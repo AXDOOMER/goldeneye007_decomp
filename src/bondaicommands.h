@@ -94,9 +94,9 @@
 #define GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE 0x0002 // wait for bond detection (spawn clone when heard bond)
 #define GLIST_IDLE_RAND_ANIM_SUBROUTINE                0x0003 // play idle animation (subroutine)
 #define GLIST_KEYBOARD_RAND_ANIM_SUBROUTINE            0x0004 // play use keyboard animation (subroutine)
-#define GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM   0x0005 // wait for bond detection (deaf & no idling)
+#define GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM   0x0005 // wait for bond detection (deaf/no clones/no idling)
 #define GLIST_FIRE_RAND_ANIM_SUBROUTINE                0x0006 // fire at bond with random animation (subroutine)
-#define GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM        0x0007 // wait for bond detection (no clones & no idling)
+#define GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM        0x0007 // wait for bond detection (no clones/no idling)
 #define GLIST_RUN_TO_BOND_SUBROUTINE                   0x0008 // run to bond and fire (subroutine)
 #define GLIST_RUN_TO_CHR_PADPRESET_AND_ACTIVATE_ALARM  0x0009 // run to chr->padpreset1 and activate alarm
 #define GLIST_STARTLE_CHR_AND_RUN_TO_BOND_SUBROUTINE   0x000A // startle character (subroutine)
@@ -253,11 +253,11 @@
 #define debug_log_end \
         '\0',
 
-#define if_local_counter_seconds_less_than(seconds, label) \
-        if_local_counter_less_than((SECS_TO_TIMER60(seconds)), label)
+#define if_local_timer_seconds_less_than(seconds, label) \
+        if_local_timer_less_than((SECS_TO_TIMER60(seconds)), label)
 
-#define if_local_counter_seconds_greater_than(seconds, label) \
-        if_local_counter_greater_than((SECS_TO_TIMER60(seconds)), label)
+#define if_local_timer_seconds_greater_than(seconds, label) \
+        if_local_timer_greater_than((SECS_TO_TIMER60(seconds)), label)
 
 #define camera_wait_for_loading \
         ai_sleep \
@@ -2104,21 +2104,21 @@
         label,
 
 /*=============================================================================
-// name: custom_byte_1_set
+// name: local_byte_1_set
 // command id: 81
 // info: set chr->flags byte value to byte argument
 //=============================================================================
 // note: argument is unsigned. this is a private byte that is stored in chr struct.
 //       it can be used for anything. default value is 0
 //===========================================================================*/
-#define custom_byte_1_set_ID 0x81
-#define custom_byte_1_set_LENGTH 0x02
-#define custom_byte_1_set(set_byte) \
-        custom_byte_1_set_ID, \
+#define local_byte_1_set_ID 0x81
+#define local_byte_1_set_LENGTH 0x02
+#define local_byte_1_set(set_byte) \
+        local_byte_1_set_ID, \
         set_byte,
 
 /*=============================================================================
-// name: custom_byte_1_add
+// name: local_byte_1_add
 // command id: 82
 // info: add byte argument to chr->flags byte value
 //=============================================================================
@@ -2126,43 +2126,43 @@
 // a private byte that is stored in chr struct. it can be used for anything.
 // default value is 0
 //===========================================================================*/
-#define custom_byte_1_add_ID 0x82
-#define custom_byte_1_add_LENGTH 0x02
-#define custom_byte_1_add(add_byte) \
-        custom_byte_1_add_ID, \
+#define local_byte_1_add_ID 0x82
+#define local_byte_1_add_LENGTH 0x02
+#define local_byte_1_add(add_byte) \
+        local_byte_1_add_ID, \
         add_byte,
 
 /*=============================================================================
-// name: custom_byte_1_subtract
+// name: local_byte_1_subtract
 // command id: 83
 // info: subtract byte argument from chr->flags byte value
 //=============================================================================
 // note: argument is unsigned, subtract value is clamped at 0. this is a private
 // byte that is stored in chr struct. it can be used for anything. default value is 0
 //===========================================================================*/
-#define custom_byte_1_subtract_ID 0x83
-#define custom_byte_1_subtract_LENGTH 0x02
-#define custom_byte_1_subtract(subtract_byte) \
-        custom_byte_1_subtract_ID, \
+#define local_byte_1_subtract_ID 0x83
+#define local_byte_1_subtract_LENGTH 0x02
+#define local_byte_1_subtract(subtract_byte) \
+        local_byte_1_subtract_ID, \
         subtract_byte,
 
 /*=============================================================================
-// name: if_custom_byte_1_less_than
+// name: if_local_byte_1_less_than
 // command id: 84
 // info: if chr->flags byte value < byte argument, goto label
 //=============================================================================
 // note: argument is unsigned. this is a private byte that is stored in chr struct.
 //       it can be used for anything. default value is 0
 //===========================================================================*/
-#define if_custom_byte_1_less_than_ID 0x84
-#define if_custom_byte_1_less_than_LENGTH 0x03
-#define if_custom_byte_1_less_than(compare_byte, label) \
-        if_custom_byte_1_less_than_ID, \
+#define if_local_byte_1_less_than_ID 0x84
+#define if_local_byte_1_less_than_LENGTH 0x03
+#define if_local_byte_1_less_than(compare_byte, label) \
+        if_local_byte_1_less_than_ID, \
         compare_byte, \
         label,
 
 /*=============================================================================
-// name: if_custom_byte_1_less_than_random_seed
+// name: if_local_byte_1_less_than_random_seed
 // command id: 85
 // info: if chr->flags byte value < chr->random, goto label
 //=============================================================================
@@ -2170,28 +2170,28 @@
 // is a private byte that is stored in chr struct. it can be used for anything.
 // default value is 0
 //===========================================================================*/
-#define if_custom_byte_1_less_than_random_seed_ID 0x85
-#define if_custom_byte_1_less_than_random_seed_LENGTH 0x02
-#define if_custom_byte_1_less_than_random_seed(label) \
-        if_custom_byte_1_less_than_random_seed_ID, \
+#define if_local_byte_1_less_than_random_seed_ID 0x85
+#define if_local_byte_1_less_than_random_seed_LENGTH 0x02
+#define if_local_byte_1_less_than_random_seed(label) \
+        if_local_byte_1_less_than_random_seed_ID, \
         label,
 
 /*=============================================================================
-// name: custom_byte_2_set
+// name: local_byte_2_set
 // command id: 86
 // info: set chr->flags2 byte value to byte argument
 //=============================================================================
 // note: argument is unsigned. this is a private byte that is stored in chr struct.
 //       it can be used for anything. default value is 0
 //===========================================================================*/
-#define custom_byte_2_set_ID 0x86
-#define custom_byte_2_set_LENGTH 0x02
-#define custom_byte_2_set(set_byte) \
-        custom_byte_2_set_ID, \
+#define local_byte_2_set_ID 0x86
+#define local_byte_2_set_LENGTH 0x02
+#define local_byte_2_set(set_byte) \
+        local_byte_2_set_ID, \
         set_byte,
 
 /*=============================================================================
-// name: custom_byte_2_add
+// name: local_byte_2_add
 // command id: 87
 // info: add byte argument to chr->flags2 byte value
 //=============================================================================
@@ -2199,43 +2199,43 @@
 // a private byte that is stored in chr struct. it can be used for anything.
 // default value is 0
 //===========================================================================*/
-#define custom_byte_2_add_ID 0x87
-#define custom_byte_2_add_LENGTH 0x02
-#define custom_byte_2_add(add_byte) \
-        custom_byte_2_add_ID, \
+#define local_byte_2_add_ID 0x87
+#define local_byte_2_add_LENGTH 0x02
+#define local_byte_2_add(add_byte) \
+        local_byte_2_add_ID, \
         add_byte,
 
 /*=============================================================================
-// name: custom_byte_2_subtract
+// name: local_byte_2_subtract
 // command id: 88
 // info: subtract byte argument from chr->flags2 byte value
 //=============================================================================
 // note: argument is unsigned, subtract value is clamped at 0. this is a private
 // byte that is stored in chr struct. it can be used for anything. default value is 0
 //===========================================================================*/
-#define custom_byte_2_subtract_ID 0x88
-#define custom_byte_2_subtract_LENGTH 0x02
-#define custom_byte_2_subtract(subtract_byte) \
-        custom_byte_2_subtract_ID, \
+#define local_byte_2_subtract_ID 0x88
+#define local_byte_2_subtract_LENGTH 0x02
+#define local_byte_2_subtract(subtract_byte) \
+        local_byte_2_subtract_ID, \
         subtract_byte,
 
 /*=============================================================================
-// name: if_custom_byte_2_less_than
+// name: if_local_byte_2_less_than
 // command id: 89
 // info: if chr->flags2 byte value < byte argument, goto label
 //=============================================================================
 // note: argument is unsigned. this is a private byte that is stored in chr struct.
 //       it can be used for anything. default value is 0
 //===========================================================================*/
-#define if_custom_byte_2_less_than_ID 0x89
-#define if_custom_byte_2_less_than_LENGTH 0x03
-#define if_custom_byte_2_less_than(compare_byte, label) \
-        if_custom_byte_2_less_than_ID, \
+#define if_local_byte_2_less_than_ID 0x89
+#define if_local_byte_2_less_than_LENGTH 0x03
+#define if_local_byte_2_less_than(compare_byte, label) \
+        if_local_byte_2_less_than_ID, \
         compare_byte, \
         label,
 
 /*=============================================================================
-// name: if_custom_byte_2_less_than_random_seed
+// name: if_local_byte_2_less_than_random_seed
 // command id: 8A
 // info: if chr->flags2 byte value < chr->random, goto label
 //=============================================================================
@@ -2243,10 +2243,10 @@
 // is a private byte that is stored in chr struct. it can be used for anything.
 // default value is 0
 //===========================================================================*/
-#define if_custom_byte_2_less_than_random_seed_ID 0x8A
-#define if_custom_byte_2_less_than_random_seed_LENGTH 0x02
-#define if_custom_byte_2_less_than_random_seed(label) \
-        if_custom_byte_2_less_than_random_seed_ID, \
+#define if_local_byte_2_less_than_random_seed_ID 0x8A
+#define if_local_byte_2_less_than_random_seed_LENGTH 0x02
+#define if_local_byte_2_less_than_random_seed(label) \
+        if_local_byte_2_less_than_random_seed_ID, \
         label,
 
 /*=============================================================================
@@ -2771,97 +2771,97 @@
         debug_log_ID,
 
 /*=============================================================================
-// name: local_counter_reset_start
+// name: local_timer_reset_start
 // command id: AE
 // info: reset and start chr->timer60
 //=============================================================================
 // note: local timer is different to hud countdown. local timer is unique for each chr,
 // while hud countdown is global for the entire mission. chr->timer60 only counts up
 //===========================================================================*/
-#define local_counter_reset_start_ID 0xAE
-#define local_counter_reset_start_LENGTH 0x01
-#define local_counter_reset_start \
-        local_counter_reset_start_ID,
+#define local_timer_reset_start_ID 0xAE
+#define local_timer_reset_start_LENGTH 0x01
+#define local_timer_reset_start \
+        local_timer_reset_start_ID,
 
 /*=============================================================================
-// name: local_counter_reset
+// name: local_timer_reset
 // command id: AF
 // info: reset chr->timer60
 //=============================================================================
 // note: local timer is different to hud countdown. local timer is unique for each chr,
 // while hud countdown is global for the entire mission. chr->timer60 only counts up
 //===========================================================================*/
-#define local_counter_reset_ID 0xAF
-#define local_counter_reset_LENGTH 0x01
-#define local_counter_reset \
-        local_counter_reset_ID,
+#define local_timer_reset_ID 0xAF
+#define local_timer_reset_LENGTH 0x01
+#define local_timer_reset \
+        local_timer_reset_ID,
 
 /*=============================================================================
-// name: local_counter_stop
+// name: local_timer_stop
 // command id: B0
 // info: pauses chr->timer60 (does not reset value)
 //=============================================================================
 // note: local timer is different to hud countdown. local timer is unique for each chr,
 // while hud countdown is global for the entire mission. chr->timer60 only counts up
 //===========================================================================*/
-#define local_counter_stop_ID 0xB0
-#define local_counter_stop_LENGTH 0x01
-#define local_counter_stop \
-        local_counter_stop_ID,
+#define local_timer_stop_ID 0xB0
+#define local_timer_stop_LENGTH 0x01
+#define local_timer_stop \
+        local_timer_stop_ID,
 
 /*=============================================================================
-// name: local_counter_start
+// name: local_timer_start
 // command id: B1
 // info: start chr->timer60 (does not reset value)
 //=============================================================================
 // note: local timer is different to hud countdown. local timer is unique for each chr,
 // while hud countdown is global for the entire mission. chr->timer60 only counts up
 //===========================================================================*/
-#define local_counter_start_ID 0xB1
-#define local_counter_start_LENGTH 0x01
-#define local_counter_start \
-        local_counter_start_ID,
+#define local_timer_start_ID 0xB1
+#define local_timer_start_LENGTH 0x01
+#define local_timer_start \
+        local_timer_start_ID,
 
 /*=============================================================================
-// name: if_local_counter_has_stopped
+// name: if_local_timer_has_stopped
 // command id: B2
 // info: if chr->timer60 is not active (paused), goto label
 //=============================================================================
 // note: by default, chr->timer60 is inactive
 //===========================================================================*/
-#define if_local_counter_has_stopped_ID 0xB2
-#define if_local_counter_has_stopped_LENGTH 0x02
-#define if_local_counter_has_stopped(label) \
-        if_local_counter_has_stopped_ID, \
+#define if_local_timer_has_stopped_ID 0xB2
+#define if_local_timer_has_stopped_LENGTH 0x02
+#define if_local_timer_has_stopped(label) \
+        if_local_timer_has_stopped_ID, \
         label,
 
 /*=============================================================================
-// name: if_local_counter_less_than
+// name: if_local_timer_less_than
 // command id: B3
 // info: if chr->timer60 < time60, goto label
 //=============================================================================
 // note: time60 argument is converted to float from unsigned int and compared.
 //       chr->timer60 only counts up
 //===========================================================================*/
-#define if_local_counter_less_than_ID 0xB3
-#define if_local_counter_less_than_LENGTH 0x05
-#define if_local_counter_less_than(time60, label) \
-        if_local_counter_less_than_ID, \
+#define if_local_timer_less_than_ID 0xB3
+#define if_local_timer_less_than_LENGTH 0x05
+#define if_local_timer_less_than(time60, label) \
+        if_local_timer_less_than_ID, \
         chararray24(time60), \
         label,
 
 /*=============================================================================
-// name: if_local_counter_greater_than
+// name: if_local_timer_greater_than
 // command id: B4
 // info: if chr->timer60 > time60, goto label
 //=============================================================================
 // note: time60 argument is converted to float from unsigned int and compared.
 //       chr->timer60 only counts up
 //===========================================================================*/
-#define if_local_counter_greater_than_ID 0xB4
-#define if_local_counter_greater_than_LENGTH 0x05
-#define if_local_counter_greater_than(time60, label) \
-        if_local_counter_greater_than_ID, \
+#define if_local_timer_greater_than_ID 0xB4
+#define if_local_timer_greater_than_LENGTH 0x05
+#define if_local_timer_greater_than(time60, label) \
+        if_local_timer_greater_than_ID, \
         chararray24(time60), \
         label,
 

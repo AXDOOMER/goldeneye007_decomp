@@ -107,7 +107,7 @@ u8 dword_D_8003713C[] = { // GLIST_KEYBOARD_RAND_ANIM_SUBROUTINE: play use keybo
 };
 
 //D:8003717C
-u8 dword_D_8003717C[] = { // GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM: wait for bond detection (deaf & no idling)
+u8 dword_D_8003717C[] = { // GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM: wait for bond detection (deaf/no clones/no idling)
     goto_loop_start(0x01) // wait for guard to stop moving before branching to next logic
         if_guard_has_stopped_moving(0x06)
         goto_loop_repeat(0x01)
@@ -209,7 +209,7 @@ u8 dword_D_80037248[] = { // GLIST_RUN_TO_BOND_AND_FIRE: run to bond and fire
 };
 
 //D:80037250
-u8 dword_D_80037250[] = { // GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM: wait for bond detection (no clones & no idling)
+u8 dword_D_80037250[] = { // GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM: wait for bond detection (no clones/no idling)
     goto_loop_start(0x01) // wait for guard to stop moving before branching to next logic
         if_guard_sees_bond(0x07)
         if_guard_was_shot_within_last_10_secs(0x0D)
@@ -340,11 +340,11 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
         ai_sleep
         goto_first(0x01)
     label(0x1C)
-        local_counter_reset_start
+        local_timer_reset_start
         guard_try_running_to_bond_position(0x1D)
     goto_loop_start(0x1D)
         if_guard_has_stopped_moving(0x03)
-        local_counter_seconds_greater_than(1, 0x03)
+        if_local_timer_seconds_greater_than(1, 0x03)
         goto_loop_repeat(0x1D)
     label(0x03)
         guard_animation_stop
@@ -353,13 +353,13 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
         random_generate_greater_than(160, 0x03)
         guard_bitfield_set_on(0x04)
     label(0x03)
-        local_counter_reset_start
+        local_timer_reset_start
     label(0x1E)
         ai_sleep
         if_guard_and_bond_within_line_of_sight(0x03)
         if_guard_shot_from_bond_missed(0x03)
         ai_sleep
-        local_counter_seconds_less_than(10, 0x04) // if timer less than 10 seconds, goto 04
+        if_local_timer_seconds_less_than(10, 0x04) // if timer less than 10 seconds, goto 04
         if_guard_bitfield_is_set_on(0x04, 0x05)
         goto_first(0x28)
     label(0x05)
@@ -378,9 +378,9 @@ u8 dword_D_800372E0[] = { // GLIST_RUN_TO_BOND_AND_FIRE_HALT_CHR_RANDOMLY: forev
 
 //D:800373D0
 u8 dword_D_800373D0[] = { // GLIST_WAIT_ONE_SECOND_SUBROUTINE: wait for one second (subroutine)
-    local_counter_reset_start
+    local_timer_reset_start
     goto_loop_start(0x1B)
-        local_counter_seconds_greater_than(1, 0x03) // wait one second
+        if_local_timer_seconds_greater_than(1, 0x03) // wait one second
         goto_loop_repeat(0x1B)
     label(0x03)
         jump_to_return_ai_list
@@ -401,9 +401,9 @@ u8 dword_D_800373E8[] = { // GLIST_DRAW_DD44_AND_FIRE: draw dd44 and fire
     label(0x03)
         guard_try_facing_target(TARGET_BOND, 0, 0x03)
     label(0x03)
-        local_counter_reset_start
+        local_timer_reset_start
     goto_loop_start(0x1B)
-        if_local_counter_greater_than(20, 0x03) // wait 1/3 of a second
+        if_local_timer_greater_than(20, 0x03) // wait 1/3 of a second
         goto_loop_repeat(0x1B)
     label(0x03)
         guard_play_animation(ANIM_fire_standing_draw_one_handed_weapon_fast, 0, 20, ANIM_LOOP_HOLD_LAST_FRAME, ANIM_DEFAULT_INTERPOLATION)

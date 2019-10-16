@@ -1152,26 +1152,26 @@ u8 get_length_of_action_block(u8 *CurrentActionByte)
                 return if_bond_health_less_than_LENGTH;
             case if_bond_health_greater_than_ID:
                 return if_bond_health_greater_than_LENGTH;
-            case custom_byte_1_set_ID:
-                return custom_byte_1_set_LENGTH;
-            case custom_byte_1_add_ID:
-                return custom_byte_1_add_LENGTH;
-            case custom_byte_1_subtract_ID:
-                return custom_byte_1_subtract_LENGTH;
-            case if_custom_byte_1_less_than_ID:
-                return if_custom_byte_1_less_than_LENGTH;
-            case if_custom_byte_1_less_than_random_seed_ID:
-                return if_custom_byte_1_less_than_random_seed_LENGTH;
-            case custom_byte_2_set_ID:
-                return custom_byte_2_set_LENGTH;
-            case custom_byte_2_add_ID:
-                return custom_byte_2_add_LENGTH;
-            case custom_byte_2_subtract_ID:
-                return custom_byte_2_subtract_LENGTH;
-            case if_custom_byte_2_less_than_ID:
-                return if_custom_byte_2_less_than_LENGTH;
-            case if_custom_byte_2_less_than_random_seed_ID:
-                return if_custom_byte_2_less_than_random_seed_LENGTH;
+            case local_byte_1_set_ID:
+                return local_byte_1_set_LENGTH;
+            case local_byte_1_add_ID:
+                return local_byte_1_add_LENGTH;
+            case local_byte_1_subtract_ID:
+                return local_byte_1_subtract_LENGTH;
+            case if_local_byte_1_less_than_ID:
+                return if_local_byte_1_less_than_LENGTH;
+            case if_local_byte_1_less_than_random_seed_ID:
+                return if_local_byte_1_less_than_random_seed_LENGTH;
+            case local_byte_2_set_ID:
+                return local_byte_2_set_LENGTH;
+            case local_byte_2_add_ID:
+                return local_byte_2_add_LENGTH;
+            case local_byte_2_subtract_ID:
+                return local_byte_2_subtract_LENGTH;
+            case if_local_byte_2_less_than_ID:
+                return if_local_byte_2_less_than_LENGTH;
+            case if_local_byte_2_less_than_random_seed_ID:
+                return if_local_byte_2_less_than_random_seed_LENGTH;
             case guard_set_hearing_scale_ID:
                 return guard_set_hearing_scale_LENGTH;
             case guard_set_vision_range_ID:
@@ -1241,20 +1241,20 @@ u8 get_length_of_action_block(u8 *CurrentActionByte)
                         return i;
                 }
                 return debug_log_LENGTH;
-            case local_counter_reset_start_ID:
-                return local_counter_reset_start_LENGTH;
-            case local_counter_reset_ID:
-                return local_counter_reset_LENGTH;
-            case local_counter_stop_ID:
-                return local_counter_stop_LENGTH;
-            case local_counter_start_ID:
-                return local_counter_start_LENGTH;
-            case if_local_counter_has_stopped_ID:
-                return if_local_counter_has_stopped_LENGTH;
-            case if_local_counter_less_than_ID:
-                return if_local_counter_less_than_LENGTH;
-            case if_local_counter_greater_than_ID:
-                return if_local_counter_greater_than_LENGTH;
+            case local_timer_reset_start_ID:
+                return local_timer_reset_start_LENGTH;
+            case local_timer_reset_ID:
+                return local_timer_reset_LENGTH;
+            case local_timer_stop_ID:
+                return local_timer_stop_LENGTH;
+            case local_timer_start_ID:
+                return local_timer_start_LENGTH;
+            case if_local_timer_has_stopped_ID:
+                return if_local_timer_has_stopped_LENGTH;
+            case if_local_timer_less_than_ID:
+                return if_local_timer_less_than_LENGTH;
+            case if_local_timer_greater_than_ID:
+                return if_local_timer_greater_than_LENGTH;
             case hud_countdown_show_ID:
                 return hud_countdown_show_LENGTH;
             case hud_countdown_hide_ID:
