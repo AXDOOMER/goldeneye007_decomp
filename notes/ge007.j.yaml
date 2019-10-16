@@ -2254,4 +2254,6 @@ labels:
    - [0x7f081da0, "sub_GAME_7F081790"]
    - [0x7f081f84, "controller_gameplay_interaction"]
    - [0x7f0845d8, "sub_GAME_7F083FC8"]
+   - [0x7f084a10, "sub_GAME_7F084360"]
+   - [0x7f084cf8, "MoveBond"]
    
