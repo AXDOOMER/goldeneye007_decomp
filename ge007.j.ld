@@ -184,6 +184,7 @@ SECTIONS
       build/src/game/objecthandler_2.o (.text);
       build/src/game/othermodemicrocode.o (.text);
       build/src/game/bond.o (.text);
+      build/src/game/bond2.o (.text);
       build/src/game/unk_08DBB0.o (.text);
       build/src/game/debugmenu_08FE00.o (.text);
       build/src/game/debugmenu_090490.o (.text);
@@ -3126,6 +3127,7 @@ SECTIONS
       build/src/game/objecthandler_2.o (.data);
       build/src/game/othermodemicrocode.o (.data);
       build/src/game/bond.o (.data);
+      build/src/game/bond2.o (.data);
       build/src/game/unk_08DBB0.o (.data);
       build/src/game/debugmenu_08FE00.o (.data);
       build/src/game/debugmenu_090490.o (.data);
@@ -3246,6 +3248,7 @@ SECTIONS
       build/src/game/objecthandler_2.o (.rodata);
       build/src/game/othermodemicrocode.o (.rodata);
       build/src/game/bond.o (.rodata);
+      build/src/game/bond2.o (.rodata);
       build/src/game/unk_08DBB0.o (.rodata);
       build/src/game/debugmenu_08FE00.o (.rodata);
       build/src/game/debugmenu_090490.o (.rodata);
@@ -3408,6 +3411,7 @@ SECTIONS
       build/src/game/objecthandler_2.o (.bss);
       build/src/game/othermodemicrocode.o (.bss);
       build/src/game/bond.o (.bss);
+      build/src/game/bond2.o (.bss);
       build/src/game/unk_08DBB0.o (.bss);
       build/src/game/debugmenu_08FE00.o (.bss);
       build/src/game/debugmenu_090490.o (.bss);
