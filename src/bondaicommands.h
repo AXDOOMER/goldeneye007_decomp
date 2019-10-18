@@ -161,7 +161,7 @@
 #define SPAWN_SUNGLASSES_RANDOM         0x00000002 // sunglasses (random, 50% of the time)
 #define SPAWN_00000004                  0x00000004 // unknown
 #define SPAWN_00000008                  0x00000008 // unknown
-#define SPAWN_00000010                  0x00000010 // unknown
+#define SPAWN_IGNORE_PAD_SIGHT_CHECK    0x00000010 // ignore check for pad within view (force spawn)
 #define SPAWN_00000020                  0x00000020 // unknown
 #define SPAWN_00000040                  0x00000040 // unknown
 #define SPAWN_00000080                  0x00000080 // unknown
@@ -2969,8 +2969,8 @@
 // command id: BD
 // info: spawn chr at pad, goto label if successful
 //=============================================================================
-// note: if out of memory/can't spawn chr/pad is in view of bond, do not got label.
-// if pad is blocked, attempt to spawn chr around pad. bitfield uses SPAWN_# defines
+// note: if out of memory/can't spawn chr, do not got label. if pad is blocked,
+//       attempt to spawn chr around pad. bitfield uses SPAWN_# defines
 //===========================================================================*/
 #define chr_try_spawning_at_pad_ID 0xBD
 #define chr_try_spawning_at_pad_LENGTH 0x0B
