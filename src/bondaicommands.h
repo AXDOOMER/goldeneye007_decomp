@@ -2973,10 +2973,10 @@
 //       attempt to spawn chr around pad. bitfield uses SPAWN_# defines
 //===========================================================================*/
 #define chr_try_spawning_at_pad_ID 0xBD
-#define chr_try_spawning_at_pad_LENGTH 0x0B
+#define chr_try_spawning_at_pad_LENGTH 0x0C
 #define chr_try_spawning_at_pad(body_num, head_num, pad, ai_list, bitfield, label) \
         chr_try_spawning_at_pad_ID, \
-        chararray16(body_num), \
+        body_num, \
         head_num, \
         chararray16(pad), \
         chararray16(ai_list), \
@@ -2993,10 +2993,10 @@
 // not spawn chr if target chr has been seen before (CHRFLAG_HAS_BEEN_ON_SCREEN)
 //===========================================================================*/
 #define chr_try_spawning_next_to_unseen_chr_ID 0xBE
-#define chr_try_spawning_next_to_unseen_chr_LENGTH 0x0A
+#define chr_try_spawning_next_to_unseen_chr_LENGTH 0x0B
 #define chr_try_spawning_next_to_unseen_chr(body_num, head_num, chr_num_target, ai_list, bitfield, label) \
         chr_try_spawning_next_to_unseen_chr_ID, \
-        chararray16(body_num), \
+        body_num, \
         head_num, \
         chr_num_target, \
         chararray16(ai_list), \
