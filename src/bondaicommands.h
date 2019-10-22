@@ -3073,7 +3073,7 @@
 // info: print text slot to top part of screen
 //=============================================================================
 // note: if text slot is not currently allocated in memory, game will softlock.
-// ensure that end of text has a \n character or it will misalign background area
+// ensure that end of text has a \n character or text background will be misaligned
 //===========================================================================*/
 #define text_print_top_ID 0xC3
 #define text_print_top_LENGTH 0x03
@@ -3766,9 +3766,9 @@
 // info: play level's x track for duration
 //=============================================================================
 // note: seconds arguments are unsigned, available music slots range is 0-3.
-// stopped duration argument is used by command F5. when a slot is stopped,
-// the xtrack will continue to play until this or total time reaches 0.
-// if you do not want this to happen, set seconds stopped duration to 0
+// stopped duration argument is used by command F5. when using F5 to stop a music
+// slot, the xtrack will continue to play until this or total time reaches 0.
+// if you don't want this to happen, set the seconds stopped duration argument to 0
 //===========================================================================*/
 #define music_xtrack_play_ID 0xF4
 #define music_xtrack_play_LENGTH 0x04

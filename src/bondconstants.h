@@ -7,7 +7,7 @@
 #define MINS_TO_TIMER60(MINS) (SECS_TO_TIMER60(MINS * GAME_TICKRATE))
 
 /* special chr num IDs */
-#define CHR_BOND -8 /* only works when bond has a third person (intro/exit cutscene) */
+#define CHR_BOND_CINEMA -8 /* only works when bond has a third person model (intro/exit cutscene) */
 #define CHR_CLONE -7
 #define CHR_SEE_SHOT -6 /* stored as chr->chrseeshot */
 #define CHR_SEE_DIE -5 /* stored as chr->chrseedie */
