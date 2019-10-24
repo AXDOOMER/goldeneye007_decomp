@@ -2550,7 +2550,7 @@ Linker script and memory map
                 0x000000007f05c440                sub_GAME_7F05C440
                 0x000000007f05c4b8                sub_GAME_7F05C4B8
  build/src/game/bondwalk.o(.text)
- .text          0x000000007f05c520     0xe680 build/src/game/bondwalk.o
+ .text          0x000000007f05c520     0xe690 build/src/game/bondwalk.o
                 0x000000007f05c520                set_cartridges_eject
                 0x000000007f05c52c                get_cartridges_eject
                 0x000000007f05c538                nullsub_73
@@ -2713,9 +2713,9 @@ Linker script and memory map
                 0x000000007f06a95c                increment_num_deaths
                 0x000000007f06aa08                get_curplayer_numdeaths
                 0x000000007f06aa18                increment_num_suicides_display_MP
- build/src/game/bondwalk2.o(.text)
- .text          0x000000007f06aba0      0x580 build/src/game/bondwalk2.o
                 0x000000007f06aba0                get_curplayer_numsuicides
+ build/src/game/bondwalk2.o(.text)
+ .text          0x000000007f06abb0      0x570 build/src/game/bondwalk2.o
                 0x000000007f06abb0                sub_GAME_7F06ABB0
                 0x000000007f06afe8                display_image_at_on_screen_coord
  build/src/game/objecthandler.o(.text)
@@ -18816,8 +18816,6 @@ Linker script and memory map
                 0x00000000800483dc                D_800483DC
                 0x00000000800483e0                D_800483E0
                 0x00000000800483e4                D_800483E4
-                0x00000000800483e8                D_800483E8
-                0x00000000800483ec                D_800483EC
  build/src/game/lvl_2.o(.data)
  .data          0x00000000800483f0       0xa0 build/src/game/lvl_2.o
                 0x00000000800483f0                ramrom_table
