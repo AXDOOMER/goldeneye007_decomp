@@ -8,11 +8,26 @@
 
 //D:800483F0
 
+//move me to better home
+extern u32* ramrom_Dam_1;
+extern u32* ramrom_Dam_2;
+extern u32* ramrom_Facility_1;
+extern u32* ramrom_Facility_2;
+extern u32* ramrom_Facility_3;
+extern u32* ramrom_Runway_1;
+extern u32* ramrom_Runway_2;
+extern u32* ramrom_BunkerI_1;
+extern u32* ramrom_BunkerI_2;
+extern u32* ramrom_Silo_1;
+extern u32* ramrom_Silo_2;
+extern u32* ramrom_Frigate_1;
+extern u32* ramrom_Frigate_2;
+extern u32* ramrom_Train;
 
 struct ramrom_struct ramrom_table[] = {
-    {0x2BF2D0, 0}, {0x2C44D0, 0}, {0x2C64A0, 0}, {0x2C7F50, 0}, {0x2CA330, 0}, 
-    {0x2CBFA0, 0}, {0x2CE6F0, 0}, {0x2D1000, 0}, {0x2D4390, 0}, {0x2D9610, 0},
-    {0x2DB7A0, 0}, {0x2DD770, 0}, {0x2DF120, 0}, {0x2E2600, 0}, {0,0}
+    {&ramrom_Dam_1, 0}, {&ramrom_Dam_2, 0}, {&ramrom_Facility_1, 0}, {&ramrom_Facility_2, 0}, {&ramrom_Facility_3, 0}, 
+    {&ramrom_Runway_1, 0}, {&ramrom_Runway_2, 0}, {&ramrom_BunkerI_1, 0}, {&ramrom_BunkerI_2, 0}, {&ramrom_Silo_1, 0},
+    {&ramrom_Silo_2, 0}, {&ramrom_Frigate_1, 0}, {&ramrom_Frigate_2, 0}, {&ramrom_Train, 0}, {0,0}
 };
 
 //D:80048468

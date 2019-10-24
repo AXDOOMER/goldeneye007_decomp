@@ -1096,6 +1096,7 @@ GLOBAL_ASM(
 .late_rodata
 glabel D_800576B8
 .word 0x3f4ccccd /*0.80000001*/
+.word 0x38d1b717
 .text
 glabel sub_GAME_7F09C7C4
 /* 0D1EA8 7F09D338 27BDFF98 */  addiu $sp, $sp, -0x68

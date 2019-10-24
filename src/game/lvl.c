@@ -50,6 +50,9 @@ s32 D_8004838C = 0;
 s32 D_80048390 = 0;
 //D:80048394
 s32 D_80048394 = 0;
+#ifdef VERSION_JP
+u32 D_jpunk = 0;
+#endif
 //D:80048398
 s32 mp_time = 0x8CA0;
 //D:8004839C
@@ -90,12 +93,13 @@ s32 D_800483DC = 0;
 s32 D_800483E0 = 0;
 //D:800483E4
 s32 D_800483E4 = 0;
+
 //D:800483E8
 //maybe alignment
-s32 D_800483E8 = 0;
+//s32 D_800483E8 = 0;
 //D:800483EC
 //maybe alignment
-s32 D_800483EC = 0;
+//s32 D_800483EC = 0;
 
 
 
@@ -114,8 +118,10 @@ const char aStanshow__1[] = "-stanshow_";
 const char aStanshow__2[] = "-stanshow_";
 //D:8005B6F8
 const char aStanshow__3[] = "-stanshow_";
+#ifndef VERSION_JP
 //D:8005B704
 const char aOneMinuteLeft[] = "One minute left";
+#endif
 //D:8005B714
 const char aSetdetailDDDDDDDDD[] = "setdetail %d %d %d %d %d %d %d %d %d";
 
@@ -2291,6 +2297,7 @@ glabel D_8005B744
 glabel D_8005B748
 .word 0x3e4ccccd /*0.2*/
 glabel D_8005B74C
+.word 0x3e8ccccd 
 .word 0x3e4ccccd /*0.2*/
 .text
 glabel sub_GAME_7F0BE8D0
@@ -3341,7 +3348,7 @@ glabel manage_mp_game
 /* 0F42A4 7F0BF774 0C0030EB */  jal   get_controller_buttons_pressed
 /* 0F42A8 7F0BF778 24050911 */   li    $a1, 2321
 /* 0F42AC 7F0BF77C 1040000B */  beqz  $v0, .L7F0BF7AC
-/* 0F42B0 7F0BF780 3C058005 */   lui   $a1, $a1, 0x8005
+/* 0F42B0 7F0BF780 3C058005 */   lui   $a1, 0x8005
 /* 0F42B4 7F0BF784 84A583E4 */  lh    $a1, %lo(D_800483E4)($a1)
 /* 0F42B8 7F0BF788 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
 /* 0F42BC 7F0BF78C 3C018005 */  lui   $at, %hi(D_800483E4)

@@ -1,23 +1,6 @@
 #include "ultra64.h"
 
 
-#ifdef NONMATCHING
-void get_curplayer_numsuicides(void) {
-
-}
-#else
-GLOBAL_ASM(
-.text
-glabel get_curplayer_numsuicides
-/* 09F6D0 7F06ABA0 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 09F6D4 7F06ABA4 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 09F6D8 7F06ABA8 03E00008 */  jr    $ra
-/* 09F6DC 7F06ABAC 8DC229DC */   lw    $v0, 0x29dc($t6)
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
