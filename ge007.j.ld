@@ -3467,6 +3467,7 @@ SECTIONS
    _roombufSegmentRomStart = _bssSegmentRomEnd;
    .roombuf _bssSegmentEnd : AT(_roombufSegmentRomStart){
       build/src/game/room_model_buffer.o (.bss);
+   }
    _roombufSegmentEnd = ADDR(.roombuf) + SIZEOF(.roombuf);
    _roombufSegmentRomEnd = _roombufSegmentRomStart + SIZEOF(.roombuf);
 
