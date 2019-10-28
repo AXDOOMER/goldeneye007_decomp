@@ -1080,8 +1080,8 @@ glabel load_camera_intro_type_values
 /* 03A560 7F0059F0 E6380000 */  swc1  $f24, ($s1)
 /* 03A564 7F0059F4 3C018003 */  lui   $at, %hi(D_80036514) # $at, 0x8003
 /* 03A568 7F0059F8 AC206554 */  sw    $zero, %lo(D_80036514)($at)
-/* 03A56C 7F0059FC 3C018005 */  lui   $at, %hi(D_8004F1D8) # $at, 0x8005
-/* 03A570 7F005A00 C424F1D8 */  lwc1  $f4, %lo(D_8004F1D8)($at)
+/* 03A56C 7F0059FC 3C018005 */  lui   $at, %hi(default_zoom_speed) # $at, 0x8005
+/* 03A570 7F005A00 C424F1D8 */  lwc1  $f4, %lo(default_zoom_speed)($at)
 /* 03A574 7F005A04 3C018003 */  lui   $at, %hi(watch_transition_time) # $at, 0x8003
 /* 03A578 7F005A08 E42465E8 */  swc1  $f4, %lo(watch_transition_time)($at)
 /* 03A57C 7F005A0C 3C018008 */  lui   $at, %hi(starting_left_weapon) # $at, 0x8008

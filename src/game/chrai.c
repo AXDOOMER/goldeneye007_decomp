@@ -41485,6 +41485,7 @@ void add_ammo_to_inventory(void) {
 
 }
 #else
+#ifdef VERSION_US
 GLOBAL_ASM(
 .late_rodata
 
@@ -41624,6 +41625,146 @@ glabel add_ammo_to_inventory
 )
 #endif
 
+#ifdef VERSION_JP
+GLOBAL_ASM(
+.text
+glabel add_ammo_to_inventory
+/* 0849DC 7F04FE6C 27BDFFE0 */  addiu $sp, $sp, -0x20
+/* 0849E0 7F04FE70 AFBF0014 */  sw    $ra, 0x14($sp)
+/* 0849E4 7F04FE74 AFA50024 */  sw    $a1, 0x24($sp)
+/* 0849E8 7F04FE78 AFA60028 */  sw    $a2, 0x28($sp)
+/* 0849EC 7F04FE7C 18A0006C */  blez  $a1, .L7F050030
+/* 0849F0 7F04FE80 AFA7002C */   sw    $a3, 0x2c($sp)
+/* 0849F4 7F04FE84 0FC1A60B */  jal   check_cur_player_ammo_amount_in_inventory
+/* 0849F8 7F04FE88 AFA40020 */   sw    $a0, 0x20($sp)
+/* 0849FC 7F04FE8C 8FA40020 */  lw    $a0, 0x20($sp)
+/* 084A00 7F04FE90 0FC1A630 */  jal   get_max_ammo_for_type
+/* 084A04 7F04FE94 AFA2001C */   sw    $v0, 0x1c($sp)
+/* 084A08 7F04FE98 8FAF001C */  lw    $t7, 0x1c($sp)
+/* 084A0C 7F04FE9C 8FA40020 */  lw    $a0, 0x20($sp)
+/* 084A10 7F04FEA0 01E2082A */  slt   $at, $t7, $v0
+/* 084A14 7F04FEA4 50200009 */  beql  $at, $zero, .L7F04FECC
+/* 084A18 7F04FEA8 8FB9002C */   lw    $t9, 0x2c($sp)
+/* 084A1C 7F04FEAC 0FC1A60B */  jal   check_cur_player_ammo_amount_in_inventory
+/* 084A20 7F04FEB0 AFA40020 */   sw    $a0, 0x20($sp)
+/* 084A24 7F04FEB4 8FB80024 */  lw    $t8, 0x24($sp)
+/* 084A28 7F04FEB8 8FA40020 */  lw    $a0, 0x20($sp)
+/* 084A2C 7F04FEBC 0FC1A5C7 */  jal   give_cur_player_ammo
+/* 084A30 7F04FEC0 00582821 */   addu  $a1, $v0, $t8
+/* 084A34 7F04FEC4 8FA40020 */  lw    $a0, 0x20($sp)
+/* 084A38 7F04FEC8 8FB9002C */  lw    $t9, 0x2c($sp)
+.L7F04FECC:
+/* 084A3C 7F04FECC 8FA50024 */  lw    $a1, 0x24($sp)
+/* 084A40 7F04FED0 53200005 */  beql  $t9, $zero, .L7F04FEE8
+/* 084A44 7F04FED4 8FA80028 */   lw    $t0, 0x28($sp)
+/* 084A48 7F04FED8 0FC13F7F */  jal   display_text_when_ammo_collected
+/* 084A4C 7F04FEDC AFA40020 */   sw    $a0, 0x20($sp)
+/* 084A50 7F04FEE0 8FA40020 */  lw    $a0, 0x20($sp)
+/* 084A54 7F04FEE4 8FA80028 */  lw    $t0, 0x28($sp)
+.L7F04FEE8:
+/* 084A58 7F04FEE8 51000005 */  beql  $t0, $zero, .L7F04FF00
+/* 084A5C 7F04FEEC 24010005 */   li    $at, 5
+/* 084A60 7F04FEF0 0FC13EE3 */  jal   set_sound_effect_for_ammo_collection
+/* 084A64 7F04FEF4 AFA40020 */   sw    $a0, 0x20($sp)
+/* 084A68 7F04FEF8 8FA40020 */  lw    $a0, 0x20($sp)
+/* 084A6C 7F04FEFC 24010005 */  li    $at, 5
+.L7F04FF00:
+/* 084A70 7F04FF00 54810006 */  bnel  $a0, $at, .L7F04FF1C
+/* 084A74 7F04FF04 24010007 */   li    $at, 7
+/* 084A78 7F04FF08 0FC2335A */  jal   add_item_to_inventory
+/* 084A7C 7F04FF0C 2404001A */   li    $a0, 26
+/* 084A80 7F04FF10 10000048 */  b     .L7F050034
+/* 084A84 7F04FF14 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 084A88 7F04FF18 24010007 */  li    $at, 7
+.L7F04FF1C:
+/* 084A8C 7F04FF1C 54810008 */  bnel  $a0, $at, .L7F04FF40
+/* 084A90 7F04FF20 24010008 */   li    $at, 8
+/* 084A94 7F04FF24 0FC2335A */  jal   add_item_to_inventory
+/* 084A98 7F04FF28 2404001D */   li    $a0, 29
+/* 084A9C 7F04FF2C 0FC2335A */  jal   add_item_to_inventory
+/* 084AA0 7F04FF30 2404001E */   li    $a0, 30
+/* 084AA4 7F04FF34 1000003F */  b     .L7F050034
+/* 084AA8 7F04FF38 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 084AAC 7F04FF3C 24010008 */  li    $at, 8
+.L7F04FF40:
+/* 084AB0 7F04FF40 54810006 */  bnel  $a0, $at, .L7F04FF5C
+/* 084AB4 7F04FF44 24010009 */   li    $at, 9
+/* 084AB8 7F04FF48 0FC2335A */  jal   add_item_to_inventory
+/* 084ABC 7F04FF4C 2404001C */   li    $a0, 28
+/* 084AC0 7F04FF50 10000038 */  b     .L7F050034
+/* 084AC4 7F04FF54 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 084AC8 7F04FF58 24010009 */  li    $at, 9
+.L7F04FF5C:
+/* 084ACC 7F04FF5C 54810006 */  bnel  $a0, $at, .L7F04FF78
+/* 084AD0 7F04FF60 2401000A */   li    $at, 10
+/* 084AD4 7F04FF64 0FC2335A */  jal   add_item_to_inventory
+/* 084AD8 7F04FF68 2404001B */   li    $a0, 27
+/* 084ADC 7F04FF6C 10000031 */  b     .L7F050034
+/* 084AE0 7F04FF70 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 084AE4 7F04FF74 2401000A */  li    $at, 10
+.L7F04FF78:
+/* 084AE8 7F04FF78 54810006 */  bnel  $a0, $at, .L7F04FF94
+/* 084AEC 7F04FF7C 24010010 */   li    $at, 16
+/* 084AF0 7F04FF80 0FC2335A */  jal   add_item_to_inventory
+/* 084AF4 7F04FF84 24040003 */   li    $a0, 3
+/* 084AF8 7F04FF88 1000002A */  b     .L7F050034
+/* 084AFC 7F04FF8C 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 084B00 7F04FF90 24010010 */  li    $at, 16
+.L7F04FF94:
+/* 084B04 7F04FF94 54810006 */  bnel  $a0, $at, .L7F04FFB0
+/* 084B08 7F04FF98 24010014 */   li    $at, 20
+/* 084B0C 7F04FF9C 0FC2335A */  jal   add_item_to_inventory
+/* 084B10 7F04FFA0 24040021 */   li    $a0, 33
+/* 084B14 7F04FFA4 10000023 */  b     .L7F050034
+/* 084B18 7F04FFA8 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 084B1C 7F04FFAC 24010014 */  li    $at, 20
+.L7F04FFB0:
+/* 084B20 7F04FFB0 54810006 */  bnel  $a0, $at, .L7F04FFCC
+/* 084B24 7F04FFB4 24010015 */   li    $at, 21
+/* 084B28 7F04FFB8 0FC2335A */  jal   add_item_to_inventory
+/* 084B2C 7F04FFBC 2404002F */   li    $a0, 47
+/* 084B30 7F04FFC0 1000001C */  b     .L7F050034
+/* 084B34 7F04FFC4 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 084B38 7F04FFC8 24010015 */  li    $at, 21
+.L7F04FFCC:
+/* 084B3C 7F04FFCC 54810006 */  bnel  $a0, $at, .L7F04FFE8
+/* 084B40 7F04FFD0 24010016 */   li    $at, 22
+/* 084B44 7F04FFD4 0FC2335A */  jal   add_item_to_inventory
+/* 084B48 7F04FFD8 24040030 */   li    $a0, 48
+/* 084B4C 7F04FFDC 10000015 */  b     .L7F050034
+/* 084B50 7F04FFE0 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 084B54 7F04FFE4 24010016 */  li    $at, 22
+.L7F04FFE8:
+/* 084B58 7F04FFE8 54810006 */  bnel  $a0, $at, .L7F050004
+/* 084B5C 7F04FFEC 2401001D */   li    $at, 29
+/* 084B60 7F04FFF0 0FC2335A */  jal   add_item_to_inventory
+/* 084B64 7F04FFF4 2404003D */   li    $a0, 61
+/* 084B68 7F04FFF8 1000000E */  b     .L7F050034
+/* 084B6C 7F04FFFC 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 084B70 7F050000 2401001D */  li    $at, 29
+.L7F050004:
+/* 084B74 7F050004 54810006 */  bnel  $a0, $at, .L7F050020
+/* 084B78 7F050008 24010017 */   li    $at, 23
+/* 084B7C 7F05000C 0FC2335A */  jal   add_item_to_inventory
+/* 084B80 7F050010 24040058 */   li    $a0, 88
+/* 084B84 7F050014 10000007 */  b     .L7F050034
+/* 084B88 7F050018 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 084B8C 7F05001C 24010017 */  li    $at, 23
+.L7F050020:
+/* 084B90 7F050020 54810004 */  bnel  $a0, $at, .L7F050034
+/* 084B94 7F050024 8FBF0014 */   lw    $ra, 0x14($sp)
+/* 084B98 7F050028 0FC2335A */  jal   add_item_to_inventory
+/* 084B9C 7F05002C 24040022 */   li    $a0, 34
+.L7F050030:
+/* 084BA0 7F050030 8FBF0014 */  lw    $ra, 0x14($sp)
+.L7F050034:
+/* 084BA4 7F050034 27BD0020 */  addiu $sp, $sp, 0x20
+/* 084BA8 7F050038 03E00008 */  jr    $ra
+/* 084BAC 7F05003C 00000000 */   nop   
+)
+#endif
+
+#endif
 
 
 

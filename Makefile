@@ -40,16 +40,19 @@ endif
 ifeq ($(VERSION), EU)
 COUNTRYCODE := e
 LCDEFS := -DVERSION_EU
+ASMDEFS := --defsym VERSION_EU=1
 endif
 
 ifeq ($(VERSION), JP)
 COUNTRYCODE := j
 LCDEFS := -DVERSION_JP
+ASMDEFS := --defsym VERSION_JP=1
 endif
 
 ifeq ($(VERSION), US)
 COUNTRYCODE := u
 LCDEFS := -DVERSION_US
+ASMDEFS := --defsym VERSION_US=1
 endif
 
 
@@ -113,7 +116,7 @@ LD_SCRIPT := ge007.$(COUNTRYCODE).ld
 LDFLAGS := -T undefined_syms.txt -T $(LD_SCRIPT) -Map $(BUILD_DIR)/ge007.$(COUNTRYCODE).map
 
 AS := $(TOOLCHAIN)as
-ASFLAGS := -march=vr4300 -mabi=32 $(INCLUDE)
+ASFLAGS := -march=vr4300 -mabi=32 $(INCLUDE) $(ASMDEFS)
 ASM_PREPROC := python3 tools/asmpreproc/asm-processor.py
 
 OBJCOPY := $(TOOLCHAIN)objcopy

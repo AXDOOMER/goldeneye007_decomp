@@ -1563,7 +1563,7 @@ glabel sub_GAME_7F008DE4
 /* 03D91C 7F008DEC AFA5001C */  sw    $a1, 0x1c($sp)
 /* 03D920 7F008DF0 8C8E0000 */  lw    $t6, ($a0)
 /* 03D924 7F008DF4 3C018007 */  lui   $at, %hi(dword_CODE_bss_8006958C)
-/* 03D928 7F008DF8 3C03002A */  lui   $v1, %hi(0x002A4D50) # $v1, 0x2a
+/* 03D928 7F008DF8 3C03002A */  lui   $v1, %hi(unknown2) # $v1, 0x2a
 /* 03D92C 7F008DFC AC2E958C */  sw    $t6, %lo(dword_CODE_bss_8006958C)($at)
 /* 03D930 7F008E00 8CB80000 */  lw    $t8, ($a1)
 /* 03D934 7F008E04 3C01FFFB */  lui   $at, (0xFFFBFC00 >> 16) # lui $at, 0xfffb
@@ -1572,7 +1572,7 @@ glabel sub_GAME_7F008DE4
 /* 03D940 7F008E10 ACB90000 */  sw    $t9, ($a1)
 /* 03D944 7F008E14 8C880000 */  lw    $t0, ($a0)
 /* 03D948 7F008E18 3C0B002C */  lui   $t3, %hi(_ramromDam1SegmentRomStart) # $t3, 0x2c
-/* 03D94C 7F008E1C 24634D50 */  addiu $v1, %lo(0x002A4D50) # addiu $v1, $v1, 0x4d50
+/* 03D94C 7F008E1C 24634D50 */  addiu $v1, %lo(unknown2) # addiu $v1, $v1, 0x4d50
 /* 03D950 7F008E20 3C010004 */  lui   $at, (0x00040400 >> 16) # lui $at, 4
 /* 03D954 7F008E24 256BF2D0 */  addiu $t3, %lo(_ramromDam1SegmentRomStart) # addiu $t3, $t3, -0xd30
 /* 03D958 7F008E28 34210400 */  ori   $at, (0x00040400 & 0xFFFF) # ori $at, $at, 0x400

@@ -9989,14 +9989,14 @@ glabel interface_menu08_difficulty
 /* 0432F0 7F00E7C0 3C0E8003 */  lui   $t6, %hi(briefingpage) 
 /* 0432F4 7F00E7C4 8DCEA8F8 */  lw    $t6, %lo(briefingpage)($t6)
 /* 0432F8 7F00E7C8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0432FC 7F00E7CC 3C048003 */  lui   $a0, 0x8003
+/* 0432FC 7F00E7CC 3C048003 */  lui   $a0, %hi(mission_folder_setup_entries+0x14)
 /* 043300 7F00E7D0 000E78C0 */  sll   $t7, $t6, 3
 /* 043304 7F00E7D4 01EE7823 */  subu  $t7, $t7, $t6
 /* 043308 7F00E7D8 000F7880 */  sll   $t7, $t7, 2
 /* 04330C 7F00E7DC AFBF0014 */  sw    $ra, 0x14($sp)
 /* 043310 7F00E7E0 008F2021 */  addu  $a0, $a0, $t7
 /* 043314 7F00E7E4 0FC03758 */  jal   get_highest_unlocked_difficulty_for_level
-/* 043318 7F00E7E8 8C84ABF8 */   lw    $a0, -0x5408($a0)
+/* 043318 7F00E7E8 8C84ABF8 */   lw    $a0, %lo(mission_folder_setup_entries+0x14)($a0)
 /* 04331C 7F00E7EC 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 043320 7F00E7F0 44816000 */  mtc1  $at, $f12
 /* 043324 7F00E7F4 0C001151 */  jal   video_related_1F
@@ -18342,8 +18342,8 @@ glabel interface_menu11_mpcontrols
 /* 048224 7F0136B4 1AE000BE */  blez  $s7, .L7F0139B0
 /* 048228 7F0136B8 00009025 */   move  $s2, $zero
 /* 04822C 7F0136BC 3C138007 */  lui   $s3, %hi(has_selected_char_player1) # $s3, 0x8007
-/* 048230 7F0136C0 3C108007 */  lui   $s0, %hi(has_selected_char_player1) # $s0, 0x8007
-/* 048234 7F0136C4 261097F8 */  addiu $s0, %lo(has_selected_char_player1) # addiu $s0, $s0, -0x6808
+/* 048230 7F0136C0 3C108007 */  lui   $s0, %hi(controlstyle_player) # $s0, 0x8007
+/* 048234 7F0136C4 261097F8 */  addiu $s0, %lo(controlstyle_player) # addiu $s0, $s0, -0x6808
 /* 048238 7F0136C8 26739780 */  addiu $s3, %lo(has_selected_char_player1) # addiu $s3, $s3, -0x6880
 /* 04823C 7F0136CC 0000B025 */  move  $s6, $zero
 /* 048240 7F0136D0 241E0002 */  li    $fp, 2
