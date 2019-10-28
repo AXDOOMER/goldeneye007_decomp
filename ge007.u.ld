@@ -3454,13 +3454,22 @@ SECTIONS
       build/src/game/viewport.o (.bss);
       build/src/game/music_0D2720.o (.bss);
       build/src/game/spectrum.o (.bss);
-      build/src/game/room_model_buffer.o (.bss);     
    }
+   
    _bssSegmentEnd = ADDR(.bss) + SIZEOF(.bss);
+   _bssSegmentSize = SIZEOF(.bss);
    _bssSegmentRomEnd = _bssSegmentRomStart + SIZEOF(.bss);
 
+   _roombufSegmentStart = ADDR(.roombuf);
+   _roombufSegmentRomStart = _bssSegmentRomEnd;
+   .roombuf _bssSegmentEnd : AT(_roombufSegmentRomStart){
+      build/src/game/room_model_buffer.o (.bss);
+   }
+   _roombufSegmentEnd = ADDR(.roombuf) + SIZEOF(.roombuf);
+   _roombufSegmentRomEnd = _roombufSegmentRomStart + SIZEOF(.roombuf);
+
    _decompbufSegmentStart = ADDR(.decompbuf);
-   _decompbufSegmentRomStart = _bssSegmentRomEnd;
+   _decompbufSegmentRomStart = _roombufSegmentRomEnd;
    .decompbuf 0x80300000 : AT(_decompbufSegmentRomStart){
       build/src/decompressbuffer.o (.bss);
    }
@@ -3495,7 +3504,8 @@ SECTIONS
       * (.gptab.bss);
       * (.gptab.data);
       * (.reginfo);
-      
+      build/src/rom_header.o (.bss);
+      build/src/bootcode.o (.bss);
       build/assets/romfiles.o (.text);
       build/assets/romfiles.o (.data);
       build/assets/ramrom/ramrom.o (.text);

@@ -2,6 +2,7 @@
 Discarded input sections
 
  .text          0x0000000000000000        0x0 build/src/rom_header.o
+ .bss           0x0000000000000000        0x0 build/src/rom_header.o
  .reginfo       0x0000000000000000       0x18 build/src/rom_header.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/src/rom_header.o
@@ -9,6 +10,7 @@ Discarded input sections
  .gnu.attributes
                 0x0000000000000000       0x10 build/src/rom_header.o
  .data          0x0000000000000000        0x0 build/src/bootcode.o
+ .bss           0x0000000000000000        0x0 build/src/bootcode.o
  .reginfo       0x0000000000000000       0x18 build/src/bootcode.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/src/bootcode.o
@@ -20552,7 +20554,7 @@ Linker script and memory map
                 0x000000008005d2e0                _bssSegmentStart = ADDR (.bss)
                 0x0000000000c3c550                _bssSegmentRomStart = _csegmentSegmentRomEnd
 
-.bss            0x000000008005d2e0   0x2a1080 load address 0x0000000000c3c550
+.bss            0x000000008005d2e0    0x31080 load address 0x0000000000c3c550
  build/src/boot.o(.bss)
  build/src/init.o(.bss)
  .bss           0x000000008005d2e0      0x760 build/src/init.o
@@ -21851,15 +21853,20 @@ Linker script and memory map
                 0x000000008008e350                spec_IY
                 0x000000008008e352                spec_SP
                 0x000000008008e354                spec_PC
+                0x000000008008e360                _bssSegmentEnd = (ADDR (.bss) + SIZEOF (.bss))
+                0x0000000000031080                _bssSegmentSize = SIZEOF (.bss)
+                0x0000000000c6d5d0                _bssSegmentRomEnd = (_bssSegmentRomStart + SIZEOF (.bss))
+                0x000000008008e360                _roombufSegmentStart = ADDR (.roombuf)
+                0x0000000000c6d5d0                _roombufSegmentRomStart = _bssSegmentRomEnd
+
+.roombuf        0x000000008008e360   0x270000 load address 0x0000000000c6d5d0
  build/src/game/room_model_buffer.o(.bss)
  .bss           0x000000008008e360   0x270000 build/src/game/room_model_buffer.o
                 0x000000008008e360                room_model_buffer
- .bss           0x00000000802fe360        0x0 build/src/rom_header.o
- .bss           0x00000000802fe360        0x0 build/src/bootcode.o
-                0x00000000802fe360                _bssSegmentEnd = (ADDR (.bss) + SIZEOF (.bss))
-                0x0000000000edd5d0                _bssSegmentRomEnd = (_bssSegmentRomStart + SIZEOF (.bss))
+                0x00000000802fe360                _roombufSegmentEnd = (ADDR (.roombuf) + SIZEOF (.roombuf))
+                0x0000000000edd5d0                _roombufSegmentRomEnd = (_roombufSegmentRomStart + SIZEOF (.roombuf))
                 0x0000000080300000                _decompbufSegmentStart = ADDR (.decompbuf)
-                0x0000000000edd5d0                _decompbufSegmentRomStart = _bssSegmentRomEnd
+                0x0000000000edd5d0                _decompbufSegmentRomStart = _roombufSegmentRomEnd
 
 .decompbuf      0x0000000080300000    0xab400 load address 0x0000000000edd5d0
  build/src/decompressbuffer.o(.bss)
@@ -21903,6 +21910,8 @@ Linker script and memory map
  *(.gptab.bss)
  *(.gptab.data)
  *(.reginfo)
+ build/src/rom_header.o(.bss)
+ build/src/bootcode.o(.bss)
  build/assets/romfiles.o(.text)
  build/assets/romfiles.o(.data)
  build/assets/ramrom/ramrom.o(.text)

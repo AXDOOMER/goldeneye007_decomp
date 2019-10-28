@@ -10,10 +10,10 @@
 #		technically, this is used in bootcode and used prior to TLB registration
 
 glabel _start
-/* 001000 80000400 3C088006 */  lui   $t0, %hi(_csegmentSegmentEnd) 
-/* 001004 80000404 3C090003 */  lui   $t1, (0x00031080 >> 16) # lui $t1, 3
-/* 001008 80000408 2508D2E0 */  addiu $t0, %lo(_csegmentSegmentEnd) # addiu $t0, $t0, -0x2d20
-/* 00100C 8000040C 35291080 */  ori   $t1, (0x00031080 & 0xFFFF) # ori $t1, $t1, 0x1080
+/* 001000 80000400 3C088006 */  lui   $t0, %hi(_bssSegmentStart) 
+/* 001004 80000404 3C090003 */  lui   $t1, %hi(_bssSegmentSize) # lui $t1, 3
+/* 001008 80000408 2508D2E0 */  addiu $t0, %lo(_bssSegmentStart) # addiu $t0, $t0, -0x2d20
+/* 00100C 8000040C 35291080 */  ori   $t1, %lo(_bssSegmentSize) # ori $t1, $t1, 0x1080
 .L80000410:
 /* 001010 80000410 2129FFF8 */  addi  $t1, $t1, -8
 /* 001014 80000414 AD000000 */  sw    $zero, ($t0)
