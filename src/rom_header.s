@@ -18,4 +18,7 @@
 .ifdef VERSION_JP
 .ascii "J"        # country
 .endif
+.ifdef VERSION_EU
+.ascii "P"        # country
+.endif
 .byte  0x00       # version

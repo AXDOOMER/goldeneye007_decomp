@@ -115,7 +115,7 @@ OBJECTS := $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(OBSEGMENT) $(ROMOBJECTS)
 INCLUDE := -I . -I include -I include/libultra -I src -I src/game -I src/rarezip
 
 CC := $(QEMU_IRIX) -silent -L $(IRIX_ROOT) $(IRIX_ROOT)/usr/bin/cc
-CFLAGS := -Wo,-loopunroll,0 -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821 -signed $(INCLUDE) -mips2 $(LCDEFS)
+CFLAGS := -Wo,-loopunroll,0 -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838 -signed $(INCLUDE) -mips2 $(LCDEFS)
 
 LD := $(TOOLCHAIN)ld
 LD_SCRIPT := ge007.$(COUNTRYCODE).ld
@@ -161,7 +161,7 @@ $(BUILD_DIR)/assets/ramrom/%.o: assets/ramrom/%.s
 $(BUILD_DIR)/assets/font/%.o: assets/font/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
-$(BUILD_DIR)/assets/obseg/%.o: assets/obseg/%.s
+$(BUILD_DIR)/assets/obseg/%.o: assets/obseg/%.s $(OBSEG_RZ)
 	$(AS) $(ASFLAGS) -o $@ $<
 
 $(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin
@@ -178,7 +178,7 @@ $(BUILD_DIR)/src/%.o: src/%.c
 $(BUILD_DIR)/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS)
 	
 
-$(APPELF): $(ULTRAOBJECTS) $(HEADEROBJECTS) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS)
+$(APPELF): $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS)
 	$(LD) $(LDFLAGS) -o $@ 
 
 $(APPBIN): $(APPELF)

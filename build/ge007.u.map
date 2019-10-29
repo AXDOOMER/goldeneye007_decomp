@@ -15957,11 +15957,12 @@ Linker script and memory map
  build/u/src/sprintf.o(.data)
  build/u/src/pi.o(.data)
  build/u/src/vi.o(.data)
- .data          0x0000000080024500      0xaa0 build/u/src/vi.o
+ .data          0x0000000080024500       0x20 build/u/src/vi.o
                 0x0000000080024500                ptr_vi_c_debug_debug_notice_list
-                0x0000000080024518                start_resource
+                0x0000000080024518                enddl_80024518
  build/u/src/debugmenu.o(.data)
- .data          0x0000000080024fa0     0x1920 build/u/src/debugmenu.o
+ .data          0x0000000080024520     0x23a0 build/u/src/debugmenu.o
+                0x0000000080024520                image_resource
                 0x0000000080024fa0                debug_menu_x_pos_offset
                 0x0000000080024fa4                debug_menu_y_pos_offset
                 0x0000000080024fa8                debug_menu_x_text_pos
