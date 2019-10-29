@@ -34,6 +34,7 @@ s32 D_8004836C = 0;
 s32 controls_locked_flag = 0;
 //D:80048374
 s32 clock_timer = 0;
+#ifdef VERSION_US
 //D:80048378
 s32 global_timer_delta = 0;
 //D:8004837C
@@ -50,8 +51,26 @@ s32 D_8004838C = 0;
 s32 D_80048390 = 0;
 //D:80048394
 s32 D_80048394 = 0;
+#endif
 #ifdef VERSION_JP
 u32 D_jpunk = 0;
+
+//D:8004837C
+s32 global_timer = 0;
+//D:80048380
+s32 D_80048380 = 0;
+s32 global_timer_delta = 0;
+//D:80048384
+s32 difficulty_0 = 0;
+//D:80048388
+s32 D_80048388 = 0;
+//D:8004838C
+s32 D_8004838C = 0;
+//D:80048390
+s32 D_80048390 = 0;
+//D:80048394
+s32 D_80048394 = 0;
+
 #endif
 //D:80048398
 s32 mp_time = 0x8CA0;

@@ -1971,8 +1971,8 @@ glabel sub_GAME_7F01FC10
 /* 05478C 7F01FC5C 1721002C */  bne   $t9, $at, .L7F01FD10
 /* 054790 7F01FC60 00000000 */   nop   
 /* 054794 7F01FC64 C6020038 */  lwc1  $f2, 0x38($s0)
-/* 054798 7F01FC68 3C028005 */  lui   $v0, %hi(global_timer_delta)
-/* 05479C 7F01FC6C 24428378 */  addiu $v0, %lo(global_timer_delta) # addiu $v0, $v0, -0x7c88
+/* 054798 7F01FC68 3C028005 */  lui   $v0, %hi(D_jpunk)
+/* 05479C 7F01FC6C 24428378 */  addiu $v0, %lo(D_jpunk) # addiu $v0, $v0, -0x7c88
 /* 0547A0 7F01FC70 4602603C */  c.lt.s $f12, $f2
 /* 0547A4 7F01FC74 00000000 */  nop   
 /* 0547A8 7F01FC78 45000025 */  bc1f  .L7F01FD10
