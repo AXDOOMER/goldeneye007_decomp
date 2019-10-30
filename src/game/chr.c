@@ -1622,8 +1622,7 @@ glabel D_80051D84
 .word 0x3f80a3d7 /*1.005*/
 glabel D_80051D88
 .word 0x41aa6666 /*21.299999*/
-glabel D_80051D8C
-.word 0x0
+
 .text
 glabel sub_GAME_7F01FC10
 /* 054740 7F01FC10 27BDFFC8 */  addiu $sp, $sp, -0x38
@@ -1945,7 +1944,7 @@ glabel D_80051D84
 .word 0x3f80a3d7 /*1.005*/
 glabel D_80051D88
 .word 0x41aa6666 /*21.299999*/
-glabel D_80051D8C
+
 /*.word 0x0*/
 .text
 glabel sub_GAME_7F01FC10

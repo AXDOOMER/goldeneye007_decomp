@@ -10364,7 +10364,7 @@ glabel __osPiDevMgr.dma
 glabel __osPiDevMgr.edma
 .word 0
 
-glabel D_800277AC
+
 glabel __osPiTable
 .word 0
 .section .bss
@@ -28695,14 +28695,14 @@ glabel osLeoDiskInit
 /* 020488 7001F888 AF380030 */   sw    $t8, %lo(PI_BSD_DOM2_RLS_REG)($t9)
 /* 02048C 7001F88C 0C00617C */  jal   __osDisableInt
 /* 020490 7001F890 00000000 */   nop   
-/* 020494 7001F894 3C088002 */  lui   $t0, %hi(D_800277AC) 
-/* 020498 7001F898 8D0877AC */  lw    $t0, %lo(D_800277AC)($t0)
+/* 020494 7001F894 3C088002 */  lui   $t0, %hi(__osPiTable) 
+/* 020498 7001F898 8D0877AC */  lw    $t0, %lo(__osPiTable)($t0)
 /* 02049C 7001F89C 3C018007 */  lui   $at, %hi(LeoDiskHandle)
 /* 0204A0 7001F8A0 3C098007 */  lui   $t1, %hi(LeoDiskHandle) 
 /* 0204A4 7001F8A4 AC289000 */  sw    $t0, %lo(LeoDiskHandle)($at)
-/* 0204A8 7001F8A8 3C018002 */  lui   $at, %hi(D_800277AC)
+/* 0204A8 7001F8A8 3C018002 */  lui   $at, %hi(__osPiTable)
 /* 0204AC 7001F8AC 25299000 */  addiu $t1, %lo(LeoDiskHandle) # addiu $t1, $t1, -0x7000
-/* 0204B0 7001F8B0 AC2977AC */  sw    $t1, %lo(D_800277AC)($at)
+/* 0204B0 7001F8B0 AC2977AC */  sw    $t1, %lo(__osPiTable)($at)
 /* 0204B4 7001F8B4 AFA2001C */  sw    $v0, 0x1c($sp)
 /* 0204B8 7001F8B8 3C018007 */  lui   $at, %hi(__osDiskHandle)
 /* 0204BC 7001F8BC AC299074 */  sw    $t1, %lo(__osDiskHandle)($at)

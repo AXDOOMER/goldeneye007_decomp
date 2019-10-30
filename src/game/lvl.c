@@ -53,13 +53,13 @@ s32 D_80048390 = 0;
 s32 D_80048394 = 0;
 #endif
 #ifdef VERSION_JP
-u32 D_jpunk = 0;
 
+s32 global_timer_delta = 0;
 //D:8004837C
 s32 global_timer = 0;
 //D:80048380
 s32 D_80048380 = 0;
-s32 global_timer_delta = 0;
+u32 D_jpunk = 0;
 //D:80048384
 s32 difficulty_0 = 0;
 //D:80048388

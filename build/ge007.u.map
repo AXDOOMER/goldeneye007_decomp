@@ -16103,7 +16103,6 @@ Linker script and memory map
                 0x00000000800277a4                __osPiDevMgr.dma
                 0x00000000800277a8                __osPiDevMgr.edma
                 0x00000000800277ac                __osPiTable
-                0x00000000800277ac                D_800277AC
                 0x00000000800277b0                __osContinitialized
                 0x00000000800277c0                __osSiAccessQueueEnabled
                 0x00000000800277d0                sin_table
@@ -19247,7 +19246,6 @@ Linker script and memory map
                 0x0000000080051d80                D_80051D80
                 0x0000000080051d84                D_80051D84
                 0x0000000080051d88                D_80051D88
-                0x0000000080051d8c                D_80051D8C
  build/u/src/game/chr2.o(.rodata)
  .rodata        0x0000000080051d90      0x370 build/u/src/game/chr2.o
                 0x0000000080051d90                D_80051D90

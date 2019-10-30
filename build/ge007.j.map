@@ -16105,7 +16105,6 @@ Linker script and memory map
                 0x00000000800277e4                __osPiDevMgr.dma
                 0x00000000800277e8                __osPiDevMgr.edma
                 0x00000000800277ec                __osPiTable
-                0x00000000800277ec                D_800277AC
                 0x00000000800277f0                __osContinitialized
                 0x0000000080027800                __osSiAccessQueueEnabled
                 0x0000000080027810                sin_table
@@ -18789,10 +18788,10 @@ Linker script and memory map
                 0x000000008004839c                D_8004836C
                 0x00000000800483a0                controls_locked_flag
                 0x00000000800483a4                clock_timer
-                0x00000000800483a8                D_jpunk
+                0x00000000800483a8                global_timer_delta
                 0x00000000800483ac                global_timer
                 0x00000000800483b0                D_80048380
-                0x00000000800483b4                global_timer_delta
+                0x00000000800483b4                D_jpunk
                 0x00000000800483b8                difficulty_0
                 0x00000000800483bc                D_80048388
                 0x00000000800483c0                D_8004838C
@@ -19251,7 +19250,6 @@ Linker script and memory map
                 0x0000000080051db4                D_80051D80
                 0x0000000080051db8                D_80051D84
                 0x0000000080051dbc                D_80051D88
-                0x0000000080051dc0                D_80051D8C
  build/j/src/game/chr2.o(.rodata)
  .rodata        0x0000000080051dc0      0x370 build/j/src/game/chr2.o
                 0x0000000080051dc0                D_80051D90
