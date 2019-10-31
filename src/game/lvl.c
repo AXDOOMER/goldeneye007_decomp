@@ -2306,7 +2306,7 @@ glabel D_8005B744
 glabel D_8005B748
 .word 0x3e4ccccd /*0.2*/
 glabel D_8005B74C
-.word 0x3e8ccccd 
+.word 0x3f8ccccd 
 glabel jpD_8005B780
 .word 0x3e4ccccd /*0.2*/
 .text

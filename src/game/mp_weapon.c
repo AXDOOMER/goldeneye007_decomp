@@ -87,6 +87,7 @@ struct struct_2 type_5_stru_800490F0[] = {
 };
 
 //D:80048BB0
+#ifdef VERSION_US
 struct struct_2 type_6_stru_800490F0[] = {
     {4, 0xBF, 3.0, 1, 0x32, 1},
     {4, 0xBF, 3.0, 1, 0x32, 1},
@@ -97,8 +98,22 @@ struct struct_2 type_6_stru_800490F0[] = {
     {0x1D, 0xC7, 1.5, 7, 5, 0},
     {0x1D, 0xC7, 1.5, 7, 5, 0}
 };
+#endif
+#ifdef VERSION_JP
+struct struct_2 type_6_stru_800490F0[] = {
+    {4, 0xBF, 3.0, 1, 0x32, 1},
+    {4, 0xBF, 3.0, 1, 0x32, 1},
+    {9, 0xC3, 1.5, 1, 0x64, 1},
+    {9, 0xC3, 1.5, 1, 0x64, 1},
+    {0xD, 0xBC, 1.5, 3, 0x64, 1},
+    {0xD, 0xBC, 1.5, 3, 0x64, 1},
+    {0x1D, 0xC7, 1.5, 7, 5, 0},
+    {0x1D, 0xC7, 1.5, 7, 5, 0}
+};
+#endif
 
 //D:80048C70
+#ifdef VERSION_US
 struct struct_2 type_7_stru_800490F0[] = {
     {6, 0xCD, 3.0, 1, 0x32, 1},
     {6, 0xCD, 3.0, 1, 0x32, 1},
@@ -109,8 +124,22 @@ struct struct_2 type_7_stru_800490F0[] = {
     {0x18, 0xB9, 1.0, 0xB, 6, 1},
     {0x18, 0xB9, 1.0, 0xB, 6, 1}
 };
+#endif
+#ifdef VERSION_JP
+struct struct_2 type_7_stru_800490F0[] = {
+    {6, 0xCD, 3.0, 1, 0x32, 1},
+    {6, 0xCD, 3.0, 1, 0x32, 1},
+    {7, 0xC1, 1.5, 1, 0x64, 1},
+    {7, 0xC1, 1.5, 1, 0x64, 1},
+    {8, 0xBC, 1.5, 3, 0x64, 1},
+    {8, 0xBC, 1.5, 3, 0x64, 1},
+    {0x18, 0xB9, 1.0, 0xB, 6, 1},
+    {0x18, 0xB9, 1.0, 0xB, 6, 1}
+};
+#endif
 
 //D:80048D30
+#ifdef VERSION_US
 struct struct_2 type_8_stru_800490F0[] = {
     {4, 0xBF, 3.0, 1, 0x32, 1},
     {4, 0xBF, 3.0, 1, 0x32, 1},
@@ -121,6 +150,19 @@ struct struct_2 type_8_stru_800490F0[] = {
     {0x1B, 0xC9, 1.5, 9, 5, 0},
     {0x1B, 0xC9, 1.5, 9, 5, 0}
 };
+#endif
+#ifdef VERSION_JP
+struct struct_2 type_8_stru_800490F0[] = {
+    {4, 0xBF, 3.0, 1, 0x32, 1},
+    {4, 0xBF, 3.0, 1, 0x32, 1},
+    {9, 0xC3, 1.5, 1, 0x64, 1},
+    {9, 0xC3, 1.5, 1, 0x64, 1},
+    {0xD, 0xBC, 1.5, 3, 0x64, 1},
+    {0xD, 0xBC, 1.5, 3, 0x64, 1},
+    {0x1B, 0xC9, 1.5, 9, 5, 0},
+    {0x1B, 0xC9, 1.5, 9, 5, 0}
+};
+#endif
 
 //D:80048DF0 
 struct struct_2 type_9_stru_800490F0[] = {
