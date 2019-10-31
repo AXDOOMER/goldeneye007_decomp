@@ -9344,8 +9344,8 @@ glabel load_image_to_buffer
 /* 1007E0 7F0CBCB0 01AC3023 */  subu  $a2, $t5, $t4
 /* 1007E4 7F0CBCB4 24C6001F */  addiu $a2, $a2, 0x1f
 /* 1007E8 7F0CBCB8 2401FFF8 */  li    $at, -8
-/* 1007EC 7F0CBCBC 3C0F008F */  lui   $t7, %hi(0x008F7DF0) # $t7, 0x8f
-/* 1007F0 7F0CBCC0 25EF7DF0 */  addiu $t7, %lo(0x008F7DF0) # addiu $t7, $t7, 0x7df0
+/* 1007EC 7F0CBCBC 3C0F008F */  lui   $t7, %hi(_imagesSegmentRomStart) # $t7, 0x8f
+/* 1007F0 7F0CBCC0 25EF7DF0 */  addiu $t7, %lo(_imagesSegmentRomStart) # addiu $t7, $t7, 0x7df0
 /* 1007F4 7F0CBCC4 01817024 */  and   $t6, $t4, $at
 /* 1007F8 7F0CBCC8 0006C102 */  srl   $t8, $a2, 4
 /* 1007FC 7F0CBCCC 00183100 */  sll   $a2, $t8, 4
