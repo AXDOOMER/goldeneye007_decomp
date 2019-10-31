@@ -18788,10 +18788,10 @@ Linker script and memory map
                 0x000000008004839c                D_8004836C
                 0x00000000800483a0                controls_locked_flag
                 0x00000000800483a4                clock_timer
-                0x00000000800483a8                global_timer_delta
+                0x00000000800483a8                D_jpunk
                 0x00000000800483ac                global_timer
                 0x00000000800483b0                D_80048380
-                0x00000000800483b4                D_jpunk
+                0x00000000800483b4                global_timer_delta
                 0x00000000800483b8                difficulty_0
                 0x00000000800483bc                D_80048388
                 0x00000000800483c0                D_8004838C
@@ -20456,6 +20456,7 @@ Linker script and memory map
                 0x000000008005b774                D_8005B744
                 0x000000008005b778                D_8005B748
                 0x000000008005b77c                D_8005B74C
+                0x000000008005b780                jpD_8005B780
  build/j/src/game/lvl_2.o(.rodata)
  .rodata        0x000000008005b790       0x40 build/j/src/game/lvl_2.o
                 0x000000008005b790                aReplayDemo_D

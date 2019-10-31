@@ -42,24 +42,16 @@ s32 global_timer = 0;
 //D:80048380
 s32 D_80048380 = 0;
 //D:80048384
-s32 difficulty_0 = 0;
-//D:80048388
-s32 D_80048388 = 0;
-//D:8004838C
-s32 D_8004838C = 0;
-//D:80048390
-s32 D_80048390 = 0;
-//D:80048394
-s32 D_80048394 = 0;
 #endif
 #ifdef VERSION_JP
-
-s32 global_timer_delta = 0;
+u32 D_jpunk = 0;
 //D:8004837C
 s32 global_timer = 0;
 //D:80048380
 s32 D_80048380 = 0;
-u32 D_jpunk = 0;
+s32 global_timer_delta = 0;
+#endif
+
 //D:80048384
 s32 difficulty_0 = 0;
 //D:80048388
@@ -70,8 +62,6 @@ s32 D_8004838C = 0;
 s32 D_80048390 = 0;
 //D:80048394
 s32 D_80048394 = 0;
-
-#endif
 //D:80048398
 s32 mp_time = 0x8CA0;
 //D:8004839C
@@ -712,8 +702,8 @@ glabel stage_load
 /* 0F31FC 7F0BE68C AC2083A0 */  sw    $zero, %lo(controls_locked_flag)($at)
 /* 0F3200 7F0BE690 263183A4 */  addiu $s1, %lo(clock_timer) # addiu $s1, $s1, -0x7c5c
 /* 0F3204 7F0BE694 AE220000 */  sw    $v0, ($s1)
-/* 0F3208 7F0BE698 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
-/* 0F320C 7F0BE69C E42C83A8 */  swc1  $f12, %lo(global_timer_delta)($at)
+/* 0F3208 7F0BE698 3C018005 */  lui   $at, %hi(D_jpunk) # $at, 0x8005
+/* 0F320C 7F0BE69C E42C83A8 */  swc1  $f12, %lo(D_jpunk)($at)
 /* 0F3210 7F0BE6A0 3C018005 */  lui   $at, %hi(D_80048380) # $at, 0x8005
 /* 0F3214 7F0BE6A4 AC2083B0 */  sw    $zero, %lo(D_80048380)($at)
 /* 0F3218 7F0BE6A8 3C018005 */  lui   $at, %hi(global_timer) # $at, 0x8005
@@ -779,7 +769,7 @@ glabel stage_load
 .Ljp7F0BE790:
 /* 0F3300 7F0BE790 3C048005 */  lui   $a0, %hi(current_stage_to_load) # $a0, 0x8005
 /* 0F3304 7F0BE794 8C848394 */  lw    $a0, %lo(current_stage_to_load)($a0)
-/* 0F3308 7F0BE798 3C018007 */  li    $at, %hi(newcheatunlocked)
+/* 0F3308 7F0BE798 3C018007 */  lui    $at, %hi(newcheatunlocked)
 /* 0F330C 7F0BE79C AC2097D0 */  sw    $zero, %lo(newcheatunlocked)($at)
 /* 0F3310 7F0BE7A0 2401005A */  li    $at, 90
 /* 0F3314 7F0BE7A4 1081001C */  beq   $a0, $at, .Ljp7F0BE818
@@ -2317,6 +2307,7 @@ glabel D_8005B748
 .word 0x3e4ccccd /*0.2*/
 glabel D_8005B74C
 .word 0x3e8ccccd 
+glabel jpD_8005B780
 .word 0x3e4ccccd /*0.2*/
 .text
 glabel sub_GAME_7F0BE8D0
@@ -2476,8 +2467,8 @@ glabel sub_GAME_7F0BE8D0
 /* 0F4270 7F0BF700 10000005 */  b     .Ljp7F0BF718
 /* 0F4274 7F0BF704 E4200AEC */   swc1  $f0, %lo(difficulty)($at)
 .Ljp7F0BF708:
-/* 0F4278 7F0BF708 3C018006 */  lui   $at, %hi(D_8005B74C) # $at, 0x8006
-/* 0F427C 7F0BF70C C426B780 */  lwc1  $f6, %lo(D_8005B74C)($at)
+/* 0F4278 7F0BF708 3C018006 */  lui   $at, %hi(jpD_8005B780) # $at, 0x8006
+/* 0F427C 7F0BF70C C426B780 */  lwc1  $f6, %lo(jpD_8005B780)($at)
 /* 0F4280 7F0BF710 3C018003 */  lui   $at, %hi(difficulty) # $at, 0x8003
 /* 0F4284 7F0BF714 E4260AEC */  swc1  $f6, %lo(difficulty)($at)
 .Ljp7F0BF718:
@@ -3441,8 +3432,8 @@ glabel manage_mp_game
 .Ljp7F0BF814:
 /* 0F4384 7F0BF814 3C028005 */  lui   $v0, %hi(clock_timer) # $v0, 0x8005
 /* 0F4388 7F0BF818 8C4283A4 */  lw    $v0, %lo(clock_timer)($v0)
-/* 0F438C 7F0BF81C 3C038005 */  lui   $v1, %hi(D_800483A8) # $v1, 0x8005
-/* 0F4390 7F0BF820 246383A8 */  addiu $v1, %lo(D_800483A8) # addiu $v1, $v1, -0x7c58
+/* 0F438C 7F0BF81C 3C038005 */  lui   $v1, %hi(D_jpunk) # $v1, 0x8005
+/* 0F4390 7F0BF820 246383A8 */  addiu $v1, %lo(D_jpunk) # addiu $v1, $v1, -0x7c58
 /* 0F4394 7F0BF824 44822000 */  mtc1  $v0, $f4
 /* 0F4398 7F0BF828 3C048005 */  lui   $a0, %hi(global_timer) # $a0, 0x8005
 /* 0F439C 7F0BF82C 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
