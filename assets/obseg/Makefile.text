@@ -1,4 +1,7 @@
 #text
+$(BUILD_DIR)/$(OBSEG_DIR)/text/%.rz: $(OBSEG_DIR)/text/$(COUNTRYCODE)/%.bin
+	$(RZ_COMP) $< $@
+
 $(BUILD_DIR)/$(OBSEG_DIR)/text/%.rz: $(OBSEG_DIR)/text/%.bin
 	$(RZ_COMP) $< $@
 

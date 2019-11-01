@@ -113,7 +113,6 @@ struct struct_2 type_6_stru_800490F0[] = {
 #endif
 
 //D:80048C70
-#ifdef VERSION_US
 struct struct_2 type_7_stru_800490F0[] = {
     {6, 0xCD, 3.0, 1, 0x32, 1},
     {6, 0xCD, 3.0, 1, 0x32, 1},
@@ -124,19 +123,6 @@ struct struct_2 type_7_stru_800490F0[] = {
     {0x18, 0xB9, 1.0, 0xB, 6, 1},
     {0x18, 0xB9, 1.0, 0xB, 6, 1}
 };
-#endif
-#ifdef VERSION_JP
-struct struct_2 type_7_stru_800490F0[] = {
-    {6, 0xCD, 3.0, 1, 0x32, 1},
-    {6, 0xCD, 3.0, 1, 0x32, 1},
-    {7, 0xC1, 1.5, 1, 0x64, 1},
-    {7, 0xC1, 1.5, 1, 0x64, 1},
-    {8, 0xBC, 1.5, 3, 0x64, 1},
-    {8, 0xBC, 1.5, 3, 0x64, 1},
-    {0x18, 0xB9, 1.0, 0xB, 6, 1},
-    {0x18, 0xB9, 1.0, 0xB, 6, 1}
-};
-#endif
 
 //D:80048D30
 #ifdef VERSION_US

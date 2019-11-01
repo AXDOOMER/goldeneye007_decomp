@@ -11,12 +11,16 @@ baserom.u.z64
 ```
 followed by
 ```
-./extract_baserom.sh && make
+./extract_baserom.u.sh && make
+```
+For J support also place a baserom.j.z64 in root and run:
+```
+./extract_baserom.u.sh && ./extract_diff.j.sh && make VERSION=JP
 ```
 
-If you are upgrading from an old repo, run
+If you are upgrading from an old repo, run:
 ```
-./clean_baserom.sh && ./extract_baserom.sh && make clean && make
+./clean_baserom.sh && ./extract_baserom.u.sh && make clean && make
 ```
 
 The extract and clean scripts support switches:
