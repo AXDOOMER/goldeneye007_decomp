@@ -3102,7 +3102,7 @@ labels:
    - [0x7f0cc7d4, "sub_GAME_7F0CBAF4"]
    - [0x7f0cc7ec, "sub_GAME_7F0CBB0C"]
    - [0x7f0cc844, "sub_GAME_7F0CBB64"]
-   - [0x7f0cc854, "sub_GAME_7F0CBB74"]
+   - [0x7f0cc854, "check_load_image_to_buffer"]
    - [0x7f0cc8f8, "load_image_to_buffer"]
    - [0x7f0ccb30, "sub_GAME_7F0CBE50"]
    - [0x7f0ccbc8, "sub_GAME_7F0CBEE8"]

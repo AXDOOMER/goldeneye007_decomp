@@ -79,7 +79,7 @@ glabel display_red_blue_on_radar
 /* 0FAC9C 7F0C616C 27A40088 */  addiu $a0, $sp, 0x88
 /* 0FACA0 7F0C6170 2B210003 */  slti  $at, $t9, 3
 /* 0FACA4 7F0C6174 14200006 */  bnez  $at, .L7F0C6190
-/* 0FACA8 7F0C6178 3C058009 */   lui   $a1, %hi(dword_CODE_bss_8008D12C)
+/* 0FACA8 7F0C6178 3C058009 */   lui   $a1, %hi(mpradarimages)
 /* 0FACAC 7F0C617C 8FA90070 */  lw    $t1, 0x70($sp)
 /* 0FACB0 7F0C6180 312A0001 */  andi  $t2, $t1, 1
 /* 0FACB4 7F0C6184 55400003 */  bnezl $t2, .L7F0C6194
@@ -89,7 +89,7 @@ glabel display_red_blue_on_radar
 /* 0FACC0 7F0C6190 240B0002 */  li    $t3, 2
 .L7F0C6194:
 /* 0FACC4 7F0C6194 AFAB0010 */  sw    $t3, 0x10($sp)
-/* 0FACC8 7F0C6198 8CA5D12C */  lw    $a1, %lo(dword_CODE_bss_8008D12C)($a1)
+/* 0FACC8 7F0C6198 8CA5D12C */  lw    $a1, %lo(mpradarimages)($a1)
 /* 0FACCC 7F0C619C 24060002 */  li    $a2, 2
 /* 0FACD0 7F0C61A0 0FC1DB5A */  jal   likely_generate_DL_for_image_declaration
 /* 0FACD4 7F0C61A4 00003825 */   move  $a3, $zero

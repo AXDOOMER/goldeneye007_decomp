@@ -2546,22 +2546,22 @@ glabel load_draw_selected_icon_folder_select
 /* 03EA48 7F009F18 AFB00040 */  sw    $s0, 0x40($sp)
 /* 03EA4C 7F009F1C 14400005 */  bnez  $v0, .L7F009F34
 /* 03EA50 7F009F20 AFA40068 */   sw    $a0, 0x68($sp)
-/* 03EA54 7F009F24 3C108009 */  lui   $s0, %hi(imgcall)
-/* 03EA58 7F009F28 8E10D114 */  lw    $s0, %lo(imgcall)($s0)
+/* 03EA54 7F009F24 3C108009 */  lui   $s0, %hi(crosshairimage)
+/* 03EA58 7F009F28 8E10D114 */  lw    $s0, %lo(crosshairimage)($s0)
 /* 03EA5C 7F009F2C 1000000D */  b     .L7F009F64
 /* 03EA60 7F009F30 AFB00054 */   sw    $s0, 0x54($sp)
 .L7F009F34:
 /* 03EA64 7F009F34 24010001 */  li    $at, 1
 /* 03EA68 7F009F38 14410004 */  bne   $v0, $at, .L7F009F4C
-/* 03EA6C 7F009F3C 3C108009 */   lui   $s0, %hi(dword_CODE_bss_8008D128)
-/* 03EA70 7F009F40 8E10D128 */  lw    $s0, %lo(dword_CODE_bss_8008D128)($s0)
+/* 03EA6C 7F009F3C 3C108009 */   lui   $s0, %hi(mainfolderimages)
+/* 03EA70 7F009F40 8E10D128 */  lw    $s0, %lo(mainfolderimages)($s0)
 /* 03EA74 7F009F44 10000007 */  b     .L7F009F64
 /* 03EA78 7F009F48 AFB00054 */   sw    $s0, 0x54($sp)
 .L7F009F4C:
 /* 03EA7C 7F009F4C 24010002 */  li    $at, 2
 /* 03EA80 7F009F50 14410004 */  bne   $v0, $at, .L7F009F64
-/* 03EA84 7F009F54 3C108009 */   lui   $s0, %hi(dword_CODE_bss_8008D128)
-/* 03EA88 7F009F58 8E10D128 */  lw    $s0, %lo(dword_CODE_bss_8008D128)($s0)
+/* 03EA84 7F009F54 3C108009 */   lui   $s0, %hi(mainfolderimages)
+/* 03EA88 7F009F58 8E10D128 */  lw    $s0, %lo(mainfolderimages)($s0)
 /* 03EA8C 7F009F5C 2610000C */  addiu $s0, $s0, 0xc
 /* 03EA90 7F009F60 AFB00054 */  sw    $s0, 0x54($sp)
 .L7F009F64:
@@ -6540,53 +6540,53 @@ loop_24:
     arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_ret_5, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, -1, get_video2_settings_txtClipH(), 0, 0);
     spAC = 225.0f;
     spB0 = (f32) D_80051A28;
-    temp_f10 = (f32) (u32) dword_CODE_bss_8008D128->unk4 * 0.5f;
+    temp_f10 = (f32) (u32) mainfolderimages->unk4 * 0.5f;
     spA4 = temp_f10;
-    spA8 = (f32) ((f32) (u32) dword_CODE_bss_8008D128->unk5 * 0.5f);
-    likely_generate_DL_for_image_declaration(&arg0, dword_CODE_bss_8008D128, 4, 0, 0);
-    display_image_at_on_screen_coord(&arg0, &spAC, &spA4, dword_CODE_bss_8008D128->unk4, (?32) dword_CODE_bss_8008D128->unk5, 0, 0, 1, 0xff, 0xff, 0xff, 0xff, (s32) (0 < dword_CODE_bss_8008D128->unk6), 0);
+    spA8 = (f32) ((f32) (u32) mainfolderimages->unk5 * 0.5f);
+    likely_generate_DL_for_image_declaration(&arg0, mainfolderimages, 4, 0, 0);
+    display_image_at_on_screen_coord(&arg0, &spAC, &spA4, mainfolderimages->unk4, (?32) mainfolderimages->unk5, 0, 0, 1, 0xff, 0xff, 0xff, 0xff, (s32) (0 < mainfolderimages->unk6), 0);
     folder_option_COPY_left_bound.unk0 = (f32) (spAC - temp_f10);
     folder_option_COPY_left_bound.unk4 = (f32) (spB0 - spA8);
     folder_option_COPY_left_bound.unkC = (f32) (spA8 + spB0);
     sp9C = (f32) D_80051A2C;
     spA0 = (f32) D_80051A30;
-    temp_f6 = (f32) dword_CODE_bss_8008D128->unk10;
+    temp_f6 = (f32) mainfolderimages->unk10;
     phi_f6 = temp_f6;
-    if (dword_CODE_bss_8008D128->unk10 < 0)
+    if (mainfolderimages->unk10 < 0)
     {
         phi_f6 = temp_f6 + 4294967296.0f;
     }
     sp94 = (f32) (phi_f6 * 0.5f);
-    temp_f18 = (f32) dword_CODE_bss_8008D128->unk11;
+    temp_f18 = (f32) mainfolderimages->unk11;
     phi_f18 = temp_f18;
-    if (dword_CODE_bss_8008D128->unk11 < 0)
+    if (mainfolderimages->unk11 < 0)
     {
         phi_f18 = temp_f18 + 4294967296.0f;
     }
     sp98 = (f32) (phi_f18 * 0.5f);
-    likely_generate_DL_for_image_declaration(&arg0, dword_CODE_bss_8008D128 + 0xc, 4, 0, 0);
-    display_image_at_on_screen_coord(&arg0, &sp9C, &sp94, dword_CODE_bss_8008D128->unk10, (?32) dword_CODE_bss_8008D128->unk11, 0, 0, 1, 0xff, 0xff, 0xff, 0xff, (s32) (0 < dword_CODE_bss_8008D128->unk12), 0);
+    likely_generate_DL_for_image_declaration(&arg0, mainfolderimages + 0xc, 4, 0, 0);
+    display_image_at_on_screen_coord(&arg0, &sp9C, &sp94, mainfolderimages->unk10, (?32) mainfolderimages->unk11, 0, 0, 1, 0xff, 0xff, 0xff, 0xff, (s32) (0 < mainfolderimages->unk12), 0);
     folder_option_ERASE_left_bound.unk0 = (f32) (sp9C - sp94);
     folder_option_ERASE_left_bound.unk4 = (f32) (spA0 - sp98);
     folder_option_ERASE_left_bound.unkC = (f32) (sp98 + spA0);
     sp8C = 110.0f;
     sp90 = (f32) D_80051A34;
-    temp_f6_2 = (f32) dword_CODE_bss_8008D128->unk1C;
+    temp_f6_2 = (f32) mainfolderimages->unk1C;
     phi_f6_2 = temp_f6_2;
-    if (dword_CODE_bss_8008D128->unk1C < 0)
+    if (mainfolderimages->unk1C < 0)
     {
         phi_f6_2 = temp_f6_2 + 4294967296.0f;
     }
     sp84 = (f32) (phi_f6_2 * 0.5f);
-    temp_f10_2 = (f32) dword_CODE_bss_8008D128->unk1D;
+    temp_f10_2 = (f32) mainfolderimages->unk1D;
     phi_f10 = temp_f10_2;
-    if (dword_CODE_bss_8008D128->unk1D < 0)
+    if (mainfolderimages->unk1D < 0)
     {
         phi_f10 = temp_f10_2 + 4294967296.0f;
     }
     sp88 = (f32) (phi_f10 * 0.5f);
-    likely_generate_DL_for_image_declaration(&arg0, dword_CODE_bss_8008D128 + 0x18, 4, 0, 0);
-    display_image_at_on_screen_coord(&arg0, &sp8C, &sp84, dword_CODE_bss_8008D128->unk1C, (?32) dword_CODE_bss_8008D128->unk1D, 0, 0, 1, 0xff, 0xff, 0xff, 0xff, (s32) (0 < dword_CODE_bss_8008D128->unk1E), 0);
+    likely_generate_DL_for_image_declaration(&arg0, mainfolderimages + 0x18, 4, 0, 0);
+    display_image_at_on_screen_coord(&arg0, &sp8C, &sp84, mainfolderimages->unk1C, (?32) mainfolderimages->unk1D, 0, 0, 1, 0xff, 0xff, 0xff, 0xff, (s32) (0 < mainfolderimages->unk1E), 0);
     if (folder_selected_for_deletion < 0)
     {
         arg0 = load_draw_selected_icon_folder_select(arg0);
@@ -7308,9 +7308,9 @@ glabel constructor_menu05_fileselect
 /* 0419F4 7F00CEC4 468042A0 */  cvt.s.w $f10, $f8
 /* 0419F8 7F00CEC8 44818000 */  mtc1  $at, $f16
 /* 0419FC 7F00CECC 2673ABD4 */  addiu $s3, %lo(folder_option_ERASE_left_bound) # addiu $s3, $s3, -0x542c
-/* 041A00 7F00CED0 3C118009 */  lui   $s1, %hi(dword_CODE_bss_8008D128)
+/* 041A00 7F00CED0 3C118009 */  lui   $s1, %hi(mainfolderimages)
 /* 041A04 7F00CED4 3C018005 */  lui   $at, %hi(D_80051A28)
-/* 041A08 7F00CED8 2631D128 */  addiu $s1, %lo(dword_CODE_bss_8008D128) # addiu $s1, $s1, -0x2ed8
+/* 041A08 7F00CED8 2631D128 */  addiu $s1, %lo(mainfolderimages) # addiu $s1, $s1, -0x2ed8
 /* 041A0C 7F00CEDC E66A0008 */  swc1  $f10, 8($s3)
 /* 041A10 7F00CEE0 C4321A28 */  lwc1  $f18, %lo(D_80051A28)($at)
 /* 041A14 7F00CEE4 8E300000 */  lw    $s0, ($s1)
@@ -10992,7 +10992,7 @@ loop_37:
         if (check_if_stage_completed_on_difficulty(briefingpage, phi_s1_2) == 3)
         {
             sp90 = 280.0f;
-            temp_s0 = dword_CODE_bss_8008D128 + 0x30;
+            temp_s0 = mainfolderimages + 0x30;
             sp94 = (f32) ((((phi_s1_2 * 0x10) - phi_s1_2) * 2) + 0xba);
             temp_f16 = (f32) temp_s0->unk4;
             phi_f16 = temp_f16;
@@ -11327,8 +11327,8 @@ glabel constructor_menu08_difficulty
 /* 043D0C 7F00F1DC 3C01438C */  li    $at, 0x438C0000 # 280.000000
 /* 043D10 7F00F1E0 44812000 */  mtc1  $at, $f4
 /* 043D14 7F00F1E4 46803220 */  cvt.s.w $f8, $f6
-/* 043D18 7F00F1E8 3C108009 */  lui   $s0, %hi(dword_CODE_bss_8008D128)
-/* 043D1C 7F00F1EC 8E10D128 */  lw    $s0, %lo(dword_CODE_bss_8008D128)($s0)
+/* 043D18 7F00F1E8 3C108009 */  lui   $s0, %hi(mainfolderimages)
+/* 043D1C 7F00F1EC 8E10D128 */  lw    $s0, %lo(mainfolderimages)($s0)
 /* 043D20 7F00F1F0 E7A40090 */  swc1  $f4, 0x90($sp)
 /* 043D24 7F00F1F4 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
 /* 043D28 7F00F1F8 26100030 */  addiu $s0, $s0, 0x30
@@ -15563,26 +15563,26 @@ void init_menu0f_mpcharsel(void)
     phi_s1 = &mp_chr_setup;
 loop_1:
     temp_lo = (phi_s1->unk3 * 4) * 0xc;
-    temp_v0 = dword_CODE_bss_8008D130 + temp_lo;
+    temp_v0 = mpcharselimages + temp_lo;
     phi_v0 = temp_v0;
     if ((u32) *temp_v0 < 0xbb8U)
     {
         sub_GAME_7F0CBEE8(*temp_v0, 0, *temp_v0);
-        phi_v0 = dword_CODE_bss_8008D130 + temp_lo;
+        phi_v0 = mpcharselimages + temp_lo;
     }
     temp_v1 = phi_v0->unkC;
     phi_v0_2 = phi_v0;
     if (temp_v1 < 0xbb8U)
     {
         sub_GAME_7F0CBEE8(temp_v1, 0);
-        phi_v0_2 = dword_CODE_bss_8008D130 + temp_lo;
+        phi_v0_2 = mpcharselimages + temp_lo;
     }
     temp_v1_2 = phi_v0_2->unk18;
     phi_v0_3 = phi_v0_2;
     if (temp_v1_2 < 0xbb8U)
     {
         sub_GAME_7F0CBEE8(temp_v1_2, 0);
-        phi_v0_3 = dword_CODE_bss_8008D130 + temp_lo;
+        phi_v0_3 = mpcharselimages + temp_lo;
     }
     temp_v1_3 = phi_v0_3->unk24;
     if (temp_v1_3 < 0xbb8U)
@@ -15678,13 +15678,13 @@ glabel init_menu0f_mpcharsel
 /* 0467A4 7F011C74 AFB30024 */  sw    $s3, 0x24($sp)
 /* 0467A8 7F011C78 3C018003 */  lui   $at, %hi(tab_1_highlight)
 /* 0467AC 7F011C7C 3C118003 */  lui   $s1, %hi(mp_chr_setup)
-/* 0467B0 7F011C80 3C128009 */  lui   $s2, %hi(dword_CODE_bss_8008D130)
+/* 0467B0 7F011C80 3C128009 */  lui   $s2, %hi(mpcharselimages)
 /* 0467B4 7F011C84 3C148003 */  lui   $s4, %hi(MP_handicap_table)
 /* 0467B8 7F011C88 AFBF002C */  sw    $ra, 0x2c($sp)
 /* 0467BC 7F011C8C AFB00018 */  sw    $s0, 0x18($sp)
 /* 0467C0 7F011C90 AC20A8DC */  sw    $zero, %lo(tab_1_highlight)($at)
 /* 0467C4 7F011C94 2694B498 */  addiu $s4, %lo(MP_handicap_table) # addiu $s4, $s4, -0x4b68
-/* 0467C8 7F011C98 2652D130 */  addiu $s2, %lo(dword_CODE_bss_8008D130) # addiu $s2, $s2, -0x2ed0
+/* 0467C8 7F011C98 2652D130 */  addiu $s2, %lo(mpcharselimages) # addiu $s2, $s2, -0x2ed0
 /* 0467CC 7F011C9C 2631B198 */  addiu $s1, %lo(mp_chr_setup) # addiu $s1, $s1, -0x4e68
 /* 0467D0 7F011CA0 2413000C */  li    $s3, 12
 /* 0467D4 7F011CA4 92230003 */  lbu   $v1, 3($s1)
@@ -16449,7 +16449,7 @@ loop_2:
     temp_t2->unk4 = spCC;
     temp_s5 = &arg0;
     temp_s2 = (arg5 * 0xc) + &mp_chr_setup;
-    likely_generate_DL_for_image_declaration(temp_s5, (((temp_s2->unk3 * 4) * 0xc) + dword_CODE_bss_8008D130) + 0x18, 2, 0, 2);
+    likely_generate_DL_for_image_declaration(temp_s5, (((temp_s2->unk3 * 4) * 0xc) + mpcharselimages) + 0x18, 2, 0, 2);
     temp_t8 = arg0;
     arg0 = (s32) (temp_t8 + 8);
     temp_t8->unk4 = 0xa28;
@@ -16458,7 +16458,7 @@ loop_2:
     arg0 = (s32) (temp_t3 + 8);
     temp_t3->unk4 = 0x280a32;
     temp_t3->unk0 = 0xbf000000;
-    likely_generate_DL_for_image_declaration(temp_s5, (((temp_s2->unk3 * 4) * 0xc) + dword_CODE_bss_8008D130) + 0x24, 2, 0, 2);
+    likely_generate_DL_for_image_declaration(temp_s5, (((temp_s2->unk3 * 4) * 0xc) + mpcharselimages) + 0x24, 2, 0, 2);
     temp_t3_2 = arg0;
     arg0 = (s32) (temp_t3_2 + 8);
     temp_t3_2->unk4 = 0x141e3c;
@@ -16467,7 +16467,7 @@ loop_2:
     arg0 = (s32) (temp_t5 + 8);
     temp_t5->unk4 = 0x3c1e46;
     temp_t5->unk0 = 0xbf000000;
-    likely_generate_DL_for_image_declaration(temp_s5, ((temp_s2->unk3 * 4) * 0xc) + dword_CODE_bss_8008D130, 2, 0, 2);
+    likely_generate_DL_for_image_declaration(temp_s5, ((temp_s2->unk3 * 4) * 0xc) + mpcharselimages, 2, 0, 2);
     temp_t5_2 = arg0;
     arg0 = (s32) (temp_t5_2 + 8);
     temp_t5_2->unk4 = 0x505a78;
@@ -16476,7 +16476,7 @@ loop_2:
     arg0 = (s32) (temp_t7 + 8);
     temp_t7->unk4 = 0x785a82;
     temp_t7->unk0 = 0xbf000000;
-    likely_generate_DL_for_image_declaration(temp_s5, (((temp_s2->unk3 * 4) * 0xc) + dword_CODE_bss_8008D130) + 0xc, 2, 0, 2);
+    likely_generate_DL_for_image_declaration(temp_s5, (((temp_s2->unk3 * 4) * 0xc) + mpcharselimages) + 0xc, 2, 0, 2);
     temp_t7_2 = arg0;
     arg0 = (s32) (temp_t7_2 + 8);
     temp_t7_2->unk4 = 0x646e8c;
@@ -16659,8 +16659,8 @@ glabel sub_GAME_7F01231C
 /* 0470B4 7F012584 AFAC00D8 */  sw    $t4, 0xd8($sp)
 /* 0470B8 7F012588 AD4D0000 */  sw    $t5, ($t2)
 /* 0470BC 7F01258C 8FAE00CC */  lw    $t6, 0xcc($sp)
-/* 0470C0 7F012590 3C148009 */  lui   $s4, %hi(dword_CODE_bss_8008D130)
-/* 0470C4 7F012594 2694D130 */  addiu $s4, %lo(dword_CODE_bss_8008D130) # addiu $s4, $s4, -0x2ed0
+/* 0470C0 7F012590 3C148009 */  lui   $s4, %hi(mpcharselimages)
+/* 0470C4 7F012594 2694D130 */  addiu $s4, %lo(mpcharselimages) # addiu $s4, $s4, -0x2ed0
 /* 0470C8 7F012598 AD4E0004 */  sw    $t6, 4($t2)
 /* 0470CC 7F01259C 8FB800EC */  lw    $t8, 0xec($sp)
 /* 0470D0 7F0125A0 8E8D0000 */  lw    $t5, ($s4)
@@ -19726,7 +19726,7 @@ loop_1:
     temp_v0_2->unk0 = 0xba000c02;
     temp_v0_2->unk4 = 0;
     temp_s3 = &arg0;
-    temp_s0_2 = dword_CODE_bss_8008D128 + 0x3c;
+    temp_s0_2 = mainfolderimages + 0x3c;
     likely_generate_DL_for_image_declaration(temp_s3, temp_s0_2, 1, 0, 2);
     sp100 = (f32) (176.0f + 37.0f);
     sp104 = (f32) (4.0f + 100.0f);
@@ -19757,7 +19757,7 @@ loop_5:
 loop_6:
     if (phi_s1_3 < 0xc)
     {
-        temp_s0_3 = ((&multi_stage_setups + (phi_s1_3 * 0x18))->unk4 * 0xc) + dword_CODE_bss_8008D134;
+        temp_s0_3 = ((&multi_stage_setups + (phi_s1_3 * 0x18))->unk4 * 0xc) + mpstageselimages;
         likely_generate_DL_for_image_declaration(temp_s3, temp_s0_3, 1, 0, 2);
         temp_t5 = arg0;
         if (phi_s1_3 == current_mp_stage_highlighted)
@@ -19919,8 +19919,8 @@ glabel constructor_menu12_mpstage
 /* 048C44 7F014114 35EF0C02 */  ori   $t7, (0xBA000C02 & 0xFFFF) # ori $t7, $t7, 0xc02
 /* 048C48 7F014118 AC4F0000 */  sw    $t7, ($v0)
 /* 048C4C 7F01411C AC400004 */  sw    $zero, 4($v0)
-/* 048C50 7F014120 3C108009 */  lui   $s0, %hi(dword_CODE_bss_8008D128)
-/* 048C54 7F014124 8E10D128 */  lw    $s0, %lo(dword_CODE_bss_8008D128)($s0)
+/* 048C50 7F014120 3C108009 */  lui   $s0, %hi(mainfolderimages)
+/* 048C54 7F014124 8E10D128 */  lw    $s0, %lo(mainfolderimages)($s0)
 /* 048C58 7F014128 27B30138 */  addiu $s3, $sp, 0x138
 /* 048C5C 7F01412C 24180002 */  li    $t8, 2
 /* 048C60 7F014130 2610003C */  addiu $s0, $s0, 0x3c
@@ -20041,8 +20041,8 @@ glabel constructor_menu12_mpstage
 /* 048E20 7F0142F0 5020007A */  beql  $at, $zero, .L7F0144DC
 /* 048E24 7F0142F4 C7B200D8 */   lwc1  $f18, 0xd8($sp)
 /* 048E28 7F0142F8 02370019 */  multu $s1, $s7
-/* 048E2C 7F0142FC 3C0A8009 */  lui   $t2, %hi(dword_CODE_bss_8008D134) 
-/* 048E30 7F014300 8D4AD134 */  lw    $t2, %lo(dword_CODE_bss_8008D134)($t2)
+/* 048E2C 7F0142FC 3C0A8009 */  lui   $t2, %hi(mpstageselimages) 
+/* 048E30 7F014300 8D4AD134 */  lw    $t2, %lo(mpstageselimages)($t2)
 /* 048E34 7F014304 240B0002 */  li    $t3, 2
 /* 048E38 7F014308 02602025 */  move  $a0, $s3
 /* 048E3C 7F01430C 24060001 */  li    $a2, 1

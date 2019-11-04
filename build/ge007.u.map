@@ -3941,7 +3941,7 @@ Linker script and memory map
                 0x000000007f0cbaf4                sub_GAME_7F0CBAF4
                 0x000000007f0cbb0c                sub_GAME_7F0CBB0C
                 0x000000007f0cbb64                sub_GAME_7F0CBB64
-                0x000000007f0cbb74                sub_GAME_7F0CBB74
+                0x000000007f0cbb74                check_load_image_to_buffer
                 0x000000007f0cbc18                load_image_to_buffer
                 0x000000007f0cbe50                sub_GAME_7F0CBE50
                 0x000000007f0cbee8                sub_GAME_7F0CBEE8
@@ -21752,38 +21752,38 @@ Linker script and memory map
                 0x000000008008d0ac                dword_CODE_bss_8008D0AC
                 0x000000008008d0b0                globalbank_rdram_offset
                 0x000000008008d0b4                ptr_explosionDL
-                0x000000008008d0b8                image
-                0x000000008008d0bc                dword_CODE_bss_8008D0BC
-                0x000000008008d0c0                dword_CODE_bss_8008D0C0
-                0x000000008008d0c4                dword_CODE_bss_8008D0C4
-                0x000000008008d0c8                dword_CODE_bss_8008D0C8
-                0x000000008008d0cc                dword_CODE_bss_8008D0CC
-                0x000000008008d0d0                dword_CODE_bss_8008D0D0
-                0x000000008008d0d4                dword_CODE_bss_8008D0D4
-                0x000000008008d0d8                dword_CODE_bss_8008D0D8
-                0x000000008008d0dc                dword_CODE_bss_8008D0DC
-                0x000000008008d0e0                dword_CODE_bss_8008D0E0
-                0x000000008008d0e4                dword_CODE_bss_8008D0E4
-                0x000000008008d0e8                dword_CODE_bss_8008D0E8
-                0x000000008008d0ec                dword_CODE_bss_8008D0EC
-                0x000000008008d0f0                dword_CODE_bss_8008D0F0
-                0x000000008008d0f4                dword_CODE_bss_8008D0F4
-                0x000000008008d0f8                dword_CODE_bss_8008D0F8
-                0x000000008008d0fc                dword_CODE_bss_8008D0FC
-                0x000000008008d100                dword_CODE_bss_8008D100
-                0x000000008008d104                dword_CODE_bss_8008D104
-                0x000000008008d108                dword_CODE_bss_8008D108
-                0x000000008008d10c                dword_CODE_bss_8008D10C
-                0x000000008008d110                dword_CODE_bss_8008D110
-                0x000000008008d114                imgcall
-                0x000000008008d118                dword_CODE_bss_8008D118
-                0x000000008008d11c                dword_CODE_bss_8008D11C
-                0x000000008008d120                dword_CODE_bss_8008D120
-                0x000000008008d124                dword_CODE_bss_8008D124
-                0x000000008008d128                dword_CODE_bss_8008D128
-                0x000000008008d12c                dword_CODE_bss_8008D12C
-                0x000000008008d130                dword_CODE_bss_8008D130
-                0x000000008008d134                dword_CODE_bss_8008D134
+                0x000000008008d0b8                genericimage
+                0x000000008008d0bc                impactimages
+                0x000000008008d0c0                explosion_smokeimages
+                0x000000008008d0c4                scattered_explosions
+                0x000000008008d0c8                flareimage1
+                0x000000008008d0cc                flareimage2
+                0x000000008008d0d0                flareimage3
+                0x000000008008d0d4                flareimage4
+                0x000000008008d0d8                flareimage5
+                0x000000008008d0dc                ammo9mmimage
+                0x000000008008d0e0                rifleammoimage
+                0x000000008008d0e4                shotgunammoimage
+                0x000000008008d0e8                knifeammoimage
+                0x000000008008d0ec                glaunchammoimage
+                0x000000008008d0f0                rocketammoimage
+                0x000000008008d0f4                genericmineammoimage
+                0x000000008008d0f8                grenadeammoimage
+                0x000000008008d0fc                magnumammoimage
+                0x000000008008d100                goldengunammoimage
+                0x000000008008d104                remotemineammoimage
+                0x000000008008d108                timedmineammoimage
+                0x000000008008d10c                proxmineammoimage
+                0x000000008008d110                tankammoimage
+                0x000000008008d114                crosshairimage
+                0x000000008008d118                betacrosshairimage
+                0x000000008008d11c                glassoverlayimage
+                0x000000008008d120                monitorimages
+                0x000000008008d124                skywaterimages
+                0x000000008008d128                mainfolderimages
+                0x000000008008d12c                mpradarimages
+                0x000000008008d130                mpcharselimages
+                0x000000008008d134                mpstageselimages
  build/u/src/game/unk_0CC4C0.o(.bss)
  .bss           0x000000008008d140      0x210 build/u/src/game/unk_0CC4C0.o
                 0x000000008008d140                dword_CODE_bss_8008D140

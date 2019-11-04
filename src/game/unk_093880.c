@@ -2771,8 +2771,8 @@ def_7F094A38:
 /* 0CA734 7F095C04 0FC2E9CB */  jal   get_ptr_currentdata
 /* 0CA738 7F095C08 ADCF0000 */   sw    $t7, ($t6)
 /* 0CA73C 7F095C0C 844D0028 */  lh    $t5, 0x28($v0)
-/* 0CA740 7F095C10 3C198009 */  lui   $t9, %hi(dword_CODE_bss_8008D124) 
-/* 0CA744 7F095C14 8F39D124 */  lw    $t9, %lo(dword_CODE_bss_8008D124)($t9)
+/* 0CA740 7F095C10 3C198009 */  lui   $t9, %hi(skywaterimages) 
+/* 0CA744 7F095C14 8F39D124 */  lw    $t9, %lo(skywaterimages)($t9)
 /* 0CA748 7F095C18 000D6080 */  sll   $t4, $t5, 2
 /* 0CA74C 7F095C1C 018D6023 */  subu  $t4, $t4, $t5
 /* 0CA750 7F095C20 000C6080 */  sll   $t4, $t4, 2
@@ -3960,8 +3960,8 @@ def_7F095E0C:
 /* 0CB96C 7F096E3C 0FC2E9CB */  jal   get_ptr_currentdata
 /* 0CB970 7F096E40 ADEC0000 */   sw    $t4, ($t7)
 /* 0CB974 7F096E44 84590010 */  lh    $t9, 0x10($v0)
-/* 0CB978 7F096E48 3C0B8009 */  lui   $t3, %hi(dword_CODE_bss_8008D124) 
-/* 0CB97C 7F096E4C 8D6BD124 */  lw    $t3, %lo(dword_CODE_bss_8008D124)($t3)
+/* 0CB978 7F096E48 3C0B8009 */  lui   $t3, %hi(skywaterimages) 
+/* 0CB97C 7F096E4C 8D6BD124 */  lw    $t3, %lo(skywaterimages)($t3)
 /* 0CB980 7F096E50 0019C080 */  sll   $t8, $t9, 2
 /* 0CB984 7F096E54 0319C023 */  subu  $t8, $t8, $t9
 /* 0CB988 7F096E58 0018C080 */  sll   $t8, $t8, 2
