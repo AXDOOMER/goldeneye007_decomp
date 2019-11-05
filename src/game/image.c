@@ -26,45 +26,45 @@ u32 bytes = 0x6DDD0;
 u32 D_80049174 = 0;
 
 //D:80049178 #1	#bytes in pixel data for image
-s32 pixelbytecounts[] = {
+s32 pixelbytecounts[] = 
+{
     4, 3, 3, 3, 2, 2, 1, 1, 1, 1, 1, 1, 1
 };
 //D:800491AC #2	1=alphagrab.  Grabs 1 bit of alpha data for each pixel
-s32 pixelalphas[] = {
+s32 pixelalphas[] = 
+{
     0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
 };
 //D:800491E0 #3	#bits in 'samples', *2	-1=bitmask
-s32 pixelsamplebits[] = {
+s32 pixelsamplebits[] = 
+{
     0x100, 0x20, 0x100, 0x20, 0x100, 0x10, 8, 0x100, 0x10, 0x100, 0x10, 0x100, 0x10
 };
 //D:80049214 #4	bitcount for pixel data
-s32 pixelbitcount[] = {
+s32 pixelbitcount[] = 
+{
      0x20, 0x10, 0x18, 0xF, 0x10, 8, 4, 8, 4, 0x10, 0x10, 0x10, 0x10, 
 };
-
-/*
- *284B8	80049248	#5	N64 image types (0=color, 1=YUV, 2=indexed, 3=IA, 4=I)
- *00 00 00 00 03 03 03 04 04 02 02 02 02 
- *
- *284EC	8004927C	#6	N64 pixel sizes (0=4bit, 1=8bit, 2=16bit, 3=32bit)
- *03 02 03 02 02 01 00 01 00 01 00 01 00 
- *
- *28520	800492B0	#7	imageflip values for indexed types
- *0000 0000 0000 0000 0000 0000 0000 0000 0000 8000 8000 C000 C000 
-*/
-
-//D:80049248
-s32 D_80049248[] = {0, 0, 0, 0};
-//D:80049258
-s32 D_80049258[] = {3, 3, 3, 4, 4, 2, 2, 2, 2, 3, 2, 3, 2, 2, 1, 0};
-//D:80049298
-s32 D_80049298[] = {1, 0};
-//D:800492A0
-s32 D_800492A0[] = {1, 0};
-//D:800492A8
-s32 D_800492A8[] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-//D:800492D4
-s32 D_800492D4[] = {0x8000, 0x8000, 0xC000, 0xC000, 0, 0, 0, 0, 0, 0, 0};
+//D:80049248 #5	N64 image types (0=color, 1=YUV, 2=indexed, 3=IA, 4=I)
+s32 n64imagetypes[] = 
+{
+    0, 0, 0, 0, 3, 3, 3, 4, 4, 2, 2, 2, 2
+};
+//D:8004927C #6	N64 pixel sizes (0=4bit, 1=8bit, 2=16bit, 3=32bit)
+s32 n64pixelsizes[] = 
+{
+    3, 2, 3, 2, 2, 1, 0, 1, 0, 1, 0, 1, 0
+};
+//D:800492B0 #7	imageflip values for indexed types
+s32 imgflipvalues[] = 
+{
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0x8000, 0x8000, 0xC000, 0xC000
+};
+//D:800492e4
+s32 D_800492E4[] = 
+{
+    0, 0, 0, 0, 0, 0, 0
+};
 
 //D:80049300
 //need way to calculate size at compile time from external data
@@ -2882,8 +2882,8 @@ glabel image_related_calls_decompressdata_function
 /* 0FB2D8 7F0C67A8 A462FFFE */   sh    $v0, -2($v1)
 .L7F0C67AC:
 /* 0FB2DC 7F0C67AC 8FA92B9C */  lw    $t1, 0x2b9c($sp)
-/* 0FB2E0 7F0C67B0 3C178005 */  lui   $s7, %hi(D_80049248) 
-/* 0FB2E4 7F0C67B4 26F79248 */  addiu $s7, %lo(D_80049248) # addiu $s7, $s7, -0x6db8
+/* 0FB2E0 7F0C67B0 3C178005 */  lui   $s7, %hi(n64imagetypes) 
+/* 0FB2E4 7F0C67B4 26F79248 */  addiu $s7, %lo(n64imagetypes) # addiu $s7, $s7, -0x6db8
 /* 0FB2E8 7F0C67B8 19200064 */  blez  $t1, .L7F0C694C
 /* 0FB2EC 7F0C67BC 00009825 */   move  $s3, $zero
 /* 0FB2F0 7F0C67C0 27B42370 */  addiu $s4, $sp, 0x2370
@@ -2916,18 +2916,18 @@ glabel image_related_calls_decompressdata_function
 /* 0FB358 7F0C6828 014B6825 */  or    $t5, $t2, $t3
 /* 0FB35C 7F0C682C A06D000B */  sb    $t5, 0xb($v1)
 /* 0FB360 7F0C6830 8FC3000C */  lw    $v1, 0xc($fp)
-/* 0FB364 7F0C6834 3C0E8005 */  lui   $t6, %hi(D_80049258+36)
+/* 0FB364 7F0C6834 3C0E8005 */  lui   $t6, %hi(n64pixelsizes)
 /* 0FB368 7F0C6838 01C47021 */  addu  $t6, $t6, $a0
-/* 0FB36C 7F0C683C 8DD8927C */  lw    $t8, %lo(D_80049258+36)($t6)
+/* 0FB36C 7F0C683C 8DD8927C */  lw    $t8, %lo(n64pixelsizes)($t6)
 /* 0FB370 7F0C6840 9069000B */  lbu   $t1, 0xb($v1)
-/* 0FB374 7F0C6844 3C0A8005 */  lui   $t2, %hi(D_800492A8+8)
+/* 0FB374 7F0C6844 3C0A8005 */  lui   $t2, %hi(imgflipvalues)
 /* 0FB378 7F0C6848 330F0003 */  andi  $t7, $t8, 3
 /* 0FB37C 7F0C684C 3139FFFC */  andi  $t9, $t1, 0xfffc
 /* 0FB380 7F0C6850 01F96025 */  or    $t4, $t7, $t9
 /* 0FB384 7F0C6854 A06C000B */  sb    $t4, 0xb($v1)
 /* 0FB388 7F0C6858 8FC3000C */  lw    $v1, 0xc($fp)
 /* 0FB38C 7F0C685C 01445021 */  addu  $t2, $t2, $a0
-/* 0FB390 7F0C6860 8D4A92B0 */  lw    $t2, %lo(D_800492A8+8)($t2)
+/* 0FB390 7F0C6860 8D4A92B0 */  lw    $t2, %lo(imgflipvalues)($t2)
 /* 0FB394 7F0C6864 9069000C */  lbu   $t1, 0xc($v1)
 /* 0FB398 7F0C6868 000A6B83 */  sra   $t5, $t2, 0xe
 /* 0FB39C 7F0C686C 000DC180 */  sll   $t8, $t5, 6
@@ -4624,7 +4624,7 @@ glabel process_huffman_compressed_images
 /* 0FCA8C 7F0C7F5C 14A00026 */  bnez  $a1, .L7F0C7FF8
 /* 0FCA90 7F0C7F60 00000000 */   nop   
 /* 0FCA94 7F0C7F64 8C8C000C */  lw    $t4, 0xc($a0)
-/* 0FCA98 7F0C7F68 3C0B8005 */  lui   $t3, %hi(D_80049248)
+/* 0FCA98 7F0C7F68 3C0B8005 */  lui   $t3, %hi(n64imagetypes)
 /* 0FCA9C 7F0C7F6C A1960008 */  sb    $s6, 8($t4)
 /* 0FCAA0 7F0C7F70 8C8D000C */  lw    $t5, 0xc($a0)
 /* 0FCAA4 7F0C7F74 A1B70009 */  sb    $s7, 9($t5)
@@ -4632,7 +4632,7 @@ glabel process_huffman_compressed_images
 /* 0FCAAC 7F0C7F7C 8C83000C */  lw    $v1, 0xc($a0)
 /* 0FCAB0 7F0C7F80 00147080 */  sll   $t6, $s4, 2
 /* 0FCAB4 7F0C7F84 016E5821 */  addu  $t3, $t3, $t6
-/* 0FCAB8 7F0C7F88 8D6F9248 */  lw    $t7, %lo(D_80049248)($t3)
+/* 0FCAB8 7F0C7F88 8D6F9248 */  lw    $t7, %lo(n64imagetypes)($t3)
 /* 0FCABC 7F0C7F8C 906C000B */  lbu   $t4, 0xb($v1)
 /* 0FCAC0 7F0C7F90 01C0A025 */  move  $s4, $t6
 /* 0FCAC4 7F0C7F94 000FC080 */  sll   $t8, $t7, 2
@@ -4641,18 +4641,18 @@ glabel process_huffman_compressed_images
 /* 0FCAD0 7F0C7FA0 032D7025 */  or    $t6, $t9, $t5
 /* 0FCAD4 7F0C7FA4 A06E000B */  sb    $t6, 0xb($v1)
 /* 0FCAD8 7F0C7FA8 8C83000C */  lw    $v1, 0xc($a0)
-/* 0FCADC 7F0C7FAC 3C0B8005 */  lui   $t3, %hi(D_80049258+36)
+/* 0FCADC 7F0C7FAC 3C0B8005 */  lui   $t3, %hi(n64pixelsizes)
 /* 0FCAE0 7F0C7FB0 01745821 */  addu  $t3, $t3, $s4
-/* 0FCAE4 7F0C7FB4 8D6F927C */  lw    $t7, %lo(D_80049258+36)($t3)
+/* 0FCAE4 7F0C7FB4 8D6F927C */  lw    $t7, %lo(n64pixelsizes)($t3)
 /* 0FCAE8 7F0C7FB8 906C000B */  lbu   $t4, 0xb($v1)
-/* 0FCAEC 7F0C7FBC 3C0E8005 */  lui   $t6, %hi(D_800492A8+8)
+/* 0FCAEC 7F0C7FBC 3C0E8005 */  lui   $t6, %hi(imgflipvalues)
 /* 0FCAF0 7F0C7FC0 31F80003 */  andi  $t8, $t7, 3
 /* 0FCAF4 7F0C7FC4 3199FFFC */  andi  $t9, $t4, 0xfffc
 /* 0FCAF8 7F0C7FC8 03196825 */  or    $t5, $t8, $t9
 /* 0FCAFC 7F0C7FCC A06D000B */  sb    $t5, 0xb($v1)
 /* 0FCB00 7F0C7FD0 8C83000C */  lw    $v1, 0xc($a0)
 /* 0FCB04 7F0C7FD4 01D47021 */  addu  $t6, $t6, $s4
-/* 0FCB08 7F0C7FD8 8DCE92B0 */  lw    $t6, %lo(D_800492A8+8)($t6)
+/* 0FCB08 7F0C7FD8 8DCE92B0 */  lw    $t6, %lo(imgflipvalues)($t6)
 /* 0FCB0C 7F0C7FDC 9079000C */  lbu   $t9, 0xc($v1)
 /* 0FCB10 7F0C7FE0 000E7B83 */  sra   $t7, $t6, 0xe
 /* 0FCB14 7F0C7FE4 000FC180 */  sll   $t8, $t7, 6

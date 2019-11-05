@@ -18880,12 +18880,10 @@ Linker script and memory map
                 0x00000000800491dc                pixelalphas
                 0x0000000080049210                pixelsamplebits
                 0x0000000080049244                pixelbitcount
-                0x0000000080049278                D_80049248
-                0x0000000080049288                D_80049258
-                0x00000000800492c8                D_80049298
-                0x00000000800492d0                D_800492A0
-                0x00000000800492d8                D_800492A8
-                0x0000000080049304                D_800492D4
+                0x0000000080049278                n64imagetypes
+                0x00000000800492ac                n64pixelsizes
+                0x00000000800492e0                imgflipvalues
+                0x0000000080049314                D_800492E4
                 0x0000000080049330                image_entries
  build/j/src/game/image_bank.o(.data)
  build/j/src/game/unk_0CC4C0.o(.data)
