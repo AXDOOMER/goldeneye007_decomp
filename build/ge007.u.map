@@ -3947,7 +3947,7 @@ Linker script and memory map
                 0x000000007f0cbee8                sub_GAME_7F0CBEE8
  build/u/src/game/image_bank.o(.text)
  .text          0x000000007f0cbf10      0x5b0 build/u/src/game/image_bank.o
-                0x000000007f0cbf10                sub_GAME_7F0CBF10
+                0x000000007f0cbf10                makeemptyimageatpos
                 0x000000007f0cbf2c                sub_GAME_7F0CBF2C
                 0x000000007f0cbfb0                load_prepare_global_image_bank
  build/u/src/game/unk_0CC4C0.o(.text)
@@ -18873,8 +18873,10 @@ Linker script and memory map
  .data          0x0000000080049170     0x55f0 build/u/src/game/image.o
                 0x0000000080049170                bytes
                 0x0000000080049174                D_80049174
-                0x0000000080049178                D_80049178
-                0x00000000800491e0                D_800491E0
+                0x0000000080049178                pixelbytecounts
+                0x00000000800491ac                pixelalphas
+                0x00000000800491e0                pixelsamplebits
+                0x0000000080049214                pixelbitcount
                 0x0000000080049248                D_80049248
                 0x0000000080049258                D_80049258
                 0x0000000080049298                D_80049298
@@ -21746,9 +21748,9 @@ Linker script and memory map
                 0x000000008008d094                dword_CODE_bss_8008D094
  build/u/src/game/image_bank.o(.bss)
  .bss           0x000000008008d0a0       0xa0 build/u/src/game/image_bank.o
-                0x000000008008d0a0                dword_CODE_bss_8008D0A0
-                0x000000008008d0a4                dword_CODE_bss_8008D0A4
-                0x000000008008d0a8                dword_CODE_bss_8008D0A8
+                0x000000008008d0a0                img_curpos
+                0x000000008008d0a4                img_curdatatable
+                0x000000008008d0a8                img_bitcount
                 0x000000008008d0ac                dword_CODE_bss_8008D0AC
                 0x000000008008d0b0                globalbank_rdram_offset
                 0x000000008008d0b4                ptr_explosionDL

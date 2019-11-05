@@ -3,11 +3,11 @@
 
 // bss
 //8008D0A0
-s32 dword_CODE_bss_8008D0A0;
+s32 img_curpos;
 //8008D0A4
-s32 dword_CODE_bss_8008D0A4;
+s32 img_curdatatable;
 //8008D0A8
-s32 dword_CODE_bss_8008D0A8;
+s32 img_bitcount;
 //8008D0AC
 s32 dword_CODE_bss_8008D0AC;
 //8008D0B0;
@@ -83,10 +83,10 @@ s32 mpstageselimages;
 extern u8* _GlobalimagetableSegmentRomStart;
 
 
-void sub_GAME_7F0CBF10(s32 arg0) {
-    dword_CODE_bss_8008D0A0 = arg0;
-    dword_CODE_bss_8008D0A4 = 0;
-    dword_CODE_bss_8008D0A8 = 0;
+void makeemptyimageatpos(s32 pos) {
+    img_curpos = pos;
+    img_curdatatable = 0;
+    img_bitcount = 0;
 }
 
 
@@ -94,49 +94,34 @@ void sub_GAME_7F0CBF10(s32 arg0) {
 
 
 #ifdef NONMATCHING
-s32 sub_GAME_7F0CBF2C(s32 arg0) {
-    s32 temp_t1;
-    s32 temp_t2;
-    s32 phi_v1;
-    s32 phi_v1_2;
-
-    // Node 0
-    phi_v1_2 = dword_CODE_bss_8008D0A8;
-    if (dword_CODE_bss_8008D0A8 < arg0)
-    {
-        // Node 1
-        phi_v1 = dword_CODE_bss_8008D0A8;
-loop_2:
-        // Node 2
-        temp_t1 = (phi_v1 + 8);
-        dword_CODE_bss_8008D0A4 = (u32) (*dword_CODE_bss_8008D0A0 | (dword_CODE_bss_8008D0A4 << 8));
-        dword_CODE_bss_8008D0A0 = (void *) (dword_CODE_bss_8008D0A0 + 1);
-        dword_CODE_bss_8008D0A8 = temp_t1;
-        phi_v1 = temp_t1;
-        phi_v1_2 = temp_t1;
-        if (temp_t1 < arg0)
-        {
-            goto loop_2;
-        }
-    }
-    // Node 3
-    temp_t2 = (phi_v1_2 - arg0);
-    dword_CODE_bss_8008D0A8 = temp_t2;
-    return (((u32) dword_CODE_bss_8008D0A4 >> temp_t2) & ((1 << arg0) + -1));
+u32 sub_GAME_7F0CBF2C(s32 bits)
+{
+  byte bVar1;
+  
+  if (img_bitcount < bits) {
+    do {
+      img_bitcount = img_bitcount + 8;
+      bVar1 = *img_curpos;
+      img_curpos = img_curpos + 1;
+      img_curdatatable = bVar1 | img_curdatatable << 8;
+    } while (img_bitcount < bits);
+  }
+  img_bitcount = img_bitcount - bits;
+  return img_curdatatable >> (img_bitcount & 0x1f) & (1 << (bits & 0x1f)) - 1U;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0CBF2C
-/* 100A5C 7F0CBF2C 3C058009 */  lui   $a1, %hi(dword_CODE_bss_8008D0A8)
-/* 100A60 7F0CBF30 24A5D0A8 */  addiu $a1, %lo(dword_CODE_bss_8008D0A8) # addiu $a1, $a1, -0x2f58
+/* 100A5C 7F0CBF2C 3C058009 */  lui   $a1, %hi(img_bitcount)
+/* 100A60 7F0CBF30 24A5D0A8 */  addiu $a1, %lo(img_bitcount) # addiu $a1, $a1, -0x2f58
 /* 100A64 7F0CBF34 8CA30000 */  lw    $v1, ($a1)
-/* 100A68 7F0CBF38 3C078009 */  lui   $a3, %hi(dword_CODE_bss_8008D0A0)
-/* 100A6C 7F0CBF3C 24E7D0A0 */  addiu $a3, %lo(dword_CODE_bss_8008D0A0) # addiu $a3, $a3, -0x2f60
+/* 100A68 7F0CBF38 3C078009 */  lui   $a3, %hi(img_curpos)
+/* 100A6C 7F0CBF3C 24E7D0A0 */  addiu $a3, %lo(img_curpos) # addiu $a3, $a3, -0x2f60
 /* 100A70 7F0CBF40 0064082A */  slt   $at, $v1, $a0
 /* 100A74 7F0CBF44 1020000F */  beqz  $at, .L7F0CBF84
-/* 100A78 7F0CBF48 3C068009 */   lui   $a2, %hi(dword_CODE_bss_8008D0A4)
-/* 100A7C 7F0CBF4C 24C6D0A4 */  addiu $a2, %lo(dword_CODE_bss_8008D0A4) # addiu $a2, $a2, -0x2f5c
+/* 100A78 7F0CBF48 3C068009 */   lui   $a2, %hi(img_curdatatable)
+/* 100A7C 7F0CBF4C 24C6D0A4 */  addiu $a2, %lo(img_curdatatable) # addiu $a2, $a2, -0x2f5c
 .L7F0CBF50:
 /* 100A80 7F0CBF50 8CE20000 */  lw    $v0, ($a3)
 /* 100A84 7F0CBF54 8CCF0000 */  lw    $t7, ($a2)
@@ -152,8 +137,8 @@ glabel sub_GAME_7F0CBF2C
 /* 100AAC 7F0CBF7C 1420FFF4 */  bnez  $at, .L7F0CBF50
 /* 100AB0 7F0CBF80 01201825 */   move  $v1, $t1
 .L7F0CBF84:
-/* 100AB4 7F0CBF84 3C068009 */  lui   $a2, %hi(dword_CODE_bss_8008D0A4)
-/* 100AB8 7F0CBF88 24C6D0A4 */  addiu $a2, %lo(dword_CODE_bss_8008D0A4) # addiu $a2, $a2, -0x2f5c
+/* 100AB4 7F0CBF84 3C068009 */  lui   $a2, %hi(img_curdatatable)
+/* 100AB8 7F0CBF88 24C6D0A4 */  addiu $a2, %lo(img_curdatatable) # addiu $a2, $a2, -0x2f5c
 /* 100ABC 7F0CBF8C 8CCB0000 */  lw    $t3, ($a2)
 /* 100AC0 7F0CBF90 240F0001 */  li    $t7, 1
 /* 100AC4 7F0CBF94 00645023 */  subu  $t2, $v1, $a0
