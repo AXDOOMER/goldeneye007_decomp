@@ -80,7 +80,7 @@ s32 mpcharselimages;
 s32 mpstageselimages;
 
 
-
+extern u8* _GlobalimagetableSegmentRomStart;
 
 
 void sub_GAME_7F0CBF10(s32 arg0) {
@@ -173,53 +173,45 @@ glabel sub_GAME_7F0CBF2C
 #ifdef NONMATCHING
 void load_prepare_global_image_bank(void) {
     s32 size;
-    u8* allocaddr;
-    s32 temp_a0;
-    s32 temp_v0;
     s32 i;
 
-    // Node 0
     size = (0x2001400 - 0x2000000);
-    allocaddr = allocate_bytes_in_bank((size + 0x1000), 4);
-    ptr_explosionDL = allocaddr;
-    temp_a0 = ((allocaddr + 0xfff) & -0x1000);
-    ptr_explosionDL = temp_a0;
-    romCopy(temp_a0, &_GlobalimagetableSegmentRomStart, size);
-    temp_v0 = (ptr_explosionDL + 0xfe000000);
-    globalbank_rdram_offset = temp_v0;
-    genericimage = (s32) (temp_v0 + 0x2000ac8);
-    impactimages = (s32) (temp_v0 + 0x2000ad4);
-    explosion_smokeimages = (s32) (temp_v0 + 0x2000bc4);
-    scattered_explosions = (s32) (temp_v0 + 0x2000c0c);
-    flareimage1 = (s32) (temp_v0 + 0x2000c48);
-    flareimage2 = (s32) (temp_v0 + 0x2000c54);
-    flareimage3 = (s32) (temp_v0 + 0x2000c60);
-    flareimage4 = (s32) (temp_v0 + 0x2000c6c);
-    flareimage5 = (s32) (temp_v0 + 0x2000c78);
-    ammo9mmimage = (s32) (temp_v0 + 0x2000c84);
-    rifleammoimage = (s32) (temp_v0 + 0x2000c90);
-    shotgunammoimage = (s32) (temp_v0 + 0x2000c9c);
-    knifeammoimage = (s32) (temp_v0 + 0x2000ca8);
-    glaunchammoimage = (s32) (temp_v0 + 0x2000cb4);
-    rocketammoimage = (s32) (temp_v0 + 0x2000cc0);
-    genericmineammoimage = (s32) (temp_v0 + 0x2000ccc);
-    grenadeammoimage = (s32) (temp_v0 + 0x2000cd8);
-    magnumammoimage = (s32) (temp_v0 + 0x2000ce4);
-    goldengunammoimage = (s32) (temp_v0 + 0x2000cf0);
-    remotemineammoimage = (s32) (temp_v0 + 0x2000cfc);
-    timedmineammoimage = (s32) (temp_v0 + 0x2000d08);
-    proxmineammoimage = (s32) (temp_v0 + 0x2000d14);
-    tankammoimage = (s32) (temp_v0 + 0x2000d20);
-    crosshairimage = (s32) (temp_v0 + 0x2000d2c);
-    betacrosshairimage = (s32) (temp_v0 + 0x2000d38);
-    glassoverlayimage = (s32) (temp_v0 + 0x2000d44);
-    monitorimages = (s32) (temp_v0 + 0x2000d5c);
-    skywaterimages = (s32) (temp_v0 + 0x2000fb4);
-    mainfolderimages = (s32) (temp_v0 + 0x2000fd8);
-    mpradarimages = (s32) (temp_v0 + 0x2001020);
-    mpcharselimages = (s32) (temp_v0 + 0x200102c);
-    mpstageselimages = (s32) (temp_v0 + 0x200132c);
-    check_load_image_to_buffer((temp_v0 + 0x2000000), 0);
+    ptr_explosionDL = ((allocate_bytes_in_bank((size + 0x1000), 4) + 0xfff) & -0x1000);
+    romCopy(ptr_explosionDL, _GlobalimagetableSegmentRomStart, size);
+    globalbank_rdram_offset = (ptr_explosionDL + 0xfe000000);
+    genericimage = (s32) (globalbank_rdram_offset + 0x2000ac8);
+    impactimages = (s32) (globalbank_rdram_offset + 0x2000ad4);
+    explosion_smokeimages = (s32) (globalbank_rdram_offset + 0x2000bc4);
+    scattered_explosions = (s32) (globalbank_rdram_offset + 0x2000c0c);
+    flareimage1 = (s32) (globalbank_rdram_offset + 0x2000c48);
+    flareimage2 = (s32) (globalbank_rdram_offset + 0x2000c54);
+    flareimage3 = (s32) (globalbank_rdram_offset + 0x2000c60);
+    flareimage4 = (s32) (globalbank_rdram_offset + 0x2000c6c);
+    flareimage5 = (s32) (globalbank_rdram_offset + 0x2000c78);
+    ammo9mmimage = (s32) (globalbank_rdram_offset + 0x2000c84);
+    rifleammoimage = (s32) (globalbank_rdram_offset + 0x2000c90);
+    shotgunammoimage = (s32) (globalbank_rdram_offset + 0x2000c9c);
+    knifeammoimage = (s32) (globalbank_rdram_offset + 0x2000ca8);
+    glaunchammoimage = (s32) (globalbank_rdram_offset + 0x2000cb4);
+    rocketammoimage = (s32) (globalbank_rdram_offset + 0x2000cc0);
+    genericmineammoimage = (s32) (globalbank_rdram_offset + 0x2000ccc);
+    grenadeammoimage = (s32) (globalbank_rdram_offset + 0x2000cd8);
+    magnumammoimage = (s32) (globalbank_rdram_offset + 0x2000ce4);
+    goldengunammoimage = (s32) (globalbank_rdram_offset + 0x2000cf0);
+    remotemineammoimage = (s32) (globalbank_rdram_offset + 0x2000cfc);
+    timedmineammoimage = (s32) (globalbank_rdram_offset + 0x2000d08);
+    proxmineammoimage = (s32) (globalbank_rdram_offset + 0x2000d14);
+    tankammoimage = (s32) (globalbank_rdram_offset + 0x2000d20);
+    crosshairimage = (s32) (globalbank_rdram_offset + 0x2000d2c);
+    betacrosshairimage = (s32) (globalbank_rdram_offset + 0x2000d38);
+    glassoverlayimage = (s32) (globalbank_rdram_offset + 0x2000d44);
+    monitorimages = (s32) (globalbank_rdram_offset + 0x2000d5c);
+    skywaterimages = (s32) (globalbank_rdram_offset + 0x2000fb4);
+    mainfolderimages = (s32) (globalbank_rdram_offset + 0x2000fd8);
+    mpradarimages = (s32) (globalbank_rdram_offset + 0x2001020);
+    mpcharselimages = (s32) (globalbank_rdram_offset + 0x200102c);
+    mpstageselimages = (s32) (globalbank_rdram_offset + 0x200132c);
+    check_load_image_to_buffer((globalbank_rdram_offset + 0x2000000), 0);
     check_load_image_to_buffer((globalbank_rdram_offset + 0x2000078), 0);
     check_load_image_to_buffer((globalbank_rdram_offset + 0x2000120), 0);
     check_load_image_to_buffer((globalbank_rdram_offset + 0x20001c8), 0);
