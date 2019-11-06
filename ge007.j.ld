@@ -224,7 +224,7 @@ SECTIONS
       build/j/src/game/zlib.o (.text);
       build/j/src/game/rsp.o (.text);
       build/j/src/game/indy_comms.o (.text);
-      build/j/src/game/indy_0D0180.o (.text);
+      build/j/src/game/indy_commands.o (.text);
       build/j/src/game/game_debug.o (.text);
       build/j/src/game/compiletime.o (.text);
       build/j/src/game/unk_0D1AC0.o (.text);
@@ -3167,7 +3167,7 @@ SECTIONS
       build/j/src/game/zlib.o (.data);
       build/j/src/game/rsp.o (.data);
       build/j/src/game/indy_comms.o (.data);
-      build/j/src/game/indy_0D0180.o (.data);
+      build/j/src/game/indy_commands.o (.data);
       build/j/src/game/game_debug.o (.data);
       build/j/src/game/compiletime.o (.data);
       build/j/src/game/unk_0D1AC0.o (.data);
@@ -3288,7 +3288,7 @@ SECTIONS
       build/j/src/game/zlib.o (.rodata);
       build/j/src/game/rsp.o (.rodata);
       build/j/src/game/indy_comms.o (.rodata);
-      build/j/src/game/indy_0D0180.o (.rodata);
+      build/j/src/game/indy_commands.o (.rodata);
       build/j/src/game/game_debug.o (.rodata);
       build/j/src/game/compiletime.o (.rodata);
       build/j/src/game/unk_0D1AC0.o (.rodata);
@@ -3451,7 +3451,7 @@ SECTIONS
       build/j/src/game/zlib.o (.bss);
       build/j/src/game/rsp.o (.bss);
       build/j/src/game/indy_comms.o (.bss);
-      build/j/src/game/indy_0D0180.o (.bss);
+      build/j/src/game/indy_commands.o (.bss);
       build/j/src/game/game_debug.o (.bss);
       build/j/src/game/compiletime.o (.bss);
       build/j/src/game/unk_0D1AC0.o (.bss);

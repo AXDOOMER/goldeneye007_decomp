@@ -344,8 +344,8 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/u/src/game/rsp.o
  .options       0x0000000000000000       0x20 build/u/src/game/indy_comms.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/indy_comms.o
- .options       0x0000000000000000       0x20 build/u/src/game/indy_0D0180.o
- .reginfo       0x0000000000000000       0x18 build/u/src/game/indy_0D0180.o
+ .options       0x0000000000000000       0x20 build/u/src/game/indy_commands.o
+ .reginfo       0x0000000000000000       0x18 build/u/src/game/indy_commands.o
  .options       0x0000000000000000       0x20 build/u/src/game/game_debug.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/game_debug.o
  .gptab.data    0x0000000000000000       0x18 build/u/src/game/game_debug.o
@@ -4011,65 +4011,65 @@ Linker script and memory map
                 0x000000007f0d00e0                response_from_command_string
                 0x000000007f0d0124                sub_GAME_7F0D0124
                 0x000000007f0d0154                send_indy_close_port_cmd
- build/u/src/game/indy_0D0180.o(.text)
- .text          0x000000007f0d0180     0x18a0 build/u/src/game/indy_0D0180.o
+ build/u/src/game/indy_commands.o(.text)
+ .text          0x000000007f0d0180     0x18a0 build/u/src/game/indy_commands.o
                 0x000000007f0d0180                sub_GAME_7F0D0180
                 0x000000007f0d01d0                sub_GAME_7F0D01D0
-                0x000000007f0d0220                sub_GAME_7F0D0220
-                0x000000007f0d0358                sub_GAME_7F0D0358
-                0x000000007f0d038c                sub_GAME_7F0D038C
-                0x000000007f0d03d4                sub_GAME_7F0D03D4
-                0x000000007f0d041c                sub_GAME_7F0D041C
-                0x000000007f0d0460                sub_GAME_7F0D0460
-                0x000000007f0d04c4                sub_GAME_7F0D04C4
-                0x000000007f0d0514                sub_GAME_7F0D0514
-                0x000000007f0d0578                sub_GAME_7F0D0578
-                0x000000007f0d05d0                sub_GAME_7F0D05D0
-                0x000000007f0d0644                sub_GAME_7F0D0644
-                0x000000007f0d06c0                sub_GAME_7F0D06C0
-                0x000000007f0d0740                sub_GAME_7F0D0740
-                0x000000007f0d0790                sub_GAME_7F0D0790
-                0x000000007f0d080c                sub_GAME_7F0D080C
-                0x000000007f0d086c                sub_GAME_7F0D086C
-                0x000000007f0d08e8                sub_GAME_7F0D08E8
-                0x000000007f0d0938                sub_GAME_7F0D0938
-                0x000000007f0d099c                sub_GAME_7F0D099C
-                0x000000007f0d09ec                sub_GAME_7F0D09EC
-                0x000000007f0d0a3c                post_indy__res_cmd_initialize
-                0x000000007f0d0a7c                sub_GAME_7F0D0A7C
-                0x000000007f0d0ac4                sub_GAME_7F0D0AC4
-                0x000000007f0d0b0c                sub_GAME_7F0D0B0C
-                0x000000007f0d0b54                sub_GAME_7F0D0B54
-                0x000000007f0d0ba4                sub_GAME_7F0D0BA4
-                0x000000007f0d0bf4                sub_GAME_7F0D0BF4
-                0x000000007f0d0c68                post_indy__res_cmd_send_capture_data
-                0x000000007f0d0cd0                sub_GAME_7F0D0CD0
-                0x000000007f0d0d18                post_indy__res_cmd_request_ramrom_file
-                0x000000007f0d0d74                sub_GAME_7F0D0D74
-                0x000000007f0d0dd0                sub_GAME_7F0D0DD0
-                0x000000007f0d0e2c                sub_GAME_7F0D0E2C
-                0x000000007f0d0e74                sub_GAME_7F0D0E74
-                0x000000007f0d0ebc                sub_GAME_7F0D0EBC
-                0x000000007f0d0f04                sub_GAME_7F0D0F04
-                0x000000007f0d0f4c                sub_GAME_7F0D0F4C
-                0x000000007f0d10a8                sub_GAME_7F0D10A8
-                0x000000007f0d1100                sub_GAME_7F0D1100
-                0x000000007f0d11ac                sub_GAME_7F0D11AC
-                0x000000007f0d1248                sub_GAME_7F0D1248
-                0x000000007f0d12f4                sub_GAME_7F0D12F4
-                0x000000007f0d13b0                sub_GAME_7F0D13B0
-                0x000000007f0d1498                sub_GAME_7F0D1498
-                0x000000007f0d1544                sub_GAME_7F0D1544
-                0x000000007f0d160c                sub_GAME_7F0D160C
-                0x000000007f0d16b8                sub_GAME_7F0D16B8
-                0x000000007f0d1764                sub_GAME_7F0D1764
-                0x000000007f0d17ac                sub_GAME_7F0D17AC
-                0x000000007f0d17fc                sub_GAME_7F0D17FC
-                0x000000007f0d1864                sub_GAME_7F0D1864
-                0x000000007f0d18ac                sub_GAME_7F0D18AC
-                0x000000007f0d1908                sub_GAME_7F0D1908
-                0x000000007f0d1950                sub_GAME_7F0D1950
-                0x000000007f0d1998                sub_GAME_7F0D1998
+                0x000000007f0d0220                postindyresourcecommand
+                0x000000007f0d0358                send2indyresourcecommands
+                0x000000007f0d038c                post_type1_indyrescmd_sizenextcmd
+                0x000000007f0d03d4                post_type2_indyrescmd_cmds_rdy_to_proc
+                0x000000007f0d041c                post_type0_indyrescmd_init
+                0x000000007f0d0460                post_type3_indyrescmd
+                0x000000007f0d04c4                post_type4_indyrescmd_data_recieved
+                0x000000007f0d0514                post_type5_indyrescmd_printfsend
+                0x000000007f0d0578                post_type6_indyrescmd_printfrecieved
+                0x000000007f0d05d0                post_type7_indyrescmd_log_send
+                0x000000007f0d0644                post_type8_indyrescmd_log_recieved
+                0x000000007f0d06c0                post_type9_indyrescmd_app_command_ready
+                0x000000007f0d0740                post_typeA_indyrescmd_app_command_recieved
+                0x000000007f0d0790                post_typeF_indyrescmd_fault_send
+                0x000000007f0d080c                post_type10_indyrescmd_fault_ack_by_host
+                0x000000007f0d086c                post_typeD_indyrescmd_prof_send_filename
+                0x000000007f0d08e8                post_typeE_indyrescmd_prof_recv
+                0x000000007f0d0938                post_typeB_indyrescmd_host_prof_req
+                0x000000007f0d099c                post_typeC_indyrescmd_prof_send
+                0x000000007f0d09ec                post_typeA_indyrescmd_app_data_recieved
+                0x000000007f0d0a3c                post_indy__res_cmd_initialize_seq
+                0x000000007f0d0a7c                post_indyrescmd_game_data_send
+                0x000000007f0d0ac4                post_indyrescmd_debug_data_recv
+                0x000000007f0d0b0c                post_indyrescmd_game_printf_send
+                0x000000007f0d0b54                post_indyrescmd_debug_printf_recv
+                0x000000007f0d0ba4                post_indyrescmd_req_filename_size
+                0x000000007f0d0bf4                post_indyrescmd_1_8_2
+                0x000000007f0d0c68                post_indyrescmd_send_capture_data
+                0x000000007f0d0cd0                post_indyrescmd_recv_capture_data_success
+                0x000000007f0d0d18                post_indyrescmd_request_ramrom_file
+                0x000000007f0d0d74                post_indyrescmd_1_10_2
+                0x000000007f0d0dd0                post_indyrescmd_game_prof_sendfile
+                0x000000007f0d0e2c                post_indyrescmd_host_prof_recv
+                0x000000007f0d0e74                post_indyrescmd_1_B_2
+                0x000000007f0d0ebc                post_indyrescmd_1_C_2
+                0x000000007f0d0f04                post_indyrescmd_1_A_2
+                0x000000007f0d0f4c                post_indyrescmd_read_command
+                0x000000007f0d10a8                post_indyrescmd_read_2commands
+                0x000000007f0d1100                post_indyrescmd_istype1_correctsize
+                0x000000007f0d11ac                post_indyrescmd_istype2_correctvalue
+                0x000000007f0d1248                post_indyrescmd_istype4_correctvalue
+                0x000000007f0d12f4                post_indyrescmd_istype6_correctvalue
+                0x000000007f0d13b0                post_indyrescmd_istype8_correctvalue
+                0x000000007f0d1498                post_indyrescmd_istypeA_correctvalue
+                0x000000007f0d1544                post_indyrescmd_istype10_correctvalue
+                0x000000007f0d160c                post_indyrescmd_istypeE_correctvalue
+                0x000000007f0d16b8                post_indyrescmd_istypeC_correctvalue
+                0x000000007f0d1764                response_indyrescmd_1_4_2
+                0x000000007f0d17ac                response_indyrescmd_1_6_2
+                0x000000007f0d17fc                response_indyrescmd_1_8_2
+                0x000000007f0d1864                response_indyrescmd_1_A_2
+                0x000000007f0d18ac                response_indyrescmd_1_10_2
+                0x000000007f0d1908                response_indyrescmd_1_E_2
+                0x000000007f0d1950                response_indyrescmd_1_C_2
+                0x000000007f0d1998                response_indyrescmd_curr_matches_expected
  build/u/src/game/game_debug.o(.text)
  .text          0x000000007f0d1a20       0x90 build/u/src/game/game_debug.o
                 0x000000007f0d1a20                something_game_c_debug_related
@@ -18946,10 +18946,10 @@ Linker script and memory map
                 0x000000008004ea50                fast3d_related_1
                 0x000000008004eab0                fast3d_related_array
  build/u/src/game/indy_comms.o(.data)
- build/u/src/game/indy_0D0180.o(.data)
- .data          0x000000008004eac0       0x20 build/u/src/game/indy_0D0180.o
+ build/u/src/game/indy_commands.o(.data)
+ .data          0x000000008004eac0       0x20 build/u/src/game/indy_commands.o
                 0x000000008004eac0                D_8004EAC0
-                0x000000008004eac4                D_8004EAC4
+                0x000000008004eac4                indy_status
                 0x000000008004eac8                indy_ready
                 0x000000008004eacc                D_8004EACC
                 0x000000008004ead0                D_8004EAD0
@@ -20520,7 +20520,7 @@ Linker script and memory map
  .rodata        0x000000008005bfb0       0x10 build/u/src/game/rsp.o
  build/u/src/game/indy_comms.o(.rodata)
  .rodata        0x000000008005bfc0       0x30 build/u/src/game/indy_comms.o
- build/u/src/game/indy_0D0180.o(.rodata)
+ build/u/src/game/indy_commands.o(.rodata)
  build/u/src/game/game_debug.o(.rodata)
  .rodata        0x000000008005bff0       0x10 build/u/src/game/game_debug.o
  build/u/src/game/compiletime.o(.rodata)
@@ -21807,7 +21807,7 @@ Linker script and memory map
                 0x000000008008d370                dword_CODE_bss_8008D370
                 0x000000008008d770                dword_CODE_bss_8008D770
  build/u/src/game/indy_comms.o(.bss)
- build/u/src/game/indy_0D0180.o(.bss)
+ build/u/src/game/indy_commands.o(.bss)
  build/u/src/game/game_debug.o(.bss)
  build/u/src/game/compiletime.o(.bss)
  build/u/src/game/unk_0D1AC0.o(.bss)
