@@ -58,9 +58,9 @@
 //=============================================================================
 // most commands with a chr prefix use a chr number argument. for the most part,
 // this can be used with any loaded chr num and it will work fine. there is however
-// one exception to this and that is special chr num ID CHR_BOND. this ID only
-// works when bond has a third person model assigned (intro/exit cutscene).
-// only use CHR_BOND for intro/exit cutscene specific logic
+// one exception to this and that is special chr num ID CHR_BOND_CINEMA. this ID
+// only works when bond has a third person model assigned (intro/exit cutscene).
+// only use CHR_BOND_CINEMA for intro/exit cutscene specific logic
 //=============================================================================
 // vehicle/aircraft ai command
 //=============================================================================
@@ -118,7 +118,7 @@
 #define ANIM_LOOP_HOLD_LAST_FRAME       0x04 // loop/hold last frame (required for reverse flag)
 #define ANIM_PLAY_SFX                   0x08 // play sneeze sfx with animation 9F (triggers 50% of the time)
 #define ANIM_IDLE_POSE_WHEN_COMPLETE    0x10 // idle pose after animation has completed (does not work with looping animations)
-#define ANIM_TRANSLATION_SCALE          0x20 // translation multiplier x 4 (used for dam and cradle cinema)
+#define ANIM_TRANSLATION_SCALE_4X       0x20 // translation scale multiplier x4 (used for dam and cradle cinema)
 #define ANIM_NO_TRANSLATION             0x40 // no translation
 #define ANIM_REVERSE_LOOPING_ANIMATION  0x80 // reverse animation (only for looped animations)
 
@@ -403,16 +403,16 @@
 // start/end set to -1/-1 will playback the entire animation length.
 // interpolation time will set how long it will take to transition from the previous state.
 // if interpolation time is too low it may crash! - use 0x10 if unsure.
-// start/end keyframe and interpolation use 60 tick units.
+// start/end keyframe uses animation 30 tick units - interpolation use 60 tick units.
 // use ANIM_# flags for bitfield argument
 //===========================================================================*/
 #define guard_play_animation_ID 0x0A
 #define guard_play_animation_LENGTH 0x09
-#define guard_play_animation(animation_id, start_time60, end_time60, bitfield, interpol_time60) \
+#define guard_play_animation(animation_id, start_time30, end_time30, bitfield, interpol_time60) \
         guard_play_animation_ID, \
         chararray16(animation_id), \
-        chararray16(start_time60), \
-        chararray16(end_time60), \
+        chararray16(start_time30), \
+        chararray16(end_time30), \
         bitfield, \
         interpol_time60,
 
