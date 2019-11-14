@@ -73,7 +73,27 @@ SECTIONS
       build/u/src/joy.o (.text);
       build/u/src/joy_rumble.o (.text);
       build/u/src/rmon.o (.text);
+
+      build/u/libultra/osPiRawStartDma.o (.text);
+      build/u/libultra/osPiGetStatus.o (.text);
+      build/u/libultra/osInitialize.o (.text);
+      build/u/libultra/osWritebackDCacheAll.o (.text);
+      build/u/libultra/osInvalICache.o (.text);
+      build/u/libultra/osUnmapTLB.o (.text);
+      build/u/libultra/__osGetFpcCsr.o (.text);
+      build/u/libultra/__osSetFpcCsr.o (.text);
+      build/u/libultra/osCreateThread.o (.text);
+      build/u/libultra/osStartThread.o (.text);
+      build/u/libultra/osCreateMesgQueue.o (.text);
+      build/u/libultra/osStopThread.o (.text);
+      build/u/libultra/osSetThreadPri.o (.text);
+      build/u/libultra/osGetCount.o (.text);
+      build/u/libultra/osCreateViManager.o (.text);
+      build/u/libultra/osViModeTable.o (.text);
+      build/u/libultra/osSetEventMesg.o (.text);
+      build/u/libultra/osViSetEvent.o (.text);
       build/u/libultra/libultra.o (.text);
+      /*build/u/libultra/libultra.a:libultra.o (.text);*/
    }
    _codeSegmentEnd = ADDR(.code) + SIZEOF(.code);
    _codeSegmentRomEnd = _codeSegmentRomStart + SIZEOF(.code);
@@ -3014,7 +3034,27 @@ SECTIONS
       build/u/src/joy.o (.data);
       build/u/src/joy_rumble.o (.data);
       build/u/src/rmon.o (.data);
+
+      build/u/libultra/osPiRawStartDma.o (.data);
+      build/u/libultra/osPiGetStatus.o (.data);
+      build/u/libultra/osInitialize.o (.data);
+      build/u/libultra/osWritebackDCacheAll.o (.data);
+      build/u/libultra/osInvalICache.o (.data);
+      build/u/libultra/osUnmapTLB.o (.data);
+      build/u/libultra/__osGetFpcCsr.o (.data);
+      build/u/libultra/__osSetFpcCsr.o (.data);
+      build/u/libultra/osCreateThread.o (.data);
+      build/u/libultra/osStartThread.o (.data);
+      build/u/libultra/osCreateMesgQueue.o (.data);
+      build/u/libultra/osStopThread.o (.data);
+      build/u/libultra/osSetThreadPri.o (.data);
+      build/u/libultra/osGetCount.o (.data);
+      build/u/libultra/osCreateViManager.o (.data);
+      build/u/libultra/osViModeTable.o (.data);
+      build/u/libultra/osSetEventMesg.o (.data);
+      build/u/libultra/osViSetEvent.o (.data);
       build/u/libultra/libultra.o (.data);
+      /*build/u/libultra/libultra.a:libultra.o (.data);*/
 
       build/u/src/aspboot.o (.rodata);
       build/u/src/boot.o (.rodata);
@@ -3048,7 +3088,27 @@ SECTIONS
       build/u/src/joy.o (.rodata);
       build/u/src/joy_rumble.o (.rodata);
       build/u/src/rmon.o (.rodata);
+
+      build/u/libultra/osPiRawStartDma.o (.rodata);
+      build/u/libultra/osPiGetStatus.o (.rodata);
+      build/u/libultra/osInitialize.o (.rodata);
+      build/u/libultra/osWritebackDCacheAll.o (.rodata);
+      build/u/libultra/osInvalICache.o (.rodata);
+      build/u/libultra/osUnmapTLB.o (.rodata);
+      build/u/libultra/__osGetFpcCsr.o (.rodata);
+      build/u/libultra/__osSetFpcCsr.o (.rodata);
+      build/u/libultra/osCreateThread.o (.rodata);
+      build/u/libultra/osStartThread.o (.rodata);
+      build/u/libultra/osCreateMesgQueue.o (.rodata);
+      build/u/libultra/osStopThread.o (.rodata);
+      build/u/libultra/osSetThreadPri.o (.rodata);
+      build/u/libultra/osGetCount.o (.rodata);
+      build/u/libultra/osCreateViManager.o (.rodata);
+      build/u/libultra/osViModeTable.o (.rodata);
+      build/u/libultra/osSetEventMesg.o (.rodata);
+      build/u/libultra/osViSetEvent.o (.rodata);
       build/u/libultra/libultra.o (.rodata);
+      /*build/u/libultra/libultra.a:libultra.o (.rodata);*/
 
       build/u/src/game/initgamedata.o (.data);
       build/u/src/game/initweaponanigroups.o (.data);
@@ -3333,7 +3393,28 @@ SECTIONS
       build/u/src/joy.o (.bss);
       build/u/src/joy_rumble.o (.bss);
       build/u/src/rmon.o (.bss);
+
+      build/u/libultra/osPiRawStartDma.o (.bss);
+      build/u/libultra/osPiGetStatus.o (.bss);
+      build/u/libultra/osInitialize.o (.bss);
+      build/u/libultra/osWritebackDCacheAll.o (.bss);
+      build/u/libultra/osInvalICache.o (.bss);
+      build/u/libultra/osUnmapTLB.o (.bss);
+      build/u/libultra/__osGetFpcCsr.o (.bss);
+      build/u/libultra/__osSetFpcCsr.o (.bss);
+      build/u/libultra/osCreateThread.o (.bss);
+      build/u/libultra/osStartThread.o (.bss);
+      build/u/libultra/osCreateMesgQueue.o (.bss);
+      build/u/libultra/osStopThread.o (.bss);
+      build/u/libultra/osSetThreadPri.o (.bss);
+      build/u/libultra/osGetCount.o (.bss);
+      build/u/libultra/osCreateViManager.o (.bss);
+      build/u/libultra/osViModeTable.o (.bss);
+      build/u/libultra/osSetEventMesg.o (.bss);
+      build/u/libultra/osViSetEvent.o (.bss);
       build/u/libultra/libultra.o (.bss);
+      /*build/u/libultra/libultra.a:libultra.o (.bss);*/
+
       build/u/src/game/initgamedata.o (.bss);
       build/u/src/game/initweaponanigroups.o (.bss);
       build/u/src/game/initactorpropstuff.o (.bss);

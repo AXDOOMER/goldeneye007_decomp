@@ -81,7 +81,25 @@ CODEOBJECTS := $(foreach file,$(CODEFILES),$(BUILD_DIR)/$(file:.c=.o))
 
 LIBULTRA := lib/libultra_rom.a
 ULTRAFILES := libultra/libultra.s
-ULTRAOBJECTS := $(BUILD_DIR)/libultra/libultra.o
+ULTRAOBJECTS := $(BUILD_DIR)/libultra/osPiRawStartDma.o \
+$(BUILD_DIR)/libultra/osPiGetStatus.o \
+$(BUILD_DIR)/libultra/osInitialize.o \
+$(BUILD_DIR)/libultra/osWritebackDCacheAll.o \
+$(BUILD_DIR)/libultra/osInvalICache.o \
+$(BUILD_DIR)/libultra/osUnmapTLB.o \
+$(BUILD_DIR)/libultra/__osGetFpcCsr.o \
+$(BUILD_DIR)/libultra/__osSetFpcCsr.o \
+$(BUILD_DIR)/libultra/osCreateThread.o \
+$(BUILD_DIR)/libultra/osStartThread.o \
+$(BUILD_DIR)/libultra/osCreateMesgQueue.o \
+$(BUILD_DIR)/libultra/osStopThread.o \
+$(BUILD_DIR)/libultra/osSetThreadPri.o \
+$(BUILD_DIR)/libultra/osGetCount.o \
+$(BUILD_DIR)/libultra/osCreateViManager.o \
+$(BUILD_DIR)/libultra/osViModeTable.o \
+$(BUILD_DIR)/libultra/osSetEventMesg.o \
+$(BUILD_DIR)/libultra/osViSetEvent.o \
+$(BUILD_DIR)/libultra/libultra.o
 
 GAMEFILES := $(foreach dir,src/game,$(wildcard $(dir)/*.c))
 GAMEOBJECTS := $(foreach file,$(GAMEFILES),$(BUILD_DIR)/$(file:.c=.o))
