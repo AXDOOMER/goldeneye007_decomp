@@ -495,7 +495,7 @@ labels:
    - [0x70010010, "guMtxIdentF"]
    - [0x70010098, "guMtxIdent"]
    - [0x700100C8, "guMtxL2F"]
-   - [0x70010180, "ultra_70010180"]
+   - [0x70010180, "__osGetCurrFaultedThread"]
    - [0x70010190, "__osExceptionPreamble"]
    - [0x700101A0, "__osException"]
    - [0x70010390, "next_interrupt"]
