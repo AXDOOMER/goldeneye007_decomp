@@ -93,348 +93,378 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/j/src/joy_rumble.o
  .options       0x0000000000000000       0x20 build/j/src/rmon.o
  .reginfo       0x0000000000000000       0x18 build/j/src/rmon.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osPiRawStartDma.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osPiRawStartDma.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osPiRawStartDma.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osPiRawStartDma.o
+                0x0000000000000000       0x18 build/j/src/libultra/osPiRawStartDma.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osPiRawStartDma.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osPiRawStartDma.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osPiGetStatus.o
+                0x0000000000000000       0x10 build/j/src/libultra/osPiRawStartDma.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osPiGetStatus.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osPiGetStatus.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osPiGetStatus.o
+                0x0000000000000000       0x18 build/j/src/libultra/osPiGetStatus.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osPiGetStatus.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osPiGetStatus.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osInitialize.o
+                0x0000000000000000       0x10 build/j/src/libultra/osPiGetStatus.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osInitialize.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osInitialize.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osInitialize.o
+                0x0000000000000000       0x18 build/j/src/libultra/osInitialize.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osInitialize.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osInitialize.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osWritebackDCacheAll.o
+                0x0000000000000000       0x10 build/j/src/libultra/osInitialize.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osWritebackDCacheAll.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osWritebackDCacheAll.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osWritebackDCacheAll.o
+                0x0000000000000000       0x18 build/j/src/libultra/osWritebackDCacheAll.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osWritebackDCacheAll.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osWritebackDCacheAll.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osInvalICache.o
+                0x0000000000000000       0x10 build/j/src/libultra/osWritebackDCacheAll.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osInvalICache.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osInvalICache.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osInvalICache.o
+                0x0000000000000000       0x18 build/j/src/libultra/osInvalICache.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osInvalICache.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osInvalICache.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osUnmapTLB.o
+                0x0000000000000000       0x10 build/j/src/libultra/osInvalICache.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osUnmapTLB.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osUnmapTLB.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osUnmapTLB.o
+                0x0000000000000000       0x18 build/j/src/libultra/osUnmapTLB.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osUnmapTLB.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osUnmapTLB.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/__osGetFpcCsr.o
+                0x0000000000000000       0x10 build/j/src/libultra/osUnmapTLB.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/__osGetFpcCsr.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/__osGetFpcCsr.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/__osGetFpcCsr.o
+                0x0000000000000000       0x18 build/j/src/libultra/__osGetFpcCsr.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/__osGetFpcCsr.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/__osGetFpcCsr.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/__osSetFpcCsr.o
+                0x0000000000000000       0x10 build/j/src/libultra/__osGetFpcCsr.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/__osSetFpcCsr.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/__osSetFpcCsr.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/__osSetFpcCsr.o
+                0x0000000000000000       0x18 build/j/src/libultra/__osSetFpcCsr.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/__osSetFpcCsr.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/__osSetFpcCsr.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osCreateThread.o
+                0x0000000000000000       0x10 build/j/src/libultra/__osSetFpcCsr.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osCreateThread.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osCreateThread.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osCreateThread.o
+                0x0000000000000000       0x18 build/j/src/libultra/osCreateThread.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osCreateThread.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osCreateThread.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osStartThread.o
+                0x0000000000000000       0x10 build/j/src/libultra/osCreateThread.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osStartThread.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osStartThread.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osStartThread.o
+                0x0000000000000000       0x18 build/j/src/libultra/osStartThread.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osStartThread.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osStartThread.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osCreateMesgQueue.o
+                0x0000000000000000       0x10 build/j/src/libultra/osStartThread.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osCreateMesgQueue.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osCreateMesgQueue.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osCreateMesgQueue.o
+                0x0000000000000000       0x18 build/j/src/libultra/osCreateMesgQueue.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osCreateMesgQueue.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osCreateMesgQueue.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osStopThread.o
+                0x0000000000000000       0x10 build/j/src/libultra/osCreateMesgQueue.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osStopThread.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osStopThread.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osStopThread.o
+                0x0000000000000000       0x18 build/j/src/libultra/osStopThread.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osStopThread.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osStopThread.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osSetThreadPri.o
+                0x0000000000000000       0x10 build/j/src/libultra/osStopThread.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osSetThreadPri.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osSetThreadPri.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osSetThreadPri.o
+                0x0000000000000000       0x18 build/j/src/libultra/osSetThreadPri.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osSetThreadPri.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osSetThreadPri.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osGetCount.o
+                0x0000000000000000       0x10 build/j/src/libultra/osSetThreadPri.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osGetCount.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osGetCount.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osGetCount.o
+                0x0000000000000000       0x18 build/j/src/libultra/osGetCount.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osGetCount.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osGetCount.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osCreateViManager.o
+                0x0000000000000000       0x10 build/j/src/libultra/osGetCount.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osCreateViManager.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osCreateViManager.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osCreateViManager.o
+                0x0000000000000000       0x18 build/j/src/libultra/osCreateViManager.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osCreateViManager.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osCreateViManager.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osViModeTable.o
+                0x0000000000000000       0x10 build/j/src/libultra/osCreateViManager.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osViModeTable.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osViModeTable.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osViModeTable.o
+                0x0000000000000000       0x18 build/j/src/libultra/osViModeTable.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osViModeTable.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osViModeTable.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osSetEventMesg.o
+                0x0000000000000000       0x10 build/j/src/libultra/osViModeTable.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osSetEventMesg.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osSetEventMesg.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osSetEventMesg.o
+                0x0000000000000000       0x18 build/j/src/libultra/osSetEventMesg.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osSetEventMesg.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osSetEventMesg.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osViSetEvent.o
+                0x0000000000000000       0x10 build/j/src/libultra/osSetEventMesg.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osViSetEvent.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osViSetEvent.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osViSetEvent.o
+                0x0000000000000000       0x18 build/j/src/libultra/osViSetEvent.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osViSetEvent.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osViSetEvent.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osSetIntMask.o
+                0x0000000000000000       0x10 build/j/src/libultra/osViSetEvent.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osSetIntMask.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osSetIntMask.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osSetIntMask.o
+                0x0000000000000000       0x18 build/j/src/libultra/osSetIntMask.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osSetIntMask.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osSetIntMask.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osRecvMesg.o
+                0x0000000000000000       0x10 build/j/src/libultra/osSetIntMask.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osRecvMesg.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osRecvMesg.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osRecvMesg.o
+                0x0000000000000000       0x18 build/j/src/libultra/osRecvMesg.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osRecvMesg.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osRecvMesg.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osSendMesg.o
+                0x0000000000000000       0x10 build/j/src/libultra/osRecvMesg.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osSendMesg.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osSendMesg.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osSendMesg.o
+                0x0000000000000000       0x18 build/j/src/libultra/osSendMesg.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osSendMesg.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osSendMesg.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osViSetMode.o
+                0x0000000000000000       0x10 build/j/src/libultra/osSendMesg.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osViSetMode.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osViSetMode.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osViSetMode.o
+                0x0000000000000000       0x18 build/j/src/libultra/osViSetMode.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osViSetMode.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osViSetMode.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osViSetXScale.o
+                0x0000000000000000       0x10 build/j/src/libultra/osViSetMode.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osViSetXScale.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osViSetXScale.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osViSetXScale.o
+                0x0000000000000000       0x18 build/j/src/libultra/osViSetXScale.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osViSetXScale.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osViSetXScale.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osViSetYScale.o
+                0x0000000000000000       0x10 build/j/src/libultra/osViSetXScale.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osViSetYScale.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osViSetYScale.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osViSetYScale.o
+                0x0000000000000000       0x18 build/j/src/libultra/osViSetYScale.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osViSetYScale.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osViSetYScale.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osViRepeatLine.o
+                0x0000000000000000       0x10 build/j/src/libultra/osViSetYScale.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osViRepeatLine.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osViRepeatLine.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osViRepeatLine.o
+                0x0000000000000000       0x18 build/j/src/libultra/osViRepeatLine.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osViRepeatLine.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osViRepeatLine.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osViBlack.o
+                0x0000000000000000       0x10 build/j/src/libultra/osViRepeatLine.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osViBlack.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osViBlack.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osViBlack.o
+                0x0000000000000000       0x18 build/j/src/libultra/osViBlack.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osViBlack.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osViBlack.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osSpTaskYielded.o
+                0x0000000000000000       0x10 build/j/src/libultra/osViBlack.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osSpTaskYielded.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osSpTaskYielded.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osSpTaskYielded.o
+                0x0000000000000000       0x18 build/j/src/libultra/osSpTaskYielded.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osSpTaskYielded.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osSpTaskYielded.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osDpGetCounters.o
+                0x0000000000000000       0x10 build/j/src/libultra/osSpTaskYielded.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osDpGetCounters.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osDpGetCounters.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osDpGetCounters.o
+                0x0000000000000000       0x18 build/j/src/libultra/osDpGetCounters.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osDpGetCounters.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osDpGetCounters.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osViGetCurrentFramebuffer.o
+                0x0000000000000000       0x10 build/j/src/libultra/osDpGetCounters.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osViGetCurrentFramebuffer.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osViGetCurrentFramebuffer.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osViGetCurrentFramebuffer.o
+                0x0000000000000000       0x18 build/j/src/libultra/osViGetCurrentFramebuffer.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osViGetCurrentFramebuffer.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osViGetCurrentFramebuffer.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osViGetNextFramebuffer.o
+                0x0000000000000000       0x10 build/j/src/libultra/osViGetCurrentFramebuffer.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osViGetNextFramebuffer.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osViGetNextFramebuffer.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osViGetNextFramebuffer.o
+                0x0000000000000000       0x18 build/j/src/libultra/osViGetNextFramebuffer.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osViGetNextFramebuffer.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osViGetNextFramebuffer.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osViSwapBuffer.o
+                0x0000000000000000       0x10 build/j/src/libultra/osViGetNextFramebuffer.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osViSwapBuffer.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osViSwapBuffer.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osViSwapBuffer.o
+                0x0000000000000000       0x18 build/j/src/libultra/osViSwapBuffer.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osViSwapBuffer.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osViSwapBuffer.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osDpSetStatus.o
+                0x0000000000000000       0x10 build/j/src/libultra/osViSwapBuffer.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osDpSetStatus.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osDpSetStatus.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osDpSetStatus.o
+                0x0000000000000000       0x18 build/j/src/libultra/osDpSetStatus.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osDpSetStatus.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osDpSetStatus.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osSpTaskLoad.o
+                0x0000000000000000       0x10 build/j/src/libultra/osDpSetStatus.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osSpTaskLoad.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osSpTaskLoad.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osSpTaskLoad.o
+                0x0000000000000000       0x18 build/j/src/libultra/osSpTaskLoad.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osSpTaskLoad.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osSpTaskLoad.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osDpSetNextBuffer.o
+                0x0000000000000000       0x10 build/j/src/libultra/osSpTaskLoad.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osDpSetNextBuffer.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osDpSetNextBuffer.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osDpSetNextBuffer.o
+                0x0000000000000000       0x18 build/j/src/libultra/osDpSetNextBuffer.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osDpSetNextBuffer.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osDpSetNextBuffer.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osSpTaskYield.o
+                0x0000000000000000       0x10 build/j/src/libultra/osDpSetNextBuffer.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osSpTaskYield.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osSpTaskYield.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osSpTaskYield.o
+                0x0000000000000000       0x18 build/j/src/libultra/osSpTaskYield.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osSpTaskYield.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osSpTaskYield.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/__osGetTLBHi.o
+                0x0000000000000000       0x10 build/j/src/libultra/osSpTaskYield.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/__osGetTLBHi.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/__osGetTLBHi.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/__osGetTLBHi.o
+                0x0000000000000000       0x18 build/j/src/libultra/__osGetTLBHi.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/__osGetTLBHi.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/__osGetTLBHi.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osVirtualToPhysical.o
+                0x0000000000000000       0x10 build/j/src/libultra/__osGetTLBHi.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osVirtualToPhysical.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osVirtualToPhysical.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osVirtualToPhysical.o
+                0x0000000000000000       0x18 build/j/src/libultra/osVirtualToPhysical.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osVirtualToPhysical.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osVirtualToPhysical.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osAiSetFrequency.o
+                0x0000000000000000       0x10 build/j/src/libultra/osVirtualToPhysical.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osAiSetFrequency.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osAiSetFrequency.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osAiSetFrequency.o
+                0x0000000000000000       0x18 build/j/src/libultra/osAiSetFrequency.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osAiSetFrequency.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osAiSetFrequency.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/alInit.o
+                0x0000000000000000       0x10 build/j/src/libultra/osAiSetFrequency.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/alInit.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/alInit.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/alInit.o
+                0x0000000000000000       0x18 build/j/src/libultra/alInit.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/alInit.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/alInit.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osGetTime.o
+                0x0000000000000000       0x10 build/j/src/libultra/alInit.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osGetTime.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osGetTime.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osGetTime.o
+                0x0000000000000000       0x18 build/j/src/libultra/osGetTime.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osGetTime.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osGetTime.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/ll.o
+                0x0000000000000000       0x10 build/j/src/libultra/osGetTime.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/ll.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/ll.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/ll.o
+                0x0000000000000000       0x18 build/j/src/libultra/ll.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/ll.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/ll.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osAiGetLength.o
+                0x0000000000000000       0x10 build/j/src/libultra/ll.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osAiGetLength.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osAiGetLength.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osAiGetLength.o
+                0x0000000000000000       0x18 build/j/src/libultra/osAiGetLength.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osAiGetLength.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osAiGetLength.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/syn.o
+                0x0000000000000000       0x10 build/j/src/libultra/osAiGetLength.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/syn.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/syn.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/syn.o
+                0x0000000000000000       0x18 build/j/src/libultra/syn.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/syn.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/syn.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osPiStartDma.o
+                0x0000000000000000       0x10 build/j/src/libultra/syn.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osPiStartDma.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osPiStartDma.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osPiStartDma.o
+                0x0000000000000000       0x18 build/j/src/libultra/osPiStartDma.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osPiStartDma.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osPiStartDma.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osViSetSpecialFeatures.o
+                0x0000000000000000       0x10 build/j/src/libultra/osPiStartDma.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osViSetSpecialFeatures.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osViSetSpecialFeatures.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osViSetSpecialFeatures.o
+                0x0000000000000000       0x18 build/j/src/libultra/osViSetSpecialFeatures.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osViSetSpecialFeatures.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osViSetSpecialFeatures.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/_bcopy.o
+                0x0000000000000000       0x10 build/j/src/libultra/osViSetSpecialFeatures.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/_bcopy.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/_bcopy.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/_bcopy.o
+                0x0000000000000000       0x18 build/j/src/libultra/_bcopy.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/_bcopy.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/_bcopy.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/guPerspective.o
+                0x0000000000000000       0x10 build/j/src/libultra/_bcopy.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/guPerspective.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/guPerspective.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/guPerspective.o
+                0x0000000000000000       0x18 build/j/src/libultra/guPerspective.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/guPerspective.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/guPerspective.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/Mtx.o
+                0x0000000000000000       0x10 build/j/src/libultra/guPerspective.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/Mtx.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/Mtx.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/Mtx.o
+                0x0000000000000000       0x18 build/j/src/libultra/Mtx.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/Mtx.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/Mtx.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/__osGetCurrFaultedThread.o
+                0x0000000000000000       0x10 build/j/src/libultra/Mtx.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/__osGetCurrFaultedThread.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/__osGetCurrFaultedThread.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/__osGetCurrFaultedThread.o
+                0x0000000000000000       0x18 build/j/src/libultra/__osGetCurrFaultedThread.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/__osGetCurrFaultedThread.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/__osGetCurrFaultedThread.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/exception.o
+                0x0000000000000000       0x10 build/j/src/libultra/__osGetCurrFaultedThread.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/exception.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/exception.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/exception.o
+                0x0000000000000000       0x18 build/j/src/libultra/exception.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/exception.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/exception.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/__osDequeueThread.o
+                0x0000000000000000       0x10 build/j/src/libultra/exception.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/__osDequeueThread.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/__osDequeueThread.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/__osDequeueThread.o
+                0x0000000000000000       0x18 build/j/src/libultra/__osDequeueThread.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/__osDequeueThread.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/__osDequeueThread.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osYieldThread.o
+                0x0000000000000000       0x10 build/j/src/libultra/__osDequeueThread.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osYieldThread.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osYieldThread.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osYieldThread.o
+                0x0000000000000000       0x18 build/j/src/libultra/osYieldThread.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osYieldThread.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osYieldThread.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osInvalDCache.o
+                0x0000000000000000       0x10 build/j/src/libultra/osYieldThread.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osInvalDCache.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osInvalDCache.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osInvalDCache.o
+                0x0000000000000000       0x18 build/j/src/libultra/osInvalDCache.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osInvalDCache.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osInvalDCache.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osWritebackDCache.o
+                0x0000000000000000       0x10 build/j/src/libultra/osInvalDCache.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osWritebackDCache.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osWritebackDCache.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osWritebackDCache.o
+                0x0000000000000000       0x18 build/j/src/libultra/osWritebackDCache.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osWritebackDCache.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osWritebackDCache.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/osSetTimer.o
+                0x0000000000000000       0x10 build/j/src/libultra/osWritebackDCache.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osSetTimer.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/osSetTimer.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/osSetTimer.o
+                0x0000000000000000       0x18 build/j/src/libultra/osSetTimer.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osSetTimer.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/osSetTimer.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/alHeapInit.o
+                0x0000000000000000       0x10 build/j/src/libultra/osSetTimer.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/alHeapInit.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/alHeapInit.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/alHeapInit.o
+                0x0000000000000000       0x18 build/j/src/libultra/alHeapInit.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/alHeapInit.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/alHeapInit.o
- .reginfo       0x0000000000000000       0x18 build/j/libultra/libultra.o
+                0x0000000000000000       0x10 build/j/src/libultra/alHeapInit.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/alBnkfNew.o
  .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/libultra/libultra.o
- .pdr           0x0000000000000000        0x0 build/j/libultra/libultra.o
+                0x0000000000000000       0x18 build/j/src/libultra/alBnkfNew.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/alBnkfNew.o
  .gnu.attributes
-                0x0000000000000000       0x10 build/j/libultra/libultra.o
+                0x0000000000000000       0x10 build/j/src/libultra/alBnkfNew.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/__CSP.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/__CSP.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/__CSP.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/__CSP.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/alSeqpSetBank.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/alSeqpSetBank.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/alSeqpSetBank.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/alSeqpSetBank.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/alCSPGetState.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/alCSPGetState.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/alCSPGetState.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/alCSPGetState.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/csequencer.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/csequencer.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/csequencer.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/csequencer.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/libultra.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/libultra.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/libultra.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/libultra.o
  .options       0x0000000000000000       0x20 build/j/src/c_data_filler.o
  .reginfo       0x0000000000000000       0x18 build/j/src/c_data_filler.o
  .gptab.data    0x0000000000000000       0x18 build/j/src/c_data_filler.o
@@ -1302,134 +1332,134 @@ Linker script and memory map
                 0x000000007000cf20                rmon_debug_stub_4
                 0x000000007000cf28                proutSyncPrintf
                 0x000000007000cf84                osSyncPrintf
- build/j/libultra/osPiRawStartDma.o(.text)
- .text          0x000000007000cfd0       0xe0 build/j/libultra/osPiRawStartDma.o
+ build/j/src/libultra/osPiRawStartDma.o(.text)
+ .text          0x000000007000cfd0       0xe0 build/j/src/libultra/osPiRawStartDma.o
                 0x000000007000cfd0                osPiRawStartDma
- build/j/libultra/osPiGetStatus.o(.text)
- .text          0x000000007000d0b0       0x10 build/j/libultra/osPiGetStatus.o
+ build/j/src/libultra/osPiGetStatus.o(.text)
+ .text          0x000000007000d0b0       0x10 build/j/src/libultra/osPiGetStatus.o
                 0x000000007000d0b0                osPiGetStatus
- build/j/libultra/osInitialize.o(.text)
- .text          0x000000007000d0c0      0x2a0 build/j/libultra/osInitialize.o
+ build/j/src/libultra/osInitialize.o(.text)
+ .text          0x000000007000d0c0      0x2a0 build/j/src/libultra/osInitialize.o
                 0x000000007000d0c0                osInitialize
- build/j/libultra/osWritebackDCacheAll.o(.text)
- .text          0x000000007000d360       0x30 build/j/libultra/osWritebackDCacheAll.o
+ build/j/src/libultra/osWritebackDCacheAll.o(.text)
+ .text          0x000000007000d360       0x30 build/j/src/libultra/osWritebackDCacheAll.o
                 0x000000007000d360                osWritebackDCacheAll
- build/j/libultra/osInvalICache.o(.text)
- .text          0x000000007000d390       0x80 build/j/libultra/osInvalICache.o
+ build/j/src/libultra/osInvalICache.o(.text)
+ .text          0x000000007000d390       0x80 build/j/src/libultra/osInvalICache.o
                 0x000000007000d390                osInvalICache
- build/j/libultra/osUnmapTLB.o(.text)
- .text          0x000000007000d410       0x40 build/j/libultra/osUnmapTLB.o
+ build/j/src/libultra/osUnmapTLB.o(.text)
+ .text          0x000000007000d410       0x40 build/j/src/libultra/osUnmapTLB.o
                 0x000000007000d410                osUnmapTLB
- build/j/libultra/__osGetFpcCsr.o(.text)
- .text          0x000000007000d450       0x10 build/j/libultra/__osGetFpcCsr.o
+ build/j/src/libultra/__osGetFpcCsr.o(.text)
+ .text          0x000000007000d450       0x10 build/j/src/libultra/__osGetFpcCsr.o
                 0x000000007000d450                __osGetFpcCsr
- build/j/libultra/__osSetFpcCsr.o(.text)
- .text          0x000000007000d460       0x10 build/j/libultra/__osSetFpcCsr.o
+ build/j/src/libultra/__osSetFpcCsr.o(.text)
+ .text          0x000000007000d460       0x10 build/j/src/libultra/__osSetFpcCsr.o
                 0x000000007000d460                __osSetFpcCsr
- build/j/libultra/osCreateThread.o(.text)
- .text          0x000000007000d470      0x150 build/j/libultra/osCreateThread.o
+ build/j/src/libultra/osCreateThread.o(.text)
+ .text          0x000000007000d470      0x150 build/j/src/libultra/osCreateThread.o
                 0x000000007000d470                osCreateThread
- build/j/libultra/osStartThread.o(.text)
- .text          0x000000007000d5c0      0x150 build/j/libultra/osStartThread.o
+ build/j/src/libultra/osStartThread.o(.text)
+ .text          0x000000007000d5c0      0x150 build/j/src/libultra/osStartThread.o
                 0x000000007000d5c0                osStartThread
- build/j/libultra/osCreateMesgQueue.o(.text)
- .text          0x000000007000d710       0x70 build/j/libultra/osCreateMesgQueue.o
+ build/j/src/libultra/osCreateMesgQueue.o(.text)
+ .text          0x000000007000d710       0x70 build/j/src/libultra/osCreateMesgQueue.o
                 0x000000007000d710                osCreateMesgQueue
- build/j/libultra/osStopThread.o(.text)
- .text          0x000000007000d780       0xc0 build/j/libultra/osStopThread.o
+ build/j/src/libultra/osStopThread.o(.text)
+ .text          0x000000007000d780       0xc0 build/j/src/libultra/osStopThread.o
                 0x000000007000d780                osStopThread
- build/j/libultra/osSetThreadPri.o(.text)
- .text          0x000000007000d840       0xe0 build/j/libultra/osSetThreadPri.o
+ build/j/src/libultra/osSetThreadPri.o(.text)
+ .text          0x000000007000d840       0xe0 build/j/src/libultra/osSetThreadPri.o
                 0x000000007000d840                osSetThreadPri
- build/j/libultra/osGetCount.o(.text)
- .text          0x000000007000d920       0x10 build/j/libultra/osGetCount.o
+ build/j/src/libultra/osGetCount.o(.text)
+ .text          0x000000007000d920       0x10 build/j/src/libultra/osGetCount.o
                 0x000000007000d920                osGetCount
- build/j/libultra/osCreateViManager.o(.text)
- .text          0x000000007000d930      0x360 build/j/libultra/osCreateViManager.o
+ build/j/src/libultra/osCreateViManager.o(.text)
+ .text          0x000000007000d930      0x360 build/j/src/libultra/osCreateViManager.o
                 0x000000007000d930                osCreateViManager
                 0x000000007000dab8                viMgrMain
- build/j/libultra/osViModeTable.o(.text)
- .text          0x000000007000dc90        0x0 build/j/libultra/osViModeTable.o
- build/j/libultra/osSetEventMesg.o(.text)
- .text          0x000000007000dc90       0x70 build/j/libultra/osSetEventMesg.o
+ build/j/src/libultra/osViModeTable.o(.text)
+ .text          0x000000007000dc90        0x0 build/j/src/libultra/osViModeTable.o
+ build/j/src/libultra/osSetEventMesg.o(.text)
+ .text          0x000000007000dc90       0x70 build/j/src/libultra/osSetEventMesg.o
                 0x000000007000dc90                osSetEventMesg
- build/j/libultra/osViSetEvent.o(.text)
- .text          0x000000007000dd00       0x70 build/j/libultra/osViSetEvent.o
+ build/j/src/libultra/osViSetEvent.o(.text)
+ .text          0x000000007000dd00       0x70 build/j/src/libultra/osViSetEvent.o
                 0x000000007000dd00                osViSetEvent
- build/j/libultra/osSetIntMask.o(.text)
- .text          0x000000007000dd70       0xa0 build/j/libultra/osSetIntMask.o
+ build/j/src/libultra/osSetIntMask.o(.text)
+ .text          0x000000007000dd70       0xa0 build/j/src/libultra/osSetIntMask.o
                 0x000000007000dd70                osSetIntMask
- build/j/libultra/osRecvMesg.o(.text)
- .text          0x000000007000de10      0x140 build/j/libultra/osRecvMesg.o
+ build/j/src/libultra/osRecvMesg.o(.text)
+ .text          0x000000007000de10      0x140 build/j/src/libultra/osRecvMesg.o
                 0x000000007000de10                osRecvMesg
- build/j/libultra/osSendMesg.o(.text)
- .text          0x000000007000df50      0x150 build/j/libultra/osSendMesg.o
+ build/j/src/libultra/osSendMesg.o(.text)
+ .text          0x000000007000df50      0x150 build/j/src/libultra/osSendMesg.o
                 0x000000007000df50                osSendMesg
- build/j/libultra/osViSetMode.o(.text)
- .text          0x000000007000e0a0       0x70 build/j/libultra/osViSetMode.o
+ build/j/src/libultra/osViSetMode.o(.text)
+ .text          0x000000007000e0a0       0x70 build/j/src/libultra/osViSetMode.o
                 0x000000007000e0a0                osViSetMode
- build/j/libultra/osViSetXScale.o(.text)
- .text          0x000000007000e110      0x130 build/j/libultra/osViSetXScale.o
+ build/j/src/libultra/osViSetXScale.o(.text)
+ .text          0x000000007000e110      0x130 build/j/src/libultra/osViSetXScale.o
                 0x000000007000e110                osViSetXScale
- build/j/libultra/osViSetYScale.o(.text)
- .text          0x000000007000e240       0x60 build/j/libultra/osViSetYScale.o
+ build/j/src/libultra/osViSetYScale.o(.text)
+ .text          0x000000007000e240       0x60 build/j/src/libultra/osViSetYScale.o
                 0x000000007000e240                osViSetYScale
- build/j/libultra/osViRepeatLine.o(.text)
- .text          0x000000007000e2a0       0x70 build/j/libultra/osViRepeatLine.o
+ build/j/src/libultra/osViRepeatLine.o(.text)
+ .text          0x000000007000e2a0       0x70 build/j/src/libultra/osViRepeatLine.o
                 0x000000007000e2a0                osViRepeatLine
- build/j/libultra/osViBlack.o(.text)
- .text          0x000000007000e310       0x70 build/j/libultra/osViBlack.o
+ build/j/src/libultra/osViBlack.o(.text)
+ .text          0x000000007000e310       0x70 build/j/src/libultra/osViBlack.o
                 0x000000007000e310                osViBlack
- build/j/libultra/osSpTaskYielded.o(.text)
- .text          0x000000007000e380       0x80 build/j/libultra/osSpTaskYielded.o
+ build/j/src/libultra/osSpTaskYielded.o(.text)
+ .text          0x000000007000e380       0x80 build/j/src/libultra/osSpTaskYielded.o
                 0x000000007000e380                osSpTaskYielded
- build/j/libultra/osDpGetCounters.o(.text)
- .text          0x000000007000e400       0x50 build/j/libultra/osDpGetCounters.o
+ build/j/src/libultra/osDpGetCounters.o(.text)
+ .text          0x000000007000e400       0x50 build/j/src/libultra/osDpGetCounters.o
                 0x000000007000e400                osDpGetCounters
- build/j/libultra/osViGetCurrentFramebuffer.o(.text)
- .text          0x000000007000e450       0x40 build/j/libultra/osViGetCurrentFramebuffer.o
+ build/j/src/libultra/osViGetCurrentFramebuffer.o(.text)
+ .text          0x000000007000e450       0x40 build/j/src/libultra/osViGetCurrentFramebuffer.o
                 0x000000007000e450                osViGetCurrentFramebuffer
- build/j/libultra/osViGetNextFramebuffer.o(.text)
- .text          0x000000007000e490       0x40 build/j/libultra/osViGetNextFramebuffer.o
+ build/j/src/libultra/osViGetNextFramebuffer.o(.text)
+ .text          0x000000007000e490       0x40 build/j/src/libultra/osViGetNextFramebuffer.o
                 0x000000007000e490                osViGetNextFramebuffer
- build/j/libultra/osViSwapBuffer.o(.text)
- .text          0x000000007000e4d0       0x50 build/j/libultra/osViSwapBuffer.o
+ build/j/src/libultra/osViSwapBuffer.o(.text)
+ .text          0x000000007000e4d0       0x50 build/j/src/libultra/osViSwapBuffer.o
                 0x000000007000e4d0                osViSwapBuffer
- build/j/libultra/osDpSetStatus.o(.text)
- .text          0x000000007000e520       0x10 build/j/libultra/osDpSetStatus.o
+ build/j/src/libultra/osDpSetStatus.o(.text)
+ .text          0x000000007000e520       0x10 build/j/src/libultra/osDpSetStatus.o
                 0x000000007000e520                osDpSetStatus
- build/j/libultra/osSpTaskLoad.o(.text)
- .text          0x000000007000e530      0x2c0 build/j/libultra/osSpTaskLoad.o
+ build/j/src/libultra/osSpTaskLoad.o(.text)
+ .text          0x000000007000e530      0x2c0 build/j/src/libultra/osSpTaskLoad.o
                 0x000000007000e530                _VirtualToPhysicalTask
                 0x000000007000e64c                osSpTaskLoad
                 0x000000007000e7ac                osSpTaskStartGo
- build/j/libultra/osDpSetNextBuffer.o(.text)
- .text          0x000000007000e7f0       0xb0 build/j/libultra/osDpSetNextBuffer.o
+ build/j/src/libultra/osDpSetNextBuffer.o(.text)
+ .text          0x000000007000e7f0       0xb0 build/j/src/libultra/osDpSetNextBuffer.o
                 0x000000007000e7f0                osDpSetNextBuffer
- build/j/libultra/osSpTaskYield.o(.text)
- .text          0x000000007000e8a0       0x20 build/j/libultra/osSpTaskYield.o
+ build/j/src/libultra/osSpTaskYield.o(.text)
+ .text          0x000000007000e8a0       0x20 build/j/src/libultra/osSpTaskYield.o
                 0x000000007000e8a0                osSpTaskYield
- build/j/libultra/__osGetTLBHi.o(.text)
- .text          0x000000007000e8c0       0x30 build/j/libultra/__osGetTLBHi.o
+ build/j/src/libultra/__osGetTLBHi.o(.text)
+ .text          0x000000007000e8c0       0x30 build/j/src/libultra/__osGetTLBHi.o
                 0x000000007000e8c0                __osGetTLBHi
- build/j/libultra/osVirtualToPhysical.o(.text)
- .text          0x000000007000e8f0       0x80 build/j/libultra/osVirtualToPhysical.o
+ build/j/src/libultra/osVirtualToPhysical.o(.text)
+ .text          0x000000007000e8f0       0x80 build/j/src/libultra/osVirtualToPhysical.o
                 0x000000007000e8f0                osVirtualToPhysical
- build/j/libultra/osAiSetFrequency.o(.text)
- .text          0x000000007000e970      0x160 build/j/libultra/osAiSetFrequency.o
+ build/j/src/libultra/osAiSetFrequency.o(.text)
+ .text          0x000000007000e970      0x160 build/j/src/libultra/osAiSetFrequency.o
                 0x000000007000e970                osAiSetFrequency
- build/j/libultra/alInit.o(.text)
- .text          0x000000007000ead0      0x120 build/j/libultra/alInit.o
+ build/j/src/libultra/alInit.o(.text)
+ .text          0x000000007000ead0      0x120 build/j/src/libultra/alInit.o
                 0x000000007000ead0                alUnlink
                 0x000000007000eb00                alLink
                 0x000000007000eb24                alClose
                 0x000000007000eb5c                alInit
                 0x000000007000eb90                alHeapDBAlloc
- build/j/libultra/osGetTime.o(.text)
- .text          0x000000007000ebf0       0x90 build/j/libultra/osGetTime.o
+ build/j/src/libultra/osGetTime.o(.text)
+ .text          0x000000007000ebf0       0x90 build/j/src/libultra/osGetTime.o
                 0x000000007000ebf0                osGetTime
- build/j/libultra/ll.o(.text)
- .text          0x000000007000ec80      0x370 build/j/libultra/ll.o
+ build/j/src/libultra/ll.o(.text)
+ .text          0x000000007000ec80      0x370 build/j/src/libultra/ll.o
                 0x000000007000ec80                __ull_rshift
                 0x000000007000ecac                __ull_rem
                 0x000000007000ece8                __ull_div
@@ -1441,11 +1471,11 @@ Linker script and memory map
                 0x000000007000ee78                __ll_mod
                 0x000000007000ef14                __ll_rshift
                 0x000000007000ef40                osAiSetNextBuffer
- build/j/libultra/osAiGetLength.o(.text)
- .text          0x000000007000eff0       0x10 build/j/libultra/osAiGetLength.o
+ build/j/src/libultra/osAiGetLength.o(.text)
+ .text          0x000000007000eff0       0x10 build/j/src/libultra/osAiGetLength.o
                 0x000000007000eff0                osAiGetLength
- build/j/libultra/syn.o(.text)
- .text          0x000000007000f000      0x6e0 build/j/libultra/syn.o
+ build/j/src/libultra/syn.o(.text)
+ .text          0x000000007000f000      0x6e0 build/j/src/libultra/syn.o
                 0x000000007000f008                _timeToSamples
                 0x000000007000f060                _freePVoice
                 0x000000007000f098                _collectPVoices
@@ -1453,30 +1483,30 @@ Linker script and memory map
                 0x000000007000f110                __allocParam
                 0x000000007000f148                alAudioFrame
                 0x000000007000f3e0                alSynNew
- build/j/libultra/osPiStartDma.o(.text)
- .text          0x000000007000f6e0      0x110 build/j/libultra/osPiStartDma.o
+ build/j/src/libultra/osPiStartDma.o(.text)
+ .text          0x000000007000f6e0      0x110 build/j/src/libultra/osPiStartDma.o
                 0x000000007000f6e0                osPiStartDma
- build/j/libultra/osViSetSpecialFeatures.o(.text)
- .text          0x000000007000f7f0      0x1c0 build/j/libultra/osViSetSpecialFeatures.o
+ build/j/src/libultra/osViSetSpecialFeatures.o(.text)
+ .text          0x000000007000f7f0      0x1c0 build/j/src/libultra/osViSetSpecialFeatures.o
                 0x000000007000f7f0                osViSetSpecialFeatures
- build/j/libultra/_bcopy.o(.text)
- .text          0x000000007000f9b0      0x310 build/j/libultra/_bcopy.o
+ build/j/src/libultra/_bcopy.o(.text)
+ .text          0x000000007000f9b0      0x310 build/j/src/libultra/_bcopy.o
                 0x000000007000f9b0                _bcopy
- build/j/libultra/guPerspective.o(.text)
- .text          0x000000007000fcc0      0x290 build/j/libultra/guPerspective.o
+ build/j/src/libultra/guPerspective.o(.text)
+ .text          0x000000007000fcc0      0x290 build/j/src/libultra/guPerspective.o
                 0x000000007000fcc0                guPerspectiveF
                 0x000000007000fef0                guPerspective
- build/j/libultra/Mtx.o(.text)
- .text          0x000000007000ff50      0x270 build/j/libultra/Mtx.o
+ build/j/src/libultra/Mtx.o(.text)
+ .text          0x000000007000ff50      0x270 build/j/src/libultra/Mtx.o
                 0x000000007000ff50                guMtxF2L
                 0x0000000070010050                guMtxIdentF
                 0x00000000700100d8                guMtxIdent
                 0x0000000070010108                guMtxL2F
- build/j/libultra/__osGetCurrFaultedThread.o(.text)
- .text          0x00000000700101c0       0x10 build/j/libultra/__osGetCurrFaultedThread.o
+ build/j/src/libultra/__osGetCurrFaultedThread.o(.text)
+ .text          0x00000000700101c0       0x10 build/j/src/libultra/__osGetCurrFaultedThread.o
                 0x00000000700101c0                __osGetCurrFaultedThread
- build/j/libultra/exception.o(.text)
- .text          0x00000000700101d0      0x900 build/j/libultra/exception.o
+ build/j/src/libultra/exception.o(.text)
+ .text          0x00000000700101d0      0x900 build/j/src/libultra/exception.o
                 0x00000000700101d0                __osExceptionPreamble
                 0x00000000700101e0                __osException
                 0x00000000700103d0                next_interrupt
@@ -1498,37 +1528,45 @@ Linker script and memory map
                 0x0000000070010944                __osDispatchThread
                 0x0000000070010964                __osDispatchThreadSave
                 0x0000000070010ac0                __osCleanupThread
- build/j/libultra/__osDequeueThread.o(.text)
- .text          0x0000000070010ad0       0x40 build/j/libultra/__osDequeueThread.o
+ build/j/src/libultra/__osDequeueThread.o(.text)
+ .text          0x0000000070010ad0       0x40 build/j/src/libultra/__osDequeueThread.o
                 0x0000000070010ad0                __osDequeueThread
- build/j/libultra/osYieldThread.o(.text)
- .text          0x0000000070010b10       0x50 build/j/libultra/osYieldThread.o
+ build/j/src/libultra/osYieldThread.o(.text)
+ .text          0x0000000070010b10       0x50 build/j/src/libultra/osYieldThread.o
                 0x0000000070010b10                osYieldThread
- build/j/libultra/osInvalDCache.o(.text)
- .text          0x0000000070010b60       0xb0 build/j/libultra/osInvalDCache.o
+ build/j/src/libultra/osInvalDCache.o(.text)
+ .text          0x0000000070010b60       0xb0 build/j/src/libultra/osInvalDCache.o
                 0x0000000070010b60                osInvalDCache
- build/j/libultra/osWritebackDCache.o(.text)
- .text          0x0000000070010c10       0x80 build/j/libultra/osWritebackDCache.o
+ build/j/src/libultra/osWritebackDCache.o(.text)
+ .text          0x0000000070010c10       0x80 build/j/src/libultra/osWritebackDCache.o
                 0x0000000070010c10                osWritebackDCache
- build/j/libultra/osSetTimer.o(.text)
- .text          0x0000000070010c90       0xe0 build/j/libultra/osSetTimer.o
+ build/j/src/libultra/osSetTimer.o(.text)
+ .text          0x0000000070010c90       0xe0 build/j/src/libultra/osSetTimer.o
                 0x0000000070010c90                osSetTimer
- build/j/libultra/alHeapInit.o(.text)
- .text          0x0000000070010d70       0x40 build/j/libultra/alHeapInit.o
+ build/j/src/libultra/alHeapInit.o(.text)
+ .text          0x0000000070010d70       0x40 build/j/src/libultra/alHeapInit.o
                 0x0000000070010d70                alHeapInit
- build/j/libultra/libultra.o(.text)
- .text          0x0000000070010db0    0x10020 build/j/libultra/libultra.o
+ build/j/src/libultra/alBnkfNew.o(.text)
+ .text          0x0000000070010db0      0x250 build/j/src/libultra/alBnkfNew.o
                 0x0000000070010dc0                ultra_70010D80
                 0x0000000070010eb4                alBnkfNew
                 0x0000000070010fb8                alSeqFileNew
+ build/j/src/libultra/__CSP.o(.text)
+ .text          0x0000000070011000     0x1230 build/j/src/libultra/__CSP.o
                 0x0000000070011000                __CSPPostNextSeqEvent
                 0x0000000070011070                ultra_70011030
                 0x00000000700110ac                ultra_7001106C
                 0x000000007001127c                __CSPHandleMIDIMsg
                 0x0000000070011aac                ultra_70011A6C
                 0x00000000700120c0                alCSPNew
+ build/j/src/libultra/alSeqpSetBank.o(.text)
+ .text          0x0000000070012230       0x40 build/j/src/libultra/alSeqpSetBank.o
                 0x0000000070012230                alSeqpSetBank
+ build/j/src/libultra/alCSPGetState.o(.text)
+ .text          0x0000000070012270       0x10 build/j/src/libultra/alCSPGetState.o
                 0x0000000070012270                alCSPGetState
+ build/j/src/libultra/csequencer.o(.text)
+ .text          0x0000000070012280      0xac0 build/j/src/libultra/csequencer.o
                 0x0000000070012280                alCSeqGetLoc
                 0x0000000070012320                alCSeqSetLoc
                 0x00000000700123c0                ultra_70012380
@@ -1540,6 +1578,8 @@ Linker script and memory map
                 0x0000000070012a64                alCSeqSecToTicks
                 0x0000000070012b60                alCSeqTicksToSec
                 0x0000000070012bcc                __alCSeqNextDelta
+ build/j/src/libultra/libultra.o(.text)
+ .text          0x0000000070012d40     0xe090 build/j/src/libultra/libultra.o
                 0x0000000070012d40                alCSPSetSeq
                 0x0000000070012d80                alCSPPlay
                 0x0000000070012db0                alCSPStop
@@ -16478,40 +16518,40 @@ Linker script and memory map
                 0x00000000800269b0                D_80026970
  build/j/src/joy_rumble.o(.data)
  build/j/src/rmon.o(.data)
- build/j/libultra/osPiRawStartDma.o(.data)
- .data          0x00000000800269c0        0x0 build/j/libultra/osPiRawStartDma.o
- build/j/libultra/osPiGetStatus.o(.data)
- .data          0x00000000800269c0        0x0 build/j/libultra/osPiGetStatus.o
- build/j/libultra/osInitialize.o(.data)
- .data          0x00000000800269c0       0x20 build/j/libultra/osInitialize.o
+ build/j/src/libultra/osPiRawStartDma.o(.data)
+ .data          0x00000000800269c0        0x0 build/j/src/libultra/osPiRawStartDma.o
+ build/j/src/libultra/osPiGetStatus.o(.data)
+ .data          0x00000000800269c0        0x0 build/j/src/libultra/osPiGetStatus.o
+ build/j/src/libultra/osInitialize.o(.data)
+ .data          0x00000000800269c0       0x20 build/j/src/libultra/osInitialize.o
                 0x00000000800269c0                osClockRate
                 0x00000000800269c8                __osShutdown
                 0x00000000800269cc                __OSGlobalIntMask
                 0x00000000800269d0                osDiskExist
- build/j/libultra/osWritebackDCacheAll.o(.data)
- .data          0x00000000800269e0        0x0 build/j/libultra/osWritebackDCacheAll.o
- build/j/libultra/osInvalICache.o(.data)
- .data          0x00000000800269e0        0x0 build/j/libultra/osInvalICache.o
- build/j/libultra/osUnmapTLB.o(.data)
- .data          0x00000000800269e0        0x0 build/j/libultra/osUnmapTLB.o
- build/j/libultra/__osGetFpcCsr.o(.data)
- .data          0x00000000800269e0        0x0 build/j/libultra/__osGetFpcCsr.o
- build/j/libultra/__osSetFpcCsr.o(.data)
- .data          0x00000000800269e0        0x0 build/j/libultra/__osSetFpcCsr.o
- build/j/libultra/osCreateThread.o(.data)
- .data          0x00000000800269e0        0x0 build/j/libultra/osCreateThread.o
- build/j/libultra/osStartThread.o(.data)
- .data          0x00000000800269e0        0x0 build/j/libultra/osStartThread.o
- build/j/libultra/osCreateMesgQueue.o(.data)
- .data          0x00000000800269e0        0x0 build/j/libultra/osCreateMesgQueue.o
- build/j/libultra/osStopThread.o(.data)
- .data          0x00000000800269e0        0x0 build/j/libultra/osStopThread.o
- build/j/libultra/osSetThreadPri.o(.data)
- .data          0x00000000800269e0        0x0 build/j/libultra/osSetThreadPri.o
- build/j/libultra/osGetCount.o(.data)
- .data          0x00000000800269e0        0x0 build/j/libultra/osGetCount.o
- build/j/libultra/osCreateViManager.o(.data)
- .data          0x00000000800269e0       0x20 build/j/libultra/osCreateViManager.o
+ build/j/src/libultra/osWritebackDCacheAll.o(.data)
+ .data          0x00000000800269e0        0x0 build/j/src/libultra/osWritebackDCacheAll.o
+ build/j/src/libultra/osInvalICache.o(.data)
+ .data          0x00000000800269e0        0x0 build/j/src/libultra/osInvalICache.o
+ build/j/src/libultra/osUnmapTLB.o(.data)
+ .data          0x00000000800269e0        0x0 build/j/src/libultra/osUnmapTLB.o
+ build/j/src/libultra/__osGetFpcCsr.o(.data)
+ .data          0x00000000800269e0        0x0 build/j/src/libultra/__osGetFpcCsr.o
+ build/j/src/libultra/__osSetFpcCsr.o(.data)
+ .data          0x00000000800269e0        0x0 build/j/src/libultra/__osSetFpcCsr.o
+ build/j/src/libultra/osCreateThread.o(.data)
+ .data          0x00000000800269e0        0x0 build/j/src/libultra/osCreateThread.o
+ build/j/src/libultra/osStartThread.o(.data)
+ .data          0x00000000800269e0        0x0 build/j/src/libultra/osStartThread.o
+ build/j/src/libultra/osCreateMesgQueue.o(.data)
+ .data          0x00000000800269e0        0x0 build/j/src/libultra/osCreateMesgQueue.o
+ build/j/src/libultra/osStopThread.o(.data)
+ .data          0x00000000800269e0        0x0 build/j/src/libultra/osStopThread.o
+ build/j/src/libultra/osSetThreadPri.o(.data)
+ .data          0x00000000800269e0        0x0 build/j/src/libultra/osSetThreadPri.o
+ build/j/src/libultra/osGetCount.o(.data)
+ .data          0x00000000800269e0        0x0 build/j/src/libultra/osGetCount.o
+ build/j/src/libultra/osCreateViManager.o(.data)
+ .data          0x00000000800269e0       0x20 build/j/src/libultra/osCreateViManager.o
                 0x00000000800269e0                __osViDevMgr
                 0x00000000800269e4                D_800269A4
                 0x00000000800269e8                D_800269A8
@@ -16519,8 +16559,8 @@ Linker script and memory map
                 0x00000000800269f0                D_800269B0
                 0x00000000800269f4                D_800269B4
                 0x00000000800269f8                D_800269B8
- build/j/libultra/osViModeTable.o(.data)
- .data          0x0000000080026a00      0xd20 build/j/libultra/osViModeTable.o
+ build/j/src/libultra/osViModeTable.o(.data)
+ .data          0x0000000080026a00      0xd20 build/j/src/libultra/osViModeTable.o
                 0x0000000080026a00                osViModeTable_osViModeNtscLpn1
                 0x0000000080026a00                osViModeTable
                 0x0000000080026a50                osViModeTable_osViModeNtscLpf1
@@ -16564,96 +16604,106 @@ Linker script and memory map
                 0x0000000080027630                osViModeTable_osViModeMpalHaf1
                 0x0000000080027680                osViModeTable_osViModeMpalHpn2
                 0x00000000800276d0                osViModeTable_osViModeMpalHpf2
- build/j/libultra/osSetEventMesg.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osSetEventMesg.o
- build/j/libultra/osViSetEvent.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osViSetEvent.o
- build/j/libultra/osSetIntMask.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osSetIntMask.o
- build/j/libultra/osRecvMesg.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osRecvMesg.o
- build/j/libultra/osSendMesg.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osSendMesg.o
- build/j/libultra/osViSetMode.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osViSetMode.o
- build/j/libultra/osViSetXScale.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osViSetXScale.o
- build/j/libultra/osViSetYScale.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osViSetYScale.o
- build/j/libultra/osViRepeatLine.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osViRepeatLine.o
- build/j/libultra/osViBlack.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osViBlack.o
- build/j/libultra/osSpTaskYielded.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osSpTaskYielded.o
- build/j/libultra/osDpGetCounters.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osDpGetCounters.o
- build/j/libultra/osViGetCurrentFramebuffer.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osViGetCurrentFramebuffer.o
- build/j/libultra/osViGetNextFramebuffer.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osViGetNextFramebuffer.o
- build/j/libultra/osViSwapBuffer.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osViSwapBuffer.o
- build/j/libultra/osDpSetStatus.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osDpSetStatus.o
- build/j/libultra/osSpTaskLoad.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osSpTaskLoad.o
- build/j/libultra/osDpSetNextBuffer.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osDpSetNextBuffer.o
- build/j/libultra/osSpTaskYield.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osSpTaskYield.o
- build/j/libultra/__osGetTLBHi.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/__osGetTLBHi.o
- build/j/libultra/osVirtualToPhysical.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osVirtualToPhysical.o
- build/j/libultra/osAiSetFrequency.o(.data)
- .data          0x0000000080027720        0x0 build/j/libultra/osAiSetFrequency.o
- build/j/libultra/alInit.o(.data)
- .data          0x0000000080027720       0x10 build/j/libultra/alInit.o
+ build/j/src/libultra/osSetEventMesg.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osSetEventMesg.o
+ build/j/src/libultra/osViSetEvent.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osViSetEvent.o
+ build/j/src/libultra/osSetIntMask.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osSetIntMask.o
+ build/j/src/libultra/osRecvMesg.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osRecvMesg.o
+ build/j/src/libultra/osSendMesg.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osSendMesg.o
+ build/j/src/libultra/osViSetMode.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osViSetMode.o
+ build/j/src/libultra/osViSetXScale.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osViSetXScale.o
+ build/j/src/libultra/osViSetYScale.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osViSetYScale.o
+ build/j/src/libultra/osViRepeatLine.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osViRepeatLine.o
+ build/j/src/libultra/osViBlack.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osViBlack.o
+ build/j/src/libultra/osSpTaskYielded.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osSpTaskYielded.o
+ build/j/src/libultra/osDpGetCounters.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osDpGetCounters.o
+ build/j/src/libultra/osViGetCurrentFramebuffer.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osViGetCurrentFramebuffer.o
+ build/j/src/libultra/osViGetNextFramebuffer.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osViGetNextFramebuffer.o
+ build/j/src/libultra/osViSwapBuffer.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osViSwapBuffer.o
+ build/j/src/libultra/osDpSetStatus.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osDpSetStatus.o
+ build/j/src/libultra/osSpTaskLoad.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osSpTaskLoad.o
+ build/j/src/libultra/osDpSetNextBuffer.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osDpSetNextBuffer.o
+ build/j/src/libultra/osSpTaskYield.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osSpTaskYield.o
+ build/j/src/libultra/__osGetTLBHi.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/__osGetTLBHi.o
+ build/j/src/libultra/osVirtualToPhysical.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osVirtualToPhysical.o
+ build/j/src/libultra/osAiSetFrequency.o(.data)
+ .data          0x0000000080027720        0x0 build/j/src/libultra/osAiSetFrequency.o
+ build/j/src/libultra/alInit.o(.data)
+ .data          0x0000000080027720       0x10 build/j/src/libultra/alInit.o
                 0x0000000080027720                alGlobals
- build/j/libultra/osGetTime.o(.data)
- .data          0x0000000080027730        0x0 build/j/libultra/osGetTime.o
- build/j/libultra/ll.o(.data)
- .data          0x0000000080027730       0x10 build/j/libultra/ll.o
+ build/j/src/libultra/osGetTime.o(.data)
+ .data          0x0000000080027730        0x0 build/j/src/libultra/osGetTime.o
+ build/j/src/libultra/ll.o(.data)
+ .data          0x0000000080027730       0x10 build/j/src/libultra/ll.o
                 0x0000000080027730                B_800276F0
- build/j/libultra/osAiGetLength.o(.data)
- .data          0x0000000080027740        0x0 build/j/libultra/osAiGetLength.o
- build/j/libultra/syn.o(.data)
- .data          0x0000000080027740        0x0 build/j/libultra/syn.o
- build/j/libultra/osPiStartDma.o(.data)
- .data          0x0000000080027740        0x0 build/j/libultra/osPiStartDma.o
- build/j/libultra/osViSetSpecialFeatures.o(.data)
- .data          0x0000000080027740        0x0 build/j/libultra/osViSetSpecialFeatures.o
- build/j/libultra/_bcopy.o(.data)
- .data          0x0000000080027740        0x0 build/j/libultra/_bcopy.o
- build/j/libultra/guPerspective.o(.data)
- .data          0x0000000080027740        0x0 build/j/libultra/guPerspective.o
- build/j/libultra/Mtx.o(.data)
- .data          0x0000000080027740        0x0 build/j/libultra/Mtx.o
- build/j/libultra/__osGetCurrFaultedThread.o(.data)
- .data          0x0000000080027740        0x0 build/j/libultra/__osGetCurrFaultedThread.o
- build/j/libultra/exception.o(.data)
- .data          0x0000000080027740       0x20 build/j/libultra/exception.o
+ build/j/src/libultra/osAiGetLength.o(.data)
+ .data          0x0000000080027740        0x0 build/j/src/libultra/osAiGetLength.o
+ build/j/src/libultra/syn.o(.data)
+ .data          0x0000000080027740        0x0 build/j/src/libultra/syn.o
+ build/j/src/libultra/osPiStartDma.o(.data)
+ .data          0x0000000080027740        0x0 build/j/src/libultra/osPiStartDma.o
+ build/j/src/libultra/osViSetSpecialFeatures.o(.data)
+ .data          0x0000000080027740        0x0 build/j/src/libultra/osViSetSpecialFeatures.o
+ build/j/src/libultra/_bcopy.o(.data)
+ .data          0x0000000080027740        0x0 build/j/src/libultra/_bcopy.o
+ build/j/src/libultra/guPerspective.o(.data)
+ .data          0x0000000080027740        0x0 build/j/src/libultra/guPerspective.o
+ build/j/src/libultra/Mtx.o(.data)
+ .data          0x0000000080027740        0x0 build/j/src/libultra/Mtx.o
+ build/j/src/libultra/__osGetCurrFaultedThread.o(.data)
+ .data          0x0000000080027740        0x0 build/j/src/libultra/__osGetCurrFaultedThread.o
+ build/j/src/libultra/exception.o(.data)
+ .data          0x0000000080027740       0x20 build/j/src/libultra/exception.o
                 0x0000000080027740                __osHwIntTable
- build/j/libultra/__osDequeueThread.o(.data)
- .data          0x0000000080027760       0x20 build/j/libultra/__osDequeueThread.o
+ build/j/src/libultra/__osDequeueThread.o(.data)
+ .data          0x0000000080027760       0x20 build/j/src/libultra/__osDequeueThread.o
                 0x0000000080027760                __osThreadTail
                 0x0000000080027768                __osRunQueue
                 0x000000008002776c                __osActiveQueue
                 0x0000000080027770                __osRunningThread
                 0x0000000080027774                __osFaultedThread
- build/j/libultra/osYieldThread.o(.data)
- .data          0x0000000080027780        0x0 build/j/libultra/osYieldThread.o
- build/j/libultra/osInvalDCache.o(.data)
- .data          0x0000000080027780        0x0 build/j/libultra/osInvalDCache.o
- build/j/libultra/osWritebackDCache.o(.data)
- .data          0x0000000080027780        0x0 build/j/libultra/osWritebackDCache.o
- build/j/libultra/osSetTimer.o(.data)
- .data          0x0000000080027780        0x0 build/j/libultra/osSetTimer.o
- build/j/libultra/alHeapInit.o(.data)
- .data          0x0000000080027780        0x0 build/j/libultra/alHeapInit.o
- build/j/libultra/libultra.o(.data)
- .data          0x0000000080027780      0xc90 build/j/libultra/libultra.o
+ build/j/src/libultra/osYieldThread.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/osYieldThread.o
+ build/j/src/libultra/osInvalDCache.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/osInvalDCache.o
+ build/j/src/libultra/osWritebackDCache.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/osWritebackDCache.o
+ build/j/src/libultra/osSetTimer.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/osSetTimer.o
+ build/j/src/libultra/alHeapInit.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/alHeapInit.o
+ build/j/src/libultra/alBnkfNew.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/alBnkfNew.o
+ build/j/src/libultra/__CSP.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/__CSP.o
+ build/j/src/libultra/alSeqpSetBank.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/alSeqpSetBank.o
+ build/j/src/libultra/alCSPGetState.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/alCSPGetState.o
+ build/j/src/libultra/csequencer.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/csequencer.o
+ build/j/src/libultra/libultra.o(.data)
+ .data          0x0000000080027780      0xc90 build/j/src/libultra/libultra.o
                 0x0000000080027780                spaces
                 0x00000000800277a4                zeros
                 0x00000000800277d0                __osPiDevMgr
@@ -16801,83 +16851,90 @@ Linker script and memory map
                 0x00000000800293d0                aJoy_c_debug
  build/j/src/joy_rumble.o(.rodata)
  build/j/src/rmon.o(.rodata)
- build/j/libultra/osPiRawStartDma.o(.rodata)
- build/j/libultra/osPiGetStatus.o(.rodata)
- build/j/libultra/osInitialize.o(.rodata)
- .rodata        0x00000000800293e0        0x0 build/j/libultra/osInitialize.o
- build/j/libultra/osWritebackDCacheAll.o(.rodata)
- build/j/libultra/osInvalICache.o(.rodata)
- build/j/libultra/osUnmapTLB.o(.rodata)
- build/j/libultra/__osGetFpcCsr.o(.rodata)
- build/j/libultra/__osSetFpcCsr.o(.rodata)
- build/j/libultra/osCreateThread.o(.rodata)
- build/j/libultra/osStartThread.o(.rodata)
- build/j/libultra/osCreateMesgQueue.o(.rodata)
- build/j/libultra/osStopThread.o(.rodata)
- build/j/libultra/osSetThreadPri.o(.rodata)
- build/j/libultra/osGetCount.o(.rodata)
- build/j/libultra/osCreateViManager.o(.rodata)
- .rodata        0x00000000800293e0        0x0 build/j/libultra/osCreateViManager.o
- build/j/libultra/osViModeTable.o(.rodata)
- build/j/libultra/osSetEventMesg.o(.rodata)
- build/j/libultra/osViSetEvent.o(.rodata)
- build/j/libultra/osSetIntMask.o(.rodata)
- .rodata        0x00000000800293e0       0x80 build/j/libultra/osSetIntMask.o
+ build/j/src/libultra/osPiRawStartDma.o(.rodata)
+ build/j/src/libultra/osPiGetStatus.o(.rodata)
+ build/j/src/libultra/osInitialize.o(.rodata)
+ .rodata        0x00000000800293e0        0x0 build/j/src/libultra/osInitialize.o
+ build/j/src/libultra/osWritebackDCacheAll.o(.rodata)
+ build/j/src/libultra/osInvalICache.o(.rodata)
+ build/j/src/libultra/osUnmapTLB.o(.rodata)
+ build/j/src/libultra/__osGetFpcCsr.o(.rodata)
+ build/j/src/libultra/__osSetFpcCsr.o(.rodata)
+ build/j/src/libultra/osCreateThread.o(.rodata)
+ build/j/src/libultra/osStartThread.o(.rodata)
+ build/j/src/libultra/osCreateMesgQueue.o(.rodata)
+ build/j/src/libultra/osStopThread.o(.rodata)
+ build/j/src/libultra/osSetThreadPri.o(.rodata)
+ build/j/src/libultra/osGetCount.o(.rodata)
+ build/j/src/libultra/osCreateViManager.o(.rodata)
+ .rodata        0x00000000800293e0        0x0 build/j/src/libultra/osCreateViManager.o
+ build/j/src/libultra/osViModeTable.o(.rodata)
+ build/j/src/libultra/osSetEventMesg.o(.rodata)
+ build/j/src/libultra/osViSetEvent.o(.rodata)
+ build/j/src/libultra/osSetIntMask.o(.rodata)
+ .rodata        0x00000000800293e0       0x80 build/j/src/libultra/osSetIntMask.o
                 0x00000000800293e0                __osRcpImTable
- build/j/libultra/osRecvMesg.o(.rodata)
- build/j/libultra/osSendMesg.o(.rodata)
- build/j/libultra/osViSetMode.o(.rodata)
- build/j/libultra/osViSetXScale.o(.rodata)
- build/j/libultra/osViSetYScale.o(.rodata)
- build/j/libultra/osViRepeatLine.o(.rodata)
- build/j/libultra/osViBlack.o(.rodata)
- build/j/libultra/osSpTaskYielded.o(.rodata)
- build/j/libultra/osDpGetCounters.o(.rodata)
- build/j/libultra/osViGetCurrentFramebuffer.o(.rodata)
- build/j/libultra/osViGetNextFramebuffer.o(.rodata)
- build/j/libultra/osViSwapBuffer.o(.rodata)
- build/j/libultra/osDpSetStatus.o(.rodata)
- build/j/libultra/osSpTaskLoad.o(.rodata)
- build/j/libultra/osDpSetNextBuffer.o(.rodata)
- build/j/libultra/osSpTaskYield.o(.rodata)
- build/j/libultra/__osGetTLBHi.o(.rodata)
- build/j/libultra/osVirtualToPhysical.o(.rodata)
- build/j/libultra/osAiSetFrequency.o(.rodata)
- build/j/libultra/alInit.o(.rodata)
- build/j/libultra/osGetTime.o(.rodata)
- build/j/libultra/ll.o(.rodata)
- build/j/libultra/osAiGetLength.o(.rodata)
- build/j/libultra/syn.o(.rodata)
- .rodata        0x0000000080029460       0x10 build/j/libultra/syn.o
+ build/j/src/libultra/osRecvMesg.o(.rodata)
+ build/j/src/libultra/osSendMesg.o(.rodata)
+ build/j/src/libultra/osViSetMode.o(.rodata)
+ build/j/src/libultra/osViSetXScale.o(.rodata)
+ build/j/src/libultra/osViSetYScale.o(.rodata)
+ build/j/src/libultra/osViRepeatLine.o(.rodata)
+ build/j/src/libultra/osViBlack.o(.rodata)
+ build/j/src/libultra/osSpTaskYielded.o(.rodata)
+ build/j/src/libultra/osDpGetCounters.o(.rodata)
+ build/j/src/libultra/osViGetCurrentFramebuffer.o(.rodata)
+ build/j/src/libultra/osViGetNextFramebuffer.o(.rodata)
+ build/j/src/libultra/osViSwapBuffer.o(.rodata)
+ build/j/src/libultra/osDpSetStatus.o(.rodata)
+ build/j/src/libultra/osSpTaskLoad.o(.rodata)
+ build/j/src/libultra/osDpSetNextBuffer.o(.rodata)
+ build/j/src/libultra/osSpTaskYield.o(.rodata)
+ build/j/src/libultra/__osGetTLBHi.o(.rodata)
+ build/j/src/libultra/osVirtualToPhysical.o(.rodata)
+ build/j/src/libultra/osAiSetFrequency.o(.rodata)
+ build/j/src/libultra/alInit.o(.rodata)
+ build/j/src/libultra/osGetTime.o(.rodata)
+ build/j/src/libultra/ll.o(.rodata)
+ build/j/src/libultra/osAiGetLength.o(.rodata)
+ build/j/src/libultra/syn.o(.rodata)
+ .rodata        0x0000000080029460       0x10 build/j/src/libultra/syn.o
                 0x0000000080029460                F64_80029420
                 0x0000000080029468                F64_80029428
- build/j/libultra/osPiStartDma.o(.rodata)
- build/j/libultra/osViSetSpecialFeatures.o(.rodata)
- build/j/libultra/_bcopy.o(.rodata)
- build/j/libultra/guPerspective.o(.rodata)
- build/j/libultra/Mtx.o(.rodata)
- .rodata        0x0000000080029470       0x10 build/j/libultra/Mtx.o
+ build/j/src/libultra/osPiStartDma.o(.rodata)
+ build/j/src/libultra/osViSetSpecialFeatures.o(.rodata)
+ build/j/src/libultra/_bcopy.o(.rodata)
+ build/j/src/libultra/guPerspective.o(.rodata)
+ build/j/src/libultra/Mtx.o(.rodata)
+ .rodata        0x0000000080029470       0x10 build/j/src/libultra/Mtx.o
                 0x0000000080029470                F64_80029430
- build/j/libultra/__osGetCurrFaultedThread.o(.rodata)
- build/j/libultra/exception.o(.rodata)
- .rodata        0x0000000080029480       0x44 build/j/libultra/exception.o
+ build/j/src/libultra/__osGetCurrFaultedThread.o(.rodata)
+ build/j/src/libultra/exception.o(.rodata)
+ .rodata        0x0000000080029480       0x44 build/j/src/libultra/exception.o
                 0x0000000080029480                __osIntOffTable
                 0x00000000800294a0                __osIntTable
- build/j/libultra/__osDequeueThread.o(.rodata)
- build/j/libultra/osYieldThread.o(.rodata)
- build/j/libultra/osInvalDCache.o(.rodata)
- build/j/libultra/osWritebackDCache.o(.rodata)
- build/j/libultra/osSetTimer.o(.rodata)
- build/j/libultra/alHeapInit.o(.rodata)
- build/j/libultra/libultra.o(.rodata)
+ build/j/src/libultra/__osDequeueThread.o(.rodata)
+ build/j/src/libultra/osYieldThread.o(.rodata)
+ build/j/src/libultra/osInvalDCache.o(.rodata)
+ build/j/src/libultra/osWritebackDCache.o(.rodata)
+ build/j/src/libultra/osSetTimer.o(.rodata)
+ build/j/src/libultra/alHeapInit.o(.rodata)
+ build/j/src/libultra/alBnkfNew.o(.rodata)
+ build/j/src/libultra/__CSP.o(.rodata)
  *fill*         0x00000000800294c4        0xc 
- .rodata        0x00000000800294d0      0x8d0 build/j/libultra/libultra.o
+ .rodata        0x00000000800294d0      0x240 build/j/src/libultra/__CSP.o
                 0x00000000800294d0                audio_related_jump_table_0
                 0x0000000080029654                audio_related_jump_table_1
                 0x00000000800296b4                audio_related_jump_table_2
                 0x0000000080029704                F32_800296C4
+ build/j/src/libultra/alSeqpSetBank.o(.rodata)
+ build/j/src/libultra/alCSPGetState.o(.rodata)
+ build/j/src/libultra/csequencer.o(.rodata)
+ .rodata        0x0000000080029710       0x10 build/j/src/libultra/csequencer.o
                 0x0000000080029710                F64_800296D0
                 0x0000000080029718                F64_800296D8
+ build/j/src/libultra/libultra.o(.rodata)
+ .rodata        0x0000000080029720      0x680 build/j/src/libultra/libultra.o
                 0x0000000080029720                F32_800296E0
                 0x0000000080029724                F32_800296E4
                 0x0000000080029730                aHll
@@ -21410,37 +21467,37 @@ Linker script and memory map
                 0x00000000800657e0                rumble_on_buffer
                 0x0000000080065800                rumble_off_buffer
  build/j/src/rmon.o(.bss)
- build/j/libultra/osPiRawStartDma.o(.bss)
- .bss           0x0000000080065820        0x0 build/j/libultra/osPiRawStartDma.o
- build/j/libultra/osPiGetStatus.o(.bss)
- .bss           0x0000000080065820        0x0 build/j/libultra/osPiGetStatus.o
- build/j/libultra/osInitialize.o(.bss)
- .bss           0x0000000080065820       0x10 build/j/libultra/osInitialize.o
+ build/j/src/libultra/osPiRawStartDma.o(.bss)
+ .bss           0x0000000080065820        0x0 build/j/src/libultra/osPiRawStartDma.o
+ build/j/src/libultra/osPiGetStatus.o(.bss)
+ .bss           0x0000000080065820        0x0 build/j/src/libultra/osPiGetStatus.o
+ build/j/src/libultra/osInitialize.o(.bss)
+ .bss           0x0000000080065820       0x10 build/j/src/libultra/osInitialize.o
                 0x0000000080065820                __osFinalRom
- build/j/libultra/osWritebackDCacheAll.o(.bss)
- .bss           0x0000000080065830        0x0 build/j/libultra/osWritebackDCacheAll.o
- build/j/libultra/osInvalICache.o(.bss)
- .bss           0x0000000080065830        0x0 build/j/libultra/osInvalICache.o
- build/j/libultra/osUnmapTLB.o(.bss)
- .bss           0x0000000080065830        0x0 build/j/libultra/osUnmapTLB.o
- build/j/libultra/__osGetFpcCsr.o(.bss)
- .bss           0x0000000080065830        0x0 build/j/libultra/__osGetFpcCsr.o
- build/j/libultra/__osSetFpcCsr.o(.bss)
- .bss           0x0000000080065830        0x0 build/j/libultra/__osSetFpcCsr.o
- build/j/libultra/osCreateThread.o(.bss)
- .bss           0x0000000080065830        0x0 build/j/libultra/osCreateThread.o
- build/j/libultra/osStartThread.o(.bss)
- .bss           0x0000000080065830        0x0 build/j/libultra/osStartThread.o
- build/j/libultra/osCreateMesgQueue.o(.bss)
- .bss           0x0000000080065830        0x0 build/j/libultra/osCreateMesgQueue.o
- build/j/libultra/osStopThread.o(.bss)
- .bss           0x0000000080065830        0x0 build/j/libultra/osStopThread.o
- build/j/libultra/osSetThreadPri.o(.bss)
- .bss           0x0000000080065830        0x0 build/j/libultra/osSetThreadPri.o
- build/j/libultra/osGetCount.o(.bss)
- .bss           0x0000000080065830        0x0 build/j/libultra/osGetCount.o
- build/j/libultra/osCreateViManager.o(.bss)
- .bss           0x0000000080065830     0x1220 build/j/libultra/osCreateViManager.o
+ build/j/src/libultra/osWritebackDCacheAll.o(.bss)
+ .bss           0x0000000080065830        0x0 build/j/src/libultra/osWritebackDCacheAll.o
+ build/j/src/libultra/osInvalICache.o(.bss)
+ .bss           0x0000000080065830        0x0 build/j/src/libultra/osInvalICache.o
+ build/j/src/libultra/osUnmapTLB.o(.bss)
+ .bss           0x0000000080065830        0x0 build/j/src/libultra/osUnmapTLB.o
+ build/j/src/libultra/__osGetFpcCsr.o(.bss)
+ .bss           0x0000000080065830        0x0 build/j/src/libultra/__osGetFpcCsr.o
+ build/j/src/libultra/__osSetFpcCsr.o(.bss)
+ .bss           0x0000000080065830        0x0 build/j/src/libultra/__osSetFpcCsr.o
+ build/j/src/libultra/osCreateThread.o(.bss)
+ .bss           0x0000000080065830        0x0 build/j/src/libultra/osCreateThread.o
+ build/j/src/libultra/osStartThread.o(.bss)
+ .bss           0x0000000080065830        0x0 build/j/src/libultra/osStartThread.o
+ build/j/src/libultra/osCreateMesgQueue.o(.bss)
+ .bss           0x0000000080065830        0x0 build/j/src/libultra/osCreateMesgQueue.o
+ build/j/src/libultra/osStopThread.o(.bss)
+ .bss           0x0000000080065830        0x0 build/j/src/libultra/osStopThread.o
+ build/j/src/libultra/osSetThreadPri.o(.bss)
+ .bss           0x0000000080065830        0x0 build/j/src/libultra/osSetThreadPri.o
+ build/j/src/libultra/osGetCount.o(.bss)
+ .bss           0x0000000080065830        0x0 build/j/src/libultra/osGetCount.o
+ build/j/src/libultra/osCreateViManager.o(.bss)
+ .bss           0x0000000080065830     0x1220 build/j/src/libultra/osCreateViManager.o
                 0x0000000080065830                viThread
                 0x00000000800659e0                viThreadStack
                 0x00000000800669e0                viEventQueue
@@ -21448,43 +21505,43 @@ Linker script and memory map
                 0x0000000080066a10                viRetraceMsg
                 0x0000000080066a28                viCounterMsg
                 0x0000000080066a40                retrace
- build/j/libultra/osViModeTable.o(.bss)
- .bss           0x0000000080066a50        0x0 build/j/libultra/osViModeTable.o
- build/j/libultra/osSetEventMesg.o(.bss)
- .bss           0x0000000080066a50       0x80 build/j/libultra/osSetEventMesg.o
+ build/j/src/libultra/osViModeTable.o(.bss)
+ .bss           0x0000000080066a50        0x0 build/j/src/libultra/osViModeTable.o
+ build/j/src/libultra/osSetEventMesg.o(.bss)
+ .bss           0x0000000080066a50       0x80 build/j/src/libultra/osSetEventMesg.o
                 0x0000000080066a50                __osEventStateTab
- build/j/libultra/osViSetEvent.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/j/libultra/osViSetEvent.o
- build/j/libultra/osSetIntMask.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/j/libultra/osSetIntMask.o
- build/j/libultra/osRecvMesg.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/j/libultra/osRecvMesg.o
- build/j/libultra/osSendMesg.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/j/libultra/osSendMesg.o
- build/j/libultra/osViSetMode.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/j/libultra/osViSetMode.o
- build/j/libultra/osViSetXScale.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/j/libultra/osViSetXScale.o
- build/j/libultra/osViSetYScale.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/j/libultra/osViSetYScale.o
- build/j/libultra/osViRepeatLine.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/j/libultra/osViRepeatLine.o
- build/j/libultra/osViBlack.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/j/libultra/osViBlack.o
- build/j/libultra/osSpTaskYielded.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/j/libultra/osSpTaskYielded.o
- build/j/libultra/osDpGetCounters.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/j/libultra/osDpGetCounters.o
- build/j/libultra/osViGetCurrentFramebuffer.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/j/libultra/osViGetCurrentFramebuffer.o
- build/j/libultra/osViGetNextFramebuffer.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/j/libultra/osViGetNextFramebuffer.o
- build/j/libultra/osViSwapBuffer.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/j/libultra/osViSwapBuffer.o
- build/j/libultra/osDpSetStatus.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/j/libultra/osDpSetStatus.o
- build/j/libultra/osSpTaskLoad.o(.bss)
- .bss           0x0000000080066ad0       0x40 build/j/libultra/osSpTaskLoad.o
+ build/j/src/libultra/osViSetEvent.o(.bss)
+ .bss           0x0000000080066ad0        0x0 build/j/src/libultra/osViSetEvent.o
+ build/j/src/libultra/osSetIntMask.o(.bss)
+ .bss           0x0000000080066ad0        0x0 build/j/src/libultra/osSetIntMask.o
+ build/j/src/libultra/osRecvMesg.o(.bss)
+ .bss           0x0000000080066ad0        0x0 build/j/src/libultra/osRecvMesg.o
+ build/j/src/libultra/osSendMesg.o(.bss)
+ .bss           0x0000000080066ad0        0x0 build/j/src/libultra/osSendMesg.o
+ build/j/src/libultra/osViSetMode.o(.bss)
+ .bss           0x0000000080066ad0        0x0 build/j/src/libultra/osViSetMode.o
+ build/j/src/libultra/osViSetXScale.o(.bss)
+ .bss           0x0000000080066ad0        0x0 build/j/src/libultra/osViSetXScale.o
+ build/j/src/libultra/osViSetYScale.o(.bss)
+ .bss           0x0000000080066ad0        0x0 build/j/src/libultra/osViSetYScale.o
+ build/j/src/libultra/osViRepeatLine.o(.bss)
+ .bss           0x0000000080066ad0        0x0 build/j/src/libultra/osViRepeatLine.o
+ build/j/src/libultra/osViBlack.o(.bss)
+ .bss           0x0000000080066ad0        0x0 build/j/src/libultra/osViBlack.o
+ build/j/src/libultra/osSpTaskYielded.o(.bss)
+ .bss           0x0000000080066ad0        0x0 build/j/src/libultra/osSpTaskYielded.o
+ build/j/src/libultra/osDpGetCounters.o(.bss)
+ .bss           0x0000000080066ad0        0x0 build/j/src/libultra/osDpGetCounters.o
+ build/j/src/libultra/osViGetCurrentFramebuffer.o(.bss)
+ .bss           0x0000000080066ad0        0x0 build/j/src/libultra/osViGetCurrentFramebuffer.o
+ build/j/src/libultra/osViGetNextFramebuffer.o(.bss)
+ .bss           0x0000000080066ad0        0x0 build/j/src/libultra/osViGetNextFramebuffer.o
+ build/j/src/libultra/osViSwapBuffer.o(.bss)
+ .bss           0x0000000080066ad0        0x0 build/j/src/libultra/osViSwapBuffer.o
+ build/j/src/libultra/osDpSetStatus.o(.bss)
+ .bss           0x0000000080066ad0        0x0 build/j/src/libultra/osDpSetStatus.o
+ build/j/src/libultra/osSpTaskLoad.o(.bss)
+ .bss           0x0000000080066ad0       0x40 build/j/src/libultra/osSpTaskLoad.o
                 0x0000000080066ad0                type
                 0x0000000080066ad0                tp
                 0x0000000080066ad4                flags
@@ -21502,54 +21559,64 @@ Linker script and memory map
                 0x0000000080066b04                t_data_size
                 0x0000000080066b08                t_yield_data_ptr
                 0x0000000080066b0c                t_yield_data_size
- build/j/libultra/osDpSetNextBuffer.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/osDpSetNextBuffer.o
- build/j/libultra/osSpTaskYield.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/osSpTaskYield.o
- build/j/libultra/__osGetTLBHi.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/__osGetTLBHi.o
- build/j/libultra/osVirtualToPhysical.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/osVirtualToPhysical.o
- build/j/libultra/osAiSetFrequency.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/osAiSetFrequency.o
- build/j/libultra/alInit.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/alInit.o
- build/j/libultra/osGetTime.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/osGetTime.o
- build/j/libultra/ll.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/ll.o
- build/j/libultra/osAiGetLength.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/osAiGetLength.o
- build/j/libultra/syn.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/syn.o
- build/j/libultra/osPiStartDma.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/osPiStartDma.o
- build/j/libultra/osViSetSpecialFeatures.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/osViSetSpecialFeatures.o
- build/j/libultra/_bcopy.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/_bcopy.o
- build/j/libultra/guPerspective.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/guPerspective.o
- build/j/libultra/Mtx.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/Mtx.o
- build/j/libultra/__osGetCurrFaultedThread.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/__osGetCurrFaultedThread.o
- build/j/libultra/exception.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/exception.o
- build/j/libultra/__osDequeueThread.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/__osDequeueThread.o
- build/j/libultra/osYieldThread.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/osYieldThread.o
- build/j/libultra/osInvalDCache.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/osInvalDCache.o
- build/j/libultra/osWritebackDCache.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/osWritebackDCache.o
- build/j/libultra/osSetTimer.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/osSetTimer.o
- build/j/libultra/alHeapInit.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/libultra/alHeapInit.o
- build/j/libultra/libultra.o(.bss)
- .bss           0x0000000080066b10     0x26a0 build/j/libultra/libultra.o
+ build/j/src/libultra/osDpSetNextBuffer.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/osDpSetNextBuffer.o
+ build/j/src/libultra/osSpTaskYield.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/osSpTaskYield.o
+ build/j/src/libultra/__osGetTLBHi.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/__osGetTLBHi.o
+ build/j/src/libultra/osVirtualToPhysical.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/osVirtualToPhysical.o
+ build/j/src/libultra/osAiSetFrequency.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/osAiSetFrequency.o
+ build/j/src/libultra/alInit.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/alInit.o
+ build/j/src/libultra/osGetTime.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/osGetTime.o
+ build/j/src/libultra/ll.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/ll.o
+ build/j/src/libultra/osAiGetLength.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/osAiGetLength.o
+ build/j/src/libultra/syn.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/syn.o
+ build/j/src/libultra/osPiStartDma.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/osPiStartDma.o
+ build/j/src/libultra/osViSetSpecialFeatures.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/osViSetSpecialFeatures.o
+ build/j/src/libultra/_bcopy.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/_bcopy.o
+ build/j/src/libultra/guPerspective.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/guPerspective.o
+ build/j/src/libultra/Mtx.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/Mtx.o
+ build/j/src/libultra/__osGetCurrFaultedThread.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/__osGetCurrFaultedThread.o
+ build/j/src/libultra/exception.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/exception.o
+ build/j/src/libultra/__osDequeueThread.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/__osDequeueThread.o
+ build/j/src/libultra/osYieldThread.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/osYieldThread.o
+ build/j/src/libultra/osInvalDCache.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/osInvalDCache.o
+ build/j/src/libultra/osWritebackDCache.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/osWritebackDCache.o
+ build/j/src/libultra/osSetTimer.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/osSetTimer.o
+ build/j/src/libultra/alHeapInit.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/alHeapInit.o
+ build/j/src/libultra/alBnkfNew.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/alBnkfNew.o
+ build/j/src/libultra/__CSP.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/__CSP.o
+ build/j/src/libultra/alSeqpSetBank.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/alSeqpSetBank.o
+ build/j/src/libultra/alCSPGetState.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/alCSPGetState.o
+ build/j/src/libultra/csequencer.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/csequencer.o
+ build/j/src/libultra/libultra.o(.bss)
+ .bss           0x0000000080066b10     0x26a0 build/j/src/libultra/libultra.o
                 0x0000000080066b10                piThread
                 0x0000000080066cc0                piThreadStack
                 0x0000000080067cc0                pieventQueue

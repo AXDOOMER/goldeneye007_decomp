@@ -130,6 +130,11 @@ SECTIONS
       build/u/libultra/osWritebackDCache.o (.text);
       build/u/libultra/osSetTimer.o (.text);
       build/u/libultra/alHeapInit.o (.text);
+      build/u/libultra/alBnkfNew.o (.text);
+      build/u/libultra/__CSP.o (.text);
+      build/u/libultra/alSeqpSetBank.o (.text);
+      build/u/libultra/alCSPGetState.o (.text);
+      build/u/libultra/csequencer.o (.text);
       build/u/libultra/libultra.o (.text);
       /*build/u/libultra/libultra.a:libultra.o (.text);*/
    }
@@ -3129,6 +3134,11 @@ SECTIONS
       build/u/libultra/osWritebackDCache.o (.data);
       build/u/libultra/osSetTimer.o (.data);
       build/u/libultra/alHeapInit.o (.data);
+      build/u/libultra/alBnkfNew.o (.data);
+      build/u/libultra/__CSP.o (.data);
+      build/u/libultra/alSeqpSetBank.o (.data);
+      build/u/libultra/alCSPGetState.o (.data);
+      build/u/libultra/csequencer.o (.data);
       build/u/libultra/libultra.o (.data);
       /*build/u/libultra/libultra.a:libultra.o (.data);*/
 
@@ -3221,6 +3231,11 @@ SECTIONS
       build/u/libultra/osWritebackDCache.o (.rodata);
       build/u/libultra/osSetTimer.o (.rodata);
       build/u/libultra/alHeapInit.o (.rodata);
+      build/u/libultra/alBnkfNew.o (.rodata);
+      build/u/libultra/__CSP.o (.rodata);
+      build/u/libultra/alSeqpSetBank.o (.rodata);
+      build/u/libultra/alCSPGetState.o (.rodata);
+      build/u/libultra/csequencer.o (.rodata);
       build/u/libultra/libultra.o (.rodata);
       /*build/u/libultra/libultra.a:libultra.o (.rodata);*/
 
@@ -3564,6 +3579,11 @@ SECTIONS
       build/u/libultra/osWritebackDCache.o (.bss);
       build/u/libultra/osSetTimer.o (.bss);
       build/u/libultra/alHeapInit.o (.bss);
+      build/u/libultra/alBnkfNew.o (.bss);
+      build/u/libultra/__CSP.o (.bss);
+      build/u/libultra/alSeqpSetBank.o (.bss);
+      build/u/libultra/alCSPGetState.o (.bss);
+      build/u/libultra/csequencer.o (.bss);
       build/u/libultra/libultra.o (.bss);
       /*build/u/libultra/libultra.a:libultra.o (.bss);*/
 

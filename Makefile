@@ -55,7 +55,7 @@ BUILD_DIR := build/$(COUNTRYCODE)
 include assets/Makefile.obseg
 include assets/Makefile.music
 BUILD_SUB_DIRS := \
-	src src/game src/rarezip libultra assets assets/obseg \
+	src src/game src/rarezip src/libultra assets assets/obseg \
 	assets/obseg/brief assets/obseg/chr assets/obseg/gun assets/obseg/prop \
 	assets/obseg/text assets/obseg/bg assets/obseg/setup assets/obseg/stan \
 	assets/music assets/ramrom assets/images assets/images/split assets/font
@@ -80,64 +80,8 @@ CODEFILES := $(foreach dir,src,$(wildcard $(dir)/*.c))
 CODEOBJECTS := $(foreach file,$(CODEFILES),$(BUILD_DIR)/$(file:.c=.o))
 
 LIBULTRA := lib/libultra_rom.a
-ULTRAFILES := libultra/libultra.s
-ULTRAOBJECTS := $(BUILD_DIR)/libultra/osPiRawStartDma.o \
-$(BUILD_DIR)/libultra/osPiGetStatus.o \
-$(BUILD_DIR)/libultra/osInitialize.o \
-$(BUILD_DIR)/libultra/osWritebackDCacheAll.o \
-$(BUILD_DIR)/libultra/osInvalICache.o \
-$(BUILD_DIR)/libultra/osUnmapTLB.o \
-$(BUILD_DIR)/libultra/__osGetFpcCsr.o \
-$(BUILD_DIR)/libultra/__osSetFpcCsr.o \
-$(BUILD_DIR)/libultra/osCreateThread.o \
-$(BUILD_DIR)/libultra/osStartThread.o \
-$(BUILD_DIR)/libultra/osCreateMesgQueue.o \
-$(BUILD_DIR)/libultra/osStopThread.o \
-$(BUILD_DIR)/libultra/osSetThreadPri.o \
-$(BUILD_DIR)/libultra/osGetCount.o \
-$(BUILD_DIR)/libultra/osCreateViManager.o \
-$(BUILD_DIR)/libultra/osViModeTable.o \
-$(BUILD_DIR)/libultra/osSetEventMesg.o \
-$(BUILD_DIR)/libultra/osViSetEvent.o \
-$(BUILD_DIR)/libultra/osSetIntMask.o \
-$(BUILD_DIR)/libultra/osRecvMesg.o \
-$(BUILD_DIR)/libultra/osSendMesg.o \
-$(BUILD_DIR)/libultra/osViSetMode.o \
-$(BUILD_DIR)/libultra/osViSetXScale.o \
-$(BUILD_DIR)/libultra/osViSetYScale.o \
-$(BUILD_DIR)/libultra/osViRepeatLine.o \
-$(BUILD_DIR)/libultra/osViBlack.o \
-$(BUILD_DIR)/libultra/osSpTaskYielded.o \
-$(BUILD_DIR)/libultra/osDpGetCounters.o \
-$(BUILD_DIR)/libultra/osViGetCurrentFramebuffer.o \
-$(BUILD_DIR)/libultra/osViGetNextFramebuffer.o \
-$(BUILD_DIR)/libultra/osViSwapBuffer.o \
-$(BUILD_DIR)/libultra/osDpSetStatus.o \
-$(BUILD_DIR)/libultra/osSpTaskLoad.o \
-$(BUILD_DIR)/libultra/osDpSetNextBuffer.o \
-$(BUILD_DIR)/libultra/osSpTaskYield.o \
-$(BUILD_DIR)/libultra/__osGetTLBHi.o \
-$(BUILD_DIR)/libultra/osVirtualToPhysical.o \
-$(BUILD_DIR)/libultra/osAiSetFrequency.o \
-$(BUILD_DIR)/libultra/alInit.o \
-$(BUILD_DIR)/libultra/osGetTime.o \
-$(BUILD_DIR)/libultra/ll.o \
-$(BUILD_DIR)/libultra/osAiGetLength.o \
-$(BUILD_DIR)/libultra/syn.o \
-$(BUILD_DIR)/libultra/osPiStartDma.o \
-$(BUILD_DIR)/libultra/osViSetSpecialFeatures.o \
-$(BUILD_DIR)/libultra/_bcopy.o \
-$(BUILD_DIR)/libultra/guPerspective.o \
-$(BUILD_DIR)/libultra/Mtx.o \
-$(BUILD_DIR)/libultra/__osGetCurrFaultedThread.o \
-$(BUILD_DIR)/libultra/exception.o \
-$(BUILD_DIR)/libultra/__osDequeueThread.o \
-$(BUILD_DIR)/libultra/osYieldThread.o \
-$(BUILD_DIR)/libultra/osInvalDCache.o \
-$(BUILD_DIR)/libultra/osWritebackDCache.o \
-$(BUILD_DIR)/libultra/osSetTimer.o \
-$(BUILD_DIR)/libultra/alHeapInit.o \
-$(BUILD_DIR)/libultra/libultra.o
+ULTRAFILES := $(foreach dir,src/libultra,$(wildcard $(dir)/*.s))
+ULTRAOBJECTS := $(foreach file,$(ULTRAFILES),$(BUILD_DIR)/$(file:.s=.o))
 
 GAMEFILES := $(foreach dir,src/game,$(wildcard $(dir)/*.c))
 GAMEOBJECTS := $(foreach file,$(GAMEFILES),$(BUILD_DIR)/$(file:.c=.o))

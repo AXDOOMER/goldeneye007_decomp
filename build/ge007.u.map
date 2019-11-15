@@ -429,6 +429,36 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/u/libultra/alHeapInit.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/u/libultra/alHeapInit.o
+ .reginfo       0x0000000000000000       0x18 build/u/libultra/alBnkfNew.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/u/libultra/alBnkfNew.o
+ .pdr           0x0000000000000000        0x0 build/u/libultra/alBnkfNew.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/u/libultra/alBnkfNew.o
+ .reginfo       0x0000000000000000       0x18 build/u/libultra/__CSP.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/u/libultra/__CSP.o
+ .pdr           0x0000000000000000        0x0 build/u/libultra/__CSP.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/u/libultra/__CSP.o
+ .reginfo       0x0000000000000000       0x18 build/u/libultra/alSeqpSetBank.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/u/libultra/alSeqpSetBank.o
+ .pdr           0x0000000000000000        0x0 build/u/libultra/alSeqpSetBank.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/u/libultra/alSeqpSetBank.o
+ .reginfo       0x0000000000000000       0x18 build/u/libultra/alCSPGetState.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/u/libultra/alCSPGetState.o
+ .pdr           0x0000000000000000        0x0 build/u/libultra/alCSPGetState.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/u/libultra/alCSPGetState.o
+ .reginfo       0x0000000000000000       0x18 build/u/libultra/csequencer.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/u/libultra/csequencer.o
+ .pdr           0x0000000000000000        0x0 build/u/libultra/csequencer.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/u/libultra/csequencer.o
  .reginfo       0x0000000000000000       0x18 build/u/libultra/libultra.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/u/libultra/libultra.o
@@ -1516,19 +1546,27 @@ Linker script and memory map
  build/u/libultra/alHeapInit.o(.text)
  .text          0x0000000070010d30       0x40 build/u/libultra/alHeapInit.o
                 0x0000000070010d30                alHeapInit
- build/u/libultra/libultra.o(.text)
- .text          0x0000000070010d70    0x10020 build/u/libultra/libultra.o
+ build/u/libultra/alBnkfNew.o(.text)
+ .text          0x0000000070010d70      0x250 build/u/libultra/alBnkfNew.o
                 0x0000000070010d80                ultra_70010D80
                 0x0000000070010e74                alBnkfNew
                 0x0000000070010f78                alSeqFileNew
+ build/u/libultra/__CSP.o(.text)
+ .text          0x0000000070010fc0     0x1230 build/u/libultra/__CSP.o
                 0x0000000070010fc0                __CSPPostNextSeqEvent
                 0x0000000070011030                ultra_70011030
                 0x000000007001106c                ultra_7001106C
                 0x000000007001123c                __CSPHandleMIDIMsg
                 0x0000000070011a6c                ultra_70011A6C
                 0x0000000070012080                alCSPNew
+ build/u/libultra/alSeqpSetBank.o(.text)
+ .text          0x00000000700121f0       0x40 build/u/libultra/alSeqpSetBank.o
                 0x00000000700121f0                alSeqpSetBank
+ build/u/libultra/alCSPGetState.o(.text)
+ .text          0x0000000070012230       0x10 build/u/libultra/alCSPGetState.o
                 0x0000000070012230                alCSPGetState
+ build/u/libultra/csequencer.o(.text)
+ .text          0x0000000070012240      0xac0 build/u/libultra/csequencer.o
                 0x0000000070012240                alCSeqGetLoc
                 0x00000000700122e0                alCSeqSetLoc
                 0x0000000070012380                ultra_70012380
@@ -1540,6 +1578,8 @@ Linker script and memory map
                 0x0000000070012a24                alCSeqSecToTicks
                 0x0000000070012b20                alCSeqTicksToSec
                 0x0000000070012b8c                __alCSeqNextDelta
+ build/u/libultra/libultra.o(.text)
+ .text          0x0000000070012d00     0xe090 build/u/libultra/libultra.o
                 0x0000000070012d00                alCSPSetSeq
                 0x0000000070012d40                alCSPPlay
                 0x0000000070012d70                alCSPStop
@@ -16650,6 +16690,16 @@ Linker script and memory map
  .data          0x0000000080027740        0x0 build/u/libultra/osSetTimer.o
  build/u/libultra/alHeapInit.o(.data)
  .data          0x0000000080027740        0x0 build/u/libultra/alHeapInit.o
+ build/u/libultra/alBnkfNew.o(.data)
+ .data          0x0000000080027740        0x0 build/u/libultra/alBnkfNew.o
+ build/u/libultra/__CSP.o(.data)
+ .data          0x0000000080027740        0x0 build/u/libultra/__CSP.o
+ build/u/libultra/alSeqpSetBank.o(.data)
+ .data          0x0000000080027740        0x0 build/u/libultra/alSeqpSetBank.o
+ build/u/libultra/alCSPGetState.o(.data)
+ .data          0x0000000080027740        0x0 build/u/libultra/alCSPGetState.o
+ build/u/libultra/csequencer.o(.data)
+ .data          0x0000000080027740        0x0 build/u/libultra/csequencer.o
  build/u/libultra/libultra.o(.data)
  .data          0x0000000080027740      0xc90 build/u/libultra/libultra.o
                 0x0000000080027740                spaces
@@ -16867,15 +16917,22 @@ Linker script and memory map
  build/u/libultra/osWritebackDCache.o(.rodata)
  build/u/libultra/osSetTimer.o(.rodata)
  build/u/libultra/alHeapInit.o(.rodata)
- build/u/libultra/libultra.o(.rodata)
+ build/u/libultra/alBnkfNew.o(.rodata)
+ build/u/libultra/__CSP.o(.rodata)
  *fill*         0x0000000080029484        0xc 
- .rodata        0x0000000080029490      0x8d0 build/u/libultra/libultra.o
+ .rodata        0x0000000080029490      0x240 build/u/libultra/__CSP.o
                 0x0000000080029490                audio_related_jump_table_0
                 0x0000000080029614                audio_related_jump_table_1
                 0x0000000080029674                audio_related_jump_table_2
                 0x00000000800296c4                F32_800296C4
+ build/u/libultra/alSeqpSetBank.o(.rodata)
+ build/u/libultra/alCSPGetState.o(.rodata)
+ build/u/libultra/csequencer.o(.rodata)
+ .rodata        0x00000000800296d0       0x10 build/u/libultra/csequencer.o
                 0x00000000800296d0                F64_800296D0
                 0x00000000800296d8                F64_800296D8
+ build/u/libultra/libultra.o(.rodata)
+ .rodata        0x00000000800296e0      0x680 build/u/libultra/libultra.o
                 0x00000000800296e0                F32_800296E0
                 0x00000000800296e4                F32_800296E4
                 0x00000000800296f0                aHll
@@ -21544,6 +21601,16 @@ Linker script and memory map
  .bss           0x0000000080066ad0        0x0 build/u/libultra/osSetTimer.o
  build/u/libultra/alHeapInit.o(.bss)
  .bss           0x0000000080066ad0        0x0 build/u/libultra/alHeapInit.o
+ build/u/libultra/alBnkfNew.o(.bss)
+ .bss           0x0000000080066ad0        0x0 build/u/libultra/alBnkfNew.o
+ build/u/libultra/__CSP.o(.bss)
+ .bss           0x0000000080066ad0        0x0 build/u/libultra/__CSP.o
+ build/u/libultra/alSeqpSetBank.o(.bss)
+ .bss           0x0000000080066ad0        0x0 build/u/libultra/alSeqpSetBank.o
+ build/u/libultra/alCSPGetState.o(.bss)
+ .bss           0x0000000080066ad0        0x0 build/u/libultra/alCSPGetState.o
+ build/u/libultra/csequencer.o(.bss)
+ .bss           0x0000000080066ad0        0x0 build/u/libultra/csequencer.o
  build/u/libultra/libultra.o(.bss)
  .bss           0x0000000080066ad0     0x26a0 build/u/libultra/libultra.o
                 0x0000000080066ad0                piThread
