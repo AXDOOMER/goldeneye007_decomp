@@ -3900,8 +3900,8 @@ Linker script and memory map
                 0x000000007f09193c                sub_GAME_7F09193C
                 0x000000007f091a5c                sub_GAME_7F091A5C
                 0x000000007f091a78                sub_GAME_7F091A78
-                0x000000007f091aac                sub_GAME_7F091AAC
-                0x000000007f091b64                sub_GAME_7F091B64
+                0x000000007f091aac                turn_on_cheat_for_players
+                0x000000007f091b64                handle_cheats_turned_on
                 0x000000007f092438                sub_GAME_7F092438
                 0x000000007f0926c0                sub_GAME_7F0926C0
                 0x000000007f092774                sub_GAME_7F092774

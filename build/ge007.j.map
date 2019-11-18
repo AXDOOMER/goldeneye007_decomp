@@ -3902,8 +3902,8 @@ Linker script and memory map
                 0x000000007f09241c                sub_GAME_7F09193C
                 0x000000007f09253c                sub_GAME_7F091A5C
                 0x000000007f092558                sub_GAME_7F091A78
-                0x000000007f09258c                sub_GAME_7F091AAC
-                0x000000007f092644                sub_GAME_7F091B64
+                0x000000007f09258c                turn_on_cheat_for_players
+                0x000000007f092644                handle_cheats_turned_on
                 0x000000007f092fb8                sub_GAME_7F092438
                 0x000000007f093240                sub_GAME_7F0926C0
                 0x000000007f0932f4                sub_GAME_7F092774
@@ -3928,7 +3928,7 @@ Linker script and memory map
                 0x000000007f094850                sub_GAME_7F093CB0
                 0x000000007f094b44                sub_GAME_7F093FA4
                 0x000000007f094e38                sub_GAME_7F094298
-                0x000000007f094fcc                sub_GAME_7F09442C
+                0x000000007f094fcc                store_stagenum_to_copyof_stagenum
                 0x000000007f094fd8                sub_GAME_7F094438
                 0x000000007f095028                sub_GAME_7F094488
                 0x000000007f097f28                sub_GAME_7F097388
@@ -4263,7 +4263,7 @@ Linker script and memory map
                 0x000000007f0b4be4                sub_GAME_7F0B4034
                 0x000000007f0b4c34                sub_GAME_7F0B4084
                 0x000000007f0b4c84                sub_GAME_7F0B40D4
-                0x000000007f0b4cd4                sub_GAME_7F0B4124
+                0x000000007f0b4cd4                load_bg_file
                 0x000000007f0b5390                sub_GAME_7F0B47E0
                 0x000000007f0b53c0                sub_GAME_7F0B4810
                 0x000000007f0b53e0                get_room_data_float2

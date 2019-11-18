@@ -47481,30 +47481,15 @@ glabel sub_GAME_7F04F244
 
 
 
-#ifdef NONMATCHING
-void append_text_picked_up(void) {
 
+void append_text_picked_up(u8 *buffer,u8 * param2,u8 * param3)
+{
+  u8 *puVar1;
+  
+  puVar1 = get_textptr_for_textID(0xa400);
+  string_load_parse_something(buffer,puVar1);
+  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel append_text_picked_up
-/* 083DE4 7F04F2B4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 083DE8 7F04F2B8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 083DEC 7F04F2BC AFA40018 */  sw    $a0, 0x18($sp)
-/* 083DF0 7F04F2C0 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 083DF4 7F04F2C4 AFA60020 */  sw    $a2, 0x20($sp)
-/* 083DF8 7F04F2C8 0FC30776 */  jal   get_textptr_for_textID
-/* 083DFC 7F04F2CC 3404A400 */   li    $a0, 41984
-/* 083E00 7F04F2D0 8FA40018 */  lw    $a0, 0x18($sp)
-/* 083E04 7F04F2D4 0C0029FF */  jal   string_load_parse_something
-/* 083E08 7F04F2D8 00402825 */   move  $a1, $v0
-/* 083E0C 7F04F2DC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 083E10 7F04F2E0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 083E14 7F04F2E4 03E00008 */  jr    $ra
-/* 083E18 7F04F2E8 00000000 */   nop   
-)
-#endif
 
 
 
