@@ -6445,7 +6445,7 @@ loop_7:
                 if (temp_ret_3 != 0)
                 {
                     textpointer_load_parse_something(&spD0, temp_ret_3);
-                    string_load_parse_something(&spD0, &asc_D_8004F488);
+                    string_append_from_obseg_textbank(&spD0, &asc_D_8004F488);
                     spF4 = 0;
                     spF8 = 0;
                     sub_GAME_7F0AE98C(&spF8, &spF4, &spD0, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
@@ -6488,11 +6488,11 @@ loop_24:
                     }
                     if (phi_s2_2 >= 0)
                     {
-                        string_load_parse_something(&spBC, *((((phi_s2_2 * 8) - phi_s2_2) * 4) + &mission_folder_setup_entries));
-                        string_load_parse_something(&spBC, &a_);
+                        string_append_from_obseg_textbank(&spBC, *((((phi_s2_2 * 8) - phi_s2_2) * 4) + &mission_folder_setup_entries));
+                        string_append_from_obseg_textbank(&spBC, &a_);
                     }
-                    string_load_parse_something(&spBC, *((((phi_s1_3 * 8) - phi_s1_3) * 4) + &mission_folder_setup_entries));
-                    string_load_parse_something(&spBC, &asc_D_8004F490);
+                    string_append_from_obseg_textbank(&spBC, *((((phi_s1_3 * 8) - phi_s1_3) * 4) + &mission_folder_setup_entries));
+                    string_append_from_obseg_textbank(&spBC, &asc_D_8004F490);
                     spF4 = 0;
                     spF8 = 0;
                     sub_GAME_7F0AE98C(&spF8, &spF4, &spBC, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
@@ -7029,7 +7029,7 @@ glabel constructor_menu05_fileselect
 /* 0415C4 7F00CA94 00402825 */   move  $a1, $v0
 /* 0415C8 7F00CA98 3C058005 */  lui   $a1, %hi(asc_D_8004F488)
 /* 0415CC 7F00CA9C 24A5F488 */  addiu $a1, %lo(asc_D_8004F488) # addiu $a1, $a1, -0xb78
-/* 0415D0 7F00CAA0 0C0029FF */  jal   string_load_parse_something
+/* 0415D0 7F00CAA0 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 0415D4 7F00CAA4 27A400D0 */   addiu $a0, $sp, 0xd0
 /* 0415D8 7F00CAA8 8E980000 */  lw    $t8, ($s4)
 /* 0415DC 7F00CAAC AFA000F4 */  sw    $zero, 0xf4($sp)
@@ -7125,19 +7125,19 @@ glabel constructor_menu05_fileselect
 /* 041730 7F00CC00 000A5080 */  sll   $t2, $t2, 2
 /* 041734 7F00CC04 014E4821 */  addu  $t1, $t2, $t6
 /* 041738 7F00CC08 8D250000 */  lw    $a1, ($t1)
-/* 04173C 7F00CC0C 0C0029FF */  jal   string_load_parse_something
+/* 04173C 7F00CC0C 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 041740 7F00CC10 02A02025 */   move  $a0, $s5
 /* 041744 7F00CC14 3C058005 */  lui   $a1, %hi(a_)
 /* 041748 7F00CC18 24A5F48C */  addiu $a1, %lo(a_) # addiu $a1, $a1, -0xb74
-/* 04174C 7F00CC1C 0C0029FF */  jal   string_load_parse_something
+/* 04174C 7F00CC1C 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 041750 7F00CC20 02A02025 */   move  $a0, $s5
 .L7F00CC24:
 /* 041754 7F00CC24 02A02025 */  move  $a0, $s5
-/* 041758 7F00CC28 0C0029FF */  jal   string_load_parse_something
+/* 041758 7F00CC28 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 04175C 7F00CC2C 8E050000 */   lw    $a1, ($s0)
 /* 041760 7F00CC30 3C058005 */  lui   $a1, %hi(asc_D_8004F490)
 /* 041764 7F00CC34 24A5F490 */  addiu $a1, %lo(asc_D_8004F490) # addiu $a1, $a1, -0xb70
-/* 041768 7F00CC38 0C0029FF */  jal   string_load_parse_something
+/* 041768 7F00CC38 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 04176C 7F00CC3C 02A02025 */   move  $a0, $s5
 /* 041770 7F00CC40 8E880000 */  lw    $t0, ($s4)
 /* 041774 7F00CC44 AFA000F4 */  sw    $zero, 0xf4($sp)
@@ -9970,7 +9970,7 @@ loop_10:
                 }
             }
         }
-        string_load_parse_something(&sp90, &asc_D_8004F4A0);
+        string_append_from_obseg_textbank(&sp90, &asc_D_8004F4A0);
         spC4 = 0;
         temp_a0 = &spC8;
         spC8 = 0;
@@ -10103,7 +10103,7 @@ glabel constructor_menu07_missionsel
 .L7F00E5C4:
 /* 0430F4 7F00E5C4 3C058005 */  lui   $a1, %hi(asc_D_8004F4A0)
 /* 0430F8 7F00E5C8 24A5F4A0 */  addiu $a1, %lo(asc_D_8004F4A0) # addiu $a1, $a1, -0xb60
-/* 0430FC 7F00E5CC 0C0029FF */  jal   string_load_parse_something
+/* 0430FC 7F00E5CC 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 043100 7F00E5D0 02402025 */   move  $a0, $s2
 /* 043104 7F00E5D4 3C198004 */  lui   $t9, %hi(ptrFirstFontTableSmall) 
 /* 043108 7F00E5D8 8F390EAC */  lw    $t9, %lo(ptrFirstFontTableSmall)($t9)
@@ -10549,7 +10549,7 @@ void print_current_solo_briefing_stage_name(s32 arg0, s32 arg1)
     if (selected_difficulty >= 0)
     {
         textpointer_load_parse_something(arg1, get_ptr_difficulty_name(selected_difficulty, selected_difficulty));
-        string_load_parse_something(arg1, get_textptr_for_textID(TEXT(LTITLE, 0x20)));
+        string_append_from_obseg_textbank(arg1, get_textptr_for_textID(TEXT(LTITLE, 0x20)));
         sp54 = 0x37;
         sp50 = 0x57;
         sp44 = get_video2_settings_txtClipW();
@@ -10562,20 +10562,20 @@ void print_current_solo_briefing_stage_name(s32 arg0, s32 arg1)
         textpointer_load_parse_something(arg1, get_textptr_for_textID(TEXT(LTITLE, 0x21)));
         temp_v1 = (sp4C * 0x1c) + &mission_folder_setup_entries;
         sp40 = temp_v1;
-        string_load_parse_something(arg1, *temp_v1);
-        string_load_parse_something(arg1, &asc_D_8004F4A4);
-        string_load_parse_something(arg1, get_textptr_for_textID(sp40->unk4));
-        string_load_parse_something(arg1, &asc_D_8004F4A8);
+        string_append_from_obseg_textbank(arg1, *temp_v1);
+        string_append_from_obseg_textbank(arg1, &asc_D_8004F4A4);
+        string_append_from_obseg_textbank(arg1, get_textptr_for_textID(sp40->unk4));
+        string_append_from_obseg_textbank(arg1, &asc_D_8004F4A8);
         sp54 = 0x37;
         sp50 = 0x67;
         sp44 = get_video2_settings_txtClipW();
         arg0 = write_text_at_abs_coord(arg0, &sp54, &sp50, arg1, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     }
     textpointer_load_parse_something(arg1, get_textptr_for_textID(TEXT(LTITLE, 0x22)));
-    string_load_parse_something(arg1, *(&mission_folder_setup_entries + (briefingpage * 0x1c)));
-    string_load_parse_something(arg1, &asc_D_8004F4AC);
-    string_load_parse_something(arg1, get_textptr_for_textID(*(&mission_folder_setup_entries + (briefingpage * 0x1c))));
-    string_load_parse_something(arg1, &asc_D_8004F4B0);
+    string_append_from_obseg_textbank(arg1, *(&mission_folder_setup_entries + (briefingpage * 0x1c)));
+    string_append_from_obseg_textbank(arg1, &asc_D_8004F4AC);
+    string_append_from_obseg_textbank(arg1, get_textptr_for_textID(*(&mission_folder_setup_entries + (briefingpage * 0x1c))));
+    string_append_from_obseg_textbank(arg1, &asc_D_8004F4B0);
     sp54 = 0x37;
     sp50 = 0x77;
     sp44 = get_video2_settings_txtClipW();
@@ -10601,7 +10601,7 @@ glabel print_current_solo_briefing_stage_name
 /* 043620 7F00EAF0 0FC30776 */  jal   get_textptr_for_textID
 /* 043624 7F00EAF4 34049C20 */   li    $a0, 39968
 /* 043628 7F00EAF8 02002025 */  move  $a0, $s0
-/* 04362C 7F00EAFC 0C0029FF */  jal   string_load_parse_something
+/* 04362C 7F00EAFC 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 043630 7F00EB00 00402825 */   move  $a1, $v0
 /* 043634 7F00EB04 240E0037 */  li    $t6, 55
 /* 043638 7F00EB08 240F0057 */  li    $t7, 87
@@ -10649,21 +10649,21 @@ glabel print_current_solo_briefing_stage_name
 /* 0436DC 7F00EBAC 016C1821 */  addu  $v1, $t3, $t4
 /* 0436E0 7F00EBB0 8C650000 */  lw    $a1, ($v1)
 /* 0436E4 7F00EBB4 AFA30040 */  sw    $v1, 0x40($sp)
-/* 0436E8 7F00EBB8 0C0029FF */  jal   string_load_parse_something
+/* 0436E8 7F00EBB8 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 0436EC 7F00EBBC 02002025 */   move  $a0, $s0
 /* 0436F0 7F00EBC0 3C058005 */  lui   $a1, %hi(asc_D_8004F4A4)
 /* 0436F4 7F00EBC4 24A5F4A4 */  addiu $a1, %lo(asc_D_8004F4A4) # addiu $a1, $a1, -0xb5c
-/* 0436F8 7F00EBC8 0C0029FF */  jal   string_load_parse_something
+/* 0436F8 7F00EBC8 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 0436FC 7F00EBCC 02002025 */   move  $a0, $s0
 /* 043700 7F00EBD0 8FAD0040 */  lw    $t5, 0x40($sp)
 /* 043704 7F00EBD4 0FC30776 */  jal   get_textptr_for_textID
 /* 043708 7F00EBD8 95A40004 */   lhu   $a0, 4($t5)
 /* 04370C 7F00EBDC 02002025 */  move  $a0, $s0
-/* 043710 7F00EBE0 0C0029FF */  jal   string_load_parse_something
+/* 043710 7F00EBE0 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 043714 7F00EBE4 00402825 */   move  $a1, $v0
 /* 043718 7F00EBE8 3C058005 */  lui   $a1, %hi(asc_D_8004F4A8)
 /* 04371C 7F00EBEC 24A5F4A8 */  addiu $a1, %lo(asc_D_8004F4A8) # addiu $a1, $a1, -0xb58
-/* 043720 7F00EBF0 0C0029FF */  jal   string_load_parse_something
+/* 043720 7F00EBF0 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 043724 7F00EBF4 02002025 */   move  $a0, $s0
 /* 043728 7F00EBF8 240E0037 */  li    $t6, 55
 /* 04372C 7F00EBFC 240F0067 */  li    $t7, 103
@@ -10705,11 +10705,11 @@ glabel print_current_solo_briefing_stage_name
 /* 0437B8 7F00EC88 016A5823 */  subu  $t3, $t3, $t2
 /* 0437BC 7F00EC8C 000B5880 */  sll   $t3, $t3, 2
 /* 0437C0 7F00EC90 00AB2821 */  addu  $a1, $a1, $t3
-/* 0437C4 7F00EC94 0C0029FF */  jal   string_load_parse_something
+/* 0437C4 7F00EC94 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 0437C8 7F00EC98 8CA5ABE4 */   lw    $a1, %lo(mission_folder_setup_entries)($a1)
 /* 0437CC 7F00EC9C 3C058005 */  lui   $a1, %hi(asc_D_8004F4AC)
 /* 0437D0 7F00ECA0 24A5F4AC */  addiu $a1, %lo(asc_D_8004F4AC) # addiu $a1, $a1, -0xb54
-/* 0437D4 7F00ECA4 0C0029FF */  jal   string_load_parse_something
+/* 0437D4 7F00ECA4 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 0437D8 7F00ECA8 02002025 */   move  $a0, $s0
 /* 0437DC 7F00ECAC 3C0C8003 */  lui   $t4, %hi(briefingpage) 
 /* 0437E0 7F00ECB0 8D8CA8F8 */  lw    $t4, %lo(briefingpage)($t4)
@@ -10721,11 +10721,11 @@ glabel print_current_solo_briefing_stage_name
 /* 0437F8 7F00ECC8 0FC30776 */  jal   get_textptr_for_textID
 /* 0437FC 7F00ECCC 9484ABE8 */   lhu   $a0, %lo(mission_folder_setup_entries+0x4)($a0)
 /* 043800 7F00ECD0 02002025 */  move  $a0, $s0
-/* 043804 7F00ECD4 0C0029FF */  jal   string_load_parse_something
+/* 043804 7F00ECD4 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 043808 7F00ECD8 00402825 */   move  $a1, $v0
 /* 04380C 7F00ECDC 3C058005 */  lui   $a1, %hi(asc_D_8004F4B0)
 /* 043810 7F00ECE0 24A5F4B0 */  addiu $a1, %lo(asc_D_8004F4B0) # addiu $a1, $a1, -0xb50
-/* 043814 7F00ECE4 0C0029FF */  jal   string_load_parse_something
+/* 043814 7F00ECE4 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 043818 7F00ECE8 02002025 */   move  $a0, $s0
 /* 04381C 7F00ECEC 240E0037 */  li    $t6, 55
 /* 043820 7F00ECF0 240F0077 */  li    $t7, 119

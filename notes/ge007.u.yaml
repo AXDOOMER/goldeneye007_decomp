@@ -330,7 +330,7 @@ labels:
    # file asm/code/string_stuff.s
    - [0x7000A770, "textpointer_load_parse_something"]
    - [0x7000A7A0, "something_with_strings"]
-   - [0x7000A7FC, "string_load_parse_something"]
+   - [0x7000A7FC, "string_append_from_obseg_textbank"]
    - [0x7000A84C, "something_with_strings_0"]
    - [0x7000A898, "string_related"]
    - [0x7000A8F8, "strtol_related"]

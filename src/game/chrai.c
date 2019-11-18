@@ -47343,15 +47343,7 @@ void sub_GAME_7F04F170(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
-/*hack, part of append_text_ammo_amount_word*/
-glabel jpt_80052F10
-.word text_some
-.word text_some
-.word text_some
-.word text_a
-.word text_a
-.word text_a
-.word text_a
+
 
 .text
 glabel sub_GAME_7F04F170
@@ -47487,7 +47479,7 @@ void append_text_picked_up(u8 *buffer,u8 * param2,u8 * param3)
   u8 *puVar1;
   
   puVar1 = get_textptr_for_textID(0xa400);
-  string_load_parse_something(buffer,puVar1);
+  string_append_from_obseg_textbank(buffer,puVar1);
   return;
 }
 
@@ -47495,130 +47487,70 @@ void append_text_picked_up(u8 *buffer,u8 * param2,u8 * param3)
 
 
 
-#ifdef NONMATCHING
-void append_text_ammo_amount_word(void) {
+void append_text_ammo_amount_word(u8 *buffer,AMMOTYPES ammotype,u32 amount)
 
+{
+    u8 *textfiletext;
+    
+    switch(ammotype) {
+    case AMMO_9MM:
+    case AMMO_9MM_2:
+    case AMMO_RIFLE:
+    case AMMO_PLASTIQUE:
+        textfiletext = get_textptr_for_textID(0xa401);
+        string_append_from_obseg_textbank(buffer,textfiletext);
+        break;
+    case AMMO_SHOTGUN:
+    case AMMO_GRENADE:
+    case AMMO_ROCKETS:
+    case AMMO_REMOTEMINE:
+    case AMMO_PROXMINE:
+    case AMMO_TIMEDMINE:
+    case AMMO_KNIFE:
+    case AMMO_GRENADEROUND:
+    case AMMO_MAGNUM:
+    case AMMO_GGUN:
+    case AMMO_DARTS:
+    case AMMO_FLARE:
+    case AMMO_PITON:
+    case AMMO_DYNAMITE:
+    case AMMO_BUG:
+    case AMMO_MICRO_CAMERA:
+        if (amount == 1) {
+            textfiletext = get_textptr_for_textID(0xa402);
+            string_append_from_obseg_textbank(buffer,textfiletext);
+        }
+        else {
+            textfiletext = get_textptr_for_textID(0xa401);
+            string_append_from_obseg_textbank(buffer,textfiletext);
+        }
+        break;
+    case AMMO_EXPLOSIVEPEN:
+    case AMMO_BOMBCASE:
+        if (amount == 1) {
+            textfiletext = get_textptr_for_textID(0xa403);
+            string_append_from_obseg_textbank(buffer,textfiletext);
+        }
+        else {
+            textfiletext = get_textptr_for_textID(0xa401);
+            string_append_from_obseg_textbank(buffer,textfiletext);
+        }
+        break;
+    case AMMO_GEKEY:
+    case AMMO_TOKEN:
+        if (amount == 1) {
+            textfiletext = get_textptr_for_textID(0xa404);
+            string_append_from_obseg_textbank(buffer,textfiletext);
+        }
+        else {
+            textfiletext = get_textptr_for_textID(0xa401);
+            string_append_from_obseg_textbank(buffer,textfiletext);
+        }
+    }
+    return;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:80052F10*/
-/*glabel jpt_80052F10*/
-/*.word text_some*/
-/*.word text_some*/
-/*.word text_some*/
-/*.word text_a*/
-/*.word text_a*/
-/*.word text_a*/
-/*.word text_a*/
-.word text_a
-.word text_a
-.word text_a
-.word text_a
-.word text_a
-.word text_a
-.word text_a
-.word text_an
-.word text_an
-.word text_a
-.word text_a
-.word text_a
-.word text_a
-.word text_a
-.word text_the
-.word text_some
-.word text_NONE
-.word text_NONE
-.word text_NONE
-.word text_NONE
-.word text_NONE
-.word text_the
-.text
-glabel append_text_ammo_amount_word
-/* 083E1C 7F04F2EC 24AEFFFF */  addiu $t6, $a1, -1
-/* 083E20 7F04F2F0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 083E24 7F04F2F4 2DC1001D */  sltiu $at, $t6, 0x1d
-/* 083E28 7F04F2F8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 083E2C 7F04F2FC 1020003F */  beqz  $at, .L7F04F3FC
-/* 083E30 7F04F300 AFA40018 */   sw    $a0, 0x18($sp)
-/* 083E34 7F04F304 000E7080 */  sll   $t6, $t6, 2
-/* 083E38 7F04F308 3C018005 */  lui   $at, %hi(jpt_80052F10)
-/* 083E3C 7F04F30C 002E0821 */  addu  $at, $at, $t6
-/* 083E40 7F04F310 8C2E2F10 */  lw    $t6, %lo(jpt_80052F10)($at)
-/* 083E44 7F04F314 01C00008 */  jr    $t6
-/* 083E48 7F04F318 00000000 */   nop   
-text_some:
-/* 083E4C 7F04F31C 0FC30776 */  jal   get_textptr_for_textID
-/* 083E50 7F04F320 3404A401 */   li    $a0, 41985
-/* 083E54 7F04F324 8FA40018 */  lw    $a0, 0x18($sp)
-/* 083E58 7F04F328 0C0029FF */  jal   string_load_parse_something
-/* 083E5C 7F04F32C 00402825 */   move  $a1, $v0
-/* 083E60 7F04F330 10000033 */  b     .L7F04F400
-/* 083E64 7F04F334 8FBF0014 */   lw    $ra, 0x14($sp)
-text_a:
-/* 083E68 7F04F338 24010001 */  li    $at, 1
-/* 083E6C 7F04F33C 14C10008 */  bne   $a2, $at, .L7F04F360
-/* 083E70 7F04F340 00000000 */   nop   
-/* 083E74 7F04F344 0FC30776 */  jal   get_textptr_for_textID
-/* 083E78 7F04F348 3404A402 */   li    $a0, 41986
-/* 083E7C 7F04F34C 8FA40018 */  lw    $a0, 0x18($sp)
-/* 083E80 7F04F350 0C0029FF */  jal   string_load_parse_something
-/* 083E84 7F04F354 00402825 */   move  $a1, $v0
-/* 083E88 7F04F358 10000029 */  b     .L7F04F400
-/* 083E8C 7F04F35C 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F04F360:
-/* 083E90 7F04F360 0FC30776 */  jal   get_textptr_for_textID
-/* 083E94 7F04F364 3404A401 */   li    $a0, 41985
-/* 083E98 7F04F368 8FA40018 */  lw    $a0, 0x18($sp)
-/* 083E9C 7F04F36C 0C0029FF */  jal   string_load_parse_something
-/* 083EA0 7F04F370 00402825 */   move  $a1, $v0
-/* 083EA4 7F04F374 10000022 */  b     .L7F04F400
-/* 083EA8 7F04F378 8FBF0014 */   lw    $ra, 0x14($sp)
-text_an:
-/* 083EAC 7F04F37C 24010001 */  li    $at, 1
-/* 083EB0 7F04F380 14C10008 */  bne   $a2, $at, .L7F04F3A4
-/* 083EB4 7F04F384 00000000 */   nop   
-/* 083EB8 7F04F388 0FC30776 */  jal   get_textptr_for_textID
-/* 083EBC 7F04F38C 3404A403 */   li    $a0, 41987
-/* 083EC0 7F04F390 8FA40018 */  lw    $a0, 0x18($sp)
-/* 083EC4 7F04F394 0C0029FF */  jal   string_load_parse_something
-/* 083EC8 7F04F398 00402825 */   move  $a1, $v0
-/* 083ECC 7F04F39C 10000018 */  b     .L7F04F400
-/* 083ED0 7F04F3A0 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F04F3A4:
-/* 083ED4 7F04F3A4 0FC30776 */  jal   get_textptr_for_textID
-/* 083ED8 7F04F3A8 3404A401 */   li    $a0, 41985
-/* 083EDC 7F04F3AC 8FA40018 */  lw    $a0, 0x18($sp)
-/* 083EE0 7F04F3B0 0C0029FF */  jal   string_load_parse_something
-/* 083EE4 7F04F3B4 00402825 */   move  $a1, $v0
-/* 083EE8 7F04F3B8 10000011 */  b     .L7F04F400
-/* 083EEC 7F04F3BC 8FBF0014 */   lw    $ra, 0x14($sp)
-text_the:
-/* 083EF0 7F04F3C0 24010001 */  li    $at, 1
-/* 083EF4 7F04F3C4 14C10008 */  bne   $a2, $at, .L7F04F3E8
-/* 083EF8 7F04F3C8 00000000 */   nop   
-/* 083EFC 7F04F3CC 0FC30776 */  jal   get_textptr_for_textID
-/* 083F00 7F04F3D0 3404A404 */   li    $a0, 41988
-/* 083F04 7F04F3D4 8FA40018 */  lw    $a0, 0x18($sp)
-/* 083F08 7F04F3D8 0C0029FF */  jal   string_load_parse_something
-/* 083F0C 7F04F3DC 00402825 */   move  $a1, $v0
-/* 083F10 7F04F3E0 10000007 */  b     .L7F04F400
-/* 083F14 7F04F3E4 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F04F3E8:
-/* 083F18 7F04F3E8 0FC30776 */  jal   get_textptr_for_textID
-/* 083F1C 7F04F3EC 3404A401 */   li    $a0, 41985
-/* 083F20 7F04F3F0 8FA40018 */  lw    $a0, 0x18($sp)
-/* 083F24 7F04F3F4 0C0029FF */  jal   string_load_parse_something
-/* 083F28 7F04F3F8 00402825 */   move  $a1, $v0
-text_NONE:
-.L7F04F3FC:
-/* 083F2C 7F04F3FC 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F04F400:
-/* 083F30 7F04F400 27BD0018 */  addiu $sp, $sp, 0x18
-/* 083F34 7F04F404 03E00008 */  jr    $ra
-/* 083F38 7F04F408 00000000 */   nop   
-)
-#endif
+
+
 
 
 
@@ -47710,7 +47642,7 @@ glabel apped_text_ammotype
 /* 083F6C 7F04F43C 0FC30776 */  jal   get_textptr_for_textID
 /* 083F70 7F04F440 3404A405 */   li    $a0, 41989
 /* 083F74 7F04F444 02002025 */  move  $a0, $s0
-/* 083F78 7F04F448 0C0029FF */  jal   string_load_parse_something
+/* 083F78 7F04F448 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 083F7C 7F04F44C 00402825 */   move  $a1, $v0
 /* 083F80 7F04F450 100000C9 */  b     .L7F04F778
 /* 083F84 7F04F454 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -47721,7 +47653,7 @@ glabel apped_text_ammotype
 /* 083F94 7F04F464 0FC30776 */  jal   get_textptr_for_textID
 /* 083F98 7F04F468 3404A40F */   li    $a0, 41999
 /* 083F9C 7F04F46C 02002025 */  move  $a0, $s0
-/* 083FA0 7F04F470 0C0029FF */  jal   string_load_parse_something
+/* 083FA0 7F04F470 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 083FA4 7F04F474 00402825 */   move  $a1, $v0
 /* 083FA8 7F04F478 8FAE0028 */  lw    $t6, 0x28($sp)
 /* 083FAC 7F04F47C 24010001 */  li    $at, 1
@@ -47730,7 +47662,7 @@ glabel apped_text_ammotype
 /* 083FB8 7F04F488 0FC30776 */  jal   get_textptr_for_textID
 /* 083FBC 7F04F48C 3404A410 */   li    $a0, 42000
 /* 083FC0 7F04F490 02002025 */  move  $a0, $s0
-/* 083FC4 7F04F494 0C0029FF */  jal   string_load_parse_something
+/* 083FC4 7F04F494 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 083FC8 7F04F498 00402825 */   move  $a1, $v0
 /* 083FCC 7F04F49C 100000B6 */  b     .L7F04F778
 /* 083FD0 7F04F4A0 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -47738,7 +47670,7 @@ glabel apped_text_ammotype
 /* 083FD4 7F04F4A4 0FC30776 */  jal   get_textptr_for_textID
 /* 083FD8 7F04F4A8 3404A411 */   li    $a0, 42001
 /* 083FDC 7F04F4AC 02002025 */  move  $a0, $s0
-/* 083FE0 7F04F4B0 0C0029FF */  jal   string_load_parse_something
+/* 083FE0 7F04F4B0 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 083FE4 7F04F4B4 00402825 */   move  $a1, $v0
 /* 083FE8 7F04F4B8 100000AF */  b     .L7F04F778
 /* 083FEC 7F04F4BC 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -47752,7 +47684,7 @@ glabel apped_text_ammotype
 /* 084008 7F04F4D8 0FC30776 */  jal   get_textptr_for_textID
 /* 08400C 7F04F4DC 3404A419 */   li    $a0, 42009
 /* 084010 7F04F4E0 02002025 */  move  $a0, $s0
-/* 084014 7F04F4E4 0C0029FF */  jal   string_load_parse_something
+/* 084014 7F04F4E4 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084018 7F04F4E8 00402825 */   move  $a1, $v0
 /* 08401C 7F04F4EC 10000006 */  b     .L7F04F508
 /* 084020 7F04F4F0 00000000 */   nop   
@@ -47760,13 +47692,13 @@ glabel apped_text_ammotype
 /* 084024 7F04F4F4 0FC30776 */  jal   get_textptr_for_textID
 /* 084028 7F04F4F8 3404A41A */   li    $a0, 42010
 /* 08402C 7F04F4FC 02002025 */  move  $a0, $s0
-/* 084030 7F04F500 0C0029FF */  jal   string_load_parse_something
+/* 084030 7F04F500 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084034 7F04F504 00402825 */   move  $a1, $v0
 .L7F04F508:
 /* 084038 7F04F508 0FC30776 */  jal   get_textptr_for_textID
 /* 08403C 7F04F50C 3404A418 */   li    $a0, 42008
 /* 084040 7F04F510 02002025 */  move  $a0, $s0
-/* 084044 7F04F514 0C0029FF */  jal   string_load_parse_something
+/* 084044 7F04F514 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084048 7F04F518 00402825 */   move  $a1, $v0
 /* 08404C 7F04F51C 10000096 */  b     .L7F04F778
 /* 084050 7F04F520 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -47783,7 +47715,7 @@ text_pickup_shotgun_cartridge:
 /* 084074 7F04F544 0FC30776 */  jal   get_textptr_for_textID
 /* 084078 7F04F548 3404A406 */   li    $a0, 41990
 /* 08407C 7F04F54C 02002025 */  move  $a0, $s0
-/* 084080 7F04F550 0C0029FF */  jal   string_load_parse_something
+/* 084080 7F04F550 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084084 7F04F554 00402825 */   move  $a1, $v0
 /* 084088 7F04F558 1000007E */  b     .L7F04F754
 /* 08408C 7F04F55C 8FB90028 */   lw    $t9, 0x28($sp)
@@ -47791,7 +47723,7 @@ text_pickup_magnum_bullet:
 /* 084090 7F04F560 0FC30776 */  jal   get_textptr_for_textID
 /* 084094 7F04F564 3404A407 */   li    $a0, 41991
 /* 084098 7F04F568 02002025 */  move  $a0, $s0
-/* 08409C 7F04F56C 0C0029FF */  jal   string_load_parse_something
+/* 08409C 7F04F56C 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 0840A0 7F04F570 00402825 */   move  $a1, $v0
 /* 0840A4 7F04F574 10000077 */  b     .L7F04F754
 /* 0840A8 7F04F578 8FB90028 */   lw    $t9, 0x28($sp)
@@ -47799,7 +47731,7 @@ text_pickup_golden_bullet:
 /* 0840AC 7F04F57C 0FC30776 */  jal   get_textptr_for_textID
 /* 0840B0 7F04F580 3404A408 */   li    $a0, 41992
 /* 0840B4 7F04F584 02002025 */  move  $a0, $s0
-/* 0840B8 7F04F588 0C0029FF */  jal   string_load_parse_something
+/* 0840B8 7F04F588 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 0840BC 7F04F58C 00402825 */   move  $a1, $v0
 /* 0840C0 7F04F590 10000070 */  b     .L7F04F754
 /* 0840C4 7F04F594 8FB90028 */   lw    $t9, 0x28($sp)
@@ -47807,7 +47739,7 @@ text_pickup_hand_grenade:
 /* 0840C8 7F04F598 0FC30776 */  jal   get_textptr_for_textID
 /* 0840CC 7F04F59C 3404A409 */   li    $a0, 41993
 /* 0840D0 7F04F5A0 02002025 */  move  $a0, $s0
-/* 0840D4 7F04F5A4 0C0029FF */  jal   string_load_parse_something
+/* 0840D4 7F04F5A4 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 0840D8 7F04F5A8 00402825 */   move  $a1, $v0
 /* 0840DC 7F04F5AC 10000069 */  b     .L7F04F754
 /* 0840E0 7F04F5B0 8FB90028 */   lw    $t9, 0x28($sp)
@@ -47815,7 +47747,7 @@ text_pickup_grenade_round:
 /* 0840E4 7F04F5B4 0FC30776 */  jal   get_textptr_for_textID
 /* 0840E8 7F04F5B8 3404A40A */   li    $a0, 41994
 /* 0840EC 7F04F5BC 02002025 */  move  $a0, $s0
-/* 0840F0 7F04F5C0 0C0029FF */  jal   string_load_parse_something
+/* 0840F0 7F04F5C0 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 0840F4 7F04F5C4 00402825 */   move  $a1, $v0
 /* 0840F8 7F04F5C8 10000062 */  b     .L7F04F754
 /* 0840FC 7F04F5CC 8FB90028 */   lw    $t9, 0x28($sp)
@@ -47823,7 +47755,7 @@ text_pickup_rocket:
 /* 084100 7F04F5D0 0FC30776 */  jal   get_textptr_for_textID
 /* 084104 7F04F5D4 3404A40B */   li    $a0, 41995
 /* 084108 7F04F5D8 02002025 */  move  $a0, $s0
-/* 08410C 7F04F5DC 0C0029FF */  jal   string_load_parse_something
+/* 08410C 7F04F5DC 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084110 7F04F5E0 00402825 */   move  $a1, $v0
 /* 084114 7F04F5E4 1000005B */  b     .L7F04F754
 /* 084118 7F04F5E8 8FB90028 */   lw    $t9, 0x28($sp)
@@ -47831,7 +47763,7 @@ text_pickup_remote_mine:
 /* 08411C 7F04F5EC 0FC30776 */  jal   get_textptr_for_textID
 /* 084120 7F04F5F0 3404A40C */   li    $a0, 41996
 /* 084124 7F04F5F4 02002025 */  move  $a0, $s0
-/* 084128 7F04F5F8 0C0029FF */  jal   string_load_parse_something
+/* 084128 7F04F5F8 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 08412C 7F04F5FC 00402825 */   move  $a1, $v0
 /* 084130 7F04F600 10000054 */  b     .L7F04F754
 /* 084134 7F04F604 8FB90028 */   lw    $t9, 0x28($sp)
@@ -47839,7 +47771,7 @@ text_pickup_proximity_mine:
 /* 084138 7F04F608 0FC30776 */  jal   get_textptr_for_textID
 /* 08413C 7F04F60C 3404A40D */   li    $a0, 41997
 /* 084140 7F04F610 02002025 */  move  $a0, $s0
-/* 084144 7F04F614 0C0029FF */  jal   string_load_parse_something
+/* 084144 7F04F614 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084148 7F04F618 00402825 */   move  $a1, $v0
 /* 08414C 7F04F61C 1000004D */  b     .L7F04F754
 /* 084150 7F04F620 8FB90028 */   lw    $t9, 0x28($sp)
@@ -47847,7 +47779,7 @@ text_pickup_timed_mine:
 /* 084154 7F04F624 0FC30776 */  jal   get_textptr_for_textID
 /* 084158 7F04F628 3404A40E */   li    $a0, 41998
 /* 08415C 7F04F62C 02002025 */  move  $a0, $s0
-/* 084160 7F04F630 0C0029FF */  jal   string_load_parse_something
+/* 084160 7F04F630 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084164 7F04F634 00402825 */   move  $a1, $v0
 /* 084168 7F04F638 10000046 */  b     .L7F04F754
 /* 08416C 7F04F63C 8FB90028 */   lw    $t9, 0x28($sp)
@@ -47855,7 +47787,7 @@ text_pickup_dart:
 /* 084170 7F04F640 0FC30776 */  jal   get_textptr_for_textID
 /* 084174 7F04F644 3404A413 */   li    $a0, 42003
 /* 084178 7F04F648 02002025 */  move  $a0, $s0
-/* 08417C 7F04F64C 0C0029FF */  jal   string_load_parse_something
+/* 08417C 7F04F64C 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084180 7F04F650 00402825 */   move  $a1, $v0
 /* 084184 7F04F654 1000003F */  b     .L7F04F754
 /* 084188 7F04F658 8FB90028 */   lw    $t9, 0x28($sp)
@@ -47863,7 +47795,7 @@ text_pickup_explosive_pen:
 /* 08418C 7F04F65C 0FC30776 */  jal   get_textptr_for_textID
 /* 084190 7F04F660 3404A414 */   li    $a0, 42004
 /* 084194 7F04F664 02002025 */  move  $a0, $s0
-/* 084198 7F04F668 0C0029FF */  jal   string_load_parse_something
+/* 084198 7F04F668 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 08419C 7F04F66C 00402825 */   move  $a1, $v0
 /* 0841A0 7F04F670 10000038 */  b     .L7F04F754
 /* 0841A4 7F04F674 8FB90028 */   lw    $t9, 0x28($sp)
@@ -47871,7 +47803,7 @@ text_pickup_explosive_case:
 /* 0841A8 7F04F678 0FC30776 */  jal   get_textptr_for_textID
 /* 0841AC 7F04F67C 3404A415 */   li    $a0, 42005
 /* 0841B0 7F04F680 02002025 */  move  $a0, $s0
-/* 0841B4 7F04F684 0C0029FF */  jal   string_load_parse_something
+/* 0841B4 7F04F684 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 0841B8 7F04F688 00402825 */   move  $a1, $v0
 /* 0841BC 7F04F68C 10000031 */  b     .L7F04F754
 /* 0841C0 7F04F690 8FB90028 */   lw    $t9, 0x28($sp)
@@ -47879,7 +47811,7 @@ text_pickup_flare:
 /* 0841C4 7F04F694 0FC30776 */  jal   get_textptr_for_textID
 /* 0841C8 7F04F698 3404A416 */   li    $a0, 42006
 /* 0841CC 7F04F69C 02002025 */  move  $a0, $s0
-/* 0841D0 7F04F6A0 0C0029FF */  jal   string_load_parse_something
+/* 0841D0 7F04F6A0 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 0841D4 7F04F6A4 00402825 */   move  $a1, $v0
 /* 0841D8 7F04F6A8 1000002A */  b     .L7F04F754
 /* 0841DC 7F04F6AC 8FB90028 */   lw    $t9, 0x28($sp)
@@ -47887,7 +47819,7 @@ text_pickup_piton:
 /* 0841E0 7F04F6B0 0FC30776 */  jal   get_textptr_for_textID
 /* 0841E4 7F04F6B4 3404A417 */   li    $a0, 42007
 /* 0841E8 7F04F6B8 02002025 */  move  $a0, $s0
-/* 0841EC 7F04F6BC 0C0029FF */  jal   string_load_parse_something
+/* 0841EC 7F04F6BC 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 0841F0 7F04F6C0 00402825 */   move  $a1, $v0
 /* 0841F4 7F04F6C4 10000023 */  b     .L7F04F754
 /* 0841F8 7F04F6C8 8FB90028 */   lw    $t9, 0x28($sp)
@@ -47895,7 +47827,7 @@ text_pickup_bug:
 /* 0841FC 7F04F6CC 0FC30776 */  jal   get_textptr_for_textID
 /* 084200 7F04F6D0 3404A41B */   li    $a0, 42011
 /* 084204 7F04F6D4 02002025 */  move  $a0, $s0
-/* 084208 7F04F6D8 0C0029FF */  jal   string_load_parse_something
+/* 084208 7F04F6D8 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 08420C 7F04F6DC 00402825 */   move  $a1, $v0
 /* 084210 7F04F6E0 1000001C */  b     .L7F04F754
 /* 084214 7F04F6E4 8FB90028 */   lw    $t9, 0x28($sp)
@@ -47903,7 +47835,7 @@ text_pickup_micro_camera:
 /* 084218 7F04F6E8 0FC30776 */  jal   get_textptr_for_textID
 /* 08421C 7F04F6EC 3404A41C */   li    $a0, 42012
 /* 084220 7F04F6F0 02002025 */  move  $a0, $s0
-/* 084224 7F04F6F4 0C0029FF */  jal   string_load_parse_something
+/* 084224 7F04F6F4 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084228 7F04F6F8 00402825 */   move  $a1, $v0
 /* 08422C 7F04F6FC 10000015 */  b     .L7F04F754
 /* 084230 7F04F700 8FB90028 */   lw    $t9, 0x28($sp)
@@ -47911,7 +47843,7 @@ text_pickup_goldeneye_key:
 /* 084234 7F04F704 0FC30776 */  jal   get_textptr_for_textID
 /* 084238 7F04F708 3404A41D */   li    $a0, 42013
 /* 08423C 7F04F70C 02002025 */  move  $a0, $s0
-/* 084240 7F04F710 0C0029FF */  jal   string_load_parse_something
+/* 084240 7F04F710 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084244 7F04F714 00402825 */   move  $a1, $v0
 /* 084248 7F04F718 1000000E */  b     .L7F04F754
 /* 08424C 7F04F71C 8FB90028 */   lw    $t9, 0x28($sp)
@@ -47919,7 +47851,7 @@ text_pickup_token:
 /* 084250 7F04F720 0FC30776 */  jal   get_textptr_for_textID
 /* 084254 7F04F724 3404A41E */   li    $a0, 42014
 /* 084258 7F04F728 02002025 */  move  $a0, $s0
-/* 08425C 7F04F72C 0C0029FF */  jal   string_load_parse_something
+/* 08425C 7F04F72C 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084260 7F04F730 00402825 */   move  $a1, $v0
 /* 084264 7F04F734 10000007 */  b     .L7F04F754
 /* 084268 7F04F738 8FB90028 */   lw    $t9, 0x28($sp)
@@ -47927,7 +47859,7 @@ text_pickup_plastique:
 /* 08426C 7F04F73C 0FC30776 */  jal   get_textptr_for_textID
 /* 084270 7F04F740 3404A41F */   li    $a0, 42015
 /* 084274 7F04F744 02002025 */  move  $a0, $s0
-/* 084278 7F04F748 0C0029FF */  jal   string_load_parse_something
+/* 084278 7F04F748 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 08427C 7F04F74C 00402825 */   move  $a1, $v0
 pluralize_multiples:
 .L7F04F750:
@@ -47939,7 +47871,7 @@ pluralize_multiples:
 /* 084290 7F04F760 0FC30776 */  jal   get_textptr_for_textID
 /* 084294 7F04F764 3404A412 */   li    $a0, 42002
 /* 084298 7F04F768 02002025 */  move  $a0, $s0
-/* 08429C 7F04F76C 0C0029FF */  jal   string_load_parse_something
+/* 08429C 7F04F76C 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 0842A0 7F04F770 00402825 */   move  $a1, $v0
 /* 0842A4 7F04F774 8FBF001C */  lw    $ra, 0x1c($sp)
 .L7F04F778:
@@ -48168,7 +48100,7 @@ glabel display_ammo_type_collection_text
 .L7F04F978:
 /* 0844A8 7F04F978 3C058005 */  lui   $a1, %hi(D_800529D0)
 /* 0844AC 7F04F97C 24A529D0 */  addiu $a1, %lo(D_800529D0) # addiu $a1, $a1, 0x29d0
-/* 0844B0 7F04F980 0C0029FF */  jal   string_load_parse_something
+/* 0844B0 7F04F980 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 0844B4 7F04F984 02002025 */   move  $a0, $s0
 /* 0844B8 7F04F988 10000016 */  b     .L7F04F9E4
 /* 0844BC 7F04F98C 8FBF0024 */   lw    $ra, 0x24($sp)
@@ -48192,7 +48124,7 @@ glabel display_ammo_type_collection_text
 /* 0844FC 7F04F9CC 02403025 */   move  $a2, $s2
 /* 084500 7F04F9D0 3C058005 */  lui   $a1, %hi(D_800529D4)
 /* 084504 7F04F9D4 24A529D4 */  addiu $a1, %lo(D_800529D4) # addiu $a1, $a1, 0x29d4
-/* 084508 7F04F9D8 0C0029FF */  jal   string_load_parse_something
+/* 084508 7F04F9D8 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 08450C 7F04F9DC 02002025 */   move  $a0, $s0
 /* 084510 7F04F9E0 8FBF0024 */  lw    $ra, 0x24($sp)
 .L7F04F9E4:
@@ -48932,7 +48864,7 @@ weapon_collect_msg_a_hunting_knife:
 /* 0849CC 7F04FE9C 0FC30776 */  jal   get_textptr_for_textID
 /* 0849D0 7F04FEA0 3404A420 */   li    $a0, 42016
 /* 0849D4 7F04FEA4 02002025 */  move  $a0, $s0
-/* 0849D8 7F04FEA8 0C0029FF */  jal   string_load_parse_something
+/* 0849D8 7F04FEA8 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 0849DC 7F04FEAC 00402825 */   move  $a1, $v0
 /* 0849E0 7F04FEB0 100000BC */  b     .L7F0501A4
 /* 0849E4 7F04FEB4 00000000 */   nop   
@@ -48940,7 +48872,7 @@ weapon_collect_msg_a_pp7:
 /* 0849E8 7F04FEB8 0FC30776 */  jal   get_textptr_for_textID
 /* 0849EC 7F04FEBC 3404A421 */   li    $a0, 42017
 /* 0849F0 7F04FEC0 02002025 */  move  $a0, $s0
-/* 0849F4 7F04FEC4 0C0029FF */  jal   string_load_parse_something
+/* 0849F4 7F04FEC4 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 0849F8 7F04FEC8 00402825 */   move  $a1, $v0
 /* 0849FC 7F04FECC 100000B5 */  b     .L7F0501A4
 /* 084A00 7F04FED0 00000000 */   nop   
@@ -48948,7 +48880,7 @@ weapon_collect_msg_a_silenced_pp7:
 /* 084A04 7F04FED4 0FC30776 */  jal   get_textptr_for_textID
 /* 084A08 7F04FED8 3404A422 */   li    $a0, 42018
 /* 084A0C 7F04FEDC 02002025 */  move  $a0, $s0
-/* 084A10 7F04FEE0 0C0029FF */  jal   string_load_parse_something
+/* 084A10 7F04FEE0 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084A14 7F04FEE4 00402825 */   move  $a1, $v0
 /* 084A18 7F04FEE8 100000AE */  b     .L7F0501A4
 /* 084A1C 7F04FEEC 00000000 */   nop   
@@ -48956,7 +48888,7 @@ weapon_collect_msg_a_dd44:
 /* 084A20 7F04FEF0 0FC30776 */  jal   get_textptr_for_textID
 /* 084A24 7F04FEF4 3404A423 */   li    $a0, 42019
 /* 084A28 7F04FEF8 02002025 */  move  $a0, $s0
-/* 084A2C 7F04FEFC 0C0029FF */  jal   string_load_parse_something
+/* 084A2C 7F04FEFC 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084A30 7F04FF00 00402825 */   move  $a1, $v0
 /* 084A34 7F04FF04 100000A7 */  b     .L7F0501A4
 /* 084A38 7F04FF08 00000000 */   nop   
@@ -48964,7 +48896,7 @@ weapon_collect_msg_a_klobb:
 /* 084A3C 7F04FF0C 0FC30776 */  jal   get_textptr_for_textID
 /* 084A40 7F04FF10 3404A424 */   li    $a0, 42020
 /* 084A44 7F04FF14 02002025 */  move  $a0, $s0
-/* 084A48 7F04FF18 0C0029FF */  jal   string_load_parse_something
+/* 084A48 7F04FF18 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084A4C 7F04FF1C 00402825 */   move  $a1, $v0
 /* 084A50 7F04FF20 100000A0 */  b     .L7F0501A4
 /* 084A54 7F04FF24 00000000 */   nop   
@@ -48972,7 +48904,7 @@ weapon_collect_msg_a_kf7:
 /* 084A58 7F04FF28 0FC30776 */  jal   get_textptr_for_textID
 /* 084A5C 7F04FF2C 3404A425 */   li    $a0, 42021
 /* 084A60 7F04FF30 02002025 */  move  $a0, $s0
-/* 084A64 7F04FF34 0C0029FF */  jal   string_load_parse_something
+/* 084A64 7F04FF34 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084A68 7F04FF38 00402825 */   move  $a1, $v0
 /* 084A6C 7F04FF3C 10000099 */  b     .L7F0501A4
 /* 084A70 7F04FF40 00000000 */   nop   
@@ -48980,7 +48912,7 @@ weapon_collect_msg_a_zmg:
 /* 084A74 7F04FF44 0FC30776 */  jal   get_textptr_for_textID
 /* 084A78 7F04FF48 3404A426 */   li    $a0, 42022
 /* 084A7C 7F04FF4C 02002025 */  move  $a0, $s0
-/* 084A80 7F04FF50 0C0029FF */  jal   string_load_parse_something
+/* 084A80 7F04FF50 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084A84 7F04FF54 00402825 */   move  $a1, $v0
 /* 084A88 7F04FF58 10000092 */  b     .L7F0501A4
 /* 084A8C 7F04FF5C 00000000 */   nop   
@@ -48988,7 +48920,7 @@ weapon_collect_msg_a_d5k:
 /* 084A90 7F04FF60 0FC30776 */  jal   get_textptr_for_textID
 /* 084A94 7F04FF64 3404A427 */   li    $a0, 42023
 /* 084A98 7F04FF68 02002025 */  move  $a0, $s0
-/* 084A9C 7F04FF6C 0C0029FF */  jal   string_load_parse_something
+/* 084A9C 7F04FF6C 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084AA0 7F04FF70 00402825 */   move  $a1, $v0
 /* 084AA4 7F04FF74 1000008B */  b     .L7F0501A4
 /* 084AA8 7F04FF78 00000000 */   nop   
@@ -48996,7 +48928,7 @@ weapon_collect_msg_a_silenced_d5k:
 /* 084AAC 7F04FF7C 0FC30776 */  jal   get_textptr_for_textID
 /* 084AB0 7F04FF80 3404A428 */   li    $a0, 42024
 /* 084AB4 7F04FF84 02002025 */  move  $a0, $s0
-/* 084AB8 7F04FF88 0C0029FF */  jal   string_load_parse_something
+/* 084AB8 7F04FF88 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084ABC 7F04FF8C 00402825 */   move  $a1, $v0
 /* 084AC0 7F04FF90 10000084 */  b     .L7F0501A4
 /* 084AC4 7F04FF94 00000000 */   nop   
@@ -49004,7 +48936,7 @@ weapon_collect_msg_a_phantom:
 /* 084AC8 7F04FF98 0FC30776 */  jal   get_textptr_for_textID
 /* 084ACC 7F04FF9C 3404A429 */   li    $a0, 42025
 /* 084AD0 7F04FFA0 02002025 */  move  $a0, $s0
-/* 084AD4 7F04FFA4 0C0029FF */  jal   string_load_parse_something
+/* 084AD4 7F04FFA4 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084AD8 7F04FFA8 00402825 */   move  $a1, $v0
 /* 084ADC 7F04FFAC 1000007D */  b     .L7F0501A4
 /* 084AE0 7F04FFB0 00000000 */   nop   
@@ -49012,7 +48944,7 @@ weapon_collect_msg_a_ar33:
 /* 084AE4 7F04FFB4 0FC30776 */  jal   get_textptr_for_textID
 /* 084AE8 7F04FFB8 3404A42A */   li    $a0, 42026
 /* 084AEC 7F04FFBC 02002025 */  move  $a0, $s0
-/* 084AF0 7F04FFC0 0C0029FF */  jal   string_load_parse_something
+/* 084AF0 7F04FFC0 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084AF4 7F04FFC4 00402825 */   move  $a1, $v0
 /* 084AF8 7F04FFC8 10000076 */  b     .L7F0501A4
 /* 084AFC 7F04FFCC 00000000 */   nop   
@@ -49020,7 +48952,7 @@ weapon_collect_msg_a_rcp90:
 /* 084B00 7F04FFD0 0FC30776 */  jal   get_textptr_for_textID
 /* 084B04 7F04FFD4 3404A42B */   li    $a0, 42027
 /* 084B08 7F04FFD8 02002025 */  move  $a0, $s0
-/* 084B0C 7F04FFDC 0C0029FF */  jal   string_load_parse_something
+/* 084B0C 7F04FFDC 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084B10 7F04FFE0 00402825 */   move  $a1, $v0
 /* 084B14 7F04FFE4 1000006F */  b     .L7F0501A4
 /* 084B18 7F04FFE8 00000000 */   nop   
@@ -49028,7 +48960,7 @@ weapon_collect_msg_a_shotgun:
 /* 084B1C 7F04FFEC 0FC30776 */  jal   get_textptr_for_textID
 /* 084B20 7F04FFF0 3404A42C */   li    $a0, 42028
 /* 084B24 7F04FFF4 02002025 */  move  $a0, $s0
-/* 084B28 7F04FFF8 0C0029FF */  jal   string_load_parse_something
+/* 084B28 7F04FFF8 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084B2C 7F04FFFC 00402825 */   move  $a1, $v0
 /* 084B30 7F050000 10000068 */  b     .L7F0501A4
 /* 084B34 7F050004 00000000 */   nop   
@@ -49036,7 +48968,7 @@ weapon_collect_msg_an_auto_shotgun:
 /* 084B38 7F050008 0FC30776 */  jal   get_textptr_for_textID
 /* 084B3C 7F05000C 3404A42D */   li    $a0, 42029
 /* 084B40 7F050010 02002025 */  move  $a0, $s0
-/* 084B44 7F050014 0C0029FF */  jal   string_load_parse_something
+/* 084B44 7F050014 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084B48 7F050018 00402825 */   move  $a1, $v0
 /* 084B4C 7F05001C 10000061 */  b     .L7F0501A4
 /* 084B50 7F050020 00000000 */   nop   
@@ -49044,7 +48976,7 @@ weapon_collect_msg_a_sniper:
 /* 084B54 7F050024 0FC30776 */  jal   get_textptr_for_textID
 /* 084B58 7F050028 3404A42E */   li    $a0, 42030
 /* 084B5C 7F05002C 02002025 */  move  $a0, $s0
-/* 084B60 7F050030 0C0029FF */  jal   string_load_parse_something
+/* 084B60 7F050030 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084B64 7F050034 00402825 */   move  $a1, $v0
 /* 084B68 7F050038 1000005A */  b     .L7F0501A4
 /* 084B6C 7F05003C 00000000 */   nop   
@@ -49052,7 +48984,7 @@ weapon_collect_msg_a_grenade_launcher:
 /* 084B70 7F050040 0FC30776 */  jal   get_textptr_for_textID
 /* 084B74 7F050044 3404A42F */   li    $a0, 42031
 /* 084B78 7F050048 02002025 */  move  $a0, $s0
-/* 084B7C 7F05004C 0C0029FF */  jal   string_load_parse_something
+/* 084B7C 7F05004C 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084B80 7F050050 00402825 */   move  $a1, $v0
 /* 084B84 7F050054 10000053 */  b     .L7F0501A4
 /* 084B88 7F050058 00000000 */   nop   
@@ -49060,7 +48992,7 @@ weapon_collect_msg_a_rocket_launcher:
 /* 084B8C 7F05005C 0FC30776 */  jal   get_textptr_for_textID
 /* 084B90 7F050060 3404A430 */   li    $a0, 42032
 /* 084B94 7F050064 02002025 */  move  $a0, $s0
-/* 084B98 7F050068 0C0029FF */  jal   string_load_parse_something
+/* 084B98 7F050068 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084B9C 7F05006C 00402825 */   move  $a1, $v0
 /* 084BA0 7F050070 1000004C */  b     .L7F0501A4
 /* 084BA4 7F050074 00000000 */   nop   
@@ -49068,7 +49000,7 @@ weapon_collect_msg_a_cougar_magnum:
 /* 084BA8 7F050078 0FC30776 */  jal   get_textptr_for_textID
 /* 084BAC 7F05007C 3404A431 */   li    $a0, 42033
 /* 084BB0 7F050080 02002025 */  move  $a0, $s0
-/* 084BB4 7F050084 0C0029FF */  jal   string_load_parse_something
+/* 084BB4 7F050084 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084BB8 7F050088 00402825 */   move  $a1, $v0
 /* 084BBC 7F05008C 10000045 */  b     .L7F0501A4
 /* 084BC0 7F050090 00000000 */   nop   
@@ -49076,7 +49008,7 @@ weapon_collect_msg_a_golden_gun:
 /* 084BC4 7F050094 0FC30776 */  jal   get_textptr_for_textID
 /* 084BC8 7F050098 3404A432 */   li    $a0, 42034
 /* 084BCC 7F05009C 02002025 */  move  $a0, $s0
-/* 084BD0 7F0500A0 0C0029FF */  jal   string_load_parse_something
+/* 084BD0 7F0500A0 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084BD4 7F0500A4 00402825 */   move  $a1, $v0
 /* 084BD8 7F0500A8 1000003E */  b     .L7F0501A4
 /* 084BDC 7F0500AC 00000000 */   nop   
@@ -49084,7 +49016,7 @@ weapon_collect_msg_a_moonraker_laser:
 /* 084BE0 7F0500B0 0FC30776 */  jal   get_textptr_for_textID
 /* 084BE4 7F0500B4 3404A433 */   li    $a0, 42035
 /* 084BE8 7F0500B8 02002025 */  move  $a0, $s0
-/* 084BEC 7F0500BC 0C0029FF */  jal   string_load_parse_something
+/* 084BEC 7F0500BC 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084BF0 7F0500C0 00402825 */   move  $a1, $v0
 /* 084BF4 7F0500C4 10000037 */  b     .L7F0501A4
 /* 084BF8 7F0500C8 00000000 */   nop   
@@ -49092,7 +49024,7 @@ weapon_collect_msg_a_flare_pistol:
 /* 084BFC 7F0500CC 0FC30776 */  jal   get_textptr_for_textID
 /* 084C00 7F0500D0 3404A434 */   li    $a0, 42036
 /* 084C04 7F0500D4 02002025 */  move  $a0, $s0
-/* 084C08 7F0500D8 0C0029FF */  jal   string_load_parse_something
+/* 084C08 7F0500D8 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084C0C 7F0500DC 00402825 */   move  $a1, $v0
 /* 084C10 7F0500E0 10000030 */  b     .L7F0501A4
 /* 084C14 7F0500E4 00000000 */   nop   
@@ -49100,7 +49032,7 @@ weapon_collect_msg_a_piton_gun:
 /* 084C18 7F0500E8 0FC30776 */  jal   get_textptr_for_textID
 /* 084C1C 7F0500EC 3404A435 */   li    $a0, 42037
 /* 084C20 7F0500F0 02002025 */  move  $a0, $s0
-/* 084C24 7F0500F4 0C0029FF */  jal   string_load_parse_something
+/* 084C24 7F0500F4 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084C28 7F0500F8 00402825 */   move  $a1, $v0
 /* 084C2C 7F0500FC 10000029 */  b     .L7F0501A4
 /* 084C30 7F050100 00000000 */   nop   
@@ -49108,7 +49040,7 @@ weapon_collect_msg_a_silver_pp7:
 /* 084C34 7F050104 0FC30776 */  jal   get_textptr_for_textID
 /* 084C38 7F050108 3404A436 */   li    $a0, 42038
 /* 084C3C 7F05010C 02002025 */  move  $a0, $s0
-/* 084C40 7F050110 0C0029FF */  jal   string_load_parse_something
+/* 084C40 7F050110 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084C44 7F050114 00402825 */   move  $a1, $v0
 /* 084C48 7F050118 10000022 */  b     .L7F0501A4
 /* 084C4C 7F05011C 00000000 */   nop   
@@ -49116,7 +49048,7 @@ weapon_collect_msg_a_gold_pp7:
 /* 084C50 7F050120 0FC30776 */  jal   get_textptr_for_textID
 /* 084C54 7F050124 3404A437 */   li    $a0, 42039
 /* 084C58 7F050128 02002025 */  move  $a0, $s0
-/* 084C5C 7F05012C 0C0029FF */  jal   string_load_parse_something
+/* 084C5C 7F05012C 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084C60 7F050130 00402825 */   move  $a1, $v0
 /* 084C64 7F050134 1000001B */  b     .L7F0501A4
 /* 084C68 7F050138 00000000 */   nop   
@@ -49124,7 +49056,7 @@ weapon_collect_msg_a_keycard:
 /* 084C6C 7F05013C 0FC30776 */  jal   get_textptr_for_textID
 /* 084C70 7F050140 3404A438 */   li    $a0, 42040
 /* 084C74 7F050144 02002025 */  move  $a0, $s0
-/* 084C78 7F050148 0C0029FF */  jal   string_load_parse_something
+/* 084C78 7F050148 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084C7C 7F05014C 00402825 */   move  $a1, $v0
 /* 084C80 7F050150 10000014 */  b     .L7F0501A4
 /* 084C84 7F050154 00000000 */   nop   
@@ -49132,7 +49064,7 @@ weapon_collect_msg_a_yale_key:
 /* 084C88 7F050158 0FC30776 */  jal   get_textptr_for_textID
 /* 084C8C 7F05015C 3404A439 */   li    $a0, 42041
 /* 084C90 7F050160 02002025 */  move  $a0, $s0
-/* 084C94 7F050164 0C0029FF */  jal   string_load_parse_something
+/* 084C94 7F050164 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084C98 7F050168 00402825 */   move  $a1, $v0
 /* 084C9C 7F05016C 1000000D */  b     .L7F0501A4
 /* 084CA0 7F050170 00000000 */   nop   
@@ -49140,7 +49072,7 @@ weapon_collect_msg_a_bolt_key:
 /* 084CA4 7F050174 0FC30776 */  jal   get_textptr_for_textID
 /* 084CA8 7F050178 3404A43A */   li    $a0, 42042
 /* 084CAC 7F05017C 02002025 */  move  $a0, $s0
-/* 084CB0 7F050180 0C0029FF */  jal   string_load_parse_something
+/* 084CB0 7F050180 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084CB4 7F050184 00402825 */   move  $a1, $v0
 /* 084CB8 7F050188 10000006 */  b     .L7F0501A4
 /* 084CBC 7F05018C 00000000 */   nop   
@@ -49149,7 +49081,7 @@ weapon_collect_msg_a_new_weapon:
 /* 084CC0 7F050190 0FC30776 */  jal   get_textptr_for_textID
 /* 084CC4 7F050194 3404A43B */   li    $a0, 42043
 /* 084CC8 7F050198 02002025 */  move  $a0, $s0
-/* 084CCC 7F05019C 0C0029FF */  jal   string_load_parse_something
+/* 084CCC 7F05019C 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084CD0 7F0501A0 00402825 */   move  $a1, $v0
 .L7F0501A4:
 /* 084CD4 7F0501A4 3C088005 */  lui   $t0, %hi(j_text_trigger) 
@@ -49174,11 +49106,11 @@ weapon_collect_msg_a_new_weapon:
 /* 084D1C 7F0501EC 0FC30776 */  jal   get_textptr_for_textID
 /* 084D20 7F0501F0 3404A400 */   li    $a0, 41984
 /* 084D24 7F0501F4 02002025 */  move  $a0, $s0
-/* 084D28 7F0501F8 0C0029FF */  jal   string_load_parse_something
+/* 084D28 7F0501F8 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084D2C 7F0501FC 00402825 */   move  $a1, $v0
 /* 084D30 7F050200 3C058005 */  lui   $a1, %hi(D_80052A40)
 /* 084D34 7F050204 24A52A40 */  addiu $a1, %lo(D_80052A40) # addiu $a1, $a1, 0x2a40
-/* 084D38 7F050208 0C0029FF */  jal   string_load_parse_something
+/* 084D38 7F050208 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 084D3C 7F05020C 02002025 */   move  $a0, $s0
 /* 084D40 7F050210 8FBF001C */  lw    $ra, 0x1c($sp)
 .L7F050214:

@@ -627,7 +627,7 @@ glabel display_objective_status_text_on_status_change
 /* 08C1A8 7F057678 0FC30776 */  jal   get_textptr_for_textID
 /* 08C1AC 7F05767C 3404B02D */   li    $a0, 45101
 /* 08C1B0 7F057680 02602025 */  move  $a0, $s3
-/* 08C1B4 7F057684 0C0029FF */  jal   string_load_parse_something
+/* 08C1B4 7F057684 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 08C1B8 7F057688 00402825 */   move  $a1, $v0
 /* 08C1BC 7F05768C 10000011 */  b     .L7F0576D4
 /* 08C1C0 7F057690 00000000 */   nop   
@@ -637,7 +637,7 @@ glabel display_objective_status_text_on_status_change
 /* 08C1CC 7F05769C 0FC30776 */  jal   get_textptr_for_textID
 /* 08C1D0 7F0576A0 3404B02E */   li    $a0, 45102
 /* 08C1D4 7F0576A4 02602025 */  move  $a0, $s3
-/* 08C1D8 7F0576A8 0C0029FF */  jal   string_load_parse_something
+/* 08C1D8 7F0576A8 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 08C1DC 7F0576AC 00402825 */   move  $a1, $v0
 /* 08C1E0 7F0576B0 10000008 */  b     .L7F0576D4
 /* 08C1E4 7F0576B4 00000000 */   nop   
@@ -647,7 +647,7 @@ glabel display_objective_status_text_on_status_change
 /* 08C1F0 7F0576C0 0FC30776 */  jal   get_textptr_for_textID
 /* 08C1F4 7F0576C4 3404B02F */   li    $a0, 45103
 /* 08C1F8 7F0576C8 02602025 */  move  $a0, $s3
-/* 08C1FC 7F0576CC 0C0029FF */  jal   string_load_parse_something
+/* 08C1FC 7F0576CC 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 08C200 7F0576D0 00402825 */   move  $a1, $v0
 .L7F0576D4:
 /* 08C204 7F0576D4 0FC228F2 */  jal   display_string_in_lower_left_corner
@@ -776,7 +776,7 @@ glabel display_objective_status_text_on_status_change
 /* 08C704 7F057B94 0FC30AA2 */  jal   get_textptr_for_textID
 /* 08C708 7F057B98 3404B02D */   li    $a0, 45101
 /* 08C70C 7F057B9C 02602025 */  move  $a0, $s3
-/* 08C710 7F057BA0 0C002A03 */  jal   string_load_parse_something
+/* 08C710 7F057BA0 0C002A03 */  jal   string_append_from_obseg_textbank
 /* 08C714 7F057BA4 00402825 */   move  $a1, $v0
 /* 08C718 7F057BA8 10000011 */  b     .L7F057BF0
 /* 08C71C 7F057BAC 00000000 */   nop   
@@ -786,7 +786,7 @@ glabel display_objective_status_text_on_status_change
 /* 08C728 7F057BB8 0FC30AA2 */  jal   get_textptr_for_textID
 /* 08C72C 7F057BBC 3404B02E */   li    $a0, 45102
 /* 08C730 7F057BC0 02602025 */  move  $a0, $s3
-/* 08C734 7F057BC4 0C002A03 */  jal   string_load_parse_something
+/* 08C734 7F057BC4 0C002A03 */  jal   string_append_from_obseg_textbank
 /* 08C738 7F057BC8 00402825 */   move  $a1, $v0
 /* 08C73C 7F057BCC 10000008 */  b     .L7F057BF0
 /* 08C740 7F057BD0 00000000 */   nop   
@@ -796,7 +796,7 @@ glabel display_objective_status_text_on_status_change
 /* 08C74C 7F057BDC 0FC30AA2 */  jal   get_textptr_for_textID
 /* 08C750 7F057BE0 3404B02F */   li    $a0, 45103
 /* 08C754 7F057BE4 02602025 */  move  $a0, $s3
-/* 08C758 7F057BE8 0C002A03 */  jal   string_load_parse_something
+/* 08C758 7F057BE8 0C002A03 */  jal   string_append_from_obseg_textbank
 /* 08C75C 7F057BEC 00402825 */   move  $a1, $v0
 .L7F057BF0:
 /* 08C760 7F057BF0 0FC22B10 */  jal   jp_FUN_7f08ac40

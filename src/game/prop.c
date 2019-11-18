@@ -2693,12 +2693,12 @@ glabel proplvreset2
 /* 038864 7F003D34 14200004 */  bnez  $at, .L7F003D48
 /* 038868 7F003D38 3C058005 */   lui   $a1, %hi(aMp_)
 /* 03886C 7F003D3C 24A5EEB0 */  addiu $a1, %lo(aMp_) # addiu $a1, $a1, -0x1150
-/* 038870 7F003D40 0C0029FF */  jal   string_load_parse_something
+/* 038870 7F003D40 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 038874 7F003D44 02202025 */   move  $a0, $s1
 .L7F003D48:
 /* 038878 7F003D48 8E050000 */  lw    $a1, ($s0)
 /* 03887C 7F003D4C 02202025 */  move  $a0, $s1
-/* 038880 7F003D50 0C0029FF */  jal   string_load_parse_something
+/* 038880 7F003D50 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 038884 7F003D54 24A50001 */   addiu $a1, $a1, 1
 /* 038888 7F003D58 02202025 */  move  $a0, $s1
 /* 03888C 7F003D5C 24050001 */  li    $a1, 1
@@ -4086,12 +4086,12 @@ glabel jpt_8004F02C
 /* 0388A4 7F003D34 14200004 */  bnez  $at, .L7F003D48
 /* 0388A8 7F003D38 3C058005 */   lui   $a1, %hi(aMp_) # $a1, 0x8005
 /* 0388AC 7F003D3C 24A5EEE0 */  addiu $a1, %lo(aMp_) # addiu $a1, $a1, -0x1120
-/* 0388B0 7F003D40 0C002A03 */  jal   string_load_parse_something
+/* 0388B0 7F003D40 0C002A03 */  jal   string_append_from_obseg_textbank
 /* 0388B4 7F003D44 02202025 */   move  $a0, $s1
 .L7F003D48:
 /* 0388B8 7F003D48 8E050000 */  lw    $a1, ($s0)
 /* 0388BC 7F003D4C 02202025 */  move  $a0, $s1
-/* 0388C0 7F003D50 0C002A03 */  jal   string_load_parse_something
+/* 0388C0 7F003D50 0C002A03 */  jal   string_append_from_obseg_textbank
 /* 0388C4 7F003D54 24A50001 */   addiu $a1, $a1, 1
 /* 0388C8 7F003D58 02202025 */  move  $a0, $s1
 /* 0388CC 7F003D5C 24050001 */  li    $a1, 1

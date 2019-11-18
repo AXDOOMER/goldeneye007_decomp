@@ -1350,7 +1350,7 @@ Linker script and memory map
  .text          0x000000007000a770      0x500 build/u/src/str.o
                 0x000000007000a770                textpointer_load_parse_something
                 0x000000007000a7a0                something_with_strings
-                0x000000007000a7fc                string_load_parse_something
+                0x000000007000a7fc                string_append_from_obseg_textbank
                 0x000000007000a84c                something_with_strings_0
                 0x000000007000a898                string_related
                 0x000000007000a8f8                strtol_related
@@ -20500,7 +20500,6 @@ Linker script and memory map
                 0x0000000080052f04                D_80052F04
                 0x0000000080052f08                D_80052F08
                 0x0000000080052f0c                D_80052F0C
-                0x0000000080052f10                jpt_80052F10
                 0x0000000080052f84                jpt_80052F84
                 0x0000000080052fec                jpt_80052FEC
                 0x0000000080053060                ammo_collected_from_magazine

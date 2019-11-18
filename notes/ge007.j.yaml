@@ -277,7 +277,7 @@ labels:
    - [0x7000a6b0, "check_token"]
    - [0x7000a780, "textpointer_load_parse_something"]
    - [0x7000a7b0, "something_with_strings"]
-   - [0x7000a80c, "string_load_parse_something"]
+   - [0x7000a80c, "string_append_from_obseg_textbank"]
    - [0x7000a85c, "something_with_strings_0"]
    - [0x7000a8a8, "string_related"]
    - [0x7000a908, "strtol_related"]
