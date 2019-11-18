@@ -20501,7 +20501,6 @@ Linker script and memory map
                 0x0000000080052f08                D_80052F08
                 0x0000000080052f0c                D_80052F0C
                 0x0000000080052f84                jpt_80052F84
-                0x0000000080052fec                jpt_80052FEC
                 0x0000000080053060                ammo_collected_from_magazine
                 0x0000000080053098                ammo_in_weapon
                 0x00000000800530d0                jpt_800530D0

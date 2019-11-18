@@ -2,6 +2,8 @@
 #include "bondgame.h"
 #include "game/chr.h"
 #include "game/chrai.h"
+#include "snd.h"
+#include "music.h"
 
 // bss
 //CODE.bss:80069B70
@@ -47556,9 +47558,127 @@ void append_text_ammo_amount_word(u8 *buffer,AMMOTYPES ammotype,u32 amount)
 
 
 
-#ifdef NONMATCHING
-void apped_text_ammotype(void) {
-
+#ifdef NONMATCHING//
+void apped_text_ammotype(u8 *buffer,AMMOTYPES ammotype,u32 amount)
+{
+    u8 *textfiletext;
+    
+    if (((ammotype == AMMO_9MM) || (ammotype == AMMO_9MM_2)) || (ammotype == AMMO_RIFLE)) {
+        textfiletext = get_textptr_for_textID(0xa405);
+        string_append_from_obseg_textbank(buffer,textfiletext);
+    }
+    else {
+        if (ammotype == AMMO_KNIFE) {
+            textfiletext = get_textptr_for_textID(41999);
+            string_append_from_obseg_textbank(buffer,textfiletext);
+            if (amount == 1) {
+                textfiletext = get_textptr_for_textID(42000);
+                string_append_from_obseg_textbank(buffer,textfiletext);
+            }
+            else {
+                textfiletext = get_textptr_for_textID(0xa411);
+                string_append_from_obseg_textbank(buffer,textfiletext);
+            }
+        }
+        else {
+            if (ammotype == AMMO_DYNAMITE) {
+                if (amount == 1) {
+                    textfiletext = get_textptr_for_textID(0xa419);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                }
+                else {
+                    textfiletext = get_textptr_for_textID(0xa41a);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                }
+                textfiletext = get_textptr_for_textID(0xa418);
+                string_append_from_obseg_textbank(buffer,textfiletext);
+            }
+            else {
+                switch(ammotype) {
+                case AMMO_SHOTGUN:
+                    textfiletext = get_textptr_for_textID(0xa406);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                    break;
+                case AMMO_GRENADE:
+                    textfiletext = get_textptr_for_textID(0xa409);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                    break;
+                case AMMO_ROCKETS:
+                    textfiletext = get_textptr_for_textID(0xa40b);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                    break;
+                case AMMO_REMOTEMINE:
+                    textfiletext = get_textptr_for_textID(0xa40c);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                    break;
+                case AMMO_PROXMINE:
+                    textfiletext = get_textptr_for_textID(0xa40d);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                    break;
+                case AMMO_TIMEDMINE:
+                    textfiletext = get_textptr_for_textID(0xa40e);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                    break;
+                case AMMO_GRENADEROUND:
+                    textfiletext = get_textptr_for_textID(0xa40a);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                    break;
+                case AMMO_MAGNUM:
+                    textfiletext = get_textptr_for_textID(0xa407);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                    break;
+                case AMMO_GGUN:
+                    textfiletext = get_textptr_for_textID(0xa408);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                    break;
+                case AMMO_DARTS:
+                    textfiletext = get_textptr_for_textID(0xa413);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                    break;
+                case AMMO_EXPLOSIVEPEN:
+                    textfiletext = get_textptr_for_textID(0xa414);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                    break;
+                case AMMO_BOMBCASE:
+                    textfiletext = get_textptr_for_textID(0xa415);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                    break;
+                case AMMO_FLARE:
+                    textfiletext = get_textptr_for_textID(0xa416);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                    break;
+                case AMMO_PITON:
+                    textfiletext = get_textptr_for_textID(0xa417);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                    break;
+                case AMMO_BUG:
+                    textfiletext = get_textptr_for_textID(0xa41b);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                    break;
+                case AMMO_MICRO_CAMERA:
+                    textfiletext = get_textptr_for_textID(0xa41c);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                    break;
+                case AMMO_GEKEY:
+                    textfiletext = get_textptr_for_textID(0xa41d);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                    break;
+                case AMMO_PLASTIQUE:
+                    textfiletext = get_textptr_for_textID(0xa41f);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                    break;
+                case AMMO_TOKEN:
+                    textfiletext = get_textptr_for_textID(0xa41e);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                }
+                if (1 < (int)amount) {
+                    textfiletext = get_textptr_for_textID(0xa412);
+                    string_append_from_obseg_textbank(buffer,textfiletext);
+                }
+            }
+        }
+    }
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -47592,37 +47712,7 @@ glabel jpt_80052F84
 .word pluralize_multiples
 .word text_pickup_token
 
-/*D:80052FEC*/
-glabel jpt_80052FEC
-.word ammo_sfx_pickup_firearm
-.word ammo_sfx_pickup_firearm
-.word ammo_sfx_pickup_firearm
-.word ammo_sfx_pickup_firearm
-.word ammo_sfx_pickup_firearm
-.word ammo_sfx_pickup_firearm
-.word ammo_sfx_pickup_mine
-.word ammo_sfx_pickup_mine
-.word ammo_sfx_pickup_mine
-.word ammo_sfx_pickup_knife
-.word ammo_sfx_pickup_firearm
-.word ammo_sfx_pickup_firearm
-.word ammo_sfx_pickup_firearm
-.word ammo_sfx_pickup_firearm
-.word ammo_sfx_pickup_firearm
-.word ammo_sfx_pickup_mine
-.word ammo_sfx_pickup_firearm
-.word ammo_sfx_pickup_firearm
-.word ammo_sfx_pickup_firearm
-.word ammo_sfx_pickup_mine
-.word ammo_sfx_pickup_mine
-.word ammo_sfx_pickup_firearm
-.word ammo_sfx_pickup_mine
-.word ammo_sfx_pickup_default
-.word ammo_sfx_pickup_default
-.word ammo_sfx_pickup_default
-.word ammo_sfx_pickup_default
-.word ammo_sfx_pickup_default
-.word ammo_sfx_pickup_firearm
+
 
 .text
 glabel apped_text_ammotype
@@ -47886,89 +47976,43 @@ pluralize_multiples:
 
 
 
-#ifdef NONMATCHING
-void set_sound_effect_for_ammo_collection(void) {
 
+void set_sound_effect_for_ammo_collection(AMMOTYPES ammotype)
+
+{
+    switch(ammotype) {
+    case AMMO_9MM:
+    case AMMO_9MM_2:
+    case AMMO_RIFLE:
+    case AMMO_SHOTGUN:
+    case AMMO_GRENADE:
+    case AMMO_ROCKETS:
+    case AMMO_GRENADEROUND:
+    case AMMO_MAGNUM:
+    case AMMO_GGUN:
+    case AMMO_DARTS:
+    case AMMO_EXPLOSIVEPEN:
+    case AMMO_FLARE:
+    case AMMO_PITON:
+    case AMMO_DYNAMITE:
+    case AMMO_GEKEY:
+    case AMMO_TOKEN:
+        play_sfx_a1(ptr_sfx_buf,0xea,0);
+        break;
+    case AMMO_REMOTEMINE:
+    case AMMO_PROXMINE:
+    case AMMO_TIMEDMINE:
+    case AMMO_BOMBCASE:
+    case AMMO_BUG:
+    case AMMO_MICRO_CAMERA:
+    case AMMO_PLASTIQUE:
+        play_sfx_a1(ptr_sfx_buf,0xeb,0);
+        break;
+    case AMMO_KNIFE:
+        play_sfx_a1(ptr_sfx_buf,0xe9,0);
+    }
+    return;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:80052FEC*/
-/*glabel jpt_80052FEC*/
-/*.word ammo_sfx_pickup_firearm*/
-/*.word ammo_sfx_pickup_firearm*/
-/*.word ammo_sfx_pickup_firearm*/
-/*.word ammo_sfx_pickup_firearm*/
-/*.word ammo_sfx_pickup_firearm*/
-/*.word ammo_sfx_pickup_firearm*/
-/*.word ammo_sfx_pickup_mine*/
-/*.word ammo_sfx_pickup_mine*/
-/*.word ammo_sfx_pickup_mine*/
-/*.word ammo_sfx_pickup_knife*/
-/*.word ammo_sfx_pickup_firearm*/
-/*.word ammo_sfx_pickup_firearm*/
-/*.word ammo_sfx_pickup_firearm*/
-/*.word ammo_sfx_pickup_firearm*/
-/*.word ammo_sfx_pickup_firearm*/
-/*.word ammo_sfx_pickup_mine*/
-/*.word ammo_sfx_pickup_firearm*/
-/*.word ammo_sfx_pickup_firearm*/
-/*.word ammo_sfx_pickup_firearm*/
-/*.word ammo_sfx_pickup_mine*/
-/*.word ammo_sfx_pickup_mine*/
-/*.word ammo_sfx_pickup_firearm*/
-/*.word ammo_sfx_pickup_mine*/
-/*.word ammo_sfx_pickup_default*/
-/*.word ammo_sfx_pickup_default*/
-/*.word ammo_sfx_pickup_default*/
-/*.word ammo_sfx_pickup_default*/
-/*.word ammo_sfx_pickup_default*/
-/*.word ammo_sfx_pickup_firearm*/
-
-.text
-glabel set_sound_effect_for_ammo_collection
-/* 0842B8 7F04F788 248EFFFF */  addiu $t6, $a0, -1
-/* 0842BC 7F04F78C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0842C0 7F04F790 2DC1001D */  sltiu $at, $t6, 0x1d
-/* 0842C4 7F04F794 1020001A */  beqz  $at, .L7F04F800
-/* 0842C8 7F04F798 AFBF0014 */   sw    $ra, 0x14($sp)
-/* 0842CC 7F04F79C 000E7080 */  sll   $t6, $t6, 2
-/* 0842D0 7F04F7A0 3C018005 */  lui   $at, %hi(jpt_80052FEC)
-/* 0842D4 7F04F7A4 002E0821 */  addu  $at, $at, $t6
-/* 0842D8 7F04F7A8 8C2E2FEC */  lw    $t6, %lo(jpt_80052FEC)($at)
-/* 0842DC 7F04F7AC 01C00008 */  jr    $t6
-/* 0842E0 7F04F7B0 00000000 */   nop   
-ammo_sfx_pickup_firearm:
-/* 0842E4 7F04F7B4 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 0842E8 7F04F7B8 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
-/* 0842EC 7F04F7BC 240500EA */  li    $a1, 234
-/* 0842F0 7F04F7C0 0C002382 */  jal   play_sfx_a1
-/* 0842F4 7F04F7C4 00003025 */   move  $a2, $zero
-/* 0842F8 7F04F7C8 1000000E */  b     .L7F04F804
-/* 0842FC 7F04F7CC 8FBF0014 */   lw    $ra, 0x14($sp)
-ammo_sfx_pickup_mine:
-/* 084300 7F04F7D0 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 084304 7F04F7D4 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
-/* 084308 7F04F7D8 240500EB */  li    $a1, 235
-/* 08430C 7F04F7DC 0C002382 */  jal   play_sfx_a1
-/* 084310 7F04F7E0 00003025 */   move  $a2, $zero
-/* 084314 7F04F7E4 10000007 */  b     .L7F04F804
-/* 084318 7F04F7E8 8FBF0014 */   lw    $ra, 0x14($sp)
-ammo_sfx_pickup_knife:
-/* 08431C 7F04F7EC 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 084320 7F04F7F0 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
-/* 084324 7F04F7F4 240500E9 */  li    $a1, 233
-/* 084328 7F04F7F8 0C002382 */  jal   play_sfx_a1
-/* 08432C 7F04F7FC 00003025 */   move  $a2, $zero
-ammo_sfx_pickup_default:
-.L7F04F800:
-/* 084330 7F04F800 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F04F804:
-/* 084334 7F04F804 27BD0018 */  addiu $sp, $sp, 0x18
-/* 084338 7F04F808 03E00008 */  jr    $ra
-/* 08433C 7F04F80C 00000000 */   nop   
-)
-#endif
 
 
 
