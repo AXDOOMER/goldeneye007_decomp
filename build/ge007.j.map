@@ -3729,7 +3729,7 @@ Linker script and memory map
                 0x000000007f08aa98                unset_flags_in_BONDdata_stationary_intro_cam
                 0x000000007f08aab4                set_flags_in_BONDdata_stationary_intro_cam
                 0x000000007f08aacc                display_string_in_lower_left_corner
-                0x000000007f08ac40                jp_FUN_7f08ac40
+                0x000000007f08ac40                jp_display_string_in_lower_left_corner
                 0x000000007f08ac6c                sub_GAME_7F08A4E4
                 0x000000007f08ad84                sub_GAME_7F08A5FC
                 0x000000007f08b0dc                sub_GAME_7F08A900

@@ -32972,7 +32972,7 @@ glabel display_string_in_lower_left_corner
 #endif
 
 #ifdef VERSION_JP
-void jp_FUN_7f08ac40(char *string)
+void jp_display_string_in_lower_left_corner(char *string)
 {
   display_string_in_lower_left_corner(string,ptrSecondFontTableSmall,ptrFirstFontTableSmall);
 }

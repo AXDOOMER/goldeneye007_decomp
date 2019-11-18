@@ -799,7 +799,7 @@ glabel display_objective_status_text_on_status_change
 /* 08C758 7F057BE8 0C002A03 */  jal   string_append_from_obseg_textbank
 /* 08C75C 7F057BEC 00402825 */   move  $a1, $v0
 .L7F057BF0:
-/* 08C760 7F057BF0 0FC22B10 */  jal   jp_FUN_7f08ac40
+/* 08C760 7F057BF0 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 08C764 7F057BF4 02602025 */   move  $a0, $s3
 .L7F057BF8:
 /* 08C768 7F057BF8 0FC15DC1 */  jal   get_difficulty_for_objective

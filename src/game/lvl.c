@@ -3567,7 +3567,7 @@ glabel manage_mp_game
 /* 0F4578 7F0BFA08 8FA4017C */   lw    $a0, 0x17c($sp)
 /* 0F457C 7F0BFA0C 0FC30AA2 */  jal   get_textptr_for_textID
 /* 0F4580 7F0BFA10 3404B044 */   li    $a0, 45124
-/* 0F4584 7F0BFA14 0FC22B10 */  jal   jp_FUN_7f08ac40
+/* 0F4584 7F0BFA14 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0F4588 7F0BFA18 00402025 */   move  $a0, $v0
 /* 0F458C 7F0BFA1C 8FAF017C */  lw    $t7, 0x17c($sp)
 /* 0F4590 7F0BFA20 25F80001 */  addiu $t8, $t7, 1

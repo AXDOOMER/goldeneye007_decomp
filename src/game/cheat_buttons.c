@@ -1471,7 +1471,7 @@ cheats_cheat_invincibility:
 /* 0C727C 7F09270C 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0C7280 7F092710 0FC30AA2 */  jal   get_textptr_for_textID
 /* 0C7284 7F092714 3404B00F */   li    $a0, 45071
-/* 0C7288 7F092718 0FC22B10 */  jal   jp_FUN_7f08ac40
+/* 0C7288 7F092718 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0C728C 7F09271C 00402025 */   move  $a0, $v0
 /* 0C7290 7F092720 0FC229A0 */  jal   set_bondata_invincible_flag
 /* 0C7294 7F092724 24040001 */   li    $a0, 1
@@ -1484,7 +1484,7 @@ cheats_cheat_allguns:
 /* 0C72AC 7F09273C 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0C72B0 7F092740 0FC30AA2 */  jal   get_textptr_for_textID
 /* 0C72B4 7F092744 3404B010 */   li    $a0, 45072
-/* 0C72B8 7F092748 0FC22B10 */  jal   jp_FUN_7f08ac40
+/* 0C72B8 7F092748 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0C72BC 7F09274C 00402025 */   move  $a0, $v0
 /* 0C72C0 7F092750 0FC232CB */  jal   set_BONDdata_allguns_flag
 /* 0C72C4 7F092754 24040001 */   li    $a0, 1
@@ -1493,7 +1493,7 @@ cheats_cheat_allguns:
 cheats_cheat_max_ammo:
 /* 0C72D0 7F092760 0FC30AA2 */  jal   get_textptr_for_textID
 /* 0C72D4 7F092764 3404B011 */   li    $a0, 45073
-/* 0C72D8 7F092768 0FC22B10 */  jal   jp_FUN_7f08ac40
+/* 0C72D8 7F092768 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0C72DC 7F09276C 00402025 */   move  $a0, $v0
 /* 0C72E0 7F092770 0FC1A637 */  jal   set_max_ammo_for_cur_player
 /* 0C72E4 7F092774 00000000 */   nop   
@@ -1563,7 +1563,7 @@ cheats_cheat_2x_health:
 .Ljp7F09285C:
 /* 0C73CC 7F09285C 0FC30AA2 */  jal   get_textptr_for_textID
 /* 0C73D0 7F092860 3404B012 */   li    $a0, 45074
-/* 0C73D4 7F092864 0FC22B10 */  jal   jp_FUN_7f08ac40
+/* 0C73D4 7F092864 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0C73D8 7F092868 00402025 */   move  $a0, $v0
 /* 0C73DC 7F09286C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0C73E0 7F092870 3C0F8008 */  lui   $t7, %hi(pPlayer) # $t7, 0x8008
@@ -1594,7 +1594,7 @@ cheats_cheat_2x_armor:
 .Ljp7F0928D0:
 /* 0C7440 7F0928D0 0FC30AA2 */  jal   get_textptr_for_textID
 /* 0C7444 7F0928D4 3404B013 */   li    $a0, 45075
-/* 0C7448 7F0928D8 0FC22B10 */  jal   jp_FUN_7f08ac40
+/* 0C7448 7F0928D8 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0C744C 7F0928DC 00402025 */   move  $a0, $v0
 /* 0C7450 7F0928E0 3C028008 */  lui   $v0, %hi(pPlayer) # $v0, 0x8008
 /* 0C7454 7F0928E4 2442A120 */  addiu $v0, %lo(pPlayer) # addiu $v0, $v0, -0x5ee0
@@ -1614,7 +1614,7 @@ cheats_cheat_invisibility:
 /* 0C7488 7F092918 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0C748C 7F09291C 0FC30AA2 */  jal   get_textptr_for_textID
 /* 0C7490 7F092920 3404B014 */   li    $a0, 45076
-/* 0C7494 7F092924 0FC22B10 */  jal   jp_FUN_7f08ac40
+/* 0C7494 7F092924 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0C7498 7F092928 00402025 */   move  $a0, $v0
 /* 0C749C 7F09292C 0FC229A8 */  jal   set_invisible_to_guards_flag
 /* 0C74A0 7F092930 00002025 */   move  $a0, $zero
@@ -1623,14 +1623,14 @@ cheats_cheat_invisibility:
 cheats_cheat_infinite_ammo:
 /* 0C74AC 7F09293C 0FC30AA2 */  jal   get_textptr_for_textID
 /* 0C74B0 7F092940 3404B016 */   li    $a0, 45078
-/* 0C74B4 7F092944 0FC22B10 */  jal   jp_FUN_7f08ac40
+/* 0C74B4 7F092944 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0C74B8 7F092948 00402025 */   move  $a0, $v0
 /* 0C74BC 7F09294C 10000197 */  b     .Ljp7F092FAC
 /* 0C74C0 7F092950 8FBF0014 */   lw    $ra, 0x14($sp)
 cheats_cheat_dk_mode:
 /* 0C74C4 7F092954 0FC30AA2 */  jal   get_textptr_for_textID
 /* 0C74C8 7F092958 3404B017 */   li    $a0, 45079
-/* 0C74CC 7F09295C 0FC22B10 */  jal   jp_FUN_7f08ac40
+/* 0C74CC 7F09295C 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0C74D0 7F092960 00402025 */   move  $a0, $v0
 /* 0C74D4 7F092964 0FC24CDD */  jal   sub_GAME_7F0927F4
 /* 0C74D8 7F092968 24040001 */   li    $a0, 1
@@ -1683,7 +1683,7 @@ cheats_cheat_extra_weapons:
 /* 0C7590 7F092A20 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0C7594 7F092A24 0FC30AA2 */  jal   get_textptr_for_textID
 /* 0C7598 7F092A28 3404B018 */   li    $a0, 45080
-/* 0C759C 7F092A2C 0FC22B10 */  jal   jp_FUN_7f08ac40
+/* 0C759C 7F092A2C 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0C75A0 7F092A30 00402025 */   move  $a0, $v0
 /* 0C75A4 7F092A34 1000015D */  b     .Ljp7F092FAC
 /* 0C75A8 7F092A38 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -1701,7 +1701,7 @@ cheats_cheat_tiny_bond:
 /* 0C75D4 7F092A64 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0C75D8 7F092A68 0FC30AA2 */  jal   get_textptr_for_textID
 /* 0C75DC 7F092A6C 3404B019 */   li    $a0, 45081
-/* 0C75E0 7F092A70 0FC22B10 */  jal   jp_FUN_7f08ac40
+/* 0C75E0 7F092A70 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0C75E4 7F092A74 00402025 */   move  $a0, $v0
 /* 0C75E8 7F092A78 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 0C75EC 7F092A7C 3C0A8008 */  lui   $t2, %hi(cur_player_stat_ptr) # $t2, 0x8008
@@ -1723,7 +1723,7 @@ cheats_cheat_tiny_bond:
 cheats_cheat_paintball:
 /* 0C762C 7F092ABC 0FC30AA2 */  jal   get_textptr_for_textID
 /* 0C7630 7F092AC0 3404B01A */   li    $a0, 45082
-/* 0C7634 7F092AC4 0FC22B10 */  jal   jp_FUN_7f08ac40
+/* 0C7634 7F092AC4 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0C7638 7F092AC8 00402025 */   move  $a0, $v0
 /* 0C763C 7F092ACC 10000137 */  b     .Ljp7F092FAC
 /* 0C7640 7F092AD0 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -1745,7 +1745,7 @@ cheats_cheat_10x_health:
 .Ljp7F092B0C:
 /* 0C767C 7F092B0C 0FC30AA2 */  jal   get_textptr_for_textID
 /* 0C7680 7F092B10 3404B01B */   li    $a0, 45083
-/* 0C7684 7F092B14 0FC22B10 */  jal   jp_FUN_7f08ac40
+/* 0C7684 7F092B14 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0C7688 7F092B18 00402025 */   move  $a0, $v0
 /* 0C768C 7F092B1C 3C028008 */  lui   $v0, %hi(pPlayer) # $v0, 0x8008
 /* 0C7690 7F092B20 2442A120 */  addiu $v0, %lo(pPlayer) # addiu $v0, $v0, -0x5ee0
@@ -1833,7 +1833,7 @@ cheats_cheat_fast:
 /* 0C77BC 7F092C4C 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0C77C0 7F092C50 0FC30AA2 */  jal   get_textptr_for_textID
 /* 0C77C4 7F092C54 3404B01D */   li    $a0, 45085
-/* 0C77C8 7F092C58 0FC22B10 */  jal   jp_FUN_7f08ac40
+/* 0C77C8 7F092C58 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0C77CC 7F092C5C 00402025 */   move  $a0, $v0
 /* 0C77D0 7F092C60 0FC246C1 */  jal   set_debug_fast_bond_flag
 /* 0C77D4 7F092C64 24040001 */   li    $a0, 1
@@ -1860,7 +1860,7 @@ cheats_debug_fast_ani:
 /* 0C7820 7F092CB0 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0C7824 7F092CB4 0FC30AA2 */  jal   get_textptr_for_textID
 /* 0C7828 7F092CB8 3404B034 */   li    $a0, 45108
-/* 0C782C 7F092CBC 0FC22B10 */  jal   jp_FUN_7f08ac40
+/* 0C782C 7F092CBC 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0C7830 7F092CC0 00402025 */   move  $a0, $v0
 /* 0C7834 7F092CC4 3C014080 */  li    $at, 0x40800000 # 4.000000
 /* 0C7838 7F092CC8 44816000 */  mtc1  $at, $f12
@@ -1880,7 +1880,7 @@ cheats_debug_slow_ani:
 /* 0C786C 7F092CFC 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0C7870 7F092D00 0FC30AA2 */  jal   get_textptr_for_textID
 /* 0C7874 7F092D04 3404B032 */   li    $a0, 45106
-/* 0C7878 7F092D08 0FC22B10 */  jal   jp_FUN_7f08ac40
+/* 0C7878 7F092D08 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0C787C 7F092D0C 00402025 */   move  $a0, $v0
 /* 0C7880 7F092D10 3C013E80 */  li    $at, 0x3E800000 # 0.250000
 /* 0C7884 7F092D14 44816000 */  mtc1  $at, $f12
@@ -2472,7 +2472,7 @@ cheat_button_invincibility:
 /* 0C7014 7F0924E4 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0C7018 7F0924E8 0FC30776 */  jal   get_textptr_for_textID
 /* 0C701C 7F0924EC 3404B01E */   li    $a0, 45086
-/* 0C7020 7F0924F0 0FC228F2 */  jal   jp_FUN_7f08ac40
+/* 0C7020 7F0924F0 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
 /* 0C7024 7F0924F4 00402025 */   move  $a0, $v0
 /* 0C7028 7F0924F8 0FC227D2 */  jal   set_bondata_invincible_flag
 /* 0C702C 7F0924FC 00002025 */   move  $a0, $zero
@@ -2485,7 +2485,7 @@ cheat_button_all_guns:
 /* 0C7044 7F092514 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0C7048 7F092518 0FC30776 */  jal   get_textptr_for_textID
 /* 0C704C 7F09251C 3404B01F */   li    $a0, 45087
-/* 0C7050 7F092520 0FC228F2 */  jal   jp_FUN_7f08ac40
+/* 0C7050 7F092520 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
 /* 0C7054 7F092524 00402025 */   move  $a0, $v0
 /* 0C7058 7F092528 0FC230A7 */  jal   set_BONDdata_allguns_flag
 /* 0C705C 7F09252C 00002025 */   move  $a0, $zero
@@ -2503,7 +2503,7 @@ cheat_button_unknown:
 /* 0C7084 7F092554 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0C7088 7F092558 0FC30776 */  jal   get_textptr_for_textID
 /* 0C708C 7F09255C 3404B020 */   li    $a0, 45088
-/* 0C7090 7F092560 0FC228F2 */  jal   jp_FUN_7f08ac40
+/* 0C7090 7F092560 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
 /* 0C7094 7F092564 00402025 */   move  $a0, $v0
 /* 0C7098 7F092568 0FC227DA */  jal   set_invisible_to_guards_flag
 /* 0C709C 7F09256C 24040001 */   li    $a0, 1
@@ -2512,14 +2512,14 @@ cheat_button_unknown:
 cheat_button_infinite_ammo:
 /* 0C70A8 7F092578 0FC30776 */  jal   get_textptr_for_textID
 /* 0C70AC 7F09257C 3404B022 */   li    $a0, 45090
-/* 0C70B0 7F092580 0FC228F2 */  jal   jp_FUN_7f08ac40
+/* 0C70B0 7F092580 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
 /* 0C70B4 7F092584 00402025 */   move  $a0, $v0
 /* 0C70B8 7F092588 1000004A */  b     .L7F0926B4
 /* 0C70BC 7F09258C 8FBF0014 */   lw    $ra, 0x14($sp)
 cheat_button_dkmode:
 /* 0C70C0 7F092590 0FC30776 */  jal   get_textptr_for_textID
 /* 0C70C4 7F092594 3404B023 */   li    $a0, 45091
-/* 0C70C8 7F092598 0FC228F2 */  jal   jp_FUN_7f08ac40
+/* 0C70C8 7F092598 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
 /* 0C70CC 7F09259C 00402025 */   move  $a0, $v0
 /* 0C70D0 7F0925A0 0FC249FD */  jal   sub_GAME_7F0927F4
 /* 0C70D4 7F0925A4 00002025 */   move  $a0, $zero
@@ -2539,7 +2539,7 @@ cheat_button_unknown_0:
 /* 0C7108 7F0925D8 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0C710C 7F0925DC 0FC30776 */  jal   get_textptr_for_textID
 /* 0C7110 7F0925E0 3404B024 */   li    $a0, 45092
-/* 0C7114 7F0925E4 0FC228F2 */  jal   jp_FUN_7f08ac40
+/* 0C7114 7F0925E4 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
 /* 0C7118 7F0925E8 00402025 */   move  $a0, $v0
 /* 0C711C 7F0925EC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0C7120 7F0925F0 3C198008 */  lui   $t9, %hi(cur_player_stat_ptr) 
@@ -2561,7 +2561,7 @@ cheat_button_unknown_0:
 cheat_button_paintball:
 /* 0C7160 7F092630 0FC30776 */  jal   get_textptr_for_textID
 /* 0C7164 7F092634 3404B025 */   li    $a0, 45093
-/* 0C7168 7F092638 0FC228F2 */  jal   jp_FUN_7f08ac40
+/* 0C7168 7F092638 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
 /* 0C716C 7F09263C 00402025 */   move  $a0, $v0
 /* 0C7170 7F092640 1000001C */  b     .L7F0926B4
 /* 0C7174 7F092644 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2581,7 +2581,7 @@ cheat_button_fast_mode:
 /* 0C71A4 7F092674 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0C71A8 7F092678 0FC30776 */  jal   get_textptr_for_textID
 /* 0C71AC 7F09267C 3404B027 */   li    $a0, 45095
-/* 0C71B0 7F092680 0FC228F2 */  jal   jp_FUN_7f08ac40
+/* 0C71B0 7F092680 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
 /* 0C71B4 7F092684 00402025 */   move  $a0, $v0
 /* 0C71B8 7F092688 0FC24409 */  jal   set_debug_fast_bond_flag
 /* 0C71BC 7F09268C 00002025 */   move  $a0, $zero

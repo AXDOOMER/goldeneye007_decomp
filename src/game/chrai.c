@@ -12807,7 +12807,7 @@ actionC2_Display_Text_Preset_Bottom_Screen_3:
 /* 06DA00 7F038ED0 000C5A00 */  sll   $t3, $t4, 8
 /* 06DA04 7F038ED4 0FC30776 */  jal   get_textptr_for_textID
 /* 06DA08 7F038ED8 01782025 */   or    $a0, $t3, $t8
-/* 06DA0C 7F038EDC 0FC228F2 */  jal   jp_FUN_7f08ac40
+/* 06DA0C 7F038EDC 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
 /* 06DA10 7F038EE0 00402025 */   move  $a0, $v0
 /* 06DA14 7F038EE4 26520003 */  addiu $s2, $s2, 3
 /* 06DA18 7F038EE8 1000F1A8 */  b     GetByteS1_ParseCommandByte_SwitchCase

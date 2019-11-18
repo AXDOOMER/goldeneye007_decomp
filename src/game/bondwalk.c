@@ -19585,7 +19585,7 @@ glabel sub_GAME_7F066E64
 /* 09B9A8 7F066E78 00000000 */   nop   
 /* 09B9AC 7F066E7C 0FC30776 */  jal   get_textptr_for_textID
 /* 09B9B0 7F066E80 340498D8 */   li    $a0, 39128
-/* 09B9B4 7F066E84 0FC228F2 */  jal   jp_FUN_7f08ac40
+/* 09B9B4 7F066E84 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
 /* 09B9B8 7F066E88 00402025 */   move  $a0, $v0
 /* 09B9BC 7F066E8C 3C0F8008 */  lui   $t7, %hi(pPlayer) 
 /* 09B9C0 7F066E90 8DEFA0B0 */  lw    $t7, %lo(pPlayer)($t7)
@@ -19607,7 +19607,7 @@ glabel sub_GAME_7F066E64
 .L7F066ED0:
 /* 09BA00 7F066ED0 0FC30776 */  jal   get_textptr_for_textID
 /* 09BA04 7F066ED4 340498D9 */   li    $a0, 39129
-/* 09BA08 7F066ED8 0FC228F2 */  jal   jp_FUN_7f08ac40
+/* 09BA08 7F066ED8 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
 /* 09BA0C 7F066EDC 00402025 */   move  $a0, $v0
 /* 09BA10 7F066EE0 0FC175A4 */  jal   sub_GAME_7F05D690
 /* 09BA14 7F066EE4 00000000 */   nop   
@@ -25603,7 +25603,7 @@ glabel increment_num_kills_display_text_in_MP
 /* 09F320 7F06A7F0 00403025 */  move  $a2, $v0
 /* 09F324 7F06A7F4 0C002B25 */  jal   sprintf
 /* 09F328 7F06A7F8 8D07001C */   lw    $a3, 0x1c($t0)
-/* 09F32C 7F06A7FC 0FC228F2 */  jal   jp_FUN_7f08ac40
+/* 09F32C 7F06A7FC 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
 /* 09F330 7F06A800 27A40040 */   addiu $a0, $sp, 0x40
 /* 09F334 7F06A804 3C038008 */  lui   $v1, %hi(cur_player_stat_ptr)
 /* 09F338 7F06A808 8C63A0B4 */  lw    $v1, %lo(cur_player_stat_ptr)($v1)
@@ -25879,7 +25879,7 @@ glabel increment_num_deaths
 /* 09F518 7F06A9E8 0C002B25 */  jal   sprintf
 /* 09F51C 7F06A9EC 8FA60028 */   lw    $a2, 0x28($sp)
 .L7F06A9F0:
-/* 09F520 7F06A9F0 0FC228F2 */  jal   jp_FUN_7f08ac40
+/* 09F520 7F06A9F0 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
 /* 09F524 7F06A9F4 27A40030 */   addiu $a0, $sp, 0x30
 .L7F06A9F8:
 /* 09F528 7F06A9F8 8FBF001C */  lw    $ra, 0x1c($sp)
@@ -26139,7 +26139,7 @@ glabel increment_num_suicides_display_MP
 /* 09F5A0 7F06AA70 00403025 */  move  $a2, $v0
 /* 09F5A4 7F06AA74 0C002B25 */  jal   sprintf
 /* 09F5A8 7F06AA78 8F0729DC */   lw    $a3, 0x29dc($t8)
-/* 09F5AC 7F06AA7C 0FC228F2 */  jal   jp_FUN_7f08ac40
+/* 09F5AC 7F06AA7C 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
 /* 09F5B0 7F06AA80 27A40040 */   addiu $a0, $sp, 0x40
 /* 09F5B4 7F06AA84 3C078008 */  lui   $a3, %hi(cur_player_stat_ptr)
 /* 09F5B8 7F06AA88 24E7A0B4 */  addiu $a3, %lo(cur_player_stat_ptr) # addiu $a3, $a3, -0x5f4c
