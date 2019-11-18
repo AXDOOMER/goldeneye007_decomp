@@ -1569,7 +1569,7 @@ labels:
    - [0x7f04f810, "apped_text_ammotype"]
    - [0x7f04fb8c, "set_sound_effect_for_ammo_collection"]
    - [0x7f04fc14, "set_sound_effect_for_weapontype_collection"]
-   - [0x7f04fd24, "display_ammo_type_collection_text"]
+   - [0x7f04fd24, "prepare_ammo_type_collection_text"]
    - [0x7f04fdfc, "display_text_when_ammo_collected"]
    - [0x7f04fe6c, "add_ammo_to_inventory"]
    - [0x7f050040, "get_ammo_in_magazine"]

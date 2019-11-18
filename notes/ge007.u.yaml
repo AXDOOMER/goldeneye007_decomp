@@ -2169,7 +2169,7 @@ labels:
    - [0x7F04F7EC, "ammo_sfx_pickup_knife"]
    - [0x7F04F800, "ammo_sfx_pickup_default"]
    - [0x7F04F810, "set_sound_effect_for_weapontype_collection"]
-   - [0x7F04F920, "display_ammo_type_collection_text"]
+   - [0x7F04F920, "prepare_ammo_type_collection_text"]
    - [0x7F04F9F8, "display_text_when_ammo_collected"]
    - [0x7F04FA68, "add_ammo_to_inventory"]
    - [0x7F04FC3C, "get_ammo_in_magazine"]

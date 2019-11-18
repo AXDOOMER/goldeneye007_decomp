@@ -249,6 +249,7 @@ SECTIONS
       build/e/src/game/chr.o (.text);
       build/e/src/game/chr2.o (.text);
       build/e/src/game/chrai.o (.text);
+      build/e/src/game/chrobjhandler.o (.text);
       build/e/src/game/loadobjectmodel.o (.text);
       build/e/src/game/objective_status.o (.text);
       build/e/src/game/objective_status2.o (.text);
@@ -3361,6 +3362,7 @@ SECTIONS
       build/e/src/game/chr.o (.data);
       build/e/src/game/chr2.o (.data);
       build/e/src/game/chrai.o (.data);
+      build/e/src/game/chrobjhandler.o (.data);
       build/e/src/game/loadobjectmodel.o (.data);
       build/e/src/game/objective_status.o (.data);
       build/e/src/game/objective_status2.o (.data);
@@ -3482,6 +3484,7 @@ SECTIONS
       build/e/src/game/chr.o (.rodata);
       build/e/src/game/chr2.o (.rodata);
       build/e/src/game/chrai.o (.rodata);
+      build/e/src/game/chrobjhandler.o (.rodata);
       build/e/src/game/loadobjectmodel.o (.rodata);
       build/e/src/game/objective_status.o (.rodata);
       build/e/src/game/objective_status2.o (.rodata);
@@ -3732,6 +3735,7 @@ SECTIONS
       build/e/src/game/chr.o (.bss);
       build/e/src/game/chr2.o (.bss);
       build/e/src/game/chrai.o (.bss);
+      build/e/src/game/chrobjhandler.o (.bss);
       build/e/src/game/loadobjectmodel.o (.bss);
       build/e/src/game/objective_status.o (.bss);
       build/e/src/game/objective_status2.o (.bss);

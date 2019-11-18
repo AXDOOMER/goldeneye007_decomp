@@ -703,6 +703,8 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/j/src/game/chr2.o
  .options       0x0000000000000000       0x20 build/j/src/game/chrai.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/chrai.o
+ .options       0x0000000000000000       0x20 build/j/src/game/chrobjhandler.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/game/chrobjhandler.o
  .options       0x0000000000000000       0x20 build/j/src/game/loadobjectmodel.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/loadobjectmodel.o
  .options       0x0000000000000000       0x20 build/j/src/game/objective_status.o
@@ -2761,7 +2763,7 @@ Linker script and memory map
                 0x000000007f03487c                actor_draws_throws_grenade_at_player_if_possible
                 0x000000007f0349fc                actor_drops_itemtype_setting_timer
  build/j/src/game/chrai.o(.text)
- .text          0x000000007f034aa0    0x222b0 build/j/src/game/chrai.o
+ .text          0x000000007f034aa0     0xb3d0 build/j/src/game/chrai.o
                 0x000000007f034aa0                set_sound_effect_source_to_location
                 0x000000007f034be4                loop_set_sound_effect_all_slots
                 0x000000007f034c24                set_sound_effect_to_slot
@@ -2848,6 +2850,8 @@ Linker script and memory map
                 0x000000007f03fc48                sub_GAME_7F03F948
                 0x000000007f03fd44                scan_position_data_table_for_normal_object_at_preset
                 0x000000007f03fdb0                sub_GAME_7F03FAB0
+ build/j/src/game/chrobjhandler.o(.text)
+ .text          0x000000007f03fe70    0x16ee0 build/j/src/game/chrobjhandler.o
                 0x000000007f03fe70                sub_GAME_7F03FB70
                 0x000000007f03fefc                sub_GAME_7F03FBFC
                 0x000000007f03ff80                sub_GAME_7F03FC80
@@ -2945,7 +2949,7 @@ Linker script and memory map
                 0x000000007f04f810                apped_text_ammotype
                 0x000000007f04fb8c                set_sound_effect_for_ammo_collection
                 0x000000007f04fc14                set_sound_effect_for_weapontype_collection
-                0x000000007f04fd24                display_ammo_type_collection_text
+                0x000000007f04fd24                prepare_ammo_type_collection_text
                 0x000000007f04fdfc                display_text_when_ammo_collected
                 0x000000007f04fe6c                add_ammo_to_inventory
                 0x000000007f050040                get_ammo_in_magazine
@@ -17829,7 +17833,7 @@ Linker script and memory map
                 0x0000000080030aa8                D_80030A68
  build/j/src/game/chr2.o(.data)
  build/j/src/game/chrai.o(.data)
- .data          0x0000000080030ab0     0x1880 build/j/src/game/chrai.o
+ .data          0x0000000080030ab0       0x50 build/j/src/game/chrai.o
                 0x0000000080030ab0                D_80030A70
                 0x0000000080030ab4                D_80030A74
                 0x0000000080030ab8                D_80030A78
@@ -17850,6 +17854,8 @@ Linker script and memory map
                 0x0000000080030af4                D_80030AB4
                 0x0000000080030af8                D_80030AB8
                 0x0000000080030afc                D_80030ABC
+ build/j/src/game/chrobjhandler.o(.data)
+ .data          0x0000000080030b00     0x1830 build/j/src/game/chrobjhandler.o
                 0x0000000080030b00                alarm_timer
                 0x0000000080030b04                ptr_alarm_sfx
                 0x0000000080030b08                toxic_gas_sound_timer
@@ -20321,7 +20327,7 @@ Linker script and memory map
                 0x0000000080052128                D_800520F8
                 0x000000008005212c                D_800520FC
  build/j/src/game/chrai.o(.rodata)
- .rodata        0x0000000080052130     0x1390 build/j/src/game/chrai.o
+ .rodata        0x0000000080052130      0x8d0 build/j/src/game/chrai.o
                 0x0000000080052130                jpt_actionblock_lengths
                 0x0000000080052524                D_800524F4
                 0x0000000080052528                jpt_800524F8
@@ -20336,7 +20342,8 @@ Linker script and memory map
                 0x00000000800529d0                jpt_800529A0
                 0x00000000800529f0                D_800529C0
                 0x00000000800529f4                D_800529C4
-                0x00000000800529f8                D_800529C8
+ build/j/src/game/chrobjhandler.o(.rodata)
+ .rodata        0x0000000080052a00      0xac0 build/j/src/game/chrobjhandler.o
                 0x0000000080052a00                D_800529D0
                 0x0000000080052a04                D_800529D4
                 0x0000000080052a08                D_800529D8
@@ -22335,6 +22342,7 @@ Linker script and memory map
                 0x0000000080075d60                dword_CODE_bss_80075D20
                 0x0000000080075d64                dword_CODE_bss_80075D24
                 0x0000000080075d68                dword_CODE_bss_80075D28
+ build/j/src/game/chrobjhandler.o(.bss)
  build/j/src/game/loadobjectmodel.o(.bss)
  build/j/src/game/objective_status.o(.bss)
  .bss           0x0000000080075d70       0x70 build/j/src/game/objective_status.o
