@@ -459,6 +459,120 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/j/src/libultra/csequencer.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/j/src/libultra/csequencer.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/alCSPSetSeq.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/alCSPSetSeq.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/alCSPSetSeq.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/alCSPSetSeq.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/alCSPPlay.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/alCSPPlay.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/alCSPPlay.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/alCSPPlay.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/alCSPStop.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/alCSPStop.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/alCSPStop.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/alCSPStop.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/alCSPSetVol.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/alCSPSetVol.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/alCSPSetVol.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/alCSPSetVol.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/alEvtq.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/alEvtq.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/alEvtq.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/alEvtq.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/alSynAddPlayer.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/alSynAddPlayer.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/alSynAddPlayer.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/alSynAddPlayer.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/alSynAllocVoice.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/alSynAllocVoice.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/alSynAllocVoice.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/alSynAllocVoice.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/alSynSetVol.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/alSynSetVol.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/alSynSetVol.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/alSynSetVol.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/alSynStartVoice.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/alSynStartVoice.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/alSynStartVoice.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/alSynStartVoice.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/alSynSetPan.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/alSynSetPan.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/alSynSetPan.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/alSynSetPan.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/alSynSetPitch.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/alSynSetPitch.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/alSynSetPitch.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/alSynSetPitch.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/alSynSetFXMix.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/alSynSetFXMix.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/alSynSetFXMix.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/alSynSetFXMix.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/alSynStopVoice.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/alSynStopVoice.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/alSynStopVoice.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/alSynStopVoice.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/alSynFreeVoice.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/alSynFreeVoice.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/alSynFreeVoice.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/alSynFreeVoice.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/alCents2Ratio.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/alCents2Ratio.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/alCents2Ratio.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/alCents2Ratio.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osPiReadIo.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/osPiReadIo.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osPiReadIo.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/osPiReadIo.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/string.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/string.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/string.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/string.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/_Printf.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/_Printf.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/_Printf.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/_Printf.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/libultra/osCreatePiManager.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/libultra/osCreatePiManager.o
+ .pdr           0x0000000000000000        0x0 build/j/src/libultra/osCreatePiManager.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/libultra/osCreatePiManager.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/libultra.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/j/src/libultra/libultra.o
@@ -1578,35 +1692,73 @@ Linker script and memory map
                 0x0000000070012a64                alCSeqSecToTicks
                 0x0000000070012b60                alCSeqTicksToSec
                 0x0000000070012bcc                __alCSeqNextDelta
- build/j/src/libultra/libultra.o(.text)
- .text          0x0000000070012d40     0xe090 build/j/src/libultra/libultra.o
+ build/j/src/libultra/alCSPSetSeq.o(.text)
+ .text          0x0000000070012d40       0x40 build/j/src/libultra/alCSPSetSeq.o
                 0x0000000070012d40                alCSPSetSeq
+ build/j/src/libultra/alCSPPlay.o(.text)
+ .text          0x0000000070012d80       0x30 build/j/src/libultra/alCSPPlay.o
                 0x0000000070012d80                alCSPPlay
+ build/j/src/libultra/alCSPStop.o(.text)
+ .text          0x0000000070012db0       0x30 build/j/src/libultra/alCSPStop.o
                 0x0000000070012db0                alCSPStop
+ build/j/src/libultra/alCSPSetVol.o(.text)
+ .text          0x0000000070012de0       0x40 build/j/src/libultra/alCSPSetVol.o
                 0x0000000070012de0                alCSPSetVol
+ build/j/src/libultra/alEvtq.o(.text)
+ .text          0x0000000070012e20      0x340 build/j/src/libultra/alEvtq.o
                 0x0000000070012e20                alEvtqFlushType
                 0x0000000070012ecc                alEvtqFlush
                 0x0000000070012f3c                alEvtqPostEvent
                 0x0000000070013060                alEvtqNextEvent
                 0x00000000700130ec                alEvtqNew
+ build/j/src/libultra/alSynAddPlayer.o(.text)
+ .text          0x0000000070013160       0x50 build/j/src/libultra/alSynAddPlayer.o
                 0x0000000070013160                alSynAddPlayer
+ build/j/src/libultra/alSynAllocVoice.o(.text)
+ .text          0x00000000700131b0      0x230 build/j/src/libultra/alSynAllocVoice.o
                 0x00000000700131b0                _allocatePVoice
                 0x0000000070013298                alSynAllocVoice
+ build/j/src/libultra/alSynSetVol.o(.text)
+ .text          0x00000000700133e0       0xa0 build/j/src/libultra/alSynSetVol.o
                 0x00000000700133e0                alSynSetVol
+ build/j/src/libultra/alSynStartVoice.o(.text)
+ .text          0x0000000070013480       0x90 build/j/src/libultra/alSynStartVoice.o
                 0x0000000070013480                alSynStartVoice
+ build/j/src/libultra/alSynSetPan.o(.text)
+ .text          0x0000000070013510       0x90 build/j/src/libultra/alSynSetPan.o
                 0x0000000070013510                alSynSetPan
+ build/j/src/libultra/alSynSetPitch.o(.text)
+ .text          0x00000000700135a0       0x90 build/j/src/libultra/alSynSetPitch.o
                 0x00000000700135a0                alSynSetPitch
+ build/j/src/libultra/alSynSetFXMix.o(.text)
+ .text          0x0000000070013630       0xa0 build/j/src/libultra/alSynSetFXMix.o
                 0x0000000070013630                alSynSetFXMix
+ build/j/src/libultra/alSynStopVoice.o(.text)
+ .text          0x00000000700136d0       0x80 build/j/src/libultra/alSynStopVoice.o
                 0x00000000700136d0                alSynStopVoice
+ build/j/src/libultra/alSynFreeVoice.o(.text)
+ .text          0x0000000070013750       0xb0 build/j/src/libultra/alSynFreeVoice.o
                 0x0000000070013750                alSynFreeVoice
+ build/j/src/libultra/alCents2Ratio.o(.text)
+ .text          0x0000000070013800       0x50 build/j/src/libultra/alCents2Ratio.o
                 0x0000000070013800                alCents2Ratio
+ build/j/src/libultra/osPiReadIo.o(.text)
+ .text          0x0000000070013850       0x40 build/j/src/libultra/osPiReadIo.o
                 0x0000000070013850                osPiReadIo
+ build/j/src/libultra/string.o(.text)
+ .text          0x0000000070013890       0xa0 build/j/src/libultra/string.o
                 0x0000000070013890                memcpy
                 0x00000000700138bc                strlen
                 0x00000000700138e4                strchr
+ build/j/src/libultra/_Printf.o(.text)
+ .text          0x0000000070013930      0xcc0 build/j/src/libultra/_Printf.o
                 0x0000000070013930                _Putfld
                 0x0000000070013fa0                _Printf
+ build/j/src/libultra/osCreatePiManager.o(.text)
+ .text          0x00000000700145f0      0x190 build/j/src/libultra/osCreatePiManager.o
                 0x00000000700145f0                osCreatePiManager
+ build/j/src/libultra/libultra.o(.text)
+ .text          0x0000000070014780     0xc650 build/j/src/libultra/libultra.o
                 0x0000000070014780                osPfsInit
                 0x0000000070014834                __osPfsGetStatus
                 0x0000000070014940                osContInit
@@ -5463,13 +5615,10 @@ Linker script and memory map
  .rel.dyn       0x00000000008f9050        0x0 build/j/src/video.o
 
 .images         0x00000000008f9050   0x2eef20
-                0x00000000008f9050                _image1_start = .
  build/j/assets/images/split/image1.o(.data)
  .data          0x00000000008f9050      0x754 build/j/assets/images/split/image1.o
                 0x00000000008f9050                _binary_assets_images_split_image1_bin_start
                 0x00000000008f97a4                _binary_assets_images_split_image1_bin_end
-                0x00000000008f97a4                _image1_end = .
-                0x0000000000000754                _image1_size = (_image1_end - _image1_start)
  build/j/assets/images/split/image2.o(.data)
  .data          0x00000000008f97a4      0x16a build/j/assets/images/split/image2.o
                 0x00000000008f97a4                _binary_assets_images_split_image2_bin_start
@@ -16702,10 +16851,46 @@ Linker script and memory map
  .data          0x0000000080027780        0x0 build/j/src/libultra/alCSPGetState.o
  build/j/src/libultra/csequencer.o(.data)
  .data          0x0000000080027780        0x0 build/j/src/libultra/csequencer.o
- build/j/src/libultra/libultra.o(.data)
- .data          0x0000000080027780      0xc90 build/j/src/libultra/libultra.o
+ build/j/src/libultra/alCSPSetSeq.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/alCSPSetSeq.o
+ build/j/src/libultra/alCSPPlay.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/alCSPPlay.o
+ build/j/src/libultra/alCSPStop.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/alCSPStop.o
+ build/j/src/libultra/alCSPSetVol.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/alCSPSetVol.o
+ build/j/src/libultra/alEvtq.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/alEvtq.o
+ build/j/src/libultra/alSynAddPlayer.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/alSynAddPlayer.o
+ build/j/src/libultra/alSynAllocVoice.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/alSynAllocVoice.o
+ build/j/src/libultra/alSynSetVol.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/alSynSetVol.o
+ build/j/src/libultra/alSynStartVoice.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/alSynStartVoice.o
+ build/j/src/libultra/alSynSetPan.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/alSynSetPan.o
+ build/j/src/libultra/alSynSetPitch.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/alSynSetPitch.o
+ build/j/src/libultra/alSynSetFXMix.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/alSynSetFXMix.o
+ build/j/src/libultra/alSynStopVoice.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/alSynStopVoice.o
+ build/j/src/libultra/alSynFreeVoice.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/alSynFreeVoice.o
+ build/j/src/libultra/alCents2Ratio.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/alCents2Ratio.o
+ build/j/src/libultra/osPiReadIo.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/osPiReadIo.o
+ build/j/src/libultra/string.o(.data)
+ .data          0x0000000080027780        0x0 build/j/src/libultra/string.o
+ build/j/src/libultra/_Printf.o(.data)
+ .data          0x0000000080027780       0x50 build/j/src/libultra/_Printf.o
                 0x0000000080027780                spaces
                 0x00000000800277a4                zeros
+ build/j/src/libultra/osCreatePiManager.o(.data)
+ .data          0x00000000800277d0       0x20 build/j/src/libultra/osCreatePiManager.o
                 0x00000000800277d0                __osPiDevMgr
                 0x00000000800277d0                __osPiDevMgr.active
                 0x00000000800277d4                __osPiDevMgr.thread
@@ -16715,6 +16900,8 @@ Linker script and memory map
                 0x00000000800277e4                __osPiDevMgr.dma
                 0x00000000800277e8                __osPiDevMgr.edma
                 0x00000000800277ec                __osPiTable
+ build/j/src/libultra/libultra.o(.data)
+ .data          0x00000000800277f0      0xc20 build/j/src/libultra/libultra.o
                 0x00000000800277f0                __osContinitialized
                 0x0000000080027800                __osSiAccessQueueEnabled
                 0x0000000080027810                sin_table
@@ -16933,14 +17120,36 @@ Linker script and memory map
  .rodata        0x0000000080029710       0x10 build/j/src/libultra/csequencer.o
                 0x0000000080029710                F64_800296D0
                 0x0000000080029718                F64_800296D8
- build/j/src/libultra/libultra.o(.rodata)
- .rodata        0x0000000080029720      0x680 build/j/src/libultra/libultra.o
+ build/j/src/libultra/alCSPSetSeq.o(.rodata)
+ build/j/src/libultra/alCSPPlay.o(.rodata)
+ build/j/src/libultra/alCSPStop.o(.rodata)
+ build/j/src/libultra/alCSPSetVol.o(.rodata)
+ build/j/src/libultra/alEvtq.o(.rodata)
+ build/j/src/libultra/alSynAddPlayer.o(.rodata)
+ build/j/src/libultra/alSynAllocVoice.o(.rodata)
+ build/j/src/libultra/alSynSetVol.o(.rodata)
+ build/j/src/libultra/alSynStartVoice.o(.rodata)
+ build/j/src/libultra/alSynSetPan.o(.rodata)
+ build/j/src/libultra/alSynSetPitch.o(.rodata)
+ build/j/src/libultra/alSynSetFXMix.o(.rodata)
+ build/j/src/libultra/alSynStopVoice.o(.rodata)
+ build/j/src/libultra/alSynFreeVoice.o(.rodata)
+ build/j/src/libultra/alCents2Ratio.o(.rodata)
+ .rodata        0x0000000080029720        0x8 build/j/src/libultra/alCents2Ratio.o
                 0x0000000080029720                F32_800296E0
                 0x0000000080029724                F32_800296E4
+ build/j/src/libultra/osPiReadIo.o(.rodata)
+ build/j/src/libultra/string.o(.rodata)
+ build/j/src/libultra/_Printf.o(.rodata)
+ *fill*         0x0000000080029728        0x8 
+ .rodata        0x0000000080029730      0x100 build/j/src/libultra/_Printf.o
                 0x0000000080029730                aHll
                 0x0000000080029734                printf_symbols
                 0x000000008002973c                byteshiftleft_lookup
                 0x0000000080029754                jpt_80029714
+ build/j/src/libultra/osCreatePiManager.o(.rodata)
+ build/j/src/libultra/libultra.o(.rodata)
+ .rodata        0x0000000080029830      0x570 build/j/src/libultra/libultra.o
                 0x0000000080029830                F32_800297F0
                 0x0000000080029840                F64_80029800
                 0x0000000080029850                F32_80029810
@@ -21615,12 +21824,50 @@ Linker script and memory map
  .bss           0x0000000080066b10        0x0 build/j/src/libultra/alCSPGetState.o
  build/j/src/libultra/csequencer.o(.bss)
  .bss           0x0000000080066b10        0x0 build/j/src/libultra/csequencer.o
- build/j/src/libultra/libultra.o(.bss)
- .bss           0x0000000080066b10     0x26a0 build/j/src/libultra/libultra.o
+ build/j/src/libultra/alCSPSetSeq.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/alCSPSetSeq.o
+ build/j/src/libultra/alCSPPlay.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/alCSPPlay.o
+ build/j/src/libultra/alCSPStop.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/alCSPStop.o
+ build/j/src/libultra/alCSPSetVol.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/alCSPSetVol.o
+ build/j/src/libultra/alEvtq.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/alEvtq.o
+ build/j/src/libultra/alSynAddPlayer.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/alSynAddPlayer.o
+ build/j/src/libultra/alSynAllocVoice.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/alSynAllocVoice.o
+ build/j/src/libultra/alSynSetVol.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/alSynSetVol.o
+ build/j/src/libultra/alSynStartVoice.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/alSynStartVoice.o
+ build/j/src/libultra/alSynSetPan.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/alSynSetPan.o
+ build/j/src/libultra/alSynSetPitch.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/alSynSetPitch.o
+ build/j/src/libultra/alSynSetFXMix.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/alSynSetFXMix.o
+ build/j/src/libultra/alSynStopVoice.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/alSynStopVoice.o
+ build/j/src/libultra/alSynFreeVoice.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/alSynFreeVoice.o
+ build/j/src/libultra/alCents2Ratio.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/alCents2Ratio.o
+ build/j/src/libultra/osPiReadIo.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/osPiReadIo.o
+ build/j/src/libultra/string.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/string.o
+ build/j/src/libultra/_Printf.o(.bss)
+ .bss           0x0000000080066b10        0x0 build/j/src/libultra/_Printf.o
+ build/j/src/libultra/osCreatePiManager.o(.bss)
+ .bss           0x0000000080066b10     0x11d0 build/j/src/libultra/osCreatePiManager.o
                 0x0000000080066b10                piThread
                 0x0000000080066cc0                piThreadStack
                 0x0000000080067cc0                pieventQueue
                 0x0000000080067cd8                piEventBuf
+ build/j/src/libultra/libultra.o(.bss)
+ .bss           0x0000000080067ce0     0x14d0 build/j/src/libultra/libultra.o
                 0x0000000080067ce0                __osContPifRam
                 0x0000000080067d20                __osContLastCmd
                 0x0000000080067d21                __osMaxControllers

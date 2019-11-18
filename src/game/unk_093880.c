@@ -1102,7 +1102,7 @@ glabel sub_GAME_7F094298
 
 
 
-void sub_GAME_7F09442C(s32 stagenum) {
+void store_stagenum_to_copyof_stagenum(s32 stagenum) {
   copyof_stagenum = stagenum;
 }
 

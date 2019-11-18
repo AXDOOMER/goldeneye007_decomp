@@ -13,7 +13,8 @@ basename: "ge007.e"
 ranges:
    - [0x00000000, 0x000040, "header", "header"]
    - [0x00000040, 0x001000, "bin", "boot"]
-   - [0x00001000, 0x01F850, "asm", "code", 0x80000400]
+   - [0x00001000, 0x001050, "asm", "start", 0x80000400]
+   - [0x00001050, 0x01F850, "asm", "code", 0x70000450]
    - [0x0001F850, 0x031450, "bin", "Compressedrodata"]
    - [0x00031450, 0x0329F0, "asm", "rarezip", 0x70200000]
    - [0x000329F0, 0x1047F0, "asm", "codeTLB", 0x7F000000]
@@ -71,7 +72,7 @@ labels:
    - [0x70001dcc, "remove_TLB_entry_from_table"]
    - [0x70001e50, "translate_load_rom_from_TLBaddress"]
    - [0x70001f70, "return_ptr_TLBallocatedblock"]
-   - [0x, ""]
+   #- [0x, ""]
 
    ###############################
    #rarezipsegment.o

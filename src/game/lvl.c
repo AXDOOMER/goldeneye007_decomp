@@ -499,10 +499,10 @@ glabel stage_load
 /* 0F2780 7F0BDC50 3C048005 */  lui   $a0, %hi(current_stage_to_load)
 /* 0F2784 7F0BDC54 8C848364 */  lw    $a0, %lo(current_stage_to_load)($a0)
 .L7F0BDC58:
-/* 0F2788 7F0BDC58 0FC2D049 */  jal   sub_GAME_7F0B4124
+/* 0F2788 7F0BDC58 0FC2D049 */  jal   load_bg_file
 /* 0F278C 7F0BDC5C 00000000 */   nop   
 /* 0F2790 7F0BDC60 3C048005 */  lui   $a0, %hi(current_stage_to_load)
-/* 0F2794 7F0BDC64 0FC2510B */  jal   sub_GAME_7F09442C
+/* 0F2794 7F0BDC64 0FC2510B */  jal   store_stagenum_to_copyof_stagenum
 /* 0F2798 7F0BDC68 8C848364 */   lw    $a0, %lo(current_stage_to_load)($a0)
 /* 0F279C 7F0BDC6C 0FC2921A */  jal   init_watch_at_start_of_stage
 /* 0F27A0 7F0BDC70 00000000 */   nop   
@@ -804,10 +804,10 @@ glabel stage_load
 /* 0F3380 7F0BE810 3C048005 */  lui   $a0, %hi(current_stage_to_load) # $a0, 0x8005
 /* 0F3384 7F0BE814 8C848394 */  lw    $a0, %lo(current_stage_to_load)($a0)
 .Ljp7F0BE818:
-/* 0F3388 7F0BE818 0FC2D335 */  jal   sub_GAME_7F0B4124
+/* 0F3388 7F0BE818 0FC2D335 */  jal   load_bg_file
 /* 0F338C 7F0BE81C 00000000 */   nop   
 /* 0F3390 7F0BE820 3C048005 */  lui   $a0, %hi(current_stage_to_load) # $a0, 0x8005
-/* 0F3394 7F0BE824 0FC253F3 */  jal   sub_GAME_7F09442C
+/* 0F3394 7F0BE824 0FC253F3 */  jal   store_stagenum_to_copyof_stagenum
 /* 0F3398 7F0BE828 8C848394 */   lw    $a0, %lo(current_stage_to_load)($a0)
 /* 0F339C 7F0BE82C 0FC29502 */  jal   init_watch_at_start_of_stage
 /* 0F33A0 7F0BE830 00000000 */   nop   

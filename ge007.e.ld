@@ -49,7 +49,7 @@ SECTIONS
 
 
       build/e/src/libultra/osCreateViManager.o (.text);
-
+      build/e/src/libultra/osCreatePiManager.o (.text);
 
       
       build/e/src/tlb_manage.o (.text);
@@ -141,6 +141,25 @@ SECTIONS
       build/e/src/libultra/alSeqpSetBank.o (.text);
       build/e/src/libultra/alCSPGetState.o (.text);
       build/e/src/libultra/csequencer.o (.text);
+      build/e/src/libultra/alCSPSetSeq.o (.text);
+      build/e/src/libultra/alCSPPlay.o (.text);
+      build/e/src/libultra/alCSPStop.o (.text);
+      build/e/src/libultra/alCSPSetVol.o (.text);
+      build/e/src/libultra/alEvtq.o (.text);
+      build/e/src/libultra/alSynAddPlayer.o (.text);
+      build/e/src/libultra/alSynAllocVoice.o (.text);
+      build/e/src/libultra/alSynSetVol.o (.text);
+      build/e/src/libultra/alSynStartVoice.o (.text);
+      build/e/src/libultra/alSynSetPan.o (.text);
+      build/e/src/libultra/alSynSetPitch.o (.text);
+      build/e/src/libultra/alSynSetFXMix.o (.text);
+      build/e/src/libultra/alSynStopVoice.o (.text);
+      build/e/src/libultra/alSynFreeVoice.o (.text);
+      build/e/src/libultra/alCents2Ratio.o (.text);
+      build/e/src/libultra/osPiReadIo.o (.text);
+      build/e/src/libultra/string.o (.text);
+      build/e/src/libultra/_Printf.o (.text);
+
       build/e/src/libultra/libultra.o (.text);
       /*build/e/src/libultra/libultra.a:libultra.o (.text);*/
    }
@@ -226,10 +245,13 @@ SECTIONS
       build/e/src/game/blood_animation.o (.text);
       build/e/src/game/blood_decrypt.o (.text);
       build/e/src/game/gamefile.o (.text);
+      build/e/src/game/gamefile2.o (.text);
       build/e/src/game/chr.o (.text);
+      build/e/src/game/chr2.o (.text);
       build/e/src/game/chrai.o (.text);
       build/e/src/game/loadobjectmodel.o (.text);
       build/e/src/game/objective_status.o (.text);
+      build/e/src/game/objective_status2.o (.text);
       build/e/src/game/sin.o (.text);
       build/e/src/game/unk_057FD0.o (.text);
       build/e/src/game/unk_05A9E0.o (.text);
@@ -241,14 +263,17 @@ SECTIONS
       build/e/src/game/truncf.o (.text);
       build/e/src/game/unk_05C440.o (.text);
       build/e/src/game/bondwalk.o (.text);
+      build/e/src/game/bondwalk2.o (.text);
       build/e/src/game/objecthandler.o (.text);
       build/e/src/game/objecthandler_2.o (.text);
       build/e/src/game/othermodemicrocode.o (.text);
       build/e/src/game/bond.o (.text);
+      build/e/src/game/bond2.o (.text);
       build/e/src/game/unk_08DBB0.o (.text);
       build/e/src/game/debugmenu_08FE00.o (.text);
       build/e/src/game/debugmenu_090490.o (.text);
       build/e/src/game/unk_091080.o (.text);
+      build/e/src/game/chrobjdata.o (.text);
       build/e/src/game/cheat_buttons.o (.text);
       build/e/src/game/unk_092890.o (.text);
       build/e/src/game/unk_092E50.o (.text);
@@ -326,10 +351,7 @@ SECTIONS
    _imagesSegmentStart = ADDR(.images);
    _imagesSegmentRomStart = _obsegSegmentRomEnd;
    .images _imagesSegmentRomStart : AT(_imagesSegmentRomStart) {
-    _image1_start = .;
-	  build/e/assets/images/split/image1.o (.data);
-	_image1_end = .;
-   _image1_size = (_image1_end - _image1_start);
+ 	   build/e/assets/images/split/image1.o (.data);
       build/e/assets/images/split/image2.o (.data);
       build/e/assets/images/split/image3.o (.data);
       build/e/assets/images/split/image4.o (.data);
@@ -3052,6 +3074,7 @@ SECTIONS
       build/e/src/osMapTLB.o (.data);
 
       build/e/src/libultra/osCreateViManager.o (.data);
+      build/e/src/libultra/osCreatePiManager.o (.data);
 
       build/e/src/tlb_manage.o (.data);
       build/e/src/tlb_random.o (.data);
@@ -3142,6 +3165,25 @@ SECTIONS
       build/e/src/libultra/alSeqpSetBank.o (.data);
       build/e/src/libultra/alCSPGetState.o (.data);
       build/e/src/libultra/csequencer.o (.data);
+      build/e/src/libultra/alCSPSetSeq.o (.data);
+      build/e/src/libultra/alCSPPlay.o (.data);
+      build/e/src/libultra/alCSPStop.o (.data);
+      build/e/src/libultra/alCSPSetVol.o (.data);
+      build/e/src/libultra/alEvtq.o (.data);
+      build/e/src/libultra/alSynAddPlayer.o (.data);
+      build/e/src/libultra/alSynAllocVoice.o (.data);
+      build/e/src/libultra/alSynSetVol.o (.data);
+      build/e/src/libultra/alSynStartVoice.o (.data);
+      build/e/src/libultra/alSynSetPan.o (.data);
+      build/e/src/libultra/alSynSetPitch.o (.data);
+      build/e/src/libultra/alSynSetFXMix.o (.data);
+      build/e/src/libultra/alSynStopVoice.o (.data);
+      build/e/src/libultra/alSynFreeVoice.o (.data);
+      build/e/src/libultra/alCents2Ratio.o (.data);
+      build/e/src/libultra/osPiReadIo.o (.data);
+      build/e/src/libultra/string.o (.data);
+      build/e/src/libultra/_Printf.o (.data);
+
       build/e/src/libultra/libultra.o (.data);
       /*build/e/src/libultra/libultra.a:libultra.o (.data);*/
 
@@ -3152,6 +3194,7 @@ SECTIONS
       build/e/src/osMapTLB.o (.rodata);
 
       build/e/src/libultra/osCreateViManager.o (.rodata);
+      build/e/src/libultra/osCreatePiManager.o (.rodata);
 
       build/e/src/tlb_manage.o (.rodata);
       build/e/src/tlb_random.o (.rodata);
@@ -3242,6 +3285,25 @@ SECTIONS
       build/e/src/libultra/alSeqpSetBank.o (.rodata);
       build/e/src/libultra/alCSPGetState.o (.rodata);
       build/e/src/libultra/csequencer.o (.rodata);
+      build/e/src/libultra/alCSPSetSeq.o (.rodata);
+      build/e/src/libultra/alCSPPlay.o (.rodata);
+      build/e/src/libultra/alCSPStop.o (.rodata);
+      build/e/src/libultra/alCSPSetVol.o (.rodata);
+      build/e/src/libultra/alEvtq.o (.rodata);
+      build/e/src/libultra/alSynAddPlayer.o (.rodata);
+      build/e/src/libultra/alSynAllocVoice.o (.rodata);
+      build/e/src/libultra/alSynSetVol.o (.rodata);
+      build/e/src/libultra/alSynStartVoice.o (.rodata);
+      build/e/src/libultra/alSynSetPan.o (.rodata);
+      build/e/src/libultra/alSynSetPitch.o (.rodata);
+      build/e/src/libultra/alSynSetFXMix.o (.rodata);
+      build/e/src/libultra/alSynStopVoice.o (.rodata);
+      build/e/src/libultra/alSynFreeVoice.o (.rodata);
+      build/e/src/libultra/alCents2Ratio.o (.rodata);
+      build/e/src/libultra/osPiReadIo.o (.rodata);
+      build/e/src/libultra/string.o (.rodata);
+      build/e/src/libultra/_Printf.o (.rodata);
+
       build/e/src/libultra/libultra.o (.rodata);
       /*build/e/src/libultra/libultra.a:libultra.o (.rodata);*/
 
@@ -3295,10 +3357,13 @@ SECTIONS
       build/e/src/game/blood_animation.o (.data);
       build/e/src/game/blood_decrypt.o (.data);
       build/e/src/game/gamefile.o (.data);
+      build/e/src/game/gamefile2.o (.data);
       build/e/src/game/chr.o (.data);
+      build/e/src/game/chr2.o (.data);
       build/e/src/game/chrai.o (.data);
       build/e/src/game/loadobjectmodel.o (.data);
       build/e/src/game/objective_status.o (.data);
+      build/e/src/game/objective_status2.o (.data);
       build/e/src/game/sin.o (.data);
       build/e/src/game/unk_057FD0.o (.data);
       build/e/src/game/unk_05A9E0.o (.data);
@@ -3310,14 +3375,17 @@ SECTIONS
       build/e/src/game/truncf.o (.data);
       build/e/src/game/unk_05C440.o (.data);
       build/e/src/game/bondwalk.o (.data);
+      build/e/src/game/bondwalk2.o (.data);
       build/e/src/game/objecthandler.o (.data);
       build/e/src/game/objecthandler_2.o (.data);
       build/e/src/game/othermodemicrocode.o (.data);
       build/e/src/game/bond.o (.data);
+      build/e/src/game/bond2.o (.data);
       build/e/src/game/unk_08DBB0.o (.data);
       build/e/src/game/debugmenu_08FE00.o (.data);
       build/e/src/game/debugmenu_090490.o (.data);
       build/e/src/game/unk_091080.o (.data);
+      build/e/src/game/chrobjdata.o (.data);
       build/e/src/game/cheat_buttons.o (.data);
       build/e/src/game/unk_092890.o (.data);
       build/e/src/game/unk_092E50.o (.data);
@@ -3410,10 +3478,13 @@ SECTIONS
       build/e/src/game/blood_animation.o (.rodata);
       build/e/src/game/blood_decrypt.o (.rodata);
       build/e/src/game/gamefile.o (.rodata);
+      build/e/src/game/gamefile2.o (.rodata);
       build/e/src/game/chr.o (.rodata);
+      build/e/src/game/chr2.o (.rodata);
       build/e/src/game/chrai.o (.rodata);
       build/e/src/game/loadobjectmodel.o (.rodata);
       build/e/src/game/objective_status.o (.rodata);
+      build/e/src/game/objective_status2.o (.rodata);
       build/e/src/game/sin.o (.rodata);
       build/e/src/game/unk_057FD0.o (.rodata);
       build/e/src/game/unk_05A9E0.o (.rodata);
@@ -3425,14 +3496,17 @@ SECTIONS
       build/e/src/game/truncf.o (.rodata);
       build/e/src/game/unk_05C440.o (.rodata);
       build/e/src/game/bondwalk.o (.rodata);
+      build/e/src/game/bondwalk2.o (.rodata);
       build/e/src/game/objecthandler.o (.rodata);
       build/e/src/game/objecthandler_2.o (.rodata);
       build/e/src/game/othermodemicrocode.o (.rodata);
       build/e/src/game/bond.o (.rodata);
+      build/e/src/game/bond2.o (.rodata);
       build/e/src/game/unk_08DBB0.o (.rodata);
       build/e/src/game/debugmenu_08FE00.o (.rodata);
       build/e/src/game/debugmenu_090490.o (.rodata);
       build/e/src/game/unk_091080.o (.rodata);
+      build/e/src/game/chrobjdata.o (.rodata);
       build/e/src/game/cheat_buttons.o (.rodata);
       build/e/src/game/unk_092890.o (.rodata);
       build/e/src/game/unk_092E50.o (.rodata);
@@ -3492,6 +3566,7 @@ SECTIONS
       build/e/src/osMapTLB.o (.bss);
 
       build/e/src/libultra/osCreateViManager.o (.bss);
+      build/e/src/libultra/osCreatePiManager.o (.bss);
 
       build/e/src/tlb_manage.o (.bss);
       build/e/src/tlb_random.o (.bss);
@@ -3581,6 +3656,25 @@ SECTIONS
       build/e/src/libultra/alSeqpSetBank.o (.bss);
       build/e/src/libultra/alCSPGetState.o (.bss);
       build/e/src/libultra/csequencer.o (.bss);
+      build/e/src/libultra/alCSPSetSeq.o (.bss);
+      build/e/src/libultra/alCSPPlay.o (.bss);
+      build/e/src/libultra/alCSPStop.o (.bss);
+      build/e/src/libultra/alCSPSetVol.o (.bss);
+      build/e/src/libultra/alEvtq.o (.bss);
+      build/e/src/libultra/alSynAddPlayer.o (.bss);
+      build/e/src/libultra/alSynAllocVoice.o (.bss);
+      build/e/src/libultra/alSynSetVol.o (.bss);
+      build/e/src/libultra/alSynStartVoice.o (.bss);
+      build/e/src/libultra/alSynSetPan.o (.bss);
+      build/e/src/libultra/alSynSetPitch.o (.bss);
+      build/e/src/libultra/alSynSetFXMix.o (.bss);
+      build/e/src/libultra/alSynStopVoice.o (.bss);
+      build/e/src/libultra/alSynFreeVoice.o (.bss);
+      build/e/src/libultra/alCents2Ratio.o (.bss);
+      build/e/src/libultra/osPiReadIo.o (.bss);
+      build/e/src/libultra/string.o (.bss);
+      build/e/src/libultra/_Printf.o (.bss);
+
       build/e/src/libultra/libultra.o (.bss);
       /*build/e/src/libultra/libultra.a:libultra.o (.bss);*/
 
@@ -3634,10 +3728,13 @@ SECTIONS
       build/e/src/game/blood_animation.o (.bss);
       build/e/src/game/blood_decrypt.o (.bss);
       build/e/src/game/gamefile.o (.bss);
+      build/e/src/game/gamefile2.o (.bss);
       build/e/src/game/chr.o (.bss);
+      build/e/src/game/chr2.o (.bss);
       build/e/src/game/chrai.o (.bss);
       build/e/src/game/loadobjectmodel.o (.bss);
       build/e/src/game/objective_status.o (.bss);
+      build/e/src/game/objective_status2.o (.bss);
       build/e/src/game/sin.o (.bss);
       build/e/src/game/unk_057FD0.o (.bss);
       build/e/src/game/unk_05A9E0.o (.bss);
@@ -3649,14 +3746,17 @@ SECTIONS
       build/e/src/game/truncf.o (.bss);
       build/e/src/game/unk_05C440.o (.bss);
       build/e/src/game/bondwalk.o (.bss);
+      build/e/src/game/bondwalk2.o (.bss);
       build/e/src/game/objecthandler.o (.bss);
       build/e/src/game/objecthandler_2.o (.bss);
       build/e/src/game/othermodemicrocode.o (.bss);
       build/e/src/game/bond.o (.bss);
+      build/e/src/game/bond2.o (.bss);
       build/e/src/game/unk_08DBB0.o (.bss);
       build/e/src/game/debugmenu_08FE00.o (.bss);
       build/e/src/game/debugmenu_090490.o (.bss);
       build/e/src/game/unk_091080.o (.bss);
+      build/e/src/game/chrobjdata.o (.bss);
       build/e/src/game/cheat_buttons.o (.bss);
       build/e/src/game/unk_092890.o (.bss);
       build/e/src/game/unk_092E50.o (.bss);
@@ -3698,18 +3798,27 @@ SECTIONS
       build/e/src/game/viewport.o (.bss);
       build/e/src/game/music_0D2720.o (.bss);
       build/e/src/game/spectrum.o (.bss);
-      build/e/src/game/room_model_buffer.o (.bss);     
    }
    _bssSegmentEnd = ADDR(.bss) + SIZEOF(.bss);
+   _bssSegmentSize = SIZEOF(.bss);
    _bssSegmentRomEnd = _bssSegmentRomStart + SIZEOF(.bss);
 
+   _roombufSegmentStart = ADDR(.roombuf);
+   _roombufSegmentRomStart = _bssSegmentRomEnd;
+   .roombuf _bssSegmentEnd : AT(_roombufSegmentRomStart){
+      build/e/src/game/room_model_buffer.o (.bss);
+   }
+   _roombufSegmentEnd = ADDR(.roombuf) + SIZEOF(.roombuf);
+   _roombufSegmentRomEnd = _roombufSegmentRomStart + SIZEOF(.roombuf);
+
    _decompbufSegmentStart = ADDR(.decompbuf);
-   _decompbufSegmentRomStart = _bssSegmentRomEnd;
+   _decompbufSegmentRomStart = _roombufSegmentRomEnd;
    .decompbuf 0x80300000 : AT(_decompbufSegmentRomStart){
       build/e/src/decompressbuffer.o (.bss);
    }
    _decompbufSegmentEnd = ADDR(.decompbuf) + SIZEOF(.decompbuf);
    _decompbufSegmentRomEnd = _decompbufSegmentRomStart + SIZEOF(.decompbuf);
+
 
    _stacksSegmentStart = ADDR(.stacks);
    _stacksSegmentRomStart = _decompbufSegmentRomEnd;

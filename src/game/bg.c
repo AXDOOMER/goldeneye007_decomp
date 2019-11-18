@@ -1722,13 +1722,14 @@ glabel sub_GAME_7F0B40D4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B4124(void) {
+void load_bg_file(STAGENUM stagenum)
+{
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0B4124
+glabel load_bg_file
 /* 0E8C54 7F0B4124 27BDFF48 */  addiu $sp, $sp, -0xb8
 /* 0E8C58 7F0B4128 AFB20020 */  sw    $s2, 0x20($sp)
 /* 0E8C5C 7F0B412C 3C128004 */  lui   $s2, %hi(D_80041400)

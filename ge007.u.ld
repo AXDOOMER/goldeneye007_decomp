@@ -135,6 +135,25 @@ SECTIONS
       build/u/src/libultra/alSeqpSetBank.o (.text);
       build/u/src/libultra/alCSPGetState.o (.text);
       build/u/src/libultra/csequencer.o (.text);
+      build/u/src/libultra/alCSPSetSeq.o (.text);
+      build/u/src/libultra/alCSPPlay.o (.text);
+      build/u/src/libultra/alCSPStop.o (.text);
+      build/u/src/libultra/alCSPSetVol.o (.text);
+      build/u/src/libultra/alEvtq.o (.text);
+      build/u/src/libultra/alSynAddPlayer.o (.text);
+      build/u/src/libultra/alSynAllocVoice.o (.text);
+      build/u/src/libultra/alSynSetVol.o (.text);
+      build/u/src/libultra/alSynStartVoice.o (.text);
+      build/u/src/libultra/alSynSetPan.o (.text);
+      build/u/src/libultra/alSynSetPitch.o (.text);
+      build/u/src/libultra/alSynSetFXMix.o (.text);
+      build/u/src/libultra/alSynStopVoice.o (.text);
+      build/u/src/libultra/alSynFreeVoice.o (.text);
+      build/u/src/libultra/alCents2Ratio.o (.text);
+      build/u/src/libultra/osPiReadIo.o (.text);
+      build/u/src/libultra/string.o (.text);
+      build/u/src/libultra/_Printf.o (.text);
+      build/u/src/libultra/osCreatePiManager.o (.text);
       build/u/src/libultra/libultra.o (.text);
       /*build/u/src/libultra/libultra.a:libultra.o (.text);*/
    }
@@ -3139,6 +3158,25 @@ SECTIONS
       build/u/src/libultra/alSeqpSetBank.o (.data);
       build/u/src/libultra/alCSPGetState.o (.data);
       build/u/src/libultra/csequencer.o (.data);
+      build/u/src/libultra/alCSPSetSeq.o (.data);
+      build/u/src/libultra/alCSPPlay.o (.data);
+      build/u/src/libultra/alCSPStop.o (.data);
+      build/u/src/libultra/alCSPSetVol.o (.data);
+      build/u/src/libultra/alEvtq.o (.data);
+      build/u/src/libultra/alSynAddPlayer.o (.data);
+      build/u/src/libultra/alSynAllocVoice.o (.data);
+      build/u/src/libultra/alSynSetVol.o (.data);
+      build/u/src/libultra/alSynStartVoice.o (.data);
+      build/u/src/libultra/alSynSetPan.o (.data);
+      build/u/src/libultra/alSynSetPitch.o (.data);
+      build/u/src/libultra/alSynSetFXMix.o (.data);
+      build/u/src/libultra/alSynStopVoice.o (.data);
+      build/u/src/libultra/alSynFreeVoice.o (.data);
+      build/u/src/libultra/alCents2Ratio.o (.data);
+      build/u/src/libultra/osPiReadIo.o (.data);
+      build/u/src/libultra/string.o (.data);
+      build/u/src/libultra/_Printf.o (.data);
+      build/u/src/libultra/osCreatePiManager.o (.data);
       build/u/src/libultra/libultra.o (.data);
       /*build/u/src/libultra/libultra.a:libultra.o (.data);*/
 
@@ -3236,6 +3274,25 @@ SECTIONS
       build/u/src/libultra/alSeqpSetBank.o (.rodata);
       build/u/src/libultra/alCSPGetState.o (.rodata);
       build/u/src/libultra/csequencer.o (.rodata);
+      build/u/src/libultra/alCSPSetSeq.o (.rodata);
+      build/u/src/libultra/alCSPPlay.o (.rodata);
+      build/u/src/libultra/alCSPStop.o (.rodata);
+      build/u/src/libultra/alCSPSetVol.o (.rodata);
+      build/u/src/libultra/alEvtq.o (.rodata);
+      build/u/src/libultra/alSynAddPlayer.o (.rodata);
+      build/u/src/libultra/alSynAllocVoice.o (.rodata);
+      build/u/src/libultra/alSynSetVol.o (.rodata);
+      build/u/src/libultra/alSynStartVoice.o (.rodata);
+      build/u/src/libultra/alSynSetPan.o (.rodata);
+      build/u/src/libultra/alSynSetPitch.o (.rodata);
+      build/u/src/libultra/alSynSetFXMix.o (.rodata);
+      build/u/src/libultra/alSynStopVoice.o (.rodata);
+      build/u/src/libultra/alSynFreeVoice.o (.rodata);
+      build/u/src/libultra/alCents2Ratio.o (.rodata);
+      build/u/src/libultra/osPiReadIo.o (.rodata);
+      build/u/src/libultra/string.o (.rodata);
+      build/u/src/libultra/_Printf.o (.rodata);
+      build/u/src/libultra/osCreatePiManager.o (.rodata);
       build/u/src/libultra/libultra.o (.rodata);
       /*build/u/src/libultra/libultra.a:libultra.o (.rodata);*/
 
@@ -3584,6 +3641,25 @@ SECTIONS
       build/u/src/libultra/alSeqpSetBank.o (.bss);
       build/u/src/libultra/alCSPGetState.o (.bss);
       build/u/src/libultra/csequencer.o (.bss);
+      build/u/src/libultra/alCSPSetSeq.o (.bss);
+      build/u/src/libultra/alCSPPlay.o (.bss);
+      build/u/src/libultra/alCSPStop.o (.bss);
+      build/u/src/libultra/alCSPSetVol.o (.bss);
+      build/u/src/libultra/alEvtq.o (.bss);
+      build/u/src/libultra/alSynAddPlayer.o (.bss);
+      build/u/src/libultra/alSynAllocVoice.o (.bss);
+      build/u/src/libultra/alSynSetVol.o (.bss);
+      build/u/src/libultra/alSynStartVoice.o (.bss);
+      build/u/src/libultra/alSynSetPan.o (.bss);
+      build/u/src/libultra/alSynSetPitch.o (.bss);
+      build/u/src/libultra/alSynSetFXMix.o (.bss);
+      build/u/src/libultra/alSynStopVoice.o (.bss);
+      build/u/src/libultra/alSynFreeVoice.o (.bss);
+      build/u/src/libultra/alCents2Ratio.o (.bss);
+      build/u/src/libultra/osPiReadIo.o (.bss);
+      build/u/src/libultra/string.o (.bss);
+      build/u/src/libultra/_Printf.o (.bss);
+      build/u/src/libultra/osCreatePiManager.o (.bss);
       build/u/src/libultra/libultra.o (.bss);
       /*build/u/src/libultra/libultra.a:libultra.o (.bss);*/
 
