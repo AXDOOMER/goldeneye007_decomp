@@ -237,5 +237,12 @@ struct object_standard {
     char field_7F;
 };
 
+struct watchMenuObjectiveText {
+    u32 id;
+    enum WATCH_BRIEFING_PAGE menu;
+    u16 reserved;
+    u16 text;
+    struct watchMenuObjectiveText * nextentry;
+};
 
 #endif

@@ -1,4 +1,6 @@
 #include "ultra64.h"
+#include "bondconstants.h"
+#include "bondtypes.h"
 
 // bss
 //CODE.bss:80075D30
@@ -107,9 +109,41 @@ glabel get_handle_to_tagged_object
 
 
 
-#ifdef NONMATCHING
-void get_ptr_text_for_watch_breifing_page(void) {
 
+#ifdef NONMATCHING
+u8 * get_ptr_text_for_watch_breifing_page(WATCH_BRIEFING_PAGE page)
+{
+    struct watchMenuObjectiveText * curentry;
+    u8 * textptr;
+
+    textptr = 0;
+    for (curentry = ptr_last_briefing_setup_entry_type23; curentry != 0; curentry = curentry->nextentry)
+    {
+        if (page == curentry->menu)
+        {
+            textptr = get_textptr_for_textID(curentry->text);
+        }
+        textptr = 0;
+    }
+    if (textptr == 0)
+    {
+        if (page == 0)
+        {
+            textptr = get_textptr_for_textID(0xb029);
+        }
+        else
+        {
+            if (page == 1)
+            {
+                textptr = get_textptr_for_textID(0xb02a);
+            }
+            else
+            {
+                textptr = get_textptr_for_textID(0xb02b);
+            }
+        }
+    }
+    return textptr;
 }
 #else
 GLOBAL_ASM(
@@ -170,22 +204,11 @@ glabel get_ptr_text_for_watch_breifing_page
 
 
 
-#ifdef NONMATCHING
-void add_objective(void) {
 
+s32 add_objective(void)
+{
+    return num_objective_ptrs[0]+1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel add_objective
-/* 08BCD8 7F0571A8 3C028003 */  lui   $v0, %hi(num_objective_ptrs)
-/* 08BCDC 7F0571AC 8C4222F0 */  lw    $v0, %lo(num_objective_ptrs)($v0)
-/* 08BCE0 7F0571B0 03E00008 */  jr    $ra
-/* 08BCE4 7F0571B4 24420001 */   addiu $v0, $v0, 1
-)
-#endif
-
-
 
 
 
