@@ -36617,15 +36617,15 @@ u32 is_clock_drawn_onscreen(void)
 }
 
 void set_clock_time(f32 time) {
-  clock_time = time;
+    clock_time = time;
 }
 
 f32 get_clock_time(void) {
-  return clock_time;
+    return clock_time;
 }
 
 void set_clock_enable(s32 enable) {
-  clock_enable = enable;
+    clock_enable = enable;
 }
 
 s32 get_clock_enable(void) {

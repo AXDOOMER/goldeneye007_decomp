@@ -20548,7 +20548,6 @@ Linker script and memory map
                 0x00000000800534bc                D_8005348C
  build/j/src/game/loadobjectmodel.o(.rodata)
  .rodata        0x00000000800534c0      0x180 build/j/src/game/loadobjectmodel.o
-                0x00000000800534c0                jpt_object_setup_size
                 0x000000008005357c                jpt_8005354C
  build/j/src/game/objective_status.o(.rodata)
  .rodata        0x0000000080053640       0x80 build/j/src/game/objective_status.o
