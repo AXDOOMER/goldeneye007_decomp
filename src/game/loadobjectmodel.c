@@ -1,6 +1,8 @@
 #include "ultra64.h"
 #include "bondtypes.h"
 #include "game/chrai.h"
+#include "game/chrobjdata.h"
+
 #ifdef NONMATCHING
 void sub_GAME_7F056850(void) {
 
@@ -340,8 +342,16 @@ glabel sub_GAME_7F056BA8
 
 
 #ifdef NONMATCHING
-void load_model(void) {
-
+u32 load_model(u32 modelid)
+{
+    struct p_itementry fileentry = PitemZ_entries[modelid];
+    if (fileentry.header == 0)
+    {
+        load_object_into_memory(PitemZ_entries[modelid].header, PitemZ_entries[modelid].filename);
+        set_objuse_flag_compute_grp_nums_set_obj_loaded(PitemZ_entries[modelid].header);
+        return 1;
+    }
+    return 0;
 }
 #else
 GLOBAL_ASM(
