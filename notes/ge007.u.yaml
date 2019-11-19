@@ -2318,7 +2318,7 @@ labels:
    - [0x7F055E2C, "stop_alarm"]
    - [0x7F055E50, "is_alarm_on"]
    - [0x7F055E64, "init_trigger_toxic_gas_effect"]
-   - [0x7F055EF8, "sub_GAME_7F055EF8"]
+   - [0x7F055EF8, "check_deactivate_gas_sound"]
    - [0x7F055F38, "check_if_toxic_gas_activated"]
    - [0x7F055F64, "handle_gas_damage"]
    - [0x7F056160, "set_unset_clock_lock_bits"]

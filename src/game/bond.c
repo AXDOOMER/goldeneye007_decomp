@@ -12759,7 +12759,7 @@ glabel sub_GAME_7F07EAF0
 /* 0B3628 7F07EAF8 AFB10018 */  sw    $s1, 0x18($sp)
 /* 0B362C 7F07EAFC 0FC1577B */  jal   deactivate_alarm_sound_effect
 /* 0B3630 7F07EB00 AFB00014 */   sw    $s0, 0x14($sp)
-/* 0B3634 7F07EB04 0FC157BE */  jal   sub_GAME_7F055EF8
+/* 0B3634 7F07EB04 0FC157BE */  jal   check_deactivate_gas_sound
 /* 0B3638 7F07EB08 00000000 */   nop   
 /* 0B363C 7F07EB0C 00008825 */  move  $s1, $zero
 .L7F07EB10:

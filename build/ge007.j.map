@@ -660,7 +660,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/j/src/game/initunk_007460.o
  .options       0x0000000000000000       0x20 build/j/src/game/cleanup_alarms.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/cleanup_alarms.o
- .mdebug        0x0000000000000000      0x388 build/j/src/game/cleanup_alarms.o
+ .mdebug        0x0000000000000000      0x390 build/j/src/game/cleanup_alarms.o
  .options       0x0000000000000000       0x20 build/j/src/game/cleanup_objects.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/cleanup_objects.o
  .options       0x0000000000000000       0x20 build/j/src/game/cleanup_objectives.o
@@ -3035,7 +3035,7 @@ Linker script and memory map
                 0x000000007f056328                stop_alarm
                 0x000000007f05634c                is_alarm_on
                 0x000000007f056360                init_trigger_toxic_gas_effect
-                0x000000007f0563f4                sub_GAME_7F055EF8
+                0x000000007f0563f4                check_deactivate_gas_sound
                 0x000000007f056434                check_if_toxic_gas_activated
                 0x000000007f056460                handle_gas_damage
                 0x000000007f05665c                set_unset_clock_lock_bits

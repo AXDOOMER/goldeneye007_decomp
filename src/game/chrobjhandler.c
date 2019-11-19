@@ -36408,42 +36408,28 @@ glabel init_trigger_toxic_gas_effect
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F055EF8(void) {
 
+void check_deactivate_gas_sound(void)
+{
+    if ((ptr_gas_sound != 0) && (sfxGetArg0Unk3F(ptr_gas_sound) != 0)) {
+        sfxDeactivate(ptr_gas_sound);
+    }
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F055EF8
-/* 08AA28 7F055EF8 3C048003 */  lui   $a0, %hi(ptr_gas_sound)
-/* 08AA2C 7F055EFC 8C840AE4 */  lw    $a0, %lo(ptr_gas_sound)($a0)
-/* 08AA30 7F055F00 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 08AA34 7F055F04 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08AA38 7F055F08 50800008 */  beql  $a0, $zero, .L7F055F2C
-/* 08AA3C 7F055F0C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 08AA40 7F055F10 0C00237C */  jal   sfxGetArg0Unk3F
-/* 08AA44 7F055F14 00000000 */   nop   
-/* 08AA48 7F055F18 10400003 */  beqz  $v0, .L7F055F28
-/* 08AA4C 7F055F1C 3C048003 */   lui   $a0, %hi(ptr_gas_sound)
-/* 08AA50 7F055F20 0C002408 */  jal   sfxDeactivate
-/* 08AA54 7F055F24 8C840AE4 */   lw    $a0, %lo(ptr_gas_sound)($a0)
-.L7F055F28:
-/* 08AA58 7F055F28 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F055F2C:
-/* 08AA5C 7F055F2C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 08AA60 7F055F30 03E00008 */  jr    $ra
-/* 08AA64 7F055F34 00000000 */   nop   
-)
-#endif
 
 
 
-
-
+//!FIXME
+//Seriously why tf is this nopping:
+///* 08AA74 7F055F44 00001025 */  move  $v0, $zero
+//it byte matches otherwise
 #ifdef NONMATCHING
-void check_if_toxic_gas_activated(void) {
-
+s32 check_if_toxic_gas_activated(void)
+{
+    if (0.0f < toxic_gas_sound_timer) {
+        return 1;
+    }
+    return ;
 }
 #else
 GLOBAL_ASM(

@@ -107,6 +107,6 @@ extern f32 gas_damage_flag;
 extern u32 gas_cutoff_flag;
 void stop_alarm(void);
 
-void sub_GAME_7F055EF8(void);
+void check_deactivate_gas_sound(void);
 
 #endif
