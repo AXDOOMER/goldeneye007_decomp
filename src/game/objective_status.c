@@ -4,7 +4,7 @@
 
 // bss
 //CODE.bss:80075D30
-char objective_ptrs[0x28];
+struct objective_entry * objective_ptrs[10];
 u32 dword_CODE_bss_80075D58;
 u32 dword_CODE_bss_80075D5C;
 char dword_CODE_bss_80075D60[0x20];
@@ -212,38 +212,15 @@ s32 add_objective(void)
 
 
 
-#ifdef NONMATCHING
-void get_text_for_objective(void) {
-
+u8 * get_text_for_objective(int objective)
+{
+    u8 *textptr;
+    
+    if ((objective < 10) && (objective_ptrs[objective] != 0)) {
+        return get_textptr_for_textID(objective_ptrs[objective]->text);
+    }
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_text_for_objective
-/* 08BCE8 7F0571B8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 08BCEC 7F0571BC 2881000A */  slti  $at, $a0, 0xa
-/* 08BCF0 7F0571C0 1020000B */  beqz  $at, .L7F0571F0
-/* 08BCF4 7F0571C4 AFBF0014 */   sw    $ra, 0x14($sp)
-/* 08BCF8 7F0571C8 00047080 */  sll   $t6, $a0, 2
-/* 08BCFC 7F0571CC 3C028007 */  lui   $v0, %hi(objective_ptrs)
-/* 08BD00 7F0571D0 004E1021 */  addu  $v0, $v0, $t6
-/* 08BD04 7F0571D4 8C425D30 */  lw    $v0, %lo(objective_ptrs)($v0)
-/* 08BD08 7F0571D8 50400006 */  beql  $v0, $zero, .L7F0571F4
-/* 08BD0C 7F0571DC 00001025 */   move  $v0, $zero
-/* 08BD10 7F0571E0 0FC30776 */  jal   get_textptr_for_textID
-/* 08BD14 7F0571E4 9444000A */   lhu   $a0, 0xa($v0)
-/* 08BD18 7F0571E8 10000003 */  b     .L7F0571F8
-/* 08BD1C 7F0571EC 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0571F0:
-/* 08BD20 7F0571F0 00001025 */  move  $v0, $zero
-.L7F0571F4:
-/* 08BD24 7F0571F4 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0571F8:
-/* 08BD28 7F0571F8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 08BD2C 7F0571FC 03E00008 */  jr    $ra
-/* 08BD30 7F057200 00000000 */   nop   
-)
-#endif
 
 
 
@@ -491,56 +468,23 @@ objective_microcode_type_17_18_1F_default:
 
 
 
-
-
-#ifdef NONMATCHING
-void check_objectives_complete(void) {
-
+u32 check_objectives_complete(void)
+{
+    DIFFICULTY objdiff;
+    DIFFICULTY curdiff;
+    int objective;
+    
+    for (objective = 0; objective < add_objective(); objective++)
+    {
+        objdiff = get_difficulty_for_objective(objective);
+        curdiff = get_current_difficulty();
+        if ((objdiff <= curdiff) && (get_status_of_objective(objective) != 1)) {
+            return 0;
+        }
+    }
+    return 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_objectives_complete
-/* 08BFE8 7F0574B8 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 08BFEC 7F0574BC AFBF0024 */  sw    $ra, 0x24($sp)
-/* 08BFF0 7F0574C0 AFB00018 */  sw    $s0, 0x18($sp)
-/* 08BFF4 7F0574C4 AFB20020 */  sw    $s2, 0x20($sp)
-/* 08BFF8 7F0574C8 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 08BFFC 7F0574CC 0FC15C6A */  jal   add_objective
-/* 08C000 7F0574D0 00008025 */   move  $s0, $zero
-/* 08C004 7F0574D4 18400013 */  blez  $v0, .L7F057524
-/* 08C008 7F0574D8 24120001 */   li    $s2, 1
-.L7F0574DC:
-/* 08C00C 7F0574DC 0FC15C81 */  jal   get_difficulty_for_objective
-/* 08C010 7F0574E0 02002025 */   move  $a0, $s0
-/* 08C014 7F0574E4 0FC2FF04 */  jal   get_current_difficulty
-/* 08C018 7F0574E8 00408825 */   move  $s1, $v0
-/* 08C01C 7F0574EC 0051082A */  slt   $at, $v0, $s1
-/* 08C020 7F0574F0 14200007 */  bnez  $at, .L7F057510
-/* 08C024 7F0574F4 00000000 */   nop   
-/* 08C028 7F0574F8 0FC15C8E */  jal   get_status_of_objective
-/* 08C02C 7F0574FC 02002025 */   move  $a0, $s0
-/* 08C030 7F057500 10520003 */  beq   $v0, $s2, .L7F057510
-/* 08C034 7F057504 00000000 */   nop   
-/* 08C038 7F057508 10000007 */  b     .L7F057528
-/* 08C03C 7F05750C 00001025 */   move  $v0, $zero
-.L7F057510:
-/* 08C040 7F057510 0FC15C6A */  jal   add_objective
-/* 08C044 7F057514 26100001 */   addiu $s0, $s0, 1
-/* 08C048 7F057518 0202082A */  slt   $at, $s0, $v0
-/* 08C04C 7F05751C 1420FFEF */  bnez  $at, .L7F0574DC
-/* 08C050 7F057520 00000000 */   nop   
-.L7F057524:
-/* 08C054 7F057524 24020001 */  li    $v0, 1
-.L7F057528:
-/* 08C058 7F057528 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 08C05C 7F05752C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 08C060 7F057530 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 08C064 7F057534 8FB20020 */  lw    $s2, 0x20($sp)
-/* 08C068 7F057538 03E00008 */  jr    $ra
-/* 08C06C 7F05753C 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
+
 
 #ifdef VERSION_JP
 void FUN_7f057a40(void)
