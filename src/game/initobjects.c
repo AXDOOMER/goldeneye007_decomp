@@ -233,7 +233,7 @@ glabel reinit_between_menus
 /* 036284 7F001754 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 036288 7F001758 0FC00656 */  jal   write_monitor_ani_control_blocks
 /* 03628C 7F00175C 00000000 */   nop   
-/* 036290 7F001760 0FC006C2 */  jal   initialize_80071E00_to_80071E78
+/* 036290 7F001760 0FC006C2 */  jal   initialize_temp_mine_table
 /* 036294 7F001764 00000000 */   nop   
 /* 036298 7F001768 3C018003 */  lui   $at, %hi(alarm_timer)
 /* 03629C 7F00176C AC200AC0 */  sw    $zero, %lo(alarm_timer)($at)
@@ -526,21 +526,21 @@ glabel write_monitor_ani_control_blocks
 #endif
 
 #ifdef NONMATCHING
-void initialize_80071E00_to_80071E78(void) {
+void initialize_temp_mine_table(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel initialize_80071E00_to_80071E78
-/* 036638 7F001B08 3C018007 */  lui   $at, %hi(dword_CODE_bss_80071E00)
-/* 03663C 7F001B0C AC201E00 */  sw    $zero, %lo(dword_CODE_bss_80071E00)($at)
-/* 036640 7F001B10 3C018007 */  lui   $at, %hi(dword_CODE_bss_80071E04)
-/* 036644 7F001B14 3C038007 */  lui   $v1, %hi(dword_CODE_bss_80071E08)
+glabel initialize_temp_mine_table
+/* 036638 7F001B08 3C018007 */  lui   $at, %hi(temp_mine_table)
+/* 03663C 7F001B0C AC201E00 */  sw    $zero, %lo(temp_mine_table)($at)
+/* 036640 7F001B10 3C018007 */  lui   $at, %hi(temp_mine_table+0x4)
+/* 036644 7F001B14 3C038007 */  lui   $v1, %hi(temp_mine_table+0x8)
 /* 036648 7F001B18 3C028007 */  lui   $v0, %hi(gas_damage_flag)
 /* 03664C 7F001B1C 24421E78 */  addiu $v0, %lo(gas_damage_flag) # addiu $v0, $v0, 0x1e78
-/* 036650 7F001B20 24631E08 */  addiu $v1, %lo(dword_CODE_bss_80071E08) # addiu $v1, $v1, 0x1e08
-/* 036654 7F001B24 AC201E04 */  sw    $zero, %lo(dword_CODE_bss_80071E04)($at)
+/* 036650 7F001B20 24631E08 */  addiu $v1, %lo(temp_mine_table+0x8) # addiu $v1, $v1, 0x1e08
+/* 036654 7F001B24 AC201E04 */  sw    $zero, %lo(temp_mine_table+0x4)($at)
 .L7F001B28:
 /* 036658 7F001B28 24630010 */  addiu $v1, $v1, 0x10
 /* 03665C 7F001B2C AC60FFF4 */  sw    $zero, -0xc($v1)

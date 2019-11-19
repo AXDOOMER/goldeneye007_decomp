@@ -2067,7 +2067,7 @@ Linker script and memory map
                 0x000000007f001928                sub_GAME_7F001928
                 0x000000007f001940                sub_GAME_7F001940
                 0x000000007f001958                write_monitor_ani_control_blocks
-                0x000000007f001b08                initialize_80071E00_to_80071E78
+                0x000000007f001b08                initialize_temp_mine_table
  build/j/src/game/prop.o(.text)
  .text          0x000000007f001b50     0x3380 build/j/src/game/prop.o
                 0x000000007f001b50                load_proptype
@@ -2975,7 +2975,7 @@ Linker script and memory map
                 0x000000007f052058                add_obj_to_temp_proxmine_table
                 0x000000007f052090                remove_obj_from_temp_proxmine_table
                 0x000000007f0520c8                detonate_proxmine_In_range
-                0x000000007f0521c4                sub_GAME_7F051CC8
+                0x000000007f0521c4                check_guard_detonate_proxmine
                 0x000000007f052270                link_objects
                 0x000000007f05228c                complete_object_data_block_return_position_entry
                 0x000000007f0522d4                sub_GAME_7F051DD8
@@ -22305,9 +22305,7 @@ Linker script and memory map
                 0x0000000080071e34                dword_CODE_bss_80071DF4
                 0x0000000080071e38                dword_CODE_bss_80071DF8
                 0x0000000080071e3c                dword_CODE_bss_80071DFC
-                0x0000000080071e40                dword_CODE_bss_80071E00
-                0x0000000080071e44                dword_CODE_bss_80071E04
-                0x0000000080071e48                dword_CODE_bss_80071E08
+                0x0000000080071e40                temp_mine_table
                 0x0000000080071eb8                gas_damage_flag
                 0x0000000080071ebc                gas_cutoff_flag
                 0x0000000080071ec0                ProjectileData_start_address

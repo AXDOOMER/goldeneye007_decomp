@@ -30369,8 +30369,13 @@ glabel sub_GAME_7F0518D0
 
 
 #ifdef NONMATCHING
-void trigger_remote_mine_detonation(void) {
-
+void trigger_remote_mine_detonation(void)
+{
+    u32 uVar1;
+    
+    uVar1 = get_cur_playernum();
+    D_80030AF4 = D_80030AF4 | 1 << (uVar1 & 0x1f);
+    play_sfx_a1(ptr_sfx_buf,0xf3,0x0);
 }
 #else
 GLOBAL_ASM(
@@ -30512,10 +30517,10 @@ void add_obj_to_temp_proxmine_table(void) {
 GLOBAL_ASM(
 .text
 glabel add_obj_to_temp_proxmine_table
-/* 08668C 7F051B5C 3C038007 */  lui   $v1, %hi(dword_CODE_bss_80071E00)
+/* 08668C 7F051B5C 3C038007 */  lui   $v1, %hi(temp_mine_table)
 /* 086690 7F051B60 3C028007 */  lui   $v0, %hi(gas_damage_flag)
 /* 086694 7F051B64 24421E78 */  addiu $v0, %lo(gas_damage_flag) # addiu $v0, $v0, 0x1e78
-/* 086698 7F051B68 24631E00 */  addiu $v1, %lo(dword_CODE_bss_80071E00) # addiu $v1, $v1, 0x1e00
+/* 086698 7F051B68 24631E00 */  addiu $v1, %lo(temp_mine_table) # addiu $v1, $v1, 0x1e00
 /* 08669C 7F051B6C 8C6E0000 */  lw    $t6, ($v1)
 .L7F051B70:
 /* 0866A0 7F051B70 55C00004 */  bnezl $t6, .L7F051B84
@@ -30544,10 +30549,10 @@ void remove_obj_from_temp_proxmine_table(void) {
 GLOBAL_ASM(
 .text
 glabel remove_obj_from_temp_proxmine_table
-/* 0866C4 7F051B94 3C038007 */  lui   $v1, %hi(dword_CODE_bss_80071E00)
+/* 0866C4 7F051B94 3C038007 */  lui   $v1, %hi(temp_mine_table)
 /* 0866C8 7F051B98 3C028007 */  lui   $v0, %hi(gas_damage_flag)
 /* 0866CC 7F051B9C 24421E78 */  addiu $v0, %lo(gas_damage_flag) # addiu $v0, $v0, 0x1e78
-/* 0866D0 7F051BA0 24631E00 */  addiu $v1, %lo(dword_CODE_bss_80071E00) # addiu $v1, $v1, 0x1e00
+/* 0866D0 7F051BA0 24631E00 */  addiu $v1, %lo(temp_mine_table) # addiu $v1, $v1, 0x1e00
 /* 0866D4 7F051BA4 8C6E0000 */  lw    $t6, ($v1)
 .L7F051BA8:
 /* 0866D8 7F051BA8 548E0004 */  bnel  $a0, $t6, .L7F051BBC
@@ -30576,13 +30581,13 @@ void detonate_proxmine_In_range(void) {
 GLOBAL_ASM(
 .text
 glabel detonate_proxmine_In_range
-/* 0866FC 7F051BCC 3C038007 */  lui   $v1, %hi(dword_CODE_bss_80071E00)
+/* 0866FC 7F051BCC 3C038007 */  lui   $v1, %hi(temp_mine_table)
 /* 086700 7F051BD0 3C018005 */  lui   $at, %hi(D_800532EC)
 /* 086704 7F051BD4 3C078007 */  lui   $a3, %hi(gas_damage_flag)
 /* 086708 7F051BD8 00802825 */  move  $a1, $a0
 /* 08670C 7F051BDC 24E71E78 */  addiu $a3, %lo(gas_damage_flag) # addiu $a3, $a3, 0x1e78
 /* 086710 7F051BE0 C42E32EC */  lwc1  $f14, %lo(D_800532EC)($at)
-/* 086714 7F051BE4 24631E00 */  addiu $v1, %lo(dword_CODE_bss_80071E00) # addiu $v1, $v1, 0x1e00
+/* 086714 7F051BE4 24631E00 */  addiu $v1, %lo(temp_mine_table) # addiu $v1, $v1, 0x1e00
 /* 086718 7F051BE8 24060001 */  li    $a2, 1
 /* 08671C 7F051BEC 8C640000 */  lw    $a0, ($v1)
 .L7F051BF0:
@@ -30650,13 +30655,13 @@ glabel detonate_proxmine_In_range
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F051CC8(void) {
+void check_guard_detonate_proxmine(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F051CC8
+glabel check_guard_detonate_proxmine
 /* 0867F8 7F051CC8 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 0867FC 7F051CCC AFBF002C */  sw    $ra, 0x2c($sp)
 /* 086800 7F051CD0 AFB40028 */  sw    $s4, 0x28($sp)
@@ -37022,7 +37027,7 @@ glabel sub_GAME_7F0565F0
 /* 08B198 7F056668 00000000 */   nop   
 /* 08B19C 7F05666C 0FC15878 */  jal   sub_GAME_7F0561E0
 /* 08B1A0 7F056670 00000000 */   nop   
-/* 08B1A4 7F056674 0FC14732 */  jal   sub_GAME_7F051CC8
+/* 08B1A4 7F056674 0FC14732 */  jal   check_guard_detonate_proxmine
 /* 08B1A8 7F056678 00000000 */   nop   
 /* 08B1AC 7F05667C 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 08B1B0 7F056680 3C018003 */  lui   $at, %hi(D_80030AF4)
