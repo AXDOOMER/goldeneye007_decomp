@@ -18001,12 +18001,13 @@ Linker script and memory map
                 0x00000000800322c0                D_800322C0
  build/u/src/game/loadobjectmodel.o(.data)
  build/u/src/game/objective_status.o(.data)
- .data          0x00000000800322f0       0x20 build/u/src/game/objective_status.o
+ .data          0x00000000800322f0       0x10 build/u/src/game/objective_status.o
                 0x00000000800322f0                num_objective_ptrs
+ build/u/src/game/objective_status2.o(.data)
+ .data          0x0000000080032300       0x10 build/u/src/game/objective_status2.o
                 0x0000000080032300                D_80032300
                 0x0000000080032304                D_80032304
                 0x0000000080032308                D_80032308
- build/u/src/game/objective_status2.o(.data)
  build/u/src/game/sin.o(.data)
  build/u/src/game/unk_057FD0.o(.data)
  .data          0x0000000080032310       0x10 build/u/src/game/unk_057FD0.o

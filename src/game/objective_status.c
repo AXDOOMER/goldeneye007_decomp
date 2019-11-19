@@ -20,15 +20,9 @@ u32 *ptr_last_deposit_in_room_subobject_entry_type21;
 u32 *ptr_last_photo_obj_in_room_subobject_entry_type1E;
 
 // data
-s32 num_objective_ptrs[] = {0xFFFFFFFF, 0, 0, 0};
-//file possibly split at sub_CODE_7F057AC0
+s32 num_objective_ptrs[] = {0xFFFFFFFF, 0};
 
-//D:80032300
-u32 D_80032300 = 0;
-//D:80032304
-u32 D_80032304 = 0;
-//D:80032308
-u32 D_80032308 = 0;
+
 
 // rodata
 const u32 D_80053610[] = {0,0,0,0,0,0,0,0,0,0,0,0,0};

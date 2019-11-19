@@ -18000,12 +18000,13 @@ Linker script and memory map
                 0x0000000080032300                D_800322C0
  build/j/src/game/loadobjectmodel.o(.data)
  build/j/src/game/objective_status.o(.data)
- .data          0x0000000080032330       0x20 build/j/src/game/objective_status.o
+ .data          0x0000000080032330       0x10 build/j/src/game/objective_status.o
                 0x0000000080032330                num_objective_ptrs
+ build/j/src/game/objective_status2.o(.data)
+ .data          0x0000000080032340       0x10 build/j/src/game/objective_status2.o
                 0x0000000080032340                D_80032300
                 0x0000000080032344                D_80032304
                 0x0000000080032348                D_80032308
- build/j/src/game/objective_status2.o(.data)
  build/j/src/game/sin.o(.data)
  build/j/src/game/unk_057FD0.o(.data)
  .data          0x0000000080032350       0x10 build/j/src/game/unk_057FD0.o
