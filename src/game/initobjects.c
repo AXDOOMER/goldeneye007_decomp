@@ -253,8 +253,8 @@ glabel reinit_between_menus
 /* 0362D4 7F0017A4 AC200ADC */  sw    $zero, %lo(D_80030ADC)($at)
 /* 0362D8 7F0017A8 3C018003 */  lui   $at, %hi(D_80030AE0)
 /* 0362DC 7F0017AC E4200AE0 */  swc1  $f0, %lo(D_80030AE0)($at)
-/* 0362E0 7F0017B0 3C018003 */  lui   $at, %hi(D_80030AE4)
-/* 0362E4 7F0017B4 AC200AE4 */  sw    $zero, %lo(D_80030AE4)($at)
+/* 0362E0 7F0017B0 3C018003 */  lui   $at, %hi(ptr_gas_sound)
+/* 0362E4 7F0017B4 AC200AE4 */  sw    $zero, %lo(ptr_gas_sound)($at)
 /* 0362E8 7F0017B8 24050001 */  li    $a1, 1
 /* 0362EC 7F0017BC 3C018003 */  lui   $at, %hi(clock_drawn_flag)
 /* 0362F0 7F0017C0 AC250AE8 */  sw    $a1, %lo(clock_drawn_flag)($at)

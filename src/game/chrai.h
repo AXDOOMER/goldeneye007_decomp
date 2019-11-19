@@ -103,7 +103,8 @@ extern struct struct_20 D_80031D58;
 extern u32 monitor_animation_microcode[];
 extern u32 dword_D_80031F00[];
 extern u32 dword_D_80031F44[];
-
+extern f32 gas_damage_flag;
+extern u32 gas_cutoff_flag;
 void stop_alarm(void);
 
 void sub_GAME_7F055EF8(void);

@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "bondgame.h"
+#include "game/bond.h"
 #include "game/chr.h"
 #include "game/chrai.h"
 #include "snd.h"
@@ -15,8 +16,8 @@ f32 D_80030AD0 = 0.0;
 f32 D_80030AD4 = 0.0;
 f32 D_80030AD8 = 0.0;
 s32 D_80030ADC = 0;
-s32 D_80030AE0 = 0;
-s32 D_80030AE4 = 0;
+u32 D_80030AE0 = 0;
+s32 ptr_gas_sound = 0;
 s32 clock_drawn_flag = 1;
 s32 clock_enable = 0;
 f32 clock_time = 0;
@@ -36415,8 +36416,8 @@ void sub_GAME_7F055EF8(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F055EF8
-/* 08AA28 7F055EF8 3C048003 */  lui   $a0, %hi(D_80030AE4)
-/* 08AA2C 7F055EFC 8C840AE4 */  lw    $a0, %lo(D_80030AE4)($a0)
+/* 08AA28 7F055EF8 3C048003 */  lui   $a0, %hi(ptr_gas_sound)
+/* 08AA2C 7F055EFC 8C840AE4 */  lw    $a0, %lo(ptr_gas_sound)($a0)
 /* 08AA30 7F055F00 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 08AA34 7F055F04 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 08AA38 7F055F08 50800008 */  beql  $a0, $zero, .L7F055F2C
@@ -36424,9 +36425,9 @@ glabel sub_GAME_7F055EF8
 /* 08AA40 7F055F10 0C00237C */  jal   sfxGetArg0Unk3F
 /* 08AA44 7F055F14 00000000 */   nop   
 /* 08AA48 7F055F18 10400003 */  beqz  $v0, .L7F055F28
-/* 08AA4C 7F055F1C 3C048003 */   lui   $a0, %hi(D_80030AE4)
+/* 08AA4C 7F055F1C 3C048003 */   lui   $a0, %hi(ptr_gas_sound)
 /* 08AA50 7F055F20 0C002408 */  jal   sfxDeactivate
-/* 08AA54 7F055F24 8C840AE4 */   lw    $a0, %lo(D_80030AE4)($a0)
+/* 08AA54 7F055F24 8C840AE4 */   lw    $a0, %lo(ptr_gas_sound)($a0)
 .L7F055F28:
 /* 08AA58 7F055F28 8FBF0014 */  lw    $ra, 0x14($sp)
 .L7F055F2C:
@@ -36466,10 +36467,67 @@ glabel check_if_toxic_gas_activated
 
 
 
-
 #ifdef NONMATCHING
-void handle_gas_damage(void) {
-
+extern s32 disable_player_pickups_flag;
+void handle_gas_damage(void)
+{
+    if (activate_gas_sound_timer)
+    {
+        toxic_gas_sound_timer = toxic_gas_sound_timer + global_timer_delta;
+        if (gas_damage_flag <= toxic_gas_sound_timer)
+        {
+            toxic_gas_sound_timer = (f32) gas_damage_flag;
+            activate_gas_sound_timer = 0;
+        }
+    }
+    if (0.0f < toxic_gas_sound_timer)
+    {
+        if (disable_player_pickups_flag == 0)
+        {
+            switch_to_solosky2(toxic_gas_sound_timer / gas_damage_flag);
+            if (gas_cutoff_flag != 0)
+            {
+                if (D_80030ADC < (global_timer - 0xe1))
+                {
+                    D_80030ADC = (s32) global_timer;
+                    if (600.0f <= toxic_gas_sound_timer)
+                    {
+                        play_sfx_a1(ptr_sfx_buf, 0x62, 0);
+                    }
+                    if (1800.0f <= toxic_gas_sound_timer)
+                    {
+                        record_damage_kills(0x3e000000, 0, 0, -1, 0);
+                    }
+                }
+                if (D_80030AE0 < gas_damage_flag)
+                {
+                    D_80030AE0 = (f32) (D_80030AE0 + global_timer_delta);
+                    if (ptr_gas_sound == 0)
+                    {
+                        if (get_controls_locked_flag(&ptr_gas_sound) == 0)
+                        {
+                            play_sfx_a1(ptr_sfx_buf, 0x66, &ptr_gas_sound);
+                        }
+                    }
+                    if (ptr_gas_sound != 0)
+                    {
+                        sub_GAME_7F053A10(ptr_gas_sound, &D_80030AD0);
+                        return;
+                    }
+                }
+                else
+                {
+                    if (ptr_gas_sound != 0)
+                    {
+                        if (sfxGetArg0Unk3F(ptr_gas_sound) != 0)
+                        {
+                            sfxDeactivate(ptr_gas_sound);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 #else
 GLOBAL_ASM(
@@ -36562,30 +36620,30 @@ glabel handle_gas_damage
 /* 08ABD8 7F0560A8 C4281E78 */  lwc1  $f8, %lo(gas_damage_flag)($at)
 /* 08ABDC 7F0560AC C4400000 */  lwc1  $f0, ($v0)
 /* 08ABE0 7F0560B0 3C018005 */  lui   $at, %hi(global_timer_delta)
-/* 08ABE4 7F0560B4 3C048003 */  lui   $a0, %hi(D_80030AE4)
+/* 08ABE4 7F0560B4 3C048003 */  lui   $a0, %hi(ptr_gas_sound)
 /* 08ABE8 7F0560B8 4608003C */  c.lt.s $f0, $f8
 /* 08ABEC 7F0560BC 00000000 */  nop   
 /* 08ABF0 7F0560C0 4500001A */  bc1f  .L7F05612C
 /* 08ABF4 7F0560C4 00000000 */   nop   
 /* 08ABF8 7F0560C8 C42A8378 */  lwc1  $f10, %lo(global_timer_delta)($at)
-/* 08ABFC 7F0560CC 3C098003 */  lui   $t1, %hi(D_80030AE4) 
+/* 08ABFC 7F0560CC 3C098003 */  lui   $t1, %hi(ptr_gas_sound) 
 /* 08AC00 7F0560D0 460A0400 */  add.s $f16, $f0, $f10
 /* 08AC04 7F0560D4 E4500000 */  swc1  $f16, ($v0)
-/* 08AC08 7F0560D8 8D290AE4 */  lw    $t1, %lo(D_80030AE4)($t1)
+/* 08AC08 7F0560D8 8D290AE4 */  lw    $t1, %lo(ptr_gas_sound)($t1)
 /* 08AC0C 7F0560DC 1520000A */  bnez  $t1, .L7F056108
 /* 08AC10 7F0560E0 00000000 */   nop   
 /* 08AC14 7F0560E4 0FC2FF01 */  jal   get_controls_locked_flag
 /* 08AC18 7F0560E8 00000000 */   nop   
 /* 08AC1C 7F0560EC 14400006 */  bnez  $v0, .L7F056108
 /* 08AC20 7F0560F0 3C048006 */   lui   $a0, %hi(ptr_sfx_buf)
-/* 08AC24 7F0560F4 3C068003 */  lui   $a2, %hi(D_80030AE4)
-/* 08AC28 7F0560F8 24C60AE4 */  addiu $a2, %lo(D_80030AE4) # addiu $a2, $a2, 0xae4
+/* 08AC24 7F0560F4 3C068003 */  lui   $a2, %hi(ptr_gas_sound)
+/* 08AC28 7F0560F8 24C60AE4 */  addiu $a2, %lo(ptr_gas_sound) # addiu $a2, $a2, 0xae4
 /* 08AC2C 7F0560FC 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
 /* 08AC30 7F056100 0C002382 */  jal   play_sfx_a1
 /* 08AC34 7F056104 24050066 */   li    $a1, 102
 .L7F056108:
-/* 08AC38 7F056108 3C048003 */  lui   $a0, %hi(D_80030AE4)
-/* 08AC3C 7F05610C 8C840AE4 */  lw    $a0, %lo(D_80030AE4)($a0)
+/* 08AC38 7F056108 3C048003 */  lui   $a0, %hi(ptr_gas_sound)
+/* 08AC3C 7F05610C 8C840AE4 */  lw    $a0, %lo(ptr_gas_sound)($a0)
 /* 08AC40 7F056110 3C058003 */  lui   $a1, %hi(D_80030AD0)
 /* 08AC44 7F056114 5080000F */  beql  $a0, $zero, .L7F056154
 /* 08AC48 7F056118 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -36594,15 +36652,15 @@ glabel handle_gas_damage
 /* 08AC54 7F056124 1000000B */  b     .L7F056154
 /* 08AC58 7F056128 8FBF001C */   lw    $ra, 0x1c($sp)
 .L7F05612C:
-/* 08AC5C 7F05612C 8C840AE4 */  lw    $a0, %lo(D_80030AE4)($a0)
+/* 08AC5C 7F05612C 8C840AE4 */  lw    $a0, %lo(ptr_gas_sound)($a0)
 /* 08AC60 7F056130 50800008 */  beql  $a0, $zero, .L7F056154
 /* 08AC64 7F056134 8FBF001C */   lw    $ra, 0x1c($sp)
 /* 08AC68 7F056138 0C00237C */  jal   sfxGetArg0Unk3F
 /* 08AC6C 7F05613C 00000000 */   nop   
 /* 08AC70 7F056140 10400003 */  beqz  $v0, .L7F056150
-/* 08AC74 7F056144 3C048003 */   lui   $a0, %hi(D_80030AE4)
+/* 08AC74 7F056144 3C048003 */   lui   $a0, %hi(ptr_gas_sound)
 /* 08AC78 7F056148 0C002408 */  jal   sfxDeactivate
-/* 08AC7C 7F05614C 8C840AE4 */   lw    $a0, %lo(D_80030AE4)($a0)
+/* 08AC7C 7F05614C 8C840AE4 */   lw    $a0, %lo(ptr_gas_sound)($a0)
 .L7F056150:
 /* 08AC80 7F056150 8FBF001C */  lw    $ra, 0x1c($sp)
 .L7F056154:

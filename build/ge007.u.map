@@ -17866,7 +17866,7 @@ Linker script and memory map
                 0x0000000080030ad8                D_80030AD8
                 0x0000000080030adc                D_80030ADC
                 0x0000000080030ae0                D_80030AE0
-                0x0000000080030ae4                D_80030AE4
+                0x0000000080030ae4                ptr_gas_sound
                 0x0000000080030ae8                clock_drawn_flag
                 0x0000000080030aec                clock_enable
                 0x0000000080030af0                clock_time

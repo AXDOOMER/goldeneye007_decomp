@@ -4258,7 +4258,7 @@ labels:
    - [0x80030b18, "D_80030AD8"]
    - [0x80030b1c, "D_80030ADC"]
    - [0x80030b20, "D_80030AE0"]
-   - [0x80030b24, "D_80030AE4"]
+   - [0x80030b24, "ptr_gas_sound"]
    - [0x80030b28, "clock_drawn_flag"]
    - [0x80030b2c, "clock_enable"]
    - [0x80030b30, "clock_time"]
