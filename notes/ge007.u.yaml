@@ -2381,7 +2381,7 @@ labels:
    - [0x7F056A74, "object_size_type_2E"]
    - [0x7F056A7C, "object_size_type_default"]
    - [0x7F056A88, "sub_GAME_7F056A88"]
-   - [0x7F056B1C, "sub_GAME_7F056B1C"]
+   - [0x7F056B1C, "check_if_object_type_has_been_loaded"]
    - [0x7F056BA8, "sub_GAME_7F056BA8"]
    - [0x7F056C38, "load_model"]
    - [0x7F056CA0, "sub_GAME_7F056CA0"]

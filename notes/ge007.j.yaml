@@ -1672,7 +1672,7 @@ labels:
    - [0x7f056d50, "sub_GAME_7F056850"]
    - [0x7f056df4, "get_size_of_setup_object_type"]
    - [0x7f056f88, "sub_GAME_7F056A88"]
-   - [0x7f05701c, "sub_GAME_7F056B1C"]
+   - [0x7f05701c, "check_if_object_type_has_been_loaded"]
    - [0x7f0570a8, "sub_GAME_7F056BA8"]
    - [0x7f057138, "load_model"]
    - [0x7f0571a0, "sub_GAME_7F056CA0"]

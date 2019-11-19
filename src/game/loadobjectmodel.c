@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "bondtypes.h"
-
+#include "game/chrai.h"
 #ifdef NONMATCHING
 void sub_GAME_7F056850(void) {
 
@@ -215,13 +215,29 @@ glabel sub_GAME_7F056A88
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F056B1C(void) {
-
+s32 check_if_object_type_has_been_loaded(struct object_standard * arg0)
+{
+    struct object_standard *object;
+    s32 i;
+    
+    if (ptr_setup_objects != 0)
+    {
+        for (object = ptr_setup_objects, i = 0; 0x30 != object->type; i++)
+        {
+            if (object == arg0)
+            {
+                return i;
+            }
+            object = (get_size_of_setup_object_type((u8 *)object) * 4) + object;
+        }
+    }
+    return -1;
 }
+
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F056B1C
+glabel check_if_object_type_has_been_loaded
 /* 08B64C 7F056B1C 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 08B650 7F056B20 AFB00014 */  sw    $s0, 0x14($sp)
 /* 08B654 7F056B24 3C108007 */  lui   $s0, %hi(ptr_setup_objects)

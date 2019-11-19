@@ -146,7 +146,7 @@ void * ptr_setup_path_link;
 //CODE.bss:80075D08
 void * ptr_setup_intro;
 //CODE.bss:80075D0C
-void * ptr_setup_objects;
+struct object_standard * ptr_setup_objects;
 //CODE.bss:80075D10
 void * ptr_setup_path_sets;
 //CODE.bss:80075D14
@@ -7436,7 +7436,7 @@ actionD5_Go_To_Camera_Position_6:
 /* 06E124 7F0395F4 92240001 */   lbu   $a0, 1($s1)
 /* 06E128 7F0395F8 1040001A */  beqz  $v0, .L7F039664
 /* 06E12C 7F0395FC 00408025 */   move  $s0, $v0
-/* 06E130 7F039600 0FC15AC7 */  jal   sub_GAME_7F056B1C
+/* 06E130 7F039600 0FC15AC7 */  jal   check_if_object_type_has_been_loaded
 /* 06E134 7F039604 00402025 */   move  $a0, $v0
 /* 06E138 7F039608 04420017 */  bltzl $v0, .L7F039668
 /* 06E13C 7F03960C 26520006 */   addiu $s2, $s2, 6
@@ -13303,7 +13303,7 @@ actionD5_Go_To_Camera_Position_6:
 /* 06E124 7F0395F4 92240001 */   lbu   $a0, 1($s1)
 /* 06E128 7F0395F8 1040001A */  beqz  $v0, .L7F039664
 /* 06E12C 7F0395FC 00408025 */   move  $s0, $v0
-/* 06E130 7F039600 0FC15AC7 */  jal   sub_GAME_7F056B1C
+/* 06E130 7F039600 0FC15AC7 */  jal   check_if_object_type_has_been_loaded
 /* 06E134 7F039604 00402025 */   move  $a0, $v0
 /* 06E138 7F039608 04420017 */  bltzl $v0, .L7F039668
 /* 06E13C 7F03960C 26520006 */   addiu $s2, $s2, 6

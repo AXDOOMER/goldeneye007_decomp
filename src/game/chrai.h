@@ -105,6 +105,7 @@ extern u32 dword_D_80031F00[];
 extern u32 dword_D_80031F44[];
 extern f32 gas_damage_flag;
 extern u32 gas_cutoff_flag;
+extern struct object_standard * ptr_setup_objects;
 void stop_alarm(void);
 
 void check_deactivate_gas_sound(void);

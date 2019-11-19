@@ -3054,7 +3054,7 @@ Linker script and memory map
                 0x000000007f056d50                sub_GAME_7F056850
                 0x000000007f056df4                get_size_of_setup_object_type
                 0x000000007f056f88                sub_GAME_7F056A88
-                0x000000007f05701c                sub_GAME_7F056B1C
+                0x000000007f05701c                check_if_object_type_has_been_loaded
                 0x000000007f0570a8                sub_GAME_7F056BA8
                 0x000000007f057138                load_model
                 0x000000007f0571a0                sub_GAME_7F056CA0
