@@ -36262,64 +36262,22 @@ glabel sub_GAME_7F055C40
 
 
 
-#ifdef NONMATCHING
-void start_alarm(void) {
 
+void start_alarm(void)
+{
+    if (alarm_timer < 1) {
+        alarm_timer = 1;
+    }
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel start_alarm
-/* 08A8F8 7F055DC8 3C028003 */  lui   $v0, %hi(alarm_timer)
-/* 08A8FC 7F055DCC 24420AC0 */  addiu $v0, %lo(alarm_timer) # addiu $v0, $v0, 0xac0
-/* 08A900 7F055DD0 8C4E0000 */  lw    $t6, ($v0)
-/* 08A904 7F055DD4 240F0001 */  li    $t7, 1
-/* 08A908 7F055DD8 1DC00002 */  bgtz  $t6, .L7F055DE4
-/* 08A90C 7F055DDC 00000000 */   nop   
-/* 08A910 7F055DE0 AC4F0000 */  sw    $t7, ($v0)
-.L7F055DE4:
-/* 08A914 7F055DE4 03E00008 */  jr    $ra
-/* 08A918 7F055DE8 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void deactivate_alarm_sound_effect(void) {
-
+void deactivate_alarm_sound_effect(void)
+{
+    if ((ptr_alarm_sfx != 0) && (sfxGetArg0Unk3F(ptr_alarm_sfx) != 0)) {
+        sfxDeactivate(ptr_alarm_sfx);
+    }
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel deactivate_alarm_sound_effect
-/* 08A91C 7F055DEC 3C048003 */  lui   $a0, %hi(ptr_alarm_sfx)
-/* 08A920 7F055DF0 8C840AC4 */  lw    $a0, %lo(ptr_alarm_sfx)($a0)
-/* 08A924 7F055DF4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 08A928 7F055DF8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08A92C 7F055DFC 50800008 */  beql  $a0, $zero, .L7F055E20
-/* 08A930 7F055E00 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 08A934 7F055E04 0C00237C */  jal   sfxGetArg0Unk3F
-/* 08A938 7F055E08 00000000 */   nop   
-/* 08A93C 7F055E0C 10400003 */  beqz  $v0, .L7F055E1C
-/* 08A940 7F055E10 3C048003 */   lui   $a0, %hi(ptr_alarm_sfx)
-/* 08A944 7F055E14 0C002408 */  jal   sfxDeactivate
-/* 08A948 7F055E18 8C840AC4 */   lw    $a0, %lo(ptr_alarm_sfx)($a0)
-.L7F055E1C:
-/* 08A94C 7F055E1C 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F055E20:
-/* 08A950 7F055E20 27BD0018 */  addiu $sp, $sp, 0x18
-/* 08A954 7F055E24 03E00008 */  jr    $ra
-/* 08A958 7F055E28 00000000 */   nop   
-)
-#endif
-
-
-
-
-
 
 void stop_alarm(void)
 {
@@ -36328,27 +36286,10 @@ void stop_alarm(void)
   return;
 }
 
-
-
-
-
-
-#ifdef NONMATCHING
-s32 is_alarm_on(void)
+u32 is_alarm_on(void)
 {
   return (0 < alarm_timer);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel is_alarm_on
-/* 08A980 7F055E50 3C028003 */  lui   $v0, %hi(alarm_timer)
-/* 08A984 7F055E54 8C420AC0 */  lw    $v0, %lo(alarm_timer)($v0)
-/* 08A988 7F055E58 0002702A */  slt   $t6, $zero, $v0
-/* 08A98C 7F055E5C 03E00008 */  jr    $ra
-/* 08A990 7F055E60 01C01025 */   move  $v0, $t6
-)
-#endif
 
 
 
@@ -36660,38 +36601,15 @@ glabel handle_gas_damage
 
 
 
-#ifdef NONMATCHING
-void set_unset_clock_lock_bits(void) {
 
+void set_unset_clock_lock_bits(int clocklockbits,int flag)
+{
+    if (flag != 0) {
+        clock_drawn_flag &= ~clocklockbits;
+        return;
+    }
+    clock_drawn_flag |= clocklockbits;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_unset_clock_lock_bits
-/* 08AC90 7F056160 10A00008 */  beqz  $a1, .L7F056184
-/* 08AC94 7F056164 3C028003 */   lui   $v0, %hi(clock_drawn_flag)
-/* 08AC98 7F056168 3C028003 */  lui   $v0, %hi(clock_drawn_flag)
-/* 08AC9C 7F05616C 24420AE8 */  addiu $v0, %lo(clock_drawn_flag) # addiu $v0, $v0, 0xae8
-/* 08ACA0 7F056170 8C4E0000 */  lw    $t6, ($v0)
-/* 08ACA4 7F056174 00807827 */  not   $t7, $a0
-/* 08ACA8 7F056178 01CFC024 */  and   $t8, $t6, $t7
-/* 08ACAC 7F05617C 03E00008 */  jr    $ra
-/* 08ACB0 7F056180 AC580000 */   sw    $t8, ($v0)
-
-.L7F056184:
-/* 08ACB4 7F056184 24420AE8 */  addiu $v0, $v0, %lo(clock_drawn_flag)
-/* 08ACB8 7F056188 8C590000 */  lw    $t9, ($v0)
-/* 08ACBC 7F05618C 03244025 */  or    $t0, $t9, $a0
-/* 08ACC0 7F056190 AC480000 */  sw    $t0, ($v0)
-/* 08ACC4 7F056194 03E00008 */  jr    $ra
-/* 08ACC8 7F056198 00000000 */   nop   
-)
-#endif
-
-
-
-
-
 
 u32 is_clock_drawn_onscreen(void)
 {
