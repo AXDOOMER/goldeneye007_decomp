@@ -3037,16 +3037,16 @@ Linker script and memory map
                 0x000000007f056360                init_trigger_toxic_gas_effect
                 0x000000007f0563f4                sub_GAME_7F055EF8
                 0x000000007f056434                check_if_toxic_gas_activated
-                0x000000007f056460                sub_GAME_7F055F64
+                0x000000007f056460                handle_gas_damage
                 0x000000007f05665c                set_unset_clock_lock_bits
                 0x000000007f056698                is_clock_drawn_onscreen
                 0x000000007f0566ac                set_clock_time
                 0x000000007f0566b8                get_clock_time
                 0x000000007f0566c4                set_clock_enable
                 0x000000007f0566d0                get_clock_enable
-                0x000000007f0566dc                sub_GAME_7F0561E0
+                0x000000007f0566dc                if_enabled_reset_clock
                 0x000000007f05670c                sub_GAME_7F056210
-                0x000000007f056aec                sub_GAME_7F0565F0
+                0x000000007f056aec                handle_alarm_gas_timer_calldamage
                 0x000000007f056b8c                sub_GAME_7F056690
                 0x000000007f056c78                drop_inventory
  build/j/src/game/loadobjectmodel.o(.text)
@@ -19683,7 +19683,7 @@ Linker script and memory map
                 0x000000008004839c                D_8004836C
                 0x00000000800483a0                controls_locked_flag
                 0x00000000800483a4                clock_timer
-                0x00000000800483a8                D_jpunk
+                0x00000000800483a8                jp_global_timer_delta
                 0x00000000800483ac                global_timer
                 0x00000000800483b0                D_80048380
                 0x00000000800483b4                global_timer_delta

@@ -10956,8 +10956,8 @@ glabel sub_GAME_7F062B00
 /* 097648 7F062B18 8DEF8374 */  lw    $t7, %lo(clock_timer)($t7)
 /* 09764C 7F062B1C 29E10003 */  slti  $at, $t7, 3
 /* 097650 7F062B20 10200008 */  beqz  $at, .L7F062B44
-/* 097654 7F062B24 3C018005 */   lui   $at, %hi(D_jpunk)
-/* 097658 7F062B28 C4268378 */  lwc1  $f6, %lo(D_jpunk)($at)
+/* 097654 7F062B24 3C018005 */   lui   $at, %hi(jp_global_timer_delta)
+/* 097658 7F062B28 C4268378 */  lwc1  $f6, %lo(jp_global_timer_delta)($at)
 /* 09765C 7F062B2C C4840020 */  lwc1  $f4, 0x20($a0)
 /* 097660 7F062B30 C48A0028 */  lwc1  $f10, 0x28($a0)
 /* 097664 7F062B34 46062202 */  mul.s $f8, $f4, $f6

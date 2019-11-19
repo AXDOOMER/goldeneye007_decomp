@@ -17466,7 +17466,7 @@ glabel determing_type_of_object_and_detection
 /* 07167C 7F03CB4C 00402025 */   move  $a0, $v0
 /* 071680 7F03CB50 54400008 */  bnezl $v0, .L7F03CB74
 /* 071684 7F03CB54 8FBF0024 */   lw    $ra, 0x24($sp)
-/* 071688 7F03CB58 0FC1597C */  jal   sub_GAME_7F0565F0
+/* 071688 7F03CB58 0FC1597C */  jal   handle_alarm_gas_timer_calldamage
 /* 07168C 7F03CB5C 00000000 */   nop   
 /* 071690 7F03CB60 0FC0D239 */  jal   loop_set_sound_effect_all_slots
 /* 071694 7F03CB64 00000000 */   nop   

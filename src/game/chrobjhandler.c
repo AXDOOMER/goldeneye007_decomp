@@ -4,6 +4,7 @@
 #include "game/chrai.h"
 #include "snd.h"
 #include "music.h"
+#include "game/lvl.h"
 #include "game/lvl_text.h"
 
 s32 alarm_timer = 0;
@@ -17786,8 +17787,8 @@ glabel object_interaction
 /* 07E704 7F049B94 44816000 */  mtc1  $at, $f12
 /* 07E708 7F049B98 3C018005 */  lui   $at, %hi(D_80052B74) # $at, 0x8005
 /* 07E70C 7F049B9C C4282BA4 */  lwc1  $f8, %lo(D_80052B74)($at)
-/* 07E710 7F049BA0 3C018005 */  lui   $at, %hi(D_jpunk) # $at, 0x8005
-/* 07E714 7F049BA4 C42A83A8 */  lwc1  $f10, %lo(D_jpunk)($at)
+/* 07E710 7F049BA0 3C018005 */  lui   $at, %hi(jp_global_timer_delta) # $at, 0x8005
+/* 07E714 7F049BA4 C42A83A8 */  lwc1  $f10, %lo(jp_global_timer_delta)($at)
 /* 07E718 7F049BA8 3C018003 */  lui   $at, %hi(D_80030B1C) # $at, 0x8003
 /* 07E71C 7F049BAC 4600603C */  c.lt.s $f12, $f0
 /* 07E720 7F049BB0 460A4182 */  mul.s $f6, $f8, $f10
@@ -19768,8 +19769,8 @@ command0E_set_rotation:
 /* 07EF20 7F04A3F0 E606000C */   swc1  $f6, 0xc($s0)
 command0F_rotate:
 /* 07EF24 7F04A3F4 8C6C0004 */  lw    $t4, 4($v1)
-/* 07EF28 7F04A3F8 3C018005 */  lui   $at, %hi(D_jpunk)
-/* 07EF2C 7F04A3FC C42A8378 */  lwc1  $f10, %lo(D_jpunk)($at)
+/* 07EF28 7F04A3F8 3C018005 */  lui   $at, %hi(jp_global_timer_delta)
+/* 07EF2C 7F04A3FC C42A8378 */  lwc1  $f10, %lo(jp_global_timer_delta)($at)
 /* 07EF30 7F04A400 448C9000 */  mtc1  $t4, $f18
 /* 07EF34 7F04A404 00000000 */  nop   
 /* 07EF38 7F04A408 46809120 */  cvt.s.w $f4, $f18
@@ -19806,8 +19807,8 @@ def_7F04A01C:
 /* 07EFA4 7F04A474 4600A03C */  c.lt.s $f20, $f0
 /* 07EFA8 7F04A478 00000000 */  nop   
 /* 07EFAC 7F04A47C 45000017 */  bc1f  .L7F04A4DC
-/* 07EFB0 7F04A480 3C028005 */   lui   $v0, %hi(D_jpunk)
-/* 07EFB4 7F04A484 24428378 */  addiu $v0, %lo(D_jpunk) # addiu $v0, $v0, -0x7c88
+/* 07EFB0 7F04A480 3C028005 */   lui   $v0, %hi(jp_global_timer_delta)
+/* 07EFB4 7F04A484 24428378 */  addiu $v0, %lo(jp_global_timer_delta) # addiu $v0, $v0, -0x7c88
 /* 07EFB8 7F04A488 C4520000 */  lwc1  $f18, ($v0)
 /* 07EFBC 7F04A48C C60A0014 */  lwc1  $f10, 0x14($s0)
 /* 07EFC0 7F04A490 46120102 */  mul.s $f4, $f0, $f18
@@ -19832,8 +19833,8 @@ def_7F04A01C:
 /* 07F008 7F04A4D8 E6080010 */  swc1  $f8, 0x10($s0)
 .L7F04A4DC:
 /* 07F00C 7F04A4DC C600002C */  lwc1  $f0, 0x2c($s0)
-/* 07F010 7F04A4E0 3C028005 */  lui   $v0, %hi(D_jpunk)
-/* 07F014 7F04A4E4 24428378 */  addiu $v0, %lo(D_jpunk) # addiu $v0, $v0, -0x7c88
+/* 07F010 7F04A4E0 3C028005 */  lui   $v0, %hi(jp_global_timer_delta)
+/* 07F014 7F04A4E4 24428378 */  addiu $v0, %lo(jp_global_timer_delta) # addiu $v0, $v0, -0x7c88
 /* 07F018 7F04A4E8 4600A03C */  c.lt.s $f20, $f0
 /* 07F01C 7F04A4EC 00000000 */  nop   
 /* 07F020 7F04A4F0 45020017 */  bc1fl .L7F04A550
@@ -36467,13 +36468,13 @@ glabel check_if_toxic_gas_activated
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F055F64(void) {
+void handle_gas_damage(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F055F64
+glabel handle_gas_damage
 /* 08AA94 7F055F64 3C028003 */  lui   $v0, %hi(activate_gas_sound_timer)
 /* 08AA98 7F055F68 24420ACC */  addiu $v0, %lo(activate_gas_sound_timer) # addiu $v0, $v0, 0xacc
 /* 08AA9C 7F055F6C 8C4E0000 */  lw    $t6, ($v0)
@@ -36647,26 +36648,11 @@ glabel set_unset_clock_lock_bits
 
 
 
-#ifdef NONMATCHING
-void is_clock_drawn_onscreen(void) {
 
+u32 is_clock_drawn_onscreen(void)
+{
+    return clock_drawn_flag == 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel is_clock_drawn_onscreen
-/* 08ACCC 7F05619C 3C028003 */  lui   $v0, %hi(clock_drawn_flag)
-/* 08ACD0 7F0561A0 8C420AE8 */  lw    $v0, %lo(clock_drawn_flag)($v0)
-/* 08ACD4 7F0561A4 2C4E0001 */  sltiu $t6, $v0, 1
-/* 08ACD8 7F0561A8 03E00008 */  jr    $ra
-/* 08ACDC 7F0561AC 01C01025 */   move  $v0, $t6
-)
-#endif
-
-
-
-
-
 
 void set_clock_time(f32 time) {
   clock_time = time;
@@ -36684,37 +36670,12 @@ s32 get_clock_enable(void) {
     return clock_enable;
 }
 
-
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0561E0(void) {
-
+void if_enabled_reset_clock(void)
+{
+    if (clock_enable != 0) {
+        clock_time = clock_time - global_timer_delta;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0561E0
-/* 08AD10 7F0561E0 3C0E8003 */  lui   $t6, %hi(clock_enable) 
-/* 08AD14 7F0561E4 8DCE0AEC */  lw    $t6, %lo(clock_enable)($t6)
-/* 08AD18 7F0561E8 3C028003 */  lui   $v0, %hi(clock_time)
-/* 08AD1C 7F0561EC 24420AF0 */  addiu $v0, %lo(clock_time) # addiu $v0, $v0, 0xaf0
-/* 08AD20 7F0561F0 11C00005 */  beqz  $t6, .L7F056208
-/* 08AD24 7F0561F4 3C018005 */   lui   $at, %hi(global_timer_delta)
-/* 08AD28 7F0561F8 C4440000 */  lwc1  $f4, ($v0)
-/* 08AD2C 7F0561FC C4268378 */  lwc1  $f6, %lo(global_timer_delta)($at)
-/* 08AD30 7F056200 46062201 */  sub.s $f8, $f4, $f6
-/* 08AD34 7F056204 E4480000 */  swc1  $f8, ($v0)
-.L7F056208:
-/* 08AD38 7F056208 03E00008 */  jr    $ra
-/* 08AD3C 7F05620C 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -36984,58 +36945,23 @@ glabel sub_GAME_7F056210
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0565F0(void) {
-
+void handle_alarm_gas_timer_calldamage(void)
+{
+    if (is_alarm_on() != 0) {
+        if ((ptr_alarm_sfx == 0) && (get_controls_locked_flag() == 0)) {
+            play_sfx_a1(ptr_sfx_buf,0xa3,&ptr_alarm_sfx);
+        }
+        alarm_timer = alarm_timer + clock_timer;
+        if (0x708 < alarm_timer) {
+            stop_alarm();
+        }
+    }
+    handle_gas_damage();
+    if_enabled_reset_clock();
+    check_guard_detonate_proxmine();
+    D_80030AF4 = 0;
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0565F0
-/* 08B120 7F0565F0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 08B124 7F0565F4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08B128 7F0565F8 0FC15794 */  jal   is_alarm_on
-/* 08B12C 7F0565FC 00000000 */   nop   
-/* 08B130 7F056600 10400018 */  beqz  $v0, .L7F056664
-/* 08B134 7F056604 3C0E8003 */   lui   $t6, %hi(ptr_alarm_sfx) 
-/* 08B138 7F056608 8DCE0AC4 */  lw    $t6, %lo(ptr_alarm_sfx)($t6)
-/* 08B13C 7F05660C 15C0000A */  bnez  $t6, .L7F056638
-/* 08B140 7F056610 00000000 */   nop   
-/* 08B144 7F056614 0FC2FF01 */  jal   get_controls_locked_flag
-/* 08B148 7F056618 00000000 */   nop   
-/* 08B14C 7F05661C 14400006 */  bnez  $v0, .L7F056638
-/* 08B150 7F056620 3C048006 */   lui   $a0, %hi(ptr_sfx_buf)
-/* 08B154 7F056624 3C068003 */  lui   $a2, %hi(ptr_alarm_sfx)
-/* 08B158 7F056628 24C60AC4 */  addiu $a2, %lo(ptr_alarm_sfx) # addiu $a2, $a2, 0xac4
-/* 08B15C 7F05662C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
-/* 08B160 7F056630 0C002382 */  jal   play_sfx_a1
-/* 08B164 7F056634 240500A3 */   li    $a1, 163
-.L7F056638:
-/* 08B168 7F056638 3C028003 */  lui   $v0, %hi(alarm_timer)
-/* 08B16C 7F05663C 24420AC0 */  addiu $v0, %lo(alarm_timer) # addiu $v0, $v0, 0xac0
-/* 08B170 7F056640 3C188005 */  lui   $t8, %hi(clock_timer) 
-/* 08B174 7F056644 8F188374 */  lw    $t8, %lo(clock_timer)($t8)
-/* 08B178 7F056648 8C4F0000 */  lw    $t7, ($v0)
-/* 08B17C 7F05664C 01F8C821 */  addu  $t9, $t7, $t8
-/* 08B180 7F056650 2B210709 */  slti  $at, $t9, 0x709
-/* 08B184 7F056654 14200003 */  bnez  $at, .L7F056664
-/* 08B188 7F056658 AC590000 */   sw    $t9, ($v0)
-/* 08B18C 7F05665C 0FC1578B */  jal   stop_alarm
-/* 08B190 7F056660 00000000 */   nop   
-.L7F056664:
-/* 08B194 7F056664 0FC157D9 */  jal   sub_GAME_7F055F64
-/* 08B198 7F056668 00000000 */   nop   
-/* 08B19C 7F05666C 0FC15878 */  jal   sub_GAME_7F0561E0
-/* 08B1A0 7F056670 00000000 */   nop   
-/* 08B1A4 7F056674 0FC14732 */  jal   check_guard_detonate_proxmine
-/* 08B1A8 7F056678 00000000 */   nop   
-/* 08B1AC 7F05667C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08B1B0 7F056680 3C018003 */  lui   $at, %hi(D_80030AF4)
-/* 08B1B4 7F056684 AC200AF4 */  sw    $zero, %lo(D_80030AF4)($at)
-/* 08B1B8 7F056688 03E00008 */  jr    $ra
-/* 08B1BC 7F05668C 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
 
 
 

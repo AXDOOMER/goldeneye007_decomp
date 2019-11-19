@@ -36,7 +36,7 @@ s32 controls_locked_flag = 0;
 s32 clock_timer = 0;
 #ifdef VERSION_US
 //D:80048378
-s32 global_timer_delta = 0;
+f32 global_timer_delta = 0;
 //D:8004837C
 s32 global_timer = 0;
 //D:80048380
@@ -44,12 +44,12 @@ s32 D_80048380 = 0;
 //D:80048384
 #endif
 #ifdef VERSION_JP
-u32 D_jpunk = 0;
+u32 jp_global_timer_delta = 0;
 //D:8004837C
 s32 global_timer = 0;
 //D:80048380
 s32 D_80048380 = 0;
-s32 global_timer_delta = 0;
+f32 global_timer_delta = 0;
 #endif
 
 //D:80048384
@@ -702,8 +702,8 @@ glabel stage_load
 /* 0F31FC 7F0BE68C AC2083A0 */  sw    $zero, %lo(controls_locked_flag)($at)
 /* 0F3200 7F0BE690 263183A4 */  addiu $s1, %lo(clock_timer) # addiu $s1, $s1, -0x7c5c
 /* 0F3204 7F0BE694 AE220000 */  sw    $v0, ($s1)
-/* 0F3208 7F0BE698 3C018005 */  lui   $at, %hi(D_jpunk) # $at, 0x8005
-/* 0F320C 7F0BE69C E42C83A8 */  swc1  $f12, %lo(D_jpunk)($at)
+/* 0F3208 7F0BE698 3C018005 */  lui   $at, %hi(jp_global_timer_delta) # $at, 0x8005
+/* 0F320C 7F0BE69C E42C83A8 */  swc1  $f12, %lo(jp_global_timer_delta)($at)
 /* 0F3210 7F0BE6A0 3C018005 */  lui   $at, %hi(D_80048380) # $at, 0x8005
 /* 0F3214 7F0BE6A4 AC2083B0 */  sw    $zero, %lo(D_80048380)($at)
 /* 0F3218 7F0BE6A8 3C018005 */  lui   $at, %hi(global_timer) # $at, 0x8005
@@ -3432,8 +3432,8 @@ glabel manage_mp_game
 .Ljp7F0BF814:
 /* 0F4384 7F0BF814 3C028005 */  lui   $v0, %hi(clock_timer) # $v0, 0x8005
 /* 0F4388 7F0BF818 8C4283A4 */  lw    $v0, %lo(clock_timer)($v0)
-/* 0F438C 7F0BF81C 3C038005 */  lui   $v1, %hi(D_jpunk) # $v1, 0x8005
-/* 0F4390 7F0BF820 246383A8 */  addiu $v1, %lo(D_jpunk) # addiu $v1, $v1, -0x7c58
+/* 0F438C 7F0BF81C 3C038005 */  lui   $v1, %hi(jp_global_timer_delta) # $v1, 0x8005
+/* 0F4390 7F0BF820 246383A8 */  addiu $v1, %lo(jp_global_timer_delta) # addiu $v1, $v1, -0x7c58
 /* 0F4394 7F0BF824 44822000 */  mtc1  $v0, $f4
 /* 0F4398 7F0BF828 3C048005 */  lui   $a0, %hi(global_timer) # $a0, 0x8005
 /* 0F439C 7F0BF82C 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
