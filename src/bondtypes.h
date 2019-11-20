@@ -1,7 +1,7 @@
 #ifndef _BONDTYPES_H_
 #define _BONDTYPES_H_
 #include "ultra64.h"
-
+#include "bondconstants.h"
 struct rgba_val{
     u8 r;
     u8 g;
