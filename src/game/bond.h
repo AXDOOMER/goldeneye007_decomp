@@ -1,7 +1,9 @@
 #ifndef _BOND_H_
 #define _BOND_H_
+
 #include "ultra64.h"
 #include "game/chr.h"
+
 struct xyzpoint
 {
     f32 x;
@@ -9,7 +11,7 @@ struct xyzpoint
     f32 z;
 };
 
-struct Player
+typedef struct Player
 {
   s32 unknown;
   s32 xpos;
@@ -526,8 +528,7 @@ struct Player
   s16 viewtop;
   s32 right_invisible;
   s32 left_invisible;
-  s32 item_right;
-  s32 item_left;
+  s32 handitem[2];
   s32 ptr_right_weapon_buffer;
   s32 ptr_left_weapon_buffer;
   s32 copy_of_body_obj_header[8];
@@ -2723,7 +2724,7 @@ struct Player
   s32 field_2A74;
   s32 field_2A78;
   s32 field_2A7C;
-};
+} Player;
 
 struct firing_anim_struct {
     struct weapon_firing_animation_table * pointer;

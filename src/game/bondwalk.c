@@ -1,7 +1,10 @@
 #include "ultra64.h"
 #include "game/bondwalk.h"
 #include "game/chrobjdata.h"
+
 #include "bondgame.h"
+#include "game/bond.h"
+#include "game/unk_093880.h"
 
 // bss
 s32 dword_CODE_bss_80075DB0;
@@ -36,9 +39,7 @@ u32 D_80032454 = 0;
 u32 D_80032458 = 0;
 
 //D:8003245C
-u32 size_right_item_buffer = 0x14820;
-//D:80032460
-u32 size_left_item_buffer = 0x14820;
+u32 size_item_buffer[] = {0x14820, 0x14820};
 
 //D:80032464
 u32 D_80032464[] ={0x7530, 0x7530};
@@ -86,7 +87,7 @@ struct ejected_cart ejected_cartridge[] = {
 #define SCALEVAL_LAUNCHER 0.9048
 #endif
 //D:80032494
-struct weapon_stats stru_D_80032494 = {
+struct weapon_stats default_weaponstats = {
 	1.0, 0.0, 0.0, 0.0, 3.0, 3.0, 8.5, 0, 0, 0xFF, 0x00, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL1, 0.89999998, 1.0, 0xFF, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 4.0, 0.0, 0x110
 };
 //D:80032504
@@ -1209,7 +1210,7 @@ struct weapon_stats *get_ptr_item_statistics(int item) {
     if (gitem_structs[item].has_no_model == 0) { /* weapon has model, return stats struct */
         return gitem_structs[item].item_weapon_stats;
     }
-    return &stru_D_80032494; /* no model, return defaults */
+    return &default_weaponstats; /* no model, return defaults */
 }
 
 
@@ -1684,12 +1685,13 @@ glabel sub_GAME_7F05CEBC
 
 
 
-
-
 #ifdef NONMATCHING
-void get_itemtype_in_hand(void) {
+s32 get_itemtype_in_hand(int hand)
 
+{
+    return pPlayer->handitem[hand];
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1729,13 +1731,13 @@ glabel get_ptr_itemheader_in_hand
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05CF30(void) {
+void getPlayerWeaponBufferForHand(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F05CF30
+glabel getPlayerWeaponBufferForHand
 /* 091A60 7F05CF30 3C0E8008 */  lui   $t6, %hi(pPlayer) 
 /* 091A64 7F05CF34 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
 /* 091A68 7F05CF38 00047880 */  sll   $t7, $a0, 2
@@ -1747,25 +1749,10 @@ glabel sub_GAME_7F05CF30
 
 
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F05CF48(void) {
-
+u32 getSizeBufferWeaponInHand(int hand)
+{
+    return size_item_buffer[hand];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05CF48
-/* 091A78 7F05CF48 00047080 */  sll   $t6, $a0, 2
-/* 091A7C 7F05CF4C 3C028003 */  lui   $v0, %hi(size_right_item_buffer)
-/* 091A80 7F05CF50 004E1021 */  addu  $v0, $v0, $t6
-/* 091A84 7F05CF54 03E00008 */  jr    $ra
-/* 091A88 7F05CF58 8C42245C */   lw    $v0, %lo(size_right_item_buffer)($v0)
-)
-#endif
-
-
 
 
 
@@ -1969,10 +1956,10 @@ glabel used_to_load_1st_person_model_on_demand
 /* 091C38 7F05D108 8FA20038 */   lw    $v0, 0x38($sp)
 /* 091C3C 7F05D10C 50400076 */  beql  $v0, $zero, .L7F05D2E8
 /* 091C40 7F05D110 8FA20038 */   lw    $v0, 0x38($sp)
-/* 091C44 7F05D114 0FC173CC */  jal   sub_GAME_7F05CF30
+/* 091C44 7F05D114 0FC173CC */  jal   getPlayerWeaponBufferForHand
 /* 091C48 7F05D118 8FA40050 */   lw    $a0, 0x50($sp)
 /* 091C4C 7F05D11C AFA20040 */  sw    $v0, 0x40($sp)
-/* 091C50 7F05D120 0FC173D2 */  jal   sub_GAME_7F05CF48
+/* 091C50 7F05D120 0FC173D2 */  jal   getSizeBufferWeaponInHand
 /* 091C54 7F05D124 8FA40050 */   lw    $a0, 0x50($sp)
 /* 091C58 7F05D128 8FAE0044 */  lw    $t6, 0x44($sp)
 /* 091C5C 7F05D12C 8FAA0050 */  lw    $t2, 0x50($sp)

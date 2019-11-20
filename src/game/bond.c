@@ -4179,17 +4179,17 @@ glabel solo_char_load
 /* 0AE840 7F079D10 8DE20004 */  lw    $v0, 4($t7)
 /* 0AE844 7F079D14 544001CA */  bnezl $v0, .L7F07A440
 /* 0AE848 7F079D18 8C4F001C */   lw    $t7, 0x1c($v0)
-/* 0AE84C 7F079D1C 0FC173CC */  jal   sub_GAME_7F05CF30
+/* 0AE84C 7F079D1C 0FC173CC */  jal   getPlayerWeaponBufferForHand
 /* 0AE850 7F079D20 00002025 */   move  $a0, $zero
 /* 0AE854 7F079D24 AFA200F0 */  sw    $v0, 0xf0($sp)
-/* 0AE858 7F079D28 0FC173CC */  jal   sub_GAME_7F05CF30
+/* 0AE858 7F079D28 0FC173CC */  jal   getPlayerWeaponBufferForHand
 /* 0AE85C 7F079D2C 24040001 */   li    $a0, 1
 /* 0AE860 7F079D30 AFA200EC */  sw    $v0, 0xec($sp)
 /* 0AE864 7F079D34 AFA000E8 */  sw    $zero, 0xe8($sp)
-/* 0AE868 7F079D38 0FC173D2 */  jal   sub_GAME_7F05CF48
+/* 0AE868 7F079D38 0FC173D2 */  jal   getSizeBufferWeaponInHand
 /* 0AE86C 7F079D3C 00002025 */   move  $a0, $zero
 /* 0AE870 7F079D40 AFA200E4 */  sw    $v0, 0xe4($sp)
-/* 0AE874 7F079D44 0FC173D2 */  jal   sub_GAME_7F05CF48
+/* 0AE874 7F079D44 0FC173D2 */  jal   getSizeBufferWeaponInHand
 /* 0AE878 7F079D48 24040001 */   li    $a0, 1
 /* 0AE87C 7F079D4C 3C198003 */  lui   $t9, %hi(dummy_08_pp7_obj) 
 /* 0AE880 7F079D50 273965AC */  addiu $t9, %lo(dummy_08_pp7_obj) # addiu $t9, $t9, 0x65ac
@@ -4742,17 +4742,17 @@ glabel solo_char_load
 /* 0AEE70 7F07A300 8DE20004 */  lw    $v0, 4($t7)
 /* 0AEE74 7F07A304 544001D6 */  bnezl $v0, .Ljp7F07AA60
 /* 0AEE78 7F07A308 8C59001C */   lw    $t9, 0x1c($v0)
-/* 0AEE7C 7F07A30C 0FC17514 */  jal   sub_GAME_7F05CF30
+/* 0AEE7C 7F07A30C 0FC17514 */  jal   getPlayerWeaponBufferForHand
 /* 0AEE80 7F07A310 00002025 */   move  $a0, $zero
 /* 0AEE84 7F07A314 AFA200F0 */  sw    $v0, 0xf0($sp)
-/* 0AEE88 7F07A318 0FC17514 */  jal   sub_GAME_7F05CF30
+/* 0AEE88 7F07A318 0FC17514 */  jal   getPlayerWeaponBufferForHand
 /* 0AEE8C 7F07A31C 24040001 */   li    $a0, 1
 /* 0AEE90 7F07A320 AFA200EC */  sw    $v0, 0xec($sp)
 /* 0AEE94 7F07A324 AFA000E8 */  sw    $zero, 0xe8($sp)
-/* 0AEE98 7F07A328 0FC1751A */  jal   sub_GAME_7F05CF48
+/* 0AEE98 7F07A328 0FC1751A */  jal   getSizeBufferWeaponInHand
 /* 0AEE9C 7F07A32C 00002025 */   move  $a0, $zero
 /* 0AEEA0 7F07A330 AFA200E4 */  sw    $v0, 0xe4($sp)
-/* 0AEEA4 7F07A334 0FC1751A */  jal   sub_GAME_7F05CF48
+/* 0AEEA4 7F07A334 0FC1751A */  jal   getSizeBufferWeaponInHand
 /* 0AEEA8 7F07A338 24040001 */   li    $a0, 1
 /* 0AEEAC 7F07A33C 3C198003 */  lui   $t9, %hi(dummy_08_pp7_obj) # $t9, 0x8003
 /* 0AEEB0 7F07A340 273965EC */  addiu $t9, %lo(dummy_08_pp7_obj) # addiu $t9, $t9, 0x65ec

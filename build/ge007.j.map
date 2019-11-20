@@ -3212,8 +3212,8 @@ Linker script and memory map
                 0x000000007f05d3dc                sub_GAME_7F05CEBC
                 0x000000007f05d420                get_itemtype_in_hand
                 0x000000007f05d438                get_ptr_itemheader_in_hand
-                0x000000007f05d450                sub_GAME_7F05CF30
-                0x000000007f05d468                sub_GAME_7F05CF48
+                0x000000007f05d450                getPlayerWeaponBufferForHand
+                0x000000007f05d468                getSizeBufferWeaponInHand
                 0x000000007f05d47c                remove_item_in_hand
                 0x000000007f05d4c4                place_item_in_hand_swap_and_make_visible
                 0x000000007f05d538                get_ptr_item_text_call_line
@@ -18033,11 +18033,10 @@ Linker script and memory map
                 0x0000000080032488                D_80032448
                 0x0000000080032494                D_80032454
                 0x0000000080032498                D_80032458
-                0x000000008003249c                size_right_item_buffer
-                0x00000000800324a0                size_left_item_buffer
+                0x000000008003249c                size_item_buffer
                 0x00000000800324a4                D_80032464
                 0x00000000800324ac                ejected_cartridge
-                0x00000000800324d4                stru_D_80032494
+                0x00000000800324d4                default_weaponstats
                 0x0000000080032544                GfistZ_stats
                 0x00000000800325b4                GknifeZ_stats
                 0x0000000080032624                GthrowknifeZ_stats
