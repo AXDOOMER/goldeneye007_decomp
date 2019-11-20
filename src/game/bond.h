@@ -2706,7 +2706,7 @@ typedef struct Player
   s32 field_2A2C;
   s32 field_2A30;
   s32 field_2A34;
-  s32 field_2A38;
+  s32 cur_item_weapon_getname;
   s32 actual_health;
   s32 actual_armor;
   s32 field_2A44;

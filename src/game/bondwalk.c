@@ -1894,13 +1894,14 @@ glabel get_ptr_weapon_model_header_line
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05D078(void) {
-
+int getCurrentWeaponOrItem(void)
+{
+    return pPlayer->cur_item_weapon_getname;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F05D078
+glabel getCurrentWeaponOrItem
 /* 091BA8 7F05D078 3C0E8008 */  lui   $t6, %hi(pPlayer) 
 /* 091BAC 7F05D07C 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
 /* 091BB0 7F05D080 03E00008 */  jr    $ra
@@ -2418,8 +2419,11 @@ glabel sub_GAME_7F05D650
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05D690(void) {
-
+void proc_7F05D690(void)
+{
+    draw_item_in_hand_has_more_ammo(0,pPlayer->previous_right_weapon);
+    draw_item_in_hand_has_more_ammo(1,pPlayer->left_weapon_previous);
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -2449,8 +2453,24 @@ glabel sub_GAME_7F05D690
 
 
 #ifdef NONMATCHING
-void advance_through_inventory(void) {
+void advance_through_inventory(void)
 
+{
+    ITEM_IDS nextleft;
+    ITEM_IDS nextright;
+    
+    nextright = get_next_weapon_in_cycle_for_hand(0,1);
+    nextleft = get_next_weapon_in_cycle_for_hand(1,1);
+    if (((int)nextright < 0x21) && ((int)nextleft < 0x21)) {
+        proc_7F08C86C((int *)&nextright,(int *)&nextleft,0);
+    }
+    else {
+        nextright = pPlayer->previous_right_weapon;
+        nextleft = pPlayer->left_weapon_previous;
+    }
+    likely_change_weapon_in_hand(0,nextright,1);
+    likely_change_weapon_in_hand(1,nextleft,1);
+    return;
 }
 #else
 GLOBAL_ASM(

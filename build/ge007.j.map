@@ -3218,7 +3218,7 @@ Linker script and memory map
                 0x000000007f05d4c4                place_item_in_hand_swap_and_make_visible
                 0x000000007f05d538                get_ptr_item_text_call_line
                 0x000000007f05d568                get_ptr_weapon_model_header_line
-                0x000000007f05d598                sub_GAME_7F05D078
+                0x000000007f05d598                getCurrentWeaponOrItem
                 0x000000007f05d5a8                used_to_load_1st_person_model_on_demand
                 0x000000007f05d854                sub_GAME_7F05D334
                 0x000000007f05d954                get_next_weapon_in_cycle_for_hand
