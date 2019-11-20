@@ -319,8 +319,14 @@ glabel sub_GAME_7F057D88
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F057DF8(void) {
-
+void sub_GAME_7F057DF8(float *param_1,float *param_2,int param_3)
+{
+    int i;
+    
+    for (i = 0; 0 < param_3; i++)
+    {
+        sub_GAME_7F058098(param_2,param_1);
+    }
 }
 #else
 GLOBAL_ASM(

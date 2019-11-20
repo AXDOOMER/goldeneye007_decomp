@@ -27882,7 +27882,7 @@ glabel constructor_menu18_displaycast
 /* 04E2FC 7F0197CC 03002025 */   move  $a0, $t8
 /* 04E300 7F0197D0 27B201E8 */  addiu $s2, $sp, 0x1e8
 /* 04E304 7F0197D4 AFA201B8 */  sw    $v0, 0x1b8($sp)
-/* 04E308 7F0197D8 0FC15FF4 */  jal   init_0x40_bytes_data_at_address_last_word_1_0
+/* 04E308 7F0197D8 0FC15FF4 */  jal   reset_array_of_0x10_floats
 /* 04E30C 7F0197DC 02402025 */   move  $a0, $s2
 /* 04E310 7F0197E0 AFB201A8 */  sw    $s2, 0x1a8($sp)
 /* 04E314 7F0197E4 27A401A8 */  addiu $a0, $sp, 0x1a8

@@ -3090,7 +3090,7 @@ Linker script and memory map
                 0x000000007f0584e4                func_7F057FC4
  build/j/src/game/unk_057FD0.o(.text)
  .text          0x000000007f0584f0     0x2a10 build/j/src/game/unk_057FD0.o
-                0x000000007f0584f0                init_0x40_bytes_data_at_address_last_word_1_0
+                0x000000007f0584f0                reset_array_of_0x10_floats
                 0x000000007f058540                sub_GAME_7F058020
                 0x000000007f058588                sub_GAME_7F058068
                 0x000000007f0585b8                sub_GAME_7F058098

@@ -2420,7 +2420,7 @@ labels:
    - [0x7F057EA0, "cosf"]
    - [0x7F057EAC, "sinf"]
    # file asm/game/7F057FD0.s
-   - [0x7F057FD0, "init_0x40_bytes_data_at_address_last_word_1_0"]
+   - [0x7F057FD0, "reset_array_of_0x10_floats"]
    - [0x7F058020, "sub_GAME_7F058020"]
    - [0x7F058068, "sub_GAME_7F058068"]
    - [0x7F058098, "sub_GAME_7F058098"]

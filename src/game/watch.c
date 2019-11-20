@@ -9240,7 +9240,7 @@ glabel sub_GAME_7F0AADC0
 /* 0DFA00 7F0AAED0 00002025 */  move  $a0, $zero
 /* 0DFA04 7F0AAED4 0FC2A5A1 */  jal   sub_GAME_7F0A9684
 /* 0DFA08 7F0AAED8 ADA10000 */   sw    $at, ($t5)
-/* 0DFA0C 7F0AAEDC 0FC15FF4 */  jal   init_0x40_bytes_data_at_address_last_word_1_0
+/* 0DFA0C 7F0AAEDC 0FC15FF4 */  jal   reset_array_of_0x10_floats
 /* 0DFA10 7F0AAEE0 27A404FC */   addiu $a0, $sp, 0x4fc
 /* 0DFA14 7F0AAEE4 3C088005 */  lui   $t0, %hi(D_80048498) 
 /* 0DFA18 7F0AAEE8 8D088498 */  lw    $t0, %lo(D_80048498)($t0)
@@ -9440,7 +9440,7 @@ glabel sub_GAME_7F0AADC0
 /* 0DFD08 7F0AB1D8 24C60B38 */  addiu $a2, %lo(D_80040B38) # addiu $a2, $a2, 0xb38
 /* 0DFD0C 7F0AB1DC 0FC2A5A1 */  jal   sub_GAME_7F0A9684
 /* 0DFD10 7F0AB1E0 24A50B3C */   addiu $a1, %lo(D_80040B3C) # addiu $a1, $a1, 0xb3c
-/* 0DFD14 7F0AB1E4 0FC15FF4 */  jal   init_0x40_bytes_data_at_address_last_word_1_0
+/* 0DFD14 7F0AB1E4 0FC15FF4 */  jal   reset_array_of_0x10_floats
 /* 0DFD18 7F0AB1E8 27A404FC */   addiu $a0, $sp, 0x4fc
 /* 0DFD1C 7F0AB1EC 3C0D8005 */  lui   $t5, %hi(D_80048498) 
 /* 0DFD20 7F0AB1F0 8DAD8498 */  lw    $t5, %lo(D_80048498)($t5)
@@ -9714,7 +9714,7 @@ glabel sub_GAME_7F0AADC0
 /* 0E0600 7F0ABA90 00002025 */  move  $a0, $zero
 /* 0E0604 7F0ABA94 0FC2A891 */  jal   sub_GAME_7F0A9684
 /* 0E0608 7F0ABA98 ADA10000 */   sw    $at, ($t5)
-/* 0E060C 7F0ABA9C 0FC1613C */  jal   init_0x40_bytes_data_at_address_last_word_1_0
+/* 0E060C 7F0ABA9C 0FC1613C */  jal   reset_array_of_0x10_floats
 /* 0E0610 7F0ABAA0 27A404FC */   addiu $a0, $sp, 0x4fc
 /* 0E0614 7F0ABAA4 3C018004 */  lui   $at, %hi(D_80040B28) # $at, 0x8004
 /* 0E0618 7F0ABAA8 C4240B58 */  lwc1  $f4, %lo(D_80040B28)($at)
@@ -9911,7 +9911,7 @@ glabel sub_GAME_7F0AADC0
 /* 0E08FC 7F0ABD8C 24C60B68 */  addiu $a2, %lo(D_80040B38) # addiu $a2, $a2, 0xb68
 /* 0E0900 7F0ABD90 0FC2A891 */  jal   sub_GAME_7F0A9684
 /* 0E0904 7F0ABD94 24A50B6C */   addiu $a1, %lo(D_80040B3C) # addiu $a1, $a1, 0xb6c
-/* 0E0908 7F0ABD98 0FC1613C */  jal   init_0x40_bytes_data_at_address_last_word_1_0
+/* 0E0908 7F0ABD98 0FC1613C */  jal   reset_array_of_0x10_floats
 /* 0E090C 7F0ABD9C 27A404FC */   addiu $a0, $sp, 0x4fc
 /* 0E0910 7F0ABDA0 3C018004 */  lui   $at, %hi(D_80040B38) # $at, 0x8004
 /* 0E0914 7F0ABDA4 C4300B68 */  lwc1  $f16, %lo(D_80040B38)($at)

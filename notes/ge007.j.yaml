@@ -1700,7 +1700,7 @@ labels:
    - [0x7f0583c0, "cosf"]
    - [0x7f0583cc, "sinf"]
    - [0x7f0584e4, "func_7F057FC4"]
-   - [0x7f0584f0, "init_0x40_bytes_data_at_address_last_word_1_0"]
+   - [0x7f0584f0, "reset_array_of_0x10_floats"]
    - [0x7f058540, "sub_GAME_7F058020"]
    - [0x7f058588, "sub_GAME_7F058068"]
    - [0x7f0585b8, "sub_GAME_7F058098"]
