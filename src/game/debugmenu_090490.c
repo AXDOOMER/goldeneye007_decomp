@@ -412,11 +412,11 @@ glabel sub_GAME_7F09054C
 
 
 
-void unknown_libname_68(void) {
+void removed_do_debug_profile_flag_false(void) {
     return;
 }
 
-void nullsub_35(void) {
+void removed_do_debug_profile_flag_true(void) {
     return;
 }
 
@@ -1147,12 +1147,12 @@ debug_profile:
 /* 0C5948 7F090E18 39AE0001 */  xori  $t6, $t5, 1
 /* 0C594C 7F090E1C 11C00005 */  beqz  $t6, .L7F090E34
 /* 0C5950 7F090E20 AC4E0000 */   sw    $t6, ($v0)
-/* 0C5954 7F090E24 0FC24164 */  jal   unknown_libname_68
+/* 0C5954 7F090E24 0FC24164 */  jal   removed_do_debug_profile_flag_false
 /* 0C5958 7F090E28 00000000 */   nop   
 /* 0C595C 7F090E2C 10000012 */  b     .L7F090E78
 /* 0C5960 7F090E30 8FB80018 */   lw    $t8, 0x18($sp)
 .L7F090E34:
-/* 0C5964 7F090E34 0FC24166 */  jal   nullsub_35
+/* 0C5964 7F090E34 0FC24166 */  jal   removed_do_debug_profile_flag_true
 /* 0C5968 7F090E38 00000000 */   nop   
 /* 0C596C 7F090E3C 1000000E */  b     .L7F090E78
 /* 0C5970 7F090E40 8FB80018 */   lw    $t8, 0x18($sp)

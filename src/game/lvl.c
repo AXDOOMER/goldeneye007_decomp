@@ -486,7 +486,7 @@ glabel stage_load
 /* 0F2750 7F0BDC20 92290000 */  lbu   $t1, ($s1)
 /* 0F2754 7F0BDC24 51200008 */  beql  $t1, $zero, .L7F0BDC48
 /* 0F2758 7F0BDC28 26100001 */   addiu $s0, $s0, 1
-/* 0F275C 7F0BDC2C 0FC24697 */  jal   sub_GAME_7F091A5C
+/* 0F275C 7F0BDC2C 0FC24697 */  jal   is_cheat_index_equal_to_1C
 /* 0F2760 7F0BDC30 02002025 */   move  $a0, $s0
 /* 0F2764 7F0BDC34 50400004 */  beql  $v0, $zero, .L7F0BDC48
 /* 0F2768 7F0BDC38 26100001 */   addiu $s0, $s0, 1
@@ -791,7 +791,7 @@ glabel stage_load
 /* 0F3350 7F0BE7E0 92290000 */  lbu   $t1, ($s1)
 /* 0F3354 7F0BE7E4 51200008 */  beql  $t1, $zero, .Ljp7F0BE808
 /* 0F3358 7F0BE7E8 26100001 */   addiu $s0, $s0, 1
-/* 0F335C 7F0BE7EC 0FC2494F */  jal   sub_GAME_7F091A5C
+/* 0F335C 7F0BE7EC 0FC2494F */  jal   is_cheat_index_equal_to_1C
 /* 0F3360 7F0BE7F0 02002025 */   move  $a0, $s0
 /* 0F3364 7F0BE7F4 50400004 */  beql  $v0, $zero, .Ljp7F0BE808
 /* 0F3368 7F0BE7F8 26100001 */   addiu $s0, $s0, 1
@@ -1616,7 +1616,7 @@ glabel sub_GAME_7F0BE30C
 /* 0F3300 7F0BE7D0 0FC2800D */  jal   sub_GAME_7F0A0034
 /* 0F3304 7F0BE7D4 00402025 */   move  $a0, $v0
 /* 0F3308 7F0BE7D8 AFA20060 */  sw    $v0, 0x60($sp)
-/* 0F330C 7F0BE7DC 0FC249EF */  jal   sub_GAME_7F0927BC
+/* 0F330C 7F0BE7DC 0FC249EF */  jal   cheatCheckIfOn
 /* 0F3310 7F0BE7E0 2404000B */   li    $a0, 11
 /* 0F3314 7F0BE7E4 10400003 */  beqz  $v0, .L7F0BE7F4
 /* 0F3318 7F0BE7E8 00000000 */   nop   
@@ -2009,7 +2009,7 @@ glabel sub_GAME_7F0BE30C
 /* 0F3F00 7F0BF390 0FC282F6 */  jal   sub_GAME_7F0A0034
 /* 0F3F04 7F0BF394 00402025 */   move  $a0, $v0
 /* 0F3F08 7F0BF398 AFA20060 */  sw    $v0, 0x60($sp)
-/* 0F3F0C 7F0BF39C 0FC24CCF */  jal   sub_GAME_7F0927BC
+/* 0F3F0C 7F0BF39C 0FC24CCF */  jal   cheatCheckIfOn
 /* 0F3F10 7F0BF3A0 2404000B */   li    $a0, 11
 /* 0F3F14 7F0BF3A4 1040000C */  beqz  $v0, .Ljp7F0BF3D8
 /* 0F3F18 7F0BF3A8 00000000 */   nop   
@@ -2589,7 +2589,7 @@ glabel manage_mp_game
 /* 0F3790 7F0BEC60 51E0000D */  beql  $t7, $zero, .L7F0BEC98
 /* 0F3794 7F0BEC64 24840001 */   addiu $a0, $a0, 1
 /* 0F3798 7F0BEC68 AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0F379C 7F0BEC6C 0FC24697 */  jal   sub_GAME_7F091A5C
+/* 0F379C 7F0BEC6C 0FC24697 */  jal   is_cheat_index_equal_to_1C
 /* 0F37A0 7F0BEC70 AFA40194 */   sw    $a0, 0x194($sp)
 /* 0F37A4 7F0BEC74 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0F37A8 7F0BEC78 14400006 */  bnez  $v0, .L7F0BEC94
@@ -3064,7 +3064,7 @@ glabel manage_mp_game
 /* 0F3E60 7F0BF330 2401005A */  li    $at, 90
 /* 0F3E64 7F0BF334 17210009 */  bne   $t9, $at, .L7F0BF35C
 /* 0F3E68 7F0BF338 00000000 */   nop   
-/* 0F3E6C 7F0BF33C 0FC2464F */  jal   sub_GAME_7F09193C
+/* 0F3E6C 7F0BF33C 0FC2464F */  jal   cheat_buttons_mp_related
 /* 0F3E70 7F0BF340 00000000 */   nop   
 /* 0F3E74 7F0BF344 0FC06987 */  jal   menu_init
 /* 0F3E78 7F0BF348 00000000 */   nop   
@@ -3466,7 +3466,7 @@ glabel manage_mp_game
 /* 0F4404 7F0BF894 51E0000D */  beql  $t7, $zero, .Ljp7F0BF8CC
 /* 0F4408 7F0BF898 24840001 */   addiu $a0, $a0, 1
 /* 0F440C 7F0BF89C AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0F4410 7F0BF8A0 0FC2494F */  jal   sub_GAME_7F091A5C
+/* 0F4410 7F0BF8A0 0FC2494F */  jal   is_cheat_index_equal_to_1C
 /* 0F4414 7F0BF8A4 AFA40194 */   sw    $a0, 0x194($sp)
 /* 0F4418 7F0BF8A8 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0F441C 7F0BF8AC 14400006 */  bnez  $v0, .Ljp7F0BF8C8
@@ -3942,7 +3942,7 @@ glabel manage_mp_game
 /* 0F4AD8 7F0BFF68 2401005A */  li    $at, 90
 /* 0F4ADC 7F0BFF6C 17210009 */  bne   $t9, $at, .Ljp7F0BFF94
 /* 0F4AE0 7F0BFF70 00000000 */   nop   
-/* 0F4AE4 7F0BFF74 0FC24907 */  jal   sub_GAME_7F09193C
+/* 0F4AE4 7F0BFF74 0FC24907 */  jal   cheat_buttons_mp_related
 /* 0F4AE8 7F0BFF78 00000000 */   nop   
 /* 0F4AEC 7F0BFF7C 0FC069F4 */  jal   menu_init
 /* 0F4AF0 7F0BFF80 00000000 */   nop   
@@ -4290,7 +4290,7 @@ glabel sub_GAME_7F0BF800
 /* 0F4334 7F0BF804 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F4338 7F0BF808 0FC26C54 */  jal   get_cur_playernum
 /* 0F433C 7F0BF80C 00000000 */   nop   
-/* 0F4340 7F0BF810 0FC2464F */  jal   sub_GAME_7F09193C
+/* 0F4340 7F0BF810 0FC2464F */  jal   cheat_buttons_mp_related
 /* 0F4344 7F0BF814 A3A2002F */   sb    $v0, 0x2f($sp)
 /* 0F4348 7F0BF818 0FC243C2 */  jal   get_debug_freeze_processing
 /* 0F434C 7F0BF81C 00000000 */   nop   
@@ -4521,7 +4521,7 @@ void unload_stage_text_data(void) {
         blank_text_bank(get_textbank_number_for_stagenum(current_stage_to_load));
         sub_GAME_7F007770();
     }
-    sub_GAME_7F0926C0();
+    cheatDisableAllCheats();
     cleanupGuardData();
     cleanupObjectSounds();
     cleanupExplosions();

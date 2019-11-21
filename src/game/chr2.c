@@ -81,7 +81,7 @@ glabel maybe_load_models_for_guards
 /* 057E68 7F023338 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 057E6C 7F02333C 2404000C */  li    $a0, 12
 /* 057E70 7F023340 AFA20024 */  sw    $v0, 0x24($sp)
-/* 057E74 7F023344 0FC249EF */  jal   sub_GAME_7F0927BC
+/* 057E74 7F023344 0FC249EF */  jal   cheatCheckIfOn
 /* 057E78 7F023348 E7AA0030 */   swc1  $f10, 0x30($sp)
 /* 057E7C 7F02334C 10400005 */  beqz  $v0, .L7F023364
 /* 057E80 7F023350 C7B00034 */   lwc1  $f16, 0x34($sp)
@@ -217,7 +217,7 @@ glabel maybe_load_models_for_guards
 /* 058198 7F023628 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 05819C 7F02362C 2404000C */  li    $a0, 12
 /* 0581A0 7F023630 AFA20024 */  sw    $v0, 0x24($sp)
-/* 0581A4 7F023634 0FC24CCF */  jal   sub_GAME_7F0927BC
+/* 0581A4 7F023634 0FC24CCF */  jal   cheatCheckIfOn
 /* 0581A8 7F023638 E7AA0030 */   swc1  $f10, 0x30($sp)
 /* 0581AC 7F02363C 10400009 */  beqz  $v0, .Ljp7F023664
 /* 0581B0 7F023640 8FA40038 */   lw    $a0, 0x38($sp)

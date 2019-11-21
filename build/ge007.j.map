@@ -3856,8 +3856,8 @@ Linker script and memory map
                 0x000000007f090fa4                sub_GAME_7F0904C4
                 0x000000007f090fe8                sub_GAME_7F090508
                 0x000000007f09102c                sub_GAME_7F09054C
-                0x000000007f091070                unknown_libname_68
-                0x000000007f091078                nullsub_35
+                0x000000007f091070                removed_do_debug_profile_flag_false
+                0x000000007f091078                removed_do_debug_profile_flag_true
                 0x000000007f091080                debug_menu_processor
                 0x000000007f0919dc                get_debug_render_raster
                 0x000000007f0919e8                get_debug_freeze_processing
@@ -3901,18 +3901,18 @@ Linker script and memory map
  build/j/src/game/chrobjdata.o(.text)
  build/j/src/game/cheat_buttons.o(.text)
  .text          0x000000007f092220     0x1210 build/j/src/game/cheat_buttons.o
-                0x000000007f092220                sub_GAME_7F091740
-                0x000000007f09225c                sub_GAME_7F09177C
-                0x000000007f09241c                sub_GAME_7F09193C
-                0x000000007f09253c                sub_GAME_7F091A5C
-                0x000000007f092558                sub_GAME_7F091A78
+                0x000000007f092220                cheatButton_7F091740
+                0x000000007f09225c                cheatButton_7F09177C
+                0x000000007f09241c                cheat_buttons_mp_related
+                0x000000007f09253c                is_cheat_index_equal_to_1C
+                0x000000007f092558                cheatCheckIfMPCheat
                 0x000000007f09258c                turn_on_cheat_for_players
                 0x000000007f092644                handle_cheats_turned_on
-                0x000000007f092fb8                sub_GAME_7F092438
-                0x000000007f093240                sub_GAME_7F0926C0
-                0x000000007f0932f4                sub_GAME_7F092774
-                0x000000007f09333c                sub_GAME_7F0927BC
-                0x000000007f093374                sub_GAME_7F0927F4
+                0x000000007f092fb8                cheatDisplayMessageActivateCheat
+                0x000000007f093240                cheatDisableAllCheats
+                0x000000007f0932f4                cheatGetMenuTextPointer
+                0x000000007f09333c                cheatCheckIfOn
+                0x000000007f093374                set_DKMode
  build/j/src/game/unk_092890.o(.text)
  .text          0x000000007f093430      0x5c0 build/j/src/game/unk_092890.o
                 0x000000007f093430                sub_GAME_7F092890

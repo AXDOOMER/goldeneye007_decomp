@@ -25206,7 +25206,7 @@ glabel update_menu15_cheat
 /* 04C75C 7F017C2C 02002025 */  move  $a0, $s0
 /* 04C760 7F017C30 51C00007 */  beql  $t6, $zero, .L7F017C50
 /* 04C764 7F017C34 26100001 */   addiu $s0, $s0, 1
-/* 04C768 7F017C38 0FC2469E */  jal   sub_GAME_7F091A78
+/* 04C768 7F017C38 0FC2469E */  jal   cheatCheckIfMPCheat
 /* 04C76C 7F017C3C 24130001 */   li    $s3, 1
 /* 04C770 7F017C40 50400003 */  beql  $v0, $zero, .L7F017C50
 /* 04C774 7F017C44 26100001 */   addiu $s0, $s0, 1
@@ -25590,7 +25590,7 @@ glabel constructor_menu15_cheat
 /* 04CB30 7F018000 26B50035 */  addiu $s5, $s5, 0x35
 /* 04CB34 7F018004 01CF9821 */  addu  $s3, $t6, $t7
 .L7F018008:
-/* 04CB38 7F018008 0FC249DD */  jal   sub_GAME_7F092774
+/* 04CB38 7F018008 0FC249DD */  jal   cheatGetMenuTextPointer
 /* 04CB3C 7F01800C 8E640000 */   lw    $a0, ($s3)
 /* 04CB40 7F018010 8EF80000 */  lw    $t8, ($s7)
 /* 04CB44 7F018014 00409025 */  move  $s2, $v0
@@ -25731,7 +25731,7 @@ glabel constructor_menu15_cheat
 /* 04CD48 7F018218 267397F0 */  addiu $s3, %lo(dword_CODE_bss_800697F0) # addiu $s3, $s3, -0x6810
 /* 04CD4C 7F01821C 24150035 */  li    $s5, 53
 .L7F018220:
-/* 04CD50 7F018220 0FC249DD */  jal   sub_GAME_7F092774
+/* 04CD50 7F018220 0FC249DD */  jal   cheatGetMenuTextPointer
 /* 04CD54 7F018224 8E640030 */   lw    $a0, 0x30($s3)
 /* 04CD58 7F018228 8EEE0000 */  lw    $t6, ($s7)
 /* 04CD5C 7F01822C 00409025 */  move  $s2, $v0

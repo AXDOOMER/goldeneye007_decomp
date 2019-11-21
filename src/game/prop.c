@@ -992,7 +992,7 @@ glabel expand_08_obj_set_guard_MP_weapons
 /* 0372B4 7F002784 2404001C */  li    $a0, 28
 /* 0372B8 7F002788 53200084 */  beql  $t9, $zero, .L7F00299C
 /* 0372BC 7F00278C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0372C0 7F002790 0FC249EF */  jal   sub_GAME_7F0927BC
+/* 0372C0 7F002790 0FC249EF */  jal   cheatCheckIfOn
 /* 0372C4 7F002794 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 0372C8 7F002798 10400011 */  beqz  $v0, .L7F0027E0
 /* 0372CC 7F00279C 8FA7002C */   lw    $a3, 0x2c($sp)
