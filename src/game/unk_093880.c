@@ -1,6 +1,8 @@
 #include "ultra64.h"
 #include "game/unk_093880.h"
+#include "game/unk_092E50.h"
 #include "game/bond.h"
+#include "game/lvl.h"
 
 // bss
 s32 copyof_stagenum;
@@ -528,7 +530,7 @@ glabel sub_GAME_7F093C48
 
 
 
-f32 sub_GAME_7F093C88(f32 arg0) {
+f32 addpoint5tofloat(f32 arg0) {
     return (f32) (s32) (arg0 + 0.5f);
 }
 
@@ -1106,49 +1108,14 @@ void store_stagenum_to_copyof_stagenum(s32 stagenum) {
   copyof_stagenum = stagenum;
 }
 
-
-
-
-
-#ifdef NONMATCHING
-f32 sub_GAME_7F094438(void) {
-    // Node 0
-    D_8003FD94 = (f32) (D_8003FD94 + (f32) clock_timer);
-    if (D_8003FD94 > 4096.0f)
+void sub_GAME_7F094438(void)
+{
+    D_8003FD94[0] = ((f32)clock_timer + D_8003FD94[0]);
+    if ( D_8003FD94[0] > 4096.0f)
     {
-        // Node 1
-        D_8003FD94 = (f32) (D_8003FD94 - 4096.0f);
+        D_8003FD94[0] -= 4096.0f;
     }
-    // Node 2
-    return D_8003FD94;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F094438
-/* 0C8F68 7F094438 3C0E8005 */  lui   $t6, %hi(clock_timer) 
-/* 0C8F6C 7F09443C 8DCE8374 */  lw    $t6, %lo(clock_timer)($t6)
-/* 0C8F70 7F094440 3C028004 */  lui   $v0, %hi(D_8003FD94)
-/* 0C8F74 7F094444 2442FD94 */  addiu $v0, %lo(D_8003FD94) # addiu $v0, $v0, -0x26c
-/* 0C8F78 7F094448 448E3000 */  mtc1  $t6, $f6
-/* 0C8F7C 7F09444C C4440000 */  lwc1  $f4, ($v0)
-/* 0C8F80 7F094450 3C014580 */  li    $at, 0x45800000 # 4096.000000
-/* 0C8F84 7F094454 46803220 */  cvt.s.w $f8, $f6
-/* 0C8F88 7F094458 44811000 */  mtc1  $at, $f2
-/* 0C8F8C 7F09445C 46082280 */  add.s $f10, $f4, $f8
-/* 0C8F90 7F094460 E44A0000 */  swc1  $f10, ($v0)
-/* 0C8F94 7F094464 C4400000 */  lwc1  $f0, ($v0)
-/* 0C8F98 7F094468 4600103C */  c.lt.s $f2, $f0
-/* 0C8F9C 7F09446C 00000000 */  nop   
-/* 0C8FA0 7F094470 45000003 */  bc1f  .L7F094480
-/* 0C8FA4 7F094474 00000000 */   nop   
-/* 0C8FA8 7F094478 46020401 */  sub.s $f16, $f0, $f2
-/* 0C8FAC 7F09447C E4500000 */  swc1  $f16, ($v0)
-.L7F094480:
-/* 0C8FB0 7F094480 03E00008 */  jr    $ra
-/* 0C8FB4 7F094484 00000000 */   nop   
-)
-#endif
 
 
 
@@ -4925,7 +4892,7 @@ glabel sub_GAME_7F097818
 /* 0CC744 7F097C14 00000000 */  nop   
 /* 0CC748 7F097C18 46044302 */  mul.s $f12, $f8, $f4
 /* 0CC74C 7F097C1C 460A1181 */  sub.s $f6, $f2, $f10
-/* 0CC750 7F097C20 0FC24F22 */  jal   sub_GAME_7F093C88
+/* 0CC750 7F097C20 0FC24F22 */  jal   addpoint5tofloat
 /* 0CC754 7F097C24 E7A6037C */   swc1  $f6, 0x37c($sp)
 /* 0CC758 7F097C28 3C013900 */  li    $at, 0x39000000 # 0.000122
 /* 0CC75C 7F097C2C 44815000 */  mtc1  $at, $f10
@@ -4939,7 +4906,7 @@ glabel sub_GAME_7F097818
 /* 0CC77C 7F097C4C 44815000 */  mtc1  $at, $f10
 /* 0CC780 7F097C50 00000000 */  nop   
 /* 0CC784 7F097C54 460A4302 */  mul.s $f12, $f8, $f10
-/* 0CC788 7F097C58 0FC24F22 */  jal   sub_GAME_7F093C88
+/* 0CC788 7F097C58 0FC24F22 */  jal   addpoint5tofloat
 /* 0CC78C 7F097C5C E7A60408 */   swc1  $f6, 0x408($sp)
 /* 0CC790 7F097C60 3C013900 */  li    $at, 0x39000000 # 0.000122
 /* 0CC794 7F097C64 44812000 */  mtc1  $at, $f4
