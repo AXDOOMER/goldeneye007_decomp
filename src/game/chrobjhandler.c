@@ -28586,7 +28586,7 @@ glabel object_collectability_routines
 /* 0855EC 7F050ABC 24010003 */  li    $at, 3
 /* 0855F0 7F050AC0 54610007 */  bnel  $v1, $at, .L7F050AE0
 /* 0855F4 7F050AC4 8FAB005C */   lw    $t3, 0x5c($sp)
-/* 0855F8 7F050AC8 0FC233F0 */  jal   sub_GAME_7F08CFC0
+/* 0855F8 7F050AC8 0FC233F0 */  jal   checkforgoldengun
 /* 0855FC 7F050ACC 00000000 */   nop   
 /* 085600 7F050AD0 10400002 */  beqz  $v0, .L7F050ADC
 /* 085604 7F050AD4 240A0001 */   li    $t2, 1
@@ -29127,7 +29127,7 @@ glabel object_collectability_routines
 /* 085B2C 7F050FBC 24010003 */  li    $at, 3
 /* 085B30 7F050FC0 56010007 */  bnel  $s0, $at, .Ljp7F050FE0
 /* 085B34 7F050FC4 8FA90064 */   lw    $t1, 0x64($sp)
-/* 085B38 7F050FC8 0FC23649 */  jal   sub_GAME_7F08CFC0
+/* 085B38 7F050FC8 0FC23649 */  jal   checkforgoldengun
 /* 085B3C 7F050FCC 00000000 */   nop   
 /* 085B40 7F050FD0 10400002 */  beqz  $v0, .Ljp7F050FDC
 /* 085B44 7F050FD4 24190001 */   li    $t9, 1

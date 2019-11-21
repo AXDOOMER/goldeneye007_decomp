@@ -26456,8 +26456,33 @@ s32 get_curplayer_viewport_ulx(void)
 
 
 #ifdef NONMATCHING
-void get_curplayer_viewport_height(void) {
-
+s32 get_curplayer_viewport_height(void)
+{
+    if (get_num_players() >= 2)
+    {
+        return 0x6d;
+    }
+    if (camera_8003642C != 0)
+    {
+        if (cur_player_get_screen_setting() == 1)
+        {
+            return 0xf8;
+        }
+        if (cur_player_get_screen_setting() != 2)
+        {
+            return 0x130;
+        }
+        return 0xbe;
+    }
+    if (cur_player_get_screen_setting() == 1)
+    {
+        return (s32) (((s32) (40.0f * sub_GAME_7F07EA78()) + 0xb4) << 0x10) >> 0x10;
+    }
+    if (cur_player_get_screen_setting() == 2)
+    {
+        return (s32) (((s32) (84.0f * sub_GAME_7F07EA78()) + 0x88) << 0x10) >> 0x10;
+    }
+    return 0xdc;
 }
 #else
 GLOBAL_ASM(
@@ -31442,7 +31467,7 @@ glabel record_damage_kills
 /* 0BE838 7F089D08 24010003 */  li    $at, 3
 /* 0BE83C 7F089D0C 54410007 */  bnel  $v0, $at, .L7F089D2C
 /* 0BE840 7F089D10 8FA8002C */   lw    $t0, 0x2c($sp)
-/* 0BE844 7F089D14 0FC233F0 */  jal   sub_GAME_7F08CFC0
+/* 0BE844 7F089D14 0FC233F0 */  jal   checkforgoldengun
 /* 0BE848 7F089D18 00000000 */   nop   
 /* 0BE84C 7F089D1C 10400002 */  beqz  $v0, .L7F089D28
 /* 0BE850 7F089D20 24190001 */   li    $t9, 1
@@ -31813,7 +31838,7 @@ glabel record_damage_kills
 /* 0BEF68 7F08A3F8 24010003 */  li    $at, 3
 /* 0BEF6C 7F08A3FC 14410006 */  bne   $v0, $at, .Ljp7F08A418
 /* 0BEF70 7F08A400 00000000 */   nop   
-/* 0BEF74 7F08A404 0FC23649 */  jal   sub_GAME_7F08CFC0
+/* 0BEF74 7F08A404 0FC23649 */  jal   checkforgoldengun
 /* 0BEF78 7F08A408 00000000 */   nop   
 /* 0BEF7C 7F08A40C 10400002 */  beqz  $v0, .Ljp7F08A418
 /* 0BEF80 7F08A410 240F0001 */   li    $t7, 1
@@ -32019,13 +32044,13 @@ glabel check_if_healthbar_timer_greater_than_0
 
 
 #ifdef NONMATCHING
-void get_BONDdata_field19C(void) {
+void get_BONDdata_bondfadefracnew(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel get_BONDdata_field19C
+glabel get_BONDdata_bondfadefracnew
 /* 0BEA04 7F089ED4 3C0E8008 */  lui   $t6, %hi(pPlayer) 
 /* 0BEA08 7F089ED8 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
 /* 0BEA0C 7F089EDC 03E00008 */  jr    $ra

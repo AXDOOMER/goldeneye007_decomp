@@ -252,11 +252,11 @@ s32 grab_rgb_screenshot_flag = 0;
 //D:80037000
 s32 grab_jpeg_screenshot_flag = 0;
 //D:80037004
-s32 D_80037004 = 0;
+s32 player_pos_x = 0;
 //D:80037008
-s32 D_80037008 = 0;
+s32 player_pos_y = 0;
 //D:8003700C
-s32 D_8003700C = 0;
+s32 player_pos_z = 0;
 
 
 
@@ -1040,8 +1040,8 @@ debug_worldpos:
 /* 0C57CC 7F090C9C 00000000 */   nop   
 /* 0C57D0 7F090CA0 10400074 */  beqz  $v0, .L7F090E74
 /* 0C57D4 7F090CA4 00401825 */   move  $v1, $v0
-/* 0C57D8 7F090CA8 3C028003 */  lui   $v0, %hi(D_80037004)
-/* 0C57DC 7F090CAC 24427004 */  addiu $v0, %lo(D_80037004) # addiu $v0, $v0, 0x7004
+/* 0C57D8 7F090CA8 3C028003 */  lui   $v0, %hi(player_pos_x)
+/* 0C57DC 7F090CAC 24427004 */  addiu $v0, %lo(player_pos_x) # addiu $v0, $v0, 0x7004
 /* 0C57E0 7F090CB0 C4460000 */  lwc1  $f6, ($v0)
 /* 0C57E4 7F090CB4 C4640008 */  lwc1  $f4, 8($v1)
 /* 0C57E8 7F090CB8 C44A0004 */  lwc1  $f10, 4($v0)
@@ -1059,8 +1059,8 @@ debug_worldpos:
 /* 0C5818 7F090CE8 0C007DF8 */  jal   sqrtf
 /* 0C581C 7F090CEC 460A4300 */   add.s $f12, $f8, $f10
 /* 0C5820 7F090CF0 8FA30050 */  lw    $v1, 0x50($sp)
-/* 0C5824 7F090CF4 3C028003 */  lui   $v0, %hi(D_80037004)
-/* 0C5828 7F090CF8 24427004 */  addiu $v0, %lo(D_80037004) # addiu $v0, $v0, 0x7004
+/* 0C5824 7F090CF4 3C028003 */  lui   $v0, %hi(player_pos_x)
+/* 0C5828 7F090CF8 24427004 */  addiu $v0, %lo(player_pos_x) # addiu $v0, $v0, 0x7004
 /* 0C582C 7F090CFC C4700008 */  lwc1  $f16, 8($v1)
 /* 0C5830 7F090D00 E4500000 */  swc1  $f16, ($v0)
 /* 0C5834 7F090D04 C472000C */  lwc1  $f18, 0xc($v1)

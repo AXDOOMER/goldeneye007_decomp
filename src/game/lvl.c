@@ -4483,7 +4483,7 @@ glabel sub_GAME_7F0BF800
 /* 0F4608 7F0BFAD8 24010003 */  li    $at, 3
 /* 0F460C 7F0BFADC 5441000D */  bnel  $v0, $at, .L7F0BFB14
 /* 0F4610 7F0BFAE0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F4614 7F0BFAE4 0FC233F0 */  jal   sub_GAME_7F08CFC0
+/* 0F4614 7F0BFAE4 0FC233F0 */  jal   checkforgoldengun
 /* 0F4618 7F0BFAE8 00000000 */   nop   
 /* 0F461C 7F0BFAEC 10400006 */  beqz  $v0, .L7F0BFB08
 /* 0F4620 7F0BFAF0 3C088008 */   lui   $t0, %hi(cur_player_stat_ptr) 

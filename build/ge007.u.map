@@ -3702,7 +3702,7 @@ Linker script and memory map
                 0x000000007f089e4c                sub_GAME_7F089E4C
                 0x000000007f089ea4                check_if_bond_is_invincible
                 0x000000007f089ebc                check_if_healthbar_timer_greater_than_0
-                0x000000007f089ed4                get_BONDdata_field19C
+                0x000000007f089ed4                get_BONDdata_bondfadefracnew
                 0x000000007f089ee4                get_curplay_horizontal_rotation_in_degrees
                 0x000000007f089f10                get_curplay_vertical_rotation_in_degrees
                 0x000000007f089f38                sub_GAME_7F089F38
@@ -3773,7 +3773,7 @@ Linker script and memory map
                 0x000000007f08ce70                sub_GAME_7F08CE70
                 0x000000007f08cf0c                sub_GAME_7F08CF0C
                 0x000000007f08cf80                sub_GAME_7F08CF80
-                0x000000007f08cfc0                sub_GAME_7F08CFC0
+                0x000000007f08cfc0                checkforgoldengun
                 0x000000007f08cfe0                sub_GAME_7F08CFE0
                 0x000000007f08d038                sub_GAME_7F08D038
                 0x000000007f08d108                sub_GAME_7F08D108
@@ -18537,9 +18537,9 @@ Linker script and memory map
                 0x0000000080036ff8                show_debug_menu_flag
                 0x0000000080036ffc                grab_rgb_screenshot_flag
                 0x0000000080037000                grab_jpeg_screenshot_flag
-                0x0000000080037004                D_80037004
-                0x0000000080037008                D_80037008
-                0x000000008003700c                D_8003700C
+                0x0000000080037004                player_pos_x
+                0x0000000080037008                player_pos_y
+                0x000000008003700c                player_pos_z
  build/u/src/game/unk_091080.o(.data)
  .data          0x0000000080037010       0x60 build/u/src/game/unk_091080.o
                 0x0000000080037010                D_80037010
