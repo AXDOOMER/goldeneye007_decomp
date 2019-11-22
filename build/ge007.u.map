@@ -4032,7 +4032,7 @@ Linker script and memory map
  .text          0x000000007f0a4860     0x8310 build/u/src/game/watch.o
                 0x000000007f0a4860                nullsub_7F0A4860
                 0x000000007f0a4868                init_watch_at_start_of_stage
-                0x000000007f0a4a98                sub_GAME_7F0A4A98
+                0x000000007f0a4a98                controller_deadzone_related
                 0x000000007f0a4b40                sub_GAME_7F0A4B40
                 0x000000007f0a4d74                sub_GAME_7F0A4D74
                 0x000000007f0a4dc0                cur_player_get_control_type

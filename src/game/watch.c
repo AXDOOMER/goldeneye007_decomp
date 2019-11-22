@@ -1,6 +1,8 @@
 #include "ultra64.h"
 #include "game/unk_093880.h"
 #include "game/unk_0A1DA0.h"
+#include "game/mainmenu.h"
+#include "game/lvl_text.h"
 
 // bss
 char dword_CODE_bss_8007B0A0[0x40];
@@ -23,19 +25,19 @@ s32 D_800409B4 = 0;
 //D:800409B8
 s32 D_800409B8 = 0;
 //D:800409BC
-s32 D_800409BC = 0;
+f32 D_800409BC = 0.0f;
 //D:800409C0
 s32 D_800409C0 = 0;
 //D:800409C4
 s32 D_800409C4 = 0;
 //D:800409C8
-s32 D_800409C8 = 0;
+f32 D_800409C8 = 0.0f;
 //D:800409CC
-s32 D_800409CC = 0;
+f32 D_800409CC = 0.0f;
 //D:800409D0
-s32 D_800409D0 = 0xFFFFFFFF;
+s32 D_800409D0 = -1;
 //D:800409D4
-s32 D_800409D4 = 0;
+f32 D_800409D4 = 0.0f;
 //D:800409D8
 s32 D_800409D8 = 8;
 //D:800409DC
@@ -101,11 +103,11 @@ u32 D_80040AE0 = 0;
 //D:80040AE4
 u32 D_80040AE4 = 0;
 //D:80040AE8
-f32 D_80040AE8 = 0.0;
+f32 D_80040AE8 = 0.0f;
 //D:80040AEC
-f32 D_80040AEC = 0.0;
+f32 D_80040AEC = 0.0f;
 //D:80040AF0
-u32 D_80040AF0 = 0x42340000;
+f32 D_80040AF0 = 45.0f;
 //D:80040AF4
 u32 D_80040AF4 = 0xFF00A0;
 //D:80040AF8
@@ -123,25 +125,25 @@ u32 D_80040B0C = 0xFFA0;
 //D:80040B10
 u32 D_80040B10 = 0xF800;
 //D:80040B14
-u32 D_80040B14 = 0;
+f32 D_80040B14 = 0.0f;
 //D:80040B18
-u32 D_80040B18 = 0;
+f32 D_80040B18 = 0.0f;
 //D:80040B1C
-u32 D_80040B1C = 0x40200000;
+f32 D_80040B1C = 2.5f;
 //D:80040B20
-u32 D_80040B20 = 0;
+f32 D_80040B20 = 0.0f;
 //D:80040B24
-u32 D_80040B24 = 0;
+f32 D_80040B24 = 0.0f;
 //D:80040B28
-u32 D_80040B28 = 0;
+f32 D_80040B28 = 0.0f;
 //D:80040B2C
 u32 D_80040B2C = 0;
 //D:80040B30
-u32 D_80040B30 = 0;
+f32 D_80040B30 = 0.0f;
 //D:80040B34
-u32 D_80040B34 = 0;
+f32 D_80040B34 = 0.0f;
 //D:80040B38
-u32 D_80040B38 = 0;
+f32 D_80040B38 = 0.0f;
 //D:80040B3C
 u32 D_80040B3C = 0;
 //D:80040B40
@@ -361,8 +363,71 @@ void nullsub_7F0A4860(void) {
 
 
 #ifdef NONMATCHING
-void init_watch_at_start_of_stage(void) {
+void init_watch_at_start_of_stage(void)
+{
+    D_80040994 = 0;
+    D_80040998 = 0;
+    D_8004099C = 0;
+    D_800409A0 = 4;
+    D_800409A4 = 0;
+    watch_soundrelated_maybe = 0;
+    D_800409AC = 0;
+    D_800409B0 = 0;
+    D_800409B4 = 0;
+    D_800409B8 = 0;
+    D_800409BC = 0.0f;
+    D_800409C0 = 0;
+    D_800409C4 = 0;
+    D_800409C8 = 0.0f;
+    D_800409CC = 0.0f;
+    D_800409D0 = -1;
+    D_800409D4 = 0.0f;
+    if (!j_text_trigger)
+    {;}
+    else
+    {
+    pPlayer->neg_vspacing_for_control_type_entry = 0;
+    pPlayer->cur_player_control_type_1 = 0;
+    pPlayer->cur_player_control_type_0 = 0;
+    pPlayer->cur_player_control_type_2 = 0.0f;
+    pPlayer->has_set_control_type_data = 1;
+    }
 
+    
+    D_800409D8 = 8;
+    controlstick_lr_enabled = 0;
+    D_80040AE0 = 0;
+    D_80040AE4 = 0;
+    D_80040AE8 = 0.0f;
+    D_80040AEC = 0.0f;
+    D_80040AF0 = 45.0f;
+    D_80040AF4 = 0xff00a0;
+    D_80040AF8 = 10;
+    D_80040AFC = 0xff;
+    D_80040B00 = 10;
+    D_80040B04 = 0xe0;
+    D_80040B08 = 0;
+    D_80040B0C = 0xffa0;
+    D_80040B10 = 0xf800;
+    D_80040B14 = 0.0f;
+    D_80040B18 = 0.0f;
+    D_80040B1C = 2.5f;
+    D_80040B20 = 0.0f;
+    D_80040B24 = 0.0f;
+    D_80040B28 = 0.0f;
+    D_80040B2C = 0;
+    D_80040B30 = 0.0f;
+    D_80040B34 = 0.0f;
+    D_80040B38 = 0.0f;
+    D_80040B3C = 0;
+    D_80040B40 = 0;
+    D_80040B44 = 1;
+    D_80040B48 = 0x32;
+    D_80040B4C = 0x32;
+    D_80040B50 = 0x32;
+    D_80040B54 = 0x32;
+    sub_GAME_7F01D500(1,0xa);
+    mission_failed_or_aborted = FALSE;
 }
 #else
 GLOBAL_ASM(
@@ -516,62 +581,26 @@ glabel init_watch_at_start_of_stage
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0A4A98(void) {
 
+void controller_deadzone_related(void)
+{
+    if (10 < get_cur_controller_horz_stick_pos('\0'))
+    {
+        D_80040B50 = D_80040B50 + 1;
+    }
+    if (get_cur_controller_horz_stick_pos('\0') < -10)
+    {
+        D_80040B50 = D_80040B50 + -1;
+    }
+    if (10 < get_cur_controller_vert_stick_pos('\0'))
+    {
+        D_80040B54 = D_80040B54 + -1;
+    }
+    if (get_cur_controller_vert_stick_pos('\0') < -10)
+    {
+        D_80040B54 = D_80040B54 + 1;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A4A98
-/* 0D95C8 7F0A4A98 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0D95CC 7F0A4A9C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0D95D0 7F0A4AA0 0C00303B */  jal   get_cur_controller_horz_stick_pos
-/* 0D95D4 7F0A4AA4 00002025 */   move  $a0, $zero
-/* 0D95D8 7F0A4AA8 2841000B */  slti  $at, $v0, 0xb
-/* 0D95DC 7F0A4AAC 14200005 */  bnez  $at, .L7F0A4AC4
-/* 0D95E0 7F0A4AB0 3C0E8004 */   lui   $t6, %hi(D_80040B50) 
-/* 0D95E4 7F0A4AB4 8DCE0B50 */  lw    $t6, %lo(D_80040B50)($t6)
-/* 0D95E8 7F0A4AB8 3C018004 */  lui   $at, %hi(D_80040B50)
-/* 0D95EC 7F0A4ABC 25CF0001 */  addiu $t7, $t6, 1
-/* 0D95F0 7F0A4AC0 AC2F0B50 */  sw    $t7, %lo(D_80040B50)($at)
-.L7F0A4AC4:
-/* 0D95F4 7F0A4AC4 0C00303B */  jal   get_cur_controller_horz_stick_pos
-/* 0D95F8 7F0A4AC8 00002025 */   move  $a0, $zero
-/* 0D95FC 7F0A4ACC 3C038004 */  lui   $v1, %hi(D_80040B50)
-/* 0D9600 7F0A4AD0 2841FFF6 */  slti  $at, $v0, -0xa
-/* 0D9604 7F0A4AD4 10200004 */  beqz  $at, .L7F0A4AE8
-/* 0D9608 7F0A4AD8 24630B50 */   addiu $v1, %lo(D_80040B50) # addiu $v1, $v1, 0xb50
-/* 0D960C 7F0A4ADC 8C780000 */  lw    $t8, ($v1)
-/* 0D9610 7F0A4AE0 2719FFFF */  addiu $t9, $t8, -1
-/* 0D9614 7F0A4AE4 AC790000 */  sw    $t9, ($v1)
-.L7F0A4AE8:
-/* 0D9618 7F0A4AE8 0C00307F */  jal   get_cur_controller_vert_stick_pos
-/* 0D961C 7F0A4AEC 00002025 */   move  $a0, $zero
-/* 0D9620 7F0A4AF0 2841000B */  slti  $at, $v0, 0xb
-/* 0D9624 7F0A4AF4 14200005 */  bnez  $at, .L7F0A4B0C
-/* 0D9628 7F0A4AF8 3C088004 */   lui   $t0, %hi(D_80040B54) 
-/* 0D962C 7F0A4AFC 8D080B54 */  lw    $t0, %lo(D_80040B54)($t0)
-/* 0D9630 7F0A4B00 3C018004 */  lui   $at, %hi(D_80040B54)
-/* 0D9634 7F0A4B04 2509FFFF */  addiu $t1, $t0, -1
-/* 0D9638 7F0A4B08 AC290B54 */  sw    $t1, %lo(D_80040B54)($at)
-.L7F0A4B0C:
-/* 0D963C 7F0A4B0C 0C00307F */  jal   get_cur_controller_vert_stick_pos
-/* 0D9640 7F0A4B10 00002025 */   move  $a0, $zero
-/* 0D9644 7F0A4B14 3C038004 */  lui   $v1, %hi(D_80040B54)
-/* 0D9648 7F0A4B18 2841FFF6 */  slti  $at, $v0, -0xa
-/* 0D964C 7F0A4B1C 10200004 */  beqz  $at, .L7F0A4B30
-/* 0D9650 7F0A4B20 24630B54 */   addiu $v1, %lo(D_80040B54) # addiu $v1, $v1, 0xb54
-/* 0D9654 7F0A4B24 8C6A0000 */  lw    $t2, ($v1)
-/* 0D9658 7F0A4B28 254B0001 */  addiu $t3, $t2, 1
-/* 0D965C 7F0A4B2C AC6B0000 */  sw    $t3, ($v1)
-.L7F0A4B30:
-/* 0D9660 7F0A4B30 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0D9664 7F0A4B34 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0D9668 7F0A4B38 03E00008 */  jr    $ra
-/* 0D966C 7F0A4B3C 00000000 */   nop   
-)
-#endif
 
 
 

@@ -2718,7 +2718,7 @@ typedef struct Player
   s32 cur_player_control_type_1;
   f32 cur_player_control_type_2;
   s32 neg_vspacing_for_control_type_entry;
-  s32 has_set_control_type_data;
+  u32 has_set_control_type_data;
   s32 field_2A6C;
   s32 field_2A70;
   s32 field_2A74;
