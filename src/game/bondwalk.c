@@ -25271,7 +25271,7 @@ void inc_curplayer_hitcount_with_weapon(s32 arg1) {
     if (temp_ret != 0)
     {
         // Node 1
-        temp_v0 = (cur_player_stat_ptr + (arg1 * 4));
+        temp_v0 = (pPlayersPerm + (arg1 * 4));
         *temp_v0 = (s32) (*temp_v0 + 1);
     }
     // Node 2
@@ -25287,9 +25287,9 @@ glabel inc_curplayer_hitcount_with_weapon
 /* 09F234 7F06A704 0FC1782D */  jal   check_special_attributes
 /* 09F238 7F06A708 3C050001 */   lui   $a1, 1
 /* 09F23C 7F06A70C 10400008 */  beqz  $v0, .L7F06A730
-/* 09F240 7F06A710 3C0E8008 */   lui   $t6, %hi(cur_player_stat_ptr) 
+/* 09F240 7F06A710 3C0E8008 */   lui   $t6, %hi(pPlayersPerm) 
 /* 09F244 7F06A714 8FAF001C */  lw    $t7, 0x1c($sp)
-/* 09F248 7F06A718 8DCEA0B4 */  lw    $t6, %lo(cur_player_stat_ptr)($t6)
+/* 09F248 7F06A718 8DCEA0B4 */  lw    $t6, %lo(pPlayersPerm)($t6)
 /* 09F24C 7F06A71C 000FC080 */  sll   $t8, $t7, 2
 /* 09F250 7F06A720 01D81021 */  addu  $v0, $t6, $t8
 /* 09F254 7F06A724 8C590000 */  lw    $t9, ($v0)
@@ -25310,14 +25310,14 @@ glabel inc_curplayer_hitcount_with_weapon
 #ifdef NONMATCHING
 void get_curplayer_shot_register(s32 arg0) {
     // Node 0
-    return *(cur_player_stat_ptr + (arg0 * 4));
+    return *(pPlayersPerm + (arg0 * 4));
 }
 #else
 GLOBAL_ASM(
 .text
 glabel get_curplayer_shot_register
-/* 09F270 7F06A740 3C0E8008 */  lui   $t6, %hi(cur_player_stat_ptr) 
-/* 09F274 7F06A744 8DCEA0B4 */  lw    $t6, %lo(cur_player_stat_ptr)($t6)
+/* 09F270 7F06A740 3C0E8008 */  lui   $t6, %hi(pPlayersPerm) 
+/* 09F274 7F06A744 8DCEA0B4 */  lw    $t6, %lo(pPlayersPerm)($t6)
 /* 09F278 7F06A748 00047880 */  sll   $t7, $a0, 2
 /* 09F27C 7F06A74C 01CFC021 */  addu  $t8, $t6, $t7
 /* 09F280 7F06A750 03E00008 */  jr    $ra
@@ -25332,16 +25332,16 @@ glabel get_curplayer_shot_register
 #ifdef NONMATCHING
 void *inc_cur_civilian_casualties(void) {
     // Node 0
-    cur_player_stat_ptr->unk6C = (s32) (cur_player_stat_ptr->unk6C + 1);
-    return cur_player_stat_ptr;
+    pPlayersPerm->unk6C = (s32) (pPlayersPerm->unk6C + 1);
+    return pPlayersPerm;
 }
 
 #else
 GLOBAL_ASM(
 .text
 glabel inc_cur_civilian_casualties
-/* 09F288 7F06A758 3C028008 */  lui   $v0, %hi(cur_player_stat_ptr)
-/* 09F28C 7F06A75C 8C42A0B4 */  lw    $v0, %lo(cur_player_stat_ptr)($v0)
+/* 09F288 7F06A758 3C028008 */  lui   $v0, %hi(pPlayersPerm)
+/* 09F28C 7F06A75C 8C42A0B4 */  lw    $v0, %lo(pPlayersPerm)($v0)
 /* 09F290 7F06A760 8C4E006C */  lw    $t6, 0x6c($v0)
 /* 09F294 7F06A764 25CF0001 */  addiu $t7, $t6, 1
 /* 09F298 7F06A768 03E00008 */  jr    $ra
@@ -25356,14 +25356,14 @@ glabel inc_cur_civilian_casualties
 #ifdef NONMATCHING
 void get_civilian_casualties(void) {
     // Node 0
-    return cur_player_stat_ptr->unk6C;
+    return pPlayersPerm->unk6C;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel get_civilian_casualties
-/* 09F2A0 7F06A770 3C0E8008 */  lui   $t6, %hi(cur_player_stat_ptr) 
-/* 09F2A4 7F06A774 8DCEA0B4 */  lw    $t6, %lo(cur_player_stat_ptr)($t6)
+/* 09F2A0 7F06A770 3C0E8008 */  lui   $t6, %hi(pPlayersPerm) 
+/* 09F2A4 7F06A774 8DCEA0B4 */  lw    $t6, %lo(pPlayersPerm)($t6)
 /* 09F2A8 7F06A778 03E00008 */  jr    $ra
 /* 09F2AC 7F06A77C 8DC2006C */   lw    $v0, 0x6c($t6)
 )
@@ -25384,7 +25384,7 @@ void *increment_num_kills_display_text_in_MP(void) {
     void *phi_return_reg;
 
     // Node 0
-    cur_player_stat_ptr->unk1C = (s32) (cur_player_stat_ptr->unk1C + 1);
+    pPlayersPerm->unk1C = (s32) (pPlayersPerm->unk1C + 1);
     pPlayer->unk29F8 = (s32) (pPlayer->unk29F8 + 1);
     temp_ret = get_num_players();
     phi_return_reg = temp_ret;
@@ -25392,22 +25392,22 @@ void *increment_num_kills_display_text_in_MP(void) {
     {
         // Node 1
         sp34 = sub_GAME_7F08BFB8();
-        sprintf(&sp40, &aSD, get_textptr_for_textID(0x98da), cur_player_stat_ptr->unk1C);
+        sprintf(&sp40, &aSD, get_textptr_for_textID(0x98da), pPlayersPerm->unk1C);
         display_string_in_lower_left_corner(&sp40);
-        if (cur_player_stat_ptr->unk1C >= 2)
+        if (pPlayersPerm->unk1C >= 2)
         {
             // Node 2
             temp_v0 = (sp34 - pPlayer->unk29E4);
-            if (cur_player_stat_ptr->unk48 < temp_v0)
+            if (pPlayersPerm->unk48 < temp_v0)
             {
                 // Node 3
-                cur_player_stat_ptr->unk48 = temp_v0;
+                pPlayersPerm->unk48 = temp_v0;
             }
             // Node 4
-            if (temp_v0 < cur_player_stat_ptr->unk44)
+            if (temp_v0 < pPlayersPerm->unk44)
             {
                 // Node 5
-                cur_player_stat_ptr->unk44 = temp_v0;
+                pPlayersPerm->unk44 = temp_v0;
             }
         }
         // Node 6
@@ -25449,10 +25449,10 @@ void *increment_num_kills_display_text_in_MP(void) {
         }
         // Node 13
         phi_return_reg = pPlayer;
-        if (cur_player_stat_ptr->unk58 < phi_a0)
+        if (pPlayersPerm->unk58 < phi_a0)
         {
             // Node 14
-            cur_player_stat_ptr->unk58 = (s32) phi_a0;
+            pPlayersPerm->unk58 = (s32) phi_a0;
             phi_return_reg = pPlayer;
         }
     }
@@ -25464,8 +25464,8 @@ void *increment_num_kills_display_text_in_MP(void) {
 GLOBAL_ASM(
 .text
 glabel increment_num_kills_display_text_in_MP
-/* 09F2B0 7F06A780 3C038008 */  lui   $v1, %hi(cur_player_stat_ptr)
-/* 09F2B4 7F06A784 8C63A0B4 */  lw    $v1, %lo(cur_player_stat_ptr)($v1)
+/* 09F2B0 7F06A780 3C038008 */  lui   $v1, %hi(pPlayersPerm)
+/* 09F2B4 7F06A784 8C63A0B4 */  lw    $v1, %lo(pPlayersPerm)($v1)
 /* 09F2B8 7F06A788 27BDFEC0 */  addiu $sp, $sp, -0x140
 /* 09F2BC 7F06A78C AFBF001C */  sw    $ra, 0x1c($sp)
 /* 09F2C0 7F06A790 AFB00018 */  sw    $s0, 0x18($sp)
@@ -25487,8 +25487,8 @@ glabel increment_num_kills_display_text_in_MP
 /* 09F300 7F06A7D0 AFA20034 */  sw    $v0, 0x34($sp)
 /* 09F304 7F06A7D4 0FC30776 */  jal   get_textptr_for_textID
 /* 09F308 7F06A7D8 340498DA */   li    $a0, 39130
-/* 09F30C 7F06A7DC 3C088008 */  lui   $t0, %hi(cur_player_stat_ptr) 
-/* 09F310 7F06A7E0 8D08A0B4 */  lw    $t0, %lo(cur_player_stat_ptr)($t0)
+/* 09F30C 7F06A7DC 3C088008 */  lui   $t0, %hi(pPlayersPerm) 
+/* 09F310 7F06A7E0 8D08A0B4 */  lw    $t0, %lo(pPlayersPerm)($t0)
 /* 09F314 7F06A7E4 3C058005 */  lui   $a1, %hi(aSD)
 /* 09F318 7F06A7E8 24A53BF8 */  addiu $a1, %lo(aSD) # addiu $a1, $a1, 0x3bf8
 /* 09F31C 7F06A7EC 27A40040 */  addiu $a0, $sp, 0x40
@@ -25497,8 +25497,8 @@ glabel increment_num_kills_display_text_in_MP
 /* 09F328 7F06A7F8 8D07001C */   lw    $a3, 0x1c($t0)
 /* 09F32C 7F06A7FC 0FC228F2 */  jal   display_string_in_lower_left_corner
 /* 09F330 7F06A800 27A40040 */   addiu $a0, $sp, 0x40
-/* 09F334 7F06A804 3C038008 */  lui   $v1, %hi(cur_player_stat_ptr)
-/* 09F338 7F06A808 8C63A0B4 */  lw    $v1, %lo(cur_player_stat_ptr)($v1)
+/* 09F334 7F06A804 3C038008 */  lui   $v1, %hi(pPlayersPerm)
+/* 09F338 7F06A808 8C63A0B4 */  lw    $v1, %lo(pPlayersPerm)($v1)
 /* 09F33C 7F06A80C 8C69001C */  lw    $t1, 0x1c($v1)
 /* 09F340 7F06A810 29210002 */  slti  $at, $t1, 2
 /* 09F344 7F06A814 54200012 */  bnezl $at, .L7F06A860
@@ -25512,8 +25512,8 @@ glabel increment_num_kills_display_text_in_MP
 /* 09F364 7F06A834 50200005 */  beql  $at, $zero, .L7F06A84C
 /* 09F368 7F06A838 8C6E0044 */   lw    $t6, 0x44($v1)
 /* 09F36C 7F06A83C AC620048 */  sw    $v0, 0x48($v1)
-/* 09F370 7F06A840 3C038008 */  lui   $v1, %hi(cur_player_stat_ptr)
-/* 09F374 7F06A844 8C63A0B4 */  lw    $v1, %lo(cur_player_stat_ptr)($v1)
+/* 09F370 7F06A840 3C038008 */  lui   $v1, %hi(pPlayersPerm)
+/* 09F374 7F06A844 8C63A0B4 */  lw    $v1, %lo(pPlayersPerm)($v1)
 /* 09F378 7F06A848 8C6E0044 */  lw    $t6, 0x44($v1)
 .L7F06A84C:
 /* 09F37C 7F06A84C 004E082A */  slt   $at, $v0, $t6
@@ -25560,8 +25560,8 @@ glabel increment_num_kills_display_text_in_MP
 /* 09F41C 7F06A8EC 00000000 */   nop   
 /* 09F420 7F06A8F0 24840001 */  addiu $a0, $a0, 1
 .L7F06A8F4:
-/* 09F424 7F06A8F4 3C038008 */  lui   $v1, %hi(cur_player_stat_ptr)
-/* 09F428 7F06A8F8 8C63A0B4 */  lw    $v1, %lo(cur_player_stat_ptr)($v1)
+/* 09F424 7F06A8F4 3C038008 */  lui   $v1, %hi(pPlayersPerm)
+/* 09F428 7F06A8F8 8C63A0B4 */  lw    $v1, %lo(pPlayersPerm)($v1)
 /* 09F42C 7F06A8FC 8C6D0058 */  lw    $t5, 0x58($v1)
 /* 09F430 7F06A900 01A4082A */  slt   $at, $t5, $a0
 /* 09F434 7F06A904 50200003 */  beql  $at, $zero, .L7F06A914
@@ -25579,8 +25579,8 @@ glabel increment_num_kills_display_text_in_MP
 GLOBAL_ASM(
 .text
 glabel increment_num_kills_display_text_in_MP
-/* 09F2B0 7F06A780 3C038008 */  lui   $v1, %hi(cur_player_stat_ptr)
-/* 09F2B4 7F06A784 8C63A0B4 */  lw    $v1, %lo(cur_player_stat_ptr)($v1)
+/* 09F2B0 7F06A780 3C038008 */  lui   $v1, %hi(pPlayersPerm)
+/* 09F2B4 7F06A784 8C63A0B4 */  lw    $v1, %lo(pPlayersPerm)($v1)
 /* 09F2B8 7F06A788 27BDFEC0 */  addiu $sp, $sp, -0x140
 /* 09F2BC 7F06A78C AFBF001C */  sw    $ra, 0x1c($sp)
 /* 09F2C0 7F06A790 AFB00018 */  sw    $s0, 0x18($sp)
@@ -25602,8 +25602,8 @@ glabel increment_num_kills_display_text_in_MP
 /* 09F300 7F06A7D0 AFA20034 */  sw    $v0, 0x34($sp)
 /* 09F304 7F06A7D4 0FC30776 */  jal   get_textptr_for_textID
 /* 09F308 7F06A7D8 340498DA */   li    $a0, 39130
-/* 09F30C 7F06A7DC 3C088008 */  lui   $t0, %hi(cur_player_stat_ptr) 
-/* 09F310 7F06A7E0 8D08A0B4 */  lw    $t0, %lo(cur_player_stat_ptr)($t0)
+/* 09F30C 7F06A7DC 3C088008 */  lui   $t0, %hi(pPlayersPerm) 
+/* 09F310 7F06A7E0 8D08A0B4 */  lw    $t0, %lo(pPlayersPerm)($t0)
 /* 09F314 7F06A7E4 3C058005 */  lui   $a1, %hi(aSD)
 /* 09F318 7F06A7E8 24A53BF8 */  addiu $a1, %lo(aSD) # addiu $a1, $a1, 0x3bf8
 /* 09F31C 7F06A7EC 27A40040 */  addiu $a0, $sp, 0x40
@@ -25612,8 +25612,8 @@ glabel increment_num_kills_display_text_in_MP
 /* 09F328 7F06A7F8 8D07001C */   lw    $a3, 0x1c($t0)
 /* 09F32C 7F06A7FC 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
 /* 09F330 7F06A800 27A40040 */   addiu $a0, $sp, 0x40
-/* 09F334 7F06A804 3C038008 */  lui   $v1, %hi(cur_player_stat_ptr)
-/* 09F338 7F06A808 8C63A0B4 */  lw    $v1, %lo(cur_player_stat_ptr)($v1)
+/* 09F334 7F06A804 3C038008 */  lui   $v1, %hi(pPlayersPerm)
+/* 09F338 7F06A808 8C63A0B4 */  lw    $v1, %lo(pPlayersPerm)($v1)
 /* 09F33C 7F06A80C 8C69001C */  lw    $t1, 0x1c($v1)
 /* 09F340 7F06A810 29210002 */  slti  $at, $t1, 2
 /* 09F344 7F06A814 54200012 */  bnezl $at, .L7F06A860
@@ -25627,8 +25627,8 @@ glabel increment_num_kills_display_text_in_MP
 /* 09F364 7F06A834 50200005 */  beql  $at, $zero, .L7F06A84C
 /* 09F368 7F06A838 8C6E0044 */   lw    $t6, 0x44($v1)
 /* 09F36C 7F06A83C AC620048 */  sw    $v0, 0x48($v1)
-/* 09F370 7F06A840 3C038008 */  lui   $v1, %hi(cur_player_stat_ptr)
-/* 09F374 7F06A844 8C63A0B4 */  lw    $v1, %lo(cur_player_stat_ptr)($v1)
+/* 09F370 7F06A840 3C038008 */  lui   $v1, %hi(pPlayersPerm)
+/* 09F374 7F06A844 8C63A0B4 */  lw    $v1, %lo(pPlayersPerm)($v1)
 /* 09F378 7F06A848 8C6E0044 */  lw    $t6, 0x44($v1)
 .L7F06A84C:
 /* 09F37C 7F06A84C 004E082A */  slt   $at, $v0, $t6
@@ -25675,8 +25675,8 @@ glabel increment_num_kills_display_text_in_MP
 /* 09F41C 7F06A8EC 00000000 */   nop   
 /* 09F420 7F06A8F0 24840001 */  addiu $a0, $a0, 1
 .L7F06A8F4:
-/* 09F424 7F06A8F4 3C038008 */  lui   $v1, %hi(cur_player_stat_ptr)
-/* 09F428 7F06A8F8 8C63A0B4 */  lw    $v1, %lo(cur_player_stat_ptr)($v1)
+/* 09F424 7F06A8F4 3C038008 */  lui   $v1, %hi(pPlayersPerm)
+/* 09F428 7F06A8F8 8C63A0B4 */  lw    $v1, %lo(pPlayersPerm)($v1)
 /* 09F42C 7F06A8FC 8C6D0058 */  lw    $t5, 0x58($v1)
 /* 09F430 7F06A900 01A4082A */  slt   $at, $t5, $a0
 /* 09F434 7F06A904 50200003 */  beql  $at, $zero, .L7F06A914
@@ -25698,15 +25698,15 @@ glabel increment_num_kills_display_text_in_MP
 #ifdef NONMATCHING
 void get_curplay_killcount(void) {
     // Node 0
-    return cur_player_stat_ptr->unk1C;
+    return pPlayersPerm->unk1C;
 }
 
 #else
 GLOBAL_ASM(
 .text
 glabel get_curplay_killcount
-/* 09F454 7F06A924 3C0E8008 */  lui   $t6, %hi(cur_player_stat_ptr) 
-/* 09F458 7F06A928 8DCEA0B4 */  lw    $t6, %lo(cur_player_stat_ptr)($t6)
+/* 09F454 7F06A924 3C0E8008 */  lui   $t6, %hi(pPlayersPerm) 
+/* 09F458 7F06A928 8DCEA0B4 */  lw    $t6, %lo(pPlayersPerm)($t6)
 /* 09F45C 7F06A92C 03E00008 */  jr    $ra
 /* 09F460 7F06A930 8DC2001C */   lw    $v0, 0x1c($t6)
 )
@@ -25719,15 +25719,15 @@ glabel get_curplay_killcount
 #ifdef NONMATCHING
 void *increment_num_times_killed_MwtGC(void) {
     // Node 0
-    cur_player_stat_ptr->unk20 = (s32) (cur_player_stat_ptr->unk20 + 1);
-    return cur_player_stat_ptr;
+    pPlayersPerm->unk20 = (s32) (pPlayersPerm->unk20 + 1);
+    return pPlayersPerm;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel increment_num_times_killed_MwtGC
-/* 09F464 7F06A934 3C028008 */  lui   $v0, %hi(cur_player_stat_ptr)
-/* 09F468 7F06A938 8C42A0B4 */  lw    $v0, %lo(cur_player_stat_ptr)($v0)
+/* 09F464 7F06A934 3C028008 */  lui   $v0, %hi(pPlayersPerm)
+/* 09F468 7F06A938 8C42A0B4 */  lw    $v0, %lo(pPlayersPerm)($v0)
 /* 09F46C 7F06A93C 8C4E0020 */  lw    $t6, 0x20($v0)
 /* 09F470 7F06A940 25CF0001 */  addiu $t7, $t6, 1
 /* 09F474 7F06A944 03E00008 */  jr    $ra
@@ -25742,14 +25742,14 @@ glabel increment_num_times_killed_MwtGC
 #ifdef NONMATCHING
 void get_times_killed_mwtgx(void) {
     // Node 0
-    return cur_player_stat_ptr->unk20;
+    return pPlayersPerm->unk20;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel get_times_killed_mwtgx
-/* 09F47C 7F06A94C 3C0E8008 */  lui   $t6, %hi(cur_player_stat_ptr) 
-/* 09F480 7F06A950 8DCEA0B4 */  lw    $t6, %lo(cur_player_stat_ptr)($t6)
+/* 09F47C 7F06A94C 3C0E8008 */  lui   $t6, %hi(pPlayersPerm) 
+/* 09F480 7F06A950 8DCEA0B4 */  lw    $t6, %lo(pPlayersPerm)($t6)
 /* 09F484 7F06A954 03E00008 */  jr    $ra
 /* 09F488 7F06A958 8DC20020 */   lw    $v0, 0x20($t6)
 )
@@ -25941,20 +25941,20 @@ void *increment_num_suicides_display_MP(void) {
         sp34 = sub_GAME_7F08BFB8();
         sprintf(&sp40, &aSD_0, get_textptr_for_textID(0x98de), pPlayer->unk29DC);
         display_string_in_lower_left_corner(&sp40);
-        if (cur_player_stat_ptr->unk1C >= 2)
+        if (pPlayersPerm->unk1C >= 2)
         {
             // Node 2
             temp_v1 = (sp34 - pPlayer->unk29E4);
-            if (cur_player_stat_ptr->unk48 < temp_v1)
+            if (pPlayersPerm->unk48 < temp_v1)
             {
                 // Node 3
-                cur_player_stat_ptr->unk48 = temp_v1;
+                pPlayersPerm->unk48 = temp_v1;
             }
             // Node 4
-            if (temp_v1 < cur_player_stat_ptr->unk44)
+            if (temp_v1 < pPlayersPerm->unk44)
             {
                 // Node 5
-                cur_player_stat_ptr->unk44 = temp_v1;
+                pPlayersPerm->unk44 = temp_v1;
             }
         }
         // Node 6
@@ -25995,12 +25995,12 @@ void *increment_num_suicides_display_MP(void) {
             }
         }
         // Node 13
-        phi_return_reg = cur_player_stat_ptr;
-        if (cur_player_stat_ptr->unk58 < phi_v1)
+        phi_return_reg = pPlayersPerm;
+        if (pPlayersPerm->unk58 < phi_v1)
         {
             // Node 14
-            cur_player_stat_ptr->unk58 = (s32) phi_v1;
-            phi_return_reg = cur_player_stat_ptr;
+            pPlayersPerm->unk58 = (s32) phi_v1;
+            phi_return_reg = pPlayersPerm;
         }
     }
     // Node 15
@@ -26039,8 +26039,8 @@ glabel increment_num_suicides_display_MP
 /* 09F5A8 7F06AA78 8F0729DC */   lw    $a3, 0x29dc($t8)
 /* 09F5AC 7F06AA7C 0FC228F2 */  jal   display_string_in_lower_left_corner
 /* 09F5B0 7F06AA80 27A40040 */   addiu $a0, $sp, 0x40
-/* 09F5B4 7F06AA84 3C078008 */  lui   $a3, %hi(cur_player_stat_ptr)
-/* 09F5B8 7F06AA88 24E7A0B4 */  addiu $a3, %lo(cur_player_stat_ptr) # addiu $a3, $a3, -0x5f4c
+/* 09F5B4 7F06AA84 3C078008 */  lui   $a3, %hi(pPlayersPerm)
+/* 09F5B8 7F06AA88 24E7A0B4 */  addiu $a3, %lo(pPlayersPerm) # addiu $a3, $a3, -0x5f4c
 /* 09F5BC 7F06AA8C 8CE20000 */  lw    $v0, ($a3)
 /* 09F5C0 7F06AA90 8C59001C */  lw    $t9, 0x1c($v0)
 /* 09F5C4 7F06AA94 2B210002 */  slti  $at, $t9, 2
@@ -26148,8 +26148,8 @@ glabel increment_num_suicides_display_MP
 /* 09F5A8 7F06AA78 8F0729DC */   lw    $a3, 0x29dc($t8)
 /* 09F5AC 7F06AA7C 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
 /* 09F5B0 7F06AA80 27A40040 */   addiu $a0, $sp, 0x40
-/* 09F5B4 7F06AA84 3C078008 */  lui   $a3, %hi(cur_player_stat_ptr)
-/* 09F5B8 7F06AA88 24E7A0B4 */  addiu $a3, %lo(cur_player_stat_ptr) # addiu $a3, $a3, -0x5f4c
+/* 09F5B4 7F06AA84 3C078008 */  lui   $a3, %hi(pPlayersPerm)
+/* 09F5B8 7F06AA88 24E7A0B4 */  addiu $a3, %lo(pPlayersPerm) # addiu $a3, $a3, -0x5f4c
 /* 09F5BC 7F06AA8C 8CE20000 */  lw    $v0, ($a3)
 /* 09F5C0 7F06AA90 8C59001C */  lw    $t9, 0x1c($v0)
 /* 09F5C4 7F06AA94 2B210002 */  slti  $at, $t9, 2

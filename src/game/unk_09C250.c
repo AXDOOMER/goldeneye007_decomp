@@ -7212,24 +7212,10 @@ glabel sub_GAME_7F0A1A94
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0A1D78(void) {
 
+void sub_GAME_7F0A1D78(u32 *param_1)
+{
+    sub_GAME_7F0A1A94(param_1,0,0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A1D78
-/* 0D68A8 7F0A1D78 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0D68AC 7F0A1D7C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0D68B0 7F0A1D80 00002825 */  move  $a1, $zero
-/* 0D68B4 7F0A1D84 0FC286A5 */  jal   sub_GAME_7F0A1A94
-/* 0D68B8 7F0A1D88 00003025 */   move  $a2, $zero
-/* 0D68BC 7F0A1D8C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0D68C0 7F0A1D90 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0D68C4 7F0A1D94 03E00008 */  jr    $ra
-/* 0D68C8 7F0A1D98 00000000 */   nop   
-)
-#endif
 
 

@@ -89,10 +89,10 @@ glabel init_player_BONDdata_stats
 /* 039CC8 7F005198 AD052A48 */  sw    $a1, 0x2a48($t0)
 /* 039CCC 7F00519C 8E0F0000 */  lw    $t7, ($s0)
 /* 039CD0 7F0051A0 00604025 */  move  $t0, $v1
-/* 039CD4 7F0051A4 3C038008 */  lui   $v1, %hi(cur_player_stat_ptr)
+/* 039CD4 7F0051A4 3C038008 */  lui   $v1, %hi(pPlayersPerm)
 /* 039CD8 7F0051A8 ADE02A50 */  sw    $zero, 0x2a50($t7)
 /* 039CDC 7F0051AC 8E0E0000 */  lw    $t6, ($s0)
-/* 039CE0 7F0051B0 2463A0B4 */  addiu $v1, %lo(cur_player_stat_ptr) # addiu $v1, $v1, -0x5f4c
+/* 039CE0 7F0051B0 2463A0B4 */  addiu $v1, %lo(pPlayersPerm) # addiu $v1, $v1, -0x5f4c
 /* 039CE4 7F0051B4 ADC02A54 */  sw    $zero, 0x2a54($t6)
 /* 039CE8 7F0051B8 8E090000 */  lw    $t1, ($s0)
 .L7F0051BC:

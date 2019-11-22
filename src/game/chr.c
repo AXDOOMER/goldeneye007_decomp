@@ -6003,8 +6003,8 @@ glabel sub_GAME_7F021BFC
 /* 056A04 7F021ED4 AFA300A4 */  sw    $v1, 0xa4($sp)
 /* 056A08 7F021ED8 AFB800A0 */  sw    $t8, 0xa0($sp)
 .L7F021EDC:
-/* 056A0C 7F021EDC 3C028008 */  lui   $v0, %hi(cur_player_stat_ptr)
-/* 056A10 7F021EE0 8C42A0B4 */  lw    $v0, %lo(cur_player_stat_ptr)($v0)
+/* 056A0C 7F021EDC 3C028008 */  lui   $v0, %hi(pPlayersPerm)
+/* 056A10 7F021EE0 8C42A0B4 */  lw    $v0, %lo(pPlayersPerm)($v0)
 /* 056A14 7F021EE4 27A40070 */  addiu $a0, $sp, 0x70
 /* 056A18 7F021EE8 8C590034 */  lw    $t9, 0x34($v0)
 /* 056A1C 7F021EEC 272D0001 */  addiu $t5, $t9, 1

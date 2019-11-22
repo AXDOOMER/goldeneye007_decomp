@@ -3947,9 +3947,9 @@ Linker script and memory map
                 0x000000007f09b15c                sub_GAME_7F09B15C
                 0x000000007f09b1dc                set_cur_player_screen_size
                 0x000000007f09b1f8                set_cur_player_viewport_size
-                0x000000007f09b214                sub_GAME_7F09B214
-                0x000000007f09b224                sub_GAME_7F09B224
-                0x000000007f09b234                sub_GAME_7F09B234
+                0x000000007f09b214                set_cur_player_fovy
+                0x000000007f09b224                set_cur_player_aspect
+                0x000000007f09b234                get_cur_player_fovy
                 0x000000007f09b244                sub_GAME_7F09B244
                 0x000000007f09b368                sub_GAME_7F09B368
                 0x000000007f09b398                sub_GAME_7F09B398
@@ -22518,7 +22518,7 @@ Linker script and memory map
                 0x0000000080079fd0                player3_player_data
                 0x000000008007a040                player4_player_data
                 0x000000008007a0b0                pPlayer
-                0x000000008007a0b4                cur_player_stat_ptr
+                0x000000008007a0b4                pPlayersPerm
                 0x000000008007a0b8                player_num
                 0x000000008007a0bc                random_byte
                 0x000000008007a0c0                dword_CODE_bss_8007A0C0
