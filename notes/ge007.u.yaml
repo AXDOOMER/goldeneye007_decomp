@@ -3424,7 +3424,7 @@ labels:
    - [0x7F093A78, "sub_GAME_7F093A78"]
    - [0x7F093BFC, "sub_GAME_7F093BFC"]
    - [0x7F093C48, "sub_GAME_7F093C48"]
-   - [0x7F093C88, "sub_GAME_7F093C88"]
+   - [0x7F093C88, "addpoint5tofloat"]
    - [0x7F093CB0, "sub_GAME_7F093CB0"]
    - [0x7F093FA4, "sub_GAME_7F093FA4"]
    - [0x7F094298, "sub_GAME_7F094298"]

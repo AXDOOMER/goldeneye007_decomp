@@ -1110,7 +1110,7 @@ void store_stagenum_to_copyof_stagenum(s32 stagenum) {
 
 void sub_GAME_7F094438(void)
 {
-    D_8003FD94[0] = ((f32)clock_timer + D_8003FD94[0]);
+    D_8003FD94[0] = (clock_timer + D_8003FD94[0]);
     if ( D_8003FD94[0] > 4096.0f)
     {
         D_8003FD94[0] -= 4096.0f;

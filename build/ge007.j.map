@@ -3928,7 +3928,7 @@ Linker script and memory map
                 0x000000007f094618                sub_GAME_7F093A78
                 0x000000007f09479c                sub_GAME_7F093BFC
                 0x000000007f0947e8                sub_GAME_7F093C48
-                0x000000007f094828                sub_GAME_7F093C88
+                0x000000007f094828                addpoint5tofloat
                 0x000000007f094850                sub_GAME_7F093CB0
                 0x000000007f094b44                sub_GAME_7F093FA4
                 0x000000007f094e38                sub_GAME_7F094298
@@ -19240,6 +19240,8 @@ Linker script and memory map
                 0x000000008003fd58                MipMap2C_Something2_Setup
                 0x000000008003fdc0                D_8003FD90
                 0x000000008003fdc4                D_8003FD94
+                0x000000008003fdd0                D_8003FDA0
+                0x000000008003fdd4                D_8003FDA4
                 0x000000008003fdd8                D_8003FDA8
  build/j/src/game/unk_093880.o(.data)
  build/j/src/game/unk_09B600.o(.data)
