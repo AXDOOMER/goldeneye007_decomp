@@ -192,9 +192,9 @@
 
 // command D7 - hud flags
 #define HUD_HIDE_ALL                    0x00 // hide all
-#define HUD_SHOW_TEXT_TOP               0x01 // hide all but top text
-#define HUD_SHOW_TEXT_BOTTOM            0x02 // hide all but bottom text
-#define HUD_SHOW_HUD_COUNTDOWN          0x04 // hide all but hud countdown
+#define HUD_SHOW_TEXT_TOP               0x01 // don't hide top text
+#define HUD_SHOW_TEXT_BOTTOM            0x02 // don't hide bottom text
+#define HUD_SHOW_HUD_COUNTDOWN          0x04 // don't hide hud countdown
 
 // command 94/95/96/97/98/99 chr->BITFIELD - used for ai list GLIST_FIRE_RAND_ANIM_SUBROUTINE
 #define BITFIELD_DONT_POINT_AT_BOND     0x01 // if set, don't point at bond
@@ -3375,35 +3375,35 @@
         label,
 
 /*=============================================================================
-// name: hud_hide_and_lock_controls
+// name: hud_hide_and_lock_controls_and_pause_mission_time
 // command id: D7
-// info: hide hud elements and lock player controls
+// info: hide hud elements, lock player control and stop mission time.
+//       command is commonly used for exit mission lists
 //=============================================================================
 // note: argument flag will not hide element on command execution. this is
 // needed for dialog/hud countdown while in cinema mode. flags can be combined
 // together to show multiple elements. sequential executions of D7 can be used
 // to hide more elements, but once an element has been hidden it cannot be shown
 // again until command D8 is executed. bond can take damage while in locked state.
-// use HUD_# flags for bitfield argument. mission time is paused while in locked state
+// use HUD_# flags for bitfield argument
 //===========================================================================*/
-#define hud_hide_and_lock_controls_ID 0xD7
-#define hud_hide_and_lock_controls_LENGTH 0x02
-#define hud_hide_and_lock_controls(bitfield) \
-        hud_hide_and_lock_controls_ID, \
+#define hud_hide_and_lock_controls_and_pause_mission_time_ID 0xD7
+#define hud_hide_and_lock_controls_and_pause_mission_time_LENGTH 0x02
+#define hud_hide_and_lock_controls_and_pause_mission_time(bitfield) \
+        hud_hide_and_lock_controls_and_pause_mission_time_ID, \
         bitfield,
 
 /*=============================================================================
-// name: hud_show_all
+// name: hud_show_all_and_unlock_controls_and_resume_mission_time
 // command id: D8
-// info: show all hud elements that have been disabled by D7
+// info: show all hud elements, unlock player control and resume mission time
 //=============================================================================
-// note: should only be executed after D7 command. mission time is resumed when
-//       calling this command
+// note: should only be executed after D7 command
 //===========================================================================*/
-#define hud_show_all_ID 0xD8
-#define hud_show_all_LENGTH 0x01
-#define hud_show_all \
-        hud_show_all_ID,
+#define hud_show_all_and_unlock_controls_and_resume_mission_time_ID 0xD8
+#define hud_show_all_and_unlock_controls_and_resume_mission_time_LENGTH 0x01
+#define hud_show_all_and_unlock_controls_and_resume_mission_time \
+        hud_show_all_and_unlock_controls_and_resume_mission_time_ID,
 
 /*=============================================================================
 // name: chr_try_teleporting_to_pad
@@ -3633,7 +3633,7 @@
 // info: if player pressed any button, fade to black and exit level
 //=============================================================================
 // note: this command activates a state where game will fade to black when button
-// input is detected from controller 1. mission time is not paused when state is active
+// input is detected from controller 1. command does not pause mission time
 //===========================================================================*/
 #define trigger_fade_and_exit_level_on_button_press_ID 0xEA
 #define trigger_fade_and_exit_level_on_button_press_LENGTH 0x01
