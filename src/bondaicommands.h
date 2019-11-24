@@ -332,7 +332,7 @@
 // info: used for ai list parser to check when list ends
 //=============================================================================
 // note: not recommended to execute this command - to finish a list create an
-// infinite loop (goto_loop_infinite) or jump to glist end routine when list has
+// infinite loop (goto_loop_infinite) or jump to GLIST_END_ROUTINE when list has
 // finished tasks
 //===========================================================================*/
 #define ai_list_end_ID 0x04
@@ -711,7 +711,8 @@
 // command id: 20
 // info: makes guard walk a predefined path within setup
 //=============================================================================
-// note: usually paired with goto glist 0005/0007
+// note: usually paired with goto GLIST_DETECT_BOND_DEAF_NO_CLONE_NO_IDLE_ANIM
+//       or GLIST_DETECT_BOND_NO_CLONE_NO_IDLE_ANIM
 //===========================================================================*/
 #define guard_start_patrol_ID 0x20
 #define guard_start_patrol_LENGTH 0x02
@@ -3296,7 +3297,7 @@
 // command id: D2
 // info: exits the level
 //=============================================================================
-// note: recommend not to use this command, instead goto glist exit level for
+// note: recommend not to use this command, instead goto GLIST_EXIT_LEVEL for
 // exit cutscene list. retail game has a glitch with hires mode that needs to
 // execute this command in a loop, check cuba's 1000 list
 //===========================================================================*/
@@ -3627,14 +3628,17 @@
         gas_leak_and_switch_fog_ID,
 
 /*=============================================================================
-// name: mission_time_stop_and_exit_level_on_button_input
+// name: trigger_fade_and_exit_level_on_button_press
 // command id: EA
-// info: stop the mission time and exit level if player 1 pressed any buttons
+// info: if player pressed any button, fade to black and exit level
+//=============================================================================
+// note: this command activates a state where game will fade to black when button
+// input is detected from controller 1. mission time is not paused when state is active
 //===========================================================================*/
-#define mission_time_stop_and_exit_level_on_button_input_ID 0xEA
-#define mission_time_stop_and_exit_level_on_button_input_LENGTH 0x01
-#define mission_time_stop_and_exit_level_on_button_input \
-        mission_time_stop_and_exit_level_on_button_input_ID,
+#define trigger_fade_and_exit_level_on_button_press_ID 0xEA
+#define trigger_fade_and_exit_level_on_button_press_LENGTH 0x01
+#define trigger_fade_and_exit_level_on_button_press \
+        trigger_fade_and_exit_level_on_button_press_ID,
 
 /*=============================================================================
 // name: if_bond_is_dead
