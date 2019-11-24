@@ -2514,7 +2514,7 @@
 // command id: 9B
 // info: set bits in objective bitfield off
 //=============================================================================
-// note: can be used to store a mission unique objective flag, which can be set
+// note: can be used to store a mission unique objective flag, which can be linked
 // to mission objectives. it can also be used to store miscellaneous flags used
 // by other ai lists. if a mission objective is changed while in third person,
 // it will not be updated on the briefing page - all mission objectives status
