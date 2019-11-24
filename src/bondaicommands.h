@@ -1612,17 +1612,17 @@
         object_tag,
 
 /*=============================================================================
-// name: object_detach_from_chr
+// name: object_drop_from_chr
 // command id: 60
-// info: detach tagged object from chr and drop to ground
+// info: drop tagged object held/attached to chr
 //=============================================================================
-// note: item must be attached to a chr. embedded objects will not drop, only
-//       works with attached objects. props can be damaged on drop
+// note: item must be held/attached to a chr. embedded objects will not drop,
+//       only works with attached objects. props can be damaged on drop
 //===========================================================================*/
-#define object_detach_from_chr_ID 0x60
-#define object_detach_from_chr_LENGTH 0x02
-#define object_detach_from_chr(object_tag) \
-        object_detach_from_chr_ID, \
+#define object_drop_from_chr_ID 0x60
+#define object_drop_from_chr_LENGTH 0x02
+#define object_drop_from_chr(object_tag) \
+        object_drop_from_chr_ID, \
         object_tag,
 
 /*=============================================================================
