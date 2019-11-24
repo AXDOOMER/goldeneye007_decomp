@@ -259,7 +259,13 @@
 #define if_local_timer_seconds_greater_than(seconds, label) \
         if_local_timer_greater_than((SECS_TO_TIMER60(seconds)), label)
 
-#define camera_wait_for_loading \
+#define camera_transition_from_bond \
+        bond_hide_weapons \
+        ai_sleep \
+        ai_sleep \
+        ai_sleep
+
+#define camera_transition_to_bond \
         ai_sleep \
         ai_sleep \
         ai_sleep
@@ -565,7 +571,7 @@
 // command id: 16
 // info: update guard's aim/fire target, goto label if successful
 //=============================================================================
-// note: this command only works if guard is currently aiming at a target
+// note: this command only works if guard is currently aiming at a target.
 //       bitfield argument is used to set the target type (pad/bond/chr).
 //       use TARGET_# flags for bitfield argument
 //===========================================================================*/
@@ -582,7 +588,7 @@
 // command id: 17
 // info: make guard continuously face target, goto label if successful
 //=============================================================================
-// note: if guard was shot while facing target, guard will snap out of facing state
+// note: if guard was shot while facing target, guard will snap out of facing state.
 // bitfield argument is used to set the target type (pad/bond/chr).
 // use TARGET_# flags for bitfield argument. command can't use TARGET_AIM_ONLY flag
 //===========================================================================*/
@@ -2353,8 +2359,8 @@
 //=============================================================================
 // note: sets to chr->speedrating. default speed is 0 - argument is signed.
 // negative values will make guard animate slower - this affects firing animations.
-// command does not use 007 reaction speed modifier. do not use values above 0x60
-// or it may crash
+// command does not use 007 reaction speed modifier. do not use values above/below
+// 100 or it may crash
 //===========================================================================*/
 #define guard_set_speed_rating_ID 0x91
 #define guard_set_speed_rating_LENGTH 0x02
@@ -3307,8 +3313,8 @@
 // note: unused command, never used in retail game. tagged items within inventory
 // will become invalid after command - only weapons are safe. command must have
 // 3 ai_sleep commands before executing this command or else engine will crash
-// on console (use macro camera_wait_for_loading). if camera mode is already in
-// third person then you don't need to do the above
+// on console (use camera_transition_to_bond). mission time is resumed on return
+// to first person view
 //===========================================================================*/
 #define camera_return_to_bond_ID 0xD3
 #define camera_return_to_bond_LENGTH 0x01
@@ -3320,9 +3326,10 @@
 // command id: D4
 // info: change view to pad and look at bond
 //=============================================================================
-// note: command must have 3 ai_sleep commands before executing this command or
-// else engine will crash on console (use macro camera_wait_for_loading).
+// note: command must have a bond_hide_weapons command and 3 ai_sleep commands
+// before executing this command or else engine will crash (use camera_transition_from_bond).
 // if camera mode is already in third person then you don't need to do the above.
+// mission time is paused while in third person
 //===========================================================================*/
 #define camera_look_at_bond_from_pad_ID 0xD4
 #define camera_look_at_bond_from_pad_LENGTH 0x03
@@ -3335,11 +3342,12 @@
 // command id: D5
 // info: change view to tagged camera's position and rotation
 //=============================================================================
-// note: command must have 3 ai_sleep commands before executing this command or
-// else engine will crash on console (use macro camera_wait_for_loading).
+// note: command must have a bond_hide_weapons command and 3 ai_sleep commands
+// before executing this command or else engine will crash (use camera_transition_from_bond).
 // if camera mode is already in third person then you don't need to do the above.
 // only look at bond if flag is set. unused flag may have separated look at bond
-// as x/y flags instead of a single flag - for retail unused flag does nothing
+// as x/y flags instead of a single flag - for retail unused flag does nothing.
+// mission time is paused while in third person
 //===========================================================================*/
 #define camera_switch_ID 0xD5
 #define camera_switch_LENGTH 0x06
@@ -3371,11 +3379,11 @@
 // info: hide hud elements and lock player controls
 //=============================================================================
 // note: argument flag will not hide element on command execution. this is
-// needed for dialog or countdown while in cinema mode. flags can be combined
+// needed for dialog/hud countdown while in cinema mode. flags can be combined
 // together to show multiple elements. sequential executions of D7 can be used
 // to hide more elements, but once an element has been hidden it cannot be shown
 // again until command D8 is executed. bond can take damage while in locked state.
-// use HUD_# flags for bitfield argument
+// use HUD_# flags for bitfield argument. mission time is paused while in locked state
 //===========================================================================*/
 #define hud_hide_and_lock_controls_ID 0xD7
 #define hud_hide_and_lock_controls_LENGTH 0x02
@@ -3388,7 +3396,8 @@
 // command id: D8
 // info: show all hud elements that have been disabled by D7
 //=============================================================================
-// note: should only be executed after D7 command
+// note: should only be executed after D7 command. mission time is resumed when
+//       calling this command
 //===========================================================================*/
 #define hud_show_all_ID 0xD8
 #define hud_show_all_LENGTH 0x01
@@ -3666,9 +3675,9 @@
 // command id: EE
 // info: change view to orbit a pad with set speed
 //=============================================================================
-// note: command must have 3 ai_sleep commands before executing this command or
-// else engine will crash on console (use macro camera_wait_for_loading). if camera
-// mode is already in third person then you don't need to do the above.
+// note: command must have a bond_hide_weapons command and 3 ai_sleep commands
+// before executing this command or else engine will crash (use camera_transition_from_bond).
+// if camera mode is already in third person then you don't need to do the above.
 // arguments:
 // lat_distance: camera distance from pad, 100 units per meter. argument is unsigned
 // vert_distance: camera distance from pad, 100 units per meter. argument is signed
@@ -3679,6 +3688,7 @@
 // y_pos_offset: offset the relative y position for pad (boom/jib), argument is signed
 // initial_rotation: uses compass direction like target commands (14-17)
 //                   but inverted - hex N: 0000 E: C000 S: 8000: W: 4000
+// mission time is paused while in third person
 //===========================================================================*/
 #define camera_orbit_pad_ID 0xEE
 #define camera_orbit_pad_LENGTH 0x0D
