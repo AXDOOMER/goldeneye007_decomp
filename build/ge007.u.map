@@ -4058,17 +4058,17 @@ Linker script and memory map
                 0x000000007f0a4f50                is_holding_greater_than_2E_left_on_stick
                 0x000000007f0a4f74                is_holding_greater_than_2E_right_on_stick
                 0x000000007f0a4f98                get_controlstick_lr_enabled
-                0x000000007f0a4fa4                set_controlstick_lr_enabled_0
+                0x000000007f0a4fa4                set_controlstick_lr_disabled
                 0x000000007f0a4fb0                sub_GAME_7F0A4FB0
                 0x000000007f0a4fec                sub_GAME_7F0A4FEC
-                0x000000007f0a5028                sub_GAME_7F0A5028
-                0x000000007f0a504c                sub_GAME_7F0A504C
+                0x000000007f0a5028                is_holding_greater_than_2E_up_on_stick
+                0x000000007f0a504c                is_holding_greater_than_2E_down_on_stick
                 0x000000007f0a5070                get_D_80040AE0
                 0x000000007f0a507c                set_D_80040AE0_0
                 0x000000007f0a5088                sub_GAME_7F0A5088
                 0x000000007f0a50c4                sub_GAME_7F0A50C4
-                0x000000007f0a5100                sub_GAME_7F0A5100
-                0x000000007f0a5124                sub_GAME_7F0A5124
+                0x000000007f0a5100                is_holding_less_than_10_up_on_stick
+                0x000000007f0a5124                is_holding_less_than_10_down_on_stick
                 0x000000007f0a5148                get_D_80040AE4
                 0x000000007f0a5154                set_D_80040AE4_0
                 0x000000007f0a5160                sub_GAME_7F0A5160
