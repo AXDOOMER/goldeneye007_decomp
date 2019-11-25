@@ -954,25 +954,10 @@ void sub_GAME_7F0A4F44(void){
 
 
 
-#ifdef NONMATCHING
-void is_holding_greater_than_2E_left_on_stick(void) {
-
+u32 is_holding_greater_than_2E_left_on_stick(void)
+{
+    return (get_cur_controller_horz_stick_pos('\0') < -0x2d);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel is_holding_greater_than_2E_left_on_stick
-/* 0D9A80 7F0A4F50 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0D9A84 7F0A4F54 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0D9A88 7F0A4F58 0C00303B */  jal   get_cur_controller_horz_stick_pos
-/* 0D9A8C 7F0A4F5C 00002025 */   move  $a0, $zero
-/* 0D9A90 7F0A4F60 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0D9A94 7F0A4F64 284EFFD3 */  slti  $t6, $v0, -0x2d
-/* 0D9A98 7F0A4F68 01C01025 */  move  $v0, $t6
-/* 0D9A9C 7F0A4F6C 03E00008 */  jr    $ra
-/* 0D9AA0 7F0A4F70 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
 
 
 
