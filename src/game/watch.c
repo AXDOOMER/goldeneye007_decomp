@@ -950,42 +950,15 @@ void sub_GAME_7F0A4F44(void){
   watch_soundrelated_maybe = 0;
 }
 
-
-
-
-
 u32 is_holding_greater_than_2E_left_on_stick(void)
 {
     return (get_cur_controller_horz_stick_pos('\0') < -0x2d);
 }
 
-
-
-
-
-#ifdef NONMATCHING
-void is_holding_greater_than_2E_right_on_stick(void) {
-
+u32 is_holding_greater_than_2E_right_on_stick(void)
+{
+    return ((get_cur_controller_horz_stick_pos('\0') < 0x2e) ^ 1);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel is_holding_greater_than_2E_right_on_stick
-/* 0D9AA4 7F0A4F74 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0D9AA8 7F0A4F78 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0D9AAC 7F0A4F7C 0C00303B */  jal   get_cur_controller_horz_stick_pos
-/* 0D9AB0 7F0A4F80 00002025 */   move  $a0, $zero
-/* 0D9AB4 7F0A4F84 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0D9AB8 7F0A4F88 284E002E */  slti  $t6, $v0, 0x2e
-/* 0D9ABC 7F0A4F8C 39C20001 */  xori  $v0, $t6, 1
-/* 0D9AC0 7F0A4F90 03E00008 */  jr    $ra
-/* 0D9AC4 7F0A4F94 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
-
-
-
-
 
 u32 get_controlstick_lr_enabled(void) {
   return controlstick_lr_enabled;
