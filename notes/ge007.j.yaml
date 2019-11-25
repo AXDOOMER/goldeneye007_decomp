@@ -2587,7 +2587,7 @@ labels:
    - [0x7f0a5408, "init_watch_at_start_of_stage"]
    - [0x7f0a5638, "controller_deadzone_related"]
    - [0x7f0a56e0, "sub_GAME_7F0A4B40"]
-   - [0x7f0a5914, "sub_GAME_7F0A4D74"]
+   - [0x7f0a5914, "controllerCheckDualControllerTypesAllowed"]
    - [0x7f0a5960, "cur_player_get_control_type"]
    - [0x7f0a5970, "cur_player_set_control_type"]
    - [0x7f0a59d8, "get_cur_player_look_vertical_inverted"]

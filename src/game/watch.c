@@ -607,8 +607,50 @@ void controller_deadzone_related(void)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A4B40(void) {
 
+void proc_7F0A4B40(undefined4 *param_1)
+{
+    s32 sVar1;
+    undefined4 *puVar2;
+    int iStack52;
+    int iStack48;
+    int iStack44;
+    int *piStack40;
+    byte abStack36 [36];
+    
+    sVar1 = get_cur_controller_horz_stick_pos('\0');
+    if (10 < sVar1) {
+        D_80040B48 = D_80040B48 + 1;
+    }
+    sVar1 = get_cur_controller_horz_stick_pos('\0');
+    if (sVar1 < -10) {
+        D_80040B48 = D_80040B48 - 1;
+    }
+    sVar1 = get_cur_controller_vert_stick_pos('\0');
+    if (10 < sVar1) {
+        D_80040B4C = D_80040B4C - 1;
+    }
+    sVar1 = get_cur_controller_vert_stick_pos('\0');
+    if (sVar1 < -10) {
+        D_80040B4C = D_80040B4C + 1;
+    }
+    *param_1 = 0xb900031d;
+    param_1[1] = 0x504240;
+    param_1[2] = 0xfcffffff;
+    param_1[3] = 0xfffdf6fb;
+    param_1[4] = 0xfa000000;
+    param_1[5] = 0xff0000ff;
+    param_1[6] = (D_80040B48 + 1 & 0x3ff) << 0xe | 0xf6000000 | (D_80040B4C + 1 & 0x3ff) << 2;
+    param_1[7] = (D_80040B48 & 0x3ff) << 0xe | (D_80040B4C & 0x3ff) << 2;
+    piStack40 = ptrFirstFontTableSmall;
+    iStack44 = ptrSecondFontTableSmall;
+    sprintf((char *)abStack36,"%d, %d\n",D_80040B48,D_80040B4C);
+    puVar2 = microcode_constructor(param_1 + 8);
+    proc_7F0AE98C(&iStack52,&iStack48,abStack36,iStack44,piStack40,0);
+    en_text_write_stuff(puVar2,&D_80040B48,&D_80040B4C,abStack36,iStack44,(int)piStack40,0xff0000ff,
+                        iStack48,iStack52,0,0);
+    D_80040B4C = (D_80040B4C - *(int *)(iStack44 + 0x890)) + 1;
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -766,41 +808,18 @@ glabel sub_GAME_7F0A4B40
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0A4D74(void) {
 
+u32 controllerCheckDualControllerTypesAllowed(void)
+{
+    if (get_attached_controller_count() >= 2)
+    {
+        if (cur_player_get_control_type() >= 4)
+        {
+            return 1;
+        }
+    }
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A4D74
-/* 0D98A4 7F0A4D74 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0D98A8 7F0A4D78 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0D98AC 7F0A4D7C 0C002E7E */  jal   get_attached_controller_count
-/* 0D98B0 7F0A4D80 00000000 */   nop   
-/* 0D98B4 7F0A4D84 28410002 */  slti  $at, $v0, 2
-/* 0D98B8 7F0A4D88 54200009 */  bnezl $at, .L7F0A4DB0
-/* 0D98BC 7F0A4D8C 00001025 */   move  $v0, $zero
-/* 0D98C0 7F0A4D90 0FC29370 */  jal   cur_player_get_control_type
-/* 0D98C4 7F0A4D94 00000000 */   nop   
-/* 0D98C8 7F0A4D98 28410004 */  slti  $at, $v0, 4
-/* 0D98CC 7F0A4D9C 54200004 */  bnezl $at, .L7F0A4DB0
-/* 0D98D0 7F0A4DA0 00001025 */   move  $v0, $zero
-/* 0D98D4 7F0A4DA4 10000002 */  b     .L7F0A4DB0
-/* 0D98D8 7F0A4DA8 24020001 */   li    $v0, 1
-/* 0D98DC 7F0A4DAC 00001025 */  move  $v0, $zero
-.L7F0A4DB0:
-/* 0D98E0 7F0A4DB0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0D98E4 7F0A4DB4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0D98E8 7F0A4DB8 03E00008 */  jr    $ra
-/* 0D98EC 7F0A4DBC 00000000 */   nop   
-)
-#endif
-
-
-
-
-
 
 int cur_player_get_control_type(void){
   return pPlayer->cur_player_control_type_0;
@@ -809,7 +828,19 @@ int cur_player_get_control_type(void){
 
 
 #ifdef NONMATCHING
-void cur_player_set_control_type(void) {
+void cur_player_set_control_type(int type)
+{
+    int langsize;
+    
+    pPlayer->cur_player_control_type_0 = type;
+    pPlayer->cur_player_control_type_1 = type;
+    pPlayer->cur_player_control_type_2 = (float)type;
+    langsize = 10;
+    if (j_text_trigger != 0) {
+        langsize = 0xe;
+    }
+    pPlayer->neg_vspacing_for_control_type_entry = -(langsize * type);
+    pPlayer->has_set_control_type_data = 1;
 
 }
 #else
@@ -9351,7 +9382,7 @@ glabel sub_GAME_7F0AADC0
 /* 0DFB40 7F0AB010 27A503FC */  addiu $a1, $sp, 0x3fc
 /* 0DFB44 7F0AB014 0FC16032 */  jal   sub_GAME_7F0580C8
 /* 0DFB48 7F0AB018 27A603BC */   addiu $a2, $sp, 0x3bc
-/* 0DFB4C 7F0AB01C 0FC2935D */  jal   sub_GAME_7F0A4D74
+/* 0DFB4C 7F0AB01C 0FC2935D */  jal   controllerCheckDualControllerTypesAllowed
 /* 0DFB50 7F0AB020 00000000 */   nop   
 /* 0DFB54 7F0AB024 10400018 */  beqz  $v0, .L7F0AB088
 /* 0DFB58 7F0AB028 3C01C0A0 */   lui   $at, 0xc0a0
@@ -9458,7 +9489,7 @@ glabel sub_GAME_7F0AADC0
 /* 0DFCE0 7F0AB1B0 8FA702E8 */   lw    $a3, 0x2e8($sp)
 /* 0DFCE4 7F0AB1B4 00408025 */  move  $s0, $v0
 .L7F0AB1B8:
-/* 0DFCE8 7F0AB1B8 0FC2935D */  jal   sub_GAME_7F0A4D74
+/* 0DFCE8 7F0AB1B8 0FC2935D */  jal   controllerCheckDualControllerTypesAllowed
 /* 0DFCEC 7F0AB1BC 00000000 */   nop   
 /* 0DFCF0 7F0AB1C0 104000A2 */  beqz  $v0, .L7F0AB44C
 /* 0DFCF4 7F0AB1C4 24040001 */   li    $a0, 1
@@ -9627,7 +9658,7 @@ glabel sub_GAME_7F0AADC0
 /* 0DFF74 7F0AB444 27A7004C */   addiu $a3, $sp, 0x4c
 /* 0DFF78 7F0AB448 00408025 */  move  $s0, $v0
 .L7F0AB44C:
-/* 0DFF7C 7F0AB44C 0FC2935D */  jal   sub_GAME_7F0A4D74
+/* 0DFF7C 7F0AB44C 0FC2935D */  jal   controllerCheckDualControllerTypesAllowed
 /* 0DFF80 7F0AB450 00000000 */   nop   
 /* 0DFF84 7F0AB454 10400005 */  beqz  $v0, .L7F0AB46C
 /* 0DFF88 7F0AB458 00000000 */   nop   
@@ -9822,7 +9853,7 @@ glabel sub_GAME_7F0AADC0
 /* 0E0734 7F0ABBC4 27A503FC */  addiu $a1, $sp, 0x3fc
 /* 0E0738 7F0ABBC8 0FC1617A */  jal   sub_GAME_7F0580C8
 /* 0E073C 7F0ABBCC 27A603BC */   addiu $a2, $sp, 0x3bc
-/* 0E0740 7F0ABBD0 0FC29645 */  jal   sub_GAME_7F0A4D74
+/* 0E0740 7F0ABBD0 0FC29645 */  jal   controllerCheckDualControllerTypesAllowed
 /* 0E0744 7F0ABBD4 00000000 */   nop   
 /* 0E0748 7F0ABBD8 10400018 */  beqz  $v0, .Ljp7F0ABC3C
 /* 0E074C 7F0ABBDC 3C01C0A0 */   lui   $at, 0xc0a0
@@ -9929,7 +9960,7 @@ glabel sub_GAME_7F0AADC0
 /* 0E08D4 7F0ABD64 8FA702E8 */   lw    $a3, 0x2e8($sp)
 /* 0E08D8 7F0ABD68 00408025 */  move  $s0, $v0
 .Ljp7F0ABD6C:
-/* 0E08DC 7F0ABD6C 0FC29645 */  jal   sub_GAME_7F0A4D74
+/* 0E08DC 7F0ABD6C 0FC29645 */  jal   controllerCheckDualControllerTypesAllowed
 /* 0E08E0 7F0ABD70 00000000 */   nop   
 /* 0E08E4 7F0ABD74 1040009F */  beqz  $v0, .Ljp7F0ABFF4
 /* 0E08E8 7F0ABD78 24040001 */   li    $a0, 1
@@ -10095,7 +10126,7 @@ glabel sub_GAME_7F0AADC0
 /* 0E0B5C 7F0ABFEC 27A7004C */   addiu $a3, $sp, 0x4c
 /* 0E0B60 7F0ABFF0 00408025 */  move  $s0, $v0
 .Ljp7F0ABFF4:
-/* 0E0B64 7F0ABFF4 0FC29645 */  jal   sub_GAME_7F0A4D74
+/* 0E0B64 7F0ABFF4 0FC29645 */  jal   controllerCheckDualControllerTypesAllowed
 /* 0E0B68 7F0ABFF8 00000000 */   nop   
 /* 0E0B6C 7F0ABFFC 10400005 */  beqz  $v0, .Ljp7F0AC014
 /* 0E0B70 7F0AC000 00000000 */   nop   
@@ -10258,7 +10289,7 @@ glabel sub_GAME_7F0AB4B8
 /* 0E017C 7F0AB64C 00408025 */  move  $s0, $v0
 /* 0E0180 7F0AB650 0FC30776 */  jal   get_textptr_for_textID
 /* 0E0184 7F0AB654 3404AC33 */   li    $a0, 44083
-/* 0E0188 7F0AB658 0FC2935D */  jal   sub_GAME_7F0A4D74
+/* 0E0188 7F0AB658 0FC2935D */  jal   controllerCheckDualControllerTypesAllowed
 /* 0E018C 7F0AB65C 00409025 */   move  $s2, $v0
 /* 0E0190 7F0AB660 10400004 */  beqz  $v0, .L7F0AB674
 /* 0E0194 7F0AB664 00000000 */   nop   

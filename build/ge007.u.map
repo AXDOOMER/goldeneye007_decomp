@@ -4034,7 +4034,7 @@ Linker script and memory map
                 0x000000007f0a4868                init_watch_at_start_of_stage
                 0x000000007f0a4a98                controller_deadzone_related
                 0x000000007f0a4b40                sub_GAME_7F0A4B40
-                0x000000007f0a4d74                sub_GAME_7F0A4D74
+                0x000000007f0a4d74                controllerCheckDualControllerTypesAllowed
                 0x000000007f0a4dc0                cur_player_get_control_type
                 0x000000007f0a4dd0                cur_player_set_control_type
                 0x000000007f0a4e38                get_cur_player_look_vertical_inverted
