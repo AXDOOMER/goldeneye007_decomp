@@ -2656,7 +2656,7 @@ s32 add_tab1_start(s32 arg0) {
 
     // Node 0
     dword_CODE_bss_80069770 = get_textptr_for_textID(TEXT(LTITLE, 0x04));
-    sub_GAME_7F0ACB78(1);
+    setTextSpacingInverted(1);
     sp48 = 0;
     sp4C = 0;
     sub_GAME_7F0AE98C(&sp4C, &sp48, dword_CODE_bss_80069770, ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0);
@@ -2673,7 +2673,7 @@ s32 add_tab1_start(s32 arg0) {
         microcode_constructor_related_to_menus(arg0, ((temp_a3 - sp4C) + 1), 0x33, temp_a3, 0x75, 0x32);
     }
     // Node 4
-    sub_GAME_7F0ACB88(1, temp_a3);
+    setTextOrientation(1, temp_a3);
     if (sp48 < 0)
     {
         // Node 5
@@ -2682,8 +2682,8 @@ s32 add_tab1_start(s32 arg0) {
     sp54 = (s32) (0x54 - (sp48 >> 1));
     sp44 = get_video2_settings_txtClipH();
     en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069770, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0);
-    sub_GAME_7F0ACB88(0);
-    sub_GAME_7F0ACB78(0);
+    setTextOrientation(0);
+    setTextSpacingInverted(0);
     return;
     // (possible return value: en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069770, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0))
 }
@@ -2699,7 +2699,7 @@ glabel add_tab1_start
 /* 03EBC4 7F00A094 34049C04 */   li    $a0, 39940
 /* 03EBC8 7F00A098 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069770)
 /* 03EBCC 7F00A09C AC229770 */  sw    $v0, %lo(dword_CODE_bss_80069770)($at)
-/* 03EBD0 7F00A0A0 0FC2B2DE */  jal   sub_GAME_7F0ACB78
+/* 03EBD0 7F00A0A0 0FC2B2DE */  jal   setTextSpacingInverted
 /* 03EBD4 7F00A0A4 24040001 */   li    $a0, 1
 /* 03EBD8 7F00A0A8 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall) 
 /* 03EBDC 7F00A0AC 8DCE0EAC */  lw    $t6, %lo(ptrFirstFontTableSmall)($t6)
@@ -2740,7 +2740,7 @@ glabel add_tab1_start
 /* 03EC64 7F00A134 AFA70050 */   sw    $a3, 0x50($sp)
 /* 03EC68 7F00A138 00408025 */  move  $s0, $v0
 .L7F00A13C:
-/* 03EC6C 7F00A13C 0FC2B2E2 */  jal   sub_GAME_7F0ACB88
+/* 03EC6C 7F00A13C 0FC2B2E2 */  jal   setTextOrientation
 /* 03EC70 7F00A140 24040001 */   li    $a0, 1
 /* 03EC74 7F00A144 8FAC0048 */  lw    $t4, 0x48($sp)
 /* 03EC78 7F00A148 240E0054 */  li    $t6, 84
@@ -2774,9 +2774,9 @@ glabel add_tab1_start
 /* 03ECE4 7F00A1B4 0FC2B6AF */  jal   en_text_write_stuff
 /* 03ECE8 7F00A1B8 AFB8001C */   sw    $t8, 0x1c($sp)
 /* 03ECEC 7F00A1BC 00408025 */  move  $s0, $v0
-/* 03ECF0 7F00A1C0 0FC2B2E2 */  jal   sub_GAME_7F0ACB88
+/* 03ECF0 7F00A1C0 0FC2B2E2 */  jal   setTextOrientation
 /* 03ECF4 7F00A1C4 00002025 */   move  $a0, $zero
-/* 03ECF8 7F00A1C8 0FC2B2DE */  jal   sub_GAME_7F0ACB78
+/* 03ECF8 7F00A1C8 0FC2B2DE */  jal   setTextSpacingInverted
 /* 03ECFC 7F00A1CC 00002025 */   move  $a0, $zero
 /* 03ED00 7F00A1D0 8FBF003C */  lw    $ra, 0x3c($sp)
 /* 03ED04 7F00A1D4 02001025 */  move  $v0, $s0
@@ -2841,7 +2841,7 @@ s32 add_tab3_previous(s32 arg0) {
 
     // Node 0
     dword_CODE_bss_80069778 = get_textptr_for_textID(TEXT(LTITLE, 0x06));
-    sub_GAME_7F0ACB78(1);
+    setTextSpacingInverted(1);
     sp48 = 0;
     sp4C = 0;
     sub_GAME_7F0AE98C(&sp4C, &sp48, dword_CODE_bss_80069778, ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0);
@@ -2858,7 +2858,7 @@ s32 add_tab3_previous(s32 arg0) {
         microcode_constructor_related_to_menus(arg0, ((temp_a3 - sp4C) + 1), 0xec, temp_a3, 0x12e, 0x32);
     }
     // Node 4
-    sub_GAME_7F0ACB88(1, temp_a3);
+    setTextOrientation(1, temp_a3);
     if (sp48 < 0)
     {
         // Node 5
@@ -2867,8 +2867,8 @@ s32 add_tab3_previous(s32 arg0) {
     sp54 = (s32) (0x10d - (sp48 >> 1));
     sp44 = get_video2_settings_txtClipH();
     en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069778, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0);
-    sub_GAME_7F0ACB88(0);
-    sub_GAME_7F0ACB78(0);
+    setTextOrientation(0);
+    setTextSpacingInverted(0);
     return;
     // (possible return value: en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069778, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0))
 }
@@ -2884,7 +2884,7 @@ glabel add_tab3_previous
 /* 03ED7C 7F00A24C 34049C06 */   li    $a0, 39942
 /* 03ED80 7F00A250 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069778)
 /* 03ED84 7F00A254 AC229778 */  sw    $v0, %lo(dword_CODE_bss_80069778)($at)
-/* 03ED88 7F00A258 0FC2B2DE */  jal   sub_GAME_7F0ACB78
+/* 03ED88 7F00A258 0FC2B2DE */  jal   setTextSpacingInverted
 /* 03ED8C 7F00A25C 24040001 */   li    $a0, 1
 /* 03ED90 7F00A260 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall) 
 /* 03ED94 7F00A264 8DCE0EAC */  lw    $t6, %lo(ptrFirstFontTableSmall)($t6)
@@ -2925,7 +2925,7 @@ glabel add_tab3_previous
 /* 03EE1C 7F00A2EC AFA70050 */   sw    $a3, 0x50($sp)
 /* 03EE20 7F00A2F0 00408025 */  move  $s0, $v0
 .L7F00A2F4:
-/* 03EE24 7F00A2F4 0FC2B2E2 */  jal   sub_GAME_7F0ACB88
+/* 03EE24 7F00A2F4 0FC2B2E2 */  jal   setTextOrientation
 /* 03EE28 7F00A2F8 24040001 */   li    $a0, 1
 /* 03EE2C 7F00A2FC 8FAC0048 */  lw    $t4, 0x48($sp)
 /* 03EE30 7F00A300 240E010D */  li    $t6, 269
@@ -2959,9 +2959,9 @@ glabel add_tab3_previous
 /* 03EE9C 7F00A36C 0FC2B6AF */  jal   en_text_write_stuff
 /* 03EEA0 7F00A370 AFB8001C */   sw    $t8, 0x1c($sp)
 /* 03EEA4 7F00A374 00408025 */  move  $s0, $v0
-/* 03EEA8 7F00A378 0FC2B2E2 */  jal   sub_GAME_7F0ACB88
+/* 03EEA8 7F00A378 0FC2B2E2 */  jal   setTextOrientation
 /* 03EEAC 7F00A37C 00002025 */   move  $a0, $zero
-/* 03EEB0 7F00A380 0FC2B2DE */  jal   sub_GAME_7F0ACB78
+/* 03EEB0 7F00A380 0FC2B2DE */  jal   setTextSpacingInverted
 /* 03EEB4 7F00A384 00002025 */   move  $a0, $zero
 /* 03EEB8 7F00A388 8FBF003C */  lw    $ra, 0x3c($sp)
 /* 03EEBC 7F00A38C 02001025 */  move  $v0, $s0
@@ -3003,7 +3003,7 @@ s32 add_tab2_next(s32 arg0) {
 
     // Node 0
     dword_CODE_bss_80069774 = get_textptr_for_textID(TEXT(LTITLE, 0x05));
-    sub_GAME_7F0ACB78(1);
+    setTextSpacingInverted(1);
     sp48 = 0;
     sp4C = 0;
     sub_GAME_7F0AE98C(&sp4C, &sp48, dword_CODE_bss_80069774, ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0);
@@ -3020,7 +3020,7 @@ s32 add_tab2_next(s32 arg0) {
         microcode_constructor_related_to_menus(arg0, ((temp_a3 - sp4C) + 1), 0x90, temp_a3, 0xd2, 0x32);
     }
     // Node 4
-    sub_GAME_7F0ACB88(1, temp_a3);
+    setTextOrientation(1, temp_a3);
     if (sp48 < 0)
     {
         // Node 5
@@ -3029,8 +3029,8 @@ s32 add_tab2_next(s32 arg0) {
     sp54 = (s32) (0xb1 - (sp48 >> 1));
     sp44 = get_video2_settings_txtClipH();
     en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069774, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0);
-    sub_GAME_7F0ACB88(0);
-    sub_GAME_7F0ACB78(0);
+    setTextOrientation(0);
+    setTextSpacingInverted(0);
     return;
     // (possible return value: en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069774, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0))
 }
@@ -3046,7 +3046,7 @@ glabel add_tab2_next
 /* 03EF58 7F00A428 34049C05 */   li    $a0, 39941
 /* 03EF5C 7F00A42C 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069774)
 /* 03EF60 7F00A430 AC229774 */  sw    $v0, %lo(dword_CODE_bss_80069774)($at)
-/* 03EF64 7F00A434 0FC2B2DE */  jal   sub_GAME_7F0ACB78
+/* 03EF64 7F00A434 0FC2B2DE */  jal   setTextSpacingInverted
 /* 03EF68 7F00A438 24040001 */   li    $a0, 1
 /* 03EF6C 7F00A43C 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall) 
 /* 03EF70 7F00A440 8DCE0EAC */  lw    $t6, %lo(ptrFirstFontTableSmall)($t6)
@@ -3087,7 +3087,7 @@ glabel add_tab2_next
 /* 03EFF8 7F00A4C8 AFA70050 */   sw    $a3, 0x50($sp)
 /* 03EFFC 7F00A4CC 00408025 */  move  $s0, $v0
 .L7F00A4D0:
-/* 03F000 7F00A4D0 0FC2B2E2 */  jal   sub_GAME_7F0ACB88
+/* 03F000 7F00A4D0 0FC2B2E2 */  jal   setTextOrientation
 /* 03F004 7F00A4D4 24040001 */   li    $a0, 1
 /* 03F008 7F00A4D8 8FAC0048 */  lw    $t4, 0x48($sp)
 /* 03F00C 7F00A4DC 240E00B1 */  li    $t6, 177
@@ -3121,9 +3121,9 @@ glabel add_tab2_next
 /* 03F078 7F00A548 0FC2B6AF */  jal   en_text_write_stuff
 /* 03F07C 7F00A54C AFB8001C */   sw    $t8, 0x1c($sp)
 /* 03F080 7F00A550 00408025 */  move  $s0, $v0
-/* 03F084 7F00A554 0FC2B2E2 */  jal   sub_GAME_7F0ACB88
+/* 03F084 7F00A554 0FC2B2E2 */  jal   setTextOrientation
 /* 03F088 7F00A558 00002025 */   move  $a0, $zero
-/* 03F08C 7F00A55C 0FC2B2DE */  jal   sub_GAME_7F0ACB78
+/* 03F08C 7F00A55C 0FC2B2DE */  jal   setTextSpacingInverted
 /* 03F090 7F00A560 00002025 */   move  $a0, $zero
 /* 03F094 7F00A564 8FBF003C */  lw    $ra, 0x3c($sp)
 /* 03F098 7F00A568 02001025 */  move  $v0, $s0
@@ -3251,7 +3251,7 @@ void interface_menu00_legalscreen(undefined8 param_1,undefined8 param_2) {
   undefined8 extraout_a2_00;
   undefined8 extraout_a3;
   
-  video_related_1F(param_1._4_4_,param_2,in_a2);
+  setvideo_far(param_1._4_4_,param_2,in_a2);
   video_related_21(extraout_a0_lo,extraout_a1,extraout_a2);
   set_page_height(extraout_a0_lo_00,extraout_a1_lo,extraout_a2_00,extraout_a3);
   set_video2_settings_offset_24(0);
@@ -3284,7 +3284,7 @@ glabel interface_menu00_legalscreen
 /* 03F210 7F00A6E0 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 03F214 7F00A6E4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 03F218 7F00A6E8 44816000 */  mtc1  $at, $f12
-/* 03F21C 7F00A6EC 0C001151 */  jal   video_related_1F
+/* 03F21C 7F00A6EC 0C001151 */  jal   setvideo_far
 /* 03F220 7F00A6F0 00000000 */   nop   
 /* 03F224 7F00A6F4 3C018005 */  lui   $at, %hi(D_800519E4)
 /* 03F228 7F00A6F8 0C001164 */  jal   video_related_21
@@ -3699,7 +3699,7 @@ void *interface_menu17_switchscreens(void)
 {
     s32 temp_t7;
 
-    video_related_1F(0x42700000);
+    setvideo_far(0x42700000);
     video_related_21(D_800519EC);
     set_page_height(0x42c80000, D_800519F0);
     set_video2_settings_offset_24(0);
@@ -3726,7 +3726,7 @@ glabel interface_menu17_switchscreens
 /* 03F634 7F00AB04 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 03F638 7F00AB08 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 03F63C 7F00AB0C 44816000 */  mtc1  $at, $f12
-/* 03F640 7F00AB10 0C001151 */  jal   video_related_1F
+/* 03F640 7F00AB10 0C001151 */  jal   setvideo_far
 /* 03F644 7F00AB14 00000000 */   nop   
 /* 03F648 7F00AB18 3C018005 */  lui   $at, %hi(D_800519EC)
 /* 03F64C 7F00AB1C 0C001164 */  jal   video_related_21
@@ -3884,7 +3884,7 @@ void interface_menu01_nintendo(void)
 {
     s32 temp_t8;
 
-    video_related_1F(0x42700000);
+    setvideo_far(0x42700000);
     video_related_21(D_800519FC);
     set_page_height(0x42c80000, D_80051A00);
     set_video2_settings_offset_24(0);
@@ -3914,7 +3914,7 @@ glabel interface_menu01_nintendo
 /* 03F7FC 7F00ACCC 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 03F800 7F00ACD0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 03F804 7F00ACD4 44816000 */  mtc1  $at, $f12
-/* 03F808 7F00ACD8 0C001151 */  jal   video_related_1F
+/* 03F808 7F00ACD8 0C001151 */  jal   setvideo_far
 /* 03F80C 7F00ACDC 00000000 */   nop   
 /* 03F810 7F00ACE0 3C018005 */  lui   $at, %hi(D_800519FC)
 /* 03F814 7F00ACE4 0C001164 */  jal   video_related_21
@@ -4424,7 +4424,7 @@ void interface_menu04_goldeneyelogo(void)
 {
     s32 temp_t8;
 
-    video_related_1F(0x42700000);
+    setvideo_far(0x42700000);
     video_related_21(D_80051A10);
     set_page_height(0x42c80000, D_80051A14);
     set_video2_settings_offset_24(0);
@@ -4481,7 +4481,7 @@ glabel interface_menu04_goldeneyelogo
 /* 03FE64 7F00B334 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 03FE68 7F00B338 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 03FE6C 7F00B33C 44816000 */  mtc1  $at, $f12
-/* 03FE70 7F00B340 0C001151 */  jal   video_related_1F
+/* 03FE70 7F00B340 0C001151 */  jal   setvideo_far
 /* 03FE74 7F00B344 00000000 */   nop   
 /* 03FE78 7F00B348 3C018005 */  lui   $at, %hi(D_80051A10)
 /* 03FE7C 7F00B34C 0C001164 */  jal   video_related_21
@@ -5412,7 +5412,7 @@ s32 interface_menu05_fileselect(void)
     {
         menu_timer = (s32) (menu_timer + clock_timer);
     }
-    video_related_1F(0x42700000);
+    setvideo_far(0x42700000);
     video_related_21(D_80051A1C);
     set_page_height(0x42c80000, D_80051A20);
     set_video2_settings_offset_24(0);
@@ -5674,7 +5674,7 @@ glabel interface_menu05_fileselect
 .L7F00BC70:
 /* 0407A0 7F00BC70 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 0407A4 7F00BC74 44816000 */  mtc1  $at, $f12
-/* 0407A8 7F00BC78 0C001151 */  jal   video_related_1F
+/* 0407A8 7F00BC78 0C001151 */  jal   setvideo_far
 /* 0407AC 7F00BC7C 00000000 */   nop   
 /* 0407B0 7F00BC80 3C018005 */  lui   $at, %hi(D_80051A1C)
 /* 0407B4 7F00BC84 0C001164 */  jal   video_related_21
@@ -6377,7 +6377,7 @@ loop_4:
         goto loop_1;
     }
     arg0 = microcode_constructor(arg0);
-    sub_GAME_7F0ACB78(0);
+    setTextSpacingInverted(0);
     sp74 = &dword_CODE_bss_80069620;
     sp1B4 = 0;
 loop_7:
@@ -6515,7 +6515,7 @@ loop_24:
     {
         goto loop_7;
     }
-    sub_GAME_7F0ACB78(0);
+    setTextSpacingInverted(0);
     temp_ret_4 = get_textptr_for_textID(TEXT(LTITLE, 0x1b));
     spF4 = 0;
     spF8 = 0;
@@ -6742,7 +6742,7 @@ glabel constructor_menu05_fileselect
 /* 041160 7F00C630 0FC2B366 */  jal   microcode_constructor
 /* 041164 7F00C634 8FA401B8 */   lw    $a0, 0x1b8($sp)
 /* 041168 7F00C638 AFA201B8 */  sw    $v0, 0x1b8($sp)
-/* 04116C 7F00C63C 0FC2B2DE */  jal   sub_GAME_7F0ACB78
+/* 04116C 7F00C63C 0FC2B2DE */  jal   setTextSpacingInverted
 /* 041170 7F00C640 00002025 */   move  $a0, $zero
 /* 041174 7F00C644 3C0B8007 */  lui   $t3, %hi(dword_CODE_bss_80069620) 
 /* 041178 7F00C648 256B9620 */  addiu $t3, %lo(dword_CODE_bss_80069620) # addiu $t3, $t3, -0x69e0
@@ -7199,7 +7199,7 @@ glabel constructor_menu05_fileselect
 /* 041848 7F00CD18 AFAD0074 */  sw    $t5, 0x74($sp)
 /* 04184C 7F00CD1C 1501FE56 */  bne   $t0, $at, .L7F00C678
 /* 041850 7F00CD20 AFA801B4 */   sw    $t0, 0x1b4($sp)
-/* 041854 7F00CD24 0FC2B2DE */  jal   sub_GAME_7F0ACB78
+/* 041854 7F00CD24 0FC2B2DE */  jal   setTextSpacingInverted
 /* 041858 7F00CD28 00002025 */   move  $a0, $zero
 /* 04185C 7F00CD2C 0FC30776 */  jal   get_textptr_for_textID
 /* 041860 7F00CD30 34049C1B */   li    $a0, 39963
@@ -7594,7 +7594,7 @@ loop_1:
     {
         goto loop_1;
     }
-    video_related_1F(0x42700000);
+    setvideo_far(0x42700000);
     video_related_21(D_80051A38);
     set_page_height(0x42c80000, D_80051A3C);
     set_video2_settings_offset_24(0);
@@ -7737,7 +7737,7 @@ glabel interface_menu06_modesel
 /* 041E24 7F00D2F4 24630001 */   addiu $v1, $v1, 1
 /* 041E28 7F00D2F8 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 041E2C 7F00D2FC 44816000 */  mtc1  $at, $f12
-/* 041E30 7F00D300 0C001151 */  jal   video_related_1F
+/* 041E30 7F00D300 0C001151 */  jal   setvideo_far
 /* 041E34 7F00D304 00000000 */   nop   
 /* 041E38 7F00D308 3C018005 */  lui   $at, %hi(D_80051A38)
 /* 041E3C 7F00D30C 0C001164 */  jal   video_related_21
@@ -8882,7 +8882,7 @@ void interface_menu07_missionsel(void)
     s32 phi_a0;
     s32 phi_s5;
 
-    video_related_1F(0x42700000);
+    setvideo_far(0x42700000);
     video_related_21(D_80051A44);
     set_page_height(0x42c80000, D_80051A48);
     set_video2_settings_offset_24(0);
@@ -9116,7 +9116,7 @@ glabel interface_menu07_missionsel
 /* 042A00 7F00DED0 AFB30020 */  sw    $s3, 0x20($sp)
 /* 042A04 7F00DED4 AFB2001C */  sw    $s2, 0x1c($sp)
 /* 042A08 7F00DED8 AFB10018 */  sw    $s1, 0x18($sp)
-/* 042A0C 7F00DEDC 0C001151 */  jal   video_related_1F
+/* 042A0C 7F00DEDC 0C001151 */  jal   setvideo_far
 /* 042A10 7F00DEE0 AFB00014 */   sw    $s0, 0x14($sp)
 /* 042A14 7F00DEE4 3C018005 */  lui   $at, %hi(D_80051A44)
 /* 042A18 7F00DEE8 0C001164 */  jal   video_related_21
@@ -9481,7 +9481,7 @@ glabel interface_menu07_missionsel
 /* 042A60 7F00DEF0 AFB30020 */  sw    $s3, 0x20($sp)
 /* 042A64 7F00DEF4 AFB2001C */  sw    $s2, 0x1c($sp)
 /* 042A68 7F00DEF8 AFB10018 */  sw    $s1, 0x18($sp)
-/* 042A6C 7F00DEFC 0C001151 */  jal   video_related_1F
+/* 042A6C 7F00DEFC 0C001151 */  jal   setvideo_far
 /* 042A70 7F00DF00 AFB00014 */   sw    $s0, 0x14($sp)
 /* 042A74 7F00DF04 3C018005 */  lui   $at, %hi(D_80051A44) # $at, 0x8005
 /* 042A78 7F00DF08 0C001164 */  jal   video_related_21
@@ -10240,7 +10240,7 @@ void interface_menu08_difficulty(void)
     s32 sp1C;
 
     sp1C = get_highest_unlocked_difficulty_for_level((0x80030000 + (briefingpage * 0x1c))->unk-5408);
-    video_related_1F(0x42700000);
+    setvideo_far(0x42700000);
     video_related_21(D_80051A4C);
     set_page_height(0x42c80000, D_80051A50);
     set_video2_settings_offset_24(0);
@@ -10341,7 +10341,7 @@ glabel interface_menu08_difficulty
 /* 043318 7F00E7E8 8C84ABF8 */   lw    $a0, %lo(mission_folder_setup_entries+0x14)($a0)
 /* 04331C 7F00E7EC 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 043320 7F00E7F0 44816000 */  mtc1  $at, $f12
-/* 043324 7F00E7F4 0C001151 */  jal   video_related_1F
+/* 043324 7F00E7F4 0C001151 */  jal   setvideo_far
 /* 043328 7F00E7F8 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 04332C 7F00E7FC 3C018005 */  lui   $at, %hi(D_80051A4C)
 /* 043330 7F00E800 0C001164 */  jal   video_related_21
@@ -11438,7 +11438,7 @@ void interface_menu09_007options(void)
     f32 phi_f0;
     f32 phi_f0_2;
 
-    video_related_1F(0x42700000);
+    setvideo_far(0x42700000);
     video_related_21(D_80051A58);
     set_page_height(0x42c80000, D_80051A5C);
     set_video2_settings_offset_24(0);
@@ -11610,7 +11610,7 @@ glabel interface_menu09_007options
 /* 043EA8 7F00F378 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 043EAC 7F00F37C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 043EB0 7F00F380 44816000 */  mtc1  $at, $f12
-/* 043EB4 7F00F384 0C001151 */  jal   video_related_1F
+/* 043EB4 7F00F384 0C001151 */  jal   setvideo_far
 /* 043EB8 7F00F388 00000000 */   nop   
 /* 043EBC 7F00F38C 3C018005 */  lui   $at, %hi(D_80051A58)
 /* 043EC0 7F00F390 0C001164 */  jal   video_related_21
@@ -13509,7 +13509,7 @@ void interface_menu0E_mpoptions(void)
     sp24 = 0;
     sp20 = 0;
     sp1C = 0;
-    video_related_1F(0x42700000);
+    setvideo_far(0x42700000);
     video_related_21(D_80051A80);
     set_page_height(0x42c80000, D_80051A84);
     set_video2_settings_offset_24(0);
@@ -13833,7 +13833,7 @@ glabel interface_menu0E_mpoptions
 /* 04539C 7F01086C AFA00028 */  sw    $zero, 0x28($sp)
 /* 0453A0 7F010870 AFA00024 */  sw    $zero, 0x24($sp)
 /* 0453A4 7F010874 AFA00020 */  sw    $zero, 0x20($sp)
-/* 0453A8 7F010878 0C001151 */  jal   video_related_1F
+/* 0453A8 7F010878 0C001151 */  jal   setvideo_far
 /* 0453AC 7F01087C AFA0001C */   sw    $zero, 0x1c($sp)
 /* 0453B0 7F010880 3C018005 */  lui   $at, %hi(D_80051A80)
 /* 0453B4 7F010884 0C001164 */  jal   video_related_21
@@ -15871,7 +15871,7 @@ void interface_menu0F_mpcharsel(void)
   
   iVar4 = get_selected_num_players();
   iStack12 = 0;
-  video_related_1F(60.00000000);
+  setvideo_far(60.00000000);
   video_related_21((f32)flt_80051A88);
   set_page_height(100.00000000,(f32)flt_80051A8C);
   set_video2_settings_offset_24(0);
@@ -16011,7 +16011,7 @@ glabel interface_menu0F_mpcharsel
 /* 046A34 7F011F04 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 046A38 7F011F08 44816000 */  mtc1  $at, $f12
 /* 046A3C 7F011F0C AFA2004C */  sw    $v0, 0x4c($sp)
-/* 046A40 7F011F10 0C001151 */  jal   video_related_1F
+/* 046A40 7F011F10 0C001151 */  jal   setvideo_far
 /* 046A44 7F011F14 AFA00044 */   sw    $zero, 0x44($sp)
 /* 046A48 7F011F18 3C018005 */  lui   $at, %hi(D_80051A88)
 /* 046A4C 7F011F1C 0C001164 */  jal   video_related_21
@@ -17515,7 +17515,7 @@ void interface_menu10_mphandicap(void)
     s32 phi_fp_2;
 
     sp44 = get_selected_num_players();
-    video_related_1F(0x42700000);
+    setvideo_far(0x42700000);
     video_related_21(D_80051A90);
     set_page_height(0x42c80000, D_80051A94);
     set_video2_settings_offset_24(0);
@@ -17634,7 +17634,7 @@ glabel interface_menu10_mphandicap
 /* 047A24 7F012EF4 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 047A28 7F012EF8 44816000 */  mtc1  $at, $f12
 /* 047A2C 7F012EFC AFA20044 */  sw    $v0, 0x44($sp)
-/* 047A30 7F012F00 0C001151 */  jal   video_related_1F
+/* 047A30 7F012F00 0C001151 */  jal   setvideo_far
 /* 047A34 7F012F04 0000F025 */   move  $fp, $zero
 /* 047A38 7F012F08 3C018005 */  lui   $at, %hi(D_80051A90)
 /* 047A3C 7F012F0C 0C001164 */  jal   video_related_21
@@ -18248,7 +18248,7 @@ void interface_menu11_mpcontrols(void)
 
     temp_s6 = get_selected_num_players();
     sp44 = 0;
-    video_related_1F(0x42700000);
+    setvideo_far(0x42700000);
     video_related_21(D_80051A98);
     set_page_height(0x42c80000, D_80051A9C);
     set_video2_settings_offset_24(0);
@@ -18420,7 +18420,7 @@ glabel interface_menu11_mpcontrols
 /* 048168 7F013638 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 04816C 7F01363C 44816000 */  mtc1  $at, $f12
 /* 048170 7F013640 0040B025 */  move  $s6, $v0
-/* 048174 7F013644 0C001151 */  jal   video_related_1F
+/* 048174 7F013644 0C001151 */  jal   setvideo_far
 /* 048178 7F013648 AFA00044 */   sw    $zero, 0x44($sp)
 /* 04817C 7F01364C 3C018005 */  lui   $at, %hi(D_80051A98)
 /* 048180 7F013650 0C001164 */  jal   video_related_21
@@ -18669,7 +18669,7 @@ glabel interface_menu11_mpcontrols
 /* 0481E8 7F013678 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 0481EC 7F01367C 44816000 */  mtc1  $at, $f12
 /* 0481F0 7F013680 0040B825 */  move  $s7, $v0
-/* 0481F4 7F013684 0C001151 */  jal   video_related_1F
+/* 0481F4 7F013684 0C001151 */  jal   setvideo_far
 /* 0481F8 7F013688 AFA00054 */   sw    $zero, 0x54($sp)
 /* 0481FC 7F01368C 3C018005 */  lui   $at, %hi(D_80051A98) # $at, 0x8005
 /* 048200 7F013690 0C001164 */  jal   video_related_21
@@ -19359,7 +19359,7 @@ void interface_menu12_mpstage(void)
     s32 phi_v1;
     s32 phi_v0;
 
-    video_related_1F(0x42700000);
+    setvideo_far(0x42700000);
     video_related_21(D_80051AA0);
     set_page_height(0x42c80000, D_80051AA4);
     set_video2_settings_offset_24(0);
@@ -19468,7 +19468,7 @@ glabel interface_menu12_mpstage
 /* 048908 7F013DD8 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 04890C 7F013DDC AFBF001C */  sw    $ra, 0x1c($sp)
 /* 048910 7F013DE0 44816000 */  mtc1  $at, $f12
-/* 048914 7F013DE4 0C001151 */  jal   video_related_1F
+/* 048914 7F013DE4 0C001151 */  jal   setvideo_far
 /* 048918 7F013DE8 AFB00018 */   sw    $s0, 0x18($sp)
 /* 04891C 7F013DEC 3C018005 */  lui   $at, %hi(D_80051AA0)
 /* 048920 7F013DF0 0C001164 */  jal   video_related_21
@@ -20370,7 +20370,7 @@ void interface_menu13_mpscenario(void)
     s32 phi_s1;
 
     sp2C = 0;
-    video_related_1F(0x42700000);
+    setvideo_far(0x42700000);
     video_related_21(D_80051AA8);
     set_page_height(0x42c80000, D_80051AAC);
     set_video2_settings_offset_24(0);
@@ -20463,7 +20463,7 @@ glabel interface_menu13_mpscenario
 /* 0492F8 7F0147C8 AFB20020 */  sw    $s2, 0x20($sp)
 /* 0492FC 7F0147CC AFB1001C */  sw    $s1, 0x1c($sp)
 /* 049300 7F0147D0 AFB00018 */  sw    $s0, 0x18($sp)
-/* 049304 7F0147D4 0C001151 */  jal   video_related_1F
+/* 049304 7F0147D4 0C001151 */  jal   setvideo_far
 /* 049308 7F0147D8 AFA0002C */   sw    $zero, 0x2c($sp)
 /* 04930C 7F0147DC 3C018005 */  lui   $at, %hi(D_80051AA8)
 /* 049310 7F0147E0 0C001164 */  jal   video_related_21
@@ -20943,7 +20943,7 @@ void interface_menu14_mpteams(void)
     ? phi_a1_2;
     s32 phi_s0_2;
 
-    video_related_1F(0x42700000);
+    setvideo_far(0x42700000);
     video_related_21(D_80051AB0);
     set_page_height(0x42c80000, D_80051AB4);
     set_video2_settings_offset_24(0);
@@ -21086,7 +21086,7 @@ glabel interface_menu14_mpteams
 /* 049880 7F014D50 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 049884 7F014D54 44816000 */  mtc1  $at, $f12
 /* 049888 7F014D58 AFB10018 */  sw    $s1, 0x18($sp)
-/* 04988C 7F014D5C 0C001151 */  jal   video_related_1F
+/* 04988C 7F014D5C 0C001151 */  jal   setvideo_far
 /* 049890 7F014D60 AFB00014 */   sw    $s0, 0x14($sp)
 /* 049894 7F014D64 3C018005 */  lui   $at, %hi(D_80051AB0)
 /* 049898 7F014D68 0C001164 */  jal   video_related_21
@@ -21902,7 +21902,7 @@ void update_menu0A_briefing(void)
 #ifdef NONMATCHING
 void interface_menu0A_briefing(void)
 {
-    video_related_1F(0x42700000);
+    setvideo_far(0x42700000);
     video_related_21(D_80051AB8);
     set_page_height(0x42c80000, D_80051ABC);
     set_video2_settings_offset_24(0);
@@ -22017,7 +22017,7 @@ glabel interface_menu0A_briefing
 /* 04A1D0 7F0156A0 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 04A1D4 7F0156A4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 04A1D8 7F0156A8 44816000 */  mtc1  $at, $f12
-/* 04A1DC 7F0156AC 0C001151 */  jal   video_related_1F
+/* 04A1DC 7F0156AC 0C001151 */  jal   setvideo_far
 /* 04A1E0 7F0156B0 00000000 */   nop   
 /* 04A1E4 7F0156B4 3C018005 */  lui   $at, %hi(D_80051AB8)
 /* 04A1E8 7F0156B8 0C001164 */  jal   video_related_21
@@ -22455,7 +22455,7 @@ glabel print_objectives_and_status_to_menu
 /* 04A6C8 7F015B98 01776021 */  addu  $t4, $t3, $s7
 /* 04A6CC 7F015B9C 11A0000E */  beqz  $t5, .L7F015BD8
 /* 04A6D0 7F015BA0 AFAC0088 */   sw    $t4, 0x88($sp)
-/* 04A6D4 7F015BA4 0FC2B2E5 */  jal   sub_GAME_7F0ACB94
+/* 04A6D4 7F015BA4 0FC2B2E5 */  jal   setTextWordWrap
 /* 04A6D8 7F015BA8 24040002 */   li    $a0, 2
 /* 04A6DC 7F015BAC 8EAE0000 */  lw    $t6, ($s5)
 /* 04A6E0 7F015BB0 240400DC */  li    $a0, 220
@@ -22464,7 +22464,7 @@ glabel print_objectives_and_status_to_menu
 /* 04A6EC 7F015BBC 8E870000 */  lw    $a3, ($s4)
 /* 04A6F0 7F015BC0 0FC2BAD9 */  jal   sub_GAME_7F0AEB64
 /* 04A6F4 7F015BC4 AFAE0010 */   sw    $t6, 0x10($sp)
-/* 04A6F8 7F015BC8 0FC2B2E5 */  jal   sub_GAME_7F0ACB94
+/* 04A6F8 7F015BC8 0FC2B2E5 */  jal   setTextWordWrap
 /* 04A6FC 7F015BCC 00002025 */   move  $a0, $zero
 /* 04A700 7F015BD0 10000005 */  b     .L7F015BE8
 /* 04A704 7F015BD4 00000000 */   nop   
@@ -22847,7 +22847,7 @@ def_7F015E0C:
 /* 04AACC 7F015F9C 27A6004C */  addiu $a2, $sp, 0x4c
 /* 04AAD0 7F015FA0 0FC2BAD9 */  jal   sub_GAME_7F0AEB64
 /* 04AAD4 7F015FA4 AFAC0010 */   sw    $t4, 0x10($sp)
-/* 04AAD8 7F015FA8 0FC2B2E8 */  jal   sub_GAME_7F0ACBA0
+/* 04AAD8 7F015FA8 0FC2B2E8 */  jal   setTextOverlapCorrection
 /* 04AADC 7F015FAC 24040008 */   li    $a0, 8
 /* 04AAE0 7F015FB0 0C001107 */  jal   get_video2_settings_txtClipW
 /* 04AAE4 7F015FB4 00000000 */   nop   
@@ -22872,7 +22872,7 @@ def_7F015E0C:
 /* 04AB30 7F016000 0FC025D8 */  jal   write_text_at_abs_coord
 /* 04AB34 7F016004 AFA8001C */   sw    $t0, 0x1c($sp)
 /* 04AB38 7F016008 00408025 */  move  $s0, $v0
-/* 04AB3C 7F01600C 0FC2B2E8 */  jal   sub_GAME_7F0ACBA0
+/* 04AB3C 7F01600C 0FC2B2E8 */  jal   setTextOverlapCorrection
 /* 04AB40 7F016010 2404FFFF */   li    $a0, -1
 .L7F016014:
 /* 04AB44 7F016014 0FC02820 */  jal   add_tab1_start
@@ -22939,7 +22939,7 @@ void interface_menu0C_missionfailed(void)
     const f32 menu0C_aspect = 1.3333334;
     const f32 menu0C_pageheight = 10000.0;
 
-    video_related_1F(60.00000000);
+    setvideo_far(60.00000000);
     video_related_21(menu0C_aspect);
     set_page_height(100.00000000, menu0C_pageheight);
     set_video2_settings_offset_24(0);
@@ -23014,7 +23014,7 @@ glabel interface_menu0C_missionfailed
 /* 04AC44 7F016114 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 04AC48 7F016118 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 04AC4C 7F01611C 44816000 */  mtc1  $at, $f12
-/* 04AC50 7F016120 0C001151 */  jal   video_related_1F
+/* 04AC50 7F016120 0C001151 */  jal   setvideo_far
 /* 04AC54 7F016124 00000000 */   nop   
 /* 04AC58 7F016128 3C018005 */  lui   $at, %hi(menu0C_aspect)
 /* 04AC5C 7F01612C 0C001164 */  jal   video_related_21
@@ -23534,7 +23534,7 @@ void interface_menu0D_missioncomplete(undefined8 param_1,undefined8 param_2)
   short sVar6;
   int iVar7;
   
-  video_related_1F(60.00000000);
+  setvideo_far(60.00000000);
   video_related_21((f32)menu0D_aspect);
   set_page_height(100.00000000,(f32)menu0D_pageheight);
   set_video2_settings_offset_24(0);
@@ -23638,7 +23638,7 @@ glabel interface_menu0D_missioncomplete
 /* 04B20C 7F0166DC 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 04B210 7F0166E0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 04B214 7F0166E4 44816000 */  mtc1  $at, $f12
-/* 04B218 7F0166E8 0C001151 */  jal   video_related_1F
+/* 04B218 7F0166E8 0C001151 */  jal   setvideo_far
 /* 04B21C 7F0166EC 00000000 */   nop   
 /* 04B220 7F0166F0 3C018005 */  lui   $at, %hi(menu0D_aspect)
 /* 04B224 7F0166F4 0C001164 */  jal   video_related_21
@@ -25012,7 +25012,7 @@ void interface_menu0D_missioncomplete(undefined8 param_1,undefined8 param_2)
   short sVar6;
   int iVar7;
   
-  video_related_1F(60.00000000);
+  setvideo_far(60.00000000);
   video_related_21((f32)menu0D_aspect);
   set_page_height(100.00000000,(f32)menu0D_pageheight);
   set_video2_settings_offset_24(0);
@@ -25236,19 +25236,17 @@ glabel update_menu15_cheat
 void interface_menu15_cheat(undefined8 param_1,undefined8 param_2)
 {
   int iVar1;
-  ulonglong uVar2;
   BOOL BVar3;
   int iVar4;
   int iVar5;
   
-  video_related_1F(60.00000000);
-  video_related_21((f32)menu15_aspect);
-  set_page_height(100.00000000,(f32)menu15_pageheight);
+  setvideo_far(60.00000000);
+  video_related_21(menu15_aspect);
+  set_page_height(100.00000000, menu15_pageheight);
   set_video2_settings_offset_24(0);
   MP_menu_selected_option = 0;
-  uVar2 = get_controller_buttons_held(0,Z_TRIG|A_BUTTON);
   iVar1 = dword_8002B5E0;
-  if (uVar2 == 0) {
+  if (get_controller_buttons_held(0,Z_TRIG|A_BUTTON) == 0) {
     tab_3_highlight = FALSE;
     tab_2_highlight = FALSE;
     tab_1_highlight = FALSE;
@@ -25340,7 +25338,7 @@ glabel interface_menu15_cheat
 /* 04C7BC 7F017C8C 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 04C7C0 7F017C90 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 04C7C4 7F017C94 44816000 */  mtc1  $at, $f12
-/* 04C7C8 7F017C98 0C001151 */  jal   video_related_1F
+/* 04C7C8 7F017C98 0C001151 */  jal   setvideo_far
 /* 04C7CC 7F017C9C 00000000 */   nop   
 /* 04C7D0 7F017CA0 3C018005 */  lui   $at, %hi(menu15_aspect)
 /* 04C7D4 7F017CA4 0C001164 */  jal   video_related_21
@@ -27197,7 +27195,7 @@ void interface_menu18_displaycast(undefined8 param_1,undefined8 param_2)
   ulonglong uVar1;
   int iVar4;
   
-  video_related_1F(46.00000000);
+  setvideo_far(46.00000000);
   set_page_height(10.00000000,2000.00000000);
   set_video2_settings_offset_24(1);
   video_related_21((f32)flt_80051B08);
@@ -27307,7 +27305,7 @@ glabel interface_menu18_displaycast
 /* 04DAA0 7F018F70 AFB30020 */  sw    $s3, 0x20($sp)
 /* 04DAA4 7F018F74 AFB2001C */  sw    $s2, 0x1c($sp)
 /* 04DAA8 7F018F78 AFB10018 */  sw    $s1, 0x18($sp)
-/* 04DAAC 7F018F7C 0C001151 */  jal   video_related_1F
+/* 04DAAC 7F018F7C 0C001151 */  jal   setvideo_far
 /* 04DAB0 7F018F80 AFB00014 */   sw    $s0, 0x14($sp)
 /* 04DAB4 7F018F84 3C014120 */  li    $at, 0x41200000 # 10.000000
 /* 04DAB8 7F018F88 44816000 */  mtc1  $at, $f12
@@ -28823,7 +28821,7 @@ void update_menu19_spectrum(void) {
 
 #ifdef NONMATCHING
 void interface_menu19_spectrum(void) {
-    video_related_1F(60.0f);
+    setvideo_far(60.0f);
     video_related_21(D_80051B3C);
     set_page_height(100.0f, D_80051B40);
     set_video2_settings_offset_24(0);
@@ -28837,7 +28835,7 @@ glabel interface_menu19_spectrum
 /* 04EFBC 7F01A48C 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 04EFC0 7F01A490 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 04EFC4 7F01A494 44816000 */  mtc1  $at, $f12
-/* 04EFC8 7F01A498 0C001151 */  jal   video_related_1F
+/* 04EFC8 7F01A498 0C001151 */  jal   setvideo_far
 /* 04EFCC 7F01A49C 00000000 */   nop   
 /* 04EFD0 7F01A4A0 3C018005 */  lui   $at, %hi(D_80051B3C)
 /* 04EFD4 7F01A4A4 0C001164 */  jal   video_related_21

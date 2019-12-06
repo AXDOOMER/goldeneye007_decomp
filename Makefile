@@ -89,6 +89,12 @@ GAMEOBJECTS := $(foreach file,$(GAMEFILES),$(BUILD_DIR)/$(file:.c=.o))
 ROMFILES := assets/romfiles.s
 ROMOBJECTS := $(BUILD_DIR)/assets/romfiles.o
 
+GLOBALIMAGETABLEFILES := assets/GlobalImageTable.c
+GLOBALIMAGETABLEOBJECTS := $(BUILD_DIR)/assets/GlobalImageTable.o
+
+ROMFILES2 := assets/romfiles2.s
+ROMOBJECTS2 := $(BUILD_DIR)/assets/romfiles2.o
+
 RAMROM_FILES := assets/ramrom/ramrom.s
 RAMROM_OBJECTS := $(BUILD_DIR)/assets/ramrom/ramrom.o
 
@@ -152,6 +158,10 @@ $(BUILD_DIR)/%.o: src/%.s
 $(BUILD_DIR)/src/%.o: src/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
+$(BUILD_DIR)/assets/%.o: assets/%.c
+	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
+	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
+
 $(BUILD_DIR)/assets/%.o: assets/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
@@ -178,7 +188,7 @@ $(BUILD_DIR)/src/%.o: src/%.c
 $(BUILD_DIR)/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS)
 	
 
-$(APPELF): $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS)
+$(APPELF): $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(GLOBALIMAGETABLEOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS)
 	$(LD) $(LDFLAGS) -o $@ 
 
 $(APPBIN): $(APPELF)

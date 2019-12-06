@@ -852,6 +852,19 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/j/assets/romfiles.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/j/assets/romfiles.o
+ .options       0x0000000000000000       0x20 build/j/assets/GlobalImageTable.o
+ .reginfo       0x0000000000000000       0x18 build/j/assets/GlobalImageTable.o
+ .gptab.data    0x0000000000000000       0x18 build/j/assets/GlobalImageTable.o
+ .mdebug        0x0000000000000000      0x214 build/j/assets/GlobalImageTable.o
+ .text          0x0000000000000000        0x0 build/j/assets/romfiles2.o
+ .data          0x0000000000000000        0x0 build/j/assets/romfiles2.o
+ .bss           0x0000000000000000        0x0 build/j/assets/romfiles2.o
+ .reginfo       0x0000000000000000       0x18 build/j/assets/romfiles2.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/assets/romfiles2.o
+ .pdr           0x0000000000000000        0x0 build/j/assets/romfiles2.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/assets/romfiles2.o
  .text          0x0000000000000000        0x0 build/j/assets/ramrom/ramrom.o
  .data          0x0000000000000000        0x0 build/j/assets/ramrom/ramrom.o
  .bss           0x0000000000000000        0x0 build/j/assets/ramrom/ramrom.o
@@ -1171,7 +1184,7 @@ Linker script and memory map
                 0x0000000070004514                get_video2_settings_ulx
                 0x0000000070004524                get_video2_settings_uly
                 0x0000000070004534                set_video2_settings_offset_24
-                0x0000000070004544                video_related_1F
+                0x0000000070004544                setvideo_far
                 0x0000000070004590                video_related_21
                 0x00000000700045dc                video_related_23
                 0x00000000700045ec                video_related_24
@@ -4109,12 +4122,13 @@ Linker script and memory map
                 0x000000007f0a895c                sub_GAME_7F0A7DC4
                 0x000000007f0a8a40                debug_gun_watch_move_related
                 0x000000007f0a8ea4                sub_GAME_7F0A830C
+                0x000000007f0a8f10                sub_GAME_7F0A8378
                 0x000000007f0a8fbc                debug_gun_watch_move_related2
                 0x000000007f0a96d0                sub_GAME_7F0A8B10
                 0x000000007f0a9900                sub_GAME_7F0A8D40
                 0x000000007f0a9a90                sub_GAME_7F0A8ED0
                 0x000000007f0a9bac                sub_GAME_7F0A8FEC
-                0x000000007f0a9d40                sub_GAME_7F0A9180
+                0x000000007f0a9d40                call_sfx_c_700091C8
                 0x000000007f0a9d60                sub_GAME_7F0A91A0
                 0x000000007f0a9d88                sub_GAME_7F0A91C8
                 0x000000007f0a9f18                sub_GAME_7F0A9358
@@ -4127,12 +4141,12 @@ Linker script and memory map
                 0x000000007f0aa678                sub_GAME_7F0A9AB8
                 0x000000007f0ab388                sub_GAME_7F0AA7C8
                 0x000000007f0ab980                sub_GAME_7F0AADC0
-                0x000000007f0ac034                sub_GAME_7F0AB48C
-                0x000000007f0ac040                sub_GAME_7F0AB498
-                0x000000007f0ac04c                sub_GAME_7F0AB4A4
-                0x000000007f0ac058                sub_GAME_7F0AB4B0
+                0x000000007f0ac034                zero_D_80040998
+                0x000000007f0ac040                zero_D_8004099C
+                0x000000007f0ac04c                zero_D_800409A4
+                0x000000007f0ac058                return_arg0_7F0AB4B0
                 0x000000007f0ac060                sub_GAME_7F0AB4B8
-                0x000000007f0ac34c                sub_GAME_7F0AB7A4
+                0x000000007f0ac34c                set_pparam1toparam2_disablejoylr_playsfx
                 0x000000007f0ac380                sub_GAME_7F0AB7D8
                 0x000000007f0ac4b0                sub_GAME_7F0AB908
                 0x000000007f0ac7c4                sub_GAME_7F0ABC1C
@@ -4143,11 +4157,11 @@ Linker script and memory map
                 0x000000007f0ad5d0                sub_GAME_7F0ACA28
  build/j/src/game/textrelated.o(.text)
  .text          0x000000007f0ad720     0x23c0 build/j/src/game/textrelated.o
-                0x000000007f0ad720                null_init_main
-                0x000000007f0ad728                sub_GAME_7F0ACB78
-                0x000000007f0ad738                sub_GAME_7F0ACB88
-                0x000000007f0ad744                sub_GAME_7F0ACB94
-                0x000000007f0ad750                sub_GAME_7F0ACBA0
+                0x000000007f0ad720                null_init_main_7f0acb70
+                0x000000007f0ad728                setTextSpacingInverted
+                0x000000007f0ad738                setTextOrientation
+                0x000000007f0ad744                setTextWordWrap
+                0x000000007f0ad750                setTextOverlapCorrection
                 0x000000007f0ad75c                load_font_tables
                 0x000000007f0ad948                microcode_constructor
                 0x000000007f0adaa0                combiner_bayer_lod_perspective
@@ -4766,7 +4780,7 @@ Linker script and memory map
 .romfiles_117880
                 0x00000000001185a0   0x320de0
  build/j/assets/romfiles.o(.romfiles)
- .romfiles      0x00000000001185a0   0x1a7a50 build/j/assets/romfiles.o
+ .romfiles      0x00000000001185a0   0x1858e0 build/j/assets/romfiles.o
                 0x00000000001185a0                _jfontdlSegmentStart
                 0x0000000000118660                _jfontdlSegmentEnd
                 0x0000000000118660                _jfontcharSegmentStart
@@ -4778,6 +4792,11 @@ Linker script and memory map
                 0x000000000028f6a0                _animation_dataSegmentRomStart
                 0x000000000029de80                _animation_dataSegmentRomEnd
                 0x000000000029de80                _GlobalimagetableSegmentRomStart
+ build/j/assets/GlobalImageTable.o(.data)
+ .data          0x000000000029de80     0x1400 build/j/assets/GlobalImageTable.o
+                0x000000000029de80                GlobalImageTable
+ build/j/assets/romfiles2.o(.romfiles)
+ .romfiles      0x000000000029f280    0x20d70 build/j/assets/romfiles2.o
                 0x000000000029f280                _GlobalimagetablecmdblkSegmentRomStart
                 0x000000000029f280                _GlobalimagetableSegmentRomEnd
                 0x00000000002a5a70                _GlobalimagetablecmdblkSegmentRomEnd
@@ -19346,7 +19365,7 @@ Linker script and memory map
                 0x0000000080040b7c                D_80040B4C
                 0x0000000080040b80                D_80040B50
                 0x0000000080040b84                D_80040B54
-                0x0000000080040b88                D_80040B58
+                0x0000000080040b88                mTrack2Vol
                 0x0000000080040b8c                D_80040B5C
                 0x0000000080040b90                D_80040B60
                 0x0000000080040b94                D_80040B64
@@ -22810,7 +22829,7 @@ Linker script and memory map
                 0x000000008008d118                img_bitcount
                 0x000000008008d11c                dword_CODE_bss_8008D0AC
                 0x000000008008d120                globalbank_rdram_offset
-                0x000000008008d124                ptr_explosionDL
+                0x000000008008d124                pGlobalimagetable
                 0x000000008008d128                genericimage
                 0x000000008008d12c                impactimages
                 0x000000008008d130                explosion_smokeimages
@@ -22970,6 +22989,8 @@ Linker script and memory map
  *(.reginfo)
  build/j/assets/romfiles.o(.text)
  build/j/assets/romfiles.o(.data)
+ build/j/assets/romfiles2.o(.text)
+ build/j/assets/romfiles2.o(.data)
  build/j/assets/ramrom/ramrom.o(.text)
  build/j/assets/ramrom/ramrom.o(.data)
  build/j/assets/font/font.o(.text)
@@ -22989,6 +23010,7 @@ Linker script and memory map
  build/j/src/gspboot.o(.rodata)
  build/j/src/_start.o(.bss)
  build/j/assets/romfiles.o(.bss)
+ build/j/assets/romfiles2.o(.bss)
  build/j/assets/ramrom/ramrom.o(.bss)
  build/j/assets/font/font.o(.bss)
  build/j/assets/music/music.o(.bss)

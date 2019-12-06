@@ -162,7 +162,7 @@ void init_mainthread_data(void)
     init_LnameX();
     something_with_lvl_c_debug();
     something_with_boss_c_debug();
-    null_init_main();
+    null_init_main_7f0acb70();
     null_init_main_0();
     default_player_perspective_and_height();
     store_osgetcount();

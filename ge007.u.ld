@@ -321,6 +321,8 @@ SECTIONS
    _romfiles_117880SegmentRomStart = _gameSegmentRomEnd;
    .romfiles_117880 _romfiles_117880SegmentRomStart : AT(_romfiles_117880SegmentRomStart) {
       build/u/assets/romfiles.o (.romfiles);
+      build/u/assets/GlobalImageTable.o (.data);
+      build/u/assets/romfiles2.o (.romfiles);
       build/u/assets/ramrom/ramrom.o (.ramrom);
       build/u/assets/font/font.o (.font);
       build/u/assets/music/music.o (.music);
@@ -3839,6 +3841,8 @@ SECTIONS
       
       build/u/assets/romfiles.o (.text);
       build/u/assets/romfiles.o (.data);
+      build/u/assets/romfiles2.o (.text);
+      build/u/assets/romfiles2.o (.data);
       build/u/assets/ramrom/ramrom.o (.text);
       build/u/assets/ramrom/ramrom.o (.data);
       build/u/assets/font/font.o (.text);
@@ -3858,6 +3862,7 @@ SECTIONS
       build/u/src/gspboot.o (.rodata);
       build/u/src/_start.o (.bss);
       build/u/assets/romfiles.o (.bss);
+      build/u/assets/romfiles2.o (.bss);
       build/u/assets/ramrom/ramrom.o (.bss);
       build/u/assets/font/font.o (.bss);
       build/u/assets/music/music.o (.bss);

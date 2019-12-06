@@ -41,7 +41,7 @@ s32 mission_state = 0;
 
 
 void sub_GAME_7F0C0C10(void) {
-  sub_GAME_7F0A9180();
+  call_sfx_c_700091C8();
 }
 
 s32 get_mission_state(void) {

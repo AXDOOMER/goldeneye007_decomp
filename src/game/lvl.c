@@ -1424,7 +1424,7 @@ glabel sub_GAME_7F0BE30C
 /* 0F302C 7F0BE4FC 0C00112F */  jal   set_video2_ulx_uly
 /* 0F3030 7F0BE500 844507F6 */   lh    $a1, 0x7f6($v0)
 /* 0F3034 7F0BE504 8E0E0000 */  lw    $t6, ($s0)
-/* 0F3038 7F0BE508 0C001151 */  jal   video_related_1F
+/* 0F3038 7F0BE508 0C001151 */  jal   setvideo_far
 /* 0F303C 7F0BE50C C5CC11D0 */   lwc1  $f12, 0x11d0($t6)
 /* 0F3040 7F0BE510 8E0F0000 */  lw    $t7, ($s0)
 /* 0F3044 7F0BE514 0C001164 */  jal   video_related_21
@@ -1817,7 +1817,7 @@ glabel sub_GAME_7F0BE30C
 /* 0F3C2C 7F0BF0BC 0C00112F */  jal   set_video2_ulx_uly
 /* 0F3C30 7F0BF0C0 844507F6 */   lh    $a1, 0x7f6($v0)
 /* 0F3C34 7F0BF0C4 8E0E0000 */  lw    $t6, ($s0)
-/* 0F3C38 7F0BF0C8 0C001151 */  jal   video_related_1F
+/* 0F3C38 7F0BF0C8 0C001151 */  jal   setvideo_far
 /* 0F3C3C 7F0BF0CC C5CC11D0 */   lwc1  $f12, 0x11d0($t6)
 /* 0F3C40 7F0BF0D0 8E0F0000 */  lw    $t7, ($s0)
 /* 0F3C44 7F0BF0D4 0C001164 */  jal   video_related_21

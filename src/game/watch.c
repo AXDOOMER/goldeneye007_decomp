@@ -160,7 +160,7 @@ u32 D_80040B50 = 0x32;
 //D:80040B54
 u32 D_80040B54 = 0x32;
 //D:80040B58
-u16 D_80040B58 = 0x7FFF;
+u16 mTrack2Vol = 0x7FFF;
 //D:80040B5C
 u32 D_80040B5C = 0;
 //D:80040B60
@@ -1421,7 +1421,7 @@ glabel sub_GAME_7F0A53D8
 /* 0D9FB4 7F0A5484 3C018004 */  lui   $at, %hi(D_80040994)
 /* 0D9FB8 7F0A5488 5120000C */  beql  $t1, $zero, .L7F0A54BC
 /* 0D9FBC 7F0A548C 8FAA0018 */   lw    $t2, 0x18($sp)
-/* 0D9FC0 7F0A5490 0FC2AD29 */  jal   sub_GAME_7F0AB4A4
+/* 0D9FC0 7F0A5490 0FC2AD29 */  jal   zero_D_800409A4
 /* 0D9FC4 7F0A5494 AC200994 */   sw    $zero, %lo(D_80040994)($at)
 /* 0D9FC8 7F0A5498 0FC29484 */  jal   sub_GAME_7F0A5210
 /* 0D9FCC 7F0A549C 00000000 */   nop   
@@ -1508,7 +1508,7 @@ glabel sub_GAME_7F0A5504
 /* 0DA0B0 7F0A5580 3C018004 */  lui   $at, %hi(D_80040994)
 /* 0DA0B4 7F0A5584 5700000C */  bnezl $t8, .L7F0A55B8
 /* 0DA0B8 7F0A5588 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0DA0BC 7F0A558C 0FC2AD23 */  jal   sub_GAME_7F0AB48C
+/* 0DA0BC 7F0A558C 0FC2AD23 */  jal   zero_D_80040998
 /* 0DA0C0 7F0A5590 AC390994 */   sw    $t9, %lo(D_80040994)($at)
 /* 0DA0C4 7F0A5594 0FC29484 */  jal   sub_GAME_7F0A5210
 /* 0DA0C8 7F0A5598 00000000 */   nop   
@@ -1594,7 +1594,7 @@ glabel sub_GAME_7F0A55C4
 /* 0DA1A8 7F0A5678 3C018004 */  lui   $at, %hi(D_80040994)
 /* 0DA1AC 7F0A567C 57000006 */  bnezl $t8, .L7F0A5698
 /* 0DA1B0 7F0A5680 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0DA1B4 7F0A5684 0FC2AD26 */  jal   sub_GAME_7F0AB498
+/* 0DA1B4 7F0A5684 0FC2AD26 */  jal   zero_D_8004099C
 /* 0DA1B8 7F0A5688 AC390994 */   sw    $t9, %lo(D_80040994)($at)
 /* 0DA1BC 7F0A568C 0FC293E9 */  jal   set_controlstick_lr_disabled
 /* 0DA1C0 7F0A5690 00000000 */   nop   
@@ -1643,7 +1643,7 @@ glabel sub_GAME_7F0A56A4
 /* 0DA218 7F0A56E8 3C018004 */  lui   $at, %hi(D_80040994)
 /* 0DA21C 7F0A56EC 55C00008 */  bnezl $t6, .L7F0A5710
 /* 0DA220 7F0A56F0 00002025 */   move  $a0, $zero
-/* 0DA224 7F0A56F4 0FC2AD23 */  jal   sub_GAME_7F0AB48C
+/* 0DA224 7F0A56F4 0FC2AD23 */  jal   zero_D_80040998
 /* 0DA228 7F0A56F8 AC2F0994 */   sw    $t7, %lo(D_80040994)($at)
 /* 0DA22C 7F0A56FC 0FC293E9 */  jal   set_controlstick_lr_disabled
 /* 0DA230 7F0A5700 00000000 */   nop   
@@ -1721,7 +1721,7 @@ glabel sub_GAME_7F0A5784
 /* 0DA2E8 7F0A57B8 3C018004 */  lui   $at, %hi(D_80040994)
 /* 0DA2EC 7F0A57BC 55C0000E */  bnezl $t6, .L7F0A57F8
 /* 0DA2F0 7F0A57C0 00002025 */   move  $a0, $zero
-/* 0DA2F4 7F0A57C4 0FC2AD26 */  jal   sub_GAME_7F0AB498
+/* 0DA2F4 7F0A57C4 0FC2AD26 */  jal   zero_D_8004099C
 /* 0DA2F8 7F0A57C8 AC2F0994 */   sw    $t7, %lo(D_80040994)($at)
 /* 0DA2FC 7F0A57CC 0FC29484 */  jal   sub_GAME_7F0A5210
 /* 0DA300 7F0A57D0 00000000 */   nop   
@@ -1749,7 +1749,7 @@ glabel sub_GAME_7F0A5784
 /* 0DA34C 7F0A581C 3C018004 */  lui   $at, %hi(D_80040994)
 /* 0DA350 7F0A5820 5700000C */  bnezl $t8, .L7F0A5854
 /* 0DA354 7F0A5824 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0DA358 7F0A5828 0FC2AD29 */  jal   sub_GAME_7F0AB4A4
+/* 0DA358 7F0A5828 0FC2AD29 */  jal   zero_D_800409A4
 /* 0DA35C 7F0A582C AC200994 */   sw    $zero, %lo(D_80040994)($at)
 /* 0DA360 7F0A5830 0FC29484 */  jal   sub_GAME_7F0A5210
 /* 0DA364 7F0A5834 00000000 */   nop   
@@ -5160,8 +5160,35 @@ u32 sub_GAME_7F0A7DBC(u32 uParm1) {
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A7DC4(void) {
+void sub_GAME_7F0A7DC4(s32 arg0)
+{
+    s32 txtptr;
+    s32 sp50;
+    ?32 sp4C;
+    s32 sp48;
+    s32 sp44;
+    s32 pFirstFontTable;
+    s32 pSecondFontTable;
+    s32 joffset;
 
+    txtptr = get_textptr_for_textID(0xac2b);
+    if (j_text_trigger != 0)
+    {
+        joffset = -5;
+    }
+    else
+    {
+        joffset = 0;
+    }
+    sp50 = (s32) (joffset + 0x65);
+    sp4C = 0x31;
+    sp48 = 0;
+    sp44 = 0;
+    pFirstFontTable = (s32) ptrFirstFontTableSmall;
+    pSecondFontTable = (s32) ptrSecondFontTableSmall;
+    arg0 = microcode_constructor(arg0);
+    sub_GAME_7F0AE98C(&sp48, &sp44, txtptr, pSecondFontTable, pFirstFontTable, 0);
+    en_text_write_stuff(arg0, &sp50, &sp4C, txtptr, pSecondFontTable, pFirstFontTable, 0xff00b0, sp44, sp48, 0, 0);
 }
 #else
 GLOBAL_ASM(
@@ -5560,8 +5587,22 @@ glabel debug_gun_watch_move_related
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A830C(void) {
+s32 sub_GAME_7F0A830C(void)
+{
+    s32 temp_s0;
+    s32 phi_s0;
 
+    temp_s0 = sub_GAME_7F0A714C(0);
+    if (check_watch_page_transistion_running() != 1)
+    {
+        phi_s0 = debug_gun_watch_move_related(sub_GAME_7F0A7DBC(sub_GAME_7F0A7C18(sub_GAME_7F0A7DC4(temp_s0))));
+    }
+    else
+    {
+        check_watch_page_transistion_running();
+        phi_s0 = temp_s0;
+    }
+    return phi_s0;
 }
 #else
 GLOBAL_ASM(
@@ -5596,8 +5637,37 @@ glabel sub_GAME_7F0A830C
 /* 0DCE9C 7F0A836C 8FB00018 */  lw    $s0, 0x18($sp)
 /* 0DCEA0 7F0A8370 03E00008 */  jr    $ra
 /* 0DCEA4 7F0A8374 27BD0020 */   addiu $sp, $sp, 0x20
+)
+#endif
 
-sub_GAME_7F0A8378:
+
+
+#ifdef NONMATCHING
+void sub_GAME_7F0A8378(void)
+{
+    s32 sp1C;
+
+    if ((get_controller_buttons_pressed(0, 0xa000) == 0) && (get_controller_buttons_pressed(0, 0x1000) != 0))
+    {
+        sp1C = get_item_in_hand(0);
+        if (sub_GAME_7F08D2A8(D_800409B8) != sp1C)
+        {
+            remove_hands_item(0, sub_GAME_7F08D2A8(D_800409B8));
+            remove_hands_item(1, 0);
+            sub_GAME_7F08D8D0(D_800409B8);
+            D_800409C4 = 0xa;
+            play_sfx_a1(ptr_sfx_buf, 0x9f, 0);
+        }
+    }
+    else
+    {
+
+    }
+}
+#else
+GLOBAL_ASM(
+.text
+glabel sub_GAME_7F0A8378
 /* 0DCEA8 7F0A8378 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0DCEAC 7F0A837C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0DCEB0 7F0A8380 00002025 */  move  $a0, $zero
@@ -7138,7 +7208,7 @@ glabel sub_GAME_7F0A8FEC
 
 
 
-void sub_GAME_7F0A9180(void) {
+void call_sfx_c_700091C8(void) {
     sfx_c_700091C8();
 }
 
@@ -7291,22 +7361,26 @@ glabel sub_GAME_7F0A91C8
 
 u16 sub_GAME_7F0A9358(void)
 {
-  return D_80040B58;
+  return mTrack2Vol;
 }
 
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A9364(void) {
+void sub_GAME_7F0A9364(s16 param_1)
 
+{
+    mTrack2Vol = param_1;
+    musicTrack2Vol(param_1);
+    return;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0A9364
 /* 0DDE94 7F0A9364 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0DDE98 7F0A9368 3C028004 */  lui   $v0, %hi(D_80040B58)
-/* 0DDE9C 7F0A936C 24420B58 */  addiu $v0, %lo(D_80040B58) # addiu $v0, $v0, 0xb58
+/* 0DDE98 7F0A9368 3C028004 */  lui   $v0, %hi(mTrack2Vol)
+/* 0DDE9C 7F0A936C 24420B58 */  addiu $v0, %lo(mTrack2Vol) # addiu $v0, $v0, 0xb58
 /* 0DDEA0 7F0A9370 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0DDEA4 7F0A9374 AFA40018 */  sw    $a0, 0x18($sp)
 /* 0DDEA8 7F0A9378 00802825 */  move  $a1, $a0
@@ -7487,8 +7561,14 @@ glabel sub_GAME_7F0A9398
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A95C4(void) {
-
+f32 sub_GAME_7F0A95C4(f32 param_1,f32 param_2,f32 param_3)
+{
+    if (param_1 < param_2) {
+        return param_1 + (param_2 - param_1) / param_3;
+    }
+    if (param_2 < param_1) {
+        return param_1 - (param_1 - param_2) / param_3;
+    }
 }
 #else
 GLOBAL_ASM(
@@ -8790,8 +8870,92 @@ glabel sub_GAME_7F0A9AB8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0AA7C8(void) {
+void sub_GAME_7F0AA7C8(u32 * displayList)
+{
+    u32 * DL;
+    u8 * txtptr;
 
+    DL = microcode_constructor(displayList);
+    if (get_controller_buttons_held('\0',A_BUTTON) != 0)
+    {
+        sub_GAME_7F0A9398(DL, 0x5a, 0xa7, get_textptr_for_textID(0xac03), -1, 1, 0x7000a0, 0, 0, 0x3000b0, 0);
+    } else {
+        sub_GAME_7F0A9398(DL, 0x5a, 0xa7, get_textptr_for_textID(0xac03), 0xaa00b0, 0, -1, 0, 0, 0x3000b0, 0);
+    }
+
+    if (get_controller_buttons_held('\0',B_BUTTON) != 0)
+    {
+        sub_GAME_7F0A9398(DL, 0x5a, 0x95, get_textptr_for_textID(0xac02), -1, 1, 0x7000a0, 0, 0, 0x3000b0, 0);
+    } else {
+        sub_GAME_7F0A9398(DL, 0x5a, 0x95, get_textptr_for_textID(0xac02), 0xaa00b0, 0, -1, 0, 0, 0x3000b0, 0);
+    }
+
+
+
+    if ((pPlayer->cur_player_control_type_0 == 4) || (pPlayer->cur_player_control_type_0 == 5))
+    {
+        txtptr = get_textptr_for_textID(0xac00);
+    } else {
+        txtptr = get_textptr_for_textID(0xac01);
+    }
+
+    if (get_controller_buttons_held('\0',Z_TRIG) != 0)
+    {
+        sub_GAME_7F0A9398(DL, 0x5a, 0xb9, txtptr, -1, 1, 0x7000a0, 0, 0, 0x3000b0, 0);
+    } else {
+        sub_GAME_7F0A9398(DL, 0x5a, 0xb9, txtptr, 0xaa00b0, 0, -1, 0, 0, 0x3000b0, 0);
+    }
+
+
+
+    if ((pPlayer->cur_player_control_type_0 == 4) || (pPlayer->cur_player_control_type_0 == 6))
+    {
+        txtptr = get_textptr_for_textID(0xac05);
+    } else {
+        txtptr = get_textptr_for_textID(0xac06);
+    }
+
+    sub_GAME_7F0A9398(DL, 0x5a, 0xcb, txtptr, 0xaa00b0, 0, -1, 0, 0, 0x3000b0, 0);
+    if (get_controller_buttons_held('\x01',A_BUTTON) != 0)
+    {
+        sub_GAME_7F0A9398(DL, 0xe6, 0xa7, get_textptr_for_textID(0xac03), -1, 1, 0x7000a0, 0, 0, 0x3000b0, 1);
+    } else {
+        sub_GAME_7F0A9398(DL, 0xe6, 0xa7, get_textptr_for_textID(0xac03), 0xaa00b0, 0, -1, 0, 0, 0x3000b0, 1);
+    }
+
+    if (get_controller_buttons_held('\x01',B_BUTTON) != 0)
+    {
+        sub_GAME_7F0A9398(DL, 0xe6, 0x95, get_textptr_for_textID(0xac02), -1, 1, 0x7000a0, 0, 0, 0x3000b0, 1);
+    } else {
+        sub_GAME_7F0A9398(DL, 0xe6, 0x95, get_textptr_for_textID(0xac02), 0xaa00b0, 0, -1, 0, 0, 0x3000b0, 1);
+    }
+
+
+
+    if ((pPlayer->cur_player_control_type_0 == 4) || (pPlayer->cur_player_control_type_0 == 5))
+    {
+        txtptr = get_textptr_for_textID(0xac01);
+    } else {
+        txtptr = get_textptr_for_textID(0xac00);
+    }
+
+    if (get_controller_buttons_held('\x01',Z_TRIG) != 0)
+    {
+        sub_GAME_7F0A9398(DL, 0xe6, 0xb9, txtptr, -1, 1, 0x7000a0, 0, 0, 0x3000b0, 1);
+    } else {
+        sub_GAME_7F0A9398(DL, 0xe6, 0xb9, txtptr, 0xaa00b0, 0, -1, 0, 0, 0x3000b0, 1);
+    }
+
+
+
+    if ((pPlayer->cur_player_control_type_0 == 4) || (pPlayer->cur_player_control_type_0 == 6))
+    {
+        txtptr = get_textptr_for_textID(0xac06);
+    } else {
+        txtptr = get_textptr_for_textID(0xac05);
+    }
+
+    sub_GAME_7F0A9398(DL, 0xe6, 0xcb, txtptr, 0xaa00b0, 0, -1, 0, 0, 0x3000b0, 1);
 }
 #else
 GLOBAL_ASM(
@@ -10163,20 +10327,20 @@ glabel sub_GAME_7F0AADC0
 
 
 
-void sub_GAME_7F0AB48C(void) {
+void zero_D_80040998(void) {
     D_80040998 = 0;
 }
 
-void sub_GAME_7F0AB498(void) {
+void zero_D_8004099C(void) {
     D_8004099C = 0;
 }
 
-void sub_GAME_7F0AB4A4(void) {
-  D_800409A4 = 0;
+void zero_D_800409A4(void) {
+    D_800409A4 = 0;
 }
 
-u32 sub_GAME_7F0AB4B0(u32 uParm1) {
-  return uParm1;
+u32 return_arg0_7F0AB4B0(u32 uParm1) {
+    return uParm1;
 }
 
 
@@ -10184,8 +10348,74 @@ u32 sub_GAME_7F0AB4B0(u32 uParm1) {
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0AB4B8(void) {
+void proc_7F0AB4B8(u32 param_1,u32 param_2)
+{
+    ?32 sp5C;
+    ?32 sp58;
+    s32 sp54;
+    s32 sp50;
+    s32 pFirstFontTableSmall;
+    s32 pSecondFontTableSmall;
+    s32 DL;
+    s32 txtptr;
+    ?32 phi_s1;
+    ?32 phi_s1_2;
 
+
+    DL = sub_GAME_7F0A714C(param_1, param_2, 0);
+    if (check_watch_page_transistion_running() != 1)
+    {
+        pFirstFontTableSmall = (s32) ptrFirstFontTableSmall;
+        pSecondFontTableSmall = (s32) ptrSecondFontTableSmall;
+        microcode_constructor(sub_GAME_7F0AADC0(DL));
+        txtptr = get_textptr_for_textID(0xac32);
+        sp5C = 0x40;
+        sp58 = 0x1a;
+        phi_s1 = 0xff00b0;
+        if (D_80040998 == 0)
+        {
+            phi_s1 = 0xa0ffa0f0;
+            if (watch_soundrelated_maybe != 0)
+            {
+                phi_s1 = -1;
+            }
+        }
+        sub_GAME_7F0AE98C(&sp50, &sp54, txtptr, pSecondFontTableSmall, pFirstFontTableSmall, 0);
+        if ((watch_soundrelated_maybe != 0) && (D_80040998 == 0))
+        {
+            jp_text_write_stuff(DL, &sp5C, &sp58, txtptr, pSecondFontTableSmall, pFirstFontTableSmall, (?32) phi_s1, 0x7000a0, (s32) (sp54 + 1), sp50, 0, 0);
+        }
+        else
+        {
+            en_text_write_stuff(DL, &sp5C, &sp58, txtptr, pSecondFontTableSmall, pFirstFontTableSmall, (?32) phi_s1, sp54, sp50, 0, 0);
+        }
+        sub_GAME_7F0A97D0(DL);
+        txtptr = get_textptr_for_textID(0xac33);
+        if (controllerCheckDualControllerTypesAllowed() != 0)
+        {
+            txtptr = get_textptr_for_textID(0xac34);
+        }
+        sp5C = 0x40;
+        sp58 = 0x2b;
+        if (D_80040998 == 1)
+        {
+            phi_s1_2 = 0xa0ffa0f0;
+            if (watch_soundrelated_maybe != 0)
+            {
+                phi_s1_2 = -1;
+            }
+        }
+        sub_GAME_7F0AE98C(&sp50, &sp54, txtptr, pSecondFontTableSmall, pFirstFontTableSmall, 0);
+        if ((watch_soundrelated_maybe != 0) && (D_80040998 == 1))
+        {
+            jp_text_write_stuff(DL, &sp5C, &sp58, txtptr, pSecondFontTableSmall, pFirstFontTableSmall, (?32) phi_s1_2, 0x7000a0, (s32) (sp54 + 1), sp50, 0, 0);
+        }
+        else
+        {
+            en_text_write_stuff(DL, &sp5C, &sp58, txtptr, pSecondFontTableSmall, pFirstFontTableSmall, (?32) phi_s1_2, sp54, sp50, 0, 0);
+        }
+    }
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -10395,29 +10625,13 @@ glabel sub_GAME_7F0AB4B8
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0AB7A4(void) {
 
+void set_pparam1toparam2_disablejoylr_playsfx(u32 *param_1,u32 param_2)
+{
+    *param_1 = param_2;
+    set_controlstick_lr_disabled();
+    play_sfx_a1(ptr_sfx_buf,0x2b,NULL);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0AB7A4
-/* 0E02D4 7F0AB7A4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0E02D8 7F0AB7A8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E02DC 7F0AB7AC 0FC293E9 */  jal   set_controlstick_lr_disabled
-/* 0E02E0 7F0AB7B0 AC850000 */   sw    $a1, ($a0)
-/* 0E02E4 7F0AB7B4 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 0E02E8 7F0AB7B8 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
-/* 0E02EC 7F0AB7BC 2405002B */  li    $a1, 43
-/* 0E02F0 7F0AB7C0 0C002382 */  jal   play_sfx_a1
-/* 0E02F4 7F0AB7C4 00003025 */   move  $a2, $zero
-/* 0E02F8 7F0AB7C8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0E02FC 7F0AB7CC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0E0300 7F0AB7D0 03E00008 */  jr    $ra
-/* 0E0304 7F0AB7D4 00000000 */   nop   
-)
-#endif
 
 
 
@@ -10458,7 +10672,7 @@ glabel sub_GAME_7F0AB7D8
 /* 0E0364 7F0AB834 24440008 */  addiu $a0, $v0, 8
 /* 0E0368 7F0AB838 54610006 */  bnel  $v1, $at, .L7F0AB854
 /* 0E036C 7F0AB83C 24010002 */   li    $at, 2
-/* 0E0370 7F0AB840 0FC2ADE9 */  jal   sub_GAME_7F0AB7A4
+/* 0E0370 7F0AB840 0FC2ADE9 */  jal   set_pparam1toparam2_disablejoylr_playsfx
 /* 0E0374 7F0AB844 00002825 */   move  $a1, $zero
 /* 0E0378 7F0AB848 1000002C */  b     .L7F0AB8FC
 /* 0E037C 7F0AB84C 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -10466,7 +10680,7 @@ glabel sub_GAME_7F0AB7D8
 .L7F0AB854:
 /* 0E0384 7F0AB854 14610028 */  bne   $v1, $at, .L7F0AB8F8
 /* 0E0388 7F0AB858 24440008 */   addiu $a0, $v0, 8
-/* 0E038C 7F0AB85C 0FC2ADE9 */  jal   sub_GAME_7F0AB7A4
+/* 0E038C 7F0AB85C 0FC2ADE9 */  jal   set_pparam1toparam2_disablejoylr_playsfx
 /* 0E0390 7F0AB860 24050001 */   li    $a1, 1
 /* 0E0394 7F0AB864 10000025 */  b     .L7F0AB8FC
 /* 0E0398 7F0AB868 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -10495,7 +10709,7 @@ glabel sub_GAME_7F0AB7D8
 /* 0E03EC 7F0AB8BC 24010001 */  li    $at, 1
 /* 0E03F0 7F0AB8C0 14600005 */  bnez  $v1, .L7F0AB8D8
 /* 0E03F4 7F0AB8C4 00000000 */   nop   
-/* 0E03F8 7F0AB8C8 0FC2ADE9 */  jal   sub_GAME_7F0AB7A4
+/* 0E03F8 7F0AB8C8 0FC2ADE9 */  jal   set_pparam1toparam2_disablejoylr_playsfx
 /* 0E03FC 7F0AB8CC 24050001 */   li    $a1, 1
 /* 0E0400 7F0AB8D0 1000000A */  b     .L7F0AB8FC
 /* 0E0404 7F0AB8D4 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -10506,7 +10720,7 @@ glabel sub_GAME_7F0AB7D8
 /* 0E0414 7F0AB8E4 24440008 */  addiu $a0, $v0, 8
 /* 0E0418 7F0AB8E8 51800004 */  beql  $t4, $zero, .L7F0AB8FC
 /* 0E041C 7F0AB8EC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0E0420 7F0AB8F0 0FC2ADE9 */  jal   sub_GAME_7F0AB7A4
+/* 0E0420 7F0AB8F0 0FC2ADE9 */  jal   set_pparam1toparam2_disablejoylr_playsfx
 /* 0E0424 7F0AB8F4 24050002 */   li    $a1, 2
 .L7F0AB8F8:
 /* 0E0428 7F0AB8F8 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -11444,7 +11658,7 @@ glabel sub_GAME_7F0AC168
 /* 0E1070 7F0AC540 10000001 */  b     .L7F0AC548
 /* 0E1074 7F0AC544 24040001 */   li    $a0, 1
 .L7F0AC548:
-/* 0E1078 7F0AC548 0FC2B2E8 */  jal   sub_GAME_7F0ACBA0
+/* 0E1078 7F0AC548 0FC2B2E8 */  jal   setTextOverlapCorrection
 /* 0E107C 7F0AC54C 00000000 */   nop   
 /* 0E1080 7F0AC550 0FC30776 */  jal   get_textptr_for_textID
 /* 0E1084 7F0AC554 3404AC3C */   li    $a0, 44092
@@ -11696,7 +11910,7 @@ glabel sub_GAME_7F0AC168
 /* 0E1404 7F0AC8D4 1420FF2E */  bnez  $at, .L7F0AC590
 /* 0E1408 7F0AC8D8 00000000 */   nop   
 .L7F0AC8DC:
-/* 0E140C 7F0AC8DC 0FC2B2E8 */  jal   sub_GAME_7F0ACBA0
+/* 0E140C 7F0AC8DC 0FC2B2E8 */  jal   setTextOverlapCorrection
 /* 0E1410 7F0AC8E0 2404FFFF */   li    $a0, -1
 /* 0E1414 7F0AC8E4 0FC29A13 */  jal   sub_GAME_7F0A684C
 /* 0E1418 7F0AC8E8 00000000 */   nop   

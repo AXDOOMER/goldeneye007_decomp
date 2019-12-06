@@ -2427,7 +2427,7 @@ void set_video2_settings_offset_24(int param_1) {
  * 5144	70004544
  */
 #ifdef NONMATCHING
-void video_related_1F(f32 arg0)
+void setvideo_far(f32 arg0)
 {
     ptr_video_settings2->far = arg0;
     sub_GAME_7F077C30(ptr_video_settings2->aspect, ptr_video_settings2->far, ptr_video_settings2->scale);
@@ -2436,7 +2436,7 @@ void video_related_1F(f32 arg0)
 #else
 GLOBAL_ASM(
 .text
-glabel video_related_1F
+glabel setvideo_far
 /* 005144 70004544 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 005148 70004548 3C038002 */  lui   $v1, %hi(ptr_video_settings2)
 /* 00514C 7000454C 246332A8 */  addiu $v1, %lo(ptr_video_settings2) # addiu $v1, $v1, 0x32a8

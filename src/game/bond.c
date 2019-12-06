@@ -12140,7 +12140,7 @@ void sub_GAME_7F07E62C(void) {
     }
     // Node 9
     set_cur_player_fovy(pPlayer->field_11C4, &pPlayer);
-    return video_related_1F(pPlayer->field_11C4, &pPlayer);
+    return setvideo_far(pPlayer->field_11C4, &pPlayer);
 }
 #else
 
@@ -12217,7 +12217,7 @@ glabel sub_GAME_7F07E62C
 /* 0B324C 7F07E71C 3C048008 */  lui   $a0, %hi(pPlayer)
 /* 0B3250 7F07E720 2484A0B0 */  addiu $a0, %lo(pPlayer) # addiu $a0, $a0, -0x5f50
 /* 0B3254 7F07E724 8C990000 */  lw    $t9, ($a0)
-/* 0B3258 7F07E728 0C001151 */  jal   video_related_1F
+/* 0B3258 7F07E728 0C001151 */  jal   setvideo_far
 /* 0B325C 7F07E72C C72C11C4 */   lwc1  $f12, 0x11c4($t9)
 /* 0B3260 7F07E730 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0B3264 7F07E734 27BD0018 */  addiu $sp, $sp, 0x18
@@ -12293,7 +12293,7 @@ glabel sub_GAME_7F07E62C
 /* 0B3898 7F07ED28 3C048008 */  lui   $a0, %hi(pPlayer) # $a0, 0x8008
 /* 0B389C 7F07ED2C 2484A120 */  addiu $a0, %lo(pPlayer) # addiu $a0, $a0, -0x5ee0
 /* 0B38A0 7F07ED30 8C8F0000 */  lw    $t7, ($a0)
-/* 0B38A4 7F07ED34 0C001151 */  jal   video_related_1F
+/* 0B38A4 7F07ED34 0C001151 */  jal   setvideo_far
 /* 0B38A8 7F07ED38 C5EC11C4 */   lwc1  $f12, 0x11c4($t7)
 /* 0B38AC 7F07ED3C 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0B38B0 7F07ED40 27BD0018 */  addiu $sp, $sp, 0x18
@@ -26707,7 +26707,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BBAE8 7F086FB8 AFA60028 */   sw    $a2, 0x28($sp)
 /* 0BBAEC 7F086FBC 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 0BBAF0 7F086FC0 44816000 */  mtc1  $at, $f12
-/* 0BBAF4 7F086FC4 0C001151 */  jal   video_related_1F
+/* 0BBAF4 7F086FC4 0C001151 */  jal   setvideo_far
 /* 0BBAF8 7F086FC8 00000000 */   nop   
 /* 0BBAFC 7F086FCC 3C038003 */  lui   $v1, %hi(camera_80036430)
 /* 0BBB00 7F086FD0 24636430 */  addiu $v1, %lo(camera_80036430) # addiu $v1, $v1, 0x6430
@@ -27144,7 +27144,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BC1F4 7F087684 AFA60028 */   sw    $a2, 0x28($sp)
 /* 0BC1F8 7F087688 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 0BC1FC 7F08768C 44816000 */  mtc1  $at, $f12
-/* 0BC200 7F087690 0C001151 */  jal   video_related_1F
+/* 0BC200 7F087690 0C001151 */  jal   setvideo_far
 /* 0BC204 7F087694 00000000 */   nop   
 /* 0BC208 7F087698 3C038003 */  lui   $v1, %hi(camera_80036430) # $v1, 0x8003
 /* 0BC20C 7F08769C 24636470 */  addiu $v1, %lo(camera_80036430) # addiu $v1, $v1, 0x6470
