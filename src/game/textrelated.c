@@ -102,7 +102,7 @@ void load_font_tables(void)
     text_s = 0;
     MACROSIZE = 0x24b0 - 0;
     text_t = 0;
-    ptrFirstFontTableSmall = allocate_bytes_in_bank(MACROSIZE, 4);
+    ptrFirstFontTableSmall = mempAllocBytesInBank(MACROSIZE, 4);
     ptrSecondFontTableSmall = (s32) (ptrFirstFontTableSmall + 0x2a4);
     romCopy(&ptrFirstFontTableSmall, &_fonttablectlsmall1SegmentRomStart, MACROSIZE);
     i = 0;
@@ -116,7 +116,7 @@ loop_1:
         goto loop_1;
     }
     MACROSIZE = 0x3540 - 0;
-    ptrFirstFontTableLarge = allocate_bytes_in_bank(MACROSIZE, 4);
+    ptrFirstFontTableLarge = mempAllocBytesInBank(MACROSIZE, 4);
     ptrSecondFontTableLarge = (s32) (ptrFirstFontTableLarge + 0x2a4);
     romCopy(&ptrFirstFontTableLarge, &_fonttablectllarge1SegmentRomStart, MACROSIZE);
     ptrSecondFontTableLarge->unk14 = (s32) (ptrSecondFontTableLarge->unk14 + ptrFirstFontTableLarge);
@@ -170,7 +170,7 @@ glabel load_font_tables
 /* 0E1740 7F0ACC10 AC200EA4 */  sw    $zero, %lo(text_t)($at)
 /* 0E1744 7F0ACC14 00C02025 */  move  $a0, $a2
 /* 0E1748 7F0ACC18 AFA6001C */  sw    $a2, 0x1c($sp)
-/* 0E174C 7F0ACC1C 0C0025C8 */  jal   allocate_bytes_in_bank
+/* 0E174C 7F0ACC1C 0C0025C8 */  jal   mempAllocBytesInBank
 /* 0E1750 7F0ACC20 24050004 */   li    $a1, 4
 /* 0E1754 7F0ACC24 3C078004 */  lui   $a3, %hi(ptrFirstFontTableSmall)
 /* 0E1758 7F0ACC28 3C088004 */  lui   $t0, %hi(ptrSecondFontTableSmall) 
@@ -206,7 +206,7 @@ glabel load_font_tables
 /* 0E17CC 7F0ACC9C 01AE3023 */  subu  $a2, $t5, $t6
 /* 0E17D0 7F0ACCA0 00C02025 */  move  $a0, $a2
 /* 0E17D4 7F0ACCA4 AFA6001C */  sw    $a2, 0x1c($sp)
-/* 0E17D8 7F0ACCA8 0C0025C8 */  jal   allocate_bytes_in_bank
+/* 0E17D8 7F0ACCA8 0C0025C8 */  jal   mempAllocBytesInBank
 /* 0E17DC 7F0ACCAC 24050004 */   li    $a1, 4
 /* 0E17E0 7F0ACCB0 3C078004 */  lui   $a3, %hi(ptrFirstFontTableLarge)
 /* 0E17E4 7F0ACCB4 3C088004 */  lui   $t0, %hi(ptrSecondFontTableLarge) 

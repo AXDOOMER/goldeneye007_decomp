@@ -162,7 +162,7 @@ void something_with_lvl_c_debug(void) {
     get_ptr_debug_notice_list_entry(&lvl_c_debug_notice_list, &aLv_c_debug);
     temp_a2 = (&_jfontdlSegmentEnd - &_jfontdlSegmentStart);
     lvl_c_debug_notice_list = 1;
-    temp_ret = allocate_bytes_in_bank(temp_a2, 6, temp_a2);
+    temp_ret = mempAllocBytesInBank(temp_a2, 6, temp_a2);
     ptr_jfont_DL = temp_ret;
     romCopy(temp_ret, &_jfontdlSegmentStart, sp18);
 }
@@ -188,7 +188,7 @@ glabel something_with_lvl_c_debug
 /* 0F2470 7F0BD940 AC2E8360 */  sw    $t6, %lo(lvl_c_debug_notice_list)($at)
 /* 0F2474 7F0BD944 00C02025 */  move  $a0, $a2
 /* 0F2478 7F0BD948 AFA60018 */  sw    $a2, 0x18($sp)
-/* 0F247C 7F0BD94C 0C0025C8 */  jal   allocate_bytes_in_bank
+/* 0F247C 7F0BD94C 0C0025C8 */  jal   mempAllocBytesInBank
 /* 0F2480 7F0BD950 24050006 */   li    $a1, 6
 /* 0F2484 7F0BD954 3C038009 */  lui   $v1, %hi(ptr_jfont_DL)
 /* 0F2488 7F0BD958 2463C260 */  addiu $v1, %lo(ptr_jfont_DL) # addiu $v1, $v1, -0x3da0
@@ -3106,7 +3106,7 @@ glabel manage_mp_game
 /* 0F3F04 7F0BF3D4 24043000 */  li    $a0, 12288
 /* 0F3F08 7F0BF3D8 17000048 */  bnez  $t8, .L7F0BF4FC
 /* 0F3F0C 7F0BF3DC 00000000 */   nop   
-/* 0F3F10 7F0BF3E0 0C0025C8 */  jal   allocate_bytes_in_bank
+/* 0F3F10 7F0BF3E0 0C0025C8 */  jal   mempAllocBytesInBank
 /* 0F3F14 7F0BF3E4 24050004 */   li    $a1, 4
 /* 0F3F18 7F0BF3E8 3C068005 */  lui   $a2, %hi(D_800483C8)
 /* 0F3F1C 7F0BF3EC 24C683C8 */  addiu $a2, %lo(D_800483C8) # addiu $a2, $a2, -0x7c38
@@ -3984,7 +3984,7 @@ glabel manage_mp_game
 /* 0F4B7C 7F0C000C 24043000 */  li    $a0, 12288
 /* 0F4B80 7F0C0010 17000048 */  bnez  $t8, .Ljp7F0C0134
 /* 0F4B84 7F0C0014 00000000 */   nop   
-/* 0F4B88 7F0C0018 0C0025CC */  jal   allocate_bytes_in_bank
+/* 0F4B88 7F0C0018 0C0025CC */  jal   mempAllocBytesInBank
 /* 0F4B8C 7F0C001C 24050004 */   li    $a1, 4
 /* 0F4B90 7F0C0020 3C068005 */  lui   $a2, %hi(D_800483C8) # $a2, 0x8005
 /* 0F4B94 7F0C0024 24C683FC */  addiu $a2, %lo(D_800483C8) # addiu $a2, $a2, -0x7c04

@@ -21,23 +21,33 @@ char dword_CODE_bss_80063BF8[0x24];
 s32 dword_CODE_bss_80063C1C;
 
 void *ptr_memp_c_debug_debug_notice_list = 0;
-s32 tied_to_mem_management[] = {0, 0, 0, 0};
-s32 D_80024414 = 2;
-s32 D_80024418 = 0;
-s32 D_8002441C = 4;
-s32 D_80024420 = 0x52;
-s32 D_80024424 = 6;
-s32 D_80024428 = 0xF;
-s32 D_8002442C = 0;
-s32 D_80024430 = 0;
-s32 D_80024434 = 0;
-s32 D_80024438 = 0;
-s32 D_8002443C = 0;
-s32 D_80024440 = 0;
-s32 D_80024444 = 0;
-s32 D_80024448 = 0;
-s32 D_8002444C = 0;
+s32 needmemallocation = 0;
+s32 D_80024408 = 0;
+s32 D_8002440C = 0;
 
+
+
+struct s_mempMVALS sdefaultmvals = {
+    0, //D_80024410
+    2, //D_80024414
+    0, //mf
+    4, //D_8002441C
+    0x52, //ml
+    6, //D_80024424
+    0xF, //me
+    0, //D_8002442C
+    0 //D_80024430
+};
+
+struct s_mempMEMSTARTS sdefaultmemstarts = {
+    0, //bank1start
+    0, //bank2start
+    0, //bank3start
+    0, //bank4start
+    0, //bank5start
+    0, //bank6start
+    0  //bank7start
+};
 
 /**
  * 9F80	70009380
@@ -60,59 +70,50 @@ void something_with_memp_c_debug(void)
  *     uses "-mf", "-ml", "-me" strings
  */
 #ifdef NONMATCHING
-void check_memflag_tokens(s32 arg0, s32 arg1, s32 arg11) {
-    ? sp20;
-    s32 sp24;
-    s32 sp2C;
-    s32 sp34;
-    s32 temp_v1;
+void mempCheckMemflagTokens(int param_1,int param_2)
 
-    // Node 0
-    memory_bank_ptrs = arg0;
-    memory_bank_ptrs.unk8 = (s32) (arg0 + arg1);
-    sp20 = (?32) D_80024414;
-    sp20.unk4 = (?32) D_80024414.unk4;
-    sp20.unkC = (?32) D_80024414.unkC;
-    sp20.unk8 = (?32) D_80024414.unk8;
-    sp20.unk10 = (?32) D_80024414.unk10;
-    sp20.unk14 = (?32) D_80024414.unk14;
-    sp20.unk1C = (?32) D_80024414.unk1C;
-    sp20.unk18 = (?32) D_80024414.unk18;
-    if (check_token(1, &aMf) != 0)
-    {
-        // Node 1
-        sp24 = strtol(check_token(1, &aMf_0), 0, 0);
+{
+    byte *__nptr;
+    int iVar1;
+    int local_20;
+    long local_1c;
+    undefined4 local_18;
+    long local_14;
+    undefined4 local_10;
+    long local_c;
+    undefined4 local_8;
+    undefined4 local_4;
+    
+    memory_bank_ptrs[0].bankend = param_1 + param_2;
+    local_20 = sdefaultmvals.dword_80024414;
+    local_1c = sdefaultmvals.mf;
+    local_14 = sdefaultmvals.ml;
+    local_18 = sdefaultmvals.dword_8002441C;
+    local_10 = sdefaultmvals.dword_80024424;
+    local_c = sdefaultmvals.me;
+    local_4 = sdefaultmvals.dword_80024430;
+    local_8 = sdefaultmvals.dword_8002442C;
+    memory_bank_ptrs[0].bankstart = param_1;
+    if (check_token(1, "-mf") != NULL) {
+        local_1c = strtol( check_token(1, "-mf"), NULL, 0);
     }
-    // Node 2
-    if (check_token(1, &aMl) != 0)
-    {
-        // Node 3
-        sp2C = strtol(check_token(1, &aMl_0), 0, 0);
+    if (check_token(1, "-ml") != NULL) {
+        local_14 = strtol( check_token(1, "-ml"), NULL, 0);
     }
-    // Node 4
-    if (check_token(1, &aMe) != 0)
-    {
-        // Node 5
-        sp34 = strtol(check_token(1, &aMe_0), 0, 0);
+    if (check_token(1, "-me") != NULL) {
+        local_c = strtol( check_token(1, "-me"), NULL, 0);
     }
-    // Node 6
-    if (sp34 == 0)
-    {
-        // Node 7
-        sp24 = 0;
-        if (j_text_trigger != 0)
-        {
-            // Node 8
+    if (local_c == 0) {
+        local_1c = 0;
+        iVar1 = 0x128;
+        if (j_text_trigger != 0) {
+            iVar1 = 0x134;
         }
-        // Node 9
-        temp_v1 = (0x128 << 0xa);
-        sp2C = (s32) (arg11 - temp_v1);
-        sp34 = temp_v1;
+        local_c = iVar1 * 0x400;
+        local_14 = param_2 + iVar1 * -0x400;
     }
-    // Node 10
-    memp_related_0(&sp20);
+    mempSetBankStarts(&local_20);
     return;
-    // (possible return value: memp_related_0(&sp20))
 }
 #else
 GLOBAL_ASM(
@@ -131,17 +132,17 @@ glabel aMe_0
 .word 0x2d6d6500 /*"-me"*/
 
 .text
-glabel check_memflag_tokens
+glabel mempCheckMemflagTokens
 /* 009FAC 700093AC 3C028006 */  lui   $v0, %hi(memory_bank_ptrs)
 /* 009FB0 700093B0 24423BB0 */  addiu $v0, %lo(memory_bank_ptrs) # addiu $v0, $v0, 0x3bb0
 /* 009FB4 700093B4 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 009FB8 700093B8 00857821 */  addu  $t7, $a0, $a1
-/* 009FBC 700093BC 3C198002 */  lui   $t9, %hi(D_80024414) 
+/* 009FBC 700093BC 3C198002 */  lui   $t9, %hi(sdefaultmvals +0x4) 
 /* 009FC0 700093C0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 009FC4 700093C4 AFA50044 */  sw    $a1, 0x44($sp)
 /* 009FC8 700093C8 AC440000 */  sw    $a0, ($v0)
 /* 009FCC 700093CC AC4F0008 */  sw    $t7, 8($v0)
-/* 009FD0 700093D0 27394414 */  addiu $t9, %lo(D_80024414) # addiu $t9, $t9, 0x4414
+/* 009FD0 700093D0 27394414 */  addiu $t9, %lo(sdefaultmvals +0x4) # addiu $t9, $t9, 0x4414
 /* 009FD4 700093D4 8F210000 */  lw    $at, ($t9)
 /* 009FD8 700093D8 8F290004 */  lw    $t1, 4($t9)
 /* 009FDC 700093DC 27B80020 */  addiu $t8, $sp, 0x20
@@ -221,7 +222,7 @@ glabel check_memflag_tokens
 /* 00A0F4 700094F4 AFAC002C */  sw    $t4, 0x2c($sp)
 /* 00A0F8 700094F8 AFA30034 */  sw    $v1, 0x34($sp)
 .L700094FC:
-/* 00A0FC 700094FC 0C002545 */  jal   memp_related_0
+/* 00A0FC 700094FC 0C002545 */  jal   mempSetBankStarts
 /* 00A100 70009500 27A40020 */   addiu $a0, $sp, 0x20
 /* 00A104 70009504 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 00A108 70009508 27BD0040 */  addiu $sp, $sp, 0x40
@@ -240,110 +241,94 @@ glabel check_memflag_tokens
  *     accepts: A0=p->allocation sizes
  */
 #ifdef NONMATCHING
-void *memp_related_0(void *arg0) {
-    s32 sp30;
-    s32 sp34;
-    s32 sp38;
-    s32 sp3C;
-    s32 sp60;
-    s32 sp78;
-    ? sp7C;
-    u32 temp_s0;
-    s32 temp_v1;
-    ? temp_ret;
-    u32 temp_s0_2;
-    u32 temp_s0_3;
-    s32 temp_v0;
-    void *temp_v0_2;
-    void *temp_s0_4;
-    s32 temp_a0;
-    s32 temp_a1;
-    s32 temp_v1_2;
+void mempSetBankStarts(int *param_1)
 
-    // Node 0
-    sp60 = (s32) D_80024434;
-    sp60.unk4 = (s32) D_80024434.unk4;
-    sp60.unk8 = (?32) D_80024434.unk8;
-    sp60.unkC = (?32) D_80024434.unkC;
-    sp60.unk10 = (?32) D_80024434.unk10;
-    sp60.unk14 = (?32) D_80024434.unk14;
-    sp60.unk18 = (?32) D_80024434.unk18;
-    // Node 1
-    *(&sp60 + (*arg0 * 4)) = (?32) arg0->unk4;
-    if (arg0->unk8 != 0)
-    {
-        goto loop_1;
+{
+    int *piVar1;
+    int right_l;
+    longlong lVar2;
+    longlong lVar3;
+    int iVar4;
+    int iVar5;
+    s_memstarts *psVar6;
+    s_memstarts *psVar7;
+    s_memstarts bankstarts;
+    undefined auStack4 [4];
+    
+    bankstarts.bank1start = sdefaultmemstarts.bank1start;
+    bankstarts.bank2start = sdefaultmemstarts.bank2start;
+    psVar6 = &bankstarts;
+    bankstarts.bank3start = sdefaultmemstarts.bank3start;
+    bankstarts.bank4start = sdefaultmemstarts.bank4start;
+    bankstarts.bank5start = sdefaultmemstarts.bank5start;
+    bankstarts.bank6start = sdefaultmemstarts.bank6start;
+    bankstarts.bank7start = sdefaultmemstarts.bank7start;
+    right_l = *param_1;
+    iVar4 = param_1[1];
+    while( true ) {
+        (&bankstarts.bank1start)[right_l] = iVar4;
+        right_l = param_1[2];
+        if (right_l == 0) break;
+        iVar4 = param_1[3];
+        param_1 = param_1 + 2;
     }
-    // Node 2
-    // Node 3
-    temp_s0 = (&sp60 + 4);
-    *temp_s0 = (s32) (sp60.unk4 + sp60);
-    if (temp_s0 < &sp78)
-    {
-        goto loop_3;
-    }
-    // Node 4
-    temp_v1 = (memory_bank_ptrs.unk8 - memory_bank_ptrs);
-    sp30 = (s32) (sp78 >> 0x1f);
-    sp38 = (s32) (temp_v1 >> 0x1f);
-    sp3C = temp_v1;
-    sp34 = sp78;
-    // Node 5
-    temp_ret = __ll_mul(((s32) sp60 >> 0x1f), sp60, sp38, sp3C);
-    temp_s0_2 = (&sp60 + 4);
-    temp_s0_2->unk-4 = (u64) __ll_div(temp_ret, temp_ret, sp30, sp34);
-    if (temp_s0_2 < &sp7C)
-    {
-        goto loop_5;
-    }
-    // Node 6
-    // Node 7
-    temp_s0_3 = (&sp60 + 4);
-    temp_s0_3->unk-4 = (s32) ((sp60 | 0xf) ^ 0xf);
-    if (temp_s0_3 < &sp7C)
-    {
-        goto loop_7;
-    }
-    // Node 8
-    D_80063BC4 = (s32) (sp60 + memory_bank_ptrs);
-    D_80063BC4 = 0;
-    temp_v0 = (sp64 + memory_bank_ptrs);
-    D_80063BC8 = temp_v0;
-    D_80063BD4 = temp_v0;
-    D_80063BD4 = 0;
-    D_80063BD8 = (s32) (sp68 + memory_bank_ptrs);
-    temp_v0_2 = (&memory_bank_ptrs + (2 * 0x10));
-    temp_s0_4 = (&sp60 + (2 * 4));
-    temp_a0 = (temp_s0_4->unk8 + memory_bank_ptrs);
-    temp_a1 = (temp_s0_4->unkC + memory_bank_ptrs);
-    temp_v1_2 = (temp_s0_4->unk4 + memory_bank_ptrs);
-    temp_v0_2->unk48 = (s32) (temp_s0_4->unk10 + memory_bank_ptrs);
-    temp_v0_2->unk20 = temp_v1_2;
-    temp_v0_2->unk38 = temp_a1;
-    temp_v0_2->unk40 = temp_a1;
-    temp_v0_2->unk28 = temp_a0;
-    temp_v0_2->unk30 = temp_a0;
-    temp_v0_2->unk24 = 0;
-    temp_v0_2->unk34 = 0;
-    temp_v0_2->unk44 = 0;
-    temp_v0_2->unk10 = (s32) (*temp_s0_4 + memory_bank_ptrs);
-    temp_v0_2->unk14 = 0;
-    temp_v0_2->unk18 = temp_v1_2;
-    return;
-    // (possible return value: temp_v0_2)
+    right_l = bankstarts.bank1start;
+    do {
+        piVar1 = &psVar6->bank2start;
+        psVar6 = (s_memstarts *)&psVar6->bank2start;
+        right_l = *piVar1 + right_l;
+        psVar6->bank1start = right_l;
+        iVar4 = bankstarts.bank7start;
+    } while (psVar6 < (s_memstarts *)&bankstarts.bank7start);
+    right_l = memory_bank_ptrs[0].bankend - memory_bank_ptrs[0].bankstart;
+    lVar3 = (longlong)right_l;
+    iVar5 = bankstarts.bank7start >> 0x1f;
+    psVar6 = &bankstarts;
+    do {
+        lVar2 = __ll_mul((int)psVar6->bank1start >> 0x1f,psVar6->bank1start,right_l >> 0x1f,right_l)
+        ;
+        __ll_div((int)lVar2,(int)lVar3,iVar5,iVar4);
+        psVar7 = (s_memstarts *)&psVar6->bank2start;
+        psVar6->bank1start = (int)lVar3;
+        psVar6 = psVar7;
+    } while (psVar7 < (s_memstarts *)auStack4);
+    psVar6 = &bankstarts;
+    do {
+        psVar7 = (s_memstarts *)&psVar6->bank2start;
+        psVar6->bank1start = (psVar6->bank1start | 0xf) ^ 0xf;
+        psVar6 = psVar7;
+    } while (psVar7 < (s_memstarts *)auStack4);
+    memory_bank_ptrs[1].bankstart = bankstarts.bank1start + memory_bank_ptrs[0].bankstart;
+    memory_bank_ptrs[1].nextentry = 0;
+    memory_bank_ptrs[1].bankend = bankstarts.bank2start + memory_bank_ptrs[0].bankstart;
+    memory_bank_ptrs[2].bankstart = bankstarts.bank2start + memory_bank_ptrs[0].bankstart;
+    memory_bank_ptrs[2].nextentry = 0;
+    memory_bank_ptrs[2].bankend = bankstarts.bank3start + memory_bank_ptrs[0].bankstart;
+    memory_bank_ptrs[3].bankstart = bankstarts.bank3start + memory_bank_ptrs[0].bankstart;
+    memory_bank_ptrs[3].nextentry = 0;
+    memory_bank_ptrs[3].bankend = bankstarts.bank4start + memory_bank_ptrs[0].bankstart;
+    memory_bank_ptrs[4].bankstart = bankstarts.bank4start + memory_bank_ptrs[0].bankstart;
+    memory_bank_ptrs[4].nextentry = 0;
+    memory_bank_ptrs[4].bankend = bankstarts.bank5start + memory_bank_ptrs[0].bankstart;
+    memory_bank_ptrs[5].bankstart = bankstarts.bank5start + memory_bank_ptrs[0].bankstart;
+    memory_bank_ptrs[5].nextentry = 0;
+    memory_bank_ptrs[5].bankend = bankstarts.bank6start + memory_bank_ptrs[0].bankstart;
+    memory_bank_ptrs[6].bankstart = bankstarts.bank6start + memory_bank_ptrs[0].bankstart;
+    memory_bank_ptrs[6].nextentry = 0;
+    memory_bank_ptrs[6].bankend = bankstarts.bank7start + memory_bank_ptrs[0].bankstart;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel memp_related_0
+glabel mempSetBankStarts
 /* 00A114 70009514 27BDFF80 */  addiu $sp, $sp, -0x80
-/* 00A118 70009518 3C0E8002 */  lui   $t6, %hi(D_80024434) 
+/* 00A118 70009518 3C0E8002 */  lui   $t6, %hi(sdefaultmemstarts) 
 /* 00A11C 7000951C AFBF0024 */  sw    $ra, 0x24($sp)
 /* 00A120 70009520 AFB30020 */  sw    $s3, 0x20($sp)
 /* 00A124 70009524 AFB2001C */  sw    $s2, 0x1c($sp)
 /* 00A128 70009528 AFB10018 */  sw    $s1, 0x18($sp)
 /* 00A12C 7000952C AFB00014 */  sw    $s0, 0x14($sp)
-/* 00A130 70009530 25CE4434 */  addiu $t6, %lo(D_80024434) # addiu $t6, $t6, 0x4434
+/* 00A130 70009530 25CE4434 */  addiu $t6, %lo(sdefaultmemstarts) # addiu $t6, $t6, 0x4434
 /* 00A134 70009534 8DC10000 */  lw    $at, ($t6)
 /* 00A138 70009538 27B20060 */  addiu $s2, $sp, 0x60
 /* 00A13C 7000953C 3C138006 */  lui   $s3, %hi(memory_bank_ptrs)
@@ -482,19 +467,59 @@ glabel memp_related_0
  *     accepts: A0=size, A1=bank
  */
 #ifdef NONMATCHING
-void allocate_bytes_in_bank(void) {
+uint mempAllocBytesInBank(u32 bytes,u32 bank)
 
+{
+    uint next;
+    uint end;
+    int domemalloc;
+    int bankmask;
+    
+    bankmask = (bank & 0xff) << 4;
+    while( true ) {
+        domemalloc = needmemallocation;
+        next = *(uint *)((int)&memory_bank_ptrs[0].nextentry + bankmask);
+        if (next == 0) {
+            do {
+                    /* WARNING: Do nothing block with infinite loop */
+            } while( true );
+        }
+        end = *(uint *)((int)&memory_bank_ptrs[0].bankend + bankmask);
+        if (end < next) {
+            nulled_mempLoopAllMemBanks();
+            do {
+                    /* WARNING: Do nothing block with infinite loop */
+            } while( true );
+        }
+        if (next + bytes <= end) {
+            *(int *)((int)&memory_bank_ptrs[0].nextentry + bankmask) = next + bytes;
+            *(uint *)((int)&memory_bank_ptrs[0].data2 + bankmask) = next;
+            return next;
+        }
+        if ((uint)memory_bank_ptrs[6].bankend < memory_bank_ptrs[6].nextentry + bytes) break;
+        needmemallocation = 1;
+        if (domemalloc == 0) {
+            bankmask = 0x60;
+        }
+        else {
+            bankmask = 0x60;
+        }
+    }
+    nulled_mempLoopAllMemBanks();
+    do {
+                    /* WARNING: Do nothing block with infinite loop */
+    } while( true );
 }
 #else
 GLOBAL_ASM(
 .text
-glabel allocate_bytes_in_bank
+glabel mempAllocBytesInBank
 /* 00A320 70009720 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00A324 70009724 AFA5001C */  sw    $a1, 0x1c($sp)
 /* 00A328 70009728 30A700FF */  andi  $a3, $a1, 0xff
 /* 00A32C 7000972C 3C058006 */  lui   $a1, %hi(memory_bank_ptrs)
-/* 00A330 70009730 3C0A8002 */  lui   $t2, %hi(tied_to_mem_management) 
-/* 00A334 70009734 254A4404 */  addiu $t2, %lo(tied_to_mem_management) # addiu $t2, $t2, 0x4404
+/* 00A330 70009730 3C0A8002 */  lui   $t2, %hi(needmemallocation) 
+/* 00A334 70009734 254A4404 */  addiu $t2, %lo(needmemallocation) # addiu $t2, $t2, 0x4404
 /* 00A338 70009738 24A53BB0 */  addiu $a1, %lo(memory_bank_ptrs) # addiu $a1, $a1, 0x3bb0
 /* 00A33C 7000973C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00A340 70009740 00803025 */  move  $a2, $a0
@@ -505,8 +530,8 @@ glabel allocate_bytes_in_bank
 /* 00A350 70009750 14400006 */  bnez  $v0, .L7000976C
 /* 00A354 70009754 00404025 */   move  $t0, $v0
 /* 00A358 70009758 24190001 */  li    $t9, 1
-/* 00A35C 7000975C 3C018002 */  lui   $at, %hi(tied_to_mem_management)
-/* 00A360 70009760 AC394404 */  sw    $t9, %lo(tied_to_mem_management)($at)
+/* 00A35C 7000975C 3C018002 */  lui   $at, %hi(needmemallocation)
+/* 00A360 70009760 AC394404 */  sw    $t9, %lo(needmemallocation)($at)
 .L70009764:
 /* 00A364 70009764 1000FFFF */  b     .L70009764
 /* 00A368 70009768 00000000 */   nop   
@@ -516,7 +541,7 @@ glabel allocate_bytes_in_bank
 /* 00A374 70009774 0082082B */  sltu  $at, $a0, $v0
 /* 00A378 70009778 50200006 */  beql  $at, $zero, .L70009794
 /* 00A37C 7000977C 008D082B */   sltu  $at, $a0, $t5
-/* 00A380 70009780 0C00263C */  jal   nulled_list_all8_mem_alloc_banks_sizes
+/* 00A380 70009780 0C00263C */  jal   nulled_mempLoopAllMemBanks
 /* 00A384 70009784 24070006 */   li    $a3, 6
 .L70009788:
 /* 00A388 70009788 1000FFFF */  b     .L70009788
@@ -540,7 +565,7 @@ glabel allocate_bytes_in_bank
 /* 00A3CC 700097CC 1000FFDE */  b     .L70009748
 /* 00A3D0 700097D0 0007C100 */   sll   $t8, $a3, 4
 .L700097D4:
-/* 00A3D4 700097D4 0C00263C */  jal   nulled_list_all8_mem_alloc_banks_sizes
+/* 00A3D4 700097D4 0C00263C */  jal   nulled_mempLoopAllMemBanks
 /* 00A3D8 700097D8 00000000 */   nop   
 .L700097DC:
 /* 00A3DC 700097DC 1000FFFF */  b     .L700097DC
@@ -565,15 +590,56 @@ glabel allocate_bytes_in_bank
  *     accepts: A0=p->allocated data, A1=size of data, A2=bank#
  */
 #ifdef NONMATCHING
-void memp_related_1(void) {
+u32 mempAddEntryOfSizeToBank(void *ptrdata,int size,uint bank)
 
+{
+    uint entry;
+    u32 retval;
+    
+    bank = bank & 0xff;
+    if ((needmemallocation != 0) && (ptrdata == memory_bank_ptrs[6].data2)) {
+        bank = 6;
+    }
+    entry = memory_bank_ptrs[bank].nextentry;
+    if (entry == 0) {
+        do {
+                    /* WARNING: Do nothing block with infinite loop */
+        } while( true );
+    }
+    if (ptrdata == memory_bank_ptrs[bank].data2) {
+        size = size - (entry - (int)memory_bank_ptrs[bank].data2);
+        if (size < 1) {
+            memory_bank_ptrs[bank].nextentry = entry + size;
+            retval = 1;
+        }
+        else {
+            if ((uint)memory_bank_ptrs[bank].bankend < entry) {
+                nulled_mempLoopAllMemBanks();
+                do {
+                    /* WARNING: Do nothing block with infinite loop */
+                } while( true );
+            }
+            if ((uint)memory_bank_ptrs[bank].bankend < entry + size) {
+                nulled_mempLoopAllMemBanks();
+                do {
+                    /* WARNING: Do nothing block with infinite loop */
+                } while( true );
+            }
+            memory_bank_ptrs[bank].nextentry = entry + size;
+            retval = 1;
+        }
+    }
+    else {
+        retval = 2;
+    }
+    return retval;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel memp_related_1
-/* 00A404 70009804 3C0F8002 */  lui   $t7, %hi(tied_to_mem_management) 
-/* 00A408 70009808 8DEF4404 */  lw    $t7, %lo(tied_to_mem_management)($t7)
+glabel mempAddEntryOfSizeToBank
+/* 00A404 70009804 3C0F8002 */  lui   $t7, %hi(needmemallocation) 
+/* 00A408 70009808 8DEF4404 */  lw    $t7, %lo(needmemallocation)($t7)
 /* 00A40C 7000980C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00A410 70009810 AFA60020 */  sw    $a2, 0x20($sp)
 /* 00A414 70009814 30CE00FF */  andi  $t6, $a2, 0xff
@@ -619,7 +685,7 @@ glabel memp_related_1
 /* 00A4A0 700098A0 0044082B */  sltu  $at, $v0, $a0
 /* 00A4A4 700098A4 50200006 */  beql  $at, $zero, .L700098C0
 /* 00A4A8 700098A8 004D082B */   sltu  $at, $v0, $t5
-/* 00A4AC 700098AC 0C00263C */  jal   nulled_list_all8_mem_alloc_banks_sizes
+/* 00A4AC 700098AC 0C00263C */  jal   nulled_mempLoopAllMemBanks
 /* 00A4B0 700098B0 24060006 */   li    $a2, 6
 .L700098B4:
 /* 00A4B4 700098B4 1000FFFF */  b     .L700098B4
@@ -628,7 +694,7 @@ glabel memp_related_1
 .L700098C0:
 /* 00A4C0 700098C0 10200005 */  beqz  $at, .L700098D8
 /* 00A4C4 700098C4 00837021 */   addu  $t6, $a0, $v1
-/* 00A4C8 700098C8 0C00263C */  jal   nulled_list_all8_mem_alloc_banks_sizes
+/* 00A4C8 700098C8 0C00263C */  jal   nulled_mempLoopAllMemBanks
 /* 00A4CC 700098CC 24060006 */   li    $a2, 6
 .L700098D0:
 /* 00A4D0 700098D0 1000FFFF */  b     .L700098D0
@@ -651,32 +717,16 @@ glabel memp_related_1
  *     V0=8 -- loop eight times, needlessly; fries AT,T6
  *     used by "show mem use", step 1; probably originally listed all eight memory allocations
  */
-#ifdef NONMATCHING
-s32 nulled_list_all8_mem_alloc_banks_sizes(void) {
-    // Node 0
-    // Node 1
-    if (((1 + 1) & 0xff) < 7)
+
+void nulled_mempLoopAllMemBanks(void)
+{
+    s32 bank;
+    for (bank = 1; bank < 7; bank = (bank + 1) & 0xff)
     {
-        goto loop_1;
-    }
-    // (possible return value: ((1 + 1) & 0xff))
+        ;
+    };
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel nulled_list_all8_mem_alloc_banks_sizes
-/* 00A4F0 700098F0 24020001 */  li    $v0, 1
-.L700098F4:
-/* 00A4F4 700098F4 24420001 */  addiu $v0, $v0, 1
-/* 00A4F8 700098F8 304E00FF */  andi  $t6, $v0, 0xff
-/* 00A4FC 700098FC 29C10007 */  slti  $at, $t6, 7
-/* 00A500 70009900 1420FFFC */  bnez  $at, .L700098F4
-/* 00A504 70009904 01C01025 */   move  $v0, $t6
-/* 00A508 70009908 03E00008 */  jr    $ra
-/* 00A50C 7000990C 00000000 */   nop   
-)
-#endif
 
 
 
@@ -686,31 +736,24 @@ glabel nulled_list_all8_mem_alloc_banks_sizes
  *     accepts: A0=bank#
  */
 #ifdef NONMATCHING
-s32 memp_related_3(s32 arg0) {
-    // Node 0
-    if (tied_to_mem_management != 0)
-    {
-        // Node 1
+s32 mempGetBankSizeLeft(uint bank)
+
+{
+    bank = bank & 0xff;
+    if (needmemallocation != 0) {
+        bank = 6;
     }
-    // Node 2
-    if ((arg0 & 0xff) == 4)
-    {
-        // Node 3
-        if (memory_bank_ptrs.unk40 == memory_bank_ptrs.unk48)
-        {
-            // Node 4
-            return;
-            // (possible return value: ((&memory_bank_ptrs + ((arg0 & 0xff) * 0x10))->unk8 - (&memory_bank_ptrs + ((arg0 & 0xff) * 0x10))->unk4))
-        }
+    if ((bank == 4) && (memory_bank_ptrs[4].bankstart == memory_bank_ptrs[4].bankend)) {
+        bank = 6;
     }
-    // (possible return value: ((&memory_bank_ptrs + ((arg0 & 0xff) * 0x10))->unk8 - (&memory_bank_ptrs + ((arg0 & 0xff) * 0x10))->unk4))
+    return memory_bank_ptrs[bank].bankend - memory_bank_ptrs[bank].nextentry;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel memp_related_3
-/* 00A510 70009910 3C0F8002 */  lui   $t7, %hi(tied_to_mem_management) 
-/* 00A514 70009914 8DEF4404 */  lw    $t7, %lo(tied_to_mem_management)($t7)
+glabel mempGetBankSizeLeft
+/* 00A510 70009910 3C0F8002 */  lui   $t7, %hi(needmemallocation) 
+/* 00A514 70009914 8DEF4404 */  lw    $t7, %lo(needmemallocation)($t7)
 /* 00A518 70009918 AFA40000 */  sw    $a0, ($sp)
 /* 00A51C 7000991C 308E00FF */  andi  $t6, $a0, 0xff
 /* 00A520 70009920 11E00002 */  beqz  $t7, .L7000992C
@@ -748,22 +791,20 @@ glabel memp_related_3
  *     accepts: A0=size/bank# entry (ssssssss ssssssss sssssssss sssssbbb)
  */
 #ifdef NONMATCHING
-void memp_related_4(u32 arg0) {
-    // Node 0
-    allocate_bytes_in_bank((arg0 >> 3), (arg0 & 7));
-    return;
-    // (possible return value: allocate_bytes_in_bank((arg0 >> 3), (arg0 & 7)))
+u32 mempAllocPackedBytesInBank(u32 param_1)
+{
+    return mempAllocBytesInBank((param_1 >> 3),(param_1 & 7));
 }
 #else
 GLOBAL_ASM(
 .text
-glabel memp_related_4
+glabel mempAllocPackedBytesInBank
 /* 00A570 70009970 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00A574 70009974 00802825 */  move  $a1, $a0
 /* 00A578 70009978 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00A57C 7000997C 30AE0007 */  andi  $t6, $a1, 7
 /* 00A580 70009980 01C02825 */  move  $a1, $t6
-/* 00A584 70009984 0C0025C8 */  jal   allocate_bytes_in_bank
+/* 00A584 70009984 0C0025C8 */  jal   mempAllocBytesInBank
 /* 00A588 70009988 000420C2 */   srl   $a0, $a0, 3
 /* 00A58C 7000998C 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 00A590 70009990 27BD0018 */  addiu $sp, $sp, 0x18
@@ -782,20 +823,20 @@ glabel memp_related_4
  *     copies base address for memory bank A0 to +4, fry +C
  */
 #ifdef NONMATCHING
-void *reset_mem_bank_a0(s32 arg0) {
-    void *temp_v0;
-
-    // Node 0
-    temp_v0 = (((arg0 & 0xff) * 0x10) + &memory_bank_ptrs);
-    temp_v0->unkC = 0;
-    temp_v0->unk4 = (?32) *temp_v0;
-    return;
-    // (possible return value: temp_v0)
+void mempResetBank(u32 bank)
+{
+    s32 sVar1;
+    u32 uVar2;
+    
+    uVar2 = bank & 0xff;
+    sVar1 = memory_bank_ptrs[uVar2].bankstart;
+    memory_bank_ptrs[uVar2].data2 = NULL;
+    memory_bank_ptrs[uVar2].nextentry = sVar1;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel reset_mem_bank_a0
+glabel mempResetBank
 /* 00A59C 7000999C 308E00FF */  andi  $t6, $a0, 0xff
 /* 00A5A0 700099A0 3C188006 */  lui   $t8, %hi(memory_bank_ptrs) 
 /* 00A5A4 700099A4 27183BB0 */  addiu $t8, %lo(memory_bank_ptrs) # addiu $t8, $t8, 0x3bb0
@@ -818,27 +859,21 @@ glabel reset_mem_bank_a0
  *     accepts: A0=bank#
  */
 #ifdef NONMATCHING
-void *memp_related_6(s32 arg0, s32 arg_unaligned3) {
-    void *temp_v0;
-
-    // Node 0
-    nulled_list_all8_mem_alloc_banks_sizes();
-    temp_v0 = ((arg_unaligned3 * 0x10) + &memory_bank_ptrs);
-    if (temp_v0->unk4 != 0)
-    {
-        // Node 1
-        temp_v0->unk4 = 0;
+void mempNullNextEntryInBank(u32 bank)
+{
+    nulled_mempLoopAllMemBanks();
+    if (memory_bank_ptrs[bank & 0xff].nextentry != 0) {
+        memory_bank_ptrs[bank & 0xff].nextentry = 0;
     }
-    // Node 2
-    return temp_v0;
+    return;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel memp_related_6
+glabel mempNullNextEntryInBank
 /* 00A5C4 700099C4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00A5C8 700099C8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00A5CC 700099CC 0C00263C */  jal   nulled_list_all8_mem_alloc_banks_sizes
+/* 00A5CC 700099CC 0C00263C */  jal   nulled_mempLoopAllMemBanks
 /* 00A5D0 700099D0 AFA40018 */   sw    $a0, 0x18($sp)
 /* 00A5D4 700099D4 93AE001B */  lbu   $t6, 0x1b($sp)
 /* 00A5D8 700099D8 3C188006 */  lui   $t8, %hi(memory_bank_ptrs) 

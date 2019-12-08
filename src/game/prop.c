@@ -1450,7 +1450,7 @@ glabel expand_type_0D_object_autoturret
 /* 03784C 7F002D1C 460C4282 */  mul.s $f10, $f8, $f12
 /* 037850 7F002D20 46025403 */  div.s $f16, $f10, $f2
 /* 037854 7F002D24 E6040088 */  swc1  $f4, 0x88($s0)
-/* 037858 7F002D28 0C0025C8 */  jal   allocate_bytes_in_bank
+/* 037858 7F002D28 0C0025C8 */  jal   mempAllocBytesInBank
 /* 03785C 7F002D2C E610008C */   swc1  $f16, 0x8c($s0)
 /* 037860 7F002D30 2403FFFF */  li    $v1, -1
 /* 037864 7F002D34 AE0200CC */  sw    $v0, 0xcc($s0)

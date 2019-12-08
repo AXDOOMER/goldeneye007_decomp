@@ -831,7 +831,7 @@ Discarded input sections
  .options       0x0000000000000000       0x20 build/j/src/game/game_debug.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/game_debug.o
  .gptab.data    0x0000000000000000       0x18 build/j/src/game/game_debug.o
- .mdebug        0x0000000000000000      0x70c build/j/src/game/game_debug.o
+ .mdebug        0x0000000000000000      0x710 build/j/src/game/game_debug.o
  .options       0x0000000000000000       0x20 build/j/src/game/compiletime.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/compiletime.o
  .mdebug        0x0000000000000000      0x294 build/j/src/game/compiletime.o
@@ -1320,15 +1320,15 @@ Linker script and memory map
  build/j/src/memp.o(.text)
  .text          0x0000000070009390      0x690 build/j/src/memp.o
                 0x0000000070009390                something_with_memp_c_debug
-                0x00000000700093bc                check_memflag_tokens
-                0x0000000070009524                memp_related_0
-                0x0000000070009730                allocate_bytes_in_bank
-                0x0000000070009814                memp_related_1
-                0x0000000070009900                nulled_list_all8_mem_alloc_banks_sizes
-                0x0000000070009920                memp_related_3
-                0x0000000070009980                memp_related_4
-                0x00000000700099ac                reset_mem_bank_a0
-                0x00000000700099d4                memp_related_6
+                0x00000000700093bc                mempCheckMemflagTokens
+                0x0000000070009524                mempSetBankStarts
+                0x0000000070009730                mempAllocBytesInBank
+                0x0000000070009814                mempAddEntryOfSizeToBank
+                0x0000000070009900                nulled_mempLoopAllMemBanks
+                0x0000000070009920                mempGetBankSizeLeft
+                0x0000000070009980                mempAllocPackedBytesInBank
+                0x00000000700099ac                mempResetBank
+                0x00000000700099d4                mempNullNextEntryInBank
  build/j/src/mema.o(.text)
  .text          0x0000000070009a20      0xa40 build/j/src/mema.o
                 0x0000000070009a20                swap_entries
@@ -16588,22 +16588,11 @@ Linker script and memory map
  build/j/src/memp.o(.data)
  .data          0x0000000080024440       0x50 build/j/src/memp.o
                 0x0000000080024440                ptr_memp_c_debug_debug_notice_list
-                0x0000000080024444                tied_to_mem_management
-                0x0000000080024454                D_80024414
-                0x0000000080024458                D_80024418
-                0x000000008002445c                D_8002441C
-                0x0000000080024460                D_80024420
-                0x0000000080024464                D_80024424
-                0x0000000080024468                D_80024428
-                0x000000008002446c                D_8002442C
-                0x0000000080024470                D_80024430
-                0x0000000080024474                D_80024434
-                0x0000000080024478                D_80024438
-                0x000000008002447c                D_8002443C
-                0x0000000080024480                D_80024440
-                0x0000000080024484                D_80024444
-                0x0000000080024488                D_80024448
-                0x000000008002448c                D_8002444C
+                0x0000000080024444                needmemallocation
+                0x0000000080024448                D_80024408
+                0x000000008002444c                D_8002440C
+                0x0000000080024450                sdefaultmvals
+                0x0000000080024474                sdefaultmemstarts
  build/j/src/mema.o(.data)
  .data          0x0000000080024490       0x10 build/j/src/mema.o
                 0x0000000080024490                ptr_mema_c_debug_notice_list

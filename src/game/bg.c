@@ -1802,7 +1802,7 @@ glabel load_bg_file
 /* 0E8D5C 7F0B422C 360F000F */  ori   $t7, $s0, 0xf
 /* 0E8D60 7F0B4230 25F00001 */  addiu $s0, $t7, 1
 /* 0E8D64 7F0B4234 02002025 */  move  $a0, $s0
-/* 0E8D68 7F0B4238 0C0025C8 */  jal   allocate_bytes_in_bank
+/* 0E8D68 7F0B4238 0C0025C8 */  jal   mempAllocBytesInBank
 /* 0E8D6C 7F0B423C 24050004 */   li    $a1, 4
 /* 0E8D70 7F0B4240 8E580000 */  lw    $t8, ($s2)
 /* 0E8D74 7F0B4244 AEE20000 */  sw    $v0, ($s7)

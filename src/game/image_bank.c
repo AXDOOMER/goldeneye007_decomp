@@ -161,7 +161,7 @@ void load_prepare_global_image_bank(void) {
     s32 i;
 
     size = (0x2001400 - 0x2000000);
-    pGlobalimagetable = ((allocate_bytes_in_bank((size + 0x1000), 4) + 0xfff) & -0x1000);
+    pGlobalimagetable = ((mempAllocBytesInBank((size + 0x1000), 4) + 0xfff) & -0x1000);
     romCopy(pGlobalimagetable, _GlobalimagetableSegmentRomStart, size);
     globalbank_rdram_offset = (pGlobalimagetable + 0xfe000000);
     genericimage = (s32) (globalbank_rdram_offset + 0x2000ac8);
@@ -240,7 +240,7 @@ glabel load_prepare_global_image_bank
 /* 100B04 7F0CBFD4 AFB2001C */  sw    $s2, 0x1c($sp)
 /* 100B08 7F0CBFD8 AFB10018 */  sw    $s1, 0x18($sp)
 /* 100B0C 7F0CBFDC 26041000 */  addiu $a0, $s0, 0x1000
-/* 100B10 7F0CBFE0 0C0025C8 */  jal   allocate_bytes_in_bank
+/* 100B10 7F0CBFE0 0C0025C8 */  jal   mempAllocBytesInBank
 /* 100B14 7F0CBFE4 24050004 */   li    $a1, 4
 /* 100B18 7F0CBFE8 3C118009 */  lui   $s1, %hi(pGlobalimagetable)
 /* 100B1C 7F0CBFEC 2631D0B4 */  addiu $s1, %lo(pGlobalimagetable) # addiu $s1, $s1, -0x2f4c

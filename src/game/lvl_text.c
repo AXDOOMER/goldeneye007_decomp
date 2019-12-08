@@ -353,12 +353,12 @@ glabel init_LnameX
 /* 0F6238 7F0C1708 11000039 */  beqz  $t0, .L7F0C17F0
 /* 0F623C 7F0C170C AFB00018 */   sw    $s0, 0x18($sp)
 /* 0F6240 7F0C1710 24042E80 */  li    $a0, 11904
-/* 0F6244 7F0C1714 0C0025C8 */  jal   allocate_bytes_in_bank
+/* 0F6244 7F0C1714 0C0025C8 */  jal   mempAllocBytesInBank
 /* 0F6248 7F0C1718 24050006 */   li    $a1, 6
 /* 0F624C 7F0C171C 3C018009 */  lui   $at, %hi(ptr_j_char_data_buf)
 /* 0F6250 7F0C1720 AC22C6F4 */  sw    $v0, %lo(ptr_j_char_data_buf)($at)
 /* 0F6254 7F0C1724 24040100 */  li    $a0, 256
-/* 0F6258 7F0C1728 0C0025C8 */  jal   allocate_bytes_in_bank
+/* 0F6258 7F0C1728 0C0025C8 */  jal   mempAllocBytesInBank
 /* 0F625C 7F0C172C 24050006 */   li    $a1, 6
 /* 0F6260 7F0C1730 3C048009 */  lui   $a0, %hi(ptr_j_char_registry)
 /* 0F6264 7F0C1734 2484C6F8 */  addiu $a0, %lo(ptr_j_char_registry) # addiu $a0, $a0, -0x3908

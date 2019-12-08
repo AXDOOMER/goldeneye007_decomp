@@ -7767,7 +7767,7 @@ void initBONDdataforPlayer(PLAYER_ID player)
         src = src_next;
         dest = dest + 3;
     } while (src_next != (int *)0x80040148);
-    pPVar4 = (Player *)allocate_bytes_in_bank(0x2a80,4);
+    pPVar4 = (Player *)mempAllocBytesInBank(0x2a80,4);
     ppPVar3 = ptr_BONDdata_p1 + player;
     *ppPVar3 = pPVar4;
     pPVar4->unknown = 0;
@@ -8170,7 +8170,7 @@ glabel initBONDdataforPlayer
 /* 0CF024 7F09A4F4 15EBFFF8 */  bne   $t7, $t3, .L7F09A4D8
 /* 0CF028 7F09A4F8 ADC1FFFC */   sw    $at, -4($t6)
 /* 0CF02C 7F09A4FC 24042A80 */  li    $a0, 10880
-/* 0CF030 7F09A500 0C0025C8 */  jal   allocate_bytes_in_bank
+/* 0CF030 7F09A500 0C0025C8 */  jal   mempAllocBytesInBank
 /* 0CF034 7F09A504 24050004 */   li    $a1, 4
 /* 0CF038 7F09A508 8FAC03D0 */  lw    $t4, 0x3d0($sp)
 /* 0CF03C 7F09A50C 3C198008 */  lui   $t9, %hi(ptr_BONDdata_p1) 
@@ -8984,7 +8984,7 @@ glabel initBONDdataforPlayer
 /* 0CFC04 7F09B094 15EBFFF8 */  bne   $t7, $t3, .L7F09B078
 /* 0CFC08 7F09B098 ADC1FFFC */   sw    $at, -4($t6)
 /* 0CFC0C 7F09B09C 24042A80 */  li    $a0, 10880
-/* 0CFC10 7F09B0A0 0C0025CC */  jal   allocate_bytes_in_bank
+/* 0CFC10 7F09B0A0 0C0025CC */  jal   mempAllocBytesInBank
 /* 0CFC14 7F09B0A4 24050004 */   li    $a1, 4
 /* 0CFC18 7F09B0A8 8FAC03D0 */  lw    $t4, 0x3d0($sp)
 /* 0CFC1C 7F09B0AC 3C198008 */  lui   $t9, %hi(ptr_BONDdata_p1) # $t9, 0x8008

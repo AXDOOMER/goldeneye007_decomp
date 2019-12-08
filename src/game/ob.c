@@ -1178,13 +1178,13 @@ glabel load_rom_resource_index_to_membank
 /* 0F1990 7F0BCE60 8E300004 */  lw    $s0, 4($s1)
 /* 0F1994 7F0BCE64 56000006 */  bnezl $s0, .L7F0BCE80
 /* 0F1998 7F0BCE68 02002025 */   move  $a0, $s0
-/* 0F199C 7F0BCE6C 0C002644 */  jal   memp_related_3
+/* 0F199C 7F0BCE6C 0C002644 */  jal   mempGetBankSizeLeft
 /* 0F19A0 7F0BCE70 93A4003F */   lbu   $a0, 0x3f($sp)
 /* 0F19A4 7F0BCE74 AE220004 */  sw    $v0, 4($s1)
 /* 0F19A8 7F0BCE78 00408025 */  move  $s0, $v0
 /* 0F19AC 7F0BCE7C 02002025 */  move  $a0, $s0
 .L7F0BCE80:
-/* 0F19B0 7F0BCE80 0C0025C8 */  jal   allocate_bytes_in_bank
+/* 0F19B0 7F0BCE80 0C0025C8 */  jal   mempAllocBytesInBank
 /* 0F19B4 7F0BCE84 93A5003F */   lbu   $a1, 0x3f($sp)
 /* 0F19B8 7F0BCE88 8E300004 */  lw    $s0, 4($s1)
 /* 0F19BC 7F0BCE8C 3C0A8004 */  lui   $t2, %hi(file_resource_table) 
@@ -1217,7 +1217,7 @@ glabel load_rom_resource_index_to_membank
 /* 0F1A20 7F0BCEF0 93A6003F */  lbu   $a2, 0x3f($sp)
 /* 0F1A24 7F0BCEF4 51800035 */  beql  $t4, $zero, .L7F0BCFCC
 /* 0F1A28 7F0BCEF8 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0F1A2C 7F0BCEFC 0C002601 */  jal   memp_related_1
+/* 0F1A2C 7F0BCEFC 0C002601 */  jal   mempAddEntryOfSizeToBank
 /* 0F1A30 7F0BCF00 8E250004 */   lw    $a1, 4($s1)
 /* 0F1A34 7F0BCF04 10000031 */  b     .L7F0BCFCC
 /* 0F1A38 7F0BCF08 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -1242,7 +1242,7 @@ glabel load_rom_resource_index_to_membank
 .L7F0BCF4C:
 /* 0F1A7C 7F0BCF4C 02002025 */  move  $a0, $s0
 .L7F0BCF50:
-/* 0F1A80 7F0BCF50 0C0025C8 */  jal   allocate_bytes_in_bank
+/* 0F1A80 7F0BCF50 0C0025C8 */  jal   mempAllocBytesInBank
 /* 0F1A84 7F0BCF54 93A5003F */   lbu   $a1, 0x3f($sp)
 /* 0F1A88 7F0BCF58 8E390004 */  lw    $t9, 4($s1)
 /* 0F1A8C 7F0BCF5C 3C0A8004 */  lui   $t2, %hi(file_resource_table) 
@@ -1491,9 +1491,9 @@ void *sub_GAME_7F0BD138(s32 arg0, s32 arg1, ?32 arg2, s32 arg3) {
     if (arg3 != 0)
     {
         // Node 1
-        memp_related_1(arg1, arg2, 4);
+        mempAddEntryOfSizeToBank(arg1, arg2, 4);
         return;
-        // (possible return value: memp_related_1(arg1, arg2, 4))
+        // (possible return value: mempAddEntryOfSizeToBank(arg1, arg2, 4))
     }
     // (possible return value: temp_v0)
 }
@@ -1516,7 +1516,7 @@ glabel sub_GAME_7F0BD138
 /* 0F1C94 7F0BD164 AC46000C */   sw    $a2, 0xc($v0)
 /* 0F1C98 7F0BD168 00A02025 */  move  $a0, $a1
 /* 0F1C9C 7F0BD16C 00C02825 */  move  $a1, $a2
-/* 0F1CA0 7F0BD170 0C002601 */  jal   memp_related_1
+/* 0F1CA0 7F0BD170 0C002601 */  jal   mempAddEntryOfSizeToBank
 /* 0F1CA4 7F0BD174 24060004 */   li    $a2, 4
 .L7F0BD178:
 /* 0F1CA8 7F0BD178 8FBF0014 */  lw    $ra, 0x14($sp)

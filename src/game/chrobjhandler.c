@@ -1420,7 +1420,7 @@ glabel init_standard_object
 /* 075100 7F0405D0 31F80100 */  andi  $t8, $t7, 0x100
 /* 075104 7F0405D4 13000008 */  beqz  $t8, .L7F0405F8
 /* 075108 7F0405D8 24040050 */   li    $a0, 80
-/* 07510C 7F0405DC 0C0025C8 */  jal   allocate_bytes_in_bank
+/* 07510C 7F0405DC 0C0025C8 */  jal   mempAllocBytesInBank
 /* 075110 7F0405E0 24050004 */   li    $a1, 4
 /* 075114 7F0405E4 92190002 */  lbu   $t9, 2($s0)
 /* 075118 7F0405E8 AE020068 */  sw    $v0, 0x68($s0)
@@ -32804,7 +32804,7 @@ glabel initialize_door
 /* 088160 7F053630 C424A230 */  lwc1  $f4, %lo(PitemZ_entries+8)($at)
 /* 088164 7F053634 24040050 */  li    $a0, 80
 /* 088168 7F053638 24050004 */  li    $a1, 4
-/* 08816C 7F05363C 0C0025C8 */  jal   allocate_bytes_in_bank
+/* 08816C 7F05363C 0C0025C8 */  jal   mempAllocBytesInBank
 /* 088170 7F053640 E7A40028 */   swc1  $f4, 0x28($sp)
 /* 088174 7F053644 AE020068 */  sw    $v0, 0x68($s0)
 /* 088178 7F053648 26050018 */  addiu $a1, $s0, 0x18
@@ -32849,7 +32849,7 @@ glabel initialize_door
 /* 08820C 7F0536DC 8DC20004 */  lw    $v0, 4($t6)
 /* 088210 7F0536E0 8444000C */  lh    $a0, 0xc($v0)
 /* 088214 7F0536E4 00047900 */  sll   $t7, $a0, 4
-/* 088218 7F0536E8 0C0025C8 */  jal   allocate_bytes_in_bank
+/* 088218 7F0536E8 0C0025C8 */  jal   mempAllocBytesInBank
 /* 08821C 7F0536EC 01E02025 */   move  $a0, $t7
 /* 088220 7F0536F0 10000002 */  b     .L7F0536FC
 /* 088224 7F0536F4 AE0200CC */   sw    $v0, 0xcc($s0)
