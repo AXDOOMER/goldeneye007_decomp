@@ -1,19 +1,19 @@
 #include "ultra64.h"
 #include "memp.h"
+#include "game/lvl_text.h"
 /**
  * @file memp.c
  * This file contains code for memp.
  */
 
+//bss
 struct s_mempBANK memory_bank_ptrs[0x7];
 
-
+//data
 void *ptr_memp_c_debug_debug_notice_list = 0;
 s32 needmemallocation = 0;
 s32 D_80024408 = 0;
 s32 D_8002440C = 0;
-
-
 
 struct s_mempMVALS sdefaultmvals = {
     0, //D_80024410
@@ -37,6 +37,11 @@ struct s_mempMEMSTARTS sdefaultmemstarts = {
     0  //bank7start
 };
 
+
+
+
+
+
 /**
  * 9F80	70009380
  *     V0=p->debug.notice.list entry for memp_c_debug
@@ -46,62 +51,58 @@ void something_with_memp_c_debug(void)
     get_ptr_debug_notice_list_entry(&ptr_memp_c_debug_debug_notice_list, "memp_c_debug"); //should be "memp_c_debug"
 }
 
-
-
-
-
-
 /**
  * 9FAC	700093AC
  *     initialize memory allocation table and set font and text bank sizes
  *     accepts: A0=p->buffer, A1=size
  *     uses "-mf", "-ml", "-me" strings
  */
-#ifdef NONMATCHING
-void mempCheckMemflagTokens(int param_1,int param_2)
-
+#ifdef NONMATCHING//
+void mempCheckMemflagTokens(int bstart,int bsize)
 {
-    byte *__nptr;
-    int iVar1;
-    int local_20;
-    long local_1c;
-    undefined4 local_18;
-    long local_14;
-    undefined4 local_10;
-    long local_c;
-    undefined4 local_8;
-    undefined4 local_4;
+    u32 iVar1;
+    u32 local_20;
+    u32 mfval;
+    u32 local_18;
+    u32 mlval;
+    u32 local_10;
+    u32 meval;
+    u32 local_8;
+    u32 local_4;
     
-    memory_bank_ptrs[0].bankend = param_1 + param_2;
-    local_20 = sdefaultmvals.dword_80024414;
-    local_1c = sdefaultmvals.mf;
-    local_14 = sdefaultmvals.ml;
-    local_18 = sdefaultmvals.dword_8002441C;
-    local_10 = sdefaultmvals.dword_80024424;
-    local_c = sdefaultmvals.me;
-    local_4 = sdefaultmvals.dword_80024430;
-    local_8 = sdefaultmvals.dword_8002442C;
-    memory_bank_ptrs[0].bankstart = param_1;
-    if (check_token(1, "-mf") != NULL) {
-        local_1c = strtol( check_token(1, "-mf"), NULL, 0);
+    memory_bank_ptrs[0].bankend = bstart + bsize;
+    local_20 = sdefaultmvals.D_80024414;
+    mfval = sdefaultmvals.mf;
+    mlval = sdefaultmvals.ml;
+    local_18 = sdefaultmvals.D_8002441C;
+    local_10 = sdefaultmvals.D_80024424;
+    meval = sdefaultmvals.me;
+    local_4 = sdefaultmvals.D_80024430;
+    local_8 = sdefaultmvals.D_8002442C;
+    memory_bank_ptrs[0].bankstart = bstart;
+
+    if (check_token(1,"-mf") != 0) {
+        mfval = strtol(check_token(1,"-mf"),NULL,0);
     }
-    if (check_token(1, "-ml") != NULL) {
-        local_14 = strtol( check_token(1, "-ml"), NULL, 0);
+
+    if (check_token(1,"-ml") != 0) {
+        mlval = strtol(check_token(1,"-ml"),NULL,0);
     }
-    if (check_token(1, "-me") != NULL) {
-        local_c = strtol( check_token(1, "-me"), NULL, 0);
+
+    if (check_token(1,"-me") != 0) {
+        meval = strtol(check_token(1,"-me"),NULL,0);
     }
-    if (local_c == 0) {
-        local_1c = 0;
+
+    if (meval == 0) {
+        mfval = 0;
         iVar1 = 0x128;
         if (j_text_trigger != 0) {
             iVar1 = 0x134;
         }
-        local_c = iVar1 * 0x400;
-        local_14 = param_2 + iVar1 * -0x400;
+        meval = iVar1 * 0x400;
+        mlval = bsize + iVar1 * -0x400;
     }
     mempSetBankStarts(&local_20);
-    return;
 }
 #else
 GLOBAL_ASM(
@@ -229,8 +230,7 @@ glabel mempCheckMemflagTokens
  *     accepts: A0=p->allocation sizes
  */
 #ifdef NONMATCHING
-void mempSetBankStarts(int *param_1)
-
+void mempSetBankStarts(int *banks)
 {
     int *piVar1;
     int right_l;
@@ -251,14 +251,14 @@ void mempSetBankStarts(int *param_1)
     bankstarts.bank5start = sdefaultmemstarts.bank5start;
     bankstarts.bank6start = sdefaultmemstarts.bank6start;
     bankstarts.bank7start = sdefaultmemstarts.bank7start;
-    right_l = *param_1;
-    iVar4 = param_1[1];
+    right_l = *banks;
+    iVar4 = banks[1];
     while( true ) {
         (&bankstarts.bank1start)[right_l] = iVar4;
-        right_l = param_1[2];
+        right_l = banks[2];
         if (right_l == 0) break;
-        iVar4 = param_1[3];
-        param_1 = param_1 + 2;
+        iVar4 = banks[3];
+        banks = banks + 2;
     }
     right_l = bankstarts.bank1start;
     do {
@@ -455,8 +455,7 @@ glabel mempSetBankStarts
  *     accepts: A0=size, A1=bank
  */
 #ifdef NONMATCHING
-uint mempAllocBytesInBank(u32 bytes,u32 bank)
-
+u32 mempAllocBytesInBank(u32 bytes,u8 bank)
 {
     uint next;
     uint end;
@@ -578,13 +577,11 @@ glabel mempAllocBytesInBank
  *     accepts: A0=p->allocated data, A1=size of data, A2=bank#
  */
 #ifdef NONMATCHING
-u32 mempAddEntryOfSizeToBank(void *ptrdata,int size,uint bank)
-
+u32 mempAddEntryOfSizeToBank(s32 ptrdata,int size,u8 bank)
 {
-    uint entry;
+    u32 entry;
     u32 retval;
     
-    bank = bank & 0xff;
     if ((needmemallocation != 0) && (ptrdata == memory_bank_ptrs[6].data2)) {
         bank = 6;
     }
@@ -592,7 +589,7 @@ u32 mempAddEntryOfSizeToBank(void *ptrdata,int size,uint bank)
     if (entry == 0) {
         do {
                     /* WARNING: Do nothing block with infinite loop */
-        } while( true );
+        } while( 1 );
     }
     if (ptrdata == memory_bank_ptrs[bank].data2) {
         size = size - (entry - (int)memory_bank_ptrs[bank].data2);
@@ -601,17 +598,17 @@ u32 mempAddEntryOfSizeToBank(void *ptrdata,int size,uint bank)
             retval = 1;
         }
         else {
-            if ((uint)memory_bank_ptrs[bank].bankend < entry) {
+            if (memory_bank_ptrs[bank].bankend < entry) {
                 nulled_mempLoopAllMemBanks();
                 do {
                     /* WARNING: Do nothing block with infinite loop */
-                } while( true );
+                } while( 1 );
             }
-            if ((uint)memory_bank_ptrs[bank].bankend < entry + size) {
+            if (memory_bank_ptrs[bank].bankend < entry + size) {
                 nulled_mempLoopAllMemBanks();
                 do {
                     /* WARNING: Do nothing block with infinite loop */
-                } while( true );
+                } while( 1 );
             }
             memory_bank_ptrs[bank].nextentry = entry + size;
             retval = 1;

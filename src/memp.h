@@ -32,6 +32,14 @@ typedef struct s_mempMEMSTARTS {
     s32 bank7start;
 } s_mempMEMSTARTS;
 
+void something_with_memp_c_debug(void);
+void mempCheckMemflagTokens(int bstart,int bsize);
+void mempSetBankStarts(int *banks);
+u32 mempAllocBytesInBank(u32 bytes,u8 bank);
+u32 mempAddEntryOfSizeToBank(s32 ptrdata,int size,u8 bank);
+void nulled_mempLoopAllMemBanks(void);
+s32 mempGetBankSizeLeft(u8 bank);
+u32 mempAllocPackedBytesInBank(u32 param_1);
 void mempResetBank(u8 bank);
 void mempNullNextEntryInBank(u8 bank);
 
