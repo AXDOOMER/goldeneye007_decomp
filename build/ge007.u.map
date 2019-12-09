@@ -1331,12 +1331,12 @@ Linker script and memory map
                 0x00000000700099c4                mempNullNextEntryInBank
  build/u/src/mema.o(.text)
  .text          0x0000000070009a10      0xa40 build/u/src/mema.o
-                0x0000000070009a10                swap_entries
-                0x0000000070009a34                merge_alloc_entries
-                0x0000000070009a50                sort_merge_entries_in_alloc_table
-                0x0000000070009b18                memp_related_7
+                0x0000000070009a10                memaSwap
+                0x0000000070009a34                memaMerge
+                0x0000000070009a50                memaSortMergeEntries
+                0x0000000070009b18                memaSortMergeAllEntries
                 0x0000000070009b60                mem_related
-                0x0000000070009c74                mem_related_model_room_buffers
+                0x0000000070009c74                memaAllocRoomBuffer
                 0x0000000070009d6c                something_with_mema_c_debug
                 0x0000000070009d98                reset_memtable_base_allocation
                 0x0000000070009e10                mem_related_calls_sort_merge_entries
@@ -21605,20 +21605,6 @@ Linker script and memory map
                 0x0000000080063c20                ptr_model_room_buf_secondary
                 0x0000000080063c24                size_modelroom_buf
                 0x0000000080063c28                ptr_table_allocated_mem_blocks
-                0x0000000080063c2c                dword_CODE_bss_80063C2C
-                0x0000000080063c30                index_for_loadedroom
-                0x0000000080063c34                dword_CODE_bss_80063C34
-                0x0000000080063c38                ptr_first_entry_in_alloc_table
-                0x0000000080063c3c                dword_CODE_bss_80063C3C
-                0x0000000080063c40                dword_CODE_bss_80063C40
-                0x0000000080063c44                dword_CODE_bss_80063C44
-                0x0000000080063c48                dword_CODE_bss_80063C48
-                0x0000000080064c08                dword_CODE_bss_80064C08
-                0x0000000080064c10                dword_CODE_bss_80064C10
-                0x0000000080064c18                dword_CODE_bss_80064C18
-                0x0000000080064c1c                dword_CODE_bss_80064C1C
-                0x0000000080064c20                dword_CODE_bss_80064C20
-                0x0000000080064c24                dword_CODE_bss_80064C24
  build/u/src/random.o(.bss)
  build/u/src/token.o(.bss)
  .bss           0x0000000080064c30      0x280 build/u/src/token.o
