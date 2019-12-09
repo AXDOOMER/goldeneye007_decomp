@@ -715,19 +715,13 @@ void nulled_mempLoopAllMemBanks(void)
     };
 }
 
-
-
-
 /**
  * A510	70009910
  *     V0= total allocated size of bank A0
  *     accepts: A0=bank#
  */
-#ifdef NONMATCHING
-s32 mempGetBankSizeLeft(uint bank)
-
+s32 mempGetBankSizeLeft(u8 bank)
 {
-    bank = bank & 0xff;
     if (needmemallocation != 0) {
         bank = 6;
     }
@@ -736,38 +730,6 @@ s32 mempGetBankSizeLeft(uint bank)
     }
     return memory_bank_ptrs[bank].bankend - memory_bank_ptrs[bank].nextentry;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel mempGetBankSizeLeft
-/* 00A510 70009910 3C0F8002 */  lui   $t7, %hi(needmemallocation) 
-/* 00A514 70009914 8DEF4404 */  lw    $t7, %lo(needmemallocation)($t7)
-/* 00A518 70009918 AFA40000 */  sw    $a0, ($sp)
-/* 00A51C 7000991C 308E00FF */  andi  $t6, $a0, 0xff
-/* 00A520 70009920 11E00002 */  beqz  $t7, .L7000992C
-/* 00A524 70009924 01C02025 */   move  $a0, $t6
-/* 00A528 70009928 24040006 */  li    $a0, 6
-.L7000992C:
-/* 00A52C 7000992C 24010004 */  li    $at, 4
-/* 00A530 70009930 14810007 */  bne   $a0, $at, .L70009950
-/* 00A534 70009934 3C058006 */   lui   $a1, %hi(memory_bank_ptrs)
-/* 00A538 70009938 24A53BB0 */  addiu $a1, %lo(memory_bank_ptrs) # addiu $a1, $a1, 0x3bb0
-/* 00A53C 7000993C 8CB80040 */  lw    $t8, 0x40($a1)
-/* 00A540 70009940 8CB90048 */  lw    $t9, 0x48($a1)
-/* 00A544 70009944 17190002 */  bne   $t8, $t9, .L70009950
-/* 00A548 70009948 00000000 */   nop   
-/* 00A54C 7000994C 24040006 */  li    $a0, 6
-.L70009950:
-/* 00A550 70009950 3C058006 */  lui   $a1, %hi(memory_bank_ptrs)
-/* 00A554 70009954 24A53BB0 */  addiu $a1, %lo(memory_bank_ptrs) # addiu $a1, $a1, 0x3bb0
-/* 00A558 70009958 00044100 */  sll   $t0, $a0, 4
-/* 00A55C 7000995C 00A81821 */  addu  $v1, $a1, $t0
-/* 00A560 70009960 8C690008 */  lw    $t1, 8($v1)
-/* 00A564 70009964 8C6A0004 */  lw    $t2, 4($v1)
-/* 00A568 70009968 03E00008 */  jr    $ra
-/* 00A56C 7000996C 012A1023 */   subu  $v0, $t1, $t2
-)
-#endif
 
 
 
@@ -810,32 +772,11 @@ glabel mempAllocPackedBytesInBank
  *     reset memory bank A0 [0-6]
  *     copies base address for memory bank A0 to +4, fry +C
  */
-
 void mempResetBank(u8 bank)
 {
     memory_bank_ptrs[bank].data2 = 0;
     memory_bank_ptrs[bank].nextentry = memory_bank_ptrs[bank].bankstart;
 }
-#ifdef NONMATCHING//#else
-GLOBAL_ASM(
-.text
-glabel mempResetBank
-/* 00A59C 7000999C 308E00FF */  andi  $t6, $a0, 0xff
-/* 00A5A0 700099A0 3C188006 */  lui   $t8, %hi(memory_bank_ptrs) 
-/* 00A5A4 700099A4 27183BB0 */  addiu $t8, %lo(memory_bank_ptrs) # addiu $t8, $t8, 0x3bb0
-/* 00A5A8 700099A8 000E7900 */  sll   $t7, $t6, 4
-/* 00A5AC 700099AC 01F81021 */  addu  $v0, $t7, $t8
-/* 00A5B0 700099B0 8C590000 */  lw    $t9, ($v0)
-/* 00A5B4 700099B4 AFA40000 */  sw    $a0, ($sp)
-/* 00A5B8 700099B8 AC40000C */  sw    $zero, 0xc($v0)
-/* 00A5BC 700099BC 03E00008 */  jr    $ra
-/* 00A5C0 700099C0 AC590004 */   sw    $t9, 4($v0)
-)
-#endif
-
-
-
-
 
 /**
  * A5C4	700099C4
