@@ -7690,9 +7690,7 @@ labels:
    - [0x80063730, "ptr_3rd_music_ctrl_block"]
    - [0x80063734, "ptr_musicdatatable"]
    - [0x80063BB0, "memory_bank_ptrs"]
-   - [0x80063BF0, "ptr_model_room_buf_pri"]
-   - [0x80063BF8, "dword_CODE_bss_80063BF8"]
-   - [0x80063C1C, "dword_CODE_bss_80063C1C"]
+
    - [0x80063C20, "ptr_model_room_buf_secondary"]
    - [0x80063C24, "size_modelroom_buf"]
    - [0x80063C28, "ptr_table_allocated_mem_blocks"]

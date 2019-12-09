@@ -3,6 +3,13 @@
 
 #include "ultra64.h"
 
+typedef struct s_mempBANK {
+    s32 bankstart;
+    s32 nextentry;
+    s32 bankend;
+    s32 data2;
+} s_mempBANK;
+
 typedef struct s_mempMVALS {
     u32 D_80024410;
     u32 D_80024414;

@@ -21601,19 +21601,6 @@ Linker script and memory map
  build/j/src/memp.o(.bss)
  .bss           0x0000000080063bf0       0x70 build/j/src/memp.o
                 0x0000000080063bf0                memory_bank_ptrs
-                0x0000000080063bf8                D_80063BB8
-                0x0000000080063c00                D_80063BC0
-                0x0000000080063c04                D_80063BC4
-                0x0000000080063c08                D_80063BC8
-                0x0000000080063c10                D_80063BD0
-                0x0000000080063c14                D_80063BD4
-                0x0000000080063c18                D_80063BD8
-                0x0000000080063c20                D_80063BE0
-                0x0000000080063c24                D_80063BE4
-                0x0000000080063c28                D_80063BE8
-                0x0000000080063c30                ptr_model_room_buf_pri
-                0x0000000080063c38                dword_CODE_bss_80063BF8
-                0x0000000080063c5c                dword_CODE_bss_80063C1C
  build/j/src/mema.o(.bss)
  .bss           0x0000000080063c60     0x1010 build/j/src/mema.o
                 0x0000000080063c60                ptr_model_room_buf_secondary

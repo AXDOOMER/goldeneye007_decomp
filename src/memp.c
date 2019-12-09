@@ -5,20 +5,8 @@
  * This file contains code for memp.
  */
 
-char memory_bank_ptrs[0x8];
-char D_80063BB8[0x8];
-char D_80063BC0[0x4];
-char D_80063BC4[0x4];
-char D_80063BC8[0x8];
-char D_80063BD0[0x4];
-char D_80063BD4[0x4];
-char D_80063BD8[0x8];
-char D_80063BE0[4];
-char D_80063BE4[4];
-char D_80063BE8[8];
-u32 *ptr_model_room_buf_pri;
-char dword_CODE_bss_80063BF8[0x24];
-s32 dword_CODE_bss_80063C1C;
+struct s_mempBANK memory_bank_ptrs[0x7];
+
 
 void *ptr_memp_c_debug_debug_notice_list = 0;
 s32 needmemallocation = 0;
@@ -408,20 +396,20 @@ glabel mempSetBankStarts
 /* 00A254 70009654 8E660000 */  lw    $a2, ($s3)
 /* 00A258 70009658 8FB80060 */  lw    $t8, 0x60($sp)
 /* 00A25C 7000965C 8FAF0064 */  lw    $t7, 0x64($sp)
-/* 00A260 70009660 3C018006 */  lui   $at, %hi(D_80063BC4)
+/* 00A260 70009660 3C018006 */  lui   $at, %hi(memory_bank_ptrs+0x14)
 /* 00A264 70009664 03067021 */  addu  $t6, $t8, $a2
-/* 00A268 70009668 AC2E3BC0 */  sw    $t6, %lo(D_80063BC0)($at)
-/* 00A26C 7000966C AC203BC4 */  sw    $zero, %lo(D_80063BC4)($at)
-/* 00A270 70009670 3C018006 */  lui   $at, %hi(D_80063BC8)
+/* 00A268 70009668 AC2E3BC0 */  sw    $t6, %lo(memory_bank_ptrs+0x10)($at)
+/* 00A26C 7000966C AC203BC4 */  sw    $zero, %lo(memory_bank_ptrs+0x14)($at)
+/* 00A270 70009670 3C018006 */  lui   $at, %hi(memory_bank_ptrs+0x18)
 /* 00A274 70009674 01E61021 */  addu  $v0, $t7, $a2
-/* 00A278 70009678 AC223BC8 */  sw    $v0, %lo(D_80063BC8)($at)
+/* 00A278 70009678 AC223BC8 */  sw    $v0, %lo(memory_bank_ptrs+0x18)($at)
 /* 00A27C 7000967C 8FA80068 */  lw    $t0, 0x68($sp)
-/* 00A280 70009680 3C018006 */  lui   $at, %hi(D_80063BD4)
-/* 00A284 70009684 AC223BD0 */  sw    $v0, %lo(D_80063BD0)($at)
-/* 00A288 70009688 AC203BD4 */  sw    $zero, %lo(D_80063BD4)($at)
-/* 00A28C 7000968C 3C018006 */  lui   $at, %hi(D_80063BD8)
+/* 00A280 70009680 3C018006 */  lui   $at, %hi(memory_bank_ptrs+0x24)
+/* 00A284 70009684 AC223BD0 */  sw    $v0, %lo(memory_bank_ptrs+0x20)($at)
+/* 00A288 70009688 AC203BD4 */  sw    $zero, %lo(memory_bank_ptrs+0x24)($at)
+/* 00A28C 7000968C 3C018006 */  lui   $at, %hi(memory_bank_ptrs+0x28)
 /* 00A290 70009690 01064821 */  addu  $t1, $t0, $a2
-/* 00A294 70009694 AC293BD8 */  sw    $t1, %lo(D_80063BD8)($at)
+/* 00A294 70009694 AC293BD8 */  sw    $t1, %lo(memory_bank_ptrs+0x28)($at)
 /* 00A298 70009698 24070002 */  li    $a3, 2
 /* 00A29C 7000969C 0007C900 */  sll   $t9, $a3, 4
 /* 00A2A0 700096A0 02791021 */  addu  $v0, $s3, $t9
@@ -648,8 +636,8 @@ glabel mempAddEntryOfSizeToBank
 /* 00A420 70009820 AFA5001C */  sw    $a1, 0x1c($sp)
 /* 00A424 70009824 11E00006 */  beqz  $t7, .L70009840
 /* 00A428 70009828 00803825 */   move  $a3, $a0
-/* 00A42C 7000982C 3C188006 */  lui   $t8, %hi(dword_CODE_bss_80063C1C) 
-/* 00A430 70009830 8F183C1C */  lw    $t8, %lo(dword_CODE_bss_80063C1C)($t8)
+/* 00A42C 7000982C 3C188006 */  lui   $t8, %hi(memory_bank_ptrs+0x6C) 
+/* 00A430 70009830 8F183C1C */  lw    $t8, %lo(memory_bank_ptrs+0x6C)($t8)
 /* 00A434 70009834 14980002 */  bne   $a0, $t8, .L70009840
 /* 00A438 70009838 00000000 */   nop   
 /* 00A43C 7000983C 24060006 */  li    $a2, 6
