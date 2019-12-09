@@ -810,18 +810,13 @@ glabel mempAllocPackedBytesInBank
  *     reset memory bank A0 [0-6]
  *     copies base address for memory bank A0 to +4, fry +C
  */
-#ifdef NONMATCHING
-void mempResetBank(u32 bank)
+
+void mempResetBank(u8 bank)
 {
-    s32 sVar1;
-    u32 uVar2;
-    
-    uVar2 = bank & 0xff;
-    sVar1 = memory_bank_ptrs[uVar2].bankstart;
-    memory_bank_ptrs[uVar2].data2 = NULL;
-    memory_bank_ptrs[uVar2].nextentry = sVar1;
+    memory_bank_ptrs[bank].data2 = 0;
+    memory_bank_ptrs[bank].nextentry = memory_bank_ptrs[bank].bankstart;
 }
-#else
+#ifdef NONMATCHING//#else
 GLOBAL_ASM(
 .text
 glabel mempResetBank
@@ -846,7 +841,6 @@ glabel mempResetBank
  * A5C4	700099C4
  *     accepts: A0=bank#
  */
-
 void mempNullNextEntryInBank(u8 bank)
 {
     nulled_mempLoopAllMemBanks();
