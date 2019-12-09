@@ -846,40 +846,11 @@ glabel mempResetBank
  * A5C4	700099C4
  *     accepts: A0=bank#
  */
-#ifdef NONMATCHING
-void mempNullNextEntryInBank(u32 bank)
+
+void mempNullNextEntryInBank(u8 bank)
 {
     nulled_mempLoopAllMemBanks();
-    if (memory_bank_ptrs[bank & 0xff].nextentry != 0) {
-        memory_bank_ptrs[bank & 0xff].nextentry = 0;
+    if (memory_bank_ptrs[bank].nextentry != 0) {
+        memory_bank_ptrs[bank].nextentry = 0;
     }
-    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel mempNullNextEntryInBank
-/* 00A5C4 700099C4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 00A5C8 700099C8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00A5CC 700099CC 0C00263C */  jal   nulled_mempLoopAllMemBanks
-/* 00A5D0 700099D0 AFA40018 */   sw    $a0, 0x18($sp)
-/* 00A5D4 700099D4 93AE001B */  lbu   $t6, 0x1b($sp)
-/* 00A5D8 700099D8 3C188006 */  lui   $t8, %hi(memory_bank_ptrs) 
-/* 00A5DC 700099DC 27183BB0 */  addiu $t8, %lo(memory_bank_ptrs) # addiu $t8, $t8, 0x3bb0
-/* 00A5E0 700099E0 000E7900 */  sll   $t7, $t6, 4
-/* 00A5E4 700099E4 01F81021 */  addu  $v0, $t7, $t8
-/* 00A5E8 700099E8 8C590004 */  lw    $t9, 4($v0)
-/* 00A5EC 700099EC 53200003 */  beql  $t9, $zero, .L700099FC
-/* 00A5F0 700099F0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 00A5F4 700099F4 AC400004 */  sw    $zero, 4($v0)
-/* 00A5F8 700099F8 8FBF0014 */  lw    $ra, 0x14($sp)
-.L700099FC:
-/* 00A5FC 700099FC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 00A600 70009A00 03E00008 */  jr    $ra
-/* 00A604 70009A04 00000000 */   nop   
-)
-#endif
-
-
-
-

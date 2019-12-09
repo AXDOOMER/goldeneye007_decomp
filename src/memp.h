@@ -32,7 +32,7 @@ typedef struct s_mempMEMSTARTS {
     s32 bank7start;
 } s_mempMEMSTARTS;
 
-void *mempResetBank(s32 arg0);
-void *mempNullNextEntryInBank(s32 arg0);
+void mempResetBank(s32 arg0);
+void mempNullNextEntryInBank(u8 bank);
 
 #endif
