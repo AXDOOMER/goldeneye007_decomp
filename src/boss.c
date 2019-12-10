@@ -390,7 +390,7 @@ loop_18:
     {
         current_ma_malloc_value = (s32) (strtol(check_token(1, &aMa_0), 0, 0) << 0xa);
     }
-    reset_memtable_base_allocation(mempAllocBytesInBank(current_ma_malloc_value, 4), current_ma_malloc_value);
+    mempInitMallocTable(mempAllocBytesInBank(current_ma_malloc_value, 4), current_ma_malloc_value);
     reset_play_data_ptrs();
     phi_s1 = 0;
     if (current_stage_num != 0x5a)
@@ -567,7 +567,7 @@ loop_44:
                         if (show_mem_use_flag != 0)
                         {
                             nulled_mempLoopAllMemBanks();
-                            generate_lists_before_after_mem_merge();
+                            memaGenerateListsBeforeAfterMerge();
                             removed_debug_routine(temp_s3_3);
                             nullsub_41(0);
                             show_mem_use_flag = 0;
@@ -853,7 +853,7 @@ glabel mainloop
 /* 006F48 70006348 24050004 */   li    $a1, 4
 /* 006F4C 7000634C 3C058002 */  lui   $a1, %hi(current_ma_malloc_value)
 /* 006F50 70006350 8CA541B0 */  lw    $a1, %lo(current_ma_malloc_value)($a1)
-/* 006F54 70006354 0C002766 */  jal   reset_memtable_base_allocation
+/* 006F54 70006354 0C002766 */  jal   mempInitMallocTable
 /* 006F58 70006358 00402025 */   move  $a0, $v0
 /* 006F5C 7000635C 0FC268CB */  jal   reset_play_data_ptrs
 /* 006F60 70006360 00000000 */   nop   
@@ -1136,7 +1136,7 @@ glabel mainloop
 /* 00737C 7000677C 00000000 */   nop   
 /* 007380 70006780 0C00263C */  jal   nulled_mempLoopAllMemBanks
 /* 007384 70006784 00000000 */   nop   
-/* 007388 70006788 0C0028A7 */  jal   generate_lists_before_after_mem_merge
+/* 007388 70006788 0C0028A7 */  jal   memaGenerateListsBeforeAfterMerge
 /* 00738C 7000678C 00000000 */   nop   
 /* 007390 70006790 0FC2F5DD */  jal   removed_debug_routine
 /* 007394 70006794 02602025 */   move  $a0, $s3

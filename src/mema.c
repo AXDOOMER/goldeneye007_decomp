@@ -506,39 +506,36 @@ void something_with_mema_c_debug(void) {
 
 
 #ifdef NONMATCHING
-void *reset_memtable_base_allocation(s32 arg0, s32 arg1) {
-    u32 temp_v0;
-
-    // Node 0
-    ptr_table_allocated_mem_blocks.unkFF0 = -1;
-    ptr_table_allocated_mem_blocks.unkFF8 = -1;
-    ptr_table_allocated_mem_blocks = 0;
-    ptr_table_allocated_mem_blocks.unk4 = 0;
-    ptr_table_allocated_mem_blocks.unk8 = 0;
-    ptr_table_allocated_mem_blocks.unkC = 0;
-    ptr_table_allocated_mem_blocks.unkFF4 = 0;
-    ptr_table_allocated_mem_blocks.unkFFC = -1;
-    // Node 1
-    temp_v0 = (&ptr_table_allocated_mem_blocks + 0x10 + 8);
-    temp_v0->unk-8 = 0;
-    temp_v0->unk-4 = 0;
-    if (&ptr_table_allocated_mem_blocks + 0xFE8 >= temp_v0)
-    {
-        goto loop_1;
-    }
-    // Node 2
-    ptr_model_room_buf_secondary = arg0;
-    ptr_table_allocated_mem_blocks.unk10 = arg0;
-    size_modelroom_buf = arg1;
-    ptr_table_allocated_mem_blocks.unk14 = arg1;
+void mempInitMallocTable(void *ptr_allocmem,u32 size)
+{
+    s_mem_alloc_entry *entry;
+    
+    ptr_table_allocated_mem_blocks.entries[510].addr = -1;
+    ptr_table_allocated_mem_blocks.entries[511].addr = -1;
+    ptr_table_allocated_mem_blocks.entries[0].addr = 0;
+    ptr_table_allocated_mem_blocks.entries[0].size = 0;
+    ptr_table_allocated_mem_blocks.entries[1].addr = 0;
+    ptr_table_allocated_mem_blocks.entries[1].size = 0;
+    ptr_table_allocated_mem_blocks.entries[510].size = 0;
+    ptr_table_allocated_mem_blocks.entries[511].size = -1;
+    entry = ptr_table_allocated_mem_blocks.entries + 2;
+    do {
+        entry = entry + 1;
+        entry->addr = 0;
+        entry->size = 0;
+        entry = entry;
+    } while (entry < (s_mem_alloc_entry *)
+                     ((int)&ptr_table_allocated_mem_blocks.entries[0x1fd].addr + 1));
+    ptr_model_room_buf_secondary = ptr_allocmem;
+    size_modelroom_buf = size;
+    ptr_table_allocated_mem_blocks.entries[2].addr = (s32)ptr_allocmem;
+    ptr_table_allocated_mem_blocks.entries[2].size = size;
     return;
-    // (possible return value: &ptr_model_room_buf_secondary)
 }
-
 #else
 GLOBAL_ASM(
 .text
-glabel reset_memtable_base_allocation
+glabel mempInitMallocTable
 /* 00A998 70009D98 3C038006 */  lui   $v1, %hi(ptr_table_allocated_mem_blocks)
 /* 00A99C 70009D9C 24633C28 */  addiu $v1, %lo(ptr_table_allocated_mem_blocks) # addiu $v1, $v1, 0x3c28
 /* 00A9A0 70009DA0 2406FFFF */  li    $a2, -1
@@ -1148,52 +1145,18 @@ glabel generate_list_alloc_mem
 
 
 
-#ifdef NONMATCHING
-void generate_lists_before_after_mem_merge(void) {
-    // Node 0
-    generate_list_alloc_mem();
-    // Node 1
-    memaSortMergeEntries(&ptr_table_allocated_mem_blocks);
-    if ((0 + 1) != 0x1fc)
-    {
-        goto loop_1;
-    }
-    // Node 2
-    generate_list_alloc_mem();
-    return;
-    // (possible return value: generate_list_alloc_mem())
-}
 
-#else
-GLOBAL_ASM(
-.text
-glabel generate_lists_before_after_mem_merge
-/* 00AE9C 7000A29C 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 00AEA0 7000A2A0 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 00AEA4 7000A2A4 AFB20020 */  sw    $s2, 0x20($sp)
-/* 00AEA8 7000A2A8 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 00AEAC 7000A2AC 0C002840 */  jal   generate_list_alloc_mem
-/* 00AEB0 7000A2B0 AFB00018 */   sw    $s0, 0x18($sp)
-/* 00AEB4 7000A2B4 3C118006 */  lui   $s1, %hi(ptr_table_allocated_mem_blocks)
-/* 00AEB8 7000A2B8 26313C28 */  addiu $s1, %lo(ptr_table_allocated_mem_blocks) # addiu $s1, $s1, 0x3c28
-/* 00AEBC 7000A2BC 00008025 */  move  $s0, $zero
-/* 00AEC0 7000A2C0 241201FC */  li    $s2, 508
-.L7000A2C4:
-/* 00AEC4 7000A2C4 0C002694 */  jal   memaSortMergeEntries
-/* 00AEC8 7000A2C8 02202025 */   move  $a0, $s1
-/* 00AECC 7000A2CC 26100001 */  addiu $s0, $s0, 1
-/* 00AED0 7000A2D0 1612FFFC */  bne   $s0, $s2, .L7000A2C4
-/* 00AED4 7000A2D4 00000000 */   nop   
-/* 00AED8 7000A2D8 0C002840 */  jal   generate_list_alloc_mem
-/* 00AEDC 7000A2DC 00000000 */   nop   
-/* 00AEE0 7000A2E0 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 00AEE4 7000A2E4 8FB00018 */  lw    $s0, 0x18($sp)
-/* 00AEE8 7000A2E8 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 00AEEC 7000A2EC 8FB20020 */  lw    $s2, 0x20($sp)
-/* 00AEF0 7000A2F0 03E00008 */  jr    $ra
-/* 00AEF4 7000A2F4 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
+void memaGenerateListsBeforeAfterMerge(void)
+{
+    s32 count;
+    
+    generate_list_alloc_mem();
+    for (count = 0; count != 0x1fc; count +=1)
+    {
+        memaSortMergeEntries(&ptr_table_allocated_mem_blocks);
+    }
+    generate_list_alloc_mem();
+}
 
 
 

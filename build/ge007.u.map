@@ -1338,7 +1338,7 @@ Linker script and memory map
                 0x0000000070009b60                mem_related
                 0x0000000070009c74                memaAllocRoomBuffer
                 0x0000000070009d6c                something_with_mema_c_debug
-                0x0000000070009d98                reset_memtable_base_allocation
+                0x0000000070009d98                mempInitMallocTable
                 0x0000000070009e10                mem_related_calls_sort_merge_entries
                 0x0000000070009e34                mem_related_something_find_first
                 0x0000000070009fa8                mem_related_something_find_first_0
@@ -1346,7 +1346,7 @@ Linker script and memory map
                 0x000000007000a040                mem_related_allocated_table_related
                 0x000000007000a064                mem_related_something_first_related
                 0x000000007000a100                generate_list_alloc_mem
-                0x000000007000a29c                generate_lists_before_after_mem_merge
+                0x000000007000a29c                memaGenerateListsBeforeAfterMerge
                 0x000000007000a2f8                mem_related_something_first_related_0
                 0x000000007000a370                mem_related_0
                 0x000000007000a3dc                mem_related_1
