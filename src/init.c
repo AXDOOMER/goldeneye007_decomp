@@ -52,7 +52,7 @@ void init(void)
 
     jump_decompressfile((_rarezipSegmentVaddrStart - cdata_rom_size), cdata_vaddr_start, 0x80300000);
 
-    if (0xfff00050 == 0)
+    if ((&_rarezipSegmentRomStart - &_codeSegmentRomStart) >= 0xfffb1)
     {
         osPiRawStartDma(0, 0x101000, 0x70100400, ((&_rarezipSegmentRomStart - &_codeSegmentRomStart) + 0xfff00050));
         while ((osPiGetStatus() & 1) != 0) {}
@@ -282,12 +282,13 @@ void start_rmon_thread(void)
 #ifdef NONMATCHING
 void init_scheduler(void) {
     osCreateMesgQueue(&gfxFrameMsgQ, &gfxFrameMsgBuf, 32);
-    if (osTvType = OS_TV_MPAL) {
+    if (osTvType == 2) { //OS_TV_MPAL
         osCreateScheduler(&sc, &shedThread, OS_VI_MPAL_LAN1, NUM_FIELDS);
     } else {
-		osCreateScheduler(&sc, &shedThread, OS_VI_NTSC_LAN1, NUM_FIELDS);
+        osCreateScheduler(&sc, &shedThread, OS_VI_NTSC_LAN1, NUM_FIELDS);
 	}
-    osScAddClient(&sc, &gfxClient, &gfxFrameMsgQ);
+    //this used to match, now here down does not
+    osScAddClient(&sc, &gfxClient[0], &gfxFrameMsgQ);
     sched_cmdQ = osScGetCmdQ(&sc);
 }
 #else
