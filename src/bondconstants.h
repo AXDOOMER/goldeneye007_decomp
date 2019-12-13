@@ -1137,7 +1137,7 @@ typedef enum ANIMATIONS {
     ANIM_aim_running_right_one_handed_weapon = 86,
     ANIM_aim_running_left_one_handed_weapon = 87,
     ANIM_aim_sprinting_one_handed_weapon = 88,
-    ANIM_jogging_one_handed_weapon = 89,
+    ANIM_running_one_handed_weapon = 89,
     ANIM_sprinting_one_handed_weapon = 90,
     ANIM_null91 = 91, /* invalid slot */
     ANIM_null92 = 92, /* invalid slot */
