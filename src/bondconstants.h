@@ -1152,7 +1152,7 @@ typedef enum ANIMATIONS {
     ANIM_holster_one_handed_weapon_and_cross_arms = 101,
     ANIM_cock_one_handed_weapon_turn_around_and_stand_up = 102,
     ANIM_draw_one_handed_weapon_and_turn_around = 103,
-    ANIM_step_foward_and_hold_one_handed_weapon = 104,
+    ANIM_step_forward_and_hold_one_handed_weapon = 104,
     ANIM_holster_one_handed_weapon_and_adjust_suit = 105,
     ANIM_idle_unarmed = 106,
     ANIM_walking_unarmed = 107,
