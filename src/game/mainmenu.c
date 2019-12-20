@@ -12850,74 +12850,43 @@ void unlock_all_mp_chars(void) {
 
 s32 get_selected_num_players(void)
 {
-  if (gamemode == GAMEMODE_MULTI) {
-    return selected_num_players;
-  }
-  return 1;
+    if (gamemode == GAMEMODE_MULTI)
+    {
+        return selected_num_players;
+    }
+    return 1;
 }
 
 u16 get_player_mp_char_head(s32 player)
 {
-  if ((&player_1_char)[player] < 0) {
-    return mp_chr_setup[player].head;
-  }
-  return mp_chr_setup[(&player_1_char)[player]].head;
+    if ((&player_1_char)[player] < 0)
+    {
+        return mp_chr_setup[player].head;
+    }
+    return mp_chr_setup[(&player_1_char)[player]].head;
 }
 
 u8 get_player_mp_char_gender(int player)
 {
-    if ((&player_1_char)[player] < 0) {
+    if ((&player_1_char)[player] < 0)
+    {
         return mp_chr_setup[player].gender;
     }
     return mp_chr_setup[(&player_1_char)[player]].gender;
 }
 
-
-
-
-#ifdef NONMATCHING
-BODIES get_player_mp_char_body(int player)
+u16 get_player_mp_char_body(int player)
 {
-  if ((int)(&player_1_char)[player] < 0) {
-    return (BODIES)(uint)(ushort)mp_chr_setup[player].body;
-  }
-  return (BODIES)(uint)(ushort)mp_chr_setup[(&player_1_char)[player]].body;
+    if ((&player_1_char)[player] < 0)
+    {
+        return mp_chr_setup[player].body;
+    }
+    return mp_chr_setup[(&player_1_char)[player]].body;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_player_mp_char_body
-/* 044E8C 7F01035C 00047080 */  sll   $t6, $a0, 2
-/* 044E90 7F010360 3C038003 */  lui   $v1, %hi(player_1_char)
-/* 044E94 7F010364 006E1821 */  addu  $v1, $v1, $t6
-/* 044E98 7F010368 8C63B524 */  lw    $v1, %lo(player_1_char)($v1)
-/* 044E9C 7F01036C 00047880 */  sll   $t7, $a0, 2
-/* 044EA0 7F010370 3C028003 */  lui   $v0, %hi(mp_chr_setup+4)
-/* 044EA4 7F010374 04610007 */  bgez  $v1, .L7F010394
-/* 044EA8 7F010378 0003C080 */   sll   $t8, $v1, 2
-/* 044EAC 7F01037C 01E47823 */  subu  $t7, $t7, $a0
-/* 044EB0 7F010380 000F7880 */  sll   $t7, $t7, 2
-/* 044EB4 7F010384 3C028003 */  lui   $v0, %hi(mp_chr_setup+4)
-/* 044EB8 7F010388 004F1021 */  addu  $v0, $v0, $t7
-/* 044EBC 7F01038C 03E00008 */  jr    $ra
-/* 044EC0 7F010390 9442B19C */   lhu   $v0, %lo(mp_chr_setup+4)($v0)
-.L7F010394:
-/* 044EC4 7F010394 0303C023 */  subu  $t8, $t8, $v1
-/* 044EC8 7F010398 0018C080 */  sll   $t8, $t8, 2
-/* 044ECC 7F01039C 00581021 */  addu  $v0, $v0, $t8
-/* 044ED0 7F0103A0 9442B19C */  lhu   $v0, %lo(mp_chr_setup+4)($v0)
-/* 044ED4 7F0103A4 03E00008 */  jr    $ra
-/* 044ED8 7F0103A8 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 f32 get_player_mp_handicap(int player)
 {
-  return (f32)MP_handicap_table[(&handicap_player1)[player]].damage_modifier;
+    return MP_handicap_table[(&handicap_player1)[player]].damage_modifier;
 }
 
 
