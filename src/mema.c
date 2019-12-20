@@ -518,19 +518,15 @@ void mempInitMallocTable(void *ptr_allocmem,u32 size)
     ptr_table_allocated_mem_blocks.entries[1].size = 0;
     ptr_table_allocated_mem_blocks.entries[510].size = 0;
     ptr_table_allocated_mem_blocks.entries[511].size = -1;
-    entry = ptr_table_allocated_mem_blocks.entries + 2;
-    do {
-        entry = entry + 1;
+    for (entry = ptr_table_allocated_mem_blocks.entries[2]; (entry < (s_mem_alloc_entry *)(&ptr_table_allocated_mem_blocks.entries[0x1fd].addr+1)); ++entry)
+    {
         entry->addr = 0;
         entry->size = 0;
-        entry = entry;
-    } while (entry < (s_mem_alloc_entry *)
-                     ((int)&ptr_table_allocated_mem_blocks.entries[0x1fd].addr + 1));
+    };
     ptr_model_room_buf_secondary = ptr_allocmem;
     size_modelroom_buf = size;
     ptr_table_allocated_mem_blocks.entries[2].addr = (s32)ptr_allocmem;
     ptr_table_allocated_mem_blocks.entries[2].size = size;
-    return;
 }
 #else
 GLOBAL_ASM(

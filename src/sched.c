@@ -255,13 +255,17 @@ glabel osCreateScheduler
  * 1814	70000C14
  */
 #ifdef NONMATCHING
-void osScAddClient(void *arg0, void *arg1, ?32 arg2, ?32 arg3)
+void osScAddClient(OSSched *sc, OSScClient *c, OSMesgQueue *msgQ)
 {
-    arg1->unk4 = arg2;
-    arg1->unk8 = arg3;
-    *arg1 = (void *) arg0->unkB4;
-    arg0->unkB4 = arg1;
-    osSetIntMask(osSetIntMask(1), arg1);
+    OSIntMask mask;
+
+    mask = osSetIntMask(1);
+
+    c->msgQ = msgQ;
+    c->next = sc->clientList;
+    sc->clientList = c;
+
+    osSetIntMask(mask);
 }
 #else
 GLOBAL_ASM(

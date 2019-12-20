@@ -1161,7 +1161,7 @@ Linker script and memory map
                 0x0000000070003c10                set_coloroutputmode_32bit
                 0x0000000070003c1c                get_video_settings2_frameb
                 0x0000000070003c2c                get_video_settings1_frameb
-                0x0000000070003c3c                set_video2buf_offset28
+                0x0000000070003c3c                set_video2buf_frameb
                 0x0000000070003c4c                get_80060824
                 0x0000000070003c58                video_related_F
                 0x0000000070003eb4                video_related_10
@@ -2469,7 +2469,7 @@ Linker script and memory map
                 0x000000007f01deb4                sub_GAME_7F01DEB4
                 0x000000007f01df90                sub_GAME_7F01DF90
                 0x000000007f01e28c                check_if_valid_folder_num
-                0x000000007f01e2c0                doesFolderHaveStageUnlockedAtDifficulty
+                0x000000007f01e2c0                isStageUnlockedAtDifficulty
                 0x000000007f01e504                sub_GAME_7F01E504
                 0x000000007f01e5f8                unlock_stage_in_folder_on_difficulty
                 0x000000007f01e760                sub_GAME_7F01E760
@@ -20037,8 +20037,8 @@ Linker script and memory map
                 0x00000000800519f0                D_800519F0
                 0x00000000800519f4                D_800519F4
                 0x00000000800519f8                D_800519F8
-                0x00000000800519fc                D_800519FC
-                0x0000000080051a00                D_80051A00
+                0x00000000800519fc                menu01_aspect
+                0x0000000080051a00                menu01_pageheight
                 0x0000000080051a04                D_80051A04
                 0x0000000080051a08                D_80051A08
                 0x0000000080051a0c                D_80051A0C
@@ -21530,7 +21530,7 @@ Linker script and memory map
                 0x00000000800607d8                dword_CODE_bss_800607D8
                 0x00000000800607dc                dword_CODE_bss_800607DC
  build/u/src/video.o(.bss)
- .bss           0x00000000800607e0       0xb0 build/u/src/video.o
+ .bss           0x00000000800607e0      0x4b0 build/u/src/video.o
                 0x00000000800607e0                dword_CODE_bss_800607E0
                 0x0000000080060820                m
                 0x0000000080060824                word_CODE_bss_80060824
@@ -21542,9 +21542,8 @@ Linker script and memory map
                 0x0000000080060884                dword_CODE_bss_80060884
                 0x0000000080060888                dword_CODE_bss_80060888
                 0x000000008006088c                dword_CODE_bss_8006088C
- build/u/src/deb.o(.bss)
- .bss           0x0000000080060890      0x400 build/u/src/deb.o
                 0x0000000080060890                dword_CODE_bss_80060890
+ build/u/src/deb.o(.bss)
  build/u/src/deb_video.o(.bss)
  .bss           0x0000000080060c90     0x2a40 build/u/src/deb_video.o
                 0x0000000080060c90                thread_video_manager_debugthread

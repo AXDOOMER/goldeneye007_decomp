@@ -146,7 +146,7 @@ labels:
    - [0x70003C10, "coloroutputmode_0"]
    - [0x70003C1C, "get_video2buf_offset28"]
    - [0x70003C2C, "get_video1buf_offset28"]
-   - [0x70003C3C, "set_video2buf_offset28"]
+   - [0x70003C3C, "set_video2buf_frameb"]
    - [0x70003C4C, "get_80060824"]
    - [0x70003C58, "video_related_F"]
    - [0x70003EB4, "video_related_10"]

@@ -1280,7 +1280,7 @@ cheats_debug_unlocklevel:
 /* 0C6EE4 7F0923B4 00003025 */  move  $a2, $zero
 /* 0C6EE8 7F0923B8 AFA30018 */  sw    $v1, 0x18($sp)
 /* 0C6EEC 7F0923BC AFA5001C */  sw    $a1, 0x1c($sp)
-/* 0C6EF0 7F0923C0 0FC078B0 */  jal   doesFolderHaveStageUnlockedAtDifficulty
+/* 0C6EF0 7F0923C0 0FC078B0 */  jal   isStageUnlockedAtDifficulty
 /* 0C6EF4 7F0923C4 AFA80020 */   sw    $t0, 0x20($sp)
 /* 0C6EF8 7F0923C8 24010003 */  li    $at, 3
 /* 0C6EFC 7F0923CC 8FA30018 */  lw    $v1, 0x18($sp)
@@ -2022,7 +2022,7 @@ cheats_debug_unlocklevel:
 /* 0C7AA4 7F092F34 00003025 */  move  $a2, $zero
 /* 0C7AA8 7F092F38 AFA30018 */  sw    $v1, 0x18($sp)
 /* 0C7AAC 7F092F3C AFA5001C */  sw    $a1, 0x1c($sp)
-/* 0C7AB0 7F092F40 0FC0791C */  jal   doesFolderHaveStageUnlockedAtDifficulty
+/* 0C7AB0 7F092F40 0FC0791C */  jal   isStageUnlockedAtDifficulty
 /* 0C7AB4 7F092F44 AFA80020 */   sw    $t0, 0x20($sp)
 /* 0C7AB8 7F092F48 24010003 */  li    $at, 3
 /* 0C7ABC 7F092F4C 8FA30018 */  lw    $v1, 0x18($sp)

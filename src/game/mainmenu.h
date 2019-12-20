@@ -37,13 +37,13 @@ struct mp_stage_playercount {
 };
 
 struct mp_stage_setup {
-    short folder_text_preset;
-    short select_screen_text_preset;
-    int photo;
-    int stage_id;
-    int unlock_after;
-    int min_player;
-    int max_player;
+    s16 folder_text_preset;
+    s16 select_screen_text_preset;
+    s32 photo;
+    s32 stage_id;
+    s32 unlock_after;
+    s32 min_player;
+    s32 max_player;
 };
 
 struct MP_selectable_chars {

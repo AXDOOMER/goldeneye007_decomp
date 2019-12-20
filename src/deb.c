@@ -11,7 +11,7 @@
  */
 
 /* bss */
-char dword_CODE_bss_80060890[0x400];
+extern char dword_CODE_bss_80060890[0x400];
 
 
 

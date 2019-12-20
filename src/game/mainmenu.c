@@ -5,6 +5,7 @@
 #include "game/unk_093880.h"
 #include "music.h"
 #include "game/textrelated.h"
+#include "game/lvl.h"
 
 // bss
 //CODE.bss:800695A0
@@ -1848,9 +1849,9 @@ glabel D_800519F4
 .word 0xBFB2B8C3 /* -1.3962635;*/
 glabel D_800519F8
 .word 0x3C962FC9 /* 0.018333333;*/
-glabel D_800519FC
+glabel menu01_aspect
 .word 0x3FAAAAAB /* 1.3333334;*/
-glabel D_80051A00
+glabel menu01_pageheight
 .word 0x461C4000 /* 10000.0;*/
 glabel D_80051A04
 .word 0x3C8EFA35 /* 0.017453292;*/
@@ -2189,9 +2190,9 @@ glabel D_800519F4
 .word 0xBFB2B8C3 /* -1.3962635;*/
 glabel D_800519F8
 .word 0x3C962FC9 /* 0.018333333;*/
-glabel D_800519FC
+glabel menu01_aspect
 .word 0x3FAAAAAB /* 1.3333334;*/
-glabel D_80051A00
+glabel menu01_pageheight
 .word 0x461C4000 /* 10000.0;*/
 glabel D_80051A04
 .word 0x3C8EFA35 /* 0.017453292;*/
@@ -3772,9 +3773,9 @@ glabel interface_menu17_switchscreens
 
 
 
-void constructor_menu17_switchscreens(void)
+void constructor_menu17_switchscreens(Gfx * DL)
 {
-    insert_imageDL();
+    insert_imageDL(DL);
 }
 
 
@@ -3786,23 +3787,21 @@ void constructor_menu17_switchscreens(void)
 #ifdef NONMATCHING
 void init_menu01_nintendo(void)
 {
-    ? sp24;
-    s32 temp_ret;
-
+    struct xyzpoint local_c;
+    
     menu_timer = 0;
-    sp24.unk0 = (?32) D_8002AAFC.unk0;
-    sp24.unk4 = (?32) D_8002AAFC.unk4;
-    sp24.unk8 = (?32) D_8002AAFC.unk8;
-    load_object_fill_header(PitemZ_entries.unkCF0, PitemZ_entries.unkCF4, ptr_logo_and_walletbond_DL, 0x3c000, 0);
-    set_objuse_flag_compute_grp_nums_set_obj_loaded(PnintendologoZ_header);
-    temp_ret = get_obj_instance_controller_for_header(PnintendologoZ_header);
-    something_legalscreen_constructor = temp_ret;
-    set_obj_instance_controller_scale(temp_ret, 0x3f800000);
-    setsuboffset(something_legalscreen_constructor, &sp24);
-    musicTrack1Play(0x2c);
-    maybe_is_in_menu = 1;
-    flt_CODE_bss_80069614 = (f32) D_800519F4;
-    (void *)0x80070000->unk-69E8 = (f32) D_800519F8;
+    local_c.x = xyzpoint_8002aafc.x;
+    local_c.y = xyzpoint_8002aafc.y;
+    local_c.z = xyzpoint_8002aafc.z;
+    load_object_fill_header(PitemZ_entries[276].header, PitemZ_entries[276].filename, ptr_logo_and_walletbond_DL,0x3c000,0);
+    set_objuse_flag_compute_grp_nums_set_obj_loaded(PitemZ_entries[276].header);
+    something_screen_constructor = get_obj_instance_controller_for_header(PitemZ_entries[276].header);
+    set_obj_instance_controller_scale(something_screen_constructor, 1.0f);
+    setsuboffset(something_screen_constructor, &local_c);
+    musicTrack1Play(M_INTROSWOOSH);
+    maybe_is_in_menu = TRUE;
+    flt_CODE_bss_80069614 = D_800519F4;
+    flt_CODE_bss_80069618 = D_800519F8;
 }
 #else
 GLOBAL_ASM(
@@ -3878,32 +3877,37 @@ void update_menu01_nintendo(void)
 
 
 
-
 #ifdef NONMATCHING
+extern f32 menu01_aspect;
+extern f32 menu01_pageheight;
+
 void interface_menu01_nintendo(void)
 {
-    s32 temp_t8;
+    setvideo_far(60.0f);
+    video_related_21(menu01_aspect);
+    set_page_height(100.0f, menu01_pageheight);
+    set_video2_settings_offset_24(0.0f);
 
-    setvideo_far(0x42700000);
-    video_related_21(D_800519FC);
-    set_page_height(0x42c80000, D_80051A00);
-    set_video2_settings_offset_24(0);
-    temp_t8 = menu_timer + clock_timer;
-    menu_timer = temp_t8;
-    if (temp_t8 >= 0x1f5)
+    menu_timer = menu_timer + clock_timer;
+    if (menu_timer < 501)
     {
-        set_menu_to_mode(2, 1);
-        return;
-    }
-    if (get_controller_buttons_pressed(0, 0xffff) != 0)
-    {
-        if (is_first_time_on_main_menu == 0)
+        if (get_controller_buttons_pressed(0, 0xffff) != 0)
         {
-            set_menu_to_mode(5, 1);
-            return;
+            if (is_first_time_on_main_menu == 0)
+            {
+                set_menu_to_mode(MENU_FILE_SELECT, 1);
+            } 
+            else
+            {    
+                prev_keypresses = 1;
+                set_menu_to_mode(MENU_RAREWARE_LOGO, 1);
+            }
         }
-        prev_keypresses = 1;
-        set_menu_to_mode(2, 1);
+    }
+    else
+    {
+        set_menu_to_mode(MENU_RAREWARE_LOGO, 1);
+        return;
     }
 }
 #else
@@ -3916,14 +3920,14 @@ glabel interface_menu01_nintendo
 /* 03F804 7F00ACD4 44816000 */  mtc1  $at, $f12
 /* 03F808 7F00ACD8 0C001151 */  jal   setvideo_far
 /* 03F80C 7F00ACDC 00000000 */   nop   
-/* 03F810 7F00ACE0 3C018005 */  lui   $at, %hi(D_800519FC)
+/* 03F810 7F00ACE0 3C018005 */  lui   $at, %hi(menu01_aspect)
 /* 03F814 7F00ACE4 0C001164 */  jal   video_related_21
-/* 03F818 7F00ACE8 C42C19FC */   lwc1  $f12, %lo(D_800519FC)($at)
+/* 03F818 7F00ACE8 C42C19FC */   lwc1  $f12, %lo(menu01_aspect)($at)
 /* 03F81C 7F00ACEC 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
 /* 03F820 7F00ACF0 44816000 */  mtc1  $at, $f12
-/* 03F824 7F00ACF4 3C018005 */  lui   $at, %hi(D_80051A00)
+/* 03F824 7F00ACF4 3C018005 */  lui   $at, %hi(menu01_pageheight)
 /* 03F828 7F00ACF8 0C001194 */  jal   set_page_height
-/* 03F82C 7F00ACFC C42E1A00 */   lwc1  $f14, %lo(D_80051A00)($at)
+/* 03F82C 7F00ACFC C42E1A00 */   lwc1  $f14, %lo(menu01_pageheight)($at)
 /* 03F830 7F00AD00 0C00114D */  jal   set_video2_settings_offset_24
 /* 03F834 7F00AD04 00002025 */   move  $a0, $zero
 /* 03F838 7F00AD08 3C028003 */  lui   $v0, %hi(menu_timer)
@@ -4299,8 +4303,8 @@ void interface_menu02_rareware(void)
     }
 }
 
-void constructor_menu02_rareware(void) {
-    retrieve_display_rareware_logo();
+void constructor_menu02_rareware(Gfx * DL) {
+    retrieve_display_rareware_logo(DL);
 }
 
 
@@ -4331,8 +4335,8 @@ void interface_menu03_eye(void) {
     }
 }
 
-void constructor_menu03_eye(void) {
-    sub_GAME_7F009254();
+void constructor_menu03_eye(Gfx * DL) {
+    sub_GAME_7F009254(DL);
 }
 
 
@@ -8661,7 +8665,7 @@ u32 check_if_stage_completed_on_difficulty(int stage, DIFFICULTY difficulty) {
     completed = FALSE;
   }
   else {
-    completed = doesFolderHaveStageUnlockedAtDifficulty(selected_folder_num,mission_folder_setup_entries[stage].mission_num,difficulty);
+    completed = isStageUnlockedAtDifficulty(selected_folder_num,mission_folder_setup_entries[stage].mission_num,difficulty);
   }
   return completed;
 }
@@ -8681,7 +8685,7 @@ glabel check_if_stage_completed_on_difficulty
 /* 042860 7F00DD30 00A03025 */   move  $a2, $a1
 /* 042864 7F00DD34 3C048003 */  lui   $a0, %hi(selected_folder_num)
 /* 042868 7F00DD38 8C84A8E8 */  lw    $a0, %lo(selected_folder_num)($a0)
-/* 04286C 7F00DD3C 0FC078B0 */  jal   doesFolderHaveStageUnlockedAtDifficulty
+/* 04286C 7F00DD3C 0FC078B0 */  jal   isStageUnlockedAtDifficulty
 /* 042870 7F00DD40 00E02825 */   move  $a1, $a3
 /* 042874 7F00DD44 10000003 */  b     .L7F00DD54
 /* 042878 7F00DD48 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -8723,7 +8727,7 @@ s32 get_highest_unlocked_difficulty_for_level(s32 arg0)
         {
             phi_s0 = phi_s1;
 loop_6:
-            temp_ret_2 = doesFolderHaveStageUnlockedAtDifficulty(selected_folder_num, arg0, phi_s0);
+            temp_ret_2 = isStageUnlockedAtDifficulty(selected_folder_num, arg0, phi_s0);
             if (append_cheat_sp == 0)
             {
                 if (temp_ret_2 != 0)
@@ -8789,7 +8793,7 @@ glabel get_highest_unlocked_difficulty_for_level
 /* 042914 7F00DDE4 8E840000 */  lw    $a0, ($s4)
 .L7F00DDE8:
 /* 042918 7F00DDE8 02602825 */  move  $a1, $s3
-/* 04291C 7F00DDEC 0FC078B0 */  jal   doesFolderHaveStageUnlockedAtDifficulty
+/* 04291C 7F00DDEC 0FC078B0 */  jal   isStageUnlockedAtDifficulty
 /* 042920 7F00DDF0 02003025 */   move  $a2, $s0
 /* 042924 7F00DDF4 8E380000 */  lw    $t8, ($s1)
 /* 042928 7F00DDF8 17000005 */  bnez  $t8, .L7F00DE10
@@ -12648,82 +12652,29 @@ glabel get_player_control_style
 
 
 
-#ifdef NONMATCHING
-? check_if_mp_stage_unlocked(s32 arg0)
-{
-    void *sp18;
-    void *temp_v1;
 
-    temp_v1 = (arg0 * 0x18) + &multi_stage_setups;
-    if (temp_v1->unk10 == 0)
+s32 check_if_mp_stage_unlocked(s32 stage)
+{
+    s32 players;
+    if (!multi_stage_setups[stage].min_player)
     {
         return 0;
     }
-    sp18 = temp_v1;
-    if (temp_v1->unk14 < get_selected_num_players())
+    players=get_selected_num_players();
+    if (multi_stage_setups[stage].max_player < players)
     {
         return 0;
     }
-    if (temp_v1->unkC == -1)
+    if (multi_stage_setups[stage].unlock_after == -1)
     {
         return 1;
     }
-    if (doesFolderHaveStageUnlockedAtDifficulty(selected_folder_num, temp_v1->unkC, 0) != 0)
+    if (isStageUnlockedAtDifficulty(selected_folder_num, multi_stage_setups[stage].unlock_after, DIFFICULTY_AGENT))
     {
         return 1;
     }
     return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_mp_stage_unlocked
-/* 044C00 7F0100D0 00047080 */  sll   $t6, $a0, 2
-/* 044C04 7F0100D4 01C47023 */  subu  $t6, $t6, $a0
-/* 044C08 7F0100D8 3C0F8003 */  lui   $t7, %hi(multi_stage_setups) 
-/* 044C0C 7F0100DC 25EFB074 */  addiu $t7, %lo(multi_stage_setups) # addiu $t7, $t7, -0x4f8c
-/* 044C10 7F0100E0 000E70C0 */  sll   $t6, $t6, 3
-/* 044C14 7F0100E4 01CF1821 */  addu  $v1, $t6, $t7
-/* 044C18 7F0100E8 8C780010 */  lw    $t8, 0x10($v1)
-/* 044C1C 7F0100EC 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 044C20 7F0100F0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 044C24 7F0100F4 17000003 */  bnez  $t8, .L7F010104
-/* 044C28 7F0100F8 00000000 */   nop   
-/* 044C2C 7F0100FC 10000018 */  b     .L7F010160
-/* 044C30 7F010100 00001025 */   move  $v0, $zero
-.L7F010104:
-/* 044C34 7F010104 0FC040A4 */  jal   get_selected_num_players
-/* 044C38 7F010108 AFA30018 */   sw    $v1, 0x18($sp)
-/* 044C3C 7F01010C 8FA30018 */  lw    $v1, 0x18($sp)
-/* 044C40 7F010110 8C790014 */  lw    $t9, 0x14($v1)
-/* 044C44 7F010114 0322082A */  slt   $at, $t9, $v0
-/* 044C48 7F010118 50200004 */  beql  $at, $zero, .L7F01012C
-/* 044C4C 7F01011C 8C65000C */   lw    $a1, 0xc($v1)
-/* 044C50 7F010120 1000000F */  b     .L7F010160
-/* 044C54 7F010124 00001025 */   move  $v0, $zero
-/* 044C58 7F010128 8C65000C */  lw    $a1, 0xc($v1)
-.L7F01012C:
-/* 044C5C 7F01012C 2401FFFF */  li    $at, -1
-/* 044C60 7F010130 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 044C64 7F010134 14A10003 */  bne   $a1, $at, .L7F010144
-/* 044C68 7F010138 00003025 */   move  $a2, $zero
-/* 044C6C 7F01013C 10000008 */  b     .L7F010160
-/* 044C70 7F010140 24020001 */   li    $v0, 1
-.L7F010144:
-/* 044C74 7F010144 0FC078B0 */  jal   doesFolderHaveStageUnlockedAtDifficulty
-/* 044C78 7F010148 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 044C7C 7F01014C 50400004 */  beql  $v0, $zero, .L7F010160
-/* 044C80 7F010150 00001025 */   move  $v0, $zero
-/* 044C84 7F010154 10000002 */  b     .L7F010160
-/* 044C88 7F010158 24020001 */   li    $v0, 1
-/* 044C8C 7F01015C 00001025 */  move  $v0, $zero
-.L7F010160:
-/* 044C90 7F010160 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 044C94 7F010164 27BD0020 */  addiu $sp, $sp, 0x20
-/* 044C98 7F010168 03E00008 */  jr    $ra
-/* 044C9C 7F01016C 00000000 */   nop   
-)
-#endif
 
 
 
@@ -12901,7 +12852,7 @@ void unlock_all_mp_chars(void) {
 
 
 
-u32 get_selected_num_players(void)
+s32 get_selected_num_players(void)
 {
   if (gamemode == GAMEMODE_MULTI) {
     return selected_num_players;
@@ -15597,7 +15548,7 @@ loop_1:
     }
     if (num_chars_selectable_mp != 0x40)
     {
-        if (doesFolderHaveStageUnlockedAtDifficulty(selected_folder_num, 0x11, 0) == 3)
+        if (isStageUnlockedAtDifficulty(selected_folder_num, 0x11, 0) == 3)
         {
             num_chars_selectable_mp = 0x21;
         }
@@ -15740,7 +15691,7 @@ glabel init_menu0f_mpcharsel
 /* 046888 7F011D58 11210023 */  beq   $t1, $at, .L7F011DE8
 /* 04688C 7F011D5C 24050011 */   li    $a1, 17
 /* 046890 7F011D60 8C84A8E8 */  lw    $a0, %lo(selected_folder_num)($a0)
-/* 046894 7F011D64 0FC078B0 */  jal   doesFolderHaveStageUnlockedAtDifficulty
+/* 046894 7F011D64 0FC078B0 */  jal   isStageUnlockedAtDifficulty
 /* 046898 7F011D68 00003025 */   move  $a2, $zero
 /* 04689C 7F011D6C 24010003 */  li    $at, 3
 /* 0468A0 7F011D70 14410004 */  bne   $v0, $at, .L7F011D84
@@ -29017,417 +28968,307 @@ MENU get_currentmenu(void)
 
 #ifdef NONMATCHING
 void menu_init(undefined8 param_1,undefined8 param_2)
-
 {
-  MENU MVar1;
-  undefined1 *puVar2;
-  int iVar3;
-  undefined8 extraout_a1;
-  undefined8 extraout_a1_00;
-  undefined8 extraout_a1_01;
-  undefined8 extraout_a1_02;
-  undefined8 extraout_a1_03;
-  undefined8 extraout_a1_04;
-  undefined8 extraout_a1_05;
-  undefined8 extraout_a1_06;
-  undefined8 extraout_a1_07;
-  undefined8 extraout_a1_08;
-  undefined8 extraout_a1_09;
-  undefined8 extraout_a1_10;
-  undefined8 extraout_a1_11;
-  undefined8 extraout_a1_12;
-  undefined8 extraout_a1_13;
-  undefined8 extraout_a1_14;
-  undefined8 extraout_a1_15;
-  undefined8 extraout_a1_16;
-  undefined8 extraout_a1_17;
-  undefined8 extraout_a1_18;
-  undefined8 extraout_a1_19;
-  undefined8 extraout_a1_20;
-  undefined8 extraout_a1_21;
-  undefined8 extraout_a1_22;
-  undefined8 extraout_a1_23;
-  undefined8 extraout_a1_24;
-  undefined8 extraout_a1_25;
-  undefined8 extraout_a1_26;
-  undefined8 extraout_a1_27;
-  undefined8 extraout_a1_28;
-  undefined8 extraout_a1_29;
-  undefined8 extraout_a1_30;
-  undefined8 extraout_a1_31;
-  undefined8 extraout_a1_32;
-  undefined8 extraout_a1_33;
-  undefined8 extraout_a1_34;
-  undefined8 extraout_a1_35;
-  undefined8 extraout_a1_36;
-  undefined8 extraout_a1_37;
-  undefined8 extraout_a1_38;
-  undefined8 extraout_a1_39;
-  undefined8 extraout_a1_40;
-  undefined8 extraout_a1_41;
-  undefined8 extraout_a1_42;
-  undefined8 extraout_a1_43;
-  undefined8 extraout_a1_44;
-  undefined8 extraout_a1_45;
-  undefined8 extraout_a1_46;
-  undefined8 extraout_a1_47;
-  undefined8 extraout_a1_48;
-  undefined8 extraout_a1_49;
-  undefined8 extraout_a1_50;
-  undefined8 uVar4;
-  
-  if (current_menu == MENU_SWITCH_SCREENS) {
-    if (spectrum_related_flag == FALSE) {
-      if ((is_emulating_spectrum != FALSE) &&
-         (puVar2 = (undefined1 *)get_video_settings2_frameb(), puVar2 == cfb_16_a)) {
-        screen_size = SCREEN_SIZE_320x240;
-        is_emulating_spectrum = FALSE;
-      }
-    }
-    else {
-      puVar2 = (undefined1 *)get_video_settings2_frameb();
-      if (puVar2 == cfb_16_b) {
-        screen_size = SCREEN_SIZE_440x330;
-        spectrum_related_flag = FALSE;
-      }
-    }
-  }
-  if (screen_size == SCREEN_SIZE_320x240) {
-    video_related_21((f32)flt_80051B48);
-    set_video2_text_clip_size(0x140,0xf0);
-    set_video2_settings_offset_18_1A(0x140,0xf0);
-    set_cur_player_screen_size(0x140,0xf0);
-    set_video2_width_height(0x140,0xf0);
-    set_cur_player_viewport_size(0,0);
-    set_video2_ulx_uly(0,0);
-    uVar4 = extraout_a1_00;
-  }
-  else {
-    puVar2 = (undefined1 *)get_video_settings2_frameb();
-    if (puVar2 == cfb_16_b) {
-      set_video_settings2_frameb((int)ptr_menu_videobuffer);
-    }
-    video_related_21((f32)flt_80051B44);
-    set_video2_text_clip_size(0x1b8,0x14a);
-    set_video2_settings_offset_18_1A(0x1b8,0x14a);
-    set_cur_player_screen_size(0x1b8,0x14a);
-    set_video2_width_height(0x1b8,0x14a);
-    set_cur_player_viewport_size(0,0);
-    set_video2_ulx_uly(0,0);
-    uVar4 = extraout_a1;
-  }
-  if (((-1 < (int)menu_update) || (-1 < (int)maybe_prev_menu)) &&
-     (current_menu != MENU_SWITCH_SCREENS)) {
-    if (true) {
-      switch(current_menu) {
-      case MENU_LEGAL_SCREEN:
-        update_menu00_legalscreen();
-        uVar4 = extraout_a1_01;
-        break;
-      case MENU_NINTENDO_LOGO:
-        update_menu01_nintendo();
-        uVar4 = extraout_a1_02;
-        break;
-      case MENU_RAREWARE_LOGO:
-        update_menu02_rareware();
-        uVar4 = extraout_a1_03;
-        break;
-      case MENU_EYE_INTRO:
-        update_menu_03_eyeintro();
-        uVar4 = extraout_a1_04;
-        break;
-      case MENU_GOLDENEYE_LOGO:
-        update_menu04_goldeneyelogo();
-        uVar4 = extraout_a1_05;
-        break;
-      case MENU_FILE_SELECT:
-        update_menu05_filesel();
-        uVar4 = extraout_a1_06;
-        break;
-      case MENU_MODE_SELECT:
-        update_menu06_modesel();
-        uVar4 = extraout_a1_07;
-        break;
-      case MENU_MISSION_SELECT:
-        update_menu07_missionsel();
-        uVar4 = extraout_a1_08;
-        break;
-      case MENU_DIFFICULTY:
-        update_menu08_difficulty();
-        uVar4 = extraout_a1_09;
-        break;
-      case MENU_007_OPTIONS:
-        update_menu09_007options();
-        uVar4 = extraout_a1_10;
-        break;
-      case MENU_BRIEFING:
-        update_menu0A_briefing();
-        uVar4 = extraout_a1_11;
-        break;
-      case MENU_MISSION_FAILED:
-        update_menu0C_missionfailed();
-        uVar4 = extraout_a1_12;
-        break;
-      case MENU_MISSION_COMPLETE:
-        update_menu0D_missioncomplete();
-        uVar4 = extraout_a1_13;
-        break;
-      case MENU_MP_OPTIONS:
-        update_menu0E_mpoptions();
-        uVar4 = extraout_a1_14;
-        break;
-      case MENU_MP_CHAR_SELECT:
-        update_menu0F_mpcharsel();
-        uVar4 = extraout_a1_16;
-        break;
-      case MENU_MP_HANDICAP:
-        update_menu10_mphandicap();
-        uVar4 = extraout_a1_18;
-        break;
-      case MENU_MP_CONTROL_STYLE:
-        update_menu11_mpcontrols();
-        uVar4 = extraout_a1_19;
-        break;
-      case MENU_MP_STAGE_SELECT:
-        update_menu12_mpstage();
-        uVar4 = extraout_a1_20;
-        break;
-      case MENU_MP_SCENARIO_SELECT:
-        update_menu13_mpscenario();
-        uVar4 = extraout_a1_15;
-        break;
-      case MENU_MP_TEAMS:
-        update_menu14_mpteams();
-        uVar4 = extraout_a1_17;
-        break;
-      case MENU_CHEAT:
-        update_menu15_cheat();
-        uVar4 = extraout_a1_21;
-        break;
-      case MENU_NO_CONTROLLERS:
-        update_menu16_nocontrollers();
-        uVar4 = extraout_a1_22;
-        break;
-      case MENU_DISPLAY_CAST:
-        update_menu18_displaycast();
-        uVar4 = extraout_a1_23;
-        break;
-      case MENU_SPECTRUM_EMU:
-        update_menu19_spectrum();
-        uVar4 = extraout_a1_24;
-      }
-    }
-    if (-1 < (int)menu_update) {
-      current_menu = MENU_SWITCH_SCREENS;
-      reset_menutimer();
-      uVar4 = extraout_a1_25;
-    }
-  }
-  MVar1 = maybe_prev_menu;
-  if (true) {
-    current_menu = maybe_prev_menu;
-    maybe_prev_menu = ~MENU_LEGAL_SCREEN;
-    if (true) {
-      switch(MVar1) {
-      case MENU_LEGAL_SCREEN:
-        init_menu00_legalscreen();
-        uVar4 = extraout_a1_26;
-        break;
-      case MENU_NINTENDO_LOGO:
-        init_menu01_nintendo();
-        uVar4 = extraout_a1_27;
-        break;
-      case MENU_RAREWARE_LOGO:
-        init_menu02_rareware();
-        uVar4 = extraout_a1_28;
-        break;
-      case MENU_EYE_INTRO:
-        init_menu03_eyeintro();
-        uVar4 = extraout_a1_29;
-        break;
-      case MENU_GOLDENEYE_LOGO:
-        init_menu04_goldeneyelogo();
-        uVar4 = extraout_a1_30;
-        break;
-      case MENU_FILE_SELECT:
-        init_menu05_filesel();
-        uVar4 = extraout_a1_31;
-        break;
-      case MENU_MODE_SELECT:
-        init_menu06_modesel();
-        uVar4 = extraout_a1_32;
-        break;
-      case MENU_MISSION_SELECT:
-        init_menu07_missionsel();
-        uVar4 = extraout_a1_33;
-        break;
-      case MENU_DIFFICULTY:
-        init_menu08_difficulty();
-        uVar4 = extraout_a1_34;
-        break;
-      case MENU_007_OPTIONS:
-        init_menu09_007options();
-        uVar4 = extraout_a1_35;
-        break;
-      case MENU_BRIEFING:
-        init_menu0A_briefing();
-        uVar4 = extraout_a1_36;
-        break;
-      case MENU_RUN_STAGE:
-        init_menu0B_runstage();
-        uVar4 = extraout_a1_37;
-        break;
-      case MENU_MISSION_FAILED:
-        init_menu0C_missionfailed();
-        uVar4 = extraout_a1_38;
-        break;
-      case MENU_MISSION_COMPLETE:
-        init_menu0D_missioncomplete();
-        uVar4 = extraout_a1_39;
-        break;
-      case MENU_MP_OPTIONS:
-        init_menu0E_mpoptions();
-        uVar4 = extraout_a1_40;
-        break;
-      case MENU_MP_CHAR_SELECT:
-        init_menu0f_mpcharsel();
-        uVar4 = extraout_a1_42;
-        break;
-      case MENU_MP_HANDICAP:
-        init_menu10_mphandicap();
-        uVar4 = extraout_a1_44;
-        break;
-      case MENU_MP_CONTROL_STYLE:
-        init_menu11_mpcontrol();
-        uVar4 = extraout_a1_45;
-        break;
-      case MENU_MP_STAGE_SELECT:
-        init_menu12_mpstage();
-        uVar4 = extraout_a1_46;
-        break;
-      case MENU_MP_SCENARIO_SELECT:
-        init_menu13_mpscenariosel();
-        uVar4 = extraout_a1_41;
-        break;
-      case MENU_MP_TEAMS:
-        init_menu14_mpteamsel();
-        uVar4 = extraout_a1_43;
-        break;
-      case MENU_CHEAT:
-        init_menu15_cheat();
-        uVar4 = extraout_a1_47;
-        break;
-      case MENU_NO_CONTROLLERS:
-        init_menu16_nocontroller();
-        uVar4 = extraout_a1_48;
-        break;
-      case MENU_DISPLAY_CAST:
-        init_menu18_displaycast();
-        uVar4 = extraout_a1_49;
-        break;
-      case MENU_SPECTRUM_EMU:
-        init_menu19_spectrum();
-        uVar4 = extraout_a1_50;
-      }
-    }
-  }
-  switch(current_menu) {
-  case MENU_LEGAL_SCREEN:
-    interface_menu00_legalscreen(ZEXT48(&current_menu),uVar4);
-    break;
-  case MENU_NINTENDO_LOGO:
-    interface_menu01_nintendo(ZEXT48(&current_menu),uVar4);
-    break;
-  case MENU_RAREWARE_LOGO:
-    interface_menu02_rareware();
-    break;
-  case MENU_EYE_INTRO:
-    interface_menu03_eyeintro();
-    break;
-  case MENU_GOLDENEYE_LOGO:
-    interface_menu04_goldeneyelogo(ZEXT48(&current_menu),uVar4);
-    break;
-  case MENU_FILE_SELECT:
-    interface_menu05_filesel();
-    break;
-  case MENU_MODE_SELECT:
-    interface_menu06_modesel();
-    break;
-  case MENU_MISSION_SELECT:
-    interface_menu07_missionsel(ZEXT48(&current_menu),uVar4);
-    break;
-  case MENU_DIFFICULTY:
-    interface_menu08_difficulty();
-    break;
-  case MENU_007_OPTIONS:
-    interface_menu09_007options(ZEXT48(&current_menu),uVar4);
-    break;
-  case MENU_BRIEFING:
-    interface_menu0A_briefing(ZEXT48(&current_menu),uVar4);
-    break;
-  case MENU_RUN_STAGE:
-    iVar3 = interface_menu0B_runstage();
-    if (iVar3 == 0) {
-      if (gamemode == GAMEMODE_MULTI) {
-        set_menu_to_mode(MENU_MP_OPTIONS,1);
-      }
-      else {
-        if (selected_stage == LEVELID_CUBA) {
-          do_extended_cast_display(TRUE);
-          set_menu_to_mode(MENU_DISPLAY_CAST,1);
+    MENU MVar1;
+    
+    if (current_menu == MENU_SWITCH_SCREENS) {
+        if (spectrum_related_flag == FALSE) {
+            if ((is_emulating_spectrum != FALSE) &&
+               (get_video_settings2_frameb() == cfb_16_a)) {
+                screen_size = SCREEN_SIZE_320x240;
+                is_emulating_spectrum = FALSE;
+            }
         }
         else {
-          set_menu_to_mode(MENU_MISSION_FAILED,1);
+            if (get_video_settings2_frameb() == cfb_16_b) {
+                screen_size = SCREEN_SIZE_440x330;
+                spectrum_related_flag = FALSE;
+            }
         }
-      }
+    }
+
+    if (screen_size == SCREEN_SIZE_320x240) {
+        video_related_21((f32)flt_80051B48);
+        set_video2_text_clip_size(320,240);
+        set_video2_settings_offset_18_1A(320,240);
+        set_cur_player_screen_size(320,240);
+        set_video2_width_height(320,240);
+        set_cur_player_viewport_size(0,0);
+        set_video2_ulx_uly(0,0);
     }
     else {
-      set_menu_to_mode(MENU_LEGAL_SCREEN,1);
+        if (get_video_settings2_frameb() == cfb_16_b) {
+            set_video_settings2_frameb(ptr_menu_videobuffer);
+        }
+        video_related_21((f32)flt_80051B44);
+        set_video2_text_clip_size(440,330);
+        set_video2_settings_offset_18_1A(440,330);
+        set_cur_player_screen_size(440,330);
+        set_video2_width_height(440,330);
+        set_cur_player_viewport_size(0,0);
+        set_video2_ulx_uly(0,0);
     }
-    break;
-  case MENU_MISSION_FAILED:
-    interface_menu0C_missionfailed(ZEXT48(&current_menu),uVar4);
-    break;
-  case MENU_MISSION_COMPLETE:
-    interface_menu0D_missioncomplete(ZEXT48(&current_menu),uVar4);
-    break;
-  case MENU_MP_OPTIONS:
-    interface_menu0E_mpoptions(ZEXT48(&current_menu),uVar4);
-    break;
-  case MENU_MP_CHAR_SELECT:
-    interface_menu0F_mpcharsel();
-    break;
-  case MENU_MP_HANDICAP:
-    interface_menu10_mphandicap();
-    break;
-  case MENU_MP_CONTROL_STYLE:
-    interface_menu11_mpcontrols();
-    break;
-  case MENU_MP_STAGE_SELECT:
-    interface_menu12_mpstage(ZEXT48(&current_menu),uVar4);
-    break;
-  case MENU_MP_SCENARIO_SELECT:
-    interface_menu13_mpscenario(ZEXT48(&current_menu),uVar4);
-    break;
-  case MENU_MP_TEAMS:
-    interface_menu14_mpteams(ZEXT48(&current_menu),uVar4);
-    break;
-  case MENU_CHEAT:
-    interface_menu15_cheat(ZEXT48(&current_menu),uVar4);
-    break;
-  case MENU_NO_CONTROLLERS:
-    interface_menu16_nocontrollers();
-    break;
-  case MENU_SWITCH_SCREENS:
-    interface_menu17_switchscreens(ZEXT48(&current_menu),uVar4);
-    break;
-  case MENU_DISPLAY_CAST:
-    interface_menu18_displaycast(ZEXT48(&current_menu),uVar4);
-    break;
-  case MENU_SPECTRUM_EMU:
-    interface_menu19_spectrum(ZEXT48(&current_menu),uVar4);
-  }
-  return;
+    if (((-1 < menu_update) || (-1 < maybe_prev_menu)) &&
+       (current_menu != MENU_SWITCH_SCREENS)) {
+        if (true) {
+            switch(current_menu) {
+            case MENU_LEGAL_SCREEN:
+                update_menu00_legalscreen();
+                break;
+            case MENU_NINTENDO_LOGO:
+                update_menu01_nintendo();
+                break;
+            case MENU_RAREWARE_LOGO:
+                update_menu02_rareware();
+                break;
+            case MENU_EYE_INTRO:
+                update_menu_03_eyeintro();
+                break;
+            case MENU_GOLDENEYE_LOGO:
+                update_menu04_goldeneyelogo();
+                break;
+            case MENU_FILE_SELECT:
+                update_menu05_filesel();
+                break;
+            case MENU_MODE_SELECT:
+                update_menu06_modesel();
+                break;
+            case MENU_MISSION_SELECT:
+                update_menu07_missionsel();
+                break;
+            case MENU_DIFFICULTY:
+                update_menu08_difficulty();
+                break;
+            case MENU_007_OPTIONS:
+                update_menu09_007options();
+                break;
+            case MENU_BRIEFING:
+                update_menu0A_briefing();
+                break;
+            case MENU_MISSION_FAILED:
+                update_menu0C_missionfailed();
+                break;
+            case MENU_MISSION_COMPLETE:
+                update_menu0D_missioncomplete();
+                break;
+            case MENU_MP_OPTIONS:
+                update_menu0E_mpoptions();
+                break;
+            case MENU_MP_CHAR_SELECT:
+                update_menu0F_mpcharsel();
+                break;
+            case MENU_MP_HANDICAP:
+                update_menu10_mphandicap();
+                break;
+            case MENU_MP_CONTROL_STYLE:
+                update_menu11_mpcontrols();
+                break;
+            case MENU_MP_STAGE_SELECT:
+                update_menu12_mpstage();
+                break;
+            case MENU_MP_SCENARIO_SELECT:
+                update_menu13_mpscenario();
+                break;
+            case MENU_MP_TEAMS:
+                update_menu14_mpteams();
+                break;
+            case MENU_CHEAT:
+                update_menu15_cheat();
+                break;
+            case MENU_NO_CONTROLLERS:
+                update_menu16_nocontrollers();
+                break;
+            case MENU_DISPLAY_CAST:
+                update_menu18_displaycast();
+                break;
+            case MENU_SPECTRUM_EMU:
+                update_menu19_spectrum();
+            }
+        }
+        if (-1 < menu_update) {
+            current_menu = MENU_SWITCH_SCREENS;
+            reset_menutimer();
+        }
+    }
+    MVar1 = maybe_prev_menu;
+    if (true) {
+        current_menu = maybe_prev_menu;
+        maybe_prev_menu = ~MENU_LEGAL_SCREEN;
+        if (true) {
+            switch(MVar1) {
+            case MENU_LEGAL_SCREEN:
+                init_menu00_legalscreen();
+                break;
+            case MENU_NINTENDO_LOGO:
+                init_menu01_nintendo();
+                break;
+            case MENU_RAREWARE_LOGO:
+                init_menu02_rareware();
+                break;
+            case MENU_EYE_INTRO:
+                init_menu03_eyeintro();
+                break;
+            case MENU_GOLDENEYE_LOGO:
+                init_menu04_goldeneyelogo();
+                break;
+            case MENU_FILE_SELECT:
+                init_menu05_filesel();
+                break;
+            case MENU_MODE_SELECT:
+                init_menu06_modesel();
+                break;
+            case MENU_MISSION_SELECT:
+                init_menu07_missionsel();
+                break;
+            case MENU_DIFFICULTY:
+                init_menu08_difficulty();
+                break;
+            case MENU_007_OPTIONS:
+                init_menu09_007options();
+                break;
+            case MENU_BRIEFING:
+                init_menu0A_briefing();
+                break;
+            case MENU_RUN_STAGE:
+                init_menu0B_runstage();
+                break;
+            case MENU_MISSION_FAILED:
+                init_menu0C_missionfailed();
+                break;
+            case MENU_MISSION_COMPLETE:
+                init_menu0D_missioncomplete();
+                break;
+            case MENU_MP_OPTIONS:
+                init_menu0E_mpoptions();
+                break;
+            case MENU_MP_CHAR_SELECT:
+                init_menu0f_mpcharsel();
+                break;
+            case MENU_MP_HANDICAP:
+                init_menu10_mphandicap();
+                break;
+            case MENU_MP_CONTROL_STYLE:
+                init_menu11_mpcontrol();
+                break;
+            case MENU_MP_STAGE_SELECT:
+                init_menu12_mpstage();
+                break;
+            case MENU_MP_SCENARIO_SELECT:
+                init_menu13_mpscenariosel();
+                break;
+            case MENU_MP_TEAMS:
+                init_menu14_mpteamsel();
+                break;
+            case MENU_CHEAT:
+                init_menu15_cheat();
+                break;
+            case MENU_NO_CONTROLLERS:
+                init_menu16_nocontroller();
+                break;
+            case MENU_DISPLAY_CAST:
+                init_menu18_displaycast();
+                break;
+            case MENU_SPECTRUM_EMU:
+                init_menu19_spectrum();
+            }
+        }
+    }
+    switch(current_menu) {
+    case MENU_LEGAL_SCREEN:
+        interface_menu00_legalscreen();
+        break;
+    case MENU_NINTENDO_LOGO:
+        interface_menu01_nintendo();
+        break;
+    case MENU_RAREWARE_LOGO:
+        interface_menu02_rareware();
+        break;
+    case MENU_EYE_INTRO:
+        interface_menu03_eyeintro();
+        break;
+    case MENU_GOLDENEYE_LOGO:
+        interface_menu04_goldeneyelogo();
+        break;
+    case MENU_FILE_SELECT:
+        interface_menu05_filesel();
+        break;
+    case MENU_MODE_SELECT:
+        interface_menu06_modesel();
+        break;
+    case MENU_MISSION_SELECT:
+        interface_menu07_missionsel();
+        break;
+    case MENU_DIFFICULTY:
+        interface_menu08_difficulty();
+        break;
+    case MENU_007_OPTIONS:
+        interface_menu09_007options();
+        break;
+    case MENU_BRIEFING:
+        interface_menu0A_briefing();
+        break;
+    case MENU_RUN_STAGE:
+        if (interface_menu0B_runstage() == 0) {
+            if (gamemode == GAMEMODE_MULTI) {
+                set_menu_to_mode(MENU_MP_OPTIONS,1);
+            }
+            else {
+                if (selected_stage == LEVELID_CUBA) {
+                    do_extended_cast_display(1);
+                    set_menu_to_mode(MENU_DISPLAY_CAST,1);
+                }
+                else {
+                    set_menu_to_mode(MENU_MISSION_FAILED,1);
+                }
+            }
+        }
+        else {
+            set_menu_to_mode(MENU_LEGAL_SCREEN,1);
+        }
+        break;
+    case MENU_MISSION_FAILED:
+        interface_menu0C_missionfailed();
+        break;
+    case MENU_MISSION_COMPLETE:
+        interface_menu0D_missioncomplete();
+        break;
+    case MENU_MP_OPTIONS:
+        interface_menu0E_mpoptions();
+        break;
+    case MENU_MP_CHAR_SELECT:
+        interface_menu0F_mpcharsel();
+        break;
+    case MENU_MP_HANDICAP:
+        interface_menu10_mphandicap();
+        break;
+    case MENU_MP_CONTROL_STYLE:
+        interface_menu11_mpcontrols();
+        break;
+    case MENU_MP_STAGE_SELECT:
+        interface_menu12_mpstage();
+        break;
+    case MENU_MP_SCENARIO_SELECT:
+        interface_menu13_mpscenario();
+        break;
+    case MENU_MP_TEAMS:
+        interface_menu14_mpteams();
+        break;
+    case MENU_CHEAT:
+        interface_menu15_cheat();
+        break;
+    case MENU_NO_CONTROLLERS:
+        interface_menu16_nocontrollers();
+        break;
+    case MENU_SWITCH_SCREENS:
+        interface_menu17_switchscreens();
+        break;
+    case MENU_DISPLAY_CAST:
+        interface_menu18_displaycast();
+        break;
+    case MENU_SPECTRUM_EMU:
+        interface_menu19_spectrum();
+    }
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -29564,7 +29405,7 @@ glabel menu_init
 /* 04F1F4 7F01A6C4 256BA800 */  addiu $t3, %lo(cfb_16_b) # addiu $t3, $t3, -0x5800
 /* 04F1F8 7F01A6C8 144B0003 */  bne   $v0, $t3, .L7F01A6D8
 /* 04F1FC 7F01A6CC 3C048003 */   lui   $a0, %hi(ptr_menu_videobuffer)
-/* 04F200 7F01A6D0 0C000F0F */  jal   set_video2buf_offset28
+/* 04F200 7F01A6D0 0C000F0F */  jal   set_video2buf_frameb
 /* 04F204 7F01A6D4 8C84A954 */   lw    $a0, %lo(ptr_menu_videobuffer)($a0)
 .L7F01A6D8:
 /* 04F208 7F01A6D8 3C018005 */  lui   $at, %hi(D_80051B48)
@@ -30184,118 +30025,85 @@ menu0B_runstage_interface:
 
 
 #ifdef NONMATCHING
-longlong menu_jump_constructor_handler(void)
+void menu_jump_constructor_handler(Gfx *DL)
 {
-  longlong in_v0;
-  int iVar1;
-  uint *puVar2;
-  undefined4 *_DL;
-  longlong in_a0;
-  
-  if (true) {
-    _DL = (undefined4 *)in_a0;
     switch(current_menu) {
-    case MENU_LEGAL_SCREEN:
-      constructor_menu00_legalscreen(_DL);
-      in_a0 = in_v0;
-      break;
-    case MENU_NINTENDO_LOGO:
-      _DL = constructor_menu01_nintendo(_DL);
-      in_a0 = (longlong)(int)_DL;
-      break;
-    case MENU_RAREWARE_LOGO:
-      _DL = constructor_menu02_rareware(_DL);
-      in_a0 = (longlong)(int)_DL;
-      break;
-    case MENU_EYE_INTRO:
-      constructor_menu03_eyeintro(in_a0);
-      in_a0 = in_v0;
-      break;
-    case MENU_GOLDENEYE_LOGO:
-      _DL = constructor_menu04_goldeneyelogo(_DL);
-      in_a0 = (longlong)(int)_DL;
-      break;
-    case MENU_FILE_SELECT:
-      puVar2 = constructor_menu05_filesel(_DL);
-      in_a0 = (longlong)(int)puVar2;
-      break;
-    case MENU_MODE_SELECT:
-      iVar1 = constructor_menu06_modesel(_DL);
-      in_a0 = (longlong)iVar1;
-      break;
-    case MENU_MISSION_SELECT:
-      iVar1 = constructor_menu07_missionsel(_DL);
-      in_a0 = (longlong)iVar1;
-      break;
-    case MENU_DIFFICULTY:
-      iVar1 = constructor_menu08_difficulty(_DL);
-      in_a0 = (longlong)iVar1;
-      break;
-    case MENU_007_OPTIONS:
-      iVar1 = constructor_menu09_007options(_DL);
-      in_a0 = (longlong)iVar1;
-      break;
-    case MENU_BRIEFING:
-      iVar1 = constructor_menu0A_briefing(_DL);
-      in_a0 = (longlong)iVar1;
-      break;
-    case MENU_MISSION_FAILED:
-      iVar1 = constructor_menu0C_missionfailed(_DL);
-      in_a0 = (longlong)iVar1;
-      break;
-    case MENU_MISSION_COMPLETE:
-      in_a0 = constructor_menu0D_missioncomplete();
-      break;
-    case MENU_MP_OPTIONS:
-      iVar1 = constructor_menu0E_mpoptions(_DL);
-      in_a0 = (longlong)iVar1;
-      break;
-    case MENU_MP_CHAR_SELECT:
-      _DL = constructor_menu0F_mpcharsel(_DL);
-      in_a0 = (longlong)(int)_DL;
-      break;
-    case MENU_MP_HANDICAP:
-      _DL = constructor_menu10_mphandicap(_DL);
-      in_a0 = (longlong)(int)_DL;
-      break;
-    case MENU_MP_CONTROL_STYLE:
-      _DL = constructor_menu11_mpcontrol(_DL);
-      in_a0 = (longlong)(int)_DL;
-      break;
-    case MENU_MP_STAGE_SELECT:
-      iVar1 = constructor_menu12_mpstage(_DL);
-      in_a0 = (longlong)iVar1;
-      break;
-    case MENU_MP_SCENARIO_SELECT:
-      iVar1 = constructor_menu13_mpscenario(_DL);
-      in_a0 = (longlong)iVar1;
-      break;
-    case MENU_MP_TEAMS:
-      _DL = constructor_menu14_mpteams(_DL);
-      in_a0 = (longlong)(int)_DL;
-      break;
-    case MENU_CHEAT:
-      iVar1 = constructor_menu15_cheat(_DL);
-      in_a0 = (longlong)iVar1;
-      break;
-    case MENU_NO_CONTROLLERS:
-      puVar2 = constructor_menu16_nocontrollers(_DL);
-      in_a0 = (longlong)(int)puVar2;
-      break;
-    case MENU_SWITCH_SCREENS:
-      _DL = constructor_menu17_switchscreens(_DL);
-      in_a0 = (longlong)(int)_DL;
-      break;
-    case MENU_DISPLAY_CAST:
-      puVar2 = constructor_menu18_displaycast(_DL);
-      in_a0 = (longlong)(int)puVar2;
-      break;
-    case MENU_SPECTRUM_EMU:
-      _DL = constructor_menu19_spectrum(_DL);
-      in_a0 = (longlong)(int)_DL;
+        case MENU_LEGAL_SCREEN:
+            constructor_menu00_legalscreen(DL);
+            break;
+        case MENU_NINTENDO_LOGO:
+            constructor_menu01_nintendo(DL);
+            break;
+        case MENU_RAREWARE_LOGO:
+            constructor_menu02_rareware(DL);
+            break;
+        case MENU_EYE_INTRO:
+            constructor_menu03_eye(DL);
+            break;
+        case MENU_GOLDENEYE_LOGO:
+            constructor_menu04_goldeneyelogo(DL);
+            break;
+        case MENU_FILE_SELECT:
+            constructor_menu05_fileselect(DL);
+            break;
+        case MENU_MODE_SELECT:
+            constructor_menu06_modesel(DL);
+            break;
+        case MENU_MISSION_SELECT:
+            constructor_menu07_missionsel(DL);
+            break;
+        case MENU_DIFFICULTY:
+            constructor_menu08_difficulty(DL);
+            break;
+        case MENU_007_OPTIONS:
+            constructor_menu09_007options(DL);
+            break;
+        case MENU_BRIEFING:
+            constructor_menu0A_briefing(DL);
+            break;
+        case MENU_MISSION_FAILED:
+            constructor_menu0C_missionfailed(DL);
+            break;
+        case MENU_MISSION_COMPLETE:
+            constructor_menu0D_missioncomplete(DL);
+            break;
+        case MENU_MP_OPTIONS:
+            constructor_menu0E_mpoptions(DL);
+            break;
+        case MENU_MP_CHAR_SELECT:
+            constructor_menu0F_mpcharsel(DL);
+            break;
+        case MENU_MP_HANDICAP:
+            constructor_menu10_mphandicap(DL);
+            break;
+        case MENU_MP_CONTROL_STYLE:
+            constructor_menu11_mpcontrol(DL);
+            break;
+        case MENU_MP_STAGE_SELECT:
+            constructor_menu12_mpstage(DL);
+            break;
+        case MENU_MP_SCENARIO_SELECT:
+            constructor_menu13_mpscenario(DL);
+            break;
+        case MENU_MP_TEAMS:
+            constructor_menu14_mpteams(DL);
+            break;
+        case MENU_CHEAT:
+            constructor_menu15_cheat(DL);
+            break;
+        case MENU_NO_CONTROLLERS:
+            constructor_menu16_nocontrollers(DL);
+            break;
+        case MENU_SWITCH_SCREENS:
+            constructor_menu17_switchscreens(DL);
+            break;
+        case MENU_DISPLAY_CAST:
+            constructor_menu18_displaycast(DL);
+            break;
+        case MENU_SPECTRUM_EMU:
+            constructor_menu19_spectrum(DL);
     }
-  }
-  return in_a0;
+    return;
 }
 #else
 GLOBAL_ASM(

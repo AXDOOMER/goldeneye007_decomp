@@ -26772,7 +26772,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BBBD4 7F0870A4 25ADA800 */  addiu $t5, %lo(cfb_16_b) # addiu $t5, $t5, -0x5800
 /* 0BBBD8 7F0870A8 144D0003 */  bne   $v0, $t5, .L7F0870B8
 /* 0BBBDC 7F0870AC 3C048003 */   lui   $a0, %hi(resolution)
-/* 0BBBE0 7F0870B0 0C000F0F */  jal   set_video2buf_offset28
+/* 0BBBE0 7F0870B0 0C000F0F */  jal   set_video2buf_frameb
 /* 0BBBE4 7F0870B4 8C846428 */   lw    $a0, %lo(resolution)($a0)
 .L7F0870B8:
 /* 0BBBE8 7F0870B8 0FC293B8 */  jal   get_screen_ratio
@@ -27209,7 +27209,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BC2E0 7F087770 25ADA800 */  addiu $t5, %lo(cfb_16_b) # addiu $t5, $t5, -0x5800
 /* 0BC2E4 7F087774 144D0003 */  bne   $v0, $t5, .Ljp7F087784
 /* 0BC2E8 7F087778 3C048003 */   lui   $a0, %hi(resolution) # $a0, 0x8003
-/* 0BC2EC 7F08777C 0C000F0F */  jal   set_video2buf_offset28
+/* 0BC2EC 7F08777C 0C000F0F */  jal   set_video2buf_frameb
 /* 0BC2F0 7F087780 8C846468 */   lw    $a0, %lo(resolution)($a0)
 .Ljp7F087784:
 /* 0BC2F4 7F087784 0FC296A0 */  jal   get_screen_ratio
