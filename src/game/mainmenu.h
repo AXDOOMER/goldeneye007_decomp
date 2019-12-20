@@ -71,8 +71,8 @@ struct MP_controller_configuration_menu {
 struct MP_sight_aim_settings {
     char anonymous_0;
     char field_1;
-    char field_2;
-    char field_3;
+    char sight;
+    char autoaim;
 };
 
 struct intro_char {

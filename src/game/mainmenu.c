@@ -12750,12 +12750,12 @@ void copy_aim_settings_to_playerdata(void)
 {
   player1_player_data.autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
   player1_player_data.sight = mp_sight_adjust_table[aim_sight_adjustment].sight;
-  player2_player_data.autoaim = player1_player_data.autoaim;
-  player2_player_data.sight = player1_player_data.sight;
-  player3_player_data.autoaim = player1_player_data.autoaim;
-  player3_player_data.sight = player1_player_data.sight;
-  player4_player_data.autoaim = player1_player_data.autoaim;
-  player4_player_data.sight = player1_player_data.sight;
+  player2_player_data.autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
+  player2_player_data.sight = mp_sight_adjust_table[aim_sight_adjustment].sight;
+  player3_player_data.autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
+  player3_player_data.sight = mp_sight_adjust_table[aim_sight_adjustment].sight;
+  player4_player_data.autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
+  player4_player_data.sight = mp_sight_adjust_table[aim_sight_adjustment].sight;
 }
 #else
 GLOBAL_ASM(
@@ -12848,10 +12848,6 @@ void unlock_all_mp_chars(void) {
 }
 
 
-
-
-
-
 s32 get_selected_num_players(void)
 {
   if (gamemode == GAMEMODE_MULTI) {
@@ -12860,86 +12856,21 @@ s32 get_selected_num_players(void)
   return 1;
 }
 
-
-
-
-
-#ifdef NONMATCHING
-HEADS get_player_mp_char_head(int player)
+u16 get_player_mp_char_head(s32 player)
 {
-  if ((int)(&player_1_char)[player] < 0) {
-    return (HEADS)(uint)(ushort)mp_chr_setup[player].head;
+  if ((&player_1_char)[player] < 0) {
+    return mp_chr_setup[player].head;
   }
-  return (HEADS)(uint)(ushort)mp_chr_setup[(&player_1_char)[player]].head;
+  return mp_chr_setup[(&player_1_char)[player]].head;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_player_mp_char_head
-/* 044DEC 7F0102BC 00047080 */  sll   $t6, $a0, 2
-/* 044DF0 7F0102C0 3C038003 */  lui   $v1, %hi(player_1_char)
-/* 044DF4 7F0102C4 006E1821 */  addu  $v1, $v1, $t6
-/* 044DF8 7F0102C8 8C63B524 */  lw    $v1, %lo(player_1_char)($v1)
-/* 044DFC 7F0102CC 00047880 */  sll   $t7, $a0, 2
-/* 044E00 7F0102D0 3C028003 */  lui   $v0, %hi(mp_chr_setup+6)
-/* 044E04 7F0102D4 04610007 */  bgez  $v1, .L7F0102F4
-/* 044E08 7F0102D8 0003C080 */   sll   $t8, $v1, 2
-/* 044E0C 7F0102DC 01E47823 */  subu  $t7, $t7, $a0
-/* 044E10 7F0102E0 000F7880 */  sll   $t7, $t7, 2
-/* 044E14 7F0102E4 3C028003 */  lui   $v0, %hi(mp_chr_setup+6)
-/* 044E18 7F0102E8 004F1021 */  addu  $v0, $v0, $t7
-/* 044E1C 7F0102EC 03E00008 */  jr    $ra
-/* 044E20 7F0102F0 9442B19E */   lhu   $v0, %lo(mp_chr_setup+6)($v0)
-.L7F0102F4:
-/* 044E24 7F0102F4 0303C023 */  subu  $t8, $t8, $v1
-/* 044E28 7F0102F8 0018C080 */  sll   $t8, $t8, 2
-/* 044E2C 7F0102FC 00581021 */  addu  $v0, $v0, $t8
-/* 044E30 7F010300 9442B19E */  lhu   $v0, %lo(mp_chr_setup+6)($v0)
-/* 044E34 7F010304 03E00008 */  jr    $ra
-/* 044E38 7F010308 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-ulonglong get_player_mp_char_gender(int player)
+u8 get_player_mp_char_gender(int player)
 {
-  if ((int)(&player_1_char)[player] < 0) {
-    return (ulonglong)(byte)mp_chr_setup[player].gender;
-  }
-  return (ulonglong)(byte)mp_chr_setup[(&player_1_char)[player]].gender;
+    if ((&player_1_char)[player] < 0) {
+        return mp_chr_setup[player].gender;
+    }
+    return mp_chr_setup[(&player_1_char)[player]].gender;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_player_mp_char_gender
-/* 044E3C 7F01030C 00047080 */  sll   $t6, $a0, 2
-/* 044E40 7F010310 3C038003 */  lui   $v1, %hi(player_1_char)
-/* 044E44 7F010314 006E1821 */  addu  $v1, $v1, $t6
-/* 044E48 7F010318 8C63B524 */  lw    $v1, %lo(player_1_char)($v1)
-/* 044E4C 7F01031C 00047880 */  sll   $t7, $a0, 2
-/* 044E50 7F010320 3C028003 */  lui   $v0, %hi(mp_chr_setup+2)
-/* 044E54 7F010324 04610007 */  bgez  $v1, .L7F010344
-/* 044E58 7F010328 0003C080 */   sll   $t8, $v1, 2
-/* 044E5C 7F01032C 01E47823 */  subu  $t7, $t7, $a0
-/* 044E60 7F010330 000F7880 */  sll   $t7, $t7, 2
-/* 044E64 7F010334 3C028003 */  lui   $v0, %hi(mp_chr_setup+2)
-/* 044E68 7F010338 004F1021 */  addu  $v0, $v0, $t7
-/* 044E6C 7F01033C 03E00008 */  jr    $ra
-/* 044E70 7F010340 9042B19A */   lbu   $v0, %lo(mp_chr_setup+2)($v0)
-.L7F010344:
-/* 044E74 7F010344 0303C023 */  subu  $t8, $t8, $v1
-/* 044E78 7F010348 0018C080 */  sll   $t8, $t8, 2
-/* 044E7C 7F01034C 00581021 */  addu  $v0, $v0, $t8
-/* 044E80 7F010350 9042B19A */  lbu   $v0, %lo(mp_chr_setup+2)($v0)
-/* 044E84 7F010354 03E00008 */  jr    $ra
-/* 044E88 7F010358 00000000 */   nop   
-)
-#endif
-
 
 
 
