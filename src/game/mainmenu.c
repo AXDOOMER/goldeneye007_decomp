@@ -12889,57 +12889,17 @@ f32 get_player_mp_handicap(int player)
     return MP_handicap_table[(&handicap_player1)[player]].damage_modifier;
 }
 
-
-
-
-
-
-#ifdef NONMATCHING
 f32 get_player_mp_char_height(int player)
 {
-  if ((int)(&player_1_char)[player] < 0) {
-    return (f32)mp_chr_setup[player].pov;
-  }
-  return (f32)mp_chr_setup[(&player_1_char)[player]].pov;
+    if ((&player_1_char)[player] < 0) {
+        return mp_chr_setup[player].pov;
+    }
+    return mp_chr_setup[(&player_1_char)[player]].pov;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_player_mp_char_height
-/* 044F00 7F0103D0 00047080 */  sll   $t6, $a0, 2
-/* 044F04 7F0103D4 3C028003 */  lui   $v0, %hi(player_1_char)
-/* 044F08 7F0103D8 004E1021 */  addu  $v0, $v0, $t6
-/* 044F0C 7F0103DC 8C42B524 */  lw    $v0, %lo(player_1_char)($v0)
-/* 044F10 7F0103E0 00047880 */  sll   $t7, $a0, 2
-/* 044F14 7F0103E4 3C018003 */  lui   $at, %hi(mp_chr_setup+8)
-/* 044F18 7F0103E8 04410007 */  bgez  $v0, .L7F010408
-/* 044F1C 7F0103EC 0002C080 */   sll   $t8, $v0, 2
-/* 044F20 7F0103F0 01E47823 */  subu  $t7, $t7, $a0
-/* 044F24 7F0103F4 000F7880 */  sll   $t7, $t7, 2
-/* 044F28 7F0103F8 3C018003 */  lui   $at, %hi(mp_chr_setup+8)
-/* 044F2C 7F0103FC 002F0821 */  addu  $at, $at, $t7
-/* 044F30 7F010400 03E00008 */  jr    $ra
-/* 044F34 7F010404 C420B1A0 */   lwc1  $f0, %lo(mp_chr_setup+8)($at)
-.L7F010408:
-/* 044F38 7F010408 0302C023 */  subu  $t8, $t8, $v0
-/* 044F3C 7F01040C 0018C080 */  sll   $t8, $t8, 2
-/* 044F40 7F010410 00380821 */  addu  $at, $at, $t8
-/* 044F44 7F010414 C420B1A0 */  lwc1  $f0, %lo(mp_chr_setup+8)($at)
-/* 044F48 7F010418 03E00008 */  jr    $ra
-/* 044F4C 7F01041C 00000000 */   nop   
-)
-#endif
-
-
-
-
-
 
 int get_mp_timelimit(void) {
   return multi_game_lengths[game_length].time;
 }
-
-
 
 int get_mp_pointlimit(void) {
   return multi_game_lengths[game_length].points;
