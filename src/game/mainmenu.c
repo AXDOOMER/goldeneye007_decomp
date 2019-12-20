@@ -12905,203 +12905,71 @@ int get_mp_pointlimit(void) {
   return multi_game_lengths[game_length].points;
 }
 
-
-
-
-#ifdef NONMATCHING
-void reset_mp_options_for_scenario(MPSCENARIOS scenario)
-
+void reset_mp_options_for_scenario(MPSCENARIOS scenarioid)
 {
-  unlock_stage_select = 1;
-  unlock_game_length = 1;
-  unlock_chars = 1;
-  unlock_weapon_select = 1;
-  unlock_handicap = 1;
-  unlock_control_style = 1;
-  unlock_aim_sight = 1;
-  
-  scenario = scenario;
-  switch(scenario) {
-  case SCENARIO_NORMAL:
-  case SCENARIO_2v2:
-  case SCENARIO_3v1:
-  case SCENARIO_2v1:
-    if (6 < game_length) {
-      game_length = 2;
+    scenario = scenarioid;
+
+    unlock_stage_select = 1;
+    unlock_game_length = 1;
+    unlock_chars = 1;
+    unlock_weapon_select = 1;
+    unlock_handicap = 1;
+    unlock_control_style = 1;
+    unlock_aim_sight = 1;
+
+    
+    switch(scenario)
+    {
+    case SCENARIO_NORMAL:
+    case SCENARIO_2v2:
+    case SCENARIO_3v1:
+    case SCENARIO_2v1:
+        if (6 < game_length)
+        {
+            game_length = 2;
+        }
+        if (0xd < get_mp_weapon_set())
+        {
+            set_mp_weapon_set(0xd);
+        }
+        break;
+    case SCENARIO_YOLT:
+        game_length = 7;
+
+        if (0xd < get_mp_weapon_set())
+        {
+            set_mp_weapon_set(0xd);
+        }
+        unlock_game_length = 0;
+        break;
+    case SCENARIO_TLD:
+        if (3 < game_length)
+        {
+            game_length = 2;
+        }
+        if (0xd < get_mp_weapon_set())
+        {
+            set_mp_weapon_set(0xd);
+        }
+        break;
+    case SCENARIO_MWTGG:
+        if (6 < game_length)
+        {
+            game_length = 2;
+        }
+        set_mp_weapon_set(0xd);
+        unlock_weapon_select = 0;
+        break;
+    case SCENARIO_LTK:
+        if (6 < game_length)
+        {
+            game_length = 2;
+        }
+        set_mp_weapon_set(1);
+        unlock_handicap = 0;
     }
-    scenario = scenario;
-    if (0xd < get_mp_weapon_set()) {
-      set_mp_weapon_set(0xd);
-    }
-    break;
-  case SCENARIO_YOLT:
-    game_length = 7;
-    scenario = scenario;
-    if (0xd < get_mp_weapon_set()) {
-      set_mp_weapon_set(0xd);
-    }
-    unlock_game_length = 0;
-    break;
-  case SCENARIO_TLD:
-    if (3 < game_length) {
-      game_length = 2;
-    }
-    scenario = scenario;
-    if (0xd < get_mp_weapon_set()) {
-      set_mp_weapon_set(0xd);
-    }
-    break;
-  case SCENARIO_MWTGG:
-    if (6 < game_length) {
-      game_length = 2;
-    }
-    scenario = scenario;
-    set_mp_weapon_set(0xd);
-    unlock_weapon_select = 0;
-    break;
-  case SCENARIO_LTK:
-    if (6 < game_length) {
-      game_length = 2;
-    }
-    scenario = scenario;
-    set_mp_weapon_set(1);
-    unlock_handicap = 0;
-  }
-  return;
+    return;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel jpt_scenario_specific_settings_mp
- .word .L7F0104DC
- .word .L7F01051C
- .word .L7F010550
- .word .L7F010594
- .word .L7F0105C8
- .word .L7F0104DC
- .word .L7F0104DC
- .word .L7F0104DC
-.text
-glabel reset_mp_options_for_scenario
-/* 044F98 7F010468 3C038003 */  lui   $v1, %hi(scenario)
-/* 044F9C 7F01046C 2463B540 */  addiu $v1, %lo(scenario) # addiu $v1, $v1, -0x4ac0
-/* 044FA0 7F010470 24020001 */  li    $v0, 1
-/* 044FA4 7F010474 AC640000 */  sw    $a0, ($v1)
-/* 044FA8 7F010478 3C018003 */  lui   $at, %hi(unlock_stage_select)
-/* 044FAC 7F01047C AC22B544 */  sw    $v0, %lo(unlock_stage_select)($at)
-/* 044FB0 7F010480 3C018003 */  lui   $at, %hi(unlock_game_length)
-/* 044FB4 7F010484 AC22B548 */  sw    $v0, %lo(unlock_game_length)($at)
-/* 044FB8 7F010488 3C018003 */  lui   $at, %hi(unlock_chars)
-/* 044FBC 7F01048C AC22B54C */  sw    $v0, %lo(unlock_chars)($at)
-/* 044FC0 7F010490 3C018003 */  lui   $at, %hi(unlock_weapon_select)
-/* 044FC4 7F010494 AC22B550 */  sw    $v0, %lo(unlock_weapon_select)($at)
-/* 044FC8 7F010498 3C018003 */  lui   $at, %hi(unlock_handicap)
-/* 044FCC 7F01049C AC22B554 */  sw    $v0, %lo(unlock_handicap)($at)
-/* 044FD0 7F0104A0 3C018003 */  lui   $at, %hi(unlock_control_style)
-/* 044FD4 7F0104A4 AC22B558 */  sw    $v0, %lo(unlock_control_style)($at)
-/* 044FD8 7F0104A8 3C018003 */  lui   $at, %hi(unlock_aim_sight)
-/* 044FDC 7F0104AC AC22B55C */  sw    $v0, %lo(unlock_aim_sight)($at)
-/* 044FE0 7F0104B0 8C6E0000 */  lw    $t6, ($v1)
-/* 044FE4 7F0104B4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 044FE8 7F0104B8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 044FEC 7F0104BC 2DC10008 */  sltiu $at, $t6, 8
-/* 044FF0 7F0104C0 1020004D */  beqz  $at, .L7F0105F8
-/* 044FF4 7F0104C4 000E7080 */   sll   $t6, $t6, 2
-/* 044FF8 7F0104C8 3C018005 */  lui   $at, %hi(jpt_scenario_specific_settings_mp)
-/* 044FFC 7F0104CC 002E0821 */  addu  $at, $at, $t6
-/* 045000 7F0104D0 8C2E1A60 */  lw    $t6, %lo(jpt_scenario_specific_settings_mp)($at)
-/* 045004 7F0104D4 01C00008 */  jr    $t6
-/* 045008 7F0104D8 00000000 */   nop   
-.L7F0104DC:
-/* 04500C 7F0104DC 3C028003 */  lui   $v0, %hi(game_length)
-/* 045010 7F0104E0 2442B538 */  addiu $v0, %lo(game_length) # addiu $v0, $v0, -0x4ac8
-/* 045014 7F0104E4 8C4F0000 */  lw    $t7, ($v0)
-/* 045018 7F0104E8 29E10007 */  slti  $at, $t7, 7
-/* 04501C 7F0104EC 14200002 */  bnez  $at, .L7F0104F8
-/* 045020 7F0104F0 24180002 */   li    $t8, 2
-/* 045024 7F0104F4 AC580000 */  sw    $t8, ($v0)
-.L7F0104F8:
-/* 045028 7F0104F8 0FC3198F */  jal   get_mp_weapon_set
-/* 04502C 7F0104FC 00000000 */   nop   
-/* 045030 7F010500 2841000E */  slti  $at, $v0, 0xe
-/* 045034 7F010504 5420003D */  bnezl $at, .L7F0105FC
-/* 045038 7F010508 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 04503C 7F01050C 0FC3198C */  jal   set_mp_weapon_set
-/* 045040 7F010510 2404000D */   li    $a0, 13
-/* 045044 7F010514 10000039 */  b     .L7F0105FC
-/* 045048 7F010518 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F01051C:
-/* 04504C 7F01051C 3C028003 */  lui   $v0, %hi(game_length)
-/* 045050 7F010520 2442B538 */  addiu $v0, %lo(game_length) # addiu $v0, $v0, -0x4ac8
-/* 045054 7F010524 24190007 */  li    $t9, 7
-/* 045058 7F010528 0FC3198F */  jal   get_mp_weapon_set
-/* 04505C 7F01052C AC590000 */   sw    $t9, ($v0)
-/* 045060 7F010530 2841000E */  slti  $at, $v0, 0xe
-/* 045064 7F010534 14200003 */  bnez  $at, .L7F010544
-/* 045068 7F010538 00000000 */   nop   
-/* 04506C 7F01053C 0FC3198C */  jal   set_mp_weapon_set
-/* 045070 7F010540 2404000D */   li    $a0, 13
-.L7F010544:
-/* 045074 7F010544 3C018003 */  lui   $at, %hi(unlock_game_length)
-/* 045078 7F010548 1000002B */  b     .L7F0105F8
-/* 04507C 7F01054C AC20B548 */   sw    $zero, %lo(unlock_game_length)($at)
-.L7F010550:
-/* 045080 7F010550 3C028003 */  lui   $v0, %hi(game_length)
-/* 045084 7F010554 2442B538 */  addiu $v0, %lo(game_length) # addiu $v0, $v0, -0x4ac8
-/* 045088 7F010558 8C480000 */  lw    $t0, ($v0)
-/* 04508C 7F01055C 24090002 */  li    $t1, 2
-/* 045090 7F010560 29010004 */  slti  $at, $t0, 4
-/* 045094 7F010564 14200002 */  bnez  $at, .L7F010570
-/* 045098 7F010568 00000000 */   nop   
-/* 04509C 7F01056C AC490000 */  sw    $t1, ($v0)
-.L7F010570:
-/* 0450A0 7F010570 0FC3198F */  jal   get_mp_weapon_set
-/* 0450A4 7F010574 00000000 */   nop   
-/* 0450A8 7F010578 2841000E */  slti  $at, $v0, 0xe
-/* 0450AC 7F01057C 5420001F */  bnezl $at, .L7F0105FC
-/* 0450B0 7F010580 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0450B4 7F010584 0FC3198C */  jal   set_mp_weapon_set
-/* 0450B8 7F010588 2404000D */   li    $a0, 13
-/* 0450BC 7F01058C 1000001B */  b     .L7F0105FC
-/* 0450C0 7F010590 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F010594:
-/* 0450C4 7F010594 3C028003 */  lui   $v0, %hi(game_length)
-/* 0450C8 7F010598 2442B538 */  addiu $v0, %lo(game_length) # addiu $v0, $v0, -0x4ac8
-/* 0450CC 7F01059C 8C4A0000 */  lw    $t2, ($v0)
-/* 0450D0 7F0105A0 240B0002 */  li    $t3, 2
-/* 0450D4 7F0105A4 29410007 */  slti  $at, $t2, 7
-/* 0450D8 7F0105A8 14200002 */  bnez  $at, .L7F0105B4
-/* 0450DC 7F0105AC 00000000 */   nop   
-/* 0450E0 7F0105B0 AC4B0000 */  sw    $t3, ($v0)
-.L7F0105B4:
-/* 0450E4 7F0105B4 0FC3198C */  jal   set_mp_weapon_set
-/* 0450E8 7F0105B8 2404000D */   li    $a0, 13
-/* 0450EC 7F0105BC 3C018003 */  lui   $at, %hi(unlock_weapon_select)
-/* 0450F0 7F0105C0 1000000D */  b     .L7F0105F8
-/* 0450F4 7F0105C4 AC20B550 */   sw    $zero, %lo(unlock_weapon_select)($at)
-.L7F0105C8:
-/* 0450F8 7F0105C8 3C028003 */  lui   $v0, %hi(game_length)
-/* 0450FC 7F0105CC 2442B538 */  addiu $v0, %lo(game_length) # addiu $v0, $v0, -0x4ac8
-/* 045100 7F0105D0 8C4C0000 */  lw    $t4, ($v0)
-/* 045104 7F0105D4 240D0002 */  li    $t5, 2
-/* 045108 7F0105D8 29810007 */  slti  $at, $t4, 7
-/* 04510C 7F0105DC 14200002 */  bnez  $at, .L7F0105E8
-/* 045110 7F0105E0 00000000 */   nop   
-/* 045114 7F0105E4 AC4D0000 */  sw    $t5, ($v0)
-.L7F0105E8:
-/* 045118 7F0105E8 0FC3198C */  jal   set_mp_weapon_set
-/* 04511C 7F0105EC 24040001 */   li    $a0, 1
-/* 045120 7F0105F0 3C018003 */  lui   $at, %hi(unlock_handicap)
-/* 045124 7F0105F4 AC20B554 */  sw    $zero, %lo(unlock_handicap)($at)
-def_7F0104D4:
-.L7F0105F8:
-/* 045128 7F0105F8 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0105FC:
-/* 04512C 7F0105FC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 045130 7F010600 03E00008 */  jr    $ra
-/* 045134 7F010604 00000000 */   nop   
-)
-#endif
 
 
 

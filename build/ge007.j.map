@@ -20062,7 +20062,6 @@ Linker script and memory map
                 0x0000000080051a84                D_80051A54
                 0x0000000080051a88                D_80051A58
                 0x0000000080051a8c                D_80051A5C
-                0x0000000080051a90                jpt_scenario_specific_settings_mp
                 0x0000000080051ab0                D_80051A80
                 0x0000000080051ab4                D_80051A84
                 0x0000000080051ab8                D_80051A88
