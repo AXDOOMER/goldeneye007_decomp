@@ -1296,7 +1296,7 @@ typedef enum ACT_TYPE {
 #define CHRFLAG_COUNT_DEATH_AS_CIVILIAN      0x00100000 // count death as civilian killed
 #define CHRFLAG_WAS_HIT                      0x00200000 // chr has been hit (even if invincible)
 #define CHRFLAG_00400000                     0x00400000 // unknown
-#define CHRFLAG_00800000                     0x00800000 // unknown
+#define CHRFLAG_CULL_USING_HITBOX            0x00800000 // cull chr using hitbox instead of tile/clipping (useful with lock y pos flag)
 #define CHRFLAG_01000000                     0x01000000 // unknown
 #define CHRFLAG_02000000                     0x02000000 // unknown
 #define CHRFLAG_04000000                     0x04000000 // unknown
