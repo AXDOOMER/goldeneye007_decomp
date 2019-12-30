@@ -13120,7 +13120,8 @@ void init_menu0E_mpoptions(void)
     tab_2_highlight = FALSE;
     tab_1_highlight = FALSE;
 
-    if (maybe_is_in_menu != FALSE) {
+    if (maybe_is_in_menu != FALSE)
+    {
         sfx_c_700091E8(0x7fff);
         musicTrack1Vol(0x7fff);
         music1_playing = FALSE;
@@ -13128,12 +13129,14 @@ void init_menu0E_mpoptions(void)
         maybe_is_in_menu = FALSE;
     }
 
-    if (selected_num_players == 0) {
+    if (selected_num_players == 0)
+    {
         numplayers = get_attached_controller_count();
         init_mp_options_for_scenario(numplayers);
     }
 
-    if (check_if_mp_stage_unlocked(MP_stage_selected) == FALSE) {
+    if (check_if_mp_stage_unlocked(MP_stage_selected) == FALSE)
+    {
         MP_stage_selected = MP_STAGE_TEMPLE;
     }
     
@@ -13149,8 +13152,8 @@ void init_menu0E_mpoptions(void)
     load_walletbond();
 }
 
-
-void update_menu0E_mpoptions(void) {
+void update_menu0E_mpoptions(void)
+{
     return;
 }
 
@@ -13164,44 +13167,45 @@ void update_menu0E_mpoptions(void) {
 #ifdef NONMATCHING
 void interface_menu0E_mpoptions(void)
 {
-    s32 sp3C;
-    s32 sp38;
-    s32 sp34;
-    s32 sp30;
-    s32 sp2C;
-    s32 sp28;
-    s32 sp24;
-    s32 sp20;
-    s32 sp1C;
-    s32 temp_f6;
+    s32 players_selected;
+    s32 scenario_selected;
+    s32 gameselect_selected;
+    s32 gamelength_selected;
+    s32 character_selected;
+    s32 weaponselect_selected;
+    s32 health_selected;
+    s32 controlstyle_selected;
+    s32 aimadjustment_selected;
+
+    s32 cursor_v;
     s32 temp_v1;
     u32 temp_hi;
     void *temp_v0;
     s32 phi_a0;
 
-    sp3C = 0;
-    sp38 = 0;
-    sp34 = 0;
-    sp30 = 0;
-    sp2C = 0;
-    sp28 = 0;
-    sp24 = 0;
-    sp20 = 0;
-    sp1C = 0;
-    setvideo_far(0x42700000);
-    video_related_21(D_80051A80);
-    set_page_height(0x42c80000, D_80051A84);
+    players_selected = 0;
+    scenario_selected = 0;
+    gameselect_selected = 0;
+    gamelength_selected = 0;
+    character_selected = 0;
+    weaponselect_selected = 0;
+    health_selected = 0;
+    controlstyle_selected = 0;
+    aimadjustment_selected = 0;
+    setvideo_far(60.0f);
+    video_related_21(menu0E_aspect);
+    set_page_height(100.0f, menu0E_pageheight);
     set_video2_settings_offset_24(0);
     if (get_attached_controller_count() < 2)
     {
-        set_menu_to_mode(6, 0);
+        set_menu_to_mode(MENU_MODE_SELECT, 0);
         set_menu_cursor_pos_to_setting(gamemode);
     }
     if (get_attached_controller_count() < selected_num_players)
     {
         init_mp_options_for_scenario(get_attached_controller_count());
     }
-    if (get_controller_buttons_held(0, 0xa000) == 0)
+    if (get_controller_buttons_held(0, Z_TRIG|A_BUTTON) == 0)
     {
         tab_3_highlight = 0;
         tab_2_highlight = 0;
@@ -13215,87 +13219,70 @@ void interface_menu0E_mpoptions(void)
         highlight_health = 0;
         highlight_controlstyle = 0;
         highlight_aimadjustment = 0;
-        if (isontab3() != 0)
+        if (isontab3())
         {
             tab_3_highlight = 1;
         }
+        
+        if (isontab1())
+        {
+            cursor_v_pos = 1;
+        }
+        
+        cursor_v = (s32)cursor_v_pos;
+        if ((cursor_v >= 0x119) && (unlock_aim_sight != 0))
+        {
+            highlight_aimadjustment = 1;
+        }
+        
+        if ((cursor_v >= 0x105) && (unlock_control_style != 0))
+        {
+            highlight_controlstyle = 1;
+        }
+        
+        if ((cursor_v >= 0xf1) && (unlock_handicap != 0))
+        {
+            highlight_health = 1;
+        }
+        
+        if ((cursor_v >= 0xdd) && (unlock_chars != 0))
+        {
+            highlight_character = 1;
+        }
+        
+        if ((cursor_v >= 0xc9) && (unlock_weapon_select != 0))
+        {
+            highlight_weaponselect = 1;
+        }
+        
+        if ((cursor_v >= 0xb5) && (unlock_game_length != 0))
+        {
+            highlight_gamelength = 1;
+        }
+        
+        if ((cursor_v >= 0xa1) && (unlock_stage_select != 0))
+        {
+            highlight_gameselect = 1;
+        }
+        
+        if (cursor_v >= 0x8d)
+        {
+            highlight_scenario = 1;
+        }
         else
         {
-            if (isontab1() != 0)
-            {
-                cursor_v_pos = 1;
-            }
-            else
-            {
-                temp_f6 = (s32) *(void *)0x80030000;
-                if ((temp_f6 >= 0x119) && (unlock_aim_sight != 0))
-                {
-                    highlight_aimadjustment = 1;
-                }
-                else
-                {
-                    if ((temp_f6 >= 0x105) && (unlock_control_style != 0))
-                    {
-                        highlight_controlstyle = 1;
-                    }
-                    else
-                    {
-                        if ((temp_f6 >= 0xf1) && (unlock_handicap != 0))
-                        {
-                            highlight_health = 1;
-                        }
-                        else
-                        {
-                            if ((temp_f6 >= 0xdd) && (unlock_chars != 0))
-                            {
-                                highlight_character = 1;
-                            }
-                            else
-                            {
-                                if ((temp_f6 >= 0xc9) && (unlock_weapon_select != 0))
-                                {
-                                    highlight_weaponselect = 1;
-                                }
-                                else
-                                {
-                                    if ((temp_f6 >= 0xb5) && (unlock_game_length != 0))
-                                    {
-                                        highlight_gamelength = 1;
-                                    }
-                                    else
-                                    {
-                                        if ((temp_f6 >= 0xa1) && (unlock_stage_select != 0))
-                                        {
-                                            highlight_gameselect = 1;
-                                        }
-                                        else
-                                        {
-                                            if (temp_f6 >= 0x8d)
-                                            {
-                                                highlight_scenario = 1;
-                                            }
-                                            else
-                                            {
-                                                highlight_players = 1;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            highlight_players = 1;
         }
     }
-    if (get_controller_buttons_pressed(0, 0x1000) != 0)
+
+    if (get_controller_buttons_pressed(0, START_BUTTON) != 0)
     {
         tab_1_selected = 1;
         play_sfx_a1(ptr_sfx_buf, 0xc7, 0);
     }
     else
     {
-        if (get_controller_buttons_pressed(0, 0xa000) != 0)
+        if (get_controller_buttons_pressed(0, Z_TRIG|A_BUTTON) != 0)
         {
             if (tab_3_highlight != 0)
             {
@@ -13305,74 +13292,47 @@ void interface_menu0E_mpoptions(void)
             {
                 tab_1_selected = 1;
             }
-            else
+            if (highlight_players != 0)
             {
-                if (highlight_players != 0)
-                {
-                    sp3C = 1;
-                }
-                else
-                {
-                    if (highlight_scenario != 0)
-                    {
-                        sp38 = 1;
-                    }
-                    else
-                    {
-                        if (highlight_gameselect != 0)
-                        {
-                            sp34 = 1;
-                        }
-                        else
-                        {
-                            if (highlight_gamelength != 0)
-                            {
-                                sp30 = 1;
-                            }
-                            else
-                            {
-                                if (highlight_character != 0)
-                                {
-                                    sp2C = 1;
-                                }
-                                else
-                                {
-                                    if (highlight_weaponselect != 0)
-                                    {
-                                        sp28 = 1;
-                                    }
-                                    else
-                                    {
-                                        if (highlight_health != 0)
-                                        {
-                                            sp24 = 1;
-                                        }
-                                        else
-                                        {
-                                            if (highlight_controlstyle != 0)
-                                            {
-                                                sp20 = 1;
-                                            }
-                                            else
-                                            {
-                                                if (highlight_aimadjustment != 0)
-                                                {
-                                                    sp1C = 1;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                players_selected = 1;
+            }
+            if (highlight_scenario != 0)
+            {
+                scenario_selected = 1;
+            }
+            if (highlight_gameselect != 0)
+            {
+                gameselect_selected = 1;
+            }
+            if (highlight_gamelength != 0)
+            {
+                gamelength_selected = 1;
+            }
+            if (highlight_character != 0)
+            {
+                character_selected = 1;
+            }
+            if (highlight_weaponselect != 0)
+            {
+                weaponselect_selected = 1;
+            }
+            if (highlight_health != 0)
+            {
+                health_selected = 1;
+            }
+            if (highlight_controlstyle != 0)
+            {
+                controlstyle_selected = 1;
+            }
+            if (highlight_aimadjustment != 0)
+            {
+                aimadjustment_selected = 1;
             }
             play_sfx_a1(ptr_sfx_buf, 0xc7, 0);
         }
         else
         {
-            if (get_controller_buttons_pressed(0, 0x4000) != 0)
+            if (get_controller_buttons_pressed(0, B_BUTTON) != 0)
             {
                 tab_3_selected = 1;
                 play_sfx_a1(ptr_sfx_buf, 0xc7, 0);
@@ -13387,117 +13347,83 @@ void interface_menu0E_mpoptions(void)
     menu_control_stick_tracking();
     if (tab_3_selected != 0)
     {
-        set_menu_to_mode(6, 0);
+        set_menu_to_mode(MENU_MODE_SELECT, 0);
         set_menu_cursor_pos_to_setting(gamemode);
         return;
     }
     if (tab_1_selected != 0)
     {
-        temp_v0 = 0x80030000 + (MP_stage_selected * 0x18);
-        if (temp_v0->unk-4F84 < 0)
-        {
-loop_65:
-            temp_hi = get_random_value() % 0xbU;
-            selected_stage = (?32) (0x80030000 + (temp_hi * 0x18))->unk-4F6C;
-            if (check_if_mp_stage_unlocked(temp_hi + 1) == 0)
-            {
-                goto loop_65;
-            }
+        curstageid = multi_stage_setups[MP_stage_selected].stage_id;
+        if (multi_stage_setups[MP_stage_selected].stage_id < 0) {
+            do {
+                numplayers = get_random_value();
+                selected_stage = multi_stage_setups[numplayers % 0xb + 1].stage_id;
+                curstageid = selected_stage;
+            } while (check_if_mp_stage_unlocked(numplayers % 0xb + 1) == FALSE);
         }
-        else
-        {
-            *(void *)0x80030000 = (bitwise f32) temp_v0->unk-4F84;
-        }
-        briefingpage = (?32) -1;
-        set_menu_to_mode(0xb, 1);
-        return;
+        selected_stage = curstageid;
+        briefingpage = 0xffffffff;
+        set_menu_to_mode(MENU_RUN_STAGE,1);
     }
-    if (sp3C != 0)
+    if (players_selected != 0)
     {
         temp_v1 = selected_num_players + 1;
         phi_a0 = temp_v1;
-        if (get_attached_controller_count(6) < temp_v1)
+        if (get_attached_controller_count() < temp_v1)
         {
             phi_a0 = 2;
         }
         init_mp_options_for_scenario(phi_a0);
         return;
     }
-    if (sp38 != 0)
+    if (scenario_selected != 0)
     {
-        set_menu_to_mode(0x13, 0);
+        set_menu_to_mode(MENU_MP_SCENARIO_SELECT, 0);
         return;
     }
-    if (sp34 != 0)
+    if (gameselect_selected != 0)
     {
-        set_menu_to_mode(0x12, 0);
+        set_menu_to_mode(MENU_MP_STAGE_SELECT, 0);
         return;
     }
-    if (sp30 != 0)
+    if (gamelength_selected != 0)
     {
-        select_game_length(6);
+        select_game_length();
         return;
     }
-    if (sp2C != 0)
+    if (character_selected != 0)
     {
-        set_menu_to_mode(0xf, 0);
+        set_menu_to_mode(MENU_MP_CHAR_SELECT, 0);
         return;
     }
-    if (sp28 != 0)
+    if (weaponselect_selected != 0)
     {
-        advance_mp_weapon_set_by_one_save_value(6);
+        advance_mp_weapon_set_by_one_save_value();
         return;
     }
-    if (sp24 != 0)
+    if (health_selected != 0)
     {
-        set_menu_to_mode(0x10, 0);
+        set_menu_to_mode(MENU_MP_HANDICAP, 0);
         return;
     }
-    if (sp20 != 0)
+    if (controlstyle_selected != 0)
     {
-        set_menu_to_mode(0x11, 0);
+        set_menu_to_mode(MENU_MP_CONTROL_STYLE, 0);
         return;
     }
-    if (sp1C != 0)
+    if (aimadjustment_selected != 0)
     {
-        advance_aim_settings_selection(6);
+        advance_aim_settings_selection();
     }
 }
 #else
 GLOBAL_ASM(
 .late_rodata
-glabel D_80051A80
+glabel menu0E_aspect
 .word 0x3FAAAAAB /*1.3333334;*/
-glabel D_80051A84
+glabel menu0E_pageheight
 .word 0x461C4000 /*10000.0;*/
-glabel D_80051A88
-.word 0x3FAAAAAB /*1.3333334;*/
-glabel D_80051A8C
-.word 0x461C4000 /*10000.0;*/
-glabel D_80051A90
-.word 0x3FAAAAAB /*1.3333334;*/
-glabel D_80051A94
-.word 0x461C4000 /*10000.0;*/
-glabel D_80051A98
-.word 0x3FAAAAAB /*1.3333334;*/
-glabel D_80051A9C
-.word 0x461C4000 /*10000.0;*/
-glabel D_80051AA0
-.word 0x3FAAAAAB /*1.3333334;*/
-glabel D_80051AA4
-.word 0x461C4000 /*10000.0;*/
-glabel D_80051AA8
-.word 0x3FAAAAAB /*1.3333334;*/
-glabel D_80051AAC
-.word 0x461C4000 /*10000.0;*/
-glabel D_80051AB0
-.word 0x3FAAAAAB /*1.3333334;*/
-glabel D_80051AB4
-.word 0x461C4000 /*10000.0;*/
-glabel D_80051AB8
-.word 0x3FAAAAAB /*1.3333334;*/
-glabel D_80051ABC
-.word 0x461C4000 /*10000.0;*/
+
 .text
 glabel interface_menu0E_mpoptions
 /* 045378 7F010848 27BDFFC0 */  addiu $sp, $sp, -0x40
@@ -13514,14 +13440,14 @@ glabel interface_menu0E_mpoptions
 /* 0453A4 7F010874 AFA00020 */  sw    $zero, 0x20($sp)
 /* 0453A8 7F010878 0C001151 */  jal   setvideo_far
 /* 0453AC 7F01087C AFA0001C */   sw    $zero, 0x1c($sp)
-/* 0453B0 7F010880 3C018005 */  lui   $at, %hi(D_80051A80)
+/* 0453B0 7F010880 3C018005 */  lui   $at, %hi(menu0E_aspect)
 /* 0453B4 7F010884 0C001164 */  jal   video_related_21
-/* 0453B8 7F010888 C42C1A80 */   lwc1  $f12, %lo(D_80051A80)($at)
+/* 0453B8 7F010888 C42C1A80 */   lwc1  $f12, %lo(menu0E_aspect)($at)
 /* 0453BC 7F01088C 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
 /* 0453C0 7F010890 44816000 */  mtc1  $at, $f12
-/* 0453C4 7F010894 3C018005 */  lui   $at, %hi(D_80051A84)
+/* 0453C4 7F010894 3C018005 */  lui   $at, %hi(menu0E_pageheight)
 /* 0453C8 7F010898 0C001194 */  jal   set_page_height
-/* 0453CC 7F01089C C42E1A84 */   lwc1  $f14, %lo(D_80051A84)($at)
+/* 0453CC 7F01089C C42E1A84 */   lwc1  $f14, %lo(menu0E_pageheight)($at)
 /* 0453D0 7F0108A0 0C00114D */  jal   set_video2_settings_offset_24
 /* 0453D4 7F0108A4 00002025 */   move  $a0, $zero
 /* 0453D8 7F0108A8 0C002E7E */  jal   get_attached_controller_count
@@ -15673,6 +15599,12 @@ LAB_7f012164:
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051A88
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051A8C
+.word 0x461C4000 /*10000.0;*/
+
 .text
 glabel interface_menu0F_mpcharsel
 /* 046A04 7F011ED4 27BDFFB0 */  addiu $sp, $sp, -0x50
@@ -17296,6 +17228,12 @@ block_15:
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051A90
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051A94
+.word 0x461C4000 /*10000.0;*/
+
 .text
 glabel interface_menu10_mphandicap
 /* 0479F4 7F012EC4 27BDFFB8 */  addiu $sp, $sp, -0x48
@@ -18082,6 +18020,12 @@ block_31:
 
 #ifdef VERSION_US
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051A98
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051A9C
+.word 0x461C4000 /*10000.0;*/
+
 .text
 glabel interface_menu11_mpcontrols
 /* 048138 7F013608 27BDFFB0 */  addiu $sp, $sp, -0x50
@@ -18331,6 +18275,11 @@ glabel interface_menu11_mpcontrols
 
 #ifdef VERSION_JP
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051A98
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051A9C
+.word 0x461C4000 /*10000.0;*/
 .text
 glabel interface_menu11_mpcontrols
 /* 0481B8 7F013648 27BDFFA0 */  addiu $sp, $sp, -0x60
@@ -19141,6 +19090,12 @@ loop_14:
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051AA0
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051AA4
+.word 0x461C4000 /*10000.0;*/
+
 .text
 glabel interface_menu12_mpstage
 /* 048904 7F013DD4 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -20133,6 +20088,12 @@ loop_4:
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051AA8
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051AAC
+.word 0x461C4000 /*10000.0;*/
+
 .text
 glabel interface_menu13_mpscenario
 /* 0492E8 7F0147B8 27BDFFD0 */  addiu $sp, $sp, -0x30
@@ -20758,6 +20719,12 @@ loop_29:
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051AB0
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051AB4
+.word 0x461C4000 /*10000.0;*/
+
 .text
 glabel interface_menu14_mpteams
 /* 049878 7F014D48 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -21690,6 +21657,11 @@ void interface_menu0A_briefing(void)
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051AB8
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051ABC
+.word 0x461C4000 /*10000.0;*/
 .text
 glabel interface_menu0A_briefing
 /* 04A1CC 7F01569C 27BDFFE8 */  addiu $sp, $sp, -0x18
