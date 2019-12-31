@@ -66,7 +66,7 @@
 //=============================================================================
 // commands with a vehicle/aircraft prefix can only be executed by vehicle/aircraft
 // objects. these types of objects do not use a chr struct. most non-vehicle
-// commands will crash if they try to access caller's chr struct 
+// commands will crash if they try to access caller's chr struct
 //=============================================================================
 // ai commands with label argument
 //=============================================================================
@@ -2319,7 +2319,7 @@
 // name: guard_set_health_total
 // command id: 8F
 // info: set guard's total health - the higher the value, the more shots needed
-//       to kill guard. 
+//       to kill guard.
 //=============================================================================
 // note: sets to chr->maxdamage. default health is 4.0f (0x0028/40 dec for argument).
 // argument is converted to float and divided by 10 before setting to maxdamage.

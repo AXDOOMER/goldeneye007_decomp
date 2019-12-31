@@ -1137,7 +1137,7 @@ typedef enum ANIMATIONS {
     ANIM_aim_running_right_one_handed_weapon = 86,
     ANIM_aim_running_left_one_handed_weapon = 87,
     ANIM_aim_sprinting_one_handed_weapon = 88,
-    ANIM_jogging_one_handed_weapon = 89,
+    ANIM_running_one_handed_weapon = 89,
     ANIM_sprinting_one_handed_weapon = 90,
     ANIM_null91 = 91, /* invalid slot */
     ANIM_null92 = 92, /* invalid slot */
@@ -1152,7 +1152,7 @@ typedef enum ANIMATIONS {
     ANIM_holster_one_handed_weapon_and_cross_arms = 101,
     ANIM_cock_one_handed_weapon_turn_around_and_stand_up = 102,
     ANIM_draw_one_handed_weapon_and_turn_around = 103,
-    ANIM_step_foward_and_hold_one_handed_weapon = 104,
+    ANIM_step_forward_and_hold_one_handed_weapon = 104,
     ANIM_holster_one_handed_weapon_and_adjust_suit = 105,
     ANIM_idle_unarmed = 106,
     ANIM_walking_unarmed = 107,
@@ -1296,7 +1296,7 @@ typedef enum ACT_TYPE {
 #define CHRFLAG_COUNT_DEATH_AS_CIVILIAN      0x00100000 // count death as civilian killed
 #define CHRFLAG_WAS_HIT                      0x00200000 // chr has been hit (even if invincible)
 #define CHRFLAG_00400000                     0x00400000 // unknown
-#define CHRFLAG_00800000                     0x00800000 // unknown
+#define CHRFLAG_CULL_USING_HITBOX            0x00800000 // cull chr using hitbox instead of tile/clipping (useful with lock y pos flag)
 #define CHRFLAG_01000000                     0x01000000 // unknown
 #define CHRFLAG_02000000                     0x02000000 // unknown
 #define CHRFLAG_04000000                     0x04000000 // unknown
