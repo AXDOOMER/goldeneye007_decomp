@@ -19761,20 +19761,20 @@ Linker script and memory map
  build/u/src/game/radar.o(.data)
  build/u/src/game/mp_weapon.o(.data)
  .data          0x0000000080048670      0xb00 build/u/src/game/mp_weapon.o
-                0x0000000080048670                type_0_stru_800490F0
-                0x0000000080048730                type_1_stru_800490F0
-                0x00000000800487f0                type_D_stru_800490F0
-                0x00000000800488b0                type_2_stru_800490F0
-                0x0000000080048970                type_3_stru_800490F0
-                0x0000000080048a30                type_4_stru_800490F0
-                0x0000000080048af0                type_5_stru_800490F0
-                0x0000000080048bb0                type_6_stru_800490F0
-                0x0000000080048c70                type_7_stru_800490F0
-                0x0000000080048d30                type_8_stru_800490F0
-                0x0000000080048df0                type_9_stru_800490F0
-                0x0000000080048eb0                type_A_stru_800490F0
-                0x0000000080048f70                type_B_stru_800490F0
-                0x0000000080049030                type_C_stru_800490F0
+                0x0000000080048670                mp_weapon_set_slaps
+                0x0000000080048730                mp_weapon_set_pistols
+                0x00000000800487f0                mp_weapon_set_knife
+                0x00000000800488b0                mp_weapon_set_auto
+                0x0000000080048970                mp_weapon_set_power
+                0x0000000080048a30                mp_weapon_set_sniper
+                0x0000000080048af0                mp_weapon_set_grenade
+                0x0000000080048bb0                mp_weapon_set_remote_m
+                0x0000000080048c70                mp_weapon_set_glaunch
+                0x0000000080048d30                mp_weapon_set_timed_m
+                0x0000000080048df0                mp_weapon_set_prox_m
+                0x0000000080048eb0                mp_weapon_set_rockets
+                0x0000000080048f70                mp_weapon_set_lasers
+                0x0000000080049030                mp_weapon_set_golden
                 0x00000000800490f0                mp_weapon_set_text_table
                 0x0000000080049160                mp_weapon_set
  build/u/src/game/image.o(.data)

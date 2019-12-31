@@ -4426,56 +4426,45 @@ void update_menu04_goldeneye(void) {
 #ifdef NONMATCHING
 void interface_menu04_goldeneyelogo(void)
 {
-    s32 temp_t8;
-
-    setvideo_far(0x42700000);
-    video_related_21(D_80051A10);
-    set_page_height(0x42c80000, D_80051A14);
+    u32 uVar1;
+    
+    setvideo_far(60.00000000);
+    video_related_21(menu04_aspect);
+    set_page_height(100.00000000,(f32)menu04_pageheight);
     set_video2_settings_offset_24(0);
-    temp_t8 = menu_timer + clock_timer;
-    menu_timer = temp_t8;
-    if (((is_first_time_on_main_menu != 0) && (temp_t8 < 0xb5)) && (D_8002A938 != 0))
-    {
-        if ((temp_t8 >= 0x5b) && (menu_timer >= 0xb5))
-        {
-block_5:
-            if (prev_keypresses == 0)
+    menu_timer += clock_timer;
+    if (((is_first_time_on_main_menu == FALSE) || (0xb4 < menu_timer)) ||
+       ((ge_logo_bool != FALSE && (0x5a < menu_timer)))) {
+        if (menu_timer < 0xb5) {
+            uVar1 = get_controller_buttons_pressed
+                              ('\0',R_CBUTTONS|L_CBUTTONS|D_CBUTTONS|U_CBUTTONS|R_TRIG|L_TRIG|
+                                    DUMMY_2|DUMMY_1|R_JPAD|L_JPAD|D_JPAD|U_JPAD|START_BUTTON|Z_TRIG|
+                                    B_BUTTON|A_BUTTON);
+            if ((uVar1 != 0) || ((is_first_time_on_main_menu != FALSE && (ge_logo_bool != FALSE))))
             {
+                set_menu_to_mode(MENU_FILE_SELECT,1);
+            }
+        }
+        else {
+            if (prev_keypresses == 0) {
                 do_extended_cast_display(0);
-                set_menu_to_mode(0x18, 1);
-                return;
+                set_menu_to_mode(MENU_DISPLAY_CAST,1);
             }
-            set_menu_to_mode(5, 1);
-            return;
-        }
-        else
-        {
-            if (get_controller_buttons_pressed(0, 0xffff) != 0)
-            {
-                D_8002A938 = 1;
+            else {
+                set_menu_to_mode(MENU_FILE_SELECT,1);
             }
         }
     }
-    else
-    {
-        if (menu_timer >= 0xb5)
-        {
-            goto block_5;
-        }
-        if (get_controller_buttons_pressed(0, 0xffff) != 0)
-        {
-block_11:
-            set_menu_to_mode(5, 1);
-            return;
-        }
-        if (is_first_time_on_main_menu != 0)
-        {
-            if (D_8002A938 != 0)
-            {
-                goto block_11;
-            }
+    else {
+        uVar1 = get_controller_buttons_pressed
+                          ('\0',R_CBUTTONS|L_CBUTTONS|D_CBUTTONS|U_CBUTTONS|R_TRIG|L_TRIG|DUMMY_2|
+                                DUMMY_1|R_JPAD|L_JPAD|D_JPAD|U_JPAD|START_BUTTON|Z_TRIG|B_BUTTON|
+                                A_BUTTON);
+        if (uVar1 != 0) {
+            ge_logo_bool = TRUE;
         }
     }
+    return;
 }
 #else
 GLOBAL_ASM(
