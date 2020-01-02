@@ -19677,7 +19677,7 @@ Linker script and memory map
  build/u/src/game/unk_0BC530.o(.data)
  build/u/src/game/ob.o(.data)
  .data          0x0000000080046050     0x2290 build/u/src/game/ob.o
-                0x0000000080046050                D_80046050
+                0x0000000080046050                ob_c_debug_notice_list_entry
                 0x0000000080046054                file_resource_table
                 0x00000000800482d4                file_entry_max
  build/u/src/game/dyn.o(.data)
@@ -22701,10 +22701,7 @@ Linker script and memory map
                 0x0000000080083db0                dword_CODE_bss_80083DB0
  build/u/src/game/ob.o(.bss)
  .bss           0x00000000800888b0     0x3980 build/u/src/game/ob.o
-                0x00000000800888b0                ptr_resource_data
-                0x00000000800888c4                ptr_res_data_next
-                0x00000000800888c8                dword_CODE_bss_800888c8
-                0x00000000800888d8                dword_CODE_bss_800888D8
+                0x00000000800888b0                resource_lookup_data_array
  build/u/src/game/dyn.o(.bss)
  .bss           0x000000008008c230       0x30 build/u/src/game/dyn.o
                 0x000000008008c230                ptr_mgfx0_alloc_start

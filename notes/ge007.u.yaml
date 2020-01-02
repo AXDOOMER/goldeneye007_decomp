@@ -8302,7 +8302,7 @@ labels:
    - [0x80083450, "dword_CODE_bss_80083450"]
    - [0x80083900, "dword_CODE_bss_80083900"]
    - [0x80083DB0, "dword_CODE_bss_80083DB0"]
-   - [0x800888B0, "ptr_resource_data"]
+   - [0x800888B0, "resource_lookup_data_array"]
    - [0x800888C4, "ptr_res_data_next"]
    - [0x800888D8, "dword_CODE_bss_800888D8"]
    - [0x8008C230, "ptr_mgfx0_alloc_start"]

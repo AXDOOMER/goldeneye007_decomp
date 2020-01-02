@@ -5990,7 +5990,7 @@ labels:
    - [0x80044e40, "fog_tables"]
    - [0x80045f80, "fog_tables2"]
    - [0x80046060, "D_80046030"]
-   - [0x80046080, "D_80046050"]
+   - [0x80046080, "ob_c_debug_notice_list_entry"]
    - [0x80046084, "file_resource_table"]
    - [0x80048304, "file_entry_max"]
    - [0x80048310, "D_800482E0"]
