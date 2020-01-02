@@ -911,36 +911,29 @@ glabel resource_load_from_indy
 
 
 #ifdef NONMATCHING
-void *ob_c_debug_setup(void) {
-    s32 temp_v1;
-    u32 temp_v0;
-    void *phi_a0;
-    u32 phi_v0;
-
-    // Node 0
-    get_ptr_debug_notice_list_entry(&ob_c_debug_notice_list_entry, &aOb_c_debug);
-    temp_v1 = (file_entry_max + -1);
-    if (temp_v1 >= 2)
-    {
-        // Node 1
-        phi_a0 = (void *) (file_resource_table + 0xc);
-        phi_v0 = &resource_lookup_data_array+0x14;
-loop_2:
-        // Node 2
-        temp_v0 = (phi_v0 + 0x14);
-        temp_v0->unk-14 = (s32) (phi_a0->unk14 - phi_a0->unk8);
-        temp_v0->unk-10 = 0;
-        temp_v0->unk-C = 0;
-        temp_v0->unk-8 = 0;
-        phi_a0 = (phi_a0 + 0xc);
-        phi_v0 = temp_v0;
-        if (temp_v0 < (u32) ((temp_v1 * 0x14) + &resource_lookup_data_array))
-        {
-            goto loop_2;
-        }
+void ob_c_debug_setup(void)
+{
+    struct resource_lookup_data_entry *lookupentry;
+    struct resource_lookup_data_entry *nextlookup;
+    int file_count;
+    struct fileentry *filetable_entry;
+    
+    get_ptr_debug_notice_list_entry(&ob_c_debug_notice_list_entry,"ob_c_debug");
+    filetable_entry = &file_resource_table[0];
+    file_count = file_entry_max - 1;
+    if (1 < file_count) {
+        lookupentry = resource_lookup_data_array + 1;
+        while (nextlookup < resource_lookup_data_array + file_count) {
+            filetable_entry = filetable_entry + 1;
+            nextlookup = lookupentry + 1;
+            lookupentry->rom_size = filetable_entry[1].hw_address - filetable_entry->hw_address;
+            lookupentry->pc_remaining = 0;
+            lookupentry->pc_size = 0;
+            lookupentry->rom_remaining = 0;
+            lookupentry = nextlookup;
+        } ;
     }
-    // Node 3
-    return &resource_lookup_data_array+0x14;
+    return;
 }
 #else
 GLOBAL_ASM(
