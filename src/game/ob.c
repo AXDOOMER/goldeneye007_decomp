@@ -844,8 +844,41 @@ glabel load_resource
 
 
 #ifdef NONMATCHING
-void resource_load_from_indy(void) {
-
+//need to tinker with stack size
+void resource_load_from_indy(u8 *ptrdata, u32 bytes, struct fileentry *srcfile, struct resource_lookup_data_entry *lookupdata)
+{
+    void *sp2124;
+    u8 buffer[8450];
+    u8 *pPayload;
+    u32 size;
+static const u8 rz_header_1[] = {0x11, 0x72, 0x00, 0x00};
+static const u8 rz_header_2[] = {0x11, 0x72, 0x00, 0x00};
+    if (bytes == 0)
+    {
+        load_resource_on_indy(srcfile->filename, ptrdata);
+        return;
+    }
+    check_file_found_on_indy(srcfile->filename, lookupdata->pc_size);
+    pPayload = (ptrdata + bytes) - ((lookupdata->pc_size + 7) & -8);
+    if ((u32) (pPayload - ptrdata) < 8U)
+    {
+        lookupdata->pc_remaining = 0;
+    }
+    else
+    {
+        sp2124 = pPayload;
+        load_resource_on_indy(srcfile->filename, pPayload);
+        if ((pPayload[0] == rz_header_1[0]) && (pPayload[1] == rz_header_2[1]))
+        {
+            size = decompressdata(pPayload, ptrdata, &buffer);
+        }
+        else
+        {
+            _bcopy(pPayload, ptrdata, lookupdata->pc_size);
+            size = lookupdata->pc_size;
+        }
+        lookupdata->pc_remaining = (s32) size;
+    }
 }
 #else
 GLOBAL_ASM(
