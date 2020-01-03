@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "game/ob.h"
 #include "assets/obseg/obseg.h"
+#include "game/decompress.h"
 
 //bss
 //800888b0
@@ -766,8 +767,29 @@ s32 file_entry_max = 0x2D7;
 
 
 #ifdef NONMATCHING
-void load_resource(void) {
+//matches other than regalloc
+void load_resource(u8 *ptrdata, u32 bytes, struct fileentry *srcfile, struct resource_lookup_data_entry *lookupdata)
+{
+    s32 unused;
+    u8 buffer[8448];
+    u8 *source;
 
+    if (bytes == 0)
+    {
+        romCopy(srcfile->hw_address, lookupdata->rom_size);
+        return;
+    }
+    source = (ptrdata + bytes) - ((lookupdata->rom_size + 7) & -8);
+    if ((u32) (source - ptrdata) < 8U)
+    {
+        lookupdata->pc_remaining = 0;
+    }
+    else
+    {
+        romCopy(source, srcfile->hw_address, lookupdata->rom_size);
+        //unused = 
+        lookupdata->pc_remaining = decompressdata(source, ptrdata, &buffer);;
+    }
 }
 #else
 GLOBAL_ASM(
