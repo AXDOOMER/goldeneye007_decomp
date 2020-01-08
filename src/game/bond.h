@@ -2685,7 +2685,7 @@ typedef struct Player
   s32 deathcount;
   s32 num_suicides;
   s32 field_29E0;
-  s32 field_29E4;
+  s32 last_kill_time;
   s32 field_29E8;
   s32 field_29EC;
   s32 field_29F0;

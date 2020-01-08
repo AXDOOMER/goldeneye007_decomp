@@ -505,9 +505,49 @@ void sub_GAME_7F077C30(f32 arg0, f32 arg1, f32 arg2)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F077C5C(void) {
+void sub_GAME_7F077C5C(void)
+{
+    f32 sp34;
+    f32 sp30;
+    f32 sp2C;
+    f32 temp_f14;
+    f32 temp_f16;
+    f32 temp_f2;
+    f32 temp_f2_2;
+    f32 temp_f2_3;
 
+    sp2C = sinf((pPlayer->c_perspfovy * D_80054FA0) / 360.0f);
+    pPlayer->c_scaley = (f32) (sp2C / (cosf((pPlayer->c_perspfovy * D_80054FA0) / 360.0f) * pPlayer->c_halfheight));
+    pPlayer->c_scalex = (f32) (((pPlayer->c_scaley * pPlayer->c_perspaspect) * pPlayer->c_halfheight) / pPlayer->c_halfwidth);
+    pPlayer->c_recipscalex = (f32) (1.0f / pPlayer->c_scalex);
+    pPlayer->c_recipscaley = (f32) (1.0f / pPlayer->c_scaley);
+    pPlayer->c_scalelod = (f32) pPlayer->c_scaley;
+    sp2C = sinf(D_80054FA4);
+    pPlayer->c_scalelod60 = (f32) (sp2C / (cosf(D_80054FA8) * 120.0f));
+    pPlayer->c_lodscalez = (f32) (pPlayer->c_scalelod / pPlayer->c_scalelod60);
+    temp_f2 = pPlayer->c_lodscalez * 65536.0f;
+    if (4294967296.0f < temp_f2)
+    {
+        pPlayer->c_lodscalezu32 = -1U;
+    }
+    else
+    {
+        pPlayer->c_lodscalezu32 = (u32) temp_f2;
+    }
+    temp_f14 = pPlayer->c_halfheight * pPlayer->c_scaley;
+    sp30 = temp_f14;
+    temp_f2_2 = 1.0f / sqrtf((temp_f14 * temp_f14) + 1.0f, temp_f14);
+    (pPlayer->c_cameratopnorm).x = 0.0f;
+    (pPlayer->c_cameratopnorm).y = temp_f2_2;
+    (pPlayer->c_cameratopnorm).z = (f32) (temp_f14 * temp_f2_2);
+    temp_f16 = -pPlayer->c_halfwidth * pPlayer->c_scalex;
+    sp34 = temp_f16;
+    temp_f2_3 = 1.0f / sqrtf((temp_f16 * temp_f16) + 1.0f, temp_f14);
+    (pPlayer->c_cameraleftnorm).x = (f32) -temp_f2_3;
+    (pPlayer->c_cameraleftnorm).y = 0.0f;
+    (pPlayer->c_cameraleftnorm).z = (f32) (-temp_f16 * temp_f2_3);
 }
+
 #else
 GLOBAL_ASM(
 .late_rodata
@@ -704,8 +744,8 @@ void sub_GAME_7F077EEC(void *arg0, void *arg1, f32 arg2) {
     f32 temp_f2;
 
     // Node 0
-    temp_f14 = ((pPlayer->field_10B0 - (arg0->unk4 - pPlayer->field_109C)) * pPlayer->field_10B8);
-    temp_f16 = (((*arg0 - pPlayer->field_1098) - pPlayer->field_10AC) * pPlayer->field_10B4);
+    temp_f14 = ((pPlayer->c_halfheight - (arg0->unk4 - pPlayer->c_screentop)) * pPlayer->c_scaley);
+    temp_f16 = (((*arg0 - pPlayer->c_screenleft) - pPlayer->c_halfwidth) * pPlayer->c_scalex);
     sp20 = temp_f16;
     temp_ret = sqrtf((((temp_f16 * temp_f16) + (temp_f14 * temp_f14)) + (-1.0f * -1.0f)), temp_f14);
     temp_f2 = (arg2 / temp_ret);
@@ -778,8 +818,8 @@ glabel sub_GAME_7F077EEC
 #ifdef NONMATCHING
 void *sub_GAME_7F077FB4(void *arg0, s32 arg1, void *arg2) {
     // Node 0
-    arg2->unk4 = (f32) ((arg0->unk4 * arg1) * pPlayer->field_10B8);
-    *arg2 = (f32) ((*arg0 * arg1) * pPlayer->field_10B4);
+    arg2->unk4 = (f32) ((arg0->unk4 * arg1) * pPlayer->c_scaley);
+    *arg2 = (f32) ((*arg0 * arg1) * pPlayer->c_scalex);
     return &pPlayer;
 }
 #else
@@ -815,8 +855,8 @@ void *sub_GAME_7F077FF4(void *arg0, void *arg1) {
 
     // Node 0
     temp_f0 = (1.0f / arg0->unk8);
-    arg1->unk4 = (f32) (((arg0->unk4 * temp_f0) * pPlayer->field_10C0) + (pPlayer->field_109C + pPlayer->field_10B0));
-    *arg1 = (f32) ((pPlayer->field_1098 + pPlayer->field_10AC) - ((*arg0 * temp_f0) * pPlayer->field_10BC));
+    arg1->unk4 = (f32) (((arg0->unk4 * temp_f0) * pPlayer->c_recipscaley) + (pPlayer->c_screentop + pPlayer->c_halfheight));
+    *arg1 = (f32) ((pPlayer->c_screenleft + pPlayer->c_halfwidth) - ((*arg0 * temp_f0) * pPlayer->c_recipscalex));
     return pPlayer;
 }
 #else
@@ -873,8 +913,8 @@ void *sub_GAME_7F078060(void *arg0, void *arg1) {
         phi_f2 = (1.0f / arg0->unk8);
     }
     // Node 3
-    arg1->unk4 = (f32) (((arg0->unk4 * phi_f2) * pPlayer->field_10C0) + (pPlayer->field_109C + pPlayer->field_10B0));
-    *arg1 = (f32) ((pPlayer->field_1098 + pPlayer->field_10AC) - ((*arg0 * phi_f2) * pPlayer->field_10BC));
+    arg1->unk4 = (f32) (((arg0->unk4 * phi_f2) * pPlayer->c_recipscaley) + (pPlayer->c_screentop + pPlayer->c_halfheight));
+    *arg1 = (f32) ((pPlayer->c_screenleft + pPlayer->c_halfwidth) - ((*arg0 * phi_f2) * pPlayer->c_recipscalex));
     return pPlayer;
 }
 
@@ -936,8 +976,8 @@ void *sub_GAME_7F0780F0(void *arg0, s32 arg1, void *arg2) {
 
     // Node 0
     temp_f0 = (1.0f / arg1);
-    arg2->unk4 = (f32) ((arg0->unk4 * temp_f0) * pPlayer->field_10C0);
-    *arg2 = (f32) ((*arg0 * temp_f0) * pPlayer->field_10BC);
+    arg2->unk4 = (f32) ((arg0->unk4 * temp_f0) * pPlayer->c_recipscaley);
+    *arg2 = (f32) ((*arg0 * temp_f0) * pPlayer->c_recipscalex);
     return &pPlayer;
 }
 #else
@@ -983,10 +1023,10 @@ void *sub_GAME_7F078140(void *arg0, void *arg1, f32 arg2, f32 arg3, f32 arg4) {
 
     // Node 0
     sp1C = sinf(((arg3 * *(void *)0x80050000) / 360.0f), arg3);
-    temp_f14 = (sp1C / (cosf(sp18) * pPlayer->field_10B0));
-    temp_f4 = ((pPlayer->field_10B0 - (arg0->unk4 - pPlayer->field_109C)) * temp_f14);
+    temp_f14 = (sp1C / (cosf(sp18) * pPlayer->c_halfheight));
+    temp_f4 = ((pPlayer->c_halfheight - (arg0->unk4 - pPlayer->c_screentop)) * temp_f14);
     sp2C = temp_f4;
-    temp_f8 = (((*arg0 - pPlayer->field_1098) - pPlayer->field_10AC) * (((temp_f14 * arg4) * pPlayer->field_10B0) / pPlayer->field_10AC));
+    temp_f8 = (((*arg0 - pPlayer->c_screenleft) - pPlayer->c_halfwidth) * (((temp_f14 * arg4) * pPlayer->c_halfheight) / pPlayer->c_halfwidth));
     sp30 = temp_f8;
     temp_f2 = (arg2 / sqrtf((((temp_f8 * temp_f8) + (temp_f4 * temp_f4)) + (-1.0f * -1.0f)), temp_f14));
     *arg1 = (f32) (sp30 * temp_f2);
@@ -1085,9 +1125,9 @@ void *sub_GAME_7F078258(void *arg0, void *arg1, f32 arg2, f32 arg3) {
 
     // Node 0
     sp20 = cosf(((arg2 * D_80054FB4) / 360.0f), arg2);
-    temp_f12 = ((sp20 * pPlayer->field_10B0) / (arg0->unk8 * sinf(sp1C)));
-    arg1->unk4 = (f32) ((arg0->unk4 * temp_f12) + (pPlayer->field_109C + pPlayer->field_10B0));
-    *arg1 = (f32) ((pPlayer->field_1098 + pPlayer->field_10AC) - (*arg0 * ((pPlayer->field_10AC * temp_f12) / (arg3 * pPlayer->field_10B0))));
+    temp_f12 = ((sp20 * pPlayer->c_halfheight) / (arg0->unk8 * sinf(sp1C)));
+    arg1->unk4 = (f32) ((arg0->unk4 * temp_f12) + (pPlayer->c_screentop + pPlayer->c_halfheight));
+    *arg1 = (f32) ((pPlayer->c_screenleft + pPlayer->c_halfwidth) - (*arg0 * ((pPlayer->c_halfwidth * temp_f12) / (arg3 * pPlayer->c_halfheight))));
     return pPlayer;
 }
 #else
@@ -1340,12 +1380,11 @@ glabel sub_GAME_7F078504
 
 
 #ifdef NONMATCHING
-void *sub_GAME_7F078534(void *arg0) {
-    // Node 0
-    *arg0 = (f32) pPlayer->field_1100;
-    arg0->unk4 = (f32) -pPlayer->field_1104;
-    arg0->unk8 = (f32) pPlayer->field_1108;
-    return &pPlayer;
+void sub_GAME_7F078534(xyzpoint *param_1)
+{
+    param_1->x = (pPlayer->c_cameratopnorm).x;
+    param_1->y = -(pPlayer->c_cameratopnorm).y;
+    param_1->z = (pPlayer->c_cameratopnorm).z;
 }
 #else
 GLOBAL_ASM(
@@ -1372,12 +1411,11 @@ glabel sub_GAME_7F078534
 
 
 #ifdef NONMATCHING
-void *sub_GAME_7F078568(void *arg0) {
-    // Node 0
-    *arg0 = (f32) pPlayer->field_110C;
-    arg0->unk4 = (f32) pPlayer->field_1110;
-    arg0->unk8 = (f32) pPlayer->field_1114;
-    return &pPlayer;
+void sub_GAME_7F078568(xyzpoint *param_1)
+{
+    param_1->x = (pPlayer->c_cameraleftnorm).x;
+    param_1->y = (pPlayer->c_cameraleftnorm).y;
+    param_1->z = (pPlayer->c_cameraleftnorm).z;
 }
 #else
 GLOBAL_ASM(
@@ -1403,12 +1441,11 @@ glabel sub_GAME_7F078568
 
 
 #ifdef NONMATCHING
-void *sub_GAME_7F078598(void *arg0) {
-    // Node 0
-    *arg0 = (f32) -pPlayer->field_110C;
-    arg0->unk4 = (f32) pPlayer->field_1110;
-    arg0->unk8 = (f32) pPlayer->field_1114;
-    return &pPlayer;
+void sub_GAME_7F078598(xyzpoint *param_1)
+{
+    param_1->x = -(pPlayer->c_cameraleftnorm).x;
+    param_1->y = (pPlayer->c_cameraleftnorm).y;
+    param_1->z = (pPlayer->c_cameraleftnorm).z;
 }
 #else
 GLOBAL_ASM(
@@ -1446,50 +1483,52 @@ f32 getPlayer_c_perspnear(void)
 
 
 #ifdef NONMATCHING
-void *sub_GAME_7F0785DC(void)
+void sub_GAME_7F0785DC(void)
 {
+    f32 sp28;
     f32 sp24;
-    f32 temp_f2;
-    f32 temp_f20;
-    f32 temp_f2_2;
-    f32 temp_f16;
-    f32 temp_f18;
     f32 temp_f14;
-    f32 temp_f20_2;
     f32 temp_f14_2;
+    f32 temp_f16;
     f32 temp_f16_2;
+    f32 temp_f18;
     f32 temp_f18_2;
+    f32 temp_f20;
+    f32 temp_f20_2;
+    f32 temp_f2;
+    f32 temp_f2_2;
 
-    temp_f2 = (pPlayer->field_10B0 * pPlayer->field_10B8);
+    temp_f2 = pPlayer->c_halfheight * pPlayer->c_scaley;
     sp24 = temp_f2;
-    temp_f20 = (1.0f / sqrtf(((temp_f2 * temp_f2) + 1.0f)));
-    temp_f2_2 = (temp_f2 * temp_f20);
+    temp_f20 = 1.0f / sqrtf((temp_f2 * temp_f2) + 1.0f);
+    temp_f2_2 = temp_f2 * temp_f20;
     temp_f16 = -temp_f20;
     temp_f18 = -temp_f16;
-    flt_CODE_bss_80079940 = (f32) ((pPlayer->field_10D4->unk20 * temp_f2_2) + (temp_f18 * pPlayer->field_10D4->unk10));
-    flt_CODE_bss_80079940.unk4 = (f32) ((pPlayer->field_10D4->unk24 * temp_f2_2) + (temp_f18 * pPlayer->field_10D4->unk14));
-    flt_CODE_bss_80079940.unk8 = (f32) ((pPlayer->field_10D4->unk28 * temp_f2_2) + (temp_f18 * pPlayer->field_10D4->unk18));
-    flt_CODE_bss_8007994C = (f32) ((pPlayer->field_10D4->unk38 * flt_CODE_bss_80079940.unk8) + ((flt_CODE_bss_80079940 * pPlayer->field_10D4->unk30) + (flt_CODE_bss_80079940.unk4 * pPlayer->field_10D4->unk34)));
-    flt_CODE_bss_80079950 = (f32) ((pPlayer->field_10D4->unk20 * temp_f2_2) + (temp_f16 * pPlayer->field_10D4->unk10));
-    flt_CODE_bss_80079950.unk4 = (f32) ((pPlayer->field_10D4->unk24 * temp_f2_2) + (temp_f16 * pPlayer->field_10D4->unk14));
-    flt_CODE_bss_80079950.unk8 = (f32) ((pPlayer->field_10D4->unk28 * temp_f2_2) + (temp_f16 * pPlayer->field_10D4->unk18));
-    flt_CODE_bss_8007995C = (f32) ((pPlayer->field_10D4->unk38 * flt_CODE_bss_80079950.unk8) + ((flt_CODE_bss_80079950 * pPlayer->field_10D4->unk30) + (flt_CODE_bss_80079950.unk4 * pPlayer->field_10D4->unk34)));
-    temp_f14 = (-pPlayer->field_10AC * pPlayer->field_10B4);
-    temp_f20_2 = (1.0f / sqrtf(((temp_f14 * temp_f14) + 1.0f), temp_f14, &flt_CODE_bss_80079940, &flt_CODE_bss_80079950));
-    temp_f14_2 = (sp28 * temp_f20_2);
+    flt_CODE_bss_80079940.unk0 = (f32) ((pPlayer->unk10D4->unk20 * temp_f2_2) + (temp_f18 * pPlayer->unk10D4->unk10));
+    flt_CODE_bss_80079940.unk4 = (f32) ((pPlayer->unk10D4->unk24 * temp_f2_2) + (temp_f18 * pPlayer->unk10D4->unk14));
+    flt_CODE_bss_80079940.unk8 = (f32) ((pPlayer->unk10D4->unk28 * temp_f2_2) + (temp_f18 * pPlayer->unk10D4->unk18));
+    flt_CODE_bss_8007994C = (f32) ((pPlayer->unk10D4->unk38 * flt_CODE_bss_80079940.unk8) + ((flt_CODE_bss_80079940.unk0 * pPlayer->unk10D4->unk30) + (flt_CODE_bss_80079940.unk4 * pPlayer->unk10D4->unk34)));
+    flt_CODE_bss_80079950.unk0 = (f32) ((pPlayer->unk10D4->unk20 * temp_f2_2) + (temp_f16 * pPlayer->unk10D4->unk10));
+    flt_CODE_bss_80079950.unk4 = (f32) ((pPlayer->unk10D4->unk24 * temp_f2_2) + (temp_f16 * pPlayer->unk10D4->unk14));
+    flt_CODE_bss_80079950.unk8 = (f32) ((pPlayer->unk10D4->unk28 * temp_f2_2) + (temp_f16 * pPlayer->unk10D4->unk18));
+    flt_CODE_bss_8007995C = (f32) ((pPlayer->unk10D4->unk38 * flt_CODE_bss_80079950.unk8) + ((flt_CODE_bss_80079950.unk0 * pPlayer->unk10D4->unk30) + (flt_CODE_bss_80079950.unk4 * pPlayer->unk10D4->unk34)));
+    temp_f14 = -pPlayer->unk10AC * pPlayer->unk10B4;
+    sp28 = temp_f14;
+    temp_f20_2 = 1.0f / sqrtf((temp_f14 * temp_f14) + 1.0f, temp_f14, &flt_CODE_bss_80079940, &flt_CODE_bss_80079950);
+    temp_f14_2 = temp_f14 * temp_f20_2;
     temp_f16_2 = -temp_f20_2;
     temp_f18_2 = -temp_f16_2;
-    flt_CODE_bss_80079960 = (f32) ((temp_f16_2 * *pPlayer->field_10D4) - (pPlayer->field_10D4->unk20 * temp_f14_2));
-    flt_CODE_bss_80079960.unk4 = (f32) ((temp_f16_2 * pPlayer->field_10D4->unk4) - (pPlayer->field_10D4->unk24 * temp_f14_2));
-    flt_CODE_bss_80079960.unk8 = (f32) ((temp_f16_2 * pPlayer->field_10D4->unk8) - (pPlayer->field_10D4->unk28 * temp_f14_2));
-    flt_CODE_bss_8007996C = (f32) ((pPlayer->field_10D4->unk38 * flt_CODE_bss_80079960.unk8) + ((flt_CODE_bss_80079960 * pPlayer->field_10D4->unk30) + (flt_CODE_bss_80079960.unk4 * pPlayer->field_10D4->unk34)));
-    flt_CODE_bss_80079970 = (f32) ((temp_f18_2 * *pPlayer->field_10D4) - (pPlayer->field_10D4->unk20 * temp_f14_2));
-    flt_CODE_bss_80079970.unk4 = (f32) ((temp_f18_2 * pPlayer->field_10D4->unk4) - (pPlayer->field_10D4->unk24 * temp_f14_2));
-    flt_CODE_bss_80079970.unk8 = (f32) ((temp_f18_2 * pPlayer->field_10D4->unk8) - (pPlayer->field_10D4->unk28 * temp_f14_2));
-    flt_CODE_bss_8007997C = (f32) ((pPlayer->field_10D4->unk38 * flt_CODE_bss_80079970.unk8) + ((flt_CODE_bss_80079970 * pPlayer->field_10D4->unk30) + (flt_CODE_bss_80079970.unk4 * pPlayer->field_10D4->unk34)));
-    (void *)0x80080000->unk-6680 = (f32) ((pPlayer->field_10D4->unk38 * pPlayer->field_10D4->unk28) + ((pPlayer->field_10D4->unk20 * pPlayer->field_10D4->unk30) + (pPlayer->field_10D4->unk24 * pPlayer->field_10D4->unk34)));
-    return pPlayer->field_10D4;
+    flt_CODE_bss_80079960.unk0 = (f32) ((temp_f16_2 * pPlayer->unk10D4->unk0) - (pPlayer->unk10D4->unk20 * temp_f14_2));
+    flt_CODE_bss_80079960.unk4 = (f32) ((temp_f16_2 * pPlayer->unk10D4->unk4) - (pPlayer->unk10D4->unk24 * temp_f14_2));
+    flt_CODE_bss_80079960.unk8 = (f32) ((temp_f16_2 * pPlayer->unk10D4->unk8) - (pPlayer->unk10D4->unk28 * temp_f14_2));
+    flt_CODE_bss_8007996C = (f32) ((pPlayer->unk10D4->unk38 * flt_CODE_bss_80079960.unk8) + ((flt_CODE_bss_80079960.unk0 * pPlayer->unk10D4->unk30) + (flt_CODE_bss_80079960.unk4 * pPlayer->unk10D4->unk34)));
+    flt_CODE_bss_80079970.unk0 = (f32) ((temp_f18_2 * pPlayer->unk10D4->unk0) - (pPlayer->unk10D4->unk20 * temp_f14_2));
+    flt_CODE_bss_80079970.unk4 = (f32) ((temp_f18_2 * pPlayer->unk10D4->unk4) - (pPlayer->unk10D4->unk24 * temp_f14_2));
+    flt_CODE_bss_80079970.unk8 = (f32) ((temp_f18_2 * pPlayer->unk10D4->unk8) - (pPlayer->unk10D4->unk28 * temp_f14_2));
+    flt_CODE_bss_8007997C = (f32) ((pPlayer->unk10D4->unk38 * flt_CODE_bss_80079970.unk8) + ((flt_CODE_bss_80079970.unk0 * pPlayer->unk10D4->unk30) + (flt_CODE_bss_80079970.unk4 * pPlayer->unk10D4->unk34)));
+    flt_CODE_bss_80079980 = (f32) ((pPlayer->unk10D4->unk38 * pPlayer->unk10D4->unk28) + ((pPlayer->unk10D4->unk20 * pPlayer->unk10D4->unk30) + (pPlayer->unk10D4->unk24 * pPlayer->unk10D4->unk34)));
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -2097,7 +2136,7 @@ void sub_GAME_7F078BF4(void *arg0, s32 arg1, void *arg2)
     {
         return 0;
     }
-    temp_f2 = (((*arg2 - pPlayer->field_1098) - pPlayer->field_10AC) * pPlayer->field_10B4);
+    temp_f2 = (((*arg2 - pPlayer->c_screenleft) - pPlayer->c_halfwidth) * pPlayer->c_scalex);
     sp38 = temp_f2;
     temp_f12 = (1.0f / sqrtf(((temp_f2 * temp_f2) + 1.0f)));
     temp_f2_2 = (temp_f2 * temp_f12);
@@ -2112,7 +2151,7 @@ void sub_GAME_7F078BF4(void *arg0, s32 arg1, void *arg2)
     {
         return 0;
     }
-    temp_f2_3 = (-((arg2->unk8 - pPlayer->field_1098) - pPlayer->field_10AC) * pPlayer->field_10B4);
+    temp_f2_3 = (-((arg2->unk8 - pPlayer->c_screenleft) - pPlayer->c_halfwidth) * pPlayer->c_scalex);
     sp38 = temp_f2_3;
     temp_f12_2 = (1.0f / sqrtf(((temp_f2_3 * temp_f2_3) + 1.0f), temp_f14, arg0));
     temp_f2_4 = (temp_f2_3 * temp_f12_2);
@@ -2127,7 +2166,7 @@ void sub_GAME_7F078BF4(void *arg0, s32 arg1, void *arg2)
     {
         return 0;
     }
-    temp_f2_5 = ((pPlayer->field_10B0 - (arg2->unk4 - pPlayer->field_109C)) * pPlayer->field_10B8);
+    temp_f2_5 = ((pPlayer->c_halfheight - (arg2->unk4 - pPlayer->c_screentop)) * pPlayer->c_scaley);
     sp34 = temp_f2_5;
     temp_f12_3 = (1.0f / sqrtf(((temp_f2_5 * temp_f2_5) + 1.0f), temp_f14_2, arg0));
     temp_f2_6 = (temp_f2_5 * temp_f12_3);
@@ -2142,7 +2181,7 @@ void sub_GAME_7F078BF4(void *arg0, s32 arg1, void *arg2)
     {
         return 0;
     }
-    temp_f2_7 = (-(pPlayer->field_10B0 - (arg2->unkC - pPlayer->field_109C)) * pPlayer->field_10B8);
+    temp_f2_7 = (-(pPlayer->c_halfheight - (arg2->unkC - pPlayer->c_screentop)) * pPlayer->c_scaley);
     sp34 = temp_f2_7;
     temp_f12_4 = (1.0f / sqrtf(((temp_f2_7 * temp_f2_7) + 1.0f), temp_f14_3, arg0));
     temp_f2_8 = (temp_f2_7 * temp_f12_4);
@@ -2866,38 +2905,36 @@ glabel sub_GAME_7F0790F0
 
 
 #ifdef NONMATCHING
-?32 init_player_BONDdata(void) {
-    // Node 0
+void init_player_BONDdata(void)
+{
     if (get_num_players() >= 2)
     {
-        // Node 1
-        pPlayer->field_430 = get_player_control_style(get_cur_playernum());
+        pPlayer->controlstyle = get_player_control_style(get_cur_playernum());
         cur_player_set_control_type(get_player_control_style(get_cur_playernum()));
     }
-    // Node 2
-    pPlayer->field_38 = 0.0f;
-    pPlayer->field_3C = 0.0f;
-    pPlayer->field_40 = 0.0f;
-    pPlayer->field_44 = 0.0f;
-    pPlayer->field_48 = 0.0f;
-    pPlayer->field_4C = 0.0f;
-    pPlayer->field_50 = 0.0f;
-    pPlayer->field_54 = 0.0f;
-    pPlayer->field_58 = 0.0f;
-    *pPlayer = 0;
-    pPlayer->field_4 = 0.0f;
-    pPlayer->field_8 = 0.0f;
-    pPlayer->field_C = 0.0f;
-    pPlayer->field_10 = 0.0f;
-    pPlayer->field_14 = 0.0f;
-    pPlayer->field_18 = 1.0f;
-    pPlayer->field_1C = 0.0f;
-    pPlayer->field_20 = 1.0f;
-    pPlayer->field_24 = 0.0f;
-    pPlayer->field_28 = 0.0f;
-    pPlayer->field_2C = 0.0f;
-    pPlayer->field_30 = 0.0f;
-    pPlayer->field_34 = 0;
+    pPlayer->current_model_xpos = 0.0f;
+    pPlayer->current_model_ypos = 0.0f;
+    pPlayer->current_model_zpos = 0.0f;
+    pPlayer->previous_model_xpos = 0.0f;
+    pPlayer->previous_model_ypos = 0.0f;
+    pPlayer->previous_model_zpos = 0.0f;
+    pPlayer->current_room_xpos = 0.0f;
+    pPlayer->current_room_ypos = 0.0f;
+    pPlayer->current_room_zpos = 0.0f;
+    pPlayer->unknown = 0;
+    pPlayer->xpos = 0.0f;
+    pPlayer->ypos = 0.0f;
+    pPlayer->zpos = 0.0f;
+    pPlayer->xpos2 = 0.0f;
+    pPlayer->ypos2 = 0.0f;
+    pPlayer->zpos2 = 1.0f;
+    pPlayer->xoffset = 0.0f;
+    pPlayer->yoffset = 1.0f;
+    pPlayer->zoffset = 0.0f;
+    pPlayer->xpos3 = 0.0f;
+    pPlayer->ypos3 = 0.0f;
+    pPlayer->zpos3 = 0.0f;
+    pPlayer->room_pointer = 0;
     pPlayer->field_3C4 = 0.0f;
     pPlayer->field_3C8 = 0.0f;
     pPlayer->field_3CC = 1.0f;
@@ -2910,74 +2947,72 @@ glabel sub_GAME_7F0790F0
     pPlayer->field_1274 = 0.0f;
     pPlayer->field_1278 = 0.0f;
     pPlayer->field_127C = 0.0f;
-    pPlayer->field_9C = 2;
+    pPlayer->crouchposition = 2;
     pPlayer->field_29FC = 2;
-    pPlayer->field_A0 = 0.0f;
+    pPlayer->ducking_height_offset = 0.0f;
     pPlayer->field_A4 = 0.0f;
     pPlayer->field_AC = 1;
     pPlayer->field_D0 = 0;
-    pPlayer->field_D8 = 0;
-    pPlayer->field_DC = 1.0f;
-    pPlayer->field_E0 = 0.0f;
-    pPlayer->field_E4 = 1.0f;
-    pPlayer->field_E8 = 0.0f;
-    pPlayer->field_EC = 1.0f;
-    pPlayer->field_F0 = 0.0f;
-    pPlayer->field_F4 = -1;
-    pPlayer->field_F8 = -1;
+    pPlayer->bonddead = 0;
+    pPlayer->bondhealth = 1.0f;
+    pPlayer->bondarmour = 0.0f;
+    pPlayer->oldhealth = 1.0f;
+    pPlayer->oldarmour = 0.0f;
+    pPlayer->apparenthealth = 1.0f;
+    pPlayer->apparentarmour = 0.0f;
+    pPlayer->damageshowtime = -1;
+    pPlayer->healthshowtime = -1;
     pPlayer->field_1C0 = 0;
     pPlayer->field_1C4 = 0;
-    pPlayer->field_1C8 = 0;
-    pPlayer->field_1CC = 1;
-    pPlayer->field_1D0 = 0;
+    pPlayer->pause_animation_state = 0;
+    pPlayer->paused_flag = 1;
+    pPlayer->open_close_solo_watch_menu = 0;
     pPlayer->field_1A0 = 0;
-    pPlayer->field_19C = 0.0f;
-    pPlayer->field_14C = 0.0f;
-    pPlayer->field_150 = 1.0f;
-    pPlayer->field_154 = 0.0f;
-    pPlayer->field_158 = -4.0f;
-    pPlayer->field_15C = (f32) pPlayer->field_158;
-    if (pPlayer->field_15C < 0.0f)
+    pPlayer->bondfadefracnew = 0.0f;
+    pPlayer->speedtheta = 0.0f;
+    pPlayer->vv_costheta = 1.0f;
+    pPlayer->vv_sintheta = 0.0f;
+    pPlayer->vv_verta = -4.0f;
+    pPlayer->vv_verta360 = (f32) pPlayer->vv_verta;
+    if (pPlayer->vv_verta360 < 0.0f)
     {
-        // Node 3
-        pPlayer->field_15C = (f32) (pPlayer->field_15C + 360.0f);
+        pPlayer->vv_verta360 = (f32) (pPlayer->vv_verta360 + 360.0f);
     }
-    // Node 4
-    pPlayer->field_160 = 0.0f;
-    pPlayer->field_164 = 1.0f;
-    pPlayer->field_168 = 0.0f;
-    pPlayer->field_16C = 0.0f;
-    pPlayer->field_170 = 0.0f;
-    pPlayer->field_174 = 0.0f;
+    pPlayer->speedverta = 0.0f;
+    pPlayer->vv_cosverta = 1.0f;
+    pPlayer->vv_sinverta = 0.0f;
+    pPlayer->speedsideways = 0.0f;
+    pPlayer->speedstrafe = 0.0f;
+    pPlayer->speedforwards = 0.0f;
     pPlayer->field_2A4C = 0.0f;
-    pPlayer->field_178 = 1.0f;
-    pPlayer->field_17C = 0;
-    pPlayer->field_180 = 0.0f;
-    pPlayer->field_184 = 0.0f;
-    pPlayer->field_188 = 0.0f;
+    pPlayer->speedboost = 1.0f;
+    pPlayer->speedmaxtime60 = 0;
+    pPlayer->boost_factor_x = 0.0f;
+    pPlayer->boost_factor_y = 0.0f;
+    pPlayer->boost_factor_z = 0.0f;
     pPlayer->field_104 = 0;
     pPlayer->field_108 = 0;
     pPlayer->field_10C = 0;
-    pPlayer->field_110 = 0;
-    pPlayer->field_114 = 1;
-    pPlayer->field_118 = 1;
-    pPlayer->field_11C = 0;
-    pPlayer->field_120 = 1;
-    pPlayer->field_124 = 0;
-    pPlayer->field_128 = 1;
-    pPlayer->field_12C = 0.0f;
-    pPlayer->field_130 = 0;
-    pPlayer->field_134 = -1;
-    pPlayer->field_138 = 1;
-    pPlayer->field_13C = 0.0f;
-    pPlayer->field_140 = 0;
-    pPlayer->field_144 = -1;
-    pPlayer->field_3D0 = 0xff;
-    pPlayer->field_3D4 = 0xff;
-    pPlayer->field_3D8 = 0xff;
-    pPlayer->field_3DC = 0.0f;
+    pPlayer->movecentrerelease = 0;
+    pPlayer->lookaheadcentreenabled = 1;
+    pPlayer->automovecentreenabled = 1;
+    pPlayer->fastmovecentreenabled = 0;
+    pPlayer->automovecentre = 1;
+    pPlayer->insightaimmode = 0;
+    pPlayer->autoyaimenabled = 1;
+    pPlayer->autoaimy = 0.0f;
+    pPlayer->autoyaimtime = 0;
+    pPlayer->autoyaimtime60 = -1;
+    pPlayer->autoxaimenabled = 1;
+    pPlayer->autoaimx = 0.0f;
+    pPlayer->autoxaimtime = 0;
+    pPlayer->autoxaimtime60 = -1;
+    pPlayer->tint_red = 0xff;
+    pPlayer->tint_green = 0xff;
+    pPlayer->tint_blue = 0xff;
+    pPlayer->tint_alpha = 0.0f;
     pPlayer->field_3E0 = -1.0f;
-    pPlayer->field_3E4 = -1.0f;
+    pPlayer->time_for_fade = -1.0f;
     pPlayer->field_3E8 = 0xff;
     pPlayer->field_3EC = 0xff;
     pPlayer->field_3F0 = 0xff;
@@ -2986,21 +3021,21 @@ glabel sub_GAME_7F0790F0
     pPlayer->field_3FC = 0xff;
     pPlayer->field_400 = 0.0f;
     pPlayer->field_404 = 0.0f;
-    pPlayer->field_18C = -1.0f;
-    pPlayer->field_190 = -1.0f;
-    pPlayer->field_194 = 0.0f;
-    pPlayer->field_198 = 0.0f;
+    pPlayer->viewport_alpha = -1.0f;
+    pPlayer->bondfadetime60 = -1.0f;
+    pPlayer->bondfadetimemax = 0.0f;
+    pPlayer->bondfadefracold = 0.0f;
     pPlayer->field_42C = 2;
-    pPlayer->field_430 = 0;
-    pPlayer->field_204 = 0.0f;
+    pPlayer->controlstyle = 0;
+    pPlayer->pause_starting_angle = 0.0f;
     pPlayer->field_208 = 0.0f;
-    pPlayer->field_20C = 0.0f;
+    pPlayer->pause_target_angle = 0.0f;
     pPlayer->field_210 = 0.0f;
     pPlayer->field_214 = 0.0f;
     pPlayer->field_218 = 0;
-    pPlayer->field_220 = 0;
-    pPlayer->field_224 = 0.0f;
-    pPlayer->field_200 = 0;
+    pPlayer->step_in_view_watch_animation = 0;
+    pPlayer->pause_animation_counter = 0.0f;
+    pPlayer->pausing_flag = 0;
     pPlayer->field_3B4 = (u16)0;
     pPlayer->field_3B6 = (u16)0;
     pPlayer->field_29C0 = 15.0f;
@@ -3009,7 +3044,6 @@ glabel sub_GAME_7F0790F0
     pPlayer->field_2A0C = 0.0f;
     pPlayer->field_2A6C = 0;
     pPlayer->field_2A70 = 0;
-    return 0xff;
 }
 #else
 
@@ -3891,7 +3925,7 @@ void *sub_GAME_7F079A60(void *arg0, void *arg1, void *arg2, s32 arg3, void *arg4
     void *phi_return;
 
     // Node 0
-    if ((((((((((*arg0 != pPlayer->field_4) || (arg0->unk4 != pPlayer->field_8)) || (arg0->unk8 != pPlayer->field_C)) || (*arg1 != pPlayer->field_10)) || (arg1->unk4 != pPlayer->field_14)) || (arg1->unk8 != pPlayer->field_18)) || (*arg2 != pPlayer->field_1C)) || (arg2->unk4 != pPlayer->field_20)) || (arg2->unk8 != pPlayer->field_24)) || (pPlayer->field_34 == 0))
+    if ((((((((((*arg0 != pPlayer->xpos) || (arg0->unk4 != pPlayer->ypos)) || (arg0->unk8 != pPlayer->zpos)) || (*arg1 != pPlayer->xpos2)) || (arg1->unk4 != pPlayer->ypos2)) || (arg1->unk8 != pPlayer->zpos2)) || (*arg2 != pPlayer->xoffset)) || (arg2->unk4 != pPlayer->yoffset)) || (arg2->unk8 != pPlayer->zoffset)) || (pPlayer->room_pointer == 0))
     {
         // Node 10
         sp34 = arg3;
@@ -3899,49 +3933,49 @@ void *sub_GAME_7F079A60(void *arg0, void *arg1, void *arg2, s32 arg3, void *arg4
         {
             // Node 11
             sub_GAME_7F0B0518(sp34, *arg0, arg0->unk8);
-            pPlayer->field_34 = sp34;
+            pPlayer->room_pointer = sp34;
         }
         else
         {
             // Node 12
-            if (pPlayer->field_34 != 0)
+            if (pPlayer->room_pointer != 0)
             {
                 // Node 13
-                sp30 = (s32) pPlayer->field_34;
-                if (sub_GAME_7F0B0BE4(&sp30, pPlayer->field_4, pPlayer->field_C, *arg0, (f32) arg0->unk8) != 0)
+                sp30 = (s32) pPlayer->room_pointer;
+                if (sub_GAME_7F0B0BE4(&sp30, pPlayer->xpos, pPlayer->zpos, *arg0, (f32) arg0->unk8) != 0)
                 {
                     // Node 14
-                    pPlayer->field_34 = sp30;
+                    pPlayer->room_pointer = sp30;
                 }
                 else
                 {
                     // Node 15
-                    pPlayer->field_34 = sp34;
+                    pPlayer->room_pointer = sp34;
                 }
             }
             else
             {
                 // Node 16
-                pPlayer->field_34 = sp34;
+                pPlayer->room_pointer = sp34;
             }
         }
         // Node 17
-        *&pPlayer->field_4 = (f32) *arg0;
-        *&pPlayer->field_8 = (f32) arg0->unk4;
-        *&pPlayer->field_C = (f32) arg0->unk8;
-        *&pPlayer->field_10 = (f32) *arg1;
-        *&pPlayer->field_14 = (f32) arg1->unk4;
-        *&pPlayer->field_18 = (f32) arg1->unk8;
-        *&pPlayer->field_1C = (f32) *arg2;
-        *&pPlayer->field_20 = (f32) arg2->unk4;
-        *&pPlayer->field_24 = (f32) arg2->unk8;
+        *&pPlayer->xpos = (f32) *arg0;
+        *&pPlayer->ypos = (f32) arg0->unk4;
+        *&pPlayer->zpos = (f32) arg0->unk8;
+        *&pPlayer->xpos2 = (f32) *arg1;
+        *&pPlayer->ypos2 = (f32) arg1->unk4;
+        *&pPlayer->zpos2 = (f32) arg1->unk8;
+        *&pPlayer->xoffset = (f32) *arg2;
+        *&pPlayer->yoffset = (f32) arg2->unk4;
+        *&pPlayer->zoffset = (f32) arg2->unk8;
         temp_v0 = *&pPlayer;
         temp_v0->unk28 = (f32) temp_v0->unk4;
         temp_v0_2 = *&pPlayer;
         temp_v0_2->unk30 = (f32) temp_v0_2->unkC;
         temp_v0_3 = *&pPlayer;
         temp_ret = sub_GAME_7F0B2970(temp_v0_3->unk34, temp_v0_3->unk4, temp_v0_3->unkC, arg1);
-        pPlayer->field_2C = temp_ret;
+        pPlayer->ypos3 = temp_ret;
         phi_return = temp_ret;
     }
     else
@@ -9957,7 +9991,7 @@ s32 cal_player_collision(void *arg0, void *arg1) {
         if ((sub_GAME_7F0B0E24(&sp90, pPlayer->field_48C, pPlayer->field_494, *arg0, (f32) arg0->unk8, sp8C, sp88, sp84, 0.0f, 1.0f) != 0) && (sub_GAME_7F0B18B8(&sp90, *arg0, arg0->unk8, sp80, sp8C, sp88, sp84) < 0))
         {
             // Node 12
-            if ((-100.0f == pPlayer->field_A0) || (sp7C < 0))
+            if ((-100.0f == pPlayer->ducking_height_offset) || (sp7C < 0))
             {
                 // Node 14
                 if ((sub_GAME_7F0B23A4(&sp3C) == 0) && (sub_GAME_7F0B26B8(&sp90, *arg0, arg0->unk8, sp80, (f32) (pPlayer->field_490 + 175.0f)) >= 0))
@@ -11302,7 +11336,7 @@ glabel sub_GAME_7F07DE9C
 #ifdef NONMATCHING
 void *sub_GAME_7F07DEFC(void) {
     // Node 0
-    pPlayer->field_204 = (f32) pPlayer->field_158;
+    pPlayer->pause_starting_angle = (f32) pPlayer->vv_verta;
     pPlayer->field_210 = 0.0f;
     pPlayer->field_218 = 0;
     return pPlayer;
@@ -11341,8 +11375,8 @@ f32 sub_GAME_7F07DF28(s32 arg0) {
     if (arg0 != 0)
     {
         // Node 1
-        pPlayer->field_208 = (f32) pPlayer->field_158;
-        pPlayer->field_20C = -40.0f;
+        pPlayer->field_208 = (f32) pPlayer->vv_verta;
+        pPlayer->pause_target_angle = -40.0f;
         phi_v1 = &pPlayer;
     }
     else
@@ -12112,7 +12146,7 @@ void sub_GAME_7F07E62C(void) {
     if (pPlayer->field_11BC < pPlayer->field_11C0)
     {
         // Node 1
-        if ((pPlayer->field_1C8 == 0xc) || (pPlayer->field_1C8 == 0xc))
+        if ((pPlayer->pause_animation_state == 0xc) || (pPlayer->pause_animation_state == 0xc))
         {
             // Node 3
             pPlayer->field_11BC = (f32) (pPlayer->field_11BC + (f32) D_80048498);
@@ -12379,7 +12413,7 @@ void sub_GAME_7F07E7CC(void) {
     // Node 2
     sub_GAME_7F075FAC((pPlayer + 0x230), sp24, (pPlayer + 0x2ec));
     set_obj_instance_controller_scale((pPlayer + 0x230), (c_item_entries+0x33C * D_80055088));
-    pPlayer->field_220 = 0;
+    pPlayer->step_in_view_watch_animation = 0;
     return sub_GAME_7F06FCA8((pPlayer + 0x230), (ptr_animation_table + &0x000042C8), 0, 0.0f, (f32) (0.5f * watch_transition_time), 0.0f);
 }
 #else
@@ -12457,7 +12491,7 @@ glabel sub_GAME_7F07E7CC
 #ifdef NONMATCHING
 void *sub_GAME_7F07E8B0(f32 arg0) {
     // Node 0
-    if (pPlayer->field_220 == 0)
+    if (pPlayer->step_in_view_watch_animation == 0)
     {
         // Node 1
         pPlayer->field_22C = (f32) (20.0f / arg0);
@@ -12468,7 +12502,7 @@ void *sub_GAME_7F07E8B0(f32 arg0) {
         pPlayer->field_22C = (f32) ((20.0f - pPlayer->field_258) / arg0);
     }
     // Node 3
-    pPlayer->field_220 = 1;
+    pPlayer->step_in_view_watch_animation = 1;
     pPlayer->field_228 = arg0;
     return pPlayer;
 }
@@ -12512,7 +12546,7 @@ glabel sub_GAME_7F07E8B0
 #ifdef NONMATCHING
 void *sub_GAME_7F07E910(f32 arg0) {
     // Node 0
-    if (pPlayer->field_220 == 20.0f)
+    if (pPlayer->step_in_view_watch_animation == 20.0f)
     {
         // Node 1
         pPlayer->field_22C = (f32) (20.0f / arg0);
@@ -12523,7 +12557,7 @@ void *sub_GAME_7F07E910(f32 arg0) {
         pPlayer->field_22C = (f32) (pPlayer->field_258 / arg0);
     }
     // Node 3
-    pPlayer->field_220 = 2;
+    pPlayer->step_in_view_watch_animation = 2;
     pPlayer->field_228 = arg0;
     return pPlayer;
 }
@@ -12567,41 +12601,41 @@ void *sub_GAME_7F07E964(void) {
 
     // Node 0
     phi_return = pPlayer;
-    if (pPlayer->field_220 != 0)
+    if (pPlayer->step_in_view_watch_animation != 0)
     {
         // Node 1
         phi_return = pPlayer;
-        if (3 != pPlayer->field_220)
+        if (3 != pPlayer->step_in_view_watch_animation)
         {
             // Node 2
-            if (pPlayer->field_220 == 20.0f)
+            if (pPlayer->step_in_view_watch_animation == 20.0f)
             {
                 // Node 3
-                pPlayer->field_224 = (f32) (pPlayer->field_224 + ((global_timer_delta * watch_transition_time) * pPlayer->field_22C));
-                if (20.0f < pPlayer->field_224)
+                pPlayer->pause_animation_counter = (f32) (pPlayer->pause_animation_counter + ((global_timer_delta * watch_transition_time) * pPlayer->field_22C));
+                if (20.0f < pPlayer->pause_animation_counter)
                 {
                     // Node 4
-                    pPlayer->field_224 = 20.0f;
-                    pPlayer->field_220 = 3;
+                    pPlayer->pause_animation_counter = 20.0f;
+                    pPlayer->step_in_view_watch_animation = 3;
                 }
             }
             else
             {
                 // Node 5
-                if (pPlayer->field_220 == &global_timer_delta)
+                if (pPlayer->step_in_view_watch_animation == &global_timer_delta)
                 {
                     // Node 6
-                    pPlayer->field_224 = (f32) (pPlayer->field_224 - ((global_timer_delta * watch_transition_time) * pPlayer->field_22C));
-                    if (pPlayer->field_224 < 0.0f)
+                    pPlayer->pause_animation_counter = (f32) (pPlayer->pause_animation_counter - ((global_timer_delta * watch_transition_time) * pPlayer->field_22C));
+                    if (pPlayer->pause_animation_counter < 0.0f)
                     {
                         // Node 7
-                        pPlayer->field_224 = 0.0f;
-                        pPlayer->field_220 = 0;
+                        pPlayer->pause_animation_counter = 0.0f;
+                        pPlayer->step_in_view_watch_animation = 0;
                     }
                 }
             }
             // Node 8
-            phi_return = sub_GAME_7F070090((pPlayer + 0x230), pPlayer->field_224, 0);
+            phi_return = sub_GAME_7F070090((pPlayer + 0x230), pPlayer->pause_animation_counter, 0);
         }
     }
     // Node 9
@@ -14870,11 +14904,11 @@ void sub_GAME_7F07FCC4(s32 arg0) {
     if (arg0 == -1)
     {
         // Node 1
-        pPlayer->field_170 = (f32) (pPlayer->field_170 - global_timer_delta);
-        if (pPlayer->field_170 < -1.0f)
+        pPlayer->speedstrafe = (f32) (pPlayer->speedstrafe - global_timer_delta);
+        if (pPlayer->speedstrafe < -1.0f)
         {
             // Node 2
-            pPlayer->field_170 = -1.0f;
+            pPlayer->speedstrafe = -1.0f;
         }
     }
     else
@@ -14883,40 +14917,40 @@ void sub_GAME_7F07FCC4(s32 arg0) {
         if (arg0 == 1)
         {
             // Node 4
-            pPlayer->field_170 = (f32) (pPlayer->field_170 + global_timer_delta);
-            if (1.0f < pPlayer->field_170)
+            pPlayer->speedstrafe = (f32) (pPlayer->speedstrafe + global_timer_delta);
+            if (1.0f < pPlayer->speedstrafe)
             {
                 // Node 5
-                pPlayer->field_170 = 1.0f;
+                pPlayer->speedstrafe = 1.0f;
             }
         }
         else
         {
             // Node 6
-            if (0.0f < pPlayer->field_170)
+            if (0.0f < pPlayer->speedstrafe)
             {
                 // Node 7
-                pPlayer->field_170 = (f32) (pPlayer->field_170 - global_timer_delta);
-                if (pPlayer->field_170 < 0.0f)
+                pPlayer->speedstrafe = (f32) (pPlayer->speedstrafe - global_timer_delta);
+                if (pPlayer->speedstrafe < 0.0f)
                 {
                     // Node 8
-                    pPlayer->field_170 = 0.0f;
+                    pPlayer->speedstrafe = 0.0f;
                 }
             }
             else
             {
                 // Node 9
-                pPlayer->field_170 = (f32) (pPlayer->field_170 + global_timer_delta);
-                if (0.0f < pPlayer->field_170)
+                pPlayer->speedstrafe = (f32) (pPlayer->speedstrafe + global_timer_delta);
+                if (0.0f < pPlayer->speedstrafe)
                 {
                     // Node 10
-                    pPlayer->field_170 = 0.0f;
+                    pPlayer->speedstrafe = 0.0f;
                 }
             }
         }
     }
     // Node 11
-    pPlayer->field_16C = (f32) pPlayer->field_170;
+    pPlayer->speedsideways = (f32) pPlayer->speedstrafe;
     return;
 }
 #else
@@ -15072,7 +15106,7 @@ void sub_GAME_7F07FE1C(s32 arg0) {
         }
     }
     // Node 11
-    pPlayer->field_174 = (f32) pPlayer->field_2A4C;
+    pPlayer->speedforwards = (f32) pPlayer->field_2A4C;
     return;
 }
 #else
@@ -15884,14 +15918,14 @@ void set_rgba_tint(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 void *sub_GAME_7F0807E0(f32 arg0, s32 arg1, ?32 arg2, ?32 arg3, f32 arg4) {
     // Node 0
     pPlayer->field_3E0 = 0.0f;
-    pPlayer->field_3E4 = arg0;
-    pPlayer->field_3E8 = (?32) pPlayer->field_3D0;
+    pPlayer->time_for_fade = arg0;
+    pPlayer->field_3E8 = (?32) pPlayer->tint_red;
     pPlayer->field_3EC = arg1;
-    pPlayer->field_3F0 = (?32) pPlayer->field_3D4;
+    pPlayer->field_3F0 = (?32) pPlayer->tint_green;
     pPlayer->field_3F4 = arg2;
-    pPlayer->field_3F8 = (?32) pPlayer->field_3D8;
+    pPlayer->field_3F8 = (?32) pPlayer->tint_blue;
     pPlayer->field_3FC = arg3;
-    pPlayer->field_400 = (f32) pPlayer->field_3DC;
+    pPlayer->field_400 = (f32) pPlayer->tint_alpha;
     pPlayer->field_404 = arg4;
     return pPlayer;
 }
@@ -15940,7 +15974,7 @@ glabel sub_GAME_7F0807E0
 #ifdef NONMATCHING
 void fade_to_over_seconds(f32 arg1) {
     // Node 0
-    return sub_GAME_7F0807E0(pPlayer->field_3D0, pPlayer->field_3D4, pPlayer->field_3D8);
+    return sub_GAME_7F0807E0(pPlayer->tint_red, pPlayer->tint_green, pPlayer->tint_blue);
 }
 
 #else
@@ -15970,7 +16004,7 @@ glabel fade_to_over_seconds
 #ifdef NONMATCHING
 void check_if_fade_to_black_complete(void) {
     // Node 0
-    if (pPlayer->field_3E4 < 0.0f)
+    if (pPlayer->time_for_fade < 0.0f)
     {
         // Node 1
     }
@@ -16006,26 +16040,26 @@ void *sub_GAME_7F0808BC(void) {
     f32 temp_f12;
 
     // Node 0
-    if (0.0f <= pPlayer->field_3E4)
+    if (0.0f <= pPlayer->time_for_fade)
     {
         // Node 1
         pPlayer->field_3E0 = (f32) (pPlayer->field_3E0 + global_timer_delta);
-        if (pPlayer->field_3E0 < pPlayer->field_3E4)
+        if (pPlayer->field_3E0 < pPlayer->time_for_fade)
         {
             // Node 2
-            temp_f12 = (pPlayer->field_3E0 / pPlayer->field_3E4);
-            pPlayer->field_3DC = (f32) (pPlayer->field_400 + ((pPlayer->field_404 - pPlayer->field_400) * temp_f12));
-            pPlayer->field_3D0 = (s32) (pPlayer->field_3E8 + (s32) ((f32) (pPlayer->field_3EC - pPlayer->field_3E8) * temp_f12));
-            pPlayer->field_3D4 = (s32) (pPlayer->field_3F0 + (s32) ((f32) (pPlayer->field_3F4 - pPlayer->field_3F0) * temp_f12));
-            pPlayer->field_3D8 = (s32) (pPlayer->field_3F8 + (s32) ((f32) (pPlayer->field_3FC - pPlayer->field_3F8) * temp_f12));
+            temp_f12 = (pPlayer->field_3E0 / pPlayer->time_for_fade);
+            pPlayer->tint_alpha = (f32) (pPlayer->field_400 + ((pPlayer->field_404 - pPlayer->field_400) * temp_f12));
+            pPlayer->tint_red = (s32) (pPlayer->field_3E8 + (s32) ((f32) (pPlayer->field_3EC - pPlayer->field_3E8) * temp_f12));
+            pPlayer->tint_green = (s32) (pPlayer->field_3F0 + (s32) ((f32) (pPlayer->field_3F4 - pPlayer->field_3F0) * temp_f12));
+            pPlayer->tint_blue = (s32) (pPlayer->field_3F8 + (s32) ((f32) (pPlayer->field_3FC - pPlayer->field_3F8) * temp_f12));
             return pPlayer;
         }
         // Node 3
-        pPlayer->field_3DC = (f32) pPlayer->field_404;
-        pPlayer->field_3D0 = (s32) pPlayer->field_3EC;
-        pPlayer->field_3D4 = (s32) pPlayer->field_3F4;
-        pPlayer->field_3D8 = (s32) pPlayer->field_3FC;
-        pPlayer->field_3E4 = -1.0f;
+        pPlayer->tint_alpha = (f32) pPlayer->field_404;
+        pPlayer->tint_red = (s32) pPlayer->field_3EC;
+        pPlayer->tint_green = (s32) pPlayer->field_3F4;
+        pPlayer->tint_blue = (s32) pPlayer->field_3FC;
+        pPlayer->time_for_fade = -1.0f;
     }
     // Node 4
     return pPlayer;
@@ -16138,8 +16172,8 @@ void *set_curplayer_fade(f32 arg0, f32 arg1) {
     if (pPlayer->field_A8->unk4 != 0)
     {
         // Node 1
-        pPlayer->field_18C = 0.0f;
-        pPlayer->field_190 = arg0;
+        pPlayer->viewport_alpha = 0.0f;
+        pPlayer->bondfadetime60 = arg0;
         temp_f8 = (f32) pPlayer->field_A8->unk4->unkC;
         phi_f8 = temp_f8;
         if (pPlayer->field_A8->unk4->unkC < 0)
@@ -16148,8 +16182,8 @@ void *set_curplayer_fade(f32 arg0, f32 arg1) {
             phi_f8 = (temp_f8 + 4294967296.0f);
         }
         // Node 3
-        pPlayer->field_194 = (f32) (phi_f8 / 255.0f);
-        pPlayer->field_198 = arg1;
+        pPlayer->bondfadetimemax = (f32) (phi_f8 / 255.0f);
+        pPlayer->bondfadefracold = arg1;
     }
     // Node 4
     return pPlayer->field_A8->unk4;
@@ -16200,20 +16234,20 @@ void *update_curplayer_fade(void) {
     f32 phi_f12;
 
     // Node 0
-    if (0.0f <= pPlayer->field_190)
+    if (0.0f <= pPlayer->bondfadetime60)
     {
         // Node 1
-        pPlayer->field_18C = (f32) (pPlayer->field_18C + *(void *)0x80050000);
-        if (pPlayer->field_18C < pPlayer->field_190)
+        pPlayer->viewport_alpha = (f32) (pPlayer->viewport_alpha + *(void *)0x80050000);
+        if (pPlayer->viewport_alpha < pPlayer->bondfadetime60)
         {
             // Node 2
-            phi_f12 = (pPlayer->field_194 + (((pPlayer->field_198 - pPlayer->field_194) * pPlayer->field_18C) / pPlayer->field_190));
+            phi_f12 = (pPlayer->bondfadetimemax + (((pPlayer->bondfadefracold - pPlayer->bondfadetimemax) * pPlayer->viewport_alpha) / pPlayer->bondfadetime60));
         }
         else
         {
             // Node 3
-            pPlayer->field_190 = -1.0f;
-            phi_f12 = pPlayer->field_198;
+            pPlayer->bondfadetime60 = -1.0f;
+            phi_f12 = pPlayer->bondfadefracold;
         }
         // Node 4
         if (pPlayer->field_A8->unk4 != 0)
@@ -17025,7 +17059,7 @@ void *sub_GAME_7F081478(void) {
 
     // Node 0
     pPlayer->field_29BC = (f32) ((pPlayer->field_500 * pPlayersPerm->unk64) + 7.0f);
-    temp_f0_2 = (pPlayer->field_29BC + ((pPlayer->field_88 + pPlayer->field_A0) * pPlayersPerm->unk64));
+    temp_f0_2 = (pPlayer->field_29BC + ((pPlayer->field_88 + pPlayer->ducking_height_offset) * pPlayersPerm->unk64));
     phi_f0 = temp_f0_2;
     if (temp_f0_2 < 30.0f)
     {
@@ -17054,7 +17088,7 @@ void *sub_GAME_7F081478(void) {
     }
     // Node 7
     phi_v0 = pPlayer;
-    if (pPlayer->field_D8 != 0)
+    if (pPlayer->bonddead != 0)
     {
         // Node 8
         temp_f0 = pPlayer->field_29C0;
@@ -17347,32 +17381,32 @@ void *sub_GAME_7F081790(void) {
     void *phi_v0_3;
 
     // Node 0
-    if (pPlayer->field_158 < -180.0f)
+    if (pPlayer->vv_verta < -180.0f)
     {
         // Node 1
 loop_2:
         // Node 2
-        pPlayer->field_158 = (f32) (pPlayer->field_158 + 360.0f);
-        if (pPlayer->field_158 < -180.0f)
+        pPlayer->vv_verta = (f32) (pPlayer->vv_verta + 360.0f);
+        if (pPlayer->vv_verta < -180.0f)
         {
             goto loop_2;
         }
     }
     // Node 3
-    phi_f0 = pPlayer->field_158;
+    phi_f0 = pPlayer->vv_verta;
     phi_v0 = pPlayer;
-    phi_f0_2 = pPlayer->field_158;
+    phi_f0_2 = pPlayer->vv_verta;
     phi_v0_2 = pPlayer;
-    if (180.0f <= pPlayer->field_158)
+    if (180.0f <= pPlayer->vv_verta)
     {
 loop_4:
         // Node 4
         phi_v0->unk158 = (f32) (phi_f0 - 360.0f);
-        phi_f0 = pPlayer->field_158;
+        phi_f0 = pPlayer->vv_verta;
         phi_v0 = pPlayer;
-        phi_f0_2 = pPlayer->field_158;
+        phi_f0_2 = pPlayer->vv_verta;
         phi_v0_2 = pPlayer;
-        if (180.0f <= pPlayer->field_158)
+        if (180.0f <= pPlayer->vv_verta)
         {
             goto loop_4;
         }
@@ -17396,20 +17430,20 @@ loop_4:
         }
     }
     // Node 9
-    pPlayer->field_150 = cosf((phi_v0_3->unk148 * D_80055110), 360.0f);
-    pPlayer->field_154 = sinf((pPlayer->field_148 * D_80055114));
-    pPlayer->field_15C = (f32) pPlayer->field_158;
-    if (pPlayer->field_15C < 0.0f)
+    pPlayer->vv_costheta = cosf((phi_v0_3->unk148 * D_80055110), 360.0f);
+    pPlayer->vv_sintheta = sinf((pPlayer->field_148 * D_80055114));
+    pPlayer->vv_verta360 = (f32) pPlayer->vv_verta;
+    if (pPlayer->vv_verta360 < 0.0f)
     {
         // Node 10
-        pPlayer->field_15C = (f32) (pPlayer->field_15C + 360.0f);
+        pPlayer->vv_verta360 = (f32) (pPlayer->vv_verta360 + 360.0f);
     }
     // Node 11
-    pPlayer->field_164 = cosf((pPlayer->field_15C * D_80055118), 360.0f);
-    pPlayer->field_168 = sinf((pPlayer->field_15C * D_8005511C));
-    pPlayer->field_498 = (f32) -pPlayer->field_154;
+    pPlayer->vv_cosverta = cosf((pPlayer->vv_verta360 * D_80055118), 360.0f);
+    pPlayer->vv_sinverta = sinf((pPlayer->vv_verta360 * D_8005511C));
+    pPlayer->field_498 = (f32) -pPlayer->vv_sintheta;
     pPlayer->field_49C = 0.0f;
-    pPlayer->field_4A0 = (f32) pPlayer->field_150;
+    pPlayer->field_4A0 = (f32) pPlayer->vv_costheta;
     return pPlayer;
 }
 #else
@@ -27569,10 +27603,10 @@ glabel possibly_reset_viewport_options_for_player
 #ifdef NONMATCHING
 void sub_GAME_7F0875E4(s32 arg0) {
     // Node 0
-    sub_GAME_7F0BCA34((pPlayer + 0x38));
-    pPlayer->field_50 = (f32) (get_room_data_float1() * pPlayer->field_38);
-    pPlayer->field_54 = (f32) (get_room_data_float1() * pPlayer->field_3C);
-    pPlayer->field_58 = (f32) (get_room_data_float1() * pPlayer->field_40);
+    sub_GAME_7F0BCA34(pPlayer->current_model_xpos);
+    pPlayer->current_room_xpos = (f32) (get_room_data_float1() * pPlayer->current_model_xpos);
+    pPlayer->current_room_ypos = (f32) (get_room_data_float1() * pPlayer->current_model_ypos);
+    pPlayer->current_room_zpos = (f32) (get_room_data_float1() * pPlayer->current_model_zpos);
     return sub_GAME_7F0BC624(arg0);
 }
 #else
@@ -27621,9 +27655,9 @@ glabel sub_GAME_7F0875E4
 #ifdef NONMATCHING
 void store_BONDdata_curpos_to_previous(void) {
     // Node 0
-    pPlayer->field_44 = (f32) pPlayer->field_38;
-    pPlayer->field_48 = (f32) pPlayer->field_3C;
-    pPlayer->field_4C = (f32) pPlayer->field_40;
+    pPlayer->previous_model_xpos = (f32) pPlayer->current_model_xpos;
+    pPlayer->previous_model_ypos = (f32) pPlayer->current_model_ypos;
+    pPlayer->previous_model_zpos = (f32) pPlayer->current_model_zpos;
     return sub_GAME_7F0583D8(get_BONDdata_field_10CC(), (pPlayer + 0x44));
 }
 #else
@@ -27693,11 +27727,11 @@ void sub_GAME_7F0876C4(void *arg0, void *arg1, void *arg2) {
     pPlayer->field_64 = sub_GAME_7F0BD6E0();
     pPlayer->field_68 = sub_GAME_7F0BD6E0();
     sp104 = sub_GAME_7F0BD6F8(2);
-    temp_f10 = ((*arg0 - pPlayer->field_38) * D_800364CC);
+    temp_f10 = ((*arg0 - pPlayer->current_model_xpos) * D_800364CC);
     spAC = temp_f10;
-    temp_f6 = ((arg0->unk4 - pPlayer->field_3C) * D_800364CC);
+    temp_f6 = ((arg0->unk4 - pPlayer->current_model_ypos) * D_800364CC);
     spB0 = temp_f6;
-    temp_f4 = ((arg0->unk8 - pPlayer->field_40) * D_800364CC);
+    temp_f4 = ((arg0->unk8 - pPlayer->current_model_zpos) * D_800364CC);
     spB4 = temp_f4;
     temp_f16 = (*arg1 + temp_f10);
     spB8 = temp_f16;
@@ -28014,15 +28048,15 @@ s32 sub_GAME_7F087A08(s32 arg0) {
     if (*pPlayer == 1)
     {
         // Node 1
-        sp74 = (f32) pPlayer->field_4;
-        sp78 = (f32) pPlayer->field_8;
-        sp7C = (f32) pPlayer->field_C;
-        sp68 = (f32) (pPlayer->field_10 - pPlayer->field_4);
-        sp6C = (f32) (pPlayer->field_14 - pPlayer->field_8);
-        sp70 = (f32) (pPlayer->field_18 - pPlayer->field_C);
-        sp5C = (f32) pPlayer->field_1C;
-        sp60 = (f32) pPlayer->field_20;
-        sp64 = (f32) pPlayer->field_24;
+        sp74 = (f32) pPlayer->xpos;
+        sp78 = (f32) pPlayer->ypos;
+        sp7C = (f32) pPlayer->zpos;
+        sp68 = (f32) (pPlayer->xpos2 - pPlayer->xpos);
+        sp6C = (f32) (pPlayer->ypos2 - pPlayer->ypos);
+        sp70 = (f32) (pPlayer->zpos2 - pPlayer->zpos);
+        sp5C = (f32) pPlayer->xoffset;
+        sp60 = (f32) pPlayer->yoffset;
+        sp64 = (f32) pPlayer->zoffset;
     }
     else
     {
@@ -28033,7 +28067,7 @@ s32 sub_GAME_7F087A08(s32 arg0) {
         temp_a1 = (temp_v1 + 0x38);
         sp4C.unk4 = (?32) D_80036830.unk4;
         sp4C.unk8 = (?32) D_80036830.unk8;
-        if (pPlayer->field_D8 == 0)
+        if (pPlayer->bonddead == 0)
         {
             // Node 3
             sp58 = temp_v1;
@@ -29638,9 +29672,9 @@ s32 sub_GAME_7F088618(void *arg0) {
     void *temp_s0_11;
 
     // Node 0
-    sub_GAME_7F0A2F30((pPlayer + 0x12b8), 0x2e, 1, pPlayer->field_F0);
+    sub_GAME_7F0A2F30((pPlayer + 0x12b8), 0x2e, 1, pPlayer->apparentarmour);
     sub_GAME_7F0A3330((pPlayer + 0x19f8), (pPlayer + 0x800012b8), 0x2e);
-    sub_GAME_7F0A2F30((pPlayer + 0x1598), 0x2e, -1, pPlayer->field_EC);
+    sub_GAME_7F0A2F30((pPlayer + 0x1598), 0x2e, -1, pPlayer->apparenthealth);
     sub_GAME_7F0A3330((pPlayer + 0x2128), (pPlayer + 0x80001598), 0x2e);
     spBC = sub_GAME_7F0BD6E0();
     temp_ret = sub_GAME_7F0BD6E0();

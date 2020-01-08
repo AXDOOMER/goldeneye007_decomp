@@ -25330,12 +25330,11 @@ glabel get_curplayer_shot_register
 
 
 #ifdef NONMATCHING
-void *inc_cur_civilian_casualties(void) {
-    // Node 0
-    pPlayersPerm->unk6C = (s32) (pPlayersPerm->unk6C + 1);
-    return pPlayersPerm;
-}
+void inc_cur_civilian_casualties(void)
+{
+    pPlayersPerm->killed_civilians++
 
+}
 #else
 GLOBAL_ASM(
 .text
@@ -25354,9 +25353,9 @@ glabel inc_cur_civilian_casualties
 
 
 #ifdef NONMATCHING
-void get_civilian_casualties(void) {
-    // Node 0
-    return pPlayersPerm->unk6C;
+int get_civilian_casualties(void)
+{
+    return pPlayersPerm->killed_civilians;
 }
 #else
 GLOBAL_ASM(
@@ -25384,43 +25383,43 @@ void *increment_num_kills_display_text_in_MP(void) {
     void *phi_return_reg;
 
     // Node 0
-    pPlayersPerm->unk1C = (s32) (pPlayersPerm->unk1C + 1);
-    pPlayer->unk29F8 = (s32) (pPlayer->unk29F8 + 1);
+    pPlayersPerm->killcount = (s32) (pPlayersPerm->killcount + 1);
+    pPlayer->field_29F8 = (s32) (pPlayer->field_29F8 + 1);
     temp_ret = get_num_players();
     phi_return_reg = temp_ret;
     if (temp_ret >= 2)
     {
         // Node 1
         sp34 = sub_GAME_7F08BFB8();
-        sprintf(&sp40, &aSD, get_textptr_for_textID(0x98da), pPlayersPerm->unk1C);
+        sprintf(&sp40, &aSD, get_textptr_for_textID(0x98da), pPlayersPerm->killcount);
         display_string_in_lower_left_corner(&sp40);
-        if (pPlayersPerm->unk1C >= 2)
+        if (pPlayersPerm->killcount >= 2)
         {
             // Node 2
-            temp_v0 = (sp34 - pPlayer->unk29E4);
-            if (pPlayersPerm->unk48 < temp_v0)
+            temp_v0 = (sp34 - pPlayer->last_kill_time);
+            if (pPlayersPerm->slowest2kills < temp_v0)
             {
                 // Node 3
-                pPlayersPerm->unk48 = temp_v0;
+                pPlayersPerm->slowest2kills = temp_v0;
             }
             // Node 4
-            if (temp_v0 < pPlayersPerm->unk44)
+            if (temp_v0 < pPlayersPerm->fastest2kills)
             {
                 // Node 5
-                pPlayersPerm->unk44 = temp_v0;
+                pPlayersPerm->fastest2kills = temp_v0;
             }
         }
         // Node 6
         pPlayer->unk29F0 = (s32) pPlayer->unk29EC;
         pPlayer->unk29EC = (s32) pPlayer->unk29E8;
-        pPlayer->unk29E8 = (s32) pPlayer->unk29E4;
-        pPlayer->unk29E4 = sp34;
+        pPlayer->unk29E8 = (s32) pPlayer->last_kill_time;
+        pPlayer->last_kill_time = sp34;
         phi_a0 = 1;
         if (-1 != pPlayer->unk29E8)
         {
             // Node 7
             phi_a0 = 1;
-            if ((pPlayer->unk29E4 - pPlayer->unk29E8) < 0x78)
+            if ((pPlayer->last_kill_time - pPlayer->unk29E8) < 0x78)
             {
                 // Node 8
                 phi_a0 = 2;
@@ -25428,7 +25427,7 @@ void *increment_num_kills_display_text_in_MP(void) {
                 {
                     // Node 9
                     phi_a0 = 2;
-                    if ((pPlayer->unk29E4 - pPlayer->unk29EC) < 0x78)
+                    if ((pPlayer->last_kill_time - pPlayer->unk29EC) < 0x78)
                     {
                         // Node 10
                         temp_a0 = (2 + 1);
@@ -25437,7 +25436,7 @@ void *increment_num_kills_display_text_in_MP(void) {
                         {
                             // Node 11
                             phi_a0 = temp_a0;
-                            if ((pPlayer->unk29E4 - pPlayer->unk29F0) < 0x78)
+                            if ((pPlayer->last_kill_time - pPlayer->unk29F0) < 0x78)
                             {
                                 // Node 12
                                 phi_a0 = (temp_a0 + 1);
@@ -25449,10 +25448,10 @@ void *increment_num_kills_display_text_in_MP(void) {
         }
         // Node 13
         phi_return_reg = pPlayer;
-        if (pPlayersPerm->unk58 < phi_a0)
+        if (pPlayersPerm->most_killed_one_time < phi_a0)
         {
             // Node 14
-            pPlayersPerm->unk58 = (s32) phi_a0;
+            pPlayersPerm->most_killed_one_time = (s32) phi_a0;
             phi_return_reg = pPlayer;
         }
     }
@@ -25698,7 +25697,7 @@ glabel increment_num_kills_display_text_in_MP
 #ifdef NONMATCHING
 void get_curplay_killcount(void) {
     // Node 0
-    return pPlayersPerm->unk1C;
+    return pPlayersPerm->killcount;
 }
 
 #else
@@ -25717,10 +25716,9 @@ glabel get_curplay_killcount
 
 
 #ifdef NONMATCHING
-void *increment_num_times_killed_MwtGC(void) {
-    // Node 0
-    pPlayersPerm->unk20 = (s32) (pPlayersPerm->unk20 + 1);
-    return pPlayersPerm;
+void increment_num_times_killed_MwtGC(void)
+{
+    pPlayersPerm->ggkillcount++;
 }
 #else
 GLOBAL_ASM(
@@ -25742,7 +25740,7 @@ glabel increment_num_times_killed_MwtGC
 #ifdef NONMATCHING
 void get_times_killed_mwtgx(void) {
     // Node 0
-    return pPlayersPerm->unk20;
+    return pPlayersPerm->ggkillcount;
 }
 #else
 GLOBAL_ASM(
@@ -25760,35 +25758,22 @@ glabel get_times_killed_mwtgx
 
 
 #ifdef NONMATCHING
-void increment_num_deaths(void) {
-    s32 sp28;
-    ? sp30;
-    ? temp_ret;
-    ? phi_return_reg;
-
-    // Node 0
-    pPlayer->unk29D8 = (s32) (pPlayer->unk29D8 + 1);
-    temp_ret = get_num_players();
-    phi_return_reg = temp_ret;
-    if (temp_ret >= 2)
+void increment_num_deaths(void)
+{
+	char acStack256 [256]
+    pPlayer->deathcount = (s32) (pPlayer->deathcount + 1);
+    if (get_num_players() >= 2)
     {
-        // Node 1
-        if (pPlayer->unk29D8 == 1)
+        if (pPlayer->deathcount == 1)
         {
-            // Node 2
-            sprintf(&sp30, get_textptr_for_textID(0x98db));
+            sprintf(acStack256, get_textptr_for_textID(0x98db));
         }
         else
         {
-            // Node 3
-            sp28 = get_textptr_for_textID(0x98dc);
-            sprintf(&sp30, &aSDS, sp28, pPlayer->unk29D8, get_textptr_for_textID(0x98dd));
+            sprintf(acStack256, &aSDS, get_textptr_for_textID(0x98dc), pPlayer->deathcount, get_textptr_for_textID(0x98dd));
         }
-        // Node 4
-        phi_return_reg = display_string_in_lower_left_corner(&sp30);
+		display_string_in_lower_left_corner(acStack256);
     }
-    // Node 5
-    return phi_return_reg;
 }
 #else
 #ifdef VERSION_US
@@ -25903,7 +25888,7 @@ glabel increment_num_deaths
 #ifdef NONMATCHING
 void get_curplayer_numdeaths(void) {
     // Node 0
-    return pPlayer->unk29D8;
+    return pPlayer->deathcount;
 }
 
 #else
@@ -25932,42 +25917,42 @@ void *increment_num_suicides_display_MP(void) {
     void *phi_return_reg;
 
     // Node 0
-    pPlayer->unk29DC = (s32) (pPlayer->unk29DC + 1);
+    pPlayer->num_suicides = (s32) (pPlayer->num_suicides + 1);
     temp_ret = get_num_players();
     phi_return_reg = temp_ret;
     if (temp_ret >= 2)
     {
         // Node 1
         sp34 = sub_GAME_7F08BFB8();
-        sprintf(&sp40, &aSD_0, get_textptr_for_textID(0x98de), pPlayer->unk29DC);
+        sprintf(&sp40, &aSD_0, get_textptr_for_textID(0x98de), pPlayer->num_suicides);
         display_string_in_lower_left_corner(&sp40);
-        if (pPlayersPerm->unk1C >= 2)
+        if (pPlayersPerm->killcount >= 2)
         {
             // Node 2
-            temp_v1 = (sp34 - pPlayer->unk29E4);
-            if (pPlayersPerm->unk48 < temp_v1)
+            temp_v1 = (sp34 - pPlayer->last_kill_time);
+            if (pPlayersPerm->slowest2kills < temp_v1)
             {
                 // Node 3
-                pPlayersPerm->unk48 = temp_v1;
+                pPlayersPerm->slowest2kills = temp_v1;
             }
             // Node 4
-            if (temp_v1 < pPlayersPerm->unk44)
+            if (temp_v1 < pPlayersPerm->fastest2kills)
             {
                 // Node 5
-                pPlayersPerm->unk44 = temp_v1;
+                pPlayersPerm->fastest2kills = temp_v1;
             }
         }
         // Node 6
         pPlayer->unk29F0 = (s32) pPlayer->unk29EC;
         pPlayer->unk29EC = (s32) pPlayer->unk29E8;
-        pPlayer->unk29E8 = (s32) pPlayer->unk29E4;
-        pPlayer->unk29E4 = sp34;
+        pPlayer->unk29E8 = (s32) pPlayer->last_kill_time;
+        pPlayer->last_kill_time = sp34;
         phi_v1 = 1;
         if (-1 != pPlayer->unk29E8)
         {
             // Node 7
             phi_v1 = 1;
-            if ((pPlayer->unk29E4 - pPlayer->unk29E8) < 0x78)
+            if ((pPlayer->last_kill_time - pPlayer->unk29E8) < 0x78)
             {
                 // Node 8
                 phi_v1 = 2;
@@ -25975,7 +25960,7 @@ void *increment_num_suicides_display_MP(void) {
                 {
                     // Node 9
                     phi_v1 = 2;
-                    if ((pPlayer->unk29E4 - pPlayer->unk29EC) < 0x78)
+                    if ((pPlayer->last_kill_time - pPlayer->unk29EC) < 0x78)
                     {
                         // Node 10
                         temp_v1_2 = (2 + 1);
@@ -25984,7 +25969,7 @@ void *increment_num_suicides_display_MP(void) {
                         {
                             // Node 11
                             phi_v1 = temp_v1_2;
-                            if ((pPlayer->unk29E4 - pPlayer->unk29F0) < 0x78)
+                            if ((pPlayer->last_kill_time - pPlayer->unk29F0) < 0x78)
                             {
                                 // Node 12
                                 phi_v1 = (temp_v1_2 + 1);
@@ -25996,10 +25981,10 @@ void *increment_num_suicides_display_MP(void) {
         }
         // Node 13
         phi_return_reg = pPlayersPerm;
-        if (pPlayersPerm->unk58 < phi_v1)
+        if (pPlayersPerm->most_killed_one_time < phi_v1)
         {
             // Node 14
-            pPlayersPerm->unk58 = (s32) phi_v1;
+            pPlayersPerm->most_killed_one_time = (s32) phi_v1;
             phi_return_reg = pPlayersPerm;
         }
     }

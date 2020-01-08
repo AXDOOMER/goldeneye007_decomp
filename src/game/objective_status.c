@@ -123,17 +123,17 @@ u8 * get_ptr_text_for_watch_breifing_page(WATCH_BRIEFING_PAGE page)
     {
         if (page == 0)
         {
-            textptr = get_textptr_for_textID(0xb029);
+            textptr = get_textptr_for_textID(0xb029); //"E R R O R\n"
         }
         else
         {
             if (page == 1)
             {
-                textptr = get_textptr_for_textID(0xb02a);
+                textptr = get_textptr_for_textID(0xb02a); //"no briefing for this mission\n"
             }
             else
             {
-                textptr = get_textptr_for_textID(0xb02b);
+                textptr = get_textptr_for_textID(0xb02b); //"\n"
             }
         }
     }
