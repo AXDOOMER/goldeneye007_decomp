@@ -254,47 +254,20 @@ glabel osCreateScheduler
 /**
  * 1814	70000C14
  */
-#ifdef NONMATCHING
-void osScAddClient(OSSched *sc, OSScClient *c, OSMesgQueue *msgQ)
+void osScAddClient(OSSched *sc, OSScClient *c, OSMesgQueue *msgQ, OSScClient *next)
 {
     OSIntMask mask;
 
     mask = osSetIntMask(1);
 
     c->msgQ = msgQ;
+    c[1].next = next;
     c->next = sc->clientList;
     sc->clientList = c;
 
     osSetIntMask(mask);
 }
-#else
-GLOBAL_ASM(
-glabel osScAddClient
-/* 001814 70000C14 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 001818 70000C18 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00181C 70000C1C AFA40018 */  sw    $a0, 0x18($sp)
-/* 001820 70000C20 AFA60020 */  sw    $a2, 0x20($sp)
-/* 001824 70000C24 AFA70024 */  sw    $a3, 0x24($sp)
-/* 001828 70000C28 24040001 */  li    $a0, 1
-/* 00182C 70000C2C 0C00374C */  jal   osSetIntMask
-/* 001830 70000C30 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 001834 70000C34 8FA5001C */  lw    $a1, 0x1c($sp)
-/* 001838 70000C38 8FAE0020 */  lw    $t6, 0x20($sp)
-/* 00183C 70000C3C 8FA30018 */  lw    $v1, 0x18($sp)
-/* 001840 70000C40 00402025 */  move  $a0, $v0
-/* 001844 70000C44 ACAE0004 */  sw    $t6, 4($a1)
-/* 001848 70000C48 8FAF0024 */  lw    $t7, 0x24($sp)
-/* 00184C 70000C4C ACAF0008 */  sw    $t7, 8($a1)
-/* 001850 70000C50 8C7800B4 */  lw    $t8, 0xb4($v1)
-/* 001854 70000C54 ACB80000 */  sw    $t8, ($a1)
-/* 001858 70000C58 0C00374C */  jal   osSetIntMask
-/* 00185C 70000C5C AC6500B4 */   sw    $a1, 0xb4($v1)
-/* 001860 70000C60 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 001864 70000C64 27BD0018 */  addiu $sp, $sp, 0x18
-/* 001868 70000C68 03E00008 */  jr    $ra
-/* 00186C 70000C6C 00000000 */   nop   
-)
-#endif
+
 
 /**
  * 1870	70000C70
