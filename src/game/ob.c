@@ -1540,59 +1540,27 @@ glabel load_resource_index_to_buffer
 
 
 
-#ifdef NONMATCHING
-s32 get_pc_remaining_buffer_for_index(int index)
+
+s32 get_pc_remaining_buffer_for_index(s32 index)
 {
     return resource_lookup_data_array[index].pc_remaining;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_pc_remaining_buffer_for_index
-/* 0F1C30 7F0BD100 00047080 */  sll   $t6, $a0, 2
-/* 0F1C34 7F0BD104 01C47021 */  addu  $t6, $t6, $a0
-/* 0F1C38 7F0BD108 000E7080 */  sll   $t6, $t6, 2
-/* 0F1C3C 7F0BD10C 3C028009 */  lui   $v0, %hi(resource_lookup_data_array+4)
-/* 0F1C40 7F0BD110 004E1021 */  addu  $v0, $v0, $t6
-/* 0F1C44 7F0BD114 03E00008 */  jr    $ra
-/* 0F1C48 7F0BD118 8C4288B4 */   lw    $v0, %lo(resource_lookup_data_array+4)($v0)
-)
-#endif
 
 
-
-
-
-#ifdef NONMATCHING
-u32 get_rom_remaining_buffer_for_index(int param_1)
+s32 get_rom_remaining_buffer_for_index(s32 index)
 {
-    return resource_lookup_data_array[param_1].rom_remaining;
+    return resource_lookup_data_array[index].rom_remaining;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_rom_remaining_buffer_for_index
-/* 0F1C4C 7F0BD11C 00047080 */  sll   $t6, $a0, 2
-/* 0F1C50 7F0BD120 01C47021 */  addu  $t6, $t6, $a0
-/* 0F1C54 7F0BD124 000E7080 */  sll   $t6, $t6, 2
-/* 0F1C58 7F0BD128 3C028009 */  lui   $v0, %hi(resource_lookup_data_array+12)
-/* 0F1C5C 7F0BD12C 004E1021 */  addu  $v0, $v0, $t6
-/* 0F1C60 7F0BD130 03E00008 */  jr    $ra
-/* 0F1C64 7F0BD134 8C4288BC */   lw    $v0, %lo(resource_lookup_data_array+12)($v0)
-)
-#endif
-
-
 
 
 
 #ifdef NONMATCHING
-void proc_7F0BD138(int index, u8 *ptrdata, int size, s32 param_4)
+void sub_GAME_7F0BD138(int index, u8 *ptrdata, int size, s32 param_4)
 {
     resource_lookup_data_array[index].pc_remaining = size;
     resource_lookup_data_array[index].rom_remaining = size;
-    if (param_4 != 0) {
-        memAddEntryOfSizeToBank(ptrdata,size,4);
+    if (param_4) {
+        mempAddEntryOfSizeToBank(ptrdata,size,4);
     }
 }
 #else
@@ -1627,33 +1595,15 @@ glabel sub_GAME_7F0BD138
 
 
 
-#ifdef NONMATCHING
-s32 get_pc_buffer_remaining_value(byte *name)
+
+s32 get_pc_buffer_remaining_value(u8 *name)
 {
     int index;
     
     index = get_index_num_of_named_resource(name);
     return resource_lookup_data_array[index].pc_remaining;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_pc_buffer_remaining_value
-/* 0F1CB8 7F0BD188 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F1CBC 7F0BD18C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F1CC0 7F0BD190 0FC2F495 */  jal   get_index_num_of_named_resource
-/* 0F1CC4 7F0BD194 00000000 */   nop   
-/* 0F1CC8 7F0BD198 00027080 */  sll   $t6, $v0, 2
-/* 0F1CCC 7F0BD19C 01C27021 */  addu  $t6, $t6, $v0
-/* 0F1CD0 7F0BD1A0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F1CD4 7F0BD1A4 000E7080 */  sll   $t6, $t6, 2
-/* 0F1CD8 7F0BD1A8 3C028009 */  lui   $v0, %hi(resource_lookup_data_array+4)
-/* 0F1CDC 7F0BD1AC 004E1021 */  addu  $v0, $v0, $t6
-/* 0F1CE0 7F0BD1B0 8C4288B4 */  lw    $v0, %lo(resource_lookup_data_array+4)($v0)
-/* 0F1CE4 7F0BD1B4 03E00008 */  jr    $ra
-/* 0F1CE8 7F0BD1B8 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
+
 
 
 
@@ -1772,7 +1722,7 @@ int get_index_num_of_named_resource(byte *filename)
         }
         else {
             file_resource_table[iVar4].index = iVar4;
-            *(byte **)&file_resource_table[iVar4].filename = filename;
+            file_resource_table[iVar4].filename = filename;
             resource_lookup_data_array[iVar4].unk_11 = '\0';
             file_resource_table[iVar4].hw_address = 0;
             resource_lookup_data_array[iVar4].rom_size = 0;
