@@ -1071,8 +1071,8 @@ glabel _load_rom_index_to_membank
 
 
 
-void _load_resource_index_to_membank(void) {
-    load_resource_index_to_buffer();
+void _load_resource_index_to_membank(int index,s32 param_2,u8 *ptrdata,int size) {
+    load_resource_index_to_buffer(index, param_2, ptrdata, size);
 }
 
 
@@ -1401,42 +1401,54 @@ glabel load_rom_resource_index_to_membank
 
 
 
-
-
-#ifdef NONMATCHING
-void load_resource_index_to_buffer(int index,longlong param_2,u8 *ptrdata,int bytes)
+/*
+ *this matches except:
+ *baserom.u.z64                                                                   
+ *000F 1BC0: AE 0C 00 0C 8F A5 00 2C  0F C2 F2 A8 8F A4 00 28  ......., .......( 
+ *ge007.u.z64               this   is flipped with   this                 
+ *000F 1BC0: AE 0C 00 0C 8F A4 00 28  0F C2 F2 A8 8F A5 00 2C  .......( .......,
+ */
+#ifdef NONMATCHING//
+u8* load_resource_index_to_buffer(s32 index,s32 bank,u8 *ptrdata,s32 bytes)
 {
-    resource_lookup_data_entry *lookupdata;
-    
-    lookupdata = resource_lookup_data_array + index;
-    if (resource_lookup_data_array[index].pc_remaining == 0) {
-        if (lookupdata->rom_size == 0) {
-            resource_lookup_data_array[index].pc_remaining =
-                 resource_lookup_data_array[index].pc_size;
+    if (resource_lookup_data_array[index].pc_remaining == 0)
+    {
+        if (resource_lookup_data_array[index].rom_size > 0)
+        {
+            resource_lookup_data_array[index].pc_remaining = resource_lookup_data_array[index].rom_size;
         }
-        else {
-            resource_lookup_data_array[index].pc_remaining = lookupdata->rom_size;
+        else
+        {
+            resource_lookup_data_array[index].pc_remaining = resource_lookup_data_array[index].pc_size;
         }
     }
-    if (((param_2 == 0) || (param_2 == 1)) || (param_2 == 2)) {
-        if (file_resource_table[index].hw_address == 0) {
+    if (((bank == 0) || (bank == 1)) || (bank == 2))
+    {
+        if (!file_resource_table[index].hw_address)
+        {
             resource_lookup_data_array[index].rom_remaining = bytes;
-            load_resource_from_indy(ptrdata,bytes,file_resource_table + index,lookupdata);
+            resource_load_from_indy(ptrdata, bytes, &file_resource_table[index], &resource_lookup_data_array[index]);
         }
-        else {
+        else
+        {
             resource_lookup_data_array[index].rom_remaining = bytes;
-            load_resource(ptrdata,bytes,file_resource_table + index,lookupdata);
+            //flip happens here
+            load_resource(ptrdata, bytes, &file_resource_table[index], &resource_lookup_data_array[index]);
         }
     }
-    else {
-        if (file_resource_table[index].hw_address == 0) {
-            load_resource_from_indy(ptrdata,0,file_resource_table + index,lookupdata);
+    else
+    {
+        if (!file_resource_table[index].hw_address)
+        {
+            resource_load_from_indy(ptrdata, 0, &file_resource_table[index], &resource_lookup_data_array[index]);
         }
-        else {
-            load_resource(ptrdata,0,file_resource_table + index,lookupdata);
+        else
+        {
+            
+            load_resource(ptrdata, 0, &file_resource_table[index], &resource_lookup_data_array[index]);
         }
     }
-    return;
+    return ptrdata;
 }
 #else
 GLOBAL_ASM(

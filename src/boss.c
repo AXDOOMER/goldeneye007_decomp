@@ -287,9 +287,9 @@ void mainloop(void)
 
     sp1DC = 0;
     reset_mem_bank_5();
-    if (check_token(1, &aLevel__0) != 0)
+    if (check_token(1, "-level_") != 0)
     {
-        temp_ret = check_token(1, &aLevel__1);
+        temp_ret = check_token(1, "-level_");
         current_stage_num = (s32) ((temp_ret->unk1 + (temp_ret->unk0 * 0xa)) + -0x210);
     }
     if (current_stage_num != 0x5a)
@@ -298,10 +298,10 @@ void mainloop(void)
         set_selected_folder_num(0);
         set_selected_difficulty(0);
         set_solo_and_ptr_briefing(current_stage_num);
-        if (check_token(1, &aHard) != 0)
+        if (check_token(1, "-hard") != 0)
         {
-            set_selected_difficulty(*check_token(1, &aHard_1) + -0x30);
-            set_difficulty(*check_token(1, &aHard_2) + -0x30);
+            set_selected_difficulty(*check_token(1, "-hard") + -0x30);
+            set_difficulty(*check_token(1, "-hard") + -0x30);
         }
     }
     increment_random_num(osGetCount());

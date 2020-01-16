@@ -20,5 +20,8 @@ struct fileentry {
 
 void something_mem_bank_a0(int);
 void sub_GAME_7F0BD234(void);
+u8* load_resource_index_to_buffer(s32 index,s32 param_2,u8 *ptrdata,s32 bytes);
+void resource_load_from_indy(u8 *ptrdata, s32 bytes, struct fileentry *srcfile, struct resource_lookup_data_entry *lookupdata);
+void load_resource(u8 *ptrdata, s32 bytes, struct fileentry *srcfile, struct resource_lookup_data_entry *lookupdata);
 
 #endif
