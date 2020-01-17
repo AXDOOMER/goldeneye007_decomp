@@ -1046,8 +1046,8 @@ glabel ob_c_debug_setup
 
 
 
-void _load_rom_index_to_membank(s32 index,s32 param_2,s32 size,int bank) {
-    load_rom_resource_index_to_membank(index, param_2, size, bank & 0xff);
+void _load_rom_index_to_membank(s32 index,s32 param_2,s32 size,u8 bank) {
+    load_rom_resource_index_to_membank(index, param_2, size, bank);
 }
 
 void _load_resource_index_to_membank(int index,s32 param_2,u8 *ptrdata,int size) {
