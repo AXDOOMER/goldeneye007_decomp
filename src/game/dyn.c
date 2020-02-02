@@ -50,22 +50,17 @@ void set_vtx_gfx_mem_alloc(void) {
     s32 sp18;
     ? temp_ret;
 
-    // Node 0
     if (check_token(1, "-mgfx") != 0)
     {
-        // Node 1
-        sp18 = get_num_players();
-        (0x80050000 + (sp18 * 4))->unk-7D20 = (s32) (strtol(check_token(1, "-mgfx"), 0, 0) << 0xa);
+        dyn_c_debug_notice_list_entry[get_num_players()] = strtol(check_token(1, "-mgfx"), 0, 0) << 0xa;
     }
-    // Node 2
+
     if (check_token(1, "-mvtx") != 0)
     {
-        // Node 3
-        sp18 = get_num_players();
-        (0x80050000 + (sp18 * 4))->unk-7D10 = (s32) (strtol(check_token(1, "-mvtx"), 0, 0) << 0xa);
+        D_800482F0[get_num_players()] = strtol(check_token(1, "-mvtx"), 0, 0) << 0xa;
     }
-    // Node 4
-    ptr_mgfx0_alloc_start = mempAllocBytesInBank(((0x80050000 + (get_num_players() * 4))->unk-7D20 * 2), 4);
+
+    mempAllocBytesInBank(dyn_c_debug_notice_list_entry[sVar1] << 1, 4);
     ptr_mgfx0_alloc_start.unk4 = (s32) ((0x80050000 + (get_num_players() * 4))->unk-7D20 + ptr_mgfx0_alloc_start);
     ptr_mgfx0_alloc_start.unk8 = (s32) ((0x80050000 + (get_num_players() * 4))->unk-7D20 + ptr_mgfx0_alloc_start.unk4);
     ptr_mvtx0_alloc_start = mempAllocBytesInBank(((0x80050000 + (get_num_players() * 4))->unk-7D10 * 2), 4);

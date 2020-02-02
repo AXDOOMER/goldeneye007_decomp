@@ -29,7 +29,7 @@ s32 current_stage_to_load = 0;
 //D:80048368
 f32 D_80048368 = 1.0;
 //D:8004836C
-s32 D_8004836C = 0;
+s32 musictrack1_playing = 0;
 //D:80048370
 s32 controls_locked_flag = 0;
 //D:80048374
@@ -154,19 +154,13 @@ void sub_GAME_7F0BD8FC(s32 arg0) {
 
 
 #ifdef NONMATCHING
-void something_with_lvl_c_debug(void) {
-    s32 temp_a2;
-    ? temp_ret;
-
-    // Node 0
-    get_ptr_debug_notice_list_entry(&lvl_c_debug_notice_list, &aLv_c_debug);
-    temp_a2 = (&_jfontdlSegmentEnd - &_jfontdlSegmentStart);
+void something_with_lvl_c_debug(void)
+{
+    get_ptr_debug_notice_list_entry(&lvl_c_debug_notice_list, "lv_c_debug");
     lvl_c_debug_notice_list = 1;
-    temp_ret = mempAllocBytesInBank(temp_a2, 6, temp_a2);
-    ptr_jfont_DL = temp_ret;
-    romCopy(temp_ret, &_jfontdlSegmentStart, sp18);
+    ptr_jfont_DL = mempAllocBytesInBank(0xc0,'\x06');
+    romCopy(ptr_jfont_DL, _jfontdlSegmentStart, 0xc0);
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -210,13 +204,10 @@ glabel something_with_lvl_c_debug
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BD984(void) {
-    s32 temp_a0;
-
-    // Node 0
-    temp_a0 = ((get_random_value() % 0x3dU) + 2);
-    D_8004836C = temp_a0;
-    return musicTrack1Play(temp_a0);
+void playrandommusictrack1(void)
+{
+    musictrack1_playing = get_random_value() % 0x3d + M_INTRO;
+    musicTrack1Play(musictrack1_playing);
 }
 #else
 GLOBAL_ASM(
@@ -229,8 +220,8 @@ glabel sub_GAME_7F0BD984
 /* 0F24C4 7F0BD994 2401003D */  li    $at, 61
 /* 0F24C8 7F0BD998 0041001B */  divu  $zero, $v0, $at
 /* 0F24CC 7F0BD99C 00007010 */  mfhi  $t6
-/* 0F24D0 7F0BD9A0 3C038005 */  lui   $v1, %hi(D_8004836C)
-/* 0F24D4 7F0BD9A4 2463836C */  addiu $v1, %lo(D_8004836C) # addiu $v1, $v1, -0x7c94
+/* 0F24D0 7F0BD9A0 3C038005 */  lui   $v1, %hi(musictrack1_playing)
+/* 0F24D4 7F0BD9A4 2463836C */  addiu $v1, %lo(musictrack1_playing) # addiu $v1, $v1, -0x7c94
 /* 0F24D8 7F0BD9A8 25C40002 */  addiu $a0, $t6, 2
 /* 0F24DC 7F0BD9AC 0C001B9F */  jal   musicTrack1Play
 /* 0F24E0 7F0BD9B0 AC640000 */   sw    $a0, ($v1)
@@ -246,18 +237,18 @@ glabel sub_GAME_7F0BD984
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BD9C4(s32 arg0) {
-    // Node 0
-    D_8004836C = arg0;
-    return musicTrack1Play();
+void playmusictrack1(MUSIC_TRACKS track)
+{
+    musictrack1_playing = track;
+    musicTrack1Play(track);
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0BD9C4
+glabel playmusictrack1
 /* 0F24F4 7F0BD9C4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F24F8 7F0BD9C8 3C028005 */  lui   $v0, %hi(D_8004836C)
-/* 0F24FC 7F0BD9CC 2442836C */  addiu $v0, %lo(D_8004836C) # addiu $v0, $v0, -0x7c94
+/* 0F24F8 7F0BD9C8 3C028005 */  lui   $v0, %hi(musictrack1_playing)
+/* 0F24FC 7F0BD9CC 2442836C */  addiu $v0, %lo(musictrack1_playing) # addiu $v0, $v0, -0x7c94
 /* 0F2500 7F0BD9D0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F2504 7F0BD9D4 0C001B9F */  jal   musicTrack1Play
 /* 0F2508 7F0BD9D8 AC440000 */   sw    $a0, ($v0)
@@ -273,29 +264,21 @@ glabel sub_GAME_7F0BD9C4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BD9EC(void) {
-    s32 temp_hi;
-    s32 phi_a0;
+void music_append_play_solo_death_short(void)
 
-    // Node 0
-    temp_hi = ((s32) (D_8004836C + 1) % 0x3f);
-    D_8004836C = temp_hi;
-    phi_a0 = temp_hi;
-    if (temp_hi == 0)
-    {
-        // Node 1
-        D_8004836C = 1;
-        phi_a0 = 1;
+{
+    musictrack1_playing = (musictrack1_playing + M_SHORT_SOLO_DEATH) % 0x3f;
+    if (musictrack1_playing == M_NONE) {
+        musictrack1_playing = M_SHORT_SOLO_DEATH;
     }
-    // Node 2
-    return musicTrack1Play(phi_a0);
+    musicTrack1Play(musictrack1_playing);
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0BD9EC
-/* 0F251C 7F0BD9EC 3C028005 */  lui   $v0, %hi(D_8004836C)
-/* 0F2520 7F0BD9F0 2442836C */  addiu $v0, %lo(D_8004836C) # addiu $v0, $v0, -0x7c94
+glabel music_append_play_solo_death_short
+/* 0F251C 7F0BD9EC 3C028005 */  lui   $v0, %hi(musictrack1_playing)
+/* 0F2520 7F0BD9F0 2442836C */  addiu $v0, %lo(musictrack1_playing) # addiu $v0, $v0, -0x7c94
 /* 0F2524 7F0BD9F4 8C4E0000 */  lw    $t6, ($v0)
 /* 0F2528 7F0BD9F8 2401003F */  li    $at, 63
 /* 0F252C 7F0BD9FC 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -322,29 +305,20 @@ glabel sub_GAME_7F0BD9EC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BDA38(void) {
-    s32 temp_hi;
-    s32 phi_a0;
-
-    // Node 0
-    temp_hi = ((s32) (D_8004836C + 0x3e) % 0x3f);
-    D_8004836C = temp_hi;
-    phi_a0 = temp_hi;
-    if (temp_hi == 0)
-    {
-        // Node 1
-        D_8004836C = 0x3e;
-        phi_a0 = 0x3e;
+void music_append_play_endtheme(void)
+{
+    musictrack1_playing = (musictrack1_playing + M_END_SOMETHING) % 0x3f;
+    if (musictrack1_playing == M_NONE) {
+        musictrack1_playing = M_END_SOMETHING;
     }
-    // Node 2
-    return musicTrack1Play(phi_a0);
+    musicTrack1Play(musictrack1_playing);
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0BDA38
-/* 0F2568 7F0BDA38 3C028005 */  lui   $v0, %hi(D_8004836C)
-/* 0F256C 7F0BDA3C 2442836C */  addiu $v0, %lo(D_8004836C) # addiu $v0, $v0, -0x7c94
+glabel music_append_play_endtheme
+/* 0F2568 7F0BDA38 3C028005 */  lui   $v0, %hi(musictrack1_playing)
+/* 0F256C 7F0BDA3C 2442836C */  addiu $v0, %lo(musictrack1_playing) # addiu $v0, $v0, -0x7c94
 /* 0F2570 7F0BDA40 8C4E0000 */  lw    $t6, ($v0)
 /* 0F2574 7F0BDA44 2401003F */  li    $at, 63
 /* 0F2578 7F0BDA48 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -371,7 +345,7 @@ glabel sub_GAME_7F0BDA38
 
 
 void sub_GAME_7F0BDA84(void) {
-    sub_GAME_7F0BD9C4(sub_GAME_7F0D2720(current_stage_to_load));
+    playmusictrack1(getmusictrack_or_randomtrack(current_stage_to_load));
 }
 
 
@@ -3310,7 +3284,7 @@ glabel manage_mp_game
 /* 0F41F8 7F0BF6C8 24050202 */   li    $a1, 514
 /* 0F41FC 7F0BF6CC 50400004 */  beql  $v0, $zero, .L7F0BF6E0
 /* 0F4200 7F0BF6D0 00002025 */   move  $a0, $zero
-/* 0F4204 7F0BF6D4 0FC2F68E */  jal   sub_GAME_7F0BDA38
+/* 0F4204 7F0BF6D4 0FC2F68E */  jal   music_append_play_endtheme
 /* 0F4208 7F0BF6D8 00000000 */   nop   
 /* 0F420C 7F0BF6DC 00002025 */  move  $a0, $zero
 .L7F0BF6E0:
@@ -3318,7 +3292,7 @@ glabel manage_mp_game
 /* 0F4214 7F0BF6E4 24050101 */   li    $a1, 257
 /* 0F4218 7F0BF6E8 50400004 */  beql  $v0, $zero, .L7F0BF6FC
 /* 0F421C 7F0BF6EC 00002025 */   move  $a0, $zero
-/* 0F4220 7F0BF6F0 0FC2F67B */  jal   sub_GAME_7F0BD9EC
+/* 0F4220 7F0BF6F0 0FC2F67B */  jal   music_append_play_solo_death_short
 /* 0F4224 7F0BF6F4 00000000 */   nop   
 /* 0F4228 7F0BF6F8 00002025 */  move  $a0, $zero
 .L7F0BF6FC:
@@ -4188,7 +4162,7 @@ glabel manage_mp_game
 /* 0F4E70 7F0C0300 24050202 */   li    $a1, 514
 /* 0F4E74 7F0C0304 50400004 */  beql  $v0, $zero, .Ljp7F0C0318
 /* 0F4E78 7F0C0308 00002025 */   move  $a0, $zero
-/* 0F4E7C 7F0C030C 0FC2F97A */  jal   sub_GAME_7F0BDA38
+/* 0F4E7C 7F0C030C 0FC2F97A */  jal   music_append_play_endtheme
 /* 0F4E80 7F0C0310 00000000 */   nop   
 /* 0F4E84 7F0C0314 00002025 */  move  $a0, $zero
 .Ljp7F0C0318:
@@ -4196,7 +4170,7 @@ glabel manage_mp_game
 /* 0F4E8C 7F0C031C 24050101 */   li    $a1, 257
 /* 0F4E90 7F0C0320 50400004 */  beql  $v0, $zero, .Ljp7F0C0334
 /* 0F4E94 7F0C0324 00002025 */   move  $a0, $zero
-/* 0F4E98 7F0C0328 0FC2F967 */  jal   sub_GAME_7F0BD9EC
+/* 0F4E98 7F0C0328 0FC2F967 */  jal   music_append_play_solo_death_short
 /* 0F4E9C 7F0C032C 00000000 */   nop   
 /* 0F4EA0 7F0C0330 00002025 */  move  $a0, $zero
 .Ljp7F0C0334:

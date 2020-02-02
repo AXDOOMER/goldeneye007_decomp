@@ -178,7 +178,7 @@ glabel set_missionstate
 /* 0F57D4 7F0C0CA4 3C018002 */  lui   $at, %hi(music1_playing)
 /* 0F57D8 7F0C0CA8 3C048009 */  lui   $a0, %hi(dword_CODE_bss_8008C600)
 /* 0F57DC 7F0C0CAC AC20434C */  sw    $zero, %lo(music1_playing)($at)
-/* 0F57E0 7F0C0CB0 0FC349C8 */  jal   sub_GAME_7F0D2720
+/* 0F57E0 7F0C0CB0 0FC349C8 */  jal   getmusictrack_or_randomtrack
 /* 0F57E4 7F0C0CB4 8C84C600 */   lw    $a0, %lo(dword_CODE_bss_8008C600)($a0)
 /* 0F57E8 7F0C0CB8 0C001B9F */  jal   musicTrack1Play
 /* 0F57EC 7F0C0CBC 00402025 */   move  $a0, $v0
@@ -192,7 +192,7 @@ glabel set_missionstate
 /* 0F5808 7F0C0CD8 3C018002 */  lui   $at, %hi(music1_playing)
 /* 0F580C 7F0C0CDC 3C048009 */  lui   $a0, %hi(dword_CODE_bss_8008C600)
 /* 0F5810 7F0C0CE0 AC20434C */  sw    $zero, %lo(music1_playing)($at)
-/* 0F5814 7F0C0CE4 0FC349C8 */  jal   sub_GAME_7F0D2720
+/* 0F5814 7F0C0CE4 0FC349C8 */  jal   getmusictrack_or_randomtrack
 /* 0F5818 7F0C0CE8 8C84C600 */   lw    $a0, %lo(dword_CODE_bss_8008C600)($a0)
 /* 0F581C 7F0C0CEC 0C001B9F */  jal   musicTrack1Play
 /* 0F5820 7F0C0CF0 00402025 */   move  $a0, $v0
@@ -680,7 +680,7 @@ glabel set_missionstate
 /* 0F64C4 7F0C1954 3C018002 */  lui   $at, %hi(music1_playing) # $at, 0x8002
 /* 0F64C8 7F0C1958 3C048009 */  lui   $a0, %hi(dword_CODE_bss_8008C600) # $a0, 0x8009
 /* 0F64CC 7F0C195C AC20438C */  sw    $zero, %lo(music1_playing)($at)
-/* 0F64D0 7F0C1960 0FC34D00 */  jal   sub_GAME_7F0D2720
+/* 0F64D0 7F0C1960 0FC34D00 */  jal   getmusictrack_or_randomtrack
 /* 0F64D4 7F0C1964 8C84C670 */   lw    $a0, %lo(dword_CODE_bss_8008C600)($a0)
 /* 0F64D8 7F0C1968 0C001BA3 */  jal   musicTrack1Play
 /* 0F64DC 7F0C196C 00402025 */   move  $a0, $v0
@@ -694,7 +694,7 @@ glabel set_missionstate
 /* 0F64F8 7F0C1988 3C018002 */  lui   $at, %hi(music1_playing) # $at, 0x8002
 /* 0F64FC 7F0C198C 3C048009 */  lui   $a0, %hi(dword_CODE_bss_8008C600) # $a0, 0x8009
 /* 0F6500 7F0C1990 AC20438C */  sw    $zero, %lo(music1_playing)($at)
-/* 0F6504 7F0C1994 0FC34D00 */  jal   sub_GAME_7F0D2720
+/* 0F6504 7F0C1994 0FC34D00 */  jal   getmusictrack_or_randomtrack
 /* 0F6508 7F0C1998 8C84C670 */   lw    $a0, %lo(dword_CODE_bss_8008C600)($a0)
 /* 0F650C 7F0C199C 0C001BA3 */  jal   musicTrack1Play
 /* 0F6510 7F0C19A0 00402025 */   move  $a0, $v0

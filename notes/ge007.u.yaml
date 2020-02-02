@@ -3990,9 +3990,9 @@ labels:
    - [0x7F0BD8FC, "sub_GAME_7F0BD8FC"]
    - [0x7F0BD908, "something_with_lvl_c_debug"]
    - [0x7F0BD984, "sub_GAME_7F0BD984"]
-   - [0x7F0BD9C4, "sub_GAME_7F0BD9C4"]
-   - [0x7F0BD9EC, "sub_GAME_7F0BD9EC"]
-   - [0x7F0BDA38, "sub_GAME_7F0BDA38"]
+   - [0x7F0BD9C4, "playmusictrack1"]
+   - [0x7F0BD9EC, "music_append_play_solo_death_short"]
+   - [0x7F0BDA38, "music_append_play_endtheme"]
    - [0x7F0BDA84, "sub_GAME_7F0BDA84"]
    - [0x7F0BDAB0, "stage_load"]
    - [0x7F0BDF04, "sub_GAME_7F0BDF04"]
@@ -4311,7 +4311,7 @@ labels:
    - [0x7F0D2464, "sub_GAME_7F0D2464"]
    - [0x7F0D2518, "sub_GAME_7F0D2518"]
    # file asm/game/7F0D2720.s
-   - [0x7F0D2720, "sub_GAME_7F0D2720"]
+   - [0x7F0D2720, "getmusictrack_or_randomtrack"]
    - [0x7F0D2848, "sub_GAME_7F0D2848"]
    - [0x7F0D2890, "sub_GAME_7F0D2890"]
    # file asm/game/spectrum.s

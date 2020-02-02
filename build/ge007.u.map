@@ -4463,9 +4463,9 @@ Linker script and memory map
                 0x000000007f0bd8fc                sub_GAME_7F0BD8FC
                 0x000000007f0bd908                something_with_lvl_c_debug
                 0x000000007f0bd984                sub_GAME_7F0BD984
-                0x000000007f0bd9c4                sub_GAME_7F0BD9C4
-                0x000000007f0bd9ec                sub_GAME_7F0BD9EC
-                0x000000007f0bda38                sub_GAME_7F0BDA38
+                0x000000007f0bd9c4                playmusictrack1
+                0x000000007f0bd9ec                music_append_play_solo_death_short
+                0x000000007f0bda38                music_append_play_endtheme
                 0x000000007f0bda84                sub_GAME_7F0BDA84
                 0x000000007f0bdab0                stage_load
                 0x000000007f0bdf04                sub_GAME_7F0BDF04
@@ -4755,7 +4755,7 @@ Linker script and memory map
                 0x000000007f0d2518                sub_GAME_7F0D2518
  build/u/src/game/music_0D2720.o(.text)
  .text          0x000000007f0d2720      0x1c0 build/u/src/game/music_0D2720.o
-                0x000000007f0d2720                sub_GAME_7F0D2720
+                0x000000007f0d2720                getmusictrack_or_randomtrack
                 0x000000007f0d2848                sub_GAME_7F0D2848
                 0x000000007f0d2890                sub_GAME_7F0D2890
  build/u/src/game/spectrum.o(.text)
@@ -19693,7 +19693,7 @@ Linker script and memory map
                 0x0000000080048360                lvl_c_debug_notice_list
                 0x0000000080048364                current_stage_to_load
                 0x0000000080048368                D_80048368
-                0x000000008004836c                D_8004836C
+                0x000000008004836c                musictrack1_playing
                 0x0000000080048370                controls_locked_flag
                 0x0000000080048374                clock_timer
                 0x0000000080048378                global_timer_delta
@@ -19727,7 +19727,7 @@ Linker script and memory map
  build/u/src/game/lvl_2.o(.data)
  .data          0x00000000800483f0       0xa0 build/u/src/game/lvl_2.o
                 0x00000000800483f0                ramrom_table
-                0x0000000080048468                ramrom_blkbuf_1
+                0x0000000080048468                ptr_active_demofile
                 0x000000008004846c                ramrom_blkbuf_2
                 0x0000000080048470                ramrom_blkbuf_3
                 0x0000000080048474                is_ramrom_flag
