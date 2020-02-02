@@ -1281,8 +1281,13 @@ glabel reset_all_music_slots
 
 
 #ifdef NONMATCHING
-void set_musicslot_time(void) {
-
+void set_musicslot_time(int slot,int min,int sec)
+{
+    if (music_slot_active[slot] == 0) {
+        music_slot_active[slot] = 1;
+        music_slot_minutes[slot] = min * 0x3c;
+        music_slot_seconds[slot] = sec * 0x3c;
+    }
 }
 #else
 GLOBAL_ASM(
