@@ -1057,9 +1057,23 @@ glabel set_missionstate
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0C11FC(void) {
+#ifdef NONMATCHING//
+void sub_GAME_7F0C11FC(s16 param_1)
+{
+    musicTrack1Stop();
+    musicTrack2Stop();
+    musicTrack3Stop();
+    mission_state = 0;
+    dword_CODE_bss_8008C600 = (int)param_1;
 
+    if (sub_GAME_7F0D2848(param_1) < 0)
+    {
+        set_missionstate(1);
+    }
+    else
+    {
+        set_missionstate(4);
+    }
 }
 #else
 GLOBAL_ASM(
@@ -1101,40 +1115,48 @@ glabel sub_GAME_7F0C11FC
 
 
 
-void sub_GAME_7F0C1268(void) {
+void sub_GAME_7F0C1268(void)
+{
   set_missionstate(0);
 }
 
-void sub_GAME_7F0C1288(void) {
-  if (sub_GAME_7F0D2848(dword_CODE_bss_8008C600) < 0) {
+void sub_GAME_7F0C1288(void)
+{
+  if (sub_GAME_7F0D2848(dword_CODE_bss_8008C600) < 0)
+  {
     set_missionstate(2);
   }
-  else {
+  else
+  {
     set_missionstate(5);
   }
-  return;
 }
 
-void sub_GAME_7F0C12CC(void) {
-  if (sub_GAME_7F0D2848(dword_CODE_bss_8008C600) < 0) {
+void sub_GAME_7F0C12CC(void)
+{
+  if (sub_GAME_7F0D2848(dword_CODE_bss_8008C600) < 0)
+  {
     set_missionstate(1);
   }
-  else {
+  else
+  {
     set_missionstate(4);
   }
-  return;
 }
 
-void sub_GAME_7F0C1310(void) {
+void sub_GAME_7F0C1310(void)
+{
   dword_CODE_bss_8008C604 = mission_state;
   set_missionstate(3);
 }
 
-void sub_GAME_7F0C1340(void) {
+void sub_GAME_7F0C1340(void)
+{
   set_missionstate(dword_CODE_bss_8008C604);
 }
 
-void sub_GAME_7F0C1364(void) {
+void sub_GAME_7F0C1364(void)
+{
   dword_CODE_bss_8008C608 = 0;
   dword_CODE_bss_8008C618 = 0;
   dword_CODE_bss_8008C628 = 0;
