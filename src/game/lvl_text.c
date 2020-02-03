@@ -312,8 +312,9 @@ void init_LnameX(void) {
 }
 #else
 GLOBAL_ASM(
-    .late_rodata
-/*hacks for jtbl*/
+.late_rodata
+/*hacks for above jtbl to fit , jpt_stage_text */
+/*remove once get_textbank_number_for_stagenum matches */
 .word .L7F0C1664
 .word .L7F0C16AC
 .word .L7F0C169C
