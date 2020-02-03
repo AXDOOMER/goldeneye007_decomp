@@ -83,70 +83,70 @@ void *LnameX_lookuptable[] = {
     "LmiscE", "LmiscJ"};           /* Cheat options */
 
 
-#ifdef NONMATCHING
-LEVELID get_textbank_number_for_stagenum(LEVELID level) {
+#ifdef NONMATCHING//
+LEVELID get_textbank_number_for_stagenum(LEVELID level)
+{
     switch(level)
     {
         case LEVELID_BUNKER1:
-            return LSEV;
+            return 0xb;
         case LEVELID_SILO:
-            return LSILO;
+            return 0x3;
         case LEVELID_STATUE:
-            return LSTAT;
+            return 0x1c;
         case LEVELID_CONTROL:
-            return LAREC;
+            return 0x1f;
         case LEVELID_ARCHIVES:
-            return LARCH;
+            return 0x1e;
         case LEVELID_TRAIN:
-            return LTRA;
+            return 0x22;
         case LEVELID_FRIGATE:
-            return LDEST;
+            return 0xd;
         case LEVELID_BUNKER2:
-            return LSEVB;
+            return 0x20;
         case LEVELID_AZTEC:
-            return LAZT;
+            return 0x1d;
         case LEVELID_STREETS:
-            return LPETE;
+            return 0x23;
         case LEVELID_DEPOT:
-            return LDEPO;
+            return 0x2;
         case LEVELID_COMPLEX:
-            return LREF;
+            return 0x19;
         case LEVELID_EGYPT:
-            return LCRYP;
+            return 0xC;
         case LEVELID_DAM:
-            return LDAM;
+            return 0x24;
         case LEVELID_FACILITY:
-            return LARK;
+            return 0x12;
         case LEVELID_RUNWAY:
-            return LRUN;
+            return 0x8;
         case LEVELID_SURFACE:
-            return LSEVX;
+            return 0x7;
         case LEVELID_JUNGLE:
-            return LJUN;
+            return 0x9;
         case LEVELID_TEMPLE:
-            return LDISH;
+            return 0x5;
         case LEVELID_CAVERNS:
-            return LCAVE;
+            return 0xa;
         case LEVELID_CRADLE:
-            return LCRAD;
+            return 0xe;
         case LEVELID_SURFACE2:
-            return LSEVXB;
+            return 0x1a;
         case LEVELID_BASEMENT:
-            return LIMP;
+            return 0x1;
         case LEVELID_STACK:
-            return LASH;
+            return 0x11;
         case LEVELID_LIBRARY:
-            return LAME;
+            return 0x4;
         case LEVELID_CAVES:
-            return LOAT;
+            return 0x17;
         case LEVELID_CUBA:
-            return LLEN;
+            return 0x14;
     }
 
 	/* infinite loop on invalid text bank */
-    do {
-    } while(1);
-    return 0;
+    while(1) { } ;
+    return 0; //missing v0=v1 before return
 }
 #else
 GLOBAL_ASM(
@@ -312,7 +312,7 @@ void init_LnameX(void) {
 }
 #else
 GLOBAL_ASM(
-.late_rodata
+    .late_rodata
 /*hacks for jtbl*/
 .word .L7F0C1664
 .word .L7F0C16AC
