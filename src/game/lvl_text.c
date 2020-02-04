@@ -82,228 +82,102 @@ void *LnameX_lookuptable[] = {
     "LoptionsE", "LoptionsJ",      /* Solo in-game menus */
     "LmiscE", "LmiscJ"};           /* Cheat options */
 
-
-#ifdef NONMATCHING//
 LEVELID get_textbank_number_for_stagenum(LEVELID level)
 {
+    LEVELID return_id;
+
     switch(level)
     {
-        case LEVELID_BUNKER1:
-            return 0xb;
-        case LEVELID_SILO:
-            return 0x3;
-        case LEVELID_STATUE:
-            return 0x1c;
-        case LEVELID_CONTROL:
-            return 0x1f;
-        case LEVELID_ARCHIVES:
-            return 0x1e;
-        case LEVELID_TRAIN:
-            return 0x22;
-        case LEVELID_FRIGATE:
-            return 0xd;
-        case LEVELID_BUNKER2:
-            return 0x20;
-        case LEVELID_AZTEC:
-            return 0x1d;
-        case LEVELID_STREETS:
-            return 0x23;
-        case LEVELID_DEPOT:
-            return 0x2;
-        case LEVELID_COMPLEX:
-            return 0x19;
-        case LEVELID_EGYPT:
-            return 0xC;
         case LEVELID_DAM:
-            return 0x24;
+            return_id = LDAM;
+            break;
         case LEVELID_FACILITY:
-            return 0x12;
+            return_id = LARK;
+            break;
         case LEVELID_RUNWAY:
-            return 0x8;
+            return_id = LRUN;
+            break;
         case LEVELID_SURFACE:
-            return 0x7;
-        case LEVELID_JUNGLE:
-            return 0x9;
-        case LEVELID_TEMPLE:
-            return 0x5;
-        case LEVELID_CAVERNS:
-            return 0xa;
-        case LEVELID_CRADLE:
-            return 0xe;
+            return_id = LSEVX;
+            break;
+        case LEVELID_BUNKER1:
+            return_id = LSEV;
+            break;
+        case LEVELID_SILO:
+            return_id = LSILO;
+            break;
+        case LEVELID_FRIGATE:
+            return_id = LDEST;
+            break;
         case LEVELID_SURFACE2:
-            return 0x1a;
-        case LEVELID_BASEMENT:
-            return 0x1;
-        case LEVELID_STACK:
-            return 0x11;
+            return_id = LSEVXB;
+            break;
+        case LEVELID_BUNKER2:
+            return_id = LSEVB;
+            break;
+        case LEVELID_STATUE:
+            return_id = LSTAT;
+            break;
+        case LEVELID_ARCHIVES:
+            return_id = LARCH;
+            break;
+        case LEVELID_STREETS:
+            return_id = LPETE;
+            break;
+        case LEVELID_DEPOT:
+            return_id = LDEPO;
+            break;
+        case LEVELID_TRAIN:
+            return_id = LTRA;
+            break;
+        case LEVELID_JUNGLE:
+            return_id = LJUN;
+            break;
+        case LEVELID_CONTROL:
+            return_id = LAREC;
+            break;
+        case LEVELID_CAVERNS:
+            return_id = LCAVE;
+            break;
+        case LEVELID_CRADLE:
+            return_id = LCRAD;
+            break;
+        case LEVELID_AZTEC:
+            return_id = LAZT;
+            break;
+        case LEVELID_EGYPT:
+            return_id = LCRYP;
+            break;
+        case LEVELID_TEMPLE:
+            return_id = LDISH;
+            break;
+        case LEVELID_COMPLEX:
+            return_id = LREF;
+            break;
         case LEVELID_LIBRARY:
-            return 0x4;
+            return_id = LAME;
+            break;
+        case LEVELID_BASEMENT:
+            return_id = LIMP;
+            break;
+        case LEVELID_STACK:
+            return_id = LASH;
+            break;
         case LEVELID_CAVES:
-            return 0x17;
+            return_id = LOAT;
+            break;
         case LEVELID_CUBA:
-            return 0x14;
+            return_id = LLEN;
+            break;
+        default:
+        {
+            /* infinite loop on invalid text bank */
+            while(1) {};
+        }
     }
 
-	/* infinite loop on invalid text bank */
-    while(1) { } ;
-    return 0; //missing v0=v1 before return
+    return return_id;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:8005BB60*/
-glabel jpt_stage_text
-.word .L7F0C1624
-.word stagetext_loop
-.word stagetext_loop
-.word stagetext_loop
-.word stagetext_loop
-.word stagetext_loop
-.word stagetext_loop
-.word stagetext_loop
-.word stagetext_loop
-.word stagetext_loop
-.word stagetext_loop
-.word .L7F0C162C
-.word stagetext_loop
-.word .L7F0C164C
-.word .L7F0C167C
-.word .L7F0C1654
-.word .L7F0C166C
-.word .L7F0C1634
-.word .L7F0C1644
-.word .L7F0C1694
-.word .L7F0C165C
-/*.word .L7F0C1664*/
-/*.word .L7F0C16AC*/
-/*.word .L7F0C169C*/
-/*.word .L7F0C1604*/
-/*.word .L7F0C160C*/
-/*.word .L7F0C1614*/
-/*.word .L7F0C161C*/
-/*.word .L7F0C1674*/
-/*.word .L7F0C16A4*/
-/*.word .L7F0C1684*/
-/*.word stagetext_loop*/
-/*.word .L7F0C168C*/
-/*.word stagetext_loop*/
-/*.word .L7F0C163C*/
-/*.word stagetext_loop*/
-/*.word .L7F0C16BC*/
-/*.word .L7F0C16C4*/
-/*.word stagetext_loop*/
-/*.word .L7F0C16B4*/
-/*.word stagetext_loop*/
-/*.word .L7F0C16CC*/
-/*.word stagetext_loop*/
-/*.word stagetext_loop*/
-/*.word stagetext_loop*/
-/*.word .L7F0C16D4*/
-
-.text
-glabel get_textbank_number_for_stagenum
-/* 0F6110 7F0C15E0 248EFFF7 */  addiu $t6, $a0, -9
-/* 0F6114 7F0C15E4 2DC1002E */  sltiu $at, $t6, 0x2e
-/* 0F6118 7F0C15E8 1020003C */  beqz  $at, .L7F0C16DC
-/* 0F611C 7F0C15EC 000E7080 */   sll   $t6, $t6, 2
-/* 0F6120 7F0C15F0 3C018006 */  lui   $at, %hi(jpt_stage_text)
-/* 0F6124 7F0C15F4 002E0821 */  addu  $at, $at, $t6
-/* 0F6128 7F0C15F8 8C2EBB60 */  lw    $t6, %lo(jpt_stage_text)($at)
-/* 0F612C 7F0C15FC 01C00008 */  jr    $t6
-/* 0F6130 7F0C1600 00000000 */   nop   
-.L7F0C1604:
-/* 0F6134 7F0C1604 03E00008 */  jr    $ra
-/* 0F6138 7F0C1608 2402000B */   li    $v0, 11
-.L7F0C160C:
-/* 0F613C 7F0C160C 03E00008 */  jr    $ra
-/* 0F6140 7F0C1610 24020003 */   li    $v0, 3
-.L7F0C1614:
-/* 0F6144 7F0C1614 03E00008 */  jr    $ra
-/* 0F6148 7F0C1618 2402001C */   li    $v0, 28
-.L7F0C161C:
-/* 0F614C 7F0C161C 03E00008 */  jr    $ra
-/* 0F6150 7F0C1620 2402001F */   li    $v0, 31
-.L7F0C1624:
-/* 0F6154 7F0C1624 03E00008 */  jr    $ra
-/* 0F6158 7F0C1628 2402001E */   li    $v0, 30
-.L7F0C162C:
-/* 0F615C 7F0C162C 03E00008 */  jr    $ra
-/* 0F6160 7F0C1630 24020022 */   li    $v0, 34
-.L7F0C1634:
-/* 0F6164 7F0C1634 03E00008 */  jr    $ra
-/* 0F6168 7F0C1638 2402000D */   li    $v0, 13
-.L7F0C163C:
-/* 0F616C 7F0C163C 03E00008 */  jr    $ra
-/* 0F6170 7F0C1640 24020020 */   li    $v0, 32
-.L7F0C1644:
-/* 0F6174 7F0C1644 03E00008 */  jr    $ra
-/* 0F6178 7F0C1648 2402001D */   li    $v0, 29
-.L7F0C164C:
-/* 0F617C 7F0C164C 03E00008 */  jr    $ra
-/* 0F6180 7F0C1650 24020023 */   li    $v0, 35
-.L7F0C1654:
-/* 0F6184 7F0C1654 03E00008 */  jr    $ra
-/* 0F6188 7F0C1658 24020002 */   li    $v0, 2
-.L7F0C165C:
-/* 0F618C 7F0C165C 03E00008 */  jr    $ra
-/* 0F6190 7F0C1660 24020019 */   li    $v0, 25
-.L7F0C1664:
-/* 0F6194 7F0C1664 03E00008 */  jr    $ra
-/* 0F6198 7F0C1668 2402000C */   li    $v0, 12
-.L7F0C166C:
-/* 0F619C 7F0C166C 03E00008 */  jr    $ra
-/* 0F61A0 7F0C1670 24020024 */   li    $v0, 36
-.L7F0C1674:
-/* 0F61A4 7F0C1674 03E00008 */  jr    $ra
-/* 0F61A8 7F0C1678 24020012 */   li    $v0, 18
-.L7F0C167C:
-/* 0F61AC 7F0C167C 03E00008 */  jr    $ra
-/* 0F61B0 7F0C1680 24020008 */   li    $v0, 8
-.L7F0C1684:
-/* 0F61B4 7F0C1684 03E00008 */  jr    $ra
-/* 0F61B8 7F0C1688 24020007 */   li    $v0, 7
-.L7F0C168C:
-/* 0F61BC 7F0C168C 03E00008 */  jr    $ra
-/* 0F61C0 7F0C1690 24020009 */   li    $v0, 9
-.L7F0C1694:
-/* 0F61C4 7F0C1694 03E00008 */  jr    $ra
-/* 0F61C8 7F0C1698 24020005 */   li    $v0, 5
-.L7F0C169C:
-/* 0F61CC 7F0C169C 03E00008 */  jr    $ra
-/* 0F61D0 7F0C16A0 2402000A */   li    $v0, 10
-.L7F0C16A4:
-/* 0F61D4 7F0C16A4 03E00008 */  jr    $ra
-/* 0F61D8 7F0C16A8 2402000E */   li    $v0, 14
-.L7F0C16AC:
-/* 0F61DC 7F0C16AC 03E00008 */  jr    $ra
-/* 0F61E0 7F0C16B0 2402001A */   li    $v0, 26
-.L7F0C16B4:
-/* 0F61E4 7F0C16B4 03E00008 */  jr    $ra
-/* 0F61E8 7F0C16B8 24020001 */   li    $v0, 1
-.L7F0C16BC:
-/* 0F61EC 7F0C16BC 03E00008 */  jr    $ra
-/* 0F61F0 7F0C16C0 24020011 */   li    $v0, 17
-.L7F0C16C4:
-/* 0F61F4 7F0C16C4 03E00008 */  jr    $ra
-/* 0F61F8 7F0C16C8 24020004 */   li    $v0, 4
-.L7F0C16CC:
-/* 0F61FC 7F0C16CC 03E00008 */  jr    $ra
-/* 0F6200 7F0C16D0 24020017 */   li    $v0, 23
-.L7F0C16D4:
-/* 0F6204 7F0C16D4 03E00008 */  jr    $ra
-/* 0F6208 7F0C16D8 24020014 */   li    $v0, 20
-
-stagetext_loop:
-.L7F0C16DC:
-/* 0F620C 7F0C16DC 1000FFFF */  b     .L7F0C16DC
-/* 0F6210 7F0C16E0 00000000 */   nop   
-/* 0F6214 7F0C16E4 03E00008 */  jr    $ra
-/* 0F6218 7F0C16E8 00601025 */   move  $v0, $v1
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -312,36 +186,6 @@ void init_LnameX(void) {
 }
 #else
 GLOBAL_ASM(
-.late_rodata
-/*hacks for above jtbl to fit , jpt_stage_text */
-/*remove once get_textbank_number_for_stagenum matches */
-.word .L7F0C1664
-.word .L7F0C16AC
-.word .L7F0C169C
-.word .L7F0C1604
-.word .L7F0C160C
-.word .L7F0C1614
-.word .L7F0C161C
-.word .L7F0C1674
-.word .L7F0C16A4
-.word .L7F0C1684
-.word stagetext_loop
-.word .L7F0C168C
-.word stagetext_loop
-.word .L7F0C163C
-.word stagetext_loop
-.word .L7F0C16BC
-.word .L7F0C16C4
-.word stagetext_loop
-.word .L7F0C16B4
-.word stagetext_loop
-.word .L7F0C16CC
-.word stagetext_loop
-.word stagetext_loop
-.word stagetext_loop
-.word .L7F0C16D4
-
-
 .text
 glabel init_LnameX
 /* 0F621C 7F0C16EC 27BDFFD8 */  addiu $sp, $sp, -0x28
