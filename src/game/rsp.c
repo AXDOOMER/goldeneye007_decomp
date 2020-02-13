@@ -38,15 +38,12 @@ void something_with_rsp_c_debug(void) {
 
 
 #ifdef NONMATCHING
-void allocate_init_rsp_buffers(void) {
-    ? temp_ret;
+void allocate_init_rsp_buffers(void)
 
-    // Node 0
-    temp_ret = mempAllocBytesInBank(0xa000, 6);
-    D_8004E9E8 = temp_ret;
-    D_8004E9E4 = (s32) (temp_ret + 0xa000);
+{
+    ptr_rsp_buffer_start = mempAllocBytesInBank(0xa000,'\x06');
+    ptr_rspbuffer_end = ptr_rsp_buffer_start + 0xa000;
     return;
-    // (possible return value: temp_ret)
 }
 
 #else

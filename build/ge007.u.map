@@ -4602,7 +4602,7 @@ Linker script and memory map
                 0x000000007f0cbb74                check_load_image_to_buffer
                 0x000000007f0cbc18                load_image_to_buffer
                 0x000000007f0cbe50                sub_GAME_7F0CBE50
-                0x000000007f0cbee8                sub_GAME_7F0CBEE8
+                0x000000007f0cbee8                calls_load_image_to_buffer
  build/u/src/game/image_bank.o(.text)
  .text          0x000000007f0cbf10      0x5b0 build/u/src/game/image_bank.o
                 0x000000007f0cbf10                makeemptyimageatpos
@@ -21377,7 +21377,6 @@ Linker script and memory map
                 0x000000008005b858                jpt_8005B858
  build/u/src/game/lvl_text.o(.rodata)
  .rodata        0x000000008005b880      0x3a0 build/u/src/game/lvl_text.o
-                0x000000008005bb60                jpt_stage_text
  build/u/src/game/mp_watch.o(.rodata)
  .rodata        0x000000008005bc20      0x100 build/u/src/game/mp_watch.o
                 0x000000008005bc20                ascii_MP_watch_menu_percentd
@@ -22730,18 +22729,18 @@ Linker script and memory map
  .bss           0x000000008008c600       0x40 build/u/src/game/mp_music.o
                 0x000000008008c600                dword_CODE_bss_8008C600
                 0x000000008008c604                dword_CODE_bss_8008C604
-                0x000000008008c608                dword_CODE_bss_8008C608
-                0x000000008008c60c                dword_CODE_bss_8008C60C
-                0x000000008008c610                dword_CODE_bss_8008C610
-                0x000000008008c614                dword_CODE_bss_8008C614
-                0x000000008008c618                dword_CODE_bss_8008C618
-                0x000000008008c61c                dword_CODE_bss_8008C61C
-                0x000000008008c620                dword_CODE_bss_8008C620
-                0x000000008008c624                dword_CODE_bss_8008C624
-                0x000000008008c628                dword_CODE_bss_8008C628
-                0x000000008008c62c                dword_CODE_bss_8008C62C
-                0x000000008008c630                dword_CODE_bss_8008C630
-                0x000000008008c634                dword_CODE_bss_8008C634
+                0x000000008008c608                music_slot_active_0
+                0x000000008008c60c                music_slot_active_1
+                0x000000008008c610                music_slot_active_2
+                0x000000008008c614                music_slot_active_3
+                0x000000008008c618                music_slot_minutes_0
+                0x000000008008c61c                music_slot_minutes_1
+                0x000000008008c620                music_slot_minutes_2
+                0x000000008008c624                music_slot_minutes_3
+                0x000000008008c628                music_slot_seconds_0
+                0x000000008008c62c                music_slot_seconds_1
+                0x000000008008c630                music_slot_seconds_2
+                0x000000008008c634                music_slot_seconds_3
  build/u/src/game/lvl_text.o(.bss)
  .bss           0x000000008008c640       0xc0 build/u/src/game/lvl_text.o
                 0x000000008008c640                ptr_text

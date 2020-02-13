@@ -248,10 +248,9 @@ s32 mp_weapon_set = 0xB;
 
 
 #ifdef NONMATCHING
-void *advance_mp_weapon_set_by_one_save_value(void) {
-    // Node 0
-    mp_weapon_set = (s32) ((s32) (mp_weapon_set + 1) % 0xe);
-    return &mp_weapon_set;
+void advance_mp_weapon_set_by_one_save_value(void)
+{
+    mp_weapon_set = (mp_weapon_set + 1) % 0xe;
 }
 #else
 GLOBAL_ASM(

@@ -342,11 +342,13 @@ glabel check_if_player_is_pressing_anything_left
 
 
 
-void play_watch_sfx_beep(void) {
+void play_watch_sfx_beep(void)
+{
     play_sfx_a1(ptr_sfx_buf, 0x9f, 0);
 }
 
-void unpause_game(void) {
+void unpause_game(void)
+{
     stop_play_flag = 0;
     is_gameover_flag = 0;
     is_paused = 0;
@@ -7219,14 +7221,13 @@ def_7F0C40C0:
 
 
 #ifdef NONMATCHING
-s32 sub_GAME_7F0C6048(void) {
-    // Node 0
+s32 sub_GAME_7F0C6048(void)
+{
     if (is_gameover_flag != 0)
     {
-        // Node 1
         return 0;
     }
-    return (pPlayer->unk29C4 | (0 < pPlayer->unk2A00));
+    return (pPlayer->mpmenuon | (0 < pPlayer->healthdisplaytime));
 }
 
 #else

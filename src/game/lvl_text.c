@@ -181,8 +181,49 @@ LEVELID get_textbank_number_for_stagenum(LEVELID level)
 
 
 #ifdef NONMATCHING
-void init_LnameX(void) {
+void init_LnameX(void)
 
+{
+    undefined *puVar1;
+    u8 **ppuVar2;
+    int iVar3;
+    
+    if (j_text_trigger != 0) {
+        ptr_char_data_buf = mempAllocBytesInBank(0x2e80,'\x06');
+        ptr_char_registry = mempAllocBytesInBank(0x100,'\x06');
+        iVar3 = 0;
+        do {
+            ptr_char_registry[iVar3] = ptr_char_registry[iVar3] & 0x3f;
+            *(ushort *)(ptr_char_registry + iVar3) = *(ushort *)(ptr_char_registry + iVar3) | 0x3fff;
+            (ptr_char_registry + iVar3)[2] = (ptr_char_registry + iVar3)[2] & 0x3f;
+            *(ushort *)(ptr_char_registry + iVar3 + 2) = *(ushort *)(ptr_char_registry + iVar3 + 2) | 0x3fff;
+            (ptr_char_registry + iVar3)[4] = (ptr_char_registry + iVar3)[4] & 0x3f;
+            *(ushort *)(ptr_char_registry + iVar3 + 4) = *(ushort *)(ptr_char_registry + iVar3 + 4) | 0x3fff;
+            (ptr_char_registry + iVar3)[6] = (ptr_char_registry + iVar3)[6] & 0x3f;
+            puVar1 = ptr_char_registry + iVar3;
+            iVar3 += 8;
+            *(ushort *)(puVar1 + 6) = *(ushort *)(puVar1 + 6) | 0x3fff;
+        } while (iVar3 != 0xf8);
+    }
+
+    ptr_text = 0;
+    ppuVar2 = (u8 **)table_text_pointers;
+    do {
+        ppuVar2 = ppuVar2 + 4;
+        ppuVar2[1] = NULL;
+        ppuVar2[2] = NULL;
+        ppuVar2[3] = NULL;
+        *ppuVar2 = NULL;
+        ppuVar2 = ppuVar2;
+    } while (ppuVar2 != &ptr_char_data_buf);
+    table_text_pointers[37] = _load_resource_named_to_membank((&ptr_LgunX)[j_text_trigger],1,0x100,6);
+    table_text_pointers[38] = _load_resource_named_to_membank((&ptr_LtitleX)[j_text_trigger],1,0x100,6);
+    table_text_pointers[39] = _load_resource_named_to_membank((&ptr_LmpmenuX)[j_text_trigger],1,0x100,6);
+    table_text_pointers[40] = _load_resource_named_to_membank((&ptr_LpropobjX)[j_text_trigger],1,0x100,6);
+    table_text_pointers[41] =  _load_resource_named_to_membank((&ptr_LmpweaponsX)[j_text_trigger],1,0x100,6);
+    table_text_pointers[42] = _load_resource_named_to_membank((&ptr_LoptionsX)[j_text_trigger],1,0x100,6);
+    table_text_pointers[43] = _load_resource_named_to_membank((&ptr_LmiscX)[j_text_trigger],1,0x100,6);
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -348,8 +389,50 @@ glabel init_LnameX
 
 
 #ifdef NONMATCHING
-void something_with_LnameJ(void) {
-
+void something_with_LnameJ(void)
+{
+    ushort uVar1;
+    ushort *puVar2;
+    int iVar3;
+    
+    iVar3 = 0;
+    if (j_text_trigger != 0) {
+        do {
+            puVar2 = (ushort *)(ptr_char_registry + iVar3);
+            if (*puVar2 >> 0xe == 0) {
+                uVar1 = puVar2[1];
+            }
+            else {
+                *(byte *)puVar2 = ((byte)(*puVar2 >> 0xe) - 1) * '@' | *(byte *)puVar2 & 0x3f;
+                puVar2 = (ushort *)(ptr_char_registry + iVar3);
+                uVar1 = puVar2[1];
+            }
+            if (uVar1 >> 0xe == 0) {
+                uVar1 = puVar2[2];
+            }
+            else {
+                *(byte *)(puVar2 + 1) =
+                     ((byte)(uVar1 >> 0xe) - 1) * '@' | *(byte *)(puVar2 + 1) & 0x3f;
+                puVar2 = (ushort *)(ptr_char_registry + iVar3);
+                uVar1 = puVar2[2];
+            }
+            if (uVar1 >> 0xe == 0) {
+                uVar1 = puVar2[3];
+            }
+            else {
+                *(byte *)(puVar2 + 2) =
+                     ((byte)(uVar1 >> 0xe) - 1) * '@' | *(byte *)(puVar2 + 2) & 0x3f;
+                puVar2 = (ushort *)(ptr_char_registry + iVar3);
+                uVar1 = puVar2[3];
+            }
+            iVar3 += 8;
+            if (uVar1 >> 0xe != 0) {
+                *(byte *)(puVar2 + 3) =
+                     ((byte)(uVar1 >> 0xe) - 1) * '@' | *(byte *)(puVar2 + 3) & 0x3f;
+            }
+        } while (iVar3 != 0xf8);
+    }
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -429,8 +512,84 @@ glabel something_with_LnameJ
 
 
 #ifdef NONMATCHING
-void something_with_LnameX(void) {
-
+int something_with_LnameX(uint param_1)
+{
+    bool bVar1;
+    ushort uVar3;
+    u8 *puVar2;
+    int iVar4;
+    ushort *puVar5;
+    int iVar6;
+    int iVar7;
+    int indexto;
+    int iVar8;
+    int iVar9;
+    int indexfrom;
+    
+    indexto = -1;
+    bVar1 = (param_1 & 0x2000) != 0;
+    iVar7 = 0;
+    iVar4 = 0;
+    iVar9 = -1;
+    puVar5 = (ushort *)ptr_char_registry;
+    do {
+        indexfrom = (int)param_1 >> 1;
+        if ((!bVar1) && ((longlong)indexfrom == ((ulonglong)*puVar5 & 0x3fff))) break;
+        if ((bVar1) &&
+           (((iVar4 + 1 < 0x7c && ((longlong)indexfrom == ((ulonglong)*puVar5 & 0x3fff))) &&
+            ((longlong)indexfrom == ((ulonglong)puVar5[1] & 0x3fff))))) break;
+        uVar3 = *puVar5 >> 0xe;
+        iVar6 = iVar4 + 1;
+        if (uVar3 == 0) {
+            indexto = iVar4;
+        }
+        iVar7 += 2;
+        iVar8 = iVar9;
+        if (((uVar3 == 0) && (puVar5[1] >> 0xe == 0)) && (iVar8 = iVar4, 0x7b < iVar6)) {
+            iVar8 = iVar9;
+        }
+        puVar5 = puVar5 + 1;
+        iVar4 = iVar6;
+        iVar9 = iVar8;
+    } while (iVar6 != 0x7c);
+    if (iVar4 < 0x7c) {
+        if (bVar1) {
+            *(byte *)puVar5 = *(byte *)puVar5 & 0x3f | 0x80;
+            (ptr_char_registry + iVar7)[2] = (ptr_char_registry + iVar7)[2] & 0x3f | 0x80;
+            puVar2 = ptr_char_data_buf + iVar4 * 0x60;
+        }
+        else {
+            *(byte *)puVar5 = *(byte *)puVar5 & 0x3f | 0x80;
+            puVar2 = ptr_char_data_buf + iVar4 * 0x60;
+        }
+    }
+    else {
+        if ((bVar1) || (indexto < 0)) {
+            puVar2 = ptr_char_data_buf;
+            if ((bVar1) && (iVar4 = iVar9 * 2, -1 < iVar9)) {
+                ptr_char_registry[iVar4] = ptr_char_registry[iVar4] & 0x3f | 0x80;
+                (ptr_char_registry + iVar4)[2] = (ptr_char_registry + iVar4)[2] & 0x3f | 0x80;
+                uVar3 = (ushort)indexfrom & 0x3fff;
+                *(ushort *)(ptr_char_registry + iVar4) =
+                     uVar3 | *(ushort *)(ptr_char_registry + iVar4) & 0xc000;
+                *(ushort *)(ptr_char_registry + iVar4 + 2) =
+                     uVar3 | *(ushort *)(ptr_char_registry + iVar4 + 2) & 0xc000;
+                romCopy((char *)(ptr_char_data_buf + iVar9 * 0x60),
+                        (char *)(_efontcharSegmentStart + ((int)(param_1 & 0x1fff) >> 1) * 0x20),
+                        0x80);
+                puVar2 = ptr_char_data_buf + iVar9 * 0x60;
+            }
+        }
+        else {
+            ptr_char_registry[indexto * 2] = ptr_char_registry[indexto * 2] & 0x3f | 0x80;
+            *(ushort *)(ptr_char_registry + indexto * 2) =
+                 (ushort)indexfrom & 0x3fff | *(ushort *)(ptr_char_registry + indexto * 2) & 0xc000;
+            romCopy((char *)(ptr_char_data_buf + indexto * 0x60),
+                    (char *)(_jfontcharSegmentStart + indexfrom * 0x18),0x60);
+            puVar2 = ptr_char_data_buf + indexto * 0x60;
+        }
+    }
+    return (int)puVar2;
 }
 #else
 GLOBAL_ASM(
@@ -642,13 +801,10 @@ glabel something_with_LnameX
 
 
 #ifdef NONMATCHING
-void load_mission_text_bank(s32 arg0, s32 arg6) {
-    // Node 0
-    *(&ptr_text + (arg6 * 4)) = _load_resource_named_to_membank(*(&LnameX_lookuptable + ((arg0 * 8) + (j_text_trigger * 4))), 1, 0x100, 4);
-    return;
-    // (possible return value: _load_resource_named_to_membank(*(&LnameX_lookuptable + ((arg0 * 8) + (j_text_trigger * 4))), 1, 0x100, 4))
+void load_mission_text_bank(u32 param_1)
+{
+    *(u8 **)(&ptr_text + param_1) = _load_resource_named_to_membank((byte *)(&(&LnameX_lookuptable)[param_1].en_file)[j_text_trigger],1,0x100,4);
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -684,13 +840,10 @@ glabel load_mission_text_bank
 
 
 #ifdef NONMATCHING
-void load_briefing_text_bank(s32 arg0, s32 arg1, ? arg2, s32 arg6) {
-    // Node 0
-    *(&ptr_text + (arg6 * 4)) = _load_resource_named_to_buffer(*(&LnameX_lookuptable + ((arg0 * 8) + (j_text_trigger * 4))), 1, arg1, arg2);
-    return;
-    // (possible return value: _load_resource_named_to_buffer(*(&LnameX_lookuptable + ((arg0 * 8) + (j_text_trigger * 4))), 1, arg1, arg2))
+void load_briefing_text_bank(int lnameID,undefined *target,int size)
+{
+    *(u8 **)(&ptr_text + lnameID) = _load_resource_named_to_buffer((byte *)(&(&LnameX_lookuptable)[lnameID].en_file)[j_text_trigger],1,target, size);
 }
-
 #else
 GLOBAL_ASM(
 .text
