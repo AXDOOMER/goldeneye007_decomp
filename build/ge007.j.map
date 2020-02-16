@@ -4604,7 +4604,7 @@ Linker script and memory map
                 0x000000007f0cc854                check_load_image_to_buffer
                 0x000000007f0cc8f8                load_image_to_buffer
                 0x000000007f0ccb30                sub_GAME_7F0CBE50
-                0x000000007f0ccbc8                sub_GAME_7F0CBEE8
+                0x000000007f0ccbc8                calls_load_image_to_buffer
  build/j/src/game/image_bank.o(.text)
  .text          0x000000007f0ccbf0      0x5b0 build/j/src/game/image_bank.o
                 0x000000007f0ccbf0                makeemptyimageatpos
@@ -16654,7 +16654,7 @@ Linker script and memory map
                 0x000000008002694c                controller_2_rumble_pulse
                 0x0000000080026950                controller_3_rumble_pulse
                 0x0000000080026954                controller_4_rumble_pulse
-                0x0000000080026958                D_80026918
+                0x0000000080026958                enableControllers
                 0x000000008002695c                D_8002691C
                 0x0000000080026960                D_80026920
                 0x0000000080026964                disable_all_rumble

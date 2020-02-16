@@ -16655,7 +16655,7 @@ Linker script and memory map
                 0x000000008002690c                controller_2_rumble_pulse
                 0x0000000080026910                controller_3_rumble_pulse
                 0x0000000080026914                controller_4_rumble_pulse
-                0x0000000080026918                D_80026918
+                0x0000000080026918                enableControllers
                 0x000000008002691c                D_8002691C
                 0x0000000080026920                D_80026920
                 0x0000000080026924                disable_all_rumble
