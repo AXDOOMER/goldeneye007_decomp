@@ -1274,7 +1274,7 @@ typedef enum ACT_TYPE {
 
 // character flags
 #define CHRFLAG_00000001                     0x00000001 // unknown
-#define CHRFLAG_SUNGLASSES                   0x00000002 // sunglasses
+#define CHRFLAG_CLONE                        0x00000002 // clone on heard gunfire (used by GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
 #define CHRFLAG_00000004                     0x00000004 // unknown
 #define CHRFLAG_HAS_BEEN_ON_SCREEN           0x00000008 // chr has been on screen before
 #define CHRFLAG_INVINCIBLE                   0x00000010 // invincible
