@@ -18,7 +18,7 @@
 #define CHR_OBJECTIVE -2 /* objective ai list chr ID */
 #define CHR_FREE -1 /* chr IDs when free'd (killed or removed from level) */
 #define CHR_SPAWN_NUM_START 5000 /* default chr num for spawned guards with ai command BD/BE */
-#define CHR_CLONED_NUM_START 9000 /* default chr num for cloed guards with ai command C1 */
+#define CHR_CLONED_NUM_START 10000 /* default chr num for cloed guards with ai command C1 */
 
 #define PAD_PRESET 9000 /* stored as chr->padpreset1 */
 
@@ -1273,9 +1273,9 @@ typedef enum ACT_TYPE {
 } ACT_TYPE;
 
 // character flags
-#define CHRFLAG_00000001                     0x00000001 // unknown
+#define CHRFLAG_INIT                         0x00000001 // initialize chr
 #define CHRFLAG_CLONE                        0x00000002 // clone on heard gunfire (used by GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
-#define CHRFLAG_00000004                     0x00000004 // unknown
+#define CHRFLAG_NEAR_MISS                    0x00000004 // chr was just nearly shot (sometimes set on direct hit)
 #define CHRFLAG_HAS_BEEN_ON_SCREEN           0x00000008 // chr has been on screen before
 #define CHRFLAG_INVINCIBLE                   0x00000010 // invincible
 #define CHRFLAG_00000020                     0x00000020 // unknown
