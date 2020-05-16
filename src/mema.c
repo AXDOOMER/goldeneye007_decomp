@@ -33,31 +33,12 @@ void memaSwap(s_mem_alloc_entry *a, s_mem_alloc_entry *b) {
     b->size = temp_v1;
 }
 
-
-
-
-
-
-#ifdef NONMATCHING
-void memaMerge(void *arg0, void *arg1)
-{
-    arg0->unk4 = (s32) (arg0->unk4 + arg1->unk4);
-    arg1->unk0 = 0;
-    arg1->unk4 = 0;
+void memaMerge(s_mem_alloc_entry *a, s_mem_alloc_entry *b) {
+    a->size = (s32) (a->size + b->size);
+    b->addr = 0;
+    b->size = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel memaMerge
-/* 00A634 70009A34 8C8E0004 */  lw    $t6, 4($a0)
-/* 00A638 70009A38 8CAF0004 */  lw    $t7, 4($a1)
-/* 00A63C 70009A3C 01CFC021 */  addu  $t8, $t6, $t7
-/* 00A640 70009A40 AC980004 */  sw    $t8, 4($a0)
-/* 00A644 70009A44 ACA00000 */  sw    $zero, ($a1)
-/* 00A648 70009A48 03E00008 */  jr    $ra
-/* 00A64C 70009A4C ACA00004 */   sw    $zero, 4($a1)
-)
-#endif
+
 
 
 
