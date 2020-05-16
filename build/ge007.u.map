@@ -1335,7 +1335,7 @@ Linker script and memory map
                 0x0000000070009a34                memaMerge
                 0x0000000070009a50                memaSortMergeEntries
                 0x0000000070009b18                memaSortMergeAllEntries
-                0x0000000070009b60                mem_related
+                0x0000000070009b60                memaFindOpening
                 0x0000000070009c74                memaAllocRoomBuffer
                 0x0000000070009d6c                something_with_mema_c_debug
                 0x0000000070009d98                mempInitMallocTable

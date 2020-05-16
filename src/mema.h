@@ -19,7 +19,7 @@ void memaSwap(s_mem_alloc_entry *a,s_mem_alloc_entry *b);
 void memaMerge(s_mem_alloc_entry *a, s_mem_alloc_entry *b);
 u32 memaSortMergeEntries(struct s_mem_alloc_table *param_1);
 void memaSortMergeAllEntries(void);
-u32 mem_related(s32 arg0);
+s_mem_alloc_entry * memaFindOpening(s_mem_alloc_table *param_1);
 void memaAllocRoomBuffer(u32 addr,u32 size);
 void something_with_mema_c_debug(void);
 void mempInitMallocTable(void *ptr_allocmem,u32 size);

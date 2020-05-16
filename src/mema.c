@@ -180,75 +180,73 @@ void memaSortMergeAllEntries(void)
 
 
 #ifdef NONMATCHING
-u32 mem_related(s32 arg0) {
-    u32 temp_s2;
-    u32 temp_s1;
-
-    // Node 0
-    temp_s2 = (arg0 + 0x10);
-    temp_s1 = (arg0 + 0xfe8);
-    // Node 1
-    if (temp_s1 >= temp_s2)
-    {
-        loop_2:
-        // Node 2
-        if (temp_s2->unk4 == 0)
-        {
-            // Node 3
-            return;
-            // (possible return value: temp_s2)
+s_mem_alloc_entry * memaFindOpening(s_mem_alloc_table *param_1)
+{
+  u32 entrySize;
+  s_mem_alloc_entry *pAStart;
+  s_mem_alloc_entry *a;
+  int iVar1;
+  u32 invalidSize;
+  s_mem_alloc_entry *pStart;
+  s_mem_alloc_entry *pEnd;
+  int count;
+  
+  pStart = param_1->entries + 2;
+  pEnd = param_1->entries + 0x1fd;
+  count = 0;
+  pAStart = pStart;
+  while( 1 ) {
+    while (a = pAStart, pEnd < a) {
+      count = count + 1;
+      pAStart = pStart;
+      if (0x1fb < count) {
+        if (pEnd < pStart) {
+          return pStart;
         }
-        // Node 4
-        if ((u32) temp_s2->unk8 < (u32) *temp_s2)
-        {
-            // Node 5
-            memaSwap(temp_s2, (temp_s2 + 8));
+        invalidSize = 0xffffffff;
+        entrySize = param_1->entries[2].size;
+        while( 1 ) {
+          a = pStart;
+          if (invalidSize <= entrySize) {
+            entrySize = invalidSize;
+            a = pAStart;
+          }
+          if (pEnd < pStart + 1) break;
+          invalidSize = entrySize;
+          entrySize = pStart[1].size;
+          pStart = pStart + 1;
+          pAStart = a;
         }
-        // Node 6
-        if (temp_s2->unk8 == (*temp_s2 + temp_s2->unk4))
-        {
-            // Node 7
-            temp_s2->unk8 = 0U;
-            temp_s2->unkC = 0;
-            temp_s2->unk4 = (u32) (temp_s2->unk4 + temp_s2->unkC);
-            return;
-            // (possible return value: (temp_s2 + 8))
-        }
-        // Node 8
-        if (temp_s1 >= (u32) (temp_s2 + 8))
-        {
-            goto loop_2;
-        }
-        // Node 9
+        return a;
+      }
     }
-    // Node 10
-    if ((0 + 1) < 0x1fc)
-    {
-        goto loop_1;
+    iVar1 = a->size;
+    if (iVar1 == 0) break;
+    entrySize = a[1].addr;
+    if (entrySize < (u32)a->addr) {
+      memaSwap((u8 *)a,(u8 *)(a + 1));
+      iVar1 = a->size;
+      entrySize = a[1].addr;
+      invalidSize = a->addr + iVar1;
     }
-    // Node 11
-    if (temp_s1 >= temp_s2)
-    {
-        loop_12:
-        // Node 12
-        if ((u32) temp_s2->unk4 < -1U)
-        {
-            // Node 13
-        }
-        // Node 14
-        if (temp_s1 >= (u32) (temp_s2 + 8))
-        {
-            goto loop_12;
-        }
+    else {
+      invalidSize = a->addr + iVar1;
     }
-    // Node 15
-    return;
-    // (possible return value: temp_s2)
+    pAStart = a + 1;
+    if (entrySize == invalidSize) {
+      count = a[1].size;
+      a[1].addr = 0;
+      a[1].size = 0;
+      a->size = iVar1 + count;
+      return a + 1;
+    }
+  }
+  return a;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel mem_related
+glabel memaFindOpening
 /* 00A760 70009B60 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 00A764 70009B64 AFB2001C */  sw    $s2, 0x1c($sp)
 /* 00A768 70009B68 AFB30020 */  sw    $s3, 0x20($sp)
@@ -445,7 +443,7 @@ glabel memaAllocRoomBuffer
 /* 00A934 70009D34 3C048006 */  lui   $a0, %hi(ptr_table_allocated_mem_blocks)
 /* 00A938 70009D38 55E00005 */  bnezl $t7, .L70009D50
 /* 00A93C 70009D3C 8FB80018 */   lw    $t8, 0x18($sp)
-/* 00A940 70009D40 0C0026D8 */  jal   mem_related
+/* 00A940 70009D40 0C0026D8 */  jal   memaFindOpening
 /* 00A944 70009D44 24843C28 */   addiu $a0, %lo(ptr_table_allocated_mem_blocks) # addiu $a0, $a0, 0x3c28
 /* 00A948 70009D48 00401825 */  move  $v1, $v0
 /* 00A94C 70009D4C 8FB80018 */  lw    $t8, 0x18($sp)
@@ -538,98 +536,74 @@ void mem_related_calls_sort_merge_entries(void) {
 
 
 #ifdef NONMATCHING
-s32 mem_related_something_find_first(u32 arg0) {
-    u32 temp_v0;
-    void *temp_s1;
-    s32 temp_t6;
-    s32 temp_at;
+int mem_related_something_find_first(uint size)
 
-    // Node 0
-    // Node 1
-    temp_v0 = (ptr_table_allocated_mem_blocks + 0x10.unk4 - arg0);
-    if ((((u32) ptr_table_allocated_mem_blocks + 0x10.unk4 >= arg0) && (-1 != ptr_table_allocated_mem_blocks + 0x10)) && (temp_at != 0))
-    {
-        // Node 4
-        if (temp_at == 0)
-        {
-            // Node 5
-            if (temp_v0 >= (u32) (arg0 >> 2))
-            {
-                // Node 6
-                temp_s1 = (&ptr_table_allocated_mem_blocks + 0x10 + 8);
-                if ((0 + 1) != 0x10)
-                {
-                    goto loop_1;
-                }
-            }
-        }
+{
+  uint uVar1;
+  s_mem_alloc_entry *psVar2;
+  uint uVar3;
+  s32 sVar4;
+  int iVar5;
+  int iVar6;
+  s_mem_alloc_entry *psVar7;
+  
+  psVar7 = ptr_table_allocated_mem_blocks.entries + 2;
+  uVar3 = 0xffffffff;
+  psVar2 = (s_mem_alloc_entry *)0x0;
+  iVar6 = 0;
+  do {
+    iVar6 = iVar6 + 1;
+    uVar1 = psVar7->size - size;
+    if (size <= (uint)psVar7->size) {
+      if ((psVar7->addr == -1) ||
+         ((uVar1 < uVar3 && ((psVar2 = psVar7, uVar1 < 0x40 || (uVar3 = uVar1, uVar1 < size >> 2))))
+         )) break;
     }
-    else
-    {
-        // Node 6
-        temp_s1 = (&ptr_table_allocated_mem_blocks + 0x10 + 8);
-        if ((0 + 1) != 0x10)
-        {
-            goto loop_1;
-        }
+    psVar7 = psVar7 + 1;
+  } while (iVar6 != 0x10);
+  if (psVar2 == (s_mem_alloc_entry *)0x0) {
+    iVar6 = 0;
+    psVar2 = psVar7;
+    if ((uint)psVar7->size < size) {
+      uVar3 = psVar7[1].size;
+      while (psVar2 = psVar7 + 1, uVar3 < size) {
+        uVar3 = psVar7[2].size;
+        psVar7 = psVar2;
+      }
     }
-    // Node 7
-    if (NULL == 0)
-    {
-        // Node 8
-        if ((u32) temp_s1->unk4 < arg0)
-        {
-            loop_9:
-            // Node 9
-            if ((u32) temp_s1->unkC < arg0)
-            {
-                goto loop_9;
-            }
+    if (psVar2->addr == -1) {
+      psVar2 = ptr_table_allocated_mem_blocks.entries + 2;
+      do {
+        memaSortMergeEntries(&ptr_table_allocated_mem_blocks);
+        iVar6 = iVar6 + 1;
+      } while (iVar6 != 8);
+      uVar3 = ptr_table_allocated_mem_blocks.entries[3].size;
+      sVar4 = ptr_table_allocated_mem_blocks.entries[2].addr;
+      psVar7 = psVar2;
+      if ((uint)ptr_table_allocated_mem_blocks.entries[2].size < size) {
+        while (psVar2 = psVar7 + 1, uVar3 < size) {
+          uVar3 = psVar7[2].size;
+          psVar7 = psVar2;
         }
-        // Node 10
-        if (-1 == *temp_s1)
-        {
-            // Node 11
-            // Node 12
-            memaSortMergeEntries(&ptr_table_allocated_mem_blocks, NULL, 0x10);
-            if ((0 + 1) != 8)
-            {
-                goto loop_12;
-            }
-            // Node 13
-            if ((u32) ptr_table_allocated_mem_blocks.unk14 < arg0)
-            {
-                loop_14:
-                // Node 14
-                if ((u32) ptr_table_allocated_mem_blocks + 0x10.unkC < arg0)
-                {
-                    goto loop_14;
-                }
-            }
-            // Node 15
-            if (-1 == ptr_table_allocated_mem_blocks + 0x10)
-            {
-                // Node 16
-                return;
-                // (possible return value: 0)
-            }
-        }
-        // Node 17
+        sVar4 = psVar2->addr;
+      }
+      if (sVar4 == -1) {
+        return 0;
+      }
     }
-    // Node 18
-    temp_t6 = (NULL->unk4 - arg0);
-    *NULL = (s32) (*NULL + arg0);
-    NULL->unk4 = temp_t6;
-    if (temp_t6 == 0)
-    {
-        // Node 19
-        *NULL = 0;
-    }
-    // Node 20
-    return;
-    // (possible return value: *NULL)
+    iVar6 = psVar2->addr;
+  }
+  else {
+    iVar6 = psVar2->addr;
+  }
+  iVar5 = psVar2->size - size;
+  psVar2->addr = iVar6 + size;
+  psVar2->size = iVar5;
+  if (iVar5 == 0) {
+    psVar2->addr = 0;
+  }
+  return iVar6;
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -1258,25 +1232,23 @@ glabel mem_related_0
 
 
 #ifdef NONMATCHING
+//close C, regalloc
 u32 mem_related_1(u32 addr,u32 length,u32 maxsize)
 {
-    u32 uVar2;
-    
     if (length < maxsize) {
         if (mem_related_something_find_first_0((addr + length), (maxsize - length)) == 0) {
-            uVar2 = 0;
+            return 0;
         }
         else {
-            uVar2 = 1;
+            return 1;
         }
     }
     else {
         if (maxsize < length) {
             mem_related_model_room_buffers_0((addr + maxsize), (length - maxsize));
         }
-        uVar2 = 1;
+        return 1;
     }
-    return uVar2;
 }
 #else
 GLOBAL_ASM(
