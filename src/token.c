@@ -11,10 +11,8 @@ s32 strstr_ptrcurrent_string = 0;
 u32 D_80024478[34] = {0};
 
 
-const char str_empty[] = "";
-const char aD_6[] = "-d";
-const char aS_2[] = "-s";
-const char aJ[] = "-j";
+//const char str_empty[] = "";
+
 
 
 
@@ -89,6 +87,9 @@ loop_4:
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel str_empty
+.word 0x0
 .text
 glabel check_string_something
 /* 00B0F0 7000A4F0 3C058002 */  lui   $a1, %hi(strstr_ptrcurrent_string)
@@ -145,7 +146,9 @@ void strtok(s32 arg0) {
     check_string_something(&boot_token_from_indy);
 }
 
-
+//const char aD_6[] = "-d";
+//const char aS_2[] = "-s";
+//const char aJ[] = "-j";
 
 #ifdef NONMATCHING
 s32 check_boot_switches(void)
@@ -182,6 +185,13 @@ s32 check_boot_switches(void)
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel aD_6
+.word 0x2d640000
+glabel aS_2
+.word 0x2d730000
+glabel aJ
+.word 0x2d6a0000
 .text
 glabel check_boot_switches
 /* 00B1C0 7000A5C0 27BDFFC8 */  addiu $sp, $sp, -0x38
