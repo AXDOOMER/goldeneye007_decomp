@@ -16983,7 +16983,7 @@ Linker script and memory map
                 0x000000008002858c                aGrab_D_temp_uix_0
                 0x00000000800285a0                aUix2pixXsDGrab_D_temp_uix
                 0x00000000800285c0                aFromaliasGrab_D_temp_pixGrab_D_t_0
-                0x00000000800285ec                ::aImgcopyFjfifGrab_D_temp_rgbGrab(void)
+                0x00000000800285ec                aImgcopyFjfifGrab_D_temp_rgbGrab__0
                 0x000000008002861c                aRmGrab_D_temp_uixGrab_D_temp_pix_0
                 0x0000000080028654                aImgviewGrab_D_jpeg_0
                 0x000000008002866c                aGrab_D_rgb
@@ -17007,7 +17007,7 @@ Linker script and memory map
  build/u/src/ramrom.o(.rodata)
  build/u/src/boss.o(.rodata)
  .rodata        0x0000000080028a70      0x6f0 build/u/src/boss.o
-                0x0000000080029104                ::aLevel(void)
+                0x0000000080029104                aLevel__0
                 0x000000008002910c                aLevel__1
                 0x0000000080029114                aHard
                 0x000000008002911c                aHard_1
@@ -21347,7 +21347,7 @@ Linker script and memory map
                 0x000000008005b6b0                aLv_c_debug
                 0x000000008005b6bc                aStanshow_
                 0x000000008005b6c8                aStanshow__5
-                0x000000008005b6d4                ::aStanshow(void)
+                0x000000008005b6d4                aStanshow__0
                 0x000000008005b6e0                aStanshow__1
                 0x000000008005b6ec                aStanshow__2
                 0x000000008005b6f8                aStanshow__3

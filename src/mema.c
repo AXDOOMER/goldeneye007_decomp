@@ -20,36 +20,19 @@ void *ptr_mema_c_debug_notice_list = 0;
 
 
 
-#ifdef NONMATCHING
-void memaSwap(u8 *a,u8 *b)
 
-{
-    u8 *tempstart;
-    u8 *tempend;
-    
-    tempstart = *(void **)a;
-    tempend = *(void **)(a + 4);
-    *(undefined4 *)a = *(undefined4 *)b;
-    *(undefined4 *)(a + 4) = *(undefined4 *)(b + 4);
-    *(void **)b = tempstart;
-    *(void **)(b + 4) = tempend;
-    return;
+void memaSwap(s_mem_alloc_entry *a, s_mem_alloc_entry *b) {
+    s32 temp_v0;
+    s32 temp_v1;
+
+    temp_v0 = a->addr;
+    temp_v1 = a->size;
+    a->addr = (s32) b->addr;
+    a->size = (s32) b->size;
+    b->addr = temp_v0;
+    b->size = temp_v1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel memaSwap
-/* 00A610 70009A10 8CAE0000 */  lw    $t6, ($a1)
-/* 00A614 70009A14 8C820000 */  lw    $v0, ($a0)
-/* 00A618 70009A18 8C830004 */  lw    $v1, 4($a0)
-/* 00A61C 70009A1C AC8E0000 */  sw    $t6, ($a0)
-/* 00A620 70009A20 8CAF0004 */  lw    $t7, 4($a1)
-/* 00A624 70009A24 AC8F0004 */  sw    $t7, 4($a0)
-/* 00A628 70009A28 ACA20000 */  sw    $v0, ($a1)
-/* 00A62C 70009A2C 03E00008 */  jr    $ra
-/* 00A630 70009A30 ACA30004 */   sw    $v1, 4($a1)
-)
-#endif
+
 
 
 

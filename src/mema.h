@@ -15,7 +15,7 @@ typedef struct s_mem_alloc_table {
 
 extern struct s_mem_alloc_table ptr_table_allocated_mem_blocks;
 
-void memaSwap(u8 *a,u8 *b);
+void memaSwap(s_mem_alloc_entry *a,s_mem_alloc_entry *b);
 void memaMerge(void *arg0, void *arg1);
 u32 memaSortMergeEntries(struct s_mem_alloc_table *param_1);
 void memaSortMergeAllEntries(void);
