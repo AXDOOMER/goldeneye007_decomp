@@ -1992,8 +1992,8 @@ Linker script and memory map
                 0x000000007020141c                decompress_entry
  build/u/src/rarezip/rarezip.o(.data)
  .data          0x0000000070201480      0x120 build/u/src/rarezip/rarezip.o
-                0x0000000070201480                rz_ptr_source
-                0x0000000070201484                rz_ptr_target
+                0x0000000070201480                inbuf
+                0x0000000070201484                outbuf
                 0x0000000070201488                inptr
                 0x000000007020148c                wp
                 0x0000000070201490                rz_ptrbuffer

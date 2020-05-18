@@ -1,13 +1,21 @@
 #include "ultra64.h"
 #include "rarezip/rarezip.h"
 
+#define GETBYTE()   (inbuf[inptr++])
+#define NEXTBYTE()  (u8)GETBYTE()
+#define NEEDBITS(n) {while(k<(n)){b|=((u32)NEXTBYTE())<<k;k+=8;}}
+#define DUMPBITS(n) {b>>=(n);k-=(n);}
+
+#define BMAX 16
+#define N_MAX 288
+
 //this file is modified from inflate.c found in gzip...
 //does this create a license conflict in rare's original source tree?
 
-u32 rz_ptr_source = 0x00000000;
-u32 rz_ptr_target = 0x00000000;
-u32 inptr = 0x00000000;
-u32 wp = 0x00000000;
+u8 *inbuf = 0;
+u8 *outbuf = 0;
+u32 inptr = 0;
+u32 wp = 0;
 u32 rz_ptrbuffer = 0x00000000;
 u8 border[0x14] = {
         16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15};
@@ -515,7 +523,7 @@ glabel inflate_codes
 /* 033C14 70200684 016E7821 */  addu  $t7, $t3, $t6
 /* 033C18 70200688 0178C821 */  addu  $t9, $t3, $t8
 /* 033C1C 7020068C 3C077020 */  lui   $a3, %hi(inptr) # $a3, 0x7020
-/* 033C20 70200690 3C067020 */  lui   $a2, %hi(rz_ptr_target) # $a2, 0x7020
+/* 033C20 70200690 3C067020 */  lui   $a2, %hi(outbuf) # $a2, 0x7020
 /* 033C24 70200694 AFB2000C */  sw    $s2, 0xc($sp)
 /* 033C28 70200698 AFA40010 */  sw    $a0, 0x10($sp)
 /* 033C2C 7020069C AFA50014 */  sw    $a1, 0x14($sp)
@@ -524,14 +532,14 @@ glabel inflate_codes
 /* 033C38 702006A8 8C63148C */  lw    $v1, %lo(wp)($v1)
 /* 033C3C 702006AC 95EC0000 */  lhu   $t4, ($t7)
 /* 033C40 702006B0 972D0000 */  lhu   $t5, ($t9)
-/* 033C44 702006B4 24C61484 */  addiu $a2, %lo(rz_ptr_target) # addiu $a2, $a2, 0x1484
+/* 033C44 702006B4 24C61484 */  addiu $a2, %lo(outbuf) # addiu $a2, $a2, 0x1484
 /* 033C48 702006B8 24E71488 */  addiu $a3, %lo(inptr) # addiu $a3, $a3, 0x1488
 .L702006BC:
 /* 033C4C 702006BC 0110082B */  sltu  $at, $t0, $s0
 .L702006C0:
 /* 033C50 702006C0 1020000C */  beqz  $at, .L702006F4
-/* 033C54 702006C4 3C027020 */   lui   $v0, %hi(rz_ptr_source) # $v0, 0x7020
-/* 033C58 702006C8 8C421480 */  lw    $v0, %lo(rz_ptr_source)($v0)
+/* 033C54 702006C4 3C027020 */   lui   $v0, %hi(inbuf) # $v0, 0x7020
+/* 033C58 702006C8 8C421480 */  lw    $v0, %lo(inbuf)($v0)
 .L702006CC:
 /* 033C5C 702006CC 8CF20000 */  lw    $s2, ($a3)
 /* 033C60 702006D0 00527021 */  addu  $t6, $v0, $s2
@@ -559,8 +567,8 @@ glabel inflate_codes
 /* 033CB0 70200720 0104082B */  sltu  $at, $t0, $a0
 /* 033CB4 70200724 1020000D */  beqz  $at, .L7020075C
 /* 033CB8 70200728 00494806 */   srlv  $t1, $t1, $v0
-/* 033CBC 7020072C 3C027020 */  lui   $v0, %hi(rz_ptr_source) # $v0, 0x7020
-/* 033CC0 70200730 8C421480 */  lw    $v0, %lo(rz_ptr_source)($v0)
+/* 033CBC 7020072C 3C027020 */  lui   $v0, %hi(inbuf) # $v0, 0x7020
+/* 033CC0 70200730 8C421480 */  lw    $v0, %lo(inbuf)($v0)
 .L70200734:
 /* 033CC4 70200734 8CF20000 */  lw    $s2, ($a3)
 /* 033CC8 70200738 0052C821 */  addu  $t9, $v0, $s2
@@ -599,11 +607,11 @@ glabel inflate_codes
 .L702007B4:
 /* 033D44 702007B4 2401000F */  li    $at, 15
 /* 033D48 702007B8 10810097 */  beq   $a0, $at, .L70200A18
-/* 033D4C 702007BC 3C027020 */   lui   $v0, %hi(rz_ptr_source) # $v0, 0x7020
+/* 033D4C 702007BC 3C027020 */   lui   $v0, %hi(inbuf) # $v0, 0x7020
 /* 033D50 702007C0 0104082B */  sltu  $at, $t0, $a0
 /* 033D54 702007C4 5020000D */  beql  $at, $zero, .L702007FC
 /* 033D58 702007C8 00047040 */   sll   $t6, $a0, 1
-/* 033D5C 702007CC 8C421480 */  lw    $v0, %lo(rz_ptr_source)($v0)
+/* 033D5C 702007CC 8C421480 */  lw    $v0, %lo(inbuf)($v0)
 .L702007D0:
 /* 033D60 702007D0 8CF20000 */  lw    $s2, ($a3)
 /* 033D64 702007D4 00527021 */  addu  $t6, $v0, $s2
@@ -626,8 +634,8 @@ glabel inflate_codes
 /* 033DA4 70200814 00894806 */  srlv  $t1, $t1, $a0
 /* 033DA8 70200818 1020000D */  beqz  $at, .L70200850
 /* 033DAC 7020081C 032E5021 */   addu  $t2, $t9, $t6
-/* 033DB0 70200820 3C027020 */  lui   $v0, %hi(rz_ptr_source) # $v0, 0x7020
-/* 033DB4 70200824 8C421480 */  lw    $v0, %lo(rz_ptr_source)($v0)
+/* 033DB0 70200820 3C027020 */  lui   $v0, %hi(inbuf) # $v0, 0x7020
+/* 033DB4 70200824 8C421480 */  lw    $v0, %lo(inbuf)($v0)
 .L70200828:
 /* 033DB8 70200828 8CF20000 */  lw    $s2, ($a3)
 /* 033DBC 7020082C 0052C021 */  addu  $t8, $v0, $s2
@@ -655,8 +663,8 @@ glabel inflate_codes
 /* 033E0C 7020087C 0104082B */  sltu  $at, $t0, $a0
 /* 033E10 70200880 1020000D */  beqz  $at, .L702008B8
 /* 033E14 70200884 00494806 */   srlv  $t1, $t1, $v0
-/* 033E18 70200888 3C027020 */  lui   $v0, %hi(rz_ptr_source) # $v0, 0x7020
-/* 033E1C 7020088C 8C421480 */  lw    $v0, %lo(rz_ptr_source)($v0)
+/* 033E18 70200888 3C027020 */  lui   $v0, %hi(inbuf) # $v0, 0x7020
+/* 033E1C 7020088C 8C421480 */  lw    $v0, %lo(inbuf)($v0)
 .L70200890:
 /* 033E20 70200890 8CF20000 */  lw    $s2, ($a3)
 /* 033E24 70200894 00527021 */  addu  $t6, $v0, $s2
@@ -686,8 +694,8 @@ glabel inflate_codes
 /* 033E7C 702008EC 0104082B */  sltu  $at, $t0, $a0
 /* 033E80 702008F0 1020000D */  beqz  $at, .L70200928
 /* 033E84 702008F4 00494806 */   srlv  $t1, $t1, $v0
-/* 033E88 702008F8 3C027020 */  lui   $v0, %hi(rz_ptr_source) # $v0, 0x7020
-/* 033E8C 702008FC 8C421480 */  lw    $v0, %lo(rz_ptr_source)($v0)
+/* 033E88 702008F8 3C027020 */  lui   $v0, %hi(inbuf) # $v0, 0x7020
+/* 033E8C 702008FC 8C421480 */  lw    $v0, %lo(inbuf)($v0)
 .L70200900:
 /* 033E90 70200900 8CF20000 */  lw    $s2, ($a3)
 /* 033E94 70200904 00527821 */  addu  $t7, $v0, $s2
@@ -836,7 +844,7 @@ void inflate_stored(void) {
             }
         }
         // Node 11
-        *(rz_ptr_target + wp) = temp_t5;
+        *(outbuf + wp) = temp_t5;
         if ((temp_v0_2 + -1) != 0)
         {
             goto loop_8;
@@ -866,10 +874,10 @@ glabel inflate_stored
 /* 034004 70200A74 8D450000 */  lw    $a1, ($t2)
 /* 034008 70200A78 1020000F */  beqz  $at, .L70200AB8
 /* 03400C 70200A7C 00431806 */   srlv  $v1, $v1, $v0
-/* 034010 70200A80 3C067020 */  lui   $a2, %hi(rz_ptr_source) # $a2, 0x7020
+/* 034010 70200A80 3C067020 */  lui   $a2, %hi(inbuf) # $a2, 0x7020
 /* 034014 70200A84 3C0B7020 */  lui   $t3, %hi(inptr) # $t3, 0x7020
 /* 034018 70200A88 256B1488 */  addiu $t3, %lo(inptr) # addiu $t3, $t3, 0x1488
-/* 03401C 70200A8C 8CC61480 */  lw    $a2, %lo(rz_ptr_source)($a2)
+/* 03401C 70200A8C 8CC61480 */  lw    $a2, %lo(inbuf)($a2)
 .L70200A90:
 /* 034020 70200A90 8D670000 */  lw    $a3, ($t3)
 /* 034024 70200A94 00C77021 */  addu  $t6, $a2, $a3
@@ -890,8 +898,8 @@ glabel inflate_stored
 /* 03405C 70200ACC 256B1488 */  addiu $t3, %lo(inptr) # addiu $t3, $t3, 0x1488
 /* 034060 70200AD0 1020000D */  beqz  $at, .L70200B08
 /* 034064 70200AD4 01A01825 */   move  $v1, $t5
-/* 034068 70200AD8 3C067020 */  lui   $a2, %hi(rz_ptr_source) # $a2, 0x7020
-/* 03406C 70200ADC 8CC61480 */  lw    $a2, %lo(rz_ptr_source)($a2)
+/* 034068 70200AD8 3C067020 */  lui   $a2, %hi(inbuf) # $a2, 0x7020
+/* 03406C 70200ADC 8CC61480 */  lw    $a2, %lo(inbuf)($a2)
 .L70200AE0:
 /* 034070 70200AE0 8D670000 */  lw    $a3, ($t3)
 /* 034074 70200AE4 00C77021 */  addu  $t6, $a2, $a3
@@ -910,13 +918,13 @@ glabel inflate_stored
 /* 0340A4 70200B14 2484FFF0 */  addiu $a0, $a0, -0x10
 /* 0340A8 70200B18 1040001B */  beqz  $v0, .L70200B88
 /* 0340AC 70200B1C 2442FFFF */   addiu $v0, $v0, -1
-/* 0340B0 70200B20 3C0C7020 */  lui   $t4, %hi(rz_ptr_target) # $t4, 0x7020
-/* 0340B4 70200B24 258C1484 */  addiu $t4, %lo(rz_ptr_target) # addiu $t4, $t4, 0x1484
+/* 0340B0 70200B20 3C0C7020 */  lui   $t4, %hi(outbuf) # $t4, 0x7020
+/* 0340B4 70200B24 258C1484 */  addiu $t4, %lo(outbuf) # addiu $t4, $t4, 0x1484
 .L70200B28:
 /* 0340B8 70200B28 2C810008 */  sltiu $at, $a0, 8
 /* 0340BC 70200B2C 1020000C */  beqz  $at, .L70200B60
-/* 0340C0 70200B30 3C067020 */   lui   $a2, %hi(rz_ptr_source) # $a2, 0x7020
-/* 0340C4 70200B34 8CC61480 */  lw    $a2, %lo(rz_ptr_source)($a2)
+/* 0340C0 70200B30 3C067020 */   lui   $a2, %hi(inbuf) # $a2, 0x7020
+/* 0340C4 70200B34 8CC61480 */  lw    $a2, %lo(inbuf)($a2)
 .L70200B38:
 /* 0340C8 70200B38 8D670000 */  lw    $a3, ($t3)
 /* 0340CC 70200B3C 00C77021 */  addu  $t6, $a2, $a3
@@ -1152,10 +1160,10 @@ glabel inflate_dynamic
 /* 0342AC 70200D1C AFB00028 */  sw    $s0, 0x28($sp)
 /* 0342B0 70200D20 1020000F */  beqz  $at, .L70200D60
 /* 0342B4 70200D24 8D291564 */   lw    $t1, %lo(bb)($t1)
-/* 0342B8 70200D28 3C037020 */  lui   $v1, %hi(rz_ptr_source) # $v1, 0x7020
+/* 0342B8 70200D28 3C037020 */  lui   $v1, %hi(inbuf) # $v1, 0x7020
 /* 0342BC 70200D2C 3C0A7020 */  lui   $t2, %hi(inptr) # $t2, 0x7020
 /* 0342C0 70200D30 254A1488 */  addiu $t2, %lo(inptr) # addiu $t2, $t2, 0x1488
-/* 0342C4 70200D34 8C631480 */  lw    $v1, %lo(rz_ptr_source)($v1)
+/* 0342C4 70200D34 8C631480 */  lw    $v1, %lo(inbuf)($v1)
 .L70200D38:
 /* 0342C8 70200D38 8D420000 */  lw    $v0, ($t2)
 /* 0342CC 70200D3C 00627021 */  addu  $t6, $v1, $v0
@@ -1178,8 +1186,8 @@ glabel inflate_dynamic
 /* 03430C 70200D7C AFAF053C */  sw    $t7, 0x53c($sp)
 /* 034310 70200D80 1020000D */  beqz  $at, .L70200DB8
 /* 034314 70200D84 03004825 */   move  $t1, $t8
-/* 034318 70200D88 3C037020 */  lui   $v1, %hi(rz_ptr_source) # $v1, 0x7020
-/* 03431C 70200D8C 8C631480 */  lw    $v1, %lo(rz_ptr_source)($v1)
+/* 034318 70200D88 3C037020 */  lui   $v1, %hi(inbuf) # $v1, 0x7020
+/* 03431C 70200D8C 8C631480 */  lw    $v1, %lo(inbuf)($v1)
 .L70200D90:
 /* 034320 70200D90 8D420000 */  lw    $v0, ($t2)
 /* 034324 70200D94 0062C821 */  addu  $t9, $v1, $v0
@@ -1200,8 +1208,8 @@ glabel inflate_dynamic
 /* 03435C 70200DCC AFAE0538 */  sw    $t6, 0x538($sp)
 /* 034360 70200DD0 1020000D */  beqz  $at, .L70200E08
 /* 034364 70200DD4 01E04825 */   move  $t1, $t7
-/* 034368 70200DD8 3C037020 */  lui   $v1, %hi(rz_ptr_source) # $v1, 0x7020
-/* 03436C 70200DDC 8C631480 */  lw    $v1, %lo(rz_ptr_source)($v1)
+/* 034368 70200DD8 3C037020 */  lui   $v1, %hi(inbuf) # $v1, 0x7020
+/* 03436C 70200DDC 8C631480 */  lw    $v1, %lo(inbuf)($v1)
 .L70200DE0:
 /* 034370 70200DE0 8D420000 */  lw    $v0, ($t2)
 /* 034374 70200DE4 0062C021 */  addu  $t8, $v1, $v0
@@ -1228,8 +1236,8 @@ glabel inflate_dynamic
 /* 0343C0 70200E30 2D010003 */  sltiu $at, $t0, 3
 /* 0343C4 70200E34 1020000D */  beqz  $at, .L70200E6C
 /* 0343C8 70200E38 24840001 */   addiu $a0, $a0, 1
-/* 0343CC 70200E3C 3C037020 */  lui   $v1, %hi(rz_ptr_source) # $v1, 0x7020
-/* 0343D0 70200E40 8C631480 */  lw    $v1, %lo(rz_ptr_source)($v1)
+/* 0343CC 70200E3C 3C037020 */  lui   $v1, %hi(inbuf) # $v1, 0x7020
+/* 0343D0 70200E40 8C631480 */  lw    $v1, %lo(inbuf)($v1)
 .L70200E44:
 /* 0343D4 70200E44 8D420000 */  lw    $v0, ($t2)
 /* 0343D8 70200E48 0062C821 */  addu  $t9, $v1, $v0
@@ -1303,11 +1311,11 @@ glabel inflate_dynamic
 /* 0344D8 70200F48 240C0010 */  li    $t4, 16
 /* 0344DC 70200F4C 8FAE0548 */  lw    $t6, 0x548($sp)
 .L70200F50:
-/* 0344E0 70200F50 3C037020 */  lui   $v1, %hi(rz_ptr_source) # $v1, 0x7020
+/* 0344E0 70200F50 3C037020 */  lui   $v1, %hi(inbuf) # $v1, 0x7020
 /* 0344E4 70200F54 010E082B */  sltu  $at, $t0, $t6
 /* 0344E8 70200F58 5020000E */  beql  $at, $zero, .L70200F94
 /* 0344EC 70200F5C 8FAE0550 */   lw    $t6, 0x550($sp)
-/* 0344F0 70200F60 8C631480 */  lw    $v1, %lo(rz_ptr_source)($v1)
+/* 0344F0 70200F60 8C631480 */  lw    $v1, %lo(inbuf)($v1)
 .L70200F64:
 /* 0344F4 70200F64 8D420000 */  lw    $v0, ($t2)
 /* 0344F8 70200F68 00627821 */  addu  $t7, $v1, $v0
@@ -1343,8 +1351,8 @@ glabel inflate_dynamic
 /* 034568 70200FD8 148C0020 */  bne   $a0, $t4, .L7020105C
 /* 03456C 70200FDC 2D010002 */   sltiu $at, $t0, 2
 /* 034570 70200FE0 1020000C */  beqz  $at, .L70201014
-/* 034574 70200FE4 3C037020 */   lui   $v1, %hi(rz_ptr_source) # $v1, 0x7020
-/* 034578 70200FE8 8C631480 */  lw    $v1, %lo(rz_ptr_source)($v1)
+/* 034574 70200FE4 3C037020 */   lui   $v1, %hi(inbuf) # $v1, 0x7020
+/* 034578 70200FE8 8C631480 */  lw    $v1, %lo(inbuf)($v1)
 .L70200FEC:
 /* 03457C 70200FEC 8D420000 */  lw    $v0, ($t2)
 /* 034580 70200FF0 00627021 */  addu  $t6, $v1, $v0
@@ -1381,8 +1389,8 @@ glabel inflate_dynamic
 /* 0345F0 70201060 00003025 */   move  $a2, $zero
 /* 0345F4 70201064 2D010003 */  sltiu $at, $t0, 3
 /* 0345F8 70201068 1020000C */  beqz  $at, .L7020109C
-/* 0345FC 7020106C 3C037020 */   lui   $v1, %hi(rz_ptr_source) # $v1, 0x7020
-/* 034600 70201070 8C631480 */  lw    $v1, %lo(rz_ptr_source)($v1)
+/* 0345FC 7020106C 3C037020 */   lui   $v1, %hi(inbuf) # $v1, 0x7020
+/* 034600 70201070 8C631480 */  lw    $v1, %lo(inbuf)($v1)
 .L70201074:
 /* 034604 70201074 8D420000 */  lw    $v0, ($t2)
 /* 034608 70201078 0062C821 */  addu  $t9, $v1, $v0
@@ -1417,8 +1425,8 @@ glabel inflate_dynamic
 .L702010E4:
 /* 034674 702010E4 2D010007 */  sltiu $at, $t0, 7
 /* 034678 702010E8 1020000C */  beqz  $at, .L7020111C
-/* 03467C 702010EC 3C037020 */   lui   $v1, %hi(rz_ptr_source) # $v1, 0x7020
-/* 034680 702010F0 8C631480 */  lw    $v1, %lo(rz_ptr_source)($v1)
+/* 03467C 702010EC 3C037020 */   lui   $v1, %hi(inbuf) # $v1, 0x7020
+/* 034680 702010F0 8C631480 */  lw    $v1, %lo(inbuf)($v1)
 .L702010F4:
 /* 034684 702010F4 8D420000 */  lw    $v0, ($t2)
 /* 034688 702010F8 00627021 */  addu  $t6, $v1, $v0
@@ -1505,153 +1513,47 @@ glabel inflate_dynamic
 )
 
 
-#ifdef NONMATCHING
-void inflate_block(void *arg0) {
-    u32 temp_v1;
-    u32 temp_t3;
-    s32 temp_v0;
 
-    // Node 0
-    if (bb == 0)
-    {
-        // Node 1
-        // Node 2
-        inptr = (s32) (inptr + 1);
-        if ((bb + 8) == 0)
-        {
-            goto loop_2;
-        }
-    }
-    // Node 3
-    temp_v1 = (bb + -1);
-    temp_t3 = ((u32) bk >> 1);
-    *arg0 = (s32) (bk & 1);
-    if (temp_v1 < 2U)
-    {
-        // Node 4
-        // Node 5
-        inptr = (s32) (inptr + 1);
-        if ((u32) (temp_v1 + 8) < 2U)
-        {
-            goto loop_5;
-        }
-    }
-    // Node 6
-    temp_v0 = (temp_t3 & 3);
-    bk = (u32) (temp_t3 >> 2);
-    bb = (s32) (temp_v1 + -2);
-    if (temp_v0 == 2)
-    {
-        // Node 7
-        inflate_dynamic(&inptr, temp_t3, arg0);
-        return;
-        // (possible return value: inflate_dynamic(&inptr, temp_t3, arg0))
-    }
-    // Node 8
-    if (temp_v0 == 0)
-    {
-        // Node 9
-        inflate_stored(&inptr, temp_t3, arg0);
-        return;
-        // (possible return value: inflate_stored(&inptr, temp_t3, arg0))
-    }
-    // Node 10
-    if (temp_v0 == 1)
-    {
-        // Node 11
-        inflate_fixed(&inptr, temp_t3, arg0);
-        return;
-        // (possible return value: inflate_fixed(&inptr, temp_t3, arg0))
-    }
-    // Node 12
-    return;
-    // (possible return value: 2)
+s32 inflate_block(s32 *e)
+{
+	u32 t;                /* block type */
+	register u32 b = bb;  /* bit buffer */
+	register u32 k = bk;  /* number of bits in bit buffer */
+
+	/* make local bit buffer */
+	b = bb;
+	k = bk;
+
+	/* read in last block bit */
+	NEEDBITS(1)
+	*e = b & 1;
+	DUMPBITS(1)
+
+	/* read in last block type */
+	NEEDBITS(2)
+	t = b & 3;
+	DUMPBITS(2)
+
+	/* restore the global bit buffer */
+	bb = b;
+	bk = k;
+
+	/* inflate that block type */
+	if (t == 2) {
+		return inflate_dynamic();
+	}
+
+	if (t == 0) {
+		return inflate_stored();
+	}
+
+	if (t == 1) {
+		return inflate_fixed();
+	}
+
+	/* bad block type */
+	return 2;
 }
-#else
-GLOBAL_ASM(
-glabel inflate_block
-/* 0347B8 70201228 3C097020 */  lui   $t1, %hi(bk) # $t1, 0x7020
-/* 0347BC 7020122C 25291568 */  addiu $t1, %lo(bk) # addiu $t1, $t1, 0x1568
-/* 0347C0 70201230 8D230000 */  lw    $v1, ($t1)
-/* 0347C4 70201234 3C087020 */  lui   $t0, %hi(bb) # $t0, 0x7020
-/* 0347C8 70201238 25081564 */  addiu $t0, %lo(bb) # addiu $t0, $t0, 0x1564
-/* 0347CC 7020123C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0347D0 70201240 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0347D4 70201244 00803825 */  move  $a3, $a0
-/* 0347D8 70201248 1460000E */  bnez  $v1, .L70201284
-/* 0347DC 7020124C 8D050000 */   lw    $a1, ($t0)
-/* 0347E0 70201250 3C067020 */  lui   $a2, %hi(rz_ptr_source) # $a2, 0x7020
-/* 0347E4 70201254 3C047020 */  lui   $a0, %hi(inptr) # $a0, 0x7020
-/* 0347E8 70201258 24841488 */  addiu $a0, %lo(inptr) # addiu $a0, $a0, 0x1488
-/* 0347EC 7020125C 8CC61480 */  lw    $a2, %lo(rz_ptr_source)($a2)
-.L70201260:
-/* 0347F0 70201260 8C820000 */  lw    $v0, ($a0)
-/* 0347F4 70201264 00C27021 */  addu  $t6, $a2, $v0
-/* 0347F8 70201268 91CF0000 */  lbu   $t7, ($t6)
-/* 0347FC 7020126C 24590001 */  addiu $t9, $v0, 1
-/* 034800 70201270 AC990000 */  sw    $t9, ($a0)
-/* 034804 70201274 006FC004 */  sllv  $t8, $t7, $v1
-/* 034808 70201278 24630008 */  addiu $v1, $v1, 8
-/* 03480C 7020127C 1060FFF8 */  beqz  $v1, .L70201260
-/* 034810 70201280 00B82825 */   or    $a1, $a1, $t8
-.L70201284:
-/* 034814 70201284 2463FFFF */  addiu $v1, $v1, -1
-/* 034818 70201288 3C047020 */  lui   $a0, %hi(inptr) # $a0, 0x7020
-/* 03481C 7020128C 30AA0001 */  andi  $t2, $a1, 1
-/* 034820 70201290 00055842 */  srl   $t3, $a1, 1
-/* 034824 70201294 2C610002 */  sltiu $at, $v1, 2
-/* 034828 70201298 24841488 */  addiu $a0, %lo(inptr) # addiu $a0, $a0, 0x1488
-/* 03482C 7020129C ACEA0000 */  sw    $t2, ($a3)
-/* 034830 702012A0 1020000D */  beqz  $at, .L702012D8
-/* 034834 702012A4 01602825 */   move  $a1, $t3
-/* 034838 702012A8 3C067020 */  lui   $a2, %hi(rz_ptr_source) # $a2, 0x7020
-/* 03483C 702012AC 8CC61480 */  lw    $a2, %lo(rz_ptr_source)($a2)
-.L702012B0:
-/* 034840 702012B0 8C820000 */  lw    $v0, ($a0)
-/* 034844 702012B4 00C26021 */  addu  $t4, $a2, $v0
-/* 034848 702012B8 918D0000 */  lbu   $t5, ($t4)
-/* 03484C 702012BC 244F0001 */  addiu $t7, $v0, 1
-/* 034850 702012C0 AC8F0000 */  sw    $t7, ($a0)
-/* 034854 702012C4 006D7004 */  sllv  $t6, $t5, $v1
-/* 034858 702012C8 24630008 */  addiu $v1, $v1, 8
-/* 03485C 702012CC 2C610002 */  sltiu $at, $v1, 2
-/* 034860 702012D0 1420FFF7 */  bnez  $at, .L702012B0
-/* 034864 702012D4 00AE2825 */   or    $a1, $a1, $t6
-.L702012D8:
-/* 034868 702012D8 30A20003 */  andi  $v0, $a1, 3
-/* 03486C 702012DC 0005C082 */  srl   $t8, $a1, 2
-/* 034870 702012E0 2463FFFE */  addiu $v1, $v1, -2
-/* 034874 702012E4 24010002 */  li    $at, 2
-/* 034878 702012E8 AD180000 */  sw    $t8, ($t0)
-/* 03487C 702012EC 14410005 */  bne   $v0, $at, .L70201304
-/* 034880 702012F0 AD230000 */   sw    $v1, ($t1)
-/* 034884 702012F4 0C080341 */  jal   inflate_dynamic
-/* 034888 702012F8 00000000 */   nop   
-/* 03488C 702012FC 1000000F */  b     .L7020133C
-/* 034890 70201300 8FBF0014 */   lw    $ra, 0x14($sp)
-.L70201304:
-/* 034894 70201304 14400005 */  bnez  $v0, .L7020131C
-/* 034898 70201308 24010001 */   li    $at, 1
-/* 03489C 7020130C 0C080292 */  jal   inflate_stored
-/* 0348A0 70201310 00000000 */   nop   
-/* 0348A4 70201314 10000009 */  b     .L7020133C
-/* 0348A8 70201318 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7020131C:
-/* 0348AC 7020131C 54410006 */  bnel  $v0, $at, .L70201338
-/* 0348B0 70201320 24020002 */   li    $v0, 2
-/* 0348B4 70201324 0C0802E7 */  jal   inflate_fixed
-/* 0348B8 70201328 00000000 */   nop   
-/* 0348BC 7020132C 10000003 */  b     .L7020133C
-/* 0348C0 70201330 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0348C4 70201334 24020002 */  li    $v0, 2
-.L70201338:
-/* 0348C8 70201338 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7020133C:
-/* 0348CC 7020133C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0348D0 70201340 03E00008 */  jr    $ra
-/* 0348D4 70201344 00000000 */   nop   
-)
-#endif
 
 
 int inflate(void) {
@@ -1684,10 +1586,10 @@ int inflate(void) {
 
 u32 decompress_entry(u32 source, u32 target, u32 buffer) {
 
-    rz_ptr_source = source;
-    rz_ptr_target = target;
+    inbuf = source;
+    outbuf = target;
     rz_ptrbuffer = buffer;
-    rz_ptr_source = (s32) (rz_ptr_source + 2);
+    inbuf = (s32) (inbuf + 2);
     wp = 0;
     inptr = 0;
     inflate();
