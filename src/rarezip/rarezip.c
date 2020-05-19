@@ -17,8 +17,8 @@ u8 *outbuf = 0;
 
 u32 inptr = 0;
 u32 wp = 0;
-u32 rz_ptrbuffer = 0x00000000;
 
+struct huft *huftlist = NULL;
 u8 border[0x14] = {
         16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15};
 
@@ -277,10 +277,10 @@ glabel huft_build
 /* 0338A0 70200310 00157080 */  sll   $t6, $s5, 2
 /* 0338A4 70200314 27AF05A8 */  addiu $t7, $sp, 0x5a8
 /* 0338A8 70200318 01CFC021 */  addu  $t8, $t6, $t7
-/* 0338AC 7020031C 3C1E7020 */  lui   $fp, %hi(rz_ptrbuffer) # $fp, 0x7020
+/* 0338AC 7020031C 3C1E7020 */  lui   $fp, %hi(huftlist) # $fp, 0x7020
 /* 0338B0 70200320 3C137020 */  lui   $s3, %hi(hufts) # $s3, 0x7020
 /* 0338B4 70200324 26731598 */  addiu $s3, %lo(hufts) # addiu $s3, $s3, 0x1598
-/* 0338B8 70200328 27DE1490 */  addiu $fp, %lo(rz_ptrbuffer) # addiu $fp, $fp, 0x1490
+/* 0338B8 70200328 27DE1490 */  addiu $fp, %lo(huftlist) # addiu $fp, $fp, 0x1490
 /* 0338BC 7020032C AFB80050 */  sw    $t8, 0x50($sp)
 /* 0338C0 70200330 8FB60604 */  lw    $s6, 0x604($sp)
 /* 0338C4 70200334 27B4057C */  addiu $s4, $sp, 0x57c
@@ -1416,7 +1416,7 @@ u32 decompress_entry(u32 source, u32 target, u32 buffer) {
 
     inbuf = source;
     outbuf = target;
-    rz_ptrbuffer = buffer;
+    huftlist = buffer;
     inbuf = (s32) (inbuf + 2);
     wp = 0;
     inptr = 0;

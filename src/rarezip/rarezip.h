@@ -1,5 +1,13 @@
-#ifndef _BOOT_H_
-#define _BOOT_H_
+#ifndef _RAREZIP_H_
+#define _RAREZIP_H_
+struct huft {
+	u8 e;                /* number of extra bits or operation */
+	u8 b;                /* number of bits in this code or subcode */
+	union {
+		u16 n;            /* literal, length base, or distance base */
+		struct huft *t;   /* pointer to next level of table */
+	} v;
+};
 
 u32 decompress_entry(u32 source, u32 target, u32 buffer);
 

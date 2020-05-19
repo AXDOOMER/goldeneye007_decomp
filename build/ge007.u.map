@@ -1996,7 +1996,7 @@ Linker script and memory map
                 0x0000000070201484                outbuf
                 0x0000000070201488                inptr
                 0x000000007020148c                wp
-                0x0000000070201490                rz_ptrbuffer
+                0x0000000070201490                huftlist
                 0x0000000070201494                border
                 0x00000000702014a8                cplens
                 0x00000000702014e8                cplext
