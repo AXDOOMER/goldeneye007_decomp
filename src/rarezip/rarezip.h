@@ -9,6 +9,6 @@ struct huft {
 	} v;
 };
 
-u32 decompress_entry(u32 source, u32 target, u32 buffer);
+u32 decompress_entry(void *src, void *dst, struct huft *hlist);
 
 #endif
