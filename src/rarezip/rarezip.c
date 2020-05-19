@@ -14,9 +14,11 @@
 
 u8 *inbuf = 0;
 u8 *outbuf = 0;
+
 u32 inptr = 0;
 u32 wp = 0;
 u32 rz_ptrbuffer = 0x00000000;
+
 u8 border[0x14] = {
         16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15};
 
@@ -789,261 +791,87 @@ glabel inflate_codes
 
 
 
-#ifdef NONMATCHING
-void inflate_stored(void) {
-    s32 temp_v0;
-    u32 temp_a0;
-    u32 temp_v1;
-    u32 temp_a0_2;
-    u32 temp_t5;
-    u32 temp_a0_3;
-    s32 temp_v0_2;
+s32 inflate_stored(void)
+{
+	s32 n;           /* number of bytes in block */
+	s32 w;           /* current window position */
+	register u32 b; /* bit buffer */
+	register u32 k;  /* number of bits in bit buffer */
 
-    // Node 0
-    temp_v0 = (bb & 7);
-    temp_a0 = (bb - temp_v0);
-    temp_v1 = ((u32) bk >> temp_v0);
-    if (temp_a0 < 0x10U)
-    {
-        // Node 1
-        // Node 2
-        inptr = (s32) (inptr + 1);
-        if ((u32) (temp_a0 + 8) < 0x10U)
-        {
-            goto loop_2;
-        }
-    }
-    // Node 3
-    temp_a0_2 = (temp_a0 + -0x10);
-    if (temp_a0_2 < 0x10U)
-    {
-        // Node 4
-        // Node 5
-        inptr = (s32) (inptr + 1);
-        if ((u32) (temp_a0_2 + 8) < 0x10U)
-        {
-            goto loop_5;
-        }
-    }
-    // Node 6
-    temp_t5 = ((u32) (temp_v1 >> 0x10) >> 0x10);
-    temp_a0_3 = (temp_a0_2 + -0x10);
-    temp_v0_2 = ((temp_v1 & 0xffff) + -1);
-    if (temp_v0_2 != 0)
-    {
-        // Node 7
-        // Node 8
-        if (temp_a0_3 < 8U)
-        {
-            // Node 9
-            // Node 10
-            inptr = (s32) (inptr + 1);
-            if ((u32) (temp_a0_3 + 8) < 8U)
-            {
-                goto loop_10;
-            }
-        }
-        // Node 11
-        *(outbuf + wp) = temp_t5;
-        if ((temp_v0_2 + -1) != 0)
-        {
-            goto loop_8;
-        }
-    }
-    // Node 12
-    wp = (s32) wp;
-    bk = temp_t5;
-    bb = temp_a0_3;
-    return;
-    // (possible return value: 0)
+	/* make local copies of globals */
+	b = bb;                       /* initialize bit buffer */
+	k = bk;
+	w = wp;                       /* initialize window position */
+
+	/* go to byte boundary */
+	n = k & 7;
+	DUMPBITS(n);
+
+	/* get the length and its complement */
+	NEEDBITS(16)
+	n = (b & 0xffff);
+	DUMPBITS(16)
+
+	NEEDBITS(16)
+	DUMPBITS(16)
+
+	/* read and output the compressed data */
+	while (n--) {
+		NEEDBITS(8)
+		outbuf[w++] = (u8)b;
+
+		DUMPBITS(8)
+	}
+
+	/* restore the globals from the locals */
+	wp = w;                       /* restore global window pointer */
+	bb = b;                       /* restore global bit buffer */
+	bk = k;
+	return 0;
 }
-#else
-GLOBAL_ASM(
-glabel inflate_stored
-/* 033FD8 70200A48 3C097020 */  lui   $t1, %hi(bk) # $t1, 0x7020
-/* 033FDC 70200A4C 25291568 */  addiu $t1, %lo(bk) # addiu $t1, $t1, 0x1568
-/* 033FE0 70200A50 8D240000 */  lw    $a0, ($t1)
-/* 033FE4 70200A54 3C087020 */  lui   $t0, %hi(bb) # $t0, 0x7020
-/* 033FE8 70200A58 25081564 */  addiu $t0, %lo(bb) # addiu $t0, $t0, 0x1564
-/* 033FEC 70200A5C 30820007 */  andi  $v0, $a0, 7
-/* 033FF0 70200A60 8D030000 */  lw    $v1, ($t0)
-/* 033FF4 70200A64 3C0A7020 */  lui   $t2, %hi(wp) # $t2, 0x7020
-/* 033FF8 70200A68 00822023 */  subu  $a0, $a0, $v0
-/* 033FFC 70200A6C 254A148C */  addiu $t2, %lo(wp) # addiu $t2, $t2, 0x148c
-/* 034000 70200A70 2C810010 */  sltiu $at, $a0, 0x10
-/* 034004 70200A74 8D450000 */  lw    $a1, ($t2)
-/* 034008 70200A78 1020000F */  beqz  $at, .L70200AB8
-/* 03400C 70200A7C 00431806 */   srlv  $v1, $v1, $v0
-/* 034010 70200A80 3C067020 */  lui   $a2, %hi(inbuf) # $a2, 0x7020
-/* 034014 70200A84 3C0B7020 */  lui   $t3, %hi(inptr) # $t3, 0x7020
-/* 034018 70200A88 256B1488 */  addiu $t3, %lo(inptr) # addiu $t3, $t3, 0x1488
-/* 03401C 70200A8C 8CC61480 */  lw    $a2, %lo(inbuf)($a2)
-.L70200A90:
-/* 034020 70200A90 8D670000 */  lw    $a3, ($t3)
-/* 034024 70200A94 00C77021 */  addu  $t6, $a2, $a3
-/* 034028 70200A98 91CF0000 */  lbu   $t7, ($t6)
-/* 03402C 70200A9C 24F90001 */  addiu $t9, $a3, 1
-/* 034030 70200AA0 AD790000 */  sw    $t9, ($t3)
-/* 034034 70200AA4 008FC004 */  sllv  $t8, $t7, $a0
-/* 034038 70200AA8 24840008 */  addiu $a0, $a0, 8
-/* 03403C 70200AAC 2C810010 */  sltiu $at, $a0, 0x10
-/* 034040 70200AB0 1420FFF7 */  bnez  $at, .L70200A90
-/* 034044 70200AB4 00781825 */   or    $v1, $v1, $t8
-.L70200AB8:
-/* 034048 70200AB8 2484FFF0 */  addiu $a0, $a0, -0x10
-/* 03404C 70200ABC 3C0B7020 */  lui   $t3, %hi(inptr) # $t3, 0x7020
-/* 034050 70200AC0 3062FFFF */  andi  $v0, $v1, 0xffff
-/* 034054 70200AC4 00036C02 */  srl   $t5, $v1, 0x10
-/* 034058 70200AC8 2C810010 */  sltiu $at, $a0, 0x10
-/* 03405C 70200ACC 256B1488 */  addiu $t3, %lo(inptr) # addiu $t3, $t3, 0x1488
-/* 034060 70200AD0 1020000D */  beqz  $at, .L70200B08
-/* 034064 70200AD4 01A01825 */   move  $v1, $t5
-/* 034068 70200AD8 3C067020 */  lui   $a2, %hi(inbuf) # $a2, 0x7020
-/* 03406C 70200ADC 8CC61480 */  lw    $a2, %lo(inbuf)($a2)
-.L70200AE0:
-/* 034070 70200AE0 8D670000 */  lw    $a3, ($t3)
-/* 034074 70200AE4 00C77021 */  addu  $t6, $a2, $a3
-/* 034078 70200AE8 91CF0000 */  lbu   $t7, ($t6)
-/* 03407C 70200AEC 24F90001 */  addiu $t9, $a3, 1
-/* 034080 70200AF0 AD790000 */  sw    $t9, ($t3)
-/* 034084 70200AF4 008FC004 */  sllv  $t8, $t7, $a0
-/* 034088 70200AF8 24840008 */  addiu $a0, $a0, 8
-/* 03408C 70200AFC 2C810010 */  sltiu $at, $a0, 0x10
-/* 034090 70200B00 1420FFF7 */  bnez  $at, .L70200AE0
-/* 034094 70200B04 00781825 */   or    $v1, $v1, $t8
-.L70200B08:
-/* 034098 70200B08 00403025 */  move  $a2, $v0
-/* 03409C 70200B0C 00036C02 */  srl   $t5, $v1, 0x10
-/* 0340A0 70200B10 01A01825 */  move  $v1, $t5
-/* 0340A4 70200B14 2484FFF0 */  addiu $a0, $a0, -0x10
-/* 0340A8 70200B18 1040001B */  beqz  $v0, .L70200B88
-/* 0340AC 70200B1C 2442FFFF */   addiu $v0, $v0, -1
-/* 0340B0 70200B20 3C0C7020 */  lui   $t4, %hi(outbuf) # $t4, 0x7020
-/* 0340B4 70200B24 258C1484 */  addiu $t4, %lo(outbuf) # addiu $t4, $t4, 0x1484
-.L70200B28:
-/* 0340B8 70200B28 2C810008 */  sltiu $at, $a0, 8
-/* 0340BC 70200B2C 1020000C */  beqz  $at, .L70200B60
-/* 0340C0 70200B30 3C067020 */   lui   $a2, %hi(inbuf) # $a2, 0x7020
-/* 0340C4 70200B34 8CC61480 */  lw    $a2, %lo(inbuf)($a2)
-.L70200B38:
-/* 0340C8 70200B38 8D670000 */  lw    $a3, ($t3)
-/* 0340CC 70200B3C 00C77021 */  addu  $t6, $a2, $a3
-/* 0340D0 70200B40 91CF0000 */  lbu   $t7, ($t6)
-/* 0340D4 70200B44 24F90001 */  addiu $t9, $a3, 1
-/* 0340D8 70200B48 AD790000 */  sw    $t9, ($t3)
-/* 0340DC 70200B4C 008FC004 */  sllv  $t8, $t7, $a0
-/* 0340E0 70200B50 24840008 */  addiu $a0, $a0, 8
-/* 0340E4 70200B54 2C810008 */  sltiu $at, $a0, 8
-/* 0340E8 70200B58 1420FFF7 */  bnez  $at, .L70200B38
-/* 0340EC 70200B5C 00781825 */   or    $v1, $v1, $t8
-.L70200B60:
-/* 0340F0 70200B60 8D8D0000 */  lw    $t5, ($t4)
-/* 0340F4 70200B64 00403025 */  move  $a2, $v0
-/* 0340F8 70200B68 00037A02 */  srl   $t7, $v1, 8
-/* 0340FC 70200B6C 01A57021 */  addu  $t6, $t5, $a1
-/* 034100 70200B70 A1C30000 */  sb    $v1, ($t6)
-/* 034104 70200B74 24A50001 */  addiu $a1, $a1, 1
-/* 034108 70200B78 01E01825 */  move  $v1, $t7
-/* 03410C 70200B7C 2484FFF8 */  addiu $a0, $a0, -8
-/* 034110 70200B80 1440FFE9 */  bnez  $v0, .L70200B28
-/* 034114 70200B84 2442FFFF */   addiu $v0, $v0, -1
-.L70200B88:
-/* 034118 70200B88 AD450000 */  sw    $a1, ($t2)
-/* 03411C 70200B8C AD030000 */  sw    $v1, ($t0)
-/* 034120 70200B90 AD240000 */  sw    $a0, ($t1)
-/* 034124 70200B94 03E00008 */  jr    $ra
-/* 034128 70200B98 00001025 */   move  $v0, $zero
-)
-#endif
 
 
 #ifdef NONMATCHING
-void inflate_fixed(void) {
-    ?32 sp2C;
-    ?32 sp30;
-    ? sp34;
-    ? spA4;
-    ? sp26C;
-    ? sp42C;
-    ? sp48C;
-    ?32 sp4AC;
-    ?32 sp4B0;
-    ? sp4B4;
-    ? sp4B8;
-    void *temp_v0;
-    void *temp_v0_2;
-    u32 temp_v0_3;
-    u32 temp_v0_4;
-    u32 temp_v0_5;
+s32 inflate_fixed(void)
+{
+	s32 i;                /* temporary variable */
+	struct huft *tl;      /* literal/length code table */
+	struct huft *td;      /* distance code table */
+	s32 bl;               /* lookup bits for tl */
+	s32 bd;               /* lookup bits for td */
+	u32 l[288];           /* length list for huft_build */
 
-    // Node 0
-    // Node 1
-    temp_v0 = (&sp2C + 0x10);
-    temp_v0->unk-C = 8;
-    temp_v0->unk-8 = 8;
-    temp_v0->unk-4 = 8;
-    temp_v0->unk-10 = 8;
-    if (temp_v0 != &sp26C)
-    {
-        goto loop_1;
-    }
-    // Node 2
-    if (temp_v0 < &sp42C)
-    {
-        // Node 3
-        // Node 4
-        temp_v0_5 = (temp_v0 + 4);
-        temp_v0_5->unk-4 = 9;
-        if (temp_v0_5 < &sp42C)
-        {
-            goto loop_4;
-        }
-    }
-    // Node 5
-    if (temp_v0 < &sp48C)
-    {
-        // Node 6
-        // Node 7
-        temp_v0_4 = (temp_v0 + 4);
-        temp_v0_4->unk-4 = 7;
-        if (temp_v0_4 < &sp48C)
-        {
-            goto loop_7;
-        }
-    }
-    // Node 8
-    if (temp_v0 < &sp4AC)
-    {
-        // Node 9
-        // Node 10
-        temp_v0_3 = (temp_v0 + 4);
-        temp_v0_3->unk-4 = 8;
-        if (temp_v0_3 < &sp4AC)
-        {
-            goto loop_10;
-        }
-    }
-    // Node 11
-    sp4B0 = 7;
-    huft_build(&sp2C, 0x120, 0x101, &cplens, &cplext, &sp4B8, &sp4B0);
-    sp30 = 5;
-    sp2C = 5;
-    // Node 12
-    temp_v0_2 = (&sp34 + 0x10);
-    temp_v0_2->unk-C = 5;
-    temp_v0_2->unk-8 = 5;
-    temp_v0_2->unk-4 = 5;
-    temp_v0_2->unk-10 = 5;
-    if (temp_v0_2 != &spA4)
-    {
-        goto loop_12;
-    }
-    // Node 13
-    sp4AC = 5;
-    huft_build(&sp2C, 0x1e, 0, &cpdist, &cpdext, &sp4B4, &sp4AC);
-    inflate_codes(sp4B8, sp4B4, sp4B0, sp4AC);
-    return;
-    // (possible return value: 0)
+	/* set up literal table */
+	for (i = 0; i < 144; i++) {
+		l[i] = 8;
+	}
+	for (; i < 256; i++) {
+		l[i] = 9;
+	}
+	for (; i < 280; i++) {
+		l[i] = 7;
+	}
+	for (; i < 288; i++) {
+		l[i] = 8;
+	}
+
+	bl = 7;
+
+	huft_build(l, 288, 257, cplens, cplext, &tl, &bl);
+
+	/* set up distance table */
+	for (i = 0; i < 30; i++) {
+		l[i] = 5;
+	}
+
+	bd = 5;
+
+	/* decompress until an end-of-block code */
+	huft_build(l, 30, 0, cpdist, cpdext, &td, &bd);
+
+	inflate_codes(tl, td, bl, bd);
+
+	return 0;
 }
 #else
 GLOBAL_ASM(
