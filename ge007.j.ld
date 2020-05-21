@@ -176,8 +176,8 @@ SECTIONS
    _rarezipSegmentStart = ADDR(.rarezip);
    _rarezipSegmentRomStart = _cdataSegmentRomEnd;
    .rarezip 0x70200000 : AT(_rarezipSegmentRomStart) {
-      build/j/src/rarezip/rarezip.o (.text);
-      build/j/src/rarezip/rarezip.o (.data);
+      build/j/src/inflate/inflate.o (.text);
+      build/j/src/inflate/inflate.o (.data);
    }
    _rarezipSegmentEnd = ADDR(.rarezip) + SIZEOF(.rarezip);
    _rarezipSegmentRomEnd = _rarezipSegmentRomStart + SIZEOF(.rarezip);
