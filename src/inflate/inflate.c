@@ -1,5 +1,5 @@
 #include "ultra64.h"
-#include "rarezip/rarezip.h"
+#include "inflate/inflate.h"
 
 #define GETBYTE()   (inbuf[inptr++])
 #define NEXTBYTE()  (u8)GETBYTE()

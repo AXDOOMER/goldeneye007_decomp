@@ -1,7 +1,7 @@
 #include <ultra64.h>
 #include "boot.h"
 #include "bondgame.h"
-#include "rarezip/rarezip.h"
+#include "inflate/inflate.h"
 
 /**
  * @file boot.c

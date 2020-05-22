@@ -74,8 +74,8 @@ SECTIONS
    /* (0x70200000, 0x702029BC, 0x701CCA70), // 033590-035F4D [29BD] */
    BEGIN_SEG(rarezip, 0x70200000)
    {
-      build/rarezip/rarezip.o (.text);
-      build/rarezip/rarezip.o (.data);
+      build/inflate/inflate.o (.text);
+      build/inflate/inflate.o (.data);
    }
    END_SEG(rarezip)
 

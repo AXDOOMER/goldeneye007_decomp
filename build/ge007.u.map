@@ -583,8 +583,8 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/u/src/c_data_filler.o
  .gptab.data    0x0000000000000000       0x18 build/u/src/c_data_filler.o
  .mdebug        0x0000000000000000      0x218 build/u/src/c_data_filler.o
- .options       0x0000000000000000       0x20 build/u/src/rarezip/rarezip.o
- .reginfo       0x0000000000000000       0x18 build/u/src/rarezip/rarezip.o
+ .options       0x0000000000000000       0x20 build/u/src/inflate/inflate.o
+ .reginfo       0x0000000000000000       0x18 build/u/src/inflate/inflate.o
  .options       0x0000000000000000       0x20 build/u/src/game/initgamedata.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/initgamedata.o
  .mdebug        0x0000000000000000      0x7ac build/u/src/game/initgamedata.o
@@ -1980,8 +1980,8 @@ Linker script and memory map
                 0x0000000000033590                _rarezipSegmentRomStart = _cdataSegmentRomEnd
 
 .rarezip        0x0000000070200000     0x15a0 load address 0x0000000000033590
- build/u/src/rarezip/rarezip.o(.text)
- .text          0x0000000070200000     0x1480 build/u/src/rarezip/rarezip.o
+ build/u/src/inflate/inflate.o(.text)
+ .text          0x0000000070200000     0x1480 build/u/src/inflate/inflate.o
                 0x0000000070200000                huft_build
                 0x0000000070200654                inflate_codes
                 0x0000000070200a48                inflate_stored
@@ -1990,8 +1990,8 @@ Linker script and memory map
                 0x0000000070201228                inflate_block
                 0x0000000070201348                inflate
                 0x000000007020141c                decompress_entry
- build/u/src/rarezip/rarezip.o(.data)
- .data          0x0000000070201480      0x120 build/u/src/rarezip/rarezip.o
+ build/u/src/inflate/inflate.o(.data)
+ .data          0x0000000070201480      0x120 build/u/src/inflate/inflate.o
                 0x0000000070201480                inbuf
                 0x0000000070201484                outbuf
                 0x0000000070201488                inptr

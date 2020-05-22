@@ -58,7 +58,7 @@ goldeneye_src
 ├── src: C source code for game
 │   ├── game: core ge specific code 0x7f000000 range
 │   ├── libultra: currently used libultra.s
-│   └── rarezip: statically linked initial decompression code
+│   └── inflate: statically linked initial decompression code
 └── tools: build tools
 ```
 
