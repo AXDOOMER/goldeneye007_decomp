@@ -10,7 +10,7 @@
 
 .section .text, "ax"
 glabel rspbootTextStart
-.incbin "/bin/rspboot.text.bin"
+.incbin "/rsp/rspboot.bin"
 
 .section .data
 .section .rodata
