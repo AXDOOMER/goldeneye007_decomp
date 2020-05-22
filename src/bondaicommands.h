@@ -2373,7 +2373,7 @@
 // name: guard_set_argh_rating
 // command id: 92
 // info: set guard's argh rating - controls how quickly the guard recovers from
-//       being shot. range is -128 to 127 (127 show almost no hit reaction)
+//       being shot. range is -100 to 100 (100 show almost no hit reaction)
 //=============================================================================
 // note: sets to chr->arghrating. default value is 0 - argument is signed.
 // negative values will make guard animate slower - this affects firing animations.
@@ -2391,8 +2391,8 @@
 // info: set guard's accuracy rating - controls how accurately the guard fires
 //       their weapon
 //=============================================================================
-// note: sets to chr->accuracyrating. default value is 0 and ranges from -128
-// to 127, argument is signed byte. command does not use 007 accuracy modifier
+// note: sets to chr->accuracyrating. default value is 0 and ranges from -100
+// to 100, argument is signed byte. command does not use 007 accuracy modifier
 //===========================================================================*/
 #define guard_set_accuracy_rating_ID 0x93
 #define guard_set_accuracy_rating_LENGTH 0x02
@@ -2980,7 +2980,7 @@
 // command id: BD
 // info: spawn chr at pad, goto label if successful
 //=============================================================================
-// note: if out of memory/can't spawn chr, do not got label. if pad is blocked,
+// note: if out of memory/can't spawn chr, do not goto label. if pad is blocked,
 //       attempt to spawn chr around pad. bitfield uses SPAWN_# defines
 //===========================================================================*/
 #define chr_try_spawning_at_pad_ID 0xBD
@@ -2999,7 +2999,7 @@
 // command id: BE
 // info: spawn a chr next to another chr, goto label if successful
 //=============================================================================
-// note: if out of memory/can't spawn chr, do not got label. bitfield uses SPAWN_# defines.
+// note: if out of memory/can't spawn chr, do not goto label. bitfield uses SPAWN_# defines.
 // target chr must still exist in level or else command will crash. command will
 // not spawn chr if target chr has been seen before (CHRFLAG_HAS_BEEN_ON_SCREEN)
 //===========================================================================*/
@@ -3019,7 +3019,7 @@
 // command id: BF
 // info: spawn weapon for guard, goto label if successful
 //=============================================================================
-// note: if out of memory/can't spawn item/hands occupied, do not got label.
+// note: if out of memory/can't spawn item/hands occupied, do not goto label.
 // spawned prop must have a holding position command within the model file,
 // else use conceal flag so guard does not attempt to hold prop
 //===========================================================================*/
@@ -3037,7 +3037,7 @@
 // command id: C0
 // info: spawn hat for guard, goto label if successful
 //=============================================================================
-// note: if out of memory/can't spawn item/already have hat, do not got label.
+// note: if out of memory/can't spawn item/already have hat, do not goto label.
 // spawned hat must have a holding position command within the model file
 //===========================================================================*/
 #define guard_try_spawning_hat_ID 0xC0
@@ -3617,14 +3617,12 @@
         label,
 
 /*=============================================================================
-// name: gas_leak_and_switch_fog
+// name: switch_fog_instantly
 // command id: E9
-// info: trigger gas leak event and instantly switch fog to the next fog's slot
+// info: instantly switch fog to the next fog's slot
 //=============================================================================
-// note: this command triggers a gas leak. for the level egypt, this command
-// will not trigger a gas leak, but instead will only switch the fog. this
-// command can't be stopped after executing. level must have a fog assigned
-// or will crash!
+// note: this command can't be stopped after executing. level must have a fog
+// assigned or will crash!
 //===========================================================================*/
 #define gas_leak_and_switch_fog_ID 0xE9
 #define gas_leak_and_switch_fog_LENGTH 0x01
