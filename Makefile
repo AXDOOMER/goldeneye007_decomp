@@ -77,7 +77,7 @@ HEADERFILES := $(foreach dir,src,$(wildcard $(dir)/*.s))
 HEADEROBJECTS := $(foreach file,$(HEADERFILES),$(BUILD_DIR)/$(file:.s=.o))
 
 RSPCODE := $(foreach dir,rsp,$(wildcard $(dir)/*.s))
-RSPOBJECTS := $(foreach file,$(RSPCODE),$(file:.s=.bin))
+RSPOBJECTS := $(foreach file,$(RSPCODE),$(BUILD_DIR)/$(file:.s=.bin))
 
 CODEFILES := $(foreach dir,src,$(wildcard $(dir)/*.c))
 CODEOBJECTS := $(foreach file,$(CODEFILES),$(BUILD_DIR)/$(file:.c=.o))
@@ -156,8 +156,8 @@ clean:
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) $(RSPOBJECTS)
 
-rsp/%.bin: rsp/*.s
-	$(ARMIPS) -strequ CODE_FILE rsp/$*.bin $<
+$(BUILD_DIR)/rsp/%.bin: rsp/*.s
+	$(ARMIPS) -strequ CODE_FILE $(BUILD_DIR)/rsp/$*.bin $<
 
 $(BUILD_DIR)/%.o: src/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
