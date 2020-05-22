@@ -172,6 +172,8 @@ $(BUILD_DIR)/assets/%.o: assets/%.c
 $(BUILD_DIR)/assets/%.o: assets/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
+$(BUILD_DIR)/src/rspboot.o: $(BUILD_DIR)/rsp/rspboot.bin 
+
 $(BUILD_DIR)/assets/ramrom/%.o: assets/ramrom/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
