@@ -55,7 +55,7 @@ BUILD_DIR := build/$(COUNTRYCODE)
 include assets/Makefile.obseg
 include assets/Makefile.music
 BUILD_SUB_DIRS := \
-	src src/game src/inflate src/libultra assets assets/obseg \
+	rsp src src/game src/inflate src/libultra assets assets/obseg \
 	assets/obseg/brief assets/obseg/chr assets/obseg/gun assets/obseg/prop \
 	assets/obseg/text assets/obseg/bg assets/obseg/setup assets/obseg/stan \
 	assets/music assets/ramrom assets/images assets/images/split assets/font
