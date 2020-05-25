@@ -8,7 +8,7 @@
 
 /*=============================================================================
 // chr ai commands reference
-// programmed by mark edmonds and martin hollis
+// programmed by mark edmonds
 //=============================================================================
 // terminology:
 // chr              character
@@ -131,6 +131,8 @@
 #define TARGET_PAD                      0x0008 // set target type to pad
 #define TARGET_COMPASS                  0x0010 // set target to compass direction (hex) N: 0000 E: C000 S: 8000: W: 4000
 #define TARGET_AIM_ONLY                 0x0020 // aim at target instead of firing
+#define TARGET_180_RANGE                0x0040 // limits target to 180 degrees in front of guard
+#define TARGET_180_RANGE_BOND           0x0040 // limits bond target to 180 degrees in front of guard (yes, it is also 0x0040)
 
 // command 18/19 - target body part values
 #define HIT_NULL_PART                   0x00 // null part, no reaction - 1x damage
@@ -3595,14 +3597,14 @@
         label,
 
 /*=============================================================================
-// name: if_guard_is_firing_and_unknown_flag
+// name: if_guard_is_firing_and_using_180_range_flag
 // command id: E7
-// info: if guard is in firing state (ACT_ATTACK) and chr->field_4C | 0x40, goto label
+// info: if guard is in firing state (ACT_ATTACK) and TARGET_180_RANGE is set, goto label
 //===========================================================================*/
-#define if_guard_is_firing_and_unknown_flag_ID 0xE7
-#define if_guard_is_firing_and_unknown_flag_LENGTH 0x02
-#define if_guard_is_firing_and_unknown_flag(label) \
-        if_guard_is_firing_and_unknown_flag_ID, \
+#define if_guard_is_firing_and_using_180_range_flag_ID 0xE7
+#define if_guard_is_firing_and_using_180_range_flag_LENGTH 0x02
+#define if_guard_is_firing_and_using_180_range_flag(label) \
+        if_guard_is_firing_and_using_180_range_flag_ID, \
         label,
 
 /*=============================================================================
