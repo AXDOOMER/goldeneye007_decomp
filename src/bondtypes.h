@@ -61,9 +61,9 @@ struct CHRdata {
     int field_40;
     int field_44;
     int field_48;
-    int field_4C;
+    int targetflag;
     /* 0x0050 */
-    int field_50;
+    int targettoshoot;
     int field_54;
     char type_of_motion;
     char distance_counter_or_something;
