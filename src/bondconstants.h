@@ -1023,26 +1023,6 @@ typedef enum CAMERAMODE {
     UNK10_CAM
 } CAMERAMODE;
 
-typedef enum IMAGE_FORMAT {
-    F_RGBA,
-    F_YUV,
-    F_CI,
-    F_IA,
-    F_I
- } IMAGE_FORMAT;
-
- typedef enum IMAGE_BITDEPTH {
-    D_4BIT,
-    D_8BIT,
-    D_16BIT,
-    D_32BIT
-} IMAGE_BITDEPTH;
-
-typedef enum CM_FLAGS {
-    CLAMP = 1,
-    MIRROR =2
-} CM_FLAGS;
-
 /* motion capture actor: duncan botwood */
 /* motion capture assistance: b jones */
 /* recorded using 'flock of birds' system by ascension technology corporation, in a freezing metal barn in the depths of winter */
