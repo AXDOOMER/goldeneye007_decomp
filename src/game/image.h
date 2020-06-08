@@ -4,13 +4,13 @@
 
 struct image_entry
 {
-  char flag1;
-  char flag2;
-  u16 size;
-  char flag3;
-  char flag4;
-  char flag5;
-  char flag6;
+  char flag1; //HitType
+  char flag2; //remove this line
+  u16 size;   //this is u32 Size:24 - 24bit size/address
+  char flag3; //Detailflag1 used once with value 0x38D2
+  char flag4; //DetailFlag2
+  char flag5; //padding
+  char flag6; //padding
 };
 
 extern s32 ptr_texture_alloc_start;
