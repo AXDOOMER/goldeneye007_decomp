@@ -121,7 +121,7 @@ OBJECTS := $(RSPOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(OBSEGMENT)
 
 
 
-INCLUDE := -I . -I include -I include/libultra -I src -I src/game -I src/inflate
+INCLUDE := -I . -I include -I include/ultra64 -I src -I src/game -I src/inflate
 
 CC := $(QEMU_IRIX) -silent -L $(IRIX_ROOT) $(IRIX_ROOT)/usr/bin/cc
 CFLAGS := -Wo,-loopunroll,0 -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838 -signed $(INCLUDE) -mips2 $(LCDEFS)
