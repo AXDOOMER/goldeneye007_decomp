@@ -1023,26 +1023,6 @@ typedef enum CAMERAMODE {
     UNK10_CAM
 } CAMERAMODE;
 
-typedef enum IMAGE_FORMAT {
-    F_RGBA,
-    F_YUV,
-    F_CI,
-    F_IA,
-    F_I
- } IMAGE_FORMAT;
-
- typedef enum IMAGE_BITDEPTH {
-    D_4BIT,
-    D_8BIT,
-    D_16BIT,
-    D_32BIT
-} IMAGE_BITDEPTH;
-
-typedef enum CM_FLAGS {
-    CLAMP = 1,
-    MIRROR =2
-} CM_FLAGS;
-
 /* motion capture actor: duncan botwood */
 /* motion capture assistance: b jones */
 /* recorded using 'flock of birds' system by ascension technology corporation, in a freezing metal barn in the depths of winter */
@@ -1273,6 +1253,23 @@ typedef enum ACT_TYPE {
 } ACT_TYPE;
 
 // character flags
+#define CHRHIDDEN_DROP_HELD_ITEMS       0x0001 // drop held items/weapons
+#define CHRHIDDEN_0002                  0x0002 // unknown
+#define CHRHIDDEN_FIRE_WEAPON_LEFT      0x0004 // firing left weapon
+#define CHRHIDDEN_FIRE_WEAPON_RIGHT     0x0008 // firing right weapon
+#define CHRHIDDEN_0010                  0x0010 // unknown
+#define CHRHIDDEN_REMOVE                0x0020 // remove character
+#define CHRHIDDEN_TIMER_ACTIVE          0x0040 // chr timer is active
+#define CHRHIDDEN_FIRE_TRACER           0x0080 // spawn a tracer
+#define CHRHIDDEN_MOVING                0x0100 // moving
+#define CHRHIDDEN_0200                  0x0200 // unknown
+#define CHRHIDDEN_0400                  0x0400 // unknown
+#define CHRHIDDEN_FREEZE                0x0800 // freeze current animation state
+#define CHRHIDDEN_1000                  0x1000 // unknown
+#define CHRHIDDEN_2000                  0x2000 // unknown
+#define CHRHIDDEN_4000                  0x4000 // unknown
+#define CHRHIDDEN_8000                  0x8000 // unknown
+
 #define CHRFLAG_INIT                         0x00000001 // initialize chr
 #define CHRFLAG_CLONE                        0x00000002 // clone on heard gunfire (used by GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
 #define CHRFLAG_NEAR_MISS                    0x00000004 // chr was just nearly shot (sometimes set on direct hit)
