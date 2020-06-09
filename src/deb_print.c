@@ -142,10 +142,10 @@ void write_char_to_pos_stderr(int xpos,int ypos,u8 letter) {
   if ((letter == 9) || (letter == 10)) {
     letter = 0;
   }
-  if (((letter != 0) && (letter < 0x20)) || (0x7e < letter)) {
+  if ((letter <= 0 || letter >= 0x20) && letter >= 0x7f) {
     letter = 0x3f;
   }
-  if (((-1 < xpos) && (xpos < 0x48)) && ((-1 < ypos && (ypos < 0x20)))) {
+  if ((0 <  xpos && xpos < 0x48) && (0 < ypos && ypos < 0x20)) {
     stderr_buffer[ypos * 0x47 + xpos] = letter;
   }
   return;

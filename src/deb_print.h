@@ -14,9 +14,10 @@ struct debug_processor_error_entry
 };
 
 extern struct debug_processor_error_entry debug_processor_error_table[];
-void *stack_ptrs_1[];
-void *stack_ptrs_2[];
-void *stack_ptrs_3[];
-char stderr_buffer[2280];
+extern void *stack_ptrs_1[];
+extern void *stack_ptrs_2[];
+extern void *stack_ptrs_3[];
+extern char stderr_buffer[2280];
 
+void write_stderr_to_buffer(u32 *buffer);
 #endif

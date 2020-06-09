@@ -2,6 +2,7 @@
 #include "init.h"
 #include "sched.h"
 #include "bondgame.h"
+#include "deb_print.h"
 
 /**
  * @file sched.c
