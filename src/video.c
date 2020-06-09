@@ -1,7 +1,7 @@
 //FIXME i still need all sorts of love
 #include "ultra64.h"
-#include "video.h"
 #include "vi.h"
+#include "video.h"
 #include "bondgame.h"
 
 /**
@@ -1347,6 +1347,8 @@ glabel video_related_9
 /**
  * 4764	70003B64
  */
+//Even though this is defined in vi.h, it also must be in this file to be seen??
+extern OSMesgQueue vi_c_debug_MQ;
 void receive_vi_c_msgs(int msgcount){
   do {
     osRecvMesg(&vi_c_debug_MQ,NULL,1);

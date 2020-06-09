@@ -583,8 +583,8 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/j/src/c_data_filler.o
  .gptab.data    0x0000000000000000       0x18 build/j/src/c_data_filler.o
  .mdebug        0x0000000000000000      0x218 build/j/src/c_data_filler.o
- .options       0x0000000000000000       0x20 build/j/src/rarezip/rarezip.o
- .reginfo       0x0000000000000000       0x18 build/j/src/rarezip/rarezip.o
+ .options       0x0000000000000000       0x20 build/j/src/inflate/inflate.o
+ .reginfo       0x0000000000000000       0x18 build/j/src/inflate/inflate.o
  .options       0x0000000000000000       0x20 build/j/src/game/initgamedata.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/initgamedata.o
  .mdebug        0x0000000000000000      0x7ac build/j/src/game/initgamedata.o
@@ -1335,7 +1335,7 @@ Linker script and memory map
                 0x0000000070009a44                memaMerge
                 0x0000000070009a60                memaSortMergeEntries
                 0x0000000070009b28                memaSortMergeAllEntries
-                0x0000000070009b70                mem_related
+                0x0000000070009b70                memaFindOpening
                 0x0000000070009c84                memaAllocRoomBuffer
                 0x0000000070009d7c                something_with_mema_c_debug
                 0x0000000070009da8                mempInitMallocTable
@@ -1980,8 +1980,8 @@ Linker script and memory map
                 0x00000000000335d0                _rarezipSegmentRomStart = _cdataSegmentRomEnd
 
 .rarezip        0x0000000070200000     0x15a0 load address 0x00000000000335d0
- build/j/src/rarezip/rarezip.o(.text)
- .text          0x0000000070200000     0x1480 build/j/src/rarezip/rarezip.o
+ build/j/src/inflate/inflate.o(.text)
+ .text          0x0000000070200000     0x1480 build/j/src/inflate/inflate.o
                 0x0000000070200000                huft_build
                 0x0000000070200654                inflate_codes
                 0x0000000070200a48                inflate_stored
@@ -1990,13 +1990,13 @@ Linker script and memory map
                 0x0000000070201228                inflate_block
                 0x0000000070201348                inflate
                 0x000000007020141c                decompress_entry
- build/j/src/rarezip/rarezip.o(.data)
- .data          0x0000000070201480      0x120 build/j/src/rarezip/rarezip.o
-                0x0000000070201480                rz_ptr_source
-                0x0000000070201484                rz_ptr_target
+ build/j/src/inflate/inflate.o(.data)
+ .data          0x0000000070201480      0x120 build/j/src/inflate/inflate.o
+                0x0000000070201480                inbuf
+                0x0000000070201484                outbuf
                 0x0000000070201488                inptr
                 0x000000007020148c                wp
-                0x0000000070201490                rz_ptrbuffer
+                0x0000000070201490                huftlist
                 0x0000000070201494                border
                 0x00000000702014a8                cplens
                 0x00000000702014e8                cplext
@@ -16982,7 +16982,7 @@ Linker script and memory map
                 0x00000000800285cc                aGrab_D_temp_uix_0
                 0x00000000800285e0                aUix2pixXsDGrab_D_temp_uix
                 0x0000000080028600                aFromaliasGrab_D_temp_pixGrab_D_t_0
-                0x000000008002862c                ::aImgcopyFjfifGrab_D_temp_rgbGrab(void)
+                0x000000008002862c                aImgcopyFjfifGrab_D_temp_rgbGrab__0
                 0x000000008002865c                aRmGrab_D_temp_uixGrab_D_temp_pix_0
                 0x0000000080028694                aImgviewGrab_D_jpeg_0
                 0x00000000800286ac                aGrab_D_rgb
@@ -17006,7 +17006,7 @@ Linker script and memory map
  build/j/src/ramrom.o(.rodata)
  build/j/src/boss.o(.rodata)
  .rodata        0x0000000080028ab0      0x6f0 build/j/src/boss.o
-                0x0000000080029144                ::aLevel(void)
+                0x0000000080029144                aLevel__0
                 0x000000008002914c                aLevel__1
                 0x0000000080029154                aHard
                 0x000000008002915c                aHard_1
@@ -21348,7 +21348,7 @@ Linker script and memory map
                 0x000000008005b6f0                aLv_c_debug
                 0x000000008005b6fc                aStanshow_
                 0x000000008005b708                aStanshow__5
-                0x000000008005b714                ::aStanshow(void)
+                0x000000008005b714                aStanshow__0
                 0x000000008005b720                aStanshow__1
                 0x000000008005b72c                aStanshow__2
                 0x000000008005b738                aStanshow__3
