@@ -127,7 +127,7 @@ u32 std_error_font_bitcode[] = {
 void *ptr_videobuffer1 = 0;
 void *ptr_videobuffer2 = 0;
 
-u32 padding_80024184[4] = 0;
+u32 padding_80024184[4] = {0};
 
 
 

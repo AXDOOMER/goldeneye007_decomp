@@ -105,8 +105,8 @@ void CheckDisplayErrorBufferEvery16Frames(u32 framecount)
         {
 			if (userCompareValue < (osGetCount() - currentcount))
             {
-				write_stderr_to_buffer(cfb_16_a);
-				write_stderr_to_buffer(cfb_16_b);
+				write_stderr_to_buffer((u32*)cfb_16_a);
+				write_stderr_to_buffer((u32*)cfb_16_b);
 			}
 		}
 	}
@@ -496,12 +496,14 @@ glabel __scMain
 #ifdef NONMATCHING
 void __scHandleRetrace(OSSched *sc)
 {
-    OSScTask    *rspTask;
+    OSScTask    *rspTask = 0;
+    
     OSScClient  *client;
-    s32         i;
+    //s32         i;
     s32         state;
     OSScTask    *sp = 0;
     OSScTask    *dp = 0;
+    
 
     video_related_1();
     sc->frameCount++;
@@ -639,28 +641,28 @@ void __scHandleRSP(OSSched *sc)
 
     t = sc->curRSPTask;
     sc->curRSPTask = 0;
-    video_related_3(0x10001, arg0->unkC8);
-    if (((sp2C->unk4 & 0x10) != 0) && (osSpTaskYielded((sp2C + 0x10), sp2C) != 0))
+    video_related_3(0x10001);
+    if (((t->state & 0x10) != 0) && (osSpTaskYielded(t->list) != 0))
     {
-        sp2C->unk4 = (s32) (sp2C->unk4 | 0x20);
-        if ((sp2C->unk8 & 7) == 3)
+        t->state = (s32) (t->state | 0x20);
+        if ((t->flags & 7) == 3)
         {
-            *sp2C = (void *) arg0->unkBC;
-            arg0->unkBC = sp2C;
-            if (arg0->unkC4 == 0)
+            *t = (void *) sc->gfxListHead;
+            sc->gfxListHead = t;
+            if (sc->gfxListTail == 0)
             {
-                arg0->unkC4 = sp2C;
+                sc->gfxListTail = t;
             }
         }
     }
     else
     {
-        sp2C->unk4 = (s32) (sp2C->unk4 & -3);
-        __scTaskComplete(arg0, sp2C);
+        t->state = (s32) (t->state & -3);
+        __scTaskComplete(sc, t);
     }
-    if (__scSchedule(arg0, &sp28, &sp24, ((((u32) arg0->unkC8 < 1U) * 2) | ((u32) arg0->unkCC < 1U))) != sp20)
+    if (__scSchedule(sc, &sp, &dp, ((((u32) sc->curRSPTask < 1U) * 2) | ((u32) sc->curRDPTask < 1U))))
     {
-        __scExec(arg0, sp28, sp24, sp20);
+        __scExec(sc, sp, dp);
     }
 }
 
