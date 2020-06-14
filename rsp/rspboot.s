@@ -3,6 +3,7 @@
 .create CODE_FILE, 0x04001000
 
 // rspboot microcode by SGI
+// this initalizes the RSP and gets it ready to load the next microcode.
 
     j     rdpcheck
      addi  at, zero, 0x0fc0
