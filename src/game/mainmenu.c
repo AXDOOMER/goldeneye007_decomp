@@ -1830,24 +1830,7 @@ glabel D_800519D0
 .word 0x3D99999A /* 0.075000003;*/
 glabel D_800519D4
 .word 0x3D99999A /* 0.075000003;*/
-glabel tab1_max_x_coord
-.word 0x43028000 /* 130.5;*/
-glabel tab2_first_x_coord
-.word 0x43C78000 /* 399.0;*/
-glabel tab2_bottom_y_coord
-.word 0x43028000 /* 130.5;*/
-glabel D_800519E4
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel D_800519E8
-.word 0x461C4000 /* 10000.0;*/
-glabel D_800519EC
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel D_800519F0
-.word 0x461C4000 /* 10000.0;*/
-glabel D_800519F4
-.word 0xBFB2B8C3 /* -1.3962635;*/
-glabel D_800519F8
-.word 0x3C962FC9 /* 0.018333333;*/
+
 .text
 glabel menu_control_stick_tracking
 /* 03E6B4 7F009B84 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -2121,24 +2104,6 @@ glabel D_800519D0
 .word 0x3D99999A /* 0.075000003;*/
 glabel D_800519D4
 .word 0x3D99999A /* 0.075000003;*/
-glabel tab1_max_x_coord
-.word 0x43028000 /* 130.5;*/
-glabel tab2_first_x_coord
-.word 0x43C78000 /* 399.0;*/
-glabel tab2_bottom_y_coord
-.word 0x43028000 /* 130.5;*/
-glabel D_800519E4
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel D_800519E8
-.word 0x461C4000 /* 10000.0;*/
-glabel D_800519EC
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel D_800519F0
-.word 0x461C4000 /* 10000.0;*/
-glabel D_800519F4
-.word 0xBFB2B8C3 /* -1.3962635;*/
-glabel D_800519F8
-.word 0x3C962FC9 /* 0.018333333;*/
 
 .text
 glabel menu_control_stick_tracking
@@ -2700,6 +2665,10 @@ u32 isontab1(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel tab1_max_x_coord
+.word 0x43028000 /* 130.5;*/
+
 .text
 glabel isontab1
 /* 03ED14 7F00A1E4 3C0143C3 */  li    $at, 0x43C30000 # 390.000000
@@ -2888,8 +2857,8 @@ u32 isontab3(void)
 
 void set_cursor_pos_tab2(void) 
 {
-  cursor_h_pos = tab2_first_x_coord;
-  cursor_v_pos = 144.00000000f;
+  cursor_h_pos = 399.0f;
+  cursor_v_pos = 144.0f;
 }
 
 
@@ -3037,7 +3006,7 @@ glabel add_tab2_next
 
 u32 isontab2(void)
 {
-  if (((390.00000000f < cursor_h_pos) && (tab2_bottom_y_coord < cursor_v_pos)) && (cursor_v_pos <= 223.00000000f)) {
+  if (((390.00000000f < cursor_h_pos) && (130.5f < cursor_v_pos)) && (cursor_v_pos <= 223.00000000f)) {
     return TRUE;
   }
   return FALSE;
@@ -3179,6 +3148,11 @@ void interface_menu00_legalscreen(undefined8 param_1,undefined8 param_2) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800519E4
+.word 0x3FAAAAAB /* 1.3333334;*/
+glabel D_800519E8
+.word 0x461C4000 /* 10000.0;*/
 .text
 glabel interface_menu00_legalscreen
 /* 03F20C 7F00A6DC 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -3621,6 +3595,11 @@ void *interface_menu17_switchscreens(void)
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800519EC
+.word 0x3FAAAAAB /* 1.3333334;*/
+glabel D_800519F0
+.word 0x461C4000 /* 10000.0;*/
 .text
 glabel interface_menu17_switchscreens
 /* 03F630 7F00AB00 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -3705,6 +3684,11 @@ void init_menu01_nintendo(void)
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_800519F4
+.word 0xBFB2B8C3 /* -1.3962635;*/
+glabel D_800519F8
+.word 0x3C962FC9 /* 0.018333333;*/
 .text
 glabel init_menu01_nintendo
 /* 03F6F8 7F00ABC8 27BDFFD0 */  addiu $sp, $sp, -0x30
