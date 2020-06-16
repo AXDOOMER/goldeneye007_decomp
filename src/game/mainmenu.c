@@ -1643,9 +1643,8 @@ def_7F00986C:
 
 
 #ifdef NONMATCHING
-int getplayerfavoredweapon(int param_1,int param_2)
-{
-  return get_ptr_long_watch_text_for_item((&(&fav_weapon_player1)[param_1].right)[param_2]);
+int getplayerfavoredweapon(int player,int hand) {
+    return get_ptr_long_watch_text_for_item(array_favweapon[player].hand[hand]);
 }
 #else
 GLOBAL_ASM(
@@ -1849,56 +1848,6 @@ glabel D_800519F4
 .word 0xBFB2B8C3 /* -1.3962635;*/
 glabel D_800519F8
 .word 0x3C962FC9 /* 0.018333333;*/
-glabel menu01_aspect
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel menu01_pageheight
-.word 0x461C4000 /* 10000.0;*/
-glabel D_80051A04
-.word 0x3C8EFA35 /* 0.017453292;*/
-glabel D_80051A08
-.word 0x3F8CCCCD /* 1.1;*/
-glabel D_80051A0C
-.word 0x3F8A35E7 /* 1.07977;*/
-glabel D_80051A10
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel D_80051A14
-.word 0x461C4000 /* 10000.0;*/
-glabel D_80051A18
-.word 0x3F99999A /* 1.2;*/
-glabel D_80051A1C
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel D_80051A20
-.word 0x461C4000 /* 10000.0;*/
-glabel D_80051A24
-.word 0x3EBD70A4 /* 0.37;*/
-glabel D_80051A28
-.word 0x438E8000 /* 285.0;*/
-glabel D_80051A2C
-.word 0x43A78000 /* 335.0;*/
-glabel D_80051A30
-.word 0x438E8000 /* 285.0;*/
-glabel D_80051A34
-.word 0x438E8000 /* 285.0;*/
-glabel D_80051A38
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel D_80051A3C
-.word 0x461C4000 /* 10000.0;*/
-glabel D_80051A40
-.word 0x43898000 /* 275.0;*/
-glabel D_80051A44
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel D_80051A48
-.word 0x461C4000 /* 10000.0;*/
-glabel D_80051A4C
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel D_80051A50
-.word 0x461C4000 /* 10000.0;*/
-glabel D_80051A54
-.word 0x43898000 /* 275.0;*/
-glabel D_80051A58
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel D_80051A5C
-.word 0x461C4000 /* 10000.0;*/
 .text
 glabel menu_control_stick_tracking
 /* 03E6B4 7F009B84 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -2190,56 +2139,7 @@ glabel D_800519F4
 .word 0xBFB2B8C3 /* -1.3962635;*/
 glabel D_800519F8
 .word 0x3C962FC9 /* 0.018333333;*/
-glabel menu01_aspect
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel menu01_pageheight
-.word 0x461C4000 /* 10000.0;*/
-glabel D_80051A04
-.word 0x3C8EFA35 /* 0.017453292;*/
-glabel D_80051A08
-.word 0x3F8CCCCD /* 1.1;*/
-glabel D_80051A0C
-.word 0x3F8A35E7 /* 1.07977;*/
-glabel D_80051A10
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel D_80051A14
-.word 0x461C4000 /* 10000.0;*/
-glabel D_80051A18
-.word 0x3F99999A /* 1.2;*/
-glabel D_80051A1C
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel D_80051A20
-.word 0x461C4000 /* 10000.0;*/
-glabel D_80051A24
-.word 0x3EBD70A4 /* 0.37;*/
-glabel D_80051A28
-.word 0x438E8000 /* 285.0;*/
-glabel D_80051A2C
-.word 0x43A78000 /* 335.0;*/
-glabel D_80051A30
-.word 0x438E8000 /* 285.0;*/
-glabel D_80051A34
-.word 0x438E8000 /* 285.0;*/
-glabel D_80051A38
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel D_80051A3C
-.word 0x461C4000 /* 10000.0;*/
-glabel D_80051A40
-.word 0x43898000 /* 275.0;*/
-glabel D_80051A44
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel D_80051A48
-.word 0x461C4000 /* 10000.0;*/
-glabel D_80051A4C
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel D_80051A50
-.word 0x461C4000 /* 10000.0;*/
-glabel D_80051A54
-.word 0x43898000 /* 275.0;*/
-glabel D_80051A58
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel D_80051A5C
-.word 0x461C4000 /* 10000.0;*/
+
 .text
 glabel menu_control_stick_tracking
 /* 03E714 7F009BA4 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -3912,6 +3812,11 @@ void interface_menu01_nintendo(void)
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel menu01_aspect
+.word 0x3FAAAAAB /* 1.3333334;*/
+glabel menu01_pageheight
+.word 0x461C4000 /* 10000.0;*/
 .text
 glabel interface_menu01_nintendo
 /* 03F7F8 7F00ACC8 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -4081,6 +3986,13 @@ loop_9:
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051A04
+.word 0x3C8EFA35 /* 0.017453292;*/
+glabel D_80051A08
+.word 0x3F8CCCCD /* 1.1;*/
+glabel D_80051A0C
+.word 0x3F8A35E7 /* 1.07977;*/
 .text
 glabel constructor_menu01_nintendo
 /* 03F8C8 7F00AD98 27BDFE98 */  addiu $sp, $sp, -0x168
@@ -4468,6 +4380,12 @@ void interface_menu04_goldeneyelogo(void)
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051A10
+.word 0x3FAAAAAB /* 1.3333334;*/
+glabel D_80051A14
+.word 0x461C4000 /* 10000.0;*/
+
 .text
 glabel interface_menu04_goldeneyelogo
 /* 03FE60 7F00B330 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -4654,6 +4572,9 @@ loop_3:
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051A18
+.word 0x3F99999A /* 1.2;*/
 .text
 glabel constructor_menu04_goldeneyelogo
 /* 03FFAC 7F00B47C 27BDFE80 */  addiu $sp, $sp, -0x180
@@ -5619,6 +5540,13 @@ loop_38:
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051A1C
+.word 0x3FAAAAAB /* 1.3333334;*/
+glabel D_80051A20
+.word 0x461C4000 /* 10000.0;*/
+glabel D_80051A24
+.word 0x3EBD70A4 /* 0.37;*/
 .text
 glabel interface_menu05_fileselect
 /* 0406FC 7F00BBCC 27BDFEF0 */  addiu $sp, $sp, -0x110
@@ -6588,6 +6516,15 @@ loop_24:
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051A28
+.word 0x438E8000 /* 285.0;*/
+glabel D_80051A2C
+.word 0x43A78000 /* 335.0;*/
+glabel D_80051A30
+.word 0x438E8000 /* 285.0;*/
+glabel D_80051A34
+.word 0x438E8000 /* 285.0;*/
 .text
 glabel constructor_menu05_fileselect
 /* 040F38 7F00C408 27BDFE48 */  addiu $sp, $sp, -0x1b8
@@ -7699,6 +7636,13 @@ block_16:
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051A38
+.word 0x3FAAAAAB /* 1.3333334;*/
+glabel D_80051A3C
+.word 0x461C4000 /* 10000.0;*/
+glabel D_80051A40
+.word 0x43898000 /* 275.0;*/
 .text
 glabel interface_menu06_modesel
 /* 041DC8 7F00D298 27BDFFD0 */  addiu $sp, $sp, -0x30
@@ -9098,6 +9042,11 @@ loop_29:
 
 #ifdef VERSION_US
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051A44
+.word 0x3FAAAAAB /* 1.3333334;*/
+glabel D_80051A48
+.word 0x461C4000 /* 10000.0;*/
 .text
 glabel interface_menu07_missionsel
 /* 0429E8 7F00DEB8 27BDFFA0 */  addiu $sp, $sp, -0x60
@@ -9463,6 +9412,11 @@ glabel interface_menu07_missionsel
 
 #ifdef VERSION_JP
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051A44
+.word 0x3FAAAAAB /* 1.3333334;*/
+glabel D_80051A48
+.word 0x461C4000 /* 10000.0;*/
 .text
 glabel interface_menu07_missionsel
 /* 042A48 7F00DED8 27BDFFA0 */  addiu $sp, $sp, -0x60
@@ -10319,6 +10273,13 @@ void interface_menu08_difficulty(void)
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051A4C
+.word 0x3FAAAAAB /* 1.3333334;*/
+glabel D_80051A50
+.word 0x461C4000 /* 10000.0;*/
+glabel D_80051A54
+.word 0x43898000 /* 275.0;*/
 .text
 glabel interface_menu08_difficulty
 /* 0432F0 7F00E7C0 3C0E8003 */  lui   $t6, %hi(briefingpage) 
@@ -11597,6 +11558,11 @@ void interface_menu09_007options(void)
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80051A58
+.word 0x3FAAAAAB /* 1.3333334;*/
+glabel D_80051A5C
+.word 0x461C4000 /* 10000.0;*/
 .text
 glabel interface_menu09_007options
 /* 043EA4 7F00F374 27BDFFE8 */  addiu $sp, $sp, -0x18
