@@ -575,26 +575,12 @@ glabel print_to_vidbuff1
  *     A0 | A0000000 -> 8002417C
  *     A1 | A0000000 -> 80024180
  */
-#ifdef NONMATCHING
+
 void set_ptr_video_buffers(s32 arg0, s32 arg1) {
     ptr_videobuffer1 = (s32) (arg0 | 0xa0000000);
     ptr_videobuffer2 = (s32) (arg1 | 0xa0000000);
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel set_ptr_video_buffers
-/* 006584 70005984 3C02A000 */  lui   $v0, 0xa000
-/* 006588 70005988 00827025 */  or    $t6, $a0, $v0
-/* 00658C 7000598C 3C018002 */  lui   $at, %hi(ptr_videobuffer1)
-/* 006590 70005990 AC2E417C */  sw    $t6, %lo(ptr_videobuffer1)($at)
-/* 006594 70005994 3C018002 */  lui   $at, %hi(ptr_videobuffer2)
-/* 006598 70005998 00A27825 */  or    $t7, $a1, $v0
-/* 00659C 7000599C 03E00008 */  jr    $ra
-/* 0065A0 700059A0 AC2F4180 */   sw    $t7, %lo(ptr_videobuffer2)($at)
-)
-#endif
 
 
 

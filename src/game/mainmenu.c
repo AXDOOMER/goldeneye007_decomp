@@ -6,7 +6,13 @@
 #include "music.h"
 #include "game/textrelated.h"
 #include "game/lvl.h"
-
+#include "game/bond.h"
+#include "game/chrobjdata.h"
+struct point {
+    f32 x;
+    f32 y;
+    f32 z;
+};
 // bss
 //CODE.bss:800695A0
 f32 flt_CODE_bss_800695A0;
@@ -508,9 +514,7 @@ u32 D_8002A9B0 = 0xA0000000;
 u32 D_8002A9B4 = 0x96000000;
 u32 D_8002A9B8 = 0x28000000;
 u32 D_8002A9BC = 0x8C000000;
-u32 D_8002A9C0 = 0;
-u32 D_8002A9C4 = 0;
-u32 D_8002A9C8 = 0;
+struct point D_8002A9C0 = {0.0f, 0.0f, 0.0f};
 
 struct legal_screen_text D_8002A9CC[] = {
     {220,  30, 1, 1, TEXT(LTITLE, 0x07), 0},
@@ -3006,7 +3010,7 @@ glabel add_tab2_next
 
 u32 isontab2(void)
 {
-  if (((390.00000000f < cursor_h_pos) && (130.5f < cursor_v_pos)) && (cursor_v_pos <= 223.00000000f)) {
+  if (((390.0f < cursor_h_pos) && (130.5f < cursor_v_pos)) && (cursor_v_pos <= 223.00000000f)) {
     return TRUE;
   }
   return FALSE;
@@ -3020,20 +3024,17 @@ u32 isontab2(void)
 #ifdef NONMATCHING
 void init_menu00_legalscreen(void)
 {
-    ? sp20;
-    s32 temp_ret;
+    struct point sp20;
 
     musicTrack1Stop();
     maybe_is_in_menu = 1;
     menu_timer = 0;
-    sp20.unk0 = (?32) D_8002A9C0.unk0;
-    sp20.unk4 = (?32) D_8002A9C0.unk4;
-    sp20.unk8 = (?32) D_8002A9C0.unk8;
-    load_object_fill_header(PitemZ_entries.unkEF4, PitemZ_entries.unkEF8, ptr_logo_and_walletbond_DL, 0x3c000, 0);
-    set_objuse_flag_compute_grp_nums_set_obj_loaded(PlegalpageZ_header);
-    temp_ret = get_obj_instance_controller_for_header(PlegalpageZ_header);
-    something_legalscreen_constructor = temp_ret;
-    set_obj_instance_controller_scale(temp_ret, 0x3f800000);
+    sp20 = D_8002A9C0;
+    load_object_fill_header(&PitemZ_entries[0xEF4], &PitemZ_entries[0xEF8], ptr_logo_and_walletbond_DL, 0x3c000, 0);
+    set_objuse_flag_compute_grp_nums_set_obj_loaded(&PlegalpageZ_header);
+
+    something_legalscreen_constructor = get_obj_instance_controller_for_header(PlegalpageZ_header);
+    set_obj_instance_controller_scale(something_legalscreen_constructor, 1.0f);
     setsuboffset(something_legalscreen_constructor, &sp20);
     sub_GAME_7F01DF90();
 }
@@ -3109,42 +3110,30 @@ void update_menu00_legalscreen(void)
 
 
 #ifdef NONMATCHING
-void interface_menu00_legalscreen(undefined8 param_1,undefined8 param_2) {
-  longlong lVar1;
-  ulonglong uVar2;
-  undefined4 extraout_a0_lo;
-  undefined4 extraout_a0_lo_00;
-  undefined8 extraout_a1;
-  undefined4 extraout_a1_lo;
-  undefined8 in_a2;
-  undefined8 extraout_a2;
-  undefined8 extraout_a2_00;
-  undefined8 extraout_a3;
+void interface_menu00_legalscreen(void) {
   
-  setvideo_far(param_1._4_4_,param_2,in_a2);
-  video_related_21(extraout_a0_lo,extraout_a1,extraout_a2);
-  set_page_height(extraout_a0_lo_00,extraout_a1_lo,extraout_a2_00,extraout_a3);
+  setvideo_far(60.0f);
+  video_related_21(1.3333334f);
+  set_page_height(100.0f, 10000.0f);
   set_video2_settings_offset_24(0);
   menu_timer += clock_timer;
-  if (menu_timer < 0xf1) {
-    if ((get_controller_buttons_pressed(0,R_CBUTTONS|L_CBUTTONS|D_CBUTTONS|U_CBUTTONS|R_TRIG|L_TRIG|DUMMY_2|DUMMY_1|R_JPAD|L_JPAD|D_JPAD|U_JPAD|START_BUTTON|Z_TRIG|B_BUTTON|A_BUTTON) != 0) && (is_first_time_on_legal_screen == FALSE)) {
-      if (is_first_time_on_main_menu == FALSE) {
-        set_menu_to_mode(MENU_FILE_SELECT,1);
+  if (menu_timer >= 0xF1) {
+      if (get_attached_controller_count() > 0) {
+          while (is_first_time_on_legal_screen == 0) {
+              set_menu_to_mode(MENU_NINTENDO_LOGO,1);
+              return;
+          }
+          set_menu_to_mode(MENU_NO_CONTROLLERS,1);
+          return;
       }
-      else {
-        set_menu_to_mode(MENU_NINTENDO_LOGO,1);
+      if (get_controller_buttons_pressed(0, 0xFFFF)) {
+          if ((is_first_time_on_legal_screen == 0) && (is_first_time_on_main_menu == 0)) {
+              set_menu_to_mode(MENU_FILE_SELECT,1);
+              return;
+          }
+          set_menu_to_mode(MENU_NINTENDO_LOGO,1);
       }
-    }
   }
-  else {
-    if ((get_attached_controller_count() < 1) && (is_first_time_on_legal_screen != FALSE)) {
-      set_menu_to_mode(MENU_NO_CONTROLLERS,1);
-    }
-    else {
-      set_menu_to_mode(MENU_NINTENDO_LOGO,1);
-    }
-  }
-  return;
 }
 #else
 GLOBAL_ASM(
