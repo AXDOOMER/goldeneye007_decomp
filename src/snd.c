@@ -2368,9 +2368,9 @@ glabel sfx_c_70009184
  * 9DC8	700091C8
  *     redirect to 70009264: A0=0
  */
-void sfx_c_700091C8(void)
+u32 sfx_c_700091C8(void)
 {
-    sfx_c_70009264(0);
+    return sfx_c_70009264(0);
 }
 
 
@@ -2437,29 +2437,13 @@ glabel sfx_c_700091E8
 /**
  * 9E38	70009238
  */
-#ifdef NONMATCHING
+
 void sfx_c_70009238(f32 arg0)
 {
     F32_800243FC = arg0;
     sfx_c_700091E8((sfx_c_700091C8() & 0xffff));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sfx_c_70009238
-/* 009E38 70009238 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 009E3C 7000923C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 009E40 70009240 3C018002 */  lui   $at, %hi(F32_800243FC)
-/* 009E44 70009244 0C002472 */  jal   sfx_c_700091C8
-/* 009E48 70009248 E42C43FC */   swc1  $f12, %lo(F32_800243FC)($at)
-/* 009E4C 7000924C 0C00247A */  jal   sfx_c_700091E8
-/* 009E50 70009250 3044FFFF */   andi  $a0, $v0, 0xffff
-/* 009E54 70009254 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 009E58 70009258 27BD0018 */  addiu $sp, $sp, 0x18
-/* 009E5C 7000925C 03E00008 */  jr    $ra
-/* 009E60 70009260 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -2476,7 +2460,7 @@ glabel sfx_c_70009238
 #ifdef NONMATCHING
 void sfx_c_70009264(s32 arg0)
 {
-    return *(D_80063BA8 + ((arg0 & 0xff) * 2));
+    return (D_80063BA8 + ((arg0 & 0xff) * 2));
 }
 
 #else

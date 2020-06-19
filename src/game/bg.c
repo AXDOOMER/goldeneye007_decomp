@@ -2229,29 +2229,11 @@ glabel sub_GAME_7F0B47E0
 
 
 
-#ifdef NONMATCHING
+
 void sub_GAME_7F0B4810(f32 arg0) {
     room_data_float1 = arg0;
     room_data_float2 = (f32) (1.0f / arg0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B4810
-/* 0E9340 7F0B4810 3C018004 */  lui   $at, %hi(room_data_float1)
-/* 0E9344 7F0B4814 E42C13F4 */  swc1  $f12, %lo(room_data_float1)($at)
-/* 0E9348 7F0B4818 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0E934C 7F0B481C 44812000 */  mtc1  $at, $f4
-/* 0E9350 7F0B4820 3C018004 */  lui   $at, %hi(room_data_float2)
-/* 0E9354 7F0B4824 460C2183 */  div.s $f6, $f4, $f12
-/* 0E9358 7F0B4828 03E00008 */  jr    $ra
-/* 0E935C 7F0B482C E42613F8 */   swc1  $f6, %lo(room_data_float2)($at)
-)
-#endif
-
-
-
-
 
 
 f32 get_room_data_float2(void){
