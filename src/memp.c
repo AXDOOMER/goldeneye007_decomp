@@ -737,29 +737,11 @@ s32 mempGetBankSizeLeft(u8 bank)
  *     allocate A0 coded #bytes in bank
  *     accepts: A0=size/bank# entry (ssssssss ssssssss sssssssss sssssbbb)
  */
-#ifdef NONMATCHING
+
 u32 mempAllocPackedBytesInBank(u32 param_1)
 {
     return mempAllocBytesInBank((param_1 >> 3),(param_1 & 7));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel mempAllocPackedBytesInBank
-/* 00A570 70009970 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 00A574 70009974 00802825 */  move  $a1, $a0
-/* 00A578 70009978 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00A57C 7000997C 30AE0007 */  andi  $t6, $a1, 7
-/* 00A580 70009980 01C02825 */  move  $a1, $t6
-/* 00A584 70009984 0C0025C8 */  jal   mempAllocBytesInBank
-/* 00A588 70009988 000420C2 */   srl   $a0, $a0, 3
-/* 00A58C 7000998C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00A590 70009990 27BD0018 */  addiu $sp, $sp, 0x18
-/* 00A594 70009994 03E00008 */  jr    $ra
-/* 00A598 70009998 00000000 */   nop   
-)
-#endif
-
 
 
 
