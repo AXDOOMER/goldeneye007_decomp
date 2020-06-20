@@ -3140,7 +3140,7 @@ labels:
    - [0x7F08BDC4, "sub_GAME_7F08BDC4"]
    - [0x7F08BE2C, "sub_GAME_7F08BE2C"]
    - [0x7F08BEEC, "sub_GAME_7F08BEEC"]
-   - [0x7F08BFB8, "sub_GAME_7F08BFB8"]
+   - [0x7F08BFB8, "get_mission_timer"]
    - [0x7F08BFC4, "trigger_explosions_around_player"]
    - [0x7F08BFF0, "reinit_BONDdata_inventory"]
    - [0x7F08C054, "sub_GAME_7F08C054"]

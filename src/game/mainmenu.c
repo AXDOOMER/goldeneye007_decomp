@@ -23460,7 +23460,7 @@ glabel constructor_menu0D_missioncomplete
 /* 04B564 7F016A34 00402025 */   move  $a0, $v0
 /* 04B568 7F016A38 0FC2B366 */  jal   microcode_constructor
 /* 04B56C 7F016A3C 00402025 */   move  $a0, $v0
-/* 04B570 7F016A40 0FC22FEE */  jal   sub_GAME_7F08BFB8
+/* 04B570 7F016A40 0FC22FEE */  jal   get_mission_timer
 /* 04B574 7F016A44 00408825 */   move  $s1, $v0
 /* 04B578 7F016A48 0FC1AA49 */  jal   get_curplay_killcount
 /* 04B57C 7F016A4C AFA20098 */   sw    $v0, 0x98($sp)

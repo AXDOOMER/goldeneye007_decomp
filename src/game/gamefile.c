@@ -172,7 +172,7 @@ glabel end_of_mission_briefing
 /* 051F2C 7F01D3FC 03284821 */  addu  $t1, $t9, $t0
 /* 051F30 7F01D400 01495021 */  addu  $t2, $t2, $t1
 /* 051F34 7F01D404 854AB564 */  lh    $t2, %lo(solo_target_time_array)($t2)
-/* 051F38 7F01D408 0FC22FEE */  jal   sub_GAME_7F08BFB8
+/* 051F38 7F01D408 0FC22FEE */  jal   get_mission_timer
 /* 051F3C 7F01D40C A7AA001E */   sh    $t2, 0x1e($sp)
 /* 051F40 7F01D410 2401003C */  li    $at, 60
 /* 051F44 7F01D414 0041001A */  div   $zero, $v0, $at
@@ -190,7 +190,7 @@ glabel end_of_mission_briefing
 /* 051F74 7F01D444 8C84A8E8 */  lw    $a0, %lo(selected_folder_num)($a0)
 /* 051F78 7F01D448 0FC0797E */  jal   unlock_stage_in_folder_on_difficulty
 /* 051F7C 7F01D44C 8CA5ABF8 */   lw    $a1, %lo(mission_folder_setup_entries+0x14)($a1)
-/* 051F80 7F01D450 0FC22FEE */  jal   sub_GAME_7F08BFB8
+/* 051F80 7F01D450 0FC22FEE */  jal   get_mission_timer
 /* 051F84 7F01D454 00000000 */   nop   
 /* 051F88 7F01D458 2401003C */  li    $at, 60
 /* 051F8C 7F01D45C 0041001A */  div   $zero, $v0, $at
@@ -271,7 +271,7 @@ glabel end_of_mission_briefing
 /* 05211C 7F01D5AC 03284821 */  addu  $t1, $t9, $t0
 /* 052120 7F01D5B0 01495021 */  addu  $t2, $t2, $t1
 /* 052124 7F01D5B4 854AB5A4 */  lh    $t2, %lo(solo_target_time_array)($t2)
-/* 052128 7F01D5B8 0FC23210 */  jal   sub_GAME_7F08BFB8
+/* 052128 7F01D5B8 0FC23210 */  jal   get_mission_timer
 /* 05212C 7F01D5BC A7AA001E */   sh    $t2, 0x1e($sp)
 /* 052130 7F01D5C0 2401003C */  li    $at, 60
 /* 052134 7F01D5C4 0041001A */  div   $zero, $v0, $at
@@ -289,7 +289,7 @@ glabel end_of_mission_briefing
 /* 052164 7F01D5F4 8C84A928 */  lw    $a0, %lo(selected_folder_num)($a0)
 /* 052168 7F01D5F8 0FC079EA */  jal   unlock_stage_in_folder_on_difficulty
 /* 05216C 7F01D5FC 8CA5AC38 */   lw    $a1, %lo(mission_folder_setup_entries+0x14)($a1)
-/* 052170 7F01D600 0FC23210 */  jal   sub_GAME_7F08BFB8
+/* 052170 7F01D600 0FC23210 */  jal   get_mission_timer
 /* 052174 7F01D604 00000000 */   nop   
 /* 052178 7F01D608 2401003C */  li    $at, 60
 /* 05217C 7F01D60C 0041001A */  div   $zero, $v0, $at

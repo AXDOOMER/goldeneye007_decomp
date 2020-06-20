@@ -3760,7 +3760,7 @@ Linker script and memory map
                 0x000000007f08c64c                sub_GAME_7F08BDC4
                 0x000000007f08c6b4                sub_GAME_7F08BE2C
                 0x000000007f08c774                sub_GAME_7F08BEEC
-                0x000000007f08c840                sub_GAME_7F08BFB8
+                0x000000007f08c840                get_mission_timer
                 0x000000007f08c84c                trigger_explosions_around_player
  build/j/src/game/bond2.o(.text)
  .text          0x000000007f08c880     0x1e10 build/j/src/game/bond2.o

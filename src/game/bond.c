@@ -118,7 +118,7 @@ s32 dword_CODE_bss_80079A18;
 //CODE.bss:80079A1C
 s32 dword_CODE_bss_80079A1C;
 //CODE.bss:80079A20
-f32 mission_timer;
+s32 mission_timer;
 //CODE.bss:80079A24
 f32 watch_time_0;
 //CODE.bss:80079A28
@@ -3690,7 +3690,7 @@ void sub_GAME_7F0798B8(void) {
     // Node 0
     pPlayer->field_29BC = (f32) (((pPlayersPerm->unk64 * 185.0f) * 1.0f) - 10.0f);
     pPlayer->field_29F8 = 0;
-    pPlayer->field_29F4 = sub_GAME_7F08BFB8();
+    pPlayer->field_29F4 = get_mission_timer();
     pPlayer->field_2A00 = 0;
     add_item_to_inventory(1);
     temp_ret = get_num_players();
@@ -3732,7 +3732,7 @@ glabel sub_GAME_7F0798B8
 /* 0AE428 7F0798F8 46128101 */  sub.s $f4, $f16, $f18
 /* 0AE42C 7F0798FC E5E429BC */  swc1  $f4, 0x29bc($t7)
 /* 0AE430 7F079900 8C580000 */  lw    $t8, ($v0)
-/* 0AE434 7F079904 0FC22FEE */  jal   sub_GAME_7F08BFB8
+/* 0AE434 7F079904 0FC22FEE */  jal   get_mission_timer
 /* 0AE438 7F079908 AF0029F8 */   sw    $zero, 0x29f8($t8)
 /* 0AE43C 7F07990C 3C038008 */  lui   $v1, %hi(pPlayer)
 /* 0AE440 7F079910 2463A0B0 */  addiu $v1, %lo(pPlayer) # addiu $v1, $v1, -0x5f50
@@ -31159,7 +31159,7 @@ glabel kill_current_player
 /* 0BE39C 7F08986C 00002025 */  move  $a0, $zero
 /* 0BE3A0 7F089870 0FC17645 */  jal   draw_item_in_hand_has_more_ammo
 /* 0BE3A4 7F089874 00002825 */   move  $a1, $zero
-/* 0BE3A8 7F089878 0FC22FEE */  jal   sub_GAME_7F08BFB8
+/* 0BE3A8 7F089878 0FC22FEE */  jal   get_mission_timer
 /* 0BE3AC 7F08987C 00000000 */   nop   
 /* 0BE3B0 7F089880 8E0C0000 */  lw    $t4, ($s0)
 /* 0BE3B4 7F089884 3C0F8008 */  lui   $t7, %hi(pPlayersPerm) 
@@ -31170,7 +31170,7 @@ glabel kill_current_player
 /* 0BE3C8 7F089898 01D8082A */  slt   $at, $t6, $t8
 /* 0BE3CC 7F08989C 10200009 */  beqz  $at, .L7F0898C4
 /* 0BE3D0 7F0898A0 00000000 */   nop   
-/* 0BE3D4 7F0898A4 0FC22FEE */  jal   sub_GAME_7F08BFB8
+/* 0BE3D4 7F0898A4 0FC22FEE */  jal   get_mission_timer
 /* 0BE3D8 7F0898A8 00000000 */   nop   
 /* 0BE3DC 7F0898AC 8E190000 */  lw    $t9, ($s0)
 /* 0BE3E0 7F0898B0 3C0A8008 */  lui   $t2, %hi(pPlayersPerm) 
@@ -31179,7 +31179,7 @@ glabel kill_current_player
 /* 0BE3EC 7F0898BC 00484823 */  subu  $t1, $v0, $t0
 /* 0BE3F0 7F0898C0 AD490050 */  sw    $t1, 0x50($t2)
 .L7F0898C4:
-/* 0BE3F4 7F0898C4 0FC22FEE */  jal   sub_GAME_7F08BFB8
+/* 0BE3F4 7F0898C4 0FC22FEE */  jal   get_mission_timer
 /* 0BE3F8 7F0898C8 00000000 */   nop   
 /* 0BE3FC 7F0898CC 8E0B0000 */  lw    $t3, ($s0)
 /* 0BE400 7F0898D0 AD6229F4 */  sw    $v0, 0x29f4($t3)
@@ -35701,19 +35701,11 @@ glabel sub_GAME_7F08BEEC
 
 
 
-#ifdef NONMATCHING
-f32 sub_GAME_7F08BFB8(void) {
+
+s32 get_mission_timer(void) {
   return mission_timer;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08BFB8
-/* 0C0AE8 7F08BFB8 3C028008 */  lui   $v0, %hi(mission_timer)
-/* 0C0AEC 7F08BFBC 03E00008 */  jr    $ra
-/* 0C0AF0 7F08BFC0 8C429A20 */   lw    $v0, %lo(mission_timer)($v0)
-)
-#endif
+
 
 
 

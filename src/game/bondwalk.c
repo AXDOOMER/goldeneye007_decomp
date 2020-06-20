@@ -25390,7 +25390,7 @@ void *increment_num_kills_display_text_in_MP(void) {
     if (temp_ret >= 2)
     {
         // Node 1
-        sp34 = sub_GAME_7F08BFB8();
+        sp34 = get_mission_timer();
         sprintf(&sp40, &aSD, get_textptr_for_textID(0x98da), pPlayersPerm->killcount);
         display_string_in_lower_left_corner(&sp40);
         if (pPlayersPerm->killcount >= 2)
@@ -25481,7 +25481,7 @@ glabel increment_num_kills_display_text_in_MP
 /* 09F2EC 7F06A7BC 28410002 */  slti  $at, $v0, 2
 /* 09F2F0 7F06A7C0 54200054 */  bnezl $at, .L7F06A914
 /* 09F2F4 7F06A7C4 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 09F2F8 7F06A7C8 0FC22FEE */  jal   sub_GAME_7F08BFB8
+/* 09F2F8 7F06A7C8 0FC22FEE */  jal   get_mission_timer
 /* 09F2FC 7F06A7CC 00000000 */   nop   
 /* 09F300 7F06A7D0 AFA20034 */  sw    $v0, 0x34($sp)
 /* 09F304 7F06A7D4 0FC30776 */  jal   get_textptr_for_textID
@@ -25596,7 +25596,7 @@ glabel increment_num_kills_display_text_in_MP
 /* 09F2EC 7F06A7BC 28410002 */  slti  $at, $v0, 2
 /* 09F2F0 7F06A7C0 54200054 */  bnezl $at, .L7F06A914
 /* 09F2F4 7F06A7C4 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 09F2F8 7F06A7C8 0FC22FEE */  jal   sub_GAME_7F08BFB8
+/* 09F2F8 7F06A7C8 0FC22FEE */  jal   get_mission_timer
 /* 09F2FC 7F06A7CC 00000000 */   nop   
 /* 09F300 7F06A7D0 AFA20034 */  sw    $v0, 0x34($sp)
 /* 09F304 7F06A7D4 0FC30776 */  jal   get_textptr_for_textID
@@ -25923,7 +25923,7 @@ void *increment_num_suicides_display_MP(void) {
     if (temp_ret >= 2)
     {
         // Node 1
-        sp34 = sub_GAME_7F08BFB8();
+        sp34 = get_mission_timer();
         sprintf(&sp40, &aSD_0, get_textptr_for_textID(0x98de), pPlayer->num_suicides);
         display_string_in_lower_left_corner(&sp40);
         if (pPlayersPerm->killcount >= 2)
@@ -26010,7 +26010,7 @@ glabel increment_num_suicides_display_MP
 /* 09F570 7F06AA40 28410002 */  slti  $at, $v0, 2
 /* 09F574 7F06AA44 54200052 */  bnezl $at, .L7F06AB90
 /* 09F578 7F06AA48 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 09F57C 7F06AA4C 0FC22FEE */  jal   sub_GAME_7F08BFB8
+/* 09F57C 7F06AA4C 0FC22FEE */  jal   get_mission_timer
 /* 09F580 7F06AA50 00000000 */   nop   
 /* 09F584 7F06AA54 AFA20034 */  sw    $v0, 0x34($sp)
 /* 09F588 7F06AA58 0FC30776 */  jal   get_textptr_for_textID
@@ -26119,7 +26119,7 @@ glabel increment_num_suicides_display_MP
 /* 09F570 7F06AA40 28410002 */  slti  $at, $v0, 2
 /* 09F574 7F06AA44 54200052 */  bnezl $at, .L7F06AB90
 /* 09F578 7F06AA48 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 09F57C 7F06AA4C 0FC22FEE */  jal   sub_GAME_7F08BFB8
+/* 09F57C 7F06AA4C 0FC22FEE */  jal   get_mission_timer
 /* 09F580 7F06AA50 00000000 */   nop   
 /* 09F584 7F06AA54 AFA20034 */  sw    $v0, 0x34($sp)
 /* 09F588 7F06AA58 0FC30776 */  jal   get_textptr_for_textID
