@@ -3,6 +3,7 @@
 #include "game/chr.h"
 #include "game/unk_093880.h"
 #include "game/textrelated.h"
+#include "game/lvl.h"
 
 // bss
 //CODE.bss:80079940
@@ -33598,9 +33599,48 @@ glabel display_string_at_top_of_screen
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F08A9F8(void) {
+void sub_GAME_7F08A9F8(void)
+{
+  int nextbuffer;
+  if ((D_800368B4 == 0) && (pPlayer->mpmenuon == 0))
+  {
+    if ((-1) < upper_text_window_timer)
+    {
+      upper_text_window_timer = upper_text_window_timer - clock_timer;
+      if (upper_text_window_timer < 0)
+      {
+        nextbuffer = upper_text_buffer_index + 1;
+        upper_text_buffer_index = nextbuffer & 1;
+        if (1)
+        {
+          if (((upper_text_buffer_index + 1) < 0) && (upper_text_buffer_index != 0))
+          {
+            upper_text_buffer_index = upper_text_buffer_index - 2;
+          }
+        }
+        display_upper_text_window = display_upper_text_window + (-1);
+      }
+      else
+        if ((1 < display_upper_text_window) && (0x3c < upper_text_window_timer))
+      {
+        upper_text_window_timer = 0x3c;
+      }
+    }
 
+    nextbuffer = upper_text_window_timer < 0;
+    if (nextbuffer && (0 < display_upper_text_window))
+    {
+      if (1 < display_upper_text_window)
+      {
+        upper_text_window_timer = 0x3c;
+        return;
+      }
+      upper_text_window_timer = 0xf0;
+    }
+  }
+  return;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -35707,31 +35747,12 @@ s32 get_mission_timer(void) {
 }
 
 
-
-
-
-
-#ifdef NONMATCHING
-void trigger_explosions_around_player(void) {
-
+void trigger_explosions_around_player(int delay){
+  D_80036444 = 1;
+  dword_CODE_bss_8007999C = delay + global_timer;
+  dword_CODE_bss_800799A0 = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel trigger_explosions_around_player
-/* 0C0AF4 7F08BFC4 3C0F8005 */  lui   $t7, %hi(global_timer) 
-/* 0C0AF8 7F08BFC8 8DEF837C */  lw    $t7, %lo(global_timer)($t7)
-/* 0C0AFC 7F08BFCC 240E0001 */  li    $t6, 1
-/* 0C0B00 7F08BFD0 3C018003 */  lui   $at, %hi(D_80036444)
-/* 0C0B04 7F08BFD4 AC2E6444 */  sw    $t6, %lo(D_80036444)($at)
-/* 0C0B08 7F08BFD8 3C018008 */  lui   $at, %hi(dword_CODE_bss_8007999C)
-/* 0C0B0C 7F08BFDC 008FC021 */  addu  $t8, $a0, $t7
-/* 0C0B10 7F08BFE0 AC38999C */  sw    $t8, %lo(dword_CODE_bss_8007999C)($at)
-/* 0C0B14 7F08BFE4 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799A0)
-/* 0C0B18 7F08BFE8 03E00008 */  jr    $ra
-/* 0C0B1C 7F08BFEC AC2099A0 */   sw    $zero, %lo(dword_CODE_bss_800799A0)($at)
-)
-#endif
+
 
 
 
