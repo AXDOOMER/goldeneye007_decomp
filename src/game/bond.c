@@ -33474,48 +33474,21 @@ glabel sub_GAME_7F08A5FC
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08A900(void) {
-
+void sub_GAME_7F08A900(void)
+{
+    upper_text_window_timer = -1;
+    display_upper_text_window = 0;
+    upper_text_buffer_index = 0;
+    D_800368B4 = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08A900
-/* 0BF430 7F08A900 240EFFFF */  li    $t6, -1
-/* 0BF434 7F08A904 3C018003 */  lui   $at, %hi(upper_text_window_timer)
-/* 0BF438 7F08A908 AC2E68B0 */  sw    $t6, %lo(upper_text_window_timer)($at)
-/* 0BF43C 7F08A90C 3C018003 */  lui   $at, %hi(display_upper_text_window)
-/* 0BF440 7F08A910 AC2068AC */  sw    $zero, %lo(display_upper_text_window)($at)
-/* 0BF444 7F08A914 3C018003 */  lui   $at, %hi(upper_text_buffer_index)
-/* 0BF448 7F08A918 AC2068A8 */  sw    $zero, %lo(upper_text_buffer_index)($at)
-/* 0BF44C 7F08A91C 3C018003 */  lui   $at, %hi(D_800368B4)
-/* 0BF450 7F08A920 03E00008 */  jr    $ra
-/* 0BF454 7F08A924 AC2068B4 */   sw    $zero, %lo(D_800368B4)($at)
-)
-#endif
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F08A928(void) {
-
+void sub_GAME_7F08A928(int param_1)
+{
+  int new_var;
+  new_var = ~param_1;
+  D_800368B4 = D_800368B4 & new_var;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08A928
-/* 0BF458 7F08A928 3C028003 */  lui   $v0, %hi(D_800368B4)
-/* 0BF45C 7F08A92C 244268B4 */  addiu $v0, %lo(D_800368B4) # addiu $v0, $v0, 0x68b4
-/* 0BF460 7F08A930 8C4E0000 */  lw    $t6, ($v0)
-/* 0BF464 7F08A934 00807827 */  not   $t7, $a0
-/* 0BF468 7F08A938 01CFC024 */  and   $t8, $t6, $t7
-/* 0BF46C 7F08A93C 03E00008 */  jr    $ra
-/* 0BF470 7F08A940 AC580000 */   sw    $t8, ($v0)
-)
-#endif
 
 
 
