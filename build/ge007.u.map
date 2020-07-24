@@ -812,6 +812,8 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/u/src/game/radar.o
  .options       0x0000000000000000       0x20 build/u/src/game/mp_weapon.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/mp_weapon.o
+ .gptab.data    0x0000000000000000       0x28 build/u/src/game/mp_weapon.o
+ .mdebug        0x0000000000000000      0x900 build/u/src/game/mp_weapon.o
  .options       0x0000000000000000       0x20 build/u/src/game/image.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/image.o
  .options       0x0000000000000000       0x20 build/u/src/game/image_bank.o

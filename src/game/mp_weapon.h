@@ -21,5 +21,19 @@ struct struct_8
   struct s_mp_weapon_set * anonymous_1;
 };
 
+extern struct s_mp_weapon_set mp_weapon_set_slaps[];
+extern struct s_mp_weapon_set mp_weapon_set_pistols[];
+extern struct s_mp_weapon_set mp_weapon_set_knife[];
+extern struct s_mp_weapon_set mp_weapon_set_auto[];
+extern struct s_mp_weapon_set mp_weapon_set_power[];
+extern struct s_mp_weapon_set mp_weapon_set_sniper[];
+extern struct s_mp_weapon_set mp_weapon_set_grenade[];
+extern struct s_mp_weapon_set mp_weapon_set_remote_m[];
+extern struct s_mp_weapon_set mp_weapon_set_glaunch[];
+extern struct s_mp_weapon_set mp_weapon_set_timed_m[];
+extern struct s_mp_weapon_set mp_weapon_set_prox_m[];
+extern struct s_mp_weapon_set mp_weapon_set_rockets[];
+extern struct s_mp_weapon_set mp_weapon_set_lasers[];
+extern struct s_mp_weapon_set mp_weapon_set_golden[];
 
 #endif
