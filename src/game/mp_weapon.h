@@ -36,4 +36,10 @@ extern struct s_mp_weapon_set mp_weapon_set_rockets[];
 extern struct s_mp_weapon_set mp_weapon_set_lasers[];
 extern struct s_mp_weapon_set mp_weapon_set_golden[];
 
+void advance_mp_weapon_set_by_one_save_value(void);
+struct struct_8 *get_ptr_current_mp_weapon_set_text_code(void);
+struct s_mp_weapon_set * get_ptr_mp_weapon_set_data(void);
+void set_mp_weapon_set(s32 arg0);
+s32 get_mp_weapon_set(void);
+
 #endif
