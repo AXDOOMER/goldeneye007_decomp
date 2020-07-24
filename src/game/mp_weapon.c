@@ -271,19 +271,19 @@ void advance_mp_weapon_set_by_one_save_value(void)
     mp_weapon_set = (mp_weapon_set + 1) % 0xe;
 }
 
-struct s_mp_weapon_set_text *get_ptr_current_mp_weapon_set_text_code(void)
+struct s_mp_weapon_set_text* get_ptr_current_mp_weapon_set_text_code(void)
 {
     return &mp_weapon_set_text_table[mp_weapon_set];
 }
 
-struct s_mp_weapon_set * get_ptr_mp_weapon_set_data(void)
+struct s_mp_weapon_set* get_ptr_mp_weapon_set_data(void)
 {
     return mp_weapon_set_text_table[mp_weapon_set].weapon_set;
 }
 
-void set_mp_weapon_set(s32 arg0)
+void set_mp_weapon_set(s32 setNUM)
 {
-    mp_weapon_set = arg0;
+    mp_weapon_set = setNUM;
 }
 
 s32 get_mp_weapon_set(void)
