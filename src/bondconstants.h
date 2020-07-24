@@ -961,6 +961,7 @@ typedef enum PROJECTILES
 } PROJECTILES;
 
 typedef enum AMMOTYPES {
+    AMMO_NONE = 0,
     AMMO_9MM = 1,
     AMMO_9MM_2 = 2,
     AMMO_RIFLE = 3,
