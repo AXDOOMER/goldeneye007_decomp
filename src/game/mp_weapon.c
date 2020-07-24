@@ -164,7 +164,7 @@ struct s_mp_weapon_set mp_weapon_set_timed_m[] =
 };
 #endif
 #ifdef VERSION_EU
-//!FIXME temp copy of us data
+//!FIXME temp copy of jp data
 struct s_mp_weapon_set mp_weapon_set_timed_m[] = 
 {
     {ITEM_WPPK, PROP_chrwppk, 3.0, AMMO_9MM, 0x32, 1},
@@ -265,28 +265,32 @@ struct s_mp_weapon_set_text mp_weapon_set_text_table[] =
 s32 mp_weapon_set = 0xB;
 
 
-
-void advance_mp_weapon_set_by_one_save_value(void)
+//increment mp_weapon_set by 1, capping at 0xE
+void incrementMPWeaponSet(void)
 {
     mp_weapon_set = (mp_weapon_set + 1) % 0xe;
 }
 
-struct s_mp_weapon_set_text* get_ptr_current_mp_weapon_set_text_code(void)
+//return pointer to selected mp_weapon_set textID
+u16* getPtrMPWeaponSetTextID(void)
 {
-    return &mp_weapon_set_text_table[mp_weapon_set];
+    return &mp_weapon_set_text_table[mp_weapon_set].textID;
 }
 
-struct s_mp_weapon_set* get_ptr_mp_weapon_set_data(void)
+//return pointer to selected mp_weapon_set data
+struct s_mp_weapon_set* getPtrMPWeaponSetData(void)
 {
     return mp_weapon_set_text_table[mp_weapon_set].weapon_set;
 }
 
-void set_mp_weapon_set(s32 setNUM)
+//set mp weapon set
+void setMPWeaponSet(s32 setNUM)
 {
     mp_weapon_set = setNUM;
 }
 
-s32 get_mp_weapon_set(void)
+//return mp weapon set
+s32 getMPWeaponSet(void)
 {
     return mp_weapon_set;
 }

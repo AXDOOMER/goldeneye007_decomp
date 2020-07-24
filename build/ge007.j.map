@@ -813,7 +813,7 @@ Discarded input sections
  .options       0x0000000000000000       0x20 build/j/src/game/mp_weapon.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/mp_weapon.o
  .gptab.data    0x0000000000000000       0x28 build/j/src/game/mp_weapon.o
- .mdebug        0x0000000000000000      0x900 build/j/src/game/mp_weapon.o
+ .mdebug        0x0000000000000000      0x8a4 build/j/src/game/mp_weapon.o
  .options       0x0000000000000000       0x20 build/j/src/game/image.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/image.o
  .options       0x0000000000000000       0x20 build/j/src/game/image_bank.o
@@ -4574,11 +4574,11 @@ Linker script and memory map
                 0x000000007f0c6d70                display_red_blue_on_radar
  build/j/src/game/mp_weapon.o(.text)
  .text          0x000000007f0c72b0       0x80 build/j/src/game/mp_weapon.o
-                0x000000007f0c72b0                advance_mp_weapon_set_by_one_save_value
-                0x000000007f0c72d8                get_ptr_current_mp_weapon_set_text_code
-                0x000000007f0c72f4                get_ptr_mp_weapon_set_data
-                0x000000007f0c7310                set_mp_weapon_set
-                0x000000007f0c731c                get_mp_weapon_set
+                0x000000007f0c72b0                incrementMPWeaponSet
+                0x000000007f0c72d8                getPtrMPWeaponSetTextID
+                0x000000007f0c72f4                getPtrMPWeaponSetData
+                0x000000007f0c7310                setMPWeaponSet
+                0x000000007f0c731c                getMPWeaponSet
  build/j/src/game/image.o(.text)
  .text          0x000000007f0c7330     0x58c0 build/j/src/game/image.o
                 0x000000007f0c7330                nullsub_41

@@ -1053,7 +1053,7 @@ glabel expand_08_obj_set_guard_MP_weapons
 /* 037398 7F002868 10000041 */  b     .L7F002970
 /* 03739C 7F00286C 80E40080 */   lb    $a0, 0x80($a3)
 .L7F002870:
-/* 0373A0 7F002870 0FC31985 */  jal   get_ptr_mp_weapon_set_data
+/* 0373A0 7F002870 0FC31985 */  jal   getPtrMPWeaponSetData
 /* 0373A4 7F002874 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 0373A8 7F002878 8FA7002C */  lw    $a3, 0x2c($sp)
 /* 0373AC 7F00287C 3C018007 */  lui   $at, %hi(lastmpweaponnum)
@@ -3395,7 +3395,7 @@ ammo_box_expand:
 /* 039298 7F004768 28410002 */  slti  $at, $v0, 2
 /* 03929C 7F00476C 1420000E */  bnez  $at, .L7F0047A8
 /* 0392A0 7F004770 00000000 */   nop   
-/* 0392A4 7F004774 0FC31985 */  jal   get_ptr_mp_weapon_set_data
+/* 0392A4 7F004774 0FC31985 */  jal   getPtrMPWeaponSetData
 /* 0392A8 7F004778 00000000 */   nop   
 /* 0392AC 7F00477C 3C0E8007 */  lui   $t6, %hi(lastmpweaponnum) 
 /* 0392B0 7F004780 8DCE9540 */  lw    $t6, %lo(lastmpweaponnum)($t6)
@@ -4793,7 +4793,7 @@ ammo_box_expand:
 /* 0392E8 7F004778 28410002 */  slti  $at, $v0, 2
 /* 0392EC 7F00477C 1420000E */  bnez  $at, .L7F0047B8
 /* 0392F0 7F004780 00000000 */   nop   
-/* 0392F4 7F004784 0FC31CBD */  jal   get_ptr_mp_weapon_set_data
+/* 0392F4 7F004784 0FC31CBD */  jal   getPtrMPWeaponSetData
 /* 0392F8 7F004788 00000000 */   nop   
 /* 0392FC 7F00478C 3C188007 */  lui   $t8, %hi(lastmpweaponnum) # $t8, 0x8007
 /* 039300 7F004790 8F189580 */  lw    $t8, %lo(lastmpweaponnum)($t8)

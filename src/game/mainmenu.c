@@ -12856,17 +12856,17 @@ void reset_mp_options_for_scenario(MPSCENARIOS scenarioid)
         {
             game_length = 2;
         }
-        if (0xd < get_mp_weapon_set())
+        if (0xd < getMPWeaponSet())
         {
-            set_mp_weapon_set(0xd);
+            setMPWeaponSet(0xd);
         }
         break;
     case SCENARIO_YOLT:
         game_length = 7;
 
-        if (0xd < get_mp_weapon_set())
+        if (0xd < getMPWeaponSet())
         {
-            set_mp_weapon_set(0xd);
+            setMPWeaponSet(0xd);
         }
         unlock_game_length = 0;
         break;
@@ -12875,9 +12875,9 @@ void reset_mp_options_for_scenario(MPSCENARIOS scenarioid)
         {
             game_length = 2;
         }
-        if (0xd < get_mp_weapon_set())
+        if (0xd < getMPWeaponSet())
         {
-            set_mp_weapon_set(0xd);
+            setMPWeaponSet(0xd);
         }
         break;
     case SCENARIO_MWTGG:
@@ -12885,7 +12885,7 @@ void reset_mp_options_for_scenario(MPSCENARIOS scenarioid)
         {
             game_length = 2;
         }
-        set_mp_weapon_set(0xd);
+        setMPWeaponSet(0xd);
         unlock_weapon_select = 0;
         break;
     case SCENARIO_LTK:
@@ -12893,7 +12893,7 @@ void reset_mp_options_for_scenario(MPSCENARIOS scenarioid)
         {
             game_length = 2;
         }
-        set_mp_weapon_set(1);
+        setMPWeaponSet(1);
         unlock_handicap = 0;
     }
     return;
@@ -13326,7 +13326,7 @@ void interface_menu0E_mpoptions(void)
     }
     if (weaponselect_selected != 0)
     {
-        advance_mp_weapon_set_by_one_save_value();
+        incrementMPWeaponSet();
         return;
     }
     if (health_selected != 0)
@@ -13806,7 +13806,7 @@ glabel interface_menu0E_mpoptions
 .L7F010EA0:
 /* 0459D0 7F010EA0 13000005 */  beqz  $t8, .L7F010EB8
 /* 0459D4 7F010EA4 8FB90024 */   lw    $t9, 0x24($sp)
-/* 0459D8 7F010EA8 0FC31974 */  jal   advance_mp_weapon_set_by_one_save_value
+/* 0459D8 7F010EA8 0FC31974 */  jal   incrementMPWeaponSet
 /* 0459DC 7F010EAC 00000000 */   nop   
 /* 0459E0 7F010EB0 10000014 */  b     .L7F010F04
 /* 0459E4 7F010EB4 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -14111,7 +14111,7 @@ void constructor_menu0E_mpoptions(void)
     sp48 = (?32) phi_v1_9;
     sp44 = get_video2_settings_txtClipW();
     temp_s0_14 = write_text_at_abs_coord(temp_s0_13, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_9, sp44, get_video2_settings_txtClipH(), 0, 0);
-    sp64 = get_textptr_for_textID(*get_ptr_current_mp_weapon_set_text_code());
+    sp64 = get_textptr_for_textID(*getPtrMPWeaponSetTextID());
     sp58 = 0xa0;
     sp54 = 0xc9;
     if (unlock_weapon_select != 0)
@@ -14893,7 +14893,7 @@ glabel constructor_menu0E_mpoptions
 /* 046598 7F011A68 AFA30018 */  sw    $v1, 0x18($sp)
 /* 04659C 7F011A6C 0FC025D8 */  jal   write_text_at_abs_coord
 /* 0465A0 7F011A70 AFA9001C */   sw    $t1, 0x1c($sp)
-/* 0465A4 7F011A74 0FC3197E */  jal   get_ptr_current_mp_weapon_set_text_code
+/* 0465A4 7F011A74 0FC3197E */  jal   getPtrMPWeaponSetTextID
 /* 0465A8 7F011A78 00408025 */   move  $s0, $v0
 /* 0465AC 7F011A7C 0FC30776 */  jal   get_textptr_for_textID
 /* 0465B0 7F011A80 94440000 */   lhu   $a0, ($v0)

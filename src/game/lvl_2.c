@@ -743,7 +743,7 @@ void copy_current_ingame_registers_before_ramrom_playback(void *arg0) {
     arg0->unk90 = (?32) scenario;
     arg0->unk94 = (?32) MP_stage_selected;
     arg0->unk98 = (?32) game_length;
-    arg0->unk9C = get_mp_weapon_set();
+    arg0->unk9C = getMPWeaponSet();
     arg0->unkA0 = (?32) player_1_char;
     arg0->unkA4 = (?32) player_1_char.unk4;
     arg0->unkA8 = (?32) player_1_char.unk8;
@@ -797,7 +797,7 @@ glabel copy_current_ingame_registers_before_ramrom_playback
 /* 0F4F44 7F0C0414 8D6BB534 */  lw    $t3, %lo(MP_stage_selected)($t3)
 /* 0F4F48 7F0C0418 AC8B0094 */  sw    $t3, 0x94($a0)
 /* 0F4F4C 7F0C041C 8D8CB538 */  lw    $t4, %lo(game_length)($t4)
-/* 0F4F50 7F0C0420 0FC3198F */  jal   get_mp_weapon_set
+/* 0F4F50 7F0C0420 0FC3198F */  jal   getMPWeaponSet
 /* 0F4F54 7F0C0424 AC8C0098 */   sw    $t4, 0x98($a0)
 /* 0F4F58 7F0C0428 3C038003 */  lui   $v1, %hi(player_1_char)
 /* 0F4F5C 7F0C042C 2463B524 */  addiu $v1, %lo(player_1_char) # addiu $v1, $v1, -0x4adc
@@ -869,7 +869,7 @@ void copy_recorded_ramrom_registers_to_proper_place_ingame(void *arg0) {
     scenario = (?32) arg0->unk90;
     MP_stage_selected = (?32) arg0->unk94;
     game_length = (?32) arg0->unk98;
-    set_mp_weapon_set(arg0->unk9C);
+    setMPWeaponSet(arg0->unk9C);
     player_1_char = (?32) arg0->unkA0;
     player_1_char.unk4 = (?32) arg0->unkA4;
     player_1_char.unk8 = (?32) arg0->unkA8;
@@ -923,7 +923,7 @@ glabel copy_recorded_ramrom_registers_to_proper_place_ingame
 /* 0F5094 7F0C0564 8C8C0098 */  lw    $t4, 0x98($a0)
 /* 0F5098 7F0C0568 3C018003 */  lui   $at, %hi(game_length)
 /* 0F509C 7F0C056C AC2CB538 */  sw    $t4, %lo(game_length)($at)
-/* 0F50A0 7F0C0570 0FC3198C */  jal   set_mp_weapon_set
+/* 0F50A0 7F0C0570 0FC3198C */  jal   setMPWeaponSet
 /* 0F50A4 7F0C0574 8C84009C */   lw    $a0, 0x9c($a0)
 /* 0F50A8 7F0C0578 8E0D00A0 */  lw    $t5, 0xa0($s0)
 /* 0F50AC 7F0C057C 3C028003 */  lui   $v0, %hi(player_1_char)
