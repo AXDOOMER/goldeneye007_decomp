@@ -1543,7 +1543,7 @@ void obBlankResourcesLoadedInBank(u8 bank)
     }
 }
 
-void sub_GAME_7F0BD234(void) {
+void obBlankResourcesInBank5(void) {
   obBlankResourcesLoadedInBank(5);
 }
 

@@ -833,7 +833,7 @@ Discarded input sections
  .options       0x0000000000000000       0x20 build/j/src/game/game_debug.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/game_debug.o
  .gptab.data    0x0000000000000000       0x18 build/j/src/game/game_debug.o
- .mdebug        0x0000000000000000      0x718 build/j/src/game/game_debug.o
+ .mdebug        0x0000000000000000      0x71c build/j/src/game/game_debug.o
  .options       0x0000000000000000       0x20 build/j/src/game/compiletime.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/compiletime.o
  .mdebug        0x0000000000000000      0x294 build/j/src/game/compiletime.o
@@ -4439,7 +4439,7 @@ Linker script and memory map
                 0x000000007f0bdce8                sub_GAME_7F0BD138
                 0x000000007f0bdd38                get_pc_buffer_remaining_value
                 0x000000007f0bdd6c                obBlankResourcesLoadedInBank
-                0x000000007f0bdde4                sub_GAME_7F0BD234
+                0x000000007f0bdde4                obBlankResourcesInBank5
                 0x000000007f0bde04                get_index_num_of_named_resource
                 0x000000007f0bdf34                removed_handle_filetable_entry
                 0x000000007f0bdf3c                removed_loop_handle_filetable_entries

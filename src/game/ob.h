@@ -19,7 +19,7 @@ struct fileentry {
 };
 
 void obBlankResourcesLoadedInBank(u8 i);
-void sub_GAME_7F0BD234(void);
+void obBlankResourcesInBank5(void);
 u8* load_resource_index_to_buffer(s32 index,s32 param_2,u8 *ptrdata,s32 bytes);
 u8 * load_rom_resource_index_to_membank(s32 index,s32 type,s32 size,u8 bank);
 void resource_load_from_indy(u8 *ptrdata, s32 bytes, struct fileentry *srcfile, struct resource_lookup_data_entry *lookupdata);

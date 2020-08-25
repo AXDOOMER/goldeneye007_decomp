@@ -13,7 +13,7 @@ void something_game_c_debug_related(void) {
 }
 
 void reset_mem_bank_5(void) {
-    sub_GAME_7F0BD234();
+    obBlankResourcesInBank5();
     mempResetBank(5);
     obBlankResourcesLoadedInBank(5);
 }
