@@ -1,7 +1,9 @@
 #include "ultra64.h"
 #include "game/ob.h"
+#include "memp.h"
 #include "assets/obseg/obseg.h"
 #include "game/decompress.h"
+
 
 //bss
 //800888b0
@@ -1535,7 +1537,7 @@ s32 get_pc_buffer_remaining_value(u8 *name)
 
 
 #ifdef NONMATCHING
-void something_mem_bank_a0(byte param_1)
+void something_mem_bank_a0(u8 param_1)
 {
     byte bVar1;
     resource_lookup_data_entry *nextres;
@@ -1615,7 +1617,7 @@ void sub_GAME_7F0BD234(void) {
 
 #ifdef NONMATCHING
 
-int get_index_num_of_named_resource(byte *filename)
+int get_index_num_of_named_resource(u8 *filename)
 {
     longlong lVar1;
     int iVar2;

@@ -1,7 +1,9 @@
 #include "ultra64.h"
 #include "game/unk_0C0A70.h"
+#include "game/unk_093880.h"
 #include "music.h"
 #include "bondgame.h"
+#include "bondconstants.h"
 
 
 // bss

@@ -11,7 +11,7 @@ struct xyzpoint
     f32 z;
 };
 
-typedef struct Player
+struct Player
 {
   s32 unknown;
   s32 xpos;
@@ -2724,7 +2724,7 @@ typedef struct Player
   s32 field_2A74;
   s32 field_2A78;
   s32 field_2A7C;
-} Player;
+};
 
 struct firing_anim_struct {
     struct weapon_firing_animation_table * pointer;

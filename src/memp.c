@@ -577,7 +577,7 @@ glabel mempAllocBytesInBank
  *     accepts: A0=p->allocated data, A1=size of data, A2=bank#
  */
 #ifdef NONMATCHING
-u32 mempAddEntryOfSizeToBank(s32 ptrdata,int size,u8 bank)
+u32 mempAddEntryOfSizeToBank(s32 ptrdata,u32 size,u8 bank)
 {
     u32 entry;
     u32 retval;
