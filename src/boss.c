@@ -385,7 +385,7 @@ loop_18:
         strtok((&memallocstringtable + (phi_s0_3 * 8))->unk4, &memallocstringtable);
     }
     mempResetBank(4);
-    something_mem_bank_a0(4);
+    obBlankResourcesLoadedInBank(4);
     if (check_token(1, &aMa) != 0)
     {
         current_ma_malloc_value = (s32) (strtol(check_token(1, &aMa_0), 0, 0) << 0xa);
@@ -620,7 +620,7 @@ loop_58:
     unload_stage_text_data();
     stop_demo_playback();
     mempNullNextEntryInBank(4);
-    something_mem_bank_a0(4);
+    obBlankResourcesLoadedInBank(4);
     current_stage_num = (?32) loadedstage;
     loadedstage = -1;
     if (sp1DC == 0)
@@ -828,7 +828,7 @@ glabel mainloop
 .L700062EC:
 /* 006EEC 700062EC 0C002667 */  jal   mempResetBank
 /* 006EF0 700062F0 24040004 */   li    $a0, 4
-/* 006EF4 700062F4 0FC2F46F */  jal   something_mem_bank_a0
+/* 006EF4 700062F4 0FC2F46F */  jal   obBlankResourcesLoadedInBank
 /* 006EF8 700062F8 24040004 */   li    $a0, 4
 /* 006EFC 700062FC 3C058003 */  lui   $a1, %hi(aMa)
 /* 006F00 70006300 24A5912C */  addiu $a1, %lo(aMa) # addiu $a1, $a1, -0x6ed4
@@ -1226,7 +1226,7 @@ glabel mainloop
 /* 0074C0 700068C0 00000000 */   nop   
 /* 0074C4 700068C4 0C002671 */  jal   mempNullNextEntryInBank
 /* 0074C8 700068C8 24040004 */   li    $a0, 4
-/* 0074CC 700068CC 0FC2F46F */  jal   something_mem_bank_a0
+/* 0074CC 700068CC 0FC2F46F */  jal   obBlankResourcesLoadedInBank
 /* 0074D0 700068D0 24040004 */   li    $a0, 4
 /* 0074D4 700068D4 3C028002 */  lui   $v0, %hi(loadedstage)
 /* 0074D8 700068D8 244242FC */  addiu $v0, %lo(loadedstage) # addiu $v0, $v0, 0x42fc

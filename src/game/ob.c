@@ -1532,83 +1532,21 @@ s32 get_pc_buffer_remaining_value(u8 *name)
 }
 
 
-
-
-
-
-#ifdef NONMATCHING
-void something_mem_bank_a0(u8 param_1)
+void obBlankResourcesLoadedInBank(u8 bank)
 {
-    byte bVar1;
-    resource_lookup_data_entry *nextres;
-    resource_lookup_data_entry *prVar2;
-    int tablesize;
-    
-    if (1 < file_entry_max) {
-        prVar2 = resource_lookup_data_array + file_entry_max;
-        bVar1 = resource_lookup_data_array[1].loaded_bank;
-        nextres = resource_lookup_data_array + 1;
-        while( true ) {
-            if (bVar1 <= param_1) {
-                nextres->loaded_bank = '\0';
-            }
-            if (param_1 == 4) {
-                nextres->pc_remaining = 0;
-            }
-            if (prVar2 <= nextres + 1) break;
-            bVar1 = nextres[1].loaded_bank;
-            nextres = nextres + 1;
+    int i;
+    for (i = 1; i < file_entry_max; i++) {
+        if (resource_lookup_data_array[i].loaded_bank <= bank) {
+            resource_lookup_data_array[i].loaded_bank = '\0';
+        }
+        if (bank == 4) {
+            resource_lookup_data_array[i].pc_remaining = 0;
         }
     }
-    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel something_mem_bank_a0
-/* 0F1CEC 7F0BD1BC 3C038005 */  lui   $v1, %hi(file_entry_max)
-/* 0F1CF0 7F0BD1C0 8C6382D4 */  lw    $v1, %lo(file_entry_max)($v1)
-/* 0F1CF4 7F0BD1C4 308E00FF */  andi  $t6, $a0, 0xff
-/* 0F1CF8 7F0BD1C8 AFA40000 */  sw    $a0, ($sp)
-/* 0F1CFC 7F0BD1CC 28610002 */  slti  $at, $v1, 2
-/* 0F1D00 7F0BD1D0 14200016 */  bnez  $at, .L7F0BD22C
-/* 0F1D04 7F0BD1D4 01C01025 */   move  $v0, $t6
-/* 0F1D08 7F0BD1D8 00037880 */  sll   $t7, $v1, 2
-/* 0F1D0C 7F0BD1DC 01E37821 */  addu  $t7, $t7, $v1
-/* 0F1D10 7F0BD1E0 3C188009 */  lui   $t8, %hi(resource_lookup_data_array) 
-/* 0F1D14 7F0BD1E4 271888B0 */  addiu $t8, %lo(resource_lookup_data_array) # addiu $t8, $t8, -0x7750
-/* 0F1D18 7F0BD1E8 000F7880 */  sll   $t7, $t7, 2
-/* 0F1D1C 7F0BD1EC 3C058009 */  lui   $a1, %hi(resource_lookup_data_array+0x14)
-/* 0F1D20 7F0BD1F0 24A588C4 */  addiu $a1, %lo(resource_lookup_data_array+0x14) # addiu $a1, $a1, -0x773c
-/* 0F1D24 7F0BD1F4 01F83021 */  addu  $a2, $t7, $t8
-/* 0F1D28 7F0BD1F8 24030004 */  li    $v1, 4
-/* 0F1D2C 7F0BD1FC 90B90010 */  lbu   $t9, 0x10($a1)
-.L7F0BD200:
-/* 0F1D30 7F0BD200 0059082A */  slt   $at, $v0, $t9
-/* 0F1D34 7F0BD204 14200002 */  bnez  $at, .L7F0BD210
-/* 0F1D38 7F0BD208 00000000 */   nop   
-/* 0F1D3C 7F0BD20C A0A00010 */  sb    $zero, 0x10($a1)
-.L7F0BD210:
-/* 0F1D40 7F0BD210 54620003 */  bnel  $v1, $v0, .L7F0BD220
-/* 0F1D44 7F0BD214 24A50014 */   addiu $a1, $a1, 0x14
-/* 0F1D48 7F0BD218 ACA00004 */  sw    $zero, 4($a1)
-/* 0F1D4C 7F0BD21C 24A50014 */  addiu $a1, $a1, 0x14
-.L7F0BD220:
-/* 0F1D50 7F0BD220 00A6082B */  sltu  $at, $a1, $a2
-/* 0F1D54 7F0BD224 5420FFF6 */  bnezl $at, .L7F0BD200
-/* 0F1D58 7F0BD228 90B90010 */   lbu   $t9, 0x10($a1)
-.L7F0BD22C:
-/* 0F1D5C 7F0BD22C 03E00008 */  jr    $ra
-/* 0F1D60 7F0BD230 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-void sub_GAME_7F0BD234(void) {
-  something_mem_bank_a0(5);
+void obBlankResourcesInBank5(void) {
+  obBlankResourcesLoadedInBank(5);
 }
 
 

@@ -95,46 +95,23 @@ struct s_mp_weapon_set mp_weapon_set_grenade[] =
 };
 
 //D:80048BB0
+struct s_mp_weapon_set mp_weapon_set_remote_m[] = 
+{
+    {ITEM_WPPK, PROP_chrwppk, 3.0, AMMO_9MM, 0x32, 1},
+    {ITEM_WPPK, PROP_chrwppk, 3.0, AMMO_9MM, 0x32, 1},
+    {ITEM_UZI, PROP_chruzi, 1.5, AMMO_9MM, 0x64, 1},
+    {ITEM_UZI, PROP_chruzi, 1.5, AMMO_9MM, 0x64, 1},
 #ifdef VERSION_US
-struct s_mp_weapon_set mp_weapon_set_remote_m[] = 
-{
-    {ITEM_WPPK, PROP_chrwppk, 3.0, AMMO_9MM, 0x32, 1},
-    {ITEM_WPPK, PROP_chrwppk, 3.0, AMMO_9MM, 0x32, 1},
-    {ITEM_UZI, PROP_chruzi, 1.5, AMMO_9MM, 0x64, 1},
-    {ITEM_UZI, PROP_chruzi, 1.5, AMMO_9MM, 0x64, 1},
     {ITEM_M16, PROP_chrkalash, 1.5, AMMO_RIFLE, 0x64, 1},
     {ITEM_M16, PROP_chrkalash, 1.5, AMMO_RIFLE, 0x64, 1},
+#else
+    {ITEM_M16, PROP_chrm16, 1.5, AMMO_RIFLE, 0x64, 1},
+    {ITEM_M16, PROP_chrm16, 1.5, AMMO_RIFLE, 0x64, 1},
+#endif
     {ITEM_REMOTEMINE, PROP_chrremotemine, 1.5, AMMO_REMOTEMINE, 5, 0},
     {ITEM_REMOTEMINE, PROP_chrremotemine, 1.5, AMMO_REMOTEMINE, 5, 0}
 };
-#endif
-#ifdef VERSION_EU
-//!FIXME temp copy of jp data
-struct s_mp_weapon_set mp_weapon_set_remote_m[] = 
-{
-    {ITEM_WPPK, PROP_chrwppk, 3.0, AMMO_9MM, 0x32, 1},
-    {ITEM_WPPK, PROP_chrwppk, 3.0, AMMO_9MM, 0x32, 1},
-    {ITEM_UZI, PROP_chruzi, 1.5, AMMO_9MM, 0x64, 1},
-    {ITEM_UZI, PROP_chruzi, 1.5, AMMO_9MM, 0x64, 1},
-    {ITEM_M16, PROP_chrm16, 1.5, AMMO_RIFLE, 0x64, 1},
-    {ITEM_M16, PROP_chrm16, 1.5, AMMO_RIFLE, 0x64, 1},
-    {ITEM_REMOTEMINE, PROP_chrremotemine, 1.5, AMMO_REMOTEMINE, 5, 0},
-    {ITEM_REMOTEMINE, PROP_chrremotemine, 1.5, AMMO_REMOTEMINE, 5, 0}
-};
-#endif
-#ifdef VERSION_JP
-struct s_mp_weapon_set mp_weapon_set_remote_m[] = 
-{
-    {ITEM_WPPK, PROP_chrwppk, 3.0, AMMO_9MM, 0x32, 1},
-    {ITEM_WPPK, PROP_chrwppk, 3.0, AMMO_9MM, 0x32, 1},
-    {ITEM_UZI, PROP_chruzi, 1.5, AMMO_9MM, 0x64, 1},
-    {ITEM_UZI, PROP_chruzi, 1.5, AMMO_9MM, 0x64, 1},
-    {ITEM_M16, PROP_chrm16, 1.5, AMMO_RIFLE, 0x64, 1},
-    {ITEM_M16, PROP_chrm16, 1.5, AMMO_RIFLE, 0x64, 1},
-    {ITEM_REMOTEMINE, PROP_chrremotemine, 1.5, AMMO_REMOTEMINE, 5, 0},
-    {ITEM_REMOTEMINE, PROP_chrremotemine, 1.5, AMMO_REMOTEMINE, 5, 0}
-};
-#endif
+
 
 //D:80048C70
 struct s_mp_weapon_set mp_weapon_set_glaunch[] = 
@@ -150,46 +127,22 @@ struct s_mp_weapon_set mp_weapon_set_glaunch[] =
 };
 
 //D:80048D30
+struct s_mp_weapon_set mp_weapon_set_timed_m[] = 
+{
+    {ITEM_WPPK, PROP_chrwppk, 3.0, AMMO_9MM, 0x32, 1},
+    {ITEM_WPPK, PROP_chrwppk, 3.0, AMMO_9MM, 0x32, 1},
+    {ITEM_UZI, PROP_chruzi, 1.5, AMMO_9MM, 0x64, 1},
+    {ITEM_UZI, PROP_chruzi, 1.5, AMMO_9MM, 0x64, 1},
 #ifdef VERSION_US
-struct s_mp_weapon_set mp_weapon_set_timed_m[] = 
-{
-    {ITEM_WPPK, PROP_chrwppk, 3.0, AMMO_9MM, 0x32, 1},
-    {ITEM_WPPK, PROP_chrwppk, 3.0, AMMO_9MM, 0x32, 1},
-    {ITEM_UZI, PROP_chruzi, 1.5, AMMO_9MM, 0x64, 1},
-    {ITEM_UZI, PROP_chruzi, 1.5, AMMO_9MM, 0x64, 1},
     {ITEM_M16, PROP_chrkalash, 1.5, AMMO_RIFLE, 0x64, 1},
     {ITEM_M16, PROP_chrkalash, 1.5, AMMO_RIFLE, 0x64, 1},
+#else
+    {ITEM_M16, PROP_chrm16, 1.5, AMMO_RIFLE, 0x64, 1},
+    {ITEM_M16, PROP_chrm16, 1.5, AMMO_RIFLE, 0x64, 1},
+#endif
     {ITEM_TIMEDMINE, PROP_chrtimedmine, 1.5, AMMO_TIMEDMINE, 5, 0},
     {ITEM_TIMEDMINE, PROP_chrtimedmine, 1.5, AMMO_TIMEDMINE, 5, 0}
 };
-#endif
-#ifdef VERSION_EU
-//!FIXME temp copy of jp data
-struct s_mp_weapon_set mp_weapon_set_timed_m[] = 
-{
-    {ITEM_WPPK, PROP_chrwppk, 3.0, AMMO_9MM, 0x32, 1},
-    {ITEM_WPPK, PROP_chrwppk, 3.0, AMMO_9MM, 0x32, 1},
-    {ITEM_UZI, PROP_chruzi, 1.5, AMMO_9MM, 0x64, 1},
-    {ITEM_UZI, PROP_chruzi, 1.5, AMMO_9MM, 0x64, 1},
-    {ITEM_M16, PROP_chrm16, 1.5, AMMO_RIFLE, 0x64, 1},
-    {ITEM_M16, PROP_chrm16, 1.5, AMMO_RIFLE, 0x64, 1},
-    {ITEM_TIMEDMINE, PROP_chrtimedmine, 1.5, AMMO_TIMEDMINE, 5, 0},
-    {ITEM_TIMEDMINE, PROP_chrtimedmine, 1.5, AMMO_TIMEDMINE, 5, 0}
-};
-#endif
-#ifdef VERSION_JP
-struct s_mp_weapon_set mp_weapon_set_timed_m[] = 
-{
-    {ITEM_WPPK, PROP_chrwppk, 3.0, AMMO_9MM, 0x32, 1},
-    {ITEM_WPPK, PROP_chrwppk, 3.0, AMMO_9MM, 0x32, 1},
-    {ITEM_UZI, PROP_chruzi, 1.5, AMMO_9MM, 0x64, 1},
-    {ITEM_UZI, PROP_chruzi, 1.5, AMMO_9MM, 0x64, 1},
-    {ITEM_M16, PROP_chrm16, 1.5, AMMO_RIFLE, 0x64, 1},
-    {ITEM_M16, PROP_chrm16, 1.5, AMMO_RIFLE, 0x64, 1},
-    {ITEM_TIMEDMINE, PROP_chrtimedmine, 1.5, AMMO_TIMEDMINE, 5, 0},
-    {ITEM_TIMEDMINE, PROP_chrtimedmine, 1.5, AMMO_TIMEDMINE, 5, 0}
-};
-#endif
 
 //D:80048DF0 
 struct s_mp_weapon_set mp_weapon_set_prox_m[] = 
