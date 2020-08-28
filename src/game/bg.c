@@ -1781,7 +1781,7 @@ glabel load_bg_file
 /* 0E8D08 7F0B41D8 24070040 */  li    $a3, 64
 /* 0E8D0C 7F0B41DC 0000C812 */  mflo  $t9
 /* 0E8D10 7F0B41E0 02394021 */  addu  $t0, $s1, $t9
-/* 0E8D14 7F0B41E4 0FC2F35F */  jal   load_bg_bytes_at_offset_to_membank
+/* 0E8D14 7F0B41E4 0FC2F35F */  jal   obLoadBGFileBytesAtOffset
 /* 0E8D18 7F0B41E8 8D040004 */   lw    $a0, 4($t0)
 /* 0E8D1C 7F0B41EC 8EE20000 */  lw    $v0, ($s7)
 /* 0E8D20 7F0B41F0 3C168008 */  lui   $s6, %hi(ptr_bgdata_offsets)
@@ -1812,7 +1812,7 @@ glabel load_bg_file
 /* 0E8D84 7F0B4254 02003825 */  move  $a3, $s0
 /* 0E8D88 7F0B4258 0000C812 */  mflo  $t9
 /* 0E8D8C 7F0B425C 02394021 */  addu  $t0, $s1, $t9
-/* 0E8D90 7F0B4260 0FC2F35F */  jal   load_bg_bytes_at_offset_to_membank
+/* 0E8D90 7F0B4260 0FC2F35F */  jal   obLoadBGFileBytesAtOffset
 /* 0E8D94 7F0B4264 8D040004 */   lw    $a0, 4($t0)
 /* 0E8D98 7F0B4268 8E490000 */  lw    $t1, ($s2)
 /* 0E8D9C 7F0B426C 24050002 */  li    $a1, 2
@@ -4828,7 +4828,7 @@ void sub_GAME_7F0B5FAC(s32 arg0, s32 arg1, s32 arg2) {
     {
         // Node 2
         sp1C = temp_v1;
-        load_bg_bytes_at_offset_to_membank(*(&levelinfotable + (D_80041400 * 0x18)), ((arg2 - temp_t9) + arg1), (((*(ptr_bgdata_room_fileposition_list + (arg0 * 0x18)) + ptr_bg_data) - ptr_bg_data) + 0xf1000000), temp_t9);
+        obLoadBGFileBytesAtOffset(*(&levelinfotable + (D_80041400 * 0x18)), ((arg2 - temp_t9) + arg1), (((*(ptr_bgdata_room_fileposition_list + (arg0 * 0x18)) + ptr_bg_data) - ptr_bg_data) + 0xf1000000), temp_t9);
         temp_ret = sub_GAME_7F0B5F8C(sp18, arg1);
         temp_v1->unk1C = temp_ret;
         temp_v1->unk4 = arg1;
@@ -4890,7 +4890,7 @@ glabel sub_GAME_7F0B5FAC
 /* 0EAB8C 7F0B605C AFA3001C */  sw    $v1, 0x1c($sp)
 /* 0EAB90 7F0B6060 00004812 */  mflo  $t1
 /* 0EAB94 7F0B6064 00892021 */  addu  $a0, $a0, $t1
-/* 0EAB98 7F0B6068 0FC2F35F */  jal   load_bg_bytes_at_offset_to_membank
+/* 0EAB98 7F0B6068 0FC2F35F */  jal   obLoadBGFileBytesAtOffset
 /* 0EAB9C 7F0B606C 8C844490 */   lw    $a0, %lo(levelinfotable+4)($a0)
 /* 0EABA0 7F0B6070 8FA40018 */  lw    $a0, 0x18($sp)
 /* 0EABA4 7F0B6074 0FC2D7E3 */  jal   sub_GAME_7F0B5F8C
@@ -4968,7 +4968,7 @@ glabel sub_GAME_7F0B609C
 /* 0EAC80 7F0B6150 AFA80020 */  sw    $t0, 0x20($sp)
 /* 0EAC84 7F0B6154 00004812 */  mflo  $t1
 /* 0EAC88 7F0B6158 00892021 */  addu  $a0, $a0, $t1
-/* 0EAC8C 7F0B615C 0FC2F35F */  jal   load_bg_bytes_at_offset_to_membank
+/* 0EAC8C 7F0B615C 0FC2F35F */  jal   obLoadBGFileBytesAtOffset
 /* 0EAC90 7F0B6160 8C844490 */   lw    $a0, %lo(levelinfotable+4)($a0)
 /* 0EAC94 7F0B6164 02202025 */  move  $a0, $s1
 /* 0EAC98 7F0B6168 0FC2D7E3 */  jal   sub_GAME_7F0B5F8C
@@ -5066,7 +5066,7 @@ glabel sub_GAME_7F0B61DC
 /* 0EADC0 7F0B6290 AFA80020 */  sw    $t0, 0x20($sp)
 /* 0EADC4 7F0B6294 00004812 */  mflo  $t1
 /* 0EADC8 7F0B6298 00892021 */  addu  $a0, $a0, $t1
-/* 0EADCC 7F0B629C 0FC2F35F */  jal   load_bg_bytes_at_offset_to_membank
+/* 0EADCC 7F0B629C 0FC2F35F */  jal   obLoadBGFileBytesAtOffset
 /* 0EADD0 7F0B62A0 8C844490 */   lw    $a0, %lo(levelinfotable+4)($a0)
 /* 0EADD4 7F0B62A4 02002025 */  move  $a0, $s0
 /* 0EADD8 7F0B62A8 0FC2D7E3 */  jal   sub_GAME_7F0B5F8C

@@ -4431,7 +4431,7 @@ Linker script and memory map
                 0x000000007f0bd894                _load_resource_index_to_membank
                 0x000000007f0bd8b4                _load_resource_named_to_membank
                 0x000000007f0bd8f0                _load_resource_named_to_buffer
-                0x000000007f0bd92c                load_bg_bytes_at_offset_to_membank
+                0x000000007f0bd92c                obLoadBGFileBytesAtOffset
                 0x000000007f0bd9bc                load_rom_resource_index_to_membank
                 0x000000007f0bdb90                load_resource_index_to_buffer
                 0x000000007f0bdcb0                get_pc_remaining_buffer_for_index

@@ -765,7 +765,6 @@ struct fileentry file_resource_table[] = {
 s32 file_entry_max = 0x2D7;
 
 
-// rodata
 
 
 void load_resource(u8 *ptrdata, u32 bytes, struct fileentry *srcfile, struct resource_lookup_data_entry *lookupdata)
@@ -1016,70 +1015,29 @@ void _load_resource_named_to_buffer(u8 *filename,s32 bank,u8 *ptrdata,int size)
     load_resource_index_to_buffer(get_index_num_of_named_resource(filename), bank, ptrdata, size);
 }
 
-
-
-
-#ifdef NONMATCHING
-void load_bg_bytes_at_offset_to_membank(u8 *bgname,u8 *src,s32 offset,s32 len)
+/**
+ * 0F18AC 7F0BCD7C
+ * loads data stored at an offset of a bg file
+ */
+void obLoadBGFileBytesAtOffset(u8 *bgname, u8 *target, s32 offset, s32 len)
 {
-    int index;
-    
-    index = get_index_num_of_named_resource(bgname);
+  s32 index;
+  struct fileentry *fileentry;
 
-    if (resource_lookup_data_array[index].rom_size != 0) {
-        if (resource_lookup_data_array[index].rom_size + 0xf >= (offset + len)) {
-            romCopy(src,(file_resource_table[index].hw_address + offset),len);
-            return;
-        }
-        while( 1 ) { } ;
+  index = get_index_num_of_named_resource(bgname);
+  fileentry = &file_resource_table[index];
+  
+  if (resource_lookup_data_array[index].rom_size != 0)
+  {
+    //if the size of offset data would exceed file size, loop forever
+    if ((resource_lookup_data_array[index].rom_size + 0xF) < (offset + len))
+    {
+      while (1){};
     }
-}
-#else
-GLOBAL_ASM(
-.text
-glabel load_bg_bytes_at_offset_to_membank
-/* 0F18AC 7F0BCD7C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F18B0 7F0BCD80 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F18B4 7F0BCD84 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 0F18B8 7F0BCD88 AFA60020 */  sw    $a2, 0x20($sp)
-/* 0F18BC 7F0BCD8C 0FC2F495 */  jal   get_index_num_of_named_resource
-/* 0F18C0 7F0BCD90 AFA70024 */   sw    $a3, 0x24($sp)
-/* 0F18C4 7F0BCD94 0002C080 */  sll   $t8, $v0, 2
-/* 0F18C8 7F0BCD98 0302C021 */  addu  $t8, $t8, $v0
-/* 0F18CC 7F0BCD9C 0018C080 */  sll   $t8, $t8, 2
-/* 0F18D0 7F0BCDA0 3C038009 */  lui   $v1, %hi(resource_lookup_data_array)
-/* 0F18D4 7F0BCDA4 00781821 */  addu  $v1, $v1, $t8
-/* 0F18D8 7F0BCDA8 8C6388B0 */  lw    $v1, %lo(resource_lookup_data_array)($v1)
-/* 0F18DC 7F0BCDAC 00027080 */  sll   $t6, $v0, 2
-/* 0F18E0 7F0BCDB0 01C27023 */  subu  $t6, $t6, $v0
-/* 0F18E4 7F0BCDB4 3C0F8004 */  lui   $t7, %hi(file_resource_table) 
-/* 0F18E8 7F0BCDB8 25EF6054 */  addiu $t7, %lo(file_resource_table) # addiu $t7, $t7, 0x6054
-/* 0F18EC 7F0BCDBC 000E7080 */  sll   $t6, $t6, 2
-/* 0F18F0 7F0BCDC0 8FA60024 */  lw    $a2, 0x24($sp)
-/* 0F18F4 7F0BCDC4 8FA80020 */  lw    $t0, 0x20($sp)
-/* 0F18F8 7F0BCDC8 1060000C */  beqz  $v1, .L7F0BCDFC
-/* 0F18FC 7F0BCDCC 01CF3821 */   addu  $a3, $t6, $t7
-/* 0F1900 7F0BCDD0 0106C821 */  addu  $t9, $t0, $a2
-/* 0F1904 7F0BCDD4 2469000F */  addiu $t1, $v1, 0xf
-/* 0F1908 7F0BCDD8 0139082B */  sltu  $at, $t1, $t9
-/* 0F190C 7F0BCDDC 50200004 */  beql  $at, $zero, .L7F0BCDF0
-/* 0F1910 7F0BCDE0 8CEA0008 */   lw    $t2, 8($a3)
-.L7F0BCDE4:
-/* 0F1914 7F0BCDE4 1000FFFF */  b     .L7F0BCDE4
-/* 0F1918 7F0BCDE8 00000000 */   nop   
-/* 0F191C 7F0BCDEC 8CEA0008 */  lw    $t2, 8($a3)
-.L7F0BCDF0:
-/* 0F1920 7F0BCDF0 8FA4001C */  lw    $a0, 0x1c($sp)
-/* 0F1924 7F0BCDF4 0C001707 */  jal   romCopy
-/* 0F1928 7F0BCDF8 01482821 */   addu  $a1, $t2, $t0
-.L7F0BCDFC:
-/* 0F192C 7F0BCDFC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F1930 7F0BCE00 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F1934 7F0BCE04 03E00008 */  jr    $ra
-/* 0F1938 7F0BCE08 00000000 */   nop   
-)
-#endif
+    romCopy(target, &fileentry->hw_address[offset], len, fileentry);
+  }
 
+}
 
 
 
