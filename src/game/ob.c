@@ -768,17 +768,16 @@ s32 file_entry_max = 0x2D7;
 // rodata
 
 
-#ifdef NONMATCHING
-//matches other than regalloc
 void load_resource(u8 *ptrdata, u32 bytes, struct fileentry *srcfile, struct resource_lookup_data_entry *lookupdata)
 {
-    s32 unused;
-    u8 buffer[8448];
     u8 *source;
+    u8 buffer[0x2100];
+    s32 unused;
+    
 
     if (bytes == 0)
     {
-        romCopy(srcfile->hw_address, lookupdata->rom_size);
+        romCopy(ptrdata, srcfile->hw_address, lookupdata->rom_size);
         return;
     }
     source = (ptrdata + bytes) - ((lookupdata->rom_size + 7) & -8);
@@ -789,58 +788,9 @@ void load_resource(u8 *ptrdata, u32 bytes, struct fileentry *srcfile, struct res
     else
     {
         romCopy(source, srcfile->hw_address, lookupdata->rom_size);
-        //unused = 
-        lookupdata->pc_remaining = decompressdata(source, ptrdata, &buffer);;
+        lookupdata->pc_remaining = decompressdata(source, ptrdata, buffer);;
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel load_resource
-/* 0F15D0 7F0BCAA0 27BDDED8 */  addiu $sp, $sp, -0x2128
-/* 0F15D4 7F0BCAA4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F15D8 7F0BCAA8 AFA42128 */  sw    $a0, 0x2128($sp)
-/* 0F15DC 7F0BCAAC 14A00006 */  bnez  $a1, .L7F0BCAC8
-/* 0F15E0 7F0BCAB0 AFA62130 */   sw    $a2, 0x2130($sp)
-/* 0F15E4 7F0BCAB4 8CC50008 */  lw    $a1, 8($a2)
-/* 0F15E8 7F0BCAB8 0C001707 */  jal   romCopy
-/* 0F15EC 7F0BCABC 8CE60000 */   lw    $a2, ($a3)
-/* 0F15F0 7F0BCAC0 10000019 */  b     .L7F0BCB28
-/* 0F15F4 7F0BCAC4 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0BCAC8:
-/* 0F15F8 7F0BCAC8 8CE60000 */  lw    $a2, ($a3)
-/* 0F15FC 7F0BCACC 8FAF2128 */  lw    $t7, 0x2128($sp)
-/* 0F1600 7F0BCAD0 2401FFF8 */  li    $at, -8
-/* 0F1604 7F0BCAD4 24D90007 */  addiu $t9, $a2, 7
-/* 0F1608 7F0BCAD8 03214024 */  and   $t0, $t9, $at
-/* 0F160C 7F0BCADC 01E5C021 */  addu  $t8, $t7, $a1
-/* 0F1610 7F0BCAE0 03082023 */  subu  $a0, $t8, $t0
-/* 0F1614 7F0BCAE4 008F4823 */  subu  $t1, $a0, $t7
-/* 0F1618 7F0BCAE8 2D210008 */  sltiu $at, $t1, 8
-/* 0F161C 7F0BCAEC 10200003 */  beqz  $at, .L7F0BCAFC
-/* 0F1620 7F0BCAF0 8FAA2130 */   lw    $t2, 0x2130($sp)
-/* 0F1624 7F0BCAF4 1000000B */  b     .L7F0BCB24
-/* 0F1628 7F0BCAF8 ACE00004 */   sw    $zero, 4($a3)
-.L7F0BCAFC:
-/* 0F162C 7F0BCAFC 8D450008 */  lw    $a1, 8($t2)
-/* 0F1630 7F0BCB00 AFA72134 */  sw    $a3, 0x2134($sp)
-/* 0F1634 7F0BCB04 0C001707 */  jal   romCopy
-/* 0F1638 7F0BCB08 AFA42124 */   sw    $a0, 0x2124($sp)
-/* 0F163C 7F0BCB0C 8FA42124 */  lw    $a0, 0x2124($sp)
-/* 0F1640 7F0BCB10 8FA52128 */  lw    $a1, 0x2128($sp)
-/* 0F1644 7F0BCB14 0FC339FC */  jal   decompressdata
-/* 0F1648 7F0BCB18 27A60024 */   addiu $a2, $sp, 0x24
-/* 0F164C 7F0BCB1C 8FA72134 */  lw    $a3, 0x2134($sp)
-/* 0F1650 7F0BCB20 ACE20004 */  sw    $v0, 4($a3)
-.L7F0BCB24:
-/* 0F1654 7F0BCB24 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0BCB28:
-/* 0F1658 7F0BCB28 27BD2128 */  addiu $sp, $sp, 0x2128
-/* 0F165C 7F0BCB2C 03E00008 */  jr    $ra
-/* 0F1660 7F0BCB30 00000000 */   nop   
-)
-#endif
-
 
 
 
