@@ -23,7 +23,7 @@ s32 ob_c_debug_notice_list_entry = 0;
 
 
 //D:800482D4
-s32 file_entry_max = 0x2D7;
+s32 file_entry_max = OBJ_INDEX_END;
 
 
 
@@ -744,7 +744,7 @@ int get_index_num_of_named_resource(u8 *resname)
     }
 
     i = file_entry_max;
-    if (file_entry_max < 0x2e0) {
+    if (file_entry_max < OBJ_INDEX_MAX) {
         file_entry_max += 1;
 
         if (check_file_found_on_indy(resname,buffer) != 0) {
@@ -801,7 +801,7 @@ glabel get_index_num_of_named_resource
 /* 0F1DF4 7F0BD2C4 5420FFF3 */  bnezl $at, .L7F0BD294
 /* 0F1DF8 7F0BD2C8 8E050004 */   lw    $a1, 4($s0)
 .L7F0BD2CC:
-/* 0F1DFC 7F0BD2CC 284102E0 */  slti  $at, $v0, 0x2e0
+/* 0F1DFC 7F0BD2CC 284102E0 */  slti  $at, $v0, 0x2e0 /*OBJ_INDEX_MAX*/
 /* 0F1E00 7F0BD2D0 14200003 */  bnez  $at, .L7F0BD2E0
 /* 0F1E04 7F0BD2D4 00408825 */   move  $s1, $v0
 /* 0F1E08 7F0BD2D8 10000023 */  b     .L7F0BD368
