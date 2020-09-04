@@ -4,9 +4,9 @@
 
 struct resource_lookup_data_entry {
     u32 rom_size;
-    s32 pc_remaining;
+    u32 pc_remaining;
     u32 pc_size;
-    s32 rom_remaining;
+    u32 rom_remaining;
     u8 loaded_bank;
     u8 unk_11;
     u16 reserved;
