@@ -33491,29 +33491,9 @@ void sub_GAME_7F08A928(int param_1)
 }
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F08A944(void) {
-
+void sub_GAME_7F08A944(int param) {
+    D_800368B4 = D_800368B4 | param;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08A944
-/* 0BF474 7F08A944 3C028003 */  lui   $v0, %hi(D_800368B4)
-/* 0BF478 7F08A948 244268B4 */  addiu $v0, %lo(D_800368B4) # addiu $v0, $v0, 0x68b4
-/* 0BF47C 7F08A94C 8C4E0000 */  lw    $t6, ($v0)
-/* 0BF480 7F08A950 01C47825 */  or    $t7, $t6, $a0
-/* 0BF484 7F08A954 03E00008 */  jr    $ra
-/* 0BF488 7F08A958 AC4F0000 */   sw    $t7, ($v0)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void display_string_at_top_of_screen(void) {
