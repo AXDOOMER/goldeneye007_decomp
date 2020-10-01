@@ -32097,30 +32097,10 @@ glabel get_BONDdata_bondfadefracnew
 
 
 
-#ifdef NONMATCHING
-void get_curplay_horizontal_rotation_in_degrees(void) {
 
+f32 get_curplay_horizontal_rotation_in_degrees(void) {
+    return ((360.0f - pPlayer->vv_theta) * 6.2831855f) / 360.0f;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel twopi_800552B4
-.word 0x40c90fdb /*6.2831855*/
-.text
-glabel get_curplay_horizontal_rotation_in_degrees
-/* 0BEA14 7F089EE4 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0BEA18 7F089EE8 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0BEA1C 7F089EEC 3C0143B4 */  li    $at, 0x43B40000 # 360.000000
-/* 0BEA20 7F089EF0 44811000 */  mtc1  $at, $f2
-/* 0BEA24 7F089EF4 C5C40148 */  lwc1  $f4, 0x148($t6)
-/* 0BEA28 7F089EF8 3C018005 */  lui   $at, %hi(twopi_800552B4)
-/* 0BEA2C 7F089EFC C42852B4 */  lwc1  $f8, %lo(twopi_800552B4)($at)
-/* 0BEA30 7F089F00 46041181 */  sub.s $f6, $f2, $f4
-/* 0BEA34 7F089F04 46083282 */  mul.s $f10, $f6, $f8
-/* 0BEA38 7F089F08 03E00008 */  jr    $ra
-/* 0BEA3C 7F089F0C 46025003 */   div.s $f0, $f10, $f2
-)
-#endif
 
 
 
