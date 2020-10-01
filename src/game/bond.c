@@ -32126,29 +32126,11 @@ glabel get_curplay_horizontal_rotation_in_degrees
 
 
 
-#ifdef NONMATCHING
-void get_curplay_vertical_rotation_in_degrees(void) {
 
+f32 get_curplay_vertical_rotation_in_degrees(void) {
+    return (pPlayer->vv_verta * 6.2831855f) / 360.0f;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_800552B8
-.word 0x40c90fdb /*6.2831855*/
-.text
-glabel get_curplay_vertical_rotation_in_degrees
-/* 0BEA40 7F089F10 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0BEA44 7F089F14 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0BEA48 7F089F18 3C018005 */  lui   $at, %hi(D_800552B8)
-/* 0BEA4C 7F089F1C C42652B8 */  lwc1  $f6, %lo(D_800552B8)($at)
-/* 0BEA50 7F089F20 C5C40158 */  lwc1  $f4, 0x158($t6)
-/* 0BEA54 7F089F24 3C0143B4 */  li    $at, 0x43B40000 # 360.000000
-/* 0BEA58 7F089F28 44815000 */  mtc1  $at, $f10
-/* 0BEA5C 7F089F2C 46062202 */  mul.s $f8, $f4, $f6
-/* 0BEA60 7F089F30 03E00008 */  jr    $ra
-/* 0BEA64 7F089F34 460A4003 */   div.s $f0, $f8, $f10
-)
-#endif
+
 
 
 s32 sub_GAME_7F089F38(void) {
