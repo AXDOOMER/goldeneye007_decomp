@@ -32274,45 +32274,18 @@ glabel get_BONDdata_position
 #endif
 
 
+int * get_BONDdata_position3(void) {
+    
+    if (pPlayer->unknown == 1) {
+        return (int *) &pPlayer->xpos3;
+    }
 
-
-
-#ifdef NONMATCHING
-void get_BONDdata_position3(void) {
-
+    return &pPlayer->field_4A4;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_BONDdata_position3
-/* 0BEB30 7F08A000 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 0BEB34 7F08A004 8C63A0B0 */  lw    $v1, %lo(pPlayer)($v1)
-/* 0BEB38 7F08A008 24010001 */  li    $at, 1
-/* 0BEB3C 7F08A00C 8C6E0000 */  lw    $t6, ($v1)
-/* 0BEB40 7F08A010 246204A4 */  addiu $v0, $v1, 0x4a4
-/* 0BEB44 7F08A014 15C10003 */  bne   $t6, $at, .L7F08A024
-/* 0BEB48 7F08A018 00000000 */   nop   
-/* 0BEB4C 7F08A01C 03E00008 */  jr    $ra
-/* 0BEB50 7F08A020 24620028 */   addiu $v0, $v1, 0x28
-
-.L7F08A024:
-/* 0BEB54 7F08A024 03E00008 */  jr    $ra
-/* 0BEB58 7F08A028 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 int get_BONDdata_field408(void) {
-    return (int)&pPlayer->field_408;
+    return (int) &pPlayer->field_408;
 }
-
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F08A03C(void) {
