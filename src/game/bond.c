@@ -32305,20 +32305,10 @@ glabel get_BONDdata_position3
 
 
 
-#ifdef NONMATCHING
-void get_BONDdata_field408(void) {
-
+int get_BONDdata_field408(void) {
+    return (int)&pPlayer->field_408;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_BONDdata_field408
-/* 0BEB5C 7F08A02C 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 0BEB60 7F08A030 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
-/* 0BEB64 7F08A034 03E00008 */  jr    $ra
-/* 0BEB68 7F08A038 24420408 */   addiu $v0, $v0, 0x408
-)
-#endif
+
 
 
 
