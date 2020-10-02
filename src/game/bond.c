@@ -32107,20 +32107,9 @@ void set_bondata_invincible_flag(u32 arg0) {
 
 
 
-#ifdef NONMATCHING
-void get_bondata_invincible_flag(void) {
-
+u8 get_bondata_invincible_flag(void) {
+    return pPlayer->bondinvincible;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_bondata_invincible_flag
-/* 0BEA88 7F089F58 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0BEA8C 7F089F5C 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0BEA90 7F089F60 03E00008 */  jr    $ra
-/* 0BEA94 7F089F64 91C212B6 */   lbu   $v0, 0x12b6($t6)
-)
-#endif
 
 
 

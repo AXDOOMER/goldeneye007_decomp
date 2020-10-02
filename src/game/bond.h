@@ -1200,7 +1200,7 @@ struct Player
   s32 field_12B0;
   u8 something_with_cheat_text;
   u8 can_display_cheat_text;
-  u32 bondinvincible;
+  u8 bondinvincible;
   u8 field_12B7;
   s32 healthdamagetype;
   s32 field_12BC;
