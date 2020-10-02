@@ -32010,23 +32010,11 @@ glabel sub_GAME_7F089E4C
 
 
 
-#ifdef NONMATCHING
-void check_if_bond_is_invincible(void) {
 
+int check_if_bond_is_invincible(void) {
+    return (pPlayer->damageshowtime < 0) ^ 1;
 }
-#else
-#ifdef VERSION_US
-GLOBAL_ASM(
-.text
-glabel check_if_bond_is_invincible
-/* 0BE9D4 7F089EA4 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0BE9D8 7F089EA8 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0BE9DC 7F089EAC 8DC200F4 */  lw    $v0, 0xf4($t6)
-/* 0BE9E0 7F089EB0 284F0000 */  slti  $t7, $v0, 0
-/* 0BE9E4 7F089EB4 03E00008 */  jr    $ra
-/* 0BE9E8 7F089EB8 39E20001 */   xori  $v0, $t7, 1
-)
-#endif
+
 
 #ifdef VERSION_JP
 GLOBAL_ASM(
