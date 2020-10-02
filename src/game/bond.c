@@ -32099,20 +32099,9 @@ s32 sub_GAME_7F089F38(void) {
 
 
 
-#ifdef NONMATCHING
-void set_bondata_invincible_flag(void) {
-
+void set_bondata_invincible_flag(u32 arg0) {
+    pPlayer->bondinvincible = arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_bondata_invincible_flag
-/* 0BEA78 7F089F48 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0BEA7C 7F089F4C 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0BEA80 7F089F50 03E00008 */  jr    $ra
-/* 0BEA84 7F089F54 A1C412B6 */   sb    $a0, 0x12b6($t6)
-)
-#endif
 
 
 
