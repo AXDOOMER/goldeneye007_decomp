@@ -32078,21 +32078,10 @@ glabel check_if_healthbar_timer_greater_than_0
 
 
 
-#ifdef NONMATCHING
-void get_BONDdata_bondfadefracnew(void) {
 
+f32 get_BONDdata_bondfadefracnew(void) {
+    return pPlayer->bondfadefracnew;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_BONDdata_bondfadefracnew
-/* 0BEA04 7F089ED4 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0BEA08 7F089ED8 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0BEA0C 7F089EDC 03E00008 */  jr    $ra
-/* 0BEA10 7F089EE0 C5C0019C */   lwc1  $f0, 0x19c($t6)
-)
-#endif
-
 
 
 
