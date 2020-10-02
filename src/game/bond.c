@@ -32010,11 +32010,11 @@ glabel sub_GAME_7F089E4C
 
 
 
-
+#ifdef VERSION_US
 int check_if_bond_is_invincible(void) {
     return (pPlayer->damageshowtime < 0) ^ 1;
 }
-
+#endif
 
 #ifdef VERSION_JP
 GLOBAL_ASM(
@@ -32034,8 +32034,6 @@ glabel check_if_bond_is_invincible
 /* 0BF144 7F08A5D4 03E00008 */  jr    $ra
 /* 0BF148 7F08A5D8 00000000 */   nop   
 )
-#endif
-
 #endif
 
 
