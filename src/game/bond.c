@@ -32074,9 +32074,9 @@ f32 get_BONDdata_bondfadefracnew(void) {
 
 
 f32 get_curplay_horizontal_rotation_in_degrees(void) {
-    f32 twopi_800552B4 = 6.2831855f;
+    f32 twoPi = 6.2831855f;
     
-    return ((360.0f - pPlayer->vv_theta) * twopi_800552B4) / 360.0f;
+    return ((360.0f - pPlayer->vv_theta) * twoPi) / 360.0f;
 }
 
 
@@ -32085,9 +32085,9 @@ f32 get_curplay_horizontal_rotation_in_degrees(void) {
 
 
 f32 get_curplay_vertical_rotation_in_degrees(void) {
-    f32 D_800552B8 = 6.2831855f;
+    f32 twoPi = 6.2831855f;
 
-    return (pPlayer->vv_verta * D_800552B8) / 360.0f;
+    return (pPlayer->vv_verta * twoPi) / 360.0f;
 }
 
 
