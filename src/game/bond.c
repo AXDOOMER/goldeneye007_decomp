@@ -32074,7 +32074,9 @@ f32 get_BONDdata_bondfadefracnew(void) {
 
 
 f32 get_curplay_horizontal_rotation_in_degrees(void) {
-    return ((360.0f - pPlayer->vv_theta) * 6.2831855f) / 360.0f;
+    f32 twopi_800552B4 = 6.2831855f;
+    
+    return ((360.0f - pPlayer->vv_theta) * twopi_800552B4) / 360.0f;
 }
 
 
@@ -32083,13 +32085,15 @@ f32 get_curplay_horizontal_rotation_in_degrees(void) {
 
 
 f32 get_curplay_vertical_rotation_in_degrees(void) {
-    return (pPlayer->vv_verta * 6.2831855f) / 360.0f;
+    f32 D_800552B8 = 6.2831855f;
+
+    return (pPlayer->vv_verta * D_800552B8) / 360.0f;
 }
 
 
 
 s32 sub_GAME_7F089F38(void) {
-  return pPlayer->field_D0;
+    return pPlayer->field_D0;
 }
 
 
