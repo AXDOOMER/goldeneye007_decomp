@@ -161,7 +161,7 @@ void add_additional_weapon_slot_to_player_inventory_guess(int *param_1) {
   
     iVar1 = pPlayer->ptr_inventory_first_in_cycle;
     
-    if (iVar1 != 0) {
+    if (iVar1) {
         param_1[3] = iVar1;
         param_1[4] = *(int *)(pPlayer->ptr_inventory_first_in_cycle + 0x10);
         *(int **)(iVar1 + 0x10) = param_1;
@@ -906,7 +906,7 @@ int sub_GAME_7F08C724(int param_1) {
 
     piVar1 = (int *)get_ptr_next_available_weapon();
     
-    if (piVar1 != 0) {
+    if (piVar1) {
         *piVar1 = 2;
         piVar1[1] = param_1;
         add_additional_weapon_slot_to_player_inventory_guess(piVar1);
@@ -3556,7 +3556,7 @@ int sub_GAME_7F08D95C(void) {
 
     temp = sub_GAME_7F08D21C();
 
-    if ((temp != 0) && (*(int *)(temp + 0x1c) != 0)) {
+    if ( temp && (*(int *)(temp + 0x1c)) ) {
         return get_textptr_for_textID(*(int *)(temp + 0x1c));
     }
 
@@ -3567,7 +3567,7 @@ int sub_GAME_7F08D9A4(void) {
     int temp;
 
     temp = sub_GAME_7F08D25C();
-    if ((temp != 0) && (*(int *)(temp + 0x1c) != 0)) {
+    if ( temp && (*(int *)(temp + 0x1c)) ) {
         return get_textptr_for_textID(*(int *)(temp + 0x1c));
     }
     return 0;
