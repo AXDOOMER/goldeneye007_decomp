@@ -3482,43 +3482,14 @@ void sub_GAME_7F08D8A0(int param) {
 }
 
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F08D8C0(void) {
-
+int sub_GAME_7F08D8C0(void) {
+  return pPlayer->field_11F0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08D8C0
-/* 0C23F0 7F08D8C0 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0C23F4 7F08D8C4 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0C23F8 7F08D8C8 03E00008 */  jr    $ra
-/* 0C23FC 7F08D8CC 8DC211F0 */   lw    $v0, 0x11f0($t6)
-)
-#endif
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F08D8D0(void) {
-
+void sub_GAME_7F08D8D0(int param) {
+    pPlayer->field_11F0 = param;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08D8D0
-/* 0C2400 7F08D8D0 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0C2404 7F08D8D4 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0C2408 7F08D8D8 03E00008 */  jr    $ra
-/* 0C240C 7F08D8DC ADC411F0 */   sw    $a0, 0x11f0($t6)
-)
-#endif
 
 
 
