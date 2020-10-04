@@ -251,8 +251,29 @@ glabel reorder_inventory_ptrs_based_on_id_code
 
 
 #ifdef NONMATCHING
-void get_ptr_next_available_weapon(void) {
+int get_ptr_next_available_weapon(void)
 
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int *piVar4;
+  
+  iVar2 = 0;
+  if (0 < pPlayer->equipmaxitems) {
+    iVar3 = 0;
+    piVar4 = (int *)pPlayer->p_itemcur;
+    do {
+      iVar1 = *piVar4;
+      iVar2 = iVar2 + 1;
+      piVar4 = piVar4 + 5;
+      if (iVar1 == -1) {
+        return (int)(int *)pPlayer->p_itemcur + iVar3;
+      }
+      iVar3 = iVar3 + 0x14;
+    } while (iVar2 < pPlayer->equipmaxitems);
+  }
+  return 0;
 }
 #else
 GLOBAL_ASM(
@@ -346,25 +367,11 @@ glabel get_ptr_inventory_item
 
 
 
-#ifdef NONMATCHING
-void is_weapon_in_inv(void) {
 
+s32 is_weapon_in_inv(void) {
+    return get_ptr_inventory_item() != 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel is_weapon_in_inv
-/* 0C0E44 7F08C314 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C0E48 7F08C318 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C0E4C 7F08C31C 0FC230AF */  jal   get_ptr_inventory_item
-/* 0C0E50 7F08C320 00000000 */   nop   
-/* 0C0E54 7F08C324 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C0E58 7F08C328 0002702B */  sltu  $t6, $zero, $v0
-/* 0C0E5C 7F08C32C 01C01025 */  move  $v0, $t6
-/* 0C0E60 7F08C330 03E00008 */  jr    $ra
-/* 0C0E64 7F08C334 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
+
 
 
 
