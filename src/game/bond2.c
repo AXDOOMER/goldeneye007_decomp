@@ -3423,26 +3423,9 @@ glabel sub_GAME_7F08D6BC
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08D7B0(void) {
-
+int sub_GAME_7F08D7B0(int param) {
+    get_45_degree_angle(sub_GAME_7F08D2A8(param));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08D7B0
-/* 0C22E0 7F08D7B0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C22E4 7F08D7B4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C22E8 7F08D7B8 0FC234AA */  jal   sub_GAME_7F08D2A8
-/* 0C22EC 7F08D7BC 00000000 */   nop   
-/* 0C22F0 7F08D7C0 0FC19C0C */  jal   get_45_degree_angle
-/* 0C22F4 7F08D7C4 00402025 */   move  $a0, $v0
-/* 0C22F8 7F08D7C8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C22FC 7F08D7CC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C2300 7F08D7D0 03E00008 */  jr    $ra
-/* 0C2304 7F08D7D4 00000000 */   nop   
-)
-#endif
 
 
 
