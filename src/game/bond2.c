@@ -3468,26 +3468,19 @@ int sub_GAME_7F08D878(int param) {
 
 
 
+void sub_GAME_7F08D8A0(int param) {
+  // maybe param and field_11F4 of Player are structs 
+  // as mips_to_c gives the following output for the following two lines:
+  
+  // --------------------
+  // arg0->unk20 = (s32) pPlayer->unk11F4;
+  // pPlayer->unk11F4 = arg0;
+  // --------------------
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F08D8A0(void) {
-
+  *(int *)(param + 0x20) = pPlayer->field_11F4;
+  pPlayer->field_11F4 = param;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08D8A0
-/* 0C23D0 7F08D8A0 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 0C23D4 7F08D8A4 2442A0B0 */  addiu $v0, %lo(pPlayer) # addiu $v0, $v0, -0x5f50
-/* 0C23D8 7F08D8A8 8C4E0000 */  lw    $t6, ($v0)
-/* 0C23DC 7F08D8AC 8DCF11F4 */  lw    $t7, 0x11f4($t6)
-/* 0C23E0 7F08D8B0 AC8F0020 */  sw    $t7, 0x20($a0)
-/* 0C23E4 7F08D8B4 8C580000 */  lw    $t8, ($v0)
-/* 0C23E8 7F08D8B8 03E00008 */  jr    $ra
-/* 0C23EC 7F08D8BC AF0411F4 */   sw    $a0, 0x11f4($t8)
-)
-#endif
+
 
 
 
