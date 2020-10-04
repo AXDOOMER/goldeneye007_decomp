@@ -2094,24 +2094,11 @@ glabel sub_GAME_7F08CF80
 
 
 
-#ifdef NONMATCHING
-void checkforgoldengun(void) {
 
+void checkforgoldengun(void) {
+  is_weapon_in_inv(19);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel checkforgoldengun
-/* 0C1AF0 7F08CFC0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C1AF4 7F08CFC4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C1AF8 7F08CFC8 0FC230C5 */  jal   is_weapon_in_inv
-/* 0C1AFC 7F08CFCC 24040013 */   li    $a0, 19
-/* 0C1B00 7F08CFD0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C1B04 7F08CFD4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C1B08 7F08CFD8 03E00008 */  jr    $ra
-/* 0C1B0C 7F08CFDC 00000000 */   nop   
-)
-#endif
+
 
 
 
