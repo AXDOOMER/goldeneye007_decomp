@@ -3424,133 +3424,47 @@ glabel sub_GAME_7F08D6BC
 
 
 int sub_GAME_7F08D7B0(int param) {
-    get_45_degree_angle(sub_GAME_7F08D2A8(param));
+    return get_45_degree_angle(sub_GAME_7F08D2A8(param));
 }
 
 
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08D7D8(void) {
-
+int sub_GAME_7F08D7D8(int param) {
+    return get_vertical_position_solo_watch_menu_main_page_for_item(sub_GAME_7F08D2A8(param));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08D7D8
-/* 0C2308 7F08D7D8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C230C 7F08D7DC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C2310 7F08D7E0 0FC234AA */  jal   sub_GAME_7F08D2A8
-/* 0C2314 7F08D7E4 00000000 */   nop   
-/* 0C2318 7F08D7E8 0FC19BE9 */  jal   get_vertical_position_solo_watch_menu_main_page_for_item
-/* 0C231C 7F08D7EC 00402025 */   move  $a0, $v0
-/* 0C2320 7F08D7F0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C2324 7F08D7F4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C2328 7F08D7F8 03E00008 */  jr    $ra
-/* 0C232C 7F08D7FC 00000000 */   nop   
-)
-#endif
 
 
 
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F08D800(void) {
-
+int sub_GAME_7F08D800(int param) {
+    return get_lateral_position_solo_watch_menu_main_page_for_item(sub_GAME_7F08D2A8(param));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08D800
-/* 0C2330 7F08D800 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C2334 7F08D804 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C2338 7F08D808 0FC234AA */  jal   sub_GAME_7F08D2A8
-/* 0C233C 7F08D80C 00000000 */   nop   
-/* 0C2340 7F08D810 0FC19BF0 */  jal   get_lateral_position_solo_watch_menu_main_page_for_item
-/* 0C2344 7F08D814 00402025 */   move  $a0, $v0
-/* 0C2348 7F08D818 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C234C 7F08D81C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C2350 7F08D820 03E00008 */  jr    $ra
-/* 0C2354 7F08D824 00000000 */   nop   
-)
-#endif
 
 
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08D828(void) {
-
+int sub_GAME_7F08D828(int param) {
+    return get_depth_on_solo_watch_menu_page_for_item(sub_GAME_7F08D2A8(param));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08D828
-/* 0C2358 7F08D828 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C235C 7F08D82C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C2360 7F08D830 0FC234AA */  jal   sub_GAME_7F08D2A8
-/* 0C2364 7F08D834 00000000 */   nop   
-/* 0C2368 7F08D838 0FC19BF7 */  jal   get_depth_on_solo_watch_menu_page_for_item
-/* 0C236C 7F08D83C 00402025 */   move  $a0, $v0
-/* 0C2370 7F08D840 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C2374 7F08D844 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C2378 7F08D848 03E00008 */  jr    $ra
-/* 0C237C 7F08D84C 00000000 */   nop   
-)
-#endif
 
 
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08D850(void) {
-
+int sub_GAME_7F08D850(int param) {
+    return get_zrotation_solo_watch_menu_for_item(sub_GAME_7F08D2A8(param));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08D850
-/* 0C2380 7F08D850 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C2384 7F08D854 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C2388 7F08D858 0FC234AA */  jal   sub_GAME_7F08D2A8
-/* 0C238C 7F08D85C 00000000 */   nop   
-/* 0C2390 7F08D860 0FC19BFE */  jal   get_zrotation_solo_watch_menu_for_item
-/* 0C2394 7F08D864 00402025 */   move  $a0, $v0
-/* 0C2398 7F08D868 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C239C 7F08D86C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C23A0 7F08D870 03E00008 */  jr    $ra
-/* 0C23A4 7F08D874 00000000 */   nop   
-)
-#endif
 
 
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08D878(void) {
-
+int sub_GAME_7F08D878(int param) {
+    return get_xrotation_solo_watch_menu_for_item(sub_GAME_7F08D2A8(param));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08D878
-/* 0C23A8 7F08D878 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C23AC 7F08D87C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C23B0 7F08D880 0FC234AA */  jal   sub_GAME_7F08D2A8
-/* 0C23B4 7F08D884 00000000 */   nop   
-/* 0C23B8 7F08D888 0FC19C05 */  jal   get_xrotation_solo_watch_menu_for_item
-/* 0C23BC 7F08D88C 00402025 */   move  $a0, $v0
-/* 0C23C0 7F08D890 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C23C4 7F08D894 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C23C8 7F08D898 03E00008 */  jr    $ra
-/* 0C23CC 7F08D89C 00000000 */   nop   
-)
-#endif
 
 
 
