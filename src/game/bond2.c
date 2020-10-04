@@ -2095,8 +2095,8 @@ glabel sub_GAME_7F08CF80
 
 
 
-void checkforgoldengun(void) {
-  is_weapon_in_inv(19);
+int checkforgoldengun(void) {
+  return is_weapon_in_inv(19);
 }
 
 
