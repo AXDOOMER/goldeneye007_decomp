@@ -3563,39 +3563,15 @@ int sub_GAME_7F08D95C(void) {
     return 0;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F08D9A4(void) {
+int sub_GAME_7F08D9A4(void) {
+    int temp;
 
+    temp = sub_GAME_7F08D25C();
+    if ((temp != 0) && (*(int *)(temp + 0x1c) != 0)) {
+        return get_textptr_for_textID(*(int *)(temp + 0x1c));
+    }
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08D9A4
-/* 0C24D4 7F08D9A4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C24D8 7F08D9A8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C24DC 7F08D9AC 0FC23497 */  jal   sub_GAME_7F08D25C
-/* 0C24E0 7F08D9B0 00000000 */   nop   
-/* 0C24E4 7F08D9B4 50400009 */  beql  $v0, $zero, .L7F08D9DC
-/* 0C24E8 7F08D9B8 00001025 */   move  $v0, $zero
-/* 0C24EC 7F08D9BC 8C4E001C */  lw    $t6, 0x1c($v0)
-/* 0C24F0 7F08D9C0 51C00006 */  beql  $t6, $zero, .L7F08D9DC
-/* 0C24F4 7F08D9C4 00001025 */   move  $v0, $zero
-/* 0C24F8 7F08D9C8 0FC30776 */  jal   get_textptr_for_textID
-/* 0C24FC 7F08D9CC 8C44001C */   lw    $a0, 0x1c($v0)
-/* 0C2500 7F08D9D0 10000003 */  b     .L7F08D9E0
-/* 0C2504 7F08D9D4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C2508 7F08D9D8 00001025 */  move  $v0, $zero
-.L7F08D9DC:
-/* 0C250C 7F08D9DC 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F08D9E0:
-/* 0C2510 7F08D9E0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C2514 7F08D9E4 03E00008 */  jr    $ra
-/* 0C2518 7F08D9E8 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
