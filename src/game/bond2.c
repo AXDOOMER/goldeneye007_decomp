@@ -368,8 +368,8 @@ glabel get_ptr_inventory_item
 
 
 
-s32 is_weapon_in_inv(void) {
-    return get_ptr_inventory_item() != 0;
+int is_weapon_in_inv(int item) {
+    return get_ptr_inventory_item(item) != 0;
 }
 
 
@@ -422,9 +422,11 @@ glabel get_ptr_inventory_for_item_in_hand
 
 
 
-s32 is_item_for_hand_in_inventory(void) {
-    return get_ptr_inventory_for_item_in_hand() != 0;
+
+int is_item_for_hand_in_inventory(int item, int hand) {
+    return get_ptr_inventory_for_item_in_hand(item, hand) != 0;
 }
+
 
 
 
