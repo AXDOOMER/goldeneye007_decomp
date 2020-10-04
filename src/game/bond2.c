@@ -156,8 +156,25 @@ glabel sub_GAME_7F08C054
 
 
 #ifdef NONMATCHING
-void add_additional_weapon_slot_to_player_inventory_guess(void) {
+void add_additional_weapon_slot_to_player_inventory_guess(int *param_1) {
+  int iVar1;
+  
+    iVar1 = pPlayer->ptr_inventory_first_in_cycle;
+    
+    if (iVar1 != 0) {
+        param_1[3] = iVar1;
+        param_1[4] = *(int *)(pPlayer->ptr_inventory_first_in_cycle + 0x10);
+        *(int **)(iVar1 + 0x10) = param_1;
+        *(int **)(param_1[4] + 0xc) = param_1;
+    }
+    else {
+        *(int **)(param_1 + 3) = param_1;
+        *(int **)(param_1 + 4) = param_1;
+    }
 
+    *(int **)&pPlayer->ptr_inventory_first_in_cycle = param_1;
+    proc_7F08C054(param_1);
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -891,38 +908,19 @@ glabel sub_GAME_7F08C61C
 
 
 
+int sub_GAME_7F08C724(int param_1) {
+    int *piVar1;
 
+    piVar1 = (int *)get_ptr_next_available_weapon();
+    
+    if (piVar1 != 0) {
+        *piVar1 = 2;
+        piVar1[1] = param_1;
+        add_additional_weapon_slot_to_player_inventory_guess(piVar1);
+    }
 
-#ifdef NONMATCHING
-void sub_GAME_7F08C724(void) {
-
+    return 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08C724
-/* 0C1254 7F08C724 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C1258 7F08C728 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C125C 7F08C72C 0FC23091 */  jal   get_ptr_next_available_weapon
-/* 0C1260 7F08C730 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0C1264 7F08C734 10400006 */  beqz  $v0, .L7F08C750
-/* 0C1268 7F08C738 00402025 */   move  $a0, $v0
-/* 0C126C 7F08C73C 240E0002 */  li    $t6, 2
-/* 0C1270 7F08C740 AC4E0000 */  sw    $t6, ($v0)
-/* 0C1274 7F08C744 8FAF0018 */  lw    $t7, 0x18($sp)
-/* 0C1278 7F08C748 0FC23065 */  jal   add_additional_weapon_slot_to_player_inventory_guess
-/* 0C127C 7F08C74C AC4F0004 */   sw    $t7, 4($v0)
-.L7F08C750:
-/* 0C1280 7F08C750 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C1284 7F08C754 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C1288 7F08C758 24020001 */  li    $v0, 1
-/* 0C128C 7F08C75C 03E00008 */  jr    $ra
-/* 0C1290 7F08C760 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
