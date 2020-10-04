@@ -3542,43 +3542,26 @@ glabel sub_GAME_7F08D8E0
 #endif
 
 
+int sub_GAME_7F08D95C(void) {
+    // temp is probably a struct as mips_to_c gives the following output
+    // --------------------
+    // temp_v0->unk1C 
+    // --------------------
+    //
+    // Instead of
+    // --------------------
+    // *(int *)(temp + 0x1c)
+    // --------------------
+    int temp;
 
+    temp = sub_GAME_7F08D21C();
 
+    if ((temp != 0) && (*(int *)(temp + 0x1c) != 0)) {
+        return get_textptr_for_textID(*(int *)(temp + 0x1c));
+    }
 
-#ifdef NONMATCHING
-void sub_GAME_7F08D95C(void) {
-
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08D95C
-/* 0C248C 7F08D95C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C2490 7F08D960 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C2494 7F08D964 0FC23487 */  jal   sub_GAME_7F08D21C
-/* 0C2498 7F08D968 00000000 */   nop   
-/* 0C249C 7F08D96C 50400009 */  beql  $v0, $zero, .L7F08D994
-/* 0C24A0 7F08D970 00001025 */   move  $v0, $zero
-/* 0C24A4 7F08D974 8C4E001C */  lw    $t6, 0x1c($v0)
-/* 0C24A8 7F08D978 51C00006 */  beql  $t6, $zero, .L7F08D994
-/* 0C24AC 7F08D97C 00001025 */   move  $v0, $zero
-/* 0C24B0 7F08D980 0FC30776 */  jal   get_textptr_for_textID
-/* 0C24B4 7F08D984 8C44001C */   lw    $a0, 0x1c($v0)
-/* 0C24B8 7F08D988 10000003 */  b     .L7F08D998
-/* 0C24BC 7F08D98C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C24C0 7F08D990 00001025 */  move  $v0, $zero
-.L7F08D994:
-/* 0C24C4 7F08D994 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F08D998:
-/* 0C24C8 7F08D998 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C24CC 7F08D99C 03E00008 */  jr    $ra
-/* 0C24D0 7F08D9A0 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F08D9A4(void) {
