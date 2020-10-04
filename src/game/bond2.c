@@ -422,25 +422,9 @@ glabel get_ptr_inventory_for_item_in_hand
 
 
 
-#ifdef NONMATCHING
-void is_item_for_hand_in_inventory(void) {
-
+s32 is_item_for_hand_in_inventory(void) {
+    return get_ptr_inventory_for_item_in_hand() != 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel is_item_for_hand_in_inventory
-/* 0C0ECC 7F08C39C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C0ED0 7F08C3A0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C0ED4 7F08C3A4 0FC230CE */  jal   get_ptr_inventory_for_item_in_hand
-/* 0C0ED8 7F08C3A8 00000000 */   nop   
-/* 0C0EDC 7F08C3AC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C0EE0 7F08C3B0 0002702B */  sltu  $t6, $zero, $v0
-/* 0C0EE4 7F08C3B4 01C01025 */  move  $v0, $t6
-/* 0C0EE8 7F08C3B8 03E00008 */  jr    $ra
-/* 0C0EEC 7F08C3BC 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
 
 
 
