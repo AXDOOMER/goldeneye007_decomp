@@ -116,7 +116,7 @@ struct Player
   s32 bondfadetime60;
   s32 bondfadetimemax;
   s32 bondfadefracold;
-  s32 bondfadefracnew;
+  f32 bondfadefracnew;
   s32 field_1A0;
   s32 field_1A4;
   s32 field_1A8;

@@ -32010,22 +32010,10 @@ glabel sub_GAME_7F089E4C
 
 
 
-#ifdef NONMATCHING
-void check_if_bond_is_invincible(void) {
-
-}
-#else
 #ifdef VERSION_US
-GLOBAL_ASM(
-.text
-glabel check_if_bond_is_invincible
-/* 0BE9D4 7F089EA4 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0BE9D8 7F089EA8 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0BE9DC 7F089EAC 8DC200F4 */  lw    $v0, 0xf4($t6)
-/* 0BE9E0 7F089EB0 284F0000 */  slti  $t7, $v0, 0
-/* 0BE9E4 7F089EB4 03E00008 */  jr    $ra
-/* 0BE9E8 7F089EB8 39E20001 */   xori  $v0, $t7, 1
-)
+int check_if_bond_is_invincible(void) {
+    return (pPlayer->damageshowtime < 0) ^ 1;
+}
 #endif
 
 #ifdef VERSION_JP
@@ -32046,8 +32034,6 @@ glabel check_if_bond_is_invincible
 /* 0BF144 7F08A5D4 03E00008 */  jr    $ra
 /* 0BF148 7F08A5D8 00000000 */   nop   
 )
-#endif
-
 #endif
 
 
@@ -32078,81 +32064,32 @@ glabel check_if_healthbar_timer_greater_than_0
 
 
 
-#ifdef NONMATCHING
-void get_BONDdata_bondfadefracnew(void) {
 
+f32 get_BONDdata_bondfadefracnew(void) {
+    return pPlayer->bondfadefracnew;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_BONDdata_bondfadefracnew
-/* 0BEA04 7F089ED4 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0BEA08 7F089ED8 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0BEA0C 7F089EDC 03E00008 */  jr    $ra
-/* 0BEA10 7F089EE0 C5C0019C */   lwc1  $f0, 0x19c($t6)
-)
-#endif
 
 
 
 
 
-#ifdef NONMATCHING
-void get_curplay_horizontal_rotation_in_degrees(void) {
-
+f32 get_curplay_horizontal_rotation_in_degrees(void) {
+    return ((360.0f - pPlayer->vv_theta) * 6.2831855f) / 360.0f;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel twopi_800552B4
-.word 0x40c90fdb /*6.2831855*/
-.text
-glabel get_curplay_horizontal_rotation_in_degrees
-/* 0BEA14 7F089EE4 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0BEA18 7F089EE8 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0BEA1C 7F089EEC 3C0143B4 */  li    $at, 0x43B40000 # 360.000000
-/* 0BEA20 7F089EF0 44811000 */  mtc1  $at, $f2
-/* 0BEA24 7F089EF4 C5C40148 */  lwc1  $f4, 0x148($t6)
-/* 0BEA28 7F089EF8 3C018005 */  lui   $at, %hi(twopi_800552B4)
-/* 0BEA2C 7F089EFC C42852B4 */  lwc1  $f8, %lo(twopi_800552B4)($at)
-/* 0BEA30 7F089F00 46041181 */  sub.s $f6, $f2, $f4
-/* 0BEA34 7F089F04 46083282 */  mul.s $f10, $f6, $f8
-/* 0BEA38 7F089F08 03E00008 */  jr    $ra
-/* 0BEA3C 7F089F0C 46025003 */   div.s $f0, $f10, $f2
-)
-#endif
 
 
 
 
 
-#ifdef NONMATCHING
-void get_curplay_vertical_rotation_in_degrees(void) {
 
+f32 get_curplay_vertical_rotation_in_degrees(void) {
+    return (pPlayer->vv_verta * 6.2831855f) / 360.0f;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_800552B8
-.word 0x40c90fdb /*6.2831855*/
-.text
-glabel get_curplay_vertical_rotation_in_degrees
-/* 0BEA40 7F089F10 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0BEA44 7F089F14 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0BEA48 7F089F18 3C018005 */  lui   $at, %hi(D_800552B8)
-/* 0BEA4C 7F089F1C C42652B8 */  lwc1  $f6, %lo(D_800552B8)($at)
-/* 0BEA50 7F089F20 C5C40158 */  lwc1  $f4, 0x158($t6)
-/* 0BEA54 7F089F24 3C0143B4 */  li    $at, 0x43B40000 # 360.000000
-/* 0BEA58 7F089F28 44815000 */  mtc1  $at, $f10
-/* 0BEA5C 7F089F2C 46062202 */  mul.s $f8, $f4, $f6
-/* 0BEA60 7F089F30 03E00008 */  jr    $ra
-/* 0BEA64 7F089F34 460A4003 */   div.s $f0, $f8, $f10
-)
-#endif
+
 
 
 s32 sub_GAME_7F089F38(void) {
-  return pPlayer->field_D0;
+    return pPlayer->field_D0;
 }
 
 
@@ -32160,39 +32097,17 @@ s32 sub_GAME_7F089F38(void) {
 
 
 
-#ifdef NONMATCHING
-void set_bondata_invincible_flag(void) {
-
+void set_bondata_invincible_flag(u32 arg0) {
+    pPlayer->bondinvincible = arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_bondata_invincible_flag
-/* 0BEA78 7F089F48 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0BEA7C 7F089F4C 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0BEA80 7F089F50 03E00008 */  jr    $ra
-/* 0BEA84 7F089F54 A1C412B6 */   sb    $a0, 0x12b6($t6)
-)
-#endif
 
 
 
 
 
-#ifdef NONMATCHING
-void get_bondata_invincible_flag(void) {
-
+u8 get_bondata_invincible_flag(void) {
+    return pPlayer->bondinvincible;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_bondata_invincible_flag
-/* 0BEA88 7F089F58 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0BEA8C 7F089F5C 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0BEA90 7F089F60 03E00008 */  jr    $ra
-/* 0BEA94 7F089F64 91C212B6 */   lbu   $v0, 0x12b6($t6)
-)
-#endif
 
 
 
@@ -32274,55 +32189,18 @@ glabel get_BONDdata_position
 #endif
 
 
+int * get_BONDdata_position3(void) {
+    
+    if (pPlayer->unknown == 1) {
+        return (int *) &pPlayer->xpos3;
+    }
 
-
-
-#ifdef NONMATCHING
-void get_BONDdata_position3(void) {
-
+    return &pPlayer->field_4A4;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_BONDdata_position3
-/* 0BEB30 7F08A000 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 0BEB34 7F08A004 8C63A0B0 */  lw    $v1, %lo(pPlayer)($v1)
-/* 0BEB38 7F08A008 24010001 */  li    $at, 1
-/* 0BEB3C 7F08A00C 8C6E0000 */  lw    $t6, ($v1)
-/* 0BEB40 7F08A010 246204A4 */  addiu $v0, $v1, 0x4a4
-/* 0BEB44 7F08A014 15C10003 */  bne   $t6, $at, .L7F08A024
-/* 0BEB48 7F08A018 00000000 */   nop   
-/* 0BEB4C 7F08A01C 03E00008 */  jr    $ra
-/* 0BEB50 7F08A020 24620028 */   addiu $v0, $v1, 0x28
 
-.L7F08A024:
-/* 0BEB54 7F08A024 03E00008 */  jr    $ra
-/* 0BEB58 7F08A028 00000000 */   nop   
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-void get_BONDdata_field408(void) {
-
+int get_BONDdata_field408(void) {
+    return (int) &pPlayer->field_408;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_BONDdata_field408
-/* 0BEB5C 7F08A02C 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 0BEB60 7F08A030 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
-/* 0BEB64 7F08A034 03E00008 */  jr    $ra
-/* 0BEB68 7F08A038 24420408 */   addiu $v0, $v0, 0x408
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F08A03C(void) {
