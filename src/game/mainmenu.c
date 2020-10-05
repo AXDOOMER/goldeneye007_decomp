@@ -8,6 +8,7 @@
 #include "game/lvl.h"
 #include "game/bond.h"
 #include "game/chrobjdata.h"
+#include "joy.h"
 struct point {
     f32 x;
     f32 y;
@@ -1109,7 +1110,7 @@ const char aD_10[] = "%d";
 
 
 #ifdef NONMATCHING
-s32 write_text_at_abs_coord(?32 arg12, ?32 arg13, ?32 arg14, ?32 arg15, ?32 arg16, ?32 arg17, ?32 arg18) {
+s32 write_text_at_abs_coord(s32 arg12, s32 arg13, s32 arg14, s32 arg15, s32 arg16, s32 arg17, s32 arg18) {
     // Node 0
     if (j_text_trigger != 0)
     {
@@ -1195,12 +1196,12 @@ glabel write_text_at_abs_coord
 
 
 #ifdef NONMATCHING
-ulonglong check_if_cheat_available(undefined4 cheat)
+s32 check_if_cheat_available(s32 cheat)
 {
-  ulonglong uVar1;
+  s32 uVar1;
   save_file *folder;
   u32 uVar2;
-  BOOL BVar3;
+  u32 BVar3;
   
   switch(cheat) {
   case 1:
@@ -2363,7 +2364,7 @@ glabel menu_control_stick_tracking
 
 
 #ifdef NONMATCHING
-void load_draw_selected_icon_folder_select(s32 arg0, ? arg1A) {
+void load_draw_selected_icon_folder_select(s32 arg0, s32 arg1A) {
     f32 sp58;
     f32 sp5C;
     f32 sp60;
@@ -2520,7 +2521,7 @@ s32 add_tab1_start(s32 arg0) {
     s16 sp44;
     s32 sp48;
     s32 sp4C;
-    ? sp50;
+    s32 sp50;
     s32 sp54;
     s32 temp_a3;
 
@@ -2529,7 +2530,7 @@ s32 add_tab1_start(s32 arg0) {
     setTextSpacingInverted(1);
     sp48 = 0;
     sp4C = 0;
-    sub_GAME_7F0AE98C(&sp4C, &sp48, dword_CODE_bss_80069770, ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0);
+    sub_GAME_7F0AE98C(&sp4C, &sp48, dword_CODE_bss_80069770, ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0);
     sp54 = 0x33;
     if (sp4C < 0)
     {
@@ -2551,11 +2552,11 @@ s32 add_tab1_start(s32 arg0) {
     // Node 6
     sp54 = (s32) (0x54 - (sp48 >> 1));
     sp44 = get_video2_settings_txtClipH();
-    en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069770, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0);
+    en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069770, (s32) ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0);
     setTextOrientation(0);
     setTextSpacingInverted(0);
     return;
-    // (possible return value: en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069770, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0))
+    // (possible return value: en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069770, (s32) ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0))
 }
 #else
 GLOBAL_ASM(
@@ -2709,7 +2710,7 @@ s32 add_tab3_previous(s32 arg0) {
     s16 sp44;
     s32 sp48;
     s32 sp4C;
-    ? sp50;
+    s32 sp50;
     s32 sp54;
     s32 temp_a3;
 
@@ -2718,7 +2719,7 @@ s32 add_tab3_previous(s32 arg0) {
     setTextSpacingInverted(1);
     sp48 = 0;
     sp4C = 0;
-    sub_GAME_7F0AE98C(&sp4C, &sp48, dword_CODE_bss_80069778, ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0);
+    sub_GAME_7F0AE98C(&sp4C, &sp48, dword_CODE_bss_80069778, ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0);
     sp54 = 0xec;
     if (sp4C < 0)
     {
@@ -2740,11 +2741,11 @@ s32 add_tab3_previous(s32 arg0) {
     // Node 6
     sp54 = (s32) (0x10d - (sp48 >> 1));
     sp44 = get_video2_settings_txtClipH();
-    en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069778, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0);
+    en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069778, (s32) ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0);
     setTextOrientation(0);
     setTextSpacingInverted(0);
     return;
-    // (possible return value: en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069778, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0))
+    // (possible return value: en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069778, (s32) ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0))
 }
 #else
 GLOBAL_ASM(
@@ -2871,7 +2872,7 @@ s32 add_tab2_next(s32 arg0) {
     s16 sp44;
     s32 sp48;
     s32 sp4C;
-    ? sp50;
+    s32 sp50;
     s32 sp54;
     s32 temp_a3;
 
@@ -2880,7 +2881,7 @@ s32 add_tab2_next(s32 arg0) {
     setTextSpacingInverted(1);
     sp48 = 0;
     sp4C = 0;
-    sub_GAME_7F0AE98C(&sp4C, &sp48, dword_CODE_bss_80069774, ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0);
+    sub_GAME_7F0AE98C(&sp4C, &sp48, dword_CODE_bss_80069774, ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0);
     sp54 = 0x90;
     if (sp4C < 0)
     {
@@ -2902,11 +2903,11 @@ s32 add_tab2_next(s32 arg0) {
     // Node 6
     sp54 = (s32) (0xb1 - (sp48 >> 1));
     sp44 = get_video2_settings_txtClipH();
-    en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069774, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0);
+    en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069774, (s32) ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0);
     setTextOrientation(0);
     setTextSpacingInverted(0);
     return;
-    // (possible return value: en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069774, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0))
+    // (possible return value: en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069774, (s32) ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0xff, sp44, get_video2_settings_txtClipW(), 0, 0))
 }
 #else
 GLOBAL_ASM(
@@ -3111,13 +3112,14 @@ void update_menu00_legalscreen(void)
 
 #ifdef NONMATCHING
 void interface_menu00_legalscreen(void) {
-  
+  s32 temp;
   setvideo_far(60.0f);
   video_related_21(1.3333334f);
   set_page_height(100.0f, 10000.0f);
   set_video2_settings_offset_24(0);
-  menu_timer += clock_timer;
-  if (menu_timer >= 0xF1) {
+  temp = menu_timer + clock_timer;
+  menu_timer = temp;
+  if (temp >= 0xF1) {
       if (get_attached_controller_count() > 0) {
           while (is_first_time_on_legal_screen == 0) {
               set_menu_to_mode(MENU_NINTENDO_LOGO,1);
@@ -3222,7 +3224,7 @@ glabel interface_menu00_legalscreen
 
 
 #ifdef NONMATCHING
-void display_aligned_white_text_to_screen(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, ? arg5, ?32 arg6, ?32 arg7)
+void display_aligned_white_text_to_screen(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7)
 {
     s32 sp4C;
     s32 sp48;
@@ -3236,7 +3238,7 @@ void display_aligned_white_text_to_screen(s32 arg0, s32 arg1, s32 arg2, s32 arg3
 
     sp48 = 0;
     sp4C = 0;
-    sub_GAME_7F0AE98C(&sp4C, &sp48, arg5, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+    sub_GAME_7F0AE98C(&sp4C, &sp48, arg5, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     temp_lo = arg3 * sp48;
     phi_t0 = temp_lo >> 1;
     if (temp_lo < 0)
@@ -3334,11 +3336,11 @@ glabel display_aligned_white_text_to_screen
 void constructor_menu00_legalscreen(s32 arg0)
 {
     s32 spF4;
-    ?32 spEC;
-    ?32 spE8;
-    ? spE4;
-    ? spA0;
-    ? sp58;
+    s32 spEC;
+    s32 spE8;
+    s32 spE4;
+    s32 spA0;
+    s32 sp58;
     s32 temp_ret;
     s32 temp_s0;
     u32 temp_s0_2;
@@ -3356,16 +3358,16 @@ void constructor_menu00_legalscreen(s32 arg0)
 loop_1:
     temp_t6 = phi_t6 + 0xc;
     temp_t0 = phi_t0 + 0xc;
-    temp_t0->unk-C = (?32) *phi_t6;
-    temp_t0->unk-8 = (?32) temp_t6->unk-8;
-    temp_t0->unk-4 = (?32) temp_t6->unk-4;
+    temp_t0->unk-C = (s32) *phi_t6;
+    temp_t0->unk-8 = (s32) temp_t6->unk-8;
+    temp_t0->unk-4 = (s32) temp_t6->unk-4;
     phi_t6 = temp_t6;
     phi_t0 = temp_t0;
     if (temp_t6 != (&D_8002AABC + 0x3c))
     {
         goto loop_1;
     }
-    temp_t0->unk0 = (?32) temp_t6->unk0;
+    temp_t0->unk0 = (s32) temp_t6->unk0;
     insert_imageDL(arg0);
     sub_GAME_7F059694(&spA0, 0.0f, 0.0f, 0x457a0000, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
     temp_ret = sub_GAME_7F0BD714(something_legalscreen_constructor->unk8->unkE << 6);
@@ -3396,7 +3398,7 @@ loop_3:
 loop_5:
     temp_s0_2 = phi_s0_2 + 0x14;
     phi_s0_2 = temp_s0_2;
-    phi_s4 = display_aligned_white_text_to_screen(phi_s4, phi_s0_2->unk0, phi_s0_2->unk4, phi_s0_2->unk8, (?32) phi_s0_2->unkC, get_textptr_for_textID(phi_s0_2->unk10), (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge);
+    phi_s4 = display_aligned_white_text_to_screen(phi_s4, phi_s0_2->unk0, phi_s0_2->unk4, phi_s0_2->unk8, (s32) phi_s0_2->unkC, get_textptr_for_textID(phi_s0_2->unk10), (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge);
     if (temp_s0_2 < &D_8002AABC)
     {
         goto loop_5;
@@ -3575,7 +3577,7 @@ void *interface_menu17_switchscreens(void)
         {
             if (is_emulating_spectrum == 0)
             {
-                maybe_prev_menu = (?32) menu_update;
+                maybe_prev_menu = (s32) menu_update;
                 menu_update = -1;
             }
         }
@@ -3860,12 +3862,12 @@ s32 constructor_menu01_nintendo(s32 arg0)
 {
     s32 sp138;
     s32 sp134;
-    ?32 sp130;
-    ?32 sp12C;
-    ? sp128;
-    ? spE0;
-    ? sp90;
-    ? sp50;
+    s32 sp130;
+    s32 sp12C;
+    s32 sp128;
+    s32 spE0;
+    s32 sp90;
+    s32 sp50;
     s32 temp_ret;
     s32 temp_ret_2;
     s32 temp_s0;
@@ -3884,16 +3886,16 @@ s32 constructor_menu01_nintendo(s32 arg0)
 loop_1:
     temp_t6 = phi_t6 + 0xc;
     temp_t0 = phi_t0 + 0xc;
-    temp_t0->unk-C = (?32) *phi_t6;
-    temp_t0->unk-8 = (?32) temp_t6->unk-8;
-    temp_t0->unk-4 = (?32) temp_t6->unk-4;
+    temp_t0->unk-C = (s32) *phi_t6;
+    temp_t0->unk-8 = (s32) temp_t6->unk-8;
+    temp_t0->unk-4 = (s32) temp_t6->unk-4;
     phi_t6 = temp_t6;
     phi_t0 = temp_t0;
     if (temp_t6 != (&D_8002AB08 + 0x3c))
     {
         goto loop_1;
     }
-    temp_t0->unk0 = (?32) temp_t6->unk0;
+    temp_t0->unk0 = (s32) temp_t6->unk0;
     temp_ret = insert_imageDL();
     temp_ret->unk0 = 0xbc000002;
     temp_ret->unk4 = 0x80000040;
@@ -4173,18 +4175,18 @@ void interface_menu02_rareware(void)
     set_video2_settings_offset_24(0);
     if (sub_GAME_7F008DD0() != 0)
     {
-        set_menu_to_mode(3, 1);
+        set_menu_to_mode(MENU_EYE_INTRO, 1);
         return;
     }
     if (get_controller_buttons_pressed(0, 0xffff) != 0)
     {
         if (is_first_time_on_main_menu == 0)
         {
-            set_menu_to_mode(5, 1);
+            set_menu_to_mode(MENU_FILE_SELECT, 1);
             return;
         }
         prev_keypresses = 1;
-        set_menu_to_mode(3, 1);
+        set_menu_to_mode(MENU_EYE_INTRO, 1);
     }
 }
 
@@ -4207,16 +4209,16 @@ void update_menu_03_eye(void) {
 void interface_menu03_eye(void) {
     set_video2_settings_offset_24(0);
     if (sub_GAME_7F009744() != 0) {
-        set_menu_to_mode(4, 1);
+        set_menu_to_mode(MENU_GOLDENEYE_LOGO, 1);
         return;
     }
     if (get_controller_buttons_pressed(0, 0xffff) != 0) {
         if (is_first_time_on_main_menu == 0) {
-            set_menu_to_mode(5, 1);
+            set_menu_to_mode(MENU_FILE_SELECT, 1);
             return;
         }
         prev_keypresses = 1;
-        set_menu_to_mode(4, 1);
+        set_menu_to_mode(MENU_GOLDENEYE_LOGO, 1);
     }
 }
 
@@ -4231,13 +4233,13 @@ void constructor_menu03_eye(Gfx * DL) {
 #ifdef NONMATCHING
 void init_menu04_goldeneyelogo(void)
 {
-    ? sp24;
+    s32 sp24;
     s32 temp_ret;
 
     menu_timer = 0;
-    sp24.unk0 = (?32) D_8002AB48.unk0;
-    sp24.unk4 = (?32) D_8002AB48.unk4;
-    sp24.unk8 = (?32) D_8002AB48.unk8;
+    sp24.unk0 = (s32) D_8002AB48.unk0;
+    sp24.unk4 = (s32) D_8002AB48.unk4;
+    sp24.unk8 = (s32) D_8002AB48.unk8;
     load_object_fill_header(PitemZ_entries.unkCFC, PitemZ_entries.unkD00, ptr_logo_and_walletbond_DL, 0x3c000, 0);
     set_objuse_flag_compute_grp_nums_set_obj_loaded(PgoldeneyelogoZ_header);
     temp_ret = get_obj_instance_controller_for_header(PgoldeneyelogoZ_header);
@@ -4458,15 +4460,15 @@ glabel interface_menu04_goldeneyelogo
 
 
 #ifdef NONMATCHING
-? constructor_menu04_goldeneyelogo(s32 arg0)
+s32 constructor_menu04_goldeneyelogo(s32 arg0)
 {
     s32 sp150;
-    ?32 sp148;
-    ?32 sp144;
-    ? sp140;
-    ? spF8;
-    ? spB0;
-    ? sp5C;
+    s32 sp148;
+    s32 sp144;
+    s32 sp140;
+    s32 spF8;
+    s32 spB0;
+    s32 sp5C;
     s32 temp_a0;
     s32 temp_ret;
     s32 temp_s0;
@@ -4486,16 +4488,16 @@ glabel interface_menu04_goldeneyelogo
 loop_1:
     temp_t6 = phi_t6 + 0xc;
     temp_t1 = phi_t1 + 0xc;
-    temp_t1->unk-C = (?32) *phi_t6;
-    temp_t1->unk-8 = (?32) temp_t6->unk-8;
-    temp_t1->unk-4 = (?32) temp_t6->unk-4;
+    temp_t1->unk-C = (s32) *phi_t6;
+    temp_t1->unk-8 = (s32) temp_t6->unk-8;
+    temp_t1->unk-4 = (s32) temp_t6->unk-4;
     phi_t6 = temp_t6;
     phi_t1 = temp_t1;
     if (temp_t6 != (&D_8002AB54 + 0x3c))
     {
         goto loop_1;
     }
-    temp_t1->unk0 = (?32) temp_t6->unk0;
+    temp_t1->unk0 = (s32) temp_t6->unk0;
     temp_s4 = insert_generic_fillrect(set_setfillcolor(arg0, 0, 0, 0));
     temp_ret = sub_GAME_7F0BD6F8(2);
     temp_s0 = temp_ret;
@@ -4822,7 +4824,7 @@ glabel disable_all_switches
 
 
 #ifdef NONMATCHING
-void set_item_visibility_in_objinstance(void *arg0, s32 arg1, ?32 arg2)
+void set_item_visibility_in_objinstance(void *arg0, s32 arg1, s32 arg2)
 {
     void *temp_t9;
 
@@ -5266,12 +5268,12 @@ glabel toggle_deletion_menu_for_folder
 #ifdef NONMATCHING
 s32 interface_menu05_fileselect(void)
 {
-    ? spC8;
-    ? sp88;
-    ? sp80;
-    ? sp7C;
-    ? sp78;
-    ? sp74;
+    s32 spC8;
+    s32 sp88;
+    s32 sp80;
+    s32 sp7C;
+    s32 sp78;
+    s32 sp74;
     f32 sp6C;
     f32 sp64;
     s32 sp60;
@@ -5502,12 +5504,12 @@ loop_38:
     }
     if (selected_folder_num >= 0)
     {
-        set_menu_to_mode(6, 0);
+        set_menu_to_mode(MENU_MODE_SELECT, 0);
         return set_menu_cursor_pos_to_setting(0);
     }
     if (menu_timer >= 0x709)
     {
-        phi_return = set_menu_to_mode(0, 1);
+        phi_return = set_menu_to_mode(MENU_LEGAL_SCREEN, 1);
     }
     return phi_return;
 }
@@ -6052,9 +6054,9 @@ glabel interface_menu05_fileselect
 
 
 #ifdef NONMATCHING
-int get_ptr_difficulty_name(longlong difficulty)
+int get_ptr_difficulty_name(s32 difficulty)
 {
-  byte *return;
+  u8 *return;
   
   return = NULL;
   if (difficulty == 0) {
@@ -6131,22 +6133,22 @@ glabel get_ptr_difficulty_name
 void *constructor_menu05_fileselect(void *arg0)
 {
     s32 sp1B4;
-    ? sp1A8;
-    ? sp19C;
+    s32 sp1A8;
+    s32 sp19C;
     void *sp158;
-    ?32 sp154;
-    ?32 sp150;
-    ? sp14C;
-    ? sp108;
+    s32 sp154;
+    s32 sp150;
+    s32 sp14C;
+    s32 sp108;
     s32 sp100;
     s32 spFC;
     s32 spF8;
     s32 spF4;
     s32 spF0;
     s32 spEC;
-    ? spE4;
-    ? spD0;
-    ? spBC;
+    s32 spE4;
+    s32 spD0;
+    s32 spBC;
     f32 spB0;
     f32 spAC;
     f32 spA8;
@@ -6202,12 +6204,12 @@ void *constructor_menu05_fileselect(void *arg0)
     f32 phi_f6_2;
     f32 phi_f10;
 
-    sp1A8.unk0 = (?32) unknown_folderselect_constructor.unk0;
-    sp1A8.unk4 = (?32) unknown_folderselect_constructor.unk4;
-    sp1A8.unk8 = (?32) unknown_folderselect_constructor.unk8;
-    sp19C.unk0 = (?32) unknown_folderselect_constructor_0.unk0;
-    sp19C.unk4 = (?32) unknown_folderselect_constructor_0.unk4;
-    sp19C.unk8 = (?32) unknown_folderselect_constructor_0.unk8;
+    sp1A8.unk0 = (s32) unknown_folderselect_constructor.unk0;
+    sp1A8.unk4 = (s32) unknown_folderselect_constructor.unk4;
+    sp1A8.unk8 = (s32) unknown_folderselect_constructor.unk8;
+    sp19C.unk0 = (s32) unknown_folderselect_constructor_0.unk0;
+    sp19C.unk4 = (s32) unknown_folderselect_constructor_0.unk4;
+    sp19C.unk8 = (s32) unknown_folderselect_constructor_0.unk8;
     temp_ret = insert_imageDL(arg0);
     arg0 = (void *) (temp_ret + 8);
     temp_v0 = temp_ret;
@@ -6233,16 +6235,16 @@ loop_1:
 loop_2:
     temp_t9 = phi_t9;
     temp_t2 = phi_t2 + 0xc;
-    temp_t2->unk-C = (?32) phi_t9->unk0;
-    temp_t2->unk-8 = (?32) temp_t9->unk-8;
-    temp_t2->unk-4 = (?32) temp_t9->unk-4;
+    temp_t2->unk-C = (s32) phi_t9->unk0;
+    temp_t2->unk-8 = (s32) temp_t9->unk-8;
+    temp_t2->unk-4 = (s32) temp_t9->unk-4;
     phi_t9 = temp_t9;
     phi_t2 = temp_t2;
     if (temp_t9 != (&unknown_folderselect + 0x3c))
     {
         goto loop_2;
     }
-    temp_t2->unk0 = (?32) temp_t9->unk0;
+    temp_t2->unk0 = (s32) temp_t9->unk0;
     sp154 = 3;
     sp150 = 0;
     sp158 = arg0;
@@ -6284,7 +6286,7 @@ loop_7:
         truncf(spE4);
         truncf(spE8);
         get_video2_settings_txtClipW();
-        arg0 = en_text_write_stuff(arg0, &sp100, &spFC, get_textptr_for_textID(TEXT(LTITLE, 0x17)), (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, get_video2_settings_txtClipH(), 0, 0);
+        arg0 = en_text_write_stuff(arg0, &sp100, &spFC, get_textptr_for_textID(TEXT(LTITLE, 0x17)), (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, get_video2_settings_txtClipH(), 0, 0);
         temp_s1_2 = get_textptr_for_textID(TEXT(LTITLE, 0x18));
         truncf(spE4);
         truncf(spE8);
@@ -6294,15 +6296,15 @@ loop_7:
         {
             spF4 = 0;
             spF8 = 0;
-            sub_GAME_7F0AE98C(temp_a0, temp_a1, temp_s1_2, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+            sub_GAME_7F0AE98C(temp_a0, temp_a1, temp_s1_2, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
             arg0 = microcode_constructor_related_to_menus(arg0, sp100 + -1, spFC + -1, (sp100 + spF4) + 3, (s32) (spFC + spF8), 0x32);
             get_video2_settings_txtClipW();
-            arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_2, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, -1, get_video2_settings_txtClipH(), 0, 0);
+            arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_2, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, -1, get_video2_settings_txtClipH(), 0, 0);
         }
         else
         {
             get_video2_settings_txtClipW(temp_a0, temp_a1, temp_s1_2);
-            arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_2, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, get_video2_settings_txtClipH(), 0, 0);
+            arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_2, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, get_video2_settings_txtClipH(), 0, 0);
         }
         temp_s1_3 = get_textptr_for_textID(TEXT(LTITLE, 0x19));
         truncf(spE4);
@@ -6316,16 +6318,16 @@ loop_7:
         if (folder_selected_for_deletion_choice != 0)
         {
             get_video2_settings_txtClipW(temp_a0_2, temp_a1_2, temp_s1_3);
-            arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_3, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, get_video2_settings_txtClipH(), 0, 0);
+            arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_3, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, get_video2_settings_txtClipH(), 0, 0);
         }
         else
         {
             spF4 = 0;
             spF8 = 0;
-            sub_GAME_7F0AE98C(temp_a0_2, temp_a1_2, temp_s1_3, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+            sub_GAME_7F0AE98C(temp_a0_2, temp_a1_2, temp_s1_3, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
             arg0 = microcode_constructor_related_to_menus(arg0, sp100 + -1, spFC + -1, (sp100 + spF4) + 3, (s32) (spFC + spF8), 0x32);
             get_video2_settings_txtClipW();
-            arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_3, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, -1, get_video2_settings_txtClipH(), 0, 0);
+            arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_3, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, -1, get_video2_settings_txtClipH(), 0, 0);
         }
     }
     else
@@ -6342,7 +6344,7 @@ loop_7:
                     string_append_from_obseg_textbank(&spD0, &asc_D_8004F488);
                     spF4 = 0;
                     spF8 = 0;
-                    sub_GAME_7F0AE98C(&spF8, &spF4, &spD0, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+                    sub_GAME_7F0AE98C(&spF8, &spF4, &spD0, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
                     truncf(spE4);
                     if (spF4 < 0)
                     {
@@ -6350,7 +6352,7 @@ loop_7:
                     }
                     truncf(spE8);
                     get_video2_settings_txtClipW();
-                    arg0 = en_text_write_stuff(arg0, &sp100, &spFC, &spD0, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, get_video2_settings_txtClipH(), 0, 0);
+                    arg0 = en_text_write_stuff(arg0, &sp100, &spFC, &spD0, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, get_video2_settings_txtClipH(), 0, 0);
                 }
                 if (spEC != 3)
                 {
@@ -6389,7 +6391,7 @@ loop_24:
                     string_append_from_obseg_textbank(&spBC, &asc_D_8004F490);
                     spF4 = 0;
                     spF8 = 0;
-                    sub_GAME_7F0AE98C(&spF8, &spF4, &spBC, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+                    sub_GAME_7F0AE98C(&spF8, &spF4, &spBC, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
                     truncf(spE4);
                     if (spF4 < 0)
                     {
@@ -6397,7 +6399,7 @@ loop_24:
                     }
                     truncf(spE8);
                     get_video2_settings_txtClipW();
-                    arg0 = en_text_write_stuff(arg0, &sp100, &spFC, &spBC, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, get_video2_settings_txtClipH(), 0, 0);
+                    arg0 = en_text_write_stuff(arg0, &sp100, &spFC, &spBC, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, get_video2_settings_txtClipH(), 0, 0);
                 }
             }
         }
@@ -6413,32 +6415,32 @@ loop_24:
     temp_ret_4 = get_textptr_for_textID(TEXT(LTITLE, 0x1b));
     spF4 = 0;
     spF8 = 0;
-    sub_GAME_7F0AE98C(&spF8, &spF4, temp_ret_4, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+    sub_GAME_7F0AE98C(&spF8, &spF4, temp_ret_4, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     if (spF8 < 0)
     {
 
     }
     get_video2_settings_txtClipW();
-    arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_ret_4, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, -1, get_video2_settings_txtClipH(), 0, 0);
+    arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_ret_4, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, -1, get_video2_settings_txtClipH(), 0, 0);
     folder_option_COPY_left_bound.unk8 = (f32) (sp100 + spF4);
     temp_ret_5 = get_textptr_for_textID(TEXT(LTITLE, 0x1c));
     spF4 = 0;
     spF8 = 0;
-    sub_GAME_7F0AE98C(&spF8, &spF4, temp_ret_5, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+    sub_GAME_7F0AE98C(&spF8, &spF4, temp_ret_5, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     if (spF8 < 0)
     {
 
     }
     get_video2_settings_txtClipW();
     folder_option_ERASE_left_bound.unk8 = (f32) (sp100 + spF4);
-    arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_ret_5, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, -1, get_video2_settings_txtClipH(), 0, 0);
+    arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_ret_5, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, -1, get_video2_settings_txtClipH(), 0, 0);
     spAC = 225.0f;
     spB0 = (f32) D_80051A28;
     temp_f10 = (f32) (u32) mainfolderimages->unk4 * 0.5f;
     spA4 = temp_f10;
     spA8 = (f32) ((f32) (u32) mainfolderimages->unk5 * 0.5f);
     likely_generate_DL_for_image_declaration(&arg0, mainfolderimages, 4, 0, 0);
-    display_image_at_on_screen_coord(&arg0, &spAC, &spA4, mainfolderimages->unk4, (?32) mainfolderimages->unk5, 0, 0, 1, 0xff, 0xff, 0xff, 0xff, (s32) (0 < mainfolderimages->unk6), 0);
+    display_image_at_on_screen_coord(&arg0, &spAC, &spA4, mainfolderimages->unk4, (s32) mainfolderimages->unk5, 0, 0, 1, 0xff, 0xff, 0xff, 0xff, (s32) (0 < mainfolderimages->unk6), 0);
     folder_option_COPY_left_bound.unk0 = (f32) (spAC - temp_f10);
     folder_option_COPY_left_bound.unk4 = (f32) (spB0 - spA8);
     folder_option_COPY_left_bound.unkC = (f32) (spA8 + spB0);
@@ -6459,7 +6461,7 @@ loop_24:
     }
     sp98 = (f32) (phi_f18 * 0.5f);
     likely_generate_DL_for_image_declaration(&arg0, mainfolderimages + 0xc, 4, 0, 0);
-    display_image_at_on_screen_coord(&arg0, &sp9C, &sp94, mainfolderimages->unk10, (?32) mainfolderimages->unk11, 0, 0, 1, 0xff, 0xff, 0xff, 0xff, (s32) (0 < mainfolderimages->unk12), 0);
+    display_image_at_on_screen_coord(&arg0, &sp9C, &sp94, mainfolderimages->unk10, (s32) mainfolderimages->unk11, 0, 0, 1, 0xff, 0xff, 0xff, 0xff, (s32) (0 < mainfolderimages->unk12), 0);
     folder_option_ERASE_left_bound.unk0 = (f32) (sp9C - sp94);
     folder_option_ERASE_left_bound.unk4 = (f32) (spA0 - sp98);
     folder_option_ERASE_left_bound.unkC = (f32) (sp98 + spA0);
@@ -6480,7 +6482,7 @@ loop_24:
     }
     sp88 = (f32) (phi_f10 * 0.5f);
     likely_generate_DL_for_image_declaration(&arg0, mainfolderimages + 0x18, 4, 0, 0);
-    display_image_at_on_screen_coord(&arg0, &sp8C, &sp84, mainfolderimages->unk1C, (?32) mainfolderimages->unk1D, 0, 0, 1, 0xff, 0xff, 0xff, 0xff, (s32) (0 < mainfolderimages->unk1E), 0);
+    display_image_at_on_screen_coord(&arg0, &sp8C, &sp84, mainfolderimages->unk1C, (s32) mainfolderimages->unk1D, 0, 0, 1, 0xff, 0xff, 0xff, 0xff, (s32) (0 < mainfolderimages->unk1E), 0);
     if (folder_selected_for_deletion < 0)
     {
         arg0 = load_draw_selected_icon_folder_select(arg0);
@@ -7589,21 +7591,21 @@ block_16:
     menu_control_stick_tracking();
     if (gamemode == 0)
     {
-        set_menu_to_mode(7, 0);
+        set_menu_to_mode(MENU_MISSION_SELECT, 0);
         return set_cursor_to_stage_solo(0);
     }
     if (gamemode == 1)
     {
-        return set_menu_to_mode(0xe, 0);
+        return set_menu_to_mode(MENU_MP_OPTIONS, 0);
     }
     if (gamemode == 2)
     {
-        return set_menu_to_mode(0x15, 0);
+        return set_menu_to_mode(MENU_CHEAT, 0);
     }
     phi_return = gamemode;
     if (tab_3_selected != 0)
     {
-        phi_return = set_menu_to_mode(5, 0);
+        phi_return = set_menu_to_mode(MENU_FILE_SELECT, 0);
     }
     return phi_return;
 }
@@ -7854,12 +7856,12 @@ s32 sub_GAME_7F00D5E8(s32 arg0)
 {
     s32 sp11C;
     s32 sp118;
-    ?32 sp114;
-    ?32 sp110;
-    ? sp10C;
-    ? spC8;
-    ? sp88;
-    ? sp48;
+    s32 sp114;
+    s32 sp110;
+    s32 sp10C;
+    s32 spC8;
+    s32 sp88;
+    s32 sp48;
     f32 temp_f0;
     f32 temp_f2;
     s32 temp_ret;
@@ -7878,16 +7880,16 @@ s32 sub_GAME_7F00D5E8(s32 arg0)
 loop_1:
     temp_t9 = phi_t9 + 0xc;
     temp_t8 = phi_t8 + 0xc;
-    temp_t8->unk-C = (?32) *phi_t9;
-    temp_t8->unk-8 = (?32) temp_t9->unk-8;
-    temp_t8->unk-4 = (?32) temp_t9->unk-4;
+    temp_t8->unk-C = (s32) *phi_t9;
+    temp_t8->unk-8 = (s32) temp_t9->unk-8;
+    temp_t8->unk-4 = (s32) temp_t9->unk-4;
     phi_t9 = temp_t9;
     phi_t8 = temp_t8;
     if (temp_t9 != (&D_8002AF84 + 0x3c))
     {
         goto loop_1;
     }
-    temp_t8->unk0 = (?32) temp_t9->unk0;
+    temp_t8->unk0 = (s32) temp_t9->unk0;
     temp_f0 = temp_v0->unk0 + D_8002AFC4;
     temp_f2 = temp_v0->unk4 + D_8002AFC8;
     sub_GAME_7F059694(0, &spC8, temp_f0, temp_f2, 4000.0f + D_8002AFCC, temp_f0, temp_f2, 1.0f);
@@ -8099,11 +8101,11 @@ glabel set_menu_cursor_pos_to_setting
 void constructor_menu06_modesel(void)
 {
     s32 sp5C;
-    ?32 sp58;
-    ?32 sp54;
+    s32 sp58;
+    s32 sp54;
     s32 sp50;
-    ? sp4C;
-    ?32 sp48;
+    s32 sp4C;
+    s32 sp48;
     s16 sp44;
     s32 temp_ret;
     s32 temp_ret_2;
@@ -8113,9 +8115,9 @@ void constructor_menu06_modesel(void)
     s32 temp_s0_3;
     s32 temp_s0_4;
     s32 temp_s0_5;
-    ? phi_a0;
+    s32 phi_a0;
     s32 phi_s0;
-    ? phi_a0_2;
+    s32 phi_a0_2;
     s32 phi_s0_2;
     s32 phi_s0_3;
     s32 phi_s0_4;
@@ -8123,7 +8125,7 @@ void constructor_menu06_modesel(void)
     sp58 = 0x96;
     sp54 = 0xdc;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0 = write_text_at_abs_coord(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp58, &sp54, &a1_, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0 = write_text_at_abs_coord(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp58, &sp54, &a1_, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     if (append_cheat_sp != 0)
     {
         phi_a0 = TEXT(LTITLE, 0x75);
@@ -8134,7 +8136,7 @@ void constructor_menu06_modesel(void)
     }
     temp_ret = get_textptr_for_textID(phi_a0);
     sp5C = temp_ret;
-    sub_GAME_7F0AE98C(&sp4C, &sp50, temp_ret, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+    sub_GAME_7F0AE98C(&sp4C, &sp50, temp_ret, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     sp58 = 0xaa;
     sp54 = 0xdc;
     phi_s0 = temp_s0;
@@ -8143,7 +8145,7 @@ void constructor_menu06_modesel(void)
         phi_s0 = microcode_constructor_related_to_menus(temp_s0, 0x94, 0xda, sp50 + 0xaf, 0xea, 0x32);
     }
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_2 = write_text_at_abs_coord(phi_s0, &sp58, &sp54, sp5C, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_2 = write_text_at_abs_coord(phi_s0, &sp58, &sp54, sp5C, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     sp58 = 0x96;
     sp54 = 0xfc;
     if (get_attached_controller_count() >= 2)
@@ -8155,7 +8157,7 @@ void constructor_menu06_modesel(void)
         sp48 = 0x70;
     }
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_3 = write_text_at_abs_coord(temp_s0_2, &sp58, &sp54, &a2_, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, sp48, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_3 = write_text_at_abs_coord(temp_s0_2, &sp58, &sp54, &a2_, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, sp48, sp44, get_video2_settings_txtClipH(), 0, 0);
     phi_a0_2 = TEXT(LTITLE, 0x1e);
     if (append_cheat_mp != 0)
     {
@@ -8163,7 +8165,7 @@ void constructor_menu06_modesel(void)
     }
     temp_ret_2 = get_textptr_for_textID(phi_a0_2);
     sp5C = temp_ret_2;
-    sub_GAME_7F0AE98C(&sp4C, &sp50, temp_ret_2, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+    sub_GAME_7F0AE98C(&sp4C, &sp50, temp_ret_2, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     sp58 = 0xaa;
     sp54 = 0xfc;
     phi_s0_2 = temp_s0_3;
@@ -8172,17 +8174,17 @@ void constructor_menu06_modesel(void)
         phi_s0_2 = microcode_constructor_related_to_menus(temp_s0_3, 0x94, 0xfa, sp50 + 0xaf, 0x10a, 0x32);
     }
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_4 = write_text_at_abs_coord(phi_s0_2, &sp58, &sp54, sp5C, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, sp48, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_4 = write_text_at_abs_coord(phi_s0_2, &sp58, &sp54, sp5C, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, sp48, sp44, get_video2_settings_txtClipH(), 0, 0);
     phi_s0_4 = temp_s0_4;
     if (is_cheat_menu_available != 0)
     {
         sp58 = 0x96;
         sp54 = 0x11c;
         sp44 = get_video2_settings_txtClipW();
-        temp_s0_5 = write_text_at_abs_coord(temp_s0_4, &sp58, &sp54, &a3_, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+        temp_s0_5 = write_text_at_abs_coord(temp_s0_4, &sp58, &sp54, &a3_, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
         temp_ret_3 = get_textptr_for_textID(TEXT(LTITLE, 0x1f));
         sp5C = temp_ret_3;
-        sub_GAME_7F0AE98C(&sp4C, &sp50, temp_ret_3, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+        sub_GAME_7F0AE98C(&sp4C, &sp50, temp_ret_3, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
         sp58 = 0xaa;
         sp54 = 0x11c;
         phi_s0_3 = temp_s0_5;
@@ -8191,7 +8193,7 @@ void constructor_menu06_modesel(void)
             phi_s0_3 = microcode_constructor_related_to_menus(temp_s0_5, 0x94, 0x11a, sp50 + 0xaf, 0x12a, 0x32);
         }
         sp44 = get_video2_settings_txtClipW();
-        phi_s0_4 = write_text_at_abs_coord(phi_s0_3, &sp58, &sp54, sp5C, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+        phi_s0_4 = write_text_at_abs_coord(phi_s0_3, &sp58, &sp54, sp5C, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     }
     load_draw_selected_icon_folder_select(add_tab3_previous(phi_s0_4));
 }
@@ -8930,10 +8932,10 @@ loop_23:
 loop_29:
             temp_t3 = ptr_folder_object_instance->unk8->unk8->unk54->unk4->unk8 + phi_s0_4;
             temp_t1 = *temp_s1_2 + phi_s0_4;
-            temp_t1->unk0 = (?32) temp_t3->unk0;
-            temp_t1->unk4 = (?32) temp_t3->unk4;
-            temp_t1->unk8 = (?32) temp_t3->unk8;
-            temp_t1->unkC = (?32) temp_t3->unkC;
+            temp_t1->unk0 = (s32) temp_t3->unk0;
+            temp_t1->unk4 = (s32) temp_t3->unk4;
+            temp_t1->unk8 = (s32) temp_t3->unk8;
+            temp_t1->unkC = (s32) temp_t3->unkC;
             phi_a0 = (s32) phi_s2_5 >> 2;
             if (phi_s2_5 < 0)
             {
@@ -8984,7 +8986,7 @@ loop_29:
             if ((void *)0x80070000->unk-687C >= 0)
             {
                 briefingpage = pull_and_display_text_for_folder_a0((void *)0x80070000->unk-687C);
-                selected_stage = (?32) (0x80030000 + (briefingpage * 0x1c))->unk-5414;
+                selected_stage = (s32) (0x80030000 + (briefingpage * 0x1c))->unk-5414;
                 tab_2_selected = 1;
                 play_sfx_a1(ptr_sfx_buf, 0xc7, 0);
             }
@@ -9001,13 +9003,13 @@ loop_29:
     menu_control_stick_tracking();
     if (tab_2_selected != 0)
     {
-        set_menu_to_mode(8, 0);
+        set_menu_to_mode(MENU_DIFFICULTY, 0);
         set_cursor_pos_difficulty(get_highest_unlocked_difficulty_for_level((0x80030000 + (briefingpage * 0x1c))->unk-5408));
         return;
     }
     if (tab_3_selected != 0)
     {
-        set_menu_to_mode(6, 0);
+        set_menu_to_mode(MENU_MODE_SELECT, 0);
         set_menu_cursor_pos_to_setting(0);
     }
 }
@@ -9822,9 +9824,9 @@ void constructor_menu07_missionsel(void)
     s32 spD8;
     s32 spC8;
     s32 spC4;
-    ? sp90;
-    ? sp8C;
-    ? sp88;
+    s32 sp90;
+    s32 sp8C;
+    s32 sp88;
     s32 temp_a1;
     s32 temp_a2;
     s32 temp_ret;
@@ -9894,12 +9896,12 @@ loop_10:
         spC4 = 0;
         temp_a0 = &spC8;
         spC8 = 0;
-        sub_GAME_7F0AE98C(temp_a0, &spC4, &sp90, ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, 0);
+        sub_GAME_7F0AE98C(temp_a0, &spC4, &sp90, ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0);
         temp_a2 = (subroutine_arg0 - spC8) + 0x1d;
         temp_a1 = *temp_s7 + -0x1f;
         get_video2_settings_txtClipW();
         get_video2_settings_txtClipW(*temp_s7 + -0x1f, (subroutine_arg0 - spC8) + 0x1d);
-        phi_s4_2 = en_text_write_stuff(en_text_write_stuff(microcode_constructor_related_to_menus(phi_s4, temp_a1, temp_a2, temp_a1 + spC4, (s32) (temp_a2 + spC8), 0), &sp8C, &sp88, &sp90, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, (s32) (phi_s5 | 0xff), get_video2_settings_txtClipH(), 0, 0), &sp8C, &sp88, &sp90, (?32) ptrSecondFontTableSmall, (?32) ptrFirstFontTableSmall, (s32) (phi_s5 | 0x64), get_video2_settings_txtClipH(), 0, 0);
+        phi_s4_2 = en_text_write_stuff(en_text_write_stuff(microcode_constructor_related_to_menus(phi_s4, temp_a1, temp_a2, temp_a1 + spC4, (s32) (temp_a2 + spC8), 0), &sp8C, &sp88, &sp90, (s32) ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, (s32) (phi_s5 | 0xff), get_video2_settings_txtClipH(), 0, 0), &sp8C, &sp88, &sp90, (s32) ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, (s32) (phi_s5 | 0x64), get_video2_settings_txtClipH(), 0, 0);
     }
     temp_s6 = phi_s6 + 1;
     phi_s3 = phi_s3 + 5;
@@ -10230,17 +10232,17 @@ void interface_menu08_difficulty(void)
     {
         if (selected_difficulty != 3)
         {
-            set_menu_to_mode(0xa, 0);
+            set_menu_to_mode(MENU_BRIEFING, 0);
             set_cursor_pos_tab2();
             return;
         }
-        set_menu_to_mode(9, 0);
+        set_menu_to_mode(MENU_007_OPTIONS, 0);
         set_cursor_pos_tab2();
         return;
     }
     if (tab_3_selected != 0)
     {
-        set_menu_to_mode(7, 0);
+        set_menu_to_mode(MENU_MISSION_SELECT, 0);
         set_cursor_to_stage_solo((0x80030000 + (briefingpage * 0x1c))->unk-5408);
     }
 }
@@ -10465,8 +10467,8 @@ glabel interface_menu08_difficulty
 #ifdef NONMATCHING
 void print_current_solo_briefing_stage_name(s32 arg0, s32 arg1)
 {
-    ?32 sp54;
-    ?32 sp50;
+    s32 sp54;
+    s32 sp50;
     s32 sp4C;
     s16 sp44;
     void *sp40;
@@ -10480,7 +10482,7 @@ void print_current_solo_briefing_stage_name(s32 arg0, s32 arg1)
         sp54 = 0x37;
         sp50 = 0x57;
         sp44 = get_video2_settings_txtClipW();
-        arg0 = write_text_at_abs_coord(arg0, &sp54, &sp50, arg1, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+        arg0 = write_text_at_abs_coord(arg0, &sp54, &sp50, arg1, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     }
     temp_ret = get_chapter_briefing_entry(briefingpage);
     sp4C = temp_ret;
@@ -10496,7 +10498,7 @@ void print_current_solo_briefing_stage_name(s32 arg0, s32 arg1)
         sp54 = 0x37;
         sp50 = 0x67;
         sp44 = get_video2_settings_txtClipW();
-        arg0 = write_text_at_abs_coord(arg0, &sp54, &sp50, arg1, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+        arg0 = write_text_at_abs_coord(arg0, &sp54, &sp50, arg1, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     }
     textpointer_load_parse_something(arg1, get_textptr_for_textID(TEXT(LTITLE, 0x22)));
     string_append_from_obseg_textbank(arg1, *(&mission_folder_setup_entries + (briefingpage * 0x1c)));
@@ -10506,7 +10508,7 @@ void print_current_solo_briefing_stage_name(s32 arg0, s32 arg1)
     sp54 = 0x37;
     sp50 = 0x77;
     sp44 = get_video2_settings_txtClipW();
-    write_text_at_abs_coord(arg0, &sp54, &sp50, arg1, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    write_text_at_abs_coord(arg0, &sp54, &sp50, arg1, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
 }
 #else
 GLOBAL_ASM(
@@ -10726,10 +10728,10 @@ void constructor_menu08_difficulty(s32 arg0)
 {
     s32 spC68;
     s32 spC60;
-    ?32 spC5C;
-    ? spA4;
+    s32 spC5C;
+    s32 spA4;
     s32 sp9C;
-    ? sp98;
+    s32 sp98;
     f32 sp94;
     f32 sp90;
     f32 sp8C;
@@ -10777,9 +10779,9 @@ void constructor_menu08_difficulty(s32 arg0)
 loop_1:
     temp_t9 = phi_t9 + 0xc;
     temp_t8 = phi_t8 + 0xc;
-    temp_t8->unk-C = (?32) *phi_t9;
-    temp_t8->unk-8 = (?32) temp_t9->unk-8;
-    temp_t8->unk-4 = (?32) temp_t9->unk-4;
+    temp_t8->unk-C = (s32) *phi_t9;
+    temp_t8->unk-8 = (s32) temp_t9->unk-8;
+    temp_t8->unk-4 = (s32) temp_t9->unk-4;
     phi_t9 = temp_t9;
     phi_t8 = temp_t8;
     if (temp_t9 != (&asc_D_8004F4B4 + 0xbb8))
@@ -10793,7 +10795,7 @@ loop_1:
     spC60 = 0x37;
     spC5C = 0x8f;
     get_video2_settings_txtClipW();
-    arg0 = write_text_at_abs_coord(arg0, &spC60, &spC5C, get_textptr_for_textID(TEXT(LTITLE, 0x23)), (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, get_video2_settings_txtClipH(), 0, 0);
+    arg0 = write_text_at_abs_coord(arg0, &spC60, &spC5C, get_textptr_for_textID(TEXT(LTITLE, 0x23)), (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, get_video2_settings_txtClipH(), 0, 0);
     if (mission_difficulty_highlighted >= 0)
     {
         if (j_text_trigger != 0)
@@ -10854,7 +10856,7 @@ block_21:
             phi_s2 = &spA4;
             goto block_21;
         }
-        sub_GAME_7F0AE98C(&sp98, &sp9C, phi_s2, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+        sub_GAME_7F0AE98C(&sp98, &sp9C, phi_s2, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
         phi_v0_2 = 0;
         if (j_text_trigger != 0)
         {
@@ -10862,7 +10864,7 @@ block_21:
         }
         spC60 = (s32) (0x82 - phi_v0_2);
         get_video2_settings_txtClipW();
-        arg0 = write_text_at_abs_coord(arg0, &spC60, &spC5C, phi_s2, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, get_video2_settings_txtClipH(), 0, 0);
+        arg0 = write_text_at_abs_coord(arg0, &spC60, &spC5C, phi_s2, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, get_video2_settings_txtClipH(), 0, 0);
         if (phi_s1 != 0)
         {
             if (phi_s1 != 1)
@@ -10898,7 +10900,7 @@ block_33:
         }
         spC60 = (s32) 0x96;
         get_video2_settings_txtClipW();
-        arg0 = write_text_at_abs_coord(arg0, &spC60, &spC5C, phi_s2_2, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, get_video2_settings_txtClipH(), 0, 0);
+        arg0 = write_text_at_abs_coord(arg0, &spC60, &spC5C, phi_s2_2, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, get_video2_settings_txtClipH(), 0, 0);
         phi_s2_3 = phi_s2_2;
     }
     else
@@ -11515,17 +11517,17 @@ void interface_menu09_007options(void)
     menu_control_stick_tracking();
     if (tab_1_selected != 0)
     {
-        set_menu_to_mode(0xb, 1);
+        set_menu_to_mode(MENU_RUN_STAGE, 1);
         return;
     }
     if (tab_2_selected != 0)
     {
-        set_menu_to_mode(0xa, 0);
+        set_menu_to_mode(MENU_BRIEFING, 0);
         return;
     }
     if (tab_3_selected != 0)
     {
-        set_menu_to_mode(8, 0);
+        set_menu_to_mode(MENU_DIFFICULTY, 0);
         set_cursor_pos_difficulty(selected_difficulty);
     }
 }
@@ -11840,8 +11842,8 @@ void constructor_menu09_007options(void)
     s32 spC14;
     s32 spC10;
     s32 spC0C;
-    ? sp54;
-    ?32 sp50;
+    s32 sp54;
+    s32 sp50;
     s32 sp4C;
     s16 sp44;
     s32 temp_ret;
@@ -11870,9 +11872,9 @@ void constructor_menu09_007options(void)
 loop_1:
     temp_t7 = phi_t7 + 0xc;
     temp_t6 = phi_t6 + 0xc;
-    temp_t6->unk-C = (?32) *phi_t7;
-    temp_t6->unk-8 = (?32) temp_t7->unk-8;
-    temp_t6->unk-4 = (?32) temp_t7->unk-4;
+    temp_t6->unk-C = (s32) *phi_t7;
+    temp_t6->unk-8 = (s32) temp_t7->unk-8;
+    temp_t6->unk-4 = (s32) temp_t7->unk-4;
     phi_t7 = temp_t7;
     phi_t6 = temp_t6;
     if (temp_t7 != (&asc_D_80050074 + 0xbb8))
@@ -11883,7 +11885,7 @@ loop_1:
     spC10 = 0x37;
     spC0C = 0x8f;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0 = write_text_at_abs_coord(print_current_solo_briefing_stage_name(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp54), &spC10, &spC0C, spC14, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0 = write_text_at_abs_coord(print_current_solo_briefing_stage_name(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp54), &spC10, &spC0C, spC14, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     spC14 = get_textptr_for_textID(TEXT(LTITLE, 0x2a));
     spC10 = 0x39;
     spC0C = 0xa4;
@@ -11894,15 +11896,15 @@ loop_1:
         phi_s0 = microcode_constructor_related_to_menus(temp_ret, 0x37, spC0C + -1, 0xc7, (s32) (spC0C + 0xe), 0x32);
     }
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_2 = write_text_at_abs_coord(phi_s0, &spC10, &spC0C, spC14, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_2 = write_text_at_abs_coord(phi_s0, &spC10, &spC0C, spC14, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     sprintf(&sp54, &aD, (s32) (slider_007_mode_health * 100.0f));
     sp4C = 0;
     sp50 = 0;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     spC10 = (s32) (0x11d - sp4C);
     spC0C = 0xa4;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_3 = write_text_at_abs_coord(temp_s0_2, &spC10, &spC0C, &sp54, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_3 = write_text_at_abs_coord(temp_s0_2, &spC10, &spC0C, &sp54, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     spC14 = get_textptr_for_textID(TEXT(LTITLE, 0x2b));
     spC10 = 0x39;
     spC0C = 0xc5;
@@ -11913,15 +11915,15 @@ loop_1:
         phi_s0_2 = microcode_constructor_related_to_menus(temp_ret_2, 0x37, spC0C + -1, 0xc7, (s32) (spC0C + 0xe), 0x32);
     }
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_4 = write_text_at_abs_coord(phi_s0_2, &spC10, &spC0C, spC14, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_4 = write_text_at_abs_coord(phi_s0_2, &spC10, &spC0C, spC14, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     sprintf(&sp54, &aD_0, (s32) (slider_007_mode_accuracy * 100.0f));
     sp4C = 0;
     sp50 = 0;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     spC10 = (s32) (0x11d - sp4C);
     spC0C = 0xc5;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_5 = write_text_at_abs_coord(temp_s0_4, &spC10, &spC0C, &sp54, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_5 = write_text_at_abs_coord(temp_s0_4, &spC10, &spC0C, &sp54, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     spC14 = get_textptr_for_textID(TEXT(LTITLE, 0x2c));
     spC10 = 0x39;
     spC0C = 0xe6;
@@ -11932,15 +11934,15 @@ loop_1:
         phi_s0_3 = microcode_constructor_related_to_menus(temp_ret_3, 0x37, spC0C + -1, 0xc7, (s32) (spC0C + 0xe), 0x32);
     }
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_6 = write_text_at_abs_coord(phi_s0_3, &spC10, &spC0C, spC14, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_6 = write_text_at_abs_coord(phi_s0_3, &spC10, &spC0C, spC14, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     sprintf(&sp54, &aD_1, (s32) (slider_007_mode_damage * 10.0f));
     sp4C = 0;
     sp50 = 0;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     spC10 = (s32) (0x11d - sp4C);
     spC0C = 0xe6;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_7 = write_text_at_abs_coord(temp_s0_6, &spC10, &spC0C, &sp54, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_7 = write_text_at_abs_coord(temp_s0_6, &spC10, &spC0C, &sp54, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     spC14 = get_textptr_for_textID(TEXT(LTITLE, 0x29));
     spC10 = 0x39;
     spC0C = 0x107;
@@ -11951,15 +11953,15 @@ loop_1:
         phi_s0_4 = microcode_constructor_related_to_menus(temp_ret_4, 0x37, spC0C + -1, 0xc7, (s32) (spC0C + 0xe), 0x32);
     }
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_8 = write_text_at_abs_coord(phi_s0_4, &spC10, &spC0C, spC14, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_8 = write_text_at_abs_coord(phi_s0_4, &spC10, &spC0C, spC14, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     sprintf(&sp54, &aD_2, (s32) (slider_007_mode_reaction * 100.0f));
     sp4C = 0;
     sp50 = 0;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, &sp54, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     spC10 = (s32) (0x11d - sp4C);
     spC0C = 0x107;
     sp44 = get_video2_settings_txtClipW();
-    load_draw_selected_icon_folder_select(add_tab2_next(add_tab3_previous(add_tab1_start(write_text_at_abs_coord(temp_s0_8, &spC10, &spC0C, &sp54, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0)))));
+    load_draw_selected_icon_folder_select(add_tab2_next(add_tab3_previous(add_tab1_start(write_text_at_abs_coord(temp_s0_8, &spC10, &spC0C, &sp54, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0)))));
 }
 #else
 GLOBAL_ASM(
@@ -12561,7 +12563,7 @@ glabel constructor_menu09_007options
 
 
 #ifdef NONMATCHING
-undefined4 get_player_control_style(int playernum) {
+s32 get_player_control_style(int playernum) {
   return (&controlstyle_player)[playernum];
 }
 #else
@@ -12905,9 +12907,9 @@ void reset_mp_options_for_scenario(MPSCENARIOS scenarioid)
 
 
 #ifdef NONMATCHING
-void init_mp_options_for_scenario(longlong numplayers)
+void init_mp_options_for_scenario(s32 numplayers)
 {
-  longlong lVar1;
+  s32 lVar1;
   int iVar2;
   int *piVar3;
   
@@ -12922,9 +12924,9 @@ void init_mp_options_for_scenario(longlong numplayers)
     do {
       if (*piVar3 == -1) {
         *piVar3 = (int)lVar1;
-        *(undefined4 *)((int)&handicap_player1 + iVar2) = 5;
+        *(s32 *)((int)&handicap_player1 + iVar2) = 5;
       }
-      lVar1 = (longlong)((int)lVar1 + 1);
+      lVar1 = (s32)((int)lVar1 + 1);
       if ((2 < numplayers) && (3 < *(int *)((int)&controlstyle_player + iVar2))) {
         *(int *)((int)&controlstyle_player + iVar2) = 0;
       }
@@ -12932,12 +12934,12 @@ void init_mp_options_for_scenario(longlong numplayers)
       piVar3 = piVar3 + 1;
     } while (lVar1 < numplayers);
   }
-  if (((longlong)(ulonglong)(byte)mp_stage_playercounts[scenario].max < numplayers) ||
-     (numplayers < (longlong)(ulonglong)(byte)mp_stage_playercounts[scenario].min)) {
+  if (((s32)(s32)(u8)mp_stage_playercounts[scenario].max < numplayers) ||
+     (numplayers < (s32)(s32)(u8)mp_stage_playercounts[scenario].min)) {
     reset_mp_options_for_scenario(0);
-    numplayers = (longlong)(int)selected_num_players;
+    numplayers = (s32)(int)selected_num_players;
   }
-  if ((longlong)multi_stage_setups[MP_stage_selected].max_player < numplayers) {
+  if ((s32)multi_stage_setups[MP_stage_selected].max_player < numplayers) {
     MP_stage_selected = MP_STAGE_TEMPLE;
   }
   return;
@@ -13845,12 +13847,12 @@ glabel interface_menu0E_mpoptions
 void constructor_menu0E_mpoptions(void)
 {
     s32 sp64;
-    ? sp5C;
-    ?32 sp58;
-    ?32 sp54;
-    ? sp50;
+    s32 sp5C;
+    s32 sp58;
+    s32 sp54;
+    s32 sp50;
     s32 sp4C;
-    ?32 sp48;
+    s32 sp48;
     s16 sp44;
     s32 temp_ret;
     s32 temp_ret_2;
@@ -13878,33 +13880,33 @@ void constructor_menu0E_mpoptions(void)
     s32 temp_s0_9;
     s32 phi_s0;
     s32 phi_s0_2;
-    ?32 phi_v1;
+    s32 phi_v1;
     s32 phi_s0_3;
-    ?32 phi_v1_2;
+    s32 phi_v1_2;
     s32 phi_s0_4;
-    ?32 phi_v1_3;
+    s32 phi_v1_3;
     s32 phi_s0_5;
-    ?32 phi_v1_4;
+    s32 phi_v1_4;
     s32 phi_s0_6;
-    ?32 phi_v1_5;
+    s32 phi_v1_5;
     s32 phi_s0_7;
-    ?32 phi_v1_6;
+    s32 phi_v1_6;
     s32 phi_s0_8;
-    ?32 phi_v1_7;
+    s32 phi_v1_7;
     s32 phi_s0_9;
-    ?32 phi_v1_8;
-    ?32 phi_v1_9;
-    ?32 phi_v1_10;
-    ?32 phi_v1_11;
+    s32 phi_v1_8;
+    s32 phi_v1_9;
+    s32 phi_v1_10;
+    s32 phi_v1_11;
 
     sp64 = get_textptr_for_textID(TEXT(LTITLE, 0x4c));
     sp58 = 0x37;
     sp54 = 0x5f;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0 = write_text_at_abs_coord(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0 = write_text_at_abs_coord(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp58, &sp54, sp64, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret = get_textptr_for_textID(TEXT(LTITLE, 0x4d));
     sp64 = temp_ret;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     sp58 = 0x39;
     sp54 = 0x79;
     phi_s0 = temp_s0;
@@ -13913,10 +13915,10 @@ void constructor_menu0E_mpoptions(void)
         phi_s0 = microcode_constructor_related_to_menus(temp_s0, 0x37, 0x78, sp4C + 0x3c, 0x87, 0x32);
     }
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_2 = write_text_at_abs_coord(phi_s0, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_2 = write_text_at_abs_coord(phi_s0, &sp58, &sp54, sp64, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret_2 = get_textptr_for_textID(TEXT(LTITLE, 0x4e));
     sp64 = temp_ret_2;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_2, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_2, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     sp58 = 0x39;
     sp54 = 0x8d;
     phi_s0_2 = temp_s0_2;
@@ -13925,10 +13927,10 @@ void constructor_menu0E_mpoptions(void)
         phi_s0_2 = microcode_constructor_related_to_menus(temp_s0_2, 0x37, 0x8c, sp4C + 0x3c, 0x9b, 0x32);
     }
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_3 = write_text_at_abs_coord(phi_s0_2, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_3 = write_text_at_abs_coord(phi_s0_2, &sp58, &sp54, sp64, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret_3 = get_textptr_for_textID(TEXT(LTITLE, 0x4f));
     sp64 = temp_ret_3;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_3, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_3, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     sp58 = 0x39;
     sp54 = 0xa1;
     phi_s0_3 = temp_s0_3;
@@ -13944,12 +13946,12 @@ void constructor_menu0E_mpoptions(void)
     {
         phi_v1 = 0x70;
     }
-    sp48 = (?32) phi_v1;
+    sp48 = (s32) phi_v1;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_4 = write_text_at_abs_coord(phi_s0_3, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_4 = write_text_at_abs_coord(phi_s0_3, &sp58, &sp54, sp64, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, (s32) phi_v1, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret_4 = get_textptr_for_textID(TEXT(LTITLE, 0x50));
     sp64 = temp_ret_4;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_4, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_4, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     sp58 = 0x39;
     sp54 = 0xb5;
     phi_s0_4 = temp_s0_4;
@@ -13965,12 +13967,12 @@ void constructor_menu0E_mpoptions(void)
     {
         phi_v1_2 = 0x70;
     }
-    sp48 = (?32) phi_v1_2;
+    sp48 = (s32) phi_v1_2;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_5 = write_text_at_abs_coord(phi_s0_4, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_2, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_5 = write_text_at_abs_coord(phi_s0_4, &sp58, &sp54, sp64, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, (s32) phi_v1_2, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret_5 = get_textptr_for_textID(TEXT(LTITLE, 0x51));
     sp64 = temp_ret_5;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_5, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_5, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     sp58 = 0x39;
     sp54 = 0xc9;
     phi_s0_5 = temp_s0_5;
@@ -13986,12 +13988,12 @@ void constructor_menu0E_mpoptions(void)
     {
         phi_v1_3 = 0x70;
     }
-    sp48 = (?32) phi_v1_3;
+    sp48 = (s32) phi_v1_3;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_6 = write_text_at_abs_coord(phi_s0_5, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_3, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_6 = write_text_at_abs_coord(phi_s0_5, &sp58, &sp54, sp64, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, (s32) phi_v1_3, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret_6 = get_textptr_for_textID(TEXT(LTITLE, 0x52));
     sp64 = temp_ret_6;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_6, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_6, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     sp58 = 0x39;
     sp54 = 0xdd;
     phi_s0_6 = temp_s0_6;
@@ -14007,12 +14009,12 @@ void constructor_menu0E_mpoptions(void)
     {
         phi_v1_4 = 0x70;
     }
-    sp48 = (?32) phi_v1_4;
+    sp48 = (s32) phi_v1_4;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_7 = write_text_at_abs_coord(phi_s0_6, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_4, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_7 = write_text_at_abs_coord(phi_s0_6, &sp58, &sp54, sp64, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, (s32) phi_v1_4, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret_7 = get_textptr_for_textID(TEXT(LTITLE, 0x53));
     sp64 = temp_ret_7;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_7, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_7, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     sp58 = 0x39;
     sp54 = 0xf1;
     phi_s0_7 = temp_s0_7;
@@ -14028,12 +14030,12 @@ void constructor_menu0E_mpoptions(void)
     {
         phi_v1_5 = 0x70;
     }
-    sp48 = (?32) phi_v1_5;
+    sp48 = (s32) phi_v1_5;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_8 = write_text_at_abs_coord(phi_s0_7, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_5, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_8 = write_text_at_abs_coord(phi_s0_7, &sp58, &sp54, sp64, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, (s32) phi_v1_5, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret_8 = get_textptr_for_textID(TEXT(LTITLE, 0x11e));
     sp64 = temp_ret_8;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_8, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_8, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     sp58 = 0x39;
     sp54 = 0x105;
     phi_s0_8 = temp_s0_8;
@@ -14049,12 +14051,12 @@ void constructor_menu0E_mpoptions(void)
     {
         phi_v1_6 = 0x70;
     }
-    sp48 = (?32) phi_v1_6;
+    sp48 = (s32) phi_v1_6;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_9 = write_text_at_abs_coord(phi_s0_8, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_6, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_9 = write_text_at_abs_coord(phi_s0_8, &sp58, &sp54, sp64, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, (s32) phi_v1_6, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret_9 = get_textptr_for_textID(TEXT(LTITLE, 0x54));
     sp64 = temp_ret_9;
-    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_9, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+    sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret_9, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     sp58 = 0x39;
     sp54 = 0x119;
     phi_s0_9 = temp_s0_9;
@@ -14070,19 +14072,19 @@ void constructor_menu0E_mpoptions(void)
     {
         phi_v1_7 = 0x70;
     }
-    sp48 = (?32) phi_v1_7;
+    sp48 = (s32) phi_v1_7;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_10 = write_text_at_abs_coord(phi_s0_9, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_7, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_10 = write_text_at_abs_coord(phi_s0_9, &sp58, &sp54, sp64, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, (s32) phi_v1_7, sp44, get_video2_settings_txtClipH(), 0, 0);
     sprintf(&sp5C, &aD_7, selected_num_players);
     sp58 = 0xa0;
     sp54 = 0x79;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_11 = write_text_at_abs_coord(temp_s0_10, &sp58, &sp54, &sp5C, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_11 = write_text_at_abs_coord(temp_s0_10, &sp58, &sp54, &sp5C, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     sp64 = get_textptr_for_textID((0x80030000 + (scenario * 4))->unk-4FAC);
     sp58 = 0xa0;
     sp54 = 0x8d;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_12 = write_text_at_abs_coord(temp_s0_11, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_12 = write_text_at_abs_coord(temp_s0_11, &sp58, &sp54, sp64, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     sp64 = get_textptr_for_textID((0x80030000 + (MP_stage_selected * 0x18))->unk-4F8C);
     sp58 = 0xa0;
     sp54 = 0xa1;
@@ -14094,9 +14096,9 @@ void constructor_menu0E_mpoptions(void)
     {
         phi_v1_8 = 0x70;
     }
-    sp48 = (?32) phi_v1_8;
+    sp48 = (s32) phi_v1_8;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_13 = write_text_at_abs_coord(temp_s0_12, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_8, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_13 = write_text_at_abs_coord(temp_s0_12, &sp58, &sp54, sp64, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, (s32) phi_v1_8, sp44, get_video2_settings_txtClipH(), 0, 0);
     sp64 = get_textptr_for_textID((0x80030000 + (game_length * 0xc))->unk-500C);
     sp58 = 0xa0;
     sp54 = 0xb5;
@@ -14108,9 +14110,9 @@ void constructor_menu0E_mpoptions(void)
     {
         phi_v1_9 = 0x70;
     }
-    sp48 = (?32) phi_v1_9;
+    sp48 = (s32) phi_v1_9;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_14 = write_text_at_abs_coord(temp_s0_13, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_9, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_14 = write_text_at_abs_coord(temp_s0_13, &sp58, &sp54, sp64, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, (s32) phi_v1_9, sp44, get_video2_settings_txtClipH(), 0, 0);
     sp64 = get_textptr_for_textID(*getPtrMPWeaponSetTextID());
     sp58 = 0xa0;
     sp54 = 0xc9;
@@ -14122,9 +14124,9 @@ void constructor_menu0E_mpoptions(void)
     {
         phi_v1_10 = 0x70;
     }
-    sp48 = (?32) phi_v1_10;
+    sp48 = (s32) phi_v1_10;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0_15 = write_text_at_abs_coord(temp_s0_14, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_10, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0_15 = write_text_at_abs_coord(temp_s0_14, &sp58, &sp54, sp64, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, (s32) phi_v1_10, sp44, get_video2_settings_txtClipH(), 0, 0);
     sp64 = get_textptr_for_textID((0x80030000 + (aim_sight_adjustment * 4))->unk-4AF0);
     sp58 = 0xa0;
     sp54 = 0x119;
@@ -14136,9 +14138,9 @@ void constructor_menu0E_mpoptions(void)
     {
         phi_v1_11 = 0x70;
     }
-    sp48 = (?32) phi_v1_11;
+    sp48 = (s32) phi_v1_11;
     sp44 = get_video2_settings_txtClipW();
-    load_draw_selected_icon_folder_select(add_tab1_start(add_tab3_previous(write_text_at_abs_coord(temp_s0_15, &sp58, &sp54, sp64, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (?32) phi_v1_11, sp44, get_video2_settings_txtClipH(), 0, 0))));
+    load_draw_selected_icon_folder_select(add_tab1_start(add_tab3_previous(write_text_at_abs_coord(temp_s0_15, &sp58, &sp54, sp64, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, (s32) phi_v1_11, sp44, get_video2_settings_txtClipH(), 0, 0))));
 }
 #else
 GLOBAL_ASM(
@@ -14992,15 +14994,15 @@ glabel constructor_menu0E_mpoptions
 
 
 #ifdef NONMATCHING
-? get_players_who_have_selected_mp_char(s32 arg0)
+s32 get_players_who_have_selected_mp_char(s32 arg0)
 {
     u32 temp_a0_2;
     void *temp_a0;
     void *phi_a0;
     s32 phi_v0;
-    ? phi_v1;
-    ? phi_v1_2;
-    ? phi_v1_3;
+    s32 phi_v1;
+    s32 phi_v1_2;
+    s32 phi_v1_3;
 
     phi_v1 = 0;
     if (selected_num_players > 0)
@@ -15168,23 +15170,23 @@ loop_16:
             }
         }
     }
-    mp_char_cur_select_player1 = (?32) player_1_char;
-    mp_char_prev_select_player1 = (?32) player_1_char;
+    mp_char_cur_select_player1 = (s32) player_1_char;
+    mp_char_prev_select_player1 = (s32) player_1_char;
     dword_CODE_bss_80069730 = 0;
     has_selected_char_player1 = 0;
     size_mp_select_image_player1 = 0;
-    mp_char_cur_select_player2 = (?32) player_2_char;
-    mp_char_prev_select_player2 = (?32) player_2_char;
+    mp_char_cur_select_player2 = (s32) player_2_char;
+    mp_char_prev_select_player2 = (s32) player_2_char;
     dword_CODE_bss_80069734 = 0;
     has_selected_char_player2 = 0;
     size_mp_select_image_player2 = 0;
-    mp_char_cur_select_player3 = (?32) player_3_char;
-    mp_char_prev_select_player3 = (?32) player_3_char;
+    mp_char_cur_select_player3 = (s32) player_3_char;
+    mp_char_prev_select_player3 = (s32) player_3_char;
     dword_CODE_bss_80069738 = 0;
     has_selected_char_player3 = 0;
     size_mp_select_image_player3 = 0;
-    mp_char_cur_select_player4 = (?32) player_4_char;
-    mp_char_prev_select_player4 = (?32) player_4_char;
+    mp_char_cur_select_player4 = (s32) player_4_char;
+    mp_char_prev_select_player4 = (s32) player_4_char;
     dword_CODE_bss_8006973C = 0;
     has_selected_char_player4 = 0;
     size_mp_select_image_player4 = 0;
@@ -15389,15 +15391,15 @@ void interface_menu0F_mpcharsel(void)
   int iVar1;
   int iVar2;
   int iVar4;
-  ulonglong uVar3;
-  BOOL BVar5;
+  s32 uVar3;
+  u32 BVar5;
   int iVar6;
   int iVar7;
   char controller;
   int *piVar8;
   int *piVar9;
   int iVar10;
-  BOOL *pBVar11;
+  u32 *pBVar11;
   int *piVar12;
   int iVar13;
   int iStack12;
@@ -15425,7 +15427,7 @@ void interface_menu0F_mpcharsel(void)
         uVar3 = get_controller_buttons_pressed(controller,B_BUTTON);
         if (uVar3 != 0) {
           *pBVar11 = FALSE;
-          play_sfx_a1((longlong)(int)ptr_sfx_buf,199,NULL);
+          play_sfx_a1((s32)(int)ptr_sfx_buf,199,NULL);
         }
       }
       if ((*pBVar11 == FALSE) &&
@@ -15482,9 +15484,9 @@ LAB_7f012164:
           BVar5 = hasPlayerSelectedMPChar(*piVar8);
           if (BVar5 != FALSE) goto LAB_7f012164;
           *(int *)((int)&player_1_char + iVar10) = *piVar8;
-          *(undefined4 *)((int)&size_mp_select_image_player1 + iVar10) = 1;
+          *(s32 *)((int)&size_mp_select_image_player1 + iVar10) = 1;
           *pBVar11 = TRUE;
-          play_sfx_a1((longlong)(int)ptr_sfx_buf,199,NULL);
+          play_sfx_a1((s32)(int)ptr_sfx_buf,199,NULL);
           iVar6 = *piVar12;
         }
       }
@@ -15865,7 +15867,7 @@ glabel sub_GAME_7F0122A8
 
 
 #ifdef NONMATCHING
-s32 sub_GAME_7F01231C(s32 arg0, s32 arg1, ? arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6)
+s32 sub_GAME_7F01231C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6)
 {
     s32 spD4;
     s32 spD0;
@@ -16337,11 +16339,11 @@ void constructor_menu0F_mpcharsel(s32 arg0)
 {
     s32 spE4;
     s32 spE0;
-    ? spBC;
+    s32 spBC;
     s32 spB8;
     s32 spB4;
-    ? spB0;
-    ? spA8;
+    s32 spB0;
+    s32 spA8;
     s32 spA4;
     s32 spA0;
     s32 sp9C;
@@ -16458,21 +16460,21 @@ loop_4:
             if (subroutine_arg0 == 0)
             {
                 temp_ret_3 = get_textptr_for_textID(TEXT(LTITLE, 0x55));
-                sub_GAME_7F0AE98C(&spBC, &spB8, temp_ret_3, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+                sub_GAME_7F0AE98C(&spBC, &spB8, temp_ret_3, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
                 spB4 = (s32) ((((s32) phi_s4 >> 1) + phi_s2) - (spB8 >> 1));
                 get_video2_settings_txtClipW();
-                phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &spB4, &spB0, temp_ret_3, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, get_video2_settings_txtClipH(), 0, 0);
+                phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &spB4, &spB0, temp_ret_3, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, get_video2_settings_txtClipH(), 0, 0);
             }
         }
         temp_s6 = ((s32) phi_s4 >> 1) + phi_s2;
         temp_ret_4 = get_textptr_for_textID((0x80030000 + (*sp80 * 0xc))->unk-4E68);
-        sub_GAME_7F0AE98C(&spA8, &spA4, temp_ret_4, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+        sub_GAME_7F0AE98C(&spA8, &spA4, temp_ret_4, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
         sp9C = (s32) (phi_s7 + 0x78);
         spA0 = (s32) (temp_s6 - (spA4 >> 1));
         get_video2_settings_txtClipW();
         temp_s3 = phi_s2 + 0xd;
         temp_s4 = sp8C + -0xe;
-        temp_ret_5 = sub_GAME_7F01231C(write_text_at_abs_coord(microcode_constructor(phi_s1), &spA0, &sp9C, temp_ret_4, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, get_video2_settings_txtClipH(), 0, 0), temp_s3, temp_s4, temp_s6 - *sp74, (?32) *sp70, (?32) subroutine_arg0);
+        temp_ret_5 = sub_GAME_7F01231C(write_text_at_abs_coord(microcode_constructor(phi_s1), &spA0, &sp9C, temp_ret_4, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, get_video2_settings_txtClipH(), 0, 0), temp_s3, temp_s4, temp_s6 - *sp74, (s32) *sp70, (s32) subroutine_arg0);
         temp_s1_3 = temp_ret_5;
         if ((*sp88 != 0) || (subroutine_arg0 != 0))
         {
@@ -16486,7 +16488,7 @@ block_21:
                 phi_v0 = temp_ret_5;
                 if (*sp70 >= 3)
                 {
-                    temp_ret_6 = sub_GAME_7F01231C(temp_s1_3, temp_s3, temp_s4, (temp_s6 - *sp74) + -0xfc, (s32) (*sp70 + -3), (?32) subroutine_arg0);
+                    temp_ret_6 = sub_GAME_7F01231C(temp_s1_3, temp_s3, temp_s4, (temp_s6 - *sp74) + -0xfc, (s32) (*sp70 + -3), (s32) subroutine_arg0);
                     phi_s0 = *sp70;
                     phi_s1_2 = temp_ret_6;
                     phi_v0 = temp_ret_6;
@@ -16495,7 +16497,7 @@ block_21:
                 phi_s1_3 = phi_s1_2;
                 if (phi_s0 >= 2)
                 {
-                    temp_ret_7 = sub_GAME_7F01231C(phi_s1_2, temp_s3, temp_s4, (temp_s6 - *sp74) + -0xa8, (s32) (phi_s0 + -2), (?32) subroutine_arg0);
+                    temp_ret_7 = sub_GAME_7F01231C(phi_s1_2, temp_s3, temp_s4, (temp_s6 - *sp74) + -0xa8, (s32) (phi_s0 + -2), (s32) subroutine_arg0);
                     phi_s0_2 = *sp70;
                     phi_s1_3 = temp_ret_7;
                     phi_v0 = temp_ret_7;
@@ -16504,7 +16506,7 @@ block_21:
                 phi_s1_4 = phi_s1_3;
                 if (phi_s0_2 > 0)
                 {
-                    temp_ret_8 = sub_GAME_7F01231C(phi_s1_3, temp_s3, temp_s4, (temp_s6 - *sp74) + -0x54, (s32) (phi_s0_2 + -1), (?32) subroutine_arg0);
+                    temp_ret_8 = sub_GAME_7F01231C(phi_s1_3, temp_s3, temp_s4, (temp_s6 - *sp74) + -0x54, (s32) (phi_s0_2 + -1), (s32) subroutine_arg0);
                     phi_s0_3 = *sp70;
                     phi_s1_4 = temp_ret_8;
                     phi_v0 = temp_ret_8;
@@ -16514,7 +16516,7 @@ block_21:
                 phi_s1_5 = phi_s1_4;
                 if (phi_s0_3 < (num_chars_selectable_mp + -1))
                 {
-                    temp_ret_9 = sub_GAME_7F01231C(phi_s1_4, temp_s3, temp_s4, (temp_s6 - *sp74) + 0x54, (s32) (phi_s0_3 + 1), (?32) subroutine_arg0);
+                    temp_ret_9 = sub_GAME_7F01231C(phi_s1_4, temp_s3, temp_s4, (temp_s6 - *sp74) + 0x54, (s32) (phi_s0_3 + 1), (s32) subroutine_arg0);
                     phi_s0_4 = *sp70;
                     phi_v1 = num_chars_selectable_mp;
                     phi_s1_5 = temp_ret_9;
@@ -16525,7 +16527,7 @@ block_21:
                 phi_s1_6 = phi_s1_5;
                 if (phi_s0_4 < (phi_v1 + -2))
                 {
-                    temp_ret_10 = sub_GAME_7F01231C(phi_s1_5, temp_s3, temp_s4, (temp_s6 - *sp74) + 0xa8, (s32) (phi_s0_4 + 2), (?32) subroutine_arg0);
+                    temp_ret_10 = sub_GAME_7F01231C(phi_s1_5, temp_s3, temp_s4, (temp_s6 - *sp74) + 0xa8, (s32) (phi_s0_4 + 2), (s32) subroutine_arg0);
                     phi_s0_5 = *sp70;
                     phi_v1_2 = num_chars_selectable_mp;
                     phi_s1_6 = temp_ret_10;
@@ -16534,7 +16536,7 @@ block_21:
                 phi_s1_7 = phi_s1_6;
                 if (phi_s0_5 < (phi_v1_2 + -3))
                 {
-                    temp_ret_11 = sub_GAME_7F01231C(phi_s1_6, temp_s3, temp_s4, (temp_s6 - *sp74) + 0xfc, (s32) (phi_s0_5 + 3), (?32) subroutine_arg0);
+                    temp_ret_11 = sub_GAME_7F01231C(phi_s1_6, temp_s3, temp_s4, (temp_s6 - *sp74) + 0xfc, (s32) (phi_s0_5 + 3), (s32) subroutine_arg0);
                     phi_v0 = temp_ret_11;
                     phi_s1_7 = temp_ret_11;
                 }
@@ -17151,7 +17153,7 @@ block_15:
     menu_control_stick_tracking();
     if (phi_fp == sp44)
     {
-        set_menu_to_mode(0xe, 0);
+        set_menu_to_mode(MENU_MP_OPTIONS, 0);
     }
 }
 #else
@@ -17449,20 +17451,20 @@ loop_4:
         if (*sp74 == 0)
         {
             temp_ret_3 = get_textptr_for_textID(TEXT(LTITLE, 0x56));
-            sub_GAME_7F0AE98C(&spA4, &spA0, temp_ret_3, ptrSecondFontTableLarge, (?32) subroutine_arg0, 0);
+            sub_GAME_7F0AE98C(&spA4, &spA0, temp_ret_3, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
             sp9C = (s32) ((((s32) phi_s5 >> 1) + phi_s3) - (spA0 >> 1));
             sp98 = (s32) ((phi_s2 - (spA4 >> 1)) + 0x37);
             get_video2_settings_txtClipW();
-            phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &sp9C, &sp98, temp_ret_3, (?32) ptrSecondFontTableLarge, (?32) subroutine_arg0, 0xff, get_video2_settings_txtClipH(), 0, 0);
+            phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &sp9C, &sp98, temp_ret_3, (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0, 0xff, get_video2_settings_txtClipH(), 0, 0);
         }
         temp_ret_4 = get_textptr_for_textID((0x80030000 + (*sp70 * 8))->unk-4B68);
-        sub_GAME_7F0AE98C(&sp90, &sp8C, temp_ret_4, ptrSecondFontTableLarge, (?32) subroutine_arg0, 0);
+        sub_GAME_7F0AE98C(&sp90, &sp8C, temp_ret_4, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
         sp88 = (s32) ((((s32) phi_s5 >> 1) + phi_s3) - (sp8C >> 1));
         sp84 = (s32) (((phi_s2 + 0x46) - (sp90 >> 1)) + 0xf);
         get_video2_settings_txtClipW();
         temp_s6 = phi_s6 + 1;
         sp70 = (void *) (sp70 + 4);
-        temp_v0 = write_text_at_abs_coord(microcode_constructor(phi_s1), &sp88, &sp84, temp_ret_4, (?32) ptrSecondFontTableLarge, (?32) subroutine_arg0, 0xff, get_video2_settings_txtClipH(), 0, 0);
+        temp_v0 = write_text_at_abs_coord(microcode_constructor(phi_s1), &sp88, &sp84, temp_ret_4, (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0, 0xff, get_video2_settings_txtClipH(), 0, 0);
         sp74 = (void *) (sp74 + 4);
         phi_s6 = temp_s6;
         phi_v0 = temp_v0;
@@ -17941,7 +17943,7 @@ block_31:
     menu_control_stick_tracking();
     if (sp44 == temp_s6)
     {
-        set_menu_to_mode(0xe, 0);
+        set_menu_to_mode(MENU_MP_OPTIONS, 0);
     }
 }
 #else
@@ -18584,20 +18586,20 @@ loop_4:
         if (*sp74 == 0)
         {
             temp_ret_3 = get_textptr_for_textID(TEXT(LTITLE, 0x11d));
-            sub_GAME_7F0AE98C(&spA4, &spA0, temp_ret_3, ptrSecondFontTableLarge, (?32) subroutine_arg0, 0);
+            sub_GAME_7F0AE98C(&spA4, &spA0, temp_ret_3, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
             sp9C = (s32) ((((s32) phi_s5 >> 1) + phi_s3) - (spA0 >> 1));
             sp98 = (s32) ((phi_s2 - (spA4 >> 1)) + 0x37);
             get_video2_settings_txtClipW();
-            phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &sp9C, &sp98, temp_ret_3, (?32) ptrSecondFontTableLarge, (?32) subroutine_arg0, 0xff, get_video2_settings_txtClipH(), 0, 0);
+            phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &sp9C, &sp98, temp_ret_3, (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0, 0xff, get_video2_settings_txtClipH(), 0, 0);
         }
         temp_ret_4 = get_textptr_for_textID((0x80030000 + (*sp70 * 4))->unk-4B10);
-        sub_GAME_7F0AE98C(&sp90, &sp8C, temp_ret_4, ptrSecondFontTableLarge, (?32) subroutine_arg0, 0);
+        sub_GAME_7F0AE98C(&sp90, &sp8C, temp_ret_4, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
         sp88 = (s32) ((((s32) phi_s5 >> 1) + phi_s3) - (sp8C >> 1));
         sp84 = (s32) (((phi_s2 + 0x46) - (sp90 >> 1)) + 0xf);
         get_video2_settings_txtClipW();
         temp_s6 = phi_s6 + 1;
         sp70 = (void *) (sp70 + 4);
-        temp_v0 = write_text_at_abs_coord(microcode_constructor(phi_s1), &sp88, &sp84, temp_ret_4, (?32) ptrSecondFontTableLarge, (?32) subroutine_arg0, 0xff, get_video2_settings_txtClipH(), 0, 0);
+        temp_v0 = write_text_at_abs_coord(microcode_constructor(phi_s1), &sp88, &sp84, temp_ret_4, (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0, 0xff, get_video2_settings_txtClipH(), 0, 0);
         sp74 = (void *) (sp74 + 4);
         phi_s6 = temp_s6;
         phi_v0 = temp_v0;
@@ -19008,12 +19010,12 @@ loop_14:
     menu_control_stick_tracking();
     if (tab_2_selected != 0)
     {
-        set_menu_to_mode(0xe, 0);
+        set_menu_to_mode(MENU_MP_OPTIONS, 0);
         return;
     }
     if (tab_3_selected != 0)
     {
-        set_menu_to_mode(0xe, 0);
+        set_menu_to_mode(MENU_MP_OPTIONS, 0);
     }
 }
 #else
@@ -19207,8 +19209,8 @@ glabel interface_menu12_mpstage
 #ifdef NONMATCHING
 void constructor_menu12_mpstage(s32 arg0)
 {
-    ? sp130;
-    ? sp12C;
+    s32 sp130;
+    s32 sp12C;
     s32 sp128;
     s32 sp124;
     f32 sp104;
@@ -19389,14 +19391,14 @@ loop_17:
             {
                 phi_s2_2 = -0x100;
             }
-            sub_GAME_7F0AE98C(&sp128, &sp124, get_textptr_for_textID(temp_s3_2->unk2), subroutine_arg0, (?32) ptrFirstFontTableSmall, 0);
+            sub_GAME_7F0AE98C(&sp128, &sp124, get_textptr_for_textID(temp_s3_2->unk2), subroutine_arg0, (s32) ptrFirstFontTableSmall, 0);
             temp_s4_3 = phi_s6 + -0x1f;
             temp_a2 = sp90 - sp128;
             arg0 = microcode_constructor_related_to_menus(arg0, temp_s4_3, temp_a2, temp_s4_3 + sp124, (s32) (temp_a2 + sp128), 0);
             get_video2_settings_txtClipW();
-            arg0 = en_text_write_stuff(arg0, &sp130, &sp12C, get_textptr_for_textID(temp_s3_2->unk2), (?32) subroutine_arg0, (?32) ptrFirstFontTableSmall, (s32) (phi_s2_2 | 0xff), get_video2_settings_txtClipH(), 0, 0);
+            arg0 = en_text_write_stuff(arg0, &sp130, &sp12C, get_textptr_for_textID(temp_s3_2->unk2), (s32) subroutine_arg0, (s32) ptrFirstFontTableSmall, (s32) (phi_s2_2 | 0xff), get_video2_settings_txtClipH(), 0, 0);
             get_video2_settings_txtClipW();
-            arg0 = en_text_write_stuff(arg0, &sp130, &sp12C, get_textptr_for_textID(temp_s3_2->unk2, sp90 - sp128), (?32) subroutine_arg0, (?32) ptrFirstFontTableSmall, (s32) (phi_s2_2 | 0x64), get_video2_settings_txtClipH(), 0, 0);
+            arg0 = en_text_write_stuff(arg0, &sp130, &sp12C, get_textptr_for_textID(temp_s3_2->unk2, sp90 - sp128), (s32) subroutine_arg0, (s32) ptrFirstFontTableSmall, (s32) (phi_s2_2 | 0x64), get_video2_settings_txtClipH(), 0, 0);
         }
     }
     temp_s7 = phi_s7 + 1;
@@ -20006,12 +20008,12 @@ loop_4:
     menu_control_stick_tracking();
     if (sp2C != 0)
     {
-        set_menu_to_mode(0x14, 0);
+        set_menu_to_mode(MENU_MP_TEAMS, 0);
         return;
     }
     if (tab_3_selected != 0)
     {
-        set_menu_to_mode(0xe, 0);
+        set_menu_to_mode(MENU_MP_OPTIONS, 0);
     }
 }
 #else
@@ -20209,12 +20211,12 @@ glabel interface_menu13_mpscenario
 #ifdef NONMATCHING
 void constructor_menu13_mpscenario(void)
 {
-    ?32 sp88;
+    s32 sp88;
     s32 sp84;
-    ? sp7C;
+    s32 sp7C;
     s32 sp78;
-    ?32 sp28;
-    ?32 sp24;
+    s32 sp28;
+    s32 sp24;
     s32 sp20;
     s32 temp_ret;
     s32 temp_ret_2;
@@ -20235,7 +20237,7 @@ void constructor_menu13_mpscenario(void)
     phi_s1 = &mp_player_counts;
     phi_s2 = 0;
     phi_s5 = 0x83;
-    phi_s4 = write_text_at_abs_coord(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp88, &sp84, get_textptr_for_textID(TEXT(LTITLE, 0x57)), (?32) ptrSecondFontTableLarge, (?32) subroutine_arg0, 0xff);
+    phi_s4 = write_text_at_abs_coord(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp88, &sp84, get_textptr_for_textID(TEXT(LTITLE, 0x57)), (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0, 0xff);
 loop_1:
     if ((phi_s1->unk3 < get_selected_num_players()) || (get_selected_num_players() < phi_s1->unk2))
     {
@@ -20246,7 +20248,7 @@ loop_1:
 
     }
     temp_ret = get_textptr_for_textID(phi_s1->unk0);
-    sub_GAME_7F0AE98C(&sp7C, &sp78, temp_ret, ptrSecondFontTableLarge, (?32) subroutine_arg0, 0);
+    sub_GAME_7F0AE98C(&sp7C, &sp78, temp_ret, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
     sp88 = 0x39;
     temp_v1 = phi_s5;
     phi_s4_2 = phi_s4;
@@ -20259,7 +20261,7 @@ loop_1:
     sp20 = get_video2_settings_txtClipH();
     sp24 = 0;
     sp28 = 0;
-    temp_ret_2 = write_text_at_abs_coord(phi_s4_2, &sp88, &sp84, temp_ret, (?32) ptrSecondFontTableLarge, (?32) subroutine_arg0);
+    temp_ret_2 = write_text_at_abs_coord(phi_s4_2, &sp88, &sp84, temp_ret, (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0);
     temp_s2 = phi_s2 + 1;
     phi_s1 = phi_s1 + 4;
     phi_s2 = temp_s2;
@@ -20428,9 +20430,9 @@ glabel constructor_menu13_mpscenario
 
 
 #ifdef NONMATCHING
-ulonglong get_players_team_or_scenario_item_flag(int player)
+s32 get_players_team_or_scenario_item_flag(int player)
 {
-  return (ulonglong)(byte)(&player1_player_data)[player].have_token_or_goldengun;
+  return (s32)(u8)(&player1_player_data)[player].have_token_or_goldengun;
 }
 #else
 GLOBAL_ASM(
@@ -20507,8 +20509,8 @@ return;
 void interface_menu14_mpteams(void)
 {
     s32 phi_s0;
-    ? phi_a1;
-    ? phi_a1_2;
+    s32 phi_a1;
+    s32 phi_a1_2;
     s32 phi_s0_2;
 
     setvideo_far(0x42700000);
@@ -20641,7 +20643,7 @@ loop_29:
         {
             goto loop_29;
         }
-        set_menu_to_mode(0xe, 0);
+        set_menu_to_mode(MENU_MP_OPTIONS, 0);
         play_sfx_a1(ptr_sfx_buf, 0xc7, 0);
     }
 }
@@ -20935,10 +20937,10 @@ glabel interface_menu14_mpteams
 void constructor_menu14_mpteams(s32 arg0)
 {
     s32 spCC;
-    ? spA4;
+    s32 spA4;
     s32 spA0;
     s32 sp9C;
-    ? sp98;
+    s32 sp98;
     s32 sp90;
     s32 sp8C;
     s32 sp88;
@@ -21001,10 +21003,10 @@ loop_4:
         if (temp_s2 != 0)
         {
             temp_ret_2 = get_textptr_for_textID(TEXT(LTITLE, 0x58));
-            sub_GAME_7F0AE98C(&spA4, &spA0, temp_ret_2, ptrSecondFontTableLarge, (?32) subroutine_arg0, 0);
+            sub_GAME_7F0AE98C(&spA4, &spA0, temp_ret_2, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
             sp9C = (s32) ((phi_v0 + 0x7d) - (spA0 >> 1));
             get_video2_settings_txtClipW();
-            phi_s5_2 = write_text_at_abs_coord(temp_s5, &sp9C, &sp98, temp_ret_2, (?32) ptrSecondFontTableLarge, (?32) subroutine_arg0, 0xff, get_video2_settings_txtClipH(), 0, 0);
+            phi_s5_2 = write_text_at_abs_coord(temp_s5, &sp9C, &sp98, temp_ret_2, (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0, 0xff, get_video2_settings_txtClipH(), 0, 0);
         }
         if (scenario == 5)
         {
@@ -21035,7 +21037,7 @@ loop_4:
         {
 
         }
-        sub_GAME_7F0AE98C(&sp90, &sp8C, phi_s1, ptrSecondFontTableLarge, (?32) subroutine_arg0, 0);
+        sub_GAME_7F0AE98C(&sp90, &sp8C, phi_s1, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
         sp88 = (s32) (spB4 - (sp8C >> 1));
         sp84 = (s32) ((temp_s6 - (sp90 >> 1)) + 0x46);
         if ((phi_s4 == teamsize) && (phi_s4 == teamsize))
@@ -21045,7 +21047,7 @@ loop_4:
             {
 block_26:
                 get_video2_settings_txtClipW();
-                phi_s5_4 = write_text_at_abs_coord(phi_s5_2, &sp88, &sp84, phi_s1, (?32) ptrSecondFontTableLarge, (?32) subroutine_arg0, get_video2_settings_txtClipH(), 0, 0);
+                phi_s5_4 = write_text_at_abs_coord(phi_s5_2, &sp88, &sp84, phi_s1, (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0, get_video2_settings_txtClipH(), 0, 0);
             }
         }
         else
@@ -21574,12 +21576,12 @@ void interface_menu0A_briefing(void)
     menu_control_stick_tracking();
     if (tab_2_selected != 0)
     {
-        set_menu_to_mode(0xb, 1);
+        set_menu_to_mode(MENU_RUN_STAGE, 1);
         return;
     }
     if (tab_3_selected != 0)
     {
-        set_menu_to_mode(7, 0);
+        set_menu_to_mode(MENU_MISSION_SELECT, 0);
         set_cursor_to_stage_solo((0x80030000 + (briefingpage * 0x1c))->unk-5408);
     }
 }
@@ -21836,19 +21838,19 @@ glabel interface_menu0A_briefing
 
 
 #ifdef NONMATCHING
-uint * print_objectives_and_status_to_menu(uint *param_1,int param_2,byte *param_3,int param_4)
+u32 * print_objectives_and_status_to_menu(u32 *param_1,int param_2,u8 *param_3,int param_4)
 {
   ushort uVar1;
-  byte *pbVar2;
+  u8 *pbVar2;
   short sVar5;
   short sVar6;
-  uint *puVar3;
+  u32 *puVar3;
   int iVar4;
   int iVar7;
-  uint uVar8;
+  u32 uVar8;
   int iVar9;
-  uint uStack24;
-  uint uStack20;
+  u32 uStack24;
+  u32 uStack20;
   int iStack16;
   int iStack12;
   int iStack8;
@@ -21864,12 +21866,12 @@ uint * print_objectives_and_status_to_menu(uint *param_1,int param_2,byte *param
       iStack4 += 1;
     }
     else {
-      if ((longlong)selected_difficulty <
-          (longlong)(ulonglong)*(ushort *)(ptrbriefingdata + iVar7 + 10)) {
+      if ((s32)selected_difficulty <
+          (s32)(s32)*(ushort *)(ptrbriefingdata + iVar7 + 10)) {
         iStack4 += 1;
       }
       else {
-        pbVar2 = get_textptr_for_textID((uint)uVar1);
+        pbVar2 = get_textptr_for_textID((u32)uVar1);
         textpointer_load_parse_something((char *)param_3,aA_);
         *param_3 = *param_3 + (char)iStack8;
         iStack12 = 0;
@@ -21899,7 +21901,7 @@ uint * print_objectives_and_status_to_menu(uint *param_1,int param_2,byte *param
                             (puVar3,&uStack20,&uStack24,param_3,(int)ptrSecondFontTableLarge,
                              (int)ptrFirstFontTableLarge,0xff,(int)sVar5,(int)sVar6,0,0);
         if (param_4 != 0) {
-          iVar4 = get_status_of_objective((longlong)iStack4);
+          iVar4 = get_status_of_objective((s32)iStack4);
           if ((iVar4 == 0) || (iVar4 != 1)) {
             uVar8 = 0x780000ff;
             pbVar2 = get_textptr_for_textID(TEXT(LTITLE, 0x5c));
@@ -22164,25 +22166,25 @@ glabel print_objectives_and_status_to_menu
 
 
 #ifdef NONMATCHING
-undefined4 constructor_menu0A_briefing(undefined4 *param_1)
+s32 constructor_menu0A_briefing(s32 *param_1)
 {
-  undefined4 *puVar1;
-  undefined4 *DL;
-  uint *puVar2;
+  s32 *puVar1;
+  s32 *DL;
+  u32 *puVar2;
   short sVar4;
   short sVar5;
-  undefined4 uVar3;
-  undefined4 *puVar6;
-  undefined4 *puVar7;
-  undefined4 auStack3012 [750];
-  uint uStack12;
-  uint uStack8;
-  byte *pbStack4;
+  s32 uVar3;
+  s32 *puVar6;
+  s32 *puVar7;
+  s32 auStack3012 [750];
+  u32 uStack12;
+  u32 uStack8;
+  u8 *pbStack4;
   
   puVar1 = set_setfillcolor(param_1,0,0,0);
   puVar1 = insert_generic_fillrect(puVar1);
-  DL = (undefined4 *)proc_7F00D5E8(puVar1);
-  puVar1 = (undefined4 *)array_80050C54;
+  DL = (s32 *)proc_7F00D5E8(puVar1);
+  puVar1 = (s32 *)array_80050C54;
   puVar6 = auStack3012;
   do {
     puVar7 = puVar1 + 3;
@@ -22191,9 +22193,9 @@ undefined4 constructor_menu0A_briefing(undefined4 *param_1)
     puVar6[2] = puVar1[2];
     puVar1 = puVar7;
     puVar6 = puVar6 + 3;
-  } while (puVar7 != (undefined4 *)a02d02d);
+  } while (puVar7 != (s32 *)a02d02d);
   puVar2 = microcode_constructor(DL);
-  puVar2 = print_current_solo_briefing_stage_name(puVar2,(byte *)auStack3012);
+  puVar2 = print_current_solo_briefing_stage_name(puVar2,(u8 *)auStack3012);
   switch(current_menu_briefing_page) {
   case BRIEFING_TITLE:
     pbStack4 = get_textptr_for_textID(TEXT(LTITLE, 0x5d));
@@ -22218,36 +22220,36 @@ undefined4 constructor_menu0A_briefing(undefined4 *param_1)
                      (puVar2,&uStack8,&uStack12,pbStack4,(int)ptrSecondFontTableLarge,
                       (int)ptrFirstFontTableLarge,0xff,(int)sVar4,(int)sVar5,0,0);
   if (current_menu_briefing_page == BRIEFING_TITLE) {
-    puVar2 = print_objectives_and_status_to_menu(puVar2,0xa7,(byte *)auStack3012,0);
+    puVar2 = print_objectives_and_status_to_menu(puVar2,0xa7,(u8 *)auStack3012,0);
   }
   else {
     if (current_menu_briefing_page == BRIEFING_OVERVIEW) {
-      pbStack4 = get_textptr_for_textID((uint)*(ushort *)ptrbriefingdata);
+      pbStack4 = get_textptr_for_textID((u32)*(ushort *)ptrbriefingdata);
     }
     else {
       if (current_menu_briefing_page == BRIEFING_M) {
-        pbStack4 = get_textptr_for_textID((uint)*(ushort *)(ptrbriefingdata + 2));
+        pbStack4 = get_textptr_for_textID((u32)*(ushort *)(ptrbriefingdata + 2));
       }
       else {
         if (current_menu_briefing_page == BRIEFING_Q) {
-          pbStack4 = get_textptr_for_textID((uint)*(ushort *)(ptrbriefingdata + 4));
+          pbStack4 = get_textptr_for_textID((u32)*(ushort *)(ptrbriefingdata + 4));
         }
         else {
           if (current_menu_briefing_page == BRIEFING_MONEYPENNY) {
-            pbStack4 = get_textptr_for_textID((uint)*(ushort *)(ptrbriefingdata + 6));
+            pbStack4 = get_textptr_for_textID((u32)*(ushort *)(ptrbriefingdata + 6));
           }
         }
       }
     }
     uStack8 = 0x37;
     uStack12 = 0xa7;
-    proc_7F0AEB64(0x140,pbStack4,(byte *)auStack3012,(int)ptrSecondFontTableLarge,
+    proc_7F0AEB64(0x140,pbStack4,(u8 *)auStack3012,(int)ptrSecondFontTableLarge,
                   (int *)ptrFirstFontTableLarge);
     proc_7F0ACBA0(8);
     sVar4 = get_video2_settings_txtClipW();
     sVar5 = get_video2_settings_txtClipH();
     puVar2 = write_text_at_abs_coord
-                       (puVar2,&uStack8,&uStack12,(byte *)auStack3012,(int)ptrSecondFontTableLarge,
+                       (puVar2,&uStack8,&uStack12,(u8 *)auStack3012,(int)ptrSecondFontTableLarge,
                         (int)ptrFirstFontTableLarge,0xff,(int)sVar4,(int)sVar5,0,0);
     proc_7F0ACBA0(0xffffffff);
   }
@@ -22571,12 +22573,12 @@ void interface_menu0C_missionfailed(void)
     menu_control_stick_tracking();
     if (tab_2_selected != 0)
     {
-        set_menu_to_mode(0xd, 0);
+        set_menu_to_mode(MENU_MISSION_COMPLETE, 0);
         return;
     }
     if (tab_3_selected != 0)
     {
-        set_menu_to_mode(7, 0);
+        set_menu_to_mode(MENU_MISSION_SELECT, 0);
         set_cursor_to_stage_solo(mission_folder_setup_entries[briefingpage].mission_num);
     }
 }
@@ -22737,7 +22739,7 @@ glabel interface_menu0C_missionfailed
 
 
 #ifdef NONMATCHING
-? sub_GAME_7F01631C(void)
+s32 sub_GAME_7F01631C(void)
 {
     s32 temp_s0;
     s32 phi_s1;
@@ -22844,10 +22846,10 @@ glabel sub_GAME_7F01631C
 void constructor_menu0C_missionfailed(s32 arg0)
 {
     s32 spC14;
-    ?32 spC10;
-    ? sp58;
+    s32 spC10;
+    s32 sp58;
     s32 sp50;
-    ?32 sp4C;
+    s32 sp4C;
     s32 sp48;
     s16 sp44;
     s32 temp_ret;
@@ -22858,15 +22860,15 @@ void constructor_menu0C_missionfailed(s32 arg0)
     spC14 = 0x37;
     spC10 = 0x8f;
     sp44 = get_video2_settings_txtClipW();
-    arg0 = write_text_at_abs_coord(arg0, &spC14, &spC10, get_textptr_for_textID(TEXT(LTITLE, 0x62)), (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    arg0 = write_text_at_abs_coord(arg0, &spC14, &spC10, get_textptr_for_textID(TEXT(LTITLE, 0x62)), (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret = get_textptr_for_textID(TEXT(LTITLE, 0x63));
     sp48 = 0;
     sp4C = 0;
-    sub_GAME_7F0AE98C(&sp4C, &sp48, temp_ret, ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0);
+    sub_GAME_7F0AE98C(&sp4C, &sp48, temp_ret, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
     spC14 = 0x37;
     spC10 = 0xa7;
     sp44 = get_video2_settings_txtClipW();
-    arg0 = write_text_at_abs_coord(arg0, &spC14, &spC10, temp_ret, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    arg0 = write_text_at_abs_coord(arg0, &spC14, &spC10, temp_ret, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     if (mission_kia_flag != 0)
     {
         phi_v1 = 0x780000ff;
@@ -22897,7 +22899,7 @@ void constructor_menu0C_missionfailed(s32 arg0)
     spC14 = (s32) (sp48 + 0x37);
     sp50 = (s32) phi_v1;
     sp44 = get_video2_settings_txtClipW();
-    load_draw_selected_icon_folder_select(add_tab3_previous(add_tab2_next(print_objectives_and_status_to_menu(write_text_at_abs_coord(arg0, &spC14, &spC10, phi_s0, (?32) ptrSecondFontTableLarge, (?32) ptrFirstFontTableLarge, (s32) phi_v1, sp44, get_video2_settings_txtClipH(), 0, 0), 0xbf, &sp58, 1))));
+    load_draw_selected_icon_folder_select(add_tab3_previous(add_tab2_next(print_objectives_and_status_to_menu(write_text_at_abs_coord(arg0, &spC14, &spC10, phi_s0, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, (s32) phi_v1, sp44, get_video2_settings_txtClipH(), 0, 0), 0xbf, &sp58, 1))));
 }
 #else
 GLOBAL_ASM(
@@ -23102,11 +23104,11 @@ void update_menu0D_missioncomplete(void) {
 
 
 #ifdef NONMATCHING
-void interface_menu0D_missioncomplete(undefined8 param_1,undefined8 param_2)
+void interface_menu0D_missioncomplete(u32 param_1,u32 param_2)
 {
-  BOOL BVar3;
-  ulonglong uVar1;
-  longlong lVar2;
+  u32 BVar3;
+  s32 uVar1;
+  s32 lVar2;
   mission_folder_setup *pmVar4;
   mission_folder_setup *pmVar5;
   int entry;
@@ -23133,19 +23135,19 @@ void interface_menu0D_missioncomplete(undefined8 param_1,undefined8 param_2)
   if (get_controller_buttons_pressed(0,START_BUTTON|Z_TRIG|A_BUTTON) == 0) {
     if (get_controller_buttons_pressed(0,B_BUTTON) != 0) {
       tab_3_selected = TRUE;
-      play_sfx_a1((longlong)(int)ptr_sfx_buf,199,NULL);
+      play_sfx_a1((s32)(int)ptr_sfx_buf,199,NULL);
     }
   }
   else {
     if (tab_2_highlight == FALSE) {
       if (tab_3_highlight != FALSE) {
         tab_3_selected = TRUE;
-        play_sfx_a1((longlong)(int)ptr_sfx_buf,199,NULL);
+        play_sfx_a1((s32)(int)ptr_sfx_buf,199,NULL);
       }
     }
     else {
       tab_2_selected = TRUE;
-      play_sfx_a1((longlong)(int)ptr_sfx_buf,199,NULL);
+      play_sfx_a1((s32)(int)ptr_sfx_buf,199,NULL);
     }
   }
   disable_all_switches((int)ptr_folder_object_instance);
@@ -23157,7 +23159,7 @@ void interface_menu0D_missioncomplete(undefined8 param_1,undefined8 param_2)
   if (tab_2_selected == FALSE) {
     if (tab_3_selected != FALSE) {
       set_menu_to_mode(MENU_MISSION_SELECT,0);
-      set_cursor_to_stage_solo((longlong)mission_folder_setup_entries[briefingpage].mission_num);
+      set_cursor_to_stage_solo((s32)mission_folder_setup_entries[briefingpage].mission_num);
     }
   }
   else {
@@ -23195,7 +23197,7 @@ void interface_menu0D_missioncomplete(undefined8 param_1,undefined8 param_2)
         }
         else {
           set_menu_to_mode(MENU_MISSION_SELECT,0);
-          set_cursor_to_stage_solo((longlong)mission_folder_setup_entries[briefingpage].mission_num)
+          set_cursor_to_stage_solo((s32)mission_folder_setup_entries[briefingpage].mission_num)
           ;
         }
       }
@@ -24580,11 +24582,11 @@ glabel constructor_menu0D_missioncomplete
 
 
 #ifdef NONMATCHING
-void interface_menu0D_missioncomplete(undefined8 param_1,undefined8 param_2)
+void interface_menu0D_missioncomplete(u32 param_1,u32 param_2)
 {
-  BOOL BVar3;
-  ulonglong uVar1;
-  longlong lVar2;
+  u32 BVar3;
+  s32 uVar1;
+  s32 lVar2;
   mission_folder_setup *pmVar4;
   mission_folder_setup *pmVar5;
   int entry;
@@ -24615,19 +24617,19 @@ void interface_menu0D_missioncomplete(undefined8 param_1,undefined8 param_2)
     uVar1 = get_controller_buttons_pressed(0,B_BUTTON);
     if (uVar1 != 0) {
       tab_3_selected = TRUE;
-      play_sfx_a1((longlong)(int)ptr_sfx_buf,199,NULL);
+      play_sfx_a1((s32)(int)ptr_sfx_buf,199,NULL);
     }
   }
   else {
     if (tab_2_highlight == FALSE) {
       if (tab_3_highlight != FALSE) {
         tab_3_selected = TRUE;
-        play_sfx_a1((longlong)(int)ptr_sfx_buf,199,NULL);
+        play_sfx_a1((s32)(int)ptr_sfx_buf,199,NULL);
       }
     }
     else {
       tab_2_selected = TRUE;
-      play_sfx_a1((longlong)(int)ptr_sfx_buf,199,NULL);
+      play_sfx_a1((s32)(int)ptr_sfx_buf,199,NULL);
     }
   }
   disable_all_switches((int)ptr_folder_object_instance);
@@ -24639,7 +24641,7 @@ void interface_menu0D_missioncomplete(undefined8 param_1,undefined8 param_2)
   if (tab_2_selected == FALSE) {
     if (tab_3_selected != FALSE) {
       set_menu_to_mode(MENU_MISSION_SELECT,0);
-      set_cursor_to_stage_solo((longlong)mission_folder_setup_entries[briefingpage].mission_num);
+      set_cursor_to_stage_solo((s32)mission_folder_setup_entries[briefingpage].mission_num);
     }
   }
   else {
@@ -24677,7 +24679,7 @@ void interface_menu0D_missioncomplete(undefined8 param_1,undefined8 param_2)
         }
         else {
           set_menu_to_mode(MENU_MISSION_SELECT,0);
-          set_cursor_to_stage_solo((longlong)mission_folder_setup_entries[briefingpage].mission_num)
+          set_cursor_to_stage_solo((s32)mission_folder_setup_entries[briefingpage].mission_num)
           ;
         }
       }
@@ -24739,11 +24741,11 @@ glabel init_menu15_cheat
 #ifdef NONMATCHING
 void update_menu15_cheat(void)
 {
-  longlong lVar1;
+  s32 lVar1;
   int i;
   undefined1 *puVar2;
-  BOOL appendsp;
-  BOOL appendmp;
+  u32 appendsp;
+  u32 appendmp;
   
   appendsp = FALSE;
   appendmp = FALSE;
@@ -24812,10 +24814,10 @@ glabel update_menu15_cheat
 
 
 #ifdef NONMATCHING
-void interface_menu15_cheat(undefined8 param_1,undefined8 param_2)
+void interface_menu15_cheat(u32 param_1,u32 param_2)
 {
   int iVar1;
-  BOOL BVar3;
+  u32 BVar3;
   int iVar4;
   int iVar5;
   
@@ -24876,7 +24878,7 @@ void interface_menu15_cheat(undefined8 param_1,undefined8 param_2)
     uVar2 = get_controller_buttons_pressed(0,B_BUTTON);
     if (uVar2 != 0) {
       tab_3_selected = TRUE;
-      play_sfx_a1((longlong)(int)ptr_sfx_buf,199,NULL);
+      play_sfx_a1((s32)(int)ptr_sfx_buf,199,NULL);
     }
   }
   else {
@@ -24886,7 +24888,7 @@ void interface_menu15_cheat(undefined8 param_1,undefined8 param_2)
     else {
       tab_3_selected = TRUE;
     }
-    play_sfx_a1((longlong)(int)ptr_sfx_buf,199,NULL);
+    play_sfx_a1((s32)(int)ptr_sfx_buf,199,NULL);
   }
   disable_all_switches((int)ptr_folder_object_instance);
   set_item_visibility_in_objinstance((int)ptr_folder_object_instance,0,1);
@@ -25849,7 +25851,7 @@ glabel constructor_menu16_nocontrollers
 #endif
 
 #ifdef NONMATCHING
-void do_extended_cast_display(BOOL flag)
+void do_extended_cast_display(u32 flag)
 {
   if (flag != FALSE) {
     do_not_play_intro_movie = 0;
@@ -25887,15 +25889,15 @@ glabel do_extended_cast_display
 void init_menu18_displaycast(void)
 {
   object_header *objheader;
-  uint uVar2;
-  uint uVar3;
+  u32 uVar2;
+  u32 uVar3;
   int iVar4;
-  longlong lVar1;
-  BOOL BVar5;
+  s32 lVar1;
+  u32 BVar5;
   int iVar6;
-  undefined4 extraout_a2_lo;
-  undefined4 extraout_a2_lo_00;
-  undefined4 extraout_a3_lo;
+  s32 extraout_a2_lo;
+  s32 extraout_a2_lo_00;
+  s32 extraout_a3_lo;
   int *piVar7;
   int *piVar8;
   int *piVar9;
@@ -25915,8 +25917,8 @@ void init_menu18_displaycast(void)
   BODIES bodyID;
   int aiStack40 [4];
   float local_18;
-  undefined4 local_14;
-  undefined4 local_10;
+  s32 local_14;
+  s32 local_10;
   undefined *local_8;
   undefined *local_4;
   
@@ -25985,7 +25987,7 @@ void init_menu18_displaycast(void)
     headID = get_random_head(bodyID);
   }
   local_8 = &DAT_00031160;
-  proc_7F0D2448(((uint)(local_4 + 0x3119f) | 0x3f) ^ 0x3f,0x1b8,0x14a);
+  proc_7F0D2448(((u32)(local_4 + 0x3119f) | 0x3f) ^ 0x3f,0x1b8,0x14a);
   proc_7F0CBAF4(aiStack40,(int)local_4,0x19000);
   objheader = c_item_entries[bodyID].header;
   local_4 = local_4 + 0x19000;
@@ -25993,7 +25995,7 @@ void init_menu18_displaycast(void)
   load_object_fill_header
             (objheader,(int *)c_item_entries[bodyID].filename,(int)local_4,(int)local_8,
              (int)aiStack40);
-  iVar4 = proc_7F0BD188((byte *)c_item_entries[bodyID].filename);
+  iVar4 = proc_7F0BD188((u8 *)c_item_entries[bodyID].filename);
   uVar3 = (iVar4 + 0x3fU | 0x3f) ^ 0x3f;
   local_8 = local_8 + -uVar3;
   local_4 = local_4 + uVar3;
@@ -26002,7 +26004,7 @@ void init_menu18_displaycast(void)
     load_object_fill_header
               (headHeader,(int *)c_item_entries[headID].filename,(int)local_4,(int)local_8,
                (int)aiStack40);
-    iVar4 = proc_7F0BD188((byte *)c_item_entries[headID].filename);
+    iVar4 = proc_7F0BD188((u8 *)c_item_entries[headID].filename);
     uVar3 = (iVar4 + 0x3fU | 0x3f) ^ 0x3f;
     local_8 = local_8 + -uVar3;
     local_4 = local_4 + uVar3;
@@ -26052,7 +26054,7 @@ void init_menu18_displaycast(void)
     load_object_fill_header
               (objheader,(int *)PitemZ_entries[iVar6].filename,(int)local_4,(int)local_8,
                (int)aiStack40);
-    proc_7F0BD188((byte *)PitemZ_entries[iVar6].filename);
+    proc_7F0BD188((u8 *)PitemZ_entries[iVar6].filename);
     set_objuse_flag_compute_grp_nums_set_obj_loaded(objheader);
     ptrobjinstance = (undefined *)get_obj_instance_controller_for_header((PitemZ_header *)objheader)
     ;
@@ -26062,15 +26064,15 @@ void init_menu18_displaycast(void)
     if ((uVar2 & 1) != 0) {
       iVar6 = 5;
     }
-    *(undefined4 *)(ptrobjinstance + 0x1c) =
-         *(undefined4 *)(*(int *)(*(int *)(objinstance + 8) + 8) + iVar6 * 4);
+    *(s32 *)(ptrobjinstance + 0x1c) =
+         *(s32 *)(*(int *)(*(int *)(objinstance + 8) + 8) + iVar6 * 4);
   }
   proc_7F06CE84((int)objinstance,0x3dcccccd);
   setsuboffset((int)objinstance,&local_18,extraout_a2_lo,extraout_a3_lo);
   setsubroty((int)objinstance,extraout_f12,0.00000000,extraout_a2_lo_00);
   proc_7F06FF18((int)objinstance,extraout_f12_00,extraout_f14);
   proc_7F06FCA8((int)objinstance,
-                *(undefined4 *)
+                *(s32 *)
                  (animation_table_ptrs1 +
                  intro_animation_table[randomly_selected_intro_animation].animID * 4),
                 (char)(uVar2 & 1),extraout_f12_01,
@@ -26767,11 +26769,11 @@ void update_menu18_displaycast(void) {
 
 
 #ifdef NONMATCHING
-void interface_menu18_displaycast(undefined8 param_1,undefined8 param_2)
+void interface_menu18_displaycast(u32 param_1,u32 param_2)
 {
-  BOOL BVar2;
-  uint uVar3;
-  ulonglong uVar1;
+  u32 BVar2;
+  u32 uVar3;
+  s32 uVar1;
   int iVar4;
   
   setvideo_far(46.00000000);
@@ -28442,7 +28444,7 @@ glabel interface_menu19_spectrum
 
 #ifdef NONMATCHING
 void constructor_menu19_spectrum(void) {
-    ? temp_ret;
+    s32 temp_ret;
 
     // Node 0
     temp_ret = insert_imageDL();
@@ -28595,7 +28597,7 @@ MENU get_currentmenu(void)
 
 
 #ifdef NONMATCHING
-void menu_init(undefined8 param_1,undefined8 param_2)
+void menu_init(u32 param_1,u32 param_2)
 {
     MENU MVar1;
     

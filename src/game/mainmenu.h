@@ -805,5 +805,6 @@ extern u32 intro_animation_count;
 extern u32 objinstance;
 extern u32 ptrobjinstance;
 extern u32 full_actor_intro;
+void set_menu_to_mode(MENU menu, u32 mode);
 
 #endif
