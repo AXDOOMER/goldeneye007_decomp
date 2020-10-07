@@ -366,10 +366,14 @@ glabel get_ptr_inventory_item
 
 
 
-
-
-int is_weapon_in_inv(int item) {
-    return get_ptr_inventory_item(item) != 0;
+/**
+ * Is item in inventory
+ * @param item: enum Item ID eg: ITEM_KNIFE
+ * @return TRUE/FALSE
+ */
+int is_weapon_in_inv(int item) 
+{
+    return (get_ptr_inventory_item(item) != 0);
 }
 
 
@@ -422,9 +426,15 @@ glabel get_ptr_inventory_for_item_in_hand
 
 
 
-
-int is_item_for_hand_in_inventory(int item, int hand) {
-    return get_ptr_inventory_for_item_in_hand(item, hand) != 0;
+/**
+ * Is item for hand in inventory
+ * @param item: enum Item ID eg: ITEM_KNIFE
+ * @param hand: enum Hand ID eg: HAND_LEFT
+ * @return TRUE/FALSE
+ */
+int is_item_for_hand_in_inventory(int item, int hand) 
+{
+    return (get_ptr_inventory_for_item_in_hand(item, hand) != 0);
 }
 
 
@@ -2094,9 +2104,13 @@ glabel sub_GAME_7F08CF80
 
 
 
-
-int checkforgoldengun(void) {
-  return is_weapon_in_inv(19);
+/**
+ * Is the Golden Gun in inventory
+ * @return TRUE/FALSE
+ */
+int checkforgoldengun(void) 
+{
+  return is_weapon_in_inv(ITEM_GOLDENGUN);
 }
 
 
