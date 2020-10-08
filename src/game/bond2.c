@@ -3,6 +3,7 @@
 #include "game/chr.h"
 #include "game/unk_093880.h"
 #include "game/textrelated.h"
+#include "bondconstants.h"
 
 #ifdef NONMATCHING
 void reinit_BONDdata_inventory(void) {
