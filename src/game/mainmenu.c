@@ -455,38 +455,52 @@ s32 current_menu = -1;
 s32 menu_update = -1;
 s32 maybe_prev_menu = -1;
 s32 menu_timer = 0;
-s32 tab_1_selected = 0;
-s32 tab_2_selected = 0;
-s32 tab_3_selected = 0;
-s32 tab_1_highlight = 0;
-s32 tab_2_highlight = 0;
-s32 tab_3_highlight = 0;
+
+s32 tab_1_selected = FALSE;
+s32 tab_2_selected = FALSE;
+s32 tab_3_selected = FALSE;
+s32 tab_1_highlight = FALSE;
+s32 tab_2_highlight = FALSE;
+s32 tab_3_highlight = FALSE;
+
 s32 selected_folder_num = 0;
 s32 selected_folder_num_copy = 0;
-s32 gamemode = -1;//GAMEMODE_INTRO;
+
+s32 gamemode = GAMEMODE_INTRO;
 s32 selected_stage = -1;
 s32 briefingpage = -1;
-s32 selected_difficulty = -1;//DIFFICULTY_MULTI;
+s32 selected_difficulty = DIFFICULTY_MULTI;
+
 s32 append_cheat_sp = FALSE;
 s32 append_cheat_mp = FALSE;
+
 f32 cursor_h_pos = 220.0;
 f32 cursor_v_pos = 165.0;
+
 s32 final_menu_briefing_page = 2;
 s32 current_menu_briefing_page = 0;
+
 s32 folder_selection_screen_option_icon = 0;
 s32 folder_selected_for_deletion = -1;
 s32 folder_selected_for_deletion_choice = 1;
-s32 mission_failed_or_aborted = 0;
-s32 mission_kia_flag = 0;
+
+s32 mission_failed_or_aborted = FALSE;
+s32 mission_kia_flag = FALSE;
+
 s32 is_first_time_on_legal_screen = TRUE;
 s32 is_first_time_on_main_menu = TRUE;
+
 s32 prev_keypresses = 0;
 s32 D_8002A938 = 0;
+
 s32 maybe_is_in_menu = TRUE;
-s32 screen_size = 0;//SCREEN_SIZE_320x240;
+s32 screen_size = SCREEN_SIZE_320x240;
+
 s32 spectrum_related_flag = 0;
 s32 is_emulating_spectrum = FALSE;
+
 s32 is_cheat_menu_available = FALSE;
+
 s32 ptr_logo_and_walletbond_DL = 0;
 s32 ptr_menu_videobuffer = 0;
 s32 something_legalscreen_constructor = 0;
@@ -507,10 +521,12 @@ u32 D_8002A990 = 0;
 u32 D_8002A994 = 0;
 u32 D_8002A998 = 0;
 u32 D_8002A99C = 0;
+
 f32 slider_007_mode_reaction = 0.0f;
 f32 slider_007_mode_health = 1.0f;
 f32 slider_007_mode_accuracy = 1.0f;
 f32 slider_007_mode_damage = 1.0f;
+
 u32 D_8002A9B0 = 0xA0000000;
 u32 D_8002A9B4 = 0x96000000;
 u32 D_8002A9B8 = 0x28000000;
@@ -889,7 +905,7 @@ s32 player_4_char = -1;
 s32 MP_stage_selected = MP_STAGE_TEMPLE;
 s32 game_length = 2;
 s32 aim_sight_adjustment = 3;
-s32 scenario = 0;
+s32 scenario = SCENARIO_NORMAL;
 s32 unlock_stage_select = 1;
 s32 unlock_game_length = 1;
 s32 unlock_chars = 1;
@@ -1064,46 +1080,6 @@ u32 D_8002BAEC = 1;
 
 u16 color_palette_entries_50_percent[] = {1, 0x1F, 0x3C1, 0x3DF, 0x7801, 0x781F, 0x7BC1, 0x7BDF};
 
-
-
-
-
-const char asc_D_8004F488[] = "\n";
-const char a_[] = ".";
-const char asc_D_8004F490[] = "\n";
-const char a1_[] = "1.\n";
-const char a2_[] = "2.\n";
-const char a3_[] = "3.\n";
-const char asc_D_8004F4A0[] = "\n";
-const char asc_D_8004F4A4[] = ": ";
-const char asc_D_8004F4A8[] = "\n";
-const char asc_D_8004F4AC[] = ": ";
-const char asc_D_8004F4B0[] = "\n";
-const char asc_D_8004F4B4[3000] = {0xA, 0};
-const char aD_[] = "%d.\n";
-const char asc_D_80050074[3000] = {0xA, 0};
-const char aD[] = "%d%%\n";
-const char aD_0[] = "%d%%\n";
-const char aD_1[] = "%d%%\n";
-const char aD_2[] = "%d%%\n";
-const char aD_7[] = "%d";
-const char aA_[] = "a.\n";
-const char asc_D_80050C54[3000] = {0xA,0};
-
-const char a02d02d[] = "%02d:%02d";
-const char aS[] = "     [%s]";
-const char a02d02d_0[] = "%02d:%02d";
-const char aS02d02d[] = "     (%s  %02d:%02d)";
-const char D_80051848[] = "";
-const char a02d02d_1[] = "%02d:%02d";
-const char a_1f[] = "%.1f%%";
-const char aX2[] = " x 2\n";
-const char aD_8[] = "%d";
-const char aDD_0[] = "%d (%d%%)";
-const char aDD_1[] = "%d (%d%%)";
-const char aDD_2[] = "%d (%d%%)";
-const char aDD_3[] = "%d (%d%%)";
-const char aD_10[] = "%d";
 
 
 
@@ -6490,7 +6466,12 @@ loop_24:
     return arg0;
 }
 #else
+const char asc_D_8004F488[] = "\n";
+const char a_[] = ".";
+const char asc_D_8004F490[] = "\n";
 GLOBAL_ASM(
+.rdata
+
 .late_rodata
 glabel D_80051A28
 .word 0x438E8000 /* 285.0;*/
@@ -8198,6 +8179,9 @@ void constructor_menu06_modesel(void)
     load_draw_selected_icon_folder_select(add_tab3_previous(phi_s0_4));
 }
 #else
+const char a1_[] = "1.\n";
+const char a2_[] = "2.\n";
+const char a3_[] = "3.\n";
 GLOBAL_ASM(
 .text
 glabel constructor_menu06_modesel
@@ -9921,6 +9905,7 @@ loop_10:
     load_draw_selected_icon_folder_select(add_tab3_previous(phi_s4_2));
 }
 #else
+const char asc_D_8004F4A0[] = "\n";
 GLOBAL_ASM(
 .text
 glabel constructor_menu07_missionsel
@@ -10511,6 +10496,10 @@ void print_current_solo_briefing_stage_name(s32 arg0, s32 arg1)
     write_text_at_abs_coord(arg0, &sp54, &sp50, arg1, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
 }
 #else
+const char asc_D_8004F4A4[] = ": ";
+const char asc_D_8004F4A8[] = "\n";
+const char asc_D_8004F4AC[] = ": ";
+const char asc_D_8004F4B0[] = "\n";
 GLOBAL_ASM(
 .text
 glabel print_current_solo_briefing_stage_name
@@ -10954,6 +10943,8 @@ loop_37:
     load_draw_selected_icon_folder_select(arg0);
 }
 #else
+const char asc_D_8004F4B4[3000] = {0xA, 0};
+const char aD_[] = "%d.\n";
 GLOBAL_ASM(
 .text
 glabel constructor_menu08_difficulty
@@ -11964,6 +11955,11 @@ loop_1:
     load_draw_selected_icon_folder_select(add_tab2_next(add_tab3_previous(add_tab1_start(write_text_at_abs_coord(temp_s0_8, &spC10, &spC0C, &sp54, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0)))));
 }
 #else
+const char asc_D_80050074[3000] = {0xA, 0};
+const char aD[] = "%d%%\n";
+const char aD_0[] = "%d%%\n";
+const char aD_1[] = "%d%%\n";
+const char aD_2[] = "%d%%\n";
 GLOBAL_ASM(
 .text
 glabel constructor_menu09_007options
@@ -14143,6 +14139,7 @@ void constructor_menu0E_mpoptions(void)
     load_draw_selected_icon_folder_select(add_tab1_start(add_tab3_previous(write_text_at_abs_coord(temp_s0_15, &sp58, &sp54, sp64, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, (s32) phi_v1_11, sp44, get_video2_settings_txtClipH(), 0, 0))));
 }
 #else
+const char aD_7[] = "%d";
 GLOBAL_ASM(
 .text
 glabel constructor_menu0E_mpoptions
@@ -21929,6 +21926,7 @@ u32 * print_objectives_and_status_to_menu(u32 *param_1,int param_2,u8 *param_3,i
   return param_1;
 }
 #else
+const char aA_[] = "a.\n";
 GLOBAL_ASM(
 .text
 glabel print_objectives_and_status_to_menu
@@ -22262,6 +22260,7 @@ s32 constructor_menu0A_briefing(s32 *param_1)
   return uVar3;
 }
 #else
+const char asc_D_80050C54[3000] = {0xA,0};
 GLOBAL_ASM(
 .late_rodata
 glabel jpt_briefingpage_name
@@ -23445,6 +23444,20 @@ void constructor_menu0D_missioncomplete(void) {
 
 }
 #else
+const char a02d02d[] = "%02d:%02d";
+const char aS[] = "     [%s]";
+const char a02d02d_0[] = "%02d:%02d";
+const char aS02d02d[] = "     (%s  %02d:%02d)";
+const char D_80051848[] = "";
+const char a02d02d_1[] = "%02d:%02d";
+const char a_1f[] = "%.1f%%";
+const char aX2[] = " x 2\n";
+const char aD_8[] = "%d";
+const char aDD_0[] = "%d (%d%%)";
+const char aDD_1[] = "%d (%d%%)";
+const char aDD_2[] = "%d (%d%%)";
+const char aDD_3[] = "%d (%d%%)";
+const char aD_10[] = "%d";
 GLOBAL_ASM(
 .text
 glabel constructor_menu0D_missioncomplete
