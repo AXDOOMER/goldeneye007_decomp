@@ -5,46 +5,30 @@
 #include "game/textrelated.h"
 #include "bondconstants.h"
 
-#ifdef NONMATCHING
 void reinit_BONDdata_inventory(void) {
 
+    s32 iVar1;
+    s32 iVar2;
+    
+    iVar1 = 0;
+    
+    if (pPlayer->equipmaxitems > 0) {
+
+      iVar2 = 0;
+
+      do {
+        iVar1 = iVar1 + 1;
+        *(int *)(pPlayer->p_itemcur + iVar2) = -1;
+        iVar2 = iVar2 + 0x14;
+      
+      } while (iVar1 < pPlayer->equipmaxitems);
+
+    }
+
+    pPlayer->ptr_inventory_first_in_cycle = 0;
+    pPlayer->field_11F4 = 0;
+    pPlayer->field_11F0 = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel reinit_BONDdata_inventory
-/* 0C0B20 7F08BFF0 3C058008 */  lui   $a1, %hi(pPlayer)
-/* 0C0B24 7F08BFF4 24A5A0B0 */  addiu $a1, %lo(pPlayer) # addiu $a1, $a1, -0x5f50
-/* 0C0B28 7F08BFF8 8CA30000 */  lw    $v1, ($a1)
-/* 0C0B2C 7F08BFFC 00001025 */  move  $v0, $zero
-/* 0C0B30 7F08C000 00002025 */  move  $a0, $zero
-/* 0C0B34 7F08C004 8C6E11E8 */  lw    $t6, 0x11e8($v1)
-/* 0C0B38 7F08C008 2406FFFF */  li    $a2, -1
-/* 0C0B3C 7F08C00C 59C0000C */  blezl $t6, .L7F08C040
-/* 0C0B40 7F08C010 AC6011E0 */   sw    $zero, 0x11e0($v1)
-/* 0C0B44 7F08C014 8C6F11E4 */  lw    $t7, 0x11e4($v1)
-.L7F08C018:
-/* 0C0B48 7F08C018 24420001 */  addiu $v0, $v0, 1
-/* 0C0B4C 7F08C01C 01E4C021 */  addu  $t8, $t7, $a0
-/* 0C0B50 7F08C020 AF060000 */  sw    $a2, ($t8)
-/* 0C0B54 7F08C024 8CA30000 */  lw    $v1, ($a1)
-/* 0C0B58 7F08C028 24840014 */  addiu $a0, $a0, 0x14
-/* 0C0B5C 7F08C02C 8C7911E8 */  lw    $t9, 0x11e8($v1)
-/* 0C0B60 7F08C030 0059082A */  slt   $at, $v0, $t9
-/* 0C0B64 7F08C034 5420FFF8 */  bnezl $at, .L7F08C018
-/* 0C0B68 7F08C038 8C6F11E4 */   lw    $t7, 0x11e4($v1)
-/* 0C0B6C 7F08C03C AC6011E0 */  sw    $zero, 0x11e0($v1)
-.L7F08C040:
-/* 0C0B70 7F08C040 8CA80000 */  lw    $t0, ($a1)
-/* 0C0B74 7F08C044 AD0011F4 */  sw    $zero, 0x11f4($t0)
-/* 0C0B78 7F08C048 8CA90000 */  lw    $t1, ($a1)
-/* 0C0B7C 7F08C04C 03E00008 */  jr    $ra
-/* 0C0B80 7F08C050 AD2011F0 */   sw    $zero, 0x11f0($t1)
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
