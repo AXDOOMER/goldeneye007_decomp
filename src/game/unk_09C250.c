@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "game/unk_09C250.h"
 
 // bss
 //CODE.bss:8007A100
