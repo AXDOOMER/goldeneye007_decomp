@@ -322,22 +322,10 @@ u8 cheat_activated_77;
 //CODE.bss:800696EF
 u8 cheat_activated_78;
 
+
 //CODE.bss:800696F0
-s32 fav_weapon_right_player1;
-//CODE.bss:800696F4
-s32 fav_weapon_left_player1;
-//CODE.bss:800696F8
-s32 fav_weapon_right_player2;
-//CODE.bss:800696FC
-s32 fav_weapon_left_player2;
-//CODE.bss:80069700
-s32 fav_weapon_right_player3;
-//CODE.bss:80069704
-s32 fav_weapon_left_player3;
-//CODE.bss:80069708
-s32 fav_weapon_right_player4;
-//CODE.bss:8006970C
-s32 fav_weapon_left_player4;
+s32 array_favweapon[4][2];
+
 //CODE.bss:80069710
 s32 mp_char_cur_select_player1;
 //CODE.bss:80069714
@@ -1623,29 +1611,11 @@ def_7F00986C:
 
 
 
-#ifdef NONMATCHING
+
 int getplayerfavoredweapon(int player,int hand) {
-    return get_ptr_long_watch_text_for_item(array_favweapon[player].hand[hand]);
+    return get_ptr_long_watch_text_for_item(array_favweapon[player][hand]);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel getplayerfavoredweapon
-/* 03E680 7F009B50 000470C0 */  sll   $t6, $a0, 3
-/* 03E684 7F009B54 00057880 */  sll   $t7, $a1, 2
-/* 03E688 7F009B58 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 03E68C 7F009B5C 01CFC021 */  addu  $t8, $t6, $t7
-/* 03E690 7F009B60 3C048007 */  lui   $a0, %hi(fav_weapon_right_player1)
-/* 03E694 7F009B64 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 03E698 7F009B68 00982021 */  addu  $a0, $a0, $t8
-/* 03E69C 7F009B6C 0FC19C37 */  jal   get_ptr_long_watch_text_for_item
-/* 03E6A0 7F009B70 8C8496F0 */   lw    $a0, %lo(fav_weapon_right_player1)($a0)
-/* 03E6A4 7F009B74 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 03E6A8 7F009B78 27BD0018 */  addiu $sp, $sp, 0x18
-/* 03E6AC 7F009B7C 03E00008 */  jr    $ra
-/* 03E6B0 7F009B80 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -24088,8 +24058,8 @@ glabel constructor_menu0D_missioncomplete
 /* 04BEA4 7F017374 27A400A8 */  addiu $a0, $sp, 0xa8
 /* 04BEA8 7F017378 0C0029DC */  jal   textpointer_load_parse_something
 /* 04BEAC 7F01737C 00402825 */   move  $a1, $v0
-/* 04BEB0 7F017380 3C048007 */  lui   $a0, %hi(fav_weapon_right_player1)
-/* 04BEB4 7F017384 248496F0 */  addiu $a0, %lo(fav_weapon_right_player1) # addiu $a0, $a0, -0x6910
+/* 04BEB0 7F017380 3C048007 */  lui   $a0, %hi(array_favweapon)
+/* 04BEB4 7F017384 248496F0 */  addiu $a0, %lo(array_favweapon) # addiu $a0, $a0, -0x6910
 /* 04BEB8 7F017388 8C830000 */  lw    $v1, ($a0)
 /* 04BEBC 7F01738C 5860000D */  blezl $v1, .L7F0173C4
 /* 04BEC0 7F017390 240E00BE */   li    $t6, 190
