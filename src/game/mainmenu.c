@@ -2607,48 +2607,13 @@ glabel add_tab1_start
 
 
 
-#ifdef NONMATCHING
-u32 isontab1(void) {
-  if ((390.00000000f < cursor_h_pos) && (cursor_v_pos <= tab1_max_x_coord)) {
+
+s32 isontab1(void) {
+  if ((390.00000000f < cursor_h_pos) && (cursor_v_pos <= 130.5f)) {
     return TRUE;
   }
   return FALSE;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel tab1_max_x_coord
-.word 0x43028000 /* 130.5;*/
-
-.text
-glabel isontab1
-/* 03ED14 7F00A1E4 3C0143C3 */  li    $at, 0x43C30000 # 390.000000
-/* 03ED18 7F00A1E8 44812000 */  mtc1  $at, $f4
-/* 03ED1C 7F00A1EC 3C018003 */  lui   $at, %hi(cursor_h_pos)
-/* 03ED20 7F00A1F0 C426A908 */  lwc1  $f6, %lo(cursor_h_pos)($at)
-/* 03ED24 7F00A1F4 3C018005 */  lui   $at, %hi(tab1_max_x_coord)
-/* 03ED28 7F00A1F8 00001025 */  move  $v0, $zero
-/* 03ED2C 7F00A1FC 4606203C */  c.lt.s $f4, $f6
-/* 03ED30 7F00A200 00000000 */  nop   
-/* 03ED34 7F00A204 4500000A */  bc1f  .L7F00A230
-/* 03ED38 7F00A208 00000000 */   nop   
-/* 03ED3C 7F00A20C C42819D8 */  lwc1  $f8, %lo(tab1_max_x_coord)($at)
-/* 03ED40 7F00A210 3C018003 */  lui   $at, %hi(cursor_v_pos)
-/* 03ED44 7F00A214 C42AA90C */  lwc1  $f10, %lo(cursor_v_pos)($at)
-/* 03ED48 7F00A218 4608503E */  c.le.s $f10, $f8
-/* 03ED4C 7F00A21C 00000000 */  nop   
-/* 03ED50 7F00A220 45000003 */  bc1f  .L7F00A230
-/* 03ED54 7F00A224 00000000 */   nop   
-/* 03ED58 7F00A228 03E00008 */  jr    $ra
-/* 03ED5C 7F00A22C 24020001 */   li    $v0, 1
-.L7F00A230:
-/* 03ED60 7F00A230 03E00008 */  jr    $ra
-/* 03ED64 7F00A234 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
