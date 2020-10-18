@@ -24565,109 +24565,31 @@ glabel constructor_menu0D_missioncomplete
 
 
 #ifdef NONMATCHING
-void interface_menu0D_missioncomplete(u32 param_1,u32 param_2)
+void init_menu15_cheat(void)
+
 {
-  u32 BVar3;
-  s32 uVar1;
-  s32 lVar2;
-  mission_folder_setup *pmVar4;
-  mission_folder_setup *pmVar5;
-  int entry;
-  short sVar6;
-  int iVar7;
-  
-  setvideo_far(60.00000000);
-  video_related_21((f32)menu0D_aspect);
-  set_page_height(100.00000000,(f32)menu0D_pageheight);
-  set_video2_settings_offset_24(0);
-  tab_3_highlight = FALSE;
-  tab_2_highlight = FALSE;
-  BVar3 = isontab3();
-  if (BVar3 == FALSE) {
-    BVar3 = isontab2();
-    if (BVar3 == FALSE) {
-      tab_2_highlight = TRUE;
-    }
-    else {
-      tab_2_highlight = TRUE;
-    }
-  }
-  else {
-    tab_3_highlight = TRUE;
-  }
-  uVar1 = get_controller_buttons_pressed(0,START_BUTTON|Z_TRIG|A_BUTTON);
-  if (uVar1 == 0) {
-    uVar1 = get_controller_buttons_pressed(0,B_BUTTON);
-    if (uVar1 != 0) {
-      tab_3_selected = TRUE;
-      play_sfx_a1((s32)(int)ptr_sfx_buf,199,NULL);
-    }
-  }
-  else {
-    if (tab_2_highlight == FALSE) {
-      if (tab_3_highlight != FALSE) {
-        tab_3_selected = TRUE;
-        play_sfx_a1((s32)(int)ptr_sfx_buf,199,NULL);
-      }
-    }
-    else {
-      tab_2_selected = TRUE;
-      play_sfx_a1((s32)(int)ptr_sfx_buf,199,NULL);
-    }
-  }
-  disable_all_switches((int)ptr_folder_object_instance);
-  set_item_visibility_in_objinstance((int)ptr_folder_object_instance,0,1);
-  set_item_visibility_in_objinstance((int)ptr_folder_object_instance,1,1);
-  set_item_visibility_in_objinstance((int)ptr_folder_object_instance,3,1);
-  set_item_visibility_in_objinstance((int)ptr_folder_object_instance,6,1);
-  menu_control_stick_tracking();
-  if (tab_2_selected == FALSE) {
-    if (tab_3_selected != FALSE) {
-      set_menu_to_mode(MENU_MISSION_SELECT,0);
-      set_cursor_to_stage_solo((s32)mission_folder_setup_entries[briefingpage].mission_num);
-    }
-  }
-  else {
-    lVar2 = proc_7F01631C();
-    if ((lVar2 == 0) || (append_cheat_sp != FALSE)) {
-      set_menu_to_mode(MENU_BRIEFING,0);
-    }
-    else {
-      if (mission_folder_setup_entries[briefingpage].mission_num == 0x11) {
-        set_menu_to_mode(MENU_RUN_STAGE,1);
-        selected_stage = LEVELID_CUBA;
-      }
-      else {
-        entry = briefingpage + 1;
-        if (mission_folder_setup_entries[briefingpage].mission_num < 0x12) {
-          sVar6 = mission_folder_setup_entries[entry].folder_text_preset;
-          pmVar5 = mission_folder_setup_entries + entry;
-          if (sVar6 != 0) {
-            iVar7 = mission_folder_setup_entries[entry].stage_id;
-            pmVar4 = mission_folder_setup_entries + entry;
-            while (pmVar5 = pmVar4, iVar7 < 0) {
-              sVar6 = pmVar4[1].folder_text_preset;
-              entry += 1;
-              pmVar5 = pmVar4 + 1;
-              if (sVar6 == 0) break;
-              iVar7 = pmVar4[1].stage_id;
-              pmVar4 = pmVar5;
-            }
-          }
-          if (sVar6 != 0) {
-            selected_stage = pmVar5->stage_id;
-            briefingpage = entry;
-          }
-          set_menu_to_mode(MENU_BRIEFING,0);
+    int iVar1;
+    undefined1 *puVar2;
+    
+    tab_1_selected = FALSE;
+    tab_2_selected = FALSE;
+    tab_3_selected = FALSE;
+    tab_3_highlight = FALSE;
+    tab_2_highlight = FALSE;
+    tab_1_highlight = FALSE;
+    dword_8002B5DC = NULL;
+    puVar2 = cheat_available;
+    iVar1 = 1;
+    do {
+        if (*puVar2 != '\0') {
+            (&DAT_800697f0)[(int)dword_8002B5DC] = iVar1;
+            dword_8002B5DC = dword_8002B5DC + 1;
         }
-        else {
-          set_menu_to_mode(MENU_MISSION_SELECT,0);
-          set_cursor_to_stage_solo((s32)mission_folder_setup_entries[briefingpage].mission_num)
-          ;
-        }
-      }
-    }
-  }
+        iVar1 += 1;
+        puVar2 = puVar2 + 1;
+    } while (iVar1 != 0x4b);
+    load_walletbond();
+    return;
 }
 #else
 GLOBAL_ASM(
