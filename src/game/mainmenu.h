@@ -2,6 +2,7 @@
 #define _MAINMENU_H_
 #include "ultra64.h"
 #include "bondgame.h"
+#include "bondconstants.h"
 
 struct legal_screen_text {
     int h_pos;
