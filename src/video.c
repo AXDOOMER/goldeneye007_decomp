@@ -30,34 +30,11 @@ s32 rgb_16bit_grabnum = 1;
 s32 rgb_32bit_grabnum = 1;
 
 //rodata
-const u16 widths_80028480[] = {320, 320, 640};
-const u16 heights_80028488[] = {240, 240, 480}; //is this not 16bit and a list of 320x240 and 640x480 - 3 widths, 3 heights
-const char aGrab_D_jpeg_1[] = "grab.%d.jpeg";
-const char aGrab_D_temp_uix[] = "grab.%d.temp.uix";
-const char aUix2pixGrab_D_temp_uix[] = "uix2pix grab.%d.temp.uix";
-const char aFromaliasGrab_D_temp_pixGrab_D_tem[] = "fromalias grab.%d.temp.pix grab.%d.temp.rgb";
-const char aImgcopyFjfifGrab_D_temp_rgbGrab_D_[] = "imgcopy -fjfif grab.%d.temp.rgb grab.%d.jpeg";
-const char aRmGrab_D_temp_uixGrab_D_temp_pixGr[] = "rm grab.%d.temp.uix grab.%d.temp.pix grab.%d.temp.rgb";
-const char aImgviewGrab_D_jpeg[] = "imgview grab.%d.jpeg";
-const char aGrab_D_jpeg[] = "grab.%d.jpeg";
-const char aGrab_D_temp_uix_0[] = "grab.%d.temp.Uix";
-const char aUix2pixXsDGrab_D_temp_uix[] = "Uix2pix -xs%d grab.%d.temp.Uix";
-const char aFromaliasGrab_D_temp_pixGrab_D_t_0[] = "fromalias grab.%d.temp.pix grab.%d.temp.rgb";
-const char aImgcopyFjfifGrab_D_temp_rgbGrab__0[] = "imgcopy -fjfif grab.%d.temp.rgb grab.%d.jpeg";
-const char aRmGrab_D_temp_uixGrab_D_temp_pix_0[] = "rm grab.%d.temp.Uix grab.%d.temp.pix grab.%d.temp.rgb";
-const char aImgviewGrab_D_jpeg_0[] = "imgview grab.%d.jpeg";
-const char aGrab_D_rgb[] = "grab.%d.rgb";
-const char aGrab_D_temp_uix_1[] = "grab.%d.temp.uix";
-const char aUix2pixGrab_D_temp_uix_0[] = "uix2pix grab.%d.temp.uix";
-const char aFromaliasGrab_D_temp_pixGrab_D_rgb[] = "fromalias grab.%d.temp.pix grab.%d.rgb";
-const char aRmGrab_D_temp_uixGrab_D_temp_pix[] = "rm grab.%d.temp.uix grab.%d.temp.pix";
-const char aImgviewGrab_D_rgb[] = "imgview grab.%d.rgb";
-const char aGrab_D_rgb_0[] = "grab.%d.rgb";
-const char aGrab_D_temp_uix_2[] = "grab.%d.temp.Uix";
-const char aUix2pixXsDGrab_D_temp_uix_0[] = "Uix2pix -xs%d grab.%d.temp.Uix";
-const char aFromaliasGrab_D_temp_pixGrab_D_r_0[] = "fromalias grab.%d.temp.pix grab.%d.rgb";
-const char aRmGrab_D_temp_uixGrab_D_temp_pix_1[] = "rm grab.%d.temp.Uix grab.%d.temp.pix";
-const char aImgviewGrab_D_rgb_0[] = "imgview grab.%d.rgb";
+
+
+
+
+
 
 
 //bss
@@ -1363,8 +1340,9 @@ void receive_vi_c_msgs(int msgcount){
 #ifdef NONMATCHING
 void setVideoWidthHeightToMode(s32 videomode)
 {
-    u16 uVar1;
-    
+    u16 widths_80028480[] = {320, 320, 640};
+    u16 heights_80028488[] = {240, 240, 480};
+
     ptr_video_settings2->mode = videomode;
 
     ptr_video_settings2->somethingW = widths_80028480[videomode];
@@ -1374,6 +1352,8 @@ void setVideoWidthHeightToMode(s32 videomode)
     ptr_video_settings2->txtClipH = heights_80028488[videomode];
 }
 #else
+const u16 widths_80028480[] = {320, 320, 640};
+const u16 heights_80028488[] = {240, 240, 480}; //is this not 16bit and a list of 320x240 and 640x480 - 3 widths, 3 heights
 GLOBAL_ASM(
 .text
 glabel setVideoWidthHeightToMode
@@ -2268,7 +2248,7 @@ void set_video2_width_height(short width,short height) {
   ptr_video_settings2->width = width;
   ptr_video_settings2->height = height;
   set_BONDdata_screensize(ptr_video_settings2->width,ptr_video_settings2->height);
-  proc_7F077C5C();
+  sub_GAME_7F077C5C();
   return;
 }
 #else
@@ -2654,29 +2634,35 @@ glabel set_setfillcolor
 #ifdef NONMATCHING
 void indy_grab_jpg_16bit(void)
 {
-    u32 iFileSize;
     char iFileName[256];
-
-
+    u32 iFileSize;
+    
     while( 1 ) {
-        sprintf(&iFileName,aGrab_D_jpeg_1,jpg_16bit_grabnum);
+        sprintf(&iFileName,"grab.%d.jpeg",jpg_16bit_grabnum);
         if (check_file_found_on_indy(&iFileName,&iFileSize) == 0) break;
         jpg_16bit_grabnum++;
     }
-    sprintf(&iFileName, &aGrab_D_temp_uix, jpg_16bit_grabnum);
+    sprintf(&iFileName, "grab.%d.temp.uix", jpg_16bit_grabnum);
     indy_send_capture_data(&iFileName, ptr_video_settings2->frameb, (get_video2_settings_txtClipH() * get_video2_settings_txtClipW() * 2));
-    sprintf(&iFileName, &aUix2pixGrab_D_temp_uix, jpg_16bit_grabnum);
+    sprintf(&iFileName, "uix2pix grab.%d.temp.uix", jpg_16bit_grabnum);
     response_from_command_string(&iFileName);
-    sprintf(&iFileName, &aFromaliasGrab_D_temp_pixGrab_D_tem, jpg_16bit_grabnum, jpg_16bit_grabnum);
+    sprintf(&iFileName, "fromalias grab.%d.temp.pix grab.%d.temp.rgb", jpg_16bit_grabnum, jpg_16bit_grabnum);
     response_from_command_string(&iFileName);
-    sprintf(&iFileName, &aImgcopyFjfifGrab_D_temp_rgbGrab_D_, jpg_16bit_grabnum, jpg_16bit_grabnum);
+    sprintf(&iFileName, "imgcopy -fjfif grab.%d.temp.rgb grab.%d.jpeg", jpg_16bit_grabnum, jpg_16bit_grabnum);
     response_from_command_string(&iFileName);
-    sprintf(&iFileName, &aRmGrab_D_temp_uixGrab_D_temp_pixGr, jpg_16bit_grabnum, jpg_16bit_grabnum);
+    sprintf(&iFileName, "rm grab.%d.temp.uix grab.%d.temp.pix grab.%d.temp.rgb", jpg_16bit_grabnum, jpg_16bit_grabnum);
     response_from_command_string(&iFileName);
-    sprintf(&iFileName, &aImgviewGrab_D_jpeg, jpg_16bit_grabnum);
+    sprintf(&iFileName, "imgview grab.%d.jpeg", jpg_16bit_grabnum);
     response_from_command_string(&iFileName);
 }
 #else
+const char aGrab_D_jpeg_1[] = "grab.%d.jpeg";
+const char aGrab_D_temp_uix[] = "grab.%d.temp.uix";
+const char aUix2pixGrab_D_temp_uix[] = "uix2pix grab.%d.temp.uix";
+const char aFromaliasGrab_D_temp_pixGrab_D_tem[] = "fromalias grab.%d.temp.pix grab.%d.temp.rgb";
+const char aImgcopyFjfifGrab_D_temp_rgbGrab_D_[] = "imgcopy -fjfif grab.%d.temp.rgb grab.%d.jpeg";
+const char aRmGrab_D_temp_uixGrab_D_temp_pixGr[] = "rm grab.%d.temp.uix grab.%d.temp.pix grab.%d.temp.rgb";
+const char aImgviewGrab_D_jpeg[] = "imgview grab.%d.jpeg";
 GLOBAL_ASM(
 .text
 glabel indy_grab_jpg_16bit
@@ -2791,26 +2777,33 @@ void indy_grab_jpg_32bit(void)
     ? sp34;
 
 loop_1:
-    sprintf(&iFileName, &aGrab_D_jpeg, jpg_32bit_grabnum);
+    sprintf(&iFileName, "grab.%d.jpeg", jpg_32bit_grabnum);
     if (check_file_found_on_indy(&iFileName, &sp34) != 0)
     {
         jpg_32bit_grabnum = (s32) (jpg_32bit_grabnum + 1);
         goto loop_1;
     }
-    sprintf(&iFileName, &aGrab_D_temp_uix_0, jpg_32bit_grabnum);
+    sprintf(&iFileName, "grab.%d.temp.Uix", jpg_32bit_grabnum);
     indy_send_capture_data(&iFileName, &cfb_16_a, (get_video2_settings_txtClipH() * ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10)) * 4);
-    sprintf(&iFileName, &aUix2pixXsDGrab_D_temp_uix, get_video2_settings_txtClipW(), jpg_32bit_grabnum);
+    sprintf(&iFileName, "Uix2pix -xs%d grab.%d.temp.Uix", get_video2_settings_txtClipW(), jpg_32bit_grabnum);
     response_from_command_string(&iFileName);
-    sprintf(&iFileName, &aFromaliasGrab_D_temp_pixGrab_D_t_0, jpg_32bit_grabnum, jpg_32bit_grabnum);
+    sprintf(&iFileName, "fromalias grab.%d.temp.pix grab.%d.temp.rgb", jpg_32bit_grabnum, jpg_32bit_grabnum);
     response_from_command_string(&iFileName);
-    sprintf(&iFileName, &aImgcopyFjfifGrab_D_temp_rgbGrab__0, jpg_32bit_grabnum, jpg_32bit_grabnum);
+    sprintf(&iFileName, "imgcopy -fjfif grab.%d.temp.rgb grab.%d.jpeg", jpg_32bit_grabnum, jpg_32bit_grabnum);
     response_from_command_string(&iFileName);
-    sprintf(&iFileName, &aRmGrab_D_temp_uixGrab_D_temp_pix_0, jpg_32bit_grabnum, jpg_32bit_grabnum);
+    sprintf(&iFileName, "rm grab.%d.temp.Uix grab.%d.temp.pix grab.%d.temp.rgb", jpg_32bit_grabnum, jpg_32bit_grabnum);
     response_from_command_string(&iFileName);
-    sprintf(&iFileName, &aImgviewGrab_D_jpeg_0, jpg_32bit_grabnum);
+    sprintf(&iFileName, "imgview grab.%d.jpeg", jpg_32bit_grabnum);
     response_from_command_string(&iFileName);
 }
 #else
+const char aGrab_D_jpeg[] = "grab.%d.jpeg";
+const char aGrab_D_temp_uix_0[] = "grab.%d.temp.Uix";
+const char aUix2pixXsDGrab_D_temp_uix[] = "Uix2pix -xs%d grab.%d.temp.Uix";
+const char aFromaliasGrab_D_temp_pixGrab_D_t_0[] = "fromalias grab.%d.temp.pix grab.%d.temp.rgb";
+const char aImgcopyFjfifGrab_D_temp_rgbGrab__0[] = "imgcopy -fjfif grab.%d.temp.rgb grab.%d.jpeg";
+const char aRmGrab_D_temp_uixGrab_D_temp_pix_0[] = "rm grab.%d.temp.Uix grab.%d.temp.pix grab.%d.temp.rgb";
+const char aImgviewGrab_D_jpeg_0[] = "imgview grab.%d.jpeg";
 GLOBAL_ASM(
 .text
 glabel indy_grab_jpg_32bit
@@ -2929,24 +2922,30 @@ void indy_grab_rgb_16bit(void)
     ? sp2C;
 
 loop_1:
-    sprintf(&sp30, &aGrab_D_rgb, rgb_16bit_grabnum);
+    sprintf(&sp30, "grab.%d.rgb", rgb_16bit_grabnum);
     if (check_file_found_on_indy(&sp30, &sp2C) != 0)
     {
         rgb_16bit_grabnum = (s32) (rgb_16bit_grabnum + 1);
         goto loop_1;
     }
-    sprintf(&sp30, &aGrab_D_temp_uix_1, rgb_16bit_grabnum);
+    sprintf(&sp30, "grab.%d.temp.uix", rgb_16bit_grabnum);
     indy_send_capture_data(&sp30, ptr_video_settings2->frameb, (get_video2_settings_txtClipH() * ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10)) * 2);
-    sprintf(&sp30, &aUix2pixGrab_D_temp_uix_0, rgb_16bit_grabnum);
+    sprintf(&sp30, "uix2pix grab.%d.temp.uix", rgb_16bit_grabnum);
     response_from_command_string(&sp30);
-    sprintf(&sp30, &aFromaliasGrab_D_temp_pixGrab_D_rgb, rgb_16bit_grabnum, rgb_16bit_grabnum);
+    sprintf(&sp30, "fromalias grab.%d.temp.pix grab.%d.rgb", rgb_16bit_grabnum, rgb_16bit_grabnum);
     response_from_command_string(&sp30);
-    sprintf(&sp30, &aRmGrab_D_temp_uixGrab_D_temp_pix, rgb_16bit_grabnum, rgb_16bit_grabnum);
+    sprintf(&sp30, "rm grab.%d.temp.uix grab.%d.temp.pix", rgb_16bit_grabnum, rgb_16bit_grabnum);
     response_from_command_string(&sp30);
-    sprintf(&sp30, &aImgviewGrab_D_rgb, rgb_16bit_grabnum);
+    sprintf(&sp30, "imgview grab.%d.rgb", rgb_16bit_grabnum);
     response_from_command_string(&sp30);
 }
 #else
+const char aGrab_D_rgb[] = "grab.%d.rgb";
+const char aGrab_D_temp_uix_1[] = "grab.%d.temp.uix";
+const char aUix2pixGrab_D_temp_uix_0[] = "uix2pix grab.%d.temp.uix";
+const char aFromaliasGrab_D_temp_pixGrab_D_rgb[] = "fromalias grab.%d.temp.pix grab.%d.rgb";
+const char aRmGrab_D_temp_uixGrab_D_temp_pix[] = "rm grab.%d.temp.uix grab.%d.temp.pix";
+const char aImgviewGrab_D_rgb[] = "imgview grab.%d.rgb";
 GLOBAL_ASM(
 .text
 glabel indy_grab_rgb_16bit
@@ -3051,24 +3050,30 @@ void indy_grab_rgb_32bit(void)
     ? sp2C;
 
 loop_1:
-    sprintf(&sp30, &aGrab_D_rgb_0, rgb_32bit_grabnum);
+    sprintf(&sp30, "grab.%d.rgb", rgb_32bit_grabnum);
     if (check_file_found_on_indy(&sp30, &sp2C) != 0)
     {
         rgb_32bit_grabnum = (s32) (rgb_32bit_grabnum + 1);
         goto loop_1;
     }
-    sprintf(&sp30, &aGrab_D_temp_uix_2, rgb_32bit_grabnum);
+    sprintf(&sp30, "grab.%d.temp.Uix", rgb_32bit_grabnum);
     indy_send_capture_data(&sp30, &cfb_16_a, (get_video2_settings_txtClipH() * ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10)) * 4);
-    sprintf(&sp30, &aUix2pixXsDGrab_D_temp_uix_0, get_video2_settings_txtClipW(), rgb_32bit_grabnum);
+    sprintf(&sp30, "Uix2pix -xs%d grab.%d.temp.Uix", get_video2_settings_txtClipW(), rgb_32bit_grabnum);
     response_from_command_string(&sp30);
-    sprintf(&sp30, &aFromaliasGrab_D_temp_pixGrab_D_r_0, rgb_32bit_grabnum, rgb_32bit_grabnum);
+    sprintf(&sp30, "fromalias grab.%d.temp.pix grab.%d.rgb", rgb_32bit_grabnum, rgb_32bit_grabnum);
     response_from_command_string(&sp30);
-    sprintf(&sp30, &aRmGrab_D_temp_uixGrab_D_temp_pix_1, rgb_32bit_grabnum, rgb_32bit_grabnum);
+    sprintf(&sp30, "rm grab.%d.temp.Uix grab.%d.temp.pix", rgb_32bit_grabnum, rgb_32bit_grabnum);
     response_from_command_string(&sp30);
-    sprintf(&sp30, &aImgviewGrab_D_rgb_0, rgb_32bit_grabnum);
+    sprintf(&sp30, "imgview grab.%d.rgb", rgb_32bit_grabnum);
     response_from_command_string(&sp30);
 }
 #else
+const char aGrab_D_rgb_0[] = "grab.%d.rgb";
+const char aGrab_D_temp_uix_2[] = "grab.%d.temp.Uix";
+const char aUix2pixXsDGrab_D_temp_uix_0[] = "Uix2pix -xs%d grab.%d.temp.Uix";
+const char aFromaliasGrab_D_temp_pixGrab_D_r_0[] = "fromalias grab.%d.temp.pix grab.%d.rgb";
+const char aRmGrab_D_temp_uixGrab_D_temp_pix_1[] = "rm grab.%d.temp.Uix grab.%d.temp.pix";
+const char aImgviewGrab_D_rgb_0[] = "imgview grab.%d.rgb";
 GLOBAL_ASM(
 .text
 glabel indy_grab_rgb_32bit
