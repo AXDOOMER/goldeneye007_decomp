@@ -5,6 +5,8 @@ The only requirements for Ubuntu 16.04 and 18.04 should be
 ```
 sudo apt install binutils-mips-linux-gnu make
 ```
+Make sure you cloned the repo with git otherwise it won't build!!
+
 Place a USA rom in project root named 
 ```
 baserom.u.z64

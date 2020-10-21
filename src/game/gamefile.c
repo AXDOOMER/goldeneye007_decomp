@@ -487,10 +487,10 @@ glabel store_favorite_weapon_current_player
 /* 0521BC 7F01D68C 0FC26C54 */  jal   get_cur_playernum
 /* 0521C0 7F01D690 AFA5001C */   sw    $a1, 0x1c($sp)
 /* 0521C4 7F01D694 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0521C8 7F01D698 3C0F8007 */  lui   $t7, %hi(fav_weapon_right_player1) 
+/* 0521C8 7F01D698 3C0F8007 */  lui   $t7, %hi(array_favweapon) 
 /* 0521CC 7F01D69C 8FB80018 */  lw    $t8, 0x18($sp)
 /* 0521D0 7F01D6A0 8FB9001C */  lw    $t9, 0x1c($sp)
-/* 0521D4 7F01D6A4 25EF96F0 */  addiu $t7, %lo(fav_weapon_right_player1) # addiu $t7, $t7, -0x6910
+/* 0521D4 7F01D6A4 25EF96F0 */  addiu $t7, %lo(array_favweapon) # addiu $t7, $t7, -0x6910
 /* 0521D8 7F01D6A8 000270C0 */  sll   $t6, $v0, 3
 /* 0521DC 7F01D6AC 01CF1821 */  addu  $v1, $t6, $t7
 /* 0521E0 7F01D6B0 27BD0018 */  addiu $sp, $sp, 0x18

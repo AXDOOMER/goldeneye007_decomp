@@ -2,6 +2,7 @@
 #define _MAINMENU_H_
 #include "ultra64.h"
 #include "bondgame.h"
+#include "bondconstants.h"
 
 struct legal_screen_text {
     int h_pos;
@@ -358,21 +359,7 @@ extern u8 cheat_activated_77;
 extern u8 cheat_activated_78;
 
 //CODE.bss:800696F0
-extern s32 fav_weapon_right_player1;
-//CODE.bss:800696F4
-extern s32 fav_weapon_left_player1;
-//CODE.bss:800696F8
-extern s32 fav_weapon_right_player2;
-//CODE.bss:800696FC
-extern s32 fav_weapon_left_player2;
-//CODE.bss:80069700
-extern s32 fav_weapon_right_player3;
-//CODE.bss:80069704
-extern s32 fav_weapon_left_player3;
-//CODE.bss:80069708
-extern s32 fav_weapon_right_player4;
-//CODE.bss:8006970C
-extern s32 fav_weapon_left_player4;
+extern s32 array_favweapon[4][2];
 //CODE.bss:80069710
 extern s32 mp_char_cur_select_player1;
 //CODE.bss:80069714
