@@ -427,37 +427,14 @@ int is_item_for_hand_in_inventory(int item, int hand)
 
 
 
-#ifdef NONMATCHING
-void check_if_item_available(void) {
 
-}
-#else
 #ifdef VERSION_US
-GLOBAL_ASM(
-.text
-glabel check_if_item_available
-/* 0C0EF0 7F08C3C0 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0C0EF4 7F08C3C4 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0C0EF8 7F08C3C8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C0EFC 7F08C3CC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C0F00 7F08C3D0 8DCF11EC */  lw    $t7, 0x11ec($t6)
-/* 0C0F04 7F08C3D4 11E00007 */  beqz  $t7, .L7F08C3F4
-/* 0C0F08 7F08C3D8 00000000 */   nop   
-/* 0C0F0C 7F08C3DC 10800005 */  beqz  $a0, .L7F08C3F4
-/* 0C0F10 7F08C3E0 28810021 */   slti  $at, $a0, 0x21
-/* 0C0F14 7F08C3E4 10200003 */  beqz  $at, .L7F08C3F4
-/* 0C0F18 7F08C3E8 00000000 */   nop   
-/* 0C0F1C 7F08C3EC 10000003 */  b     .L7F08C3FC
-/* 0C0F20 7F08C3F0 24020001 */   li    $v0, 1
-.L7F08C3F4:
-/* 0C0F24 7F08C3F4 0FC230C5 */  jal   is_weapon_in_inv
-/* 0C0F28 7F08C3F8 00000000 */   nop   
-.L7F08C3FC:
-/* 0C0F2C 7F08C3FC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C0F30 7F08C400 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C0F34 7F08C404 03E00008 */  jr    $ra
-/* 0C0F38 7F08C408 00000000 */   nop   
-)
+int check_if_item_available(ITEM_IDS weaponid) {
+    if ((pPlayer->equipallguns) && (weaponid != ITEM_UNARMED) && (weaponid < ITEM_BOMBCASE)) {
+        return 1;
+    }
+    return is_weapon_in_inv(weaponid);
+}
 #endif
 
 #ifdef VERSION_JP
@@ -493,8 +470,6 @@ glabel check_if_item_available
 /* 0C181C 7F08CCAC 03E00008 */  jr    $ra
 /* 0C1820 7F08CCB0 00000000 */   nop   
 )
-#endif
-
 #endif
 
 
