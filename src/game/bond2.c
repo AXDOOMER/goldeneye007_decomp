@@ -579,53 +579,29 @@ glabel check_if_item_for_hand_available
 
 
 
-
-#ifdef NONMATCHING
-void add_item_to_inventory(void) {
-
-}
-#else
 #ifdef VERSION_US
-GLOBAL_ASM(
-.text
-glabel add_item_to_inventory
-/* 0C0FB8 7F08C488 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C0FBC 7F08C48C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C0FC0 7F08C490 0FC230C5 */  jal   is_weapon_in_inv
-/* 0C0FC4 7F08C494 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0C0FC8 7F08C498 54400018 */  bnezl $v0, .L7F08C4FC
-/* 0C0FCC 7F08C49C 00001025 */   move  $v0, $zero
-/* 0C0FD0 7F08C4A0 0FC23091 */  jal   get_ptr_next_available_weapon
-/* 0C0FD4 7F08C4A4 00000000 */   nop   
-/* 0C0FD8 7F08C4A8 10400006 */  beqz  $v0, .L7F08C4C4
-/* 0C0FDC 7F08C4AC 00402025 */   move  $a0, $v0
-/* 0C0FE0 7F08C4B0 240E0001 */  li    $t6, 1
-/* 0C0FE4 7F08C4B4 AC4E0000 */  sw    $t6, ($v0)
-/* 0C0FE8 7F08C4B8 8FAF0018 */  lw    $t7, 0x18($sp)
-/* 0C0FEC 7F08C4BC 0FC23065 */  jal   add_additional_weapon_slot_to_player_inventory_guess
-/* 0C0FF0 7F08C4C0 AC4F0004 */   sw    $t7, 4($v0)
-.L7F08C4C4:
-/* 0C0FF4 7F08C4C4 3C188008 */  lui   $t8, %hi(pPlayer) 
-/* 0C0FF8 7F08C4C8 8F18A0B0 */  lw    $t8, %lo(pPlayer)($t8)
-/* 0C0FFC 7F08C4CC 8FA80018 */  lw    $t0, 0x18($sp)
-/* 0C1000 7F08C4D0 8F1911EC */  lw    $t9, 0x11ec($t8)
-/* 0C1004 7F08C4D4 29010021 */  slti  $at, $t0, 0x21
-/* 0C1008 7F08C4D8 13200005 */  beqz  $t9, .L7F08C4F0
-/* 0C100C 7F08C4DC 00000000 */   nop   
-/* 0C1010 7F08C4E0 10200003 */  beqz  $at, .L7F08C4F0
-/* 0C1014 7F08C4E4 00000000 */   nop   
-/* 0C1018 7F08C4E8 10000004 */  b     .L7F08C4FC
-/* 0C101C 7F08C4EC 00001025 */   move  $v0, $zero
-.L7F08C4F0:
-/* 0C1020 7F08C4F0 10000002 */  b     .L7F08C4FC
-/* 0C1024 7F08C4F4 24020001 */   li    $v0, 1
-/* 0C1028 7F08C4F8 00001025 */  move  $v0, $zero
-.L7F08C4FC:
-/* 0C102C 7F08C4FC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C1030 7F08C500 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C1034 7F08C504 03E00008 */  jr    $ra
-/* 0C1038 7F08C508 00000000 */   nop   
-)
+int add_item_to_inventory(ITEM_IDS item)
+{
+    int *var;
+  
+    if (is_weapon_in_inv(item) == 0) {
+
+        var = (int *)get_ptr_next_available_weapon();
+        if (var) {
+            *var = 1;
+            var[1] = item;
+            add_additional_weapon_slot_to_player_inventory_guess(var);
+        }
+
+        if ((pPlayer->equipallguns) && (item < ITEM_BOMBCASE)) {
+            return 0;
+        }
+        
+        return 1;
+    }
+    
+    return 0;
+}
 #endif
 
 #ifdef VERSION_JP
@@ -678,7 +654,7 @@ glabel add_item_to_inventory
 )
 #endif
 
-#endif
+
 
 
 
