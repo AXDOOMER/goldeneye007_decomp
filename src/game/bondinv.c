@@ -5,24 +5,25 @@
 #include "game/textrelated.h"
 #include "bondconstants.h"
 #include "game/lvl_text.h"
+#include "game/bondinv.h"
 
 void reinit_BONDdata_inventory(void) {
 
-    s32 iVar1;
-    s32 iVar2;
+    s32 i;
+    s32 itementry;
     
-    iVar1 = 0;
+    i = 0;
     
-    if (pPlayer->equipmaxitems > 0) {
-
-        iVar2 = 0;
+    if (pPlayer->equipmaxitems > 0)
+    {
+        itementry = 0;
 
         do {
-            iVar1 = iVar1 + 1;
-            *(int *)(pPlayer->p_itemcur + iVar2) = -1;
-            iVar2 = iVar2 + 0x14;
+            i = i + 1;
+            *(int *)(pPlayer->p_itemcur + itementry) = -1;
+            itementry = itementry + 0x14;
 
-        } while (iVar1 < pPlayer->equipmaxitems);
+        } while (i < pPlayer->equipmaxitems);
     }
 
     pPlayer->ptr_inventory_first_in_cycle = 0;
