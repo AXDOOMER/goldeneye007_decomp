@@ -13,4 +13,6 @@ struct levelentry
   float unknownfloat;
 };
 
+void bgInitDebugNoticeList(void);
+
 #endif

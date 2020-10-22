@@ -263,7 +263,7 @@ SECTIONS
       build/j/src/game/objecthandler_2.o (.text);
       build/j/src/game/othermodemicrocode.o (.text);
       build/j/src/game/bond.o (.text);
-      build/j/src/game/bond2.o (.text);
+      build/j/src/game/bondinv.o (.text);
       build/j/src/game/unk_08DBB0.o (.text);
       build/j/src/game/debugmenu_08FE00.o (.text);
       build/j/src/game/debugmenu_090490.o (.text);
@@ -289,7 +289,7 @@ SECTIONS
       build/j/src/game/ob.o (.text);
       build/j/src/game/dyn.o (.text);
       build/j/src/game/lvl.o (.text);
-      build/j/src/game/lvl_2.o (.text);
+      build/j/src/game/ramromreplay.o (.text);
       build/j/src/game/unk_0C0A70.o (.text);
       build/j/src/game/mp_music.o (.text);
       build/j/src/game/lvl_text.o (.text);
@@ -3370,7 +3370,7 @@ SECTIONS
       build/j/src/game/objecthandler_2.o (.data);
       build/j/src/game/othermodemicrocode.o (.data);
       build/j/src/game/bond.o (.data);
-      build/j/src/game/bond2.o (.data);
+      build/j/src/game/bondinv.o (.data);
       build/j/src/game/unk_08DBB0.o (.data);
       build/j/src/game/debugmenu_08FE00.o (.data);
       build/j/src/game/debugmenu_090490.o (.data);
@@ -3396,7 +3396,7 @@ SECTIONS
       build/j/src/game/ob.o (.data);
       build/j/src/game/dyn.o (.data);
       build/j/src/game/lvl.o (.data);
-      build/j/src/game/lvl_2.o (.data);
+      build/j/src/game/ramromreplay.o (.data);
       build/j/src/game/unk_0C0A70.o (.data);
       build/j/src/game/mp_music.o (.data);
       build/j/src/game/lvl_text.o (.data);
@@ -3492,7 +3492,7 @@ SECTIONS
       build/j/src/game/objecthandler_2.o (.rodata);
       build/j/src/game/othermodemicrocode.o (.rodata);
       build/j/src/game/bond.o (.rodata);
-      build/j/src/game/bond2.o (.rodata);
+      build/j/src/game/bondinv.o (.rodata);
       build/j/src/game/unk_08DBB0.o (.rodata);
       build/j/src/game/debugmenu_08FE00.o (.rodata);
       build/j/src/game/debugmenu_090490.o (.rodata);
@@ -3518,7 +3518,7 @@ SECTIONS
       build/j/src/game/ob.o (.rodata);
       build/j/src/game/dyn.o (.rodata);
       build/j/src/game/lvl.o (.rodata);
-      build/j/src/game/lvl_2.o (.rodata);
+      build/j/src/game/ramromreplay.o (.rodata);
       build/j/src/game/unk_0C0A70.o (.rodata);
       build/j/src/game/mp_music.o (.rodata);
       build/j/src/game/lvl_text.o (.rodata);
@@ -3739,7 +3739,7 @@ SECTIONS
       build/j/src/game/objecthandler_2.o (.bss);
       build/j/src/game/othermodemicrocode.o (.bss);
       build/j/src/game/bond.o (.bss);
-      build/j/src/game/bond2.o (.bss);
+      build/j/src/game/bondinv.o (.bss);
       build/j/src/game/unk_08DBB0.o (.bss);
       build/j/src/game/debugmenu_08FE00.o (.bss);
       build/j/src/game/debugmenu_090490.o (.bss);
@@ -3765,7 +3765,7 @@ SECTIONS
       build/j/src/game/ob.o (.bss);
       build/j/src/game/dyn.o (.bss);
       build/j/src/game/lvl.o (.bss);
-      build/j/src/game/lvl_2.o (.bss);
+      build/j/src/game/ramromreplay.o (.bss);
       build/j/src/game/unk_0C0A70.o (.bss);
       build/j/src/game/mp_music.o (.bss);
       build/j/src/game/lvl_text.o (.bss);

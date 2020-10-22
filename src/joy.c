@@ -105,12 +105,12 @@ s32 D_80026970 = 0;
 
 
 #ifdef NONMATCHING
-void *something_with_joy_c_debug(void) {
+void *joyInitDebugNoticeList(void) {
     void *temp_v0;
     void *temp_v0_2;
 
     // Node 0
-    get_ptr_debug_notice_list_entry(&D_800268C0, &aJoy_c_debug);
+    debCheckAddDebugNoticeListEntry(&D_800268C0, &aJoy_c_debug);
     osCreateMesgQueue(&cont1MesgMQ, &cont1Mesg, 1);
     osCreateMesgQueue(&cont2MesgMQ, &cont2Mesg, 1);
     osCreateMesgQueue(&cont3MesgMQ, &cont3Mesg, 1);
@@ -153,13 +153,13 @@ void *something_with_joy_c_debug(void) {
 #else
 GLOBAL_ASM(
 .text
-glabel something_with_joy_c_debug
+glabel joyInitDebugNoticeList
 /* 00C160 7000B560 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00C164 7000B564 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00C168 7000B568 3C048002 */  lui   $a0, %hi(D_800268C0)
 /* 00C16C 7000B56C 3C058003 */  lui   $a1, %hi(aJoy_c_debug)
 /* 00C170 7000B570 24A59390 */  addiu $a1, %lo(aJoy_c_debug) # addiu $a1, $a1, -0x6c70
-/* 00C174 7000B574 0C001398 */  jal   get_ptr_debug_notice_list_entry
+/* 00C174 7000B574 0C001398 */  jal   debCheckAddDebugNoticeListEntry
 /* 00C178 7000B578 248468C0 */   addiu $a0, %lo(D_800268C0) # addiu $a0, $a0, 0x68c0
 /* 00C17C 7000B57C 3C048006 */  lui   $a0, %hi(cont1MesgMQ)
 /* 00C180 7000B580 3C058006 */  lui   $a1, %hi(cont1Mesg)

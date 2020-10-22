@@ -7,4 +7,5 @@ extern s32 ptrSecondFontTableSmall;
 extern s32 ptrFirstFontTableLarge;
 extern s32 ptrSecondFontTableLarge;
 
+void textrelatedInit_REMOVED(void);
 #endif

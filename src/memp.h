@@ -32,7 +32,7 @@ typedef struct s_mempMEMSTARTS {
     s32 bank7start;
 } s_mempMEMSTARTS;
 
-void something_with_memp_c_debug(void);
+void mempInitDebugNoticeList(void);
 void mempCheckMemflagTokens(int bstart,int bsize);
 void mempSetBankStarts(int *banks);
 u32 mempAllocBytesInBank(u32 bytes,u8 bank);

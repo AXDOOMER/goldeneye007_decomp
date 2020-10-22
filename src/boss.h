@@ -3,7 +3,13 @@
 #include <ultra64.h>
 #include "bondgame.h"
 
+struct memallocstring
+{
+  s32 id;
+  void *string;
+};
+
 void set_loaded_stage(LEVELID stage);
-void something_with_boss_c_debug(void);
+void bossInitDebugNoticeList(void);
 
 #endif

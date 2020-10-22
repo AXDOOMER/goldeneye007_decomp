@@ -130,9 +130,19 @@ glabel establish_TLB_buffer_management_table
  * ???; pointless conditional tests, will reset 800230D0
  */
 #ifdef NONMATCHING
-void mp_tlb_related(void) {
-    
+s32 mp_tlb_related(void)
+{
+    s32 temp_v0;
+
+    temp_v0 = maybe_cur_TLB_entries;
+    if ((temp_v0 >= 0x33) || (temp_v0 < 0x1A))
+    {
+
+    }
+    maybe_cur_TLB_entries = 0;
+    return temp_v0;
 }
+
 #else
 GLOBAL_ASM(
 glabel mp_tlb_related

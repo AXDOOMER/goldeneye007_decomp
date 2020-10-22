@@ -46,9 +46,9 @@ struct s_mempMEMSTARTS sdefaultmemstarts = {
  * 9F80	70009380
  *     V0=p->debug.notice.list entry for memp_c_debug
  */
-void something_with_memp_c_debug(void)
+void mempInitDebugNoticeList(void)
 {
-    get_ptr_debug_notice_list_entry(&ptr_memp_c_debug_debug_notice_list, "memp_c_debug"); //should be "memp_c_debug"
+    debCheckAddDebugNoticeListEntry(&ptr_memp_c_debug_debug_notice_list, "memp_c_debug"); //should be "memp_c_debug"
 }
 
 /**

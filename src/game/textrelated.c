@@ -49,7 +49,7 @@ s32 D_80040F28 = 0;
 
 
 
-void null_init_main_7f0acb70(void) {
+void textrelatedInit_REMOVED(void) {
 
 }
 

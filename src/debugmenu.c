@@ -167,7 +167,7 @@ void null_function_7000ADA0(void)
 }
 
 
-void null_init_main_0(void)
+void debugmenuInit_REMOVED(void)
 {
 //empty
 }

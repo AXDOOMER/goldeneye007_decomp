@@ -4,6 +4,7 @@
 #include "game/unk_093880.h"
 #include "game/textrelated.h"
 #include "game/lvl.h"
+#include "game/bondinv.h"
 
 // bss
 //CODE.bss:80079940

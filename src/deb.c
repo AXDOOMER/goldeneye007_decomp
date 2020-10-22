@@ -30,7 +30,7 @@ char * debug_notice_list_data = &dword_CODE_bss_80060890;
  *     accepts: A0=p->name, A1=p->data
  */
 #ifdef NONMATCHING
-void *return_match_in_debug_notice_list(s32 arg0)
+void *debCheckIfDNLEntryExists(s32 arg0)
 {
     void *temp_s0;
     void *phi_s0;
@@ -55,7 +55,7 @@ loop_1:
 #else
 GLOBAL_ASM(
 .text
-glabel return_match_in_debug_notice_list
+glabel debCheckIfDNLEntryExists
 /* 005920 70004D20 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 005924 70004D24 AFB00014 */  sw    $s0, 0x14($sp)
 /* 005928 70004D28 3C108002 */  lui   $s0, %hi(debug_notice_list)
@@ -93,7 +93,7 @@ glabel return_match_in_debug_notice_list
  *     accepts: A0=size
  */
 #ifdef NONMATCHING
-u32 get_entry_of_size_in_debug_notice_list(s32 arg0)
+u32 debAllocateDNLEntry(s32 arg0)
 {
     u32 temp_v0;
 
@@ -109,7 +109,7 @@ u32 get_entry_of_size_in_debug_notice_list(s32 arg0)
 #else
 GLOBAL_ASM(
 .text
-glabel get_entry_of_size_in_debug_notice_list
+glabel debAllocateDNLEntry
 /* 005980 70004D80 3C028002 */  lui   $v0, %hi(debug_notice_list_data)
 /* 005984 70004D84 8C4232F8 */  lw    $v0, %lo(debug_notice_list_data)($v0)
 /* 005988 70004D88 3C0E8006 */  lui   $t6, %hi(thread_video_manager_debugthread) 
@@ -148,11 +148,11 @@ glabel get_entry_of_size_in_debug_notice_list
  *     accepts: A0=p->name, A1=p->data
  */
 #ifdef NONMATCHING
-void add_new_entry_to_debug_notice_list(s32 arg0, s32 arg1)
+void debAllocateAndAddDNLEntry(s32 arg0, s32 arg1)
 {
     ? temp_ret;
 
-    temp_ret = get_entry_of_size_in_debug_notice_list(0x10);
+    temp_ret = debAllocateDNLEntry(0x10);
     *temp_ret = (s32) debug_notice_list;
     temp_ret->unk4 = arg1;
     temp_ret->unk8 = arg0;
@@ -161,12 +161,12 @@ void add_new_entry_to_debug_notice_list(s32 arg0, s32 arg1)
 #else
 GLOBAL_ASM(
 .text
-glabel add_new_entry_to_debug_notice_list
+glabel debAllocateAndAddDNLEntry
 /* 0059E0 70004DE0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0059E4 70004DE4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0059E8 70004DE8 AFA40018 */  sw    $a0, 0x18($sp)
 /* 0059EC 70004DEC AFA5001C */  sw    $a1, 0x1c($sp)
-/* 0059F0 70004DF0 0C001360 */  jal   get_entry_of_size_in_debug_notice_list
+/* 0059F0 70004DF0 0C001360 */  jal   debAllocateDNLEntry
 /* 0059F4 70004DF4 24040010 */   li    $a0, 16
 /* 0059F8 70004DF8 3C038002 */  lui   $v1, %hi(debug_notice_list)
 /* 0059FC 70004DFC 246332E8 */  addiu $v1, %lo(debug_notice_list) # addiu $v1, $v1, 0x32e8
@@ -191,9 +191,9 @@ glabel add_new_entry_to_debug_notice_list
  * 5A2C	70004E2C
  *     V0= p->debug.notice.list entry for boss_c_debug using data at 800241A0
  */
-void add_debug_notice_deb_c_debug(void)
+void debInitDebugNoticeList(void)
 {
-    get_ptr_debug_notice_list_entry(&D_800232E0, "deb_c_debug");
+    debCheckAddDebugNoticeListEntry(&D_800232E0, "deb_c_debug");
     init_tlb();
 }
 
@@ -203,11 +203,11 @@ void add_debug_notice_deb_c_debug(void)
  *     V0=p->debug.notice.list entry for name A1 and data A0; generates if not found
  *     accepts: A0=p->data, A1=p->name
  */
-void get_ptr_debug_notice_list_entry(void* data, char * string)
+void debCheckAddDebugNoticeListEntry(void* data, char * string)
 {
-    if (return_match_in_debug_notice_list(string) == 0)
+    if (debCheckIfDNLEntryExists(string) == 0)
     {
-        add_new_entry_to_debug_notice_list(string, data);
+        debAllocateAndAddDNLEntry(string, data);
     }
 }
 
@@ -219,7 +219,7 @@ void get_ptr_debug_notice_list_entry(void* data, char * string)
  *     likely this would have executed some function for each entry...
  */
 #ifdef NONMATCHING
-void *scan_debug_notice_list_till_NULL(void)
+void *debScanDNLEntries_NEUTERED(void)
 {
     void *temp_v0;
     void *phi_v0;
@@ -240,7 +240,7 @@ loop_1:
 #else
 GLOBAL_ASM(
 .text
-glabel scan_debug_notice_list_till_NULL
+glabel debScanDNLEntries_NEUTERED
 /* 005A98 70004E98 3C028002 */  lui   $v0, %hi(debug_notice_list)
 /* 005A9C 70004E9C 8C4232E8 */  lw    $v0, %lo(debug_notice_list)($v0)
 /* 005AA0 70004EA0 10400004 */  beqz  $v0, .L70004EB4
@@ -261,7 +261,7 @@ glabel scan_debug_notice_list_till_NULL
  * 5ABC	70004EBC
  *     unconditional return
  */
-void debug_stubbed_70004EBC(void)
+void debRemoved70004EBC(void)
 {
     return;
 }
@@ -270,7 +270,7 @@ void debug_stubbed_70004EBC(void)
  * 5AC4	70004EC4
  *     A0->SP+0, A1->SP+4, A2->SP+8
  */
-void debug_removed(s32 arg0, s32 arg1, s32 arg2)
+void debRemoved70004EC4(s32 arg0, s32 arg1, s32 arg2)
 {
     return;
 }

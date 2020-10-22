@@ -4,7 +4,10 @@
 #include "bondgame.h"
 #include "game/debugmenu_090490.h"
 #include "game/room_model_buffer.h"
-
+#include "deb.h"
+#include "game/stan.h"
+#include "game/rsp.h"
+#include "bondconstants.h"
 /**
  * @file boss.c
  * This file contains the main game loop code. 
@@ -19,48 +22,44 @@ u32 current_ma_malloc_value = 0x4B000;
 s32 show_mem_use_flag = 0;
 s32 show_mem_bars_flag = 0;
 
-struct memallocstring
-{
-  s32 id;
-  void *string;
-} memallocstringtable[] = {
-{  0x21, "-ml0 -me0 -mgfx70  -mvtx50 -mt625 -ma275"},
-{  0x22, "-ml0 -me0 -mgfx70  -mvtx50 -mt650 -ma160"},
-{  0x23, "-ml0 -me0 -mgfx100 -mvtx50 -mt610 -ma300"},
-{  0x24, "-ml0 -me0 -mgfx70  -mvtx50 -mt600 -ma300"},
-{     9, "-ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma150"},
-{  0x14, "-ml0 -me0 -mgfx70  -mvtx50 -mt660 -ma150"},
-{  0x1A, "-ml0 -me0 -mgfx70  -mvtx50 -mt750 -ma225"},
-{  0x2B, "-ml0 -me0 -mgfx100 -mvtx50 -mt550 -ma350"},
-{  0x1B, "-ml0 -me0 -mgfx100 -mvtx50 -mt725 -ma150"},
-{  0x16, "-ml0 -me0 -mgfx70  -mvtx50 -mt750 -ma220"},
-{  0x18, "-ml0 -me0 -mgfx70  -mvtx50 -mt600 -ma250"},
-{  0x1D, "-ml0 -me0 -mgfx60  -mvtx40 -mt635 -ma290"},
-{  0x1E, "-ml0 -me0 -mgfx60  -mvtx50 -mt710 -ma300"},
-{  0x19, "-ml0 -me0 -mgfx100 -mvtx50 -mt600 -ma200"},
-{  0x25, "-ml0 -me0 -mgfx70  -mvtx50 -mt500 -ma200"},
-{  0x17, "-ml0 -me0 -mgfx70  -mvtx50 -mt671 -ma200"},
-{  0x29, "-ml0 -me0 -mgfx100 -mvtx50 -mt650 -ma250"},
-{  0x27, "-ml0 -me0 -mgfx100 -mvtx50 -mt530 -ma250"},
-{  0x1C, "-ml0 -me0 -mgfx60  -mvtx40 -mt855 -ma135"},
-{  0x20, "-ml0 -me0 -mgfx100 -mvtx50 -mt600 -ma250"},
-{  0x28, "-ml0 -me0 -mgfx100 -mvtx50 -mt650 -ma150"},
-{  0x36, "-ml0 -me0 -mgfx100 -mvtx50 -mt300 -ma300"},
-{  0x5A, "-ml0 -me0 -mgfx80 -mvtx20 -mt646 -ma001"},
-{  0x5B, "-ml0 -me0 -mgfx60 -mvtx20 -mt500 -ma001"},
-{  0x63, "-ml0 -me0 -mgfx60 -mvtx20 -mt500 -ma001"},
-{  0x26, "-ml0 -me0 -mgfx130 -mvtx100 -mt390 -ma100"},
-{  0x1F, "-ml0 -me0 -mgfx130 -mvtx100 -mt400 -ma100"},
-{  0x30, "-ml0 -me0 -mgfx130 -mvtx100 -mt400 -ma100"},
-{  0x2D, "-ml0 -me0 -mgfx130 -mvtx100 -mt400 -ma100"},
-{  0x2E, "-ml0 -me0 -mgfx130 -mvtx100 -mt400 -ma100"},
-{  0x32, "-ml0 -me0 -mgfx130 -mvtx100 -mt400 -ma300"},
-{ 0x1AB, "-ml0 -me0 -mgfx130 -mvtx100 -mt550 -ma170"},
-{ 0x1A8, "-ml0 -me0 -mgfx80  -mvtx100 -mt550 -ma250"},
-{ 0x1B7, "-ml0 -me0 -mgfx130 -mvtx100 -mt440 -ma220"},
-{ 0x1B2, "-ml0 -me0 -mgfx90  -mvtx100 -mt550 -ma230"},
-{ 0x1B0, "-ml0 -me0 -mgfx110 -mvtx100 -mt350 -ma400"},
-{   0x0, "-ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400"},
+struct memallocstring memallocstringtable[] = {
+{ LEVELID_DAM,          "-ml0 -me0 -mgfx70  -mvtx50 -mt625 -ma275"},
+{ LEVELID_FACILITY,     "-ml0 -me0 -mgfx70  -mvtx50 -mt650 -ma160"},
+{ LEVELID_RUNWAY,       "-ml0 -me0 -mgfx100 -mvtx50 -mt610 -ma300"},
+{ LEVELID_SURFACE,      "-ml0 -me0 -mgfx70  -mvtx50 -mt600 -ma300"},
+{ LEVELID_BUNKER1,      "-ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma150"},
+{ LEVELID_SILO,         "-ml0 -me0 -mgfx70  -mvtx50 -mt660 -ma150"},
+{ LEVELID_FRIGATE,      "-ml0 -me0 -mgfx70  -mvtx50 -mt750 -ma225"},
+{ LEVELID_SURFACE2,     "-ml0 -me0 -mgfx100 -mvtx50 -mt550 -ma350"},
+{ LEVELID_BUNKER2,      "-ml0 -me0 -mgfx100 -mvtx50 -mt725 -ma150"},
+{ LEVELID_STATUE,       "-ml0 -me0 -mgfx70  -mvtx50 -mt750 -ma220"},
+{ LEVELID_ARCHIVES,     "-ml0 -me0 -mgfx70  -mvtx50 -mt600 -ma250"},
+{ LEVELID_STREETS,      "-ml0 -me0 -mgfx60  -mvtx40 -mt635 -ma290"},
+{ LEVELID_DEPOT,        "-ml0 -me0 -mgfx60  -mvtx50 -mt710 -ma300"},
+{ LEVELID_TRAIN,        "-ml0 -me0 -mgfx100 -mvtx50 -mt600 -ma200"},
+{ LEVELID_JUNGLE,       "-ml0 -me0 -mgfx70  -mvtx50 -mt500 -ma200"},
+{ LEVELID_CONTROL,      "-ml0 -me0 -mgfx70  -mvtx50 -mt671 -ma200"},
+{ LEVELID_CRADLE,       "-ml0 -me0 -mgfx100 -mvtx50 -mt650 -ma250"},
+{ LEVELID_CAVERNS,      "-ml0 -me0 -mgfx100 -mvtx50 -mt530 -ma250"},
+{ LEVELID_AZTEC,        "-ml0 -me0 -mgfx60  -mvtx40 -mt855 -ma135"},
+{ LEVELID_EGYPT,        "-ml0 -me0 -mgfx100 -mvtx50 -mt600 -ma250"},
+{ LEVELID_CITADEL,      "-ml0 -me0 -mgfx100 -mvtx50 -mt650 -ma150"},
+{ LEVELID_CUBA,         "-ml0 -me0 -mgfx100 -mvtx50 -mt300 -ma300"},
+{ LEVELID_TITLE,        "-ml0 -me0 -mgfx80 -mvtx20 -mt646 -ma001"},
+{ 0x5B,                 "-ml0 -me0 -mgfx60 -mvtx20 -mt500 -ma001"},
+{ 0x63,                 "-ml0 -me0 -mgfx60 -mvtx20 -mt500 -ma001"},
+{ LEVELID_TEMPLE,       "-ml0 -me0 -mgfx130 -mvtx100 -mt390 -ma100"},
+{ LEVELID_COMPLEX,      "-ml0 -me0 -mgfx130 -mvtx100 -mt400 -ma100"},
+{ LEVELID_LIBRARY,      "-ml0 -me0 -mgfx130 -mvtx100 -mt400 -ma100"},
+{ LEVELID_BASEMENT,     "-ml0 -me0 -mgfx130 -mvtx100 -mt400 -ma100"},
+{ LEVELID_STACK,        "-ml0 -me0 -mgfx130 -mvtx100 -mt400 -ma100"},
+{ LEVELID_CAVES,        "-ml0 -me0 -mgfx130 -mvtx100 -mt400 -ma300"},
+{ 0x1AB,                "-ml0 -me0 -mgfx130 -mvtx100 -mt550 -ma170"},
+{ 0x1A8,                "-ml0 -me0 -mgfx80  -mvtx100 -mt550 -ma250"},
+{ 0x1B7,                "-ml0 -me0 -mgfx130 -mvtx100 -mt440 -ma220"},
+{ 0x1B2,                "-ml0 -me0 -mgfx90  -mvtx100 -mt550 -ma230"},
+{ 0x1B0,                "-ml0 -me0 -mgfx110 -mvtx100 -mt350 -ma400"},
+{   0x0,                "-ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400"},
 { 0x0, },
 { 0x0, },
 { 0x0, }
@@ -111,21 +110,21 @@ void init_mainthread_data(void)
     s32 i;
 
 
-    add_debug_notice_deb_c_debug();
+    debInitDebugNoticeList();
     romCreateMesgQueue();
     establish_TLB_buffer_management_table();
     image_entries_load();
-    something_with_memp_c_debug();
-    something_with_mema_c_debug();
-    something_with_bg_c_debug();
-    something_with_vi_c_debug();
+    mempInitDebugNoticeList();
+    memaInitDebugNoticeList();
+    bgInitDebugNoticeList();
+    viInitDebugNoticeList();
     init_video_settings();
     init_indy_if_not_ready();
     debug_and_update_stage_flag = rmon_debug_is_final_build();
-    ob_c_debug_setup();
-    something_with_rsp_c_debug();
-    something_with_dyn_c_debug();
-    something_with_joy_c_debug();
+    obInitDebugNoticeList();
+    rspInitDebugNoticeList();
+    dynInitDebugNoticeList();
+    joyInitDebugNoticeList();
     osCreateMesgQueue(&bossmq, &bossmsg, 1);
 
     for (i = 0; i != 4; i++)
@@ -146,8 +145,8 @@ void init_mainthread_data(void)
     {
         debug_and_update_stage_flag = 1;
     }
-    something_stan_c_debug_related();
-    something_game_c_debug_related();
+    stanInitDebugNoticeList();
+    gameInitDebugNoticeList();
     if (debug_and_update_stage_flag != 0)
     {
         strtok("          -ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400");
@@ -160,10 +159,10 @@ void init_mainthread_data(void)
     mempCheckMemflagTokens(temp_s0, (return_ptr_TLBallocatedblock() - temp_s0));
     mempResetBank(6);
     init_LnameX();
-    something_with_lvl_c_debug();
-    something_with_boss_c_debug();
-    null_init_main_7f0acb70();
-    null_init_main_0();
+    lvInitDebugNoticeList();
+    bossInitDebugNoticeList();
+    textrelatedInit_REMOVED();
+    debugmenuInit_REMOVED();
     default_player_perspective_and_height();
     store_osgetcount();
     null_init_main_1();
@@ -1309,8 +1308,8 @@ s32 get_debug_parse_flag(void) {
  * 75C0	700069C0
  *     V0= p->debug.notice.list entry for boss_c_debug using data at 800241A0
  */
-void something_with_boss_c_debug(void) {
-    get_ptr_debug_notice_list_entry(&boss_c_ptr_debug_notice_list_entry, "boss_c_debug");
+void bossInitDebugNoticeList(void) {
+    debCheckAddDebugNoticeListEntry(&boss_c_ptr_debug_notice_list_entry, "boss_c_debug");
 }
 
 

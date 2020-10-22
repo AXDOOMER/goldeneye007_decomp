@@ -27,7 +27,9 @@ OSMesgQueue gfxFrameMsgQ;
 OSMesg gfxFrameMsgBuf[32];
 OSMesgQueue *sched_cmdQ;
 
+void thread3_main(void *args);
 
+extern u8 * _rarezipSegmentStart;
 /**
  * 1110	70000510
  * ???	initializes TLB index...
@@ -39,18 +41,19 @@ void init(void)
     s32 *cdata_vaddr_start;
     s32 cdata_rom_size;
     s32 datapos;
-    void *dest;
-    void *source;
+    u32 *dest;
+    u32 *source;
+    u32 i;
 
     cdata_vaddr_start = get_csegmentSegmentStart();
     cdata_rom_size = (get_cdataSegmentRomEnd() - get_cdataSegmentRomStart());
 
 	for (datapos = ((cdata_rom_size + (get_rarezipSegmentRomEnd() - get_rarezipSegmentRomStart())) + -1); datapos >= 0; datapos--)
     {
-		_rarezipSegmentVaddrStart[-cdata_rom_size + datapos] = &cdata_vaddr_start[datapos];
+		_rarezipSegmentStart[-cdata_rom_size + datapos] = &cdata_vaddr_start[datapos];
 	}
 
-    jump_decompressfile((_rarezipSegmentVaddrStart - cdata_rom_size), cdata_vaddr_start, 0x80300000);
+    jump_decompressfile((_rarezipSegmentStart - cdata_rom_size), cdata_vaddr_start, 0x80300000);
 
     if ((&_rarezipSegmentRomStart - &_codeSegmentRomStart) >= 0xfffb1)
     {
@@ -63,19 +66,11 @@ void init(void)
 
 
 	//IM BROKEN FIX ME!!!!!!!
-	source = (void *)resolve_TLBaddress_for_InvalidHit;
+	source = (u32 *)resolve_TLBaddress_for_InvalidHit;
 	//UT_VEC
-	dest = (void *)0x80000000;
+	dest = (u32 *)0x80000000;
 	//XUT_VEC
-	while (dest != (void *)0x80000080)
-    {
-		dest = (dest + 0x10);
-    	source = (source + 0x10);
-    	dest[-0x10] = source[-0x10];
-    	dest[-0xC] = source[-0xC];
-    	dest[-8] = source[-8];
-    	dest[-4] = source[-4];
-	}
+    while ( (u32)dest != (u32)dest + 0x80 ) { *dest = *source; dest++; source++;}
 	//TO HERE
 
     osWritebackDCacheAll();
@@ -304,7 +299,7 @@ void init_scheduler(void)
 void thread3_main(void *args)
 {
 	start_idle_thread();
-	start_nulled_entry();
+	viDebugRemoved();
 	start_pi_manager();
 	start_rmon_thread();
 	if (check_boot_switches() != 0)
