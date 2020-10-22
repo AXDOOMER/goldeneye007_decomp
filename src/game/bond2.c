@@ -434,9 +434,10 @@ int check_if_item_available(ITEM_IDS weaponid)
     if (((pPlayer->equipallguns) && (weaponid != ITEM_UNARMED) && (weaponid < ITEM_BOMBCASE)))
     {
 #ifdef VERSION_JP
-        if  ((!j_text_trigger || (weaponid != ITEM_KNIFE))) {
-            return 1;
-        }
+    if  ((!j_text_trigger || (weaponid != ITEM_KNIFE)))
+    {
+        return 1;
+    }
 #else
         return 1;
 #endif
@@ -550,80 +551,38 @@ glabel check_if_item_for_hand_available
 
 
 
-#ifdef VERSION_US
+
 int add_item_to_inventory(ITEM_IDS item)
 {
-    int *var;
+    int *nextslot;
   
-    if (is_weapon_in_inv(item) == 0) {
-
-        var = (int *)get_ptr_next_available_weapon();
-        if (var) {
-            *var = 1;
-            var[1] = item;
-            add_additional_weapon_slot_to_player_inventory_guess(var);
+    if (is_weapon_in_inv(item) == 0)
+    {
+        nextslot = (int *)get_ptr_next_available_weapon();
+        if (nextslot)
+        {
+            *nextslot = 1;
+            nextslot[1] = item;
+            add_additional_weapon_slot_to_player_inventory_guess(nextslot);
         }
 
-        if ((pPlayer->equipallguns) && (item < ITEM_BOMBCASE)) {
+        if ((pPlayer->equipallguns) && (item < ITEM_BOMBCASE))
+        {
+#ifdef VERSION_JP
+        if  ((!j_text_trigger || (item != ITEM_KNIFE)))
+        {
             return 0;
         }
-        
+#else
+            return 0;
+#endif
+        }
         return 1;
     }
-    
     return 0;
 }
-#endif
 
-#ifdef VERSION_JP
-GLOBAL_ASM(
-.text
-glabel add_item_to_inventory
-/* 0C18D8 7F08CD68 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C18DC 7F08CD6C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C18E0 7F08CD70 0FC232E9 */  jal   is_weapon_in_inv
-/* 0C18E4 7F08CD74 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0C18E8 7F08CD78 5440001E */  bnezl $v0, .Ljp7F08CDF4
-/* 0C18EC 7F08CD7C 00001025 */   move  $v0, $zero
-/* 0C18F0 7F08CD80 0FC232B5 */  jal   get_ptr_next_available_weapon
-/* 0C18F4 7F08CD84 00000000 */   nop   
-/* 0C18F8 7F08CD88 10400006 */  beqz  $v0, .Ljp7F08CDA4
-/* 0C18FC 7F08CD8C 00402025 */   move  $a0, $v0
-/* 0C1900 7F08CD90 240E0001 */  li    $t6, 1
-/* 0C1904 7F08CD94 AC4E0000 */  sw    $t6, ($v0)
-/* 0C1908 7F08CD98 8FAF0018 */  lw    $t7, 0x18($sp)
-/* 0C190C 7F08CD9C 0FC23289 */  jal   add_additional_weapon_slot_to_player_inventory_guess
-/* 0C1910 7F08CDA0 AC4F0004 */   sw    $t7, 4($v0)
-.Ljp7F08CDA4:
-/* 0C1914 7F08CDA4 3C188008 */  lui   $t8, %hi(pPlayer) # $t8, 0x8008
-/* 0C1918 7F08CDA8 8F18A120 */  lw    $t8, %lo(pPlayer)($t8)
-/* 0C191C 7F08CDAC 8FA80018 */  lw    $t0, 0x18($sp)
-/* 0C1920 7F08CDB0 8F1911EC */  lw    $t9, 0x11ec($t8)
-/* 0C1924 7F08CDB4 29010021 */  slti  $at, $t0, 0x21
-/* 0C1928 7F08CDB8 1320000B */  beqz  $t9, .Ljp7F08CDE8
-/* 0C192C 7F08CDBC 00000000 */   nop   
-/* 0C1930 7F08CDC0 10200009 */  beqz  $at, .Ljp7F08CDE8
-/* 0C1934 7F08CDC4 3C098005 */   lui   $t1, %hi(j_text_trigger) # $t1, 0x8005
-/* 0C1938 7F08CDC8 8D298500 */  lw    $t1, %lo(j_text_trigger)($t1)
-/* 0C193C 7F08CDCC 24010002 */  li    $at, 2
-/* 0C1940 7F08CDD0 11200003 */  beqz  $t1, .Ljp7F08CDE0
-/* 0C1944 7F08CDD4 00000000 */   nop   
-/* 0C1948 7F08CDD8 11010003 */  beq   $t0, $at, .Ljp7F08CDE8
-/* 0C194C 7F08CDDC 00000000 */   nop   
-.Ljp7F08CDE0:
-/* 0C1950 7F08CDE0 10000004 */  b     .Ljp7F08CDF4
-/* 0C1954 7F08CDE4 00001025 */   move  $v0, $zero
-.Ljp7F08CDE8:
-/* 0C1958 7F08CDE8 10000002 */  b     .Ljp7F08CDF4
-/* 0C195C 7F08CDEC 24020001 */   li    $v0, 1
-/* 0C1960 7F08CDF0 00001025 */  move  $v0, $zero
-.Ljp7F08CDF4:
-/* 0C1964 7F08CDF4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C1968 7F08CDF8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C196C 7F08CDFC 03E00008 */  jr    $ra
-/* 0C1970 7F08CE00 00000000 */   nop    
-)
-#endif
+
 
 
 
