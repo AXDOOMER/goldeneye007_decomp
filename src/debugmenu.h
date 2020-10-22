@@ -3,5 +3,5 @@
 
 #include <ultra64.h>
 void blank_debug_buffer_chars(void);
-
+void debugmenuInit_REMOVED(void);
 #endif

@@ -84,7 +84,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/u/src/vi.o
  .gptab.data    0x0000000000000000       0x20 build/u/src/vi.o
  .gptab.bss     0x0000000000000000       0x20 build/u/src/vi.o
- .mdebug        0x0000000000000000      0x518 build/u/src/vi.o
+ .mdebug        0x0000000000000000      0x4f4 build/u/src/vi.o
  .options       0x0000000000000000       0x20 build/u/src/debugmenu.o
  .reginfo       0x0000000000000000       0x18 build/u/src/debugmenu.o
  .options       0x0000000000000000       0x20 build/u/src/joy.o
@@ -799,8 +799,8 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/u/src/game/dyn.o
  .options       0x0000000000000000       0x20 build/u/src/game/lvl.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/lvl.o
- .options       0x0000000000000000       0x20 build/u/src/game/lvl_2.o
- .reginfo       0x0000000000000000       0x18 build/u/src/game/lvl_2.o
+ .options       0x0000000000000000       0x20 build/u/src/game/ramromreplay.o
+ .reginfo       0x0000000000000000       0x18 build/u/src/game/ramromreplay.o
  .options       0x0000000000000000       0x20 build/u/src/game/unk_0C0A70.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/unk_0C0A70.o
  .options       0x0000000000000000       0x20 build/u/src/game/mp_music.o
@@ -834,7 +834,7 @@ Discarded input sections
  .options       0x0000000000000000       0x20 build/u/src/game/game_debug.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/game_debug.o
  .gptab.data    0x0000000000000000       0x18 build/u/src/game/game_debug.o
- .mdebug        0x0000000000000000      0x71c build/u/src/game/game_debug.o
+ .mdebug        0x0000000000000000      0x710 build/u/src/game/game_debug.o
  .options       0x0000000000000000       0x20 build/u/src/game/compiletime.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/compiletime.o
  .mdebug        0x0000000000000000      0x294 build/u/src/game/compiletime.o
@@ -1200,14 +1200,14 @@ Linker script and memory map
                 0x0000000070004bb4                indy_grab_rgb_32bit
  build/u/src/deb.o(.text)
  .text          0x0000000070004d20      0x1c0 build/u/src/deb.o
-                0x0000000070004d20                return_match_in_debug_notice_list
-                0x0000000070004d80                get_entry_of_size_in_debug_notice_list
-                0x0000000070004de0                add_new_entry_to_debug_notice_list
-                0x0000000070004e2c                add_debug_notice_deb_c_debug
-                0x0000000070004e60                get_ptr_debug_notice_list_entry
-                0x0000000070004e98                scan_debug_notice_list_till_NULL
-                0x0000000070004ebc                debug_stubbed_70004EBC
-                0x0000000070004ec4                debug_removed
+                0x0000000070004d20                debCheckIfDNLEntryExists
+                0x0000000070004d80                debAllocateDNLEntry
+                0x0000000070004de0                debAllocateAndAddDNLEntry
+                0x0000000070004e2c                debInitDebugNoticeList
+                0x0000000070004e60                debCheckAddDebugNoticeListEntry
+                0x0000000070004e98                debScanDNLEntries_NEUTERED
+                0x0000000070004ebc                debRemoved70004EBC
+                0x0000000070004ec4                debRemoved70004EC4
  build/u/src/deb_video.o(.text)
  .text          0x0000000070004ee0      0x750 build/u/src/deb_video.o
                 0x0000000070004ee0                init_tlb
@@ -1262,7 +1262,7 @@ Linker script and memory map
                 0x000000007000695c                get_stage_num
                 0x0000000070006968                return_to_title_from_level_end
                 0x00000000700069b4                get_debug_parse_flag
-                0x00000000700069c0                something_with_boss_c_debug
+                0x00000000700069c0                bossInitDebugNoticeList
  build/u/src/music.o(.text)
  .text          0x00000000700069f0     0x1130 build/u/src/music.o
                 0x00000000700069f0                audio_related
@@ -1322,7 +1322,7 @@ Linker script and memory map
                 0x0000000070009284                sfx_c_70009284
  build/u/src/memp.o(.text)
  .text          0x0000000070009380      0x690 build/u/src/memp.o
-                0x0000000070009380                something_with_memp_c_debug
+                0x0000000070009380                mempInitDebugNoticeList
                 0x00000000700093ac                mempCheckMemflagTokens
                 0x0000000070009514                mempSetBankStarts
                 0x0000000070009720                mempAllocBytesInBank
@@ -1340,7 +1340,7 @@ Linker script and memory map
                 0x0000000070009b18                memaSortMergeAllEntries
                 0x0000000070009b60                memaFindOpening
                 0x0000000070009c74                memaAllocRoomBuffer
-                0x0000000070009d6c                something_with_mema_c_debug
+                0x0000000070009d6c                memaInitDebugNoticeList
                 0x0000000070009d98                mempInitMallocTable
                 0x0000000070009e10                mem_related_calls_sort_merge_entries
                 0x0000000070009e34                mem_related_something_find_first
@@ -1385,14 +1385,14 @@ Linker script and memory map
                 0x000000007000acf0                start_pi_manager
  build/u/src/vi.o(.text)
  .text          0x000000007000ad30       0x50 build/u/src/vi.o
-                0x000000007000ad30                start_nulled_entry
-                0x000000007000ad38                something_with_vi_c_debug
+                0x000000007000ad30                viDebugRemoved
+                0x000000007000ad38                viInitDebugNoticeList
  build/u/src/debugmenu.o(.text)
  .text          0x000000007000ad80      0x7e0 build/u/src/debugmenu.o
                 0x000000007000ad80                dummied_function_7000AD80
                 0x000000007000ad90                dummied_function_7000AD90
                 0x000000007000ada0                null_function_7000ADA0
-                0x000000007000ada8                null_init_main_0
+                0x000000007000ada8                debugmenuInit_REMOVED
                 0x000000007000adb0                debug_text_related_2
                 0x000000007000add0                display_text_to_coord
                 0x000000007000aedc                debugMenuSetTextPOStoOffset
@@ -1409,7 +1409,7 @@ Linker script and memory map
                 0x000000007000b27c                read_screen_display_block_and_write_chars
  build/u/src/joy.o(.text)
  .text          0x000000007000b560     0x1420 build/u/src/joy.o
-                0x000000007000b560                something_with_joy_c_debug
+                0x000000007000b560                joyInitDebugNoticeList
                 0x000000007000b6ac                test_controller_presence
                 0x000000007000b728                osPfsChecker
                 0x000000007000b734                controller_7000B734
@@ -3101,7 +3101,6 @@ Linker script and memory map
  .text          0x000000007f057ea0      0x130 build/u/src/game/sin.o
                 0x000000007f057ea0                cosf
                 0x000000007f057eac                sinf
-                0x000000007f057fc4                func_7F057FC4
  build/u/src/game/unk_057FD0.o(.text)
  .text          0x000000007f057fd0     0x2a10 build/u/src/game/unk_057FD0.o
                 0x000000007f057fd0                reset_array_of_0x10_floats
@@ -4158,7 +4157,7 @@ Linker script and memory map
                 0x000000007f0aca28                sub_GAME_7F0ACA28
  build/u/src/game/textrelated.o(.text)
  .text          0x000000007f0acb70     0x23c0 build/u/src/game/textrelated.o
-                0x000000007f0acb70                null_init_main_7f0acb70
+                0x000000007f0acb70                textrelatedInit_REMOVED
                 0x000000007f0acb78                setTextSpacingInverted
                 0x000000007f0acb88                setTextOrientation
                 0x000000007f0acb94                setTextWordWrap
@@ -4183,7 +4182,7 @@ Linker script and memory map
                 0x000000007f0aef3c                sub_GAME_7F0AEF3C
                 0x000000007f0aefe0                sub_GAME_7F0AEFE0
                 0x000000007f0af000                stanRemovedAnimationRoutine
-                0x000000007f0af00c                something_stan_c_debug_related
+                0x000000007f0af00c                stanInitDebugNoticeList
                 0x000000007f0af038                sub_GAME_7F0AF038
                 0x000000007f0af20c                sub_GAME_7F0AF20C
                 0x000000007f0af5b8                stanLoadFile
@@ -4270,7 +4269,7 @@ Linker script and memory map
                 0x000000007f0b33dc                sub_GAME_7F0B33DC
  build/u/src/game/bg.o(.text)
  .text          0x000000007f0b37c0     0x6f60 build/u/src/game/bg.o
-                0x000000007f0b37c0                something_with_bg_c_debug
+                0x000000007f0b37c0                bgInitDebugNoticeList
                 0x000000007f0b37ec                sub_GAME_7F0B37EC
                 0x000000007f0b38b4                sub_GAME_7F0B38B4
                 0x000000007f0b39bc                sub_GAME_7F0B39BC
@@ -4425,7 +4424,7 @@ Linker script and memory map
  .text          0x000000007f0bcaa0      0x9c0 build/u/src/game/ob.o
                 0x000000007f0bcaa0                load_resource
                 0x000000007f0bcb34                resource_load_from_indy
-                0x000000007f0bcc28                ob_c_debug_setup
+                0x000000007f0bcc28                obInitDebugNoticeList
                 0x000000007f0bccbc                _load_rom_index_to_membank
                 0x000000007f0bcce4                _load_resource_index_to_membank
                 0x000000007f0bcd04                _load_resource_named_to_membank
@@ -4446,7 +4445,7 @@ Linker script and memory map
                 0x000000007f0bd410                sub_GAME_7F0BD410
  build/u/src/game/dyn.o(.text)
  .text          0x000000007f0bd460      0x490 build/u/src/game/dyn.o
-                0x000000007f0bd460                something_with_dyn_c_debug
+                0x000000007f0bd460                dynInitDebugNoticeList
                 0x000000007f0bd48c                set_vtx_gfx_mem_alloc
                 0x000000007f0bd674                get_ptr_displaylist
                 0x000000007f0bd69c                allocate_something_in_mgfx
@@ -4464,7 +4463,7 @@ Linker script and memory map
  .text          0x000000007f0bd8f0     0x2380 build/u/src/game/lvl.o
                 0x000000007f0bd8f0                sub_GAME_7F0BD8F0
                 0x000000007f0bd8fc                sub_GAME_7F0BD8FC
-                0x000000007f0bd908                something_with_lvl_c_debug
+                0x000000007f0bd908                lvInitDebugNoticeList
                 0x000000007f0bd984                sub_GAME_7F0BD984
                 0x000000007f0bd9c4                playmusictrack1
                 0x000000007f0bd9ec                music_append_play_solo_death_short
@@ -4488,8 +4487,8 @@ Linker script and memory map
                 0x000000007f0bfc4c                get_cur_mp_min
                 0x000000007f0bfc58                get_stage_time_sec
                 0x000000007f0bfc64                get_poweron_time_sec
- build/u/src/game/lvl_2.o(.text)
- .text          0x000000007f0bfc70      0xe00 build/u/src/game/lvl_2.o
+ build/u/src/game/ramromreplay.o(.text)
+ .text          0x000000007f0bfc70      0xe00 build/u/src/game/ramromreplay.o
                 0x000000007f0bfc70                clear_ramrom_block_buffer_heading_ptrs
                 0x000000007f0bfc8c                get_is_ramrom_flag
                 0x000000007f0bfc98                get_recording_ramrom_flag
@@ -4656,7 +4655,7 @@ Linker script and memory map
                 0x000000007f0cfcd4                loop_to_decompress_entire_file
  build/u/src/game/rsp.o(.text)
  .text          0x000000007f0cfdb0      0x180 build/u/src/game/rsp.o
-                0x000000007f0cfdb0                something_with_rsp_c_debug
+                0x000000007f0cfdb0                rspInitDebugNoticeList
                 0x000000007f0cfddc                allocate_init_rsp_buffers
                 0x000000007f0cfe18                load_rsp_microcode
  build/u/src/game/indy_comms.o(.text)
@@ -4733,7 +4732,7 @@ Linker script and memory map
                 0x000000007f0d1998                response_indyrescmd_curr_matches_expected
  build/u/src/game/game_debug.o(.text)
  .text          0x000000007f0d1a20       0x90 build/u/src/game/game_debug.o
-                0x000000007f0d1a20                something_game_c_debug_related
+                0x000000007f0d1a20                gameInitDebugNoticeList
                 0x000000007f0d1a4c                reset_mem_bank_5
                 0x000000007f0d1a7c                sub_GAME_7F0D1A7C
  build/u/src/game/compiletime.o(.text)
@@ -16613,8 +16612,8 @@ Linker script and memory map
  build/u/src/pi.o(.data)
  build/u/src/vi.o(.data)
  .data          0x0000000080024500       0x20 build/u/src/vi.o
-                0x0000000080024500                ptr_vi_c_debug_debug_notice_list
-                0x0000000080024518                enddl_80024518
+                0x0000000080024500                viDebugNoticeList
+                0x0000000080024518                viDLEnd
  build/u/src/debugmenu.o(.data)
  .data          0x0000000080024520     0x23a0 build/u/src/debugmenu.o
                 0x0000000080024520                image_resource
@@ -19725,8 +19724,8 @@ Linker script and memory map
                 0x00000000800483dc                D_800483DC
                 0x00000000800483e0                D_800483E0
                 0x00000000800483e4                D_800483E4
- build/u/src/game/lvl_2.o(.data)
- .data          0x00000000800483f0       0xa0 build/u/src/game/lvl_2.o
+ build/u/src/game/ramromreplay.o(.data)
+ .data          0x00000000800483f0       0xa0 build/u/src/game/ramromreplay.o
                 0x00000000800483f0                ramrom_table
                 0x0000000080048468                ptr_active_demofile
                 0x000000008004846c                ramrom_blkbuf_2
@@ -21353,8 +21352,8 @@ Linker script and memory map
                 0x000000008005b744                D_8005B744
                 0x000000008005b748                D_8005B748
                 0x000000008005b74c                D_8005B74C
- build/u/src/game/lvl_2.o(.rodata)
- .rodata        0x000000008005b750       0x40 build/u/src/game/lvl_2.o
+ build/u/src/game/ramromreplay.o(.rodata)
+ .rodata        0x000000008005b750       0x40 build/u/src/game/ramromreplay.o
                 0x000000008005b750                aReplayDemo_D
                 0x000000008005b760                aReplayDemo_D_1
                 0x000000008005b770                aReplayDemo_load
@@ -22711,7 +22710,7 @@ Linker script and memory map
                 0x000000008008c5f0                record_slot_num
                 0x000000008008c5f4                address_demo_loaded
                 0x000000008008c5f8                dword_CODE_bss_8008C5F8
- build/u/src/game/lvl_2.o(.bss)
+ build/u/src/game/ramromreplay.o(.bss)
  build/u/src/game/unk_0C0A70.o(.bss)
  build/u/src/game/mp_music.o(.bss)
  .bss           0x000000008008c600       0x40 build/u/src/game/mp_music.o

@@ -178,14 +178,14 @@ glabel resource_load_from_indy
 
 
 #ifdef NONMATCHING
-void ob_c_debug_setup(void)
+void obInitDebugNoticeList(void)
 {
     struct resource_lookup_data_entry *lookupentry;
     struct resource_lookup_data_entry *nextlookup;
     int file_count;
     struct fileentry *filetable_entry;
     
-    get_ptr_debug_notice_list_entry(&ob_c_debug_notice_list_entry,"ob_c_debug");
+    debCheckAddDebugNoticeListEntry(&ob_c_debug_notice_list_entry,"ob_c_debug");
     filetable_entry = &file_resource_table[0];
     file_count = file_entry_max - 1;
     if (1 < file_count) {
@@ -210,13 +210,13 @@ glabel aOb_c_debug
 /*"ob_c_debug"*/
 .word 0x6F625F63, 0x5F646562, 0x75670000
 .text
-glabel ob_c_debug_setup
+glabel obInitDebugNoticeList
 /* 0F1758 7F0BCC28 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0F175C 7F0BCC2C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F1760 7F0BCC30 3C048004 */  lui   $a0, %hi(ob_c_debug_notice_list_entry)
 /* 0F1764 7F0BCC34 3C058006 */  lui   $a1, %hi(aOb_c_debug)
 /* 0F1768 7F0BCC38 24A5B674 */  addiu $a1, %lo(aOb_c_debug) # addiu $a1, $a1, -0x498c
-/* 0F176C 7F0BCC3C 0C001398 */  jal   get_ptr_debug_notice_list_entry
+/* 0F176C 7F0BCC3C 0C001398 */  jal   debCheckAddDebugNoticeListEntry
 /* 0F1770 7F0BCC40 24846050 */   addiu $a0, %lo(ob_c_debug_notice_list_entry) # addiu $a0, $a0, 0x6050
 /* 0F1774 7F0BCC44 3C038005 */  lui   $v1, %hi(file_entry_max)
 /* 0F1778 7F0BCC48 8C6382D4 */  lw    $v1, %lo(file_entry_max)($v1)

@@ -6,7 +6,18 @@
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B3200(void) {
+f32 sub_GAME_7F0B3200(f32 *param_1,f32 *param_2,f32 *param_3,f32 *param_4)
+
+{
+  if ((*param_2 - *param_1) * param_3[1] - param_4[1] + (param_2[1] - param_1[1]) * *param_4 - *param_3 == 0.00000000) {
+    return 1.00000000;
+  }
+  else {
+    
+    if ((((*param_3 - *param_1) * param_3[1] - param_4[1] + (param_3[1] - param_1[1]) * *param_4 - *param_3) / (*param_2 - *param_1) * param_3[1] - param_4[1] + (param_2[1] - param_1[1]) * *param_4 - *param_3 < 0.00000000) || (1.00000000 < ((*param_3 - *param_1) * param_3[1] - param_4[1] + (param_3[1] - param_1[1]) * *param_4 - *param_3) / (*param_2 - *param_1) * param_3[1] - param_4[1] + (param_2[1] - param_1[1]) * *param_4 - *param_3)) {
+      return 1.00000000;
+    }
+  }
 
 }
 #else
@@ -79,8 +90,32 @@ glabel sub_GAME_7F0B3200
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B32D8(void) {
+f32 sub_GAME_7F0B32D8(struct xyzpoint *param_1,struct xyzpoint *param_2,struct xyzpoint *param_3)
 
+{
+
+  f32 fVar2;
+  float __x;
+
+
+  __x = (param_1->x - ((param_2->x) * (param_3->y - param_1->z) - (param_3->x - param_1->y) * (param_2->y))) * (param_1->x + ((param_2->x) * (param_3->y - param_1->z) - (param_3->x - param_1->y) * (param_2->y)));
+  if (__x < 0.00000000)
+  {
+    return 340282346638528859811704183484516925440.00000000;
+  }
+  else {
+    __x = sqrtf(__x);
+    fVar2 = (f32)(((param_2->x) * (param_3->x - param_1->y) + (param_3->y - param_1->z) * (param_2->y)) - __x);
+    if (fVar2 < 0.00000000) {
+      if (fVar2 * fVar2 + ((param_2->x) * (param_3->y - param_1->z) - (param_3->x - param_1->y) * (param_2->y)) * ((param_2->x) * (param_3->y - param_1->z) - (param_3->x - param_1->y) * (param_2->y)) <= param_1->x * param_1->x) {
+        fVar2 = 0.00000000;
+      }
+      else {
+        fVar2 = (f32)340282346638528859811704183484516925440.00000000;
+      }
+    }
+  }
+  return fVar2;
 }
 #else
 GLOBAL_ASM(

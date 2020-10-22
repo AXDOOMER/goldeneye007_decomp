@@ -21,7 +21,7 @@ u32 memaSortMergeEntries(struct s_mem_alloc_table *param_1);
 void memaSortMergeAllEntries(void);
 s_mem_alloc_entry * memaFindOpening(s_mem_alloc_table *param_1);
 void memaAllocRoomBuffer(u32 addr,u32 size);
-void something_with_mema_c_debug(void);
+void memaInitDebugNoticeList(void);
 void mempInitMallocTable(void *ptr_allocmem,u32 size);
 void mem_related_calls_sort_merge_entries(void);
 s32 mem_related_something_find_first(u32 arg0);

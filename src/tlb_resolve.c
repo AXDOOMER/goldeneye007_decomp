@@ -12,8 +12,14 @@
  * loads/resolves TLB address, writting random entry
  */
 #ifdef NONMATCHING
-void resolve_TLBaddress_for_InvalidHit(void) {
-    //i should probably remain as assembly, maybe even moved to a .s
+//i should probably remain as assembly, maybe even moved to a .s
+void resolve_TLBaddress_for_InvalidHit(void)
+{
+  setCopReg(0,PageMask,0,0);
+  setCopReg(0,EntryLo0,(longlong)*(int *)(Context + TLB_manager_mapping_table_end),0);
+  setCopReg(0,EntryLo1,(longlong)(*(int *)(Context + TLB_manager_mapping_table_end) + 0x40),0);
+  TLB_write_random_entry(Random,EntryHi,EntryLo0,EntryLo1,PageMask);
+  return;
 }
 #else
 GLOBAL_ASM(

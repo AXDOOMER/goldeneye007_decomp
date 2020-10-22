@@ -51,12 +51,8 @@ s32 flag_to_record_ramrom = 0;
 //D:8004848C
 //                     .align 4
 
-//D:8005B750
-const char aReplayDemo_D[] = "replay/demo.%d";
-//D:8005B760
-const char aReplayDemo_D_1[] = "replay/demo.%d";
-//D:8005B770
-const char aReplayDemo_load[] = "replay/demo.load";
+
+
 
 
 
@@ -172,6 +168,10 @@ void save_ramrom_to_devtool(void)
     check_file_exported(indyFileName,0xf00000,(ptr_active_demofile + 0x80));
 }
 #else
+//D:8005B750
+const char aReplayDemo_D[] = "replay/demo.%d";
+//D:8005B760
+const char aReplayDemo_D_1[] = "replay/demo.%d";
 GLOBAL_ASM(
 .text
 glabel save_ramrom_to_devtool
@@ -236,6 +236,8 @@ void load_ramrom_from_devtool(void)
     }
 }
 #else
+//D:8005B770
+const char aReplayDemo_load[] = "replay/demo.load";
 GLOBAL_ASM(
 .text
 glabel load_ramrom_from_devtool

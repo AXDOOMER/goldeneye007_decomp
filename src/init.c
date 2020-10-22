@@ -299,7 +299,7 @@ void init_scheduler(void)
 void thread3_main(void *args)
 {
 	start_idle_thread();
-	start_nulled_entry();
+	viDebugRemoved();
 	start_pi_manager();
 	start_rmon_thread();
 	if (check_boot_switches() != 0)

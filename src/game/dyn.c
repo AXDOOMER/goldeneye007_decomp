@@ -1,5 +1,5 @@
 #include "ultra64.h"
-
+#include "game/dyn.h"
 // bss
 //CODE.bss:8008C230
 s32 *ptr_mgfx0_alloc_start;
@@ -41,8 +41,8 @@ char membars_string3[] = "-------------------------";
 
 //rodata
 
-void something_with_dyn_c_debug(void) {
-    get_ptr_debug_notice_list_entry(&D_800482E0, "dyn_c_debug");
+void dynInitDebugNoticeList(void) {
+    debCheckAddDebugNoticeListEntry(&D_800482E0, "dyn_c_debug");
 }
 
 #ifdef NONMATCHING

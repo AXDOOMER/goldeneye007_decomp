@@ -795,8 +795,8 @@ s32 D_80044DB0 = 0;
 
 
 
-void something_with_bg_c_debug(void) {
-    get_ptr_debug_notice_list_entry(&ptr_bg_c_debug_debug_notice_list, "bg_c_debug");
+void bgInitDebugNoticeList(void) {
+    debCheckAddDebugNoticeListEntry(&ptr_bg_c_debug_debug_notice_list, "bg_c_debug");
 }
 
 
