@@ -467,37 +467,11 @@ glabel sub_GAME_7F01D644
 #endif
 
 
-
-#ifdef NONMATCHING
 void store_favorite_weapon_current_player(u32 right,u32 left)
 {
   u32 playerNum;
   
   playerNum = get_cur_playernum();
-  (&fav_weapon_player1)[playerNum].right = right;
-  (&fav_weapon_player1)[playerNum].left = left;
+  array_favweapon[playerNum][0] = right;
+  array_favweapon[playerNum][1] = left;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel store_favorite_weapon_current_player
-/* 0521B0 7F01D680 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0521B4 7F01D684 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0521B8 7F01D688 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0521BC 7F01D68C 0FC26C54 */  jal   get_cur_playernum
-/* 0521C0 7F01D690 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 0521C4 7F01D694 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0521C8 7F01D698 3C0F8007 */  lui   $t7, %hi(array_favweapon) 
-/* 0521CC 7F01D69C 8FB80018 */  lw    $t8, 0x18($sp)
-/* 0521D0 7F01D6A0 8FB9001C */  lw    $t9, 0x1c($sp)
-/* 0521D4 7F01D6A4 25EF96F0 */  addiu $t7, %lo(array_favweapon) # addiu $t7, $t7, -0x6910
-/* 0521D8 7F01D6A8 000270C0 */  sll   $t6, $v0, 3
-/* 0521DC 7F01D6AC 01CF1821 */  addu  $v1, $t6, $t7
-/* 0521E0 7F01D6B0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0521E4 7F01D6B4 AC780000 */  sw    $t8, ($v1)
-/* 0521E8 7F01D6B8 03E00008 */  jr    $ra
-/* 0521EC 7F01D6BC AC790004 */   sw    $t9, 4($v1)
-)
-#endif
-
-
