@@ -312,7 +312,7 @@ s32 get_BONDdata_allguns_flag(void) {
 
 
 #ifdef NONMATCHING
-void get_ptr_inventory_item(void) {
+void get_ptr_inventory_item(ITEM_IDS item) {
 
 }
 #else
@@ -357,7 +357,7 @@ glabel get_ptr_inventory_item
  * @param item: enum Item ID eg: ITEM_KNIFE
  * @return TRUE/FALSE
  */
-int is_weapon_in_inv(int item) 
+int is_weapon_in_inv(ITEM_IDS item) 
 {
     return (get_ptr_inventory_item(item) != 0);
 }
@@ -418,7 +418,7 @@ glabel get_ptr_inventory_for_item_in_hand
  * @param hand: enum Hand ID eg: HAND_LEFT
  * @return TRUE/FALSE
  */
-int is_item_for_hand_in_inventory(int item, int hand) 
+int is_item_for_hand_in_inventory(ITEM_IDS item, int hand) 
 {
     return (get_ptr_inventory_for_item_in_hand(item, hand) != 0);
 }
@@ -447,109 +447,36 @@ int check_if_item_available(ITEM_IDS weaponid)
 }
 
 
-#ifdef NONMATCHING
-void check_if_item_for_hand_available(void) {
-
-}
-#else
+//Please make me pretty during cleanup phase
+s32 check_if_item_for_hand_available(ITEM_IDS item,int hand)
+{
 #ifdef VERSION_US
-GLOBAL_ASM(
-.text
-glabel check_if_item_for_hand_available
-/* 0C0F3C 7F08C40C 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0C0F40 7F08C410 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0C0F44 7F08C414 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C0F48 7F08C418 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C0F4C 7F08C41C AFA5001C */  sw    $a1, 0x1c($sp)
-/* 0C0F50 7F08C420 8DCF11EC */  lw    $t7, 0x11ec($t6)
-/* 0C0F54 7F08C424 28810021 */  slti  $at, $a0, 0x21
-/* 0C0F58 7F08C428 11E00011 */  beqz  $t7, .L7F08C470
-/* 0C0F5C 7F08C42C 00000000 */   nop   
-/* 0C0F60 7F08C430 1020000F */  beqz  $at, .L7F08C470
-/* 0C0F64 7F08C434 00000000 */   nop   
-/* 0C0F68 7F08C438 1485000D */  bne   $a0, $a1, .L7F08C470
-/* 0C0F6C 7F08C43C 00000000 */   nop   
-/* 0C0F70 7F08C440 0FC26919 */  jal   get_num_players
-/* 0C0F74 7F08C444 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0C0F78 7F08C448 24010001 */  li    $at, 1
-/* 0C0F7C 7F08C44C 14410008 */  bne   $v0, $at, .L7F08C470
-/* 0C0F80 7F08C450 8FA40018 */   lw    $a0, 0x18($sp)
-/* 0C0F84 7F08C454 3C050010 */  lui   $a1, 0x10
-/* 0C0F88 7F08C458 0FC1782D */  jal   check_special_attributes
-/* 0C0F8C 7F08C45C AFA40018 */   sw    $a0, 0x18($sp)
-/* 0C0F90 7F08C460 10400003 */  beqz  $v0, .L7F08C470
-/* 0C0F94 7F08C464 8FA40018 */   lw    $a0, 0x18($sp)
-/* 0C0F98 7F08C468 10000003 */  b     .L7F08C478
-/* 0C0F9C 7F08C46C 24020001 */   li    $v0, 1
-.L7F08C470:
-/* 0C0FA0 7F08C470 0FC230E7 */  jal   is_item_for_hand_in_inventory
-/* 0C0FA4 7F08C474 8FA5001C */   lw    $a1, 0x1c($sp)
-.L7F08C478:
-/* 0C0FA8 7F08C478 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C0FAC 7F08C47C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C0FB0 7F08C480 03E00008 */  jr    $ra
-/* 0C0FB4 7F08C484 00000000 */   nop   
-)
+    if (((pPlayer->equipallguns && (item < ITEM_BOMBCASE)) && 
+     (item == hand)) && ((get_num_players() == 1 && 
+     (check_special_attributes(item,0x100000) != 0)))) 
+    {
+        return 1;
+    }
+    return is_item_for_hand_in_inventory(item,hand);
 #endif
-
 #ifdef VERSION_JP
-GLOBAL_ASM(
-.text
-glabel check_if_item_for_hand_available
-/* 0C1824 7F08CCB4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C1828 7F08CCB8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C182C 7F08CCBC 14A00003 */  bnez  $a1, .Ljp7F08CCCC
-/* 0C1830 7F08CCC0 00A03025 */   move  $a2, $a1
-/* 0C1834 7F08CCC4 10000024 */  b     .Ljp7F08CD58
-/* 0C1838 7F08CCC8 24020001 */   li    $v0, 1
-.Ljp7F08CCCC:
-/* 0C183C 7F08CCCC 3C0E8008 */  lui   $t6, %hi(pPlayer) # $t6, 0x8008
-/* 0C1840 7F08CCD0 8DCEA120 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0C1844 7F08CCD4 28810021 */  slti  $at, $a0, 0x21
-/* 0C1848 7F08CCD8 8DCF11EC */  lw    $t7, 0x11ec($t6)
-/* 0C184C 7F08CCDC 11E0001C */  beqz  $t7, .Ljp7F08CD50
-/* 0C1850 7F08CCE0 00000000 */   nop   
-/* 0C1854 7F08CCE4 1020001A */  beqz  $at, .Ljp7F08CD50
-/* 0C1858 7F08CCE8 00000000 */   nop   
-/* 0C185C 7F08CCEC 14860018 */  bne   $a0, $a2, .Ljp7F08CD50
-/* 0C1860 7F08CCF0 00000000 */   nop   
-/* 0C1864 7F08CCF4 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0C1868 7F08CCF8 0FC26C01 */  jal   get_num_players
-/* 0C186C 7F08CCFC AFA6001C */   sw    $a2, 0x1c($sp)
-/* 0C1870 7F08CD00 24010001 */  li    $at, 1
-/* 0C1874 7F08CD04 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0C1878 7F08CD08 14410011 */  bne   $v0, $at, .Ljp7F08CD50
-/* 0C187C 7F08CD0C 8FA6001C */   lw    $a2, 0x1c($sp)
-/* 0C1880 7F08CD10 3C050010 */  lui   $a1, 0x10
-/* 0C1884 7F08CD14 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0C1888 7F08CD18 0FC17975 */  jal   check_special_attributes
-/* 0C188C 7F08CD1C AFA6001C */   sw    $a2, 0x1c($sp)
-/* 0C1890 7F08CD20 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0C1894 7F08CD24 1040000A */  beqz  $v0, .Ljp7F08CD50
-/* 0C1898 7F08CD28 8FA6001C */   lw    $a2, 0x1c($sp)
-/* 0C189C 7F08CD2C 3C188005 */  lui   $t8, %hi(j_text_trigger) # $t8, 0x8005
-/* 0C18A0 7F08CD30 8F188500 */  lw    $t8, %lo(j_text_trigger)($t8)
-/* 0C18A4 7F08CD34 24010002 */  li    $at, 2
-/* 0C18A8 7F08CD38 13000003 */  beqz  $t8, .Ljp7F08CD48
-/* 0C18AC 7F08CD3C 00000000 */   nop   
-/* 0C18B0 7F08CD40 10810003 */  beq   $a0, $at, .Ljp7F08CD50
-/* 0C18B4 7F08CD44 00000000 */   nop   
-.Ljp7F08CD48:
-/* 0C18B8 7F08CD48 10000003 */  b     .Ljp7F08CD58
-/* 0C18BC 7F08CD4C 24020001 */   li    $v0, 1
-.Ljp7F08CD50:
-/* 0C18C0 7F08CD50 0FC2330B */  jal   is_item_for_hand_in_inventory
-/* 0C18C4 7F08CD54 00C02825 */   move  $a1, $a2
-.Ljp7F08CD58:
-/* 0C18C8 7F08CD58 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C18CC 7F08CD5C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C18D0 7F08CD60 03E00008 */  jr    $ra
-/* 0C18D4 7F08CD64 00000000 */   nop    
-)
+    if (hand == 0) 
+    {
+        return 1;
+    }
+    else
+    {
+        if ((((pPlayer->equipallguns != 0) && (item < ITEM_BOMBCASE)) &&
+         (item == hand)) && (((get_num_players() == 1 &&
+         (check_special_attributes(item,0x100000) != 0)) &&
+         ((j_text_trigger == 0 || (item != ITEM_KNIFE))))))
+        {
+            return 1;
+        }
+    }
+    return is_item_for_hand_in_inventory(item,hand);
 #endif
-
-#endif
-
+}
 
 
 
