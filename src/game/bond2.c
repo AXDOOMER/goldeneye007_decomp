@@ -14,15 +14,14 @@ void reinit_BONDdata_inventory(void) {
     
     if (pPlayer->equipmaxitems > 0) {
 
-      iVar2 = 0;
+        iVar2 = 0;
 
-      do {
-        iVar1 = iVar1 + 1;
-        *(int *)(pPlayer->p_itemcur + iVar2) = -1;
-        iVar2 = iVar2 + 0x14;
-      
-      } while (iVar1 < pPlayer->equipmaxitems);
+        do {
+            iVar1 = iVar1 + 1;
+            *(int *)(pPlayer->p_itemcur + iVar2) = -1;
+            iVar2 = iVar2 + 0x14;
 
+        } while (iVar1 < pPlayer->equipmaxitems);
     }
 
     pPlayer->ptr_inventory_first_in_cycle = 0;
