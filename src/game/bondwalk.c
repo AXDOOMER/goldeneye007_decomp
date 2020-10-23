@@ -1,9 +1,12 @@
 #include "ultra64.h"
+#include "bondconstants.h"
+#include "bondtypes.h"
+#include "game/bond.h"
 #include "game/bondwalk.h"
 #include "game/chrobjdata.h"
 
 #include "bondgame.h"
-#include "game/bond.h"
+
 #include "game/unk_093880.h"
 
 // bss
@@ -368,7 +371,7 @@ struct gitem_data_struct gitem_structs[] = {
 	{&GkeycardZ_struct, "GkeycardZ", 1, NULL, 0x9883, 0x9845, 24.0, 0.0, 556.0, 80.0, 90.0, 0x9845, 0x98AA, 0.0, -6.0, 411.0},
 	{&GkeyyaleZ_struct, "GkeyyaleZ", 1, NULL, 0x9883, 0x9881, 64.0, 0.0, 1912.0, 260.0, 90.0, 0x9881, 0x98D6, 0.0, -18.0, 1568.0},
 	{&GkeyboltZ_struct, "GkeyboltZ", 1, NULL, 0x9883, 0x9819, 78.0, 0.0, 3518.0, 80.0, 90.0, 0x9819, 0x9889, 0.0, -12.0, 2582.0},
-	{(struct Gitemheader *)&Csuit_lf_handz_struct, "Csuit_lf_handZ", 0, &Csuit_lf_handz_stats, 0x9883, 0x986D, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
+	{&Csuit_lf_handz_struct, "Csuit_lf_handZ", 0, &Csuit_lf_handz_stats, 0x9883, 0x986D, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
 	{&GjoypadZ_struct, "GjoypadZ", 0, &GjoypadZ_stats, 0x9883, 0x9824, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
 	{NULL              ,          NULL, 0, &stru_D_800337D4, 0x9883, 0x9854, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
 	{NULL              ,          NULL, 0, &stru_D_80033844, 0x9883, 0x9854, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
@@ -1685,25 +1688,12 @@ glabel sub_GAME_7F05CEBC
 
 
 
-#ifdef NONMATCHING
-s32 get_itemtype_in_hand(int hand)
 
+s32 get_itemtype_in_hand(s32 hand)
 {
     return pPlayer->handitem[hand];
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel get_itemtype_in_hand
-/* 091A30 7F05CF00 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 091A34 7F05CF04 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 091A38 7F05CF08 00047880 */  sll   $t7, $a0, 2
-/* 091A3C 7F05CF0C 01CFC021 */  addu  $t8, $t6, $t7
-/* 091A40 7F05CF10 03E00008 */  jr    $ra
-/* 091A44 7F05CF14 8F020800 */   lw    $v0, 0x800($t8)
-)
-#endif
 
 
 
