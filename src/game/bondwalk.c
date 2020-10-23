@@ -1792,30 +1792,14 @@ glabel place_item_in_hand_swap_and_make_visible
 
 
 
-
-#ifdef NONMATCHING
-void get_ptr_item_text_call_line(void) {
-
+char * get_ptr_item_text_call_line(ITEM_IDS item)
+{
+  if (item == ITEM_FIST) {
+    item = pPlayer->cur_item_weapon_getname;
+  }
+  return gitem_structs[item].item_file_name;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_ptr_item_text_call_line
-/* 091B48 7F05D018 24010001 */  li    $at, 1
-/* 091B4C 7F05D01C 14810004 */  bne   $a0, $at, .L7F05D030
-/* 091B50 7F05D020 3C028003 */   lui   $v0,  %hi(gitem_structs+4)
-/* 091B54 7F05D024 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 091B58 7F05D028 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 091B5C 7F05D02C 8DC42A38 */  lw    $a0, 0x2a38($t6)
-.L7F05D030:
-/* 091B60 7F05D030 000478C0 */  sll   $t7, $a0, 3
-/* 091B64 7F05D034 01E47823 */  subu  $t7, $t7, $a0
-/* 091B68 7F05D038 000F78C0 */  sll   $t7, $t7, 3
-/* 091B6C 7F05D03C 004F1021 */  addu  $v0, $v0, $t7
-/* 091B70 7F05D040 03E00008 */  jr    $ra
-/* 091B74 7F05D044 8C423928 */   lw    $v0, %lo(gitem_structs+4)($v0)
-)
-#endif
+
 
 
 
