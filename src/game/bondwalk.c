@@ -1691,7 +1691,7 @@ glabel sub_GAME_7F05CEBC
 
 s32 get_itemtype_in_hand(s32 hand)
 {
-    return pPlayer->handitem[hand];
+    return pPlayer->hand_item[hand];
 }
 
 
@@ -1733,36 +1733,14 @@ u32 getSizeBufferWeaponInHand(int hand)
 }
 
 
-
-#ifdef NONMATCHING
-void remove_item_in_hand(void) {
-
+void remove_item_in_hand(HANDEDNESS hand)
+{
+  pPlayer->hand_invisible[hand] = 0;
+  pPlayer->hand_item[hand] = ITEM_UNARMED;
+  pPlayer->field_2A44[hand] = -1;
+  pPlayer->lock_hand_model[hand] = 1;
+  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel remove_item_in_hand
-/* 091A8C 7F05CF5C 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 091A90 7F05CF60 2463A0B0 */  addiu $v1, %lo(pPlayer) # addiu $v1, $v1, -0x5f50
-/* 091A94 7F05CF64 8C6E0000 */  lw    $t6, ($v1)
-/* 091A98 7F05CF68 00041080 */  sll   $v0, $a0, 2
-/* 091A9C 7F05CF6C 2408FFFF */  li    $t0, -1
-/* 091AA0 7F05CF70 01C27821 */  addu  $t7, $t6, $v0
-/* 091AA4 7F05CF74 ADE007F8 */  sw    $zero, 0x7f8($t7)
-/* 091AA8 7F05CF78 8C780000 */  lw    $t8, ($v1)
-/* 091AAC 7F05CF7C 240B0001 */  li    $t3, 1
-/* 091AB0 7F05CF80 0302C821 */  addu  $t9, $t8, $v0
-/* 091AB4 7F05CF84 AF200800 */  sw    $zero, 0x800($t9)
-/* 091AB8 7F05CF88 8C690000 */  lw    $t1, ($v1)
-/* 091ABC 7F05CF8C 01225021 */  addu  $t2, $t1, $v0
-/* 091AC0 7F05CF90 AD482A44 */  sw    $t0, 0x2a44($t2)
-/* 091AC4 7F05CF94 8C6C0000 */  lw    $t4, ($v1)
-/* 091AC8 7F05CF98 01826821 */  addu  $t5, $t4, $v0
-/* 091ACC 7F05CF9C 03E00008 */  jr    $ra
-/* 091AD0 7F05CFA0 ADAB2A50 */   sw    $t3, 0x2a50($t5)
-)
-#endif
-
 
 
 
