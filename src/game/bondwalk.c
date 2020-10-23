@@ -1812,22 +1812,10 @@ struct Gitemheader * get_ptr_weapon_model_header_line(ITEM_IDS weapon)
 
 
 
-#ifdef NONMATCHING
 int getCurrentWeaponOrItem(void)
 {
     return pPlayer->cur_item_weapon_getname;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel getCurrentWeaponOrItem
-/* 091BA8 7F05D078 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 091BAC 7F05D07C 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 091BB0 7F05D080 03E00008 */  jr    $ra
-/* 091BB4 7F05D084 8DC22A38 */   lw    $v0, 0x2a38($t6)
-)
-#endif
-
 
 
 
