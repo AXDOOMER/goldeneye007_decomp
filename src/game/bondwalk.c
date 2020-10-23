@@ -2275,40 +2275,11 @@ void sub_GAME_7F05D650(int param_1)
 }
 
 
-
-
-
-
-#ifdef NONMATCHING
-void proc_7F05D690(void)
+void sub_GAME_7F05D690(void)
 {
     draw_item_in_hand_has_more_ammo(0,pPlayer->previous_right_weapon);
     draw_item_in_hand_has_more_ammo(1,pPlayer->left_weapon_previous);
-    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05D690
-/* 0921C0 7F05D690 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0921C4 7F05D694 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0921C8 7F05D698 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0921CC 7F05D69C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0921D0 7F05D6A0 00002025 */  move  $a0, $zero
-/* 0921D4 7F05D6A4 0FC17645 */  jal   draw_item_in_hand_has_more_ammo
-/* 0921D8 7F05D6A8 8DC50878 */   lw    $a1, 0x878($t6)
-/* 0921DC 7F05D6AC 3C0F8008 */  lui   $t7, %hi(pPlayer) 
-/* 0921E0 7F05D6B0 8DEFA0B0 */  lw    $t7, %lo(pPlayer)($t7)
-/* 0921E4 7F05D6B4 24040001 */  li    $a0, 1
-/* 0921E8 7F05D6B8 0FC17645 */  jal   draw_item_in_hand_has_more_ammo
-/* 0921EC 7F05D6BC 8DE50C20 */   lw    $a1, 0xc20($t7)
-/* 0921F0 7F05D6C0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0921F4 7F05D6C4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0921F8 7F05D6C8 03E00008 */  jr    $ra
-/* 0921FC 7F05D6CC 00000000 */   nop   
-)
-#endif
-
 
 
 
