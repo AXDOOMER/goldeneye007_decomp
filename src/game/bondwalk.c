@@ -1801,34 +1801,13 @@ char * get_ptr_item_text_call_line(ITEM_IDS item)
 }
 
 
-
-
-
-
-#ifdef NONMATCHING
-void get_ptr_weapon_model_header_line(void) {
-
+struct Gitemheader * get_ptr_weapon_model_header_line(ITEM_IDS weapon)
+{
+    if (weapon == ITEM_FIST) {
+        weapon = pPlayer->cur_item_weapon_getname;
+    }
+    return gitem_structs[weapon].item_header;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_ptr_weapon_model_header_line
-/* 091B78 7F05D048 24010001 */  li    $at, 1
-/* 091B7C 7F05D04C 14810004 */  bne   $a0, $at, .L7F05D060
-/* 091B80 7F05D050 3C028003 */   lui   $v0, %hi(gitem_structs)
-/* 091B84 7F05D054 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 091B88 7F05D058 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 091B8C 7F05D05C 8DC42A38 */  lw    $a0, 0x2a38($t6)
-.L7F05D060:
-/* 091B90 7F05D060 000478C0 */  sll   $t7, $a0, 3
-/* 091B94 7F05D064 01E47823 */  subu  $t7, $t7, $a0
-/* 091B98 7F05D068 000F78C0 */  sll   $t7, $t7, 3
-/* 091B9C 7F05D06C 004F1021 */  addu  $v0, $v0, $t7
-/* 091BA0 7F05D070 03E00008 */  jr    $ra
-/* 091BA4 7F05D074 8C423924 */   lw    $v0, %lo(gitem_structs)($v0)
-)
-#endif
-
 
 
 
