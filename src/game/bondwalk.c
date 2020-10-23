@@ -1697,8 +1697,6 @@ s32 get_itemtype_in_hand(s32 hand)
 
 
 
-
-
 #ifdef NONMATCHING
 void get_ptr_itemheader_in_hand(void) {
 
@@ -1720,22 +1718,12 @@ glabel get_ptr_itemheader_in_hand
 
 
 
-#ifdef NONMATCHING
-void getPlayerWeaponBufferForHand(void) {
 
+u8 * getPlayerWeaponBufferForHand(HANDEDNESS hand)
+
+{
+  return pPlayer->ptr_hand_weapon_buffer[hand];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel getPlayerWeaponBufferForHand
-/* 091A60 7F05CF30 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 091A64 7F05CF34 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 091A68 7F05CF38 00047880 */  sll   $t7, $a0, 2
-/* 091A6C 7F05CF3C 01CFC021 */  addu  $t8, $t6, $t7
-/* 091A70 7F05CF40 03E00008 */  jr    $ra
-/* 091A74 7F05CF44 8F020808 */   lw    $v0, 0x808($t8)
-)
-#endif
 
 
 

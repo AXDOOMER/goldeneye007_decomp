@@ -529,8 +529,7 @@ struct Player
   s32 right_invisible;
   s32 left_invisible;
   s32 handitem[2];
-  s32 ptr_right_weapon_buffer;
-  s32 ptr_left_weapon_buffer;
+  u8 *ptr_hand_weapon_buffer[2];
   s32 copy_of_body_obj_header[8];
   s32 copy_of_right_weapon_obj_header[8];
   s32 field_850;
