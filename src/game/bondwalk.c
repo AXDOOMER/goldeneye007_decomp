@@ -2428,8 +2428,39 @@ glabel backstep_through_inventory
 
 
 #ifdef NONMATCHING
-void autoadvance_on_deplete_all_ammo(void) {
-
+void autoadvance_on_deplete_all_ammo(void)
+{
+  ITEM_IDS nextleft;
+  ITEM_IDS nextright;
+  ITEM_IDS dupeleft;
+  ITEM_IDS duperight;
+  
+  nextright = get_next_weapon_in_cycle_for_hand(RIGHT_HAND,1);
+  duperight = nextright;
+  nextleft = get_next_weapon_in_cycle_for_hand(LEFT_HAND,1);
+  if (((int)nextright < ITEM_BOMBCASE) && ((int)nextleft < ITEM_BOMBCASE)) {
+    dupeleft = nextleft;
+    if ((nextright == ITEM_REMOTEMINE) &&
+       (check_if_item_available(ITEM_TRIGGER) != 0)) {
+      nextright = ITEM_TRIGGER;
+      nextleft = ITEM_UNARMED;
+    }
+    else {
+      sub_GAME_7F08C86C((int *)&nextright,(int *)&nextleft,1);
+      if (((int)nextright < (int)duperight) ||
+         ((nextright == duperight && ((int)nextleft <= (int)dupeleft)))) {
+        nextright = duperight;
+        nextleft = dupeleft;
+        sub_GAME_7F08CB10((int *)&nextright,(int *)&nextleft,1);
+      }
+    }
+  }
+  else {
+    nextright = pPlayer->previous_right_weapon;
+    nextleft = pPlayer->left_weapon_previous;
+  }
+  likely_change_weapon_in_hand(RIGHT_HAND,nextright,1);
+  likely_change_weapon_in_hand(LEFT_HAND,nextleft,1);
 }
 #else
 GLOBAL_ASM(
