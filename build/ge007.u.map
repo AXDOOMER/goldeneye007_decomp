@@ -745,8 +745,8 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/u/src/game/othermodemicrocode.o
  .options       0x0000000000000000       0x20 build/u/src/game/bond.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/bond.o
- .options       0x0000000000000000       0x20 build/u/src/game/bond2.o
- .reginfo       0x0000000000000000       0x18 build/u/src/game/bond2.o
+ .options       0x0000000000000000       0x20 build/u/src/game/bondinv.o
+ .reginfo       0x0000000000000000       0x18 build/u/src/game/bondinv.o
  .options       0x0000000000000000       0x20 build/u/src/game/unk_08DBB0.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/unk_08DBB0.o
  .options       0x0000000000000000       0x20 build/u/src/game/debugmenu_08FE00.o
@@ -3762,8 +3762,8 @@ Linker script and memory map
                 0x000000007f08beec                sub_GAME_7F08BEEC
                 0x000000007f08bfb8                get_mission_timer
                 0x000000007f08bfc4                trigger_explosions_around_player
- build/u/src/game/bond2.o(.text)
- .text          0x000000007f08bff0     0x1bc0 build/u/src/game/bond2.o
+ build/u/src/game/bondinv.o(.text)
+ .text          0x000000007f08bff0     0x1bc0 build/u/src/game/bondinv.o
                 0x000000007f08bff0                reinit_BONDdata_inventory
                 0x000000007f08c054                sub_GAME_7F08C054
                 0x000000007f08c194                add_additional_weapon_slot_to_player_inventory_guess
@@ -3787,7 +3787,7 @@ Linker script and memory map
                 0x000000007f08cb10                sub_GAME_7F08CB10
                 0x000000007f08ce70                sub_GAME_7F08CE70
                 0x000000007f08cf0c                sub_GAME_7F08CF0C
-                0x000000007f08cf80                sub_GAME_7F08CF80
+                0x000000007f08cf80                bondinvIsAliveWithFlag
                 0x000000007f08cfc0                checkforgoldengun
                 0x000000007f08cfe0                sub_GAME_7F08CFE0
                 0x000000007f08d038                sub_GAME_7F08D038
@@ -18462,7 +18462,7 @@ Linker script and memory map
                 0x0000000080036abc                D_80036ABC
                 0x0000000080036ac0                D_80036AC0
                 0x0000000080036ac4                D_80036AC4
- build/u/src/game/bond2.o(.data)
+ build/u/src/game/bondinv.o(.data)
  build/u/src/game/unk_08DBB0.o(.data)
  .data          0x0000000080036ad0       0xa0 build/u/src/game/unk_08DBB0.o
                 0x0000000080036ad0                D_80036AD0
@@ -21065,7 +21065,7 @@ Linker script and memory map
                 0x00000000800552c8                D_800552C8
                 0x00000000800552cc                D_800552CC
                 0x00000000800552d0                D_800552D0
- build/u/src/game/bond2.o(.rodata)
+ build/u/src/game/bondinv.o(.rodata)
  build/u/src/game/unk_08DBB0.o(.rodata)
  .rodata        0x00000000800552e0       0x60 build/u/src/game/unk_08DBB0.o
                 0x00000000800552e0                D_800552E0
@@ -22452,7 +22452,7 @@ Linker script and memory map
                 0x0000000080079e08                flt_CODE_bss_80079E08
                 0x0000000080079e0c                flt_CODE_bss_80079E0C
                 0x0000000080079e10                flt_CODE_bss_80079E10
- build/u/src/game/bond2.o(.bss)
+ build/u/src/game/bondinv.o(.bss)
  build/u/src/game/unk_08DBB0.o(.bss)
  build/u/src/game/debugmenu_08FE00.o(.bss)
  build/u/src/game/debugmenu_090490.o(.bss)

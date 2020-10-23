@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "game/bond.h"
+#include "game/bondinv.h"
 #include "game/chr.h"
 #include "game/chrai.h"
 #include "snd.h"
@@ -28575,7 +28576,7 @@ glabel object_collectability_routines
 /* 0855C4 7F050A94 24010002 */  li    $at, 2
 /* 0855C8 7F050A98 14410008 */  bne   $v0, $at, .L7F050ABC
 /* 0855CC 7F050A9C 00401825 */   move  $v1, $v0
-/* 0855D0 7F050AA0 0FC233E0 */  jal   sub_GAME_7F08CF80
+/* 0855D0 7F050AA0 0FC233E0 */  jal   bondinvIsAliveWithFlag
 /* 0855D4 7F050AA4 AFA20058 */   sw    $v0, 0x58($sp)
 /* 0855D8 7F050AA8 10400004 */  beqz  $v0, .L7F050ABC
 /* 0855DC 7F050AAC 8FA30058 */   lw    $v1, 0x58($sp)
@@ -29117,7 +29118,7 @@ glabel object_collectability_routines
 /* 085B08 7F050F98 24010002 */  li    $at, 2
 /* 085B0C 7F050F9C 14410007 */  bne   $v0, $at, .Ljp7F050FBC
 /* 085B10 7F050FA0 00408025 */   move  $s0, $v0
-/* 085B14 7F050FA4 0FC23639 */  jal   sub_GAME_7F08CF80
+/* 085B14 7F050FA4 0FC23639 */  jal   bondinvIsAliveWithFlag
 /* 085B18 7F050FA8 00000000 */   nop   
 /* 085B1C 7F050FAC 10400003 */  beqz  $v0, .Ljp7F050FBC
 /* 085B20 7F050FB0 24180001 */   li    $t8, 1

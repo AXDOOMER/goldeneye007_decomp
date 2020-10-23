@@ -3,6 +3,7 @@
 #include "game/lvl.h"
 #include "game/initunk_0072B0.h"
 #include "game/mainmenu.h"
+#include "game/bondinv.h"
 
 // bss
 //CODE.bss:8008C260
@@ -4414,7 +4415,7 @@ glabel sub_GAME_7F0BF800
 /* 0F4568 7F0BFA38 24010002 */  li    $at, 2
 /* 0F456C 7F0BFA3C 14410024 */  bne   $v0, $at, .L7F0BFAD0
 /* 0F4570 7F0BFA40 00000000 */   nop   
-/* 0F4574 7F0BFA44 0FC233E0 */  jal   sub_GAME_7F08CF80
+/* 0F4574 7F0BFA44 0FC233E0 */  jal   bondinvIsAliveWithFlag
 /* 0F4578 7F0BFA48 00000000 */   nop   
 /* 0F457C 7F0BFA4C 1040001C */  beqz  $v0, .L7F0BFAC0
 /* 0F4580 7F0BFA50 00000000 */   nop   
