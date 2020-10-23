@@ -2167,13 +2167,13 @@ glabel get_next_weapon_in_cycle_for_hand
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05D4E0(void) {
+void likely_change_weapon_in_hand(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F05D4E0
+glabel likely_change_weapon_in_hand
 /* 092010 7F05D4E0 000438C0 */  sll   $a3, $a0, 3
 /* 092014 7F05D4E4 00E43823 */  subu  $a3, $a3, $a0
 /* 092018 7F05D4E8 3C088008 */  lui   $t0, %hi(pPlayer) 
@@ -2265,13 +2265,13 @@ glabel sub_GAME_7F05D4E0
 
 void sub_GAME_7F05D610(int param_1)
 {
-  	sub_GAME_7F05D4E0(param_1, sub_GAME_7F05D334(get_next_weapon_in_cycle_for_hand(param_1, 0), 1), 0);
+  	likely_change_weapon_in_hand(param_1, sub_GAME_7F05D334(get_next_weapon_in_cycle_for_hand(param_1, 0), 1), 0);
 }
 
 
 void sub_GAME_7F05D650(int param_1)
 {
-	sub_GAME_7F05D4E0(param_1, sub_GAME_7F05D334(get_next_weapon_in_cycle_for_hand(param_1, 0), -1), 0);
+	likely_change_weapon_in_hand(param_1, sub_GAME_7F05D334(get_next_weapon_in_cycle_for_hand(param_1, 0), -1), 0);
 }
 
 
@@ -2286,23 +2286,23 @@ void sub_GAME_7F05D690(void)
 
 #ifdef NONMATCHING
 void advance_through_inventory(void)
-
 {
-    ITEM_IDS nextleft;
-    ITEM_IDS nextright;
+    s32 nextleft;
+    s32 nextright;
     
-    nextright = get_next_weapon_in_cycle_for_hand(0,1);
-    nextleft = get_next_weapon_in_cycle_for_hand(1,1);
-    if (((int)nextright < 0x21) && ((int)nextleft < 0x21)) {
-        proc_7F08C86C((int *)&nextright,(int *)&nextleft,0);
+    nextright = get_next_weapon_in_cycle_for_hand(RIGHT_HAND,1);
+    nextleft = get_next_weapon_in_cycle_for_hand(LEFT_HAND,1);
+    if ((nextright < ITEM_BOMBCASE) && (nextleft < ITEM_BOMBCASE))
+	{
+        sub_GAME_7F08C86C(nextright, nextleft, 0);
     }
-    else {
+    else
+	{
         nextright = pPlayer->previous_right_weapon;
         nextleft = pPlayer->left_weapon_previous;
     }
-    likely_change_weapon_in_hand(0,nextright,1);
-    likely_change_weapon_in_hand(1,nextleft,1);
-    return;
+    likely_change_weapon_in_hand(RIGHT_HAND,nextright,1);
+    likely_change_weapon_in_hand(LEFT_HAND,nextleft,1);
 }
 #else
 GLOBAL_ASM(
@@ -2339,11 +2339,11 @@ glabel advance_through_inventory
 .L7F05D738:
 /* 092268 7F05D738 00002025 */  move  $a0, $zero
 /* 09226C 7F05D73C 8FA50024 */  lw    $a1, 0x24($sp)
-/* 092270 7F05D740 0FC17538 */  jal   sub_GAME_7F05D4E0
+/* 092270 7F05D740 0FC17538 */  jal   likely_change_weapon_in_hand
 /* 092274 7F05D744 24060001 */   li    $a2, 1
 /* 092278 7F05D748 24040001 */  li    $a0, 1
 /* 09227C 7F05D74C 8FA50020 */  lw    $a1, 0x20($sp)
-/* 092280 7F05D750 0FC17538 */  jal   sub_GAME_7F05D4E0
+/* 092280 7F05D750 0FC17538 */  jal   likely_change_weapon_in_hand
 /* 092284 7F05D754 24060001 */   li    $a2, 1
 /* 092288 7F05D758 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 09228C 7F05D75C 27BD0028 */  addiu $sp, $sp, 0x28
@@ -2357,8 +2357,23 @@ glabel advance_through_inventory
 
 
 #ifdef NONMATCHING
-void backstep_through_inventory(void) {
-
+void backstep_through_inventory(void)
+{
+	ITEM_IDS nextleft;
+	ITEM_IDS nextright;
+	nextright = get_next_weapon_in_cycle_for_hand(RIGHT_HAND,-1);
+	nextleft = get_next_weapon_in_cycle_for_hand(LEFT_HAND,-1);
+	if ((nextright < ITEM_BOMBCASE) && (nextleft < ITEM_BOMBCASE))
+	{
+	  	sub_GAME_7F08CB10(nextright,nextleft,0);
+	}
+	else
+	{
+		nextright = pPlayer->previous_right_weapon;
+	  	nextleft = pPlayer->left_weapon_previous;
+	}
+	likely_change_weapon_in_hand(RIGHT_HAND,nextright,-1);
+	likely_change_weapon_in_hand(LEFT_HAND,nextleft,-1);
 }
 #else
 GLOBAL_ASM(
@@ -2395,11 +2410,11 @@ glabel backstep_through_inventory
 .L7F05D7D0:
 /* 092300 7F05D7D0 00002025 */  move  $a0, $zero
 /* 092304 7F05D7D4 8FA50024 */  lw    $a1, 0x24($sp)
-/* 092308 7F05D7D8 0FC17538 */  jal   sub_GAME_7F05D4E0
+/* 092308 7F05D7D8 0FC17538 */  jal   likely_change_weapon_in_hand
 /* 09230C 7F05D7DC 2406FFFF */   li    $a2, -1
 /* 092310 7F05D7E0 24040001 */  li    $a0, 1
 /* 092314 7F05D7E4 8FA50020 */  lw    $a1, 0x20($sp)
-/* 092318 7F05D7E8 0FC17538 */  jal   sub_GAME_7F05D4E0
+/* 092318 7F05D7E8 0FC17538 */  jal   likely_change_weapon_in_hand
 /* 09231C 7F05D7EC 2406FFFF */   li    $a2, -1
 /* 092320 7F05D7F0 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 092324 7F05D7F4 27BD0028 */  addiu $sp, $sp, 0x28
@@ -2485,11 +2500,11 @@ glabel autoadvance_on_deplete_all_ammo
 /* 092414 7F05D8E4 00002025 */  move  $a0, $zero
 .L7F05D8E8:
 /* 092418 7F05D8E8 8FA50024 */  lw    $a1, 0x24($sp)
-/* 09241C 7F05D8EC 0FC17538 */  jal   sub_GAME_7F05D4E0
+/* 09241C 7F05D8EC 0FC17538 */  jal   likely_change_weapon_in_hand
 /* 092420 7F05D8F0 24060001 */   li    $a2, 1
 /* 092424 7F05D8F4 24040001 */  li    $a0, 1
 /* 092428 7F05D8F8 8FA50020 */  lw    $a1, 0x20($sp)
-/* 09242C 7F05D8FC 0FC17538 */  jal   sub_GAME_7F05D4E0
+/* 09242C 7F05D8FC 0FC17538 */  jal   likely_change_weapon_in_hand
 /* 092430 7F05D900 24060001 */   li    $a2, 1
 /* 092434 7F05D904 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 092438 7F05D908 27BD0030 */  addiu $sp, $sp, 0x30

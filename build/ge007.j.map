@@ -3237,7 +3237,7 @@ Linker script and memory map
                 0x000000007f05d5a8                used_to_load_1st_person_model_on_demand
                 0x000000007f05d854                sub_GAME_7F05D334
                 0x000000007f05d954                get_next_weapon_in_cycle_for_hand
-                0x000000007f05da00                sub_GAME_7F05D4E0
+                0x000000007f05da00                likely_change_weapon_in_hand
                 0x000000007f05db30                sub_GAME_7F05D610
                 0x000000007f05db70                sub_GAME_7F05D650
                 0x000000007f05dbb0                sub_GAME_7F05D690
