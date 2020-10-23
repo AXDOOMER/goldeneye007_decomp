@@ -2265,40 +2265,15 @@ glabel sub_GAME_7F05D4E0
 
 void sub_GAME_7F05D610(int param_1)
 {
-  sub_GAME_7F05D4E0(param_1, sub_GAME_7F05D334(get_next_weapon_in_cycle_for_hand(param_1, 0), 1), 0);
+  	sub_GAME_7F05D4E0(param_1, sub_GAME_7F05D334(get_next_weapon_in_cycle_for_hand(param_1, 0), 1), 0);
 }
 
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F05D650(void) {
-
+void sub_GAME_7F05D650(int param_1)
+{
+	sub_GAME_7F05D4E0(param_1, sub_GAME_7F05D334(get_next_weapon_in_cycle_for_hand(param_1, 0), -1), 0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05D650
-/* 092180 7F05D650 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 092184 7F05D654 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 092188 7F05D658 AFA40018 */  sw    $a0, 0x18($sp)
-/* 09218C 7F05D65C 0FC1750D */  jal   get_next_weapon_in_cycle_for_hand
-/* 092190 7F05D660 00002825 */   move  $a1, $zero
-/* 092194 7F05D664 00402025 */  move  $a0, $v0
-/* 092198 7F05D668 0FC174CD */  jal   sub_GAME_7F05D334
-/* 09219C 7F05D66C 2405FFFF */   li    $a1, -1
-/* 0921A0 7F05D670 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0921A4 7F05D674 00402825 */  move  $a1, $v0
-/* 0921A8 7F05D678 0FC17538 */  jal   sub_GAME_7F05D4E0
-/* 0921AC 7F05D67C 00003025 */   move  $a2, $zero
-/* 0921B0 7F05D680 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0921B4 7F05D684 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0921B8 7F05D688 03E00008 */  jr    $ra
-/* 0921BC 7F05D68C 00000000 */   nop   
-)
-#endif
+
 
 
 
