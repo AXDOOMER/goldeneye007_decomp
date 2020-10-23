@@ -1,9 +1,12 @@
 #include "ultra64.h"
+#include "bondconstants.h"
+#include "bondtypes.h"
+#include "game/bond.h"
 #include "game/bondwalk.h"
 #include "game/chrobjdata.h"
 
 #include "bondgame.h"
-#include "game/bond.h"
+
 #include "game/unk_093880.h"
 
 // bss
@@ -368,7 +371,7 @@ struct gitem_data_struct gitem_structs[] = {
 	{&GkeycardZ_struct, "GkeycardZ", 1, NULL, 0x9883, 0x9845, 24.0, 0.0, 556.0, 80.0, 90.0, 0x9845, 0x98AA, 0.0, -6.0, 411.0},
 	{&GkeyyaleZ_struct, "GkeyyaleZ", 1, NULL, 0x9883, 0x9881, 64.0, 0.0, 1912.0, 260.0, 90.0, 0x9881, 0x98D6, 0.0, -18.0, 1568.0},
 	{&GkeyboltZ_struct, "GkeyboltZ", 1, NULL, 0x9883, 0x9819, 78.0, 0.0, 3518.0, 80.0, 90.0, 0x9819, 0x9889, 0.0, -12.0, 2582.0},
-	{(struct Gitemheader *)&Csuit_lf_handz_struct, "Csuit_lf_handZ", 0, &Csuit_lf_handz_stats, 0x9883, 0x986D, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
+	{&Csuit_lf_handz_struct, "Csuit_lf_handZ", 0, &Csuit_lf_handz_stats, 0x9883, 0x986D, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
 	{&GjoypadZ_struct, "GjoypadZ", 0, &GjoypadZ_stats, 0x9883, 0x9824, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
 	{NULL              ,          NULL, 0, &stru_D_800337D4, 0x9883, 0x9854, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
 	{NULL              ,          NULL, 0, &stru_D_80033844, 0x9883, 0x9854, 0.0, 0.0, 1000.0, 0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
@@ -1685,26 +1688,11 @@ glabel sub_GAME_7F05CEBC
 
 
 
-#ifdef NONMATCHING
-s32 get_itemtype_in_hand(int hand)
 
+s32 get_itemtype_in_hand(s32 hand)
 {
-    return pPlayer->handitem[hand];
+    return pPlayer->hand_item[hand];
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel get_itemtype_in_hand
-/* 091A30 7F05CF00 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 091A34 7F05CF04 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 091A38 7F05CF08 00047880 */  sll   $t7, $a0, 2
-/* 091A3C 7F05CF0C 01CFC021 */  addu  $t8, $t6, $t7
-/* 091A40 7F05CF10 03E00008 */  jr    $ra
-/* 091A44 7F05CF14 8F020800 */   lw    $v0, 0x800($t8)
-)
-#endif
-
 
 
 
@@ -1730,22 +1718,12 @@ glabel get_ptr_itemheader_in_hand
 
 
 
-#ifdef NONMATCHING
-void getPlayerWeaponBufferForHand(void) {
 
+u8 * getPlayerWeaponBufferForHand(HANDEDNESS hand)
+
+{
+  return pPlayer->ptr_hand_weapon_buffer[hand];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel getPlayerWeaponBufferForHand
-/* 091A60 7F05CF30 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 091A64 7F05CF34 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 091A68 7F05CF38 00047880 */  sll   $t7, $a0, 2
-/* 091A6C 7F05CF3C 01CFC021 */  addu  $t8, $t6, $t7
-/* 091A70 7F05CF40 03E00008 */  jr    $ra
-/* 091A74 7F05CF44 8F020808 */   lw    $v0, 0x808($t8)
-)
-#endif
 
 
 
@@ -1755,36 +1733,14 @@ u32 getSizeBufferWeaponInHand(int hand)
 }
 
 
-
-#ifdef NONMATCHING
-void remove_item_in_hand(void) {
-
+void remove_item_in_hand(HANDEDNESS hand)
+{
+  pPlayer->hand_invisible[hand] = 0;
+  pPlayer->hand_item[hand] = ITEM_UNARMED;
+  pPlayer->field_2A44[hand] = -1;
+  pPlayer->lock_hand_model[hand] = 1;
+  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel remove_item_in_hand
-/* 091A8C 7F05CF5C 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 091A90 7F05CF60 2463A0B0 */  addiu $v1, %lo(pPlayer) # addiu $v1, $v1, -0x5f50
-/* 091A94 7F05CF64 8C6E0000 */  lw    $t6, ($v1)
-/* 091A98 7F05CF68 00041080 */  sll   $v0, $a0, 2
-/* 091A9C 7F05CF6C 2408FFFF */  li    $t0, -1
-/* 091AA0 7F05CF70 01C27821 */  addu  $t7, $t6, $v0
-/* 091AA4 7F05CF74 ADE007F8 */  sw    $zero, 0x7f8($t7)
-/* 091AA8 7F05CF78 8C780000 */  lw    $t8, ($v1)
-/* 091AAC 7F05CF7C 240B0001 */  li    $t3, 1
-/* 091AB0 7F05CF80 0302C821 */  addu  $t9, $t8, $v0
-/* 091AB4 7F05CF84 AF200800 */  sw    $zero, 0x800($t9)
-/* 091AB8 7F05CF88 8C690000 */  lw    $t1, ($v1)
-/* 091ABC 7F05CF8C 01225021 */  addu  $t2, $t1, $v0
-/* 091AC0 7F05CF90 AD482A44 */  sw    $t0, 0x2a44($t2)
-/* 091AC4 7F05CF94 8C6C0000 */  lw    $t4, ($v1)
-/* 091AC8 7F05CF98 01826821 */  addu  $t5, $t4, $v0
-/* 091ACC 7F05CF9C 03E00008 */  jr    $ra
-/* 091AD0 7F05CFA0 ADAB2A50 */   sw    $t3, 0x2a50($t5)
-)
-#endif
-
 
 
 
@@ -1836,79 +1792,30 @@ glabel place_item_in_hand_swap_and_make_visible
 
 
 
-
-#ifdef NONMATCHING
-void get_ptr_item_text_call_line(void) {
-
+char * get_ptr_item_text_call_line(ITEM_IDS item)
+{
+  if (item == ITEM_FIST) {
+    item = pPlayer->cur_item_weapon_getname;
+  }
+  return gitem_structs[item].item_file_name;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_ptr_item_text_call_line
-/* 091B48 7F05D018 24010001 */  li    $at, 1
-/* 091B4C 7F05D01C 14810004 */  bne   $a0, $at, .L7F05D030
-/* 091B50 7F05D020 3C028003 */   lui   $v0,  %hi(gitem_structs+4)
-/* 091B54 7F05D024 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 091B58 7F05D028 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 091B5C 7F05D02C 8DC42A38 */  lw    $a0, 0x2a38($t6)
-.L7F05D030:
-/* 091B60 7F05D030 000478C0 */  sll   $t7, $a0, 3
-/* 091B64 7F05D034 01E47823 */  subu  $t7, $t7, $a0
-/* 091B68 7F05D038 000F78C0 */  sll   $t7, $t7, 3
-/* 091B6C 7F05D03C 004F1021 */  addu  $v0, $v0, $t7
-/* 091B70 7F05D040 03E00008 */  jr    $ra
-/* 091B74 7F05D044 8C423928 */   lw    $v0, %lo(gitem_structs+4)($v0)
-)
-#endif
 
 
-
-
-
-#ifdef NONMATCHING
-void get_ptr_weapon_model_header_line(void) {
-
+struct Gitemheader * get_ptr_weapon_model_header_line(ITEM_IDS weapon)
+{
+    if (weapon == ITEM_FIST) {
+        weapon = pPlayer->cur_item_weapon_getname;
+    }
+    return gitem_structs[weapon].item_header;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_ptr_weapon_model_header_line
-/* 091B78 7F05D048 24010001 */  li    $at, 1
-/* 091B7C 7F05D04C 14810004 */  bne   $a0, $at, .L7F05D060
-/* 091B80 7F05D050 3C028003 */   lui   $v0, %hi(gitem_structs)
-/* 091B84 7F05D054 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 091B88 7F05D058 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 091B8C 7F05D05C 8DC42A38 */  lw    $a0, 0x2a38($t6)
-.L7F05D060:
-/* 091B90 7F05D060 000478C0 */  sll   $t7, $a0, 3
-/* 091B94 7F05D064 01E47823 */  subu  $t7, $t7, $a0
-/* 091B98 7F05D068 000F78C0 */  sll   $t7, $t7, 3
-/* 091B9C 7F05D06C 004F1021 */  addu  $v0, $v0, $t7
-/* 091BA0 7F05D070 03E00008 */  jr    $ra
-/* 091BA4 7F05D074 8C423924 */   lw    $v0, %lo(gitem_structs)($v0)
-)
-#endif
 
 
 
 
-
-#ifdef NONMATCHING
 int getCurrentWeaponOrItem(void)
 {
     return pPlayer->cur_item_weapon_getname;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel getCurrentWeaponOrItem
-/* 091BA8 7F05D078 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 091BAC 7F05D07C 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 091BB0 7F05D080 03E00008 */  jr    $ra
-/* 091BB4 7F05D084 8DC22A38 */   lw    $v0, 0x2a38($t6)
-)
-#endif
-
 
 
 
@@ -2356,98 +2263,23 @@ glabel sub_GAME_7F05D4E0
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F05D610(void) {
-
+void sub_GAME_7F05D610(int param_1)
+{
+  	sub_GAME_7F05D4E0(param_1, sub_GAME_7F05D334(get_next_weapon_in_cycle_for_hand(param_1, 0), 1), 0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05D610
-/* 092140 7F05D610 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 092144 7F05D614 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 092148 7F05D618 AFA40018 */  sw    $a0, 0x18($sp)
-/* 09214C 7F05D61C 0FC1750D */  jal   get_next_weapon_in_cycle_for_hand
-/* 092150 7F05D620 00002825 */   move  $a1, $zero
-/* 092154 7F05D624 00402025 */  move  $a0, $v0
-/* 092158 7F05D628 0FC174CD */  jal   sub_GAME_7F05D334
-/* 09215C 7F05D62C 24050001 */   li    $a1, 1
-/* 092160 7F05D630 8FA40018 */  lw    $a0, 0x18($sp)
-/* 092164 7F05D634 00402825 */  move  $a1, $v0
-/* 092168 7F05D638 0FC17538 */  jal   sub_GAME_7F05D4E0
-/* 09216C 7F05D63C 00003025 */   move  $a2, $zero
-/* 092170 7F05D640 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 092174 7F05D644 27BD0018 */  addiu $sp, $sp, 0x18
-/* 092178 7F05D648 03E00008 */  jr    $ra
-/* 09217C 7F05D64C 00000000 */   nop   
-)
-#endif
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F05D650(void) {
-
+void sub_GAME_7F05D650(int param_1)
+{
+	sub_GAME_7F05D4E0(param_1, sub_GAME_7F05D334(get_next_weapon_in_cycle_for_hand(param_1, 0), -1), 0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05D650
-/* 092180 7F05D650 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 092184 7F05D654 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 092188 7F05D658 AFA40018 */  sw    $a0, 0x18($sp)
-/* 09218C 7F05D65C 0FC1750D */  jal   get_next_weapon_in_cycle_for_hand
-/* 092190 7F05D660 00002825 */   move  $a1, $zero
-/* 092194 7F05D664 00402025 */  move  $a0, $v0
-/* 092198 7F05D668 0FC174CD */  jal   sub_GAME_7F05D334
-/* 09219C 7F05D66C 2405FFFF */   li    $a1, -1
-/* 0921A0 7F05D670 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0921A4 7F05D674 00402825 */  move  $a1, $v0
-/* 0921A8 7F05D678 0FC17538 */  jal   sub_GAME_7F05D4E0
-/* 0921AC 7F05D67C 00003025 */   move  $a2, $zero
-/* 0921B0 7F05D680 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0921B4 7F05D684 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0921B8 7F05D688 03E00008 */  jr    $ra
-/* 0921BC 7F05D68C 00000000 */   nop   
-)
-#endif
 
 
-
-
-
-#ifdef NONMATCHING
-void proc_7F05D690(void)
+void sub_GAME_7F05D690(void)
 {
     draw_item_in_hand_has_more_ammo(0,pPlayer->previous_right_weapon);
     draw_item_in_hand_has_more_ammo(1,pPlayer->left_weapon_previous);
-    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05D690
-/* 0921C0 7F05D690 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0921C4 7F05D694 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0921C8 7F05D698 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0921CC 7F05D69C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0921D0 7F05D6A0 00002025 */  move  $a0, $zero
-/* 0921D4 7F05D6A4 0FC17645 */  jal   draw_item_in_hand_has_more_ammo
-/* 0921D8 7F05D6A8 8DC50878 */   lw    $a1, 0x878($t6)
-/* 0921DC 7F05D6AC 3C0F8008 */  lui   $t7, %hi(pPlayer) 
-/* 0921E0 7F05D6B0 8DEFA0B0 */  lw    $t7, %lo(pPlayer)($t7)
-/* 0921E4 7F05D6B4 24040001 */  li    $a0, 1
-/* 0921E8 7F05D6B8 0FC17645 */  jal   draw_item_in_hand_has_more_ammo
-/* 0921EC 7F05D6BC 8DE50C20 */   lw    $a1, 0xc20($t7)
-/* 0921F0 7F05D6C0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0921F4 7F05D6C4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0921F8 7F05D6C8 03E00008 */  jr    $ra
-/* 0921FC 7F05D6CC 00000000 */   nop   
-)
-#endif
-
 
 
 

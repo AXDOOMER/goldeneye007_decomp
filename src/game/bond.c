@@ -20196,7 +20196,7 @@ glabel controller_gameplay_interaction
 /* 0B88FC 7F083DCC 24010002 */  li    $at, 2
 /* 0B8900 7F083DD0 54410007 */  bnel  $v0, $at, .L7F083DF0
 /* 0B8904 7F083DD4 8FAB0074 */   lw    $t3, 0x74($sp)
-/* 0B8908 7F083DD8 0FC233E0 */  jal   sub_GAME_7F08CF80
+/* 0B8908 7F083DD8 0FC233E0 */  jal   bondinvIsAliveWithFlag
 /* 0B890C 7F083DDC 00000000 */   nop   
 /* 0B8910 7F083DE0 50400003 */  beql  $v0, $zero, .L7F083DF0
 /* 0B8914 7F083DE4 8FAB0074 */   lw    $t3, 0x74($sp)

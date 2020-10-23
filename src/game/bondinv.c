@@ -1860,41 +1860,17 @@ glabel sub_GAME_7F08CF0C
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F08CF80(void) {
-
+/**
+ * Is the player alive with flag tag token in inventory
+ * @return TRUE/FALSE
+ */
+s32 bondinvIsAliveWithFlag(void)
+{
+  if (!pPlayer->bonddead) {
+    return is_weapon_in_inv(ITEM_TOKEN);
+  }
+  return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08CF80
-/* 0C1AB0 7F08CF80 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0C1AB4 7F08CF84 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0C1AB8 7F08CF88 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C1ABC 7F08CF8C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C1AC0 7F08CF90 8DCF00D8 */  lw    $t7, 0xd8($t6)
-/* 0C1AC4 7F08CF94 00001025 */  move  $v0, $zero
-/* 0C1AC8 7F08CF98 15E00005 */  bnez  $t7, .L7F08CFB0
-/* 0C1ACC 7F08CF9C 00000000 */   nop   
-/* 0C1AD0 7F08CFA0 0FC230C5 */  jal   is_weapon_in_inv
-/* 0C1AD4 7F08CFA4 24040058 */   li    $a0, 88
-/* 0C1AD8 7F08CFA8 10000002 */  b     .L7F08CFB4
-/* 0C1ADC 7F08CFAC 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F08CFB0:
-/* 0C1AE0 7F08CFB0 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F08CFB4:
-/* 0C1AE4 7F08CFB4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C1AE8 7F08CFB8 03E00008 */  jr    $ra
-/* 0C1AEC 7F08CFBC 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 /**
@@ -1905,9 +1881,6 @@ int checkforgoldengun(void)
 {
   return is_weapon_in_inv(ITEM_GOLDENGUN);
 }
-
-
-
 
 
 
