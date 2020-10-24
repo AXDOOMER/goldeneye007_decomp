@@ -681,17 +681,17 @@ glabel sub_GAME_7F08C61C
 
 
 int sub_GAME_7F08C724(int param_1) {
-    int *piVar1;
+    int *nextslot;
 
-    piVar1 = (int *)get_ptr_next_available_weapon();
+    nextslot = (int *)get_ptr_next_available_weapon();
     
-    if (piVar1) {
-        *piVar1 = 2;
-        piVar1[1] = param_1;
-        add_additional_weapon_slot_to_player_inventory_guess(piVar1);
+    if (nextslot) {
+        *nextslot = 2;
+        nextslot[1] = param_1;
+        add_additional_weapon_slot_to_player_inventory_guess(nextslot);
     }
 
-    return 1;
+    return TRUE;
 }
 
 
