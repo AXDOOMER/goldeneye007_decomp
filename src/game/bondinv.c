@@ -225,68 +225,18 @@ glabel reorder_inventory_ptrs_based_on_id_code
 
 
 
-
-
-#ifdef NONMATCHING
-int get_ptr_next_available_weapon(void)
-
+struct invitem *get_ptr_next_available_weapon(void)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int *piVar4;
-  
-  iVar2 = 0;
-  if (0 < pPlayer->equipmaxitems) {
-    iVar3 = 0;
-    piVar4 = (int *)pPlayer->p_itemcur;
-    do {
-      iVar1 = *piVar4;
-      iVar2 = iVar2 + 1;
-      piVar4 = piVar4 + 5;
-      if (iVar1 == -1) {
-        return (int)(int *)pPlayer->p_itemcur + iVar3;
-      }
-      iVar3 = iVar3 + 0x14;
-    } while (iVar2 < pPlayer->equipmaxitems);
-  }
-  return 0;
+    int i;
+
+	for (i = 0; i < pPlayer->equipmaxitems; i++) {
+		if (pPlayer->p_itemcur[i].type == -1) {
+			return &pPlayer->p_itemcur[i];
+		}
+	}
+
+	return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_ptr_next_available_weapon
-/* 0C0D74 7F08C244 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 0C0D78 7F08C248 8C63A0B0 */  lw    $v1, %lo(pPlayer)($v1)
-/* 0C0D7C 7F08C24C 00001025 */  move  $v0, $zero
-/* 0C0D80 7F08C250 8C6411E8 */  lw    $a0, 0x11e8($v1)
-/* 0C0D84 7F08C254 5880000F */  blezl $a0, .L7F08C294
-/* 0C0D88 7F08C258 00001025 */   move  $v0, $zero
-/* 0C0D8C 7F08C25C 8C6511E4 */  lw    $a1, 0x11e4($v1)
-/* 0C0D90 7F08C260 2403FFFF */  li    $v1, -1
-/* 0C0D94 7F08C264 00003025 */  move  $a2, $zero
-/* 0C0D98 7F08C268 00A03825 */  move  $a3, $a1
-.L7F08C26C:
-/* 0C0D9C 7F08C26C 8CEE0000 */  lw    $t6, ($a3)
-/* 0C0DA0 7F08C270 24420001 */  addiu $v0, $v0, 1
-/* 0C0DA4 7F08C274 0044082A */  slt   $at, $v0, $a0
-/* 0C0DA8 7F08C278 146E0003 */  bne   $v1, $t6, .L7F08C288
-/* 0C0DAC 7F08C27C 24E70014 */   addiu $a3, $a3, 0x14
-/* 0C0DB0 7F08C280 03E00008 */  jr    $ra
-/* 0C0DB4 7F08C284 00A61021 */   addu  $v0, $a1, $a2
-
-.L7F08C288:
-/* 0C0DB8 7F08C288 1420FFF8 */  bnez  $at, .L7F08C26C
-/* 0C0DBC 7F08C28C 24C60014 */   addiu $a2, $a2, 0x14
-/* 0C0DC0 7F08C290 00001025 */  move  $v0, $zero
-.L7F08C294:
-/* 0C0DC4 7F08C294 03E00008 */  jr    $ra
-/* 0C0DC8 7F08C298 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 void set_BONDdata_allguns_flag(s32 param_1) {
