@@ -3260,7 +3260,7 @@ Linker script and memory map
                 0x000000007f05dfa8                bondwalkGetItemField68
                 0x000000007f05dfcc                get_automatic_firing_rate
                 0x000000007f05dff0                get_sound_trigger_rate
-                0x000000007f05e014                sub_GAME_7F05E014
+                0x000000007f05e014                bondwalkItemGetSound
                 0x000000007f05e038                sub_GAME_7F05E038
                 0x000000007f05e05c                check_if_have_ammo_for_item
                 0x000000007f05e0b4                check_special_attributes

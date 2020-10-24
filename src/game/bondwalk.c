@@ -3278,25 +3278,11 @@ u8 get_sound_trigger_rate(int item) {
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F05E014(void) {
-
+u16 bondwalkItemGetSound(int param_1)
+{
+  return get_ptr_item_statistics(param_1)->sound;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05E014
-/* 092B44 7F05E014 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 092B48 7F05E018 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 092B4C 7F05E01C 0FC1722D */  jal   get_ptr_item_statistics
-/* 092B50 7F05E020 00000000 */   nop   
-/* 092B54 7F05E024 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 092B58 7F05E028 94420026 */  lhu   $v0, 0x26($v0)
-/* 092B5C 7F05E02C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 092B60 7F05E030 03E00008 */  jr    $ra
-/* 092B64 7F05E034 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -14705,14 +14691,14 @@ Weapon_shooting_throwable:
 /* 099F4C 7F06541C 0C002408 */  jal   sfxDeactivate
 /* 099F50 7F065420 8E0401D8 */   lw    $a0, 0x1d8($s0)
 .L7F065424:
-/* 099F54 7F065424 0FC17805 */  jal   sub_GAME_7F05E014
+/* 099F54 7F065424 0FC17805 */  jal   bondwalkItemGetSound
 /* 099F58 7F065428 02202025 */   move  $a0, $s1
 /* 099F5C 7F06542C 5040001F */  beql  $v0, $zero, .L7F0654AC
 /* 099F60 7F065430 24010017 */   li    $at, 23
 /* 099F64 7F065434 8E0E01D4 */  lw    $t6, 0x1d4($s0)
 /* 099F68 7F065438 55C0000D */  bnezl $t6, .L7F065470
 /* 099F6C 7F06543C 8E1801D8 */   lw    $t8, 0x1d8($s0)
-/* 099F70 7F065440 0FC17805 */  jal   sub_GAME_7F05E014
+/* 099F70 7F065440 0FC17805 */  jal   bondwalkItemGetSound
 /* 099F74 7F065444 02202025 */   move  $a0, $s1
 /* 099F78 7F065448 00022C00 */  sll   $a1, $v0, 0x10
 /* 099F7C 7F06544C 00057C03 */  sra   $t7, $a1, 0x10
@@ -14727,7 +14713,7 @@ Weapon_shooting_throwable:
 .L7F065470:
 /* 099FA0 7F065470 1700000A */  bnez  $t8, .L7F06549C
 /* 099FA4 7F065474 00000000 */   nop   
-/* 099FA8 7F065478 0FC17805 */  jal   sub_GAME_7F05E014
+/* 099FA8 7F065478 0FC17805 */  jal   bondwalkItemGetSound
 /* 099FAC 7F06547C 02202025 */   move  $a0, $s1
 /* 099FB0 7F065480 00022C00 */  sll   $a1, $v0, 0x10
 /* 099FB4 7F065484 0005CC03 */  sra   $t9, $a1, 0x10
@@ -17549,14 +17535,14 @@ Weapon_shooting_throwable:
 /* 09A520 7F0659B0 0C00240C */  jal   sfxDeactivate
 /* 09A524 7F0659B4 8E0401D8 */   lw    $a0, 0x1d8($s0)
 .Ljp7F0659B8:
-/* 09A528 7F0659B8 0FC1794D */  jal   sub_GAME_7F05E014
+/* 09A528 7F0659B8 0FC1794D */  jal   bondwalkItemGetSound
 /* 09A52C 7F0659BC 02202025 */   move  $a0, $s1
 /* 09A530 7F0659C0 5040001F */  beql  $v0, $zero, .Ljp7F065A40
 /* 09A534 7F0659C4 24010017 */   li    $at, 23
 /* 09A538 7F0659C8 8E1801D4 */  lw    $t8, 0x1d4($s0)
 /* 09A53C 7F0659CC 5700000D */  bnezl $t8, .Ljp7F065A04
 /* 09A540 7F0659D0 8E0F01D8 */   lw    $t7, 0x1d8($s0)
-/* 09A544 7F0659D4 0FC1794D */  jal   sub_GAME_7F05E014
+/* 09A544 7F0659D4 0FC1794D */  jal   bondwalkItemGetSound
 /* 09A548 7F0659D8 02202025 */   move  $a0, $s1
 /* 09A54C 7F0659DC 00022C00 */  sll   $a1, $v0, 0x10
 /* 09A550 7F0659E0 00057403 */  sra   $t6, $a1, 0x10
@@ -17571,7 +17557,7 @@ Weapon_shooting_throwable:
 .Ljp7F065A04:
 /* 09A574 7F065A04 15E0000A */  bnez  $t7, .Ljp7F065A30
 /* 09A578 7F065A08 00000000 */   nop   
-/* 09A57C 7F065A0C 0FC1794D */  jal   sub_GAME_7F05E014
+/* 09A57C 7F065A0C 0FC1794D */  jal   bondwalkItemGetSound
 /* 09A580 7F065A10 02202025 */   move  $a0, $s1
 /* 09A584 7F065A14 00022C00 */  sll   $a1, $v0, 0x10
 /* 09A588 7F065A18 0005CC03 */  sra   $t9, $a1, 0x10

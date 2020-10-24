@@ -18,7 +18,7 @@ struct weapon_stats
   s8 single_firing_rate;
   u8 objects_shoot_through;
   u8 sound_trigger_rate;
-  s16 sound;
+  u16 sound;
   struct Gitemheader * ptr_cartridge_struct;
   f32 destruction_amount;
   f32 inaccuracy;

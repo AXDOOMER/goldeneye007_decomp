@@ -11519,7 +11519,7 @@ glabel sub_GAME_7F02BFE4
 /* 060B40 7F02C010 AFA30038 */   sw    $v1, 0x38($sp)
 /* 060B44 7F02C014 8FA30038 */  lw    $v1, 0x38($sp)
 /* 060B48 7F02C018 A3A20033 */  sb    $v0, 0x33($sp)
-/* 060B4C 7F02C01C 0FC17805 */  jal   sub_GAME_7F05E014
+/* 060B4C 7F02C01C 0FC17805 */  jal   bondwalkItemGetSound
 /* 060B50 7F02C020 80640080 */   lb    $a0, 0x80($v1)
 /* 060B54 7F02C024 8FAE0048 */  lw    $t6, 0x48($sp)
 /* 060B58 7F02C028 8FA50034 */  lw    $a1, 0x34($sp)
