@@ -12,13 +12,13 @@ struct xyzpoint
 };
 
 struct invitem {
-	s32 type;
+    s32 type;
 
     s32 unk1;
     s32 unk2;
 
     struct invitem *next;
-	struct invitem *prev;
+    struct invitem *prev;
 };
 
 
