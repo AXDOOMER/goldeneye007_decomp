@@ -3237,7 +3237,7 @@ Linker script and memory map
                 0x000000007f05d5a8                used_to_load_1st_person_model_on_demand
                 0x000000007f05d854                sub_GAME_7F05D334
                 0x000000007f05d954                get_next_weapon_in_cycle_for_hand
-                0x000000007f05da00                sub_GAME_7F05D4E0
+                0x000000007f05da00                likely_change_weapon_in_hand
                 0x000000007f05db30                sub_GAME_7F05D610
                 0x000000007f05db70                sub_GAME_7F05D650
                 0x000000007f05dbb0                sub_GAME_7F05D690
@@ -3256,16 +3256,16 @@ Linker script and memory map
                 0x000000007f05e1d8                sub_GAME_7F05DCB8
                 0x000000007f05e208                sub_GAME_7F05DCE8
                 0x000000007f05e258                sub_GAME_7F05DD38
-                0x000000007f05e2c4                sub_GAME_7F05DDA4
+                0x000000007f05e2c4                camera_sniper_zoom
                 0x000000007f05e3b4                sub_GAME_7F05DE94
-                0x000000007f05e4a4                sub_GAME_7F05DF84
-                0x000000007f05e4c8                sub_GAME_7F05DFA8
+                0x000000007f05e4a4                bondwalkGetItemDestructionAmount
+                0x000000007f05e4c8                bondwalkGetItemField68
                 0x000000007f05e4ec                get_automatic_firing_rate
                 0x000000007f05e510                get_sound_trigger_rate
-                0x000000007f05e534                sub_GAME_7F05E014
-                0x000000007f05e558                sub_GAME_7F05E038
-                0x000000007f05e57c                check_if_have_ammo_for_item
-                0x000000007f05e5d4                check_special_attributes
+                0x000000007f05e534                bondwalkItemGetSound
+                0x000000007f05e558                bondwalkItemGetShootThroughFlag
+                0x000000007f05e57c                bondwalkItemHasAmmo
+                0x000000007f05e5d4                bondwalkItemCheckBitflags
                 0x000000007f05e604                sub_GAME_7F05E0E4
                 0x000000007f05eb10                sub_GAME_7F05E5F0
                 0x000000007f05eb84                get_value_if_watch_is_on_hand_or_not
@@ -3285,7 +3285,7 @@ Linker script and memory map
                 0x000000007f060020                sub_GAME_7F05FB00
                 0x000000007f060084                sub_GAME_7F05FB64
                 0x000000007f0604e8                handles_firing_or_throwing_weapon_in_hand
-                0x000000007f061e4c                sub_GAME_7F061920
+                0x000000007f061e4c                bondwalkFireBothHands
                 0x000000007f061e74                sub_GAME_7F061948
                 0x000000007f062120                sub_GAME_7F061BF4
                 0x000000007f062344                sub_GAME_7F061E18
@@ -20651,8 +20651,6 @@ Linker script and memory map
                 0x0000000080053c9c                D_80053C6C
                 0x0000000080053ca0                D_80053C70
                 0x0000000080053ca4                D_80053C74
-                0x0000000080053ca8                D_80053C78
-                0x0000000080053cac                D_80053C7C
                 0x0000000080053cb0                D_80053C80
                 0x0000000080053cb4                D_80053C84
                 0x0000000080053cb8                D_80053C88

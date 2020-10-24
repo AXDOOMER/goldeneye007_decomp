@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "game/chr.h"
+#include "game/bondwalk.h"
 
 // data
 f32 animation_rate = 0;
@@ -6910,7 +6911,7 @@ glabel sub_GAME_7F022980
 /* 05768C 7F022B5C 96C90012 */  lhu   $t1, 0x12($s6)
 /* 057690 7F022B60 352A0001 */  ori   $t2, $t1, 1
 /* 057694 7F022B64 A6CA0012 */  sh    $t2, 0x12($s6)
-/* 057698 7F022B68 0FC177E1 */  jal   sub_GAME_7F05DF84
+/* 057698 7F022B68 0FC177E1 */  jal   bondwalkGetItemDestructionAmount
 /* 05769C 7F022B6C 8E840018 */   lw    $a0, 0x18($s4)
 /* 0576A0 7F022B70 0FC26C54 */  jal   get_cur_playernum
 /* 0576A4 7F022B74 46000506 */   mov.s $f20, $f0
@@ -7363,7 +7364,7 @@ glabel is_weapon_in_guarddata_hand
 /* 057B88 7F023058 8C620004 */  lw    $v0, 4($v1)
 /* 057B8C 7F02305C 24050200 */  li    $a1, 512
 /* 057B90 7F023060 80440080 */  lb    $a0, 0x80($v0)
-/* 057B94 7F023064 0FC1782D */  jal   check_special_attributes
+/* 057B94 7F023064 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 057B98 7F023068 AFA3001C */   sw    $v1, 0x1c($sp)
 /* 057B9C 7F02306C 14400002 */  bnez  $v0, .L7F023078
 /* 057BA0 7F023070 8FA3001C */   lw    $v1, 0x1c($sp)

@@ -12706,7 +12706,7 @@ glabel object_interaction
 /* 07E318 7F0497E8 00000000 */  nop   
 /* 07E31C 7F0497EC 45020014 */  bc1fl .L7F049840
 /* 07E320 7F0497F0 8FB9011C */   lw    $t9, 0x11c($sp)
-/* 07E324 7F0497F4 0FC177E1 */  jal   sub_GAME_7F05DF84
+/* 07E324 7F0497F4 0FC177E1 */  jal   bondwalkGetItemDestructionAmount
 /* 07E328 7F0497F8 2404000E */   li    $a0, 14
 /* 07E32C 7F0497FC 3C013E00 */  li    $at, 0x3E000000 # 0.125000
 /* 07E330 7F049800 44815000 */  mtc1  $at, $f10
@@ -17812,7 +17812,7 @@ glabel object_interaction
 /* 07E75C 7F049BEC 00000000 */  nop   
 /* 07E760 7F049BF0 45020014 */  bc1fl .Ljp7F049C44
 /* 07E764 7F049BF4 8FB90120 */   lw    $t9, 0x120($sp)
-/* 07E768 7F049BF8 0FC17929 */  jal   sub_GAME_7F05DF84
+/* 07E768 7F049BF8 0FC17929 */  jal   bondwalkGetItemDestructionAmount
 /* 07E76C 7F049BFC 2404000E */   li    $a0, 14
 /* 07E770 7F049C00 3C013E00 */  li    $at, 0x3E000000 # 0.125000
 /* 07E774 7F049C04 44815000 */  mtc1  $at, $f10
@@ -25447,7 +25447,7 @@ glabel sub_GAME_7F04EA68
 /* 0838AC 7F04ED7C 8FAE0070 */  lw    $t6, 0x70($sp)
 /* 0838B0 7F04ED80 8DC40018 */  lw    $a0, 0x18($t6)
 .L7F04ED84:
-/* 0838B4 7F04ED84 0FC177E1 */  jal   sub_GAME_7F05DF84
+/* 0838B4 7F04ED84 0FC177E1 */  jal   bondwalkGetItemDestructionAmount
 /* 0838B8 7F04ED88 00000000 */   nop   
 /* 0838BC 7F04ED8C 92220003 */  lbu   $v0, 3($s1)
 /* 0838C0 7F04ED90 2401000D */  li    $at, 13

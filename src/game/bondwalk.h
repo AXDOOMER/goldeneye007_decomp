@@ -2,6 +2,7 @@
 #define _BONDWALK_H_
 #include "ultra64.h"
 #include "game/chrobjdata.h"
+#include "bondconstants.h"
 
 struct weapon_stats
 {
@@ -18,7 +19,7 @@ struct weapon_stats
   s8 single_firing_rate;
   u8 objects_shoot_through;
   u8 sound_trigger_rate;
-  s16 sound;
+  u16 sound;
   struct Gitemheader * ptr_cartridge_struct;
   f32 destruction_amount;
   f32 inaccuracy;
@@ -63,5 +64,10 @@ struct ejected_cart {
     struct Gitemheader * header;
     char * text;
 };
+
+f32 bondwalkGetItemField68(ITEM_IDS item);
+u32 bondwalkItemCheckBitflags(ITEM_IDS item, u32 mask);
+
+void bondwalkFireBothHands(void);
 
 #endif

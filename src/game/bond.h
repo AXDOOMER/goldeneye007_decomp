@@ -11,6 +11,17 @@ struct xyzpoint
     f32 z;
 };
 
+struct invitem {
+    s32 type;
+
+    s32 unk1;
+    s32 unk2;
+
+    struct invitem *next;
+    struct invitem *prev;
+};
+
+
 struct Player
 {
   s32 unknown;
@@ -651,7 +662,7 @@ struct Player
   s32 field_A24;
   s32 field_A28;
   s32 field_A2C;
-  s32 field_A30;
+  f32 field_A30;
   s32 field_A34;
   s32 field_A38;
   s32 field_A3C;
@@ -885,7 +896,7 @@ struct Player
   s32 field_DCC;
   s32 field_DD0;
   s32 field_DD4;
-  s32 field_DD8;
+  f32 field_DD8;
   s32 field_DDC;
   s32 field_DE0;
   s32 field_DE4;
@@ -1144,7 +1155,7 @@ struct Player
   s32 hudmessoff;
   s32 bondmesscnt;
   s32 ptr_inventory_first_in_cycle;
-  s32 p_itemcur;
+  struct invitem *p_itemcur;
   s32 equipmaxitems;
   s32 equipallguns;
   s32 field_11F0;

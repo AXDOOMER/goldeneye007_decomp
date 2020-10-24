@@ -15890,7 +15890,7 @@ glabel sub_GAME_7F03B15C
 /* 070244 7F03B714 1180000A */  beqz  $t4, .L7F03B740
 /* 070248 7F03B718 25AE0001 */   addiu $t6, $t5, 1
 /* 07024C 7F03B71C AFAE018C */  sw    $t6, 0x18c($sp)
-/* 070250 7F03B720 0FC1780E */  jal   sub_GAME_7F05E038
+/* 070250 7F03B720 0FC1780E */  jal   bondwalkItemGetShootThroughFlag
 /* 070254 7F03B724 8FA401AC */   lw    $a0, 0x1ac($sp)
 /* 070258 7F03B728 8FAF018C */  lw    $t7, 0x18c($sp)
 /* 07025C 7F03B72C 01E2082A */  slt   $at, $t7, $v0
@@ -16128,7 +16128,7 @@ glabel sub_GAME_7F03B9C0
 /* 07057C 7F03BA4C E7AE0038 */  swc1  $f14, 0x38($sp)
 /* 070580 7F03BA50 E7AC0020 */  swc1  $f12, 0x20($sp)
 /* 070584 7F03BA54 AFA60024 */  sw    $a2, 0x24($sp)
-/* 070588 7F03BA58 0FC1780E */  jal   sub_GAME_7F05E038
+/* 070588 7F03BA58 0FC1780E */  jal   bondwalkItemGetShootThroughFlag
 /* 07058C 7F03BA5C AFA5001C */   sw    $a1, 0x1c($sp)
 /* 070590 7F03BA60 8FA5001C */  lw    $a1, 0x1c($sp)
 /* 070594 7F03BA64 8FA60024 */  lw    $a2, 0x24($sp)
@@ -16237,7 +16237,7 @@ glabel sub_GAME_7F03B9C0
 .L7F03BBE0:
 /* 070710 7F03BBE0 8CE40018 */  lw    $a0, 0x18($a3)
 /* 070714 7F03BBE4 E7AE0038 */  swc1  $f14, 0x38($sp)
-/* 070718 7F03BBE8 0FC1780E */  jal   sub_GAME_7F05E038
+/* 070718 7F03BBE8 0FC1780E */  jal   bondwalkItemGetShootThroughFlag
 /* 07071C 7F03BBEC AFA5001C */   sw    $a1, 0x1c($sp)
 /* 070720 7F03BBF0 8FA5001C */  lw    $a1, 0x1c($sp)
 /* 070724 7F03BBF4 8FA70030 */  lw    $a3, 0x30($sp)
