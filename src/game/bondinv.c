@@ -129,68 +129,26 @@ glabel sub_GAME_7F08C054
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void add_additional_weapon_slot_to_player_inventory_guess(int *param_1) {
-  int iVar1;
+void add_additional_weapon_slot_to_player_inventory_guess(struct invitem *item) {
   
-    iVar1 = pPlayer->ptr_inventory_first_in_cycle;
-    
-    if (iVar1) {
-        param_1[3] = iVar1;
-        param_1[4] = *(int *)(pPlayer->ptr_inventory_first_in_cycle + 0x10);
-        *(int **)(iVar1 + 0x10) = param_1;
-        *(int **)(param_1[4] + 0xc) = param_1;
+  if (pPlayer->ptr_inventory_first_in_cycle) {
+        
+        item->next = pPlayer->ptr_inventory_first_in_cycle;
+        item->prev = pPlayer->ptr_inventory_first_in_cycle->prev;
+
+        item->next->prev = item;
+		item->prev->next = item;
+
     }
     else {
-        *(int **)(param_1 + 3) = param_1;
-        *(int **)(param_1 + 4) = param_1;
+        item->next = item;
+		item->prev = item;
     }
 
-    *(int **)&pPlayer->ptr_inventory_first_in_cycle = param_1;
-    proc_7F08C054(param_1);
+    pPlayer->ptr_inventory_first_in_cycle = item;
+    sub_GAME_7F08C054(item);
     return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel add_additional_weapon_slot_to_player_inventory_guess
-/* 0C0CC4 7F08C194 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 0C0CC8 7F08C198 2463A0B0 */  addiu $v1, %lo(pPlayer) # addiu $v1, $v1, -0x5f50
-/* 0C0CCC 7F08C19C 8C6E0000 */  lw    $t6, ($v1)
-/* 0C0CD0 7F08C1A0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C0CD4 7F08C1A4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C0CD8 7F08C1A8 8DC211E0 */  lw    $v0, 0x11e0($t6)
-/* 0C0CDC 7F08C1AC 5040000B */  beql  $v0, $zero, .L7F08C1DC
-/* 0C0CE0 7F08C1B0 AC84000C */   sw    $a0, 0xc($a0)
-/* 0C0CE4 7F08C1B4 AC82000C */  sw    $v0, 0xc($a0)
-/* 0C0CE8 7F08C1B8 8C6F0000 */  lw    $t7, ($v1)
-/* 0C0CEC 7F08C1BC 8DF811E0 */  lw    $t8, 0x11e0($t7)
-/* 0C0CF0 7F08C1C0 8F190010 */  lw    $t9, 0x10($t8)
-/* 0C0CF4 7F08C1C4 AC990010 */  sw    $t9, 0x10($a0)
-/* 0C0CF8 7F08C1C8 AC440010 */  sw    $a0, 0x10($v0)
-/* 0C0CFC 7F08C1CC 8C890010 */  lw    $t1, 0x10($a0)
-/* 0C0D00 7F08C1D0 10000003 */  b     .L7F08C1E0
-/* 0C0D04 7F08C1D4 AD24000C */   sw    $a0, 0xc($t1)
-/* 0C0D08 7F08C1D8 AC84000C */  sw    $a0, 0xc($a0)
-.L7F08C1DC:
-/* 0C0D0C 7F08C1DC AC840010 */  sw    $a0, 0x10($a0)
-.L7F08C1E0:
-/* 0C0D10 7F08C1E0 8C6A0000 */  lw    $t2, ($v1)
-/* 0C0D14 7F08C1E4 0FC23015 */  jal   sub_GAME_7F08C054
-/* 0C0D18 7F08C1E8 AD4411E0 */   sw    $a0, 0x11e0($t2)
-/* 0C0D1C 7F08C1EC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C0D20 7F08C1F0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C0D24 7F08C1F4 03E00008 */  jr    $ra
-/* 0C0D28 7F08C1F8 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void reorder_inventory_ptrs_based_on_id_code(void) {
