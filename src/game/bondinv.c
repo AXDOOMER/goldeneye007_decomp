@@ -680,7 +680,7 @@ glabel sub_GAME_7F08C61C
 
 
 
-int sub_GAME_7F08C724(int param_1) {
+int add_item_to_inventory_nocheck(int param_1) {
     int *nextslot;
 
     nextslot = (int *)get_ptr_next_available_weapon();

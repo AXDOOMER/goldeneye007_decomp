@@ -27890,7 +27890,7 @@ interact_default_object:
 .L7F0506B0:
 /* 0851E0 7F0506B0 10600005 */  beqz  $v1, .L7F0506C8
 /* 0851E4 7F0506B4 00001025 */   move  $v0, $zero
-/* 0851E8 7F0506B8 0FC231C9 */  jal   sub_GAME_7F08C724
+/* 0851E8 7F0506B8 0FC231C9 */  jal   add_item_to_inventory_nocheck
 /* 0851EC 7F0506BC 8FA40070 */   lw    $a0, 0x70($sp)
 /* 0851F0 7F0506C0 10000001 */  b     .L7F0506C8
 /* 0851F4 7F0506C4 24020004 */   li    $v0, 4
@@ -28270,7 +28270,7 @@ interact_default_object:
 .L7F0506B0:
 /* 0851E0 7F0506B0 10600005 */  beqz  $v1, .L7F0506C8
 /* 0851E4 7F0506B4 00001025 */   move  $v0, $zero
-/* 0851E8 7F0506B8 0FC231C9 */  jal   sub_GAME_7F08C724
+/* 0851E8 7F0506B8 0FC231C9 */  jal   add_item_to_inventory_nocheck
 /* 0851EC 7F0506BC 8FA40070 */   lw    $a0, 0x70($sp)
 /* 0851F0 7F0506C0 10000001 */  b     .L7F0506C8
 /* 0851F4 7F0506C4 24020004 */   li    $v0, 4
