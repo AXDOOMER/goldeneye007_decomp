@@ -150,38 +150,33 @@ void add_additional_weapon_slot_to_player_inventory_guess(struct invitem *item) 
     return;
 }
 
-#ifdef NONMATCHING
-void reorder_inventory_ptrs_based_on_id_code(void) {
 
+void reorder_inventory_ptrs_based_on_id_code(struct invitem *item) {
+
+  struct invitem *prev;
+  struct invitem *next;
+  
+  next = item->next;
+  prev = item->prev;
+
+  if (item == pPlayer->ptr_inventory_first_in_cycle) {
+    
+    if (item == item->next) {
+        pPlayer->ptr_inventory_first_in_cycle = NULL;
+       
+    }
+    else {
+        pPlayer->ptr_inventory_first_in_cycle = item->next;
+     
+    }
+
+  }
+  
+  next->prev = prev;
+  prev->next = next; 
+  item->type = -1;
+  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel reorder_inventory_ptrs_based_on_id_code
-/* 0C0D2C 7F08C1FC 3C068008 */  lui   $a2, %hi(pPlayer)
-/* 0C0D30 7F08C200 8CC6A0B0 */  lw    $a2, %lo(pPlayer)($a2)
-/* 0C0D34 7F08C204 8C83000C */  lw    $v1, 0xc($a0)
-/* 0C0D38 7F08C208 8C850010 */  lw    $a1, 0x10($a0)
-/* 0C0D3C 7F08C20C 8CCE11E0 */  lw    $t6, 0x11e0($a2)
-/* 0C0D40 7F08C210 240FFFFF */  li    $t7, -1
-/* 0C0D44 7F08C214 00601025 */  move  $v0, $v1
-/* 0C0D48 7F08C218 548E0007 */  bnel  $a0, $t6, .L7F08C238
-/* 0C0D4C 7F08C21C AC450010 */   sw    $a1, 0x10($v0)
-/* 0C0D50 7F08C220 54830004 */  bnel  $a0, $v1, .L7F08C234
-/* 0C0D54 7F08C224 ACC311E0 */   sw    $v1, 0x11e0($a2)
-/* 0C0D58 7F08C228 10000002 */  b     .L7F08C234
-/* 0C0D5C 7F08C22C ACC011E0 */   sw    $zero, 0x11e0($a2)
-/* 0C0D60 7F08C230 ACC311E0 */  sw    $v1, 0x11e0($a2)
-.L7F08C234:
-/* 0C0D64 7F08C234 AC450010 */  sw    $a1, 0x10($v0)
-.L7F08C238:
-/* 0C0D68 7F08C238 ACA2000C */  sw    $v0, 0xc($a1)
-/* 0C0D6C 7F08C23C 03E00008 */  jr    $ra
-/* 0C0D70 7F08C240 AC8F0000 */   sw    $t7, ($a0)
-)
-#endif
-
-
 
 struct invitem *get_ptr_next_available_weapon(void)
 {
