@@ -381,16 +381,16 @@ s32 check_if_item_for_hand_available(ITEM_IDS item,int hand)
 
 int add_item_to_inventory(ITEM_IDS item)
 {
-    int *nextslot;
+    struct invitem *nextItem;
   
     if (is_weapon_in_inv(item) == 0)
     {
-        nextslot = (int *)get_ptr_next_available_weapon();
-        if (nextslot)
+        nextItem = get_ptr_next_available_weapon();
+        if (nextItem)
         {
-            *nextslot = INVITEMTYPE_WEAP;
-            nextslot[1] = item;
-            add_additional_weapon_slot_to_player_inventory_guess(nextslot);
+            nextItem->type = INVITEMTYPE_WEAP;
+            nextItem->right = item;
+            add_additional_weapon_slot_to_player_inventory_guess(nextItem);
         }
 
         if ((pPlayer->equipallguns) && (item < ITEM_BOMBCASE))
@@ -579,14 +579,15 @@ glabel sub_GAME_7F08C61C
 
 
 int add_prop_to_inventory(PROPS prop) {
-    int *nextslot;
-
-    nextslot = (int *)get_ptr_next_available_weapon();
     
-    if (nextslot) {
-        *nextslot = INVITEMTYPE_PROP;
-        nextslot[1] = prop;
-        add_additional_weapon_slot_to_player_inventory_guess(nextslot);
+    struct invitem *item;
+
+    item = get_ptr_next_available_weapon();
+    
+    if (item) {
+        item->type = INVITEMTYPE_PROP;
+        item->right = prop;
+        add_additional_weapon_slot_to_player_inventory_guess(item);
     }
 
     return TRUE;
