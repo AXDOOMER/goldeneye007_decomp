@@ -20915,32 +20915,10 @@ glabel sub_GAME_7F067FBC
 
 #endif
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F068008(void) {
-
+void get_bullet_angle(f32* horizontal_angle, f32* vertical_angle) {
+	*horizontal_angle = pPlayer->field_FE8;
+	*vertical_angle = pPlayer->field_FEC;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F068008
-/* 09CB38 7F068008 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 09CB3C 7F06800C 2442A0B0 */  addiu $v0, %lo(pPlayer) # addiu $v0, $v0, -0x5f50
-/* 09CB40 7F068010 8C4E0000 */  lw    $t6, ($v0)
-/* 09CB44 7F068014 C5C40FE8 */  lwc1  $f4, 0xfe8($t6)
-/* 09CB48 7F068018 E4840000 */  swc1  $f4, ($a0)
-/* 09CB4C 7F06801C 8C4F0000 */  lw    $t7, ($v0)
-/* 09CB50 7F068020 C5E60FEC */  lwc1  $f6, 0xfec($t7)
-/* 09CB54 7F068024 03E00008 */  jr    $ra
-/* 09CB58 7F068028 E4A60000 */   swc1  $f6, ($a1)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F06802C(void) {
