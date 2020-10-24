@@ -3261,52 +3261,27 @@ f32 bondwalkGetItemField68(ITEM_IDS item)
 }
 
 
-
-s8 get_automatic_firing_rate(int item) {
+s8 get_automatic_firing_rate(ITEM_IDS item) {
     return get_ptr_item_statistics(item)->automatic_firing_rate;
 }
 
 
-
-
-
-u8 get_sound_trigger_rate(int item) {
+u8 get_sound_trigger_rate(ITEM_IDS item) {
     return get_ptr_item_statistics(item)->sound_trigger_rate;
 }
 
 
-
-
-
-u16 bondwalkItemGetSound(int param_1)
+u16 bondwalkItemGetSound(ITEM_IDS item)
 {
-  return get_ptr_item_statistics(param_1)->sound;
+  return get_ptr_item_statistics(item)->sound;
 }
 
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F05E038(void) {
-
+u8 bondwalkItemGetShootThroughFlag(ITEM_IDS item)
+{
+  return get_ptr_item_statistics(item)->objects_shoot_through;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05E038
-/* 092B68 7F05E038 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 092B6C 7F05E03C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 092B70 7F05E040 0FC1722D */  jal   get_ptr_item_statistics
-/* 092B74 7F05E044 00000000 */   nop   
-/* 092B78 7F05E048 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 092B7C 7F05E04C 90420024 */  lbu   $v0, 0x24($v0)
-/* 092B80 7F05E050 27BD0018 */  addiu $sp, $sp, 0x18
-/* 092B84 7F05E054 03E00008 */  jr    $ra
-/* 092B88 7F05E058 00000000 */   nop   
-)
-#endif
+
 
 
 
