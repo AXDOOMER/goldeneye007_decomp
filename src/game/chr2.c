@@ -1,7 +1,7 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "game/chr.h"
-
+#include "game/bondwalk.h"
 
 #ifdef NONMATCHING
 void load_body_head_if_not_loaded(void) {
@@ -4568,7 +4568,7 @@ glabel triggered_on_shot_hit
 .L7F026968:
 /* 05B498 7F026968 8FA400B0 */  lw    $a0, 0xb0($sp)
 .L7F02696C:
-/* 05B49C 7F02696C 0FC177EA */  jal   sub_GAME_7F05DFA8
+/* 05B49C 7F02696C 0FC177EA */  jal   bondwalkGetItemField68
 /* 05B4A0 7F026970 AFA8005C */   sw    $t0, 0x5c($sp)
 /* 05B4A4 7F026974 44806000 */  mtc1  $zero, $f12
 /* 05B4A8 7F026978 8FA8005C */  lw    $t0, 0x5c($sp)

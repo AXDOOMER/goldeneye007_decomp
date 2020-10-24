@@ -3255,30 +3255,10 @@ f32 bondwalkGetItemDestructionAmount(ITEM_IDS item)
 }
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F05DFA8(void) {
-
+f32 bondwalkGetItemField68(ITEM_IDS item)
+{
+	return get_ptr_item_statistics(item)->field_68;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05DFA8
-/* 092AD8 7F05DFA8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 092ADC 7F05DFAC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 092AE0 7F05DFB0 0FC1722D */  jal   get_ptr_item_statistics
-/* 092AE4 7F05DFB4 00000000 */   nop   
-/* 092AE8 7F05DFB8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 092AEC 7F05DFBC C4400068 */  lwc1  $f0, 0x68($v0)
-/* 092AF0 7F05DFC0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 092AF4 7F05DFC4 03E00008 */  jr    $ra
-/* 092AF8 7F05DFC8 00000000 */   nop   
-)
-#endif
-
-
 
 
 

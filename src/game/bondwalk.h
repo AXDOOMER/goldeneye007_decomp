@@ -64,4 +64,6 @@ struct ejected_cart {
     char * text;
 };
 
+f32 bondwalkGetItemField68(ITEM_IDS item);
+
 #endif
