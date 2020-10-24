@@ -843,7 +843,7 @@ glabel sub_GAME_7F08C86C
 /* 0C13FC 7F08C8CC 00000000 */   nop   
 /* 0C1400 7F08C8D0 52400008 */  beql  $s2, $zero, .L7F08C8F4
 /* 0C1404 7F08C8D4 00808825 */   move  $s1, $a0
-/* 0C1408 7F08C8D8 0FC17817 */  jal   check_if_have_ammo_for_item
+/* 0C1408 7F08C8D8 0FC17817 */  jal   bondwalkItemHasAmmo
 /* 0C140C 7F08C8DC 00000000 */   nop   
 /* 0C1410 7F08C8E0 10400021 */  beqz  $v0, .L7F08C968
 /* 0C1414 7F08C8E4 3C038008 */   lui   $v1, %hi(pPlayer)
@@ -870,11 +870,11 @@ glabel sub_GAME_7F08C86C
 .L7F08C930:
 /* 0C1460 7F08C930 12400008 */  beqz  $s2, .L7F08C954
 /* 0C1464 7F08C934 00000000 */   nop   
-/* 0C1468 7F08C938 0FC17817 */  jal   check_if_have_ammo_for_item
+/* 0C1468 7F08C938 0FC17817 */  jal   bondwalkItemHasAmmo
 /* 0C146C 7F08C93C 00000000 */   nop   
 /* 0C1470 7F08C940 14400004 */  bnez  $v0, .L7F08C954
 /* 0C1474 7F08C944 00000000 */   nop   
-/* 0C1478 7F08C948 0FC17817 */  jal   check_if_have_ammo_for_item
+/* 0C1478 7F08C948 0FC17817 */  jal   bondwalkItemHasAmmo
 /* 0C147C 7F08C94C 8E040008 */   lw    $a0, 8($s0)
 /* 0C1480 7F08C950 10400005 */  beqz  $v0, .L7F08C968
 .L7F08C954:
@@ -923,7 +923,7 @@ glabel sub_GAME_7F08C86C
 /* 0C151C 7F08C9EC 8FAF0028 */   lw    $t7, 0x28($sp)
 /* 0C1520 7F08C9F0 12400007 */  beqz  $s2, .L7F08CA10
 /* 0C1524 7F08C9F4 00000000 */   nop   
-/* 0C1528 7F08C9F8 0FC17817 */  jal   check_if_have_ammo_for_item
+/* 0C1528 7F08C9F8 0FC17817 */  jal   bondwalkItemHasAmmo
 /* 0C152C 7F08C9FC 00000000 */   nop   
 /* 0C1530 7F08CA00 5040000B */  beql  $v0, $zero, .L7F08CA30
 /* 0C1534 7F08CA04 8FAF0028 */   lw    $t7, 0x28($sp)
@@ -982,7 +982,7 @@ glabel sub_GAME_7F08C86C
 .L7F08CAB8:
 /* 0C15E8 7F08CAB8 52400006 */  beql  $s2, $zero, .L7F08CAD4
 /* 0C15EC 7F08CABC 02008825 */   move  $s1, $s0
-/* 0C15F0 7F08CAC0 0FC17817 */  jal   check_if_have_ammo_for_item
+/* 0C15F0 7F08CAC0 0FC17817 */  jal   bondwalkItemHasAmmo
 /* 0C15F4 7F08CAC4 02002025 */   move  $a0, $s0
 /* 0C15F8 7F08CAC8 10400004 */  beqz  $v0, .L7F08CADC
 /* 0C15FC 7F08CACC 24030021 */   li    $v1, 33
@@ -1041,7 +1041,7 @@ glabel sub_GAME_7F08C86C
 /* 0C1D34 7F08D1C4 00000000 */   nop   
 /* 0C1D38 7F08D1C8 52400008 */  beql  $s2, $zero, .Ljp7F08D1EC
 /* 0C1D3C 7F08D1CC 00808825 */   move  $s1, $a0
-/* 0C1D40 7F08D1D0 0FC1795F */  jal   check_if_have_ammo_for_item
+/* 0C1D40 7F08D1D0 0FC1795F */  jal   bondwalkItemHasAmmo
 /* 0C1D44 7F08D1D4 00000000 */   nop   
 /* 0C1D48 7F08D1D8 10400021 */  beqz  $v0, .Ljp7F08D260
 /* 0C1D4C 7F08D1DC 3C038008 */   lui   $v1, %hi(pPlayer) # $v1, 0x8008
@@ -1068,11 +1068,11 @@ glabel sub_GAME_7F08C86C
 .Ljp7F08D228:
 /* 0C1D98 7F08D228 12400008 */  beqz  $s2, .Ljp7F08D24C
 /* 0C1D9C 7F08D22C 00000000 */   nop   
-/* 0C1DA0 7F08D230 0FC1795F */  jal   check_if_have_ammo_for_item
+/* 0C1DA0 7F08D230 0FC1795F */  jal   bondwalkItemHasAmmo
 /* 0C1DA4 7F08D234 00000000 */   nop   
 /* 0C1DA8 7F08D238 14400004 */  bnez  $v0, .Ljp7F08D24C
 /* 0C1DAC 7F08D23C 00000000 */   nop   
-/* 0C1DB0 7F08D240 0FC1795F */  jal   check_if_have_ammo_for_item
+/* 0C1DB0 7F08D240 0FC1795F */  jal   bondwalkItemHasAmmo
 /* 0C1DB4 7F08D244 8E040008 */   lw    $a0, 8($s0)
 /* 0C1DB8 7F08D248 10400005 */  beqz  $v0, .Ljp7F08D260
 .Ljp7F08D24C:
@@ -1120,7 +1120,7 @@ glabel sub_GAME_7F08C86C
 /* 0C1E50 7F08D2E0 8FB80028 */   lw    $t8, 0x28($sp)
 /* 0C1E54 7F08D2E4 12400007 */  beqz  $s2, .Ljp7F08D304
 /* 0C1E58 7F08D2E8 00000000 */   nop   
-/* 0C1E5C 7F08D2EC 0FC1795F */  jal   check_if_have_ammo_for_item
+/* 0C1E5C 7F08D2EC 0FC1795F */  jal   bondwalkItemHasAmmo
 /* 0C1E60 7F08D2F0 00000000 */   nop   
 /* 0C1E64 7F08D2F4 50400012 */  beql  $v0, $zero, .Ljp7F08D340
 /* 0C1E68 7F08D2F8 8FB80028 */   lw    $t8, 0x28($sp)
@@ -1188,7 +1188,7 @@ glabel sub_GAME_7F08C86C
 .Ljp7F08D3C8:
 /* 0C1F38 7F08D3C8 12400005 */  beqz  $s2, .Ljp7F08D3E0
 /* 0C1F3C 7F08D3CC 00000000 */   nop   
-/* 0C1F40 7F08D3D0 0FC1795F */  jal   check_if_have_ammo_for_item
+/* 0C1F40 7F08D3D0 0FC1795F */  jal   bondwalkItemHasAmmo
 /* 0C1F44 7F08D3D4 02002025 */   move  $a0, $s0
 /* 0C1F48 7F08D3D8 1040000B */  beqz  $v0, .Ljp7F08D408
 /* 0C1F4C 7F08D3DC 24030021 */   li    $v1, 33
@@ -1274,7 +1274,7 @@ glabel sub_GAME_7F08CB10
 .L7F08CB94:
 /* 0C16C4 7F08CB94 52400008 */  beql  $s2, $zero, .L7F08CBB8
 /* 0C16C8 7F08CB98 00808825 */   move  $s1, $a0
-/* 0C16CC 7F08CB9C 0FC17817 */  jal   check_if_have_ammo_for_item
+/* 0C16CC 7F08CB9C 0FC17817 */  jal   bondwalkItemHasAmmo
 /* 0C16D0 7F08CBA0 00000000 */   nop   
 /* 0C16D4 7F08CBA4 10400021 */  beqz  $v0, .L7F08CC2C
 /* 0C16D8 7F08CBA8 3C038008 */   lui   $v1, %hi(pPlayer)
@@ -1301,11 +1301,11 @@ glabel sub_GAME_7F08CB10
 .L7F08CBF4:
 /* 0C1724 7F08CBF4 12400008 */  beqz  $s2, .L7F08CC18
 /* 0C1728 7F08CBF8 00000000 */   nop   
-/* 0C172C 7F08CBFC 0FC17817 */  jal   check_if_have_ammo_for_item
+/* 0C172C 7F08CBFC 0FC17817 */  jal   bondwalkItemHasAmmo
 /* 0C1730 7F08CC00 00000000 */   nop   
 /* 0C1734 7F08CC04 14400004 */  bnez  $v0, .L7F08CC18
 /* 0C1738 7F08CC08 00000000 */   nop   
-/* 0C173C 7F08CC0C 0FC17817 */  jal   check_if_have_ammo_for_item
+/* 0C173C 7F08CC0C 0FC17817 */  jal   bondwalkItemHasAmmo
 /* 0C1740 7F08CC10 8E040008 */   lw    $a0, 8($s0)
 /* 0C1744 7F08CC14 10400005 */  beqz  $v0, .L7F08CC2C
 .L7F08CC18:
@@ -1381,7 +1381,7 @@ glabel sub_GAME_7F08CB10
 /* 0C183C 7F08CD0C 8FAE0028 */   lw    $t6, 0x28($sp)
 /* 0C1840 7F08CD10 52400006 */  beql  $s2, $zero, .L7F08CD2C
 /* 0C1844 7F08CD14 8FAE0028 */   lw    $t6, 0x28($sp)
-/* 0C1848 7F08CD18 0FC17817 */  jal   check_if_have_ammo_for_item
+/* 0C1848 7F08CD18 0FC17817 */  jal   bondwalkItemHasAmmo
 /* 0C184C 7F08CD1C 02002025 */   move  $a0, $s0
 /* 0C1850 7F08CD20 50400049 */  beql  $v0, $zero, .L7F08CE48
 /* 0C1854 7F08CD24 8FAE0028 */   lw    $t6, 0x28($sp)
@@ -1404,7 +1404,7 @@ glabel sub_GAME_7F08CB10
 .L7F08CD60:
 /* 0C1890 7F08CD60 12400005 */  beqz  $s2, .L7F08CD78
 /* 0C1894 7F08CD64 00000000 */   nop   
-/* 0C1898 7F08CD68 0FC17817 */  jal   check_if_have_ammo_for_item
+/* 0C1898 7F08CD68 0FC17817 */  jal   bondwalkItemHasAmmo
 /* 0C189C 7F08CD6C 02002025 */   move  $a0, $s0
 /* 0C18A0 7F08CD70 10400018 */  beqz  $v0, .L7F08CDD4
 /* 0C18A4 7F08CD74 24030021 */   li    $v1, 33
@@ -1525,7 +1525,7 @@ glabel sub_GAME_7F08CB10
 .Ljp7F08D4C0:
 /* 0C2030 7F08D4C0 52400008 */  beql  $s2, $zero, .Ljp7F08D4E4
 /* 0C2034 7F08D4C4 00808825 */   move  $s1, $a0
-/* 0C2038 7F08D4C8 0FC1795F */  jal   check_if_have_ammo_for_item
+/* 0C2038 7F08D4C8 0FC1795F */  jal   bondwalkItemHasAmmo
 /* 0C203C 7F08D4CC 00000000 */   nop   
 /* 0C2040 7F08D4D0 10400021 */  beqz  $v0, .Ljp7F08D558
 /* 0C2044 7F08D4D4 3C038008 */   lui   $v1, %hi(pPlayer) # $v1, 0x8008
@@ -1552,11 +1552,11 @@ glabel sub_GAME_7F08CB10
 .Ljp7F08D520:
 /* 0C2090 7F08D520 12400008 */  beqz  $s2, .Ljp7F08D544
 /* 0C2094 7F08D524 00000000 */   nop   
-/* 0C2098 7F08D528 0FC1795F */  jal   check_if_have_ammo_for_item
+/* 0C2098 7F08D528 0FC1795F */  jal   bondwalkItemHasAmmo
 /* 0C209C 7F08D52C 00000000 */   nop   
 /* 0C20A0 7F08D530 14400004 */  bnez  $v0, .Ljp7F08D544
 /* 0C20A4 7F08D534 00000000 */   nop   
-/* 0C20A8 7F08D538 0FC1795F */  jal   check_if_have_ammo_for_item
+/* 0C20A8 7F08D538 0FC1795F */  jal   bondwalkItemHasAmmo
 /* 0C20AC 7F08D53C 8E040008 */   lw    $a0, 8($s0)
 /* 0C20B0 7F08D540 10400005 */  beqz  $v0, .Ljp7F08D558
 .Ljp7F08D544:
@@ -1634,7 +1634,7 @@ glabel sub_GAME_7F08CB10
 /* 0C21AC 7F08D63C 8FB80028 */   lw    $t8, 0x28($sp)
 /* 0C21B0 7F08D640 52400006 */  beql  $s2, $zero, .Ljp7F08D65C
 /* 0C21B4 7F08D644 8FAE0028 */   lw    $t6, 0x28($sp)
-/* 0C21B8 7F08D648 0FC1795F */  jal   check_if_have_ammo_for_item
+/* 0C21B8 7F08D648 0FC1795F */  jal   bondwalkItemHasAmmo
 /* 0C21BC 7F08D64C 02002025 */   move  $a0, $s0
 /* 0C21C0 7F08D650 50400056 */  beql  $v0, $zero, .Ljp7F08D7AC
 /* 0C21C4 7F08D654 8FB80028 */   lw    $t8, 0x28($sp)
@@ -1664,7 +1664,7 @@ glabel sub_GAME_7F08CB10
 .Ljp7F08D6A8:
 /* 0C2218 7F08D6A8 12400005 */  beqz  $s2, .Ljp7F08D6C0
 /* 0C221C 7F08D6AC 00000000 */   nop   
-/* 0C2220 7F08D6B0 0FC1795F */  jal   check_if_have_ammo_for_item
+/* 0C2220 7F08D6B0 0FC1795F */  jal   bondwalkItemHasAmmo
 /* 0C2224 7F08D6B4 02002025 */   move  $a0, $s0
 /* 0C2228 7F08D6B8 1040001F */  beqz  $v0, .Ljp7F08D738
 /* 0C222C 7F08D6BC 24030021 */   li    $v1, 33

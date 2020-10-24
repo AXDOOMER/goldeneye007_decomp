@@ -3283,44 +3283,17 @@ u8 bondwalkItemGetShootThroughFlag(ITEM_IDS item)
 }
 
 
-
-
-
-
-#ifdef NONMATCHING
-void check_if_have_ammo_for_item(void) {
-
+s32 bondwalkItemHasAmmo(ITEM_IDS item)
+{
+    if (check_special_attributes(item, 0x40000) != 0)
+    {
+        if ((get_ammo_type_for_weapon(item) == 0) || (get_ammo_count_for_weapon(item) > 0))
+        {
+            return 1;
+        }
+    }
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_have_ammo_for_item
-/* 092B8C 7F05E05C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 092B90 7F05E060 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 092B94 7F05E064 AFA40018 */  sw    $a0, 0x18($sp)
-/* 092B98 7F05E068 0FC1782D */  jal   check_special_attributes
-/* 092B9C 7F05E06C 3C050004 */   lui   $a1, 4
-/* 092BA0 7F05E070 5040000C */  beql  $v0, $zero, .L7F05E0A4
-/* 092BA4 7F05E074 00001025 */   move  $v0, $zero
-/* 092BA8 7F05E078 0FC1A50B */  jal   get_ammo_type_for_weapon
-/* 092BAC 7F05E07C 8FA40018 */   lw    $a0, 0x18($sp)
-/* 092BB0 7F05E080 10400005 */  beqz  $v0, .L7F05E098
-/* 092BB4 7F05E084 00000000 */   nop   
-/* 092BB8 7F05E088 0FC1A514 */  jal   get_ammo_count_for_weapon
-/* 092BBC 7F05E08C 8FA40018 */   lw    $a0, 0x18($sp)
-/* 092BC0 7F05E090 58400004 */  blezl $v0, .L7F05E0A4
-/* 092BC4 7F05E094 00001025 */   move  $v0, $zero
-.L7F05E098:
-/* 092BC8 7F05E098 10000002 */  b     .L7F05E0A4
-/* 092BCC 7F05E09C 24020001 */   li    $v0, 1
-/* 092BD0 7F05E0A0 00001025 */  move  $v0, $zero
-.L7F05E0A4:
-/* 092BD4 7F05E0A4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 092BD8 7F05E0A8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 092BDC 7F05E0AC 03E00008 */  jr    $ra
-/* 092BE0 7F05E0B0 00000000 */   nop   
-)
-#endif
 
 
 
