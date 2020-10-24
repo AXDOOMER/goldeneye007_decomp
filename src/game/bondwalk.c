@@ -3285,7 +3285,7 @@ u8 bondwalkItemGetShootThroughFlag(ITEM_IDS item)
 
 s32 bondwalkItemHasAmmo(ITEM_IDS item)
 {
-    if (check_special_attributes(item, 0x40000) != 0)
+    if (bondwalkItemCheckBitflags(item, 0x40000) != 0)
     {
         if ((get_ammo_type_for_weapon(item) == 0) || (get_ammo_count_for_weapon(item) > 0))
         {
@@ -3296,31 +3296,11 @@ s32 bondwalkItemHasAmmo(ITEM_IDS item)
 }
 
 
-
-
-
-#ifdef NONMATCHING
-void check_special_attributes(void) {
-
+u32 bondwalkItemCheckBitflags(ITEM_IDS item, u32 mask)
+{
+  return ((get_ptr_item_statistics(item)->bitflags & mask) != 0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_special_attributes
-/* 092BE4 7F05E0B4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 092BE8 7F05E0B8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 092BEC 7F05E0BC 0FC1722D */  jal   get_ptr_item_statistics
-/* 092BF0 7F05E0C0 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 092BF4 7F05E0C4 8C4E006C */  lw    $t6, 0x6c($v0)
-/* 092BF8 7F05E0C8 8FAF001C */  lw    $t7, 0x1c($sp)
-/* 092BFC 7F05E0CC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 092C00 7F05E0D0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 092C04 7F05E0D4 01CF1024 */  and   $v0, $t6, $t7
-/* 092C08 7F05E0D8 0002C02B */  sltu  $t8, $zero, $v0
-/* 092C0C 7F05E0DC 03E00008 */  jr    $ra
-/* 092C10 7F05E0E0 03001025 */   move  $v0, $t8
-)
-#endif
+
 
 
 
@@ -5957,7 +5937,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 094B80 7F060050 0FC17691 */  jal   return_ammo_in_hand
 /* 094B84 7F060054 24040001 */   li    $a0, 1
 /* 094B88 7F060058 00402025 */  move  $a0, $v0
-/* 094B8C 7F06005C 0FC1782D */  jal   check_special_attributes
+/* 094B8C 7F06005C 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 094B90 7F060060 24050800 */   li    $a1, 2048
 /* 094B94 7F060064 10400015 */  beqz  $v0, .L7F0600BC
 /* 094B98 7F060068 3C018005 */   lui   $at, %hi(global_timer_delta)
@@ -6003,7 +5983,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 094C30 7F060100 0FC17691 */  jal   return_ammo_in_hand
 /* 094C34 7F060104 00002025 */   move  $a0, $zero
 /* 094C38 7F060108 00402025 */  move  $a0, $v0
-/* 094C3C 7F06010C 0FC1782D */  jal   check_special_attributes
+/* 094C3C 7F06010C 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 094C40 7F060110 24050800 */   li    $a1, 2048
 /* 094C44 7F060114 10400013 */  beqz  $v0, .L7F060164
 /* 094C48 7F060118 3C018005 */   lui   $at, %hi(global_timer_delta)
@@ -6388,11 +6368,11 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 0951F8 7F0606C8 820F000C */  lb    $t7, 0xc($s0)
 /* 0951FC 7F0606CC 11E00047 */  beqz  $t7, .L7F0607EC
 /* 095200 7F0606D0 00000000 */   nop   
-/* 095204 7F0606D4 0FC1782D */  jal   check_special_attributes
+/* 095204 7F0606D4 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 095208 7F0606D8 24050020 */   li    $a1, 32
 /* 09520C 7F0606DC 10400043 */  beqz  $v0, .L7F0607EC
 /* 095210 7F0606E0 8FA400FC */   lw    $a0, 0xfc($sp)
-/* 095214 7F0606E4 0FC1782D */  jal   check_special_attributes
+/* 095214 7F0606E4 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 095218 7F0606E8 24050040 */   li    $a1, 64
 /* 09521C 7F0606EC 10400016 */  beqz  $v0, .L7F060748
 /* 095220 7F0606F0 00000000 */   nop   
@@ -6738,11 +6718,11 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095738 7F060C08 8FA400FC */   lw    $a0, 0xfc($sp)
 /* 09573C 7F060C0C 10400017 */  beqz  $v0, .L7F060C6C
 /* 095740 7F060C10 8FA400FC */   lw    $a0, 0xfc($sp)
-/* 095744 7F060C14 0FC1782D */  jal   check_special_attributes
+/* 095744 7F060C14 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 095748 7F060C18 24050800 */   li    $a1, 2048
 /* 09574C 7F060C1C 10400013 */  beqz  $v0, .L7F060C6C
 /* 095750 7F060C20 8FA400FC */   lw    $a0, 0xfc($sp)
-/* 095754 7F060C24 0FC1782D */  jal   check_special_attributes
+/* 095754 7F060C24 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 095758 7F060C28 24052000 */   li    $a1, 8192
 /* 09575C 7F060C2C 54400010 */  bnezl $v0, .L7F060C70
 /* 095760 7F060C30 A200000F */   sb    $zero, 0xf($s0)
@@ -6768,7 +6748,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 0957A4 7F060C74 8FA400FC */  lw    $a0, 0xfc($sp)
 /* 0957A8 7F060C78 5F000007 */  bgtzl $t8, .L7F060C98
 /* 0957AC 7F060C7C 8219000F */   lb    $t9, 0xf($s0)
-/* 0957B0 7F060C80 0FC1782D */  jal   check_special_attributes
+/* 0957B0 7F060C80 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 0957B4 7F060C84 24050002 */   li    $a1, 2
 /* 0957B8 7F060C88 50400003 */  beql  $v0, $zero, .L7F060C98
 /* 0957BC 7F060C8C 8219000F */   lb    $t9, 0xf($s0)
@@ -6844,7 +6824,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 .L7F060D94:
 /* 0958C4 7F060D94 24050400 */  li    $a1, 1024
 /* 0958C8 7F060D98 AE190304 */  sw    $t9, 0x304($s0)
-/* 0958CC 7F060D9C 0FC1782D */  jal   check_special_attributes
+/* 0958CC 7F060D9C 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 0958D0 7F060DA0 8FA400FC */   lw    $a0, 0xfc($sp)
 /* 0958D4 7F060DA4 10400008 */  beqz  $v0, .L7F060DC8
 /* 0958D8 7F060DA8 00000000 */   nop   
@@ -7028,7 +7008,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095B70 7F061040 46049200 */  add.s $f8, $f18, $f4
 /* 095B74 7F061044 E7A80080 */  swc1  $f8, 0x80($sp)
 /* 095B78 7F061048 C5B00000 */  lwc1  $f16, ($t5)
-/* 095B7C 7F06104C 0FC1782D */  jal   check_special_attributes
+/* 095B7C 7F06104C 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 095B80 7F061050 E7B0007C */   swc1  $f16, 0x7c($sp)
 /* 095B84 7F061054 10400018 */  beqz  $v0, .L7F0610B8
 /* 095B88 7F061058 8FA40108 */   lw    $a0, 0x108($sp)
@@ -7741,7 +7721,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 0950E0 7F060570 0FC177D9 */  jal   return_ammo_in_hand
 /* 0950E4 7F060574 24040001 */   li    $a0, 1
 /* 0950E8 7F060578 00402025 */  move  $a0, $v0
-/* 0950EC 7F06057C 0FC17975 */  jal   check_special_attributes
+/* 0950EC 7F06057C 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 0950F0 7F060580 24050800 */   li    $a1, 2048
 /* 0950F4 7F060584 10400015 */  beqz  $v0, .Ljp7F0605DC
 /* 0950F8 7F060588 3C018005 */   lui   $at, %hi(global_timer_delta)
@@ -7787,7 +7767,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095190 7F060620 0FC177D9 */  jal   return_ammo_in_hand
 /* 095194 7F060624 00002025 */   move  $a0, $zero
 /* 095198 7F060628 00402025 */  move  $a0, $v0
-/* 09519C 7F06062C 0FC17975 */  jal   check_special_attributes
+/* 09519C 7F06062C 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 0951A0 7F060630 24050800 */   li    $a1, 2048
 /* 0951A4 7F060634 10400013 */  beqz  $v0, .Ljp7F060684
 /* 0951A8 7F060638 3C018005 */   lui   $at, %hi(global_timer_delta)
@@ -8172,11 +8152,11 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095758 7F060BE8 820F000C */  lb    $t7, 0xc($s0)
 /* 09575C 7F060BEC 11E00047 */  beqz  $t7, .Ljp7F060D0C
 /* 095760 7F060BF0 00000000 */   nop   
-/* 095764 7F060BF4 0FC17975 */  jal   check_special_attributes
+/* 095764 7F060BF4 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 095768 7F060BF8 24050020 */   li    $a1, 32
 /* 09576C 7F060BFC 10400043 */  beqz  $v0, .Ljp7F060D0C
 /* 095770 7F060C00 8FA400FC */   lw    $a0, 0xfc($sp)
-/* 095774 7F060C04 0FC17975 */  jal   check_special_attributes
+/* 095774 7F060C04 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 095778 7F060C08 24050040 */   li    $a1, 64
 /* 09577C 7F060C0C 10400016 */  beqz  $v0, .Ljp7F060C68
 /* 095780 7F060C10 00000000 */   nop   
@@ -8522,11 +8502,11 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095C98 7F061128 8FA400FC */   lw    $a0, 0xfc($sp)
 /* 095C9C 7F06112C 10400017 */  beqz  $v0, .Ljp7F06118C
 /* 095CA0 7F061130 8FA400FC */   lw    $a0, 0xfc($sp)
-/* 095CA4 7F061134 0FC17975 */  jal   check_special_attributes
+/* 095CA4 7F061134 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 095CA8 7F061138 24050800 */   li    $a1, 2048
 /* 095CAC 7F06113C 10400013 */  beqz  $v0, .Ljp7F06118C
 /* 095CB0 7F061140 8FA400FC */   lw    $a0, 0xfc($sp)
-/* 095CB4 7F061144 0FC17975 */  jal   check_special_attributes
+/* 095CB4 7F061144 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 095CB8 7F061148 24052000 */   li    $a1, 8192
 /* 095CBC 7F06114C 54400010 */  bnezl $v0, .Ljp7F061190
 /* 095CC0 7F061150 A200000F */   sb    $zero, 0xf($s0)
@@ -8552,7 +8532,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095D04 7F061194 8FA400FC */  lw    $a0, 0xfc($sp)
 /* 095D08 7F061198 5F000007 */  bgtzl $t8, .Ljp7F0611B8
 /* 095D0C 7F06119C 8219000F */   lb    $t9, 0xf($s0)
-/* 095D10 7F0611A0 0FC17975 */  jal   check_special_attributes
+/* 095D10 7F0611A0 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 095D14 7F0611A4 24050002 */   li    $a1, 2
 /* 095D18 7F0611A8 50400003 */  beql  $v0, $zero, .Ljp7F0611B8
 /* 095D1C 7F0611AC 8219000F */   lb    $t9, 0xf($s0)
@@ -8628,7 +8608,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 .Ljp7F0612B4:
 /* 095E24 7F0612B4 24050400 */  li    $a1, 1024
 /* 095E28 7F0612B8 AE190304 */  sw    $t9, 0x304($s0)
-/* 095E2C 7F0612BC 0FC17975 */  jal   check_special_attributes
+/* 095E2C 7F0612BC 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 095E30 7F0612C0 8FA400FC */   lw    $a0, 0xfc($sp)
 /* 095E34 7F0612C4 10400008 */  beqz  $v0, .Ljp7F0612E8
 /* 095E38 7F0612C8 00000000 */   nop   
@@ -8812,7 +8792,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 0960D0 7F061560 46049200 */  add.s $f8, $f18, $f4
 /* 0960D4 7F061564 E7A80080 */  swc1  $f8, 0x80($sp)
 /* 0960D8 7F061568 C5B00000 */  lwc1  $f16, ($t5)
-/* 0960DC 7F06156C 0FC17975 */  jal   check_special_attributes
+/* 0960DC 7F06156C 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 0960E0 7F061570 E7B0007C */   swc1  $f16, 0x7c($sp)
 /* 0960E4 7F061574 10400018 */  beqz  $v0, .Ljp7F0615D8
 /* 0960E8 7F061578 8FA40108 */   lw    $a0, 0x108($sp)
@@ -11064,7 +11044,7 @@ glabel sub_GAME_7F062BE4
 /* 097A1C 7F062EEC AE600220 */  sw    $zero, 0x220($s3)
 /* 097A20 7F062EF0 02802025 */  move  $a0, $s4
 .L7F062EF4:
-/* 097A24 7F062EF4 0FC1782D */  jal   check_special_attributes
+/* 097A24 7F062EF4 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 097A28 7F062EF8 24050400 */   li    $a1, 1024
 /* 097A2C 7F062EFC 1040000E */  beqz  $v0, .L7F062F38
 /* 097A30 7F062F00 02E02025 */   move  $a0, $s7
@@ -11087,7 +11067,7 @@ glabel sub_GAME_7F062BE4
 /* 097A6C 7F062F3C 02202825 */   move  $a1, $s1
 /* 097A70 7F062F40 8FB00098 */  lw    $s0, 0x98($sp)
 /* 097A74 7F062F44 02802025 */  move  $a0, $s4
-/* 097A78 7F062F48 0FC1782D */  jal   check_special_attributes
+/* 097A78 7F062F48 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 097A7C 7F062F4C 24050400 */   li    $a1, 1024
 /* 097A80 7F062F50 10400006 */  beqz  $v0, .L7F062F6C
 /* 097A84 7F062F54 3C0AB600 */   lui   $t2, 0xb600
@@ -11206,7 +11186,7 @@ glabel set_enviro_fog_for_items_in_solo_watch_menu
 /* 097BEC 7F0630BC 26520810 */   addiu $s2, $s2, 0x810
 /* 097BF0 7F0630C0 104000FD */  beqz  $v0, .L7F0634B8
 /* 097BF4 7F0630C4 8FA4019C */   lw    $a0, 0x19c($sp)
-/* 097BF8 7F0630C8 0FC1782D */  jal   check_special_attributes
+/* 097BF8 7F0630C8 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 097BFC 7F0630CC 24054000 */   li    $a1, 16384
 /* 097C00 7F0630D0 544000FA */  bnezl $v0, .L7F0634BC
 /* 097C04 7F0630D4 8FA20198 */   lw    $v0, 0x198($sp)
@@ -13598,7 +13578,7 @@ glabel sub_GAME_7F0649D8
 /* 099594 7F064A64 AE23002C */  sw    $v1, 0x2c($s1)
 .L7F064A68:
 /* 099598 7F064A68 02002025 */  move  $a0, $s0
-/* 09959C 7F064A6C 0FC1782D */  jal   check_special_attributes
+/* 09959C 7F064A6C 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 0995A0 7F064A70 AFA60024 */   sw    $a2, 0x24($sp)
 /* 0995A4 7F064A74 10400008 */  beqz  $v0, .L7F064A98
 /* 0995A8 7F064A78 8FA60024 */   lw    $a2, 0x24($sp)
@@ -14050,7 +14030,7 @@ glabel handle_weapon_id_values_possibly_1st_person_animation
 /* 09971C 7F064BEC 1220000E */  beqz  $s1, .L7F064C28
 /* 099720 7F064BF0 02202025 */   move  $a0, $s1
 /* 099724 7F064BF4 24050010 */  li    $a1, 16
-/* 099728 7F064BF8 0FC1782D */  jal   check_special_attributes
+/* 099728 7F064BF8 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09972C 7F064BFC AFA601C4 */   sw    $a2, 0x1c4($sp)
 /* 099730 7F064C00 14400003 */  bnez  $v0, .L7F064C10
 /* 099734 7F064C04 8FA601C4 */   lw    $a2, 0x1c4($sp)
@@ -14406,7 +14386,7 @@ Weapon_shooting_machinegun:
 /* 099C04 7F0650D4 02202025 */  move  $a0, $s1
 /* 099C08 7F0650D8 1580000F */  bnez  $t4, .L7F065118
 /* 099C0C 7F0650DC 00000000 */   nop   
-/* 099C10 7F0650E0 0FC1782D */  jal   check_special_attributes
+/* 099C10 7F0650E0 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 099C14 7F0650E4 24050004 */   li    $a1, 4
 /* 099C18 7F0650E8 50400035 */  beql  $v0, $zero, .L7F0651C0
 /* 099C1C 7F0650EC 240E0003 */   li    $t6, 3
@@ -15383,11 +15363,11 @@ weapon_switchstyle_NONE:
 /* 09AA04 7F065ED4 02202025 */   move  $a0, $s1
 /* 09AA08 7F065ED8 10400009 */  beqz  $v0, .L7F065F00
 /* 09AA0C 7F065EDC 02202025 */   move  $a0, $s1
-/* 09AA10 7F065EE0 0FC1782D */  jal   check_special_attributes
+/* 09AA10 7F065EE0 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09AA14 7F065EE4 24050800 */   li    $a1, 2048
 /* 09AA18 7F065EE8 10400005 */  beqz  $v0, .L7F065F00
 /* 09AA1C 7F065EEC 02202025 */   move  $a0, $s1
-/* 09AA20 7F065EF0 0FC1782D */  jal   check_special_attributes
+/* 09AA20 7F065EF0 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09AA24 7F065EF4 24052000 */   li    $a1, 8192
 /* 09AA28 7F065EF8 10400006 */  beqz  $v0, .L7F065F14
 /* 09AA2C 7F065EFC 8FB80178 */   lw    $t8, 0x178($sp)
@@ -15445,7 +15425,7 @@ weapon_switchstyle_NONE:
 /* 09AAEC 7F065FBC 01AE082A */  slt   $at, $t5, $t6
 /* 09AAF0 7F065FC0 14200005 */  bnez  $at, .L7F065FD8
 /* 09AAF4 7F065FC4 00000000 */   nop   
-/* 09AAF8 7F065FC8 0FC1782D */  jal   check_special_attributes
+/* 09AAF8 7F065FC8 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09AAFC 7F065FCC 3C050020 */   lui   $a1, 0x20
 /* 09AB00 7F065FD0 50400008 */  beql  $v0, $zero, .L7F065FF4
 /* 09AB04 7F065FD4 AE000024 */   sw    $zero, 0x24($s0)
@@ -15674,11 +15654,11 @@ weapon_reload_none_sfx:
 /* 09AE24 7F0662F4 02202025 */   move  $a0, $s1
 /* 09AE28 7F0662F8 10400009 */  beqz  $v0, .L7F066320
 /* 09AE2C 7F0662FC 02202025 */   move  $a0, $s1
-/* 09AE30 7F066300 0FC1782D */  jal   check_special_attributes
+/* 09AE30 7F066300 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09AE34 7F066304 24050800 */   li    $a1, 2048
 /* 09AE38 7F066308 10400005 */  beqz  $v0, .L7F066320
 /* 09AE3C 7F06630C 02202025 */   move  $a0, $s1
-/* 09AE40 7F066310 0FC1782D */  jal   check_special_attributes
+/* 09AE40 7F066310 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09AE44 7F066314 24052000 */   li    $a1, 8192
 /* 09AE48 7F066318 50400007 */  beql  $v0, $zero, .L7F066338
 /* 09AE4C 7F06631C 8E0E0020 */   lw    $t6, 0x20($s0)
@@ -15890,11 +15870,11 @@ weapon_reload_none_sfx:
 /* 09B13C 7F06660C 02202025 */   move  $a0, $s1
 /* 09B140 7F066610 10400009 */  beqz  $v0, .L7F066638
 /* 09B144 7F066614 02202025 */   move  $a0, $s1
-/* 09B148 7F066618 0FC1782D */  jal   check_special_attributes
+/* 09B148 7F066618 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09B14C 7F06661C 24050800 */   li    $a1, 2048
 /* 09B150 7F066620 10400005 */  beqz  $v0, .L7F066638
 /* 09B154 7F066624 02202025 */   move  $a0, $s1
-/* 09B158 7F066628 0FC1782D */  jal   check_special_attributes
+/* 09B158 7F066628 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09B15C 7F06662C 24052000 */   li    $a1, 8192
 /* 09B160 7F066630 50400007 */  beql  $v0, $zero, .L7F066650
 /* 09B164 7F066634 8E0F0020 */   lw    $t7, 0x20($s0)
@@ -16334,7 +16314,7 @@ weapon_reload_none_sfx:
 /* 09B750 7F066C20 02202025 */  move  $a0, $s1
 /* 09B754 7F066C24 5DA00006 */  bgtzl $t5, .L7F066C40
 /* 09B758 7F066C28 8E0F0020 */   lw    $t7, 0x20($s0)
-/* 09B75C 7F066C2C 0FC1782D */  jal   check_special_attributes
+/* 09B75C 7F066C2C 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09B760 7F066C30 24050010 */   li    $a1, 16
 /* 09B764 7F066C34 5040001C */  beql  $v0, $zero, .L7F066CA8
 /* 09B768 7F066C38 AE000024 */   sw    $zero, 0x24($s0)
@@ -16889,7 +16869,7 @@ glabel handle_weapon_id_values_possibly_1st_person_animation
 /* 099CD8 7F065168 12200014 */  beqz  $s1, .Ljp7F0651BC
 /* 099CDC 7F06516C 02202025 */   move  $a0, $s1
 /* 099CE0 7F065170 24050010 */  li    $a1, 16
-/* 099CE4 7F065174 0FC17975 */  jal   check_special_attributes
+/* 099CE4 7F065174 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 099CE8 7F065178 AFA601D4 */   sw    $a2, 0x1d4($sp)
 /* 099CEC 7F06517C 14400003 */  bnez  $v0, .Ljp7F06518C
 /* 099CF0 7F065180 8FA601D4 */   lw    $a2, 0x1d4($sp)
@@ -17251,7 +17231,7 @@ Weapon_shooting_machinegun:
 /* 09A1D8 7F065668 02202025 */  move  $a0, $s1
 /* 09A1DC 7F06566C 1700000F */  bnez  $t8, .Ljp7F0656AC
 /* 09A1E0 7F065670 00000000 */   nop   
-/* 09A1E4 7F065674 0FC17975 */  jal   check_special_attributes
+/* 09A1E4 7F065674 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 09A1E8 7F065678 24050004 */   li    $a1, 4
 /* 09A1EC 7F06567C 50400035 */  beql  $v0, $zero, .Ljp7F065754
 /* 09A1F0 7F065680 24190003 */   li    $t9, 3
@@ -18234,11 +18214,11 @@ weapon_switchstyle_NONE:
 /* 09AFFC 7F06648C 02202025 */   move  $a0, $s1
 /* 09B000 7F066490 10400009 */  beqz  $v0, .Ljp7F0664B8
 /* 09B004 7F066494 02202025 */   move  $a0, $s1
-/* 09B008 7F066498 0FC17975 */  jal   check_special_attributes
+/* 09B008 7F066498 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 09B00C 7F06649C 24050800 */   li    $a1, 2048
 /* 09B010 7F0664A0 10400005 */  beqz  $v0, .Ljp7F0664B8
 /* 09B014 7F0664A4 02202025 */   move  $a0, $s1
-/* 09B018 7F0664A8 0FC17975 */  jal   check_special_attributes
+/* 09B018 7F0664A8 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 09B01C 7F0664AC 24052000 */   li    $a1, 8192
 /* 09B020 7F0664B0 10400006 */  beqz  $v0, .Ljp7F0664CC
 /* 09B024 7F0664B4 8FB8017C */   lw    $t8, 0x17c($sp)
@@ -18296,7 +18276,7 @@ weapon_switchstyle_NONE:
 /* 09B0E4 7F066574 01CF082A */  slt   $at, $t6, $t7
 /* 09B0E8 7F066578 14200005 */  bnez  $at, .Ljp7F066590
 /* 09B0EC 7F06657C 00000000 */   nop   
-/* 09B0F0 7F066580 0FC17975 */  jal   check_special_attributes
+/* 09B0F0 7F066580 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 09B0F4 7F066584 3C050020 */   lui   $a1, 0x20
 /* 09B0F8 7F066588 50400008 */  beql  $v0, $zero, .Ljp7F0665AC
 /* 09B0FC 7F06658C AE000024 */   sw    $zero, 0x24($s0)
@@ -18532,11 +18512,11 @@ weapon_reload_none_sfx:
 /* 09B43C 7F0668CC 02202025 */   move  $a0, $s1
 /* 09B440 7F0668D0 10400009 */  beqz  $v0, .Ljp7F0668F8
 /* 09B444 7F0668D4 02202025 */   move  $a0, $s1
-/* 09B448 7F0668D8 0FC17975 */  jal   check_special_attributes
+/* 09B448 7F0668D8 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 09B44C 7F0668DC 24050800 */   li    $a1, 2048
 /* 09B450 7F0668E0 10400005 */  beqz  $v0, .Ljp7F0668F8
 /* 09B454 7F0668E4 02202025 */   move  $a0, $s1
-/* 09B458 7F0668E8 0FC17975 */  jal   check_special_attributes
+/* 09B458 7F0668E8 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 09B45C 7F0668EC 24052000 */   li    $a1, 8192
 /* 09B460 7F0668F0 50400007 */  beql  $v0, $zero, .Ljp7F066910
 /* 09B464 7F0668F4 8E0F0020 */   lw    $t7, 0x20($s0)
@@ -18748,11 +18728,11 @@ weapon_reload_none_sfx:
 /* 09B754 7F066BE4 02202025 */   move  $a0, $s1
 /* 09B758 7F066BE8 10400009 */  beqz  $v0, .Ljp7F066C10
 /* 09B75C 7F066BEC 02202025 */   move  $a0, $s1
-/* 09B760 7F066BF0 0FC17975 */  jal   check_special_attributes
+/* 09B760 7F066BF0 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 09B764 7F066BF4 24050800 */   li    $a1, 2048
 /* 09B768 7F066BF8 10400005 */  beqz  $v0, .Ljp7F066C10
 /* 09B76C 7F066BFC 02202025 */   move  $a0, $s1
-/* 09B770 7F066C00 0FC17975 */  jal   check_special_attributes
+/* 09B770 7F066C00 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 09B774 7F066C04 24052000 */   li    $a1, 8192
 /* 09B778 7F066C08 50400007 */  beql  $v0, $zero, .Ljp7F066C28
 /* 09B77C 7F066C0C 8E190020 */   lw    $t9, 0x20($s0)
@@ -19192,7 +19172,7 @@ weapon_reload_none_sfx:
 /* 09BD68 7F0671F8 02202025 */  move  $a0, $s1
 /* 09BD6C 7F0671FC 5DC00006 */  bgtzl $t6, .Ljp7F067218
 /* 09BD70 7F067200 8E0F0020 */   lw    $t7, 0x20($s0)
-/* 09BD74 7F067204 0FC17975 */  jal   check_special_attributes
+/* 09BD74 7F067204 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 09BD78 7F067208 24050010 */   li    $a1, 16
 /* 09BD7C 7F06720C 5040001C */  beql  $v0, $zero, .Ljp7F067280
 /* 09BD80 7F067210 AE000024 */   sw    $zero, 0x24($s0)
@@ -20134,11 +20114,11 @@ glabel sub_GAME_7F067420
 /* 09BFFC 7F0674CC AC780FD4 */   sw    $t8, 0xfd4($v1)
 /* 09C000 7F0674D0 504000FC */  beql  $v0, $zero, .L7F0678C4
 /* 09C004 7F0674D4 8E0D0000 */   lw    $t5, ($s0)
-/* 09C008 7F0674D8 0FC1782D */  jal   check_special_attributes
+/* 09C008 7F0674D8 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09C00C 7F0674DC 24050080 */   li    $a1, 128
 /* 09C010 7F0674E0 10400049 */  beqz  $v0, .L7F067608
 /* 09C014 7F0674E4 8FA40040 */   lw    $a0, 0x40($sp)
-/* 09C018 7F0674E8 0FC1782D */  jal   check_special_attributes
+/* 09C018 7F0674E8 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09C01C 7F0674EC 24050080 */   li    $a1, 128
 /* 09C020 7F0674F0 50400046 */  beql  $v0, $zero, .L7F06760C
 /* 09C024 7F0674F4 8FA40044 */   lw    $a0, 0x44($sp)
@@ -20217,11 +20197,11 @@ glabel sub_GAME_7F067420
 .L7F067608:
 /* 09C138 7F067608 8FA40044 */  lw    $a0, 0x44($sp)
 .L7F06760C:
-/* 09C13C 7F06760C 0FC1782D */  jal   check_special_attributes
+/* 09C13C 7F06760C 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09C140 7F067610 24050080 */   li    $a1, 128
 /* 09C144 7F067614 14400005 */  bnez  $v0, .L7F06762C
 /* 09C148 7F067618 8FA40040 */   lw    $a0, 0x40($sp)
-/* 09C14C 7F06761C 0FC1782D */  jal   check_special_attributes
+/* 09C14C 7F06761C 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09C150 7F067620 24050080 */   li    $a1, 128
 /* 09C154 7F067624 50400063 */  beql  $v0, $zero, .L7F0677B4
 /* 09C158 7F067628 8E030000 */   lw    $v1, ($s0)
@@ -20266,7 +20246,7 @@ glabel sub_GAME_7F067420
 /* 09C1EC 7F0676BC 1000009F */  b     .L7F06793C
 /* 09C1F0 7F0676C0 AD8F004C */   sw    $t7, 0x4c($t4)
 .L7F0676C4:
-/* 09C1F4 7F0676C4 0FC1782D */  jal   check_special_attributes
+/* 09C1F4 7F0676C4 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09C1F8 7F0676C8 24050080 */   li    $a1, 128
 /* 09C1FC 7F0676CC 10400003 */  beqz  $v0, .L7F0676DC
 /* 09C200 7F0676D0 24050001 */   li    $a1, 1
@@ -21219,7 +21199,7 @@ void sub_GAME_7F0681CC(void *arg0, s32 arg1, s32 arg2) {
 
     // Node 0
     sp28 = (f32) get_ptr_item_statistics(get_item_in_hand(arg2))->unk30;
-    if (check_special_attributes(return_ammo_in_hand(arg2), 0x1000) != 0)
+    if (bondwalkItemCheckBitflags(return_ammo_in_hand(arg2), 0x1000) != 0)
     {
         // Node 1
         if ((pPlayer + (arg2 * 0x3a8))->unkC08 == 0x3e800000)
@@ -21297,7 +21277,7 @@ glabel sub_GAME_7F0681CC
 /* 09CD28 7F0681F8 0FC17691 */  jal   return_ammo_in_hand
 /* 09CD2C 7F0681FC E7A40028 */   swc1  $f4, 0x28($sp)
 /* 09CD30 7F068200 00402025 */  move  $a0, $v0
-/* 09CD34 7F068204 0FC1782D */  jal   check_special_attributes
+/* 09CD34 7F068204 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09CD38 7F068208 24051000 */   li    $a1, 4096
 /* 09CD3C 7F06820C 10400015 */  beqz  $v0, .L7F068264
 /* 09CD40 7F068210 00000000 */   nop   
@@ -22649,7 +22629,7 @@ glabel give_cur_player_ammo
 /* 09DC84 7F069154 00402025 */   move  $a0, $v0
 /* 09DC88 7F069158 1450001F */  bne   $v0, $s0, .L7F0691D8
 /* 09DC8C 7F06915C 8FA40024 */   lw    $a0, 0x24($sp)
-/* 09DC90 7F069160 0FC1782D */  jal   check_special_attributes
+/* 09DC90 7F069160 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09DC94 7F069164 3C050020 */   lui   $a1, 0x20
 /* 09DC98 7F069168 1040001B */  beqz  $v0, .L7F0691D8
 /* 09DC9C 7F06916C 3C038008 */   lui   $v1, %hi(pPlayer)
@@ -23996,7 +23976,7 @@ s32 generate_ammo_total_microcode(s32 arg0) {
                         if (pPlayer->unk894 != 7)
                         {
                             // Node 11
-                            if (check_special_attributes(sp60, 0x80000) == 0)
+                            if (bondwalkItemCheckBitflags(sp60, 0x80000) == 0)
                             {
                                 // Node 12
                                 temp_v1 = ((sp5C * 0xc) + &ammo_related);
@@ -24014,7 +23994,7 @@ s32 generate_ammo_total_microcode(s32 arg0) {
                                 }
                                 // Node 14
                                 arg0 = microcode_constructor(arg0);
-                                if (check_special_attributes(sp60, 0x400000) != 0)
+                                if (bondwalkItemCheckBitflags(sp60, 0x400000) != 0)
                                 {
                                     // Node 15
                                     sp4C = 0;
@@ -24035,7 +24015,7 @@ s32 generate_ammo_total_microcode(s32 arg0) {
                                     sp50 = (s32) (pPlayer + (sp5C * 4))->unk1130;
                                 }
                                 // Node 19
-                                if (check_special_attributes(sp60, 0x400000) == 0)
+                                if (bondwalkItemCheckBitflags(sp60, 0x400000) == 0)
                                 {
                                     // Node 20
                                     sp2C = get_video2_settings_ulx();
@@ -24052,7 +24032,7 @@ s32 generate_ammo_total_microcode(s32 arg0) {
                                     arg0 = display_ammo_total_in_a1(arg0, sp4C, ((((sp2E + sp2C) - sp54) - phi_t9) + -4), 0);
                                 }
                                 // Node 23
-                                if ((sp50 > 0) || (check_special_attributes(sp60, 0x400000) != 0))
+                                if ((sp50 > 0) || (bondwalkItemCheckBitflags(sp60, 0x400000) != 0))
                                 {
                                     // Node 25
                                     sp2C = get_video2_settings_ulx();
@@ -24095,7 +24075,7 @@ s32 generate_ammo_total_microcode(s32 arg0) {
                         if (pPlayer->unkC3C != 7)
                         {
                             // Node 33
-                            if (check_special_attributes(sp64, 0x80000) == 0)
+                            if (bondwalkItemCheckBitflags(sp64, 0x80000) == 0)
                             {
                                 // Node 34
                                 temp_v1_2 = ((sp5C * 0xc) + &ammo_related);
@@ -24113,7 +24093,7 @@ s32 generate_ammo_total_microcode(s32 arg0) {
                                 }
                                 // Node 36
                                 arg0 = microcode_constructor(arg0);
-                                if (check_special_attributes(sp64, 0x400000) != 0)
+                                if (bondwalkItemCheckBitflags(sp64, 0x400000) != 0)
                                 {
                                     // Node 37
                                     sp4C = 0;
@@ -24134,7 +24114,7 @@ s32 generate_ammo_total_microcode(s32 arg0) {
                                     sp50 = (s32) (pPlayer + (sp5C * 4))->unk1130;
                                 }
                                 // Node 41
-                                if (check_special_attributes(sp64, 0x400000) == 0)
+                                if (bondwalkItemCheckBitflags(sp64, 0x400000) == 0)
                                 {
                                     // Node 42
                                     sp2E = get_video2_settings_ulx();
@@ -24150,7 +24130,7 @@ s32 generate_ammo_total_microcode(s32 arg0) {
                                     arg0 = display_ammo_total_in_a1(arg0, sp4C, (((sp2E + sp58) + phi_t3) + 3), 1);
                                 }
                                 // Node 45
-                                if ((sp50 > 0) || (check_special_attributes(sp64, 0x400000) != 0))
+                                if ((sp50 > 0) || (bondwalkItemCheckBitflags(sp64, 0x400000) != 0))
                                 {
                                     // Node 47
                                     sp2E = get_video2_settings_ulx();
@@ -24242,7 +24222,7 @@ glabel generate_ammo_total_microcode
 /* 09E8EC 7F069DBC 24010007 */   li    $at, 7
 /* 09E8F0 7F069DC0 104100AA */  beq   $v0, $at, .L7F06A06C
 /* 09E8F4 7F069DC4 8FA40060 */   lw    $a0, 0x60($sp)
-/* 09E8F8 7F069DC8 0FC1782D */  jal   check_special_attributes
+/* 09E8F8 7F069DC8 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09E8FC 7F069DCC 3C050008 */   lui   $a1, 8
 /* 09E900 7F069DD0 144000A6 */  bnez  $v0, .L7F06A06C
 /* 09E904 7F069DD4 8FAF005C */   lw    $t7, 0x5c($sp)
@@ -24301,7 +24281,7 @@ glabel generate_ammo_total_microcode
 /* 09E9D4 7F069EA4 8FA40068 */   lw    $a0, 0x68($sp)
 /* 09E9D8 7F069EA8 AFA20068 */  sw    $v0, 0x68($sp)
 /* 09E9DC 7F069EAC 8FA40060 */  lw    $a0, 0x60($sp)
-/* 09E9E0 7F069EB0 0FC1782D */  jal   check_special_attributes
+/* 09E9E0 7F069EB0 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09E9E4 7F069EB4 3C050040 */   lui   $a1, 0x40
 /* 09E9E8 7F069EB8 10400011 */  beqz  $v0, .L7F069F00
 /* 09E9EC 7F069EBC 3C050040 */   lui   $a1, 0x40
@@ -24333,7 +24313,7 @@ glabel generate_ammo_total_microcode
 /* 09EA4C 7F069F1C 8D4B1130 */  lw    $t3, 0x1130($t2)
 /* 09EA50 7F069F20 AFAB0050 */  sw    $t3, 0x50($sp)
 .L7F069F24:
-/* 09EA54 7F069F24 0FC1782D */  jal   check_special_attributes
+/* 09EA54 7F069F24 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09EA58 7F069F28 8FA40060 */   lw    $a0, 0x60($sp)
 /* 09EA5C 7F069F2C 54400023 */  bnezl $v0, .L7F069FBC
 /* 09EA60 7F069F30 8FAD0050 */   lw    $t5, 0x50($sp)
@@ -24376,7 +24356,7 @@ glabel generate_ammo_total_microcode
 /* 09EAEC 7F069FBC 8FA40060 */  lw    $a0, 0x60($sp)
 /* 09EAF0 7F069FC0 1DA00005 */  bgtz  $t5, .L7F069FD8
 /* 09EAF4 7F069FC4 00000000 */   nop   
-/* 09EAF8 7F069FC8 0FC1782D */  jal   check_special_attributes
+/* 09EAF8 7F069FC8 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09EAFC 7F069FCC 3C050040 */   lui   $a1, 0x40
 /* 09EB00 7F069FD0 10400023 */  beqz  $v0, .L7F06A060
 /* 09EB04 7F069FD4 00000000 */   nop   
@@ -24437,7 +24417,7 @@ glabel generate_ammo_total_microcode
 /* 09EBCC 7F06A09C 24010007 */   li    $at, 7
 /* 09EBD0 7F06A0A0 1041009F */  beq   $v0, $at, .L7F06A320
 /* 09EBD4 7F06A0A4 8FA40064 */   lw    $a0, 0x64($sp)
-/* 09EBD8 7F06A0A8 0FC1782D */  jal   check_special_attributes
+/* 09EBD8 7F06A0A8 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09EBDC 7F06A0AC 3C050008 */   lui   $a1, 8
 /* 09EBE0 7F06A0B0 1440009B */  bnez  $v0, .L7F06A320
 /* 09EBE4 7F06A0B4 8FAA005C */   lw    $t2, 0x5c($sp)
@@ -24493,7 +24473,7 @@ glabel generate_ammo_total_microcode
 /* 09ECA8 7F06A178 8FA40068 */   lw    $a0, 0x68($sp)
 /* 09ECAC 7F06A17C AFA20068 */  sw    $v0, 0x68($sp)
 /* 09ECB0 7F06A180 8FA40064 */  lw    $a0, 0x64($sp)
-/* 09ECB4 7F06A184 0FC1782D */  jal   check_special_attributes
+/* 09ECB4 7F06A184 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09ECB8 7F06A188 3C050040 */   lui   $a1, 0x40
 /* 09ECBC 7F06A18C 10400011 */  beqz  $v0, .L7F06A1D4
 /* 09ECC0 7F06A190 3C050040 */   lui   $a1, 0x40
@@ -24525,7 +24505,7 @@ glabel generate_ammo_total_microcode
 /* 09ED20 7F06A1F0 8DD81130 */  lw    $t8, 0x1130($t6)
 /* 09ED24 7F06A1F4 AFB80050 */  sw    $t8, 0x50($sp)
 .L7F06A1F8:
-/* 09ED28 7F06A1F8 0FC1782D */  jal   check_special_attributes
+/* 09ED28 7F06A1F8 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09ED2C 7F06A1FC 8FA40064 */   lw    $a0, 0x64($sp)
 /* 09ED30 7F06A200 5440001F */  bnezl $v0, .L7F06A280
 /* 09ED34 7F06A204 8FAC0050 */   lw    $t4, 0x50($sp)
@@ -24564,7 +24544,7 @@ glabel generate_ammo_total_microcode
 /* 09EDB0 7F06A280 8FA40064 */  lw    $a0, 0x64($sp)
 /* 09EDB4 7F06A284 1D800005 */  bgtz  $t4, .L7F06A29C
 /* 09EDB8 7F06A288 00000000 */   nop   
-/* 09EDBC 7F06A28C 0FC1782D */  jal   check_special_attributes
+/* 09EDBC 7F06A28C 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09EDC0 7F06A290 3C050040 */   lui   $a1, 0x40
 /* 09EDC4 7F06A294 1040001F */  beqz  $v0, .L7F06A314
 /* 09EDC8 7F06A298 00000000 */   nop   
@@ -24666,7 +24646,7 @@ s32 sub_GAME_7F06A334(s32 arg0) {
                 {
                     // Node 4
                     phi_s0_4 = arg0;
-                    if (check_special_attributes(sp50, 0x80000) == 0)
+                    if (bondwalkItemCheckBitflags(sp50, 0x80000) == 0)
                     {
                         // Node 5
                         temp_v0 = ((sp4C * 0xc) + &ammo_related);
@@ -24685,7 +24665,7 @@ s32 sub_GAME_7F06A334(s32 arg0) {
                         }
                         // Node 7
                         temp_s0 = microcode_constructor(phi_s0);
-                        if (check_special_attributes(sp50, 0x400000) != 0)
+                        if (bondwalkItemCheckBitflags(sp50, 0x400000) != 0)
                         {
                             // Node 8
                             sp44 = 0;
@@ -24707,7 +24687,7 @@ s32 sub_GAME_7F06A334(s32 arg0) {
                         }
                         // Node 12
                         phi_s0_2 = temp_s0;
-                        if (check_special_attributes(sp50, 0x400000) == 0)
+                        if (bondwalkItemCheckBitflags(sp50, 0x400000) == 0)
                         {
                             // Node 13
                             phi_t4 = (sp3C >> 1);
@@ -24720,7 +24700,7 @@ s32 sub_GAME_7F06A334(s32 arg0) {
                             phi_s0_2 = display_ammo_total_in_a1(temp_s0, sp44, (0xc4 - phi_t4), 0, 0);
                         }
                         // Node 16
-                        if ((sp48 > 0) || (check_special_attributes(sp50, 0x400000) != 0))
+                        if ((sp48 > 0) || (bondwalkItemCheckBitflags(sp50, 0x400000) != 0))
                         {
                             // Node 18
                             temp_a2 = (sp3C + 1);
@@ -24774,7 +24754,7 @@ glabel sub_GAME_7F06A334
 /* 09EEB4 7F06A384 24010007 */   li    $at, 7
 /* 09EEB8 7F06A388 10410082 */  beq   $v0, $at, .L7F06A594
 /* 09EEBC 7F06A38C 8FA40050 */   lw    $a0, 0x50($sp)
-/* 09EEC0 7F06A390 0FC1782D */  jal   check_special_attributes
+/* 09EEC0 7F06A390 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09EEC4 7F06A394 3C050008 */   lui   $a1, 8
 /* 09EEC8 7F06A398 1440007E */  bnez  $v0, .L7F06A594
 /* 09EECC 7F06A39C 8FAF004C */   lw    $t7, 0x4c($sp)
@@ -24827,7 +24807,7 @@ glabel sub_GAME_7F06A334
 /* 09EF84 7F06A454 02002025 */   move  $a0, $s0
 /* 09EF88 7F06A458 00408025 */  move  $s0, $v0
 /* 09EF8C 7F06A45C 8FA40050 */  lw    $a0, 0x50($sp)
-/* 09EF90 7F06A460 0FC1782D */  jal   check_special_attributes
+/* 09EF90 7F06A460 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09EF94 7F06A464 3C050040 */   lui   $a1, 0x40
 /* 09EF98 7F06A468 10400011 */  beqz  $v0, .L7F06A4B0
 /* 09EF9C 7F06A46C 3C050040 */   lui   $a1, 0x40
@@ -24859,7 +24839,7 @@ glabel sub_GAME_7F06A334
 /* 09EFFC 7F06A4CC 8D4B1130 */  lw    $t3, 0x1130($t2)
 /* 09F000 7F06A4D0 AFAB0048 */  sw    $t3, 0x48($sp)
 .L7F06A4D4:
-/* 09F004 7F06A4D4 0FC1782D */  jal   check_special_attributes
+/* 09F004 7F06A4D4 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09F008 7F06A4D8 8FA40050 */   lw    $a0, 0x50($sp)
 /* 09F00C 7F06A4DC 14400011 */  bnez  $v0, .L7F06A524
 /* 09F010 7F06A4E0 02002025 */   move  $a0, $s0
@@ -24885,7 +24865,7 @@ glabel sub_GAME_7F06A334
 /* 09F058 7F06A528 8FA40050 */  lw    $a0, 0x50($sp)
 /* 09F05C 7F06A52C 5F000006 */  bgtzl $t8, .L7F06A548
 /* 09F060 7F06A530 8FA6003C */   lw    $a2, 0x3c($sp)
-/* 09F064 7F06A534 0FC1782D */  jal   check_special_attributes
+/* 09F064 7F06A534 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09F068 7F06A538 3C050040 */   lui   $a1, 0x40
 /* 09F06C 7F06A53C 10400012 */  beqz  $v0, .L7F06A588
 /* 09F070 7F06A540 00000000 */   nop   
@@ -25093,7 +25073,7 @@ void inc_curplayer_hitcount_with_weapon(s32 arg1) {
     void *temp_v0;
 
     // Node 0
-    temp_ret = check_special_attributes(0x10000);
+    temp_ret = bondwalkItemCheckBitflags(0x10000);
     if (temp_ret != 0)
     {
         // Node 1
@@ -25110,7 +25090,7 @@ glabel inc_curplayer_hitcount_with_weapon
 /* 09F228 7F06A6F8 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 09F22C 7F06A6FC AFBF0014 */  sw    $ra, 0x14($sp)
 /* 09F230 7F06A700 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 09F234 7F06A704 0FC1782D */  jal   check_special_attributes
+/* 09F234 7F06A704 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 09F238 7F06A708 3C050001 */   lui   $a1, 1
 /* 09F23C 7F06A70C 10400008 */  beqz  $v0, .L7F06A730
 /* 09F240 7F06A710 3C0E8008 */   lui   $t6, %hi(pPlayersPerm) 

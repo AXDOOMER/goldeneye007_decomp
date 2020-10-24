@@ -6,6 +6,7 @@
 #include "bondconstants.h"
 #include "game/lvl_text.h"
 #include "game/bondinv.h"
+#include "game/bondwalk.h"
 
 void reinit_BONDdata_inventory(void) {
 
@@ -453,7 +454,7 @@ s32 check_if_item_for_hand_available(ITEM_IDS item,int hand)
 #ifdef VERSION_US
     if (((pPlayer->equipallguns && (item < ITEM_BOMBCASE)) && 
      (item == hand)) && ((get_num_players() == 1 && 
-     (check_special_attributes(item,0x100000) != 0)))) 
+     (bondwalkItemCheckBitflags(item,0x100000) != 0)))) 
     {
         return 1;
     }
@@ -468,7 +469,7 @@ s32 check_if_item_for_hand_available(ITEM_IDS item,int hand)
     {
         if ((((pPlayer->equipallguns != 0) && (item < ITEM_BOMBCASE)) &&
          (item == hand)) && (((get_num_players() == 1 &&
-         (check_special_attributes(item,0x100000) != 0)) &&
+         (bondwalkItemCheckBitflags(item,0x100000) != 0)) &&
          ((j_text_trigger == 0 || (item != ITEM_KNIFE))))))
         {
             return 1;
@@ -910,7 +911,7 @@ glabel sub_GAME_7F08C86C
 /* 0C14E8 7F08C9B8 8FAF0028 */   lw    $t7, 0x28($sp)
 /* 0C14EC 7F08C9BC 8FAA0028 */  lw    $t2, 0x28($sp)
 /* 0C14F0 7F08C9C0 3C050010 */  lui   $a1, 0x10
-/* 0C14F4 7F08C9C4 0FC1782D */  jal   check_special_attributes
+/* 0C14F4 7F08C9C4 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 0C14F8 7F08C9C8 8D440000 */   lw    $a0, ($t2)
 /* 0C14FC 7F08C9CC 50400018 */  beql  $v0, $zero, .L7F08CA30
 /* 0C1500 7F08C9D0 8FAF0028 */   lw    $t7, 0x28($sp)
@@ -1107,7 +1108,7 @@ glabel sub_GAME_7F08C86C
 /* 0C1E1C 7F08D2AC 14410023 */  bne   $v0, $at, .Ljp7F08D33C
 /* 0C1E20 7F08D2B0 8FAA0028 */   lw    $t2, 0x28($sp)
 /* 0C1E24 7F08D2B4 8D440000 */  lw    $a0, ($t2)
-/* 0C1E28 7F08D2B8 0FC17975 */  jal   check_special_attributes
+/* 0C1E28 7F08D2B8 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 0C1E2C 7F08D2BC 3C050010 */   lui   $a1, 0x10
 /* 0C1E30 7F08D2C0 5040001F */  beql  $v0, $zero, .Ljp7F08D340
 /* 0C1E34 7F08D2C4 8FB80028 */   lw    $t8, 0x28($sp)
@@ -1375,7 +1376,7 @@ glabel sub_GAME_7F08CB10
 /* 0C1824 7F08CCF4 24010001 */  li    $at, 1
 /* 0C1828 7F08CCF8 14410052 */  bne   $v0, $at, .L7F08CE44
 /* 0C182C 7F08CCFC 02002025 */   move  $a0, $s0
-/* 0C1830 7F08CD00 0FC1782D */  jal   check_special_attributes
+/* 0C1830 7F08CD00 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 0C1834 7F08CD04 3C050010 */   lui   $a1, 0x10
 /* 0C1838 7F08CD08 5040004F */  beql  $v0, $zero, .L7F08CE48
 /* 0C183C 7F08CD0C 8FAE0028 */   lw    $t6, 0x28($sp)
@@ -1414,7 +1415,7 @@ glabel sub_GAME_7F08CB10
 /* 0C18B0 7F08CD80 24010001 */  li    $at, 1
 /* 0C18B4 7F08CD84 14410010 */  bne   $v0, $at, .L7F08CDC8
 /* 0C18B8 7F08CD88 02002025 */   move  $a0, $s0
-/* 0C18BC 7F08CD8C 0FC1782D */  jal   check_special_attributes
+/* 0C18BC 7F08CD8C 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 0C18C0 7F08CD90 3C050010 */   lui   $a1, 0x10
 /* 0C18C4 7F08CD94 1040000C */  beqz  $v0, .L7F08CDC8
 /* 0C18C8 7F08CD98 8FA80028 */   lw    $t0, 0x28($sp)
@@ -1628,7 +1629,7 @@ glabel sub_GAME_7F08CB10
 /* 0C2194 7F08D624 24010001 */  li    $at, 1
 /* 0C2198 7F08D628 1441005F */  bne   $v0, $at, .Ljp7F08D7A8
 /* 0C219C 7F08D62C 02002025 */   move  $a0, $s0
-/* 0C21A0 7F08D630 0FC17975 */  jal   check_special_attributes
+/* 0C21A0 7F08D630 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 0C21A4 7F08D634 3C050010 */   lui   $a1, 0x10
 /* 0C21A8 7F08D638 5040005C */  beql  $v0, $zero, .Ljp7F08D7AC
 /* 0C21AC 7F08D63C 8FB80028 */   lw    $t8, 0x28($sp)
@@ -1682,7 +1683,7 @@ glabel sub_GAME_7F08CB10
 /* 0C2254 7F08D6E4 24010001 */  li    $at, 1
 /* 0C2258 7F08D6E8 14410010 */  bne   $v0, $at, .Ljp7F08D72C
 /* 0C225C 7F08D6EC 02002025 */   move  $a0, $s0
-/* 0C2260 7F08D6F0 0FC17975 */  jal   check_special_attributes
+/* 0C2260 7F08D6F0 0FC17975 */  jal   bondwalkItemCheckBitflags
 /* 0C2264 7F08D6F4 3C050010 */   lui   $a1, 0x10
 /* 0C2268 7F08D6F8 1040000C */  beqz  $v0, .Ljp7F08D72C
 /* 0C226C 7F08D6FC 8FAA0028 */   lw    $t2, 0x28($sp)
@@ -3368,7 +3369,7 @@ glabel sub_GAME_7F08D9EC
 /* 0C2528 7F08D9F8 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 0C252C 7F08D9FC AFB10018 */  sw    $s1, 0x18($sp)
 /* 0C2530 7F08DA00 00808825 */  move  $s1, $a0
-/* 0C2534 7F08DA04 0FC1782D */  jal   check_special_attributes
+/* 0C2534 7F08DA04 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 0C2538 7F08DA08 3C050002 */   lui   $a1, 2
 /* 0C253C 7F08DA0C 10400039 */  beqz  $v0, .L7F08DAF4
 /* 0C2540 7F08DA10 3C067FFF */   lui   $a2, (0x7FFFFFFF >> 16) # lui $a2, 0x7fff
@@ -3376,7 +3377,7 @@ glabel sub_GAME_7F08D9EC
 /* 0C2548 7F08DA18 AFA60024 */  sw    $a2, 0x24($sp)
 /* 0C254C 7F08DA1C 02002025 */  move  $a0, $s0
 /* 0C2550 7F08DA20 3C050002 */  lui   $a1, 2
-/* 0C2554 7F08DA24 0FC1782D */  jal   check_special_attributes
+/* 0C2554 7F08DA24 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 0C2558 7F08DA28 AFA00020 */   sw    $zero, 0x20($sp)
 /* 0C255C 7F08DA2C 8FA60024 */  lw    $a2, 0x24($sp)
 /* 0C2560 7F08DA30 14400002 */  bnez  $v0, .L7F08DA3C

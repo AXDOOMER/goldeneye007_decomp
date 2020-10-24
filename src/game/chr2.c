@@ -719,7 +719,7 @@ glabel check_if_item_held_like_pistol
 /* 058448 7F023918 AFBF0014 */   sw    $ra, 0x14($sp)
 /* 05844C 7F02391C 8C820004 */  lw    $v0, 4($a0)
 /* 058450 7F023920 24050100 */  li    $a1, 256
-/* 058454 7F023924 0FC1782D */  jal   check_special_attributes
+/* 058454 7F023924 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 058458 7F023928 80440080 */   lb    $a0, 0x80($v0)
 /* 05845C 7F02392C 10000003 */  b     .L7F02393C
 /* 058460 7F023930 8FBF0014 */   lw    $ra, 0x14($sp)

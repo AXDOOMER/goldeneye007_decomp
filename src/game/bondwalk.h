@@ -2,6 +2,7 @@
 #define _BONDWALK_H_
 #include "ultra64.h"
 #include "game/chrobjdata.h"
+#include "bondconstants.h"
 
 struct weapon_stats
 {
@@ -65,5 +66,6 @@ struct ejected_cart {
 };
 
 f32 bondwalkGetItemField68(ITEM_IDS item);
+u32 bondwalkItemCheckBitflags(ITEM_IDS item, u32 mask);
 
 #endif

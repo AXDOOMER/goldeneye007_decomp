@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "game/chr.h"
+#include "game/bondwalk.h"
 
 // data
 f32 animation_rate = 0;
@@ -7363,7 +7364,7 @@ glabel is_weapon_in_guarddata_hand
 /* 057B88 7F023058 8C620004 */  lw    $v0, 4($v1)
 /* 057B8C 7F02305C 24050200 */  li    $a1, 512
 /* 057B90 7F023060 80440080 */  lb    $a0, 0x80($v0)
-/* 057B94 7F023064 0FC1782D */  jal   check_special_attributes
+/* 057B94 7F023064 0FC1782D */  jal   bondwalkItemCheckBitflags
 /* 057B98 7F023068 AFA3001C */   sw    $v1, 0x1c($sp)
 /* 057B9C 7F02306C 14400002 */  bnez  $v0, .L7F023078
 /* 057BA0 7F023070 8FA3001C */   lw    $v1, 0x1c($sp)
