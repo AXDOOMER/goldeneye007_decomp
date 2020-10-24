@@ -3283,7 +3283,7 @@ Linker script and memory map
                 0x000000007f05fb00                sub_GAME_7F05FB00
                 0x000000007f05fb64                sub_GAME_7F05FB64
                 0x000000007f05ffc8                handles_firing_or_throwing_weapon_in_hand
-                0x000000007f061920                sub_GAME_7F061920
+                0x000000007f061920                bondwalkFireBothHands
                 0x000000007f061948                sub_GAME_7F061948
                 0x000000007f061bf4                sub_GAME_7F061BF4
                 0x000000007f061e18                sub_GAME_7F061E18

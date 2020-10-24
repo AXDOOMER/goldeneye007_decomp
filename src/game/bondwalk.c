@@ -9332,26 +9332,13 @@ weapon_bullet_type_shotgun_mine:
 #endif
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F061920(void) {
 
+void bondwalkFireBothHands(void)
+{
+    handles_firing_or_throwing_weapon_in_hand(RIGHT_HAND);
+    handles_firing_or_throwing_weapon_in_hand(LEFT_HAND);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F061920
-/* 096450 7F061920 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 096454 7F061924 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 096458 7F061928 0FC17FF2 */  jal   handles_firing_or_throwing_weapon_in_hand
-/* 09645C 7F06192C 00002025 */   move  $a0, $zero
-/* 096460 7F061930 0FC17FF2 */  jal   handles_firing_or_throwing_weapon_in_hand
-/* 096464 7F061934 24040001 */   li    $a0, 1
-/* 096468 7F061938 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09646C 7F06193C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 096470 7F061940 03E00008 */  jr    $ra
-/* 096474 7F061944 00000000 */   nop   
-)
-#endif
+
 
 
 

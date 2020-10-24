@@ -30631,7 +30631,7 @@ glabel maybe_mp_interface
 /* 0BDDA0 7F089270 10000110 */  b     .L7F0896B4
 /* 0BDDA4 7F089274 8FBF001C */   lw    $ra, 0x1c($sp)
 .L7F089278:
-/* 0BDDA8 7F089278 0FC18648 */  jal   sub_GAME_7F061920
+/* 0BDDA8 7F089278 0FC18648 */  jal   bondwalkFireBothHands
 /* 0BDDAC 7F08927C 00000000 */   nop   
 /* 0BDDB0 7F089280 0FC1A423 */  jal   sub_GAME_7F06908C
 /* 0BDDB4 7F089284 27A40058 */   addiu $a0, $sp, 0x58

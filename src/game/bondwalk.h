@@ -68,4 +68,6 @@ struct ejected_cart {
 f32 bondwalkGetItemField68(ITEM_IDS item);
 u32 bondwalkItemCheckBitflags(ITEM_IDS item, u32 mask);
 
+void bondwalkFireBothHands(void);
+
 #endif
