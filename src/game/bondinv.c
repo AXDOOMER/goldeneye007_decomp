@@ -206,49 +206,26 @@ s32 get_BONDdata_allguns_flag(void) {
 }
 
 
+struct invitem *get_ptr_inventory_item(ITEM_IDS weapon) {
 
+    struct invitem *first = pPlayer->ptr_inventory_first_in_cycle;
+    struct invitem *item = first;
 
+    while (item) {
 
+        if (item->type == INVITEMTYPE_WEAP && item->right == weapon) {
+            return item;
+        }
 
-#ifdef NONMATCHING
-void get_ptr_inventory_item(ITEM_IDS item) {
+        item = item->next;
 
+        if (item == first) {
+            break;
+        }
+    }
+
+    return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_ptr_inventory_item
-/* 0C0DEC 7F08C2BC 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0C0DF0 7F08C2C0 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0C0DF4 7F08C2C4 24050001 */  li    $a1, 1
-/* 0C0DF8 7F08C2C8 8DC211E0 */  lw    $v0, 0x11e0($t6)
-/* 0C0DFC 7F08C2CC 1040000E */  beqz  $v0, .L7F08C308
-/* 0C0E00 7F08C2D0 00401825 */   move  $v1, $v0
-/* 0C0E04 7F08C2D4 8C6F0000 */  lw    $t7, ($v1)
-.L7F08C2D8:
-/* 0C0E08 7F08C2D8 54AF0007 */  bnel  $a1, $t7, .L7F08C2F8
-/* 0C0E0C 7F08C2DC 8C63000C */   lw    $v1, 0xc($v1)
-/* 0C0E10 7F08C2E0 8C780004 */  lw    $t8, 4($v1)
-/* 0C0E14 7F08C2E4 54980004 */  bnel  $a0, $t8, .L7F08C2F8
-/* 0C0E18 7F08C2E8 8C63000C */   lw    $v1, 0xc($v1)
-/* 0C0E1C 7F08C2EC 03E00008 */  jr    $ra
-/* 0C0E20 7F08C2F0 00601025 */   move  $v0, $v1
-
-/* 0C0E24 7F08C2F4 8C63000C */  lw    $v1, 0xc($v1)
-.L7F08C2F8:
-/* 0C0E28 7F08C2F8 50620004 */  beql  $v1, $v0, .L7F08C30C
-/* 0C0E2C 7F08C2FC 00001025 */   move  $v0, $zero
-/* 0C0E30 7F08C300 5460FFF5 */  bnezl $v1, .L7F08C2D8
-/* 0C0E34 7F08C304 8C6F0000 */   lw    $t7, ($v1)
-.L7F08C308:
-/* 0C0E38 7F08C308 00001025 */  move  $v0, $zero
-.L7F08C30C:
-/* 0C0E3C 7F08C30C 03E00008 */  jr    $ra
-/* 0C0E40 7F08C310 00000000 */   nop   
-)
-#endif
-
-
 
 
 /**
