@@ -23,7 +23,6 @@ void reinit_BONDdata_inventory(void) {
     pPlayer->field_11F0 = 0;
 }
 
-
 #ifdef NONMATCHING
 void sub_GAME_7F08C054(void) {
 
