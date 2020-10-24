@@ -11,27 +11,17 @@
 void reinit_BONDdata_inventory(void) {
 
     s32 i;
-    s32 itementry;
-    
-    i = 0;
-    
-    if (pPlayer->equipmaxitems > 0)
-    {
-        itementry = 0;
 
-        do {
-            i = i + 1;
-            *(int *)(pPlayer->p_itemcur + itementry) = -1;
-            itementry = itementry + 0x14;
+    for (i=0; i < pPlayer->equipmaxitems; i++) {
+        
+        pPlayer->p_itemcur[i].type = -1;
 
-        } while (i < pPlayer->equipmaxitems);
     }
-
+    
     pPlayer->ptr_inventory_first_in_cycle = 0;
     pPlayer->field_11F4 = 0;
     pPlayer->field_11F0 = 0;
 }
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F08C054(void) {
@@ -500,15 +490,15 @@ int add_item_to_inventory(ITEM_IDS item)
 #ifdef VERSION_JP
         if  ((!j_text_trigger || (item != ITEM_KNIFE)))
         {
-            return 0;
+            return FALSE;
         }
 #else
-            return 0;
+            return FALSE;
 #endif
         }
-        return 1;
+        return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
 
