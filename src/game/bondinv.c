@@ -412,17 +412,17 @@ int add_item_to_inventory(ITEM_IDS item)
 
 int add_doubles_item_to_inventory(int right, int left)
 {
-    int *nextslot;
+    struct invitem *item;
   
     if (is_item_for_hand_in_inventory(right, left) == 0) {
     
-        nextslot = (int *)get_ptr_next_available_weapon();
+        item = get_ptr_next_available_weapon();
     
-        if (nextslot) {
-            *nextslot = INVITEMTYPE_DUAL;
-            nextslot[1] = right;
-            nextslot[2] = left;
-            add_additional_weapon_slot_to_player_inventory_guess(nextslot);
+        if (item) {
+            item->type = INVITEMTYPE_DUAL;
+            item->right = right;
+            item->left = left;
+            add_additional_weapon_slot_to_player_inventory_guess(item);
         }
 
         return TRUE;
