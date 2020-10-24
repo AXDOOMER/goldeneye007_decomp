@@ -490,15 +490,15 @@ int add_item_to_inventory(ITEM_IDS item)
 #ifdef VERSION_JP
         if  ((!j_text_trigger || (item != ITEM_KNIFE)))
         {
-            return 0;
+            return FALSE;
         }
 #else
-            return 0;
+            return FALSE;
 #endif
         }
-        return 1;
+        return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
 
