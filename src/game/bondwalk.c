@@ -2953,8 +2953,16 @@ glabel sub_GAME_7F05DCB8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05DCE8(void) {
-
+f32 sub_GAME_7F05DCE8(HANDEDNESS hand)
+{
+  if (hand == RIGHT_HAND) 
+  {
+    return get_ptr_item_statistics(return_ammo_in_hand(RIGHT_HAND))->pos_x;
+  }
+  else 
+  {
+    return -get_ptr_item_statistics(return_ammo_in_hand(LEFT_HAND))->pos_x;
+  }
 }
 #else
 GLOBAL_ASM(
@@ -2990,8 +2998,12 @@ glabel sub_GAME_7F05DCE8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05DD38(void) {
-
+struct weapon_stats *sub_GAME_7F05DD38(void)
+{
+  	if ((return_ammo_in_hand(RIGHT_HAND) != AMMO_GRENADEROUND) && (return_ammo_in_hand(RIGHT_HAND) != AMMO_TANK))
+	{
+    	return get_ptr_item_statistics(return_ammo_in_hand(RIGHT_HAND));
+  	}
 }
 #else
 GLOBAL_ASM(
@@ -3035,8 +3047,27 @@ glabel sub_GAME_7F05DD38
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05DDA4(void) {
-
+void camera_sniper_zoom(f32 zoom)
+{
+  if (return_ammo_in_hand(RIGHT_HAND) == ITEM_SNIPERRIFLE) 
+  {
+    pPlayer->sniper_zoom *= (zoom * 0.1f + 1.0f);
+    if (pPlayer->sniper_zoom > 60.0f) 
+	{
+      pPlayer->sniper_zoom = 60.0f;
+    }
+  }
+  else 
+  {
+    if (return_ammo_in_hand(RIGHT_HAND) == ITEM_CAMERA)
+	{
+       pPlayer->camera_zoom *= (zoom * 0.1f + 1.0f);
+       if (pPlayer->camera_zoom > 60.0f)
+	   {
+          pPlayer->camera_zoom = 60.0f;
+       }
+	}
+  }
 }
 #else
 GLOBAL_ASM(
@@ -3046,7 +3077,7 @@ glabel D_80053C24
 glabel D_80053C28
 .word 0x3dcccccd /*0.1*/
 .text
-glabel sub_GAME_7F05DDA4
+glabel camera_sniper_zoom
 /* 0928D4 7F05DDA4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0928D8 7F05DDA8 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0928DC 7F05DDAC E7AC0018 */  swc1  $f12, 0x18($sp)
@@ -3118,8 +3149,26 @@ glabel sub_GAME_7F05DDA4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05DE94(void) {
-
+void sub_GAME_7F05DE94(float param_1)
+{
+  if (return_ammo_in_hand(HAND_RIGHT) == ITEM_SNIPERRIFLE) 
+  {
+    pPlayer->sniper_zoom = pPlayer->sniper_zoom / (param_1 * 0.10000000 + 1.00000000);
+    if (pPlayer->sniper_zoom < 7.00000000)
+	{
+      pPlayer->sniper_zoom = 7.00000000;
+    }
+  }
+  else 
+  {
+    if ((return_ammo_in_hand(HAND_RIGHT) == ITEM_CAMERA) &&
+       (pPlayer->camera_zoom = pPlayer->camera_zoom / (param_1 * 0.10000000 + 1.00000000),
+       pPlayer->camera_zoom < 7.00000000))
+	{
+      pPlayer->camera_zoom = 7.00000000;
+    }
+  }
+  return;
 }
 #else
 GLOBAL_ASM(
@@ -3200,25 +3249,10 @@ glabel sub_GAME_7F05DE94
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F05DF84(void) {
-
+f32 bondwalkGetItemDestructionAmount(ITEM_IDS item)
+{
+  return get_ptr_item_statistics(item)->destruction_amount;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05DF84
-/* 092AB4 7F05DF84 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 092AB8 7F05DF88 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 092ABC 7F05DF8C 0FC1722D */  jal   get_ptr_item_statistics
-/* 092AC0 7F05DF90 00000000 */   nop   
-/* 092AC4 7F05DF94 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 092AC8 7F05DF98 C440002C */  lwc1  $f0, 0x2c($v0)
-/* 092ACC 7F05DF9C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 092AD0 7F05DFA0 03E00008 */  jr    $ra
-/* 092AD4 7F05DFA4 00000000 */   nop   
-)
-#endif
 
 
 

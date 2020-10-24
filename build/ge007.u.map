@@ -3254,9 +3254,9 @@ Linker script and memory map
                 0x000000007f05dcb8                sub_GAME_7F05DCB8
                 0x000000007f05dce8                sub_GAME_7F05DCE8
                 0x000000007f05dd38                sub_GAME_7F05DD38
-                0x000000007f05dda4                sub_GAME_7F05DDA4
+                0x000000007f05dda4                camera_sniper_zoom
                 0x000000007f05de94                sub_GAME_7F05DE94
-                0x000000007f05df84                sub_GAME_7F05DF84
+                0x000000007f05df84                bondwalkGetItemDestructionAmount
                 0x000000007f05dfa8                sub_GAME_7F05DFA8
                 0x000000007f05dfcc                get_automatic_firing_rate
                 0x000000007f05dff0                get_sound_trigger_rate

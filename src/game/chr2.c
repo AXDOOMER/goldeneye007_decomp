@@ -5353,7 +5353,7 @@ glabel handles_shot_actors
 /* 05BF58 7F027428 24010005 */   li    $at, 5
 /* 05BF5C 7F02742C 504100F0 */  beql  $v0, $at, .L7F0277F0
 /* 05BF60 7F027430 24020001 */   li    $v0, 1
-/* 05BF64 7F027434 0FC177E1 */  jal   sub_GAME_7F05DF84
+/* 05BF64 7F027434 0FC177E1 */  jal   bondwalkGetItemDestructionAmount
 /* 05BF68 7F027438 8FA40074 */   lw    $a0, 0x74($sp)
 /* 05BF6C 7F02743C 8FAD0078 */  lw    $t5, 0x78($sp)
 /* 05BF70 7F027440 46000086 */  mov.s $f2, $f0
@@ -13429,7 +13429,7 @@ glabel sub_GAME_7F02D2E4
 /* 0620B4 7F02D584 00000000 */  nop   
 /* 0620B8 7F02D588 45020026 */  bc1fl .L7F02D624
 /* 0620BC 7F02D58C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0620C0 7F02D590 0FC177E1 */  jal   sub_GAME_7F05DF84
+/* 0620C0 7F02D590 0FC177E1 */  jal   bondwalkGetItemDestructionAmount
 /* 0620C4 7F02D594 00000000 */   nop   
 /* 0620C8 7F02D598 0FC074C9 */  jal   get_007_damage_mod
 /* 0620CC 7F02D59C E7A00020 */   swc1  $f0, 0x20($sp)
@@ -13672,7 +13672,7 @@ glabel sub_GAME_7F02D2E4
 /* 0620B4 7F02D584 00000000 */  nop   
 /* 0620B8 7F02D588 45020026 */  bc1fl .L7F02D624
 /* 0620BC 7F02D58C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0620C0 7F02D590 0FC177E1 */  jal   sub_GAME_7F05DF84
+/* 0620C0 7F02D590 0FC177E1 */  jal   bondwalkGetItemDestructionAmount
 /* 0620C4 7F02D594 00000000 */   nop   
 /* 0620C8 7F02D598 0FC074C9 */  jal   get_007_damage_mod
 /* 0620CC 7F02D59C E7A00020 */   swc1  $f0, 0x20($sp)
@@ -14528,7 +14528,7 @@ glabel sub_GAME_7F02D734
 /* 062C7C 7F02E14C 54410014 */  bnel  $v0, $at, .L7F02E1A0
 /* 062C80 7F02E150 8FAC0264 */   lw    $t4, 0x264($sp)
 .L7F02E154:
-/* 062C84 7F02E154 0FC177E1 */  jal   sub_GAME_7F05DF84
+/* 062C84 7F02E154 0FC177E1 */  jal   bondwalkGetItemDestructionAmount
 /* 062C88 7F02E158 81240080 */   lb    $a0, 0x80($t1)
 /* 062C8C 7F02E15C 0FC26C54 */  jal   get_cur_playernum
 /* 062C90 7F02E160 E7A0004C */   swc1  $f0, 0x4c($sp)

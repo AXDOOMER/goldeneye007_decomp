@@ -19036,7 +19036,7 @@ glabel controller_gameplay_interaction
 /* 0B787C 7F082D4C 00000000 */  nop   
 /* 0B7880 7F082D50 45020004 */  bc1fl .L7F082D64
 /* 0B7884 7F082D54 C7A40160 */   lwc1  $f4, 0x160($sp)
-/* 0B7888 7F082D58 0FC17769 */  jal   sub_GAME_7F05DDA4
+/* 0B7888 7F082D58 0FC17769 */  jal   camera_sniper_zoom
 /* 0B788C 7F082D5C 46009306 */   mov.s $f12, $f18
 /* 0B7890 7F082D60 C7A40160 */  lwc1  $f4, 0x160($sp)
 .L7F082D64:
