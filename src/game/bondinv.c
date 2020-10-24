@@ -490,7 +490,7 @@ int add_item_to_inventory(ITEM_IDS item)
         nextslot = (int *)get_ptr_next_available_weapon();
         if (nextslot)
         {
-            *nextslot = 1;
+            *nextslot = INVITEMTYPE_WEAP;
             nextslot[1] = item;
             add_additional_weapon_slot_to_player_inventory_guess(nextslot);
         }
@@ -521,7 +521,7 @@ int add_doubles_item_to_inventory(int right, int left)
         nextslot = (int *)get_ptr_next_available_weapon();
     
         if (nextslot) {
-            *nextslot = 3;
+            *nextslot = INVITEMTYPE_DUAL;
             nextslot[1] = right;
             nextslot[2] = left;
             add_additional_weapon_slot_to_player_inventory_guess(nextslot);
@@ -680,14 +680,14 @@ glabel sub_GAME_7F08C61C
 
 
 
-int add_item_to_inventory_nocheck(int param_1) {
+int add_prop_to_inventory(PROPS prop) {
     int *nextslot;
 
     nextslot = (int *)get_ptr_next_available_weapon();
     
     if (nextslot) {
-        *nextslot = 2;
-        nextslot[1] = param_1;
+        *nextslot = INVITEMTYPE_PROP;
+        nextslot[1] = prop;
         add_additional_weapon_slot_to_player_inventory_guess(nextslot);
     }
 
