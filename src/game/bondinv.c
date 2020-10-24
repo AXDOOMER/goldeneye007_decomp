@@ -11,22 +11,13 @@
 void reinit_BONDdata_inventory(void) {
 
     s32 i;
-    s32 itementry;
-    
-    i = 0;
-    
-    if (pPlayer->equipmaxitems > 0)
-    {
-        itementry = 0;
 
-        do {
-            i = i + 1;
-            *(int *)(pPlayer->p_itemcur + itementry) = -1;
-            itementry = itementry + 0x14;
+    for (i=0; i < pPlayer->equipmaxitems; i++) {
+        
+        pPlayer->p_itemcur[i].type = -1;
 
-        } while (i < pPlayer->equipmaxitems);
     }
-
+    
     pPlayer->ptr_inventory_first_in_cycle = 0;
     pPlayer->field_11F4 = 0;
     pPlayer->field_11F0 = 0;
