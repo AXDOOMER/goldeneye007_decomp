@@ -512,51 +512,26 @@ int add_item_to_inventory(ITEM_IDS item)
 }
 
 
+int add_doubles_item_to_inventory(int right, int left)
+{
+    int *nextslot;
+  
+    if (is_item_for_hand_in_inventory(right, left) == 0) {
+    
+        nextslot = (int *)get_ptr_next_available_weapon();
+    
+        if (nextslot) {
+            *nextslot = 3;
+            nextslot[1] = right;
+            nextslot[2] = left;
+            add_additional_weapon_slot_to_player_inventory_guess(nextslot);
+        }
 
-
-
-
-
-#ifdef NONMATCHING
-void add_doubles_item_to_inventory(void) {
-
+        return TRUE;
+    } else {
+        return FALSE;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel add_doubles_item_to_inventory
-/* 0C103C 7F08C50C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C1040 7F08C510 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C1044 7F08C514 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0C1048 7F08C518 0FC230E7 */  jal   is_item_for_hand_in_inventory
-/* 0C104C 7F08C51C AFA5001C */   sw    $a1, 0x1c($sp)
-/* 0C1050 7F08C520 5440000F */  bnezl $v0, .L7F08C560
-/* 0C1054 7F08C524 00001025 */   move  $v0, $zero
-/* 0C1058 7F08C528 0FC23091 */  jal   get_ptr_next_available_weapon
-/* 0C105C 7F08C52C 00000000 */   nop   
-/* 0C1060 7F08C530 10400008 */  beqz  $v0, .L7F08C554
-/* 0C1064 7F08C534 00402025 */   move  $a0, $v0
-/* 0C1068 7F08C538 240E0003 */  li    $t6, 3
-/* 0C106C 7F08C53C AC4E0000 */  sw    $t6, ($v0)
-/* 0C1070 7F08C540 8FAF0018 */  lw    $t7, 0x18($sp)
-/* 0C1074 7F08C544 AC4F0004 */  sw    $t7, 4($v0)
-/* 0C1078 7F08C548 8FB8001C */  lw    $t8, 0x1c($sp)
-/* 0C107C 7F08C54C 0FC23065 */  jal   add_additional_weapon_slot_to_player_inventory_guess
-/* 0C1080 7F08C550 AC580008 */   sw    $t8, 8($v0)
-.L7F08C554:
-/* 0C1084 7F08C554 10000002 */  b     .L7F08C560
-/* 0C1088 7F08C558 24020001 */   li    $v0, 1
-/* 0C108C 7F08C55C 00001025 */  move  $v0, $zero
-.L7F08C560:
-/* 0C1090 7F08C560 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C1094 7F08C564 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C1098 7F08C568 03E00008 */  jr    $ra
-/* 0C109C 7F08C56C 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
