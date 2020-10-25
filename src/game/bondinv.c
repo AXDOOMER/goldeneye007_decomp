@@ -129,168 +129,68 @@ glabel sub_GAME_7F08C054
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void add_additional_weapon_slot_to_player_inventory_guess(int *param_1) {
-  int iVar1;
+void add_additional_weapon_slot_to_player_inventory_guess(struct invitem *item) {
   
-    iVar1 = pPlayer->ptr_inventory_first_in_cycle;
-    
-    if (iVar1) {
-        param_1[3] = iVar1;
-        param_1[4] = *(int *)(pPlayer->ptr_inventory_first_in_cycle + 0x10);
-        *(int **)(iVar1 + 0x10) = param_1;
-        *(int **)(param_1[4] + 0xc) = param_1;
+  if (pPlayer->ptr_inventory_first_in_cycle) {
+        
+        item->next = pPlayer->ptr_inventory_first_in_cycle;
+        item->prev = pPlayer->ptr_inventory_first_in_cycle->prev;
+
+        item->next->prev = item;
+        item->prev->next = item;
+
     }
     else {
-        *(int **)(param_1 + 3) = param_1;
-        *(int **)(param_1 + 4) = param_1;
+        item->next = item;
+        item->prev = item;
     }
 
-    *(int **)&pPlayer->ptr_inventory_first_in_cycle = param_1;
-    proc_7F08C054(param_1);
+    pPlayer->ptr_inventory_first_in_cycle = item;
+    sub_GAME_7F08C054(item);
     return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel add_additional_weapon_slot_to_player_inventory_guess
-/* 0C0CC4 7F08C194 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 0C0CC8 7F08C198 2463A0B0 */  addiu $v1, %lo(pPlayer) # addiu $v1, $v1, -0x5f50
-/* 0C0CCC 7F08C19C 8C6E0000 */  lw    $t6, ($v1)
-/* 0C0CD0 7F08C1A0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C0CD4 7F08C1A4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C0CD8 7F08C1A8 8DC211E0 */  lw    $v0, 0x11e0($t6)
-/* 0C0CDC 7F08C1AC 5040000B */  beql  $v0, $zero, .L7F08C1DC
-/* 0C0CE0 7F08C1B0 AC84000C */   sw    $a0, 0xc($a0)
-/* 0C0CE4 7F08C1B4 AC82000C */  sw    $v0, 0xc($a0)
-/* 0C0CE8 7F08C1B8 8C6F0000 */  lw    $t7, ($v1)
-/* 0C0CEC 7F08C1BC 8DF811E0 */  lw    $t8, 0x11e0($t7)
-/* 0C0CF0 7F08C1C0 8F190010 */  lw    $t9, 0x10($t8)
-/* 0C0CF4 7F08C1C4 AC990010 */  sw    $t9, 0x10($a0)
-/* 0C0CF8 7F08C1C8 AC440010 */  sw    $a0, 0x10($v0)
-/* 0C0CFC 7F08C1CC 8C890010 */  lw    $t1, 0x10($a0)
-/* 0C0D00 7F08C1D0 10000003 */  b     .L7F08C1E0
-/* 0C0D04 7F08C1D4 AD24000C */   sw    $a0, 0xc($t1)
-/* 0C0D08 7F08C1D8 AC84000C */  sw    $a0, 0xc($a0)
-.L7F08C1DC:
-/* 0C0D0C 7F08C1DC AC840010 */  sw    $a0, 0x10($a0)
-.L7F08C1E0:
-/* 0C0D10 7F08C1E0 8C6A0000 */  lw    $t2, ($v1)
-/* 0C0D14 7F08C1E4 0FC23015 */  jal   sub_GAME_7F08C054
-/* 0C0D18 7F08C1E8 AD4411E0 */   sw    $a0, 0x11e0($t2)
-/* 0C0D1C 7F08C1EC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C0D20 7F08C1F0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C0D24 7F08C1F4 03E00008 */  jr    $ra
-/* 0C0D28 7F08C1F8 00000000 */   nop   
-)
-#endif
 
 
+void reorder_inventory_ptrs_based_on_id_code(struct invitem *item) {
 
-
-
-#ifdef NONMATCHING
-void reorder_inventory_ptrs_based_on_id_code(void) {
-
-}
-#else
-GLOBAL_ASM(
-.text
-glabel reorder_inventory_ptrs_based_on_id_code
-/* 0C0D2C 7F08C1FC 3C068008 */  lui   $a2, %hi(pPlayer)
-/* 0C0D30 7F08C200 8CC6A0B0 */  lw    $a2, %lo(pPlayer)($a2)
-/* 0C0D34 7F08C204 8C83000C */  lw    $v1, 0xc($a0)
-/* 0C0D38 7F08C208 8C850010 */  lw    $a1, 0x10($a0)
-/* 0C0D3C 7F08C20C 8CCE11E0 */  lw    $t6, 0x11e0($a2)
-/* 0C0D40 7F08C210 240FFFFF */  li    $t7, -1
-/* 0C0D44 7F08C214 00601025 */  move  $v0, $v1
-/* 0C0D48 7F08C218 548E0007 */  bnel  $a0, $t6, .L7F08C238
-/* 0C0D4C 7F08C21C AC450010 */   sw    $a1, 0x10($v0)
-/* 0C0D50 7F08C220 54830004 */  bnel  $a0, $v1, .L7F08C234
-/* 0C0D54 7F08C224 ACC311E0 */   sw    $v1, 0x11e0($a2)
-/* 0C0D58 7F08C228 10000002 */  b     .L7F08C234
-/* 0C0D5C 7F08C22C ACC011E0 */   sw    $zero, 0x11e0($a2)
-/* 0C0D60 7F08C230 ACC311E0 */  sw    $v1, 0x11e0($a2)
-.L7F08C234:
-/* 0C0D64 7F08C234 AC450010 */  sw    $a1, 0x10($v0)
-.L7F08C238:
-/* 0C0D68 7F08C238 ACA2000C */  sw    $v0, 0xc($a1)
-/* 0C0D6C 7F08C23C 03E00008 */  jr    $ra
-/* 0C0D70 7F08C240 AC8F0000 */   sw    $t7, ($a0)
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-int get_ptr_next_available_weapon(void)
-
-{
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int *piVar4;
+    struct invitem *prev;
+    struct invitem *next;
   
-  iVar2 = 0;
-  if (0 < pPlayer->equipmaxitems) {
-    iVar3 = 0;
-    piVar4 = (int *)pPlayer->p_itemcur;
-    do {
-      iVar1 = *piVar4;
-      iVar2 = iVar2 + 1;
-      piVar4 = piVar4 + 5;
-      if (iVar1 == -1) {
-        return (int)(int *)pPlayer->p_itemcur + iVar3;
-      }
-      iVar3 = iVar3 + 0x14;
-    } while (iVar2 < pPlayer->equipmaxitems);
-  }
-  return 0;
+    next = item->next;
+    prev = item->prev;
+
+    if (item == pPlayer->ptr_inventory_first_in_cycle) {
+    
+        if (item == item->next) {
+            pPlayer->ptr_inventory_first_in_cycle = NULL;
+        }
+        else {
+            pPlayer->ptr_inventory_first_in_cycle = item->next;
+        }
+    }
+  
+    next->prev = prev;
+    prev->next = next; 
+    item->type = -1;
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_ptr_next_available_weapon
-/* 0C0D74 7F08C244 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 0C0D78 7F08C248 8C63A0B0 */  lw    $v1, %lo(pPlayer)($v1)
-/* 0C0D7C 7F08C24C 00001025 */  move  $v0, $zero
-/* 0C0D80 7F08C250 8C6411E8 */  lw    $a0, 0x11e8($v1)
-/* 0C0D84 7F08C254 5880000F */  blezl $a0, .L7F08C294
-/* 0C0D88 7F08C258 00001025 */   move  $v0, $zero
-/* 0C0D8C 7F08C25C 8C6511E4 */  lw    $a1, 0x11e4($v1)
-/* 0C0D90 7F08C260 2403FFFF */  li    $v1, -1
-/* 0C0D94 7F08C264 00003025 */  move  $a2, $zero
-/* 0C0D98 7F08C268 00A03825 */  move  $a3, $a1
-.L7F08C26C:
-/* 0C0D9C 7F08C26C 8CEE0000 */  lw    $t6, ($a3)
-/* 0C0DA0 7F08C270 24420001 */  addiu $v0, $v0, 1
-/* 0C0DA4 7F08C274 0044082A */  slt   $at, $v0, $a0
-/* 0C0DA8 7F08C278 146E0003 */  bne   $v1, $t6, .L7F08C288
-/* 0C0DAC 7F08C27C 24E70014 */   addiu $a3, $a3, 0x14
-/* 0C0DB0 7F08C280 03E00008 */  jr    $ra
-/* 0C0DB4 7F08C284 00A61021 */   addu  $v0, $a1, $a2
 
-.L7F08C288:
-/* 0C0DB8 7F08C288 1420FFF8 */  bnez  $at, .L7F08C26C
-/* 0C0DBC 7F08C28C 24C60014 */   addiu $a2, $a2, 0x14
-/* 0C0DC0 7F08C290 00001025 */  move  $v0, $zero
-.L7F08C294:
-/* 0C0DC4 7F08C294 03E00008 */  jr    $ra
-/* 0C0DC8 7F08C298 00000000 */   nop   
-)
-#endif
+struct invitem *get_ptr_next_available_weapon(void)
+{
+    int i;
 
+    for (i = 0; i < pPlayer->equipmaxitems; i++) {
+        if (pPlayer->p_itemcur[i].type == -1) {
+            return &pPlayer->p_itemcur[i];
+        }
+    }
 
-
+    return NULL;
+}
 
 
 void set_BONDdata_allguns_flag(s32 param_1) {
-  pPlayer->equipallguns = param_1;
+    pPlayer->equipallguns = param_1;
 }
 
 s32 get_BONDdata_allguns_flag(void) {
@@ -298,49 +198,26 @@ s32 get_BONDdata_allguns_flag(void) {
 }
 
 
+struct invitem *get_ptr_inventory_item(ITEM_IDS weapon) {
 
+    struct invitem *first = pPlayer->ptr_inventory_first_in_cycle;
+    struct invitem *item = first;
 
+    while (item) {
 
+        if (item->type == INVITEMTYPE_WEAP && item->right == weapon) {
+            return item;
+        }
 
-#ifdef NONMATCHING
-void get_ptr_inventory_item(ITEM_IDS item) {
+        item = item->next;
 
+        if (item == first) {
+            break;
+        }
+    }
+
+    return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_ptr_inventory_item
-/* 0C0DEC 7F08C2BC 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0C0DF0 7F08C2C0 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0C0DF4 7F08C2C4 24050001 */  li    $a1, 1
-/* 0C0DF8 7F08C2C8 8DC211E0 */  lw    $v0, 0x11e0($t6)
-/* 0C0DFC 7F08C2CC 1040000E */  beqz  $v0, .L7F08C308
-/* 0C0E00 7F08C2D0 00401825 */   move  $v1, $v0
-/* 0C0E04 7F08C2D4 8C6F0000 */  lw    $t7, ($v1)
-.L7F08C2D8:
-/* 0C0E08 7F08C2D8 54AF0007 */  bnel  $a1, $t7, .L7F08C2F8
-/* 0C0E0C 7F08C2DC 8C63000C */   lw    $v1, 0xc($v1)
-/* 0C0E10 7F08C2E0 8C780004 */  lw    $t8, 4($v1)
-/* 0C0E14 7F08C2E4 54980004 */  bnel  $a0, $t8, .L7F08C2F8
-/* 0C0E18 7F08C2E8 8C63000C */   lw    $v1, 0xc($v1)
-/* 0C0E1C 7F08C2EC 03E00008 */  jr    $ra
-/* 0C0E20 7F08C2F0 00601025 */   move  $v0, $v1
-
-/* 0C0E24 7F08C2F4 8C63000C */  lw    $v1, 0xc($v1)
-.L7F08C2F8:
-/* 0C0E28 7F08C2F8 50620004 */  beql  $v1, $v0, .L7F08C30C
-/* 0C0E2C 7F08C2FC 00001025 */   move  $v0, $zero
-/* 0C0E30 7F08C300 5460FFF5 */  bnezl $v1, .L7F08C2D8
-/* 0C0E34 7F08C304 8C6F0000 */   lw    $t7, ($v1)
-.L7F08C308:
-/* 0C0E38 7F08C308 00001025 */  move  $v0, $zero
-.L7F08C30C:
-/* 0C0E3C 7F08C30C 03E00008 */  jr    $ra
-/* 0C0E40 7F08C310 00000000 */   nop   
-)
-#endif
-
-
 
 
 /**
@@ -414,12 +291,6 @@ int is_item_for_hand_in_inventory(ITEM_IDS item, int hand)
     return (get_ptr_inventory_for_item_in_hand(item, hand) != 0);
 }
 
-
-
-
-
-
-
 int check_if_item_available(ITEM_IDS weaponid)
 {    
 
@@ -473,16 +344,16 @@ s32 check_if_item_for_hand_available(ITEM_IDS item,int hand)
 
 int add_item_to_inventory(ITEM_IDS item)
 {
-    int *nextslot;
+    struct invitem *nextItem;
   
     if (is_weapon_in_inv(item) == 0)
     {
-        nextslot = (int *)get_ptr_next_available_weapon();
-        if (nextslot)
+        nextItem = get_ptr_next_available_weapon();
+        if (nextItem)
         {
-            *nextslot = 1;
-            nextslot[1] = item;
-            add_additional_weapon_slot_to_player_inventory_guess(nextslot);
+            nextItem->type = INVITEMTYPE_WEAP;
+            nextItem->right = item;
+            add_additional_weapon_slot_to_player_inventory_guess(nextItem);
         }
 
         if ((pPlayer->equipallguns) && (item < ITEM_BOMBCASE))
@@ -502,51 +373,26 @@ int add_item_to_inventory(ITEM_IDS item)
 }
 
 
+int add_doubles_item_to_inventory(int right, int left)
+{
+    struct invitem *item;
+  
+    if (is_item_for_hand_in_inventory(right, left) == 0) {
+    
+        item = get_ptr_next_available_weapon();
+    
+        if (item) {
+            item->type = INVITEMTYPE_DUAL;
+            item->right = right;
+            item->left = left;
+            add_additional_weapon_slot_to_player_inventory_guess(item);
+        }
 
-
-
-
-
-#ifdef NONMATCHING
-void add_doubles_item_to_inventory(void) {
-
+        return TRUE;
+    } else {
+        return FALSE;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel add_doubles_item_to_inventory
-/* 0C103C 7F08C50C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C1040 7F08C510 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C1044 7F08C514 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0C1048 7F08C518 0FC230E7 */  jal   is_item_for_hand_in_inventory
-/* 0C104C 7F08C51C AFA5001C */   sw    $a1, 0x1c($sp)
-/* 0C1050 7F08C520 5440000F */  bnezl $v0, .L7F08C560
-/* 0C1054 7F08C524 00001025 */   move  $v0, $zero
-/* 0C1058 7F08C528 0FC23091 */  jal   get_ptr_next_available_weapon
-/* 0C105C 7F08C52C 00000000 */   nop   
-/* 0C1060 7F08C530 10400008 */  beqz  $v0, .L7F08C554
-/* 0C1064 7F08C534 00402025 */   move  $a0, $v0
-/* 0C1068 7F08C538 240E0003 */  li    $t6, 3
-/* 0C106C 7F08C53C AC4E0000 */  sw    $t6, ($v0)
-/* 0C1070 7F08C540 8FAF0018 */  lw    $t7, 0x18($sp)
-/* 0C1074 7F08C544 AC4F0004 */  sw    $t7, 4($v0)
-/* 0C1078 7F08C548 8FB8001C */  lw    $t8, 0x1c($sp)
-/* 0C107C 7F08C54C 0FC23065 */  jal   add_additional_weapon_slot_to_player_inventory_guess
-/* 0C1080 7F08C550 AC580008 */   sw    $t8, 8($v0)
-.L7F08C554:
-/* 0C1084 7F08C554 10000002 */  b     .L7F08C560
-/* 0C1088 7F08C558 24020001 */   li    $v0, 1
-/* 0C108C 7F08C55C 00001025 */  move  $v0, $zero
-.L7F08C560:
-/* 0C1090 7F08C560 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C1094 7F08C564 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C1098 7F08C568 03E00008 */  jr    $ra
-/* 0C109C 7F08C56C 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -695,18 +541,19 @@ glabel sub_GAME_7F08C61C
 
 
 
-int sub_GAME_7F08C724(int param_1) {
-    int *piVar1;
-
-    piVar1 = (int *)get_ptr_next_available_weapon();
+int add_prop_to_inventory(PROPS prop) {
     
-    if (piVar1) {
-        *piVar1 = 2;
-        piVar1[1] = param_1;
-        add_additional_weapon_slot_to_player_inventory_guess(piVar1);
+    struct invitem *item;
+
+    item = get_ptr_next_available_weapon();
+    
+    if (item) {
+        item->type = INVITEMTYPE_PROP;
+        item->right = prop;
+        add_additional_weapon_slot_to_player_inventory_guess(item);
     }
 
-    return 1;
+    return TRUE;
 }
 
 
@@ -1870,7 +1717,7 @@ s32 bondinvIsAliveWithFlag(void)
  */
 int checkforgoldengun(void) 
 {
-  return is_weapon_in_inv(ITEM_GOLDENGUN);
+    return is_weapon_in_inv(ITEM_GOLDENGUN);
 }
 
 
@@ -3261,10 +3108,6 @@ int sub_GAME_7F08D8C0(void) {
 void sub_GAME_7F08D8D0(int param) {
     pPlayer->field_11F0 = param;
 }
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F08D8E0(void) {

@@ -14,8 +14,8 @@ struct xyzpoint
 struct invitem {
     s32 type;
 
-    s32 unk1;
-    s32 unk2;
+    s32 right;
+    s32 left;
 
     struct invitem *next;
     struct invitem *prev;
@@ -1154,7 +1154,7 @@ struct Player
   f32 aspect;
   s32 hudmessoff;
   s32 bondmesscnt;
-  s32 ptr_inventory_first_in_cycle;
+  struct invitem *ptr_inventory_first_in_cycle;
   struct invitem *p_itemcur;
   s32 equipmaxitems;
   s32 equipallguns;
