@@ -19320,71 +19320,24 @@ f32 get_lateral_position_solo_watch_menu_main_page_for_item(ITEM_IDS item)
 }
 
 
-
-
-
-
-#ifdef NONMATCHING
-void get_depth_on_solo_watch_menu_page_for_item(void) {
-
+f32 get_depth_on_solo_watch_menu_page_for_item(ITEM_IDS item)
+{
+  return gitem_structs[item].watch_pos_z;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_depth_on_solo_watch_menu_page_for_item
-/* 09BB0C 7F066FDC 000470C0 */  sll   $t6, $a0, 3
-/* 09BB10 7F066FE0 01C47023 */  subu  $t6, $t6, $a0
-/* 09BB14 7F066FE4 000E70C0 */  sll   $t6, $t6, 3
-/* 09BB18 7F066FE8 3C018003 */  lui   $at, %hi(gitem_structs+28)
-/* 09BB1C 7F066FEC 002E0821 */  addu  $at, $at, $t6
-/* 09BB20 7F066FF0 03E00008 */  jr    $ra
-/* 09BB24 7F066FF4 C4203940 */   lwc1  $f0, %lo(gitem_structs+28)($at)
-)
-#endif
 
 
+f32 get_xrotation_solo_watch_menu_for_item(ITEM_IDS item)
 
-
-
-#ifdef NONMATCHING
-void get_zrotation_solo_watch_menu_for_item(void) {
-
+{
+  return gitem_structs[item].x_rotation;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_zrotation_solo_watch_menu_for_item
-/* 09BB28 7F066FF8 000470C0 */  sll   $t6, $a0, 3
-/* 09BB2C 7F066FFC 01C47023 */  subu  $t6, $t6, $a0
-/* 09BB30 7F067000 000E70C0 */  sll   $t6, $t6, 3
-/* 09BB34 7F067004 3C018003 */  lui   $at, %hi(gitem_structs+32)
-/* 09BB38 7F067008 002E0821 */  addu  $at, $at, $t6
-/* 09BB3C 7F06700C 03E00008 */  jr    $ra
-/* 09BB40 7F067010 C4203944 */   lwc1  $f0, %lo(gitem_structs+32)($at)
-)
-#endif
 
 
-
-
-
-#ifdef NONMATCHING
-void get_xrotation_solo_watch_menu_for_item(void) {
-
+f32 get_yrotation_solo_watch_menu_for_item(ITEM_IDS item)
+{
+  return gitem_structs[item].y_rotation;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_xrotation_solo_watch_menu_for_item
-/* 09BB44 7F067014 000470C0 */  sll   $t6, $a0, 3
-/* 09BB48 7F067018 01C47023 */  subu  $t6, $t6, $a0
-/* 09BB4C 7F06701C 000E70C0 */  sll   $t6, $t6, 3
-/* 09BB50 7F067020 3C018003 */  lui   $at, %hi(gitem_structs+36)
-/* 09BB54 7F067024 002E0821 */  addu  $at, $at, $t6
-/* 09BB58 7F067028 03E00008 */  jr    $ra
-/* 09BB5C 7F06702C C4203948 */   lwc1  $f0, %lo(gitem_structs+36)($at)
-)
-#endif
+
 
 
 

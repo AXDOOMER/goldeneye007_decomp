@@ -3073,7 +3073,7 @@ int sub_GAME_7F08D828(int param) {
 
 
 int sub_GAME_7F08D850(int param) {
-    return get_zrotation_solo_watch_menu_for_item(sub_GAME_7F08D2A8(param));
+    return get_xrotation_solo_watch_menu_for_item(sub_GAME_7F08D2A8(param));
 }
 
 
@@ -3081,7 +3081,7 @@ int sub_GAME_7F08D850(int param) {
 
 
 int sub_GAME_7F08D878(int param) {
-    return get_xrotation_solo_watch_menu_for_item(sub_GAME_7F08D2A8(param));
+    return get_yrotation_solo_watch_menu_for_item(sub_GAME_7F08D2A8(param));
 }
 
 
