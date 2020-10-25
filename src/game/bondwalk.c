@@ -2928,7 +2928,8 @@ glabel get_hands_firing_status
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05DCB8(void) {
+f32 sub_GAME_7F05DCB8(HANDEDNESS hand)
+{
 
 }
 #else
@@ -20141,7 +20142,15 @@ void sub_GAME_7F067AA4(s32 param_1)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F067AB4(void) {
+void sub_GAME_7F067AB4(struct xyzpoint *param_1)
+{
+  pPlayer->field_A38.x = sub_GAME_7F05DCB8(0) + param_1->x;
+  pPlayer->field_A38.y = param_1->y;
+  pPlayer->field_A38.z = param_1->z;
+
+  pPlayer->field_DE0.x = sub_GAME_7F05DCB8(1) + param_1->x;
+  pPlayer->field_DE0.y = param_1->y;
+  pPlayer->field_DE0.z = param_1->z;
 
 }
 #else

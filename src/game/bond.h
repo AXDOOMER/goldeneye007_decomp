@@ -664,9 +664,9 @@ struct Player
   s32 field_A2C;
   f32 field_A30;
   s32 field_A34;
-  s32 field_A38;
-  s32 field_A3C;
-  s32 field_A40;
+  f32 field_A38;
+  f32 field_A3C;
+  f32 field_A40;
   s32 field_A44;
   s32 field_A48;
   s32 field_A4C;
@@ -898,9 +898,9 @@ struct Player
   s32 field_DD4;
   f32 field_DD8;
   s32 field_DDC;
-  s32 field_DE0;
-  s32 field_DE4;
-  s32 field_DE8;
+  f32 field_DE0;
+  f32 field_DE4;
+  f32 field_DE8;
   s32 field_DEC;
   s32 field_DF0;
   s32 field_DF4;
