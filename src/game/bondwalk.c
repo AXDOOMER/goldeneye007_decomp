@@ -2277,8 +2277,8 @@ void sub_GAME_7F05D650(int param_1)
 
 void sub_GAME_7F05D690(void)
 {
-    draw_item_in_hand_has_more_ammo(0,pPlayer->hands[RIGHT_HAND].previous_weapon);
-    draw_item_in_hand_has_more_ammo(1,pPlayer->hands[LEFT_HAND].previous_weapon);
+    draw_item_in_hand_has_more_ammo(RIGHT_HAND, pPlayer->hands[RIGHT_HAND].previous_weapon);
+    draw_item_in_hand_has_more_ammo(LEFT_HAND, pPlayer->hands[LEFT_HAND].previous_weapon);
 }
 
 
@@ -2544,40 +2544,11 @@ glabel autoadvance_on_deplete_all_ammo
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
-void draw_item_in_hand_has_more_ammo(void) {
-
+s32 draw_item_in_hand_has_more_ammo(HANDEDNESS hand, s32 next_weapon) {
+    pPlayer->hands[hand].weapon_current_animation = 5;
+    pPlayer->hands[hand].weapon_next_weapon = next_weapon;
+    pPlayer->hands[hand].weapon_animation_trigger = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel draw_item_in_hand_has_more_ammo
-/* 092444 7F05D914 000410C0 */  sll   $v0, $a0, 3
-/* 092448 7F05D918 00441023 */  subu  $v0, $v0, $a0
-/* 09244C 7F05D91C 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 092450 7F05D920 00021080 */  sll   $v0, $v0, 2
-/* 092454 7F05D924 2463A0B0 */  addiu $v1, %lo(pPlayer) # addiu $v1, $v1, -0x5f50
-/* 092458 7F05D928 00441021 */  addu  $v0, $v0, $a0
-/* 09245C 7F05D92C 8C6F0000 */  lw    $t7, ($v1)
-/* 092460 7F05D930 00021080 */  sll   $v0, $v0, 2
-/* 092464 7F05D934 00441021 */  addu  $v0, $v0, $a0
-/* 092468 7F05D938 000210C0 */  sll   $v0, $v0, 3
-/* 09246C 7F05D93C 240E0005 */  li    $t6, 5
-/* 092470 7F05D940 01E2C021 */  addu  $t8, $t7, $v0
-/* 092474 7F05D944 AF0E0898 */  sw    $t6, 0x898($t8)
-/* 092478 7F05D948 8C790000 */  lw    $t9, ($v1)
-/* 09247C 7F05D94C 03224021 */  addu  $t0, $t9, $v0
-/* 092480 7F05D950 AD0508AC */  sw    $a1, 0x8ac($t0)
-/* 092484 7F05D954 8C690000 */  lw    $t1, ($v1)
-/* 092488 7F05D958 01225021 */  addu  $t2, $t1, $v0
-/* 09248C 7F05D95C 03E00008 */  jr    $ra
-/* 092490 7F05D960 AD4008B4 */   sw    $zero, 0x8b4($t2)
-)
-#endif
 
 void attempt_reload_item_in_hand(HANDEDNESS hand) {
     s32 ammo_type = get_ammo_type_for_weapon(get_item_in_hand(hand));
