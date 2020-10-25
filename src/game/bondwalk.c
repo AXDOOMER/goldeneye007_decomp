@@ -12501,8 +12501,21 @@ glabel sub_GAME_7F064364
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0643A0(void) {
-
+s32 sub_GAME_7F0643A0(void)
+{
+  if (dword_CODE_bss_80075DB8 == 0) {
+    return &dword_CODE_bss_80075DB8;
+  }
+  if (dword_CODE_bss_80075DBC == 0) {
+    return &dword_CODE_bss_80075DBC;
+  }
+  if (dword_CODE_bss_80075DC0 == 0) {
+    return &dword_CODE_bss_80075DC0;
+  }
+  if (dword_CODE_bss_80075DC4 == 0) {
+    return &dword_CODE_bss_80075DC4;
+  }
+  return 0x0;
 }
 #else
 GLOBAL_ASM(
@@ -13422,28 +13435,17 @@ glabel sub_GAME_7F064934
 #endif
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0649AC(void) {
-
+f32 sub_GAME_7F0649AC(s32 param_1)
+{
+  f32 fVar1;
+  
+  fVar1 = -60.0f;
+  if (param_1 == 0x19) {
+    fVar1 -= 20.0f;
+  }
+  return fVar1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0649AC
-/* 0994DC 7F0649AC 3C01C270 */  li    $at, 0xC2700000 # -60.000000
-/* 0994E0 7F0649B0 44810000 */  mtc1  $at, $f0
-/* 0994E4 7F0649B4 24010019 */  li    $at, 25
-/* 0994E8 7F0649B8 14810005 */  bne   $a0, $at, .L7F0649D0
-/* 0994EC 7F0649BC 46000086 */   mov.s $f2, $f0
-/* 0994F0 7F0649C0 3C0141A0 */  li    $at, 0x41A00000 # 20.000000
-/* 0994F4 7F0649C4 44812000 */  mtc1  $at, $f4
-/* 0994F8 7F0649C8 00000000 */  nop   
-/* 0994FC 7F0649CC 46040081 */  sub.s $f2, $f0, $f4
-.L7F0649D0:
-/* 099500 7F0649D0 03E00008 */  jr    $ra
-/* 099504 7F0649D4 46001006 */   mov.s $f0, $f2
-)
-#endif
+
 
 
 
