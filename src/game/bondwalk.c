@@ -2277,8 +2277,8 @@ void sub_GAME_7F05D650(int param_1)
 
 void sub_GAME_7F05D690(void)
 {
-    draw_item_in_hand_has_more_ammo(0,pPlayer->previous_right_weapon);
-    draw_item_in_hand_has_more_ammo(1,pPlayer->left_weapon_previous);
+    draw_item_in_hand_has_more_ammo(0,pPlayer->hands[0].previous_weapon);
+    draw_item_in_hand_has_more_ammo(1,pPlayer->hands[1].previous_weapon);
 }
 
 
@@ -2623,36 +2623,9 @@ glabel attempt_reload_item_in_hand
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_item_in_hand(void) {
-
+s32 get_item_in_hand(s32 hand) {
+    return pPlayer->hands[hand].weaponnum;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_item_in_hand
-/* 092500 7F05D9D0 000478C0 */  sll   $t7, $a0, 3
-/* 092504 7F05D9D4 01E47823 */  subu  $t7, $t7, $a0
-/* 092508 7F05D9D8 000F7880 */  sll   $t7, $t7, 2
-/* 09250C 7F05D9DC 01E47821 */  addu  $t7, $t7, $a0
-/* 092510 7F05D9E0 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 092514 7F05D9E4 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 092518 7F05D9E8 000F7880 */  sll   $t7, $t7, 2
-/* 09251C 7F05D9EC 01E47821 */  addu  $t7, $t7, $a0
-/* 092520 7F05D9F0 000F78C0 */  sll   $t7, $t7, 3
-/* 092524 7F05D9F4 01CFC021 */  addu  $t8, $t6, $t7
-/* 092528 7F05D9F8 03E00008 */  jr    $ra
-/* 09252C 7F05D9FC 8F020870 */   lw    $v0, 0x870($t8)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void draw_item_in_hand(void) {
@@ -3702,8 +3675,8 @@ glabel sub_GAME_7F05E0E4
 
 void sub_GAME_7F05E5F0(f32 param_1)
 {
-    pPlayer->field_A30 = (1.0f - cosf(param_1)) * 5.0f;
-    pPlayer->field_DD8 = (1.0f - cosf(param_1)) * 5.0f;
+    pPlayer->hands[0].field_A30 = (1.0f - cosf(param_1)) * 5.0f;
+    pPlayer->hands[1].field_A30 = (1.0f - cosf(param_1)) * 5.0f;
 }
 
 
