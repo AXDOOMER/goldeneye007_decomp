@@ -19344,33 +19344,10 @@ f32 get_45_degree_angle(s32 unk) {
 }
 
 
-
-
-
-#ifdef NONMATCHING
-u16 get_ptr_first_title_line_item(ITEM_IDS item)
+u16 *get_ptr_first_title_line_item(ITEM_IDS item)
 {
   return get_textptr_for_textID(gitem_structs[item].upper_watch_text);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_ptr_first_title_line_item
-/* 09BB70 7F067040 000470C0 */  sll   $t6, $a0, 3
-/* 09BB74 7F067044 01C47023 */  subu  $t6, $t6, $a0
-/* 09BB78 7F067048 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09BB7C 7F06704C 000E70C0 */  sll   $t6, $t6, 3
-/* 09BB80 7F067050 3C048003 */  lui   $a0, %hi(gitem_structs+0x10)
-/* 09BB84 7F067054 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09BB88 7F067058 008E2021 */  addu  $a0, $a0, $t6
-/* 09BB8C 7F06705C 0FC30776 */  jal   get_textptr_for_textID
-/* 09BB90 7F067060 94843934 */   lhu   $a0, %lo(gitem_structs+0x10)($a0)
-/* 09BB94 7F067064 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09BB98 7F067068 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09BB9C 7F06706C 03E00008 */  jr    $ra
-/* 09BBA0 7F067070 00000000 */   nop   
-)
-#endif
 
 
 
