@@ -2690,50 +2690,21 @@ f32 sub_GAME_7F05DCB8(HANDEDNESS hand) {
 	return pPlayer->hands[hand].field_A34;
 }
 
-#ifdef NONMATCHING
 f32 sub_GAME_7F05DCE8(HANDEDNESS hand)
 {
-  if (hand == RIGHT_HAND) 
-  {
-    return get_ptr_item_statistics(get_item_in_hand_or_watch_menu(RIGHT_HAND))->pos_x;
-  }
-  else 
-  {
-    return -get_ptr_item_statistics(get_item_in_hand_or_watch_menu(LEFT_HAND))->pos_x;
-  }
+	f32 ret;
+
+	if (hand == RIGHT_HAND) 
+	{
+		ret = get_ptr_item_statistics(get_item_in_hand_or_watch_menu(RIGHT_HAND))->pos_x;
+	}
+	else 
+	{
+		ret = -get_ptr_item_statistics(get_item_in_hand_or_watch_menu(LEFT_HAND))->pos_x;
+	}
+
+	return ret;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05DCE8
-/* 092818 7F05DCE8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09281C 7F05DCEC 14800007 */  bnez  $a0, .L7F05DD0C
-/* 092820 7F05DCF0 AFBF0014 */   sw    $ra, 0x14($sp)
-/* 092824 7F05DCF4 0FC17691 */  jal   get_item_in_hand_or_watch_menu
-/* 092828 7F05DCF8 00002025 */   move  $a0, $zero
-/* 09282C 7F05DCFC 0FC1722D */  jal   get_ptr_item_statistics
-/* 092830 7F05DD00 00402025 */   move  $a0, $v0
-/* 092834 7F05DD04 10000007 */  b     .L7F05DD24
-/* 092838 7F05DD08 C4420004 */   lwc1  $f2, 4($v0)
-.L7F05DD0C:
-/* 09283C 7F05DD0C 0FC17691 */  jal   get_item_in_hand_or_watch_menu
-/* 092840 7F05DD10 24040001 */   li    $a0, 1
-/* 092844 7F05DD14 0FC1722D */  jal   get_ptr_item_statistics
-/* 092848 7F05DD18 00402025 */   move  $a0, $v0
-/* 09284C 7F05DD1C C4420004 */  lwc1  $f2, 4($v0)
-/* 092850 7F05DD20 46001087 */  neg.s $f2, $f2
-.L7F05DD24:
-/* 092854 7F05DD24 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 092858 7F05DD28 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09285C 7F05DD2C 46001006 */  mov.s $f0, $f2
-/* 092860 7F05DD30 03E00008 */  jr    $ra
-/* 092864 7F05DD34 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 struct weapon_stats *sub_GAME_7F05DD38(void)
