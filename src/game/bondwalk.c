@@ -2645,49 +2645,12 @@ void sub_GAME_7F05DA8C(HANDEDNESS hand, s32 weaponnum_watchmenu) {
 	pPlayer->hands[hand].weaponnum_watchmenu = weaponnum_watchmenu;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F05DAE4(void) {
-
+void sub_GAME_7F05DAE4(HANDEDNESS hand) {
+    if (pPlayer->hands[hand].weaponnum_watchmenu >= 0) {
+        place_item_in_hand_swap_and_make_visible(hand, pPlayer->hands[hand].weaponnum);
+		pPlayer->hands[hand].weaponnum_watchmenu = -1;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05DAE4
-/* 092614 7F05DAE4 000410C0 */  sll   $v0, $a0, 3
-/* 092618 7F05DAE8 00441023 */  subu  $v0, $v0, $a0
-/* 09261C 7F05DAEC 00021080 */  sll   $v0, $v0, 2
-/* 092620 7F05DAF0 00441021 */  addu  $v0, $v0, $a0
-/* 092624 7F05DAF4 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 092628 7F05DAF8 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 09262C 7F05DAFC 00021080 */  sll   $v0, $v0, 2
-/* 092630 7F05DB00 00441021 */  addu  $v0, $v0, $a0
-/* 092634 7F05DB04 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 092638 7F05DB08 000210C0 */  sll   $v0, $v0, 3
-/* 09263C 7F05DB0C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 092640 7F05DB10 01C21821 */  addu  $v1, $t6, $v0
-/* 092644 7F05DB14 8C6F0874 */  lw    $t7, 0x874($v1)
-/* 092648 7F05DB18 05E2000B */  bltzl $t7, .L7F05DB48
-/* 09264C 7F05DB1C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 092650 7F05DB20 8C650870 */  lw    $a1, 0x870($v1)
-/* 092654 7F05DB24 0FC173E9 */  jal   place_item_in_hand_swap_and_make_visible
-/* 092658 7F05DB28 AFA2001C */   sw    $v0, 0x1c($sp)
-/* 09265C 7F05DB2C 3C198008 */  lui   $t9, %hi(pPlayer) 
-/* 092660 7F05DB30 8FA2001C */  lw    $v0, 0x1c($sp)
-/* 092664 7F05DB34 8F39A0B0 */  lw    $t9, %lo(pPlayer)($t9)
-/* 092668 7F05DB38 2418FFFF */  li    $t8, -1
-/* 09266C 7F05DB3C 03224021 */  addu  $t0, $t9, $v0
-/* 092670 7F05DB40 AD180874 */  sw    $t8, 0x874($t0)
-/* 092674 7F05DB44 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F05DB48:
-/* 092678 7F05DB48 27BD0020 */  addiu $sp, $sp, 0x20
-/* 09267C 7F05DB4C 03E00008 */  jr    $ra
-/* 092680 7F05DB50 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void remove_hands_item(void) {
