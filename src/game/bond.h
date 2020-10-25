@@ -16,7 +16,10 @@ struct hand
   s32 weaponnum;
   s32 weaponnum_watchmenu;
   s32 previous_weapon;
-  s32 weapon_firing_status;
+  s8 weapon_firing_status;
+  s8 field_87D;
+  s8 field_87E;
+  s8 field_87F;
   s32 field_880;
   s32 field_884;
   s32 field_888;
