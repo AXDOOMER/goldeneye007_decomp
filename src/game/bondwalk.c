@@ -19310,25 +19310,11 @@ void sub_GAME_7F066F08(void)
 
 
 
-#ifdef NONMATCHING
-void get_vertical_position_solo_watch_menu_main_page_for_item(void) {
 
+f32 get_vertical_position_solo_watch_menu_main_page_for_item(int item)
+{
+  return gitem_structs[item].watch_pos_x;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_vertical_position_solo_watch_menu_main_page_for_item
-/* 09BAD4 7F066FA4 000470C0 */  sll   $t6, $a0, 3
-/* 09BAD8 7F066FA8 01C47023 */  subu  $t6, $t6, $a0
-/* 09BADC 7F066FAC 000E70C0 */  sll   $t6, $t6, 3
-/* 09BAE0 7F066FB0 3C018003 */  lui   $at, %hi(gitem_structs+20)
-/* 09BAE4 7F066FB4 002E0821 */  addu  $at, $at, $t6
-/* 09BAE8 7F066FB8 03E00008 */  jr    $ra
-/* 09BAEC 7F066FBC C4203938 */   lwc1  $f0, %lo(gitem_structs+20)($at)
-)
-#endif
-
-
 
 
 
