@@ -129,7 +129,7 @@ struct hand
   s32 field_A28;
   s32 field_A2C;
   f32 field_A30;
-  s32 field_A34;
+  f32 field_A34;
   s32 field_A38;
   s32 field_A3C;
   s32 field_A40;

@@ -2684,59 +2684,9 @@ s8 get_hands_firing_status(HANDEDNESS hand) {
     return pPlayer->hands[hand].weapon_firing_status;
 }
 
-// #ifdef NONMATCHING
-// void get_hands_firing_status(void) {
-
-// }
-// #else
-// GLOBAL_ASM(
-// .text
-// glabel get_hands_firing_status
-// /* 0927B8 7F05DC88 000478C0 */  sll   $t7, $a0, 3
-// /* 0927BC 7F05DC8C 01E47823 */  subu  $t7, $t7, $a0
-// /* 0927C0 7F05DC90 000F7880 */  sll   $t7, $t7, 2
-// /* 0927C4 7F05DC94 01E47821 */  addu  $t7, $t7, $a0
-// /* 0927C8 7F05DC98 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-// /* 0927CC 7F05DC9C 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-// /* 0927D0 7F05DCA0 000F7880 */  sll   $t7, $t7, 2
-// /* 0927D4 7F05DCA4 01E47821 */  addu  $t7, $t7, $a0
-// /* 0927D8 7F05DCA8 000F78C0 */  sll   $t7, $t7, 3
-// /* 0927DC 7F05DCAC 01CFC021 */  addu  $t8, $t6, $t7
-// /* 0927E0 7F05DCB0 03E00008 */  jr    $ra
-// /* 0927E4 7F05DCB4 8302087C */   lb    $v0, 0x87c($t8)
-// )
-// #endif
-
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F05DCB8(void) {
-
+f32 sub_GAME_7F05DCB8(HANDEDNESS hand) {
+	return pPlayer->hands[hand].field_A34;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05DCB8
-/* 0927E8 7F05DCB8 000478C0 */  sll   $t7, $a0, 3
-/* 0927EC 7F05DCBC 01E47823 */  subu  $t7, $t7, $a0
-/* 0927F0 7F05DCC0 000F7880 */  sll   $t7, $t7, 2
-/* 0927F4 7F05DCC4 01E47821 */  addu  $t7, $t7, $a0
-/* 0927F8 7F05DCC8 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0927FC 7F05DCCC 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 092800 7F05DCD0 000F7880 */  sll   $t7, $t7, 2
-/* 092804 7F05DCD4 01E47821 */  addu  $t7, $t7, $a0
-/* 092808 7F05DCD8 000F78C0 */  sll   $t7, $t7, 3
-/* 09280C 7F05DCDC 01CFC021 */  addu  $t8, $t6, $t7
-/* 092810 7F05DCE0 03E00008 */  jr    $ra
-/* 092814 7F05DCE4 C7000A34 */   lwc1  $f0, 0xa34($t8)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 f32 sub_GAME_7F05DCE8(HANDEDNESS hand)
