@@ -19287,7 +19287,6 @@ void sub_GAME_7F066E64(void)
 }
 
 
-
 #ifdef NONMATCHING
 void get_keyanalyzer_flag(void) {
 
