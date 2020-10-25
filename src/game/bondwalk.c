@@ -9,6 +9,7 @@
 
 #include "game/unk_093880.h"
 #include "music.h"
+#include "game/lvl.h"
 
 // bss
 s32 dword_CODE_bss_80075DB0;
@@ -19423,8 +19424,54 @@ glabel sub_GAME_7F067174
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0671A4(void) {
+void sub_GAME_7F0671A4(void)
 
+{
+  ITEM_IDS item;
+  ITEM_IDS item_00;
+  struct weapon_stats *pwVar2;
+  struct weapon_stats *pwVar3;
+
+  float fVar4;
+  float fVar5;
+  
+  item = get_item_in_hand(0);
+  item_00 = get_item_in_hand(1);
+  pwVar2 = get_ptr_item_statistics(item);
+  pwVar3 = get_ptr_item_statistics(item_00);
+  if ((item != ITEM_UNARMED) && (get_hands_firing_status(0) != 0)) {
+    *(float *)&pPlayer->noise = (float)pPlayer->noise + pwVar2->field_5C;
+    if (pwVar2->loudness2 < (float)pPlayer->noise) {
+      *(float *)&pPlayer->noise = pwVar2->loudness2;
+    }
+  }
+  if ((item_00 != ITEM_UNARMED) && (get_hands_firing_status(1) != 0)) {
+    *(float *)&pPlayer->field_E28 = (float)pPlayer->field_E28 + pwVar3->field_5C;
+    if (pwVar3->loudness2 < (float)pPlayer->field_E28) {
+      *(float *)&pPlayer->field_E28 = pwVar3->loudness2;
+    }
+  }
+  fVar5 = (pwVar2->field_5C * global_timer_delta) / (pwVar2->field_60 * 60.00000000);
+  fVar4 = (((float)pPlayer->noise - pwVar2->loudness) * global_timer_delta) /
+          (pwVar2->field_64 * 60.00000000);
+  if (fVar4 <= fVar5) {
+    fVar4 = fVar5;
+  }
+  *(float *)&pPlayer->noise = (float)pPlayer->noise - fVar4;
+  if ((float)pPlayer->noise < pwVar2->loudness) {
+    *(float *)&pPlayer->noise = pwVar2->loudness;
+  }
+  fVar5 = (pwVar3->field_5C * global_timer_delta) / (pwVar3->field_60 * 60.00000000);
+  fVar4 = (((float)pPlayer->field_E28 - pwVar3->loudness) * global_timer_delta) /
+          (pwVar3->field_64 * 60.00000000);
+  if (fVar4 <= fVar5) {
+    fVar4 = fVar5;
+  }
+  *(float *)&pPlayer->field_E28 = (float)pPlayer->field_E28 - fVar4;
+  if ((float)pPlayer->field_E28 < pwVar3->loudness) {
+    *(float *)&pPlayer->field_E28 = pwVar3->loudness;
+  }
+  return;
 }
 #else
 GLOBAL_ASM(
@@ -20083,20 +20130,11 @@ glabel sub_GAME_7F067420
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F067AA4(void) {
 
+void sub_GAME_7F067AA4(s32 param_1)
+{
+  pPlayer->field_FE4 = param_1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F067AA4
-/* 09C5D4 7F067AA4 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 09C5D8 7F067AA8 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 09C5DC 7F067AAC 03E00008 */  jr    $ra
-/* 09C5E0 7F067AB0 ADC40FE4 */   sw    $a0, 0xfe4($t6)
-)
-#endif
 
 
 
