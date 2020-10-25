@@ -2277,8 +2277,8 @@ void sub_GAME_7F05D650(int param_1)
 
 void sub_GAME_7F05D690(void)
 {
-    draw_item_in_hand_has_more_ammo(0,pPlayer->hands[0].previous_weapon);
-    draw_item_in_hand_has_more_ammo(1,pPlayer->hands[1].previous_weapon);
+    draw_item_in_hand_has_more_ammo(0,pPlayer->hands[RIGHT_HAND].previous_weapon);
+    draw_item_in_hand_has_more_ammo(1,pPlayer->hands[LEFT_HAND].previous_weapon);
 }
 
 
@@ -3675,8 +3675,8 @@ glabel sub_GAME_7F05E0E4
 
 void sub_GAME_7F05E5F0(f32 param_1)
 {
-    pPlayer->hands[0].field_A30 = (1.0f - cosf(param_1)) * 5.0f;
-    pPlayer->hands[1].field_A30 = (1.0f - cosf(param_1)) * 5.0f;
+    pPlayer->hands[RIGHT_HAND].field_A30 = (1.0f - cosf(param_1)) * 5.0f;
+    pPlayer->hands[LEFT_HAND].field_A30 = (1.0f - cosf(param_1)) * 5.0f;
 }
 
 
