@@ -19380,27 +19380,11 @@ f32 get_horizontal_offset_on_solo_watch_menu_for_item(ITEM_IDS item)
 }
 
 
-
-
-
-
-#ifdef NONMATCHING
-void get_vertical_offset_on_solo_watch_menu_for_item(void) {
-
+f32 get_vertical_offset_on_solo_watch_menu_for_item(ITEM_IDS item)
+{
+  return gitem_structs[item].equip_watch_y;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_vertical_offset_on_solo_watch_menu_for_item
-/* 09BC6C 7F06713C 000470C0 */  sll   $t6, $a0, 3
-/* 09BC70 7F067140 01C47023 */  subu  $t6, $t6, $a0
-/* 09BC74 7F067144 000E70C0 */  sll   $t6, $t6, 3
-/* 09BC78 7F067148 3C018003 */  lui   $at, %hi(gitem_structs+48)
-/* 09BC7C 7F06714C 002E0821 */  addu  $at, $at, $t6
-/* 09BC80 7F067150 03E00008 */  jr    $ra
-/* 09BC84 7F067154 C4203954 */   lwc1  $f0, %lo(gitem_structs+48)($at)
-)
-#endif
+
 
 
 
