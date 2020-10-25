@@ -19308,33 +19308,17 @@ void sub_GAME_7F066F08(void)
 }
 
 
-
-
-
-f32 get_vertical_position_solo_watch_menu_main_page_for_item(int item)
+f32 get_vertical_position_solo_watch_menu_main_page_for_item(ITEM_IDS item)
 {
   return gitem_structs[item].watch_pos_x;
 }
 
 
-
-#ifdef NONMATCHING
-void get_lateral_position_solo_watch_menu_main_page_for_item(void) {
-
+f32 get_lateral_position_solo_watch_menu_main_page_for_item(ITEM_IDS item)
+{
+  return gitem_structs[item].watch_pos_y;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_lateral_position_solo_watch_menu_main_page_for_item
-/* 09BAF0 7F066FC0 000470C0 */  sll   $t6, $a0, 3
-/* 09BAF4 7F066FC4 01C47023 */  subu  $t6, $t6, $a0
-/* 09BAF8 7F066FC8 000E70C0 */  sll   $t6, $t6, 3
-/* 09BAFC 7F066FCC 3C018003 */  lui   $at, %hi(gitem_structs+24)
-/* 09BB00 7F066FD0 002E0821 */  addu  $at, $at, $t6
-/* 09BB04 7F066FD4 03E00008 */  jr    $ra
-/* 09BB08 7F066FD8 C420393C */   lwc1  $f0, %lo(gitem_structs+24)($at)
-)
-#endif
+
 
 
 
