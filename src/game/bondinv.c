@@ -137,12 +137,12 @@ void add_additional_weapon_slot_to_player_inventory_guess(struct invitem *item) 
         item->prev = pPlayer->ptr_inventory_first_in_cycle->prev;
 
         item->next->prev = item;
-		item->prev->next = item;
+        item->prev->next = item;
 
     }
     else {
         item->next = item;
-		item->prev = item;
+        item->prev = item;
     }
 
     pPlayer->ptr_inventory_first_in_cycle = item;
@@ -153,47 +153,44 @@ void add_additional_weapon_slot_to_player_inventory_guess(struct invitem *item) 
 
 void reorder_inventory_ptrs_based_on_id_code(struct invitem *item) {
 
-  struct invitem *prev;
-  struct invitem *next;
+    struct invitem *prev;
+    struct invitem *next;
   
-  next = item->next;
-  prev = item->prev;
+    next = item->next;
+    prev = item->prev;
 
-  if (item == pPlayer->ptr_inventory_first_in_cycle) {
+    if (item == pPlayer->ptr_inventory_first_in_cycle) {
     
-    if (item == item->next) {
-        pPlayer->ptr_inventory_first_in_cycle = NULL;
-       
+        if (item == item->next) {
+            pPlayer->ptr_inventory_first_in_cycle = NULL;
+        }
+        else {
+            pPlayer->ptr_inventory_first_in_cycle = item->next;
+        }
     }
-    else {
-        pPlayer->ptr_inventory_first_in_cycle = item->next;
-     
-    }
-
-  }
   
-  next->prev = prev;
-  prev->next = next; 
-  item->type = -1;
-  return;
+    next->prev = prev;
+    prev->next = next; 
+    item->type = -1;
+    return;
 }
 
 struct invitem *get_ptr_next_available_weapon(void)
 {
     int i;
 
-	for (i = 0; i < pPlayer->equipmaxitems; i++) {
-		if (pPlayer->p_itemcur[i].type == -1) {
-			return &pPlayer->p_itemcur[i];
-		}
-	}
+    for (i = 0; i < pPlayer->equipmaxitems; i++) {
+        if (pPlayer->p_itemcur[i].type == -1) {
+            return &pPlayer->p_itemcur[i];
+        }
+    }
 
-	return NULL;
+    return NULL;
 }
 
 
 void set_BONDdata_allguns_flag(s32 param_1) {
-  pPlayer->equipallguns = param_1;
+    pPlayer->equipallguns = param_1;
 }
 
 s32 get_BONDdata_allguns_flag(void) {
@@ -293,12 +290,6 @@ int is_item_for_hand_in_inventory(ITEM_IDS item, int hand)
 {
     return (get_ptr_inventory_for_item_in_hand(item, hand) != 0);
 }
-
-
-
-
-
-
 
 int check_if_item_available(ITEM_IDS weaponid)
 {    
@@ -1726,7 +1717,7 @@ s32 bondinvIsAliveWithFlag(void)
  */
 int checkforgoldengun(void) 
 {
-  return is_weapon_in_inv(ITEM_GOLDENGUN);
+    return is_weapon_in_inv(ITEM_GOLDENGUN);
 }
 
 
@@ -3117,10 +3108,6 @@ int sub_GAME_7F08D8C0(void) {
 void sub_GAME_7F08D8D0(int param) {
     pPlayer->field_11F0 = param;
 }
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F08D8E0(void) {
