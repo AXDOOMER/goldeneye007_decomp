@@ -14,7 +14,7 @@ struct xyzpoint
 struct hand
 {
   s32 weaponnum;
-  s32 weapon_attack;
+  s32 weaponnum_watchmenu;
   s32 previous_weapon;
   s32 weapon_firing_status;
   s32 field_880;
