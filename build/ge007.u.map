@@ -1052,6 +1052,7 @@ Linker script and memory map
                 0x0000000004000980                func_04000980
                 0x0000000004000a40                func_04000A40
                 0x0000000004000ad0                func_04000AD0
+                0x0000000004000b70                ipl3_font
                 0x0000000004001000                _bootSegmentEnd = (ADDR (.boot) + SIZEOF (.boot))
                 0x0000000000001000                _bootSegmentRomEnd = (_bootSegmentRomStart + SIZEOF (.boot))
                 0x0000000080000400                _startSegmentStart = ADDR (.start)
@@ -3309,8 +3310,8 @@ Linker script and memory map
                 0x000000007f066fa4                get_vertical_position_solo_watch_menu_main_page_for_item
                 0x000000007f066fc0                get_lateral_position_solo_watch_menu_main_page_for_item
                 0x000000007f066fdc                get_depth_on_solo_watch_menu_page_for_item
-                0x000000007f066ff8                get_zrotation_solo_watch_menu_for_item
-                0x000000007f067014                get_xrotation_solo_watch_menu_for_item
+                0x000000007f066ff8                get_xrotation_solo_watch_menu_for_item
+                0x000000007f067014                get_yrotation_solo_watch_menu_for_item
                 0x000000007f067030                get_45_degree_angle
                 0x000000007f067040                get_ptr_first_title_line_item
                 0x000000007f067074                get_ptr_second_title_line_item
@@ -3330,7 +3331,7 @@ Linker script and memory map
                 0x000000007f067b94                caclulate_gun_crosshair_position_rotation
                 0x000000007f067f58                sub_GAME_7F067F58
                 0x000000007f067fbc                sub_GAME_7F067FBC
-                0x000000007f068008                sub_GAME_7F068008
+                0x000000007f068008                get_bullet_angle
                 0x000000007f06802c                sub_GAME_7F06802C
                 0x000000007f0680d4                sub_GAME_7F0680D4
                 0x000000007f068190                sub_GAME_7F068190
@@ -3781,7 +3782,7 @@ Linker script and memory map
                 0x000000007f08c50c                add_doubles_item_to_inventory
                 0x000000007f08c570                sub_GAME_7F08C570
                 0x000000007f08c61c                sub_GAME_7F08C61C
-                0x000000007f08c724                sub_GAME_7F08C724
+                0x000000007f08c724                add_prop_to_inventory
                 0x000000007f08c764                sub_GAME_7F08C764
                 0x000000007f08c86c                sub_GAME_7F08C86C
                 0x000000007f08cb10                sub_GAME_7F08CB10
