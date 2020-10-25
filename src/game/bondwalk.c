@@ -2706,54 +2706,15 @@ f32 sub_GAME_7F05DCE8(HANDEDNESS hand)
 	return ret;
 }
 
-#ifdef NONMATCHING
-struct weapon_stats *sub_GAME_7F05DD38(void)
-{
-  	if ((get_item_in_hand_or_watch_menu(RIGHT_HAND) != AMMO_GRENADEROUND) && (get_item_in_hand_or_watch_menu(RIGHT_HAND) != AMMO_TANK))
-	{
-    	return get_ptr_item_statistics(get_item_in_hand_or_watch_menu(RIGHT_HAND));
-  	}
+f32 get_item_in_hand_zoom(void) {
+    if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_SNIPERRIFLE) {
+        return pPlayer->sniper_zoom;
+    }
+    if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_CAMERA) {
+        return pPlayer->camera_zoom;
+    }
+    return get_ptr_item_statistics(get_item_in_hand_or_watch_menu(RIGHT_HAND))->zoom;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05DD38
-/* 092868 7F05DD38 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09286C 7F05DD3C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 092870 7F05DD40 0FC17691 */  jal   get_item_in_hand_or_watch_menu
-/* 092874 7F05DD44 00002025 */   move  $a0, $zero
-/* 092878 7F05DD48 24010011 */  li    $at, 17
-/* 09287C 7F05DD4C 14410004 */  bne   $v0, $at, .L7F05DD60
-/* 092880 7F05DD50 3C0E8008 */   lui   $t6, %hi(pPlayer) 
-/* 092884 7F05DD54 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 092888 7F05DD58 1000000E */  b     .L7F05DD94
-/* 09288C 7F05DD5C C5C01084 */   lwc1  $f0, 0x1084($t6)
-.L7F05DD60:
-/* 092890 7F05DD60 0FC17691 */  jal   get_item_in_hand_or_watch_menu
-/* 092894 7F05DD64 00002025 */   move  $a0, $zero
-/* 092898 7F05DD68 24010028 */  li    $at, 40
-/* 09289C 7F05DD6C 14410004 */  bne   $v0, $at, .L7F05DD80
-/* 0928A0 7F05DD70 3C0F8008 */   lui   $t7, %hi(pPlayer) 
-/* 0928A4 7F05DD74 8DEFA0B0 */  lw    $t7, %lo(pPlayer)($t7)
-/* 0928A8 7F05DD78 10000006 */  b     .L7F05DD94
-/* 0928AC 7F05DD7C C5E01088 */   lwc1  $f0, 0x1088($t7)
-.L7F05DD80:
-/* 0928B0 7F05DD80 0FC17691 */  jal   get_item_in_hand_or_watch_menu
-/* 0928B4 7F05DD84 00002025 */   move  $a0, $zero
-/* 0928B8 7F05DD88 0FC1722D */  jal   get_ptr_item_statistics
-/* 0928BC 7F05DD8C 00402025 */   move  $a0, $v0
-/* 0928C0 7F05DD90 C4400034 */  lwc1  $f0, 0x34($v0)
-.L7F05DD94:
-/* 0928C4 7F05DD94 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0928C8 7F05DD98 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0928CC 7F05DD9C 03E00008 */  jr    $ra
-/* 0928D0 7F05DDA0 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void camera_sniper_zoom(f32 zoom)
