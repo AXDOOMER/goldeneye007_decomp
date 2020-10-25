@@ -19348,8 +19348,9 @@ f32 get_45_degree_angle(s32 unk) {
 
 
 #ifdef NONMATCHING
-void get_ptr_first_title_line_item(void) {
-
+u16 get_ptr_first_title_line_item(ITEM_IDS item)
+{
+  return get_textptr_for_textID(gitem_structs[item].upper_watch_text);
 }
 #else
 GLOBAL_ASM(
