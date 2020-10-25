@@ -19350,33 +19350,10 @@ u16 *get_ptr_first_title_line_item(ITEM_IDS item)
 }
 
 
-
-
-
-#ifdef NONMATCHING
-void get_ptr_second_title_line_item(void) {
-
+u16 *get_ptr_second_title_line_item(ITEM_IDS item)
+{
+    return get_textptr_for_textID(gitem_structs[item].lower_watch_text);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_ptr_second_title_line_item
-/* 09BBA4 7F067074 000470C0 */  sll   $t6, $a0, 3
-/* 09BBA8 7F067078 01C47023 */  subu  $t6, $t6, $a0
-/* 09BBAC 7F06707C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09BBB0 7F067080 000E70C0 */  sll   $t6, $t6, 3
-/* 09BBB4 7F067084 3C048003 */  lui   $a0, %hi(gitem_structs+0x12)
-/* 09BBB8 7F067088 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09BBBC 7F06708C 008E2021 */  addu  $a0, $a0, $t6
-/* 09BBC0 7F067090 0FC30776 */  jal   get_textptr_for_textID
-/* 09BBC4 7F067094 94843936 */   lhu   $a0, %lo(gitem_structs+0x12)($a0)
-/* 09BBC8 7F067098 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09BBCC 7F06709C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09BBD0 7F0670A0 03E00008 */  jr    $ra
-/* 09BBD4 7F0670A4 00000000 */   nop   
-)
-#endif
-
 
 
 
