@@ -19287,20 +19287,11 @@ void sub_GAME_7F066E64(void)
 }
 
 
-#ifdef NONMATCHING
-void get_keyanalyzer_flag(void) {
+int get_keyanalyzer_flag(void)
 
+{
+  return pPlayer->copiedgoldeneye;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_keyanalyzer_flag
-/* 09BA28 7F066EF8 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 09BA2C 7F066EFC 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 09BA30 7F066F00 03E00008 */  jr    $ra
-/* 09BA34 7F066F04 8DC21060 */   lw    $v0, 0x1060($t6)
-)
-#endif
 
 
 
