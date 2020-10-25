@@ -19294,59 +19294,18 @@ int get_keyanalyzer_flag(void)
 }
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F066F08(void) {
-
+void sub_GAME_7F066F08(void)
+{
+  add_ammo_to_inventory(AMMO_KNIFE,2,0,1);
+  add_ammo_to_inventory(AMMO_GRENADE,2,0,1);
+  add_item_to_inventory(ITEM_SNIPERRIFLE);
+  set_sound_effect_for_weapontype_collection(ITEM_SNIPERRIFLE);
+  display_text_for_weapon_in_lower_left_corner(ITEM_SNIPERRIFLE);
+  give_cur_player_ammo(GsniperrifleZ_stats.ammotype,check_cur_player_ammo_amount_in_inventory(GsniperrifleZ_stats.ammotype) + GsniperrifleZ_stats.mag_size);
+  sub_GAME_7F08C61C(0x2c);
+  draw_item_in_hand_has_more_ammo(RIGHT_HAND,ITEM_SNIPERRIFLE);
+  draw_item_in_hand_has_more_ammo(LEFT_HAND,ITEM_UNARMED);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F066F08
-/* 09BA38 7F066F08 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09BA3C 7F066F0C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09BA40 7F066F10 2404000A */  li    $a0, 10
-/* 09BA44 7F066F14 24050002 */  li    $a1, 2
-/* 09BA48 7F066F18 00003025 */  move  $a2, $zero
-/* 09BA4C 7F066F1C 0FC13E9A */  jal   add_ammo_to_inventory
-/* 09BA50 7F066F20 24070001 */   li    $a3, 1
-/* 09BA54 7F066F24 24040005 */  li    $a0, 5
-/* 09BA58 7F066F28 24050002 */  li    $a1, 2
-/* 09BA5C 7F066F2C 00003025 */  move  $a2, $zero
-/* 09BA60 7F066F30 0FC13E9A */  jal   add_ammo_to_inventory
-/* 09BA64 7F066F34 24070001 */   li    $a3, 1
-/* 09BA68 7F066F38 0FC23122 */  jal   add_item_to_inventory
-/* 09BA6C 7F066F3C 24040011 */   li    $a0, 17
-/* 09BA70 7F066F40 0FC13E04 */  jal   set_sound_effect_for_weapontype_collection
-/* 09BA74 7F066F44 24040011 */   li    $a0, 17
-/* 09BA78 7F066F48 0FC14089 */  jal   display_text_for_weapon_in_lower_left_corner
-/* 09BA7C 7F066F4C 24040011 */   li    $a0, 17
-/* 09BA80 7F066F50 3C048003 */  lui   $a0, %hi(GsniperrifleZ_stats+0x1C)
-/* 09BA84 7F066F54 0FC1A490 */  jal   check_cur_player_ammo_amount_in_inventory
-/* 09BA88 7F066F58 8C842C20 */   lw    $a0, %lo(GsniperrifleZ_stats+0x1C)($a0)
-/* 09BA8C 7F066F5C 3C038003 */  lui   $v1, %hi(GsniperrifleZ_stats)
-/* 09BA90 7F066F60 24632C04 */  addiu $v1, %lo(GsniperrifleZ_stats) # addiu $v1, $v1, 0x2c04
-/* 09BA94 7F066F64 846E0020 */  lh    $t6, 0x20($v1)
-/* 09BA98 7F066F68 8C64001C */  lw    $a0, 0x1c($v1)
-/* 09BA9C 7F066F6C 0FC1A44C */  jal   give_cur_player_ammo
-/* 09BAA0 7F066F70 004E2821 */   addu  $a1, $v0, $t6
-/* 09BAA4 7F066F74 0FC23187 */  jal   sub_GAME_7F08C61C
-/* 09BAA8 7F066F78 2404002C */   li    $a0, 44
-/* 09BAAC 7F066F7C 00002025 */  move  $a0, $zero
-/* 09BAB0 7F066F80 0FC17645 */  jal   draw_item_in_hand_has_more_ammo
-/* 09BAB4 7F066F84 24050011 */   li    $a1, 17
-/* 09BAB8 7F066F88 24040001 */  li    $a0, 1
-/* 09BABC 7F066F8C 0FC17645 */  jal   draw_item_in_hand_has_more_ammo
-/* 09BAC0 7F066F90 00002825 */   move  $a1, $zero
-/* 09BAC4 7F066F94 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09BAC8 7F066F98 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09BACC 7F066F9C 03E00008 */  jr    $ra
-/* 09BAD0 7F066FA0 00000000 */   nop   
-)
-#endif
-
 
 
 
