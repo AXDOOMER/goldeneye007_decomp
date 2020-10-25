@@ -3311,8 +3311,8 @@ Linker script and memory map
                 0x000000007f06757c                get_vertical_position_solo_watch_menu_main_page_for_item
                 0x000000007f067598                get_lateral_position_solo_watch_menu_main_page_for_item
                 0x000000007f0675b4                get_depth_on_solo_watch_menu_page_for_item
-                0x000000007f0675d0                get_zrotation_solo_watch_menu_for_item
-                0x000000007f0675ec                get_xrotation_solo_watch_menu_for_item
+                0x000000007f0675d0                get_xrotation_solo_watch_menu_for_item
+                0x000000007f0675ec                get_yrotation_solo_watch_menu_for_item
                 0x000000007f067608                get_45_degree_angle
                 0x000000007f067618                get_ptr_first_title_line_item
                 0x000000007f06764c                get_ptr_second_title_line_item
@@ -3332,7 +3332,7 @@ Linker script and memory map
                 0x000000007f06816c                caclulate_gun_crosshair_position_rotation
                 0x000000007f068530                sub_GAME_7F067F58
                 0x000000007f068594                sub_GAME_7F067FBC
-                0x000000007f0685e0                sub_GAME_7F068008
+                0x000000007f0685e0                get_bullet_angle
                 0x000000007f068604                sub_GAME_7F06802C
                 0x000000007f0686ac                sub_GAME_7F0680D4
                 0x000000007f068768                sub_GAME_7F068190
@@ -3783,7 +3783,7 @@ Linker script and memory map
                 0x000000007f08ce04                add_doubles_item_to_inventory
                 0x000000007f08ce68                sub_GAME_7F08C570
                 0x000000007f08cf14                sub_GAME_7F08C61C
-                0x000000007f08d01c                sub_GAME_7F08C724
+                0x000000007f08d01c                add_prop_to_inventory
                 0x000000007f08d05c                sub_GAME_7F08C764
                 0x000000007f08d164                sub_GAME_7F08C86C
                 0x000000007f08d43c                sub_GAME_7F08CB10

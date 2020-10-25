@@ -70,4 +70,6 @@ u32 bondwalkItemCheckBitflags(ITEM_IDS item, u32 mask);
 
 void bondwalkFireBothHands(void);
 
+f32 sub_GAME_7F0649AC(s32 param_1);
+
 #endif
