@@ -205,7 +205,7 @@ InvItem *get_ptr_inventory_item(ITEM_IDS weapon) {
 
     while (item) {
 
-        if (item->type == INVITEMTYPE_WEAP && item->right == weapon) {
+        if (item->type == INV_ITEM_WEAPON && item->right == weapon) {
             return item;
         }
 
@@ -351,7 +351,7 @@ int add_item_to_inventory(ITEM_IDS item)
         nextItem = get_ptr_next_available_weapon();
         if (nextItem)
         {
-            nextItem->type = INVITEMTYPE_WEAP;
+            nextItem->type = INV_ITEM_WEAPON;
             nextItem->right = item;
             add_additional_weapon_slot_to_player_inventory_guess(nextItem);
         }
@@ -382,7 +382,7 @@ int add_doubles_item_to_inventory(int right, int left)
         item = get_ptr_next_available_weapon();
     
         if (item) {
-            item->type = INVITEMTYPE_DUAL;
+            item->type = INV_ITEM_DUAL;
             item->right = right;
             item->left = left;
             add_additional_weapon_slot_to_player_inventory_guess(item);
@@ -548,7 +548,7 @@ int add_prop_to_inventory(PROPS prop) {
     item = get_ptr_next_available_weapon();
     
     if (item) {
-        item->type = INVITEMTYPE_PROP;
+        item->type = INV_ITEM_PROP;
         item->right = prop;
         add_additional_weapon_slot_to_player_inventory_guess(item);
     }
