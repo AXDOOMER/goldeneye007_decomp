@@ -2623,37 +2623,14 @@ glabel attempt_reload_item_in_hand
 )
 #endif
 
-s32 get_item_in_hand(s32 hand) {
+s32 get_item_in_hand(HANDEDNESS hand) {
     return pPlayer->hands[hand].weaponnum;
 }
 
-#ifdef NONMATCHING
-void draw_item_in_hand(void) {
-
+void draw_item_in_hand(HANDEDNESS hand, s32 next_weapon) {
+	pPlayer->hands[hand].weapon_current_animation = 0xE;
+	pPlayer->hands[hand].weapon_next_weapon = next_weapon;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel draw_item_in_hand
-/* 092530 7F05DA00 000410C0 */  sll   $v0, $a0, 3
-/* 092534 7F05DA04 00441023 */  subu  $v0, $v0, $a0
-/* 092538 7F05DA08 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 09253C 7F05DA0C 00021080 */  sll   $v0, $v0, 2
-/* 092540 7F05DA10 2463A0B0 */  addiu $v1, %lo(pPlayer) # addiu $v1, $v1, -0x5f50
-/* 092544 7F05DA14 00441021 */  addu  $v0, $v0, $a0
-/* 092548 7F05DA18 8C6F0000 */  lw    $t7, ($v1)
-/* 09254C 7F05DA1C 00021080 */  sll   $v0, $v0, 2
-/* 092550 7F05DA20 00441021 */  addu  $v0, $v0, $a0
-/* 092554 7F05DA24 000210C0 */  sll   $v0, $v0, 3
-/* 092558 7F05DA28 240E000E */  li    $t6, 14
-/* 09255C 7F05DA2C 01E2C021 */  addu  $t8, $t7, $v0
-/* 092560 7F05DA30 AF0E0898 */  sw    $t6, 0x898($t8)
-/* 092564 7F05DA34 8C790000 */  lw    $t9, ($v1)
-/* 092568 7F05DA38 03224021 */  addu  $t0, $t9, $v0
-/* 09256C 7F05DA3C 03E00008 */  jr    $ra
-/* 092570 7F05DA40 AD0508AC */   sw    $a1, 0x8ac($t0)
-)
-#endif
 
 s32 get_item_in_hand_or_watch_menu(HANDEDNESS hand) {
 	if (pPlayer->hands[hand].weaponnum_watchmenu >= 0) {
