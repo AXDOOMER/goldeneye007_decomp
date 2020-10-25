@@ -2579,49 +2579,14 @@ glabel draw_item_in_hand_has_more_ammo
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
-void attempt_reload_item_in_hand(void) {
-
+void attempt_reload_item_in_hand(HANDEDNESS hand) {
+    s32 ammo_type = get_ammo_type_for_weapon(get_item_in_hand(hand));
+    if (ammo_type != 0) {
+        if (pPlayer->hands[hand].weapon_current_animation == 0) {
+            pPlayer->hands[hand].weapon_current_animation = 9;
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel attempt_reload_item_in_hand
-/* 092494 7F05D964 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 092498 7F05D968 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09249C 7F05D96C 0FC17674 */  jal   get_item_in_hand
-/* 0924A0 7F05D970 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0924A4 7F05D974 0FC1A50B */  jal   get_ammo_type_for_weapon
-/* 0924A8 7F05D978 00402025 */   move  $a0, $v0
-/* 0924AC 7F05D97C 10400010 */  beqz  $v0, .L7F05D9C0
-/* 0924B0 7F05D980 8FAF0018 */   lw    $t7, 0x18($sp)
-/* 0924B4 7F05D984 000FC0C0 */  sll   $t8, $t7, 3
-/* 0924B8 7F05D988 030FC023 */  subu  $t8, $t8, $t7
-/* 0924BC 7F05D98C 0018C080 */  sll   $t8, $t8, 2
-/* 0924C0 7F05D990 030FC021 */  addu  $t8, $t8, $t7
-/* 0924C4 7F05D994 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0924C8 7F05D998 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0924CC 7F05D99C 0018C080 */  sll   $t8, $t8, 2
-/* 0924D0 7F05D9A0 030FC021 */  addu  $t8, $t8, $t7
-/* 0924D4 7F05D9A4 0018C0C0 */  sll   $t8, $t8, 3
-/* 0924D8 7F05D9A8 01D81021 */  addu  $v0, $t6, $t8
-/* 0924DC 7F05D9AC 8C590898 */  lw    $t9, 0x898($v0)
-/* 0924E0 7F05D9B0 24080009 */  li    $t0, 9
-/* 0924E4 7F05D9B4 57200003 */  bnezl $t9, .L7F05D9C4
-/* 0924E8 7F05D9B8 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0924EC 7F05D9BC AC480898 */  sw    $t0, 0x898($v0)
-.L7F05D9C0:
-/* 0924F0 7F05D9C0 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F05D9C4:
-/* 0924F4 7F05D9C4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0924F8 7F05D9C8 03E00008 */  jr    $ra
-/* 0924FC 7F05D9CC 00000000 */   nop   
-)
-#endif
 
 s32 get_item_in_hand(HANDEDNESS hand) {
     return pPlayer->hands[hand].weaponnum;
