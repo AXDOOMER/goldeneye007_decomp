@@ -19339,24 +19339,9 @@ f32 get_yrotation_solo_watch_menu_for_item(ITEM_IDS item)
 }
 
 
-
-
-
-
-#ifdef NONMATCHING
-f32 get_45_degree_angle(void) {
-  return 45.000000f;
+f32 get_45_degree_angle(s32 unk) {
+  return 45.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_45_degree_angle
-/* 09BB60 7F067030 3C014234 */  li    $at, 0x42340000 # 45.000000
-/* 09BB64 7F067034 44810000 */  mtc1  $at, $f0
-/* 09BB68 7F067038 03E00008 */  jr    $ra
-/* 09BB6C 7F06703C AFA40000 */   sw    $a0, ($sp)
-)
-#endif
 
 
 
