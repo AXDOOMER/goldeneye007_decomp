@@ -1052,6 +1052,7 @@ Linker script and memory map
                 0x0000000004000980                func_04000980
                 0x0000000004000a40                func_04000A40
                 0x0000000004000ad0                func_04000AD0
+                0x0000000004000b70                ipl3_font
                 0x0000000004001000                _bootSegmentEnd = (ADDR (.boot) + SIZEOF (.boot))
                 0x0000000000001000                _bootSegmentRomEnd = (_bootSegmentRomStart + SIZEOF (.boot))
                 0x0000000080000400                _startSegmentStart = ADDR (.start)

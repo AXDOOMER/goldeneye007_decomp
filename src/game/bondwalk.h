@@ -72,4 +72,5 @@ void bondwalkFireBothHands(void);
 
 f32 sub_GAME_7F0649AC(s32 param_1);
 
+f32 sub_GAME_7F05DCB8(HANDEDNESS hand);
 #endif
