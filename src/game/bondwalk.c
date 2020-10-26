@@ -2735,7 +2735,7 @@ void camera_sniper_zoom_in(f32 zoom)
 	}
 }
 
-void camera_sniper_zoom_out(float zoom)
+void camera_sniper_zoom_out(f32 zoom)
 {
 	if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_SNIPERRIFLE) {
 		pPlayer->sniper_zoom /= (1.0f + (zoom * 0.1f));
@@ -3332,37 +3332,9 @@ glabel sub_GAME_7F05E6B4
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F05E808(void) {
-
+void sub_GAME_7F05E808(HANDEDNESS hand) {
+	pPlayer->hands[hand].field_A8C = 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05E808
-/* 093338 7F05E808 0004C0C0 */  sll   $t8, $a0, 3
-/* 09333C 7F05E80C 0304C023 */  subu  $t8, $t8, $a0
-/* 093340 7F05E810 0018C080 */  sll   $t8, $t8, 2
-/* 093344 7F05E814 0304C021 */  addu  $t8, $t8, $a0
-/* 093348 7F05E818 3C0F8008 */  lui   $t7, %hi(pPlayer) 
-/* 09334C 7F05E81C 8DEFA0B0 */  lw    $t7, %lo(pPlayer)($t7)
-/* 093350 7F05E820 0018C080 */  sll   $t8, $t8, 2
-/* 093354 7F05E824 0304C021 */  addu  $t8, $t8, $a0
-/* 093358 7F05E828 0018C0C0 */  sll   $t8, $t8, 3
-/* 09335C 7F05E82C 240E0001 */  li    $t6, 1
-/* 093360 7F05E830 01F8C821 */  addu  $t9, $t7, $t8
-/* 093364 7F05E834 03E00008 */  jr    $ra
-/* 093368 7F05E838 AF2E0A8C */   sw    $t6, 0xa8c($t9)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F05E83C(void) {
