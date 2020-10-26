@@ -368,21 +368,27 @@ void set_selected_folder_num(u32 foldernum)
 #ifdef NONMATCHING
 void set_selected_difficulty(DIFFICULTY difficulty)
 {
-  if (difficulty != DIFFICULTY_AGENT) {
+  if (difficulty != DIFFICULTY_AGENT) 
+  {
+    if (difficulty == DIFFICULTY_SECRET)
+    {
+      selected_difficulty = DIFFICULTY_SECRET;
+      return;
+    }
+    if (difficulty == DIFFICULTY_00)
+    {
+      selected_difficulty = DIFFICULTY_00;
+      return;
+    }
+    if (difficulty == DIFFICULTY_007)
+    {
+      selected_difficulty = DIFFICULTY_007;
+      return;
+    }
+  }
+  else
+  {
     selected_difficulty = DIFFICULTY_AGENT;
-    return;
-  }
-  if (difficulty == DIFFICULTY_SECRET) {
-    selected_difficulty = DIFFICULTY_SECRET;
-    return;
-  }
-  if (difficulty == DIFFICULTY_00) {
-    selected_difficulty = DIFFICULTY_00;
-    return;
-  }
-  if (difficulty == DIFFICULTY_007) {
-    selected_difficulty = DIFFICULTY_007;
-    return;
   }
 }
 #else
