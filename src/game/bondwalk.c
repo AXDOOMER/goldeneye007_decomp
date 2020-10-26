@@ -24507,25 +24507,9 @@ glabel increment_num_kills_display_text_in_MP
 #endif
 #endif
 
-
-
-
-#ifdef NONMATCHING
-void get_curplay_killcount(void) {
-    // Node 0
-    return pPlayersPerm->killcount;
+s32 get_curplay_killcount(void) {
+    return pPlayersPerm->kill_count;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel get_curplay_killcount
-/* 09F454 7F06A924 3C0E8008 */  lui   $t6, %hi(pPlayersPerm) 
-/* 09F458 7F06A928 8DCEA0B4 */  lw    $t6, %lo(pPlayersPerm)($t6)
-/* 09F45C 7F06A92C 03E00008 */  jr    $ra
-/* 09F460 7F06A930 8DC2001C */   lw    $v0, 0x1c($t6)
-)
-#endif
 
 void increment_num_times_killed_MwtGC(void){
     pPlayersPerm->killed_gg_owner_count++;
