@@ -3246,14 +3246,14 @@ Linker script and memory map
                 0x000000007f05d964                attempt_reload_item_in_hand
                 0x000000007f05d9d0                get_item_in_hand
                 0x000000007f05da00                draw_item_in_hand
-                0x000000007f05da44                return_ammo_in_hand
+                0x000000007f05da44                get_item_in_hand_or_watch_menu
                 0x000000007f05da8c                sub_GAME_7F05DA8C
                 0x000000007f05dae4                sub_GAME_7F05DAE4
                 0x000000007f05db54                remove_hands_item
                 0x000000007f05dc88                get_hands_firing_status
                 0x000000007f05dcb8                sub_GAME_7F05DCB8
                 0x000000007f05dce8                sub_GAME_7F05DCE8
-                0x000000007f05dd38                sub_GAME_7F05DD38
+                0x000000007f05dd38                get_item_in_hand_zoom
                 0x000000007f05dda4                camera_sniper_zoom
                 0x000000007f05de94                sub_GAME_7F05DE94
                 0x000000007f05df84                bondwalkGetItemDestructionAmount

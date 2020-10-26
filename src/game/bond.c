@@ -5382,7 +5382,7 @@ glabel maybe_solo_intro_camera_handler
 
 
 
-CAMERAMODE get_camera_mode(void) {
+u32 get_camera_mode(void) {
     // Node 0
     return cameramode;
 }
