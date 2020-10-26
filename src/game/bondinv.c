@@ -129,7 +129,7 @@ glabel sub_GAME_7F08C054
 #endif
 
 
-void add_additional_weapon_slot_to_player_inventory_guess(struct invitem *item) {
+void add_additional_weapon_slot_to_player_inventory_guess(InvItem *item) {
   
   if (pPlayer->ptr_inventory_first_in_cycle) {
         
@@ -151,10 +151,10 @@ void add_additional_weapon_slot_to_player_inventory_guess(struct invitem *item) 
 }
 
 
-void reorder_inventory_ptrs_based_on_id_code(struct invitem *item) {
+void reorder_inventory_ptrs_based_on_id_code(InvItem *item) {
 
-    struct invitem *prev;
-    struct invitem *next;
+    InvItem *prev;
+    InvItem *next;
   
     next = item->next;
     prev = item->prev;
@@ -175,7 +175,7 @@ void reorder_inventory_ptrs_based_on_id_code(struct invitem *item) {
     return;
 }
 
-struct invitem *get_ptr_next_available_weapon(void)
+InvItem *get_ptr_next_available_weapon(void)
 {
     int i;
 
@@ -198,14 +198,14 @@ s32 get_BONDdata_allguns_flag(void) {
 }
 
 
-struct invitem *get_ptr_inventory_item(ITEM_IDS weapon) {
+InvItem *get_ptr_inventory_item(ITEM_IDS weapon) {
 
-    struct invitem *first = pPlayer->ptr_inventory_first_in_cycle;
-    struct invitem *item = first;
+    InvItem *first = pPlayer->ptr_inventory_first_in_cycle;
+    InvItem *item = first;
 
     while (item) {
 
-        if (item->type == INVITEMTYPE_WEAP && item->right == weapon) {
+        if (item->type == INV_ITEM_WEAPON && item->right == weapon) {
             return item;
         }
 
@@ -344,14 +344,14 @@ s32 check_if_item_for_hand_available(ITEM_IDS item,int hand)
 
 int add_item_to_inventory(ITEM_IDS item)
 {
-    struct invitem *nextItem;
+    InvItem *nextItem;
   
     if (is_weapon_in_inv(item) == 0)
     {
         nextItem = get_ptr_next_available_weapon();
         if (nextItem)
         {
-            nextItem->type = INVITEMTYPE_WEAP;
+            nextItem->type = INV_ITEM_WEAPON;
             nextItem->right = item;
             add_additional_weapon_slot_to_player_inventory_guess(nextItem);
         }
@@ -375,14 +375,14 @@ int add_item_to_inventory(ITEM_IDS item)
 
 int add_doubles_item_to_inventory(int right, int left)
 {
-    struct invitem *item;
+    InvItem *item;
   
     if (is_item_for_hand_in_inventory(right, left) == 0) {
     
         item = get_ptr_next_available_weapon();
     
         if (item) {
-            item->type = INVITEMTYPE_DUAL;
+            item->type = INV_ITEM_DUAL;
             item->right = right;
             item->left = left;
             add_additional_weapon_slot_to_player_inventory_guess(item);
@@ -543,12 +543,12 @@ glabel sub_GAME_7F08C61C
 
 int add_prop_to_inventory(PROPS prop) {
     
-    struct invitem *item;
+    InvItem *item;
 
     item = get_ptr_next_available_weapon();
     
     if (item) {
-        item->type = INVITEMTYPE_PROP;
+        item->type = INV_ITEM_PROP;
         item->right = prop;
         add_additional_weapon_slot_to_player_inventory_guess(item);
     }

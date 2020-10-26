@@ -258,9 +258,9 @@ struct invitem {
     s32 right;
     s32 left;
 
-    struct invitem *next;
-    struct invitem *prev;
-};
+    struct InvItem *next;
+    struct InvItem *prev;
+} InvItem;
 
 
 struct Player
@@ -928,8 +928,8 @@ struct Player
   f32 aspect;
   s32 hudmessoff;
   s32 bondmesscnt;
-  struct invitem *ptr_inventory_first_in_cycle;
-  struct invitem *p_itemcur;
+  InvItem *ptr_inventory_first_in_cycle;
+  InvItem *p_itemcur;
   s32 equipmaxitems;
   s32 equipallguns;
   s32 field_11F0;

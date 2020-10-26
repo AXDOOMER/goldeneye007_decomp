@@ -508,9 +508,12 @@ typedef enum CUFF_TYPES
     CUFF_TUX8
 } CUFF_TYPES;
 
-#define INVITEMTYPE_WEAP 1
-#define INVITEMTYPE_PROP 2
-#define INVITEMTYPE_DUAL 3
+typedef enum INV_ITEM_TYPE
+{
+    INV_ITEM_WEAPON = 1,
+    INV_ITEM_PROP,
+    INV_ITEM_DUAL
+} INV_ITEM_TYPE;
 
 typedef enum ITEM_IDS
 {
