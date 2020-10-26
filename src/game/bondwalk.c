@@ -2716,12 +2716,11 @@ f32 get_item_in_hand_zoom(void) {
     return get_ptr_item_statistics(get_item_in_hand_or_watch_menu(RIGHT_HAND))->zoom;
 }
 
-#ifdef NONMATCHING
 void camera_sniper_zoom(f32 zoom)
 {
   if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_SNIPERRIFLE) 
   {
-    pPlayer->sniper_zoom *= (zoom * 0.1f + 1.0f);
+    pPlayer->sniper_zoom *= (1.0f + zoom * 0.1f);
     if (pPlayer->sniper_zoom > 60.0f) 
 	{
       pPlayer->sniper_zoom = 60.0f;
@@ -2731,92 +2730,14 @@ void camera_sniper_zoom(f32 zoom)
   {
     if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_CAMERA)
 	{
-       pPlayer->camera_zoom *= (zoom * 0.1f + 1.0f);
+       pPlayer->camera_zoom *= (1.0f + zoom * 0.1f);
        if (pPlayer->camera_zoom > 60.0f)
 	   {
           pPlayer->camera_zoom = 60.0f;
-       }
+       }	
 	}
   }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80053C24
-.word 0x3dcccccd /*0.1*/
-glabel D_80053C28
-.word 0x3dcccccd /*0.1*/
-.text
-glabel camera_sniper_zoom
-/* 0928D4 7F05DDA4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0928D8 7F05DDA8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0928DC 7F05DDAC E7AC0018 */  swc1  $f12, 0x18($sp)
-/* 0928E0 7F05DDB0 0FC17691 */  jal   get_item_in_hand_or_watch_menu
-/* 0928E4 7F05DDB4 00002025 */   move  $a0, $zero
-/* 0928E8 7F05DDB8 24010011 */  li    $at, 17
-/* 0928EC 7F05DDBC 14410017 */  bne   $v0, $at, .L7F05DE1C
-/* 0928F0 7F05DDC0 C7A40018 */   lwc1  $f4, 0x18($sp)
-/* 0928F4 7F05DDC4 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 0928F8 7F05DDC8 44810000 */  mtc1  $at, $f0
-/* 0928FC 7F05DDCC 3C018005 */  lui   $at, %hi(D_80053C24)
-/* 092900 7F05DDD0 C4263C24 */  lwc1  $f6, %lo(D_80053C24)($at)
-/* 092904 7F05DDD4 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 092908 7F05DDD8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 09290C 7F05DDDC 46062202 */  mul.s $f8, $f4, $f6
-/* 092910 7F05DDE0 44815000 */  mtc1  $at, $f10
-/* 092914 7F05DDE4 2463A0B0 */  addiu $v1, %lo(pPlayer) # addiu $v1, $v1, -0x5f50
-/* 092918 7F05DDE8 8C620000 */  lw    $v0, ($v1)
-/* 09291C 7F05DDEC C4521084 */  lwc1  $f18, 0x1084($v0)
-/* 092920 7F05DDF0 46085400 */  add.s $f16, $f10, $f8
-/* 092924 7F05DDF4 46109102 */  mul.s $f4, $f18, $f16
-/* 092928 7F05DDF8 E4441084 */  swc1  $f4, 0x1084($v0)
-/* 09292C 7F05DDFC 8C620000 */  lw    $v0, ($v1)
-/* 092930 7F05DE00 C4461084 */  lwc1  $f6, 0x1084($v0)
-/* 092934 7F05DE04 4606003C */  c.lt.s $f0, $f6
-/* 092938 7F05DE08 00000000 */  nop   
-/* 09293C 7F05DE0C 4502001E */  bc1fl .L7F05DE88
-/* 092940 7F05DE10 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 092944 7F05DE14 1000001B */  b     .L7F05DE84
-/* 092948 7F05DE18 E4401084 */   swc1  $f0, 0x1084($v0)
-.L7F05DE1C:
-/* 09294C 7F05DE1C 0FC17691 */  jal   get_item_in_hand_or_watch_menu
-/* 092950 7F05DE20 00002025 */   move  $a0, $zero
-/* 092954 7F05DE24 24010028 */  li    $at, 40
-/* 092958 7F05DE28 14410016 */  bne   $v0, $at, .L7F05DE84
-/* 09295C 7F05DE2C C7AA0018 */   lwc1  $f10, 0x18($sp)
-/* 092960 7F05DE30 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 092964 7F05DE34 44810000 */  mtc1  $at, $f0
-/* 092968 7F05DE38 3C018005 */  lui   $at, %hi(D_80053C28)
-/* 09296C 7F05DE3C C4283C28 */  lwc1  $f8, %lo(D_80053C28)($at)
-/* 092970 7F05DE40 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 092974 7F05DE44 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 092978 7F05DE48 46085482 */  mul.s $f18, $f10, $f8
-/* 09297C 7F05DE4C 44818000 */  mtc1  $at, $f16
-/* 092980 7F05DE50 2463A0B0 */  addiu $v1, %lo(pPlayer) # addiu $v1, $v1, -0x5f50
-/* 092984 7F05DE54 8C620000 */  lw    $v0, ($v1)
-/* 092988 7F05DE58 C4461088 */  lwc1  $f6, 0x1088($v0)
-/* 09298C 7F05DE5C 46128100 */  add.s $f4, $f16, $f18
-/* 092990 7F05DE60 46043282 */  mul.s $f10, $f6, $f4
-/* 092994 7F05DE64 E44A1088 */  swc1  $f10, 0x1088($v0)
-/* 092998 7F05DE68 8C620000 */  lw    $v0, ($v1)
-/* 09299C 7F05DE6C C4481088 */  lwc1  $f8, 0x1088($v0)
-/* 0929A0 7F05DE70 4608003C */  c.lt.s $f0, $f8
-/* 0929A4 7F05DE74 00000000 */  nop   
-/* 0929A8 7F05DE78 45020003 */  bc1fl .L7F05DE88
-/* 0929AC 7F05DE7C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0929B0 7F05DE80 E4401088 */  swc1  $f0, 0x1088($v0)
-.L7F05DE84:
-/* 0929B4 7F05DE84 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F05DE88:
-/* 0929B8 7F05DE88 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0929BC 7F05DE8C 03E00008 */  jr    $ra
-/* 0929C0 7F05DE90 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F05DE94(float param_1)
