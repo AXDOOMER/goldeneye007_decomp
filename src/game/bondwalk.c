@@ -24698,29 +24698,9 @@ glabel increment_num_deaths
 #endif
 #endif
 
-
-
-
-#ifdef NONMATCHING
-void get_curplayer_numdeaths(void) {
-    // Node 0
+s32 get_curplayer_numdeaths(void) {
     return pPlayer->deathcount;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel get_curplayer_numdeaths
-/* 09F538 7F06AA08 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 09F53C 7F06AA0C 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 09F540 7F06AA10 03E00008 */  jr    $ra
-/* 09F544 7F06AA14 8DC229D8 */   lw    $v0, 0x29d8($t6)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void *increment_num_suicides_display_MP(void) {
