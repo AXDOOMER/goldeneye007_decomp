@@ -1,14 +1,18 @@
 #include "ultra64.h"
 #include "game/mainmenu.h"
-
+#include "bondconstants.h"
+ /**
+  * initGameData
+  * 
+  **/
 void initGameData(void) {
-    current_menu = -1;
+    current_menu = MENU_INVALID;
     menu_update = 0;
-    maybe_prev_menu = -1;
+    maybe_prev_menu = MENU_INVALID;
     menu_timer = 0;
     selected_stage = -1;
-    briefingpage = -1;
-    selected_difficulty = -1;
+    briefingpage = BRIEFING_INVALID;
+    selected_difficulty = DIFFICULTY_MULTI;
     screen_size = 0;
     folder_selection_screen_option_icon = 0;
     selected_folder_num = 0;

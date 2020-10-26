@@ -2813,4 +2813,7 @@ extern f32 D_80036AC0;
 //D:80036AC4
 extern f32 D_80036AC4;
 
+
+CAMERAMODE get_camera_mode(void);
+
 #endif
