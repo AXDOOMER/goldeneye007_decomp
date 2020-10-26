@@ -24527,27 +24527,9 @@ glabel get_curplay_killcount
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
-void increment_num_times_killed_MwtGC(void)
-{
-    pPlayersPerm->ggkillcount++;
+void increment_num_times_killed_MwtGC(void){
+    pPlayersPerm->killed_gg_owner_count++;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel increment_num_times_killed_MwtGC
-/* 09F464 7F06A934 3C028008 */  lui   $v0, %hi(pPlayersPerm)
-/* 09F468 7F06A938 8C42A0B4 */  lw    $v0, %lo(pPlayersPerm)($v0)
-/* 09F46C 7F06A93C 8C4E0020 */  lw    $t6, 0x20($v0)
-/* 09F470 7F06A940 25CF0001 */  addiu $t7, $t6, 1
-/* 09F474 7F06A944 03E00008 */  jr    $ra
-/* 09F478 7F06A948 AC4F0020 */   sw    $t7, 0x20($v0)
-)
-#endif
 
 s32 get_times_killed_mwtgx(void) {
     return pPlayersPerm->killed_gg_owner_count;
