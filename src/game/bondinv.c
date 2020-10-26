@@ -231,53 +231,26 @@ int is_weapon_in_inv(ITEM_IDS item)
 }
 
 
+InvItem *get_ptr_inventory_for_item_in_hand(ITEM_IDS right, ITEM_IDS left) {
 
+    InvItem *first = pPlayer->ptr_inventory_first_in_cycle;
+    InvItem *item = first;
 
+    while (item) {
 
+        if (item->type == INV_ITEM_DUAL && item->right == right && item->left == left) {
+            return item;
+        }
 
-#ifdef NONMATCHING
-void get_ptr_inventory_for_item_in_hand(void) {
+        item = item->next;
 
+        if (item == first) {
+            break;
+        }
+    }
+
+    return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_ptr_inventory_for_item_in_hand
-/* 0C0E68 7F08C338 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0C0E6C 7F08C33C 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0C0E70 7F08C340 24060003 */  li    $a2, 3
-/* 0C0E74 7F08C344 8DC211E0 */  lw    $v0, 0x11e0($t6)
-/* 0C0E78 7F08C348 10400011 */  beqz  $v0, .L7F08C390
-/* 0C0E7C 7F08C34C 00401825 */   move  $v1, $v0
-/* 0C0E80 7F08C350 8C6F0000 */  lw    $t7, ($v1)
-.L7F08C354:
-/* 0C0E84 7F08C354 54CF000A */  bnel  $a2, $t7, .L7F08C380
-/* 0C0E88 7F08C358 8C63000C */   lw    $v1, 0xc($v1)
-/* 0C0E8C 7F08C35C 8C780004 */  lw    $t8, 4($v1)
-/* 0C0E90 7F08C360 54980007 */  bnel  $a0, $t8, .L7F08C380
-/* 0C0E94 7F08C364 8C63000C */   lw    $v1, 0xc($v1)
-/* 0C0E98 7F08C368 8C790008 */  lw    $t9, 8($v1)
-/* 0C0E9C 7F08C36C 54B90004 */  bnel  $a1, $t9, .L7F08C380
-/* 0C0EA0 7F08C370 8C63000C */   lw    $v1, 0xc($v1)
-/* 0C0EA4 7F08C374 03E00008 */  jr    $ra
-/* 0C0EA8 7F08C378 00601025 */   move  $v0, $v1
-
-/* 0C0EAC 7F08C37C 8C63000C */  lw    $v1, 0xc($v1)
-.L7F08C380:
-/* 0C0EB0 7F08C380 50620004 */  beql  $v1, $v0, .L7F08C394
-/* 0C0EB4 7F08C384 00001025 */   move  $v0, $zero
-/* 0C0EB8 7F08C388 5460FFF2 */  bnezl $v1, .L7F08C354
-/* 0C0EBC 7F08C38C 8C6F0000 */   lw    $t7, ($v1)
-.L7F08C390:
-/* 0C0EC0 7F08C390 00001025 */  move  $v0, $zero
-.L7F08C394:
-/* 0C0EC4 7F08C394 03E00008 */  jr    $ra
-/* 0C0EC8 7F08C398 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 /**
