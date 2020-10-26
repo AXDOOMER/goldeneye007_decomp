@@ -457,7 +457,7 @@ s32 selected_folder_num_copy = 0;
 s32 gamemode = GAMEMODE_INTRO;
 s32 selected_stage = -1;
 s32 briefingpage = -1;
-s32 selected_difficulty = DIFFICULTY_MULTI;
+DIFFICULTY selected_difficulty = DIFFICULTY_MULTI;
 
 s32 append_cheat_sp = FALSE;
 s32 append_cheat_mp = FALSE;
@@ -10062,9 +10062,9 @@ glabel constructor_menu07_missionsel
 
 void init_menu08_difficultyselect(void)
 {
-    selected_difficulty = -1;
-    tab_2_selected = 0;
-    tab_3_selected = 0;
+    selected_difficulty = DIFFICULTY_MULTI;
+    tab_2_selected = FALSE;
+    tab_3_selected = FALSE;
     load_walletbond();
 }
 
@@ -10150,7 +10150,7 @@ void interface_menu08_difficulty(void)
     menu_control_stick_tracking();
     if (tab_2_selected != 0)
     {
-        if (selected_difficulty != 3)
+        if (selected_difficulty != DIFFICULTY_007)
         {
             set_menu_to_mode(MENU_BRIEFING, 0);
             set_cursor_pos_tab2();
@@ -10395,7 +10395,7 @@ void print_current_solo_briefing_stage_name(s32 arg0, s32 arg1)
     s32 temp_ret;
     void *temp_v1;
 
-    if (selected_difficulty >= 0)
+    if (selected_difficulty >= DIFFICULTY_AGENT)
     {
         textpointer_load_parse_something(arg1, get_ptr_difficulty_name(selected_difficulty, selected_difficulty));
         string_append_from_obseg_textbank(arg1, get_textptr_for_textID(TEXT(LTITLE, 0x20)));

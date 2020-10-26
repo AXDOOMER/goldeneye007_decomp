@@ -1126,7 +1126,7 @@ void replay_recorded_ramrom_at_address(s32 arg0)
     ramrom_demo_related_4 = 1;
     set_solo_and_ptr_briefing(ptr_active_demofile->unk10);
     set_selected_difficulty(ptr_active_demofile->unk14);
-    return set_menu_to_mode(0xb, 1);
+    return set_menu_to_mode(MENU_RUN_STAGE, 1);
 }
 #else
 GLOBAL_ASM(
@@ -1181,9 +1181,9 @@ void replay_recorded_ramrom_from_indy(void)
 
 void ensureCameraModeA(void)
 {
-    if (get_camera_mode() != 0xa)
+    if (get_camera_mode() != UNK10_CAM)
     {
-        set_camera_mode(0xa);
+        set_camera_mode(UNK10_CAM);
     }
 }
 
