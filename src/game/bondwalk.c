@@ -19805,66 +19805,17 @@ void sub_GAME_7F067AA4(s32 param_1)
 }
 
 
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F067AB4(struct xyzpoint *param_1)
 {
-  pPlayer->field_A38.x = sub_GAME_7F05DCB8(0) + param_1->x;
-  pPlayer->field_A38.y = param_1->y;
-  pPlayer->field_A38.z = param_1->z;
+  pPlayer->hands[RIGHT_HAND].field_A38 = sub_GAME_7F05DCB8(RIGHT_HAND) + param_1->x;
+  pPlayer->hands[RIGHT_HAND].field_A3C = param_1->y;
+  pPlayer->hands[RIGHT_HAND].field_A40 = param_1->z;
 
-  pPlayer->field_DE0.x = sub_GAME_7F05DCB8(1) + param_1->x;
-  pPlayer->field_DE0.y = param_1->y;
-  pPlayer->field_DE0.z = param_1->z;
+  pPlayer->hands[LEFT_HAND].field_A38 = sub_GAME_7F05DCB8(LEFT_HAND) + param_1->x;
+  pPlayer->hands[LEFT_HAND].field_A3C = param_1->y;
+  pPlayer->hands[LEFT_HAND].field_A40 = param_1->z;
 
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F067AB4
-/* 09C5E4 7F067AB4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09C5E8 7F067AB8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09C5EC 7F067ABC 00802825 */  move  $a1, $a0
-/* 09C5F0 7F067AC0 AFA50018 */  sw    $a1, 0x18($sp)
-/* 09C5F4 7F067AC4 0FC1772E */  jal   sub_GAME_7F05DCB8
-/* 09C5F8 7F067AC8 00002025 */   move  $a0, $zero
-/* 09C5FC 7F067ACC 8FA50018 */  lw    $a1, 0x18($sp)
-/* 09C600 7F067AD0 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 09C604 7F067AD4 2442A0B0 */  addiu $v0, %lo(pPlayer) # addiu $v0, $v0, -0x5f50
-/* 09C608 7F067AD8 C4A40000 */  lwc1  $f4, ($a1)
-/* 09C60C 7F067ADC 8C4E0000 */  lw    $t6, ($v0)
-/* 09C610 7F067AE0 24040001 */  li    $a0, 1
-/* 09C614 7F067AE4 46040180 */  add.s $f6, $f0, $f4
-/* 09C618 7F067AE8 E5C60A38 */  swc1  $f6, 0xa38($t6)
-/* 09C61C 7F067AEC 8C4F0000 */  lw    $t7, ($v0)
-/* 09C620 7F067AF0 C4A80004 */  lwc1  $f8, 4($a1)
-/* 09C624 7F067AF4 E5E80A3C */  swc1  $f8, 0xa3c($t7)
-/* 09C628 7F067AF8 8C580000 */  lw    $t8, ($v0)
-/* 09C62C 7F067AFC C4AA0008 */  lwc1  $f10, 8($a1)
-/* 09C630 7F067B00 0FC1772E */  jal   sub_GAME_7F05DCB8
-/* 09C634 7F067B04 E70A0A40 */   swc1  $f10, 0xa40($t8)
-/* 09C638 7F067B08 8FA50018 */  lw    $a1, 0x18($sp)
-/* 09C63C 7F067B0C 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 09C640 7F067B10 2442A0B0 */  addiu $v0, %lo(pPlayer) # addiu $v0, $v0, -0x5f50
-/* 09C644 7F067B14 C4B00000 */  lwc1  $f16, ($a1)
-/* 09C648 7F067B18 8C590000 */  lw    $t9, ($v0)
-/* 09C64C 7F067B1C 46100480 */  add.s $f18, $f0, $f16
-/* 09C650 7F067B20 E7320DE0 */  swc1  $f18, 0xde0($t9)
-/* 09C654 7F067B24 8C480000 */  lw    $t0, ($v0)
-/* 09C658 7F067B28 C4A40004 */  lwc1  $f4, 4($a1)
-/* 09C65C 7F067B2C E5040DE4 */  swc1  $f4, 0xde4($t0)
-/* 09C660 7F067B30 8C490000 */  lw    $t1, ($v0)
-/* 09C664 7F067B34 C4A60008 */  lwc1  $f6, 8($a1)
-/* 09C668 7F067B38 E5260DE8 */  swc1  $f6, 0xde8($t1)
-/* 09C66C 7F067B3C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09C670 7F067B40 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09C674 7F067B44 03E00008 */  jr    $ra
-/* 09C678 7F067B48 00000000 */   nop   
-)
-#endif
-
 
 
 
