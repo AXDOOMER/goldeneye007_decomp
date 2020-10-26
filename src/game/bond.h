@@ -252,7 +252,7 @@ struct hand
   s32 item_related3;
 };
 
-struct invitem {
+typedef struct InvItem {
     s32 type;
 
     s32 right;
