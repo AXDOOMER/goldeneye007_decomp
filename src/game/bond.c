@@ -19037,7 +19037,7 @@ glabel controller_gameplay_interaction
 /* 0B787C 7F082D4C 00000000 */  nop   
 /* 0B7880 7F082D50 45020004 */  bc1fl .L7F082D64
 /* 0B7884 7F082D54 C7A40160 */   lwc1  $f4, 0x160($sp)
-/* 0B7888 7F082D58 0FC17769 */  jal   camera_sniper_zoom
+/* 0B7888 7F082D58 0FC17769 */  jal   camera_sniper_zoom_in
 /* 0B788C 7F082D5C 46009306 */   mov.s $f12, $f18
 /* 0B7890 7F082D60 C7A40160 */  lwc1  $f4, 0x160($sp)
 .L7F082D64:
@@ -19045,7 +19045,7 @@ glabel controller_gameplay_interaction
 /* 0B7898 7F082D68 00000000 */  nop   
 /* 0B789C 7F082D6C 45020004 */  bc1fl .L7F082D80
 /* 0B78A0 7F082D70 8E0A0000 */   lw    $t2, ($s0)
-/* 0B78A4 7F082D74 0FC177A5 */  jal   sub_GAME_7F05DE94
+/* 0B78A4 7F082D74 0FC177A5 */  jal   camera_sniper_zoom_out
 /* 0B78A8 7F082D78 46002306 */   mov.s $f12, $f4
 /* 0B78AC 7F082D7C 8E0A0000 */  lw    $t2, ($s0)
 .L7F082D80:

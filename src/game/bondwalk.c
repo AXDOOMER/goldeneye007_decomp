@@ -2716,129 +2716,43 @@ f32 get_item_in_hand_zoom(void) {
     return get_ptr_item_statistics(get_item_in_hand_or_watch_menu(RIGHT_HAND))->zoom;
 }
 
-void camera_sniper_zoom(f32 zoom)
+void camera_sniper_zoom_in(f32 zoom)
 {
-  if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_SNIPERRIFLE) 
-  {
-    pPlayer->sniper_zoom *= (1.0f + zoom * 0.1f);
-    if (pPlayer->sniper_zoom > 60.0f) 
-	{
-      pPlayer->sniper_zoom = 60.0f;
-    }
-  }
-  else 
-  {
-    if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_CAMERA)
-	{
-       pPlayer->camera_zoom *= (1.0f + zoom * 0.1f);
-       if (pPlayer->camera_zoom > 60.0f)
-	   {
-          pPlayer->camera_zoom = 60.0f;
-       }	
+	if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_SNIPERRIFLE) {
+		pPlayer->sniper_zoom *= (1.0f + (zoom * 0.1f));
+		if (pPlayer->sniper_zoom > 60.0f) {
+			pPlayer->sniper_zoom = 60.0f;
+		}
 	}
-  }
+	else 
+	{
+		if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_CAMERA) {
+			pPlayer->camera_zoom *= (1.0f + (zoom * 0.1f));
+			if (pPlayer->camera_zoom > 60.0f) {
+				pPlayer->camera_zoom = 60.0f;
+			}	
+		}
+	}
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F05DE94(float param_1)
+void camera_sniper_zoom_out(float zoom)
 {
-  if (get_item_in_hand_or_watch_menu(HAND_RIGHT) == ITEM_SNIPERRIFLE) 
-  {
-    pPlayer->sniper_zoom = pPlayer->sniper_zoom / (param_1 * 0.10000000 + 1.00000000);
-    if (pPlayer->sniper_zoom < 7.00000000)
+	if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_SNIPERRIFLE) {
+		pPlayer->sniper_zoom /= (1.0f + (zoom * 0.1f));
+		if (pPlayer->sniper_zoom < 7.0f) {
+			pPlayer->sniper_zoom = 7.0f;
+		}
+	}
+	else 
 	{
-      pPlayer->sniper_zoom = 7.00000000;
-    }
-  }
-  else 
-  {
-    if ((get_item_in_hand_or_watch_menu(HAND_RIGHT) == ITEM_CAMERA) &&
-       (pPlayer->camera_zoom = pPlayer->camera_zoom / (param_1 * 0.10000000 + 1.00000000),
-       pPlayer->camera_zoom < 7.00000000))
-	{
-      pPlayer->camera_zoom = 7.00000000;
-    }
-  }
-  return;
+		if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_CAMERA) {
+			pPlayer->camera_zoom /= (1.0f + (zoom * 0.1f));
+			if (pPlayer->camera_zoom < 7.0f) {
+				pPlayer->camera_zoom = 7.0f;
+			}
+		}
+	}
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80053C2C
-.word 0x3dcccccd /*0.1*/
-glabel D_80053C30
-.word 0x3dcccccd /*0.1*/
-.text
-glabel sub_GAME_7F05DE94
-/* 0929C4 7F05DE94 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0929C8 7F05DE98 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0929CC 7F05DE9C E7AC0018 */  swc1  $f12, 0x18($sp)
-/* 0929D0 7F05DEA0 0FC17691 */  jal   get_item_in_hand_or_watch_menu
-/* 0929D4 7F05DEA4 00002025 */   move  $a0, $zero
-/* 0929D8 7F05DEA8 24010011 */  li    $at, 17
-/* 0929DC 7F05DEAC 14410017 */  bne   $v0, $at, .L7F05DF0C
-/* 0929E0 7F05DEB0 C7A40018 */   lwc1  $f4, 0x18($sp)
-/* 0929E4 7F05DEB4 3C0140E0 */  li    $at, 0x40E00000 # 7.000000
-/* 0929E8 7F05DEB8 44810000 */  mtc1  $at, $f0
-/* 0929EC 7F05DEBC 3C018005 */  lui   $at, %hi(D_80053C2C)
-/* 0929F0 7F05DEC0 C4263C2C */  lwc1  $f6, %lo(D_80053C2C)($at)
-/* 0929F4 7F05DEC4 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 0929F8 7F05DEC8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0929FC 7F05DECC 46062202 */  mul.s $f8, $f4, $f6
-/* 092A00 7F05DED0 44815000 */  mtc1  $at, $f10
-/* 092A04 7F05DED4 2463A0B0 */  addiu $v1, %lo(pPlayer) # addiu $v1, $v1, -0x5f50
-/* 092A08 7F05DED8 8C620000 */  lw    $v0, ($v1)
-/* 092A0C 7F05DEDC C4521084 */  lwc1  $f18, 0x1084($v0)
-/* 092A10 7F05DEE0 46085400 */  add.s $f16, $f10, $f8
-/* 092A14 7F05DEE4 46109103 */  div.s $f4, $f18, $f16
-/* 092A18 7F05DEE8 E4441084 */  swc1  $f4, 0x1084($v0)
-/* 092A1C 7F05DEEC 8C620000 */  lw    $v0, ($v1)
-/* 092A20 7F05DEF0 C4461084 */  lwc1  $f6, 0x1084($v0)
-/* 092A24 7F05DEF4 4600303C */  c.lt.s $f6, $f0
-/* 092A28 7F05DEF8 00000000 */  nop   
-/* 092A2C 7F05DEFC 4502001E */  bc1fl .L7F05DF78
-/* 092A30 7F05DF00 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 092A34 7F05DF04 1000001B */  b     .L7F05DF74
-/* 092A38 7F05DF08 E4401084 */   swc1  $f0, 0x1084($v0)
-.L7F05DF0C:
-/* 092A3C 7F05DF0C 0FC17691 */  jal   get_item_in_hand_or_watch_menu
-/* 092A40 7F05DF10 00002025 */   move  $a0, $zero
-/* 092A44 7F05DF14 24010028 */  li    $at, 40
-/* 092A48 7F05DF18 14410016 */  bne   $v0, $at, .L7F05DF74
-/* 092A4C 7F05DF1C C7AA0018 */   lwc1  $f10, 0x18($sp)
-/* 092A50 7F05DF20 3C0140E0 */  li    $at, 0x40E00000 # 7.000000
-/* 092A54 7F05DF24 44810000 */  mtc1  $at, $f0
-/* 092A58 7F05DF28 3C018005 */  lui   $at, %hi(D_80053C30)
-/* 092A5C 7F05DF2C C4283C30 */  lwc1  $f8, %lo(D_80053C30)($at)
-/* 092A60 7F05DF30 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 092A64 7F05DF34 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 092A68 7F05DF38 46085482 */  mul.s $f18, $f10, $f8
-/* 092A6C 7F05DF3C 44818000 */  mtc1  $at, $f16
-/* 092A70 7F05DF40 2463A0B0 */  addiu $v1, %lo(pPlayer) # addiu $v1, $v1, -0x5f50
-/* 092A74 7F05DF44 8C620000 */  lw    $v0, ($v1)
-/* 092A78 7F05DF48 C4461088 */  lwc1  $f6, 0x1088($v0)
-/* 092A7C 7F05DF4C 46128100 */  add.s $f4, $f16, $f18
-/* 092A80 7F05DF50 46043283 */  div.s $f10, $f6, $f4
-/* 092A84 7F05DF54 E44A1088 */  swc1  $f10, 0x1088($v0)
-/* 092A88 7F05DF58 8C620000 */  lw    $v0, ($v1)
-/* 092A8C 7F05DF5C C4481088 */  lwc1  $f8, 0x1088($v0)
-/* 092A90 7F05DF60 4600403C */  c.lt.s $f8, $f0
-/* 092A94 7F05DF64 00000000 */  nop   
-/* 092A98 7F05DF68 45020003 */  bc1fl .L7F05DF78
-/* 092A9C 7F05DF6C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 092AA0 7F05DF70 E4401088 */  swc1  $f0, 0x1088($v0)
-.L7F05DF74:
-/* 092AA4 7F05DF74 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F05DF78:
-/* 092AA8 7F05DF78 27BD0018 */  addiu $sp, $sp, 0x18
-/* 092AAC 7F05DF7C 03E00008 */  jr    $ra
-/* 092AB0 7F05DF80 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 f32 bondwalkGetItemDestructionAmount(ITEM_IDS item)
 {
