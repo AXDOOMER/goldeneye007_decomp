@@ -16,7 +16,10 @@ struct hand
   s32 weaponnum;
   s32 weaponnum_watchmenu;
   s32 previous_weapon;
-  s32 weapon_firing_status;
+  s8 weapon_firing_status;
+  s8 field_87D;
+  s8 field_87E;
+  s8 field_87F;
   s32 field_880;
   s32 field_884;
   s32 field_888;
@@ -126,7 +129,7 @@ struct hand
   s32 field_A28;
   s32 field_A2C;
   f32 field_A30;
-  s32 field_A34;
+  f32 field_A34;
   s32 field_A38;
   s32 field_A3C;
   s32 field_A40;
@@ -248,6 +251,17 @@ struct hand
   s32 item_related2;
   s32 item_related3;
 };
+
+struct invitem {
+    s32 type;
+
+    s32 right;
+    s32 left;
+
+    struct invitem *next;
+    struct invitem *prev;
+};
+
 
 struct Player
 {
@@ -914,8 +928,8 @@ struct Player
   f32 aspect;
   s32 hudmessoff;
   s32 bondmesscnt;
-  s32 ptr_inventory_first_in_cycle;
-  s32 p_itemcur;
+  struct invitem *ptr_inventory_first_in_cycle;
+  struct invitem *p_itemcur;
   s32 equipmaxitems;
   s32 equipallguns;
   s32 field_11F0;

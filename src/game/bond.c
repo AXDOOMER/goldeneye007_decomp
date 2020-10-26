@@ -19056,7 +19056,7 @@ glabel controller_gameplay_interaction
 /* 0B78C0 7F082D90 44816000 */  mtc1  $at, $f12
 /* 0B78C4 7F082D94 11A0000A */  beqz  $t5, .L7F082DC0
 /* 0B78C8 7F082D98 00000000 */   nop   
-/* 0B78CC 7F082D9C 0FC1774E */  jal   sub_GAME_7F05DD38
+/* 0B78CC 7F082D9C 0FC1774E */  jal   get_item_in_hand_zoom
 /* 0B78D0 7F082DA0 00000000 */   nop   
 /* 0B78D4 7F082DA4 4614003E */  c.le.s $f0, $f20
 /* 0B78D8 7F082DA8 46000306 */  mov.s $f12, $f0

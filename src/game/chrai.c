@@ -18172,7 +18172,7 @@ glabel sub_GAME_7F03D188
 /* 071E50 7F03D320 27A50074 */  addiu $a1, $sp, 0x74
 /* 071E54 7F03D324 45020115 */  bc1fl .L7F03D77C
 /* 071E58 7F03D328 8FBF002C */   lw    $ra, 0x2c($sp)
-/* 071E5C 7F03D32C 0FC1A002 */  jal   sub_GAME_7F068008
+/* 071E5C 7F03D32C 0FC1A002 */  jal   get_bullet_angle
 /* 071E60 7F03D330 AFA0005C */   sw    $zero, 0x5c($sp)
 /* 071E64 7F03D334 0FC170D8 */  jal   truncf
 /* 071E68 7F03D338 C7AC0094 */   lwc1  $f12, 0x94($sp)
