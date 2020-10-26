@@ -24549,29 +24549,9 @@ glabel increment_num_times_killed_MwtGC
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_times_killed_mwtgx(void) {
-    // Node 0
-    return pPlayersPerm->ggkillcount;
+s32 get_times_killed_mwtgx(void) {
+    return pPlayersPerm->killed_gg_owner_count;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_times_killed_mwtgx
-/* 09F47C 7F06A94C 3C0E8008 */  lui   $t6, %hi(pPlayersPerm) 
-/* 09F480 7F06A950 8DCEA0B4 */  lw    $t6, %lo(pPlayersPerm)($t6)
-/* 09F484 7F06A954 03E00008 */  jr    $ra
-/* 09F488 7F06A958 8DC20020 */   lw    $v0, 0x20($t6)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void increment_num_deaths(void)
