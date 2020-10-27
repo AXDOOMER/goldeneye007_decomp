@@ -15,84 +15,34 @@ f32 D_80032314 = 65536.0;
 // rodata
 //D:800536F0
 
-
-
-
-
-#ifdef NONMATCHING
-void reset_array_of_0x10_floats(void) {
-
+void matrix_4x4_set_identity(f32 matrix[4][4]) {
+    matrix[0][0] = 1.0f;
+    matrix[0][1] = 0.0f;
+    matrix[0][2] = 0.0f;
+    matrix[0][3] = 0.0f;
+    matrix[1][0] = 0.0f;
+    matrix[1][1] = 1.0f;
+    matrix[1][2] = 0.0f;
+    matrix[1][3] = 0.0f;
+    matrix[2][0] = 0.0f;
+    matrix[2][1] = 0.0f;
+    matrix[2][2] = 1.0f;
+    matrix[2][3] = 0.0f;
+    matrix[3][0] = 0.0f;
+    matrix[3][1] = 0.0f;
+    matrix[3][2] = 0.0f;
+    matrix[3][3] = 1.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel reset_array_of_0x10_floats
-/* 08CB00 7F057FD0 44801000 */  mtc1  $zero, $f2
-/* 08CB04 7F057FD4 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 08CB08 7F057FD8 44810000 */  mtc1  $at, $f0
-/* 08CB0C 7F057FDC E4820004 */  swc1  $f2, 4($a0)
-/* 08CB10 7F057FE0 E4820008 */  swc1  $f2, 8($a0)
-/* 08CB14 7F057FE4 E482000C */  swc1  $f2, 0xc($a0)
-/* 08CB18 7F057FE8 E4820010 */  swc1  $f2, 0x10($a0)
-/* 08CB1C 7F057FEC E4820018 */  swc1  $f2, 0x18($a0)
-/* 08CB20 7F057FF0 E482001C */  swc1  $f2, 0x1c($a0)
-/* 08CB24 7F057FF4 E4820020 */  swc1  $f2, 0x20($a0)
-/* 08CB28 7F057FF8 E4820024 */  swc1  $f2, 0x24($a0)
-/* 08CB2C 7F057FFC E482002C */  swc1  $f2, 0x2c($a0)
-/* 08CB30 7F058000 E4820030 */  swc1  $f2, 0x30($a0)
-/* 08CB34 7F058004 E4820034 */  swc1  $f2, 0x34($a0)
-/* 08CB38 7F058008 E4820038 */  swc1  $f2, 0x38($a0)
-/* 08CB3C 7F05800C E4800000 */  swc1  $f0, ($a0)
-/* 08CB40 7F058010 E4800014 */  swc1  $f0, 0x14($a0)
-/* 08CB44 7F058014 E4800028 */  swc1  $f0, 0x28($a0)
-/* 08CB48 7F058018 03E00008 */  jr    $ra
-/* 08CB4C 7F05801C E480003C */   swc1  $f0, 0x3c($a0)
-)
-#endif
 
-void matrix_4x4_copy(f32* src, f32* dst) {
+void matrix_4x4_copy(f32 src[4][4], f32 dst[4][4]) {
     s32 i;
     for (i = 0; i < 4; i++) {
-        dst[(i * 4) + 0] = src[(i * 4) + 0];
-        dst[(i * 4) + 1] = src[(i * 4) + 1];
-        dst[(i * 4) + 2] = src[(i * 4) + 2];
-        dst[(i * 4) + 3] = src[(i * 4) + 3];
+        dst[i][0] = src[i][0];
+        dst[i][1] = src[i][1];
+        dst[i][2] = src[i][2];
+        dst[i][3] = src[i][3];
     }
 }
-
-//#ifdef NONMATCHING
-// void matrix_4x4_copy(void) {
-
-// }
-// #else
-// GLOBAL_ASM(
-// .text
-// glabel matrix_4x4_copy
-// /* 08CB50 7F058020 00803025 */  move  $v1, $a0
-// /* 08CB54 7F058024 24040004 */  li    $a0, 4
-// /* 08CB58 7F058028 00001025 */  move  $v0, $zero
-// /* 08CB5C 7F05802C 00A01825 */  move  $a2, $a1
-// .L7F058030:
-// /* 08CB60 7F058030 C4C40000 */  lwc1  $f4, ($a2)
-// /* 08CB64 7F058034 24420001 */  addiu $v0, $v0, 1
-// /* 08CB68 7F058038 24630010 */  addiu $v1, $v1, 0x10
-// /* 08CB6C 7F05803C E464FFF0 */  swc1  $f4, -0x10($v1)
-// /* 08CB70 7F058040 C4C60004 */  lwc1  $f6, 4($a2)
-// /* 08CB74 7F058044 24C60010 */  addiu $a2, $a2, 0x10
-// /* 08CB78 7F058048 E466FFF4 */  swc1  $f6, -0xc($v1)
-// /* 08CB7C 7F05804C C4C8FFF8 */  lwc1  $f8, -8($a2)
-// /* 08CB80 7F058050 E468FFF8 */  swc1  $f8, -8($v1)
-// /* 08CB84 7F058054 C4CAFFFC */  lwc1  $f10, -4($a2)
-// /* 08CB88 7F058058 1444FFF5 */  bne   $v0, $a0, .L7F058030
-// /* 08CB8C 7F05805C E46AFFFC */   swc1  $f10, -4($v1)
-// /* 08CB90 7F058060 03E00008 */  jr    $ra
-// /* 08CB94 7F058064 00000000 */   nop   
-// )
-// #endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F058068(void) {
@@ -972,7 +922,7 @@ glabel init_something_copy_posdata_to_it
 /* 08D498 7F058968 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 08D49C 7F05896C AFA40018 */  sw    $a0, 0x18($sp)
 /* 08D4A0 7F058970 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 08D4A4 7F058974 0FC15FF4 */  jal   reset_array_of_0x10_floats
+/* 08D4A4 7F058974 0FC15FF4 */  jal   matrix_4x4_set_identity
 /* 08D4A8 7F058978 00A02025 */   move  $a0, $a1
 /* 08D4AC 7F05897C 8FA40018 */  lw    $a0, 0x18($sp)
 /* 08D4B0 7F058980 0FC16266 */  jal   copies_first_3_floats_from_a0_to_a1_plus_0x30
@@ -2589,7 +2539,7 @@ glabel sub_GAME_7F059B58
 /* 08E7F4 7F059CC4 10000003 */  b     .L7F059CD4
 /* 08E7F8 7F059CC8 E606003C */   swc1  $f6, 0x3c($s0)
 .L7F059CCC:
-/* 08E7FC 7F059CCC 0FC15FF4 */  jal   reset_array_of_0x10_floats
+/* 08E7FC 7F059CCC 0FC15FF4 */  jal   matrix_4x4_set_identity
 /* 08E800 7F059CD0 02002025 */   move  $a0, $s0
 .L7F059CD4:
 /* 08E804 7F059CD4 8FBF0024 */  lw    $ra, 0x24($sp)

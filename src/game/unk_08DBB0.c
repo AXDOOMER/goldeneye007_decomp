@@ -767,7 +767,7 @@ glabel sub_GAME_7F08E240
 /* 0C2F7C 7F08E44C 8E040000 */  lw    $a0, ($s0)
 /* 0C2F80 7F08E450 0FC1B5AC */  jal   subcalcpos
 /* 0C2F84 7F08E454 24840598 */   addiu $a0, $a0, 0x598
-/* 0C2F88 7F08E458 0FC15FF4 */  jal   reset_array_of_0x10_floats
+/* 0C2F88 7F08E458 0FC15FF4 */  jal   matrix_4x4_set_identity
 /* 0C2F8C 7F08E45C 27A40040 */   addiu $a0, $sp, 0x40
 /* 0C2F90 7F08E460 8E020000 */  lw    $v0, ($s0)
 /* 0C2F94 7F08E464 27AC0040 */  addiu $t4, $sp, 0x40

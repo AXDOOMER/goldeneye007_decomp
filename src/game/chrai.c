@@ -8249,7 +8249,7 @@ actionFC_Launch_Shuttle_2:
 /* 06ECB8 7F03A188 AFA30088 */   sw    $v1, 0x88($sp)
 /* 06ECBC 7F03A18C 8FA30088 */  lw    $v1, 0x88($sp)
 /* 06ECC0 7F03A190 8C64006C */  lw    $a0, 0x6c($v1)
-/* 06ECC4 7F03A194 0FC15FF4 */  jal   reset_array_of_0x10_floats
+/* 06ECC4 7F03A194 0FC15FF4 */  jal   matrix_4x4_set_identity
 /* 06ECC8 7F03A198 24840020 */   addiu $a0, $a0, 0x20
 /* 06ECCC 7F03A19C 8FA30088 */  lw    $v1, 0x88($sp)
 /* 06ECD0 7F03A1A0 3C018005 */  lui   $at, %hi(D_80052974)
@@ -14116,7 +14116,7 @@ actionFC_Launch_Shuttle_2:
 /* 06ECB8 7F03A188 AFA30088 */   sw    $v1, 0x88($sp)
 /* 06ECBC 7F03A18C 8FA30088 */  lw    $v1, 0x88($sp)
 /* 06ECC0 7F03A190 8C64006C */  lw    $a0, 0x6c($v1)
-/* 06ECC4 7F03A194 0FC15FF4 */  jal   reset_array_of_0x10_floats
+/* 06ECC4 7F03A194 0FC15FF4 */  jal   matrix_4x4_set_identity
 /* 06ECC8 7F03A198 24840020 */   addiu $a0, $a0, 0x20
 /* 06ECCC 7F03A19C 8FA30088 */  lw    $v1, 0x88($sp)
 /* 06ECD0 7F03A1A0 3C018005 */  lui   $at, %hi(D_80052974)

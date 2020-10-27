@@ -7652,7 +7652,7 @@ glabel sub_GAME_7F044B38
 /* 079B64 7F045034 C60C00A0 */   lwc1  $f12, 0xa0($s0)
 /* 079B68 7F045038 26040018 */  addiu $a0, $s0, 0x18
 /* 079B6C 7F04503C E7A00070 */  swc1  $f0, 0x70($sp)
-/* 079B70 7F045040 0FC15FF4 */  jal   reset_array_of_0x10_floats
+/* 079B70 7F045040 0FC15FF4 */  jal   matrix_4x4_set_identity
 /* 079B74 7F045044 AFA40058 */   sw    $a0, 0x58($sp)
 /* 079B78 7F045048 C7A80074 */  lwc1  $f8, 0x74($sp)
 /* 079B7C 7F04504C 8FA50058 */  lw    $a1, 0x58($sp)
@@ -11780,7 +11780,7 @@ glabel object_interaction
 /* 07D574 7F048A44 8E8F0008 */   lw    $t7, 8($s4)
 /* 07D578 7F048A48 AFA202F8 */  sw    $v0, 0x2f8($sp)
 .L7F048A4C:
-/* 07D57C 7F048A4C 0FC15FF4 */  jal   reset_array_of_0x10_floats
+/* 07D57C 7F048A4C 0FC15FF4 */  jal   matrix_4x4_set_identity
 /* 07D580 7F048A50 AFA40074 */   sw    $a0, 0x74($sp)
 /* 07D584 7F048A54 8E8E0008 */  lw    $t6, 8($s4)
 /* 07D588 7F048A58 8FA202F8 */  lw    $v0, 0x2f8($sp)
@@ -16886,7 +16886,7 @@ glabel object_interaction
 /* 07D9B8 7F048E48 8E8C0008 */   lw    $t4, 8($s4)
 /* 07D9BC 7F048E4C AFA202FC */  sw    $v0, 0x2fc($sp)
 .Ljp7F048E50:
-/* 07D9C0 7F048E50 0FC1613C */  jal   reset_array_of_0x10_floats
+/* 07D9C0 7F048E50 0FC1613C */  jal   matrix_4x4_set_identity
 /* 07D9C4 7F048E54 AFA40078 */   sw    $a0, 0x78($sp)
 /* 07D9C8 7F048E58 8E890008 */  lw    $t1, 8($s4)
 /* 07D9CC 7F048E5C 8FA202FC */  lw    $v0, 0x2fc($sp)
@@ -22568,7 +22568,7 @@ glabel sub_GAME_7F04C130
 /* 081488 7F04C958 8E0A0014 */  lw    $t2, 0x14($s0)
 .L7F04C95C:
 /* 08148C 7F04C95C 27A400B8 */  addiu $a0, $sp, 0xb8
-/* 081490 7F04C960 0FC15FF4 */  jal   reset_array_of_0x10_floats
+/* 081490 7F04C960 0FC15FF4 */  jal   matrix_4x4_set_identity
 /* 081494 7F04C964 AC4A0014 */   sw    $t2, 0x14($v0)
 /* 081498 7F04C968 8FB900F8 */  lw    $t9, 0xf8($sp)
 /* 08149C 7F04C96C 27A500B8 */  addiu $a1, $sp, 0xb8
@@ -34381,7 +34381,7 @@ glabel sub_GAME_7F05480C
 /* 089388 7F054858 37280001 */  ori   $t0, $t9, 1
 /* 08938C 7F05485C AC480000 */  sw    $t0, ($v0)
 /* 089390 7F054860 8CA4006C */  lw    $a0, 0x6c($a1)
-/* 089394 7F054864 0FC15FF4 */  jal   reset_array_of_0x10_floats
+/* 089394 7F054864 0FC15FF4 */  jal   matrix_4x4_set_identity
 /* 089398 7F054868 24840020 */   addiu $a0, $a0, 0x20
 /* 08939C 7F05486C 8FBF0014 */  lw    $ra, 0x14($sp)
 .L7F054870:
