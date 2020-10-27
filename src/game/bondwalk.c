@@ -6795,7 +6795,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 096130 7F061600 10000004 */  b     .L7F061614
 /* 096134 7F061604 8FAF006C */   lw    $t7, 0x6c($sp)
 .L7F061608:
-/* 096138 7F061608 0FC16134 */  jal   sub_GAME_7F0584D0
+/* 096138 7F061608 0FC16134 */  jal   matrix_4x4_set_transform_with_rotation_around_y
 /* 09613C 7F06160C 8E050214 */   lw    $a1, 0x214($s0)
 /* 096140 7F061610 8FAF006C */  lw    $t7, 0x6c($sp)
 .L7F061614:
@@ -8579,7 +8579,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 096690 7F061B20 10000004 */  b     .Ljp7F061B34
 /* 096694 7F061B24 8FAF006C */   lw    $t7, 0x6c($sp)
 .Ljp7F061B28:
-/* 096698 7F061B28 0FC1627C */  jal   sub_GAME_7F0584D0
+/* 096698 7F061B28 0FC1627C */  jal   matrix_4x4_set_transform_with_rotation_around_y
 /* 09669C 7F061B2C 8E050214 */   lw    $a1, 0x214($s0)
 /* 0966A0 7F061B30 8FAF006C */  lw    $t7, 0x6c($sp)
 .Ljp7F061B34:
