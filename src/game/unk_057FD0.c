@@ -1014,26 +1014,9 @@ void matrix_scalar_multiply_3(f32 scalar, f32* matrix) {
     matrix[14] *= scalar;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F058C4C(void) {
-
+void sub_GAME_7F058C4C(f32 arg0) {
+    D_80032310 = (65536.0f * arg0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F058C4C
-/* 08D77C 7F058C4C 3C014780 */  li    $at, 0x47800000 # 65536.000000
-/* 08D780 7F058C50 44812000 */  mtc1  $at, $f4
-/* 08D784 7F058C54 3C018003 */  lui   $at, %hi(D_80032310)
-/* 08D788 7F058C58 460C2182 */  mul.s $f6, $f4, $f12
-/* 08D78C 7F058C5C 03E00008 */  jr    $ra
-/* 08D790 7F058C60 E4262310 */   swc1  $f6, %lo(D_80032310)($at)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F058C64(void) {
