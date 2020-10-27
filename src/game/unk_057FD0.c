@@ -999,57 +999,20 @@ void matrix_row_3_scalar_multiply(f32 scalar, f32* matrix) {
     matrix[14] *= scalar;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F058BB8(void) {
-
+void matrix_scalar_multiply_3(f32 scalar, f32* matrix) {
+    matrix[0] *= scalar;
+    matrix[4] *= scalar;
+    matrix[8] *= scalar;
+    matrix[12] *= scalar;
+    matrix[1] *= scalar;
+    matrix[5] *= scalar;
+    matrix[9] *= scalar;
+    matrix[13] *= scalar;
+    matrix[2] *= scalar;
+    matrix[6] *= scalar;
+    matrix[10] *= scalar;
+    matrix[14] *= scalar;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F058BB8
-/* 08D6E8 7F058BB8 C4A40000 */  lwc1  $f4, ($a1)
-/* 08D6EC 7F058BBC C4A80010 */  lwc1  $f8, 0x10($a1)
-/* 08D6F0 7F058BC0 C4B00020 */  lwc1  $f16, 0x20($a1)
-/* 08D6F4 7F058BC4 460C2182 */  mul.s $f6, $f4, $f12
-/* 08D6F8 7F058BC8 C4A40030 */  lwc1  $f4, 0x30($a1)
-/* 08D6FC 7F058BCC 460C4282 */  mul.s $f10, $f8, $f12
-/* 08D700 7F058BD0 C4A80004 */  lwc1  $f8, 4($a1)
-/* 08D704 7F058BD4 460C8482 */  mul.s $f18, $f16, $f12
-/* 08D708 7F058BD8 E4A60000 */  swc1  $f6, ($a1)
-/* 08D70C 7F058BDC C4B00014 */  lwc1  $f16, 0x14($a1)
-/* 08D710 7F058BE0 460C2182 */  mul.s $f6, $f4, $f12
-/* 08D714 7F058BE4 E4AA0010 */  swc1  $f10, 0x10($a1)
-/* 08D718 7F058BE8 C4A40024 */  lwc1  $f4, 0x24($a1)
-/* 08D71C 7F058BEC 460C4282 */  mul.s $f10, $f8, $f12
-/* 08D720 7F058BF0 E4B20020 */  swc1  $f18, 0x20($a1)
-/* 08D724 7F058BF4 C4A80034 */  lwc1  $f8, 0x34($a1)
-/* 08D728 7F058BF8 460C8482 */  mul.s $f18, $f16, $f12
-/* 08D72C 7F058BFC E4A60030 */  swc1  $f6, 0x30($a1)
-/* 08D730 7F058C00 C4B00008 */  lwc1  $f16, 8($a1)
-/* 08D734 7F058C04 460C2182 */  mul.s $f6, $f4, $f12
-/* 08D738 7F058C08 E4AA0004 */  swc1  $f10, 4($a1)
-/* 08D73C 7F058C0C C4A40018 */  lwc1  $f4, 0x18($a1)
-/* 08D740 7F058C10 460C4282 */  mul.s $f10, $f8, $f12
-/* 08D744 7F058C14 E4B20014 */  swc1  $f18, 0x14($a1)
-/* 08D748 7F058C18 C4A80028 */  lwc1  $f8, 0x28($a1)
-/* 08D74C 7F058C1C 460C8482 */  mul.s $f18, $f16, $f12
-/* 08D750 7F058C20 E4A60024 */  swc1  $f6, 0x24($a1)
-/* 08D754 7F058C24 C4B00038 */  lwc1  $f16, 0x38($a1)
-/* 08D758 7F058C28 460C2182 */  mul.s $f6, $f4, $f12
-/* 08D75C 7F058C2C E4AA0034 */  swc1  $f10, 0x34($a1)
-/* 08D760 7F058C30 460C4282 */  mul.s $f10, $f8, $f12
-/* 08D764 7F058C34 E4B20008 */  swc1  $f18, 8($a1)
-/* 08D768 7F058C38 460C8482 */  mul.s $f18, $f16, $f12
-/* 08D76C 7F058C3C E4A60018 */  swc1  $f6, 0x18($a1)
-/* 08D770 7F058C40 E4AA0028 */  swc1  $f10, 0x28($a1)
-/* 08D774 7F058C44 03E00008 */  jr    $ra
-/* 08D778 7F058C48 E4B20038 */   swc1  $f18, 0x38($a1)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F058C4C(void) {
