@@ -15,6 +15,7 @@ f32 D_80032314 = 65536.0;
 // rodata
 //D:800536F0
 
+typedef f32 vec3[3];
 typedef f32 mat44[4][4];
 
 void matrix_4x4_set_identity(mat44 matrix) {
@@ -896,7 +897,7 @@ glabel sub_GAME_7F05892C
 /* 08D470 7F058940 0FC161C5 */  jal   sub_GAME_7F058714
 /* 08D474 7F058944 00C02825 */   move  $a1, $a2
 /* 08D478 7F058948 8FA40018 */  lw    $a0, 0x18($sp)
-/* 08D47C 7F05894C 0FC16266 */  jal   copies_first_3_floats_from_a0_to_a1_plus_0x30
+/* 08D47C 7F05894C 0FC16266 */  jal   matrix_4x4_set_translation
 /* 08D480 7F058950 8FA50020 */   lw    $a1, 0x20($sp)
 /* 08D484 7F058954 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 08D488 7F058958 27BD0018 */  addiu $sp, $sp, 0x18
@@ -924,7 +925,7 @@ glabel init_something_copy_posdata_to_it
 /* 08D4A4 7F058974 0FC15FF4 */  jal   matrix_4x4_set_identity
 /* 08D4A8 7F058978 00A02025 */   move  $a0, $a1
 /* 08D4AC 7F05897C 8FA40018 */  lw    $a0, 0x18($sp)
-/* 08D4B0 7F058980 0FC16266 */  jal   copies_first_3_floats_from_a0_to_a1_plus_0x30
+/* 08D4B0 7F058980 0FC16266 */  jal   matrix_4x4_set_translation
 /* 08D4B4 7F058984 8FA5001C */   lw    $a1, 0x1c($sp)
 /* 08D4B8 7F058988 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 08D4BC 7F05898C 27BD0018 */  addiu $sp, $sp, 0x18
@@ -933,31 +934,11 @@ glabel init_something_copy_posdata_to_it
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
-void copies_first_3_floats_from_a0_to_a1_plus_0x30(void) {
-
+void matrix_4x4_set_translation(vec3 translation, mat44 transform) {
+    transform[3][0] = translation[0];
+    transform[3][1] = translation[1];
+    transform[3][2] = translation[2];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel copies_first_3_floats_from_a0_to_a1_plus_0x30
-/* 08D4C8 7F058998 C4840000 */  lwc1  $f4, ($a0)
-/* 08D4CC 7F05899C E4A40030 */  swc1  $f4, 0x30($a1)
-/* 08D4D0 7F0589A0 C4860004 */  lwc1  $f6, 4($a0)
-/* 08D4D4 7F0589A4 E4A60034 */  swc1  $f6, 0x34($a1)
-/* 08D4D8 7F0589A8 C4880008 */  lwc1  $f8, 8($a0)
-/* 08D4DC 7F0589AC 03E00008 */  jr    $ra
-/* 08D4E0 7F0589B0 E4A80038 */   swc1  $f8, 0x38($a1)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F0589B4(void) {
