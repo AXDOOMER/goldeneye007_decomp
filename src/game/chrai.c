@@ -5000,7 +5000,7 @@ action65_Object_Moved_To_Preset_4:
 /* 06BEAC 7F03737C 27A504B8 */  addiu $a1, $sp, 0x4b8
 /* 06BEB0 7F037380 50400004 */  beql  $v0, $zero, .L7F037394
 /* 06BEB4 7F037384 8E070028 */   lw    $a3, 0x28($s0)
-/* 06BEB8 7F037388 0FC1629F */  jal   matrix_multiply_A1_by_F12
+/* 06BEB8 7F037388 0FC1629F */  jal   matrix_scalar_multiply
 /* 06BEBC 7F03738C C44C0014 */   lwc1  $f12, 0x14($v0)
 /* 06BEC0 7F037390 8E070028 */  lw    $a3, 0x28($s0)
 .L7F037394:
@@ -8249,7 +8249,7 @@ actionFC_Launch_Shuttle_2:
 /* 06ECB8 7F03A188 AFA30088 */   sw    $v1, 0x88($sp)
 /* 06ECBC 7F03A18C 8FA30088 */  lw    $v1, 0x88($sp)
 /* 06ECC0 7F03A190 8C64006C */  lw    $a0, 0x6c($v1)
-/* 06ECC4 7F03A194 0FC15FF4 */  jal   reset_array_of_0x10_floats
+/* 06ECC4 7F03A194 0FC15FF4 */  jal   matrix_4x4_set_identity
 /* 06ECC8 7F03A198 24840020 */   addiu $a0, $a0, 0x20
 /* 06ECCC 7F03A19C 8FA30088 */  lw    $v1, 0x88($sp)
 /* 06ECD0 7F03A1A0 3C018005 */  lui   $at, %hi(D_80052974)
@@ -10867,7 +10867,7 @@ action65_Object_Moved_To_Preset_4:
 /* 06BEAC 7F03737C 27A504B8 */  addiu $a1, $sp, 0x4b8
 /* 06BEB0 7F037380 50400004 */  beql  $v0, $zero, .L7F037394
 /* 06BEB4 7F037384 8E070028 */   lw    $a3, 0x28($s0)
-/* 06BEB8 7F037388 0FC1629F */  jal   matrix_multiply_A1_by_F12
+/* 06BEB8 7F037388 0FC1629F */  jal   matrix_scalar_multiply
 /* 06BEBC 7F03738C C44C0014 */   lwc1  $f12, 0x14($v0)
 /* 06BEC0 7F037390 8E070028 */  lw    $a3, 0x28($s0)
 .L7F037394:
@@ -14116,7 +14116,7 @@ actionFC_Launch_Shuttle_2:
 /* 06ECB8 7F03A188 AFA30088 */   sw    $v1, 0x88($sp)
 /* 06ECBC 7F03A18C 8FA30088 */  lw    $v1, 0x88($sp)
 /* 06ECC0 7F03A190 8C64006C */  lw    $a0, 0x6c($v1)
-/* 06ECC4 7F03A194 0FC15FF4 */  jal   reset_array_of_0x10_floats
+/* 06ECC4 7F03A194 0FC15FF4 */  jal   matrix_4x4_set_identity
 /* 06ECC8 7F03A198 24840020 */   addiu $a0, $a0, 0x20
 /* 06ECCC 7F03A19C 8FA30088 */  lw    $v1, 0x88($sp)
 /* 06ECD0 7F03A1A0 3C018005 */  lui   $at, %hi(D_80052974)
