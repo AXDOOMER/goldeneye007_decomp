@@ -4432,7 +4432,7 @@ loop_1:
     temp_s4->unk0 = 0x3820010;
     sub_GAME_7F059694(&spF8, 0.0f, 0.0f, 0x453b8000, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
     sp150 = sub_GAME_7F0BD714(something_legalscreen_constructor->unk8->unkE << 6);
-    matrix_multiply_A1_by_F12(D_80051A18, &spF8);
+    matrix_scalar_multiply(D_80051A18, &spF8);
     matrix_4x4_copy(&spF8, sp150);
     something_legalscreen_constructor->unkC = sp150;
     sub_GAME_7F06EFC4(something_legalscreen_constructor);
@@ -4581,7 +4581,7 @@ glabel constructor_menu04_goldeneyelogo
 /* 040174 7F00B644 3C018005 */  lui   $at, %hi(D_80051A18)
 /* 040178 7F00B648 AFA20150 */  sw    $v0, 0x150($sp)
 /* 04017C 7F00B64C C42C1A18 */  lwc1  $f12, %lo(D_80051A18)($at)
-/* 040180 7F00B650 0FC1629F */  jal   matrix_multiply_A1_by_F12
+/* 040180 7F00B650 0FC1629F */  jal   matrix_scalar_multiply
 /* 040184 7F00B654 02202825 */   move  $a1, $s1
 /* 040188 7F00B658 02202025 */  move  $a0, $s1
 /* 04018C 7F00B65C 0FC16008 */  jal   matrix_4x4_copy
@@ -5223,7 +5223,7 @@ s32 interface_menu05_fileselect(void)
 loop_8:
     sub_GAME_7F059694(&spC8, 0, 0, 0x457a0000, 1.0f);
     init_something_copy_posdata_to_it(sp54, &sp88);
-    matrix_multiply_A1_by_F12(D_80051A24, &sp88);
+    matrix_scalar_multiply(D_80051A24, &sp88);
     sub_GAME_7F058068(&spC8, &sp88);
     (*phi_s0)->unkC = sub_GAME_7F0BD714((*phi_s0)->unk8->unkE << 6);
     matrix_4x4_copy(&sp88, (*phi_s0)->unkC);
@@ -5522,7 +5522,7 @@ glabel interface_menu05_fileselect
 /* 04083C 7F00BD0C 02602825 */   move  $a1, $s3
 /* 040840 7F00BD10 3C018005 */  lui   $at, %hi(D_80051A24)
 /* 040844 7F00BD14 C42C1A24 */  lwc1  $f12, %lo(D_80051A24)($at)
-/* 040848 7F00BD18 0FC1629F */  jal   matrix_multiply_A1_by_F12
+/* 040848 7F00BD18 0FC1629F */  jal   matrix_scalar_multiply
 /* 04084C 7F00BD1C 02602825 */   move  $a1, $s3
 /* 040850 7F00BD20 27A400C8 */  addiu $a0, $sp, 0xc8
 /* 040854 7F00BD24 0FC1601A */  jal   sub_GAME_7F058068
@@ -7810,7 +7810,7 @@ loop_1:
     temp_f2 = temp_v0->unk4 + D_8002AFC8;
     sub_GAME_7F059694(0, &spC8, temp_f0, temp_f2, 4000.0f + D_8002AFCC, temp_f0, temp_f2, 1.0f);
     init_something_copy_posdata_to_it(&D_8002AB94 + (selected_folder_num * 0xc), &sp88);
-    matrix_multiply_A1_by_F12(0x3e800000, &sp88);
+    matrix_scalar_multiply(0x3e800000, &sp88);
     sub_GAME_7F058068(&spC8, &sp88);
     temp_ret = sub_GAME_7F0BD714(ptr_folder_object_instance->unk8->unkE << 6);
     sp11C = temp_ret;
@@ -7911,7 +7911,7 @@ glabel sub_GAME_7F00D5E8
 /* 04221C 7F00D6EC 00000000 */   nop   
 /* 042220 7F00D6F0 3C013E80 */  li    $at, 0x3E800000 # 0.250000
 /* 042224 7F00D6F4 44816000 */  mtc1  $at, $f12
-/* 042228 7F00D6F8 0FC1629F */  jal   matrix_multiply_A1_by_F12
+/* 042228 7F00D6F8 0FC1629F */  jal   matrix_scalar_multiply
 /* 04222C 7F00D6FC 02002825 */   move  $a1, $s0
 /* 042230 7F00D700 27A400C8 */  addiu $a0, $sp, 0xc8
 /* 042234 7F00D704 0FC1601A */  jal   sub_GAME_7F058068
