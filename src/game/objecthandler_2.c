@@ -1737,7 +1737,7 @@ glabel process_01_group_heading
 /* 0A236C 7F06D83C 45030006 */  bc1tl .L7F06D858
 /* 0A2370 7F06D840 00E02025 */   move  $a0, $a3
 /* 0A2374 7F06D844 46004306 */  mov.s $f12, $f8
-/* 0A2378 7F06D848 0FC162C4 */  jal   sub_GAME_7F058B10
+/* 0A2378 7F06D848 0FC162C4 */  jal   matrix_scalar_multiply_2
 /* 0A237C 7F06D84C AFA70068 */   sw    $a3, 0x68($sp)
 /* 0A2380 7F06D850 8FA70068 */  lw    $a3, 0x68($sp)
 /* 0A2384 7F06D854 00E02025 */  move  $a0, $a3
@@ -1759,7 +1759,7 @@ glabel process_01_group_heading
 /* 0A23BC 7F06D88C 00000000 */  nop   
 /* 0A23C0 7F06D890 45030004 */  bc1tl .L7F06D8A4
 /* 0A23C4 7F06D894 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0A23C8 7F06D898 0FC162C4 */  jal   sub_GAME_7F058B10
+/* 0A23C8 7F06D898 0FC162C4 */  jal   matrix_scalar_multiply_2
 /* 0A23CC 7F06D89C 46008306 */   mov.s $f12, $f16
 /* 0A23D0 7F06D8A0 8FBF0014 */  lw    $ra, 0x14($sp)
 .L7F06D8A4:

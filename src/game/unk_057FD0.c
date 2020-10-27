@@ -980,48 +980,17 @@ void matrix_scalar_multiply(f32 scalar, f32* matrix) {
     matrix[11] *= scalar;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F058B10(void) {
-
+void matrix_scalar_multiply_2(f32 scalar, f32* matrix) {
+    matrix[0] *= scalar;
+    matrix[1] *= scalar;
+    matrix[2] *= scalar;
+    matrix[4] *= scalar;
+    matrix[5] *= scalar;
+    matrix[6] *= scalar;
+    matrix[8] *= scalar;
+    matrix[9] *= scalar;
+    matrix[10] *= scalar;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F058B10
-/* 08D640 7F058B10 C4A40000 */  lwc1  $f4, ($a1)
-/* 08D644 7F058B14 C4A80004 */  lwc1  $f8, 4($a1)
-/* 08D648 7F058B18 C4B00008 */  lwc1  $f16, 8($a1)
-/* 08D64C 7F058B1C 460C2182 */  mul.s $f6, $f4, $f12
-/* 08D650 7F058B20 C4A40010 */  lwc1  $f4, 0x10($a1)
-/* 08D654 7F058B24 460C4282 */  mul.s $f10, $f8, $f12
-/* 08D658 7F058B28 C4A80014 */  lwc1  $f8, 0x14($a1)
-/* 08D65C 7F058B2C 460C8482 */  mul.s $f18, $f16, $f12
-/* 08D660 7F058B30 E4A60000 */  swc1  $f6, ($a1)
-/* 08D664 7F058B34 C4B00018 */  lwc1  $f16, 0x18($a1)
-/* 08D668 7F058B38 460C2182 */  mul.s $f6, $f4, $f12
-/* 08D66C 7F058B3C E4AA0004 */  swc1  $f10, 4($a1)
-/* 08D670 7F058B40 C4A40020 */  lwc1  $f4, 0x20($a1)
-/* 08D674 7F058B44 460C4282 */  mul.s $f10, $f8, $f12
-/* 08D678 7F058B48 E4B20008 */  swc1  $f18, 8($a1)
-/* 08D67C 7F058B4C C4A80024 */  lwc1  $f8, 0x24($a1)
-/* 08D680 7F058B50 460C8482 */  mul.s $f18, $f16, $f12
-/* 08D684 7F058B54 E4A60010 */  swc1  $f6, 0x10($a1)
-/* 08D688 7F058B58 C4B00028 */  lwc1  $f16, 0x28($a1)
-/* 08D68C 7F058B5C 460C2182 */  mul.s $f6, $f4, $f12
-/* 08D690 7F058B60 E4AA0014 */  swc1  $f10, 0x14($a1)
-/* 08D694 7F058B64 460C4282 */  mul.s $f10, $f8, $f12
-/* 08D698 7F058B68 E4B20018 */  swc1  $f18, 0x18($a1)
-/* 08D69C 7F058B6C 460C8482 */  mul.s $f18, $f16, $f12
-/* 08D6A0 7F058B70 E4A60020 */  swc1  $f6, 0x20($a1)
-/* 08D6A4 7F058B74 E4AA0024 */  swc1  $f10, 0x24($a1)
-/* 08D6A8 7F058B78 03E00008 */  jr    $ra
-/* 08D6AC 7F058B7C E4B20028 */   swc1  $f18, 0x28($a1)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F058B80(void) {
