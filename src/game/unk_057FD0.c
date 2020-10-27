@@ -15,7 +15,9 @@ f32 D_80032314 = 65536.0;
 // rodata
 //D:800536F0
 
-void matrix_4x4_set_identity(f32 matrix[4][4]) {
+typedef f32 mat44[4][4];
+
+void matrix_4x4_set_identity(mat44 matrix) {
     matrix[0][0] = 1.0f;
     matrix[0][1] = 0.0f;
     matrix[0][2] = 0.0f;
@@ -34,7 +36,7 @@ void matrix_4x4_set_identity(f32 matrix[4][4]) {
     matrix[3][3] = 1.0f;
 }
 
-void matrix_4x4_copy(f32 src[4][4], f32 dst[4][4]) {
+void matrix_4x4_copy(mat44 src, mat44 dst) {
     s32 i;
     for (i = 0; i < 4; i++) {
         dst[i][0] = src[i][0];
@@ -43,6 +45,7 @@ void matrix_4x4_copy(f32 src[4][4], f32 dst[4][4]) {
         dst[i][3] = src[i][3];
     }
 }
+
 
 #ifdef NONMATCHING
 void sub_GAME_7F058068(void) {
@@ -360,10 +363,6 @@ glabel sub_GAME_7F058274
 /* 08CEAC 7F05837C E4C6003C */   swc1  $f6, 0x3c($a2)
 )
 #endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F058380(void) {
@@ -3517,28 +3516,6 @@ glabel sub_GAME_7F05A928
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F05A9B8(void) {
-
+f32 sub_GAME_7F05A9B8(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
+    return (arg0 * arg3) - (arg1 * arg2);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05A9B8
-/* 08F4E8 7F05A9B8 AFA7000C */  sw    $a3, 0xc($sp)
-/* 08F4EC 7F05A9BC C7A4000C */  lwc1  $f4, 0xc($sp)
-/* 08F4F0 7F05A9C0 AFA60008 */  sw    $a2, 8($sp)
-/* 08F4F4 7F05A9C4 C7A80008 */  lwc1  $f8, 8($sp)
-/* 08F4F8 7F05A9C8 46046182 */  mul.s $f6, $f12, $f4
-/* 08F4FC 7F05A9CC 00000000 */  nop   
-/* 08F500 7F05A9D0 46087282 */  mul.s $f10, $f14, $f8
-/* 08F504 7F05A9D4 03E00008 */  jr    $ra
-/* 08F508 7F05A9D8 460A3001 */   sub.s $f0, $f6, $f10
-)
-#endif
- 
-
