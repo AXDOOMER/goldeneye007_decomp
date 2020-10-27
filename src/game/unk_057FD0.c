@@ -940,32 +940,11 @@ void matrix_4x4_set_translation(vec3 translation, mat44 transform) {
     transform[3][2] = translation[2];
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F0589B4(void) {
-
+void vec3_scalar_multiply(f32 scalar, vec3 vector) {
+    vector[0] *= scalar;
+    vector[1] *= scalar;
+    vector[2] *= scalar;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0589B4
-/* 08D4E4 7F0589B4 C4A40000 */  lwc1  $f4, ($a1)
-/* 08D4E8 7F0589B8 C4A80004 */  lwc1  $f8, 4($a1)
-/* 08D4EC 7F0589BC C4B00008 */  lwc1  $f16, 8($a1)
-/* 08D4F0 7F0589C0 460C2182 */  mul.s $f6, $f4, $f12
-/* 08D4F4 7F0589C4 00000000 */  nop   
-/* 08D4F8 7F0589C8 460C4282 */  mul.s $f10, $f8, $f12
-/* 08D4FC 7F0589CC 00000000 */  nop   
-/* 08D500 7F0589D0 460C8482 */  mul.s $f18, $f16, $f12
-/* 08D504 7F0589D4 E4A60000 */  swc1  $f6, ($a1)
-/* 08D508 7F0589D8 E4AA0004 */  swc1  $f10, 4($a1)
-/* 08D50C 7F0589DC 03E00008 */  jr    $ra
-/* 08D510 7F0589E0 E4B20008 */   swc1  $f18, 8($a1)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F0589E4(void) {
