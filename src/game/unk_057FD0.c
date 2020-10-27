@@ -992,34 +992,12 @@ void matrix_scalar_multiply_2(f32 scalar, f32* matrix) {
     matrix[10] *= scalar;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F058B80(void) {
-
+void matrix_row_3_scalar_multiply(f32 scalar, f32* matrix) {
+    matrix[2] *= scalar;
+    matrix[6] *= scalar;
+    matrix[10] *= scalar;
+    matrix[14] *= scalar;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F058B80
-/* 08D6B0 7F058B80 C4A40008 */  lwc1  $f4, 8($a1)
-/* 08D6B4 7F058B84 C4A80018 */  lwc1  $f8, 0x18($a1)
-/* 08D6B8 7F058B88 C4B00028 */  lwc1  $f16, 0x28($a1)
-/* 08D6BC 7F058B8C 460C2182 */  mul.s $f6, $f4, $f12
-/* 08D6C0 7F058B90 C4A40038 */  lwc1  $f4, 0x38($a1)
-/* 08D6C4 7F058B94 460C4282 */  mul.s $f10, $f8, $f12
-/* 08D6C8 7F058B98 00000000 */  nop   
-/* 08D6CC 7F058B9C 460C8482 */  mul.s $f18, $f16, $f12
-/* 08D6D0 7F058BA0 E4A60008 */  swc1  $f6, 8($a1)
-/* 08D6D4 7F058BA4 460C2182 */  mul.s $f6, $f4, $f12
-/* 08D6D8 7F058BA8 E4AA0018 */  swc1  $f10, 0x18($a1)
-/* 08D6DC 7F058BAC E4B20028 */  swc1  $f18, 0x28($a1)
-/* 08D6E0 7F058BB0 03E00008 */  jr    $ra
-/* 08D6E4 7F058BB4 E4A60038 */   swc1  $f6, 0x38($a1)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F058BB8(void) {

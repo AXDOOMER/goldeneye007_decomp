@@ -6583,7 +6583,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095DF8 7F0612C8 0FC1601A */  jal   sub_GAME_7F058068
 /* 095DFC 7F0612CC 27A501E4 */   addiu $a1, $sp, 0x1e4
 /* 095E00 7F0612D0 C7AC007C */  lwc1  $f12, 0x7c($sp)
-/* 095E04 7F0612D4 0FC162E0 */  jal   sub_GAME_7F058B80
+/* 095E04 7F0612D4 0FC162E0 */  jal   matrix_row_3_scalar_multiply
 /* 095E08 7F0612D8 27A501E4 */   addiu $a1, $sp, 0x1e4
 /* 095E0C 7F0612DC 27A40154 */  addiu $a0, $sp, 0x154
 /* 095E10 7F0612E0 0FC1601A */  jal   sub_GAME_7F058068
@@ -6706,7 +6706,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095FDC 7F0614AC 0FC1601A */  jal   sub_GAME_7F058068
 /* 095FE0 7F0614B0 27A501E4 */   addiu $a1, $sp, 0x1e4
 /* 095FE4 7F0614B4 C7AC007C */  lwc1  $f12, 0x7c($sp)
-/* 095FE8 7F0614B8 0FC162E0 */  jal   sub_GAME_7F058B80
+/* 095FE8 7F0614B8 0FC162E0 */  jal   matrix_row_3_scalar_multiply
 /* 095FEC 7F0614BC 27A501E4 */   addiu $a1, $sp, 0x1e4
 /* 095FF0 7F0614C0 27A40154 */  addiu $a0, $sp, 0x154
 /* 095FF4 7F0614C4 0FC1601A */  jal   sub_GAME_7F058068
@@ -8367,7 +8367,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 096358 7F0617E8 0FC16162 */  jal   sub_GAME_7F058068
 /* 09635C 7F0617EC 27A501E4 */   addiu $a1, $sp, 0x1e4
 /* 096360 7F0617F0 C7AC007C */  lwc1  $f12, 0x7c($sp)
-/* 096364 7F0617F4 0FC16428 */  jal   sub_GAME_7F058B80
+/* 096364 7F0617F4 0FC16428 */  jal   matrix_row_3_scalar_multiply
 /* 096368 7F0617F8 27A501E4 */   addiu $a1, $sp, 0x1e4
 /* 09636C 7F0617FC 27A40154 */  addiu $a0, $sp, 0x154
 /* 096370 7F061800 0FC16162 */  jal   sub_GAME_7F058068
@@ -8490,7 +8490,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 09653C 7F0619CC 0FC16162 */  jal   sub_GAME_7F058068
 /* 096540 7F0619D0 27A501E4 */   addiu $a1, $sp, 0x1e4
 /* 096544 7F0619D4 C7AC007C */  lwc1  $f12, 0x7c($sp)
-/* 096548 7F0619D8 0FC16428 */  jal   sub_GAME_7F058B80
+/* 096548 7F0619D8 0FC16428 */  jal   matrix_row_3_scalar_multiply
 /* 09654C 7F0619DC 27A501E4 */   addiu $a1, $sp, 0x1e4
 /* 096550 7F0619E0 27A40154 */  addiu $a0, $sp, 0x154
 /* 096554 7F0619E4 0FC16162 */  jal   sub_GAME_7F058068
