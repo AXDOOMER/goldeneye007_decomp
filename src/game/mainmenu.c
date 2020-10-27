@@ -3283,7 +3283,7 @@ loop_1:
     sub_GAME_7F059694(&spA0, 0.0f, 0.0f, 0x457a0000, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
     temp_ret = sub_GAME_7F0BD714(something_legalscreen_constructor->unk8->unkE << 6);
     spF4 = temp_ret;
-    sub_GAME_7F058020(&spA0, temp_ret);
+    matrix_4x4_copy(&spA0, temp_ret);
     something_legalscreen_constructor->unkC = spF4;
     sub_GAME_7F06EFC4(something_legalscreen_constructor);
     spEC = 3;
@@ -3294,7 +3294,7 @@ loop_1:
     if (something_legalscreen_constructor->unk8->unkE > 0)
     {
 loop_3:
-        sub_GAME_7F058020(something_legalscreen_constructor->unkC + phi_s1, &sp58);
+        matrix_4x4_copy(something_legalscreen_constructor->unkC + phi_s1, &sp58);
         sub_GAME_7F058C9C(&sp58, something_legalscreen_constructor->unkC + (phi_s0 << 6));
         temp_s0 = phi_s0 + 1;
         phi_s1 = phi_s1 + 0x40;
@@ -3373,7 +3373,7 @@ glabel constructor_menu00_legalscreen
 /* 03F4D8 7F00A9A8 01602025 */   move  $a0, $t3
 /* 03F4DC 7F00A9AC AFA200F4 */  sw    $v0, 0xf4($sp)
 /* 03F4E0 7F00A9B0 02002025 */  move  $a0, $s0
-/* 03F4E4 7F00A9B4 0FC16008 */  jal   sub_GAME_7F058020
+/* 03F4E4 7F00A9B4 0FC16008 */  jal   matrix_4x4_copy
 /* 03F4E8 7F00A9B8 00402825 */   move  $a1, $v0
 /* 03F4EC 7F00A9BC 8FAC00F4 */  lw    $t4, 0xf4($sp)
 /* 03F4F0 7F00A9C0 8E6D0000 */  lw    $t5, ($s3)
@@ -3399,7 +3399,7 @@ glabel constructor_menu00_legalscreen
 /* 03F540 7F00AA10 8C4E000C */  lw    $t6, 0xc($v0)
 .L7F00AA14:
 /* 03F544 7F00AA14 02402825 */  move  $a1, $s2
-/* 03F548 7F00AA18 0FC16008 */  jal   sub_GAME_7F058020
+/* 03F548 7F00AA18 0FC16008 */  jal   matrix_4x4_copy
 /* 03F54C 7F00AA1C 01D12021 */   addu  $a0, $t6, $s1
 /* 03F550 7F00AA20 8E680000 */  lw    $t0, ($s3)
 /* 03F554 7F00AA24 00105180 */  sll   $t2, $s0, 6
@@ -3834,7 +3834,7 @@ loop_1:
     D_8002A988.unk0 = (s8) phi_v1_2;
     flt_CODE_bss_80069614 = (f32) (flt_CODE_bss_80069614 + D_80051A04);
     sub_GAME_7F0585FC(flt_CODE_bss_80069614, &D_8002A988, &sp90);
-    sub_GAME_7F058BB8(flt_CODE_bss_80069618, &sp90);
+    matrix_scalar_multiply_3(flt_CODE_bss_80069618, &sp90);
     flt_CODE_bss_80069618 = (f32) (flt_CODE_bss_80069618 * D_80051A0C);
     if (D_80051A08 < flt_CODE_bss_80069618)
     {
@@ -3842,10 +3842,10 @@ loop_1:
     }
     sub_GAME_7F059694(&spE0, 0.0f, 0.0f, 0x457a0000, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
     sub_GAME_7F058068(&spE0, &sp90);
-    sub_GAME_7F058020(&sp90, &spE0);
+    matrix_4x4_copy(&sp90, &spE0);
     temp_ret_2 = sub_GAME_7F0BD714(something_legalscreen_constructor->unk8->unkE << 6);
     sp138 = temp_ret_2;
-    sub_GAME_7F058020(&spE0, temp_ret_2);
+    matrix_4x4_copy(&spE0, temp_ret_2);
     something_legalscreen_constructor->unkC = sp138;
     sub_GAME_7F06EFC4(something_legalscreen_constructor);
     sp130 = 3;
@@ -3858,7 +3858,7 @@ loop_1:
     if (something_legalscreen_constructor->unk8->unkE > 0)
     {
 loop_9:
-        sub_GAME_7F058020(something_legalscreen_constructor->unkC + phi_s1, &sp50);
+        matrix_4x4_copy(something_legalscreen_constructor->unkC + phi_s1, &sp50);
         sub_GAME_7F058C9C(&sp50, something_legalscreen_constructor->unkC + (phi_s0 << 6));
         temp_s0 = phi_s0 + 1;
         phi_s1 = phi_s1 + 0x40;
@@ -3965,7 +3965,7 @@ glabel constructor_menu01_nintendo
 /* 03FA00 7F00AED0 3C108007 */  lui   $s0, %hi(flt_CODE_bss_80069618)
 /* 03FA04 7F00AED4 26109618 */  addiu $s0, %lo(flt_CODE_bss_80069618) # addiu $s0, $s0, -0x69e8
 /* 03FA08 7F00AED8 C60C0000 */  lwc1  $f12, ($s0)
-/* 03FA0C 7F00AEDC 0FC162EE */  jal   sub_GAME_7F058BB8
+/* 03FA0C 7F00AEDC 0FC162EE */  jal   matrix_scalar_multiply_3
 /* 03FA10 7F00AEE0 02202825 */   move  $a1, $s1
 /* 03FA14 7F00AEE4 3C018005 */  lui   $at, %hi(D_80051A08)
 /* 03FA18 7F00AEE8 C4201A08 */  lwc1  $f0, %lo(D_80051A08)($at)
@@ -4000,7 +4000,7 @@ glabel constructor_menu01_nintendo
 /* 03FA88 7F00AF58 0FC1601A */  jal   sub_GAME_7F058068
 /* 03FA8C 7F00AF5C 02202825 */   move  $a1, $s1
 /* 03FA90 7F00AF60 02202025 */  move  $a0, $s1
-/* 03FA94 7F00AF64 0FC16008 */  jal   sub_GAME_7F058020
+/* 03FA94 7F00AF64 0FC16008 */  jal   matrix_4x4_copy
 /* 03FA98 7F00AF68 02002825 */   move  $a1, $s0
 /* 03FA9C 7F00AF6C 3C138003 */  lui   $s3, %hi(something_legalscreen_constructor)
 /* 03FAA0 7F00AF70 2673A958 */  addiu $s3, %lo(something_legalscreen_constructor) # addiu $s3, $s3, -0x56a8
@@ -4013,7 +4013,7 @@ glabel constructor_menu01_nintendo
 /* 03FABC 7F00AF8C 01602025 */   move  $a0, $t3
 /* 03FAC0 7F00AF90 AFA20138 */  sw    $v0, 0x138($sp)
 /* 03FAC4 7F00AF94 02002025 */  move  $a0, $s0
-/* 03FAC8 7F00AF98 0FC16008 */  jal   sub_GAME_7F058020
+/* 03FAC8 7F00AF98 0FC16008 */  jal   matrix_4x4_copy
 /* 03FACC 7F00AF9C 00402825 */   move  $a1, $v0
 /* 03FAD0 7F00AFA0 8FAC0138 */  lw    $t4, 0x138($sp)
 /* 03FAD4 7F00AFA4 8E6D0000 */  lw    $t5, ($s3)
@@ -4041,7 +4041,7 @@ glabel constructor_menu01_nintendo
 /* 03FB2C 7F00AFFC 8C49000C */  lw    $t1, 0xc($v0)
 .L7F00B000:
 /* 03FB30 7F00B000 02402825 */  move  $a1, $s2
-/* 03FB34 7F00B004 0FC16008 */  jal   sub_GAME_7F058020
+/* 03FB34 7F00B004 0FC16008 */  jal   matrix_4x4_copy
 /* 03FB38 7F00B008 01312021 */   addu  $a0, $t1, $s1
 /* 03FB3C 7F00B00C 8E6A0000 */  lw    $t2, ($s3)
 /* 03FB40 7F00B010 00106180 */  sll   $t4, $s0, 6
@@ -4432,8 +4432,8 @@ loop_1:
     temp_s4->unk0 = 0x3820010;
     sub_GAME_7F059694(&spF8, 0.0f, 0.0f, 0x453b8000, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
     sp150 = sub_GAME_7F0BD714(something_legalscreen_constructor->unk8->unkE << 6);
-    matrix_multiply_A1_by_F12(D_80051A18, &spF8);
-    sub_GAME_7F058020(&spF8, sp150);
+    matrix_scalar_multiply(D_80051A18, &spF8);
+    matrix_4x4_copy(&spF8, sp150);
     something_legalscreen_constructor->unkC = sp150;
     sub_GAME_7F06EFC4(something_legalscreen_constructor);
     sp148 = 3;
@@ -4444,7 +4444,7 @@ loop_1:
     if (something_legalscreen_constructor->unk8->unkE > 0)
     {
 loop_3:
-        sub_GAME_7F058020(something_legalscreen_constructor->unkC + phi_s1, &sp5C);
+        matrix_4x4_copy(something_legalscreen_constructor->unkC + phi_s1, &sp5C);
         sub_GAME_7F058C9C(&sp5C, something_legalscreen_constructor->unkC + (phi_s0 << 6));
         temp_s0_2 = phi_s0 + 1;
         phi_s1 = phi_s1 + 0x40;
@@ -4581,10 +4581,10 @@ glabel constructor_menu04_goldeneyelogo
 /* 040174 7F00B644 3C018005 */  lui   $at, %hi(D_80051A18)
 /* 040178 7F00B648 AFA20150 */  sw    $v0, 0x150($sp)
 /* 04017C 7F00B64C C42C1A18 */  lwc1  $f12, %lo(D_80051A18)($at)
-/* 040180 7F00B650 0FC1629F */  jal   matrix_multiply_A1_by_F12
+/* 040180 7F00B650 0FC1629F */  jal   matrix_scalar_multiply
 /* 040184 7F00B654 02202825 */   move  $a1, $s1
 /* 040188 7F00B658 02202025 */  move  $a0, $s1
-/* 04018C 7F00B65C 0FC16008 */  jal   sub_GAME_7F058020
+/* 04018C 7F00B65C 0FC16008 */  jal   matrix_4x4_copy
 /* 040190 7F00B660 8FA50150 */   lw    $a1, 0x150($sp)
 /* 040194 7F00B664 8FAD0150 */  lw    $t5, 0x150($sp)
 /* 040198 7F00B668 8E780000 */  lw    $t8, ($s3)
@@ -4610,7 +4610,7 @@ glabel constructor_menu04_goldeneyelogo
 /* 0401E8 7F00B6B8 8C49000C */  lw    $t1, 0xc($v0)
 .L7F00B6BC:
 /* 0401EC 7F00B6BC 02402825 */  move  $a1, $s2
-/* 0401F0 7F00B6C0 0FC16008 */  jal   sub_GAME_7F058020
+/* 0401F0 7F00B6C0 0FC16008 */  jal   matrix_4x4_copy
 /* 0401F4 7F00B6C4 01312021 */   addu  $a0, $t1, $s1
 /* 0401F8 7F00B6C8 8E6A0000 */  lw    $t2, ($s3)
 /* 0401FC 7F00B6CC 00106180 */  sll   $t4, $s0, 6
@@ -5223,10 +5223,10 @@ s32 interface_menu05_fileselect(void)
 loop_8:
     sub_GAME_7F059694(&spC8, 0, 0, 0x457a0000, 1.0f);
     init_something_copy_posdata_to_it(sp54, &sp88);
-    matrix_multiply_A1_by_F12(D_80051A24, &sp88);
+    matrix_scalar_multiply(D_80051A24, &sp88);
     sub_GAME_7F058068(&spC8, &sp88);
     (*phi_s0)->unkC = sub_GAME_7F0BD714((*phi_s0)->unk8->unkE << 6);
-    sub_GAME_7F058020(&sp88, (*phi_s0)->unkC);
+    matrix_4x4_copy(&sp88, (*phi_s0)->unkC);
     temp_a0 = *phi_s0;
     phi_s1->unk0 = (f32) temp_a0->unkC->unk30;
     phi_s1->unk4 = (f32) temp_a0->unkC->unk34;
@@ -5522,7 +5522,7 @@ glabel interface_menu05_fileselect
 /* 04083C 7F00BD0C 02602825 */   move  $a1, $s3
 /* 040840 7F00BD10 3C018005 */  lui   $at, %hi(D_80051A24)
 /* 040844 7F00BD14 C42C1A24 */  lwc1  $f12, %lo(D_80051A24)($at)
-/* 040848 7F00BD18 0FC1629F */  jal   matrix_multiply_A1_by_F12
+/* 040848 7F00BD18 0FC1629F */  jal   matrix_scalar_multiply
 /* 04084C 7F00BD1C 02602825 */   move  $a1, $s3
 /* 040850 7F00BD20 27A400C8 */  addiu $a0, $sp, 0xc8
 /* 040854 7F00BD24 0FC1601A */  jal   sub_GAME_7F058068
@@ -5537,7 +5537,7 @@ glabel interface_menu05_fileselect
 /* 040878 7F00BD48 02602025 */  move  $a0, $s3
 /* 04087C 7F00BD4C AD62000C */  sw    $v0, 0xc($t3)
 /* 040880 7F00BD50 8E0C0000 */  lw    $t4, ($s0)
-/* 040884 7F00BD54 0FC16008 */  jal   sub_GAME_7F058020
+/* 040884 7F00BD54 0FC16008 */  jal   matrix_4x4_copy
 /* 040888 7F00BD58 8D85000C */   lw    $a1, 0xc($t4)
 /* 04088C 7F00BD5C 8E040000 */  lw    $a0, ($s0)
 /* 040890 7F00BD60 8C8D000C */  lw    $t5, 0xc($a0)
@@ -6166,7 +6166,7 @@ loop_2:
     if ((*phi_s2)->unk8->unkE > 0)
     {
 loop_4:
-        sub_GAME_7F058020(temp_v0_3->unkC + phi_s0, &sp108);
+        matrix_4x4_copy(temp_v0_3->unkC + phi_s0, &sp108);
         sub_GAME_7F058C9C(&sp108, (*phi_s2)->unkC + (phi_s1 << 6));
         temp_v0_3 = *phi_s2;
         temp_s1 = phi_s1 + 1;
@@ -6537,7 +6537,7 @@ glabel constructor_menu05_fileselect
 /* 041100 7F00C5D0 8C58000C */  lw    $t8, 0xc($v0)
 .L7F00C5D4:
 /* 041104 7F00C5D4 02602825 */  move  $a1, $s3
-/* 041108 7F00C5D8 0FC16008 */  jal   sub_GAME_7F058020
+/* 041108 7F00C5D8 0FC16008 */  jal   matrix_4x4_copy
 /* 04110C 7F00C5DC 03102021 */   addu  $a0, $t8, $s0
 /* 041110 7F00C5E0 8E4F0000 */  lw    $t7, ($s2)
 /* 041114 7F00C5E4 0011C980 */  sll   $t9, $s1, 6
@@ -7810,11 +7810,11 @@ loop_1:
     temp_f2 = temp_v0->unk4 + D_8002AFC8;
     sub_GAME_7F059694(0, &spC8, temp_f0, temp_f2, 4000.0f + D_8002AFCC, temp_f0, temp_f2, 1.0f);
     init_something_copy_posdata_to_it(&D_8002AB94 + (selected_folder_num * 0xc), &sp88);
-    matrix_multiply_A1_by_F12(0x3e800000, &sp88);
+    matrix_scalar_multiply(0x3e800000, &sp88);
     sub_GAME_7F058068(&spC8, &sp88);
     temp_ret = sub_GAME_7F0BD714(ptr_folder_object_instance->unk8->unkE << 6);
     sp11C = temp_ret;
-    sub_GAME_7F058020(&sp88, temp_ret);
+    matrix_4x4_copy(&sp88, temp_ret);
     ptr_folder_object_instance->unkC = sp11C;
     sp114 = 3;
     sp110 = 0;
@@ -7826,7 +7826,7 @@ loop_1:
     if (ptr_folder_object_instance->unk8->unkE > 0)
     {
 loop_3:
-        sub_GAME_7F058020(ptr_folder_object_instance->unkC + phi_s1, &sp48);
+        matrix_4x4_copy(ptr_folder_object_instance->unkC + phi_s1, &sp48);
         sub_GAME_7F058C9C(&sp48, ptr_folder_object_instance->unkC + (phi_s0 << 6));
         temp_s0 = phi_s0 + 1;
         phi_s1 = phi_s1 + 0x40;
@@ -7911,7 +7911,7 @@ glabel sub_GAME_7F00D5E8
 /* 04221C 7F00D6EC 00000000 */   nop   
 /* 042220 7F00D6F0 3C013E80 */  li    $at, 0x3E800000 # 0.250000
 /* 042224 7F00D6F4 44816000 */  mtc1  $at, $f12
-/* 042228 7F00D6F8 0FC1629F */  jal   matrix_multiply_A1_by_F12
+/* 042228 7F00D6F8 0FC1629F */  jal   matrix_scalar_multiply
 /* 04222C 7F00D6FC 02002825 */   move  $a1, $s0
 /* 042230 7F00D700 27A400C8 */  addiu $a0, $sp, 0xc8
 /* 042234 7F00D704 0FC1601A */  jal   sub_GAME_7F058068
@@ -7927,7 +7927,7 @@ glabel sub_GAME_7F00D5E8
 /* 04225C 7F00D72C 01E02025 */   move  $a0, $t7
 /* 042260 7F00D730 AFA2011C */  sw    $v0, 0x11c($sp)
 /* 042264 7F00D734 02002025 */  move  $a0, $s0
-/* 042268 7F00D738 0FC16008 */  jal   sub_GAME_7F058020
+/* 042268 7F00D738 0FC16008 */  jal   matrix_4x4_copy
 /* 04226C 7F00D73C 00402825 */   move  $a1, $v0
 /* 042270 7F00D740 8FA9011C */  lw    $t1, 0x11c($sp)
 /* 042274 7F00D744 8E680000 */  lw    $t0, ($s3)
@@ -7953,7 +7953,7 @@ glabel sub_GAME_7F00D5E8
 /* 0422C4 7F00D794 8C4D000C */  lw    $t5, 0xc($v0)
 .L7F00D798:
 /* 0422C8 7F00D798 02402825 */  move  $a1, $s2
-/* 0422CC 7F00D79C 0FC16008 */  jal   sub_GAME_7F058020
+/* 0422CC 7F00D79C 0FC16008 */  jal   matrix_4x4_copy
 /* 0422D0 7F00D7A0 01B12021 */   addu  $a0, $t5, $s1
 /* 0422D4 7F00D7A4 8E6E0000 */  lw    $t6, ($s3)
 /* 0422D8 7F00D7A8 00104980 */  sll   $t1, $s0, 6
@@ -27331,7 +27331,7 @@ glabel constructor_menu18_displaycast
 /* 04E2FC 7F0197CC 03002025 */   move  $a0, $t8
 /* 04E300 7F0197D0 27B201E8 */  addiu $s2, $sp, 0x1e8
 /* 04E304 7F0197D4 AFA201B8 */  sw    $v0, 0x1b8($sp)
-/* 04E308 7F0197D8 0FC15FF4 */  jal   reset_array_of_0x10_floats
+/* 04E308 7F0197D8 0FC15FF4 */  jal   matrix_4x4_set_identity
 /* 04E30C 7F0197DC 02402025 */   move  $a0, $s2
 /* 04E310 7F0197E0 AFB201A8 */  sw    $s2, 0x1a8($sp)
 /* 04E314 7F0197E4 27A401A8 */  addiu $a0, $sp, 0x1a8
@@ -27684,7 +27684,7 @@ glabel constructor_menu18_displaycast
 /* 04E850 7F019D20 8C4F000C */  lw    $t7, 0xc($v0)
 .L7F019D24:
 /* 04E854 7F019D24 02402825 */  move  $a1, $s2
-/* 04E858 7F019D28 0FC16008 */  jal   sub_GAME_7F058020
+/* 04E858 7F019D28 0FC16008 */  jal   matrix_4x4_copy
 /* 04E85C 7F019D2C 01F02021 */   addu  $a0, $t7, $s0
 /* 04E860 7F019D30 8E8D0000 */  lw    $t5, ($s4)
 /* 04E864 7F019D34 00116180 */  sll   $t4, $s1, 6
@@ -27714,7 +27714,7 @@ glabel constructor_menu18_displaycast
 /* 04E8C0 7F019D90 8CED000C */  lw    $t5, 0xc($a3)
 .L7F019D94:
 /* 04E8C4 7F019D94 02402825 */  move  $a1, $s2
-/* 04E8C8 7F019D98 0FC16008 */  jal   sub_GAME_7F058020
+/* 04E8C8 7F019D98 0FC16008 */  jal   matrix_4x4_copy
 /* 04E8CC 7F019D9C 01B02021 */   addu  $a0, $t5, $s0
 /* 04E8D0 7F019DA0 3C188003 */  lui   $t8, %hi(ptrobjinstance) 
 /* 04E8D4 7F019DA4 8F18B5F8 */  lw    $t8, %lo(ptrobjinstance)($t8)
