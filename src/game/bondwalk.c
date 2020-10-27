@@ -6241,7 +6241,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 0958E4 7F060DB4 15A10004 */  bne   $t5, $at, .L7F060DC8
 /* 0958E8 7F060DB8 3C01BF80 */   li    $at, 0xBF800000 # -1.000000
 /* 0958EC 7F060DBC 44816000 */  mtc1  $at, $f12
-/* 0958F0 7F060DC0 0FC1626D */  jal   vec3_scalar_multiply
+/* 0958F0 7F060DC0 0FC1626D */  jal   matrix_column_1_scalar_multiply
 /* 0958F4 7F060DC4 27A50264 */   addiu $a1, $sp, 0x264
 .L7F060DC8:
 /* 0958F8 7F060DC8 3C018005 */  lui   $at, %hi(D_80053E04)
@@ -6452,7 +6452,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095BF4 7F0610C4 0FC1629F */  jal   matrix_scalar_multiply
 /* 095BF8 7F0610C8 27A50224 */   addiu $a1, $sp, 0x224
 /* 095BFC 7F0610CC C7AC007C */  lwc1  $f12, 0x7c($sp)
-/* 095C00 7F0610D0 0FC16285 */  jal   sub_GAME_7F058A14
+/* 095C00 7F0610D0 0FC16285 */  jal   matrix_column_3_scalar_multiply
 /* 095C04 7F0610D4 27A50224 */   addiu $a1, $sp, 0x224
 /* 095C08 7F0610D8 27A40264 */  addiu $a0, $sp, 0x264
 /* 095C0C 7F0610DC 0FC1601A */  jal   sub_GAME_7F058068
@@ -8025,7 +8025,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095E44 7F0612D4 15A10004 */  bne   $t5, $at, .Ljp7F0612E8
 /* 095E48 7F0612D8 3C01BF80 */   li    $at, 0xBF800000 # -1.000000
 /* 095E4C 7F0612DC 44816000 */  mtc1  $at, $f12
-/* 095E50 7F0612E0 0FC163B5 */  jal   vec3_scalar_multiply
+/* 095E50 7F0612E0 0FC163B5 */  jal   matrix_column_1_scalar_multiply
 /* 095E54 7F0612E4 27A50264 */   addiu $a1, $sp, 0x264
 .Ljp7F0612E8:
 /* 095E58 7F0612E8 3C018005 */  lui   $at, %hi(D_80053E04) # $at, 0x8005
@@ -8236,7 +8236,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 096154 7F0615E4 0FC163E7 */  jal   matrix_scalar_multiply
 /* 096158 7F0615E8 27A50224 */   addiu $a1, $sp, 0x224
 /* 09615C 7F0615EC C7AC007C */  lwc1  $f12, 0x7c($sp)
-/* 096160 7F0615F0 0FC163CD */  jal   sub_GAME_7F058A14
+/* 096160 7F0615F0 0FC163CD */  jal   matrix_column_3_scalar_multiply
 /* 096164 7F0615F4 27A50224 */   addiu $a1, $sp, 0x224
 /* 096168 7F0615F8 27A40264 */  addiu $a0, $sp, 0x264
 /* 09616C 7F0615FC 0FC16162 */  jal   sub_GAME_7F058068
