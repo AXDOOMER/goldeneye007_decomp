@@ -3833,7 +3833,7 @@ loop_1:
     D_8002A988.unk1 = (s8) phi_v1_2;
     D_8002A988.unk0 = (s8) phi_v1_2;
     flt_CODE_bss_80069614 = (f32) (flt_CODE_bss_80069614 + D_80051A04);
-    sub_GAME_7F0585FC(flt_CODE_bss_80069614, &D_8002A988, &sp90);
+    matrix_4x4_set_rotation_around_y(flt_CODE_bss_80069614, &D_8002A988, &sp90);
     matrix_scalar_multiply_3(flt_CODE_bss_80069618, &sp90);
     flt_CODE_bss_80069618 = (f32) (flt_CODE_bss_80069618 * D_80051A0C);
     if (D_80051A08 < flt_CODE_bss_80069618)
@@ -3960,7 +3960,7 @@ glabel constructor_menu01_nintendo
 /* 03F9EC 7F00AEBC 02202825 */  move  $a1, $s1
 /* 03F9F0 7F00AEC0 46062200 */  add.s $f8, $f4, $f6
 /* 03F9F4 7F00AEC4 E4480000 */  swc1  $f8, ($v0)
-/* 03F9F8 7F00AEC8 0FC1617F */  jal   sub_GAME_7F0585FC
+/* 03F9F8 7F00AEC8 0FC1617F */  jal   matrix_4x4_set_rotation_around_y
 /* 03F9FC 7F00AECC C44C0000 */   lwc1  $f12, ($v0)
 /* 03FA00 7F00AED0 3C108007 */  lui   $s0, %hi(flt_CODE_bss_80069618)
 /* 03FA04 7F00AED4 26109618 */  addiu $s0, %lo(flt_CODE_bss_80069618) # addiu $s0, $s0, -0x69e8
@@ -27713,7 +27713,7 @@ glabel constructor_menu18_displaycast
 /* 04E798 7F019C68 3C018005 */  lui   $at, %hi(D_80051B38)
 /* 04E79C 7F019C6C 556E000A */  bnel  $t3, $t6, .L7F019C98
 /* 04E7A0 7F019C70 8CEF0008 */   lw    $t7, 8($a3)
-/* 04E7A4 7F019C74 0FC161A2 */  jal   sub_GAME_7F058688
+/* 04E7A4 7F019C74 0FC161A2 */  jal   matrix_4x4_set_rotation_around_z
 /* 04E7A8 7F019C78 C42C1B38 */   lwc1  $f12, %lo(D_80051B38)($at)
 /* 04E7AC 7F019C7C 8FA401A8 */  lw    $a0, 0x1a8($sp)
 /* 04E7B0 7F019C80 0FC1601A */  jal   sub_GAME_7F058068

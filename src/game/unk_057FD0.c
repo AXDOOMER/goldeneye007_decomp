@@ -506,176 +506,89 @@ glabel sub_GAME_7F058474
 )
 #endif
 
-void matrix_4x4_set_transform_with_rotation_around_y(f32* translation, f32 angle, mat44 transform) {
+void matrix_4x4_set_position_and_rotation_around_y(f32* position, f32 angle, mat44 matrix) {
     f32 cosine = cosf(angle);
     f32 sine = sinf(angle);
-    transform[2][0] = sine;
-    transform[0][2] = -sine;
-    transform[0][0] = cosine;
-    transform[2][2] = cosine;
-    transform[0][1] = 0.0f;
-    transform[0][3] = 0.0f;
-    transform[1][0] = 0.0f;
-    transform[1][2] = 0.0f;
-    transform[1][3] = 0.0f;
-    transform[2][1] = 0.0f;
-    transform[2][3] = 0.0f;
-    transform[1][1] = 1.0f;
-    transform[3][0] = translation[0];
-    transform[3][1] = translation[1];
-    transform[3][2] = translation[2];
-    transform[3][3] = 1.0f;
+    matrix[2][0] = sine;
+    matrix[0][2] = -sine;
+    matrix[0][0] = cosine;
+    matrix[2][2] = cosine;
+    matrix[0][1] = 0.0f;
+    matrix[0][3] = 0.0f;
+    matrix[1][0] = 0.0f;
+    matrix[1][2] = 0.0f;
+    matrix[1][3] = 0.0f;
+    matrix[2][1] = 0.0f;
+    matrix[2][3] = 0.0f;
+    matrix[1][1] = 1.0f;
+    matrix[3][0] = position[0];
+    matrix[3][1] = position[1];
+    matrix[3][2] = position[2];
+    matrix[3][3] = 1.0f;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F058570(void) {
-
+void matrix_4x4_set_rotation_around_x(f32 angle, mat44 matrix) {
+    f32 cosine = cosf(angle);
+    f32 sine = sinf(angle);
+    matrix[1][2] = sine;
+    matrix[2][1] = -sine;
+    matrix[1][1] = cosine;
+    matrix[2][2] = cosine;
+    matrix[0][1] = 0.0f;
+    matrix[0][2] = 0.0f;
+    matrix[0][3] = 0.0f;
+    matrix[1][0] = 0.0f;
+    matrix[1][3] = 0.0f;
+    matrix[2][0] = 0.0f;
+    matrix[2][3] = 0.0f;
+    matrix[3][0] = 0.0f;
+    matrix[3][1] = 0.0f;
+    matrix[3][2] = 0.0f;
+    matrix[0][0] = 1.0f;
+    matrix[3][3] = 1.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F058570
-/* 08D0A0 7F058570 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 08D0A4 7F058574 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08D0A8 7F058578 E7AC0020 */  swc1  $f12, 0x20($sp)
-/* 08D0AC 7F05857C C7AC0020 */  lwc1  $f12, 0x20($sp)
-/* 08D0B0 7F058580 0FC15FA8 */  jal   cosf
-/* 08D0B4 7F058584 AFA50024 */   sw    $a1, 0x24($sp)
-/* 08D0B8 7F058588 C7AC0020 */  lwc1  $f12, 0x20($sp)
-/* 08D0BC 7F05858C 0FC15FAB */  jal   sinf
-/* 08D0C0 7F058590 E7A0001C */   swc1  $f0, 0x1c($sp)
-/* 08D0C4 7F058594 8FA50024 */  lw    $a1, 0x24($sp)
-/* 08D0C8 7F058598 C7AE001C */  lwc1  $f14, 0x1c($sp)
-/* 08D0CC 7F05859C 44801000 */  mtc1  $zero, $f2
-/* 08D0D0 7F0585A0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 08D0D4 7F0585A4 44816000 */  mtc1  $at, $f12
-/* 08D0D8 7F0585A8 46000107 */  neg.s $f4, $f0
-/* 08D0DC 7F0585AC E4A00018 */  swc1  $f0, 0x18($a1)
-/* 08D0E0 7F0585B0 E4A40024 */  swc1  $f4, 0x24($a1)
-/* 08D0E4 7F0585B4 E4AE0014 */  swc1  $f14, 0x14($a1)
-/* 08D0E8 7F0585B8 E4AE0028 */  swc1  $f14, 0x28($a1)
-/* 08D0EC 7F0585BC E4A20004 */  swc1  $f2, 4($a1)
-/* 08D0F0 7F0585C0 E4A20008 */  swc1  $f2, 8($a1)
-/* 08D0F4 7F0585C4 E4A2000C */  swc1  $f2, 0xc($a1)
-/* 08D0F8 7F0585C8 E4A20010 */  swc1  $f2, 0x10($a1)
-/* 08D0FC 7F0585CC E4A2001C */  swc1  $f2, 0x1c($a1)
-/* 08D100 7F0585D0 E4A20020 */  swc1  $f2, 0x20($a1)
-/* 08D104 7F0585D4 E4A2002C */  swc1  $f2, 0x2c($a1)
-/* 08D108 7F0585D8 E4A20030 */  swc1  $f2, 0x30($a1)
-/* 08D10C 7F0585DC E4A20034 */  swc1  $f2, 0x34($a1)
-/* 08D110 7F0585E0 E4A20038 */  swc1  $f2, 0x38($a1)
-/* 08D114 7F0585E4 E4AC0000 */  swc1  $f12, ($a1)
-/* 08D118 7F0585E8 E4AC003C */  swc1  $f12, 0x3c($a1)
-/* 08D11C 7F0585EC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08D120 7F0585F0 27BD0020 */  addiu $sp, $sp, 0x20
-/* 08D124 7F0585F4 03E00008 */  jr    $ra
-/* 08D128 7F0585F8 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0585FC(void) {
-
+void matrix_4x4_set_rotation_around_y(f32 angle, mat44 matrix) {
+    f32 cosine = cosf(angle);
+    f32 sine = sinf(angle);
+    matrix[2][0] = sine;
+    matrix[0][2] = -sine;
+    matrix[0][0] = cosine;
+    matrix[2][2] = cosine;
+    matrix[0][1] = 0.0f;
+    matrix[0][3] = 0.0f;
+    matrix[1][0] = 0.0f;
+    matrix[1][2] = 0.0f;
+    matrix[1][3] = 0.0f;
+    matrix[2][1] = 0.0f;
+    matrix[2][3] = 0.0f;
+    matrix[3][0] = 0.0f;
+    matrix[3][1] = 0.0f;
+    matrix[3][2] = 0.0f;
+    matrix[1][1] = 1.0f;
+    matrix[3][3] = 1.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0585FC
-/* 08D12C 7F0585FC 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 08D130 7F058600 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08D134 7F058604 E7AC0020 */  swc1  $f12, 0x20($sp)
-/* 08D138 7F058608 C7AC0020 */  lwc1  $f12, 0x20($sp)
-/* 08D13C 7F05860C 0FC15FA8 */  jal   cosf
-/* 08D140 7F058610 AFA50024 */   sw    $a1, 0x24($sp)
-/* 08D144 7F058614 C7AC0020 */  lwc1  $f12, 0x20($sp)
-/* 08D148 7F058618 0FC15FAB */  jal   sinf
-/* 08D14C 7F05861C E7A0001C */   swc1  $f0, 0x1c($sp)
-/* 08D150 7F058620 8FA50024 */  lw    $a1, 0x24($sp)
-/* 08D154 7F058624 C7AE001C */  lwc1  $f14, 0x1c($sp)
-/* 08D158 7F058628 44801000 */  mtc1  $zero, $f2
-/* 08D15C 7F05862C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 08D160 7F058630 44816000 */  mtc1  $at, $f12
-/* 08D164 7F058634 46000107 */  neg.s $f4, $f0
-/* 08D168 7F058638 E4A00020 */  swc1  $f0, 0x20($a1)
-/* 08D16C 7F05863C E4A40008 */  swc1  $f4, 8($a1)
-/* 08D170 7F058640 E4AE0000 */  swc1  $f14, ($a1)
-/* 08D174 7F058644 E4AE0028 */  swc1  $f14, 0x28($a1)
-/* 08D178 7F058648 E4A20004 */  swc1  $f2, 4($a1)
-/* 08D17C 7F05864C E4A2000C */  swc1  $f2, 0xc($a1)
-/* 08D180 7F058650 E4A20010 */  swc1  $f2, 0x10($a1)
-/* 08D184 7F058654 E4A20018 */  swc1  $f2, 0x18($a1)
-/* 08D188 7F058658 E4A2001C */  swc1  $f2, 0x1c($a1)
-/* 08D18C 7F05865C E4A20024 */  swc1  $f2, 0x24($a1)
-/* 08D190 7F058660 E4A2002C */  swc1  $f2, 0x2c($a1)
-/* 08D194 7F058664 E4A20030 */  swc1  $f2, 0x30($a1)
-/* 08D198 7F058668 E4A20034 */  swc1  $f2, 0x34($a1)
-/* 08D19C 7F05866C E4A20038 */  swc1  $f2, 0x38($a1)
-/* 08D1A0 7F058670 E4AC0014 */  swc1  $f12, 0x14($a1)
-/* 08D1A4 7F058674 E4AC003C */  swc1  $f12, 0x3c($a1)
-/* 08D1A8 7F058678 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08D1AC 7F05867C 27BD0020 */  addiu $sp, $sp, 0x20
-/* 08D1B0 7F058680 03E00008 */  jr    $ra
-/* 08D1B4 7F058684 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F058688(void) {
-
+void matrix_4x4_set_rotation_around_z(f32 angle, mat44 matrix) {
+    f32 cosine = cosf(angle);
+    f32 sine = sinf(angle);
+    matrix[0][1] = sine;
+    matrix[1][0] = -sine;
+    matrix[0][0] = cosine;
+    matrix[1][1] = cosine;
+    matrix[0][2] = 0.0f;
+    matrix[0][3] = 0.0f;
+    matrix[1][2] = 0.0f;
+    matrix[1][3] = 0.0f;
+    matrix[2][0] = 0.0f;
+    matrix[2][1] = 0.0f;
+    matrix[2][3] = 0.0f;
+    matrix[3][0] = 0.0f;
+    matrix[3][1] = 0.0f;
+    matrix[3][2] = 0.0f;
+    matrix[2][2] = 1.0f;
+    matrix[3][3] = 1.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F058688
-/* 08D1B8 7F058688 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 08D1BC 7F05868C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08D1C0 7F058690 E7AC0020 */  swc1  $f12, 0x20($sp)
-/* 08D1C4 7F058694 C7AC0020 */  lwc1  $f12, 0x20($sp)
-/* 08D1C8 7F058698 0FC15FA8 */  jal   cosf
-/* 08D1CC 7F05869C AFA50024 */   sw    $a1, 0x24($sp)
-/* 08D1D0 7F0586A0 C7AC0020 */  lwc1  $f12, 0x20($sp)
-/* 08D1D4 7F0586A4 0FC15FAB */  jal   sinf
-/* 08D1D8 7F0586A8 E7A0001C */   swc1  $f0, 0x1c($sp)
-/* 08D1DC 7F0586AC 8FA50024 */  lw    $a1, 0x24($sp)
-/* 08D1E0 7F0586B0 C7AE001C */  lwc1  $f14, 0x1c($sp)
-/* 08D1E4 7F0586B4 44801000 */  mtc1  $zero, $f2
-/* 08D1E8 7F0586B8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 08D1EC 7F0586BC 44816000 */  mtc1  $at, $f12
-/* 08D1F0 7F0586C0 46000107 */  neg.s $f4, $f0
-/* 08D1F4 7F0586C4 E4A00004 */  swc1  $f0, 4($a1)
-/* 08D1F8 7F0586C8 E4A40010 */  swc1  $f4, 0x10($a1)
-/* 08D1FC 7F0586CC E4AE0000 */  swc1  $f14, ($a1)
-/* 08D200 7F0586D0 E4AE0014 */  swc1  $f14, 0x14($a1)
-/* 08D204 7F0586D4 E4A20008 */  swc1  $f2, 8($a1)
-/* 08D208 7F0586D8 E4A2000C */  swc1  $f2, 0xc($a1)
-/* 08D20C 7F0586DC E4A20018 */  swc1  $f2, 0x18($a1)
-/* 08D210 7F0586E0 E4A2001C */  swc1  $f2, 0x1c($a1)
-/* 08D214 7F0586E4 E4A20020 */  swc1  $f2, 0x20($a1)
-/* 08D218 7F0586E8 E4A20024 */  swc1  $f2, 0x24($a1)
-/* 08D21C 7F0586EC E4A2002C */  swc1  $f2, 0x2c($a1)
-/* 08D220 7F0586F0 E4A20030 */  swc1  $f2, 0x30($a1)
-/* 08D224 7F0586F4 E4A20034 */  swc1  $f2, 0x34($a1)
-/* 08D228 7F0586F8 E4A20038 */  swc1  $f2, 0x38($a1)
-/* 08D22C 7F0586FC E4AC0028 */  swc1  $f12, 0x28($a1)
-/* 08D230 7F058700 E4AC003C */  swc1  $f12, 0x3c($a1)
-/* 08D234 7F058704 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08D238 7F058708 27BD0020 */  addiu $sp, $sp, 0x20
-/* 08D23C 7F05870C 03E00008 */  jr    $ra
-/* 08D240 7F058710 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F058714(void) {
@@ -859,7 +772,7 @@ glabel sub_GAME_7F05892C
 /* 08D470 7F058940 0FC161C5 */  jal   sub_GAME_7F058714
 /* 08D474 7F058944 00C02825 */   move  $a1, $a2
 /* 08D478 7F058948 8FA40018 */  lw    $a0, 0x18($sp)
-/* 08D47C 7F05894C 0FC16266 */  jal   matrix_4x4_set_translation
+/* 08D47C 7F05894C 0FC16266 */  jal   matrix_4x4_set_position
 /* 08D480 7F058950 8FA50020 */   lw    $a1, 0x20($sp)
 /* 08D484 7F058954 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 08D488 7F058958 27BD0018 */  addiu $sp, $sp, 0x18
@@ -887,7 +800,7 @@ glabel init_something_copy_posdata_to_it
 /* 08D4A4 7F058974 0FC15FF4 */  jal   matrix_4x4_set_identity
 /* 08D4A8 7F058978 00A02025 */   move  $a0, $a1
 /* 08D4AC 7F05897C 8FA40018 */  lw    $a0, 0x18($sp)
-/* 08D4B0 7F058980 0FC16266 */  jal   matrix_4x4_set_translation
+/* 08D4B0 7F058980 0FC16266 */  jal   matrix_4x4_set_position
 /* 08D4B4 7F058984 8FA5001C */   lw    $a1, 0x1c($sp)
 /* 08D4B8 7F058988 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 08D4BC 7F05898C 27BD0018 */  addiu $sp, $sp, 0x18
@@ -896,10 +809,10 @@ glabel init_something_copy_posdata_to_it
 )
 #endif
 
-void matrix_4x4_set_translation(vec3 translation, mat44 transform) {
-    transform[3][0] = translation[0];
-    transform[3][1] = translation[1];
-    transform[3][2] = translation[2];
+void matrix_4x4_set_position(vec3 position, mat44 matrix) {
+    matrix[3][0] = position[0];
+    matrix[3][1] = position[1];
+    matrix[3][2] = position[2];
 }
 
 void matrix_column_1_scalar_multiply(f32 scalar, f32* matrix) {

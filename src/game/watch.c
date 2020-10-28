@@ -5448,7 +5448,7 @@ glabel debug_gun_watch_move_related
 /* 0DCC2C 7F0A80FC 3C0143B4 */  li    $at, 0x43B40000 # 360.000000
 /* 0DCC30 7F0A8100 44812000 */  mtc1  $at, $f4
 /* 0DCC34 7F0A8104 46105482 */  mul.s $f18, $f10, $f16
-/* 0DCC38 7F0A8108 0FC1617F */  jal   sub_GAME_7F0585FC
+/* 0DCC38 7F0A8108 0FC1617F */  jal   matrix_4x4_set_rotation_around_y
 /* 0DCC3C 7F0A810C 46049303 */   div.s $f12, $f18, $f4
 /* 0DCC40 7F0A8110 3C018006 */  lui   $at, %hi(D_8005851C)
 /* 0DCC44 7F0A8114 C420851C */  lwc1  $f0, %lo(D_8005851C)($at)
@@ -5458,7 +5458,7 @@ glabel debug_gun_watch_move_related
 /* 0DCC54 7F0A8124 46003202 */  mul.s $f8, $f6, $f0
 /* 0DCC58 7F0A8128 27A50090 */  addiu $a1, $sp, 0x90
 /* 0DCC5C 7F0A812C 460A4403 */  div.s $f16, $f8, $f10
-/* 0DCC60 7F0A8130 0FC161A2 */  jal   sub_GAME_7F058688
+/* 0DCC60 7F0A8130 0FC161A2 */  jal   matrix_4x4_set_rotation_around_z
 /* 0DCC64 7F0A8134 46100301 */   sub.s $f12, $f0, $f16
 /* 0DCC68 7F0A8138 27A40090 */  addiu $a0, $sp, 0x90
 /* 0DCC6C 7F0A813C 0FC1601A */  jal   sub_GAME_7F058068
@@ -5875,7 +5875,7 @@ glabel debug_gun_watch_move_related2
 /* 0DD170 7F0A8640 44812000 */  mtc1  $at, $f4
 /* 0DD174 7F0A8644 46105482 */  mul.s $f18, $f10, $f16
 /* 0DD178 7F0A8648 27A508E0 */  addiu $a1, $sp, 0x8e0
-/* 0DD17C 7F0A864C 0FC1617F */  jal   sub_GAME_7F0585FC
+/* 0DD17C 7F0A864C 0FC1617F */  jal   matrix_4x4_set_rotation_around_y
 /* 0DD180 7F0A8650 46049303 */   div.s $f12, $f18, $f4
 /* 0DD184 7F0A8654 3C018006 */  lui   $at, %hi(D_80058530)
 /* 0DD188 7F0A8658 C4208530 */  lwc1  $f0, %lo(D_80058530)($at)
@@ -5886,7 +5886,7 @@ glabel debug_gun_watch_move_related2
 /* 0DD19C 7F0A866C 27B008A0 */  addiu $s0, $sp, 0x8a0
 /* 0DD1A0 7F0A8670 02002825 */  move  $a1, $s0
 /* 0DD1A4 7F0A8674 460A4403 */  div.s $f16, $f8, $f10
-/* 0DD1A8 7F0A8678 0FC161A2 */  jal   sub_GAME_7F058688
+/* 0DD1A8 7F0A8678 0FC161A2 */  jal   matrix_4x4_set_rotation_around_z
 /* 0DD1AC 7F0A867C 46100301 */   sub.s $f12, $f0, $f16
 /* 0DD1B0 7F0A8680 02002025 */  move  $a0, $s0
 /* 0DD1B4 7F0A8684 0FC1601A */  jal   sub_GAME_7F058068
@@ -6358,7 +6358,7 @@ glabel debug_gun_watch_move_related2
 /* 0DDD48 7F0A91D8 44812000 */  mtc1  $at, $f4
 /* 0DDD4C 7F0A91DC 46105482 */  mul.s $f18, $f10, $f16
 /* 0DDD50 7F0A91E0 27A508E8 */  addiu $a1, $sp, 0x8e8
-/* 0DDD54 7F0A91E4 0FC162C7 */  jal   sub_GAME_7F0585FC
+/* 0DDD54 7F0A91E4 0FC162C7 */  jal   matrix_4x4_set_rotation_around_y
 /* 0DDD58 7F0A91E8 46049303 */   div.s $f12, $f18, $f4
 /* 0DDD5C 7F0A91EC 3C018006 */  lui   $at, %hi(D_80058530) # $at, 0x8006
 /* 0DDD60 7F0A91F0 C4208570 */  lwc1  $f0, %lo(D_80058530)($at)
@@ -6369,7 +6369,7 @@ glabel debug_gun_watch_move_related2
 /* 0DDD74 7F0A9204 27B008A8 */  addiu $s0, $sp, 0x8a8
 /* 0DDD78 7F0A9208 02002825 */  move  $a1, $s0
 /* 0DDD7C 7F0A920C 460A4403 */  div.s $f16, $f8, $f10
-/* 0DDD80 7F0A9210 0FC162EA */  jal   sub_GAME_7F058688
+/* 0DDD80 7F0A9210 0FC162EA */  jal   matrix_4x4_set_rotation_around_z
 /* 0DDD84 7F0A9214 46100301 */   sub.s $f12, $f0, $f16
 /* 0DDD88 7F0A9218 02002025 */  move  $a0, $s0
 /* 0DDD8C 7F0A921C 0FC16162 */  jal   sub_GAME_7F058068
@@ -9497,7 +9497,7 @@ glabel sub_GAME_7F0AADC0
 /* 0DFA5C 7F0AAF2C 3C018004 */  lui   $at, %hi(D_80040B24)
 /* 0DFA60 7F0AAF30 E4200B24 */  swc1  $f0, %lo(D_80040B24)($at)
 /* 0DFA64 7F0AAF34 C42C0B24 */  lwc1  $f12, %lo(D_80040B24)($at)
-/* 0DFA68 7F0AAF38 0FC161A2 */  jal   sub_GAME_7F058688
+/* 0DFA68 7F0AAF38 0FC161A2 */  jal   matrix_4x4_set_rotation_around_z
 /* 0DFA6C 7F0AAF3C 27A504BC */   addiu $a1, $sp, 0x4bc
 /* 0DFA70 7F0AAF40 3C0F8004 */  lui   $t7, %hi(watch_soundrelated_maybe) 
 /* 0DFA74 7F0AAF44 8DEF09A8 */  lw    $t7, %lo(watch_soundrelated_maybe)($t7)
@@ -9539,7 +9539,7 @@ glabel sub_GAME_7F0AADC0
 /* 0DFAFC 7F0AAFCC C42A8554 */  lwc1  $f10, %lo(D_80058554)($at)
 /* 0DFB00 7F0AAFD0 46002207 */  neg.s $f8, $f4
 /* 0DFB04 7F0AAFD4 27A5047C */  addiu $a1, $sp, 0x47c
-/* 0DFB08 7F0AAFD8 0FC1615C */  jal   sub_GAME_7F058570
+/* 0DFB08 7F0AAFD8 0FC1615C */  jal   matrix_4x4_set_rotation_around_x
 /* 0DFB0C 7F0AAFDC 460A4301 */   sub.s $f12, $f8, $f10
 /* 0DFB10 7F0AAFE0 27A404FC */  addiu $a0, $sp, 0x4fc
 /* 0DFB14 7F0AAFE4 27A504BC */  addiu $a1, $sp, 0x4bc
@@ -9697,7 +9697,7 @@ glabel sub_GAME_7F0AADC0
 /* 0DFD64 7F0AB234 3C018004 */  lui   $at, %hi(D_80040B34)
 /* 0DFD68 7F0AB238 E4200B34 */  swc1  $f0, %lo(D_80040B34)($at)
 /* 0DFD6C 7F0AB23C C42C0B34 */  lwc1  $f12, %lo(D_80040B34)($at)
-/* 0DFD70 7F0AB240 0FC161A2 */  jal   sub_GAME_7F058688
+/* 0DFD70 7F0AB240 0FC161A2 */  jal   matrix_4x4_set_rotation_around_z
 /* 0DFD74 7F0AB244 27A504BC */   addiu $a1, $sp, 0x4bc
 /* 0DFD78 7F0AB248 3C088004 */  lui   $t0, %hi(watch_soundrelated_maybe) 
 /* 0DFD7C 7F0AB24C 8D0809A8 */  lw    $t0, %lo(watch_soundrelated_maybe)($t0)
@@ -9739,7 +9739,7 @@ glabel sub_GAME_7F0AADC0
 /* 0DFE04 7F0AB2D4 C42A8564 */  lwc1  $f10, %lo(D_80058564)($at)
 /* 0DFE08 7F0AB2D8 46009207 */  neg.s $f8, $f18
 /* 0DFE0C 7F0AB2DC 27A5047C */  addiu $a1, $sp, 0x47c
-/* 0DFE10 7F0AB2E0 0FC1615C */  jal   sub_GAME_7F058570
+/* 0DFE10 7F0AB2E0 0FC1615C */  jal   matrix_4x4_set_rotation_around_x
 /* 0DFE14 7F0AB2E4 460A4301 */   sub.s $f12, $f8, $f10
 /* 0DFE18 7F0AB2E8 27A404FC */  addiu $a0, $sp, 0x4fc
 /* 0DFE1C 7F0AB2EC 27A504BC */  addiu $a1, $sp, 0x4bc
@@ -9968,7 +9968,7 @@ glabel sub_GAME_7F0AADC0
 /* 0E0650 7F0ABAE0 3C018004 */  lui   $at, %hi(D_80040B24) # $at, 0x8004
 /* 0E0654 7F0ABAE4 E4200B54 */  swc1  $f0, %lo(D_80040B24)($at)
 /* 0E0658 7F0ABAE8 C42C0B54 */  lwc1  $f12, %lo(D_80040B24)($at)
-/* 0E065C 7F0ABAEC 0FC162EA */  jal   sub_GAME_7F058688
+/* 0E065C 7F0ABAEC 0FC162EA */  jal   matrix_4x4_set_rotation_around_z
 /* 0E0660 7F0ABAF0 27A504BC */   addiu $a1, $sp, 0x4bc
 /* 0E0664 7F0ABAF4 3C088004 */  lui   $t0, %hi(watch_soundrelated_maybe) # $t0, 0x8004
 /* 0E0668 7F0ABAF8 8D0809D8 */  lw    $t0, %lo(watch_soundrelated_maybe)($t0)
@@ -10010,7 +10010,7 @@ glabel sub_GAME_7F0AADC0
 /* 0E06F0 7F0ABB80 C4288594 */  lwc1  $f8, %lo(D_80058554)($at)
 /* 0E06F4 7F0ABB84 46002187 */  neg.s $f6, $f4
 /* 0E06F8 7F0ABB88 27A5047C */  addiu $a1, $sp, 0x47c
-/* 0E06FC 7F0ABB8C 0FC162A4 */  jal   sub_GAME_7F058570
+/* 0E06FC 7F0ABB8C 0FC162A4 */  jal   matrix_4x4_set_rotation_around_x
 /* 0E0700 7F0ABB90 46083301 */   sub.s $f12, $f6, $f8
 /* 0E0704 7F0ABB94 27A404FC */  addiu $a0, $sp, 0x4fc
 /* 0E0708 7F0ABB98 27A504BC */  addiu $a1, $sp, 0x4bc
@@ -10165,7 +10165,7 @@ glabel sub_GAME_7F0AADC0
 /* 0E094C 7F0ABDDC 3C018004 */  lui   $at, %hi(D_80040B34) # $at, 0x8004
 /* 0E0950 7F0ABDE0 E4200B64 */  swc1  $f0, %lo(D_80040B34)($at)
 /* 0E0954 7F0ABDE4 C42C0B64 */  lwc1  $f12, %lo(D_80040B34)($at)
-/* 0E0958 7F0ABDE8 0FC162EA */  jal   sub_GAME_7F058688
+/* 0E0958 7F0ABDE8 0FC162EA */  jal   matrix_4x4_set_rotation_around_z
 /* 0E095C 7F0ABDEC 27A504BC */   addiu $a1, $sp, 0x4bc
 /* 0E0960 7F0ABDF0 3C0C8004 */  lui   $t4, %hi(watch_soundrelated_maybe) # $t4, 0x8004
 /* 0E0964 7F0ABDF4 8D8C09D8 */  lw    $t4, %lo(watch_soundrelated_maybe)($t4)
@@ -10207,7 +10207,7 @@ glabel sub_GAME_7F0AADC0
 /* 0E09EC 7F0ABE7C C42685A4 */  lwc1  $f6, %lo(D_80058564)($at)
 /* 0E09F0 7F0ABE80 46008107 */  neg.s $f4, $f16
 /* 0E09F4 7F0ABE84 27A5047C */  addiu $a1, $sp, 0x47c
-/* 0E09F8 7F0ABE88 0FC162A4 */  jal   sub_GAME_7F058570
+/* 0E09F8 7F0ABE88 0FC162A4 */  jal   matrix_4x4_set_rotation_around_x
 /* 0E09FC 7F0ABE8C 46062301 */   sub.s $f12, $f4, $f6
 /* 0E0A00 7F0ABE90 27A404FC */  addiu $a0, $sp, 0x4fc
 /* 0E0A04 7F0ABE94 27A504BC */  addiu $a1, $sp, 0x4bc
