@@ -963,7 +963,7 @@ glabel sub_GAME_7F05C594
 /* 0910E8 7F05C5B8 25F80010 */  addiu $t8, $t7, 0x10
 /* 0910EC 7F05C5BC 27395904 */  addiu $t9, %lo(D_80035904) # addiu $t9, $t9, 0x5904
 /* 0910F0 7F05C5C0 03192021 */  addu  $a0, $t8, $t9
-/* 0910F4 7F05C5C4 0FC161C5 */  jal   sub_GAME_7F058714
+/* 0910F4 7F05C5C4 0FC161C5 */  jal   matrix_4x4_set_rotation_around_xyz
 /* 0910F8 7F05C5C8 27A50018 */   addiu $a1, $sp, 0x18
 /* 0910FC 7F05C5CC 8FA40058 */  lw    $a0, 0x58($sp)
 /* 091100 7F05C5D0 0FC1601A */  jal   sub_GAME_7F058068
@@ -1018,7 +1018,7 @@ glabel sub_GAME_7F05C614
 /* 091188 7F05C658 25090010 */  addiu $t1, $t0, 0x10
 /* 09118C 7F05C65C 254A5904 */  addiu $t2, %lo(D_80035904) # addiu $t2, $t2, 0x5904
 /* 091190 7F05C660 012A2021 */  addu  $a0, $t1, $t2
-/* 091194 7F05C664 0FC161C5 */  jal   sub_GAME_7F058714
+/* 091194 7F05C664 0FC161C5 */  jal   matrix_4x4_set_rotation_around_xyz
 /* 091198 7F05C668 24A508EC */   addiu $a1, $a1, 0x8ec
 /* 09119C 7F05C66C 3C0B8003 */  lui   $t3, %hi(D_80034CA0) 
 /* 0911A0 7F05C670 8D6B4CA0 */  lw    $t3, %lo(D_80034CA0)($t3)
@@ -1124,7 +1124,7 @@ glabel sub_GAME_7F05C6FC
 /* 0912A4 7F05C774 33280001 */  andi  $t0, $t9, 1
 /* 0912A8 7F05C778 11000008 */  beqz  $t0, .L7F05C79C
 /* 0912AC 7F05C77C 26040010 */   addiu $a0, $s0, 0x10
-/* 0912B0 7F05C780 0FC161C5 */  jal   sub_GAME_7F058714
+/* 0912B0 7F05C780 0FC161C5 */  jal   matrix_4x4_set_rotation_around_xyz
 /* 0912B4 7F05C784 8FA500A8 */   lw    $a1, 0xa8($sp)
 /* 0912B8 7F05C788 26040004 */  addiu $a0, $s0, 4
 /* 0912BC 7F05C78C 0FC16266 */  jal   matrix_4x4_set_position
@@ -5961,7 +5961,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 0954BC 7F06098C 8DAF0004 */  lw    $t7, 4($t5)
 /* 0954C0 7F060990 AC8F0004 */  sw    $t7, 4($a0)
 /* 0954C4 7F060994 8DA10008 */  lw    $at, 8($t5)
-/* 0954C8 7F060998 0FC161C5 */  jal   sub_GAME_7F058714
+/* 0954C8 7F060998 0FC161C5 */  jal   matrix_4x4_set_rotation_around_xyz
 /* 0954CC 7F06099C AC810008 */   sw    $at, 8($a0)
 /* 0954D0 7F0609A0 27A401A4 */  addiu $a0, $sp, 0x1a4
 /* 0954D4 7F0609A4 0FC16026 */  jal   sub_GAME_7F058098
@@ -5980,7 +5980,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095504 7F0609D4 8F0E0004 */  lw    $t6, 4($t8)
 /* 095508 7F0609D8 AC8E0004 */  sw    $t6, 4($a0)
 /* 09550C 7F0609DC 8F010008 */  lw    $at, 8($t8)
-/* 095510 7F0609E0 0FC161C5 */  jal   sub_GAME_7F058714
+/* 095510 7F0609E0 0FC161C5 */  jal   matrix_4x4_set_rotation_around_xyz
 /* 095514 7F0609E4 AC810008 */   sw    $at, 8($a0)
 /* 095518 7F0609E8 27A401A4 */  addiu $a0, $sp, 0x1a4
 /* 09551C 7F0609EC 0FC16026 */  jal   sub_GAME_7F058098
@@ -6005,7 +6005,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095564 7F060A34 8F2E0004 */  lw    $t6, 4($t9)
 /* 095568 7F060A38 AC8E0004 */  sw    $t6, 4($a0)
 /* 09556C 7F060A3C 8F210008 */  lw    $at, 8($t9)
-/* 095570 7F060A40 0FC161C5 */  jal   sub_GAME_7F058714
+/* 095570 7F060A40 0FC161C5 */  jal   matrix_4x4_set_rotation_around_xyz
 /* 095574 7F060A44 AC810008 */   sw    $at, 8($a0)
 /* 095578 7F060A48 27A401A4 */  addiu $a0, $sp, 0x1a4
 /* 09557C 7F060A4C 0FC16026 */  jal   sub_GAME_7F058098
@@ -7745,7 +7745,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095A1C 7F060EAC 8DAF0004 */  lw    $t7, 4($t5)
 /* 095A20 7F060EB0 AC8F0004 */  sw    $t7, 4($a0)
 /* 095A24 7F060EB4 8DA10008 */  lw    $at, 8($t5)
-/* 095A28 7F060EB8 0FC1630D */  jal   sub_GAME_7F058714
+/* 095A28 7F060EB8 0FC1630D */  jal   matrix_4x4_set_rotation_around_xyz
 /* 095A2C 7F060EBC AC810008 */   sw    $at, 8($a0)
 /* 095A30 7F060EC0 27A401A4 */  addiu $a0, $sp, 0x1a4
 /* 095A34 7F060EC4 0FC1616E */  jal   sub_GAME_7F058098
@@ -7764,7 +7764,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095A64 7F060EF4 8F0E0004 */  lw    $t6, 4($t8)
 /* 095A68 7F060EF8 AC8E0004 */  sw    $t6, 4($a0)
 /* 095A6C 7F060EFC 8F010008 */  lw    $at, 8($t8)
-/* 095A70 7F060F00 0FC1630D */  jal   sub_GAME_7F058714
+/* 095A70 7F060F00 0FC1630D */  jal   matrix_4x4_set_rotation_around_xyz
 /* 095A74 7F060F04 AC810008 */   sw    $at, 8($a0)
 /* 095A78 7F060F08 27A401A4 */  addiu $a0, $sp, 0x1a4
 /* 095A7C 7F060F0C 0FC1616E */  jal   sub_GAME_7F058098
@@ -7789,7 +7789,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095AC4 7F060F54 8F2E0004 */  lw    $t6, 4($t9)
 /* 095AC8 7F060F58 AC8E0004 */  sw    $t6, 4($a0)
 /* 095ACC 7F060F5C 8F210008 */  lw    $at, 8($t9)
-/* 095AD0 7F060F60 0FC1630D */  jal   sub_GAME_7F058714
+/* 095AD0 7F060F60 0FC1630D */  jal   matrix_4x4_set_rotation_around_xyz
 /* 095AD4 7F060F64 AC810008 */   sw    $at, 8($a0)
 /* 095AD8 7F060F68 27A401A4 */  addiu $a0, $sp, 0x1a4
 /* 095ADC 7F060F6C 0FC1616E */  jal   sub_GAME_7F058098
@@ -20113,7 +20113,7 @@ glabel sub_GAME_7F0680D4
 /* 09CC30 7F068100 C4880008 */  lwc1  $f8, 8($a0)
 /* 09CC34 7F068104 E7081018 */  swc1  $f8, 0x1018($t8)
 /* 09CC38 7F068108 8C650000 */  lw    $a1, ($v1)
-/* 09CC3C 7F06810C 0FC161C5 */  jal   sub_GAME_7F058714
+/* 09CC3C 7F06810C 0FC161C5 */  jal   matrix_4x4_set_rotation_around_xyz
 /* 09CC40 7F068110 24A5101C */   addiu $a1, $a1, 0x101c
 /* 09CC44 7F068114 3C038008 */  lui   $v1, %hi(pPlayer)
 /* 09CC48 7F068118 2463A0B0 */  addiu $v1, %lo(pPlayer) # addiu $v1, $v1, -0x5f50
@@ -20831,7 +20831,7 @@ glabel sub_GAME_7F068508
 /* 09D37C 7F06884C C43243D0 */  lwc1  $f18, %lo(D_800543D0)($at)
 /* 09D380 7F068850 460A3202 */  mul.s $f8, $f6, $f10
 /* 09D384 7F068854 46124101 */  sub.s $f4, $f8, $f18
-/* 09D388 7F068858 0FC161C5 */  jal   sub_GAME_7F058714
+/* 09D388 7F068858 0FC161C5 */  jal   matrix_4x4_set_rotation_around_xyz
 /* 09D38C 7F06885C E7A4005C */   swc1  $f4, 0x5c($sp)
 /* 09D390 7F068860 0C002914 */  jal   get_random_value
 /* 09D394 7F068864 00000000 */   nop   
@@ -21049,7 +21049,7 @@ glabel sub_GAME_7F068508
 /* 09D6C4 7F068B94 C43243F8 */  lwc1  $f18, %lo(D_800543F8)($at)
 /* 09D6C8 7F068B98 46064282 */  mul.s $f10, $f8, $f6
 /* 09D6CC 7F068B9C 46125101 */  sub.s $f4, $f10, $f18
-/* 09D6D0 7F068BA0 0FC161C5 */  jal   sub_GAME_7F058714
+/* 09D6D0 7F068BA0 0FC161C5 */  jal   matrix_4x4_set_rotation_around_xyz
 /* 09D6D4 7F068BA4 E7A4005C */   swc1  $f4, 0x5c($sp)
 /* 09D6D8 7F068BA8 0C002914 */  jal   get_random_value
 /* 09D6DC 7F068BAC 00000000 */   nop   

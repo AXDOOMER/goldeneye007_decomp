@@ -509,18 +509,18 @@ glabel sub_GAME_7F058474
 void matrix_4x4_set_position_and_rotation_around_y(f32* position, f32 angle, mat44 matrix) {
     f32 cosine = cosf(angle);
     f32 sine = sinf(angle);
-    matrix[2][0] = sine;
-    matrix[0][2] = -sine;
     matrix[0][0] = cosine;
-    matrix[2][2] = cosine;
     matrix[0][1] = 0.0f;
+    matrix[0][2] = -sine;
     matrix[0][3] = 0.0f;
     matrix[1][0] = 0.0f;
+    matrix[1][1] = 1.0f;
     matrix[1][2] = 0.0f;
     matrix[1][3] = 0.0f;
+    matrix[2][0] = sine;
     matrix[2][1] = 0.0f;
+    matrix[2][2] = cosine;
     matrix[2][3] = 0.0f;
-    matrix[1][1] = 1.0f;
     matrix[3][0] = position[0];
     matrix[3][1] = position[1];
     matrix[3][2] = position[2];
@@ -530,74 +530,100 @@ void matrix_4x4_set_position_and_rotation_around_y(f32* position, f32 angle, mat
 void matrix_4x4_set_rotation_around_x(f32 angle, mat44 matrix) {
     f32 cosine = cosf(angle);
     f32 sine = sinf(angle);
-    matrix[1][2] = sine;
-    matrix[2][1] = -sine;
-    matrix[1][1] = cosine;
-    matrix[2][2] = cosine;
+    matrix[0][0] = 1.0f;
     matrix[0][1] = 0.0f;
     matrix[0][2] = 0.0f;
     matrix[0][3] = 0.0f;
     matrix[1][0] = 0.0f;
+    matrix[1][1] = cosine;
+    matrix[1][2] = sine;
     matrix[1][3] = 0.0f;
     matrix[2][0] = 0.0f;
+    matrix[2][1] = -sine;
+    matrix[2][2] = cosine;
     matrix[2][3] = 0.0f;
     matrix[3][0] = 0.0f;
     matrix[3][1] = 0.0f;
     matrix[3][2] = 0.0f;
-    matrix[0][0] = 1.0f;
     matrix[3][3] = 1.0f;
 }
 
 void matrix_4x4_set_rotation_around_y(f32 angle, mat44 matrix) {
     f32 cosine = cosf(angle);
     f32 sine = sinf(angle);
-    matrix[2][0] = sine;
-    matrix[0][2] = -sine;
     matrix[0][0] = cosine;
-    matrix[2][2] = cosine;
     matrix[0][1] = 0.0f;
+    matrix[0][2] = -sine;
     matrix[0][3] = 0.0f;
     matrix[1][0] = 0.0f;
+    matrix[1][1] = 1.0f;
     matrix[1][2] = 0.0f;
     matrix[1][3] = 0.0f;
+    matrix[2][0] = sine;
     matrix[2][1] = 0.0f;
+    matrix[2][2] = cosine;
     matrix[2][3] = 0.0f;
     matrix[3][0] = 0.0f;
     matrix[3][1] = 0.0f;
     matrix[3][2] = 0.0f;
-    matrix[1][1] = 1.0f;
     matrix[3][3] = 1.0f;
 }
 
 void matrix_4x4_set_rotation_around_z(f32 angle, mat44 matrix) {
     f32 cosine = cosf(angle);
     f32 sine = sinf(angle);
-    matrix[0][1] = sine;
-    matrix[1][0] = -sine;
     matrix[0][0] = cosine;
-    matrix[1][1] = cosine;
+    matrix[0][1] = sine;
     matrix[0][2] = 0.0f;
     matrix[0][3] = 0.0f;
+    matrix[1][0] = -sine;
+    matrix[1][1] = cosine;
     matrix[1][2] = 0.0f;
     matrix[1][3] = 0.0f;
     matrix[2][0] = 0.0f;
     matrix[2][1] = 0.0f;
+    matrix[2][2] = 1.0f;
     matrix[2][3] = 0.0f;
     matrix[3][0] = 0.0f;
     matrix[3][1] = 0.0f;
     matrix[3][2] = 0.0f;
-    matrix[2][2] = 1.0f;
     matrix[3][3] = 1.0f;
 }
 
 #ifdef NONMATCHING
-void sub_GAME_7F058714(void) {
-
+// Regalloc issues after 0x08D300
+void matrix_4x4_set_rotation_around_xyz(vec3 angles, mat44 matrix) {
+    f32 cos_x = cosf(angles[0]);
+    f32 sin_x = sinf(angles[0]);
+    f32 cos_y = cosf(angles[1]);
+    f32 sin_y = sinf(angles[1]);
+    f32 cos_z = cosf(angles[2]);
+    f32 sin_z = sinf(angles[2]);
+    f32 cos_x_cos_z = cos_x * cos_z;
+    f32 cos_x_sin_z = cos_x * sin_z;
+    f32 sin_x_cos_z = sin_x * cos_z;
+    f32 sin_x_sin_z = sin_x * sin_z;
+    matrix[0][0] = (cos_y * cos_z);
+    matrix[0][1] = (cos_y * sin_z);
+    matrix[0][2] = -sin_y;
+    matrix[0][3] = 0.0f;
+    matrix[1][0] = ((sin_x_cos_z * sin_y) - cos_x_sin_z);
+    matrix[1][1] = ((sin_x_sin_z * sin_y) + cos_x_cos_z);
+    matrix[1][2] = sin_x * cos_y;
+    matrix[1][3] = 0.0f;
+    matrix[2][0] = ((cos_x_cos_z * sin_y) + sin_x_sin_z);
+    matrix[2][1] = ((cos_x_sin_z * sin_y) - sin_x_cos_z);
+    matrix[2][2] = cos_x * cos_y;
+    matrix[2][3] = 0.0f;
+    matrix[3][0] = 0.0f;
+    matrix[3][1] = 0.0f;
+    matrix[3][2] = 0.0f;
+    matrix[3][3] = 1.0f;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F058714
+glabel matrix_4x4_set_rotation_around_xyz
 /* 08D244 7F058714 27BDFFA8 */  addiu $sp, $sp, -0x58
 /* 08D248 7F058718 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 08D24C 7F05871C AFB10018 */  sw    $s1, 0x18($sp)
@@ -769,7 +795,7 @@ glabel sub_GAME_7F05892C
 /* 08D464 7F058934 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 08D468 7F058938 00A02025 */  move  $a0, $a1
 /* 08D46C 7F05893C AFA60020 */  sw    $a2, 0x20($sp)
-/* 08D470 7F058940 0FC161C5 */  jal   sub_GAME_7F058714
+/* 08D470 7F058940 0FC161C5 */  jal   matrix_4x4_set_rotation_around_xyz
 /* 08D474 7F058944 00C02825 */   move  $a1, $a2
 /* 08D478 7F058948 8FA40018 */  lw    $a0, 0x18($sp)
 /* 08D47C 7F05894C 0FC16266 */  jal   matrix_4x4_set_position

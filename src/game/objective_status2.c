@@ -20,7 +20,7 @@ void sub_GAME_7F057AC0(float *param_1)
     firstrandfinal = get_random_value() * 0.00000000 * 6.28318548 * 0.03125000 - 0.09817477;
     secondrandfinal = get_random_value() * 0.00000000 * 6.28318548 * 0.03125000 - 0.09817477;
     thirdrandfinal = get_random_value() * 0.00000000 * 6.28318548 * 0.03125000 - 0.09817477;
-    sub_GAME_7F058714(&firstrandfinal,param_1);
+    matrix_4x4_set_rotation_around_xyz(&firstrandfinal,param_1);
     return;
 }
 #else
@@ -122,7 +122,7 @@ glabel sub_GAME_7F057AC0
 /* 08C720 7F057BF0 00000000 */  nop   
 /* 08C724 7F057BF4 46088482 */  mul.s $f18, $f16, $f8
 /* 08C728 7F057BF8 46049181 */  sub.s $f6, $f18, $f4
-/* 08C72C 7F057BFC 0FC161C5 */  jal   sub_GAME_7F058714
+/* 08C72C 7F057BFC 0FC161C5 */  jal   matrix_4x4_set_rotation_around_xyz
 /* 08C730 7F057C00 E7A60024 */   swc1  $f6, 0x24($sp)
 /* 08C734 7F057C04 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 08C738 7F057C08 27BD0028 */  addiu $sp, $sp, 0x28
