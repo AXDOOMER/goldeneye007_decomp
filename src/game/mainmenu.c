@@ -27540,7 +27540,7 @@ glabel constructor_menu18_displaycast
 /* 04E4F4 7F0199C4 E6060004 */  swc1  $f6, 4($s0)
 /* 04E4F8 7F0199C8 46044180 */  add.s $f6, $f8, $f4
 /* 04E4FC 7F0199CC E6060008 */  swc1  $f6, 8($s0)
-/* 04E500 7F0199D0 0FC1611D */  jal   sub_GAME_7F058474
+/* 04E500 7F0199D0 0FC1611D */  jal   matrix_4x4_transform_vector_in_place
 /* 04E504 7F0199D4 8D84000C */   lw    $a0, 0xc($t4)
 /* 04E508 7F0199D8 C60A0004 */  lwc1  $f10, 4($s0)
 /* 04E50C 7F0199DC C6040008 */  lwc1  $f4, 8($s0)

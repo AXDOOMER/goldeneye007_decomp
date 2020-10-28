@@ -9060,7 +9060,7 @@ void sub_GAME_7F07C7B4(void) {
         flt_CODE_bss_800799A8 = (f32) *sp68;
         flt_CODE_bss_800799A8.unk4 = (f32) sp68->unk4;
         flt_CODE_bss_800799A8.unk8 = (f32) sp68->unk8;
-        matrix_4x4_vec3_multiply_in_place(&sp24, &flt_CODE_bss_800799A8, sp68);
+        matrix_4x4_rotate_vector_in_place(&sp24, &flt_CODE_bss_800799A8, sp68);
         flt_CODE_bss_800799A8 = (f32) (flt_CODE_bss_800799A8 + *sp64);
         flt_CODE_bss_800799A8.unk4 = (f32) (flt_CODE_bss_800799A8.unk4 + sp64->unk4);
         flt_CODE_bss_800799A8.unk8 = (f32) (flt_CODE_bss_800799A8.unk8 + sp64->unk8);
@@ -9107,7 +9107,7 @@ glabel sub_GAME_7F07C7B4
 /* 0B1358 7F07C828 C4CA0004 */  lwc1  $f10, 4($a2)
 /* 0B135C 7F07C82C E4AA0004 */  swc1  $f10, 4($a1)
 /* 0B1360 7F07C830 C4D00008 */  lwc1  $f16, 8($a2)
-/* 0B1364 7F07C834 0FC160F6 */  jal   matrix_4x4_vec3_multiply_in_place
+/* 0B1364 7F07C834 0FC160F6 */  jal   matrix_4x4_rotate_vector_in_place
 /* 0B1368 7F07C838 E4B00008 */   swc1  $f16, 8($a1)
 /* 0B136C 7F07C83C 8FA70064 */  lw    $a3, 0x64($sp)
 /* 0B1370 7F07C840 3C058008 */  lui   $a1, %hi(flt_CODE_bss_800799A8)
@@ -9443,7 +9443,7 @@ glabel sub_GAME_7F07CA2C
                             // Node 12
                             sp8C = (void *) ptr_playerstank->unk4->unk14;
                             matrix_4x4_set_rotation_around_y((D_80055064 - phi_f0_2), ptr_playerstank, &sp34, ptr_playerstank->unk4->unk14->unk8->unk8->unk8->unk4, ptr_playerstank->unk4);
-                            matrix_4x4_vec3_multiply_in_place(&sp34, &sp74);
+                            matrix_4x4_rotate_vector_in_place(&sp34, &sp74);
                             temp_f6 = (sp74 * ptr_playerstank->unk4->unk14->unk14);
                             sp74 = temp_f6;
                             temp_f16 = (sp7C * ptr_playerstank->unk4->unk14->unk14);
@@ -9621,7 +9621,7 @@ glabel sub_GAME_7F07CAC8
 /* 0B1814 7F07CCE4 0FC1617F */  jal   matrix_4x4_set_rotation_around_y
 /* 0B1818 7F07CCE8 AFA8008C */   sw    $t0, 0x8c($sp)
 /* 0B181C 7F07CCEC 27A40034 */  addiu $a0, $sp, 0x34
-/* 0B1820 7F07CCF0 0FC160F6 */  jal   matrix_4x4_vec3_multiply_in_place
+/* 0B1820 7F07CCF0 0FC160F6 */  jal   matrix_4x4_rotate_vector_in_place
 /* 0B1824 7F07CCF4 27A50074 */   addiu $a1, $sp, 0x74
 /* 0B1828 7F07CCF8 8FA8008C */  lw    $t0, 0x8c($sp)
 /* 0B182C 7F07CCFC C7B20074 */  lwc1  $f18, 0x74($sp)
@@ -21899,7 +21899,7 @@ glabel MoveBond
 /* 0B9B04 7F084FD4 0FC1617F */  jal   matrix_4x4_set_rotation_around_y
 /* 0B9B08 7F084FD8 E7AA02FC */   swc1  $f10, 0x2fc($sp)
 /* 0B9B0C 7F084FDC 02002025 */  move  $a0, $s0
-/* 0B9B10 7F084FE0 0FC160F6 */  jal   matrix_4x4_vec3_multiply_in_place
+/* 0B9B10 7F084FE0 0FC160F6 */  jal   matrix_4x4_rotate_vector_in_place
 /* 0B9B14 7F084FE4 27A502F4 */   addiu $a1, $sp, 0x2f4
 /* 0B9B18 7F084FE8 0FC1F1ED */  jal   sub_GAME_7F07C7B4
 /* 0B9B1C 7F084FEC 00000000 */   nop   
@@ -21927,7 +21927,7 @@ glabel MoveBond
 /* 0B9B74 7F085044 0FC1629F */  jal   matrix_scalar_multiply
 /* 0B9B78 7F085048 C70C0014 */   lwc1  $f12, 0x14($t8)
 /* 0B9B7C 7F08504C 02002025 */  move  $a0, $s0
-/* 0B9B80 7F085050 0FC160F6 */  jal   matrix_4x4_vec3_multiply_in_place
+/* 0B9B80 7F085050 0FC160F6 */  jal   matrix_4x4_rotate_vector_in_place
 /* 0B9B84 7F085054 27A502F4 */   addiu $a1, $sp, 0x2f4
 /* 0B9B88 7F085058 27A402F4 */  addiu $a0, $sp, 0x2f4
 /* 0B9B8C 7F08505C 0FC1F658 */  jal   sub_GAME_7F07D960
@@ -22157,7 +22157,7 @@ glabel MoveBond
 /* 0B9EC0 7F085390 27A5025C */  addiu $a1, $sp, 0x25c
 /* 0B9EC4 7F085394 E7A8025C */  swc1  $f8, 0x25c($sp)
 /* 0B9EC8 7F085398 E7A60260 */  swc1  $f6, 0x260($sp)
-/* 0B9ECC 7F08539C 0FC160F6 */  jal   matrix_4x4_vec3_multiply_in_place
+/* 0B9ECC 7F08539C 0FC160F6 */  jal   matrix_4x4_rotate_vector_in_place
 /* 0B9ED0 7F0853A0 E7A40264 */   swc1  $f4, 0x264($sp)
 /* 0B9ED4 7F0853A4 C7AA025C */  lwc1  $f10, 0x25c($sp)
 /* 0B9ED8 7F0853A8 C6080058 */  lwc1  $f8, 0x58($s0)
@@ -23378,7 +23378,7 @@ glabel MoveBond
 /* 0BB098 7F086568 E7A800E8 */  swc1  $f8, 0xe8($sp)
 /* 0BB09C 7F08656C E7A600EC */  swc1  $f6, 0xec($sp)
 /* 0BB0A0 7F086570 27A400F0 */  addiu $a0, $sp, 0xf0
-/* 0BB0A4 7F086574 0FC160F6 */  jal   matrix_4x4_vec3_multiply_in_place
+/* 0BB0A4 7F086574 0FC160F6 */  jal   matrix_4x4_rotate_vector_in_place
 /* 0BB0A8 7F086578 27A500E4 */   addiu $a1, $sp, 0xe4
 /* 0BB0AC 7F08657C 8E280000 */  lw    $t0, ($s1)
 /* 0BB0B0 7F086580 C7A400E4 */  lwc1  $f4, 0xe4($sp)
@@ -24439,7 +24439,7 @@ glabel MoveBond
 /* 0BA1F4 7F085684 0FC162C7 */  jal   matrix_4x4_set_rotation_around_y
 /* 0BA1F8 7F085688 E7AA02FC */   swc1  $f10, 0x2fc($sp)
 /* 0BA1FC 7F08568C 02002025 */  move  $a0, $s0
-/* 0BA200 7F085690 0FC1623E */  jal   matrix_4x4_vec3_multiply_in_place
+/* 0BA200 7F085690 0FC1623E */  jal   matrix_4x4_rotate_vector_in_place
 /* 0BA204 7F085694 27A502F4 */   addiu $a1, $sp, 0x2f4
 /* 0BA208 7F085698 0FC1F376 */  jal   sub_GAME_7F07C7B4
 /* 0BA20C 7F08569C 00000000 */   nop   
@@ -24467,7 +24467,7 @@ glabel MoveBond
 /* 0BA264 7F0856F4 0FC163E7 */  jal   matrix_scalar_multiply
 /* 0BA268 7F0856F8 C5AC0014 */   lwc1  $f12, 0x14($t5)
 /* 0BA26C 7F0856FC 02002025 */  move  $a0, $s0
-/* 0BA270 7F085700 0FC1623E */  jal   matrix_4x4_vec3_multiply_in_place
+/* 0BA270 7F085700 0FC1623E */  jal   matrix_4x4_rotate_vector_in_place
 /* 0BA274 7F085704 27A502F4 */   addiu $a1, $sp, 0x2f4
 /* 0BA278 7F085708 27A402F4 */  addiu $a0, $sp, 0x2f4
 /* 0BA27C 7F08570C 0FC1F7E1 */  jal   sub_GAME_7F07D960
@@ -24697,7 +24697,7 @@ glabel MoveBond
 /* 0BA5B0 7F085A40 27A5025C */  addiu $a1, $sp, 0x25c
 /* 0BA5B4 7F085A44 E7A8025C */  swc1  $f8, 0x25c($sp)
 /* 0BA5B8 7F085A48 E7A60260 */  swc1  $f6, 0x260($sp)
-/* 0BA5BC 7F085A4C 0FC1623E */  jal   matrix_4x4_vec3_multiply_in_place
+/* 0BA5BC 7F085A4C 0FC1623E */  jal   matrix_4x4_rotate_vector_in_place
 /* 0BA5C0 7F085A50 E7A40264 */   swc1  $f4, 0x264($sp)
 /* 0BA5C4 7F085A54 C7AA025C */  lwc1  $f10, 0x25c($sp)
 /* 0BA5C8 7F085A58 C6080058 */  lwc1  $f8, 0x58($s0)
@@ -25919,7 +25919,7 @@ glabel MoveBond
 /* 0BB78C 7F086C1C E7A800E8 */  swc1  $f8, 0xe8($sp)
 /* 0BB790 7F086C20 E7A600EC */  swc1  $f6, 0xec($sp)
 /* 0BB794 7F086C24 27A400F0 */  addiu $a0, $sp, 0xf0
-/* 0BB798 7F086C28 0FC1623E */  jal   matrix_4x4_vec3_multiply_in_place
+/* 0BB798 7F086C28 0FC1623E */  jal   matrix_4x4_rotate_vector_in_place
 /* 0BB79C 7F086C2C 27A500E4 */   addiu $a1, $sp, 0xe4
 /* 0BB7A0 7F086C30 8E280000 */  lw    $t0, ($s1)
 /* 0BB7A4 7F086C34 C7A400E4 */  lwc1  $f4, 0xe4($sp)
@@ -27661,7 +27661,7 @@ void store_BONDdata_curpos_to_previous(void) {
     pPlayer->previous_model_xpos = (f32) pPlayer->current_model_xpos;
     pPlayer->previous_model_ypos = (f32) pPlayer->current_model_ypos;
     pPlayer->previous_model_zpos = (f32) pPlayer->current_model_zpos;
-    return matrix_4x4_vec3_multiply_in_place(get_BONDdata_field_10CC(), (pPlayer + 0x44));
+    return matrix_4x4_rotate_vector_in_place(get_BONDdata_field_10CC(), (pPlayer + 0x44));
 }
 #else
 GLOBAL_ASM(
@@ -27685,7 +27685,7 @@ glabel store_BONDdata_curpos_to_previous
 /* 0BC1D0 7F0876A0 2463A0B0 */  addiu $v1, %lo(pPlayer) # addiu $v1, $v1, -0x5f50
 /* 0BC1D4 7F0876A4 8C650000 */  lw    $a1, ($v1)
 /* 0BC1D8 7F0876A8 00402025 */  move  $a0, $v0
-/* 0BC1DC 7F0876AC 0FC160F6 */  jal   matrix_4x4_vec3_multiply_in_place
+/* 0BC1DC 7F0876AC 0FC160F6 */  jal   matrix_4x4_rotate_vector_in_place
 /* 0BC1E0 7F0876B0 24A50044 */   addiu $a1, $a1, 0x44
 /* 0BC1E4 7F0876B4 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0BC1E8 7F0876B8 27BD0018 */  addiu $sp, $sp, 0x18

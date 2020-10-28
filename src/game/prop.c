@@ -1290,7 +1290,7 @@ glabel sub_GAME_7F002A3C
 /* 037604 7F002AD4 E7A60048 */  swc1  $f6, 0x48($sp)
 /* 037608 7F002AD8 C4C80008 */  lwc1  $f8, 8($a2)
 /* 03760C 7F002ADC AFA30050 */  sw    $v1, 0x50($sp)
-/* 037610 7F002AE0 0FC160F6 */  jal   matrix_4x4_vec3_multiply_in_place
+/* 037610 7F002AE0 0FC160F6 */  jal   matrix_4x4_rotate_vector_in_place
 /* 037614 7F002AE4 E7A8004C */   swc1  $f8, 0x4c($sp)
 /* 037618 7F002AE8 8E0C0010 */  lw    $t4, 0x10($s0)
 /* 03761C 7F002AEC C7AA0044 */  lwc1  $f10, 0x44($sp)
