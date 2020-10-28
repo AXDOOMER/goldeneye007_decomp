@@ -365,74 +365,20 @@ glabel sub_GAME_7F058274
 )
 #endif
 
-#ifdef NONMATCHING
-void sub_GAME_7F058380(void) {
-
+void matrix_4x4_vec3_multiply(mat44 matrix, vec3 vector, vec3 result) {
+    s32 i;
+    for (i = 0; i < 3; i++) {
+        result[i] = matrix[0][i] * vector[0] + matrix[1][i] * vector[1] + matrix[2][i] * vector[2];
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F058380
-/* 08CEB0 7F058380 00803825 */  move  $a3, $a0
-/* 08CEB4 7F058384 24040003 */  li    $a0, 3
-/* 08CEB8 7F058388 00001025 */  move  $v0, $zero
-/* 08CEBC 7F05838C 00C01825 */  move  $v1, $a2
-.L7F058390:
-/* 08CEC0 7F058390 C4F20000 */  lwc1  $f18, ($a3)
-/* 08CEC4 7F058394 C4B00000 */  lwc1  $f16, ($a1)
-/* 08CEC8 7F058398 C4EE0010 */  lwc1  $f14, 0x10($a3)
-/* 08CECC 7F05839C C4AC0004 */  lwc1  $f12, 4($a1)
-/* 08CED0 7F0583A0 46109402 */  mul.s $f16, $f18, $f16
-/* 08CED4 7F0583A4 C4B20008 */  lwc1  $f18, 8($a1)
-/* 08CED8 7F0583A8 C4EA0020 */  lwc1  $f10, 0x20($a3)
-/* 08CEDC 7F0583AC 460C7302 */  mul.s $f12, $f14, $f12
-/* 08CEE0 7F0583B0 24420001 */  addiu $v0, $v0, 1
-/* 08CEE4 7F0583B4 24630004 */  addiu $v1, $v1, 4
-/* 08CEE8 7F0583B8 460A9282 */  mul.s $f10, $f18, $f10
-/* 08CEEC 7F0583BC 24E70004 */  addiu $a3, $a3, 4
-/* 08CEF0 7F0583C0 460C8300 */  add.s $f12, $f16, $f12
-/* 08CEF4 7F0583C4 460C5300 */  add.s $f12, $f10, $f12
-/* 08CEF8 7F0583C8 1444FFF1 */  bne   $v0, $a0, .L7F058390
-/* 08CEFC 7F0583CC E46CFFFC */   swc1  $f12, -4($v1)
-/* 08CF00 7F0583D0 03E00008 */  jr    $ra
-/* 08CF04 7F0583D4 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0583D8(void) {
-
+void matrix_4x4_vec3_multiply_in_place(mat44 matrix, vec3 vector) {
+    vec3 result;
+    matrix_4x4_vec3_multiply(matrix, vector, result);
+    vector[0] = result[0];
+    vector[1] = result[1];
+    vector[2] = result[2];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0583D8
-/* 08CF08 7F0583D8 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 08CF0C 7F0583DC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08CF10 7F0583E0 27A6001C */  addiu $a2, $sp, 0x1c
-/* 08CF14 7F0583E4 0FC160E0 */  jal   sub_GAME_7F058380
-/* 08CF18 7F0583E8 AFA5002C */   sw    $a1, 0x2c($sp)
-/* 08CF1C 7F0583EC 8FA5002C */  lw    $a1, 0x2c($sp)
-/* 08CF20 7F0583F0 C7A4001C */  lwc1  $f4, 0x1c($sp)
-/* 08CF24 7F0583F4 E4A40000 */  swc1  $f4, ($a1)
-/* 08CF28 7F0583F8 C7A60020 */  lwc1  $f6, 0x20($sp)
-/* 08CF2C 7F0583FC E4A60004 */  swc1  $f6, 4($a1)
-/* 08CF30 7F058400 C7A80024 */  lwc1  $f8, 0x24($sp)
-/* 08CF34 7F058404 E4A80008 */  swc1  $f8, 8($a1)
-/* 08CF38 7F058408 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08CF3C 7F05840C 27BD0028 */  addiu $sp, $sp, 0x28
-/* 08CF40 7F058410 03E00008 */  jr    $ra
-/* 08CF44 7F058414 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F058418(void) {
@@ -445,7 +391,7 @@ glabel sub_GAME_7F058418
 /* 08CF48 7F058418 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 08CF4C 7F05841C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 08CF50 7F058420 AFA40018 */  sw    $a0, 0x18($sp)
-/* 08CF54 7F058424 0FC160E0 */  jal   sub_GAME_7F058380
+/* 08CF54 7F058424 0FC160E0 */  jal   matrix_4x4_vec3_multiply
 /* 08CF58 7F058428 AFA60020 */   sw    $a2, 0x20($sp)
 /* 08CF5C 7F05842C 8FA40018 */  lw    $a0, 0x18($sp)
 /* 08CF60 7F058430 8FA60020 */  lw    $a2, 0x20($sp)
@@ -483,7 +429,7 @@ glabel sub_GAME_7F058474
 /* 08CFA4 7F058474 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 08CFA8 7F058478 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 08CFAC 7F05847C AFA40018 */  sw    $a0, 0x18($sp)
-/* 08CFB0 7F058480 0FC160F6 */  jal   sub_GAME_7F0583D8
+/* 08CFB0 7F058480 0FC160F6 */  jal   matrix_4x4_vec3_multiply_in_place
 /* 08CFB4 7F058484 AFA5001C */   sw    $a1, 0x1c($sp)
 /* 08CFB8 7F058488 8FA40018 */  lw    $a0, 0x18($sp)
 /* 08CFBC 7F05848C 8FA5001C */  lw    $a1, 0x1c($sp)

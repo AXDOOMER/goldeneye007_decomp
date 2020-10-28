@@ -3358,7 +3358,7 @@ glabel process_09_head_hat_placement_interlink
 /* 0A36C0 7F06EB90 E7A6003C */  swc1  $f6, 0x3c($sp)
 /* 0A36C4 7F06EB94 C6080014 */  lwc1  $f8, 0x14($s0)
 /* 0A36C8 7F06EB98 AFA40044 */  sw    $a0, 0x44($sp)
-/* 0A36CC 7F06EB9C 0FC160F6 */  jal   sub_GAME_7F0583D8
+/* 0A36CC 7F06EB9C 0FC160F6 */  jal   matrix_4x4_vec3_multiply_in_place
 /* 0A36D0 7F06EBA0 E7A80040 */   swc1  $f8, 0x40($sp)
 /* 0A36D4 7F06EBA4 1000002F */  b     .L7F06EC64
 /* 0A36D8 7F06EBA8 8FA40044 */   lw    $a0, 0x44($sp)

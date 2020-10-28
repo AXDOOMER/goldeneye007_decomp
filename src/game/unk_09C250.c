@@ -6462,10 +6462,10 @@ glabel sub_GAME_7F0A108C
 /* 0D5D9C 7F0A126C E7A60080 */  swc1  $f6, 0x80($sp)
 /* 0D5DA0 7F0A1270 E7A4006C */  swc1  $f4, 0x6c($sp)
 /* 0D5DA4 7F0A1274 E7A80070 */  swc1  $f8, 0x70($sp)
-/* 0D5DA8 7F0A1278 0FC160F6 */  jal   sub_GAME_7F0583D8
+/* 0D5DA8 7F0A1278 0FC160F6 */  jal   matrix_4x4_vec3_multiply_in_place
 /* 0D5DAC 7F0A127C E7AA0074 */   swc1  $f10, 0x74($sp)
 /* 0D5DB0 7F0A1280 02202025 */  move  $a0, $s1
-/* 0D5DB4 7F0A1284 0FC160F6 */  jal   sub_GAME_7F0583D8
+/* 0D5DB4 7F0A1284 0FC160F6 */  jal   matrix_4x4_vec3_multiply_in_place
 /* 0D5DB8 7F0A1288 27A5006C */   addiu $a1, $sp, 0x6c
 /* 0D5DBC 7F0A128C C7A00078 */  lwc1  $f0, 0x78($sp)
 /* 0D5DC0 7F0A1290 C7A2007C */  lwc1  $f2, 0x7c($sp)

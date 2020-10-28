@@ -43,7 +43,7 @@ void sub_GAME_7F093880(f32 arg0, f32 arg1, ? arg2) {
     sp18 = getPlayer_c_screentop();
     sp20 = (f32) (get_ptr_currentdata()->unk38 + (arg1 + sp18));
     sub_GAME_7F077EEC(&sp1C, arg2, 0x42c80000);
-    return sub_GAME_7F0583D8(sp24, arg2);
+    return matrix_4x4_vec3_multiply_in_place(sp24, arg2);
 }
 
 #else
@@ -75,7 +75,7 @@ glabel sub_GAME_7F093880
 /* 0C8408 7F0938D8 0FC1DFBB */  jal   sub_GAME_7F077EEC
 /* 0C840C 7F0938DC E7A40020 */   swc1  $f4, 0x20($sp)
 /* 0C8410 7F0938E0 8FA40024 */  lw    $a0, 0x24($sp)
-/* 0C8414 7F0938E4 0FC160F6 */  jal   sub_GAME_7F0583D8
+/* 0C8414 7F0938E4 0FC160F6 */  jal   matrix_4x4_vec3_multiply_in_place
 /* 0C8418 7F0938E8 8FA50030 */   lw    $a1, 0x30($sp)
 /* 0C841C 7F0938EC 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0C8420 7F0938F0 27BD0028 */  addiu $sp, $sp, 0x28

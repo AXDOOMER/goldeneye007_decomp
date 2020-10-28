@@ -6694,7 +6694,7 @@ glabel sub_GAME_7F022648
 /* 05736C 7F02283C 0FC1E111 */  jal   sub_GAME_7F078444
 /* 057370 7F022840 E7A4007C */   swc1  $f4, 0x7c($sp)
 /* 057374 7F022844 00402025 */  move  $a0, $v0
-/* 057378 7F022848 0FC160F6 */  jal   sub_GAME_7F0583D8
+/* 057378 7F022848 0FC160F6 */  jal   matrix_4x4_vec3_multiply_in_place
 /* 05737C 7F02284C 27A50074 */   addiu $a1, $sp, 0x74
 /* 057380 7F022850 8FA400DC */  lw    $a0, 0xdc($sp)
 /* 057384 7F022854 8FA500D8 */  lw    $a1, 0xd8($sp)
