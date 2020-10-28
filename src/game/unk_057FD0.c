@@ -778,62 +778,17 @@ glabel sub_GAME_7F058860
 )
 #endif
 
+void matrix_4x4_set_position(vec3 position, mat44 matrix);
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F05892C(void) {
-
+void matrix_4x4_set_position_and_rotation_around_xyz(vec3 position, vec3 rotation, mat44 matrix) {
+    matrix_4x4_set_rotation_around_xyz(rotation, matrix);
+    matrix_4x4_set_position(position, matrix);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05892C
-/* 08D45C 7F05892C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 08D460 7F058930 AFA40018 */  sw    $a0, 0x18($sp)
-/* 08D464 7F058934 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08D468 7F058938 00A02025 */  move  $a0, $a1
-/* 08D46C 7F05893C AFA60020 */  sw    $a2, 0x20($sp)
-/* 08D470 7F058940 0FC161C5 */  jal   matrix_4x4_set_rotation_around_xyz
-/* 08D474 7F058944 00C02825 */   move  $a1, $a2
-/* 08D478 7F058948 8FA40018 */  lw    $a0, 0x18($sp)
-/* 08D47C 7F05894C 0FC16266 */  jal   matrix_4x4_set_position
-/* 08D480 7F058950 8FA50020 */   lw    $a1, 0x20($sp)
-/* 08D484 7F058954 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08D488 7F058958 27BD0018 */  addiu $sp, $sp, 0x18
-/* 08D48C 7F05895C 03E00008 */  jr    $ra
-/* 08D490 7F058960 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void init_something_copy_posdata_to_it(void) {
-
+void matrix_4x4_set_identity_and_position(vec3 position, mat44 matrix) {
+    matrix_4x4_set_identity(matrix);
+    matrix_4x4_set_position(position, matrix);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel init_something_copy_posdata_to_it
-/* 08D494 7F058964 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 08D498 7F058968 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08D49C 7F05896C AFA40018 */  sw    $a0, 0x18($sp)
-/* 08D4A0 7F058970 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 08D4A4 7F058974 0FC15FF4 */  jal   matrix_4x4_set_identity
-/* 08D4A8 7F058978 00A02025 */   move  $a0, $a1
-/* 08D4AC 7F05897C 8FA40018 */  lw    $a0, 0x18($sp)
-/* 08D4B0 7F058980 0FC16266 */  jal   matrix_4x4_set_position
-/* 08D4B4 7F058984 8FA5001C */   lw    $a1, 0x1c($sp)
-/* 08D4B8 7F058988 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08D4BC 7F05898C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 08D4C0 7F058990 03E00008 */  jr    $ra
-/* 08D4C4 7F058994 00000000 */   nop   
-)
-#endif
 
 void matrix_4x4_set_position(vec3 position, mat44 matrix) {
     matrix[3][0] = position[0];

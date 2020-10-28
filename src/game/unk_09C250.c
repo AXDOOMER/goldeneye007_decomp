@@ -5211,7 +5211,7 @@ glabel sub_GAME_7F0A0034
 /* 0D4C5C 7F0A012C 24450010 */  addiu $a1, $v0, 0x10
 /* 0D4C60 7F0A0130 19A0003C */  blez  $t5, .L7F0A0224
 /* 0D4C64 7F0A0134 00000000 */   nop   
-/* 0D4C68 7F0A0138 0FC1624B */  jal   sub_GAME_7F05892C
+/* 0D4C68 7F0A0138 0FC1624B */  jal   matrix_4x4_set_position_and_rotation_around_xyz
 /* 0D4C6C 7F0A013C 02803025 */   move  $a2, $s4
 /* 0D4C70 7F0A0140 0FC1E0F1 */  jal   get_BONDdata_field_10CC
 /* 0D4C74 7F0A0144 00000000 */   nop   

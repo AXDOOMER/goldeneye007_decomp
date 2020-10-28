@@ -5222,7 +5222,7 @@ s32 interface_menu05_fileselect(void)
     phi_s2 = 0;
 loop_8:
     sub_GAME_7F059694(&spC8, 0, 0, 0x457a0000, 1.0f);
-    init_something_copy_posdata_to_it(sp54, &sp88);
+    matrix_4x4_set_identity_and_position(sp54, &sp88);
     matrix_scalar_multiply(D_80051A24, &sp88);
     sub_GAME_7F058068(&spC8, &sp88);
     (*phi_s0)->unkC = sub_GAME_7F0BD714((*phi_s0)->unk8->unkE << 6);
@@ -5518,7 +5518,7 @@ glabel interface_menu05_fileselect
 /* 04082C 7F00BCFC 0FC165A5 */  jal   sub_GAME_7F059694
 /* 040830 7F00BD00 E7A40020 */   swc1  $f4, 0x20($sp)
 /* 040834 7F00BD04 8FA40054 */  lw    $a0, 0x54($sp)
-/* 040838 7F00BD08 0FC16259 */  jal   init_something_copy_posdata_to_it
+/* 040838 7F00BD08 0FC16259 */  jal   matrix_4x4_set_identity_and_position
 /* 04083C 7F00BD0C 02602825 */   move  $a1, $s3
 /* 040840 7F00BD10 3C018005 */  lui   $at, %hi(D_80051A24)
 /* 040844 7F00BD14 C42C1A24 */  lwc1  $f12, %lo(D_80051A24)($at)
@@ -7809,7 +7809,7 @@ loop_1:
     temp_f0 = temp_v0->unk0 + D_8002AFC4;
     temp_f2 = temp_v0->unk4 + D_8002AFC8;
     sub_GAME_7F059694(0, &spC8, temp_f0, temp_f2, 4000.0f + D_8002AFCC, temp_f0, temp_f2, 1.0f);
-    init_something_copy_posdata_to_it(&D_8002AB94 + (selected_folder_num * 0xc), &sp88);
+    matrix_4x4_set_identity_and_position(&D_8002AB94 + (selected_folder_num * 0xc), &sp88);
     matrix_scalar_multiply(0x3e800000, &sp88);
     sub_GAME_7F058068(&spC8, &sp88);
     temp_ret = sub_GAME_7F0BD714(ptr_folder_object_instance->unk8->unkE << 6);
@@ -7907,7 +7907,7 @@ glabel sub_GAME_7F00D5E8
 /* 04220C 7F00D6DC 01730019 */  multu $t3, $s3
 /* 042210 7F00D6E0 00006012 */  mflo  $t4
 /* 042214 7F00D6E4 022C2021 */  addu  $a0, $s1, $t4
-/* 042218 7F00D6E8 0FC16259 */  jal   init_something_copy_posdata_to_it
+/* 042218 7F00D6E8 0FC16259 */  jal   matrix_4x4_set_identity_and_position
 /* 04221C 7F00D6EC 00000000 */   nop   
 /* 042220 7F00D6F0 3C013E80 */  li    $at, 0x3E800000 # 0.250000
 /* 042224 7F00D6F4 44816000 */  mtc1  $at, $f12

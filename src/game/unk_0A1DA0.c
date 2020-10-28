@@ -1202,7 +1202,7 @@ glabel sub_GAME_7F0A2C44
 /* 0D7904 7F0A2DD4 02A03025 */  move  $a2, $s5
 /* 0D7908 7F0A2DD8 01F01821 */  addu  $v1, $t7, $s0
 /* 0D790C 7F0A2DDC 24640004 */  addiu $a0, $v1, 4
-/* 0D7910 7F0A2DE0 0FC1624B */  jal   sub_GAME_7F05892C
+/* 0D7910 7F0A2DE0 0FC1624B */  jal   matrix_4x4_set_position_and_rotation_around_xyz
 /* 0D7914 7F0A2DE4 24650010 */   addiu $a1, $v1, 0x10
 /* 0D7918 7F0A2DE8 8EC20000 */  lw    $v0, ($s6)
 /* 0D791C 7F0A2DEC C7A400C0 */  lwc1  $f4, 0xc0($sp)

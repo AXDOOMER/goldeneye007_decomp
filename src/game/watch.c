@@ -9550,7 +9550,7 @@ glabel sub_GAME_7F0AADC0
 /* 0DFB28 7F0AAFF8 0FC16032 */  jal   sub_GAME_7F0580C8
 /* 0DFB2C 7F0AAFFC 27A603FC */   addiu $a2, $sp, 0x3fc
 /* 0DFB30 7F0AB000 27A40370 */  addiu $a0, $sp, 0x370
-/* 0DFB34 7F0AB004 0FC16259 */  jal   init_something_copy_posdata_to_it
+/* 0DFB34 7F0AB004 0FC16259 */  jal   matrix_4x4_set_identity_and_position
 /* 0DFB38 7F0AB008 27A5043C */   addiu $a1, $sp, 0x43c
 /* 0DFB3C 7F0AB00C 27A4043C */  addiu $a0, $sp, 0x43c
 /* 0DFB40 7F0AB010 27A503FC */  addiu $a1, $sp, 0x3fc
@@ -9750,7 +9750,7 @@ glabel sub_GAME_7F0AADC0
 /* 0DFE30 7F0AB300 0FC16032 */  jal   sub_GAME_7F0580C8
 /* 0DFE34 7F0AB304 27A603FC */   addiu $a2, $sp, 0x3fc
 /* 0DFE38 7F0AB308 27A40370 */  addiu $a0, $sp, 0x370
-/* 0DFE3C 7F0AB30C 0FC16259 */  jal   init_something_copy_posdata_to_it
+/* 0DFE3C 7F0AB30C 0FC16259 */  jal   matrix_4x4_set_identity_and_position
 /* 0DFE40 7F0AB310 27A5043C */   addiu $a1, $sp, 0x43c
 /* 0DFE44 7F0AB314 27A4043C */  addiu $a0, $sp, 0x43c
 /* 0DFE48 7F0AB318 27A503FC */  addiu $a1, $sp, 0x3fc
@@ -10021,7 +10021,7 @@ glabel sub_GAME_7F0AADC0
 /* 0E071C 7F0ABBAC 0FC1617A */  jal   sub_GAME_7F0580C8
 /* 0E0720 7F0ABBB0 27A603FC */   addiu $a2, $sp, 0x3fc
 /* 0E0724 7F0ABBB4 27A40370 */  addiu $a0, $sp, 0x370
-/* 0E0728 7F0ABBB8 0FC163A1 */  jal   init_something_copy_posdata_to_it
+/* 0E0728 7F0ABBB8 0FC163A1 */  jal   matrix_4x4_set_identity_and_position
 /* 0E072C 7F0ABBBC 27A5043C */   addiu $a1, $sp, 0x43c
 /* 0E0730 7F0ABBC0 27A4043C */  addiu $a0, $sp, 0x43c
 /* 0E0734 7F0ABBC4 27A503FC */  addiu $a1, $sp, 0x3fc
@@ -10218,7 +10218,7 @@ glabel sub_GAME_7F0AADC0
 /* 0E0A18 7F0ABEA8 0FC1617A */  jal   sub_GAME_7F0580C8
 /* 0E0A1C 7F0ABEAC 27A603FC */   addiu $a2, $sp, 0x3fc
 /* 0E0A20 7F0ABEB0 27A40370 */  addiu $a0, $sp, 0x370
-/* 0E0A24 7F0ABEB4 0FC163A1 */  jal   init_something_copy_posdata_to_it
+/* 0E0A24 7F0ABEB4 0FC163A1 */  jal   matrix_4x4_set_identity_and_position
 /* 0E0A28 7F0ABEB8 27A5043C */   addiu $a1, $sp, 0x43c
 /* 0E0A2C 7F0ABEBC 27A4043C */  addiu $a0, $sp, 0x43c
 /* 0E0A30 7F0ABEC0 27A503FC */  addiu $a1, $sp, 0x3fc
