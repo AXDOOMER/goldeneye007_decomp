@@ -1640,7 +1640,28 @@ glabel sub_GAME_7F08CE70
 
 
 #ifdef NONMATCHING
+//NOT MATCHING -> Register values
 void sub_GAME_7F08CF0C(void) {
+
+    InvItem *item = pPlayer->ptr_inventory_first_in_cycle;
+
+    while (item) {
+
+        if (item->type == 2 ) {
+            struct prop *temp_a0 = item->type_inv_item.type_prop.prop;
+            if (item->type_inv_item.type_prop.prop->type == 4 && temp_a0->obj->type == 0xF8) {
+                return TRUE;
+            }
+        }
+
+        item = item->next;
+
+        if (item == pPlayer->ptr_inventory_first_in_cycle) {
+            break;
+        }
+    }
+
+    return FALSE;
 
 }
 #else
