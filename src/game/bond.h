@@ -11,32 +11,31 @@ struct xyzpoint
     f32 z;
 };
 
-struct defaultobj {
+typedef struct defaultobj {
 	s16 type;
-};
+} defaultobj;
 
-
-struct prop {
+typedef struct prop {
+    
     u8 type;
 
     union {
 		struct defaultobj *obj;
-	};
-    
-};
+	} obj;
+} prop;
 
-struct invitem_weap {
+typedef struct invitem_weap {
 	s32 weapon1;
-};
+} invitem_weap;
 
-struct invitem_prop {
+typedef struct invitem_prop {
     struct prop *prop;
-};
+} invitem_prop;
 
-struct invitem_dual {
+typedef struct invitem_dual {
 	s32 weapon1;
 	s32 weapon2;
-};
+} invitem_dual;
 
 typedef struct InvItem 
 {
