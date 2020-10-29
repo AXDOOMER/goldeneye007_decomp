@@ -205,7 +205,7 @@ InvItem *get_ptr_inventory_item(ITEM_IDS weapon) {
 
     while (item) {
 
-        if (item->type == INV_ITEM_WEAPON && item->right == weapon) {
+        if (item->type == INV_ITEM_WEAPON && item->type_inv_item.type_weap.weapon1 == weapon) {
             return item;
         }
 
@@ -238,7 +238,7 @@ InvItem *get_ptr_inventory_for_item_in_hand(ITEM_IDS right, ITEM_IDS left) {
 
     while (item) {
 
-        if (item->type == INV_ITEM_DUAL && item->right == right && item->left == left) {
+        if (item->type == INV_ITEM_DUAL && item->type_inv_item.type_dual.weapon1 == right && item->type_inv_item.type_dual.weapon2 == left) {
             return item;
         }
 
@@ -325,7 +325,7 @@ int add_item_to_inventory(ITEM_IDS item)
         if (nextItem)
         {
             nextItem->type = INV_ITEM_WEAPON;
-            nextItem->right = item;
+            nextItem->type_inv_item.type_weap.weapon1 = item;
             add_additional_weapon_slot_to_player_inventory_guess(nextItem);
         }
 
@@ -356,8 +356,9 @@ int add_doubles_item_to_inventory(int right, int left)
     
         if (item) {
             item->type = INV_ITEM_DUAL;
-            item->right = right;
-            item->left = left;
+            
+            item->type_inv_item.type_dual.weapon1 = right;
+            item->type_inv_item.type_dual.weapon2 = left;
             add_additional_weapon_slot_to_player_inventory_guess(item);
         }
 
@@ -514,7 +515,7 @@ glabel sub_GAME_7F08C61C
 
 
 
-int add_prop_to_inventory(PROPS prop) {
+int add_prop_to_inventory(struct prop *prop) {
     
     InvItem *item;
 
@@ -522,11 +523,23 @@ int add_prop_to_inventory(PROPS prop) {
     
     if (item) {
         item->type = INV_ITEM_PROP;
-        item->right = prop;
+        item->type_inv_item.type_prop.prop = prop;
         add_additional_weapon_slot_to_player_inventory_guess(item);
     }
 
     return TRUE;
+
+    /*
+     int *piVar1;
+    piVar1 = (int *)get_ptr_next_available_weapon();
+    if (piVar1) {
+        *piVar1 = 2
+        piVar1[1] = param_1;
+        add_additional_weapon_slot_to_player_inventory_guess(piVar1);
+    }
+
+    return 1;
+    */
 }
 
 
