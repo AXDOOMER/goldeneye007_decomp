@@ -528,18 +528,6 @@ int add_prop_to_inventory(struct prop *prop) {
     }
 
     return TRUE;
-
-    /*
-     int *piVar1;
-    piVar1 = (int *)get_ptr_next_available_weapon();
-    if (piVar1) {
-        *piVar1 = 2
-        piVar1[1] = param_1;
-        add_additional_weapon_slot_to_player_inventory_guess(piVar1);
-    }
-
-    return 1;
-    */
 }
 
 
