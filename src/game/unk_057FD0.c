@@ -2343,7 +2343,7 @@ glabel sub_GAME_7F05A250
 /* 08ED88 7F05A258 AFA40018 */  sw    $a0, 0x18($sp)
 /* 08ED8C 7F05A25C 0FC168C4 */  jal   sub_GAME_7F05A310
 /* 08ED90 7F05A260 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 08ED94 7F05A264 0FC169DD */  jal   sub_GAME_7F05A774
+/* 08ED94 7F05A264 0FC169DD */  jal   matrix_4x4_determinant
 /* 08ED98 7F05A268 8FA40018 */   lw    $a0, 0x18($sp)
 /* 08ED9C 7F05A26C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 08EDA0 7F05A270 44812000 */  mtc1  $at, $f4
@@ -2445,7 +2445,7 @@ glabel sub_GAME_7F05A310
 /* 08EEDC 7F05A3AC E7B0007C */  swc1  $f16, 0x7c($sp)
 /* 08EEE0 7F05A3B0 E7B00010 */  swc1  $f16, 0x10($sp)
 /* 08EEE4 7F05A3B4 E7BA0020 */  swc1  $f26, 0x20($sp)
-/* 08EEE8 7F05A3B8 0FC16A4A */  jal   sub_GAME_7F05A928
+/* 08EEE8 7F05A3B8 0FC16A4A */  jal   matrix_3x3_determinant
 /* 08EEEC 7F05A3BC E7B80014 */   swc1  $f24, 0x14($sp)
 /* 08EEF0 7F05A3C0 E6000000 */  swc1  $f0, ($s0)
 /* 08EEF4 7F05A3C4 C7A8006C */  lwc1  $f8, 0x6c($sp)
@@ -2459,7 +2459,7 @@ glabel sub_GAME_7F05A310
 /* 08EF14 7F05A3E4 C7AC00A0 */  lwc1  $f12, 0xa0($sp)
 /* 08EF18 7F05A3E8 E7A8001C */  swc1  $f8, 0x1c($sp)
 /* 08EF1C 7F05A3EC E7A60018 */  swc1  $f6, 0x18($sp)
-/* 08EF20 7F05A3F0 0FC16A4A */  jal   sub_GAME_7F05A928
+/* 08EF20 7F05A3F0 0FC16A4A */  jal   matrix_3x3_determinant
 /* 08EF24 7F05A3F4 E7A40010 */   swc1  $f4, 0x10($sp)
 /* 08EF28 7F05A3F8 46000287 */  neg.s $f10, $f0
 /* 08EF2C 7F05A3FC 4406A000 */  mfc1  $a2, $f20
@@ -2474,7 +2474,7 @@ glabel sub_GAME_7F05A310
 /* 08EF50 7F05A420 C7AC00A0 */  lwc1  $f12, 0xa0($sp)
 /* 08EF54 7F05A424 E7A8001C */  swc1  $f8, 0x1c($sp)
 /* 08EF58 7F05A428 E7A60018 */  swc1  $f6, 0x18($sp)
-/* 08EF5C 7F05A42C 0FC16A4A */  jal   sub_GAME_7F05A928
+/* 08EF5C 7F05A42C 0FC16A4A */  jal   matrix_3x3_determinant
 /* 08EF60 7F05A430 E7A40010 */   swc1  $f4, 0x10($sp)
 /* 08EF64 7F05A434 E6000020 */  swc1  $f0, 0x20($s0)
 /* 08EF68 7F05A438 C7A6007C */  lwc1  $f6, 0x7c($sp)
@@ -2488,7 +2488,7 @@ glabel sub_GAME_7F05A310
 /* 08EF88 7F05A458 C7AC00A0 */  lwc1  $f12, 0xa0($sp)
 /* 08EF8C 7F05A45C E7A6001C */  swc1  $f6, 0x1c($sp)
 /* 08EF90 7F05A460 E7A40018 */  swc1  $f4, 0x18($sp)
-/* 08EF94 7F05A464 0FC16A4A */  jal   sub_GAME_7F05A928
+/* 08EF94 7F05A464 0FC16A4A */  jal   matrix_3x3_determinant
 /* 08EF98 7F05A468 E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 08EF9C 7F05A46C 46000207 */  neg.s $f8, $f0
 /* 08EFA0 7F05A470 4406B000 */  mfc1  $a2, $f22
@@ -2503,7 +2503,7 @@ glabel sub_GAME_7F05A310
 /* 08EFC4 7F05A494 4600F306 */  mov.s $f12, $f30
 /* 08EFC8 7F05A498 E7A6001C */  swc1  $f6, 0x1c($sp)
 /* 08EFCC 7F05A49C E7A40018 */  swc1  $f4, 0x18($sp)
-/* 08EFD0 7F05A4A0 0FC16A4A */  jal   sub_GAME_7F05A928
+/* 08EFD0 7F05A4A0 0FC16A4A */  jal   matrix_3x3_determinant
 /* 08EFD4 7F05A4A4 E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 08EFD8 7F05A4A8 46000207 */  neg.s $f8, $f0
 /* 08EFDC 7F05A4AC 4406A000 */  mfc1  $a2, $f20
@@ -2518,7 +2518,7 @@ glabel sub_GAME_7F05A310
 /* 08F000 7F05A4D0 4600E306 */  mov.s $f12, $f28
 /* 08F004 7F05A4D4 E7A6001C */  swc1  $f6, 0x1c($sp)
 /* 08F008 7F05A4D8 E7A40018 */  swc1  $f4, 0x18($sp)
-/* 08F00C 7F05A4DC 0FC16A4A */  jal   sub_GAME_7F05A928
+/* 08F00C 7F05A4DC 0FC16A4A */  jal   matrix_3x3_determinant
 /* 08F010 7F05A4E0 E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 08F014 7F05A4E4 E6000014 */  swc1  $f0, 0x14($s0)
 /* 08F018 7F05A4E8 C7A4006C */  lwc1  $f4, 0x6c($sp)
@@ -2532,7 +2532,7 @@ glabel sub_GAME_7F05A310
 /* 08F038 7F05A508 4600E306 */  mov.s $f12, $f28
 /* 08F03C 7F05A50C E7A4001C */  swc1  $f4, 0x1c($sp)
 /* 08F040 7F05A510 E7AA0018 */  swc1  $f10, 0x18($sp)
-/* 08F044 7F05A514 0FC16A4A */  jal   sub_GAME_7F05A928
+/* 08F044 7F05A514 0FC16A4A */  jal   matrix_3x3_determinant
 /* 08F048 7F05A518 E7A80010 */   swc1  $f8, 0x10($sp)
 /* 08F04C 7F05A51C 46000187 */  neg.s $f6, $f0
 /* 08F050 7F05A520 4406A000 */  mfc1  $a2, $f20
@@ -2547,7 +2547,7 @@ glabel sub_GAME_7F05A310
 /* 08F074 7F05A544 4600E306 */  mov.s $f12, $f28
 /* 08F078 7F05A548 E7A4001C */  swc1  $f4, 0x1c($sp)
 /* 08F07C 7F05A54C E7AA0018 */  swc1  $f10, 0x18($sp)
-/* 08F080 7F05A550 0FC16A4A */  jal   sub_GAME_7F05A928
+/* 08F080 7F05A550 0FC16A4A */  jal   matrix_3x3_determinant
 /* 08F084 7F05A554 E7A80010 */   swc1  $f8, 0x10($sp)
 /* 08F088 7F05A558 E6000034 */  swc1  $f0, 0x34($s0)
 /* 08F08C 7F05A55C C7AA0070 */  lwc1  $f10, 0x70($sp)
@@ -2561,7 +2561,7 @@ glabel sub_GAME_7F05A310
 /* 08F0AC 7F05A57C 4600F306 */  mov.s $f12, $f30
 /* 08F0B0 7F05A580 E7AA001C */  swc1  $f10, 0x1c($sp)
 /* 08F0B4 7F05A584 E7A80018 */  swc1  $f8, 0x18($sp)
-/* 08F0B8 7F05A588 0FC16A4A */  jal   sub_GAME_7F05A928
+/* 08F0B8 7F05A588 0FC16A4A */  jal   matrix_3x3_determinant
 /* 08F0BC 7F05A58C E7A60010 */   swc1  $f6, 0x10($sp)
 /* 08F0C0 7F05A590 E6000008 */  swc1  $f0, 8($s0)
 /* 08F0C4 7F05A594 C7A80070 */  lwc1  $f8, 0x70($sp)
@@ -2575,7 +2575,7 @@ glabel sub_GAME_7F05A310
 /* 08F0E4 7F05A5B4 4600E306 */  mov.s $f12, $f28
 /* 08F0E8 7F05A5B8 E7A8001C */  swc1  $f8, 0x1c($sp)
 /* 08F0EC 7F05A5BC E7A60018 */  swc1  $f6, 0x18($sp)
-/* 08F0F0 7F05A5C0 0FC16A4A */  jal   sub_GAME_7F05A928
+/* 08F0F0 7F05A5C0 0FC16A4A */  jal   matrix_3x3_determinant
 /* 08F0F4 7F05A5C4 E7A40010 */   swc1  $f4, 0x10($sp)
 /* 08F0F8 7F05A5C8 46000287 */  neg.s $f10, $f0
 /* 08F0FC 7F05A5CC 4406A000 */  mfc1  $a2, $f20
@@ -2590,7 +2590,7 @@ glabel sub_GAME_7F05A310
 /* 08F120 7F05A5F0 4600E306 */  mov.s $f12, $f28
 /* 08F124 7F05A5F4 E7A8001C */  swc1  $f8, 0x1c($sp)
 /* 08F128 7F05A5F8 E7A60018 */  swc1  $f6, 0x18($sp)
-/* 08F12C 7F05A5FC 0FC16A4A */  jal   sub_GAME_7F05A928
+/* 08F12C 7F05A5FC 0FC16A4A */  jal   matrix_3x3_determinant
 /* 08F130 7F05A600 E7A40010 */   swc1  $f4, 0x10($sp)
 /* 08F134 7F05A604 E6000028 */  swc1  $f0, 0x28($s0)
 /* 08F138 7F05A608 C7A60080 */  lwc1  $f6, 0x80($sp)
@@ -2604,7 +2604,7 @@ glabel sub_GAME_7F05A310
 /* 08F158 7F05A628 4600E306 */  mov.s $f12, $f28
 /* 08F15C 7F05A62C E7A6001C */  swc1  $f6, 0x1c($sp)
 /* 08F160 7F05A630 E7A40018 */  swc1  $f4, 0x18($sp)
-/* 08F164 7F05A634 0FC16A4A */  jal   sub_GAME_7F05A928
+/* 08F164 7F05A634 0FC16A4A */  jal   matrix_3x3_determinant
 /* 08F168 7F05A638 E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 08F16C 7F05A63C 46000207 */  neg.s $f8, $f0
 /* 08F170 7F05A640 4600F306 */  mov.s $f12, $f30
@@ -2621,7 +2621,7 @@ glabel sub_GAME_7F05A310
 /* 08F19C 7F05A66C E7A8001C */  swc1  $f8, 0x1c($sp)
 /* 08F1A0 7F05A670 E7A60018 */  swc1  $f6, 0x18($sp)
 /* 08F1A4 7F05A674 E7AA0020 */  swc1  $f10, 0x20($sp)
-/* 08F1A8 7F05A678 0FC16A4A */  jal   sub_GAME_7F05A928
+/* 08F1A8 7F05A678 0FC16A4A */  jal   matrix_3x3_determinant
 /* 08F1AC 7F05A67C E7A40014 */   swc1  $f4, 0x14($sp)
 /* 08F1B0 7F05A680 46000107 */  neg.s $f4, $f0
 /* 08F1B4 7F05A684 4600E306 */  mov.s $f12, $f28
@@ -2638,7 +2638,7 @@ glabel sub_GAME_7F05A310
 /* 08F1E0 7F05A6B0 E7A4001C */  swc1  $f4, 0x1c($sp)
 /* 08F1E4 7F05A6B4 E7AA0018 */  swc1  $f10, 0x18($sp)
 /* 08F1E8 7F05A6B8 E7A60020 */  swc1  $f6, 0x20($sp)
-/* 08F1EC 7F05A6BC 0FC16A4A */  jal   sub_GAME_7F05A928
+/* 08F1EC 7F05A6BC 0FC16A4A */  jal   matrix_3x3_determinant
 /* 08F1F0 7F05A6C0 E7A80014 */   swc1  $f8, 0x14($sp)
 /* 08F1F4 7F05A6C4 E600001C */  swc1  $f0, 0x1c($s0)
 /* 08F1F8 7F05A6C8 C7A80090 */  lwc1  $f8, 0x90($sp)
@@ -2654,7 +2654,7 @@ glabel sub_GAME_7F05A310
 /* 08F220 7F05A6F0 E7A6001C */  swc1  $f6, 0x1c($sp)
 /* 08F224 7F05A6F4 E7A40018 */  swc1  $f4, 0x18($sp)
 /* 08F228 7F05A6F8 E7A80020 */  swc1  $f8, 0x20($sp)
-/* 08F22C 7F05A6FC 0FC16A4A */  jal   sub_GAME_7F05A928
+/* 08F22C 7F05A6FC 0FC16A4A */  jal   matrix_3x3_determinant
 /* 08F230 7F05A700 E7AA0014 */   swc1  $f10, 0x14($sp)
 /* 08F234 7F05A704 46000287 */  neg.s $f10, $f0
 /* 08F238 7F05A708 4407F000 */  mfc1  $a3, $f30
@@ -2671,7 +2671,7 @@ glabel sub_GAME_7F05A310
 /* 08F264 7F05A734 E7AA001C */  swc1  $f10, 0x1c($sp)
 /* 08F268 7F05A738 E7A80018 */  swc1  $f8, 0x18($sp)
 /* 08F26C 7F05A73C E7A40020 */  swc1  $f4, 0x20($sp)
-/* 08F270 7F05A740 0FC16A4A */  jal   sub_GAME_7F05A928
+/* 08F270 7F05A740 0FC16A4A */  jal   matrix_3x3_determinant
 /* 08F274 7F05A744 E7A60014 */   swc1  $f6, 0x14($sp)
 /* 08F278 7F05A748 E600003C */  swc1  $f0, 0x3c($s0)
 /* 08F27C 7F05A74C 8FBF0064 */  lw    $ra, 0x64($sp)
@@ -2687,18 +2687,35 @@ glabel sub_GAME_7F05A310
 )
 #endif
 
+f32 matrix_3x3_determinant(f32 m11, f32 m21, f32 m31, f32 m12, f32 m22, f32 m32, f32 m13, f32 m23, f32 m33);
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F05A774(void) {
-
+ #ifdef NONMATCHING
+ // Stack pointer mostly
+f32 matrix_4x4_determinant(mat44 matrix) {
+    f32 det;
+    f32 a = matrix[0][0];
+    f32 b = matrix[0][1];
+    f32 c = matrix[0][2];
+    f32 d = matrix[0][3];
+    f32 e = matrix[1][0];
+    f32 f = matrix[1][1];
+    f32 g = matrix[1][2];
+    f32 h = matrix[1][3];
+    f32 i = matrix[2][0];
+    f32 j = matrix[2][1];
+    f32 k = matrix[2][2];
+    f32 l = matrix[2][3];
+    f32 m = matrix[3][0];
+    f32 n = matrix[3][1];
+    f32 o = matrix[3][2];
+    f32 p = matrix[3][3];
+    det = (a * matrix_3x3_determinant(f, j, n, g, k, o, h, l, p)) - (b * matrix_3x3_determinant(e, i, m, g, k, o, h, l, p)) + (c * matrix_3x3_determinant(e, i, m, f, j, n, h, l, p)) - (d * matrix_3x3_determinant(e, i, m, f, j, n, g, k, o));
+    return det;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F05A774
+glabel matrix_4x4_determinant
 /* 08F2A4 7F05A774 27BDFF80 */  addiu $sp, $sp, -0x80
 /* 08F2A8 7F05A778 AFBF002C */  sw    $ra, 0x2c($sp)
 /* 08F2AC 7F05A77C C4840000 */  lwc1  $f4, ($a0)
@@ -2741,7 +2758,7 @@ glabel sub_GAME_7F05A774
 /* 08F340 7F05A810 E7B20040 */  swc1  $f18, 0x40($sp)
 /* 08F344 7F05A814 E7B2001C */  swc1  $f18, 0x1c($sp)
 /* 08F348 7F05A818 E7A80014 */  swc1  $f8, 0x14($sp)
-/* 08F34C 7F05A81C 0FC16A4A */  jal   sub_GAME_7F05A928
+/* 08F34C 7F05A81C 0FC16A4A */  jal   matrix_3x3_determinant
 /* 08F350 7F05A820 E7AA0020 */   swc1  $f10, 0x20($sp)
 /* 08F354 7F05A824 C7A40050 */  lwc1  $f4, 0x50($sp)
 /* 08F358 7F05A828 C7A6004C */  lwc1  $f6, 0x4c($sp)
@@ -2757,7 +2774,7 @@ glabel sub_GAME_7F05A774
 /* 08F380 7F05A850 E7A60014 */  swc1  $f6, 0x14($sp)
 /* 08F384 7F05A854 E7A80018 */  swc1  $f8, 0x18($sp)
 /* 08F388 7F05A858 E7A40020 */  swc1  $f4, 0x20($sp)
-/* 08F38C 7F05A85C 0FC16A4A */  jal   sub_GAME_7F05A928
+/* 08F38C 7F05A85C 0FC16A4A */  jal   matrix_3x3_determinant
 /* 08F390 7F05A860 E7AA001C */   swc1  $f10, 0x1c($sp)
 /* 08F394 7F05A864 C7A60050 */  lwc1  $f6, 0x50($sp)
 /* 08F398 7F05A868 C7A8004C */  lwc1  $f8, 0x4c($sp)
@@ -2773,7 +2790,7 @@ glabel sub_GAME_7F05A774
 /* 08F3C0 7F05A890 E7A80014 */  swc1  $f8, 0x14($sp)
 /* 08F3C4 7F05A894 E7AA0018 */  swc1  $f10, 0x18($sp)
 /* 08F3C8 7F05A898 E7A60020 */  swc1  $f6, 0x20($sp)
-/* 08F3CC 7F05A89C 0FC16A4A */  jal   sub_GAME_7F05A928
+/* 08F3CC 7F05A89C 0FC16A4A */  jal   matrix_3x3_determinant
 /* 08F3D0 7F05A8A0 E7A4001C */   swc1  $f4, 0x1c($sp)
 /* 08F3D4 7F05A8A4 C7A80060 */  lwc1  $f8, 0x60($sp)
 /* 08F3D8 7F05A8A8 C7AA005C */  lwc1  $f10, 0x5c($sp)
@@ -2789,7 +2806,7 @@ glabel sub_GAME_7F05A774
 /* 08F400 7F05A8D0 E7AA0014 */  swc1  $f10, 0x14($sp)
 /* 08F404 7F05A8D4 E7A40018 */  swc1  $f4, 0x18($sp)
 /* 08F408 7F05A8D8 E7A80020 */  swc1  $f8, 0x20($sp)
-/* 08F40C 7F05A8DC 0FC16A4A */  jal   sub_GAME_7F05A928
+/* 08F40C 7F05A8DC 0FC16A4A */  jal   matrix_3x3_determinant
 /* 08F410 7F05A8E0 E7A6001C */   swc1  $f6, 0x1c($sp)
 /* 08F414 7F05A8E4 C7AA0078 */  lwc1  $f10, 0x78($sp)
 /* 08F418 7F05A8E8 C7A40038 */  lwc1  $f4, 0x38($sp)
@@ -2812,13 +2829,13 @@ glabel sub_GAME_7F05A774
 #endif
 
 
-f32 sub_GAME_7F05A9B8(f32 arg0, f32 arg1, f32 arg2, f32 arg3);
+f32 matrix_2x2_determinant(f32 a, f32 c, f32 b, f32 d);
 
-f32 sub_GAME_7F05A928(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8) {
-    f32 test = (arg0 * sub_GAME_7F05A9B8(arg4, arg5, arg7, arg8)) - (arg3 * sub_GAME_7F05A9B8(arg1, arg2, arg7, arg8)) + (arg6 * sub_GAME_7F05A9B8(arg1, arg2, arg4, arg5));
-    return test;
+f32 matrix_3x3_determinant(f32 a, f32 d, f32 g, f32 b, f32 e, f32 h, f32 c, f32 f, f32 i) {
+    f32 determinant = (a * matrix_2x2_determinant(e, h, f, i)) - (b * matrix_2x2_determinant(d, g, f, i)) + (c * matrix_2x2_determinant(d, g, e, h));
+    return determinant;
 }
 
-f32 sub_GAME_7F05A9B8(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
-    return (arg0 * arg3) - (arg1 * arg2);
+f32 matrix_2x2_determinant(f32 a, f32 c, f32 b, f32 d) {
+     return (a * d) - (c * b);
 }
