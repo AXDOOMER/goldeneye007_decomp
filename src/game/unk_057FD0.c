@@ -2812,55 +2812,12 @@ glabel sub_GAME_7F05A774
 #endif
 
 
+f32 sub_GAME_7F05A9B8(f32 arg0, f32 arg1, f32 arg2, f32 arg3);
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F05A928(void) {
-
+f32 sub_GAME_7F05A928(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8) {
+    f32 test = (arg0 * sub_GAME_7F05A9B8(arg4, arg5, arg7, arg8)) - (arg3 * sub_GAME_7F05A9B8(arg1, arg2, arg7, arg8)) + (arg6 * sub_GAME_7F05A9B8(arg1, arg2, arg4, arg5));
+    return test;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05A928
-/* 08F458 7F05A928 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 08F45C 7F05A92C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08F460 7F05A930 E7AC0028 */  swc1  $f12, 0x28($sp)
-/* 08F464 7F05A934 E7AE002C */  swc1  $f14, 0x2c($sp)
-/* 08F468 7F05A938 AFA60030 */  sw    $a2, 0x30($sp)
-/* 08F46C 7F05A93C AFA70034 */  sw    $a3, 0x34($sp)
-/* 08F470 7F05A940 8FA70048 */  lw    $a3, 0x48($sp)
-/* 08F474 7F05A944 C7AE0030 */  lwc1  $f14, 0x30($sp)
-/* 08F478 7F05A948 8FA60044 */  lw    $a2, 0x44($sp)
-/* 08F47C 7F05A94C 0FC16A6E */  jal   sub_GAME_7F05A9B8
-/* 08F480 7F05A950 C7AC002C */   lwc1  $f12, 0x2c($sp)
-/* 08F484 7F05A954 E7A0001C */  swc1  $f0, 0x1c($sp)
-/* 08F488 7F05A958 C7AC0038 */  lwc1  $f12, 0x38($sp)
-/* 08F48C 7F05A95C C7AE003C */  lwc1  $f14, 0x3c($sp)
-/* 08F490 7F05A960 8FA60044 */  lw    $a2, 0x44($sp)
-/* 08F494 7F05A964 0FC16A6E */  jal   sub_GAME_7F05A9B8
-/* 08F498 7F05A968 8FA70048 */   lw    $a3, 0x48($sp)
-/* 08F49C 7F05A96C E7A00020 */  swc1  $f0, 0x20($sp)
-/* 08F4A0 7F05A970 C7AC002C */  lwc1  $f12, 0x2c($sp)
-/* 08F4A4 7F05A974 C7AE0030 */  lwc1  $f14, 0x30($sp)
-/* 08F4A8 7F05A978 8FA60038 */  lw    $a2, 0x38($sp)
-/* 08F4AC 7F05A97C 0FC16A6E */  jal   sub_GAME_7F05A9B8
-/* 08F4B0 7F05A980 8FA7003C */   lw    $a3, 0x3c($sp)
-/* 08F4B4 7F05A984 C7A40028 */  lwc1  $f4, 0x28($sp)
-/* 08F4B8 7F05A988 C7A60020 */  lwc1  $f6, 0x20($sp)
-/* 08F4BC 7F05A98C C7AA0034 */  lwc1  $f10, 0x34($sp)
-/* 08F4C0 7F05A990 C7B0001C */  lwc1  $f16, 0x1c($sp)
-/* 08F4C4 7F05A994 46062202 */  mul.s $f8, $f4, $f6
-/* 08F4C8 7F05A998 C7A60040 */  lwc1  $f6, 0x40($sp)
-/* 08F4CC 7F05A99C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08F4D0 7F05A9A0 46105482 */  mul.s $f18, $f10, $f16
-/* 08F4D4 7F05A9A4 27BD0028 */  addiu $sp, $sp, 0x28
-/* 08F4D8 7F05A9A8 46060282 */  mul.s $f10, $f0, $f6
-/* 08F4DC 7F05A9AC 46124101 */  sub.s $f4, $f8, $f18
-/* 08F4E0 7F05A9B0 03E00008 */  jr    $ra
-/* 08F4E4 7F05A9B4 46045000 */   add.s $f0, $f10, $f4
-)
-#endif
 
 f32 sub_GAME_7F05A9B8(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
     return (arg0 * arg3) - (arg1 * arg2);
