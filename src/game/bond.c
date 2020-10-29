@@ -27745,7 +27745,7 @@ void sub_GAME_7F0876C4(void *arg0, void *arg1, void *arg2) {
     sub_GAME_7F059424(pPlayer->field_64, *arg0, arg0->unk4, arg0->unk8, (f32) *arg1, (f32) arg1->unk4, (f32) arg1->unk8, (f32) *arg2, (f32) arg2->unk4, (f32) arg2->unk8);
     sub_GAME_7F059708(pPlayer->field_68, *arg0, arg0->unk4, arg0->unk8, (f32) *arg1, (f32) arg1->unk4, (f32) arg1->unk8, (f32) *arg2, (f32) arg2->unk4, (f32) arg2->unk8);
     temp_s0 = sub_GAME_7F0BD6E0();
-    sub_GAME_7F0580C8(get_BONDdata_field_10DC(), &spC4, &sp60);
+    matrix_4x4_multiply(get_BONDdata_field_10DC(), &spC4, &sp60);
     phi_a1 = &sp60;
 loop_1:
     // Node 1
@@ -27939,7 +27939,7 @@ glabel sub_GAME_7F0876C4
 /* 0BC410 7F0878E0 27B10060 */  addiu $s1, $sp, 0x60
 /* 0BC414 7F0878E4 02203025 */  move  $a2, $s1
 /* 0BC418 7F0878E8 00402025 */  move  $a0, $v0
-/* 0BC41C 7F0878EC 0FC16032 */  jal   sub_GAME_7F0580C8
+/* 0BC41C 7F0878EC 0FC16032 */  jal   matrix_4x4_multiply
 /* 0BC420 7F0878F0 27A500C4 */   addiu $a1, $sp, 0xc4
 /* 0BC424 7F0878F4 3C01C6FA */  li    $at, 0xC6FA0000 # -32000.000000
 /* 0BC428 7F0878F8 44816000 */  mtc1  $at, $f12

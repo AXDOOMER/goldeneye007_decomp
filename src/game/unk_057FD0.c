@@ -59,7 +59,7 @@ glabel sub_GAME_7F058068
 /* 08CB98 7F058068 27BDFFA8 */  addiu $sp, $sp, -0x58
 /* 08CB9C 7F05806C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 08CBA0 7F058070 AFA5005C */  sw    $a1, 0x5c($sp)
-/* 08CBA4 7F058074 0FC16032 */  jal   sub_GAME_7F0580C8
+/* 08CBA4 7F058074 0FC16032 */  jal   matrix_4x4_multiply
 /* 08CBA8 7F058078 27A60018 */   addiu $a2, $sp, 0x18
 /* 08CBAC 7F05807C 27A40018 */  addiu $a0, $sp, 0x18
 /* 08CBB0 7F058080 0FC16008 */  jal   matrix_4x4_copy
@@ -98,60 +98,21 @@ glabel sub_GAME_7F058098
 )
 #endif
 
-
-
-
-
 #ifdef NONMATCHING
-s32 sub_GAME_7F0580C8(void *arg0, void *arg1, s32 arg2) {
-    s32 temp_v0;
-    void *temp_a0;
-    void *temp_a3;
-    s32 temp_v1;
-    void *phi_a3;
-    void *phi_t0;
-    void *phi_a0;
-    s32 phi_v0;
-    s32 phi_v1;
-
-    // Node 0
-    phi_t0 = arg0;
-    phi_v1 = 0;
-loop_1:
-    // Node 1
-    phi_a3 = arg1;
-    phi_a0 = (arg2 + phi_v1);
-    phi_v0 = 0;
-loop_2:
-    // Node 2
-    temp_v0 = (phi_v0 + 2);
-    temp_a0 = (phi_a0 + 0x20);
-    temp_a3 = (phi_a3 + 0x20);
-    temp_a0->unk-20 = (f32) ((phi_a3->unkC * phi_t0->unk30) + (((*phi_t0 * *phi_a3) + (phi_t0->unk10 * phi_a3->unk4)) + (phi_t0->unk20 * phi_a3->unk8)));
-    temp_a0->unk-10 = (f32) ((temp_a3->unk-4 * phi_t0->unk30) + (((*phi_t0 * temp_a3->unk-10) + (phi_t0->unk10 * temp_a3->unk-C)) + (phi_t0->unk20 * temp_a3->unk-8)));
-    phi_a3 = temp_a3;
-    phi_a0 = temp_a0;
-    phi_v0 = temp_v0;
-    if (temp_v0 != 4)
-    {
-        goto loop_2;
+// Regalloc + The inner loop variable goes from 0 to 64 instead of 0 to 4. Unwinding the inner loop yields worse match, same with having j < 4.
+void matrix_4x4_multiply(mat44 lhs, mat44 rhs, mat44 result) {
+    s32 i, j;
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 2; j++) {
+            result[j * 2 + 0][i] = lhs[0][i] * rhs[j * 2 + 0][0] + lhs[1][i] * rhs[j * 2 + 0][1] + lhs[2][i] * rhs[j * 2 + 0][2] + lhs[3][i] * rhs[j * 2 + 0][3];
+            result[j * 2 + 1][i] = lhs[0][i] * rhs[j * 2 + 1][0] + lhs[1][i] * rhs[j * 2 + 1][1] + lhs[2][i] * rhs[j * 2 + 1][2] + lhs[3][i] * rhs[j * 2 + 1][3];
+        }
     }
-    // Node 3
-    temp_v1 = (phi_v1 + 4);
-    phi_t0 = (phi_t0 + 4);
-    phi_v1 = temp_v1;
-    if (temp_v1 != 0x10)
-    {
-        goto loop_1;
-    }
-    // Node 4
-    return temp_v0;
 }
-
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0580C8
+glabel matrix_4x4_multiply
 /* 08CBF8 7F0580C8 00001825 */  move  $v1, $zero
 /* 08CBFC 7F0580CC 00804025 */  move  $t0, $a0
 /* 08CC00 7F0580D0 240A0010 */  li    $t2, 16
