@@ -54,6 +54,20 @@ typedef struct InvItem
 
 } InvItem;
 
+typedef struct UnkStruct11F4 {
+	s32 unk1;
+	s32 unk2;
+	s32 unk3;
+	s32 unk4;
+	s32 unk5;
+	s32 unk6;
+	s32 unk7;
+	s32 unk8;
+
+	struct UnkStruct11F4 *next;
+	struct defaultobj *obj;
+} UnkStruct11F4;
+
 
 struct Player
 {
@@ -1192,7 +1206,7 @@ struct Player
   s32 equipmaxitems;
   s32 equipallguns;
   s32 field_11F0;
-  s32 field_11F4;
+  UnkStruct11F4 *field_11F4;
   s32 index_time_spent_using_item;
   s32 field_11FC;
   s32 field_1200;

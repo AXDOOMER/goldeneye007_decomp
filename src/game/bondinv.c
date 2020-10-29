@@ -2085,42 +2085,20 @@ glabel sub_GAME_7F08D108
 
 #endif
 
+UnkStruct11F4 *sub_GAME_7F08D21C(struct defaultobj *obj)
+{
+  UnkStruct11F4 *field_11F4 = pPlayer->field_11F4;
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F08D21C(void) {
-
+  while (field_11F4) {
+      
+      if (field_11F4->obj == obj) {
+        return field_11F4;
+      }
+      
+      field_11F4 = field_11F4->next;
+  }
+  return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08D21C
-/* 0C1D4C 7F08D21C 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0C1D50 7F08D220 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0C1D54 7F08D224 00001025 */  move  $v0, $zero
-/* 0C1D58 7F08D228 8DC311F4 */  lw    $v1, 0x11f4($t6)
-/* 0C1D5C 7F08D22C 10600009 */  beqz  $v1, .L7F08D254
-/* 0C1D60 7F08D230 00000000 */   nop   
-/* 0C1D64 7F08D234 8C6F0024 */  lw    $t7, 0x24($v1)
-.L7F08D238:
-/* 0C1D68 7F08D238 548F0004 */  bnel  $a0, $t7, .L7F08D24C
-/* 0C1D6C 7F08D23C 8C630020 */   lw    $v1, 0x20($v1)
-/* 0C1D70 7F08D240 03E00008 */  jr    $ra
-/* 0C1D74 7F08D244 00601025 */   move  $v0, $v1
-
-/* 0C1D78 7F08D248 8C630020 */  lw    $v1, 0x20($v1)
-.L7F08D24C:
-/* 0C1D7C 7F08D24C 5460FFFA */  bnezl $v1, .L7F08D238
-/* 0C1D80 7F08D250 8C6F0024 */   lw    $t7, 0x24($v1)
-.L7F08D254:
-/* 0C1D84 7F08D254 03E00008 */  jr    $ra
-/* 0C1D88 7F08D258 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F08D25C(void) {
@@ -3124,7 +3102,7 @@ glabel sub_GAME_7F08D8E0
 #endif
 
 
-int sub_GAME_7F08D95C(void) {
+int sub_GAME_7F08D95C(s32 param) {
     // temp is probably a struct as mips_to_c gives the following output
     // --------------------
     // temp_v0->unk1C 
@@ -3136,7 +3114,7 @@ int sub_GAME_7F08D95C(void) {
     // --------------------
     int temp;
 
-    temp = sub_GAME_7F08D21C();
+    temp = sub_GAME_7F08D21C(param);
 
     if ( temp && (*(int *)(temp + 0x1c)) ) {
         return get_textptr_for_textID(*(int *)(temp + 0x1c));
