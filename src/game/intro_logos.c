@@ -697,7 +697,7 @@ glabel sub_GAME_7F007F30
 /* 03CD20 7F0081F0 8C4A000C */  lw    $t2, 0xc($v0)
 .L7F0081F4:
 /* 03CD24 7F0081F4 02202825 */  move  $a1, $s1
-/* 03CD28 7F0081F8 0FC16008 */  jal   sub_GAME_7F058020
+/* 03CD28 7F0081F8 0FC16008 */  jal   matrix_4x4_copy
 /* 03CD2C 7F0081FC 01502021 */   addu  $a0, $t2, $s0
 /* 03CD30 7F008200 8E6B0000 */  lw    $t3, ($s3)
 /* 03CD34 7F008204 00126980 */  sll   $t5, $s2, 6
@@ -725,7 +725,7 @@ glabel sub_GAME_7F007F30
 /* 03CD88 7F008258 8CCE000C */  lw    $t6, 0xc($a2)
 .L7F00825C:
 /* 03CD8C 7F00825C 02202825 */  move  $a1, $s1
-/* 03CD90 7F008260 0FC16008 */  jal   sub_GAME_7F058020
+/* 03CD90 7F008260 0FC16008 */  jal   matrix_4x4_copy
 /* 03CD94 7F008264 01D02021 */   addu  $a0, $t6, $s0
 /* 03CD98 7F008268 8E890000 */  lw    $t1, ($s4)
 /* 03CD9C 7F00826C 00125980 */  sll   $t3, $s2, 6

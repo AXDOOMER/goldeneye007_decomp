@@ -492,7 +492,7 @@ extern s32 selected_folder_num_copy;
 extern s32 gamemode;
 extern s32 selected_stage;
 extern s32 briefingpage;
-extern s32 selected_difficulty;
+extern DIFFICULTY selected_difficulty;
 extern s32 append_cheat_sp;
 extern s32 append_cheat_mp;
 extern f32 cursor_h_pos;
