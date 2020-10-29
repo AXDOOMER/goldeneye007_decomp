@@ -1708,43 +1708,25 @@ int checkforgoldengun(void)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08CFE0(void) {
+int sub_GAME_7F08CFE0(struct prop *prop) {
 
+    InvItem *item = pPlayer->ptr_inventory_first_in_cycle;
+
+    while (item) {
+
+        if (item->type == 2 && item->type_inv_item.type_prop.prop == prop) {
+            return TRUE;
+        }
+
+        item = item->next;
+
+        if (item == pPlayer->ptr_inventory_first_in_cycle) {
+            break;
+        }
+    }
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08CFE0
-/* 0C1B10 7F08CFE0 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0C1B14 7F08CFE4 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0C1B18 7F08CFE8 24050002 */  li    $a1, 2
-/* 0C1B1C 7F08CFEC 8DC311E0 */  lw    $v1, 0x11e0($t6)
-/* 0C1B20 7F08CFF0 1060000E */  beqz  $v1, .L7F08D02C
-/* 0C1B24 7F08CFF4 00601025 */   move  $v0, $v1
-/* 0C1B28 7F08CFF8 8C4F0000 */  lw    $t7, ($v0)
-.L7F08CFFC:
-/* 0C1B2C 7F08CFFC 54AF0007 */  bnel  $a1, $t7, .L7F08D01C
-/* 0C1B30 7F08D000 8C42000C */   lw    $v0, 0xc($v0)
-/* 0C1B34 7F08D004 8C580004 */  lw    $t8, 4($v0)
-/* 0C1B38 7F08D008 54980004 */  bnel  $a0, $t8, .L7F08D01C
-/* 0C1B3C 7F08D00C 8C42000C */   lw    $v0, 0xc($v0)
-/* 0C1B40 7F08D010 03E00008 */  jr    $ra
-/* 0C1B44 7F08D014 24020001 */   li    $v0, 1
-
-/* 0C1B48 7F08D018 8C42000C */  lw    $v0, 0xc($v0)
-.L7F08D01C:
-/* 0C1B4C 7F08D01C 50430004 */  beql  $v0, $v1, .L7F08D030
-/* 0C1B50 7F08D020 00001025 */   move  $v0, $zero
-/* 0C1B54 7F08D024 5440FFF5 */  bnezl $v0, .L7F08CFFC
-/* 0C1B58 7F08D028 8C4F0000 */   lw    $t7, ($v0)
-.L7F08D02C:
-/* 0C1B5C 7F08D02C 00001025 */  move  $v0, $zero
-.L7F08D030:
-/* 0C1B60 7F08D030 03E00008 */  jr    $ra
-/* 0C1B64 7F08D034 00000000 */   nop   
-)
-#endif
 
 
 
