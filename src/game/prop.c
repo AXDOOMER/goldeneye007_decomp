@@ -2211,10 +2211,10 @@ glabel sub_GAME_7F003480
 /* 038310 7F0037E0 0FC161A2 */  jal   matrix_4x4_set_rotation_around_z
 /* 038314 7F0037E4 27A50088 */   addiu $a1, $sp, 0x88
 /* 038318 7F0037E8 27A40088 */  addiu $a0, $sp, 0x88
-/* 03831C 7F0037EC 0FC1601A */  jal   sub_GAME_7F058068
+/* 03831C 7F0037EC 0FC1601A */  jal   matrix_4x4_multiply_in_place
 /* 038320 7F0037F0 27A500D4 */   addiu $a1, $sp, 0xd4
 /* 038324 7F0037F4 27A4012C */  addiu $a0, $sp, 0x12c
-/* 038328 7F0037F8 0FC1601A */  jal   sub_GAME_7F058068
+/* 038328 7F0037F8 0FC1601A */  jal   matrix_4x4_multiply_in_place
 /* 03832C 7F0037FC 27A500D4 */   addiu $a1, $sp, 0xd4
 /* 038330 7F003800 02002025 */  move  $a0, $s0
 /* 038334 7F003804 0FC006F5 */  jal   sub_GAME_7F001BD4

@@ -47,33 +47,11 @@ void matrix_4x4_copy(mat44 src, mat44 dst) {
     }
 }
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F058068(void) {
-
+void matrix_4x4_multiply_in_place(mat44 lhs, mat44 rhs) {
+    mat44 result;
+    matrix_4x4_multiply(lhs, rhs, result);
+    matrix_4x4_copy(result, rhs);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F058068
-/* 08CB98 7F058068 27BDFFA8 */  addiu $sp, $sp, -0x58
-/* 08CB9C 7F05806C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08CBA0 7F058070 AFA5005C */  sw    $a1, 0x5c($sp)
-/* 08CBA4 7F058074 0FC16032 */  jal   matrix_4x4_multiply
-/* 08CBA8 7F058078 27A60018 */   addiu $a2, $sp, 0x18
-/* 08CBAC 7F05807C 27A40018 */  addiu $a0, $sp, 0x18
-/* 08CBB0 7F058080 0FC16008 */  jal   matrix_4x4_copy
-/* 08CBB4 7F058084 8FA5005C */   lw    $a1, 0x5c($sp)
-/* 08CBB8 7F058088 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08CBBC 7F05808C 27BD0058 */  addiu $sp, $sp, 0x58
-/* 08CBC0 7F058090 03E00008 */  jr    $ra
-/* 08CBC4 7F058094 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F058098(void) {
