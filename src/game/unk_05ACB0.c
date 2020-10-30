@@ -3,14 +3,27 @@
 
 // rodata
 
-
-
-
-
 #ifdef NONMATCHING
-void acosf(void) {
-
-}
+// s16 acos(s16);
+// One extra mov.s instruction after 0x08F854
+// f32 acosf(f32 cosinef) {
+//     s16 cosines;
+//     s16 angles;
+//     f32 anglef;
+//     if (1.0f <= cosinef) {
+//         cosines = 0x7FFF;
+//     } else if (cosinef <= -1.0f) {
+//         cosines = -0x7FFF;
+//     } else {
+//         cosines = (cosinef * 32767.0f);
+//     }
+//     angles = acos(cosines);
+//     anglef = angles;
+//     if (angles < 0) {
+//         anglef += 4294967296.0f;
+//     }
+//     return (anglef * 3.1415927f) / 65535.0f;
+// }
 #else
 GLOBAL_ASM(
 .late_rodata
@@ -50,7 +63,7 @@ glabel acosf
 /* 08F83C 7F05AD0C 00047C00 */  sll   $t7, $a0, 0x10
 /* 08F840 7F05AD10 000F2403 */  sra   $a0, $t7, 0x10
 .L7F05AD14:
-/* 08F844 7F05AD14 0FC16AFC */  jal   sub_GAME_7F05ABF0
+/* 08F844 7F05AD14 0FC16AFC */  jal   acos
 /* 08F848 7F05AD18 00000000 */   nop   
 /* 08F84C 7F05AD1C 44829000 */  mtc1  $v0, $f18
 /* 08F850 7F05AD20 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
