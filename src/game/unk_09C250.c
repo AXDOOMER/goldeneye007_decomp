@@ -5216,7 +5216,7 @@ glabel sub_GAME_7F0A0034
 /* 0D4C70 7F0A0140 0FC1E0F1 */  jal   get_BONDdata_field_10CC
 /* 0D4C74 7F0A0144 00000000 */   nop   
 /* 0D4C78 7F0A0148 00402025 */  move  $a0, $v0
-/* 0D4C7C 7F0A014C 0FC16026 */  jal   sub_GAME_7F058098
+/* 0D4C7C 7F0A014C 0FC16026 */  jal   matrix_4x4_multiply_homogeneous_in_place
 /* 0D4C80 7F0A0150 02802825 */   move  $a1, $s4
 /* 0D4C84 7F0A0154 C7A000B0 */  lwc1  $f0, 0xb0($sp)
 /* 0D4C88 7F0A0158 4614003C */  c.lt.s $f0, $f20

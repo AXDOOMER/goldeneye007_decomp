@@ -8,7 +8,7 @@
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05ACB0(void) {
+void acosf(void) {
 
 }
 #else
@@ -21,7 +21,7 @@ glabel D_80053724
 glabel D_80053728
 .word 0x477fff00 /*65535.0*/
 .text
-glabel sub_GAME_7F05ACB0
+glabel acosf
 /* 08F7E0 7F05ACB0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 08F7E4 7F05ACB4 44812000 */  mtc1  $at, $f4
 /* 08F7E8 7F05ACB8 27BDFFE8 */  addiu $sp, $sp, -0x18

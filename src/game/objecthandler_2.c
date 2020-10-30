@@ -2118,7 +2118,7 @@ glabel sub_GAME_7F06DB5C
 /* 0A281C 7F06DCEC AFB80028 */  sw    $t8, 0x28($sp)
 .L7F06DCF0:
 /* 0A2820 7F06DCF0 8FA900B4 */  lw    $t1, 0xb4($sp)
-/* 0A2824 7F06DCF4 0FC16B2C */  jal   sub_GAME_7F05ACB0
+/* 0A2824 7F06DCF4 0FC16B2C */  jal   acosf
 /* 0A2828 7F06DCF8 C52C0000 */   lwc1  $f12, ($t1)
 /* 0A282C 7F06DCFC 46000080 */  add.s $f2, $f0, $f0
 /* 0A2830 7F06DD00 3C018005 */  lui   $at, %hi(D_80054BDC)
@@ -3499,7 +3499,7 @@ glabel process_07_unknown
 /* 0A3888 7F06ED58 C7AA0040 */  lwc1  $f10, 0x40($sp)
 /* 0A388C 7F06ED5C 460A3402 */  mul.s $f16, $f6, $f10
 /* 0A3890 7F06ED60 46124100 */  add.s $f4, $f8, $f18
-/* 0A3894 7F06ED64 0FC16B2C */  jal   sub_GAME_7F05ACB0
+/* 0A3894 7F06ED64 0FC16B2C */  jal   acosf
 /* 0A3898 7F06ED68 46048300 */   add.s $f12, $f16, $f4
 /* 0A389C 7F06ED6C E7A00030 */  swc1  $f0, 0x30($sp)
 /* 0A38A0 7F06ED70 0FC15FAB */  jal   sinf
@@ -3515,7 +3515,7 @@ glabel process_07_unknown
 /* 0A38C8 7F06ED98 460A9402 */  mul.s $f16, $f18, $f10
 /* 0A38CC 7F06ED9C 46043200 */  add.s $f8, $f6, $f4
 /* 0A38D0 7F06EDA0 46104180 */  add.s $f6, $f8, $f16
-/* 0A38D4 7F06EDA4 0FC16B2C */  jal   sub_GAME_7F05ACB0
+/* 0A38D4 7F06EDA4 0FC16B2C */  jal   acosf
 /* 0A38D8 7F06EDA8 46003303 */   div.s $f12, $f6, $f0
 /* 0A38DC 7F06EDAC C7A40038 */  lwc1  $f4, 0x38($sp)
 /* 0A38E0 7F06EDB0 C6120000 */  lwc1  $f18, ($s0)
@@ -9727,7 +9727,7 @@ glabel dogfnegx
 /* 0A8538 7F073A08 46065200 */  add.s $f8, $f10, $f6
 /* 0A853C 7F073A0C C7AA00D8 */  lwc1  $f10, 0xd8($sp)
 /* 0A8540 7F073A10 460A2182 */  mul.s $f6, $f4, $f10
-/* 0A8544 7F073A14 0FC16B2C */  jal   sub_GAME_7F05ACB0
+/* 0A8544 7F073A14 0FC16B2C */  jal   acosf
 /* 0A8548 7F073A18 46083300 */   add.s $f12, $f6, $f8
 /* 0A854C 7F073A1C E7A000DC */  swc1  $f0, 0xdc($sp)
 /* 0A8550 7F073A20 0FC15FAB */  jal   sinf
@@ -9744,7 +9744,7 @@ glabel dogfnegx
 /* 0A857C 7F073A4C 46062282 */  mul.s $f10, $f4, $f6
 /* 0A8580 7F073A50 460A4100 */  add.s $f4, $f8, $f10
 /* 0A8584 7F073A54 46002187 */  neg.s $f6, $f4
-/* 0A8588 7F073A58 0FC16B2C */  jal   sub_GAME_7F05ACB0
+/* 0A8588 7F073A58 0FC16B2C */  jal   acosf
 /* 0A858C 7F073A5C 46003303 */   div.s $f12, $f6, $f0
 /* 0A8590 7F073A60 C7A800D0 */  lwc1  $f8, 0xd0($sp)
 /* 0A8594 7F073A64 C60A0000 */  lwc1  $f10, ($s0)

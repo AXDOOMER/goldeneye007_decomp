@@ -53,7 +53,7 @@ void matrix_4x4_multiply_in_place(mat44 lhs, mat44 rhs) {
     matrix_4x4_copy(result, rhs);
 }
 
-void sub_GAME_7F058098(mat44 lhs, mat44 rhs) {
+void matrix_4x4_multiply_homogeneous_in_place(mat44 lhs, mat44 rhs) {
     mat44 result;
     matrix_4x4_multiply_homogeneous(lhs, rhs, result);
     matrix_4x4_copy(result, rhs);
@@ -67,6 +67,15 @@ void matrix_4x4_multiply(mat44 lhs, mat44 rhs, mat44 result) {
         for (j = 0; j < 2; j++) {
             result[j * 2 + 0][i] = lhs[0][i] * rhs[j * 2 + 0][0] + lhs[1][i] * rhs[j * 2 + 0][1] + lhs[2][i] * rhs[j * 2 + 0][2] + lhs[3][i] * rhs[j * 2 + 0][3];
             result[j * 2 + 1][i] = lhs[0][i] * rhs[j * 2 + 1][0] + lhs[1][i] * rhs[j * 2 + 1][1] + lhs[2][i] * rhs[j * 2 + 1][2] + lhs[3][i] * rhs[j * 2 + 1][3];
+        }
+    }
+}
+s32 matrix_4x4_multiply(mat44 lhs, mat44 rhs, mat44 result) {
+    s32 i, j;
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 4; j += 2) {
+            result[j + 0][i] = (lhs[0][i] * rhs[j + 0][0]) + (lhs[1][i] * rhs[j + 0][1]) + (lhs[2][i] * rhs[j + 0][2]) + (lhs[3][i] * rhs[j + 0][3]);
+            result[j + 1][i] = (lhs[0][i] * rhs[j + 1][0]) + (lhs[1][i] * rhs[j + 1][1]) + (lhs[2][i] * rhs[j + 1][2]) + (lhs[3][i] * rhs[j + 1][3]);
         }
     }
 }
@@ -404,7 +413,7 @@ glabel matrix_4x4_set_rotation_around_xyz
 
 
 
-
+// matrix_4x4_get_euler_angles?
 #ifdef NONMATCHING
 void sub_GAME_7F058860(void) {
 
@@ -433,16 +442,16 @@ glabel sub_GAME_7F058860
 /* 08D3D4 7F0588A4 45020010 */  bc1fl .L7F0588E8
 /* 08D3D8 7F0588A8 44805000 */   mtc1  $zero, $f10
 /* 08D3DC 7F0588AC C60C0018 */  lwc1  $f12, 0x18($s0)
-/* 08D3E0 7F0588B0 0FC16A8C */  jal   convert_angle_using_inverse
+/* 08D3E0 7F0588B0 0FC16A8C */  jal   atan2f
 /* 08D3E4 7F0588B4 C60E0028 */   lwc1  $f14, 0x28($s0)
 /* 08D3E8 7F0588B8 E6200000 */  swc1  $f0, ($s1)
 /* 08D3EC 7F0588BC C60C0008 */  lwc1  $f12, 8($s0)
 /* 08D3F0 7F0588C0 C7AE0024 */  lwc1  $f14, 0x24($sp)
-/* 08D3F4 7F0588C4 0FC16A8C */  jal   convert_angle_using_inverse
+/* 08D3F4 7F0588C4 0FC16A8C */  jal   atan2f
 /* 08D3F8 7F0588C8 46006307 */   neg.s $f12, $f12
 /* 08D3FC 7F0588CC E6200004 */  swc1  $f0, 4($s1)
 /* 08D400 7F0588D0 C60E0000 */  lwc1  $f14, ($s0)
-/* 08D404 7F0588D4 0FC16A8C */  jal   convert_angle_using_inverse
+/* 08D404 7F0588D4 0FC16A8C */  jal   atan2f
 /* 08D408 7F0588D8 C60C0004 */   lwc1  $f12, 4($s0)
 /* 08D40C 7F0588DC 1000000E */  b     .L7F058918
 /* 08D410 7F0588E0 E6200008 */   swc1  $f0, 8($s1)
@@ -452,12 +461,12 @@ glabel sub_GAME_7F058860
 /* 08D41C 7F0588EC E62A0000 */  swc1  $f10, ($s1)
 /* 08D420 7F0588F0 C60C0008 */  lwc1  $f12, 8($s0)
 /* 08D424 7F0588F4 C7AE0024 */  lwc1  $f14, 0x24($sp)
-/* 08D428 7F0588F8 0FC16A8C */  jal   convert_angle_using_inverse
+/* 08D428 7F0588F8 0FC16A8C */  jal   atan2f
 /* 08D42C 7F0588FC 46006307 */   neg.s $f12, $f12
 /* 08D430 7F058900 E6200004 */  swc1  $f0, 4($s1)
 /* 08D434 7F058904 C60C0010 */  lwc1  $f12, 0x10($s0)
 /* 08D438 7F058908 C60E0014 */  lwc1  $f14, 0x14($s0)
-/* 08D43C 7F05890C 0FC16A8C */  jal   convert_angle_using_inverse
+/* 08D43C 7F05890C 0FC16A8C */  jal   atan2f
 /* 08D440 7F058910 46006307 */   neg.s $f12, $f12
 /* 08D444 7F058914 E6200008 */  swc1  $f0, 8($s1)
 .L7F058918:

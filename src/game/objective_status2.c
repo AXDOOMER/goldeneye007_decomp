@@ -325,7 +325,7 @@ void sub_GAME_7F057DF8(float *param_1,float *param_2,int param_3)
     
     for (i = 0; 0 < param_3; i++)
     {
-        sub_GAME_7F058098(param_2,param_1);
+        matrix_4x4_multiply_homogeneous_in_place(param_2,param_1);
     }
 }
 #else
@@ -345,7 +345,7 @@ glabel sub_GAME_7F057DF8
 /* 08C950 7F057E20 00008025 */   move  $s0, $zero
 /* 08C954 7F057E24 02402025 */  move  $a0, $s2
 .L7F057E28:
-/* 08C958 7F057E28 0FC16026 */  jal   sub_GAME_7F058098
+/* 08C958 7F057E28 0FC16026 */  jal   matrix_4x4_multiply_homogeneous_in_place
 /* 08C95C 7F057E2C 02602825 */   move  $a1, $s3
 /* 08C960 7F057E30 26100001 */  addiu $s0, $s0, 1
 /* 08C964 7F057E34 5611FFFC */  bnel  $s0, $s1, .L7F057E28

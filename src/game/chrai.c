@@ -7586,7 +7586,7 @@ actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5:
 .L7F039820:
 /* 06E350 7F039820 C46C0018 */  lwc1  $f12, 0x18($v1)
 /* 06E354 7F039824 C46E0020 */  lwc1  $f14, 0x20($v1)
-/* 06E358 7F039828 0FC16A8C */  jal   convert_angle_using_inverse
+/* 06E358 7F039828 0FC16A8C */  jal   atan2f
 /* 06E35C 7F03982C AFA30134 */   sw    $v1, 0x134($sp)
 /* 06E360 7F039830 8FA30134 */  lw    $v1, 0x134($sp)
 /* 06E364 7F039834 E7A00130 */  swc1  $f0, 0x130($sp)
@@ -13453,7 +13453,7 @@ actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5:
 .L7F039820:
 /* 06E350 7F039820 C46C0018 */  lwc1  $f12, 0x18($v1)
 /* 06E354 7F039824 C46E0020 */  lwc1  $f14, 0x20($v1)
-/* 06E358 7F039828 0FC16A8C */  jal   convert_angle_using_inverse
+/* 06E358 7F039828 0FC16A8C */  jal   atan2f
 /* 06E35C 7F03982C AFA30134 */   sw    $v1, 0x134($sp)
 /* 06E360 7F039830 8FA30134 */  lw    $v1, 0x134($sp)
 /* 06E364 7F039834 E7A00130 */  swc1  $f0, 0x130($sp)

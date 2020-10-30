@@ -143,7 +143,7 @@ glabel sub_GAME_7F0A1DA0
 /* 0D6A0C 7F0A1EDC E7B0008C */  swc1  $f16, 0x8c($sp)
 /* 0D6A10 7F0A1EE0 E7AA00FC */  swc1  $f10, 0xfc($sp)
 /* 0D6A14 7F0A1EE4 C64E0008 */  lwc1  $f14, 8($s2)
-/* 0D6A18 7F0A1EE8 0FC16A8C */  jal   convert_angle_using_inverse
+/* 0D6A18 7F0A1EE8 0FC16A8C */  jal   atan2f
 /* 0D6A1C 7F0A1EEC C64C0000 */   lwc1  $f12, ($s2)
 /* 0D6A20 7F0A1EF0 C7B200FC */  lwc1  $f18, 0xfc($sp)
 /* 0D6A24 7F0A1EF4 3C0E8008 */  lui   $t6, %hi(dword_CODE_bss_8007A160) 

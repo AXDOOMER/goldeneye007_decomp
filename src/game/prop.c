@@ -1376,7 +1376,7 @@ glabel sub_GAME_7F002A3C
 /* 037758 7F002C28 C46A0000 */  lwc1  $f10, ($v1)
 /* 03775C 7F002C2C C7A60044 */  lwc1  $f6, 0x44($sp)
 /* 037760 7F002C30 46104381 */  sub.s $f14, $f8, $f16
-/* 037764 7F002C34 0FC16A8C */  jal   convert_angle_using_inverse
+/* 037764 7F002C34 0FC16A8C */  jal   atan2f
 /* 037768 7F002C38 460A3301 */   sub.s $f12, $f6, $f10
 /* 03776C 7F002C3C E60000C4 */  swc1  $f0, 0xc4($s0)
 /* 037770 7F002C40 AE0000E0 */  sw    $zero, 0xe0($s0)
@@ -1494,7 +1494,7 @@ glabel expand_type_0D_object_autoturret
 /* 0378F4 7F002DC4 C4520010 */  lwc1  $f18, 0x10($v0)
 /* 0378F8 7F002DC8 E7AC002C */  swc1  $f12, 0x2c($sp)
 /* 0378FC 7F002DCC 46128381 */  sub.s $f14, $f16, $f18
-/* 037900 7F002DD0 0FC16A8C */  jal   convert_angle_using_inverse
+/* 037900 7F002DD0 0FC16A8C */  jal   atan2f
 /* 037904 7F002DD4 E7AE0024 */   swc1  $f14, 0x24($sp)
 /* 037908 7F002DD8 C7A2002C */  lwc1  $f2, 0x2c($sp)
 /* 03790C 7F002DDC C7AE0024 */  lwc1  $f14, 0x24($sp)
@@ -1505,7 +1505,7 @@ glabel expand_type_0D_object_autoturret
 /* 037920 7F002DF0 0C007DF8 */  jal   sqrtf
 /* 037924 7F002DF4 46062300 */   add.s $f12, $f4, $f6
 /* 037928 7F002DF8 C7AC0028 */  lwc1  $f12, 0x28($sp)
-/* 03792C 7F002DFC 0FC16A8C */  jal   convert_angle_using_inverse
+/* 03792C 7F002DFC 0FC16A8C */  jal   atan2f
 /* 037930 7F002E00 46000386 */   mov.s $f14, $f0
 /* 037934 7F002E04 E6000098 */  swc1  $f0, 0x98($s0)
 .L7F002E08:
@@ -3455,7 +3455,7 @@ type2D_tank:
 /* 039378 7F004848 E65400C8 */  swc1  $f20, 0xc8($s2)
 /* 03937C 7F00484C E65400CC */  swc1  $f20, 0xcc($s2)
 /* 039380 7F004850 C64C0038 */  lwc1  $f12, 0x38($s2)
-/* 039384 7F004854 0FC16A8C */  jal   convert_angle_using_inverse
+/* 039384 7F004854 0FC16A8C */  jal   atan2f
 /* 039388 7F004858 C64E0040 */   lwc1  $f14, 0x40($s2)
 /* 03938C 7F00485C 3C018005 */  lui   $at, %hi(D_8004F024)
 /* 039390 7F004860 C426F024 */  lwc1  $f6, %lo(D_8004F024)($at)
@@ -4853,7 +4853,7 @@ type2D_tank:
 /* 0393C8 7F004858 E65400C8 */  swc1  $f20, 0xc8($s2)
 /* 0393CC 7F00485C E65400CC */  swc1  $f20, 0xcc($s2)
 /* 0393D0 7F004860 C64C0038 */  lwc1  $f12, 0x38($s2)
-/* 0393D4 7F004864 0FC16BD4 */  jal   convert_angle_using_inverse
+/* 0393D4 7F004864 0FC16BD4 */  jal   atan2f
 /* 0393D8 7F004868 C64E0040 */   lwc1  $f14, 0x40($s2)
 /* 0393DC 7F00486C 3C018005 */  lui   $at, %hi(D_8004F024) # $at, 0x8005
 /* 0393E0 7F004870 C426F054 */  lwc1  $f6, %lo(D_8004F024)($at)
