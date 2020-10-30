@@ -977,7 +977,7 @@ glabel sub_GAME_7F05C594
 /* 091120 7F05C5F0 00094880 */  sll   $t1, $t1, 2
 /* 091124 7F05C5F4 252A0010 */  addiu $t2, $t1, 0x10
 /* 091128 7F05C5F8 014B2821 */  addu  $a1, $t2, $t3
-/* 09112C 7F05C5FC 0FC16218 */  jal   sub_GAME_7F058860
+/* 09112C 7F05C5FC 0FC16218 */  jal   matrix_4x4_get_rotation_around_xyz
 /* 091130 7F05C600 27A40018 */   addiu $a0, $sp, 0x18
 /* 091134 7F05C604 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 091138 7F05C608 27BD0058 */  addiu $sp, $sp, 0x58

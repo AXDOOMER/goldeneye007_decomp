@@ -410,73 +410,26 @@ glabel matrix_4x4_set_rotation_around_xyz
 )
 #endif
 
+f32 atan2f(f32, f32);
 
+#define EPSILON 0.0000019073486f
 
-
-// matrix_4x4_get_euler_angles?
-#ifdef NONMATCHING
-void sub_GAME_7F058860(void) {
-
+// https://stackoverflow.com/a/15029416
+void matrix_4x4_get_rotation_around_xyz(mat44 matrix, vec3 angles) {
+    f32 norm;
+    f32 sin_x_cos_y = matrix[1][2];
+    f32 cos_x_cos_y = matrix[2][2];
+    norm = sqrtf((sin_x_cos_y * sin_x_cos_y) + (cos_x_cos_y * cos_x_cos_y));
+    if (EPSILON < norm) {
+        angles[0] = atan2f(matrix[1][2], matrix[2][2]);
+        angles[1] = atan2f(-matrix[0][2], norm);
+        angles[2] = atan2f(matrix[0][1], matrix[0][0]);
+    } else {
+        angles[0] = 0.0f;
+        angles[1] = atan2f(-matrix[0][2], norm);
+        angles[2] = atan2f(-matrix[1][0], matrix[1][1]);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F058860
-/* 08D390 7F058860 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 08D394 7F058864 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 08D398 7F058868 AFB10018 */  sw    $s1, 0x18($sp)
-/* 08D39C 7F05886C AFB00014 */  sw    $s0, 0x14($sp)
-/* 08D3A0 7F058870 C4800018 */  lwc1  $f0, 0x18($a0)
-/* 08D3A4 7F058874 C4820028 */  lwc1  $f2, 0x28($a0)
-/* 08D3A8 7F058878 00808025 */  move  $s0, $a0
-/* 08D3AC 7F05887C 46000102 */  mul.s $f4, $f0, $f0
-/* 08D3B0 7F058880 00A08825 */  move  $s1, $a1
-/* 08D3B4 7F058884 46021182 */  mul.s $f6, $f2, $f2
-/* 08D3B8 7F058888 0C007DF8 */  jal   sqrtf
-/* 08D3BC 7F05888C 46062300 */   add.s $f12, $f4, $f6
-/* 08D3C0 7F058890 3C013600 */  li    $at, 0x36000000 # 0.000002
-/* 08D3C4 7F058894 44814000 */  mtc1  $at, $f8
-/* 08D3C8 7F058898 E7A00024 */  swc1  $f0, 0x24($sp)
-/* 08D3CC 7F05889C 4600403C */  c.lt.s $f8, $f0
-/* 08D3D0 7F0588A0 00000000 */  nop   
-/* 08D3D4 7F0588A4 45020010 */  bc1fl .L7F0588E8
-/* 08D3D8 7F0588A8 44805000 */   mtc1  $zero, $f10
-/* 08D3DC 7F0588AC C60C0018 */  lwc1  $f12, 0x18($s0)
-/* 08D3E0 7F0588B0 0FC16A8C */  jal   atan2f
-/* 08D3E4 7F0588B4 C60E0028 */   lwc1  $f14, 0x28($s0)
-/* 08D3E8 7F0588B8 E6200000 */  swc1  $f0, ($s1)
-/* 08D3EC 7F0588BC C60C0008 */  lwc1  $f12, 8($s0)
-/* 08D3F0 7F0588C0 C7AE0024 */  lwc1  $f14, 0x24($sp)
-/* 08D3F4 7F0588C4 0FC16A8C */  jal   atan2f
-/* 08D3F8 7F0588C8 46006307 */   neg.s $f12, $f12
-/* 08D3FC 7F0588CC E6200004 */  swc1  $f0, 4($s1)
-/* 08D400 7F0588D0 C60E0000 */  lwc1  $f14, ($s0)
-/* 08D404 7F0588D4 0FC16A8C */  jal   atan2f
-/* 08D408 7F0588D8 C60C0004 */   lwc1  $f12, 4($s0)
-/* 08D40C 7F0588DC 1000000E */  b     .L7F058918
-/* 08D410 7F0588E0 E6200008 */   swc1  $f0, 8($s1)
-/* 08D414 7F0588E4 44805000 */  mtc1  $zero, $f10
-.L7F0588E8:
-/* 08D418 7F0588E8 00000000 */  nop   
-/* 08D41C 7F0588EC E62A0000 */  swc1  $f10, ($s1)
-/* 08D420 7F0588F0 C60C0008 */  lwc1  $f12, 8($s0)
-/* 08D424 7F0588F4 C7AE0024 */  lwc1  $f14, 0x24($sp)
-/* 08D428 7F0588F8 0FC16A8C */  jal   atan2f
-/* 08D42C 7F0588FC 46006307 */   neg.s $f12, $f12
-/* 08D430 7F058900 E6200004 */  swc1  $f0, 4($s1)
-/* 08D434 7F058904 C60C0010 */  lwc1  $f12, 0x10($s0)
-/* 08D438 7F058908 C60E0014 */  lwc1  $f14, 0x14($s0)
-/* 08D43C 7F05890C 0FC16A8C */  jal   atan2f
-/* 08D440 7F058910 46006307 */   neg.s $f12, $f12
-/* 08D444 7F058914 E6200008 */  swc1  $f0, 8($s1)
-.L7F058918:
-/* 08D448 7F058918 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 08D44C 7F05891C 8FB00014 */  lw    $s0, 0x14($sp)
-/* 08D450 7F058920 8FB10018 */  lw    $s1, 0x18($sp)
-/* 08D454 7F058924 03E00008 */  jr    $ra
-/* 08D458 7F058928 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
 
 void matrix_4x4_set_position(vec3 position, mat44 matrix);
 
