@@ -53,28 +53,11 @@ void matrix_4x4_multiply_in_place(mat44 lhs, mat44 rhs) {
     matrix_4x4_copy(result, rhs);
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F058098(void) {
-
+void sub_GAME_7F058098(mat44 lhs, mat44 rhs) {
+    mat44 result;
+    sub_GAME_7F05818C(lhs, rhs, result);
+    matrix_4x4_copy(result, rhs);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F058098
-/* 08CBC8 7F058098 27BDFFA8 */  addiu $sp, $sp, -0x58
-/* 08CBCC 7F05809C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08CBD0 7F0580A0 AFA5005C */  sw    $a1, 0x5c($sp)
-/* 08CBD4 7F0580A4 0FC16063 */  jal   sub_GAME_7F05818C
-/* 08CBD8 7F0580A8 27A60018 */   addiu $a2, $sp, 0x18
-/* 08CBDC 7F0580AC 27A40018 */  addiu $a0, $sp, 0x18
-/* 08CBE0 7F0580B0 0FC16008 */  jal   matrix_4x4_copy
-/* 08CBE4 7F0580B4 8FA5005C */   lw    $a1, 0x5c($sp)
-/* 08CBE8 7F0580B8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08CBEC 7F0580BC 27BD0058 */  addiu $sp, $sp, 0x58
-/* 08CBF0 7F0580C0 03E00008 */  jr    $ra
-/* 08CBF4 7F0580C4 00000000 */   nop   
-)
-#endif
 
 #ifdef NONMATCHING
 // Regalloc + The inner loop variable goes from 0 to 64 instead of 0 to 4. Unwinding the inner loop yields worse match, same with having j < 4.
