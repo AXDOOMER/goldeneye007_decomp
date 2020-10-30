@@ -123,13 +123,13 @@ glabel acos
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05AC44(void) {
+void asin(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F05AC44
+glabel asin
 /* 08F774 7F05AC44 00042C00 */  sll   $a1, $a0, 0x10
 /* 08F778 7F05AC48 00057403 */  sra   $t6, $a1, 0x10
 /* 08F77C 7F05AC4C 27BDFFE8 */  addiu $sp, $sp, -0x18
