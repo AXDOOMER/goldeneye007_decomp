@@ -55,7 +55,7 @@ void matrix_4x4_multiply_in_place(mat44 lhs, mat44 rhs) {
 
 void sub_GAME_7F058098(mat44 lhs, mat44 rhs) {
     mat44 result;
-    sub_GAME_7F05818C(lhs, rhs, result);
+    matrix_4x4_multiply_homogeneous(lhs, rhs, result);
     matrix_4x4_copy(result, rhs);
 }
 
@@ -128,83 +128,26 @@ glabel matrix_4x4_multiply
 )
 #endif
 
+s32 matrix_4x4_multiply_homogeneous(mat44 lhs, mat44 rhs, mat44 result) {
+    s32 i, j;
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 4; j += 2) {
+            result[j + 0][i] = (lhs[0][i] * rhs[j + 0][0]) + (lhs[1][i] * rhs[j + 0][1]) + (lhs[2][i] * rhs[j + 0][2]);
+            if (j == 3) {
+                result[j + 0][i] += lhs[3][i];
+            }
+            result[j + 1][i] = (lhs[0][i] * rhs[j + 1][0]) + (lhs[1][i] * rhs[j + 1][1]) + (lhs[2][i] * rhs[j + 1][2]);
+            if (j == 2) {
+                result[j + 1][i] += lhs[3][i];
+            }
+        }
+    }
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F05818C(void) {
-
+    result[0][3] = 0.0f;
+    result[1][3] = 0.0f;
+    result[2][3] = 0.0f;
+    result[3][3] = 1.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05818C
-/* 08CCBC 7F05818C 00001825 */  move  $v1, $zero
-/* 08CCC0 7F058190 00804025 */  move  $t0, $a0
-/* 08CCC4 7F058194 240C000C */  li    $t4, 12
-/* 08CCC8 7F058198 240B0004 */  li    $t3, 4
-/* 08CCCC 7F05819C 240A0002 */  li    $t2, 2
-/* 08CCD0 7F0581A0 24090003 */  li    $t1, 3
-.L7F0581A4:
-/* 08CCD4 7F0581A4 00001025 */  move  $v0, $zero
-/* 08CCD8 7F0581A8 00C32021 */  addu  $a0, $a2, $v1
-/* 08CCDC 7F0581AC 00A03825 */  move  $a3, $a1
-.L7F0581B0:
-/* 08CCE0 7F0581B0 C5040000 */  lwc1  $f4, ($t0)
-/* 08CCE4 7F0581B4 C4E60000 */  lwc1  $f6, ($a3)
-/* 08CCE8 7F0581B8 C50A0010 */  lwc1  $f10, 0x10($t0)
-/* 08CCEC 7F0581BC C4F00004 */  lwc1  $f16, 4($a3)
-/* 08CCF0 7F0581C0 46062202 */  mul.s $f8, $f4, $f6
-/* 08CCF4 7F0581C4 C4E60008 */  lwc1  $f6, 8($a3)
-/* 08CCF8 7F0581C8 46105482 */  mul.s $f18, $f10, $f16
-/* 08CCFC 7F0581CC C50A0020 */  lwc1  $f10, 0x20($t0)
-/* 08CD00 7F0581D0 460A3402 */  mul.s $f16, $f6, $f10
-/* 08CD04 7F0581D4 46124100 */  add.s $f4, $f8, $f18
-/* 08CD08 7F0581D8 46048200 */  add.s $f8, $f16, $f4
-/* 08CD0C 7F0581DC 14490005 */  bne   $v0, $t1, .L7F0581F4
-/* 08CD10 7F0581E0 E4880000 */   swc1  $f8, ($a0)
-/* 08CD14 7F0581E4 C4920000 */  lwc1  $f18, ($a0)
-/* 08CD18 7F0581E8 C5060030 */  lwc1  $f6, 0x30($t0)
-/* 08CD1C 7F0581EC 46069280 */  add.s $f10, $f18, $f6
-/* 08CD20 7F0581F0 E48A0000 */  swc1  $f10, ($a0)
-.L7F0581F4:
-/* 08CD24 7F0581F4 C5100000 */  lwc1  $f16, ($t0)
-/* 08CD28 7F0581F8 C4E40010 */  lwc1  $f4, 0x10($a3)
-/* 08CD2C 7F0581FC C5120010 */  lwc1  $f18, 0x10($t0)
-/* 08CD30 7F058200 C4E60014 */  lwc1  $f6, 0x14($a3)
-/* 08CD34 7F058204 46048202 */  mul.s $f8, $f16, $f4
-/* 08CD38 7F058208 C4E40018 */  lwc1  $f4, 0x18($a3)
-/* 08CD3C 7F05820C 24E70020 */  addiu $a3, $a3, 0x20
-/* 08CD40 7F058210 46069282 */  mul.s $f10, $f18, $f6
-/* 08CD44 7F058214 C5120020 */  lwc1  $f18, 0x20($t0)
-/* 08CD48 7F058218 46122182 */  mul.s $f6, $f4, $f18
-/* 08CD4C 7F05821C 460A4400 */  add.s $f16, $f8, $f10
-/* 08CD50 7F058220 46103200 */  add.s $f8, $f6, $f16
-/* 08CD54 7F058224 144A0005 */  bne   $v0, $t2, .L7F05823C
-/* 08CD58 7F058228 E4880010 */   swc1  $f8, 0x10($a0)
-/* 08CD5C 7F05822C C48A0010 */  lwc1  $f10, 0x10($a0)
-/* 08CD60 7F058230 C5040030 */  lwc1  $f4, 0x30($t0)
-/* 08CD64 7F058234 46045480 */  add.s $f18, $f10, $f4
-/* 08CD68 7F058238 E4920010 */  swc1  $f18, 0x10($a0)
-.L7F05823C:
-/* 08CD6C 7F05823C 24420002 */  addiu $v0, $v0, 2
-/* 08CD70 7F058240 144BFFDB */  bne   $v0, $t3, .L7F0581B0
-/* 08CD74 7F058244 24840020 */   addiu $a0, $a0, 0x20
-/* 08CD78 7F058248 24630004 */  addiu $v1, $v1, 4
-/* 08CD7C 7F05824C 146CFFD5 */  bne   $v1, $t4, .L7F0581A4
-/* 08CD80 7F058250 25080004 */   addiu $t0, $t0, 4
-/* 08CD84 7F058254 44800000 */  mtc1  $zero, $f0
-/* 08CD88 7F058258 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 08CD8C 7F05825C 44813000 */  mtc1  $at, $f6
-/* 08CD90 7F058260 E4C0000C */  swc1  $f0, 0xc($a2)
-/* 08CD94 7F058264 E4C0001C */  swc1  $f0, 0x1c($a2)
-/* 08CD98 7F058268 E4C0002C */  swc1  $f0, 0x2c($a2)
-/* 08CD9C 7F05826C 03E00008 */  jr    $ra
-/* 08CDA0 7F058270 E4C6003C */   swc1  $f6, 0x3c($a2)
-)
-#endif
-
 
 void sub_GAME_7F058274(mat44 arg0, mat44 arg1, mat44 arg2) {
     arg2[0][0] = (arg0[0][0] * arg1[0][0]);
