@@ -536,10 +536,6 @@ void sub_GAME_7F058C88(void) {
     D_80032310 = flt_CODE_bss_80075DA0;
 }
 
-
-
-
-
 #ifdef NONMATCHING
 void sub_GAME_7F058C9C(void) {
 
@@ -1287,10 +1283,6 @@ glabel sub_GAME_7F059424
 )
 #endif
 
-
-
-
-
 #ifdef NONMATCHING
 void sub_GAME_7F059694(void) {
 
@@ -1518,14 +1510,33 @@ glabel sub_GAME_7F059908
 )
 #endif
 
-
-
-
-
 #ifdef NONMATCHING
-void sub_GAME_7F05997C(void) {
+//<    8e568:     3043ffff        andi    v1,v0,0xffff
+//---
+//>    8e568:     31e3ffff        andi    v1,t7,0xffff
+//57,58c57,58
+//<    8e570:     03e00008        jr      ra
+//<    8e574:     00601025        move    v0,v1
+//---
+//>    8e570:     00601025        move    v0,v1
+//>    8e574:     03e00008        jr      ra
+//
+// s32 sub_GAME_7F05997C(f32 arg0, f32 arg1) {
+//     f32 temp_f0;
+//     u32 temp_v0;
+//     s32 phi_v1;
 
-}
+//     temp_f0 = arg0 + arg1;
+//     if (temp_f0 <= 2.0f) {
+//         return 0xFFFF;
+//     }
+//     temp_v0 = (u32) (131072.0f / temp_f0) & 0xFFFF;
+//     phi_v1 = temp_v0 & 0xFFFF;
+//     if ((s32)temp_v0 <= 0) {
+//         phi_v1 = 1;
+//     }
+//     return phi_v1;
+// }
 #else
 GLOBAL_ASM(
 .text
