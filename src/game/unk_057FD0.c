@@ -1802,45 +1802,14 @@ glabel sub_GAME_7F059B58
 )
 #endif
 
+void guAlignF(float mf[4][4], float a, float x, float y, float z);
 
+#define RAD2DEG(x) x * 57.295776f
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F059CE8(void) {
-
+void matrix_4x4_align(mat44 matrix, f32 angle, f32 x, f32 y, f32 z) {
+    angle = RAD2DEG(angle);
+    guAlignF(matrix, angle, x, y, z);
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_800536F0
-.word 0x42652ee0 /*57.295776*/
-.text
-glabel sub_GAME_7F059CE8
-/* 08E818 7F059CE8 3C018005 */  lui   $at, %hi(D_800536F0)
-/* 08E81C 7F059CEC 44856000 */  mtc1  $a1, $f12
-/* 08E820 7F059CF0 C42436F0 */  lwc1  $f4, %lo(D_800536F0)($at)
-/* 08E824 7F059CF4 44867000 */  mtc1  $a2, $f14
-/* 08E828 7F059CF8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 08E82C 7F059CFC 46046302 */  mul.s $f12, $f12, $f4
-/* 08E830 7F059D00 C7A60030 */  lwc1  $f6, 0x30($sp)
-/* 08E834 7F059D04 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 08E838 7F059D08 44067000 */  mfc1  $a2, $f14
-/* 08E83C 7F059D0C AFA7002C */  sw    $a3, 0x2c($sp)
-/* 08E840 7F059D10 E7A60010 */  swc1  $f6, 0x10($sp)
-/* 08E844 7F059D14 44056000 */  mfc1  $a1, $f12
-/* 08E848 7F059D18 0C005A18 */  jal   guAlignF
-/* 08E84C 7F059D1C 00000000 */   nop   
-/* 08E850 7F059D20 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 08E854 7F059D24 27BD0020 */  addiu $sp, $sp, 0x20
-/* 08E858 7F059D28 03E00008 */  jr    $ra
-/* 08E85C 7F059D2C 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 void sub_GAME_7F059D30(u32 arg0) {
     return;
