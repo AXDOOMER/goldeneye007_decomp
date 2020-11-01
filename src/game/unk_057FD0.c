@@ -1600,89 +1600,31 @@ glabel sub_GAME_7F05997C
 )
 #endif
 
+s16 sub_GAME_7F05997C(f32 arg0, f32 arg1);
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F059A48(void) {
-
+void sub_GAME_7F059A48(mat44 matrix, s16* arg1, f32 angle, f32 arg3, f32 arg4, f32 arg5, f32 arg6) {
+    f32 temp_f12_2 = cosf(angle * 0.5f) / sinf(angle * 0.5f);
+    arg6 *= 65536.0f;
+    matrix[0][0] = ((temp_f12_2 / arg3) * arg6);
+    matrix[1][1] = (temp_f12_2 * arg6);
+    matrix[1][0] = 0.0f;
+    matrix[2][0] = 0.0f;
+    matrix[3][0] = 0.0f;
+    matrix[0][1] = 0.0f;
+    matrix[2][1] = 0.0f;
+    matrix[3][1] = 0.0f;
+    matrix[0][2] = 0.0f;
+    matrix[1][2] = 0.0f;
+    matrix[2][2] = (((arg4 + arg5) / (arg4 - arg5)) * arg6);
+    matrix[3][2] = ((((arg4 + arg4) * arg5) / (arg4 - arg5)) * arg6);
+    matrix[2][3] =  -arg6;
+    matrix[0][3] = 0.0f;
+    matrix[1][3] = 0.0f;
+    matrix[3][3] = 0.0f;
+    if (arg1 != 0) {
+        *arg1 = sub_GAME_7F05997C(arg4, arg5);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F059A48
-/* 08E578 7F059A48 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 08E57C 7F059A4C 44867000 */  mtc1  $a2, $f14
-/* 08E580 7F059A50 44812000 */  mtc1  $at, $f4
-/* 08E584 7F059A54 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 08E588 7F059A58 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08E58C 7F059A5C 46047302 */  mul.s $f12, $f14, $f4
-/* 08E590 7F059A60 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 08E594 7F059A64 AFA70034 */  sw    $a3, 0x34($sp)
-/* 08E598 7F059A68 AFA40028 */  sw    $a0, 0x28($sp)
-/* 08E59C 7F059A6C 0FC15FA8 */  jal   cosf
-/* 08E5A0 7F059A70 E7AC001C */   swc1  $f12, 0x1c($sp)
-/* 08E5A4 7F059A74 C7AC001C */  lwc1  $f12, 0x1c($sp)
-/* 08E5A8 7F059A78 0FC15FAB */  jal   sinf
-/* 08E5AC 7F059A7C E7A00020 */   swc1  $f0, 0x20($sp)
-/* 08E5B0 7F059A80 C7A80020 */  lwc1  $f8, 0x20($sp)
-/* 08E5B4 7F059A84 C7AA0034 */  lwc1  $f10, 0x34($sp)
-/* 08E5B8 7F059A88 3C014780 */  li    $at, 0x47800000 # 65536.000000
-/* 08E5BC 7F059A8C 46004303 */  div.s $f12, $f8, $f0
-/* 08E5C0 7F059A90 C7AE0040 */  lwc1  $f14, 0x40($sp)
-/* 08E5C4 7F059A94 44813000 */  mtc1  $at, $f6
-/* 08E5C8 7F059A98 8FA40028 */  lw    $a0, 0x28($sp)
-/* 08E5CC 7F059A9C 44801000 */  mtc1  $zero, $f2
-/* 08E5D0 7F059AA0 46067382 */  mul.s $f14, $f14, $f6
-/* 08E5D4 7F059AA4 E4820010 */  swc1  $f2, 0x10($a0)
-/* 08E5D8 7F059AA8 E4820020 */  swc1  $f2, 0x20($a0)
-/* 08E5DC 7F059AAC E4820030 */  swc1  $f2, 0x30($a0)
-/* 08E5E0 7F059AB0 E4820004 */  swc1  $f2, 4($a0)
-/* 08E5E4 7F059AB4 E4820024 */  swc1  $f2, 0x24($a0)
-/* 08E5E8 7F059AB8 E4820034 */  swc1  $f2, 0x34($a0)
-/* 08E5EC 7F059ABC E4820008 */  swc1  $f2, 8($a0)
-/* 08E5F0 7F059AC0 E4820018 */  swc1  $f2, 0x18($a0)
-/* 08E5F4 7F059AC4 460A6483 */  div.s $f18, $f12, $f10
-/* 08E5F8 7F059AC8 460E9102 */  mul.s $f4, $f18, $f14
-/* 08E5FC 7F059ACC 00000000 */  nop   
-/* 08E600 7F059AD0 460E6182 */  mul.s $f6, $f12, $f14
-/* 08E604 7F059AD4 E4840000 */  swc1  $f4, ($a0)
-/* 08E608 7F059AD8 E4860014 */  swc1  $f6, 0x14($a0)
-/* 08E60C 7F059ADC C7A80038 */  lwc1  $f8, 0x38($sp)
-/* 08E610 7F059AE0 C7AA003C */  lwc1  $f10, 0x3c($sp)
-/* 08E614 7F059AE4 460A4401 */  sub.s $f16, $f8, $f10
-/* 08E618 7F059AE8 460A4480 */  add.s $f18, $f8, $f10
-/* 08E61C 7F059AEC 46109103 */  div.s $f4, $f18, $f16
-/* 08E620 7F059AF0 460E2182 */  mul.s $f6, $f4, $f14
-/* 08E624 7F059AF4 E4860028 */  swc1  $f6, 0x28($a0)
-/* 08E628 7F059AF8 C7A80038 */  lwc1  $f8, 0x38($sp)
-/* 08E62C 7F059AFC C7B2003C */  lwc1  $f18, 0x3c($sp)
-/* 08E630 7F059B00 E482000C */  swc1  $f2, 0xc($a0)
-/* 08E634 7F059B04 46084280 */  add.s $f10, $f8, $f8
-/* 08E638 7F059B08 E482001C */  swc1  $f2, 0x1c($a0)
-/* 08E63C 7F059B0C E482003C */  swc1  $f2, 0x3c($a0)
-/* 08E640 7F059B10 46125102 */  mul.s $f4, $f10, $f18
-/* 08E644 7F059B14 46007287 */  neg.s $f10, $f14
-/* 08E648 7F059B18 E48A002C */  swc1  $f10, 0x2c($a0)
-/* 08E64C 7F059B1C 46102183 */  div.s $f6, $f4, $f16
-/* 08E650 7F059B20 460E3202 */  mul.s $f8, $f6, $f14
-/* 08E654 7F059B24 E4880038 */  swc1  $f8, 0x38($a0)
-/* 08E658 7F059B28 8FAE002C */  lw    $t6, 0x2c($sp)
-/* 08E65C 7F059B2C C7AC0038 */  lwc1  $f12, 0x38($sp)
-/* 08E660 7F059B30 11C00005 */  beqz  $t6, .L7F059B48
-/* 08E664 7F059B34 00000000 */   nop   
-/* 08E668 7F059B38 0FC1665F */  jal   sub_GAME_7F05997C
-/* 08E66C 7F059B3C C7AE003C */   lwc1  $f14, 0x3c($sp)
-/* 08E670 7F059B40 8FAF002C */  lw    $t7, 0x2c($sp)
-/* 08E674 7F059B44 A5E20000 */  sh    $v0, ($t7)
-.L7F059B48:
-/* 08E678 7F059B48 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08E67C 7F059B4C 27BD0028 */  addiu $sp, $sp, 0x28
-/* 08E680 7F059B50 03E00008 */  jr    $ra
-/* 08E684 7F059B54 00000000 */   nop   
-)
-#endif
 
 void guNormalize(f32 *x, f32 *y, f32 *z);
 
