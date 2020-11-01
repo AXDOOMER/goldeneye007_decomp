@@ -1367,45 +1367,9 @@ void sub_GAME_7F059708(mat44 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
     arg0[3][3] = 1.0f;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F059908(void) {
-
+void sub_GAME_7F059908(mat44 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9) {
+    sub_GAME_7F059708(arg0, arg1, arg2, arg3, arg4 - arg1, arg5 - arg2, arg6 - arg3, arg7, arg8, arg9);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F059908
-/* 08E438 7F059908 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 08E43C 7F05990C 44856000 */  mtc1  $a1, $f12
-/* 08E440 7F059910 44867000 */  mtc1  $a2, $f14
-/* 08E444 7F059914 C7A60040 */  lwc1  $f6, 0x40($sp)
-/* 08E448 7F059918 C7AA0044 */  lwc1  $f10, 0x44($sp)
-/* 08E44C 7F05991C AFA7003C */  sw    $a3, 0x3c($sp)
-/* 08E450 7F059920 460C3201 */  sub.s $f8, $f6, $f12
-/* 08E454 7F059924 C7A4003C */  lwc1  $f4, 0x3c($sp)
-/* 08E458 7F059928 C7B20048 */  lwc1  $f18, 0x48($sp)
-/* 08E45C 7F05992C 460E5401 */  sub.s $f16, $f10, $f14
-/* 08E460 7F059930 E7A80010 */  swc1  $f8, 0x10($sp)
-/* 08E464 7F059934 C7A8004C */  lwc1  $f8, 0x4c($sp)
-/* 08E468 7F059938 46049181 */  sub.s $f6, $f18, $f4
-/* 08E46C 7F05993C E7B00014 */  swc1  $f16, 0x14($sp)
-/* 08E470 7F059940 C7B00054 */  lwc1  $f16, 0x54($sp)
-/* 08E474 7F059944 C7AA0050 */  lwc1  $f10, 0x50($sp)
-/* 08E478 7F059948 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 08E47C 7F05994C 44056000 */  mfc1  $a1, $f12
-/* 08E480 7F059950 44067000 */  mfc1  $a2, $f14
-/* 08E484 7F059954 44072000 */  mfc1  $a3, $f4
-/* 08E488 7F059958 E7A60018 */  swc1  $f6, 0x18($sp)
-/* 08E48C 7F05995C E7A8001C */  swc1  $f8, 0x1c($sp)
-/* 08E490 7F059960 E7B00024 */  swc1  $f16, 0x24($sp)
-/* 08E494 7F059964 0FC165C2 */  jal   sub_GAME_7F059708
-/* 08E498 7F059968 E7AA0020 */   swc1  $f10, 0x20($sp)
-/* 08E49C 7F05996C 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 08E4A0 7F059970 27BD0030 */  addiu $sp, $sp, 0x30
-/* 08E4A4 7F059974 03E00008 */  jr    $ra
-/* 08E4A8 7F059978 00000000 */   nop   
-)
-#endif
 
 #ifdef NONMATCHING
 //<    8e568:     3043ffff        andi    v1,v0,0xffff
