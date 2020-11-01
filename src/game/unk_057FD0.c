@@ -1283,47 +1283,11 @@ glabel sub_GAME_7F059424
 )
 #endif
 
-#ifdef NONMATCHING
-void sub_GAME_7F059694(void) {
+void sub_GAME_7F059424(mat44 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9);
 
+void sub_GAME_7F059694(mat44 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9) {
+    sub_GAME_7F059424(arg0, arg1, arg2, arg3, arg4 - arg1, arg5 - arg2, arg6 - arg3, arg7, arg8, arg9);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F059694
-/* 08E1C4 7F059694 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 08E1C8 7F059698 44856000 */  mtc1  $a1, $f12
-/* 08E1CC 7F05969C 44867000 */  mtc1  $a2, $f14
-/* 08E1D0 7F0596A0 C7A60040 */  lwc1  $f6, 0x40($sp)
-/* 08E1D4 7F0596A4 C7AA0044 */  lwc1  $f10, 0x44($sp)
-/* 08E1D8 7F0596A8 AFA7003C */  sw    $a3, 0x3c($sp)
-/* 08E1DC 7F0596AC 460C3201 */  sub.s $f8, $f6, $f12
-/* 08E1E0 7F0596B0 C7A4003C */  lwc1  $f4, 0x3c($sp)
-/* 08E1E4 7F0596B4 C7B20048 */  lwc1  $f18, 0x48($sp)
-/* 08E1E8 7F0596B8 460E5401 */  sub.s $f16, $f10, $f14
-/* 08E1EC 7F0596BC E7A80010 */  swc1  $f8, 0x10($sp)
-/* 08E1F0 7F0596C0 C7A8004C */  lwc1  $f8, 0x4c($sp)
-/* 08E1F4 7F0596C4 46049181 */  sub.s $f6, $f18, $f4
-/* 08E1F8 7F0596C8 E7B00014 */  swc1  $f16, 0x14($sp)
-/* 08E1FC 7F0596CC C7B00054 */  lwc1  $f16, 0x54($sp)
-/* 08E200 7F0596D0 C7AA0050 */  lwc1  $f10, 0x50($sp)
-/* 08E204 7F0596D4 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 08E208 7F0596D8 44056000 */  mfc1  $a1, $f12
-/* 08E20C 7F0596DC 44067000 */  mfc1  $a2, $f14
-/* 08E210 7F0596E0 44072000 */  mfc1  $a3, $f4
-/* 08E214 7F0596E4 E7A60018 */  swc1  $f6, 0x18($sp)
-/* 08E218 7F0596E8 E7A8001C */  swc1  $f8, 0x1c($sp)
-/* 08E21C 7F0596EC E7B00024 */  swc1  $f16, 0x24($sp)
-/* 08E220 7F0596F0 0FC16509 */  jal   sub_GAME_7F059424
-/* 08E224 7F0596F4 E7AA0020 */   swc1  $f10, 0x20($sp)
-/* 08E228 7F0596F8 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 08E22C 7F0596FC 27BD0030 */  addiu $sp, $sp, 0x30
-/* 08E230 7F059700 03E00008 */  jr    $ra
-/* 08E234 7F059704 00000000 */   nop   
-)
-#endif
-
-
 
 void sub_GAME_7F059708(mat44 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9) {
     f32 temp_f26;
