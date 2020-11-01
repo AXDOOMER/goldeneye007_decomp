@@ -1876,9 +1876,27 @@ void sub_GAME_7F059E64(mat44 arg0, mat44 arg1) {
     arg1[2][3] = 0.0f;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F059FB8(void) {
 
+#ifdef NONMATCHING
+void sub_GAME_7F059FB8(mat44 arg0, mat44 arg1) {
+    f32 temp_f0 = (arg0[0][0] * arg0[1][1] * arg0[2][2]) + (arg0[0][1] * arg0[1][2] * arg0[2][0]) + (arg0[0][2] * arg0[1][0] * arg0[2][1]) - (arg0[0][2] * arg0[1][1] * arg0[2][0]) - (arg0[0][1] * arg0[1][0] * arg0[2][2]) - (arg0[0][0] * arg0[1][2] * arg0[2][1]);
+    temp_f0 = 1.0f / temp_f0;
+    arg1[0][0] = (((arg0[1][1] * arg0[2][2]) - (arg0[2][1] * arg0[1][2])) * temp_f0);
+    arg1[1][0] = (((arg0[1][2] * arg0[2][0]) - (arg0[2][2] * arg0[1][0])) * temp_f0);
+    arg1[2][0] = (((arg0[1][0] * arg0[2][1]) - (arg0[2][0] * arg0[1][1])) * temp_f0);
+    arg1[0][1] = (((arg0[0][2] * arg0[2][1]) - (arg0[2][2] * arg0[0][1])) * temp_f0);
+    arg1[1][1] = (((arg0[0][0] * arg0[2][2]) - (arg0[2][0] * arg0[0][2])) * temp_f0);
+    arg1[2][1] = (((arg0[0][1] * arg0[2][0]) - (arg0[2][1] * arg0[0][0])) * temp_f0);
+    arg1[0][2] = (((arg0[0][1] * arg0[1][2]) - (arg0[1][1] * arg0[0][2])) * temp_f0);
+    arg1[1][2] = (((arg0[0][2] * arg0[1][0]) - (arg0[1][2] * arg0[0][0])) * temp_f0);
+    arg1[2][2] = (((arg0[0][0] * arg0[1][1]) - (arg0[1][0] * arg0[0][1])) * temp_f0);
+    arg1[3][0] = -((arg1[0][0] * arg0[3][0]) + (arg1[1][0] * arg0[3][1]) + (arg1[2][0] * arg0[3][2]));
+    arg1[3][1] = -((arg1[0][1] * arg0[3][0]) + (arg1[1][1] * arg0[3][1]) + (arg1[2][1] * arg0[3][2]));
+    arg1[3][2] = -((arg1[0][2] * arg0[3][0]) + (arg1[1][2] * arg0[3][1]) + (arg1[2][2] * arg0[3][2]));
+    arg1[3][3] = 1.0f;
+    arg1[0][3] = 0.0f;
+    arg1[1][3] = 0.0f;
+    arg1[2][3] = 0.0f;
 }
 #else
 GLOBAL_ASM(
