@@ -79,7 +79,7 @@ Discarded input sections
  .options       0x0000000000000000       0x20 build/u/src/pi.o
  .reginfo       0x0000000000000000       0x18 build/u/src/pi.o
  .gptab.bss     0x0000000000000000       0x20 build/u/src/pi.o
- .mdebug        0x0000000000000000      0x3b0 build/u/src/pi.o
+ .mdebug        0x0000000000000000      0x3ac build/u/src/pi.o
  .options       0x0000000000000000       0x20 build/u/src/vi.o
  .reginfo       0x0000000000000000       0x18 build/u/src/vi.o
  .gptab.data    0x0000000000000000       0x20 build/u/src/vi.o
@@ -1082,11 +1082,11 @@ Linker script and memory map
                 0x0000000070000510                init
                 0x00000000700006f0                set_stack_entry
                 0x00000000700006fc                set_hw_address_and_unknown
-                0x0000000070000718                thread1_idle
-                0x0000000070000738                start_idle_thread
-                0x0000000070000790                start_rmon_thread
-                0x00000000700007ec                init_scheduler
-                0x000000007000089c                thread3_main
+                0x0000000070000718                idleproc
+                0x0000000070000738                idleCreateThread
+                0x0000000070000790                rmonCreateThread
+                0x00000000700007ec                schedulerInitThread
+                0x000000007000089c                mainproc
                 0x0000000070000908                setuplastentryofdebughandler
  build/u/src/sched.o(.text)
  .text          0x0000000070000970      0xe10 build/u/src/sched.o
@@ -1212,9 +1212,9 @@ Linker script and memory map
  build/u/src/deb_video.o(.text)
  .text          0x0000000070004ee0      0x750 build/u/src/deb_video.o
                 0x0000000070004ee0                init_tlb
-                0x0000000070004f54                thread5_translate_7F_address
+                0x0000000070004f54                tlbproc
                 0x00000000700050ac                debug_related_8
-                0x00000000700051e0                was_opcode_In_70000450_70020D90
+                0x00000000700051e0                tlbIsJumpOpInCodeSeg
                 0x0000000070005258                return_strlen
                 0x0000000070005294                indy_file_get_address_subsequent_data
                 0x0000000070005340                scan_load_resourceID_from_indy_read_buf
@@ -1256,7 +1256,7 @@ Linker script and memory map
                 0x0000000070005d30                init_mainthread_data
                 0x0000000070005ff4                enable_show_mem_use_flag
                 0x0000000070006004                mem_bars_flag_toggle
-                0x000000007000601c                setup_gamevalues_and_launchmainloop
+                0x000000007000601c                bossEntry
                 0x0000000070006060                mainloop
                 0x0000000070006930                run_title_stage
                 0x0000000070006950                set_loaded_stage
@@ -1383,7 +1383,7 @@ Linker script and memory map
                 0x000000007000ac94                sprintf
  build/u/src/pi.o(.text)
  .text          0x000000007000acf0       0x40 build/u/src/pi.o
-                0x000000007000acf0                start_pi_manager
+                0x000000007000acf0                piCreateManager
  build/u/src/vi.o(.text)
  .text          0x000000007000ad30       0x50 build/u/src/vi.o
                 0x000000007000ad30                viDebugRemoved
@@ -3104,8 +3104,8 @@ Linker script and memory map
                 0x000000007f057eac                sinf
  build/u/src/game/unk_057FD0.o(.text)
  .text          0x000000007f057fd0     0x2a10 build/u/src/game/unk_057FD0.o
-                0x000000007f057fd0                reset_array_of_0x10_floats
-                0x000000007f058020                sub_GAME_7F058020
+                0x000000007f057fd0                matrix_4x4_set_identity
+                0x000000007f058020                matrix_4x4_copy
                 0x000000007f058068                sub_GAME_7F058068
                 0x000000007f058098                sub_GAME_7F058098
                 0x000000007f0580c8                sub_GAME_7F0580C8
@@ -3123,15 +3123,15 @@ Linker script and memory map
                 0x000000007f058860                sub_GAME_7F058860
                 0x000000007f05892c                sub_GAME_7F05892C
                 0x000000007f058964                init_something_copy_posdata_to_it
-                0x000000007f058998                copies_first_3_floats_from_a0_to_a1_plus_0x30
-                0x000000007f0589b4                sub_GAME_7F0589B4
-                0x000000007f0589e4                sub_GAME_7F0589E4
-                0x000000007f058a14                sub_GAME_7F058A14
-                0x000000007f058a4c                sub_GAME_7F058A4C
-                0x000000007f058a7c                matrix_multiply_A1_by_F12
-                0x000000007f058b10                sub_GAME_7F058B10
-                0x000000007f058b80                sub_GAME_7F058B80
-                0x000000007f058bb8                sub_GAME_7F058BB8
+                0x000000007f058998                matrix_4x4_set_translation
+                0x000000007f0589b4                matrix_column_1_scalar_multiply
+                0x000000007f0589e4                matrix_column_2_scalar_multiply
+                0x000000007f058a14                matrix_column_3_scalar_multiply
+                0x000000007f058a4c                matrix_column_3_scalar_multiply_2
+                0x000000007f058a7c                matrix_scalar_multiply
+                0x000000007f058b10                matrix_scalar_multiply_2
+                0x000000007f058b80                matrix_row_3_scalar_multiply
+                0x000000007f058bb8                matrix_scalar_multiply_3
                 0x000000007f058c4c                sub_GAME_7F058C4C
                 0x000000007f058c64                sub_GAME_7F058C64
                 0x000000007f058c88                sub_GAME_7F058C88
@@ -3255,8 +3255,8 @@ Linker script and memory map
                 0x000000007f05dcb8                sub_GAME_7F05DCB8
                 0x000000007f05dce8                sub_GAME_7F05DCE8
                 0x000000007f05dd38                get_item_in_hand_zoom
-                0x000000007f05dda4                camera_sniper_zoom
-                0x000000007f05de94                sub_GAME_7F05DE94
+                0x000000007f05dda4                camera_sniper_zoom_in
+                0x000000007f05de94                camera_sniper_zoom_out
                 0x000000007f05df84                bondwalkGetItemDestructionAmount
                 0x000000007f05dfa8                bondwalkGetItemField68
                 0x000000007f05dfcc                get_automatic_firing_rate
@@ -20630,10 +20630,6 @@ Linker script and memory map
                 0x0000000080053c18                D_80053C18
                 0x0000000080053c1c                D_80053C1C
                 0x0000000080053c20                D_80053C20
-                0x0000000080053c24                D_80053C24
-                0x0000000080053c28                D_80053C28
-                0x0000000080053c2c                D_80053C2C
-                0x0000000080053c30                D_80053C30
                 0x0000000080053c34                D_80053C34
                 0x0000000080053c38                D_80053C38
                 0x0000000080053c3c                D_80053C3C
@@ -21537,10 +21533,10 @@ Linker script and memory map
  build/u/src/deb.o(.bss)
  build/u/src/deb_video.o(.bss)
  .bss           0x0000000080060c90     0x2a40 build/u/src/deb_video.o
-                0x0000000080060c90                thread_video_manager_debugthread
+                0x0000000080060c90                tlbthread
                 0x0000000080061340                tlbStack
-                0x0000000080063640                thread5_MesgQ
-                0x0000000080063658                thread5_MesgBuf
+                0x0000000080063640                tlbMesgQ
+                0x0000000080063658                tlbMesgBuf
                 0x000000008006365c                ptr_tlbthread_maybe
                 0x0000000080063660                dword_CODE_bss_80063660
                 0x0000000080063664                current_indy_read_buf_resourceID

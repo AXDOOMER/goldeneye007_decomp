@@ -11,10 +11,10 @@
  */
 
 //bss
-char thread_video_manager_debugthread[0x6B0];
+char tlbthread[0x6B0];
 char tlbStack[0x2300];
-OSMesgQueue thread5_MesgQ;
-u32 thread5_MesgBuf;
+OSMesgQueue tlbMesgQ;
+u32 tlbMesgBuf;
 OSThread *ptr_tlbthread_maybe;
 u32 dword_CODE_bss_80063660;
 u32 *current_indy_read_buf_resourceID;
@@ -28,9 +28,9 @@ char indy_read_buffer[0x60];
  */
 void init_tlb(void) {
     set_video_buffer_pointers();
-    osCreateMesgQueue(&thread5_MesgQ, &thread5_MesgBuf, 1);
-    osCreateThread(&thread_video_manager_debugthread, 5, &thread5_translate_7F_address, 0, &tlbStack, 0x28);
-    osStartThread(&thread_video_manager_debugthread);
+    osCreateMesgQueue(&tlbMesgQ, &tlbMesgBuf, 1);
+    osCreateThread(&tlbthread, 5, &tlbproc, 0, &tlbStack, 0x28);
+    osStartThread(&tlbthread);
 }
 
 
@@ -41,17 +41,17 @@ void init_tlb(void) {
  * 5B54	70004F54
  */
 #ifdef NONMATCHING
-void thread5_translate_7F_address(void) {
+void tlbproc(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel thread5_translate_7F_address
+glabel tlbproc
 /* 005B54 70004F54 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 005B58 70004F58 AFB70030 */  sw    $s7, 0x30($sp)
-/* 005B5C 70004F5C 3C178006 */  lui   $s7, %hi(thread5_MesgQ) 
-/* 005B60 70004F60 26F73640 */  addiu $s7, %lo(thread5_MesgQ) # addiu $s7, $s7, 0x3640
+/* 005B5C 70004F5C 3C178006 */  lui   $s7, %hi(tlbMesgQ) 
+/* 005B60 70004F60 26F73640 */  addiu $s7, %lo(tlbMesgQ) # addiu $s7, $s7, 0x3640
 /* 005B64 70004F64 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 005B68 70004F68 AFA40040 */  sw    $a0, 0x40($sp)
 /* 005B6C 70004F6C AFB6002C */  sw    $s6, 0x2c($sp)
@@ -248,63 +248,24 @@ glabel debug_related_8
  *     V0=TRUE if opcode that set RA A0 was a JAL or JALR type within bounds (70000450,70020D90)
  *     accepts: A0=p->70-mapped TLB function, presumably from RA
  */
-#ifdef NONMATCHING
-void was_opcode_In_70000450_70020D90(u32 * function)
+s32 tlbIsJumpOpInCodeSeg(u32 *currop)
 {
-    if ((function & 3) == 0) && (function >= &_codeSegmentStart) && (&_codeSegmentEnd >= function) {
-        if ((function[-2] & 0xfc00003c) == 9)
+    u32 prevop;
+
+    if ((((s32) currop & 3) == 0) && ((u32) currop >= (u32) &_codeSegmentStart) && ((u32) &_codeSegmentEnd >= (u32) currop))
+    {
+        prevop = currop[-2];
+        if ((prevop & 0xFC00003C) == 9)
         {
             return 1;
         }
-        if ((function[] & 0xfc000000) == 0xc000000)
+        if ((prevop & 0xFC000000) == 0xC000000)
         {
             return 1;
         }
     }
     return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel was_opcode_In_70000450_70020D90
-/* 005DE0 700051E0 308E0003 */  andi  $t6, $a0, 3
-/* 005DE4 700051E4 15C00019 */  bnez  $t6, .L7000524C
-/* 005DE8 700051E8 3C0F7000 */   lui   $t7, %hi(_codeSegmentStart) # $t7, 0x7000
-/* 005DEC 700051EC 25EF0450 */  addiu $t7, %lo(_codeSegmentStart) # addiu $t7, $t7, 0x450
-/* 005DF0 700051F0 008F082B */  sltu  $at, $a0, $t7
-/* 005DF4 700051F4 14200015 */  bnez  $at, .L7000524C
-/* 005DF8 700051F8 3C187002 */   lui   $t8, %hi(_codeSegmentEnd) # $t8, 0x7002
-/* 005DFC 700051FC 27180D90 */  addiu $t8, %lo(_codeSegmentEnd) # addiu $t8, $t8, 0xd90
-/* 005E00 70005200 0304082B */  sltu  $at, $t8, $a0
-/* 005E04 70005204 54200012 */  bnezl $at, .L70005250
-/* 005E08 70005208 00001025 */   move  $v0, $zero
-/* 005E0C 7000520C 8C82FFF8 */  lw    $v0, -8($a0)
-/* 005E10 70005210 3C01FC00 */  lui   $at, (0xFC00003C >> 16) # lui $at, 0xfc00
-/* 005E14 70005214 3421003C */  ori   $at, (0xFC00003C & 0xFFFF) # ori $at, $at, 0x3c
-/* 005E18 70005218 0041C824 */  and   $t9, $v0, $at
-/* 005E1C 7000521C 24010009 */  li    $at, 9
-/* 005E20 70005220 57210004 */  bnel  $t9, $at, .L70005234
-/* 005E24 70005224 3C01FC00 */   lui   $at, 0xfc00
-/* 005E28 70005228 03E00008 */  jr    $ra
-/* 005E2C 7000522C 24020001 */   li    $v0, 1
-
-/* 005E30 70005230 3C01FC00 */  lui   $at, 0xfc00
-.L70005234:
-/* 005E34 70005234 00414024 */  and   $t0, $v0, $at
-/* 005E38 70005238 3C010C00 */  lui   $at, 0xc00
-/* 005E3C 7000523C 55010004 */  bnel  $t0, $at, .L70005250
-/* 005E40 70005240 00001025 */   move  $v0, $zero
-/* 005E44 70005244 03E00008 */  jr    $ra
-/* 005E48 70005248 24020001 */   li    $v0, 1
-
-.L7000524C:
-/* 005E4C 7000524C 00001025 */  move  $v0, $zero
-.L70005250:
-/* 005E50 70005250 03E00008 */  jr    $ra
-/* 005E54 70005254 00000000 */   nop   
-)
-#endif
-
 
 
 
