@@ -3591,7 +3591,7 @@ void sub_GAME_7F0B5488(void *arg0, void *arg1) {
     *arg1 = (f32) (*arg0 * room_data_float2);
     arg1->unk4 = (f32) (arg0->unk4 * room_data_float2);
     arg1->unk8 = (f32) (arg0->unk8 * room_data_float2);
-    sub_GAME_7F058474(get_BONDdata_field_10CC(), arg1, arg0);
+    matrix_4x4_transform_vector_in_place(get_BONDdata_field_10CC(), arg1, arg0);
     sub_GAME_7F078060(arg1, arg1);
     if (0.0f < arg1->unk8)
     {
@@ -3626,7 +3626,7 @@ glabel sub_GAME_7F0B5488
 /* 0EA004 7F0B54D4 C4660000 */  lwc1  $f6, ($v1)
 /* 0EA008 7F0B54D8 C4C40008 */  lwc1  $f4, 8($a2)
 /* 0EA00C 7F0B54DC 46062202 */  mul.s $f8, $f4, $f6
-/* 0EA010 7F0B54E0 0FC1611D */  jal   sub_GAME_7F058474
+/* 0EA010 7F0B54E0 0FC1611D */  jal   matrix_4x4_transform_vector_in_place
 /* 0EA014 7F0B54E4 E6080008 */   swc1  $f8, 8($s0)
 /* 0EA018 7F0B54E8 02002025 */  move  $a0, $s0
 /* 0EA01C 7F0B54EC 0FC1E018 */  jal   sub_GAME_7F078060
@@ -3760,7 +3760,7 @@ glabel sub_GAME_7F0B5528
 /* 0EA1C8 7F0B5698 C6920000 */  lwc1  $f18, ($s4)
 /* 0EA1CC 7F0B569C 46124102 */  mul.s $f4, $f8, $f18
 /* 0EA1D0 7F0B56A0 E6040008 */  swc1  $f4, 8($s0)
-/* 0EA1D4 7F0B56A4 0FC1611D */  jal   sub_GAME_7F058474
+/* 0EA1D4 7F0B56A4 0FC1611D */  jal   matrix_4x4_transform_vector_in_place
 /* 0EA1D8 7F0B56A8 8FA400AC */   lw    $a0, 0xac($sp)
 /* 0EA1DC 7F0B56AC C7A6009C */  lwc1  $f6, 0x9c($sp)
 /* 0EA1E0 7F0B56B0 C6120008 */  lwc1  $f18, 8($s0)

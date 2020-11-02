@@ -681,7 +681,7 @@ def_7F005A74:
 /* 03AA54 7F005F24 E4400070 */  swc1  $f0, 0x70($v0)
 /* 03AA58 7F005F28 8E300000 */  lw    $s0, ($s1)
 /* 03AA5C 7F005F2C C60C0018 */  lwc1  $f12, 0x18($s0)
-/* 03AA60 7F005F30 0FC16A8C */  jal   convert_angle_using_inverse
+/* 03AA60 7F005F30 0FC16A8C */  jal   atan2f
 /* 03AA64 7F005F34 C60E0020 */   lwc1  $f14, 0x20($s0)
 /* 03AA68 7F005F38 3C018005 */  lui   $at, %hi(D_8004F1D4)
 /* 03AA6C 7F005F3C C424F1D4 */  lwc1  $f4, %lo(D_8004F1D4)($at)
@@ -1443,7 +1443,7 @@ def_7F005A74:
 /* 03AA90 7F005F20 E4400070 */  swc1  $f0, 0x70($v0)
 /* 03AA94 7F005F24 8E300000 */  lw    $s0, ($s1)
 /* 03AA98 7F005F28 C60C0018 */  lwc1  $f12, 0x18($s0)
-/* 03AA9C 7F005F2C 0FC16BD4 */  jal   convert_angle_using_inverse
+/* 03AA9C 7F005F2C 0FC16BD4 */  jal   atan2f
 /* 03AAA0 7F005F30 C60E0020 */   lwc1  $f14, 0x20($s0)
 /* 03AAA4 7F005F34 3C018005 */  lui   $at, %hi(D_8004F1D4) # $at, 0x8005
 /* 03AAA8 7F005F38 C426F204 */  lwc1  $f6, %lo(D_8004F1D4)($at)
