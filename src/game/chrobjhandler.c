@@ -4969,7 +4969,7 @@ glabel sub_GAME_7F0431E4
 /* 077F78 7F043448 0FC16CFD */  jal   sub_GAME_7F05B3F4
 /* 077F7C 7F04344C 27A4010C */   addiu $a0, $sp, 0x10c
 /* 077F80 7F043450 8FA50028 */  lw    $a1, 0x28($sp)
-/* 077F84 7F043454 0FC16F84 */  jal   sub_GAME_7F05BE10
+/* 077F84 7F043454 0FC16F84 */  jal   quaternion_ensure_shortest_path
 /* 077F88 7F043458 8FA40024 */   lw    $a0, 0x24($sp)
 /* 077F8C 7F04345C 44808000 */  mtc1  $zero, $f16
 /* 077F90 7F043460 00000000 */  nop   

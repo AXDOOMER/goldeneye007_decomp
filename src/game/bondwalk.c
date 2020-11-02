@@ -1150,13 +1150,13 @@ glabel sub_GAME_7F05C6FC
 /* 091308 7F05C7D8 0FC16CFD */  jal   sub_GAME_7F05B3F4
 /* 09130C 7F05C7DC 27A50038 */   addiu $a1, $sp, 0x38
 /* 091310 7F05C7E0 27A40058 */  addiu $a0, $sp, 0x58
-/* 091314 7F05C7E4 0FC16F84 */  jal   sub_GAME_7F05BE10
+/* 091314 7F05C7E4 0FC16F84 */  jal   quaternion_ensure_shortest_path
 /* 091318 7F05C7E8 27A50048 */   addiu $a1, $sp, 0x48
 /* 09131C 7F05C7EC 27A40048 */  addiu $a0, $sp, 0x48
-/* 091320 7F05C7F0 0FC16F84 */  jal   sub_GAME_7F05BE10
+/* 091320 7F05C7F0 0FC16F84 */  jal   quaternion_ensure_shortest_path
 /* 091324 7F05C7F4 27A50038 */   addiu $a1, $sp, 0x38
 /* 091328 7F05C7F8 27A40058 */  addiu $a0, $sp, 0x58
-/* 09132C 7F05C7FC 0FC16F84 */  jal   sub_GAME_7F05BE10
+/* 09132C 7F05C7FC 0FC16F84 */  jal   quaternion_ensure_shortest_path
 /* 091330 7F05C800 27A50068 */   addiu $a1, $sp, 0x68
 /* 091334 7F05C804 C7B00098 */  lwc1  $f16, 0x98($sp)
 /* 091338 7F05C808 27A90078 */  addiu $t1, $sp, 0x78
