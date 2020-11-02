@@ -275,37 +275,43 @@ void sub_GAME_7F05B57C(f32 angle, vec4 vector) {
     vector[3] = 0.0f;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F05B5D4(void) {
-
+void sub_GAME_7F05B5D4(f32 angle, vec4 vector) {
+    vector[0] = cosf(angle * 0.5f);
+    vector[1] = 0.0f;
+    vector[2] = 0.0f;
+    vector[3] = sinf(angle * 0.5f);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05B5D4
-/* 090104 7F05B5D4 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 090108 7F05B5D8 44812000 */  mtc1  $at, $f4
-/* 09010C 7F05B5DC 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 090110 7F05B5E0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 090114 7F05B5E4 46046302 */  mul.s $f12, $f12, $f4
-/* 090118 7F05B5E8 AFA50024 */  sw    $a1, 0x24($sp)
-/* 09011C 7F05B5EC 0FC15FA8 */  jal   cosf
-/* 090120 7F05B5F0 E7AC001C */   swc1  $f12, 0x1c($sp)
-/* 090124 7F05B5F4 8FA20024 */  lw    $v0, 0x24($sp)
-/* 090128 7F05B5F8 44801000 */  mtc1  $zero, $f2
-/* 09012C 7F05B5FC C7AC001C */  lwc1  $f12, 0x1c($sp)
-/* 090130 7F05B600 E4400000 */  swc1  $f0, ($v0)
-/* 090134 7F05B604 E4420004 */  swc1  $f2, 4($v0)
-/* 090138 7F05B608 0FC15FAB */  jal   sinf
-/* 09013C 7F05B60C E4420008 */   swc1  $f2, 8($v0)
-/* 090140 7F05B610 8FA20024 */  lw    $v0, 0x24($sp)
-/* 090144 7F05B614 E440000C */  swc1  $f0, 0xc($v0)
-/* 090148 7F05B618 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09014C 7F05B61C 27BD0020 */  addiu $sp, $sp, 0x20
-/* 090150 7F05B620 03E00008 */  jr    $ra
-/* 090154 7F05B624 00000000 */   nop   
-)
-#endif
+// #ifdef NONMATCHING
+// void sub_GAME_7F05B5D4(void) {
+
+// }
+// #else
+// GLOBAL_ASM(
+// .text
+// glabel sub_GAME_7F05B5D4
+// /* 090104 7F05B5D4 3C013F00 */  li    $at, 0x3F000000 # 0.500000
+// /* 090108 7F05B5D8 44812000 */  mtc1  $at, $f4
+// /* 09010C 7F05B5DC 27BDFFE0 */  addiu $sp, $sp, -0x20
+// /* 090110 7F05B5E0 AFBF0014 */  sw    $ra, 0x14($sp)
+// /* 090114 7F05B5E4 46046302 */  mul.s $f12, $f12, $f4
+// /* 090118 7F05B5E8 AFA50024 */  sw    $a1, 0x24($sp)
+// /* 09011C 7F05B5EC 0FC15FA8 */  jal   cosf
+// /* 090120 7F05B5F0 E7AC001C */   swc1  $f12, 0x1c($sp)
+// /* 090124 7F05B5F4 8FA20024 */  lw    $v0, 0x24($sp)
+// /* 090128 7F05B5F8 44801000 */  mtc1  $zero, $f2
+// /* 09012C 7F05B5FC C7AC001C */  lwc1  $f12, 0x1c($sp)
+// /* 090130 7F05B600 E4400000 */  swc1  $f0, ($v0)
+// /* 090134 7F05B604 E4420004 */  swc1  $f2, 4($v0)
+// /* 090138 7F05B608 0FC15FAB */  jal   sinf
+// /* 09013C 7F05B60C E4420008 */   swc1  $f2, 8($v0)
+// /* 090140 7F05B610 8FA20024 */  lw    $v0, 0x24($sp)
+// /* 090144 7F05B614 E440000C */  swc1  $f0, 0xc($v0)
+// /* 090148 7F05B618 8FBF0014 */  lw    $ra, 0x14($sp)
+// /* 09014C 7F05B61C 27BD0020 */  addiu $sp, $sp, 0x20
+// /* 090150 7F05B620 03E00008 */  jr    $ra
+// /* 090154 7F05B624 00000000 */   nop   
+// )
+// #endif
 
 
 
