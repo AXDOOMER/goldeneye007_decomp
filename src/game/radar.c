@@ -242,7 +242,7 @@ glabel display_red_blue_on_radar
 /* 0FAF08 7F0C63D8 46104683 */  div.s $f26, $f8, $f16
 /* 0FAF0C 7F0C63DC 4600A306 */  mov.s $f12, $f20
 /* 0FAF10 7F0C63E0 4600B386 */  mov.s $f14, $f22
-/* 0FAF14 7F0C63E4 0FC16A8C */  jal   convert_angle_using_inverse
+/* 0FAF14 7F0C63E4 0FC16A8C */  jal   atan2f
 /* 0FAF18 7F0C63E8 46805620 */   cvt.s.w $f24, $f10
 /* 0FAF1C 7F0C63EC 461E0182 */  mul.s $f6, $f0, $f30
 /* 0FAF20 7F0C63F0 3C018006 */  lui   $at, %hi(D_8005BD20)
