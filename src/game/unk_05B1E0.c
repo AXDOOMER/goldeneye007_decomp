@@ -268,42 +268,12 @@ void sub_GAME_7F05B528(f32 angle, vec4 vector) {
     vector[3] = 0.0f;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F05B57C(void) {
-
+void sub_GAME_7F05B57C(f32 angle, vec4 vector) {
+    vector[0] = cosf(angle * 0.5f);
+    vector[1] = 0.0f;
+    vector[2] = sinf(angle * 0.5f);
+    vector[3] = 0.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05B57C
-/* 0900AC 7F05B57C 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0900B0 7F05B580 44812000 */  mtc1  $at, $f4
-/* 0900B4 7F05B584 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0900B8 7F05B588 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0900BC 7F05B58C 46046302 */  mul.s $f12, $f12, $f4
-/* 0900C0 7F05B590 AFA50024 */  sw    $a1, 0x24($sp)
-/* 0900C4 7F05B594 0FC15FA8 */  jal   cosf
-/* 0900C8 7F05B598 E7AC001C */   swc1  $f12, 0x1c($sp)
-/* 0900CC 7F05B59C 8FA20024 */  lw    $v0, 0x24($sp)
-/* 0900D0 7F05B5A0 44803000 */  mtc1  $zero, $f6
-/* 0900D4 7F05B5A4 C7AC001C */  lwc1  $f12, 0x1c($sp)
-/* 0900D8 7F05B5A8 E4400000 */  swc1  $f0, ($v0)
-/* 0900DC 7F05B5AC 0FC15FAB */  jal   sinf
-/* 0900E0 7F05B5B0 E4460004 */   swc1  $f6, 4($v0)
-/* 0900E4 7F05B5B4 8FA20024 */  lw    $v0, 0x24($sp)
-/* 0900E8 7F05B5B8 44804000 */  mtc1  $zero, $f8
-/* 0900EC 7F05B5BC E4400008 */  swc1  $f0, 8($v0)
-/* 0900F0 7F05B5C0 E448000C */  swc1  $f8, 0xc($v0)
-/* 0900F4 7F05B5C4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0900F8 7F05B5C8 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0900FC 7F05B5CC 03E00008 */  jr    $ra
-/* 090100 7F05B5D0 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F05B5D4(void) {
