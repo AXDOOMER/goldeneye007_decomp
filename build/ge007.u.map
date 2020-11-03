@@ -1254,8 +1254,8 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/u/src/game/objective_status2.o
  .options       0x0000000000000000       0x20 build/u/src/game/sin.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/sin.o
- .options       0x0000000000000000       0x20 build/u/src/game/unk_057FD0.o
- .reginfo       0x0000000000000000       0x18 build/u/src/game/unk_057FD0.o
+ .options       0x0000000000000000       0x20 build/u/src/game/matrixmath.o
+ .reginfo       0x0000000000000000       0x18 build/u/src/game/matrixmath.o
  .options       0x0000000000000000       0x20 build/u/src/game/unk_05A9E0.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/unk_05A9E0.o
  .mdebug        0x0000000000000000      0x390 build/u/src/game/unk_05A9E0.o
@@ -3823,8 +3823,8 @@ Linker script and memory map
  .text          0x000000007f057ea0      0x130 build/u/src/game/sin.o
                 0x000000007f057ea0                cosf
                 0x000000007f057eac                sinf
- build/u/src/game/unk_057FD0.o(.text)
- .text          0x000000007f057fd0     0x2a10 build/u/src/game/unk_057FD0.o
+ build/u/src/game/matrixmath.o(.text)
+ .text          0x000000007f057fd0     0x2a10 build/u/src/game/matrixmath.o
                 0x000000007f057fd0                matrix_4x4_set_identity
                 0x000000007f058020                matrix_4x4_copy
                 0x000000007f058068                matrix_4x4_multiply_in_place
@@ -19020,8 +19020,8 @@ Linker script and memory map
                 0x0000000080032304                D_80032304
                 0x0000000080032308                D_80032308
  build/u/src/game/sin.o(.data)
- build/u/src/game/unk_057FD0.o(.data)
- .data          0x0000000080032310       0x10 build/u/src/game/unk_057FD0.o
+ build/u/src/game/matrixmath.o(.data)
+ .data          0x0000000080032310       0x10 build/u/src/game/matrixmath.o
                 0x0000000080032310                D_80032310
                 0x0000000080032314                D_80032314
  build/u/src/game/unk_05A9E0.o(.data)
@@ -21590,8 +21590,8 @@ Linker script and memory map
                 0x00000000800536e4                D_800536E4
                 0x00000000800536e8                D_800536E8
                 0x00000000800536ec                D_800536EC
- build/u/src/game/unk_057FD0.o(.rodata)
- .rodata        0x00000000800536f0       0x10 build/u/src/game/unk_057FD0.o
+ build/u/src/game/matrixmath.o(.rodata)
+ .rodata        0x00000000800536f0       0x10 build/u/src/game/matrixmath.o
  build/u/src/game/unk_05A9E0.o(.rodata)
  build/u/src/game/convertangleusinginverse.o(.rodata)
  .rodata        0x0000000080053700       0x20 build/u/src/game/convertangleusinginverse.o
@@ -23486,8 +23486,8 @@ Linker script and memory map
                 0x0000000080075d90                ptr_last_photo_obj_in_room_subobject_entry_type1E
  build/u/src/game/objective_status2.o(.bss)
  build/u/src/game/sin.o(.bss)
- build/u/src/game/unk_057FD0.o(.bss)
- .bss           0x0000000080075da0       0x10 build/u/src/game/unk_057FD0.o
+ build/u/src/game/matrixmath.o(.bss)
+ .bss           0x0000000080075da0       0x10 build/u/src/game/matrixmath.o
                 0x0000000080075da0                flt_CODE_bss_80075DA0
  build/u/src/game/unk_05A9E0.o(.bss)
  build/u/src/game/convertangleusinginverse.o(.bss)

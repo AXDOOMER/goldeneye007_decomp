@@ -339,7 +339,7 @@ SECTIONS
       build/j/src/game/objective_status.o (.text);
       build/j/src/game/objective_status2.o (.text);
       build/j/src/game/sin.o (.text);
-      build/j/src/game/unk_057FD0.o (.text);
+      build/j/src/game/matrixmath.o (.text);
       build/j/src/game/unk_05A9E0.o (.text);
       build/j/src/game/convertangleusinginverse.o (.text);
       build/j/src/game/unk_05AB70.o (.text);
@@ -3630,7 +3630,7 @@ SECTIONS
       build/j/src/game/objective_status.o (.data);
       build/j/src/game/objective_status2.o (.data);
       build/j/src/game/sin.o (.data);
-      build/j/src/game/unk_057FD0.o (.data);
+      build/j/src/game/matrixmath.o (.data);
       build/j/src/game/unk_05A9E0.o (.data);
       build/j/src/game/convertangleusinginverse.o (.data);
       build/j/src/game/unk_05AB70.o (.data);
@@ -3752,7 +3752,7 @@ SECTIONS
       build/j/src/game/objective_status.o (.rodata);
       build/j/src/game/objective_status2.o (.rodata);
       build/j/src/game/sin.o (.rodata);
-      build/j/src/game/unk_057FD0.o (.rodata);
+      build/j/src/game/matrixmath.o (.rodata);
       build/j/src/game/unk_05A9E0.o (.rodata);
       build/j/src/game/convertangleusinginverse.o (.rodata);
       build/j/src/game/unk_05AB70.o (.rodata);
@@ -4090,7 +4090,7 @@ SECTIONS
       build/j/src/game/objective_status.o (.bss);
       build/j/src/game/objective_status2.o (.bss);
       build/j/src/game/sin.o (.bss);
-      build/j/src/game/unk_057FD0.o (.bss);
+      build/j/src/game/matrixmath.o (.bss);
       build/j/src/game/unk_05A9E0.o (.bss);
       build/j/src/game/convertangleusinginverse.o (.bss);
       build/j/src/game/unk_05AB70.o (.bss);
