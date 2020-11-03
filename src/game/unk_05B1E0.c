@@ -167,97 +167,24 @@ glabel sub_GAME_7F05B1E0
 )
 #endif
 
+typedef f32 vec3[3];
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F05B3F4(void) {
-
+void quaternion_set_rotation_around_xyz(vec3 angles, Quaternion q) {
+    f32 cos_x = cosf(angles[0] * 0.5f);
+    f32 sin_x = sinf(angles[0] * 0.5f);
+    f32 cos_y = cosf(angles[1] * 0.5f);
+    f32 sin_y = sinf(angles[1] * 0.5f);
+    f32 cos_z = cosf(angles[2] * 0.5f);
+    f32 sin_z = sinf(angles[2] * 0.5f);
+    f32 cos_x_cos_y = cos_x * cos_y;
+    f32 cos_x_sin_y = cos_x * sin_y;
+    f32 sin_x_cos_y = sin_x * cos_y;
+    f32 sin_x_sin_y = sin_x * sin_y;
+    q[0] = (cos_x_cos_y * cos_z) + (sin_x_sin_y * sin_z);
+    q[1] = (sin_x_cos_y * cos_z) - (cos_x_sin_y * sin_z);
+    q[2] = (cos_x_sin_y * cos_z) + (sin_x_cos_y * sin_z);
+    q[3] = (cos_x_cos_y * sin_z) - (sin_x_sin_y * cos_z);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05B3F4
-/* 08FF24 7F05B3F4 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 08FF28 7F05B3F8 F7B40018 */  sdc1  $f20, 0x18($sp)
-/* 08FF2C 7F05B3FC AFBF0024 */  sw    $ra, 0x24($sp)
-/* 08FF30 7F05B400 AFB00020 */  sw    $s0, 0x20($sp)
-/* 08FF34 7F05B404 AFA50044 */  sw    $a1, 0x44($sp)
-/* 08FF38 7F05B408 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 08FF3C 7F05B40C 4481A000 */  mtc1  $at, $f20
-/* 08FF40 7F05B410 C4840000 */  lwc1  $f4, ($a0)
-/* 08FF44 7F05B414 00808025 */  move  $s0, $a0
-/* 08FF48 7F05B418 46142302 */  mul.s $f12, $f4, $f20
-/* 08FF4C 7F05B41C 0FC15FA8 */  jal   cosf
-/* 08FF50 7F05B420 00000000 */   nop   
-/* 08FF54 7F05B424 E7A0003C */  swc1  $f0, 0x3c($sp)
-/* 08FF58 7F05B428 C6060000 */  lwc1  $f6, ($s0)
-/* 08FF5C 7F05B42C 46143302 */  mul.s $f12, $f6, $f20
-/* 08FF60 7F05B430 0FC15FAB */  jal   sinf
-/* 08FF64 7F05B434 00000000 */   nop   
-/* 08FF68 7F05B438 E7A00038 */  swc1  $f0, 0x38($sp)
-/* 08FF6C 7F05B43C C6080004 */  lwc1  $f8, 4($s0)
-/* 08FF70 7F05B440 46144302 */  mul.s $f12, $f8, $f20
-/* 08FF74 7F05B444 0FC15FA8 */  jal   cosf
-/* 08FF78 7F05B448 00000000 */   nop   
-/* 08FF7C 7F05B44C E7A00034 */  swc1  $f0, 0x34($sp)
-/* 08FF80 7F05B450 C60A0004 */  lwc1  $f10, 4($s0)
-/* 08FF84 7F05B454 46145302 */  mul.s $f12, $f10, $f20
-/* 08FF88 7F05B458 0FC15FAB */  jal   sinf
-/* 08FF8C 7F05B45C 00000000 */   nop   
-/* 08FF90 7F05B460 E7A00030 */  swc1  $f0, 0x30($sp)
-/* 08FF94 7F05B464 C6040008 */  lwc1  $f4, 8($s0)
-/* 08FF98 7F05B468 46142302 */  mul.s $f12, $f4, $f20
-/* 08FF9C 7F05B46C 0FC15FA8 */  jal   cosf
-/* 08FFA0 7F05B470 00000000 */   nop   
-/* 08FFA4 7F05B474 C6060008 */  lwc1  $f6, 8($s0)
-/* 08FFA8 7F05B478 E7A0002C */  swc1  $f0, 0x2c($sp)
-/* 08FFAC 7F05B47C 46143302 */  mul.s $f12, $f6, $f20
-/* 08FFB0 7F05B480 0FC15FAB */  jal   sinf
-/* 08FFB4 7F05B484 00000000 */   nop   
-/* 08FFB8 7F05B488 C7A8003C */  lwc1  $f8, 0x3c($sp)
-/* 08FFBC 7F05B48C C7AA0034 */  lwc1  $f10, 0x34($sp)
-/* 08FFC0 7F05B490 C7B40038 */  lwc1  $f20, 0x38($sp)
-/* 08FFC4 7F05B494 C7A40030 */  lwc1  $f4, 0x30($sp)
-/* 08FFC8 7F05B498 460A4082 */  mul.s $f2, $f8, $f10
-/* 08FFCC 7F05B49C C7B2002C */  lwc1  $f18, 0x2c($sp)
-/* 08FFD0 7F05B4A0 8FA20044 */  lw    $v0, 0x44($sp)
-/* 08FFD4 7F05B4A4 4604A402 */  mul.s $f16, $f20, $f4
-/* 08FFD8 7F05B4A8 00000000 */  nop   
-/* 08FFDC 7F05B4AC 46121182 */  mul.s $f6, $f2, $f18
-/* 08FFE0 7F05B4B0 00000000 */  nop   
-/* 08FFE4 7F05B4B4 46008202 */  mul.s $f8, $f16, $f0
-/* 08FFE8 7F05B4B8 46083280 */  add.s $f10, $f6, $f8
-/* 08FFEC 7F05B4BC E44A0000 */  swc1  $f10, ($v0)
-/* 08FFF0 7F05B4C0 C7A40034 */  lwc1  $f4, 0x34($sp)
-/* 08FFF4 7F05B4C4 C7A80030 */  lwc1  $f8, 0x30($sp)
-/* 08FFF8 7F05B4C8 C7A6003C */  lwc1  $f6, 0x3c($sp)
-/* 08FFFC 7F05B4CC 4604A382 */  mul.s $f14, $f20, $f4
-/* 090000 7F05B4D0 00000000 */  nop   
-/* 090004 7F05B4D4 46083302 */  mul.s $f12, $f6, $f8
-/* 090008 7F05B4D8 00000000 */  nop   
-/* 09000C 7F05B4DC 46127282 */  mul.s $f10, $f14, $f18
-/* 090010 7F05B4E0 00000000 */  nop   
-/* 090014 7F05B4E4 46006102 */  mul.s $f4, $f12, $f0
-/* 090018 7F05B4E8 46045181 */  sub.s $f6, $f10, $f4
-/* 09001C 7F05B4EC 46126202 */  mul.s $f8, $f12, $f18
-/* 090020 7F05B4F0 00000000 */  nop   
-/* 090024 7F05B4F4 46007282 */  mul.s $f10, $f14, $f0
-/* 090028 7F05B4F8 E4460004 */  swc1  $f6, 4($v0)
-/* 09002C 7F05B4FC 46001182 */  mul.s $f6, $f2, $f0
-/* 090030 7F05B500 460A4100 */  add.s $f4, $f8, $f10
-/* 090034 7F05B504 46128202 */  mul.s $f8, $f16, $f18
-/* 090038 7F05B508 E4440008 */  swc1  $f4, 8($v0)
-/* 09003C 7F05B50C 46083281 */  sub.s $f10, $f6, $f8
-/* 090040 7F05B510 E44A000C */  swc1  $f10, 0xc($v0)
-/* 090044 7F05B514 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 090048 7F05B518 8FB00020 */  lw    $s0, 0x20($sp)
-/* 09004C 7F05B51C D7B40018 */  ldc1  $f20, 0x18($sp)
-/* 090050 7F05B520 03E00008 */  jr    $ra
-/* 090054 7F05B524 27BD0040 */   addiu $sp, $sp, 0x40
-)
-#endif
 
 void quaternion_set_rotation_around_x(f32 angle, Quaternion q) {
     q[0] = cosf(angle * 0.5f);
@@ -887,10 +814,10 @@ void quaternion_ensure_shortest_path(Quaternion q1, Quaternion q2) {
 }
 
 void quaternion_multiply(Quaternion lhs, Quaternion rhs, Quaternion result) {
-    arg2[0] = (arg0[0] * arg1[0]) - (arg0[1] * arg1[1]) - (arg0[2] * arg1[2]) - (arg0[3] * arg1[3]);
-    arg2[1] = (arg0[0] * arg1[1]) + (arg1[0] * arg0[1]) + (arg0[2] * arg1[3]) - (arg0[3] * arg1[2]);
-    arg2[2] = (arg0[0] * arg1[2]) + (arg1[0] * arg0[2]) + (arg0[3] * arg1[1]) - (arg0[1] * arg1[3]);
-    arg2[3] = (arg0[0] * arg1[3]) + (arg1[0] * arg0[3]) + (arg0[1] * arg1[2]) - (arg0[2] * arg1[1]);
+    result[0] = (lhs[0] * rhs[0]) - (lhs[1] * rhs[1]) - (lhs[2] * rhs[2]) - (lhs[3] * rhs[3]);
+    result[1] = (lhs[0] * rhs[1]) + (rhs[0] * lhs[1]) + (lhs[2] * rhs[3]) - (lhs[3] * rhs[2]);
+    result[2] = (lhs[0] * rhs[2]) + (rhs[0] * lhs[2]) + (lhs[3] * rhs[1]) - (lhs[1] * rhs[3]);
+    result[3] = (lhs[0] * rhs[3]) + (rhs[0] * lhs[3]) + (lhs[1] * rhs[2]) - (lhs[2] * rhs[1]);
 }
 
 #ifdef NONMATCHING
@@ -926,8 +853,8 @@ float acosf(float);
 float sinf(float);
 
 void sub_GAME_7F05BFD4(Quaternion arg0, Quaternion arg1) {
-    f32 temp_f0 = acosf(arg0[0]);
-    f32 temp_f0_2 = sinf(temp_f0);
+    f32 sin_z = acosf(arg0[0]);
+    f32 temp_f0_2 = sinf(sin_z);
     if (temp_f0_2 == 0.0f) {
         arg1[0] = 0.0f;
         arg1[1] = 0.0f;
@@ -936,9 +863,9 @@ void sub_GAME_7F05BFD4(Quaternion arg0, Quaternion arg1) {
         return;
     }
     arg1[0] = 0.0f;
-    arg1[1] = (arg0[1] * (temp_f0 / temp_f0_2));
-    arg1[2] = (arg0[2] * (temp_f0 / temp_f0_2));
-    arg1[3] = (arg0[3] * (temp_f0 / temp_f0_2));
+    arg1[1] = (arg0[1] * (sin_z / temp_f0_2));
+    arg1[2] = (arg0[2] * (sin_z / temp_f0_2));
+    arg1[3] = (arg0[3] * (sin_z / temp_f0_2));
 }
 
 #ifdef NONMATCHING
