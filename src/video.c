@@ -667,7 +667,7 @@ block_43:
     ptr_video_settings1 = (void *) (&video1_settings + (off_CODE_bss_80060878 * 0x2c));
     temp_a1 = (&video1_settings + (off_CODE_bss_80060879 * 0x2c));
     *&ptr_video_settings2 = temp_a1;
-    _bcopy(*&ptr_video_settings2, temp_a1, 0x2c, &video1_settings);
+    bcopy(*&ptr_video_settings2, temp_a1, 0x2c, &video1_settings);
     ptr_video_settings2->frameb = (s32) ((off_CODE_bss_80060879 * 0x25800) + &cfb_16_a);
 }
 #else
@@ -1238,7 +1238,7 @@ glabel video_related_8
 /* 0046A0 70003AA0 01E80019 */  multu $t7, $t0
 /* 0046A4 70003AA4 00007012 */  mflo  $t6
 /* 0046A8 70003AA8 00EE2821 */  addu  $a1, $a3, $t6
-/* 0046AC 70003AAC 0C003E5C */  jal   _bcopy
+/* 0046AC 70003AAC 0C003E5C */  jal   bcopy
 /* 0046B0 70003AB0 ADA50000 */   sw    $a1, ($t5)
 /* 0046B4 70003AB4 3C038006 */  lui   $v1, %hi(off_CODE_bss_80060879)
 /* 0046B8 70003AB8 24630879 */  addiu $v1, %lo(off_CODE_bss_80060879) # addiu $v1, $v1, 0x879

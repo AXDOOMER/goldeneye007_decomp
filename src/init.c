@@ -19,6 +19,24 @@
 
 #define NUM_FIELDS  1
 
+u32 unknown_val_80023040 = 0;
+/*D:80023044*/
+u32 unknown_init_val = 2;
+
+u32 cart_hw_address = 0x10000000;
+
+struct debug_handler_entry debug_handler_table[] = 
+{
+    {sp_boot, "boot"},
+    {sp_rmon, "rmon"},
+    {sp_idle, "idle"},
+    {sp_shed, "shed"},
+    {sp_main, "main"},
+    {sp_audi, "audi"},
+    {0, 0},
+    {0, 0},
+};
+
 OSThread rmonThread;
 OSThread idleThread;
 OSThread mainThread;

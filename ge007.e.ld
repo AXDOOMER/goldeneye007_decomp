@@ -125,7 +125,7 @@ SECTIONS
       build/e/src/libultra/syn.o (.text);
       build/e/src/libultra/osPiStartDma.o (.text);
       build/e/src/libultra/osViSetSpecialFeatures.o (.text);
-      build/e/src/libultra/_bcopy.o (.text);
+      build/e/src/libultra/bcopy.o (.text);
       build/e/src/libultra/guPerspective.o (.text);
       build/e/src/libultra/Mtx.o (.text);
       build/e/src/libultra/__osGetCurrFaultedThread.o (.text);
@@ -254,7 +254,7 @@ SECTIONS
       build/e/src/game/objective_status.o (.text);
       build/e/src/game/objective_status2.o (.text);
       build/e/src/game/sin.o (.text);
-      build/e/src/game/unk_057FD0.o (.text);
+      build/e/src/game/matrixmath.o (.text);
       build/e/src/game/unk_05A9E0.o (.text);
       build/e/src/game/convertangleusinginverse.o (.text);
       build/e/src/game/unk_05AB70.o (.text);
@@ -3152,7 +3152,7 @@ SECTIONS
       build/e/src/libultra/syn.o (.data);
       build/e/src/libultra/osPiStartDma.o (.data);
       build/e/src/libultra/osViSetSpecialFeatures.o (.data);
-      build/e/src/libultra/_bcopy.o (.data);
+      build/e/src/libultra/bcopy.o (.data);
       build/e/src/libultra/guPerspective.o (.data);
       build/e/src/libultra/Mtx.o (.data);
       build/e/src/libultra/__osGetCurrFaultedThread.o (.data);
@@ -3272,7 +3272,7 @@ SECTIONS
       build/e/src/libultra/syn.o (.rodata);
       build/e/src/libultra/osPiStartDma.o (.rodata);
       build/e/src/libultra/osViSetSpecialFeatures.o (.rodata);
-      build/e/src/libultra/_bcopy.o (.rodata);
+      build/e/src/libultra/bcopy.o (.rodata);
       build/e/src/libultra/guPerspective.o (.rodata);
       build/e/src/libultra/Mtx.o (.rodata);
       build/e/src/libultra/__osGetCurrFaultedThread.o (.rodata);
@@ -3369,7 +3369,7 @@ SECTIONS
       build/e/src/game/objective_status.o (.data);
       build/e/src/game/objective_status2.o (.data);
       build/e/src/game/sin.o (.data);
-      build/e/src/game/unk_057FD0.o (.data);
+      build/e/src/game/matrixmath.o (.data);
       build/e/src/game/unk_05A9E0.o (.data);
       build/e/src/game/convertangleusinginverse.o (.data);
       build/e/src/game/unk_05AB70.o (.data);
@@ -3491,7 +3491,7 @@ SECTIONS
       build/e/src/game/objective_status.o (.rodata);
       build/e/src/game/objective_status2.o (.rodata);
       build/e/src/game/sin.o (.rodata);
-      build/e/src/game/unk_057FD0.o (.rodata);
+      build/e/src/game/matrixmath.o (.rodata);
       build/e/src/game/unk_05A9E0.o (.rodata);
       build/e/src/game/convertangleusinginverse.o (.rodata);
       build/e/src/game/unk_05AB70.o (.rodata);
@@ -3645,7 +3645,7 @@ SECTIONS
       build/e/src/libultra/syn.o (.bss);
       build/e/src/libultra/osPiStartDma.o (.bss);
       build/e/src/libultra/osViSetSpecialFeatures.o (.bss);
-      build/e/src/libultra/_bcopy.o (.bss);
+      build/e/src/libultra/bcopy.o (.bss);
       build/e/src/libultra/guPerspective.o (.bss);
       build/e/src/libultra/Mtx.o (.bss);
       build/e/src/libultra/__osGetCurrFaultedThread.o (.bss);
@@ -3742,7 +3742,7 @@ SECTIONS
       build/e/src/game/objective_status.o (.bss);
       build/e/src/game/objective_status2.o (.bss);
       build/e/src/game/sin.o (.bss);
-      build/e/src/game/unk_057FD0.o (.bss);
+      build/e/src/game/matrixmath.o (.bss);
       build/e/src/game/unk_05A9E0.o (.bss);
       build/e/src/game/convertangleusinginverse.o (.bss);
       build/e/src/game/unk_05AB70.o (.bss);

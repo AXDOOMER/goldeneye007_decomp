@@ -86,7 +86,7 @@ static const u8 rz_header_2[] = {0x11, 0x72, 0x00, 0x00};
         }
         else
         {
-            _bcopy(pPayload, ptrdata, lookupdata->pc_size);
+            bcopy(pPayload, ptrdata, lookupdata->pc_size);
             size = lookupdata->pc_size;
         }
         lookupdata->pc_remaining = (s32) size;
@@ -158,7 +158,7 @@ glabel resource_load_from_indy
 /* 0F172C 7F0BCBFC 10000004 */  b     .L7F0BCC10
 /* 0F1730 7F0BCC00 00401825 */   move  $v1, $v0
 .L7F0BCC04:
-/* 0F1734 7F0BCC04 0C003E5C */  jal   _bcopy
+/* 0F1734 7F0BCC04 0C003E5C */  jal   bcopy
 /* 0F1738 7F0BCC08 8E260008 */   lw    $a2, 8($s1)
 /* 0F173C 7F0BCC0C 8E230008 */  lw    $v1, 8($s1)
 .L7F0BCC10:
