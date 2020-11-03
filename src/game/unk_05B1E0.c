@@ -887,10 +887,10 @@ void quaternion_ensure_shortest_path(Quaternion q1, Quaternion q2) {
 }
 
 void quaternion_multiply(Quaternion lhs, Quaternion rhs, Quaternion result) {
-    result[0] = (lhs[0] * rhs[0]) - (lhs[1] * rhs[1]) - (lhs[2] * rhs[2]) - (lhs[3] * rhs[3]);
-    result[1] = (lhs[0] * rhs[1]) + (rhs[0] * lhs[1]) + (lhs[2] * rhs[3]) - (lhs[3] * rhs[2]);
-    result[2] = (lhs[0] * rhs[2]) + (rhs[0] * lhs[2]) + (lhs[3] * rhs[1]) - (lhs[1] * rhs[3]);
-    result[3] = (lhs[0] * rhs[3]) + (rhs[0] * lhs[3]) + (lhs[1] * rhs[2]) - (lhs[2] * rhs[1]);
+    arg2[0] = (arg0[0] * arg1[0]) - (arg0[1] * arg1[1]) - (arg0[2] * arg1[2]) - (arg0[3] * arg1[3]);
+    arg2[1] = (arg0[0] * arg1[1]) + (arg1[0] * arg0[1]) + (arg0[2] * arg1[3]) - (arg0[3] * arg1[2]);
+    arg2[2] = (arg0[0] * arg1[2]) + (arg1[0] * arg0[2]) + (arg0[3] * arg1[1]) - (arg0[1] * arg1[3]);
+    arg2[3] = (arg0[0] * arg1[3]) + (arg1[0] * arg0[3]) + (arg0[1] * arg1[2]) - (arg0[2] * arg1[1]);
 }
 
 #ifdef NONMATCHING
