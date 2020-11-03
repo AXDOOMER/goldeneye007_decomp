@@ -1261,6 +1261,7 @@ Discarded input sections
  .mdebug        0x0000000000000000      0x390 build/u/src/game/unk_05A9E0.o
  .options       0x0000000000000000       0x20 build/u/src/game/convertangleusinginverse.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/convertangleusinginverse.o
+ .mdebug        0x0000000000000000      0x3b8 build/u/src/game/convertangleusinginverse.o
  .options       0x0000000000000000       0x20 build/u/src/game/unk_05AB70.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/unk_05AB70.o
  .options       0x0000000000000000       0x20 build/u/src/game/unk_05ACB0.o
@@ -3826,24 +3827,24 @@ Linker script and memory map
  .text          0x000000007f057fd0     0x2a10 build/u/src/game/unk_057FD0.o
                 0x000000007f057fd0                matrix_4x4_set_identity
                 0x000000007f058020                matrix_4x4_copy
-                0x000000007f058068                sub_GAME_7F058068
-                0x000000007f058098                sub_GAME_7F058098
-                0x000000007f0580c8                sub_GAME_7F0580C8
-                0x000000007f05818c                sub_GAME_7F05818C
+                0x000000007f058068                matrix_4x4_multiply_in_place
+                0x000000007f058098                matrix_4x4_multiply_homogeneous_in_place
+                0x000000007f0580c8                matrix_4x4_multiply
+                0x000000007f05818c                matrix_4x4_multiply_homogeneous
                 0x000000007f058274                sub_GAME_7F058274
-                0x000000007f058380                sub_GAME_7F058380
-                0x000000007f0583d8                sub_GAME_7F0583D8
-                0x000000007f058418                sub_GAME_7F058418
-                0x000000007f058474                sub_GAME_7F058474
-                0x000000007f0584d0                sub_GAME_7F0584D0
-                0x000000007f058570                sub_GAME_7F058570
-                0x000000007f0585fc                sub_GAME_7F0585FC
-                0x000000007f058688                sub_GAME_7F058688
-                0x000000007f058714                sub_GAME_7F058714
-                0x000000007f058860                sub_GAME_7F058860
-                0x000000007f05892c                sub_GAME_7F05892C
-                0x000000007f058964                init_something_copy_posdata_to_it
-                0x000000007f058998                matrix_4x4_set_translation
+                0x000000007f058380                matrix_4x4_rotate_vector
+                0x000000007f0583d8                matrix_4x4_rotate_vector_in_place
+                0x000000007f058418                matrix_4x4_transform_vector
+                0x000000007f058474                matrix_4x4_transform_vector_in_place
+                0x000000007f0584d0                matrix_4x4_set_position_and_rotation_around_y
+                0x000000007f058570                matrix_4x4_set_rotation_around_x
+                0x000000007f0585fc                matrix_4x4_set_rotation_around_y
+                0x000000007f058688                matrix_4x4_set_rotation_around_z
+                0x000000007f058714                matrix_4x4_set_rotation_around_xyz
+                0x000000007f058860                matrix_4x4_get_rotation_around_xyz
+                0x000000007f05892c                matrix_4x4_set_position_and_rotation_around_xyz
+                0x000000007f058964                matrix_4x4_set_identity_and_position
+                0x000000007f058998                matrix_4x4_set_position
                 0x000000007f0589b4                matrix_column_1_scalar_multiply
                 0x000000007f0589e4                matrix_column_2_scalar_multiply
                 0x000000007f058a14                matrix_column_3_scalar_multiply
@@ -3868,32 +3869,32 @@ Linker script and memory map
                 0x000000007f05997c                sub_GAME_7F05997C
                 0x000000007f059a48                sub_GAME_7F059A48
                 0x000000007f059b58                sub_GAME_7F059B58
-                0x000000007f059ce8                sub_GAME_7F059CE8
+                0x000000007f059ce8                matrix_4x4_align
                 0x000000007f059d30                sub_GAME_7F059D30
-                0x000000007f059d38                sub_GAME_7F059D38
+                0x000000007f059d38                matrix_4x4_set_rotation_inverse
                 0x000000007f059dac                sub_GAME_7F059DAC
                 0x000000007f059e64                sub_GAME_7F059E64
                 0x000000007f059fb8                sub_GAME_7F059FB8
                 0x000000007f05a250                sub_GAME_7F05A250
                 0x000000007f05a310                sub_GAME_7F05A310
-                0x000000007f05a774                sub_GAME_7F05A774
-                0x000000007f05a928                sub_GAME_7F05A928
-                0x000000007f05a9b8                sub_GAME_7F05A9B8
+                0x000000007f05a774                matrix_4x4_determinant
+                0x000000007f05a928                matrix_3x3_determinant
+                0x000000007f05a9b8                matrix_2x2_determinant
  build/u/src/game/unk_05A9E0.o(.text)
  .text          0x000000007f05a9e0       0x50 build/u/src/game/unk_05A9E0.o
                 0x000000007f05a9e0                sub_GAME_7F05A9E0
  build/u/src/game/convertangleusinginverse.o(.text)
  .text          0x000000007f05aa30      0x140 build/u/src/game/convertangleusinginverse.o
-                0x000000007f05aa30                convert_angle_using_inverse
+                0x000000007f05aa30                atan2f
  build/u/src/game/unk_05AB70.o(.text)
  .text          0x000000007f05ab70      0x140 build/u/src/game/unk_05AB70.o
                 0x000000007f05ab70                sub_GAME_7F05AB70
-                0x000000007f05abf0                sub_GAME_7F05ABF0
-                0x000000007f05ac44                sub_GAME_7F05AC44
+                0x000000007f05abf0                acos
+                0x000000007f05ac44                asin
  build/u/src/game/unk_05ACB0.o(.text)
  .text          0x000000007f05acb0      0x150 build/u/src/game/unk_05ACB0.o
-                0x000000007f05acb0                sub_GAME_7F05ACB0
-                0x000000007f05ad5c                sub_GAME_7F05AD5C
+                0x000000007f05acb0                acosf
+                0x000000007f05ad5c                asinf
  build/u/src/game/unk_05AE00.o(.text)
  .text          0x000000007f05ae00      0x3e0 build/u/src/game/unk_05AE00.o
                 0x000000007f05ae00                sub_GAME_7F05AE00
@@ -21591,26 +21592,15 @@ Linker script and memory map
                 0x00000000800536ec                D_800536EC
  build/u/src/game/unk_057FD0.o(.rodata)
  .rodata        0x00000000800536f0       0x10 build/u/src/game/unk_057FD0.o
-                0x00000000800536f0                D_800536F0
  build/u/src/game/unk_05A9E0.o(.rodata)
  build/u/src/game/convertangleusinginverse.o(.rodata)
  .rodata        0x0000000080053700       0x20 build/u/src/game/convertangleusinginverse.o
-                0x0000000080053700                D_80053700
-                0x0000000080053704                D_80053704
-                0x0000000080053708                D_80053708
-                0x000000008005370c                D_8005370C
-                0x0000000080053710                D_80053710
-                0x0000000080053714                D_80053714
-                0x0000000080053718                D_80053718
  build/u/src/game/unk_05AB70.o(.rodata)
  build/u/src/game/unk_05ACB0.o(.rodata)
  .rodata        0x0000000080053720       0x20 build/u/src/game/unk_05ACB0.o
                 0x0000000080053720                D_80053720
                 0x0000000080053724                D_80053724
                 0x0000000080053728                D_80053728
-                0x000000008005372c                D_8005372C
-                0x0000000080053730                D_80053730
-                0x0000000080053734                D_80053734
  build/u/src/game/unk_05AE00.o(.rodata)
  build/u/src/game/unk_05B1E0.o(.rodata)
  .rodata        0x0000000080053740       0x20 build/u/src/game/unk_05B1E0.o
