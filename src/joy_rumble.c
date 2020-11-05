@@ -199,13 +199,14 @@ glabel controller_7000CAAC
 
 
 #ifdef NONMATCHING
-void controller_7000CBDC(void) {
+//verify, but seems to be an early/custom version of
+void __osMakeMotorData(int channel, OSPifRam *mdata) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel controller_7000CBDC
+glabel __osMakeMotorData
 /* 00D7DC 7000CBDC 27BDFFA8 */  addiu $sp, $sp, -0x58
 /* 00D7E0 7000CBE0 AFB00018 */  sw    $s0, 0x18($sp)
 /* 00D7E4 7000CBE4 00808025 */  move  $s0, $a0
@@ -372,8 +373,8 @@ void controller_7000CD38(s32 arg0, void *arg1, s32 arg2, ? arg16) {
             // Node 12
             temp_v0_2 = (arg2 << 6);
             sp2C = temp_v0_2;
-            controller_7000CBDC(arg2, 0x600, &rumble_off_buffer, (temp_v0_2 + &rumble_on_player_packet_buffers));
-            controller_7000CBDC(arg2, 0x600, &rumble_on_buffer, (sp2C + &rumble_off_player1_packet_buffer));
+            __osMakeMotorData(arg2, 0x600, &rumble_off_buffer, (temp_v0_2 + &rumble_on_player_packet_buffers));
+            __osMakeMotorData(arg2, 0x600, &rumble_on_buffer, (sp2C + &rumble_off_player1_packet_buffer));
         }
     }
     // Node 13
@@ -463,7 +464,7 @@ glabel controller_7000CD38
 /* 00DA50 7000CE50 AFA2002C */  sw    $v0, 0x2c($sp)
 /* 00DA54 7000CE54 24C657C0 */  addiu $a2, %lo(rumble_off_buffer) # addiu $a2, $a2, 0x57c0
 /* 00DA58 7000CE58 02002025 */  move  $a0, $s0
-/* 00DA5C 7000CE5C 0C0032F7 */  jal   controller_7000CBDC
+/* 00DA5C 7000CE5C 0C0032F7 */  jal   __osMakeMotorData
 /* 00DA60 7000CE60 24050600 */   li    $a1, 1536
 /* 00DA64 7000CE64 8FA2002C */  lw    $v0, 0x2c($sp)
 /* 00DA68 7000CE68 3C188006 */  lui   $t8, %hi(rumble_off_player1_packet_buffer) 
@@ -472,7 +473,7 @@ glabel controller_7000CD38
 /* 00DA74 7000CE74 24C657A0 */  addiu $a2, %lo(rumble_on_buffer) # addiu $a2, $a2, 0x57a0
 /* 00DA78 7000CE78 02002025 */  move  $a0, $s0
 /* 00DA7C 7000CE7C 24050600 */  li    $a1, 1536
-/* 00DA80 7000CE80 0C0032F7 */  jal   controller_7000CBDC
+/* 00DA80 7000CE80 0C0032F7 */  jal   __osMakeMotorData
 /* 00DA84 7000CE84 00583821 */   addu  $a3, $v0, $t8
 /* 00DA88 7000CE88 00001025 */  move  $v0, $zero
 .L7000CE8C:
