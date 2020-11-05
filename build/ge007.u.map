@@ -1274,6 +1274,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/u/src/game/truncf.o
  .options       0x0000000000000000       0x20 build/u/src/game/unk_05C440.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/unk_05C440.o
+ .mdebug        0x0000000000000000      0x328 build/u/src/game/unk_05C440.o
  .options       0x0000000000000000       0x20 build/u/src/game/bondwalk.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/bondwalk.o
  .options       0x0000000000000000       0x20 build/u/src/game/bondwalk2.o
@@ -1991,7 +1992,7 @@ Linker script and memory map
  .text          0x000000007000c980      0x520 build/u/src/joy_rumble.o
                 0x000000007000c980                send_rumble_off_to_PIF
                 0x000000007000caac                controller_7000CAAC
-                0x000000007000cbdc                controller_7000CBDC
+                0x000000007000cbdc                __osMakeMotorData
                 0x000000007000cd38                controller_7000CD38
  build/u/src/rmon.o(.text)
  .text          0x000000007000cea0       0xf0 build/u/src/rmon.o
@@ -17171,12 +17172,15 @@ Linker script and memory map
  build/u/src/rspboot.o(.text)
  .text          0x0000000080020d90       0xd0 build/u/src/rspboot.o
                 0x0000000080020d90                rspbootTextStart
+                0x0000000080020e60                rspbootTextEnd
  build/u/src/gspboot.o(.text)
  .text          0x0000000080020e60     0x1420 build/u/src/gspboot.o
                 0x0000000080020e60                gsp3DTextStart
+                0x0000000080022280                gsp3DTextEnd
  build/u/src/aspboot.o(.text)
  .text          0x0000000080022280      0xdc0 build/u/src/aspboot.o
                 0x0000000080022280                aspMainTextStart
+                0x0000000080023040                aspMainTextEnd
  build/u/src/boot.o(.data)
  build/u/src/init.o(.data)
  .data          0x0000000080023040       0x50 build/u/src/init.o
@@ -22426,9 +22430,11 @@ Linker script and memory map
  build/u/src/gspboot.o(.data)
  .data          0x000000008005c820      0x800 build/u/src/gspboot.o
                 0x000000008005c820                gsp3DDataStart
+                0x000000008005d020                gsp3DDataEnd
  build/u/src/aspboot.o(.data)
  .data          0x000000008005d020      0x2c0 build/u/src/aspboot.o
                 0x000000008005d020                aspMainDataStart
+                0x000000008005d2e0                aspMainDataEnd
                 0x000000008005d2e0                _csegmentSegmentEnd = (ADDR (.csegment) + SIZEOF (.csegment))
                 0x0000000000c3c550                _csegmentSegmentRomEnd = (_csegmentSegmentRomStart + SIZEOF (.csegment))
                 0x0000000000c3c550                __dataSegmentVaddrEnd = _csegmentSegmentRomEnd
