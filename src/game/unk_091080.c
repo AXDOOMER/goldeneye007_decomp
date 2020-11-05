@@ -510,17 +510,19 @@ glabel sub_GAME_7F0915BC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F091618(void) {
-    // Node 0
+void sub_GAME_7F091618(void)
+{
+    float __x;
+    
     get_BONDdata_position();
-    cosf((D_80055860 - get_curplay_horizontal_rotation_in_degrees()));
-    sinf(sp18);
-    cosf(sp18);
-    sinf(sp18);
+    __x = get_curplay_horizontal_rotation_in_degrees();
+    __x = 6.28318548f - __x;
+    cosf(__x);
+    sinf(__x);
+    cosf(__x);
+    sinf(__x);
     return;
-    // (possible return value: sinf(sp18))
 }
-
 #else
 GLOBAL_ASM(
 .late_rodata
@@ -606,8 +608,16 @@ glabel sub_GAME_7F09166C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0916F4(void) {
-
+void sub_GAME_7F0916F4(void)
+{
+    struct xyzpoint *pos;
+    
+    pos = get_BONDdata_position();
+    stanbondx.x = pos->x;
+    stanbondx.y = pos->y;
+    stanbondx.z = pos->z;
+    dword_CODE_bss_80079E20 = 0;
+    return;
 }
 #else
 GLOBAL_ASM(
