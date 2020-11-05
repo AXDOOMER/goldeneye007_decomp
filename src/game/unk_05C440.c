@@ -1,5 +1,5 @@
 #include "ultra64.h"
-
+#include "game/unk_05C440.h"
 
 
 f32 sub_GAME_7F05C440(f32 arg0)
