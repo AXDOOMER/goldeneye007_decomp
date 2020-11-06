@@ -77,7 +77,7 @@ SECTIONS
       build/e/src/vi.o (.text);
       build/e/src/debugmenu.o (.text);
       build/e/src/joy.o (.text);
-      build/e/src/joy_rumble.o (.text);
+      build/e/src/motor.o (.text);
       build/e/src/rmon.o (.text);
 
       build/e/src/libultra/osPiRawStartDma.o (.text);
@@ -3104,7 +3104,7 @@ SECTIONS
       build/e/src/vi.o (.data);
       build/e/src/debugmenu.o (.data);
       build/e/src/joy.o (.data);
-      build/e/src/joy_rumble.o (.data);
+      build/e/src/motor.o (.data);
       build/e/src/rmon.o (.data);
 
       build/e/src/libultra/osPiRawStartDma.o (.data);
@@ -3224,7 +3224,7 @@ SECTIONS
       build/e/src/vi.o (.rodata);
       build/e/src/debugmenu.o (.rodata);
       build/e/src/joy.o (.rodata);
-      build/e/src/joy_rumble.o (.rodata);
+      build/e/src/motor.o (.rodata);
       build/e/src/rmon.o (.rodata);
 
       build/e/src/libultra/osPiRawStartDma.o (.rodata);
@@ -3597,7 +3597,7 @@ SECTIONS
       build/e/src/vi.o (.bss);
       build/e/src/debugmenu.o (.bss);
       build/e/src/joy.o (.bss);
-      build/e/src/joy_rumble.o (.bss);
+      build/e/src/motor.o (.bss);
       build/e/src/rmon.o (.bss);
 
       build/e/src/libultra/osPiRawStartDma.o (.bss);

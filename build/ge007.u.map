@@ -89,8 +89,8 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/u/src/debugmenu.o
  .options       0x0000000000000000       0x20 build/u/src/joy.o
  .reginfo       0x0000000000000000       0x18 build/u/src/joy.o
- .options       0x0000000000000000       0x20 build/u/src/joy_rumble.o
- .reginfo       0x0000000000000000       0x18 build/u/src/joy_rumble.o
+ .options       0x0000000000000000       0x20 build/u/src/motor.o
+ .reginfo       0x0000000000000000       0x18 build/u/src/motor.o
  .options       0x0000000000000000       0x20 build/u/src/rmon.o
  .reginfo       0x0000000000000000       0x18 build/u/src/rmon.o
  .reginfo       0x0000000000000000       0x18 build/u/src/libultra/pirawdma.o
@@ -1988,12 +1988,12 @@ Linker script and memory map
                 0x000000007000c8dc                reset_cont_rumble_detect
                 0x000000007000c930                controller_7000C930
                 0x000000007000c954                controller_7000C954
- build/u/src/joy_rumble.o(.text)
- .text          0x000000007000c980      0x520 build/u/src/joy_rumble.o
-                0x000000007000c980                send_rumble_off_to_PIF
-                0x000000007000caac                controller_7000CAAC
-                0x000000007000cbdc                __osMakeMotorData
-                0x000000007000cd38                controller_7000CD38
+ build/u/src/motor.o(.text)
+ .text          0x000000007000c980      0x520 build/u/src/motor.o
+                0x000000007000c980                osMotorStop
+                0x000000007000caac                osMotorStart
+                0x000000007000cbdc                _MakeMotorData
+                0x000000007000cd38                osMotorInit
  build/u/src/rmon.o(.text)
  .text          0x000000007000cea0       0xf0 build/u/src/rmon.o
                 0x000000007000cea0                rmonproc
@@ -17408,7 +17408,7 @@ Linker script and memory map
                 0x0000000080026968                pl3_controller_failure_pressed
                 0x000000008002696c                pl4_controller_failure_pressed
                 0x0000000080026970                D_80026970
- build/u/src/joy_rumble.o(.data)
+ build/u/src/motor.o(.data)
  build/u/src/rmon.o(.data)
  build/u/src/libultra/pirawdma.o(.data)
  .data          0x0000000080026980        0x0 build/u/src/libultra/pirawdma.o
@@ -17953,7 +17953,7 @@ Linker script and memory map
  build/u/src/joy.o(.rodata)
  .rodata        0x0000000080029390       0x10 build/u/src/joy.o
                 0x0000000080029390                aJoy_c_debug
- build/u/src/joy_rumble.o(.rodata)
+ build/u/src/motor.o(.rodata)
  build/u/src/rmon.o(.rodata)
  build/u/src/libultra/pirawdma.o(.rodata)
  build/u/src/libultra/pigetstat.o(.rodata)
@@ -22638,12 +22638,12 @@ Linker script and memory map
                 0x00000000800653f0                player3_controllerstatus
                 0x00000000800653f4                player4_controllerstatus
                 0x00000000800653f8                player1_controller_packet
- build/u/src/joy_rumble.o(.bss)
- .bss           0x00000000800655a0      0x240 build/u/src/joy_rumble.o
-                0x00000000800655a0                rumble_off_player1_packet_buffer
-                0x00000000800656a0                rumble_on_player_packet_buffers
-                0x00000000800657a0                rumble_on_buffer
-                0x00000000800657c0                rumble_off_buffer
+ build/u/src/motor.o(.bss)
+ .bss           0x00000000800655a0      0x240 build/u/src/motor.o
+                0x00000000800655a0                _MotorStopData
+                0x00000000800656a0                _MotorStartData
+                0x00000000800657a0                _motorstopbuf
+                0x00000000800657c0                _motorstartbuf
  build/u/src/rmon.o(.bss)
  build/u/src/libultra/pirawdma.o(.bss)
  .bss           0x00000000800657e0        0x0 build/u/src/libultra/pirawdma.o
