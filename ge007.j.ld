@@ -71,7 +71,7 @@ SECTIONS
       build/j/src/vi.o (.text);
       build/j/src/debugmenu.o (.text);
       build/j/src/joy.o (.text);
-      build/j/src/joy_rumble.o (.text);
+      build/j/src/motor.o (.text);
       build/j/src/rmon.o (.text);
 
       /*build/u/src/libultra/osPiRawStartDma.o (.text);*/
@@ -3185,7 +3185,7 @@ SECTIONS
       build/j/src/vi.o (.data);
       build/j/src/debugmenu.o (.data);
       build/j/src/joy.o (.data);
-      build/j/src/joy_rumble.o (.data);
+      build/j/src/motor.o (.data);
       build/j/src/rmon.o (.data);
 
       /*build/u/src/libultra/osPiRawStartDma.o (.data);*/
@@ -3393,7 +3393,7 @@ SECTIONS
       build/j/src/vi.o (.rodata);
       build/j/src/debugmenu.o (.rodata);
       build/j/src/joy.o (.rodata);
-      build/j/src/joy_rumble.o (.rodata);
+      build/j/src/motor.o (.rodata);
       build/j/src/rmon.o (.rodata);
 
 
@@ -3854,7 +3854,7 @@ SECTIONS
       build/j/src/vi.o (.bss);
       build/j/src/debugmenu.o (.bss);
       build/j/src/joy.o (.bss);
-      build/j/src/joy_rumble.o (.bss);
+      build/j/src/motor.o (.bss);
       build/j/src/rmon.o (.bss);
 
       /*build/u/src/libultra/osPiRawStartDma.o (.bss);*/

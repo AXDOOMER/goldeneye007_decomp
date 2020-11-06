@@ -7384,146 +7384,96 @@ void update_menu06_modesel(void) {
 
 
 #ifdef NONMATCHING
-s32 interface_menu06_modesel(void)
+void interface_menu06_modesel(void)
 {
-    void *sp24;
-    s32 temp_s0;
-    void *temp_v1;
-    void *phi_v1;
-    s32 phi_s0;
-    s32 phi_return;
+    u32 i;
+    
+    is_cheat_menu_available = FALSE;
+    for (i=1; i != 0x4b; i++)
+    {
+        if (check_if_cheat_available(i) == 0)
+        {
+            cheat_available[i] = FALSE;
+        }
+        else
+        {
+            cheat_available[i] = TRUE;
+            is_cheat_menu_available = TRUE;
+        }
+    }
 
-    is_cheat_menu_available = 0;
-    phi_v1 = &cheat_available;
-    phi_s0 = 1;
-loop_1:
-    sp24 = (void *) phi_v1;
-    temp_v1 = phi_v1;
-    if (check_if_cheat_available(phi_s0) != 0)
-    {
-        *temp_v1 = (u8)1;
-        is_cheat_menu_available = 1;
-    }
-    else
-    {
-        *temp_v1 = (u8)0;
-    }
-    temp_s0 = phi_s0 + 1;
-    phi_v1 = temp_v1 + 1;
-    phi_s0 = temp_s0;
-    if (temp_s0 != 0x4b)
-    {
-        goto loop_1;
-    }
-    setvideo_far(0x42700000);
-    video_related_21(D_80051A38);
-    set_page_height(0x42c80000, D_80051A3C);
+    setvideo_far(60.0f);
+    video_related_21((1.33333337f);
+    set_page_height(100.0f, 10000.0f);
     set_video2_settings_offset_24(0);
     disable_all_switches(ptr_folder_object_instance);
+    
     select_load_bond_picture(ptr_folder_object_instance, removed_would_have_returned_bond_for_folder_num(selected_folder_num));
     set_item_visibility_in_objinstance(ptr_folder_object_instance, 0, 1);
     set_item_visibility_in_objinstance(ptr_folder_object_instance, 1, 1);
     set_item_visibility_in_objinstance(ptr_folder_object_instance, 3, 1);
     set_item_visibility_in_objinstance(ptr_folder_object_instance, 7, 1);
     set_item_visibility_in_objinstance(ptr_folder_object_instance, 2, 1);
-    tab_3_highlight = 0;
-    mission_difficulty_highlighted = -1;
-    if (isontab3() != 0)
-    {
-        tab_3_highlight = 1;
-        if (get_controller_buttons_pressed(0, 0xb000) != 0)
-        {
-            tab_3_selected = 1;
-            play_sfx_a1(ptr_sfx_buf, 0xc7, 0);
-        }
-        else
-        {
-block_18:
-        }
-    }
-    else
-    {
-        if (is_cheat_menu_available != 0)
-        {
-            if (D_80051A40 <= cursor_v_pos)
-            {
-                mission_difficulty_highlighted = 2;
-                if (get_controller_buttons_pressed(0, 0xb000) != 0)
-                {
-                    gamemode = 2;
-                    play_sfx_a1(ptr_sfx_buf, 0xc5, 0);
-                }
-                else
-                {
-                    goto block_18;
+    tab_3_highlight = FALSE;
+    mission_difficulty_highlighted = DIFFICULTY_MULTI;
+    if (isontab3() == 0) {
+        if ((is_cheat_menu_available == FALSE) || (cursor_v_pos < 275.0f)) {
+            if ((cursor_v_pos < 243.0f) ||
+               (get_attached_controller_count() < 2)) {
+                mission_difficulty_highlighted = DIFFICULTY_AGENT;
+                if (get_controller_buttons_pressed('\0', START_BUTTON|Z_TRIG|A_BUTTON)) {
+                    gamemode = GAMEMODE_SOLO;
+                    play_sfx_a1(ptr_sfx_buf, 0xc5, NULL);
                 }
             }
-            else
-            {
-block_12:
-                if (243.0f <= cursor_v_pos)
-                {
-                    if (get_attached_controller_count() >= 2)
-                    {
-                        mission_difficulty_highlighted = 1;
-                        if (get_controller_buttons_pressed(0, 0xb000) != 0)
-                        {
-                            gamemode = 1;
-                            play_sfx_a1(ptr_sfx_buf, 0xc5, 0);
-                        }
-                        else
-                        {
-                            goto block_18;
-                        }
-                    }
-                    else
-                    {
-block_16:
-                        mission_difficulty_highlighted = 0;
-                        if (get_controller_buttons_pressed(0, 0xb000) != 0)
-                        {
-                            gamemode = 0;
-                            play_sfx_a1(ptr_sfx_buf, 0xc5, 0);
-                        }
-                        goto block_18;
-                    }
-                }
-                else
-                {
-                    goto block_16;
+            else {
+                mission_difficulty_highlighted = DIFFICULTY_SECRET;
+                if (get_controller_buttons_pressed('\0', START_BUTTON|Z_TRIG|A_BUTTON)) {
+                    gamemode = GAMEMODE_MULTI;
+                    play_sfx_a1(ptr_sfx_buf, 0xc5, NULL);
                 }
             }
         }
-        else
-        {
-            goto block_12;
+        else {
+            mission_difficulty_highlighted = DIFFICULTY_00;
+            if (get_controller_buttons_pressed('\0', START_BUTTON|Z_TRIG|A_BUTTON)) {
+                gamemode = GAMEMODE_CHEATS;
+                play_sfx_a1(ptr_sfx_buf, 0xc5, NULL);
+            }
         }
     }
-    if (get_controller_buttons_pressed(0, 0x4000) != 0)
-    {
-        tab_3_selected = 1;
-        play_sfx_a1(ptr_sfx_buf, 0xc7, 0);
+    else {
+        tab_3_highlight = TRUE;
+        if (get_controller_buttons_pressed('\0', START_BUTTON|Z_TRIG|A_BUTTON)) {
+            tab_3_selected = TRUE;
+            play_sfx_a1(ptr_sfx_buf, 199, NULL);
+        }
+    }
+    if (get_controller_buttons_pressed('\0',B_BUTTON)) {
+        tab_3_selected = TRUE;
+        play_sfx_a1(ptr_sfx_buf, 199, NULL);
     }
     menu_control_stick_tracking();
-    if (gamemode == 0)
-    {
+    if (gamemode == GAMEMODE_SOLO) {
         set_menu_to_mode(MENU_MISSION_SELECT, 0);
-        return set_cursor_to_stage_solo(0);
+        set_cursor_to_stage_solo(0);
     }
-    if (gamemode == 1)
-    {
-        return set_menu_to_mode(MENU_MP_OPTIONS, 0);
+    else {
+        if (gamemode == GAMEMODE_MULTI) {
+            set_menu_to_mode(MENU_MP_OPTIONS, 0);
+        }
+        else {
+            if (gamemode == GAMEMODE_CHEATS) {
+                set_menu_to_mode(MENU_CHEAT, 0);
+            }
+            else {
+                if (tab_3_selected != FALSE) {
+                    set_menu_to_mode(MENU_FILE_SELECT, 0);
+                }
+            }
+        }
     }
-    if (gamemode == 2)
-    {
-        return set_menu_to_mode(MENU_CHEAT, 0);
-    }
-    phi_return = gamemode;
-    if (tab_3_selected != 0)
-    {
-        phi_return = set_menu_to_mode(MENU_FILE_SELECT, 0);
-    }
-    return phi_return;
+    return;
 }
 #else
 GLOBAL_ASM(

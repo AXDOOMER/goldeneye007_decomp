@@ -1,24 +1,25 @@
 #include "ultra64.h"
 //0x800655a0
-char rumble_off_player1_packet_buffer[256];
+char _MotorStopData[256];
 //800656a0
-char rumble_on_player_packet_buffers[256];
+char _MotorStartData[256];
 //800657a0 
-char rumble_on_buffer[32];
+u8 _motorstopbuf[32];
 //800657c0
-char rumble_off_buffer[32];
+u8 _motorstartbuf[32];
 
 
 
 
 #ifdef NONMATCHING
-void send_rumble_off_to_PIF(void) {
+s32 osMotorStop(OSPfs *pfs)
+{
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel send_rumble_off_to_PIF
+glabel osMotorStop
 /* 00D580 7000C980 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 00D584 7000C984 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00D588 7000C988 0C005798 */  jal   __osSiGetAccess
@@ -28,8 +29,8 @@ glabel send_rumble_off_to_PIF
 /* 00D598 7000C998 3C018006 */  lui   $at, %hi(__osContLastCmd)
 /* 00D59C 7000C99C A02E7CE0 */  sb    $t6, %lo(__osContLastCmd)($at)
 /* 00D5A0 7000C9A0 8DF80008 */  lw    $t8, 8($t7)
-/* 00D5A4 7000C9A4 3C088006 */  lui   $t0, %hi(rumble_off_player1_packet_buffer) 
-/* 00D5A8 7000C9A8 250855A0 */  addiu $t0, %lo(rumble_off_player1_packet_buffer) # addiu $t0, $t0, 0x55a0
+/* 00D5A4 7000C9A4 3C088006 */  lui   $t0, %hi(_MotorStopData) 
+/* 00D5A8 7000C9A8 250855A0 */  addiu $t0, %lo(_MotorStopData) # addiu $t0, $t0, 0x55a0
 /* 00D5AC 7000C9AC 0018C980 */  sll   $t9, $t8, 6
 /* 00D5B0 7000C9B0 03282821 */  addu  $a1, $t9, $t0
 /* 00D5B4 7000C9B4 0C0057B4 */  jal   __osSiRawStartDma
@@ -105,13 +106,14 @@ glabel send_rumble_off_to_PIF
 
 
 #ifdef NONMATCHING
-void controller_7000CAAC(void) {
+s32 osMotorStart(OSPfs *pfs)
+{
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel controller_7000CAAC
+glabel osMotorStart
 /* 00D6AC 7000CAAC 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 00D6B0 7000CAB0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00D6B4 7000CAB4 0C005798 */  jal   __osSiGetAccess
@@ -121,8 +123,8 @@ glabel controller_7000CAAC
 /* 00D6C4 7000CAC4 3C018006 */  lui   $at, %hi(__osContLastCmd)
 /* 00D6C8 7000CAC8 A02E7CE0 */  sb    $t6, %lo(__osContLastCmd)($at)
 /* 00D6CC 7000CACC 8DF80008 */  lw    $t8, 8($t7)
-/* 00D6D0 7000CAD0 3C088006 */  lui   $t0, %hi(rumble_on_player_packet_buffers) 
-/* 00D6D4 7000CAD4 250856A0 */  addiu $t0, %lo(rumble_on_player_packet_buffers) # addiu $t0, $t0, 0x56a0
+/* 00D6D0 7000CAD0 3C088006 */  lui   $t0, %hi(_MotorStartData) 
+/* 00D6D4 7000CAD4 250856A0 */  addiu $t0, %lo(_MotorStartData) # addiu $t0, $t0, 0x56a0
 /* 00D6D8 7000CAD8 0018C980 */  sll   $t9, $t8, 6
 /* 00D6DC 7000CADC 03282821 */  addu  $a1, $t9, $t0
 /* 00D6E0 7000CAE0 0C0057B4 */  jal   __osSiRawStartDma
@@ -199,13 +201,14 @@ glabel controller_7000CAAC
 
 
 #ifdef NONMATCHING
-void controller_7000CBDC(void) {
+void _MakeMotorData(int channel,u16 address,u8 *buffer,OSPifRam *mdata)
+{
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel controller_7000CBDC
+glabel _MakeMotorData
 /* 00D7DC 7000CBDC 27BDFFA8 */  addiu $sp, $sp, -0x58
 /* 00D7E0 7000CBE0 AFB00018 */  sw    $s0, 0x18($sp)
 /* 00D7E4 7000CBE4 00808025 */  move  $s0, $a0
@@ -305,7 +308,7 @@ glabel controller_7000CBDC
 
 
 #ifdef NONMATCHING
-void controller_7000CD38(s32 arg0, void *arg1, s32 arg2, ? arg16) {
+s32 osMotorInit(OSMesgQueue *mq,OSPfs *pfs,int channel) {
     s32 sp2C;
     ? sp30;
     ? sp50;
@@ -356,24 +359,24 @@ void controller_7000CD38(s32 arg0, void *arg1, s32 arg2, ? arg16) {
         {
             // Node 10
             // Node 11
-            temp_v1 = (&rumble_on_buffer + 4);
-            rumble_off_buffer.unk1 = (u8)1;
+            temp_v1 = (&_motorstopbuf + 4);
+            _motorstartbuf.unk1 = (u8)1;
             temp_v1->unk-3 = (u8)0;
-            rumble_off_buffer.unk2 = (u8)1;
+            _motorstartbuf.unk2 = (u8)1;
             temp_v1->unk-2 = (u8)0;
-            rumble_off_buffer.unk3 = (u8)1;
+            _motorstartbuf.unk3 = (u8)1;
             temp_v1->unk-1 = (u8)0;
-            (&rumble_off_buffer + 4)->unk-4 = (u8)1;
+            (&_motorstartbuf + 4)->unk-4 = (u8)1;
             temp_v1->unk-4 = (u8)0;
-            if (temp_v1 != &rumble_off_buffer)
+            if (temp_v1 != &_motorstartbuf)
             {
                 goto loop_11;
             }
             // Node 12
             temp_v0_2 = (arg2 << 6);
             sp2C = temp_v0_2;
-            controller_7000CBDC(arg2, 0x600, &rumble_off_buffer, (temp_v0_2 + &rumble_on_player_packet_buffers));
-            controller_7000CBDC(arg2, 0x600, &rumble_on_buffer, (sp2C + &rumble_off_player1_packet_buffer));
+            _MakeMotorData(arg2, 0x600, &_motorstartbuf, (temp_v0_2 + &_MotorStartData));
+            _MakeMotorData(arg2, 0x600, &_motorstopbuf, (sp2C + &_MotorStopData));
         }
     }
     // Node 13
@@ -383,7 +386,7 @@ void controller_7000CD38(s32 arg0, void *arg1, s32 arg2, ? arg16) {
 #else
 GLOBAL_ASM(
 .text
-glabel controller_7000CD38
+glabel osMotorInit
 /* 00D938 7000CD38 27BDFFA8 */  addiu $sp, $sp, -0x58
 /* 00D93C 7000CD3C AFB00020 */  sw    $s0, 0x20($sp)
 /* 00D940 7000CD40 AFBF0024 */  sw    $ra, 0x24($sp)
@@ -433,15 +436,15 @@ glabel controller_7000CD38
 .L7000CDE4:
 /* 00D9E4 7000CDE4 24010080 */  li    $at, 128
 /* 00D9E8 7000CDE8 11C10003 */  beq   $t6, $at, .L7000CDF8
-/* 00D9EC 7000CDEC 3C048006 */   lui   $a0, %hi(rumble_off_buffer)
+/* 00D9EC 7000CDEC 3C048006 */   lui   $a0, %hi(_motorstartbuf)
 /* 00D9F0 7000CDF0 10000026 */  b     .L7000CE8C
 /* 00D9F4 7000CDF4 2402000B */   li    $v0, 11
 .L7000CDF8:
-/* 00D9F8 7000CDF8 3C038006 */  lui   $v1, %hi(rumble_on_buffer)
-/* 00D9FC 7000CDFC 3C058006 */  lui   $a1, %hi(rumble_off_buffer)
-/* 00DA00 7000CE00 24A557C0 */  addiu $a1, %lo(rumble_off_buffer) # addiu $a1, $a1, 0x57c0
-/* 00DA04 7000CE04 246357A0 */  addiu $v1, %lo(rumble_on_buffer) # addiu $v1, $v1, 0x57a0
-/* 00DA08 7000CE08 248457C0 */  addiu $a0, %lo(rumble_off_buffer) # addiu $a0, $a0, 0x57c0
+/* 00D9F8 7000CDF8 3C038006 */  lui   $v1, %hi(_motorstopbuf)
+/* 00D9FC 7000CDFC 3C058006 */  lui   $a1, %hi(_motorstartbuf)
+/* 00DA00 7000CE00 24A557C0 */  addiu $a1, %lo(_motorstartbuf) # addiu $a1, $a1, 0x57c0
+/* 00DA04 7000CE04 246357A0 */  addiu $v1, %lo(_motorstopbuf) # addiu $v1, $v1, 0x57a0
+/* 00DA08 7000CE08 248457C0 */  addiu $a0, %lo(_motorstartbuf) # addiu $a0, $a0, 0x57c0
 /* 00DA0C 7000CE0C 24020001 */  li    $v0, 1
 .L7000CE10:
 /* 00DA10 7000CE10 24630004 */  addiu $v1, $v1, 4
@@ -455,24 +458,24 @@ glabel controller_7000CD38
 /* 00DA30 7000CE30 A082FFFC */  sb    $v0, -4($a0)
 /* 00DA34 7000CE34 1465FFF6 */  bne   $v1, $a1, .L7000CE10
 /* 00DA38 7000CE38 A060FFFC */   sb    $zero, -4($v1)
-/* 00DA3C 7000CE3C 3C0F8006 */  lui   $t7, %hi(rumble_on_player_packet_buffers) 
-/* 00DA40 7000CE40 25EF56A0 */  addiu $t7, %lo(rumble_on_player_packet_buffers) # addiu $t7, $t7, 0x56a0
-/* 00DA44 7000CE44 3C068006 */  lui   $a2, %hi(rumble_off_buffer)
+/* 00DA3C 7000CE3C 3C0F8006 */  lui   $t7, %hi(_MotorStartData) 
+/* 00DA40 7000CE40 25EF56A0 */  addiu $t7, %lo(_MotorStartData) # addiu $t7, $t7, 0x56a0
+/* 00DA44 7000CE44 3C068006 */  lui   $a2, %hi(_motorstartbuf)
 /* 00DA48 7000CE48 00101180 */  sll   $v0, $s0, 6
 /* 00DA4C 7000CE4C 004F3821 */  addu  $a3, $v0, $t7
 /* 00DA50 7000CE50 AFA2002C */  sw    $v0, 0x2c($sp)
-/* 00DA54 7000CE54 24C657C0 */  addiu $a2, %lo(rumble_off_buffer) # addiu $a2, $a2, 0x57c0
+/* 00DA54 7000CE54 24C657C0 */  addiu $a2, %lo(_motorstartbuf) # addiu $a2, $a2, 0x57c0
 /* 00DA58 7000CE58 02002025 */  move  $a0, $s0
-/* 00DA5C 7000CE5C 0C0032F7 */  jal   controller_7000CBDC
+/* 00DA5C 7000CE5C 0C0032F7 */  jal   _MakeMotorData
 /* 00DA60 7000CE60 24050600 */   li    $a1, 1536
 /* 00DA64 7000CE64 8FA2002C */  lw    $v0, 0x2c($sp)
-/* 00DA68 7000CE68 3C188006 */  lui   $t8, %hi(rumble_off_player1_packet_buffer) 
-/* 00DA6C 7000CE6C 271855A0 */  addiu $t8, %lo(rumble_off_player1_packet_buffer) # addiu $t8, $t8, 0x55a0
-/* 00DA70 7000CE70 3C068006 */  lui   $a2, %hi(rumble_on_buffer)
-/* 00DA74 7000CE74 24C657A0 */  addiu $a2, %lo(rumble_on_buffer) # addiu $a2, $a2, 0x57a0
+/* 00DA68 7000CE68 3C188006 */  lui   $t8, %hi(_MotorStopData) 
+/* 00DA6C 7000CE6C 271855A0 */  addiu $t8, %lo(_MotorStopData) # addiu $t8, $t8, 0x55a0
+/* 00DA70 7000CE70 3C068006 */  lui   $a2, %hi(_motorstopbuf)
+/* 00DA74 7000CE74 24C657A0 */  addiu $a2, %lo(_motorstopbuf) # addiu $a2, $a2, 0x57a0
 /* 00DA78 7000CE78 02002025 */  move  $a0, $s0
 /* 00DA7C 7000CE7C 24050600 */  li    $a1, 1536
-/* 00DA80 7000CE80 0C0032F7 */  jal   controller_7000CBDC
+/* 00DA80 7000CE80 0C0032F7 */  jal   _MakeMotorData
 /* 00DA84 7000CE84 00583821 */   addu  $a3, $v0, $t8
 /* 00DA88 7000CE88 00001025 */  move  $v0, $zero
 .L7000CE8C:
