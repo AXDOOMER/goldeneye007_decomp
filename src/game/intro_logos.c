@@ -2213,20 +2213,7 @@ def_7F00929C:
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F009744(void) {
 
+s32 sub_GAME_7F009744(void) {
+    return (D_8002A7D4 == 9);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F009744
-/* 03E274 7F009744 3C028003 */  lui   $v0, %hi(D_8002A7D4)
-/* 03E278 7F009748 9042A7D4 */  lbu   $v0, %lo(D_8002A7D4)($v0)
-/* 03E27C 7F00974C 384E0009 */  xori  $t6, $v0, 9
-/* 03E280 7F009750 03E00008 */  jr    $ra
-/* 03E284 7F009754 2DC20001 */   sltiu $v0, $t6, 1
-)
-#endif
-
-
