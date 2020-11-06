@@ -1191,6 +1191,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/j/src/game/initunk_007180.o
  .options       0x0000000000000000       0x20 build/j/src/game/initunk_007290.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/initunk_007290.o
+ .mdebug        0x0000000000000000      0x3d4 build/j/src/game/initunk_007290.o
  .options       0x0000000000000000       0x20 build/j/src/game/initunk_0072B0.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/initunk_0072B0.o
  .options       0x0000000000000000       0x20 build/j/src/game/initmttex.o
