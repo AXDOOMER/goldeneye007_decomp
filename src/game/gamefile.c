@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/gamefile.h"
+#include "game/gamefile2.h"
 #include "game/mainmenu.h"
 
 /* EEPROM masks for in-game settings */
