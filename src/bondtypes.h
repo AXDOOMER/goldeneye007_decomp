@@ -16,6 +16,20 @@ struct rgba_valf32{
     f32 a;
 };
 
+typedef struct ObjectRecord
+{
+  u16 obj;     
+} ObjectRecord;
+
+typedef struct PropRecord
+{
+  u8 type;
+  union
+  {
+    ObjectRecord *obj;
+  } Entityp;
+} PropRecord;
+
 typedef struct CHRdata CHRdata, *PCHRdata;
 
 /* unfinished struct, WIP */

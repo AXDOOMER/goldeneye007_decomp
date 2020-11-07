@@ -7,6 +7,7 @@
 #include "game/lvl_text.h"
 #include "game/bondinv.h"
 #include "game/bondwalk.h"
+#include "bondtypes.h"
 
 void reinit_BONDdata_inventory(void) {
 
@@ -515,7 +516,7 @@ glabel sub_GAME_7F08C61C
 
 
 
-int add_prop_to_inventory(struct prop *prop) {
+int add_prop_to_inventory(struct PropRecord *prop) {
     
     InvItem *item;
 
@@ -1717,13 +1718,13 @@ int checkforgoldengun(void)
 
 
 
-int sub_GAME_7F08CFE0(struct prop *prop) {
+int sub_GAME_7F08CFE0(struct PropRecord *prop) {
 
     InvItem *item = pPlayer->ptr_inventory_first_in_cycle;
 
     while (item) {
 
-        if (item->type == 2 && item->type_inv_item.type_prop.prop == prop) {
+        if (item->type == INV_ITEM_PROP && item->type_inv_item.type_prop.prop == prop) {
             return TRUE;
         }
 
@@ -2094,7 +2095,7 @@ glabel sub_GAME_7F08D108
 
 #endif
 
-UnkStruct11F4 *sub_GAME_7F08D21C(struct defaultobj *obj)
+UnkStruct11F4 *sub_GAME_7F08D21C(struct ObjectRecord *obj)
 {
   UnkStruct11F4 *field_11F4 = pPlayer->field_11F4;
 
@@ -3111,7 +3112,7 @@ glabel sub_GAME_7F08D8E0
 #endif
 
 
-int sub_GAME_7F08D95C(s32 param) {
+int sub_GAME_7F08D95C(struct ObjectRecord *obj) {
     // temp is probably a struct as mips_to_c gives the following output
     // --------------------
     // temp_v0->unk1C 
@@ -3123,7 +3124,7 @@ int sub_GAME_7F08D95C(s32 param) {
     // --------------------
     int temp;
 
-    temp = sub_GAME_7F08D21C(param);
+    temp = sub_GAME_7F08D21C(obj);
 
     if ( temp && (*(int *)(temp + 0x1c)) ) {
         return get_textptr_for_textID(*(int *)(temp + 0x1c));
