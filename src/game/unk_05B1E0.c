@@ -497,10 +497,10 @@ void matrix_4x4_set_position_and_rotation(vec3 position, Quaternion rotation, ma
     matrix[3][2] = position[2];
 }
 
-void sub_GAME_7F05BA08(Quaternion arg0, Quaternion arg1, f32 arg2, Quaternion arg3);
+void quaternion_slerp(Quaternion q1, Quaternion q2, f32 t, Quaternion result);
 
 #ifdef NONMATCHING
-void sub_GAME_7F05BA08(void) {
+void quaternion_slerp(void) {
 
 }
 #else
@@ -511,7 +511,7 @@ glabel D_80053748
 glabel D_8005374C
 .word 0xbf7fff58 /*-0.99998999*/
 .text
-glabel sub_GAME_7F05BA08
+glabel quaternion_slerp
 /* 090538 7F05BA08 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 09053C 7F05BA0C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 090540 7F05BA10 C4A60004 */  lwc1  $f6, 4($a1)
@@ -950,22 +950,22 @@ void sub_GAME_7F05C138(Quaternion arg0, Quaternion arg1, Quaternion arg2, Quater
     quaternion_multiply(arg1, sp50, result);
 }
 
-void sub_GAME_7F05C250(Quaternion arg0, Quaternion arg1, Quaternion arg2, Quaternion arg3, f32 arg4, Quaternion arg5) {
-    Quaternion sp30;
-    Quaternion sp20;
-    f32 test = (arg4 + arg4) * (1.0f - arg4);
-    quaternion_ensure_shortest_path(arg0, arg3);
-    sub_GAME_7F05BA08(arg0, arg3, arg4, sp30);
-    quaternion_ensure_shortest_path(arg1, arg2);
-    sub_GAME_7F05BA08(arg1, arg2, arg4, sp20);
-    quaternion_ensure_shortest_path(sp30, sp20);
-    sub_GAME_7F05BA08(sp30, sp20, test, arg5);
+void sub_GAME_7F05C250(Quaternion q1, Quaternion q2, Quaternion q3, Quaternion q4, f32 t, Quaternion result) {
+    Quaternion q5;
+    Quaternion q6;
+    f32 t2 = (t + t) * (1.0f - t);
+    quaternion_ensure_shortest_path(q1, q4);
+    quaternion_slerp(q1, q4, t, q5);
+    quaternion_ensure_shortest_path(q2, q3);
+    quaternion_slerp(q2, q3, t, q6);
+    quaternion_ensure_shortest_path(q5, q6);
+    quaternion_slerp(q5, q6, t2, result);
 }
 
-void sub_GAME_7F05C2F0(Quaternion arg0, Quaternion arg1, Quaternion arg2, Quaternion arg3, f32 arg4, Quaternion arg5) {
-    Quaternion sp30;
-    Quaternion sp20;
-    sub_GAME_7F05C138(arg0, arg1, arg2, sp30);
-    sub_GAME_7F05C138(arg1, arg2, arg3, sp20);
-    sub_GAME_7F05C250(arg1, sp30, sp20, arg2, arg4, arg5);
+void sub_GAME_7F05C2F0(Quaternion q1, Quaternion q2, Quaternion q3, Quaternion q4, f32 t, Quaternion result) {
+    Quaternion q5;
+    Quaternion q6;
+    sub_GAME_7F05C138(q1, q2, q3, q5);
+    sub_GAME_7F05C138(q2, q3, q4, q6);
+    sub_GAME_7F05C250(q2, q5, q6, q3, t, result);
 }

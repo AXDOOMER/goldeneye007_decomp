@@ -2541,7 +2541,7 @@ glabel process_02_position
 /* 0A2D9C 7F06E26C 27A40058 */  addiu $a0, $sp, 0x58
 /* 0A2DA0 7F06E270 27A50048 */  addiu $a1, $sp, 0x48
 /* 0A2DA4 7F06E274 8E060084 */  lw    $a2, 0x84($s0)
-/* 0A2DA8 7F06E278 0FC16E82 */  jal   sub_GAME_7F05BA08
+/* 0A2DA8 7F06E278 0FC16E82 */  jal   quaternion_slerp
 /* 0A2DAC 7F06E27C 27A70038 */   addiu $a3, $sp, 0x38
 /* 0A2DB0 7F06E280 8FA40098 */  lw    $a0, 0x98($sp)
 /* 0A2DB4 7F06E284 02002825 */  move  $a1, $s0

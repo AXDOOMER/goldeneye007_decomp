@@ -9104,7 +9104,7 @@ glabel object_interaction
 /* 07AE54 7F046324 C6000060 */  lwc1  $f0, 0x60($s0)
 /* 07AE58 7F046328 44060000 */  mfc1  $a2, $f0
 .L7F04632C:
-/* 07AE5C 7F04632C 0FC16E82 */  jal   sub_GAME_7F05BA08
+/* 07AE5C 7F04632C 0FC16E82 */  jal   quaternion_slerp
 /* 07AE60 7F046330 02403825 */   move  $a3, $s2
 /* 07AE64 7F046334 26250018 */  addiu $a1, $s1, 0x18
 /* 07AE68 7F046338 AFA50070 */  sw    $a1, 0x70($sp)
@@ -14201,7 +14201,7 @@ glabel object_interaction
 /* 07B278 7F046708 C6000060 */  lwc1  $f0, 0x60($s0)
 /* 07B27C 7F04670C 44060000 */  mfc1  $a2, $f0
 .Ljp7F046710:
-/* 07B280 7F046710 0FC16FCA */  jal   sub_GAME_7F05BA08
+/* 07B280 7F046710 0FC16FCA */  jal   quaternion_slerp
 /* 07B284 7F046714 02403825 */   move  $a3, $s2
 /* 07B288 7F046718 26250018 */  addiu $a1, $s1, 0x18
 /* 07B28C 7F04671C AFA50074 */  sw    $a1, 0x74($sp)
