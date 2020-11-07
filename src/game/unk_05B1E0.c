@@ -949,8 +949,21 @@ void sub_GAME_7F05C138(Quaternion arg0, Quaternion arg1, Quaternion arg2, Quater
 }
 
 #ifdef NONMATCHING
-void sub_GAME_7F05C250(void) {
+void sub_GAME_7F05BA08(Quaternion arg0, Quaternion arg1, f32 arg2, Quaternion arg3);
 
+// <    90dfc:     8fa70054        lw      a3,84(sp)
+// ---
+// >    90dfc:     8fa7004c        lw      a3,76(sp)
+void sub_GAME_7F05C250(Quaternion arg0, Quaternion arg1, Quaternion arg2, Quaternion arg3, f32 arg4) {
+    Quaternion sp30;
+    Quaternion sp20;
+    f32 test = (arg4 + arg4) * (1.0f - arg4);
+    quaternion_ensure_shortest_path(arg0, arg3);
+    sub_GAME_7F05BA08(arg0, arg3, arg4, sp30);
+    quaternion_ensure_shortest_path(arg1, arg2);
+    sub_GAME_7F05BA08(arg1, arg2, arg4, sp20);
+    quaternion_ensure_shortest_path(sp30, sp20);
+    sub_GAME_7F05BA08(sp30, sp20, test, arg3);
 }
 #else
 GLOBAL_ASM(
@@ -998,10 +1011,6 @@ glabel sub_GAME_7F05C250
 /* 090E1C 7F05C2EC 00000000 */   nop   
 )
 #endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F05C2F0(void) {
