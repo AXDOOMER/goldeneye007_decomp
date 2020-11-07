@@ -1192,7 +1192,7 @@ glabel sub_GAME_7F05C6FC
 /* 0913B0 7F05C880 E7B00078 */  swc1  $f16, 0x78($sp)
 /* 0913B4 7F05C884 E7A4007C */  swc1  $f4, 0x7c($sp)
 .L7F05C888:
-/* 0913B8 7F05C888 0FC16D8A */  jal   sub_GAME_7F05B628
+/* 0913B8 7F05C888 0FC16D8A */  jal   quaternion_to_matrix
 /* 0913BC 7F05C88C 8FA500A8 */   lw    $a1, 0xa8($sp)
 /* 0913C0 7F05C890 27A40088 */  addiu $a0, $sp, 0x88
 /* 0913C4 7F05C894 0FC16266 */  jal   matrix_4x4_set_position

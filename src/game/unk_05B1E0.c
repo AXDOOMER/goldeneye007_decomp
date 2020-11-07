@@ -208,13 +208,37 @@ void quaternion_set_rotation_around_z(f32 angle, Quaternion q) {
 }
 
 #ifdef NONMATCHING
-void sub_GAME_7F05B628(void) {
+typedef f32 mat44[4][4];
 
+void quaternion_to_matrix(Quaternion q, mat44 matrix) {
+    f32 temp_f6 = 2.0f / ((q[0] * q[0]) + (q[1] * q[1]) + (q[2] * q[2]) +  (q[3] * q[3]));
+    f32 temp_f18 = q[1] * temp_f6;
+    f32 temp_f16 = q[2] * temp_f6;
+    f32 temp_f14 = q[3] * temp_f6;
+    f32 sp34 = q[0] * temp_f18;
+    f32 sp30 = q[0] * temp_f16;
+    f32 sp2C = q[0] * temp_f14;
+    matrix[0][0] = (1.0f - (q[2] * temp_f16 + q[3] * temp_f14));
+    matrix[0][1] = (q[1] * temp_f16 + sp2C);
+    matrix[0][2] = (q[1] * temp_f14 - sp30);
+    matrix[0][3] = 0.0f;
+    matrix[1][0] = (q[1] * temp_f16 - sp2C);
+    matrix[1][1] = (1.0f - (q[1] * temp_f18 + q[3] * temp_f14));
+    matrix[1][2] = (q[2] * temp_f14 + sp34);
+    matrix[1][3] = 0.0f;
+    matrix[2][0] = (q[1] * temp_f14 + sp30);
+    matrix[2][1] = (q[2] * temp_f14 - sp34);
+    matrix[2][2] = (1.0f - (q[1] * temp_f18 + q[2] * temp_f16));
+    matrix[2][3] = 0.0f;
+    matrix[3][0] = 0.0f;
+    matrix[3][1] = 0.0f;
+    matrix[3][2] = 0.0f;
+    matrix[3][3] = 1.0f;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F05B628
+glabel quaternion_to_matrix
 /* 090158 7F05B628 27BDFFB8 */  addiu $sp, $sp, -0x48
 /* 09015C 7F05B62C F7B40008 */  sdc1  $f20, 8($sp)
 /* 090160 7F05B630 C4940000 */  lwc1  $f20, ($a0)
@@ -483,7 +507,7 @@ glabel sub_GAME_7F05B9B4
 /* 0904F4 7F05B9C4 00A02025 */  move  $a0, $a1
 /* 0904F8 7F05B9C8 00C02825 */  move  $a1, $a2
 /* 0904FC 7F05B9CC AFA70018 */  sw    $a3, 0x18($sp)
-/* 090500 7F05B9D0 0FC16D8A */  jal   sub_GAME_7F05B628
+/* 090500 7F05B9D0 0FC16D8A */  jal   quaternion_to_matrix
 /* 090504 7F05B9D4 AFA60020 */   sw    $a2, 0x20($sp)
 /* 090508 7F05B9D8 8FA70018 */  lw    $a3, 0x18($sp)
 /* 09050C 7F05B9DC 8FA60020 */  lw    $a2, 0x20($sp)
@@ -852,20 +876,20 @@ glabel sub_GAME_7F05BF8C
 float acosf(float);
 float sinf(float);
 
-void sub_GAME_7F05BFD4(Quaternion arg0, Quaternion arg1) {
+void sub_GAME_7F05BFD4(Quaternion arg0, Quaternion matrix) {
     f32 sin_z = acosf(arg0[0]);
     f32 temp_f0_2 = sinf(sin_z);
     if (temp_f0_2 == 0.0f) {
-        arg1[0] = 0.0f;
-        arg1[1] = 0.0f;
-        arg1[2] = 0.0f;
-        arg1[3] = 0.0f;
+        matrix[0] = 0.0f;
+        matrix[1] = 0.0f;
+        matrix[2] = 0.0f;
+        matrix[3] = 0.0f;
         return;
     }
-    arg1[0] = 0.0f;
-    arg1[1] = (arg0[1] * (sin_z / temp_f0_2));
-    arg1[2] = (arg0[2] * (sin_z / temp_f0_2));
-    arg1[3] = (arg0[3] * (sin_z / temp_f0_2));
+    matrix[0] = 0.0f;
+    matrix[1] = (arg0[1] * (sin_z / temp_f0_2));
+    matrix[2] = (arg0[2] * (sin_z / temp_f0_2));
+    matrix[3] = (arg0[3] * (sin_z / temp_f0_2));
 }
 
 #ifdef NONMATCHING
