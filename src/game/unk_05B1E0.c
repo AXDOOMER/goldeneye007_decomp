@@ -813,34 +813,14 @@ void quaternion_multiply(Quaternion lhs, Quaternion rhs, Quaternion result) {
     result[3] = (lhs[0] * rhs[3]) + (rhs[0] * lhs[3]) + (lhs[1] * rhs[2]) - (lhs[2] * rhs[1]);
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F05BF8C(void) {
-
+void quaternion_multiply_in_place(Quaternion lhs, Quaternion rhs) {
+    Quaternion result;
+    quaternion_multiply(lhs, rhs, result);
+    rhs[0] = result[0];
+    rhs[1] = result[1];
+    rhs[2] = result[2];
+    rhs[3] = result[3];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05BF8C
-/* 090ABC 7F05BF8C 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 090AC0 7F05BF90 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 090AC4 7F05BF94 27A60018 */  addiu $a2, $sp, 0x18
-/* 090AC8 7F05BF98 0FC16FA2 */  jal   quaternion_multiply
-/* 090ACC 7F05BF9C AFA5002C */   sw    $a1, 0x2c($sp)
-/* 090AD0 7F05BFA0 8FA5002C */  lw    $a1, 0x2c($sp)
-/* 090AD4 7F05BFA4 C7A40018 */  lwc1  $f4, 0x18($sp)
-/* 090AD8 7F05BFA8 E4A40000 */  swc1  $f4, ($a1)
-/* 090ADC 7F05BFAC C7A6001C */  lwc1  $f6, 0x1c($sp)
-/* 090AE0 7F05BFB0 E4A60004 */  swc1  $f6, 4($a1)
-/* 090AE4 7F05BFB4 C7A80020 */  lwc1  $f8, 0x20($sp)
-/* 090AE8 7F05BFB8 E4A80008 */  swc1  $f8, 8($a1)
-/* 090AEC 7F05BFBC C7AA0024 */  lwc1  $f10, 0x24($sp)
-/* 090AF0 7F05BFC0 E4AA000C */  swc1  $f10, 0xc($a1)
-/* 090AF4 7F05BFC4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 090AF8 7F05BFC8 27BD0028 */  addiu $sp, $sp, 0x28
-/* 090AFC 7F05BFCC 03E00008 */  jr    $ra
-/* 090B00 7F05BFD0 00000000 */   nop   
-)
-#endif
 
 float acosf(float);
 float sinf(float);
