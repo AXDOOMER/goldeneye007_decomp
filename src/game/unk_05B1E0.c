@@ -11,6 +11,8 @@ s32 D_80032434 = 2;
 // rodata
 
 typedef f32 Quaternion[4]; // w, x, y, z
+typedef f32 mat44[4][4];
+typedef f32 vec3[3];
 
 #ifdef NONMATCHING
 void sub_GAME_7F05B1E0(void) {
@@ -166,8 +168,6 @@ glabel sub_GAME_7F05B1E0
 /* 08FF20 7F05B3F0 27BD0048 */   addiu $sp, $sp, 0x48
 )
 #endif
-
-typedef f32 vec3[3];
 
 void quaternion_set_rotation_around_xyz(vec3 angles, Quaternion q) {
     f32 cos_x = cosf(angles[0] * 0.5f);
@@ -488,45 +488,14 @@ glabel sub_GAME_7F05B798
 )
 #endif
 
+void quaternion_to_matrix(Quaternion q, mat44 matrix);
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F05B9B4(void) {
-
+void matrix_4x4_set_position_and_rotation(vec3 position, Quaternion rotation, mat44 matrix) {
+    quaternion_to_matrix(rotation, matrix);
+    matrix[3][0] = position[0];
+    matrix[3][1] = position[1];
+    matrix[3][2] = position[2];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05B9B4
-/* 0904E4 7F05B9B4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0904E8 7F05B9B8 00803825 */  move  $a3, $a0
-/* 0904EC 7F05B9BC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0904F0 7F05B9C0 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 0904F4 7F05B9C4 00A02025 */  move  $a0, $a1
-/* 0904F8 7F05B9C8 00C02825 */  move  $a1, $a2
-/* 0904FC 7F05B9CC AFA70018 */  sw    $a3, 0x18($sp)
-/* 090500 7F05B9D0 0FC16D8A */  jal   quaternion_to_matrix
-/* 090504 7F05B9D4 AFA60020 */   sw    $a2, 0x20($sp)
-/* 090508 7F05B9D8 8FA70018 */  lw    $a3, 0x18($sp)
-/* 09050C 7F05B9DC 8FA60020 */  lw    $a2, 0x20($sp)
-/* 090510 7F05B9E0 C4E40000 */  lwc1  $f4, ($a3)
-/* 090514 7F05B9E4 E4C40030 */  swc1  $f4, 0x30($a2)
-/* 090518 7F05B9E8 C4E60004 */  lwc1  $f6, 4($a3)
-/* 09051C 7F05B9EC E4C60034 */  swc1  $f6, 0x34($a2)
-/* 090520 7F05B9F0 C4E80008 */  lwc1  $f8, 8($a3)
-/* 090524 7F05B9F4 E4C80038 */  swc1  $f8, 0x38($a2)
-/* 090528 7F05B9F8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09052C 7F05B9FC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 090530 7F05BA00 03E00008 */  jr    $ra
-/* 090534 7F05BA04 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F05BA08(void) {
