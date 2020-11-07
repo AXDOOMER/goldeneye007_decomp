@@ -3112,25 +3112,15 @@ glabel sub_GAME_7F08D8E0
 #endif
 
 
-int sub_GAME_7F08D95C(struct ObjectRecord *obj) {
-    // temp is probably a struct as mips_to_c gives the following output
-    // --------------------
-    // temp_v0->unk1C 
-    // --------------------
-    //
-    // Instead of
-    // --------------------
-    // *(int *)(temp + 0x1c)
-    // --------------------
-    int temp;
+u8 *sub_GAME_7F08D95C(struct ObjectRecord *obj) {
 
-    temp = sub_GAME_7F08D21C(obj);
+    UnkStruct11F4 *temp = sub_GAME_7F08D21C(obj);
 
-    if ( temp && (*(int *)(temp + 0x1c)) ) {
-        return get_textptr_for_textID(*(int *)(temp + 0x1c));
+    if ( temp && temp->unk8 ) {
+        return get_textptr_for_textID(temp->unk8);
     }
 
-    return 0;
+    return NULL;
 }
 
 int sub_GAME_7F08D9A4(void) {
