@@ -3047,51 +3047,22 @@ void sub_GAME_7F08D8D0(int param) {
     pPlayer->field_11F0 = param;
 }
 
-#ifdef NONMATCHING
 void sub_GAME_7F08D8E0(void) {
+    s32 weaponnum;
+    s32 i;
 
+    weaponnum = get_item_in_hand(RIGHT_HAND);
+    pPlayer->field_11F0 = 0;
+
+    for (i=0; i < sub_GAME_7F08D038(); i++) {
+        
+        if (sub_GAME_7F08D2A8(i) == weaponnum) {
+            pPlayer->field_11F0 = i;
+            return;
+        }
+
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08D8E0
-/* 0C2410 7F08D8E0 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0C2414 7F08D8E4 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0C2418 7F08D8E8 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0C241C 7F08D8EC AFB00014 */  sw    $s0, 0x14($sp)
-/* 0C2420 7F08D8F0 0FC17674 */  jal   get_item_in_hand
-/* 0C2424 7F08D8F4 00002025 */   move  $a0, $zero
-/* 0C2428 7F08D8F8 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0C242C 7F08D8FC 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0C2430 7F08D900 00408825 */  move  $s1, $v0
-/* 0C2434 7F08D904 00008025 */  move  $s0, $zero
-/* 0C2438 7F08D908 0FC2340E */  jal   sub_GAME_7F08D038
-/* 0C243C 7F08D90C ADC011F0 */   sw    $zero, 0x11f0($t6)
-/* 0C2440 7F08D910 5840000E */  blezl $v0, .L7F08D94C
-/* 0C2444 7F08D914 8FBF001C */   lw    $ra, 0x1c($sp)
-.L7F08D918:
-/* 0C2448 7F08D918 0FC234AA */  jal   sub_GAME_7F08D2A8
-/* 0C244C 7F08D91C 02002025 */   move  $a0, $s0
-/* 0C2450 7F08D920 14510004 */  bne   $v0, $s1, .L7F08D934
-/* 0C2454 7F08D924 3C0F8008 */   lui   $t7, %hi(pPlayer) 
-/* 0C2458 7F08D928 8DEFA0B0 */  lw    $t7, %lo(pPlayer)($t7)
-/* 0C245C 7F08D92C 10000006 */  b     .L7F08D948
-/* 0C2460 7F08D930 ADF011F0 */   sw    $s0, 0x11f0($t7)
-.L7F08D934:
-/* 0C2464 7F08D934 0FC2340E */  jal   sub_GAME_7F08D038
-/* 0C2468 7F08D938 26100001 */   addiu $s0, $s0, 1
-/* 0C246C 7F08D93C 0202082A */  slt   $at, $s0, $v0
-/* 0C2470 7F08D940 1420FFF5 */  bnez  $at, .L7F08D918
-/* 0C2474 7F08D944 00000000 */   nop   
-.L7F08D948:
-/* 0C2478 7F08D948 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F08D94C:
-/* 0C247C 7F08D94C 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0C2480 7F08D950 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0C2484 7F08D954 03E00008 */  jr    $ra
-/* 0C2488 7F08D958 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
 
 
 u8 *sub_GAME_7F08D95C(struct ObjectRecord *obj) {
