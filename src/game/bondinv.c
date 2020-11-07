@@ -2117,7 +2117,7 @@ UnkStruct11F4 *sub_GAME_7F08D25C(s32 param)
 
     while (field_11F4) {
       
-      if ((field_11F4->unk2 == 0) && (param == field_11F4->unk3)) {
+      if ((field_11F4->unk2 == 0) && (field_11F4->unk3 == param)) {
         return field_11F4;
       }
       
