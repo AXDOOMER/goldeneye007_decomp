@@ -2110,39 +2110,21 @@ UnkStruct11F4 *sub_GAME_7F08D21C(struct ObjectRecord *obj)
   return NULL;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F08D25C(void) {
+UnkStruct11F4 *sub_GAME_7F08D25C(s32 param)
+{
+    
+    UnkStruct11F4 *field_11F4 = pPlayer->field_11F4;
 
+    while (field_11F4) {
+      
+      if ((field_11F4->unk2 == 0) && (param == field_11F4->unk3)) {
+        return field_11F4;
+      }
+      
+      field_11F4 = field_11F4->next;
+  }
+  return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08D25C
-/* 0C1D8C 7F08D25C 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0C1D90 7F08D260 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0C1D94 7F08D264 00001025 */  move  $v0, $zero
-/* 0C1D98 7F08D268 8DC311F4 */  lw    $v1, 0x11f4($t6)
-/* 0C1D9C 7F08D26C 1060000C */  beqz  $v1, .L7F08D2A0
-/* 0C1DA0 7F08D270 00000000 */   nop   
-/* 0C1DA4 7F08D274 8C6F0004 */  lw    $t7, 4($v1)
-.L7F08D278:
-/* 0C1DA8 7F08D278 55E00007 */  bnezl $t7, .L7F08D298
-/* 0C1DAC 7F08D27C 8C630020 */   lw    $v1, 0x20($v1)
-/* 0C1DB0 7F08D280 8C780008 */  lw    $t8, 8($v1)
-/* 0C1DB4 7F08D284 54980004 */  bnel  $a0, $t8, .L7F08D298
-/* 0C1DB8 7F08D288 8C630020 */   lw    $v1, 0x20($v1)
-/* 0C1DBC 7F08D28C 03E00008 */  jr    $ra
-/* 0C1DC0 7F08D290 00601025 */   move  $v0, $v1
-
-/* 0C1DC4 7F08D294 8C630020 */  lw    $v1, 0x20($v1)
-.L7F08D298:
-/* 0C1DC8 7F08D298 5460FFF7 */  bnezl $v1, .L7F08D278
-/* 0C1DCC 7F08D29C 8C6F0004 */   lw    $t7, 4($v1)
-.L7F08D2A0:
-/* 0C1DD0 7F08D2A0 03E00008 */  jr    $ra
-/* 0C1DD4 7F08D2A4 00000000 */   nop   
-)
-#endif
 
 
 
@@ -3120,16 +3102,17 @@ u8 *sub_GAME_7F08D95C(struct ObjectRecord *obj) {
         return get_textptr_for_textID(temp->unk8);
     }
 
-    return NULL;
+    return 0;
 }
 
-int sub_GAME_7F08D9A4(void) {
-    int temp;
+u8 *sub_GAME_7F08D9A4(struct ObjectRecord *obj) {
+    
+    UnkStruct11F4 *temp = sub_GAME_7F08D25C(obj);
 
-    temp = sub_GAME_7F08D25C();
-    if ( temp && (*(int *)(temp + 0x1c)) ) {
-        return get_textptr_for_textID(*(int *)(temp + 0x1c));
+    if ( temp && temp->unk8 ) {
+        return get_textptr_for_textID(temp->unk8);
     }
+    
     return 0;
 }
 
