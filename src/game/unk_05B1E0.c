@@ -825,20 +825,20 @@ void quaternion_multiply_in_place(Quaternion lhs, Quaternion rhs) {
 float acosf(float);
 float sinf(float);
 
-void sub_GAME_7F05BFD4(Quaternion arg0, Quaternion matrix) {
+void sub_GAME_7F05BFD4(Quaternion arg0, Quaternion arg1) {
     f32 angle = acosf(arg0[0]);
     f32 temp_f0_2 = sinf(angle);
     if (temp_f0_2 == 0.0f) {
-        matrix[0] = 0.0f;
-        matrix[1] = 0.0f;
-        matrix[2] = 0.0f;
-        matrix[3] = 0.0f;
+        arg1[0] = 0.0f;
+        arg1[1] = 0.0f;
+        arg1[2] = 0.0f;
+        arg1[3] = 0.0f;
         return;
     }
-    matrix[0] = 0.0f;
-    matrix[1] = (arg0[1] * (angle / temp_f0_2));
-    matrix[2] = (arg0[2] * (angle / temp_f0_2));
-    matrix[3] = (arg0[3] * (angle / temp_f0_2));
+    arg1[0] = 0.0f;
+    arg1[1] = (arg0[1] * (angle / temp_f0_2));
+    arg1[2] = (arg0[2] * (angle / temp_f0_2));
+    arg1[3] = (arg0[3] * (angle / temp_f0_2));
 }
 
 #ifdef NONMATCHING
@@ -926,94 +926,27 @@ glabel sub_GAME_7F05C068
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F05C138(void) {
-
+void sub_GAME_7F05C138(Quaternion arg0, Quaternion arg1, Quaternion arg2, Quaternion result) {
+    Quaternion conjugate;
+    Quaternion sp50;
+    Quaternion sp40;
+    Quaternion sp30;
+    Quaternion sp20;
+    conjugate[0] = arg1[0];
+    conjugate[1] = -arg1[1];
+    conjugate[2] = -arg1[2];
+    conjugate[3] = -arg1[3];
+    quaternion_multiply(conjugate, arg0, sp50);
+    quaternion_multiply(conjugate, arg2, sp40);
+    sub_GAME_7F05BFD4(sp50, sp30);
+    sub_GAME_7F05BFD4(sp40, sp20);
+    sp30[0] = -(sp30[0] + sp20[0]) * 0.25f;
+    sp30[1] = -(sp30[1] + sp20[1]) * 0.25f;
+    sp30[2] = -(sp30[2] + sp20[2]) * 0.25f;
+    sp30[3] = -(sp30[3] + sp20[3]) * 0.25f;
+    sub_GAME_7F05C068(sp30, sp50);
+    quaternion_multiply(arg1, sp50, result);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05C138
-/* 090C68 7F05C138 27BDFF90 */  addiu $sp, $sp, -0x70
-/* 090C6C 7F05C13C AFB00018 */  sw    $s0, 0x18($sp)
-/* 090C70 7F05C140 00A08025 */  move  $s0, $a1
-/* 090C74 7F05C144 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 090C78 7F05C148 AFA40070 */  sw    $a0, 0x70($sp)
-/* 090C7C 7F05C14C AFA60078 */  sw    $a2, 0x78($sp)
-/* 090C80 7F05C150 AFA7007C */  sw    $a3, 0x7c($sp)
-/* 090C84 7F05C154 C6040000 */  lwc1  $f4, ($s0)
-/* 090C88 7F05C158 00802825 */  move  $a1, $a0
-/* 090C8C 7F05C15C 27A40060 */  addiu $a0, $sp, 0x60
-/* 090C90 7F05C160 E7A40060 */  swc1  $f4, 0x60($sp)
-/* 090C94 7F05C164 C6060004 */  lwc1  $f6, 4($s0)
-/* 090C98 7F05C168 27A60050 */  addiu $a2, $sp, 0x50
-/* 090C9C 7F05C16C 46003207 */  neg.s $f8, $f6
-/* 090CA0 7F05C170 E7A80064 */  swc1  $f8, 0x64($sp)
-/* 090CA4 7F05C174 C60A0008 */  lwc1  $f10, 8($s0)
-/* 090CA8 7F05C178 46005407 */  neg.s $f16, $f10
-/* 090CAC 7F05C17C E7B00068 */  swc1  $f16, 0x68($sp)
-/* 090CB0 7F05C180 C612000C */  lwc1  $f18, 0xc($s0)
-/* 090CB4 7F05C184 46009107 */  neg.s $f4, $f18
-/* 090CB8 7F05C188 0FC16FA2 */  jal   quaternion_multiply
-/* 090CBC 7F05C18C E7A4006C */   swc1  $f4, 0x6c($sp)
-/* 090CC0 7F05C190 27A40060 */  addiu $a0, $sp, 0x60
-/* 090CC4 7F05C194 8FA50078 */  lw    $a1, 0x78($sp)
-/* 090CC8 7F05C198 0FC16FA2 */  jal   quaternion_multiply
-/* 090CCC 7F05C19C 27A60040 */   addiu $a2, $sp, 0x40
-/* 090CD0 7F05C1A0 27A40050 */  addiu $a0, $sp, 0x50
-/* 090CD4 7F05C1A4 0FC16FF5 */  jal   sub_GAME_7F05BFD4
-/* 090CD8 7F05C1A8 27A50030 */   addiu $a1, $sp, 0x30
-/* 090CDC 7F05C1AC 27A40040 */  addiu $a0, $sp, 0x40
-/* 090CE0 7F05C1B0 0FC16FF5 */  jal   sub_GAME_7F05BFD4
-/* 090CE4 7F05C1B4 27A50020 */   addiu $a1, $sp, 0x20
-/* 090CE8 7F05C1B8 C7A60020 */  lwc1  $f6, 0x20($sp)
-/* 090CEC 7F05C1BC C7A80030 */  lwc1  $f8, 0x30($sp)
-/* 090CF0 7F05C1C0 C7A40024 */  lwc1  $f4, 0x24($sp)
-/* 090CF4 7F05C1C4 3C013E80 */  li    $at, 0x3E800000 # 0.250000
-/* 090CF8 7F05C1C8 46083280 */  add.s $f10, $f6, $f8
-/* 090CFC 7F05C1CC C7A60034 */  lwc1  $f6, 0x34($sp)
-/* 090D00 7F05C1D0 44810000 */  mtc1  $at, $f0
-/* 090D04 7F05C1D4 27A40030 */  addiu $a0, $sp, 0x30
-/* 090D08 7F05C1D8 46062200 */  add.s $f8, $f4, $f6
-/* 090D0C 7F05C1DC C7A40038 */  lwc1  $f4, 0x38($sp)
-/* 090D10 7F05C1E0 27A50050 */  addiu $a1, $sp, 0x50
-/* 090D14 7F05C1E4 46005407 */  neg.s $f16, $f10
-/* 090D18 7F05C1E8 46004287 */  neg.s $f10, $f8
-/* 090D1C 7F05C1EC 46008482 */  mul.s $f18, $f16, $f0
-/* 090D20 7F05C1F0 E7B20030 */  swc1  $f18, 0x30($sp)
-/* 090D24 7F05C1F4 46005402 */  mul.s $f16, $f10, $f0
-/* 090D28 7F05C1F8 C7B20028 */  lwc1  $f18, 0x28($sp)
-/* 090D2C 7F05C1FC 46049180 */  add.s $f6, $f18, $f4
-/* 090D30 7F05C200 C7B2003C */  lwc1  $f18, 0x3c($sp)
-/* 090D34 7F05C204 E7B00034 */  swc1  $f16, 0x34($sp)
-/* 090D38 7F05C208 C7B0002C */  lwc1  $f16, 0x2c($sp)
-/* 090D3C 7F05C20C 46003207 */  neg.s $f8, $f6
-/* 090D40 7F05C210 46128100 */  add.s $f4, $f16, $f18
-/* 090D44 7F05C214 46004282 */  mul.s $f10, $f8, $f0
-/* 090D48 7F05C218 46002187 */  neg.s $f6, $f4
-/* 090D4C 7F05C21C 46003202 */  mul.s $f8, $f6, $f0
-/* 090D50 7F05C220 E7AA0038 */  swc1  $f10, 0x38($sp)
-/* 090D54 7F05C224 0FC1701A */  jal   sub_GAME_7F05C068
-/* 090D58 7F05C228 E7A8003C */   swc1  $f8, 0x3c($sp)
-/* 090D5C 7F05C22C 02002025 */  move  $a0, $s0
-/* 090D60 7F05C230 27A50050 */  addiu $a1, $sp, 0x50
-/* 090D64 7F05C234 0FC16FA2 */  jal   quaternion_multiply
-/* 090D68 7F05C238 8FA6007C */   lw    $a2, 0x7c($sp)
-/* 090D6C 7F05C23C 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 090D70 7F05C240 8FB00018 */  lw    $s0, 0x18($sp)
-/* 090D74 7F05C244 27BD0070 */  addiu $sp, $sp, 0x70
-/* 090D78 7F05C248 03E00008 */  jr    $ra
-/* 090D7C 7F05C24C 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F05C250(void) {
