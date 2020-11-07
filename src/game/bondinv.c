@@ -2095,35 +2095,36 @@ glabel sub_GAME_7F08D108
 
 #endif
 
-UnkStruct11F4 *sub_GAME_7F08D21C(struct ObjectRecord *obj)
-{
-  UnkStruct11F4 *field_11F4 = pPlayer->field_11F4;
-
-  while (field_11F4) {
-      
-      if (field_11F4->obj == obj) {
-        return field_11F4;
-      }
-      
-      field_11F4 = field_11F4->next;
-  }
-  return NULL;
-}
-
-UnkStruct11F4 *sub_GAME_7F08D25C(s32 param)
-{
+UnkStruct11F4 *sub_GAME_7F08D21C(struct ObjectRecord *obj) {
     
     UnkStruct11F4 *field_11F4 = pPlayer->field_11F4;
 
     while (field_11F4) {
       
-      if ((field_11F4->unk2 == 0) && (field_11F4->unk3 == param)) {
-        return field_11F4;
-      }
+        if (field_11F4->obj == obj) {
+            return field_11F4;
+        }
       
-      field_11F4 = field_11F4->next;
-  }
-  return NULL;
+        field_11F4 = field_11F4->next;
+    }
+
+    return NULL;
+}
+
+UnkStruct11F4 *sub_GAME_7F08D25C(s32 param) {
+    
+    UnkStruct11F4 *field_11F4 = pPlayer->field_11F4;
+
+    while (field_11F4) {
+      
+        if ((field_11F4->unk2 == 0) && (field_11F4->unk3 == param)) {
+            return field_11F4;
+        }
+      
+        field_11F4 = field_11F4->next;
+    }
+
+    return NULL;
 }
 
 
