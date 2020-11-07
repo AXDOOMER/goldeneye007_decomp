@@ -497,6 +497,8 @@ void matrix_4x4_set_position_and_rotation(vec3 position, Quaternion rotation, ma
     matrix[3][2] = position[2];
 }
 
+void sub_GAME_7F05BA08(Quaternion arg0, Quaternion arg1, f32 arg2, Quaternion arg3);
+
 #ifdef NONMATCHING
 void sub_GAME_7F05BA08(void) {
 
@@ -948,13 +950,7 @@ void sub_GAME_7F05C138(Quaternion arg0, Quaternion arg1, Quaternion arg2, Quater
     quaternion_multiply(arg1, sp50, result);
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F05BA08(Quaternion arg0, Quaternion arg1, f32 arg2, Quaternion arg3);
-
-// <    90dfc:     8fa70054        lw      a3,84(sp)
-// ---
-// >    90dfc:     8fa7004c        lw      a3,76(sp)
-void sub_GAME_7F05C250(Quaternion arg0, Quaternion arg1, Quaternion arg2, Quaternion arg3, f32 arg4) {
+void sub_GAME_7F05C250(Quaternion arg0, Quaternion arg1, Quaternion arg2, Quaternion arg3, f32 arg4, Quaternion arg5) {
     Quaternion sp30;
     Quaternion sp20;
     f32 test = (arg4 + arg4) * (1.0f - arg4);
@@ -963,58 +959,10 @@ void sub_GAME_7F05C250(Quaternion arg0, Quaternion arg1, Quaternion arg2, Quater
     quaternion_ensure_shortest_path(arg1, arg2);
     sub_GAME_7F05BA08(arg1, arg2, arg4, sp20);
     quaternion_ensure_shortest_path(sp30, sp20);
-    sub_GAME_7F05BA08(sp30, sp20, test, arg3);
+    sub_GAME_7F05BA08(sp30, sp20, test, arg5);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05C250
-/* 090D80 7F05C250 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 090D84 7F05C254 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 090D88 7F05C258 AFA50044 */  sw    $a1, 0x44($sp)
-/* 090D8C 7F05C25C AFA40040 */  sw    $a0, 0x40($sp)
-/* 090D90 7F05C260 AFA60048 */  sw    $a2, 0x48($sp)
-/* 090D94 7F05C264 AFA7004C */  sw    $a3, 0x4c($sp)
-/* 090D98 7F05C268 0FC16F84 */  jal   quaternion_ensure_shortest_path
-/* 090D9C 7F05C26C 00E02825 */   move  $a1, $a3
-/* 090DA0 7F05C270 8FA40040 */  lw    $a0, 0x40($sp)
-/* 090DA4 7F05C274 8FA5004C */  lw    $a1, 0x4c($sp)
-/* 090DA8 7F05C278 8FA60050 */  lw    $a2, 0x50($sp)
-/* 090DAC 7F05C27C 0FC16E82 */  jal   sub_GAME_7F05BA08
-/* 090DB0 7F05C280 27A70030 */   addiu $a3, $sp, 0x30
-/* 090DB4 7F05C284 8FA40044 */  lw    $a0, 0x44($sp)
-/* 090DB8 7F05C288 0FC16F84 */  jal   quaternion_ensure_shortest_path
-/* 090DBC 7F05C28C 8FA50048 */   lw    $a1, 0x48($sp)
-/* 090DC0 7F05C290 8FA40044 */  lw    $a0, 0x44($sp)
-/* 090DC4 7F05C294 8FA50048 */  lw    $a1, 0x48($sp)
-/* 090DC8 7F05C298 8FA60050 */  lw    $a2, 0x50($sp)
-/* 090DCC 7F05C29C 0FC16E82 */  jal   sub_GAME_7F05BA08
-/* 090DD0 7F05C2A0 27A70020 */   addiu $a3, $sp, 0x20
-/* 090DD4 7F05C2A4 27A40030 */  addiu $a0, $sp, 0x30
-/* 090DD8 7F05C2A8 0FC16F84 */  jal   quaternion_ensure_shortest_path
-/* 090DDC 7F05C2AC 27A50020 */   addiu $a1, $sp, 0x20
-/* 090DE0 7F05C2B0 C7A00050 */  lwc1  $f0, 0x50($sp)
-/* 090DE4 7F05C2B4 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 090DE8 7F05C2B8 44813000 */  mtc1  $at, $f6
-/* 090DEC 7F05C2BC 46000100 */  add.s $f4, $f0, $f0
-/* 090DF0 7F05C2C0 27A40030 */  addiu $a0, $sp, 0x30
-/* 090DF4 7F05C2C4 27A50020 */  addiu $a1, $sp, 0x20
-/* 090DF8 7F05C2C8 46003201 */  sub.s $f8, $f6, $f0
-/* 090DFC 7F05C2CC 8FA70054 */  lw    $a3, 0x54($sp)
-/* 090E00 7F05C2D0 46082282 */  mul.s $f10, $f4, $f8
-/* 090E04 7F05C2D4 44065000 */  mfc1  $a2, $f10
-/* 090E08 7F05C2D8 0FC16E82 */  jal   sub_GAME_7F05BA08
-/* 090E0C 7F05C2DC 00000000 */   nop   
-/* 090E10 7F05C2E0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 090E14 7F05C2E4 27BD0040 */  addiu $sp, $sp, 0x40
-/* 090E18 7F05C2E8 03E00008 */  jr    $ra
-/* 090E1C 7F05C2EC 00000000 */   nop   
-)
-#endif
 
-void sub_GAME_7F05C250(Quaternion arg0, Quaternion arg1, Quaternion arg2, Quaternion arg3, f32 arg4, s32 arg5);
-
-void sub_GAME_7F05C2F0(Quaternion arg0, Quaternion arg1, Quaternion arg2, Quaternion arg3, f32 arg4, s32 arg5) {
+void sub_GAME_7F05C2F0(Quaternion arg0, Quaternion arg1, Quaternion arg2, Quaternion arg3, f32 arg4, Quaternion arg5) {
     Quaternion sp30;
     Quaternion sp20;
     sub_GAME_7F05C138(arg0, arg1, arg2, sp30);
