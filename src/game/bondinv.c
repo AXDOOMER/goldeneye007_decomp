@@ -190,8 +190,8 @@ InvItem *get_ptr_next_available_weapon(void)
 }
 
 
-void set_BONDdata_allguns_flag(s32 param_1) {
-    pPlayer->equipallguns = param_1;
+void set_BONDdata_allguns_flag(s32 all_guns) {
+    pPlayer->equipallguns = all_guns;
 }
 
 s32 get_BONDdata_allguns_flag(void) {
@@ -3016,14 +3016,13 @@ void sub_GAME_7F08D8A0(int param) {
   pPlayer->field_11F4 = param;
 }
 
-
-int sub_GAME_7F08D8C0(void) {
+int get_BONDdata_equipcuritem(void) {
   return pPlayer->equipcuritem;
 }
 
 
-void sub_GAME_7F08D8D0(int param) {
-    pPlayer->equipcuritem = param;
+void set_BONDdata_equipcuritem(int current_item) {
+    pPlayer->equipcuritem = current_item;
 }
 
 void sub_GAME_7F08D8E0(void) {

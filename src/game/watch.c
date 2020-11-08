@@ -5302,7 +5302,7 @@ glabel debug_gun_watch_move_related
 /* 0DCA00 7F0A7ED0 AFA00084 */  sw    $zero, 0x84($sp)
 /* 0DCA04 7F0A7ED4 AFA00080 */  sw    $zero, 0x80($sp)
 /* 0DCA08 7F0A7ED8 AFAE007C */  sw    $t6, 0x7c($sp)
-/* 0DCA0C 7F0A7EDC 0FC23630 */  jal   sub_GAME_7F08D8C0
+/* 0DCA0C 7F0A7EDC 0FC23630 */  jal   get_BONDdata_equipcuritem
 /* 0DCA10 7F0A7EE0 AFAF0078 */   sw    $t7, 0x78($sp)
 /* 0DCA14 7F0A7EE4 AFA20074 */  sw    $v0, 0x74($sp)
 /* 0DCA18 7F0A7EE8 0FC234AA */  jal   sub_GAME_7F08D2A8
@@ -5654,7 +5654,7 @@ void sub_GAME_7F0A8378(void)
         {
             remove_hands_item(0, sub_GAME_7F08D2A8(D_800409B8));
             remove_hands_item(1, 0);
-            sub_GAME_7F08D8D0(D_800409B8);
+            set_BONDdata_equipcuritem(D_800409B8);
             D_800409C4 = 0xa;
             play_sfx_a1(ptr_sfx_buf, 0x9f, 0);
         }
@@ -5698,7 +5698,7 @@ glabel sub_GAME_7F0A8378
 /* 0DCF10 7F0A83E0 0FC176D5 */  jal   remove_hands_item
 /* 0DCF14 7F0A83E4 00002825 */   move  $a1, $zero
 /* 0DCF18 7F0A83E8 3C048004 */  lui   $a0, %hi(D_800409B8)
-/* 0DCF1C 7F0A83EC 0FC23634 */  jal   sub_GAME_7F08D8D0
+/* 0DCF1C 7F0A83EC 0FC23634 */  jal   set_BONDdata_equipcuritem
 /* 0DCF20 7F0A83F0 8C8409B8 */   lw    $a0, %lo(D_800409B8)($a0)
 /* 0DCF24 7F0A83F4 240F000A */  li    $t7, 10
 /* 0DCF28 7F0A83F8 3C018004 */  lui   $at, %hi(D_800409C4)
