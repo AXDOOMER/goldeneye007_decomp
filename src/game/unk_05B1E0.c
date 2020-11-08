@@ -13,21 +13,89 @@ s32 D_80032434 = 2;
 typedef f32 Quaternion[4]; // w, x, y, z
 typedef f32 mat44[4][4];
 typedef f32 vec3[3];
+typedef u16 u16_3[3];
 
 float acosf(float);
 float sinf(float);
 
 #ifdef NONMATCHING
-void sub_GAME_7F05B1E0(void) {
+//#define ABS(x) (((s32)x < 0) ? -x : x)
+// void sub_GAME_7F05B1E0(u16_3 arg0, Quaternion arg1) {
+//     f32 sp44;
+//     f32 sp40;
+//     f32 sp3C;
+//     f32 sp38;
+//     f32 sp34;
+//     f32 temp_f0;
+//     f32 temp_f0_2;
+//     f32 temp_f12;
+//     f32 temp_f14;
+//     f32 temp_f16;
+//     f32 temp_f20;
+//     f32 temp_f2;
+//     f32 temp_f6;
+//     f32 temp_f6_2;
+//     f32 temp_f8;
+//     f32 temp_f8_2;
+//     f32 temp_f8_3;
+//     u16 temp_t0;
+//     u16 temp_t1;
+//     u16 temp_t7;
+//     u16 temp_t8;
+//     u16 temp_t9;
+//     f32 phi_f8;
+//     f32 phi_f6;
+//     f32 phi_f8_2;
+//     f32 phi_f6_2;
+//     f32 phi_f8_3;
 
-}
+//     temp_f20 = 0.000095873802f; // M_PI / 32768
+//     sp44 = cosf(arg0[0] * temp_f20 * 0.5f);
+//     phi_f8 = arg0[0];
+//     sp40 = sinf(ABS(phi_f8) * temp_f20 * 0.5f);
+//     temp_t8 = arg0[1];
+//     temp_f6 = (f32) temp_t8;
+//     phi_f6 = temp_f6;
+//     if ((s32) temp_t8 < 0) {
+//         phi_f6 = temp_f6 + 4294967296.0f;
+//     }
+//     sp3C = cosf(phi_f6 * temp_f20 * 0.5f);
+//     temp_t9 = arg0[1];
+//     temp_f8_2 = (f32) temp_t9;
+//     phi_f8_2 = temp_f8_2;
+//     if ((s32) temp_t9 < 0) {
+//         phi_f8_2 = temp_f8_2 + 4294967296.0f;
+//     }
+//     sp38 = sinf(phi_f8_2 * temp_f20 * 0.5f);
+//     temp_t0 = arg0[2];
+//     temp_f6_2 = (f32) temp_t0;
+//     phi_f6_2 = temp_f6_2;
+//     if ((s32) temp_t0 < 0) {
+//         phi_f6_2 = temp_f6_2 + 4294967296.0f;
+//     }
+//     temp_f0 = cosf(phi_f6_2 * temp_f20 * 0.5f);
+//     temp_t1 = arg0[2];
+//     temp_f8_3 = (f32) temp_t1;
+//     phi_f8_3 = temp_f8_3;
+//     if ((s32) temp_t1 < 0) {
+//         phi_f8_3 = temp_f8_3 + 4294967296.0f;
+//     }
+//     sp34 = temp_f0;
+//     temp_f0_2 = sinf(phi_f8_3 * temp_f20 * 0.5f);
+//     temp_f2 = sp44 * sp3C;
+//     temp_f16 = sp40 * sp38;
+//     temp_f14 = sp40 * sp3C;
+//     arg1[0] = ((temp_f2 * temp_f0) + (temp_f16 * temp_f0_2));
+//     temp_f12 = sp44 * sp38;
+//     arg1[1] = ((temp_f14 * temp_f0) - (temp_f12 * temp_f0_2));
+//     arg1[2] = ((temp_f12 * temp_f0) + (temp_f14 * temp_f0_2));
+//     arg1[3] = ((temp_f2 * temp_f0_2) - (temp_f16 * temp_f0));
+// }
 #else
 GLOBAL_ASM(
 .late_rodata
 glabel D_80053740
 .word 0x38c90fdb /*0.000095873802*/
-glabel D_80053744
-.word 0xbf7fff58 /*-0.99998999*/
 .text
 glabel sub_GAME_7F05B1E0
 /* 08FD10 7F05B1E0 27BDFFB8 */  addiu $sp, $sp, -0x48
@@ -509,6 +577,8 @@ void quaternion_slerp(void) {
 #else
 GLOBAL_ASM(
 .late_rodata
+glabel D_80053744
+.word 0xbf7fff58 /*-0.99998999*/
 glabel D_80053748
 .word 0x3f7fff58 /*0.99998999*/
 glabel D_8005374C
