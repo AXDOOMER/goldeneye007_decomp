@@ -205,7 +205,7 @@ struct struct_15 D_8003F80C[] = {
 
 
 #ifdef NONMATCHING
-void cheatButton_7F091740(void) {
+int cheatButton_7F091740(u16 param_1) {
 
 }
 #else
@@ -379,7 +379,7 @@ glabel cheatButton_7F09177C
 
 
 #ifdef NONMATCHING
-void cheat_buttons_mp_related(void) {
+void cheat_buttons_mp_related(void)
 
 }
 #else
@@ -519,7 +519,7 @@ void turn_on_cheat_for_players(u32 cheatindex)
   u32 numplayers;
   u32 i;
   
-  uVar1 = *(&D_8003F808 + cheatindex * 0x10);
+  uVar1 = D_8003F80C[cheatindex];
   playernum = get_cur_playernum();
   numplayers = get_num_players();
   if (numplayers == 1) {
@@ -614,8 +614,318 @@ glabel turn_on_cheat_for_players
 
 
 #ifdef NONMATCHING
-void handle_cheats_turned_on(void) {
+void handle_cheats_turned_on(CHEAT_IDS cheat)
 
+{
+  uint uVar1;
+  bool bVar2;
+  PLAYER_ID playernum;
+  PLAYER_ID PVar4;
+  //ulonglong uVar3;
+  //BOOL BVar5;
+  //BOOL BVar6;
+  //BOOL BVar7;
+  //BOOL BVar8;
+  //BOOL BVar9;
+  //u8 *text;
+  s32 sVar10;
+  //int amount;
+  STAGENUM stageid;
+  STAGENUM SVar11;
+  //f32 fVar12;
+  f32 scale;
+  PLAYER_ID local_10;
+  
+  uVar1 = (&D_8003F808)[cheat * 4];
+  playernum = get_cur_playernum();
+  numplayers = get_num_players();
+  if ((uVar1 & 0x10) == 0) {
+    if ((uVar1 & 0x20) == 0) {
+      cheatl_ARRAY_80079e30[cheat] = cheatl_ARRAY_80079e30[cheat] | (byte)(1 << (playernum & 0x1f));
+    }
+    else {
+      cheatl_ARRAY_80079e30[cheat] = (char)(1 << (numplayers & 0x1f)) + -1;
+    }
+  }
+  switch(cheat) {
+  case CHEAT_EXTRA_MP_CHARS:
+    unlock_mp_chars();
+    break;
+  case CHEAT_INVINCIBILITY:
+    if (get_bondata_invincible_flag() == 0)
+    {
+      display_string_in_lower_left_corner(get_textptr_for_textID(0xb00f));
+      set_bondata_invincible_flag(1);
+    }
+    break;
+  case CHEAT_ALLGUNS:
+    if (get_BONDdata_allguns_flag() == 0)
+    {
+      display_string_in_lower_left_corner(get_textptr_for_textID(0xb010));
+      set_BONDdata_allguns_flag(1);
+    }
+    break;
+  case CHEAT_MAXAMMO:
+    display_string_in_lower_left_corner(get_textptr_for_textID(0xb011));
+    set_max_ammo_for_cur_player();
+    break;
+  case CHEAT_REMOVE_INVINCIBILITY:
+    bVar2 = false;
+    if (1 < (int)numplayers) {
+      local_10 = PLAYER1;
+      if (0 < (int)numplayers) {
+        do {
+          if (local_10 != playernum) {
+            set_cur_player(local_10);
+            if (get_bondata_invincible_flag() != 0) {
+              bVar2 = true;
+              set_bondata_invincible_flag(0);
+            }
+          }
+          set_cur_player(playernum);
+          local_10 = local_10 + PLAYER2;
+        } while (local_10 != numplayers);
+      }
+      if (bVar2) {
+        play_sfx_a1(ptr_sfx_buf,0x9f,(ALSndPlayer *)0x0);
+      }
+    }
+    break;
+  case CHEAT_LINEMODE:
+    set_linemode_flag(1);
+    break;
+  case cheats_cheat_2x_health:
+    if ((pPlayer->actual_health == 1.00000000) || (pPlayer->bondhealth < 1.00000000))
+    {
+      display_string_in_lower_left_corner(get_textptr_for_textID(0xb012));
+      pPlayer->bondhealth = 1.00000000;
+      pPlayer->actual_health = 2.00000000;
+    }
+    break;
+  case cheats_cheat_2x_armor:
+    if ((pPlayer->actual_armor == 1.00000000) || (pPlayer->bondarmour < 1.00000000))
+    {
+      display_string_in_lower_left_corner(get_textptr_for_textID(0xb013));
+      pPlayer->bondarmour = 1.00000000;
+      pPlayer->actual_armor = 2.00000000;
+    }
+    break;
+  case cheats_cheat_invisibility:
+    if (get_invisible_to_guards_flag() != 0)
+    {
+      display_string_in_lower_left_corner(get_textptr_for_textID(0xb014));
+      set_invisible_to_guards_flag(0);
+    }
+    break;
+  case cheats_cheat_infinite_ammo:
+    display_string_in_lower_left_corner(get_textptr_for_textID(0xb016));
+    break;
+  case cheats_cheat_dk_mode:
+    display_string_in_lower_left_corner(get_textptr_for_textID(0xb017));
+    set_DKMode(1);
+    break;
+  case cheats_cheat_extra_weapons:
+    if (numplayers == PLAYER2)
+    {
+      give_cur_player_ammo(AMMO_MAGNUM, get_max_ammo_for_type(AMMO_MAGNUM));
+      give_cur_player_ammo(AMMO_GGUN, get_max_ammo_for_type(AMMO_GGUN));
+      give_cur_player_ammo(AMMO_9MM, get_max_ammo_for_type(AMMO_9MM));
+      if (0 < (add_item_to_inventory(ITEM_RUGER) + add_item_to_inventory(ITEM_LASER) + add_item_to_inventory(ITEM_GOLDENGUN) + add_item_to_inventory(ITEM_SILVERWPPK) + add_item_to_inventory(ITEM_GOLDWPPK)))
+      {
+        display_string_in_lower_left_corner(get_textptr_for_textID(0xb018));
+      }
+    }
+    break;
+  case cheats_cheat_tiny_bond:
+    if ((numplayers == PLAYER2) && (pPlayersPerm->player_perspective_height == 1.00000000))
+    {
+      display_string_in_lower_left_corner(get_textptr_for_textID(0xb019));
+      pPlayersPerm->player_perspective_height = 0.50000000;
+      if (pPlayer->ptr_char_objectinstance != 0)
+      {
+        set_obj_instance_controller_scale(pPlayer->ptr_char_objectinstance,scale);
+      }
+    }
+    break;
+  case cheats_cheat_paintball:
+    display_string_in_lower_left_corner(get_textptr_for_textID(0xb01a));
+    break;
+  case cheats_cheat_10x_health:
+    if ((pPlayer->actual_health == 1.00000000) || (pPlayer->bondhealth < 1.00000000))
+    {
+      display_string_in_lower_left_corner(get_textptr_for_textID(0xb01b));
+      pPlayer->bondhealth = 1.00000000;
+      pPlayer->actual_health = 10.00000000;
+    }
+    break;
+  case cheats_cheat_magnum:
+    if (numplayers == PLAYER2)
+    {
+      add_item_to_inventory(ITEM_RUGER);
+      give_cur_player_ammo(AMMO_MAGNUM, get_max_ammo_for_type(AMMO_MAGNUM));
+    }
+    break;
+  case cheats_cheat_laser:
+    if (numplayers == PLAYER2)
+    {
+      add_item_to_inventory(ITEM_LASER);
+    }
+    break;
+  case cheats_cheat_goldengun:
+    if (numplayers == PLAYER2) {
+      add_item_to_inventory(ITEM_GOLDENGUN);
+      give_cur_player_ammo(AMMO_GGUN, get_max_ammo_for_type(AMMO_GGUN));
+    }
+    break;
+  case cheats_cheat_silverpp7:
+    if (numplayers == PLAYER2)
+    {
+      add_item_to_inventory(ITEM_SILVERWPPK);
+      give_cur_player_ammo(AMMO_9MM, get_max_ammo_for_type(AMMO_9MM));
+    }
+    break;
+  case cheats_cheat_goldpp7:
+    if (numplayers == PLAYER2)
+    {
+      add_item_to_inventory(ITEM_GOLDWPPK);
+      give_cur_player_ammo(AMMO_9MM, get_max_ammo_for_type(AMMO_9MM));
+    }
+    break;
+  case cheats_cheat_invisibility_mp:
+    set_curplayer_fade(300.00000000, 0.5f);
+    break;
+  case cheats_cheat_fast:
+    if (get_debug_fast_bond_flag() == FALSE)
+    {
+      display_string_in_lower_left_corner(get_textptr_for_textID(0xb01d));
+      set_debug_fast_bond_flag(TRUE);
+    }
+    break;
+  case cheats_debug_pos:
+    if (get_debug_testingmanpos_flag() == FALSE)
+    {
+      set_debug_testingmanpos_flag(TRUE);
+    }
+    break;
+  case cheats_debug_fast_ani:
+    if (get_animation_rate() < 4.00000000)
+    {
+      display_string_in_lower_left_corner(get_textptr_for_textID(0xb034));
+      animation_speed_related(4.00000000);
+    }
+    break;
+  case cheats_debug_slow_ani:
+    if (0.25000000 < get_animation_rate())
+    {
+      display_string_in_lower_left_corner(get_textptr_for_textID(0xb032));
+      animation_speed_related(0.25000000);
+    }
+    break;
+  case cheats_debug_2x_rockets:
+    if (numplayers == PLAYER2)
+    {
+      add_doubles_item_to_inventory(ITEM_ROCKETLAUNCH, ITEM_ROCKETLAUNCH);
+      give_cur_player_ammo(AMMO_ROCKETS, get_max_ammo_for_type(AMMO_ROCKETS));
+    }
+    break;
+  case cheats_debug_2x_grenade_launch:
+    if (numplayers == PLAYER2)
+    {
+      add_doubles_item_to_inventory(ITEM_GRENADELAUNCH, ITEM_GRENADELAUNCH);
+      give_cur_player_ammo(AMMO_GRENADEROUND, get_max_ammo_for_type(AMMO_GRENADEROUND));
+    }
+    break;
+  case cheats_debug_2x_rcp90:
+    if (numplayers == PLAYER2)
+    {
+      add_doubles_item_to_inventory(ITEM_FNP90, ITEM_FNP90);
+      give_cur_player_ammo(AMMO_9MM, get_max_ammo_for_type(AMMO_9MM));
+    }
+    break;
+  case cheats_debug_2x_throwing_knife:
+    if (numplayers == PLAYER2)
+    {
+      add_doubles_item_to_inventory(ITEM_THROWKNIFE, ITEM_THROWKNIFE);
+      give_cur_player_ammo(AMMO_KNIFE, get_max_ammo_for_type(AMMO_KNIFE));
+    }
+    break;
+  case cheats_debug_2x_hunting_knife:
+    if (numplayers == PLAYER2)
+    {
+      add_doubles_item_to_inventory(ITEM_KNIFE, ITEM_KNIFE);
+    }
+    break;
+  case cheats_debug_2x_laser:
+    if (numplayers == PLAYER2)
+    {
+      add_doubles_item_to_inventory(ITEM_LASER, ITEM_LASER);
+    }
+    break;
+  case UNUSED_23:
+  case UNUSED_24:
+  case UNUSED_25:
+  case UNUSED_26:
+  case UNUSED_27:
+  case UNUSED_28:
+  case UNUSED_29:
+  case UNUSED_2A:
+  case UNUSED_2B:
+  case UNUSED_2C:
+  case UNUSED_2D:
+  case UNUSED_2E:
+  case UNUSED_2F:
+  case UNUSED_30:
+  case UNUSED_31:
+  case UNUSED_32:
+  case UNUSED_33:
+  case UNUSED_34:
+  case UNUSED_35:
+  case UNLOCK_CHEATS:
+    if ((-1 < selected_folder_num) && (selected_folder_num < 4)) {
+      proc_7F01E760(selected_folder_num,cheat + ~cheats_debug_2x_laser);
+      play_sfx_a1(ptr_sfx_buf,0x9f,(ALSndPlayer *)0x0);
+    }
+    break;
+  case UNUSED_37:
+  case UNUSED_38:
+  case UNUSED_39:
+  case UNUSED_3A:
+  case UNUSED_3B:
+  case UNUSED_3C:
+  case UNUSED_3D:
+  case UNUSED_3E:
+  case UNUSED_3F:
+  case UNUSED_40:
+  case UNUSED_41:
+  case UNUSED_42:
+  case UNUSED_43:
+  case UNUSED_44:
+  case UNUSED_45:
+  case UNUSED_46:
+  case UNUSED_47:
+  case UNUSED_48:
+  case UNUSED_49:
+  case UNLOCK_STAGES:
+    SVar11 = cheat + ~UNLOCK_CHEATS;
+    if ((-1 < (int)selected_folder_num) && (amount = 0, (int)selected_folder_num < 4)) {
+      stageid = SP_STAGE_DAM;
+      if (0 < (int)SVar11) {
+        do {
+          sVar10 = isStageUnlockedAtDifficulty(selected_folder_num,stageid,DIFFICULTY_AGENT);
+          if (sVar10 == 3) {
+            amount = amount + 1;
+          }
+          stageid = stageid + SP_STAGE_FACILITY;
+        } while (stageid != SVar11);
+      }
+      if (SVar11 == amount + SP_STAGE_FACILITY) {
+        unlock_stage_in_folder_on_difficulty
+                  (selected_folder_num,(longlong)(int)(cheat + ~UNUSED_37),0,99999999);
+        play_sfx_a1(ptr_sfx_buf,0x9f,(ALSndPlayer *)0x0);
+      }
+    }
+  }
+  return;
 }
 #else
 #ifdef VERSION_US

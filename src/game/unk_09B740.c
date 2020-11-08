@@ -41,8 +41,9 @@ glabel sub_GAME_7F09B740
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09B788(void) {
-
+void sub_GAME_7F09B788(u64 param_1)
+{
+    random_val = param_1 + 1;
 }
 #else
 GLOBAL_ASM(

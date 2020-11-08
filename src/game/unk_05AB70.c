@@ -84,13 +84,13 @@ glabel sub_GAME_7F05AB70
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05ABF0(void) {
+void acos(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F05ABF0
+glabel acos
 /* 08F720 7F05ABF0 00042C00 */  sll   $a1, $a0, 0x10
 /* 08F724 7F05ABF4 00057403 */  sra   $t6, $a1, 0x10
 /* 08F728 7F05ABF8 27BDFFE8 */  addiu $sp, $sp, -0x18
@@ -123,13 +123,13 @@ glabel sub_GAME_7F05ABF0
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05AC44(void) {
+void asin(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F05AC44
+glabel asin
 /* 08F774 7F05AC44 00042C00 */  sll   $a1, $a0, 0x10
 /* 08F778 7F05AC48 00057403 */  sra   $t6, $a1, 0x10
 /* 08F77C 7F05AC4C 27BDFFE8 */  addiu $sp, $sp, -0x18

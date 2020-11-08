@@ -958,8 +958,16 @@ u32 sub_GAME_7F0CCACC(s32 arg0) {
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0CCAFC(void) {
+s32 sub_GAME_7F0CCAFC(f32 arg0)
+{
+    s32 temp_f4;
 
+    temp_f4 = (s32) arg0;
+    if ((f32) temp_f4 < arg0)
+    {
+        return temp_f4 + 1;
+    }
+    return temp_f4;
 }
 #else
 GLOBAL_ASM(

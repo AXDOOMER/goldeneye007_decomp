@@ -34,6 +34,6 @@ struct save_data
 
 };
 
-u8 removed_would_have_returned_bond_for_folder_num(u32 folder);
+extern u32 save_selected_bond[];
 
 #endif

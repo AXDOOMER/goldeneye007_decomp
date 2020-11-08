@@ -19,7 +19,7 @@ glabel rspbootTextStart
 .ifdef VERSION_EU
 .incbin "build/e/rsp/rspboot.bin"
 .endif
-
+glabel rspbootTextEnd
 .section .data
 .section .rodata
 .section .bss

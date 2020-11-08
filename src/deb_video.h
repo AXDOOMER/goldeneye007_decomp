@@ -3,6 +3,6 @@
 
 #include "ultra64.h"
 
-void thread5_translate_7F_address(void);
+void tlbproc(void);
 
 #endif

@@ -101,8 +101,11 @@ void sub_GAME_7F0BC624(s32 param_1) {
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BC634(void) {
-
+void sub_GAME_7F0BC634(s16 param_1,int param_2)
+{
+    roominformationblock[param_2].field_36 = param_1;
+    (&dword_CODE_bss_80083450)[param_1] = param_2;
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -127,8 +130,11 @@ glabel sub_GAME_7F0BC634
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BC660(void) {
-
+void sub_GAME_7F0BC660(int param_1,int param_2)
+{
+    roominformationblock[param_2].field_36 = -1;
+    (&dword_CODE_bss_80083450)[param_1] = 0xffffffff;
+    return;
 }
 #else
 GLOBAL_ASM(
