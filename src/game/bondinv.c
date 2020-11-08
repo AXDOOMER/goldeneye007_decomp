@@ -2111,7 +2111,7 @@ textoverride *get_textoverride_by_obj(ObjectRecord *obj) {
     return NULL;
 }
 
-textoverride *sub_GAME_7F08D25C(s32 weaponnum) {
+textoverride *get_textoverride_by_weaponum(s32 weaponnum) {
     
     textoverride *override = pPlayer->textoverrides;
 
@@ -2270,7 +2270,7 @@ glabel sub_GAME_7F08D340
 /* 0C1EE4 7F08D3B4 14810019 */  bne   $a0, $at, .L7F08D41C
 /* 0C1EE8 7F08D3B8 00000000 */   nop   
 /* 0C1EEC 7F08D3BC 8C640004 */  lw    $a0, 4($v1)
-/* 0C1EF0 7F08D3C0 0FC23497 */  jal   sub_GAME_7F08D25C
+/* 0C1EF0 7F08D3C0 0FC23497 */  jal   get_textoverride_by_weaponum
 /* 0C1EF4 7F08D3C4 AFA40018 */   sw    $a0, 0x18($sp)
 /* 0C1EF8 7F08D3C8 10400014 */  beqz  $v0, .L7F08D41C
 /* 0C1EFC 7F08D3CC 8FA60018 */   lw    $a2, 0x18($sp)
@@ -2343,7 +2343,7 @@ glabel sub_GAME_7F08D340
 /* 0C290C 7F08DD9C 14810029 */  bne   $a0, $at, .Ljp7F08DE44
 /* 0C2910 7F08DDA0 00000000 */   nop   
 /* 0C2914 7F08DDA4 8C640004 */  lw    $a0, 4($v1)
-/* 0C2918 7F08DDA8 0FC23703 */  jal   sub_GAME_7F08D25C
+/* 0C2918 7F08DDA8 0FC23703 */  jal   get_textoverride_by_weaponum
 /* 0C291C 7F08DDAC AFA40018 */   sw    $a0, 0x18($sp)
 /* 0C2920 7F08DDB0 10400024 */  beqz  $v0, .Ljp7F08DE44
 /* 0C2924 7F08DDB4 8FA60018 */   lw    $a2, 0x18($sp)
@@ -2443,7 +2443,7 @@ glabel sub_GAME_7F08D434
 /* 0C1FD8 7F08D4A8 14810019 */  bne   $a0, $at, .L7F08D510
 /* 0C1FDC 7F08D4AC 00000000 */   nop   
 /* 0C1FE0 7F08D4B0 8C640004 */  lw    $a0, 4($v1)
-/* 0C1FE4 7F08D4B4 0FC23497 */  jal   sub_GAME_7F08D25C
+/* 0C1FE4 7F08D4B4 0FC23497 */  jal   get_textoverride_by_weaponum
 /* 0C1FE8 7F08D4B8 AFA40018 */   sw    $a0, 0x18($sp)
 /* 0C1FEC 7F08D4BC 10400014 */  beqz  $v0, .L7F08D510
 /* 0C1FF0 7F08D4C0 8FA60018 */   lw    $a2, 0x18($sp)
@@ -2516,7 +2516,7 @@ glabel sub_GAME_7F08D434
 /* 0C2A40 7F08DED0 14810029 */  bne   $a0, $at, .Ljp7F08DF78
 /* 0C2A44 7F08DED4 00000000 */   nop   
 /* 0C2A48 7F08DED8 8C640004 */  lw    $a0, 4($v1)
-/* 0C2A4C 7F08DEDC 0FC23703 */  jal   sub_GAME_7F08D25C
+/* 0C2A4C 7F08DEDC 0FC23703 */  jal   get_textoverride_by_weaponum
 /* 0C2A50 7F08DEE0 AFA40018 */   sw    $a0, 0x18($sp)
 /* 0C2A54 7F08DEE4 10400024 */  beqz  $v0, .Ljp7F08DF78
 /* 0C2A58 7F08DEE8 8FA60018 */   lw    $a2, 0x18($sp)
@@ -2650,7 +2650,7 @@ glabel sub_GAME_7F08D5C8
 /* 0C216C 7F08D63C 14810019 */  bne   $a0, $at, .L7F08D6A4
 /* 0C2170 7F08D640 00000000 */   nop   
 /* 0C2174 7F08D644 8C640004 */  lw    $a0, 4($v1)
-/* 0C2178 7F08D648 0FC23497 */  jal   sub_GAME_7F08D25C
+/* 0C2178 7F08D648 0FC23497 */  jal   get_textoverride_by_weaponum
 /* 0C217C 7F08D64C AFA40018 */   sw    $a0, 0x18($sp)
 /* 0C2180 7F08D650 10400014 */  beqz  $v0, .L7F08D6A4
 /* 0C2184 7F08D654 8FA60018 */   lw    $a2, 0x18($sp)
@@ -2723,7 +2723,7 @@ glabel sub_GAME_7F08D5C8
 /* 0C2C14 7F08E0A4 14810029 */  bne   $a0, $at, .Ljp7F08E14C
 /* 0C2C18 7F08E0A8 00000000 */   nop   
 /* 0C2C1C 7F08E0AC 8C640004 */  lw    $a0, 4($v1)
-/* 0C2C20 7F08E0B0 0FC23703 */  jal   sub_GAME_7F08D25C
+/* 0C2C20 7F08E0B0 0FC23703 */  jal   get_textoverride_by_weaponum
 /* 0C2C24 7F08E0B4 AFA40018 */   sw    $a0, 0x18($sp)
 /* 0C2C28 7F08E0B8 10400024 */  beqz  $v0, .Ljp7F08E14C
 /* 0C2C2C 7F08E0BC 8FA60018 */   lw    $a2, 0x18($sp)
@@ -2824,7 +2824,7 @@ glabel sub_GAME_7F08D6BC
 /* 0C2260 7F08D730 14810019 */  bne   $a0, $at, .L7F08D798
 /* 0C2264 7F08D734 00000000 */   nop   
 /* 0C2268 7F08D738 8C640004 */  lw    $a0, 4($v1)
-/* 0C226C 7F08D73C 0FC23497 */  jal   sub_GAME_7F08D25C
+/* 0C226C 7F08D73C 0FC23497 */  jal   get_textoverride_by_weaponum
 /* 0C2270 7F08D740 AFA40018 */   sw    $a0, 0x18($sp)
 /* 0C2274 7F08D744 10400014 */  beqz  $v0, .L7F08D798
 /* 0C2278 7F08D748 8FA60018 */   lw    $a2, 0x18($sp)
@@ -2897,7 +2897,7 @@ glabel sub_GAME_7F08D6BC
 /* 0C2D48 7F08E1D8 14810029 */  bne   $a0, $at, .Ljp7F08E280
 /* 0C2D4C 7F08E1DC 00000000 */   nop   
 /* 0C2D50 7F08E1E0 8C640004 */  lw    $a0, 4($v1)
-/* 0C2D54 7F08E1E4 0FC23703 */  jal   sub_GAME_7F08D25C
+/* 0C2D54 7F08E1E4 0FC23703 */  jal   get_textoverride_by_weaponum
 /* 0C2D58 7F08E1E8 AFA40018 */   sw    $a0, 0x18($sp)
 /* 0C2D5C 7F08E1EC 10400024 */  beqz  $v0, .Ljp7F08E280
 /* 0C2D60 7F08E1F0 8FA60018 */   lw    $a2, 0x18($sp)
@@ -3043,9 +3043,9 @@ u8 *sub_GAME_7F08D95C(ObjectRecord *obj) {
     return NULL;
 }
 
-u8 *sub_GAME_7F08D9A4(ObjectRecord *obj) {
+u8 *sub_GAME_7F08D9A4(s32 weaponnum) {
     
-    textoverride *override = sub_GAME_7F08D25C(obj);
+    textoverride *override = get_textoverride_by_weaponum(weaponnum);
 
     if ( override && override->unk8 ) {
         return get_textptr_for_textID(override->unk8);
