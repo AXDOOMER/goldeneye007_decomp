@@ -19,8 +19,8 @@ void reinit_BONDdata_inventory(void) {
 
     }
     
-    pPlayer->ptr_inventory_first_in_cycle = 0;
-    pPlayer->field_11F4 = 0;
+    pPlayer->ptr_inventory_first_in_cycle = NULL;
+    pPlayer->field_11F4 = NULL;
     pPlayer->equipcuritem = 0;
 }
 
@@ -2095,9 +2095,9 @@ glabel sub_GAME_7F08D108
 
 #endif
 
-UnkStruct11F4 *sub_GAME_7F08D21C(ObjectRecord *obj) {
+textoverride *sub_GAME_7F08D21C(ObjectRecord *obj) {
     
-    UnkStruct11F4 *field_11F4 = pPlayer->field_11F4;
+    textoverride *field_11F4 = pPlayer->field_11F4;
 
     while (field_11F4) {
       
@@ -2111,9 +2111,9 @@ UnkStruct11F4 *sub_GAME_7F08D21C(ObjectRecord *obj) {
     return NULL;
 }
 
-UnkStruct11F4 *sub_GAME_7F08D25C(s32 param) {
+textoverride *sub_GAME_7F08D25C(s32 param) {
     
-    UnkStruct11F4 *field_11F4 = pPlayer->field_11F4;
+    textoverride *field_11F4 = pPlayer->field_11F4;
 
     while (field_11F4) {
       
@@ -2135,7 +2135,7 @@ UnkStruct11F4 *sub_GAME_7F08D25C(s32 param) {
 #ifdef VERSION_US
 s32 sub_GAME_7F08D2A8(ITEM_IDS item_id) {
 
-    UnkStruct11F4 *playerStruct11F4;
+    textoverride *playerStruct11F4;
     InvItem *inv_item;
 
     inv_item = sub_GAME_7F08D108(item_id);
@@ -3046,7 +3046,7 @@ void calculate_equip_cur_item(void) {
 
 u8 *sub_GAME_7F08D95C(ObjectRecord *obj) {
 
-    UnkStruct11F4 *temp = sub_GAME_7F08D21C(obj);
+    textoverride *temp = sub_GAME_7F08D21C(obj);
 
     if ( temp && temp->unk8 ) {
         return get_textptr_for_textID(temp->unk8);
@@ -3057,7 +3057,7 @@ u8 *sub_GAME_7F08D95C(ObjectRecord *obj) {
 
 u8 *sub_GAME_7F08D9A4(ObjectRecord *obj) {
     
-    UnkStruct11F4 *temp = sub_GAME_7F08D25C(obj);
+    textoverride *temp = sub_GAME_7F08D25C(obj);
 
     if ( temp && temp->unk8 ) {
         return get_textptr_for_textID(temp->unk8);

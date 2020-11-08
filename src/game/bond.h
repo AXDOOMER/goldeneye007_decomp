@@ -284,7 +284,7 @@ typedef struct InvItem {
 
 } InvItem;
 
-typedef struct UnkStruct11F4 {
+typedef struct textoverride {
 	s32 unk1;
 	s32 unk2;
 	s32 unk3;
@@ -294,9 +294,9 @@ typedef struct UnkStruct11F4 {
 	s32 unk7;
 	s32 unk8;
 
-	struct UnkStruct11F4 *next;
+	struct textoverride *next;
 	struct ObjectRecord *obj;
-} UnkStruct11F4;
+} textoverride;
 
 
 struct Player
@@ -972,7 +972,7 @@ struct Player
   s32 equipmaxitems;
   s32 equipallguns;
   s32 equipcuritem;
-  UnkStruct11F4 *field_11F4;
+  textoverride *field_11F4;
   s32 index_time_spent_using_item;
   s32 field_11FC;
   s32 field_1200;
