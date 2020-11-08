@@ -3218,7 +3218,7 @@ glabel sub_GAME_7F0A69A8
 /* 0DB538 7F0A6A08 3C018006 */  lui   $at, %hi(D_800584B4)
 /* 0DB53C 7F0A6A0C C42684B4 */  lwc1  $f6, %lo(D_800584B4)($at)
 /* 0DB540 7F0A6A10 3C018004 */  lui   $at, %hi(D_800409CC)
-/* 0DB544 7F0A6A14 0FC23638 */  jal   sub_GAME_7F08D8E0
+/* 0DB544 7F0A6A14 0FC23638 */  jal   calculate_equip_cur_item
 /* 0DB548 7F0A6A18 E42609CC */   swc1  $f6, %lo(D_800409CC)($at)
 /* 0DB54C 7F0A6A1C 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0DB550 7F0A6A20 27BD0018 */  addiu $sp, $sp, 0x18

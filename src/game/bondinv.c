@@ -3025,7 +3025,7 @@ void set_BONDdata_equipcuritem(int current_item) {
     pPlayer->equipcuritem = current_item;
 }
 
-void sub_GAME_7F08D8E0(void) {
+void calculate_equip_cur_item(void) {
     s32 current_weapon;
     s32 i;
 
