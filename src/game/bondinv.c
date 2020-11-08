@@ -2129,12 +2129,12 @@ textoverride *get_textoverride_by_weaponum(s32 weaponnum) {
 
 
 #ifdef VERSION_US
-s32 sub_GAME_7F08D2A8(ITEM_IDS item_id) {
+s32 get_weaponnum_by_inv_index(s32 index) {
 
     textoverride *override;
     InvItem *inv_item;
 
-    inv_item = sub_GAME_7F08D108(item_id);
+    inv_item = sub_GAME_7F08D108(index);
     
     if (inv_item) {
 
@@ -2152,8 +2152,8 @@ s32 sub_GAME_7F08D2A8(ITEM_IDS item_id) {
             return inv_item->type_inv_item.type_weap.weapon;
         }
 
-    } else if ((pPlayer->equipallguns) && (item_id < ITEM_TANKSHELLS)) {
-        return item_id + 1;
+    } else if ((pPlayer->equipallguns) && (index < ITEM_TANKSHELLS)) {
+        return index + 1;
     }
     
     return 0;
@@ -2163,7 +2163,7 @@ s32 sub_GAME_7F08D2A8(ITEM_IDS item_id) {
 #ifdef VERSION_JP
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F08D2A8
+glabel get_weaponnum_by_inv_index
 /* 0C27C8 7F08DC58 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0C27CC 7F08DC5C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0C27D0 7F08DC60 0FC236A1 */  jal   sub_GAME_7F08D108
@@ -2574,8 +2574,8 @@ glabel sub_GAME_7F08D434
 
 
 
-int sub_GAME_7F08D528(int param) {
-    return get_45_degree_angle_0(sub_GAME_7F08D2A8(param));
+int sub_GAME_7F08D528(int index) {
+    return get_45_degree_angle_0(get_weaponnum_by_inv_index(index));
 }
 
 
@@ -2583,24 +2583,24 @@ int sub_GAME_7F08D528(int param) {
 
 
 
-int sub_GAME_7F08D550(int param) {
-    return get_horizontal_offset_on_solo_watch_menu_for_item(sub_GAME_7F08D2A8(param));
+int sub_GAME_7F08D550(int index) {
+    return get_horizontal_offset_on_solo_watch_menu_for_item(get_weaponnum_by_inv_index(index));
 }
 
 
 
 
 
-int sub_GAME_7F08D578(int param) {
-    return get_vertical_offset_on_solo_watch_menu_for_item(sub_GAME_7F08D2A8(param));
+int sub_GAME_7F08D578(int index) {
+    return get_vertical_offset_on_solo_watch_menu_for_item(get_weaponnum_by_inv_index(index));
 }
 
 
 
 
 
-int sub_GAME_7F08D5A0(int param) {
-    return get_depth_offset_solo_watch_menu_inventory_page_for_item(sub_GAME_7F08D2A8(param));
+int sub_GAME_7F08D5A0(int index) {
+    return get_depth_offset_solo_watch_menu_inventory_page_for_item(get_weaponnum_by_inv_index(index));
 }
 
 
@@ -2954,47 +2954,47 @@ glabel sub_GAME_7F08D6BC
 
 
 
-int sub_GAME_7F08D7B0(int param) {
-    return get_45_degree_angle(sub_GAME_7F08D2A8(param));
+int sub_GAME_7F08D7B0(int index) {
+    return get_45_degree_angle(get_weaponnum_by_inv_index(index));
 }
 
 
 
 
 
-int sub_GAME_7F08D7D8(int param) {
-    return get_vertical_position_solo_watch_menu_main_page_for_item(sub_GAME_7F08D2A8(param));
+int sub_GAME_7F08D7D8(int index) {
+    return get_vertical_position_solo_watch_menu_main_page_for_item(get_weaponnum_by_inv_index(index));
 }
 
 
 
 
-int sub_GAME_7F08D800(int param) {
-    return get_lateral_position_solo_watch_menu_main_page_for_item(sub_GAME_7F08D2A8(param));
-}
-
-
-
-
-
-int sub_GAME_7F08D828(int param) {
-    return get_depth_on_solo_watch_menu_page_for_item(sub_GAME_7F08D2A8(param));
+int sub_GAME_7F08D800(int index) {
+    return get_lateral_position_solo_watch_menu_main_page_for_item(get_weaponnum_by_inv_index(index));
 }
 
 
 
 
 
-int sub_GAME_7F08D850(int param) {
-    return get_xrotation_solo_watch_menu_for_item(sub_GAME_7F08D2A8(param));
+int sub_GAME_7F08D828(int index) {
+    return get_depth_on_solo_watch_menu_page_for_item(get_weaponnum_by_inv_index(index));
 }
 
 
 
 
 
-int sub_GAME_7F08D878(int param) {
-    return get_yrotation_solo_watch_menu_for_item(sub_GAME_7F08D2A8(param));
+int sub_GAME_7F08D850(int index) {
+    return get_xrotation_solo_watch_menu_for_item(get_weaponnum_by_inv_index(index));
+}
+
+
+
+
+
+int sub_GAME_7F08D878(int index) {
+    return get_yrotation_solo_watch_menu_for_item(get_weaponnum_by_inv_index(index));
 }
 
 
@@ -3023,7 +3023,7 @@ void calculate_equip_cur_item(void) {
 
     for (i=0; i < sub_GAME_7F08D038(); i++) {
         
-        if (sub_GAME_7F08D2A8(i) == current_weapon) {
+        if (get_weaponnum_by_inv_index(i) == current_weapon) {
             pPlayer->equipcuritem = i;
             return;
         }

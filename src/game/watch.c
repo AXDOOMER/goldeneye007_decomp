@@ -5305,7 +5305,7 @@ glabel debug_gun_watch_move_related
 /* 0DCA0C 7F0A7EDC 0FC23630 */  jal   get_BONDdata_equipcuritem
 /* 0DCA10 7F0A7EE0 AFAF0078 */   sw    $t7, 0x78($sp)
 /* 0DCA14 7F0A7EE4 AFA20074 */  sw    $v0, 0x74($sp)
-/* 0DCA18 7F0A7EE8 0FC234AA */  jal   sub_GAME_7F08D2A8
+/* 0DCA18 7F0A7EE8 0FC234AA */  jal   get_weaponnum_by_inv_index
 /* 0DCA1C 7F0A7EEC 00402025 */   move  $a0, $v0
 /* 0DCA20 7F0A7EF0 AFA20070 */  sw    $v0, 0x70($sp)
 /* 0DCA24 7F0A7EF4 0FC235F6 */  jal   sub_GAME_7F08D7D8
@@ -5650,9 +5650,9 @@ void sub_GAME_7F0A8378(void)
     if ((get_controller_buttons_pressed(0, 0xa000) == 0) && (get_controller_buttons_pressed(0, 0x1000) != 0))
     {
         sp1C = get_item_in_hand(0);
-        if (sub_GAME_7F08D2A8(D_800409B8) != sp1C)
+        if (get_weaponnum_by_inv_index(D_800409B8) != sp1C)
         {
-            remove_hands_item(0, sub_GAME_7F08D2A8(D_800409B8));
+            remove_hands_item(0, get_weaponnum_by_inv_index(D_800409B8));
             remove_hands_item(1, 0);
             set_BONDdata_equipcuritem(D_800409B8);
             D_800409C4 = 0xa;
@@ -5683,13 +5683,13 @@ glabel sub_GAME_7F0A8378
 /* 0DCED8 7F0A83A8 00002025 */   move  $a0, $zero
 /* 0DCEDC 7F0A83AC 3C048004 */  lui   $a0, %hi(D_800409B8)
 /* 0DCEE0 7F0A83B0 8C8409B8 */  lw    $a0, %lo(D_800409B8)($a0)
-/* 0DCEE4 7F0A83B4 0FC234AA */  jal   sub_GAME_7F08D2A8
+/* 0DCEE4 7F0A83B4 0FC234AA */  jal   get_weaponnum_by_inv_index
 /* 0DCEE8 7F0A83B8 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 0DCEEC 7F0A83BC 8FAE001C */  lw    $t6, 0x1c($sp)
 /* 0DCEF0 7F0A83C0 104E0014 */  beq   $v0, $t6, .L7F0A8414
 .L7F0A83C4:
 /* 0DCEF4 7F0A83C4 3C048004 */   lui   $a0, %hi(D_800409B8)
-/* 0DCEF8 7F0A83C8 0FC234AA */  jal   sub_GAME_7F08D2A8
+/* 0DCEF8 7F0A83C8 0FC234AA */  jal   get_weaponnum_by_inv_index
 /* 0DCEFC 7F0A83CC 8C8409B8 */   lw    $a0, %lo(D_800409B8)($a0)
 /* 0DCF00 7F0A83D0 00002025 */  move  $a0, $zero
 /* 0DCF04 7F0A83D4 0FC176D5 */  jal   remove_hands_item
@@ -5760,7 +5760,7 @@ glabel debug_gun_watch_move_related2
 /* 0DCFC0 7F0A8490 8C8409B8 */   lw    $a0, %lo(D_800409B8)($a0)
 /* 0DCFC4 7F0A8494 3C048004 */  lui   $a0, %hi(D_800409B8)
 /* 0DCFC8 7F0A8498 E7A00888 */  swc1  $f0, 0x888($sp)
-/* 0DCFCC 7F0A849C 0FC234AA */  jal   sub_GAME_7F08D2A8
+/* 0DCFCC 7F0A849C 0FC234AA */  jal   get_weaponnum_by_inv_index
 /* 0DCFD0 7F0A84A0 8C8409B8 */   lw    $a0, %lo(D_800409B8)($a0)
 /* 0DCFD4 7F0A84A4 3C048004 */  lui   $a0, %hi(D_800409B8)
 /* 0DCFD8 7F0A84A8 AFA20884 */  sw    $v0, 0x884($sp)
@@ -6243,7 +6243,7 @@ glabel debug_gun_watch_move_related2
 /* 0DDB98 7F0A9028 8C8409E8 */   lw    $a0, %lo(D_800409B8)($a0)
 /* 0DDB9C 7F0A902C 3C048004 */  lui   $a0, %hi(D_800409B8) # $a0, 0x8004
 /* 0DDBA0 7F0A9030 E7A00890 */  swc1  $f0, 0x890($sp)
-/* 0DDBA4 7F0A9034 0FC23716 */  jal   sub_GAME_7F08D2A8
+/* 0DDBA4 7F0A9034 0FC23716 */  jal   get_weaponnum_by_inv_index
 /* 0DDBA8 7F0A9038 8C8409E8 */   lw    $a0, %lo(D_800409B8)($a0)
 /* 0DDBAC 7F0A903C 3C048004 */  lui   $a0, %hi(D_800409B8) # $a0, 0x8004
 /* 0DDBB0 7F0A9040 AFA2088C */  sw    $v0, 0x88c($sp)
