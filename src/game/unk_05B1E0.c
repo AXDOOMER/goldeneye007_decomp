@@ -10,237 +10,34 @@ s32 D_80032434 = 2;
 
 // rodata
 
-typedef f32 Quaternion[4]; // w, x, y, z
-typedef f32 mat44[4][4];
-typedef f32 vec3[3];
-typedef u16 u16_3[3];
+typedef u16 vec3u[3];
+typedef f32 vec3f[3];
+typedef f32 mat44f[4][4];
+typedef f32 quatf[4]; // w, x, y, z
 
 float acosf(float);
-float sinf(float);
 
-#ifdef NONMATCHING
-//#define ABS(x) (((s32)x < 0) ? -x : x)
-// void sub_GAME_7F05B1E0(u16_3 arg0, Quaternion arg1) {
-//     f32 sp44;
-//     f32 sp40;
-//     f32 sp3C;
-//     f32 sp38;
-//     f32 sp34;
-//     f32 temp_f0;
-//     f32 temp_f0_2;
-//     f32 temp_f12;
-//     f32 temp_f14;
-//     f32 temp_f16;
-//     f32 temp_f20;
-//     f32 temp_f2;
-//     f32 temp_f6;
-//     f32 temp_f6_2;
-//     f32 temp_f8;
-//     f32 temp_f8_2;
-//     f32 temp_f8_3;
-//     u16 temp_t0;
-//     u16 temp_t1;
-//     u16 temp_t7;
-//     u16 temp_t8;
-//     u16 temp_t9;
-//     f32 phi_f8;
-//     f32 phi_f6;
-//     f32 phi_f8_2;
-//     f32 phi_f6_2;
-//     f32 phi_f8_3;
+#define M_PI 3.1415927f
+#define HALF2RAD(x) (x * (M_PI / 32768.0f))
 
-//     temp_f20 = 0.000095873802f; // M_PI / 32768
-//     sp44 = cosf(arg0[0] * temp_f20 * 0.5f);
-//     phi_f8 = arg0[0];
-//     sp40 = sinf(ABS(phi_f8) * temp_f20 * 0.5f);
-//     temp_t8 = arg0[1];
-//     temp_f6 = (f32) temp_t8;
-//     phi_f6 = temp_f6;
-//     if ((s32) temp_t8 < 0) {
-//         phi_f6 = temp_f6 + 4294967296.0f;
-//     }
-//     sp3C = cosf(phi_f6 * temp_f20 * 0.5f);
-//     temp_t9 = arg0[1];
-//     temp_f8_2 = (f32) temp_t9;
-//     phi_f8_2 = temp_f8_2;
-//     if ((s32) temp_t9 < 0) {
-//         phi_f8_2 = temp_f8_2 + 4294967296.0f;
-//     }
-//     sp38 = sinf(phi_f8_2 * temp_f20 * 0.5f);
-//     temp_t0 = arg0[2];
-//     temp_f6_2 = (f32) temp_t0;
-//     phi_f6_2 = temp_f6_2;
-//     if ((s32) temp_t0 < 0) {
-//         phi_f6_2 = temp_f6_2 + 4294967296.0f;
-//     }
-//     temp_f0 = cosf(phi_f6_2 * temp_f20 * 0.5f);
-//     temp_t1 = arg0[2];
-//     temp_f8_3 = (f32) temp_t1;
-//     phi_f8_3 = temp_f8_3;
-//     if ((s32) temp_t1 < 0) {
-//         phi_f8_3 = temp_f8_3 + 4294967296.0f;
-//     }
-//     sp34 = temp_f0;
-//     temp_f0_2 = sinf(phi_f8_3 * temp_f20 * 0.5f);
-//     temp_f2 = sp44 * sp3C;
-//     temp_f16 = sp40 * sp38;
-//     temp_f14 = sp40 * sp3C;
-//     arg1[0] = ((temp_f2 * temp_f0) + (temp_f16 * temp_f0_2));
-//     temp_f12 = sp44 * sp38;
-//     arg1[1] = ((temp_f14 * temp_f0) - (temp_f12 * temp_f0_2));
-//     arg1[2] = ((temp_f12 * temp_f0) + (temp_f14 * temp_f0_2));
-//     arg1[3] = ((temp_f2 * temp_f0_2) - (temp_f16 * temp_f0));
-// }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80053740
-.word 0x38c90fdb /*0.000095873802*/
-.text
-glabel sub_GAME_7F05B1E0
-/* 08FD10 7F05B1E0 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 08FD14 7F05B1E4 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 08FD18 7F05B1E8 AFB00028 */  sw    $s0, 0x28($sp)
-/* 08FD1C 7F05B1EC F7B60020 */  sdc1  $f22, 0x20($sp)
-/* 08FD20 7F05B1F0 F7B40018 */  sdc1  $f20, 0x18($sp)
-/* 08FD24 7F05B1F4 AFA5004C */  sw    $a1, 0x4c($sp)
-/* 08FD28 7F05B1F8 948E0000 */  lhu   $t6, ($a0)
-/* 08FD2C 7F05B1FC 3C018005 */  lui   $at, %hi(D_80053740)
-/* 08FD30 7F05B200 C4343740 */  lwc1  $f20, %lo(D_80053740)($at)
-/* 08FD34 7F05B204 448E2000 */  mtc1  $t6, $f4
-/* 08FD38 7F05B208 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 08FD3C 7F05B20C 4481B000 */  mtc1  $at, $f22
-/* 08FD40 7F05B210 00808025 */  move  $s0, $a0
-/* 08FD44 7F05B214 05C10005 */  bgez  $t6, .L7F05B22C
-/* 08FD48 7F05B218 468021A0 */   cvt.s.w $f6, $f4
-/* 08FD4C 7F05B21C 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 08FD50 7F05B220 44814000 */  mtc1  $at, $f8
-/* 08FD54 7F05B224 00000000 */  nop   
-/* 08FD58 7F05B228 46083180 */  add.s $f6, $f6, $f8
-.L7F05B22C:
-/* 08FD5C 7F05B22C 46143282 */  mul.s $f10, $f6, $f20
-/* 08FD60 7F05B230 00000000 */  nop   
-/* 08FD64 7F05B234 46165302 */  mul.s $f12, $f10, $f22
-/* 08FD68 7F05B238 0FC15FA8 */  jal   cosf
-/* 08FD6C 7F05B23C 00000000 */   nop   
-/* 08FD70 7F05B240 E7A00044 */  swc1  $f0, 0x44($sp)
-/* 08FD74 7F05B244 960F0000 */  lhu   $t7, ($s0)
-/* 08FD78 7F05B248 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 08FD7C 7F05B24C 448F2000 */  mtc1  $t7, $f4
-/* 08FD80 7F05B250 05E10004 */  bgez  $t7, .L7F05B264
-/* 08FD84 7F05B254 46802220 */   cvt.s.w $f8, $f4
-/* 08FD88 7F05B258 44813000 */  mtc1  $at, $f6
-/* 08FD8C 7F05B25C 00000000 */  nop   
-/* 08FD90 7F05B260 46064200 */  add.s $f8, $f8, $f6
-.L7F05B264:
-/* 08FD94 7F05B264 46144282 */  mul.s $f10, $f8, $f20
-/* 08FD98 7F05B268 00000000 */  nop   
-/* 08FD9C 7F05B26C 46165302 */  mul.s $f12, $f10, $f22
-/* 08FDA0 7F05B270 0FC15FAB */  jal   sinf
-/* 08FDA4 7F05B274 00000000 */   nop   
-/* 08FDA8 7F05B278 E7A00040 */  swc1  $f0, 0x40($sp)
-/* 08FDAC 7F05B27C 96180002 */  lhu   $t8, 2($s0)
-/* 08FDB0 7F05B280 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 08FDB4 7F05B284 44982000 */  mtc1  $t8, $f4
-/* 08FDB8 7F05B288 07010004 */  bgez  $t8, .L7F05B29C
-/* 08FDBC 7F05B28C 468021A0 */   cvt.s.w $f6, $f4
-/* 08FDC0 7F05B290 44814000 */  mtc1  $at, $f8
-/* 08FDC4 7F05B294 00000000 */  nop   
-/* 08FDC8 7F05B298 46083180 */  add.s $f6, $f6, $f8
-.L7F05B29C:
-/* 08FDCC 7F05B29C 46143282 */  mul.s $f10, $f6, $f20
-/* 08FDD0 7F05B2A0 00000000 */  nop   
-/* 08FDD4 7F05B2A4 46165302 */  mul.s $f12, $f10, $f22
-/* 08FDD8 7F05B2A8 0FC15FA8 */  jal   cosf
-/* 08FDDC 7F05B2AC 00000000 */   nop   
-/* 08FDE0 7F05B2B0 E7A0003C */  swc1  $f0, 0x3c($sp)
-/* 08FDE4 7F05B2B4 96190002 */  lhu   $t9, 2($s0)
-/* 08FDE8 7F05B2B8 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 08FDEC 7F05B2BC 44992000 */  mtc1  $t9, $f4
-/* 08FDF0 7F05B2C0 07210004 */  bgez  $t9, .L7F05B2D4
-/* 08FDF4 7F05B2C4 46802220 */   cvt.s.w $f8, $f4
-/* 08FDF8 7F05B2C8 44813000 */  mtc1  $at, $f6
-/* 08FDFC 7F05B2CC 00000000 */  nop   
-/* 08FE00 7F05B2D0 46064200 */  add.s $f8, $f8, $f6
-.L7F05B2D4:
-/* 08FE04 7F05B2D4 46144282 */  mul.s $f10, $f8, $f20
-/* 08FE08 7F05B2D8 00000000 */  nop   
-/* 08FE0C 7F05B2DC 46165302 */  mul.s $f12, $f10, $f22
-/* 08FE10 7F05B2E0 0FC15FAB */  jal   sinf
-/* 08FE14 7F05B2E4 00000000 */   nop   
-/* 08FE18 7F05B2E8 E7A00038 */  swc1  $f0, 0x38($sp)
-/* 08FE1C 7F05B2EC 96080004 */  lhu   $t0, 4($s0)
-/* 08FE20 7F05B2F0 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 08FE24 7F05B2F4 44882000 */  mtc1  $t0, $f4
-/* 08FE28 7F05B2F8 05010004 */  bgez  $t0, .L7F05B30C
-/* 08FE2C 7F05B2FC 468021A0 */   cvt.s.w $f6, $f4
-/* 08FE30 7F05B300 44814000 */  mtc1  $at, $f8
-/* 08FE34 7F05B304 00000000 */  nop   
-/* 08FE38 7F05B308 46083180 */  add.s $f6, $f6, $f8
-.L7F05B30C:
-/* 08FE3C 7F05B30C 46143282 */  mul.s $f10, $f6, $f20
-/* 08FE40 7F05B310 00000000 */  nop   
-/* 08FE44 7F05B314 46165302 */  mul.s $f12, $f10, $f22
-/* 08FE48 7F05B318 0FC15FA8 */  jal   cosf
-/* 08FE4C 7F05B31C 00000000 */   nop   
-/* 08FE50 7F05B320 96090004 */  lhu   $t1, 4($s0)
-/* 08FE54 7F05B324 46000486 */  mov.s $f18, $f0
-/* 08FE58 7F05B328 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 08FE5C 7F05B32C 44892000 */  mtc1  $t1, $f4
-/* 08FE60 7F05B330 05210004 */  bgez  $t1, .L7F05B344
-/* 08FE64 7F05B334 46802220 */   cvt.s.w $f8, $f4
-/* 08FE68 7F05B338 44813000 */  mtc1  $at, $f6
-/* 08FE6C 7F05B33C 00000000 */  nop   
-/* 08FE70 7F05B340 46064200 */  add.s $f8, $f8, $f6
-.L7F05B344:
-/* 08FE74 7F05B344 46144282 */  mul.s $f10, $f8, $f20
-/* 08FE78 7F05B348 E7B20034 */  swc1  $f18, 0x34($sp)
-/* 08FE7C 7F05B34C 46165302 */  mul.s $f12, $f10, $f22
-/* 08FE80 7F05B350 0FC15FAB */  jal   sinf
-/* 08FE84 7F05B354 00000000 */   nop   
-/* 08FE88 7F05B358 C7B6003C */  lwc1  $f22, 0x3c($sp)
-/* 08FE8C 7F05B35C C7A40044 */  lwc1  $f4, 0x44($sp)
-/* 08FE90 7F05B360 C7B40040 */  lwc1  $f20, 0x40($sp)
-/* 08FE94 7F05B364 C7A60038 */  lwc1  $f6, 0x38($sp)
-/* 08FE98 7F05B368 46162082 */  mul.s $f2, $f4, $f22
-/* 08FE9C 7F05B36C C7B20034 */  lwc1  $f18, 0x34($sp)
-/* 08FEA0 7F05B370 8FA2004C */  lw    $v0, 0x4c($sp)
-/* 08FEA4 7F05B374 4606A402 */  mul.s $f16, $f20, $f6
-/* 08FEA8 7F05B378 00000000 */  nop   
-/* 08FEAC 7F05B37C 46121202 */  mul.s $f8, $f2, $f18
-/* 08FEB0 7F05B380 00000000 */  nop   
-/* 08FEB4 7F05B384 46008282 */  mul.s $f10, $f16, $f0
-/* 08FEB8 7F05B388 460A4100 */  add.s $f4, $f8, $f10
-/* 08FEBC 7F05B38C 4616A382 */  mul.s $f14, $f20, $f22
-/* 08FEC0 7F05B390 E4440000 */  swc1  $f4, ($v0)
-/* 08FEC4 7F05B394 C7A80038 */  lwc1  $f8, 0x38($sp)
-/* 08FEC8 7F05B398 C7A60044 */  lwc1  $f6, 0x44($sp)
-/* 08FECC 7F05B39C 46083302 */  mul.s $f12, $f6, $f8
-/* 08FED0 7F05B3A0 00000000 */  nop   
-/* 08FED4 7F05B3A4 46127282 */  mul.s $f10, $f14, $f18
-/* 08FED8 7F05B3A8 00000000 */  nop   
-/* 08FEDC 7F05B3AC 46006102 */  mul.s $f4, $f12, $f0
-/* 08FEE0 7F05B3B0 46045181 */  sub.s $f6, $f10, $f4
-/* 08FEE4 7F05B3B4 46126202 */  mul.s $f8, $f12, $f18
-/* 08FEE8 7F05B3B8 00000000 */  nop   
-/* 08FEEC 7F05B3BC 46007282 */  mul.s $f10, $f14, $f0
-/* 08FEF0 7F05B3C0 E4460004 */  swc1  $f6, 4($v0)
-/* 08FEF4 7F05B3C4 46001182 */  mul.s $f6, $f2, $f0
-/* 08FEF8 7F05B3C8 460A4100 */  add.s $f4, $f8, $f10
-/* 08FEFC 7F05B3CC 46128202 */  mul.s $f8, $f16, $f18
-/* 08FF00 7F05B3D0 E4440008 */  swc1  $f4, 8($v0)
-/* 08FF04 7F05B3D4 46083281 */  sub.s $f10, $f6, $f8
-/* 08FF08 7F05B3D8 E44A000C */  swc1  $f10, 0xc($v0)
-/* 08FF0C 7F05B3DC 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 08FF10 7F05B3E0 8FB00028 */  lw    $s0, 0x28($sp)
-/* 08FF14 7F05B3E4 D7B60020 */  ldc1  $f22, 0x20($sp)
-/* 08FF18 7F05B3E8 D7B40018 */  ldc1  $f20, 0x18($sp)
-/* 08FF1C 7F05B3EC 03E00008 */  jr    $ra
-/* 08FF20 7F05B3F0 27BD0048 */   addiu $sp, $sp, 0x48
-)
-#endif
+void quaternion_set_rotation_around_xyz(vec3u angles, quatf q) {
+    f32 cos_x = cosf(HALF2RAD(angles[0]) * 0.5f);
+    f32 sin_x = sinf(HALF2RAD(angles[0]) * 0.5f);
+    f32 cos_y = cosf(HALF2RAD(angles[1]) * 0.5f);
+    f32 sin_y = sinf(HALF2RAD(angles[1]) * 0.5f);
+    f32 cos_z = cosf(HALF2RAD(angles[2]) * 0.5f);
+    f32 sin_z = sinf(HALF2RAD(angles[2]) * 0.5f);
+    f32 cos_x_cos_y = cos_x * cos_y;
+    f32 cos_x_sin_y = cos_x * sin_y;
+    f32 sin_x_cos_y = sin_x * cos_y;
+    f32 sin_x_sin_y = sin_x * sin_y;
+    q[0] = ((cos_x_cos_y * cos_z) + (sin_x_sin_y * sin_z));
+    q[1] = ((sin_x_cos_y * cos_z) - (cos_x_sin_y * sin_z));
+    q[2] = ((cos_x_sin_y * cos_z) + (sin_x_cos_y * sin_z));
+    q[3] = ((cos_x_cos_y * sin_z) - (sin_x_sin_y * cos_z));
+}
 
-void quaternion_set_rotation_around_xyz(vec3 angles, Quaternion q) {
+void quaternion_set_rotation_around_xyzf(vec3f angles, quatf q) {
     f32 cos_x = cosf(angles[0] * 0.5f);
     f32 sin_x = sinf(angles[0] * 0.5f);
     f32 cos_y = cosf(angles[1] * 0.5f);
@@ -257,21 +54,21 @@ void quaternion_set_rotation_around_xyz(vec3 angles, Quaternion q) {
     q[3] = (cos_x_cos_y * sin_z) - (sin_x_sin_y * cos_z);
 }
 
-void quaternion_set_rotation_around_x(f32 angle, Quaternion q) {
+void quaternion_set_rotation_around_x(f32 angle, quatf q) {
     q[0] = cosf(angle * 0.5f);
     q[1] = sinf(angle * 0.5f);
     q[2] = 0.0f;
     q[3] = 0.0f;
 }
 
-void quaternion_set_rotation_around_y(f32 angle, Quaternion q) {
+void quaternion_set_rotation_around_y(f32 angle, quatf q) {
     q[0] = cosf(angle * 0.5f);
     q[1] = 0.0f;
     q[2] = sinf(angle * 0.5f);
     q[3] = 0.0f;
 }
 
-void quaternion_set_rotation_around_z(f32 angle, Quaternion q) {
+void quaternion_set_rotation_around_z(f32 angle, quatf q) {
     q[0] = cosf(angle * 0.5f);
     q[1] = 0.0f;
     q[2] = 0.0f;
@@ -279,9 +76,7 @@ void quaternion_set_rotation_around_z(f32 angle, Quaternion q) {
 }
 
 #ifdef NONMATCHING
-typedef f32 mat44[4][4];
-
-void quaternion_to_matrix(Quaternion q, mat44 matrix) {
+void quaternion_to_matrix(quatf q, mat44f matrix) {
     f32 temp_f6 = 2.0f / ((q[0] * q[0]) + (q[1] * q[1]) + (q[2] * q[2]) +  (q[3] * q[3]));
     f32 temp_f18 = q[1] * temp_f6;
     f32 temp_f16 = q[2] * temp_f6;
@@ -559,16 +354,16 @@ glabel sub_GAME_7F05B798
 )
 #endif
 
-void quaternion_to_matrix(Quaternion q, mat44 matrix);
+void quaternion_to_matrix(quatf q, mat44f matrix);
 
-void matrix_4x4_set_position_and_rotation(vec3 position, Quaternion rotation, mat44 matrix) {
+void matrix_4x4_set_position_and_rotation(vec3f position, quatf rotation, mat44f matrix) {
     quaternion_to_matrix(rotation, matrix);
     matrix[3][0] = position[0];
     matrix[3][1] = position[1];
     matrix[3][2] = position[2];
 }
 
-void quaternion_slerp(Quaternion q1, Quaternion q2, f32 t, Quaternion result);
+void quaternion_slerp(quatf q1, quatf q2, f32 t, quatf result);
 
 #ifdef NONMATCHING
 void quaternion_slerp(void) {
@@ -787,7 +582,7 @@ glabel quaternion_slerp
 // <    908b0:     c7b00030        lwc1    $f16,48(sp)
 // ---
 // >    908b0:     c7b00018        lwc1    $f16,24(sp)
-void sub_GAME_7F05BC68(Quaternion q, f32 t, Quaternion result) {
+void sub_GAME_7F05BC68(quatf q, f32 t, quatf result) {
     f32 temp_f0_2;
     f32 test2;
     f32 temp_f4;
@@ -945,7 +740,7 @@ glabel sub_GAME_7F05BC68
 )
 #endif
 
-void quaternion_ensure_shortest_path(Quaternion q1, Quaternion q2) {
+void quaternion_ensure_shortest_path(quatf q1, quatf q2) {
     f32 dot = (q1[0] * q2[0]) + (q1[1] * q2[1]) + (q1[2] * q2[2]) + (q1[3] * q2[3]);
     if (dot < 0.0f) {
         q2[0] = -q2[0];
@@ -955,15 +750,15 @@ void quaternion_ensure_shortest_path(Quaternion q1, Quaternion q2) {
     }
 }
 
-void quaternion_multiply(Quaternion lhs, Quaternion rhs, Quaternion result) {
+void quaternion_multiply(quatf lhs, quatf rhs, quatf result) {
     result[0] = (lhs[0] * rhs[0]) - (lhs[1] * rhs[1]) - (lhs[2] * rhs[2]) - (lhs[3] * rhs[3]);
     result[1] = (lhs[0] * rhs[1]) + (rhs[0] * lhs[1]) + (lhs[2] * rhs[3]) - (lhs[3] * rhs[2]);
     result[2] = (lhs[0] * rhs[2]) + (rhs[0] * lhs[2]) + (lhs[3] * rhs[1]) - (lhs[1] * rhs[3]);
     result[3] = (lhs[0] * rhs[3]) + (rhs[0] * lhs[3]) + (lhs[1] * rhs[2]) - (lhs[2] * rhs[1]);
 }
 
-void quaternion_multiply_in_place(Quaternion lhs, Quaternion rhs) {
-    Quaternion result;
+void quaternion_multiply_in_place(quatf lhs, quatf rhs) {
+    quatf result;
     quaternion_multiply(lhs, rhs, result);
     rhs[0] = result[0];
     rhs[1] = result[1];
@@ -971,7 +766,7 @@ void quaternion_multiply_in_place(Quaternion lhs, Quaternion rhs) {
     rhs[3] = result[3];
 }
 
-void sub_GAME_7F05BFD4(Quaternion arg0, Quaternion arg1) {
+void sub_GAME_7F05BFD4(quatf arg0, quatf arg1) {
     f32 angle = acosf(arg0[0]);
     f32 temp_f0_2 = sinf(angle);
     if (temp_f0_2 == 0.0f) {
@@ -993,7 +788,7 @@ void sub_GAME_7F05BFD4(Quaternion arg0, Quaternion arg1) {
 // ---
 // >    90c10:     e7ac0024        swc1    $f12,36(sp)
 // >    90c14:     c7ac0024        lwc1    $f12,36(sp)
-void sub_GAME_7F05C068(Quaternion arg0, Quaternion arg1) {
+void sub_GAME_7F05C068(quatf arg0, quatf arg1) {
     f32 temp_f0_2 = sqrtf((arg0[1] * arg0[1]) + (arg0[2] * arg0[2]) + (arg0[3] * arg0[3]));
     f32 temp_f2_2;
     f32 test;
@@ -1072,12 +867,12 @@ glabel sub_GAME_7F05C068
 )
 #endif
 
-void sub_GAME_7F05C138(Quaternion arg0, Quaternion arg1, Quaternion arg2, Quaternion result) {
-    Quaternion conjugate;
-    Quaternion sp50;
-    Quaternion sp40;
-    Quaternion sp30;
-    Quaternion sp20;
+void sub_GAME_7F05C138(quatf arg0, quatf arg1, quatf arg2, quatf result) {
+    quatf conjugate;
+    quatf sp50;
+    quatf sp40;
+    quatf sp30;
+    quatf sp20;
     conjugate[0] = arg1[0];
     conjugate[1] = -arg1[1];
     conjugate[2] = -arg1[2];
@@ -1094,9 +889,9 @@ void sub_GAME_7F05C138(Quaternion arg0, Quaternion arg1, Quaternion arg2, Quater
     quaternion_multiply(arg1, sp50, result);
 }
 
-void sub_GAME_7F05C250(Quaternion q1, Quaternion q2, Quaternion q3, Quaternion q4, f32 t, Quaternion result) {
-    Quaternion q5;
-    Quaternion q6;
+void sub_GAME_7F05C250(quatf q1, quatf q2, quatf q3, quatf q4, f32 t, quatf result) {
+    quatf q5;
+    quatf q6;
     f32 t2 = (t + t) * (1.0f - t);
     quaternion_ensure_shortest_path(q1, q4);
     quaternion_slerp(q1, q4, t, q5);
@@ -1106,9 +901,9 @@ void sub_GAME_7F05C250(Quaternion q1, Quaternion q2, Quaternion q3, Quaternion q
     quaternion_slerp(q5, q6, t2, result);
 }
 
-void sub_GAME_7F05C2F0(Quaternion q1, Quaternion q2, Quaternion q3, Quaternion q4, f32 t, Quaternion result) {
-    Quaternion q5;
-    Quaternion q6;
+void sub_GAME_7F05C2F0(quatf q1, quatf q2, quatf q3, quatf q4, f32 t, quatf result) {
+    quatf q5;
+    quatf q6;
     sub_GAME_7F05C138(q1, q2, q3, q5);
     sub_GAME_7F05C138(q2, q3, q4, q6);
     sub_GAME_7F05C250(q2, q5, q6, q3, t, result);
