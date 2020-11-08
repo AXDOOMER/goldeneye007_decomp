@@ -516,7 +516,7 @@ glabel sub_GAME_7F08C61C
 
 
 
-int add_prop_to_inventory(struct PropRecord *prop) {
+int add_prop_to_inventory(PropRecord *prop) {
     
     InvItem *item;
 
@@ -1718,7 +1718,7 @@ int checkforgoldengun(void)
 
 
 
-int sub_GAME_7F08CFE0(struct PropRecord *prop) {
+int sub_GAME_7F08CFE0(PropRecord *prop) {
 
     InvItem *item = pPlayer->ptr_inventory_first_in_cycle;
 
@@ -2095,7 +2095,7 @@ glabel sub_GAME_7F08D108
 
 #endif
 
-UnkStruct11F4 *sub_GAME_7F08D21C(struct ObjectRecord *obj) {
+UnkStruct11F4 *sub_GAME_7F08D21C(ObjectRecord *obj) {
     
     UnkStruct11F4 *field_11F4 = pPlayer->field_11F4;
 
@@ -3044,7 +3044,7 @@ void sub_GAME_7F08D8E0(void) {
 }
 
 
-u8 *sub_GAME_7F08D95C(struct ObjectRecord *obj) {
+u8 *sub_GAME_7F08D95C(ObjectRecord *obj) {
 
     UnkStruct11F4 *temp = sub_GAME_7F08D21C(obj);
 
@@ -3055,7 +3055,7 @@ u8 *sub_GAME_7F08D95C(struct ObjectRecord *obj) {
     return 0;
 }
 
-u8 *sub_GAME_7F08D9A4(struct ObjectRecord *obj) {
+u8 *sub_GAME_7F08D9A4(ObjectRecord *obj) {
     
     UnkStruct11F4 *temp = sub_GAME_7F08D25C(obj);
 
