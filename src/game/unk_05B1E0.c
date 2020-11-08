@@ -14,6 +14,9 @@ typedef f32 Quaternion[4]; // w, x, y, z
 typedef f32 mat44[4][4];
 typedef f32 vec3[3];
 
+float acosf(float);
+float sinf(float);
+
 #ifdef NONMATCHING
 void sub_GAME_7F05B1E0(void) {
 
@@ -670,13 +673,87 @@ glabel quaternion_slerp
 )
 #endif
 
-
-
-
-
 #ifdef NONMATCHING
-void sub_GAME_7F05BC68(void) {
-
+// <    907d0:     c426374c        lwc1    $f6,14156(at)
+// ---
+// >    907d0:     c4263750        lwc1    $f6,14160(at)
+// 44c44
+// <    90828:     c42a3750        lwc1    $f10,14160(at)
+// ---
+// >    90828:     c42a3754        lwc1    $f10,14164(at)
+// 53c53
+// <    9084c:     e7b00030        swc1    $f16,48(sp)
+// ---
+// >    9084c:     e7b00018        swc1    $f16,24(sp)
+// 62c62
+// <    90870:     e7a80028        swc1    $f8,40(sp)
+// ---
+// >    90870:     e7a80030        swc1    $f8,48(sp)
+// 64,65c64,65
+// <    90878:     e7a40024        swc1    $f4,36(sp)
+// <    9087c:     e7a00020        swc1    $f0,32(sp)
+// ---
+// >    90878:     e7a4002c        swc1    $f4,44(sp)
+// >    9087c:     e7a00028        swc1    $f0,40(sp)
+// 67,69c67,69
+// <    90884:     c7ac0028        lwc1    $f12,40(sp)
+// <    90888:     c7a60020        lwc1    $f6,32(sp)
+// <    9088c:     c7ac0024        lwc1    $f12,36(sp)
+// ---
+// >    90884:     c7ac0030        lwc1    $f12,48(sp)
+// >    90888:     c7a60028        lwc1    $f6,40(sp)
+// >    9088c:     c7ac002c        lwc1    $f12,44(sp)
+// 72,73c72,73
+// <    90898:     e7a2001c        swc1    $f2,28(sp)
+// <    9089c:     c7b20020        lwc1    $f18,32(sp)
+// ---
+// >    90898:     e7a20024        swc1    $f2,36(sp)
+// >    9089c:     c7b20028        lwc1    $f18,40(sp)
+// 75c75
+// <    908a4:     c7a2001c        lwc1    $f2,28(sp)
+// ---
+// >    908a4:     c7a20024        lwc1    $f2,36(sp)
+// 78c78
+// <    908b0:     c7b00030        lwc1    $f16,48(sp)
+// ---
+// >    908b0:     c7b00018        lwc1    $f16,24(sp)
+void sub_GAME_7F05BC68(Quaternion q, f32 t, Quaternion result) {
+    f32 temp_f0_2;
+    f32 test2;
+    f32 temp_f4;
+    f32 sp20;
+    f32 temp_f2;
+    f32 test;
+    f32 phi_f12 = q[0];
+    f32 phi_f16 = 1.0f;
+    if (q[0] < 0.0f) {
+        phi_f12 = -phi_f12;
+        phi_f16 = -phi_f16;
+    }
+    if (phi_f12 < -0.99998999f) {
+        result[0] = (q[0] * t) - ((1.0f - t) * phi_f16);
+        result[1] = (q[1] * t);
+        result[2] = (q[2] * t);
+        result[3] = (q[3] * t);
+        return;
+    }
+    if (phi_f12 <= 0.99998999f) {
+        temp_f0_2 = acosf(phi_f12);
+        test2 = t * temp_f0_2;
+        temp_f4 = (1.0f - t) *  temp_f0_2;
+        sp20 = sinf(temp_f0_2);
+        temp_f2 = sinf(test2) / sp20;
+        test = sinf(temp_f4) / sp20;
+        result[0] = (q[0] * temp_f2) + (test * phi_f16);
+        result[1] = (q[1] * temp_f2);
+        result[2] = (q[2] * temp_f2);
+        result[3] = (q[3] * temp_f2);
+    } else {
+        result[0] = (q[0] * t) + ((1.0f - t) * phi_f16);
+        result[1] = (q[1] * t);
+        result[2] = (q[2] * t);
+        result[3] = (q[3] * t);
+    }
 }
 #else
 GLOBAL_ASM(
@@ -823,9 +900,6 @@ void quaternion_multiply_in_place(Quaternion lhs, Quaternion rhs) {
     rhs[2] = result[2];
     rhs[3] = result[3];
 }
-
-float acosf(float);
-float sinf(float);
 
 void sub_GAME_7F05BFD4(Quaternion arg0, Quaternion arg1) {
     f32 angle = acosf(arg0[0]);
