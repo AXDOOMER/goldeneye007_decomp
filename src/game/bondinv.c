@@ -1629,7 +1629,7 @@ glabel sub_GAME_7F08CE70
 
 
 #ifdef NONMATCHING
-//NOT MATCHING -> Register values
+//NOT MATCHING YET -> Wrong Register values
 void sub_GAME_7F08CF0C(void) {
 
     InvItem *item = pPlayer->ptr_inventory_first_in_cycle;
