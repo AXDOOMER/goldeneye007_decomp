@@ -2095,7 +2095,7 @@ glabel sub_GAME_7F08D108
 
 #endif
 
-textoverride *sub_GAME_7F08D21C(ObjectRecord *obj) {
+textoverride *get_textoverride_by_obj(ObjectRecord *obj) {
     
     textoverride *override = pPlayer->textoverrides;
 
@@ -2142,7 +2142,7 @@ s32 sub_GAME_7F08D2A8(ITEM_IDS item_id) {
 
             PropRecord *prop = inv_item->type_inv_item.type_prop.prop;
             
-            override = sub_GAME_7F08D21C(prop->Entityp.obj);
+            override = get_textoverride_by_obj(prop->Entityp.obj);
             
             if (override) {
                 return override->weapon;
@@ -2176,7 +2176,7 @@ glabel sub_GAME_7F08D2A8
 /* 0C27EC 7F08DC7C 54810009 */  bnel  $a0, $at, .Ljp7F08DCA4
 /* 0C27F0 7F08DC80 24010001 */   li    $at, 1
 /* 0C27F4 7F08DC84 8C420004 */  lw    $v0, 4($v0)
-/* 0C27F8 7F08DC88 0FC236F3 */  jal   sub_GAME_7F08D21C
+/* 0C27F8 7F08DC88 0FC236F3 */  jal   get_textoverride_by_obj
 /* 0C27FC 7F08DC8C 8C440004 */   lw    $a0, 4($v0)
 /* 0C2800 7F08DC90 50400021 */  beql  $v0, $zero, .Ljp7F08DD18
 /* 0C2804 7F08DC94 00001025 */   move  $v0, $zero
@@ -2250,7 +2250,7 @@ glabel sub_GAME_7F08D340
 /* 0C1E9C 7F08D36C 24010001 */   li    $at, 1
 /* 0C1EA0 7F08D370 8C420004 */  lw    $v0, 4($v0)
 /* 0C1EA4 7F08D374 8C440004 */  lw    $a0, 4($v0)
-/* 0C1EA8 7F08D378 0FC23487 */  jal   sub_GAME_7F08D21C
+/* 0C1EA8 7F08D378 0FC23487 */  jal   get_textoverride_by_obj
 /* 0C1EAC 7F08D37C AFA00018 */   sw    $zero, 0x18($sp)
 /* 0C1EB0 7F08D380 8FA60018 */  lw    $a2, 0x18($sp)
 /* 0C1EB4 7F08D384 10400025 */  beqz  $v0, .L7F08D41C
@@ -2323,7 +2323,7 @@ glabel sub_GAME_7F08D340
 /* 0C28C4 7F08DD54 24010001 */   li    $at, 1
 /* 0C28C8 7F08DD58 8C420004 */  lw    $v0, 4($v0)
 /* 0C28CC 7F08DD5C 8C440004 */  lw    $a0, 4($v0)
-/* 0C28D0 7F08DD60 0FC236F3 */  jal   sub_GAME_7F08D21C
+/* 0C28D0 7F08DD60 0FC236F3 */  jal   get_textoverride_by_obj
 /* 0C28D4 7F08DD64 AFA00018 */   sw    $zero, 0x18($sp)
 /* 0C28D8 7F08DD68 8FA60018 */  lw    $a2, 0x18($sp)
 /* 0C28DC 7F08DD6C 10400035 */  beqz  $v0, .Ljp7F08DE44
@@ -2423,7 +2423,7 @@ glabel sub_GAME_7F08D434
 /* 0C1F90 7F08D460 24010001 */   li    $at, 1
 /* 0C1F94 7F08D464 8C420004 */  lw    $v0, 4($v0)
 /* 0C1F98 7F08D468 8C440004 */  lw    $a0, 4($v0)
-/* 0C1F9C 7F08D46C 0FC23487 */  jal   sub_GAME_7F08D21C
+/* 0C1F9C 7F08D46C 0FC23487 */  jal   get_textoverride_by_obj
 /* 0C1FA0 7F08D470 AFA00018 */   sw    $zero, 0x18($sp)
 /* 0C1FA4 7F08D474 8FA60018 */  lw    $a2, 0x18($sp)
 /* 0C1FA8 7F08D478 10400025 */  beqz  $v0, .L7F08D510
@@ -2496,7 +2496,7 @@ glabel sub_GAME_7F08D434
 /* 0C29F8 7F08DE88 24010001 */   li    $at, 1
 /* 0C29FC 7F08DE8C 8C420004 */  lw    $v0, 4($v0)
 /* 0C2A00 7F08DE90 8C440004 */  lw    $a0, 4($v0)
-/* 0C2A04 7F08DE94 0FC236F3 */  jal   sub_GAME_7F08D21C
+/* 0C2A04 7F08DE94 0FC236F3 */  jal   get_textoverride_by_obj
 /* 0C2A08 7F08DE98 AFA00018 */   sw    $zero, 0x18($sp)
 /* 0C2A0C 7F08DE9C 8FA60018 */  lw    $a2, 0x18($sp)
 /* 0C2A10 7F08DEA0 10400035 */  beqz  $v0, .Ljp7F08DF78
@@ -2630,7 +2630,7 @@ glabel sub_GAME_7F08D5C8
 /* 0C2124 7F08D5F4 24010001 */   li    $at, 1
 /* 0C2128 7F08D5F8 8C420004 */  lw    $v0, 4($v0)
 /* 0C212C 7F08D5FC 8C440004 */  lw    $a0, 4($v0)
-/* 0C2130 7F08D600 0FC23487 */  jal   sub_GAME_7F08D21C
+/* 0C2130 7F08D600 0FC23487 */  jal   get_textoverride_by_obj
 /* 0C2134 7F08D604 AFA00018 */   sw    $zero, 0x18($sp)
 /* 0C2138 7F08D608 8FA60018 */  lw    $a2, 0x18($sp)
 /* 0C213C 7F08D60C 10400025 */  beqz  $v0, .L7F08D6A4
@@ -2703,7 +2703,7 @@ glabel sub_GAME_7F08D5C8
 /* 0C2BCC 7F08E05C 24010001 */   li    $at, 1
 /* 0C2BD0 7F08E060 8C420004 */  lw    $v0, 4($v0)
 /* 0C2BD4 7F08E064 8C440004 */  lw    $a0, 4($v0)
-/* 0C2BD8 7F08E068 0FC236F3 */  jal   sub_GAME_7F08D21C
+/* 0C2BD8 7F08E068 0FC236F3 */  jal   get_textoverride_by_obj
 /* 0C2BDC 7F08E06C AFA00018 */   sw    $zero, 0x18($sp)
 /* 0C2BE0 7F08E070 8FA60018 */  lw    $a2, 0x18($sp)
 /* 0C2BE4 7F08E074 10400035 */  beqz  $v0, .Ljp7F08E14C
@@ -2804,7 +2804,7 @@ glabel sub_GAME_7F08D6BC
 /* 0C2218 7F08D6E8 24010001 */   li    $at, 1
 /* 0C221C 7F08D6EC 8C420004 */  lw    $v0, 4($v0)
 /* 0C2220 7F08D6F0 8C440004 */  lw    $a0, 4($v0)
-/* 0C2224 7F08D6F4 0FC23487 */  jal   sub_GAME_7F08D21C
+/* 0C2224 7F08D6F4 0FC23487 */  jal   get_textoverride_by_obj
 /* 0C2228 7F08D6F8 AFA00018 */   sw    $zero, 0x18($sp)
 /* 0C222C 7F08D6FC 8FA60018 */  lw    $a2, 0x18($sp)
 /* 0C2230 7F08D700 10400025 */  beqz  $v0, .L7F08D798
@@ -2877,7 +2877,7 @@ glabel sub_GAME_7F08D6BC
 /* 0C2D00 7F08E190 24010001 */   li    $at, 1
 /* 0C2D04 7F08E194 8C420004 */  lw    $v0, 4($v0)
 /* 0C2D08 7F08E198 8C440004 */  lw    $a0, 4($v0)
-/* 0C2D0C 7F08E19C 0FC236F3 */  jal   sub_GAME_7F08D21C
+/* 0C2D0C 7F08E19C 0FC236F3 */  jal   get_textoverride_by_obj
 /* 0C2D10 7F08E1A0 AFA00018 */   sw    $zero, 0x18($sp)
 /* 0C2D14 7F08E1A4 8FA60018 */  lw    $a2, 0x18($sp)
 /* 0C2D18 7F08E1A8 10400035 */  beqz  $v0, .Ljp7F08E280
@@ -3034,7 +3034,7 @@ void calculate_equip_cur_item(void) {
 
 u8 *sub_GAME_7F08D95C(ObjectRecord *obj) {
 
-    textoverride *override = sub_GAME_7F08D21C(obj);
+    textoverride *override = get_textoverride_by_obj(obj);
 
     if ( override && override->unk8 ) {
         return get_textptr_for_textID(override->unk8);
