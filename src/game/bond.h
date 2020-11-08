@@ -286,8 +286,8 @@ typedef struct InvItem {
 
 typedef struct textoverride {
 	s32 unk1;
-	s32 unk2;
-	s32 unk3;
+	s32 objoffset;
+	s32 weapon;
 	s32 unk4;
 	s32 unk5;
 	s32 unk6;
@@ -972,7 +972,7 @@ struct Player
   s32 equipmaxitems;
   s32 equipallguns;
   s32 equipcuritem;
-  textoverride *field_11F4;
+  textoverride *textoverrides;
   s32 index_time_spent_using_item;
   s32 field_11FC;
   s32 field_1200;

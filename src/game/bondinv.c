@@ -20,7 +20,7 @@ void reinit_BONDdata_inventory(void) {
     }
     
     pPlayer->ptr_inventory_first_in_cycle = NULL;
-    pPlayer->field_11F4 = NULL;
+    pPlayer->textoverrides = NULL;
     pPlayer->equipcuritem = 0;
 }
 
@@ -2097,45 +2097,41 @@ glabel sub_GAME_7F08D108
 
 textoverride *sub_GAME_7F08D21C(ObjectRecord *obj) {
     
-    textoverride *field_11F4 = pPlayer->field_11F4;
+    textoverride *override = pPlayer->textoverrides;
 
-    while (field_11F4) {
+    while (override) {
       
-        if (field_11F4->obj == obj) {
-            return field_11F4;
+        if (override->obj == obj) {
+            return override;
         }
       
-        field_11F4 = field_11F4->next;
+        override = override->next;
     }
 
     return NULL;
 }
 
-textoverride *sub_GAME_7F08D25C(s32 param) {
+textoverride *sub_GAME_7F08D25C(s32 weaponnum) {
     
-    textoverride *field_11F4 = pPlayer->field_11F4;
+    textoverride *override = pPlayer->textoverrides;
 
-    while (field_11F4) {
+    while (override) {
       
-        if ((field_11F4->unk2 == 0) && (field_11F4->unk3 == param)) {
-            return field_11F4;
+        if ((override->objoffset == 0) && (override->weapon == weaponnum)) {
+            return override;
         }
       
-        field_11F4 = field_11F4->next;
+        override = override->next;
     }
 
     return NULL;
 }
-
-
-
-
 
 
 #ifdef VERSION_US
 s32 sub_GAME_7F08D2A8(ITEM_IDS item_id) {
 
-    textoverride *playerStruct11F4;
+    textoverride *override;
     InvItem *inv_item;
 
     inv_item = sub_GAME_7F08D108(item_id);
@@ -2146,10 +2142,10 @@ s32 sub_GAME_7F08D2A8(ITEM_IDS item_id) {
 
             PropRecord *prop = inv_item->type_inv_item.type_prop.prop;
             
-            playerStruct11F4 = sub_GAME_7F08D21C(prop->Entityp.obj);
+            override = sub_GAME_7F08D21C(prop->Entityp.obj);
             
-            if (playerStruct11F4) {
-                return playerStruct11F4->unk3;
+            if (override) {
+                return override->weapon;
             }
 
         } else if (inv_item->type == INV_ITEM_WEAPON) {
@@ -3003,17 +2999,9 @@ int sub_GAME_7F08D878(int param) {
 
 
 
-void sub_GAME_7F08D8A0(int param) {
-  // maybe param and field_11F4 of Player are structs 
-  // as mips_to_c gives the following output for the following two lines:
-  
-  // --------------------
-  // arg0->unk20 = (s32) pPlayer->unk11F4;
-  // pPlayer->unk11F4 = arg0;
-  // --------------------
-
-  *(int *)(param + 0x20) = pPlayer->field_11F4;
-  pPlayer->field_11F4 = param;
+void sub_GAME_7F08D8A0(textoverride *override) {
+  override->next = pPlayer->textoverrides;
+  pPlayer->textoverrides = override;
 }
 
 int get_BONDdata_equipcuritem(void) {
@@ -3046,24 +3034,24 @@ void calculate_equip_cur_item(void) {
 
 u8 *sub_GAME_7F08D95C(ObjectRecord *obj) {
 
-    textoverride *temp = sub_GAME_7F08D21C(obj);
+    textoverride *override = sub_GAME_7F08D21C(obj);
 
-    if ( temp && temp->unk8 ) {
-        return get_textptr_for_textID(temp->unk8);
+    if ( override && override->unk8 ) {
+        return get_textptr_for_textID(override->unk8);
     }
 
-    return 0;
+    return NULL;
 }
 
 u8 *sub_GAME_7F08D9A4(ObjectRecord *obj) {
     
-    textoverride *temp = sub_GAME_7F08D25C(obj);
+    textoverride *override = sub_GAME_7F08D25C(obj);
 
-    if ( temp && temp->unk8 ) {
-        return get_textptr_for_textID(temp->unk8);
+    if ( override && override->unk8 ) {
+        return get_textptr_for_textID(override->unk8);
     }
     
-    return 0;
+    return NULL;
 }
 
 
