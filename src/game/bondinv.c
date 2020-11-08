@@ -2131,57 +2131,37 @@ UnkStruct11F4 *sub_GAME_7F08D25C(s32 param) {
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08D2A8(void) {
 
-}
-#else
 #ifdef VERSION_US
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08D2A8
-/* 0C1DD8 7F08D2A8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C1DDC 7F08D2AC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C1DE0 7F08D2B0 0FC23442 */  jal   sub_GAME_7F08D108
-/* 0C1DE4 7F08D2B4 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0C1DE8 7F08D2B8 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0C1DEC 7F08D2BC 10400011 */  beqz  $v0, .L7F08D304
-/* 0C1DF0 7F08D2C0 00401825 */   move  $v1, $v0
-/* 0C1DF4 7F08D2C4 8C440000 */  lw    $a0, ($v0)
-/* 0C1DF8 7F08D2C8 24010002 */  li    $at, 2
-/* 0C1DFC 7F08D2CC 54810009 */  bnel  $a0, $at, .L7F08D2F4
-/* 0C1E00 7F08D2D0 24010001 */   li    $at, 1
-/* 0C1E04 7F08D2D4 8C420004 */  lw    $v0, 4($v0)
-/* 0C1E08 7F08D2D8 0FC23487 */  jal   sub_GAME_7F08D21C
-/* 0C1E0C 7F08D2DC 8C440004 */   lw    $a0, 4($v0)
-/* 0C1E10 7F08D2E0 50400013 */  beql  $v0, $zero, .L7F08D330
-/* 0C1E14 7F08D2E4 00001025 */   move  $v0, $zero
-/* 0C1E18 7F08D2E8 10000011 */  b     .L7F08D330
-/* 0C1E1C 7F08D2EC 8C420008 */   lw    $v0, 8($v0)
-/* 0C1E20 7F08D2F0 24010001 */  li    $at, 1
-.L7F08D2F4:
-/* 0C1E24 7F08D2F4 5481000E */  bnel  $a0, $at, .L7F08D330
-/* 0C1E28 7F08D2F8 00001025 */   move  $v0, $zero
-/* 0C1E2C 7F08D2FC 1000000C */  b     .L7F08D330
-/* 0C1E30 7F08D300 8C620004 */   lw    $v0, 4($v1)
-.L7F08D304:
-/* 0C1E34 7F08D304 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0C1E38 7F08D308 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0C1E3C 7F08D30C 28810020 */  slti  $at, $a0, 0x20
-/* 0C1E40 7F08D310 8DCF11EC */  lw    $t7, 0x11ec($t6)
-/* 0C1E44 7F08D314 51E00006 */  beql  $t7, $zero, .L7F08D330
-/* 0C1E48 7F08D318 00001025 */   move  $v0, $zero
-/* 0C1E4C 7F08D31C 50200004 */  beql  $at, $zero, .L7F08D330
-/* 0C1E50 7F08D320 00001025 */   move  $v0, $zero
-/* 0C1E54 7F08D324 10000002 */  b     .L7F08D330
-/* 0C1E58 7F08D328 24820001 */   addiu $v0, $a0, 1
-/* 0C1E5C 7F08D32C 00001025 */  move  $v0, $zero
-.L7F08D330:
-/* 0C1E60 7F08D330 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C1E64 7F08D334 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C1E68 7F08D338 03E00008 */  jr    $ra
-/* 0C1E6C 7F08D33C 00000000 */   nop   
-)
+s32 sub_GAME_7F08D2A8(ITEM_IDS item_id) {
+
+    UnkStruct11F4 *playerStruct11F4;
+    InvItem *inv_item;
+
+    inv_item = sub_GAME_7F08D108(item_id);
+    
+    if (inv_item) {
+
+        if (inv_item->type == INV_ITEM_PROP) {
+
+            PropRecord *prop = inv_item->type_inv_item.type_prop.prop;
+            
+            playerStruct11F4 = sub_GAME_7F08D21C(prop->Entityp.obj);
+            
+            if (playerStruct11F4) {
+                return playerStruct11F4->unk3;
+            }
+
+        } else if (inv_item->type == INV_ITEM_WEAPON) {
+            return inv_item->type_inv_item.type_weap.weapon1;
+        }
+
+    } else if ((pPlayer->equipallguns) && (item_id < ITEM_TANKSHELLS)) {
+        return item_id + 1;
+    }
+    
+    return 0;
+}
 #endif
 
 #ifdef VERSION_JP
@@ -2246,8 +2226,6 @@ glabel sub_GAME_7F08D2A8
 /* 0C2890 7F08DD20 03E00008 */  jr    $ra
 /* 0C2894 7F08DD24 00000000 */   nop   
 )
-#endif
-
 #endif
 
 
