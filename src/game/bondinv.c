@@ -21,7 +21,7 @@ void reinit_BONDdata_inventory(void) {
     
     pPlayer->ptr_inventory_first_in_cycle = 0;
     pPlayer->field_11F4 = 0;
-    pPlayer->field_11F0 = 0;
+    pPlayer->equipcuritem = 0;
 }
 
 #ifdef NONMATCHING
@@ -3018,25 +3018,26 @@ void sub_GAME_7F08D8A0(int param) {
 
 
 int sub_GAME_7F08D8C0(void) {
-  return pPlayer->field_11F0;
+  return pPlayer->equipcuritem;
 }
 
 
 void sub_GAME_7F08D8D0(int param) {
-    pPlayer->field_11F0 = param;
+    pPlayer->equipcuritem = param;
 }
 
 void sub_GAME_7F08D8E0(void) {
-    s32 weaponnum;
+    s32 current_weapon;
     s32 i;
 
-    weaponnum = get_item_in_hand(RIGHT_HAND);
-    pPlayer->field_11F0 = 0;
+    current_weapon = get_item_in_hand(RIGHT_HAND);
+    
+    pPlayer->equipcuritem = 0;
 
     for (i=0; i < sub_GAME_7F08D038(); i++) {
         
-        if (sub_GAME_7F08D2A8(i) == weaponnum) {
-            pPlayer->field_11F0 = i;
+        if (sub_GAME_7F08D2A8(i) == current_weapon) {
+            pPlayer->equipcuritem = i;
             return;
         }
 

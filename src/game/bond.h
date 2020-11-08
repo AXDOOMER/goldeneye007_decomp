@@ -971,7 +971,7 @@ struct Player
   InvItem *p_itemcur;
   s32 equipmaxitems;
   s32 equipallguns;
-  s32 field_11F0;
+  s32 equipcuritem;
   UnkStruct11F4 *field_11F4;
   s32 index_time_spent_using_item;
   s32 field_11FC;
