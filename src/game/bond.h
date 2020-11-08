@@ -12,17 +12,20 @@ struct xyzpoint
 };
 
 
-typedef struct invitem_weap {
-	s32 weapon1;
+typedef struct invitem_weap
+{
+	s32 weapon;
 } invitem_weap;
 
-typedef struct invitem_prop {
+typedef struct invitem_prop
+{
   struct PropRecord *prop;
 } invitem_prop;
 
-typedef struct invitem_dual {
-	s32 weapon1;
-	s32 weapon2;
+typedef struct invitem_dual
+{
+	s32 weapon_right;
+	s32 weapon_left;
 } invitem_dual;
 
 struct hand

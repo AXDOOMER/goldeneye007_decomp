@@ -206,7 +206,7 @@ InvItem *get_ptr_inventory_item(ITEM_IDS weapon) {
 
     while (item) {
 
-        if (item->type == INV_ITEM_WEAPON && item->type_inv_item.type_weap.weapon1 == weapon) {
+        if (item->type == INV_ITEM_WEAPON && item->type_inv_item.type_weap.weapon == weapon) {
             return item;
         }
 
@@ -239,7 +239,7 @@ InvItem *get_ptr_inventory_for_item_in_hand(ITEM_IDS right, ITEM_IDS left) {
 
     while (item) {
 
-        if (item->type == INV_ITEM_DUAL && item->type_inv_item.type_dual.weapon1 == right && item->type_inv_item.type_dual.weapon2 == left) {
+        if (item->type == INV_ITEM_DUAL && item->type_inv_item.type_dual.weapon_right == right && item->type_inv_item.type_dual.weapon_left == left) {
             return item;
         }
 
@@ -326,7 +326,7 @@ int add_item_to_inventory(ITEM_IDS item)
         if (nextItem)
         {
             nextItem->type = INV_ITEM_WEAPON;
-            nextItem->type_inv_item.type_weap.weapon1 = item;
+            nextItem->type_inv_item.type_weap.weapon = item;
             add_additional_weapon_slot_to_player_inventory_guess(nextItem);
         }
 
@@ -358,8 +358,8 @@ int add_doubles_item_to_inventory(int right, int left)
         if (item) {
             item->type = INV_ITEM_DUAL;
             
-            item->type_inv_item.type_dual.weapon1 = right;
-            item->type_inv_item.type_dual.weapon2 = left;
+            item->type_inv_item.type_dual.weapon_right = right;
+            item->type_inv_item.type_dual.weapon_left = left;
             add_additional_weapon_slot_to_player_inventory_guess(item);
         }
 
@@ -2153,7 +2153,7 @@ s32 sub_GAME_7F08D2A8(ITEM_IDS item_id) {
             }
 
         } else if (inv_item->type == INV_ITEM_WEAPON) {
-            return inv_item->type_inv_item.type_weap.weapon1;
+            return inv_item->type_inv_item.type_weap.weapon;
         }
 
     } else if ((pPlayer->equipallguns) && (item_id < ITEM_TANKSHELLS)) {
