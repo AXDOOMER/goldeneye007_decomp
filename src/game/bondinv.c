@@ -3032,11 +3032,11 @@ void calculate_equip_cur_item(void) {
 }
 
 
-u8 *sub_GAME_7F08D95C(ObjectRecord *obj) {
+u8 *obj_get_activated_text(ObjectRecord *obj) {
 
     textoverride *override = get_textoverride_by_obj(obj);
 
-    if ( override && override->unk8 ) {
+    if (override && override->unk8) {
         return get_textptr_for_textID(override->unk8);
     }
 
@@ -3047,7 +3047,7 @@ u8 *sub_GAME_7F08D9A4(s32 weaponnum) {
     
     textoverride *override = get_textoverride_by_weaponum(weaponnum);
 
-    if ( override && override->unk8 ) {
+    if (override && override->unk8) {
         return get_textptr_for_textID(override->unk8);
     }
     
