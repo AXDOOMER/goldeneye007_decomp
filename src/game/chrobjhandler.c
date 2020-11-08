@@ -27753,7 +27753,7 @@ interact_weapon_object:
 /* 084FEC 7F0504BC 8FAF0048 */  lw    $t7, 0x48($sp)
 /* 084FF0 7F0504C0 51C00011 */  beql  $t6, $zero, .L7F050508
 /* 084FF4 7F0504C4 8FA90048 */   lw    $t1, 0x48($sp)
-/* 084FF8 7F0504C8 0FC23669 */  jal   sub_GAME_7F08D9A4
+/* 084FF8 7F0504C8 0FC23669 */  jal   weapon_get_activated_text
 /* 084FFC 7F0504CC 81E40080 */   lb    $a0, 0x80($t7)
 /* 085000 7F0504D0 10400006 */  beqz  $v0, .L7F0504EC
 /* 085004 7F0504D4 00402025 */   move  $a0, $v0
@@ -28133,7 +28133,7 @@ interact_weapon_object:
 /* 084FEC 7F0504BC 8FAF0048 */  lw    $t7, 0x48($sp)
 /* 084FF0 7F0504C0 51C00011 */  beql  $t6, $zero, .L7F050508
 /* 084FF4 7F0504C4 8FA90048 */   lw    $t1, 0x48($sp)
-/* 084FF8 7F0504C8 0FC23669 */  jal   sub_GAME_7F08D9A4
+/* 084FF8 7F0504C8 0FC23669 */  jal   weapon_get_activated_text
 /* 084FFC 7F0504CC 81E40080 */   lb    $a0, 0x80($t7)
 /* 085000 7F0504D0 10400006 */  beqz  $v0, .L7F0504EC
 /* 085004 7F0504D4 00402025 */   move  $a0, $v0

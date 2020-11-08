@@ -3043,7 +3043,7 @@ u8 *obj_get_activated_text(ObjectRecord *obj) {
     return NULL;
 }
 
-u8 *sub_GAME_7F08D9A4(s32 weaponnum) {
+u8 *weapon_get_activated_text(s32 weaponnum) {
     
     textoverride *override = get_textoverride_by_weaponum(weaponnum);
 
