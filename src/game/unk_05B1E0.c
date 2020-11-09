@@ -75,7 +75,6 @@ void quaternion_set_rotation_around_z(f32 angle, quatf q) {
     q[3] = sinf(angle * 0.5f);
 }
 
-#ifdef NONMATCHING
 void quaternion_to_matrix(quatf q, mat44f matrix) {
     f32 temp_f6 = 2.0f / ((q[0] * q[0]) + (q[1] * q[1]) + (q[2] * q[2]) +  (q[3] * q[3]));
     f32 temp_f18 = q[1] * temp_f6;
@@ -84,123 +83,29 @@ void quaternion_to_matrix(quatf q, mat44f matrix) {
     f32 sp34 = q[0] * temp_f18;
     f32 sp30 = q[0] * temp_f16;
     f32 sp2C = q[0] * temp_f14;
-    matrix[0][0] = (1.0f - (q[2] * temp_f16 + q[3] * temp_f14));
-    matrix[0][1] = (q[1] * temp_f16 + sp2C);
-    matrix[0][2] = (q[1] * temp_f14 - sp30);
-    matrix[0][3] = 0.0f;
-    matrix[1][0] = (q[1] * temp_f16 - sp2C);
-    matrix[1][1] = (1.0f - (q[1] * temp_f18 + q[3] * temp_f14));
-    matrix[1][2] = (q[2] * temp_f14 + sp34);
-    matrix[1][3] = 0.0f;
-    matrix[2][0] = (q[1] * temp_f14 + sp30);
-    matrix[2][1] = (q[2] * temp_f14 - sp34);
-    matrix[2][2] = (1.0f - (q[1] * temp_f18 + q[2] * temp_f16));
-    matrix[2][3] = 0.0f;
+    f32 sp28 = q[1] * temp_f18;
+    f32 sp24 = q[1] * temp_f16;
+    f32 sp20 = q[1] * temp_f14;
+    f32 sp1C = q[2] * temp_f16;
+    f32 sp18 = q[2] * temp_f14;
+    f32 sp14 = q[3] * temp_f14;
+    matrix[0][0] = (1.0f - (sp1C + sp14));
+    matrix[0][1] = (sp24 + sp2C);
+    matrix[0][2] = (sp20 - sp30);
+    matrix[1][0] = (sp24 - sp2C);
+    matrix[1][1] = (1.0f - (sp28 + sp14));
+    matrix[1][2] = (sp18 + sp34);
+    matrix[2][0] = (sp20 + sp30);
+    matrix[2][1] = (sp18 - sp34);
+    matrix[2][2] = (1.0f - (sp28 + sp1C));
     matrix[3][0] = 0.0f;
     matrix[3][1] = 0.0f;
     matrix[3][2] = 0.0f;
+    matrix[0][3] = 0.0f;
+    matrix[1][3] = 0.0f;
+    matrix[2][3] = 0.0f;
     matrix[3][3] = 1.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel quaternion_to_matrix
-/* 090158 7F05B628 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 09015C 7F05B62C F7B40008 */  sdc1  $f20, 8($sp)
-/* 090160 7F05B630 C4940000 */  lwc1  $f20, ($a0)
-/* 090164 7F05B634 C4800004 */  lwc1  $f0, 4($a0)
-/* 090168 7F05B638 C4820008 */  lwc1  $f2, 8($a0)
-/* 09016C 7F05B63C 4614A102 */  mul.s $f4, $f20, $f20
-/* 090170 7F05B640 C48C000C */  lwc1  $f12, 0xc($a0)
-/* 090174 7F05B644 3C014000 */  li    $at, 0x40000000 # 2.000000
-/* 090178 7F05B648 46000182 */  mul.s $f6, $f0, $f0
-/* 09017C 7F05B64C 46062200 */  add.s $f8, $f4, $f6
-/* 090180 7F05B650 46021282 */  mul.s $f10, $f2, $f2
-/* 090184 7F05B654 460A4100 */  add.s $f4, $f8, $f10
-/* 090188 7F05B658 460C6182 */  mul.s $f6, $f12, $f12
-/* 09018C 7F05B65C 44815000 */  mtc1  $at, $f10
-/* 090190 7F05B660 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 090194 7F05B664 46043200 */  add.s $f8, $f6, $f4
-/* 090198 7F05B668 46085183 */  div.s $f6, $f10, $f8
-/* 09019C 7F05B66C 46060482 */  mul.s $f18, $f0, $f6
-/* 0901A0 7F05B670 E7A60044 */  swc1  $f6, 0x44($sp)
-/* 0901A4 7F05B674 46061402 */  mul.s $f16, $f2, $f6
-/* 0901A8 7F05B678 00000000 */  nop   
-/* 0901AC 7F05B67C 46066382 */  mul.s $f14, $f12, $f6
-/* 0901B0 7F05B680 00000000 */  nop   
-/* 0901B4 7F05B684 4612A102 */  mul.s $f4, $f20, $f18
-/* 0901B8 7F05B688 00000000 */  nop   
-/* 0901BC 7F05B68C 4610A282 */  mul.s $f10, $f20, $f16
-/* 0901C0 7F05B690 00000000 */  nop   
-/* 0901C4 7F05B694 460EA202 */  mul.s $f8, $f20, $f14
-/* 0901C8 7F05B698 E7A40034 */  swc1  $f4, 0x34($sp)
-/* 0901CC 7F05B69C 46120182 */  mul.s $f6, $f0, $f18
-/* 0901D0 7F05B6A0 E7AA0030 */  swc1  $f10, 0x30($sp)
-/* 0901D4 7F05B6A4 46100102 */  mul.s $f4, $f0, $f16
-/* 0901D8 7F05B6A8 E7A8002C */  swc1  $f8, 0x2c($sp)
-/* 0901DC 7F05B6AC 460E0282 */  mul.s $f10, $f0, $f14
-/* 0901E0 7F05B6B0 E7A60028 */  swc1  $f6, 0x28($sp)
-/* 0901E4 7F05B6B4 44800000 */  mtc1  $zero, $f0
-/* 0901E8 7F05B6B8 46101202 */  mul.s $f8, $f2, $f16
-/* 0901EC 7F05B6BC E7A40024 */  swc1  $f4, 0x24($sp)
-/* 0901F0 7F05B6C0 44818000 */  mtc1  $at, $f16
-/* 0901F4 7F05B6C4 460E1182 */  mul.s $f6, $f2, $f14
-/* 0901F8 7F05B6C8 E7AA0020 */  swc1  $f10, 0x20($sp)
-/* 0901FC 7F05B6CC 460E6102 */  mul.s $f4, $f12, $f14
-/* 090200 7F05B6D0 E7A8001C */  swc1  $f8, 0x1c($sp)
-/* 090204 7F05B6D4 C7AA001C */  lwc1  $f10, 0x1c($sp)
-/* 090208 7F05B6D8 E7A60018 */  swc1  $f6, 0x18($sp)
-/* 09020C 7F05B6DC E7A40014 */  swc1  $f4, 0x14($sp)
-/* 090210 7F05B6E0 C7A80014 */  lwc1  $f8, 0x14($sp)
-/* 090214 7F05B6E4 44812000 */  mtc1  $at, $f4
-/* 090218 7F05B6E8 46085180 */  add.s $f6, $f10, $f8
-/* 09021C 7F05B6EC 46062281 */  sub.s $f10, $f4, $f6
-/* 090220 7F05B6F0 E4AA0000 */  swc1  $f10, ($a1)
-/* 090224 7F05B6F4 C7A4002C */  lwc1  $f4, 0x2c($sp)
-/* 090228 7F05B6F8 C7A80024 */  lwc1  $f8, 0x24($sp)
-/* 09022C 7F05B6FC 46044180 */  add.s $f6, $f8, $f4
-/* 090230 7F05B700 E4A60004 */  swc1  $f6, 4($a1)
-/* 090234 7F05B704 C7A80030 */  lwc1  $f8, 0x30($sp)
-/* 090238 7F05B708 C7AA0020 */  lwc1  $f10, 0x20($sp)
-/* 09023C 7F05B70C 46085101 */  sub.s $f4, $f10, $f8
-/* 090240 7F05B710 E4A40008 */  swc1  $f4, 8($a1)
-/* 090244 7F05B714 C7AA002C */  lwc1  $f10, 0x2c($sp)
-/* 090248 7F05B718 C7A60024 */  lwc1  $f6, 0x24($sp)
-/* 09024C 7F05B71C C7AE0018 */  lwc1  $f14, 0x18($sp)
-/* 090250 7F05B720 C7AC0028 */  lwc1  $f12, 0x28($sp)
-/* 090254 7F05B724 460A3201 */  sub.s $f8, $f6, $f10
-/* 090258 7F05B728 C7A20034 */  lwc1  $f2, 0x34($sp)
-/* 09025C 7F05B72C E4A80010 */  swc1  $f8, 0x10($a1)
-/* 090260 7F05B730 C7A40014 */  lwc1  $f4, 0x14($sp)
-/* 090264 7F05B734 46027200 */  add.s $f8, $f14, $f2
-/* 090268 7F05B738 46046180 */  add.s $f6, $f12, $f4
-/* 09026C 7F05B73C E4A80018 */  swc1  $f8, 0x18($a1)
-/* 090270 7F05B740 46027201 */  sub.s $f8, $f14, $f2
-/* 090274 7F05B744 46068281 */  sub.s $f10, $f16, $f6
-/* 090278 7F05B748 E4AA0014 */  swc1  $f10, 0x14($a1)
-/* 09027C 7F05B74C C7A60030 */  lwc1  $f6, 0x30($sp)
-/* 090280 7F05B750 C7A40020 */  lwc1  $f4, 0x20($sp)
-/* 090284 7F05B754 E4A80024 */  swc1  $f8, 0x24($a1)
-/* 090288 7F05B758 46062280 */  add.s $f10, $f4, $f6
-/* 09028C 7F05B75C E4AA0020 */  swc1  $f10, 0x20($a1)
-/* 090290 7F05B760 C7A4001C */  lwc1  $f4, 0x1c($sp)
-/* 090294 7F05B764 E4A00030 */  swc1  $f0, 0x30($a1)
-/* 090298 7F05B768 E4A00034 */  swc1  $f0, 0x34($a1)
-/* 09029C 7F05B76C 46046180 */  add.s $f6, $f12, $f4
-/* 0902A0 7F05B770 E4A00038 */  swc1  $f0, 0x38($a1)
-/* 0902A4 7F05B774 E4A0000C */  swc1  $f0, 0xc($a1)
-/* 0902A8 7F05B778 E4A0001C */  swc1  $f0, 0x1c($a1)
-/* 0902AC 7F05B77C 46068281 */  sub.s $f10, $f16, $f6
-/* 0902B0 7F05B780 E4A0002C */  swc1  $f0, 0x2c($a1)
-/* 0902B4 7F05B784 E4B0003C */  swc1  $f16, 0x3c($a1)
-/* 0902B8 7F05B788 E4AA0028 */  swc1  $f10, 0x28($a1)
-/* 0902BC 7F05B78C D7B40008 */  ldc1  $f20, 8($sp)
-/* 0902C0 7F05B790 03E00008 */  jr    $ra
-/* 0902C4 7F05B794 27BD0048 */   addiu $sp, $sp, 0x48
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 void matrix_to_quaternion(mat44f arg0, quatf arg1) { //quaternion_from_matrix
