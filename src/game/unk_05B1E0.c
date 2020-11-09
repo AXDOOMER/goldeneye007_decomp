@@ -202,16 +202,94 @@ glabel quaternion_to_matrix
 
 
 
-
-
 #ifdef NONMATCHING
-void sub_GAME_7F05B798(void) {
+void matrix_to_quaternion(mat44f arg0, quatf arg1) { //quaternion_from_matrix
+    // ? sp40;
+    // void *sp38;
+    // s32 sp34;
+    // s32 sp2C;
+    // void *sp28;
+    // void *sp24;
+    // s32 sp20;
+    f32 temp_f0;
+    // f32 temp_f0_2;
+    // f32 temp_f0_3;
+    // f32 temp_f12;
+    f32 temp_f2;
+    // f32 temp_f2_2;
+    // s32 temp_a1;
+    // s32 temp_a2;
+    // s32 temp_a3;
+    // s32 temp_t0;
+    // s32 temp_v0;
+    // s32 temp_v0_2;
+    // void *temp_t1;
+    // void *temp_t2;
+    // void *temp_v1;
+    // void *temp_v1_2;
+    // void *temp_v1_3;
+    // s32 phi_a1;
+    // s32 phi_v0;
+    // void *phi_v1;
+    // f32 phi_f0;
 
+    f32 trace = arg0[0][0] + arg0[1][1] + arg0[2][2] + 1.0f;
+    if (0.0f < trace) {
+        temp_f0 = sqrtf(trace) * 0.5f;
+        temp_f2 = 0.5f / temp_f0;
+        arg1[0] = (temp_f0 * 0.5f);
+        arg1[1] = ((arg0[1][2] - arg0[2][1]) * temp_f0);
+        arg1[2] = ((arg0[2][0] - arg0[0][2]) * temp_f0);
+        arg1[3] = ((arg0[0][1] - arg0[1][0]) * temp_f0);
+        return;
+    }
+    else if ()
+
+
+    // sp40.unk0 = (s32) D_80032430.unk0;
+    // sp40.unk4 = (s32) D_80032430.unk4;
+    // sp40.unk8 = (s32) D_80032430.unk8;
+    // phi_a1 = 0;
+    // if (arg0[0][0] < arg0[1][1]) {
+    //     phi_a1 = 1;
+    // }
+    // temp_v1 = arg0 + (phi_a1 * 0x10);
+    // temp_v0 = phi_a1 * 4;
+    // temp_f0_2 = *(temp_v1 + temp_v0);
+    // phi_v0 = temp_v0;
+    // phi_v1 = temp_v1;
+    // phi_f0 = temp_f0_2;
+    // if (temp_f0_2 < arg0[2][2]) {
+    //     temp_v1_2 = arg0 + 0x20;
+    //     phi_v0 = 8;
+    //     phi_v1 = temp_v1_2;
+    //     phi_f0 = temp_v1_2->unk8;
+    // }
+    // temp_a1 = *(&sp40 + phi_v0);
+    // temp_a3 = temp_a1 * 4;
+    // temp_a2 = *(&sp40 + temp_a3);
+    // temp_t1 = arg0 + (temp_a1 * 0x10);
+    // temp_t2 = arg0 + (temp_a2 * 0x10);
+    // temp_t0 = temp_a2 * 4;
+    // sp24 = temp_t2;
+    // sp28 = temp_t1;
+    // sp20 = temp_t0;
+    // sp2C = temp_a3;
+    // sp38 = phi_v1;
+    // sp34 = phi_v0;
+    // temp_f0_3 = sqrtf(((phi_f0 - *(temp_t1 + temp_a3)) - *(temp_t2 + temp_t0)) + 1.0f, temp_a1, temp_a2, temp_a3);
+    // temp_v0_2 = phi_v0;
+    // temp_f2_2 = 0.5f / temp_f0_3;
+    // temp_v1_3 = phi_v1;
+    // (arg1 + temp_v0_2)->unk4 = (f32) (temp_f0_3 * 0.5f);
+    // arg1->unk0 = (f32) ((*(temp_t1 + temp_t0) - *(temp_t2 + temp_a3)) * temp_f2_2);
+    // (arg1 + temp_a3)->unk4 = (f32) ((*(temp_t1 + temp_v0_2) + *(temp_v1_3 + temp_a3)) * temp_f2_2);
+    // (arg1 + temp_t0)->unk4 = (f32) ((*(temp_t2 + temp_v0_2) + *(temp_v1_3 + temp_t0)) * temp_f2_2);
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F05B798
+glabel matrix_to_quaternion
 /* 0902C8 7F05B798 27BDFFA0 */  addiu $sp, $sp, -0x60
 /* 0902CC 7F05B79C AFBF001C */  sw    $ra, 0x1c($sp)
 /* 0902D0 7F05B7A0 AFB00018 */  sw    $s0, 0x18($sp)
@@ -366,8 +444,46 @@ void matrix_4x4_set_position_and_rotation(vec3f position, quatf rotation, mat44f
 void quaternion_slerp(quatf q1, quatf q2, f32 t, quatf result);
 
 #ifdef NONMATCHING
-void quaternion_slerp(void) {
-
+#define EPSILON 0.0000019073486f
+// <    90678:     c7ac0024        lwc1    $f12,36(sp)
+// ---
+// >    90678:     c7ac0020        lwc1    $f12,32(sp)
+// 90c90
+// <    90680:     c7ac0020        lwc1    $f12,32(sp)
+// ---
+// >    90680:     c7ac0024        lwc1    $f12,36(sp)
+void quaternion_slerp(quatf q1, quatf q2, f32 t, quatf result) {
+    f32 temp_f12 = (q1[0] * q2[0]) + (q1[1] * q2[1]) + (q1[2] * q2[2]) + (q1[3] * q2[3]);
+    f32 temp_f0_2;
+    f32 temp_f8;
+    f32 sp24;
+    f32 sp1C;
+    f32 temp_f2_2;
+    f32 temp_f14_2;
+    if (temp_f12 < (-1.0f + EPSILON)) {
+        result[0] = ((1.0f - t) * q1[0]) - (q2[0] * t);
+        result[1] = ((1.0f - t) * q1[1]) - (q2[1] * t);
+        result[2] = ((1.0f - t) * q1[2]) - (q2[2] * t);
+        result[3] = ((1.0f - t) * q1[3]) - (q2[3] * t);
+        return;
+    }
+    if (temp_f12 <= (1.0f - EPSILON)) {
+        temp_f0_2 = acosf(temp_f12);
+        sp24 = (1.0f - t) * temp_f0_2;
+        temp_f8 = t * temp_f0_2;
+        sp1C = sinf(temp_f0_2);
+        temp_f2_2 = sinf(temp_f8) / sp1C;
+        temp_f14_2 = sinf(sp24) / sp1C;
+        result[0] = (temp_f2_2 * q1[0]) + (q2[0] * temp_f14_2);
+        result[1] = (temp_f2_2 * q1[1]) + (q2[1] * temp_f14_2);
+        result[2] = (temp_f2_2 * q1[2]) + (q2[2] * temp_f14_2);
+        result[3] = (temp_f2_2 * q1[3]) + (q2[3] * temp_f14_2);
+        return;
+    }
+    result[0] = ((1.0f - t) * q1[0]) + (q2[0] * t);
+    result[1] = ((1.0f - t) * q1[1]) + (q2[1] * t);
+    result[2] = ((1.0f - t) * q1[2]) + (q2[2] * t);
+    result[3] = ((1.0f - t) * q1[3]) + (q2[3] * t);
 }
 #else
 GLOBAL_ASM(
