@@ -617,15 +617,9 @@ void sub_GAME_7F05BFD4(quatf arg0, quatf arg1) {
     arg1[3] = (arg0[3] * (angle / temp_f0_2));
 }
 
-#ifdef NONMATCHING
-// <    90c10:     e7ac0020        swc1    $f12,32(sp)
-// <    90c14:     c7ac0020        lwc1    $f12,32(sp)
-// ---
-// >    90c10:     e7ac0024        swc1    $f12,36(sp)
-// >    90c14:     c7ac0024        lwc1    $f12,36(sp)
 void sub_GAME_7F05C068(quatf arg0, quatf arg1) {
-    f32 temp_f0_2 = sqrtf((arg0[1] * arg0[1]) + (arg0[2] * arg0[2]) + (arg0[3] * arg0[3]));
     f32 temp_f2_2;
+    f32 temp_f0_2 = sqrtf((arg0[1] * arg0[1]) + (arg0[2] * arg0[2]) + (arg0[3] * arg0[3]));
     f32 test;
     if (temp_f0_2 == 0.0f) {
         arg1[0] = 1.0f;
@@ -641,66 +635,6 @@ void sub_GAME_7F05C068(quatf arg0, quatf arg1) {
     arg1[2] = (arg0[2] * test);
     arg1[3] = (arg0[3] * test);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05C068
-/* 090B98 7F05C068 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 090B9C 7F05C06C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 090BA0 7F05C070 C4820004 */  lwc1  $f2, 4($a0)
-/* 090BA4 7F05C074 C48E0008 */  lwc1  $f14, 8($a0)
-/* 090BA8 7F05C078 C480000C */  lwc1  $f0, 0xc($a0)
-/* 090BAC 7F05C07C 46021102 */  mul.s $f4, $f2, $f2
-/* 090BB0 7F05C080 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 090BB4 7F05C084 AFA40028 */  sw    $a0, 0x28($sp)
-/* 090BB8 7F05C088 460E7182 */  mul.s $f6, $f14, $f14
-/* 090BBC 7F05C08C 46062200 */  add.s $f8, $f4, $f6
-/* 090BC0 7F05C090 46000282 */  mul.s $f10, $f0, $f0
-/* 090BC4 7F05C094 0C007DF8 */  jal   sqrtf
-/* 090BC8 7F05C098 46085300 */   add.s $f12, $f10, $f8
-/* 090BCC 7F05C09C 44801000 */  mtc1  $zero, $f2
-/* 090BD0 7F05C0A0 8FA40028 */  lw    $a0, 0x28($sp)
-/* 090BD4 7F05C0A4 8FA5002C */  lw    $a1, 0x2c($sp)
-/* 090BD8 7F05C0A8 46020032 */  c.eq.s $f0, $f2
-/* 090BDC 7F05C0AC 46000306 */  mov.s $f12, $f0
-/* 090BE0 7F05C0B0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 090BE4 7F05C0B4 45020008 */  bc1fl .L7F05C0D8
-/* 090BE8 7F05C0B8 AFA40028 */   sw    $a0, 0x28($sp)
-/* 090BEC 7F05C0BC 44818000 */  mtc1  $at, $f16
-/* 090BF0 7F05C0C0 E4A20004 */  swc1  $f2, 4($a1)
-/* 090BF4 7F05C0C4 E4A20008 */  swc1  $f2, 8($a1)
-/* 090BF8 7F05C0C8 E4A2000C */  swc1  $f2, 0xc($a1)
-/* 090BFC 7F05C0CC 10000016 */  b     .L7F05C128
-/* 090C00 7F05C0D0 E4B00000 */   swc1  $f16, ($a1)
-/* 090C04 7F05C0D4 AFA40028 */  sw    $a0, 0x28($sp)
-.L7F05C0D8:
-/* 090C08 7F05C0D8 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 090C0C 7F05C0DC 0FC15FAB */  jal   sinf
-/* 090C10 7F05C0E0 E7AC0020 */   swc1  $f12, 0x20($sp)
-/* 090C14 7F05C0E4 C7AC0020 */  lwc1  $f12, 0x20($sp)
-/* 090C18 7F05C0E8 460C0083 */  div.s $f2, $f0, $f12
-/* 090C1C 7F05C0EC 0FC15FA8 */  jal   cosf
-/* 090C20 7F05C0F0 E7A2001C */   swc1  $f2, 0x1c($sp)
-/* 090C24 7F05C0F4 8FA5002C */  lw    $a1, 0x2c($sp)
-/* 090C28 7F05C0F8 8FA40028 */  lw    $a0, 0x28($sp)
-/* 090C2C 7F05C0FC C7A2001C */  lwc1  $f2, 0x1c($sp)
-/* 090C30 7F05C100 E4A00000 */  swc1  $f0, ($a1)
-/* 090C34 7F05C104 C4920004 */  lwc1  $f18, 4($a0)
-/* 090C38 7F05C108 46029102 */  mul.s $f4, $f18, $f2
-/* 090C3C 7F05C10C E4A40004 */  swc1  $f4, 4($a1)
-/* 090C40 7F05C110 C4860008 */  lwc1  $f6, 8($a0)
-/* 090C44 7F05C114 46023282 */  mul.s $f10, $f6, $f2
-/* 090C48 7F05C118 E4AA0008 */  swc1  $f10, 8($a1)
-/* 090C4C 7F05C11C C488000C */  lwc1  $f8, 0xc($a0)
-/* 090C50 7F05C120 46024402 */  mul.s $f16, $f8, $f2
-/* 090C54 7F05C124 E4B0000C */  swc1  $f16, 0xc($a1)
-.L7F05C128:
-/* 090C58 7F05C128 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 090C5C 7F05C12C 27BD0028 */  addiu $sp, $sp, 0x28
-/* 090C60 7F05C130 03E00008 */  jr    $ra
-/* 090C64 7F05C134 00000000 */   nop   
-)
-#endif
 
 void sub_GAME_7F05C138(quatf arg0, quatf arg1, quatf arg2, quatf result) {
     quatf conjugate;
