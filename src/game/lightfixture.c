@@ -91,9 +91,8 @@ s32 get_index_of_current_entry_in_init_lightfixture_table(void)
 
 
 
-#ifdef NONMATCHING
-void add_entry_to_init_lightfixture_table(Gfx *DL)
 
+void add_entry_to_init_lightfixture_table(Gfx *DL)
 {
   cur_entry_lightfixture_table = get_index_of_current_entry_in_init_lightfixture_table();
   if (cur_entry_lightfixture_table != 100) {
@@ -102,39 +101,6 @@ void add_entry_to_init_lightfixture_table(Gfx *DL)
   }
   return;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel add_entry_to_init_lightfixture_table
-/* 0F00CC 7F0BB59C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F00D0 7F0BB5A0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F00D4 7F0BB5A4 0FC2ED49 */  jal   get_index_of_current_entry_in_init_lightfixture_table
-/* 0F00D8 7F0BB5A8 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0F00DC 7F0BB5AC 3C048008 */  lui   $a0, %hi(cur_entry_lightfixture_table)
-/* 0F00E0 7F0BB5B0 24842B10 */  addiu $a0, %lo(cur_entry_lightfixture_table) # addiu $a0, $a0, 0x2b10
-/* 0F00E4 7F0BB5B4 A4820000 */  sh    $v0, ($a0)
-/* 0F00E8 7F0BB5B8 84830000 */  lh    $v1, ($a0)
-/* 0F00EC 7F0BB5BC 24010064 */  li    $at, 100
-/* 0F00F0 7F0BB5C0 3C0F8008 */  lui   $t7, %hi(light_fixture_table) 
-/* 0F00F4 7F0BB5C4 1061000A */  beq   $v1, $at, .L7F0BB5F0
-/* 0F00F8 7F0BB5C8 00037080 */   sll   $t6, $v1, 2
-/* 0F00FC 7F0BB5CC 01C37023 */  subu  $t6, $t6, $v1
-/* 0F0100 7F0BB5D0 3C188008 */  lui   $t8, %hi(index_of_cur_entry_lightfixture_table) 
-/* 0F0104 7F0BB5D4 87182B12 */  lh    $t8, %lo(index_of_cur_entry_lightfixture_table)($t8)
-/* 0F0108 7F0BB5D8 8FB90018 */  lw    $t9, 0x18($sp)
-/* 0F010C 7F0BB5DC 000E7080 */  sll   $t6, $t6, 2
-/* 0F0110 7F0BB5E0 25EF2660 */  addiu $t7, %lo(light_fixture_table) # addiu $t7, $t7, 0x2660
-/* 0F0114 7F0BB5E4 01CF1021 */  addu  $v0, $t6, $t7
-/* 0F0118 7F0BB5E8 A4580000 */  sh    $t8, ($v0)
-/* 0F011C 7F0BB5EC AC590004 */  sw    $t9, 4($v0)
-.L7F0BB5F0:
-/* 0F0120 7F0BB5F0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F0124 7F0BB5F4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F0128 7F0BB5F8 03E00008 */  jr    $ra
-/* 0F012C 7F0BB5FC 00000000 */   nop   
-)
-#endif
 
 
 

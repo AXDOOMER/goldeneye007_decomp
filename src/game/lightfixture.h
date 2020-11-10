@@ -6,7 +6,7 @@
 typedef struct s_lightfixture {
     s16 index;
     s16 RESERVED;
-    void *ptr_start_pertinent_DL;
+    Gfx *ptr_start_pertinent_DL;
     void *ptr_end_pertinent_DL;
 } s_lightfixture;
 
