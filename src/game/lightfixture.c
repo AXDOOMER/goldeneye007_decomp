@@ -116,9 +116,51 @@ void save_ptrDL_enpoint_to_current_init_lightfixture_table(Gfx *param_1)
 
 
 #ifdef NONMATCHING
-void check_if_imageID_is_light(void) {
-
+s32 check_if_imageID_is_light(s32 imageID)
+{
+    if (imageID == 0xC9)
+    {
+        return 1;
+    }
+    if (imageID == 0xCB)
+    {
+        return 1;
+    }
+    if (imageID == 0xCD)
+    {
+        return 1;
+    }
+    if (imageID == 0xFC)
+    {
+        return 1;
+    }
+    if (imageID == 0xFE)
+    {
+        return 1;
+    }
+    if (imageID == 0xFF)
+    {
+        return 1;
+    }
+    if (imageID == 0x100)
+    {
+        return 1;
+    }
+    if (imageID == 0x1AC)
+    {
+        return 1;
+    }
+    if (imageID == 0x3D6)
+    {
+        return 1;
+    }
+    if (imageID == 0x567)
+    {
+        return 1;
+    }
+    return 0;
 }
+
 #else
 GLOBAL_ASM(
 .text
