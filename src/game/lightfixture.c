@@ -99,38 +99,19 @@ void add_entry_to_init_lightfixture_table(Gfx *DL)
     light_fixture_table[cur_entry_lightfixture_table].index = index_of_cur_entry_lightfixture_table;
     light_fixture_table[cur_entry_lightfixture_table].ptr_start_pertinent_DL = DL;
   }
-  return;
 }
 
 
 
 
 
-#ifdef NONMATCHING
-void save_ptrDL_enpoint_to_current_init_lightfixture_table(void) {
 
+void save_ptrDL_enpoint_to_current_init_lightfixture_table(Gfx *param_1)
+{
+  if (cur_entry_lightfixture_table != 100) {
+    light_fixture_table[cur_entry_lightfixture_table].ptr_end_pertinent_DL = param_1;
+  }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel save_ptrDL_enpoint_to_current_init_lightfixture_table
-/* 0F0130 7F0BB600 3C028008 */  lui   $v0, %hi(cur_entry_lightfixture_table)
-/* 0F0134 7F0BB604 84422B10 */  lh    $v0, %lo(cur_entry_lightfixture_table)($v0)
-/* 0F0138 7F0BB608 24010064 */  li    $at, 100
-/* 0F013C 7F0BB60C 10410006 */  beq   $v0, $at, .L7F0BB628
-/* 0F0140 7F0BB610 00027080 */   sll   $t6, $v0, 2
-/* 0F0144 7F0BB614 01C27023 */  subu  $t6, $t6, $v0
-/* 0F0148 7F0BB618 000E7080 */  sll   $t6, $t6, 2
-/* 0F014C 7F0BB61C 3C018008 */  lui   $at, %hi(light_fixture_table+8)
-/* 0F0150 7F0BB620 002E0821 */  addu  $at, $at, $t6
-/* 0F0154 7F0BB624 AC242668 */  sw    $a0, %lo(light_fixture_table+8)($at)
-.L7F0BB628:
-/* 0F0158 7F0BB628 03E00008 */  jr    $ra
-/* 0F015C 7F0BB62C 00000000 */   nop   
-)
-#endif
-
-
 
 
 
