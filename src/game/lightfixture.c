@@ -1,8 +1,9 @@
 #include "ultra64.h"
+#include "game/lightfixture.h"
 
 // bss
 //CODE.bss:80082660
-char light_fixture_table[0x4B0];
+s_lightfixture light_fixture_table[0x64];
 //CODE.bss:80082B10
 s16 cur_entry_lightfixture_table;
 //CODE.bss:80082B12
@@ -61,64 +62,47 @@ glabel init_lightfixture_tables
 
 
 
-#ifdef NONMATCHING
-void get_index_of_current_entry_in_init_lightfixture_table(void) {
 
+s32 get_index_of_current_entry_in_init_lightfixture_table(void)
+{
+    s32 i;
+
+    for (i = 0; i != 0x64; i+=4)
+    {
+        if (light_fixture_table[i].index == 0)
+        {
+            return i;
+        }
+        if (light_fixture_table[i+1].index == 0)
+        {
+            return i + 1;
+        }
+        if (light_fixture_table[i+2].index == 0)
+        {
+            return i + 2;
+        }
+        if (light_fixture_table[i+3].index == 0)
+        {
+            return i + 3;
+        }
+    }
+    return 0x64;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_index_of_current_entry_in_init_lightfixture_table
-/* 0F0054 7F0BB524 3C028008 */  lui   $v0, %hi(light_fixture_table)
-/* 0F0058 7F0BB528 24422660 */  addiu $v0, %lo(light_fixture_table) # addiu $v0, $v0, 0x2660
-/* 0F005C 7F0BB52C 00001825 */  move  $v1, $zero
-/* 0F0060 7F0BB530 24040064 */  li    $a0, 100
-.L7F0BB534:
-/* 0F0064 7F0BB534 844E0000 */  lh    $t6, ($v0)
-/* 0F0068 7F0BB538 55C00004 */  bnezl $t6, .L7F0BB54C
-/* 0F006C 7F0BB53C 844F000C */   lh    $t7, 0xc($v0)
-/* 0F0070 7F0BB540 03E00008 */  jr    $ra
-/* 0F0074 7F0BB544 00601025 */   move  $v0, $v1
-
-/* 0F0078 7F0BB548 844F000C */  lh    $t7, 0xc($v0)
-.L7F0BB54C:
-/* 0F007C 7F0BB54C 55E00004 */  bnezl $t7, .L7F0BB560
-/* 0F0080 7F0BB550 84580018 */   lh    $t8, 0x18($v0)
-/* 0F0084 7F0BB554 03E00008 */  jr    $ra
-/* 0F0088 7F0BB558 24620001 */   addiu $v0, $v1, 1
-
-/* 0F008C 7F0BB55C 84580018 */  lh    $t8, 0x18($v0)
-.L7F0BB560:
-/* 0F0090 7F0BB560 57000004 */  bnezl $t8, .L7F0BB574
-/* 0F0094 7F0BB564 84590024 */   lh    $t9, 0x24($v0)
-/* 0F0098 7F0BB568 03E00008 */  jr    $ra
-/* 0F009C 7F0BB56C 24620002 */   addiu $v0, $v1, 2
-
-/* 0F00A0 7F0BB570 84590024 */  lh    $t9, 0x24($v0)
-.L7F0BB574:
-/* 0F00A4 7F0BB574 57200004 */  bnezl $t9, .L7F0BB588
-/* 0F00A8 7F0BB578 24630004 */   addiu $v1, $v1, 4
-/* 0F00AC 7F0BB57C 03E00008 */  jr    $ra
-/* 0F00B0 7F0BB580 24620003 */   addiu $v0, $v1, 3
-
-/* 0F00B4 7F0BB584 24630004 */  addiu $v1, $v1, 4
-.L7F0BB588:
-/* 0F00B8 7F0BB588 1464FFEA */  bne   $v1, $a0, .L7F0BB534
-/* 0F00BC 7F0BB58C 24420030 */   addiu $v0, $v0, 0x30
-/* 0F00C0 7F0BB590 24020064 */  li    $v0, 100
-/* 0F00C4 7F0BB594 03E00008 */  jr    $ra
-/* 0F00C8 7F0BB598 00000000 */   nop   
-)
-#endif
-
-
 
 
 
 #ifdef NONMATCHING
-void add_entry_to_init_lightfixture_table(void) {
+void add_entry_to_init_lightfixture_table(Gfx *DL)
 
+{
+  cur_entry_lightfixture_table = get_index_of_current_entry_in_init_lightfixture_table();
+  if (cur_entry_lightfixture_table != 100) {
+    light_fixture_table[cur_entry_lightfixture_table].index = index_of_cur_entry_lightfixture_table;
+    light_fixture_table[cur_entry_lightfixture_table].ptr_start_pertinent_DL = DL;
+  }
+  return;
 }
+
 #else
 GLOBAL_ASM(
 .text
