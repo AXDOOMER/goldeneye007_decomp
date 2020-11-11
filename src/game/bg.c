@@ -762,26 +762,11 @@ glabel sub_GAME_7F0B39BC
 
 
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F0B3B04(s32 arg0) {
-    // Node 0
-    *((array_room_info + 3) + (arg0 * 0x50)) = (u8)0;
-    return;
+void bgZeroBitflags2ForRoom(s32 roomnum)
+{
+  array_room_info[roomnum].bitflags2 = '\0';
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B3B04
-/* 0E8634 7F0B3B04 00047080 */  sll   $t6, $a0, 2
-/* 0E8638 7F0B3B08 01C47021 */  addu  $t6, $t6, $a0
-/* 0E863C 7F0B3B0C 000E7100 */  sll   $t6, $t6, 4
-/* 0E8640 7F0B3B10 3C018004 */  lui   $at, %hi(array_room_info+0x3)
-/* 0E8644 7F0B3B14 002E0821 */  addu  $at, $at, $t6
-/* 0E8648 7F0B3B18 03E00008 */  jr    $ra
-/* 0E864C 7F0B3B1C A0201417 */   sb    $zero, %lo(array_room_info+0x3)($at)
-)
-#endif
+
 
 
 

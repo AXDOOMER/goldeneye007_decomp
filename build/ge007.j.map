@@ -4999,7 +4999,7 @@ Linker script and memory map
                 0x000000007f0b439c                sub_GAME_7F0B37EC
                 0x000000007f0b4464                sub_GAME_7F0B38B4
                 0x000000007f0b456c                sub_GAME_7F0B39BC
-                0x000000007f0b46b4                sub_GAME_7F0B3B04
+                0x000000007f0b46b4                bgZeroBitflags2ForRoom
                 0x000000007f0b46d0                sub_GAME_7F0B3B20
                 0x000000007f0b4774                sub_GAME_7F0B3BC4
                 0x000000007f0b47bc                sub_GAME_7F0B3C0C
