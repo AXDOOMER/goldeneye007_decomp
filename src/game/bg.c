@@ -866,29 +866,20 @@ glabel sub_GAME_7F0B3B20
 
 
 #ifdef NONMATCHING
-void *sub_GAME_7F0B3BC4(void) {
-    void *temp_v1;
-    void *phi_v1;
-
-    // Node 0
-    NumberOfRoomsDrawn = 0;
-    array_room_info+0x3 = (u8)0;
-    array_room_info + 0x53 = (u8)0;
-    phi_v1 = &array_room_info + 0xA0;
-loop_1:
-    // Node 1
-    temp_v1 = (phi_v1 + 0x140);
-    temp_v1->unk-13D = (u8)0;
-    temp_v1->unk-ED = (u8)0;
-    temp_v1->unk-9D = (u8)0;
-    temp_v1->unk-4D = (u8)0;
-    phi_v1 = temp_v1;
-    if (temp_v1 != &MaxNumRooms)
-    {
-        goto loop_1;
-    }
-    // Node 2
-    return &MaxNumRooms;
+void sub_GAME_7F0B3BC4(void)
+{
+  s32 i;
+  
+  NumberOfRoomsDrawn = 0;
+  array_room_info[0].bitflags2 = '\0';
+  array_room_info[1].bitflags2 = '\0';
+  for (i=2;i!=MaxNumRooms;i=i+4)
+  {
+    array_room_info[i].bitflags2 = '\0';
+    array_room_info[i+1].bitflags2 = '\0';
+    array_room_info[i+2].bitflags2 = '\0';
+    array_room_info[i+3].bitflags2 = '\0';
+  }
 }
 #else
 GLOBAL_ASM(
