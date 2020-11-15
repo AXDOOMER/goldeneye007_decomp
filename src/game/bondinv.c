@@ -1743,7 +1743,7 @@ int sub_GAME_7F08CFE0(PropRecord *prop) {
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F08D038(void) {
+void count_total_items_in_inventory(void) {
 
     InvItem *inv_item;
     s32 numitems = 0;
@@ -1795,7 +1795,7 @@ void sub_GAME_7F08D038(void) {
 #ifdef VERSION_US
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F08D038
+glabel count_total_items_in_inventory
 /* 0C1B68 7F08D038 3C028008 */  lui   $v0, %hi(pPlayer)
 /* 0C1B6C 7F08D03C 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
 /* 0C1B70 7F08D040 00001825 */  move  $v1, $zero
@@ -1861,7 +1861,7 @@ glabel sub_GAME_7F08D038
 #ifdef VERSION_JP
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F08D038
+glabel count_total_items_in_inventory
 /* 0C250C 7F08D99C 3C028008 */  lui   $v0, %hi(pPlayer) # $v0, 0x8008
 /* 0C2510 7F08D9A0 8C42A120 */  lw    $v0, %lo(pPlayer)($v0)
 /* 0C2514 7F08D9A4 00001825 */  move  $v1, $zero
@@ -3066,7 +3066,7 @@ void calculate_equip_cur_item(void) {
     
     pPlayer->equipcuritem = 0;
 
-    for (i=0; i < sub_GAME_7F08D038(); i++) {
+    for (i=0; i < count_total_items_in_inventory(); i++) {
         
         if (get_weaponnum_by_inv_index(i) == current_weapon) {
             pPlayer->equipcuritem = i;

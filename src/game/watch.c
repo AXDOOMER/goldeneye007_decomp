@@ -2095,7 +2095,7 @@ glabel D_80058490
 glabel sub_GAME_7F0A5B80
 /* 0DA6B0 7F0A5B80 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0DA6B4 7F0A5B84 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0DA6B8 7F0A5B88 0FC2340E */  jal   sub_GAME_7F08D038
+/* 0DA6B8 7F0A5B88 0FC2340E */  jal   count_total_items_in_inventory
 /* 0DA6BC 7F0A5B8C 00000000 */   nop   
 /* 0DA6C0 7F0A5B90 0FC24415 */  jal   get_debug_gunwatchpos_flag
 /* 0DA6C4 7F0A5B94 AFA2001C */   sw    $v0, 0x1c($sp)
@@ -5942,7 +5942,7 @@ glabel debug_gun_watch_move_related2
 /* 0DD27C 7F0A874C A3A00084 */  sb    $zero, 0x84($sp)
 /* 0DD280 7F0A8750 00008025 */  move  $s0, $zero
 /* 0DD284 7F0A8754 AFA90858 */  sw    $t1, 0x858($sp)
-/* 0DD288 7F0A8758 0FC2340E */  jal   sub_GAME_7F08D038
+/* 0DD288 7F0A8758 0FC2340E */  jal   count_total_items_in_inventory
 /* 0DD28C 7F0A875C AFAA0854 */   sw    $t2, 0x854($sp)
 /* 0DD290 7F0A8760 1840000B */  blez  $v0, .L7F0A8790
 /* 0DD294 7F0A8764 00000000 */   nop   
@@ -5952,7 +5952,7 @@ glabel debug_gun_watch_move_related2
 /* 0DD2A0 7F0A8770 27A40084 */  addiu $a0, $sp, 0x84
 /* 0DD2A4 7F0A8774 0C0029FF */  jal   string_append_from_obseg_textbank
 /* 0DD2A8 7F0A8778 00402825 */   move  $a1, $v0
-/* 0DD2AC 7F0A877C 0FC2340E */  jal   sub_GAME_7F08D038
+/* 0DD2AC 7F0A877C 0FC2340E */  jal   count_total_items_in_inventory
 /* 0DD2B0 7F0A8780 26100001 */   addiu $s0, $s0, 1
 /* 0DD2B4 7F0A8784 0202082A */  slt   $at, $s0, $v0
 /* 0DD2B8 7F0A8788 1420FFF7 */  bnez  $at, .L7F0A8768
@@ -6435,7 +6435,7 @@ glabel debug_gun_watch_move_related2
 /* 0DDE78 7F0A9308 AFAD0084 */  sw    $t5, 0x84($sp)
 .Ljp7F0A930C:
 /* 0DDE7C 7F0A930C A3A0008C */  sb    $zero, 0x8c($sp)
-/* 0DDE80 7F0A9310 0FC23667 */  jal   sub_GAME_7F08D038
+/* 0DDE80 7F0A9310 0FC23667 */  jal   count_total_items_in_inventory
 /* 0DDE84 7F0A9314 00008025 */   move  $s0, $zero
 /* 0DDE88 7F0A9318 1840000B */  blez  $v0, .Ljp7F0A9348
 /* 0DDE8C 7F0A931C 00000000 */   nop   
@@ -6445,7 +6445,7 @@ glabel debug_gun_watch_move_related2
 /* 0DDE98 7F0A9328 27A4008C */  addiu $a0, $sp, 0x8c
 /* 0DDE9C 7F0A932C 0C002A03 */  jal   string_append_from_obseg_textbank
 /* 0DDEA0 7F0A9330 00402825 */   move  $a1, $v0
-/* 0DDEA4 7F0A9334 0FC23667 */  jal   sub_GAME_7F08D038
+/* 0DDEA4 7F0A9334 0FC23667 */  jal   count_total_items_in_inventory
 /* 0DDEA8 7F0A9338 26100001 */   addiu $s0, $s0, 1
 /* 0DDEAC 7F0A933C 0202082A */  slt   $at, $s0, $v0
 /* 0DDEB0 7F0A9340 1420FFF7 */  bnez  $at, .Ljp7F0A9320
