@@ -1761,8 +1761,10 @@ void sub_GAME_7F08D038(void) {
             PropRecord *prop = inv_item->type_inv_item.type_prop.prop;
 
             if (prop->type == 4) {
+
+                ObjectRecord *obj = prop->Entityp.obj;
      
-                if (prop->Entityp.obj->runtime_bitflags & 0x400) {
+                if (obj->runtime_bitflags & 0x400) {
                     numitems = numitems + 1;
                 }
 
