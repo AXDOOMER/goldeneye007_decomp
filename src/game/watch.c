@@ -908,44 +908,16 @@ u32 get_screen_ratio(void) {return screen_ratio;}
 void set_screen_ratio(u32 uParm1) {screen_ratio = uParm1;}
 
 
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0A4EF8(void) {
-
+    
+    if (watch_soundrelated_maybe == 1) {
+        watch_soundrelated_maybe = 0;
+        
+    } else {
+        watch_soundrelated_maybe = 1;
+        play_sfx_a1(ptr_sfx_buf, 0x9F, 0);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A4EF8
-/* 0D9A28 7F0A4EF8 3C028004 */  lui   $v0, %hi(watch_soundrelated_maybe)
-/* 0D9A2C 7F0A4EFC 244209A8 */  addiu $v0, %lo(watch_soundrelated_maybe) # addiu $v0, $v0, 0x9a8
-/* 0D9A30 7F0A4F00 8C4E0000 */  lw    $t6, ($v0)
-/* 0D9A34 7F0A4F04 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0D9A38 7F0A4F08 24030001 */  li    $v1, 1
-/* 0D9A3C 7F0A4F0C 146E0003 */  bne   $v1, $t6, .L7F0A4F1C
-/* 0D9A40 7F0A4F10 AFBF0014 */   sw    $ra, 0x14($sp)
-/* 0D9A44 7F0A4F14 10000007 */  b     .L7F0A4F34
-/* 0D9A48 7F0A4F18 AC400000 */   sw    $zero, ($v0)
-.L7F0A4F1C:
-/* 0D9A4C 7F0A4F1C AC430000 */  sw    $v1, ($v0)
-/* 0D9A50 7F0A4F20 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 0D9A54 7F0A4F24 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
-/* 0D9A58 7F0A4F28 2405009F */  li    $a1, 159
-/* 0D9A5C 7F0A4F2C 0C002382 */  jal   play_sfx_a1
-/* 0D9A60 7F0A4F30 00003025 */   move  $a2, $zero
-.L7F0A4F34:
-/* 0D9A64 7F0A4F34 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0D9A68 7F0A4F38 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0D9A6C 7F0A4F3C 03E00008 */  jr    $ra
-/* 0D9A70 7F0A4F40 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 void sub_GAME_7F0A4F44(void){
   watch_soundrelated_maybe = 0;
