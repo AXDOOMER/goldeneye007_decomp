@@ -2156,7 +2156,7 @@ textoverride *get_textoverride_by_obj(ObjectRecord *obj) {
     return NULL;
 }
 
-textoverride *get_textoverride_by_weaponum(s32 weaponnum) {
+textoverride *get_textoverride_by_weaponum(ITEM_IDS weaponnum) {
     
     textoverride *override = pPlayer->textoverrides;
 
@@ -3088,7 +3088,7 @@ u8 *obj_get_activated_text(ObjectRecord *obj) {
     return NULL;
 }
 
-u8 *weapon_get_activated_text(s32 weaponnum) {
+u8 *weapon_get_activated_text(ITEM_IDS weaponnum) {
     
     textoverride *override = get_textoverride_by_weaponum(weaponnum);
 
