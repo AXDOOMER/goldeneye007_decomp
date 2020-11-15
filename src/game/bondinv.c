@@ -1745,6 +1745,49 @@ int sub_GAME_7F08CFE0(PropRecord *prop) {
 #ifdef NONMATCHING
 void sub_GAME_7F08D038(void) {
 
+    InvItem *inv_item;
+    s32 numitems = 0;
+
+    if (pPlayer->equipallguns) {
+        numitems = 0x20;
+    }
+
+    inv_item = pPlayer->ptr_inventory_first_in_cycle;
+
+    while (inv_item) {
+      
+      if (inv_item->type == INV_ITEM_PROP) { 
+            
+            PropRecord *prop = inv_item->type_inv_item.type_prop.prop;
+
+            if (prop->type == 4) {
+     
+                if (prop->Entityp.obj->runtime_bitflags & 0x400) {
+                    numitems = numitems + 1;
+                }
+
+            } else if (prop->type == 1) {
+
+                if ((prop->Entityp.obj->flags2 & 0x40000) == 0) {
+                    numitems = numitems + 1;
+                }
+            }
+        } else if (inv_item->type == INV_ITEM_WEAPON) { 
+            
+            if ((pPlayer->equipallguns == 0) || ( inv_item->type_inv_item.type_weap.weapon < 0x21) == 0) {
+                numitems = numitems + 1;
+            }
+        }
+
+        inv_item = inv_item->next;
+
+        if (inv_item == pPlayer->ptr_inventory_first_in_cycle) {
+          break;
+        }
+    }
+
+    return numitems;
+
 }
 #else
 #ifdef VERSION_US
