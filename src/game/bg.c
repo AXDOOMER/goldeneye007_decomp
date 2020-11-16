@@ -1235,32 +1235,25 @@ glabel sub_GAME_7F0B3C8C
 
 
 #ifdef NONMATCHING
-s32 sub_GAME_7F0B4034(s32 arg0) {
-    s32 temp_v1;
-    void *phi_a0;
-    s32 phi_v1;
-    s32 phi_v1_2;
+int sub_GAME_7F0B4034(int room)
 
-    // Node 0
-    phi_v1 = arg0;
-    if ((ptr_bgdata_room_fileposition_list + (arg0 * 0x18))->unk4 == 0)
+{
+  bg_room_data *pbVar1;
+  f32 fVar2;
+  
+  if (ptr_bgdata_room_fileposition_list[room].ypos == 0.00000000)
+  {
+    fVar2 = (ptr_bgdata_room_fileposition_list[room+1].ypos;
+    pbVar1 = ptr_bgdata_room_fileposition_list + room;
+    while( true )
     {
-        // Node 1
-        phi_a0 = (ptr_bgdata_room_fileposition_list + (arg0 * 0x18));
-        phi_v1_2 = arg0;
-loop_2:
-        // Node 2
-        temp_v1 = (phi_v1_2 + 1);
-        phi_a0 = (phi_a0 + 0x18);
-        phi_v1 = temp_v1;
-        phi_v1_2 = temp_v1;
-        if (phi_a0->unk1C == 0)
-        {
-            goto loop_2;
-        }
+      room = room + 1;
+      if (fVar2 != 0.00000000) break;
+      fVar2 = pbVar1[2].ypos;
+      pbVar1 = pbVar1 + 1;
     }
-    // Node 3
-    return phi_v1;
+  }
+  return room;
 }
 #else
 GLOBAL_ASM(
