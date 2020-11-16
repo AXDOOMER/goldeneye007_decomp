@@ -22,6 +22,7 @@ u32 TLB_manager_mapping_table_end;
 
 
 extern u8 *_gameSegmentRomStart;
+extern u8 *_tlbbufSegmentStart;
 
 
 /**
@@ -29,49 +30,27 @@ extern u8 *_gameSegmentRomStart;
  * establishes 7F- TLB buffer and management table
  */
 #ifdef NONMATCHING
-void *establish_TLB_buffer_management_table(void)
-{
-    u32 temp_v1;
-    s32 temp_at;
-    void *temp_v1_2;
-    u32 phi_v1;
-    void *phi_v1_2;
+void establish_TLB_buffer_management_table(void)
 
-    phi_v1 = &TLB_managment_table;
-block_1:
-    temp_v1 = (phi_v1 + 0x10);
-    temp_v1->unk-10 = 1;
-    temp_v1->unk-C = 0;
-    phi_v1 = temp_v1;
-    if (temp_v1 < &TLB_manager_mapping_table)
+{
+    s32 i;
+  
+    for (i=0;i<128;i++)
     {
-        goto block_1;
+        TLB_managment_table[i]->context_value = 1;
+        TLB_managment_table[i]->pagenum = 0;
     }
-    temp_at = (TLB_manager_mapping_table + 2);
-    *temp_at = (u8)0;
-    *temp_at = 1;
-    *temp_at = (u8)0;
-    *temp_at = 1;
-    phi_v1_2 = (void *) (TLB_manager_mapping_table + 4);
-block_3:
-    temp_v1_2 = (phi_v1_2 + 8);
-    temp_v1_2->unk-5 = (u8)0;
-    temp_v1_2->unk-6 = 1;
-    temp_v1_2->unk-3 = (u8)0;
-    temp_v1_2->unk-4 = 1;
-    temp_v1_2->unk-1 = (u8)0;
-    temp_v1_2->unk-2 = 1;
-    temp_v1_2->unk-7 = (u8)0;
-    temp_v1_2->unk-8 = 1;
-    phi_v1_2 = temp_v1_2;
-    if (temp_v1_2 != &TLB_manager_mapping_table_end)
+
+    for (i=0;i<90;i++)
     {
-        goto block_3;
+        TLB_manager_mapping_table[i].entry1 = '\0';
+        TLB_manager_mapping_table[i].entry0 = '\x01';
     }
-    ptr_TLBallocatedblock = (s32) ((&sp_boot & -0x2000) + 0xfff4c000);
-    (void *)0x80060000->unk-1B5C = (s32) (&TLB_managment_table + 0xffc08000);
-    return &TLB_manager_mapping_table_end;
+
+    TLB_manager_mapping_table_end = 0x7fc65bf0;
+    ptr_TLBallocatedblock = (u8 (*) [8192])&_tlbbufSegmentStart;
 }
+
 #else
 GLOBAL_ASM(
 glabel establish_TLB_buffer_management_table
@@ -373,7 +352,7 @@ glabel translate_load_rom_from_TLBaddress
  * 26F8	70001AF8
  * V0=p->TLB memory, or alternately end of free memory [8005E4A8]
  */
-u32 * return_ptr_TLBallocatedblock(void)
+u8 * return_ptr_TLBallocatedblock(void)
 {
     return ptr_TLBallocatedblock;
 }

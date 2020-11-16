@@ -4166,8 +4166,17 @@ SECTIONS
    _roombufSegmentEnd = ADDR(.roombuf) + SIZEOF(.roombuf);
    _roombufSegmentRomEnd = _roombufSegmentRomStart + SIZEOF(.roombuf);
 
+   _tlbbufSegmentStart = ADDR(.tlbbuf);
+   _tlbbufSegmentRomStart = _roombufSegmentRomEnd;
+   .tlbbuf _roombufSegmentEnd : AT(_tlbbufSegmentRomStart){
+      build/u/src/tlb_buffer.o (.bss);
+   }
+   _tlbbufSegmentEnd = ADDR(.tlbbuf) + SIZEOF(.tlbbuf);
+   _tlbbufSegmentRomEnd = _tlbbufSegmentRomStart + SIZEOF(.tlbbuf);
+
+
    _decompbufSegmentStart = ADDR(.decompbuf);
-   _decompbufSegmentRomStart = _roombufSegmentRomEnd;
+   _decompbufSegmentRomStart = _tlbbufSegmentRomEnd;
    .decompbuf 0x80300000 : AT(_decompbufSegmentRomStart){
       build/u/src/decompressbuffer.o (.bss);
    }

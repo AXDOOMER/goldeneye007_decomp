@@ -1477,6 +1477,10 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/u/src/game/room_model_buffer.o
  .gptab.bss     0x0000000000000000       0x18 build/u/src/game/room_model_buffer.o
  .mdebug        0x0000000000000000      0x214 build/u/src/game/room_model_buffer.o
+ .options       0x0000000000000000       0x20 build/u/src/tlb_buffer.o
+ .reginfo       0x0000000000000000       0x18 build/u/src/tlb_buffer.o
+ .gptab.bss     0x0000000000000000       0x18 build/u/src/tlb_buffer.o
+ .mdebug        0x0000000000000000      0x20c build/u/src/tlb_buffer.o
  .options       0x0000000000000000       0x20 build/u/src/decompressbuffer.o
  .reginfo       0x0000000000000000       0x18 build/u/src/decompressbuffer.o
  .gptab.bss     0x0000000000000000       0x18 build/u/src/decompressbuffer.o
@@ -23899,25 +23903,34 @@ Linker script and memory map
                 0x000000008008e360                _roombufSegmentStart = ADDR (.roombuf)
                 0x0000000000c6d5d0                _roombufSegmentRomStart = _bssSegmentRomEnd
 
-.roombuf        0x000000008008e360   0x270000 load address 0x0000000000c6d5d0
+.roombuf        0x000000008008e360   0x267ca0 load address 0x0000000000c6d5d0
  build/u/src/game/room_model_buffer.o(.bss)
- .bss           0x000000008008e360   0x270000 build/u/src/game/room_model_buffer.o
+ .bss           0x000000008008e360   0x267ca0 build/u/src/game/room_model_buffer.o
                 0x000000008008e360                room_model_buffer
-                0x00000000802fe360                _roombufSegmentEnd = (ADDR (.roombuf) + SIZEOF (.roombuf))
-                0x0000000000edd5d0                _roombufSegmentRomEnd = (_roombufSegmentRomStart + SIZEOF (.roombuf))
-                0x0000000080300000                _decompbufSegmentStart = ADDR (.decompbuf)
-                0x0000000000edd5d0                _decompbufSegmentRomStart = _roombufSegmentRomEnd
+                0x00000000802f6000                _roombufSegmentEnd = (ADDR (.roombuf) + SIZEOF (.roombuf))
+                0x0000000000ed5270                _roombufSegmentRomEnd = (_roombufSegmentRomStart + SIZEOF (.roombuf))
+                0x00000000802f6000                _tlbbufSegmentStart = ADDR (.tlbbuf)
+                0x0000000000ed5270                _tlbbufSegmentRomStart = _roombufSegmentRomEnd
 
-.decompbuf      0x0000000080300000    0xab400 load address 0x0000000000edd5d0
+.tlbbuf         0x00000000802f6000     0x81a0 load address 0x0000000000ed5270
+ build/u/src/tlb_buffer.o(.bss)
+ .bss           0x00000000802f6000     0x81a0 build/u/src/tlb_buffer.o
+                0x00000000802f6000                tlb_buffer
+                0x00000000802fe1a0                _tlbbufSegmentEnd = (ADDR (.tlbbuf) + SIZEOF (.tlbbuf))
+                0x0000000000edd410                _tlbbufSegmentRomEnd = (_tlbbufSegmentRomStart + SIZEOF (.tlbbuf))
+                0x0000000080300000                _decompbufSegmentStart = ADDR (.decompbuf)
+                0x0000000000edd410                _decompbufSegmentRomStart = _tlbbufSegmentRomEnd
+
+.decompbuf      0x0000000080300000    0xab400 load address 0x0000000000edd410
  build/u/src/decompressbuffer.o(.bss)
  .bss           0x0000000080300000    0xab400 build/u/src/decompressbuffer.o
                 0x0000000080300000                _decompressBuffer
                 0x00000000803ab400                _decompbufSegmentEnd = (ADDR (.decompbuf) + SIZEOF (.decompbuf))
-                0x0000000000f889d0                _decompbufSegmentRomEnd = (_decompbufSegmentRomStart + SIZEOF (.decompbuf))
+                0x0000000000f88810                _decompbufSegmentRomEnd = (_decompbufSegmentRomStart + SIZEOF (.decompbuf))
                 0x00000000803ab400                _stacksSegmentStart = ADDR (.stacks)
-                0x0000000000f889d0                _stacksSegmentRomStart = _decompbufSegmentRomEnd
+                0x0000000000f88810                _stacksSegmentRomStart = _decompbufSegmentRomEnd
 
-.stacks         0x00000000803ab400     0x9c00 load address 0x0000000000f889d0
+.stacks         0x00000000803ab400     0x9c00 load address 0x0000000000f88810
  build/u/src/stacks.o(.bss)
  .bss           0x00000000803ab400     0x9c00 build/u/src/stacks.o
                 0x00000000803ab400                sp_boot
@@ -23928,17 +23941,17 @@ Linker script and memory map
                 0x00000000803b3950                sp_audi
                 0x00000000803b4950                sp_debug
                 0x00000000803b5000                _stacksSegmentEnd = (ADDR (.stacks) + SIZEOF (.stacks))
-                0x0000000000f925d0                _stacksSegmentRomEnd = (_stacksSegmentRomStart + SIZEOF (.stacks))
+                0x0000000000f92410                _stacksSegmentRomEnd = (_stacksSegmentRomStart + SIZEOF (.stacks))
                 0x00000000803b5000                _cfbSegmentStart = ADDR (.cfb)
-                0x0000000000f925d0                _cfbSegmentRomStart = _stacksSegmentRomEnd
+                0x0000000000f92410                _cfbSegmentRomStart = _stacksSegmentRomEnd
 
-.cfb            0x00000000803b5000    0x4b000 load address 0x0000000000f925d0
+.cfb            0x00000000803b5000    0x4b000 load address 0x0000000000f92410
  build/u/src/cfb.o(.bss)
  .bss           0x00000000803b5000    0x4b000 build/u/src/cfb.o
                 0x00000000803b5000                cfb_16_a
                 0x00000000803da800                cfb_16_b
                 0x0000000080400000                _cfbSegmentEnd = (ADDR (.cfb) + SIZEOF (.cfb))
-                0x0000000000fdd5d0                _cfbSegmentRomEnd = (_cfbSegmentRomStart + SIZEOF (.cfb))
+                0x0000000000fdd410                _cfbSegmentRomEnd = (_cfbSegmentRomStart + SIZEOF (.cfb))
 
 /DISCARD/
  *(.MIPS.abiflags)
