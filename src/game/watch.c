@@ -1434,6 +1434,22 @@ glabel sub_GAME_7F0A53D8
 #ifdef NONMATCHING
 void sub_GAME_7F0A5504(void) {
 
+    if ((get_controller_buttons_pressed(0, 0x222) != 0) || (sub_GAME_7F0A4FB0() != 0)) {
+        if (watch_soundrelated_maybe == 0) {
+            D_80040994 = 1;
+            set_controlstick_lr_disabled();
+            return;
+        }
+    }
+    if ((get_controller_buttons_pressed(0, 0x111) != 0) || (sub_GAME_7F0A4FEC() != 0)) {
+        if (watch_soundrelated_maybe == 0) {
+            D_80040994 = 2;
+            zero_D_80040998();
+            sub_GAME_7F0A5210();
+            trigger_watch_zoom(3.95f, 15.0f);
+        }
+    }
+
 }
 #else
 GLOBAL_ASM(
