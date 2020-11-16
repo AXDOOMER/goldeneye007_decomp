@@ -22311,8 +22311,8 @@ Linker script and memory map
  build/u/src/osMapTLB.o(.bss)
  build/u/src/tlb_manage.o(.bss)
  .bss           0x000000008005dbf0      0x8c0 build/u/src/tlb_manage.o
-                0x000000008005dbf0                TLB_managment_table_start
-                0x000000008005e3f0                TLB_manager_mapping_table_start
+                0x000000008005dbf0                TLB_managment_table
+                0x000000008005e3f0                TLB_manager_mapping_table
                 0x000000008005e4a4                TLB_manager_mapping_table_end
                 0x000000008005e4a8                ptr_TLBallocatedblock
  build/u/src/tlb_random.o(.bss)
