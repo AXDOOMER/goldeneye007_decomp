@@ -11487,9 +11487,6 @@ glabel sub_GAME_7F07DF28
 #endif
 
 
-
-
-
 void sub_GAME_7F07E010(f32 arg0) {
     pPlayer->field_210 = 0.0f;
     pPlayer->field_214 = arg0;
@@ -11503,42 +11500,9 @@ void sub_GAME_7F07E03C(f32 arg0) {
 }
 
 
-
-
-
-
-#ifdef NONMATCHING
 s32 sub_GAME_7F07E068(void) {
-    s32 temp_v0;
-
-    // Node 0
-    temp_v0 = (0U < (u32) pPlayer->field_218);
-    if (temp_v0 != 0)
-    {
-        // Node 1
-    }
-    // Node 2
-    return temp_v0;
+    return (pPlayer->field_218 != 0 && pPlayer->field_218 != 3);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F07E068
-/* 0B2B98 7F07E068 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0B2B9C 7F07E06C 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0B2BA0 7F07E070 8DC30218 */  lw    $v1, 0x218($t6)
-/* 0B2BA4 7F07E074 0003102B */  sltu  $v0, $zero, $v1
-/* 0B2BA8 7F07E078 10400003 */  beqz  $v0, .L7F07E088
-/* 0B2BAC 7F07E07C 00000000 */   nop   
-/* 0B2BB0 7F07E080 38620003 */  xori  $v0, $v1, 3
-/* 0B2BB4 7F07E084 0002102B */  sltu  $v0, $zero, $v0
-.L7F07E088:
-/* 0B2BB8 7F07E088 03E00008 */  jr    $ra
-/* 0B2BBC 7F07E08C 00000000 */   nop   
-)
-#endif
-
-
 
 
 
