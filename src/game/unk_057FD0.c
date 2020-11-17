@@ -40,12 +40,11 @@ void matrix_4x4_set_identity(mat44 matrix) {
 }
 
 void matrix_4x4_copy(mat44 src, mat44 dst) {
-    s32 i;
+    s32 i, j;
     for (i = 0; i < 4; i++) {
-        dst[i][0] = src[i][0];
-        dst[i][1] = src[i][1];
-        dst[i][2] = src[i][2];
-        dst[i][3] = src[i][3];
+        for (j = 0; j < 4; j++) {
+            dst[i][j] = src[i][j];
+        }
     }
 }
 
@@ -63,133 +62,22 @@ void matrix_4x4_multiply_homogeneous_in_place(mat44 lhs, mat44 rhs) {
     matrix_4x4_copy(result, rhs);
 }
 
-#ifdef NONMATCHING
-// 8cbf8:    move    v1,zero                           8cbf8:    move    v1,zero
-// 8cbfc:    move    t0,a0                           r 8cbfc:    move    t1,a0
-// 8cc00:    li      t2,0x10                         r 8cc00:    li      t3,0x10
-// 8cc04:    li      t1,4                            r 8cc04:    li      t2,0x40
-// 8cc08:    move    v0,zero                         | 8cc08:    addu    a0,a2,v1
-// 8cc0c:    addu    a0,a2,v1                        | 8cc0c:    move    a3,zero
-// 8cc10:    move    a3,a1                           r 8cc10:    move    t0,a1
-// 8cc14:    lwc1    $f18,0(t0)                      r 8cc14:    lwc1    $f18,0(t1)
-// 8cc18:    lwc1    $f16,0(a3)                      r 8cc18:    lwc1    $f16,0(t0)
-// 8cc1c:    lwc1    $f14,0x10(t0)                   r 8cc1c:    lwc1    $f14,0x10(t1)
-// 8cc20:    lwc1    $f12,4(a3)                      r 8cc20:    lwc1    $f12,4(t0)
-// 8cc24:    mul.s   $f16,$f18,$f16                    8cc24:    mul.s   $f16,$f18,$f16
-// 8cc28:    lwc1    $f18,0x20(t0)                   r 8cc28:    lwc1    $f18,0x20(t1)
-// 8cc2c:    lwc1    $f10,8(a3)                      r 8cc2c:    lwc1    $f10,8(t0)
-// 8cc30:    mul.s   $f12,$f14,$f12                    8cc30:    mul.s   $f12,$f14,$f12
-// 8cc34:    lwc1    $f14,0xc(a3)                    r 8cc34:    lwc1    $f14,0xc(t0)
-// 8cc38:    lwc1    $f8,0x30(t0)                    r 8cc38:    lwc1    $f8,0x30(t1)
-// 8cc3c:    mul.s   $f10,$f18,$f10                    8cc3c:    mul.s   $f10,$f18,$f10
-// 8cc40:    addiu   v0,v0,2                         r 8cc40:    addiu   a3,a3,0x20
-// 8cc44:    addiu   a0,a0,0x20                        8cc44:    addiu   a0,a0,0x20
-// 8cc48:    mul.s   $f8,$f14,$f8                      8cc48:    mul.s   $f8,$f14,$f8
-// 8cc4c:    addiu   a3,a3,0x20                      r 8cc4c:    addiu   t0,t0,0x20
-// 8cc50:    add.s   $f12,$f16,$f12                    8cc50:    add.s   $f12,$f16,$f12
-// 8cc54:    add.s   $f10,$f12,$f10                    8cc54:    add.s   $f10,$f12,$f10
-// 8cc58:    add.s   $f10,$f8,$f10                     8cc58:    add.s   $f10,$f8,$f10
-// 8cc5c:    swc1    $f10,-0x20(a0)                    8cc5c:    swc1    $f10,-0x20(a0)
-// 8cc60:    lwc1    $f10,0(t0)                      r 8cc60:    lwc1    $f10,0(t1)
-// 8cc64:    lwc1    $f8,-0x10(a3)                   r 8cc64:    lwc1    $f8,-0x10(t0)
-// 8cc68:    lwc1    $f12,0x10(t0)                   r 8cc68:    lwc1    $f12,0x10(t1)
-// 8cc6c:    lwc1    $f16,-0xc(a3)                   r 8cc6c:    lwc1    $f16,-0xc(t0)
-// 8cc70:    mul.s   $f8,$f10,$f8                      8cc70:    mul.s   $f8,$f10,$f8
-// 8cc74:    lwc1    $f10,0x20(t0)                   r 8cc74:    lwc1    $f10,0x20(t1)
-// 8cc78:    lwc1    $f14,-8(a3)                     r 8cc78:    lwc1    $f14,-8(t0)
-// 8cc7c:    mul.s   $f16,$f12,$f16                    8cc7c:    mul.s   $f16,$f12,$f16
-// 8cc80:    lwc1    $f12,-4(a3)                     r 8cc80:    lwc1    $f12,-4(t0)
-// 8cc84:    lwc1    $f18,0x30(t0)                   r 8cc84:    lwc1    $f18,0x30(t1)
-// 8cc88:    mul.s   $f14,$f10,$f14                    8cc88:    mul.s   $f14,$f10,$f14
-// 8cc8c:    nop                                       8cc8c:    nop
-// 8cc90:    mul.s   $f18,$f12,$f18                    8cc90:    mul.s   $f18,$f12,$f18
-// 8cc94:    add.s   $f16,$f8,$f16                     8cc94:    add.s   $f16,$f8,$f16
-// 8cc98:    add.s   $f14,$f16,$f14                    8cc98:    add.s   $f14,$f16,$f14
-// 8cc9c:    add.s   $f14,$f18,$f14                    8cc9c:    add.s   $f14,$f18,$f14
-// 8cca0:    bne     v0,t1,0x8cc14 ~>                r 8cca0:    bne     a3,t2,0x8cc14 ~>
-// 8cca4:    swc1    $f14,-0x10(a0)                    8cca4:    swc1    $f14,-0x10(a0)
-// 8cca8:    addiu   v1,v1,4                           8cca8:    addiu   v1,v1,4
-// 8ccac:    bne     v1,t2,0x8cc08 ~>                r 8ccac:    bne     v1,t3,0x8cc08 ~>
-// 8ccb0:    addiu   t0,t0,4                         r 8ccb0:    addiu   t1,t1,4
-// 8ccb4:    jr      ra                                8ccb4:    jr      ra
 void matrix_4x4_multiply(mat44 lhs, mat44 rhs, mat44 result) {
     s32 i, j;
     for (i = 0; i < 4; i++) {
-        for (j = 0; j < 4; j += 2) {
-            result[j + 0][i] = lhs[0][i] * rhs[j + 0][0] + lhs[1][i] * rhs[j + 0][1] + lhs[2][i] * rhs[j + 0][2] + lhs[3][i] * rhs[j + 0][3];
-            result[j + 1][i] = lhs[0][i] * rhs[j + 1][0] + lhs[1][i] * rhs[j + 1][1] + lhs[2][i] * rhs[j + 1][2] + lhs[3][i] * rhs[j + 1][3];
+        for (j = 0; j < 4; j++) {
+            result[j][i] = lhs[0][i] * rhs[j][0] + lhs[1][i] * rhs[j][1] + lhs[2][i] * rhs[j][2] + lhs[3][i] * rhs[j][3];
         }
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel matrix_4x4_multiply
-/* 08CBF8 7F0580C8 00001825 */  move  $v1, $zero
-/* 08CBFC 7F0580CC 00804025 */  move  $t0, $a0
-/* 08CC00 7F0580D0 240A0010 */  li    $t2, 16
-/* 08CC04 7F0580D4 24090004 */  li    $t1, 4
-.L7F0580D8:
-/* 08CC08 7F0580D8 00001025 */  move  $v0, $zero
-/* 08CC0C 7F0580DC 00C32021 */  addu  $a0, $a2, $v1
-/* 08CC10 7F0580E0 00A03825 */  move  $a3, $a1
-.L7F0580E4:
-/* 08CC14 7F0580E4 C5120000 */  lwc1  $f18, ($t0)
-/* 08CC18 7F0580E8 C4F00000 */  lwc1  $f16, ($a3)
-/* 08CC1C 7F0580EC C50E0010 */  lwc1  $f14, 0x10($t0)
-/* 08CC20 7F0580F0 C4EC0004 */  lwc1  $f12, 4($a3)
-/* 08CC24 7F0580F4 46109402 */  mul.s $f16, $f18, $f16
-/* 08CC28 7F0580F8 C5120020 */  lwc1  $f18, 0x20($t0)
-/* 08CC2C 7F0580FC C4EA0008 */  lwc1  $f10, 8($a3)
-/* 08CC30 7F058100 460C7302 */  mul.s $f12, $f14, $f12
-/* 08CC34 7F058104 C4EE000C */  lwc1  $f14, 0xc($a3)
-/* 08CC38 7F058108 C5080030 */  lwc1  $f8, 0x30($t0)
-/* 08CC3C 7F05810C 460A9282 */  mul.s $f10, $f18, $f10
-/* 08CC40 7F058110 24420002 */  addiu $v0, $v0, 2
-/* 08CC44 7F058114 24840020 */  addiu $a0, $a0, 0x20
-/* 08CC48 7F058118 46087202 */  mul.s $f8, $f14, $f8
-/* 08CC4C 7F05811C 24E70020 */  addiu $a3, $a3, 0x20
-/* 08CC50 7F058120 460C8300 */  add.s $f12, $f16, $f12
-/* 08CC54 7F058124 460A6280 */  add.s $f10, $f12, $f10
-/* 08CC58 7F058128 460A4280 */  add.s $f10, $f8, $f10
-/* 08CC5C 7F05812C E48AFFE0 */  swc1  $f10, -0x20($a0)
-/* 08CC60 7F058130 C50A0000 */  lwc1  $f10, ($t0)
-/* 08CC64 7F058134 C4E8FFF0 */  lwc1  $f8, -0x10($a3)
-/* 08CC68 7F058138 C50C0010 */  lwc1  $f12, 0x10($t0)
-/* 08CC6C 7F05813C C4F0FFF4 */  lwc1  $f16, -0xc($a3)
-/* 08CC70 7F058140 46085202 */  mul.s $f8, $f10, $f8
-/* 08CC74 7F058144 C50A0020 */  lwc1  $f10, 0x20($t0)
-/* 08CC78 7F058148 C4EEFFF8 */  lwc1  $f14, -8($a3)
-/* 08CC7C 7F05814C 46106402 */  mul.s $f16, $f12, $f16
-/* 08CC80 7F058150 C4ECFFFC */  lwc1  $f12, -4($a3)
-/* 08CC84 7F058154 C5120030 */  lwc1  $f18, 0x30($t0)
-/* 08CC88 7F058158 460E5382 */  mul.s $f14, $f10, $f14
-/* 08CC8C 7F05815C 00000000 */  nop   
-/* 08CC90 7F058160 46126482 */  mul.s $f18, $f12, $f18
-/* 08CC94 7F058164 46104400 */  add.s $f16, $f8, $f16
-/* 08CC98 7F058168 460E8380 */  add.s $f14, $f16, $f14
-/* 08CC9C 7F05816C 460E9380 */  add.s $f14, $f18, $f14
-/* 08CCA0 7F058170 1449FFDC */  bne   $v0, $t1, .L7F0580E4
-/* 08CCA4 7F058174 E48EFFF0 */   swc1  $f14, -0x10($a0)
-/* 08CCA8 7F058178 24630004 */  addiu $v1, $v1, 4
-/* 08CCAC 7F05817C 146AFFD6 */  bne   $v1, $t2, .L7F0580D8
-/* 08CCB0 7F058180 25080004 */   addiu $t0, $t0, 4
-/* 08CCB4 7F058184 03E00008 */  jr    $ra
-/* 08CCB8 7F058188 00000000 */   nop   
-)
-#endif
 
 s32 matrix_4x4_multiply_homogeneous(mat44 lhs, mat44 rhs, mat44 result) {
     s32 i, j;
     for (i = 0; i < 3; i++) {
-        for (j = 0; j < 4; j += 2) {
-            result[j + 0][i] = (lhs[0][i] * rhs[j + 0][0]) + (lhs[1][i] * rhs[j + 0][1]) + (lhs[2][i] * rhs[j + 0][2]);
+        for (j = 0; j < 4; j++) {
+            result[j][i] = (lhs[0][i] * rhs[j][0]) + (lhs[1][i] * rhs[j][1]) + (lhs[2][i] * rhs[j][2]);
             if (j == 3) {
-                result[j + 0][i] += lhs[3][i];
-            }
-            result[j + 1][i] = (lhs[0][i] * rhs[j + 1][0]) + (lhs[1][i] * rhs[j + 1][1]) + (lhs[2][i] * rhs[j + 1][2]);
-            if (j == 2) {
-                result[j + 1][i] += lhs[3][i];
+                result[j][i] += lhs[3][i];
             }
         }
     }
