@@ -1,0 +1,9 @@
+#ifndef _WATCH_H_
+#define _WATCH_H_
+#include "ultra64.h"
+
+void zero_D_80040998();
+
+#endif
+
+
