@@ -11781,33 +11781,9 @@ glabel sub_GAME_7F07E46C
 
 
 
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F07E504(void) {
-    // Node 0
-    return sub_GAME_7F07E46C(60.0f);
+    sub_GAME_7F07E46C(60.0f);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F07E504
-/* 0B3034 7F07E504 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0B3038 7F07E508 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 0B303C 7F07E50C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0B3040 7F07E510 44816000 */  mtc1  $at, $f12
-/* 0B3044 7F07E514 0FC1F91B */  jal   sub_GAME_7F07E46C
-/* 0B3048 7F07E518 00000000 */   nop   
-/* 0B304C 7F07E51C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0B3050 7F07E520 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0B3054 7F07E524 03E00008 */  jr    $ra
-/* 0B3058 7F07E528 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void zoom_to_watch_on_open(void) {

@@ -2833,4 +2833,6 @@ extern f32 D_80036AC4;
 
 u32 get_camera_mode(void);
 
+void sub_GAME_7F07E46C(f32 param);
+
 #endif
