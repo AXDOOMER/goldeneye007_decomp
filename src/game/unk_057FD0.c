@@ -6,10 +6,12 @@ f32 flt_CODE_bss_80075DA0;
 
 
 // data
-//D:80032310     
-f32 D_80032310 = 65536.0;
-//D:80032314     
-f32 D_80032314 = 65536.0;
+//D:80032310
+f32 D_80032310[2] = {65536.0f, 65536.0f};
+
+// f32 D_80032310 = 65536.0;
+// //D:80032314     
+// f32 D_80032314 = 65536.0;
 
 
 // rodata
@@ -47,6 +49,8 @@ void matrix_4x4_copy(mat44 src, mat44 dst) {
     }
 }
 
+void matrix_4x4_multiply(mat44 lhs, mat44 rhs, mat44 result);
+
 void matrix_4x4_multiply_in_place(mat44 lhs, mat44 rhs) {
     mat44 result;
     matrix_4x4_multiply(lhs, rhs, result);
@@ -60,22 +64,60 @@ void matrix_4x4_multiply_homogeneous_in_place(mat44 lhs, mat44 rhs) {
 }
 
 #ifdef NONMATCHING
-// Regalloc + The inner loop variable goes from 0 to 64 instead of 0 to 4. Unwinding the inner loop yields worse match, same with having j < 4.
+// 8cbf8:    move    v1,zero                           8cbf8:    move    v1,zero
+// 8cbfc:    move    t0,a0                           r 8cbfc:    move    t1,a0
+// 8cc00:    li      t2,0x10                         r 8cc00:    li      t3,0x10
+// 8cc04:    li      t1,4                            r 8cc04:    li      t2,0x40
+// 8cc08:    move    v0,zero                         | 8cc08:    addu    a0,a2,v1
+// 8cc0c:    addu    a0,a2,v1                        | 8cc0c:    move    a3,zero
+// 8cc10:    move    a3,a1                           r 8cc10:    move    t0,a1
+// 8cc14:    lwc1    $f18,0(t0)                      r 8cc14:    lwc1    $f18,0(t1)
+// 8cc18:    lwc1    $f16,0(a3)                      r 8cc18:    lwc1    $f16,0(t0)
+// 8cc1c:    lwc1    $f14,0x10(t0)                   r 8cc1c:    lwc1    $f14,0x10(t1)
+// 8cc20:    lwc1    $f12,4(a3)                      r 8cc20:    lwc1    $f12,4(t0)
+// 8cc24:    mul.s   $f16,$f18,$f16                    8cc24:    mul.s   $f16,$f18,$f16
+// 8cc28:    lwc1    $f18,0x20(t0)                   r 8cc28:    lwc1    $f18,0x20(t1)
+// 8cc2c:    lwc1    $f10,8(a3)                      r 8cc2c:    lwc1    $f10,8(t0)
+// 8cc30:    mul.s   $f12,$f14,$f12                    8cc30:    mul.s   $f12,$f14,$f12
+// 8cc34:    lwc1    $f14,0xc(a3)                    r 8cc34:    lwc1    $f14,0xc(t0)
+// 8cc38:    lwc1    $f8,0x30(t0)                    r 8cc38:    lwc1    $f8,0x30(t1)
+// 8cc3c:    mul.s   $f10,$f18,$f10                    8cc3c:    mul.s   $f10,$f18,$f10
+// 8cc40:    addiu   v0,v0,2                         r 8cc40:    addiu   a3,a3,0x20
+// 8cc44:    addiu   a0,a0,0x20                        8cc44:    addiu   a0,a0,0x20
+// 8cc48:    mul.s   $f8,$f14,$f8                      8cc48:    mul.s   $f8,$f14,$f8
+// 8cc4c:    addiu   a3,a3,0x20                      r 8cc4c:    addiu   t0,t0,0x20
+// 8cc50:    add.s   $f12,$f16,$f12                    8cc50:    add.s   $f12,$f16,$f12
+// 8cc54:    add.s   $f10,$f12,$f10                    8cc54:    add.s   $f10,$f12,$f10
+// 8cc58:    add.s   $f10,$f8,$f10                     8cc58:    add.s   $f10,$f8,$f10
+// 8cc5c:    swc1    $f10,-0x20(a0)                    8cc5c:    swc1    $f10,-0x20(a0)
+// 8cc60:    lwc1    $f10,0(t0)                      r 8cc60:    lwc1    $f10,0(t1)
+// 8cc64:    lwc1    $f8,-0x10(a3)                   r 8cc64:    lwc1    $f8,-0x10(t0)
+// 8cc68:    lwc1    $f12,0x10(t0)                   r 8cc68:    lwc1    $f12,0x10(t1)
+// 8cc6c:    lwc1    $f16,-0xc(a3)                   r 8cc6c:    lwc1    $f16,-0xc(t0)
+// 8cc70:    mul.s   $f8,$f10,$f8                      8cc70:    mul.s   $f8,$f10,$f8
+// 8cc74:    lwc1    $f10,0x20(t0)                   r 8cc74:    lwc1    $f10,0x20(t1)
+// 8cc78:    lwc1    $f14,-8(a3)                     r 8cc78:    lwc1    $f14,-8(t0)
+// 8cc7c:    mul.s   $f16,$f12,$f16                    8cc7c:    mul.s   $f16,$f12,$f16
+// 8cc80:    lwc1    $f12,-4(a3)                     r 8cc80:    lwc1    $f12,-4(t0)
+// 8cc84:    lwc1    $f18,0x30(t0)                   r 8cc84:    lwc1    $f18,0x30(t1)
+// 8cc88:    mul.s   $f14,$f10,$f14                    8cc88:    mul.s   $f14,$f10,$f14
+// 8cc8c:    nop                                       8cc8c:    nop
+// 8cc90:    mul.s   $f18,$f12,$f18                    8cc90:    mul.s   $f18,$f12,$f18
+// 8cc94:    add.s   $f16,$f8,$f16                     8cc94:    add.s   $f16,$f8,$f16
+// 8cc98:    add.s   $f14,$f16,$f14                    8cc98:    add.s   $f14,$f16,$f14
+// 8cc9c:    add.s   $f14,$f18,$f14                    8cc9c:    add.s   $f14,$f18,$f14
+// 8cca0:    bne     v0,t1,0x8cc14 ~>                r 8cca0:    bne     a3,t2,0x8cc14 ~>
+// 8cca4:    swc1    $f14,-0x10(a0)                    8cca4:    swc1    $f14,-0x10(a0)
+// 8cca8:    addiu   v1,v1,4                           8cca8:    addiu   v1,v1,4
+// 8ccac:    bne     v1,t2,0x8cc08 ~>                r 8ccac:    bne     v1,t3,0x8cc08 ~>
+// 8ccb0:    addiu   t0,t0,4                         r 8ccb0:    addiu   t1,t1,4
+// 8ccb4:    jr      ra                                8ccb4:    jr      ra
 void matrix_4x4_multiply(mat44 lhs, mat44 rhs, mat44 result) {
     s32 i, j;
     for (i = 0; i < 4; i++) {
-        for (j = 0; j < 2; j++) {
-            result[j * 2 + 0][i] = lhs[0][i] * rhs[j * 2 + 0][0] + lhs[1][i] * rhs[j * 2 + 0][1] + lhs[2][i] * rhs[j * 2 + 0][2] + lhs[3][i] * rhs[j * 2 + 0][3];
-            result[j * 2 + 1][i] = lhs[0][i] * rhs[j * 2 + 1][0] + lhs[1][i] * rhs[j * 2 + 1][1] + lhs[2][i] * rhs[j * 2 + 1][2] + lhs[3][i] * rhs[j * 2 + 1][3];
-        }
-    }
-}
-s32 matrix_4x4_multiply(mat44 lhs, mat44 rhs, mat44 result) {
-    s32 i, j;
-    for (i = 0; i < 4; i++) {
         for (j = 0; j < 4; j += 2) {
-            result[j + 0][i] = (lhs[0][i] * rhs[j + 0][0]) + (lhs[1][i] * rhs[j + 0][1]) + (lhs[2][i] * rhs[j + 0][2]) + (lhs[3][i] * rhs[j + 0][3]);
-            result[j + 1][i] = (lhs[0][i] * rhs[j + 1][0]) + (lhs[1][i] * rhs[j + 1][1]) + (lhs[2][i] * rhs[j + 1][2]) + (lhs[3][i] * rhs[j + 1][3]);
+            result[j + 0][i] = lhs[0][i] * rhs[j + 0][0] + lhs[1][i] * rhs[j + 0][1] + lhs[2][i] * rhs[j + 0][2] + lhs[3][i] * rhs[j + 0][3];
+            result[j + 1][i] = lhs[0][i] * rhs[j + 1][0] + lhs[1][i] * rhs[j + 1][1] + lhs[2][i] * rhs[j + 1][2] + lhs[3][i] * rhs[j + 1][3];
         }
     }
 }
@@ -291,35 +333,65 @@ void matrix_4x4_set_rotation_around_z(f32 angle, mat44 matrix) {
 }
 
 #ifdef NONMATCHING
-// Regalloc issues after 0x08D300
-void matrix_4x4_set_rotation_around_xyz(vec3 angles, mat44 matrix) {
-    f32 cos_x = cosf(angles[0]);
-    f32 sin_x = sinf(angles[0]);
-    f32 cos_y = cosf(angles[1]);
-    f32 sin_y = sinf(angles[1]);
-    f32 cos_z = cosf(angles[2]);
-    f32 sin_z = sinf(angles[2]);
-    f32 cos_x_cos_z = cos_x * cos_z;
-    f32 cos_x_sin_z = cos_x * sin_z;
-    f32 sin_x_cos_z = sin_x * cos_z;
-    f32 sin_x_sin_z = sin_x * sin_z;
-    matrix[0][0] = (cos_y * cos_z);
-    matrix[0][1] = (cos_y * sin_z);
-    matrix[0][2] = -sin_y;
-    matrix[0][3] = 0.0f;
-    matrix[1][0] = ((sin_x_cos_z * sin_y) - cos_x_sin_z);
-    matrix[1][1] = ((sin_x_sin_z * sin_y) + cos_x_cos_z);
-    matrix[1][2] = sin_x * cos_y;
-    matrix[1][3] = 0.0f;
-    matrix[2][0] = ((cos_x_cos_z * sin_y) + sin_x_sin_z);
-    matrix[2][1] = ((cos_x_sin_z * sin_y) - sin_x_cos_z);
-    matrix[2][2] = cos_x * cos_y;
-    matrix[2][3] = 0.0f;
-    matrix[3][0] = 0.0f;
-    matrix[3][1] = 0.0f;
-    matrix[3][2] = 0.0f;
-    matrix[3][3] = 1.0f;
-}
+// 8d300:    lwc1    $f10,0x54(sp)                   r 8d300:    lwc1    $f8,0x54(sp)
+// 8d304:    mul.s   $f18,$f4,$f0                    r 8d304:    mul.s   $f10,$f4,$f0
+// 8d308:    nop                                       8d308:    nop
+// 8d30c:    mul.s   $f8,$f10,$f16                   r 8d30c:    mul.s   $f18,$f8,$f16
+// 8d310:    nop                                       8d310:    nop
+// 8d314:    mul.s   $f6,$f18,$f2                    r 8d314:    mul.s   $f6,$f10,$f2
+// 8d318:    swc1    $f8,0x20(sp)                    r 8d318:    swc1    $f10,0x20(sp)
+// 8d31c:    add.s   $f4,$f6,$f8                     r 8d31c:    add.s   $f4,$f6,$f18
+// 8d320:    swc1    $f4,0x14(s0)                      8d320:    swc1    $f4,0x14(s0)
+// 8d324:    lwc1    $f10,0x50(sp)                   r 8d324:    lwc1    $f8,0x50(sp)
+// 8d328:    swc1    $f12,0x1c(s0)                     8d328:    swc1    $f12,0x1c(s0)
+// 8d32c:    mul.s   $f6,$f10,$f14                   r 8d32c:    mul.s   $f10,$f8,$f14
+// 8d330:    swc1    $f6,0x18(s0)                    r 8d330:    swc1    $f10,0x18(s0)
+// 8d334:    lwc1    $f8,0x20(sp)                    | 8d334:    mul.s   $f6,$f18,$f2
+// 8d338:    mul.s   $f4,$f8,$f2                     | 8d338:    lwc1    $f4,0x20(sp)
+// 8d33c:    add.s   $f10,$f4,$f18                   r 8d33c:    add.s   $f8,$f6,$f4
+// 8d340:    swc1    $f10,0x20(s0)                   r 8d340:    swc1    $f8,0x20(s0)
+// 8d344:    lwc1    $f6,0x28(sp)                    r 8d344:    lwc1    $f10,0x28(sp)
+// 8d348:    lwc1    $f4,0x24(sp)                      8d348:    lwc1    $f4,0x24(sp)
+// 8d34c:    mul.s   $f8,$f6,$f2                     r 8d34c:    mul.s   $f6,$f10,$f2
+// 8d350:    sub.s   $f10,$f8,$f4                    r 8d350:    sub.s   $f8,$f6,$f4
+// 8d354:    mtc1    at,$f4                            8d354:    mtc1    at,$f4
+// 8d358:    swc1    $f10,0x24(s0)                   r 8d358:    swc1    $f8,0x24(s0)
+// 8d35c:    lwc1    $f6,0x54(sp)                    r 8d35c:    lwc1    $f10,0x54(sp)
+// 8d360:    swc1    $f12,0x2c(s0)                     8d360:    swc1    $f12,0x2c(s0)
+// 8d364:    swc1    $f12,0x30(s0)                     8d364:    swc1    $f12,0x30(s0)
+// 8d368:    mul.s   $f8,$f6,$f14                    r 8d368:    mul.s   $f6,$f10,$f14
+// 8d36c:    swc1    $f12,0x34(s0)                     8d36c:    swc1    $f12,0x34(s0)
+// 8d370:    swc1    $f12,0x38(s0)                     8d370:    swc1    $f12,0x38(s0)
+// 8d374:    swc1    $f4,0x3c(s0)                      8d374:    swc1    $f4,0x3c(s0)
+// 8d378:    swc1    $f8,0x28(s0)                    r 8d378:    swc1    $f6,0x28(s0)
+// void matrix_4x4_set_rotation_around_xyz(vec3 angles, mat44 matrix) {
+//     f32 cos_x = cosf(angles[0]);
+//     f32 sin_x = sinf(angles[0]);
+//     f32 cos_y = cosf(angles[1]);
+//     f32 sin_y = sinf(angles[1]);
+//     f32 cos_z = cosf(angles[2]);
+//     f32 sin_z = sinf(angles[2]);
+//     f32 cos_x_cos_z = cos_x * cos_z;
+//     f32 cos_x_sin_z = cos_x * sin_z;
+//     f32 sin_x_cos_z = sin_x * cos_z;
+//     f32 sin_x_sin_z = sin_x * sin_z;
+//     matrix[0][0] = (cos_y * cos_z);
+//     matrix[0][1] = (cos_y * sin_z);
+//     matrix[0][2] = -sin_y;
+//     matrix[0][3] = 0.0f;
+//     matrix[1][0] = ((sin_x_cos_z * sin_y) - cos_x_sin_z);
+//     matrix[1][1] = ((sin_x_sin_z * sin_y) + cos_x_cos_z);
+//     matrix[1][2] = sin_x * cos_y;
+//     matrix[1][3] = 0.0f;
+//     matrix[2][0] = ((cos_x_cos_z * sin_y) + sin_x_sin_z);
+//     matrix[2][1] = ((cos_x_sin_z * sin_y) - sin_x_cos_z);
+//     matrix[2][2] = cos_x * cos_y;
+//     matrix[2][3] = 0.0f;
+//     matrix[3][0] = 0.0f;
+//     matrix[3][1] = 0.0f;
+//     matrix[3][2] = 0.0f;
+//     matrix[3][3] = 1.0f;
+// }
 #else
 GLOBAL_ASM(
 .text
@@ -524,22 +596,73 @@ void matrix_scalar_multiply_3(f32 scalar, f32* matrix) {
 }
 
 void sub_GAME_7F058C4C(f32 arg0) {
-    D_80032310 = (65536.0f * arg0);
+    D_80032310[0] = (65536.0f * arg0);
 }
 
 void sub_GAME_7F058C64(void) {
-    flt_CODE_bss_80075DA0 = D_80032310;
-    D_80032310 = 65536.0f;
+    flt_CODE_bss_80075DA0 = D_80032310[0];
+    D_80032310[0] = 65536.0f;
 }
 
 void sub_GAME_7F058C88(void) {
-    D_80032310 = flt_CODE_bss_80075DA0;
+    D_80032310[0] = flt_CODE_bss_80075DA0;
 }
 
 #ifdef NONMATCHING
-void sub_GAME_7F058C9C(void) {
+// #define GET_HIGH_S16(x, y) (x & 0xFFFF0000) | (y >> 16);
+// #define GET_LOW_S16(x, y) (x << 16) | (y & 0xFFFF);
 
-}
+// #define STORE_HIGH_AND_LOW_16(index) \
+//     var1 = (s32)(matrix[(index) * 2 + 0] * D_80032310[(index) & 0]); \
+//     var2 = (s32)(matrix[(index) * 2 + 1] * D_80032310[(index) & 1]); \
+//     result[index + 0] = GET_HIGH_S16(var1, var2); \
+//     result[index + 8] = GET_LOW_S16(var1, var2);
+// void sub_GAME_7F058C9C(f32* matrix, s32* result) {
+//     // s32 i;
+//     // s32 x;
+//     // s32 y;
+//     // for (i = 0; i < 8; i++) {
+//     //     result[i] =
+//     //     //x = D_80032310[(i + 0) & 0] * matrix[i][0];
+//     //     //y = D_80032310[(i + 0) & 0] * matrix[0][i];
+//     //     //y = D_80032310[(i + 0) & 1]
+//     // }
+
+//     s32 i;
+//     u32 var1;
+//     u32 var2;
+//     // u32 var3;
+//     // u32 var4;
+//     // u32 var5;
+//     // u32 var6;
+//     // u32 var7;
+//     // u32 var8;
+//     for (i = 0; i < 8; i += 4) {
+//         STORE_HIGH_AND_LOW_16(i + 0)
+//         STORE_HIGH_AND_LOW_16(i + 1)
+//         STORE_HIGH_AND_LOW_16(i + 2)
+//         STORE_HIGH_AND_LOW_16(i + 3)
+
+
+
+//         // var1 = (s32)(D_80032310[0] * matrix[(i + 0) * 2 + 0]);
+//         // var2 = (s32)(D_80032310[0] * matrix[(i + 0) * 2 + 1]);
+//         // result[i + 0] = GET_HIGH_S16(var1, var2);
+//         // result[i + 8] = GET_LOW_S16(var1, var2);
+//         // var3 = (s32)(D_80032310[0] * matrix[(i + 1) * 2 + 0]);
+//         // var4 = (s32)(D_80032310[1] * matrix[(i + 1) * 2 + 1]);
+//         // result[i + 1]= GET_HIGH_S16(var3, var4);
+//         // result[i + 9] = GET_LOW_S16(var3, var4);
+//         // var5 = (s32)(D_80032310[0] * matrix[(i + 2) * 2 + 0]);
+//         // var6 = (s32)(D_80032310[0] * matrix[(i + 2) * 2 + 1]);
+//         // result[i + 2] = GET_HIGH_S16(var5, var6);
+//         // result[i + 10] = GET_LOW_S16(var5, var6);
+//         // var7 = (s32)(D_80032310[0] * matrix[(i + 3) * 2 + 0]);
+//         // var8 = (s32)(D_80032310[1] * matrix[(i + 3) * 2 + 1]);
+//         // result[i + 3] = GET_HIGH_S16(var7, var8);
+//         // result[i + 11] = GET_LOW_S16(var7, var8);
+//     }
+// }
 #else
 GLOBAL_ASM(
 .text
@@ -1036,9 +1159,130 @@ glabel sub_GAME_7F059244
 )
 #endif
 
+/*
+for ($v0 = 0; $v0 < 2; $v0++) { // pointers?
+	$a1[$v0 * 2 + 0][0] = $a0[$v0][0] & 0xFFFF0000 | ($a0[$v0 + 2][0] >> 16)
+	$a1[$v0 * 2 + 0][1] = $a0[$v0][0] << 16 | ($a0[$v0 + 2][0] & 0xFFFF)
+	$a1[$v0 * 2 + 0][2] = $a0[$v0][1] & 0xFFFF0000 | $a0[$v0 + 2][1] >> 16
+	$a1[$v0 * 2 + 0][3] = $a0[$v0][1] << 16 | $a0[$v0 + 2][1] & 0xFFFF
+	$a1[$v0 * 2 + 1][0] = $a0[$v0][2] & 0xFFFF0000 | $a0[$v0 + 2][2] << 16
+	$a1[$v0 * 2 + 1][1] = $a0[$v0][2] << 16 | $a0[$v0 + 2][2] & 0xFFFF
+	$a1[$v0 * 2 + 1][2] = $a0[$v0][3] & 0xFFFF0000 | $a0[$v0 + 2][3] >> 16
+	$a1[$v0 * 2 + 1][3] = $a0[$v0][3] << 16 | $a0[$v0 + 2][3] & 0xffff
+}
 
+*/
 
+/* 
+$v0 = 0
+$a3 = $a0
+loop:
+	$v1 = *($a3)
+	$a2 = *($a3 + 0x20)
+    $t0 = $a1 + (($v0 + 0) * 8)
+	*($t0) = ($v1 & 0xFFFF0000) | ($a2 >> 16)
+	*($t0 + 0x4) = ($v1 << 16) | ($a2 & 0xFFFF)
+    $a2 = *($a3 + 0x24)
+	$v1 = *($a3 + 0x4)
+	$t1 = $a1 + (($v0 + 1) * 8)
+	*($t1 + 0) = $v1 & 0xFFFF0000 | $a2 >> 16
+	*($t1 + 4) = $v1 << 16 | $a2 & 0xFFFF
+	$a2 = *($a3 + 0x28)
+	$v1 = *($a3 + 0x8)
+	$t2 = $a1 + (($v0 + 2) * 8)
+	*($t2 + 0) = $v1 & 0xFFFF0000 | $a2 << 16
+	*($t2 + 4) = $v1 << 16 | $a2 & 0xFFFF
+	$a2 = *($a3 + 0x2C)
+	$v1 = *($a3 + 0xC)
+	$t3 = $a1 + (($v0 + 3) * 8)
+	$v0 += 4
+	*($t3 + 0) = $v1 & 0xFFFF0000 | $a2 >> 16
+	*($t3 + 4) = $v1 << 16 | $a2 & 0xffff
+	if ($v0 != 8)
+	{
+		$a3 += 0x10;
+		goto loop;
+	}
+return
 
+*/
+//typedef s32 mat4s[4][4];
+
+//void sub_GAME_7F059334(mat4s arg0, mat4s arg1) {
+//sub_GAME_7F059334(s32* arg0, s32* arg1) {  
+    //s32* var1 = arg0;
+    //s32* var2 = arg1;
+    //for (i = 0; i < 2; i++) {
+    // for (; var1 < (arg0 + 8); var1++, var2 += 4)
+    //     var1 = arg0[i + 0][0];
+    //     var2 = arg0[i + 2][0];
+    //     arg1[i * 2 + 0][0] = ((var1 & 0xFFFF0000) | (var2 >> 16));
+    //     arg1[i * 2 + 0][1] = ((var1 << 16) | (var2 & 0xFFFF));
+    //     var1 = arg0[i + 0][1];
+    //     var2 = arg0[i + 2][1];
+    //     arg1[i * 2 + 0][2] = ((var1 & 0xFFFF0000) | (var2 >> 16));
+    //     arg1[i * 2 + 0][3] = ((var1 << 16) | (var2 & 0xFFFF));
+    //     var1 = arg0[i + 0][2];
+    //     var2 = arg0[i + 2][2];
+    //     arg1[i * 2 + 1][0] = ((var1 & 0xFFFF0000) | (var2 << 16));
+    //     arg1[i * 2 + 1][1] = ((var1 << 16) | (var2 & 0xFFFF));
+    //     var1 = arg0[i + 0][3];
+    //     var2 = arg0[i + 2][3];
+    //     arg1[i * 2 + 1][2] = ((var1 & 0xFFFF0000) | (var2 >> 16));
+    //     arg1[i * 2 + 1][3] = ((var1 << 16) | (var2 & 0xffff));
+    // }
+
+    // s32 var1;
+    // s32 var2;
+    // s32 i;
+    // for (i = 0; i < 2; i++) {
+    //     var1 = arg0[i + 0][0];
+    //     var2 = arg0[i + 2][0];
+    //     arg1[i * 2 + 0][0] = ((var1 & 0xFFFF0000) | (var2 >> 16));
+    //     arg1[i * 2 + 0][1] = ((var1 << 16) | (var2 & 0xFFFF));
+    //     var1 = arg0[i + 0][1];
+    //     var2 = arg0[i + 2][1];
+    //     arg1[i * 2 + 0][2] = ((var1 & 0xFFFF0000) | (var2 >> 16));
+    //     arg1[i * 2 + 0][3] = ((var1 << 16) | (var2 & 0xFFFF));
+    //     var1 = arg0[i + 0][2];
+    //     var2 = arg0[i + 2][2];
+    //     arg1[i * 2 + 1][0] = ((var1 & 0xFFFF0000) | (var2 << 16));
+    //     arg1[i * 2 + 1][1] = ((var1 << 16) | (var2 & 0xFFFF));
+    //     var1 = arg0[i + 0][3];
+    //     var2 = arg0[i + 2][3];
+    //     arg1[i * 2 + 1][2] = ((var1 & 0xFFFF0000) | (var2 >> 16));
+    //     arg1[i * 2 + 1][3] = ((var1 << 16) | (var2 & 0xffff));
+    // }
+
+    // s32 temp_v1;
+    // s32 temp_v1_2;
+    // s32 temp_v1_3;
+    // s32 temp_v1_4;
+    // u32 temp_a2;
+    // u32 temp_a2_2;
+    // u32 temp_a2_3;
+    // u32 temp_a2_4;
+    // s32 i;
+
+    // for (i = 0; i < 2; i++) {
+    //     temp_v1 = arg0[i + 0][0];
+    //     temp_a2 = arg0[i + 2][0];
+    //     arg1[i * 2][0] = ((temp_v1 & 0xFFFF0000) | (temp_a2 >> 0x10));
+    //     arg1[i * 2][1] = ((temp_v1 << 0x10) | (temp_a2 & 0xFFFF));
+    //     temp_v1_2 = arg0[i + 0][1];
+    //     temp_a2_2 = arg0[i + 2][1];
+    //     arg1[i * 2][2] = ((temp_v1_2 & 0xFFFF0000) | (temp_a2_2 >> 0x10));
+    //     arg1[i * 2][3] = ((temp_v1_2 << 0x10) | (temp_a2_2 & 0xFFFF));
+    //     temp_v1_3 = arg0[i + 0][2];
+    //     temp_a2_3 = arg0[i + 2][2];
+    //     arg1[i * 2 + 1][0] = ((temp_v1_3 & 0xFFFF0000) | (temp_a2_3 >> 0x10));
+    //     arg1[i * 2 + 1][1] = ((temp_v1_3 << 0x10) | (temp_a2_3 & 0xFFFF));
+    //     temp_v1_4 = arg0[i + 0][3];
+    //     temp_a2_4 = arg0[i + 2][3];
+    //     arg1[i * 2 + 1][2] = ((temp_v1_4 & 0xFFFF0000) | (temp_a2_4 >> 0x10));
+    //     arg1[i * 2 + 1][3] = ((temp_v1_4 << 0x10) | (temp_a2_4 & 0xFFFF));
+    // }
+//}
 
 #ifdef NONMATCHING
 void sub_GAME_7F059334(void) {
