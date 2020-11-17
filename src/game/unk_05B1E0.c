@@ -153,9 +153,8 @@ void quaternion_slerp(quatf q1, quatf q2, f32 t, quatf result) {
         result[1] = ((1.0f - t) * q1[1]) - (q2[1] * t);
         result[2] = ((1.0f - t) * q1[2]) - (q2[2] * t);
         result[3] = ((1.0f - t) * q1[3]) - (q2[3] * t);
-        return;
     }
-    if (dot <= (1.0f - EPSILON)) {
+    else if (dot <= (1.0f - EPSILON)) {
         theta = acosf(dot);
         theta_q1 = (1.0f - t) * theta;
         theta_q2 = t * theta;
@@ -166,12 +165,12 @@ void quaternion_slerp(quatf q1, quatf q2, f32 t, quatf result) {
         result[1] = (coeff_q1 * q1[1]) + (q2[1] * coeff_q2);
         result[2] = (coeff_q1 * q1[2]) + (q2[2] * coeff_q2);
         result[3] = (coeff_q1 * q1[3]) + (q2[3] * coeff_q2);
-        return;
+    } else {
+        result[0] = ((1.0f - t) * q1[0]) + (q2[0] * t);
+        result[1] = ((1.0f - t) * q1[1]) + (q2[1] * t);
+        result[2] = ((1.0f - t) * q1[2]) + (q2[2] * t);
+        result[3] = ((1.0f - t) * q1[3]) + (q2[3] * t);
     }
-    result[0] = ((1.0f - t) * q1[0]) + (q2[0] * t);
-    result[1] = ((1.0f - t) * q1[1]) + (q2[1] * t);
-    result[2] = ((1.0f - t) * q1[2]) + (q2[2] * t);
-    result[3] = ((1.0f - t) * q1[3]) + (q2[3] * t);
 }
 
 void quaternion_7F05BC68(quatf q, f32 t, quatf result) {
@@ -192,9 +191,7 @@ void quaternion_7F05BC68(quatf q, f32 t, quatf result) {
         result[1] = (q[1] * t);
         result[2] = (q[2] * t);
         result[3] = (q[3] * t);
-        return;
-    }
-    if (phi_f12 <= 0.99998999f) {
+    } else if (phi_f12 <= 0.99998999f) {
         temp_f0_2 = acosf(phi_f12);
         test2 = t * temp_f0_2;
         temp_f4 = (1.0f - t) * temp_f0_2;
@@ -247,12 +244,12 @@ void quaternion_7F05BFD4(quatf q1, quatf q2) {
         q2[1] = 0.0f;
         q2[2] = 0.0f;
         q2[3] = 0.0f;
-        return;
+    } else {
+        q2[0] = 0.0f;
+        q2[1] = (q1[1] * (angle / sine));
+        q2[2] = (q1[2] * (angle / sine));
+        q2[3] = (q1[3] * (angle / sine));
     }
-    q2[0] = 0.0f;
-    q2[1] = (q1[1] * (angle / sine));
-    q2[2] = (q1[2] * (angle / sine));
-    q2[3] = (q1[3] * (angle / sine));
 }
 
 void quaternion_7F05C068(quatf q1, quatf q2) {
@@ -264,14 +261,14 @@ void quaternion_7F05C068(quatf q1, quatf q2) {
         q2[1] = 0.0f;
         q2[2] = 0.0f;
         q2[3] = 0.0f;
-        return;
+    } else {
+        sine = sinf(angle);
+        unknown = sine / angle;
+        q2[0] = cosf(angle);
+        q2[1] = (q1[1] * unknown);
+        q2[2] = (q1[2] * unknown);
+        q2[3] = (q1[3] * unknown);
     }
-    sine = sinf(angle);
-    unknown = sine / angle;
-    q2[0] = cosf(angle);
-    q2[1] = (q1[1] * unknown);
-    q2[2] = (q1[2] * unknown);
-    q2[3] = (q1[3] * unknown);
 }
 
 void quaternion_7F05C138(quatf arg0, quatf arg1, quatf arg2, quatf result) {
