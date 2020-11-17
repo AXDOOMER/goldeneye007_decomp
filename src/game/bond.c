@@ -11765,75 +11765,19 @@ glabel sub_GAME_7F07E090
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
 f32 sub_GAME_7F07E388(void) {
-    // Node 0
-    if (pPlayer->field_218 == 1)
-    {
-        // Node 1
-        return (pPlayer->field_210 / pPlayer->field_214);
+
+    if (pPlayer->field_218 == 1) {
+        return pPlayer->field_210 / pPlayer->field_214;
     }
-    // Node 2
-    if (pPlayer->field_218 == 2)
-    {
-        // Node 3
-        return (1.0f - (pPlayer->field_210 / pPlayer->field_214));
+    if (pPlayer->field_218 == 2) {
+        return 1.0f - (pPlayer->field_210 / pPlayer->field_214);
     }
-    // Node 4
-    if (pPlayer->field_218 == 1.0f)
-    {
-        // Node 5
+    if (pPlayer->field_218 == 3) {
         return 1.0f;
     }
-    // Node 6
     return 0.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F07E388
-/* 0B2EB8 7F07E388 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 0B2EBC 7F07E38C 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
-/* 0B2EC0 7F07E390 24010001 */  li    $at, 1
-/* 0B2EC4 7F07E394 8C430218 */  lw    $v1, 0x218($v0)
-/* 0B2EC8 7F07E398 54610006 */  bnel  $v1, $at, .L7F07E3B4
-/* 0B2ECC 7F07E39C 24010002 */   li    $at, 2
-/* 0B2ED0 7F07E3A0 C4440210 */  lwc1  $f4, 0x210($v0)
-/* 0B2ED4 7F07E3A4 C4460214 */  lwc1  $f6, 0x214($v0)
-/* 0B2ED8 7F07E3A8 03E00008 */  jr    $ra
-/* 0B2EDC 7F07E3AC 46062003 */   div.s $f0, $f4, $f6
-
-/* 0B2EE0 7F07E3B0 24010002 */  li    $at, 2
-.L7F07E3B4:
-/* 0B2EE4 7F07E3B4 54610009 */  bnel  $v1, $at, .L7F07E3DC
-/* 0B2EE8 7F07E3B8 24010003 */   li    $at, 3
-/* 0B2EEC 7F07E3BC C4480210 */  lwc1  $f8, 0x210($v0)
-/* 0B2EF0 7F07E3C0 C44A0214 */  lwc1  $f10, 0x214($v0)
-/* 0B2EF4 7F07E3C4 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0B2EF8 7F07E3C8 44819000 */  mtc1  $at, $f18
-/* 0B2EFC 7F07E3CC 460A4403 */  div.s $f16, $f8, $f10
-/* 0B2F00 7F07E3D0 03E00008 */  jr    $ra
-/* 0B2F04 7F07E3D4 46109001 */   sub.s $f0, $f18, $f16
-
-/* 0B2F08 7F07E3D8 24010003 */  li    $at, 3
-.L7F07E3DC:
-/* 0B2F0C 7F07E3DC 14610004 */  bne   $v1, $at, .L7F07E3F0
-/* 0B2F10 7F07E3E0 3C013F80 */   li    $at, 0x3F800000 # 1.000000
-/* 0B2F14 7F07E3E4 44810000 */  mtc1  $at, $f0
-/* 0B2F18 7F07E3E8 03E00008 */  jr    $ra
-/* 0B2F1C 7F07E3EC 00000000 */   nop   
-
-.L7F07E3F0:
-/* 0B2F20 7F07E3F0 44800000 */  mtc1  $zero, $f0
-/* 0B2F24 7F07E3F4 00000000 */  nop   
-/* 0B2F28 7F07E3F8 03E00008 */  jr    $ra
-/* 0B2F2C 7F07E3FC 00000000 */   nop   
-)
-#endif
-
 
 void trigger_watch_zoom(f32 final,f32 time)
 {
