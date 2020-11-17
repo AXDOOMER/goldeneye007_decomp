@@ -11304,38 +11304,11 @@ glabel sub_GAME_7F07DE9C
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void *sub_GAME_7F07DEFC(void) {
-    // Node 0
-    pPlayer->pause_starting_angle = (f32) pPlayer->vv_verta;
+void sub_GAME_7F07DEFC(void) {
+    pPlayer->pause_starting_angle = pPlayer->vv_verta;
     pPlayer->field_210 = 0.0f;
     pPlayer->field_218 = 0;
-    return pPlayer;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F07DEFC
-/* 0B2A2C 7F07DEFC 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 0B2A30 7F07DF00 2463A0B0 */  addiu $v1, %lo(pPlayer) # addiu $v1, $v1, -0x5f50
-/* 0B2A34 7F07DF04 8C620000 */  lw    $v0, ($v1)
-/* 0B2A38 7F07DF08 44803000 */  mtc1  $zero, $f6
-/* 0B2A3C 7F07DF0C C4440158 */  lwc1  $f4, 0x158($v0)
-/* 0B2A40 7F07DF10 E4440204 */  swc1  $f4, 0x204($v0)
-/* 0B2A44 7F07DF14 8C6E0000 */  lw    $t6, ($v1)
-/* 0B2A48 7F07DF18 E5C60210 */  swc1  $f6, 0x210($t6)
-/* 0B2A4C 7F07DF1C 8C6F0000 */  lw    $t7, ($v1)
-/* 0B2A50 7F07DF20 03E00008 */  jr    $ra
-/* 0B2A54 7F07DF24 ADE00218 */   sw    $zero, 0x218($t7)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 f32 sub_GAME_7F07DF28(s32 arg0) {
