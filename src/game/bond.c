@@ -11835,10 +11835,6 @@ glabel sub_GAME_7F07E388
 #endif
 
 
-
-
-
-
 void trigger_watch_zoom(f32 final,f32 time)
 {
   pPlayer->zoomintime = 0.00000000;
@@ -11848,46 +11844,15 @@ void trigger_watch_zoom(f32 final,f32 time)
 }
 
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F07E438(void) {
-    // Node 0
-    if (pPlayer->field_11BC < pPlayer->field_11C0)
+f32 sub_GAME_7F07E438(void) {
+    
+    if (pPlayer->zoomintime < pPlayer->zoomintimemax)
     {
-        // Node 1
-        return pPlayer->field_11CC;
+        return pPlayer->zoominfovynew;
     }
-    // Node 2
-    return pPlayer->field_11C4;
+
+    return pPlayer->zoominfovy;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F07E438
-/* 0B2F68 7F07E438 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 0B2F6C 7F07E43C 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
-/* 0B2F70 7F07E440 C44411BC */  lwc1  $f4, 0x11bc($v0)
-/* 0B2F74 7F07E444 C44611C0 */  lwc1  $f6, 0x11c0($v0)
-/* 0B2F78 7F07E448 4606203C */  c.lt.s $f4, $f6
-/* 0B2F7C 7F07E44C 00000000 */  nop   
-/* 0B2F80 7F07E450 45020004 */  bc1fl .L7F07E464
-/* 0B2F84 7F07E454 C44011C4 */   lwc1  $f0, 0x11c4($v0)
-/* 0B2F88 7F07E458 03E00008 */  jr    $ra
-/* 0B2F8C 7F07E45C C44011CC */   lwc1  $f0, 0x11cc($v0)
-
-/* 0B2F90 7F07E460 C44011C4 */  lwc1  $f0, 0x11c4($v0)
-.L7F07E464:
-/* 0B2F94 7F07E464 03E00008 */  jr    $ra
-/* 0B2F98 7F07E468 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F07E46C(f32 arg0) {
