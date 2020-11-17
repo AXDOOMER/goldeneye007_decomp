@@ -4,6 +4,8 @@
 
 void zero_D_80040998();
 
+void zero_D_8004099C();
+
 #endif
 
 

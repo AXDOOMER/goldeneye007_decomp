@@ -1453,18 +1453,13 @@ void sub_GAME_7F0A5504(void) {
 }
 
 
-
-
-
-#ifdef NONMATCHING
-//NOT MATCHING -> Floats on trigger_watch_zoom
 void sub_GAME_7F0A55C4(void) {
     
     if ((get_controller_buttons_pressed(0, 0x222) != 0) || (sub_GAME_7F0A4FB0() != 0)) {
         if ((get_controller_buttons_held(0, 0x2000) == 0) && (watch_soundrelated_maybe == 0)) {
             D_80040994 = 1;
             sub_GAME_7F0A5210();
-            trigger_watch_zoom(4.6f, 0x41700000);
+            trigger_watch_zoom(4.6f, 15.0f);
             return;
         }
     }
@@ -1476,80 +1471,6 @@ void sub_GAME_7F0A55C4(void) {
         }
     }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_8005846C
-.word 0x40933333 /*4.5999999*/
-.text
-glabel sub_GAME_7F0A55C4
-/* 0DA0F4 7F0A55C4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0DA0F8 7F0A55C8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0DA0FC 7F0A55CC 00002025 */  move  $a0, $zero
-/* 0DA100 7F0A55D0 0C0030EB */  jal   get_controller_buttons_pressed
-/* 0DA104 7F0A55D4 24050222 */   li    $a1, 546
-/* 0DA108 7F0A55D8 54400005 */  bnezl $v0, .L7F0A55F0
-/* 0DA10C 7F0A55DC 00002025 */   move  $a0, $zero
-/* 0DA110 7F0A55E0 0FC293EC */  jal   sub_GAME_7F0A4FB0
-/* 0DA114 7F0A55E4 00000000 */   nop   
-/* 0DA118 7F0A55E8 10400014 */  beqz  $v0, .L7F0A563C
-/* 0DA11C 7F0A55EC 00002025 */   move  $a0, $zero
-.L7F0A55F0:
-/* 0DA120 7F0A55F0 0C0030C3 */  jal   get_controller_buttons_held
-/* 0DA124 7F0A55F4 24052000 */   li    $a1, 8192
-/* 0DA128 7F0A55F8 14400010 */  bnez  $v0, .L7F0A563C
-/* 0DA12C 7F0A55FC 3C0E8004 */   lui   $t6, %hi(watch_soundrelated_maybe) 
-/* 0DA130 7F0A5600 8DCE09A8 */  lw    $t6, %lo(watch_soundrelated_maybe)($t6)
-/* 0DA134 7F0A5604 240F0001 */  li    $t7, 1
-/* 0DA138 7F0A5608 3C018004 */  lui   $at, %hi(D_80040994)
-/* 0DA13C 7F0A560C 55C0000C */  bnezl $t6, .L7F0A5640
-/* 0DA140 7F0A5610 00002025 */   move  $a0, $zero
-/* 0DA144 7F0A5614 0FC29484 */  jal   sub_GAME_7F0A5210
-/* 0DA148 7F0A5618 AC2F0994 */   sw    $t7, %lo(D_80040994)($at)
-/* 0DA14C 7F0A561C 3C018006 */  lui   $at, %hi(D_8005846C)
-/* 0DA150 7F0A5620 C42C846C */  lwc1  $f12, %lo(D_8005846C)($at)
-/* 0DA154 7F0A5624 3C014170 */  li    $at, 0x41700000 # 15.000000
-/* 0DA158 7F0A5628 44817000 */  mtc1  $at, $f14
-/* 0DA15C 7F0A562C 0FC1F900 */  jal   trigger_watch_zoom
-/* 0DA160 7F0A5630 00000000 */   nop   
-/* 0DA164 7F0A5634 10000018 */  b     .L7F0A5698
-/* 0DA168 7F0A5638 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0A563C:
-/* 0DA16C 7F0A563C 00002025 */  move  $a0, $zero
-.L7F0A5640:
-/* 0DA170 7F0A5640 0C0030EB */  jal   get_controller_buttons_pressed
-/* 0DA174 7F0A5644 24050111 */   li    $a1, 273
-/* 0DA178 7F0A5648 54400005 */  bnezl $v0, .L7F0A5660
-/* 0DA17C 7F0A564C 00002025 */   move  $a0, $zero
-/* 0DA180 7F0A5650 0FC293FB */  jal   sub_GAME_7F0A4FEC
-/* 0DA184 7F0A5654 00000000 */   nop   
-/* 0DA188 7F0A5658 1040000E */  beqz  $v0, .L7F0A5694
-/* 0DA18C 7F0A565C 00002025 */   move  $a0, $zero
-.L7F0A5660:
-/* 0DA190 7F0A5660 0C0030C3 */  jal   get_controller_buttons_held
-/* 0DA194 7F0A5664 24052000 */   li    $a1, 8192
-/* 0DA198 7F0A5668 1440000A */  bnez  $v0, .L7F0A5694
-/* 0DA19C 7F0A566C 3C188004 */   lui   $t8, %hi(watch_soundrelated_maybe) 
-/* 0DA1A0 7F0A5670 8F1809A8 */  lw    $t8, %lo(watch_soundrelated_maybe)($t8)
-/* 0DA1A4 7F0A5674 24190003 */  li    $t9, 3
-/* 0DA1A8 7F0A5678 3C018004 */  lui   $at, %hi(D_80040994)
-/* 0DA1AC 7F0A567C 57000006 */  bnezl $t8, .L7F0A5698
-/* 0DA1B0 7F0A5680 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0DA1B4 7F0A5684 0FC2AD26 */  jal   zero_D_8004099C
-/* 0DA1B8 7F0A5688 AC390994 */   sw    $t9, %lo(D_80040994)($at)
-/* 0DA1BC 7F0A568C 0FC293E9 */  jal   set_controlstick_lr_disabled
-/* 0DA1C0 7F0A5690 00000000 */   nop   
-.L7F0A5694:
-/* 0DA1C4 7F0A5694 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0A5698:
-/* 0DA1C8 7F0A5698 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0DA1CC 7F0A569C 03E00008 */  jr    $ra
-/* 0DA1D0 7F0A56A0 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
