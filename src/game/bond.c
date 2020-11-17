@@ -11921,42 +11921,9 @@ glabel zoom_from_watch_on_exit
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void check_watch_page_transistion_running(void) {
-    // Node 0
-    if (pPlayer->field_11BC < pPlayer->field_11C0)
-    {
-        // Node 1
-    }
-    // Node 2
-    return 0;
+s32 check_watch_page_transistion_running(void) {
+    return (pPlayer->zoomintime < pPlayer->zoomintimemax);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_watch_page_transistion_running
-/* 0B312C 7F07E5FC 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 0B3130 7F07E600 8C63A0B0 */  lw    $v1, %lo(pPlayer)($v1)
-/* 0B3134 7F07E604 00001025 */  move  $v0, $zero
-/* 0B3138 7F07E608 C46411BC */  lwc1  $f4, 0x11bc($v1)
-/* 0B313C 7F07E60C C46611C0 */  lwc1  $f6, 0x11c0($v1)
-/* 0B3140 7F07E610 4606203C */  c.lt.s $f4, $f6
-/* 0B3144 7F07E614 00000000 */  nop   
-/* 0B3148 7F07E618 45000002 */  bc1f  .L7F07E624
-/* 0B314C 7F07E61C 00000000 */   nop   
-/* 0B3150 7F07E620 24020001 */  li    $v0, 1
-.L7F07E624:
-/* 0B3154 7F07E624 03E00008 */  jr    $ra
-/* 0B3158 7F07E628 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F07E62C(void) {
