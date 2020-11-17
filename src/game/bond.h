@@ -2479,7 +2479,7 @@ struct Player
   s32 field_29F8;
   s32 field_29FC;
   s32 healthdisplaytime;
-  s32 field_2A04;
+  s16 field_2A04;
   s32 field_2A08;
   s32 field_2A0C;
   s32 ptr_text_first_mp_award;

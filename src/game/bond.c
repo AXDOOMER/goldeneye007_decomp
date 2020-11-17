@@ -11261,39 +11261,10 @@ glabel sub_GAME_7F07D960
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F07DE64(void *arg0) {
-    // Node 0
-    arg0->unk2A04 = (u16)-1;
-    return sub_GAME_7F03DE94(arg0->unkA8, arg0->unk2A04, arg0);
+void sub_GAME_7F07DE64(struct Player *player) {
+    sub_GAME_7F03DE94(player->position_data_pointer, player->field_2A04, player);
+    player->field_2A04 = -1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F07DE64
-/* 0B2994 7F07DE64 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0B2998 7F07DE68 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0B299C 7F07DE6C 00803025 */  move  $a2, $a0
-/* 0B29A0 7F07DE70 84C52A04 */  lh    $a1, 0x2a04($a2)
-/* 0B29A4 7F07DE74 8C8400A8 */  lw    $a0, 0xa8($a0)
-/* 0B29A8 7F07DE78 0FC0F7A5 */  jal   sub_GAME_7F03DE94
-/* 0B29AC 7F07DE7C AFA60018 */   sw    $a2, 0x18($sp)
-/* 0B29B0 7F07DE80 8FA60018 */  lw    $a2, 0x18($sp)
-/* 0B29B4 7F07DE84 240EFFFF */  li    $t6, -1
-/* 0B29B8 7F07DE88 A4CE2A04 */  sh    $t6, 0x2a04($a2)
-/* 0B29BC 7F07DE8C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0B29C0 7F07DE90 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0B29C4 7F07DE94 03E00008 */  jr    $ra
-/* 0B29C8 7F07DE98 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F07DE9C(void) {
