@@ -1492,8 +1492,6 @@ void sub_GAME_7F0A56A4(void) {
 }
 
 
-
-#ifdef NONMATCHING
 void sub_GAME_7F0A5784(void) {
     
     if ((get_controller_buttons_pressed(0, 0x222) != 0) || (sub_GAME_7F0A4FB0() != 0)) {
@@ -1501,7 +1499,7 @@ void sub_GAME_7F0A5784(void) {
             D_80040994 = 3;
             zero_D_8004099C();
             sub_GAME_7F0A5210();
-            trigger_watch_zoom(3.95f, 0x41700000);
+            trigger_watch_zoom(3.95f, 15.0f);
             return;
         }
     }
@@ -1510,86 +1508,10 @@ void sub_GAME_7F0A5784(void) {
             D_80040994 = 0;
             zero_D_800409A4();
             sub_GAME_7F0A5210();
-            trigger_watch_zoom(5.9f, 0x41700000);
+            trigger_watch_zoom(5.9f, 15.0f);
         }
     }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80058474
-.word 0x407ccccd /*3.95*/
-glabel D_80058478
-.word 0x40bccccd /*5.9000001*/
-.text
-glabel sub_GAME_7F0A5784
-/* 0DA2B4 7F0A5784 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0DA2B8 7F0A5788 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0DA2BC 7F0A578C 00002025 */  move  $a0, $zero
-/* 0DA2C0 7F0A5790 0C0030EB */  jal   get_controller_buttons_pressed
-/* 0DA2C4 7F0A5794 24050222 */   li    $a1, 546
-/* 0DA2C8 7F0A5798 14400004 */  bnez  $v0, .L7F0A57AC
-/* 0DA2CC 7F0A579C 00000000 */   nop   
-/* 0DA2D0 7F0A57A0 0FC293EC */  jal   sub_GAME_7F0A4FB0
-/* 0DA2D4 7F0A57A4 00000000 */   nop   
-/* 0DA2D8 7F0A57A8 10400012 */  beqz  $v0, .L7F0A57F4
-.L7F0A57AC:
-/* 0DA2DC 7F0A57AC 3C0E8004 */   lui   $t6, %hi(watch_soundrelated_maybe) 
-/* 0DA2E0 7F0A57B0 8DCE09A8 */  lw    $t6, %lo(watch_soundrelated_maybe)($t6)
-/* 0DA2E4 7F0A57B4 240F0003 */  li    $t7, 3
-/* 0DA2E8 7F0A57B8 3C018004 */  lui   $at, %hi(D_80040994)
-/* 0DA2EC 7F0A57BC 55C0000E */  bnezl $t6, .L7F0A57F8
-/* 0DA2F0 7F0A57C0 00002025 */   move  $a0, $zero
-/* 0DA2F4 7F0A57C4 0FC2AD26 */  jal   zero_D_8004099C
-/* 0DA2F8 7F0A57C8 AC2F0994 */   sw    $t7, %lo(D_80040994)($at)
-/* 0DA2FC 7F0A57CC 0FC29484 */  jal   sub_GAME_7F0A5210
-/* 0DA300 7F0A57D0 00000000 */   nop   
-/* 0DA304 7F0A57D4 3C018006 */  lui   $at, %hi(D_80058474)
-/* 0DA308 7F0A57D8 C42C8474 */  lwc1  $f12, %lo(D_80058474)($at)
-/* 0DA30C 7F0A57DC 3C014170 */  li    $at, 0x41700000 # 15.000000
-/* 0DA310 7F0A57E0 44817000 */  mtc1  $at, $f14
-/* 0DA314 7F0A57E4 0FC1F900 */  jal   trigger_watch_zoom
-/* 0DA318 7F0A57E8 00000000 */   nop   
-/* 0DA31C 7F0A57EC 10000019 */  b     .L7F0A5854
-/* 0DA320 7F0A57F0 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0A57F4:
-/* 0DA324 7F0A57F4 00002025 */  move  $a0, $zero
-.L7F0A57F8:
-/* 0DA328 7F0A57F8 0C0030EB */  jal   get_controller_buttons_pressed
-/* 0DA32C 7F0A57FC 24050111 */   li    $a1, 273
-/* 0DA330 7F0A5800 14400004 */  bnez  $v0, .L7F0A5814
-/* 0DA334 7F0A5804 00000000 */   nop   
-/* 0DA338 7F0A5808 0FC293FB */  jal   sub_GAME_7F0A4FEC
-/* 0DA33C 7F0A580C 00000000 */   nop   
-/* 0DA340 7F0A5810 1040000F */  beqz  $v0, .L7F0A5850
-.L7F0A5814:
-/* 0DA344 7F0A5814 3C188004 */   lui   $t8, %hi(watch_soundrelated_maybe) 
-/* 0DA348 7F0A5818 8F1809A8 */  lw    $t8, %lo(watch_soundrelated_maybe)($t8)
-/* 0DA34C 7F0A581C 3C018004 */  lui   $at, %hi(D_80040994)
-/* 0DA350 7F0A5820 5700000C */  bnezl $t8, .L7F0A5854
-/* 0DA354 7F0A5824 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0DA358 7F0A5828 0FC2AD29 */  jal   zero_D_800409A4
-/* 0DA35C 7F0A582C AC200994 */   sw    $zero, %lo(D_80040994)($at)
-/* 0DA360 7F0A5830 0FC29484 */  jal   sub_GAME_7F0A5210
-/* 0DA364 7F0A5834 00000000 */   nop   
-/* 0DA368 7F0A5838 3C018006 */  lui   $at, %hi(D_80058478)
-/* 0DA36C 7F0A583C C42C8478 */  lwc1  $f12, %lo(D_80058478)($at)
-/* 0DA370 7F0A5840 3C014170 */  li    $at, 0x41700000 # 15.000000
-/* 0DA374 7F0A5844 44817000 */  mtc1  $at, $f14
-/* 0DA378 7F0A5848 0FC1F900 */  jal   trigger_watch_zoom
-/* 0DA37C 7F0A584C 00000000 */   nop   
-.L7F0A5850:
-/* 0DA380 7F0A5850 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0A5854:
-/* 0DA384 7F0A5854 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0DA388 7F0A5858 03E00008 */  jr    $ra
-/* 0DA38C 7F0A585C 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 
 void sub_GAME_7F0A5860(void)
