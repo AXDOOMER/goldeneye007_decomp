@@ -9,6 +9,7 @@
 #include "game/bond.h"
 #include "game/chrobjdata.h"
 #include "joy.h"
+#include "video.h"
 struct point {
     f32 x;
     f32 y;
@@ -3022,31 +3023,35 @@ void update_menu00_legalscreen(void)
 
 
 #ifdef NONMATCHING
-void interface_menu00_legalscreen(void) {
-  s32 temp;
-  setvideo_far(60.0f);
-  video_related_21(1.3333334f);
-  set_page_height(100.0f, 10000.0f);
-  set_video2_settings_offset_24(0);
-  temp = menu_timer + clock_timer;
-  menu_timer = temp;
-  if (temp >= 0xF1) {
-      if (get_attached_controller_count() > 0) {
-          while (is_first_time_on_legal_screen == 0) {
-              set_menu_to_mode(MENU_NINTENDO_LOGO,1);
-              return;
-          }
-          set_menu_to_mode(MENU_NO_CONTROLLERS,1);
-          return;
-      }
-      if (get_controller_buttons_pressed(0, 0xFFFF)) {
-          if ((is_first_time_on_legal_screen == 0) && (is_first_time_on_main_menu == 0)) {
-              set_menu_to_mode(MENU_FILE_SELECT,1);
-              return;
-          }
-          set_menu_to_mode(MENU_NINTENDO_LOGO,1);
-      }
-  }
+void interface_menu00_legalscreen(void)
+{
+    setvideo_far(60.0f);
+    video_related_21(1.333333f);
+    set_page_height(100.0f, 10000.0f);
+    set_video2_settings_offset_24(0);
+
+    menu_timer += clock_timer;
+    if (menu_timer >= 0xF1)
+    {
+        if ((get_attached_controller_count() > 0) && (is_first_time_on_legal_screen == 0))
+        {
+            set_menu_to_mode(MENU_NINTENDO_LOGO,1);
+            return;
+        } else
+        {
+        set_menu_to_mode(MENU_NO_CONTROLLERS,1);
+        return;
+        }
+    }
+    if (get_controller_buttons_pressed(0, 0xFFFF))
+    {
+        if ((is_first_time_on_legal_screen == 0) && (is_first_time_on_main_menu == 0))
+        {
+            set_menu_to_mode(MENU_FILE_SELECT,1);
+            return;
+        }
+        set_menu_to_mode(MENU_NINTENDO_LOGO,1);
+    }
 }
 #else
 GLOBAL_ASM(
