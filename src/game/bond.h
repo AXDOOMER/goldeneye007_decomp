@@ -2515,7 +2515,7 @@ struct Player
   s32 field_29F8;
   s32 field_29FC;
   s32 healthdisplaytime;
-  s32 field_2A04;
+  s16 field_2A04;
   s32 field_2A08;
   s32 field_2A0C;
   s32 ptr_text_first_mp_award;
@@ -2868,5 +2868,9 @@ extern f32 D_80036AC4;
 
 
 u32 get_camera_mode(void);
+
+void sub_GAME_7F07E46C(f32 param);
+
+void trigger_watch_zoom(f32 final, f32 time);
 
 #endif
