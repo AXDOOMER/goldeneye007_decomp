@@ -84,7 +84,7 @@ glabel sub_GAME_7F05AB70
 
 
 #ifdef NONMATCHING
-void acos(void) {
+u16 acos(s16) {
 
 }
 #else
@@ -123,7 +123,7 @@ glabel acos
 
 
 #ifdef NONMATCHING
-void asin(void) {
+s16 asin(s16) {
 
 }
 #else
