@@ -1541,10 +1541,6 @@ void sub_GAME_7F0A5860(void)
             return;
         }
     }
-    else
-    {
-
-    }
     if ((get_controller_buttons_pressed(0, D_CBUTTONS|D_JPAD)) || (sub_GAME_7F0A50C4()))
     {
         if (watch_soundrelated_maybe == 0)
@@ -1552,10 +1548,6 @@ void sub_GAME_7F0A5860(void)
             D_80040998 = 1;
             set_D_80040AE0_0();
         }
-    }
-    else
-    {
-
     }
 }
 
@@ -1570,10 +1562,6 @@ void sub_GAME_7F0A5900(void)
             return;
         }
     }
-    else
-    {
-
-    }
     if ((get_controller_buttons_pressed(0, D_CBUTTONS|D_JPAD)) || (sub_GAME_7F0A50C4()))
     {
         if (watch_soundrelated_maybe == 0)
@@ -1581,10 +1569,6 @@ void sub_GAME_7F0A5900(void)
             D_80040998 = 0;
             set_D_80040AE0_0();
         }
-    }
-    else
-    {
-
     }
 }
 
@@ -2614,25 +2598,18 @@ glabel sub_GAME_7F0A611C
 
 void sub_GAME_7F0A6618(void)
 {
-    if ((get_controller_buttons_pressed('\0',U_CBUTTONS|U_JPAD) != 0) || (sub_GAME_7F0A5088() != 0))
+    if ((get_controller_buttons_pressed(0, U_CBUTTONS|U_JPAD)) || (sub_GAME_7F0A5088()))
     {
         D_800409A0 = 4;
         set_D_80040AE0_0();
         sub_GAME_7F0A4F44();
     }
-    else
-    {
 
-    }
-    if ((get_controller_buttons_pressed('\0',D_CBUTTONS|D_JPAD) != 0) || (sub_GAME_7F0A50C4() != 0))
+    if ((get_controller_buttons_pressed(0, D_CBUTTONS|D_JPAD)) || (sub_GAME_7F0A50C4()))
     {
         D_800409A0 = 1;
         set_D_80040AE0_0();
         sub_GAME_7F0A4F44();
-    }
-    else
-    {
-
     }
 }
 
