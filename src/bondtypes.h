@@ -16,6 +16,36 @@ struct rgba_valf32{
     f32 a;
 };
 
+/******
+
+ The following struct ObjectRecord was copied from AIListLogic branch
+ and should be removed when merged
+
+ note: only the necessary fields were copied in order to compile (not the full struct)
+
+******/
+typedef struct ObjectRecord
+{
+  u16 obj;     
+} ObjectRecord;
+
+/******
+
+ The following struct PropRecord was copied from AIListLogic branch
+ and should be removed when merged
+
+ note: only the necessary fields were copied in order to compile (not the full struct)
+
+******/
+typedef struct PropRecord
+{
+  u8 type;
+  union
+  {
+    ObjectRecord *obj;
+  } Entityp;
+} PropRecord;
+
 typedef struct CHRdata CHRdata, *PCHRdata;
 
 /* unfinished struct, WIP */

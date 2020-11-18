@@ -11,6 +11,23 @@ struct xyzpoint
     f32 z;
 };
 
+
+typedef struct invitem_weap
+{
+	s32 weapon;
+} invitem_weap;
+
+typedef struct invitem_prop
+{
+  struct PropRecord *prop;
+} invitem_prop;
+
+typedef struct invitem_dual
+{
+	s32 weapon_right;
+	s32 weapon_left;
+} invitem_dual;
+
 struct hand
 {
   s32 weaponnum;
@@ -255,12 +272,31 @@ struct hand
 typedef struct InvItem {
     s32 type;
 
-    s32 right;
-    s32 left;
+    union {
+		struct invitem_weap type_weap;
+		struct invitem_prop type_prop;
+		struct invitem_dual type_dual;
+
+	} type_inv_item;
 
     struct InvItem *next;
     struct InvItem *prev;
+
 } InvItem;
+
+typedef struct textoverride {
+	s32 unk1;
+	s32 objoffset;
+	s32 weapon;
+	s32 unk4;
+	s32 unk5;
+	s32 unk6;
+	s32 unk7;
+	s32 unk8;
+
+	struct textoverride *next;
+	struct ObjectRecord *obj;
+} textoverride;
 
 
 struct Player
@@ -935,8 +971,8 @@ struct Player
   InvItem *p_itemcur;
   s32 equipmaxitems;
   s32 equipallguns;
-  s32 field_11F0;
-  s32 field_11F4;
+  s32 equipcuritem;
+  textoverride *textoverrides;
   s32 index_time_spent_using_item;
   s32 field_11FC;
   s32 field_1200;

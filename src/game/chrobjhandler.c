@@ -27615,7 +27615,7 @@ interact_key_object:
 /* 084E08 7F0502D8 8FAB0074 */  lw    $t3, 0x74($sp)
 /* 084E0C 7F0502DC 1160000A */  beqz  $t3, .L7F050308
 /* 084E10 7F0502E0 00000000 */   nop   
-/* 084E14 7F0502E4 0FC23657 */  jal   sub_GAME_7F08D95C
+/* 084E14 7F0502E4 0FC23657 */  jal   obj_get_activated_text
 /* 084E18 7F0502E8 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 084E1C 7F0502EC 14400004 */  bnez  $v0, .L7F050300
 /* 084E20 7F0502F0 00402025 */   move  $a0, $v0
@@ -27722,7 +27722,7 @@ interact_weapon_object:
 .L7F050458:
 /* 084F88 7F050458 5120000F */  beql  $t1, $zero, .L7F050498
 /* 084F8C 7F05045C 8FAC0048 */   lw    $t4, 0x48($sp)
-/* 084F90 7F050460 0FC23657 */  jal   sub_GAME_7F08D95C
+/* 084F90 7F050460 0FC23657 */  jal   obj_get_activated_text
 /* 084F94 7F050464 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 084F98 7F050468 10400005 */  beqz  $v0, .L7F050480
 /* 084F9C 7F05046C 00402025 */   move  $a0, $v0
@@ -27753,7 +27753,7 @@ interact_weapon_object:
 /* 084FEC 7F0504BC 8FAF0048 */  lw    $t7, 0x48($sp)
 /* 084FF0 7F0504C0 51C00011 */  beql  $t6, $zero, .L7F050508
 /* 084FF4 7F0504C4 8FA90048 */   lw    $t1, 0x48($sp)
-/* 084FF8 7F0504C8 0FC23669 */  jal   sub_GAME_7F08D9A4
+/* 084FF8 7F0504C8 0FC23669 */  jal   weapon_get_activated_text
 /* 084FFC 7F0504CC 81E40080 */   lb    $a0, 0x80($t7)
 /* 085000 7F0504D0 10400006 */  beqz  $v0, .L7F0504EC
 /* 085004 7F0504D4 00402025 */   move  $a0, $v0
@@ -27826,7 +27826,7 @@ interact_bodyarmor_object:
 /* 085100 7F0505D0 8FAE0074 */  lw    $t6, 0x74($sp)
 /* 085104 7F0505D4 11C00013 */  beqz  $t6, .L7F050624
 /* 085108 7F0505D8 00000000 */   nop   
-/* 08510C 7F0505DC 0FC23657 */  jal   sub_GAME_7F08D95C
+/* 08510C 7F0505DC 0FC23657 */  jal   obj_get_activated_text
 /* 085110 7F0505E0 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 085114 7F0505E4 1440000D */  bnez  $v0, .L7F05061C
 /* 085118 7F0505E8 00402025 */   move  $a0, $v0
@@ -27859,7 +27859,7 @@ interact_default_object:
 /* 085170 7F050640 8FAF0074 */  lw    $t7, 0x74($sp)
 /* 085174 7F050644 51E0000B */  beql  $t7, $zero, .L7F050674
 /* 085178 7F050648 24030004 */   li    $v1, 4
-/* 08517C 7F05064C 0FC23657 */  jal   sub_GAME_7F08D95C
+/* 08517C 7F05064C 0FC23657 */  jal   obj_get_activated_text
 /* 085180 7F050650 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 085184 7F050654 14400004 */  bnez  $v0, .L7F050668
 /* 085188 7F050658 00402025 */   move  $a0, $v0
@@ -27995,7 +27995,7 @@ interact_key_object:
 /* 084E08 7F0502D8 8FAB0074 */  lw    $t3, 0x74($sp)
 /* 084E0C 7F0502DC 1160000A */  beqz  $t3, .L7F050308
 /* 084E10 7F0502E0 00000000 */   nop   
-/* 084E14 7F0502E4 0FC23657 */  jal   sub_GAME_7F08D95C
+/* 084E14 7F0502E4 0FC23657 */  jal   obj_get_activated_text
 /* 084E18 7F0502E8 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 084E1C 7F0502EC 14400004 */  bnez  $v0, .L7F050300
 /* 084E20 7F0502F0 00402025 */   move  $a0, $v0
@@ -28102,7 +28102,7 @@ interact_weapon_object:
 .L7F050458:
 /* 084F88 7F050458 5120000F */  beql  $t1, $zero, .L7F050498
 /* 084F8C 7F05045C 8FAC0048 */   lw    $t4, 0x48($sp)
-/* 084F90 7F050460 0FC23657 */  jal   sub_GAME_7F08D95C
+/* 084F90 7F050460 0FC23657 */  jal   obj_get_activated_text
 /* 084F94 7F050464 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 084F98 7F050468 10400005 */  beqz  $v0, .L7F050480
 /* 084F9C 7F05046C 00402025 */   move  $a0, $v0
@@ -28133,7 +28133,7 @@ interact_weapon_object:
 /* 084FEC 7F0504BC 8FAF0048 */  lw    $t7, 0x48($sp)
 /* 084FF0 7F0504C0 51C00011 */  beql  $t6, $zero, .L7F050508
 /* 084FF4 7F0504C4 8FA90048 */   lw    $t1, 0x48($sp)
-/* 084FF8 7F0504C8 0FC23669 */  jal   sub_GAME_7F08D9A4
+/* 084FF8 7F0504C8 0FC23669 */  jal   weapon_get_activated_text
 /* 084FFC 7F0504CC 81E40080 */   lb    $a0, 0x80($t7)
 /* 085000 7F0504D0 10400006 */  beqz  $v0, .L7F0504EC
 /* 085004 7F0504D4 00402025 */   move  $a0, $v0
@@ -28206,7 +28206,7 @@ interact_bodyarmor_object:
 /* 085100 7F0505D0 8FAE0074 */  lw    $t6, 0x74($sp)
 /* 085104 7F0505D4 11C00013 */  beqz  $t6, .L7F050624
 /* 085108 7F0505D8 00000000 */   nop   
-/* 08510C 7F0505DC 0FC23657 */  jal   sub_GAME_7F08D95C
+/* 08510C 7F0505DC 0FC23657 */  jal   obj_get_activated_text
 /* 085110 7F0505E0 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 085114 7F0505E4 1440000D */  bnez  $v0, .L7F05061C
 /* 085118 7F0505E8 00402025 */   move  $a0, $v0
@@ -28239,7 +28239,7 @@ interact_default_object:
 /* 085170 7F050640 8FAF0074 */  lw    $t7, 0x74($sp)
 /* 085174 7F050644 51E0000B */  beql  $t7, $zero, .L7F050674
 /* 085178 7F050648 24030004 */   li    $v1, 4
-/* 08517C 7F05064C 0FC23657 */  jal   sub_GAME_7F08D95C
+/* 08517C 7F05064C 0FC23657 */  jal   obj_get_activated_text
 /* 085180 7F050650 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 085184 7F050654 14400004 */  bnez  $v0, .L7F050668
 /* 085188 7F050658 00402025 */   move  $a0, $v0
@@ -36109,7 +36109,7 @@ glabel sub_GAME_7F055C40
 /* 08A87C 7F055D4C 304A0004 */  andi  $t2, $v0, 4
 /* 08A880 7F055D50 55400014 */  bnezl $t2, .L7F055DA4
 /* 08A884 7F055D54 8E0C0064 */   lw    $t4, 0x64($s0)
-/* 08A888 7F055D58 0FC23487 */  jal   sub_GAME_7F08D21C
+/* 08A888 7F055D58 0FC23487 */  jal   get_textoverride_by_obj
 /* 08A88C 7F055D5C 02002025 */   move  $a0, $s0
 /* 08A890 7F055D60 1040000A */  beqz  $v0, .L7F055D8C
 /* 08A894 7F055D64 00000000 */   nop   
@@ -36224,7 +36224,7 @@ glabel sub_GAME_7F055C40
 /* 08A87C 7F055D4C 304A0004 */  andi  $t2, $v0, 4
 /* 08A880 7F055D50 55400014 */  bnezl $t2, .L7F055DA4
 /* 08A884 7F055D54 8E0C0064 */   lw    $t4, 0x64($s0)
-/* 08A888 7F055D58 0FC23487 */  jal   sub_GAME_7F08D21C
+/* 08A888 7F055D58 0FC23487 */  jal   get_textoverride_by_obj
 /* 08A88C 7F055D5C 02002025 */   move  $a0, $s0
 /* 08A890 7F055D60 1040000A */  beqz  $v0, .L7F055D8C
 /* 08A894 7F055D64 00000000 */   nop   
