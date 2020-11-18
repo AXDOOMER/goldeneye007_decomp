@@ -1455,7 +1455,7 @@ void sub_GAME_7F0A5504(void) {
 void sub_GAME_7F0A55C4(void) {
     
     if ((get_controller_buttons_pressed(0, L_CBUTTONS|L_TRIG|L_JPAD) != 0) || (sub_GAME_7F0A4FB0() != 0)) {
-        if ((get_controller_buttons_held(0, 0x2000) == 0) && (watch_soundrelated_maybe == 0)) {
+        if ((get_controller_buttons_held(0, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0)) {
             D_80040994 = 1;
             sub_GAME_7F0A5210();
             trigger_watch_zoom(4.6f, 15.0f);
@@ -1463,7 +1463,7 @@ void sub_GAME_7F0A55C4(void) {
         }
     }
     if ((get_controller_buttons_pressed(0, R_CBUTTONS|R_TRIG|R_JPAD) != 0) || (sub_GAME_7F0A4FEC() != 0)) {
-        if ((get_controller_buttons_held(0, 0x2000) == 0) && (watch_soundrelated_maybe == 0)) {
+        if ((get_controller_buttons_held(0, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0)) {
             D_80040994 = 3;
             zero_D_8004099C();
             set_controlstick_lr_disabled();
@@ -1475,7 +1475,7 @@ void sub_GAME_7F0A55C4(void) {
 void sub_GAME_7F0A56A4(void) {
 
     if ((get_controller_buttons_pressed(0, L_CBUTTONS|L_TRIG|L_JPAD) != 0) || (sub_GAME_7F0A4FB0() != 0)) {
-        if ((get_controller_buttons_held(0, 0x2000) == 0) && (watch_soundrelated_maybe == 0)) {
+        if ((get_controller_buttons_held(0, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0)) {
             D_80040994 = 2;
             zero_D_80040998();
             set_controlstick_lr_disabled();
@@ -1483,7 +1483,7 @@ void sub_GAME_7F0A56A4(void) {
         }
     }
     if ((get_controller_buttons_pressed(0, R_CBUTTONS|R_TRIG|R_JPAD) != 0) || (sub_GAME_7F0A4FEC() != 0)) {
-        if ((get_controller_buttons_held(0, 0x2000) == 0) && (watch_soundrelated_maybe == 0)) {
+        if ((get_controller_buttons_held(0, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0)) {
             D_80040994 = 4;
             sub_GAME_7F0A5210();
             trigger_watch_zoom(4.6f, 15.0f);
