@@ -19,6 +19,24 @@
 
 #define NUM_FIELDS  1
 
+u32 unknown_val_80023040 = 0;
+/*D:80023044*/
+u32 unknown_init_val = 2;
+
+u32 cart_hw_address = 0x10000000;
+
+struct debug_handler_entry debug_handler_table[] = 
+{
+    {sp_boot, "boot"},
+    {sp_rmon, "rmon"},
+    {sp_idle, "idle"},
+    {sp_shed, "shed"},
+    {sp_main, "main"},
+    {sp_audi, "audi"},
+    {0, 0},
+    {0, 0},
+};
+
 OSThread rmonThread;
 OSThread idleThread;
 OSThread mainThread;
@@ -27,7 +45,7 @@ OSMesgQueue gfxFrameMsgQ;
 OSMesg gfxFrameMsgBuf[32];
 OSMesgQueue *sched_cmdQ;
 
-void thread3_main(void *args);
+void mainproc(void *args);
 
 extern u8 * _rarezipSegmentStart;
 /**
@@ -82,7 +100,7 @@ void init(void)
 	}
 
     __osSetFpcCsr((__osGetFpcCsr() | 0xe80));
-    osCreateThread(&mainThread, 3, &thread3_main, 0, set_stack_entry(&sp_main, 0x8000), 0xa);
+    osCreateThread(&mainThread, 3, &mainproc, 0, set_stack_entry(&sp_main, 0x8000), 0xa);
     osStartThread(&mainThread);
 }
 #else
@@ -203,10 +221,10 @@ glabel init
 /* 0012A4 700006A4 34058000 */   li    $a1, 32768
 /* 0012A8 700006A8 3C108006 */  lui   $s0, %hi(mainThread)
 /* 0012AC 700006AC 2610D640 */  addiu $s0, %lo(mainThread) # addiu $s0, $s0, -0x29c0
-/* 0012B0 700006B0 3C067000 */  lui   $a2, %hi(thread3_main) # $a2, 0x7000
+/* 0012B0 700006B0 3C067000 */  lui   $a2, %hi(mainproc) # $a2, 0x7000
 /* 0012B4 700006B4 240C000A */  li    $t4, 10
 /* 0012B8 700006B8 AFAC0014 */  sw    $t4, 0x14($sp)
-/* 0012BC 700006BC 24C6089C */  addiu $a2, %lo(thread3_main) # addiu $a2, $a2, 0x89c
+/* 0012BC 700006BC 24C6089C */  addiu $a2, %lo(mainproc) # addiu $a2, $a2, 0x89c
 /* 0012C0 700006C0 02002025 */  move  $a0, $s0
 /* 0012C4 700006C4 24050003 */  li    $a1, 3
 /* 0012C8 700006C8 00003825 */  move  $a3, $zero
@@ -246,7 +264,7 @@ void set_hw_address_and_unknown(void)
  * 1318	70000718
  * A0->SP+0, infinite loop
  */
-void thread1_idle(void *arg) 
+void idleproc(void *arg) 
 {
 	for (;;);
 }
@@ -255,9 +273,9 @@ void thread1_idle(void *arg)
  * 1338	70000738
  * Null thread; executes 70000718
  */
-void start_idle_thread(void) 
+void idleCreateThread(void) 
 {
-    osCreateThread(&idleThread, (OSId)1, thread1_idle, 0, set_stack_entry(&sp_idle, 0x40), (OSPri)0);
+    osCreateThread(&idleThread, (OSId)1, idleproc, 0, set_stack_entry(&sp_idle, 0x40), (OSPri)0);
     osStartThread(&idleThread);
 }
 
@@ -265,16 +283,16 @@ void start_idle_thread(void)
  * 1390	70000790
  * Indi board detection thread; now forcably returns INDI_NOT_DETECTED (1)
  */
-void start_rmon_thread(void) 
+void rmonCreateThread(void) 
 {
-    osCreateThread(&rmonThread, (OSId)0, thread0_rmon, 0, set_stack_entry(&sp_rmon, 0x300), (OSPri)250);
+    osCreateThread(&rmonThread, (OSId)0, rmonproc, 0, set_stack_entry(&sp_rmon, 0x300), (OSPri)250);
     osStartThread(&rmonThread);
 }
 
 /**
  * 13EC	700007EC
  */
-void init_scheduler(void)
+void schedulerInitThread(void)
 {
     osCreateMesgQueue(&gfxFrameMsgQ, &gfxFrameMsgBuf, 32);
     if (osTvType == 2) //OS_TV_MPAL
@@ -296,20 +314,20 @@ void init_scheduler(void)
  *	called by 70000510, using 7000D430: A0=8005D640, A1=3, A2=7000089C, A3=0, SP+10=[803B3948], SP+14=0xA
  *	never returns; 7000601C is an infinite loop
  */
-void thread3_main(void *args)
+void mainproc(void *args)
 {
-	start_idle_thread();
+	idleCreateThread();
 	viDebugRemoved();
-	start_pi_manager();
-	start_rmon_thread();
+	piCreateManager();
+	rmonCreateThread();
 	if (check_boot_switches() != 0)
 	{
 		osStopThread(0);
 	}
 	
     osSetThreadPri(0, 0xa);
-    init_scheduler();
-    setup_gamevalues_and_launchmainloop();
+    schedulerInitThread();
+    bossEntry();
 }
 
 /**

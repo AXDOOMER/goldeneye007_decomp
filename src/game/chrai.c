@@ -14888,8 +14888,8 @@ GLOBAL_ASM(
 glabel sub_GAME_7F03A97C
 /* 06F4AC 7F03A97C 00047080 */  sll   $t6, $a0, 2
 /* 06F4B0 7F03A980 01C47021 */  addu  $t6, $t6, $a0
-/* 06F4B4 7F03A984 3C0F8004 */  lui   $t7, %hi(D_80041414) 
-/* 06F4B8 7F03A988 25EF1414 */  addiu $t7, %lo(D_80041414) # addiu $t7, $t7, 0x1414
+/* 06F4B4 7F03A984 3C0F8004 */  lui   $t7, %hi(array_room_info) 
+/* 06F4B8 7F03A988 25EF1414 */  addiu $t7, %lo(array_room_info) # addiu $t7, $t7, 0x1414
 /* 06F4BC 7F03A98C 000E7100 */  sll   $t6, $t6, 4
 /* 06F4C0 7F03A990 01CF1021 */  addu  $v0, $t6, $t7
 /* 06F4C4 7F03A994 8C58002C */  lw    $t8, 0x2c($v0)

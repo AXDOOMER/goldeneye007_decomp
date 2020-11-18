@@ -83,7 +83,7 @@ glabel sub_GAME_7F0CE8B0
 /* 103418 7F0CE8E8 AFA60600 */  sw    $a2, 0x600($sp)
 /* 10341C 7F0CE8EC AFA70604 */  sw    $a3, 0x604($sp)
 /* 103420 7F0CE8F0 24050044 */  li    $a1, 68
-/* 103424 7F0CE8F4 0C005F10 */  jal   _blkclr
+/* 103424 7F0CE8F4 0C005F10 */  jal   bzero
 /* 103428 7F0CE8F8 02202025 */   move  $a0, $s1
 /* 10342C 7F0CE8FC 8FAE05FC */  lw    $t6, 0x5fc($sp)
 /* 103430 7F0CE900 0240F025 */  move  $fp, $s2

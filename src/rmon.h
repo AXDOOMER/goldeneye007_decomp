@@ -2,7 +2,7 @@
 #define _RMON_H_
 #include <ultra64.h>
 
-void thread0_rmon(void);
+void rmonproc(void);
 
 
 #endif

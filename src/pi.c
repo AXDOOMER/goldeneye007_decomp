@@ -4,6 +4,6 @@
 OSMesg piCmdBuf[0x8];
 OSMesgQueue piCmdQ;
 
-void start_pi_manager(void) {
+void piCreateManager(void) {
     osCreatePiManager(0x96, &piCmdQ, &piCmdBuf, 8);
 }

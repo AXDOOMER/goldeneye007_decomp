@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "game/gamefile.h"
 
 s32 sub_GAME_7F01D6C0(void) {
   return save_7000C6FC();
@@ -1871,17 +1872,29 @@ u32 check_egypt_completed_any_folder_00(void) {
 }
 
 
-u8 removed_would_have_returned_bond_for_folder_num(u32 folder) {
-  return 0;
+u8 removed_would_have_returned_bond_for_folder_num(u32 folder)
+{
+    #ifdef ALL_BONDS
+    //likely code based on behavior
+    if ((folder >= 0) && (folder < 4))
+    {
+        return save_selected_bond[folder];
+    }
+    #endif
+
+    #ifndef ALL_BONDS
+    return 0;
+    #endif
 }
 
 
 
 #ifdef NONMATCHING
 void set_selected_bond_to_folder(u32 folder,u32 bond) {
-  if ((-1 < folder) && (folder < 4)) {
-    save_selected_bond[folder] = 0;
-  }
+    if ((folder >= 0) && (folder < 4))
+    {
+        save_selected_bond[folder] = 0;
+    }
 }
 #else
 GLOBAL_ASM(
@@ -2632,8 +2645,39 @@ glabel copy_eepromfile_a0_from_a1_to_buffer
 
 
 #ifdef NONMATCHING
-void check_for_007_mode_unlocked(void) {
 
+BOOL is007ModeUnlockedinFolder(u32 foldernum)
+
+{
+    save_file *folder;
+    BOOL BVar1;
+    BOOL found;
+    int stagenum;
+    
+    folder = getEEPROMforFoldernum(foldernum);
+    if (folder == NULL) {
+        BVar1 = FALSE;
+    }
+    else {
+        stagenum = SP_STAGE_DAM;
+        if ((folder->bitflags & 1) == 0) {
+            do {
+                found = doesSaveHaveStageCompletedOnDifficulty(folder,stagenum,DIFFICULTY_00);
+                if (found == FALSE) break;
+                stagenum += SP_STAGE_FACILITY;
+            } while (stagenum != 0x14);
+            if (stagenum == SP_STAGE_MAX) {
+                BVar1 = TRUE;
+            }
+            else {
+                BVar1 = FALSE;
+            }
+        }
+        else {
+            BVar1 = TRUE;
+        }
+    }
+    return BVar1;
 }
 #else
 GLOBAL_ASM(

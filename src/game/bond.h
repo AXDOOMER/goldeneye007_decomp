@@ -11,6 +11,23 @@ struct xyzpoint
     f32 z;
 };
 
+
+typedef struct invitem_weap
+{
+	s32 weapon;
+} invitem_weap;
+
+typedef struct invitem_prop
+{
+  struct PropRecord *prop;
+} invitem_prop;
+
+typedef struct invitem_dual
+{
+	s32 weapon_right;
+	s32 weapon_left;
+} invitem_dual;
+
 struct hand
 {
   s32 weaponnum;
@@ -255,12 +272,31 @@ struct hand
 typedef struct InvItem {
     s32 type;
 
-    s32 right;
-    s32 left;
+    union {
+		struct invitem_weap type_weap;
+		struct invitem_prop type_prop;
+		struct invitem_dual type_dual;
+
+	} type_inv_item;
 
     struct InvItem *next;
     struct InvItem *prev;
+
 } InvItem;
+
+typedef struct textoverride {
+	s32 unk1;
+	s32 objoffset;
+	s32 weapon;
+	s32 unk4;
+	s32 unk5;
+	s32 unk6;
+	s32 unk7;
+	s32 unk8;
+
+	struct textoverride *next;
+	struct ObjectRecord *obj;
+} textoverride;
 
 
 struct Player
@@ -581,28 +617,28 @@ struct Player
   s32 field_4E0;
   s32 field_4E4;
   s32 field_4E8;
-  s32 field_4EC;
+  f32 field_4EC;
   s32 field_4F0;
   s32 field_4F4;
   s32 field_4F8;
-  s32 scaled_velocity;
-  s32 field_500;
-  s32 field_504;
-  s32 field_508;
-  s32 field_50C;
-  s32 field_510;
-  s32 field_514;
-  s32 field_518;
-  s32 field_51C;
-  s32 velocity;
-  s32 field_524;
-  s32 field_528;
-  s32 field_52C;
-  s32 field_530;
-  s32 field_534;
-  s32 field_538;
-  s32 field_53C;
-  s32 field_540;
+  struct xyzpoint scaled_velocity;
+  //f32 field_500;
+  //f32 field_504;
+  struct xyzpoint field_508;
+  //s32 field_50C;
+  //s32 field_510;
+  struct xyzpoint field_514;
+  //s32 field_518;
+  //s32 field_51C;
+  struct xyzpoint velocity;
+  //f32 field_524;
+  //f32 field_528;
+  struct xyzpoint field_52C;
+  //s32 field_530;
+  //s32 field_534;
+  struct xyzpoint field_538;
+  //s32 field_53C;
+  //s32 field_540;
   s32 field_544;
   s32 field_548;
   s32 field_54C;
@@ -633,7 +669,10 @@ struct Player
   s32 field_5B0;
   s32 field_5B4;
   s32 field_5B8;
-  u32 field_5BC;
+  s8 field_5BC;
+  s8 field_5BD;
+  s8 field_5BE;
+  s8 field_5BF;
   s32 field_5C0;
   s32 field_5C4;
   s32 field_5C8;
@@ -932,8 +971,8 @@ struct Player
   InvItem *p_itemcur;
   s32 equipmaxitems;
   s32 equipallguns;
-  s32 field_11F0;
-  s32 field_11F4;
+  s32 equipcuritem;
+  textoverride *textoverrides;
   s32 index_time_spent_using_item;
   s32 field_11FC;
   s32 field_1200;
@@ -2476,7 +2515,7 @@ struct Player
   s32 field_29F8;
   s32 field_29FC;
   s32 healthdisplaytime;
-  s32 field_2A04;
+  s16 field_2A04;
   s32 field_2A08;
   s32 field_2A0C;
   s32 ptr_text_first_mp_award;
@@ -2829,5 +2868,9 @@ extern f32 D_80036AC4;
 
 
 u32 get_camera_mode(void);
+
+void sub_GAME_7F07E46C(f32 param);
+
+void trigger_watch_zoom(f32 final, f32 time);
 
 #endif

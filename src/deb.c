@@ -98,7 +98,7 @@ u32 debAllocateDNLEntry(s32 arg0)
     u32 temp_v0;
 
     temp_v0 = (debug_notice_list_data + arg0);
-    if (&thread_video_manager_debugthread >= temp_v0)
+    if (&tlbthread >= temp_v0)
     {
         debug_notice_list_data = temp_v0;
         return debug_notice_list_data;
@@ -112,8 +112,8 @@ GLOBAL_ASM(
 glabel debAllocateDNLEntry
 /* 005980 70004D80 3C028002 */  lui   $v0, %hi(debug_notice_list_data)
 /* 005984 70004D84 8C4232F8 */  lw    $v0, %lo(debug_notice_list_data)($v0)
-/* 005988 70004D88 3C0E8006 */  lui   $t6, %hi(thread_video_manager_debugthread) 
-/* 00598C 70004D8C 25CE0C90 */  addiu $t6, %lo(thread_video_manager_debugthread) # addiu $t6, $t6, 0xc90
+/* 005988 70004D88 3C0E8006 */  lui   $t6, %hi(tlbthread) 
+/* 00598C 70004D8C 25CE0C90 */  addiu $t6, %lo(tlbthread) # addiu $t6, $t6, 0xc90
 /* 005990 70004D90 00401825 */  move  $v1, $v0
 /* 005994 70004D94 00441021 */  addu  $v0, $v0, $a0
 /* 005998 70004D98 27BDFFE8 */  addiu $sp, $sp, -0x18
