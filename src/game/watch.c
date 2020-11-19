@@ -1152,40 +1152,10 @@ glabel sub_GAME_7F0A5160
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0A519C(void) {
-
+s32 sub_GAME_7F0A519C(void)
+{
+    return is_holding_less_than_10_down_on_stick() && get_D_80040AE4() == 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A519C
-/* 0D9CCC 7F0A519C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0D9CD0 7F0A51A0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0D9CD4 7F0A51A4 0FC29449 */  jal   is_holding_less_than_10_down_on_stick
-/* 0D9CD8 7F0A51A8 00000000 */   nop   
-/* 0D9CDC 7F0A51AC 0002702B */  sltu  $t6, $zero, $v0
-/* 0D9CE0 7F0A51B0 11C00005 */  beqz  $t6, .L7F0A51C8
-/* 0D9CE4 7F0A51B4 01C01025 */   move  $v0, $t6
-/* 0D9CE8 7F0A51B8 0FC29452 */  jal   get_D_80040AE4
-/* 0D9CEC 7F0A51BC 00000000 */   nop   
-/* 0D9CF0 7F0A51C0 2C4F0001 */  sltiu $t7, $v0, 1
-/* 0D9CF4 7F0A51C4 01E01025 */  move  $v0, $t7
-.L7F0A51C8:
-/* 0D9CF8 7F0A51C8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0D9CFC 7F0A51CC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0D9D00 7F0A51D0 03E00008 */  jr    $ra
-/* 0D9D04 7F0A51D4 00000000 */   nop   
-)
-#endif
-
-
-
-
-
 
 void sub_GAME_7F0A51D8(void)
 {
