@@ -2936,8 +2936,19 @@ glabel sub_GAME_7F0A69A8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A6A2C(void) {
+f32 sub_GAME_7F0A6A2C(f32 arg0) {
+    f32 phi_f12;
 
+    if (3.1415927f < arg0) {
+        return arg0 - 6.2831855f;
+    }
+
+    phi_f12 = arg0;
+    
+    if (-3.1415927f > arg0) {
+        return arg0 + 6.2831855f;
+    }
+    return phi_f12;
 }
 #else
 GLOBAL_ASM(
