@@ -2576,61 +2576,23 @@ glabel sub_GAME_7F0A68D8
 
 
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0A69A8(void) {
-
+void sub_GAME_7F0A69A8(void)
+{
+    if (get_attached_controller_count() < 2)
+    {
+        D_800409D8 = 4;
+    }
+    else
+    {
+        D_800409D8 = 8;
+    }
+    sub_GAME_7F0A4F44();
+    D_80040994 = 0;
+    D_800409A0 = 4;
+    D_800409C8 = 0.999f;
+    D_800409CC = 0.9999f;
+    calculate_equip_cur_item();
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_800584B0
-.word 0x3f7fbe77  /*0.99900001*/
-glabel D_800584B4
-.word 0x3f7ff972 /*0.99989998*/
-.text
-glabel sub_GAME_7F0A69A8
-/* 0DB4D8 7F0A69A8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0DB4DC 7F0A69AC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0DB4E0 7F0A69B0 0C002E7E */  jal   get_attached_controller_count
-/* 0DB4E4 7F0A69B4 00000000 */   nop   
-/* 0DB4E8 7F0A69B8 28410002 */  slti  $at, $v0, 2
-/* 0DB4EC 7F0A69BC 10200005 */  beqz  $at, .L7F0A69D4
-/* 0DB4F0 7F0A69C0 240F0008 */   li    $t7, 8
-/* 0DB4F4 7F0A69C4 240E0004 */  li    $t6, 4
-/* 0DB4F8 7F0A69C8 3C018004 */  lui   $at, %hi(D_800409D8)
-/* 0DB4FC 7F0A69CC 10000003 */  b     .L7F0A69DC
-/* 0DB500 7F0A69D0 AC2E09D8 */   sw    $t6, %lo(D_800409D8)($at)
-.L7F0A69D4:
-/* 0DB504 7F0A69D4 3C018004 */  lui   $at, %hi(D_800409D8)
-/* 0DB508 7F0A69D8 AC2F09D8 */  sw    $t7, %lo(D_800409D8)($at)
-.L7F0A69DC:
-/* 0DB50C 7F0A69DC 0FC293D1 */  jal   sub_GAME_7F0A4F44
-/* 0DB510 7F0A69E0 00000000 */   nop   
-/* 0DB514 7F0A69E4 3C018004 */  lui   $at, %hi(D_80040994)
-/* 0DB518 7F0A69E8 AC200994 */  sw    $zero, %lo(D_80040994)($at)
-/* 0DB51C 7F0A69EC 3C018004 */  lui   $at, %hi(D_800409A0)
-/* 0DB520 7F0A69F0 24180004 */  li    $t8, 4
-/* 0DB524 7F0A69F4 AC3809A0 */  sw    $t8, %lo(D_800409A0)($at)
-/* 0DB528 7F0A69F8 3C018006 */  lui   $at, %hi(D_800584B0)
-/* 0DB52C 7F0A69FC C42484B0 */  lwc1  $f4, %lo(D_800584B0)($at)
-/* 0DB530 7F0A6A00 3C018004 */  lui   $at, %hi(D_800409C8)
-/* 0DB534 7F0A6A04 E42409C8 */  swc1  $f4, %lo(D_800409C8)($at)
-/* 0DB538 7F0A6A08 3C018006 */  lui   $at, %hi(D_800584B4)
-/* 0DB53C 7F0A6A0C C42684B4 */  lwc1  $f6, %lo(D_800584B4)($at)
-/* 0DB540 7F0A6A10 3C018004 */  lui   $at, %hi(D_800409CC)
-/* 0DB544 7F0A6A14 0FC23638 */  jal   calculate_equip_cur_item
-/* 0DB548 7F0A6A18 E42609CC */   swc1  $f6, %lo(D_800409CC)($at)
-/* 0DB54C 7F0A6A1C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0DB550 7F0A6A20 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0DB554 7F0A6A24 03E00008 */  jr    $ra
-/* 0DB558 7F0A6A28 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
