@@ -942,78 +942,15 @@ void set_controlstick_lr_disabled(void) {
   controlstick_lr_enabled = 0;
 }
 
-
-
-
-
-#ifdef NONMATCHING
-u8 sub_GAME_7F0A4FB0(void)
-
+s32 sub_GAME_7F0A4FB0(void)
 {
-    u32 uVar1;
-    u8 ret;
-    
-    uVar1 = is_holding_greater_than_2E_left_on_stick();
-    ret = uVar1 != 0;
-    if (ret) {
-        uVar1 = get_controlstick_lr_enabled();
-        ret = uVar1 != 0;
-    }
-    return ret;
+    return is_holding_greater_than_2E_left_on_stick() && get_controlstick_lr_enabled();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A4FB0
-/* 0D9AE0 7F0A4FB0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0D9AE4 7F0A4FB4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0D9AE8 7F0A4FB8 0FC293D4 */  jal   is_holding_greater_than_2E_left_on_stick
-/* 0D9AEC 7F0A4FBC 00000000 */   nop   
-/* 0D9AF0 7F0A4FC0 0002702B */  sltu  $t6, $zero, $v0
-/* 0D9AF4 7F0A4FC4 11C00005 */  beqz  $t6, .L7F0A4FDC
-/* 0D9AF8 7F0A4FC8 01C01025 */   move  $v0, $t6
-/* 0D9AFC 7F0A4FCC 0FC293E6 */  jal   get_controlstick_lr_enabled
-/* 0D9B00 7F0A4FD0 00000000 */   nop   
-/* 0D9B04 7F0A4FD4 0002782B */  sltu  $t7, $zero, $v0
-/* 0D9B08 7F0A4FD8 01E01025 */  move  $v0, $t7
-.L7F0A4FDC:
-/* 0D9B0C 7F0A4FDC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0D9B10 7F0A4FE0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0D9B14 7F0A4FE4 03E00008 */  jr    $ra
-/* 0D9B18 7F0A4FE8 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0A4FEC(void) {
-
+s32 sub_GAME_7F0A4FEC(void)
+{
+    return is_holding_greater_than_2E_right_on_stick() && get_controlstick_lr_enabled();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A4FEC
-/* 0D9B1C 7F0A4FEC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0D9B20 7F0A4FF0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0D9B24 7F0A4FF4 0FC293DD */  jal   is_holding_greater_than_2E_right_on_stick
-/* 0D9B28 7F0A4FF8 00000000 */   nop   
-/* 0D9B2C 7F0A4FFC 0002702B */  sltu  $t6, $zero, $v0
-/* 0D9B30 7F0A5000 11C00005 */  beqz  $t6, .L7F0A5018
-/* 0D9B34 7F0A5004 01C01025 */   move  $v0, $t6
-/* 0D9B38 7F0A5008 0FC293E6 */  jal   get_controlstick_lr_enabled
-/* 0D9B3C 7F0A500C 00000000 */   nop   
-/* 0D9B40 7F0A5010 0002782B */  sltu  $t7, $zero, $v0
-/* 0D9B44 7F0A5014 01E01025 */  move  $v0, $t7
-.L7F0A5018:
-/* 0D9B48 7F0A5018 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0D9B4C 7F0A501C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0D9B50 7F0A5020 03E00008 */  jr    $ra
-/* 0D9B54 7F0A5024 00000000 */   nop   
-)
-#endif
 
 u32 is_holding_greater_than_2E_up_on_stick(void)
 {
