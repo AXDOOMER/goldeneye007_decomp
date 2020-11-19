@@ -1035,72 +1035,15 @@ void set_D_80040AE0_0(void)
   D_80040AE0 = 0;
 }
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0A5088(void) {
-
+s32 sub_GAME_7F0A5088(void)
+{
+    return is_holding_greater_than_2E_up_on_stick() && get_D_80040AE0();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A5088
-/* 0D9BB8 7F0A5088 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0D9BBC 7F0A508C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0D9BC0 7F0A5090 0FC2940A */  jal   is_holding_greater_than_2E_up_on_stick
-/* 0D9BC4 7F0A5094 00000000 */   nop   
-/* 0D9BC8 7F0A5098 0002702B */  sltu  $t6, $zero, $v0
-/* 0D9BCC 7F0A509C 11C00005 */  beqz  $t6, .L7F0A50B4
-/* 0D9BD0 7F0A50A0 01C01025 */   move  $v0, $t6
-/* 0D9BD4 7F0A50A4 0FC2941C */  jal   get_D_80040AE0
-/* 0D9BD8 7F0A50A8 00000000 */   nop   
-/* 0D9BDC 7F0A50AC 0002782B */  sltu  $t7, $zero, $v0
-/* 0D9BE0 7F0A50B0 01E01025 */  move  $v0, $t7
-.L7F0A50B4:
-/* 0D9BE4 7F0A50B4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0D9BE8 7F0A50B8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0D9BEC 7F0A50BC 03E00008 */  jr    $ra
-/* 0D9BF0 7F0A50C0 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0A50C4(void) {
-
+s32 sub_GAME_7F0A50C4(void)
+{
+    return is_holding_greater_than_2E_down_on_stick() && get_D_80040AE0();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A50C4
-/* 0D9BF4 7F0A50C4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0D9BF8 7F0A50C8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0D9BFC 7F0A50CC 0FC29413 */  jal   is_holding_greater_than_2E_down_on_stick
-/* 0D9C00 7F0A50D0 00000000 */   nop   
-/* 0D9C04 7F0A50D4 0002702B */  sltu  $t6, $zero, $v0
-/* 0D9C08 7F0A50D8 11C00005 */  beqz  $t6, .L7F0A50F0
-/* 0D9C0C 7F0A50DC 01C01025 */   move  $v0, $t6
-/* 0D9C10 7F0A50E0 0FC2941C */  jal   get_D_80040AE0
-/* 0D9C14 7F0A50E4 00000000 */   nop   
-/* 0D9C18 7F0A50E8 0002782B */  sltu  $t7, $zero, $v0
-/* 0D9C1C 7F0A50EC 01E01025 */  move  $v0, $t7
-.L7F0A50F0:
-/* 0D9C20 7F0A50F0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0D9C24 7F0A50F4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0D9C28 7F0A50F8 03E00008 */  jr    $ra
-/* 0D9C2C 7F0A50FC 00000000 */   nop   
-)
-#endif
-
-
-
-
-
 
 u32 is_holding_less_than_10_up_on_stick(void)
 {
