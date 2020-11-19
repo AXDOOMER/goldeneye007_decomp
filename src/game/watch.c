@@ -828,8 +828,6 @@ int cur_player_get_control_type(void){
 }
 
 
-
-#ifdef NONMATCHING
 void cur_player_set_control_type(int type)
 {
     int langsize;
@@ -837,52 +835,13 @@ void cur_player_set_control_type(int type)
     pPlayer->cur_player_control_type_0 = type;
     pPlayer->cur_player_control_type_1 = type;
     pPlayer->cur_player_control_type_2 = (float)type;
-    langsize = 10;
-    if (j_text_trigger != 0) {
-        langsize = 0xe;
-    }
+    
+    langsize = j_text_trigger ? 14 : 10;
+
     pPlayer->neg_vspacing_for_control_type_entry = -(langsize * type);
     pPlayer->has_set_control_type_data = 1;
 
 }
-#else
-GLOBAL_ASM(
-.text
-glabel cur_player_set_control_type
-/* 0D9900 7F0A4DD0 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 0D9904 7F0A4DD4 2463A0B0 */  addiu $v1, %lo(pPlayer) # addiu $v1, $v1, -0x5f50
-/* 0D9908 7F0A4DD8 8C6E0000 */  lw    $t6, ($v1)
-/* 0D990C 7F0A4DDC 44842000 */  mtc1  $a0, $f4
-/* 0D9910 7F0A4DE0 3C198005 */  lui   $t9, %hi(j_text_trigger) 
-/* 0D9914 7F0A4DE4 ADC42A58 */  sw    $a0, 0x2a58($t6)
-/* 0D9918 7F0A4DE8 8C6F0000 */  lw    $t7, ($v1)
-/* 0D991C 7F0A4DEC 468021A0 */  cvt.s.w $f6, $f4
-/* 0D9920 7F0A4DF0 2402000A */  li    $v0, 10
-/* 0D9924 7F0A4DF4 ADE42A5C */  sw    $a0, 0x2a5c($t7)
-/* 0D9928 7F0A4DF8 8C780000 */  lw    $t8, ($v1)
-/* 0D992C 7F0A4DFC E7062A60 */  swc1  $f6, 0x2a60($t8)
-/* 0D9930 7F0A4E00 8F3984D0 */  lw    $t9, %lo(j_text_trigger)($t9)
-/* 0D9934 7F0A4E04 13200003 */  beqz  $t9, .L7F0A4E14
-/* 0D9938 7F0A4E08 00000000 */   nop   
-/* 0D993C 7F0A4E0C 10000001 */  b     .L7F0A4E14
-/* 0D9940 7F0A4E10 2402000E */   li    $v0, 14
-.L7F0A4E14:
-/* 0D9944 7F0A4E14 00440019 */  multu $v0, $a0
-/* 0D9948 7F0A4E18 8C6A0000 */  lw    $t2, ($v1)
-/* 0D994C 7F0A4E1C 240B0001 */  li    $t3, 1
-/* 0D9950 7F0A4E20 00004012 */  mflo  $t0
-/* 0D9954 7F0A4E24 00084823 */  negu  $t1, $t0
-/* 0D9958 7F0A4E28 AD492A64 */  sw    $t1, 0x2a64($t2)
-/* 0D995C 7F0A4E2C 8C6C0000 */  lw    $t4, ($v1)
-/* 0D9960 7F0A4E30 03E00008 */  jr    $ra
-/* 0D9964 7F0A4E34 AD8B2A68 */   sw    $t3, 0x2a68($t4)
-)
-#endif
-
-
-
-
-
 
 u32 get_cur_player_look_vertical_inverted(void) {return cur_player_look_vertical_inverted;}
 void set_cur_player_look_vertical_inverted(u32 param_1) {cur_player_look_vertical_inverted = param_1;}
