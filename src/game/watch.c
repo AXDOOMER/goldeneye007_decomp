@@ -1045,7 +1045,7 @@ void sub_GAME_7F0A526C(void)
 }
 
 
-void sub_GAME_7F0A53D8(void)
+void watch_page_2_nav_control(void)
 {
     s32 move_to_watch_screen_page_1;
     s32 move_to_watch_screen_page_3;
@@ -2992,7 +2992,7 @@ glabel sub_GAME_7F0A6A80
 /* 0DB9F8 7F0A6EC8 10000004 */  b     .L7F0A6EDC
 /* 0DB9FC 7F0A6ECC 8FBF0014 */   lw    $ra, 0x14($sp)
 .L7F0A6ED0:
-/* 0DBA00 7F0A6ED0 0FC294F6 */  jal   sub_GAME_7F0A53D8
+/* 0DBA00 7F0A6ED0 0FC294F6 */  jal   watch_page_2_nav_control
 /* 0DBA04 7F0A6ED4 00000000 */   nop   
 .L7F0A6ED8:
 /* 0DBA08 7F0A6ED8 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -3334,7 +3334,7 @@ glabel sub_GAME_7F0A6A80
 /* 0DC5D0 7F0A7A60 10000004 */  b     .Ljp7F0A7A74
 /* 0DC5D4 7F0A7A64 8FBF0014 */   lw    $ra, 0x14($sp)
 .Ljp7F0A6ED0:
-/* 0DC5D8 7F0A7A68 0FC297DE */  jal   sub_GAME_7F0A53D8
+/* 0DC5D8 7F0A7A68 0FC297DE */  jal   watch_page_2_nav_control
 /* 0DC5DC 7F0A7A6C 00000000 */   nop   
 .Ljp7F0A7A70:
 /* 0DC5E0 7F0A7A70 8FBF0014 */  lw    $ra, 0x14($sp)
