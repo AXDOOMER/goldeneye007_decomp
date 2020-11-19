@@ -987,46 +987,46 @@ void sub_GAME_7F0A5210(void)
     return;
 }
 
-void sub_GAME_7F0A526C(void)
+void watch_screen0_navigation(void)
 {
-    s32 bool1;
-    s32 bool2;
+    s32 goto_watch_screen_index_4;
+    s32 goto_watch_screen_index_1;
 
     if (watch_soundrelated_maybe == 0)
     {
-        bool1 = 0;
-        bool2 = 0;
+        goto_watch_screen_index_4 = 0;
+        goto_watch_screen_index_1 = 0;
         
         if (get_debug_gunwatchpos_flag() == 0)
         {
             if (get_controller_buttons_pressed(0, L_TRIG|L_CBUTTONS))
             {
-                bool1 = 1;
+                goto_watch_screen_index_4 = 1;
             }
             if (get_controller_buttons_pressed(0, R_TRIG|R_CBUTTONS))
             {
-                bool2 = 1;
+                goto_watch_screen_index_1 = 1;
             }
         }
         
         if ((get_controller_buttons_pressed(0, L_JPAD)) || (sub_GAME_7F0A4FB0()))
         {
-            bool1 = 1;
+            goto_watch_screen_index_4 = 1;
         }
         
         if ((get_controller_buttons_pressed(0, R_JPAD)) || (sub_GAME_7F0A4FEC()))
         {
-            bool2 = 1;
+            goto_watch_screen_index_1 = 1;
         }
         
-        if (bool1)
+        if (goto_watch_screen_index_4)
         {
             watch_screen_index = 4;
             sub_GAME_7F0A5210();
             trigger_watch_zoom(4.6f, 15.0f);
         }
 
-        if (bool2)
+        if (goto_watch_screen_index_1)
         {
             watch_screen_index = 1;
             sub_GAME_7F0A5210();
@@ -1045,39 +1045,39 @@ void sub_GAME_7F0A526C(void)
 }
 
 
-void watch_page_2_nav_control(void)
+void watch_screen1_navigation(void)
 {
-    s32 move_to_watch_screen_page_1;
-    s32 move_to_watch_screen_page_3;
+    s32 goto_watch_screen_index_0;
+    s32 goto_watch_screen_index_2;
 
     if (watch_soundrelated_maybe == 0)
     {
-        move_to_watch_screen_page_1 = FALSE;
-        move_to_watch_screen_page_3 = FALSE;
+        goto_watch_screen_index_0 = FALSE;
+        goto_watch_screen_index_2 = FALSE;
 
         if (get_debug_gunwatchpos_flag() == FALSE)
         {
             if (get_controller_buttons_pressed(0, L_TRIG|L_CBUTTONS))
             {
-                move_to_watch_screen_page_1 = TRUE;
+                goto_watch_screen_index_0 = TRUE;
             }
             if (get_controller_buttons_pressed(0, R_TRIG|R_CBUTTONS))
             {
-                move_to_watch_screen_page_3 = TRUE;
+                goto_watch_screen_index_2 = TRUE;
             }
         }
 
         if ((get_controller_buttons_pressed(0, L_JPAD)) || (sub_GAME_7F0A4FB0()))
         {
-            move_to_watch_screen_page_1 = TRUE;
+            goto_watch_screen_index_0 = TRUE;
         }
         
         if ((get_controller_buttons_pressed(0, R_JPAD)) || (sub_GAME_7F0A4FEC()))
         {
-            move_to_watch_screen_page_3 = TRUE;
+            goto_watch_screen_index_2 = TRUE;
         }
 
-        if (move_to_watch_screen_page_1)
+        if (goto_watch_screen_index_0)
         {
             watch_screen_index = 0;
             zero_D_800409A4();
@@ -1085,7 +1085,7 @@ void watch_page_2_nav_control(void)
             trigger_watch_zoom(5.9f, 15.0f);
         }
 
-        if (move_to_watch_screen_page_3)
+        if (goto_watch_screen_index_2)
         {
             watch_screen_index = 2;
             set_controlstick_lr_disabled();
@@ -1096,11 +1096,7 @@ void watch_page_2_nav_control(void)
 }
 
 
-
-
-
-
-void sub_GAME_7F0A5504(void) {
+void unused_watch_screen_navigation(void) {
 
     if ((get_controller_buttons_pressed(0, L_CBUTTONS|L_TRIG|L_JPAD)) || (sub_GAME_7F0A4FB0()))
     {
@@ -1124,7 +1120,7 @@ void sub_GAME_7F0A5504(void) {
 }
 
 
-void sub_GAME_7F0A55C4(void) {
+void watch_screen2_navigation(void) {
     
     if ((get_controller_buttons_pressed(0, L_CBUTTONS|L_TRIG|L_JPAD)) || (sub_GAME_7F0A4FB0()))
     {
@@ -1148,7 +1144,7 @@ void sub_GAME_7F0A55C4(void) {
 }
 
 
-void sub_GAME_7F0A56A4(void) {
+void watch_screen3_navigation(void) {
 
     if ((get_controller_buttons_pressed(0, L_CBUTTONS|L_TRIG|L_JPAD)) || (sub_GAME_7F0A4FB0()))
     {
@@ -1172,7 +1168,7 @@ void sub_GAME_7F0A56A4(void) {
 }
 
 
-void sub_GAME_7F0A5784(void) {
+void watch_screen4_navigation(void) {
     
     if ((get_controller_buttons_pressed(0, L_CBUTTONS|L_TRIG|L_JPAD)) || (sub_GAME_7F0A4FB0()))
     {
@@ -2930,7 +2926,7 @@ glabel sub_GAME_7F0A6A80
 /* 0DB92C 7F0A6DFC 01A00008 */  jr    $t5
 /* 0DB930 7F0A6E00 00000000 */   nop   
 .L7F0A6E04:
-/* 0DB934 7F0A6E04 0FC2949B */  jal   sub_GAME_7F0A526C
+/* 0DB934 7F0A6E04 0FC2949B */  jal   watch_screen0_navigation
 /* 0DB938 7F0A6E08 00000000 */   nop   
 /* 0DB93C 7F0A6E0C 10000033 */  b     .L7F0A6EDC
 /* 0DB940 7F0A6E10 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2953,7 +2949,7 @@ glabel sub_GAME_7F0A6A80
 /* 0DB978 7F0A6E48 0FC29640 */  jal   sub_GAME_7F0A5900
 /* 0DB97C 7F0A6E4C 00000000 */   nop   
 .L7F0A6E50:
-/* 0DB980 7F0A6E50 0FC29571 */  jal   sub_GAME_7F0A55C4
+/* 0DB980 7F0A6E50 0FC29571 */  jal   watch_screen2_navigation
 /* 0DB984 7F0A6E54 00000000 */   nop   
 /* 0DB988 7F0A6E58 10000020 */  b     .L7F0A6EDC
 /* 0DB98C 7F0A6E5C 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2982,17 +2978,17 @@ glabel sub_GAME_7F0A6A80
 /* 0DB9D8 7F0A6EA8 0FC29666 */  jal   sub_GAME_7F0A5998
 /* 0DB9DC 7F0A6EAC 00000000 */   nop   
 .L7F0A6EB0:
-/* 0DB9E0 7F0A6EB0 0FC295A9 */  jal   sub_GAME_7F0A56A4
+/* 0DB9E0 7F0A6EB0 0FC295A9 */  jal   watch_screen3_navigation
 /* 0DB9E4 7F0A6EB4 00000000 */   nop   
 /* 0DB9E8 7F0A6EB8 10000008 */  b     .L7F0A6EDC
 /* 0DB9EC 7F0A6EBC 8FBF0014 */   lw    $ra, 0x14($sp)
 .L7F0A6EC0:
-/* 0DB9F0 7F0A6EC0 0FC295E1 */  jal   sub_GAME_7F0A5784
+/* 0DB9F0 7F0A6EC0 0FC295E1 */  jal   watch_screen4_navigation
 /* 0DB9F4 7F0A6EC4 00000000 */   nop   
 /* 0DB9F8 7F0A6EC8 10000004 */  b     .L7F0A6EDC
 /* 0DB9FC 7F0A6ECC 8FBF0014 */   lw    $ra, 0x14($sp)
 .L7F0A6ED0:
-/* 0DBA00 7F0A6ED0 0FC294F6 */  jal   watch_page_2_nav_control
+/* 0DBA00 7F0A6ED0 0FC294F6 */  jal   watch_screen1_navigation
 /* 0DBA04 7F0A6ED4 00000000 */   nop   
 .L7F0A6ED8:
 /* 0DBA08 7F0A6ED8 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -3272,7 +3268,7 @@ glabel sub_GAME_7F0A6A80
 /* 0DC504 7F0A7994 01800008 */  jr    $t4
 /* 0DC508 7F0A7998 00000000 */   nop   
 .Ljp7F0A6E04:
-/* 0DC50C 7F0A799C 0FC29783 */  jal   sub_GAME_7F0A526C
+/* 0DC50C 7F0A799C 0FC29783 */  jal   watch_screen0_navigation
 /* 0DC510 7F0A79A0 00000000 */   nop   
 /* 0DC514 7F0A79A4 10000033 */  b     .Ljp7F0A7A74
 /* 0DC518 7F0A79A8 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -3295,7 +3291,7 @@ glabel sub_GAME_7F0A6A80
 /* 0DC550 7F0A79E0 0FC29928 */  jal   sub_GAME_7F0A5900
 /* 0DC554 7F0A79E4 00000000 */   nop   
 .Ljp7F0A79E8:
-/* 0DC558 7F0A79E8 0FC29859 */  jal   sub_GAME_7F0A55C4
+/* 0DC558 7F0A79E8 0FC29859 */  jal   watch_screen2_navigation
 /* 0DC55C 7F0A79EC 00000000 */   nop   
 /* 0DC560 7F0A79F0 10000020 */  b     .Ljp7F0A7A74
 /* 0DC564 7F0A79F4 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -3324,17 +3320,17 @@ glabel sub_GAME_7F0A6A80
 /* 0DC5B0 7F0A7A40 0FC2994E */  jal   sub_GAME_7F0A5998
 /* 0DC5B4 7F0A7A44 00000000 */   nop   
 .Ljp7F0A7A48:
-/* 0DC5B8 7F0A7A48 0FC29891 */  jal   sub_GAME_7F0A56A4
+/* 0DC5B8 7F0A7A48 0FC29891 */  jal   watch_screen3_navigation
 /* 0DC5BC 7F0A7A4C 00000000 */   nop   
 /* 0DC5C0 7F0A7A50 10000008 */  b     .Ljp7F0A7A74
 /* 0DC5C4 7F0A7A54 8FBF0014 */   lw    $ra, 0x14($sp)
 .Ljp7F0A6EC0:
-/* 0DC5C8 7F0A7A58 0FC298C9 */  jal   sub_GAME_7F0A5784
+/* 0DC5C8 7F0A7A58 0FC298C9 */  jal   watch_screen4_navigation
 /* 0DC5CC 7F0A7A5C 00000000 */   nop   
 /* 0DC5D0 7F0A7A60 10000004 */  b     .Ljp7F0A7A74
 /* 0DC5D4 7F0A7A64 8FBF0014 */   lw    $ra, 0x14($sp)
 .Ljp7F0A6ED0:
-/* 0DC5D8 7F0A7A68 0FC297DE */  jal   watch_page_2_nav_control
+/* 0DC5D8 7F0A7A68 0FC297DE */  jal   watch_screen1_navigation
 /* 0DC5DC 7F0A7A6C 00000000 */   nop   
 .Ljp7F0A7A70:
 /* 0DC5E0 7F0A7A70 8FBF0014 */  lw    $ra, 0x14($sp)
