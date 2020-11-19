@@ -1047,37 +1047,37 @@ void sub_GAME_7F0A526C(void)
 
 void sub_GAME_7F0A53D8(void)
 {
-    s32 bool1;
-    s32 bool2;
+    s32 go_to_watch_screen_page_1;
+    s32 go_to_watch_screen_page_3;
 
     if (watch_soundrelated_maybe == 0)
     {
-        bool1 = 0;
-        bool2 = 0;
+        go_to_watch_screen_page_1 = 0;
+        go_to_watch_screen_page_3 = 0;
 
         if (get_debug_gunwatchpos_flag() == 0)
         {
             if (get_controller_buttons_pressed(0, L_TRIG|L_CBUTTONS))
             {
-                bool1 = 1;
+                go_to_watch_screen_page_1 = 1;
             }
             if (get_controller_buttons_pressed(0, R_TRIG|R_CBUTTONS))
             {
-                bool2 = 1;
+                go_to_watch_screen_page_3 = 1;
             }
         }
 
         if ((get_controller_buttons_pressed(0, L_JPAD)) || (sub_GAME_7F0A4FB0()))
         {
-            bool1 = 1;
+            go_to_watch_screen_page_1 = 1;
         }
         
         if ((get_controller_buttons_pressed(0, R_JPAD)) || (sub_GAME_7F0A4FEC()))
         {
-            bool2 = 1;
+            go_to_watch_screen_page_3 = 1;
         }
 
-        if (bool1)
+        if (go_to_watch_screen_page_1)
         {
             watch_screen_index = 0;
             zero_D_800409A4();
@@ -1085,7 +1085,7 @@ void sub_GAME_7F0A53D8(void)
             trigger_watch_zoom(5.9f, 15.0f);
         }
 
-        if (bool2)
+        if (go_to_watch_screen_page_3)
         {
             watch_screen_index = 2;
             set_controlstick_lr_disabled();
