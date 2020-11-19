@@ -1121,36 +1121,10 @@ void set_D_80040AE4_0(void) {
 }
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0A5160(void) {
-
+s32 sub_GAME_7F0A5160(void)
+{
+    return is_holding_less_than_10_up_on_stick() && get_D_80040AE4() == 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A5160
-/* 0D9C90 7F0A5160 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0D9C94 7F0A5164 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0D9C98 7F0A5168 0FC29440 */  jal   is_holding_less_than_10_up_on_stick
-/* 0D9C9C 7F0A516C 00000000 */   nop   
-/* 0D9CA0 7F0A5170 0002702B */  sltu  $t6, $zero, $v0
-/* 0D9CA4 7F0A5174 11C00005 */  beqz  $t6, .L7F0A518C
-/* 0D9CA8 7F0A5178 01C01025 */   move  $v0, $t6
-/* 0D9CAC 7F0A517C 0FC29452 */  jal   get_D_80040AE4
-/* 0D9CB0 7F0A5180 00000000 */   nop   
-/* 0D9CB4 7F0A5184 2C4F0001 */  sltiu $t7, $v0, 1
-/* 0D9CB8 7F0A5188 01E01025 */  move  $v0, $t7
-.L7F0A518C:
-/* 0D9CBC 7F0A518C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0D9CC0 7F0A5190 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0D9CC4 7F0A5194 03E00008 */  jr    $ra
-/* 0D9CC8 7F0A5198 00000000 */   nop   
-)
-#endif
-
 
 s32 sub_GAME_7F0A519C(void)
 {
