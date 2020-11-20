@@ -6589,8 +6589,9 @@ void call_sfx_c_700091C8(void) {
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A91A0(void) {
-
+void sub_GAME_7F0A91A0(u16 arg0)
+{
+    sfx_c_700091E8(0xffff & arg0);
 }
 #else
 GLOBAL_ASM(
