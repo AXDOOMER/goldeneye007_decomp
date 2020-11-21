@@ -505,7 +505,28 @@ void sub_GAME_7F058C88(void) {
 //     var2 = (s32)(matrix[(index) * 2 + 1] * D_80032310[(index) & 1]); \
 //     result[index + 0] = GET_HIGH_S16(var1, var2); \
 //     result[index + 8] = GET_LOW_S16(var1, var2);
-// void sub_GAME_7F058C9C(f32* matrix, s32* result) {
+#define	FTOFIX32(x)	(long)((x) * D_80032310[0])
+
+//typedef s32 Mtx[4][4];
+
+void sub_GAME_7F058C9C(f32 mf[4][4], s32 ms[4][4]) {
+    int	i, j;
+	int	e1,e2;
+	int	*ai,*af;
+
+	ai=(int*)&ms[0][0];
+	af=(int*)&ms[2][0];
+
+	for (i=0; i<4; i++)
+	for (j=0; j<2; j++) {
+		e1=FTOFIX32(mf[i][j*2]);
+		e2=FTOFIX32(mf[i][j*2+1]);
+		*(ai++) = (e1 & 0xffff0000 ) | ((e2 >> 16)&0xffff);
+		*(af++) = ((e1 << 16) & 0xffff0000) | (e2 & 0xffff);
+	}
+}
+
+
 //     // s32 i;
 //     // s32 x;
 //     // s32 y;
@@ -809,171 +830,23 @@ glabel sub_GAME_7F058E78
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F059044(void) {
-
+void sub_GAME_7F059044(mat44 arg0, Mtx* arg1) {
+    s32 i, j;
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 4; j++) {
+            arg1->m[i][j] = arg0[i][j] * 65536.0f;
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F059044
-/* 08DB74 7F059044 3C014780 */  li    $at, 0x47800000 # 65536.000000
-/* 08DB78 7F059048 00803025 */  move  $a2, $a0
-/* 08DB7C 7F05904C 44810000 */  mtc1  $at, $f0
-/* 08DB80 7F059050 24040004 */  li    $a0, 4
-/* 08DB84 7F059054 00001025 */  move  $v0, $zero
-/* 08DB88 7F059058 00A01825 */  move  $v1, $a1
-/* 08DB8C 7F05905C C4D00000 */  lwc1  $f16, ($a2)
-/* 08DB90 7F059060 24420001 */  addiu $v0, $v0, 1
-/* 08DB94 7F059064 46008482 */  mul.s $f18, $f16, $f0
-/* 08DB98 7F059068 5044001F */  beql  $v0, $a0, .L7F0590E8
-/* 08DB9C 7F05906C 4600940D */   trunc.w.s $f16, $f18
-/* 08DBA0 7F059070 4600940D */  trunc.w.s $f16, $f18
-.L7F059074:
-/* 08DBA4 7F059074 24420001 */  addiu $v0, $v0, 1
-/* 08DBA8 7F059078 24630010 */  addiu $v1, $v1, 0x10
-/* 08DBAC 7F05907C 24C60010 */  addiu $a2, $a2, 0x10
-/* 08DBB0 7F059080 440F8000 */  mfc1  $t7, $f16
-/* 08DBB4 7F059084 00000000 */  nop   
-/* 08DBB8 7F059088 AC6FFFF0 */  sw    $t7, -0x10($v1)
-/* 08DBBC 7F05908C C4D0FFF4 */  lwc1  $f16, -0xc($a2)
-/* 08DBC0 7F059090 46008402 */  mul.s $f16, $f16, $f0
-/* 08DBC4 7F059094 4600840D */  trunc.w.s $f16, $f16
-/* 08DBC8 7F059098 44198000 */  mfc1  $t9, $f16
-/* 08DBCC 7F05909C 00000000 */  nop   
-/* 08DBD0 7F0590A0 AC79FFF4 */  sw    $t9, -0xc($v1)
-/* 08DBD4 7F0590A4 C4D0FFF8 */  lwc1  $f16, -8($a2)
-/* 08DBD8 7F0590A8 46008402 */  mul.s $f16, $f16, $f0
-/* 08DBDC 7F0590AC 4600840D */  trunc.w.s $f16, $f16
-/* 08DBE0 7F0590B0 44098000 */  mfc1  $t1, $f16
-/* 08DBE4 7F0590B4 00000000 */  nop   
-/* 08DBE8 7F0590B8 AC69FFF8 */  sw    $t1, -8($v1)
-/* 08DBEC 7F0590BC C4D0FFFC */  lwc1  $f16, -4($a2)
-/* 08DBF0 7F0590C0 46008402 */  mul.s $f16, $f16, $f0
-/* 08DBF4 7F0590C4 4600840D */  trunc.w.s $f16, $f16
-/* 08DBF8 7F0590C8 440B8000 */  mfc1  $t3, $f16
-/* 08DBFC 7F0590CC 00000000 */  nop   
-/* 08DC00 7F0590D0 AC6BFFFC */  sw    $t3, -4($v1)
-/* 08DC04 7F0590D4 C4D00000 */  lwc1  $f16, ($a2)
-/* 08DC08 7F0590D8 46008482 */  mul.s $f18, $f16, $f0
-/* 08DC0C 7F0590DC 5444FFE5 */  bnel  $v0, $a0, .L7F059074
-/* 08DC10 7F0590E0 4600940D */   trunc.w.s $f16, $f18
-/* 08DC14 7F0590E4 4600940D */  trunc.w.s $f16, $f18
-.L7F0590E8:
-/* 08DC18 7F0590E8 24630010 */  addiu $v1, $v1, 0x10
-/* 08DC1C 7F0590EC 24C60010 */  addiu $a2, $a2, 0x10
-/* 08DC20 7F0590F0 440F8000 */  mfc1  $t7, $f16
-/* 08DC24 7F0590F4 00000000 */  nop   
-/* 08DC28 7F0590F8 AC6FFFF0 */  sw    $t7, -0x10($v1)
-/* 08DC2C 7F0590FC C4D0FFF4 */  lwc1  $f16, -0xc($a2)
-/* 08DC30 7F059100 46008402 */  mul.s $f16, $f16, $f0
-/* 08DC34 7F059104 4600840D */  trunc.w.s $f16, $f16
-/* 08DC38 7F059108 44198000 */  mfc1  $t9, $f16
-/* 08DC3C 7F05910C 00000000 */  nop   
-/* 08DC40 7F059110 AC79FFF4 */  sw    $t9, -0xc($v1)
-/* 08DC44 7F059114 C4D0FFF8 */  lwc1  $f16, -8($a2)
-/* 08DC48 7F059118 46008402 */  mul.s $f16, $f16, $f0
-/* 08DC4C 7F05911C 4600840D */  trunc.w.s $f16, $f16
-/* 08DC50 7F059120 44098000 */  mfc1  $t1, $f16
-/* 08DC54 7F059124 00000000 */  nop   
-/* 08DC58 7F059128 AC69FFF8 */  sw    $t1, -8($v1)
-/* 08DC5C 7F05912C C4D0FFFC */  lwc1  $f16, -4($a2)
-/* 08DC60 7F059130 46008402 */  mul.s $f16, $f16, $f0
-/* 08DC64 7F059134 4600840D */  trunc.w.s $f16, $f16
-/* 08DC68 7F059138 440B8000 */  mfc1  $t3, $f16
-/* 08DC6C 7F05913C 00000000 */  nop   
-/* 08DC70 7F059140 AC6BFFFC */  sw    $t3, -4($v1)
-/* 08DC74 7F059144 03E00008 */  jr    $ra
-/* 08DC78 7F059148 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F05914C(void) {
-
+void sub_GAME_7F05914C(Mtx* arg1, mat44 arg0) {
+    s32 i, j;
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 4; j++) {
+            arg0[i][j] = arg1->m[i][j] / 65536.0f;
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05914C
-/* 08DC7C 7F05914C 3C014780 */  li    $at, 0x47800000 # 65536.000000
-/* 08DC80 7F059150 00803025 */  move  $a2, $a0
-/* 08DC84 7F059154 44810000 */  mtc1  $at, $f0
-/* 08DC88 7F059158 24040004 */  li    $a0, 4
-/* 08DC8C 7F05915C 00001025 */  move  $v0, $zero
-/* 08DC90 7F059160 00A01825 */  move  $v1, $a1
-/* 08DC94 7F059164 24420001 */  addiu $v0, $v0, 1
-/* 08DC98 7F059168 1044001C */  beq   $v0, $a0, .L7F0591DC
-/* 08DC9C 7F05916C 8CCE0000 */   lw    $t6, ($a2)
-.L7F059170:
-/* 08DCA0 7F059170 448E9000 */  mtc1  $t6, $f18
-/* 08DCA4 7F059174 24420001 */  addiu $v0, $v0, 1
-/* 08DCA8 7F059178 24630010 */  addiu $v1, $v1, 0x10
-/* 08DCAC 7F05917C 468094A0 */  cvt.s.w $f18, $f18
-/* 08DCB0 7F059180 24C60010 */  addiu $a2, $a2, 0x10
-/* 08DCB4 7F059184 46009483 */  div.s $f18, $f18, $f0
-/* 08DCB8 7F059188 E472FFF0 */  swc1  $f18, -0x10($v1)
-/* 08DCBC 7F05918C 8CCFFFF4 */  lw    $t7, -0xc($a2)
-/* 08DCC0 7F059190 448F9000 */  mtc1  $t7, $f18
-/* 08DCC4 7F059194 00000000 */  nop   
-/* 08DCC8 7F059198 468094A0 */  cvt.s.w $f18, $f18
-/* 08DCCC 7F05919C 46009483 */  div.s $f18, $f18, $f0
-/* 08DCD0 7F0591A0 E472FFF4 */  swc1  $f18, -0xc($v1)
-/* 08DCD4 7F0591A4 8CD8FFF8 */  lw    $t8, -8($a2)
-/* 08DCD8 7F0591A8 44989000 */  mtc1  $t8, $f18
-/* 08DCDC 7F0591AC 00000000 */  nop   
-/* 08DCE0 7F0591B0 468094A0 */  cvt.s.w $f18, $f18
-/* 08DCE4 7F0591B4 46009483 */  div.s $f18, $f18, $f0
-/* 08DCE8 7F0591B8 E472FFF8 */  swc1  $f18, -8($v1)
-/* 08DCEC 7F0591BC 8CD9FFFC */  lw    $t9, -4($a2)
-/* 08DCF0 7F0591C0 44999000 */  mtc1  $t9, $f18
-/* 08DCF4 7F0591C4 00000000 */  nop   
-/* 08DCF8 7F0591C8 468094A0 */  cvt.s.w $f18, $f18
-/* 08DCFC 7F0591CC 46009483 */  div.s $f18, $f18, $f0
-/* 08DD00 7F0591D0 E472FFFC */  swc1  $f18, -4($v1)
-/* 08DD04 7F0591D4 1444FFE6 */  bne   $v0, $a0, .L7F059170
-/* 08DD08 7F0591D8 8CCE0000 */   lw    $t6, ($a2)
-.L7F0591DC:
-/* 08DD0C 7F0591DC 448E9000 */  mtc1  $t6, $f18
-/* 08DD10 7F0591E0 24630010 */  addiu $v1, $v1, 0x10
-/* 08DD14 7F0591E4 24C60010 */  addiu $a2, $a2, 0x10
-/* 08DD18 7F0591E8 468094A0 */  cvt.s.w $f18, $f18
-/* 08DD1C 7F0591EC 46009483 */  div.s $f18, $f18, $f0
-/* 08DD20 7F0591F0 E472FFF0 */  swc1  $f18, -0x10($v1)
-/* 08DD24 7F0591F4 8CCFFFF4 */  lw    $t7, -0xc($a2)
-/* 08DD28 7F0591F8 448F9000 */  mtc1  $t7, $f18
-/* 08DD2C 7F0591FC 00000000 */  nop   
-/* 08DD30 7F059200 468094A0 */  cvt.s.w $f18, $f18
-/* 08DD34 7F059204 46009483 */  div.s $f18, $f18, $f0
-/* 08DD38 7F059208 E472FFF4 */  swc1  $f18, -0xc($v1)
-/* 08DD3C 7F05920C 8CD8FFF8 */  lw    $t8, -8($a2)
-/* 08DD40 7F059210 44989000 */  mtc1  $t8, $f18
-/* 08DD44 7F059214 00000000 */  nop   
-/* 08DD48 7F059218 468094A0 */  cvt.s.w $f18, $f18
-/* 08DD4C 7F05921C 46009483 */  div.s $f18, $f18, $f0
-/* 08DD50 7F059220 E472FFF8 */  swc1  $f18, -8($v1)
-/* 08DD54 7F059224 8CD9FFFC */  lw    $t9, -4($a2)
-/* 08DD58 7F059228 44999000 */  mtc1  $t9, $f18
-/* 08DD5C 7F05922C 00000000 */  nop   
-/* 08DD60 7F059230 468094A0 */  cvt.s.w $f18, $f18
-/* 08DD64 7F059234 46009483 */  div.s $f18, $f18, $f0
-/* 08DD68 7F059238 E472FFFC */  swc1  $f18, -4($v1)
-/* 08DD6C 7F05923C 03E00008 */  jr    $ra
-/* 08DD70 7F059240 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F059244(void) {
@@ -1094,53 +967,90 @@ loop:
 return
 
 */
-//typedef s32 mat4s[4][4];
+/*
+0, 0
+0, 1
+0, 2
+0, 3
+1, 0
+1, 1
+1, 2
+1, 3
+2, 0
+*/
 
-//void sub_GAME_7F059334(mat4s arg0, mat4s arg1) {
-//sub_GAME_7F059334(s32* arg0, s32* arg1) {  
-    //s32* var1 = arg0;
-    //s32* var2 = arg1;
-    //for (i = 0; i < 2; i++) {
-    // for (; var1 < (arg0 + 8); var1++, var2 += 4)
-    //     var1 = arg0[i + 0][0];
-    //     var2 = arg0[i + 2][0];
-    //     arg1[i * 2 + 0][0] = ((var1 & 0xFFFF0000) | (var2 >> 16));
-    //     arg1[i * 2 + 0][1] = ((var1 << 16) | (var2 & 0xFFFF));
-    //     var1 = arg0[i + 0][1];
-    //     var2 = arg0[i + 2][1];
-    //     arg1[i * 2 + 0][2] = ((var1 & 0xFFFF0000) | (var2 >> 16));
-    //     arg1[i * 2 + 0][3] = ((var1 << 16) | (var2 & 0xFFFF));
-    //     var1 = arg0[i + 0][2];
-    //     var2 = arg0[i + 2][2];
-    //     arg1[i * 2 + 1][0] = ((var1 & 0xFFFF0000) | (var2 << 16));
-    //     arg1[i * 2 + 1][1] = ((var1 << 16) | (var2 & 0xFFFF));
-    //     var1 = arg0[i + 0][3];
-    //     var2 = arg0[i + 2][3];
-    //     arg1[i * 2 + 1][2] = ((var1 & 0xFFFF0000) | (var2 >> 16));
-    //     arg1[i * 2 + 1][3] = ((var1 << 16) | (var2 & 0xffff));
-    // }
+// void sub_GAME_7F059334(mat4s arg0, mat4s arg1) {
+//     s32 var1;
+//     s32 var2;
+//     s32 i, j;
+//     for (i = 0; i < 2; i++) {
+//         for (j = 0; j < 2; j++) {
+//             var1 = arg0[i + 0][j + 0];
+//             var2 = arg0[i + 2][j + 0];
+//             arg1[i * 2 + 0][] [i * 8 + j * 2 + 0] = ((var1 & 0xFFFF0000) | (var2 >> 16));
+//             arg1[i * 2 + 0] * 2 + 1]  = ((var1 << 16) | (var2 & 0xFFFF));
+//             var1 = arg0[i + 0][j + 1];
+//             var2 = arg0[i + 2][j + 1];
+//             arg1[i * 2 + 1][2] = ((var1 & 0xFFFF0000) | (var2 >> 16));
+//             arg1[i * 2 + 1][3] = ((var1 << 16) | (var2 & 0xFFFF));
+//             // var1 = arg0[i + 0][2];
+//             // var2 = arg0[i + 2][2];
+//             // arg1[i * 2 + 1][0] = ((var1 & 0xFFFF0000) | (var2 << 16));
+//             // arg1[i * 2 + 1][1] = ((var1 << 16) | (var2 & 0xFFFF));
+//             // var1 = arg0[i + 0][3];
+//             // var2 = arg0[i + 2][3];
+//             // arg1[i * 2 + 1][2] = ((var1 & 0xFFFF0000) | (var2 >> 16));
+//             // arg1[i * 2 + 1][3] = ((var1 << 16) | (var2 & 0xffff));
+//         }
+//     }
 
-    // s32 var1;
-    // s32 var2;
-    // s32 i;
-    // for (i = 0; i < 2; i++) {
-    //     var1 = arg0[i + 0][0];
-    //     var2 = arg0[i + 2][0];
-    //     arg1[i * 2 + 0][0] = ((var1 & 0xFFFF0000) | (var2 >> 16));
-    //     arg1[i * 2 + 0][1] = ((var1 << 16) | (var2 & 0xFFFF));
-    //     var1 = arg0[i + 0][1];
-    //     var2 = arg0[i + 2][1];
-    //     arg1[i * 2 + 0][2] = ((var1 & 0xFFFF0000) | (var2 >> 16));
-    //     arg1[i * 2 + 0][3] = ((var1 << 16) | (var2 & 0xFFFF));
-    //     var1 = arg0[i + 0][2];
-    //     var2 = arg0[i + 2][2];
-    //     arg1[i * 2 + 1][0] = ((var1 & 0xFFFF0000) | (var2 << 16));
-    //     arg1[i * 2 + 1][1] = ((var1 << 16) | (var2 & 0xFFFF));
-    //     var1 = arg0[i + 0][3];
-    //     var2 = arg0[i + 2][3];
-    //     arg1[i * 2 + 1][2] = ((var1 & 0xFFFF0000) | (var2 >> 16));
-    //     arg1[i * 2 + 1][3] = ((var1 << 16) | (var2 & 0xffff));
-    // }
+
+
+
+// sub_GAME_7F059334(s32* arg0, s32* arg1) {  
+//     s32* var1 = arg0;
+//     s32* var2 = arg1;
+//     for (i = 0; i < 2; i++) {
+//     for (; var1 < (arg0 + 8); var1++, var2 += 4)
+//         var1 = arg0[i + 0][0];
+//         var2 = arg0[i + 2][0];
+//         arg1[i * 2 + 0][0] = ((var1 & 0xFFFF0000) | (var2 >> 16));
+//         arg1[i * 2 + 0][1] = ((var1 << 16) | (var2 & 0xFFFF));
+//         var1 = arg0[i + 0][1];
+//         var2 = arg0[i + 2][1];
+//         arg1[i * 2 + 0][2] = ((var1 & 0xFFFF0000) | (var2 >> 16));
+//         arg1[i * 2 + 0][3] = ((var1 << 16) | (var2 & 0xFFFF));
+//         var1 = arg0[i + 0][2];
+//         var2 = arg0[i + 2][2];
+//         arg1[i * 2 + 1][0] = ((var1 & 0xFFFF0000) | (var2 << 16));
+//         arg1[i * 2 + 1][1] = ((var1 << 16) | (var2 & 0xFFFF));
+//         var1 = arg0[i + 0][3];
+//         var2 = arg0[i + 2][3];
+//         arg1[i * 2 + 1][2] = ((var1 & 0xFFFF0000) | (var2 >> 16));
+//         arg1[i * 2 + 1][3] = ((var1 << 16) | (var2 & 0xffff));
+//     }
+
+//     s32 var1;
+//     s32 var2;
+//     s32 i;
+//     for (i = 0; i < 2; i++) {
+//         var1 = arg0[i + 0][0];
+//         var2 = arg0[i + 2][0];
+//         arg1[i * 2 + 0][0] = ((var1 & 0xFFFF0000) | (var2 >> 16));
+//         arg1[i * 2 + 0][1] = ((var1 << 16) | (var2 & 0xFFFF));
+//         var1 = arg0[i + 0][1];
+//         var2 = arg0[i + 2][1];
+//         arg1[i * 2 + 0][2] = ((var1 & 0xFFFF0000) | (var2 >> 16));
+//         arg1[i * 2 + 0][3] = ((var1 << 16) | (var2 & 0xFFFF));
+//         var1 = arg0[i + 0][2];
+//         var2 = arg0[i + 2][2];
+//         arg1[i * 2 + 1][0] = ((var1 & 0xFFFF0000) | (var2 << 16));
+//         arg1[i * 2 + 1][1] = ((var1 << 16) | (var2 & 0xFFFF));
+//         var1 = arg0[i + 0][3];
+//         var2 = arg0[i + 2][3];
+//         arg1[i * 2 + 1][2] = ((var1 & 0xFFFF0000) | (var2 >> 16));
+//         arg1[i * 2 + 1][3] = ((var1 << 16) | (var2 & 0xffff));
+//     }
 
     // s32 temp_v1;
     // s32 temp_v1_2;
@@ -1172,10 +1082,63 @@ return
     // }
 //}
 
-#ifdef NONMATCHING
-void sub_GAME_7F059334(void) {
+//#ifdef NONMATCHING
+#if 0
 
+#define MTX_INTPART_PACK(w1, w2) (((w1) &0xFFFF0000) | (((w2) >> 16) & 0xFFFF))
+#define MTX_FRACPART_PACK(w1, w2) ((((w1) << 16) & 0xFFFF0000) | ((w2) &0xFFFF))
+
+void sub_GAME_7F059334(s32 arg0[4][4], s32 arg1[4][4]) {    
+    s32 i;
+    s32 j;
+    u32 *m1 = (u32*)&arg0[0][0];
+    u32 *m2 = (u32*)&arg0[2][0];
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 2; j++) {
+            arg1[i][j * 2 + 0] = MTX_INTPART_PACK((*m1), (*m2));
+            m1++;
+            arg1[i][j * 2 + 1] = MTX_FRACPART_PACK((*m1), (*m2));
+            m2++;
+        }
+    }
+    
+    
+    // s32 var1;
+    // u32 var2;
+    // s32 i;
+    // for ()
+    // for (i = 0; i < 2; i++) {
+    //     var1 = arg0[i + 0][0];
+    //     var2 = arg0[i + 2][0];
+    //     arg1[i * 2 + 0][0] = ((var1 & 0xFFFF0000) | (var2 >> 16));
+    //     arg1[i * 2 + 0][1] = ((var1 << 16) | (var2 & 0xFFFF));
+    //     var1 = arg0[i + 0][1];
+    //     var2 = arg0[i + 2][1];
+    //     arg1[i * 2 + 0][2] = ((var1 & 0xFFFF0000) | (var2 >> 16));
+    //     arg1[i * 2 + 0][3] = ((var1 << 16) | (var2 & 0xFFFF));
+    //     var1 = arg0[i + 0][2];
+    //     var2 = arg0[i + 2][2];
+    //     arg1[i * 2 + 1][0] = ((var1 & 0xFFFF0000) | (var2 << 16));
+    //     arg1[i * 2 + 1][1] = ((var1 << 16) | (var2 & 0xFFFF));
+    //     var1 = arg0[i + 0][3];
+    //     var2 = arg0[i + 2][3];
+    //     arg1[i * 2 + 1][2] = ((var1 & 0xFFFF0000) | (var2 >> 16));
+    //     arg1[i * 2 + 1][3] = ((var1 << 16) | (var2 & 0xffff));
+    // }
 }
+// void sub_GAME_7F059334(s32 m1[4][4], s32 m2[4][4]) {
+//     int i;
+//     int j;
+//     int *ai = &m1[0][0];
+//     u32 *af = &m1[2][0];
+
+//         for (j=0; j<2; j++) {
+//     for (i=0; i<4; i++) {
+//             m2[i][j*2+0] = (*ai & 0xffff0000) | ((*af >> 16) & 0xffff);
+//             m2[i][j*2+1] = ((*(ai++) << 16) & 0xffff0000) | (*(af++) & 0xffff);
+//         }
+//     }
+// }
 #else
 GLOBAL_ASM(
 .text
