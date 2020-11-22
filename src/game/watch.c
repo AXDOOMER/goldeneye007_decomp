@@ -4310,16 +4310,9 @@ glabel sub_GAME_7F0A7C18
 #endif
 
 
-
-
-
 u32 sub_GAME_7F0A7DBC(u32 uParm1) {
   return uParm1;
 }
-
-
-
-
 
 void sub_GAME_7F0A7DC4(s32 arg0)
 {
@@ -4351,10 +4344,6 @@ void sub_GAME_7F0A7DC4(s32 arg0)
     sub_GAME_7F0AE98C(&sp48, &sp44, txtptr, pSecondFontTable, pFirstFontTable, 0);
     en_text_write_stuff(arg0, &sp50, &sp4C, txtptr, pSecondFontTable, pFirstFontTable, 0xFF00B0, sp44, sp48, 0, 0);
 }
-
-
-
-
 
 #ifdef NONMATCHING
 void debug_gun_watch_move_related(void) {
@@ -4738,80 +4727,27 @@ glabel sub_GAME_7F0A830C
 
 
 
-#ifdef NONMATCHING
+
 void sub_GAME_7F0A8378(void)
 {
-    s32 sp1C;
-
-    if ((get_controller_buttons_pressed(0, 0xa000) == 0) && (get_controller_buttons_pressed(0, 0x1000) != 0))
-    {
-        sp1C = get_item_in_hand(0);
-        if (get_weaponnum_by_inv_index(D_800409B8) != sp1C)
+    if (get_controller_buttons_pressed('\0', 0xa000) == 0) {
+        if (get_controller_buttons_pressed('\0', START_BUTTON) == 0)
         {
-            remove_hands_item(0, get_weaponnum_by_inv_index(D_800409B8));
-            remove_hands_item(1, 0);
-            set_BONDdata_equipcuritem(D_800409B8);
-            D_800409C4 = 0xa;
-            play_sfx_a1(ptr_sfx_buf, 0x9f, 0);
+            return;
+        }
+
+        if (get_item_in_hand(0) == get_weaponnum_by_inv_index(D_800409B8))
+        {
+            return;
         }
     }
-    else
-    {
 
-    }
+    remove_hands_item(0, get_weaponnum_by_inv_index(D_800409B8));
+    remove_hands_item(1, 0);
+    set_BONDdata_equipcuritem(D_800409B8);
+    D_800409C4 = 10;
+    play_sfx_a1(ptr_sfx_buf, 0x9F, 0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A8378
-/* 0DCEA8 7F0A8378 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0DCEAC 7F0A837C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0DCEB0 7F0A8380 00002025 */  move  $a0, $zero
-/* 0DCEB4 7F0A8384 0C0030EB */  jal   get_controller_buttons_pressed
-/* 0DCEB8 7F0A8388 3405A000 */   li    $a1, 40960
-/* 0DCEBC 7F0A838C 1440000D */  bnez  $v0, .L7F0A83C4
-/* 0DCEC0 7F0A8390 00002025 */   move  $a0, $zero
-/* 0DCEC4 7F0A8394 0C0030EB */  jal   get_controller_buttons_pressed
-/* 0DCEC8 7F0A8398 24051000 */   li    $a1, 4096
-/* 0DCECC 7F0A839C 5040001E */  beql  $v0, $zero, .L7F0A8418
-/* 0DCED0 7F0A83A0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0DCED4 7F0A83A4 0FC17674 */  jal   get_item_in_hand
-/* 0DCED8 7F0A83A8 00002025 */   move  $a0, $zero
-/* 0DCEDC 7F0A83AC 3C048004 */  lui   $a0, %hi(D_800409B8)
-/* 0DCEE0 7F0A83B0 8C8409B8 */  lw    $a0, %lo(D_800409B8)($a0)
-/* 0DCEE4 7F0A83B4 0FC234AA */  jal   get_weaponnum_by_inv_index
-/* 0DCEE8 7F0A83B8 AFA2001C */   sw    $v0, 0x1c($sp)
-/* 0DCEEC 7F0A83BC 8FAE001C */  lw    $t6, 0x1c($sp)
-/* 0DCEF0 7F0A83C0 104E0014 */  beq   $v0, $t6, .L7F0A8414
-.L7F0A83C4:
-/* 0DCEF4 7F0A83C4 3C048004 */   lui   $a0, %hi(D_800409B8)
-/* 0DCEF8 7F0A83C8 0FC234AA */  jal   get_weaponnum_by_inv_index
-/* 0DCEFC 7F0A83CC 8C8409B8 */   lw    $a0, %lo(D_800409B8)($a0)
-/* 0DCF00 7F0A83D0 00002025 */  move  $a0, $zero
-/* 0DCF04 7F0A83D4 0FC176D5 */  jal   remove_hands_item
-/* 0DCF08 7F0A83D8 00402825 */   move  $a1, $v0
-/* 0DCF0C 7F0A83DC 24040001 */  li    $a0, 1
-/* 0DCF10 7F0A83E0 0FC176D5 */  jal   remove_hands_item
-/* 0DCF14 7F0A83E4 00002825 */   move  $a1, $zero
-/* 0DCF18 7F0A83E8 3C048004 */  lui   $a0, %hi(D_800409B8)
-/* 0DCF1C 7F0A83EC 0FC23634 */  jal   set_BONDdata_equipcuritem
-/* 0DCF20 7F0A83F0 8C8409B8 */   lw    $a0, %lo(D_800409B8)($a0)
-/* 0DCF24 7F0A83F4 240F000A */  li    $t7, 10
-/* 0DCF28 7F0A83F8 3C018004 */  lui   $at, %hi(D_800409C4)
-/* 0DCF2C 7F0A83FC 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 0DCF30 7F0A8400 AC2F09C4 */  sw    $t7, %lo(D_800409C4)($at)
-/* 0DCF34 7F0A8404 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
-/* 0DCF38 7F0A8408 2405009F */  li    $a1, 159
-/* 0DCF3C 7F0A840C 0C002382 */  jal   play_sfx_a1
-/* 0DCF40 7F0A8410 00003025 */   move  $a2, $zero
-.L7F0A8414:
-/* 0DCF44 7F0A8414 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0A8418:
-/* 0DCF48 7F0A8418 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0DCF4C 7F0A841C 03E00008 */  jr    $ra
-/* 0DCF50 7F0A8420 00000000 */   nop   
-)
-#endif
 
 
 
