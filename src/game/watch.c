@@ -2231,61 +2231,23 @@ void sub_GAME_7F0A67BC(void)
     }
 }
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0A684C(void) {
-
+void sub_GAME_7F0A684C(void)
+{
+    if (get_controller_buttons_pressed(0, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
+    {
+        D_800409A0 = 3;
+        set_D_80040AE0_0();
+        sub_GAME_7F0A4F44();
+        return;
+    }
+    
+    if (get_controller_buttons_pressed(0, D_CBUTTONS|D_JPAD) || sub_GAME_7F0A50C4())
+    {
+        D_800409A0 = 0;
+        set_D_80040AE0_0();
+        sub_GAME_7F0A4F44();
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A684C
-/* 0DB37C 7F0A684C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0DB380 7F0A6850 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0DB384 7F0A6854 00002025 */  move  $a0, $zero
-/* 0DB388 7F0A6858 0C0030EB */  jal   get_controller_buttons_pressed
-/* 0DB38C 7F0A685C 24050808 */   li    $a1, 2056
-/* 0DB390 7F0A6860 54400006 */  bnezl $v0, .L7F0A687C
-/* 0DB394 7F0A6864 240E0003 */   li    $t6, 3
-/* 0DB398 7F0A6868 0FC29422 */  jal   sub_GAME_7F0A5088
-/* 0DB39C 7F0A686C 00000000 */   nop   
-/* 0DB3A0 7F0A6870 10400009 */  beqz  $v0, .L7F0A6898
-/* 0DB3A4 7F0A6874 00002025 */   move  $a0, $zero
-/* 0DB3A8 7F0A6878 240E0003 */  li    $t6, 3
-.L7F0A687C:
-/* 0DB3AC 7F0A687C 3C018004 */  lui   $at, %hi(D_800409A0)
-/* 0DB3B0 7F0A6880 0FC2941F */  jal   set_D_80040AE0_0
-/* 0DB3B4 7F0A6884 AC2E09A0 */   sw    $t6, %lo(D_800409A0)($at)
-/* 0DB3B8 7F0A6888 0FC293D1 */  jal   sub_GAME_7F0A4F44
-/* 0DB3BC 7F0A688C 00000000 */   nop   
-/* 0DB3C0 7F0A6890 1000000E */  b     .L7F0A68CC
-/* 0DB3C4 7F0A6894 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0A6898:
-/* 0DB3C8 7F0A6898 0C0030EB */  jal   get_controller_buttons_pressed
-/* 0DB3CC 7F0A689C 24050404 */   li    $a1, 1028
-/* 0DB3D0 7F0A68A0 14400004 */  bnez  $v0, .L7F0A68B4
-/* 0DB3D4 7F0A68A4 00000000 */   nop   
-/* 0DB3D8 7F0A68A8 0FC29431 */  jal   sub_GAME_7F0A50C4
-/* 0DB3DC 7F0A68AC 00000000 */   nop   
-/* 0DB3E0 7F0A68B0 10400005 */  beqz  $v0, .L7F0A68C8
-.L7F0A68B4:
-/* 0DB3E4 7F0A68B4 3C018004 */   lui   $at, %hi(D_800409A0)
-/* 0DB3E8 7F0A68B8 0FC2941F */  jal   set_D_80040AE0_0
-/* 0DB3EC 7F0A68BC AC2009A0 */   sw    $zero, %lo(D_800409A0)($at)
-/* 0DB3F0 7F0A68C0 0FC293D1 */  jal   sub_GAME_7F0A4F44
-/* 0DB3F4 7F0A68C4 00000000 */   nop   
-.L7F0A68C8:
-/* 0DB3F8 7F0A68C8 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0A68CC:
-/* 0DB3FC 7F0A68CC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0DB400 7F0A68D0 03E00008 */  jr    $ra
-/* 0DB404 7F0A68D4 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
