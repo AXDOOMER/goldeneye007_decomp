@@ -4400,8 +4400,52 @@ glabel sub_GAME_7F0A77C8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A7C18(void) {
+s32 sub_GAME_7F0A7C18(s32 param_1)
+{
+  s32 txtptr = get_textptr_for_textID(0xac27);
+  s32 puVar5;
+  s32 puVar4;
+  s32 pSecondFontTable = ptrFirstFontTableSmall;
+  s32 pFirstFontTable = ptrSecondFontTableSmall;
+  s32 uStack36;
+  s32 iStack24;
+  int iStack20;
+  int iStack16;
+  int iStack12;
+  s32 pbStack8;
+  s32 joffset;
 
+  if (check_objectives_complete() != 0)
+  {
+    uStack36 = 0xff00b0;
+    pbStack8 = get_textptr_for_textID(0xac28);
+  }
+  else
+  {
+    uStack36 = D_80040AF4;
+    pbStack8 = get_textptr_for_textID(0xac29);
+  }
+
+  puVar4 = microcode_constructor(param_1);
+  
+  sub_GAME_7F0AE98C(&iStack20, &iStack24, txtptr, pFirstFontTable, pSecondFontTable,0);
+  iStack12 = 0x51;
+  iStack16 = 0x41;
+  puVar5 = en_text_write_stuff(puVar4, &iStack12,&iStack16,txtptr,pFirstFontTable, pSecondFontTable, 0xFF00B0,iStack24, iStack20, 0, 0);
+  
+  if (j_text_trigger != 0) {
+    joffset = 0x22;
+  }
+  else {
+    joffset = 0;
+  }
+
+  iStack12 = iStack12 + iStack24 + joffset + 4;
+  iStack16 = iStack16 - iStack20;
+  sub_GAME_7F0AE98C(&iStack20, &iStack24,pbStack8,pFirstFontTable, pSecondFontTable,0);
+  puVar5 = en_text_write_stuff(puVar5 ,&iStack12,&iStack16,pbStack8,pFirstFontTable, pSecondFontTable,uStack36,iStack24, iStack20, 0, 0);
+  puVar5 = sub_GAME_7F0A77C8(puVar5);
+  return puVar5;
 }
 #else
 GLOBAL_ASM(
