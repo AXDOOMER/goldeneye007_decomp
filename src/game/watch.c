@@ -6237,16 +6237,9 @@ glabel sub_GAME_7F0A8FEC
 #endif
 
 
-
-
-
 void call_sfx_c_700091C8(void) {
     sfx_c_700091C8();
 }
-
-
-
-
 
 
 #ifdef NONMATCHING
@@ -6637,8 +6630,12 @@ glabel sub_GAME_7F0A95C4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A9610(void) {
-
+s32 sub_GAME_7F0A9610(void) {
+    if ((((D_80040B24 < D_80058540) && (D_80058544 < D_80040B24)) &&
+        (D_80040B20 < D_80058540)) && (D_80058544 < D_80040B20)) {
+            return 1;
+    }
+    return 0;
 }
 #else
 GLOBAL_ASM(
