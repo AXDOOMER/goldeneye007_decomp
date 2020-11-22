@@ -4,6 +4,7 @@
 #include "game/unk_0A1DA0.h"
 #include "game/mainmenu.h"
 #include "game/lvl_text.h"
+#include "game/textrelated.h"
 #include "music.h"
 
 // bss
@@ -4530,19 +4531,18 @@ u32 sub_GAME_7F0A7DBC(u32 uParm1) {
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F0A7DC4(s32 arg0)
 {
     s32 txtptr;
     s32 sp50;
-    ?32 sp4C;
+    s32 sp4C;
     s32 sp48;
     s32 sp44;
     s32 pFirstFontTable;
     s32 pSecondFontTable;
     s32 joffset;
 
-    txtptr = get_textptr_for_textID(0xac2b);
+    txtptr = get_textptr_for_textID(0xAC2B);
     if (j_text_trigger != 0)
     {
         joffset = -5;
@@ -4551,81 +4551,16 @@ void sub_GAME_7F0A7DC4(s32 arg0)
     {
         joffset = 0;
     }
-    sp50 = (s32) (joffset + 0x65);
+    sp50 = joffset + 0x65;
     sp4C = 0x31;
     sp48 = 0;
     sp44 = 0;
-    pFirstFontTable = (s32) ptrFirstFontTableSmall;
-    pSecondFontTable = (s32) ptrSecondFontTableSmall;
+    pFirstFontTable = ptrFirstFontTableSmall;
+    pSecondFontTable = ptrSecondFontTableSmall;
     arg0 = microcode_constructor(arg0);
     sub_GAME_7F0AE98C(&sp48, &sp44, txtptr, pSecondFontTable, pFirstFontTable, 0);
-    en_text_write_stuff(arg0, &sp50, &sp4C, txtptr, pSecondFontTable, pFirstFontTable, 0xff00b0, sp44, sp48, 0, 0);
+    en_text_write_stuff(arg0, &sp50, &sp4C, txtptr, pSecondFontTable, pFirstFontTable, 0xFF00B0, sp44, sp48, 0, 0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A7DC4
-/* 0DC8F4 7F0A7DC4 27BDFFA8 */  addiu $sp, $sp, -0x58
-/* 0DC8F8 7F0A7DC8 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 0DC8FC 7F0A7DCC AFA40058 */  sw    $a0, 0x58($sp)
-/* 0DC900 7F0A7DD0 0FC30776 */  jal   get_textptr_for_textID
-/* 0DC904 7F0A7DD4 3404AC2B */   li    $a0, 44075
-/* 0DC908 7F0A7DD8 3C0E8005 */  lui   $t6, %hi(j_text_trigger) 
-/* 0DC90C 7F0A7DDC 8DCE84D0 */  lw    $t6, %lo(j_text_trigger)($t6)
-/* 0DC910 7F0A7DE0 AFA20054 */  sw    $v0, 0x54($sp)
-/* 0DC914 7F0A7DE4 24180031 */  li    $t8, 49
-/* 0DC918 7F0A7DE8 11C00003 */  beqz  $t6, .L7F0A7DF8
-/* 0DC91C 7F0A7DEC 3C198004 */   lui   $t9, %hi(ptrFirstFontTableSmall) 
-/* 0DC920 7F0A7DF0 10000002 */  b     .L7F0A7DFC
-/* 0DC924 7F0A7DF4 2402FFFB */   li    $v0, -5
-.L7F0A7DF8:
-/* 0DC928 7F0A7DF8 00001025 */  move  $v0, $zero
-.L7F0A7DFC:
-/* 0DC92C 7F0A7DFC 3C088004 */  lui   $t0, %hi(ptrSecondFontTableSmall) 
-/* 0DC930 7F0A7E00 8F390EAC */  lw    $t9, %lo(ptrFirstFontTableSmall)($t9)
-/* 0DC934 7F0A7E04 8D080EB0 */  lw    $t0, %lo(ptrSecondFontTableSmall)($t0)
-/* 0DC938 7F0A7E08 244F0065 */  addiu $t7, $v0, 0x65
-/* 0DC93C 7F0A7E0C AFAF0050 */  sw    $t7, 0x50($sp)
-/* 0DC940 7F0A7E10 AFB8004C */  sw    $t8, 0x4c($sp)
-/* 0DC944 7F0A7E14 AFA00048 */  sw    $zero, 0x48($sp)
-/* 0DC948 7F0A7E18 AFA00044 */  sw    $zero, 0x44($sp)
-/* 0DC94C 7F0A7E1C 8FA40058 */  lw    $a0, 0x58($sp)
-/* 0DC950 7F0A7E20 AFB90040 */  sw    $t9, 0x40($sp)
-/* 0DC954 7F0A7E24 0FC2B366 */  jal   microcode_constructor
-/* 0DC958 7F0A7E28 AFA8003C */   sw    $t0, 0x3c($sp)
-/* 0DC95C 7F0A7E2C 8FA90040 */  lw    $t1, 0x40($sp)
-/* 0DC960 7F0A7E30 AFA20058 */  sw    $v0, 0x58($sp)
-/* 0DC964 7F0A7E34 27A40048 */  addiu $a0, $sp, 0x48
-/* 0DC968 7F0A7E38 27A50044 */  addiu $a1, $sp, 0x44
-/* 0DC96C 7F0A7E3C 8FA60054 */  lw    $a2, 0x54($sp)
-/* 0DC970 7F0A7E40 8FA7003C */  lw    $a3, 0x3c($sp)
-/* 0DC974 7F0A7E44 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0DC978 7F0A7E48 0FC2BA63 */  jal   sub_GAME_7F0AE98C
-/* 0DC97C 7F0A7E4C AFA90010 */   sw    $t1, 0x10($sp)
-/* 0DC980 7F0A7E50 8FAA003C */  lw    $t2, 0x3c($sp)
-/* 0DC984 7F0A7E54 8FAB0040 */  lw    $t3, 0x40($sp)
-/* 0DC988 7F0A7E58 8FAD0044 */  lw    $t5, 0x44($sp)
-/* 0DC98C 7F0A7E5C 8FAE0048 */  lw    $t6, 0x48($sp)
-/* 0DC990 7F0A7E60 3C0C00FF */  lui   $t4, (0x00FF00B0 >> 16) # lui $t4, 0xff
-/* 0DC994 7F0A7E64 358C00B0 */  ori   $t4, (0x00FF00B0 & 0xFFFF) # ori $t4, $t4, 0xb0
-/* 0DC998 7F0A7E68 AFAC0018 */  sw    $t4, 0x18($sp)
-/* 0DC99C 7F0A7E6C 8FA40058 */  lw    $a0, 0x58($sp)
-/* 0DC9A0 7F0A7E70 27A50050 */  addiu $a1, $sp, 0x50
-/* 0DC9A4 7F0A7E74 27A6004C */  addiu $a2, $sp, 0x4c
-/* 0DC9A8 7F0A7E78 8FA70054 */  lw    $a3, 0x54($sp)
-/* 0DC9AC 7F0A7E7C AFA00024 */  sw    $zero, 0x24($sp)
-/* 0DC9B0 7F0A7E80 AFA00028 */  sw    $zero, 0x28($sp)
-/* 0DC9B4 7F0A7E84 AFAA0010 */  sw    $t2, 0x10($sp)
-/* 0DC9B8 7F0A7E88 AFAB0014 */  sw    $t3, 0x14($sp)
-/* 0DC9BC 7F0A7E8C AFAD001C */  sw    $t5, 0x1c($sp)
-/* 0DC9C0 7F0A7E90 0FC2B6AF */  jal   en_text_write_stuff
-/* 0DC9C4 7F0A7E94 AFAE0020 */   sw    $t6, 0x20($sp)
-/* 0DC9C8 7F0A7E98 8FBF0034 */  lw    $ra, 0x34($sp)
-/* 0DC9CC 7F0A7E9C 27BD0058 */  addiu $sp, $sp, 0x58
-/* 0DC9D0 7F0A7EA0 03E00008 */  jr    $ra
-/* 0DC9D4 7F0A7EA4 00000000 */   nop   
-)
-#endif
 
 
 
