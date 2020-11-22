@@ -11311,8 +11311,47 @@ glabel sub_GAME_7F0AC168
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0ACA28(void) {
+s32 sub_GAME_7F0ACA28(s32 arg0, s32 arg1, s32 arg2)
+{
 
+    sub_GAME_7F0A70AC(watch_screen_index, &pPlayer->buffer_for_watch_greenbackdrop_vertices);
+    
+    if (arg2 == 1)
+    {
+        set_BONDdata_paused_flag(0);
+        sub_GAME_7F0BD8FC(0);
+        if ((watch_screen_index != 1) && (get_controller_buttons_pressed(0, 0xA000) != 0))
+        {
+            sub_GAME_7F0A4EF8();
+        }
+
+        switch (watch_screen_index)
+        {
+            case 0:
+                arg0 = sub_GAME_7F0A830C(arg0, arg1);
+                break;
+            case 1:
+                arg0 = debug_gun_watch_move_related2(arg0, arg1);
+                break;
+            case 2:
+                arg0 = sub_GAME_7F0AB4B8(arg0, arg1);
+                break;
+            case 3:
+                arg0 = sub_GAME_7F0ABDFC(arg0, arg1);
+                break;
+            case 4:
+                arg0 = sub_GAME_7F0AC168(arg0, arg1);
+        }
+    }
+    else if (arg2 == 0)
+    {
+        
+        sub_GAME_7F0BD8FC(1);
+        set_BONDdata_paused_flag(1);
+        arg0 = sub_GAME_7F0A77A8(arg0, arg1);
+        
+    }
+    return arg0;
 }
 #else
 GLOBAL_ASM(
