@@ -1267,10 +1267,13 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/j/src/game/unk_05AB70.o
  .options       0x0000000000000000       0x20 build/j/src/game/unk_05ACB0.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/unk_05ACB0.o
+ .mdebug        0x0000000000000000      0x370 build/j/src/game/unk_05ACB0.o
  .options       0x0000000000000000       0x20 build/j/src/game/unk_05AE00.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/unk_05AE00.o
  .options       0x0000000000000000       0x20 build/j/src/game/unk_05B1E0.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/unk_05B1E0.o
+ .gptab.data    0x0000000000000000       0x18 build/j/src/game/unk_05B1E0.o
+ .mdebug        0x0000000000000000     0x10d8 build/j/src/game/unk_05B1E0.o
  .options       0x0000000000000000       0x20 build/j/src/game/truncf.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/truncf.o
  .options       0x0000000000000000       0x20 build/j/src/game/unk_05C440.o
@@ -1736,7 +1739,7 @@ Linker script and memory map
                 0x0000000070004524                get_video2_settings_uly
                 0x0000000070004534                set_video2_settings_offset_24
                 0x0000000070004544                setvideo_far
-                0x0000000070004590                video_related_21
+                0x0000000070004590                set_page_aspect
                 0x00000000700045dc                video_related_23
                 0x00000000700045ec                video_related_24
                 0x0000000070004650                set_page_height
@@ -3912,24 +3915,24 @@ Linker script and memory map
                 0x000000007f05b674                sub_GAME_7F05B154
  build/j/src/game/unk_05B1E0.o(.text)
  .text          0x000000007f05b700     0x1180 build/j/src/game/unk_05B1E0.o
-                0x000000007f05b700                sub_GAME_7F05B1E0
-                0x000000007f05b914                sub_GAME_7F05B3F4
-                0x000000007f05ba48                sub_GAME_7F05B528
-                0x000000007f05ba9c                sub_GAME_7F05B57C
-                0x000000007f05baf4                sub_GAME_7F05B5D4
-                0x000000007f05bb48                sub_GAME_7F05B628
-                0x000000007f05bcb8                sub_GAME_7F05B798
-                0x000000007f05bed4                sub_GAME_7F05B9B4
-                0x000000007f05bf28                sub_GAME_7F05BA08
-                0x000000007f05c188                sub_GAME_7F05BC68
-                0x000000007f05c330                sub_GAME_7F05BE10
-                0x000000007f05c3a8                sub_GAME_7F05BE88
-                0x000000007f05c4ac                sub_GAME_7F05BF8C
-                0x000000007f05c4f4                sub_GAME_7F05BFD4
-                0x000000007f05c588                sub_GAME_7F05C068
-                0x000000007f05c658                sub_GAME_7F05C138
-                0x000000007f05c770                sub_GAME_7F05C250
-                0x000000007f05c810                sub_GAME_7F05C2F0
+                0x000000007f05b700                quaternion_set_rotation_around_xyz
+                0x000000007f05b914                quaternion_set_rotation_around_xyzf
+                0x000000007f05ba48                quaternion_set_rotation_around_x
+                0x000000007f05ba9c                quaternion_set_rotation_around_y
+                0x000000007f05baf4                quaternion_set_rotation_around_z
+                0x000000007f05bb48                quaternion_to_matrix
+                0x000000007f05bcb8                quaternion_from_matrix
+                0x000000007f05bed4                quaternion_to_transform_matrix
+                0x000000007f05bf28                quaternion_slerp
+                0x000000007f05c188                quaternion_7F05BC68
+                0x000000007f05c330                quaternion_ensure_shortest_path
+                0x000000007f05c3a8                quaternion_multiply
+                0x000000007f05c4ac                quaternion_multiply_in_place
+                0x000000007f05c4f4                quaternion_7F05BFD4
+                0x000000007f05c588                quaternion_7F05C068
+                0x000000007f05c658                quaternion_7F05C138
+                0x000000007f05c770                quaternion_7F05C250
+                0x000000007f05c810                quaternion_7F05C2F0
  build/j/src/game/truncf.o(.text)
  .text          0x000000007f05c880       0xe0 build/j/src/game/truncf.o
                 0x000000007f05c880                truncf
@@ -4520,11 +4523,11 @@ Linker script and memory map
                 0x000000007f08d8e4                bondinvIsAliveWithFlag
                 0x000000007f08d924                checkforgoldengun
                 0x000000007f08d944                sub_GAME_7F08CFE0
-                0x000000007f08d99c                sub_GAME_7F08D038
+                0x000000007f08d99c                count_total_items_in_inventory
                 0x000000007f08da84                sub_GAME_7F08D108
-                0x000000007f08dbcc                sub_GAME_7F08D21C
-                0x000000007f08dc0c                sub_GAME_7F08D25C
-                0x000000007f08dc58                sub_GAME_7F08D2A8
+                0x000000007f08dbcc                get_textoverride_by_obj
+                0x000000007f08dc0c                get_textoverride_by_weaponum
+                0x000000007f08dc58                get_weaponnum_by_inv_index
                 0x000000007f08dd28                sub_GAME_7F08D340
                 0x000000007f08de5c                sub_GAME_7F08D434
                 0x000000007f08df90                sub_GAME_7F08D528
@@ -4540,11 +4543,11 @@ Linker script and memory map
                 0x000000007f08e338                sub_GAME_7F08D850
                 0x000000007f08e360                sub_GAME_7F08D878
                 0x000000007f08e388                sub_GAME_7F08D8A0
-                0x000000007f08e3a8                sub_GAME_7F08D8C0
-                0x000000007f08e3b8                sub_GAME_7F08D8D0
-                0x000000007f08e3c8                sub_GAME_7F08D8E0
-                0x000000007f08e444                sub_GAME_7F08D95C
-                0x000000007f08e48c                sub_GAME_7F08D9A4
+                0x000000007f08e3a8                get_BONDdata_equipcuritem
+                0x000000007f08e3b8                set_BONDdata_equipcuritem
+                0x000000007f08e3c8                calculate_equip_cur_item
+                0x000000007f08e444                obj_get_activated_text
+                0x000000007f08e48c                weapon_get_activated_text
                 0x000000007f08e4d4                sub_GAME_7F08D9EC
                 0x000000007f08e5f0                sub_GAME_7F08DB08
  build/j/src/game/unk_08DBB0.o(.text)
@@ -4820,12 +4823,12 @@ Linker script and memory map
                 0x000000007f0a5d3c                sub_GAME_7F0A519C
                 0x000000007f0a5d78                sub_GAME_7F0A51D8
                 0x000000007f0a5db0                sub_GAME_7F0A5210
-                0x000000007f0a5e0c                sub_GAME_7F0A526C
-                0x000000007f0a5f78                sub_GAME_7F0A53D8
-                0x000000007f0a60a4                sub_GAME_7F0A5504
-                0x000000007f0a6164                sub_GAME_7F0A55C4
-                0x000000007f0a6244                sub_GAME_7F0A56A4
-                0x000000007f0a6324                sub_GAME_7F0A5784
+                0x000000007f0a5e0c                watch_screen0_navigation
+                0x000000007f0a5f78                watch_screen1_navigation
+                0x000000007f0a60a4                unused_watch_screen_navigation
+                0x000000007f0a6164                watch_screen2_navigation
+                0x000000007f0a6244                watch_screen3_navigation
+                0x000000007f0a6324                watch_screen4_navigation
                 0x000000007f0a6400                sub_GAME_7F0A5860
                 0x000000007f0a64a0                sub_GAME_7F0A5900
                 0x000000007f0a6538                sub_GAME_7F0A5998
@@ -19031,7 +19034,6 @@ Linker script and memory map
  build/j/src/game/matrixmath.o(.data)
  .data          0x0000000080032350       0x10 build/j/src/game/matrixmath.o
                 0x0000000080032350                D_80032310
-                0x0000000080032354                D_80032314
  build/j/src/game/unk_05A9E0.o(.data)
  build/j/src/game/convertangleusinginverse.o(.data)
  build/j/src/game/unk_05AB70.o(.data)
@@ -19043,8 +19045,6 @@ Linker script and memory map
  build/j/src/game/unk_05AE00.o(.data)
  build/j/src/game/unk_05B1E0.o(.data)
  .data          0x0000000080032470       0x10 build/j/src/game/unk_05B1E0.o
-                0x0000000080032470                D_80032430
-                0x0000000080032474                D_80032434
  build/j/src/game/truncf.o(.data)
  build/j/src/game/unk_05C440.o(.data)
  build/j/src/game/bondwalk.o(.data)
@@ -20298,7 +20298,7 @@ Linker script and memory map
                 0x00000000800409b8                D_80040988
                 0x00000000800409bc                D_8004098C
                 0x00000000800409c0                D_80040990
-                0x00000000800409c4                D_80040994
+                0x00000000800409c4                watch_screen_index
                 0x00000000800409c8                D_80040998
                 0x00000000800409cc                D_8004099C
  build/j/src/game/watch.o(.data)
@@ -20890,8 +20890,6 @@ Linker script and memory map
                 0x0000000080051a04                D_800519D4
                 0x0000000080051a14                D_800519E4
                 0x0000000080051a18                D_800519E8
-                0x0000000080051a1c                D_800519EC
-                0x0000000080051a20                D_800519F0
                 0x0000000080051a24                D_800519F4
                 0x0000000080051a28                D_800519F8
                 0x0000000080051a2c                menu01_aspect
@@ -21457,17 +21455,9 @@ Linker script and memory map
  build/j/src/game/unk_05AB70.o(.rodata)
  build/j/src/game/unk_05ACB0.o(.rodata)
  .rodata        0x0000000080053750       0x20 build/j/src/game/unk_05ACB0.o
-                0x0000000080053750                D_80053720
-                0x0000000080053754                D_80053724
-                0x0000000080053758                D_80053728
  build/j/src/game/unk_05AE00.o(.rodata)
  build/j/src/game/unk_05B1E0.o(.rodata)
  .rodata        0x0000000080053770       0x20 build/j/src/game/unk_05B1E0.o
-                0x0000000080053770                D_80053740
-                0x0000000080053774                D_80053744
-                0x0000000080053778                D_80053748
-                0x000000008005377c                D_8005374C
-                0x0000000080053780                D_80053750
  build/j/src/game/truncf.o(.rodata)
  build/j/src/game/unk_05C440.o(.rodata)
  build/j/src/game/bondwalk.o(.rodata)
@@ -22076,15 +22066,6 @@ Linker script and memory map
                 0x0000000080058488                aC_2
                 0x0000000080058490                D_80058450
                 0x0000000080058494                D_80058454
-                0x0000000080058498                D_80058458
-                0x000000008005849c                D_8005845C
-                0x00000000800584a0                D_80058460
-                0x00000000800584a4                D_80058464
-                0x00000000800584a8                D_80058468
-                0x00000000800584ac                D_8005846C
-                0x00000000800584b0                D_80058470
-                0x00000000800584b4                D_80058474
-                0x00000000800584b8                D_80058478
                 0x00000000800584bc                D_8005847C
                 0x00000000800584c0                D_80058480
                 0x00000000800584c4                D_80058484
@@ -22098,8 +22079,6 @@ Linker script and memory map
                 0x00000000800584e4                D_800584A4
                 0x00000000800584e8                D_800584A8
                 0x00000000800584ec                D_800584AC
-                0x00000000800584f0                D_800584B0
-                0x00000000800584f4                D_800584B4
                 0x00000000800584f8                D_800584B8
                 0x00000000800584fc                D_800584BC
                 0x0000000080058500                D_800584C0

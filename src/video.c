@@ -2408,7 +2408,7 @@ glabel setvideo_far
  *     F12->video2 page width [p@800232A8+C] and something else...
  */
 #ifdef NONMATCHING
-void video_related_21(f32 arg0)
+void set_page_aspect(f32 arg0)
 {
     ptr_video_settings2->scale = arg0;
     sub_GAME_7F077C30(ptr_video_settings2->aspect, ptr_video_settings2->far, ptr_video_settings2->scale);
@@ -2417,7 +2417,7 @@ void video_related_21(f32 arg0)
 #else
 GLOBAL_ASM(
 .text
-glabel video_related_21
+glabel set_page_aspect
 /* 005190 70004590 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 005194 70004594 3C038002 */  lui   $v1, %hi(ptr_video_settings2)
 /* 005198 70004598 246332A8 */  addiu $v1, %lo(ptr_video_settings2) # addiu $v1, $v1, 0x32a8

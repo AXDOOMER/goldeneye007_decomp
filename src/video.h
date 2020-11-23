@@ -23,7 +23,7 @@ struct video_settings {
 };
 
 void setvideo_far(f32 arg0);
-void video_related_21(f32 arg0);
+void set_page_aspect(f32 arg0);
 void set_page_height(f32 arg0, f32 arg1);
 void set_video2_settings_offset_24(int param_1);
 #endif

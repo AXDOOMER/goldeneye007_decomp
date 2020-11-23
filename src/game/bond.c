@@ -26613,7 +26613,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BBC80 7F087150 46082182 */  mul.s $f6, $f4, $f8
 /* 0BBC84 7F087154 00000000 */  nop   
 /* 0BBC88 7F087158 46103302 */  mul.s $f12, $f6, $f16
-/* 0BBC8C 7F08715C 0C001164 */  jal   video_related_21
+/* 0BBC8C 7F08715C 0C001164 */  jal   set_page_aspect
 /* 0BBC90 7F087160 00000000 */   nop   
 /* 0BBC94 7F087164 10000017 */  b     .L7F0871C4
 /* 0BBC98 7F087168 00000000 */   nop   
@@ -26638,7 +26638,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BBCE0 7F0871B0 44993000 */  mtc1  $t9, $f6
 /* 0BBCE4 7F0871B4 46805120 */  cvt.s.w $f4, $f10
 /* 0BBCE8 7F0871B8 46803420 */  cvt.s.w $f16, $f6
-/* 0BBCEC 7F0871BC 0C001164 */  jal   video_related_21
+/* 0BBCEC 7F0871BC 0C001164 */  jal   set_page_aspect
 /* 0BBCF0 7F0871C0 46048303 */   div.s $f12, $f16, $f4
 .L7F0871C4:
 /* 0BBCF4 7F0871C4 0FC21B10 */  jal   get_curplayer_viewport_width
@@ -27050,7 +27050,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BC38C 7F08781C 46082182 */  mul.s $f6, $f4, $f8
 /* 0BC390 7F087820 00000000 */  nop   
 /* 0BC394 7F087824 46103302 */  mul.s $f12, $f6, $f16
-/* 0BC398 7F087828 0C001164 */  jal   video_related_21
+/* 0BC398 7F087828 0C001164 */  jal   set_page_aspect
 /* 0BC39C 7F08782C 00000000 */   nop   
 /* 0BC3A0 7F087830 10000017 */  b     .Ljp7F087890
 /* 0BC3A4 7F087834 00000000 */   nop   
@@ -27075,7 +27075,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BC3EC 7F08787C 44993000 */  mtc1  $t9, $f6
 /* 0BC3F0 7F087880 46805120 */  cvt.s.w $f4, $f10
 /* 0BC3F4 7F087884 46803420 */  cvt.s.w $f16, $f6
-/* 0BC3F8 7F087888 0C001164 */  jal   video_related_21
+/* 0BC3F8 7F087888 0C001164 */  jal   set_page_aspect
 /* 0BC3FC 7F08788C 46048303 */   div.s $f12, $f16, $f4
 .Ljp7F087890:
 /* 0BC400 7F087890 0FC21CC3 */  jal   get_curplayer_viewport_width
