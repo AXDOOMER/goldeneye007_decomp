@@ -3601,107 +3601,30 @@ void update_menu01_nintendo(void)
 
 
 
-#ifdef NONMATCHING
-extern f32 menu01_aspect;
-extern f32 menu01_pageheight;
-
 void interface_menu01_nintendo(void)
 {
     setvideo_far(60.0f);
-    set_page_aspect(menu01_aspect);
-    set_page_height(100.0f, menu01_pageheight);
-    set_video2_settings_offset_24(0.0f);
+    set_page_aspect(1.3333334f);
+    set_page_height(100.0f, 10000.0f);
+    set_video2_settings_offset_24(0);
 
     menu_timer = menu_timer + clock_timer;
-    if (menu_timer < 501)
-    {
-        if (get_controller_buttons_pressed(0, 0xffff) != 0)
-        {
-            if (is_first_time_on_main_menu == 0)
-            {
-                set_menu_to_mode(MENU_FILE_SELECT, 1);
-            } 
-            else
-            {    
-                prev_keypresses = 1;
-                set_menu_to_mode(MENU_RAREWARE_LOGO, 1);
-            }
-        }
-    }
-    else
+    if (menu_timer >= 0x1F5)
     {
         set_menu_to_mode(MENU_RAREWARE_LOGO, 1);
         return;
     }
+    if (get_controller_buttons_pressed(0, 0xFFFF))
+    {
+        if (is_first_time_on_main_menu == 0)
+        {
+            set_menu_to_mode(MENU_FILE_SELECT, 1);
+            return;
+        }
+        prev_keypresses = 1;
+        set_menu_to_mode(MENU_RAREWARE_LOGO, 1);
+    }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel menu01_aspect
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel menu01_pageheight
-.word 0x461C4000 /* 10000.0;*/
-.text
-glabel interface_menu01_nintendo
-/* 03F7F8 7F00ACC8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 03F7FC 7F00ACCC 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 03F800 7F00ACD0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 03F804 7F00ACD4 44816000 */  mtc1  $at, $f12
-/* 03F808 7F00ACD8 0C001151 */  jal   setvideo_far
-/* 03F80C 7F00ACDC 00000000 */   nop   
-/* 03F810 7F00ACE0 3C018005 */  lui   $at, %hi(menu01_aspect)
-/* 03F814 7F00ACE4 0C001164 */  jal   set_page_aspect
-/* 03F818 7F00ACE8 C42C19FC */   lwc1  $f12, %lo(menu01_aspect)($at)
-/* 03F81C 7F00ACEC 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 03F820 7F00ACF0 44816000 */  mtc1  $at, $f12
-/* 03F824 7F00ACF4 3C018005 */  lui   $at, %hi(menu01_pageheight)
-/* 03F828 7F00ACF8 0C001194 */  jal   set_page_height
-/* 03F82C 7F00ACFC C42E1A00 */   lwc1  $f14, %lo(menu01_pageheight)($at)
-/* 03F830 7F00AD00 0C00114D */  jal   set_video2_settings_offset_24
-/* 03F834 7F00AD04 00002025 */   move  $a0, $zero
-/* 03F838 7F00AD08 3C028003 */  lui   $v0, %hi(menu_timer)
-/* 03F83C 7F00AD0C 2442A8CC */  addiu $v0, %lo(menu_timer) # addiu $v0, $v0, -0x5734
-/* 03F840 7F00AD10 3C0F8005 */  lui   $t7, %hi(clock_timer) 
-/* 03F844 7F00AD14 8DEF8374 */  lw    $t7, %lo(clock_timer)($t7)
-/* 03F848 7F00AD18 8C4E0000 */  lw    $t6, ($v0)
-/* 03F84C 7F00AD1C 24050001 */  li    $a1, 1
-/* 03F850 7F00AD20 00002025 */  move  $a0, $zero
-/* 03F854 7F00AD24 01CFC021 */  addu  $t8, $t6, $t7
-/* 03F858 7F00AD28 2B0101F5 */  slti  $at, $t8, 0x1f5
-/* 03F85C 7F00AD2C 14200005 */  bnez  $at, .L7F00AD44
-/* 03F860 7F00AD30 AC580000 */   sw    $t8, ($v0)
-/* 03F864 7F00AD34 0FC06975 */  jal   set_menu_to_mode
-/* 03F868 7F00AD38 24040002 */   li    $a0, 2
-/* 03F86C 7F00AD3C 10000013 */  b     .L7F00AD8C
-/* 03F870 7F00AD40 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F00AD44:
-/* 03F874 7F00AD44 0C0030EB */  jal   get_controller_buttons_pressed
-/* 03F878 7F00AD48 3405FFFF */   li    $a1, 65535
-/* 03F87C 7F00AD4C 1040000E */  beqz  $v0, .L7F00AD88
-/* 03F880 7F00AD50 3C088003 */   lui   $t0, %hi(is_first_time_on_main_menu) 
-/* 03F884 7F00AD54 8D08A930 */  lw    $t0, %lo(is_first_time_on_main_menu)($t0)
-/* 03F888 7F00AD58 24090001 */  li    $t1, 1
-/* 03F88C 7F00AD5C 3C018003 */  lui   $at, %hi(prev_keypresses)
-/* 03F890 7F00AD60 15000006 */  bnez  $t0, .L7F00AD7C
-/* 03F894 7F00AD64 24040002 */   li    $a0, 2
-/* 03F898 7F00AD68 24040005 */  li    $a0, 5
-/* 03F89C 7F00AD6C 0FC06975 */  jal   set_menu_to_mode
-/* 03F8A0 7F00AD70 24050001 */   li    $a1, 1
-/* 03F8A4 7F00AD74 10000005 */  b     .L7F00AD8C
-/* 03F8A8 7F00AD78 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F00AD7C:
-/* 03F8AC 7F00AD7C AC29A934 */  sw    $t1, %lo(prev_keypresses)($at)
-/* 03F8B0 7F00AD80 0FC06975 */  jal   set_menu_to_mode
-/* 03F8B4 7F00AD84 24050001 */   li    $a1, 1
-.L7F00AD88:
-/* 03F8B8 7F00AD88 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F00AD8C:
-/* 03F8BC 7F00AD8C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 03F8C0 7F00AD90 03E00008 */  jr    $ra
-/* 03F8C4 7F00AD94 00000000 */   nop   
-)
-#endif
-
 
 
 
@@ -28306,7 +28229,7 @@ glabel constructor_menu19_spectrum
 
 
 #ifdef NONMATCHING
-void set_menu_to_mode(MENU menu, u32 mode)
+void set_menu_to_mode(MENU menu, s32 mode)
 {
   if ((menu == MENU_RUN_STAGE) || (menu == MENU_SPECTRUM_EMU)) {
     is_emulating_spectrum = TRUE;
