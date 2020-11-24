@@ -23144,18 +23144,9 @@ Linker script and memory map
                 0x00000000800696ee                cheat_activated_77
                 0x00000000800696ef                cheat_activated_78
                 0x00000000800696f0                array_favweapon
-                0x0000000080069710                mp_char_cur_select_player1
-                0x0000000080069714                mp_char_cur_select_player2
-                0x0000000080069718                mp_char_cur_select_player3
-                0x000000008006971c                mp_char_cur_select_player4
-                0x0000000080069720                mp_char_prev_select_player1
-                0x0000000080069724                mp_char_prev_select_player2
-                0x0000000080069728                mp_char_prev_select_player3
-                0x000000008006972c                mp_char_prev_select_player4
+                0x0000000080069710                mp_char_cur_select_player
+                0x0000000080069720                mp_char_prev_select_player
                 0x0000000080069730                dword_CODE_bss_80069730
-                0x0000000080069734                dword_CODE_bss_80069734
-                0x0000000080069738                dword_CODE_bss_80069738
-                0x000000008006973c                dword_CODE_bss_8006973C
                 0x0000000080069740                has_selected_char_player1
                 0x0000000080069744                has_selected_char_player2
                 0x0000000080069748                has_selected_char_player3
