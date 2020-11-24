@@ -2995,7 +2995,7 @@ Linker script and memory map
                 0x000000007f00d2b0                update_menu06_modesel
                 0x000000007f00d2b8                interface_menu06_modesel
                 0x000000007f00d608                sub_GAME_7F00D5E8
-                0x000000007f00d81c                set_menu_cursor_pos_to_setting
+                0x000000007f00d81c                setCursorPOSforMode
                 0x000000007f00d848                constructor_menu06_modesel
                 0x000000007f00dce0                pull_and_display_text_for_folder_a0
                 0x000000007f00dd2c                check_if_stage_completed_on_difficulty
