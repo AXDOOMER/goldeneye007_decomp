@@ -2995,7 +2995,7 @@ Linker script and memory map
                 0x000000007f00d290                update_menu06_modesel
                 0x000000007f00d298                interface_menu06_modesel
                 0x000000007f00d5e8                sub_GAME_7F00D5E8
-                0x000000007f00d7fc                set_menu_cursor_pos_to_setting
+                0x000000007f00d7fc                setCursorPOSforMode
                 0x000000007f00d828                constructor_menu06_modesel
                 0x000000007f00dcc0                pull_and_display_text_for_folder_a0
                 0x000000007f00dd0c                check_if_stage_completed_on_difficulty
@@ -20892,8 +20892,6 @@ Linker script and memory map
                 0x00000000800519e8                D_800519E8
                 0x00000000800519f4                D_800519F4
                 0x00000000800519f8                D_800519F8
-                0x00000000800519fc                menu01_aspect
-                0x0000000080051a00                menu01_pageheight
                 0x0000000080051a04                D_80051A04
                 0x0000000080051a08                D_80051A08
                 0x0000000080051a0c                D_80051A0C

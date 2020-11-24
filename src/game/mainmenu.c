@@ -3586,107 +3586,30 @@ void update_menu01_nintendo(void)
 
 
 
-#ifdef NONMATCHING
-extern f32 menu01_aspect;
-extern f32 menu01_pageheight;
-
 void interface_menu01_nintendo(void)
 {
     setvideo_far(60.0f);
-    set_page_aspect(menu01_aspect);
-    set_page_height(100.0f, menu01_pageheight);
-    set_video2_settings_offset_24(0.0f);
+    set_page_aspect(1.3333334f);
+    set_page_height(100.0f, 10000.0f);
+    set_video2_settings_offset_24(0);
 
     menu_timer = menu_timer + clock_timer;
-    if (menu_timer < 501)
-    {
-        if (get_controller_buttons_pressed(0, 0xffff) != 0)
-        {
-            if (is_first_time_on_main_menu == 0)
-            {
-                set_menu_to_mode(MENU_FILE_SELECT, 1);
-            } 
-            else
-            {    
-                prev_keypresses = 1;
-                set_menu_to_mode(MENU_RAREWARE_LOGO, 1);
-            }
-        }
-    }
-    else
+    if (menu_timer >= 0x1F5)
     {
         set_menu_to_mode(MENU_RAREWARE_LOGO, 1);
         return;
     }
+    if (get_controller_buttons_pressed(0, 0xFFFF))
+    {
+        if (is_first_time_on_main_menu == 0)
+        {
+            set_menu_to_mode(MENU_FILE_SELECT, 1);
+            return;
+        }
+        prev_keypresses = 1;
+        set_menu_to_mode(MENU_RAREWARE_LOGO, 1);
+    }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel menu01_aspect
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel menu01_pageheight
-.word 0x461C4000 /* 10000.0;*/
-.text
-glabel interface_menu01_nintendo
-/* 03F7F8 7F00ACC8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 03F7FC 7F00ACCC 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 03F800 7F00ACD0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 03F804 7F00ACD4 44816000 */  mtc1  $at, $f12
-/* 03F808 7F00ACD8 0C001151 */  jal   setvideo_far
-/* 03F80C 7F00ACDC 00000000 */   nop   
-/* 03F810 7F00ACE0 3C018005 */  lui   $at, %hi(menu01_aspect)
-/* 03F814 7F00ACE4 0C001164 */  jal   set_page_aspect
-/* 03F818 7F00ACE8 C42C19FC */   lwc1  $f12, %lo(menu01_aspect)($at)
-/* 03F81C 7F00ACEC 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 03F820 7F00ACF0 44816000 */  mtc1  $at, $f12
-/* 03F824 7F00ACF4 3C018005 */  lui   $at, %hi(menu01_pageheight)
-/* 03F828 7F00ACF8 0C001194 */  jal   set_page_height
-/* 03F82C 7F00ACFC C42E1A00 */   lwc1  $f14, %lo(menu01_pageheight)($at)
-/* 03F830 7F00AD00 0C00114D */  jal   set_video2_settings_offset_24
-/* 03F834 7F00AD04 00002025 */   move  $a0, $zero
-/* 03F838 7F00AD08 3C028003 */  lui   $v0, %hi(menu_timer)
-/* 03F83C 7F00AD0C 2442A8CC */  addiu $v0, %lo(menu_timer) # addiu $v0, $v0, -0x5734
-/* 03F840 7F00AD10 3C0F8005 */  lui   $t7, %hi(clock_timer) 
-/* 03F844 7F00AD14 8DEF8374 */  lw    $t7, %lo(clock_timer)($t7)
-/* 03F848 7F00AD18 8C4E0000 */  lw    $t6, ($v0)
-/* 03F84C 7F00AD1C 24050001 */  li    $a1, 1
-/* 03F850 7F00AD20 00002025 */  move  $a0, $zero
-/* 03F854 7F00AD24 01CFC021 */  addu  $t8, $t6, $t7
-/* 03F858 7F00AD28 2B0101F5 */  slti  $at, $t8, 0x1f5
-/* 03F85C 7F00AD2C 14200005 */  bnez  $at, .L7F00AD44
-/* 03F860 7F00AD30 AC580000 */   sw    $t8, ($v0)
-/* 03F864 7F00AD34 0FC06975 */  jal   set_menu_to_mode
-/* 03F868 7F00AD38 24040002 */   li    $a0, 2
-/* 03F86C 7F00AD3C 10000013 */  b     .L7F00AD8C
-/* 03F870 7F00AD40 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F00AD44:
-/* 03F874 7F00AD44 0C0030EB */  jal   get_controller_buttons_pressed
-/* 03F878 7F00AD48 3405FFFF */   li    $a1, 65535
-/* 03F87C 7F00AD4C 1040000E */  beqz  $v0, .L7F00AD88
-/* 03F880 7F00AD50 3C088003 */   lui   $t0, %hi(is_first_time_on_main_menu) 
-/* 03F884 7F00AD54 8D08A930 */  lw    $t0, %lo(is_first_time_on_main_menu)($t0)
-/* 03F888 7F00AD58 24090001 */  li    $t1, 1
-/* 03F88C 7F00AD5C 3C018003 */  lui   $at, %hi(prev_keypresses)
-/* 03F890 7F00AD60 15000006 */  bnez  $t0, .L7F00AD7C
-/* 03F894 7F00AD64 24040002 */   li    $a0, 2
-/* 03F898 7F00AD68 24040005 */  li    $a0, 5
-/* 03F89C 7F00AD6C 0FC06975 */  jal   set_menu_to_mode
-/* 03F8A0 7F00AD70 24050001 */   li    $a1, 1
-/* 03F8A4 7F00AD74 10000005 */  b     .L7F00AD8C
-/* 03F8A8 7F00AD78 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F00AD7C:
-/* 03F8AC 7F00AD7C AC29A934 */  sw    $t1, %lo(prev_keypresses)($at)
-/* 03F8B0 7F00AD80 0FC06975 */  jal   set_menu_to_mode
-/* 03F8B4 7F00AD84 24050001 */   li    $a1, 1
-.L7F00AD88:
-/* 03F8B8 7F00AD88 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F00AD8C:
-/* 03F8BC 7F00AD8C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 03F8C0 7F00AD90 03E00008 */  jr    $ra
-/* 03F8C4 7F00AD94 00000000 */   nop   
-)
-#endif
-
 
 
 
@@ -5339,7 +5262,7 @@ loop_38:
     if (selected_folder_num >= 0)
     {
         set_menu_to_mode(MENU_MODE_SELECT, 0);
-        return set_menu_cursor_pos_to_setting(0);
+        return setCursorPOSforMode(0);
     }
     if (menu_timer >= 0x709)
     {
@@ -5860,7 +5783,7 @@ glabel interface_menu05_fileselect
 /* 040E58 7F00C328 24040006 */   li    $a0, 6
 /* 040E5C 7F00C32C 0FC06975 */  jal   set_menu_to_mode
 /* 040E60 7F00C330 00002825 */   move  $a1, $zero
-/* 040E64 7F00C334 0FC035FF */  jal   set_menu_cursor_pos_to_setting
+/* 040E64 7F00C334 0FC035FF */  jal   setCursorPOSforMode
 /* 040E68 7F00C338 00002025 */   move  $a0, $zero
 /* 040E6C 7F00C33C 1000000A */  b     .L7F00C368
 /* 040E70 7F00C340 8FBF0044 */   lw    $ra, 0x44($sp)
@@ -7324,79 +7247,83 @@ void interface_menu06_modesel(void)
             is_cheat_menu_available = TRUE;
         }
     }
-
-    setvideo_far(60.0f);
-    set_page_aspect((1.33333337f);
+    setvideo_far(60.f);
+    set_page_aspect(1.333333f);
     set_page_height(100.0f, 10000.0f);
     set_video2_settings_offset_24(0);
+
     disable_all_switches(ptr_folder_object_instance);
-    
     select_load_bond_picture(ptr_folder_object_instance, removed_would_have_returned_bond_for_folder_num(selected_folder_num));
     set_item_visibility_in_objinstance(ptr_folder_object_instance, 0, 1);
     set_item_visibility_in_objinstance(ptr_folder_object_instance, 1, 1);
     set_item_visibility_in_objinstance(ptr_folder_object_instance, 3, 1);
     set_item_visibility_in_objinstance(ptr_folder_object_instance, 7, 1);
     set_item_visibility_in_objinstance(ptr_folder_object_instance, 2, 1);
-    tab_3_highlight = FALSE;
-    mission_difficulty_highlighted = DIFFICULTY_MULTI;
-    if (isontab3() == 0) {
-        if ((is_cheat_menu_available == FALSE) || (cursor_v_pos < 275.0f)) {
-            if ((cursor_v_pos < 243.0f) ||
-               (get_attached_controller_count() < 2)) {
-                mission_difficulty_highlighted = DIFFICULTY_AGENT;
-                if (get_controller_buttons_pressed('\0', START_BUTTON|Z_TRIG|A_BUTTON)) {
-                    gamemode = GAMEMODE_SOLO;
-                    play_sfx_a1(ptr_sfx_buf, 0xc5, NULL);
-                }
-            }
-            else {
-                mission_difficulty_highlighted = DIFFICULTY_SECRET;
-                if (get_controller_buttons_pressed('\0', START_BUTTON|Z_TRIG|A_BUTTON)) {
-                    gamemode = GAMEMODE_MULTI;
-                    play_sfx_a1(ptr_sfx_buf, 0xc5, NULL);
-                }
-            }
-        }
-        else {
-            mission_difficulty_highlighted = DIFFICULTY_00;
-            if (get_controller_buttons_pressed('\0', START_BUTTON|Z_TRIG|A_BUTTON)) {
-                gamemode = GAMEMODE_CHEATS;
-                play_sfx_a1(ptr_sfx_buf, 0xc5, NULL);
-            }
+    tab_3_highlight = 0;
+    mission_difficulty_highlighted = -1;
+    if (isontab3() != 0)
+    {
+        tab_3_highlight = 1;
+        if (get_controller_buttons_pressed(0, START_BUTTON|Z_TRIG|A_BUTTON) != 0)
+        {
+            tab_3_selected = 1;
+            play_sfx_a1(ptr_sfx_buf, 0xC7, 0);
         }
     }
-    else {
-        tab_3_highlight = TRUE;
-        if (get_controller_buttons_pressed('\0', START_BUTTON|Z_TRIG|A_BUTTON)) {
-            tab_3_selected = TRUE;
-            play_sfx_a1(ptr_sfx_buf, 199, NULL);
+    else if ((is_cheat_menu_available != 0) && (275.0f <= cursor_v_pos))
+    {
+        mission_difficulty_highlighted = 2;
+        if (get_controller_buttons_pressed(0, START_BUTTON|Z_TRIG|A_BUTTON) != 0)
+        {
+            gamemode = 2;
+            play_sfx_a1(ptr_sfx_buf, 0xC5, 0);
         }
     }
-    if (get_controller_buttons_pressed('\0',B_BUTTON)) {
-        tab_3_selected = TRUE;
-        play_sfx_a1(ptr_sfx_buf, 199, NULL);
+    else if ((243.0f <= cursor_v_pos) && (get_attached_controller_count() >= 2))
+    {
+        mission_difficulty_highlighted = 1;
+        if (get_controller_buttons_pressed(0, START_BUTTON|Z_TRIG|A_BUTTON) != 0)
+        {
+            gamemode = 1;
+            play_sfx_a1(ptr_sfx_buf, 0xC5, 0);
+        }
+    }
+    else
+    {
+        mission_difficulty_highlighted = 0;
+        if (get_controller_buttons_pressed(0, START_BUTTON|Z_TRIG|A_BUTTON) != 0)
+        {
+            gamemode = 0;
+            play_sfx_a1(ptr_sfx_buf, 0xC5, 0);
+        }
+    }
+
+    if (get_controller_buttons_pressed(0, B_BUTTON) != 0)
+    {
+        tab_3_selected = 1;
+        play_sfx_a1(ptr_sfx_buf, 0xC7, 0);
     }
     menu_control_stick_tracking();
-    if (gamemode == GAMEMODE_SOLO) {
+    if (gamemode == GAMEMODE_SOLO)
+    {
         set_menu_to_mode(MENU_MISSION_SELECT, 0);
         set_cursor_to_stage_solo(0);
+        return;
     }
-    else {
-        if (gamemode == GAMEMODE_MULTI) {
-            set_menu_to_mode(MENU_MP_OPTIONS, 0);
-        }
-        else {
-            if (gamemode == GAMEMODE_CHEATS) {
-                set_menu_to_mode(MENU_CHEAT, 0);
-            }
-            else {
-                if (tab_3_selected != FALSE) {
-                    set_menu_to_mode(MENU_FILE_SELECT, 0);
-                }
-            }
-        }
+    if (gamemode == GAMEMODE_MULTI)
+    {
+        set_menu_to_mode(MENU_MP_OPTIONS, 0);
+        return;
     }
-    return;
+    if (gamemode == GAMEMODE_CHEATS)
+    {
+        set_menu_to_mode(MENU_CHEAT, 0);
+        return;
+    }
+    if (tab_3_selected != 0)
+    {
+        set_menu_to_mode(MENU_FILE_SELECT, 0);
+    }
 }
 #else
 GLOBAL_ASM(
@@ -7856,32 +7783,11 @@ glabel sub_GAME_7F00D5E8
 
 
 
-#ifdef NONMATCHING
-void set_menu_cursor_pos_to_setting(s32 arg0) {
-    // Node 0
+void setCursorPOSforMode(int mode)
+{
     cursor_h_pos = 126.0f;
-    cursor_v_pos = (f32) ((arg0 << 5) + 0xe2);
-    return;
-    // (function likely void)
+    cursor_v_pos = mode * 0x20 + 0xe2;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_menu_cursor_pos_to_setting
-/* 04232C 7F00D7FC 00047140 */  sll   $t6, $a0, 5
-/* 042330 7F00D800 25CF00E2 */  addiu $t7, $t6, 0xe2
-/* 042334 7F00D804 448F3000 */  mtc1  $t7, $f6
-/* 042338 7F00D808 3C0142FC */  li    $at, 0x42FC0000 # 126.000000
-/* 04233C 7F00D80C 44812000 */  mtc1  $at, $f4
-/* 042340 7F00D810 46803220 */  cvt.s.w $f8, $f6
-/* 042344 7F00D814 3C018003 */  lui   $at, %hi(cursor_h_pos)
-/* 042348 7F00D818 E424A908 */  swc1  $f4, %lo(cursor_h_pos)($at)
-/* 04234C 7F00D81C 3C018003 */  lui   $at, %hi(cursor_v_pos)
-/* 042350 7F00D820 03E00008 */  jr    $ra
-/* 042354 7F00D824 E428A90C */   swc1  $f8, %lo(cursor_v_pos)($at)
-)
-#endif
-
 
 
 
@@ -8802,7 +8708,7 @@ loop_29:
     if (tab_3_selected != 0)
     {
         set_menu_to_mode(MENU_MODE_SELECT, 0);
-        set_menu_cursor_pos_to_setting(0);
+        setCursorPOSforMode(0);
     }
 }
 #else
@@ -9162,7 +9068,7 @@ glabel interface_menu07_missionsel
 /* 042ED8 7F00E3A8 8FBF002C */   lw    $ra, 0x2c($sp)
 /* 042EDC 7F00E3AC 0FC06975 */  jal   set_menu_to_mode
 /* 042EE0 7F00E3B0 00002825 */   move  $a1, $zero
-/* 042EE4 7F00E3B4 0FC035FF */  jal   set_menu_cursor_pos_to_setting
+/* 042EE4 7F00E3B4 0FC035FF */  jal   setCursorPOSforMode
 /* 042EE8 7F00E3B8 00002025 */   move  $a0, $zero
 /* 042EEC 7F00E3BC 8FBF002C */  lw    $ra, 0x2c($sp)
 .L7F00E3C0:
@@ -9541,7 +9447,7 @@ glabel interface_menu07_missionsel
 /* 042F58 7F00E3E8 8FBF002C */   lw    $ra, 0x2c($sp)
 /* 042F5C 7F00E3EC 0FC069E2 */  jal   set_menu_to_mode
 /* 042F60 7F00E3F0 00002825 */   move  $a1, $zero
-/* 042F64 7F00E3F4 0FC03607 */  jal   set_menu_cursor_pos_to_setting
+/* 042F64 7F00E3F4 0FC03607 */  jal   setCursorPOSforMode
 /* 042F68 7F00E3F8 00002025 */   move  $a0, $zero
 /* 042F6C 7F00E3FC 8FBF002C */  lw    $ra, 0x2c($sp)
 .L7F00E400:
@@ -12933,7 +12839,7 @@ void interface_menu0E_mpoptions(void)
     if (get_attached_controller_count() < 2)
     {
         set_menu_to_mode(MENU_MODE_SELECT, 0);
-        set_menu_cursor_pos_to_setting(gamemode);
+        setCursorPOSforMode(gamemode);
     }
     if (get_attached_controller_count() < selected_num_players)
     {
@@ -13082,7 +12988,7 @@ void interface_menu0E_mpoptions(void)
     if (tab_3_selected != 0)
     {
         set_menu_to_mode(MENU_MODE_SELECT, 0);
-        set_menu_cursor_pos_to_setting(gamemode);
+        setCursorPOSforMode(gamemode);
         return;
     }
     if (tab_1_selected != 0)
@@ -13192,7 +13098,7 @@ glabel interface_menu0E_mpoptions
 /* 0453EC 7F0108BC 0FC06975 */  jal   set_menu_to_mode
 /* 0453F0 7F0108C0 00002825 */   move  $a1, $zero
 /* 0453F4 7F0108C4 3C048003 */  lui   $a0, %hi(gamemode)
-/* 0453F8 7F0108C8 0FC035FF */  jal   set_menu_cursor_pos_to_setting
+/* 0453F8 7F0108C8 0FC035FF */  jal   setCursorPOSforMode
 /* 0453FC 7F0108CC 8C84A8F0 */   lw    $a0, %lo(gamemode)($a0)
 .L7F0108D0:
 /* 045400 7F0108D0 0C002E7E */  jal   get_attached_controller_count
@@ -13509,7 +13415,7 @@ glabel interface_menu0E_mpoptions
 /* 04585C 7F010D2C 0FC06975 */  jal   set_menu_to_mode
 /* 045860 7F010D30 00002825 */   move  $a1, $zero
 /* 045864 7F010D34 3C048003 */  lui   $a0, %hi(gamemode)
-/* 045868 7F010D38 0FC035FF */  jal   set_menu_cursor_pos_to_setting
+/* 045868 7F010D38 0FC035FF */  jal   setCursorPOSforMode
 /* 04586C 7F010D3C 8C84A8F0 */   lw    $a0, %lo(gamemode)($a0)
 /* 045870 7F010D40 10000070 */  b     .L7F010F04
 /* 045874 7F010D44 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -24646,7 +24552,7 @@ void interface_menu15_cheat(u32 param_1,u32 param_2)
   }
   else {
     set_menu_to_mode(MENU_MODE_SELECT,0);
-    set_menu_cursor_pos_to_setting(gamemode);
+    setCursorPOSforMode(gamemode);
   }
 }
 #else
@@ -24828,7 +24734,7 @@ glabel interface_menu15_cheat
 /* 04CA20 7F017EF0 0FC06975 */  jal   set_menu_to_mode
 /* 04CA24 7F017EF4 00002825 */   move  $a1, $zero
 /* 04CA28 7F017EF8 3C048003 */  lui   $a0, %hi(gamemode)
-/* 04CA2C 7F017EFC 0FC035FF */  jal   set_menu_cursor_pos_to_setting
+/* 04CA2C 7F017EFC 0FC035FF */  jal   setCursorPOSforMode
 /* 04CA30 7F017F00 8C84A8F0 */   lw    $a0, %lo(gamemode)($a0)
 /* 04CA34 7F017F04 10000012 */  b     .L7F017F50
 /* 04CA38 7F017F08 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -28291,7 +28197,7 @@ glabel constructor_menu19_spectrum
 
 
 #ifdef NONMATCHING
-void set_menu_to_mode(MENU menu, u32 mode)
+void set_menu_to_mode(MENU menu, s32 mode)
 {
   if ((menu == MENU_RUN_STAGE) || (menu == MENU_SPECTRUM_EMU)) {
     is_emulating_spectrum = TRUE;
