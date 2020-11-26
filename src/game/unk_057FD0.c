@@ -220,155 +220,34 @@ void matrix_4x4_set_rotation_around_z(f32 angle, mat44 matrix) {
     matrix[3][3] = 1.0f;
 }
 
-#ifdef NONMATCHING
-// 8d300:    lwc1    $f10,0x54(sp)                   r 8d300:    lwc1    $f8,0x54(sp)
-// 8d304:    mul.s   $f18,$f4,$f0                    r 8d304:    mul.s   $f10,$f4,$f0
-// 8d308:    nop                                       8d308:    nop
-// 8d30c:    mul.s   $f8,$f10,$f16                   r 8d30c:    mul.s   $f18,$f8,$f16
-// 8d310:    nop                                       8d310:    nop
-// 8d314:    mul.s   $f6,$f18,$f2                    r 8d314:    mul.s   $f6,$f10,$f2
-// 8d318:    swc1    $f8,0x20(sp)                    r 8d318:    swc1    $f10,0x20(sp)
-// 8d31c:    add.s   $f4,$f6,$f8                     r 8d31c:    add.s   $f4,$f6,$f18
-// 8d320:    swc1    $f4,0x14(s0)                      8d320:    swc1    $f4,0x14(s0)
-// 8d324:    lwc1    $f10,0x50(sp)                   r 8d324:    lwc1    $f8,0x50(sp)
-// 8d328:    swc1    $f12,0x1c(s0)                     8d328:    swc1    $f12,0x1c(s0)
-// 8d32c:    mul.s   $f6,$f10,$f14                   r 8d32c:    mul.s   $f10,$f8,$f14
-// 8d330:    swc1    $f6,0x18(s0)                    r 8d330:    swc1    $f10,0x18(s0)
-// 8d334:    lwc1    $f8,0x20(sp)                    | 8d334:    mul.s   $f6,$f18,$f2
-// 8d338:    mul.s   $f4,$f8,$f2                     | 8d338:    lwc1    $f4,0x20(sp)
-// 8d33c:    add.s   $f10,$f4,$f18                   r 8d33c:    add.s   $f8,$f6,$f4
-// 8d340:    swc1    $f10,0x20(s0)                   r 8d340:    swc1    $f8,0x20(s0)
-// 8d344:    lwc1    $f6,0x28(sp)                    r 8d344:    lwc1    $f10,0x28(sp)
-// 8d348:    lwc1    $f4,0x24(sp)                      8d348:    lwc1    $f4,0x24(sp)
-// 8d34c:    mul.s   $f8,$f6,$f2                     r 8d34c:    mul.s   $f6,$f10,$f2
-// 8d350:    sub.s   $f10,$f8,$f4                    r 8d350:    sub.s   $f8,$f6,$f4
-// 8d354:    mtc1    at,$f4                            8d354:    mtc1    at,$f4
-// 8d358:    swc1    $f10,0x24(s0)                   r 8d358:    swc1    $f8,0x24(s0)
-// 8d35c:    lwc1    $f6,0x54(sp)                    r 8d35c:    lwc1    $f10,0x54(sp)
-// 8d360:    swc1    $f12,0x2c(s0)                     8d360:    swc1    $f12,0x2c(s0)
-// 8d364:    swc1    $f12,0x30(s0)                     8d364:    swc1    $f12,0x30(s0)
-// 8d368:    mul.s   $f8,$f6,$f14                    r 8d368:    mul.s   $f6,$f10,$f14
-// 8d36c:    swc1    $f12,0x34(s0)                     8d36c:    swc1    $f12,0x34(s0)
-// 8d370:    swc1    $f12,0x38(s0)                     8d370:    swc1    $f12,0x38(s0)
-// 8d374:    swc1    $f4,0x3c(s0)                      8d374:    swc1    $f4,0x3c(s0)
-// 8d378:    swc1    $f8,0x28(s0)                    r 8d378:    swc1    $f6,0x28(s0)
-// void matrix_4x4_set_rotation_around_xyz(vec3 angles, mat44 matrix) {
-//     f32 cos_x = cosf(angles[0]);
-//     f32 sin_x = sinf(angles[0]);
-//     f32 cos_y = cosf(angles[1]);
-//     f32 sin_y = sinf(angles[1]);
-//     f32 cos_z = cosf(angles[2]);
-//     f32 sin_z = sinf(angles[2]);
-//     f32 cos_x_cos_z = cos_x * cos_z;
-//     f32 cos_x_sin_z = cos_x * sin_z;
-//     f32 sin_x_cos_z = sin_x * cos_z;
-//     f32 sin_x_sin_z = sin_x * sin_z;
-//     matrix[0][0] = (cos_y * cos_z);
-//     matrix[0][1] = (cos_y * sin_z);
-//     matrix[0][2] = -sin_y;
-//     matrix[0][3] = 0.0f;
-//     matrix[1][0] = ((sin_x_cos_z * sin_y) - cos_x_sin_z);
-//     matrix[1][1] = ((sin_x_sin_z * sin_y) + cos_x_cos_z);
-//     matrix[1][2] = sin_x * cos_y;
-//     matrix[1][3] = 0.0f;
-//     matrix[2][0] = ((cos_x_cos_z * sin_y) + sin_x_sin_z);
-//     matrix[2][1] = ((cos_x_sin_z * sin_y) - sin_x_cos_z);
-//     matrix[2][2] = cos_x * cos_y;
-//     matrix[2][3] = 0.0f;
-//     matrix[3][0] = 0.0f;
-//     matrix[3][1] = 0.0f;
-//     matrix[3][2] = 0.0f;
-//     matrix[3][3] = 1.0f;
-// }
-#else
-GLOBAL_ASM(
-.text
-glabel matrix_4x4_set_rotation_around_xyz
-/* 08D244 7F058714 27BDFFA8 */  addiu $sp, $sp, -0x58
-/* 08D248 7F058718 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 08D24C 7F05871C AFB10018 */  sw    $s1, 0x18($sp)
-/* 08D250 7F058720 AFB00014 */  sw    $s0, 0x14($sp)
-/* 08D254 7F058724 00A08025 */  move  $s0, $a1
-/* 08D258 7F058728 00808825 */  move  $s1, $a0
-/* 08D25C 7F05872C 0FC15FA8 */  jal   cosf
-/* 08D260 7F058730 C48C0000 */   lwc1  $f12, ($a0)
-/* 08D264 7F058734 E7A00054 */  swc1  $f0, 0x54($sp)
-/* 08D268 7F058738 0FC15FAB */  jal   sinf
-/* 08D26C 7F05873C C62C0000 */   lwc1  $f12, ($s1)
-/* 08D270 7F058740 E7A00050 */  swc1  $f0, 0x50($sp)
-/* 08D274 7F058744 0FC15FA8 */  jal   cosf
-/* 08D278 7F058748 C62C0004 */   lwc1  $f12, 4($s1)
-/* 08D27C 7F05874C C62C0004 */  lwc1  $f12, 4($s1)
-/* 08D280 7F058750 0FC15FAB */  jal   sinf
-/* 08D284 7F058754 E7A0004C */   swc1  $f0, 0x4c($sp)
-/* 08D288 7F058758 C62C0008 */  lwc1  $f12, 8($s1)
-/* 08D28C 7F05875C 0FC15FA8 */  jal   cosf
-/* 08D290 7F058760 E7A00048 */   swc1  $f0, 0x48($sp)
-/* 08D294 7F058764 C62C0008 */  lwc1  $f12, 8($s1)
-/* 08D298 7F058768 0FC15FAB */  jal   sinf
-/* 08D29C 7F05876C E7A00044 */   swc1  $f0, 0x44($sp)
-/* 08D2A0 7F058770 C7AE004C */  lwc1  $f14, 0x4c($sp)
-/* 08D2A4 7F058774 C7B00044 */  lwc1  $f16, 0x44($sp)
-/* 08D2A8 7F058778 C7A20048 */  lwc1  $f2, 0x48($sp)
-/* 08D2AC 7F05877C 44806000 */  mtc1  $zero, $f12
-/* 08D2B0 7F058780 46107102 */  mul.s $f4, $f14, $f16
-/* 08D2B4 7F058784 46001207 */  neg.s $f8, $f2
-/* 08D2B8 7F058788 E60C000C */  swc1  $f12, 0xc($s0)
-/* 08D2BC 7F05878C 46007182 */  mul.s $f6, $f14, $f0
-/* 08D2C0 7F058790 E6080008 */  swc1  $f8, 8($s0)
-/* 08D2C4 7F058794 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 08D2C8 7F058798 E6040000 */  swc1  $f4, ($s0)
-/* 08D2CC 7F05879C E6060004 */  swc1  $f6, 4($s0)
-/* 08D2D0 7F0587A0 C7AA0050 */  lwc1  $f10, 0x50($sp)
-/* 08D2D4 7F0587A4 C7A60054 */  lwc1  $f6, 0x54($sp)
-/* 08D2D8 7F0587A8 46105102 */  mul.s $f4, $f10, $f16
-/* 08D2DC 7F0587AC 00000000 */  nop   
-/* 08D2E0 7F0587B0 46003202 */  mul.s $f8, $f6, $f0
-/* 08D2E4 7F0587B4 00000000 */  nop   
-/* 08D2E8 7F0587B8 46022282 */  mul.s $f10, $f4, $f2
-/* 08D2EC 7F0587BC E7A40024 */  swc1  $f4, 0x24($sp)
-/* 08D2F0 7F0587C0 E7A80028 */  swc1  $f8, 0x28($sp)
-/* 08D2F4 7F0587C4 46085181 */  sub.s $f6, $f10, $f8
-/* 08D2F8 7F0587C8 E6060010 */  swc1  $f6, 0x10($s0)
-/* 08D2FC 7F0587CC C7A40050 */  lwc1  $f4, 0x50($sp)
-/* 08D300 7F0587D0 C7AA0054 */  lwc1  $f10, 0x54($sp)
-/* 08D304 7F0587D4 46002482 */  mul.s $f18, $f4, $f0
-/* 08D308 7F0587D8 00000000 */  nop   
-/* 08D30C 7F0587DC 46105202 */  mul.s $f8, $f10, $f16
-/* 08D310 7F0587E0 00000000 */  nop   
-/* 08D314 7F0587E4 46029182 */  mul.s $f6, $f18, $f2
-/* 08D318 7F0587E8 E7A80020 */  swc1  $f8, 0x20($sp)
-/* 08D31C 7F0587EC 46083100 */  add.s $f4, $f6, $f8
-/* 08D320 7F0587F0 E6040014 */  swc1  $f4, 0x14($s0)
-/* 08D324 7F0587F4 C7AA0050 */  lwc1  $f10, 0x50($sp)
-/* 08D328 7F0587F8 E60C001C */  swc1  $f12, 0x1c($s0)
-/* 08D32C 7F0587FC 460E5182 */  mul.s $f6, $f10, $f14
-/* 08D330 7F058800 E6060018 */  swc1  $f6, 0x18($s0)
-/* 08D334 7F058804 C7A80020 */  lwc1  $f8, 0x20($sp)
-/* 08D338 7F058808 46024102 */  mul.s $f4, $f8, $f2
-/* 08D33C 7F05880C 46122280 */  add.s $f10, $f4, $f18
-/* 08D340 7F058810 E60A0020 */  swc1  $f10, 0x20($s0)
-/* 08D344 7F058814 C7A60028 */  lwc1  $f6, 0x28($sp)
-/* 08D348 7F058818 C7A40024 */  lwc1  $f4, 0x24($sp)
-/* 08D34C 7F05881C 46023202 */  mul.s $f8, $f6, $f2
-/* 08D350 7F058820 46044281 */  sub.s $f10, $f8, $f4
-/* 08D354 7F058824 44812000 */  mtc1  $at, $f4
-/* 08D358 7F058828 E60A0024 */  swc1  $f10, 0x24($s0)
-/* 08D35C 7F05882C C7A60054 */  lwc1  $f6, 0x54($sp)
-/* 08D360 7F058830 E60C002C */  swc1  $f12, 0x2c($s0)
-/* 08D364 7F058834 E60C0030 */  swc1  $f12, 0x30($s0)
-/* 08D368 7F058838 460E3202 */  mul.s $f8, $f6, $f14
-/* 08D36C 7F05883C E60C0034 */  swc1  $f12, 0x34($s0)
-/* 08D370 7F058840 E60C0038 */  swc1  $f12, 0x38($s0)
-/* 08D374 7F058844 E604003C */  swc1  $f4, 0x3c($s0)
-/* 08D378 7F058848 E6080028 */  swc1  $f8, 0x28($s0)
-/* 08D37C 7F05884C 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 08D380 7F058850 8FB10018 */  lw    $s1, 0x18($sp)
-/* 08D384 7F058854 8FB00014 */  lw    $s0, 0x14($sp)
-/* 08D388 7F058858 03E00008 */  jr    $ra
-/* 08D38C 7F05885C 27BD0058 */   addiu $sp, $sp, 0x58
-)
-#endif
+void matrix_4x4_set_rotation_around_xyz(vec3 angles, mat44 matrix) {
+    f32 cos_x = cosf(angles[0]);
+    f32 sin_x = sinf(angles[0]);
+    f32 cos_y = cosf(angles[1]);
+    f32 sin_y = sinf(angles[1]);
+    f32 cos_z = cosf(angles[2]);
+    f32 sin_z = sinf(angles[2]);
+    f32 sin_x_sin_z = sin_x * sin_z;
+    f32 cos_x_sin_z = cos_x * sin_z;
+    f32 sin_x_cos_z = sin_x * cos_z;
+    f32 cos_x_cos_z = cos_x * cos_z;
+    matrix[0][0] = (cos_y * cos_z);
+    matrix[0][1] = (cos_y * sin_z);
+    matrix[0][2] = -sin_y;
+    matrix[0][3] = 0.0f;
+    matrix[1][0] = ((sin_x_cos_z * sin_y) - cos_x_sin_z);
+    matrix[1][1] = ((sin_x_sin_z * sin_y) + cos_x_cos_z);
+    matrix[1][2] = sin_x * cos_y;
+    matrix[1][3] = 0.0f;
+    matrix[2][0] = ((cos_x_cos_z * sin_y) + sin_x_sin_z);
+    matrix[2][1] = ((cos_x_sin_z * sin_y) - sin_x_cos_z);
+    matrix[2][2] = cos_x * cos_y;
+    matrix[2][3] = 0.0f;
+    matrix[3][0] = 0.0f;
+    matrix[3][1] = 0.0f;
+    matrix[3][2] = 0.0f;
+    matrix[3][3] = 1.0f;
+}
 
 f32 atan2f(f32, f32);
 
@@ -839,18 +718,194 @@ void sub_GAME_7F059044(mat44 arg0, Mtx* arg1) {
     }
 }
 
-void sub_GAME_7F05914C(Mtx* arg1, mat44 arg0) {
+void sub_GAME_7F05914C(Mtx* arg0, mat44 arg1) {
     s32 i, j;
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 4; j++) {
-            arg0[i][j] = arg1->m[i][j] / 65536.0f;
+            arg1[i][j] = arg0->m[i][j] / 65536.0f;
         }
     }
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F059244(void) {
+//#ifdef NONMATCHING
+#if 0
+#define MTX_INTPART_PACK(w1, w2) (((w1) & 0xFFFF0000) | ((w2) >> 16))
+#define MTX_FRACPART_PACK(w1, w2) (((w1) << 16) | ((w2) & 0xFFFF))
 
+void sub_GAME_7F059244(Mtx* a0, Mtx* a1) {
+    s32 i;
+    s32 j;
+    u32 w1;
+    u32 w2;
+    for (i = 0; i < 2; i++) {
+        for (j = 0; j < 4; j++) {
+            w1 = a0->m[i * 2 + j / 2][((j * 2) % 4) + 0];
+            w2 = a0->m[i * 2 + j / 2][((j * 2) % 4) + 1];
+            a1->m[i + 0][j] = MTX_INTPART_PACK(w1, w2);
+            a1->m[i + 2][j] = MTX_FRACPART_PACK(w1, w2);
+        }
+    }
+
+    // Reg alloc and iteration mostly!
+    // s32 i;
+    // s32 j;
+    // for (i = 0; i < 2; i++) {
+    //     for (j = 0; j < 4; j++) {
+    //         u32 w1 = a0[i * 2 + j / 2][(j % 2) * 2 + 0];
+    //         u32 w2 = a0[i * 2 + j / 2][(j % 2) * 2 + 1];
+    //         a1[i + 0][j] = MTX_INTPART_PACK(w1, w2);
+    //         a1[i + 2][j] = MTX_FRACPART_PACK(w1, w2);
+    //     }
+    // }
+
+    // s32 i;
+    // s32 j;
+    // s32 *mtxInt = (s32 *)&a1[0][0];
+    // s32 *mtxFrc = (s32 *)&a1[2][0];
+    // for (i = 0; i < 8; i++) {
+    //     *mtxInt++ = MTX_INTPART_PACK(a0[i * 2], (u32)a0[i * 2 + 1]);
+    //     *mtxFrc++ = MTX_FRACPART_PACK(a0[i * 2], a0[i * 2 + 1]);
+    // }
+
+    // s32 i;
+    // s32 j;
+    // s32 *mtxInt = (s32 *)&a1[0][0];
+    // s32 *mtxFrc = (s32 *)&a1[2][0];
+    // for (i = 0; i < 8; i++) {
+    //     *mtxInt++ = MTX_INTPART_PACK(a0[i * 2], (u32)a0[i * 2 + 1]);
+    //     *mtxFrc++ = MTX_FRACPART_PACK(a0[i * 2], a0[i * 2 + 1]);
+    // }
+    // s32 i;
+    // s32 j;
+    // for (i = 0; i < 2; i++) {
+    //     for (j = 0; j < 4; j++) {
+    //         a1[i + 0][j] = MTX_INTPART_PACK(a0[i * 8 + j * 2], (u32)a0[i * 8 + j*2 + 1]);
+    //         a1[i + 2][j] = MTX_FRACPART_PACK(a0[i * 8 + j * 2], a0[i * 8 + j*2 + 1]);
+    //     }
+    // }
+
+    // s32 i;
+    // s32 j;
+    // s32* ptr = &a0[0][0];
+    // for (i = 0; i < 2; i++) {
+    //     for (j = 0; j < 4; j++) {
+    //         s32 w1 = *ptr++;
+    //         s32 w2 = *ptr++;
+    //         a1[i + 0][j] = MTX_INTPART_PACK(w1, (u32)w2);
+    //         a1[i + 2][j] = MTX_FRACPART_PACK(w1, w2);
+    //     }
+    // }
+
+    // s32 i;
+    // s32 j;
+    // s32 w1;
+    // s32 w2;
+    // for (i = 0; i < 2; i++) {
+    //     for (j = 0; j < 4; j++) {
+    //         w1 = a0[i * 8 + j * 2 + 0];
+    //         w2 = a0[i * 8 + j * 2 + 1];
+    //         a1[i + 0][j] = MTX_INTPART_PACK(w1, (u32)w2);
+    //         a1[i + 2][j] = MTX_FRACPART_PACK(w1, w2);
+    //     }
+    // }
+
+    // s32 i = 0;
+    // s32 *w1 = &a0[0][0];
+    // s32 *w2 = &a0[0][1];
+    // for (i = 0; i < 2; i++) {
+    //     a1[i + 0][0] = MTX_INTPART_PACK(*w1, (u32)*w2);
+    //     a1[i + 2][0] = MTX_FRACPART_PACK(*w1, *w2);
+    //     w1 += 2;
+    //     w2 += 2;
+    //     a1[i + 0][1] = MTX_INTPART_PACK(*w1, (u32)*w2);
+    //     a1[i + 2][1] = MTX_FRACPART_PACK(*w1, *w2);
+    //     w1 += 2;
+    //     w2 += 2;
+    //     a1[i + 0][2] = MTX_INTPART_PACK(*w1, (u32)*w2);
+    //     a1[i + 2][2] = MTX_FRACPART_PACK(*w1, *w2);
+    //     w1 += 2;
+    //     w2 += 2;
+    //     a1[i + 0][3] = MTX_INTPART_PACK(*w1, (u32)*w2);
+    //     a1[i + 2][3] = MTX_FRACPART_PACK(*w1, *w2);
+    // }
+
+    // s32 i = 0;
+    // s32 w1;
+    // s32 w2;
+    // for (i = 0; i < 2; i++) {
+    //     w1 = a0[i * 2 + 0][0];
+    //     w2 = a0[i * 2 + 0][1];
+    //     a1[i + 0][0] = MTX_INTPART_PACK(w1, (u32)w2);
+    //     a1[i + 2][0] = MTX_FRACPART_PACK(w1, w2);
+    //     w1 = a0[i * 2 + 0][2];
+    //     w2 = a0[i * 2 + 0][3];
+    //     a1[i + 0][1] = MTX_INTPART_PACK(w1, (u32)w2);
+    //     a1[i + 2][1] = MTX_FRACPART_PACK(w1, w2);
+    //     w1 = a0[i * 2 + 1][0];
+    //     w2 = a0[i * 2 + 1][1];
+    //     a1[i + 0][2] = MTX_INTPART_PACK(w1, (u32)w2);
+    //     a1[i + 2][2] = MTX_FRACPART_PACK(w1, w2);
+    //     w1 = a0[i * 2 + 1][2];
+    //     w2 = a0[i * 2 + 1][3];
+    //     a1[i + 0][3] = MTX_INTPART_PACK(w1, (u32)w2);
+    //     a1[i + 2][3] = MTX_FRACPART_PACK(w1, w2);
+    // }
+
+
+    // s32 i;
+    // for (i = 0; i < 2; i++) {
+    //     a1[i + 0][0] = MTX_INTPART_PACK(a0[i * 2 + 0][0], (u32)a0[i * 2 + 0][1]);
+    //     a1[i + 2][0] = MTX_FRACPART_PACK(a0[i * 2 + 0][0], a0[i * 2 + 0][1]);
+    //     a1[i + 0][1] = MTX_INTPART_PACK(a0[i * 2 + 0][2], (u32)a0[i * 2 + 0][3]);
+    //     a1[i + 2][1] = MTX_FRACPART_PACK(a0[i * 2 + 0][2], a0[i * 2 + 0][3]);
+    //     a1[i + 0][2] = MTX_INTPART_PACK(a0[i * 2 + 1][0], (u32)a0[i * 2 + 1][1]);
+    //     a1[i + 2][2] = MTX_FRACPART_PACK(a0[i * 2 + 1][0], a0[i * 2 + 1][1]);
+    //     a1[i + 0][3] = MTX_INTPART_PACK(a0[i * 2 + 1][2], (u32)a0[i * 2 + 1][3]);
+    //     a1[i + 2][3] = MTX_FRACPART_PACK(a0[i * 2 + 1][2], a0[i * 2 + 1][3]);
+    // }
+
+
+    // a1[0][0] = MTX_INTPART_PACK(a0[0][0], (u32)a0[0][1]);
+    // a1[2][0] = MTX_FRACPART_PACK(a0[0][0], a0[0][1]);
+    // a1[0][1] = MTX_INTPART_PACK(a0[0][2], (u32)a0[0][3]);
+    // a1[2][1] = MTX_FRACPART_PACK(a0[0][2], a0[0][3]);
+    // a1[0][2] = MTX_INTPART_PACK(a0[1][0], (u32)a0[1][1]);
+    // a1[2][2] = MTX_FRACPART_PACK(a0[1][0], a0[1][1]);
+    // a1[0][3] = MTX_INTPART_PACK(a0[1][2], (u32)a0[1][3]);
+    // a1[2][3] = MTX_FRACPART_PACK(a0[1][2], a0[1][3]);
+
+    // a1[1][0] = MTX_INTPART_PACK(a0[2][0], (u32)a0[2][1]);
+    // a1[3][0] = MTX_FRACPART_PACK(a0[2][0], a0[2][1]);    
+    // a1[1][1] = MTX_INTPART_PACK(a0[2][2], (u32)a0[2][3]);
+    // a1[3][1] = MTX_FRACPART_PACK(a0[2][2], a0[2][3]);
+    // a1[1][2] = MTX_INTPART_PACK(a0[3][0], (u32)a0[3][1]);
+    // a1[3][2] = MTX_FRACPART_PACK(a0[3][0], a0[3][1]);
+    // a1[1][3] = MTX_INTPART_PACK(a0[3][2], (u32)a0[3][3]);
+    // a1[3][3] = MTX_FRACPART_PACK(a0[3][2], a0[3][3]);
+
+/*  $v0 = 0
+    loop:
+    $a1 += 0x10
+    $v1 = *($a0 + $v0 * 8 + 0x00)
+    $a2 = *($a0 + $v0 * 8 + 0x04)
+    *($a1 - 0x10) = MTX_INTPART_PACK($v1, (u32)$a2)
+    *($a1 + 0x10) = MTX_FRACPART_PACK($v1, $a2)
+    $v1 = *($a0 + ($v0 + 1) * 8 + 0x00)
+    $a2 = *($a0 + ($v0 + 1) * 8 + 0x04)
+    *($a1 - 0x0C) = MTX_INTPART_PACK($v1, (u32)$a2)
+    *($a1 + 0x14) = MTX_FRACPART_PACK($v1, $a2)
+    $v1 = *($a0 + ($v0 + 2) * 8 + 0x00)
+    $a2 = *($a0 + ($v0 + 2) * 8 + 0x04)
+    *($a1 - 0x08) = MTX_INTPART_PACK($v1, (u32)$a2)
+    *($a1 + 0x18) = MTX_FRACPART_PACK($v1, $a2)
+    $v1 = *($a0 + ($v0 + 3) * 8 + 0x00)
+    $a2 = *($a0 + ($v0 + 3) * 8 + 0x04)
+    *($a1 - 0x04) = MTX_INTPART_PACK($v1, (u32)$a2)
+    *($a1 + 0x1C) = MTX_FRACPART_PACK($v1, $a2)
+    $v0 += 4
+    if ($v0 != 8) {
+        goto loop;
+    }*/
 }
 #else
 GLOBAL_ASM(
