@@ -2548,112 +2548,33 @@ glabel sub_GAME_7F0B0518
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B05C0(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
-    f32 temp_f0;
-    f32 temp_f2;
+// A->B ACWS returns 1, CWS (including opposite) returns -1.
+// Identical direction and |A| >= |B| returns 0
+int getRotationalDirectionBetween(float a_x,float a_z,float b_x,float b_z)
+{
+    // The main 2 cases : return the sign of AxB where it's non-zero
+    if (a_z * b_x < a_x * b_z) {
+        return 1;
+    }
+    if (a_x * b_z < a_z * b_x) {
+        return -1;
+    }
 
-    // Node 0
-    temp_f0 = (arg1 * arg2);
-    temp_f2 = (arg0 * arg3);
-    if (temp_f0 < temp_f2)
-    {
-        // Node 1
-        return 1;
+    // [AxB == 0 now]
+
+    // If the vectors are opposite, default to clockwise
+    if ((a_x * b_x < 0) || (a_z * b_z < 0)) {
+      return -1;
     }
-    // Node 2
-    if (temp_f2 < temp_f0)
-    {
-        // Node 3
-        return -1;
+
+    // If A is shorter, return anti-clockwise
+    if (a_x * a_x + a_z * a_z < b_x * b_x + b_z * b_z) {
+        return 1;   // ACWS
     }
-    // Node 4
-    if ((arg0 * arg2) < 0.0f)
-    {
-        // Node 6
-        return -1;
-    }
-    // Node 5
-    if ((arg1 * arg3) < 0.0f)
-    {
-        // Node 6
-        return -1;
-    }
-    // Node 7
-    if (((arg0 * arg0) + (arg1 * arg1)) < ((arg2 * arg2) + (arg3 * arg3)))
-    {
-        // Node 8
-        return 1;
-    }
-    // Node 9
+
+    // Identical direction, |A| >= |B|
     return 0;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B05C0
-/* 0E50F0 7F0B05C0 AFA60008 */  sw    $a2, 8($sp)
-/* 0E50F4 7F0B05C4 C7A40008 */  lwc1  $f4, 8($sp)
-/* 0E50F8 7F0B05C8 AFA7000C */  sw    $a3, 0xc($sp)
-/* 0E50FC 7F0B05CC C7A6000C */  lwc1  $f6, 0xc($sp)
-/* 0E5100 7F0B05D0 46047002 */  mul.s $f0, $f14, $f4
-/* 0E5104 7F0B05D4 00000000 */  nop   
-/* 0E5108 7F0B05D8 46066082 */  mul.s $f2, $f12, $f6
-/* 0E510C 7F0B05DC 4602003C */  c.lt.s $f0, $f2
-/* 0E5110 7F0B05E0 00000000 */  nop   
-/* 0E5114 7F0B05E4 45000003 */  bc1f  .L7F0B05F4
-/* 0E5118 7F0B05E8 00000000 */   nop   
-/* 0E511C 7F0B05EC 03E00008 */  jr    $ra
-/* 0E5120 7F0B05F0 24020001 */   li    $v0, 1
-
-.L7F0B05F4:
-/* 0E5124 7F0B05F4 4600103C */  c.lt.s $f2, $f0
-/* 0E5128 7F0B05F8 C7A80008 */  lwc1  $f8, 8($sp)
-/* 0E512C 7F0B05FC 45000003 */  bc1f  .L7F0B060C
-/* 0E5130 7F0B0600 00000000 */   nop   
-/* 0E5134 7F0B0604 03E00008 */  jr    $ra
-/* 0E5138 7F0B0608 2402FFFF */   li    $v0, -1
-
-.L7F0B060C:
-/* 0E513C 7F0B060C 46086282 */  mul.s $f10, $f12, $f8
-/* 0E5140 7F0B0610 44800000 */  mtc1  $zero, $f0
-/* 0E5144 7F0B0614 C7B0000C */  lwc1  $f16, 0xc($sp)
-/* 0E5148 7F0B0618 4600503C */  c.lt.s $f10, $f0
-/* 0E514C 7F0B061C 00000000 */  nop   
-/* 0E5150 7F0B0620 45010006 */  bc1t  .L7F0B063C
-/* 0E5154 7F0B0624 00000000 */   nop   
-/* 0E5158 7F0B0628 46107482 */  mul.s $f18, $f14, $f16
-/* 0E515C 7F0B062C 4600903C */  c.lt.s $f18, $f0
-/* 0E5160 7F0B0630 00000000 */  nop   
-/* 0E5164 7F0B0634 45000003 */  bc1f  .L7F0B0644
-/* 0E5168 7F0B0638 00000000 */   nop   
-.L7F0B063C:
-/* 0E516C 7F0B063C 03E00008 */  jr    $ra
-/* 0E5170 7F0B0640 2402FFFF */   li    $v0, -1
-
-.L7F0B0644:
-/* 0E5174 7F0B0644 460C6102 */  mul.s $f4, $f12, $f12
-/* 0E5178 7F0B0648 C7AA0008 */  lwc1  $f10, 8($sp)
-/* 0E517C 7F0B064C C7B2000C */  lwc1  $f18, 0xc($sp)
-/* 0E5180 7F0B0650 460E7182 */  mul.s $f6, $f14, $f14
-/* 0E5184 7F0B0654 00001025 */  move  $v0, $zero
-/* 0E5188 7F0B0658 460A5402 */  mul.s $f16, $f10, $f10
-/* 0E518C 7F0B065C 46062200 */  add.s $f8, $f4, $f6
-/* 0E5190 7F0B0660 46129102 */  mul.s $f4, $f18, $f18
-/* 0E5194 7F0B0664 46048180 */  add.s $f6, $f16, $f4
-/* 0E5198 7F0B0668 4606403C */  c.lt.s $f8, $f6
-/* 0E519C 7F0B066C 00000000 */  nop   
-/* 0E51A0 7F0B0670 45000003 */  bc1f  .L7F0B0680
-/* 0E51A4 7F0B0674 00000000 */   nop   
-/* 0E51A8 7F0B0678 03E00008 */  jr    $ra
-/* 0E51AC 7F0B067C 24020001 */   li    $v0, 1
-
-.L7F0B0680:
-/* 0E51B0 7F0B0680 03E00008 */  jr    $ra
-/* 0E51B4 7F0B0684 00000000 */   nop   
-)
-#endif
 
 
 
@@ -2675,14 +2596,14 @@ s32 sub_GAME_7F0B0688(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
     temp_f2 = (arg1 - arg5);
     sp24 = temp_f0;
     sp20 = temp_f2;
-    sp2C = sub_GAME_7F0B05C0((arg2 - arg0), (arg3 - arg1), -temp_f0, -temp_f2);
-    temp_t7 = ((sub_GAME_7F0B05C0(sp1C, sp18, (arg6 - arg0), (arg7 - arg1)) * sp2C) < 1);
+    sp2C = getRotationalDirectionBetween((arg2 - arg0), (arg3 - arg1), -temp_f0, -temp_f2);
+    temp_t7 = ((getRotationalDirectionBetween(sp1C, sp18, (arg6 - arg0), (arg7 - arg1)) * sp2C) < 1);
     phi_return = temp_t7;
     if (temp_t7 != 0)
     {
         // Node 1
-        sp28 = sub_GAME_7F0B05C0((arg6 - arg4), (arg7 - arg5), sp24, sp20);
-        phi_return = ((sub_GAME_7F0B05C0(sp1C, sp18, (arg2 - arg4), (arg3 - arg5)) * sp28) < 1);
+        sp28 = getRotationalDirectionBetween((arg6 - arg4), (arg7 - arg5), sp24, sp20);
+        phi_return = ((getRotationalDirectionBetween(sp1C, sp18, (arg2 - arg4), (arg3 - arg5)) * sp28) < 1);
     }
     // Node 2
     return phi_return;
@@ -2715,7 +2636,7 @@ glabel sub_GAME_7F0B0688
 /* 0E5208 7F0B06D8 46001407 */  neg.s $f16, $f2
 /* 0E520C 7F0B06DC 44064000 */  mfc1  $a2, $f8
 /* 0E5210 7F0B06E0 44078000 */  mfc1  $a3, $f16
-/* 0E5214 7F0B06E4 0FC2C170 */  jal   sub_GAME_7F0B05C0
+/* 0E5214 7F0B06E4 0FC2C170 */  jal   getRotationalDirectionBetween
 /* 0E5218 7F0B06E8 E7AE0018 */   swc1  $f14, 0x18($sp)
 /* 0E521C 7F0B06EC C7A60060 */  lwc1  $f6, 0x60($sp)
 /* 0E5220 7F0B06F0 C7B00048 */  lwc1  $f16, 0x48($sp)
@@ -2728,7 +2649,7 @@ glabel sub_GAME_7F0B0688
 /* 0E523C 7F0B070C 44069000 */  mfc1  $a2, $f18
 /* 0E5240 7F0B0710 AFA2002C */  sw    $v0, 0x2c($sp)
 /* 0E5244 7F0B0714 44074000 */  mfc1  $a3, $f8
-/* 0E5248 7F0B0718 0FC2C170 */  jal   sub_GAME_7F0B05C0
+/* 0E5248 7F0B0718 0FC2C170 */  jal   getRotationalDirectionBetween
 /* 0E524C 7F0B071C 00000000 */   nop   
 /* 0E5250 7F0B0720 8FAE002C */  lw    $t6, 0x2c($sp)
 /* 0E5254 7F0B0724 C7A60060 */  lwc1  $f6, 0x60($sp)
@@ -2745,7 +2666,7 @@ glabel sub_GAME_7F0B0688
 /* 0E5280 7F0B0750 8FA70020 */  lw    $a3, 0x20($sp)
 /* 0E5284 7F0B0754 460A9381 */  sub.s $f14, $f18, $f10
 /* 0E5288 7F0B0758 E7AC001C */  swc1  $f12, 0x1c($sp)
-/* 0E528C 7F0B075C 0FC2C170 */  jal   sub_GAME_7F0B05C0
+/* 0E528C 7F0B075C 0FC2C170 */  jal   getRotationalDirectionBetween
 /* 0E5290 7F0B0760 E7AE0018 */   swc1  $f14, 0x18($sp)
 /* 0E5294 7F0B0764 C7A40050 */  lwc1  $f4, 0x50($sp)
 /* 0E5298 7F0B0768 C7A80058 */  lwc1  $f8, 0x58($sp)
@@ -2758,7 +2679,7 @@ glabel sub_GAME_7F0B0688
 /* 0E52B4 7F0B0784 44063000 */  mfc1  $a2, $f6
 /* 0E52B8 7F0B0788 AFA20028 */  sw    $v0, 0x28($sp)
 /* 0E52BC 7F0B078C 44075000 */  mfc1  $a3, $f10
-/* 0E52C0 7F0B0790 0FC2C170 */  jal   sub_GAME_7F0B05C0
+/* 0E52C0 7F0B0790 0FC2C170 */  jal   getRotationalDirectionBetween
 /* 0E52C4 7F0B0794 00000000 */   nop   
 /* 0E52C8 7F0B0798 8FB80028 */  lw    $t8, 0x28($sp)
 /* 0E52CC 7F0B079C 00580019 */  multu $v0, $t8
@@ -2794,9 +2715,9 @@ glabel sub_GAME_7F0B0688
     sp44 = 1;
     sp28 = temp_f0;
     sp24 = temp_f2;
-    sp2C = sub_GAME_7F0B05C0((arg2 - arg0), (arg3 - arg1), -temp_f0, -temp_f2);
-    sp4C = (s32) (sub_GAME_7F0B05C0(sp20, sp1C, (arg6 - arg0), (arg7 - arg1)) * sp2C);
-    sp2C = sub_GAME_7F0B05C0((arg6 - arg4), (arg7 - arg5), sp28, sp24);
+    sp2C = getRotationalDirectionBetween((arg2 - arg0), (arg3 - arg1), -temp_f0, -temp_f2);
+    sp4C = (s32) (getRotationalDirectionBetween(sp20, sp1C, (arg6 - arg0), (arg7 - arg1)) * sp2C);
+    sp2C = getRotationalDirectionBetween((arg6 - arg4), (arg7 - arg5), sp28, sp24);
     if (sp4C >= arg8)
     {
         // Node 1
@@ -2804,7 +2725,7 @@ glabel sub_GAME_7F0B0688
     }
     // Node 2
     phi_a0 = sp44;
-    if ((sub_GAME_7F0B05C0(sp20, sp1C, (arg2 - arg4), (arg3 - arg5)) * sp2C) >= arg8)
+    if ((getRotationalDirectionBetween(sp20, sp1C, (arg2 - arg4), (arg3 - arg5)) * sp2C) >= arg8)
     {
         // Node 3
         phi_a0 = 0;
@@ -2842,7 +2763,7 @@ glabel sub_GAME_7F0B07BC
 /* 0E5344 7F0B0814 44074000 */  mfc1  $a3, $f8
 /* 0E5348 7F0B0818 44069000 */  mfc1  $a2, $f18
 /* 0E534C 7F0B081C E7AE001C */  swc1  $f14, 0x1c($sp)
-/* 0E5350 7F0B0820 0FC2C170 */  jal   sub_GAME_7F0B05C0
+/* 0E5350 7F0B0820 0FC2C170 */  jal   getRotationalDirectionBetween
 /* 0E5354 7F0B0824 E7AC0020 */   swc1  $f12, 0x20($sp)
 /* 0E5358 7F0B0828 C7A60080 */  lwc1  $f6, 0x80($sp)
 /* 0E535C 7F0B082C C7B00068 */  lwc1  $f16, 0x68($sp)
@@ -2855,7 +2776,7 @@ glabel sub_GAME_7F0B07BC
 /* 0E5378 7F0B0848 44069000 */  mfc1  $a2, $f18
 /* 0E537C 7F0B084C AFA2002C */  sw    $v0, 0x2c($sp)
 /* 0E5380 7F0B0850 44074000 */  mfc1  $a3, $f8
-/* 0E5384 7F0B0854 0FC2C170 */  jal   sub_GAME_7F0B05C0
+/* 0E5384 7F0B0854 0FC2C170 */  jal   getRotationalDirectionBetween
 /* 0E5388 7F0B0858 00000000 */   nop   
 /* 0E538C 7F0B085C 8FAF002C */  lw    $t7, 0x2c($sp)
 /* 0E5390 7F0B0860 C7A60080 */  lwc1  $f6, 0x80($sp)
@@ -2870,7 +2791,7 @@ glabel sub_GAME_7F0B07BC
 /* 0E53B4 7F0B0884 E7AC0020 */  swc1  $f12, 0x20($sp)
 /* 0E53B8 7F0B0888 0000C012 */  mflo  $t8
 /* 0E53BC 7F0B088C AFB8004C */  sw    $t8, 0x4c($sp)
-/* 0E53C0 7F0B0890 0FC2C170 */  jal   sub_GAME_7F0B05C0
+/* 0E53C0 7F0B0890 0FC2C170 */  jal   getRotationalDirectionBetween
 /* 0E53C4 7F0B0894 E7AE001C */   swc1  $f14, 0x1c($sp)
 /* 0E53C8 7F0B0898 C7A40070 */  lwc1  $f4, 0x70($sp)
 /* 0E53CC 7F0B089C C7A80078 */  lwc1  $f8, 0x78($sp)
@@ -2883,7 +2804,7 @@ glabel sub_GAME_7F0B07BC
 /* 0E53E8 7F0B08B8 44063000 */  mfc1  $a2, $f6
 /* 0E53EC 7F0B08BC AFA2002C */  sw    $v0, 0x2c($sp)
 /* 0E53F0 7F0B08C0 44075000 */  mfc1  $a3, $f10
-/* 0E53F4 7F0B08C4 0FC2C170 */  jal   sub_GAME_7F0B05C0
+/* 0E53F4 7F0B08C4 0FC2C170 */  jal   getRotationalDirectionBetween
 /* 0E53F8 7F0B08C8 00000000 */   nop   
 /* 0E53FC 7F0B08CC 8FA30088 */  lw    $v1, 0x88($sp)
 /* 0E5400 7F0B08D0 8FB9004C */  lw    $t9, 0x4c($sp)
