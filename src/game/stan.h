@@ -3,17 +3,17 @@
 #include "ultra64.h"
 
 
-struct TilePoint {
+struct StanTilePoint {
     s16 x;
     s16 y;
     s16 z;
     u16 link;
 };
 
-struct Tile {
+struct StandTile {
     u32 nameAndRoom;
     u32 header;
-    struct TilePoint points[9]; // actually a FAM
+    struct StanTilePoint points[9]; // actually a FAM fam
 };
 
 void stanInitDebugNoticeList(void);

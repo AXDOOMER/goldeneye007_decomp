@@ -1935,7 +1935,7 @@ glabel sub_GAME_7F0B0018
 
 
 
-float distToTilePnt2D(struct Tile *tile,int pntI,float p_x,float p_z)
+float distToTilePnt2D(struct StandTile *tile,int pntI,float p_x,float p_z)
 {
   float len;
   
