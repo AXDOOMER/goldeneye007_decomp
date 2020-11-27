@@ -2130,47 +2130,22 @@ def_7F0B490C:
 
 
 
+void addToByteSetMaxSize15(u8* set, u8 newElement) {
+    s32 i = 0;
 
+    while (i < 0x10 && set[i] != 0xFF) {
+        if (newElement == set[i]) {
+            return;
+        }
+        i++;
+    }
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B4A50(void) {
-
+    if (i < 0xF) {
+        set[i] = newElement;
+        set[i+1] = -1;
+    }
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B4A50
-/* 0E9580 7F0B4A50 AFA50004 */  sw    $a1, 4($sp)
-/* 0E9584 7F0B4A54 908E0000 */  lbu   $t6, ($a0)
-/* 0E9588 7F0B4A58 240800FF */  li    $t0, 255
-/* 0E958C 7F0B4A5C 30A600FF */  andi  $a2, $a1, 0xff
-/* 0E9590 7F0B4A60 110E000C */  beq   $t0, $t6, .L7F0B4A94
-/* 0E9594 7F0B4A64 00001025 */   move  $v0, $zero
-/* 0E9598 7F0B4A68 00801821 */  addu  $v1, $a0, $zero
-/* 0E959C 7F0B4A6C 90850000 */  lbu   $a1, ($a0)
-/* 0E95A0 7F0B4A70 00C03825 */  move  $a3, $a2
-.L7F0B4A74:
-/* 0E95A4 7F0B4A74 10E5000D */  beq   $a3, $a1, .L7F0B4AAC
-/* 0E95A8 7F0B4A78 24420001 */   addiu $v0, $v0, 1
-/* 0E95AC 7F0B4A7C 28410010 */  slti  $at, $v0, 0x10
-/* 0E95B0 7F0B4A80 10200004 */  beqz  $at, .L7F0B4A94
-/* 0E95B4 7F0B4A84 24630001 */   addiu $v1, $v1, 1
-/* 0E95B8 7F0B4A88 90650000 */  lbu   $a1, ($v1)
-/* 0E95BC 7F0B4A8C 1505FFF9 */  bne   $t0, $a1, .L7F0B4A74
-/* 0E95C0 7F0B4A90 00000000 */   nop   
-.L7F0B4A94:
-/* 0E95C4 7F0B4A94 2841000F */  slti  $at, $v0, 0xf
-/* 0E95C8 7F0B4A98 10200004 */  beqz  $at, .L7F0B4AAC
-/* 0E95CC 7F0B4A9C 00821821 */   addu  $v1, $a0, $v0
-/* 0E95D0 7F0B4AA0 240F00FF */  li    $t7, 255
-/* 0E95D4 7F0B4AA4 A0660000 */  sb    $a2, ($v1)
-/* 0E95D8 7F0B4AA8 A06F0001 */  sb    $t7, 1($v1)
-.L7F0B4AAC:
-/* 0E95DC 7F0B4AAC 03E00008 */  jr    $ra
-/* 0E95E0 7F0B4AB0 00000000 */   nop   
-)
-#endif
-
 
 
 
@@ -2290,12 +2265,12 @@ glabel sub_GAME_7F0B4AB4
 /* 0E975C 7F0B4C2C 02602025 */  move  $a0, $s3
 /* 0E9760 7F0B4C30 156C000C */  bne   $t3, $t4, .L7F0B4C64
 /* 0E9764 7F0B4C34 00000000 */   nop   
-/* 0E9768 7F0B4C38 0FC2D294 */  jal   sub_GAME_7F0B4A50
+/* 0E9768 7F0B4C38 0FC2D294 */  jal   addToByteSetMaxSize15
 /* 0E976C 7F0B4C3C 90650005 */   lbu   $a1, 5($v1)
 /* 0E9770 7F0B4C40 8EAD0000 */  lw    $t5, ($s5)
 /* 0E9774 7F0B4C44 02802025 */  move  $a0, $s4
 /* 0E9778 7F0B4C48 01B27021 */  addu  $t6, $t5, $s2
-/* 0E977C 7F0B4C4C 0FC2D294 */  jal   sub_GAME_7F0B4A50
+/* 0E977C 7F0B4C4C 0FC2D294 */  jal   addToByteSetMaxSize15
 /* 0E9780 7F0B4C50 91C50005 */   lbu   $a1, 5($t6)
 /* 0E9784 7F0B4C54 8EA80000 */  lw    $t0, ($s5)
 /* 0E9788 7F0B4C58 A2200000 */  sb    $zero, ($s1)
@@ -2309,12 +2284,12 @@ glabel sub_GAME_7F0B4AB4
 /* 0E97A4 7F0B4C74 02602025 */  move  $a0, $s3
 /* 0E97A8 7F0B4C78 55F8000C */  bnel  $t7, $t8, .L7F0B4CAC
 /* 0E97AC 7F0B4C7C 920A0001 */   lbu   $t2, 1($s0)
-/* 0E97B0 7F0B4C80 0FC2D294 */  jal   sub_GAME_7F0B4A50
+/* 0E97B0 7F0B4C80 0FC2D294 */  jal   addToByteSetMaxSize15
 /* 0E97B4 7F0B4C84 90650004 */   lbu   $a1, 4($v1)
 /* 0E97B8 7F0B4C88 8EB90000 */  lw    $t9, ($s5)
 /* 0E97BC 7F0B4C8C 02802025 */  move  $a0, $s4
 /* 0E97C0 7F0B4C90 03324821 */  addu  $t1, $t9, $s2
-/* 0E97C4 7F0B4C94 0FC2D294 */  jal   sub_GAME_7F0B4A50
+/* 0E97C4 7F0B4C94 0FC2D294 */  jal   addToByteSetMaxSize15
 /* 0E97C8 7F0B4C98 91250004 */   lbu   $a1, 4($t1)
 /* 0E97CC 7F0B4C9C 8EA80000 */  lw    $t0, ($s5)
 /* 0E97D0 7F0B4CA0 A2200000 */  sb    $zero, ($s1)
