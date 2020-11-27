@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "game/stan.h"
 
 // bss
 //CODE.bss:8007B120
@@ -1934,51 +1935,14 @@ glabel sub_GAME_7F0B0018
 
 
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F0B0064(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
-    void *temp_v0;
-    f32 temp_f18;
-    f32 temp_f14;
-
-    // Node 0
-    temp_v0 = (arg0 + (arg1 * 8));
-    temp_f18 = (arg3 - (f32) temp_v0->unkC);
-    temp_f14 = (arg2 - (f32) temp_v0->unk8);
-    arg3 = temp_f18;
-    return sqrtf(((temp_f14 * temp_f14) + (temp_f18 * temp_f18)), temp_f14);
+float distToTilePnt2D(struct Tile *tile,int pntI,float p_x,float p_z)
+{
+  float len;
+  
+  p_x -= (float)tile->points[pntI].x;
+  p_z -= (float)tile->points[pntI].z;
+  return sqrtf(p_x * p_x + p_z * p_z);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B0064
-/* 0E4B94 7F0B0064 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0E4B98 7F0B0068 000570C0 */  sll   $t6, $a1, 3
-/* 0E4B9C 7F0B006C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E4BA0 7F0B0070 AFA70024 */  sw    $a3, 0x24($sp)
-/* 0E4BA4 7F0B0074 008E1021 */  addu  $v0, $a0, $t6
-/* 0E4BA8 7F0B0078 8458000C */  lh    $t8, 0xc($v0)
-/* 0E4BAC 7F0B007C 844F0008 */  lh    $t7, 8($v0)
-/* 0E4BB0 7F0B0080 C7A80024 */  lwc1  $f8, 0x24($sp)
-/* 0E4BB4 7F0B0084 44985000 */  mtc1  $t8, $f10
-/* 0E4BB8 7F0B0088 448F2000 */  mtc1  $t7, $f4
-/* 0E4BBC 7F0B008C 44867000 */  mtc1  $a2, $f14
-/* 0E4BC0 7F0B0090 46805420 */  cvt.s.w $f16, $f10
-/* 0E4BC4 7F0B0094 468021A0 */  cvt.s.w $f6, $f4
-/* 0E4BC8 7F0B0098 46104481 */  sub.s $f18, $f8, $f16
-/* 0E4BCC 7F0B009C 46067381 */  sub.s $f14, $f14, $f6
-/* 0E4BD0 7F0B00A0 46129102 */  mul.s $f4, $f18, $f18
-/* 0E4BD4 7F0B00A4 E7B20024 */  swc1  $f18, 0x24($sp)
-/* 0E4BD8 7F0B00A8 460E7182 */  mul.s $f6, $f14, $f14
-/* 0E4BDC 7F0B00AC 0C007DF8 */  jal   sqrtf
-/* 0E4BE0 7F0B00B0 46043300 */   add.s $f12, $f6, $f4
-/* 0E4BE4 7F0B00B4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0E4BE8 7F0B00B8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0E4BEC 7F0B00BC 03E00008 */  jr    $ra
-/* 0E4BF0 7F0B00C0 00000000 */   nop   
-)
-#endif
-
 
 
 
@@ -4709,13 +4673,13 @@ glabel sub_GAME_7F0B1DDC
 /* 0E6A28 7F0B1EF8 4407E000 */  mfc1  $a3, $f28
 /* 0E6A2C 7F0B1EFC 46000586 */  mov.s $f22, $f0
 /* 0E6A30 7F0B1F00 02602025 */  move  $a0, $s3
-/* 0E6A34 7F0B1F04 0FC2C019 */  jal   sub_GAME_7F0B0064
+/* 0E6A34 7F0B1F04 0FC2C019 */  jal   distToTilePnt2D
 /* 0E6A38 7F0B1F08 02002825 */   move  $a1, $s0
 /* 0E6A3C 7F0B1F0C 4406D000 */  mfc1  $a2, $f26
 /* 0E6A40 7F0B1F10 4407E000 */  mfc1  $a3, $f28
 /* 0E6A44 7F0B1F14 46000506 */  mov.s $f20, $f0
 /* 0E6A48 7F0B1F18 02602025 */  move  $a0, $s3
-/* 0E6A4C 7F0B1F1C 0FC2C019 */  jal   sub_GAME_7F0B0064
+/* 0E6A4C 7F0B1F1C 0FC2C019 */  jal   distToTilePnt2D
 /* 0E6A50 7F0B1F20 02202825 */   move  $a1, $s1
 /* 0E6A54 7F0B1F24 461EB03C */  c.lt.s $f22, $f30
 /* 0E6A58 7F0B1F28 46000606 */  mov.s $f24, $f0
