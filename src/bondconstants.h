@@ -1282,7 +1282,7 @@ typedef enum ACT_TYPE {
 
 #define CHRFLAG_INIT                         0x00000001 // initialize chr
 #define CHRFLAG_CLONE                        0x00000002 // clone on heard gunfire (used by GLIST_DETECT_BOND_SPAWN_CLONE_ON_HEARD_GUNFIRE)
-#define CHRFLAG_NEAR_MISS                    0x00000004 // chr was just nearly shot (sometimes set on direct hit)
+#define CHRFLAG_NEAR_MISS                    0x00000004 // chr was just nearly shot (sometimes set on direct hit) - resets every tick
 #define CHRFLAG_HAS_BEEN_ON_SCREEN           0x00000008 // chr has been on screen before
 #define CHRFLAG_INVINCIBLE                   0x00000010 // invincible
 #define CHRFLAG_00000020                     0x00000020 // unknown
