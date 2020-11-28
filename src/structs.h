@@ -4,6 +4,8 @@
 #include "ultra64.h"
 #include "game/stan.h"
 
+// Staying here for the moment.
+
 enum EObjectClass { // u8
     Zero,
     NormalObj1,
@@ -22,7 +24,7 @@ struct float3 {
 
 struct float2 {
     float x;
-    float z;    // usually projected down, so z makes sense here.
+    float z;
 };
 
 struct PositionData {

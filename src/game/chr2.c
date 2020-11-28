@@ -2,6 +2,7 @@
 #include "bondgame.h"
 #include "game/chr.h"
 #include "game/bondwalk.h"
+#include "game/lvl.h"
 
 #ifdef NONMATCHING
 void load_body_head_if_not_loaded(void) {
@@ -7808,20 +7809,11 @@ glabel set_actor_on_path
 
 
 
-#ifdef NONMATCHING
-void update_GUARDdata_timer_to_current(void) {
-
+void setSeenBondTimeToNow(struct CHRdata* guardData)
+{
+  guardData->lastseenbondtime = global_timer;
+  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel update_GUARDdata_timer_to_current
-/* 05DDC8 7F029298 3C0E8005 */  lui   $t6, %hi(global_timer) 
-/* 05DDCC 7F02929C 8DCE837C */  lw    $t6, %lo(global_timer)($t6)
-/* 05DDD0 7F0292A0 03E00008 */  jr    $ra
-/* 05DDD4 7F0292A4 AC8E00E8 */   sw    $t6, 0xe8($a0)
-)
-#endif
 
 
 
@@ -7901,7 +7893,7 @@ glabel sub_GAME_7F0292A8
 /* 05DED4 7F0293A4 8FAF0040 */  lw    $t7, 0x40($sp)
 /* 05DED8 7F0293A8 15CF0005 */  bne   $t6, $t7, .L7F0293C0
 /* 05DEDC 7F0293AC 00000000 */   nop   
-/* 05DEE0 7F0293B0 0FC0A4A6 */  jal   update_GUARDdata_timer_to_current
+/* 05DEE0 7F0293B0 0FC0A4A6 */  jal   setSeenBondTimeToNow
 /* 05DEE4 7F0293B4 8FA40050 */   lw    $a0, 0x50($sp)
 /* 05DEE8 7F0293B8 24180001 */  li    $t8, 1
 /* 05DEEC 7F0293BC AFB8004C */  sw    $t8, 0x4c($sp)
@@ -8039,7 +8031,7 @@ glabel sub_GAME_7F0294BC
 /* 05E0B0 7F029580 8D2A0014 */  lw    $t2, 0x14($t1)
 /* 05E0B4 7F029584 550A0006 */  bnel  $t0, $t2, .L7F0295A0
 /* 05E0B8 7F029588 02002025 */   move  $a0, $s0
-/* 05E0BC 7F02958C 0FC0A4A6 */  jal   update_GUARDdata_timer_to_current
+/* 05E0BC 7F02958C 0FC0A4A6 */  jal   setSeenBondTimeToNow
 /* 05E0C0 7F029590 02002025 */   move  $a0, $s0
 /* 05E0C4 7F029594 240B0001 */  li    $t3, 1
 /* 05E0C8 7F029598 AFAB004C */  sw    $t3, 0x4c($sp)
@@ -9922,7 +9914,7 @@ glabel actor_moves_to_preset_at_speed
 /* 05F71C 7F02ABEC 29C1000A */  slti  $at, $t6, 0xa
 /* 05F720 7F02ABF0 50200053 */  beql  $at, $zero, .L7F02AD40
 /* 05F724 7F02ABF4 00001025 */   move  $v0, $zero
-/* 05F728 7F02ABF8 0FC0CBE5 */  jal   sub_GAME_7F032F94
+/* 05F728 7F02ABF8 0FC0CBE5 */  jal   convertPadIf9000
 /* 05F72C 7F02ABFC 02002825 */   move  $a1, $s0
 /* 05F730 7F02AC00 28412710 */  slti  $at, $v0, 0x2710
 /* 05F734 7F02AC04 1020000A */  beqz  $at, .L7F02AC30
@@ -20449,7 +20441,7 @@ glabel sub_GAME_7F032C78
 /* 067800 7F032CD0 30A90008 */  andi  $t1, $a1, 8
 /* 067804 7F032CD4 1120001C */  beqz  $t1, .L7F032D48
 /* 067808 7F032CD8 00000000 */   nop   
-/* 06780C 7F032CDC 0FC0CBE5 */  jal   sub_GAME_7F032F94
+/* 06780C 7F032CDC 0FC0CBE5 */  jal   convertPadIf9000
 /* 067810 7F032CE0 00C02825 */   move  $a1, $a2
 /* 067814 7F032CE4 28412710 */  slti  $at, $v0, 0x2710
 /* 067818 7F032CE8 1020000A */  beqz  $at, .L7F032D14
@@ -20540,7 +20532,7 @@ glabel get_angle_between_actor_cur_player
 #endif
 
 
-float distToBond3D(struct GuardData *guardData)
+float distToBond3D(struct CHRdata *guardData)
 {
   struct PositionData *guardPosData;
   struct PositionData *playerPosData;
@@ -20548,7 +20540,7 @@ float distToBond3D(struct GuardData *guardData)
   float yDiff;
   float zDiff;
   
-  guardPosData = guardData->position_data;
+  guardPosData = guardData->posdata;
   playerPosData = get_curplayer_positiondata();
   xDiff = (playerPosData->position).x - (guardPosData->position).x;
   yDiff = (playerPosData->position).y - (guardPosData->position).y;
@@ -20568,7 +20560,7 @@ glabel sub_GAME_7F032E48
 /* 067978 7F032E48 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 06797C 7F032E4C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 067980 7F032E50 8C860018 */  lw    $a2, 0x18($a0)
-/* 067984 7F032E54 0FC0CBE5 */  jal   sub_GAME_7F032F94
+/* 067984 7F032E54 0FC0CBE5 */  jal   convertPadIf9000
 /* 067988 7F032E58 AFA6001C */   sw    $a2, 0x1c($sp)
 /* 06798C 7F032E5C 28412710 */  slti  $at, $v0, 0x2710
 /* 067990 7F032E60 1020000A */  beqz  $at, .L7F032E8C
@@ -20627,7 +20619,7 @@ GLOBAL_ASM(
 glabel check_if_room_for_preset_loaded
 /* 067A2C 7F032EFC 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 067A30 7F032F00 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 067A34 7F032F04 0FC0CBE5 */  jal   sub_GAME_7F032F94
+/* 067A34 7F032F04 0FC0CBE5 */  jal   convertPadIf9000
 /* 067A38 7F032F08 00000000 */   nop   
 /* 067A3C 7F032F0C 28412710 */  slti  $at, $v0, 0x2710
 /* 067A40 7F032F10 1020000A */  beqz  $at, .L7F032F3C
@@ -20671,11 +20663,11 @@ glabel check_if_room_for_preset_loaded
 #endif
 
 
-s32 convertPadIf9000(struct GuardData* guardData,s32 padNo)
+s32 convertPadIf9000(struct CHRdata* guardData,s32 padNo)
 {
     // 9000 (= 0x2328) is used to indicate the guard's target pad.
     if (padNo == 9000) {
-        padNo = (s32)guardData->pad9000;
+        padNo = (s32)guardData->padpreset1;
     }
     return padNo;
 }
@@ -20858,7 +20850,7 @@ glabel get_distance_between_actor_and_preset
 /* 067C94 7F033164 AFA50024 */   sw    $a1, 0x24($sp)
 /* 067C98 7F033168 8FA40020 */  lw    $a0, 0x20($sp)
 /* 067C9C 7F03316C 8FA50024 */  lw    $a1, 0x24($sp)
-/* 067CA0 7F033170 0FC0CBE5 */  jal   sub_GAME_7F032F94
+/* 067CA0 7F033170 0FC0CBE5 */  jal   convertPadIf9000
 /* 067CA4 7F033174 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 067CA8 7F033178 28412710 */  slti  $at, $v0, 0x2710
 /* 067CAC 7F03317C 1020000A */  beqz  $at, .L7F0331A8
@@ -22172,7 +22164,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F033D5C
 /* 06888C 7F033D5C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 068890 7F033D60 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 068894 7F033D64 0FC0CBE5 */  jal   sub_GAME_7F032F94
+/* 068894 7F033D64 0FC0CBE5 */  jal   convertPadIf9000
 /* 068898 7F033D68 AFA40018 */   sw    $a0, 0x18($sp)
 /* 06889C 7F033D6C 8FAE0018 */  lw    $t6, 0x18($sp)
 /* 0688A0 7F033D70 A5C20114 */  sh    $v0, 0x114($t6)
@@ -22201,7 +22193,7 @@ glabel sub_GAME_7F033D84
 /* 0688C8 7F033D98 10400006 */  beqz  $v0, .L7F033DB4
 /* 0688CC 7F033D9C 8FA40020 */   lw    $a0, 0x20($sp)
 /* 0688D0 7F033DA0 8FA50028 */  lw    $a1, 0x28($sp)
-/* 0688D4 7F033DA4 0FC0CBE5 */  jal   sub_GAME_7F032F94
+/* 0688D4 7F033DA4 0FC0CBE5 */  jal   convertPadIf9000
 /* 0688D8 7F033DA8 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 0688DC 7F033DAC 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0688E0 7F033DB0 A4620114 */  sh    $v0, 0x114($v1)
@@ -22594,7 +22586,7 @@ glabel guard_constructor_BD
 /* 068D8C 7F03425C AFBF0024 */  sw    $ra, 0x24($sp)
 /* 068D90 7F034260 AFA50034 */  sw    $a1, 0x34($sp)
 /* 068D94 7F034264 AFA60038 */  sw    $a2, 0x38($sp)
-/* 068D98 7F034268 0FC0CBE5 */  jal   sub_GAME_7F032F94
+/* 068D98 7F034268 0FC0CBE5 */  jal   convertPadIf9000
 /* 068D9C 7F03426C 00E02825 */   move  $a1, $a3
 /* 068DA0 7F034270 28412710 */  slti  $at, $v0, 0x2710
 /* 068DA4 7F034274 1020000A */  beqz  $at, .L7F0342A0
@@ -22703,7 +22695,7 @@ glabel check_if_actorID_is_at_preset
 /* 068EC8 7F034398 AFA60028 */   sw    $a2, 0x28($sp)
 /* 068ECC 7F03439C 8FA40020 */  lw    $a0, 0x20($sp)
 /* 068ED0 7F0343A0 8FA50028 */  lw    $a1, 0x28($sp)
-/* 068ED4 7F0343A4 0FC0CBE5 */  jal   sub_GAME_7F032F94
+/* 068ED4 7F0343A4 0FC0CBE5 */  jal   convertPadIf9000
 /* 068ED8 7F0343A8 AFA20018 */   sw    $v0, 0x18($sp)
 /* 068EDC 7F0343AC 28412710 */  slti  $at, $v0, 0x2710
 /* 068EE0 7F0343B0 1020000A */  beqz  $at, .L7F0343DC
@@ -22768,7 +22760,7 @@ glabel check_if_actor_is_at_preset
 /* 068F8C 7F03445C AFA50024 */   sw    $a1, 0x24($sp)
 /* 068F90 7F034460 AFA2001C */  sw    $v0, 0x1c($sp)
 /* 068F94 7F034464 8FA40020 */  lw    $a0, 0x20($sp)
-/* 068F98 7F034468 0FC0CBE5 */  jal   sub_GAME_7F032F94
+/* 068F98 7F034468 0FC0CBE5 */  jal   convertPadIf9000
 /* 068F9C 7F03446C 8FA50024 */   lw    $a1, 0x24($sp)
 /* 068FA0 7F034470 28412710 */  slti  $at, $v0, 0x2710
 /* 068FA4 7F034474 1020000A */  beqz  $at, .L7F0344A0
@@ -22850,7 +22842,7 @@ glabel removed_animation_routine_2B
 {
     s32 temp_ret;
 
-    arg1 = sub_GAME_7F032F94();
+    arg1 = convertPadIf9000();
     if (true_if_actor_dying_fading_limping_shot(arg0) != 0)
     {
         temp_ret = scan_position_data_table_for_normal_object_at_preset(arg1);
@@ -22871,7 +22863,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F034514
 /* 069044 7F034514 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 069048 7F034518 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 06904C 7F03451C 0FC0CBE5 */  jal   sub_GAME_7F032F94
+/* 06904C 7F03451C 0FC0CBE5 */  jal   convertPadIf9000
 /* 069050 7F034520 AFA40018 */   sw    $a0, 0x18($sp)
 /* 069054 7F034524 AFA2001C */  sw    $v0, 0x1c($sp)
 /* 069058 7F034528 0FC0A896 */  jal   true_if_actor_dying_fading_limping_shot

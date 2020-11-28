@@ -7560,7 +7560,7 @@ actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5:
 /* 06E2EC 7F0397BC 1040005E */  beqz  $v0, .L7F039938
 /* 06E2F0 7F0397C0 00408025 */   move  $s0, $v0
 /* 06E2F4 7F0397C4 02E02025 */  move  $a0, $s7
-/* 06E2F8 7F0397C8 0FC0CBE5 */  jal   sub_GAME_7F032F94
+/* 06E2F8 7F0397C8 0FC0CBE5 */  jal   convertPadIf9000
 /* 06E2FC 7F0397CC 02602825 */   move  $a1, $s3
 /* 06E300 7F0397D0 28412710 */  slti  $at, $v0, 0x2710
 /* 06E304 7F0397D4 1020000A */  beqz  $at, .L7F039800
@@ -13427,7 +13427,7 @@ actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5:
 /* 06E2EC 7F0397BC 1040005E */  beqz  $v0, .L7F039938
 /* 06E2F0 7F0397C0 00408025 */   move  $s0, $v0
 /* 06E2F4 7F0397C4 02E02025 */  move  $a0, $s7
-/* 06E2F8 7F0397C8 0FC0CBE5 */  jal   sub_GAME_7F032F94
+/* 06E2F8 7F0397C8 0FC0CBE5 */  jal   convertPadIf9000
 /* 06E2FC 7F0397CC 02602825 */   move  $a1, $s3
 /* 06E300 7F0397D0 28412710 */  slti  $at, $v0, 0x2710
 /* 06E304 7F0397D4 1020000A */  beqz  $at, .L7F039800
