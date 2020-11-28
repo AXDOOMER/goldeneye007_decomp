@@ -8,4 +8,6 @@ struct stringentry {
 
 extern s32 j_text_trigger;
 
+u8 * get_textptr_for_textID(s32 slotID)
+
 #endif

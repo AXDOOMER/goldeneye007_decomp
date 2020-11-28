@@ -4932,7 +4932,7 @@ action64_Type_16_Object_Equipped_On_Guard_3:
 /* 06BDB4 7F037284 26520003 */   addiu $s2, $s2, 3
 /* 06BDB8 7F037288 8E040010 */  lw    $a0, 0x10($s0)
 .L7F03728C:
-/* 06BDBC 7F03728C 0FC0E969 */  jal   sub_GAME_7F03A5A4
+/* 06BDBC 7F03728C 0FC0E969 */  jal   attachNewChild
 /* 06BDC0 7F037290 8E650018 */   lw    $a1, 0x18($s3)
 .L7F037294:
 /* 06BDC4 7F037294 26520003 */  addiu $s2, $s2, 3
@@ -10799,7 +10799,7 @@ action64_Type_16_Object_Equipped_On_Guard_3:
 /* 06BDB4 7F037284 26520003 */   addiu $s2, $s2, 3
 /* 06BDB8 7F037288 8E040010 */  lw    $a0, 0x10($s0)
 .L7F03728C:
-/* 06BDBC 7F03728C 0FC0E969 */  jal   sub_GAME_7F03A5A4
+/* 06BDBC 7F03728C 0FC0E969 */  jal   attachNewChild
 /* 06BDC0 7F037290 8E650018 */   lw    $a1, 0x18($s3)
 .L7F037294:
 /* 06BDC4 7F037294 26520003 */  addiu $s2, $s2, 3
@@ -16841,7 +16841,7 @@ glabel sub_GAME_7F03C2BC
 /* 070F04 7F03C3D4 0FC225E6 */  jal   get_curplayer_positiondata
 /* 070F08 7F03C3D8 00000000 */   nop   
 /* 070F0C 7F03C3DC 02002025 */  move  $a0, $s0
-/* 070F10 7F03C3E0 0FC0E969 */  jal   sub_GAME_7F03A5A4
+/* 070F10 7F03C3E0 0FC0E969 */  jal   attachNewChild
 /* 070F14 7F03C3E4 00402825 */   move  $a1, $v0
 /* 070F18 7F03C3E8 8FBF001C */  lw    $ra, 0x1c($sp)
 .L7F03C3EC:
@@ -17213,7 +17213,7 @@ glabel handle_mp_respawn_and_some_things
 /* 071354 7F03C824 AFA20028 */   sw    $v0, 0x28($sp)
 /* 071358 7F03C828 8FA30028 */  lw    $v1, 0x28($sp)
 /* 07135C 7F03C82C 8E040010 */  lw    $a0, 0x10($s0)
-/* 071360 7F03C830 0FC0E969 */  jal   sub_GAME_7F03A5A4
+/* 071360 7F03C830 0FC0E969 */  jal   attachNewChild
 /* 071364 7F03C834 8C650010 */   lw    $a1, 0x10($v1)
 /* 071368 7F03C838 1000001C */  b     .L7F03C8AC
 /* 07136C 7F03C83C 24130001 */   li    $s3, 1
@@ -19328,7 +19328,7 @@ glabel sub_GAME_7F03E134
 
 #ifdef NONMATCHING
 void sub_GAME_7F03E18C(void) {
-
+    // Duplicate of the below function with a small extension.
 }
 #else
 GLOBAL_ASM(
@@ -19378,8 +19378,31 @@ glabel sub_GAME_7F03E18C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03E210(void) {
+/*
+Main missing these kinds of instructions:
 
+- sll   $a1, $s0, 0x10
+- sra   $t6, $a1, 0x10
+..
+- sll   $a1, $s0, 0x10
+
+So it looks like a conversion from u32 to u16, but we're reading a u8?
+I tried u32 room but no joy.
+*/
+void sub_GAME_7F03E210(struct PositionData *posData)
+{
+  u8 room;
+  u8 *roomIter;
+  
+  roomIter = posData->rooms;
+  room = roomIter[0];
+
+  while (room != 0xff) {
+    FUN_7f03dd9c(posData,(u16)room);
+    roomIter += 1;
+    room = *roomIter;
+  }
+  return;
 }
 #else
 GLOBAL_ASM(

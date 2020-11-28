@@ -39,10 +39,7 @@ struct PositionData {
     struct PositionData * child;
     struct PositionData * nextSibling;
     struct PositionData * prevSibling;
-    char roomMaybe;
-    u8 unknown_0x2d;
-    u16 unknown_0x2e;
-    u32 unknown_0x30;
+    u8 rooms[4];
 };
 
 #endif

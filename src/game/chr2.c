@@ -23092,7 +23092,7 @@ glabel actor_draws_throws_grenade_at_player_if_possible
             temp_a0 = temp_ret->unk14;
             sp1C = temp_ret;
             set_obj_instance_controller_scale(temp_a0, temp_a0->unk14);
-            sub_GAME_7F03A5A4(sp1C->unk10, arg0->unk18);
+            attachNewChild(sp1C->unk10, arg0->unk18);
             sp1C->unk82 = (u16)0xb4;
             sub_GAME_7F04BFD0(sp1C->unk10, 1);
             arg0->unk12 = (s16) (arg0->unk12 | 1);
@@ -23125,7 +23125,7 @@ glabel actor_drops_itemtype_setting_timer
 /* 069270 7F034740 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 069274 7F034744 8FB80020 */  lw    $t8, 0x20($sp)
 /* 069278 7F034748 8C640010 */  lw    $a0, 0x10($v1)
-/* 06927C 7F03474C 0FC0E969 */  jal   sub_GAME_7F03A5A4
+/* 06927C 7F03474C 0FC0E969 */  jal   attachNewChild
 /* 069280 7F034750 8F050018 */   lw    $a1, 0x18($t8)
 /* 069284 7F034754 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 069288 7F034758 241900B4 */  li    $t9, 180
