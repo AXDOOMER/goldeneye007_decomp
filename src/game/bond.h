@@ -2874,4 +2874,6 @@ void sub_GAME_7F07E46C(f32 param);
 
 void trigger_watch_zoom(f32 final, f32 time);
 
+struct PositionData* get_curplayer_positiondata(void)
+
 #endif

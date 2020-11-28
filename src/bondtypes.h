@@ -138,7 +138,7 @@ struct CHRdata {
     f32 lastvisibletarg[3];
     /* 0x00E4 */
     void * field_E4;
-    s32 lastseenbondtime; //  was s32 timeshooter;
+    s32 timeshooter;
     f32 hearingscale;
     /* 0x00F0 */
     s32 lastheartarget60;

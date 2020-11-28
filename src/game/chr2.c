@@ -3,6 +3,7 @@
 #include "game/chr.h"
 #include "game/bondwalk.h"
 #include "game/lvl.h"
+#include "bondconstants.h"
 
 #ifdef NONMATCHING
 void load_body_head_if_not_loaded(void) {
@@ -7811,7 +7812,7 @@ glabel set_actor_on_path
 
 void setSeenBondTimeToNow(struct CHRdata* guardData)
 {
-  guardData->lastseenbondtime = global_timer;
+  guardData->timeshooter = global_timer;
   return;
 }
 
@@ -20665,8 +20666,8 @@ glabel check_if_room_for_preset_loaded
 
 s32 convertPadIf9000(struct CHRdata* guardData,s32 padNo)
 {
-    // 9000 (= 0x2328) is used to indicate the guard's target pad.
-    if (padNo == 9000) {
+    // Guard's target pad.
+    if (padNo == PAD_PRESET) {
         padNo = (s32)guardData->padpreset1;
     }
     return padNo;
