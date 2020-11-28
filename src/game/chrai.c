@@ -140,7 +140,7 @@ char dword_CODE_bss_80075C10[0x78];
 char dword_CODE_bss_80075C88[0x78];
 
 //CODE.bss:80075D00
-void * ptr_setup_path_tbl;
+struct Pad * ptr_setup_path_tbl;
 //CODE.bss:80075D04
 void * ptr_setup_path_link;
 //CODE.bss:80075D08

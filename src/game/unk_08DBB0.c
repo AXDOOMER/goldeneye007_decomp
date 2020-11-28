@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "game/lvl.h"
 #include "game/unk_093880.h"
+#include "game/chrai.h"
 
 // data
 //D:80036AD0
@@ -1637,12 +1638,28 @@ glabel sub_GAME_7F08EFA0
 #endif
 
 
-
-
-
 #ifdef NONMATCHING
-void sub_GAME_7F08F090(void) {
+struct Pad* sub_GAME_7F08F090(s32 *padNumList,s32 desiredDist, u32 setIndex) // findPadWithDistAndSet
+{
+    s32 padNum;
+    struct Pad *currPad;
 
+    padNum = padNumList[0];
+    
+    while (padNum >= 0)
+    {
+        currPad = ptr_setup_path_tbl + padNum;
+        if (setIndex == currPad->pathSetIndex) {
+            if (desiredDist == currPad->dist_tmp) {
+                return currPad;
+            }
+        }
+
+        padNumList += 1;
+        padNum = *padNumList;
+    } 
+
+    return (struct Pad*)0;
 }
 #else
 GLOBAL_ASM(
@@ -1676,7 +1693,6 @@ glabel sub_GAME_7F08F090
 /* 0C3C14 7F08F0E4 00000000 */   nop   
 )
 #endif
-
 
 
 
@@ -1859,9 +1875,26 @@ glabel sub_GAME_7F08F1D8
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08F2CC(void) {
 
+
+#ifdef NONMATCHING
+void sub_GAME_7F08F2CC(struct Pad *startPad,struct Pad *endPad)
+{
+  s32 dist;
+  
+  sub_GAME_7F08F1D8(startPad,endPad,0); // do_BFS_withinPathSet
+  dist = endPad->dist_tmp + -1;
+
+  while (dist >= 0) {
+      endPad->dist_tmp = endPad->dist_tmp + 10000;
+      endPad = sub_GAME_7F08F090(endPad->neighbours,dist,startPad->pathSetIndex); // findPadWithDistAndSet
+      dist = dist + -1;
+  }
+
+
+  dist = endPad->dist_tmp;
+  endPad->dist_tmp = dist + 10000;
+  return;
 }
 #else
 GLOBAL_ASM(

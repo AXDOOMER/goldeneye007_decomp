@@ -3,6 +3,7 @@
 
 #include "ultra64.h"
 #include "game/chr.h"
+#include "ted.h"
 
 struct xyzpoint
 {
@@ -343,7 +344,7 @@ struct Player
   s32 crouchposition;
   s32 ducking_height_offset;
   s32 field_A4;
-  s32 position_data_pointer;
+  struct PositionData* position_data_pointer;
   s32 field_AC;
   s32 field_B0;
   s32 zpos_0;
