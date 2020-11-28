@@ -1866,7 +1866,7 @@ glabel load_bg_file
 /* 0E8E5C 7F0B432C E6040000 */  swc1  $f4, ($s0)
 /* 0E8E60 7F0B4330 0FC225DB */  jal   sub_GAME_7F08976C
 /* 0E8E64 7F0B4334 C60C0000 */   lwc1  $f12, ($s0)
-/* 0E8E68 7F0B4338 0FC16313 */  jal   sub_GAME_7F058C4C
+/* 0E8E68 7F0B4338 0FC16313 */  jal   matrix_4x4_7F058C4C
 /* 0E8E6C 7F0B433C C60C0000 */   lwc1  $f12, ($s0)
 /* 0E8E70 7F0B4340 8EE20000 */  lw    $v0, ($s7)
 /* 0E8E74 7F0B4344 3C038008 */  lui   $v1, %hi(dword_CODE_bss_8007BF98)
@@ -2204,7 +2204,7 @@ glabel load_bg_file
 #ifdef NONMATCHING
 void sub_GAME_7F0B47E0(void) {
     sub_GAME_7F0B667C();
-    sub_GAME_7F058C4C(1.0);
+    matrix_4x4_7F058C4C(1.0);
 }
 #else
 GLOBAL_ASM(
@@ -2216,7 +2216,7 @@ glabel sub_GAME_7F0B47E0
 /* 0E931C 7F0B47EC 00000000 */   nop   
 /* 0E9320 7F0B47F0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0E9324 7F0B47F4 44816000 */  mtc1  $at, $f12
-/* 0E9328 7F0B47F8 0FC16313 */  jal   sub_GAME_7F058C4C
+/* 0E9328 7F0B47F8 0FC16313 */  jal   matrix_4x4_7F058C4C
 /* 0E932C 7F0B47FC 00000000 */   nop   
 /* 0E9330 7F0B4800 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0E9334 7F0B4804 27BD0018 */  addiu $sp, $sp, 0x18

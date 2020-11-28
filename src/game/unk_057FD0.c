@@ -88,7 +88,7 @@ s32 matrix_4x4_multiply_homogeneous(mat44 lhs, mat44 rhs, mat44 result) {
     result[3][3] = 1.0f;
 }
 
-void sub_GAME_7F058274(mat44 arg0, mat44 arg1, mat44 arg2) {
+void matrix_4x4_7F058274(mat44 arg0, mat44 arg1, mat44 arg2) {
     arg2[0][0] = (arg0[0][0] * arg1[0][0]);
     arg2[1][0] = (arg0[0][0] * arg1[1][0]);
     arg2[2][0] = (arg0[0][0] * arg1[2][0]);
@@ -362,16 +362,16 @@ void matrix_scalar_multiply_3(f32 scalar, f32* matrix) {
     matrix[14] *= scalar;
 }
 
-void sub_GAME_7F058C4C(f32 arg0) {
+void matrix_4x4_7F058C4C(f32 arg0) {
     D_80032310[0] = (65536.0f * arg0);
 }
 
-void sub_GAME_7F058C64(void) {
+void matrix_4x4_7F058C64(void) {
     flt_CODE_bss_80075DA0 = D_80032310[0];
     D_80032310[0] = 65536.0f;
 }
 
-void sub_GAME_7F058C88(void) {
+void matrix_4x4_7F058C88(void) {
     D_80032310[0] = flt_CODE_bss_80075DA0;
 }
 
@@ -709,7 +709,7 @@ glabel sub_GAME_7F058E78
 )
 #endif
 
-void sub_GAME_7F059044(mat44 arg0, Mtx* arg1) {
+void matrix_4x4_7F059044(mat44 arg0, Mtx* arg1) {
     s32 i, j;
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 4; j++) {
@@ -718,7 +718,7 @@ void sub_GAME_7F059044(mat44 arg0, Mtx* arg1) {
     }
 }
 
-void sub_GAME_7F05914C(Mtx* arg0, mat44 arg1) {
+void matrix_4x4_7F05914C(Mtx* arg0, mat44 arg1) {
     s32 i, j;
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 4; j++) {
@@ -1262,7 +1262,7 @@ glabel sub_GAME_7F059334
 )
 #endif
 
-void sub_GAME_7F059424(mat44 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9) {
+void matrix_4x4_7F059424(mat44 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9) {
     f32 temp_f26;
     f32 temp_f28;
     f32 temp_f2_2;
@@ -1304,13 +1304,13 @@ void sub_GAME_7F059424(mat44 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
     arg0[3][3] = 1.0f;
 }
 
-void sub_GAME_7F059424(mat44 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9);
+void matrix_4x4_7F059424(mat44 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9);
 
-void sub_GAME_7F059694(mat44 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9) {
-    sub_GAME_7F059424(arg0, arg1, arg2, arg3, arg4 - arg1, arg5 - arg2, arg6 - arg3, arg7, arg8, arg9);
+void matrix_4x4_7F059694(mat44 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9) {
+    matrix_4x4_7F059424(arg0, arg1, arg2, arg3, arg4 - arg1, arg5 - arg2, arg6 - arg3, arg7, arg8, arg9);
 }
 
-void sub_GAME_7F059708(mat44 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9) {
+void matrix_4x4_7F059708(mat44 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9) {
     f32 temp_f26;
     f32 temp_f28;
     f32 temp_f2_2;
@@ -1352,32 +1352,22 @@ void sub_GAME_7F059708(mat44 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
     arg0[3][3] = 1.0f;
 }
 
-void sub_GAME_7F059908(mat44 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9) {
-    sub_GAME_7F059708(arg0, arg1, arg2, arg3, arg4 - arg1, arg5 - arg2, arg6 - arg3, arg7, arg8, arg9);
+void matrix_4x4_7F059908(mat44 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9) {
+    matrix_4x4_7F059708(arg0, arg1, arg2, arg3, arg4 - arg1, arg5 - arg2, arg6 - arg3, arg7, arg8, arg9);
 }
 
 #ifdef NONMATCHING
-//<    8e568:     3043ffff        andi    v1,v0,0xffff
-//---
-//>    8e568:     31e3ffff        andi    v1,t7,0xffff
-//57,58c57,58
-//<    8e570:     03e00008        jr      ra
-//<    8e574:     00601025        move    v0,v1
-//---
-//>    8e570:     00601025        move    v0,v1
-//>    8e574:     03e00008        jr      ra
-s32 sub_GAME_7F05997C(f32 arg0, f32 arg1) {
-    f32 temp_f0;
-    u32 temp_v0;
-    s32 phi_v1;
-
-    temp_f0 = arg0 + arg1;
+//                                                   > 8e570:    move    v0,v1
+// 8e570:    jr      ra                                8e574:    jr      ra
+// 8e574:    move    v0,v1                           | 8e578:    nop
+u16 sub_GAME_7F05997C(f32 arg0, f32 arg1) {
+    u16 phi_v1;
+    f32 temp_f0 = arg0 + arg1;
     if (temp_f0 <= 2.0f) {
-        return 0xFFFF;
+        return -1;
     }
-    temp_v0 = (u32) (131072.0f / temp_f0) & 0xFFFF;
-    phi_v1 = temp_v0 & 0xFFFF;
-    if ((s32)temp_v0 <= 0) {
+    phi_v1 = (131072.0f / temp_f0);
+    if (phi_v1 <= 0) {
         phi_v1 = 1;
     }
     return phi_v1;
@@ -1446,9 +1436,9 @@ glabel sub_GAME_7F05997C
 )
 #endif
 
-s16 sub_GAME_7F05997C(f32 arg0, f32 arg1);
+u16 sub_GAME_7F05997C(f32 arg0, f32 arg1);
 
-void sub_GAME_7F059A48(mat44 matrix, s16* arg1, f32 angle, f32 arg3, f32 arg4, f32 arg5, f32 arg6) {
+void matrix_4x4_7F059A48(mat44 matrix, u16* arg1, f32 angle, f32 arg3, f32 arg4, f32 arg5, f32 arg6) {
     f32 temp_f12_2 = cosf(angle * 0.5f) / sinf(angle * 0.5f);
     arg6 *= 65536.0f;
     matrix[0][0] = ((temp_f12_2 / arg3) * arg6);
@@ -1474,7 +1464,7 @@ void sub_GAME_7F059A48(mat44 matrix, s16* arg1, f32 angle, f32 arg3, f32 arg4, f
 
 void guNormalize(f32 *x, f32 *y, f32 *z);
 
-void sub_GAME_7F059B58(mat44 matrix, f32 angle, f32 x, f32 y, f32 z) {
+void matrix_4x4_7F059B58(mat44 matrix, f32 angle, f32 x, f32 y, f32 z) {
     f32 sine;
     f32 cosine;
     f32 norm;
@@ -1523,7 +1513,7 @@ void matrix_4x4_align(mat44 matrix, f32 angle, f32 x, f32 y, f32 z) {
     guAlignF(matrix, angle, x, y, z);
 }
 
-void sub_GAME_7F059D30(u32 arg0) {
+void matrix_4x4_7F059D30(u32 arg0) {
     return;
 }
 
@@ -1546,7 +1536,7 @@ void matrix_4x4_set_rotation_inverse(mat44 rotation, mat44 transpose) {
     transpose[3][3] = 1.0f;
 }
 
-void sub_GAME_7F059DAC(mat44 arg0, mat44 arg1) {
+void matrix_4x4_7F059DAC(mat44 arg0, mat44 arg1) {
     f32 temp_f0 = ((arg0[0][0] * arg0[0][0]) + (arg0[1][0] * arg0[1][0]) + (arg0[2][0] * arg0[2][0]));
     temp_f0 = 1.0f / temp_f0;
     arg1[0][0] = (arg0[0][0] * temp_f0);
@@ -1567,7 +1557,7 @@ void sub_GAME_7F059DAC(mat44 arg0, mat44 arg1) {
     arg1[3][3] = 1.0f;
 }
 
-void sub_GAME_7F059E64(mat44 arg0, mat44 arg1) {
+void matrix_4x4_7F059E64(mat44 arg0, mat44 arg1) {
     f32 temp_f0 = (arg0[0][0] * arg0[0][0]) + (arg0[1][0] * arg0[1][0]) + (arg0[2][0] * arg0[2][0]);
     temp_f0 = 1.0f / temp_f0;
     arg1[0][0] = (arg0[0][0] * temp_f0);
@@ -1783,83 +1773,63 @@ glabel sub_GAME_7F059FB8
 )
 #endif
 
+void matrix_4x4_7F05A310(mat44 arg0, mat44 arg1);
 
+f32 matrix_4x4_determinant(mat44 matrix);
 
-
+void matrix_4x4_7F05A250(mat44 arg0, mat44 arg1) {
+    s32 i, j;
+    f32 inv_det;
+    matrix_4x4_7F05A310(arg0, arg1);
+    inv_det = 1.0f / matrix_4x4_determinant(arg0);
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 4; j++) {
+            arg1[i][j] *= inv_det;
+        }
+    }
+}
 
 #ifdef NONMATCHING
-void sub_GAME_7F05A250(void) {
-
+f32 matrix_3x3_determinant(f32 a, f32 d, f32 g, f32 b, f32 e, f32 h, f32 c, f32 f, f32 i);
+// Stack pointer mostly
+void matrix_4x4_7F05A310(mat44 arg0, mat44 arg1) {
+    f32 m00 = arg0[0][0];
+    f32 m01 = arg0[0][1];
+    f32 m02 = arg0[0][2];
+    f32 m03 = arg0[0][3];
+    f32 m10 = arg0[1][0];
+    f32 m11 = arg0[1][1];
+    f32 m12 = arg0[1][2];
+    f32 m13 = arg0[1][3];
+    f32 m20 = arg0[2][0];
+    f32 m21 = arg0[2][1];
+    f32 m22 = arg0[2][2];
+    f32 m23 = arg0[2][3];
+    f32 m30 = arg0[3][0];
+    f32 m31 = arg0[3][1];
+    f32 m32 = arg0[3][2];
+    f32 m33 = arg0[3][3];
+    arg1[0][0] =  matrix_3x3_determinant(m11, m21, m31, m12, m22, m32, m13, m23, m33);
+    arg1[1][0] = -matrix_3x3_determinant(m10, m20, m30, m12, m22, m32, m13, m23, m33);
+    arg1[2][0] =  matrix_3x3_determinant(m10, m20, m30, m11, m21, m31, m13, m23, m33);
+    arg1[3][0] = -matrix_3x3_determinant(m10, m20, m30, m11, m21, m31, m12, m22, m32);
+    arg1[0][1] = -matrix_3x3_determinant(m01, m21, m31, m02, m22, m32, m03, m23, m33);
+    arg1[1][1] =  matrix_3x3_determinant(m00, m20, m30, m02, m22, m32, m03, m23, m33);
+    arg1[2][1] = -matrix_3x3_determinant(m00, m20, m30, m01, m21, m31, m03, m23, m33);
+    arg1[3][1] =  matrix_3x3_determinant(m00, m20, m30, m01, m21, m31, m02, m22, m32);
+    arg1[0][2] =  matrix_3x3_determinant(m01, m11, m31, m02, m12, m32, m03, m13, m33);
+    arg1[1][2] = -matrix_3x3_determinant(m00, m10, m30, m02, m12, m32, m03, m13, m33);
+    arg1[2][2] =  matrix_3x3_determinant(m00, m10, m30, m01, m11, m31, m03, m13, m33);
+    arg1[3][2] = -matrix_3x3_determinant(m00, m10, m30, m01, m11, m31, m02, m12, m32);
+    arg1[0][3] = -matrix_3x3_determinant(m01, m11, m21, m02, m12, m22, m03, m13, m23);
+    arg1[1][3] =  matrix_3x3_determinant(m00, m10, m20, m02, m12, m22, m03, m13, m23);
+    arg1[2][3] = -matrix_3x3_determinant(m00, m10, m20, m01, m11, m21, m03, m13, m23);
+    arg1[3][3] =  matrix_3x3_determinant(m00, m10, m20, m01, m11, m21, m02, m12, m22);
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F05A250
-/* 08ED80 7F05A250 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 08ED84 7F05A254 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08ED88 7F05A258 AFA40018 */  sw    $a0, 0x18($sp)
-/* 08ED8C 7F05A25C 0FC168C4 */  jal   sub_GAME_7F05A310
-/* 08ED90 7F05A260 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 08ED94 7F05A264 0FC169DD */  jal   matrix_4x4_determinant
-/* 08ED98 7F05A268 8FA40018 */   lw    $a0, 0x18($sp)
-/* 08ED9C 7F05A26C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 08EDA0 7F05A270 44812000 */  mtc1  $at, $f4
-/* 08EDA4 7F05A274 00001825 */  move  $v1, $zero
-/* 08EDA8 7F05A278 8FA2001C */  lw    $v0, 0x1c($sp)
-/* 08EDAC 7F05A27C 24040004 */  li    $a0, 4
-/* 08EDB0 7F05A280 46002083 */  div.s $f2, $f4, $f0
-/* 08EDB4 7F05A284 C4480000 */  lwc1  $f8, ($v0)
-/* 08EDB8 7F05A288 24630001 */  addiu $v1, $v1, 1
-/* 08EDBC 7F05A28C C44E0004 */  lwc1  $f14, 4($v0)
-/* 08EDC0 7F05A290 46024402 */  mul.s $f16, $f8, $f2
-/* 08EDC4 7F05A294 C44C0008 */  lwc1  $f12, 8($v0)
-/* 08EDC8 7F05A298 10640010 */  beq   $v1, $a0, .L7F05A2DC
-/* 08EDCC 7F05A29C C452000C */   lwc1  $f18, 0xc($v0)
-.L7F05A2A0:
-/* 08EDD0 7F05A2A0 46027282 */  mul.s $f10, $f14, $f2
-/* 08EDD4 7F05A2A4 C4480010 */  lwc1  $f8, 0x10($v0)
-/* 08EDD8 7F05A2A8 C44E0014 */  lwc1  $f14, 0x14($v0)
-/* 08EDDC 7F05A2AC 46026182 */  mul.s $f6, $f12, $f2
-/* 08EDE0 7F05A2B0 C44C0018 */  lwc1  $f12, 0x18($v0)
-/* 08EDE4 7F05A2B4 24630001 */  addiu $v1, $v1, 1
-/* 08EDE8 7F05A2B8 46029102 */  mul.s $f4, $f18, $f2
-/* 08EDEC 7F05A2BC C452001C */  lwc1  $f18, 0x1c($v0)
-/* 08EDF0 7F05A2C0 E4500000 */  swc1  $f16, ($v0)
-/* 08EDF4 7F05A2C4 46024402 */  mul.s $f16, $f8, $f2
-/* 08EDF8 7F05A2C8 E44A0004 */  swc1  $f10, 4($v0)
-/* 08EDFC 7F05A2CC E4460008 */  swc1  $f6, 8($v0)
-/* 08EE00 7F05A2D0 24420010 */  addiu $v0, $v0, 0x10
-/* 08EE04 7F05A2D4 1464FFF2 */  bne   $v1, $a0, .L7F05A2A0
-/* 08EE08 7F05A2D8 E444FFFC */   swc1  $f4, -4($v0)
-.L7F05A2DC:
-/* 08EE0C 7F05A2DC 46027282 */  mul.s $f10, $f14, $f2
-/* 08EE10 7F05A2E0 24420010 */  addiu $v0, $v0, 0x10
-/* 08EE14 7F05A2E4 E450FFF0 */  swc1  $f16, -0x10($v0)
-/* 08EE18 7F05A2E8 46026182 */  mul.s $f6, $f12, $f2
-/* 08EE1C 7F05A2EC 00000000 */  nop   
-/* 08EE20 7F05A2F0 46029102 */  mul.s $f4, $f18, $f2
-/* 08EE24 7F05A2F4 E44AFFF4 */  swc1  $f10, -0xc($v0)
-/* 08EE28 7F05A2F8 E446FFF8 */  swc1  $f6, -8($v0)
-/* 08EE2C 7F05A2FC E444FFFC */  swc1  $f4, -4($v0)
-/* 08EE30 7F05A300 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08EE34 7F05A304 27BD0018 */  addiu $sp, $sp, 0x18
-/* 08EE38 7F05A308 03E00008 */  jr    $ra
-/* 08EE3C 7F05A30C 00000000 */   nop   
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F05A310(void) {
-
-}
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05A310
+glabel matrix_4x4_7F05A310
 /* 08EE40 7F05A310 27BDFF58 */  addiu $sp, $sp, -0xa8
 /* 08EE44 7F05A314 AFBF0064 */  sw    $ra, 0x64($sp)
 /* 08EE48 7F05A318 AFB00060 */  sw    $s0, 0x60($sp)
@@ -2144,9 +2114,8 @@ glabel sub_GAME_7F05A310
 )
 #endif
 
-f32 matrix_3x3_determinant(f32 m11, f32 m21, f32 m31, f32 m12, f32 m22, f32 m32, f32 m13, f32 m23, f32 m33);
-
  #ifdef NONMATCHING
+f32 matrix_3x3_determinant(f32 a, f32 d, f32 g, f32 b, f32 e, f32 h, f32 c, f32 f, f32 i);
  // Stack pointer mostly
 f32 matrix_4x4_determinant(mat44 matrix) {
     f32 det;
@@ -2167,6 +2136,7 @@ f32 matrix_4x4_determinant(mat44 matrix) {
     f32 o = matrix[3][2];
     f32 p = matrix[3][3];
     det = (a * matrix_3x3_determinant(f, j, n, g, k, o, h, l, p)) - (b * matrix_3x3_determinant(e, i, m, g, k, o, h, l, p)) + (c * matrix_3x3_determinant(e, i, m, f, j, n, h, l, p)) - (d * matrix_3x3_determinant(e, i, m, f, j, n, g, k, o));
+    // det = (a * matrix_3x3_determinant(f, g, h, j, k, l, n, o, p)) - (b * matrix_3x3_determinant(e, g, h, i, k, l, m, o, p)) + (c * matrix_3x3_determinant(e, f, h, i, j, l, m, n, p)) - (d * matrix_3x3_determinant(e, f, g, i, j, k, m, n, o));
     return det;
 }
 #else

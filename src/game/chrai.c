@@ -4994,7 +4994,7 @@ action65_Object_Moved_To_Preset_4:
 /* 06BE94 7F037364 C60A0010 */  lwc1  $f10, 0x10($s0)
 /* 06BE98 7F037368 E7AA0020 */  swc1  $f10, 0x20($sp)
 /* 06BE9C 7F03736C C6100014 */  lwc1  $f16, 0x14($s0)
-/* 06BEA0 7F037370 0FC16642 */  jal   sub_GAME_7F059908
+/* 06BEA0 7F037370 0FC16642 */  jal   matrix_4x4_7F059908
 /* 06BEA4 7F037374 E7B00024 */   swc1  $f16, 0x24($sp)
 /* 06BEA8 7F037378 8E620014 */  lw    $v0, 0x14($s3)
 /* 06BEAC 7F03737C 27A504B8 */  addiu $a1, $sp, 0x4b8
@@ -10861,7 +10861,7 @@ action65_Object_Moved_To_Preset_4:
 /* 06BE94 7F037364 C60A0010 */  lwc1  $f10, 0x10($s0)
 /* 06BE98 7F037368 E7AA0020 */  swc1  $f10, 0x20($sp)
 /* 06BE9C 7F03736C C6100014 */  lwc1  $f16, 0x14($s0)
-/* 06BEA0 7F037370 0FC16642 */  jal   sub_GAME_7F059908
+/* 06BEA0 7F037370 0FC16642 */  jal   matrix_4x4_7F059908
 /* 06BEA4 7F037374 E7B00024 */   swc1  $f16, 0x24($sp)
 /* 06BEA8 7F037378 8E620014 */  lw    $v0, 0x14($s3)
 /* 06BEAC 7F03737C 27A504B8 */  addiu $a1, $sp, 0x4b8
