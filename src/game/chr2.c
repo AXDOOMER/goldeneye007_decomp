@@ -10645,7 +10645,7 @@ glabel sub_GAME_7F02B4E8
 /* 0600C4 7F02B594 314B0001 */  andi  $t3, $t2, 1
 /* 0600C8 7F02B598 55600012 */  bnezl $t3, .L7F02B5E4
 /* 0600CC 7F02B59C 8E0C0014 */   lw    $t4, 0x14($s0)
-/* 0600D0 7F02B5A0 0FC0CB79 */  jal   sub_GAME_7F032DE4
+/* 0600D0 7F02B5A0 0FC0CB79 */  jal   distToBond3D
 /* 0600D4 7F02B5A4 02002025 */   move  $a0, $s0
 /* 0600D8 7F02B5A8 3C014448 */  li    $at, 0x44480000 # 800.000000
 /* 0600DC 7F02B5AC 44814000 */  mtc1  $at, $f8
@@ -20540,43 +20540,21 @@ glabel get_angle_between_actor_cur_player
 #endif
 
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F032DE4(void) {
-
+float distToBond3D(struct GuardData *guardData)
+{
+  struct PositionData *guardPosData;
+  struct PositionData *playerPosData;
+  float xDiff;
+  float yDiff;
+  float zDiff;
+  
+  guardPosData = guardData->position_data;
+  playerPosData = get_curplayer_positiondata();
+  xDiff = (playerPosData->position).x - (guardPosData->position).x;
+  yDiff = (playerPosData->position).y - (guardPosData->position).y;
+  zDiff = (playerPosData->position).z - (guardPosData->position).z;
+  return sqrtf(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F032DE4
-/* 067914 7F032DE4 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 067918 7F032DE8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 06791C 7F032DEC 8C830018 */  lw    $v1, 0x18($a0)
-/* 067920 7F032DF0 0FC225E6 */  jal   get_curplayer_positiondata
-/* 067924 7F032DF4 AFA3001C */   sw    $v1, 0x1c($sp)
-/* 067928 7F032DF8 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 06792C 7F032DFC C4440008 */  lwc1  $f4, 8($v0)
-/* 067930 7F032E00 C448000C */  lwc1  $f8, 0xc($v0)
-/* 067934 7F032E04 C4660008 */  lwc1  $f6, 8($v1)
-/* 067938 7F032E08 C46A000C */  lwc1  $f10, 0xc($v1)
-/* 06793C 7F032E0C C4500010 */  lwc1  $f16, 0x10($v0)
-/* 067940 7F032E10 46062001 */  sub.s $f0, $f4, $f6
-/* 067944 7F032E14 C4720010 */  lwc1  $f18, 0x10($v1)
-/* 067948 7F032E18 460A4081 */  sub.s $f2, $f8, $f10
-/* 06794C 7F032E1C 46000102 */  mul.s $f4, $f0, $f0
-/* 067950 7F032E20 46128381 */  sub.s $f14, $f16, $f18
-/* 067954 7F032E24 46021182 */  mul.s $f6, $f2, $f2
-/* 067958 7F032E28 46062200 */  add.s $f8, $f4, $f6
-/* 06795C 7F032E2C 460E7282 */  mul.s $f10, $f14, $f14
-/* 067960 7F032E30 0C007DF8 */  jal   sqrtf
-/* 067964 7F032E34 460A4300 */   add.s $f12, $f8, $f10
-/* 067968 7F032E38 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 06796C 7F032E3C 27BD0020 */  addiu $sp, $sp, 0x20
-/* 067970 7F032E40 03E00008 */  jr    $ra
-/* 067974 7F032E44 00000000 */   nop   
-)
-#endif
-
 
 
 #ifdef NONMATCHING
@@ -22950,7 +22928,7 @@ glabel sub_GAME_7F034514
     {
         return 0;
     }
-    if (sub_GAME_7F032DE4(arg0) < 10.0f)
+    if (distToBond3D(arg0) < 10.0f)
     {
         return 0;
     }
@@ -23022,7 +23000,7 @@ glabel actor_draws_throws_grenade_at_player_if_possible
 /* 0690DC 7F0345AC 1000004E */  b     .L7F0346E8
 /* 0690E0 7F0345B0 00001025 */   move  $v0, $zero
 .L7F0345B4:
-/* 0690E4 7F0345B4 0FC0CB79 */  jal   sub_GAME_7F032DE4
+/* 0690E4 7F0345B4 0FC0CB79 */  jal   distToBond3D
 /* 0690E8 7F0345B8 02002025 */   move  $a0, $s0
 /* 0690EC 7F0345BC 3C014120 */  li    $at, 0x41200000 # 10.000000
 /* 0690F0 7F0345C0 44812000 */  mtc1  $at, $f4

@@ -1,7 +1,10 @@
+#ifndef _TED_H_
+#define _TED_H_
+
 #include "ultra64.h"
 #include "game/stan.h"
 
-enum EObjectClass {
+enum EObjectClass { // u8
     Zero,
     NormalObj1,
     Door,
@@ -23,7 +26,7 @@ struct float2 {
 };
 
 struct PositionData {
-    enum EObjectClass objectClass;
+    u8 objectClass; // enum EObjectClass
     u8 flags;
     short unknown_0x2;
     void* object_data;
@@ -40,3 +43,4 @@ struct PositionData {
     u32 unknown_0x30;
 };
 
+#endif
