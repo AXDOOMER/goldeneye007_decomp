@@ -1531,7 +1531,7 @@ glabel load_bg_file
 /* 0E8DFC 7F0B42CC 01F40019 */  multu $t7, $s4
 /* 0E8E00 7F0B42D0 0000C012 */  mflo  $t8
 /* 0E8E04 7F0B42D4 0238C821 */  addu  $t9, $s1, $t8
-/* 0E8E08 7F0B42D8 0FC2CA54 */  jal   sub_GAME_7F0B2950
+/* 0E8E08 7F0B42D8 0FC2CA54 */  jal   setLevelScale
 /* 0E8E0C 7F0B42DC C72C000C */   lwc1  $f12, 0xc($t9)
 /* 0E8E10 7F0B42E0 8E480000 */  lw    $t0, ($s2)
 /* 0E8E14 7F0B42E4 01140019 */  multu $t0, $s4
