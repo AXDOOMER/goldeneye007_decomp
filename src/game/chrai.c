@@ -14540,28 +14540,22 @@ glabel sub_GAME_7F03A538
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03A5A4(void) {
+void attachNewChild(struct PositionData *newChild,struct PositionData *host)
+{
+    newChild->host = host;
 
+    // Link the newChild into its siblings
+    if (host->child) {
+        host->child->prevSibling = newChild;
+    }
+    newChild->nextSibling = host->child;
+    newChild->prevSibling = 0x0;
+
+    newChild->standTile = 0x0;
+    host->child = newChild;
+
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03A5A4
-/* 06F0D4 7F03A5A4 AC85001C */  sw    $a1, 0x1c($a0)
-/* 06F0D8 7F03A5A8 8CA20020 */  lw    $v0, 0x20($a1)
-/* 06F0DC 7F03A5AC 50400004 */  beql  $v0, $zero, .L7F03A5C0
-/* 06F0E0 7F03A5B0 AC820024 */   sw    $v0, 0x24($a0)
-/* 06F0E4 7F03A5B4 AC440028 */  sw    $a0, 0x28($v0)
-/* 06F0E8 7F03A5B8 8CA20020 */  lw    $v0, 0x20($a1)
-/* 06F0EC 7F03A5BC AC820024 */  sw    $v0, 0x24($a0)
-.L7F03A5C0:
-/* 06F0F0 7F03A5C0 AC800028 */  sw    $zero, 0x28($a0)
-/* 06F0F4 7F03A5C4 AC800014 */  sw    $zero, 0x14($a0)
-/* 06F0F8 7F03A5C8 03E00008 */  jr    $ra
-/* 06F0FC 7F03A5CC ACA40020 */   sw    $a0, 0x20($a1)
-)
-#endif
 
 
 

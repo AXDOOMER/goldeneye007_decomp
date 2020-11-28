@@ -35,10 +35,10 @@ struct PositionData {
     struct float3 position;
     struct StandTile * standTile;
     u32 unknown_0x18;
-    struct positionData * host;
-    struct positionData * child;
-    struct positionData * prevAttachment;
-    struct positionData * nextAttachment;
+    struct PositionData * host;
+    struct PositionData * child;
+    struct PositionData * nextSibling;
+    struct PositionData * prevSibling;
     char roomMaybe;
     u8 unknown_0x2d;
     u16 unknown_0x2e;
