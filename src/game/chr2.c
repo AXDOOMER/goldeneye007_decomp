@@ -20671,25 +20671,14 @@ glabel check_if_room_for_preset_loaded
 #endif
 
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F032F94(void) {
-
+s32 convertPadIf9000(struct GuardData* guardData,s32 padNo)
+{
+    // 9000 (= 0x2328) is used to indicate the guard's target pad.
+    if (padNo == 9000) {
+        padNo = (s32)guardData->pad9000;
+    }
+    return padNo;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F032F94
-/* 067AC4 7F032F94 24012328 */  li    $at, 9000
-/* 067AC8 7F032F98 14A10002 */  bne   $a1, $at, .L7F032FA4
-/* 067ACC 7F032F9C 00000000 */   nop   
-/* 067AD0 7F032FA0 84850114 */  lh    $a1, 0x114($a0)
-.L7F032FA4:
-/* 067AD4 7F032FA4 03E00008 */  jr    $ra
-/* 067AD8 7F032FA8 00A01025 */   move  $v0, $a1
-)
-#endif
-
 
 
 #ifdef NONMATCHING

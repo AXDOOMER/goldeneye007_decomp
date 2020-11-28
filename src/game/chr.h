@@ -39,7 +39,7 @@ typedef enum EGuardChaseStage { // u8
 } EGuardChaseStage;
 
 struct guardChaseData {
-  enum EGuardChaseStage motionStage;
+  u8 motionStage; // enum EGuardChaseStage
   s8 failCount;
   u8 normal_target_set; // bool
   u8 crit_target_set; // bool
@@ -204,8 +204,7 @@ struct GuardData {
   u8 UNKNOWN_0x10e;
   u8 UNKNOWN_0x10f;
   int timer;
-  u8 UNKNOWN_0x114;
-  u8 UNKNOWN_0x115;
+  s16 pad9000;
   u8 UNKNOWN_0x116;
   u8 UNKNOWN_0x117;
   u8 UNKNOWN_0x118;
