@@ -4,6 +4,8 @@
 DOALL="1"
 BASEROM="baserom.u.z64"
 
+clear
+
 if [ -z "$2" ]; then
     if [ -z "$1" ]; then
         #No Args
@@ -41,12 +43,16 @@ do
     fi
 done
 
+#build/rebuild extractor
+if [ -f tools/extractor/extractor ]; then
+    make -C tools/extractor clean && make -C tools/extractor
+else
+    make -C tools/extractor
+fi
 
 if [ "$DOALL" == "1" ] || [ $1 == 'files' ]; then
     echo "Processing Files"
-      make -C tools/extractor clean && make -C tools/extractor
-    if [ -f tools/extractor/extractor ];
-    then
+    if [ -f tools/extractor/extractor ]; then
         tools/extractor/extractor "$BASEROM" filelist.u.csv
     else
         while IFS=, read -r offset size name compressed extract
@@ -84,9 +90,7 @@ fi
 
 if [ "$DOALL" == "1" ] || [ $1 == 'images' ]; then
     echo "Processing Images"
-    make -C tools/extractor clean && make -C tools/extractor
-    if [ -f tools/extractor/extractor ];
-    then
+    if [ -f tools/extractor/extractor ]; then
         tools/extractor/extractor "$BASEROM" imagelist.u.csv
     else
         while IFS=, read -r offset size name
