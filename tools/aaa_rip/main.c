@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 	printf("AAA RIP\n%s\n", LINE);
 	if(argc != 5) /* no file provided or too many arguments */
 	{
-		printf("\n  About: Extract sub-binary from binary\n\n  Syntax: %s \"input file\" \"output file\" \"offset (dec)\" \"length (dec)\"  Note: Set length to 0 to write until end of input file\n", argv[0]);
+		printf("\n  About: Extract sub-binary from binary\n\n  Syntax: %s \"input file\" \"output file\" \"offset (dec)\" \"length (dec)\"\n  Note: Set length to 0 to write until end of input file\n", argv[0]);
 		goto exit;
 	}
 
