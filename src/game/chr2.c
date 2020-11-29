@@ -22549,7 +22549,7 @@ glabel actionblock_guard_constructor_BDBE
 /* 068C94 7F034164 AFA40040 */  sw    $a0, 0x40($sp)
 /* 068C98 7F034168 AFA50044 */  sw    $a1, 0x44($sp)
 /* 068C9C 7F03416C AFA60048 */  sw    $a2, 0x48($sp)
-/* 068CA0 7F034170 0FC07FF0 */  jal   get_next_available_guardID
+/* 068CA0 7F034170 0FC07FF0 */  jal   chrGetNumFree
 /* 068CA4 7F034174 AFA7004C */   sw    $a3, 0x4c($sp)
 /* 068CA8 7F034178 28410003 */  slti  $at, $v0, 3
 /* 068CAC 7F03417C 14200031 */  bnez  $at, .L7F034244
