@@ -31,7 +31,7 @@ clean:
 	@rm $(SRCDIR)*.o
 
 #Individual recipes
-$(OBJDIR)main.o: $(SRCDIR)main.c $(SRCDIR)puff.h
+$(OBJDIR)main.o: $(SRCDIR)main.c $(SRCDIR)puff.h $(SRCDIR)fread_csv_line.h
 	@$(CC) -c $(SRCDIR)main.c -o $(SRCDIR)main.o $(CFLAGS) $(WFLAGS)
 
 $(OBJDIR)puff.o: $(SRCDIR)puff.c $(SRCDIR)puff.h

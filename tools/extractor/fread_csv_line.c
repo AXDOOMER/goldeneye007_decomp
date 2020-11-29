@@ -38,7 +38,7 @@ while(0)
  * Warning: Calling this function on an exhausted file (as indicated by the
  *   'done' flag) is undefined behavior.
  *
- * See csv.h for definitions of error codes.
+ * See fread_csv_line.h for definitions of error codes.
  */
 
 char *buf = NULL;
