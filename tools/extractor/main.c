@@ -222,7 +222,7 @@ int main(int argc, char **argv)
 	int total_threads;
 	/************************/
 
-	printf("GoldenEye 007 1172 extractor\n%s\n", LINE);
+	printf("\n  GoldenEye 007 1172 extractor\n%s\n", LINE);
 	if(argc != 3) /* no file provided or too many arguments */
 	{
 		printf("\n  About: Extract GoldenEye 007 files\n\n  Syntax: %s \"input ROM\" \"input csv file\"\n", argv[0]);
@@ -262,7 +262,7 @@ int main(int argc, char **argv)
 		printf("\n  Error: Aborted, could not find beginning of ROM file");
 		goto error_rom;
 	}
-	printf("\n  Input ROM: %s\n", argv[1]);
+	printf("\n  Input ROM: %s", argv[1]);
 
 	/* load csv file from argument */
 	csvfile = fopen(argv[2], "rb");

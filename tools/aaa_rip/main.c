@@ -12,7 +12,7 @@ int main(int argc, char **argv)
 	unsigned char *in_buf;
 	/************************/
 
-	printf("AAA RIP\n%s\n", LINE);
+	printf("\n  AAA RIP - Lite DD Clone\n%s\n", LINE);
 	if(argc != 5) /* no file provided or too many arguments */
 	{
 		printf("\n  About: Extract sub-binary from binary\n\n  Syntax: %s \"input file\" \"output file\" \"offset (dec)\" \"length (dec)\"\n  Note: Set length to 0 to write until end of input file\n", argv[0]);
@@ -57,12 +57,17 @@ int main(int argc, char **argv)
 	{
 		length = filesize - offset;
 	}
+	if(offset >= filesize)
+	{
+		printf("\n  Error: Aborted, offset goes beyond end of file");
+		goto error_input;
+	}
 	if(offset + length > filesize)
 	{
 		printf("\n  Error: Aborted, length goes beyond end of file");
 		goto error_input;
 	}
-	printf("\n  Input File: %s\n", argv[1]);
+	printf("\n  Input File: %s\n  Offset: %d\n  Length: %d", argv[1], offset, length);
 
 	/* read input to file buffer */
 	in_buf = (unsigned char *)malloc(length);
