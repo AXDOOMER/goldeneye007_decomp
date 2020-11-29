@@ -9,32 +9,42 @@ mkdir assets assets/font assets/images assets/images/split assets/music assets/r
 
 if [ "$DOALL" == "1" ] || [ $1 == 'files' ]; then
     echo "Processing Files"
-    while IFS=, read -r offset size name compressed extract
-    do
-        if [ "$extract" == "$true" ]; then
-            if [ "$compressed" == "$true" ]; then
-                echo "Extracting compressed $name, $size bytes..."
-                dd bs=1 skip=$offset count=$size if=baserom.u.z64 of=$name status=none
-    	         # Add the gZip Header to a new file using the name given in command
-    	        echo -n -e \\x1F\\x8B\\x08\\x00\\x00\\x00\\x00\\x00\\x02\\x03 > $name.temp
-    	         # Add the contents of the compressed file minus the 1172 to the new file
-    	        cat $name | tail --bytes=+3 >> $name.temp
-    	         # copy the new file over the old compressed file
-    	        cat $name.temp > $name.zip
-    	         # decompress the Z file to the filename given in the command
-    	        cat $name.zip | gzip --quiet --decompress > $name.bin
-    	         # remove the compressed Z file
-    	        rm $name.temp $name.zip $name
-    	        echo "Successfully Decompressed $name"
+    if [ -f tools/extractor/extractor ];
+    then
+        make -C tools/extractor clean
+    fi
+    make -C tools/extractor
+    if [ -f tools/extractor/extractor ];
+    then
+        tools/extractor/extractor baserom.u.z64 filelist.u.csv
+    else
+        while IFS=, read -r offset size name compressed extract
+        do
+            if [ "$extract" == "$true" ]; then
+                if [ "$compressed" == "$true" ]; then
+                    echo "Extracting compressed $name, $size bytes..."
+                    dd bs=1 skip=$offset count=$size if=baserom.u.z64 of=$name status=none
+                     # Add the gZip Header to a new file using the name given in command
+                    echo -n -e \\x1F\\x8B\\x08\\x00\\x00\\x00\\x00\\x00\\x02\\x03 > $name.temp
+                     # Add the contents of the compressed file minus the 1172 to the new file
+                    cat $name | tail --bytes=+3 >> $name.temp
+                     # copy the new file over the old compressed file
+                    cat $name.temp > $name.zip
+                     # decompress the Z file to the filename given in the command
+                    cat $name.zip | gzip --quiet --decompress > $name
+                     # remove the compressed Z file
+                    rm $name.temp $name.zip
+                    echo "Successfully Decompressed $name"
+                else
+                    echo "Extracting uncompressed $name, $size bytes..."
+                    dd bs=1 skip=$offset count=$size if=baserom.u.z64 of=$name status=none
+                    echo "Successfully Extracted $name"
+                fi
             else
-                echo "Extracting uncompressed $name, $size bytes..."
-                dd bs=1 skip=$offset count=$size if=baserom.u.z64 of=$name status=none
-                echo "Successfully Extracted $name"
+                echo "skip $name"
             fi
-        else
-            echo "skip $name"
-        fi
-    done < filelist.u.csv
+        done < filelist.u.csv
+    fi
     #filelist.u.csv should follow pattern of:
     #offset,size,name,compressed,extract
     #formatting matters, no comments, no extra lines, unix line endings only
@@ -42,15 +52,25 @@ if [ "$DOALL" == "1" ] || [ $1 == 'files' ]; then
 fi
 
 if [ "$DOALL" == "1" ] || [ $1 == 'images' ]; then
-    echo "Processing Imagess"
-    while IFS=, read -r offset size name
-    do
-        echo "Extracting $name, $size bytes..."
-        dd bs=1 skip=$offset count=$size if=baserom.u.z64 of=$name status=none
-        echo "Successfully Extracted $name"
-    done < imagelist.u.csv
+    echo "Processing Images"
+    if [ -f tools/extractor/extractor ];
+    then
+        make -C tools/extractor clean
+    fi
+    make -C tools/extractor
+    if [ -f tools/extractor/extractor ];
+    then
+        tools/extractor/extractor baserom.u.z64 imagelist.u.csv
+    else
+        while IFS=, read -r offset size name
+        do
+            echo "Extracting $name, $size bytes..."
+            dd bs=1 skip=$offset count=$size if=baserom.u.z64 of=$name status=none
+            echo "Successfully Extracted $name"
+        done < imagelist.u.csv
+    fi
     #imageslist.u.csv should follow pattern of:
-    #offset,size,name
+    #offset,size,name,compressed,extract
     #formatting matters, no comments, no extra lines, unix line endings only
     #and always end with a newline
 fi
