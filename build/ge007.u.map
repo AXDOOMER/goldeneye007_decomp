@@ -3356,7 +3356,7 @@ Linker script and memory map
                 0x000000007f028ddc                plot_course_for_actor
                 0x000000007f028fac                sub_GAME_7F028FAC
                 0x000000007f0290f8                set_actor_on_path
-                0x000000007f029298                update_GUARDdata_timer_to_current
+                0x000000007f029298                setSeenBondTimeToNow
                 0x000000007f0292a8                sub_GAME_7F0292A8
                 0x000000007f0294bc                sub_GAME_7F0294BC
                 0x000000007f0295d0                check_if_position_in_same_room
@@ -3449,10 +3449,10 @@ Linker script and memory map
                 0x000000007f032c4c                sub_GAME_7F032C4C
                 0x000000007f032c78                sub_GAME_7F032C78
                 0x000000007f032d70                get_angle_between_actor_cur_player
-                0x000000007f032de4                sub_GAME_7F032DE4
+                0x000000007f032de4                distToBond3D
                 0x000000007f032e48                sub_GAME_7F032E48
                 0x000000007f032efc                check_if_room_for_preset_loaded
-                0x000000007f032f94                sub_GAME_7F032F94
+                0x000000007f032f94                convertPadIf9000
                 0x000000007f032fac                sub_GAME_7F032FAC
                 0x000000007f033040                get_handle_for_guard_id
                 0x000000007f0330c4                get_distance_between_actor_and_actorID
@@ -3529,7 +3529,7 @@ Linker script and memory map
                 0x000000007f03a4a4                set_current_objposdata_plus_0x28
                 0x000000007f03a4f0                sub_GAME_7F03A4F0
                 0x000000007f03a538                sub_GAME_7F03A538
-                0x000000007f03a5a4                sub_GAME_7F03A5A4
+                0x000000007f03a5a4                attachNewChild
                 0x000000007f03a5d0                sub_GAME_7F03A5D0
                 0x000000007f03a62c                sub_GAME_7F03A62C
                 0x000000007f03a6f4                sub_GAME_7F03A6F4
@@ -4148,7 +4148,7 @@ Linker script and memory map
                 0x000000007f06ce84                sub_GAME_7F06CE84
                 0x000000007f06ce90                getjointsize
                 0x000000007f06d00c                getinstsize
-                0x000000007f06d07c                sub_GAME_7F06D07C
+                0x000000007f06d07c                interpolate3dVectors
                 0x000000007f06d0cc                sub_GAME_7F06D0CC
                 0x000000007f06d160                sub_GAME_7F06D160
                 0x000000007f06d1cc                sub_GAME_7F06D1CC
@@ -4929,7 +4929,7 @@ Linker script and memory map
                 0x000000007f0afe70                sub_GAME_7F0AFE70
                 0x000000007f0affcc                sub_GAME_7F0AFFCC
                 0x000000007f0b0018                sub_GAME_7F0B0018
-                0x000000007f0b0064                sub_GAME_7F0B0064
+                0x000000007f0b0064                distToTilePnt2D
                 0x000000007f0b00c4                sub_GAME_7F0B00C4
                 0x000000007f0b0140                sub_GAME_7F0B0140
                 0x000000007f0b0198                sub_GAME_7F0B0198
@@ -4937,7 +4937,7 @@ Linker script and memory map
                 0x000000007f0b036c                sub_GAME_7F0B036C
                 0x000000007f0b0400                sub_GAME_7F0B0400
                 0x000000007f0b0518                sub_GAME_7F0B0518
-                0x000000007f0b05c0                sub_GAME_7F0B05C0
+                0x000000007f0b05c0                getRotationalDirectionBetween
                 0x000000007f0b0688                sub_GAME_7F0B0688
                 0x000000007f0b07bc                sub_GAME_7F0B07BC
                 0x000000007f0b0914                sub_GAME_7F0B0914
@@ -5020,7 +5020,7 @@ Linker script and memory map
                 0x000000007f0b4848                sub_GAME_7F0B4848
                 0x000000007f0b4878                sub_GAME_7F0B4878
                 0x000000007f0b4884                sub_GAME_7F0B4884
-                0x000000007f0b4a50                sub_GAME_7F0B4A50
+                0x000000007f0b4a50                addToByteSetMaxSize15
                 0x000000007f0b4ab4                sub_GAME_7F0B4AB4
                 0x000000007f0b4e40                sub_GAME_7F0B4E40
                 0x000000007f0b4f9c                sub_GAME_7F0B4F9C
