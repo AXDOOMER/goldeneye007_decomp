@@ -6,7 +6,9 @@ DATASEG_START=$(printf "%d\n" 0x$(grep ${MAPFILE} -e '__csegtempPos =' | cut -d 
 DATASEG_LEN=$(printf "%d\n" 0x$(grep ${MAPFILE} -e 'load address 0x0000000000c00000' | cut -d "x" -f3 | cut -d " " -f1))
 
 #build/rebuild aaa_rip
-make -C tools/aaa_rip
+if [ ! -f tools/aaa_rip/aaa_rip ]; then
+    make -C tools/aaa_rip
+fi
 
 echo "patching $1"
 echo "extract data segment"

@@ -44,9 +44,7 @@ do
 done
 
 #build/rebuild extractor
-if [ -f tools/extractor/extractor ]; then
-    make -C tools/extractor clean && make -C tools/extractor
-else
+if [ ! -f tools/extractor/extractor ]; then
     make -C tools/extractor
 fi
 
