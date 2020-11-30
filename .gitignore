@@ -47,3 +47,9 @@ ge007.j.elf
 ge007.u.bin
 ge007.u.elf
 lib/libultra_rom.a
+tools/extractor/puff.o
+tools/extractor/main.o
+tools/extractor/fread_csv_line.o
+tools/extractor/extractor
+tools/aaa_rip/main.o
+tools/aaa_rip/aaa_rip

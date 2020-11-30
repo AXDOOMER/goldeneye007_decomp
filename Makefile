@@ -138,6 +138,10 @@ ASM_PREPROC := python3 tools/asmpreproc/asm-processor.py
 OBJCOPY := $(TOOLCHAIN)objcopy
 
 all: $(APPROM)
+.SECONDARY:
+	$(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
+	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
+	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) 
 ifeq ($(COMPARE),1)
 	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1
 endif
@@ -208,7 +212,6 @@ $(APPROM):	$(APPBIN)
 	$(N64CKSUM) $< $@
 	rm header.tmp
 
+.PRECIOUS: %.bin  %.o
+
 .PHONY: all default codeclean dataclean clean
-
-
-
