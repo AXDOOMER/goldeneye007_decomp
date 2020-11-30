@@ -8,7 +8,7 @@ OUTNAME = extractor
 #Compiler flags
 CFLAGS = -shared -ansi -Os -std=c89
 CFLAGSDBG = -shared -ansi -g -std=c89
-WFLAGS = -W -Wall -Wextra -pedantic -Wunreachable-code -Wno-implicit-fallthrough
+WFLAGS = -W -Wall -Wextra -pedantic -Wunreachable-code -Wno-implicit-fallthrough -Wno-unused-result
 
 #Linker flags
 OBJS = $(SRCDIR)main.o $(SRCDIR)puff.o $(SRCDIR)fread_csv_line.o
