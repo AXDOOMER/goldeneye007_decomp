@@ -13,12 +13,12 @@ int main(int argc, char **argv)
 	unsigned char *in_buf, *out_buf;
 	/************************/
 
-	printf("\n  AAA RIP - Lite DD Clone\n%s\n", LINE);
 	if((argc != 5) && (argc != 6)) /* no file provided or too many arguments */
 	{
-		printf("\n  About: Extract sub-binary from binary\n\n  Syntax: %s \"in\" \"out\" \"offset\" \"length\" \"out offset\"\n\n  Notes:\n  Setting length argument to 0 will write until end of input file.\n  All arguments assume decimal value.\n  Omitting output offset will overwrite output file.", argv[0]);
+		printf("\n  AAA RIP - Lite DD Clone\n%s\n\n  About: Extract sub-binary from binary\n\n  Syntax: %s \"in\" \"out\" \"offset\" \"length\" \"out offset\"\n\n  Usage:\n  Setting length argument to 0 will write until end of input file.\n  Omitting output offset will overwrite output file.\n  All arguments assume decimal values.", LINE, argv[0]);
 		goto exit;
 	}
+	printf("%s\n", LINE);
 
 	/* load input from argument */
 	input = fopen(argv[1], "rb");
@@ -69,9 +69,11 @@ int main(int argc, char **argv)
 		printf("\n  Error: Aborted, length goes beyond end of file");
 		goto error_input;
 	}
-	printf("\n  Input File: %s\n  Offset: %d\n  Length: %d", argv[1], offset, length);
+	printf("\n  Input File: %s\n  Output File: %s\n  Offset: %d\n  Length: %d", argv[1], argv[2],offset, length);
 	if(argc == 6)
+	{
 		printf("\n  Output Offset: %d", offset_output);
+	}
 
 	/* read input to file buffer */
 	in_buf = (unsigned char *)malloc(length);
