@@ -225,7 +225,7 @@ int main(int argc, char **argv)
 	printf("\n  GoldenEye 007 1172 extractor\n%s\n", LINE);
 	if(argc != 3) /* no file provided or too many arguments */
 	{
-		printf("\n  About: Extract GoldenEye 007 files\n\n  Syntax: %s \"input ROM\" \"input csv file\"\n", argv[0]);
+		printf("\n  About: Extract GoldenEye 007 files\n\n  Syntax: %s \"input ROM\" \"input csv file\"", argv[0]);
 		goto exit;
 	}
 
@@ -279,7 +279,7 @@ int main(int argc, char **argv)
 		printf("\n  Error: Aborted, not enough memory to load ROM");
 		goto error_csv;
 	}
-	filesize = fread(rom_buf, filesize, 1, romfile);
+	fread(rom_buf, filesize, 1, romfile);
 
 	extract_files(csvfile, total_threads);
 
