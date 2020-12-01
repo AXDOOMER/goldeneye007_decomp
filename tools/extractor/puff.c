@@ -797,7 +797,7 @@ int puff(unsigned char *dest,           /* pointer to destination pointer */
 {
     struct state s;             /* input/output state */
     int last, type;             /* block information */
-    int err;                    /* error value */
+    int err;                    /* return value */
 
     /* initialize output state */
     s.out = dest;
@@ -831,6 +831,6 @@ int puff(unsigned char *dest,           /* pointer to destination pointer */
         } while (!last);
     }
 
-    /* return uncompressed length or zero on error */
+    /* update the lengths and return */
     return !err ? s.outcnt : 0;
 }
