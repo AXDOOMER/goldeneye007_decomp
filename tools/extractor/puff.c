@@ -838,6 +838,6 @@ int puff(unsigned char *dest,           /* pointer to destination pointer */
     }
 
     /* update the lengths and return */
-	*outlen = s.outcnt;
+    *outlen = s.outcnt;
     return err;
 }

@@ -1,5 +1,5 @@
 #Compiler
-CC = gcc
+CC = @gcc
 
 #Source directories
 SRCDIR = ./
@@ -12,18 +12,19 @@ WFLAGS = -W -Wall -Wextra -pedantic -Wunreachable-code -Wno-implicit-fallthrough
 
 #Linker flags
 OBJS = $(SRCDIR)main.o
-LFLAGS = $(OBJS) -o $(OUTNAME) $(LIBS) -s
-LFLAGSDBG = $(OBJS) -o $(OUTNAME) $(LIBS)
+LFLAGS = $(OBJS) -o $(OUTNAME) -s
+LFLAGSDBG = $(OBJS) -o $(OUTNAME)
 
 #Main recipes
 all: aaa_rip
 
+debug: CC = gcc
 debug: CFLAGS = $(CFLAGSDBG)
 debug: LFLAGS = $(LFLAGSDBG)
 debug: aaa_rip
 
 aaa_rip: $(OBJS)
-	@$(CC) $(LFLAGS)
+	$(CC) $(LFLAGS)
 
 clean:
 	@rm $(OUTNAME)
@@ -31,4 +32,4 @@ clean:
 
 #Individual recipes
 $(OBJDIR)main.o: $(SRCDIR)main.c
-	@$(CC) -c $(SRCDIR)main.c -o $(SRCDIR)main.o $(CFLAGS) $(WFLAGS)
+	$(CC) -c $(SRCDIR)main.c -o $(SRCDIR)main.o $(CFLAGS) $(WFLAGS)

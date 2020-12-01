@@ -32,7 +32,7 @@ unsigned char *rom_buf;
 unsigned char tmp_buf[MAX_THREADS][MBTOBYTES(2)] = {0}; /* holds our input/output for gzip inflate (max output file supported 2MB) */
 pthread_t gzip_threads[MAX_THREADS];
 
-struct arg_thread
+struct pthread_arg
 {
 	volatile int offset, compress, size;
 	volatile short thread_id, ready;
@@ -40,10 +40,12 @@ struct arg_thread
 	char *name;
 };
 
+typedef struct pthread_arg arg_thread;
+
 void *extract_thread(void *arg)
 {
 	/************************/
-	struct arg_thread *thread_arg = (struct arg_thread *)arg;
+	arg_thread *thread_arg = (arg_thread *)arg;
 	int offset, compress, size, thread_id, puff_return;
 	unsigned long out_size;
 	char name[MAX_FILENAME];
@@ -147,7 +149,7 @@ void extract_files(FILE *csvfile, const int max_threads, long unsigned int *coun
 	char *csv_buf, cur_line;
 	unsigned int offset, size, compress, extract;
 	char name[MAX_FILENAME] = {'\0'};
-	struct arg_thread thread_arg;
+	arg_thread thread_arg;
 	/************************/
 
 	/* get max line entry in csv file (required for allocation) */
