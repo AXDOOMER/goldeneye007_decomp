@@ -44,7 +44,8 @@ void *extract_thread(void *arg)
 {
 	/************************/
 	struct arg_thread *thread_arg = (struct arg_thread *)arg;
-	int offset, compress, size, thread_id;
+	int offset, compress, size, thread_id, puff_return;
+	unsigned long out_size;
 	char name[MAX_FILENAME];
 	FILE *output;
 	/************************/
@@ -66,14 +67,30 @@ void *extract_thread(void *arg)
 	}
 	if(compress) /* unzip */
 	{
-		size = puff(tmp_buf[thread_id], (unsigned long)MBTOBYTES(2), &rom_buf[offset + GE_1172_HEADER_LENGTH], (unsigned long)size);
-		if(!size)
+		puff_return = puff(tmp_buf[thread_id], (unsigned long)MBTOBYTES(2), &rom_buf[offset + GE_1172_HEADER_LENGTH], (unsigned long)size, &out_size);
+		if(puff_return != 0)
 		{
-			printf("\n  Error: Could not uncompress file %s", name);
+			switch(puff_return)
+			{
+				case   2: printf("\n\n  Error: Could not uncompress file %s\n  Available inflate data did not terminate\n", name); break;
+				case   1: printf("\n\n  Error: Could not uncompress file %s\n  Output space exhausted before completing inflate\n", name); break;
+				case  -1: printf("\n\n  Error: Could not uncompress file %s\n  Invalid block type (type == 3)\n", name); break;
+				case  -2: printf("\n\n  Error: Could not uncompress file %s\n  Stored block length did not match one's complement\n", name); break;
+				case  -3: printf("\n\n  Error: Could not uncompress file %s\n  Dynamic block code description: too many length or distance codes\n", name); break;
+				case  -4: printf("\n\n  Error: Could not uncompress file %s\n  Dynamic block code description: code lengths codes incomplete\n", name); break;
+				case  -5: printf("\n\n  Error: Could not uncompress file %s\n  Dynamic block code description: repeat lengths with no first length\n", name); break;
+				case  -6: printf("\n\n  Error: Could not uncompress file %s\n  Dynamic block code description: repeat more than specified lengths\n", name); break;
+				case  -7: printf("\n\n  Error: Could not uncompress file %s\n  Dynamic block code description: invalid literal/length code lengths\n", name); break;
+				case  -8: printf("\n\n  Error: Could not uncompress file %s\n  Dynamic block code description: invalid distance code lengths\n", name); break;
+				case  -9: printf("\n\n  Error: Could not uncompress file %s\n  Dynamic block code description: missing end-of-block code\n", name); break;
+				case -10: printf("\n\n  Error: Could not uncompress file %s\n  Invalid literal/length or distance code in fixed or dynamic block\n", name); break;
+				case -11: printf("\n\n  Error: Could not uncompress file %s\n  Distance is too far back in fixed or dynamic block\n", name); break;
+				 default: printf("\n\n  Error: Could not uncompress file %s\n  Unknown error\n", name); break;
+			}
 			*thread_arg->failed += 1;
 			goto error_thread_unzip;
 		}
-		fwrite(tmp_buf[thread_id], size, 1, output);
+		fwrite(tmp_buf[thread_id], out_size, 1, output);
 	}
 	else /* uncompressed */
 	{

@@ -1,4 +1,9 @@
 /*
+   THIS FILE HAS BEEN MODIFIED
+   puff has been modified to write length to argument pointer
+*/
+
+/*
  * puff.c
  * Copyright (C) 2002-2013 Mark Adler
  * For conditions of distribution and use, see copyright notice in puff.h
@@ -793,7 +798,8 @@ local int dynamic(struct state *s)
 int puff(unsigned char *dest,           /* pointer to destination pointer */
          unsigned long destlen,        /* amount of output space */
          const unsigned char *source,   /* pointer to source data pointer */
-         unsigned long sourcelen)      /* amount of input available */
+         unsigned long sourcelen,      /* amount of input available */
+         unsigned long *outlen)      /* output length */
 {
     struct state s;             /* input/output state */
     int last, type;             /* block information */
@@ -832,5 +838,6 @@ int puff(unsigned char *dest,           /* pointer to destination pointer */
     }
 
     /* update the lengths and return */
-    return !err ? s.outcnt : 0;
+	*outlen = s.outcnt;
+    return err;
 }
