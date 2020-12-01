@@ -17,7 +17,9 @@
 #define MAX_THREADS 32
 #else
 #include <unistd.h>
-#if !defined (_SC_NPROCESSORS_ONLN) && !defined (_SC_NPROC_ONLN)
+#if defined (_SC_NPROCESSORS_ONLN) || defined (_SC_NPROC_ONLN)
+#define MAX_THREADS 8
+#else
 #define MAX_THREADS 1
 #endif
 #endif
