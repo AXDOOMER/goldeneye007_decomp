@@ -3985,40 +3985,12 @@ glabel sub_GAME_7F0B16C4
 
 
 
-
-#ifdef NONMATCHING
-float sub_GAME_7F0B1794(float a_x,float a_z,float b_x,float b_z)
+float distBetweenPoints2d(float o_x,float o_z,float p_x,float p_z)
 {
-  float x_diff = (b_x - a_x);
-  float z_diff = (b_z - a_z);
-  return sqrtf(x_diff*x_diff + z_diff*z_diff);
+  p_x -= o_x;
+  p_z -= o_z;
+  return sqrtf(p_x*p_x + p_z*p_z);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B1794
-/* 0E62C4 7F0B1794 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0E62C8 7F0B1798 E7AC0018 */  swc1  $f12, 0x18($sp)
-/* 0E62CC 7F0B179C AFA60020 */  sw    $a2, 0x20($sp)
-/* 0E62D0 7F0B17A0 C7A40020 */  lwc1  $f4, 0x20($sp)
-/* 0E62D4 7F0B17A4 C7A60018 */  lwc1  $f6, 0x18($sp)
-/* 0E62D8 7F0B17A8 AFA70024 */  sw    $a3, 0x24($sp)
-/* 0E62DC 7F0B17AC C7AA0024 */  lwc1  $f10, 0x24($sp)
-/* 0E62E0 7F0B17B0 46062201 */  sub.s $f8, $f4, $f6
-/* 0E62E4 7F0B17B4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E62E8 7F0B17B8 460E5401 */  sub.s $f16, $f10, $f14
-/* 0E62EC 7F0B17BC 46084482 */  mul.s $f18, $f8, $f8
-/* 0E62F0 7F0B17C0 E7A80020 */  swc1  $f8, 0x20($sp)
-/* 0E62F4 7F0B17C4 46108102 */  mul.s $f4, $f16, $f16
-/* 0E62F8 7F0B17C8 E7B00024 */  swc1  $f16, 0x24($sp)
-/* 0E62FC 7F0B17CC 0C007DF8 */  jal   sqrtf
-/* 0E6300 7F0B17D0 46049300 */   add.s $f12, $f18, $f4
-/* 0E6304 7F0B17D4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0E6308 7F0B17D8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0E630C 7F0B17DC 03E00008 */  jr    $ra
-/* 0E6310 7F0B17E0 00000000 */   nop   
-)
-#endif
 
 
 
@@ -4353,7 +4325,7 @@ glabel sub_GAME_7F0B18B8
 /* 0E6678 7F0B1B48 4407E000 */  mfc1  $a3, $f28
 /* 0E667C 7F0B1B4C 01911021 */  addu  $v0, $t4, $s1
 /* 0E6680 7F0B1B50 C44C0000 */  lwc1  $f12, ($v0)
-/* 0E6684 7F0B1B54 0FC2C5E5 */  jal   sub_GAME_7F0B1794
+/* 0E6684 7F0B1B54 0FC2C5E5 */  jal   distBetweenPoints2d
 /* 0E6688 7F0B1B58 C44E0004 */   lwc1  $f14, 4($v0)
 /* 0E668C 7F0B1B5C 8FAD00A4 */  lw    $t5, 0xa4($sp)
 /* 0E6690 7F0B1B60 001280C0 */  sll   $s0, $s2, 3
@@ -4362,7 +4334,7 @@ glabel sub_GAME_7F0B18B8
 /* 0E669C 7F0B1B6C 01B01821 */  addu  $v1, $t5, $s0
 /* 0E66A0 7F0B1B70 46000586 */  mov.s $f22, $f0
 /* 0E66A4 7F0B1B74 C46C0000 */  lwc1  $f12, ($v1)
-/* 0E66A8 7F0B1B78 0FC2C5E5 */  jal   sub_GAME_7F0B1794
+/* 0E66A8 7F0B1B78 0FC2C5E5 */  jal   distBetweenPoints2d
 /* 0E66AC 7F0B1B7C C46E0004 */   lwc1  $f14, 4($v1)
 /* 0E66B0 7F0B1B80 461EA03C */  c.lt.s $f20, $f30
 /* 0E66B4 7F0B1B84 00000000 */  nop   
