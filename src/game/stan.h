@@ -11,8 +11,14 @@ struct StandTilePoint {
 };
 
 struct StandTile {
-    u32 nameAndRoom;
-    u32 header;
+    u16 name1;
+    u8 name2;
+    u8 room;    // compared to 0xFF, not -1 in a function
+    s16 headerA;
+    u8 headerB : 4;
+    u8 headerC : 4;
+    u8 headerD;
+    /* 0x08 */
     struct StandTilePoint points[1];
 };
 

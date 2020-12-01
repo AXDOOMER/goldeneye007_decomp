@@ -1408,20 +1408,14 @@ glabel sub_GAME_7F0AFA1C
 
 
 #ifdef NONMATCHING
-f32 sub_GAME_7F0AFB1C(void *arg0, void *arg1) {
-    f32 sp4;
-    f32 sp8;
-    f32 spC;
-    f32 temp_f18;
-    f32 temp_f8;
-
-    // Node 0
-    sp4 = (f32) (*arg1 - *arg0);
-    temp_f18 = (arg1->unk4 - arg0->unk4);
-    sp8 = temp_f18;
-    temp_f8 = (arg1->unk8 - arg0->unk8);
-    spC = temp_f8;
-    return ((temp_f8 * temp_f8) + ((sp4 * sp4) + (temp_f18 * temp_f18)));
+// Missing addiu sp, sp, -0x10 : I can't get it to use the stack at all. 
+float sub_GAME_7F0AFB1C(struct float3 *p,struct float3 *q)
+{
+  float xDiff = q->x - p->x;
+  float yDiff = q->y - p->y;
+  float zDiff = q->z - p->z;
+  
+  return xDiff*xDiff + yDiff*yDiff + zDiff*zDiff;
 }
 #else
 GLOBAL_ASM(
@@ -1867,10 +1861,15 @@ glabel sub_GAME_7F0AFE70
 
 
 #ifdef NONMATCHING
-f32 sub_GAME_7F0AFFCC(f32 arg2, f32 arg3) {
-    // Node 0
-    return (sub_GAME_7F0AFD1C(arg2, arg3, (arg2 * level_scale), (arg3 * level_scale)) * inv_level_scale);
+// May need 7F0AFD1C decompiled first
+float FUN_7f0affcc(struct StandTile *tile, int index,float x,float z)
+{
+  float dist;
+  
+  dist = sub_GAME_7F0AFD1C(tile, index, x * level_scale, z * level_scale);
+  return dist * inv_level_scale;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1948,8 +1947,16 @@ float distToTilePnt2D(struct StandTile *tile,int pntI,float p_x,float p_z)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B00C4(void) {
-
+float sub_GAME_7F0B00C4(s32 param_1,s32 index,float param_3,float param_4)
+{
+  float dist;
+  float fVar2;
+  
+  param_1 = param_1 + index * 8;
+  dist = param_3 * level_scale - (float)(s32)*(short *)(param_1 + 8);
+  fVar2 = param_4 * level_scale - (float)(s32)*(short *)(param_1 + 0xc);
+  dist = sqrtf(dist * dist + fVar2 * fVar2);
+  return dist * inv_level_scale;
 }
 #else
 GLOBAL_ASM(
@@ -3093,60 +3100,36 @@ glabel sub_GAME_7F0B0C24
 
 
 
+// This function is used in a callback, probably only internally to stan
+// TODO rename this struct more appropriately
+struct sub_GAME_7F0B0C98_struct {
+    s32 * roomBuf;
+    s32 count;
+    s32 bufMax;
+    s32 lastRoom;
+};
 
-#ifdef NONMATCHING
-s32 sub_GAME_7F0B0C98(void *arg0, s32 arg1, void *arg2) {
-    // Node 0
-    if (arg2->unkC != arg0->unk3)
+void sub_GAME_7F0B0C98(struct StandTile *tile, struct StandTile *unused, struct sub_GAME_7F0B0C98_struct *data)
+{
+    s32 newRoom;
+
+    if (tile->room != data->lastRoom && data->count < data->bufMax)
     {
-        // Node 1
-        if (arg2->unk4 < arg2->unk8)
-        {
-            // Node 2
-            **arg2 = (s32) arg0->unk3;
-            arg2->unkC = (s32) arg0->unk3;
-            *arg2 = (void *) (*arg2 + 4);
-            arg2->unk4 = (s32) (arg2->unk4 + 1);
-        }
+        newRoom = (s32)tile->room;
+        *data->roomBuf = newRoom;
+        data->lastRoom = newRoom;
+        data->roomBuf += 1;
+        data->count += 1;
     }
-    // Node 3
-    return arg0->unk3;
+
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B0C98
-/* 0E57C8 7F0B0C98 AFA50004 */  sw    $a1, 4($sp)
-/* 0E57CC 7F0B0C9C 8CCE000C */  lw    $t6, 0xc($a2)
-/* 0E57D0 7F0B0CA0 90820003 */  lbu   $v0, 3($a0)
-/* 0E57D4 7F0B0CA4 11C2000F */  beq   $t6, $v0, .L7F0B0CE4
-/* 0E57D8 7F0B0CA8 00000000 */   nop   
-/* 0E57DC 7F0B0CAC 8CCF0004 */  lw    $t7, 4($a2)
-/* 0E57E0 7F0B0CB0 8CD80008 */  lw    $t8, 8($a2)
-/* 0E57E4 7F0B0CB4 01F8082A */  slt   $at, $t7, $t8
-/* 0E57E8 7F0B0CB8 1020000A */  beqz  $at, .L7F0B0CE4
-/* 0E57EC 7F0B0CBC 00000000 */   nop   
-/* 0E57F0 7F0B0CC0 8CD90000 */  lw    $t9, ($a2)
-/* 0E57F4 7F0B0CC4 AF220000 */  sw    $v0, ($t9)
-/* 0E57F8 7F0B0CC8 8CC80000 */  lw    $t0, ($a2)
-/* 0E57FC 7F0B0CCC 8CCA0004 */  lw    $t2, 4($a2)
-/* 0E5800 7F0B0CD0 ACC2000C */  sw    $v0, 0xc($a2)
-/* 0E5804 7F0B0CD4 25090004 */  addiu $t1, $t0, 4
-/* 0E5808 7F0B0CD8 254B0001 */  addiu $t3, $t2, 1
-/* 0E580C 7F0B0CDC ACC90000 */  sw    $t1, ($a2)
-/* 0E5810 7F0B0CE0 ACCB0004 */  sw    $t3, 4($a2)
-.L7F0B0CE4:
-/* 0E5814 7F0B0CE4 03E00008 */  jr    $ra
-/* 0E5818 7F0B0CE8 00000000 */   nop   
-)
-#endif
 
 
 
 
-
-void sub_GAME_7F0B0CEC(void) {
-    sub_GAME_7F0B0C98();
+void sub_GAME_7F0B0CEC(struct StandTile *tile, struct StandTile *unused, struct sub_GAME_7F0B0C98_struct *data) {
+    sub_GAME_7F0B0C98(tile, unused, data);
 }
 
 
@@ -4004,16 +3987,11 @@ glabel sub_GAME_7F0B16C4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B1794(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
-    f32 temp_f8;
-    f32 temp_f16;
-
-    // Node 0
-    temp_f8 = (arg2 - arg0);
-    temp_f16 = (arg3 - arg1);
-    arg2 = temp_f8;
-    arg3 = temp_f16;
-    sqrtf(((temp_f8 * temp_f8) + (temp_f16 * temp_f16)));
+float sub_GAME_7F0B1794(float a_x,float a_z,float b_x,float b_z)
+{
+  float x_diff = (b_x - a_x);
+  float z_diff = (b_z - a_z);
+  return sqrtf(x_diff*x_diff + z_diff*z_diff);
 }
 #else
 GLOBAL_ASM(
@@ -5021,16 +4999,16 @@ glabel sub_GAME_7F0B21B0
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B2244(void *arg0, void *arg1) {
-    // Node 0
-    if ((*(&D_80040F30 + ((s32) arg0->unk4 >> 0xc)) & 2) != 0)
+
+s32 sub_GAME_7F0B2244(StandTile *tile, u8 *rtn) {
+    if ( D_80040F30[(tile->headerA >> 0xc)] & 2 != 0 )  // as u8[]
     {
-        // Node 1
-        *arg1 = 1;
+        *rtn = 1;
     }
-    // Node 2
+
     return 0;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -5050,7 +5028,6 @@ glabel sub_GAME_7F0B2244
 /* 0E6DA0 7F0B2270 00001025 */   move  $v0, $zero
 )
 #endif
-
 
 
 
@@ -5518,13 +5495,19 @@ glabel sub_GAME_7F0B260C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B26B8(s32 arg1, ? arg2, ? arg3, f32 arg4) {
-    f32 sp2C;
-
-    // Node 0
-    sp2C = (f32) (arg4 * level_scale);
-    sub_GAME_7F0B1DDC(arg1, arg2, arg1, arg2, 0, &sub_GAME_7F0B260C, 0, &sp2C);
+// Needs sub_GAME_7F0B260C defined in order to build.
+void sub_GAME_7F0B26B8(struct StandTile **tile, float target_x, float target_z, float b_z, float param_5)
+{
+    float unk_float;
+    
+    unk_float = param_5 * level_scale;
+    
+    return sub_GAME_7F0B1DDC(
+        tile, target_x, target_z, b_z,
+        0x0, &sub_GAME_7F0B260C, 0x0, &unk_float
+    );
 }
+
 #else
 GLOBAL_ASM(
 .text
