@@ -3,6 +3,7 @@
 
 #include "ultra64.h"
 #include "game/chr.h"
+#include "structs.h"
 
 struct xyzpoint
 {
@@ -343,7 +344,7 @@ struct Player
   s32 crouchposition;
   s32 ducking_height_offset;
   s32 field_A4;
-  s32 position_data_pointer;
+  struct PositionData* position_data;
   s32 field_AC;
   s32 field_B0;
   s32 zpos_0;
@@ -2872,5 +2873,7 @@ u32 get_camera_mode(void);
 void sub_GAME_7F07E46C(f32 param);
 
 void trigger_watch_zoom(f32 final, f32 time);
+
+struct PositionData* get_curplayer_positiondata(void);
 
 #endif

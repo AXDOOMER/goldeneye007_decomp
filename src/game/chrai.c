@@ -140,7 +140,7 @@ char dword_CODE_bss_80075C10[0x78];
 char dword_CODE_bss_80075C88[0x78];
 
 //CODE.bss:80075D00
-void * ptr_setup_path_tbl;
+struct Pad * ptr_setup_path_tbl;
 //CODE.bss:80075D04
 void * ptr_setup_path_link;
 //CODE.bss:80075D08
@@ -4227,7 +4227,7 @@ action4B_RVL_If_In_Proximity_Of_Bond_4:
 /* 06B3BC 7F03688C 00000000 */  nop   
 /* 06B3C0 7F036890 468042A0 */  cvt.s.w $f10, $f8
 /* 06B3C4 7F036894 46185402 */  mul.s $f16, $f10, $f24
-/* 06B3C8 7F036898 0FC0CB79 */  jal   sub_GAME_7F032DE4
+/* 06B3C8 7F036898 0FC0CB79 */  jal   distToBond3D
 /* 06B3CC 7F03689C E7B005FC */   swc1  $f16, 0x5fc($sp)
 /* 06B3D0 7F0368A0 C7B205FC */  lwc1  $f18, 0x5fc($sp)
 /* 06B3D4 7F0368A4 02C02025 */  move  $a0, $s6
@@ -4255,7 +4255,7 @@ action4C_RVL_If_Not_In_Proximity_Of_Bond_4:
 /* 06B424 7F0368F4 00000000 */  nop   
 /* 06B428 7F0368F8 468021A0 */  cvt.s.w $f6, $f4
 /* 06B42C 7F0368FC 46183202 */  mul.s $f8, $f6, $f24
-/* 06B430 7F036900 0FC0CB79 */  jal   sub_GAME_7F032DE4
+/* 06B430 7F036900 0FC0CB79 */  jal   distToBond3D
 /* 06B434 7F036904 E7A805F4 */   swc1  $f8, 0x5f4($sp)
 /* 06B438 7F036908 C7AA05F4 */  lwc1  $f10, 0x5f4($sp)
 /* 06B43C 7F03690C 02C02025 */  move  $a0, $s6
@@ -4932,7 +4932,7 @@ action64_Type_16_Object_Equipped_On_Guard_3:
 /* 06BDB4 7F037284 26520003 */   addiu $s2, $s2, 3
 /* 06BDB8 7F037288 8E040010 */  lw    $a0, 0x10($s0)
 .L7F03728C:
-/* 06BDBC 7F03728C 0FC0E969 */  jal   sub_GAME_7F03A5A4
+/* 06BDBC 7F03728C 0FC0E969 */  jal   attachNewChild
 /* 06BDC0 7F037290 8E650018 */   lw    $a1, 0x18($s3)
 .L7F037294:
 /* 06BDC4 7F037294 26520003 */  addiu $s2, $s2, 3
@@ -7560,7 +7560,7 @@ actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5:
 /* 06E2EC 7F0397BC 1040005E */  beqz  $v0, .L7F039938
 /* 06E2F0 7F0397C0 00408025 */   move  $s0, $v0
 /* 06E2F4 7F0397C4 02E02025 */  move  $a0, $s7
-/* 06E2F8 7F0397C8 0FC0CBE5 */  jal   sub_GAME_7F032F94
+/* 06E2F8 7F0397C8 0FC0CBE5 */  jal   convertPadIf9000
 /* 06E2FC 7F0397CC 02602825 */   move  $a1, $s3
 /* 06E300 7F0397D0 28412710 */  slti  $at, $v0, 0x2710
 /* 06E304 7F0397D4 1020000A */  beqz  $at, .L7F039800
@@ -10094,7 +10094,7 @@ action4B_RVL_If_In_Proximity_Of_Bond_4:
 /* 06B3BC 7F03688C 00000000 */  nop   
 /* 06B3C0 7F036890 468042A0 */  cvt.s.w $f10, $f8
 /* 06B3C4 7F036894 46185402 */  mul.s $f16, $f10, $f24
-/* 06B3C8 7F036898 0FC0CB79 */  jal   sub_GAME_7F032DE4
+/* 06B3C8 7F036898 0FC0CB79 */  jal   distToBond3D
 /* 06B3CC 7F03689C E7B005FC */   swc1  $f16, 0x5fc($sp)
 /* 06B3D0 7F0368A0 C7B205FC */  lwc1  $f18, 0x5fc($sp)
 /* 06B3D4 7F0368A4 02C02025 */  move  $a0, $s6
@@ -10122,7 +10122,7 @@ action4C_RVL_If_Not_In_Proximity_Of_Bond_4:
 /* 06B424 7F0368F4 00000000 */  nop   
 /* 06B428 7F0368F8 468021A0 */  cvt.s.w $f6, $f4
 /* 06B42C 7F0368FC 46183202 */  mul.s $f8, $f6, $f24
-/* 06B430 7F036900 0FC0CB79 */  jal   sub_GAME_7F032DE4
+/* 06B430 7F036900 0FC0CB79 */  jal   distToBond3D
 /* 06B434 7F036904 E7A805F4 */   swc1  $f8, 0x5f4($sp)
 /* 06B438 7F036908 C7AA05F4 */  lwc1  $f10, 0x5f4($sp)
 /* 06B43C 7F03690C 02C02025 */  move  $a0, $s6
@@ -10799,7 +10799,7 @@ action64_Type_16_Object_Equipped_On_Guard_3:
 /* 06BDB4 7F037284 26520003 */   addiu $s2, $s2, 3
 /* 06BDB8 7F037288 8E040010 */  lw    $a0, 0x10($s0)
 .L7F03728C:
-/* 06BDBC 7F03728C 0FC0E969 */  jal   sub_GAME_7F03A5A4
+/* 06BDBC 7F03728C 0FC0E969 */  jal   attachNewChild
 /* 06BDC0 7F037290 8E650018 */   lw    $a1, 0x18($s3)
 .L7F037294:
 /* 06BDC4 7F037294 26520003 */  addiu $s2, $s2, 3
@@ -13427,7 +13427,7 @@ actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5:
 /* 06E2EC 7F0397BC 1040005E */  beqz  $v0, .L7F039938
 /* 06E2F0 7F0397C0 00408025 */   move  $s0, $v0
 /* 06E2F4 7F0397C4 02E02025 */  move  $a0, $s7
-/* 06E2F8 7F0397C8 0FC0CBE5 */  jal   sub_GAME_7F032F94
+/* 06E2F8 7F0397C8 0FC0CBE5 */  jal   convertPadIf9000
 /* 06E2FC 7F0397CC 02602825 */   move  $a1, $s3
 /* 06E300 7F0397D0 28412710 */  slti  $at, $v0, 0x2710
 /* 06E304 7F0397D4 1020000A */  beqz  $at, .L7F039800
@@ -14540,28 +14540,22 @@ glabel sub_GAME_7F03A538
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03A5A4(void) {
+void attachNewChild(struct PositionData *newChild,struct PositionData *host)
+{
+    newChild->host = host;
 
+    // Link the newChild into its siblings
+    if (host->child) {
+        host->child->prevSibling = newChild;
+    }
+    newChild->nextSibling = host->child;
+    newChild->prevSibling = 0x0;
+
+    newChild->standTile = 0x0;
+    host->child = newChild;
+
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03A5A4
-/* 06F0D4 7F03A5A4 AC85001C */  sw    $a1, 0x1c($a0)
-/* 06F0D8 7F03A5A8 8CA20020 */  lw    $v0, 0x20($a1)
-/* 06F0DC 7F03A5AC 50400004 */  beql  $v0, $zero, .L7F03A5C0
-/* 06F0E0 7F03A5B0 AC820024 */   sw    $v0, 0x24($a0)
-/* 06F0E4 7F03A5B4 AC440028 */  sw    $a0, 0x28($v0)
-/* 06F0E8 7F03A5B8 8CA20020 */  lw    $v0, 0x20($a1)
-/* 06F0EC 7F03A5BC AC820024 */  sw    $v0, 0x24($a0)
-.L7F03A5C0:
-/* 06F0F0 7F03A5C0 AC800028 */  sw    $zero, 0x28($a0)
-/* 06F0F4 7F03A5C4 AC800014 */  sw    $zero, 0x14($a0)
-/* 06F0F8 7F03A5C8 03E00008 */  jr    $ra
-/* 06F0FC 7F03A5CC ACA40020 */   sw    $a0, 0x20($a1)
-)
-#endif
 
 
 
@@ -16847,7 +16841,7 @@ glabel sub_GAME_7F03C2BC
 /* 070F04 7F03C3D4 0FC225E6 */  jal   get_curplayer_positiondata
 /* 070F08 7F03C3D8 00000000 */   nop   
 /* 070F0C 7F03C3DC 02002025 */  move  $a0, $s0
-/* 070F10 7F03C3E0 0FC0E969 */  jal   sub_GAME_7F03A5A4
+/* 070F10 7F03C3E0 0FC0E969 */  jal   attachNewChild
 /* 070F14 7F03C3E4 00402825 */   move  $a1, $v0
 /* 070F18 7F03C3E8 8FBF001C */  lw    $ra, 0x1c($sp)
 .L7F03C3EC:
@@ -17219,7 +17213,7 @@ glabel handle_mp_respawn_and_some_things
 /* 071354 7F03C824 AFA20028 */   sw    $v0, 0x28($sp)
 /* 071358 7F03C828 8FA30028 */  lw    $v1, 0x28($sp)
 /* 07135C 7F03C82C 8E040010 */  lw    $a0, 0x10($s0)
-/* 071360 7F03C830 0FC0E969 */  jal   sub_GAME_7F03A5A4
+/* 071360 7F03C830 0FC0E969 */  jal   attachNewChild
 /* 071364 7F03C834 8C650010 */   lw    $a1, 0x10($v1)
 /* 071368 7F03C838 1000001C */  b     .L7F03C8AC
 /* 07136C 7F03C83C 24130001 */   li    $s3, 1
@@ -19334,7 +19328,7 @@ glabel sub_GAME_7F03E134
 
 #ifdef NONMATCHING
 void sub_GAME_7F03E18C(void) {
-
+    // Duplicate of the below function with a small extension.
 }
 #else
 GLOBAL_ASM(
@@ -19384,8 +19378,31 @@ glabel sub_GAME_7F03E18C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03E210(void) {
+/*
+Main missing these kinds of instructions:
 
+- sll   $a1, $s0, 0x10
+- sra   $t6, $a1, 0x10
+..
+- sll   $a1, $s0, 0x10
+
+So it looks like a conversion from u32 to u16, but we're reading a u8?
+I tried u32 room but no joy.
+*/
+void sub_GAME_7F03E210(struct PositionData *posData)
+{
+  u8 room;
+  u8 *roomIter;
+  
+  roomIter = posData->rooms;
+  room = roomIter[0];
+
+  while (room != 0xff) {
+    FUN_7f03dd9c(posData,(u16)room);
+    roomIter += 1;
+    room = *roomIter;
+  }
+  return;
 }
 #else
 GLOBAL_ASM(

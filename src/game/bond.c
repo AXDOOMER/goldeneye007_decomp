@@ -11262,7 +11262,7 @@ glabel sub_GAME_7F07D960
 
 
 void sub_GAME_7F07DE64(struct Player *player) {
-    sub_GAME_7F03DE94(player->position_data_pointer, player->field_2A04, player);
+    sub_GAME_7F03DE94(player->position_data, player->field_2A04, player);
     player->field_2A04 = -1;
 }
 
@@ -30840,20 +30840,9 @@ glabel sub_GAME_7F089780
 
 
 
-#ifdef NONMATCHING
-void get_curplayer_positiondata(void) {
-
+struct PositionData* get_curplayer_positiondata(void) {
+    return pPlayer->position_data;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_curplayer_positiondata
-/* 0BE2C8 7F089798 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0BE2CC 7F08979C 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0BE2D0 7F0897A0 03E00008 */  jr    $ra
-/* 0BE2D4 7F0897A4 8DC200A8 */   lw    $v0, 0xa8($t6)
-)
-#endif
 
 
 

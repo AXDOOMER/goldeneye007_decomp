@@ -5479,7 +5479,7 @@ glabel sub_GAME_7F043A6C
 /* 078624 7F043AF4 8E0C0014 */  lw    $t4, 0x14($s0)
 /* 078628 7F043AF8 8FAB00FC */  lw    $t3, 0xfc($sp)
 /* 07862C 7F043AFC AD8B001C */  sw    $t3, 0x1c($t4)
-/* 078630 7F043B00 0FC0E969 */  jal   sub_GAME_7F03A5A4
+/* 078630 7F043B00 0FC0E969 */  jal   attachNewChild
 /* 078634 7F043B04 8FA500F4 */   lw    $a1, 0xf4($sp)
 /* 078638 7F043B08 27B100AC */  addiu $s1, $sp, 0xac
 /* 07863C 7F043B0C 02202825 */  move  $a1, $s1
@@ -24818,7 +24818,7 @@ glabel maybe_detonate_object
 /* 08303C 7F04E50C AFA600C0 */   sw    $a2, 0xc0($sp)
 /* 083040 7F04E510 8FA600C0 */  lw    $a2, 0xc0($sp)
 /* 083044 7F04E514 8E050010 */  lw    $a1, 0x10($s0)
-/* 083048 7F04E518 0FC0E969 */  jal   sub_GAME_7F03A5A4
+/* 083048 7F04E518 0FC0E969 */  jal   attachNewChild
 /* 08304C 7F04E51C 8CC40010 */   lw    $a0, 0x10($a2)
 /* 083050 7F04E520 10000008 */  b     .L7F04E544
 /* 083054 7F04E524 92020003 */   lbu   $v0, 3($s0)
@@ -29534,7 +29534,7 @@ glabel sub_GAME_7F050F50
 /* 085B24 7F050FF4 8D090008 */  lw    $t1, 8($t0)
 /* 085B28 7F050FF8 8D2A0018 */  lw    $t2, 0x18($t1)
 /* 085B2C 7F050FFC AD6A001C */  sw    $t2, 0x1c($t3)
-/* 085B30 7F051000 0FC0E969 */  jal   sub_GAME_7F03A5A4
+/* 085B30 7F051000 0FC0E969 */  jal   attachNewChild
 /* 085B34 7F051004 8C450018 */   lw    $a1, 0x18($v0)
 /* 085B38 7F051008 8FAC0024 */  lw    $t4, 0x24($sp)
 /* 085B3C 7F05100C AD9101D8 */  sw    $s1, 0x1d8($t4)
@@ -30883,7 +30883,7 @@ glabel sub_GAME_7F051E1C
 /* 086A3C 7F051F0C 10000004 */  b     .L7F051F20
 /* 086A40 7F051F10 00001025 */   move  $v0, $zero
 .L7F051F14:
-/* 086A44 7F051F14 0FC0E969 */  jal   sub_GAME_7F03A5A4
+/* 086A44 7F051F14 0FC0E969 */  jal   attachNewChild
 /* 086A48 7F051F18 8CE50018 */   lw    $a1, 0x18($a3)
 /* 086A4C 7F051F1C 24020001 */  li    $v0, 1
 .L7F051F20:

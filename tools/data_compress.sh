@@ -5,11 +5,18 @@ MAPFILE="./build/ge007."$2".map"
 DATASEG_START=$(printf "%d\n" 0x$(grep ${MAPFILE} -e '__csegtempPos =' | cut -d "x" -f3))
 DATASEG_LEN=$(printf "%d\n" 0x$(grep ${MAPFILE} -e 'load address 0x0000000000c00000' | cut -d "x" -f3 | cut -d " " -f1))
 
+#build/rebuild aaa_rip
+if [ ! -f tools/aaa_rip/aaa_rip ]; then
+    make -C tools/aaa_rip
+fi
 
 echo "patching $1"
 echo "extract data segment"
-echo "one byte at a time is slow, sorry"
-dd skip=${DATASEG_START} count=${DATASEG_LEN} if=$1 of=data_seg bs=1
+if [ -f tools/aaa_rip/aaa_rip ]; then
+    tools/aaa_rip/aaa_rip $1 data_seg ${DATASEG_START} ${DATASEG_LEN}
+else
+    dd skip=${DATASEG_START} count=${DATASEG_LEN} if=$1 of=data_seg bs=1
+fi
 
 echo "truncate $1 to 0x$(printf "%x\n" ${DATASEG_START})"
 cat $1 | head --bytes=${DATASEG_START} > $1.tmp
@@ -30,9 +37,12 @@ CDATA_MAX_SIZE=72704
 
 echo "maxsize=${CDATA_MAX_SIZE}"
 
-echo "one byte at a time is slow, sorry"
-dd if=data_seg.rz of=$1.tmp obs=1 seek=${CDATA_POS} conv=notrunc
-#rm data_seg data_seg.rz
+if [ -f tools/aaa_rip/aaa_rip ]; then
+    tools/aaa_rip/aaa_rip data_seg.rz $1.tmp 0 0 ${CDATA_POS}
+else
+    echo "one byte at a time is slow, sorry"
+    dd if=data_seg.rz of=$1.tmp obs=1 seek=${CDATA_POS} conv=notrunc
+fi
 
 mv $1.tmp $1
 
