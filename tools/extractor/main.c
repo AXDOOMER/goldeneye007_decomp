@@ -32,8 +32,11 @@ unsigned char *rom_buf;
 unsigned char tmp_buf[MAX_THREADS][MBTOBYTES(2)] = {0}; /* holds our input/output for gzip inflate (max output file supported 2MB) */
 pthread_t gzip_threads[MAX_THREADS];
 
-struct arg_thread {
-	volatile int offset, compress, size, thread_id, ready;
+struct arg_thread
+{
+	volatile int offset, compress, size;
+	volatile short thread_id, ready;
+	unsigned long int *success, *failed;
 	char *name;
 };
 
@@ -41,7 +44,8 @@ void *extract_thread(void *arg)
 {
 	/************************/
 	struct arg_thread *thread_arg = (struct arg_thread *)arg;
-	int offset, compress, size, thread_id;
+	int offset, compress, size, thread_id, puff_return;
+	unsigned long out_size;
 	char name[MAX_FILENAME];
 	FILE *output;
 	/************************/
@@ -58,22 +62,41 @@ void *extract_thread(void *arg)
 	if(output == NULL)
 	{
 		printf("\n  Error: Could not output file %s", name);
+		*thread_arg->failed += 1;
 		goto error_thread_output;
 	}
 	if(compress) /* unzip */
 	{
-		size = puff(tmp_buf[thread_id], (unsigned long)MBTOBYTES(2), &rom_buf[offset + GE_1172_HEADER_LENGTH], (unsigned long)size);
-		if(!size)
+		puff_return = puff(tmp_buf[thread_id], (unsigned long)MBTOBYTES(2), &rom_buf[offset + GE_1172_HEADER_LENGTH], (unsigned long)size, &out_size);
+		if(puff_return != 0)
 		{
-			printf("\n  Error: Could not uncompress file %s", name);
+			switch(puff_return)
+			{
+				case   2: printf("\n\n  Error: Could not uncompress file %s\n  Available inflate data did not terminate\n", name); break;
+				case   1: printf("\n\n  Error: Could not uncompress file %s\n  Output space exhausted before completing inflate\n", name); break;
+				case  -1: printf("\n\n  Error: Could not uncompress file %s\n  Invalid block type (type == 3)\n", name); break;
+				case  -2: printf("\n\n  Error: Could not uncompress file %s\n  Stored block length did not match one's complement\n", name); break;
+				case  -3: printf("\n\n  Error: Could not uncompress file %s\n  Dynamic block code description: too many length or distance codes\n", name); break;
+				case  -4: printf("\n\n  Error: Could not uncompress file %s\n  Dynamic block code description: code lengths codes incomplete\n", name); break;
+				case  -5: printf("\n\n  Error: Could not uncompress file %s\n  Dynamic block code description: repeat lengths with no first length\n", name); break;
+				case  -6: printf("\n\n  Error: Could not uncompress file %s\n  Dynamic block code description: repeat more than specified lengths\n", name); break;
+				case  -7: printf("\n\n  Error: Could not uncompress file %s\n  Dynamic block code description: invalid literal/length code lengths\n", name); break;
+				case  -8: printf("\n\n  Error: Could not uncompress file %s\n  Dynamic block code description: invalid distance code lengths\n", name); break;
+				case  -9: printf("\n\n  Error: Could not uncompress file %s\n  Dynamic block code description: missing end-of-block code\n", name); break;
+				case -10: printf("\n\n  Error: Could not uncompress file %s\n  Invalid literal/length or distance code in fixed or dynamic block\n", name); break;
+				case -11: printf("\n\n  Error: Could not uncompress file %s\n  Distance is too far back in fixed or dynamic block\n", name); break;
+				 default: printf("\n\n  Error: Could not uncompress file %s\n  Unknown error\n", name); break;
+			}
+			*thread_arg->failed += 1;
 			goto error_thread_unzip;
 		}
-		fwrite(tmp_buf[thread_id], size, 1, output);
+		fwrite(tmp_buf[thread_id], out_size, 1, output);
 	}
 	else /* uncompressed */
 	{
 		fwrite(&rom_buf[offset], size, 1, output);
 	}
+	*thread_arg->success += 1;
 
 error_thread_unzip:
 	fclose(output);
@@ -110,15 +133,17 @@ int detect_threads(void)
 	return sysconf(_SC_NPROCESSORS_ONLN);
 #elif defined (_SC_NPROC_ONLN)
 	return sysconf(_SC_NPROC_ONLN);
+#else
+	return 1;
 #endif
 #endif
 }
 
-void extract_files(FILE *csvfile, const int max_threads)
+void extract_files(FILE *csvfile, const int max_threads, long unsigned int *counted, long unsigned int *success, long unsigned int *failed)
 {
 	/************************/
 	int cur_line_entry = 0, max_line_entry = 0;
-	int eof = 0, error = 0, index, cur_thread = 0, check_threads = 0;
+	int eof = 0, index, cur_thread = 0, check_threads = 0;
 	char *csv_buf, cur_line;
 	unsigned int offset, size, compress, extract;
 	char name[MAX_FILENAME] = {'\0'};
@@ -150,15 +175,11 @@ void extract_files(FILE *csvfile, const int max_threads)
 	}
 	while(!eof)
 	{
-		csv_buf = fread_csv_line(csvfile, &eof, &error);
+		csv_buf = fread_csv_line(csvfile, &eof);
 		if(csv_buf == NULL)
 		{
-			if(error == CSV_ERR_LONGLINE)
-				printf("\n  Error: Aborted, could not read csv line");
-			else
-				printf("\n  Error: Aborted, could not allocate memory for csv file");
-			fread_csv_free();
-			return;
+			printf("\n  Error: Aborted, could not read csv line");
+			break;
 		}
 
 		for(index = 0; index < max_line_entry; index++) /* replace commas with new line characters for sscanf */
@@ -168,6 +189,7 @@ void extract_files(FILE *csvfile, const int max_threads)
 		}
 		if(sscanf(csv_buf, "%u\n%u\n%s\n%u\n%u", &offset, &size, name, &compress, &extract) != 5) /* error or reached end of csv file, abort */
 			break;
+		*counted += 1;
 
 		if(!extract)
 			continue;
@@ -179,12 +201,14 @@ void extract_files(FILE *csvfile, const int max_threads)
 				break;
 			}
 		}
-		thread_arg.offset = offset;
-		thread_arg.size = size;
-		thread_arg.compress = !(!compress);
 		thread_arg.ready = 0;
 		thread_arg.name = name;
-		thread_arg.thread_id = cur_thread;
+		thread_arg.size = size;
+		thread_arg.offset = offset;
+		thread_arg.failed = failed;
+		thread_arg.success = success;
+		thread_arg.compress = !(!compress);
+		thread_arg.thread_id = (short)cur_thread;
 		pthread_create(&gzip_threads[cur_thread], NULL, extract_thread, (void *)&thread_arg);
 		for(;;) /* wait for thread to finish copy arguments */
 		{
@@ -219,7 +243,8 @@ int main(int argc, char **argv)
 	/************************/
 	FILE *romfile, *csvfile;
 	long int filesize;
-	int total_threads;
+	long unsigned int counted = 0, success = 0, failed = 0;
+	int threads_total;
 	/************************/
 
 	printf("\n  GoldenEye 007 1172 extractor\n%s\n", LINE);
@@ -230,7 +255,7 @@ int main(int argc, char **argv)
 	}
 
 	/* set threads total from argument */
-	total_threads = CLAMP_VAL(detect_threads(), 1, MAX_THREADS);
+	threads_total = CLAMP_VAL(detect_threads(), 1, MAX_THREADS);
 
 	/* load ROM from argument */
 	romfile = fopen(argv[1], "rb");
@@ -281,7 +306,10 @@ int main(int argc, char **argv)
 	}
 	fread(rom_buf, filesize, 1, romfile);
 
-	extract_files(csvfile, total_threads);
+	extract_files(csvfile, threads_total, &counted, &success, &failed);
+	printf("\n\n  Total Files: %lu\n\n  Extracted: %lu\n  Skipped: %lu", counted, success, counted - success);
+	if(failed)
+		printf("\n  Failed: %lu", failed);
 
 	free(rom_buf);
 error_csv:
