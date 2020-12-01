@@ -53,3 +53,7 @@ tools/extractor/fread_csv_line.o
 tools/extractor/extractor
 tools/aaa_rip/main.o
 tools/aaa_rip/aaa_rip
+tools/n64cksum
+tools/armips
+tools/gzipsrc/gzip
+tools/gzipsrc/*.o
