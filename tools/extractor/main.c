@@ -6,20 +6,19 @@
 #include "fread_csv_line.h"
 
 #ifdef _WIN32
-#include <windows.h>
-#define MAX_THREADS 32
+	#include <windows.h>
+	#define MAX_THREADS 32
 #elif __APPLE__
-#include <sys/param.h>
-#include <sys/sysctl.h>
-#define MAX_THREADS 32
-#elif __linux__
-#include <unistd.h>
-#define MAX_THREADS 32
+	#include <sys/param.h>
+	#include <sys/sysctl.h>
+	#define MAX_THREADS 32
 #else
-#include <unistd.h>
-#if !defined (_SC_NPROCESSORS_ONLN) && !defined (_SC_NPROC_ONLN)
-#define MAX_THREADS 1
-#endif
+	#include <unistd.h>
+	#ifdef __linux__
+		#define MAX_THREADS 32
+	#else
+		#define MAX_THREADS 1
+	#endif
 #endif
 
 #define CLAMP_VAL(value, min, max) (((value) < (min)) ? (min) : (((value) > (max)) ? (max) : ((value) < (min)) ? (min) : (value)))
@@ -132,14 +131,16 @@ int detect_threads(void)
 		}
 	}
 	return count;
+#elif __linux__
+	#if defined (_SC_NPROCESSORS_ONLN)
+		return sysconf(_SC_NPROCESSORS_ONLN);
+	#elif defined (_SC_NPROC_ONLN)
+		return sysconf(_SC_NPROC_ONLN);
+	#else
+		return 1;
+	#endif
 #else
-#if defined (_SC_NPROCESSORS_ONLN)
-	return sysconf(_SC_NPROCESSORS_ONLN);
-#elif defined (_SC_NPROC_ONLN)
-	return sysconf(_SC_NPROC_ONLN);
-#else
-	return MAX_THREADS;
-#endif
+	return 1;
 #endif
 }
 
@@ -250,15 +251,15 @@ int main(int argc, char **argv)
 	unsigned long success_total = 0, failed_total = 0;
 	/************************/
 
+	/* set threads total */
+	threads_total = CLAMP_VAL(detect_threads(), 1, MAX_THREADS);
+
 	printf("\n  GoldenEye 007 Extractor\n%s\n", LINE);
 	if(argc != 3) /* no file provided or too many arguments */
 	{
-		printf("\n  About: Extract GoldenEye 007 files\n\n  Syntax: %s \"input ROM\" \"input csv file\"", argv[0]);
+		printf("\n  About: Extract GoldenEye 007 files\n\n  Syntax: %s \"input ROM\" \"input csv file\"\n  Multithread Mode: %sabled", argv[0], threads_total > 1 ? "En" : "Dis");
 		goto exit;
 	}
-
-	/* set threads total from argument */
-	threads_total = CLAMP_VAL(detect_threads(), 1, MAX_THREADS);
 
 	/* load ROM from argument */
 	romfile = fopen(argv[1], "rb");
