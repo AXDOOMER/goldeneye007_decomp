@@ -23143,22 +23143,22 @@ Linker script and memory map
                 0x000000008006972e                cheat_activated_77
                 0x000000008006972f                cheat_activated_78
                 0x0000000080069730                array_favweapon
-                0x0000000080069750                mp_char_cur_select_player1
-                0x0000000080069754                mp_char_cur_select_player2
-                0x0000000080069758                mp_char_cur_select_player3
-                0x000000008006975c                mp_char_cur_select_player4
-                0x0000000080069760                mp_char_prev_select_player1
-                0x0000000080069764                mp_char_prev_select_player2
-                0x0000000080069768                mp_char_prev_select_player3
-                0x000000008006976c                mp_char_prev_select_player4
+                0x0000000080069750                mp_char_cur_select_player
+                0x0000000080069754                mp_char_cur_select_player+0x4
+                0x0000000080069758                mp_char_cur_select_player+0x8
+                0x000000008006975c                mp_char_cur_select_player+0xc
+                0x0000000080069760                mp_char_prev_select_player
+                0x0000000080069764                mp_char_prev_select_player+0x4
+                0x0000000080069768                mp_char_prev_select_player+0x8
+                0x000000008006976c                mp_char_prev_select_player+0xC
                 0x0000000080069770                dword_CODE_bss_80069730
-                0x0000000080069774                dword_CODE_bss_80069734
-                0x0000000080069778                dword_CODE_bss_80069738
-                0x000000008006977c                dword_CODE_bss_8006973C
+                0x0000000080069774                dword_CODE_bss_80069730+0x4
+                0x0000000080069778                dword_CODE_bss_80069730+0x8
+                0x000000008006977c                dword_CODE_bss_80069730+0xC
                 0x0000000080069780                has_selected_char_player1
-                0x0000000080069784                has_selected_char_player2
-                0x0000000080069788                has_selected_char_player3
-                0x000000008006978c                has_selected_char_player4
+                0x0000000080069784                has_selected_char_player1+0x4
+                0x0000000080069788                has_selected_char_player1+0x8
+                0x000000008006978c                has_selected_char_player1+0xC
                 0x0000000080069790                size_mp_select_image_player1
                 0x0000000080069794                size_mp_select_image_player2
                 0x0000000080069798                size_mp_select_image_player3

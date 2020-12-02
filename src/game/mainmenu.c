@@ -328,29 +328,14 @@ u8 cheat_activated_78;
 s32 array_favweapon[4][2];
 
 //CODE.bss:80069710
-s32 mp_char_cur_select_player1;
-//CODE.bss:80069714
-s32 mp_char_cur_select_player2;
-//CODE.bss:80069718
-s32 mp_char_cur_select_player3;
-//CODE.bss:8006971C
-s32 mp_char_cur_select_player4;
+s32 mp_char_cur_select_player[4];
+
 //CODE.bss:80069720
-s32 mp_char_prev_select_player1;
-//CODE.bss:80069724
-s32 mp_char_prev_select_player2;
-//CODE.bss:80069728
-s32 mp_char_prev_select_player3;
-//CODE.bss:8006972C
-s32 mp_char_prev_select_player4;
+s32 mp_char_prev_select_player[4];
+
 //CODE.bss:80069730
-s32 dword_CODE_bss_80069730;
-//CODE.bss:80069734
-s32 dword_CODE_bss_80069734;
-//CODE.bss:80069738
-s32 dword_CODE_bss_80069738;
-//CODE.bss:8006973C
-s32 dword_CODE_bss_8006973C;
+s32 dword_CODE_bss_80069730[4];
+
 //CODE.bss:80069740
 s32 has_selected_char_player1;
 //CODE.bss:80069744
@@ -440,9 +425,9 @@ s32 highlight_aimadjustment;
 char dword_CODE_bss_800697F0[0x130];
 
 
-s32 current_menu = -1;
-s32 menu_update = -1;
-s32 maybe_prev_menu = -1;
+MENU current_menu = MENU_INVALID;
+MENU menu_update = MENU_INVALID;
+MENU maybe_prev_menu = MENU_INVALID;
 s32 menu_timer = 0;
 
 s32 tab_1_selected = FALSE;
@@ -455,7 +440,7 @@ s32 tab_3_highlight = FALSE;
 s32 selected_folder_num = 0;
 s32 selected_folder_num_copy = 0;
 
-s32 gamemode = GAMEMODE_INTRO;
+GAMEMODE gamemode = GAMEMODE_INTRO;
 s32 selected_stage = -1;
 s32 briefingpage = -1;
 DIFFICULTY selected_difficulty = DIFFICULTY_MULTI;
@@ -14896,24 +14881,24 @@ loop_16:
             }
         }
     }
-    mp_char_cur_select_player1 = (s32) player_1_char;
-    mp_char_prev_select_player1 = (s32) player_1_char;
+    mp_char_cur_select_player = (s32) player_1_char;
+    mp_char_prev_select_player = (s32) player_1_char;
     dword_CODE_bss_80069730 = 0;
     has_selected_char_player1 = 0;
     size_mp_select_image_player1 = 0;
-    mp_char_cur_select_player2 = (s32) player_2_char;
-    mp_char_prev_select_player2 = (s32) player_2_char;
-    dword_CODE_bss_80069734 = 0;
+    mp_char_cur_select_player+0x4 = (s32) player_2_char;
+    mp_char_prev_select_player+0x4 = (s32) player_2_char;
+    dword_CODE_bss_80069730+0x4 = 0;
     has_selected_char_player2 = 0;
     size_mp_select_image_player2 = 0;
-    mp_char_cur_select_player3 = (s32) player_3_char;
-    mp_char_prev_select_player3 = (s32) player_3_char;
-    dword_CODE_bss_80069738 = 0;
+    mp_char_cur_select_player+0x8 = (s32) player_3_char;
+    mp_char_prev_select_player+0x8 = (s32) player_3_char;
+    dword_CODE_bss_80069730+0x8 = 0;
     has_selected_char_player3 = 0;
     size_mp_select_image_player3 = 0;
-    mp_char_cur_select_player4 = (s32) player_4_char;
-    mp_char_prev_select_player4 = (s32) player_4_char;
-    dword_CODE_bss_8006973C = 0;
+    mp_char_cur_select_player+0xc = (s32) player_4_char;
+    mp_char_prev_select_player+0xC = (s32) player_4_char;
+    dword_CODE_bss_80069730+0xC = 0;
     has_selected_char_player4 = 0;
     size_mp_select_image_player4 = 0;
     load_walletbond(player_3_char, player_4_char);
@@ -15043,11 +15028,11 @@ glabel init_menu0f_mpcharsel
 .L7F011DE8:
 /* 046918 7F011DE8 3C028003 */  lui   $v0, %hi(player_1_char)
 /* 04691C 7F011DEC 8C42B524 */  lw    $v0, %lo(player_1_char)($v0)
-/* 046920 7F011DF0 3C018007 */  lui   $at, %hi(mp_char_cur_select_player1)
+/* 046920 7F011DF0 3C018007 */  lui   $at, %hi(mp_char_cur_select_player)
 /* 046924 7F011DF4 3C038003 */  lui   $v1, %hi(player_2_char)
-/* 046928 7F011DF8 AC229710 */  sw    $v0, %lo(mp_char_cur_select_player1)($at)
-/* 04692C 7F011DFC 3C018007 */  lui   $at, %hi(mp_char_prev_select_player1)
-/* 046930 7F011E00 AC229720 */  sw    $v0, %lo(mp_char_prev_select_player1)($at)
+/* 046928 7F011DF8 AC229710 */  sw    $v0, %lo(mp_char_cur_select_player)($at)
+/* 04692C 7F011DFC 3C018007 */  lui   $at, %hi(mp_char_prev_select_player)
+/* 046930 7F011E00 AC229720 */  sw    $v0, %lo(mp_char_prev_select_player)($at)
 /* 046934 7F011E04 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069730)
 /* 046938 7F011E08 AC209730 */  sw    $zero, %lo(dword_CODE_bss_80069730)($at)
 /* 04693C 7F011E0C 3C018007 */  lui   $at, %hi(has_selected_char_player1)
@@ -15055,36 +15040,36 @@ glabel init_menu0f_mpcharsel
 /* 046944 7F011E14 8C63B528 */  lw    $v1, %lo(player_2_char)($v1)
 /* 046948 7F011E18 3C018007 */  lui   $at, %hi(size_mp_select_image_player1)
 /* 04694C 7F011E1C AC209750 */  sw    $zero, %lo(size_mp_select_image_player1)($at)
-/* 046950 7F011E20 3C018007 */  lui   $at, %hi(mp_char_cur_select_player2)
-/* 046954 7F011E24 AC239714 */  sw    $v1, %lo(mp_char_cur_select_player2)($at)
-/* 046958 7F011E28 3C018007 */  lui   $at, %hi(mp_char_prev_select_player2)
-/* 04695C 7F011E2C AC239724 */  sw    $v1, %lo(mp_char_prev_select_player2)($at)
-/* 046960 7F011E30 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069734)
-/* 046964 7F011E34 AC209734 */  sw    $zero, %lo(dword_CODE_bss_80069734)($at)
+/* 046950 7F011E20 3C018007 */  lui   $at, %hi(mp_char_cur_select_player+0x4)
+/* 046954 7F011E24 AC239714 */  sw    $v1, %lo(mp_char_cur_select_player+0x4)($at)
+/* 046958 7F011E28 3C018007 */  lui   $at, %hi(mp_char_prev_select_player+0x4)
+/* 04695C 7F011E2C AC239724 */  sw    $v1, %lo(mp_char_prev_select_player+0x4)($at)
+/* 046960 7F011E30 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069730+0x4)
+/* 046964 7F011E34 AC209734 */  sw    $zero, %lo(dword_CODE_bss_80069730+0x4)($at)
 /* 046968 7F011E38 3C018007 */  lui   $at, %hi(has_selected_char_player2)
 /* 04696C 7F011E3C AC209744 */  sw    $zero, %lo(has_selected_char_player2)($at)
 /* 046970 7F011E40 3C048003 */  lui   $a0, %hi(player_3_char)
 /* 046974 7F011E44 8C84B52C */  lw    $a0, %lo(player_3_char)($a0)
 /* 046978 7F011E48 3C018007 */  lui   $at, %hi(size_mp_select_image_player2)
 /* 04697C 7F011E4C AC209754 */  sw    $zero, %lo(size_mp_select_image_player2)($at)
-/* 046980 7F011E50 3C018007 */  lui   $at, %hi(mp_char_cur_select_player3)
-/* 046984 7F011E54 AC249718 */  sw    $a0, %lo(mp_char_cur_select_player3)($at)
-/* 046988 7F011E58 3C018007 */  lui   $at, %hi(mp_char_prev_select_player3)
-/* 04698C 7F011E5C AC249728 */  sw    $a0, %lo(mp_char_prev_select_player3)($at)
-/* 046990 7F011E60 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069738)
-/* 046994 7F011E64 AC209738 */  sw    $zero, %lo(dword_CODE_bss_80069738)($at)
+/* 046980 7F011E50 3C018007 */  lui   $at, %hi(mp_char_cur_select_player+0x8)
+/* 046984 7F011E54 AC249718 */  sw    $a0, %lo(mp_char_cur_select_player+0x8)($at)
+/* 046988 7F011E58 3C018007 */  lui   $at, %hi(mp_char_prev_select_player+0x8)
+/* 04698C 7F011E5C AC249728 */  sw    $a0, %lo(mp_char_prev_select_player+0x8)($at)
+/* 046990 7F011E60 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069730+0x8)
+/* 046994 7F011E64 AC209738 */  sw    $zero, %lo(dword_CODE_bss_80069730+0x8)($at)
 /* 046998 7F011E68 3C018007 */  lui   $at, %hi(has_selected_char_player3)
 /* 04699C 7F011E6C AC209748 */  sw    $zero, %lo(has_selected_char_player3)($at)
 /* 0469A0 7F011E70 3C058003 */  lui   $a1, %hi(player_4_char)
 /* 0469A4 7F011E74 8CA5B530 */  lw    $a1, %lo(player_4_char)($a1)
 /* 0469A8 7F011E78 3C018007 */  lui   $at, %hi(size_mp_select_image_player3)
 /* 0469AC 7F011E7C AC209758 */  sw    $zero, %lo(size_mp_select_image_player3)($at)
-/* 0469B0 7F011E80 3C018007 */  lui   $at, %hi(mp_char_cur_select_player4)
-/* 0469B4 7F011E84 AC25971C */  sw    $a1, %lo(mp_char_cur_select_player4)($at)
-/* 0469B8 7F011E88 3C018007 */  lui   $at, %hi(mp_char_prev_select_player4)
-/* 0469BC 7F011E8C AC25972C */  sw    $a1, %lo(mp_char_prev_select_player4)($at)
-/* 0469C0 7F011E90 3C018007 */  lui   $at, %hi(dword_CODE_bss_8006973C)
-/* 0469C4 7F011E94 AC20973C */  sw    $zero, %lo(dword_CODE_bss_8006973C)($at)
+/* 0469B0 7F011E80 3C018007 */  lui   $at, %hi(mp_char_cur_select_player+0xc)
+/* 0469B4 7F011E84 AC25971C */  sw    $a1, %lo(mp_char_cur_select_player+0xc)($at)
+/* 0469B8 7F011E88 3C018007 */  lui   $at, %hi(mp_char_prev_select_player+0xC)
+/* 0469BC 7F011E8C AC25972C */  sw    $a1, %lo(mp_char_prev_select_player+0xC)($at)
+/* 0469C0 7F011E90 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069730+0xC)
+/* 0469C4 7F011E94 AC20973C */  sw    $zero, %lo(dword_CODE_bss_80069730+0xC)($at)
 /* 0469C8 7F011E98 3C018007 */  lui   $at, %hi(has_selected_char_player4)
 /* 0469CC 7F011E9C AC20974C */  sw    $zero, %lo(has_selected_char_player4)($at)
 /* 0469D0 7F011EA0 3C018007 */  lui   $at, %hi(size_mp_select_image_player4)
@@ -15140,8 +15125,8 @@ void interface_menu0F_mpcharsel(void)
   iVar10 = 0;
   if (0 < iVar4) {
     piVar9 = &mp_unknown1_player1;
-    piVar8 = &mp_char_cur_select_player1;
-    piVar12 = &mp_char_prev_select_player1;
+    piVar8 = &mp_char_cur_select_player;
+    piVar12 = &mp_char_prev_select_player;
     pBVar11 = &has_selected_char_player1;
     do {
       controller = (char)iVar13;
@@ -15295,16 +15280,16 @@ glabel interface_menu0F_mpcharsel
 /* 046A78 7F011F48 00009825 */  move  $s3, $zero
 /* 046A7C 7F011F4C 19C000B6 */  blez  $t6, .L7F012228
 /* 046A80 7F011F50 3C148007 */   lui   $s4, %hi(has_selected_char_player1)
-/* 046A84 7F011F54 3C158007 */  lui   $s5, %hi(mp_char_prev_select_player1)
-/* 046A88 7F011F58 3C118007 */  lui   $s1, %hi(mp_char_cur_select_player1)
+/* 046A84 7F011F54 3C158007 */  lui   $s5, %hi(mp_char_prev_select_player)
+/* 046A88 7F011F58 3C118007 */  lui   $s1, %hi(mp_char_cur_select_player)
 /* 046A8C 7F011F5C 3C128007 */  lui   $s2, %hi(dword_CODE_bss_80069730)
 /* 046A90 7F011F60 3C1E8006 */  lui   $fp, %hi(ptr_sfx_buf) 
 /* 046A94 7F011F64 3C178007 */  lui   $s7, %hi(size_mp_select_image_player1) 
 /* 046A98 7F011F68 26F79750 */  addiu $s7, %lo(size_mp_select_image_player1) # addiu $s7, $s7, -0x68b0
 /* 046A9C 7F011F6C 27DE3720 */  addiu $fp, %lo(ptr_sfx_buf) # addiu $fp, $fp, 0x3720
 /* 046AA0 7F011F70 26529730 */  addiu $s2, %lo(dword_CODE_bss_80069730) # addiu $s2, $s2, -0x68d0
-/* 046AA4 7F011F74 26319710 */  addiu $s1, %lo(mp_char_cur_select_player1) # addiu $s1, $s1, -0x68f0
-/* 046AA8 7F011F78 26B59720 */  addiu $s5, %lo(mp_char_prev_select_player1) # addiu $s5, $s5, -0x68e0
+/* 046AA4 7F011F74 26319710 */  addiu $s1, %lo(mp_char_cur_select_player) # addiu $s1, $s1, -0x68f0
+/* 046AA8 7F011F78 26B59720 */  addiu $s5, %lo(mp_char_prev_select_player) # addiu $s5, $s5, -0x68e0
 /* 046AAC 7F011F7C 26949740 */  addiu $s4, %lo(has_selected_char_player1) # addiu $s4, $s4, -0x68c0
 .L7F011F80:
 /* 046AB0 7F011F80 8E8F0000 */  lw    $t7, ($s4)
@@ -16132,9 +16117,9 @@ void constructor_menu0F_mpcharsel(s32 arg0)
     if (spE4 > 0)
     {
         sp88 = &has_selected_char_player1;
-        sp80 = &mp_char_cur_select_player1;
+        sp80 = &mp_char_cur_select_player;
         sp74 = &dword_CODE_bss_80069730;
-        sp70 = &mp_char_prev_select_player1;
+        sp70 = &mp_char_prev_select_player;
         spE0 = 0;
 loop_4:
         if (spE4 == 2)
@@ -16342,13 +16327,13 @@ glabel constructor_menu0F_mpcharsel
 .L7F01285C:
 /* 04738C 7F01285C 19000165 */  blez  $t0, .L7F012DF4
 /* 047390 7F012860 3C098007 */   lui   $t1, %hi(has_selected_char_player1) 
-/* 047394 7F012864 3C0A8007 */  lui   $t2, %hi(mp_char_cur_select_player1) 
+/* 047394 7F012864 3C0A8007 */  lui   $t2, %hi(mp_char_cur_select_player) 
 /* 047398 7F012868 3C0B8007 */  lui   $t3, %hi(dword_CODE_bss_80069730) 
-/* 04739C 7F01286C 3C0C8007 */  lui   $t4, %hi(mp_char_prev_select_player1) 
+/* 04739C 7F01286C 3C0C8007 */  lui   $t4, %hi(mp_char_prev_select_player) 
 /* 0473A0 7F012870 3C014080 */  li    $at, 0x40800000 # 4.000000
-/* 0473A4 7F012874 258C9720 */  addiu $t4, %lo(mp_char_prev_select_player1) # addiu $t4, $t4, -0x68e0
+/* 0473A4 7F012874 258C9720 */  addiu $t4, %lo(mp_char_prev_select_player) # addiu $t4, $t4, -0x68e0
 /* 0473A8 7F012878 256B9730 */  addiu $t3, %lo(dword_CODE_bss_80069730) # addiu $t3, $t3, -0x68d0
-/* 0473AC 7F01287C 254A9710 */  addiu $t2, %lo(mp_char_cur_select_player1) # addiu $t2, $t2, -0x68f0
+/* 0473AC 7F01287C 254A9710 */  addiu $t2, %lo(mp_char_cur_select_player) # addiu $t2, $t2, -0x68f0
 /* 0473B0 7F012880 25299740 */  addiu $t1, %lo(has_selected_char_player1) # addiu $t1, $t1, -0x68c0
 /* 0473B4 7F012884 3C1E8007 */  lui   $fp, %hi(size_mp_select_image_player1) 
 /* 0473B8 7F012888 4481A000 */  mtc1  $at, $f20

@@ -33,12 +33,9 @@ while(0)
  *
  * Other arguments:
  * int *done: Pointer to an int that will be set to 1 when file is exhausted.
- * int *err: Pointer to an int where error code will be written.
  *
  * Warning: Calling this function on an exhausted file (as indicated by the
  *   'done' flag) is undefined behavior.
- *
- * See fread_csv_line.h for definitions of error codes.
  */
 
 char *buf = NULL;
@@ -54,7 +51,7 @@ void fread_csv_free(void) {
 	free( buf );
 }
 
-char *fread_csv_line(FILE *fp, int *done, int *err) {
+char *fread_csv_line(FILE *fp, int *done) {
     static FILE *bookmark;
     static char read_buf[READ_BLOCK_SIZE], *read_ptr, *read_end;
     static int fread_len;
@@ -78,7 +75,6 @@ char *fread_csv_line(FILE *fp, int *done, int *err) {
         }
 
         if ( bptr >= limit ) {
-            *err = CSV_ERR_LONGLINE;
             return NULL;
         }
         *bptr++ = ch;

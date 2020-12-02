@@ -44,15 +44,11 @@ do
 done
 
 #build/rebuild extractor
-if [ -f tools/extractor/extractor ]; then
-    make -C tools/extractor clean && make -C tools/extractor
-else
-    make -C tools/extractor
-fi
+[ ! -x tools/extractor/extractor ] && make -C tools/extractor
 
 if [ "$DOALL" == "1" ] || [ $1 == 'files' ]; then
     echo "Processing Files"
-    if [ -f tools/extractor/extractor ]; then
+    if [ -x tools/extractor/extractor ]; then
         tools/extractor/extractor "$BASEROM" filelist.u.csv
     else
         while IFS=, read -r offset size name compressed extract
@@ -90,7 +86,7 @@ fi
 
 if [ "$DOALL" == "1" ] || [ $1 == 'images' ]; then
     echo "Processing Images"
-    if [ -f tools/extractor/extractor ]; then
+    if [ -x tools/extractor/extractor ]; then
         tools/extractor/extractor "$BASEROM" imagelist.u.csv
     else
         while IFS=, read -r offset size name

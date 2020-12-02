@@ -1,3 +1,8 @@
+/*
+   THIS FILE HAS BEEN MODIFIED
+   puff has been modified to write length to argument pointer
+*/
+
 /* puff.h
   Copyright (C) 2002-2013 Mark Adler, all rights reserved
   version 2.3, 21 Jan 2013
@@ -32,4 +37,5 @@
 int puff(unsigned char *dest,           /* pointer to destination pointer */
          unsigned long destlen,        /* amount of output space */
          const unsigned char *source,   /* pointer to source data pointer */
-         unsigned long sourcelen);     /* amount of input available */
+         unsigned long sourcelen,      /* amount of input available */
+         unsigned long *outlen);     /* output length */
