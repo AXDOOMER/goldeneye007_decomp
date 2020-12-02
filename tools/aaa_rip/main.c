@@ -68,10 +68,10 @@ int main(int argc, char **argv)
 		printf("\n  Error: Aborted, length goes beyond end of file");
 		goto error_input;
 	}
-	printf("\n  Input File: %s\n  Output File: %s\n  Offset: %d\n  Length: %d", argv[1], argv[2], offset, length);
+	printf("\n  Input File: %s\n  Output File: %s\n  Offset: %ld\n  Length: %ld", argv[1], argv[2], offset, length);
 	if(argc == 6)
 	{
-		printf("\n  Output Offset: %d", offset_output);
+		printf("\n  Output Offset: %ld", offset_output);
 	}
 
 	/* read input to file buffer */

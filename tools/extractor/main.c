@@ -17,9 +17,7 @@
 #define MAX_THREADS 32
 #else
 #include <unistd.h>
-#if defined (_SC_NPROCESSORS_ONLN) || defined (_SC_NPROC_ONLN)
-#define MAX_THREADS 8
-#else
+#if !defined (_SC_NPROCESSORS_ONLN) && !defined (_SC_NPROC_ONLN)
 #define MAX_THREADS 1
 #endif
 #endif
@@ -73,7 +71,7 @@ void *extract_thread(void *arg)
 	}
 	if(compress) /* unzip */
 	{
-		puff_return = puff(tmp_buf[thread_id], (unsigned long)MBTOBYTES(2), &rom_buf[offset + GE_1172_HEADER_LENGTH], (unsigned long)size, &out_size);
+		puff_return = puff(tmp_buf[thread_id], (unsigned long)MBTOBYTES(2), &rom_buf[offset + GE_1172_HEADER_LENGTH], size, &out_size);
 		if(puff_return != 0)
 		{
 			switch(puff_return)
