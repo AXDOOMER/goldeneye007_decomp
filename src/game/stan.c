@@ -1581,40 +1581,58 @@ glabel sub_GAME_7F0AFB78
 
 
 #ifdef NONMATCHING
-f32 sub_GAME_7F0AFD1C(void *arg0, s32 arg1, f32 arg2, f32 arg3) {
-    void *sp18;
-    void *sp1C;
-    f32 sp40;
-    s32 temp_hi;
-    void *temp_v0;
-    void *temp_v1;
-    f32 temp_f2;
-    f32 temp_f14;
-    ? temp_ret;
-    f32 temp_f0;
-    f32 temp_f2_2;
 
-    // Node 0
-    temp_hi = ((s32) (arg1 + 1) % (s32) (((s32) arg0->unk6 >> 0xc) & 0xf));
-    temp_v0 = (arg0 + (temp_hi * 8));
-    temp_v1 = (arg0 + (arg1 * 8));
-    temp_f2 = (f32) (temp_v0->unk8 - temp_v1->unk8);
-    temp_f14 = (f32) (temp_v0->unkC - temp_v1->unkC);
-    sp40 = temp_f2;
-    sp18 = temp_v1;
-    sp1C = temp_v0;
-    temp_ret = sqrtf(((temp_f2 * temp_f2) + (temp_f14 * temp_f14)), temp_f14, temp_hi);
-    if (temp_ret != 0.0f)
-    {
-        // Node 2
-        // Node 3
-        return ((((arg3 - (f32) temp_v1->unkC) * -temp_f2) + (sp3C * (arg2 - (f32) temp_v1->unk8))) / temp_ret);
+// Pretty much just regalloc differing now.
+
+float sub_GAME_7F0AFD1C(struct StandTile *tile,s32 index,float p_x,float p_z)
+{
+    struct StandTilePoint* currPnt;
+    struct StandTilePoint* nextPnt;
+
+    s32 pntCount;
+    float edge_len;
+    float edge_x;
+    float edge_z;
+    s32 diff_x;
+    s32 diff_z;
+    float unknown;
+
+    // First storing references to currPnt, nextPnt i.e. tile->points[..]
+    //  seems to introduce extra addiu x,x,0x8 in later uses
+    // Using both in the first part creates big changes, but currPnt only is fine and corrects the stack height.. atm
+
+    currPnt = &tile->points[index];
+    nextPnt = &tile->points[(index + 1) % pntCount];
+    
+    pntCount = tile->pointCount & 0xF;
+    diff_x = tile->points[(index + 1) % pntCount].x - currPnt->x; // necessary to do int sub first to swap 2 instructions
+    diff_z = tile->points[(index + 1) % pntCount].z - currPnt->z; // consistent
+    edge_x = (float)(diff_x);
+    edge_z = (float)(diff_z);
+
+    // (break code is auto-generated)
+
+    edge_len = sqrtf(edge_x * edge_x + edge_z * edge_z);
+    
+    // If statement in this order it seems based on bc1f
+
+    if (edge_len == 0) {
+        // [!] Adding edge_G here rather than doing a -= was a breakthrough.
+        edge_x = p_x - (float)tile->points[(index + 1) % pntCount].x;
+        edge_z = p_z - (float)tile->points[(index + 1) % pntCount].z;
+        edge_len = sqrtf(edge_x * edge_x + edge_z * edge_z);
+        return edge_len;
     }
-    // Node 1
-    temp_f0 = (arg2 - (f32) temp_v0->unk8);
-    temp_f2_2 = (arg3 - (f32) temp_v0->unkC);
-    return ((((arg3 - (f32) temp_v1->unkC) * -temp_f2) + (sp3C * (arg2 - (f32) temp_v1->unk8))) / temp_ret);
+    else
+    {
+                        // - (AP x AB) / ||AB|| = ||PA|| sin(a)
+        unknown = ((p_z - (float)tile->points[index].z) * -edge_x +
+                edge_z * (p_x - (float)tile->points[index].x));
+        return unknown / edge_len;
+    }
+
 }
+
 #else
 GLOBAL_ASM(
 .text
