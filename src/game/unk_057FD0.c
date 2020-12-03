@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include "matrixmath.h"
 
 // bss
 //CODE.bss:80075DA0
@@ -16,9 +16,6 @@ f32 D_80032310[2] = {65536.0f, 65536.0f};
 
 // rodata
 //D:800536F0
-
-typedef f32 vec3[3];
-typedef f32 mat44[4][4];
 
 void matrix_4x4_set_identity(mat44 matrix) {
     matrix[0][0] = 1.0f;
@@ -733,18 +730,18 @@ void matrix_4x4_7F05914C(Mtx* arg0, mat44 arg1) {
 #define MTX_FRACPART_PACK(w1, w2) (((w1) << 16) | ((w2) & 0xFFFF))
 
 void sub_GAME_7F059244(Mtx* a0, Mtx* a1) {
-    s32 i;
-    s32 j;
-    u32 w1;
-    u32 w2;
-    for (i = 0; i < 2; i++) {
-        for (j = 0; j < 4; j++) {
-            w1 = a0->m[i * 2 + j / 2][((j * 2) % 4) + 0];
-            w2 = a0->m[i * 2 + j / 2][((j * 2) % 4) + 1];
-            a1->m[i + 0][j] = MTX_INTPART_PACK(w1, w2);
-            a1->m[i + 2][j] = MTX_FRACPART_PACK(w1, w2);
-        }
-    }
+    // s32 i;
+    // s32 j;
+    // u32 w1;
+    // u32 w2;
+    // for (i = 0; i < 2; i++) {
+    //     for (j = 0; j < 4; j++) {
+    //         w1 = a0->m[i * 2 + j / 2][((j * 2) % 4) + 0];
+    //         w2 = a0->m[i * 2 + j / 2][((j * 2) % 4) + 1];
+    //         a1->m[i + 0][j] = MTX_INTPART_PACK(w1, w2);
+    //         a1->m[i + 2][j] = MTX_FRACPART_PACK(w1, w2);
+    //     }
+    // }
 
     // Reg alloc and iteration mostly!
     // s32 i;
@@ -784,17 +781,17 @@ void sub_GAME_7F059244(Mtx* a0, Mtx* a1) {
     //     }
     // }
 
-    // s32 i;
-    // s32 j;
-    // s32* ptr = &a0[0][0];
-    // for (i = 0; i < 2; i++) {
-    //     for (j = 0; j < 4; j++) {
-    //         s32 w1 = *ptr++;
-    //         s32 w2 = *ptr++;
-    //         a1[i + 0][j] = MTX_INTPART_PACK(w1, (u32)w2);
-    //         a1[i + 2][j] = MTX_FRACPART_PACK(w1, w2);
-    //     }
-    // }
+    s32 i;
+    s32 j;
+    s32* ptr = &a0->m[0][0];
+    for (i = 0; i < 2; i++) {
+        for (j = 0; j < 4; j++) {
+            s32 w1 = *ptr++;
+            s32 w2 = *ptr++;
+            a1->m[i + 0][j] = MTX_INTPART_PACK(w1, (u32)w2);
+            a1->m[i + 2][j] = MTX_FRACPART_PACK(w1, w2);
+        }
+    }
 
     // s32 i;
     // s32 j;
@@ -1137,25 +1134,23 @@ return
     // }
 //}
 
-//#ifdef NONMATCHING
-#if 0
+#ifdef NONMATCHING
+#define MTX_INTPART_PACK(w1, w2) (((w1) & 0xFFFF0000) | (((w2) >> 16)/* & 0xFFFF*/))
+#define MTX_FRACPART_PACK(w1, w2) ((((w1) << 16) & 0xFFFF0000) | ((w2) & 0xFFFF))
 
-#define MTX_INTPART_PACK(w1, w2) (((w1) &0xFFFF0000) | (((w2) >> 16) & 0xFFFF))
-#define MTX_FRACPART_PACK(w1, w2) ((((w1) << 16) & 0xFFFF0000) | ((w2) &0xFFFF))
-
-void sub_GAME_7F059334(s32 arg0[4][4], s32 arg1[4][4]) {    
-    s32 i;
-    s32 j;
-    u32 *m1 = (u32*)&arg0[0][0];
-    u32 *m2 = (u32*)&arg0[2][0];
-    for (i = 0; i < 4; i++) {
-        for (j = 0; j < 2; j++) {
-            arg1[i][j * 2 + 0] = MTX_INTPART_PACK((*m1), (*m2));
-            m1++;
-            arg1[i][j * 2 + 1] = MTX_FRACPART_PACK((*m1), (*m2));
-            m2++;
-        }
-    }
+// void sub_GAME_7F059334(s32 arg0[4][4], s32 arg1[4][4]) {    
+//     s32 i;
+//     s32 j;
+//     u32 *m1 = (u32*)&arg0[0][0];
+//     u32 *m2 = (u32*)&arg0[2][0];
+//     for (i = 0; i < 4; i++) {
+//         for (j = 0; j < 2; j++) {
+//             arg1[i][j * 2 + 0] = MTX_INTPART_PACK((*m1), (*m2));
+//             m1++;
+//             arg1[i][j * 2 + 1] = MTX_FRACPART_PACK((*m1), (*m2));
+//             m2++;
+//         }
+//     }
     
     
     // s32 var1;
@@ -1180,20 +1175,39 @@ void sub_GAME_7F059334(s32 arg0[4][4], s32 arg1[4][4]) {
     //     arg1[i * 2 + 1][2] = ((var1 & 0xFFFF0000) | (var2 >> 16));
     //     arg1[i * 2 + 1][3] = ((var1 << 16) | (var2 & 0xffff));
     // }
-}
+//}
 // void sub_GAME_7F059334(s32 m1[4][4], s32 m2[4][4]) {
 //     int i;
 //     int j;
 //     int *ai = &m1[0][0];
 //     u32 *af = &m1[2][0];
 
-//         for (j=0; j<2; j++) {
-//     for (i=0; i<4; i++) {
+//     for (j=0; j<2; j++) {
+//         for (i=0; i<4; i++) {
 //             m2[i][j*2+0] = (*ai & 0xffff0000) | ((*af >> 16) & 0xffff);
 //             m2[i][j*2+1] = ((*(ai++) << 16) & 0xffff0000) | (*(af++) & 0xffff);
 //         }
 //     }
 // }
+
+//void sub_GAME_7F059334(s32 m1[16], s32 m2[16]) {
+    // s32 i;
+    // for (i = 0; i < 8; i++) {
+    //     s32 t1 = m1[i+0];
+    //     s32 t2 = m1[i+8];
+    //     m2[i * 2 + 0] = MTX_INTPART_PACK(t1, t2);
+    //     m2[i * 2 + 1] = MTX_FRACPART_PACK(t1, t2);
+    // }
+    // s32 i, j;
+    // for (i = 0; i < 2; i++) {
+    //     for (j = 0; j < 4; j++) {
+    //         s32 t1 = m1[i+0][j];
+    //         s32 t2 = m1[i+2][j];
+    //         m2[i*8+j*2+0] = MTX_INTPART_PACK(t1, t2);
+    //         m2[i*8+j*2+1] = MTX_FRACPART_PACK(t1, t2);
+    //     }
+    // }
+//}
 #else
 GLOBAL_ASM(
 .text
@@ -1363,13 +1377,11 @@ void matrix_4x4_7F059908(mat44 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32
 u16 sub_GAME_7F05997C(f32 arg0, f32 arg1) {
     u16 phi_v1;
     f32 temp_f0 = arg0 + arg1;
-    if (temp_f0 <= 2.0f) {
+    if (temp_f0 <= 2.0f)
         return -1;
-    }
     phi_v1 = (131072.0f / temp_f0);
-    if (phi_v1 <= 0) {
+    if (phi_v1 <= 0) 
         phi_v1 = 1;
-    }
     return phi_v1;
 }
 #else

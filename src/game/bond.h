@@ -3,6 +3,7 @@
 
 #include "ultra64.h"
 #include "game/chr.h"
+#include "game/matrixmath.h"
 
 struct xyzpoint
 {
@@ -279,12 +280,8 @@ struct Player
   s32 ypos3;
   s32 zpos3;
   s32 room_pointer;
-  s32 current_model_xpos;
-  s32 current_model_ypos;
-  s32 current_model_zpos;
-  s32 previous_model_xpos;
-  s32 previous_model_ypos;
-  s32 previous_model_zpos;
+  vec3 current_model_pos;
+  vec3 previous_model_pos;
   s32 current_room_xpos;
   s32 current_room_ypos;
   s32 current_room_zpos;
@@ -862,7 +859,7 @@ struct Player
   f32 c_recipscaley;
   s32 field_10C4;
   s32 field_10C8;
-  s32 field_10CC;
+  s32 field_10CC; // 4x4 matrix
   s32 field_10D0;
   s32 field_10D4;
   s32 field_10D8;
