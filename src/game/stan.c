@@ -1579,155 +1579,55 @@ glabel sub_GAME_7F0AFB78
 
 
 
-
-#ifdef NONMATCHING
-
-// Pretty much just regalloc differing now.
-
-float sub_GAME_7F0AFD1C(struct StandTile *tile,s32 index,float p_x,float p_z)
+// Returns the shortest distance from (p_x,p_z) to the infinite extention of tile's index-th edge, projected into XZ.
+// Where the edge is vertical (or degenerate) they just return the distance between the points.
+float getShortest2dDistToInfTileEdge(struct StandTile *tile,s32 index,float p_x,float p_z)
 {
-    struct StandTilePoint* currPnt;
-    struct StandTilePoint* nextPnt;
-
-    s32 pntCount;
-    float edge_len;
+    s32 nextIndex;
     float edge_x;
     float edge_z;
-    s32 diff_x;
-    s32 diff_z;
-    float unknown;
+    float edge_len;
 
-    // First storing references to currPnt, nextPnt i.e. tile->points[..]
-    //  seems to introduce extra addiu x,x,0x8 in later uses
-    // Using both in the first part creates big changes, but currPnt only is fine and corrects the stack height.. atm
+    float v_x;
+    float v_z;
+    float crossProduct;
 
+    // 3 unused. We use 2 for the points to make our code cleaner,
+    //   though it seems much more likely that the variables were used in the else clause.
+    struct StandTilePoint* currPnt;
+    struct StandTilePoint* nextPnt;
+    float UNUSED;
+
+    // Omiting the '& 0xF' is equivalent, but keeping it is necessary to match.
+    // Perhaps the structure isn't correct but this seems much cleaner than doing an explicit >> 0xC. 
+    nextIndex = (index + 1) % (tile->pointCount & 0xF);
+
+    nextPnt = &tile->points[nextIndex];
     currPnt = &tile->points[index];
-    nextPnt = &tile->points[(index + 1) % pntCount];
-    
-    pntCount = tile->pointCount & 0xF;
-    diff_x = tile->points[(index + 1) % pntCount].x - currPnt->x; // necessary to do int sub first to swap 2 instructions
-    diff_z = tile->points[(index + 1) % pntCount].z - currPnt->z; // consistent
-    edge_x = (float)(diff_x);
-    edge_z = (float)(diff_z);
-
-    // (break code is auto-generated)
+    edge_x = (float)(nextPnt->x - currPnt->x);
+    edge_z = (float)(nextPnt->z - currPnt->z);
 
     edge_len = sqrtf(edge_x * edge_x + edge_z * edge_z);
-    
-    // If statement in this order it seems based on bc1f
 
     if (edge_len == 0) {
-        // [!] Adding edge_G here rather than doing a -= was a breakthrough.
-        edge_x = p_x - (float)tile->points[(index + 1) % pntCount].x;
-        edge_z = p_z - (float)tile->points[(index + 1) % pntCount].z;
-        edge_len = sqrtf(edge_x * edge_x + edge_z * edge_z);
-        return edge_len;
+        // Degenerate case, edge is vertical
+        // They just return the distance between the points, which is sensible and the correct value in 3 dimensions.
+        v_x = p_x - (float)tile->points[nextIndex].x;
+        v_z = p_z - (float)tile->points[nextIndex].z;
+        return sqrtf(v_x * v_x + v_z * v_z);  
     }
     else
     {
-                        // - (AP x AB) / ||AB|| = ||PA|| sin(a)
-        unknown = ((p_z - (float)tile->points[index].z) * -edge_x +
-                edge_z * (p_x - (float)tile->points[index].x));
-        return unknown / edge_len;
+        // - (AP x AB) / ||AB|| = ||PA|| sin(a)
+        crossProduct = (
+            edge_z * (p_x - (float)tile->points[index].x)
+            +
+            -edge_x * (p_z - (float)tile->points[index].z)
+        );
+        return crossProduct / edge_len;
     }
-
+    
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0AFD1C
-/* 0E484C 7F0AFD1C 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 0E4850 7F0AFD20 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E4854 7F0AFD24 AFA60050 */  sw    $a2, 0x50($sp)
-/* 0E4858 7F0AFD28 AFA70054 */  sw    $a3, 0x54($sp)
-/* 0E485C 7F0AFD2C 848F0006 */  lh    $t7, 6($a0)
-/* 0E4860 7F0AFD30 24AE0001 */  addiu $t6, $a1, 1
-/* 0E4864 7F0AFD34 000548C0 */  sll   $t1, $a1, 3
-/* 0E4868 7F0AFD38 000FC303 */  sra   $t8, $t7, 0xc
-/* 0E486C 7F0AFD3C 3319000F */  andi  $t9, $t8, 0xf
-/* 0E4870 7F0AFD40 01D9001A */  div   $zero, $t6, $t9
-/* 0E4874 7F0AFD44 00003010 */  mfhi  $a2
-/* 0E4878 7F0AFD48 000640C0 */  sll   $t0, $a2, 3
-/* 0E487C 7F0AFD4C 00881021 */  addu  $v0, $a0, $t0
-/* 0E4880 7F0AFD50 00891821 */  addu  $v1, $a0, $t1
-/* 0E4884 7F0AFD54 846B0008 */  lh    $t3, 8($v1)
-/* 0E4888 7F0AFD58 844A0008 */  lh    $t2, 8($v0)
-/* 0E488C 7F0AFD5C 846F000C */  lh    $t7, 0xc($v1)
-/* 0E4890 7F0AFD60 844D000C */  lh    $t5, 0xc($v0)
-/* 0E4894 7F0AFD64 014B6023 */  subu  $t4, $t2, $t3
-/* 0E4898 7F0AFD68 448C2000 */  mtc1  $t4, $f4
-/* 0E489C 7F0AFD6C 01AFC023 */  subu  $t8, $t5, $t7
-/* 0E48A0 7F0AFD70 44983000 */  mtc1  $t8, $f6
-/* 0E48A4 7F0AFD74 468020A0 */  cvt.s.w $f2, $f4
-/* 0E48A8 7F0AFD78 17200002 */  bnez  $t9, .L7F0AFD84
-/* 0E48AC 7F0AFD7C 00000000 */   nop   
-/* 0E48B0 7F0AFD80 0007000D */  break 7
-.L7F0AFD84:
-/* 0E48B4 7F0AFD84 2401FFFF */  li    $at, -1
-/* 0E48B8 7F0AFD88 17210004 */  bne   $t9, $at, .L7F0AFD9C
-/* 0E48BC 7F0AFD8C 3C018000 */   lui   $at, 0x8000
-/* 0E48C0 7F0AFD90 15C10002 */  bne   $t6, $at, .L7F0AFD9C
-/* 0E48C4 7F0AFD94 00000000 */   nop   
-/* 0E48C8 7F0AFD98 0006000D */  break 6
-.L7F0AFD9C:
-/* 0E48CC 7F0AFD9C 468033A0 */  cvt.s.w $f14, $f6
-/* 0E48D0 7F0AFDA0 46021202 */  mul.s $f8, $f2, $f2
-/* 0E48D4 7F0AFDA4 E7A20040 */  swc1  $f2, 0x40($sp)
-/* 0E48D8 7F0AFDA8 AFA30018 */  sw    $v1, 0x18($sp)
-/* 0E48DC 7F0AFDAC AFA2001C */  sw    $v0, 0x1c($sp)
-/* 0E48E0 7F0AFDB0 460E7282 */  mul.s $f10, $f14, $f14
-/* 0E48E4 7F0AFDB4 E7AE003C */  swc1  $f14, 0x3c($sp)
-/* 0E48E8 7F0AFDB8 0C007DF8 */  jal   sqrtf
-/* 0E48EC 7F0AFDBC 460A4300 */   add.s $f12, $f8, $f10
-/* 0E48F0 7F0AFDC0 44802000 */  mtc1  $zero, $f4
-/* 0E48F4 7F0AFDC4 8FA2001C */  lw    $v0, 0x1c($sp)
-/* 0E48F8 7F0AFDC8 8FA30018 */  lw    $v1, 0x18($sp)
-/* 0E48FC 7F0AFDCC 46040032 */  c.eq.s $f0, $f4
-/* 0E4900 7F0AFDD0 C7A20040 */  lwc1  $f2, 0x40($sp)
-/* 0E4904 7F0AFDD4 C7AE003C */  lwc1  $f14, 0x3c($sp)
-/* 0E4908 7F0AFDD8 C7B20050 */  lwc1  $f18, 0x50($sp)
-/* 0E490C 7F0AFDDC 45000011 */  bc1f  .L7F0AFE24
-/* 0E4910 7F0AFDE0 46000406 */   mov.s $f16, $f0
-/* 0E4914 7F0AFDE4 844E0008 */  lh    $t6, 8($v0)
-/* 0E4918 7F0AFDE8 8459000C */  lh    $t9, 0xc($v0)
-/* 0E491C 7F0AFDEC C7AA0054 */  lwc1  $f10, 0x54($sp)
-/* 0E4920 7F0AFDF0 448E3000 */  mtc1  $t6, $f6
-/* 0E4924 7F0AFDF4 44992000 */  mtc1  $t9, $f4
-/* 0E4928 7F0AFDF8 46803220 */  cvt.s.w $f8, $f6
-/* 0E492C 7F0AFDFC 468021A0 */  cvt.s.w $f6, $f4
-/* 0E4930 7F0AFE00 46089001 */  sub.s $f0, $f18, $f8
-/* 0E4934 7F0AFE04 46065081 */  sub.s $f2, $f10, $f6
-/* 0E4938 7F0AFE08 46000202 */  mul.s $f8, $f0, $f0
-/* 0E493C 7F0AFE0C 00000000 */  nop   
-/* 0E4940 7F0AFE10 46021102 */  mul.s $f4, $f2, $f2
-/* 0E4944 7F0AFE14 0C007DF8 */  jal   sqrtf
-/* 0E4948 7F0AFE18 46044300 */   add.s $f12, $f8, $f4
-/* 0E494C 7F0AFE1C 10000011 */  b     .L7F0AFE64
-/* 0E4950 7F0AFE20 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0AFE24:
-/* 0E4954 7F0AFE24 8468000C */  lh    $t0, 0xc($v1)
-/* 0E4958 7F0AFE28 C7AA0054 */  lwc1  $f10, 0x54($sp)
-/* 0E495C 7F0AFE2C 84690008 */  lh    $t1, 8($v1)
-/* 0E4960 7F0AFE30 44883000 */  mtc1  $t0, $f6
-/* 0E4964 7F0AFE34 00000000 */  nop   
-/* 0E4968 7F0AFE38 46803220 */  cvt.s.w $f8, $f6
-/* 0E496C 7F0AFE3C 46001187 */  neg.s $f6, $f2
-/* 0E4970 7F0AFE40 46085101 */  sub.s $f4, $f10, $f8
-/* 0E4974 7F0AFE44 44894000 */  mtc1  $t1, $f8
-/* 0E4978 7F0AFE48 46062282 */  mul.s $f10, $f4, $f6
-/* 0E497C 7F0AFE4C 46804120 */  cvt.s.w $f4, $f8
-/* 0E4980 7F0AFE50 46049181 */  sub.s $f6, $f18, $f4
-/* 0E4984 7F0AFE54 46067202 */  mul.s $f8, $f14, $f6
-/* 0E4988 7F0AFE58 46085300 */  add.s $f12, $f10, $f8
-/* 0E498C 7F0AFE5C 46106003 */  div.s $f0, $f12, $f16
-/* 0E4990 7F0AFE60 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0AFE64:
-/* 0E4994 7F0AFE64 27BD0048 */  addiu $sp, $sp, 0x48
-/* 0E4998 7F0AFE68 03E00008 */  jr    $ra
-/* 0E499C 7F0AFE6C 00000000 */   nop   
-)
-#endif
 
 
 
@@ -1884,7 +1784,7 @@ float FUN_7f0affcc(struct StandTile *tile, int index,float x,float z)
 {
   float dist;
   
-  dist = sub_GAME_7F0AFD1C(tile, index, x * level_scale, z * level_scale);
+  dist = getShortest2dDistToInfTileEdge(tile, index, x * level_scale, z * level_scale);
   return dist * inv_level_scale;
 }
 
@@ -1902,7 +1802,7 @@ glabel sub_GAME_7F0AFFCC
 /* 0E4B18 7F0AFFE8 46007182 */  mul.s $f6, $f14, $f0
 /* 0E4B1C 7F0AFFEC 44062000 */  mfc1  $a2, $f4
 /* 0E4B20 7F0AFFF0 44073000 */  mfc1  $a3, $f6
-/* 0E4B24 7F0AFFF4 0FC2BF47 */  jal   sub_GAME_7F0AFD1C
+/* 0E4B24 7F0AFFF4 0FC2BF47 */  jal   getShortest2dDistToInfTileEdge
 /* 0E4B28 7F0AFFF8 00000000 */   nop   
 /* 0E4B2C 7F0AFFFC 3C018004 */  lui   $at, %hi(inv_level_scale)
 /* 0E4B30 7F0B0000 C4280F48 */  lwc1  $f8, %lo(inv_level_scale)($at)
@@ -4635,7 +4535,7 @@ glabel sub_GAME_7F0B1DDC
 .L7F0B1EE4:
 /* 0E6A14 7F0B1EE4 4407E000 */  mfc1  $a3, $f28
 /* 0E6A18 7F0B1EE8 02602025 */  move  $a0, $s3
-/* 0E6A1C 7F0B1EEC 0FC2BF47 */  jal   sub_GAME_7F0AFD1C
+/* 0E6A1C 7F0B1EEC 0FC2BF47 */  jal   getShortest2dDistToInfTileEdge
 /* 0E6A20 7F0B1EF0 02002825 */   move  $a1, $s0
 /* 0E6A24 7F0B1EF4 4406D000 */  mfc1  $a2, $f26
 /* 0E6A28 7F0B1EF8 4407E000 */  mfc1  $a3, $f28
