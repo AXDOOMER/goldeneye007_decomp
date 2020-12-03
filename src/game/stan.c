@@ -1600,7 +1600,7 @@ float getShortest2dDistToInfTileEdge(struct StandTile *tile,s32 index,float p_x,
 
     // Omiting the '& 0xF' is equivalent, but keeping it is necessary to match.
     // Perhaps the structure isn't correct but this seems much cleaner than doing an explicit >> 0xC. 
-    nextIndex = (index + 1) % (tile->pointCount & 0xF);
+    nextIndex = (index + 1) % (tile->hdrTail >> 0xC & 0xF);
 
     nextPnt = &tile->points[nextIndex];
     currPnt = &tile->points[index];
@@ -1778,9 +1778,7 @@ glabel sub_GAME_7F0AFE70
 
 
 
-#ifdef NONMATCHING
-// May need 7F0AFD1C decompiled first
-float FUN_7f0affcc(struct StandTile *tile, int index,float x,float z)
+float getShortest2dDistToInfTileEdgeUnscaled(struct StandTile *tile, int index,float x,float z)
 {
   float dist;
   
@@ -1788,31 +1786,6 @@ float FUN_7f0affcc(struct StandTile *tile, int index,float x,float z)
   return dist * inv_level_scale;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0AFFCC
-/* 0E4AFC 7F0AFFCC 3C018004 */  lui   $at, %hi(level_scale)
-/* 0E4B00 7F0AFFD0 44866000 */  mtc1  $a2, $f12
-/* 0E4B04 7F0AFFD4 C4200F44 */  lwc1  $f0, %lo(level_scale)($at)
-/* 0E4B08 7F0AFFD8 44877000 */  mtc1  $a3, $f14
-/* 0E4B0C 7F0AFFDC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0E4B10 7F0AFFE0 46006102 */  mul.s $f4, $f12, $f0
-/* 0E4B14 7F0AFFE4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E4B18 7F0AFFE8 46007182 */  mul.s $f6, $f14, $f0
-/* 0E4B1C 7F0AFFEC 44062000 */  mfc1  $a2, $f4
-/* 0E4B20 7F0AFFF0 44073000 */  mfc1  $a3, $f6
-/* 0E4B24 7F0AFFF4 0FC2BF47 */  jal   getShortest2dDistToInfTileEdge
-/* 0E4B28 7F0AFFF8 00000000 */   nop   
-/* 0E4B2C 7F0AFFFC 3C018004 */  lui   $at, %hi(inv_level_scale)
-/* 0E4B30 7F0B0000 C4280F48 */  lwc1  $f8, %lo(inv_level_scale)($at)
-/* 0E4B34 7F0B0004 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0E4B38 7F0B0008 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0E4B3C 7F0B000C 46080002 */  mul.s $f0, $f0, $f8
-/* 0E4B40 7F0B0010 03E00008 */  jr    $ra
-/* 0E4B44 7F0B0014 00000000 */   nop   
-)
-#endif
 
 
 

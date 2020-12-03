@@ -10,15 +10,23 @@ struct StandTilePoint {
     u16 link;
 };
 
+struct StandTileHeaderTail {
+    s8 pointCount : 4; // seen lh, not lhu. Also seen with an explicit unnecessary '& 0xF' 
+    s8 headerC : 4;
+    s8 headerD : 4;
+    s8 headerE : 4;
+};
+
 struct StandTile {
     u16 name1;
     u8 name2;
     u8 room;    // compared to 0xFF, not -1 in a function
     s16 headerA;
 
-    s8 pointCount : 4; // seen lh, not lhu. Also seen with an explicit unnecessary '& 0xF' 
-    u8 headerC : 4;
-    u8 headerD;
+    /* 0x06 */
+    // They appear to have performed the bit field work themselves here,
+    //   but we provide the StandTileHeaderTail member for clarity - it should be unused I believe.
+    s16 hdrTail;
 
     /* 0x08 */
     struct StandTilePoint points[1];
