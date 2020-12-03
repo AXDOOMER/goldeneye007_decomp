@@ -2,6 +2,7 @@
 #define _CHR_H_
 #include "ultra64.h"
 #include "bondgame.h"
+#include "bondtypes.h"
 
 struct animation_something
 {
