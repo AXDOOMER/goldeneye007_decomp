@@ -1050,33 +1050,49 @@ glabel sub_GAME_7F0AF638
 
 
 #ifdef NONMATCHING
-s32 sub_GAME_7F0AF760(void *arg0) {
-    u32 sp0;
-    s32 sp8;
-    s32 sp10;
-    s32 sp14;
-    s32 sp1C;
-    void *temp_t1;
-    void *temp_t0;
-    void *temp_t2;
-    s32 temp_t5;
-    s32 temp_t8;
-    u32 temp_t8_2;
 
-    // Node 0
-    temp_t1 = (arg0 + ((((s32) arg0->unk6 >> 8) & 0xf) * 8));
-    temp_t0 = (arg0 + ((((s32) arg0->unk6 >> 4) & 0xf) * 8));
-    sp14 = (s32) (temp_t0->unk8 - temp_t1->unk8);
-    temp_t2 = (arg0 + ((arg0->unk6 & 0xf) * 8));
-    sp1C = (s32) (temp_t0->unkC - temp_t1->unkC);
-    temp_t5 = (temp_t2->unk8 - temp_t1->unk8);
-    sp8 = temp_t5;
-    temp_t8 = (temp_t2->unkC - temp_t1->unkC);
-    sp10 = temp_t8;
-    temp_t8_2 = ((sp1C * temp_t5) - (temp_t8 * sp14));
-    sp0 = temp_t8_2;
-    return (temp_t8_2 < 1U);
+// A decent start, mostly my code isn't saving the AB.x and AB.z to the stack
+
+struct int3 {
+    s32 x;
+    s32 y;
+    s32 z;
+};
+
+s32 sub_GAME_7F0AF760(struct StandTile *tile) {
+    // Perhaps it's a coincidence but there is a gap between their uses of x and z
+    // Suggests there could be an unused y, which makes sense when their points are 3D
+
+    u32 iA;
+    u32 iB;
+    u32 iC;
+
+    s32 crossProduct;
+
+    struct int3 AB;
+    struct int3 AC;
+
+    
+    iA = (tile->hdrTail >> 0x8 & 0xf);     // t1
+    iB = (tile->hdrTail >> 0x4 & 0xf);    // t0
+    // Actually saving iC somewhere has prevented it being computed early
+    iC = (tile->hdrTail & 0xf);     // t2
+
+    AB.x = (tile->points[iB].x - tile->points[iA].x);
+    AB.y = 0;
+    AB.z = (tile->points[iB].z - tile->points[iA].z);
+
+
+    AC.x = (tile->points[iC].x - tile->points[iA].x);
+    AC.y = 0;
+    AC.z = (tile->points[iC].z - tile->points[iA].z);
+    
+    crossProduct =  ((AB.z * AC.x) - (AB.x * AC.z));    // potential overflow.
+    
+    return (crossProduct == 0);
 }
+
+
 #else
 GLOBAL_ASM(
 .text
@@ -1634,48 +1650,66 @@ float getShortest2dDistToInfTileEdge(struct StandTile *tile,s32 index,float p_x,
 
 
 #ifdef NONMATCHING
-f32 sub_GAME_7F0AFE70(void *arg0, s32 arg1, f32 arg2, f32 arg3) {
-    f32 sp40;
-    s32 temp_a1;
-    void *temp_a2;
-    void *temp_a0;
-    f32 temp_f2;
-    f32 temp_f14;
-    ? temp_ret;
-    f32 temp_f0;
-    f32 temp_f2_2;
-    s32 phi_v1;
+// Only regalloc incorrect essentially. Any change I make seems to make things much worse though,
+//   and my ability to reorder statements is very limited.
 
-    // Node 0
-    if (arg1 != 2)
-    {
-        // Node 1
-        phi_v1 = (arg1 + 1);
+// Similar to getShortest2dDistToInfTileEdge
+// 2nd arg must be in {0,1,2}
+float sub_GAME_7F0AFE70(struct StandTile *tile,s32 start3index,float p_x,float p_z)
+{
+    s32 end3index;      // types seem correct, changing introduces more instructions
+
+    float edge_x;       // 0x40 (8)
+    float edge_z;       // 0x3C 
+    float edge_len;
+
+    s32 currPntI;   
+    s32 nextPntI;
+
+    float v_x;
+    float v_z;
+    float crossProduct;
+
+
+    // end3index = (start3index + 1) % 3, start3index in [0,3)
+    if (start3index != 2) {
+        end3index = start3index + 1;
+    }
+    else {
+        end3index = 0;
+    }
+
+    // making and reusing macros of these introduces extra instructions later
+    currPntI = ((tile->hdrTail >> (8 - 4*start3index)) & 0xF);
+    nextPntI = ((tile->hdrTail >> (8 - 4*end3index)) & 0xF);
+
+    edge_x = (float)(tile->points[nextPntI].x - tile->points[currPntI].x);
+    edge_z = (float)(tile->points[nextPntI].z - tile->points[currPntI].z);
+
+
+    // Identical to getShortest2dDistToInfTileEdge from here
+
+    edge_len = sqrtf(edge_x * edge_x + edge_z * edge_z);
+
+    if (edge_len == 0) {
+        // Degenerate case, edge is vertical
+        // They just return the distance between the points, which is sensible and the correct value in 3 dimensions.
+        v_x = p_x - (float)tile->points[nextPntI].x;
+        v_z = p_z - (float)tile->points[nextPntI].z;
+        return sqrtf(v_x * v_x + v_z * v_z);  
     }
     else
     {
-        // Node 2
-        phi_v1 = 0;
+        // - (AP x AB) / ||AB|| = ||PA|| sin(a)
+        crossProduct = (
+            edge_z * (p_x - (float)tile->points[currPntI].x)
+            +
+            -edge_x * (p_z - (float)tile->points[currPntI].z)
+        );
+        return crossProduct / edge_len;
     }
-    // Node 3
-    temp_a1 = ((s32) arg0->unk6 >> (8 - (arg1 * 4)));
-    temp_a2 = (arg0 + ((temp_a1 & 0xf) * 8));
-    temp_a0 = (arg0 + ((((s32) arg0->unk6 >> (8 - (phi_v1 * 4))) & 0xf) * 8));
-    temp_f2 = (f32) (temp_a0->unk8 - temp_a2->unk8);
-    temp_f14 = (f32) (temp_a0->unkC - temp_a2->unkC);
-    sp40 = temp_f2;
-    temp_ret = sqrtf(((temp_f2 * temp_f2) + (temp_f14 * temp_f14)), temp_f14, temp_a0, temp_a1, temp_a2, arg0);
-    if (temp_ret != 0.0f)
-    {
-        // Node 5
-        // Node 6
-        return ((((arg3 - (f32) sp18->unkC) * -temp_f2) + (sp3C * (arg2 - (f32) sp18->unk8))) / temp_ret);
-    }
-    // Node 4
-    temp_f0 = (arg2 - (f32) sp1C->unk8);
-    temp_f2_2 = (arg3 - (f32) sp1C->unkC);
-    return ((((arg3 - (f32) sp18->unkC) * -temp_f2) + (sp3C * (arg2 - (f32) sp18->unk8))) / temp_ret);
 }
+
 #else
 GLOBAL_ASM(
 .text

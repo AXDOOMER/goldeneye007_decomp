@@ -11,10 +11,10 @@ struct StandTilePoint {
 };
 
 struct StandTileHeaderTail {
-    s8 pointCount : 4; // seen lh, not lhu. Also seen with an explicit unnecessary '& 0xF' 
-    s8 headerC : 4;
-    s8 headerD : 4;
-    s8 headerE : 4;
+    s16 pointCount : 4; // seen lh, not lhu. Also seen with an explicit unnecessary '& 0xF' 
+    s16 headerC : 4;
+    s16 headerD : 4;
+    s16 headerE : 4;
 };
 
 struct StandTile {
