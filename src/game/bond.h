@@ -399,7 +399,7 @@ struct Player
   s32 field_218;
   s32 field_21C;
   s32 step_in_view_watch_animation;
-  s32 pause_animation_counter;
+  f32 pause_animation_counter;
   s32 field_228;
   s32 field_22C;
   s32 something_with_watch_object_instance;
