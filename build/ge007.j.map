@@ -3357,7 +3357,7 @@ Linker script and memory map
                 0x000000007f0290e4                plot_course_for_actor
                 0x000000007f0292b4                sub_GAME_7F028FAC
                 0x000000007f029400                set_actor_on_path
-                0x000000007f0295a0                update_GUARDdata_timer_to_current
+                0x000000007f0295a0                setSeenBondTimeToNow
                 0x000000007f0295b0                sub_GAME_7F0292A8
                 0x000000007f0297c4                sub_GAME_7F0294BC
                 0x000000007f0298d8                check_if_position_in_same_room
@@ -3450,10 +3450,10 @@ Linker script and memory map
                 0x000000007f032f4c                sub_GAME_7F032C4C
                 0x000000007f032f78                sub_GAME_7F032C78
                 0x000000007f033070                get_angle_between_actor_cur_player
-                0x000000007f0330e4                sub_GAME_7F032DE4
+                0x000000007f0330e4                distToBond3D
                 0x000000007f033148                sub_GAME_7F032E48
                 0x000000007f0331fc                check_if_room_for_preset_loaded
-                0x000000007f033294                sub_GAME_7F032F94
+                0x000000007f033294                convertPadIf9000
                 0x000000007f0332ac                sub_GAME_7F032FAC
                 0x000000007f033340                get_handle_for_guard_id
                 0x000000007f0333c4                get_distance_between_actor_and_actorID
@@ -3530,7 +3530,7 @@ Linker script and memory map
                 0x000000007f03a7a4                set_current_objposdata_plus_0x28
                 0x000000007f03a7f0                sub_GAME_7F03A4F0
                 0x000000007f03a838                sub_GAME_7F03A538
-                0x000000007f03a8a4                sub_GAME_7F03A5A4
+                0x000000007f03a8a4                attachNewChild
                 0x000000007f03a8d0                sub_GAME_7F03A5D0
                 0x000000007f03a92c                sub_GAME_7F03A62C
                 0x000000007f03a9f4                sub_GAME_7F03A6F4
@@ -4150,7 +4150,7 @@ Linker script and memory map
                 0x000000007f06d474                sub_GAME_7F06CE84
                 0x000000007f06d480                getjointsize
                 0x000000007f06d5fc                getinstsize
-                0x000000007f06d66c                sub_GAME_7F06D07C
+                0x000000007f06d66c                interpolate3dVectors
                 0x000000007f06d6bc                sub_GAME_7F06D0CC
                 0x000000007f06d750                sub_GAME_7F06D160
                 0x000000007f06d7bc                sub_GAME_7F06D1CC
@@ -4931,7 +4931,7 @@ Linker script and memory map
                 0x000000007f0b0a20                sub_GAME_7F0AFE70
                 0x000000007f0b0b7c                sub_GAME_7F0AFFCC
                 0x000000007f0b0bc8                sub_GAME_7F0B0018
-                0x000000007f0b0c14                sub_GAME_7F0B0064
+                0x000000007f0b0c14                distToTilePnt2D
                 0x000000007f0b0c74                sub_GAME_7F0B00C4
                 0x000000007f0b0cf0                sub_GAME_7F0B0140
                 0x000000007f0b0d48                sub_GAME_7F0B0198
@@ -4939,7 +4939,7 @@ Linker script and memory map
                 0x000000007f0b0f1c                sub_GAME_7F0B036C
                 0x000000007f0b0fb0                sub_GAME_7F0B0400
                 0x000000007f0b10c8                sub_GAME_7F0B0518
-                0x000000007f0b1170                sub_GAME_7F0B05C0
+                0x000000007f0b1170                getRotationalDirectionBetween
                 0x000000007f0b1238                sub_GAME_7F0B0688
                 0x000000007f0b136c                sub_GAME_7F0B07BC
                 0x000000007f0b14c4                sub_GAME_7F0B0914
@@ -5022,7 +5022,7 @@ Linker script and memory map
                 0x000000007f0b53f8                sub_GAME_7F0B4848
                 0x000000007f0b5428                sub_GAME_7F0B4878
                 0x000000007f0b5434                sub_GAME_7F0B4884
-                0x000000007f0b5600                sub_GAME_7F0B4A50
+                0x000000007f0b5600                addToByteSetMaxSize15
                 0x000000007f0b5664                sub_GAME_7F0B4AB4
                 0x000000007f0b59f0                sub_GAME_7F0B4E40
                 0x000000007f0b5b4c                sub_GAME_7F0B4F9C
@@ -23144,21 +23144,12 @@ Linker script and memory map
                 0x000000008006972f                cheat_activated_78
                 0x0000000080069730                array_favweapon
                 0x0000000080069750                mp_char_cur_select_player
-                0x0000000080069754                mp_char_cur_select_player+0x4
-                0x0000000080069758                mp_char_cur_select_player+0x8
-                0x000000008006975c                mp_char_cur_select_player+0xc
                 0x0000000080069760                mp_char_prev_select_player
-                0x0000000080069764                mp_char_prev_select_player+0x4
-                0x0000000080069768                mp_char_prev_select_player+0x8
-                0x000000008006976c                mp_char_prev_select_player+0xC
                 0x0000000080069770                dword_CODE_bss_80069730
-                0x0000000080069774                dword_CODE_bss_80069730+0x4
-                0x0000000080069778                dword_CODE_bss_80069730+0x8
-                0x000000008006977c                dword_CODE_bss_80069730+0xC
                 0x0000000080069780                has_selected_char_player1
-                0x0000000080069784                has_selected_char_player1+0x4
-                0x0000000080069788                has_selected_char_player1+0x8
-                0x000000008006978c                has_selected_char_player1+0xC
+                0x0000000080069784                has_selected_char_player2
+                0x0000000080069788                has_selected_char_player3
+                0x000000008006978c                has_selected_char_player4
                 0x0000000080069790                size_mp_select_image_player1
                 0x0000000080069794                size_mp_select_image_player2
                 0x0000000080069798                size_mp_select_image_player3
