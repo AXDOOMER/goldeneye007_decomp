@@ -32,6 +32,18 @@ struct StandTile {
     struct StandTilePoint points[1];
 };
 
+
+// May be internal only, nice here.
+struct StandTileCallbackRecord {
+    s32 * roomBuf;
+    s32 count;
+    s32 bufMax;
+    s32 lastRoom;
+};
+typedef void (*standTileCallback_t)(struct StandTile*, struct StandTile*, struct StandTileCallbackRecord*);
+// Necessary forward declaration
+void sub_GAME_7F0B0C98(struct StandTile *tile, struct StandTile *unused, struct StandTileCallbackRecord *data);
+
 void stanInitDebugNoticeList(void);
 
 #endif

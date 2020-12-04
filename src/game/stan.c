@@ -1647,7 +1647,7 @@ float getShortest2dDispToInfTileEdge(struct StandTile *tile,s32 index,float p_x,
 }
 
 
-// Sig needed for callee matches.
+// Sig needed for caller matches.
 float getShortest2dDispToInfTripleEdge(struct StandTile *tile,s32 start3index,float p_x,float p_z);
 
 #ifdef NONMATCHING
@@ -2164,7 +2164,7 @@ s32 isPointInsideTriStandTileUnscaled_Maybe(struct StandTile *tile, float p_x, f
 }
 
 
-// Sig for callee matches
+// Sig for caller matches
 float sub_GAME_7F0B0400(struct StandTile *tile, s32 start3index, float p_x,float p_z);
 
 #ifdef NONMATCHING
@@ -2599,6 +2599,11 @@ glabel sub_GAME_7F0B07BC
 
 
 
+// 'walkTilesBetweenPoints_withCallback'
+// sig declared for caller matches
+s32 sub_GAME_7F0B0914(struct StandTile **tileStack, float start_x, float start_z, float dest_x, float dest_z,
+    standTileCallback_t func, struct StandTileCallbackRecord *funcData);
+
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B0914(void) {
@@ -2807,105 +2812,36 @@ glabel sub_GAME_7F0B0914
 
 
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0B0BE4(s32 arg1, ? arg2, ? arg3, f32 arg4) {
-    sub_GAME_7F0B0914(arg1, arg2, arg1, arg2, arg4, 0, 0);
+// 'walkTilesBetweenPoints_NoCallback'
+s32 sub_GAME_7F0B0BE4(struct StandTile *tileStack, float start_x, float start_z, float dest_x, float dest_z)
+{
+    return sub_GAME_7F0B0914(tileStack, start_x, start_z, dest_x, dest_z, 0, 0);
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B0BE4
-/* 0E5714 7F0B0BE4 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0E5718 7F0B0BE8 44856000 */  mtc1  $a1, $f12
-/* 0E571C 7F0B0BEC 44867000 */  mtc1  $a2, $f14
-/* 0E5720 7F0B0BF0 C7A40038 */  lwc1  $f4, 0x38($sp)
-/* 0E5724 7F0B0BF4 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0E5728 7F0B0BF8 44056000 */  mfc1  $a1, $f12
-/* 0E572C 7F0B0BFC 44067000 */  mfc1  $a2, $f14
-/* 0E5730 7F0B0C00 AFA70034 */  sw    $a3, 0x34($sp)
-/* 0E5734 7F0B0C04 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0E5738 7F0B0C08 AFA00018 */  sw    $zero, 0x18($sp)
-/* 0E573C 7F0B0C0C 0FC2C245 */  jal   sub_GAME_7F0B0914
-/* 0E5740 7F0B0C10 E7A40010 */   swc1  $f4, 0x10($sp)
-/* 0E5744 7F0B0C14 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 0E5748 7F0B0C18 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0E574C 7F0B0C1C 03E00008 */  jr    $ra
-/* 0E5750 7F0B0C20 00000000 */   nop   
-)
-#endif
 
 
 
+// 'walkTilesBetweenPoints_NotingRooms'
+s32 sub_GAME_7F0B0C24(struct StandTile *tileStack, float start_x, float start_z, float dest_x, float dest_z, s32 *roomBuffer, s32 *rtnCountSize, s32 maxBufSize)
+{
+    struct StandTileCallbackRecord callbackData;
+    s32 rtn;
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B0C24(s32 arg1, ? arg2, ? arg3, f32 arg4, ?32 arg5, void *arg6, ?32 arg7) {
-    ?32 sp30;
-    ?32 sp34;
-    ?32 sp38;
-    ?32 sp3C;
+    callbackData.roomBuf = roomBuffer;
+    callbackData.count = 0;
+    callbackData.bufMax = maxBufSize;
+    callbackData.lastRoom = -1;
 
-    // Node 0
-    sp34 = 0;
-    sp3C = -1;
-    sp30 = arg5;
-    sp38 = arg7;
-    *arg6 = sp34;
-    return sub_GAME_7F0B0914(arg1, arg2, arg1, arg2, arg4, &sub_GAME_7F0B0C98, &sp30);
+    rtn = sub_GAME_7F0B0914(tileStack, start_x, start_z, dest_x, dest_z, sub_GAME_7F0B0C98, &callbackData);
+
+    *rtnCountSize = callbackData.count;
+    return rtn;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B0C24
-/* 0E5754 7F0B0C24 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 0E5758 7F0B0C28 44856000 */  mtc1  $a1, $f12
-/* 0E575C 7F0B0C2C 44867000 */  mtc1  $a2, $f14
-/* 0E5760 7F0B0C30 8FAE0054 */  lw    $t6, 0x54($sp)
-/* 0E5764 7F0B0C34 8FAF005C */  lw    $t7, 0x5c($sp)
-/* 0E5768 7F0B0C38 C7A40050 */  lwc1  $f4, 0x50($sp)
-/* 0E576C 7F0B0C3C 3C197F0B */  lui   $t9, %hi(sub_GAME_7F0B0C98) # $t9, 0x7f0b
-/* 0E5770 7F0B0C40 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0E5774 7F0B0C44 2418FFFF */  li    $t8, -1
-/* 0E5778 7F0B0C48 27390C98 */  addiu $t9, %lo(sub_GAME_7F0B0C98) # addiu $t9, $t9, 0xc98
-/* 0E577C 7F0B0C4C 27A80030 */  addiu $t0, $sp, 0x30
-/* 0E5780 7F0B0C50 44056000 */  mfc1  $a1, $f12
-/* 0E5784 7F0B0C54 44067000 */  mfc1  $a2, $f14
-/* 0E5788 7F0B0C58 AFA7004C */  sw    $a3, 0x4c($sp)
-/* 0E578C 7F0B0C5C AFA00034 */  sw    $zero, 0x34($sp)
-/* 0E5790 7F0B0C60 AFB8003C */  sw    $t8, 0x3c($sp)
-/* 0E5794 7F0B0C64 AFA80018 */  sw    $t0, 0x18($sp)
-/* 0E5798 7F0B0C68 AFB90014 */  sw    $t9, 0x14($sp)
-/* 0E579C 7F0B0C6C AFAE0030 */  sw    $t6, 0x30($sp)
-/* 0E57A0 7F0B0C70 AFAF0038 */  sw    $t7, 0x38($sp)
-/* 0E57A4 7F0B0C74 0FC2C245 */  jal   sub_GAME_7F0B0914
-/* 0E57A8 7F0B0C78 E7A40010 */   swc1  $f4, 0x10($sp)
-/* 0E57AC 7F0B0C7C 8FA90034 */  lw    $t1, 0x34($sp)
-/* 0E57B0 7F0B0C80 8FAA0058 */  lw    $t2, 0x58($sp)
-/* 0E57B4 7F0B0C84 AD490000 */  sw    $t1, ($t2)
-/* 0E57B8 7F0B0C88 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 0E57BC 7F0B0C8C 27BD0040 */  addiu $sp, $sp, 0x40
-/* 0E57C0 7F0B0C90 03E00008 */  jr    $ra
-/* 0E57C4 7F0B0C94 00000000 */   nop   
-)
-#endif
 
 
-
-
-// This function is used in a callback, probably only internally to stan
-// TODO rename this struct more appropriately
-struct sub_GAME_7F0B0C98_struct {
-    s32 * roomBuf;
-    s32 count;
-    s32 bufMax;
-    s32 lastRoom;
-};
-
-void sub_GAME_7F0B0C98(struct StandTile *tile, struct StandTile *unused, struct sub_GAME_7F0B0C98_struct *data)
+void sub_GAME_7F0B0C98(struct StandTile *tile, struct StandTile *unused, struct StandTileCallbackRecord *data)
 {
     s32 newRoom;
 
@@ -2924,7 +2860,7 @@ void sub_GAME_7F0B0C98(struct StandTile *tile, struct StandTile *unused, struct 
 
 
 
-void sub_GAME_7F0B0CEC(struct StandTile *tile, struct StandTile *unused, struct sub_GAME_7F0B0C98_struct *data) {
+void sub_GAME_7F0B0CEC(struct StandTile *tile, struct StandTile *unused, struct StandTileCallbackRecord *data) {
     sub_GAME_7F0B0C98(tile, unused, data);
 }
 
