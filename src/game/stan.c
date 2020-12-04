@@ -1597,7 +1597,7 @@ glabel sub_GAME_7F0AFB78
 
 // Returns the shortest distance from (p_x,p_z) to the infinite extention of tile's index-th edge, projected into XZ.
 // Where the edge is vertical (or degenerate) they just return the distance between the points.
-float getShortest2dDistToInfTileEdge(struct StandTile *tile,s32 index,float p_x,float p_z)
+float getShortest2dDispToInfTileEdge(struct StandTile *tile,s32 index,float p_x,float p_z)
 {
     s32 nextIndex;
     float edge_x;
@@ -1634,7 +1634,8 @@ float getShortest2dDistToInfTileEdge(struct StandTile *tile,s32 index,float p_x,
     }
     else
     {
-        // - (AP x AB) / ||AB|| = ||PA|| sin(a)
+        // | (AP x AB) / ||AB|| | = ||PA|| sin(a),
+        // so we're returning the SIGNED displacement
         crossProduct = (
             edge_z * (p_x - (float)tile->points[index].x)
             +
@@ -1646,14 +1647,14 @@ float getShortest2dDistToInfTileEdge(struct StandTile *tile,s32 index,float p_x,
 }
 
 
-
-
+// Sig needed for callee matches.
+float sub_GAME_7F0AFE70(struct StandTile *tile,s32 start3index,float p_x,float p_z);
 
 #ifdef NONMATCHING
 // Only regalloc incorrect essentially. Any change I make seems to make things much worse though,
 //   and my ability to reorder statements is very limited.
 
-// Similar to getShortest2dDistToInfTileEdge
+// Similar to getShortest2dDispToInfTileEdge
 // 2nd arg must be in {0,1,2}
 float sub_GAME_7F0AFE70(struct StandTile *tile,s32 start3index,float p_x,float p_z)
 {
@@ -1687,7 +1688,7 @@ float sub_GAME_7F0AFE70(struct StandTile *tile,s32 start3index,float p_x,float p
     edge_z = (float)(tile->points[nextPntI].z - tile->points[currPntI].z);
 
 
-    // Identical to getShortest2dDistToInfTileEdge from here
+    // Identical to getShortest2dDispToInfTileEdge from here
 
     edge_len = sqrtf(edge_x * edge_x + edge_z * edge_z);
 
@@ -1812,12 +1813,12 @@ glabel sub_GAME_7F0AFE70
 
 
 
-float getShortest2dDistToInfTileEdgeUnscaled(struct StandTile *tile, int index,float x,float z)
+float getShortest2dDispToInfTileEdgeUnscaled(struct StandTile *tile, int index,float x,float z)
 {
-  float dist;
+  float disp;
   
-  dist = getShortest2dDistToInfTileEdge(tile, index, x * level_scale, z * level_scale);
-  return dist * inv_level_scale;
+  disp = getShortest2dDispToInfTileEdge(tile, index, x * level_scale, z * level_scale);
+  return disp * inv_level_scale;
 }
 
 
@@ -1825,36 +1826,13 @@ float getShortest2dDistToInfTileEdgeUnscaled(struct StandTile *tile, int index,f
 
 
 
-#ifdef NONMATCHING
-f32 sub_GAME_7F0B0018(f32 arg2, f32 arg3) {
-    // Node 0
-    return (sub_GAME_7F0AFE70(arg2, arg3, (arg2 * level_scale), (arg3 * level_scale)) * inv_level_scale);
+float sub_GAME_7F0B0018(struct StandTile *tile,s32 start3index,float p_x,float p_z)
+{
+  float disp;
+  
+  disp = sub_GAME_7F0AFE70(tile, start3index, p_x * level_scale, p_z * level_scale);
+  return disp * inv_level_scale;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B0018
-/* 0E4B48 7F0B0018 3C018004 */  lui   $at, %hi(level_scale)
-/* 0E4B4C 7F0B001C 44866000 */  mtc1  $a2, $f12
-/* 0E4B50 7F0B0020 C4200F44 */  lwc1  $f0, %lo(level_scale)($at)
-/* 0E4B54 7F0B0024 44877000 */  mtc1  $a3, $f14
-/* 0E4B58 7F0B0028 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0E4B5C 7F0B002C 46006102 */  mul.s $f4, $f12, $f0
-/* 0E4B60 7F0B0030 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E4B64 7F0B0034 46007182 */  mul.s $f6, $f14, $f0
-/* 0E4B68 7F0B0038 44062000 */  mfc1  $a2, $f4
-/* 0E4B6C 7F0B003C 44073000 */  mfc1  $a3, $f6
-/* 0E4B70 7F0B0040 0FC2BF9C */  jal   sub_GAME_7F0AFE70
-/* 0E4B74 7F0B0044 00000000 */   nop   
-/* 0E4B78 7F0B0048 3C018004 */  lui   $at, %hi(inv_level_scale)
-/* 0E4B7C 7F0B004C C4280F48 */  lwc1  $f8, %lo(inv_level_scale)($at)
-/* 0E4B80 7F0B0050 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0E4B84 7F0B0054 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0E4B88 7F0B0058 46080002 */  mul.s $f0, $f0, $f8
-/* 0E4B8C 7F0B005C 03E00008 */  jr    $ra
-/* 0E4B90 7F0B0060 00000000 */   nop   
-)
-#endif
 
 
 
@@ -2148,56 +2126,23 @@ glabel sub_GAME_7F0B0198
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B02D8(void) {
+// Determines if inside (or maybe outside) based on the 3 edges
+// -> so probably only for triangular tiles.
+s32 isPointInsideTriStandTile_Maybe(struct StandTile *tile, float p_x, float p_z)
+{
+    float disp;
+    s32 i;
 
+    for (i = 0; i != 3; i++)
+    {
+        disp = sub_GAME_7F0AFE70(tile,i,p_x,p_z);
+        if (disp < 0) {
+            return 0;
+        }
+    }
+
+    return 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B02D8
-/* 0E4E08 7F0B02D8 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 0E4E0C 7F0B02DC F7B80028 */  sdc1  $f24, 0x28($sp)
-/* 0E4E10 7F0B02E0 F7B60020 */  sdc1  $f22, 0x20($sp)
-/* 0E4E14 7F0B02E4 F7B40018 */  sdc1  $f20, 0x18($sp)
-/* 0E4E18 7F0B02E8 AFB20038 */  sw    $s2, 0x38($sp)
-/* 0E4E1C 7F0B02EC AFB10034 */  sw    $s1, 0x34($sp)
-/* 0E4E20 7F0B02F0 AFB00030 */  sw    $s0, 0x30($sp)
-/* 0E4E24 7F0B02F4 4485A000 */  mtc1  $a1, $f20
-/* 0E4E28 7F0B02F8 4486B000 */  mtc1  $a2, $f22
-/* 0E4E2C 7F0B02FC 4480C000 */  mtc1  $zero, $f24
-/* 0E4E30 7F0B0300 00808825 */  move  $s1, $a0
-/* 0E4E34 7F0B0304 AFBF003C */  sw    $ra, 0x3c($sp)
-/* 0E4E38 7F0B0308 00008025 */  move  $s0, $zero
-/* 0E4E3C 7F0B030C 24120003 */  li    $s2, 3
-/* 0E4E40 7F0B0310 4406A000 */  mfc1  $a2, $f20
-.L7F0B0314:
-/* 0E4E44 7F0B0314 4407B000 */  mfc1  $a3, $f22
-/* 0E4E48 7F0B0318 02202025 */  move  $a0, $s1
-/* 0E4E4C 7F0B031C 0FC2BF9C */  jal   sub_GAME_7F0AFE70
-/* 0E4E50 7F0B0320 02002825 */   move  $a1, $s0
-/* 0E4E54 7F0B0324 4618003C */  c.lt.s $f0, $f24
-/* 0E4E58 7F0B0328 26100001 */  addiu $s0, $s0, 1
-/* 0E4E5C 7F0B032C 45000003 */  bc1f  .L7F0B033C
-/* 0E4E60 7F0B0330 00000000 */   nop   
-/* 0E4E64 7F0B0334 10000004 */  b     .L7F0B0348
-/* 0E4E68 7F0B0338 00001025 */   move  $v0, $zero
-.L7F0B033C:
-/* 0E4E6C 7F0B033C 5612FFF5 */  bnel  $s0, $s2, .L7F0B0314
-/* 0E4E70 7F0B0340 4406A000 */   mfc1  $a2, $f20
-/* 0E4E74 7F0B0344 24020001 */  li    $v0, 1
-.L7F0B0348:
-/* 0E4E78 7F0B0348 8FBF003C */  lw    $ra, 0x3c($sp)
-/* 0E4E7C 7F0B034C D7B40018 */  ldc1  $f20, 0x18($sp)
-/* 0E4E80 7F0B0350 D7B60020 */  ldc1  $f22, 0x20($sp)
-/* 0E4E84 7F0B0354 D7B80028 */  ldc1  $f24, 0x28($sp)
-/* 0E4E88 7F0B0358 8FB00030 */  lw    $s0, 0x30($sp)
-/* 0E4E8C 7F0B035C 8FB10034 */  lw    $s1, 0x34($sp)
-/* 0E4E90 7F0B0360 8FB20038 */  lw    $s2, 0x38($sp)
-/* 0E4E94 7F0B0364 03E00008 */  jr    $ra
-/* 0E4E98 7F0B0368 27BD0040 */   addiu $sp, $sp, 0x40
-)
-#endif
 
 
 
@@ -4542,7 +4487,7 @@ glabel sub_GAME_7F0B1DDC
 .L7F0B1EE4:
 /* 0E6A14 7F0B1EE4 4407E000 */  mfc1  $a3, $f28
 /* 0E6A18 7F0B1EE8 02602025 */  move  $a0, $s3
-/* 0E6A1C 7F0B1EEC 0FC2BF47 */  jal   getShortest2dDistToInfTileEdge
+/* 0E6A1C 7F0B1EEC 0FC2BF47 */  jal   getShortest2dDispToInfTileEdge
 /* 0E6A20 7F0B1EF0 02002825 */   move  $a1, $s0
 /* 0E6A24 7F0B1EF4 4406D000 */  mfc1  $a2, $f26
 /* 0E6A28 7F0B1EF8 4407E000 */  mfc1  $a3, $f28
