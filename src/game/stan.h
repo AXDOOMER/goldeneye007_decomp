@@ -33,8 +33,9 @@ struct StandTile {
 };
 
 // RGB? I've called them 'triple' because I don't really know what RGB is
+// No parens around params
 #define STAN_TRIPLE_TO_PNT_INDEX(tile, tripleIndex) (tile->hdrTail >> (8 - 4*tripleIndex) & 0xF)
-
+#define STAN_POINT_COUNT(tile) (tile->hdrTail >> 0xC & 0xF)
 
 // May be internal only, nice here.
 struct StandTileWalkCallbackRecord {
@@ -58,6 +59,7 @@ typedef s32 (*standTileLocusCallback_A_t)(struct StandTile*, struct StandTileLoc
 typedef s32 (*standTileLocusCallback_B_t)(struct StandTile*, s32, float, float, void, float*);  // 5th parameter uncertain
 typedef s32 (*standTileLocusCallback_C_t)(struct StandTile**, s32, struct StandTileLocusCallbackRecord*);
 
+typedef s32 (*tilePredicate_t)(struct StandTile*);
 
 void stanInitDebugNoticeList(void);
 

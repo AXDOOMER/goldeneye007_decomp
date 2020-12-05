@@ -50,7 +50,7 @@ s32 dword_CODE_bss_8007BA08;
 //CODE.bss:8007BA0C
 s32 dword_CODE_bss_8007BA0C;
 //CODE.bss:8007BA10
-char dword_CODE_bss_8007BA10[0x580];
+struct StandTile* bfsTileStack[352];
 
 
 // data
@@ -1617,7 +1617,7 @@ float getShortest2dDispToInfTileEdge(struct StandTile *tile,s32 index,float p_x,
 
     // Omiting the '& 0xF' is equivalent, but keeping it is necessary to match.
     // Perhaps the structure isn't correct but this seems much cleaner than doing an explicit >> 0xC. 
-    nextIndex = (index + 1) % (tile->hdrTail >> 0xC & 0xF);
+    nextIndex = (index + 1) % STAN_POINT_COUNT(tile);
 
     nextPnt = &tile->points[nextIndex];
     currPnt = &tile->points[index];
@@ -4170,7 +4170,7 @@ void sub_GAME_7F0B1CF8(struct StandTile *tile, s32 pointI, struct float3 *currPn
   currPntRtn->y = (float)tilePntA->y * inv_level_scale;
   currPntRtn->z = (float)tilePntA->z * inv_level_scale;
 
-  pointCount = tile->hdrTail >> 0xC & 0xF;
+  pointCount = STAN_POINT_COUNT(tile);
   tilePntB = &tile->points[(pointI + 1) % pointCount];
 
 
@@ -5132,8 +5132,6 @@ glabel sub_GAME_7F0B26B8
 
 
 
-
-
 #ifdef NONMATCHING
 void sub_GAME_7F0B2718(void) {
     // Omg it's BFS on tiles =D
@@ -5158,23 +5156,23 @@ glabel sub_GAME_7F0B2718
 /* 0E7278 7F0B2748 00A0F809 */  jalr  $a1
 /* 0E727C 7F0B274C AFB00018 */  sw    $s0, 0x18($sp)
 /* 0E7280 7F0B2750 10400003 */  beqz  $v0, .L7F0B2760
-/* 0E7284 7F0B2754 3C018008 */   lui   $at, %hi(dword_CODE_bss_8007BA10)
+/* 0E7284 7F0B2754 3C018008 */   lui   $at, %hi(bfsTileStack)
 /* 0E7288 7F0B2758 10000049 */  b     .L7F0B2880
 /* 0E728C 7F0B275C 02801025 */   move  $v0, $s4
 .L7F0B2760:
 /* 0E7290 7F0B2760 240E0001 */  li    $t6, 1
-/* 0E7294 7F0B2764 3C178008 */  lui   $s7, %hi(dword_CODE_bss_8007BA10) 
+/* 0E7294 7F0B2764 3C178008 */  lui   $s7, %hi(bfsTileStack) 
 /* 0E7298 7F0B2768 3C168004 */  lui   $s6, %hi(base_ptr_connection_vals)
-/* 0E729C 7F0B276C AC34BA10 */  sw    $s4, %lo(dword_CODE_bss_8007BA10)($at)
+/* 0E729C 7F0B276C AC34BA10 */  sw    $s4, %lo(bfsTileStack)($at)
 /* 0E72A0 7F0B2770 24110001 */  li    $s1, 1
 /* 0E72A4 7F0B2774 26D60F58 */  addiu $s6, %lo(base_ptr_connection_vals) # addiu $s6, $s6, 0xf58
-/* 0E72A8 7F0B2778 26F7BA10 */  addiu $s7, %lo(dword_CODE_bss_8007BA10) # addiu $s7, $s7, -0x45f0
+/* 0E72A8 7F0B2778 26F7BA10 */  addiu $s7, %lo(bfsTileStack) # addiu $s7, $s7, -0x45f0
 /* 0E72AC 7F0B277C AFAE0058 */  sw    $t6, 0x58($sp)
 /* 0E72B0 7F0B2780 0000F025 */  move  $fp, $zero
 .L7F0B2784:
 /* 0E72B4 7F0B2784 1A200037 */  blez  $s1, .L7F0B2864
-/* 0E72B8 7F0B2788 3C0F8008 */   lui   $t7, %hi(dword_CODE_bss_8007BA10) 
-/* 0E72BC 7F0B278C 25EFBA10 */  addiu $t7, %lo(dword_CODE_bss_8007BA10) # addiu $t7, $t7, -0x45f0
+/* 0E72B8 7F0B2788 3C0F8008 */   lui   $t7, %hi(bfsTileStack) 
+/* 0E72BC 7F0B278C 25EFBA10 */  addiu $t7, %lo(bfsTileStack) # addiu $t7, $t7, -0x45f0
 /* 0E72C0 7F0B2790 AFAF0044 */  sw    $t7, 0x44($sp)
 .L7F0B2794:
 /* 0E72C4 7F0B2794 8FB80044 */  lw    $t8, 0x44($sp)
@@ -5195,8 +5193,8 @@ glabel sub_GAME_7F0B2718
 /* 0E72FC 7F0B27CC 012A8021 */   addu  $s0, $t1, $t2
 /* 0E7300 7F0B27D0 1A200009 */  blez  $s1, .L7F0B27F8
 /* 0E7304 7F0B27D4 00001025 */   move  $v0, $zero
-/* 0E7308 7F0B27D8 3C038008 */  lui   $v1, %hi(dword_CODE_bss_8007BA10)
-/* 0E730C 7F0B27DC 2463BA10 */  addiu $v1, %lo(dword_CODE_bss_8007BA10) # addiu $v1, $v1, -0x45f0
+/* 0E7308 7F0B27D8 3C038008 */  lui   $v1, %hi(bfsTileStack)
+/* 0E730C 7F0B27DC 2463BA10 */  addiu $v1, %lo(bfsTileStack) # addiu $v1, $v1, -0x45f0
 .L7F0B27E0:
 /* 0E7310 7F0B27E0 8C6C0000 */  lw    $t4, ($v1)
 /* 0E7314 7F0B27E4 24420001 */  addiu $v0, $v0, 1
@@ -5788,7 +5786,7 @@ glabel sub_GAME_7F0B2C74
 float sub_GAME_7F0B2D14(struct StandTile* tile) {
     float vs[2];
 
-    sub_GAME_7F0B2C74(tile, &vs);
+    sub_GAME_7F0B2C74(tile, vs);
     return vs[0];
 }
 
