@@ -20,7 +20,7 @@ struct StandTileHeaderTail {
 struct StandTile {
     u16 name1;
     u8 name2;
-    u8 room;    // compared to 0xFF, not -1 in a function
+    u8 room;    // compared to 0xFF, not -1 in a function. Seen LBUs.
     s16 headerA;
 
     /* 0x06 */
@@ -32,17 +32,32 @@ struct StandTile {
     struct StandTilePoint points[1];
 };
 
+// RGB? I've called them 'triple' because I don't really know what RGB is
+#define STAN_TRIPLE_TO_PNT_INDEX(tile, tripleIndex) (tile->hdrTail >> (8 - 4*tripleIndex) & 0xF)
+
 
 // May be internal only, nice here.
-struct StandTileCallbackRecord {
+struct StandTileWalkCallbackRecord {
     s32 * roomBuf;
     s32 count;
     s32 bufMax;
     s32 lastRoom;
 };
-typedef void (*standTileCallback_t)(struct StandTile*, struct StandTile*, struct StandTileCallbackRecord*);
+typedef void (*standTileWalkCallback_t)(struct StandTile*, struct StandTile*, struct StandTileWalkCallbackRecord*);
 // Necessary forward declaration
-void sub_GAME_7F0B0C98(struct StandTile *tile, struct StandTile *unused, struct StandTileCallbackRecord *data);
+void sub_GAME_7F0B0C98(struct StandTile *tile, struct StandTile *unused, struct StandTileWalkCallbackRecord *data);
+
+// Very similar but definitely different to the above?
+struct StandTileLocusCallbackRecord {
+    s32 * roomBuf;
+    s32 count;
+    s32 bufMax;
+    s32 nearEdgeCount;
+};
+typedef s32 (*standTileLocusCallback_A_t)(struct StandTile*, struct StandTileLocusCallbackRecord*);
+typedef s32 (*standTileLocusCallback_B_t)(struct StandTile*, s32, float, float, void, float*);  // 5th parameter uncertain
+typedef s32 (*standTileLocusCallback_C_t)(struct StandTile**, s32, struct StandTileLocusCallbackRecord*);
+
 
 void stanInitDebugNoticeList(void);
 

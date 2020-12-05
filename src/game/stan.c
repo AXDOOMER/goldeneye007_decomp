@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/stan.h"
+#include "structs.h"
 
 // bss
 //CODE.bss:8007B120
@@ -1682,8 +1683,8 @@ float getShortest2dDispToInfTripleEdge(struct StandTile *tile,s32 start3index,fl
     }
 
     // making and reusing macros of these introduces extra instructions later
-    currPntI = ((tile->hdrTail >> (8 - 4*start3index)) & 0xF);
-    nextPntI = ((tile->hdrTail >> (8 - 4*end3index)) & 0xF);
+    currPntI = STAN_TRIPLE_TO_PNT_INDEX(tile, start3index);
+    nextPntI = STAN_TRIPLE_TO_PNT_INDEX(tile, end3index);
 
     edge_x = (float)(tile->points[nextPntI].x - tile->points[currPntI].x);
     edge_z = (float)(tile->points[nextPntI].z - tile->points[currPntI].z);
@@ -1851,15 +1852,16 @@ float distToTilePnt2D(struct StandTile *tile,int pntI,float p_x,float p_z)
 
 
 #ifdef NONMATCHING
-float sub_GAME_7F0B00C4(s32 param_1,s32 index,float param_3,float param_4)
+float sub_GAME_7F0B00C4(struct StandTile* tile,s32 index,float p_x,float p_z)
 {
+  float v_x;
+  float v_z;
   float dist;
-  float fVar2;
   
-  param_1 = param_1 + index * 8;
-  dist = param_3 * level_scale - (float)(s32)*(short *)(param_1 + 8);
-  fVar2 = param_4 * level_scale - (float)(s32)*(short *)(param_1 + 0xc);
-  dist = sqrtf(dist * dist + fVar2 * fVar2);
+  v_x = p_x * level_scale - (float)tile->points[index].x;
+  v_z = p_z * level_scale - (float)tile->points[index].z;
+  dist = sqrtf(v_x * v_x + v_z * v_z);
+  
   return dist * inv_level_scale;
 }
 #else
@@ -1905,12 +1907,17 @@ glabel sub_GAME_7F0B00C4
 
 
 #ifdef NONMATCHING
-f32 sub_GAME_7F0B0140(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
-    void *temp_v0;
 
-    // Node 0
-    temp_v0 = (arg0 + (arg1 * 8));
-    return ((((f32) temp_v0->unkC * (arg3 * level_scale)) + ((arg2 * level_scale) * (f32) temp_v0->unk8)) * inv_level_scale);
+// dot product
+f32 sub_GAME_7F0B0140(struct StandTile* tile, s32 index, float p_x, float p_z)
+{
+    float d_x;
+    float d_z;
+
+    d_x = (p_x * level_scale) * tile->points[index].x;
+    d_z = (p_z * level_scale) * tile->points[index].z;  // was originally commuted
+
+    return (d_x + d_z) * inv_level_scale);
 }
 #else
 GLOBAL_ASM(
@@ -1946,6 +1953,7 @@ glabel sub_GAME_7F0B0140
 
 
 #ifdef NONMATCHING
+// Similar to others
 f32 sub_GAME_7F0B0198(void *arg0, s32 arg1, f32 arg2, f32 arg3) {
     void *temp_v0;
     void *temp_v0_2;
@@ -2602,7 +2610,7 @@ glabel sub_GAME_7F0B07BC
 // 'walkTilesBetweenPoints_withCallback'
 // sig declared for caller matches
 s32 sub_GAME_7F0B0914(struct StandTile **tileStack, float start_x, float start_z, float dest_x, float dest_z,
-    standTileCallback_t func, struct StandTileCallbackRecord *funcData);
+    standTileWalkCallback_t func, struct StandTileWalkCallbackRecord *funcData);
 
 
 #ifdef NONMATCHING
@@ -2813,7 +2821,7 @@ glabel sub_GAME_7F0B0914
 
 
 // 'walkTilesBetweenPoints_NoCallback'
-s32 sub_GAME_7F0B0BE4(struct StandTile *tileStack, float start_x, float start_z, float dest_x, float dest_z)
+s32 sub_GAME_7F0B0BE4(struct StandTile **tileStack, float start_x, float start_z, float dest_x, float dest_z)
 {
     return sub_GAME_7F0B0914(tileStack, start_x, start_z, dest_x, dest_z, 0, 0);
 }
@@ -2822,9 +2830,9 @@ s32 sub_GAME_7F0B0BE4(struct StandTile *tileStack, float start_x, float start_z,
 
 
 // 'walkTilesBetweenPoints_NotingRooms'
-s32 sub_GAME_7F0B0C24(struct StandTile *tileStack, float start_x, float start_z, float dest_x, float dest_z, s32 *roomBuffer, s32 *rtnCountSize, s32 maxBufSize)
+s32 sub_GAME_7F0B0C24(struct StandTile **tileStack, float start_x, float start_z, float dest_x, float dest_z, s32 *roomBuffer, s32 *rtnCountSize, s32 maxBufSize)
 {
-    struct StandTileCallbackRecord callbackData;
+    struct StandTileWalkCallbackRecord callbackData;
     s32 rtn;
 
 
@@ -2841,7 +2849,7 @@ s32 sub_GAME_7F0B0C24(struct StandTile *tileStack, float start_x, float start_z,
 
 
 
-void sub_GAME_7F0B0C98(struct StandTile *tile, struct StandTile *unused, struct StandTileCallbackRecord *data)
+void sub_GAME_7F0B0C98(struct StandTile *tile, struct StandTile *unused, struct StandTileWalkCallbackRecord *data)
 {
     s32 newRoom;
 
@@ -2860,7 +2868,7 @@ void sub_GAME_7F0B0C98(struct StandTile *tile, struct StandTile *unused, struct 
 
 
 
-void sub_GAME_7F0B0CEC(struct StandTile *tile, struct StandTile *unused, struct StandTileCallbackRecord *data) {
+void sub_GAME_7F0B0CEC(struct StandTile *tile, struct StandTile *unused, struct StandTileWalkCallbackRecord *data) {
     sub_GAME_7F0B0C98(tile, unused, data);
 }
 
@@ -3627,32 +3635,41 @@ glabel sub_GAME_7F0B1410
 
 
 #ifdef NONMATCHING
-f32 sub_GAME_7F0B16C4(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5) {
-    f32 sp1C;
-    f32 sp20;
-    f32 temp_f2;
-    f32 temp_f16;
-    ? temp_ret;
-    f32 temp_f0;
-    f32 temp_f2_2;
+// general regalloc
+float sub_GAME_7F0B16C4(float a_x,float a_z,float b_x,float b_z,float c_x,float c_z)
+{
+    float AB_x;
+    float AB_y; // unused
+    float AB_z;
 
-    // Node 0
-    temp_f2 = (arg2 - arg0);
-    temp_f16 = (arg3 - arg1);
-    sp20 = temp_f2;
-    sp1C = temp_f16;
-    temp_ret = sqrtf(((temp_f2 * temp_f2) + (temp_f16 * temp_f16)));
-    if (temp_ret != 0.0f)
-    {
-        // Node 2
-        // Node 3
-        return (((temp_f16 * (arg4 - arg0)) + (-temp_f2 * (arg5 - arg1))) / temp_ret);
+    float dist;
+
+    float BC_x;
+    float BC_y; // unused
+    float BC_z;
+
+    float AC_x;
+    float AC_y; // unused
+    float AC_z;
+    
+    AB_x = b_x - a_x;
+    AB_z = b_z - a_z;
+    dist = sqrtf(AB_x * AB_x + AB_z * AB_z);
+
+    if (dist == 0) {
+        BC_x = c_x - b_x;
+        BC_z = c_z - b_z;
+        return sqrtf(BC_x*BC_x + BC_z*BC_z);
     }
-    // Node 1
-    temp_f0 = (arg4 - arg2);
-    temp_f2_2 = (arg5 - arg3);
-    return (((temp_f16 * (arg4 - arg0)) + (-temp_f2 * (arg5 - arg1))) / temp_ret);
+    else {
+        AC_x = c_x - a_x;
+        AC_z = c_z - a_z;
+        return (AB_z * AC_x  + -AB_x * AC_z) / dist;
+    }
+
+    return dist;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -3729,80 +3746,38 @@ float distBetweenPoints2d(float o_x,float o_z,float p_x,float p_z)
 
 
 #ifdef NONMATCHING
-s32 sub_GAME_7F0B17E4(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5) {
-    f32 temp_f6;
-    f32 temp_f10;
-    f32 temp_f0;
-    f32 temp_f2;
-    f32 temp_f18;
-    f32 temp_f16;
-    s32 phi_v0;
-    s32 phi_v0_2;
-    s32 phi_v0_3;
+// Not 100% sure it's logically equivalent.
+// Pretty sure the test at least needs rephrasing to match.
+s32 sub_GAME_7F0B17E4(float a_x,float a_z,float b_x,float b_z,float c_x,float c_z)
+{
+    float AB_x;
+    float AB_z;
+    float len_AB_sq;
+    float AC_x;
+    float AC_z;
+    float AC_dot_AB;
+    
+    AB_x = b_x - a_x;
+    AB_z = b_z - a_z;
+    len_AB_sq = AB_x * AB_x + AB_z * AB_z;
 
-    // Node 0
-    temp_f6 = (arg4 - arg0);
-    temp_f10 = (arg5 - arg1);
-    arg4 = temp_f6;
-    temp_f0 = (arg2 - arg0);
-    arg5 = temp_f10;
-    temp_f2 = (arg3 - arg1);
-    temp_f18 = ((temp_f0 * temp_f0) + (temp_f2 * temp_f2));
-    temp_f16 = ((temp_f6 * temp_f0) + (temp_f10 * temp_f2));
-    phi_v0 = 0;
-    if (temp_f18 < temp_f16)
-    {
-        // Node 1
-        phi_v0 = 1;
+    AC_x = c_x - a_x;
+    AC_z = c_z - a_z;
+    AC_dot_AB = AC_x * AB_x + AC_z * AB_z;
+
+    // This appears to be A correct formulation, but the first statement is obviously false (requires length < 0)
+    // 
+    if (
+        ((AC_dot_AB > len_AB_sq) && (AC_dot_AB < 0))    // = false
+        || (0 < AC_dot_AB && AC_dot_AB < len_AB_sq)     // AC_dot_AB in (0, len_AB_sq)
+    ){
+        return 1;
     }
-    // Node 2
-    if ((phi_v0 != 0) && (temp_f16 < 0.0f))
-    {
-        // Node 4
-        phi_v0_2 = 1;
-        // Node 5
-        if (phi_v0_2 == 0)
-        {
-            // Node 6
-            phi_v0_3 = 0;
-            if (0.0f < temp_f16)
-            {
-                // Node 7
-                phi_v0_3 = 1;
-            }
-            // Node 8
-            if (phi_v0_3 != 0)
-            {
-                // Node 9
-                if (temp_f16 < temp_f18)
-                {
-                    // Node 10
-                }
-            }
-        }
-    }
-    else
-    {
-        // Node 6
-        phi_v0_3 = 0;
-        if (0.0f < temp_f16)
-        {
-            // Node 7
-            phi_v0_3 = 1;
-        }
-        // Node 8
-        if (phi_v0_3 != 0)
-        {
-            // Node 9
-            if (temp_f16 < temp_f18)
-            {
-                // Node 10
-            }
-        }
-    }
-    // Node 11
+
     return 0;
+
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -4181,22 +4156,28 @@ s32 sub_GAME_7F0B1CEC(void) {
 
 
 
-
 #ifdef NONMATCHING
-void *sub_GAME_7F0B1CF8(void *arg0, s32 arg1, void *arg2, void *arg3) {
-    void *temp_v0;
-    void *temp_v0_2;
+// Not debugged at all - can't be far wrong though.
+void sub_GAME_7F0B1CF8(struct StandTile *tile, s32 pointI, struct float3 *currPntRtn, struct float3 *nextPointRtn)
+{
+  struct StandTilePoint *tilePntA;
+  struct StandTilePoint *tilePntB;
+  s32 pointCount;
+  
+  tilePntA = &tile->points[pointI];
 
-    // Node 0
-    temp_v0 = (arg0 + (arg1 * 8));
-    *arg2 = (f32) ((f32) temp_v0->unk8 * inv_level_scale);
-    arg2->unk4 = (f32) ((f32) temp_v0->unkA * inv_level_scale);
-    arg2->unk8 = (f32) ((f32) temp_v0->unkC * inv_level_scale);
-    temp_v0_2 = (arg0 + (((s32) (arg1 + 1) % (s32) (((s32) arg0->unk6 >> 0xc) & 0xf)) * 8));
-    *arg3 = (f32) ((f32) temp_v0_2->unk8 * inv_level_scale);
-    arg3->unk4 = (f32) ((f32) temp_v0_2->unkA * inv_level_scale);
-    arg3->unk8 = (f32) ((f32) temp_v0_2->unkC * inv_level_scale);
-    return temp_v0_2;
+  currPntRtn->x = (float)tilePntA->x * inv_level_scale;
+  currPntRtn->y = (float)tilePntA->y * inv_level_scale;
+  currPntRtn->z = (float)tilePntA->z * inv_level_scale;
+
+  pointCount = tile->hdrTail >> 0xC & 0xF;
+  tilePntB = &tile->points[(pointI + 1) % pointCount];
+
+
+  nextPointRtn->x = (float)tilePntB->x * inv_level_scale;
+  nextPointRtn->y = (float)tilePntB->y * inv_level_scale;
+  nextPointRtn->z = (float)tilePntB->z * inv_level_scale;
+  
 }
 #else
 GLOBAL_ASM(
@@ -4264,9 +4245,12 @@ glabel sub_GAME_7F0B1CF8
 )
 #endif
 
-
-
-
+// Sig for caller matches
+// Note it's not clear from caller usage alone what the type of C's 5th parameter is
+s32 sub_GAME_7F0B1DDC(struct StandTile**, float, float, float,
+    standTileLocusCallback_A_t, standTileLocusCallback_B_t, standTileLocusCallback_C_t,
+    struct StandTileLocusCallbackRecord*
+);
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B1DDC(void) {
@@ -4488,78 +4472,39 @@ glabel sub_GAME_7F0B1DDC
 
 
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F0B20D0(s32 arg1, ? arg2, ? arg3) {
-    // Node 0
-    sub_GAME_7F0B1DDC(arg1, arg2, arg1, arg2, 0, 0, 0, 0);
+s32 sub_GAME_7F0B20D0(struct StandTile** tileStack, float target_x, float target_z, float unknown) {
+    return sub_GAME_7F0B1DDC(tileStack, target_x, target_z, unknown, 0, 0, 0, 0);
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B20D0
-/* 0E6C00 7F0B20D0 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0E6C04 7F0B20D4 44856000 */  mtc1  $a1, $f12
-/* 0E6C08 7F0B20D8 44867000 */  mtc1  $a2, $f14
-/* 0E6C0C 7F0B20DC AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0E6C10 7F0B20E0 44056000 */  mfc1  $a1, $f12
-/* 0E6C14 7F0B20E4 44067000 */  mfc1  $a2, $f14
-/* 0E6C18 7F0B20E8 AFA70034 */  sw    $a3, 0x34($sp)
-/* 0E6C1C 7F0B20EC AFA00010 */  sw    $zero, 0x10($sp)
-/* 0E6C20 7F0B20F0 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0E6C24 7F0B20F4 AFA00018 */  sw    $zero, 0x18($sp)
-/* 0E6C28 7F0B20F8 0FC2C777 */  jal   sub_GAME_7F0B1DDC
-/* 0E6C2C 7F0B20FC AFA0001C */   sw    $zero, 0x1c($sp)
-/* 0E6C30 7F0B2100 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 0E6C34 7F0B2104 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0E6C38 7F0B2108 03E00008 */  jr    $ra
-/* 0E6C3C 7F0B210C 00000000 */   nop   
-)
-#endif
 
-
-
-
+// sig for caller matches
+s32 sub_GAME_7F0B2110(struct StandTile* tile, struct StandTileLocusCallbackRecord*);
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B2110(void *arg0, void *arg1) {
-    s32 temp_v1;
-    void *phi_t0;
-    s32 phi_v1;
 
-    // Node 0
-    if (arg1->unk4 > 0)
+// Regalloc and a little reordering to solve, but there just seems to be nothing to work with in the loop.
+// Indexing roomBuf makes sense and generates closer code.
+// 'addTileRoomIfNew'
+s32 sub_GAME_7F0B2110(struct StandTile* tile, struct StandTileLocusCallbackRecord* data)
+{
+    s32 i;
+    s32 room;
+
+    for (i = 0; i < data->count; i++)
     {
-        // Node 1
-        phi_t0 = *arg1;
-        phi_v1 = 0;
-loop_2:
-        // Node 2
-        if (arg0->unk3 == *phi_t0)
-        {
-            // Node 3
+        if (data->roomBuf[i] == tile->room) {
             return 0;
         }
-        // Node 4
-        temp_v1 = (phi_v1 + 1);
-        phi_t0 = (phi_t0 + 4);
-        phi_v1 = temp_v1;
-        if (temp_v1 < arg1->unk4)
-        {
-            goto loop_2;
-        }
     }
-    // Node 5
-    if (arg1->unk4 < arg1->unk8)
-    {
-        // Node 6
-        *(*arg1 + (arg1->unk4 * 4)) = (s32) arg0->unk3;
-        arg1->unk4 = (s32) (arg1->unk4 + 1);
+    
+    if (data->count < data->bufMax) {
+        data->roomBuf[data->count] = tile->room;
+        data->count++;
     }
-    // Node 7
+
     return 0;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -4608,95 +4553,35 @@ glabel sub_GAME_7F0B2110
 
 
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F0B2194(s32 arg0, s32 arg1, void *arg2) {
-    // Node 0
-    arg2->unkC = (s32) (arg2->unkC + 1);
+s32 incrNearEdgeCount(struct StandTile** tileStack, s32 stackHeight, struct StandTileLocusCallbackRecord* data) {
+    data->nearEdgeCount += 1;
     return 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B2194
-/* 0E6CC4 7F0B2194 AFA40000 */  sw    $a0, ($sp)
-/* 0E6CC8 7F0B2198 AFA50004 */  sw    $a1, 4($sp)
-/* 0E6CCC 7F0B219C 8CCE000C */  lw    $t6, 0xc($a2)
-/* 0E6CD0 7F0B21A0 24020001 */  li    $v0, 1
-/* 0E6CD4 7F0B21A4 25CF0001 */  addiu $t7, $t6, 1
-/* 0E6CD8 7F0B21A8 03E00008 */  jr    $ra
-/* 0E6CDC 7F0B21AC ACCF000C */   sw    $t7, 0xc($a2)
-)
-#endif
 
 
 
 
+s32 sub_GAME_7F0B21B0(struct StandTile **tileStack, float target_x, float target_z, float unknown, s32 *roomBuf, s32 *count_rtn, s32 bufMax){
+    struct StandTileLocusCallbackRecord data;
+    s32 rtn;
 
-#ifdef NONMATCHING
-s32 sub_GAME_7F0B21B0(s32 arg1, ? arg2, ? arg3, ?32 arg4, void *arg5, ?32 arg6) {
-    ?32 sp30;
-    ?32 sp34;
-    ?32 sp38;
-    s32 sp3C;
+    data.roomBuf = roomBuf;
+    data.count = 0;
+    data.bufMax = bufMax;
+    data.nearEdgeCount = 0;
 
-    // Node 0
-    sp34 = 0;
-    sp3C = 0;
-    sp30 = arg4;
-    sp38 = arg6;
-    *arg5 = sp34;
-    if (sp3C >= 2)
-    {
-        // Node 1
+    rtn = sub_GAME_7F0B1DDC(tileStack, target_x, target_z, unknown,
+        sub_GAME_7F0B2110, 0x0, incrNearEdgeCount, &data
+    );
+
+    *count_rtn = data.count;
+
+    if (1 < data.nearEdgeCount) {
+        return 2;
     }
-    // Node 2
-    return sub_GAME_7F0B1DDC(arg1, arg2, arg1, arg2, &sub_GAME_7F0B2110, 0, &sub_GAME_7F0B2194, &sp30);
+
+    return rtn;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B21B0
-/* 0E6CE0 7F0B21B0 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 0E6CE4 7F0B21B4 44856000 */  mtc1  $a1, $f12
-/* 0E6CE8 7F0B21B8 44867000 */  mtc1  $a2, $f14
-/* 0E6CEC 7F0B21BC 8FAE0050 */  lw    $t6, 0x50($sp)
-/* 0E6CF0 7F0B21C0 8FAF0058 */  lw    $t7, 0x58($sp)
-/* 0E6CF4 7F0B21C4 3C187F0B */  lui   $t8, %hi(sub_GAME_7F0B2110) # $t8, 0x7f0b
-/* 0E6CF8 7F0B21C8 3C197F0B */  lui   $t9, %hi(sub_GAME_7F0B2194) # $t9, 0x7f0b
-/* 0E6CFC 7F0B21CC AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0E6D00 7F0B21D0 27392194 */  addiu $t9, %lo(sub_GAME_7F0B2194) # addiu $t9, $t9, 0x2194
-/* 0E6D04 7F0B21D4 27182110 */  addiu $t8, %lo(sub_GAME_7F0B2110) # addiu $t8, $t8, 0x2110
-/* 0E6D08 7F0B21D8 27A80030 */  addiu $t0, $sp, 0x30
-/* 0E6D0C 7F0B21DC 44056000 */  mfc1  $a1, $f12
-/* 0E6D10 7F0B21E0 44067000 */  mfc1  $a2, $f14
-/* 0E6D14 7F0B21E4 AFA7004C */  sw    $a3, 0x4c($sp)
-/* 0E6D18 7F0B21E8 AFA00034 */  sw    $zero, 0x34($sp)
-/* 0E6D1C 7F0B21EC AFA0003C */  sw    $zero, 0x3c($sp)
-/* 0E6D20 7F0B21F0 AFA8001C */  sw    $t0, 0x1c($sp)
-/* 0E6D24 7F0B21F4 AFB80010 */  sw    $t8, 0x10($sp)
-/* 0E6D28 7F0B21F8 AFB90018 */  sw    $t9, 0x18($sp)
-/* 0E6D2C 7F0B21FC AFA00014 */  sw    $zero, 0x14($sp)
-/* 0E6D30 7F0B2200 AFAE0030 */  sw    $t6, 0x30($sp)
-/* 0E6D34 7F0B2204 0FC2C777 */  jal   sub_GAME_7F0B1DDC
-/* 0E6D38 7F0B2208 AFAF0038 */   sw    $t7, 0x38($sp)
-/* 0E6D3C 7F0B220C 8FA90034 */  lw    $t1, 0x34($sp)
-/* 0E6D40 7F0B2210 8FAA0054 */  lw    $t2, 0x54($sp)
-/* 0E6D44 7F0B2214 00401825 */  move  $v1, $v0
-/* 0E6D48 7F0B2218 00601025 */  move  $v0, $v1
-/* 0E6D4C 7F0B221C AD490000 */  sw    $t1, ($t2)
-/* 0E6D50 7F0B2220 8FAB003C */  lw    $t3, 0x3c($sp)
-/* 0E6D54 7F0B2224 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 0E6D58 7F0B2228 29610002 */  slti  $at, $t3, 2
-/* 0E6D5C 7F0B222C 14200003 */  bnez  $at, .L7F0B223C
-/* 0E6D60 7F0B2230 00000000 */   nop   
-/* 0E6D64 7F0B2234 10000001 */  b     .L7F0B223C
-/* 0E6D68 7F0B2238 24020002 */   li    $v0, 2
-.L7F0B223C:
-/* 0E6D6C 7F0B223C 03E00008 */  jr    $ra
-/* 0E6D70 7F0B2240 27BD0040 */   addiu $sp, $sp, 0x40
-)
-#endif
 
 
 
@@ -4822,6 +4707,8 @@ glabel sub_GAME_7F0B2274
 
 
 #ifdef NONMATCHING
+// I think they might have abused c a little here, which is what's led to the strange zero-ing.
+// The use the struct (size 0x10) to just hold a bool.
 void sub_GAME_7F0B2314(s32 arg0, s32 arg1, ? arg2, ? arg3, void *arg4) {
     s32 temp_v1;
     void *phi_v0;
@@ -4929,16 +4816,16 @@ glabel sub_GAME_7F0B23A4
 
 
 #ifdef NONMATCHING
-f32 sub_GAME_7F0B23AC(void *arg0, s32 arg1, void *arg2) {
-    void *temp_v0;
+void sub_GAME_7F0B23AC(struct StandTile *tile, s32 tripleIndex, struct float3 *pnt)
+{
+    s32 pntIndex = STAN_TRIPLE_TO_PNT_INDEX(tile, tripleIndex);
 
-    // Node 0
-    temp_v0 = (arg0 + ((((s32) arg0->unk6 >> (8 - (arg1 * 4))) & 0xf) * 8));
-    *arg2 = (f32) ((f32) temp_v0->unk8 * inv_level_scale);
-    arg2->unk4 = (f32) ((f32) temp_v0->unkA * inv_level_scale);
-    arg2->unk8 = (f32) ((f32) temp_v0->unkC * inv_level_scale);
-    return inv_level_scale;
+    pnt->x = (float)tile->points[pntIndex].x * inv_level_scale;
+    pnt->y = (float)tile->points[pntIndex].y * inv_level_scale;
+    pnt->z = (float)tile->points[pntIndex].z * inv_level_scale;
+    return;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -5199,7 +5086,7 @@ glabel sub_GAME_7F0B260C
 
 
 #ifdef NONMATCHING
-// Needs sub_GAME_7F0B260C defined in order to build.
+// We'll wait to decomp sub_GAME_7F0B260C properly, the reference to the float seems to be misbehaving and pointless.
 void sub_GAME_7F0B26B8(struct StandTile **tile, float target_x, float target_z, float b_z, float param_5)
 {
     float unk_float;
@@ -5208,7 +5095,7 @@ void sub_GAME_7F0B26B8(struct StandTile **tile, float target_x, float target_z, 
     
     return sub_GAME_7F0B1DDC(
         tile, target_x, target_z, b_z,
-        0x0, &sub_GAME_7F0B260C, 0x0, &unk_float
+        0x0, sub_GAME_7F0B260C, 0x0, &unk_float
     );
 }
 
@@ -5249,7 +5136,8 @@ glabel sub_GAME_7F0B26B8
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B2718(void) {
-
+    // Omg it's BFS on tiles =D
+    // Bagsied
 }
 #else
 GLOBAL_ASM(
@@ -5805,7 +5693,7 @@ glabel copy_tile_RGB_as_24bit
 
 
 
-
+float sub_GAME_7F0B2C74(struct StandTile *tile, float *arg1);
 
 #ifdef NONMATCHING
 f32 sub_GAME_7F0B2C74(void *arg0, void *arg1) {
@@ -5897,31 +5785,12 @@ glabel sub_GAME_7F0B2C74
 
 
 
+float sub_GAME_7F0B2D14(struct StandTile* tile) {
+    float vs[2];
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B2D14(void) {
-    ? sp18;
-
-    // Node 0
-    sub_GAME_7F0B2C74(&sp18);
-    return sp18;
+    sub_GAME_7F0B2C74(tile, &vs);
+    return vs[0];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B2D14
-/* 0E7844 7F0B2D14 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0E7848 7F0B2D18 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E784C 7F0B2D1C 0FC2CB1D */  jal   sub_GAME_7F0B2C74
-/* 0E7850 7F0B2D20 27A50018 */   addiu $a1, $sp, 0x18
-/* 0E7854 7F0B2D24 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0E7858 7F0B2D28 C7A00018 */  lwc1  $f0, 0x18($sp)
-/* 0E785C 7F0B2D2C 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0E7860 7F0B2D30 03E00008 */  jr    $ra
-/* 0E7864 7F0B2D34 00000000 */   nop   
-)
-#endif
-
 
 
 
