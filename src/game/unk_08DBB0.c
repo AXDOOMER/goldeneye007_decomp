@@ -60,30 +60,9 @@ u32 D_80036B6C = 0;
 
 // rodata
 
-
-
-#ifdef NONMATCHING
-u32 sub_GAME_7F08DBB0(void) {
-    // Node 0
-    pPlayer->unk5BC = (s8) ((u32) pPlayer->unk5BC < 1U);
-    return pPlayer->unk5BC;
+void currentPlayerToggle5BC() {
+    pPlayer->field_5BC = !pPlayer->field_5BC;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08DBB0
-/* 0C26E0 7F08DBB0 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 0C26E4 7F08DBB4 8C63A0B0 */  lw    $v1, %lo(pPlayer)($v1)
-/* 0C26E8 7F08DBB8 806205BC */  lb    $v0, 0x5bc($v1)
-/* 0C26EC 7F08DBBC 2C4E0001 */  sltiu $t6, $v0, 1
-/* 0C26F0 7F08DBC0 03E00008 */  jr    $ra
-/* 0C26F4 7F08DBC4 A06E05BC */   sb    $t6, 0x5bc($v1)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F08DBC8(void) {
@@ -1067,8 +1046,8 @@ glabel sub_GAME_7F08E8BC
 /* 0C34F0 7F08E9C0 24840598 */   addiu $a0, $a0, 0x598
 /* 0C34F4 7F08E9C4 3C048008 */  lui   $a0, %hi(pPlayer)
 /* 0C34F8 7F08E9C8 8C84A0B0 */  lw    $a0, %lo(pPlayer)($a0)
-/* 0C34FC 7F08E9CC 3C057F09 */  lui   $a1, %hi(sub_GAME_7F08DBB0) # $a1, 0x7f09
-/* 0C3500 7F08E9D0 24A5DBB0 */  addiu $a1, %lo(sub_GAME_7F08DBB0) # addiu $a1, $a1, -0x2450
+/* 0C34FC 7F08E9CC 3C057F09 */  lui   $a1, %hi(currentPlayerToggle5BC) # $a1, 0x7f09
+/* 0C3500 7F08E9D0 24A5DBB0 */  addiu $a1, %lo(currentPlayerToggle5BC) # addiu $a1, $a1, -0x2450
 /* 0C3504 7F08E9D4 0FC1BF8F */  jal   sub_GAME_7F06FE3C
 /* 0C3508 7F08E9D8 24840598 */   addiu $a0, $a0, 0x598
 /* 0C350C 7F08E9DC 3C198008 */  lui   $t9, %hi(pPlayer) 

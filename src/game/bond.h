@@ -626,7 +626,10 @@ struct Player
   s32 field_5B0;
   s32 field_5B4;
   s32 field_5B8;
-  u32 field_5BC;
+  s8 field_5BC;
+  s8 field_5BD;
+  s8 field_5BE;
+  s8 field_5BF;
   s32 field_5C0;
   s32 field_5C4;
   s32 field_5C8;
