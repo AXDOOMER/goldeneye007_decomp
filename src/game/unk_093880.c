@@ -7963,7 +7963,7 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->field_588 = 0.00000000;
     (*ppPVar3)->field_58C = 1.00000000;
     (*ppPVar3)->field_590 = 0.00000000;
-    (*ppPVar3)->field_594 = 0;
+    (*ppPVar3)->standcnt = 0;
     iVar1 = 0;
     do {
         *(undefined2 *)((int)&((*ppPVar3)->field_7D0).field_7D0 + iVar1) = 0x280;
