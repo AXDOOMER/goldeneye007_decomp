@@ -14965,21 +14965,60 @@ void sub_GAME_7F07FE1C(s32 arg0) {
     pPlayer->speedforwards = pPlayer->field_2A4C;
 }
 
-f32 video_related_23(void);
+f32 viGetFovY(void);
 
-f32 sub_GAME_7F07FF74(f32 arg0) {
-    if (0.0f < arg0) {
-        return (video_related_23() * arg0 * -0.69999999f) / 60.0f;
-    } else if (arg0 < 0.0f) {
-        return (video_related_23() * -arg0 * 0.69999999f) / 60.0f;
-    } else {
-        return 0.0f;
+f32 sub_GAME_7F07FF74(f32 value) {
+    if (value > 0) {
+        return (viGetFovY() * value * -0.7f) / 60.0f;
     }
+    
+    if (value < 0) {
+        return (viGetFovY() * -value * 0.7f) / 60.0f;
+    }
+        
+    return 0;
 }
 
 #ifdef NONMATCHING
-void sub_GAME_7F080010(void) {
+// global_timer_delta should be loaded and multiplied two more times
+void currentPlayerUpdateSpeedVerta(f32 value) {
+    f32 mult = viGetFovY() / 60.0f;
+    f32 limit = sub_GAME_7F07FF74(value);
+    if (value > 0) {
+        if (pPlayer->speedverta > 0) {
+            pPlayer->speedverta -= (0.05f * global_timer_delta * mult);
+        } else {
+            pPlayer->speedverta -= (0.0125f * global_timer_delta * mult);
+        }
 
+        if (pPlayer->speedverta < limit) {
+            pPlayer->speedverta = limit;
+        }
+    } else if (value < 0) {
+        if (pPlayer->speedverta < 0) {
+            pPlayer->speedverta += (0.05f * 0.0125f * mult);
+        } else {
+            pPlayer->speedverta += (0.0125f * global_timer_delta * mult);
+        }
+
+        if (pPlayer->speedverta > limit) {
+            pPlayer->speedverta = limit;
+        }
+    } else {
+        if (pPlayer->speedverta > limit) {
+            pPlayer->speedverta -= (0.05f * 0.05f * mult);
+
+            if (pPlayer->speedverta < limit) {
+                pPlayer->speedverta = limit;
+            }
+        } else {
+            pPlayer->speedverta += (0.05f * global_timer_delta * mult);
+
+            if (pPlayer->speedverta > limit) {
+                pPlayer->speedverta = limit;
+            }
+        }
+    }
 }
 #else
 GLOBAL_ASM(
@@ -14997,10 +15036,10 @@ glabel D_800550AC
 glabel D_800550B0
 .word 0x3d4ccccd /*0.050000001*/
 .text
-glabel sub_GAME_7F080010
+glabel currentPlayerUpdateSpeedVerta
 /* 0B4B40 7F080010 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0B4B44 7F080014 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0B4B48 7F080018 0C001177 */  jal   video_related_23
+/* 0B4B48 7F080018 0C001177 */  jal   viGetFovY
 /* 0B4B4C 7F08001C E7AC0020 */   swc1  $f12, 0x20($sp)
 /* 0B4B50 7F080020 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 0B4B54 7F080024 44812000 */  mtc1  $at, $f4
@@ -15149,9 +15188,9 @@ glabel sub_GAME_7F080010
 
 f32 sub_GAME_7F080228(f32 arg0) {
     if (0.0f < arg0) {
-        return (video_related_23() * arg0 * -0.69999999f) / 60.0f;
+        return (viGetFovY() * arg0 * -0.7f) / 60.0f;
     } else if (arg0 < 0.0f) {
-        return (video_related_23() * -arg0 * 0.69999999f) / 60.0f;
+        return (viGetFovY() * -arg0 * 0.7f) / 60.0f;
     } else {
         return 0.0f;
     }
@@ -15180,7 +15219,7 @@ glabel D_800550D0
 glabel sub_GAME_7F0802C4
 /* 0B4DF4 7F0802C4 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0B4DF8 7F0802C8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0B4DFC 7F0802CC 0C001177 */  jal   video_related_23
+/* 0B4DFC 7F0802CC 0C001177 */  jal   viGetFovY
 /* 0B4E00 7F0802D0 E7AC0020 */   swc1  $f12, 0x20($sp)
 /* 0B4E04 7F0802D4 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 0B4E08 7F0802D8 44812000 */  mtc1  $at, $f4
@@ -15330,8 +15369,93 @@ glabel sub_GAME_7F0802C4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0804E0(void) {
+void sub_GAME_7F0804E0(s32 *arg0) {
+    s32 *temp_s0;
+    s32 *temp_s0_10;
+    s32 *temp_s0_11;
+    s32 *temp_s0_12;
+    s32 *temp_s0_13;
+    s32 *temp_s0_14;
+    s32 *temp_s0_15;
+    s32 *temp_s0_16;
+    s32 *temp_s0_2;
+    s32 *temp_s0_3;
+    s32 *temp_s0_4;
+    s32 *temp_s0_5;
+    s32 *temp_s0_6;
+    s32 *temp_s0_7;
+    s32 *temp_s0_8;
+    s32 *temp_s0_9;
+   
+    f32 a = pPlayer->tint_alpha;
+    s32 r = pPlayer->tint_red;
+    s32 g = pPlayer->tint_green;
+    s32 b = pPlayer->tint_blue;
 
+    if ((camera_80036430 != 0) || (camera_80036434 != 0)) {
+        a = 1.0f;
+        r = 0;
+        g = 0;
+        b = 0;
+    }
+    if (a > 0) {
+        temp_s0 = arg0 + 2;
+        arg0[0] = 0xE7000000;
+        arg0[1] = 0;
+        temp_s0_2 = temp_s0 + 2;
+        temp_s0[0] = 0xBA001402;
+        temp_s0[1] = 0;
+        temp_s0_3 = temp_s0_2 + 2;
+        temp_s0_2[0] = 0xBA000602;
+        temp_s0_2[1] = 0xC0;
+        temp_s0_4 = temp_s0_3 + 2;
+        temp_s0_3[0] = 0xBA001301;
+        temp_s0_3[1]= 0;
+        temp_s0_5 = temp_s0_4 + 2;
+        temp_s0_4[0] = 0xB9000002;
+        temp_s0_4[1] = 0;
+        temp_s0_6 = temp_s0_5 + 2;
+        temp_s0_5[0] = 0xBA001001;
+        temp_s0_5[1] = 0;
+        temp_s0_7 = temp_s0_6 + 2;
+        temp_s0_6[0] = 0xBA000C02;
+        temp_s0_6[1] = 0x2000;
+        temp_s0_8 = temp_s0_7 + 2;
+        temp_s0_7[0] = 0xBA000903;
+        temp_s0_7[1] = 0xC00;
+        temp_s0_9 = temp_s0_8 + 2;
+        temp_s0_8[0] = 0xBA000E02;
+        temp_s0_8[1] = 0;
+        temp_s0_10 = temp_s0_9 + 2;
+        temp_s0_9[0] = 0xB900031D;
+        temp_s0_9[1] = 0x504340;
+        temp_s0_10[0] = 0xFCFFFFFF;
+        temp_s0_10[1] = 0xFFFDF6FB;
+        temp_s0_11 = temp_s0_10 + 2;
+        temp_s0_11[0] = 0xFA000000;
+        temp_s0_11[1] = (s32) ((r << 0x18) | ((g & 0xFF) << 0x10) | ((b & 0xFF) << 8) | ((s32) (a * 255.0f) & 0xFF));
+        temp_s0_12 = temp_s0_11 + 2;
+        sp3C = temp_s0_12;
+        temp_s0_13 = temp_s0_12 + 2;
+        sp26 = get_video2_settings_width(temp_s0_7, temp_s0_8, temp_s0_9, r);
+        sp28 = get_video2_settings_ulx();
+        sp2A = get_video2_settings_uly();
+        sp3C[0] = (s32) ((((get_video2_settings_height() + sp2A) & 0x3FF) * 4) | 0xF6000000 | (((sp28 + sp26) & 0x3FF) << 0xE));
+        sp2A = get_video2_settings_ulx();
+        sp3C[1] = (s32) (((get_video2_settings_uly() & 0x3FF) * 4) | ((sp2A & 0x3FF) << 0xE));
+        temp_s0_14 = temp_s0_13 + 2;
+        temp_s0_13[0] = 0xE7000000;
+        temp_s0_13[1 = 0;
+        temp_s0_15 = temp_s0_14 + 2;
+        temp_s0_14[0] = 0xBA000602;
+        temp_s0_14[1 = 0x40;
+        temp_s0_16 = temp_s0_15 + 2;
+        temp_s0_15[0] = 0xBA001301;
+        temp_s0_15[1] = 0x80000;
+        temp_s0_16[0] = 0xBA001001;
+        temp_s0_16[1] = 0x10000;
+        phi_s0 = temp_s0_16 + 2;
+    }
 }
 #else
 GLOBAL_ASM(
@@ -19444,7 +19568,7 @@ glabel controller_gameplay_interaction
 /* 0B83BC 7F08388C 45020007 */  bc1fl .L7F0838AC
 /* 0B83C0 7F083890 460C7281 */   sub.s $f10, $f14, $f12
 /* 0B83C4 7F083894 44816000 */  mtc1  $at, $f12
-/* 0B83C8 7F083898 0FC20004 */  jal   sub_GAME_7F080010
+/* 0B83C8 7F083898 0FC20004 */  jal   currentPlayerUpdateSpeedVerta
 /* 0B83CC 7F08389C E7AE00C4 */   swc1  $f14, 0xc4($sp)
 /* 0B83D0 7F0838A0 10000010 */  b     .L7F0838E4
 /* 0B83D4 7F0838A4 C7AE00C4 */   lwc1  $f14, 0xc4($sp)
@@ -19456,13 +19580,13 @@ glabel controller_gameplay_interaction
 /* 0B83E8 7F0838B8 45020007 */  bc1fl .L7F0838D8
 /* 0B83EC 7F0838BC 4600A306 */   mov.s $f12, $f20
 /* 0B83F0 7F0838C0 44816000 */  mtc1  $at, $f12
-/* 0B83F4 7F0838C4 0FC20004 */  jal   sub_GAME_7F080010
+/* 0B83F4 7F0838C4 0FC20004 */  jal   currentPlayerUpdateSpeedVerta
 /* 0B83F8 7F0838C8 E7AE00C4 */   swc1  $f14, 0xc4($sp)
 /* 0B83FC 7F0838CC 10000005 */  b     .L7F0838E4
 /* 0B8400 7F0838D0 C7AE00C4 */   lwc1  $f14, 0xc4($sp)
 /* 0B8404 7F0838D4 4600A306 */  mov.s $f12, $f20
 .L7F0838D8:
-/* 0B8408 7F0838D8 0FC20004 */  jal   sub_GAME_7F080010
+/* 0B8408 7F0838D8 0FC20004 */  jal   currentPlayerUpdateSpeedVerta
 /* 0B840C 7F0838DC E7AE00C4 */   swc1  $f14, 0xc4($sp)
 /* 0B8410 7F0838E0 C7AE00C4 */  lwc1  $f14, 0xc4($sp)
 .L7F0838E4:
@@ -19507,7 +19631,7 @@ glabel controller_gameplay_interaction
 .L7F083970:
 /* 0B84A0 7F083970 1140002E */  beqz  $t2, .L7F083A2C
 /* 0B84A4 7F083974 C7B20184 */   lwc1  $f18, 0x184($sp)
-/* 0B84A8 7F083978 0C001177 */  jal   video_related_23
+/* 0B84A8 7F083978 0C001177 */  jal   viGetFovY
 /* 0B84AC 7F08397C 00000000 */   nop   
 /* 0B84B0 7F083980 8FAB0128 */  lw    $t3, 0x128($sp)
 /* 0B84B4 7F083984 3C014270 */  li    $at, 0x42700000 # 60.000000
@@ -19561,7 +19685,7 @@ glabel controller_gameplay_interaction
 /* 0B8560 7F083A30 C7A40180 */  lwc1  $f4, 0x180($sp)
 /* 0B8564 7F083A34 45020010 */  bc1fl .L7F083A78
 /* 0B8568 7F083A38 4604A03C */   c.lt.s $f20, $f4
-/* 0B856C 7F083A3C 0FC20004 */  jal   sub_GAME_7F080010
+/* 0B856C 7F083A3C 0FC20004 */  jal   currentPlayerUpdateSpeedVerta
 /* 0B8570 7F083A40 46009306 */   mov.s $f12, $f18
 /* 0B8574 7F083A44 8FAC01AC */  lw    $t4, 0x1ac($sp)
 /* 0B8578 7F083A48 8FB80120 */  lw    $t8, 0x120($sp)
@@ -19581,7 +19705,7 @@ glabel controller_gameplay_interaction
 /* 0B85A8 7F083A78 00000000 */  nop   
 /* 0B85AC 7F083A7C 4500000F */  bc1f  .L7F083ABC
 /* 0B85B0 7F083A80 00000000 */   nop   
-/* 0B85B4 7F083A84 0FC20004 */  jal   sub_GAME_7F080010
+/* 0B85B4 7F083A84 0FC20004 */  jal   currentPlayerUpdateSpeedVerta
 /* 0B85B8 7F083A88 46002307 */   neg.s $f12, $f4
 /* 0B85BC 7F083A8C 8FB901AC */  lw    $t9, 0x1ac($sp)
 /* 0B85C0 7F083A90 8FAA0120 */  lw    $t2, 0x120($sp)
@@ -19597,7 +19721,7 @@ glabel controller_gameplay_interaction
 /* 0B85E4 7F083AB4 10000003 */  b     .L7F083AC4
 /* 0B85E8 7F083AB8 ADAB0110 */   sw    $t3, 0x110($t5)
 .L7F083ABC:
-/* 0B85EC 7F083ABC 0FC20004 */  jal   sub_GAME_7F080010
+/* 0B85EC 7F083ABC 0FC20004 */  jal   currentPlayerUpdateSpeedVerta
 /* 0B85F0 7F083AC0 4600A306 */   mov.s $f12, $f20
 .L7F083AC4:
 /* 0B85F4 7F083AC4 8E080000 */  lw    $t0, ($s0)
@@ -19637,7 +19761,7 @@ glabel controller_gameplay_interaction
 /* 0B8670 7F083B40 C7A6017C */  lwc1  $f6, 0x17c($sp)
 /* 0B8674 7F083B44 51C0002A */  beql  $t6, $zero, .L7F083BF0
 /* 0B8678 7F083B48 4606A03C */   c.lt.s $f20, $f6
-/* 0B867C 7F083B4C 0C001177 */  jal   video_related_23
+/* 0B867C 7F083B4C 0C001177 */  jal   viGetFovY
 /* 0B8680 7F083B50 00000000 */   nop   
 /* 0B8684 7F083B54 8FAF012C */  lw    $t7, 0x12c($sp)
 /* 0B8688 7F083B58 3C013F80 */  li    $at, 0x3F800000 # 1.000000

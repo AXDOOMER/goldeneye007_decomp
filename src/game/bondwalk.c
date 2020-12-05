@@ -20219,7 +20219,7 @@ void sub_GAME_7F0681CC(void *arg0, s32 arg1, s32 arg2) {
         }
     }
     // Node 3
-    sp24 = (f32) ((120.0f * sp28) / video_related_23());
+    sp24 = (f32) ((120.0f * sp28) / viGetFovY());
     sp1C = get_random_value();
     temp_ret = get_random_value();
     temp_f10 = (f32) sp1C;
@@ -20312,7 +20312,7 @@ glabel sub_GAME_7F0681CC
 /* 09CD8C 7F06825C 46083282 */  mul.s $f10, $f6, $f8
 /* 09CD90 7F068260 E7AA0028 */  swc1  $f10, 0x28($sp)
 .L7F068264:
-/* 09CD94 7F068264 0C001177 */  jal   video_related_23
+/* 09CD94 7F068264 0C001177 */  jal   viGetFovY
 /* 09CD98 7F068268 00000000 */   nop   
 /* 09CD9C 7F06826C 3C0142F0 */  li    $at, 0x42F00000 # 120.000000
 /* 09CDA0 7F068270 44818000 */  mtc1  $at, $f16

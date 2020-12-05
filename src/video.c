@@ -2444,7 +2444,7 @@ glabel video_related_21
  * 51DC	700045DC
  *     F0= [p@800232A8+8]; fry T6
  */
-f32 video_related_23(void)
+f32 viGetFovY(void)
 {
     return ptr_video_settings2->far;
 }
