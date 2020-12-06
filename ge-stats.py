@@ -1,15 +1,11 @@
 import re
 import os
 
-def main():
-
-    # --------------------------
-    # PART 1 
-    # READ MAP FILE AND FILL lengths
-    # --------------------------
-
-    f = open('build/ge007.u.map', 'r')
-    lines = f.readlines()
+# --------------------------
+# Read Map File and return
+# all function lenghts
+# --------------------------
+def parse_map():
     
     infile = False
     prevromaddr = 0
@@ -17,6 +13,9 @@ def main():
 
     p1 = re.compile(r"^ \.text\s+0x00000000([0-9a-f]{8})\s+0x([0-9a-f]+)\s+build\/u\/(.*)\/\S+.\w$")
     p2 = re.compile(r"\s+0x00000000([0-9a-f]{8})\s+(\S+)$")
+
+    map_file = open('build/ge007.u.map', 'r')
+    lines = map_file.readlines()
 
     for line in lines:
 
@@ -50,54 +49,66 @@ def main():
             if prevfuncname:
                 lengths[segment][prevfuncname] = (filestart + filelen) - prevromaddr
 
-    # --------------------------
-    # PART 2 
-    # GET TODOS FUNCTIONS IN ALL FILES
-    # --------------------------
+    return lengths
 
-    p3 = re.compile(r"^glabel (\S+)$")
-    todos = []
+# --------------------------
+# Find and return all
+# ASM Function names that still
+# exists in Source Files 
+# --------------------------
+def find_asm_functions():
+    
+    p = re.compile(r"^glabel (\S+)$")
+    asm_functions = []
 
     for root, dirs, files in os.walk('src'):
         for file in files:
             with open(os.path.join(root, file)) as _file:
                 for i, line in enumerate(_file.readlines()):
-                    m3 = p3.findall(line)
-                    if m3:
-                        todos.append(m3[0])
+                    m = p.findall(line)
+                    if m:
+                        asm_functions.append(m[0])
 
-    # --------------------------
-    # PART 3
-    # FIND FUNCTION IS IN TODOs
-    # --------------------------
+    return asm_functions
 
-    analyse = ['src', 'src/game', 'src/inflate', 'src/libultra']
+# --------------------------
+# Calculate the decomp stats
+# on each folder
+# --------------------------
+def do_stats(map_file, analyse_folders):
+
+    asm_functions = find_asm_functions()
     segments = {}
 
-    for key in analyse:
+    for folder in analyse_folders:
 
-        segments[key] = {}
-        segments[key]['done'] = 0
-        segments[key]['left'] = 0
-        segments[key]['total'] = 0
+        segments[folder] = {}
+        segments[folder]['done'] = 0
+        segments[folder]['left'] = 0
+        segments[folder]['total'] = 0
         
         num_done = 0
         num_left = 0
 
-        for fn in lengths[key]:
-            if fn in todos:
-                num_left += lengths[key][fn]
+        for function in map_file[folder]:
+            if function in asm_functions:
+                num_left += map_file[folder][function]
             else:
-                num_done += lengths[key][fn]
+                num_done += map_file[folder][function]
         
-        segments[key]['done'] = num_done / 4
-        segments[key]['left'] = num_left / 4
-        segments[key]['total'] = segments[key]['done'] + segments[key]['left']
+        segments[folder]['done'] = num_done / 4
+        segments[folder]['left'] = num_left / 4
+        segments[folder]['total'] = segments[folder]['done'] + segments[folder]['left']
 
-    # --------------------------
-    # PART 4
-    # PRINT ALL
-    # --------------------------
+    return segments
+
+def main():
+
+    map_file = parse_map()
+
+    folders = ['src', 'src/game', 'src/inflate', 'src/libultra']
+
+    segments = do_stats(map_file, folders)
 
     totals = {}
     totals['done'] = 0
