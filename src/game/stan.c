@@ -3,10 +3,17 @@
 #include "structs.h"
 
 // bss
-//CODE.bss:8007B120
-s32 clippingfile;
-//CODE.bss:8007B124
-s32 ptr_firstroom;
+struct StanPrefixRecord {
+    //CODE.bss:8007B120
+    s32 clippingfile;
+    //CODE.bss:8007B124
+    struct StandTile* ptr_firstroom;    // read as offset 4, hence the struct
+};
+
+struct StanPrefixRecord stan_prefix;
+
+
+
 //CODE.bss:8007B128
 s32 dword_CODE_bss_8007B128;
 //CODE.bss:8007B12C
@@ -57,7 +64,7 @@ struct StandTile* bfsTileStack[352];
 
 // data
 //D:80040F30
-s32 D_80040F30[] = {0x8D8604C5, 0x9DA40000, 0, 0};
+u8 D_80040F30[] = {0x8D, 0x86, 0x04, 0xC5, 0x9D, 0xA4, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 s32 stan_c_debug_notice_list_entry = 0;
 //D:80040F44
 f32 level_scale = 1.0;
@@ -70,7 +77,7 @@ u8 list_of_tilesizes[] = {
     0x48,0x50,0x58,0x00
 };
 //D:80040F58
-s32 base_ptr_connection_vals = 0;
+s32 standTileStart = 0;
 //D:80040F5C
 s32 ptr_firstroom_0 = 0;
 //D:80040F60
@@ -277,11 +284,11 @@ loop_1:
         goto loop_1;
     }
     // Node 2
-    if (*clippingfile->unk4 != 0)
+    if (*stan_prefix.ptr_firstroom != 0)
     {
         // Node 3
         phi_a1 = 0xff;
-        phi_a0 = clippingfile->unk4;
+        phi_a0 = stan_prefix.ptr_firstroom;
         phi_a2 = 0xff;
 loop_4:
         // Node 4
@@ -401,8 +408,8 @@ glabel sub_GAME_7F0AF038
 /* 0E3BC4 7F0AF094 AC60FFF8 */  sw    $zero, -8($v1)
 /* 0E3BC8 7F0AF098 1462FFFB */  bne   $v1, $v0, .L7F0AF088
 /* 0E3BCC 7F0AF09C AC60FFFC */   sw    $zero, -4($v1)
-/* 0E3BD0 7F0AF0A0 3C0E8008 */  lui   $t6, %hi(clippingfile) 
-/* 0E3BD4 7F0AF0A4 8DCEB120 */  lw    $t6, %lo(clippingfile)($t6)
+/* 0E3BD0 7F0AF0A0 3C0E8008 */  lui   $t6, %hi(stan_prefix) 
+/* 0E3BD4 7F0AF0A4 8DCEB120 */  lw    $t6, %lo(stan_prefix)($t6)
 /* 0E3BD8 7F0AF0A8 3C0D8004 */  lui   $t5, %hi(list_of_tilesizes) 
 /* 0E3BDC 7F0AF0AC 25AD0F4C */  addiu $t5, %lo(list_of_tilesizes) # addiu $t5, $t5, 0xf4c
 /* 0E3BE0 7F0AF0B0 8DC40004 */  lw    $a0, 4($t6)
@@ -695,7 +702,7 @@ glabel sub_GAME_7F0AF20C
 /* 0E3FB8 7F0AF488 86220006 */   lh    $v0, 6($s1)
 /* 0E3FBC 7F0AF48C 1240000E */  beqz  $s2, .L7F0AF4C8
 /* 0E3FC0 7F0AF490 02202025 */   move  $a0, $s1
-/* 0E3FC4 7F0AF494 0FC2BE49 */  jal   sub_GAME_7F0AF924
+/* 0E3FC4 7F0AF494 0FC2BE49 */  jal   getTileMidPoint
 /* 0E3FC8 7F0AF498 03C02825 */   move  $a1, $fp
 /* 0E3FCC 7F0AF49C AFB100A0 */  sw    $s1, 0xa0($sp)
 /* 0E3FD0 7F0AF4A0 C6900008 */  lwc1  $f16, 8($s4)
@@ -786,8 +793,8 @@ glabel sub_GAME_7F0AF20C
 #ifdef NONMATCHING
 void stanLoadFile(void *arg0) {
     stanLoaded = 1;
-    clippingfile = arg0;
-    base_ptr_connection_vals = (s32) (arg0->unk4 + -0x80);
+    stan_prefix.clippingfile = arg0;
+    standTileStart = (s32) (arg0->unk4 + -0x80);
     if (check_token(1, "-stanlinelog") != 0)
     {
         stanlinelog_flag = 1;
@@ -800,19 +807,19 @@ void stanLoadFile(void *arg0) {
 GLOBAL_ASM(
 .text
 glabel stanLoadFile
-/* 0E40E8 7F0AF5B8 3C028008 */  lui   $v0, %hi(clippingfile)
+/* 0E40E8 7F0AF5B8 3C028008 */  lui   $v0, %hi(stan_prefix)
 /* 0E40EC 7F0AF5BC 240E0001 */  li    $t6, 1
 /* 0E40F0 7F0AF5C0 3C018004 */  lui   $at, %hi(stanLoaded)
-/* 0E40F4 7F0AF5C4 2442B120 */  addiu $v0, %lo(clippingfile) # addiu $v0, $v0, -0x4ee0
+/* 0E40F4 7F0AF5C4 2442B120 */  addiu $v0, %lo(stan_prefix) # addiu $v0, $v0, -0x4ee0
 /* 0E40F8 7F0AF5C8 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0E40FC 7F0AF5CC AC2E0FB0 */  sw    $t6, %lo(stanLoaded)($at)
 /* 0E4100 7F0AF5D0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0E4104 7F0AF5D4 AC440000 */  sw    $a0, ($v0)
 /* 0E4108 7F0AF5D8 8C980004 */  lw    $t8, 4($a0)
-/* 0E410C 7F0AF5DC 3C018004 */  lui   $at, %hi(base_ptr_connection_vals)
+/* 0E410C 7F0AF5DC 3C018004 */  lui   $at, %hi(standTileStart)
 /* 0E4110 7F0AF5E0 3C058006 */  lui   $a1, %hi(aStanlinelog)
 /* 0E4114 7F0AF5E4 2719FF80 */  addiu $t9, $t8, -0x80
-/* 0E4118 7F0AF5E8 AC390F58 */  sw    $t9, %lo(base_ptr_connection_vals)($at)
+/* 0E4118 7F0AF5E8 AC390F58 */  sw    $t9, %lo(standTileStart)($at)
 /* 0E411C 7F0AF5EC 24A585BC */  addiu $a1, %lo(aStanlinelog) # addiu $a1, $a1, -0x7a44
 /* 0E4120 7F0AF5F0 0C0029A8 */  jal   check_token
 /* 0E4124 7F0AF5F4 24040001 */   li    $a0, 1
@@ -923,7 +930,7 @@ loop_5:
             if ((temp_v0 >> 4) != 0)
             {
                 // Node 6
-                temp_v1 = ((temp_v0 * 8) + base_ptr_connection_vals);
+                temp_v1 = ((temp_v0 * 8) + standTileStart);
                 phi_a1_2 = phi_a1_3;
                 phi_s2_3 = phi_s2_2;
                 phi_s1_2 = phi_s1_4;
@@ -977,12 +984,12 @@ glabel sub_GAME_7F0AF638
 /* 0E4188 7F0AF658 AFB30020 */  sw    $s3, 0x20($sp)
 /* 0E418C 7F0AF65C AFB00014 */  sw    $s0, 0x14($sp)
 /* 0E4190 7F0AF660 AFA5003C */  sw    $a1, 0x3c($sp)
-/* 0E4194 7F0AF664 3C168004 */  lui   $s6, %hi(base_ptr_connection_vals)
+/* 0E4194 7F0AF664 3C168004 */  lui   $s6, %hi(standTileStart)
 /* 0E4198 7F0AF668 30B400FF */  andi  $s4, $a1, 0xff
 /* 0E419C 7F0AF66C 0000B825 */  move  $s7, $zero
 /* 0E41A0 7F0AF670 ACC40000 */  sw    $a0, ($a2)
 /* 0E41A4 7F0AF674 24110001 */  li    $s1, 1
-/* 0E41A8 7F0AF678 26D60F58 */  addiu $s6, %lo(base_ptr_connection_vals) # addiu $s6, $s6, 0xf58
+/* 0E41A8 7F0AF678 26D60F58 */  addiu $s6, %lo(standTileStart) # addiu $s6, $s6, 0xf58
 /* 0E41AC 7F0AF67C 24D20004 */  addiu $s2, $a2, 4
 /* 0E41B0 7F0AF680 8E53FFFC */  lw    $s3, -4($s2)
 .L7F0AF684:
@@ -1152,14 +1159,50 @@ glabel sub_GAME_7F0AF760
 #ifdef NONMATCHING
 void sub_GAME_7F0AF808(void) {
 
+// Still quite a long way off.
+struct StandTile* sub_GAME_7F0AF808(float f1,float f2,float f3,float f4)
+{
+    // 'findSomeTile' atm
+    // It seems a silly thing to be doing during runtime.
+
+    struct StandTile* tile;
+    struct StandTile* tileStack[2];
+
+    tile = stan_prefix.ptr_firstroom;
+
+    // this test may be reading a field but it could well look like this,
+    //   since 0 signals that there is no more data, so 'tile' isn't really a struct StandTile*
+
+    while (*(u32*)tile != 0)
+    {
+        tileStack[0] = tile;
+
+        if (
+            (!sub_GAME_7F0AF760(tile)) &&
+            (isPointInsideTriStandTileUnscaled_Maybe(tile,f1,f3) != 0) &&
+            (FUN_7f0b20d0(tileStack,f1,f3,f4) != 0) &&
+            (tile == tileStack[0]) &&
+            (getCrossProductY_and_distToPlaneMaybe(tile,f1,f3) < f2)
+        )
+        {
+            return tile;
+        }
+
+        tile = (struct StandTile*) (
+            ((s32)tile) + list_of_tilesizes[STAN_POINT_COUNT(tile)]
+        );
+
+    }
+
+    return (struct StandTile*)0x0;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0AF808
 /* 0E4338 7F0AF808 27BDFFA8 */  addiu $sp, $sp, -0x58
-/* 0E433C 7F0AF80C 3C0E8008 */  lui   $t6, %hi(clippingfile) 
-/* 0E4340 7F0AF810 8DCEB120 */  lw    $t6, %lo(clippingfile)($t6)
+/* 0E433C 7F0AF80C 3C0E8008 */  lui   $t6, %hi(stan_prefix) 
+/* 0E4340 7F0AF810 8DCEB120 */  lw    $t6, %lo(stan_prefix)($t6)
 /* 0E4344 7F0AF814 AFBF0044 */  sw    $ra, 0x44($sp)
 /* 0E4348 7F0AF818 AFB20040 */  sw    $s2, 0x40($sp)
 /* 0E434C 7F0AF81C AFB1003C */  sw    $s1, 0x3c($sp)
@@ -1241,24 +1284,36 @@ glabel sub_GAME_7F0AF808
 
 
 #ifdef NONMATCHING
-f32 sub_GAME_7F0AF924(void *arg0, void *arg1) {
-    void *temp_t2;
-    void *temp_t1;
-    void *temp_t0;
+// 2 instructions swapped, regalloc.
+// I've tried all orderings of the A,B,C assignments, both as indices and as pointers to StandTilePoints
+// Summing the x,y,z components first just makes more regalloc issues
+// Placing the macros directly in the indexing doesn't help either.
+// Making midPnt a float* did nothing.
 
-    // Node 0
-    temp_t2 = (arg0 + ((((s32) arg0->unk6 >> 4) & 0xf) * 8));
-    temp_t1 = (arg0 + ((((s32) arg0->unk6 >> 8) & 0xf) * 8));
-    temp_t0 = (arg0 + ((arg0->unk6 & 0xf) * 8));
-    *arg1 = (f32) ((((f32) temp_t0->unk8 + ((f32) temp_t1->unk8 + (f32) temp_t2->unk8)) / 3.0f) * inv_level_scale);
-    arg1->unk4 = (f32) ((((f32) temp_t0->unkA + ((f32) temp_t1->unkA + (f32) temp_t2->unkA)) / 3.0f) * inv_level_scale);
-    arg1->unk8 = (f32) ((((f32) temp_t0->unkC + ((f32) temp_t1->unkC + (f32) temp_t2->unkC)) / 3.0f) * inv_level_scale);
-    return 3.0f;
+// I'm out of ideas.
+void getTileMidPoint(struct StandTile *tile, struct float3 *midPnt)
+{
+    short headerTail;
+    // may be RGB
+    s32 indexA;
+    s32 indexB;
+    s32 indexC;
+
+    indexA = STAN_TRIPLE_TO_PNT_INDEX(tile, 0);
+    indexB = STAN_TRIPLE_TO_PNT_INDEX(tile, 1);
+    indexC = STAN_TRIPLE_TO_PNT_INDEX(tile, 2);
+
+    midPnt->x = ((float)tile->points[indexA].x + tile->points[indexB].x + tile->points[indexC].x) / 3 * inv_level_scale;
+    midPnt->y = ((float)tile->points[indexA].y + tile->points[indexB].y + tile->points[indexC].y) / 3 * inv_level_scale;
+    midPnt->z = ((float)tile->points[indexA].z + tile->points[indexB].z + tile->points[indexC].z) / 3 * inv_level_scale;
+
+    return;
 }
+
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0AF924
+glabel getTileMidPoint
 /* 0E4454 7F0AF924 84870006 */  lh    $a3, 6($a0)
 /* 0E4458 7F0AF928 3C014040 */  li    $at, 0x40400000 # 3.000000
 /* 0E445C 7F0AF92C 44810000 */  mtc1  $at, $f0
@@ -1329,22 +1384,27 @@ glabel sub_GAME_7F0AF924
 
 
 #ifdef NONMATCHING
-f32 sub_GAME_7F0AFA1C(void *arg0, s32 arg1, void *arg2) {
-    f32 sp1C;
-    s32 temp_a3;
-    void *temp_v0;
+// Saves a1 (tripleIndex) to the stack completely unnecessarily
+// Otherwise just regalloc, but maybe that alone fixes it.
+void getPointJustInsideOfTileTriple(struct StandTile* tile, s32 tripleIndex, struct float3* pnt)
+{
+    struct float3 midPoint;
+    s32 pntIndex;
 
-    // Node 0
-    temp_a3 = ((s32) arg0->unk6 >> (8 - (arg1 * 4)));
-    temp_v0 = (arg0 + ((temp_a3 & 0xf) * 8));
-    *arg2 = (f32) ((f32) temp_v0->unk8 * inv_level_scale);
-    arg2->unk4 = (f32) ((f32) temp_v0->unkA * inv_level_scale);
-    arg2->unk8 = (f32) ((f32) temp_v0->unkC * inv_level_scale);
-    sub_GAME_7F0AF924(&sp1C, temp_a3);
-    *arg2 = (f32) ((sp1C * D_800585D8) + (D_800585DC * *arg2));
-    arg2->unk4 = (f32) ((sp20 * D_800585D8) + (D_800585DC * arg2->unk4));
-    arg2->unk8 = (f32) ((sp24 * D_800585D8) + (D_800585DC * arg2->unk8));
-    return D_800585D8;
+    pntIndex = STAN_TRIPLE_TO_PNT_INDEX(tile, tripleIndex);
+
+    pnt->x = tile->points[pntIndex].x * inv_level_scale;
+    pnt->y = tile->points[pntIndex].y * inv_level_scale;
+    pnt->z = tile->points[pntIndex].z * inv_level_scale;
+
+    getTileMidPoint(tile,&midPoint);
+
+    // 10% of the way from the actual tile point towards the tile's centre.
+    pnt->x = midPoint.x * 0.1f + pnt->x * 0.9f;
+    pnt->y = midPoint.y * 0.1f + pnt->y * 0.9f;
+    pnt->z = midPoint.z * 0.1f + pnt->z * 0.9f;
+
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -1354,7 +1414,7 @@ glabel D_800585D8
 glabel D_800585DC
 .word 0x3f666666 /*0.89999998*/
 .text
-glabel sub_GAME_7F0AFA1C
+glabel getPointJustInsideOfTileTriple
 /* 0E454C 7F0AFA1C 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0E4550 7F0AFA20 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0E4554 7F0AFA24 848E0006 */  lh    $t6, 6($a0)
@@ -1388,7 +1448,7 @@ glabel sub_GAME_7F0AFA1C
 /* 0E45C4 7F0AFA94 468042A0 */  cvt.s.w $f10, $f8
 /* 0E45C8 7F0AFA98 46105482 */  mul.s $f18, $f10, $f16
 /* 0E45CC 7F0AFA9C E4D20008 */  swc1  $f18, 8($a2)
-/* 0E45D0 7F0AFAA0 0FC2BE49 */  jal   sub_GAME_7F0AF924
+/* 0E45D0 7F0AFAA0 0FC2BE49 */  jal   getTileMidPoint
 /* 0E45D4 7F0AFAA4 AFA60030 */   sw    $a2, 0x30($sp)
 /* 0E45D8 7F0AFAA8 3C018006 */  lui   $at, %hi(D_800585D8)
 /* 0E45DC 7F0AFAAC C42085D8 */  lwc1  $f0, %lo(D_800585D8)($at)
@@ -1493,8 +1553,8 @@ glabel sub_GAME_7F0AFB78
 /* 0E46D8 7F0AFBA8 F7B40018 */  sdc1  $f20, 0x18($sp)
 /* 0E46DC 7F0AFBAC AFA00078 */  sw    $zero, 0x78($sp)
 /* 0E46E0 7F0AFBB0 C4840000 */  lwc1  $f4, ($a0)
-/* 0E46E4 7F0AFBB4 3C0E8008 */  lui   $t6, %hi(clippingfile) 
-/* 0E46E8 7F0AFBB8 8DCEB120 */  lw    $t6, %lo(clippingfile)($t6)
+/* 0E46E4 7F0AFBB4 3C0E8008 */  lui   $t6, %hi(stan_prefix) 
+/* 0E46E8 7F0AFBB8 8DCEB120 */  lw    $t6, %lo(stan_prefix)($t6)
 /* 0E46EC 7F0AFBBC E7A40064 */  swc1  $f4, 0x64($sp)
 /* 0E46F0 7F0AFBC0 C4A60000 */  lwc1  $f6, ($a1)
 /* 0E46F4 7F0AFBC4 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
@@ -1528,13 +1588,13 @@ glabel sub_GAME_7F0AFB78
 /* 0E475C 7F0AFC2C 16160006 */  bne   $s0, $s6, .L7F0AFC48
 /* 0E4760 7F0AFC30 02202025 */   move  $a0, $s1
 /* 0E4764 7F0AFC34 02202025 */  move  $a0, $s1
-/* 0E4768 7F0AFC38 0FC2BE49 */  jal   sub_GAME_7F0AF924
+/* 0E4768 7F0AFC38 0FC2BE49 */  jal   getTileMidPoint
 /* 0E476C 7F0AFC3C 02402825 */   move  $a1, $s2
 /* 0E4770 7F0AFC40 10000005 */  b     .L7F0AFC58
 /* 0E4774 7F0AFC44 4407B000 */   mfc1  $a3, $f22
 .L7F0AFC48:
 /* 0E4778 7F0AFC48 02002825 */  move  $a1, $s0
-/* 0E477C 7F0AFC4C 0FC2BE87 */  jal   sub_GAME_7F0AFA1C
+/* 0E477C 7F0AFC4C 0FC2BE87 */  jal   getPointJustInsideOfTileTriple
 /* 0E4780 7F0AFC50 02403025 */   move  $a2, $s2
 /* 0E4784 7F0AFC54 4407B000 */  mfc1  $a3, $f22
 .L7F0AFC58:
@@ -2739,8 +2799,8 @@ glabel sub_GAME_7F0B0914
 /* 0E55F4 7F0B0AC4 50400012 */  beql  $v0, $zero, .L7F0B0B10
 /* 0E55F8 7F0B0AC8 86640006 */   lh    $a0, 6($s3)
 /* 0E55FC 7F0B0ACC 9603000E */  lhu   $v1, 0xe($s0)
-/* 0E5600 7F0B0AD0 3C198004 */  lui   $t9, %hi(base_ptr_connection_vals) 
-/* 0E5604 7F0B0AD4 8F390F58 */  lw    $t9, %lo(base_ptr_connection_vals)($t9)
+/* 0E5600 7F0B0AD0 3C198004 */  lui   $t9, %hi(standTileStart) 
+/* 0E5604 7F0B0AD4 8F390F58 */  lw    $t9, %lo(standTileStart)($t9)
 /* 0E5608 7F0B0AD8 0003C0C0 */  sll   $t8, $v1, 3
 /* 0E560C 7F0B0ADC 26940001 */  addiu $s4, $s4, 1
 /* 0E5610 7F0B0AE0 03191021 */  addu  $v0, $t8, $t9
@@ -2843,7 +2903,7 @@ s32 sub_GAME_7F0B0C24(struct StandTile **tileStack, float start_x, float start_z
     callbackData.bufMax = maxBufSize;
     callbackData.lastRoom = -1;
 
-    rtn = sub_GAME_7F0B0914(tileStack, start_x, start_z, dest_x, dest_z, sub_GAME_7F0B0C98, &callbackData);
+    rtn = sub_GAME_7F0B0914(tileStack, start_x, start_z, dest_x, dest_z, noteTileRoomIfDifferentToPrev, &callbackData);
 
     *rtnCountSize = callbackData.count;
     return rtn;
@@ -2851,7 +2911,7 @@ s32 sub_GAME_7F0B0C24(struct StandTile **tileStack, float start_x, float start_z
 
 
 
-void sub_GAME_7F0B0C98(struct StandTile *tile, struct StandTile *unused, struct StandTileWalkCallbackRecord *data)
+void noteTileRoomIfDifferentToPrev(struct StandTile *tile, struct StandTile *unused, struct StandTileWalkCallbackRecord *data)
 {
     s32 newRoom;
 
@@ -2870,8 +2930,8 @@ void sub_GAME_7F0B0C98(struct StandTile *tile, struct StandTile *unused, struct 
 
 
 
-void sub_GAME_7F0B0CEC(struct StandTile *tile, struct StandTile *unused, struct StandTileWalkCallbackRecord *data) {
-    sub_GAME_7F0B0C98(tile, unused, data);
+void noteTileRoomIfDifferentToPrev_2(struct StandTile *tile, struct StandTile *unused, struct StandTileWalkCallbackRecord *data) {
+    noteTileRoomIfDifferentToPrev(tile, unused, data);
 }
 
 
@@ -2880,60 +2940,65 @@ void sub_GAME_7F0B0CEC(struct StandTile *tile, struct StandTile *unused, struct 
 
 
 #ifdef NONMATCHING
-s32 sub_GAME_7F0B0D0C(void *arg0, s32 arg1, ? arg2, void *arg3, ? arg4, f32 arg5, void *arg6, s32 arg7) {
-    s32 sp40;
-    void *sp44;
-    void *phi_v0;
+// Not too close
 
-    // Node 0
-    sp40 = 0;
-    if (*arg3 != 0)
-    {
-        // Node 1
-        if (arg0->unk3 == *arg3->unk3)
-        {
-            // Node 2
-            *arg6 = (s32) arg0->unk3;
-            return sp40;
+s32 sub_GAME_7F0B0D0C(struct StandTile *tile, float start_x, float start_z, struct StandTile **tilePtr,
+    float end_x, float end_z, s32 *roomBuf, s32 maxBufSize)
+{
+    s32 roomA;
+    s32 roomB;
+    s32 bufCount;
+    struct StandTile* tileStack[2];   // unknown size
+    struct StandTile* unkTile;
+
+
+    bufCount = 0;
+    tileStack[0] = tile;
+
+    if (*tilePtr != 0x0) {
+
+        roomA = tile->room;
+        roomB = (*tilePtr)->room;
+
+        if (roomA == roomB) {
+            *roomBuf = roomA;
+            return 1;
+         }
+
+        // function related to portals
+        // funny & 0xFFs here which we can't reproduce
+        if (FUN_7f0b8fd0(roomA & 0xFF, roomB & 0xFF) != 0) {
+            *roomBuf = (s32)tile->room;
+            roomBuf[1] = (s32)(*tilePtr)->room;
+            return 2;
+         }
+
+     }
+
+    if (sub_GAME_7F0B0C24(tileStack,start_x,start_z,end_x,end_z,
+        roomBuf,&bufCount,maxBufSize) == 0 )
+     {
+        bufCount = 0;
+     }
+    else {
+        if (maxBufSize < bufCount) {
+            bufCount = maxBufSize;
         }
-        // Node 3
-        if (sub_GAME_7F0B8FD0((arg0->unk3 & 0xff), (*arg3->unk3 & 0xff), arg0->unk3, *arg3->unk3) != 0)
-        {
-            // Node 4
-            *arg6 = (s32) arg0->unk3;
-            arg6->unk4 = (s32) *arg3->unk3;
-            return sp40;
+
+        // Not sure what's going on here.
+        unkTile = *tilePtr;
+
+        if (unkTile == 0) {
+            *tilePtr = tileStack[0];
+            unkTile = tileStack[0];
         }
-    }
-    // Node 5
-    if (sub_GAME_7F0B0C24(&sp44, arg1, arg2, arg4, arg5, arg6, &sp40, arg7) == 0)
-    {
-        // Node 6
-        return sp40;
-    }
-    // Node 7
-    if (arg7 < sp40)
-    {
-        // Node 8
-        sp40 = arg7;
-    }
-    // Node 9
-    phi_v0 = *arg3;
-    if (*arg3 == 0)
-    {
-        // Node 10
-        *arg3 = sp44;
-        phi_v0 = sp44;
-    }
-    // Node 11
-    if (sp44 == phi_v0)
-    {
-        // Node 13
-        // Node 14
-        return sp40;
-    }
-    // Node 12
-    return sp40;
+
+        if (tileStack[0] != unkTile) {
+            bufCount = 0;
+        }
+     }
+
+    return bufCount;
 }
 #else
 GLOBAL_ASM(
@@ -4156,7 +4221,8 @@ s32 sub_GAME_7F0B1CEC(void) {
 }
 
 
-
+// sig for caller matches
+void sub_GAME_7F0B1CF8(struct StandTile *tile, s32 pointI, struct float3 *currPntRtn, struct float3 *nextPointRtn);
 
 #ifdef NONMATCHING
 // Not debugged at all - can't be far wrong though.
@@ -4381,12 +4447,12 @@ glabel sub_GAME_7F0B1DDC
 /* 0E6AC0 7F0B1F90 001068C0 */   sll   $t5, $s0, 3
 /* 0E6AC4 7F0B1F94 026D7021 */  addu  $t6, $s3, $t5
 /* 0E6AC8 7F0B1F98 95C4000E */  lhu   $a0, 0xe($t6)
-/* 0E6ACC 7F0B1F9C 3C088004 */  lui   $t0, %hi(base_ptr_connection_vals) 
+/* 0E6ACC 7F0B1F9C 3C088004 */  lui   $t0, %hi(standTileStart) 
 /* 0E6AD0 7F0B1FA0 2682FFFF */  addiu $v0, $s4, -1
 /* 0E6AD4 7F0B1FA4 00047903 */  sra   $t7, $a0, 4
 /* 0E6AD8 7F0B1FA8 11E00014 */  beqz  $t7, .L7F0B1FFC
 /* 0E6ADC 7F0B1FAC 0004C8C0 */   sll   $t9, $a0, 3
-/* 0E6AE0 7F0B1FB0 8D080F58 */  lw    $t0, %lo(base_ptr_connection_vals)($t0)
+/* 0E6AE0 7F0B1FB0 8D080F58 */  lw    $t0, %lo(standTileStart)($t0)
 /* 0E6AE4 7F0B1FB4 00402825 */  move  $a1, $v0
 /* 0E6AE8 7F0B1FB8 0440000B */  bltz  $v0, .L7F0B1FE8
 /* 0E6AEC 7F0B1FBC 03281821 */   addu  $v1, $t9, $t0
@@ -4591,8 +4657,9 @@ s32 sub_GAME_7F0B21B0(struct StandTile **tileStack, float target_x, float target
 
 #ifdef NONMATCHING
 
+// TODO
 s32 sub_GAME_7F0B2244(StandTile *tile, u8 *rtn) {
-    if ( D_80040F30[(tile->headerA >> 0xc)] & 2 != 0 )  // as u8[]
+    if ( D_80040F30[(tile->headerA >> 0xc)] & 2 != 0 )
     {
         *rtn = 1;
     }
@@ -4633,7 +4700,7 @@ void sub_GAME_7F0B2274(s32 arg0, s32 arg1, ? arg2, ? arg3, void *arg5) {
     if (((s32) temp_t7->unkE >> 4) != 0)
     {
         // Node 1
-        temp_v1 = ((temp_t7->unkE * 8) + base_ptr_connection_vals);
+        temp_v1 = ((temp_t7->unkE * 8) + standTileStart);
         if ((*(&D_80040F30 + ((s32) temp_v1->unk4 >> 0xc)) & 2) != 0)
         {
             // Node 2
@@ -4661,11 +4728,11 @@ glabel sub_GAME_7F0B2274
 /* 0E6DAC 7F0B227C AFA7000C */  sw    $a3, 0xc($sp)
 /* 0E6DB0 7F0B2280 008E7821 */  addu  $t7, $a0, $t6
 /* 0E6DB4 7F0B2284 95E2000E */  lhu   $v0, 0xe($t7)
-/* 0E6DB8 7F0B2288 3C088004 */  lui   $t0, %hi(base_ptr_connection_vals) 
+/* 0E6DB8 7F0B2288 3C088004 */  lui   $t0, %hi(standTileStart) 
 /* 0E6DBC 7F0B228C 0002C103 */  sra   $t8, $v0, 4
 /* 0E6DC0 7F0B2290 5300001E */  beql  $t8, $zero, .L7F0B230C
 /* 0E6DC4 7F0B2294 00001025 */   move  $v0, $zero
-/* 0E6DC8 7F0B2298 8D080F58 */  lw    $t0, %lo(base_ptr_connection_vals)($t0)
+/* 0E6DC8 7F0B2298 8D080F58 */  lw    $t0, %lo(standTileStart)($t0)
 /* 0E6DCC 7F0B229C 0002C8C0 */  sll   $t9, $v0, 3
 /* 0E6DD0 7F0B22A0 3C058004 */  lui   $a1, %hi(D_80040F30)
 /* 0E6DD4 7F0B22A4 03281821 */  addu  $v1, $t9, $t0
@@ -4897,10 +4964,10 @@ glabel sub_GAME_7F0B2420
 /* 0E6F98 7F0B2468 00C0A825 */  move  $s5, $a2
 /* 0E6F9C 7F0B246C 1900005B */  blez  $t0, .L7F0B25DC
 /* 0E6FA0 7F0B2470 00003825 */   move  $a3, $zero
-/* 0E6FA4 7F0B2474 3C048004 */  lui   $a0, %hi(base_ptr_connection_vals)
+/* 0E6FA4 7F0B2474 3C048004 */  lui   $a0, %hi(standTileStart)
 /* 0E6FA8 7F0B2478 3C058004 */  lui   $a1, %hi(D_80040F30)
 /* 0E6FAC 7F0B247C 24A50F30 */  addiu $a1, %lo(D_80040F30) # addiu $a1, $a1, 0xf30
-/* 0E6FB0 7F0B2480 8C840F58 */  lw    $a0, %lo(base_ptr_connection_vals)($a0)
+/* 0E6FB0 7F0B2480 8C840F58 */  lw    $a0, %lo(standTileStart)($a0)
 /* 0E6FB4 7F0B2484 01201825 */  move  $v1, $t1
 .L7F0B2488:
 /* 0E6FB8 7F0B2488 9462000E */  lhu   $v0, 0xe($v1)
@@ -5015,20 +5082,21 @@ glabel sub_GAME_7F0B2420
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B260C(void *arg0, s32 arg1, ? arg2, ? arg3, void *arg5) {
-    // Node 0
-    if (*arg5 < (f32) (arg0 + (arg1 * 8))->unkA)
-    {
-        // Node 1
-        if (*arg5 < (f32) (arg0 + (((s32) (arg1 + 1) % (s32) (((s32) arg0->unk6 >> 0xc) & 0xf)) * 8))->unkA)
+// Tests do appear to be lts
+s32 sub_GAME_7F0B260C(struct StandTile *tile, s32 index, float p_x,float p_z, void, float *rtn)
+{
+    s32 nextIndex;
+
+    if (*rtn < (float)tile->points[index].y) {
+        if (*rtn < (float)tile->points[(index + 1) % STAN_POINT_COUNT(tile)].y)
         {
-            // Node 2
             return 1;
         }
     }
-    // Node 3
+    
     return 0;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -5135,9 +5203,92 @@ glabel sub_GAME_7F0B26B8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B2718(void) {
-    // Omg it's BFS on tiles =D
-    // Bagsied
+// Horrifc BFS on tiles
+struct StandTile* sub_GAME_7F0B2718(struct StandTile* srcTile, tilePredicate_t tilePred)
+{
+    struct StandTile* tile;
+    u32 i;
+    u32 pointCount;
+    s32 link;
+    struct StandTile* linkTile;
+
+    s32 countForIter;
+
+    s32 pntI;
+    s32 seenCount;
+    s32 linkI;
+    s32 linkOffset;
+    s32 madeProgress;   // bool
+
+    // 0x44(sp) looks to be the ptr onto the stack
+
+    // madeProgress =
+    if (tilePred(srcTile)) {
+        return srcTile;
+    }
+
+    bfsTileStack[0] = srcTile;
+    seenCount = 1;
+    countForIter = seenCount;
+
+    do {
+        // Loop over everyone for this iteration
+        for(pntI=0; pntI < countForIter; pntI++)
+        {
+
+            tile = bfsTileStack[pntI];
+            pointCount = STAN_POINT_COUNT(tile);
+
+            // Loop over linked tiles
+            for (linkI = 0; linkI < pointCount; linkI++)
+            {
+                link = tile->points[linkI].link;
+                linkOffset = link * 8;  // somehow it's doing this << 3 before testing the >> 4, but this isn't working.
+
+                if (link >> 4 != 0) {
+                    linkTile = (struct StandTile*)((s32)standTileStart + linkOffset);
+
+                    // Loop to see if this is a new tile (disgusting)
+                    // If was a < and the while was a != though
+                    for (i = 0; i < seenCount; i++)
+                    {
+                        if (bfsTileStack[i] == linkTile) {
+                            goto LAB_7f0b283c;  // continue named loop?
+                        }
+                    }
+
+                    if (tilePred(linkTile)) {
+                        return linkTile;
+                    }
+
+                    bfsTileStack[seenCount] = linkTile;
+                    if (350 < seenCount + 1) {    // as written
+                        return 0;
+                    }
+
+                    pointCount = STAN_POINT_COUNT(tile);
+                    seenCount = seenCount + 1;
+
+                }
+
+                // they may also have needed something to put by the label
+                LAB_7f0b283c: linkI = linkI;
+            }
+
+        }
+
+        // We only continue if we made progress with this iteration
+        if (seenCount == countForIter){
+            break;
+        }
+
+        // does appear to be down here - two li,X,1s initially and a mov zero in the delay slot
+        countForIter = seenCount;
+
+    } while (1);
+
+
+    return 0;
 }
 #else
 GLOBAL_ASM(
@@ -5164,10 +5315,10 @@ glabel sub_GAME_7F0B2718
 .L7F0B2760:
 /* 0E7290 7F0B2760 240E0001 */  li    $t6, 1
 /* 0E7294 7F0B2764 3C178008 */  lui   $s7, %hi(bfsTileStack) 
-/* 0E7298 7F0B2768 3C168004 */  lui   $s6, %hi(base_ptr_connection_vals)
+/* 0E7298 7F0B2768 3C168004 */  lui   $s6, %hi(standTileStart)
 /* 0E729C 7F0B276C AC34BA10 */  sw    $s4, %lo(bfsTileStack)($at)
 /* 0E72A0 7F0B2770 24110001 */  li    $s1, 1
-/* 0E72A4 7F0B2774 26D60F58 */  addiu $s6, %lo(base_ptr_connection_vals) # addiu $s6, $s6, 0xf58
+/* 0E72A4 7F0B2774 26D60F58 */  addiu $s6, %lo(standTileStart) # addiu $s6, $s6, 0xf58
 /* 0E72A8 7F0B2778 26F7BA10 */  addiu $s7, %lo(bfsTileStack) # addiu $s7, $s7, -0x45f0
 /* 0E72AC 7F0B277C AFAE0058 */  sw    $t6, 0x58($sp)
 /* 0E72B0 7F0B2780 0000F025 */  move  $fp, $zero
@@ -5354,7 +5505,7 @@ void setLevelScale(float ls) {
 
 
 
-
+float sub_GAME_7F0B2970(struct StandTile* tile, float p_x, float p_z);
 
 #ifdef NONMATCHING
 f32 sub_GAME_7F0B2970(void *arg0, s32 arg1, f32 arg2) {
@@ -6024,8 +6175,8 @@ glabel stanMatchTileName
 .L7F0B2E78:
 /* 0E79A8 7F0B2E78 0FC2CB54 */  jal   stanConvertNameStringToS32
 /* 0E79AC 7F0B2E7C 27A60021 */   addiu $a2, $sp, 0x21
-/* 0E79B0 7F0B2E80 3C0F8008 */  lui   $t7, %hi(clippingfile) 
-/* 0E79B4 7F0B2E84 8DEFB120 */  lw    $t7, %lo(clippingfile)($t7)
+/* 0E79B0 7F0B2E80 3C0F8008 */  lui   $t7, %hi(stan_prefix) 
+/* 0E79B4 7F0B2E84 8DEFB120 */  lw    $t7, %lo(stan_prefix)($t7)
 /* 0E79B8 7F0B2E88 3C058004 */  lui   $a1, %hi(list_of_tilesizes)
 /* 0E79BC 7F0B2E8C 24A50F4C */  addiu $a1, %lo(list_of_tilesizes) # addiu $a1, $a1, 0xf4c
 /* 0E79C0 7F0B2E90 8DE30004 */  lw    $v1, 4($t7)
@@ -6111,9 +6262,9 @@ void *stanDetermineEOF(void *arg0, s32 arg1, s32 arg2) {
     void *phi_v0;
 
     // Node 0
-    clippingfile = arg0;
+    stan_prefix.clippingfile = arg0;
     temp_v0 = (arg2 - arg1);
-    base_ptr_connection_vals = (s32) ((arg0->unk4 + temp_v0) + -0x80);
+    standTileStart = (s32) ((arg0->unk4 + temp_v0) + -0x80);
     ptr_firstroom_0 = (s32) (arg0->unk4 + temp_v0);
     temp_a3 = (arg0 + 4);
     phi_a3_2 = temp_a3;
@@ -6151,22 +6302,22 @@ loop_4:
         }
     }
     // Node 5
-    clippingfile = arg0;
+    stan_prefix.clippingfile = arg0;
     return temp_v0_2;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel stanDetermineEOF
-/* 0E7A5C 7F0B2F2C 3C088008 */  lui   $t0, %hi(clippingfile) 
-/* 0E7A60 7F0B2F30 2508B120 */  addiu $t0, %lo(clippingfile) # addiu $t0, $t0, -0x4ee0
+/* 0E7A5C 7F0B2F2C 3C088008 */  lui   $t0, %hi(stan_prefix) 
+/* 0E7A60 7F0B2F30 2508B120 */  addiu $t0, %lo(stan_prefix) # addiu $t0, $t0, -0x4ee0
 /* 0E7A64 7F0B2F34 AD040000 */  sw    $a0, ($t0)
 /* 0E7A68 7F0B2F38 8C8E0004 */  lw    $t6, 4($a0)
 /* 0E7A6C 7F0B2F3C 00C51023 */  subu  $v0, $a2, $a1
-/* 0E7A70 7F0B2F40 3C018004 */  lui   $at, %hi(base_ptr_connection_vals)
+/* 0E7A70 7F0B2F40 3C018004 */  lui   $at, %hi(standTileStart)
 /* 0E7A74 7F0B2F44 01C27821 */  addu  $t7, $t6, $v0
 /* 0E7A78 7F0B2F48 25F8FF80 */  addiu $t8, $t7, -0x80
-/* 0E7A7C 7F0B2F4C AC380F58 */  sw    $t8, %lo(base_ptr_connection_vals)($at)
+/* 0E7A7C 7F0B2F4C AC380F58 */  sw    $t8, %lo(standTileStart)($at)
 /* 0E7A80 7F0B2F50 8C990004 */  lw    $t9, 4($a0)
 /* 0E7A84 7F0B2F54 3C018004 */  lui   $at, %hi(ptr_firstroom_0)
 /* 0E7A88 7F0B2F58 3C068004 */  lui   $a2, %hi(list_of_tilesizes)

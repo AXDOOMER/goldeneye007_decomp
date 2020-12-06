@@ -11211,8 +11211,8 @@ glabel sub_GAME_7F07D960
 /* 0B28E8 7F07DDB8 11A00008 */  beqz  $t5, .L7F07DDDC
 /* 0B28EC 7F07DDBC 00000000 */   nop   
 /* 0B28F0 7F07DDC0 14870005 */  bne   $a0, $a3, .L7F07DDD8
-/* 0B28F4 7F07DDC4 3C0F8004 */   lui   $t7, %hi(base_ptr_connection_vals) 
-/* 0B28F8 7F07DDC8 8DEF0F58 */  lw    $t7, %lo(base_ptr_connection_vals)($t7)
+/* 0B28F4 7F07DDC4 3C0F8004 */   lui   $t7, %hi(standTileStart) 
+/* 0B28F8 7F07DDC8 8DEF0F58 */  lw    $t7, %lo(standTileStart)($t7)
 /* 0B28FC 7F07DDCC 000570C0 */  sll   $t6, $a1, 3
 /* 0B2900 7F07DDD0 10000004 */  b     .L7F07DDE4
 /* 0B2904 7F07DDD4 01CF8021 */   addu  $s0, $t6, $t7

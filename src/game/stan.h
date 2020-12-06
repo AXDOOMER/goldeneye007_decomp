@@ -46,7 +46,7 @@ struct StandTileWalkCallbackRecord {
 };
 typedef void (*standTileWalkCallback_t)(struct StandTile*, struct StandTile*, struct StandTileWalkCallbackRecord*);
 // Necessary forward declaration
-void sub_GAME_7F0B0C98(struct StandTile *tile, struct StandTile *unused, struct StandTileWalkCallbackRecord *data);
+void noteTileRoomIfDifferentToPrev(struct StandTile *tile, struct StandTile *unused, struct StandTileWalkCallbackRecord *data);
 
 // Very similar but definitely different to the above?
 struct StandTileLocusCallbackRecord {
