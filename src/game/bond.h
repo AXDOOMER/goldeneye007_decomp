@@ -574,28 +574,20 @@ struct Player
   s32 field_4D0;
   s32 field_4D4;
   s32 current_tile_ptr_for_portals;
-  s32 field_4DC;
-  s32 field_4E0;
+  u32 resetheadpos; // bool
+  u32 resetheadrot; // bool
   s32 field_4E4;
   s32 field_4E8;
-  s32 field_4EC;
+  f32 headdamp;
   s32 field_4F0;
   s32 field_4F4;
   s32 field_4F8;
-  vec3 scaled_velocity;
-  s32 field_508;
-  s32 field_50C;
-  s32 field_510;
-  s32 field_514;
-  s32 field_518;
-  s32 field_51C;
-  vec3 velocity;
-  s32 field_52C;
-  s32 field_530;
-  s32 field_534;
-  s32 field_538;
-  s32 field_53C;
-  s32 field_540;
+  vec3 headpos;
+  vec3 headlook;
+  vec3 headup;
+  vec3 headpossum;
+  vec3 headlooksum;
+  vec3 headupsum;
   s32 field_544;
   s32 field_548;
   s32 field_54C;

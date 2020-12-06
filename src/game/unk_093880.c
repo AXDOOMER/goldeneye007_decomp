@@ -7925,7 +7925,7 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->field_4F0 = 0;
     (*ppPVar3)->field_4F4 = 1.00000000;
     (*ppPVar3)->field_4F8 = 1.00000000;
-    (*ppPVar3)->scaled_velocity = 0.00000000;
+    (*ppPVar3)->headpos = 0.00000000;
     (*ppPVar3)->field_500 = 0.00000000;
     (*ppPVar3)->field_504 = 0.00000000;
     (*ppPVar3)->field_508 = 0.00000000;
@@ -7934,7 +7934,7 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->field_514 = 0.00000000;
     (*ppPVar3)->field_518 = 1.00000000;
     (*ppPVar3)->field_51C = 0.00000000;
-    (*ppPVar3)->velocity = 0.00000000;
+    (*ppPVar3)->headpossum = 0.00000000;
     (*ppPVar3)->field_524 = 0.00000000;
     (*ppPVar3)->field_528 = 0.00000000;
     (*ppPVar3)->field_52C = 0.00000000;
