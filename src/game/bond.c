@@ -10006,18 +10006,18 @@ s32 cal_player_collision(void *arg0, void *arg1) {
                     {
                         // Node 20
                         phi_v1 = pPlayer;
-                        if (dword_CODE_bss_8007BA04 != 0)
+                        if (stanSavedColl_posData != 0)
                         {
                             // Node 21
                             phi_v1 = pPlayer;
-                            if (*dword_CODE_bss_8007BA04 == 1)
+                            if (*stanSavedColl_posData == 1)
                             {
                                 // Node 22
                                 phi_v1 = pPlayer;
-                                if (dword_CODE_bss_8007BA04->unk4->unk3 == &D_8003644C)
+                                if (stanSavedColl_posData->unk4->unk3 == &D_8003644C)
                                 {
                                     // Node 23
-                                    D_8003644C = (void *) dword_CODE_bss_8007BA04;
+                                    D_8003644C = (void *) stanSavedColl_posData;
                                     phi_v1 = pPlayer;
                                 }
                             }
@@ -10040,18 +10040,18 @@ s32 cal_player_collision(void *arg0, void *arg1) {
                 {
                     // Node 20
                     phi_v1 = pPlayer;
-                    if (dword_CODE_bss_8007BA04 != 0)
+                    if (stanSavedColl_posData != 0)
                     {
                         // Node 21
                         phi_v1 = pPlayer;
-                        if (*dword_CODE_bss_8007BA04 == 1)
+                        if (*stanSavedColl_posData == 1)
                         {
                             // Node 22
                             phi_v1 = pPlayer;
-                            if (dword_CODE_bss_8007BA04->unk4->unk3 == &D_8003644C)
+                            if (stanSavedColl_posData->unk4->unk3 == &D_8003644C)
                             {
                                 // Node 23
-                                D_8003644C = (void *) dword_CODE_bss_8007BA04;
+                                D_8003644C = (void *) stanSavedColl_posData;
                                 phi_v1 = pPlayer;
                             }
                         }
@@ -10068,18 +10068,18 @@ s32 cal_player_collision(void *arg0, void *arg1) {
             {
                 // Node 20
                 phi_v1 = pPlayer;
-                if (dword_CODE_bss_8007BA04 != 0)
+                if (stanSavedColl_posData != 0)
                 {
                     // Node 21
                     phi_v1 = pPlayer;
-                    if (*dword_CODE_bss_8007BA04 == 1)
+                    if (*stanSavedColl_posData == 1)
                     {
                         // Node 22
                         phi_v1 = pPlayer;
-                        if (dword_CODE_bss_8007BA04->unk4->unk3 == &D_8003644C)
+                        if (stanSavedColl_posData->unk4->unk3 == &D_8003644C)
                         {
                             // Node 23
-                            D_8003644C = (void *) dword_CODE_bss_8007BA04;
+                            D_8003644C = (void *) stanSavedColl_posData;
                             phi_v1 = pPlayer;
                         }
                     }
@@ -10250,10 +10250,10 @@ glabel cal_player_collision
 .L7F07D1B4:
 /* 0B1CE4 7F07D1B4 3C0A8003 */  lui   $t2, %hi(ptr_playerstank) 
 /* 0B1CE8 7F07D1B8 8D4A6450 */  lw    $t2, %lo(ptr_playerstank)($t2)
-/* 0B1CEC 7F07D1BC 3C028008 */  lui   $v0, %hi(dword_CODE_bss_8007BA04)
+/* 0B1CEC 7F07D1BC 3C028008 */  lui   $v0, %hi(stanSavedColl_posData)
 /* 0B1CF0 7F07D1C0 5540000F */  bnezl $t2, .L7F07D200
 /* 0B1CF4 7F07D1C4 8C6400A8 */   lw    $a0, 0xa8($v1)
-/* 0B1CF8 7F07D1C8 8C42BA04 */  lw    $v0, %lo(dword_CODE_bss_8007BA04)($v0)
+/* 0B1CF8 7F07D1C8 8C42BA04 */  lw    $v0, %lo(stanSavedColl_posData)($v0)
 /* 0B1CFC 7F07D1CC 5040000C */  beql  $v0, $zero, .L7F07D200
 /* 0B1D00 7F07D1D0 8C6400A8 */   lw    $a0, 0xa8($v1)
 /* 0B1D04 7F07D1D4 904B0000 */  lbu   $t3, ($v0)

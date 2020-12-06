@@ -14436,7 +14436,7 @@ glabel sub_GAME_7F02D734
 /* 062B44 7F02E014 8FA80230 */  lw    $t0, 0x230($sp)
 .L7F02E018:
 /* 062B48 7F02E018 8FA50270 */  lw    $a1, 0x270($sp)
-/* 062B4C 7F02E01C 3C038008 */  lui   $v1, %hi(dword_CODE_bss_8007BA04)
+/* 062B4C 7F02E01C 3C038008 */  lui   $v1, %hi(stanSavedColl_posData)
 /* 062B50 7F02E020 1100000F */  beqz  $t0, .L7F02E060
 /* 062B54 7F02E024 00000000 */   nop   
 /* 062B58 7F02E028 C4A60008 */  lwc1  $f6, 8($a1)
@@ -14454,7 +14454,7 @@ glabel sub_GAME_7F02D734
 /* 062B88 7F02E058 10000012 */  b     .L7F02E0A4
 /* 062B8C 7F02E05C 8FAC022C */   lw    $t4, 0x22c($sp)
 .L7F02E060:
-/* 062B90 7F02E060 8C63BA04 */  lw    $v1, %lo(dword_CODE_bss_8007BA04)($v1)
+/* 062B90 7F02E060 8C63BA04 */  lw    $v1, %lo(stanSavedColl_posData)($v1)
 /* 062B94 7F02E064 C7A8020C */  lwc1  $f8, 0x20c($sp)
 /* 062B98 7F02E068 10600006 */  beqz  $v1, .L7F02E084
 /* 062B9C 7F02E06C 00000000 */   nop   
@@ -14484,8 +14484,8 @@ glabel sub_GAME_7F02D734
 /* 062BF0 7F02E0C0 0FC28F87 */  jal   sub_GAME_7F0A3E1C
 /* 062BF4 7F02E0C4 91A70003 */   lbu   $a3, 3($t5)
 .L7F02E0C8:
-/* 062BF8 7F02E0C8 3C058008 */  lui   $a1, %hi(dword_CODE_bss_8007BA04)
-/* 062BFC 7F02E0CC 8CA5BA04 */  lw    $a1, %lo(dword_CODE_bss_8007BA04)($a1)
+/* 062BF8 7F02E0C8 3C058008 */  lui   $a1, %hi(stanSavedColl_posData)
+/* 062BFC 7F02E0CC 8CA5BA04 */  lw    $a1, %lo(stanSavedColl_posData)($a1)
 /* 062C00 7F02E0D0 8FAE0274 */  lw    $t6, 0x274($sp)
 /* 062C04 7F02E0D4 2406FFFF */  li    $a2, -1
 /* 062C08 7F02E0D8 10A0002D */  beqz  $a1, .L7F02E190
@@ -14493,8 +14493,8 @@ glabel sub_GAME_7F02D734
 /* 062C10 7F02E0E0 00E02025 */  move  $a0, $a3
 /* 062C14 7F02E0E4 0FC19107 */  jal   recall_joy2_hits_edit_detail_edit_flag
 /* 062C18 7F02E0E8 2406FFFF */   li    $a2, -1
-/* 062C1C 7F02E0EC 3C038008 */  lui   $v1, %hi(dword_CODE_bss_8007BA04)
-/* 062C20 7F02E0F0 8C63BA04 */  lw    $v1, %lo(dword_CODE_bss_8007BA04)($v1)
+/* 062C1C 7F02E0EC 3C038008 */  lui   $v1, %hi(stanSavedColl_posData)
+/* 062C20 7F02E0F0 8C63BA04 */  lw    $v1, %lo(stanSavedColl_posData)($v1)
 /* 062C24 7F02E0F4 24010003 */  li    $at, 3
 /* 062C28 7F02E0F8 8FAF0288 */  lw    $t7, 0x288($sp)
 /* 062C2C 7F02E0FC 90620000 */  lbu   $v0, ($v1)
@@ -14525,8 +14525,8 @@ glabel sub_GAME_7F02D734
 /* 062C88 7F02E158 81240080 */   lb    $a0, 0x80($t1)
 /* 062C8C 7F02E15C 0FC26C54 */  jal   get_cur_playernum
 /* 062C90 7F02E160 E7A0004C */   swc1  $f0, 0x4c($sp)
-/* 062C94 7F02E164 3C0B8008 */  lui   $t3, %hi(dword_CODE_bss_8007BA04) 
-/* 062C98 7F02E168 8D6BBA04 */  lw    $t3, %lo(dword_CODE_bss_8007BA04)($t3)
+/* 062C94 7F02E164 3C0B8008 */  lui   $t3, %hi(stanSavedColl_posData) 
+/* 062C98 7F02E168 8D6BBA04 */  lw    $t3, %lo(stanSavedColl_posData)($t3)
 /* 062C9C 7F02E16C 8FAA0274 */  lw    $t2, 0x274($sp)
 /* 062CA0 7F02E170 8FA5004C */  lw    $a1, 0x4c($sp)
 /* 062CA4 7F02E174 8D640004 */  lw    $a0, 4($t3)
@@ -18227,8 +18227,8 @@ glabel sub_GAME_7F030D70
 /* 065AF4 7F030FC4 27A50074 */  addiu $a1, $sp, 0x74
 /* 065AF8 7F030FC8 0FC0C1D3 */  jal   sub_GAME_7F03074C
 /* 065AFC 7F030FCC 27A600A8 */   addiu $a2, $sp, 0xa8
-/* 065B00 7F030FD0 3C018008 */  lui   $at, %hi(flt_CODE_bss_8007BA00)
-/* 065B04 7F030FD4 C42ABA00 */  lwc1  $f10, %lo(flt_CODE_bss_8007BA00)($at)
+/* 065B00 7F030FD0 3C018008 */  lui   $at, %hi(stanSavedColl_someMin)
+/* 065B04 7F030FD4 C42ABA00 */  lwc1  $f10, %lo(stanSavedColl_someMin)($at)
 /* 065B08 7F030FD8 E7AA0054 */  swc1  $f10, 0x54($sp)
 .L7F030FDC:
 /* 065B0C 7F030FDC 8FA900C0 */  lw    $t1, 0xc0($sp)
@@ -18305,8 +18305,8 @@ glabel sub_GAME_7F030D70
 /* 065C24 7F0310F4 27A5005C */  addiu $a1, $sp, 0x5c
 /* 065C28 7F0310F8 0FC0C1D3 */  jal   sub_GAME_7F03074C
 /* 065C2C 7F0310FC 27A600A8 */   addiu $a2, $sp, 0xa8
-/* 065C30 7F031100 3C018008 */  lui   $at, %hi(flt_CODE_bss_8007BA00)
-/* 065C34 7F031104 C428BA00 */  lwc1  $f8, %lo(flt_CODE_bss_8007BA00)($at)
+/* 065C30 7F031100 3C018008 */  lui   $at, %hi(stanSavedColl_someMin)
+/* 065C34 7F031104 C428BA00 */  lwc1  $f8, %lo(stanSavedColl_someMin)($at)
 /* 065C38 7F031108 E7A80050 */  swc1  $f8, 0x50($sp)
 .L7F03110C:
 /* 065C3C 7F03110C 8FAD0090 */  lw    $t5, 0x90($sp)
