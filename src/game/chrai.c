@@ -4023,7 +4023,7 @@ action42_If_Current_Guard_On_Screen_In_Loaded_Room_RVL_2:
 /* 06B0E0 7F0365B0 26310002 */   addiu $s1, $s1, 2
 action43_If_Guard_In_A_Room_Currently_Loaded_RVL_2:
 /* 06B0E4 7F0365B4 8EEC0018 */  lw    $t4, 0x18($s7)
-/* 06B0E8 7F0365B8 0FC2CBF6 */  jal   sub_GAME_7F0B2FD8
+/* 06B0E8 7F0365B8 0FC2CBF6 */  jal   getTileRoom
 /* 06B0EC 7F0365BC 8D840014 */   lw    $a0, 0x14($t4)
 /* 06B0F0 7F0365C0 0FC2D794 */  jal   sub_GAME_7F0B5E50
 /* 06B0F4 7F0365C4 00402025 */   move  $a0, $v0
@@ -9890,7 +9890,7 @@ action42_If_Current_Guard_On_Screen_In_Loaded_Room_RVL_2:
 /* 06B0E0 7F0365B0 26310002 */   addiu $s1, $s1, 2
 action43_If_Guard_In_A_Room_Currently_Loaded_RVL_2:
 /* 06B0E4 7F0365B4 8EEC0018 */  lw    $t4, 0x18($s7)
-/* 06B0E8 7F0365B8 0FC2CBF6 */  jal   sub_GAME_7F0B2FD8
+/* 06B0E8 7F0365B8 0FC2CBF6 */  jal   getTileRoom
 /* 06B0EC 7F0365BC 8D840014 */   lw    $a0, 0x14($t4)
 /* 06B0F0 7F0365C0 0FC2D794 */  jal   sub_GAME_7F0B5E50
 /* 06B0F4 7F0365C4 00402025 */   move  $a0, $v0
@@ -15639,7 +15639,7 @@ glabel sub_GAME_7F03B15C
 /* 06FECC 7F03B39C C6080008 */  lwc1  $f8, 8($s0)
 /* 06FED0 7F03B3A0 AFA4055C */  sw    $a0, 0x55c($sp)
 /* 06FED4 7F03B3A4 46004402 */  mul.s $f16, $f8, $f0
-/* 06FED8 7F03B3A8 0FC2CBF6 */  jal   sub_GAME_7F0B2FD8
+/* 06FED8 7F03B3A8 0FC2CBF6 */  jal   getTileRoom
 /* 06FEDC 7F03B3AC E7B00084 */   swc1  $f16, 0x84($sp)
 /* 06FEE0 7F03B3B0 00408825 */  move  $s1, $v0
 /* 06FEE4 7F03B3B4 27A2018C */  addiu $v0, $sp, 0x18c
@@ -15672,7 +15672,7 @@ glabel sub_GAME_7F03B15C
 /* 06FF48 7F03B418 00000000 */   nop   
 /* 06FF4C 7F03B41C 0FC225E6 */  jal   get_curplayer_positiondata
 /* 06FF50 7F03B420 00000000 */   nop   
-/* 06FF54 7F03B424 0FC2CBF6 */  jal   sub_GAME_7F0B2FD8
+/* 06FF54 7F03B424 0FC2CBF6 */  jal   getTileRoom
 /* 06FF58 7F03B428 8C440014 */   lw    $a0, 0x14($v0)
 /* 06FF5C 7F03B42C 27AC007C */  addiu $t4, $sp, 0x7c
 /* 06FF60 7F03B430 27AD008C */  addiu $t5, $sp, 0x8c
@@ -15690,7 +15690,7 @@ glabel sub_GAME_7F03B15C
 .L7F03B460:
 /* 06FF90 7F03B460 0FC225E6 */  jal   get_curplayer_positiondata
 /* 06FF94 7F03B464 00000000 */   nop   
-/* 06FF98 7F03B468 0FC2CBF6 */  jal   sub_GAME_7F0B2FD8
+/* 06FF98 7F03B468 0FC2CBF6 */  jal   getTileRoom
 /* 06FF9C 7F03B46C 8C440014 */   lw    $a0, 0x14($v0)
 /* 06FFA0 7F03B470 27AF007C */  addiu $t7, $sp, 0x7c
 /* 06FFA4 7F03B474 27B8008C */  addiu $t8, $sp, 0x8c

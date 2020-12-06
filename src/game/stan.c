@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "game/stan.h"
 #include "structs.h"
+#include "game/bg.h"
 
 // bss
 struct StanPrefixRecord {
@@ -3085,11 +3086,14 @@ glabel sub_GAME_7F0B0D0C
 #endif
 
 
-
-
+// sig for caller matches
+int sub_GAME_7F0B0E24(struct StandTile **pTile, float p_x, float p_z, float dest_x, float dest_z,
+    int objFlags, float unkHeight, float unkA, float unkB, float unkC);
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B0E24(void) {
+// 'testLineUnobstructed'
+int sub_GAME_7F0B0E24(struct StandTile **pTile, float p_x, float p_z, float dest_x, float dest_z,
+    int objFlags, float unkHeight, float unkA, float unkB, float unkC) {
 
 }
 #else
@@ -4222,11 +4226,11 @@ s32 sub_GAME_7F0B1CEC(void) {
 
 
 // sig for caller matches
-void sub_GAME_7F0B1CF8(struct StandTile *tile, s32 pointI, struct float3 *currPntRtn, struct float3 *nextPointRtn);
+void getTileEdgePoints(struct StandTile *tile, s32 pointI, struct float3 *currPntRtn, struct float3 *nextPointRtn);
 
 #ifdef NONMATCHING
 // Not debugged at all - can't be far wrong though.
-void sub_GAME_7F0B1CF8(struct StandTile *tile, s32 pointI, struct float3 *currPntRtn, struct float3 *nextPointRtn)
+void getTileEdgePoints(struct StandTile *tile, s32 pointI, struct float3 *currPntRtn, struct float3 *nextPointRtn)
 {
   struct StandTilePoint *tilePntA;
   struct StandTilePoint *tilePntB;
@@ -4250,7 +4254,7 @@ void sub_GAME_7F0B1CF8(struct StandTile *tile, s32 pointI, struct float3 *currPn
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0B1CF8
+glabel getTileEdgePoints
 /* 0E6828 7F0B1CF8 000570C0 */  sll   $t6, $a1, 3
 /* 0E682C 7F0B1CFC 008E1021 */  addu  $v0, $a0, $t6
 /* 0E6830 7F0B1D00 844F0008 */  lh    $t7, 8($v0)
@@ -4658,8 +4662,9 @@ s32 sub_GAME_7F0B21B0(struct StandTile **tileStack, float target_x, float target
 #ifdef NONMATCHING
 
 // TODO
-s32 sub_GAME_7F0B2244(StandTile *tile, u8 *rtn) {
-    if ( D_80040F30[(tile->headerA >> 0xc)] & 2 != 0 )
+// s16 headerA : 4   gives just regalloc
+s32 sub_GAME_7F0B2244(struct StandTile *tile, u8 *rtn) {
+    if (D_80040F30[tile->headerMid >> 0xC] & 2)
     {
         *rtn = 1;
     }
@@ -4691,6 +4696,7 @@ glabel sub_GAME_7F0B2244
 
 
 #ifdef NONMATCHING
+// TODO
 void sub_GAME_7F0B2274(s32 arg0, s32 arg1, ? arg2, ? arg3, void *arg5) {
     void *temp_t7;
     void *temp_v1;
@@ -4885,6 +4891,8 @@ glabel sub_GAME_7F0B23A4
 
 
 #ifdef NONMATCHING
+// regalloc only really
+// Duplicating the macro does nothing
 void sub_GAME_7F0B23AC(struct StandTile *tile, s32 tripleIndex, struct float3 *pnt)
 {
     s32 pntIndex = STAN_TRIPLE_TO_PNT_INDEX(tile, tripleIndex);
@@ -4936,6 +4944,7 @@ glabel sub_GAME_7F0B23AC
 
 
 #ifdef NONMATCHING
+// TODO
 void sub_GAME_7F0B2420(void) {
 
 }
@@ -5093,8 +5102,9 @@ s32 sub_GAME_7F0B260C(struct StandTile *tile, s32 index, float p_x,float p_z, vo
             return 1;
         }
     }
-    
-    return 0;
+    else {
+        return 0;
+    }
 }
 
 #else
@@ -5416,84 +5426,32 @@ glabel sub_GAME_7F0B2718
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B28B0(void *arg0, void *arg1) {
-    s32 sp1C;
+s32 getCollisionEdge_maybe(struct float3 *pntA, struct float3 *pntB)
+{
+    // The moral is that they prefer == 0 tests?
 
-    // Node 0
-    sp1C = (s32) stanSavedColl_tile;
-    if (stanSavedColl_tile != 0)
-    {
-        // Node 1
-        sub_GAME_7F0B1CF8(stanSavedColl_tile, stanSavedColl_pointI, arg0, arg1);
-        return 0;
+    if (stanSavedColl_tile) {
+        getTileEdgePoints(stanSavedColl_tile, stanSavedColl_pointI, pntA, pntB);
+        return 1;
     }
-    // Node 2
-    if (D_800413BC == 0)
-    {
-        // Node 4
-        // Node 5
-        return 0;
+    else {
+        if (D_800413BC) {
+            pntA->x = stanSavedColl_pntA.x;
+            pntA->y = 0;
+            pntA->z = stanSavedColl_pntA.z;
+
+            pntB->x = stanSavedColl_pntB.x;
+            pntB->y = 0;
+            pntB->z = stanSavedColl_pntB.z;
+
+            return 1;
+        }
+        else {
+            return 0;
+        }
     }
-    // Node 3
-    arg0->unk4 = 0.0f;
-    *arg0 = (f32) stanSavedColl_pntA;
-    arg0->unk8 = (f32) stanSavedColl_pntA.unk4;
-    arg1->unk4 = 0.0f;
-    *arg1 = (f32) stanSavedColl_pntB;
-    arg1->unk8 = (f32) stanSavedColl_pntB.unk4;
-    return 0;
+
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B28B0
-/* 0E73E0 7F0B28B0 3C0E8008 */  lui   $t6, %hi(stanSavedColl_tile) 
-/* 0E73E4 7F0B28B4 8DCEB9E4 */  lw    $t6, %lo(stanSavedColl_tile)($t6)
-/* 0E73E8 7F0B28B8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0E73EC 7F0B28BC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E73F0 7F0B28C0 00803025 */  move  $a2, $a0
-/* 0E73F4 7F0B28C4 00A03825 */  move  $a3, $a1
-/* 0E73F8 7F0B28C8 11C00007 */  beqz  $t6, .L7F0B28E8
-/* 0E73FC 7F0B28CC AFAE001C */   sw    $t6, 0x1c($sp)
-/* 0E7400 7F0B28D0 3C058008 */  lui   $a1, %hi(stanSavedColl_pointI)
-/* 0E7404 7F0B28D4 8CA5B9E8 */  lw    $a1, %lo(stanSavedColl_pointI)($a1)
-/* 0E7408 7F0B28D8 0FC2C73E */  jal   sub_GAME_7F0B1CF8
-/* 0E740C 7F0B28DC 01C02025 */   move  $a0, $t6
-/* 0E7410 7F0B28E0 10000017 */  b     .L7F0B2940
-/* 0E7414 7F0B28E4 24020001 */   li    $v0, 1
-.L7F0B28E8:
-/* 0E7418 7F0B28E8 3C0F8004 */  lui   $t7, %hi(D_800413BC) 
-/* 0E741C 7F0B28EC 8DEF13BC */  lw    $t7, %lo(D_800413BC)($t7)
-/* 0E7420 7F0B28F0 3C038008 */  lui   $v1, %hi(stanSavedColl_pntA)
-/* 0E7424 7F0B28F4 2463B9F0 */  addiu $v1, %lo(stanSavedColl_pntA) # addiu $v1, $v1, -0x4610
-/* 0E7428 7F0B28F8 51E00011 */  beql  $t7, $zero, .L7F0B2940
-/* 0E742C 7F0B28FC 00001025 */   move  $v0, $zero
-/* 0E7430 7F0B2900 44800000 */  mtc1  $zero, $f0
-/* 0E7434 7F0B2904 C4640000 */  lwc1  $f4, ($v1)
-/* 0E7438 7F0B2908 3C048008 */  lui   $a0, %hi(stanSavedColl_pntB)
-/* 0E743C 7F0B290C E4C00004 */  swc1  $f0, 4($a2)
-/* 0E7440 7F0B2910 E4C40000 */  swc1  $f4, ($a2)
-/* 0E7444 7F0B2914 C4660004 */  lwc1  $f6, 4($v1)
-/* 0E7448 7F0B2918 2484B9F8 */  addiu $a0, %lo(stanSavedColl_pntB) # addiu $a0, $a0, -0x4608
-/* 0E744C 7F0B291C 24020001 */  li    $v0, 1
-/* 0E7450 7F0B2920 E4C60008 */  swc1  $f6, 8($a2)
-/* 0E7454 7F0B2924 C4880000 */  lwc1  $f8, ($a0)
-/* 0E7458 7F0B2928 E4E00004 */  swc1  $f0, 4($a3)
-/* 0E745C 7F0B292C E4E80000 */  swc1  $f8, ($a3)
-/* 0E7460 7F0B2930 C48A0004 */  lwc1  $f10, 4($a0)
-/* 0E7464 7F0B2934 10000002 */  b     .L7F0B2940
-/* 0E7468 7F0B2938 E4EA0008 */   swc1  $f10, 8($a3)
-/* 0E746C 7F0B293C 00001025 */  move  $v0, $zero
-.L7F0B2940:
-/* 0E7470 7F0B2940 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0E7474 7F0B2944 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0E7478 7F0B2948 03E00008 */  jr    $ra
-/* 0E747C 7F0B294C 00000000 */   nop   
-)
-#endif
-
-
 
 
 
@@ -5801,21 +5759,22 @@ glabel sub_GAME_7F0B2970
 
 
 #ifdef NONMATCHING
-s32 copy_tile_RGB_as_24bit(void *arg0, s32 arg1, ? arg2, void *arg3) {
-    s32 temp_v0;
-    s32 temp_t7;
-    s32 temp_t9;
-    s32 temp_t3;
 
-    // Node 0
-    temp_v0 = ((s32) arg0->unk4 >> 8);
-    temp_t7 = (temp_v0 & 0xf);
-    temp_t9 = (((s32) arg0->unk4 >> 4) & 0xf);
-    temp_t3 = (arg0->unk4 & 0xf);
-    *arg3 = (s8) ((temp_t7 * 0x10) | temp_t7);
-    arg3->unk1 = (s8) ((temp_t9 * 0x10) | temp_t9);
-    arg3->unk2 = (s8) ((temp_t3 * 0x10) | temp_t3);
-    return temp_v0;
+// Some instructions misordered
+s32 copy_tile_RGB_as_24bit(struct StandTile* tile, float p_x, float p_z, u8* rtn) {
+    
+    u8 B;
+    u8 C;
+    u8 D;
+
+    B = tile->headerMid >> 0x8 & 0xF;
+    C = tile->headerMid >> 0x4 & 0xF;
+    D = tile->headerMid & 0xF;
+
+    rtn[0] = (B << 4) | B;
+    rtn[1] = (C << 4) | C;
+    rtn[2] = (D << 4) | D;
+
 }
 #else
 GLOBAL_ASM(
@@ -5844,44 +5803,26 @@ glabel copy_tile_RGB_as_24bit
 
 
 
-float sub_GAME_7F0B2C74(struct StandTile *tile, float *arg1);
+float sub_GAME_7F0B2C74(struct StandTile *tile, float *heights);
 
 #ifdef NONMATCHING
-f32 sub_GAME_7F0B2C74(void *arg0, void *arg1) {
-    f32 temp_f2;
-    f32 phi_f16;
-    f32 phi_f2;
 
-    // Node 0
-    temp_f2 = (f32) (arg0 + ((((s32) arg0->unk6 >> 8) & 0xf) * 8))->unkA;
-    if (temp_f2 < temp_f2)
-    {
-        // Node 1
-    }
-    // Node 2
-    phi_f16 = temp_f2;
-    if (temp_f2 < temp_f2)
-    {
-        // Node 3
-        phi_f16 = temp_f2;
-    }
-    // Node 4
-    if (temp_f2 < temp_f2)
-    {
-        // Node 5
-    }
-    // Node 6
-    phi_f2 = temp_f2;
-    if (temp_f2 < temp_f2)
-    {
-        // Node 7
-        phi_f2 = temp_f2;
-    }
-    // Node 8
-    *arg1 = (f32) (phi_f16 * inv_level_scale);
-    arg1->unk4 = (f32) (phi_f2 * inv_level_scale);
-    return temp_f2;
+// Very interesting. The target has a load of filler crap including instructions like "c.lt.S f2,f2"
+// Presumably something has been generated from a macro but using the fixed value 0
+
+float sub_GAME_7F0B2C74(struct StandTile *tile, float *heights)
+{
+    float y;
+
+    y = tile->points[STAN_TRIPLE_TO_PNT_INDEX(tile, 0)].y;
+
+    heights[0] = y * inv_level_scale;
+    heights[1] = y * inv_level_scale;
+
+    return;
+
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -6157,6 +6098,7 @@ glabel stanConvertNameStringToS32
 
 
 #ifdef NONMATCHING
+// TODO
 void stanMatchTileName(void) {
 
 }
@@ -6249,6 +6191,7 @@ glabel sub_GAME_7F0B2F00
 
 
 #ifdef NONMATCHING
+// To try
 void *stanDetermineEOF(void *arg0, s32 arg1, s32 arg2) {
     s32 temp_v0;
     void *temp_a3;
@@ -6361,68 +6304,29 @@ glabel stanDetermineEOF
 
 
 
-
-
-#ifdef NONMATCHING
-s32 sub_GAME_7F0B2FD8(void *arg0) {
-    return arg0->unk3;
+u8 getTileRoom(struct StandTile* tile) {
+    return tile->room;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B2FD8
-/* 0E7B08 7F0B2FD8 03E00008 */  jr    $ra
-/* 0E7B0C 7F0B2FDC 90820003 */   lbu   $v0, 3($a0)
-)
-#endif
 
 
 
 
+s32 sub_GAME_7F0B2FE0(struct StandTile* tile) {
+    // u8 -> s32 -> u8 causes the odd asm
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B2FE0(void *arg0) {
-    sub_GAME_7F0B4F9C(arg0->unk3);
+    s32 room = tile->room;
+
+    return sub_GAME_7F0B4F9C(room);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B2FE0
-/* 0E7B10 7F0B2FE0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0E7B14 7F0B2FE4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E7B18 7F0B2FE8 90820003 */  lbu   $v0, 3($a0)
-/* 0E7B1C 7F0B2FEC 0FC2D3E7 */  jal   sub_GAME_7F0B4F9C
-/* 0E7B20 7F0B2FF0 00402025 */   move  $a0, $v0
-/* 0E7B24 7F0B2FF4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0E7B28 7F0B2FF8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0E7B2C 7F0B2FFC 03E00008 */  jr    $ra
-/* 0E7B30 7F0B3000 00000000 */   nop   
-)
-#endif
 
 
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B3004(void) {
-    sub_GAME_7F0B2D14();
+float sub_GAME_7F0B3004(struct StandTile* tile) {
+    return sub_GAME_7F0B2D14(tile);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B3004
-/* 0E7B34 7F0B3004 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0E7B38 7F0B3008 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E7B3C 7F0B300C 0FC2CB45 */  jal   sub_GAME_7F0B2D14
-/* 0E7B40 7F0B3010 00000000 */   nop   
-/* 0E7B44 7F0B3014 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0E7B48 7F0B3018 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0E7B4C 7F0B301C 03E00008 */  jr    $ra
-/* 0E7B50 7F0B3020 00000000 */   nop   
-)
-#endif
 
 
 
@@ -6559,9 +6463,12 @@ glabel sub_GAME_7F0B312C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B3138(s32 arg0, s32 arg1, ? arg2, ? arg3, ? arg4, f32 arg5, ?32 arg6, f32 arg7, f32 arg8) {
-    // Node 0
-    return sub_GAME_7F0B0E24(arg2, arg3, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, 0.0f, 1.0f);
+// Only difference is an extra sw a1,0x34(sp) appearing.
+// There is the unused first argument which may have the wrong type
+int sub_GAME_7F0B3138(void* unused, struct StandTile **pTile, float p_x, float p_z, float dest_x, float dest_z,
+        int objFlags, float unkHeight, float unkA) {
+
+    return sub_GAME_7F0B0E24(pTile, p_x, p_z, dest_x, dest_z, objFlags, unkHeight, unkA, 0, 1);
 }
 #else
 GLOBAL_ASM(

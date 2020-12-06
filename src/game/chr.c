@@ -1219,7 +1219,7 @@ glabel sub_GAME_7F01F614
 .L7F01F708:
 /* 054238 7F01F708 AFA0004C */  sw    $zero, 0x4c($sp)
 /* 05423C 7F01F70C 27A40078 */  addiu $a0, $sp, 0x78
-/* 054240 7F01F710 0FC2CA2C */  jal   sub_GAME_7F0B28B0
+/* 054240 7F01F710 0FC2CA2C */  jal   getCollisionEdge_maybe
 /* 054244 7F01F714 27A5006C */   addiu $a1, $sp, 0x6c
 /* 054248 7F01F718 50400130 */  beql  $v0, $zero, .L7F01FBDC
 /* 05424C 7F01F71C 8FA40098 */   lw    $a0, 0x98($sp)

@@ -21,7 +21,7 @@ struct StandTile {
     u16 name1;
     u8 name2;
     u8 room;    // compared to 0xFF, not -1 in a function. Seen LBUs.
-    s16 headerA;
+    s16 headerMid;
 
     /* 0x06 */
     // They appear to have performed the bit field work themselves here,

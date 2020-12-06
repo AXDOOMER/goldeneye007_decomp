@@ -2561,7 +2561,7 @@ glabel sub_GAME_7F0B4E40
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B4F9C(s32 arg0) {
+s32 sub_GAME_7F0B4F9C(u8 arg0) {
     return (dword_CODE_bss_8007FF94 + (arg0 * 4))->unk4;
 }
 #else

@@ -10300,7 +10300,7 @@ void sub_GAME_7F07D234(void *arg0, s32 arg1, ? arg2) {
     if (cal_player_collision(arg0, &sp1C) == 0)
     {
         // Node 2
-        sub_GAME_7F0B28B0(arg1, arg2);
+        getCollisionEdge_maybe(arg1, arg2);
         // Node 3
         return 0;
     }
@@ -10340,7 +10340,7 @@ glabel sub_GAME_7F07D234
 /* 0B1DC0 7F07D290 E7260494 */   swc1  $f6, 0x494($t9)
 .L7F07D294:
 /* 0B1DC4 7F07D294 8FA40024 */  lw    $a0, 0x24($sp)
-/* 0B1DC8 7F07D298 0FC2CA2C */  jal   sub_GAME_7F0B28B0
+/* 0B1DC8 7F07D298 0FC2CA2C */  jal   getCollisionEdge_maybe
 /* 0B1DCC 7F07D29C 8FA50028 */   lw    $a1, 0x28($sp)
 /* 0B1DD0 7F07D2A0 00001025 */  move  $v0, $zero
 .L7F07D2A4:
@@ -10447,7 +10447,7 @@ glabel sub_GAME_7F07D2B4
 .L7F07D3F8:
 /* 0B1F28 7F07D3F8 8FB00090 */  lw    $s0, 0x90($sp)
 /* 0B1F2C 7F07D3FC 8FA4008C */  lw    $a0, 0x8c($sp)
-/* 0B1F30 7F07D400 0FC2CA2C */  jal   sub_GAME_7F0B28B0
+/* 0B1F30 7F07D400 0FC2CA2C */  jal   getCollisionEdge_maybe
 /* 0B1F34 7F07D404 02002825 */   move  $a1, $s0
 /* 0B1F38 7F07D408 8FA3008C */  lw    $v1, 0x8c($sp)
 /* 0B1F3C 7F07D40C C6300000 */  lwc1  $f16, ($s1)
@@ -21282,7 +21282,7 @@ glabel MoveBond
 /* 0B9578 7F084A48 27A40348 */  addiu $a0, $sp, 0x348
 /* 0B957C 7F084A4C 27A5033C */  addiu $a1, $sp, 0x33c
 /* 0B9580 7F084A50 E7AA031C */  swc1  $f10, 0x31c($sp)
-/* 0B9584 7F084A54 0FC2CA2C */  jal   sub_GAME_7F0B28B0
+/* 0B9584 7F084A54 0FC2CA2C */  jal   getCollisionEdge_maybe
 /* 0B9588 7F084A58 E7A60304 */   swc1  $f6, 0x304($sp)
 /* 0B958C 7F084A5C C7A8033C */  lwc1  $f8, 0x33c($sp)
 /* 0B9590 7F084A60 C7A40348 */  lwc1  $f4, 0x348($sp)
@@ -23822,7 +23822,7 @@ glabel MoveBond
 /* 0B9C68 7F0850F8 27A40348 */  addiu $a0, $sp, 0x348
 /* 0B9C6C 7F0850FC 27A5033C */  addiu $a1, $sp, 0x33c
 /* 0B9C70 7F085100 E7AA031C */  swc1  $f10, 0x31c($sp)
-/* 0B9C74 7F085104 0FC2CD18 */  jal   sub_GAME_7F0B28B0
+/* 0B9C74 7F085104 0FC2CD18 */  jal   getCollisionEdge_maybe
 /* 0B9C78 7F085108 E7A60304 */   swc1  $f6, 0x304($sp)
 /* 0B9C7C 7F08510C C7A8033C */  lwc1  $f8, 0x33c($sp)
 /* 0B9C80 7F085110 C7A40348 */  lwc1  $f4, 0x348($sp)
