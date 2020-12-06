@@ -72,6 +72,36 @@ def find_asm_functions():
     return asm_functions
 
 # --------------------------
+# Find and return the number of completed files
+# Only scans for C and S files
+# --------------------------
+def find_files_completed():
+    
+    p = re.compile(r"^glabel (\S+)$")
+    files_complete = {}
+
+    files_complete['completed'] = 0
+    files_complete['total'] = 0
+
+    for root, dirs, files in os.walk('src'):
+        for file in files:
+            if file.endswith(".c") or file.endswith(".s"):
+                with open(os.path.join(root, file)) as _file:
+                    
+                    completed = True
+                    files_complete['total'] += 1
+                    
+                    for i, line in enumerate(_file.readlines()):
+                        if p.findall(line):
+                            completed = False
+                            break
+                    
+                    if completed:
+                        files_complete['completed'] += 1
+
+    return files_complete
+
+# --------------------------
 # Calculate the decomp stats
 # on each folder
 # --------------------------
@@ -104,6 +134,14 @@ def do_stats(map_file, analyse_folders):
 
 def main():
 
+    print('--------------------------')
+    
+    files_completed = find_files_completed()
+    print('FILES\t\t{:10,} / {:,} \t{:.2f}%'.format(int(files_completed['completed']), int(files_completed['total']), (files_completed['completed'] / files_completed['total'] * 100)))
+
+    print('--------------------------')
+    print('WORDS')
+
     map_file = parse_map()
 
     folders = ['src', 'src/game', 'src/inflate', 'src/libultra']
@@ -120,6 +158,8 @@ def main():
         totals['total'] += segments[key]['total']
 
     print('TOTAL\t\t{:10,} / {:,} \t{:.2f}%'.format(int(totals['done']), int(totals['total']), (totals['done'] / totals['total'] * 100)))
+
+    print('--------------------------')
 
 if __name__ == '__main__':
     main()
