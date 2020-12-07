@@ -93,87 +93,27 @@ void save_ptrDL_enpoint_to_current_init_lightfixture_table(Gfx *param_1)
 }
 
 
-
-#ifdef NONMATCHING
 s32 check_if_imageID_is_light(s32 imageID)
 {
-    if (imageID == 0xC9)
+    if ((imageID == 0xC9)  || 
+        (imageID == 0xCB)  || 
+        (imageID == 0xCD)  || 
+        (imageID == 0xFC)  || 
+        (imageID == 0xFE)  || 
+        (imageID == 0xFF)  || 
+        (imageID == 0x100) || 
+        (imageID == 0x1AC) || 
+        (imageID == 0x3D6) || 
+        (imageID == 0x567))
     {
         return 1;
-    }
-    if (imageID == 0xCB)
+    } 
+    else
     {
-        return 1;
+        return 0;
     }
-    if (imageID == 0xCD)
-    {
-        return 1;
-    }
-    if (imageID == 0xFC)
-    {
-        return 1;
-    }
-    if (imageID == 0xFE)
-    {
-        return 1;
-    }
-    if (imageID == 0xFF)
-    {
-        return 1;
-    }
-    if (imageID == 0x100)
-    {
-        return 1;
-    }
-    if (imageID == 0x1AC)
-    {
-        return 1;
-    }
-    if (imageID == 0x3D6)
-    {
-        return 1;
-    }
-    if (imageID == 0x567)
-    {
-        return 1;
-    }
-    return 0;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_imageID_is_light
-/* 0F0160 7F0BB630 240100C9 */  li    $at, 201
-/* 0F0164 7F0BB634 10810013 */  beq   $a0, $at, .L7F0BB684
-/* 0F0168 7F0BB638 240100CB */   li    $at, 203
-/* 0F016C 7F0BB63C 10810011 */  beq   $a0, $at, .L7F0BB684
-/* 0F0170 7F0BB640 240100CD */   li    $at, 205
-/* 0F0174 7F0BB644 1081000F */  beq   $a0, $at, .L7F0BB684
-/* 0F0178 7F0BB648 240100FC */   li    $at, 252
-/* 0F017C 7F0BB64C 1081000D */  beq   $a0, $at, .L7F0BB684
-/* 0F0180 7F0BB650 240100FE */   li    $at, 254
-/* 0F0184 7F0BB654 1081000B */  beq   $a0, $at, .L7F0BB684
-/* 0F0188 7F0BB658 240100FF */   li    $at, 255
-/* 0F018C 7F0BB65C 10810009 */  beq   $a0, $at, .L7F0BB684
-/* 0F0190 7F0BB660 24010100 */   li    $at, 256
-/* 0F0194 7F0BB664 10810007 */  beq   $a0, $at, .L7F0BB684
-/* 0F0198 7F0BB668 240101AC */   li    $at, 428
-/* 0F019C 7F0BB66C 10810005 */  beq   $a0, $at, .L7F0BB684
-/* 0F01A0 7F0BB670 240103D6 */   li    $at, 982
-/* 0F01A4 7F0BB674 10810003 */  beq   $a0, $at, .L7F0BB684
-/* 0F01A8 7F0BB678 24010567 */   li    $at, 1383
-/* 0F01AC 7F0BB67C 14810003 */  bne   $a0, $at, .L7F0BB68C
-/* 0F01B0 7F0BB680 00001025 */   move  $v0, $zero
-.L7F0BB684:
-/* 0F01B4 7F0BB684 03E00008 */  jr    $ra
-/* 0F01B8 7F0BB688 24020001 */   li    $v0, 1
-
-.L7F0BB68C:
-/* 0F01BC 7F0BB68C 03E00008 */  jr    $ra
-/* 0F01C0 7F0BB690 00000000 */   nop   
-)
-#endif
 
 
 
