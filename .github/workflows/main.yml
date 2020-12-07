@@ -3,6 +3,8 @@ name: GE-CI
 on:
   push:
     branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -19,13 +21,17 @@ jobs:
         run: |
           sudo apt update
           sudo apt install binutils-mips-linux-gnu make
+      
       - name: Get Base File
         env:
           FILE_US: ${{ secrets.SECRET_FILE_US  }}
         run: wget -O baserom.u.z64 $FILE_US
+
       - name: Extract
         run: ./extract_baserom.u.sh
-      - name: Make!
+
+      - name: Make
         run: make
-      - name: Done
-        run: echo Done by now
+      
+      - name: Stats
+        run: python3 tools/ge-stats.py
