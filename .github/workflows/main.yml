@@ -23,7 +23,9 @@ jobs:
         env:
           FILE_US: ${{ secrets.SECRET_FILE_US  }}
         run: wget -O baserom.u.z64 $FILE_US
-      - name: Check File
-        run: ls .
+      - name: Extract
+        run: ./extract_baserom.u.sh
+      - name: Make!
+        run: make
       - name: Done
         run: echo Done by now
