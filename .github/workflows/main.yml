@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [ $default-branch ]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
 jobs:
   build:
     
@@ -22,7 +19,7 @@ jobs:
           sudo apt update
           sudo apt install binutils-mips-linux-gnu make
       
-      - name: Get Base File
+      - name: Get NTSC File
         env:
           FILE_US: ${{ secrets.SECRET_FILE_US  }}
         run: wget -O baserom.u.z64 $FILE_US
