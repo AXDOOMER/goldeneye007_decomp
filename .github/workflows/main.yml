@@ -19,6 +19,11 @@ jobs:
         run: |
           sudo apt update
           sudo apt install binutils-mips-linux-gnu make
-
+      - name: Get Base File
+        env:
+          FILE_US: ${{ secrets.SECRET_FILE_US  }}
+        run: wget -O baserom.u.z64 $FILE_US
+      - name: Check File
+        run: ls .
       - name: Done
         run: echo Done by now
