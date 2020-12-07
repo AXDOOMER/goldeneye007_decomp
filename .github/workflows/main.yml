@@ -31,7 +31,7 @@ jobs:
         run: ./extract_baserom.u.sh
 
       - name: Make
-        run: make
+        run: make -j
       
       - name: Stats
         run: python3 tools/ge-stats.py
