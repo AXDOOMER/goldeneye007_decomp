@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/lightfixture.h"
+#include "assets/images/image_externs.h"
 
 // bss
 //CODE.bss:80082660
@@ -95,16 +96,16 @@ void save_ptrDL_enpoint_to_current_init_lightfixture_table(Gfx *param_1)
 
 s32 check_if_imageID_is_light(s32 imageID)
 {
-    if ((imageID == 0xC9)  || 
-        (imageID == 0xCB)  || 
-        (imageID == 0xCD)  || 
-        (imageID == 0xFC)  || 
-        (imageID == 0xFE)  || 
-        (imageID == 0xFF)  || 
-        (imageID == 0x100) || 
-        (imageID == 0x1AC) || 
-        (imageID == 0x3D6) || 
-        (imageID == 0x567))
+    if ((imageID == _image201_ID_LIGHT)  || 
+        (imageID == _image203_ID_LIGHT)  || 
+        (imageID == _image205_ID_LIGHT)  || 
+        (imageID == _image252_ID_LIGHT)  || 
+        (imageID == _image254_ID_LIGHT)  || 
+        (imageID == _image255_ID_LIGHT)  || 
+        (imageID == _image256_ID_LIGHT) || 
+        (imageID == _image428_ID_LIGHT) || 
+        (imageID == _image982_ID_LIGHT) || 
+        (imageID == _image1383_ID_LIGHT))
     {
         return 1;
     } 
