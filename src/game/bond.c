@@ -9788,36 +9788,14 @@ s32 get_intank_flag(void) {
 
 
 
-#ifdef NONMATCHING
-void get_ptr_for_players_tank(void) {
-    // Node 0
+s32 get_ptr_for_players_tank(void)
+{
     if (in_tank_flag == 1)
     {
-        // Node 1
         return ptr_playerstank;
     }
-    // Node 2
     return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_ptr_for_players_tank
-/* 0B19B4 7F07CE84 3C0E8003 */  lui   $t6, %hi(in_tank_flag) 
-/* 0B19B8 7F07CE88 8DCE6448 */  lw    $t6, %lo(in_tank_flag)($t6)
-/* 0B19BC 7F07CE8C 24010001 */  li    $at, 1
-/* 0B19C0 7F07CE90 00001025 */  move  $v0, $zero
-/* 0B19C4 7F07CE94 15C10004 */  bne   $t6, $at, .L7F07CEA8
-/* 0B19C8 7F07CE98 00000000 */   nop   
-/* 0B19CC 7F07CE9C 3C028003 */  lui   $v0, %hi(ptr_playerstank)
-/* 0B19D0 7F07CEA0 03E00008 */  jr    $ra
-/* 0B19D4 7F07CEA4 8C426450 */   lw    $v0, %lo(ptr_playerstank)($v0)
-
-.L7F07CEA8:
-/* 0B19D8 7F07CEA8 03E00008 */  jr    $ra
-/* 0B19DC 7F07CEAC 00000000 */   nop   
-)
-#endif
 
 
 
