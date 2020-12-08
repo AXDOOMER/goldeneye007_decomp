@@ -30,13 +30,19 @@ jobs:
       - name: Get JP File
         env:
           FILE_US: ${{ secrets.SECRET_FILE_JP  }}
-        run: wget -O baserom.j.z64 $FILE_US
+        run: wget -O baserom.j.z64 $FILE_JP
 
-      - name: Extract
+      - name: Extract US Assets
         run: ./extract_baserom.u.sh
 
-      - name: Make
-        run: make -j
+      - name: Extract JP Assets
+        run: ./extract_diff.j.sh
+
+      - name: Make US 
+        run: make -j VERSION=US
+
+      - name: Make JP 
+        run: make -j VERSION=JP
       
       - name: Stats
         run: python3 tools/ge-stats.py
