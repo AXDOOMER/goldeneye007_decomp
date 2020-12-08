@@ -29,7 +29,7 @@ jobs:
       
       - name: Get JP File
         env:
-          FILE_US: ${{ secrets.SECRET_FILE_JP  }}
+          FILE_JP: ${{ secrets.SECRET_FILE_JP  }}
         run: wget -O baserom.j.z64 $FILE_JP
 
       - name: Extract US Assets
