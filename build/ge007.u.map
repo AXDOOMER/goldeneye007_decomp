@@ -57,7 +57,7 @@ Discarded input sections
  .options       0x0000000000000000       0x20 build/u/src/ramrom.o
  .reginfo       0x0000000000000000       0x18 build/u/src/ramrom.o
  .gptab.bss     0x0000000000000000       0x20 build/u/src/ramrom.o
- .mdebug        0x0000000000000000      0x968 build/u/src/ramrom.o
+ .mdebug        0x0000000000000000      0x964 build/u/src/ramrom.o
  .options       0x0000000000000000       0x20 build/u/src/boss.o
  .reginfo       0x0000000000000000       0x18 build/u/src/boss.o
  .options       0x0000000000000000       0x20 build/u/src/music.o
@@ -84,7 +84,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/u/src/vi.o
  .gptab.data    0x0000000000000000       0x20 build/u/src/vi.o
  .gptab.bss     0x0000000000000000       0x20 build/u/src/vi.o
- .mdebug        0x0000000000000000      0x4f4 build/u/src/vi.o
+ .mdebug        0x0000000000000000      0x4f0 build/u/src/vi.o
  .options       0x0000000000000000       0x20 build/u/src/debugmenu.o
  .reginfo       0x0000000000000000       0x18 build/u/src/debugmenu.o
  .options       0x0000000000000000       0x20 build/u/src/joy.o
@@ -321,12 +321,9 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/u/src/libultra/virtualtophysical.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/u/src/libultra/virtualtophysical.o
+ .options       0x0000000000000000       0x20 build/u/src/libultra/aisetfreq.o
  .reginfo       0x0000000000000000       0x18 build/u/src/libultra/aisetfreq.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/u/src/libultra/aisetfreq.o
- .pdr           0x0000000000000000        0x0 build/u/src/libultra/aisetfreq.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/u/src/libultra/aisetfreq.o
+ .mdebug        0x0000000000000000      0x1fc build/u/src/libultra/aisetfreq.o
  .reginfo       0x0000000000000000       0x18 build/u/src/libultra/sl.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/u/src/libultra/sl.o
@@ -351,18 +348,13 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/u/src/libultra/ll.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/u/src/libultra/ll.o
+ .options       0x0000000000000000       0x20 build/u/src/libultra/aisetnextbuf.o
  .reginfo       0x0000000000000000       0x18 build/u/src/libultra/aisetnextbuf.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/u/src/libultra/aisetnextbuf.o
- .pdr           0x0000000000000000        0x0 build/u/src/libultra/aisetnextbuf.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/u/src/libultra/aisetnextbuf.o
+ .gptab.data    0x0000000000000000       0x18 build/u/src/libultra/aisetnextbuf.o
+ .mdebug        0x0000000000000000      0x3d8 build/u/src/libultra/aisetnextbuf.o
+ .options       0x0000000000000000       0x20 build/u/src/libultra/aigetlen.o
  .reginfo       0x0000000000000000       0x18 build/u/src/libultra/aigetlen.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/u/src/libultra/aigetlen.o
- .pdr           0x0000000000000000        0x0 build/u/src/libultra/aigetlen.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/u/src/libultra/aigetlen.o
+ .mdebug        0x0000000000000000      0x1c4 build/u/src/libultra/aigetlen.o
  .reginfo       0x0000000000000000       0x18 build/u/src/libultra/synthesizer.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/u/src/libultra/synthesizer.o
@@ -885,12 +877,9 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/u/src/libultra/syndelete.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/u/src/libultra/syndelete.o
+ .options       0x0000000000000000       0x20 build/u/src/libultra/ai.o
  .reginfo       0x0000000000000000       0x18 build/u/src/libultra/ai.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/u/src/libultra/ai.o
- .pdr           0x0000000000000000        0x0 build/u/src/libultra/ai.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/u/src/libultra/ai.o
+ .mdebug        0x0000000000000000      0x1d0 build/u/src/libultra/ai.o
  .reginfo       0x0000000000000000       0x18 build/u/src/libultra/drvrNew.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/u/src/libultra/drvrNew.o
@@ -1146,7 +1135,7 @@ Discarded input sections
  .mdebug        0x0000000000000000      0x39c build/u/src/game/initunk_000B60.o
  .options       0x0000000000000000       0x20 build/u/src/game/setguscale.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/setguscale.o
- .mdebug        0x0000000000000000      0x450 build/u/src/game/setguscale.o
+ .mdebug        0x0000000000000000      0x44c build/u/src/game/setguscale.o
  .options       0x0000000000000000       0x20 build/u/src/game/initnull_000BC0.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/initnull_000BC0.o
  .mdebug        0x0000000000000000      0x28c build/u/src/game/initnull_000BC0.o
@@ -4921,20 +4910,20 @@ Linker script and memory map
                 0x000000007f0af638                sub_GAME_7F0AF638
                 0x000000007f0af760                sub_GAME_7F0AF760
                 0x000000007f0af808                sub_GAME_7F0AF808
-                0x000000007f0af924                sub_GAME_7F0AF924
-                0x000000007f0afa1c                sub_GAME_7F0AFA1C
+                0x000000007f0af924                getTileMidPoint
+                0x000000007f0afa1c                getPointJustInsideOfTileTriple
                 0x000000007f0afb1c                sub_GAME_7F0AFB1C
                 0x000000007f0afb78                sub_GAME_7F0AFB78
-                0x000000007f0afd1c                sub_GAME_7F0AFD1C
-                0x000000007f0afe70                sub_GAME_7F0AFE70
-                0x000000007f0affcc                sub_GAME_7F0AFFCC
-                0x000000007f0b0018                sub_GAME_7F0B0018
+                0x000000007f0afd1c                getShortest2dDispToInfTileEdge
+                0x000000007f0afe70                getShortest2dDispToInfTripleEdge
+                0x000000007f0affcc                getShortest2dDispToInfTileEdgeUnscaled
+                0x000000007f0b0018                getShortest2dDispToInfTripleEdgeUnscaled
                 0x000000007f0b0064                distToTilePnt2D
                 0x000000007f0b00c4                sub_GAME_7F0B00C4
                 0x000000007f0b0140                sub_GAME_7F0B0140
                 0x000000007f0b0198                sub_GAME_7F0B0198
-                0x000000007f0b02d8                sub_GAME_7F0B02D8
-                0x000000007f0b036c                sub_GAME_7F0B036C
+                0x000000007f0b02d8                isPointInsideTriStandTile_Maybe
+                0x000000007f0b036c                isPointInsideTriStandTileUnscaled_Maybe
                 0x000000007f0b0400                sub_GAME_7F0B0400
                 0x000000007f0b0518                sub_GAME_7F0B0518
                 0x000000007f0b05c0                getRotationalDirectionBetween
@@ -4943,23 +4932,23 @@ Linker script and memory map
                 0x000000007f0b0914                sub_GAME_7F0B0914
                 0x000000007f0b0be4                sub_GAME_7F0B0BE4
                 0x000000007f0b0c24                sub_GAME_7F0B0C24
-                0x000000007f0b0c98                sub_GAME_7F0B0C98
-                0x000000007f0b0cec                sub_GAME_7F0B0CEC
+                0x000000007f0b0c98                noteTileRoomIfDifferentToPrev
+                0x000000007f0b0cec                noteTileRoomIfDifferentToPrev_2
                 0x000000007f0b0d0c                sub_GAME_7F0B0D0C
                 0x000000007f0b0e24                sub_GAME_7F0B0E24
                 0x000000007f0b1410                sub_GAME_7F0B1410
                 0x000000007f0b16c4                sub_GAME_7F0B16C4
-                0x000000007f0b1794                sub_GAME_7F0B1794
+                0x000000007f0b1794                distBetweenPoints2d
                 0x000000007f0b17e4                sub_GAME_7F0B17E4
                 0x000000007f0b18b8                sub_GAME_7F0B18B8
                 0x000000007f0b1cc4                sub_GAME_7F0B1CC4
                 0x000000007f0b1ce0                sub_GAME_7F0B1CE0
                 0x000000007f0b1cec                sub_GAME_7F0B1CEC
-                0x000000007f0b1cf8                sub_GAME_7F0B1CF8
+                0x000000007f0b1cf8                getTileEdgePoints
                 0x000000007f0b1ddc                sub_GAME_7F0B1DDC
                 0x000000007f0b20d0                sub_GAME_7F0B20D0
                 0x000000007f0b2110                sub_GAME_7F0B2110
-                0x000000007f0b2194                sub_GAME_7F0B2194
+                0x000000007f0b2194                incrNearEdgeCount
                 0x000000007f0b21b0                sub_GAME_7F0B21B0
                 0x000000007f0b2244                sub_GAME_7F0B2244
                 0x000000007f0b2274                sub_GAME_7F0B2274
@@ -4971,8 +4960,8 @@ Linker script and memory map
                 0x000000007f0b260c                sub_GAME_7F0B260C
                 0x000000007f0b26b8                sub_GAME_7F0B26B8
                 0x000000007f0b2718                sub_GAME_7F0B2718
-                0x000000007f0b28b0                sub_GAME_7F0B28B0
-                0x000000007f0b2950                sub_GAME_7F0B2950
+                0x000000007f0b28b0                getCollisionEdge_maybe
+                0x000000007f0b2950                setLevelScale
                 0x000000007f0b2970                sub_GAME_7F0B2970
                 0x000000007f0b2c2c                copy_tile_RGB_as_24bit
                 0x000000007f0b2c74                sub_GAME_7F0B2C74
@@ -4983,7 +4972,7 @@ Linker script and memory map
                 0x000000007f0b2e58                stanMatchTileName
                 0x000000007f0b2f00                sub_GAME_7F0B2F00
                 0x000000007f0b2f2c                stanDetermineEOF
-                0x000000007f0b2fd8                sub_GAME_7F0B2FD8
+                0x000000007f0b2fd8                getTileRoom
                 0x000000007f0b2fe0                sub_GAME_7F0B2FE0
                 0x000000007f0b3004                sub_GAME_7F0B3004
                 0x000000007f0b3024                sub_GAME_7F0B3024
@@ -17549,7 +17538,6 @@ Linker script and memory map
  build/u/src/libultra/virtualtophysical.o(.data)
  .data          0x00000000800276e0        0x0 build/u/src/libultra/virtualtophysical.o
  build/u/src/libultra/aisetfreq.o(.data)
- .data          0x00000000800276e0        0x0 build/u/src/libultra/aisetfreq.o
  build/u/src/libultra/sl.o(.data)
  .data          0x00000000800276e0       0x10 build/u/src/libultra/sl.o
                 0x00000000800276e0                alGlobals
@@ -17561,9 +17549,8 @@ Linker script and memory map
  .data          0x00000000800276f0        0x0 build/u/src/libultra/ll.o
  build/u/src/libultra/aisetnextbuf.o(.data)
  .data          0x00000000800276f0       0x10 build/u/src/libultra/aisetnextbuf.o
-                0x00000000800276f0                B_800276F0
+                0x00000000800276f0                D_80334820
  build/u/src/libultra/aigetlen.o(.data)
- .data          0x0000000080027700        0x0 build/u/src/libultra/aigetlen.o
  build/u/src/libultra/synthesizer.o(.data)
  .data          0x0000000080027700        0x0 build/u/src/libultra/synthesizer.o
  build/u/src/libultra/pidma.o(.data)
@@ -17768,7 +17755,6 @@ Linker script and memory map
  build/u/src/libultra/syndelete.o(.data)
  .data          0x0000000080028050        0x0 build/u/src/libultra/syndelete.o
  build/u/src/libultra/ai.o(.data)
- .data          0x0000000080028050        0x0 build/u/src/libultra/ai.o
  build/u/src/libultra/drvrNew.o(.data)
  .data          0x0000000080028050      0x190 build/u/src/libultra/drvrNew.o
                 0x0000000080028050                SMALLROOM_PARAMS
@@ -20440,10 +20426,10 @@ Linker script and memory map
  .data          0x0000000080040f30      0x4c0 build/u/src/game/stan.o
                 0x0000000080040f30                D_80040F30
                 0x0000000080040f40                stan_c_debug_notice_list_entry
-                0x0000000080040f44                D_80040F44
-                0x0000000080040f48                D_80040F48
+                0x0000000080040f44                level_scale
+                0x0000000080040f48                inv_level_scale
                 0x0000000080040f4c                list_of_tilesizes
-                0x0000000080040f58                base_ptr_connection_vals
+                0x0000000080040f58                standTileStart
                 0x0000000080040f5c                ptr_firstroom_0
                 0x0000000080040f60                D_80040F60
                 0x0000000080040f64                D_80040F64
@@ -22579,7 +22565,6 @@ Linker script and memory map
  build/u/src/libultra/virtualtophysical.o(.bss)
  .bss           0x0000000080066ad0        0x0 build/u/src/libultra/virtualtophysical.o
  build/u/src/libultra/aisetfreq.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/u/src/libultra/aisetfreq.o
  build/u/src/libultra/sl.o(.bss)
  .bss           0x0000000080066ad0        0x0 build/u/src/libultra/sl.o
  build/u/src/libultra/heapalloc.o(.bss)
@@ -22589,9 +22574,7 @@ Linker script and memory map
  build/u/src/libultra/ll.o(.bss)
  .bss           0x0000000080066ad0        0x0 build/u/src/libultra/ll.o
  build/u/src/libultra/aisetnextbuf.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/u/src/libultra/aisetnextbuf.o
  build/u/src/libultra/aigetlen.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/u/src/libultra/aigetlen.o
  build/u/src/libultra/synthesizer.o(.bss)
  .bss           0x0000000080066ad0        0x0 build/u/src/libultra/synthesizer.o
  build/u/src/libultra/pidma.o(.bss)
@@ -22791,7 +22774,6 @@ Linker script and memory map
  build/u/src/libultra/syndelete.o(.bss)
  .bss           0x0000000080068fe0        0x0 build/u/src/libultra/syndelete.o
  build/u/src/libultra/ai.o(.bss)
- .bss           0x0000000080068fe0        0x0 build/u/src/libultra/ai.o
  build/u/src/libultra/drvrNew.o(.bss)
  .bss           0x0000000080068fe0        0x0 build/u/src/libultra/drvrNew.o
  build/u/src/libultra/synallocfx.o(.bss)
@@ -23523,8 +23505,7 @@ Linker script and memory map
  build/u/src/game/textrelated.o(.bss)
  build/u/src/game/stan.o(.bss)
  .bss           0x000000008007b120      0xe70 build/u/src/game/stan.o
-                0x000000008007b120                clippingfile
-                0x000000008007b124                ptr_firstroom
+                0x000000008007b120                stan_prefix
                 0x000000008007b128                dword_CODE_bss_8007B128
                 0x000000008007b12c                dword_CODE_bss_8007B12C
                 0x000000008007b130                dword_CODE_bss_8007B130
@@ -23537,18 +23518,16 @@ Linker script and memory map
                 0x000000008007b358                dword_CODE_bss_8007B358
                 0x000000008007b9dc                dword_CODE_bss_8007B9DC
                 0x000000008007b9e0                dword_CODE_bss_8007B9E0
-                0x000000008007b9e4                dword_CODE_bss_8007B9E4
-                0x000000008007b9e8                dword_CODE_bss_8007B9E8
-                0x000000008007b9ec                dword_CODE_bss_8007B9EC
-                0x000000008007b9f0                flt_CODE_bss_8007B9F0
-                0x000000008007b9f4                flt_CODE_bss_8007B9F4
-                0x000000008007b9f8                flt_CODE_bss_8007B9F8
-                0x000000008007b9fc                flt_CODE_bss_8007B9FC
-                0x000000008007ba00                flt_CODE_bss_8007BA00
-                0x000000008007ba04                dword_CODE_bss_8007BA04
+                0x000000008007b9e4                stanSavedColl_tile
+                0x000000008007b9e8                stanSavedColl_pointI
+                0x000000008007b9ec                stanSavedColl_unknown
+                0x000000008007b9f0                stanSavedColl_pntA
+                0x000000008007b9f8                stanSavedColl_pntB
+                0x000000008007ba00                stanSavedColl_someMin
+                0x000000008007ba04                stanSavedColl_posData
                 0x000000008007ba08                dword_CODE_bss_8007BA08
                 0x000000008007ba0c                dword_CODE_bss_8007BA0C
-                0x000000008007ba10                dword_CODE_bss_8007BA10
+                0x000000008007ba10                bfsTileStack
  build/u/src/game/unk_0B3200.o(.bss)
  build/u/src/game/bg.o(.bss)
  .bss           0x000000008007bf90     0x6630 build/u/src/game/bg.o

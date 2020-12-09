@@ -4923,20 +4923,20 @@ Linker script and memory map
                 0x000000007f0b01e8                sub_GAME_7F0AF638
                 0x000000007f0b0310                sub_GAME_7F0AF760
                 0x000000007f0b03b8                sub_GAME_7F0AF808
-                0x000000007f0b04d4                sub_GAME_7F0AF924
-                0x000000007f0b05cc                sub_GAME_7F0AFA1C
+                0x000000007f0b04d4                getTileMidPoint
+                0x000000007f0b05cc                getPointJustInsideOfTileTriple
                 0x000000007f0b06cc                sub_GAME_7F0AFB1C
                 0x000000007f0b0728                sub_GAME_7F0AFB78
-                0x000000007f0b08cc                sub_GAME_7F0AFD1C
-                0x000000007f0b0a20                sub_GAME_7F0AFE70
-                0x000000007f0b0b7c                sub_GAME_7F0AFFCC
-                0x000000007f0b0bc8                sub_GAME_7F0B0018
+                0x000000007f0b08cc                getShortest2dDispToInfTileEdge
+                0x000000007f0b0a20                getShortest2dDispToInfTripleEdge
+                0x000000007f0b0b7c                getShortest2dDispToInfTileEdgeUnscaled
+                0x000000007f0b0bc8                getShortest2dDispToInfTripleEdgeUnscaled
                 0x000000007f0b0c14                distToTilePnt2D
                 0x000000007f0b0c74                sub_GAME_7F0B00C4
                 0x000000007f0b0cf0                sub_GAME_7F0B0140
                 0x000000007f0b0d48                sub_GAME_7F0B0198
-                0x000000007f0b0e88                sub_GAME_7F0B02D8
-                0x000000007f0b0f1c                sub_GAME_7F0B036C
+                0x000000007f0b0e88                isPointInsideTriStandTile_Maybe
+                0x000000007f0b0f1c                isPointInsideTriStandTileUnscaled_Maybe
                 0x000000007f0b0fb0                sub_GAME_7F0B0400
                 0x000000007f0b10c8                sub_GAME_7F0B0518
                 0x000000007f0b1170                getRotationalDirectionBetween
@@ -4945,23 +4945,23 @@ Linker script and memory map
                 0x000000007f0b14c4                sub_GAME_7F0B0914
                 0x000000007f0b1794                sub_GAME_7F0B0BE4
                 0x000000007f0b17d4                sub_GAME_7F0B0C24
-                0x000000007f0b1848                sub_GAME_7F0B0C98
-                0x000000007f0b189c                sub_GAME_7F0B0CEC
+                0x000000007f0b1848                noteTileRoomIfDifferentToPrev
+                0x000000007f0b189c                noteTileRoomIfDifferentToPrev_2
                 0x000000007f0b18bc                sub_GAME_7F0B0D0C
                 0x000000007f0b19d4                sub_GAME_7F0B0E24
                 0x000000007f0b1fc0                sub_GAME_7F0B1410
                 0x000000007f0b2274                sub_GAME_7F0B16C4
-                0x000000007f0b2344                sub_GAME_7F0B1794
+                0x000000007f0b2344                distBetweenPoints2d
                 0x000000007f0b2394                sub_GAME_7F0B17E4
                 0x000000007f0b2468                sub_GAME_7F0B18B8
                 0x000000007f0b2874                sub_GAME_7F0B1CC4
                 0x000000007f0b2890                sub_GAME_7F0B1CE0
                 0x000000007f0b289c                sub_GAME_7F0B1CEC
-                0x000000007f0b28a8                sub_GAME_7F0B1CF8
+                0x000000007f0b28a8                getTileEdgePoints
                 0x000000007f0b298c                sub_GAME_7F0B1DDC
                 0x000000007f0b2c80                sub_GAME_7F0B20D0
                 0x000000007f0b2cc0                sub_GAME_7F0B2110
-                0x000000007f0b2d44                sub_GAME_7F0B2194
+                0x000000007f0b2d44                incrNearEdgeCount
                 0x000000007f0b2d60                sub_GAME_7F0B21B0
                 0x000000007f0b2df4                sub_GAME_7F0B2244
                 0x000000007f0b2e24                sub_GAME_7F0B2274
@@ -4973,8 +4973,8 @@ Linker script and memory map
                 0x000000007f0b31bc                sub_GAME_7F0B260C
                 0x000000007f0b3268                sub_GAME_7F0B26B8
                 0x000000007f0b32c8                sub_GAME_7F0B2718
-                0x000000007f0b3460                sub_GAME_7F0B28B0
-                0x000000007f0b3500                sub_GAME_7F0B2950
+                0x000000007f0b3460                getCollisionEdge_maybe
+                0x000000007f0b3500                setLevelScale
                 0x000000007f0b3520                sub_GAME_7F0B2970
                 0x000000007f0b37dc                copy_tile_RGB_as_24bit
                 0x000000007f0b3824                sub_GAME_7F0B2C74
@@ -4985,7 +4985,7 @@ Linker script and memory map
                 0x000000007f0b3a08                stanMatchTileName
                 0x000000007f0b3ab0                sub_GAME_7F0B2F00
                 0x000000007f0b3adc                stanDetermineEOF
-                0x000000007f0b3b88                sub_GAME_7F0B2FD8
+                0x000000007f0b3b88                getTileRoom
                 0x000000007f0b3b90                sub_GAME_7F0B2FE0
                 0x000000007f0b3bb4                sub_GAME_7F0B3004
                 0x000000007f0b3bd4                sub_GAME_7F0B3024
@@ -20437,10 +20437,10 @@ Linker script and memory map
  .data          0x0000000080040f60      0x4c0 build/j/src/game/stan.o
                 0x0000000080040f60                D_80040F30
                 0x0000000080040f70                stan_c_debug_notice_list_entry
-                0x0000000080040f74                D_80040F44
-                0x0000000080040f78                D_80040F48
+                0x0000000080040f74                level_scale
+                0x0000000080040f78                inv_level_scale
                 0x0000000080040f7c                list_of_tilesizes
-                0x0000000080040f88                base_ptr_connection_vals
+                0x0000000080040f88                standTileStart
                 0x0000000080040f8c                ptr_firstroom_0
                 0x0000000080040f90                D_80040F60
                 0x0000000080040f94                D_80040F64
@@ -23525,8 +23525,7 @@ Linker script and memory map
  build/j/src/game/textrelated.o(.bss)
  build/j/src/game/stan.o(.bss)
  .bss           0x000000008007b190      0xe70 build/j/src/game/stan.o
-                0x000000008007b190                clippingfile
-                0x000000008007b194                ptr_firstroom
+                0x000000008007b190                stan_prefix
                 0x000000008007b198                dword_CODE_bss_8007B128
                 0x000000008007b19c                dword_CODE_bss_8007B12C
                 0x000000008007b1a0                dword_CODE_bss_8007B130
@@ -23539,18 +23538,16 @@ Linker script and memory map
                 0x000000008007b3c8                dword_CODE_bss_8007B358
                 0x000000008007ba4c                dword_CODE_bss_8007B9DC
                 0x000000008007ba50                dword_CODE_bss_8007B9E0
-                0x000000008007ba54                dword_CODE_bss_8007B9E4
-                0x000000008007ba58                dword_CODE_bss_8007B9E8
-                0x000000008007ba5c                dword_CODE_bss_8007B9EC
-                0x000000008007ba60                flt_CODE_bss_8007B9F0
-                0x000000008007ba64                flt_CODE_bss_8007B9F4
-                0x000000008007ba68                flt_CODE_bss_8007B9F8
-                0x000000008007ba6c                flt_CODE_bss_8007B9FC
-                0x000000008007ba70                flt_CODE_bss_8007BA00
-                0x000000008007ba74                dword_CODE_bss_8007BA04
+                0x000000008007ba54                stanSavedColl_tile
+                0x000000008007ba58                stanSavedColl_pointI
+                0x000000008007ba5c                stanSavedColl_unknown
+                0x000000008007ba60                stanSavedColl_pntA
+                0x000000008007ba68                stanSavedColl_pntB
+                0x000000008007ba70                stanSavedColl_someMin
+                0x000000008007ba74                stanSavedColl_posData
                 0x000000008007ba78                dword_CODE_bss_8007BA08
                 0x000000008007ba7c                dword_CODE_bss_8007BA0C
-                0x000000008007ba80                dword_CODE_bss_8007BA10
+                0x000000008007ba80                bfsTileStack
  build/j/src/game/unk_0B3200.o(.bss)
  build/j/src/game/bg.o(.bss)
  .bss           0x000000008007c000     0x6630 build/j/src/game/bg.o
