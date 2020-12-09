@@ -805,12 +805,9 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/u/src/libultra/kdebugserver.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/u/src/libultra/kdebugserver.o
+ .options       0x0000000000000000       0x20 build/u/src/libultra/getthreadpri.o
  .reginfo       0x0000000000000000       0x18 build/u/src/libultra/getthreadpri.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/u/src/libultra/getthreadpri.o
- .pdr           0x0000000000000000        0x0 build/u/src/libultra/getthreadpri.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/u/src/libultra/getthreadpri.o
+ .mdebug        0x0000000000000000      0x2bc build/u/src/libultra/getthreadpri.o
  .reginfo       0x0000000000000000       0x18 build/u/src/libultra/vi.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/u/src/libultra/vi.o
@@ -17723,7 +17720,6 @@ Linker script and memory map
  build/u/src/libultra/kdebugserver.o(.data)
  .data          0x0000000080027fe0        0x0 build/u/src/libultra/kdebugserver.o
  build/u/src/libultra/getthreadpri.o(.data)
- .data          0x0000000080027fe0        0x0 build/u/src/libultra/getthreadpri.o
  build/u/src/libultra/vi.o(.data)
  .data          0x0000000080027fe0       0x70 build/u/src/libultra/vi.o
                 0x0000000080027fe0                vi
@@ -22750,7 +22746,6 @@ Linker script and memory map
  .bss           0x0000000080068e30      0x1b0 build/u/src/libultra/kdebugserver.o
                 0x0000000080068e30                __osThreadSave
  build/u/src/libultra/getthreadpri.o(.bss)
- .bss           0x0000000080068fe0        0x0 build/u/src/libultra/getthreadpri.o
  build/u/src/libultra/vi.o(.bss)
  .bss           0x0000000080068fe0        0x0 build/u/src/libultra/vi.o
  build/u/src/libultra/vigetcurrcontext.o(.bss)

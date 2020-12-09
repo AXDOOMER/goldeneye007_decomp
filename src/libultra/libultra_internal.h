@@ -39,7 +39,7 @@ extern OSThread *D_80334890;
 extern u32 D_80334894;
 extern OSThread *D_80334898;
 extern OSThread *D_8033489C;
-extern OSThread *D_803348A0;
+extern OSThread *__osRunningThread;
 
 // Original EEPROM definitions
 extern u32 D_80365E00[15];

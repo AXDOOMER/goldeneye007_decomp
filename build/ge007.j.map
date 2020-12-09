@@ -57,7 +57,7 @@ Discarded input sections
  .options       0x0000000000000000       0x20 build/j/src/ramrom.o
  .reginfo       0x0000000000000000       0x18 build/j/src/ramrom.o
  .gptab.bss     0x0000000000000000       0x20 build/j/src/ramrom.o
- .mdebug        0x0000000000000000      0x968 build/j/src/ramrom.o
+ .mdebug        0x0000000000000000      0x964 build/j/src/ramrom.o
  .options       0x0000000000000000       0x20 build/j/src/boss.o
  .reginfo       0x0000000000000000       0x18 build/j/src/boss.o
  .options       0x0000000000000000       0x20 build/j/src/music.o
@@ -84,7 +84,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/j/src/vi.o
  .gptab.data    0x0000000000000000       0x20 build/j/src/vi.o
  .gptab.bss     0x0000000000000000       0x20 build/j/src/vi.o
- .mdebug        0x0000000000000000      0x4f4 build/j/src/vi.o
+ .mdebug        0x0000000000000000      0x4f0 build/j/src/vi.o
  .options       0x0000000000000000       0x20 build/j/src/debugmenu.o
  .reginfo       0x0000000000000000       0x18 build/j/src/debugmenu.o
  .options       0x0000000000000000       0x20 build/j/src/joy.o
@@ -321,12 +321,9 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/j/src/libultra/virtualtophysical.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/j/src/libultra/virtualtophysical.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/aisetfreq.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/aisetfreq.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/aisetfreq.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/aisetfreq.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/aisetfreq.o
+ .mdebug        0x0000000000000000      0x1fc build/j/src/libultra/aisetfreq.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/sl.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/j/src/libultra/sl.o
@@ -351,18 +348,13 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/j/src/libultra/ll.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/j/src/libultra/ll.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/aisetnextbuf.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/aisetnextbuf.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/aisetnextbuf.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/aisetnextbuf.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/aisetnextbuf.o
+ .gptab.data    0x0000000000000000       0x18 build/j/src/libultra/aisetnextbuf.o
+ .mdebug        0x0000000000000000      0x3d8 build/j/src/libultra/aisetnextbuf.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/aigetlen.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/aigetlen.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/aigetlen.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/aigetlen.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/aigetlen.o
+ .mdebug        0x0000000000000000      0x1c4 build/j/src/libultra/aigetlen.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/synthesizer.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/j/src/libultra/synthesizer.o
@@ -813,12 +805,9 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/j/src/libultra/kdebugserver.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/j/src/libultra/kdebugserver.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/getthreadpri.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/getthreadpri.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/getthreadpri.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/getthreadpri.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/getthreadpri.o
+ .mdebug        0x0000000000000000      0x2bc build/j/src/libultra/getthreadpri.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/vi.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/j/src/libultra/vi.o
@@ -885,12 +874,9 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/j/src/libultra/syndelete.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/j/src/libultra/syndelete.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/ai.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/ai.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/ai.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/ai.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/ai.o
+ .mdebug        0x0000000000000000      0x1d0 build/j/src/libultra/ai.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/drvrNew.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/j/src/libultra/drvrNew.o
@@ -1146,7 +1132,7 @@ Discarded input sections
  .mdebug        0x0000000000000000      0x39c build/j/src/game/initunk_000B60.o
  .options       0x0000000000000000       0x20 build/j/src/game/setguscale.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/setguscale.o
- .mdebug        0x0000000000000000      0x450 build/j/src/game/setguscale.o
+ .mdebug        0x0000000000000000      0x44c build/j/src/game/setguscale.o
  .options       0x0000000000000000       0x20 build/j/src/game/initnull_000BC0.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/initnull_000BC0.o
  .mdebug        0x0000000000000000      0x28c build/j/src/game/initnull_000BC0.o
@@ -17548,7 +17534,6 @@ Linker script and memory map
  build/j/src/libultra/virtualtophysical.o(.data)
  .data          0x0000000080027720        0x0 build/j/src/libultra/virtualtophysical.o
  build/j/src/libultra/aisetfreq.o(.data)
- .data          0x0000000080027720        0x0 build/j/src/libultra/aisetfreq.o
  build/j/src/libultra/sl.o(.data)
  .data          0x0000000080027720       0x10 build/j/src/libultra/sl.o
                 0x0000000080027720                alGlobals
@@ -17560,9 +17545,8 @@ Linker script and memory map
  .data          0x0000000080027730        0x0 build/j/src/libultra/ll.o
  build/j/src/libultra/aisetnextbuf.o(.data)
  .data          0x0000000080027730       0x10 build/j/src/libultra/aisetnextbuf.o
-                0x0000000080027730                B_800276F0
+                0x0000000080027730                D_80334820
  build/j/src/libultra/aigetlen.o(.data)
- .data          0x0000000080027740        0x0 build/j/src/libultra/aigetlen.o
  build/j/src/libultra/synthesizer.o(.data)
  .data          0x0000000080027740        0x0 build/j/src/libultra/synthesizer.o
  build/j/src/libultra/pidma.o(.data)
@@ -17735,7 +17719,6 @@ Linker script and memory map
  build/j/src/libultra/kdebugserver.o(.data)
  .data          0x0000000080028020        0x0 build/j/src/libultra/kdebugserver.o
  build/j/src/libultra/getthreadpri.o(.data)
- .data          0x0000000080028020        0x0 build/j/src/libultra/getthreadpri.o
  build/j/src/libultra/vi.o(.data)
  .data          0x0000000080028020       0x70 build/j/src/libultra/vi.o
                 0x0000000080028020                vi
@@ -17767,7 +17750,6 @@ Linker script and memory map
  build/j/src/libultra/syndelete.o(.data)
  .data          0x0000000080028090        0x0 build/j/src/libultra/syndelete.o
  build/j/src/libultra/ai.o(.data)
- .data          0x0000000080028090        0x0 build/j/src/libultra/ai.o
  build/j/src/libultra/drvrNew.o(.data)
  .data          0x0000000080028090      0x190 build/j/src/libultra/drvrNew.o
                 0x0000000080028090                SMALLROOM_PARAMS
@@ -22580,7 +22562,6 @@ Linker script and memory map
  build/j/src/libultra/virtualtophysical.o(.bss)
  .bss           0x0000000080066b10        0x0 build/j/src/libultra/virtualtophysical.o
  build/j/src/libultra/aisetfreq.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/src/libultra/aisetfreq.o
  build/j/src/libultra/sl.o(.bss)
  .bss           0x0000000080066b10        0x0 build/j/src/libultra/sl.o
  build/j/src/libultra/heapalloc.o(.bss)
@@ -22590,9 +22571,7 @@ Linker script and memory map
  build/j/src/libultra/ll.o(.bss)
  .bss           0x0000000080066b10        0x0 build/j/src/libultra/ll.o
  build/j/src/libultra/aisetnextbuf.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/src/libultra/aisetnextbuf.o
  build/j/src/libultra/aigetlen.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/src/libultra/aigetlen.o
  build/j/src/libultra/synthesizer.o(.bss)
  .bss           0x0000000080066b10        0x0 build/j/src/libultra/synthesizer.o
  build/j/src/libultra/pidma.o(.bss)
@@ -22768,7 +22747,6 @@ Linker script and memory map
  .bss           0x0000000080068e70      0x1b0 build/j/src/libultra/kdebugserver.o
                 0x0000000080068e70                __osThreadSave
  build/j/src/libultra/getthreadpri.o(.bss)
- .bss           0x0000000080069020        0x0 build/j/src/libultra/getthreadpri.o
  build/j/src/libultra/vi.o(.bss)
  .bss           0x0000000080069020        0x0 build/j/src/libultra/vi.o
  build/j/src/libultra/vigetcurrcontext.o(.bss)
@@ -22792,7 +22770,6 @@ Linker script and memory map
  build/j/src/libultra/syndelete.o(.bss)
  .bss           0x0000000080069020        0x0 build/j/src/libultra/syndelete.o
  build/j/src/libultra/ai.o(.bss)
- .bss           0x0000000080069020        0x0 build/j/src/libultra/ai.o
  build/j/src/libultra/drvrNew.o(.bss)
  .bss           0x0000000080069020        0x0 build/j/src/libultra/drvrNew.o
  build/j/src/libultra/synallocfx.o(.bss)
