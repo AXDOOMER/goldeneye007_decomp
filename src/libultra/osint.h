@@ -32,7 +32,7 @@ extern OSThread_ListHead D_80334890_fix;
 extern OSThread *__osRunningThread;
 extern OSThread *D_8033489C;
 extern OSThread *__osFaultedThread;
-extern OSThread *D_80334898;
+extern OSThread *__osRunQueue;
 #endif
 
 extern OSTimer *__osTimerList;

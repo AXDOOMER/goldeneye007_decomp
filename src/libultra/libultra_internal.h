@@ -24,7 +24,7 @@ extern OSThread_ListHead D_80334890_fix;
 
 #define D_80334890 D_80334890_fix.next
 #define D_80334894 D_80334890_fix.priority
-#define D_80334898 D_80334890_fix.queue
+#define __osRunQueue D_80334890_fix.queue
 #define D_8033489C D_80334890_fix.tlnext
 #define D_803348A0 D_80334890_fix.unk10
 
@@ -37,7 +37,7 @@ extern u32 D_80365E00[16];
 // Original OSThread_ListHead definitions
 extern OSThread *D_80334890;
 extern u32 D_80334894;
-extern OSThread *D_80334898;
+extern OSThread *__osRunQueue;
 extern OSThread *D_8033489C;
 extern OSThread *__osRunningThread;
 
