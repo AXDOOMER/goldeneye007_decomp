@@ -6312,7 +6312,7 @@ glabel sub_GAME_7F0A91C8
 /* 0DDD68 7F0A9238 C42A853C */  lwc1  $f10, %lo(D_8005853C)($at)
 /* 0DDD6C 7F0A923C 03002025 */  move  $a0, $t8
 /* 0DDD70 7F0A9240 460A3403 */  div.s $f16, $f6, $f10
-/* 0DDD74 7F0A9244 0FC2A4D9 */  jal   sub_GAME_7F0A9364
+/* 0DDD74 7F0A9244 0FC2A4D9 */  jal   set_mTrack2Vol
 /* 0DDD78 7F0A9248 E7B00040 */   swc1  $f16, 0x40($sp)
 /* 0DDD7C 7F0A924C 02001025 */  move  $v0, $s0
 /* 0DDD80 7F0A9250 3C19B900 */  lui   $t9, (0xB900031D >> 16) # lui $t9, 0xb900
@@ -6390,7 +6390,7 @@ u16 get_mTrack2Vol(void)
   return mTrack2Vol;
 }
 
-void sub_GAME_7F0A9364(u16 param_1)
+void set_mTrack2Vol(u16 param_1)
 {
     mTrack2Vol = param_1;
     musicTrack2Vol(mTrack2Vol);

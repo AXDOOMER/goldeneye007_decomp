@@ -2289,7 +2289,7 @@ glabel get_screen_ratio_settings_for_mpgame_from_folder
 /* 053B84 7F01F054 00027843 */  sra   $t7, $v0, 1
 /* 053B88 7F01F058 01CF2025 */  or    $a0, $t6, $t7
 /* 053B8C 7F01F05C 3098FFFF */  andi  $t8, $a0, 0xffff
-/* 053B90 7F01F060 0FC2A4D9 */  jal   sub_GAME_7F0A9364
+/* 053B90 7F01F060 0FC2A4D9 */  jal   set_mTrack2Vol
 /* 053B94 7F01F064 03002025 */   move  $a0, $t8
 /* 053B98 7F01F068 8FB00024 */  lw    $s0, 0x24($sp)
 /* 053B9C 7F01F06C 9202000B */  lbu   $v0, 0xb($s0)
