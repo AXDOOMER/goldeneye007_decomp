@@ -6390,38 +6390,11 @@ u16 sub_GAME_7F0A9358(void)
   return mTrack2Vol;
 }
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0A9364(s16 param_1)
-
+void sub_GAME_7F0A9364(u16 param_1)
 {
     mTrack2Vol = param_1;
-    musicTrack2Vol(param_1);
-    return;
+    musicTrack2Vol(mTrack2Vol);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A9364
-/* 0DDE94 7F0A9364 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0DDE98 7F0A9368 3C028004 */  lui   $v0, %hi(mTrack2Vol)
-/* 0DDE9C 7F0A936C 24420B58 */  addiu $v0, %lo(mTrack2Vol) # addiu $v0, $v0, 0xb58
-/* 0DDEA0 7F0A9370 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0DDEA4 7F0A9374 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0DDEA8 7F0A9378 00802825 */  move  $a1, $a0
-/* 0DDEAC 7F0A937C A4450000 */  sh    $a1, ($v0)
-/* 0DDEB0 7F0A9380 0C001CF1 */  jal   musicTrack2Vol
-/* 0DDEB4 7F0A9384 30A4FFFF */   andi  $a0, $a1, 0xffff
-/* 0DDEB8 7F0A9388 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0DDEBC 7F0A938C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0DDEC0 7F0A9390 03E00008 */  jr    $ra
-/* 0DDEC4 7F0A9394 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
