@@ -6285,7 +6285,7 @@ glabel sub_GAME_7F0A91C8
 /* 0DDD04 7F0A91D4 AFBF002C */  sw    $ra, 0x2c($sp)
 /* 0DDD08 7F0A91D8 0FC2F5B1 */  jal   sub_GAME_7F0BD6C4
 /* 0DDD0C 7F0A91DC 2404000C */   li    $a0, 12
-/* 0DDD10 7F0A91E0 0FC2A4D6 */  jal   sub_GAME_7F0A9358
+/* 0DDD10 7F0A91E0 0FC2A4D6 */  jal   get_mTrack2Vol
 /* 0DDD14 7F0A91E4 AFA2003C */   sw    $v0, 0x3c($sp)
 /* 0DDD18 7F0A91E8 3C0E8004 */  lui   $t6, %hi(watch_soundrelated_maybe) 
 /* 0DDD1C 7F0A91EC 8DCE09A8 */  lw    $t6, %lo(watch_soundrelated_maybe)($t6)
@@ -6385,7 +6385,7 @@ glabel sub_GAME_7F0A91C8
 #endif
 
 
-u16 sub_GAME_7F0A9358(void)
+u16 get_mTrack2Vol(void)
 {
   return mTrack2Vol;
 }

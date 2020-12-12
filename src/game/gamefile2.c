@@ -2187,7 +2187,7 @@ glabel update_eeprom_to_current_solo_watch_settings
 /* 053A44 7F01EF14 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 053A48 7F01EF18 AFB00018 */  sw    $s0, 0x18($sp)
 /* 053A4C 7F01EF1C AFA40020 */  sw    $a0, 0x20($sp)
-/* 053A50 7F01EF20 0FC2A4D6 */  jal   sub_GAME_7F0A9358
+/* 053A50 7F01EF20 0FC2A4D6 */  jal   get_mTrack2Vol
 /* 053A54 7F01EF24 00008025 */   move  $s0, $zero
 /* 053A58 7F01EF28 8FAF0020 */  lw    $t7, 0x20($sp)
 /* 053A5C 7F01EF2C 000271C3 */  sra   $t6, $v0, 7
