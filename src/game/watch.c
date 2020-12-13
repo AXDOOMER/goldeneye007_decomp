@@ -1343,7 +1343,7 @@ void game_options_music_volume_navigation(void)
 {
     if (get_controller_buttons_pressed(0, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
     {
-        game_options_index = 9;
+        game_options_index = OPTIONS_INDEX_RATIO;
         set_D_80040AE0_0();
         reset_watch_soundrelated_maybe();
         return;
@@ -1351,7 +1351,7 @@ void game_options_music_volume_navigation(void)
    
     if (get_controller_buttons_pressed(0, D_CBUTTONS|D_JPAD) || sub_GAME_7F0A50C4())
     {
-        game_options_index = 1;
+        game_options_index = OPTIONS_INDEX_FX;
         set_D_80040AE0_0();
         reset_watch_soundrelated_maybe();
     }
@@ -1361,7 +1361,7 @@ void game_options_fx_volume_navigation(void)
 {
     if (get_controller_buttons_pressed(0, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
     {
-        game_options_index = 0;
+        game_options_index = OPTIONS_INDEX_MUSIC;
         set_D_80040AE0_0();
         reset_watch_soundrelated_maybe();
         return;
@@ -1369,7 +1369,7 @@ void game_options_fx_volume_navigation(void)
 
     if (get_controller_buttons_pressed(0, D_CBUTTONS|D_JPAD) || sub_GAME_7F0A50C4())
     {
-        game_options_index = 2;
+        game_options_index = OPTIONS_INDEX_LOOK_UPDOWN;
         set_D_80040AE0_0();
         reset_watch_soundrelated_maybe();
     }
