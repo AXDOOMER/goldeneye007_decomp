@@ -1339,7 +1339,7 @@ glabel sub_GAME_7F0A5998
 #endif
 
 
-void sub_GAME_7F0A5A64(void)
+void game_options_music_volume_navigation(void)
 {
     if (get_controller_buttons_pressed(0, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
     {
@@ -2713,7 +2713,7 @@ glabel sub_GAME_7F0A6A80
 /* 0DB9B0 7F0A6E80 01C00008 */  jr    $t6
 /* 0DB9B4 7F0A6E84 00000000 */   nop   
 .L7F0A6E88:
-/* 0DB9B8 7F0A6E88 0FC29699 */  jal   sub_GAME_7F0A5A64
+/* 0DB9B8 7F0A6E88 0FC29699 */  jal   game_options_music_volume_navigation
 /* 0DB9BC 7F0A6E8C 00000000 */   nop   
 /* 0DB9C0 7F0A6E90 10000007 */  b     .L7F0A6EB0
 /* 0DB9C4 7F0A6E94 00000000 */   nop   
@@ -3055,7 +3055,7 @@ glabel sub_GAME_7F0A6A80
 /* 0DC588 7F0A7A18 01A00008 */  jr    $t5
 /* 0DC58C 7F0A7A1C 00000000 */   nop   
 .Ljp7F0A6E88:
-/* 0DC590 7F0A7A20 0FC29981 */  jal   sub_GAME_7F0A5A64
+/* 0DC590 7F0A7A20 0FC29981 */  jal   game_options_music_volume_navigation
 /* 0DC594 7F0A7A24 00000000 */   nop   
 /* 0DC598 7F0A7A28 10000007 */  b     .Ljp7F0A7A48
 /* 0DC59C 7F0A7A2C 00000000 */   nop   
