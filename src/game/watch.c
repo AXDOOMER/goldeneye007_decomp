@@ -369,8 +369,8 @@ void nullsub_7F0A4860(void) {
 void init_watch_at_start_of_stage(void)
 {
     watch_screen_index = WATCH_INDEX_MISSION_STATUS;
-    controller_options_index = 0;
-    game_options_index = 0;
+    controller_options_index = CONTROLLER_OPTIONS_INDEX_STYLE;
+    game_options_index = OPTIONS_INDEX_MUSIC;
     mission_brief_index = BRIEF_INDEX_OBJECTIVES;
     D_800409A4 = 0;
     watch_soundrelated_maybe = 0;
