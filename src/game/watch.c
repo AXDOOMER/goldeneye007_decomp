@@ -2158,7 +2158,7 @@ glabel sub_GAME_7F0A611C
 
 
 
-void sub_GAME_7F0A6618(void)
+void mission_brief_background_navigation(void)
 {
     if ((get_controller_buttons_pressed(0, U_CBUTTONS|U_JPAD)) || (sub_GAME_7F0A5088()))
     {
@@ -2176,7 +2176,7 @@ void sub_GAME_7F0A6618(void)
 }
 
 
-void sub_GAME_7F0A66A0(void)
+void mission_brief_m_briefing_navigation(void)
 {
     if (get_controller_buttons_pressed(0, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
     {
@@ -2195,7 +2195,7 @@ void sub_GAME_7F0A66A0(void)
 }
 
 
-void sub_GAME_7F0A672C(void)
+void mission_brief_q_branch_navigation(void)
 {
     if (get_controller_buttons_pressed(0, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
     {
@@ -2213,7 +2213,7 @@ void sub_GAME_7F0A672C(void)
     }
 }
 
-void sub_GAME_7F0A67BC(void)
+void mission_brief_moneypenny_navigation(void)
 {
     if (get_controller_buttons_pressed(0, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
     {
@@ -2231,7 +2231,7 @@ void sub_GAME_7F0A67BC(void)
     }
 }
 
-void sub_GAME_7F0A684C(void)
+void mission_brief_objectives_navigation(void)
 {
     if (get_controller_buttons_pressed(0, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
     {
@@ -10570,7 +10570,7 @@ glabel sub_GAME_7F0AC168
 /* 0E0F14 7F0AC3E4 8FA70D48 */  lw    $a3, 0xd48($sp)
 /* 0E0F18 7F0AC3E8 0FC2BAD9 */  jal   sub_GAME_7F0AEB64
 /* 0E0F1C 7F0AC3EC AFAE0010 */   sw    $t6, 0x10($sp)
-/* 0E0F20 7F0AC3F0 0FC29986 */  jal   sub_GAME_7F0A6618
+/* 0E0F20 7F0AC3F0 0FC29986 */  jal   mission_brief_background_navigation
 /* 0E0F24 7F0AC3F4 00000000 */   nop   
 /* 0E0F28 7F0AC3F8 1000013D */  b     .L7F0AC8F0
 /* 0E0F2C 7F0AC3FC 8FAA0D4C */   lw    $t2, 0xd4c($sp)
@@ -10589,7 +10589,7 @@ glabel sub_GAME_7F0AC168
 /* 0E0F5C 7F0AC42C 8FA70D48 */  lw    $a3, 0xd48($sp)
 /* 0E0F60 7F0AC430 0FC2BAD9 */  jal   sub_GAME_7F0AEB64
 /* 0E0F64 7F0AC434 AFAB0010 */   sw    $t3, 0x10($sp)
-/* 0E0F68 7F0AC438 0FC299A8 */  jal   sub_GAME_7F0A66A0
+/* 0E0F68 7F0AC438 0FC299A8 */  jal   mission_brief_m_briefing_navigation
 /* 0E0F6C 7F0AC43C 00000000 */   nop   
 /* 0E0F70 7F0AC440 1000012B */  b     .L7F0AC8F0
 /* 0E0F74 7F0AC444 8FAA0D4C */   lw    $t2, 0xd4c($sp)
@@ -10608,7 +10608,7 @@ glabel sub_GAME_7F0AC168
 /* 0E0FA4 7F0AC474 8FA70D48 */  lw    $a3, 0xd48($sp)
 /* 0E0FA8 7F0AC478 0FC2BAD9 */  jal   sub_GAME_7F0AEB64
 /* 0E0FAC 7F0AC47C AFA90010 */   sw    $t1, 0x10($sp)
-/* 0E0FB0 7F0AC480 0FC299CB */  jal   sub_GAME_7F0A672C
+/* 0E0FB0 7F0AC480 0FC299CB */  jal   mission_brief_q_branch_navigation
 /* 0E0FB4 7F0AC484 00000000 */   nop   
 /* 0E0FB8 7F0AC488 10000119 */  b     .L7F0AC8F0
 /* 0E0FBC 7F0AC48C 8FAA0D4C */   lw    $t2, 0xd4c($sp)
@@ -10627,7 +10627,7 @@ glabel sub_GAME_7F0AC168
 /* 0E0FEC 7F0AC4BC 8FA70D48 */  lw    $a3, 0xd48($sp)
 /* 0E0FF0 7F0AC4C0 0FC2BAD9 */  jal   sub_GAME_7F0AEB64
 /* 0E0FF4 7F0AC4C4 AFB80010 */   sw    $t8, 0x10($sp)
-/* 0E0FF8 7F0AC4C8 0FC299EF */  jal   sub_GAME_7F0A67BC
+/* 0E0FF8 7F0AC4C8 0FC299EF */  jal   mission_brief_moneypenny_navigation
 /* 0E0FFC 7F0AC4CC 00000000 */   nop   
 /* 0E1000 7F0AC4D0 10000107 */  b     .L7F0AC8F0
 /* 0E1004 7F0AC4D4 8FAA0D4C */   lw    $t2, 0xd4c($sp)
@@ -10916,7 +10916,7 @@ glabel sub_GAME_7F0AC168
 .L7F0AC8DC:
 /* 0E140C 7F0AC8DC 0FC2B2E8 */  jal   setTextOverlapCorrection
 /* 0E1410 7F0AC8E0 2404FFFF */   li    $a0, -1
-/* 0E1414 7F0AC8E4 0FC29A13 */  jal   sub_GAME_7F0A684C
+/* 0E1414 7F0AC8E4 0FC29A13 */  jal   mission_brief_objectives_navigation
 /* 0E1418 7F0AC8E8 00000000 */   nop   
 .L7F0AC8EC:
 /* 0E141C 7F0AC8EC 8FAA0D4C */  lw    $t2, 0xd4c($sp)
