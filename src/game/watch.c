@@ -1242,6 +1242,7 @@ void sub_GAME_7F0A5900(void)
 
 
 #ifdef NONMATCHING
+//TODO: The final part to reset game_options_index is not matching
 void sub_GAME_7F0A5998(void)
 {
     if ((get_controller_buttons_pressed('\0',U_CBUTTONS|U_JPAD) != 0) || (sub_GAME_7F0A5088() != 0))
@@ -6558,50 +6559,16 @@ glabel sub_GAME_7F0A9398
 
 
 
-
-
-#ifdef NONMATCHING
-f32 sub_GAME_7F0A95C4(f32 param_1,f32 param_2,f32 param_3)
+f32 sub_GAME_7F0A95C4(f32 param_1, f32 param_2, f32 param_3)
 {
     if (param_1 < param_2) {
-        return param_1 + (param_2 - param_1) / param_3;
+        param_1 += (param_2 - param_1) / param_3;
+    } else if (param_2 < param_1) {
+        param_1 -= (param_1 - param_2) / param_3;
     }
-    if (param_2 < param_1) {
-        return param_1 - (param_1 - param_2) / param_3;
-    }
+    
+    return param_1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A95C4
-/* 0DE0F4 7F0A95C4 460E603C */  c.lt.s $f12, $f14
-/* 0DE0F8 7F0A95C8 AFA60008 */  sw    $a2, 8($sp)
-/* 0DE0FC 7F0A95CC 45020007 */  bc1fl .L7F0A95EC
-/* 0DE100 7F0A95D0 460C703C */   c.lt.s $f14, $f12
-/* 0DE104 7F0A95D4 460C7101 */  sub.s $f4, $f14, $f12
-/* 0DE108 7F0A95D8 C7A60008 */  lwc1  $f6, 8($sp)
-/* 0DE10C 7F0A95DC 46062203 */  div.s $f8, $f4, $f6
-/* 0DE110 7F0A95E0 03E00008 */  jr    $ra
-/* 0DE114 7F0A95E4 46086000 */   add.s $f0, $f12, $f8
-
-/* 0DE118 7F0A95E8 460C703C */  c.lt.s $f14, $f12
-.L7F0A95EC:
-/* 0DE11C 7F0A95EC 00000000 */  nop   
-/* 0DE120 7F0A95F0 45000005 */  bc1f  .L7F0A9608
-/* 0DE124 7F0A95F4 00000000 */   nop   
-/* 0DE128 7F0A95F8 460E6281 */  sub.s $f10, $f12, $f14
-/* 0DE12C 7F0A95FC C7B00008 */  lwc1  $f16, 8($sp)
-/* 0DE130 7F0A9600 46105483 */  div.s $f18, $f10, $f16
-/* 0DE134 7F0A9604 46126301 */  sub.s $f12, $f12, $f18
-.L7F0A9608:
-/* 0DE138 7F0A9608 03E00008 */  jr    $ra
-/* 0DE13C 7F0A960C 46006006 */   mov.s $f0, $f12
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 s32 sub_GAME_7F0A9610(void) {

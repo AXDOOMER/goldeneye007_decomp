@@ -20,6 +20,8 @@ void reset_game_options_index();
 
 void zero_D_800409A4();
 
+f32 sub_GAME_7F0A95C4(f32 param_1, f32 param_2, f32 param_3);
+
 #endif
 
 
