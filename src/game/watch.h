@@ -2,6 +2,12 @@
 #define _WATCH_H_
 #include "ultra64.h"
 
+#define WATCH_INDEX_MISSION_STATUS      0
+#define WATCH_INDEX_INVENTORY           1
+#define WATCH_INDEX_CONTROL_OPTIONS     2
+#define WATCH_INDEX_GAME_OPTIONS        3
+#define WATCH_INDEX_MISSION_BRIEFING    4
+
 #define BRIEF_INDEX_BACKGROUND  0
 #define BRIEF_INDEX_M           1
 #define BRIEF_INDEX_Q           2

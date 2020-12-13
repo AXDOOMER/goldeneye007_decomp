@@ -368,7 +368,7 @@ void nullsub_7F0A4860(void) {
 #ifdef NONMATCHING
 void init_watch_at_start_of_stage(void)
 {
-    watch_screen_index = 0;
+    watch_screen_index = WATCH_INDEX_MISSION_STATUS;
     D_80040998 = 0;
     D_8004099C = 0;
     mission_brief_index = BRIEF_INDEX_OBJECTIVES;
@@ -995,41 +995,41 @@ void watch_screen0_navigation(void)
 
     if (watch_soundrelated_maybe == 0)
     {
-        goto_watch_screen_index_4 = 0;
-        goto_watch_screen_index_1 = 0;
+        goto_watch_screen_index_4 = FALSE;
+        goto_watch_screen_index_1 = FALSE;
         
         if (get_debug_gunwatchpos_flag() == 0)
         {
             if (get_controller_buttons_pressed(0, L_TRIG|L_CBUTTONS))
             {
-                goto_watch_screen_index_4 = 1;
+                goto_watch_screen_index_4 = TRUE;
             }
             if (get_controller_buttons_pressed(0, R_TRIG|R_CBUTTONS))
             {
-                goto_watch_screen_index_1 = 1;
+                goto_watch_screen_index_1 = TRUE;
             }
         }
         
         if ((get_controller_buttons_pressed(0, L_JPAD)) || (sub_GAME_7F0A4FB0()))
         {
-            goto_watch_screen_index_4 = 1;
+            goto_watch_screen_index_4 = TRUE;
         }
         
         if ((get_controller_buttons_pressed(0, R_JPAD)) || (sub_GAME_7F0A4FEC()))
         {
-            goto_watch_screen_index_1 = 1;
+            goto_watch_screen_index_1 = TRUE;
         }
         
         if (goto_watch_screen_index_4)
         {
-            watch_screen_index = 4;
+            watch_screen_index = WATCH_INDEX_MISSION_BRIEFING;
             sub_GAME_7F0A5210();
             trigger_watch_zoom(4.6f, 15.0f);
         }
 
         if (goto_watch_screen_index_1)
         {
-            watch_screen_index = 1;
+            watch_screen_index = WATCH_INDEX_INVENTORY;
             sub_GAME_7F0A5210();
             trigger_watch_zoom(4.6f, 15.0f);
             return;
@@ -1080,7 +1080,7 @@ void watch_screen1_navigation(void)
 
         if (goto_watch_screen_index_0)
         {
-            watch_screen_index = 0;
+            watch_screen_index = WATCH_INDEX_MISSION_STATUS;
             zero_D_800409A4();
             sub_GAME_7F0A5210();
             trigger_watch_zoom(5.9f, 15.0f);
@@ -1088,7 +1088,7 @@ void watch_screen1_navigation(void)
 
         if (goto_watch_screen_index_2)
         {
-            watch_screen_index = 2;
+            watch_screen_index = WATCH_INDEX_CONTROL_OPTIONS;
             set_controlstick_lr_disabled();
             sub_GAME_7F0A5210();
             trigger_watch_zoom(3.95f, 15.0f);
@@ -1103,7 +1103,7 @@ void unused_watch_screen_navigation(void) {
     {
         if (watch_soundrelated_maybe == 0)
         {
-            watch_screen_index = 1;
+            watch_screen_index = WATCH_INDEX_INVENTORY;
             set_controlstick_lr_disabled();
             return;
         }
@@ -1112,7 +1112,7 @@ void unused_watch_screen_navigation(void) {
     {
         if (watch_soundrelated_maybe == 0)
         {
-            watch_screen_index = 2;
+            watch_screen_index = WATCH_INDEX_CONTROL_OPTIONS;
             zero_D_80040998();
             sub_GAME_7F0A5210();
             trigger_watch_zoom(3.95f, 15.0f);
@@ -1127,7 +1127,7 @@ void watch_screen2_navigation(void) {
     {
         if ((get_controller_buttons_held(0, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0))
         {
-            watch_screen_index = 1;
+            watch_screen_index = WATCH_INDEX_INVENTORY;
             sub_GAME_7F0A5210();
             trigger_watch_zoom(4.6f, 15.0f);
             return;
@@ -1137,7 +1137,7 @@ void watch_screen2_navigation(void) {
     {
         if ((get_controller_buttons_held(0, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0))
         {
-            watch_screen_index = 3;
+            watch_screen_index = WATCH_INDEX_GAME_OPTIONS;
             zero_D_8004099C();
             set_controlstick_lr_disabled();
         }
@@ -1151,7 +1151,7 @@ void watch_screen3_navigation(void) {
     {
         if ((get_controller_buttons_held(0, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0))
         {
-            watch_screen_index = 2;
+            watch_screen_index = WATCH_INDEX_CONTROL_OPTIONS;
             zero_D_80040998();
             set_controlstick_lr_disabled();
             return;
@@ -1161,7 +1161,7 @@ void watch_screen3_navigation(void) {
     {
         if ((get_controller_buttons_held(0, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0))
         {
-            watch_screen_index = 4;
+            watch_screen_index = WATCH_INDEX_MISSION_BRIEFING;
             sub_GAME_7F0A5210();
             trigger_watch_zoom(4.6f, 15.0f);
         }
@@ -1175,7 +1175,7 @@ void watch_screen4_navigation(void) {
     {
         if (watch_soundrelated_maybe == 0)
         {
-            watch_screen_index = 3;
+            watch_screen_index = WATCH_INDEX_GAME_OPTIONS;
             zero_D_8004099C();
             sub_GAME_7F0A5210();
             trigger_watch_zoom(3.95f, 15.0f);
@@ -1186,7 +1186,7 @@ void watch_screen4_navigation(void) {
     {
         if (watch_soundrelated_maybe == 0)
         {
-            watch_screen_index = 0;
+            watch_screen_index = WATCH_INDEX_MISSION_STATUS;
             zero_D_800409A4();
             sub_GAME_7F0A5210();
             trigger_watch_zoom(5.9f, 15.0f);
@@ -2330,7 +2330,7 @@ void sub_GAME_7F0A69A8(void)
         D_800409D8 = 8;
     }
     sub_GAME_7F0A4F44();
-    watch_screen_index = 0;
+    watch_screen_index = WATCH_INDEX_MISSION_STATUS;
     mission_brief_index = BRIEF_INDEX_OBJECTIVES;
     D_800409C8 = 0.999f;
     D_800409CC = 0.9999f;
