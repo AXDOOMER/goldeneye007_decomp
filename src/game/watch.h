@@ -14,7 +14,7 @@
 #define BRIEF_INDEX_MONEYPENNY  3
 #define BRIEF_INDEX_OBJECTIVES  4
 
-void zero_D_80040998();
+void reset_controller_options_index();
 
 void reset_game_options_index();
 
