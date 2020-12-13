@@ -880,7 +880,7 @@ void sub_GAME_7F0A4EF8(void) {
     }
 }
 
-void sub_GAME_7F0A4F44(void){
+void reset_watch_soundrelated_maybe(void){
   watch_soundrelated_maybe = 0;
 }
 
@@ -1249,7 +1249,7 @@ void sub_GAME_7F0A5998(void)
     {
         game_options_index = (s32) (game_options_index - 1);
         set_D_80040AE0_0();
-        sub_GAME_7F0A4F44();
+        reset_watch_soundrelated_maybe();
     }
     else
     {
@@ -1257,7 +1257,7 @@ void sub_GAME_7F0A5998(void)
         {
             game_options_index = (s32) (game_options_index + 1);
             set_D_80040AE0_0();
-            sub_GAME_7F0A4F44();
+            reset_watch_soundrelated_maybe();
         }
         else
         {
@@ -1296,7 +1296,7 @@ glabel sub_GAME_7F0A5998
 /* 0DA500 7F0A59D0 25CFFFFF */  addiu $t7, $t6, -1
 /* 0DA504 7F0A59D4 0FC2941F */  jal   set_D_80040AE0_0
 /* 0DA508 7F0A59D8 AC4F0000 */   sw    $t7, ($v0)
-/* 0DA50C 7F0A59DC 0FC293D1 */  jal   sub_GAME_7F0A4F44
+/* 0DA50C 7F0A59DC 0FC293D1 */  jal   reset_watch_soundrelated_maybe
 /* 0DA510 7F0A59E0 00000000 */   nop   
 /* 0DA514 7F0A59E4 10000010 */  b     .L7F0A5A28
 /* 0DA518 7F0A59E8 00000000 */   nop   
@@ -1315,7 +1315,7 @@ glabel sub_GAME_7F0A5998
 /* 0DA544 7F0A5A14 27190001 */  addiu $t9, $t8, 1
 /* 0DA548 7F0A5A18 0FC2941F */  jal   set_D_80040AE0_0
 /* 0DA54C 7F0A5A1C AC39099C */   sw    $t9, %lo(game_options_index)($at)
-/* 0DA550 7F0A5A20 0FC293D1 */  jal   sub_GAME_7F0A4F44
+/* 0DA550 7F0A5A20 0FC293D1 */  jal   reset_watch_soundrelated_maybe
 /* 0DA554 7F0A5A24 00000000 */   nop   
 .L7F0A5A28:
 /* 0DA558 7F0A5A28 3C038004 */  lui   $v1, %hi(game_options_index)
@@ -1345,7 +1345,7 @@ void sub_GAME_7F0A5A64(void)
     {
         game_options_index = 9;
         set_D_80040AE0_0();
-        sub_GAME_7F0A4F44();
+        reset_watch_soundrelated_maybe();
         return;
     }
    
@@ -1353,7 +1353,7 @@ void sub_GAME_7F0A5A64(void)
     {
         game_options_index = 1;
         set_D_80040AE0_0();
-        sub_GAME_7F0A4F44();
+        reset_watch_soundrelated_maybe();
     }
 }
 
@@ -1363,7 +1363,7 @@ void sub_GAME_7F0A5AF4(void)
     {
         game_options_index = 0;
         set_D_80040AE0_0();
-        sub_GAME_7F0A4F44();
+        reset_watch_soundrelated_maybe();
         return;
     }
 
@@ -1371,7 +1371,7 @@ void sub_GAME_7F0A5AF4(void)
     {
         game_options_index = 2;
         set_D_80040AE0_0();
-        sub_GAME_7F0A4F44();
+        reset_watch_soundrelated_maybe();
     }
 }
 
@@ -2165,14 +2165,14 @@ void mission_brief_background_navigation(void)
     {
         mission_brief_index = BRIEF_INDEX_OBJECTIVES;
         set_D_80040AE0_0();
-        sub_GAME_7F0A4F44();
+        reset_watch_soundrelated_maybe();
     }
 
     if ((get_controller_buttons_pressed(0, D_CBUTTONS|D_JPAD)) || (sub_GAME_7F0A50C4()))
     {
         mission_brief_index = BRIEF_INDEX_M;
         set_D_80040AE0_0();
-        sub_GAME_7F0A4F44();
+        reset_watch_soundrelated_maybe();
     }
 }
 
@@ -2183,7 +2183,7 @@ void mission_brief_m_briefing_navigation(void)
     {
         mission_brief_index = BRIEF_INDEX_BACKGROUND;
         set_D_80040AE0_0();
-        sub_GAME_7F0A4F44();
+        reset_watch_soundrelated_maybe();
         return;
     }
     
@@ -2191,7 +2191,7 @@ void mission_brief_m_briefing_navigation(void)
     {
         mission_brief_index = BRIEF_INDEX_Q;
         set_D_80040AE0_0();
-        sub_GAME_7F0A4F44();
+        reset_watch_soundrelated_maybe();
     }
 }
 
@@ -2202,7 +2202,7 @@ void mission_brief_q_branch_navigation(void)
     {
         mission_brief_index = BRIEF_INDEX_M;
         set_D_80040AE0_0();
-        sub_GAME_7F0A4F44();
+        reset_watch_soundrelated_maybe();
         return;
     }
     
@@ -2210,7 +2210,7 @@ void mission_brief_q_branch_navigation(void)
     {
         mission_brief_index = BRIEF_INDEX_MONEYPENNY;
         set_D_80040AE0_0();
-        sub_GAME_7F0A4F44();
+        reset_watch_soundrelated_maybe();
     }
 }
 
@@ -2220,7 +2220,7 @@ void mission_brief_moneypenny_navigation(void)
     {
         mission_brief_index = BRIEF_INDEX_Q;
         set_D_80040AE0_0();
-        sub_GAME_7F0A4F44();
+        reset_watch_soundrelated_maybe();
         return;
     }
     
@@ -2228,7 +2228,7 @@ void mission_brief_moneypenny_navigation(void)
     {
         mission_brief_index = BRIEF_INDEX_OBJECTIVES;
         set_D_80040AE0_0();
-        sub_GAME_7F0A4F44();
+        reset_watch_soundrelated_maybe();
     }
 }
 
@@ -2238,7 +2238,7 @@ void mission_brief_objectives_navigation(void)
     {
         mission_brief_index = BRIEF_INDEX_MONEYPENNY;
         set_D_80040AE0_0();
-        sub_GAME_7F0A4F44();
+        reset_watch_soundrelated_maybe();
         return;
     }
     
@@ -2246,7 +2246,7 @@ void mission_brief_objectives_navigation(void)
     {
         mission_brief_index = BRIEF_INDEX_BACKGROUND;
         set_D_80040AE0_0();
-        sub_GAME_7F0A4F44();
+        reset_watch_soundrelated_maybe();
     }
 }
 
@@ -2330,7 +2330,7 @@ void sub_GAME_7F0A69A8(void)
     {
         D_800409D8 = 8;
     }
-    sub_GAME_7F0A4F44();
+    reset_watch_soundrelated_maybe();
     watch_screen_index = WATCH_INDEX_MISSION_STATUS;
     mission_brief_index = BRIEF_INDEX_OBJECTIVES;
     D_800409C8 = 0.999f;
