@@ -1195,7 +1195,7 @@ void watch_screen4_navigation(void) {
 }
 
 
-void sub_GAME_7F0A5860(void)
+void controller_options_controlstyle_navigation(void)
 {
     if ((get_controller_buttons_pressed(0, U_CBUTTONS|U_JPAD)) || (sub_GAME_7F0A5088()))
     {
@@ -1216,7 +1216,7 @@ void sub_GAME_7F0A5860(void)
     }
 }
 
-void sub_GAME_7F0A5900(void)
+void controller_options_inputs_navigation(void)
 {
     if ((get_controller_buttons_pressed(0, U_CBUTTONS|U_JPAD)) || (sub_GAME_7F0A5088()))
     {
@@ -2689,12 +2689,12 @@ glabel sub_GAME_7F0A6A80
 /* 0DB960 7F0A6E30 10000007 */  b     .L7F0A6E50
 /* 0DB964 7F0A6E34 00000000 */   nop   
 .L7F0A6E38:
-/* 0DB968 7F0A6E38 0FC29618 */  jal   sub_GAME_7F0A5860
+/* 0DB968 7F0A6E38 0FC29618 */  jal   controller_options_controlstyle_navigation
 /* 0DB96C 7F0A6E3C 00000000 */   nop   
 /* 0DB970 7F0A6E40 10000003 */  b     .L7F0A6E50
 /* 0DB974 7F0A6E44 00000000 */   nop   
 .L7F0A6E48:
-/* 0DB978 7F0A6E48 0FC29640 */  jal   sub_GAME_7F0A5900
+/* 0DB978 7F0A6E48 0FC29640 */  jal   controller_options_inputs_navigation
 /* 0DB97C 7F0A6E4C 00000000 */   nop   
 .L7F0A6E50:
 /* 0DB980 7F0A6E50 0FC29571 */  jal   watch_screen2_navigation
@@ -3031,12 +3031,12 @@ glabel sub_GAME_7F0A6A80
 /* 0DC538 7F0A79C8 10000007 */  b     .Ljp7F0A79E8
 /* 0DC53C 7F0A79CC 00000000 */   nop   
 .Ljp7F0A79D0:
-/* 0DC540 7F0A79D0 0FC29900 */  jal   sub_GAME_7F0A5860
+/* 0DC540 7F0A79D0 0FC29900 */  jal   controller_options_controlstyle_navigation
 /* 0DC544 7F0A79D4 00000000 */   nop   
 /* 0DC548 7F0A79D8 10000003 */  b     .Ljp7F0A79E8
 /* 0DC54C 7F0A79DC 00000000 */   nop   
 .Ljp7F0A79E0:
-/* 0DC550 7F0A79E0 0FC29928 */  jal   sub_GAME_7F0A5900
+/* 0DC550 7F0A79E0 0FC29928 */  jal   controller_options_inputs_navigation
 /* 0DC554 7F0A79E4 00000000 */   nop   
 .Ljp7F0A79E8:
 /* 0DC558 7F0A79E8 0FC29859 */  jal   watch_screen2_navigation
