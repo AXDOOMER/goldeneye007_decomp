@@ -370,7 +370,7 @@ void init_watch_at_start_of_stage(void)
 {
     watch_screen_index = WATCH_INDEX_MISSION_STATUS;
     controller_options_index = CONTROLLER_OPTIONS_INDEX_STYLE;
-    game_options_index = OPTIONS_INDEX_MUSIC;
+    game_options_index = GAME_OPTIONS_INDEX_MUSIC;
     mission_brief_index = BRIEF_INDEX_OBJECTIVES;
     D_800409A4 = 0;
     watch_soundrelated_maybe = 0;
@@ -1258,13 +1258,13 @@ void sub_GAME_7F0A5998(void)
     
     if (aux >= 10)
     {
-        game_options_index = OPTIONS_INDEX_MUSIC;
+        game_options_index = GAME_OPTIONS_INDEX_MUSIC;
         return;
     }
     
     if (aux < 0)
     {
-        game_options_index = OPTIONS_INDEX_RATIO;
+        game_options_index = GAME_OPTIONS_INDEX_RATIO;
     }
 }
 
@@ -1272,7 +1272,7 @@ void game_options_music_volume_navigation(void)
 {
     if (get_controller_buttons_pressed(0, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
     {
-        game_options_index = OPTIONS_INDEX_RATIO;
+        game_options_index = GAME_OPTIONS_INDEX_RATIO;
         set_D_80040AE0_0();
         reset_watch_soundrelated_maybe();
         return;
@@ -1280,7 +1280,7 @@ void game_options_music_volume_navigation(void)
    
     if (get_controller_buttons_pressed(0, D_CBUTTONS|D_JPAD) || sub_GAME_7F0A50C4())
     {
-        game_options_index = OPTIONS_INDEX_FX;
+        game_options_index = GAME_OPTIONS_INDEX_FX;
         set_D_80040AE0_0();
         reset_watch_soundrelated_maybe();
     }
@@ -1290,7 +1290,7 @@ void game_options_fx_volume_navigation(void)
 {
     if (get_controller_buttons_pressed(0, U_CBUTTONS|U_JPAD) || sub_GAME_7F0A5088())
     {
-        game_options_index = OPTIONS_INDEX_MUSIC;
+        game_options_index = GAME_OPTIONS_INDEX_MUSIC;
         set_D_80040AE0_0();
         reset_watch_soundrelated_maybe();
         return;
@@ -1298,7 +1298,7 @@ void game_options_fx_volume_navigation(void)
 
     if (get_controller_buttons_pressed(0, D_CBUTTONS|D_JPAD) || sub_GAME_7F0A50C4())
     {
-        game_options_index = OPTIONS_INDEX_LOOK_UPDOWN;
+        game_options_index = GAME_OPTIONS_INDEX_LOOK_UPDOWN;
         set_D_80040AE0_0();
         reset_watch_soundrelated_maybe();
     }
