@@ -1237,107 +1237,36 @@ void controller_options_inputs_navigation(void)
     }
 }
 
-
-
-
-
-#ifdef NONMATCHING
-//TODO: The final part to reset game_options_index is not matching
 void sub_GAME_7F0A5998(void)
 {
-    if ((get_controller_buttons_pressed('\0',U_CBUTTONS|U_JPAD) != 0) || (sub_GAME_7F0A5088() != 0))
+    s32 aux;
+
+    if ((get_controller_buttons_pressed(0, U_CBUTTONS|U_JPAD)) || (sub_GAME_7F0A5088()))
     {
-        game_options_index = (s32) (game_options_index - 1);
+        game_options_index = game_options_index - 1;
         set_D_80040AE0_0();
         reset_watch_soundrelated_maybe();
     }
-    else
+    else if ((get_controller_buttons_pressed(0, D_CBUTTONS|D_JPAD)) || (sub_GAME_7F0A50C4()))
     {
-        if ((get_controller_buttons_pressed('\0',D_CBUTTONS|D_JPAD) != 0) || (sub_GAME_7F0A50C4() != 0))
-        {
-            game_options_index = (s32) (game_options_index + 1);
-            set_D_80040AE0_0();
-            reset_watch_soundrelated_maybe();
-        }
-        else
-        {
-
-        }
+        game_options_index = game_options_index + 1;
+        set_D_80040AE0_0();
+        reset_watch_soundrelated_maybe();
     }
-    if (game_options_index >= 0xa)
+
+    aux = game_options_index;
+    
+    if (aux >= 10)
     {
-        game_options_index = 0;
+        game_options_index = OPTIONS_INDEX_MUSIC;
         return;
     }
-    if (game_options_index < 0)
+    
+    if (aux < 0)
     {
-        game_options_index = 9;
+        game_options_index = OPTIONS_INDEX_RATIO;
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A5998
-/* 0DA4C8 7F0A5998 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0DA4CC 7F0A599C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0DA4D0 7F0A59A0 00002025 */  move  $a0, $zero
-/* 0DA4D4 7F0A59A4 0C0030EB */  jal   get_controller_buttons_pressed
-/* 0DA4D8 7F0A59A8 24050808 */   li    $a1, 2056
-/* 0DA4DC 7F0A59AC 14400005 */  bnez  $v0, .L7F0A59C4
-/* 0DA4E0 7F0A59B0 00000000 */   nop   
-/* 0DA4E4 7F0A59B4 0FC29422 */  jal   sub_GAME_7F0A5088
-/* 0DA4E8 7F0A59B8 00000000 */   nop   
-/* 0DA4EC 7F0A59BC 1040000B */  beqz  $v0, .L7F0A59EC
-/* 0DA4F0 7F0A59C0 00002025 */   move  $a0, $zero
-.L7F0A59C4:
-/* 0DA4F4 7F0A59C4 3C028004 */  lui   $v0, %hi(game_options_index)
-/* 0DA4F8 7F0A59C8 2442099C */  addiu $v0, %lo(game_options_index) # addiu $v0, $v0, 0x99c
-/* 0DA4FC 7F0A59CC 8C4E0000 */  lw    $t6, ($v0)
-/* 0DA500 7F0A59D0 25CFFFFF */  addiu $t7, $t6, -1
-/* 0DA504 7F0A59D4 0FC2941F */  jal   set_D_80040AE0_0
-/* 0DA508 7F0A59D8 AC4F0000 */   sw    $t7, ($v0)
-/* 0DA50C 7F0A59DC 0FC293D1 */  jal   reset_watch_soundrelated_maybe
-/* 0DA510 7F0A59E0 00000000 */   nop   
-/* 0DA514 7F0A59E4 10000010 */  b     .L7F0A5A28
-/* 0DA518 7F0A59E8 00000000 */   nop   
-.L7F0A59EC:
-/* 0DA51C 7F0A59EC 0C0030EB */  jal   get_controller_buttons_pressed
-/* 0DA520 7F0A59F0 24050404 */   li    $a1, 1028
-/* 0DA524 7F0A59F4 14400004 */  bnez  $v0, .L7F0A5A08
-/* 0DA528 7F0A59F8 00000000 */   nop   
-/* 0DA52C 7F0A59FC 0FC29431 */  jal   sub_GAME_7F0A50C4
-/* 0DA530 7F0A5A00 00000000 */   nop   
-/* 0DA534 7F0A5A04 10400008 */  beqz  $v0, .L7F0A5A28
-.L7F0A5A08:
-/* 0DA538 7F0A5A08 3C188004 */   lui   $t8, %hi(game_options_index) 
-/* 0DA53C 7F0A5A0C 8F18099C */  lw    $t8, %lo(game_options_index)($t8)
-/* 0DA540 7F0A5A10 3C018004 */  lui   $at, %hi(game_options_index)
-/* 0DA544 7F0A5A14 27190001 */  addiu $t9, $t8, 1
-/* 0DA548 7F0A5A18 0FC2941F */  jal   set_D_80040AE0_0
-/* 0DA54C 7F0A5A1C AC39099C */   sw    $t9, %lo(game_options_index)($at)
-/* 0DA550 7F0A5A20 0FC293D1 */  jal   reset_watch_soundrelated_maybe
-/* 0DA554 7F0A5A24 00000000 */   nop   
-.L7F0A5A28:
-/* 0DA558 7F0A5A28 3C038004 */  lui   $v1, %hi(game_options_index)
-/* 0DA55C 7F0A5A2C 2463099C */  addiu $v1, %lo(game_options_index) # addiu $v1, $v1, 0x99c
-/* 0DA560 7F0A5A30 8C620000 */  lw    $v0, ($v1)
-/* 0DA564 7F0A5A34 2841000A */  slti  $at, $v0, 0xa
-/* 0DA568 7F0A5A38 14200003 */  bnez  $at, .L7F0A5A48
-/* 0DA56C 7F0A5A3C 00000000 */   nop   
-/* 0DA570 7F0A5A40 10000004 */  b     .L7F0A5A54
-/* 0DA574 7F0A5A44 AC600000 */   sw    $zero, ($v1)
-.L7F0A5A48:
-/* 0DA578 7F0A5A48 04410002 */  bgez  $v0, .L7F0A5A54
-/* 0DA57C 7F0A5A4C 24080009 */   li    $t0, 9
-/* 0DA580 7F0A5A50 AC680000 */  sw    $t0, ($v1)
-.L7F0A5A54:
-/* 0DA584 7F0A5A54 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0DA588 7F0A5A58 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0DA58C 7F0A5A5C 03E00008 */  jr    $ra
-/* 0DA590 7F0A5A60 00000000 */   nop   
-)
-#endif
-
 
 void game_options_music_volume_navigation(void)
 {
