@@ -2354,8 +2354,172 @@ f32 sub_GAME_7F0A6A2C(f32 arg0)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A6A80(void) {
+//TODO: Last if statement and switch case not matching
+//also, needs to clean lots of unused variables
+void sub_GAME_7F0A6A80(void)
+{
+    u32 sp1C;
+    s32 temp_v0;
+    s32 temp_v0_2;
+    s32 temp_v0_3;
+    s32 temp_v0_4;
+    s32 temp_v1;
+    s32 temp_v1_2;
+    u32 temp_t5;
+    u32 temp_t6;
+    s32 phi_v1;
+    s32 phi_v1_2;
+    s32 phi_v0;
 
+    u32 aux1;
+
+    //Block 1
+    if (get_controller_buttons_pressed(0, 0x1000))
+    {
+        set_open_close_solo_watch_menu_to1();
+    }
+
+    //Block 2
+    if (controlstick_lr_enabled == 0)
+    {
+        if ((get_cur_controller_horz_stick_pos(0) >= -0xA) && (get_cur_controller_horz_stick_pos(0) < 0xB))
+        {
+            controlstick_lr_enabled = 1;
+        }
+        else if ((get_cur_controller_horz_stick_pos(0) < 0xB) && (controller_7000C174(0) >= 0xB))
+        {
+            controlstick_lr_enabled = 1;
+        }
+        else if ((get_cur_controller_horz_stick_pos(0) >= -0xA) && (controller_7000C174(0) < -0xA))
+        {
+            controlstick_lr_enabled = 1;
+        }
+    }
+
+    //Block 3
+    if (D_80040AE0 == 0)
+    {
+        if ((get_cur_controller_vert_stick_pos(0) >= -0xA) && (get_cur_controller_vert_stick_pos(0) < 0xB))
+        {
+            D_80040AE0 = 1;
+        }
+        else if ((get_cur_controller_vert_stick_pos(0) < 0xB) && (controller_7000C284(0) >= 0xB))
+        {
+            D_80040AE0 = 1;
+        }
+        else if ((get_cur_controller_vert_stick_pos(0) >= -0xA) && (controller_7000C284(0) < -0xA))
+        {
+            D_80040AE0 = 1;
+        }
+    }
+
+
+    //Block 4 -> L7F0A6BF4
+    temp_v0 = D_80040AF8;
+    if (temp_v0 < 0)
+    {
+        D_80040AF4 = D_80040AF4 + 0xFFF00000;
+    }
+    D_80040AF8 = temp_v0 - 1;
+
+    //L7F0A6C20
+    if (D_80040AF4 < 0x5F00A1U)
+    {
+        D_80040AF4 = 0xFF00A0U;
+        D_80040AF8 = 0xF;
+    }
+
+    //Block 5
+    temp_v0_2 = D_80040B00;
+    if (temp_v0_2 < 0)
+    {
+        D_80040AFC = D_80040AFC - 0x10;
+    }
+    D_80040B00 = temp_v0_2 -1;
+    
+    //L7F0A6C7C
+    if (D_80040AFC < 0x60U)
+    {
+        D_80040AFC = 0xFFU;
+        D_80040B00 = 0xF;
+    }
+    
+    //L7F0A6CA8
+    D_80040B14 += ((D_80040B1C * D_80048498 * 6.2831855f) / 360.0f);
+    
+    D_80040B14 = sub_GAME_7F0A6A2C(D_80040B14);
+    
+    sp1C = D_80040B0C << 0x10;
+    if (sp1C < get_random_value())
+    {
+        sub_GAME_7F0A51D8();
+    }
+
+    //L7F0A6D2C
+    if (D_80040B04 < 0xE0)
+    {
+        aux1 = get_random_value();
+        D_80040B04 += (aux1 >> 0x1E);
+    }
+
+    if (D_80040B04 > 0xe0) {
+        D_80040B04 = 0xe0;
+    }
+    
+    D_80040B08 = (s32) ((-D_80040B04 * 4) + 0x380);
+    D_80040B40 = D_80040B40 - 4;
+    
+    if (D_80040B40 >= 0x157) {
+        D_80040B40 = -0x156;
+    }
+    
+    if (D_80040B40 < -0x156) {
+        D_80040B40 = 0x156;
+    }
+
+    D_80040B44 = D_80040B44 + 1 & 1;
+    
+    switch (watch_screen_index)
+    {
+        case 0: // switch 1
+            watch_screen0_navigation();
+        case 2: // switch 1
+            if (controller_options_index == 0) {
+                controller_options_inputs_navigation();
+            }
+            else {
+                if (controller_options_index == 1) {
+                    controller_options_controlstyle_navigation();
+                }
+            }
+            watch_screen2_navigation();
+            break;
+        case 3: 
+            switch(game_options_index) {
+                case 0:
+                    game_options_music_volume_navigation();
+                    break;
+                case 1:
+                    game_options_fx_volume_navigation();
+                    break;
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                    sub_GAME_7F0A5998();
+            }
+            watch_screen3_navigation();
+            break;
+        case 4: 
+            watch_screen4_navigation();
+            break;
+        case 1: 
+            watch_screen1_navigation();
+    }
 }
 #else
 #ifdef VERSION_US
