@@ -1201,7 +1201,7 @@ void controller_options_controlstyle_navigation(void)
     {
         if (watch_soundrelated_maybe == 0)
         {
-            controller_options_index = 1;
+            controller_options_index = CONTROLLER_OPTIONS_INDEX_INPUTS;
             set_D_80040AE0_0();
             return;
         }
@@ -1210,7 +1210,7 @@ void controller_options_controlstyle_navigation(void)
     {
         if (watch_soundrelated_maybe == 0)
         {
-            controller_options_index = 1;
+            controller_options_index = CONTROLLER_OPTIONS_INDEX_INPUTS;
             set_D_80040AE0_0();
         }
     }
@@ -1222,7 +1222,7 @@ void controller_options_inputs_navigation(void)
     {
         if (watch_soundrelated_maybe == 0)
         {
-            controller_options_index = 0;
+            controller_options_index = CONTROLLER_OPTIONS_INDEX_STYLE;
             set_D_80040AE0_0();
             return;
         }
@@ -1231,7 +1231,7 @@ void controller_options_inputs_navigation(void)
     {
         if (watch_soundrelated_maybe == 0)
         {
-            controller_options_index = 0;
+            controller_options_index = CONTROLLER_OPTIONS_INDEX_STYLE;
             set_D_80040AE0_0();
         }
     }
