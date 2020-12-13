@@ -1138,7 +1138,7 @@ void watch_screen2_navigation(void) {
         if ((get_controller_buttons_held(0, Z_TRIG) == 0) && (watch_soundrelated_maybe == 0))
         {
             watch_screen_index = WATCH_INDEX_GAME_OPTIONS;
-            zero_D_8004099C();
+            reset_game_options_index();
             set_controlstick_lr_disabled();
         }
     }
@@ -1176,7 +1176,7 @@ void watch_screen4_navigation(void) {
         if (watch_soundrelated_maybe == 0)
         {
             watch_screen_index = WATCH_INDEX_GAME_OPTIONS;
-            zero_D_8004099C();
+            reset_game_options_index();
             sub_GAME_7F0A5210();
             trigger_watch_zoom(3.95f, 15.0f);
             return;
@@ -9335,7 +9335,7 @@ void zero_D_80040998(void) {
     D_80040998 = 0;
 }
 
-void zero_D_8004099C(void) {
+void reset_game_options_index(void) {
     game_options_index = 0;
 }
 
