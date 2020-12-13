@@ -10952,19 +10952,19 @@ s32 sub_GAME_7F0ACA28(s32 arg0, s32 arg1, s32 arg2)
 
         switch (watch_screen_index)
         {
-            case 0:
+            case WATCH_INDEX_MISSION_STATUS:
                 arg0 = sub_GAME_7F0A830C(arg0, arg1);
                 break;
-            case 1:
+            case WATCH_INDEX_INVENTORY:
                 arg0 = debug_gun_watch_move_related2(arg0, arg1);
                 break;
-            case 2:
+            case WATCH_INDEX_CONTROL_OPTIONS:
                 arg0 = sub_GAME_7F0AB4B8(arg0, arg1);
                 break;
-            case 3:
+            case WATCH_INDEX_GAME_OPTIONS:
                 arg0 = sub_GAME_7F0ABDFC(arg0, arg1);
                 break;
-            case 4:
+            case WATCH_INDEX_MISSION_BRIEFING:
                 arg0 = sub_GAME_7F0AC168(arg0, arg1);
         }
     }
