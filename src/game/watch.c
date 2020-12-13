@@ -6570,60 +6570,20 @@ f32 sub_GAME_7F0A95C4(f32 param_1, f32 param_2, f32 param_3)
     return param_1;
 }
 
-#ifdef NONMATCHING
+
 s32 sub_GAME_7F0A9610(void) {
-    if ((((D_80040B24 < D_80058540) && (D_80058544 < D_80040B24)) &&
-        (D_80040B20 < D_80058540)) && (D_80058544 < D_80040B20)) {
-            return 1;
+
+    if ((D_80040B24 < 0.1f) &&
+        (D_80040B24 > -0.1f) &&
+        (D_80040B20 < 0.1f) &&
+        (D_80040B20 > -0.1f))
+    {
+        
+        return 1;
+                
     }
     return 0;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80058540
-.word 0x3dcccccd /*0.1*/
-glabel D_80058544
-.word 0xbdcccccd /*-0.1*/
-.text
-glabel sub_GAME_7F0A9610
-/* 0DE140 7F0A9610 3C018006 */  lui   $at, %hi(D_80058540)
-/* 0DE144 7F0A9614 C4228540 */  lwc1  $f2, %lo(D_80058540)($at)
-/* 0DE148 7F0A9618 3C018004 */  lui   $at, %hi(D_80040B24)
-/* 0DE14C 7F0A961C C4200B24 */  lwc1  $f0, %lo(D_80040B24)($at)
-/* 0DE150 7F0A9620 3C018006 */  lui   $at, %hi(D_80058544)
-/* 0DE154 7F0A9624 00001025 */  move  $v0, $zero
-/* 0DE158 7F0A9628 4602003C */  c.lt.s $f0, $f2
-/* 0DE15C 7F0A962C 00000000 */  nop   
-/* 0DE160 7F0A9630 45000012 */  bc1f  .L7F0A967C
-/* 0DE164 7F0A9634 00000000 */   nop   
-/* 0DE168 7F0A9638 C42C8544 */  lwc1  $f12, %lo(D_80058544)($at)
-/* 0DE16C 7F0A963C 3C018004 */  lui   $at, %hi(D_80040B20)
-/* 0DE170 7F0A9640 4600603C */  c.lt.s $f12, $f0
-/* 0DE174 7F0A9644 00000000 */  nop   
-/* 0DE178 7F0A9648 4500000C */  bc1f  .L7F0A967C
-/* 0DE17C 7F0A964C 00000000 */   nop   
-/* 0DE180 7F0A9650 C4200B20 */  lwc1  $f0, %lo(D_80040B20)($at)
-/* 0DE184 7F0A9654 4602003C */  c.lt.s $f0, $f2
-/* 0DE188 7F0A9658 00000000 */  nop   
-/* 0DE18C 7F0A965C 45000007 */  bc1f  .L7F0A967C
-/* 0DE190 7F0A9660 00000000 */   nop   
-/* 0DE194 7F0A9664 4600603C */  c.lt.s $f12, $f0
-/* 0DE198 7F0A9668 00000000 */  nop   
-/* 0DE19C 7F0A966C 45000003 */  bc1f  .L7F0A967C
-/* 0DE1A0 7F0A9670 00000000 */   nop   
-/* 0DE1A4 7F0A9674 03E00008 */  jr    $ra
-/* 0DE1A8 7F0A9678 24020001 */   li    $v0, 1
-
-.L7F0A967C:
-/* 0DE1AC 7F0A967C 03E00008 */  jr    $ra
-/* 0DE1B0 7F0A9680 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F0A9684(void) {
