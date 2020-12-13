@@ -11008,6 +11008,7 @@ glabel sub_GAME_7F0AC168
 
 
 #ifdef NONMATCHING
+//TODO: Uses v0 instead of v1
 s32 sub_GAME_7F0ACA28(s32 arg0, s32 arg1, s32 arg2)
 {
 
