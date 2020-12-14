@@ -41,8 +41,17 @@ jobs:
         
       - name: Stats
         run: |
-            python3 tools/ge-stats.py
-            tools/report/report 1481 15854 12774 232276 564 1312 652 20330 15471 269772 49 336 tools/report/results.html "src/game/bond.c"
+            python3 tools/ge-stats.py | tools/report/report 
+        # 1481 15854 12774 232276 564 1312 652 20330 15471 269772 49 336 tools/report/results.html "src/game/bond.c"
+      
+      - uses: actions/download-artifact@v2
+        with:
+          name: my-artifact
+          path: tools/report/results.html
+
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: tools/report
 
   buildjp:
     
