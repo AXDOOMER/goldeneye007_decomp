@@ -81,7 +81,8 @@ int main(int argc, char **argv)
 	long int game_dir, game_dir_max;
 	long int inflate_dir, inflate_dir_max;
 	long int libultra_dir, libultra_dir_max;
-	long int decompiled, decompiled_max;
+	long int decompiled_words, decompiled_words_max;
+	long int decompiled_files, decompiled_files_max;
 	int cur_mis = 0, cur_obj = OBJ_A;
 	int cur_mis_objs_max = 0, max_objs = 0;
 	int tmp_obj, cur_line = 0;
@@ -91,9 +92,9 @@ int main(int argc, char **argv)
 	/************************/
 
 	printf("\n  GoldenEye 007 Decompiled Statistics Generator\n%s\n", LINE);
-	if((argc != 12) && (argc != 13)) /* incorrect number of arguments */
+	if((argc != 14) && (argc != 15)) /* incorrect number of arguments */
 	{
-		printf("\n  About: Generate decompiled statistics website\n\n  Syntax: %s src max game max inflate max libultra max all max html last_modified_file.c\n\n  Note: Each dir's statistic must be followed with the total words for the dir.\n  Example: 1481 15854 12641 232276 564 1312 556 20330 15242 269772 results.html src/game/bond.c", argv[0]);
+		printf("\n  About: Generate decompiled statistics website\n\n  Syntax: %s src max game max inflate max libultra max decompiled_words max_words decompiled_files all_files html_output last_modified_file\n\n  Note: Each dir's statistic must be followed with the total words for the dir.\n  Example: 1481 15854 12641 232276 564 1312 556 20330 15242 269772 49 336 ./results.html \"src/game/bond.c\"", argv[0]);
 		goto exit;
 	}
 
@@ -102,7 +103,8 @@ int main(int argc, char **argv)
 	game_dir = atol(argv[3]), game_dir_max = atol(argv[4]);
 	inflate_dir = atol(argv[5]), inflate_dir_max = atol(argv[6]);
 	libultra_dir = atol(argv[7]), libultra_dir_max = atol(argv[8]);
-	decompiled = atol(argv[9]), decompiled_max = atol(argv[10]);
+	decompiled_words = atol(argv[9]), decompiled_words_max = atol(argv[10]);
+	decompiled_files = atol(argv[11]), decompiled_files_max = atol(argv[12]);
 	if(src_dir > src_dir_max)
 	{
 		printf("\n  Error: Aborted, src larger than src max argument");
@@ -123,30 +125,35 @@ int main(int argc, char **argv)
 		printf("\n  Error: Aborted, libultra larger than libultra max argument");
 		goto exit;
 	}
-	if(decompiled > decompiled_max)
+	if(decompiled_words > decompiled_words_max)
 	{
-		printf("\n  Error: Aborted, decompiled larger than decompiled max argument");
+		printf("\n  Error: Aborted, decompiled words larger than total words argument");
 		goto exit;
 	}
-	if(!src_dir || !src_dir_max || !game_dir || !game_dir_max || !inflate_dir || !inflate_dir_max || !libultra_dir || !libultra_dir_max || !decompiled || !decompiled_max)
+	if(decompiled_files > decompiled_files_max)
+	{
+		printf("\n  Error: Aborted, decompiled files larger than total files argument");
+		goto exit;
+	}
+	if(src_dir < 0 || src_dir_max < 0 || game_dir < 0 || game_dir_max < 0 || inflate_dir < 0 || inflate_dir_max < 0 || libultra_dir < 0 || libultra_dir_max < 0 || decompiled_words < 0 || decompiled_words_max < 0|| decompiled_files < 0 || decompiled_files_max < 0)
 	{
 		printf("\n  Error: Aborted, detected negative arguments (invalid or overflow)");
 		goto exit;
 	}
-	if(argc == 13)
+	if(argc == 15)
 	{
-		last_modified_file_arg_active = (argv[12] != NULL);
+		last_modified_file_arg_active = (argv[14] != NULL);
 	}
 
-	html = fopen(argv[11], "ab");
+	html = fopen(argv[13], "ab");
 	if(html == NULL)
 	{
-		printf("\n  Error: Aborted, %s cannot be opened", argv[11]);
+		printf("\n  Error: Aborted, %s cannot be opened", argv[13]);
 		goto exit;
 	}
 
 	max_objs = total_objectives();
-	total_complete = ((float)decompiled / (float)decompiled_max) * (float)max_objs;
+	total_complete = ((float)decompiled_words / (float)decompiled_words_max) * (float)max_objs;
 	obj_remaining = total_complete - (float)((int)total_complete);
 	calc_mission_and_objective(&cur_mis, &cur_obj, (int)total_complete);
 	cur_mis_objs_max = max_objectives(cur_mis);
@@ -183,21 +190,21 @@ int main(int argc, char **argv)
 	fprintf(html, "<text x=\"856\" y=\"1284\">04:00</text>\n");
 	fprintf(html, "<text x=\"1250\" y=\"1284\">(Best Time: 00:10)</text>\n");
 	fprintf(html, "<text x=\"363\" y=\"1416\">Decomp:</text>\n");
-	fprintf(html, "<text x=\"856\" y=\"1416\">%0.1f%%</text>\n", PERCENTF(decompiled, decompiled_max));
+	fprintf(html, "<text x=\"856\" y=\"1416\">%0.1f%%</text>\n", PERCENTF(decompiled_words, decompiled_words_max));
 	if(last_modified_file_arg_active)
 	{
 		fprintf(html, "<text x=\"363\" y=\"1520\">Last modified file:</text>\n");
-		fprintf(html, "<text x=\"1180\" y=\"1520\">%s</text>\n", argv[12]);
+		fprintf(html, "<text x=\"1180\" y=\"1520\">%s</text>\n", argv[14]);
 	}
 	else
 	{
 		fprintf(html, "<text x=\"363\" y=\"1520\">Weapon of choice:</text>\n");
 		fprintf(html, "<text x=\"1246\" y=\"1520\">PP7 (silenced)</text>\n");
 	}
-	fprintf(html, "<text x=\"363\" y=\"1678\">Shot total:</text>\n");
-	fprintf(html, "<text x=\"856\" y=\"1678\">0</text>\n");
-	fprintf(html, "<text x=\"363\" y=\"1776\">Kill total:</text>\n");
-	fprintf(html, "<text x=\"856\" y=\"1776\">0</text>\n");
+	fprintf(html, "<text x=\"363\" y=\"1678\">Files done:</text>\n");
+	fprintf(html, "<text x=\"856\" y=\"1678\">%ld</text>\n", decompiled_files);
+	fprintf(html, "<text x=\"363\" y=\"1776\">Files total:</text>\n");
+	fprintf(html, "<text x=\"856\" y=\"1776\">%ld</text>\n", decompiled_files_max);
 	fprintf(html, "<text x=\"1180\" y=\"1678\">src:</text>\n");
 	fprintf(html, "<text x=\"1800\" y=\"1678\">%ld (%0.1f%%)</text>\n", src_dir, PERCENTF(src_dir, src_dir_max));
 	fprintf(html, "<text x=\"1180\" y=\"1776\">src/game:</text>\n");
