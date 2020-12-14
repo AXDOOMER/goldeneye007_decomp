@@ -48,12 +48,12 @@ void calc_mission_and_objective(int *cur_mis, int *cur_obj, int decomp_progress)
 			*cur_mis += 1;
 			*cur_obj = OBJ_A;
 		}
+		*cur_obj += 1;
+		max_objs += 1;
 		if(max_objs >= decomp_progress)
 		{
 			break;
 		}
-		*cur_obj += 1;
-		max_objs += 1;
 	}
 }
 
@@ -212,13 +212,9 @@ int main(int argc, char **argv)
 		printf("\n");
 	}
 	if(total_complete == max_objs)
-	{
-		printf("\n    Status: Completed\n\n    Baron has been defeated - decomp is complete!!\n");
-	}
+		printf("\n    Mission Status: Completed\n\n    Baron has been defeated - decomp is complete!!\n");
 	else
-	{
-		printf("\n    Status: %s\n", cur_obj == cur_mis_objs_max ? "Completed" : "FAILED");
-	}
+		printf("\n    Mission Status: %s\n", cur_obj == cur_mis_objs_max ? "Completed" : "FAILED");
 
 exit:
 	printf("\n%s\n\n", LINE);
