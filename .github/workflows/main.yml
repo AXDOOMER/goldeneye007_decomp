@@ -22,10 +22,10 @@ jobs:
           sudo apt update
           sudo apt install binutils-mips-linux-gnu make
       
-      - name: Get US File
-        env:
-          FILE_US: ${{ secrets.SECRET_FILE_US  }}
-        run: wget -O baserom.u.z64 $FILE_US
+      #- name: Get US File
+        #env:
+          #FILE_US: ${{ secrets.SECRET_FILE_US  }}
+        #run: wget -O baserom.u.z64 $FILE_US
       
       #- name: Extract US Assets
         #run: ./extract_baserom.u.sh
@@ -34,7 +34,9 @@ jobs:
         #run: make -j VERSION=US
           
       - name: Make report
-        run: tools/report/make
+        run: cd tools/report
+            make
+            cd ../../
         
       - name: Stats
         run: python3 tools/ge-stats.py | tools/report/report
@@ -51,15 +53,15 @@ jobs:
           sudo apt update
           sudo apt install binutils-mips-linux-gnu make
       
-      - name: Get US File
-        env:
-          FILE_US: ${{ secrets.SECRET_FILE_US  }}
-        run: wget -O baserom.u.z64 $FILE_US
+      #- name: Get US File
+      #  env:
+      #    FILE_US: ${{ secrets.SECRET_FILE_US  }}
+      #  run: wget -O baserom.u.z64 $FILE_US
       
-      - name: Get JP File
-        env:
-          FILE_JP: ${{ secrets.SECRET_FILE_JP  }}
-        run: wget -O baserom.j.z64 $FILE_JP
+      #- name: Get JP File
+      #  env:
+      #    FILE_JP: ${{ secrets.SECRET_FILE_JP  }}
+      #  run: wget -O baserom.j.z64 $FILE_JP
 
       #- name: Extract US Assets
         #run: ./extract_baserom.u.sh
