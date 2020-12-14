@@ -3,9 +3,9 @@ CC = @gcc
 
 #Source directories
 SRCDIR = ./
-OUTNAME = report
-TEMPLATE = template.html
-OUTHTML = results.html
+OUTNAME = $(SRCDIR)report
+TEMPLATE = $(SRCDIR)template.html
+OUTHTML = $(SRCDIR)results.html
 
 #Compiler flags
 CFLAGS = -shared -ansi -Os -std=c89
@@ -37,5 +37,5 @@ copy_html:
 	@cp -f $(TEMPLATE) $(OUTHTML)
 
 #Individual recipes
-$(OBJDIR)main.o: $(SRCDIR)main.c
+$(OBJDIR)main.o: $(SRCDIR)main.c $(SRCDIR)objectives.h
 	$(CC) -c $(SRCDIR)main.c -o $(SRCDIR)main.o $(CFLAGS) $(WFLAGS)
