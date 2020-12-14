@@ -40,7 +40,7 @@ jobs:
             cd ../../
         
       - name: Stats
-        run: python3 tools/ge-stats.py | tools/report/report
+        run: python3 tools/ge-stats.py 
 
   buildjp:
     
