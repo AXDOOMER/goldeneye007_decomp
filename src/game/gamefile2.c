@@ -2187,7 +2187,7 @@ glabel update_eeprom_to_current_solo_watch_settings
 /* 053A44 7F01EF14 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 053A48 7F01EF18 AFB00018 */  sw    $s0, 0x18($sp)
 /* 053A4C 7F01EF1C AFA40020 */  sw    $a0, 0x20($sp)
-/* 053A50 7F01EF20 0FC2A4D6 */  jal   sub_GAME_7F0A9358
+/* 053A50 7F01EF20 0FC2A4D6 */  jal   get_mTrack2Vol
 /* 053A54 7F01EF24 00008025 */   move  $s0, $zero
 /* 053A58 7F01EF28 8FAF0020 */  lw    $t7, 0x20($sp)
 /* 053A5C 7F01EF2C 000271C3 */  sra   $t6, $v0, 7
@@ -2289,7 +2289,7 @@ glabel get_screen_ratio_settings_for_mpgame_from_folder
 /* 053B84 7F01F054 00027843 */  sra   $t7, $v0, 1
 /* 053B88 7F01F058 01CF2025 */  or    $a0, $t6, $t7
 /* 053B8C 7F01F05C 3098FFFF */  andi  $t8, $a0, 0xffff
-/* 053B90 7F01F060 0FC2A4D9 */  jal   sub_GAME_7F0A9364
+/* 053B90 7F01F060 0FC2A4D9 */  jal   set_mTrack2Vol
 /* 053B94 7F01F064 03002025 */   move  $a0, $t8
 /* 053B98 7F01F068 8FB00024 */  lw    $s0, 0x24($sp)
 /* 053B9C 7F01F06C 9202000B */  lbu   $v0, 0xb($s0)
