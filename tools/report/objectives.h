@@ -3,6 +3,8 @@
 #define MISSIONS_00A_MAX 20
 #define OBJECTIVES_MAX (OBJ_MAX + 1)
 
+#define ARRAY_COUNT(array) (sizeof(array) / sizeof(array[0]))
+
 enum OBJECTIVES
 {
 	OBJ_A = 0,
@@ -15,13 +17,13 @@ enum OBJECTIVES
 
 struct objective
 {
-	char line1[64];
-	char line2[64];
+	char line1[48];
+	char line2[48];
 };
 
 struct mission
 {
-	char diff[32];
+	char diff[24];
 	char title[32];
 	char part[32];
 	struct objective obj[OBJECTIVES_MAX];

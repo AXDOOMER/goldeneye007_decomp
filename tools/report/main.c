@@ -9,7 +9,8 @@
 int total_objectives(void)
 {
 	/************************/
-	int tmp_mis = 0, tmp_obj = OBJ_A;
+	int tmp_mis = 0;
+	int tmp_obj = OBJ_A;
 	int max_objs = 0;
 	/************************/
 
@@ -47,7 +48,7 @@ void calc_mission_and_objective(int *cur_mis, int *cur_obj, int decomp_progress)
 			*cur_mis += 1;
 			*cur_obj = OBJ_A;
 		}
-		if(max_objs > decomp_progress)
+		if(max_objs >= decomp_progress)
 		{
 			break;
 		}
@@ -82,8 +83,9 @@ int main(int argc, char **argv)
 	long int libultra_dir, libultra_dir_max;
 	long int decompiled, decompiled_max;
 	int cur_mis = 0, cur_obj = OBJ_A;
-	int max_mis_objs = 0, max_objs = 0;
+	int cur_mis_objs_max = 0, max_objs = 0;
 	int tmp_obj, cur_line = 0;
+	float total_complete, obj_remaining;
 	FILE *html;
 	/************************/
 
@@ -100,29 +102,34 @@ int main(int argc, char **argv)
 	inflate_dir = atol(argv[5]), inflate_dir_max = atol(argv[6]);
 	libultra_dir = atol(argv[7]), libultra_dir_max = atol(argv[8]);
 	decompiled = atol(argv[9]), decompiled_max = atol(argv[10]);
-	if(src_dir_max < src_dir)
+	if(src_dir > src_dir_max)
 	{
 		printf("\n  Error: Aborted, src larger than src max argument");
 		goto exit;
 	}
-	if(game_dir_max < game_dir)
+	if(game_dir > game_dir_max)
 	{
 		printf("\n  Error: Aborted, game larger than game max argument");
 		goto exit;
 	}
-	if(inflate_dir_max < inflate_dir)
+	if(inflate_dir > inflate_dir_max)
 	{
 		printf("\n  Error: Aborted, inflate larger than inflate max argument");
 		goto exit;
 	}
-	if(libultra_dir_max < libultra_dir)
+	if(libultra_dir > libultra_dir_max)
 	{
 		printf("\n  Error: Aborted, libultra larger than libultra max argument");
 		goto exit;
 	}
-	if(decompiled_max < decompiled)
+	if(decompiled > decompiled_max)
 	{
 		printf("\n  Error: Aborted, decompiled larger than decompiled max argument");
+		goto exit;
+	}
+	if(!src_dir || !src_dir_max || !game_dir || !game_dir_max || !inflate_dir || !inflate_dir_max || !libultra_dir || !libultra_dir_max || !decompiled || !decompiled_max)
+	{
+		printf("\n  Error: Aborted, detected negative arguments (invalid or overflow)");
 		goto exit;
 	}
 
@@ -134,23 +141,24 @@ int main(int argc, char **argv)
 	}
 
 	max_objs = total_objectives();
-	calc_mission_and_objective(&cur_mis, &cur_obj, (int)(((float)decompiled / (float)decompiled_max) * (float)max_objs));
-	max_mis_objs = max_objectives(cur_mis);
+	total_complete = ((float)decompiled / (float)decompiled_max) * (float)max_objs;
+	obj_remaining = total_complete - (float)((int)total_complete);
+	calc_mission_and_objective(&cur_mis, &cur_obj, (int)total_complete);
+	cur_mis_objs_max = max_objectives(cur_mis);
 
 	fprintf(html, "<text x=\"363\" y=\"648\">%s</text>\n", missions[cur_mis].diff);
 	fprintf(html, "<text x=\"363\" y=\"754\">%s</text>\n", missions[cur_mis].title);
 	fprintf(html, "<text x=\"363\" y=\"858\">%s</text>\n", missions[cur_mis].part);
 	fprintf(html, "<text x=\"363\" y=\"1015\">REPORT:</text>\n");
 	fprintf(html, "<text x=\"363\" y=\"1173\">Mission status:</text>\n");
-	fprintf(html, "<text x=\"1004\" y=\"1173\"%s</text>\n", cur_obj == max_mis_objs ? ">Completed" : " class=\"failed\">FAILED");
+	fprintf(html, "<text x=\"1004\" y=\"1173\"%s</text>\n", cur_obj == cur_mis_objs_max ? ">Completed" : " class=\"failed\">FAILED");
 
-	for(tmp_obj = OBJ_A; tmp_obj < max_mis_objs; tmp_obj++)
+	for(tmp_obj = OBJ_A; tmp_obj < cur_mis_objs_max; tmp_obj++, cur_line++)
 	{
 		fprintf(html, "<text x=\"363\" y=\"%d\">%s</text>\n", line_rows[cur_line], diff_char[tmp_obj]);
 		fprintf(html, "<text x=\"493\" y=\"%d\">%s</text>\n", line_rows[cur_line], missions[cur_mis].obj[tmp_obj].line1);
 		fprintf(html, "<text x=\"562\" y=\"%d\">%s</text>\n", line_rows[cur_line+1], missions[cur_mis].obj[tmp_obj].line2);
 		fprintf(html, "<text x=\"2032\" y=\"%d\"%s</text>\n", line_rows[cur_line], tmp_obj < cur_obj ? ">Completed" : " class=\"failed\">FAILED");
-		cur_line++;
 		if(missions[cur_mis].obj[tmp_obj].line2[0] != '\0') /* if objective took up two lines, skip an extra line for next objective */
 		{
 			cur_line++;
@@ -194,11 +202,23 @@ int main(int argc, char **argv)
 
 	printf("\n  Successfully written stats to %s\n", argv[11]);
 	printf("\n    %s\n    %s\n\n", missions[cur_mis].diff, missions[cur_mis].part);
-	for(tmp_obj = OBJ_A; tmp_obj < max_mis_objs; tmp_obj++)
+	for(tmp_obj = OBJ_A; tmp_obj < cur_mis_objs_max; tmp_obj++)
 	{
-		printf("      [%s] %s %s\n", tmp_obj < cur_obj ? "X" : " ", missions[cur_mis].obj[tmp_obj].line1, missions[cur_mis].obj[tmp_obj].line2);
+		printf("      [%s] %s", tmp_obj < cur_obj ? "X" : " ", missions[cur_mis].obj[tmp_obj].line1);
+		if(missions[cur_mis].obj[tmp_obj].line2[0] != '\0')
+			printf(" %s", missions[cur_mis].obj[tmp_obj].line2);
+		if(tmp_obj == cur_obj)
+			printf(" - %0.1f%%", obj_remaining * 100.f);
+		printf("\n");
 	}
-	printf("\n    Status: %s\n", cur_obj == max_mis_objs ? "Completed" : "FAILED");
+	if(total_complete == max_objs)
+	{
+		printf("\n    Status: Completed\n\n    Baron has been defeated - decomp is complete!!\n");
+	}
+	else
+	{
+		printf("\n    Status: %s\n", cur_obj == cur_mis_objs_max ? "Completed" : "FAILED");
+	}
 
 exit:
 	printf("\n%s\n\n", LINE);
