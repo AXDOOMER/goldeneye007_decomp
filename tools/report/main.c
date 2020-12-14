@@ -85,14 +85,15 @@ int main(int argc, char **argv)
 	int cur_mis = 0, cur_obj = OBJ_A;
 	int cur_mis_objs_max = 0, max_objs = 0;
 	int tmp_obj, cur_line = 0;
+	int last_modified_file_arg_active = 0;
 	float total_complete, obj_remaining;
 	FILE *html;
 	/************************/
 
 	printf("\n  GoldenEye 007 Decompiled Statistics Generator\n%s\n", LINE);
-	if(argc != 12) /* incorrect number of arguments */
+	if((argc != 12) && (argc != 13)) /* incorrect number of arguments */
 	{
-		printf("\n  About: Generate decompiled statistics website\n\n  Syntax: %s src max game max inflate max libultra max all max html\n\n  Note: Each dir's statistic must be followed with the total words for the dir.\n  Example: 1481 15854 12641 232276 564 1312 556 20330 15242 269772 results.html", argv[0]);
+		printf("\n  About: Generate decompiled statistics website\n\n  Syntax: %s src max game max inflate max libultra max all max html last_modified_file.c\n\n  Note: Each dir's statistic must be followed with the total words for the dir.\n  Example: 1481 15854 12641 232276 564 1312 556 20330 15242 269772 results.html src/game/bond.c", argv[0]);
 		goto exit;
 	}
 
@@ -131,6 +132,10 @@ int main(int argc, char **argv)
 	{
 		printf("\n  Error: Aborted, detected negative arguments (invalid or overflow)");
 		goto exit;
+	}
+	if(argc == 13)
+	{
+		last_modified_file_arg_active = (argv[12] != NULL);
 	}
 
 	html = fopen(argv[11], "ab");
@@ -179,8 +184,16 @@ int main(int argc, char **argv)
 	fprintf(html, "<text x=\"1250\" y=\"1284\">(Best Time: 00:10)</text>\n");
 	fprintf(html, "<text x=\"363\" y=\"1416\">Decomp:</text>\n");
 	fprintf(html, "<text x=\"856\" y=\"1416\">%0.1f%%</text>\n", PERCENTF(decompiled, decompiled_max));
-	fprintf(html, "<text x=\"363\" y=\"1520\">Weapon of choice:</text>\n");
-	fprintf(html, "<text x=\"1246\" y=\"1520\">PP7 (silenced)</text>\n");
+	if(last_modified_file_arg_active)
+	{
+		fprintf(html, "<text x=\"363\" y=\"1520\">Last modified file:</text>\n");
+		fprintf(html, "<text x=\"1180\" y=\"1520\">%s</text>\n", argv[12]);
+	}
+	else
+	{
+		fprintf(html, "<text x=\"363\" y=\"1520\">Weapon of choice:</text>\n");
+		fprintf(html, "<text x=\"1246\" y=\"1520\">PP7 (silenced)</text>\n");
+	}
 	fprintf(html, "<text x=\"363\" y=\"1678\">Shot total:</text>\n");
 	fprintf(html, "<text x=\"856\" y=\"1678\">0</text>\n");
 	fprintf(html, "<text x=\"363\" y=\"1776\">Kill total:</text>\n");
