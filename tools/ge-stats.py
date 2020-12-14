@@ -167,17 +167,17 @@ def main(debug):
         print('--------------------------')
     else:
         for key in segments.keys():
-            #print('{:10} {:} '.format(int(segments[key]['done']), int(segments[key]['total'])))
+            print('{:10} {:} '.format(int(segments[key]['done']), int(segments[key]['total'])))
             totals['done'] += segments[key]['done']
             totals['total'] += segments[key]['total']
         
-        #print('{:10} {:} '.format(int(totals['done']), int(totals['total'])))
-        #print('{:10} {:,}'.format(int(files_completed['completed']), int(files_completed['total'])))
-        subprocess.call(shlex.split("./report/report int(totals['done']) int(totals['total']) int(files_completed['completed']) int(files_completed['total'])"))
+        print('{:10} {:} '.format(int(totals['done']), int(totals['total'])))
+        print('{:10} {:,}'.format(int(files_completed['completed']), int(files_completed['total'])))
+        #subprocess.call(shlex.split("./report/report int(totals['done']) int(totals['total']) int(files_completed['completed']) int(files_completed['total'])"))
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
-        if sys.argv[1] = "debug":
+        if sys.argv[1] == "debug":
             main(1)
         else:
             main(0)
