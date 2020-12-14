@@ -1,6 +1,9 @@
 import re
 import os
 import sys
+import subprocess
+import shlex
+
 
 # --------------------------
 # Read Map File and return
@@ -146,7 +149,7 @@ def main(debug):
     totals['done'] = 0
     totals['total'] = 0
 
-    if debug = 1:
+    if debug == 1:
         print('--------------------------')
         
         print('FILES\t\t{:10,} / {:,} \t{:.2f}%'.format(int(files_completed['completed']), int(files_completed['total']), (files_completed['completed'] / files_completed['total'] * 100)))
@@ -163,13 +166,14 @@ def main(debug):
         
         print('--------------------------')
     else:
-        for key in segments.keys():
-            print('{:10} {:} '.format(int(segments[key]['done']), int(segments[key]['total'])))
-            totals['done'] += segments[key]['done']
-            totals['total'] += segments[key]['total']
+        #for key in segments.keys():
+        #    print('{:10} {:} '.format(int(segments[key]['done']), int(segments[key]['total'])))
+        #    totals['done'] += segments[key]['done']
+        #    totals['total'] += segments[key]['total']
         
-        print('{:10} {:} '.format(int(totals['done']), int(totals['total'])))
-        print('{:10} {:,}'.format(int(files_completed['completed']), int(files_completed['total'])))
+        #print('{:10} {:} '.format(int(totals['done']), int(totals['total'])))
+        #print('{:10} {:,}'.format(int(files_completed['completed']), int(files_completed['total'])))
+        subprocess.call(shlex.split('./report/report int(totals['done']) int(totals['total']) int(files_completed['completed']) int(files_completed['total'])'))
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
