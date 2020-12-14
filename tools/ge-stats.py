@@ -148,6 +148,8 @@ def main(debug):
     totals = {}
     totals['done'] = 0
     totals['total'] = 0
+    
+    printstring = ""
 
     if debug == 1:
         print('--------------------------')
@@ -168,13 +170,17 @@ def main(debug):
     else:
         for key in segments.keys():
             sys.stdout.write(str(segments[key]['done']) + ' ' + str(segments[key]['total']) + ' ')
+            printstring = printstring + str(segments[key]['done']) + ' ' + str(segments[key]['total']) + ' '
             totals['done'] += segments[key]['done']
             totals['total'] += segments[key]['total']
         
         sys.stdout.write(str(totals['done']) + ' ' + str(totals['total']) + ' ')
         sys.stdout.write(str(files_completed['completed']) + ' ' + str(files_completed['total']) + ' ')
         sys.stdout.write('./tools/results/results.html "src/game/bond.c"')
-        #subprocess.call(shlex.split("./report/report int(totals['done']) int(totals['total']) int(files_completed['completed']) int(files_completed['total'])"))
+        printstring = printstring + str(totals['done']) + ' ' + str(totals['total']) + ' '
+        printstring = printstring + str(files_completed['completed']) + ' ' + str(files_completed['total']) + ' '
+        printstring = printstring + './tools/results/results.html "src/game/bond.c"'
+        subprocess.call(shlex.split('./report/report' + printstring))
         #      1481 15854      12774 232276        564 1312        652 20330      15471 269772         49 336
 
 if __name__ == '__main__':
