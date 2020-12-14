@@ -167,7 +167,7 @@ def main(debug):
         print('--------------------------')
     else:
         for key in segments.keys():
-            sys.stdout.write(int(segments[key]['done']) + ' ' + int(segments[key]['total'])) + ' ')
+            sys.stdout.write(int(segments[key]['done']) + ' ' + int(segments[key]['total']) + ' ')
             totals['done'] += segments[key]['done']
             totals['total'] += segments[key]['total']
         
