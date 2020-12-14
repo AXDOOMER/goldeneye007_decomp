@@ -27,10 +27,10 @@ jobs:
           FILE_US: ${{ secrets.SECRET_FILE_US  }}
         run: wget -O baserom.u.z64 $FILE_US
       
-      - name: Extract US Assets
+      #- name: Extract US Assets
         #run: ./extract_baserom.u.sh
 
-      - name: Make US 
+      #- name: Make US 
         #run: make -j VERSION=US
       
       - name: Stats
@@ -58,13 +58,13 @@ jobs:
           FILE_JP: ${{ secrets.SECRET_FILE_JP  }}
         run: wget -O baserom.j.z64 $FILE_JP
 
-      - name: Extract US Assets
+      #- name: Extract US Assets
         #run: ./extract_baserom.u.sh
 
-      - name: Extract JP Assets
+      #- name: Extract JP Assets
         #run: ./extract_diff.j.sh
 
-      - name: Make JP 
+      #- name: Make JP 
         #run: make -j VERSION=JP
       
       - name: Stats
