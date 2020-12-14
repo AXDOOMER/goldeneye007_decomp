@@ -34,7 +34,8 @@ jobs:
         #run: make -j VERSION=US
           
       - name: Make report
-        run: cd tools/report
+        run: |
+            cd tools/report
             make
             cd ../../
         
