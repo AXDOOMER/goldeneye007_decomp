@@ -40,7 +40,7 @@ jobs:
             cd ../../
         
       - name: Stats
-        run: python3 tools/ge-stats.py 
+        run: python3 tools/ge-stats.py | tools/report/report
 
   buildjp:
     
@@ -49,10 +49,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install Depedencies
-        run: |
-          sudo apt update
-          sudo apt install binutils-mips-linux-gnu make
+      #- name: Install Depedencies
+        #run: |
+        #  sudo apt update
+        #  sudo apt install binutils-mips-linux-gnu make
       
       #- name: Get US File
       #  env:
@@ -73,5 +73,5 @@ jobs:
       #- name: Make JP 
         #run: make -j VERSION=JP
       
-      - name: Stats
-        run: python3 tools/ge-stats.py | tools/report/report
+      #- name: Stats
+      #  run: python3 tools/ge-stats.py | tools/report/report
