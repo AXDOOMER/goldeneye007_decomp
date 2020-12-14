@@ -3,39 +3,6 @@
 #define MISSIONS_00A_MAX 20
 #define OBJECTIVES_MAX (OBJ_MAX + 1)
 
-enum LEVEL_SEQUENCE
-{
-	LVL_DAM,
-	LVL_FACILITY,
-	LVL_RUNWAY,
-	LVL_SURFACE1,
-	LVL_BUNKER1,
-	LVL_SILO,
-	LVL_FRIGATE,
-	LVL_SURFACE2,
-	LVL_BUNKER2,
-	LVL_STATUE,
-	LVL_ARCHIVES,
-	LVL_STREETS,
-	LVL_DEPOT,
-	LVL_TRAIN,
-	LVL_JUNGLE,
-	LVL_CONTROL,
-	LVL_CAVERNS,
-	LVL_CRADLE,
-	LVL_AZTEC,
-	LVL_EGYPT
-};
-
-enum DIFFICULTY
-{
-	DIFF_A = 0,
-	DIFF_SA,
-	DIFF_00A,
-	DIFF_007,
-	DIFF_NULL = -1
-};
-
 enum OBJECTIVES
 {
 	OBJ_A = 0,
@@ -205,7 +172,7 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 		"Mission 6: St. Petersburg",
 		"Part v: Train",
 		{
-			{"Destroy break units", "\0"},
+			{"Destroy brake units", "\0"},
 			{"Rescue Natalya", "\0"},
 			{"Escape to safety", "\0"}
 		}
@@ -350,7 +317,7 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 		"Mission 5: Severnaya",
 		"Part ii: Bunker",
 		{
-			{"Compare staff / causality lists", "\0"},
+			{"Compare staff / casualty lists", "\0"},
 			{"Recover CCTV tape", "\0"},
 			{"Disable all security cameras", "\0"},
 			{"Escape with Natalya", "\0"}
@@ -410,7 +377,7 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 		"Mission 6: St. Petersburg",
 		"Part v: Train",
 		{
-			{"Destroy break units", "\0"},
+			{"Destroy brake units", "\0"},
 			{"Rescue Natalya", "\0"},
 			{"Locate Janus secret base", "\0"},
 			{"Escape to safety", "\0"}
@@ -577,7 +544,7 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 		"Mission 5: Severnaya",
 		"Part ii: Bunker",
 		{
-			{"Compare staff / causality lists", "\0"},
+			{"Compare staff / casualty lists", "\0"},
 			{"Recover CCTV tape", "\0"},
 			{"Disable all security cameras", "\0"},
 			{"Recover Goldeneye operations", "manual"},
@@ -639,7 +606,7 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 		"Mission 6: St. Petersburg",
 		"Part v: Train",
 		{
-			{"Destroy break units", "\0"},
+			{"Destroy brake units", "\0"},
 			{"Rescue Natalya", "\0"},
 			{"Locate Janus secret base", "\0"},
 			{"Crack Boris' password", "\0"},
