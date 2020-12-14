@@ -1,5 +1,6 @@
 import re
 import os
+import sys
 
 # --------------------------
 # Read Map File and return
@@ -132,34 +133,49 @@ def do_stats(map_file, analyse_folders):
 
     return segments
 
-def main():
-
-    print('--------------------------')
-    
+def main(debug):
     files_completed = find_files_completed()
-    print('FILES\t\t{:10,} / {:,} \t{:.2f}%'.format(int(files_completed['completed']), int(files_completed['total']), (files_completed['completed'] / files_completed['total'] * 100)))
-
-    print('--------------------------')
-    print('WORDS')
-
+    
     map_file = parse_map()
-
+    
     folders = ['src', 'src/game', 'src/inflate', 'src/libultra']
-
+    
     segments = do_stats(map_file, folders)
-
+    
     totals = {}
     totals['done'] = 0
     totals['total'] = 0
 
-    for key in segments.keys():
-        print('{:10}\t{:10,} / {:,} \t{:.2f}%'.format(key, int(segments[key]['done']), int(segments[key]['total']), (segments[key]['done'] / segments[key]['total'] * 100)))
-        totals['done'] += segments[key]['done']
-        totals['total'] += segments[key]['total']
-
-    print('TOTAL\t\t{:10,} / {:,} \t{:.2f}%'.format(int(totals['done']), int(totals['total']), (totals['done'] / totals['total'] * 100)))
-
-    print('--------------------------')
+    if debug = 1:
+        print('--------------------------')
+        
+        print('FILES\t\t{:10,} / {:,} \t{:.2f}%'.format(int(files_completed['completed']), int(files_completed['total']), (files_completed['completed'] / files_completed['total'] * 100)))
+    
+        print('--------------------------')
+        print('WORDS')
+        
+        for key in segments.keys():
+            print('{:10}\t{:10,} / {:,} \t{:.2f}%'.format(key, int(segments[key]['done']), int(segments[key]['total']), (segments[key]['done'] / segments[key]['total'] * 100)))
+            totals['done'] += segments[key]['done']
+            totals['total'] += segments[key]['total']
+        
+        print('TOTAL\t\t{:10,} / {:,} \t{:.2f}%'.format(int(totals['done']), int(totals['total']), (totals['done'] / totals['total'] * 100)))
+        
+        print('--------------------------')
+    else:
+        for key in segments.keys():
+            print('{:10} {:} '.format(int(segments[key]['done']), int(segments[key]['total'])))
+            totals['done'] += segments[key]['done']
+            totals['total'] += segments[key]['total']
+        
+        print('{:10} {:} '.format(int(totals['done']), int(totals['total'])))
+        print('{:10} {:,}'.format(int(files_completed['completed']), int(files_completed['total'])))
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) > 1:
+        if sys.argv[1] = "debug":
+            main(1)
+        else:
+            main(0)
+    else:
+        main(0)
