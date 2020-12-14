@@ -135,19 +135,19 @@ int main(int argc, char **argv)
 	cur_mission_and_objective(&cur_mis, &cur_obj, (int)(((float)decompiled / (float)decompiled_max) * (float)max_objs));
 	max_mis_objs = get_mission_max_objectives(cur_mis);
 
-	fprintf(html, "<text x=\"363\" y=\"648\">%s</text>", missions[cur_mis].diff);
-	fprintf(html, "<text x=\"363\" y=\"754\">%s</text>", missions[cur_mis].title);
-	fprintf(html, "<text x=\"363\" y=\"858\">%s</text>", missions[cur_mis].part);
-	fprintf(html, "<text x=\"363\" y=\"1015\">REPORT:</text>");
-	fprintf(html, "<text x=\"363\" y=\"1173\">Mission status:</text>");
-	fprintf(html, "<text x=\"1004\" y=\"1173\"%s</text>", cur_obj == max_mis_objs ? ">Completed" : " class=\"failed\">FAILED");
+	fprintf(html, "<text x=\"363\" y=\"648\">%s</text>\n", missions[cur_mis].diff);
+	fprintf(html, "<text x=\"363\" y=\"754\">%s</text>\n", missions[cur_mis].title);
+	fprintf(html, "<text x=\"363\" y=\"858\">%s</text>\n", missions[cur_mis].part);
+	fprintf(html, "<text x=\"363\" y=\"1015\">REPORT:</text>\n");
+	fprintf(html, "<text x=\"363\" y=\"1173\">Mission status:</text>\n");
+	fprintf(html, "<text x=\"1004\" y=\"1173\"%s</text>\n", cur_obj == max_mis_objs ? ">Completed" : " class=\"failed\">FAILED");
 
 	for(tmp_obj = OBJ_A; tmp_obj < max_mis_objs; tmp_obj++)
 	{
-		fprintf(html, "<text x=\"363\" y=\"%d\">%s</text>", line_rows[cur_line], diff_char[tmp_obj]);
-		fprintf(html, "<text x=\"493\" y=\"%d\">%s</text>", line_rows[cur_line], missions[cur_mis].obj[tmp_obj].line1);
-		fprintf(html, "<text x=\"562\" y=\"%d\">%s</text>", line_rows[cur_line+1], missions[cur_mis].obj[tmp_obj].line2);
-		fprintf(html, "<text x=\"2032\" y=\"%d\"%s</text>", line_rows[cur_line], tmp_obj < cur_obj ? ">Completed" : " class=\"failed\">FAILED");
+		fprintf(html, "<text x=\"363\" y=\"%d\">%s</text>\n", line_rows[cur_line], diff_char[tmp_obj]);
+		fprintf(html, "<text x=\"493\" y=\"%d\">%s</text>\n", line_rows[cur_line], missions[cur_mis].obj[tmp_obj].line1);
+		fprintf(html, "<text x=\"562\" y=\"%d\">%s</text>\n", line_rows[cur_line+1], missions[cur_mis].obj[tmp_obj].line2);
+		fprintf(html, "<text x=\"2032\" y=\"%d\"%s</text>\n", line_rows[cur_line], tmp_obj < cur_obj ? ">Completed" : " class=\"failed\">FAILED");
 		cur_line++;
 		if(missions[cur_mis].obj[tmp_obj].line2[0] != '\0') /* if objective took up two lines, skip an extra line for next objective */
 		{
@@ -155,18 +155,18 @@ int main(int argc, char **argv)
 		}
 	}
 
-	fprintf(html, "<a onclick=\"swap_pages()\"><rect x=\"2573\" y=\"945\" height=\"434\" width=\"79\" class=\"button\"></rect></a>");
-	fprintf(html, "</svg>");
-	fprintf(html, "<svg viewBox=\"0 0 2880 2160\" class=\"stats\" id=\"page2\" style=\"display: none;\">");
-	fprintf(html, "<text x=\"363\" y=\"648\">%s</text>", missions[cur_mis].diff);
-	fprintf(html, "<text x=\"363\" y=\"754\">%s</text>", missions[cur_mis].title);
-	fprintf(html, "<text x=\"363\" y=\"858\">%s</text>", missions[cur_mis].part);
-	fprintf(html, "<text x=\"363\" y=\"1015\">STATISTICS:</text>");
-	fprintf(html, "<text x=\"363\" y=\"1172\">Time:</text>");
-	fprintf(html, "<text x=\"856\" y=\"1172\">00:02</text>");
-	fprintf(html, "<text x=\"363\" y=\"1284\">Target:</text>");
-	fprintf(html, "<text x=\"856\" y=\"1284\">04:00</text>");
-	fprintf(html, "<text x=\"1250\" y=\"1284\">(Best Time: 00:10)</text>");
+	fprintf(html, "<a onclick=\"swap_pages()\"><rect x=\"2573\" y=\"945\" height=\"434\" width=\"79\" class=\"button\"></rect></a>\n");
+	fprintf(html, "</svg>\n");
+	fprintf(html, "<svg viewBox=\"0 0 2880 2160\" class=\"stats\" id=\"page2\" style=\"display: none;\">\n");
+	fprintf(html, "<text x=\"363\" y=\"648\">%s</text>\n", missions[cur_mis].diff);
+	fprintf(html, "<text x=\"363\" y=\"754\">%s</text>\n", missions[cur_mis].title);
+	fprintf(html, "<text x=\"363\" y=\"858\">%s</text>\n", missions[cur_mis].part);
+	fprintf(html, "<text x=\"363\" y=\"1015\">STATISTICS:</text>\n");
+	fprintf(html, "<text x=\"363\" y=\"1172\">Time:</text>\n");
+	fprintf(html, "<text x=\"856\" y=\"1172\">00:02</text>\n");
+	fprintf(html, "<text x=\"363\" y=\"1284\">Target:</text>\n");
+	fprintf(html, "<text x=\"856\" y=\"1284\">04:00</text>\n");
+	fprintf(html, "<text x=\"1250\" y=\"1284\">(Best Time: 00:10)</text>\n");
 	fprintf(html, "<text x=\"363\" y=\"1416\">Decomp:</text>\n");
 	fprintf(html, "<text x=\"856\" y=\"1416\">%0.1f%%</text>\n", PERCENTF(decompiled, decompiled_max));
 	fprintf(html, "<text x=\"363\" y=\"1520\">Weapon of choice:</text>\n");
