@@ -32,8 +32,9 @@ jobs:
 
       #- name: Make US 
         #run: make -j VERSION=US
+          
       - name: Make report
-        run: ./tools/report/make
+        run: tools/report/make
         
       - name: Stats
         run: python3 tools/ge-stats.py | tools/report/report
