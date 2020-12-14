@@ -6,10 +6,11 @@
 
 #define PERCENTF(val, val_max) (((float)val / (float)val_max) * 100.f)
 
-void get_total_objectives(int *max_objs)
+int total_objectives(void)
 {
 	/************************/
 	int tmp_mis = 0, tmp_obj = OBJ_A;
+	int max_objs = 0;
 	/************************/
 
 	for(;;)
@@ -20,15 +21,16 @@ void get_total_objectives(int *max_objs)
 			{
 				break;
 			}
-			tmp_mis += 1;
+			tmp_mis++;
 			tmp_obj = OBJ_A;
 		}
-		tmp_obj += 1;
-		*max_objs += 1;
+		tmp_obj++;
+		max_objs++;
 	}
+	return max_objs;
 }
 
-void cur_mission_and_objective(int *cur_mis, int *cur_obj, int decomp_progress)
+void calc_mission_and_objective(int *cur_mis, int *cur_obj, int decomp_progress)
 {
 	/************************/
 	int max_objs = 0;
@@ -54,7 +56,7 @@ void cur_mission_and_objective(int *cur_mis, int *cur_obj, int decomp_progress)
 	}
 }
 
-int get_mission_max_objectives(const int cur_mis)
+int max_objectives(const int cur_mis)
 {
 	/************************/
 	int cur_obj = OBJ_A;
@@ -131,9 +133,9 @@ int main(int argc, char **argv)
 		goto exit;
 	}
 
-	get_total_objectives(&max_objs);
-	cur_mission_and_objective(&cur_mis, &cur_obj, (int)(((float)decompiled / (float)decompiled_max) * (float)max_objs));
-	max_mis_objs = get_mission_max_objectives(cur_mis);
+	max_objs = total_objectives();
+	calc_mission_and_objective(&cur_mis, &cur_obj, (int)(((float)decompiled / (float)decompiled_max) * (float)max_objs));
+	max_mis_objs = max_objectives(cur_mis);
 
 	fprintf(html, "<text x=\"363\" y=\"648\">%s</text>\n", missions[cur_mis].diff);
 	fprintf(html, "<text x=\"363\" y=\"754\">%s</text>\n", missions[cur_mis].title);
@@ -194,7 +196,7 @@ int main(int argc, char **argv)
 	printf("\n    %s\n    %s\n\n", missions[cur_mis].diff, missions[cur_mis].part);
 	for(tmp_obj = OBJ_A; tmp_obj < max_mis_objs; tmp_obj++)
 	{
-		printf("      [%s] %s%s\n", tmp_obj < cur_obj ? "X" : " ", missions[cur_mis].obj[tmp_obj].line1, missions[cur_mis].obj[tmp_obj].line2);
+		printf("      [%s] %s %s\n", tmp_obj < cur_obj ? "X" : " ", missions[cur_mis].obj[tmp_obj].line1, missions[cur_mis].obj[tmp_obj].line2);
 	}
 	printf("\n    Status: %s\n", cur_obj == max_mis_objs ? "Completed" : "FAILED");
 
