@@ -284,7 +284,7 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 		{
 			{"Photograph satellite", "\0"},
 			{"Obtain telemetric data", "\0"},
-			{"Retrieve satellite circuity", "\0"},
+			{"Retrieve satellite circuitry", "\0"},
 			{"Minimize scientist casualties", "\0"}
 		}
 	},
@@ -510,7 +510,7 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 			{"Plant bombs in fuel rooms", "\0"},
 			{"Photograph satellite", "\0"},
 			{"Obtain telemetric data", "\0"},
-			{"Retrieve satellite circuity", "\0"},
+			{"Retrieve satellite circuitry", "\0"},
 			{"Minimize scientist casualties", "\0"}
 		}
 	},

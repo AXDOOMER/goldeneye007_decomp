@@ -9,7 +9,7 @@
 void get_total_objectives(int *max_objs)
 {
 	/************************/
-	int tmp_mis = LVL_DAM, tmp_obj = OBJ_A;
+	int tmp_mis = 0, tmp_obj = OBJ_A;
 	/************************/
 
 	for(;;)
@@ -79,7 +79,7 @@ int main(int argc, char **argv)
 	long int inflate_dir, inflate_dir_max;
 	long int libultra_dir, libultra_dir_max;
 	long int decompiled, decompiled_max;
-	int cur_mis = LVL_DAM, cur_obj = OBJ_A;
+	int cur_mis = 0, cur_obj = OBJ_A;
 	int max_mis_objs = 0, max_objs = 0;
 	int tmp_obj, cur_line = 0;
 	FILE *html;
