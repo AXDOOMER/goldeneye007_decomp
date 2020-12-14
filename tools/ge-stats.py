@@ -173,7 +173,7 @@ def main(debug):
         
         #print('{:10} {:} '.format(int(totals['done']), int(totals['total'])))
         #print('{:10} {:,}'.format(int(files_completed['completed']), int(files_completed['total'])))
-        subprocess.call(shlex.split('./report/report int(totals['done']) int(totals['total']) int(files_completed['completed']) int(files_completed['total'])'))
+        subprocess.call(shlex.split("./report/report int(totals['done']) int(totals['total']) int(files_completed['completed']) int(files_completed['total'])"))
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
