@@ -3,8 +3,6 @@
 #define MISSIONS_00A_MAX 20
 #define OBJECTIVES_MAX (OBJ_MAX + 1)
 
-#define ARRAY_COUNT(array) (sizeof(array) / sizeof(array[0]))
-
 enum OBJECTIVES
 {
 	OBJ_A = 0,
