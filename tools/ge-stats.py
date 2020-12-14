@@ -166,10 +166,10 @@ def main(debug):
         
         print('--------------------------')
     else:
-        #for key in segments.keys():
-        #    print('{:10} {:} '.format(int(segments[key]['done']), int(segments[key]['total'])))
-        #    totals['done'] += segments[key]['done']
-        #    totals['total'] += segments[key]['total']
+        for key in segments.keys():
+            #print('{:10} {:} '.format(int(segments[key]['done']), int(segments[key]['total'])))
+            totals['done'] += segments[key]['done']
+            totals['total'] += segments[key]['total']
         
         #print('{:10} {:} '.format(int(totals['done']), int(totals['total'])))
         #print('{:10} {:,}'.format(int(files_completed['completed']), int(files_completed['total'])))
