@@ -167,13 +167,13 @@ def main(debug):
         print('--------------------------')
     else:
         for key in segments.keys():
-            print('{:} {:} '.format(int(segments[key]['done']), int(segments[key]['total'])), end='')
+            sys.stdout.write(int(segments[key]['done']) + ' ' + int(segments[key]['total'])) + ' ')
             totals['done'] += segments[key]['done']
             totals['total'] += segments[key]['total']
         
-        print('{:} {:} '.format(int(totals['done']), int(totals['total'])), end='')
-        print('{:} {:} '.format(int(files_completed['completed']), int(files_completed['total'])), end='')
-        print('./tools/results/results.html "src/game/bond.c"', end='')
+        sys.stdout.write(int(totals['done']) + ' ' + int(totals['total']) + ' ')
+        sys.stdout.write(int(files_completed['completed']) + ' ' + int(files_completed['total']) + ' ')
+        sys.stdout.write('./tools/results/results.html "src/game/bond.c"')
         #subprocess.call(shlex.split("./report/report int(totals['done']) int(totals['total']) int(files_completed['completed']) int(files_completed['total'])"))
         #      1481 15854      12774 232276        564 1312        652 20330      15471 269772         49 336
 
