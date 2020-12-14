@@ -40,7 +40,9 @@ jobs:
             cd ../../
         
       - name: Stats
-        run: python3 tools/ge-stats.py
+        run: |
+            python3 tools/ge-stats.py
+            tools/report/report 1481 15854 12774 232276 564 1312 652 20330 15471 269772 49 336 ./tools/results/results.html "src/game/bond.c"
 
   buildjp:
     
