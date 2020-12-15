@@ -2444,10 +2444,10 @@
 /*=============================================================================
 // name: if_guard_bitfield_is_set_on
 // command id: 96
-// info: if bits is set on in chr->BITFIELD, goto label
+// info: if any bits in argument are set on in chr->BITFIELD, goto label
 //=============================================================================
 // note: can be used by obj ai lists, obj lists are free to utilize the entire
-// spectrum of flags. command checks if any bits in the argument are set on.
+//       spectrum of flags
 //===========================================================================*/
 #define if_guard_bitfield_is_set_on_ID 0x96
 #define if_guard_bitfield_is_set_on_LENGTH 0x03
@@ -2491,9 +2491,7 @@
 /*=============================================================================
 // name: if_chr_bitfield_is_set_on
 // command id: 99
-// info: if bits is set on in chr->BITFIELD, goto label
-//=============================================================================
-// note: command checks if any bits in the argument are set on.
+// info: if any bits in argument are set on in chr->BITFIELD, goto label
 //===========================================================================*/
 #define if_chr_bitfield_is_set_on_ID 0x99
 #define if_chr_bitfield_is_set_on_LENGTH 0x04
