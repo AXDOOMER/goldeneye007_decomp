@@ -523,6 +523,8 @@ extern f32 slider_007_mode_health;
 extern f32 slider_007_mode_damage;
 extern f32 slider_007_mode_accuracy;
 
+
+extern struct mission_folder_setup mission_folder_setup_entries[];
 /*
 dword_D_8002A9B0:.word 0xA0000000
 dword_D_8002A9B4:.word 0x96000000
@@ -745,6 +747,7 @@ extern s32 unlock_weapon_select;
 extern s32 unlock_handicap;
 extern s32 unlock_control_style;
 extern s32 unlock_aim_sight;
+extern struct solo_target_times solo_target_time_array[];
 /*
 dword_D_8002B560:.word 0
                 solo_target_times <0, 160, 0>

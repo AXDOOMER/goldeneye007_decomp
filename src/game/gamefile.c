@@ -111,34 +111,23 @@ f32 get_007_accuracy_mod(void)
 
 #ifdef NONMATCHING
 void end_of_mission_briefing(void)
-
 {
-  short sVar1;
-  int iVar3;
-  save_file *folder;
-  ulonglong uVar2;
-  
-  if (((-1 < briefingpage) && (selected_difficulty != DIFFICULTY_007)) && (append_cheat_sp == FALSE)
-     ) {
-    sVar1 = (&solo_target_times_ARRAY_8002b564
-              [mission_folder_setup_entries[briefingpage].mission_num].agent_time)
-            [selected_difficulty];
+    if (((-1 < briefingpage) && (selected_difficulty != DIFFICULTY_007)) && (append_cheat_sp == FALSE)) 
+    {
+        unlock_stage_in_folder_on_difficulty(selected_folder_num, mission_folder_setup_entries[briefingpage].mission_num, selected_difficulty, get_mission_timer() / 0x3c);
 
-    unlock_stage_in_folder_on_difficulty
-              (selected_folder_num,(longlong)mission_folder_setup_entries[briefingpage].mission_num,
-               (longlong)selected_difficulty,getMissiontime() / 0x3c);
-
-    if ((longlong)(getMissiontime() / 0x3c) <= (longlong)sVar1) {
-      folder = getEEPROMforFoldernum(selected_folder_num);
-      if (check_if_cheat_unlocked(folder,(longlong)mission_folder_setup_entries[briefingpage].mission_num) == 0) {
-        proc_7F01E760(selected_folder_num,(longlong)mission_folder_setup_entries[briefingpage].mission_num);
-        newcheatunlocked = 1;
-        return;
-      }
+        if ((get_mission_timer() / 0x3c) <= (&solo_target_time_array[mission_folder_setup_entries[briefingpage].mission_num].agent_time)[selected_difficulty]) 
+        {      
+            if (check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num), mission_folder_setup_entries[briefingpage].mission_num) == 0)
+            {
+                sub_GAME_7F01E760(selected_folder_num, mission_folder_setup_entries[briefingpage].mission_num);
+                newcheatunlocked = 1;
+                return;
+            }
+        }
+        newcheatunlocked = 0;
     }
-    newcheatunlocked = 0;
-  }
-  return;
+    return;
 }
 #else
 
