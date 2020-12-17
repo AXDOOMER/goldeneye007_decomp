@@ -158,9 +158,9 @@ int main(int argc, char **argv)
 	calc_mission_and_objective(&cur_mis, &cur_obj, (int)total_complete);
 	cur_mis_objs_max = max_objectives(cur_mis);
 
-	fprintf(html, "<text x=\"363\" y=\"648\">%s</text>\n", missions[cur_mis].diff);
-	fprintf(html, "<text x=\"363\" y=\"754\">%s</text>\n", missions[cur_mis].title);
-	fprintf(html, "<text x=\"363\" y=\"858\">%s</text>\n", missions[cur_mis].part);
+	fprintf(html, "<text x=\"363\" y=\"648\">%s: James Bond</text>\n", missions[cur_mis].diff);
+	fprintf(html, "<text x=\"363\" y=\"754\">Mission %s: %s</text>\n", missions[cur_mis].title_num, missions[cur_mis].title_name);
+	fprintf(html, "<text x=\"363\" y=\"858\">%s: %s</text>\n", missions[cur_mis].part_num, missions[cur_mis].part_name);
 	fprintf(html, "<text x=\"363\" y=\"1015\">REPORT:</text>\n");
 	fprintf(html, "<text x=\"363\" y=\"1173\">Mission status:</text>\n");
 	fprintf(html, "<text x=\"1004\" y=\"1173\"%s</text>\n", cur_obj == cur_mis_objs_max ? ">Completed" : " class=\"failed\">FAILED");
@@ -180,9 +180,9 @@ int main(int argc, char **argv)
 	fprintf(html, "<a onclick=\"swap_pages()\"><rect x=\"2573\" y=\"945\" height=\"434\" width=\"79\" class=\"button\"></rect></a>\n");
 	fprintf(html, "</svg>\n");
 	fprintf(html, "<svg viewBox=\"0 0 2880 2160\" class=\"stats\" id=\"page2\" style=\"display: none;\">\n");
-	fprintf(html, "<text x=\"363\" y=\"648\">%s</text>\n", missions[cur_mis].diff);
-	fprintf(html, "<text x=\"363\" y=\"754\">%s</text>\n", missions[cur_mis].title);
-	fprintf(html, "<text x=\"363\" y=\"858\">%s</text>\n", missions[cur_mis].part);
+	fprintf(html, "<text x=\"363\" y=\"648\">%s: James Bond</text>\n", missions[cur_mis].diff);
+	fprintf(html, "<text x=\"363\" y=\"754\">Mission %s: %s</text>\n", missions[cur_mis].title_num, missions[cur_mis].title_name);
+	fprintf(html, "<text x=\"363\" y=\"858\">%s: %s</text>\n", missions[cur_mis].part_num, missions[cur_mis].part_name);
 	fprintf(html, "<text x=\"363\" y=\"1015\">STATISTICS:</text>\n");
 	fprintf(html, "<text x=\"363\" y=\"1172\">Time:</text>\n");
 	fprintf(html, "<text x=\"856\" y=\"1172\">00:02</text>\n");
@@ -220,21 +220,20 @@ int main(int argc, char **argv)
 	fprintf(html, "</html>");
 	fclose(html);
 
-	printf("\n  Successfully written stats to %s\n", argv[11]);
-	printf("\n    %s\n    %s\n\n", missions[cur_mis].diff, missions[cur_mis].part);
+	printf("\n  Successfully written stats to %s\n", argv[13]);
+	printf("\n    %s: %s (%s)\n", missions[cur_mis].title_name, missions[cur_mis].part_name, missions[cur_mis].diff);
 	for(tmp_obj = OBJ_A; tmp_obj < cur_mis_objs_max; tmp_obj++)
 	{
-		printf("      [%s] %s", tmp_obj < cur_obj ? "X" : " ", missions[cur_mis].obj[tmp_obj].line1);
+		printf("\n      [%s] %s", tmp_obj < cur_obj ? "X" : " ", missions[cur_mis].obj[tmp_obj].line1);
 		if(missions[cur_mis].obj[tmp_obj].line2[0] != '\0')
 			printf(" %s", missions[cur_mis].obj[tmp_obj].line2);
 		if(tmp_obj == cur_obj)
 			printf(" - %0.1f%%", obj_remaining * 100.f);
-		printf("\n");
 	}
 	if(total_complete == max_objs)
-		printf("\n    Mission Status: Completed\n\n    Baron has been defeated - decomp is complete!!\n");
+		printf("\n\n    Mission Status: Completed\n\n    Baron has been defeated - decomp is complete!!");
 	else
-		printf("\n    Mission Status: %s\n", cur_obj == cur_mis_objs_max ? "Completed" : "FAILED");
+		printf("\n\n    Mission Status: %s", cur_obj == cur_mis_objs_max ? "Completed" : "FAILED");
 
 exit:
 	printf("\n%s\n\n", LINE);

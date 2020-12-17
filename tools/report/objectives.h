@@ -1,6 +1,7 @@
 #define MISSIONS_A_MAX 18
 #define MISSIONS_SA_MAX 19
 #define MISSIONS_00A_MAX 20
+#define MISSIONS_MAX (MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1)
 #define OBJECTIVES_MAX (OBJ_MAX + 1)
 
 enum OBJECTIVES
@@ -15,37 +16,43 @@ enum OBJECTIVES
 
 struct objective
 {
-	char line1[48];
-	char line2[48];
+	char line1[36];
+	char line2[12];
 };
 
 struct mission
 {
-	char diff[24];
-	char title[32];
-	char part[32];
+	char *diff;
+	char *title_num;
+	char *title_name;
+	char *part_num;
+	char *part_name;
 	struct objective obj[OBJECTIVES_MAX];
 };
 
 char *diff_char[OBJECTIVES_MAX] = {"a.", "b.", "c.", "d.", "e.", "\0"};
 int line_rows[] = {1330, 1428, 1527, 1625, 1724, 1822, 1921, 2020, 2119};
 
-struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1] =
+struct mission missions[MISSIONS_MAX] =
 {
 	/* Dam (Agent) */
 	{
-		"Agent: James Bond",
-		"Mission 1: Arkangelsk",
-		"Part i: Dam",
+		"Agent",
+		"1",
+		"Arkangelsk",
+		"Part i",
+		"Dam",
 		{
 			{"Bungee jump from platform", "\0"}
 		}
 	},
 	/* Facility (Agent) */
 	{
-		"Agent: James Bond",
-		"Mission 1: Arkangelsk",
-		"Part ii: Facility",
+		"Agent",
+		"1",
+		"Arkangelsk",
+		"Part ii",
+		"Facility",
 		{
 			{"Gain access to laboratory area", "\0"},
 			{"Rendezvous with 006", "\0"},
@@ -55,9 +62,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Runway (Agent) */
 	{
-		"Agent: James Bond",
-		"Mission 1: Arkangelsk",
-		"Part iii: Runway",
+		"Agent",
+		"1",
+		"Arkangelsk",
+		"Part iii",
+		"Runway",
 		{
 			{"Find plane ignition key", "\0"},
 			{"Escape in plane", "\0"}
@@ -65,9 +74,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Surface i (Agent) */
 	{
-		"Agent: James Bond",
-		"Mission 2: Severnaya",
-		"Part i: Surface",
+		"Agent",
+		"2",
+		"Severnaya",
+		"Part i",
+		"Surface",
 		{
 			{"Power down communications", "dish"},
 			{"Enter base via ventilation tower", "\0"}
@@ -75,9 +86,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Bunker i (Agent) */
 	{
-		"Agent: James Bond",
-		"Mission 2: Severnaya",
-		"Part ii: Bunker",
+		"Agent",
+		"2",
+		"Severnaya",
+		"Part ii",
+		"Bunker",
 		{
 			{"Copy Goldeneye key and leave", "original"},
 			{"Photograph main video screen", "\0"}
@@ -85,9 +98,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Silo (Agent) */
 	{
-		"Agent: James Bond",
-		"Mission 3: Kirghizstan",
-		"Part i: Launch Silo #4",
+		"Agent",
+		"3",
+		"Kirghizstan",
+		"Part i",
+		"Launch Silo #4",
 		{
 			{"Photograph satellite", "\0"},
 			{"Minimize scientist casualties", "\0"}
@@ -95,9 +110,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Frigate (Agent) */
 	{
-		"Agent: James Bond",
-		"Mission 4: Monte Carlo",
-		"Part i: Frigate",
+		"Agent",
+		"4",
+		"Monte Carlo",
+		"Part i",
+		"Frigate",
 		{
 			{"Rescue hostages", "\0"},
 			{"Plant tracking bug on helicopter", "\0"}
@@ -105,9 +122,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Surface ii (Agent) */
 	{
-		"Agent: James Bond",
-		"Mission 5: Severnaya",
-		"Part i: Surface",
+		"Agent",
+		"5",
+		"Severnaya",
+		"Part i",
+		"Surface",
 		{
 			{"Break communications link to", "bunker"},
 			{"Gain entry to bunker", "\0"}
@@ -115,9 +134,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Bunker ii (Agent) */
 	{
-		"Agent: James Bond",
-		"Mission 5: Severnaya",
-		"Part ii: Bunker",
+		"Agent",
+		"5",
+		"Severnaya",
+		"Part ii",
+		"Bunker",
 		{
 			{"Recover CCTV tape", "\0"},
 			{"Escape with Natalya", "\0"}
@@ -125,9 +146,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Statue (Agent) */
 	{
-		"Agent: James Bond",
-		"Mission 6: St. Petersburg",
-		"Part i: Statue Park",
+		"Agent",
+		"6",
+		"St. Petersburg",
+		"Part i",
+		"Statue Park",
 		{
 			{"Contact Valentin", "\0"},
 			{"Confront and unmask Janus", "\0"},
@@ -138,9 +161,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Archives (Agent) */
 	{
-		"Agent: James Bond",
-		"Mission 6: St. Petersburg",
-		"Part ii: Military Archives",
+		"Agent",
+		"6",
+		"St. Petersburg",
+		"Part ii",
+		"Military Archives",
 		{
 			{"Escape from interrogation room", "\0"},
 			{"Find Natalya", "\0"},
@@ -149,9 +174,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Streets (Agent) */
 	{
-		"Agent: James Bond",
-		"Mission 6: St. Petersburg",
-		"Part iii: Streets",
+		"Agent",
+		"6",
+		"St. Petersburg",
+		"Part iii",
+		"Streets",
 		{
 			{"Pursue Ourumov and Natalya", "\0"},
 			{"Minimize civilian casualties", "\0"}
@@ -159,18 +186,22 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Depot (Agent) */
 	{
-		"Agent: James Bond",
-		"Mission 6: St. Petersburg",
-		"Part iv: Depot",
+		"Agent",
+		"6",
+		"St. Petersburg",
+		"Part iv",
+		"Depot",
 		{
 			{"Locate Trevelyan's train", "\0"}
 		}
 	},
 	/* Train (Agent) */
 	{
-		"Agent: James Bond",
-		"Mission 6: St. Petersburg",
-		"Part v: Train",
+		"Agent",
+		"6",
+		"St. Petersburg",
+		"Part v",
+		"Train",
 		{
 			{"Destroy brake units", "\0"},
 			{"Rescue Natalya", "\0"},
@@ -179,9 +210,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Jungle (Agent) */
 	{
-		"Agent: James Bond",
-		"Mission 7: Cuba",
-		"Part i: Jungle",
+		"Agent",
+		"7",
+		"Cuba",
+		"Part i",
+		"Jungle",
 		{
 			{"Destroy drone guns", "\0"},
 			{"Eliminate Xenia", "\0"},
@@ -190,9 +223,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Control (Agent) */
 	{
-		"Agent: James Bond",
-		"Mission 7: Cuba",
-		"Part ii: Control",
+		"Agent",
+		"7",
+		"Cuba",
+		"Part ii",
+		"Control",
 		{
 			{"Protect Natalya", "\0"},
 			{"Disable Goldeneye satellite", "\0"},
@@ -201,18 +236,22 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Caverns (Agent) */
 	{
-		"Agent: James Bond",
-		"Mission 7: Cuba",
-		"Part iii: Water Caverns",
+		"Agent",
+		"7",
+		"Cuba",
+		"Part iii",
+		"Water Caverns",
 		{
 			{"Minimize scientist casualties", "\0"}
 		}
 	},
 	/* Cradle (Agent) */
 	{
-		"Agent: James Bond",
-		"Mission 7: Cuba",
-		"Part iv: Antenna Cradle",
+		"Agent",
+		"7",
+		"Cuba",
+		"Part iv",
+		"Antenna Cradle",
 		{
 			{"Destroy control console", "\0"},
 			{"Settle the score with Trevelyan", "\0"}
@@ -221,9 +260,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 
 	/* Dam (Secret Agent) */
 	{
-		"Secret Agent: James Bond",
-		"Mission 1: Arkangelsk",
-		"Part i: Dam",
+		"Secret Agent",
+		"1",
+		"Arkangelsk",
+		"Part i",
+		"Dam",
 		{
 			{"Neutralize all alarms", "\0"},
 			{"Bungee jump from platform", "\0"}
@@ -231,9 +272,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Facility (Secret Agent) */
 	{
-		"Secret Agent: James Bond",
-		"Mission 1: Arkangelsk",
-		"Part ii: Facility",
+		"Secret Agent",
+		"1",
+		"Arkangelsk",
+		"Part ii",
+		"Facility",
 		{
 			{"Gain access to laboratory area", "\0"},
 			{"Contact double agent", "\0"},
@@ -244,9 +287,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Runway (Secret Agent) */
 	{
-		"Secret Agent: James Bond",
-		"Mission 1: Arkangelsk",
-		"Part iii: Runway",
+		"Secret Agent",
+		"1",
+		"Arkangelsk",
+		"Part iii",
+		"Runway",
 		{
 			{"Find plane ignition key", "\0"},
 			{"Destroy missile battery", "\0"},
@@ -255,9 +300,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Surface i (Secret Agent) */
 	{
-		"Secret Agent: James Bond",
-		"Mission 2: Severnaya",
-		"Part i: Surface",
+		"Secret Agent",
+		"2",
+		"Severnaya",
+		"Part i",
+		"Surface",
 		{
 			{"Power down communications", "dish"},
 			{"Obtain safe key", "\0"},
@@ -267,9 +314,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Bunker i (Secret Agent) */
 	{
-		"Secret Agent: James Bond",
-		"Mission 2: Severnaya",
-		"Part ii: Bunker",
+		"Secret Agent",
+		"2",
+		"Severnaya",
+		"Part ii",
+		"Bunker",
 		{
 			{"Disrupt all surveillance equipment", "\0"},
 			{"Copy Goldeneye key and leave", "original"},
@@ -278,9 +327,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Silo (Secret Agent) */
 	{
-		"Secret Agent: James Bond",
-		"Mission 3: Kirghizstan",
-		"Part i: Launch Silo #4",
+		"Secret Agent",
+		"3",
+		"Kirghizstan",
+		"Part i",
+		"Launch Silo #4",
 		{
 			{"Photograph satellite", "\0"},
 			{"Obtain telemetric data", "\0"},
@@ -290,9 +341,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Frigate (Secret Agent) */
 	{
-		"Secret Agent: James Bond",
-		"Mission 4: Monte Carlo",
-		"Part i: Frigate",
+		"Secret Agent",
+		"4",
+		"Monte Carlo",
+		"Part i",
+		"Frigate",
 		{
 			{"Rescue hostages", "\0"},
 			{"Disarm bridge bomb", "\0"},
@@ -302,9 +355,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Surface ii (Secret Agent) */
 	{
-		"Secret Agent: James Bond",
-		"Mission 5: Severnaya",
-		"Part i: Surface",
+		"Secret Agent",
+		"5",
+		"Severnaya",
+		"Part i",
+		"Surface",
 		{
 			{"Break communications link to", "bunker"},
 			{"Disable Spetznaz support aircraft", "\0"},
@@ -313,9 +368,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Bunker ii (Secret Agent) */
 	{
-		"Secret Agent: James Bond",
-		"Mission 5: Severnaya",
-		"Part ii: Bunker",
+		"Secret Agent",
+		"5",
+		"Severnaya",
+		"Part ii",
+		"Bunker",
 		{
 			{"Compare staff / casualty lists", "\0"},
 			{"Recover CCTV tape", "\0"},
@@ -325,9 +382,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Statue (Secret Agent) */
 	{
-		"Secret Agent: James Bond",
-		"Mission 6: St. Petersburg",
-		"Part i: Statue Park",
+		"Secret Agent",
+		"6",
+		"St. Petersburg",
+		"Part i",
+		"Statue Park",
 		{
 			{"Contact Valentin", "\0"},
 			{"Confront and unmask Janus", "\0"},
@@ -338,9 +397,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Archives (Secret Agent) */
 	{
-		"Secret Agent: James Bond",
-		"Mission 6: St. Petersburg",
-		"Part ii: Military Archives",
+		"Secret Agent",
+		"6",
+		"St. Petersburg",
+		"Part ii",
+		"Military Archives",
 		{
 			{"Escape from interrogation room", "\0"},
 			{"Find Natalya", "\0"},
@@ -350,9 +411,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Streets (Secret Agent) */
 	{
-		"Secret Agent: James Bond",
-		"Mission 6: St. Petersburg",
-		"Part iii: Streets",
+		"Secret Agent",
+		"6",
+		"St. Petersburg",
+		"Part iii",
+		"Streets",
 		{
 			{"Contact Valentin", "\0"},
 			{"Pursue Ourumov and Natalya", "\0"},
@@ -361,9 +424,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Depot (Secret Agent) */
 	{
-		"Secret Agent: James Bond",
-		"Mission 6: St. Petersburg",
-		"Part iv: Depot",
+		"Secret Agent",
+		"6",
+		"St. Petersburg",
+		"Part iv",
+		"Depot",
 		{
 			{"Destroy computer network", "\0"},
 			{"Obtain safe key", "\0"},
@@ -373,9 +438,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Train (Secret Agent) */
 	{
-		"Secret Agent: James Bond",
-		"Mission 6: St. Petersburg",
-		"Part v: Train",
+		"Secret Agent",
+		"6",
+		"St. Petersburg",
+		"Part v",
+		"Train",
 		{
 			{"Destroy brake units", "\0"},
 			{"Rescue Natalya", "\0"},
@@ -385,9 +452,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Jungle (Secret Agent) */
 	{
-		"Secret Agent: James Bond",
-		"Mission 7: Cuba",
-		"Part i: Jungle",
+		"Secret Agent",
+		"7",
+		"Cuba",
+		"Part i",
+		"Jungle",
 		{
 			{"Destroy drone guns", "\0"},
 			{"Eliminate Xenia", "\0"},
@@ -397,9 +466,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Control (Secret Agent) */
 	{
-		"Secret Agent: James Bond",
-		"Mission 7: Cuba",
-		"Part ii: Control",
+		"Secret Agent",
+		"7",
+		"Cuba",
+		"Part ii",
+		"Control",
 		{
 			{"Protect Natalya", "\0"},
 			{"Disable Goldeneye satellite", "\0"},
@@ -408,9 +479,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Caverns (Secret Agent) */
 	{
-		"Secret Agent: James Bond",
-		"Mission 7: Cuba",
-		"Part iii: Water Caverns",
+		"Secret Agent",
+		"7",
+		"Cuba",
+		"Part iii",
+		"Water Caverns",
 		{
 			{"Destroy inlet pump controls", "\0"},
 			{"Destroy outlet pump controls", "\0"},
@@ -420,9 +493,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Cradle (Secret Agent) */
 	{
-		"Secret Agent: James Bond",
-		"Mission 7: Cuba",
-		"Part iv: Antenna Cradle",
+		"Secret Agent",
+		"7",
+		"Cuba",
+		"Part iv",
+		"Antenna Cradle",
 		{
 			{"Destroy control console", "\0"},
 			{"Settle the score with Trevelyan", "\0"}
@@ -430,9 +505,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Aztec (Secret Agent) */
 	{
-		"Secret Agent: James Bond",
-		"Mission 8: Teotihuaca'n",
-		"Part i: Aztec Complex",
+		"Secret Agent",
+		"8",
+		"Teotihuaca'n",
+		"Part i",
+		"Aztec Complex",
 		{
 			{"Reprogram shuttle guidance", "\0"},
 			{"Launch shuttle", "\0"}
@@ -441,9 +518,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 
 	/* Dam (00 Agent) */
 	{
-		"00 Agent: James Bond",
-		"Mission 1: Arkangelsk",
-		"Part i: Dam",
+		"00 Agent",
+		"1",
+		"Arkangelsk",
+		"Part i",
+		"Dam",
 		{
 			{"Neutralize all alarms", "\0"},
 			{"Install covert modem", "\0"},
@@ -453,9 +532,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Facility (00 Agent) */
 	{
-		"00 Agent: James Bond",
-		"Mission 1: Arkangelsk",
-		"Part ii: Facility",
+		"00 Agent",
+		"1",
+		"Arkangelsk",
+		"Part ii",
+		"Facility",
 		{
 			{"Gain access to laboratory area", "\0"},
 			{"Contact double agent", "\0"},
@@ -466,9 +547,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Runway (00 Agent) */
 	{
-		"00 Agent: James Bond",
-		"Mission 1: Arkangelsk",
-		"Part iii: Runway",
+		"00 Agent",
+		"1",
+		"Arkangelsk",
+		"Part iii",
+		"Runway",
 		{
 			{"Find plane ignition key", "\0"},
 			{"Destroy heavy gun emplacements", "\0"},
@@ -478,9 +561,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Surface i (00 Agent) */
 	{
-		"00 Agent: James Bond",
-		"Mission 2: Severnaya",
-		"Part i: Surface",
+		"00 Agent",
+		"2",
+		"Severnaya",
+		"Part i",
+		"Surface",
 		{
 			{"Power down communications", "dish"},
 			{"Obtain safe key", "\0"},
@@ -490,9 +575,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Bunker i (00 Agent) */
 	{
-		"00 Agent: James Bond",
-		"Mission 2: Severnaya",
-		"Part ii: Bunker",
+		"00 Agent",
+		"2",
+		"Severnaya",
+		"Part ii",
+		"Bunker",
 		{
 			{"Disrupt all surveillance equipment", "\0"},
 			{"Copy Goldeneye key and leave", "original"},
@@ -503,9 +590,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Silo (00 Agent) */
 	{
-		"00 Agent: James Bond",
-		"Mission 3: Kirghizstan",
-		"Part i: Launch Silo #4",
+		"00 Agent",
+		"3",
+		"Kirghizstan",
+		"Part i",
+		"Launch Silo #4",
 		{
 			{"Plant bombs in fuel rooms", "\0"},
 			{"Photograph satellite", "\0"},
@@ -516,9 +605,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Frigate (00 Agent) */
 	{
-		"00 Agent: James Bond",
-		"Mission 4: Monte Carlo",
-		"Part i: Frigate",
+		"00 Agent",
+		"4",
+		"Monte Carlo",
+		"Part i",
+		"Frigate",
 		{
 			{"Rescue hostages", "\0"},
 			{"Disarm bridge bomb", "\0"},
@@ -528,9 +619,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Surface ii (00 Agent) */
 	{
-		"00 Agent: James Bond",
-		"Mission 5: Severnaya",
-		"Part i: Surface",
+		"00 Agent",
+		"5",
+		"Severnaya",
+		"Part i",
+		"Surface",
 		{
 			{"Disrupt all surveillance equipment", "\0"},
 			{"Break communications link to", "bunker"},
@@ -540,9 +633,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Bunker ii (00 Agent) */
 	{
-		"00 Agent: James Bond",
-		"Mission 5: Severnaya",
-		"Part ii: Bunker",
+		"00 Agent",
+		"5",
+		"Severnaya",
+		"Part ii",
+		"Bunker",
 		{
 			{"Compare staff / casualty lists", "\0"},
 			{"Recover CCTV tape", "\0"},
@@ -553,9 +648,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Statue (00 Agent) */
 	{
-		"00 Agent: James Bond",
-		"Mission 6: St. Petersburg",
-		"Part i: Statue Park",
+		"00 Agent",
+		"6",
+		"St. Petersburg",
+		"Part i",
+		"Statue Park",
 		{
 			{"Contact Valentin", "\0"},
 			{"Confront and unmask Janus", "\0"},
@@ -566,9 +663,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Archives (00 Agent) */
 	{
-		"00 Agent: James Bond",
-		"Mission 6: St. Petersburg",
-		"Part ii: Military Archives",
+		"00 Agent",
+		"6",
+		"St. Petersburg",
+		"Part ii",
+		"Military Archives",
 		{
 			{"Escape from interrogation room", "\0"},
 			{"Find Natalya", "\0"},
@@ -578,9 +677,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Streets (00 Agent) */
 	{
-		"00 Agent: James Bond",
-		"Mission 6: St. Petersburg",
-		"Part iii: Streets",
+		"00 Agent",
+		"6",
+		"St. Petersburg",
+		"Part iii",
+		"Streets",
 		{
 			{"Contact Valentin", "\0"},
 			{"Pursue Ourumov and Natalya", "\0"},
@@ -589,9 +690,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Depot (00 Agent) */
 	{
-		"00 Agent: James Bond",
-		"Mission 6: St. Petersburg",
-		"Part iv: Depot",
+		"00 Agent",
+		"6",
+		"St. Petersburg",
+		"Part iv",
+		"Depot",
 		{
 			{"Destroy illegal arms cache", "\0"},
 			{"Destroy computer network", "\0"},
@@ -602,9 +705,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Train (00 Agent) */
 	{
-		"00 Agent: James Bond",
-		"Mission 6: St. Petersburg",
-		"Part v: Train",
+		"00 Agent",
+		"6",
+		"St. Petersburg",
+		"Part v",
+		"Train",
 		{
 			{"Destroy brake units", "\0"},
 			{"Rescue Natalya", "\0"},
@@ -615,9 +720,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Jungle (00 Agent) */
 	{
-		"00 Agent: James Bond",
-		"Mission 7: Cuba",
-		"Part i: Jungle",
+		"00 Agent",
+		"7",
+		"Cuba",
+		"Part i",
+		"Jungle",
 		{
 			{"Destroy drone guns", "\0"},
 			{"Eliminate Xenia", "\0"},
@@ -627,9 +734,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Control (00 Agent) */
 	{
-		"00 Agent: James Bond",
-		"Mission 7: Cuba",
-		"Part ii: Control",
+		"00 Agent",
+		"7",
+		"Cuba",
+		"Part ii",
+		"Control",
 		{
 			{"Protect Natalya", "\0"},
 			{"Disable Goldeneye satellite", "\0"},
@@ -638,9 +747,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Caverns (00 Agent) */
 	{
-		"00 Agent: James Bond",
-		"Mission 7: Cuba",
-		"Part iii: Water Caverns",
+		"00 Agent",
+		"7",
+		"Cuba",
+		"Part iii",
+		"Water Caverns",
 		{
 			{"Destroy inlet pump controls", "\0"},
 			{"Destroy outlet pump controls", "\0"},
@@ -651,9 +762,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Cradle (00 Agent) */
 	{
-		"00 Agent: James Bond",
-		"Mission 7: Cuba",
-		"Part iv: Antenna Cradle",
+		"00 Agent",
+		"7",
+		"Cuba",
+		"Part iv",
+		"Antenna Cradle",
 		{
 			{"Destroy control console", "\0"},
 			{"Settle the score with Trevelyan", "\0"}
@@ -661,9 +774,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Aztec (00 Agent) */
 	{
-		"00 Agent: James Bond",
-		"Mission 8: Teotihuaca'n",
-		"Part i: Aztec Complex",
+		"00 Agent",
+		"8",
+		"Teotihuaca'n",
+		"Part i",
+		"Aztec Complex",
 		{
 			{"Reprogram shuttle guidance", "\0"},
 			{"Launch shuttle", "\0"}
@@ -671,9 +786,11 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 	},
 	/* Egypt (00 Agent) */
 	{
-		"00 Agent: James Bond",
-		"Mission 9: el-Saghira",
-		"Part i: Egyptian Temple",
+		"00 Agent",
+		"9",
+		"el-Saghira",
+		"Part i",
+		"Egyptian Temple",
 		{
 			{"Recover the golden gun", "\0"},
 			{"Defeat Baron Samedi?", "\0"}
@@ -682,6 +799,8 @@ struct mission missions[MISSIONS_A_MAX + MISSIONS_SA_MAX + MISSIONS_00A_MAX + 1]
 
 	/* End of struct */
 	{
+		"\0",
+		"\0",
 		"\0",
 		"\0",
 		"\0",
