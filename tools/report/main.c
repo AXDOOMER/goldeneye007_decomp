@@ -102,7 +102,7 @@ int main(int argc, char **argv)
 	{
 		printf("\n  GoldenEye 007 Decompiled Statistics Generator\n%s\n", LINE);
 	}
-	if((argc < 14) || (argc > 16)) /* incorrect number of arguments */
+	if(argc != 16) /* incorrect number of arguments */
 	{
 		printf("\n  About: Generate decompiled statistics website\n\n  Syntax: %s src max game max inflate max libultra max decompiled_words max_words decompiled_files all_files html_output last_modified_file verbosity_level (0-2)\n\n  Note: Each dir's statistic must be followed with the total words for the dir.\n  Example: 1481 15854 12641 232276 564 1312 556 20330 15242 269772 49 336 ./results.html \"src/game/bond.c\" 1", argv[0]);
 		goto exit;
@@ -150,10 +150,7 @@ int main(int argc, char **argv)
 		printf("\n  Error: Aborted, detected negative arguments (invalid or overflow)");
 		goto exit;
 	}
-	if(argc == 15)
-	{
-		last_modified_file_arg_active = (argv[14] != NULL);
-	}
+	last_modified_file_arg_active = (argv[14] != NULL);
 
 	/* print all arguments */
 	if(verbosity_level == LOG_MAX)
@@ -164,7 +161,8 @@ int main(int argc, char **argv)
 		printf("\n  inflate_dir:\t\t%ld / %ld", inflate_dir, inflate_dir_max);
 		printf("\n  libultra_dir:\t\t%ld / %ld", libultra_dir, libultra_dir_max);
 		printf("\n  decompiled_words:\t%ld / %ld", decompiled_words, decompiled_words_max);
-		printf("\n  decompiled_files:\t%ld / %ld\n%s\n", decompiled_files, decompiled_files_max, LINE);
+		printf("\n  decompiled_files:\t%ld / %ld", decompiled_files, decompiled_files_max);
+		printf("\n  last_modified_file:\t%s\n%s\n", argv[14], LINE);
 	}
 
 	html = fopen(argv[13], "ab");
@@ -180,9 +178,9 @@ int main(int argc, char **argv)
 	calc_mission_and_objective(&cur_mis, &cur_obj, (int)total_complete);
 	cur_mis_objs_max = max_objectives(cur_mis);
 
-	fprintf(html, "<text x=\"363\" y=\"648\">%s: James Bond</text>\n", missions[cur_mis].diff);
-	fprintf(html, "<text x=\"363\" y=\"754\">Mission %s: %s</text>\n", missions[cur_mis].title_num, missions[cur_mis].title_name);
-	fprintf(html, "<text x=\"363\" y=\"858\">Part %s: %s</text>\n", missions[cur_mis].part_num, missions[cur_mis].part_name);
+	fprintf(html, "<text x=\"363\" y=\"648\">%s</text>\n", missions[cur_mis].diff);
+	fprintf(html, "<text x=\"363\" y=\"754\">%s</text>\n", missions[cur_mis].title);
+	fprintf(html, "<text x=\"363\" y=\"858\">%s</text>\n", missions[cur_mis].part);
 	fprintf(html, "<text x=\"363\" y=\"1015\">REPORT:</text>\n");
 	fprintf(html, "<text x=\"363\" y=\"1173\">Mission status:</text>\n");
 	fprintf(html, "<text x=\"1004\" y=\"1173\"%s</text>\n", cur_obj == cur_mis_objs_max ? ">Completed" : " class=\"failed\">FAILED");
@@ -202,9 +200,9 @@ int main(int argc, char **argv)
 	fprintf(html, "<a onclick=\"swap_pages()\"><rect x=\"2573\" y=\"945\" height=\"434\" width=\"79\" class=\"button\"></rect></a>\n");
 	fprintf(html, "</svg>\n");
 	fprintf(html, "<svg viewBox=\"0 0 2880 2160\" class=\"stats\" id=\"page2\" style=\"display: none;\">\n");
-	fprintf(html, "<text x=\"363\" y=\"648\">%s: James Bond</text>\n", missions[cur_mis].diff);
-	fprintf(html, "<text x=\"363\" y=\"754\">Mission %s: %s</text>\n", missions[cur_mis].title_num, missions[cur_mis].title_name);
-	fprintf(html, "<text x=\"363\" y=\"858\">%s: %s</text>\n", missions[cur_mis].part_num, missions[cur_mis].part_name);
+	fprintf(html, "<text x=\"363\" y=\"648\">%s</text>\n", missions[cur_mis].diff);
+	fprintf(html, "<text x=\"363\" y=\"754\">%s</text>\n", missions[cur_mis].title);
+	fprintf(html, "<text x=\"363\" y=\"858\">%s</text>\n", missions[cur_mis].part);
 	fprintf(html, "<text x=\"363\" y=\"1015\">STATISTICS:</text>\n");
 	fprintf(html, "<text x=\"363\" y=\"1172\">Time:</text>\n");
 	fprintf(html, "<text x=\"856\" y=\"1172\">00:02</text>\n");
@@ -246,7 +244,7 @@ int main(int argc, char **argv)
 	{
 		printf("\n  Successfully written stats to %s\n", argv[13]);
 	}
-	printf("\n    %s: %s (%s)\n", missions[cur_mis].title_name, missions[cur_mis].part_name, missions[cur_mis].diff);
+	printf("\n    %s\n", missions[cur_mis].out_name);
 	for(tmp_obj = OBJ_A; tmp_obj < cur_mis_objs_max; tmp_obj++)
 	{
 		printf("\n      [%s] %s", tmp_obj < cur_obj ? "X" : " ", missions[cur_mis].obj[tmp_obj][LINE1]);
