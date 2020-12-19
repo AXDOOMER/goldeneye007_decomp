@@ -182,7 +182,7 @@ def main():
         totals['total'] += segments[key]['total']
 
     print('TOTAL\t\t{:10,} / {:,} \t{:.2f}%'.format(int(totals['done']), int(totals['total']), (totals['done'] / totals['total'] * 100)))
-    print('Last File Edited = ' + find_last_modified_file()
+    print('Last File Edited = ' + find_last_modified_file())
     print('--------------------------')
 
     printstring = printstring + str(totals['done']) + ' ' + str(totals['total']) + ' '
