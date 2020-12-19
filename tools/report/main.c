@@ -156,7 +156,6 @@ int main(int argc, char **argv)
 	if(verbosity_level == LOG_MAX)
 	{
 		printf("\n  src_dir:\t\t%ld / %ld", src_dir, src_dir_max);
-		printf("\n  src_dir:\t\t%ld / %ld", src_dir, src_dir_max);
 		printf("\n  game_dir:\t\t%ld / %ld", game_dir, game_dir_max);
 		printf("\n  inflate_dir:\t\t%ld / %ld", inflate_dir, inflate_dir_max);
 		printf("\n  libultra_dir:\t\t%ld / %ld", libultra_dir, libultra_dir_max);
