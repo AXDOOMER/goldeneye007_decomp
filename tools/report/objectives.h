@@ -20,6 +20,13 @@ enum OBJECTIVE_LINES
 	LINE2
 };
 
+enum VERBOSITY_LOGGING
+{
+	LOG_MIN = 0,
+	LOG_DEF,
+	LOG_MAX
+};
+
 struct mission
 {
 	char *diff;

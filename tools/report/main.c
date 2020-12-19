@@ -5,6 +5,7 @@
 #define LINE "__________________________________________________________________"
 
 #define PERCENTF(val, val_max) (((float)val / (float)val_max) * 100.f)
+#define CLAMP_VAL(value, min, max) (((value) < (min)) ? (min) : (((value) > (max)) ? (max) : ((value) < (min)) ? (min) : (value)))
 
 int total_objectives(void)
 {
@@ -87,14 +88,23 @@ int main(int argc, char **argv)
 	int cur_mis_objs_max = 0, max_objs = 0;
 	int tmp_obj, cur_line = 0;
 	int last_modified_file_arg_active = 0;
+	int verbosity_level = LOG_DEF;
 	float total_complete, obj_remaining;
 	FILE *html;
 	/************************/
 
-	printf("\n  GoldenEye 007 Decompiled Statistics Generator\n%s\n", LINE);
-	if((argc != 14) && (argc != 15)) /* incorrect number of arguments */
+	/* read logging level */
+	if(argc == 16)
 	{
-		printf("\n  About: Generate decompiled statistics website\n\n  Syntax: %s src max game max inflate max libultra max decompiled_words max_words decompiled_files all_files html_output last_modified_file\n\n  Note: Each dir's statistic must be followed with the total words for the dir.\n  Example: 1481 15854 12641 232276 564 1312 556 20330 15242 269772 49 336 ./results.html \"src/game/bond.c\"", argv[0]);
+		verbosity_level = CLAMP_VAL(atol(argv[15]), 0, 2);
+	}
+	if(verbosity_level != LOG_MIN)
+	{
+		printf("\n  GoldenEye 007 Decompiled Statistics Generator\n%s\n", LINE);
+	}
+	if((argc < 14) || (argc > 16)) /* incorrect number of arguments */
+	{
+		printf("\n  About: Generate decompiled statistics website\n\n  Syntax: %s src max game max inflate max libultra max decompiled_words max_words decompiled_files all_files html_output last_modified_file verbosity_level (0-2)\n\n  Note: Each dir's statistic must be followed with the total words for the dir.\n  Example: 1481 15854 12641 232276 564 1312 556 20330 15242 269772 49 336 ./results.html \"src/game/bond.c\" 1", argv[0]);
 		goto exit;
 	}
 
@@ -143,6 +153,18 @@ int main(int argc, char **argv)
 	if(argc == 15)
 	{
 		last_modified_file_arg_active = (argv[14] != NULL);
+	}
+
+	/* print all arguments */
+	if(verbosity_level == LOG_MAX)
+	{
+		printf("\n  src_dir:\t\t%ld / %ld", src_dir, src_dir_max);
+		printf("\n  src_dir:\t\t%ld / %ld", src_dir, src_dir_max);
+		printf("\n  game_dir:\t\t%ld / %ld", game_dir, game_dir_max);
+		printf("\n  inflate_dir:\t\t%ld / %ld", inflate_dir, inflate_dir_max);
+		printf("\n  libultra_dir:\t\t%ld / %ld", libultra_dir, libultra_dir_max);
+		printf("\n  decompiled_words:\t%ld / %ld", decompiled_words, decompiled_words_max);
+		printf("\n  decompiled_files:\t%ld / %ld\n%s\n", decompiled_files, decompiled_files_max, LINE);
 	}
 
 	html = fopen(argv[13], "ab");
@@ -220,7 +242,10 @@ int main(int argc, char **argv)
 	fprintf(html, "</html>");
 	fclose(html);
 
-	printf("\n  Successfully written stats to %s\n", argv[13]);
+	if(verbosity_level != LOG_MIN)
+	{
+		printf("\n  Successfully written stats to %s\n", argv[13]);
+	}
 	printf("\n    %s: %s (%s)\n", missions[cur_mis].title_name, missions[cur_mis].part_name, missions[cur_mis].diff);
 	for(tmp_obj = OBJ_A; tmp_obj < cur_mis_objs_max; tmp_obj++)
 	{
@@ -242,6 +267,9 @@ int main(int argc, char **argv)
 	}
 
 exit:
-	printf("\n%s\n\n", LINE);
+	if(verbosity_level != LOG_MIN)
+	{
+		printf("\n%s\n\n", LINE);
+	}
 	return 0;
 }
