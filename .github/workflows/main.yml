@@ -42,11 +42,16 @@ jobs:
         # expected args
         # 1481 15854 12774 232276 564 1312 652 20330 15471 269772 49 336 tools/report/results.html "src/game/bond.c"
       
-      - uses: actions/download-artifact@v2
+      #- uses: actions/download-artifact@v2
+      #  with:
+      #    name: my-artifact
+      #    path: tools/report/results.html
+      - name: Upload output file
+        uses: actions/upload-artifact@v1
         with:
-          name: my-artifact
+          name: output-log-file
           path: tools/report/results.html
-
+      
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: tools/report
