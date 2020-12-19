@@ -34,14 +34,12 @@ jobs:
         #run: make -j VERSION=US
           
       - name: Make report
-        run: |
-            cd tools/report
-            make
-            cd ../../
+        run: make -C tools/report
         
       - name: Stats
-        run: |
-            python3 tools/ge-stats.py
+        run: python3 tools/ge-stats.py
+            
+        # expected args
         # 1481 15854 12774 232276 564 1312 652 20330 15471 269772 49 336 tools/report/results.html "src/game/bond.c"
       
       - uses: actions/download-artifact@v2
