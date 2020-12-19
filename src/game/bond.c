@@ -6622,7 +6622,7 @@ glabel sub_GAME_7F07B56C
 /* 0B0118 7F07B5E8 4500000C */  bc1f  .L7F07B61C
 /* 0B011C 7F07B5EC 00000000 */   nop   
 /* 0B0120 7F07B5F0 8C840EB8 */  lw    $a0, %lo(ptrSecondFontTableLarge)($a0)
-/* 0B0124 7F07B5F4 0FC228ED */  jal   sub_GAME_7F08A3B4
+/* 0B0124 7F07B5F4 0FC228ED */  jal   setFontTables
 /* 0B0128 7F07B5F8 8CA50EB4 */   lw    $a1, %lo(ptrFirstFontTableLarge)($a1)
 /* 0B012C 7F07B5FC 3C0E8003 */  lui   $t6, %hi(ptr_random06cam_entry) 
 /* 0B0130 7F07B600 8DCE64C0 */  lw    $t6, %lo(ptr_random06cam_entry)($t6)
@@ -32318,21 +32318,11 @@ glabel set_flags_in_BONDdata_stationary_intro_cam
 
 
 #ifdef VERSION_US
-#ifdef NONMATCHING
-void sub_GAME_7F08A3B4(void) {
-
+void setFontTables(s32 arg0, s32 arg1)
+{
+    copy_2ndfonttable = arg0;
+    copy_1stfonttable = arg1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08A3B4
-/* 0BEEE4 7F08A3B4 3C018003 */  lui   $at, %hi(copy_2ndfonttable)
-/* 0BEEE8 7F08A3B8 AC2468A4 */  sw    $a0, %lo(copy_2ndfonttable)($at)
-/* 0BEEEC 7F08A3BC 3C018003 */  lui   $at, %hi(copy_1stfonttable)
-/* 0BEEF0 7F08A3C0 03E00008 */  jr    $ra
-/* 0BEEF4 7F08A3C4 AC2568A0 */   sw    $a1, %lo(copy_1stfonttable)($at)
-)
-#endif
 #endif
 
 
