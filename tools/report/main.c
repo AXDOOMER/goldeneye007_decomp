@@ -94,27 +94,27 @@ int main(int argc, char **argv)
 	/************************/
 
 	/* read logging level */
-	if(argc == 16)
+	if(argc == ARGS_MAX)
 	{
-		verbosity_level = CLAMP_VAL(atol(argv[15]), 0, 2);
+		verbosity_level = CLAMP_VAL(atol(argv[LOG_LEVEL]), 0, 2);
 	}
 	if(verbosity_level != LOG_MIN)
 	{
 		printf("\n  GoldenEye 007 Decompiled Statistics Generator\n%s\n", LINE);
 	}
-	if(argc != 16) /* incorrect number of arguments */
+	if(argc != ARGS_MAX) /* incorrect number of arguments */
 	{
-		printf("\n  About: Generate decompiled statistics website\n\n  Syntax: %s src max game max inflate max libultra max decompiled_words max_words decompiled_files all_files html_output last_modified_file verbosity_level (0-2)\n\n  Note: Each dir's statistic must be followed with the total words for the dir.\n  Example: 1481 15854 12641 232276 564 1312 556 20330 15242 269772 49 336 ./results.html \"src/game/bond.c\" 1", argv[0]);
+		printf("\n  About: Generate decompiled statistics website\n\n  Syntax: %s src max game max inflate max libultra max decompiled_words max_words decompiled_files all_files html_output last_modified_file verbosity_level (0-2)\n\n  Note: Each dir's statistic must be followed with the total words for the dir.\n  Example: 1481 15854 12641 232276 564 1312 556 20330 15242 269772 49 336 ./results.html \"src/game/bond.c\" 1", argv[PROGRAM_NAME]);
 		goto exit;
 	}
 
 	/* read arguments */
-	src_dir = atol(argv[1]), src_dir_max = atol(argv[2]);
-	game_dir = atol(argv[3]), game_dir_max = atol(argv[4]);
-	inflate_dir = atol(argv[5]), inflate_dir_max = atol(argv[6]);
-	libultra_dir = atol(argv[7]), libultra_dir_max = atol(argv[8]);
-	decompiled_words = atol(argv[9]), decompiled_words_max = atol(argv[10]);
-	decompiled_files = atol(argv[11]), decompiled_files_max = atol(argv[12]);
+	src_dir = atol(argv[SRC_DIR]), src_dir_max = atol(argv[SRC_DIR_MAX]);
+	game_dir = atol(argv[GAME_DIR]), game_dir_max = atol(argv[GAME_DIR_MAX]);
+	inflate_dir = atol(argv[INFLATE_DIR]), inflate_dir_max = atol(argv[INFLATE_DIR_MAX]);
+	libultra_dir = atol(argv[LIBULTRA_DIR]), libultra_dir_max = atol(argv[LIBULTRA_DIR_MAX]);
+	decompiled_words = atol(argv[DECOMPILED_WORDS]), decompiled_words_max = atol(argv[DECOMPILED_WORDS_MAX]);
+	decompiled_files = atol(argv[DECOMPILED_FILES]), decompiled_files_max = atol(argv[DECOMPILED_FILES_MAX]);
 	if(src_dir > src_dir_max)
 	{
 		printf("\n  Error: Aborted, src larger than src max argument");
@@ -150,7 +150,7 @@ int main(int argc, char **argv)
 		printf("\n  Error: Aborted, detected negative arguments (invalid or overflow)");
 		goto exit;
 	}
-	last_modified_file_arg_active = (argv[14] != NULL);
+	last_modified_file_arg_active = (argv[LAST_MODIFIED_FILE] != NULL);
 
 	/* print all arguments */
 	if(verbosity_level == LOG_MAX)
@@ -162,13 +162,13 @@ int main(int argc, char **argv)
 		printf("\n  libultra_dir:\t\t%ld / %ld", libultra_dir, libultra_dir_max);
 		printf("\n  decompiled_words:\t%ld / %ld", decompiled_words, decompiled_words_max);
 		printf("\n  decompiled_files:\t%ld / %ld", decompiled_files, decompiled_files_max);
-		printf("\n  last_modified_file:\t%s\n%s\n", argv[14], LINE);
+		printf("\n  last_modified_file:\t%s\n%s\n", last_modified_file_arg_active ? argv[LAST_MODIFIED_FILE] : "NULL", LINE);
 	}
 
-	html = fopen(argv[13], "ab");
+	html = fopen(argv[HTML_OUTPUT], "ab");
 	if(html == NULL)
 	{
-		printf("\n  Error: Aborted, %s cannot be opened", argv[13]);
+		printf("\n  Error: Aborted, %s cannot be opened", argv[HTML_OUTPUT]);
 		goto exit;
 	}
 
