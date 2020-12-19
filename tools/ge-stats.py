@@ -149,7 +149,7 @@ def main(debug):
     totals['done'] = 0
     totals['total'] = 0
     
-    printstring = "report/report "
+    printstring = "./tools/report/report "
 
     if debug == 1:
         print('--------------------------')
@@ -181,7 +181,7 @@ def main(debug):
         printstring = printstring + str(files_completed['completed']) + ' ' + str(files_completed['total']) + ' '
         printstring = printstring + './tools/results/results.html "src/game/bond.c"'
         subprocess.Popen(printstring.split()) 
-        sys.stdout.write(printstring)
+        #sys.stdout.write(printstring)
         #      1481 15854      12774 232276        564 1312        652 20330      15471 269772         49 336
 
 if __name__ == '__main__':
