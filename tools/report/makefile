@@ -10,7 +10,7 @@ OUTHTML = $(SRCDIR)results.html
 #Compiler flags
 CFLAGS = -shared -ansi -Os -std=c89
 CFLAGSDBG = -shared -ansi -g -std=c89
-WFLAGS = -W -Wall -Wextra -pedantic -Wunreachable-code -Wno-implicit-fallthrough -Wno-unused-result
+WFLAGS = -W -Wall -Wextra -pedantic -Wunreachable-code
 
 #Linker flags
 OBJS = $(SRCDIR)main.o
