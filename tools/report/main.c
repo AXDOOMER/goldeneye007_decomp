@@ -16,9 +16,9 @@ int total_objectives(void)
 
 	for(;;)
 	{
-		if(missions[tmp_mis].obj[tmp_obj].line1[0] == '\0') /* reached end of mission's objectives, check next mission */
+		if(missions[tmp_mis].obj[tmp_obj][LINE1] == NULL) /* reached end of mission's objectives, check next mission */
 		{
-			if(missions[tmp_mis + 1].obj[OBJ_A].line1[0] == '\0') /* reached end of struct, stop counting */
+			if(missions[tmp_mis + 1].obj[OBJ_A][LINE1] == NULL) /* reached end of struct, stop counting */
 			{
 				break;
 			}
@@ -39,9 +39,9 @@ void calc_mission_and_objective(int *cur_mis, int *cur_obj, int decomp_progress)
 
 	for(;;)
 	{
-		if(missions[*cur_mis].obj[*cur_obj].line1[0] == '\0') /* reached end of mission's objectives, check next mission */
+		if(missions[*cur_mis].obj[*cur_obj][LINE1] == NULL) /* reached end of mission's objectives, check next mission */
 		{
-			if(missions[*cur_mis + 1].obj[OBJ_A].line1[0] == '\0') /* reached end of struct, stop counting */
+			if(missions[*cur_mis + 1].obj[OBJ_A][LINE1] == NULL) /* reached end of struct, stop counting */
 			{
 				break;
 			}
@@ -65,7 +65,7 @@ int max_objectives(const int cur_mis)
 
 	for(;;)
 	{
-		if(missions[cur_mis].obj[cur_obj].line1[0] == '\0') /* reached end of mission's objectives, break */
+		if(missions[cur_mis].obj[cur_obj][LINE1] == NULL) /* reached end of mission's objectives, break */
 		{
 			break;
 		}
@@ -160,7 +160,7 @@ int main(int argc, char **argv)
 
 	fprintf(html, "<text x=\"363\" y=\"648\">%s: James Bond</text>\n", missions[cur_mis].diff);
 	fprintf(html, "<text x=\"363\" y=\"754\">Mission %s: %s</text>\n", missions[cur_mis].title_num, missions[cur_mis].title_name);
-	fprintf(html, "<text x=\"363\" y=\"858\">%s: %s</text>\n", missions[cur_mis].part_num, missions[cur_mis].part_name);
+	fprintf(html, "<text x=\"363\" y=\"858\">Part %s: %s</text>\n", missions[cur_mis].part_num, missions[cur_mis].part_name);
 	fprintf(html, "<text x=\"363\" y=\"1015\">REPORT:</text>\n");
 	fprintf(html, "<text x=\"363\" y=\"1173\">Mission status:</text>\n");
 	fprintf(html, "<text x=\"1004\" y=\"1173\"%s</text>\n", cur_obj == cur_mis_objs_max ? ">Completed" : " class=\"failed\">FAILED");
@@ -168,11 +168,11 @@ int main(int argc, char **argv)
 	for(tmp_obj = OBJ_A; tmp_obj < cur_mis_objs_max; tmp_obj++, cur_line++)
 	{
 		fprintf(html, "<text x=\"363\" y=\"%d\">%s</text>\n", line_rows[cur_line], diff_char[tmp_obj]);
-		fprintf(html, "<text x=\"493\" y=\"%d\">%s</text>\n", line_rows[cur_line], missions[cur_mis].obj[tmp_obj].line1);
-		fprintf(html, "<text x=\"562\" y=\"%d\">%s</text>\n", line_rows[cur_line+1], missions[cur_mis].obj[tmp_obj].line2);
+		fprintf(html, "<text x=\"493\" y=\"%d\">%s</text>\n", line_rows[cur_line], missions[cur_mis].obj[tmp_obj][LINE1]);
 		fprintf(html, "<text x=\"2032\" y=\"%d\"%s</text>\n", line_rows[cur_line], tmp_obj < cur_obj ? ">Completed" : " class=\"failed\">FAILED");
-		if(missions[cur_mis].obj[tmp_obj].line2[0] != '\0') /* if objective took up two lines, skip an extra line for next objective */
+		if(missions[cur_mis].obj[tmp_obj][LINE2] != NULL) /* if objective took up two lines, skip an extra line for next objective */
 		{
+			fprintf(html, "<text x=\"562\" y=\"%d\">%s</text>\n", line_rows[cur_line+1], missions[cur_mis].obj[tmp_obj][LINE2]);
 			cur_line++;
 		}
 	}
@@ -224,16 +224,22 @@ int main(int argc, char **argv)
 	printf("\n    %s: %s (%s)\n", missions[cur_mis].title_name, missions[cur_mis].part_name, missions[cur_mis].diff);
 	for(tmp_obj = OBJ_A; tmp_obj < cur_mis_objs_max; tmp_obj++)
 	{
-		printf("\n      [%s] %s", tmp_obj < cur_obj ? "X" : " ", missions[cur_mis].obj[tmp_obj].line1);
-		if(missions[cur_mis].obj[tmp_obj].line2[0] != '\0')
-			printf(" %s", missions[cur_mis].obj[tmp_obj].line2);
+		printf("\n      [%s] %s", tmp_obj < cur_obj ? "X" : " ", missions[cur_mis].obj[tmp_obj][LINE1]);
+		if(missions[cur_mis].obj[tmp_obj][LINE2] != NULL)
+		{
+			printf(" %s", missions[cur_mis].obj[tmp_obj][LINE2]);
+		}
 		if(tmp_obj == cur_obj)
+		{
 			printf(" - %0.1f%%", obj_remaining * 100.f);
+		}
 	}
+
+	printf("\n\n    Mission Status: %s", cur_obj == cur_mis_objs_max ? "Completed" : "FAILED");
 	if(total_complete == max_objs)
-		printf("\n\n    Mission Status: Completed\n\n    Baron has been defeated - decomp is complete!!");
-	else
-		printf("\n\n    Mission Status: %s", cur_obj == cur_mis_objs_max ? "Completed" : "FAILED");
+	{
+		printf("\n\n    Baron has been defeated - decomp is complete!!");
+	}
 
 exit:
 	printf("\n%s\n\n", LINE);
