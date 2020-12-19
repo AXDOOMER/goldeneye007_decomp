@@ -106,6 +106,22 @@ def find_files_completed():
     return files_complete
 
 # --------------------------
+# Find and return the Name of most recent file
+# Only scans for C and S files
+# --------------------------
+def find_last_modified_file():
+    lastdate = 0
+    lastname = ''
+    for root, dirs, files in os.walk('src'):
+        for file in files:
+            if file.endswith(".c") or file.endswith(".s"):
+                if os.path.getmtime(file) > lastdate:
+                    lastdate = os.path.getmtime(file)
+                    lastname = file
+
+    return lastname
+
+# --------------------------
 # Calculate the decomp stats
 # on each folder
 # --------------------------
@@ -136,7 +152,7 @@ def do_stats(map_file, analyse_folders):
 
     return segments
 
-def main(debug):
+def main():
     files_completed = find_files_completed()
     
     map_file = parse_map()
@@ -151,44 +167,28 @@ def main(debug):
     
     printstring = "./tools/report/report "
 
-    if debug == 1:
-        print('--------------------------')
-        
-        print('FILES\t\t{:10,} / {:,} \t{:.2f}%'.format(int(files_completed['completed']), int(files_completed['total']), (files_completed['completed'] / files_completed['total'] * 100)))
-    
-        print('--------------------------')
-        print('WORDS')
-        
-        for key in segments.keys():
-            print('{:10}\t{:10,} / {:,} \t{:.2f}%'.format(key, int(segments[key]['done']), int(segments[key]['total']), (segments[key]['done'] / segments[key]['total'] * 100)))
-            totals['done'] += segments[key]['done']
-            totals['total'] += segments[key]['total']
-        
-        print('TOTAL\t\t{:10,} / {:,} \t{:.2f}%'.format(int(totals['done']), int(totals['total']), (totals['done'] / totals['total'] * 100)))
-        
-        print('--------------------------')
-    else:
-        for key in segments.keys():
-            sys.stdout.write(key + str(segments[key]['done']) + ' ' + str(segments[key]['total']) + ' ')
-            printstring = printstring + str(segments[key]['done']) + ' ' + str(segments[key]['total']) + ' '
-            totals['done'] += segments[key]['done']
-            totals['total'] += segments[key]['total']
-        
-        sys.stdout.write('total' + str(totals['done']) + ' ' + str(totals['total']) + ' ')
-        sys.stdout.write('fcom' + str(files_completed['completed']) + ' ' + str(files_completed['total']) + ' ')
-        sys.stdout.write('./tools/report/results.html "src/game/bond.c"')
-        printstring = printstring + str(totals['done']) + ' ' + str(totals['total']) + ' '
-        printstring = printstring + str(files_completed['completed']) + ' ' + str(files_completed['total']) + ' '
-        printstring = printstring + './tools/report/results.html "src/game/bond.c"'
-        subprocess.Popen(printstring.split()) 
-        #sys.stdout.write(printstring)
-        #      1481 15854      12774 232276        564 1312        652 20330      15471 269772         49 336
+
+    print('--------------------------')
+
+    print('FILES\t\t{:10,} / {:,} \t{:.2f}%'.format(int(files_completed['completed']), int(files_completed['total']), (files_completed['completed'] / files_completed['total'] * 100)))
+
+    print('--------------------------')
+    print('WORDS')
+
+    for key in segments.keys():
+        print('{:10}\t{:10,} / {:,} \t{:.2f}%'.format(key, int(segments[key]['done']), int(segments[key]['total']), (segments[key]['done'] / segments[key]['total'] * 100)))
+        printstring = printstring + str(segments[key]['done']) + ' ' + str(segments[key]['total']) + ' '
+        totals['done'] += segments[key]['done']
+        totals['total'] += segments[key]['total']
+
+    print('TOTAL\t\t{:10,} / {:,} \t{:.2f}%'.format(int(totals['done']), int(totals['total']), (totals['done'] / totals['total'] * 100)))
+    print('Last File Edited = ' + find_last_modified_file()
+    print('--------------------------')
+
+    printstring = printstring + str(totals['done']) + ' ' + str(totals['total']) + ' '
+    printstring = printstring + str(files_completed['completed']) + ' ' + str(files_completed['total']) + ' '
+    printstring = printstring + './tools/report/results.html ' + find_last_modified_file()
+    subprocess.Popen(printstring.split()) 
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        if sys.argv[1] == "debug":
-            main(1)
-        else:
-            main(0)
-    else:
-        main(0)
+    main()
