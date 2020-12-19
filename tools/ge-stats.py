@@ -180,7 +180,8 @@ def main(debug):
         printstring = printstring + str(totals['done']) + ' ' + str(totals['total']) + ' '
         printstring = printstring + str(files_completed['completed']) + ' ' + str(files_completed['total']) + ' '
         printstring = printstring + './tools/results/results.html "src/game/bond.c"'
-        subprocess.call(shlex.split('./report/report ' + printstring))
+        subprocess.call(shlex.split('report/report ' + printstring))
+        sys.stdout.write(subprocess.call(shlex.split('pwd')))
         sys.stdout.write(printstring)
         #      1481 15854      12774 232276        564 1312        652 20330      15471 269772         49 336
 
