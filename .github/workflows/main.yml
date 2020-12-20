@@ -39,7 +39,7 @@ jobs:
 #        run: make -C tools/report
         
       - name: Stats
-        run: git diff --name-only "$GITHUB_BASE_REF..$GITHUB_SHA" 
+        run: echo git diff --name-only "$GITHUB_BASE_REF..$GITHUB_SHA" 
         # | python3 tools/ge-stats.py
             
         # expected args
