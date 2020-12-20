@@ -188,7 +188,7 @@ def main():
 
     printstring = printstring + str(totals['done']) + ' ' + str(totals['total']) + ' '
     printstring = printstring + str(files_completed['completed']) + ' ' + str(files_completed['total']) + ' '
-    printstring = printstring + './tools/report/results.html ' + find_last_modified_file()
+    printstring = printstring + './tools/report/results.html ' + find_last_modified_file() + ' 2'
     subprocess.Popen(printstring.split()) 
 
 if __name__ == '__main__':
