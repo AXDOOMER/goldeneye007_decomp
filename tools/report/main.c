@@ -7,6 +7,34 @@
 #define PERCENTF(val, val_max) (((float)val / (float)val_max) * 100.f)
 #define CLAMP_VAL(value, min, max) (((value) < (min)) ? (min) : (((value) > (max)) ? (max) : ((value) < (min)) ? (min) : (value)))
 
+enum PROGRAM_ARGUMENTS
+{
+	PROGRAM_NAME = 0,
+	SRC_DIR,
+	SRC_DIR_MAX,
+	GAME_DIR,
+	GAME_DIR_MAX,
+	INFLATE_DIR,
+	INFLATE_DIR_MAX,
+	LIBULTRA_DIR,
+	LIBULTRA_DIR_MAX,
+	DECOMPILED_WORDS,
+	DECOMPILED_WORDS_MAX,
+	DECOMPILED_FILES,
+	DECOMPILED_FILES_MAX,
+	HTML_OUTPUT,
+	LAST_MODIFIED_FILE,
+	LOG_LEVEL,
+	ARGS_MAX
+};
+
+enum VERBOSITY_LOGGING
+{
+	LOG_MIN = 0,
+	LOG_DEF,
+	LOG_MAX
+};
+
 int total_objectives(void)
 {
 	/************************/
@@ -96,7 +124,7 @@ int main(int argc, char **argv)
 	/* read logging level */
 	if(argc == ARGS_MAX)
 	{
-		verbosity_level = CLAMP_VAL(atol(argv[LOG_LEVEL]), 0, 2);
+		verbosity_level = CLAMP_VAL(atoi(argv[LOG_LEVEL]), 0, 2);
 	}
 	if(verbosity_level != LOG_MIN)
 	{
@@ -241,9 +269,9 @@ int main(int argc, char **argv)
 
 	if(verbosity_level != LOG_MIN)
 	{
-		printf("\n  Successfully written stats to %s\n", argv[13]);
+		printf("\n  Successfully written stats to %s\n\n", argv[13]);
 	}
-	printf("\n    %s\n", missions[cur_mis].out_name);
+	printf("    %s\n", missions[cur_mis].out_name);
 	for(tmp_obj = OBJ_A; tmp_obj < cur_mis_objs_max; tmp_obj++)
 	{
 		printf("\n      [%s] %s", tmp_obj < cur_obj ? "X" : " ", missions[cur_mis].obj[tmp_obj][LINE1]);

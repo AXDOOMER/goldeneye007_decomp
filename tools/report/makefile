@@ -31,6 +31,7 @@ report: $(OBJS)
 
 clean:
 	@rm $(OUTNAME)
+	@rm $(OUTHTML)
 	@rm $(SRCDIR)*.o
 
 copy_html:
