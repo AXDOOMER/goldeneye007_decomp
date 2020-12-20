@@ -39,7 +39,7 @@ jobs:
 #        run: make -C tools/report
         
       - name: Stats
-        run: git diff --name-only HEAD^
+        run: git diff HEAD^ HEAD --name-only
         # | python3 tools/ge-stats.py
             
         # expected args
