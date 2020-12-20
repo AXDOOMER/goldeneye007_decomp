@@ -3,6 +3,8 @@ name: GE-CI
 on:
   push:
     branches: master
+    paths-ignore:
+    - 'tools/**'
   pull_request:
     branches: master
     
@@ -17,27 +19,28 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install Depedencies
-        run: |
-          sudo apt update
-          sudo apt install binutils-mips-linux-gnu make
+#      - name: Install Depedencies
+#        run: |
+#          sudo apt update
+#          sudo apt install binutils-mips-linux-gnu make
       
-      - name: Get US File
-        env:
-          FILE_US: ${{ secrets.SECRET_FILE_US  }}
-        run: wget -O baserom.u.z64 $FILE_US
-      
-      - name: Extract US Assets
-        run: ./extract_baserom.u.sh
-
-      - name: Make US 
-        run: make -j VERSION=US
-          
-      - name: Make report
-        run: make -C tools/report
+#      - name: Get US File
+#        env:
+#          FILE_US: ${{ secrets.SECRET_FILE_US  }}
+#        run: wget -O baserom.u.z64 $FILE_US
+#      
+#      - name: Extract US Assets
+#        run: ./extract_baserom.u.sh
+#
+#      - name: Make US 
+#        run: make -j VERSION=US
+#          
+#      - name: Make report
+#        run: make -C tools/report
         
       - name: Stats
-        run: python3 tools/ge-stats.py
+        run: git diff --name-only "$GITHUB_BASE_REF..$GITHUB_SHA" 
+        # | python3 tools/ge-stats.py
             
         # expected args
         # 1481 15854 12774 232276 564 1312 652 20330 15471 269772 49 336 tools/report/results.html "src/game/bond.c"
@@ -49,11 +52,14 @@ jobs:
       #  with:
       #    name: my-artifact
       #    path: tools/report/results.html
-      - name: Upload output file
-        uses: actions/upload-artifact@v1
-        with:
-          name: ReportPage(US)
-          path: tools/report
+#      - name: Upload output file
+#        uses: actions/upload-artifact@v1
+#        with:
+#          name: ReportPage(US)
+#          path: |
+#              tools/report/cursor.cur
+#              tools/report/result.html
+#              tools/report/sfx.ogg
 
   buildjp:
     
@@ -62,28 +68,28 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install Depedencies
-        run: |
-          sudo apt update
-          sudo apt install binutils-mips-linux-gnu make
+#      - name: Install Depedencies
+#        run: |
+#          sudo apt update
+#          sudo apt install binutils-mips-linux-gnu make
       
-      - name: Get US File
-        env:
-          FILE_US: ${{ secrets.SECRET_FILE_US  }}
-        run: wget -O baserom.u.z64 $FILE_US
+#      - name: Get US File
+#        env:
+#          FILE_US: ${{ secrets.SECRET_FILE_US  }}
+#        run: wget -O baserom.u.z64 $FILE_US
       
-      - name: Get JP File
-        env:
-          FILE_JP: ${{ secrets.SECRET_FILE_JP  }}
-        run: wget -O baserom.j.z64 $FILE_JP
+#      - name: Get JP File
+#        env:
+#          FILE_JP: ${{ secrets.SECRET_FILE_JP  }}
+#        run: wget -O baserom.j.z64 $FILE_JP
 
-      - name: Extract US Assets
-        run: ./extract_baserom.u.sh
+#      - name: Extract US Assets
+#        run: ./extract_baserom.u.sh
 
-      - name: Extract JP Assets
-        run: ./extract_diff.j.sh
+#      - name: Extract JP Assets
+#        run: ./extract_diff.j.sh
 
-      - name: Make JP 
-        run: make -j VERSION=JP
+#      - name: Make JP 
+#        run: make -j VERSION=JP
       
 #need way of telling report that JAP passed/failed
