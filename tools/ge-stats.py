@@ -115,9 +115,10 @@ def find_last_modified_file():
     for root, dirs, files in os.walk('src'):
         for file in files:
             if file.endswith(".c") or file.endswith(".s"):
-                if os.path.getmtime(file) > lastdate:
-                    lastdate = os.path.getmtime(file)
-                    lastname = file
+                _file = os.path.join(root, file)
+                if os.path.getmtime(_file) > lastdate:
+                    lastdate = os.path.getmtime(_file)
+                    lastname = _file
 
     return lastname
 
