@@ -56,10 +56,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: ReportPage(US)
-          path: |
-              tools/report/cursor.cur
-              tools/report/result.html
-              tools/report/sfx.ogg
+          path: tools/report/*.+(jpg|cur|ogg|html)
 
   buildjp:
     
