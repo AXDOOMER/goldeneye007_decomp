@@ -69,35 +69,35 @@ u16 D_800409DC[] = {
 };
 
 //D:80040A7C
-u16 D_80040A7C[] = {0xAC11, 0xAC1C, 0xAC1B, 0};
+u16 D_80040A7C[] = {TEXT(LOPTIONS,0x11), TEXT(LOPTIONS,0x1C), TEXT(LOPTIONS,0x1B), 0}; //look up/down, reverse, upright
 //D:80040A84
 u32 cur_player_look_vertical_inverted = 0;
 //D:80040A88
-u16 D_80040A88[] = {0xAC12, 0xAC1A, 0xAC19, 0};
+u16 D_80040A88[] = {TEXT(LOPTIONS,0x12), TEXT(LOPTIONS,0x1A), TEXT(LOPTIONS,0x19), 0}; //autoaim, off, on
 //D:80040A90
 u32 cur_player_autoaim_setting = 1;
 //D:80040A94
-u16 D_80040A94[] = {0xAC14, 0xAC1E, 0xAC1D, 0};
+u16 D_80040A94[] = {TEXT(LOPTIONS,0x14), TEXT(LOPTIONS,0x1E), TEXT(LOPTIONS,0x1D), 0}; //aim control, hold, toggle
 //D:80040A9C
 u32 cur_player_aim_control = 0;
 //D:80040AA0
-u16 D_80040AA0[] = {0xAC15, 0xAC1A, 0xAC19, 0};
+u16 D_80040AA0[] = {TEXT(LOPTIONS,0x15), TEXT(LOPTIONS,0x1A), TEXT(LOPTIONS,0x19), 0}; //sight on screen, off, on
 //D:80040AA8
 u32 cur_player_sight_onscreen = 1;
 //D:80040AAC
-u16 D_80040AAC[] = {0xAC13, 0xAC1A, 0xAC19, 0};
+u16 D_80040AAC[] = {TEXT(LOPTIONS,0x13), TEXT(LOPTIONS,0x1A), TEXT(LOPTIONS,0x19), 0}; //look ahead, off, on
 //D:80040AB4
 u32 cur_player_lookahead_setting = 1;
 //D:80040AB8
-u16 D_80040AB8[] = {0xAC16, 0xAC1A, 0xAC19, 0};
+u16 D_80040AB8[] = {TEXT(LOPTIONS,0x16), TEXT(LOPTIONS,0x1A), TEXT(LOPTIONS,0x19), 0}; //ammo on screen, off, on
 //D:80040AC0
 u32 cur_player_ammo_onscreen_setting = 1;
 //D:80040AC4
-u16 D_80040AC4[] = {0xAC17, 0xAC1F, 0xAC20, 0xAC21};
+u16 D_80040AC4[] = {TEXT(LOPTIONS,0x17), TEXT(LOPTIONS,0x1F), TEXT(LOPTIONS,0x20), TEXT(LOPTIONS,0x21)}; //screen, full, wide, cinema
 //D:80040ACC
 u32 cur_player_screen_setting = 0;
 //D:80040AD0
-u16 D_80040AD0[] = {0xAC18, 0xAC22, 0xAC23, 0};
+u16 D_80040AD0[] = {TEXT(LOPTIONS,0x18), TEXT(LOPTIONS,0x22), TEXT(LOPTIONS,0x23), 0}; //ratio, normal, 16:9
 //D:80040AD8
 u32 screen_ratio = 0;
 //D:80040ADC
