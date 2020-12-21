@@ -3,22 +3,29 @@ import os
 import sys
 import subprocess
 import shlex
+import getopt
 
 
 # --------------------------
 # Read Map File and return
 # all function lenghts
 # --------------------------
-def parse_map():
+def parse_map(version):
+
+    if version not in ("us", "jp"):
+        print('fatal: version', version, 'not supported!')
+        sys.exit(2)
     
+    version_code = version[0]
+
     infile = False
     prevromaddr = 0
     lengths = {}
 
-    p1 = re.compile(r"^ \.text\s+0x00000000([0-9a-f]{8})\s+0x([0-9a-f]+)\s+build\/u\/(.*)\/\S+.\w$")
+    p1 = re.compile(r"^ \.text\s+0x00000000([0-9a-f]{8})\s+0x([0-9a-f]+)\s+build\/" + re.escape(version_code) + r"\/(.*)\/\S+.\w$")
     p2 = re.compile(r"\s+0x00000000([0-9a-f]{8})\s+(\S+)$")
 
-    map_file = open('build/ge007.u.map', 'r')
+    map_file = open('build/ge007.' + version_code + '.map', 'r')
     lines = map_file.readlines()
 
     for line in lines:
@@ -153,21 +160,27 @@ def do_stats(map_file, analyse_folders):
 
     return segments
 
-def main():
-    files_completed = find_files_completed()
-    
-    map_file = parse_map()
-    
-    folders = ['src', 'src/game', 'src/inflate', 'src/libultra']
-    
-    segments = do_stats(map_file, folders)
-    
+def generate_report(segments, files_completed, last_modified_file):
+    printstring = "./tools/report/report "
+
     totals = {}
     totals['done'] = 0
     totals['total'] = 0
-    
-    printstring = "./tools/report/report "
 
+    for key in segments.keys():
+        printstring = printstring + str(segments[key]['done']) + ' ' + str(segments[key]['total']) + ' '
+        totals['done'] += segments[key]['done']
+        totals['total'] += segments[key]['total']
+
+    printstring = printstring + str(totals['done']) + ' ' + str(totals['total']) + ' '
+    printstring = printstring + str(files_completed['completed']) + ' ' + str(files_completed['total']) + ' '
+    printstring = printstring + './tools/report/results.html ' + last_modified_file + ' 2'
+    subprocess.Popen(printstring.split()) 
+
+def print_stats(segments, files_completed, last_modified_file):
+    totals = {}
+    totals['done'] = 0
+    totals['total'] = 0
 
     print('--------------------------')
 
@@ -178,7 +191,6 @@ def main():
 
     for key in segments.keys():
         print('{:10}\t{:10,} / {:,} \t{:.2f}%'.format(key, int(segments[key]['done']), int(segments[key]['total']), (segments[key]['done'] / segments[key]['total'] * 100)))
-        printstring = printstring + str(segments[key]['done']) + ' ' + str(segments[key]['total']) + ' '
         totals['done'] += segments[key]['done']
         totals['total'] += segments[key]['total']
 
@@ -186,10 +198,47 @@ def main():
     print('Last File Edited = ' + find_last_modified_file())
     print('--------------------------')
 
-    printstring = printstring + str(totals['done']) + ' ' + str(totals['total']) + ' '
-    printstring = printstring + str(files_completed['completed']) + ' ' + str(files_completed['total']) + ' '
-    printstring = printstring + './tools/report/results.html ' + find_last_modified_file() + ' 2'
-    subprocess.Popen(printstring.split()) 
+def print_help():
+    print('Usage: python3 ge-stats.py [OPTION]')
+    print('Generate Decompilation Stats for Goldeneye 007')
+    print('Example: python3 ge-stats.py --version us')
+    print(' ')
+    print('Options:')
+    print('  -v, --version=CODE     generate decomp stats for version CODE (us or jp). Default is us')
+    print('  -r, --report           generate html report using report tool')
+    print('  -h, --help             display this help text and exit')
+
+def main():
+
+    version = 'us'
+    run_report = False
+
+    if(len(sys.argv) > 1):
+        arguments, values = getopt.getopt(sys.argv[1:], "hv:r", ["help", "version=", "report"])
+
+        for current_argument, current_value in arguments:
+            if current_argument in ("-h", "--help"):
+                print_help()
+                sys.exit()
+            elif current_argument in ("-v", "--version"):
+                version = current_value
+            elif current_argument in ("-r", "--report"):
+                run_report = True
+
+    files_completed = find_files_completed()
+
+    last_modified_file = find_last_modified_file()
+    
+    map_file = parse_map(version)
+    
+    folders = ['src', 'src/game', 'src/inflate', 'src/libultra']
+    
+    segments = do_stats(map_file, folders)
+
+    print_stats(segments, files_completed, last_modified_file)
+
+    if run_report:
+        generate_report(segments, files_completed, last_modified_file)
 
 if __name__ == '__main__':
     main()
