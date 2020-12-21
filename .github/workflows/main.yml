@@ -58,7 +58,7 @@ jobs:
           name: ReportPage(US)
           path: |
             tools/report/cursor.cur
-            tools/report/result.html
+            tools/report/results.html
             tools/report/sfx.ogg
             tools/report/background.jpg
 
