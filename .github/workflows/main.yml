@@ -53,7 +53,7 @@ jobs:
       #    name: my-artifact
       #    path: tools/report/results.html
       - name: Upload output file
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: ReportPage(US)
           path: tools/report/*.+(jpg|cur|ogg|html)
