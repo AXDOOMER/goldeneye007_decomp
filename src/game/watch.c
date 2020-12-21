@@ -2286,18 +2286,16 @@ f32 sub_GAME_7F0A6A2C(f32 arg0)
 #ifdef VERSION_US
 void sub_GAME_7F0A6A80(void)
 {
-    u32 sp1C;
-    s32 temp_v0;
-    s32 temp_v0_2;
-    u32 aux1;
+    u32 temp_1;
+    s32 temp_2;
+    s32 temp_3;
+    u32 random_value;
 
-    //Block 1
     if (get_controller_buttons_pressed(0, 0x1000))
     {
         set_open_close_solo_watch_menu_to1();
     }
 
-    //Block 2
     if (controlstick_lr_enabled == 0)
     {
         if ((get_cur_controller_horz_stick_pos(0) >= -0xA) && (get_cur_controller_horz_stick_pos(0) < 0xB))
@@ -2314,7 +2312,6 @@ void sub_GAME_7F0A6A80(void)
         }
     }
 
-    //Block 3
     if (D_80040AE0 == 0)
     {
         if ((get_cur_controller_vert_stick_pos(0) >= -0xA) && (get_cur_controller_vert_stick_pos(0) < 0xB))
@@ -2331,60 +2328,53 @@ void sub_GAME_7F0A6A80(void)
         }
     }
 
-
-    //Block 4 -> L7F0A6BF4
-    temp_v0 = D_80040AF8;
-    if (temp_v0 < 0)
+    temp_2 = D_80040AF8;
+    if (temp_2 < 0)
     {
         D_80040AF4 = D_80040AF4 + 0xFFF00000;
     }
-    D_80040AF8 = temp_v0 - 1;
+    D_80040AF8 = temp_2 - 1;
 
-    //L7F0A6C20
     if (D_80040AF4 < 0x5F00A1U)
     {
         D_80040AF4 = 0xFF00A0U;
         D_80040AF8 = 0xF;
     }
 
-    //Block 5
-    temp_v0_2 = D_80040B00;
-    if (temp_v0_2 < 0)
+    temp_3 = D_80040B00;
+    if (temp_3 < 0)
     {
         D_80040AFC = D_80040AFC - 0x10;
     }
-    D_80040B00 = temp_v0_2 -1;
+    D_80040B00 = temp_3 - 1;
     
-    //L7F0A6C7C
     if (D_80040AFC < 0x60U)
     {
         D_80040AFC = 0xFFU;
         D_80040B00 = 0xF;
     }
-    
-    //L7F0A6CA8
+
     D_80040B14 += ((D_80040B1C * D_80048498 * 6.2831855f) / 360.0f);
     
     D_80040B14 = sub_GAME_7F0A6A2C(D_80040B14);
     
-    sp1C = D_80040B0C << 0x10;
-    if (sp1C < get_random_value())
+    temp_1 = D_80040B0C << 0x10;
+    if (temp_1 < get_random_value())
     {
         sub_GAME_7F0A51D8();
     }
 
-    //L7F0A6D2C
     if (D_80040B04 < 0xE0)
     {
-        aux1 = get_random_value();
-        D_80040B04 += (aux1 >> 0x1E);
+        random_value = get_random_value();
+        D_80040B04 += (random_value >> 0x1E);
     }
 
     if (D_80040B04 > 0xe0) {
         D_80040B04 = 0xe0;
     }
     
-    D_80040B08 = (s32) ((-D_80040B04 * 4) + 0x380);
+    D_80040B08 = ((-D_80040B04 * 4) + 0x380);
     D_80040B40 = D_80040B40 - 4;
     
     if (D_80040B40 >= 0x157) {
@@ -2400,44 +2390,52 @@ void sub_GAME_7F0A6A80(void)
     
     switch (watch_screen_index)
     {
-        case 0: // switch 1
+        case WATCH_INDEX_MISSION_STATUS:
             watch_screen0_navigation();
             break;
-        case 2: // switch 1
-            
-            switch (controller_options_index) {
-                case 0:
+        
+        case WATCH_INDEX_CONTROL_OPTIONS:
+            switch (controller_options_index)
+            {    
+                case CONTROLLER_OPTIONS_INDEX_STYLE:
                     controller_options_controlstyle_navigation();
                     break;
-                case 1:
+                
+                case CONTROLLER_OPTIONS_INDEX_INPUTS:
                     controller_options_inputs_navigation();
             }
             watch_screen2_navigation();
             break;
-        case 3: 
-            switch(game_options_index) {
-                case 0:
+        
+        case WATCH_INDEX_GAME_OPTIONS: 
+            switch (game_options_index)
+            {
+                case GAME_OPTIONS_INDEX_MUSIC:
                     game_options_music_volume_navigation();
                     break;
-                case 1:
+                
+                case GAME_OPTIONS_INDEX_FX:
                     game_options_fx_volume_navigation();
                     break;
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                case 7:
-                case 8:
-                case 9:
+                
+                case GAME_OPTIONS_INDEX_LOOK_UPDOWN:
+                case GAME_OPTIONS_INDEX_AUTO_AIM:
+                case GAME_OPTIONS_INDEX_AIM_CONTROL:
+                case GAME_OPTIONS_INDEX_SIGHT_ONSCREEN:
+                case GAME_OPTIONS_INDEX_LOOK_AHEAD:
+                case GAME_OPTIONS_INDEX_AMMO_ONSCREEN:
+                case GAME_OPTIONS_INDEX_SCREEN_SIZE:
+                case GAME_OPTIONS_INDEX_RATIO:
                     sub_GAME_7F0A5998();
             }
             watch_screen3_navigation();
             break;
-        case 4: 
+        
+        case WATCH_INDEX_MISSION_BRIEFING: 
             watch_screen4_navigation();
             break;
-        case 1: 
+        
+        case WATCH_INDEX_INVENTORY: 
             watch_screen1_navigation();
     }
 }
