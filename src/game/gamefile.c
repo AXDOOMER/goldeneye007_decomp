@@ -352,10 +352,6 @@ void set_selected_folder_num(u32 foldernum)
   selected_folder_num = foldernum;
 }
 
-
-
-
-
 void set_selected_difficulty(DIFFICULTY difficulty)
 {
     switch(difficulty)
@@ -390,35 +386,17 @@ void sub_GAME_7F01D61C(struct save_file *savefile)
 
 
 
-#ifdef NONMATCHING
+//this feels fake, generated with a permuter session i forgot was running
 void sub_GAME_7F01D644(struct save_file *eeprom)
 {
-  selected_folder_num_copy = selected_folder_num;
-  selected_folder_num = 100;
-  copy_eepromfile_a0_from_a1_to_buffer(100,eeprom);
-  return;
+  int new_var;
+  long long new_var2;
+  new_var2 = (long long) 0x64;
+  new_var = new_var2;
+  selected_folder_num_copy = (s32) selected_folder_num;
+  selected_folder_num = new_var;
+  copy_eepromfile_a0_from_a1_to_buffer(new_var, eeprom);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01D644
-/* 052174 7F01D644 3C028003 */  lui   $v0, %hi(selected_folder_num)
-/* 052178 7F01D648 2442A8E8 */  addiu $v0, %lo(selected_folder_num) # addiu $v0, $v0, -0x5718
-/* 05217C 7F01D64C 8C4E0000 */  lw    $t6, ($v0)
-/* 052180 7F01D650 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 052184 7F01D654 00802825 */  move  $a1, $a0
-/* 052188 7F01D658 3C018003 */  lui   $at, %hi(selected_folder_num_copy)
-/* 05218C 7F01D65C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 052190 7F01D660 24040064 */  li    $a0, 100
-/* 052194 7F01D664 AC2EA8EC */  sw    $t6, %lo(selected_folder_num_copy)($at)
-/* 052198 7F01D668 0FC07D17 */  jal   copy_eepromfile_a0_from_a1_to_buffer
-/* 05219C 7F01D66C AC440000 */   sw    $a0, ($v0)
-/* 0521A0 7F01D670 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0521A4 7F01D674 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0521A8 7F01D678 03E00008 */  jr    $ra
-/* 0521AC 7F01D67C 00000000 */   nop   
-)
-#endif
 
 
 void store_favorite_weapon_current_player(u32 right,u32 left)
@@ -426,6 +404,6 @@ void store_favorite_weapon_current_player(u32 right,u32 left)
   u32 playerNum;
   
   playerNum = get_cur_playernum();
-  array_favweapon[playerNum][0] = right;
-  array_favweapon[playerNum][1] = left;
+  array_favweapon[playerNum][RIGHT_HAND] = right;
+  array_favweapon[playerNum][LEFT_HAND] = left;
 }
