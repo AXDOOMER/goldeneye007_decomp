@@ -177,26 +177,33 @@ def generate_report(segments, files_completed, last_modified_file):
     printstring = printstring + './tools/report/results.html ' + last_modified_file + ' 2'
     subprocess.Popen(printstring.split()) 
 
-def print_stats(segments, files_completed, last_modified_file):
+def print_stats(version, segments, files_completed, last_modified_file):
     totals = {}
     totals['done'] = 0
     totals['total'] = 0
 
-    print('--------------------------')
+    print()
+    print('~> Decomp Statistics for ' + version.upper() +' version')
+    print('__________________________________________________________________')
+    print()
 
-    print('FILES\t\t{:10,} / {:,} \t{:.2f}%'.format(int(files_completed['completed']), int(files_completed['total']), (files_completed['completed'] / files_completed['total'] * 100)))
+    print('FILES')
+    print('\tlast modified file\t' + last_modified_file )
+    print('\ttotal files\t{:10,} / {:,} \t{:.2f}%'.format(int(files_completed['completed']), int(files_completed['total']), (files_completed['completed'] / files_completed['total'] * 100)))
+    
+    print('__________________________________________________________________')
+    print()
 
-    print('--------------------------')
     print('WORDS')
-
     for key in segments.keys():
-        print('{:10}\t{:10,} / {:,} \t{:.2f}%'.format(key, int(segments[key]['done']), int(segments[key]['total']), (segments[key]['done'] / segments[key]['total'] * 100)))
+        print('\t{:10}\t{:10,} / {:,} \t{:.2f}%'.format(key, int(segments[key]['done']), int(segments[key]['total']), (segments[key]['done'] / segments[key]['total'] * 100)))
         totals['done'] += segments[key]['done']
         totals['total'] += segments[key]['total']
 
-    print('TOTAL\t\t{:10,} / {:,} \t{:.2f}%'.format(int(totals['done']), int(totals['total']), (totals['done'] / totals['total'] * 100)))
-    print('Last File Edited = ' + find_last_modified_file())
-    print('--------------------------')
+    print('\t----------------------------------------------------------')
+    print('\tTOTAL\t\t{:10,} / {:,} \t{:.2f}%'.format(int(totals['done']), int(totals['total']), (totals['done'] / totals['total'] * 100)))
+    print('__________________________________________________________________')
+    print()
 
 def print_help():
     print('Usage: python3 ge-stats.py [OPTION]')
@@ -213,7 +220,7 @@ def main():
     version = 'us'
     run_report = False
 
-    if(len(sys.argv) > 1):
+    if (len(sys.argv) > 1):
         arguments, values = getopt.getopt(sys.argv[1:], "hv:r", ["help", "version=", "report"])
 
         for current_argument, current_value in arguments:
@@ -235,7 +242,7 @@ def main():
     
     segments = do_stats(map_file, folders)
 
-    print_stats(segments, files_completed, last_modified_file)
+    print_stats(version, segments, files_completed, last_modified_file)
 
     if run_report:
         generate_report(segments, files_completed, last_modified_file)
