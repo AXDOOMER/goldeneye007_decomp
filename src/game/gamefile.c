@@ -355,79 +355,37 @@ void set_selected_folder_num(u32 foldernum)
 
 
 
-#ifdef NONMATCHING
+
 void set_selected_difficulty(DIFFICULTY difficulty)
 {
-  if (difficulty != DIFFICULTY_AGENT) 
-  {
-    if (difficulty == DIFFICULTY_SECRET)
+    switch(difficulty)
     {
-      selected_difficulty = DIFFICULTY_SECRET;
-      return;
+    case DIFFICULTY_AGENT:
+    default:
+        selected_difficulty = DIFFICULTY_AGENT;
+        return;    
+    case DIFFICULTY_SECRET:
+        selected_difficulty = DIFFICULTY_SECRET;
+        return;
+    case DIFFICULTY_00:
+        selected_difficulty = DIFFICULTY_00;
+        return;
+    case DIFFICULTY_007:
+        selected_difficulty = DIFFICULTY_007;
+        return;
     }
-    if (difficulty == DIFFICULTY_00)
-    {
-      selected_difficulty = DIFFICULTY_00;
-      return;
-    }
-    if (difficulty == DIFFICULTY_007)
-    {
-      selected_difficulty = DIFFICULTY_007;
-      return;
-    }
-  }
-  else
-  {
-    selected_difficulty = DIFFICULTY_AGENT;
-  }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_selected_difficulty
-/* 0520CC 7F01D59C 10800009 */  beqz  $a0, .L7F01D5C4
-/* 0520D0 7F01D5A0 24020001 */   li    $v0, 1
-/* 0520D4 7F01D5A4 1082000A */  beq   $a0, $v0, .L7F01D5D0
-/* 0520D8 7F01D5A8 3C018003 */   lui   $at, %hi(selected_difficulty)
-/* 0520DC 7F01D5AC 24020002 */  li    $v0, 2
-/* 0520E0 7F01D5B0 10820009 */  beq   $a0, $v0, .L7F01D5D8
-/* 0520E4 7F01D5B4 3C018003 */   lui   $at, %hi(selected_difficulty)
-/* 0520E8 7F01D5B8 24020003 */  li    $v0, 3
-/* 0520EC 7F01D5BC 10820008 */  beq   $a0, $v0, .L7F01D5E0
-/* 0520F0 7F01D5C0 3C018003 */   lui   $at, %hi(selected_difficulty)
-.L7F01D5C4:
-/* 0520F4 7F01D5C4 3C018003 */  lui   $at, %hi(selected_difficulty)
-/* 0520F8 7F01D5C8 03E00008 */  jr    $ra
-/* 0520FC 7F01D5CC AC20A8FC */   sw    $zero, %lo(selected_difficulty)($at)
-
-.L7F01D5D0:
-/* 052100 7F01D5D0 03E00008 */  jr    $ra
-/* 052104 7F01D5D4 AC22A8FC */   sw    $v0, %lo(selected_difficulty)($at)
-
-.L7F01D5D8:
-/* 052108 7F01D5D8 03E00008 */  jr    $ra
-/* 05210C 7F01D5DC AC22A8FC */   sw    $v0, %lo(selected_difficulty)($at)
-
-.L7F01D5E0:
-/* 052110 7F01D5E0 AC22A8FC */  sw    $v0, %lo(selected_difficulty)($at)
-/* 052114 7F01D5E4 03E00008 */  jr    $ra
-/* 052118 7F01D5E8 00000000 */   nop   
-)
-#endif
-
-
-
 
 void set_solo_and_ptr_briefing(LEVELID stage)
 {
-  gamemode = GAMEMODE_SOLO;
-  selected_stage = stage;
-  briefingpage = pull_and_display_text_for_folder_a0(stage);
+    gamemode = GAMEMODE_SOLO;
+    selected_stage = stage;
+    briefingpage = pull_and_display_text_for_folder_a0(stage);
 }
 
 void sub_GAME_7F01D61C(struct save_file *savefile)
 {
-  copy_eeprom_from_to(selected_folder_num,savefile);
+    copy_eeprom_from_to(selected_folder_num,savefile);
 }
 
 
