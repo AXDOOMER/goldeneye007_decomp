@@ -39,7 +39,7 @@ jobs:
         run: make -C tools/report
         
       - name: Stats
-        run: python3 tools/ge-stats.py 
+        run: python3 tools/ge-stats.py --version us --report
         #git diff HEAD^ HEAD --name-only
             
         # expected args
@@ -92,5 +92,8 @@ jobs:
 
       - name: Make JP 
         run: make -j VERSION=JP
+
+      - name: Stats
+        run: python3 tools/ge-stats.py --version jp
       
 #need way of telling report that JAP passed/failed
