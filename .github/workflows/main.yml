@@ -53,13 +53,14 @@ jobs:
       #    name: my-artifact
       #    path: tools/report/results.html
       - name: Upload output file
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: ReportPage(US)
           path: |
-              tools/report/cursor.cur
-              tools/report/result.html
-              tools/report/sfx.ogg
+            tools/report/cursor.cur
+            tools/report/results.html
+            tools/report/sfx.ogg
+            tools/report/background.jpg
 
   buildjp:
     

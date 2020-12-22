@@ -1,29 +1,12 @@
-#include "ultra64.h"
-#include "tlb_resolve.h"
+# assembler directives
+.set noat      # allow manual use of $at
+.set noreorder # don't insert nops after branches
+.set gp=64
 
-/**
- * @file tlb_resolve.c
- * This file contains code to load/resolve TLBaddress. 
- */
+.include "macros.inc"
 
 
-/**
- * 2760	70001B60
- * loads/resolves TLB address, writting random entry
- */
-#ifdef NONMATCHING
-//i should probably remain as assembly, maybe even moved to a .s
-void resolve_TLBaddress_for_InvalidHit(void)
-{
-  setCopReg(0,PageMask,0,0);
-  setCopReg(0,EntryLo0,(longlong)*(int *)(Context + TLB_manager_mapping_table_end),0);
-  setCopReg(0,EntryLo1,(longlong)(*(int *)(Context + TLB_manager_mapping_table_end) + 0x40),0);
-  TLB_write_random_entry(Random,EntryHi,EntryLo0,EntryLo1,PageMask);
-  return;
-}
-#else
-GLOBAL_ASM(
-.text
+.section .text, "ax"
 glabel resolve_TLBaddress_for_InvalidHit
 /* 002760 70001B60 40802800 */  mtc0  $zero, $5
 /* 002764 70001B64 00000000 */  nop   
@@ -44,8 +27,7 @@ glabel resolve_TLBaddress_for_InvalidHit
 /* 0027A0 70001BA0 00000000 */  nop   
 /* 0027A4 70001BA4 00000000 */  nop   
 /* 0027A8 70001BA8 42000018 */  eret  
-)
-#endif
+
 
 
 
