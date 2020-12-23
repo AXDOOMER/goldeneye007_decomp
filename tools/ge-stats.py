@@ -174,7 +174,7 @@ def generate_report(segments, files_completed, last_modified_file):
 
     printstring = printstring + str(totals['done']) + ' ' + str(totals['total']) + ' '
     printstring = printstring + str(files_completed['completed']) + ' ' + str(files_completed['total']) + ' '
-    printstring = printstring + './tools/report/results.html ' + last_modified_file + ' 2'
+    printstring = printstring + './tools/report/results.html ' + last_modified_file + ' 0'
     subprocess.Popen(printstring.split()) 
 
 def print_stats(version, segments, files_completed, last_modified_file):
