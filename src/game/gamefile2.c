@@ -281,31 +281,16 @@ u32 check_if_eeprom_flag_set_0x80(struct save_data *folder)
 }
 
 
-
-
-#ifdef NONMATCHING
-void toggle_eeprom_flag_set_0x80(void) {
-
+void toggle_eeprom_flag_set_0x80(struct save_data *folder,u32 mode)
+{
+  if (mode != 0) {
+    folder->completion_bitflags = folder->completion_bitflags | 0x80;
+    return;
+  }
+  folder->completion_bitflags = folder->completion_bitflags & 0xff7f;
+  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel toggle_eeprom_flag_set_0x80
-/* 052494 7F01D964 50A00006 */  beql  $a1, $zero, .L7F01D980
-/* 052498 7F01D968 90980008 */   lbu   $t8, 8($a0)
-/* 05249C 7F01D96C 908E0008 */  lbu   $t6, 8($a0)
-/* 0524A0 7F01D970 35CF0080 */  ori   $t7, $t6, 0x80
-/* 0524A4 7F01D974 03E00008 */  jr    $ra
-/* 0524A8 7F01D978 A08F0008 */   sb    $t7, 8($a0)
 
-/* 0524AC 7F01D97C 90980008 */  lbu   $t8, 8($a0)
-.L7F01D980:
-/* 0524B0 7F01D980 3319FF7F */  andi  $t9, $t8, 0xff7f
-/* 0524B4 7F01D984 A0990008 */  sb    $t9, 8($a0)
-/* 0524B8 7F01D988 03E00008 */  jr    $ra
-/* 0524BC 7F01D98C 00000000 */   nop   
-)
-#endif
 
 
 
