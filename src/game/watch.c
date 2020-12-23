@@ -60,6 +60,23 @@ u16 D_800409DC[] = {
 u16 D_80040A7C[] = {TEXT(LOPTIONS,0x11), TEXT(LOPTIONS,0x1C), TEXT(LOPTIONS,0x1B), 0}; //look up/down, reverse, upright
 //D:80040A84
 u32 cur_player_look_vertical_inverted = 0;
+
+struct game_options game_options_entries[] = {
+    //{ {TEXT(LOPTIONS,0x11), TEXT(LOPTIONS,0x1C), TEXT(LOPTIONS,0x1B), 0}, 0}, //look up/down, reverse, upright
+    { {TEXT(LOPTIONS,0x12), TEXT(LOPTIONS,0x1A), TEXT(LOPTIONS,0x19), 0}, 1}, //autoaim, off, on
+    { {TEXT(LOPTIONS,0x14), TEXT(LOPTIONS,0x1E), TEXT(LOPTIONS,0x1D), 0}, 0}, //aim control, hold, toggle
+    { {TEXT(LOPTIONS,0x15), TEXT(LOPTIONS,0x1A), TEXT(LOPTIONS,0x19), 0}, 1}, //sight on screen, off, on
+    { {TEXT(LOPTIONS,0x13), TEXT(LOPTIONS,0x1A), TEXT(LOPTIONS,0x19), 0}, 1}, //look ahead, off, on
+    { {TEXT(LOPTIONS,0x16), TEXT(LOPTIONS,0x1A), TEXT(LOPTIONS,0x19), 0}, 1}, //ammo on screen, off, on
+    { {TEXT(LOPTIONS,0x17), TEXT(LOPTIONS,0x1F), TEXT(LOPTIONS,0x20), TEXT(LOPTIONS,0x21)}, 0}, //screen, full, wide, cinema
+    { {TEXT(LOPTIONS,0x18), TEXT(LOPTIONS,0x22), TEXT(LOPTIONS,0x23), 0}, 0} //ratio, normal, 16:9
+};
+
+/*
+//D:80040A7C
+u16 D_80040A7C[] = {TEXT(LOPTIONS,0x11), TEXT(LOPTIONS,0x1C), TEXT(LOPTIONS,0x1B), 0}; //look up/down, reverse, upright
+//D:80040A84
+u32 cur_player_look_vertical_inverted = 0;
 //D:80040A88
 u16 D_80040A88[] = {TEXT(LOPTIONS,0x12), TEXT(LOPTIONS,0x1A), TEXT(LOPTIONS,0x19), 0}; //autoaim, off, on
 //D:80040A90
@@ -88,6 +105,8 @@ u32 cur_player_screen_setting = 0;
 u16 D_80040AD0[] = {TEXT(LOPTIONS,0x18), TEXT(LOPTIONS,0x22), TEXT(LOPTIONS,0x23), 0}; //ratio, normal, 16:9
 //D:80040AD8
 u32 screen_ratio = 0;
+*/
+
 //D:80040ADC
 u32 controlstick_lr_enabled = 0;
 //D:80040AE0
@@ -809,29 +828,78 @@ void cur_player_set_control_type(int type)
 
 }
 
-u32 get_cur_player_look_vertical_inverted(void) {return cur_player_look_vertical_inverted;}
-void set_cur_player_look_vertical_inverted(u32 param_1) {cur_player_look_vertical_inverted = param_1;}
+u32 get_cur_player_look_vertical_inverted(void)
+{
+    return cur_player_look_vertical_inverted;
+}
+void set_cur_player_look_vertical_inverted(u32 param_1)
+{
+    cur_player_look_vertical_inverted = param_1;
+}
 
-u32 cur_player_get_autoaim(void) {return cur_player_autoaim_setting;}
-void cur_player_set_autoaim(u32 uParm1) {cur_player_autoaim_setting = uParm1;}
+u32 cur_player_get_autoaim(void)
+{
+    return game_options_entries[0].current_value;
+}
+void cur_player_set_autoaim(u32 param_1)
+{
+    game_options_entries[0].current_value = param_1;
+}
 
-u32 cur_player_get_lookahead(void) {return cur_player_lookahead_setting;}
-void cur_player_set_lookahead(u32 uParm1) {cur_player_lookahead_setting = uParm1;}
+u32 cur_player_get_lookahead(void)
+{
+    return game_options_entries[3].current_value;
+}
+void cur_player_set_lookahead(u32 param_1)
+{
+    game_options_entries[3].current_value = param_1;
+}
 
-u32 cur_player_get_aim_control(void) {return cur_player_aim_control;}
-void cur_player_set_aim_control(u32 uParm1) {cur_player_aim_control = uParm1;}
+u32 cur_player_get_aim_control(void)
+{
+    return game_options_entries[1].current_value;
+}
+void cur_player_set_aim_control(u32 param_1)
+{
+    game_options_entries[1].current_value = param_1;
+}
 
-u32 cur_player_get_sight_onscreen_control(void) {return cur_player_sight_onscreen;}
-void cur_player_set_sight_onscreen_control(u32 uParm1) {cur_player_sight_onscreen = uParm1;}
+u32 cur_player_get_sight_onscreen_control(void)
+{
+    return game_options_entries[2].current_value;
+}
+void cur_player_set_sight_onscreen_control(u32 param_1)
+{
+    game_options_entries[2].current_value = param_1;
+}
 
-u32 cur_player_get_ammo_onscreen_setting(void) {return cur_player_ammo_onscreen_setting;}
-void cur_player_set_ammo_onscreen_setting(u32 uParm1) {cur_player_ammo_onscreen_setting = uParm1;}
+u32 cur_player_get_ammo_onscreen_setting(void)
+{
+    return game_options_entries[4].current_value;
+}
+void cur_player_set_ammo_onscreen_setting(u32 param_1)
+{
+    game_options_entries[4].current_value = param_1;
+}
 
-u32 cur_player_get_screen_setting(void) {return cur_player_screen_setting;}
-void cur_player_set_screen_setting(u32 uParm1) {cur_player_screen_setting = uParm1;}
+u32 cur_player_get_screen_setting(void)
+{
+    return game_options_entries[5].current_value;
+}
+void cur_player_set_screen_setting(u32 param_1)
+{
+    game_options_entries[5].current_value = param_1;
+}
 
-u32 get_screen_ratio(void) {return screen_ratio;}
-void set_screen_ratio(u32 uParm1) {screen_ratio = uParm1;}
+u32 get_screen_ratio(void)
+{
+    return game_options_entries[6].current_value;
+}
+void set_screen_ratio(u32 param_1)
+{
+    game_options_entries[6].current_value = param_1;
+}
+
 
 
 void sub_GAME_7F0A4EF8(void) {
