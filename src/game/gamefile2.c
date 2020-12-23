@@ -1054,34 +1054,18 @@ glabel sub_GAME_7F01DF90
 
 
 
-#ifdef NONMATCHING
-void check_if_valid_folder_num(void) {
-
+s32 check_if_valid_folder_num(s32 folder)
+{
+    if ((folder >= 0) && (folder < 4))
+    {
+        return 1;
+    }
+    if (folder == 100)
+    {
+        return 1;
+    }
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_valid_folder_num
-/* 052DBC 7F01E28C 04800005 */  bltz  $a0, .L7F01E2A4
-/* 052DC0 7F01E290 28810004 */   slti  $at, $a0, 4
-/* 052DC4 7F01E294 50200004 */  beql  $at, $zero, .L7F01E2A8
-/* 052DC8 7F01E298 24010064 */   li    $at, 100
-/* 052DCC 7F01E29C 03E00008 */  jr    $ra
-/* 052DD0 7F01E2A0 24020001 */   li    $v0, 1
-
-.L7F01E2A4:
-/* 052DD4 7F01E2A4 24010064 */  li    $at, 100
-.L7F01E2A8:
-/* 052DD8 7F01E2A8 14810003 */  bne   $a0, $at, .L7F01E2B8
-/* 052DDC 7F01E2AC 00001025 */   move  $v0, $zero
-/* 052DE0 7F01E2B0 03E00008 */  jr    $ra
-/* 052DE4 7F01E2B4 24020001 */   li    $v0, 1
-
-.L7F01E2B8:
-/* 052DE8 7F01E2B8 03E00008 */  jr    $ra
-/* 052DEC 7F01E2BC 00000000 */   nop   
-)
-#endif
 
 
 
