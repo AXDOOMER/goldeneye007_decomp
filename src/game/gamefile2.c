@@ -188,21 +188,11 @@ glabel sub_GAME_7F01D840
 #endif
 
 
-
-#ifdef NONMATCHING
-void get_foldernum_of_eeprom(void) {
-
+u32 get_foldernum_of_eeprom(struct save_data *eeprom)
+{
+  return eeprom->completion_bitflags & 7;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_foldernum_of_eeprom
-/* 0523F8 7F01D8C8 90820008 */  lbu   $v0, 8($a0)
-/* 0523FC 7F01D8CC 304E0007 */  andi  $t6, $v0, 7
-/* 052400 7F01D8D0 03E00008 */  jr    $ra
-/* 052404 7F01D8D4 01C01025 */   move  $v0, $t6
-)
-#endif
+
 
 
 
@@ -649,7 +639,7 @@ glabel sub_GAME_7F01DCB0
 
 
 #ifdef NONMATCHING
-void check_if_cheat_unlocked(void) {
+u32 check_if_cheat_unlocked(save_file *folder,s32 cheat) {
 
 }
 #else
