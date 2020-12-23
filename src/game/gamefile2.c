@@ -274,20 +274,12 @@ glabel set_selected_bond
 
 
 
-#ifdef NONMATCHING
-void check_if_eeprom_flag_set_0x80(void) {
 
+u32 check_if_eeprom_flag_set_0x80(struct save_data *folder)
+{
+  return ((folder->completion_bitflags & 0x80) != 0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_eeprom_flag_set_0x80
-/* 052484 7F01D954 90820008 */  lbu   $v0, 8($a0)
-/* 052488 7F01D958 304E0080 */  andi  $t6, $v0, 0x80
-/* 05248C 7F01D95C 03E00008 */  jr    $ra
-/* 052490 7F01D960 000E102B */   sltu  $v0, $zero, $t6
-)
-#endif
+
 
 
 
