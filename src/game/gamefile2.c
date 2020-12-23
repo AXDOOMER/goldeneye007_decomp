@@ -215,21 +215,11 @@ glabel set_eeprom_to_folder_num
 #endif
 
 
-
-#ifdef NONMATCHING
-void set_eeprom_flag_0x18(void) {
-
+u32 set_eeprom_flag_0x18(struct save_data *folder)
+{
+  return (folder->completion_bitflags & 0x18) >> 3;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_eeprom_flag_0x18
-/* 052424 7F01D8F4 90820008 */  lbu   $v0, 8($a0)
-/* 052428 7F01D8F8 304E0018 */  andi  $t6, $v0, 0x18
-/* 05242C 7F01D8FC 03E00008 */  jr    $ra
-/* 052430 7F01D900 000E10C3 */   sra   $v0, $t6, 3
-)
-#endif
+
 
 
 
