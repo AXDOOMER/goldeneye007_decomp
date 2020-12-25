@@ -14,68 +14,26 @@ void remove_viewport_buffer(void) {
     viewport_img = 0;
 }
 
-
-#ifdef NONMATCHING
+#define ALIGN8(val) (((val) + 0x7) & ~0x7)
+#define ALIGN16(val) (((val) + 0xF) & ~0xF)
+#define ALIGN64(val) (((val) + 0x3F) & ~0x3F)
+u32 mempAllocBytesInBank(u32 bytes,u8 bank);
+u32 get_num_players(void);
 void allocate_viewport_buffer(void) {
-
+    if (resolution != 0) {
+        viewport_img_width = 440;
+        viewport_img_height = 330;
+    } else {
+        viewport_img_width = 320;
+        if (get_num_players() == 1) {
+            viewport_img_height = 240;
+        } else {
+            viewport_img_height = 120;
+        }
+    }
+    viewport_img = mempAllocBytesInBank((viewport_img_width * viewport_img_height * 2) + 64, 4);
+    viewport_img = ALIGN64(viewport_img);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel allocate_viewport_buffer
-/* 106EBC 7F0D238C 3C0E8003 */  lui   $t6, %hi(resolution) 
-/* 106EC0 7F0D2390 8DCE6428 */  lw    $t6, %lo(resolution)($t6)
-/* 106EC4 7F0D2394 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 106EC8 7F0D2398 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 106ECC 7F0D239C 11C00008 */  beqz  $t6, .L7F0D23C0
-/* 106ED0 7F0D23A0 3C028009 */   lui   $v0, %hi(viewport_img_height)
-/* 106ED4 7F0D23A4 240F01B8 */  li    $t7, 440
-/* 106ED8 7F0D23A8 3C018009 */  lui   $at, %hi(viewport_img_width)
-/* 106EDC 7F0D23AC 2442E314 */  addiu $v0, %lo(viewport_img_height) # addiu $v0, $v0, -0x1cec
-/* 106EE0 7F0D23B0 AC2FE310 */  sw    $t7, %lo(viewport_img_width)($at)
-/* 106EE4 7F0D23B4 2418014A */  li    $t8, 330
-/* 106EE8 7F0D23B8 10000010 */  b     .L7F0D23FC
-/* 106EEC 7F0D23BC AC580000 */   sw    $t8, ($v0)
-.L7F0D23C0:
-/* 106EF0 7F0D23C0 24190140 */  li    $t9, 320
-/* 106EF4 7F0D23C4 3C018009 */  lui   $at, %hi(viewport_img_width)
-/* 106EF8 7F0D23C8 0FC26919 */  jal   get_num_players
-/* 106EFC 7F0D23CC AC39E310 */   sw    $t9, %lo(viewport_img_width)($at)
-/* 106F00 7F0D23D0 24010001 */  li    $at, 1
-/* 106F04 7F0D23D4 14410005 */  bne   $v0, $at, .L7F0D23EC
-/* 106F08 7F0D23D8 3C028009 */   lui   $v0, %hi(viewport_img_height)
-/* 106F0C 7F0D23DC 2442E314 */  addiu $v0, %lo(viewport_img_height) # addiu $v0, $v0, -0x1cec
-/* 106F10 7F0D23E0 240800F0 */  li    $t0, 240
-/* 106F14 7F0D23E4 10000005 */  b     .L7F0D23FC
-/* 106F18 7F0D23E8 AC480000 */   sw    $t0, ($v0)
-.L7F0D23EC:
-/* 106F1C 7F0D23EC 3C028009 */  lui   $v0, %hi(viewport_img_height)
-/* 106F20 7F0D23F0 2442E314 */  addiu $v0, %lo(viewport_img_height) # addiu $v0, $v0, -0x1cec
-/* 106F24 7F0D23F4 24090078 */  li    $t1, 120
-/* 106F28 7F0D23F8 AC490000 */  sw    $t1, ($v0)
-.L7F0D23FC:
-/* 106F2C 7F0D23FC 3C0A8009 */  lui   $t2, %hi(viewport_img_width) 
-/* 106F30 7F0D2400 8D4AE310 */  lw    $t2, %lo(viewport_img_width)($t2)
-/* 106F34 7F0D2404 8C4B0000 */  lw    $t3, ($v0)
-/* 106F38 7F0D2408 24050004 */  li    $a1, 4
-/* 106F3C 7F0D240C 014B0019 */  multu $t2, $t3
-/* 106F40 7F0D2410 00002012 */  mflo  $a0
-/* 106F44 7F0D2414 00046040 */  sll   $t4, $a0, 1
-/* 106F48 7F0D2418 0C0025C8 */  jal   mempAllocBytesInBank
-/* 106F4C 7F0D241C 25840040 */   addiu $a0, $t4, 0x40
-/* 106F50 7F0D2420 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 106F54 7F0D2424 3C038005 */  lui   $v1, %hi(viewport_img)
-/* 106F58 7F0D2428 2463EB00 */  addiu $v1, %lo(viewport_img) # addiu $v1, $v1, -0x1500
-/* 106F5C 7F0D242C 244E003F */  addiu $t6, $v0, 0x3f
-/* 106F60 7F0D2430 2401FFC0 */  li    $at, -64
-/* 106F64 7F0D2434 AC620000 */  sw    $v0, ($v1)
-/* 106F68 7F0D2438 01C17824 */  and   $t7, $t6, $at
-/* 106F6C 7F0D243C AC6F0000 */  sw    $t7, ($v1)
-/* 106F70 7F0D2440 03E00008 */  jr    $ra
-/* 106F74 7F0D2444 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
-
 
 void sub_GAME_7F0D2448(s32 vp_image, s32 vp_width, s32 vp_height) {
     viewport_img = vp_image;
