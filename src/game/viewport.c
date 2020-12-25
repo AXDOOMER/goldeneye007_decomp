@@ -31,7 +31,7 @@ void zbufAllocate(void) {
     z_buffer = ALIGN64(z_buffer);
 }
 
-void zbufSetBuffer(void *buffer, s32 width, s32 height) {
+void zbufSetBuffer(s32 buffer, s32 width, s32 height) {
     z_buffer = buffer;
     z_buffer_width = width;
     z_buffer_height = height;
