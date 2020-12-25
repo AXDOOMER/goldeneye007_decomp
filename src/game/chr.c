@@ -36,8 +36,8 @@ struct animation_something D_8002CC2C = {0xFFFFFFFF, 0, 0, 0.0, 0, 0, 0.0, NULL,
 
 s32 D_8002CC58 = 0;
 s32 show_patrols_flag = FALSE;
-s32 player1_guardID = 0x1388;
-s32 ptr_guard_data = 0;
+s32 player1_guardID = 5000;
+PCHRdata ptr_guard_data = 0;
 s32 num_guards = 0;
 s32 D_8002CC6C[] = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 s32 D_8002CCA8 = 0;
@@ -2201,139 +2201,45 @@ glabel sub_GAME_7F01FC10
 #endif
 #endif
 
+s32 chrGetNumFree(void)
+{
+	s32 count = 0;
+	s32 i;
 
-#ifdef NONMATCHING
-void get_next_available_guardID(void) {
+	for (i = 0; i < num_guards; i++) {
+		if (ptr_guard_data[i].model == 0) {
+			count++;
+		}
+	}
 
+	return count;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_next_available_guardID
-/* 054AF0 7F01FFC0 3C048003 */  lui   $a0, %hi(num_guards)
-/* 054AF4 7F01FFC4 8C84CC68 */  lw    $a0, %lo(num_guards)($a0)
-/* 054AF8 7F01FFC8 00001825 */  move  $v1, $zero
-/* 054AFC 7F01FFCC 00001025 */  move  $v0, $zero
-/* 054B00 7F01FFD0 1880000F */  blez  $a0, .L7F020010
-/* 054B04 7F01FFD4 3C058003 */   lui   $a1, %hi(ptr_guard_data)
-/* 054B08 7F01FFD8 00043100 */  sll   $a2, $a0, 4
-/* 054B0C 7F01FFDC 00C43023 */  subu  $a2, $a2, $a0
-/* 054B10 7F01FFE0 000630C0 */  sll   $a2, $a2, 3
-/* 054B14 7F01FFE4 00C43023 */  subu  $a2, $a2, $a0
-/* 054B18 7F01FFE8 00063080 */  sll   $a2, $a2, 2
-/* 054B1C 7F01FFEC 8CA5CC64 */  lw    $a1, %lo(ptr_guard_data)($a1)
-.L7F01FFF0:
-/* 054B20 7F01FFF0 8CAE001C */  lw    $t6, 0x1c($a1)
-/* 054B24 7F01FFF4 244201DC */  addiu $v0, $v0, 0x1dc
-/* 054B28 7F01FFF8 0046082A */  slt   $at, $v0, $a2
-/* 054B2C 7F01FFFC 15C00002 */  bnez  $t6, .L7F020008
-/* 054B30 7F020000 00000000 */   nop   
-/* 054B34 7F020004 24630001 */  addiu $v1, $v1, 1
-.L7F020008:
-/* 054B38 7F020008 1420FFF9 */  bnez  $at, .L7F01FFF0
-/* 054B3C 7F02000C 24A501DC */   addiu $a1, $a1, 0x1dc
-.L7F020010:
-/* 054B40 7F020010 03E00008 */  jr    $ra
-/* 054B44 7F020014 00601025 */   move  $v0, $v1
-)
-#endif
 
+f32 get_007_health_mod(void);
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F020018(void) {
-
+void chrSetMaxDamage(PCHRdata chr, f32 maxdamage)
+{
+    chr->maxdamage = (get_007_health_mod() * maxdamage);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F020018
-/* 054B48 7F020018 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 054B4C 7F02001C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 054B50 7F020020 AFA40018 */  sw    $a0, 0x18($sp)
-/* 054B54 7F020024 0FC074BA */  jal   get_007_health_mod
-/* 054B58 7F020028 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 054B5C 7F02002C C7A4001C */  lwc1  $f4, 0x1c($sp)
-/* 054B60 7F020030 8FAE0018 */  lw    $t6, 0x18($sp)
-/* 054B64 7F020034 46040182 */  mul.s $f6, $f0, $f4
-/* 054B68 7F020038 E5C60100 */  swc1  $f6, 0x100($t6)
-/* 054B6C 7F02003C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 054B70 7F020040 27BD0018 */  addiu $sp, $sp, 0x18
-/* 054B74 7F020044 03E00008 */  jr    $ra
-/* 054B78 7F020048 00000000 */   nop   
-)
-#endif
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F02004C(void) {
-
+f32 chrGetMaxDamage(PCHRdata chr)
+{
+    return chr->maxdamage;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02004C
-/* 054B7C 7F02004C 03E00008 */  jr    $ra
-/* 054B80 7F020050 C4800100 */   lwc1  $f0, 0x100($a0)
-)
-#endif
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F020054(void) {
-
+void chrAddHealth(PCHRdata chr, f32 health)
+{
+    chr->damage -= (health * get_007_health_mod());
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F020054
-/* 054B84 7F020054 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 054B88 7F020058 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 054B8C 7F02005C AFA40018 */  sw    $a0, 0x18($sp)
-/* 054B90 7F020060 0FC074BA */  jal   get_007_health_mod
-/* 054B94 7F020064 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 054B98 7F020068 C7A6001C */  lwc1  $f6, 0x1c($sp)
-/* 054B9C 7F02006C 8FA20018 */  lw    $v0, 0x18($sp)
-/* 054BA0 7F020070 46003202 */  mul.s $f8, $f6, $f0
-/* 054BA4 7F020074 C44400FC */  lwc1  $f4, 0xfc($v0)
-/* 054BA8 7F020078 46082281 */  sub.s $f10, $f4, $f8
-/* 054BAC 7F02007C E44A00FC */  swc1  $f10, 0xfc($v0)
-/* 054BB0 7F020080 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 054BB4 7F020084 27BD0018 */  addiu $sp, $sp, 0x18
-/* 054BB8 7F020088 03E00008 */  jr    $ra
-/* 054BBC 7F02008C 00000000 */   nop   
-)
-#endif
 
+f32 chrGetArmor(PCHRdata chr)
+{
+	if (chr->damage < 0) {
+		return -chr->damage;
+	}
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F020090(void) {
-
+	return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F020090
-/* 054BC0 7F020090 44806000 */  mtc1  $zero, $f12
-/* 054BC4 7F020094 C48200FC */  lwc1  $f2, 0xfc($a0)
-/* 054BC8 7F020098 460C103C */  c.lt.s $f2, $f12
-/* 054BCC 7F02009C 00000000 */  nop   
-/* 054BD0 7F0200A0 45020004 */  bc1fl .L7F0200B4
-/* 054BD4 7F0200A4 46006006 */   mov.s $f0, $f12
-/* 054BD8 7F0200A8 03E00008 */  jr    $ra
-/* 054BDC 7F0200AC 46001007 */   neg.s $f0, $f2
-
-/* 054BE0 7F0200B0 46006006 */  mov.s $f0, $f12
-.L7F0200B4:
-/* 054BE4 7F0200B4 03E00008 */  jr    $ra
-/* 054BE8 7F0200B8 00000000 */   nop   
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 void init_GUARDdata_with_set_values(void) {
@@ -7072,7 +6978,7 @@ glabel sub_GAME_7F022980
 /* 0578E8 7F022DB8 02002025 */  move  $a0, $s0
 /* 0578EC 7F022DBC 46082402 */  mul.s $f16, $f4, $f8
 /* 0578F0 7F022DC0 46105181 */  sub.s $f6, $f10, $f16
-/* 0578F4 7F022DC4 0FC16799 */  jal   sub_GAME_7F059E64
+/* 0578F4 7F022DC4 0FC16799 */  jal   matrix_4x4_7F059E64
 /* 0578F8 7F022DC8 E7A60078 */   swc1  $f6, 0x78($sp)
 /* 0578FC 7F022DCC 27B00070 */  addiu $s0, $sp, 0x70
 /* 057900 7F022DD0 02002825 */  move  $a1, $s0

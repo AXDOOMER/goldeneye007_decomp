@@ -3,6 +3,7 @@
 
 #include "ultra64.h"
 #include "game/chr.h"
+#include "game/matrixmath.h"
 #include "structs.h"
 
 struct xyzpoint
@@ -316,12 +317,8 @@ struct Player
   s32 ypos3;
   s32 zpos3;
   s32 room_pointer;
-  s32 current_model_xpos;
-  s32 current_model_ypos;
-  s32 current_model_zpos;
-  s32 previous_model_xpos;
-  s32 previous_model_ypos;
-  s32 previous_model_zpos;
+  vec3 current_model_pos;
+  vec3 previous_model_pos;
   s32 current_room_xpos;
   s32 current_room_ypos;
   s32 current_room_zpos;
@@ -439,7 +436,7 @@ struct Player
   s32 field_218;
   s32 field_21C;
   s32 step_in_view_watch_animation;
-  s32 pause_animation_counter;
+  f32 pause_animation_counter;
   s32 field_228;
   s32 field_22C;
   s32 something_with_watch_object_instance;
@@ -614,32 +611,20 @@ struct Player
   s32 field_4D0;
   s32 field_4D4;
   s32 current_tile_ptr_for_portals;
-  s32 field_4DC;
-  s32 field_4E0;
+  u32 resetheadpos; // bool
+  u32 resetheadrot; // bool
   s32 field_4E4;
   s32 field_4E8;
-  f32 field_4EC;
+  f32 headdamp;
   s32 field_4F0;
   s32 field_4F4;
   s32 field_4F8;
-  struct xyzpoint scaled_velocity;
-  //f32 field_500;
-  //f32 field_504;
-  struct xyzpoint field_508;
-  //s32 field_50C;
-  //s32 field_510;
-  struct xyzpoint field_514;
-  //s32 field_518;
-  //s32 field_51C;
-  struct xyzpoint velocity;
-  //f32 field_524;
-  //f32 field_528;
-  struct xyzpoint field_52C;
-  //s32 field_530;
-  //s32 field_534;
-  struct xyzpoint field_538;
-  //s32 field_53C;
-  //s32 field_540;
+  vec3 headpos;
+  vec3 headlook;
+  vec3 headup;
+  vec3 headpossum;
+  vec3 headlooksum;
+  vec3 headupsum;
   s32 field_544;
   s32 field_548;
   s32 field_54C;
@@ -648,19 +633,9 @@ struct Player
   s32 field_558;
   s32 field_55C;
   s32 field_560;
-  s32 field_564;
-  s32 field_568;
-  s32 field_56C;
-  s32 field_570;
-  s32 field_574;
-  s32 field_578;
-  s32 field_57C;
-  s32 field_580;
-  s32 field_584;
-  s32 field_588;
-  s32 field_58C;
-  s32 field_590;
-  s32 field_594;
+  vec3 standlook[2];
+  vec3 standup[2];
+  s32 standcnt;
   s32 field_598;
   s32 field_59C;
   s32 field_5A0;
@@ -902,7 +877,7 @@ struct Player
   f32 c_recipscaley;
   s32 field_10C4;
   s32 field_10C8;
-  s32 field_10CC;
+  s32 field_10CC; // 4x4 matrix
   s32 field_10D0;
   s32 field_10D4;
   s32 field_10D8;

@@ -7810,7 +7810,7 @@ glabel set_actor_on_path
 
 
 
-void setSeenBondTimeToNow(struct CHRdata* guardData)
+void setSeenBondTimeToNow(PCHRdata guardData)
 {
   guardData->timeshooter = global_timer;
   return;
@@ -20533,7 +20533,7 @@ glabel get_angle_between_actor_cur_player
 #endif
 
 
-float distToBond3D(struct CHRdata *guardData)
+float distToBond3D(PCHRdata guardData)
 {
   struct PositionData *guardPosData;
   struct PositionData *playerPosData;
@@ -20664,7 +20664,7 @@ glabel check_if_room_for_preset_loaded
 #endif
 
 
-s32 convertPadIf9000(struct CHRdata* guardData,s32 padNo)
+s32 convertPadIf9000(PCHRdata guardData,s32 padNo)
 {
     // Guard's target pad.
     if (padNo == PAD_PRESET) {
@@ -22509,7 +22509,7 @@ glabel actionblock_guard_constructor_BDBE
 /* 068C94 7F034164 AFA40040 */  sw    $a0, 0x40($sp)
 /* 068C98 7F034168 AFA50044 */  sw    $a1, 0x44($sp)
 /* 068C9C 7F03416C AFA60048 */  sw    $a2, 0x48($sp)
-/* 068CA0 7F034170 0FC07FF0 */  jal   get_next_available_guardID
+/* 068CA0 7F034170 0FC07FF0 */  jal   chrGetNumFree
 /* 068CA4 7F034174 AFA7004C */   sw    $a3, 0x4c($sp)
 /* 068CA8 7F034178 28410003 */  slti  $at, $v0, 3
 /* 068CAC 7F03417C 14200031 */  bnez  $at, .L7F034244

@@ -637,7 +637,7 @@ glabel stage_load
 .L7F0BDEB0:
 /* 0F29E0 7F0BDEB0 0FC0154D */  jal   set_contents_of_80036078
 /* 0F29E4 7F0BDEB4 00002025 */   move  $a0, $zero
-/* 0F29E8 7F0BDEB8 0FC348E0 */  jal   remove_viewport_buffer
+/* 0F29E8 7F0BDEB8 0FC348E0 */  jal   zbufDeallocate
 /* 0F29EC 7F0BDEBC 00000000 */   nop   
 /* 0F29F0 7F0BDEC0 0C000EEC */  jal   setVideoWidthHeightToMode
 /* 0F29F4 7F0BDEC4 24040001 */   li    $a0, 1
@@ -942,7 +942,7 @@ glabel stage_load
 .Ljp7F0BEA70:
 /* 0F35E0 7F0BEA70 0FC01555 */  jal   set_contents_of_80036078
 /* 0F35E4 7F0BEA74 00002025 */   move  $a0, $zero
-/* 0F35E8 7F0BEA78 0FC34C18 */  jal   remove_viewport_buffer
+/* 0F35E8 7F0BEA78 0FC34C18 */  jal   zbufDeallocate
 /* 0F35EC 7F0BEA7C 00000000 */   nop   
 /* 0F35F0 7F0BEA80 0C000EEC */  jal   setVideoWidthHeightToMode
 /* 0F35F4 7F0BEA84 24040001 */   li    $a0, 1

@@ -4994,7 +4994,7 @@ action65_Object_Moved_To_Preset_4:
 /* 06BE94 7F037364 C60A0010 */  lwc1  $f10, 0x10($s0)
 /* 06BE98 7F037368 E7AA0020 */  swc1  $f10, 0x20($sp)
 /* 06BE9C 7F03736C C6100014 */  lwc1  $f16, 0x14($s0)
-/* 06BEA0 7F037370 0FC16642 */  jal   sub_GAME_7F059908
+/* 06BEA0 7F037370 0FC16642 */  jal   matrix_4x4_7F059908
 /* 06BEA4 7F037374 E7B00024 */   swc1  $f16, 0x24($sp)
 /* 06BEA8 7F037378 8E620014 */  lw    $v0, 0x14($s3)
 /* 06BEAC 7F03737C 27A504B8 */  addiu $a1, $sp, 0x4b8
@@ -5881,7 +5881,7 @@ action8F_Set_Guard_Health_3:
 /* 06CAF8 7F037FC8 468054A0 */  cvt.s.w $f18, $f10
 /* 06CAFC 7F037FCC 46069002 */  mul.s $f0, $f18, $f6
 /* 06CB00 7F037FD0 44050000 */  mfc1  $a1, $f0
-/* 06CB04 7F037FD4 0FC08006 */  jal   sub_GAME_7F020018
+/* 06CB04 7F037FD4 0FC08006 */  jal   chrSetMaxDamage
 /* 06CB08 7F037FD8 00000000 */   nop   
 /* 06CB0C 7F037FDC 26520003 */  addiu $s2, $s2, 3
 /* 06CB10 7F037FE0 1000F56A */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -5898,7 +5898,7 @@ action90_Set_Guard_Armor_Amount_3:
 /* 06CB38 7F038008 46808220 */  cvt.s.w $f8, $f16
 /* 06CB3C 7F03800C 46044002 */  mul.s $f0, $f8, $f4
 /* 06CB40 7F038010 44050000 */  mfc1  $a1, $f0
-/* 06CB44 7F038014 0FC08015 */  jal   sub_GAME_7F020054
+/* 06CB44 7F038014 0FC08015 */  jal   chrAddHealth
 /* 06CB48 7F038018 00000000 */   nop   
 /* 06CB4C 7F03801C 26520003 */  addiu $s2, $s2, 3
 /* 06CB50 7F038020 1000F55A */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -10861,7 +10861,7 @@ action65_Object_Moved_To_Preset_4:
 /* 06BE94 7F037364 C60A0010 */  lwc1  $f10, 0x10($s0)
 /* 06BE98 7F037368 E7AA0020 */  swc1  $f10, 0x20($sp)
 /* 06BE9C 7F03736C C6100014 */  lwc1  $f16, 0x14($s0)
-/* 06BEA0 7F037370 0FC16642 */  jal   sub_GAME_7F059908
+/* 06BEA0 7F037370 0FC16642 */  jal   matrix_4x4_7F059908
 /* 06BEA4 7F037374 E7B00024 */   swc1  $f16, 0x24($sp)
 /* 06BEA8 7F037378 8E620014 */  lw    $v0, 0x14($s3)
 /* 06BEAC 7F03737C 27A504B8 */  addiu $a1, $sp, 0x4b8
@@ -11748,7 +11748,7 @@ action8F_Set_Guard_Health_3:
 /* 06CAF8 7F037FC8 468054A0 */  cvt.s.w $f18, $f10
 /* 06CAFC 7F037FCC 46069002 */  mul.s $f0, $f18, $f6
 /* 06CB00 7F037FD0 44050000 */  mfc1  $a1, $f0
-/* 06CB04 7F037FD4 0FC08006 */  jal   sub_GAME_7F020018
+/* 06CB04 7F037FD4 0FC08006 */  jal   chrSetMaxDamage
 /* 06CB08 7F037FD8 00000000 */   nop   
 /* 06CB0C 7F037FDC 26520003 */  addiu $s2, $s2, 3
 /* 06CB10 7F037FE0 1000F56A */  b     GetByteS1_ParseCommandByte_SwitchCase
@@ -11765,7 +11765,7 @@ action90_Set_Guard_Armor_Amount_3:
 /* 06CB38 7F038008 46808220 */  cvt.s.w $f8, $f16
 /* 06CB3C 7F03800C 46044002 */  mul.s $f0, $f8, $f4
 /* 06CB40 7F038010 44050000 */  mfc1  $a1, $f0
-/* 06CB44 7F038014 0FC08015 */  jal   sub_GAME_7F020054
+/* 06CB44 7F038014 0FC08015 */  jal   chrAddHealth
 /* 06CB48 7F038018 00000000 */   nop   
 /* 06CB4C 7F03801C 26520003 */  addiu $s2, $s2, 3
 /* 06CB50 7F038020 1000F55A */  b     GetByteS1_ParseCommandByte_SwitchCase
