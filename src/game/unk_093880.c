@@ -7659,7 +7659,7 @@ glabel init_player_data_ptrs_construct_viewports
 
 
 #ifdef NONMATCHING
-u32 get_num_players(void)
+s32 get_num_players(void)
 {
     u32 uVar1;
     
@@ -7894,7 +7894,7 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->field_4F0 = 0;
     (*ppPVar3)->field_4F4 = 1.00000000;
     (*ppPVar3)->field_4F8 = 1.00000000;
-    (*ppPVar3)->scaled_velocity = 0.00000000;
+    (*ppPVar3)->headpos = 0.00000000;
     (*ppPVar3)->field_500 = 0.00000000;
     (*ppPVar3)->field_504 = 0.00000000;
     (*ppPVar3)->field_508 = 0.00000000;
@@ -7903,7 +7903,7 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->field_514 = 0.00000000;
     (*ppPVar3)->field_518 = 1.00000000;
     (*ppPVar3)->field_51C = 0.00000000;
-    (*ppPVar3)->velocity = 0.00000000;
+    (*ppPVar3)->headpossum = 0.00000000;
     (*ppPVar3)->field_524 = 0.00000000;
     (*ppPVar3)->field_528 = 0.00000000;
     (*ppPVar3)->field_52C = 0.00000000;
@@ -7932,7 +7932,7 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->field_588 = 0.00000000;
     (*ppPVar3)->field_58C = 1.00000000;
     (*ppPVar3)->field_590 = 0.00000000;
-    (*ppPVar3)->field_594 = 0;
+    (*ppPVar3)->standcnt = 0;
     iVar1 = 0;
     do {
         *(undefined2 *)((int)&((*ppPVar3)->field_7D0).field_7D0 + iVar1) = 0x280;

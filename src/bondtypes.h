@@ -48,10 +48,8 @@ typedef struct PropRecord
   } Entityp;
 } PropRecord;
 
-typedef struct CHRdata CHRdata, *PCHRdata;
-
 /* unfinished struct, WIP */
-struct CHRdata {
+typedef struct {
     u16 chrnum;
     s8 accuracyrating;
     s8 speedrating;
@@ -222,7 +220,7 @@ struct CHRdata {
     int field_1D0;
     int field_1D4;
     int * handle_positiondata_hat;
-};
+} CHRdata, *PCHRdata;
 
 struct object_standard {
     u16 extrascale:2; 
