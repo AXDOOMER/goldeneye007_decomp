@@ -26287,7 +26287,7 @@ set_body_mp_choice_maybe:
 /* 04D424 7F0188F4 3B04003F */  xori  $a0, $t8, 0x3f
 /* 04D428 7F0188F8 AFA200B0 */  sw    $v0, 0xb0($sp)
 /* 04D42C 7F0188FC 240501B8 */  li    $a1, 440
-/* 04D430 7F018900 0FC34912 */  jal   sub_GAME_7F0D2448
+/* 04D430 7F018900 0FC34912 */  jal   zbufSetBuffer
 /* 04D434 7F018904 2406014A */   li    $a2, 330
 /* 04D438 7F018908 3C060001 */  lui   $a2, (0x00019000 >> 16) # lui $a2, 1
 /* 04D43C 7F01890C 34C69000 */  ori   $a2, (0x00019000 & 0xFFFF) # ori $a2, $a2, 0x9000

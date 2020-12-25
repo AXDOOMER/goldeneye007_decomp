@@ -133,7 +133,7 @@ void init_both_video_buffers(void)
 {
     s32 i;
     
-    remove_viewport_buffer();
+    zbufDeallocate();
     for (i = 0; i != 0x25800; i += 4)
     {
         cfb_16_a[i] = 0;
@@ -152,7 +152,7 @@ GLOBAL_ASM(
 glabel init_both_video_buffers
 /* 003D24 70003124 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 003D28 70003128 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 003D2C 7000312C 0FC348E0 */  jal   remove_viewport_buffer
+/* 003D2C 7000312C 0FC348E0 */  jal   zbufDeallocate
 /* 003D30 70003130 00000000 */   nop   
 /* 003D34 70003134 3C070002 */  lui   $a3, (0x00025800 >> 16) # lui $a3, 2
 /* 003D38 70003138 3C06803E */  lui   $a2, %hi(cfb_16_b) # $a2, 0x803e
@@ -1655,7 +1655,7 @@ s32 video_related_10(s32 arg0)
     phi_a0 = arg0;
     if (ptr_video_settings2->unk24 != 0)
     {
-        phi_a0 = sub_GAME_7F0D2518(sub_GAME_7F0D2464());
+        phi_a0 = zbufClearCurrentPlayer(zbuf7F0D2464());
     }
     return phi_a0;
 }
@@ -1670,9 +1670,9 @@ glabel video_related_10
 /* 004AC4 70003EC4 8DCF0024 */  lw    $t7, 0x24($t6)
 /* 004AC8 70003EC8 51E00007 */  beql  $t7, $zero, .L70003EE8
 /* 004ACC 70003ECC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 004AD0 70003ED0 0FC34919 */  jal   sub_GAME_7F0D2464
+/* 004AD0 70003ED0 0FC34919 */  jal   zbuf7F0D2464
 /* 004AD4 70003ED4 00000000 */   nop   
-/* 004AD8 70003ED8 0FC34946 */  jal   sub_GAME_7F0D2518
+/* 004AD8 70003ED8 0FC34946 */  jal   zbufClearCurrentPlayer
 /* 004ADC 70003EDC 00402025 */   move  $a0, $v0
 /* 004AE0 70003EE0 00402025 */  move  $a0, $v0
 /* 004AE4 70003EE4 8FBF0014 */  lw    $ra, 0x14($sp)

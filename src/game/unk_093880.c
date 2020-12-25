@@ -7690,7 +7690,7 @@ glabel init_player_data_ptrs_construct_viewports
 
 
 #ifdef NONMATCHING
-u32 get_num_players(void)
+s32 get_num_players(void)
 {
     u32 uVar1;
     
