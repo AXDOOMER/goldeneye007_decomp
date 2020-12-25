@@ -201,7 +201,7 @@ void mem_bars_flag_toggle(void) {
  *     loads primary resources and starts main program loop
  *     this is infinite.  Loops unconditionally: JAL 70006060
  */
-void setup_gamevalues_and_launchmainloop(void) {
+void bossEntry(void) {
     init_mainthread_data();
     allocate_init_rsp_buffers();
     setupaudio();

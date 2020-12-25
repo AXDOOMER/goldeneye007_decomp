@@ -2672,7 +2672,7 @@ glabel remove_hands_item
 /* 092790 7F05DC60 AD200A4C */  sw    $zero, 0xa4c($t1)
 /* 092794 7F05DC64 8E2A0000 */  lw    $t2, ($s1)
 /* 092798 7F05DC68 01505821 */  addu  $t3, $t2, $s0
-/* 09279C 7F05DC6C 0FC23638 */  jal   sub_GAME_7F08D8E0
+/* 09279C 7F05DC6C 0FC23638 */  jal   calculate_equip_cur_item
 /* 0927A0 7F05DC70 AD600A50 */   sw    $zero, 0xa50($t3)
 /* 0927A4 7F05DC74 8FBF001C */  lw    $ra, 0x1c($sp)
 /* 0927A8 7F05DC78 8FB00014 */  lw    $s0, 0x14($sp)

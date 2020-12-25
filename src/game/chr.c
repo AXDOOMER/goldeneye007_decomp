@@ -1219,7 +1219,7 @@ glabel sub_GAME_7F01F614
 .L7F01F708:
 /* 054238 7F01F708 AFA0004C */  sw    $zero, 0x4c($sp)
 /* 05423C 7F01F70C 27A40078 */  addiu $a0, $sp, 0x78
-/* 054240 7F01F710 0FC2CA2C */  jal   sub_GAME_7F0B28B0
+/* 054240 7F01F710 0FC2CA2C */  jal   getCollisionEdge_maybe
 /* 054244 7F01F714 27A5006C */   addiu $a1, $sp, 0x6c
 /* 054248 7F01F718 50400130 */  beql  $v0, $zero, .L7F01FBDC
 /* 05424C 7F01F71C 8FA40098 */   lw    $a0, 0x98($sp)
@@ -7158,7 +7158,7 @@ glabel sub_GAME_7F022EEC
 /* 057A7C 7F022F4C 44812000 */  mtc1  $at, $f4
 /* 057A80 7F022F50 02302021 */  addu  $a0, $s1, $s0
 /* 057A84 7F022F54 4604B502 */  mul.s $f20, $f22, $f4
-/* 057A88 7F022F58 0FC0CB79 */  jal   sub_GAME_7F032DE4
+/* 057A88 7F022F58 0FC0CB79 */  jal   distToBond3D
 /* 057A8C 7F022F5C 00000000 */   nop   
 /* 057A90 7F022F60 8E700000 */  lw    $s0, ($s3)
 /* 057A94 7F022F64 0211C821 */  addu  $t9, $s0, $s1

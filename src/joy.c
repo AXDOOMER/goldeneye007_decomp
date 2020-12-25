@@ -293,7 +293,7 @@ s32 controller_7000B734(s32 arg0)
                 temp_ret = osPfsInit(&contdemoMesgMQ, (arg0 * 0x68) + &player1_controller_packet, arg0, temp_a3);
                 if ((temp_ret == 0xa) || (temp_ret == 0xb))
                 {
-                    temp_ret_2 = controller_7000CD38(&contdemoMesgMQ, sp20, arg0, sp1C);
+                    temp_ret_2 = osMotorInit(&contdemoMesgMQ, sp20, arg0, sp1C);
                     if (temp_ret_2 == 0)
                     {
                         *sp1C = 1;
@@ -358,7 +358,7 @@ glabel controller_7000B734
 .L7000B7D4:
 /* 00C3D4 7000B7D4 3C048006 */   lui   $a0, %hi(contdemoMesgMQ)
 /* 00C3D8 7000B7D8 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
-/* 00C3DC 7000B7DC 0C00334E */  jal   controller_7000CD38
+/* 00C3DC 7000B7DC 0C00334E */  jal   osMotorInit
 /* 00C3E0 7000B7E0 AFA7001C */   sw    $a3, 0x1c($sp)
 /* 00C3E4 7000B7E4 14400004 */  bnez  $v0, .L7000B7F8
 /* 00C3E8 7000B7E8 8FA7001C */   lw    $a3, 0x1c($sp)
@@ -736,7 +736,7 @@ s32 controller_rumble_related(void) {
         if (1 == controller_1_rumble_pulse)
         {
             // Node 3
-            if (controller_7000CAAC(temp_a0) == 0)
+            if (osMotorStart(temp_a0) == 0)
             {
                 // Node 4
                 controller_1_rumble_state = 1;
@@ -750,7 +750,7 @@ s32 controller_rumble_related(void) {
         else
         {
             // Node 6
-            if (send_rumble_off_to_PIF(temp_a0) == 0)
+            if (osMotorStop(temp_a0) == 0)
             {
                 // Node 7
                 controller_1_rumble_state = 0;
@@ -825,7 +825,7 @@ glabel controller_rumble_related
 /* 00C6EC 7000BAEC 000F78C0 */  sll   $t7, $t7, 3
 /* 00C6F0 7000BAF0 16A2000B */  bne   $s5, $v0, .L7000BB20
 /* 00C6F4 7000BAF4 01F82021 */   addu  $a0, $t7, $t8
-/* 00C6F8 7000BAF8 0C0032AB */  jal   controller_7000CAAC
+/* 00C6F8 7000BAF8 0C0032AB */  jal   osMotorStart
 /* 00C6FC 7000BAFC 00000000 */   nop   
 /* 00C700 7000BB00 14400003 */  bnez  $v0, .L7000BB10
 /* 00C704 7000BB04 3C198002 */   lui   $t9, %hi(controller_1_rumble_inserted) 
@@ -837,7 +837,7 @@ glabel controller_rumble_related
 /* 00C718 7000BB18 1000000A */  b     .L7000BB44
 /* 00C71C 7000BB1C AC400000 */   sw    $zero, ($v0)
 .L7000BB20:
-/* 00C720 7000BB20 0C003260 */  jal   send_rumble_off_to_PIF
+/* 00C720 7000BB20 0C003260 */  jal   osMotorStop
 /* 00C724 7000BB24 00000000 */   nop   
 /* 00C728 7000BB28 14400003 */  bnez  $v0, .L7000BB38
 /* 00C72C 7000BB2C 3C088002 */   lui   $t0, %hi(controller_1_rumble_inserted) 
@@ -917,7 +917,7 @@ glabel controller_rumble_related
 /* 00C708 7000BB08 000F78C0 */  sll   $t7, $t7, 3
 /* 00C70C 7000BB0C 16C2000B */  bne   $s6, $v0, .Ljp7000BB3C
 /* 00C710 7000BB10 01F88021 */   addu  $s0, $t7, $t8
-/* 00C714 7000BB14 0C0032BB */  jal   controller_7000CAAC
+/* 00C714 7000BB14 0C0032BB */  jal   osMotorStart
 /* 00C718 7000BB18 02002025 */   move  $a0, $s0
 /* 00C71C 7000BB1C 14400003 */  bnez  $v0, .Ljp7000BB2C
 /* 00C720 7000BB20 3C198002 */   lui   $t9, %hi(controller_1_rumble_inserted) # $t9, 0x8002
@@ -933,7 +933,7 @@ glabel controller_rumble_related
 /* 00C740 7000BB40 3C048006 */   lui   $a0, %hi(contdemoMesgMQ) # $a0, 0x8006
 /* 00C744 7000BB44 24845390 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5390
 /* 00C748 7000BB48 02002825 */  move  $a1, $s0
-/* 00C74C 7000BB4C 0C00335E */  jal   controller_7000CD38
+/* 00C74C 7000BB4C 0C00335E */  jal   osMotorInit
 /* 00C750 7000BB50 02603025 */   move  $a2, $s3
 /* 00C754 7000BB54 10400004 */  beqz  $v0, .Ljp7000BB68
 /* 00C758 7000BB58 3C088002 */   lui   $t0, %hi(controller_1_rumble_inserted) # $t0, 0x8002
@@ -941,13 +941,13 @@ glabel controller_rumble_related
 /* 00C760 7000BB60 02881021 */  addu  $v0, $s4, $t0
 /* 00C764 7000BB64 AC400000 */  sw    $zero, ($v0)
 .Ljp7000BB68:
-/* 00C768 7000BB68 0C003270 */  jal   send_rumble_off_to_PIF
+/* 00C768 7000BB68 0C003270 */  jal   osMotorStop
 /* 00C76C 7000BB6C 02002025 */   move  $a0, $s0
 /* 00C770 7000BB70 AE400000 */  sw    $zero, ($s2)
 /* 00C774 7000BB74 1000000A */  b     .Ljp7000BBA0
 /* 00C778 7000BB78 AEA00000 */   sw    $zero, ($s5)
 .Ljp7000BB7C:
-/* 00C77C 7000BB7C 0C003270 */  jal   send_rumble_off_to_PIF
+/* 00C77C 7000BB7C 0C003270 */  jal   osMotorStop
 /* 00C780 7000BB80 02002025 */   move  $a0, $s0
 /* 00C784 7000BB84 14400003 */  bnez  $v0, .Ljp7000BB94
 /* 00C788 7000BB88 3C098002 */   lui   $t1, %hi(controller_1_rumble_inserted) # $t1, 0x8002
@@ -1909,7 +1909,7 @@ glabel get_controller_buttons_held
 
 
 #ifdef NONMATCHING
-s32 get_controller_buttons_pressed(s32 arg0, s32 arg1) {
+s32 get_controller_buttons_pressed(s8 arg0, s32 arg1) {
     s32 temp_t7;
     void *temp_v1;
 

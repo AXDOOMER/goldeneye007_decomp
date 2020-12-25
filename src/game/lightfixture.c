@@ -1,31 +1,33 @@
 #include "ultra64.h"
+#include "game/lightfixture.h"
+#include "assets/images/image_externs.h"
 
 // bss
 //CODE.bss:80082660
-char light_fixture_table[0x4B0];
+s_lightfixture light_fixture_table[0x64];
 //CODE.bss:80082B10
 s16 cur_entry_lightfixture_table;
 //CODE.bss:80082B12
 s16 index_of_cur_entry_lightfixture_table;
 //CODE.bss:80082B14                     .align 3
 //CODE.bss:80082B18
-char word_CODE_bss_80082B18[0x800];
+s16 word_CODE_bss_80082B18[0x400];
 //CODE.bss:80083318
 s32 dword_CODE_bss_80083318;
-
 
 
 // data
 //D:80046030
 s32 D_80046030[] = {0, 0, 0, 0, 0, 0, 0, 0};
 
-/* rodata
-
-*/
-
+//this mostly matches 4 bytes different
 #ifdef NONMATCHING
-void init_lightfixture_tables(void) {
-
+void init_lightfixture_tables(void)
+{
+    s32 i;
+    for (i=0;i<0x64;i++) {light_fixture_table[i].index = 0;}
+    for (i=0;i<0x400;i++) {word_CODE_bss_80082B18[i] = 0;}
+    D_80046030[0] = 0;
 }
 #else
 GLOBAL_ASM(
@@ -45,6 +47,7 @@ glabel init_lightfixture_tables
 /* 0F0028 7F0BB4F8 24423318 */  addiu $v0, %lo(dword_CODE_bss_80083318) # addiu $v0, $v0, 0x3318
 /* 0F002C 7F0BB4FC 24632B18 */  addiu $v1, %lo(word_CODE_bss_80082B18) # addiu $v1, $v1, 0x2b18
 .L7F0BB500:
+                                /*v1 offsets don't match*/
 /* 0F0030 7F0BB500 24630010 */  addiu $v1, $v1, 0x10
 /* 0F0034 7F0BB504 A460FFF4 */  sh    $zero, -0xc($v1)
 /* 0F0038 7F0BB508 A460FFF8 */  sh    $zero, -8($v1)
@@ -58,170 +61,60 @@ glabel init_lightfixture_tables
 #endif
 
 
+s32 get_index_of_current_entry_in_init_lightfixture_table(void)
+{
+    s32 i;
 
-
-
-#ifdef NONMATCHING
-void get_index_of_current_entry_in_init_lightfixture_table(void) {
-
+    for (i = 0; i != 0x64; i++)
+    {
+        if (light_fixture_table[i].index == 0)
+        {
+            return i;
+        }
+    }
+    return 0x64;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_index_of_current_entry_in_init_lightfixture_table
-/* 0F0054 7F0BB524 3C028008 */  lui   $v0, %hi(light_fixture_table)
-/* 0F0058 7F0BB528 24422660 */  addiu $v0, %lo(light_fixture_table) # addiu $v0, $v0, 0x2660
-/* 0F005C 7F0BB52C 00001825 */  move  $v1, $zero
-/* 0F0060 7F0BB530 24040064 */  li    $a0, 100
-.L7F0BB534:
-/* 0F0064 7F0BB534 844E0000 */  lh    $t6, ($v0)
-/* 0F0068 7F0BB538 55C00004 */  bnezl $t6, .L7F0BB54C
-/* 0F006C 7F0BB53C 844F000C */   lh    $t7, 0xc($v0)
-/* 0F0070 7F0BB540 03E00008 */  jr    $ra
-/* 0F0074 7F0BB544 00601025 */   move  $v0, $v1
-
-/* 0F0078 7F0BB548 844F000C */  lh    $t7, 0xc($v0)
-.L7F0BB54C:
-/* 0F007C 7F0BB54C 55E00004 */  bnezl $t7, .L7F0BB560
-/* 0F0080 7F0BB550 84580018 */   lh    $t8, 0x18($v0)
-/* 0F0084 7F0BB554 03E00008 */  jr    $ra
-/* 0F0088 7F0BB558 24620001 */   addiu $v0, $v1, 1
-
-/* 0F008C 7F0BB55C 84580018 */  lh    $t8, 0x18($v0)
-.L7F0BB560:
-/* 0F0090 7F0BB560 57000004 */  bnezl $t8, .L7F0BB574
-/* 0F0094 7F0BB564 84590024 */   lh    $t9, 0x24($v0)
-/* 0F0098 7F0BB568 03E00008 */  jr    $ra
-/* 0F009C 7F0BB56C 24620002 */   addiu $v0, $v1, 2
-
-/* 0F00A0 7F0BB570 84590024 */  lh    $t9, 0x24($v0)
-.L7F0BB574:
-/* 0F00A4 7F0BB574 57200004 */  bnezl $t9, .L7F0BB588
-/* 0F00A8 7F0BB578 24630004 */   addiu $v1, $v1, 4
-/* 0F00AC 7F0BB57C 03E00008 */  jr    $ra
-/* 0F00B0 7F0BB580 24620003 */   addiu $v0, $v1, 3
-
-/* 0F00B4 7F0BB584 24630004 */  addiu $v1, $v1, 4
-.L7F0BB588:
-/* 0F00B8 7F0BB588 1464FFEA */  bne   $v1, $a0, .L7F0BB534
-/* 0F00BC 7F0BB58C 24420030 */   addiu $v0, $v0, 0x30
-/* 0F00C0 7F0BB590 24020064 */  li    $v0, 100
-/* 0F00C4 7F0BB594 03E00008 */  jr    $ra
-/* 0F00C8 7F0BB598 00000000 */   nop   
-)
-#endif
 
 
-
-
-
-#ifdef NONMATCHING
-void add_entry_to_init_lightfixture_table(void) {
-
+void add_entry_to_init_lightfixture_table(Gfx *DL)
+{
+  cur_entry_lightfixture_table = get_index_of_current_entry_in_init_lightfixture_table();
+  if (cur_entry_lightfixture_table != 100) {
+    light_fixture_table[cur_entry_lightfixture_table].index = index_of_cur_entry_lightfixture_table;
+    light_fixture_table[cur_entry_lightfixture_table].ptr_start_pertinent_DL = DL;
+  }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel add_entry_to_init_lightfixture_table
-/* 0F00CC 7F0BB59C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F00D0 7F0BB5A0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F00D4 7F0BB5A4 0FC2ED49 */  jal   get_index_of_current_entry_in_init_lightfixture_table
-/* 0F00D8 7F0BB5A8 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0F00DC 7F0BB5AC 3C048008 */  lui   $a0, %hi(cur_entry_lightfixture_table)
-/* 0F00E0 7F0BB5B0 24842B10 */  addiu $a0, %lo(cur_entry_lightfixture_table) # addiu $a0, $a0, 0x2b10
-/* 0F00E4 7F0BB5B4 A4820000 */  sh    $v0, ($a0)
-/* 0F00E8 7F0BB5B8 84830000 */  lh    $v1, ($a0)
-/* 0F00EC 7F0BB5BC 24010064 */  li    $at, 100
-/* 0F00F0 7F0BB5C0 3C0F8008 */  lui   $t7, %hi(light_fixture_table) 
-/* 0F00F4 7F0BB5C4 1061000A */  beq   $v1, $at, .L7F0BB5F0
-/* 0F00F8 7F0BB5C8 00037080 */   sll   $t6, $v1, 2
-/* 0F00FC 7F0BB5CC 01C37023 */  subu  $t6, $t6, $v1
-/* 0F0100 7F0BB5D0 3C188008 */  lui   $t8, %hi(index_of_cur_entry_lightfixture_table) 
-/* 0F0104 7F0BB5D4 87182B12 */  lh    $t8, %lo(index_of_cur_entry_lightfixture_table)($t8)
-/* 0F0108 7F0BB5D8 8FB90018 */  lw    $t9, 0x18($sp)
-/* 0F010C 7F0BB5DC 000E7080 */  sll   $t6, $t6, 2
-/* 0F0110 7F0BB5E0 25EF2660 */  addiu $t7, %lo(light_fixture_table) # addiu $t7, $t7, 0x2660
-/* 0F0114 7F0BB5E4 01CF1021 */  addu  $v0, $t6, $t7
-/* 0F0118 7F0BB5E8 A4580000 */  sh    $t8, ($v0)
-/* 0F011C 7F0BB5EC AC590004 */  sw    $t9, 4($v0)
-.L7F0BB5F0:
-/* 0F0120 7F0BB5F0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F0124 7F0BB5F4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F0128 7F0BB5F8 03E00008 */  jr    $ra
-/* 0F012C 7F0BB5FC 00000000 */   nop   
-)
-#endif
 
 
-
-
-
-#ifdef NONMATCHING
-void save_ptrDL_enpoint_to_current_init_lightfixture_table(void) {
-
+void save_ptrDL_enpoint_to_current_init_lightfixture_table(Gfx *param_1)
+{
+  if (cur_entry_lightfixture_table != 100) {
+    light_fixture_table[cur_entry_lightfixture_table].ptr_end_pertinent_DL = param_1;
+  }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel save_ptrDL_enpoint_to_current_init_lightfixture_table
-/* 0F0130 7F0BB600 3C028008 */  lui   $v0, %hi(cur_entry_lightfixture_table)
-/* 0F0134 7F0BB604 84422B10 */  lh    $v0, %lo(cur_entry_lightfixture_table)($v0)
-/* 0F0138 7F0BB608 24010064 */  li    $at, 100
-/* 0F013C 7F0BB60C 10410006 */  beq   $v0, $at, .L7F0BB628
-/* 0F0140 7F0BB610 00027080 */   sll   $t6, $v0, 2
-/* 0F0144 7F0BB614 01C27023 */  subu  $t6, $t6, $v0
-/* 0F0148 7F0BB618 000E7080 */  sll   $t6, $t6, 2
-/* 0F014C 7F0BB61C 3C018008 */  lui   $at, %hi(light_fixture_table+8)
-/* 0F0150 7F0BB620 002E0821 */  addu  $at, $at, $t6
-/* 0F0154 7F0BB624 AC242668 */  sw    $a0, %lo(light_fixture_table+8)($at)
-.L7F0BB628:
-/* 0F0158 7F0BB628 03E00008 */  jr    $ra
-/* 0F015C 7F0BB62C 00000000 */   nop   
-)
-#endif
 
 
-
-
-
-#ifdef NONMATCHING
-void check_if_imageID_is_light(void) {
-
+s32 check_if_imageID_is_light(s32 imageID)
+{
+    if ((imageID == _image201_ID_LIGHT)  || 
+        (imageID == _image203_ID_LIGHT)  || 
+        (imageID == _image205_ID_LIGHT)  || 
+        (imageID == _image252_ID_LIGHT)  || 
+        (imageID == _image254_ID_LIGHT)  || 
+        (imageID == _image255_ID_LIGHT)  || 
+        (imageID == _image256_ID_LIGHT) || 
+        (imageID == _image428_ID_LIGHT) || 
+        (imageID == _image982_ID_LIGHT) || 
+        (imageID == _image1383_ID_LIGHT))
+    {
+        return 1;
+    } 
+    else
+    {
+        return 0;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_imageID_is_light
-/* 0F0160 7F0BB630 240100C9 */  li    $at, 201
-/* 0F0164 7F0BB634 10810013 */  beq   $a0, $at, .L7F0BB684
-/* 0F0168 7F0BB638 240100CB */   li    $at, 203
-/* 0F016C 7F0BB63C 10810011 */  beq   $a0, $at, .L7F0BB684
-/* 0F0170 7F0BB640 240100CD */   li    $at, 205
-/* 0F0174 7F0BB644 1081000F */  beq   $a0, $at, .L7F0BB684
-/* 0F0178 7F0BB648 240100FC */   li    $at, 252
-/* 0F017C 7F0BB64C 1081000D */  beq   $a0, $at, .L7F0BB684
-/* 0F0180 7F0BB650 240100FE */   li    $at, 254
-/* 0F0184 7F0BB654 1081000B */  beq   $a0, $at, .L7F0BB684
-/* 0F0188 7F0BB658 240100FF */   li    $at, 255
-/* 0F018C 7F0BB65C 10810009 */  beq   $a0, $at, .L7F0BB684
-/* 0F0190 7F0BB660 24010100 */   li    $at, 256
-/* 0F0194 7F0BB664 10810007 */  beq   $a0, $at, .L7F0BB684
-/* 0F0198 7F0BB668 240101AC */   li    $at, 428
-/* 0F019C 7F0BB66C 10810005 */  beq   $a0, $at, .L7F0BB684
-/* 0F01A0 7F0BB670 240103D6 */   li    $at, 982
-/* 0F01A4 7F0BB674 10810003 */  beq   $a0, $at, .L7F0BB684
-/* 0F01A8 7F0BB678 24010567 */   li    $at, 1383
-/* 0F01AC 7F0BB67C 14810003 */  bne   $a0, $at, .L7F0BB68C
-/* 0F01B0 7F0BB680 00001025 */   move  $v0, $zero
-.L7F0BB684:
-/* 0F01B4 7F0BB684 03E00008 */  jr    $ra
-/* 0F01B8 7F0BB688 24020001 */   li    $v0, 1
 
-.L7F0BB68C:
-/* 0F01BC 7F0BB68C 03E00008 */  jr    $ra
-/* 0F01C0 7F0BB690 00000000 */   nop   
-)
-#endif
 
 
 
@@ -252,9 +145,9 @@ glabel return_ptr_vertex_of_entry_room
 /* 0F01F4 7F0BB6C4 0061C024 */  and   $t8, $v1, $at
 /* 0F01F8 7F0BB6C8 3C010E00 */  lui   $at, 0xe00
 /* 0F01FC 7F0BB6CC 17010007 */  bne   $t8, $at, .L7F0BB6EC
-/* 0F0200 7F0BB6D0 3C088004 */   lui   $t0, %hi(D_80041418)
+/* 0F0200 7F0BB6D0 3C088004 */   lui   $t0, %hi(array_room_info + 0x4)
 /* 0F0204 7F0BB6D4 01194021 */  addu  $t0, $t0, $t9
-/* 0F0208 7F0BB6D8 8D081418 */  lw    $t0, %lo(D_80041418)($t0)
+/* 0F0208 7F0BB6D8 8D081418 */  lw    $t0, %lo(array_room_info + 0x4)($t0)
 /* 0F020C 7F0BB6DC 3C0100FF */  lui   $at, (0x00FFFFFF >> 16) # lui $at, 0xff
 /* 0F0210 7F0BB6E0 3421FFFF */  ori   $at, (0x00FFFFFF & 0xFFFF) # ori $at, $at, 0xffff
 /* 0F0214 7F0BB6E4 00614824 */  and   $t1, $v1, $at
@@ -492,11 +385,11 @@ glabel sub_GAME_7F0BB978
 /* 0F04A8 7F0BB978 00047080 */  sll   $t6, $a0, 2
 /* 0F04AC 7F0BB97C 01C47021 */  addu  $t6, $t6, $a0
 /* 0F04B0 7F0BB980 000E7100 */  sll   $t6, $t6, 4
-/* 0F04B4 7F0BB984 3C028004 */  lui   $v0, %hi(D_80041418)
+/* 0F04B4 7F0BB984 3C028004 */  lui   $v0, %hi(array_room_info + 0x4)
 /* 0F04B8 7F0BB988 004E1021 */  addu  $v0, $v0, $t6
 /* 0F04BC 7F0BB98C 3C058008 */  lui   $a1, %hi(word_CODE_bss_80082B18)
 /* 0F04C0 7F0BB990 3C068008 */  lui   $a2, %hi(dword_CODE_bss_80083318)
-/* 0F04C4 7F0BB994 8C421418 */  lw    $v0, %lo(D_80041418)($v0)
+/* 0F04C4 7F0BB994 8C421418 */  lw    $v0, %lo(array_room_info + 0x4)($v0)
 /* 0F04C8 7F0BB998 24C63318 */  addiu $a2, %lo(dword_CODE_bss_80083318) # addiu $a2, $a2, 0x3318
 /* 0F04CC 7F0BB99C 24A52B18 */  addiu $a1, %lo(word_CODE_bss_80082B18) # addiu $a1, $a1, 0x2b18
 /* 0F04D0 7F0BB9A0 94AF0000 */  lhu   $t7, ($a1)
@@ -561,10 +454,10 @@ glabel sub_GAME_7F0BBA20
 /* 0F0578 7F0BBA48 01C67021 */  addu  $t6, $t6, $a2
 /* 0F057C 7F0BBA4C 24A56030 */  addiu $a1, %lo(D_80046030) # addiu $a1, $a1, 0x6030
 /* 0F0580 7F0BBA50 000E7100 */  sll   $t6, $t6, 4
-/* 0F0584 7F0BBA54 3C0F8004 */  lui   $t7, %hi(D_80041418)
+/* 0F0584 7F0BBA54 3C0F8004 */  lui   $t7, %hi(array_room_info + 0x4)
 /* 0F0588 7F0BBA58 8CB90000 */  lw    $t9, ($a1)
 /* 0F058C 7F0BBA5C 01EE7821 */  addu  $t7, $t7, $t6
-/* 0F0590 7F0BBA60 8DEF1418 */  lw    $t7, %lo(D_80041418)($t7)
+/* 0F0590 7F0BBA60 8DEF1418 */  lw    $t7, %lo(array_room_info + 0x4)($t7)
 /* 0F0594 7F0BBA64 3C098008 */  lui   $t1, %hi(word_CODE_bss_80082B18) 
 /* 0F0598 7F0BBA68 25292B18 */  addiu $t1, %lo(word_CODE_bss_80082B18) # addiu $t1, $t1, 0x2b18
 /* 0F059C 7F0BBA6C 00194080 */  sll   $t0, $t9, 2
@@ -614,9 +507,9 @@ glabel sub_GAME_7F0BBADC
 /* 0F060C 7F0BBADC 00057080 */  sll   $t6, $a1, 2
 /* 0F0610 7F0BBAE0 01C57021 */  addu  $t6, $t6, $a1
 /* 0F0614 7F0BBAE4 000E7100 */  sll   $t6, $t6, 4
-/* 0F0618 7F0BBAE8 3C0F8004 */  lui   $t7, %hi(D_80041418)
+/* 0F0618 7F0BBAE8 3C0F8004 */  lui   $t7, %hi(array_room_info + 0x4)
 /* 0F061C 7F0BBAEC 01EE7821 */  addu  $t7, $t7, $t6
-/* 0F0620 7F0BBAF0 8DEF1418 */  lw    $t7, %lo(D_80041418)($t7)
+/* 0F0620 7F0BBAF0 8DEF1418 */  lw    $t7, %lo(array_room_info + 0x4)($t7)
 /* 0F0624 7F0BBAF4 3C068008 */  lui   $a2, %hi(word_CODE_bss_80082B18)
 /* 0F0628 7F0BBAF8 3C038008 */  lui   $v1, %hi(dword_CODE_bss_80083318)
 /* 0F062C 7F0BBAFC 008F1023 */  subu  $v0, $a0, $t7
@@ -799,7 +692,7 @@ glabel sub_GAME_7F0BBCCC
 /* 0F0818 7F0BBCE8 AFB50034 */  sw    $s5, 0x34($sp)
 /* 0F081C 7F0BBCEC AFB40030 */  sw    $s4, 0x30($sp)
 /* 0F0820 7F0BBCF0 3C138008 */  lui   $s3, %hi(word_CODE_bss_80082B18)
-/* 0F0824 7F0BBCF4 3C168004 */  lui   $s6, %hi(D_80041414)
+/* 0F0824 7F0BBCF4 3C168004 */  lui   $s6, %hi(array_room_info)
 /* 0F0828 7F0BBCF8 3C1E8008 */  lui   $fp, %hi(dword_CODE_bss_80083318) 
 /* 0F082C 7F0BBCFC 4481A000 */  mtc1  $at, $f20
 /* 0F0830 7F0BBD00 0080A025 */  move  $s4, $a0
@@ -809,7 +702,7 @@ glabel sub_GAME_7F0BBCCC
 /* 0F0840 7F0BBD10 AFB10024 */  sw    $s1, 0x24($sp)
 /* 0F0844 7F0BBD14 AFB00020 */  sw    $s0, 0x20($sp)
 /* 0F0848 7F0BBD18 27DE3318 */  addiu $fp, %lo(dword_CODE_bss_80083318) # addiu $fp, $fp, 0x3318
-/* 0F084C 7F0BBD1C 26D61414 */  addiu $s6, %lo(D_80041414) # addiu $s6, $s6, 0x1414
+/* 0F084C 7F0BBD1C 26D61414 */  addiu $s6, %lo(array_room_info) # addiu $s6, $s6, 0x1414
 /* 0F0850 7F0BBD20 26732B18 */  addiu $s3, %lo(word_CODE_bss_80082B18) # addiu $s3, $s3, 0x2b18
 /* 0F0854 7F0BBD24 24170050 */  li    $s7, 80
 /* 0F0858 7F0BBD28 966E0000 */  lhu   $t6, ($s3)
@@ -1349,11 +1242,33 @@ glabel sub_GAME_7F0BBE0C
 
 
 
+#ifdef NONMATCHING//
+void sub_GAME_7F0BC4C4(u16 arg0)
+{
+    s32 i;
 
-#ifdef NONMATCHING
-void sub_GAME_7F0BC4C4(void) {
-
+    for (i=0;i<cur_entry_lightfixture_table;i= i+4)
+    {
+        if (arg0 == light_fixture_table[i].index)
+        {
+            light_fixture_table[i].index = 0;
+        }
+        if (arg0 == light_fixture_table[i+1].index)
+        {
+            light_fixture_table[i+1].index = 0;
+        }
+        if (arg0 == light_fixture_table[i+2].index)
+        {
+            light_fixture_table[i+2].index = 0;
+        }
+        if (arg0 == light_fixture_table[i+3].index)
+        {
+            light_fixture_table[i+3].index = 0;
+        }
+    }
+    index_of_cur_entry_lightfixture_table = arg0;
 }
+
 #else
 GLOBAL_ASM(
 .text

@@ -43,7 +43,7 @@ s32 dword_CODE_bss_80069594;
 
 // data
 u32 D_8002A7D0 = 0;
-u32 D_8002A7D4 = 0x3000000;
+u8 D_8002A7D4 = 0x3;
 u32 D_8002A7D8 = 0;
 u32 D_8002A7DC = 0;
 u32 D_8002A7E0 = 0;
@@ -1532,28 +1532,27 @@ glabel retrieve_display_rareware_logo
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F008DD0(void) {
-
+s32 sub_GAME_7F008DD0(void)
+{
+  return (D_8002A7D4 == 2);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F008DD0
-/* 03D900 7F008DD0 3C028003 */  lui   $v0, %hi(D_8002A7D4)
-/* 03D904 7F008DD4 9042A7D4 */  lbu   $v0, %lo(D_8002A7D4)($v0)
-/* 03D908 7F008DD8 384E0002 */  xori  $t6, $v0, 2
-/* 03D90C 7F008DDC 03E00008 */  jr    $ra
-/* 03D910 7F008DE0 2DC20001 */   sltiu $v0, $t6, 1
-)
-#endif
+
 
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F008DE4(void) {
+void sub_GAME_7F008DE4(void *arg0, void *arg1)
+{
 
+    dword_CODE_bss_8006958C = (s32) *arg0;
+    *arg1 = (s32) (*arg1 + -0x40400);
+    *arg0 = *arg0 + 0x40400;
+
+    dword_CODE_bss_80069588 = arg0;
+    romCopy(arg0, &unknown2, (((&unknown2_end - &unknown2) + 0x3F) | 0x3F) ^ 0x3F);
+    sub_GAME_7F01B0E0(dword_CODE_bss_80069588, dword_CODE_bss_8006958C);
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1844,37 +1843,16 @@ glabel sub_GAME_7F008E80
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F00920C(void) {
 
+void sub_GAME_7F00920C(void)
+{
+  if (D_8002A7F4) {
+    set_aircraft_obj_inst_scale_to_zero(D_8002A7F4);
+  }
+  if (D_8002A7F8) {
+    set_obj_instance_scale_to_zero(D_8002A7F8);
+  }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F00920C
-/* 03DD3C 7F00920C 3C048003 */  lui   $a0, %hi(D_8002A7F4)
-/* 03DD40 7F009210 8C84A7F4 */  lw    $a0, %lo(D_8002A7F4)($a0)
-/* 03DD44 7F009214 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 03DD48 7F009218 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 03DD4C 7F00921C 10800003 */  beqz  $a0, .L7F00922C
-/* 03DD50 7F009220 00000000 */   nop   
-/* 03DD54 7F009224 0FC1B0FE */  jal   set_aircraft_obj_inst_scale_to_zero
-/* 03DD58 7F009228 00000000 */   nop   
-.L7F00922C:
-/* 03DD5C 7F00922C 3C048003 */  lui   $a0, %hi(D_8002A7F8)
-/* 03DD60 7F009230 8C84A7F8 */  lw    $a0, %lo(D_8002A7F8)($a0)
-/* 03DD64 7F009234 50800004 */  beql  $a0, $zero, .L7F009248
-/* 03DD68 7F009238 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 03DD6C 7F00923C 0FC1B08D */  jal   set_obj_instance_scale_to_zero
-/* 03DD70 7F009240 00000000 */   nop   
-/* 03DD74 7F009244 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F009248:
-/* 03DD78 7F009248 27BD0018 */  addiu $sp, $sp, 0x18
-/* 03DD7C 7F00924C 03E00008 */  jr    $ra
-/* 03DD80 7F009250 00000000 */   nop   
-)
-#endif
-
 
 
 #ifdef NONMATCHING
@@ -2235,20 +2213,7 @@ def_7F00929C:
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F009744(void) {
 
+s32 sub_GAME_7F009744(void) {
+    return (D_8002A7D4 == 9);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F009744
-/* 03E274 7F009744 3C028003 */  lui   $v0, %hi(D_8002A7D4)
-/* 03E278 7F009748 9042A7D4 */  lbu   $v0, %lo(D_8002A7D4)($v0)
-/* 03E27C 7F00974C 384E0009 */  xori  $t6, $v0, 9
-/* 03E280 7F009750 03E00008 */  jr    $ra
-/* 03E284 7F009754 2DC20001 */   sltiu $v0, $t6, 1
-)
-#endif
-
-

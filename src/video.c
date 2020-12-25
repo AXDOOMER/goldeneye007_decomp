@@ -667,7 +667,7 @@ block_43:
     ptr_video_settings1 = (void *) (&video1_settings + (off_CODE_bss_80060878 * 0x2c));
     temp_a1 = (&video1_settings + (off_CODE_bss_80060879 * 0x2c));
     *&ptr_video_settings2 = temp_a1;
-    _bcopy(*&ptr_video_settings2, temp_a1, 0x2c, &video1_settings);
+    bcopy(*&ptr_video_settings2, temp_a1, 0x2c, &video1_settings);
     ptr_video_settings2->frameb = (s32) ((off_CODE_bss_80060879 * 0x25800) + &cfb_16_a);
 }
 #else
@@ -1238,7 +1238,7 @@ glabel video_related_8
 /* 0046A0 70003AA0 01E80019 */  multu $t7, $t0
 /* 0046A4 70003AA4 00007012 */  mflo  $t6
 /* 0046A8 70003AA8 00EE2821 */  addu  $a1, $a3, $t6
-/* 0046AC 70003AAC 0C003E5C */  jal   _bcopy
+/* 0046AC 70003AAC 0C003E5C */  jal   bcopy
 /* 0046B0 70003AB0 ADA50000 */   sw    $a1, ($t5)
 /* 0046B4 70003AB4 3C038006 */  lui   $v1, %hi(off_CODE_bss_80060879)
 /* 0046B8 70003AB8 24630879 */  addiu $v1, %lo(off_CODE_bss_80060879) # addiu $v1, $v1, 0x879
@@ -2408,7 +2408,7 @@ glabel setvideo_far
  *     F12->video2 page width [p@800232A8+C] and something else...
  */
 #ifdef NONMATCHING
-void video_related_21(f32 arg0)
+void set_page_aspect(f32 arg0)
 {
     ptr_video_settings2->scale = arg0;
     sub_GAME_7F077C30(ptr_video_settings2->aspect, ptr_video_settings2->far, ptr_video_settings2->scale);
@@ -2417,7 +2417,7 @@ void video_related_21(f32 arg0)
 #else
 GLOBAL_ASM(
 .text
-glabel video_related_21
+glabel set_page_aspect
 /* 005190 70004590 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 005194 70004594 3C038002 */  lui   $v1, %hi(ptr_video_settings2)
 /* 005198 70004598 246332A8 */  addiu $v1, %lo(ptr_video_settings2) # addiu $v1, $v1, 0x32a8

@@ -6,7 +6,7 @@ struct save_data
 {
   int chksum1;
   int chksum2;
-  char completion_bitflags;
+  u8 completion_bitflags;
   char flag_007;
   char music_vol;
   char sfx_vol;
@@ -34,6 +34,6 @@ struct save_data
 
 };
 
-u8 removed_would_have_returned_bond_for_folder_num(u32 folder);
+extern u32 save_selected_bond[];
 
 #endif

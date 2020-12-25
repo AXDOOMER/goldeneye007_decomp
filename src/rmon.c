@@ -1,7 +1,7 @@
 #include "ultra64.h"
 
 
-void thread0_rmon(void) {
+void rmonproc(void) {
     // (function likely void)
 }
 

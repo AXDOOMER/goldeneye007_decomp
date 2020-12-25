@@ -57,15 +57,6 @@ Gfx *zbuf7F0D2464(Gfx *gdl) {
 
 s16 get_video2_settings_txtClipW(void);
 s16 get_video2_settings_txtClipH(void);
-#define	G_MAXFBZ 0x3fff
-#define	GBL_c1(m1a, m1b, m2a, m2b)	\
-	(m1a) << 30 | (m1b) << 26 | (m2a) << 22 | (m2b) << 18
-#define	GBL_c2(m1a, m1b, m2a, m2b)	\
-	(m1a) << 28 | (m1b) << 24 | (m2a) << 20 | (m2b) << 16
-#define	RM_NOOP(clk)	\
-	GBL_c##clk(0, 0, 0, 0)
-#define G_RM_NOOP       	RM_NOOP(1)
-#define G_RM_NOOP2      	RM_NOOP(2)
 Gfx *zbufClearCurrentPlayer(Gfx *gdl) {
     s32 start_x;
     s32 end_x;

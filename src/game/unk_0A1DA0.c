@@ -40,9 +40,9 @@ u32 D_80040984 = 0;
 u32 D_80040988 = 0;
 u32 D_8004098C = 0;
 u32 D_80040990 = 0;
-u32 D_80040994 = 0;
-u32 D_80040998 = 0;
-u32 D_8004099C = 0;
+u32 watch_screen_index = 0;
+u32 controller_options_index = 0;
+u32 game_options_index = 0;
 
 // rodata
 

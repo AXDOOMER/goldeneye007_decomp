@@ -2,11 +2,12 @@
 #define _CHR_H_
 #include "ultra64.h"
 #include "bondgame.h"
-#include "bondtypes.h"
+#include "chrai.h"
+#include "bondtypes.h"  // CHRdata
 
-struct animation_something
-{
-  s32 anonymous_0;
+ struct animation_something
+ {
+   s32 anonymous_0;
   s32 field_4;
   s32 field_8;
   f32 field_C;
@@ -17,7 +18,7 @@ struct animation_something
   s32 field_20;
   struct struck_animation_table *field_24;
   s32 field_28;
-};
+ };
 
 struct struck_animation_table
 {

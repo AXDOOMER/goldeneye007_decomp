@@ -2,6 +2,8 @@
 #define _BONDTYPES_H_
 #include "ultra64.h"
 #include "bondconstants.h"
+#include "structs.h"
+
 struct rgba_val{
     u8 r;
     u8 g;
@@ -15,6 +17,36 @@ struct rgba_valf32{
     f32 b;
     f32 a;
 };
+
+/******
+
+ The following struct ObjectRecord was copied from AIListLogic branch
+ and should be removed when merged
+
+ note: only the necessary fields were copied in order to compile (not the full struct)
+
+******/
+typedef struct ObjectRecord
+{
+  u16 obj;     
+} ObjectRecord;
+
+/******
+
+ The following struct PropRecord was copied from AIListLogic branch
+ and should be removed when merged
+
+ note: only the necessary fields were copied in order to compile (not the full struct)
+
+******/
+typedef struct PropRecord
+{
+  u8 type;
+  union
+  {
+    ObjectRecord *obj;
+  } Entityp;
+} PropRecord;
 
 /* unfinished struct, WIP */
 typedef struct {
@@ -38,7 +70,7 @@ typedef struct {
     s8 flinchcnt;
     s16 hidden;
     s32 chrflags;
-    void * pad;
+    struct PositionData* posdata;
     void * model;
     /* 0x0020 */
     void * field_20;
@@ -122,7 +154,7 @@ typedef struct {
     u8 random;
     /* 0x0110 */
     s32 timer60;
-    u16 padpreset1; /* ID PAD_PRESET */
+    s16 padpreset1; /* ID PAD_PRESET */
     u16 chrpreset1; /* ID CHR_PRESET */
     u16 chrseeshot; /* ID CHR_SEE_SHOT - ignores invincible/armoured guards */
     u16 chrseedie; /* ID CHR_SEE_DIE */

@@ -64,8 +64,8 @@ glabel sub_GAME_7F0BC530
 /* 0F1104 7F0BC5D4 1840000D */  blez  $v0, .L7F0BC60C
 /* 0F1108 7F0BC5D8 0010C880 */   sll   $t9, $s0, 2
 /* 0F110C 7F0BC5DC 0330C821 */  addu  $t9, $t9, $s0
-/* 0F1110 7F0BC5E0 3C088004 */  lui   $t0, %hi(D_80041414) 
-/* 0F1114 7F0BC5E4 25081414 */  addiu $t0, %lo(D_80041414) # addiu $t0, $t0, 0x1414
+/* 0F1110 7F0BC5E0 3C088004 */  lui   $t0, %hi(array_room_info) 
+/* 0F1114 7F0BC5E4 25081414 */  addiu $t0, %lo(array_room_info) # addiu $t0, $t0, 0x1414
 /* 0F1118 7F0BC5E8 0019C900 */  sll   $t9, $t9, 4
 /* 0F111C 7F0BC5EC 03288821 */  addu  $s1, $t9, $t0
 /* 0F1120 7F0BC5F0 26100001 */  addiu $s0, $s0, 1
@@ -101,8 +101,11 @@ void sub_GAME_7F0BC624(s32 param_1) {
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BC634(void) {
-
+void sub_GAME_7F0BC634(s16 param_1,int param_2)
+{
+    roominformationblock[param_2].field_36 = param_1;
+    (&dword_CODE_bss_80083450)[param_1] = param_2;
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -111,9 +114,9 @@ glabel sub_GAME_7F0BC634
 /* 0F1164 7F0BC634 00057080 */  sll   $t6, $a1, 2
 /* 0F1168 7F0BC638 01C57021 */  addu  $t6, $t6, $a1
 /* 0F116C 7F0BC63C 000E7100 */  sll   $t6, $t6, 4
-/* 0F1170 7F0BC640 3C018004 */  lui   $at, %hi(room_information+38)
+/* 0F1170 7F0BC640 3C018004 */  lui   $at, %hi(array_room_info + 0x10 +38)
 /* 0F1174 7F0BC644 002E0821 */  addu  $at, $at, $t6
-/* 0F1178 7F0BC648 A424144A */  sh    $a0, %lo(room_information+38)($at)
+/* 0F1178 7F0BC648 A424144A */  sh    $a0, %lo(array_room_info + 0x10 +38)($at)
 /* 0F117C 7F0BC64C 3C018008 */  lui   $at, %hi(dword_CODE_bss_80083450)
 /* 0F1180 7F0BC650 00047880 */  sll   $t7, $a0, 2
 /* 0F1184 7F0BC654 002F0821 */  addu  $at, $at, $t7
@@ -127,8 +130,11 @@ glabel sub_GAME_7F0BC634
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BC660(void) {
-
+void sub_GAME_7F0BC660(int param_1,int param_2)
+{
+    roominformationblock[param_2].field_36 = -1;
+    (&dword_CODE_bss_80083450)[param_1] = 0xffffffff;
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -137,10 +143,10 @@ glabel sub_GAME_7F0BC660
 /* 0F1190 7F0BC660 00057080 */  sll   $t6, $a1, 2
 /* 0F1194 7F0BC664 01C57021 */  addu  $t6, $t6, $a1
 /* 0F1198 7F0BC668 000E7100 */  sll   $t6, $t6, 4
-/* 0F119C 7F0BC66C 3C018004 */  lui   $at, %hi(room_information+38)
+/* 0F119C 7F0BC66C 3C018004 */  lui   $at, %hi(array_room_info + 0x10 +38)
 /* 0F11A0 7F0BC670 2402FFFF */  li    $v0, -1
 /* 0F11A4 7F0BC674 002E0821 */  addu  $at, $at, $t6
-/* 0F11A8 7F0BC678 A422144A */  sh    $v0, %lo(room_information+38)($at)
+/* 0F11A8 7F0BC678 A422144A */  sh    $v0, %lo(array_room_info + 0x10 +38)($at)
 /* 0F11AC 7F0BC67C 3C018008 */  lui   $at, %hi(dword_CODE_bss_80083450)
 /* 0F11B0 7F0BC680 00047880 */  sll   $t7, $a0, 2
 /* 0F11B4 7F0BC684 002F0821 */  addu  $at, $at, $t7
@@ -339,9 +345,9 @@ glabel sub_GAME_7F0BC85C
 /* 0F1394 7F0BC864 AFB00018 */  sw    $s0, 0x18($sp)
 /* 0F1398 7F0BC868 01E47821 */  addu  $t7, $t7, $a0
 /* 0F139C 7F0BC86C 000F7900 */  sll   $t7, $t7, 4
-/* 0F13A0 7F0BC870 3C108004 */  lui   $s0, %hi(room_information+38)
+/* 0F13A0 7F0BC870 3C108004 */  lui   $s0, %hi(array_room_info + 0x10 +38)
 /* 0F13A4 7F0BC874 020F8021 */  addu  $s0, $s0, $t7
-/* 0F13A8 7F0BC878 8610144A */  lh    $s0, %lo(room_information+38)($s0)
+/* 0F13A8 7F0BC878 8610144A */  lh    $s0, %lo(array_room_info + 0x10 +38)($s0)
 /* 0F13AC 7F0BC87C 2402FFFF */  li    $v0, -1
 /* 0F13B0 7F0BC880 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 0F13B4 7F0BC884 1202000C */  beq   $s0, $v0, .L7F0BC8B8
