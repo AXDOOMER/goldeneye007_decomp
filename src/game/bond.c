@@ -542,7 +542,7 @@ void currentPlayerSetCameraScale(void)
 	pPlayer->c_cameraleftnorm.z = -fVar5 * fVar4;
 }
 
-void sub_GAME_7F077EEC(struct xyzpoint *in, struct xyzpoint *out, f32 value) {
+void sub_GAME_7F077EEC(struct coord *in, struct coord *out, f32 value) {
     f32 norm;
     f32 x;
     f32 y;
@@ -1092,7 +1092,7 @@ f32 getPlayer_c_perspaspect(void)
 
 
 #ifdef NONMATCHING
-void proc_7F078504(xyzpoint *param_1)
+void proc_7F078504(coord *param_1)
 {
     param_1->x = (pPlayer->c_cameratopnorm).x;
     param_1->y = (pPlayer->c_cameratopnorm).y;
@@ -1122,7 +1122,7 @@ glabel sub_GAME_7F078504
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F078534(xyzpoint *param_1)
+void sub_GAME_7F078534(coord *param_1)
 {
     param_1->x = (pPlayer->c_cameratopnorm).x;
     param_1->y = -(pPlayer->c_cameratopnorm).y;
@@ -1153,7 +1153,7 @@ glabel sub_GAME_7F078534
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F078568(xyzpoint *param_1)
+void sub_GAME_7F078568(coord *param_1)
 {
     param_1->x = (pPlayer->c_cameraleftnorm).x;
     param_1->y = (pPlayer->c_cameraleftnorm).y;
@@ -1183,7 +1183,7 @@ glabel sub_GAME_7F078568
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F078598(xyzpoint *param_1)
+void sub_GAME_7F078598(coord *param_1)
 {
     param_1->x = -(pPlayer->c_cameraleftnorm).x;
     param_1->y = (pPlayer->c_cameraleftnorm).y;

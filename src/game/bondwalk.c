@@ -19612,7 +19612,7 @@ void sub_GAME_7F067AA4(s32 param_1)
 }
 
 
-void sub_GAME_7F067AB4(struct xyzpoint *param_1)
+void sub_GAME_7F067AB4(struct coord *param_1)
 {
   pPlayer->hands[RIGHT_HAND].field_A38 = sub_GAME_7F05DCB8(RIGHT_HAND) + param_1->x;
   pPlayer->hands[RIGHT_HAND].field_A3C = param_1->y;

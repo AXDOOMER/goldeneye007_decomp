@@ -3491,7 +3491,7 @@ void constructor_menu17_switchscreens(Gfx * DL)
 #ifdef NONMATCHING
 void init_menu01_nintendo(void)
 {
-    struct xyzpoint local_c;
+    struct coord local_c;
     
     menu_timer = 0;
     local_c.x = xyzpoint_8002aafc.x;

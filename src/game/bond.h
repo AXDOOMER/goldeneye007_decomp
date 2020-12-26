@@ -6,7 +6,7 @@
 #include "game/matrixmath.h"
 #include "structs.h"
 
-struct xyzpoint
+struct coord
 {
     f32 x;
     f32 y;
@@ -890,8 +890,8 @@ struct Player
   f32 c_scalelod;
   f32 c_lodscalez;
   u32 c_lodscalezu32;
-  struct xyzpoint c_cameratopnorm;
-  struct xyzpoint c_cameraleftnorm;
+  struct coord c_cameratopnorm;
+  struct coord c_cameraleftnorm;
 
   f32 screenxminf;
   f32 screenyminf;
