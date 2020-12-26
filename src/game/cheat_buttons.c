@@ -792,7 +792,7 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
     }
     break;
   case cheats_cheat_invisibility_mp:
-    set_curplayer_fade(300.00000000, 0.5f);
+    currentPlayerStartChrFade(300.00000000, 0.5f);
     break;
   case cheats_cheat_fast:
     if (get_debug_fast_bond_flag() == FALSE)
@@ -1421,7 +1421,7 @@ cheats_cheat_invisibility_mp:
 /* 0C6C74 7F092144 3C014396 */  li    $at, 0x43960000 # 300.000000
 /* 0C6C78 7F092148 44816000 */  mtc1  $at, $f12
 /* 0C6C7C 7F09214C 3C018005 */  lui   $at, %hi(finalamount)
-/* 0C6C80 7F092150 0FC20284 */  jal   set_curplayer_fade
+/* 0C6C80 7F092150 0FC20284 */  jal   currentPlayerStartChrFade
 /* 0C6C84 7F092154 C42E73D8 */   lwc1  $f14, %lo(finalamount)($at)
 /* 0C6C88 7F092158 100000B4 */  b     .L7F09242C
 /* 0C6C8C 7F09215C 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2122,7 +2122,7 @@ cheats_cheat_invisibility_mp:
 /* 0C7794 7F092C24 3C014396 */  li    $at, 0x43960000 # 300.000000
 /* 0C7798 7F092C28 44816000 */  mtc1  $at, $f12
 /* 0C779C 7F092C2C 3C018005 */  lui   $at, %hi(finalamount) # $at, 0x8005
-/* 0C77A0 7F092C30 0FC20408 */  jal   set_curplayer_fade
+/* 0C77A0 7F092C30 0FC20408 */  jal   currentPlayerStartChrFade
 /* 0C77A4 7F092C34 C42E7408 */   lwc1  $f14, %lo(finalamount)($at)
 /* 0C77A8 7F092C38 100000DC */  b     .Ljp7F092FAC
 /* 0C77AC 7F092C3C 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2608,7 +2608,7 @@ cheat_button_mp_invis:
 /* 0C717C 7F09264C 44816000 */  mtc1  $at, $f12
 /* 0C7180 7F092650 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0C7184 7F092654 44817000 */  mtc1  $at, $f14
-/* 0C7188 7F092658 0FC20284 */  jal   set_curplayer_fade
+/* 0C7188 7F092658 0FC20284 */  jal   currentPlayerStartChrFade
 /* 0C718C 7F09265C 00000000 */   nop   
 /* 0C7190 7F092660 10000014 */  b     .L7F0926B4
 /* 0C7194 7F092664 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2870,7 +2870,7 @@ cheat_button_mp_invis:
 /* 0C717C 7F09264C 44816000 */  mtc1  $at, $f12
 /* 0C7180 7F092650 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0C7184 7F092654 44817000 */  mtc1  $at, $f14
-/* 0C7188 7F092658 0FC20284 */  jal   set_curplayer_fade
+/* 0C7188 7F092658 0FC20284 */  jal   currentPlayerStartChrFade
 /* 0C718C 7F09265C 00000000 */   nop   
 /* 0C7190 7F092660 10000014 */  b     .L7F0926B4
 /* 0C7194 7F092664 8FBF0014 */   lw    $ra, 0x14($sp)

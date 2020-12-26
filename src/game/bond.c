@@ -15203,94 +15203,29 @@ void currentPlayerStartChrFade(f32 duration60, f32 targetfrac)
 	}
 }
 
-#ifdef NONMATCHING
-void *update_curplayer_fade(void) {
-    f32 phi_f12;
+void currentPlayerTickChrFade(void)
+{
+	if (pPlayer->bondfadetimemax60 >= 0) {
+		CHRdata *chr = pPlayer->position_data->object_data;
+		f32 frac;
 
-    // Node 0
-    if (0.0f <= pPlayer->bondfadetimemax60)
-    {
-        // Node 1
-        pPlayer->bondfadetime60 = (f32) (pPlayer->bondfadetime60 + *(void *)0x80050000);
-        if (pPlayer->bondfadetime60 < pPlayer->bondfadetimemax60)
-        {
-            // Node 2
-            phi_f12 = (pPlayer->bondfadefracold + (((pPlayer->bondfadefracnew - pPlayer->bondfadefracold) * pPlayer->bondfadetime60) / pPlayer->bondfadetimemax60));
-        }
-        else
-        {
-            // Node 3
-            pPlayer->bondfadetimemax60 = -1.0f;
-            phi_f12 = pPlayer->bondfadefracnew;
-        }
-        // Node 4
-        if (pPlayer->field_A8->unk4 != 0)
-        {
-            // Node 5
-            pPlayer->field_A8->unk4->unkC = (s32) (phi_f12 * 255.0f);
-        }
-    }
-    // Node 6
-    return pPlayer;
+		pPlayer->bondfadetime60 += global_timer_delta;
+
+		if (pPlayer->bondfadetime60 < pPlayer->bondfadetimemax60) {
+			frac = pPlayer->bondfadefracold
+				+ (pPlayer->bondfadefracnew - pPlayer->bondfadefracold)
+				* pPlayer->bondfadetime60
+				/ pPlayer->bondfadetimemax60;
+		} else {
+			frac = pPlayer->bondfadefracnew;
+			pPlayer->bondfadetimemax60 = -1;
+		}
+
+		if (chr) {
+			chr->fadealpha = (s8)(frac * 255);
+		}
+	}
 }
-#else
-GLOBAL_ASM(
-.text
-glabel update_curplayer_fade
-/* 0B55B0 7F080A80 3C048008 */  lui   $a0, %hi(pPlayer)
-/* 0B55B4 7F080A84 2484A0B0 */  addiu $a0, %lo(pPlayer) # addiu $a0, $a0, -0x5f50
-/* 0B55B8 7F080A88 8C820000 */  lw    $v0, ($a0)
-/* 0B55BC 7F080A8C 44803000 */  mtc1  $zero, $f6
-/* 0B55C0 7F080A90 3C018005 */  lui    $at, %hi(global_timer_delta)
-/* 0B55C4 7F080A94 C4440190 */  lwc1  $f4, 0x190($v0)
-/* 0B55C8 7F080A98 4604303E */  c.le.s $f6, $f4
-/* 0B55CC 7F080A9C 00000000 */  nop   
-/* 0B55D0 7F080AA0 45000022 */  bc1f  .L7F080B2C
-/* 0B55D4 7F080AA4 00000000 */   nop   
-/* 0B55D8 7F080AA8 C448018C */  lwc1  $f8, 0x18c($v0)
-/* 0B55DC 7F080AAC C42A8378 */  lwc1  $f10, %lo(global_timer_delta)($at)
-/* 0B55E0 7F080AB0 8C4E00A8 */  lw    $t6, 0xa8($v0)
-/* 0B55E4 7F080AB4 3C01BF80 */  li    $at, 0xBF800000 # -1.000000
-/* 0B55E8 7F080AB8 460A4400 */  add.s $f16, $f8, $f10
-/* 0B55EC 7F080ABC 8DC30004 */  lw    $v1, 4($t6)
-/* 0B55F0 7F080AC0 E450018C */  swc1  $f16, 0x18c($v0)
-/* 0B55F4 7F080AC4 8C820000 */  lw    $v0, ($a0)
-/* 0B55F8 7F080AC8 C442018C */  lwc1  $f2, 0x18c($v0)
-/* 0B55FC 7F080ACC C4400190 */  lwc1  $f0, 0x190($v0)
-/* 0B5600 7F080AD0 4600103C */  c.lt.s $f2, $f0
-/* 0B5604 7F080AD4 00000000 */  nop   
-/* 0B5608 7F080AD8 45020009 */  bc1fl .L7F080B00
-/* 0B560C 7F080ADC 44815000 */   mtc1  $at, $f10
-/* 0B5610 7F080AE0 C44E0194 */  lwc1  $f14, 0x194($v0)
-/* 0B5614 7F080AE4 C4520198 */  lwc1  $f18, 0x198($v0)
-/* 0B5618 7F080AE8 460E9101 */  sub.s $f4, $f18, $f14
-/* 0B561C 7F080AEC 46022182 */  mul.s $f6, $f4, $f2
-/* 0B5620 7F080AF0 46003203 */  div.s $f8, $f6, $f0
-/* 0B5624 7F080AF4 10000004 */  b     .L7F080B08
-/* 0B5628 7F080AF8 46087300 */   add.s $f12, $f14, $f8
-/* 0B562C 7F080AFC 44815000 */  mtc1  $at, $f10
-.L7F080B00:
-/* 0B5630 7F080B00 C44C0198 */  lwc1  $f12, 0x198($v0)
-/* 0B5634 7F080B04 E44A0190 */  swc1  $f10, 0x190($v0)
-.L7F080B08:
-/* 0B5638 7F080B08 10600008 */  beqz  $v1, .L7F080B2C
-/* 0B563C 7F080B0C 3C01437F */   li    $at, 0x437F0000 # 255.000000
-/* 0B5640 7F080B10 44818000 */  mtc1  $at, $f16
-/* 0B5644 7F080B14 00000000 */  nop   
-/* 0B5648 7F080B18 46106482 */  mul.s $f18, $f12, $f16
-/* 0B564C 7F080B1C 4600910D */  trunc.w.s $f4, $f18
-/* 0B5650 7F080B20 44182000 */  mfc1  $t8, $f4
-/* 0B5654 7F080B24 00000000 */  nop   
-/* 0B5658 7F080B28 A078000C */  sb    $t8, 0xc($v1)
-.L7F080B2C:
-/* 0B565C 7F080B2C 03E00008 */  jr    $ra
-/* 0B5660 7F080B30 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F080B34(void) {
@@ -25904,7 +25839,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BBDB8 7F087288 87A4001C */   lh    $a0, 0x1c($sp)
 /* 0BBDBC 7F08728C 0FC2022F */  jal   currentPlayerUpdateColourScreenProperties
 /* 0BBDC0 7F087290 00000000 */   nop   
-/* 0BBDC4 7F087294 0FC202A0 */  jal   update_curplayer_fade
+/* 0BBDC4 7F087294 0FC202A0 */  jal   currentPlayerTickChrFade
 /* 0BBDC8 7F087298 00000000 */   nop   
 /* 0BBDCC 7F08729C 0FC29394 */  jal   cur_player_get_autoaim
 /* 0BBDD0 7F0872A0 00000000 */   nop   
@@ -26341,7 +26276,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BC4C4 7F087954 87A4001C */   lh    $a0, 0x1c($sp)
 /* 0BC4C8 7F087958 0FC203B3 */  jal   currentPlayerUpdateColourScreenProperties
 /* 0BC4CC 7F08795C 00000000 */   nop   
-/* 0BC4D0 7F087960 0FC20424 */  jal   update_curplayer_fade
+/* 0BC4D0 7F087960 0FC20424 */  jal   currentPlayerTickChrFade
 /* 0BC4D4 7F087964 00000000 */   nop   
 /* 0BC4D8 7F087968 0FC2967C */  jal   cur_player_get_autoaim
 /* 0BC4DC 7F08796C 00000000 */   nop   
