@@ -11241,7 +11241,7 @@ glabel sub_GAME_7F07D960
 
 
 void sub_GAME_7F07DE64(struct Player *player) {
-    sub_GAME_7F03DE94(player->position_data, player->field_2A04, player);
+    sub_GAME_7F03DE94(player->prop, player->field_2A04, player);
     player->field_2A04 = -1;
 }
 
@@ -15193,7 +15193,7 @@ void currentPlayerUpdateColourScreenProperties(void)
 
 void currentPlayerStartChrFade(f32 duration60, f32 targetfrac)
 {
-	CHRdata* chr = pPlayer->position_data->chr;//pPlayer->prop->chr;
+	struct chrdata* chr = pPlayer->prop->chr;
 
 	if (chr) {
 		pPlayer->bondfadetime60 = 0;
@@ -15206,7 +15206,7 @@ void currentPlayerStartChrFade(f32 duration60, f32 targetfrac)
 void currentPlayerTickChrFade(void)
 {
 	if (pPlayer->bondfadetimemax60 >= 0) {
-		CHRdata *chr = pPlayer->position_data->chr;
+		struct chrdata *chr = pPlayer->prop->chr;
 		f32 frac;
 
 		pPlayer->bondfadetime60 += global_timer_delta;
@@ -29947,7 +29947,7 @@ glabel sub_GAME_7F089780
 
 
 struct prop* get_curplayer_positiondata(void) {
-    return pPlayer->position_data;
+    return pPlayer->prop;
 }
 
 

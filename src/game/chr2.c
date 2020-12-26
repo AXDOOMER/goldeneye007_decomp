@@ -7810,7 +7810,7 @@ glabel set_actor_on_path
 
 
 
-void setSeenBondTimeToNow(PCHRdata guardData)
+void setSeenBondTimeToNow(struct chrdata *guardData)
 {
   guardData->timeshooter = global_timer;
   return;
@@ -9103,7 +9103,7 @@ glabel sub_GAME_7F02A1E8
 
 
 
-s32 true_if_actor_dying_fading_limping_shot(PCHRdata chr) {
+s32 true_if_actor_dying_fading_limping_shot(struct chrdata *chr) {
     s8 currentaction = chr->actiontype;
 
     if ((currentaction == ACT_DIE) || (currentaction == ACT_DEAD) || (currentaction == ACT_PREARGH) || (currentaction == ACT_ARGH) && !(chr->chrflags & CHRFLAG_00000200))
@@ -9113,7 +9113,7 @@ s32 true_if_actor_dying_fading_limping_shot(PCHRdata chr) {
 
 
 
-s32 true_if_actor_dying_fading(PCHRdata chr) {
+s32 true_if_actor_dying_fading(struct chrdata *chr) {
     s8 currentaction = chr->actiontype;
 
     return ((currentaction == ACT_DIE) || (currentaction == ACT_DEAD));
@@ -10577,7 +10577,7 @@ glabel sub_GAME_7F02AD98
 
 
 
-void actor_reset_sleep(PCHRdata actor) {
+void actor_reset_sleep(struct chrdata *actor) {
     actor->sleep = 0;
 }
 
@@ -20533,7 +20533,7 @@ glabel get_angle_between_actor_cur_player
 #endif
 
 
-float distToBond3D(PCHRdata guardData)
+float distToBond3D(struct chrdata *guardData)
 {
   struct prop *guardPosData;
   struct prop *playerPosData;
@@ -20664,7 +20664,7 @@ glabel check_if_room_for_preset_loaded
 #endif
 
 
-s32 convertPadIf9000(PCHRdata guardData,s32 padNo)
+s32 convertPadIf9000(struct chrdata *guardData,s32 padNo)
 {
     // Guard's target pad.
     if (padNo == PAD_PRESET) {

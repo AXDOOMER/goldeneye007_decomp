@@ -37,7 +37,7 @@ struct animation_something D_8002CC2C = {0xFFFFFFFF, 0, 0, 0.0, 0, 0, 0.0, NULL,
 s32 D_8002CC58 = 0;
 s32 show_patrols_flag = FALSE;
 s32 player1_guardID = 5000;
-PCHRdata ptr_guard_data = 0;
+struct chrdata *ptr_guard_data = 0;
 s32 num_guards = 0;
 s32 D_8002CC6C[] = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 s32 D_8002CCA8 = 0;
@@ -2217,22 +2217,22 @@ s32 chrGetNumFree(void)
 
 f32 get_007_health_mod(void);
 
-void chrSetMaxDamage(PCHRdata chr, f32 maxdamage)
+void chrSetMaxDamage(struct chrdata *chr, f32 maxdamage)
 {
     chr->maxdamage = (get_007_health_mod() * maxdamage);
 }
 
-f32 chrGetMaxDamage(PCHRdata chr)
+f32 chrGetMaxDamage(struct chrdata *chr)
 {
     return chr->maxdamage;
 }
 
-void chrAddHealth(PCHRdata chr, f32 health)
+void chrAddHealth(struct chrdata *chr, f32 health)
 {
     chr->damage -= (health * get_007_health_mod());
 }
 
-f32 chrGetArmor(PCHRdata chr)
+f32 chrGetArmor(struct chrdata *chr)
 {
 	if (chr->damage < 0) {
 		return -chr->damage;

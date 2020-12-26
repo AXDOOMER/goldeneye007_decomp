@@ -7781,7 +7781,7 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->field_29FC = 2;
     (*ppPVar3)->ducking_height_offset = 0.00000000;
     (*ppPVar3)->field_A4 = 0.00000000;
-    (*ppPVar3)->position_data = 0;
+    (*ppPVar3)->prop = 0;
     (*ppPVar3)->field_AC = 1;
     (*ppPVar3)->field_D0 = 0;
     (*ppPVar3)->ptr_char_objectinstance = 0;
@@ -9779,7 +9779,7 @@ s32 get_cur_playernum(void) {
 
 
 #ifdef NONMATCHING
-void proc_7F09B15C(int position_data)
+void proc_7F09B15C(int prop)
 {
     Player *pPVar1;
     s32 numplayers;
@@ -9791,7 +9791,7 @@ void proc_7F09B15C(int position_data)
     if (0 < numplayers) {
         ppPVar2 = ptr_BONDdata_p1;
         pPVar1 = ptr_BONDdata_p1[0];
-        while (ppPVar2 = ppPVar2 + 1, position_data != pPVar1->position_data) {
+        while (ppPVar2 = ppPVar2 + 1, prop != pPVar1->prop) {
             i = i + 1;
             numplayers = get_num_players();
             if (numplayers <= i) {

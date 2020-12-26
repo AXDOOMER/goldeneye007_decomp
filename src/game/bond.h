@@ -341,7 +341,7 @@ struct Player
   s32 crouchposition;
   s32 ducking_height_offset;
   s32 field_A4;
-  struct prop* position_data;
+  struct prop* prop;
   s32 field_AC;
   s32 field_B0;
   s32 zpos_0;

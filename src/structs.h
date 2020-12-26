@@ -32,8 +32,7 @@ struct prop {
     u8 flags;
     s16 timetoregen;
     union {
-        CHRdata* chr;
-        // 	struct chrdata *chr;
+        struct chrdata* chr;
         // 	struct defaultobj *obj;
         // 	struct doorobj *door;
         // 	struct weaponobj *weapon;
