@@ -542,85 +542,19 @@ void currentPlayerSetCameraScale(void)
 	pPlayer->c_cameraleftnorm.z = -fVar5 * fVar4;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F077EEC(void *arg0, void *arg1, f32 arg2) {
-    f32 sp20;
-    f32 temp_f14;
-    f32 temp_f16;
-    ? temp_ret;
-    f32 temp_f2;
-
-    // Node 0
-    temp_f14 = ((pPlayer->c_halfheight - (arg0->unk4 - pPlayer->c_screentop)) * pPlayer->c_scaley);
-    temp_f16 = (((*arg0 - pPlayer->c_screenleft) - pPlayer->c_halfwidth) * pPlayer->c_scalex);
-    sp20 = temp_f16;
-    temp_ret = sqrtf((((temp_f16 * temp_f16) + (temp_f14 * temp_f14)) + (-1.0f * -1.0f)), temp_f14);
-    temp_f2 = (arg2 / temp_ret);
-    *arg1 = (f32) (temp_f16 * temp_f2);
-    arg1->unk4 = (f32) (sp1C * temp_f2);
-    arg1->unk8 = (f32) (-1.0f * temp_f2);
-    return temp_ret;
+void sub_GAME_7F077EEC(struct xyzpoint *in, struct xyzpoint *out, f32 value) {
+    f32 norm;
+    f32 x;
+    f32 y;
+    f32 z;
+    y = (pPlayer->c_halfheight - (in->y - pPlayer->c_screentop)) * pPlayer->c_scaley;
+    x = ((in->x - pPlayer->c_screenleft) - pPlayer->c_halfwidth) * pPlayer->c_scalex;
+    z = -1.0f;
+    norm = value / sqrtf((x * x) + (y * y) + (z * z));
+    out->x = (x * norm);
+    out->y = (y * norm);
+    out->z = (-1.0f * norm);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F077EEC
-/* 0ACA1C 7F077EEC 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0ACA20 7F077EF0 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 0ACA24 7F077EF4 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
-/* 0ACA28 7F077EF8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0ACA2C 7F077EFC AFA60030 */  sw    $a2, 0x30($sp)
-/* 0ACA30 7F077F00 C4840004 */  lwc1  $f4, 4($a0)
-/* 0ACA34 7F077F04 C446109C */  lwc1  $f6, 0x109c($v0)
-/* 0ACA38 7F077F08 C44A10B0 */  lwc1  $f10, 0x10b0($v0)
-/* 0ACA3C 7F077F0C 3C01BF80 */  li    $at, 0xBF800000 # -1.000000
-/* 0ACA40 7F077F10 46062201 */  sub.s $f8, $f4, $f6
-/* 0ACA44 7F077F14 C4860000 */  lwc1  $f6, ($a0)
-/* 0ACA48 7F077F18 C44410B8 */  lwc1  $f4, 0x10b8($v0)
-/* 0ACA4C 7F077F1C 44810000 */  mtc1  $at, $f0
-/* 0ACA50 7F077F20 46085481 */  sub.s $f18, $f10, $f8
-/* 0ACA54 7F077F24 C44A1098 */  lwc1  $f10, 0x1098($v0)
-/* 0ACA58 7F077F28 46049382 */  mul.s $f14, $f18, $f4
-/* 0ACA5C 7F077F2C 460A3201 */  sub.s $f8, $f6, $f10
-/* 0ACA60 7F077F30 C45210AC */  lwc1  $f18, 0x10ac($v0)
-/* 0ACA64 7F077F34 C44610B4 */  lwc1  $f6, 0x10b4($v0)
-/* 0ACA68 7F077F38 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 0ACA6C 7F077F3C 46124101 */  sub.s $f4, $f8, $f18
-/* 0ACA70 7F077F40 E7AE001C */  swc1  $f14, 0x1c($sp)
-/* 0ACA74 7F077F44 46062402 */  mul.s $f16, $f4, $f6
-/* 0ACA78 7F077F48 00000000 */  nop   
-/* 0ACA7C 7F077F4C 46108282 */  mul.s $f10, $f16, $f16
-/* 0ACA80 7F077F50 E7B00020 */  swc1  $f16, 0x20($sp)
-/* 0ACA84 7F077F54 460E7202 */  mul.s $f8, $f14, $f14
-/* 0ACA88 7F077F58 46085480 */  add.s $f18, $f10, $f8
-/* 0ACA8C 7F077F5C 46000102 */  mul.s $f4, $f0, $f0
-/* 0ACA90 7F077F60 0C007DF8 */  jal   sqrtf
-/* 0ACA94 7F077F64 46049300 */   add.s $f12, $f18, $f4
-/* 0ACA98 7F077F68 C7A60030 */  lwc1  $f6, 0x30($sp)
-/* 0ACA9C 7F077F6C C7B00020 */  lwc1  $f16, 0x20($sp)
-/* 0ACAA0 7F077F70 C7AE001C */  lwc1  $f14, 0x1c($sp)
-/* 0ACAA4 7F077F74 46003083 */  div.s $f2, $f6, $f0
-/* 0ACAA8 7F077F78 3C01BF80 */  li    $at, 0xBF800000 # -1.000000
-/* 0ACAAC 7F077F7C 44819000 */  mtc1  $at, $f18
-/* 0ACAB0 7F077F80 8FA5002C */  lw    $a1, 0x2c($sp)
-/* 0ACAB4 7F077F84 46028282 */  mul.s $f10, $f16, $f2
-/* 0ACAB8 7F077F88 00000000 */  nop   
-/* 0ACABC 7F077F8C 46027202 */  mul.s $f8, $f14, $f2
-/* 0ACAC0 7F077F90 00000000 */  nop   
-/* 0ACAC4 7F077F94 46029102 */  mul.s $f4, $f18, $f2
-/* 0ACAC8 7F077F98 E4AA0000 */  swc1  $f10, ($a1)
-/* 0ACACC 7F077F9C E4A80004 */  swc1  $f8, 4($a1)
-/* 0ACAD0 7F077FA0 E4A40008 */  swc1  $f4, 8($a1)
-/* 0ACAD4 7F077FA4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0ACAD8 7F077FA8 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0ACADC 7F077FAC 03E00008 */  jr    $ra
-/* 0ACAE0 7F077FB0 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void *sub_GAME_7F077FB4(void *arg0, s32 arg1, void *arg2) {
