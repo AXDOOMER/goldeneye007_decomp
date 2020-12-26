@@ -15147,67 +15147,18 @@ void set_rgba_tint(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
     pPlayer->tint_alpha = arg3;
 }
 
-
-
-
-
-
-#ifdef NONMATCHING
-void *sub_GAME_7F0807E0(f32 arg0, s32 arg1, ?32 arg2, ?32 arg3, f32 arg4) {
-    // Node 0
-    pPlayer->field_3E0 = 0.0f;
-    pPlayer->time_for_fade = arg0;
-    pPlayer->field_3E8 = (?32) pPlayer->tint_red;
+void sub_GAME_7F0807E0(f32 arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4) {
+    pPlayer->screen_fade_timer = 0.0f;
+    pPlayer->screen_fade_max_time = arg0;
+    pPlayer->field_3E8 = pPlayer->tint_red;
     pPlayer->field_3EC = arg1;
-    pPlayer->field_3F0 = (?32) pPlayer->tint_green;
+    pPlayer->field_3F0 = pPlayer->tint_green;
     pPlayer->field_3F4 = arg2;
-    pPlayer->field_3F8 = (?32) pPlayer->tint_blue;
+    pPlayer->field_3F8 = pPlayer->tint_blue;
     pPlayer->field_3FC = arg3;
-    pPlayer->field_400 = (f32) pPlayer->tint_alpha;
+    pPlayer->field_400 = pPlayer->tint_alpha;
     pPlayer->field_404 = arg4;
-    return pPlayer;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0807E0
-/* 0B5310 7F0807E0 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 0B5314 7F0807E4 2463A0B0 */  addiu $v1, %lo(pPlayer) # addiu $v1, $v1, -0x5f50
-/* 0B5318 7F0807E8 8C6E0000 */  lw    $t6, ($v1)
-/* 0B531C 7F0807EC 44802000 */  mtc1  $zero, $f4
-/* 0B5320 7F0807F0 00000000 */  nop   
-/* 0B5324 7F0807F4 E5C403E0 */  swc1  $f4, 0x3e0($t6)
-/* 0B5328 7F0807F8 8C6F0000 */  lw    $t7, ($v1)
-/* 0B532C 7F0807FC E5EC03E4 */  swc1  $f12, 0x3e4($t7)
-/* 0B5330 7F080800 8C620000 */  lw    $v0, ($v1)
-/* 0B5334 7F080804 8C5803D0 */  lw    $t8, 0x3d0($v0)
-/* 0B5338 7F080808 AC5803E8 */  sw    $t8, 0x3e8($v0)
-/* 0B533C 7F08080C 8C790000 */  lw    $t9, ($v1)
-/* 0B5340 7F080810 AF2503EC */  sw    $a1, 0x3ec($t9)
-/* 0B5344 7F080814 8C620000 */  lw    $v0, ($v1)
-/* 0B5348 7F080818 8C4803D4 */  lw    $t0, 0x3d4($v0)
-/* 0B534C 7F08081C AC4803F0 */  sw    $t0, 0x3f0($v0)
-/* 0B5350 7F080820 8C690000 */  lw    $t1, ($v1)
-/* 0B5354 7F080824 AD2603F4 */  sw    $a2, 0x3f4($t1)
-/* 0B5358 7F080828 8C620000 */  lw    $v0, ($v1)
-/* 0B535C 7F08082C 8C4A03D8 */  lw    $t2, 0x3d8($v0)
-/* 0B5360 7F080830 AC4A03F8 */  sw    $t2, 0x3f8($v0)
-/* 0B5364 7F080834 8C6B0000 */  lw    $t3, ($v1)
-/* 0B5368 7F080838 AD6703FC */  sw    $a3, 0x3fc($t3)
-/* 0B536C 7F08083C 8C620000 */  lw    $v0, ($v1)
-/* 0B5370 7F080840 C44603DC */  lwc1  $f6, 0x3dc($v0)
-/* 0B5374 7F080844 E4460400 */  swc1  $f6, 0x400($v0)
-/* 0B5378 7F080848 8C6C0000 */  lw    $t4, ($v1)
-/* 0B537C 7F08084C C7A80010 */  lwc1  $f8, 0x10($sp)
-/* 0B5380 7F080850 03E00008 */  jr    $ra
-/* 0B5384 7F080854 E5880404 */   swc1  $f8, 0x404($t4)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void fade_to_over_seconds(f32 arg1) {

@@ -548,7 +548,7 @@ struct Player
   s32 tint_green;
   s32 tint_blue;
   f32 tint_alpha;
-  s32 screen_fade_timer;
+  f32 screen_fade_timer;
   f32 screen_fade_max_time;
   s32 field_3E8;
   s32 field_3EC;
@@ -556,8 +556,8 @@ struct Player
   s32 field_3F4;
   s32 field_3F8;
   s32 field_3FC;
-  s32 field_400;
-  s32 field_404;
+  f32 field_400;
+  f32 field_404;
   s32 field_408;
   s32 field_40C;
   s32 field_410;
