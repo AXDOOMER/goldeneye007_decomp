@@ -567,78 +567,19 @@ void sub_GAME_7F077FF4(struct coord *in, struct coord *out) {
     out->x = (pPlayer->c_screenleft + pPlayer->c_halfwidth) - (in->x * inv_z * pPlayer->c_recipscalex);
 }
 
-#ifdef NONMATCHING
-void *sub_GAME_7F078060(void *arg0, void *arg1) {
-    f32 phi_f2;
+void sub_GAME_7F078060(struct coord *in, struct coord *out)
+{
+	f32 inv_z;
 
-    // Node 0
-    if (0.0f == arg0->unk8)
-    {
-        // Node 1
-        phi_f2 = *(void *)0x80050000;
-    }
-    else
-    {
-        // Node 2
-        phi_f2 = (1.0f / arg0->unk8);
-    }
-    // Node 3
-    arg1->unk4 = (f32) (((arg0->unk4 * phi_f2) * pPlayer->c_recipscaley) + (pPlayer->c_screentop + pPlayer->c_halfheight));
-    *arg1 = (f32) ((pPlayer->c_screenleft + pPlayer->c_halfwidth) - ((*arg0 * phi_f2) * pPlayer->c_recipscalex));
-    return pPlayer;
+	if (in->z == 0.0f) {
+		inv_z = -100000000000000000000.0f;
+	} else {
+		inv_z = 1.0f / in->z;
+	}
+
+	out->y = in->y * inv_z * pPlayer->c_recipscaley + (pPlayer->c_screentop + pPlayer->c_halfheight);
+	out->x = (pPlayer->c_screenleft + pPlayer->c_halfwidth) - in->x * inv_z * pPlayer->c_recipscalex;
 }
-
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80054FAC
-.word 0xe0ad78ec /*-1.0e20*/
-.text
-glabel sub_GAME_7F078060
-/* 0ACB90 7F078060 C4800008 */  lwc1  $f0, 8($a0)
-/* 0ACB94 7F078064 44802000 */  mtc1  $zero, $f4
-/* 0ACB98 7F078068 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0ACB9C 7F07806C 46002032 */  c.eq.s $f4, $f0
-/* 0ACBA0 7F078070 00000000 */  nop   
-/* 0ACBA4 7F078074 45020005 */  bc1fl .L7F07808C
-/* 0ACBA8 7F078078 44813000 */   mtc1  $at, $f6
-/* 0ACBAC 7F07807C 3C018005 */  lui    $at, %hi(D_80054FAC)
-/* 0ACBB0 7F078080 10000004 */  b     .L7F078094
-/* 0ACBB4 7F078084 C4224FAC */   lwc1  $f2, %lo(D_80054FAC)($at)
-/* 0ACBB8 7F078088 44813000 */  mtc1  $at, $f6
-.L7F07808C:
-/* 0ACBBC 7F07808C 00000000 */  nop   
-/* 0ACBC0 7F078090 46003083 */  div.s $f2, $f6, $f0
-.L7F078094:
-/* 0ACBC4 7F078094 C4880004 */  lwc1  $f8, 4($a0)
-/* 0ACBC8 7F078098 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 0ACBCC 7F07809C 2463A0B0 */  addiu $v1, %lo(pPlayer) # addiu $v1, $v1, -0x5f50
-/* 0ACBD0 7F0780A0 46024282 */  mul.s $f10, $f8, $f2
-/* 0ACBD4 7F0780A4 8C620000 */  lw    $v0, ($v1)
-/* 0ACBD8 7F0780A8 C45010C0 */  lwc1  $f16, 0x10c0($v0)
-/* 0ACBDC 7F0780AC C444109C */  lwc1  $f4, 0x109c($v0)
-/* 0ACBE0 7F0780B0 C44610B0 */  lwc1  $f6, 0x10b0($v0)
-/* 0ACBE4 7F0780B4 46105482 */  mul.s $f18, $f10, $f16
-/* 0ACBE8 7F0780B8 46062200 */  add.s $f8, $f4, $f6
-/* 0ACBEC 7F0780BC 46089280 */  add.s $f10, $f18, $f8
-/* 0ACBF0 7F0780C0 E4AA0004 */  swc1  $f10, 4($a1)
-/* 0ACBF4 7F0780C4 C4920000 */  lwc1  $f18, ($a0)
-/* 0ACBF8 7F0780C8 8C620000 */  lw    $v0, ($v1)
-/* 0ACBFC 7F0780CC 46029202 */  mul.s $f8, $f18, $f2
-/* 0ACC00 7F0780D0 C4501098 */  lwc1  $f16, 0x1098($v0)
-/* 0ACC04 7F0780D4 C44410AC */  lwc1  $f4, 0x10ac($v0)
-/* 0ACC08 7F0780D8 C44A10BC */  lwc1  $f10, 0x10bc($v0)
-/* 0ACC0C 7F0780DC 46048180 */  add.s $f6, $f16, $f4
-/* 0ACC10 7F0780E0 460A4402 */  mul.s $f16, $f8, $f10
-/* 0ACC14 7F0780E4 46103101 */  sub.s $f4, $f6, $f16
-/* 0ACC18 7F0780E8 03E00008 */  jr    $ra
-/* 0ACC1C 7F0780EC E4A40000 */   swc1  $f4, ($a1)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void *sub_GAME_7F0780F0(void *arg0, s32 arg1, void *arg2) {
