@@ -561,53 +561,11 @@ void sub_GAME_7F077FB4(struct coord *in, f32 value, struct coord *out) {
     out->x = ((in->x * value) * pPlayer->c_scalex);
 }
 
-#ifdef NONMATCHING
-void *sub_GAME_7F077FF4(void *arg0, void *arg1) {
-    f32 temp_f0;
-
-    // Node 0
-    temp_f0 = (1.0f / arg0->unk8);
-    arg1->unk4 = (f32) (((arg0->unk4 * temp_f0) * pPlayer->c_recipscaley) + (pPlayer->c_screentop + pPlayer->c_halfheight));
-    *arg1 = (f32) ((pPlayer->c_screenleft + pPlayer->c_halfwidth) - ((*arg0 * temp_f0) * pPlayer->c_recipscalex));
-    return pPlayer;
+void sub_GAME_7F077FF4(struct coord *in, struct coord *out) {
+    f32 inv_z = (1.0f / in->z);
+    out->y = (in->y * inv_z * pPlayer->c_recipscaley) + (pPlayer->c_screentop + pPlayer->c_halfheight);
+    out->x = (pPlayer->c_screenleft + pPlayer->c_halfwidth) - (in->x * inv_z * pPlayer->c_recipscalex);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F077FF4
-/* 0ACB24 7F077FF4 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0ACB28 7F077FF8 44812000 */  mtc1  $at, $f4
-/* 0ACB2C 7F077FFC C4860008 */  lwc1  $f6, 8($a0)
-/* 0ACB30 7F078000 C4880004 */  lwc1  $f8, 4($a0)
-/* 0ACB34 7F078004 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 0ACB38 7F078008 46062003 */  div.s $f0, $f4, $f6
-/* 0ACB3C 7F07800C 2463A0B0 */  addiu $v1, %lo(pPlayer) # addiu $v1, $v1, -0x5f50
-/* 0ACB40 7F078010 8C620000 */  lw    $v0, ($v1)
-/* 0ACB44 7F078014 C45010C0 */  lwc1  $f16, 0x10c0($v0)
-/* 0ACB48 7F078018 C444109C */  lwc1  $f4, 0x109c($v0)
-/* 0ACB4C 7F07801C C44610B0 */  lwc1  $f6, 0x10b0($v0)
-/* 0ACB50 7F078020 46004282 */  mul.s $f10, $f8, $f0
-/* 0ACB54 7F078024 46062200 */  add.s $f8, $f4, $f6
-/* 0ACB58 7F078028 46105482 */  mul.s $f18, $f10, $f16
-/* 0ACB5C 7F07802C 46089280 */  add.s $f10, $f18, $f8
-/* 0ACB60 7F078030 E4AA0004 */  swc1  $f10, 4($a1)
-/* 0ACB64 7F078034 C4920000 */  lwc1  $f18, ($a0)
-/* 0ACB68 7F078038 8C620000 */  lw    $v0, ($v1)
-/* 0ACB6C 7F07803C 46009202 */  mul.s $f8, $f18, $f0
-/* 0ACB70 7F078040 C4501098 */  lwc1  $f16, 0x1098($v0)
-/* 0ACB74 7F078044 C44410AC */  lwc1  $f4, 0x10ac($v0)
-/* 0ACB78 7F078048 C44A10BC */  lwc1  $f10, 0x10bc($v0)
-/* 0ACB7C 7F07804C 46048180 */  add.s $f6, $f16, $f4
-/* 0ACB80 7F078050 460A4402 */  mul.s $f16, $f8, $f10
-/* 0ACB84 7F078054 46103101 */  sub.s $f4, $f6, $f16
-/* 0ACB88 7F078058 03E00008 */  jr    $ra
-/* 0ACB8C 7F07805C E4A40000 */   swc1  $f4, ($a1)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void *sub_GAME_7F078060(void *arg0, void *arg1) {
