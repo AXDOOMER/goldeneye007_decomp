@@ -581,46 +581,11 @@ void sub_GAME_7F078060(struct coord *in, struct coord *out)
 	out->x = (pPlayer->c_screenleft + pPlayer->c_halfwidth) - in->x * inv_z * pPlayer->c_recipscalex;
 }
 
-#ifdef NONMATCHING
-void *sub_GAME_7F0780F0(void *arg0, s32 arg1, void *arg2) {
-    f32 temp_f0;
-
-    // Node 0
-    temp_f0 = (1.0f / arg1);
-    arg2->unk4 = (f32) ((arg0->unk4 * temp_f0) * pPlayer->c_recipscaley);
-    *arg2 = (f32) ((*arg0 * temp_f0) * pPlayer->c_recipscalex);
-    return &pPlayer;
+void sub_GAME_7F0780F0(struct coord *in, f32 divisor, struct coord *out)
+{
+	out->y = in->y * (1.0f / divisor) * pPlayer->c_recipscaley;
+	out->x = in->x * (1.0f / divisor) * pPlayer->c_recipscalex;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0780F0
-/* 0ACC20 7F0780F0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0ACC24 7F0780F4 44856000 */  mtc1  $a1, $f12
-/* 0ACC28 7F0780F8 44812000 */  mtc1  $at, $f4
-/* 0ACC2C 7F0780FC C4860004 */  lwc1  $f6, 4($a0)
-/* 0ACC30 7F078100 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 0ACC34 7F078104 460C2003 */  div.s $f0, $f4, $f12
-/* 0ACC38 7F078108 2442A0B0 */  addiu $v0, %lo(pPlayer) # addiu $v0, $v0, -0x5f50
-/* 0ACC3C 7F07810C 8C4E0000 */  lw    $t6, ($v0)
-/* 0ACC40 7F078110 C5CA10C0 */  lwc1  $f10, 0x10c0($t6)
-/* 0ACC44 7F078114 46003202 */  mul.s $f8, $f6, $f0
-/* 0ACC48 7F078118 00000000 */  nop   
-/* 0ACC4C 7F07811C 460A4402 */  mul.s $f16, $f8, $f10
-/* 0ACC50 7F078120 E4D00004 */  swc1  $f16, 4($a2)
-/* 0ACC54 7F078124 C4920000 */  lwc1  $f18, ($a0)
-/* 0ACC58 7F078128 8C4F0000 */  lw    $t7, ($v0)
-/* 0ACC5C 7F07812C 46009102 */  mul.s $f4, $f18, $f0
-/* 0ACC60 7F078130 C5E610BC */  lwc1  $f6, 0x10bc($t7)
-/* 0ACC64 7F078134 46062202 */  mul.s $f8, $f4, $f6
-/* 0ACC68 7F078138 03E00008 */  jr    $ra
-/* 0ACC6C 7F07813C E4C80000 */   swc1  $f8, ($a2)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void *sub_GAME_7F078140(void *arg0, void *arg1, f32 arg2, f32 arg3, f32 arg4) {
