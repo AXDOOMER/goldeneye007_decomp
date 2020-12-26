@@ -70,7 +70,7 @@ typedef struct {
     s8 flinchcnt;
     s16 hidden;
     s32 chrflags;
-    struct PositionData* posdata;
+    struct prop* posdata;
     void * model;
     /* 0x0020 */
     void * field_20;

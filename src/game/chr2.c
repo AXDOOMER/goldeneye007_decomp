@@ -20535,8 +20535,8 @@ glabel get_angle_between_actor_cur_player
 
 float distToBond3D(PCHRdata guardData)
 {
-  struct PositionData *guardPosData;
-  struct PositionData *playerPosData;
+  struct prop *guardPosData;
+  struct prop *playerPosData;
   float xDiff;
   float yDiff;
   float zDiff;

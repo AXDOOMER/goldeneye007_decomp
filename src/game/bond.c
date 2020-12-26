@@ -15193,7 +15193,7 @@ void currentPlayerUpdateColourScreenProperties(void)
 
 void currentPlayerStartChrFade(f32 duration60, f32 targetfrac)
 {
-	CHRdata* chr = pPlayer->position_data->object_data;//pPlayer->prop->chr;
+	CHRdata* chr = pPlayer->position_data->chr;//pPlayer->prop->chr;
 
 	if (chr) {
 		pPlayer->bondfadetime60 = 0;
@@ -15206,7 +15206,7 @@ void currentPlayerStartChrFade(f32 duration60, f32 targetfrac)
 void currentPlayerTickChrFade(void)
 {
 	if (pPlayer->bondfadetimemax60 >= 0) {
-		CHRdata *chr = pPlayer->position_data->object_data;
+		CHRdata *chr = pPlayer->position_data->chr;
 		f32 frac;
 
 		pPlayer->bondfadetime60 += global_timer_delta;
@@ -29946,7 +29946,7 @@ glabel sub_GAME_7F089780
 
 
 
-struct PositionData* get_curplayer_positiondata(void) {
+struct prop* get_curplayer_positiondata(void) {
     return pPlayer->position_data;
 }
 

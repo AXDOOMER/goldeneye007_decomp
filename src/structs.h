@@ -27,11 +27,19 @@ struct float2 {
     float z;
 };
 
-struct PositionData {
-    u8 objectClass; // enum EObjectClass
+struct prop {
+    u8 type; // enum EObjectClass
     u8 flags;
-    short unknown_0x2;
-    void* object_data;
+    s16 timetoregen;
+    union {
+        CHRdata* chr;
+        // 	struct chrdata *chr;
+        // 	struct defaultobj *obj;
+        // 	struct doorobj *door;
+        // 	struct weaponobj *weapon;
+        // 	struct explosion *explosion;
+        // 	struct smoke *smoke;
+    };
     /* 0x08 */
     struct float3 position;
     /* 0x14 */
@@ -39,10 +47,10 @@ struct PositionData {
     /* 0x18 */
     u32 unknown_0x18;
     /* 0x1C */
-    struct PositionData * host;
-    struct PositionData * child;
-    struct PositionData * nextSibling;
-    struct PositionData * prevSibling;
+    struct prop * host;
+    struct prop * child;
+    struct prop * nextSibling;
+    struct prop * prevSibling;
     u8 rooms[4];
 };
 

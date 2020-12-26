@@ -14540,7 +14540,7 @@ glabel sub_GAME_7F03A538
 
 
 
-void attachNewChild(struct PositionData *newChild,struct PositionData *host)
+void attachNewChild(struct prop *newChild,struct prop *host)
 {
     newChild->host = host;
 
@@ -19389,7 +19389,7 @@ Main missing these kinds of instructions:
 So it looks like a conversion from u32 to u16, but we're reading a u8?
 I tried u32 room but no joy.
 */
-void sub_GAME_7F03E210(struct PositionData *posData)
+void sub_GAME_7F03E210(struct prop *posData)
 {
   u8 room;
   u8 *roomIter;
