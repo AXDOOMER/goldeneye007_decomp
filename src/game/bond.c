@@ -2972,7 +2972,7 @@ void init_player_BONDdata(void)
     pPlayer->paused_flag = 1;
     pPlayer->open_close_solo_watch_menu = 0;
     pPlayer->field_1A0 = 0;
-    pPlayer->bondfadefracnew = 0.0f;
+    pPlayer->field_19C = 0.0f;
     pPlayer->speedtheta = 0.0f;
     pPlayer->vv_costheta = 1.0f;
     pPlayer->vv_sintheta = 0.0f;
@@ -3025,10 +3025,10 @@ void init_player_BONDdata(void)
     pPlayer->colourfadebluenew = 0xff;
     pPlayer->colourfadefracold = 0.0f;
     pPlayer->colourfadefracnew = 0.0f;
-    pPlayer->viewport_alpha = -1.0f;
     pPlayer->bondfadetime60 = -1.0f;
-    pPlayer->bondfadetimemax = 0.0f;
+    pPlayer->bondfadetimemax60 = -1.0f;
     pPlayer->bondfadefracold = 0.0f;
+    pPlayer->bondfadefracnew = 0.0f;
     pPlayer->field_42C = 2;
     pPlayer->controlstyle = 0;
     pPlayer->pause_starting_angle = 0.0f;
@@ -5859,7 +5859,7 @@ glabel set_camera_mode
 /* 0AF6D0 7F07ABA0 AC3964A8 */  sw    $t9, %lo(D_800364A8)($at)
 /* 0AF6D4 7F07ABA4 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0AF6D8 7F07ABA8 44817000 */  mtc1  $at, $f14
-/* 0AF6DC 7F07ABAC 0FC20284 */  jal   set_curplayer_fade
+/* 0AF6DC 7F07ABAC 0FC20284 */  jal   currentPlayerStartChrFade
 /* 0AF6E0 7F07ABB0 00000000 */   nop   
 /* 0AF6E4 7F07ABB4 0FC1E73C */  jal   solo_char_load
 /* 0AF6E8 7F07ABB8 00000000 */   nop   
@@ -6056,7 +6056,7 @@ glabel set_camera_mode
 /* 0AF9BC 7F07AE8C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0AF9C0 7F07AE90 44817000 */  mtc1  $at, $f14
 /* 0AF9C4 7F07AE94 44806000 */  mtc1  $zero, $f12
-/* 0AF9C8 7F07AE98 0FC20284 */  jal   set_curplayer_fade
+/* 0AF9C8 7F07AE98 0FC20284 */  jal   currentPlayerStartChrFade
 /* 0AF9CC 7F07AE9C 00000000 */   nop   
 /* 0AF9D0 7F07AEA0 0FC1E73C */  jal   solo_char_load
 /* 0AF9D4 7F07AEA4 00000000 */   nop   
@@ -6315,7 +6315,7 @@ glabel sub_GAME_7F07B1A4
 /* 0AFD4C 7F07B21C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0AFD50 7F07B220 44817000 */  mtc1  $at, $f14
 /* 0AFD54 7F07B224 44806000 */  mtc1  $zero, $f12
-/* 0AFD58 7F07B228 0FC20284 */  jal   set_curplayer_fade
+/* 0AFD58 7F07B228 0FC20284 */  jal   currentPlayerStartChrFade
 /* 0AFD5C 7F07B22C 00000000 */   nop   
 /* 0AFD60 7F07B230 0FC1EA6E */  jal   set_camera_mode
 /* 0AFD64 7F07B234 24040004 */   li    $a0, 4
@@ -7053,7 +7053,7 @@ glabel sub_GAME_7F07B56C
 /* 0B0770 7F07BC40 00000000 */  nop   
 /* 0B0774 7F07BC44 45000008 */  bc1f  .L7F07BC68
 /* 0B0778 7F07BC48 00000000 */   nop   
-/* 0B077C 7F07BC4C 0FC20284 */  jal   set_curplayer_fade
+/* 0B077C 7F07BC4C 0FC20284 */  jal   currentPlayerStartChrFade
 /* 0B0780 7F07BC50 E7B00030 */   swc1  $f16, 0x30($sp)
 /* 0B0784 7F07BC54 3C088003 */  lui   $t0, %hi(D_800364A8) 
 /* 0B0788 7F07BC58 3C0A8003 */  lui   $t2, %hi(D_800364A4) 
@@ -8145,7 +8145,7 @@ glabel sub_GAME_7F07B56C
 /* 0B0DD4 7F07C264 00000000 */  nop   
 /* 0B0DD8 7F07C268 45000008 */  bc1f  .Ljp7F07C28C
 /* 0B0DDC 7F07C26C 00000000 */   nop   
-/* 0B0DE0 7F07C270 0FC20408 */  jal   set_curplayer_fade
+/* 0B0DE0 7F07C270 0FC20408 */  jal   currentPlayerStartChrFade
 /* 0B0DE4 7F07C274 E7B00030 */   swc1  $f16, 0x30($sp)
 /* 0B0DE8 7F07C278 3C088003 */  lui   $t0, %hi(D_800364A8) # $t0, 0x8003
 /* 0B0DEC 7F07C27C 3C0A8003 */  lui   $t2, %hi(D_800364A4) # $t2, 0x8003
@@ -15169,219 +15169,59 @@ s32 /*bool*/ currentPlayerIsFadeComplete(void)
 	return pPlayer->colourfadetimemax60 < 0;
 }
 
-#ifdef NONMATCHING
-void *sub_GAME_7F0808BC(void) {
-    f32 temp_f12;
+void currentPlayerUpdateColourScreenProperties(void)
+{
+	if (pPlayer->colourfadetimemax60 >= 0) {
+		pPlayer->colourfadetime60 += global_timer_delta;
 
-    // Node 0
-    if (0.0f <= pPlayer->time_for_fade)
-    {
-        // Node 1
-        pPlayer->field_3E0 = (f32) (pPlayer->field_3E0 + global_timer_delta);
-        if (pPlayer->field_3E0 < pPlayer->time_for_fade)
-        {
-            // Node 2
-            temp_f12 = (pPlayer->field_3E0 / pPlayer->time_for_fade);
-            pPlayer->colourscreenfrac = (f32) (pPlayer->colourfadefracold + ((pPlayer->colourfadefracnew - pPlayer->colourfadefracold) * temp_f12));
-            pPlayer->colourscreenred = (s32) (pPlayer->colourfaderedold + (s32) ((f32) (pPlayer->colourfaderednew - pPlayer->colourfaderedold) * temp_f12));
-            pPlayer->colourscreengreen = (s32) (pPlayer->colourfadegreenold + (s32) ((f32) (pPlayer->colourfadegreennew - pPlayer->colourfadegreenold) * temp_f12));
-            pPlayer->colourscreenblue = (s32) (pPlayer->colourfadeblueold + (s32) ((f32) (pPlayer->colourfadebluenew - pPlayer->colourfadeblueold) * temp_f12));
-            return pPlayer;
-        }
-        // Node 3
-        pPlayer->colourscreenfrac = (f32) pPlayer->colourfadefracnew;
-        pPlayer->colourscreenred = (s32) pPlayer->colourfaderednew;
-        pPlayer->colourscreengreen = (s32) pPlayer->colourfadegreennew;
-        pPlayer->colourscreenblue = (s32) pPlayer->colourfadebluenew;
-        pPlayer->time_for_fade = -1.0f;
-    }
-    // Node 4
-    return pPlayer;
+		if (pPlayer->colourfadetime60 < pPlayer->colourfadetimemax60) {
+			f32 mult = pPlayer->colourfadetime60 / pPlayer->colourfadetimemax60;
+			pPlayer->colourscreenfrac = pPlayer->colourfadefracold + (pPlayer->colourfadefracnew - pPlayer->colourfadefracold) * mult;
+			pPlayer->colourscreenred = pPlayer->colourfaderedold + (s32)((pPlayer->colourfaderednew - pPlayer->colourfaderedold) * mult);
+			pPlayer->colourscreengreen = pPlayer->colourfadegreenold + (s32)((pPlayer->colourfadegreennew - pPlayer->colourfadegreenold) * mult);
+			pPlayer->colourscreenblue = pPlayer->colourfadeblueold + (s32)((pPlayer->colourfadebluenew - pPlayer->colourfadeblueold) * mult);
+			return;
+		}
+
+		pPlayer->colourscreenfrac = pPlayer->colourfadefracnew;
+		pPlayer->colourscreenred = pPlayer->colourfaderednew;
+		pPlayer->colourscreengreen = pPlayer->colourfadegreennew;
+		pPlayer->colourscreenblue = pPlayer->colourfadebluenew;
+		pPlayer->colourfadetimemax60 = -1;
+	}
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0808BC
-/* 0B53EC 7F0808BC 3C068008 */  lui   $a2, %hi(pPlayer)
-/* 0B53F0 7F0808C0 24C6A0B0 */  addiu $a2, %lo(pPlayer) # addiu $a2, $a2, -0x5f50
-/* 0B53F4 7F0808C4 8CC20000 */  lw    $v0, ($a2)
-/* 0B53F8 7F0808C8 44803000 */  mtc1  $zero, $f6
-/* 0B53FC 7F0808CC 3C018005 */  lui   $at, %hi(global_timer_delta)
-/* 0B5400 7F0808D0 C44403E4 */  lwc1  $f4, 0x3e4($v0)
-/* 0B5404 7F0808D4 4604303E */  c.le.s $f6, $f4
-/* 0B5408 7F0808D8 00000000 */  nop   
-/* 0B540C 7F0808DC 4500004A */  bc1f  .L7F080A08
-/* 0B5410 7F0808E0 00000000 */   nop   
-/* 0B5414 7F0808E4 C44803E0 */  lwc1  $f8, 0x3e0($v0)
-/* 0B5418 7F0808E8 C42A8378 */  lwc1  $f10, %lo(global_timer_delta)($at)
-/* 0B541C 7F0808EC 460A4400 */  add.s $f16, $f8, $f10
-/* 0B5420 7F0808F0 E45003E0 */  swc1  $f16, 0x3e0($v0)
-/* 0B5424 7F0808F4 8CC20000 */  lw    $v0, ($a2)
-/* 0B5428 7F0808F8 C44203E0 */  lwc1  $f2, 0x3e0($v0)
-/* 0B542C 7F0808FC C44003E4 */  lwc1  $f0, 0x3e4($v0)
-/* 0B5430 7F080900 4600103C */  c.lt.s $f2, $f0
-/* 0B5434 7F080904 00000000 */  nop   
-/* 0B5438 7F080908 45020031 */  bc1fl .L7F0809D0
-/* 0B543C 7F08090C C44A0404 */   lwc1  $f10, 0x404($v0)
-/* 0B5440 7F080910 46001303 */  div.s $f12, $f2, $f0
-/* 0B5444 7F080914 C44E0400 */  lwc1  $f14, 0x400($v0)
-/* 0B5448 7F080918 C4520404 */  lwc1  $f18, 0x404($v0)
-/* 0B544C 7F08091C 460E9101 */  sub.s $f4, $f18, $f14
-/* 0B5450 7F080920 460C2182 */  mul.s $f6, $f4, $f12
-/* 0B5454 7F080924 46067200 */  add.s $f8, $f14, $f6
-/* 0B5458 7F080928 E44803DC */  swc1  $f8, 0x3dc($v0)
-/* 0B545C 7F08092C 8CC20000 */  lw    $v0, ($a2)
-/* 0B5460 7F080930 8C4303E8 */  lw    $v1, 0x3e8($v0)
-/* 0B5464 7F080934 8C4E03EC */  lw    $t6, 0x3ec($v0)
-/* 0B5468 7F080938 01C37823 */  subu  $t7, $t6, $v1
-/* 0B546C 7F08093C 448F5000 */  mtc1  $t7, $f10
-/* 0B5470 7F080940 00000000 */  nop   
-/* 0B5474 7F080944 46805420 */  cvt.s.w $f16, $f10
-/* 0B5478 7F080948 460C8482 */  mul.s $f18, $f16, $f12
-/* 0B547C 7F08094C 4600910D */  trunc.w.s $f4, $f18
-/* 0B5480 7F080950 44192000 */  mfc1  $t9, $f4
-/* 0B5484 7F080954 00000000 */  nop   
-/* 0B5488 7F080958 00794021 */  addu  $t0, $v1, $t9
-/* 0B548C 7F08095C AC4803D0 */  sw    $t0, 0x3d0($v0)
-/* 0B5490 7F080960 8CC20000 */  lw    $v0, ($a2)
-/* 0B5494 7F080964 8C4403F0 */  lw    $a0, 0x3f0($v0)
-/* 0B5498 7F080968 8C4903F4 */  lw    $t1, 0x3f4($v0)
-/* 0B549C 7F08096C 01245023 */  subu  $t2, $t1, $a0
-/* 0B54A0 7F080970 448A3000 */  mtc1  $t2, $f6
-/* 0B54A4 7F080974 00000000 */  nop   
-/* 0B54A8 7F080978 46803220 */  cvt.s.w $f8, $f6
-/* 0B54AC 7F08097C 460C4282 */  mul.s $f10, $f8, $f12
-/* 0B54B0 7F080980 4600540D */  trunc.w.s $f16, $f10
-/* 0B54B4 7F080984 440C8000 */  mfc1  $t4, $f16
-/* 0B54B8 7F080988 00000000 */  nop   
-/* 0B54BC 7F08098C 008C6821 */  addu  $t5, $a0, $t4
-/* 0B54C0 7F080990 AC4D03D4 */  sw    $t5, 0x3d4($v0)
-/* 0B54C4 7F080994 8CC20000 */  lw    $v0, ($a2)
-/* 0B54C8 7F080998 8C4503F8 */  lw    $a1, 0x3f8($v0)
-/* 0B54CC 7F08099C 8C4E03FC */  lw    $t6, 0x3fc($v0)
-/* 0B54D0 7F0809A0 01C57823 */  subu  $t7, $t6, $a1
-/* 0B54D4 7F0809A4 448F9000 */  mtc1  $t7, $f18
-/* 0B54D8 7F0809A8 00000000 */  nop   
-/* 0B54DC 7F0809AC 46809120 */  cvt.s.w $f4, $f18
-/* 0B54E0 7F0809B0 460C2182 */  mul.s $f6, $f4, $f12
-/* 0B54E4 7F0809B4 4600320D */  trunc.w.s $f8, $f6
-/* 0B54E8 7F0809B8 44194000 */  mfc1  $t9, $f8
-/* 0B54EC 7F0809BC 00000000 */  nop   
-/* 0B54F0 7F0809C0 00B94021 */  addu  $t0, $a1, $t9
-/* 0B54F4 7F0809C4 03E00008 */  jr    $ra
-/* 0B54F8 7F0809C8 AC4803D8 */   sw    $t0, 0x3d8($v0)
 
-/* 0B54FC 7F0809CC C44A0404 */  lwc1  $f10, 0x404($v0)
-.L7F0809D0:
-/* 0B5500 7F0809D0 3C01BF80 */  li    $at, 0xBF800000 # -1.000000
-/* 0B5504 7F0809D4 44818000 */  mtc1  $at, $f16
-/* 0B5508 7F0809D8 E44A03DC */  swc1  $f10, 0x3dc($v0)
-/* 0B550C 7F0809DC 8CC20000 */  lw    $v0, ($a2)
-/* 0B5510 7F0809E0 8C4903EC */  lw    $t1, 0x3ec($v0)
-/* 0B5514 7F0809E4 AC4903D0 */  sw    $t1, 0x3d0($v0)
-/* 0B5518 7F0809E8 8CC20000 */  lw    $v0, ($a2)
-/* 0B551C 7F0809EC 8C4A03F4 */  lw    $t2, 0x3f4($v0)
-/* 0B5520 7F0809F0 AC4A03D4 */  sw    $t2, 0x3d4($v0)
-/* 0B5524 7F0809F4 8CC20000 */  lw    $v0, ($a2)
-/* 0B5528 7F0809F8 8C4B03FC */  lw    $t3, 0x3fc($v0)
-/* 0B552C 7F0809FC AC4B03D8 */  sw    $t3, 0x3d8($v0)
-/* 0B5530 7F080A00 8CCC0000 */  lw    $t4, ($a2)
-/* 0B5534 7F080A04 E59003E4 */  swc1  $f16, 0x3e4($t4)
-.L7F080A08:
-/* 0B5538 7F080A08 03E00008 */  jr    $ra
-/* 0B553C 7F080A0C 00000000 */   nop   
-)
-#endif
+void currentPlayerStartChrFade(f32 duration60, f32 targetfrac)
+{
+	CHRdata* chr = pPlayer->position_data->object_data;//pPlayer->prop->chr;
 
-
-
-
-
-#ifdef NONMATCHING
-void *set_curplayer_fade(f32 arg0, f32 arg1) {
-    f32 temp_f8;
-    f32 phi_f8;
-
-    // Node 0
-    if (pPlayer->field_A8->unk4 != 0)
-    {
-        // Node 1
-        pPlayer->viewport_alpha = 0.0f;
-        pPlayer->bondfadetime60 = arg0;
-        temp_f8 = (f32) pPlayer->field_A8->unk4->unkC;
-        phi_f8 = temp_f8;
-        if (pPlayer->field_A8->unk4->unkC < 0)
-        {
-            // Node 2
-            phi_f8 = (temp_f8 + 4294967296.0f);
-        }
-        // Node 3
-        pPlayer->bondfadetimemax = (f32) (phi_f8 / 255.0f);
-        pPlayer->bondfadefracold = arg1;
-    }
-    // Node 4
-    return pPlayer->field_A8->unk4;
+	if (chr) {
+		pPlayer->bondfadetime60 = 0;
+		pPlayer->bondfadetimemax60 = duration60;
+		pPlayer->bondfadefracold = chr->fadealpha / 255.0f;
+		pPlayer->bondfadefracnew = targetfrac;
+	}
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_curplayer_fade
-/* 0B5540 7F080A10 3C048008 */  lui   $a0, %hi(pPlayer)
-/* 0B5544 7F080A14 2484A0B0 */  addiu $a0, %lo(pPlayer) # addiu $a0, $a0, -0x5f50
-/* 0B5548 7F080A18 8C830000 */  lw    $v1, ($a0)
-/* 0B554C 7F080A1C 8C6E00A8 */  lw    $t6, 0xa8($v1)
-/* 0B5550 7F080A20 8DC20004 */  lw    $v0, 4($t6)
-/* 0B5554 7F080A24 10400014 */  beqz  $v0, .L7F080A78
-/* 0B5558 7F080A28 00000000 */   nop   
-/* 0B555C 7F080A2C 44802000 */  mtc1  $zero, $f4
-/* 0B5560 7F080A30 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 0B5564 7F080A34 E464018C */  swc1  $f4, 0x18c($v1)
-/* 0B5568 7F080A38 8C8F0000 */  lw    $t7, ($a0)
-/* 0B556C 7F080A3C E5EC0190 */  swc1  $f12, 0x190($t7)
-/* 0B5570 7F080A40 9058000C */  lbu   $t8, 0xc($v0)
-/* 0B5574 7F080A44 44983000 */  mtc1  $t8, $f6
-/* 0B5578 7F080A48 07010004 */  bgez  $t8, .L7F080A5C
-/* 0B557C 7F080A4C 46803220 */   cvt.s.w $f8, $f6
-/* 0B5580 7F080A50 44815000 */  mtc1  $at, $f10
-/* 0B5584 7F080A54 00000000 */  nop   
-/* 0B5588 7F080A58 460A4200 */  add.s $f8, $f8, $f10
-.L7F080A5C:
-/* 0B558C 7F080A5C 3C01437F */  li    $at, 0x437F0000 # 255.000000
-/* 0B5590 7F080A60 44818000 */  mtc1  $at, $f16
-/* 0B5594 7F080A64 8C990000 */  lw    $t9, ($a0)
-/* 0B5598 7F080A68 46104483 */  div.s $f18, $f8, $f16
-/* 0B559C 7F080A6C E7320194 */  swc1  $f18, 0x194($t9)
-/* 0B55A0 7F080A70 8C880000 */  lw    $t0, ($a0)
-/* 0B55A4 7F080A74 E50E0198 */  swc1  $f14, 0x198($t0)
-.L7F080A78:
-/* 0B55A8 7F080A78 03E00008 */  jr    $ra
-/* 0B55AC 7F080A7C 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void *update_curplayer_fade(void) {
     f32 phi_f12;
 
     // Node 0
-    if (0.0f <= pPlayer->bondfadetime60)
+    if (0.0f <= pPlayer->bondfadetimemax60)
     {
         // Node 1
-        pPlayer->viewport_alpha = (f32) (pPlayer->viewport_alpha + *(void *)0x80050000);
-        if (pPlayer->viewport_alpha < pPlayer->bondfadetime60)
+        pPlayer->bondfadetime60 = (f32) (pPlayer->bondfadetime60 + *(void *)0x80050000);
+        if (pPlayer->bondfadetime60 < pPlayer->bondfadetimemax60)
         {
             // Node 2
-            phi_f12 = (pPlayer->bondfadetimemax + (((pPlayer->bondfadefracold - pPlayer->bondfadetimemax) * pPlayer->viewport_alpha) / pPlayer->bondfadetime60));
+            phi_f12 = (pPlayer->bondfadefracold + (((pPlayer->bondfadefracnew - pPlayer->bondfadefracold) * pPlayer->bondfadetime60) / pPlayer->bondfadetimemax60));
         }
         else
         {
             // Node 3
-            pPlayer->bondfadetime60 = -1.0f;
-            phi_f12 = pPlayer->bondfadefracold;
+            pPlayer->bondfadetimemax60 = -1.0f;
+            phi_f12 = pPlayer->bondfadefracnew;
         }
         // Node 4
         if (pPlayer->field_A8->unk4 != 0)
@@ -26062,7 +25902,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BBDB0 7F087280 01602825 */  move  $a1, $t3
 /* 0BBDB4 7F087284 0C00112F */  jal   set_video2_ulx_uly
 /* 0BBDB8 7F087288 87A4001C */   lh    $a0, 0x1c($sp)
-/* 0BBDBC 7F08728C 0FC2022F */  jal   sub_GAME_7F0808BC
+/* 0BBDBC 7F08728C 0FC2022F */  jal   currentPlayerUpdateColourScreenProperties
 /* 0BBDC0 7F087290 00000000 */   nop   
 /* 0BBDC4 7F087294 0FC202A0 */  jal   update_curplayer_fade
 /* 0BBDC8 7F087298 00000000 */   nop   
@@ -26499,7 +26339,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BC4BC 7F08794C 01602825 */  move  $a1, $t3
 /* 0BC4C0 7F087950 0C00112F */  jal   set_video2_ulx_uly
 /* 0BC4C4 7F087954 87A4001C */   lh    $a0, 0x1c($sp)
-/* 0BC4C8 7F087958 0FC203B3 */  jal   sub_GAME_7F0808BC
+/* 0BC4C8 7F087958 0FC203B3 */  jal   currentPlayerUpdateColourScreenProperties
 /* 0BC4CC 7F08795C 00000000 */   nop   
 /* 0BC4D0 7F087960 0FC20424 */  jal   update_curplayer_fade
 /* 0BC4D4 7F087964 00000000 */   nop   
@@ -29297,7 +29137,7 @@ mp_spawntype_default:
 /* 0BD7E0 7F088CB0 8E390000 */  lw    $t9, ($s1)
 /* 0BD7E4 7F088CB4 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0BD7E8 7F088CB8 44817000 */  mtc1  $at, $f14
-/* 0BD7EC 7F088CBC 0FC20284 */  jal   set_curplayer_fade
+/* 0BD7EC 7F088CBC 0FC20284 */  jal   currentPlayerStartChrFade
 /* 0BD7F0 7F088CC0 E7200080 */   swc1  $f0, 0x80($t9)
 /* 0BD7F4 7F088CC4 8FBF001C */  lw    $ra, 0x1c($sp)
 /* 0BD7F8 7F088CC8 8FB00014 */  lw    $s0, 0x14($sp)
@@ -29930,7 +29770,7 @@ glabel maybe_mp_interface
 /* 0BE0A8 7F089578 3C0142F0 */  li    $at, 0x42F00000 # 120.000000
 /* 0BE0AC 7F08957C 44816000 */  mtc1  $at, $f12
 /* 0BE0B0 7F089580 44807000 */  mtc1  $zero, $f14
-/* 0BE0B4 7F089584 0FC20284 */  jal   set_curplayer_fade
+/* 0BE0B4 7F089584 0FC20284 */  jal   currentPlayerStartChrFade
 /* 0BE0B8 7F089588 00000000 */   nop   
 .L7F08958C:
 /* 0BE0BC 7F08958C 0FC20223 */  jal   currentPlayerIsFadeComplete
@@ -31148,7 +30988,7 @@ glabel check_if_healthbar_timer_greater_than_0
 
 
 f32 get_BONDdata_bondfadefracnew(void) {
-    return pPlayer->bondfadefracnew;
+    return pPlayer->field_19C;
 }
 
 

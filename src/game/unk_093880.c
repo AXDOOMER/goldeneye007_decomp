@@ -7828,11 +7828,11 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->boost_factor_x = 0.00000000;
     (*ppPVar3)->boost_factor_y = 0.00000000;
     (*ppPVar3)->boost_factor_z = 0.00000000;
-    (*ppPVar3)->viewport_alpha = -1.00000000;
     (*ppPVar3)->bondfadetime60 = -1.00000000;
-    (*ppPVar3)->bondfadetimemax = 0.00000000;
+    (*ppPVar3)->bondfadetimemax60 = -1.00000000;
     (*ppPVar3)->bondfadefracold = 0.00000000;
     (*ppPVar3)->bondfadefracnew = 0.00000000;
+    (*ppPVar3)->field_19C = 0.00000000;
     (*ppPVar3)->field_1A0 = 0;
     (*ppPVar3)->field_1C0 = 0;
     (*ppPVar3)->field_1C4 = 0;

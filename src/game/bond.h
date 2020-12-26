@@ -398,11 +398,11 @@ struct Player
   s32 boost_factor_x;
   s32 boost_factor_y;
   s32 boost_factor_z;
-  s32 viewport_alpha;
-  s32 bondfadetime60;
-  s32 bondfadetimemax;
-  s32 bondfadefracold;
+  f32 bondfadetime60;
+  f32 bondfadetimemax60;
+  f32 bondfadefracold;
   f32 bondfadefracnew;
+  f32 field_19C;
   s32 field_1A0;
   s32 field_1A4;
   s32 field_1A8;
