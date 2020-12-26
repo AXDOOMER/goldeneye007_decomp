@@ -2247,8 +2247,8 @@ s16 get_video2_settings_txtClipH(void) {
 void set_video2_width_height(short width,short height) {
   ptr_video_settings2->width = width;
   ptr_video_settings2->height = height;
-  set_BONDdata_screensize(ptr_video_settings2->width,ptr_video_settings2->height);
-  sub_GAME_7F077C5C();
+  currentPlayerSetScreenSize(ptr_video_settings2->width,ptr_video_settings2->height);
+  currentPlayerSetCameraScale();
   return;
 }
 #else
@@ -2271,9 +2271,9 @@ glabel set_video2_width_height
 /* 005070 70004470 448A2000 */  mtc1  $t2, $f4
 /* 005074 70004474 448B3000 */  mtc1  $t3, $f6
 /* 005078 70004478 46802320 */  cvt.s.w $f12, $f4
-/* 00507C 7000447C 0FC1DEF6 */  jal   set_BONDdata_screensize
+/* 00507C 7000447C 0FC1DEF6 */  jal   currentPlayerSetScreenSize
 /* 005080 70004480 468033A0 */   cvt.s.w $f14, $f6
-/* 005084 70004484 0FC1DF17 */  jal   sub_GAME_7F077C5C
+/* 005084 70004484 0FC1DF17 */  jal   currentPlayerSetCameraScale
 /* 005088 70004488 00000000 */   nop   
 /* 00508C 7000448C 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 005090 70004490 27BD0018 */  addiu $sp, $sp, 0x18
@@ -2309,7 +2309,7 @@ void set_video2_ulx_uly(s16 ulx, s16 uly)
 {
     ptr_video_settings2->ulx = ulx;
     ptr_video_settings2->ulx = uly;
-    set_ulx_uly((f32) ptr_video_settings2->ulx, (f32) ptr_video_settings2->uly);
+    currentPlayerSetScreenPosition((f32) ptr_video_settings2->ulx, (f32) ptr_video_settings2->uly);
 }
 #else
 GLOBAL_ASM(
@@ -2331,7 +2331,7 @@ glabel set_video2_ulx_uly
 /* 0050F0 700044F0 448A2000 */  mtc1  $t2, $f4
 /* 0050F4 700044F4 448B3000 */  mtc1  $t3, $f6
 /* 0050F8 700044F8 46802320 */  cvt.s.w $f12, $f4
-/* 0050FC 700044FC 0FC1DF05 */  jal   set_ulx_uly
+/* 0050FC 700044FC 0FC1DF05 */  jal   currentPlayerSetScreenPosition
 /* 005100 70004500 468033A0 */   cvt.s.w $f14, $f6
 /* 005104 70004504 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 005108 70004508 27BD0018 */  addiu $sp, $sp, 0x18
@@ -2373,8 +2373,8 @@ void set_video2_settings_offset_24(int param_1) {
 void setvideo_far(f32 arg0)
 {
     ptr_video_settings2->far = arg0;
-    sub_GAME_7F077C30(ptr_video_settings2->aspect, ptr_video_settings2->far, ptr_video_settings2->scale);
-    sub_GAME_7F077C5C();
+    currentPlayerSetPerspective(ptr_video_settings2->aspect, ptr_video_settings2->far, ptr_video_settings2->scale);
+    currentPlayerSetCameraScale();
 }
 #else
 GLOBAL_ASM(
@@ -2391,9 +2391,9 @@ glabel setvideo_far
 /* 005164 70004564 8C620000 */  lw    $v0, ($v1)
 /* 005168 70004568 C44C0010 */  lwc1  $f12, 0x10($v0)
 /* 00516C 7000456C C44E0008 */  lwc1  $f14, 8($v0)
-/* 005170 70004570 0FC1DF0C */  jal   sub_GAME_7F077C30
+/* 005170 70004570 0FC1DF0C */  jal   currentPlayerSetPerspective
 /* 005174 70004574 8C46000C */   lw    $a2, 0xc($v0)
-/* 005178 70004578 0FC1DF17 */  jal   sub_GAME_7F077C5C
+/* 005178 70004578 0FC1DF17 */  jal   currentPlayerSetCameraScale
 /* 00517C 7000457C 00000000 */   nop   
 /* 005180 70004580 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 005184 70004584 27BD0018 */  addiu $sp, $sp, 0x18
@@ -2411,8 +2411,8 @@ glabel setvideo_far
 void set_page_aspect(f32 arg0)
 {
     ptr_video_settings2->scale = arg0;
-    sub_GAME_7F077C30(ptr_video_settings2->aspect, ptr_video_settings2->far, ptr_video_settings2->scale);
-    sub_GAME_7F077C5C();
+    currentPlayerSetPerspective(ptr_video_settings2->aspect, ptr_video_settings2->far, ptr_video_settings2->scale);
+    currentPlayerSetCameraScale();
 }
 #else
 GLOBAL_ASM(
@@ -2429,9 +2429,9 @@ glabel set_page_aspect
 /* 0051B0 700045B0 8C620000 */  lw    $v0, ($v1)
 /* 0051B4 700045B4 C44C0010 */  lwc1  $f12, 0x10($v0)
 /* 0051B8 700045B8 C44E0008 */  lwc1  $f14, 8($v0)
-/* 0051BC 700045BC 0FC1DF0C */  jal   sub_GAME_7F077C30
+/* 0051BC 700045BC 0FC1DF0C */  jal   currentPlayerSetPerspective
 /* 0051C0 700045C0 8C46000C */   lw    $a2, 0xc($v0)
-/* 0051C4 700045C4 0FC1DF17 */  jal   sub_GAME_7F077C5C
+/* 0051C4 700045C4 0FC1DF17 */  jal   currentPlayerSetCameraScale
 /* 0051C8 700045C8 00000000 */   nop   
 /* 0051CC 700045CC 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0051D0 700045D0 27BD0018 */  addiu $sp, $sp, 0x18
@@ -2457,8 +2457,8 @@ void video_related_24(f32 arg0, f32 arg1)
 {
     ptr_video_settings2->far = arg1;
     ptr_video_settings2->scale = (f32) (arg0 / arg1);
-    sub_GAME_7F077C30(ptr_video_settings2->aspect, ptr_video_settings2->far, ptr_video_settings2->scale);
-    sub_GAME_7F077C5C();
+    currentPlayerSetPerspective(ptr_video_settings2->aspect, ptr_video_settings2->far, ptr_video_settings2->scale);
+    currentPlayerSetCameraScale();
 }
 #else
 GLOBAL_ASM(
@@ -2481,9 +2481,9 @@ glabel video_related_24
 /* 005224 70004624 8C620000 */  lw    $v0, ($v1)
 /* 005228 70004628 C44C0010 */  lwc1  $f12, 0x10($v0)
 /* 00522C 7000462C C44E0008 */  lwc1  $f14, 8($v0)
-/* 005230 70004630 0FC1DF0C */  jal   sub_GAME_7F077C30
+/* 005230 70004630 0FC1DF0C */  jal   currentPlayerSetPerspective
 /* 005234 70004634 8C46000C */   lw    $a2, 0xc($v0)
-/* 005238 70004638 0FC1DF17 */  jal   sub_GAME_7F077C5C
+/* 005238 70004638 0FC1DF17 */  jal   currentPlayerSetCameraScale
 /* 00523C 7000463C 00000000 */   nop   
 /* 005240 70004640 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 005244 70004644 27BD0018 */  addiu $sp, $sp, 0x18
@@ -2500,8 +2500,8 @@ void set_page_height(f32 arg0, f32 arg1)
 {
     ptr_video_settings2->aspect = arg0;
     ptr_video_settings2->unk14 = arg1;
-    sub_GAME_7F077C30(ptr_video_settings2->aspect, ptr_video_settings2->far, ptr_video_settings2->scale);
-    sub_GAME_7F077C5C();
+    currentPlayerSetPerspective(ptr_video_settings2->aspect, ptr_video_settings2->far, ptr_video_settings2->scale);
+    currentPlayerSetCameraScale();
 }
 #else
 GLOBAL_ASM(
@@ -2522,9 +2522,9 @@ glabel set_page_height
 /* 005280 70004680 8C620000 */  lw    $v0, ($v1)
 /* 005284 70004684 C44C0010 */  lwc1  $f12, 0x10($v0)
 /* 005288 70004688 C44E0008 */  lwc1  $f14, 8($v0)
-/* 00528C 7000468C 0FC1DF0C */  jal   sub_GAME_7F077C30
+/* 00528C 7000468C 0FC1DF0C */  jal   currentPlayerSetPerspective
 /* 005290 70004690 8C46000C */   lw    $a2, 0xc($v0)
-/* 005294 70004694 0FC1DF17 */  jal   sub_GAME_7F077C5C
+/* 005294 70004694 0FC1DF17 */  jal   currentPlayerSetCameraScale
 /* 005298 70004698 00000000 */   nop   
 /* 00529C 7000469C 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0052A0 700046A0 27BD0018 */  addiu $sp, $sp, 0x18
