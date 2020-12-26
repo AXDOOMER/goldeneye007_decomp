@@ -604,52 +604,19 @@ void sub_GAME_7F078140(struct coord *in, struct coord *out, f32 value1, f32 angl
 }
 
 #ifdef NONMATCHING
-void *sub_GAME_7F078258(void *arg0, void *arg1, f32 arg2, f32 arg3) {
-    f32 sp20;
-    f32 temp_f12;
-
-    // Node 0
-    sp20 = cosf(((arg2 * D_80054FB4) / 360.0f), arg2);
-    temp_f12 = ((sp20 * pPlayer->c_halfheight) / (arg0->unk8 * sinf(sp1C)));
-    arg1->unk4 = (f32) ((arg0->unk4 * temp_f12) + (pPlayer->c_screentop + pPlayer->c_halfheight));
-    *arg1 = (f32) ((pPlayer->c_screenleft + pPlayer->c_halfwidth) - (*arg0 * ((pPlayer->c_halfwidth * temp_f12) / (arg3 * pPlayer->c_halfheight))));
-    return pPlayer;
+// acdf8:    mul.s   $f4,$f18,$f0                    r acdf8:    mul.s   $f4,$f0,$f18
+void sub_GAME_7F078258(struct coord *in, struct coord *out, f32 angle, f32 value) {
+    f32 var0 = DEG2RAD(angle);
+    f32 var1 = (cosf(var0) * pPlayer->c_halfheight) / (sinf(var0) * in->z);
+    f32 var2 = (var1 * pPlayer->c_halfwidth) / (value * pPlayer->c_halfheight);
+    out->y = ((in->y * var1) + (pPlayer->c_screentop + pPlayer->c_halfheight));
+    out->x = ((pPlayer->c_screenleft + pPlayer->c_halfwidth) - (in->x * var2));
 }
 #else
 GLOBAL_ASM(
 .late_rodata
 glabel D_80054FB4
 .word 0x40490fdb /*3.1415927*/
-glabel D_80054FB8
-.word 0
-glabel D_80054FBC
-.word 0
-
-/*D:80054FC0*/
-glabel a8s
-/*"%8s"*/
-.word 0x25387300
-
-glabel aX4_0f
-/*"x %4.0f"*/
-.word 0x78202534
-.word 0x2E306600 
-
-glabel aY4_0f
-/*"y %4.0f"*/
-.word 0x79202534
-.word 0x2E306600 
-
-glabel aZ4_0f
-/*"z %4.0f"*/
-.word 0x7A202534
-.word 0x2E306600 
-
-glabel aS3d
-/*"%s %3d"*/
-.word 0x25732025
-.word 0x33640000
-
 .text
 glabel sub_GAME_7F078258
 /* 0ACD88 7F078258 3C018005 */  lui   $at, %hi(D_80054FB4)
@@ -705,10 +672,6 @@ glabel sub_GAME_7F078258
 /* 0ACE50 7F078320 00000000 */   nop   
 )
 #endif
-
-
-
-
 
 void set_BONDdata_field_10C4(s32 arg0) {
     pPlayer->field_10C4 = arg0;
@@ -1017,6 +980,36 @@ void sub_GAME_7F0785DC(void)
 
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80054FB8
+.word 0
+glabel D_80054FBC
+.word 0
+
+/*D:80054FC0*/
+glabel a8s
+/*"%8s"*/
+.word 0x25387300
+
+glabel aX4_0f
+/*"x %4.0f"*/
+.word 0x78202534
+.word 0x2E306600 
+
+glabel aY4_0f
+/*"y %4.0f"*/
+.word 0x79202534
+.word 0x2E306600 
+
+glabel aZ4_0f
+/*"z %4.0f"*/
+.word 0x7A202534
+.word 0x2E306600 
+
+glabel aS3d
+/*"%s %3d"*/
+.word 0x25732025
+.word 0x33640000
 .text
 glabel sub_GAME_7F0785DC
 /* 0AD10C 7F0785DC 3C038008 */  lui   $v1, %hi(pPlayer)
