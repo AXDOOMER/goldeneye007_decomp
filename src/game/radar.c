@@ -65,14 +65,14 @@ glabel display_red_blue_on_radar
 /* 0FAC68 7F0C6138 10000113 */  b     .L7F0C6588
 /* 0FAC6C 7F0C613C 8FA20088 */   lw    $v0, 0x88($sp)
 .L7F0C6140:
-/* 0FAC70 7F0C6140 0C001145 */  jal   get_video2_settings_ulx
+/* 0FAC70 7F0C6140 0C001145 */  jal   viGetViewLeft
 /* 0FAC74 7F0C6144 00000000 */   nop   
 /* 0FAC78 7F0C6148 00028400 */  sll   $s0, $v0, 0x10
 /* 0FAC7C 7F0C614C 0010C403 */  sra   $t8, $s0, 0x10
-/* 0FAC80 7F0C6150 0C001127 */  jal   get_video2_settings_width
+/* 0FAC80 7F0C6150 0C001127 */  jal   viGetViewWidth
 /* 0FAC84 7F0C6154 03008025 */   move  $s0, $t8
 /* 0FAC88 7F0C6158 0050A821 */  addu  $s5, $v0, $s0
-/* 0FAC8C 7F0C615C 0C001149 */  jal   get_video2_settings_uly
+/* 0FAC8C 7F0C615C 0C001149 */  jal   viGetViewTop
 /* 0FAC90 7F0C6160 26B5FFD7 */   addiu $s5, $s5, -0x29
 /* 0FAC94 7F0C6164 8FB90074 */  lw    $t9, 0x74($sp)
 /* 0FAC98 7F0C6168 2456001A */  addiu $s6, $v0, 0x1a

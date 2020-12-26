@@ -9762,7 +9762,7 @@ f32 sub_GAME_7F0B908C(void) {
     sp24 = (f32) D_80041404.unk4;
     sp28 = (f32) ((f32) D_8004140C + (f32) get_video2_settings_txtClipW());
     sp20 = (f32) ((f32) D_80041410 + (f32) get_video2_settings_txtClipH());
-    pPlayer->unk1118 = (f32) get_video2_settings_ulx();
+    pPlayer->unk1118 = (f32) viGetViewLeft();
     if (pPlayer->unk1118 < sp2C)
     {
         // Node 1
@@ -9775,7 +9775,7 @@ f32 sub_GAME_7F0B908C(void) {
         pPlayer->unk1118 = sp28;
     }
     // Node 4
-    pPlayer->unk111C = (f32) get_video2_settings_uly(sp28, &pPlayer);
+    pPlayer->unk111C = (f32) viGetViewTop(sp28, &pPlayer);
     if (pPlayer->unk111C < sp24)
     {
         // Node 5
@@ -9788,8 +9788,8 @@ f32 sub_GAME_7F0B908C(void) {
         pPlayer->unk111C = sp20;
     }
     // Node 8
-    sp1E = get_video2_settings_ulx(sp20, &pPlayer);
-    pPlayer->unk1120 = (f32) (get_video2_settings_width() + sp1E);
+    sp1E = viGetViewLeft(sp20, &pPlayer);
+    pPlayer->unk1120 = (f32) (viGetViewWidth() + sp1E);
     if (pPlayer->unk1120 < sp2C)
     {
         // Node 9
@@ -9802,8 +9802,8 @@ f32 sub_GAME_7F0B908C(void) {
         pPlayer->unk1120 = sp28;
     }
     // Node 12
-    sp1E = get_video2_settings_uly(&pPlayer);
-    pPlayer->unk1124 = (f32) (get_video2_settings_height() + sp1E);
+    sp1E = viGetViewTop(&pPlayer);
+    pPlayer->unk1124 = (f32) (viGetViewHeight() + sp1E);
     if (pPlayer->unk1124 < sp24)
     {
         // Node 13
@@ -9851,7 +9851,7 @@ glabel sub_GAME_7F0B908C
 /* 0EDC24 7F0B90F4 468024A0 */  cvt.s.w $f18, $f4
 /* 0EDC28 7F0B90F8 46805420 */  cvt.s.w $f16, $f10
 /* 0EDC2C 7F0B90FC 46128180 */  add.s $f6, $f16, $f18
-/* 0EDC30 7F0B9100 0C001145 */  jal   get_video2_settings_ulx
+/* 0EDC30 7F0B9100 0C001145 */  jal   viGetViewLeft
 /* 0EDC34 7F0B9104 E7A60020 */   swc1  $f6, 0x20($sp)
 /* 0EDC38 7F0B9108 44824000 */  mtc1  $v0, $f8
 /* 0EDC3C 7F0B910C 3C048008 */  lui   $a0, %hi(pPlayer)
@@ -9877,7 +9877,7 @@ glabel sub_GAME_7F0B908C
 /* 0EDC88 7F0B9158 00000000 */   nop   
 /* 0EDC8C 7F0B915C E46C1118 */  swc1  $f12, 0x1118($v1)
 .L7F0B9160:
-/* 0EDC90 7F0B9160 0C001149 */  jal   get_video2_settings_uly
+/* 0EDC90 7F0B9160 0C001149 */  jal   viGetViewTop
 /* 0EDC94 7F0B9164 00000000 */   nop   
 /* 0EDC98 7F0B9168 44822000 */  mtc1  $v0, $f4
 /* 0EDC9C 7F0B916C 3C048008 */  lui   $a0, %hi(pPlayer)
@@ -9903,9 +9903,9 @@ glabel sub_GAME_7F0B908C
 /* 0EDCE8 7F0B91B8 00000000 */   nop   
 /* 0EDCEC 7F0B91BC E46C111C */  swc1  $f12, 0x111c($v1)
 .L7F0B91C0:
-/* 0EDCF0 7F0B91C0 0C001145 */  jal   get_video2_settings_ulx
+/* 0EDCF0 7F0B91C0 0C001145 */  jal   viGetViewLeft
 /* 0EDCF4 7F0B91C4 00000000 */   nop   
-/* 0EDCF8 7F0B91C8 0C001127 */  jal   get_video2_settings_width
+/* 0EDCF8 7F0B91C8 0C001127 */  jal   viGetViewWidth
 /* 0EDCFC 7F0B91CC A7A2001E */   sh    $v0, 0x1e($sp)
 /* 0EDD00 7F0B91D0 87AA001E */  lh    $t2, 0x1e($sp)
 /* 0EDD04 7F0B91D4 3C048008 */  lui   $a0, %hi(pPlayer)
@@ -9933,9 +9933,9 @@ glabel sub_GAME_7F0B908C
 /* 0EDD58 7F0B9228 00000000 */   nop   
 /* 0EDD5C 7F0B922C E46A1120 */  swc1  $f10, 0x1120($v1)
 .L7F0B9230:
-/* 0EDD60 7F0B9230 0C001149 */  jal   get_video2_settings_uly
+/* 0EDD60 7F0B9230 0C001149 */  jal   viGetViewTop
 /* 0EDD64 7F0B9234 00000000 */   nop   
-/* 0EDD68 7F0B9238 0C00112B */  jal   get_video2_settings_height
+/* 0EDD68 7F0B9238 0C00112B */  jal   viGetViewHeight
 /* 0EDD6C 7F0B923C A7A2001E */   sh    $v0, 0x1e($sp)
 /* 0EDD70 7F0B9240 87AD001E */  lh    $t5, 0x1e($sp)
 /* 0EDD74 7F0B9244 3C048008 */  lui   $a0, %hi(pPlayer)

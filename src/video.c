@@ -1793,13 +1793,13 @@ void *setupscreensfornumplayers(void *arg0)
     temp_v1->unk4 = 0x10001;
     temp_v1->unk0 = 0xf7000000;
     phi_s0 = temp_s0;
-    if (get_video2_settings_uly() > 0)
+    if (viGetViewTop() > 0)
     {
         phi_s0 = temp_s0;
         if (sub_GAME_7F09B4D8(get_cur_playernum()) == 0)
         {
             temp_s0 = temp_s0 + 8;
-            sp58->unk0 = (s32) (((((get_video2_settings_uly() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
+            sp58->unk0 = (s32) (((((viGetViewTop() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
             sp58->unk4 = 0;
             temp_s0->unk0 = 0xe7000000;
             temp_s0->unk4 = 0;
@@ -1808,13 +1808,13 @@ void *setupscreensfornumplayers(void *arg0)
     }
     if (get_num_players() == 1)
     {
-        sp22 = get_video2_settings_height();
+        sp22 = viGetViewHeight();
         phi_s0_4 = phi_s0;
-        if ((((s32) (get_video2_settings_uly() << 0x10) >> 0x10) + sp22) < get_video2_settings_txtClipH())
+        if ((((s32) (viGetViewTop() << 0x10) >> 0x10) + sp22) < get_video2_settings_txtClipH())
         {
             temp_s0_2 = phi_s0 + 8;
             sp50->unk0 = (s32) (((((get_video2_settings_txtClipH() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
-            sp50->unk4 = (s32) (((get_video2_settings_height() + ((s32) (get_video2_settings_uly() << 0x10) >> 0x10)) & 0x3ff) * 4);
+            sp50->unk4 = (s32) (((viGetViewHeight() + ((s32) (viGetViewTop() << 0x10) >> 0x10)) & 0x3ff) * 4);
             temp_s0_2->unk4 = 0;
             temp_s0_2->unk0 = 0xe7000000;
             phi_s0_4 = temp_s0_2 + 8;
@@ -1825,15 +1825,15 @@ void *setupscreensfornumplayers(void *arg0)
         phi_s0_4 = phi_s0;
         if (sub_GAME_7F09B4D8(get_cur_playernum()) == 0)
         {
-            sp20 = get_video2_settings_height();
-            sp22 = get_video2_settings_height();
+            sp20 = viGetViewHeight();
+            sp22 = viGetViewHeight();
             phi_s0_2 = phi_s0;
-            if (((((s32) (get_video2_settings_uly() << 0x10) >> 0x10) + sp22) + sp20) < get_video2_settings_txtClipH())
+            if (((((s32) (viGetViewTop() << 0x10) >> 0x10) + sp22) + sp20) < get_video2_settings_txtClipH())
             {
                 temp_s0_3 = phi_s0 + 8;
                 sp48->unk0 = (s32) (((((get_video2_settings_txtClipH() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
-                sp22 = get_video2_settings_height();
-                sp48->unk4 = (s32) ((((get_video2_settings_height() + ((s32) (get_video2_settings_uly() << 0x10) >> 0x10)) + sp22) & 0x3ff) * 4);
+                sp22 = viGetViewHeight();
+                sp48->unk4 = (s32) ((((viGetViewHeight() + ((s32) (viGetViewTop() << 0x10) >> 0x10)) + sp22) & 0x3ff) * 4);
                 temp_s0_3->unk0 = 0xe7000000;
                 temp_s0_3->unk4 = 0;
                 phi_s0_2 = temp_s0_3 + 8;
@@ -1918,7 +1918,7 @@ glabel setupscreensfornumplayers
 /* 004C08 70004008 014E7825 */  or    $t7, $t2, $t6
 /* 004C0C 7000400C AF0F0004 */  sw    $t7, 4($t8)
 /* 004C10 70004010 AC680004 */  sw    $t0, 4($v1)
-/* 004C14 70004014 0C001149 */  jal   get_video2_settings_uly
+/* 004C14 70004014 0C001149 */  jal   viGetViewTop
 /* 004C18 70004018 AC790000 */   sw    $t9, ($v1)
 /* 004C1C 7000401C 1840001F */  blez  $v0, .L7000409C
 /* 004C20 70004020 00000000 */   nop   
@@ -1933,7 +1933,7 @@ glabel setupscreensfornumplayers
 /* 004C44 70004044 26100008 */   addiu $s0, $s0, 8
 /* 004C48 70004048 00028C00 */  sll   $s1, $v0, 0x10
 /* 004C4C 7000404C 00114C03 */  sra   $t1, $s1, 0x10
-/* 004C50 70004050 0C001149 */  jal   get_video2_settings_uly
+/* 004C50 70004050 0C001149 */  jal   viGetViewTop
 /* 004C54 70004054 01208825 */   move  $s1, $t1
 /* 004C58 70004058 244BFFFF */  addiu $t3, $v0, -1
 /* 004C5C 7000405C 8FA40058 */  lw    $a0, 0x58($sp)
@@ -1958,9 +1958,9 @@ glabel setupscreensfornumplayers
 /* 004CA4 700040A4 24010001 */  li    $at, 1
 /* 004CA8 700040A8 14410030 */  bne   $v0, $at, .L7000416C
 /* 004CAC 700040AC 00000000 */   nop   
-/* 004CB0 700040B0 0C00112B */  jal   get_video2_settings_height
+/* 004CB0 700040B0 0C00112B */  jal   viGetViewHeight
 /* 004CB4 700040B4 00000000 */   nop   
-/* 004CB8 700040B8 0C001149 */  jal   get_video2_settings_uly
+/* 004CB8 700040B8 0C001149 */  jal   viGetViewTop
 /* 004CBC 700040BC A7A20022 */   sh    $v0, 0x22($sp)
 /* 004CC0 700040C0 00028C00 */  sll   $s1, $v0, 0x10
 /* 004CC4 700040C4 00114C03 */  sra   $t1, $s1, 0x10
@@ -1988,11 +1988,11 @@ glabel setupscreensfornumplayers
 /* 004D1C 7000411C 0141C025 */  or    $t8, $t2, $at
 /* 004D20 70004120 00084B80 */  sll   $t1, $t0, 0xe
 /* 004D24 70004124 03095825 */  or    $t3, $t8, $t1
-/* 004D28 70004128 0C001149 */  jal   get_video2_settings_uly
+/* 004D28 70004128 0C001149 */  jal   viGetViewTop
 /* 004D2C 7000412C AD8B0000 */   sw    $t3, ($t4)
 /* 004D30 70004130 00028C00 */  sll   $s1, $v0, 0x10
 /* 004D34 70004134 00116C03 */  sra   $t5, $s1, 0x10
-/* 004D38 70004138 0C00112B */  jal   get_video2_settings_height
+/* 004D38 70004138 0C00112B */  jal   viGetViewHeight
 /* 004D3C 7000413C 01A08825 */   move  $s1, $t5
 /* 004D40 70004140 8FB90050 */  lw    $t9, 0x50($sp)
 /* 004D44 70004144 00517021 */  addu  $t6, $v0, $s1
@@ -2012,11 +2012,11 @@ glabel setupscreensfornumplayers
 /* 004D78 70004178 00402025 */   move  $a0, $v0
 /* 004D7C 7000417C 5440007C */  bnezl $v0, .L70004370
 /* 004D80 70004180 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 004D84 70004184 0C00112B */  jal   get_video2_settings_height
+/* 004D84 70004184 0C00112B */  jal   viGetViewHeight
 /* 004D88 70004188 00000000 */   nop   
-/* 004D8C 7000418C 0C00112B */  jal   get_video2_settings_height
+/* 004D8C 7000418C 0C00112B */  jal   viGetViewHeight
 /* 004D90 70004190 A7A20020 */   sh    $v0, 0x20($sp)
-/* 004D94 70004194 0C001149 */  jal   get_video2_settings_uly
+/* 004D94 70004194 0C001149 */  jal   viGetViewTop
 /* 004D98 70004198 A7A20022 */   sh    $v0, 0x22($sp)
 /* 004D9C 7000419C 00028C00 */  sll   $s1, $v0, 0x10
 /* 004DA0 700041A0 0011C403 */  sra   $t8, $s1, 0x10
@@ -2046,13 +2046,13 @@ glabel setupscreensfornumplayers
 /* 004E00 70004200 03214025 */  or    $t0, $t9, $at
 /* 004E04 70004204 00095B80 */  sll   $t3, $t1, 0xe
 /* 004E08 70004208 010B6025 */  or    $t4, $t0, $t3
-/* 004E0C 7000420C 0C00112B */  jal   get_video2_settings_height
+/* 004E0C 7000420C 0C00112B */  jal   viGetViewHeight
 /* 004E10 70004210 ADAC0000 */   sw    $t4, ($t5)
-/* 004E14 70004214 0C001149 */  jal   get_video2_settings_uly
+/* 004E14 70004214 0C001149 */  jal   viGetViewTop
 /* 004E18 70004218 A7A20022 */   sh    $v0, 0x22($sp)
 /* 004E1C 7000421C 00028C00 */  sll   $s1, $v0, 0x10
 /* 004E20 70004220 00117403 */  sra   $t6, $s1, 0x10
-/* 004E24 70004224 0C00112B */  jal   get_video2_settings_height
+/* 004E24 70004224 0C00112B */  jal   viGetViewHeight
 /* 004E28 70004228 01C08825 */   move  $s1, $t6
 /* 004E2C 7000422C 87AA0022 */  lh    $t2, 0x22($sp)
 /* 004E30 70004230 00517821 */  addu  $t7, $v0, $s1
@@ -2288,7 +2288,7 @@ glabel set_video2_width_height
  * 509C	7000449C
  *     V0= video2 lrx [p@800232A8+1C]; fry T6
  */
-s16 get_video2_settings_width(void) {
+s16 viGetViewWidth(void) {
     return ptr_video_settings2->width;
 }
 
@@ -2296,7 +2296,7 @@ s16 get_video2_settings_width(void) {
  * 50AC	700044AC
  *     V0= video2 lry [p@800232A8+1E]; fry T6
  */
-s16 get_video2_settings_height(void) {
+s16 viGetViewHeight(void) {
     return ptr_video_settings2->height;
 }
 
@@ -2346,7 +2346,7 @@ glabel set_video2_ulx_uly
  * 5114	70004514
  *     V0= video2 ulx [p@800232A8+20]; fry T6
  */
-s16 get_video2_settings_ulx(void) {
+s16 viGetViewLeft(void) {
     return ptr_video_settings2->ulx;
 }
 
@@ -2354,7 +2354,7 @@ s16 get_video2_settings_ulx(void) {
  * 5124	70004524
  *     V0= video2 uly [p@800232A8+22]; fry T6
  */
-s16 get_video2_settings_uly(void) {
+s16 viGetViewTop(void) {
     return ptr_video_settings2->uly;
 }
 

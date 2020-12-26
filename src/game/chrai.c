@@ -7676,11 +7676,11 @@ actionDA_Fade_Out_From_Cut_Scene_1:
 /* 06E4A4 7F039974 11A10008 */  beq   $t5, $at, .L7F039998
 /* 06E4A8 7F039978 00002825 */   move  $a1, $zero
 /* 06E4AC 7F03997C 4407A000 */  mfc1  $a3, $f20
-/* 06E4B0 7F039980 0FC201EC */  jal   set_rgba_tint
+/* 06E4B0 7F039980 0FC201EC */  jal   currentPlayerSetFadeColour
 /* 06E4B4 7F039984 00003025 */   move  $a2, $zero
 /* 06E4B8 7F039988 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 06E4BC 7F03998C 44817000 */  mtc1  $at, $f14
-/* 06E4C0 7F039990 0FC20216 */  jal   fade_to_over_seconds
+/* 06E4C0 7F039990 0FC20216 */  jal   currentPlayerSetFadeFrac
 /* 06E4C4 7F039994 4600B306 */   mov.s $f12, $f22
 .L7F039998:
 /* 06E4C8 7F039998 26520001 */  addiu $s2, $s2, 1
@@ -7694,10 +7694,10 @@ actionDB_Fade_In_From_Black_Reset_DA_1:
 /* 06E4E4 7F0399B4 11C10007 */  beq   $t6, $at, .L7F0399D4
 /* 06E4E8 7F0399B8 00002825 */   move  $a1, $zero
 /* 06E4EC 7F0399BC 00003025 */  move  $a2, $zero
-/* 06E4F0 7F0399C0 0FC201EC */  jal   set_rgba_tint
+/* 06E4F0 7F0399C0 0FC201EC */  jal   currentPlayerSetFadeColour
 /* 06E4F4 7F0399C4 3C073F80 */   li    $a3, 0x3F800000 # 1.000000
 /* 06E4F8 7F0399C8 4600B306 */  mov.s $f12, $f22
-/* 06E4FC 7F0399CC 0FC20216 */  jal   fade_to_over_seconds
+/* 06E4FC 7F0399CC 0FC20216 */  jal   currentPlayerSetFadeFrac
 /* 06E500 7F0399D0 4600A386 */   mov.s $f14, $f20
 .L7F0399D4:
 /* 06E504 7F0399D4 26520001 */  addiu $s2, $s2, 1
@@ -13543,11 +13543,11 @@ actionDA_Fade_Out_From_Cut_Scene_1:
 /* 06E4A4 7F039974 11A10008 */  beq   $t5, $at, .L7F039998
 /* 06E4A8 7F039978 00002825 */   move  $a1, $zero
 /* 06E4AC 7F03997C 4407A000 */  mfc1  $a3, $f20
-/* 06E4B0 7F039980 0FC201EC */  jal   set_rgba_tint
+/* 06E4B0 7F039980 0FC201EC */  jal   currentPlayerSetFadeColour
 /* 06E4B4 7F039984 00003025 */   move  $a2, $zero
 /* 06E4B8 7F039988 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 06E4BC 7F03998C 44817000 */  mtc1  $at, $f14
-/* 06E4C0 7F039990 0FC20216 */  jal   fade_to_over_seconds
+/* 06E4C0 7F039990 0FC20216 */  jal   currentPlayerSetFadeFrac
 /* 06E4C4 7F039994 4600B306 */   mov.s $f12, $f22
 .L7F039998:
 /* 06E4C8 7F039998 26520001 */  addiu $s2, $s2, 1
@@ -13561,10 +13561,10 @@ actionDB_Fade_In_From_Black_Reset_DA_1:
 /* 06E4E4 7F0399B4 11C10007 */  beq   $t6, $at, .L7F0399D4
 /* 06E4E8 7F0399B8 00002825 */   move  $a1, $zero
 /* 06E4EC 7F0399BC 00003025 */  move  $a2, $zero
-/* 06E4F0 7F0399C0 0FC201EC */  jal   set_rgba_tint
+/* 06E4F0 7F0399C0 0FC201EC */  jal   currentPlayerSetFadeColour
 /* 06E4F4 7F0399C4 3C073F80 */   li    $a3, 0x3F800000 # 1.000000
 /* 06E4F8 7F0399C8 4600B306 */  mov.s $f12, $f22
-/* 06E4FC 7F0399CC 0FC20216 */  jal   fade_to_over_seconds
+/* 06E4FC 7F0399CC 0FC20216 */  jal   currentPlayerSetFadeFrac
 /* 06E500 7F0399D0 4600A386 */   mov.s $f14, $f20
 .L7F0399D4:
 /* 06E504 7F0399D4 26520001 */  addiu $s2, $s2, 1

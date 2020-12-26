@@ -13571,7 +13571,7 @@ Weapon_function_camera:
 /* 09992C 7F064DFC 00002825 */  move  $a1, $zero
 /* 099930 7F064E00 15800005 */  bnez  $t4, .L7F064E18
 /* 099934 7F064E04 00003025 */   move  $a2, $zero
-/* 099938 7F064E08 0FC201EC */  jal   set_rgba_tint
+/* 099938 7F064E08 0FC201EC */  jal   currentPlayerSetFadeColour
 /* 09993C 7F064E0C 3C073F80 */   lui   $a3, 0x3f80
 /* 099940 7F064E10 10000063 */  b     .L7F064FA0
 /* 099944 7F064E14 AE000398 */   sw    $zero, 0x398($s0)
@@ -13584,7 +13584,7 @@ Weapon_function_camera:
 /* 09995C 7F064E2C 44802000 */  mtc1  $zero, $f4
 /* 099960 7F064E30 44816000 */  mtc1  $at, $f12
 /* 099964 7F064E34 00003825 */  move  $a3, $zero
-/* 099968 7F064E38 0FC201F8 */  jal   sub_GAME_7F0807E0
+/* 099968 7F064E38 0FC201F8 */  jal   currentPlayerAdjustFade
 /* 09996C 7F064E3C E7A40010 */   swc1  $f4, 0x10($sp)
 /* 099970 7F064E40 240F0002 */  li    $t7, 2
 /* 099974 7F064E44 AE0F0024 */  sw    $t7, 0x24($s0)
@@ -16417,7 +16417,7 @@ Weapon_function_camera:
 /* 099F00 7F065390 00002825 */  move  $a1, $zero
 /* 099F04 7F065394 15C00005 */  bnez  $t6, .Ljp7F0653AC
 /* 099F08 7F065398 00003025 */   move  $a2, $zero
-/* 099F0C 7F06539C 0FC20370 */  jal   set_rgba_tint
+/* 099F0C 7F06539C 0FC20370 */  jal   currentPlayerSetFadeColour
 /* 099F10 7F0653A0 3C073F80 */   lui   $a3, 0x3f80
 /* 099F14 7F0653A4 10000063 */  b     .Ljp7F065534
 /* 099F18 7F0653A8 AE000398 */   sw    $zero, 0x398($s0)
@@ -16430,7 +16430,7 @@ Weapon_function_camera:
 /* 099F30 7F0653C0 44802000 */  mtc1  $zero, $f4
 /* 099F34 7F0653C4 44816000 */  mtc1  $at, $f12
 /* 099F38 7F0653C8 00003825 */  move  $a3, $zero
-/* 099F3C 7F0653CC 0FC2037C */  jal   sub_GAME_7F0807E0
+/* 099F3C 7F0653CC 0FC2037C */  jal   currentPlayerAdjustFade
 /* 099F40 7F0653D0 E7A40010 */   swc1  $f4, 0x10($sp)
 /* 099F44 7F0653D4 240F0002 */  li    $t7, 2
 /* 099F48 7F0653D8 AE0F0024 */  sw    $t7, 0x24($s0)
@@ -22998,8 +22998,8 @@ s32 generate_ammo_total_microcode(s32 arg0) {
                                     sp48 = (void *) (temp_v1->unk4 + globalbank_rdram_offset);
                                     sp30 = getPlayer_c_screenleft();
                                     sp34 = getPlayer_c_screenwidth();
-                                    sp38 = get_video2_settings_uly();
-                                    arg0 = set_rgba_redirect_generate_microcode(arg0, sp48, ((sp34 + sp30) - (f32) sp54), 0xbf800000, (f32) ((get_video2_settings_height() + sp38) + -0x14), 0, (f32) sp28->unk8, 1);
+                                    sp38 = viGetViewTop();
+                                    arg0 = set_rgba_redirect_generate_microcode(arg0, sp48, ((sp34 + sp30) - (f32) sp54), 0xbf800000, (f32) ((viGetViewHeight() + sp38) + -0x14), 0, (f32) sp28->unk8, 1);
                                     sp44 = (s32) sp48->unk4;
                                 }
                                 // Node 14
@@ -23028,10 +23028,10 @@ s32 generate_ammo_total_microcode(s32 arg0) {
                                 if (bondwalkItemCheckBitflags(sp60, 0x400000) == 0)
                                 {
                                     // Node 20
-                                    sp2C = get_video2_settings_ulx();
-                                    sp2E = get_video2_settings_width();
-                                    sp38 = get_video2_settings_uly();
-                                    get_video2_settings_height();
+                                    sp2C = viGetViewLeft();
+                                    sp2E = viGetViewWidth();
+                                    sp38 = viGetViewTop();
+                                    viGetViewHeight();
                                     phi_t9 = (sp44 >> 1);
                                     if (sp44 < 0)
                                     {
@@ -23045,10 +23045,10 @@ s32 generate_ammo_total_microcode(s32 arg0) {
                                 if ((sp50 > 0) || (bondwalkItemCheckBitflags(sp60, 0x400000) != 0))
                                 {
                                     // Node 25
-                                    sp2C = get_video2_settings_ulx();
-                                    sp2E = get_video2_settings_width();
-                                    sp38 = get_video2_settings_uly();
-                                    get_video2_settings_height();
+                                    sp2C = viGetViewLeft();
+                                    sp2E = viGetViewWidth();
+                                    sp38 = viGetViewTop();
+                                    viGetViewHeight();
                                     temp_t3 = (sp44 + 1);
                                     phi_t0 = (temp_t3 >> 1);
                                     if (temp_t3 < 0)
@@ -23096,8 +23096,8 @@ s32 generate_ammo_total_microcode(s32 arg0) {
                                     sp28 = temp_v1_2;
                                     sp40 = (void *) (temp_v1_2->unk4 + globalbank_rdram_offset);
                                     sp34 = getPlayer_c_screenleft();
-                                    sp38 = get_video2_settings_uly();
-                                    get_video2_settings_height();
+                                    sp38 = viGetViewTop();
+                                    viGetViewHeight();
                                     arg0 = set_rgba_redirect_generate_microcode(sp28->unk8, arg0, sp40, (sp34 + (f32) sp58), 0xbf800000, 1, 1);
                                     sp3C = (s32) sp40->unk4;
                                 }
@@ -23127,9 +23127,9 @@ s32 generate_ammo_total_microcode(s32 arg0) {
                                 if (bondwalkItemCheckBitflags(sp64, 0x400000) == 0)
                                 {
                                     // Node 42
-                                    sp2E = get_video2_settings_ulx();
-                                    sp38 = get_video2_settings_uly();
-                                    get_video2_settings_height();
+                                    sp2E = viGetViewLeft();
+                                    sp38 = viGetViewTop();
+                                    viGetViewHeight();
                                     phi_t3 = (sp3C >> 1);
                                     if (sp3C < 0)
                                     {
@@ -23143,9 +23143,9 @@ s32 generate_ammo_total_microcode(s32 arg0) {
                                 if ((sp50 > 0) || (bondwalkItemCheckBitflags(sp64, 0x400000) != 0))
                                 {
                                     // Node 47
-                                    sp2E = get_video2_settings_ulx();
-                                    sp38 = get_video2_settings_uly();
-                                    get_video2_settings_height();
+                                    sp2E = viGetViewLeft();
+                                    sp38 = viGetViewTop();
+                                    viGetViewHeight();
                                     temp_t1 = (sp3C + 1);
                                     phi_t0_2 = (temp_t1 >> 1);
                                     if (temp_t1 < 0)
@@ -23254,9 +23254,9 @@ glabel generate_ammo_total_microcode
 /* 09E944 7F069E14 AFA20048 */   sw    $v0, 0x48($sp)
 /* 09E948 7F069E18 0FC1E129 */  jal   getPlayer_c_screenwidth
 /* 09E94C 7F069E1C E7A00030 */   swc1  $f0, 0x30($sp)
-/* 09E950 7F069E20 0C001149 */  jal   get_video2_settings_uly
+/* 09E950 7F069E20 0C001149 */  jal   viGetViewTop
 /* 09E954 7F069E24 E7A00034 */   swc1  $f0, 0x34($sp)
-/* 09E958 7F069E28 0C00112B */  jal   get_video2_settings_height
+/* 09E958 7F069E28 0C00112B */  jal   viGetViewHeight
 /* 09E95C 7F069E2C A7A20038 */   sh    $v0, 0x38($sp)
 /* 09E960 7F069E30 8FAA0054 */  lw    $t2, 0x54($sp)
 /* 09E964 7F069E34 87AB0038 */  lh    $t3, 0x38($sp)
@@ -23327,13 +23327,13 @@ glabel generate_ammo_total_microcode
 /* 09EA58 7F069F28 8FA40060 */   lw    $a0, 0x60($sp)
 /* 09EA5C 7F069F2C 54400023 */  bnezl $v0, .L7F069FBC
 /* 09EA60 7F069F30 8FAD0050 */   lw    $t5, 0x50($sp)
-/* 09EA64 7F069F34 0C001145 */  jal   get_video2_settings_ulx
+/* 09EA64 7F069F34 0C001145 */  jal   viGetViewLeft
 /* 09EA68 7F069F38 00000000 */   nop   
-/* 09EA6C 7F069F3C 0C001127 */  jal   get_video2_settings_width
+/* 09EA6C 7F069F3C 0C001127 */  jal   viGetViewWidth
 /* 09EA70 7F069F40 A7A2002C */   sh    $v0, 0x2c($sp)
-/* 09EA74 7F069F44 0C001149 */  jal   get_video2_settings_uly
+/* 09EA74 7F069F44 0C001149 */  jal   viGetViewTop
 /* 09EA78 7F069F48 A7A2002E */   sh    $v0, 0x2e($sp)
-/* 09EA7C 7F069F4C 0C00112B */  jal   get_video2_settings_height
+/* 09EA7C 7F069F4C 0C00112B */  jal   viGetViewHeight
 /* 09EA80 7F069F50 A7A20038 */   sh    $v0, 0x38($sp)
 /* 09EA84 7F069F54 87A8002E */  lh    $t0, 0x2e($sp)
 /* 09EA88 7F069F58 87AC002C */  lh    $t4, 0x2c($sp)
@@ -23371,13 +23371,13 @@ glabel generate_ammo_total_microcode
 /* 09EB00 7F069FD0 10400023 */  beqz  $v0, .L7F06A060
 /* 09EB04 7F069FD4 00000000 */   nop   
 .L7F069FD8:
-/* 09EB08 7F069FD8 0C001145 */  jal   get_video2_settings_ulx
+/* 09EB08 7F069FD8 0C001145 */  jal   viGetViewLeft
 /* 09EB0C 7F069FDC 00000000 */   nop   
-/* 09EB10 7F069FE0 0C001127 */  jal   get_video2_settings_width
+/* 09EB10 7F069FE0 0C001127 */  jal   viGetViewWidth
 /* 09EB14 7F069FE4 A7A2002C */   sh    $v0, 0x2c($sp)
-/* 09EB18 7F069FE8 0C001149 */  jal   get_video2_settings_uly
+/* 09EB18 7F069FE8 0C001149 */  jal   viGetViewTop
 /* 09EB1C 7F069FEC A7A2002E */   sh    $v0, 0x2e($sp)
-/* 09EB20 7F069FF0 0C00112B */  jal   get_video2_settings_height
+/* 09EB20 7F069FF0 0C00112B */  jal   viGetViewHeight
 /* 09EB24 7F069FF4 A7A20038 */   sh    $v0, 0x38($sp)
 /* 09EB28 7F069FF8 87AE002E */  lh    $t6, 0x2e($sp)
 /* 09EB2C 7F069FFC 87B8002C */  lh    $t8, 0x2c($sp)
@@ -23447,9 +23447,9 @@ glabel generate_ammo_total_microcode
 /* 09EC1C 7F06A0EC 004C1021 */  addu  $v0, $v0, $t4
 /* 09EC20 7F06A0F0 0FC1E131 */  jal   getPlayer_c_screenleft
 /* 09EC24 7F06A0F4 AFA20040 */   sw    $v0, 0x40($sp)
-/* 09EC28 7F06A0F8 0C001149 */  jal   get_video2_settings_uly
+/* 09EC28 7F06A0F8 0C001149 */  jal   viGetViewTop
 /* 09EC2C 7F06A0FC E7A00034 */   swc1  $f0, 0x34($sp)
-/* 09EC30 7F06A100 0C00112B */  jal   get_video2_settings_height
+/* 09EC30 7F06A100 0C00112B */  jal   viGetViewHeight
 /* 09EC34 7F06A104 A7A20038 */   sh    $v0, 0x38($sp)
 /* 09EC38 7F06A108 8FAD0058 */  lw    $t5, 0x58($sp)
 /* 09EC3C 7F06A10C 87AE0038 */  lh    $t6, 0x38($sp)
@@ -23519,11 +23519,11 @@ glabel generate_ammo_total_microcode
 /* 09ED2C 7F06A1FC 8FA40064 */   lw    $a0, 0x64($sp)
 /* 09ED30 7F06A200 5440001F */  bnezl $v0, .L7F06A280
 /* 09ED34 7F06A204 8FAC0050 */   lw    $t4, 0x50($sp)
-/* 09ED38 7F06A208 0C001145 */  jal   get_video2_settings_ulx
+/* 09ED38 7F06A208 0C001145 */  jal   viGetViewLeft
 /* 09ED3C 7F06A20C 00000000 */   nop   
-/* 09ED40 7F06A210 0C001149 */  jal   get_video2_settings_uly
+/* 09ED40 7F06A210 0C001149 */  jal   viGetViewTop
 /* 09ED44 7F06A214 A7A2002E */   sh    $v0, 0x2e($sp)
-/* 09ED48 7F06A218 0C00112B */  jal   get_video2_settings_height
+/* 09ED48 7F06A218 0C00112B */  jal   viGetViewHeight
 /* 09ED4C 7F06A21C A7A20038 */   sh    $v0, 0x38($sp)
 /* 09ED50 7F06A220 87AC002E */  lh    $t4, 0x2e($sp)
 /* 09ED54 7F06A224 8FAF0058 */  lw    $t7, 0x58($sp)
@@ -23559,11 +23559,11 @@ glabel generate_ammo_total_microcode
 /* 09EDC4 7F06A294 1040001F */  beqz  $v0, .L7F06A314
 /* 09EDC8 7F06A298 00000000 */   nop   
 .L7F06A29C:
-/* 09EDCC 7F06A29C 0C001145 */  jal   get_video2_settings_ulx
+/* 09EDCC 7F06A29C 0C001145 */  jal   viGetViewLeft
 /* 09EDD0 7F06A2A0 00000000 */   nop   
-/* 09EDD4 7F06A2A4 0C001149 */  jal   get_video2_settings_uly
+/* 09EDD4 7F06A2A4 0C001149 */  jal   viGetViewTop
 /* 09EDD8 7F06A2A8 A7A2002E */   sh    $v0, 0x2e($sp)
-/* 09EDDC 7F06A2AC 0C00112B */  jal   get_video2_settings_height
+/* 09EDDC 7F06A2AC 0C00112B */  jal   viGetViewHeight
 /* 09EDE0 7F06A2B0 A7A20038 */   sh    $v0, 0x38($sp)
 /* 09EDE4 7F06A2B4 87AF002E */  lh    $t7, 0x2e($sp)
 /* 09EDE8 7F06A2B8 8FAA0058 */  lw    $t2, 0x58($sp)
@@ -23669,9 +23669,9 @@ s32 sub_GAME_7F06A334(s32 arg0) {
                         {
                             // Node 6
                             sp40 = (void *) (sp40 + globalbank_rdram_offset);
-                            sp34 = get_video2_settings_uly();
+                            sp34 = viGetViewTop();
                             sp3C = (s32) sp40->unk4;
-                            phi_s0 = set_rgba_redirect_generate_microcode(arg0, sp40, 0x43480000, 0x43340000, (f32) ((get_video2_settings_height() + sp34) + -0x14), 0, (f32) sp30->unk8, 1);
+                            phi_s0 = set_rgba_redirect_generate_microcode(arg0, sp40, 0x43480000, 0x43340000, (f32) ((viGetViewHeight() + sp34) + -0x14), 0, (f32) sp30->unk8, 1);
                         }
                         // Node 7
                         temp_s0 = microcode_constructor(phi_s0);
@@ -23787,9 +23787,9 @@ glabel sub_GAME_7F06A334
 /* 09EF10 7F06A3E0 00000000 */   nop   
 /* 09EF14 7F06A3E4 8D4AD0B0 */  lw    $t2, %lo(globalbank_rdram_offset)($t2)
 /* 09EF18 7F06A3E8 006A1821 */  addu  $v1, $v1, $t2
-/* 09EF1C 7F06A3EC 0C001149 */  jal   get_video2_settings_uly
+/* 09EF1C 7F06A3EC 0C001149 */  jal   viGetViewTop
 /* 09EF20 7F06A3F0 AFA30040 */   sw    $v1, 0x40($sp)
-/* 09EF24 7F06A3F4 0C00112B */  jal   get_video2_settings_height
+/* 09EF24 7F06A3F4 0C00112B */  jal   viGetViewHeight
 /* 09EF28 7F06A3F8 A7A20034 */   sh    $v0, 0x34($sp)
 /* 09EF2C 7F06A3FC 87AB0034 */  lh    $t3, 0x34($sp)
 /* 09EF30 7F06A400 8FAE0030 */  lw    $t6, 0x30($sp)

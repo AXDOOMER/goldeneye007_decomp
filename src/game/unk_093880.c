@@ -1198,15 +1198,15 @@ glabel sub_GAME_7F094488
 /* 0C9054 7F094524 8FA406B0 */   lw    $a0, 0x6b0($sp)
 /* 0C9058 7F094528 244B0008 */  addiu $t3, $v0, 8
 /* 0C905C 7F09452C AFAB06B0 */  sw    $t3, 0x6b0($sp)
-/* 0C9060 7F094530 0C001127 */  jal   get_video2_settings_width
+/* 0C9060 7F094530 0C001127 */  jal   viGetViewWidth
 /* 0C9064 7F094534 00408825 */   move  $s1, $v0
-/* 0C9068 7F094538 0C001145 */  jal   get_video2_settings_ulx
+/* 0C9068 7F094538 0C001145 */  jal   viGetViewLeft
 /* 0C906C 7F09453C A7A2007A */   sh    $v0, 0x7a($sp)
-/* 0C9070 7F094540 0C001149 */  jal   get_video2_settings_uly
+/* 0C9070 7F094540 0C001149 */  jal   viGetViewTop
 /* 0C9074 7F094544 A7A2007C */   sh    $v0, 0x7c($sp)
 /* 0C9078 7F094548 00028400 */  sll   $s0, $v0, 0x10
 /* 0C907C 7F09454C 00106403 */  sra   $t4, $s0, 0x10
-/* 0C9080 7F094550 0C00112B */  jal   get_video2_settings_height
+/* 0C9080 7F094550 0C00112B */  jal   viGetViewHeight
 /* 0C9084 7F094554 01808025 */   move  $s0, $t4
 /* 0C9088 7F094558 87AD007C */  lh    $t5, 0x7c($sp)
 /* 0C908C 7F09455C 87AE007A */  lh    $t6, 0x7a($sp)
@@ -1221,11 +1221,11 @@ glabel sub_GAME_7F094488
 /* 0C90B0 7F094580 01C17825 */  or    $t7, $t6, $at
 /* 0C90B4 7F094584 00195380 */  sll   $t2, $t9, 0xe
 /* 0C90B8 7F094588 01EAC025 */  or    $t8, $t7, $t2
-/* 0C90BC 7F09458C 0C001145 */  jal   get_video2_settings_ulx
+/* 0C90BC 7F09458C 0C001145 */  jal   viGetViewLeft
 /* 0C90C0 7F094590 AE380000 */   sw    $t8, ($s1)
 /* 0C90C4 7F094594 00028400 */  sll   $s0, $v0, 0x10
 /* 0C90C8 7F094598 0010CC03 */  sra   $t9, $s0, 0x10
-/* 0C90CC 7F09459C 0C001149 */  jal   get_video2_settings_uly
+/* 0C90CC 7F09459C 0C001149 */  jal   viGetViewTop
 /* 0C90D0 7F0945A0 03208025 */   move  $s0, $t9
 /* 0C90D4 7F0945A4 304B03FF */  andi  $t3, $v0, 0x3ff
 /* 0C90D8 7F0945A8 320D03FF */  andi  $t5, $s0, 0x3ff
@@ -7577,8 +7577,8 @@ void init_player_data_ptrs_construct_viewports(int playercount)
     if (playercount < 1) {
         initBONDdataforPlayer(0);
         set_cur_player(0);
-        set_cur_player_screen_size( get_video2_settings_width(), get_video2_settings_height() );
-        set_cur_player_viewport_size( get_video2_settings_ulx(), get_video2_settings_uly() );
+        set_cur_player_screen_size( viGetViewWidth(), viGetViewHeight() );
+        set_cur_player_viewport_size( viGetViewLeft(), viGetViewTop() );
     }
     else {
         for (player = 0; player != playercount; player++)
@@ -7627,20 +7627,20 @@ glabel init_player_data_ptrs_construct_viewports
 /* 0CEF2C 7F09A3FC 00002025 */   move  $a0, $zero
 /* 0CEF30 7F09A400 0FC26C43 */  jal   set_cur_player
 /* 0CEF34 7F09A404 00002025 */   move  $a0, $zero
-/* 0CEF38 7F09A408 0C001127 */  jal   get_video2_settings_width
+/* 0CEF38 7F09A408 0C001127 */  jal   viGetViewWidth
 /* 0CEF3C 7F09A40C 00000000 */   nop   
 /* 0CEF40 7F09A410 00028400 */  sll   $s0, $v0, 0x10
 /* 0CEF44 7F09A414 00107C03 */  sra   $t7, $s0, 0x10
-/* 0CEF48 7F09A418 0C00112B */  jal   get_video2_settings_height
+/* 0CEF48 7F09A418 0C00112B */  jal   viGetViewHeight
 /* 0CEF4C 7F09A41C 01E08025 */   move  $s0, $t7
 /* 0CEF50 7F09A420 02002025 */  move  $a0, $s0
 /* 0CEF54 7F09A424 0FC26C77 */  jal   set_cur_player_screen_size
 /* 0CEF58 7F09A428 00402825 */   move  $a1, $v0
-/* 0CEF5C 7F09A42C 0C001145 */  jal   get_video2_settings_ulx
+/* 0CEF5C 7F09A42C 0C001145 */  jal   viGetViewLeft
 /* 0CEF60 7F09A430 00000000 */   nop   
 /* 0CEF64 7F09A434 00028400 */  sll   $s0, $v0, 0x10
 /* 0CEF68 7F09A438 0010C403 */  sra   $t8, $s0, 0x10
-/* 0CEF6C 7F09A43C 0C001149 */  jal   get_video2_settings_uly
+/* 0CEF6C 7F09A43C 0C001149 */  jal   viGetViewTop
 /* 0CEF70 7F09A440 03008025 */   move  $s0, $t8
 /* 0CEF74 7F09A444 02002025 */  move  $a0, $s0
 /* 0CEF78 7F09A448 0FC26C7E */  jal   set_cur_player_viewport_size
@@ -7866,20 +7866,20 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->field_3C4 = 0.00000000;
     (*ppPVar3)->field_3C8 = 0.00000000;
     (*ppPVar3)->field_3CC = 1.00000000;
-    (*ppPVar3)->tint_red = 0xff;
-    (*ppPVar3)->tint_green = 0xff;
-    (*ppPVar3)->tint_blue = 0xff;
-    (*ppPVar3)->tint_alpha = 0.00000000;
+    (*ppPVar3)->colourscreenred = 0xff;
+    (*ppPVar3)->colourscreengreen = 0xff;
+    (*ppPVar3)->colourscreenblue = 0xff;
+    (*ppPVar3)->colourscreenfrac = 0.00000000;
     (*ppPVar3)->field_3E0 = -1.00000000;
     (*ppPVar3)->timer_for_fade = -1.00000000;
-    (*ppPVar3)->field_3E8 = 0xff;
-    (*ppPVar3)->field_3EC = 0xff;
-    (*ppPVar3)->field_3F0 = 0xff;
-    (*ppPVar3)->field_3F4 = 0xff;
-    (*ppPVar3)->field_3F8 = 0xff;
-    (*ppPVar3)->field_3FC = 0xff;
-    (*ppPVar3)->field_400 = 0.00000000;
-    (*ppPVar3)->field_404 = 0.00000000;
+    (*ppPVar3)->colourfaderedold = 0xff;
+    (*ppPVar3)->colourfaderednew = 0xff;
+    (*ppPVar3)->colourfadegreenold = 0xff;
+    (*ppPVar3)->colourfadegreennew = 0xff;
+    (*ppPVar3)->colourfadeblueold = 0xff;
+    (*ppPVar3)->colourfadebluenew = 0xff;
+    (*ppPVar3)->colourfadefracold = 0.00000000;
+    (*ppPVar3)->colourfadefracnew = 0.00000000;
     (*ppPVar3)->cuff_value = CUFF_BLUE;
     (*ppPVar3)->field_420 = 1;
     (*ppPVar3)->field_424 = 0;
