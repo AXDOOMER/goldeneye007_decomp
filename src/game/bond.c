@@ -1246,27 +1246,9 @@ glabel sub_GAME_7F078A58
 )
 #endif
 
-
-
-
-
 #ifdef NONMATCHING
-void sub_GAME_7F078BF4(void *arg0, s32 arg1, void *arg2)
+s32 sub_GAME_7F078BF4(struct coord *arg0, f32 arg1, f32 *arg2)
 {
-    f32 sp7C;
-    f32 sp78;
-    f32 sp74;
-    f32 sp6C;
-    f32 sp68;
-    f32 sp64;
-    f32 sp5C;
-    f32 sp58;
-    f32 sp54;
-    f32 sp4C;
-    f32 sp48;
-    f32 sp44;
-    f32 sp38;
-    f32 sp34;
     f32 temp_f2;
     f32 temp_f12;
     f32 temp_f2_2;
@@ -1277,14 +1259,12 @@ void sub_GAME_7F078BF4(void *arg0, s32 arg1, void *arg2)
     f32 temp_f2_3;
     f32 temp_f12_2;
     f32 temp_f2_4;
-    f32 temp_f14_2;
     f32 temp_f6;
     f32 temp_f8;
     f32 temp_f4_2;
     f32 temp_f2_5;
     f32 temp_f12_3;
     f32 temp_f2_6;
-    f32 temp_f14_3;
     f32 temp_f8_2;
     f32 temp_f18_2;
     f32 temp_f4_3;
@@ -1295,70 +1275,51 @@ void sub_GAME_7F078BF4(void *arg0, s32 arg1, void *arg2)
     f32 temp_f6_2;
     f32 temp_f10_2;
     f32 temp_f18_3;
-
-    if ((flt_CODE_bss_80079980 + arg1) < ((arg0->unk8 * pPlayer->field_10D4->unk28) + ((pPlayer->field_10D4->unk20 * *arg0) + (pPlayer->field_10D4->unk24 * arg0->unk4))))
+    if ((flt_CODE_bss_80079980 + arg1) < ((pPlayer->field_10D4->m[2][0] * arg0->x) + (pPlayer->field_10D4->m[2][1] * arg0->y) + (pPlayer->field_10D4->m[2][2] * arg0->z)))
     {
         return 0;
     }
-    temp_f2 = (((*arg2 - pPlayer->c_screenleft) - pPlayer->c_halfwidth) * pPlayer->c_scalex);
-    sp38 = temp_f2;
+    temp_f2 = (((arg2[0] - pPlayer->c_screenleft) - pPlayer->c_halfwidth) * pPlayer->c_scalex);
     temp_f12 = (1.0f / sqrtf(((temp_f2 * temp_f2) + 1.0f)));
     temp_f2_2 = (temp_f2 * temp_f12);
     temp_f14 = -temp_f12;
-    temp_f10 = ((temp_f14 * *pPlayer->field_10D4) - (pPlayer->field_10D4->unk20 * temp_f2_2));
-    sp54 = temp_f10;
-    temp_f4 = ((temp_f14 * pPlayer->field_10D4->unk4) - (pPlayer->field_10D4->unk24 * temp_f2_2));
-    sp58 = temp_f4;
-    temp_f18 = ((temp_f14 * pPlayer->field_10D4->unk8) - (pPlayer->field_10D4->unk28 * temp_f2_2));
-    sp5C = temp_f18;
-    if ((((pPlayer->field_10D4->unk38 * temp_f18) + ((temp_f10 * pPlayer->field_10D4->unk30) + (temp_f4 * pPlayer->field_10D4->unk34))) + arg1) < ((arg0->unk8 * temp_f18) + ((temp_f10 * *arg0) + (temp_f4 * arg0->unk4))))
+    temp_f10 = ((temp_f14 * pPlayer->field_10D4->m[0][0]) - (pPlayer->field_10D4->m[2][0] * temp_f2_2));
+    temp_f4 = ((temp_f14 * pPlayer->field_10D4->m[0][1]) - (pPlayer->field_10D4->m[2][1] * temp_f2_2));
+    temp_f18 = ((temp_f14 * pPlayer->field_10D4->m[0][2]) - (pPlayer->field_10D4->m[2][2] * temp_f2_2));
+    if ((((temp_f10 * pPlayer->field_10D4->m[3][0]) + (temp_f4 * pPlayer->field_10D4->m[3][1]) + (temp_f18 * pPlayer->field_10D4->m[3][2])) + arg1) < ((temp_f10 * arg0->x) + (temp_f4 * arg0->y) + (temp_f18 * arg0->z)))
     {
         return 0;
     }
-    temp_f2_3 = (-((arg2->unk8 - pPlayer->c_screenleft) - pPlayer->c_halfwidth) * pPlayer->c_scalex);
-    sp38 = temp_f2_3;
-    temp_f12_2 = (1.0f / sqrtf(((temp_f2_3 * temp_f2_3) + 1.0f), temp_f14, arg0));
+    temp_f2_3 = (-((arg2[2] - pPlayer->c_screenleft) - pPlayer->c_halfwidth) * pPlayer->c_scalex);
+    temp_f12_2 = (1.0f / sqrtf(((temp_f2_3 * temp_f2_3) + 1.0f)));
     temp_f2_4 = (temp_f2_3 * temp_f12_2);
-    temp_f14_2 = --temp_f12_2;
-    temp_f6 = ((temp_f14_2 * *pPlayer->field_10D4) - (pPlayer->field_10D4->unk20 * temp_f2_4));
-    sp44 = temp_f6;
-    temp_f8 = ((temp_f14_2 * pPlayer->field_10D4->unk4) - (pPlayer->field_10D4->unk24 * temp_f2_4));
-    sp48 = temp_f8;
-    temp_f4_2 = ((temp_f14_2 * pPlayer->field_10D4->unk8) - (pPlayer->field_10D4->unk28 * temp_f2_4));
-    sp4C = temp_f4_2;
-    if ((((pPlayer->field_10D4->unk38 * temp_f4_2) + ((temp_f6 * pPlayer->field_10D4->unk30) + (temp_f8 * pPlayer->field_10D4->unk34))) + arg1) < ((arg0->unk8 * temp_f4_2) + ((temp_f6 * *arg0) + (temp_f8 * arg0->unk4))))
+    temp_f6 = ((temp_f12_2 * pPlayer->field_10D4->m[0][0]) - (pPlayer->field_10D4->m[2][0] * temp_f2_4));
+    temp_f8 = ((temp_f12_2 * pPlayer->field_10D4->m[0][1]) - (pPlayer->field_10D4->m[2][1] * temp_f2_4));
+    temp_f4_2 = ((temp_f12_2 * pPlayer->field_10D4->m[0][2]) - (pPlayer->field_10D4->m[2][2] * temp_f2_4));
+    if ((((temp_f6 * pPlayer->field_10D4->m[3][0]) + (temp_f8 * pPlayer->field_10D4->m[3][1]) + (temp_f4_2 * pPlayer->field_10D4->m[3][2])) + arg1) < ((temp_f6 * arg0->x) + (temp_f8 * arg0->y) + (temp_f4_2 * arg0->z)))
     {
         return 0;
     }
-    temp_f2_5 = ((pPlayer->c_halfheight - (arg2->unk4 - pPlayer->c_screentop)) * pPlayer->c_scaley);
-    sp34 = temp_f2_5;
-    temp_f12_3 = (1.0f / sqrtf(((temp_f2_5 * temp_f2_5) + 1.0f), temp_f14_2, arg0));
+    temp_f2_5 = ((pPlayer->c_halfheight - (arg2[1] - pPlayer->c_screentop)) * pPlayer->c_scaley);
+    temp_f12_3 = (1.0f / sqrtf(((temp_f2_5 * temp_f2_5) + 1.0f)));
     temp_f2_6 = (temp_f2_5 * temp_f12_3);
-    temp_f14_3 = --temp_f12_3;
-    temp_f8_2 = ((pPlayer->field_10D4->unk20 * temp_f2_6) + (temp_f14_3 * pPlayer->field_10D4->unk10));
-    sp74 = temp_f8_2;
-    temp_f18_2 = ((pPlayer->field_10D4->unk24 * temp_f2_6) + (temp_f14_3 * pPlayer->field_10D4->unk14));
-    sp78 = temp_f18_2;
-    temp_f4_3 = ((pPlayer->field_10D4->unk28 * temp_f2_6) + (temp_f14_3 * pPlayer->field_10D4->unk18));
-    sp7C = temp_f4_3;
-    if ((((pPlayer->field_10D4->unk38 * temp_f4_3) + ((temp_f8_2 * pPlayer->field_10D4->unk30) + (temp_f18_2 * pPlayer->field_10D4->unk34))) + arg1) < ((arg0->unk8 * temp_f4_3) + ((temp_f8_2 * *arg0) + (temp_f18_2 * arg0->unk4))))
+    temp_f8_2 = ((pPlayer->field_10D4->m[2][0] * temp_f2_6) + (temp_f12_3 * pPlayer->field_10D4->m[1][0]));
+    temp_f18_2 = ((pPlayer->field_10D4->m[2][1] * temp_f2_6) + (temp_f12_3 * pPlayer->field_10D4->m[1][1]));
+    temp_f4_3 = ((pPlayer->field_10D4->m[2][2] * temp_f2_6) + (temp_f12_3 * pPlayer->field_10D4->m[1][2]));
+    if ((((temp_f8_2 * pPlayer->field_10D4->m[3][0]) + (temp_f18_2 * pPlayer->field_10D4->m[3][1]) + (temp_f4_3 * pPlayer->field_10D4->m[3][2])) + arg1) < ((temp_f8_2 * arg0->x) + (temp_f18_2 * arg0->y) + (temp_f4_3 * arg0->z)))
     {
         return 0;
     }
-    temp_f2_7 = (-(pPlayer->c_halfheight - (arg2->unkC - pPlayer->c_screentop)) * pPlayer->c_scaley);
-    sp34 = temp_f2_7;
-    temp_f12_4 = (1.0f / sqrtf(((temp_f2_7 * temp_f2_7) + 1.0f), temp_f14_3, arg0));
+    temp_f2_7 = (-(pPlayer->c_halfheight - (arg2[3] - pPlayer->c_screentop)) * pPlayer->c_scaley);
+    temp_f12_4 = (1.0f / sqrtf(((temp_f2_7 * temp_f2_7) + 1.0f)));
     temp_f2_8 = (temp_f2_7 * temp_f12_4);
     temp_f14_4 = -temp_f12_4;
-    temp_f6_2 = ((pPlayer->field_10D4->unk20 * temp_f2_8) + (temp_f14_4 * pPlayer->field_10D4->unk10));
-    sp64 = temp_f6_2;
-    temp_f10_2 = ((pPlayer->field_10D4->unk24 * temp_f2_8) + (temp_f14_4 * pPlayer->field_10D4->unk14));
-    sp68 = temp_f10_2;
-    temp_f18_3 = ((pPlayer->field_10D4->unk28 * temp_f2_8) + (temp_f14_4 * pPlayer->field_10D4->unk18));
-    sp6C = temp_f18_3;
-    if ((((pPlayer->field_10D4->unk38 * temp_f18_3) + ((temp_f6_2 * pPlayer->field_10D4->unk30) + (temp_f10_2 * pPlayer->field_10D4->unk34))) + arg1) < ((arg0->unk8 * temp_f18_3) + ((temp_f6_2 * *arg0) + (temp_f10_2 * arg0->unk4))))
+    temp_f6_2 = ((pPlayer->field_10D4->m[2][0] * temp_f2_8) + (temp_f14_4 * pPlayer->field_10D4->m[1][0]));
+    temp_f10_2 = ((pPlayer->field_10D4->m[2][1] * temp_f2_8) + (temp_f14_4 * pPlayer->field_10D4->m[1][1]));
+    temp_f18_3 = ((pPlayer->field_10D4->m[2][2] * temp_f2_8) + (temp_f14_4 * pPlayer->field_10D4->m[1][2]));
+    if ((((temp_f6_2 * pPlayer->field_10D4->m[3][0]) + (temp_f10_2 * pPlayer->field_10D4->m[3][1]) + (temp_f18_3 * pPlayer->field_10D4->m[3][2])) + arg1) < ((temp_f6_2 * arg0->x) + (temp_f10_2 * arg0->y) + (temp_f18_3 * arg0->z)))
     {
-
+        return 0;
     }
     return 1;
 }
