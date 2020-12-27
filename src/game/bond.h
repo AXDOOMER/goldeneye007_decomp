@@ -979,7 +979,7 @@ struct Player
   s32 field_1268;
   s32 field_126C;
   s32 field_1270;
-  s32 field_1274;
+  f32 field_1274;
   s32 field_1278;
   s32 field_127C;
   s32 field_1280;

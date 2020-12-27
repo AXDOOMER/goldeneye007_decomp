@@ -2925,38 +2925,11 @@ glabel sub_GAME_7F0798B8
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F079988(s32 arg0) {
-    // Node 0
-    pPlayer->field_1274 = (f32) ((f32) arg0 * 75.0f);
-    return;
+    pPlayer->field_1274 = (arg0 * 75.0f);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F079988
-/* 0AE4B8 7F079988 44842000 */  mtc1  $a0, $f4
-/* 0AE4BC 7F07998C 3C014296 */  li    $at, 0x42960000 # 75.000000
-/* 0AE4C0 7F079990 44814000 */  mtc1  $at, $f8
-/* 0AE4C4 7F079994 468021A0 */  cvt.s.w $f6, $f4
-/* 0AE4C8 7F079998 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0AE4CC 7F07999C 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0AE4D0 7F0799A0 46083282 */  mul.s $f10, $f6, $f8
-/* 0AE4D4 7F0799A4 03E00008 */  jr    $ra
-/* 0AE4D8 7F0799A8 E5CA1274 */   swc1  $f10, 0x1274($t6)
-)
-#endif
 
-
-
-
-
-
-void change_crouch_position(int position)
+void change_crouch_position(s32 position)
 {
   pPlayer->crouchposition = pPlayer->crouchposition + position;
   if (pPlayer->crouchposition < 0) {
@@ -2968,10 +2941,6 @@ void change_crouch_position(int position)
   }
   return;
 }
-
-
-
-
 
 #ifdef NONMATCHING
 s32 sub_GAME_7F0799F0(void) {
