@@ -1806,7 +1806,7 @@ void *setupscreensfornumplayers(void *arg0)
             phi_s0 = temp_s0 + 8;
         }
     }
-    if (get_num_players() == 1)
+    if (getPlayerCount() == 1)
     {
         sp22 = viGetViewHeight();
         phi_s0_4 = phi_s0;
@@ -1847,7 +1847,7 @@ void *setupscreensfornumplayers(void *arg0)
             temp_s0_4 = temp_s0_4 + 8;
             temp_s1_2 = temp_s0_4;
             phi_s0_3 = temp_s0_4;
-            if (get_num_players() >= 3)
+            if (getPlayerCount() >= 3)
             {
                 temp_s0_4 = temp_s0_4 + 8;
                 temp_s1_2->unk0 = (s32) ((((get_video2_settings_txtClipH() + -1) & 0x3ff) * 4) | 0xf6280000);
@@ -1857,7 +1857,7 @@ void *setupscreensfornumplayers(void *arg0)
                 phi_s0_3 = temp_s0_4 + 8;
             }
             phi_s0_4 = phi_s0_3;
-            if (get_num_players() == 3)
+            if (getPlayerCount() == 3)
             {
                 temp_s0_5 = phi_s0_3 + 8;
                 sp30->unk0 = (s32) (((((get_video2_settings_txtClipH() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
@@ -1953,7 +1953,7 @@ glabel setupscreensfornumplayers
 /* 004C94 70004094 AC600004 */  sw    $zero, 4($v1)
 /* 004C98 70004098 26100008 */  addiu $s0, $s0, 8
 .L7000409C:
-/* 004C9C 7000409C 0FC26919 */  jal   get_num_players
+/* 004C9C 7000409C 0FC26919 */  jal   getPlayerCount
 /* 004CA0 700040A0 00000000 */   nop   
 /* 004CA4 700040A4 24010001 */  li    $at, 1
 /* 004CA8 700040A8 14410030 */  bne   $v0, $at, .L7000416C
@@ -2083,7 +2083,7 @@ glabel setupscreensfornumplayers
 /* 004E90 70004290 3C18E700 */  lui   $t8, 0xe700
 /* 004E94 70004294 AC780000 */  sw    $t8, ($v1)
 /* 004E98 70004298 AC600004 */  sw    $zero, 4($v1)
-/* 004E9C 7000429C 0FC26919 */  jal   get_num_players
+/* 004E9C 7000429C 0FC26919 */  jal   getPlayerCount
 /* 004EA0 700042A0 26100008 */   addiu $s0, $s0, 8
 /* 004EA4 700042A4 28410003 */  slti  $at, $v0, 3
 /* 004EA8 700042A8 14200011 */  bnez  $at, .L700042F0
@@ -2105,7 +2105,7 @@ glabel setupscreensfornumplayers
 /* 004EE8 700042E8 AC600004 */  sw    $zero, 4($v1)
 /* 004EEC 700042EC 26100008 */  addiu $s0, $s0, 8
 .L700042F0:
-/* 004EF0 700042F0 0FC26919 */  jal   get_num_players
+/* 004EF0 700042F0 0FC26919 */  jal   getPlayerCount
 /* 004EF4 700042F4 00000000 */   nop   
 /* 004EF8 700042F8 24010003 */  li    $at, 3
 /* 004EFC 700042FC 5441001C */  bnel  $v0, $at, .L70004370

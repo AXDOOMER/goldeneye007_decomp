@@ -37,7 +37,7 @@ glabel display_red_blue_on_radar
 /* 0FAC04 7F0C60D4 AFA40088 */   sw    $a0, 0x88($sp)
 /* 0FAC08 7F0C60D8 0FC26C54 */  jal   get_cur_playernum
 /* 0FAC0C 7F0C60DC 0040A025 */   move  $s4, $v0
-/* 0FAC10 7F0C60E0 0FC26919 */  jal   get_num_players
+/* 0FAC10 7F0C60E0 0FC26919 */  jal   getPlayerCount
 /* 0FAC14 7F0C60E4 AFA20070 */   sw    $v0, 0x70($sp)
 /* 0FAC18 7F0C60E8 24010001 */  li    $at, 1
 /* 0FAC1C 7F0C60EC 14410003 */  bne   $v0, $at, .L7F0C60FC

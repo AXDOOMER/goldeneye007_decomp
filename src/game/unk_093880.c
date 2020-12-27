@@ -1175,7 +1175,7 @@ glabel sub_GAME_7F094488
 /* 0C9004 7F0944D4 8FA406B0 */  lw    $a0, 0x6b0($sp)
 /* 0C9008 7F0944D8 55C0007B */  bnezl $t6, .L7F0946C8
 /* 0C900C 7F0944DC 92050008 */   lbu   $a1, 8($s0)
-/* 0C9010 7F0944E0 0FC26919 */  jal   get_num_players
+/* 0C9010 7F0944E0 0FC26919 */  jal   getPlayerCount
 /* 0C9014 7F0944E4 00000000 */   nop   
 /* 0C9018 7F0944E8 24010001 */  li    $at, 1
 /* 0C901C 7F0944EC 1441003B */  bne   $v0, $at, .L7F0945DC
@@ -7651,63 +7651,17 @@ glabel init_player_data_ptrs_construct_viewports
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
-s32 get_num_players(void)
+s32 getPlayerCount(void)
 {
-    u32 uVar1;
-    
-    uVar1 = (u32)(players[0] != NULL);
-    if (players[1] != NULL) {
-        uVar1 = (uint)(players[0] != NULL) + 1;
+    s32 count = 0;
+    s32 i;
+    for (i = 0; i < 4; i++) {
+        if (players[i] != NULL) {
+            count++;
+        }
     }
-    if (players[2] != NULL) {
-        uVar1 = uVar1 + 1;
-    }
-    if (players[3] != NULL) {
-        uVar1 = uVar1 + 1;
-    }
-    return uVar1;
+    return count;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_num_players
-/* 0CEF94 7F09A464 3C0E8008 */  lui   $t6, %hi(players) 
-/* 0CEF98 7F09A468 8DCE9EE0 */  lw    $t6, %lo(players)($t6)
-/* 0CEF9C 7F09A46C 00001825 */  move  $v1, $zero
-/* 0CEFA0 7F09A470 3C0F8008 */  lui   $t7, %hi(players+0x4) 
-/* 0CEFA4 7F09A474 11C00002 */  beqz  $t6, .L7F09A480
-/* 0CEFA8 7F09A478 3C188008 */   lui   $t8, %hi(players+0x8) 
-/* 0CEFAC 7F09A47C 24030001 */  li    $v1, 1
-.L7F09A480:
-/* 0CEFB0 7F09A480 8DEF9EE4 */  lw    $t7, %lo(players+0x4)($t7)
-/* 0CEFB4 7F09A484 3C198008 */  lui   $t9, %hi(players+0xC) 
-/* 0CEFB8 7F09A488 11E00002 */  beqz  $t7, .L7F09A494
-/* 0CEFBC 7F09A48C 00000000 */   nop   
-/* 0CEFC0 7F09A490 24630001 */  addiu $v1, $v1, 1
-.L7F09A494:
-/* 0CEFC4 7F09A494 8F189EE8 */  lw    $t8, %lo(players+0x8)($t8)
-/* 0CEFC8 7F09A498 13000002 */  beqz  $t8, .L7F09A4A4
-/* 0CEFCC 7F09A49C 00000000 */   nop   
-/* 0CEFD0 7F09A4A0 24630001 */  addiu $v1, $v1, 1
-.L7F09A4A4:
-/* 0CEFD4 7F09A4A4 8F399EEC */  lw    $t9, %lo(players+0xC)($t9)
-/* 0CEFD8 7F09A4A8 13200002 */  beqz  $t9, .L7F09A4B4
-/* 0CEFDC 7F09A4AC 00000000 */   nop   
-/* 0CEFE0 7F09A4B0 24630001 */  addiu $v1, $v1, 1
-.L7F09A4B4:
-/* 0CEFE4 7F09A4B4 03E00008 */  jr    $ra
-/* 0CEFE8 7F09A4B8 00601025 */   move  $v0, $v1
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void initBONDdataforPlayer(PLAYER_ID player)
@@ -9784,13 +9738,13 @@ void proc_7F09B15C(int prop)
     int i;
     
     i = 0;
-    numplayers = get_num_players();
+    numplayers = getPlayerCount();
     if (0 < numplayers) {
         ppPVar2 = players;
         pPVar1 = players[0];
         while (ppPVar2 = ppPVar2 + 1, prop != pPVar1->prop) {
             i = i + 1;
-            numplayers = get_num_players();
+            numplayers = getPlayerCount();
             if (numplayers <= i) {
                 return;
             }
@@ -9809,7 +9763,7 @@ glabel sub_GAME_7F09B15C
 /* 0CFC98 7F09B168 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 0CFC9C 7F09B16C 00809025 */  move  $s2, $a0
 /* 0CFCA0 7F09B170 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0CFCA4 7F09B174 0FC26919 */  jal   get_num_players
+/* 0CFCA4 7F09B174 0FC26919 */  jal   getPlayerCount
 /* 0CFCA8 7F09B178 00008825 */   move  $s1, $zero
 /* 0CFCAC 7F09B17C 18400010 */  blez  $v0, .L7F09B1C0
 /* 0CFCB0 7F09B180 00117080 */   sll   $t6, $s1, 2
@@ -9825,7 +9779,7 @@ glabel sub_GAME_7F09B15C
 /* 0CFCD4 7F09B1A4 10000007 */  b     .L7F09B1C4
 /* 0CFCD8 7F09B1A8 02201025 */   move  $v0, $s1
 .L7F09B1AC:
-/* 0CFCDC 7F09B1AC 0FC26919 */  jal   get_num_players
+/* 0CFCDC 7F09B1AC 0FC26919 */  jal   getPlayerCount
 /* 0CFCE0 7F09B1B0 26310001 */   addiu $s1, $s1, 1
 /* 0CFCE4 7F09B1B4 0222082A */  slt   $at, $s1, $v0
 /* 0CFCE8 7F09B1B8 5420FFF6 */  bnezl $at, .L7F09B194

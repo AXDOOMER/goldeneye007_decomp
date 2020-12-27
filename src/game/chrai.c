@@ -7812,7 +7812,7 @@ actionE0_Guard_ID_Draws_Weapon_num_3:
 /* 06E680 7F039B50 1000EE8E */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E684 7F039B54 26310003 */   addiu $s1, $s1, 3
 actionE1_If_Fewer_than_This_Many_Players_Playing_RVL_3:
-/* 06E688 7F039B58 0FC26919 */  jal   get_num_players
+/* 06E688 7F039B58 0FC26919 */  jal   getPlayerCount
 /* 06E68C 7F039B5C 00000000 */   nop   
 /* 06E690 7F039B60 822A0001 */  lb    $t2, 1($s1)
 /* 06E694 7F039B64 02C02025 */  move  $a0, $s6
@@ -13679,7 +13679,7 @@ actionE0_Guard_ID_Draws_Weapon_num_3:
 /* 06E680 7F039B50 1000EE8E */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E684 7F039B54 26310003 */   addiu $s1, $s1, 3
 actionE1_If_Fewer_than_This_Many_Players_Playing_RVL_3:
-/* 06E688 7F039B58 0FC26919 */  jal   get_num_players
+/* 06E688 7F039B58 0FC26919 */  jal   getPlayerCount
 /* 06E68C 7F039B5C 00000000 */   nop   
 /* 06E690 7F039B60 822A0001 */  lb    $t2, 1($s1)
 /* 06E694 7F039B64 02C02025 */  move  $a0, $s6
@@ -17019,7 +17019,7 @@ glabel sub_GAME_7F03C574
 /* 0710B4 7F03C584 AFB30028 */  sw    $s3, 0x28($sp)
 /* 0710B8 7F03C588 AFB10020 */  sw    $s1, 0x20($sp)
 /* 0710BC 7F03C58C AFB0001C */  sw    $s0, 0x1c($sp)
-/* 0710C0 7F03C590 0FC26919 */  jal   get_num_players
+/* 0710C0 7F03C590 0FC26919 */  jal   getPlayerCount
 /* 0710C4 7F03C594 F7B40010 */   sdc1  $f20, 0x10($sp)
 /* 0710C8 7F03C598 240E0001 */  li    $t6, 1
 /* 0710CC 7F03C59C 00409825 */  move  $s3, $v0
@@ -17315,7 +17315,7 @@ glabel handle_mp_respawn_and_some_things
 /* 0714BC 7F03C98C 8E2A0004 */  lw    $t2, 4($s1)
 /* 0714C0 7F03C990 5140000C */  beql  $t2, $zero, .L7F03C9C4
 /* 0714C4 7F03C994 24010005 */   li    $at, 5
-/* 0714C8 7F03C998 0FC26919 */  jal   get_num_players
+/* 0714C8 7F03C998 0FC26919 */  jal   getPlayerCount
 /* 0714CC 7F03C99C 00000000 */   nop   
 /* 0714D0 7F03C9A0 28410002 */  slti  $at, $v0, 2
 /* 0714D4 7F03C9A4 54200007 */  bnezl $at, .L7F03C9C4
@@ -18193,7 +18193,7 @@ glabel sub_GAME_7F03D188
 /* 071EBC 7F03D38C 44814000 */  mtc1  $at, $f8
 /* 071EC0 7F03D390 00000000 */  nop   
 /* 071EC4 7F03D394 46083282 */  mul.s $f10, $f6, $f8
-/* 071EC8 7F03D398 0FC26919 */  jal   get_num_players
+/* 071EC8 7F03D398 0FC26919 */  jal   getPlayerCount
 /* 071ECC 7F03D39C E7AA0058 */   swc1  $f10, 0x58($sp)
 /* 071ED0 7F03D3A0 24010001 */  li    $at, 1
 /* 071ED4 7F03D3A4 14410005 */  bne   $v0, $at, .L7F03D3BC

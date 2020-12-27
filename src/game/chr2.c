@@ -4293,7 +4293,7 @@ glabel triggered_on_shot_hit
 /* 05B078 7F026548 57010009 */  bnel  $t8, $at, .L7F026570
 /* 05B07C 7F02654C 82020007 */   lb    $v0, 7($s0)
 /* 05B080 7F026550 AFA700AC */  sw    $a3, 0xac($sp)
-/* 05B084 7F026554 0FC26919 */  jal   get_num_players
+/* 05B084 7F026554 0FC26919 */  jal   getPlayerCount
 /* 05B088 7F026558 E7AC00A8 */   swc1  $f12, 0xa8($sp)
 /* 05B08C 7F02655C 28410002 */  slti  $at, $v0, 2
 /* 05B090 7F026560 8FA700AC */  lw    $a3, 0xac($sp)
@@ -5096,7 +5096,7 @@ glabel play_sound_for_shot_actor
 /* 05BBF0 7F0270C0 914B0000 */  lbu   $t3, ($t2)
 /* 05BBF4 7F0270C4 5561001D */  bnel  $t3, $at, .L7F02713C
 /* 05BBF8 7F0270C8 8328000F */   lb    $t0, 0xf($t9)
-/* 05BBFC 7F0270CC 0FC26919 */  jal   get_num_players
+/* 05BBFC 7F0270CC 0FC26919 */  jal   getPlayerCount
 /* 05BC00 7F0270D0 AFA30060 */   sw    $v1, 0x60($sp)
 /* 05BC04 7F0270D4 24010001 */  li    $at, 1
 /* 05BC08 7F0270D8 1441000D */  bne   $v0, $at, .L7F027110
@@ -5361,7 +5361,7 @@ glabel handles_shot_actors
 /* 05BF70 7F027440 46000086 */  mov.s $f2, $f0
 /* 05BF74 7F027444 51A0000B */  beql  $t5, $zero, .L7F027474
 /* 05BF78 7F027448 8FA20070 */   lw    $v0, 0x70($sp)
-/* 05BF7C 7F02744C 0FC26919 */  jal   get_num_players
+/* 05BF7C 7F02744C 0FC26919 */  jal   getPlayerCount
 /* 05BF80 7F027450 E7A2003C */   swc1  $f2, 0x3c($sp)
 /* 05BF84 7F027454 24010001 */  li    $at, 1
 /* 05BF88 7F027458 14410005 */  bne   $v0, $at, .L7F027470

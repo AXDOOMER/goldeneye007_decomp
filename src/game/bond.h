@@ -319,9 +319,9 @@ struct player
   s32 room_pointer;
   vec3 current_model_pos;
   vec3 previous_model_pos;
-  s32 current_room_xpos;
-  s32 current_room_ypos;
-  s32 current_room_zpos;
+  f32 current_room_xpos;
+  f32 current_room_ypos;
+  f32 current_room_zpos;
   s32 field_5C;
   s32 field_60;
   s32 field_64;

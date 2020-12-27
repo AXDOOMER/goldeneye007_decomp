@@ -7999,7 +7999,7 @@ glabel object_interaction
 /* 079E34 7F045304 8E340014 */  lw    $s4, 0x14($s1)
 /* 079E38 7F045308 AFA00690 */  sw    $zero, 0x690($sp)
 /* 079E3C 7F04530C AFA00680 */  sw    $zero, 0x680($sp)
-/* 079E40 7F045310 0FC26919 */  jal   get_num_players
+/* 079E40 7F045310 0FC26919 */  jal   getPlayerCount
 /* 079E44 7F045314 E7B6067C */   swc1  $f22, 0x67c($sp)
 /* 079E48 7F045318 240C0001 */  li    $t4, 1
 /* 079E4C 7F04531C AFA20674 */  sw    $v0, 0x674($sp)
@@ -13092,7 +13092,7 @@ glabel object_interaction
 /* 07A248 7F0456D8 8E340014 */  lw    $s4, 0x14($s1)
 /* 07A24C 7F0456DC AFA00698 */  sw    $zero, 0x698($sp)
 /* 07A250 7F0456E0 AFA00688 */  sw    $zero, 0x688($sp)
-/* 07A254 7F0456E4 0FC26C01 */  jal   get_num_players
+/* 07A254 7F0456E4 0FC26C01 */  jal   getPlayerCount
 /* 07A258 7F0456E8 E7B60684 */   swc1  $f22, 0x684($sp)
 /* 07A25C 7F0456EC 240F0001 */  li    $t7, 1
 /* 07A260 7F0456F0 AFA2067C */  sw    $v0, 0x67c($sp)
@@ -26492,14 +26492,14 @@ void prepare_ammo_type_collection_text(u8 *finaltext, AMMOTYPES ammotype, u32 qu
     if (j_text_trigger != 0)
     {
         apped_text_ammotype(finaltext,ammotype,quantity);
-        if (get_num_players() < 3)
+        if (getPlayerCount() < 3)
         {
             append_text_picked_up(finaltext, ammotype, quantity);
         }
         string_append_from_obseg_textbank(finaltext, (char *)D_800529D0);
         return;
     }
-    if (get_num_players() < 3)
+    if (getPlayerCount() < 3)
     {
         append_text_picked_up(finaltext, ammotype, quantity);
         append_text_ammo_amount_word(finaltext, ammotype, quantity);
@@ -26527,7 +26527,7 @@ glabel prepare_ammo_type_collection_text
 /* 08447C 7F04F94C 00C09025 */   move  $s2, $a2
 /* 084480 7F04F950 0FC13D03 */  jal   apped_text_ammotype
 /* 084484 7F04F954 00000000 */   nop   
-/* 084488 7F04F958 0FC26919 */  jal   get_num_players
+/* 084488 7F04F958 0FC26919 */  jal   getPlayerCount
 /* 08448C 7F04F95C 00000000 */   nop   
 /* 084490 7F04F960 28410003 */  slti  $at, $v0, 3
 /* 084494 7F04F964 10200004 */  beqz  $at, .L7F04F978
@@ -26543,7 +26543,7 @@ glabel prepare_ammo_type_collection_text
 /* 0844B8 7F04F988 10000016 */  b     .L7F04F9E4
 /* 0844BC 7F04F98C 8FBF0024 */   lw    $ra, 0x24($sp)
 .L7F04F990:
-/* 0844C0 7F04F990 0FC26919 */  jal   get_num_players
+/* 0844C0 7F04F990 0FC26919 */  jal   getPlayerCount
 /* 0844C4 7F04F994 00000000 */   nop   
 /* 0844C8 7F04F998 28410003 */  slti  $at, $v0, 3
 /* 0844CC 7F04F99C 10200008 */  beqz  $at, .L7F04F9C0
@@ -26791,7 +26791,7 @@ magazine_has_default_ammo_rounds:
 /* 0847D4 7F04FCA4 28610002 */  slti  $at, $v1, 2
 /* 0847D8 7F04FCA8 5420000F */  bnezl $at, .L7F04FCE8
 /* 0847DC 7F04FCAC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0847E0 7F04FCB0 0FC26919 */  jal   get_num_players
+/* 0847E0 7F04FCB0 0FC26919 */  jal   getPlayerCount
 /* 0847E4 7F04FCB4 AFA3001C */   sw    $v1, 0x1c($sp)
 /* 0847E8 7F04FCB8 24010001 */  li    $at, 1
 /* 0847EC 7F04FCBC 14410009 */  bne   $v0, $at, .L7F04FCE4
@@ -26895,7 +26895,7 @@ weapon_has_default_ammo:
 /* 0848BC 7F04FD8C 28610002 */  slti  $at, $v1, 2
 /* 0848C0 7F04FD90 5420000F */  bnezl $at, .L7F04FDD0
 /* 0848C4 7F04FD94 00601025 */   move  $v0, $v1
-/* 0848C8 7F04FD98 0FC26919 */  jal   get_num_players
+/* 0848C8 7F04FD98 0FC26919 */  jal   getPlayerCount
 /* 0848CC 7F04FD9C AFA30018 */   sw    $v1, 0x18($sp)
 /* 0848D0 7F04FDA0 24010001 */  li    $at, 1
 /* 0848D4 7F04FDA4 14410009 */  bne   $v0, $at, .L7F04FDCC
@@ -26933,7 +26933,7 @@ void generate_language_specific_text_for_weapon(char *finalstring,ITEM_IDS itemt
     
     morethan2players = false;
     if (j_text_trigger == 0) {
-        numplayers = get_num_players();
+        numplayers = getPlayerCount();
         if ((int)numplayers < 3) {
             textfiletext = get_textptr_for_textID(0xa400);
             textpointer_load_parse_something(finalstring,textfiletext);
@@ -26941,7 +26941,7 @@ void generate_language_specific_text_for_weapon(char *finalstring,ITEM_IDS itemt
     }
     else {
         textpointer_load_parse_something(finalstring,"");
-        numplayers = get_num_players();
+        numplayers = getPlayerCount();
         if (2 < (int)numplayers) {
             morethan2players = true;
         }
@@ -27194,7 +27194,7 @@ glabel generate_language_specific_text_for_weapon
 /* 084934 7F04FE04 3C058005 */  lui   $a1, %hi(D_80052A3C)
 /* 084938 7F04FE08 0C0029DC */  jal   textpointer_load_parse_something
 /* 08493C 7F04FE0C 24A52A3C */   addiu $a1, %lo(D_80052A3C) # addiu $a1, $a1, 0x2a3c
-/* 084940 7F04FE10 0FC26919 */  jal   get_num_players
+/* 084940 7F04FE10 0FC26919 */  jal   getPlayerCount
 /* 084944 7F04FE14 00000000 */   nop   
 /* 084948 7F04FE18 28410003 */  slti  $at, $v0, 3
 /* 08494C 7F04FE1C 1420000D */  bnez  $at, .L7F04FE54
@@ -27202,7 +27202,7 @@ glabel generate_language_specific_text_for_weapon
 /* 084954 7F04FE24 1000000B */  b     .L7F04FE54
 /* 084958 7F04FE28 AFAF0024 */   sw    $t7, 0x24($sp)
 .L7F04FE2C:
-/* 08495C 7F04FE2C 0FC26919 */  jal   get_num_players
+/* 08495C 7F04FE2C 0FC26919 */  jal   getPlayerCount
 /* 084960 7F04FE30 00000000 */   nop   
 /* 084964 7F04FE34 28410003 */  slti  $at, $v0, 3
 /* 084968 7F04FE38 50200007 */  beql  $at, $zero, .L7F04FE58
@@ -27652,7 +27652,7 @@ interact_ammobox_object:
 /* 084E84 7F050354 96050082 */  lhu   $a1, 0x82($s0)
 /* 084E88 7F050358 AFA4004C */  sw    $a0, 0x4c($sp)
 /* 084E8C 7F05035C AFA30020 */  sw    $v1, 0x20($sp)
-/* 084E90 7F050360 0FC26919 */  jal   get_num_players
+/* 084E90 7F050360 0FC26919 */  jal   getPlayerCount
 /* 084E94 7F050364 AFA50050 */   sw    $a1, 0x50($sp)
 /* 084E98 7F050368 24010001 */  li    $at, 1
 /* 084E9C 7F05036C 8FA30020 */  lw    $v1, 0x20($sp)
@@ -27830,7 +27830,7 @@ interact_bodyarmor_object:
 /* 085110 7F0505E0 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 085114 7F0505E4 1440000D */  bnez  $v0, .L7F05061C
 /* 085118 7F0505E8 00402025 */   move  $a0, $v0
-/* 08511C 7F0505EC 0FC26919 */  jal   get_num_players
+/* 08511C 7F0505EC 0FC26919 */  jal   getPlayerCount
 /* 085120 7F0505F0 00000000 */   nop   
 /* 085124 7F0505F4 28410003 */  slti  $at, $v0, 3
 /* 085128 7F0505F8 10200005 */  beqz  $at, .L7F050610
@@ -28032,7 +28032,7 @@ interact_ammobox_object:
 /* 084E84 7F050354 96050082 */  lhu   $a1, 0x82($s0)
 /* 084E88 7F050358 AFA4004C */  sw    $a0, 0x4c($sp)
 /* 084E8C 7F05035C AFA30020 */  sw    $v1, 0x20($sp)
-/* 084E90 7F050360 0FC26919 */  jal   get_num_players
+/* 084E90 7F050360 0FC26919 */  jal   getPlayerCount
 /* 084E94 7F050364 AFA50050 */   sw    $a1, 0x50($sp)
 /* 084E98 7F050368 24010001 */  li    $at, 1
 /* 084E9C 7F05036C 8FA30020 */  lw    $v1, 0x20($sp)
@@ -28210,7 +28210,7 @@ interact_bodyarmor_object:
 /* 085110 7F0505E0 8FA4006C */   lw    $a0, 0x6c($sp)
 /* 085114 7F0505E4 1440000D */  bnez  $v0, .L7F05061C
 /* 085118 7F0505E8 00402025 */   move  $a0, $v0
-/* 08511C 7F0505EC 0FC26919 */  jal   get_num_players
+/* 08511C 7F0505EC 0FC26919 */  jal   getPlayerCount
 /* 085120 7F0505F0 00000000 */   nop   
 /* 085124 7F0505F4 28410003 */  slti  $at, $v0, 3
 /* 085128 7F0505F8 10200005 */  beqz  $at, .L7F050610
@@ -28566,7 +28566,7 @@ glabel object_collectability_routines
 /* 0855A0 7F050A70 1000001A */  b     .L7F050ADC
 /* 0855A4 7F050A74 AFB9005C */   sw    $t9, 0x5c($sp)
 .L7F050A78:
-/* 0855A8 7F050A78 0FC26919 */  jal   get_num_players
+/* 0855A8 7F050A78 0FC26919 */  jal   getPlayerCount
 /* 0855AC 7F050A7C 00000000 */   nop   
 /* 0855B0 7F050A80 28410002 */  slti  $at, $v0, 2
 /* 0855B4 7F050A84 54200016 */  bnezl $at, .L7F050AE0
@@ -29108,7 +29108,7 @@ glabel object_collectability_routines
 /* 085AE4 7F050F74 10000019 */  b     .Ljp7F050FDC
 /* 085AE8 7F050F78 AFAF0064 */   sw    $t7, 0x64($sp)
 .Ljp7F050F7C:
-/* 085AEC 7F050F7C 0FC26C01 */  jal   get_num_players
+/* 085AEC 7F050F7C 0FC26C01 */  jal   getPlayerCount
 /* 085AF0 7F050F80 00000000 */   nop   
 /* 085AF4 7F050F84 28410002 */  slti  $at, $v0, 2
 /* 085AF8 7F050F88 54200015 */  bnezl $at, .Ljp7F050FE0
@@ -33004,7 +33004,7 @@ glabel sub_GAME_7F053894
 /* 0883E0 7F0538B0 AFB20024 */  sw    $s2, 0x24($sp)
 /* 0883E4 7F0538B4 AFB0001C */  sw    $s0, 0x1c($sp)
 /* 0883E8 7F0538B8 AFA50034 */  sw    $a1, 0x34($sp)
-/* 0883EC 7F0538BC 0FC26919 */  jal   get_num_players
+/* 0883EC 7F0538BC 0FC26919 */  jal   getPlayerCount
 /* 0883F0 7F0538C0 C7B40038 */   lwc1  $f20, 0x38($sp)
 /* 0883F4 7F0538C4 1840001D */  blez  $v0, .L7F05393C
 /* 0883F8 7F0538C8 3C0E8008 */   lui   $t6, %hi(players)
