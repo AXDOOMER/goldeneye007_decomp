@@ -7774,11 +7774,11 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->field_90 = 0.00000000;
     (*ppPVar3)->field_94 = 0;
     (*ppPVar3)->field_98 = 0.00000000;
-    (*ppPVar3)->field_1274 = 0.00000000;
+    (*ppPVar3)->swaytarget = 0.00000000;
     (*ppPVar3)->field_1278 = 0.00000000;
     (*ppPVar3)->field_127C = 0.00000000;
-    (*ppPVar3)->crouchposition = 2;
-    (*ppPVar3)->field_29FC = 2;
+    (*ppPVar3)->crouchpos = 2;
+    (*ppPVar3)->autocrouchpos = 2;
     (*ppPVar3)->ducking_height_offset = 0.00000000;
     (*ppPVar3)->field_A4 = 0.00000000;
     (*ppPVar3)->prop = 0;

@@ -1428,7 +1428,9 @@ typedef enum ACT_TYPE {
 #define OBJECTTYPE_35 0x35
 #define OBJECTTYPE_36 0x36
 
-
+#define CROUCH_SQUAT 0
+#define CROUCH_HALF  1
+#define CROUCH_STAND 2
 
 #endif
 

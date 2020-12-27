@@ -2069,11 +2069,11 @@ void init_player_BONDdata(void)
     pPlayer->field_90 = 0.0f;
     pPlayer->field_94 = 0;
     pPlayer->field_98 = 0.0f;
-    pPlayer->field_1274 = 0.0f;
+    pPlayer->swaytarget = 0.0f;
     pPlayer->field_1278 = 0.0f;
     pPlayer->field_127C = 0.0f;
-    pPlayer->crouchposition = 2;
-    pPlayer->field_29FC = 2;
+    pPlayer->crouchpos = 2;
+    pPlayer->autocrouchpos = 2;
     pPlayer->ducking_height_offset = 0.0f;
     pPlayer->field_A4 = 0.0f;
     pPlayer->field_AC = 1;
@@ -2925,57 +2925,24 @@ glabel sub_GAME_7F0798B8
 )
 #endif
 
-void sub_GAME_7F079988(s32 arg0) {
-    pPlayer->field_1274 = (arg0 * 75.0f);
+void currentPlayerSetSwayTarget(s32 value) {
+    pPlayer->swaytarget = (value * 75.0f);
 }
 
-void change_crouch_position(s32 position)
+void currentPlayerAdjustCrouchPos(s32 value)
 {
-  pPlayer->crouchposition = pPlayer->crouchposition + position;
-  if (pPlayer->crouchposition < 0) {
-    pPlayer->crouchposition = 0;
-    return;
-  }
-  if (2 < pPlayer->crouchposition) {
-    pPlayer->crouchposition = 2;
-  }
-  return;
-}
+    pPlayer->crouchpos = pPlayer->crouchpos + value;
 
-#ifdef NONMATCHING
-s32 sub_GAME_7F0799F0(void) {
-    // Node 0
-    if (pPlayer->crouchposition < pPlayer->field_29FC)
-    {
-        // Node 1
-        return pPlayer->crouchposition;
+    if (pPlayer->crouchpos < CROUCH_SQUAT) {
+        pPlayer->crouchpos = CROUCH_SQUAT;
+    } else if (pPlayer->crouchpos > CROUCH_STAND) {
+        pPlayer->crouchpos = CROUCH_STAND;
     }
-    // Node 2
-    return pPlayer->field_29FC;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0799F0
-/* 0AE520 7F0799F0 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 0AE524 7F0799F4 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
-/* 0AE528 7F0799F8 8C43009C */  lw    $v1, 0x9c($v0)
-/* 0AE52C 7F0799FC 8C4429FC */  lw    $a0, 0x29fc($v0)
-/* 0AE530 7F079A00 0064082A */  slt   $at, $v1, $a0
-/* 0AE534 7F079A04 10200003 */  beqz  $at, .L7F079A14
-/* 0AE538 7F079A08 00802825 */   move  $a1, $a0
-/* 0AE53C 7F079A0C 03E00008 */  jr    $ra
-/* 0AE540 7F079A10 00601025 */   move  $v0, $v1
 
-.L7F079A14:
-/* 0AE544 7F079A14 03E00008 */  jr    $ra
-/* 0AE548 7F079A18 00A01025 */   move  $v0, $a1
-)
-#endif
-
-
-
-
+s32 currentPlayerGetCrouchPos(void) {
+    return ((pPlayer->crouchpos < pPlayer->autocrouchpos) ? pPlayer->crouchpos : pPlayer->autocrouchpos);
+}
 
 #ifdef NONMATCHING
 s32 sub_GAME_7F079A1C(s32 arg0) {
@@ -9087,7 +9054,7 @@ s32 cal_player_collision(void *arg0, void *arg1) {
         if (sub_GAME_7F0B239C(&sp3C) != 0)
         {
             // Node 9
-            pPlayer->field_29FC = 0;
+            pPlayer->autocrouchpos = 0;
         }
         // Node 10
         if ((sub_GAME_7F0B0E24(&sp90, pPlayer->field_48C, pPlayer->field_494, *arg0, (f32) arg0->unk8, sp8C, sp88, sp84, 0.0f, 1.0f) != 0) && (sub_GAME_7F0B18B8(&sp90, *arg0, arg0->unk8, sp80, sp8C, sp88, sp84) < 0))
@@ -17472,33 +17439,33 @@ glabel controller_gameplay_interaction
 /* 0B7E54 7F083324 8FAC0150 */  lw    $t4, 0x150($sp)
 /* 0B7E58 7F083328 11A00005 */  beqz  $t5, .L7F083340
 /* 0B7E5C 7F08332C 00000000 */   nop   
-/* 0B7E60 7F083330 0FC1E662 */  jal   sub_GAME_7F079988
+/* 0B7E60 7F083330 0FC1E662 */  jal   currentPlayerSetSwayTarget
 /* 0B7E64 7F083334 2404FFFF */   li    $a0, -1
 /* 0B7E68 7F083338 1000000A */  b     .L7F083364
 /* 0B7E6C 7F08333C 8FB8015C */   lw    $t8, 0x15c($sp)
 .L7F083340:
 /* 0B7E70 7F083340 11800005 */  beqz  $t4, .L7F083358
 /* 0B7E74 7F083344 00000000 */   nop   
-/* 0B7E78 7F083348 0FC1E662 */  jal   sub_GAME_7F079988
+/* 0B7E78 7F083348 0FC1E662 */  jal   currentPlayerSetSwayTarget
 /* 0B7E7C 7F08334C 24040001 */   li    $a0, 1
 /* 0B7E80 7F083350 10000004 */  b     .L7F083364
 /* 0B7E84 7F083354 8FB8015C */   lw    $t8, 0x15c($sp)
 .L7F083358:
-/* 0B7E88 7F083358 0FC1E662 */  jal   sub_GAME_7F079988
+/* 0B7E88 7F083358 0FC1E662 */  jal   currentPlayerSetSwayTarget
 /* 0B7E8C 7F08335C 00002025 */   move  $a0, $zero
 /* 0B7E90 7F083360 8FB8015C */  lw    $t8, 0x15c($sp)
 .L7F083364:
 /* 0B7E94 7F083364 8FAE0158 */  lw    $t6, 0x158($sp)
 /* 0B7E98 7F083368 13000005 */  beqz  $t8, .L7F083380
 /* 0B7E9C 7F08336C 00000000 */   nop   
-/* 0B7EA0 7F083370 0FC1E66B */  jal   change_crouch_position
+/* 0B7EA0 7F083370 0FC1E66B */  jal   currentPlayerAdjustCrouchPos
 /* 0B7EA4 7F083374 2404FFFE */   li    $a0, -2
 /* 0B7EA8 7F083378 10000006 */  b     .L7F083394
 /* 0B7EAC 7F08337C 8E080000 */   lw    $t0, ($s0)
 .L7F083380:
 /* 0B7EB0 7F083380 51C00004 */  beql  $t6, $zero, .L7F083394
 /* 0B7EB4 7F083384 8E080000 */   lw    $t0, ($s0)
-/* 0B7EB8 7F083388 0FC1E66B */  jal   change_crouch_position
+/* 0B7EB8 7F083388 0FC1E66B */  jal   currentPlayerAdjustCrouchPos
 /* 0B7EBC 7F08338C 24040002 */   li    $a0, 2
 /* 0B7EC0 7F083390 8E080000 */  lw    $t0, ($s0)
 .L7F083394:
@@ -19375,7 +19342,7 @@ glabel MoveBond
 /* 0B92EC 7F0847BC 8D6B6448 */  lw    $t3, %lo(in_tank_flag)($t3)
 /* 0B92F0 7F0847C0 1560006E */  bnez  $t3, .L7F08497C
 /* 0B92F4 7F0847C4 00000000 */   nop   
-/* 0B92F8 7F0847C8 0FC1E67C */  jal   sub_GAME_7F0799F0
+/* 0B92F8 7F0847C8 0FC1E67C */  jal   currentPlayerGetCrouchPos
 /* 0B92FC 7F0847CC 00000000 */   nop   
 /* 0B9300 7F0847D0 5440000D */  bnezl $v0, .L7F084808
 /* 0B9304 7F0847D4 8E280000 */   lw    $t0, ($s1)
@@ -20100,7 +20067,7 @@ glabel MoveBond
 .L7F08525C:
 /* 0B9D8C 7F08525C 0FC205E4 */  jal   sub_GAME_7F081790
 /* 0B9D90 7F085260 00000000 */   nop   
-/* 0B9D94 7F085264 0FC1E67C */  jal   sub_GAME_7F0799F0
+/* 0B9D94 7F085264 0FC1E67C */  jal   currentPlayerGetCrouchPos
 /* 0B9D98 7F085268 E7B402AC */   swc1  $f20, 0x2ac($sp)
 /* 0B9D9C 7F08526C 14400004 */  bnez  $v0, .L7F085280
 /* 0B9DA0 7F085270 3C01C2C8 */   li    $at, 0xC2C80000 # -100.000000
@@ -20108,7 +20075,7 @@ glabel MoveBond
 /* 0B9DA8 7F085278 1000000B */  b     .L7F0852A8
 /* 0B9DAC 7F08527C E7A602AC */   swc1  $f6, 0x2ac($sp)
 .L7F085280:
-/* 0B9DB0 7F085280 0FC1E67C */  jal   sub_GAME_7F0799F0
+/* 0B9DB0 7F085280 0FC1E67C */  jal   currentPlayerGetCrouchPos
 /* 0B9DB4 7F085284 00000000 */   nop   
 /* 0B9DB8 7F085288 24010001 */  li    $at, 1
 /* 0B9DBC 7F08528C 14410004 */  bne   $v0, $at, .L7F0852A0
@@ -20117,7 +20084,7 @@ glabel MoveBond
 /* 0B9DC8 7F085298 10000003 */  b     .L7F0852A8
 /* 0B9DCC 7F08529C E7A402AC */   swc1  $f4, 0x2ac($sp)
 .L7F0852A0:
-/* 0B9DD0 7F0852A0 0FC1E67C */  jal   sub_GAME_7F0799F0
+/* 0B9DD0 7F0852A0 0FC1E67C */  jal   currentPlayerGetCrouchPos
 /* 0B9DD4 7F0852A4 00000000 */   nop   
 .L7F0852A8:
 /* 0B9DD8 7F0852A8 8E280000 */  lw    $t0, ($s1)
@@ -21915,7 +21882,7 @@ glabel MoveBond
 /* 0B99DC 7F084E6C 8D6B6488 */  lw    $t3, %lo(in_tank_flag)($t3)
 /* 0B99E0 7F084E70 1560006E */  bnez  $t3, .Ljp7F08502C
 /* 0B99E4 7F084E74 00000000 */   nop   
-/* 0B99E8 7F084E78 0FC1E7F8 */  jal   sub_GAME_7F0799F0
+/* 0B99E8 7F084E78 0FC1E7F8 */  jal   currentPlayerGetCrouchPos
 /* 0B99EC 7F084E7C 00000000 */   nop   
 /* 0B99F0 7F084E80 5440000D */  bnezl $v0, .Ljp7F084EB8
 /* 0B99F4 7F084E84 8E280000 */   lw    $t0, ($s1)
@@ -22640,7 +22607,7 @@ glabel MoveBond
 .Ljp7F08590C:
 /* 0BA47C 7F08590C 0FC20768 */  jal   sub_GAME_7F081790
 /* 0BA480 7F085910 00000000 */   nop   
-/* 0BA484 7F085914 0FC1E7F8 */  jal   sub_GAME_7F0799F0
+/* 0BA484 7F085914 0FC1E7F8 */  jal   currentPlayerGetCrouchPos
 /* 0BA488 7F085918 E7B402AC */   swc1  $f20, 0x2ac($sp)
 /* 0BA48C 7F08591C 14400004 */  bnez  $v0, .Ljp7F085930
 /* 0BA490 7F085920 3C01C2C8 */   li    $at, 0xC2C80000 # -100.000000
@@ -22648,7 +22615,7 @@ glabel MoveBond
 /* 0BA498 7F085928 1000000B */  b     .Ljp7F085958
 /* 0BA49C 7F08592C E7A602AC */   swc1  $f6, 0x2ac($sp)
 .Ljp7F085930:
-/* 0BA4A0 7F085930 0FC1E7F8 */  jal   sub_GAME_7F0799F0
+/* 0BA4A0 7F085930 0FC1E7F8 */  jal   currentPlayerGetCrouchPos
 /* 0BA4A4 7F085934 00000000 */   nop   
 /* 0BA4A8 7F085938 24010001 */  li    $at, 1
 /* 0BA4AC 7F08593C 14410004 */  bne   $v0, $at, .Ljp7F085950
@@ -22657,7 +22624,7 @@ glabel MoveBond
 /* 0BA4B8 7F085948 10000003 */  b     .Ljp7F085958
 /* 0BA4BC 7F08594C E7A402AC */   swc1  $f4, 0x2ac($sp)
 .Ljp7F085950:
-/* 0BA4C0 7F085950 0FC1E7F8 */  jal   sub_GAME_7F0799F0
+/* 0BA4C0 7F085950 0FC1E7F8 */  jal   currentPlayerGetCrouchPos
 /* 0BA4C4 7F085954 00000000 */   nop   
 .Ljp7F085958:
 /* 0BA4C8 7F085958 8E280000 */  lw    $t0, ($s1)

@@ -338,7 +338,7 @@ struct Player
   s32 field_90;
   s32 field_94;
   s32 field_98;
-  s32 crouchposition;
+  s32 crouchpos;
   s32 ducking_height_offset;
   s32 field_A4;
   struct prop* prop;
@@ -979,7 +979,7 @@ struct Player
   s32 field_1268;
   s32 field_126C;
   s32 field_1270;
-  f32 field_1274;
+  f32 swaytarget;
   s32 field_1278;
   s32 field_127C;
   s32 field_1280;
@@ -2488,7 +2488,7 @@ struct Player
   s32 field_29F0;
   s32 field_29F4;
   s32 field_29F8;
-  s32 field_29FC;
+  s32 autocrouchpos;
   s32 healthdisplaytime;
   s16 field_2A04;
   s32 field_2A08;
