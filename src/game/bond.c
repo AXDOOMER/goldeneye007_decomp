@@ -702,7 +702,6 @@ void set_BONDdata_field_10E0(s32 arg0) {
 }
 
 s32 get_BONDdata_field_10E0(void) {
-    // Node 0
     return pPlayer->field_10E0;
 }
 
@@ -797,36 +796,12 @@ f32 getPlayer_c_perspaspect(void)
     return pPlayer->c_perspaspect;
 }
 
-
-#ifdef NONMATCHING
-void proc_7F078504(coord *param_1)
+void getPlayer_c_cameratopnorm(struct coord *out)
 {
-    param_1->x = (pPlayer->c_cameratopnorm).x;
-    param_1->y = (pPlayer->c_cameratopnorm).y;
-    param_1->z = (pPlayer->c_cameratopnorm).z;
+    out->x = (pPlayer->c_cameratopnorm).x;
+    out->y = (pPlayer->c_cameratopnorm).y;
+    out->z = (pPlayer->c_cameratopnorm).z;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F078504
-/* 0AD034 7F078504 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 0AD038 7F078508 2442A0B0 */  addiu $v0, %lo(pPlayer) # addiu $v0, $v0, -0x5f50
-/* 0AD03C 7F07850C 8C4E0000 */  lw    $t6, ($v0)
-/* 0AD040 7F078510 C5C41100 */  lwc1  $f4, 0x1100($t6)
-/* 0AD044 7F078514 E4840000 */  swc1  $f4, ($a0)
-/* 0AD048 7F078518 8C4F0000 */  lw    $t7, ($v0)
-/* 0AD04C 7F07851C C5E61104 */  lwc1  $f6, 0x1104($t7)
-/* 0AD050 7F078520 E4860004 */  swc1  $f6, 4($a0)
-/* 0AD054 7F078524 8C580000 */  lw    $t8, ($v0)
-/* 0AD058 7F078528 C7081108 */  lwc1  $f8, 0x1108($t8)
-/* 0AD05C 7F07852C 03E00008 */  jr    $ra
-/* 0AD060 7F078530 E4880008 */   swc1  $f8, 8($a0)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F078534(coord *param_1)
