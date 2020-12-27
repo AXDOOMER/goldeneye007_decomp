@@ -5081,9 +5081,9 @@ glabel play_sound_for_shot_actor
 /* 05BBB8 7F027088 0FC26C57 */  jal   sub_GAME_7F09B15C
 /* 05BBBC 7F02708C AFA00060 */   sw    $zero, 0x60($sp)
 /* 05BBC0 7F027090 0002C080 */  sll   $t8, $v0, 2
-/* 05BBC4 7F027094 3C198008 */  lui   $t9, %hi(ptr_BONDdata_p1)
+/* 05BBC4 7F027094 3C198008 */  lui   $t9, %hi(players)
 /* 05BBC8 7F027098 0338C821 */  addu  $t9, $t9, $t8
-/* 05BBCC 7F02709C 8F399EE0 */  lw    $t9, %lo(ptr_BONDdata_p1)($t9)
+/* 05BBCC 7F02709C 8F399EE0 */  lw    $t9, %lo(players)($t9)
 /* 05BBD0 7F0270A0 8FA30060 */  lw    $v1, 0x60($sp)
 /* 05BBD4 7F0270A4 8F2800D8 */  lw    $t0, 0xd8($t9)
 /* 05BBD8 7F0270A8 55000071 */  bnezl $t0, .L7F027270

@@ -217,10 +217,10 @@ glabel display_red_blue_on_radar
 /* 0FAEA8 7F0C6378 8FAA0070 */  lw    $t2, 0x70($sp)
 .L7F0C637C:
 /* 0FAEAC 7F0C637C 00135880 */  sll   $t3, $s3, 2
-/* 0FAEB0 7F0C6380 3C048008 */  lui   $a0, %hi(ptr_BONDdata_p1)
+/* 0FAEB0 7F0C6380 3C048008 */  lui   $a0, %hi(players)
 /* 0FAEB4 7F0C6384 126A007A */  beq   $s3, $t2, .L7F0C6570
 /* 0FAEB8 7F0C6388 008B2021 */   addu  $a0, $a0, $t3
-/* 0FAEBC 7F0C638C 8C849EE0 */  lw    $a0, %lo(ptr_BONDdata_p1)($a0)
+/* 0FAEBC 7F0C638C 8C849EE0 */  lw    $a0, %lo(players)($a0)
 /* 0FAEC0 7F0C6390 8C8C00D8 */  lw    $t4, 0xd8($a0)
 /* 0FAEC4 7F0C6394 55800077 */  bnezl $t4, .L7F0C6574
 /* 0FAEC8 7F0C6398 8FB80074 */   lw    $t8, 0x74($sp)

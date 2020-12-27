@@ -2603,8 +2603,8 @@ glabel manage_mp_game
 /* 0F3820 7F0BECF0 8FA5018C */  lw    $a1, 0x18c($sp)
 /* 0F3824 7F0BECF4 1840001B */  blez  $v0, .L7F0BED64
 /* 0F3828 7F0BECF8 8FA60188 */   lw    $a2, 0x188($sp)
-/* 0F382C 7F0BECFC 3C0E8008 */  lui   $t6, %hi(ptr_BONDdata_p1) 
-/* 0F3830 7F0BED00 25CE9EE0 */  addiu $t6, %lo(ptr_BONDdata_p1) # addiu $t6, $t6, -0x6120
+/* 0F382C 7F0BECFC 3C0E8008 */  lui   $t6, %hi(players) 
+/* 0F3830 7F0BED00 25CE9EE0 */  addiu $t6, %lo(players) # addiu $t6, $t6, -0x6120
 /* 0F3834 7F0BED04 0003C880 */  sll   $t9, $v1, 2
 /* 0F3838 7F0BED08 032E2021 */  addu  $a0, $t9, $t6
 .L7F0BED0C:
@@ -2737,9 +2737,9 @@ glabel manage_mp_game
 /* 0F3A14 7F0BEEE4 00003025 */  move  $a2, $zero
 /* 0F3A18 7F0BEEE8 18400029 */  blez  $v0, .L7F0BEF90
 /* 0F3A1C 7F0BEEEC 00002025 */   move  $a0, $zero
-/* 0F3A20 7F0BEEF0 3C038008 */  lui   $v1, %hi(ptr_BONDdata_p1)
+/* 0F3A20 7F0BEEF0 3C038008 */  lui   $v1, %hi(players)
 /* 0F3A24 7F0BEEF4 44800000 */  mtc1  $zero, $f0
-/* 0F3A28 7F0BEEF8 24639EE0 */  addiu $v1, %lo(ptr_BONDdata_p1) # addiu $v1, $v1, -0x6120
+/* 0F3A28 7F0BEEF8 24639EE0 */  addiu $v1, %lo(players) # addiu $v1, $v1, -0x6120
 .L7F0BEEFC:
 /* 0F3A2C 7F0BEEFC 8C620000 */  lw    $v0, ($v1)
 /* 0F3A30 7F0BEF00 8C4F00D8 */  lw    $t7, 0xd8($v0)
@@ -2818,8 +2818,8 @@ glabel manage_mp_game
 /* 0F3B38 7F0BF008 30490003 */  andi  $t1, $v0, 3
 /* 0F3B3C 7F0BF00C 11200019 */  beqz  $t1, .L7F0BF074
 /* 0F3B40 7F0BF010 000C5880 */   sll   $t3, $t4, 2
-/* 0F3B44 7F0BF014 3C188008 */  lui   $t8, %hi(ptr_BONDdata_p1) 
-/* 0F3B48 7F0BF018 27189EE0 */  addiu $t8, %lo(ptr_BONDdata_p1) # addiu $t8, $t8, -0x6120
+/* 0F3B44 7F0BF014 3C188008 */  lui   $t8, %hi(players) 
+/* 0F3B48 7F0BF018 27189EE0 */  addiu $t8, %lo(players) # addiu $t8, $t8, -0x6120
 /* 0F3B4C 7F0BF01C 00007080 */  sll   $t6, $zero, 2
 /* 0F3B50 7F0BF020 0000C8C0 */  sll   $t9, $zero, 3
 /* 0F3B54 7F0BF024 0320C823 */  subu  $t9, $t9, $zero
@@ -2845,10 +2845,10 @@ glabel manage_mp_game
 /* 0F3B9C 7F0BF06C 00AF2821 */   addu  $a1, $a1, $t7
 /* 0F3BA0 7F0BF070 10E2002C */  beq   $a3, $v0, .L7F0BF124
 .L7F0BF074:
-/* 0F3BA4 7F0BF074 3C188008 */   lui   $t8, %hi(ptr_BONDdata_p1) 
+/* 0F3BA4 7F0BF074 3C188008 */   lui   $t8, %hi(players) 
 /* 0F3BA8 7F0BF078 0007C8C0 */  sll   $t9, $a3, 3
 /* 0F3BAC 7F0BF07C 0327C823 */  subu  $t9, $t9, $a3
-/* 0F3BB0 7F0BF080 27189EE0 */  addiu $t8, %lo(ptr_BONDdata_p1) # addiu $t8, $t8, -0x6120
+/* 0F3BB0 7F0BF080 27189EE0 */  addiu $t8, %lo(players) # addiu $t8, $t8, -0x6120
 /* 0F3BB4 7F0BF084 00077080 */  sll   $t6, $a3, 2
 /* 0F3BB8 7F0BF088 01D81821 */  addu  $v1, $t6, $t8
 /* 0F3BBC 7F0BF08C 0019C900 */  sll   $t9, $t9, 4
@@ -2904,8 +2904,8 @@ glabel manage_mp_game
 /* 0F3C6C 7F0BF13C 000F7900 */  sll   $t7, $t7, 4
 /* 0F3C70 7F0BF140 01EE1821 */  addu  $v1, $t7, $t6
 /* 0F3C74 7F0BF144 906F0068 */  lbu   $t7, 0x68($v1)
-/* 0F3C78 7F0BF148 3C188008 */  lui   $t8, %hi(ptr_BONDdata_p1) 
-/* 0F3C7C 7F0BF14C 27189EE0 */  addiu $t8, %lo(ptr_BONDdata_p1) # addiu $t8, $t8, -0x6120
+/* 0F3C78 7F0BF148 3C188008 */  lui   $t8, %hi(players) 
+/* 0F3C7C 7F0BF14C 27189EE0 */  addiu $t8, %lo(players) # addiu $t8, $t8, -0x6120
 /* 0F3C80 7F0BF150 000CC880 */  sll   $t9, $t4, 2
 /* 0F3C84 7F0BF154 15E00003 */  bnez  $t7, .L7F0BF164
 /* 0F3C88 7F0BF158 03382021 */   addu  $a0, $t9, $t8
@@ -3480,8 +3480,8 @@ glabel manage_mp_game
 /* 0F4494 7F0BF924 8FA5018C */  lw    $a1, 0x18c($sp)
 /* 0F4498 7F0BF928 1840001B */  blez  $v0, .Ljp7F0BF998
 /* 0F449C 7F0BF92C 8FA60188 */   lw    $a2, 0x188($sp)
-/* 0F44A0 7F0BF930 3C0E8008 */  lui   $t6, %hi(ptr_BONDdata_p1) # $t6, 0x8008
-/* 0F44A4 7F0BF934 25CE9F50 */  addiu $t6, %lo(ptr_BONDdata_p1) # addiu $t6, $t6, -0x60b0
+/* 0F44A0 7F0BF930 3C0E8008 */  lui   $t6, %hi(players) # $t6, 0x8008
+/* 0F44A4 7F0BF934 25CE9F50 */  addiu $t6, %lo(players) # addiu $t6, $t6, -0x60b0
 /* 0F44A8 7F0BF938 0003C880 */  sll   $t9, $v1, 2
 /* 0F44AC 7F0BF93C 032E2021 */  addu  $a0, $t9, $t6
 .Ljp7F0BF940:
@@ -3615,9 +3615,9 @@ glabel manage_mp_game
 /* 0F468C 7F0BFB1C 00003025 */  move  $a2, $zero
 /* 0F4690 7F0BFB20 18400029 */  blez  $v0, .Ljp7F0BFBC8
 /* 0F4694 7F0BFB24 00002025 */   move  $a0, $zero
-/* 0F4698 7F0BFB28 3C038008 */  lui   $v1, %hi(ptr_BONDdata_p1) # $v1, 0x8008
+/* 0F4698 7F0BFB28 3C038008 */  lui   $v1, %hi(players) # $v1, 0x8008
 /* 0F469C 7F0BFB2C 44800000 */  mtc1  $zero, $f0
-/* 0F46A0 7F0BFB30 24639F50 */  addiu $v1, %lo(ptr_BONDdata_p1) # addiu $v1, $v1, -0x60b0
+/* 0F46A0 7F0BFB30 24639F50 */  addiu $v1, %lo(players) # addiu $v1, $v1, -0x60b0
 .Ljp7F0BFB34:
 /* 0F46A4 7F0BFB34 8C620000 */  lw    $v0, ($v1)
 /* 0F46A8 7F0BFB38 8C4F00D8 */  lw    $t7, 0xd8($v0)
@@ -3696,8 +3696,8 @@ glabel manage_mp_game
 /* 0F47B0 7F0BFC40 30490003 */  andi  $t1, $v0, 3
 /* 0F47B4 7F0BFC44 11200019 */  beqz  $t1, .Ljp7F0BFCAC
 /* 0F47B8 7F0BFC48 000C5880 */   sll   $t3, $t4, 2
-/* 0F47BC 7F0BFC4C 3C188008 */  lui   $t8, %hi(ptr_BONDdata_p1) # $t8, 0x8008
-/* 0F47C0 7F0BFC50 27189F50 */  addiu $t8, %lo(ptr_BONDdata_p1) # addiu $t8, $t8, -0x60b0
+/* 0F47BC 7F0BFC4C 3C188008 */  lui   $t8, %hi(players) # $t8, 0x8008
+/* 0F47C0 7F0BFC50 27189F50 */  addiu $t8, %lo(players) # addiu $t8, $t8, -0x60b0
 /* 0F47C4 7F0BFC54 00007080 */  sll   $t6, $zero, 2
 /* 0F47C8 7F0BFC58 0000C8C0 */  sll   $t9, $zero, 3
 /* 0F47CC 7F0BFC5C 0320C823 */  subu  $t9, $t9, $zero
@@ -3723,10 +3723,10 @@ glabel manage_mp_game
 /* 0F4814 7F0BFCA4 00AF2821 */   addu  $a1, $a1, $t7
 /* 0F4818 7F0BFCA8 10E2002C */  beq   $a3, $v0, .Ljp7F0BFD5C
 .Ljp7F0BFCAC:
-/* 0F481C 7F0BFCAC 3C188008 */   lui   $t8, %hi(ptr_BONDdata_p1) # $t8, 0x8008
+/* 0F481C 7F0BFCAC 3C188008 */   lui   $t8, %hi(players) # $t8, 0x8008
 /* 0F4820 7F0BFCB0 0007C8C0 */  sll   $t9, $a3, 3
 /* 0F4824 7F0BFCB4 0327C823 */  subu  $t9, $t9, $a3
-/* 0F4828 7F0BFCB8 27189F50 */  addiu $t8, %lo(ptr_BONDdata_p1) # addiu $t8, $t8, -0x60b0
+/* 0F4828 7F0BFCB8 27189F50 */  addiu $t8, %lo(players) # addiu $t8, $t8, -0x60b0
 /* 0F482C 7F0BFCBC 00077080 */  sll   $t6, $a3, 2
 /* 0F4830 7F0BFCC0 01D81821 */  addu  $v1, $t6, $t8
 /* 0F4834 7F0BFCC4 0019C900 */  sll   $t9, $t9, 4
@@ -3782,8 +3782,8 @@ glabel manage_mp_game
 /* 0F48E4 7F0BFD74 000F7900 */  sll   $t7, $t7, 4
 /* 0F48E8 7F0BFD78 01EE1821 */  addu  $v1, $t7, $t6
 /* 0F48EC 7F0BFD7C 906F0068 */  lbu   $t7, 0x68($v1)
-/* 0F48F0 7F0BFD80 3C188008 */  lui   $t8, %hi(ptr_BONDdata_p1) # $t8, 0x8008
-/* 0F48F4 7F0BFD84 27189F50 */  addiu $t8, %lo(ptr_BONDdata_p1) # addiu $t8, $t8, -0x60b0
+/* 0F48F0 7F0BFD80 3C188008 */  lui   $t8, %hi(players) # $t8, 0x8008
+/* 0F48F4 7F0BFD84 27189F50 */  addiu $t8, %lo(players) # addiu $t8, $t8, -0x60b0
 /* 0F48F8 7F0BFD88 000CC880 */  sll   $t9, $t4, 2
 /* 0F48FC 7F0BFD8C 15E00003 */  bnez  $t7, .Ljp7F0BFD9C
 /* 0F4900 7F0BFD90 03382021 */   addu  $a0, $t9, $t8

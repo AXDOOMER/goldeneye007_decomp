@@ -301,7 +301,7 @@ typedef struct textoverride {
 } textoverride;
 
 
-struct Player
+struct player
 {
   s32 unknown;
   s32 xpos;

@@ -1370,9 +1370,9 @@ glabel sub_GAME_7F0C2530
 /* 0F7868 7F0C2D38 1320000F */  beqz  $t9, .L7F0C2D78
 /* 0F786C 7F0C2D3C 00405827 */   not   $t3, $v0
 /* 0F7870 7F0C2D40 00056840 */  sll   $t5, $a1, 1
-/* 0F7874 7F0C2D44 3C188008 */  lui   $t8, %hi(ptr_BONDdata_p1) 
+/* 0F7874 7F0C2D44 3C188008 */  lui   $t8, %hi(players) 
 /* 0F7878 7F0C2D48 020B6024 */  and   $t4, $s0, $t3
-/* 0F787C 7F0C2D4C 27189EE0 */  addiu $t8, %lo(ptr_BONDdata_p1) # addiu $t8, $t8, -0x6120
+/* 0F787C 7F0C2D4C 27189EE0 */  addiu $t8, %lo(players) # addiu $t8, $t8, -0x6120
 /* 0F7880 7F0C2D50 028D7021 */  addu  $t6, $s4, $t5
 /* 0F7884 7F0C2D54 00167880 */  sll   $t7, $s6, 2
 /* 0F7888 7F0C2D58 AE4C002C */  sw    $t4, 0x2c($s2)
@@ -1420,9 +1420,9 @@ glabel sub_GAME_7F0C2530
 /* 0F791C 7F0C2DEC 006B6004 */  sllv  $t4, $t3, $v1
 /* 0F7920 7F0C2DF0 01806827 */  not   $t5, $t4
 /* 0F7924 7F0C2DF4 00037840 */  sll   $t7, $v1, 1
-/* 0F7928 7F0C2DF8 3C098008 */  lui   $t1, %hi(ptr_BONDdata_p1) 
+/* 0F7928 7F0C2DF8 3C098008 */  lui   $t1, %hi(players) 
 /* 0F792C 7F0C2DFC 020D7024 */  and   $t6, $s0, $t5
-/* 0F7930 7F0C2E00 25299EE0 */  addiu $t1, %lo(ptr_BONDdata_p1) # addiu $t1, $t1, -0x6120
+/* 0F7930 7F0C2E00 25299EE0 */  addiu $t1, %lo(players) # addiu $t1, $t1, -0x6120
 /* 0F7934 7F0C2E04 028FC021 */  addu  $t8, $s4, $t7
 /* 0F7938 7F0C2E08 00164080 */  sll   $t0, $s6, 2
 /* 0F793C 7F0C2E0C AE4E002C */  sw    $t6, 0x2c($s2)
@@ -1801,8 +1801,8 @@ glabel sub_GAME_7F0C2E80
 /* 0F7E74 7F0C3344 31070003 */  andi  $a3, $t0, 3
 /* 0F7E78 7F0C3348 10E0000E */  beqz  $a3, .L7F0C3384
 /* 0F7E7C 7F0C334C 00E02825 */   move  $a1, $a3
-/* 0F7E80 7F0C3350 3C0B8008 */  lui   $t3, %hi(ptr_BONDdata_p1) 
-/* 0F7E84 7F0C3354 256B9EE0 */  addiu $t3, %lo(ptr_BONDdata_p1) # addiu $t3, $t3, -0x6120
+/* 0F7E80 7F0C3350 3C0B8008 */  lui   $t3, %hi(players) 
+/* 0F7E84 7F0C3354 256B9EE0 */  addiu $t3, %lo(players) # addiu $t3, $t3, -0x6120
 /* 0F7E88 7F0C3358 00005080 */  sll   $t2, $zero, 2
 /* 0F7E8C 7F0C335C 014B1021 */  addu  $v0, $t2, $t3
 .L7F0C3360:
@@ -1817,8 +1817,8 @@ glabel sub_GAME_7F0C2E80
 /* 0F7EAC 7F0C337C 24420004 */   addiu $v0, $v0, 4
 /* 0F7EB0 7F0C3380 1088001D */  beq   $a0, $t0, .L7F0C33F8
 .L7F0C3384:
-/* 0F7EB4 7F0C3384 3C0F8008 */   lui   $t7, %hi(ptr_BONDdata_p1) 
-/* 0F7EB8 7F0C3388 25EF9EE0 */  addiu $t7, %lo(ptr_BONDdata_p1) # addiu $t7, $t7, -0x6120
+/* 0F7EB4 7F0C3384 3C0F8008 */   lui   $t7, %hi(players) 
+/* 0F7EB8 7F0C3388 25EF9EE0 */  addiu $t7, %lo(players) # addiu $t7, $t7, -0x6120
 /* 0F7EBC 7F0C338C 00046880 */  sll   $t5, $a0, 2
 /* 0F7EC0 7F0C3390 0008C080 */  sll   $t8, $t0, 2
 /* 0F7EC4 7F0C3394 030F2821 */  addu  $a1, $t8, $t7

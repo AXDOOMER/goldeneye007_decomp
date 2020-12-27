@@ -26,8 +26,8 @@ glabel sub_GAME_7F0BC530
 /* 0F1078 7F0BC548 00008025 */   move  $s0, $zero
 /* 0F107C 7F0BC54C 1840000D */  blez  $v0, .L7F0BC584
 /* 0F1080 7F0BC550 00107080 */   sll   $t6, $s0, 2
-/* 0F1084 7F0BC554 3C0F8008 */  lui   $t7, %hi(ptr_BONDdata_p1) 
-/* 0F1088 7F0BC558 25EF9EE0 */  addiu $t7, %lo(ptr_BONDdata_p1) # addiu $t7, $t7, -0x6120
+/* 0F1084 7F0BC554 3C0F8008 */  lui   $t7, %hi(players) 
+/* 0F1088 7F0BC558 25EF9EE0 */  addiu $t7, %lo(players) # addiu $t7, $t7, -0x6120
 /* 0F108C 7F0BC55C 01CF8821 */  addu  $s1, $t6, $t7
 /* 0F1090 7F0BC560 2412FFFF */  li    $s2, -1
 /* 0F1094 7F0BC564 8E380000 */  lw    $t8, ($s1)
