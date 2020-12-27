@@ -1102,38 +1102,28 @@ void sub_GAME_7F078A10(struct coord *arg0, f32 *arg1) {
 }
 
 #ifdef NONMATCHING
-void sub_GAME_7F078A58(void *arg0, s32 arg1) {
-    // Node 0
-    if ((flt_CODE_bss_80079980 + arg1) < ((arg0->unk8 * pPlayer->field_10D4->unk28) + ((pPlayer->field_10D4->unk20 * *arg0) + (pPlayer->field_10D4->unk24 * arg0->unk4))))
+// Regalloc
+s32 sub_GAME_7F078A58(struct coord *arg0, f32 arg1) {
+    if ((flt_CODE_bss_80079980 + arg1) < ((pPlayer->field_10D4->m[2][0] * arg0->x) + (pPlayer->field_10D4->m[2][1] * arg0->y) + (pPlayer->field_10D4->m[2][2] * arg0->z)))
     {
-        // Node 1
         return 0;
     }
-    // Node 2
-    if ((flt_CODE_bss_8007996C + arg1) < ((arg0->unk8 * flt_CODE_bss_80079960.unk8) + ((flt_CODE_bss_80079960 * *arg0) + (flt_CODE_bss_80079960.unk4 * arg0->unk4))))
+    if ((flt_CODE_bss_8007996C + arg1) < ((flt_CODE_bss_80079960.x * arg0->x) + (flt_CODE_bss_80079960.y * arg0->y) + (flt_CODE_bss_80079960.z * arg0->z)))
     {
-        // Node 3
         return 0;
     }
-    // Node 4
-    if ((flt_CODE_bss_8007997C + arg1) < ((arg0->unk8 * flt_CODE_bss_80079970.unk8) + ((flt_CODE_bss_80079970 * *arg0) + (flt_CODE_bss_80079970.unk4 * arg0->unk4))))
+    if ((flt_CODE_bss_8007997C + arg1) < ((flt_CODE_bss_80079970.x * arg0->x) + (flt_CODE_bss_80079970.y * arg0->y) + (flt_CODE_bss_80079970.z * arg0->z)))
     {
-        // Node 5
         return 0;
     }
-    // Node 6
-    if ((flt_CODE_bss_8007994C + arg1) < ((arg0->unk8 * flt_CODE_bss_80079940.unk8) + ((flt_CODE_bss_80079940 * *arg0) + (flt_CODE_bss_80079940.unk4 * arg0->unk4))))
+    if ((flt_CODE_bss_8007994C + arg1) < ((flt_CODE_bss_80079940.x * arg0->x) + (flt_CODE_bss_80079940.y * arg0->y) + (flt_CODE_bss_80079940.z * arg0->z)))
     {
-        // Node 7
         return 0;
     }
-    // Node 8
-    if ((flt_CODE_bss_8007995C + arg1) < ((arg0->unk8 * flt_CODE_bss_80079950.unk8) + ((flt_CODE_bss_80079950 * *arg0) + (flt_CODE_bss_80079950.unk4 * arg0->unk4))))
+    if ((flt_CODE_bss_8007995C + arg1) < ((flt_CODE_bss_80079950.x * arg0->x) + (flt_CODE_bss_80079950.y * arg0->y) + (flt_CODE_bss_80079950.z * arg0->z)))
     {
-        // Node 9
         return 0;
     }
-    // Node 10
     return 1;
 }
 #else
