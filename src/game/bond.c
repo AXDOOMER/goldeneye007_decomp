@@ -810,35 +810,12 @@ void getPlayer_c_cameratopnorm_inverted_y(struct coord *out)
     out->z = (pPlayer->c_cameratopnorm).z;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F078568(coord *param_1)
+void getPlayer_c_cameraleftnorm(struct coord *out)
 {
-    param_1->x = (pPlayer->c_cameraleftnorm).x;
-    param_1->y = (pPlayer->c_cameraleftnorm).y;
-    param_1->z = (pPlayer->c_cameraleftnorm).z;
+    out->x = (pPlayer->c_cameraleftnorm).x;
+    out->y = (pPlayer->c_cameraleftnorm).y;
+    out->z = (pPlayer->c_cameraleftnorm).z;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F078568
-/* 0AD098 7F078568 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 0AD09C 7F07856C 2442A0B0 */  addiu $v0, %lo(pPlayer) # addiu $v0, $v0, -0x5f50
-/* 0AD0A0 7F078570 8C4E0000 */  lw    $t6, ($v0)
-/* 0AD0A4 7F078574 C5C4110C */  lwc1  $f4, 0x110c($t6)
-/* 0AD0A8 7F078578 E4840000 */  swc1  $f4, ($a0)
-/* 0AD0AC 7F07857C 8C4F0000 */  lw    $t7, ($v0)
-/* 0AD0B0 7F078580 C5E61110 */  lwc1  $f6, 0x1110($t7)
-/* 0AD0B4 7F078584 E4860004 */  swc1  $f6, 4($a0)
-/* 0AD0B8 7F078588 8C580000 */  lw    $t8, ($v0)
-/* 0AD0BC 7F07858C C7081114 */  lwc1  $f8, 0x1114($t8)
-/* 0AD0C0 7F078590 03E00008 */  jr    $ra
-/* 0AD0C4 7F078594 E4880008 */   swc1  $f8, 8($a0)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F078598(coord *param_1)
