@@ -1094,43 +1094,12 @@ void sub_GAME_7F0789E0(struct coord *arg0, f32 *arg1) {
     *arg1 = flt_CODE_bss_8007997C;
 }
 
-#ifdef NONMATCHING
-void *sub_GAME_7F078A10(void *arg0, void *arg1) {
-    // Node 0
-    *arg0 = (f32) pPlayer->field_10D4->unk20;
-    arg0->unk4 = (f32) pPlayer->field_10D4->unk24;
-    arg0->unk8 = (f32) pPlayer->field_10D4->unk28;
-    *arg1 = (f32) flt_CODE_bss_80079980;
-    return &pPlayer;
+void sub_GAME_7F078A10(struct coord *arg0, f32 *arg1) {
+    arg0->x = pPlayer->field_10D4->m[2][0];
+    arg0->y = pPlayer->field_10D4->m[2][1];
+    arg0->z = pPlayer->field_10D4->m[2][2];
+    *arg1 = flt_CODE_bss_80079980;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F078A10
-/* 0AD540 7F078A10 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 0AD544 7F078A14 2442A0B0 */  addiu $v0, %lo(pPlayer) # addiu $v0, $v0, -0x5f50
-/* 0AD548 7F078A18 8C4E0000 */  lw    $t6, ($v0)
-/* 0AD54C 7F078A1C 3C018008 */  lui   $at, %hi(flt_CODE_bss_80079980)
-/* 0AD550 7F078A20 8DCF10D4 */  lw    $t7, 0x10d4($t6)
-/* 0AD554 7F078A24 C5E40020 */  lwc1  $f4, 0x20($t7)
-/* 0AD558 7F078A28 E4840000 */  swc1  $f4, ($a0)
-/* 0AD55C 7F078A2C 8C580000 */  lw    $t8, ($v0)
-/* 0AD560 7F078A30 8F1910D4 */  lw    $t9, 0x10d4($t8)
-/* 0AD564 7F078A34 C7260024 */  lwc1  $f6, 0x24($t9)
-/* 0AD568 7F078A38 E4860004 */  swc1  $f6, 4($a0)
-/* 0AD56C 7F078A3C 8C480000 */  lw    $t0, ($v0)
-/* 0AD570 7F078A40 8D0910D4 */  lw    $t1, 0x10d4($t0)
-/* 0AD574 7F078A44 C5280028 */  lwc1  $f8, 0x28($t1)
-/* 0AD578 7F078A48 E4880008 */  swc1  $f8, 8($a0)
-/* 0AD57C 7F078A4C C42A9980 */  lwc1  $f10, %lo(flt_CODE_bss_80079980)($at)
-/* 0AD580 7F078A50 03E00008 */  jr    $ra
-/* 0AD584 7F078A54 E4AA0000 */   swc1  $f10, ($a1)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F078A58(void *arg0, s32 arg1) {
