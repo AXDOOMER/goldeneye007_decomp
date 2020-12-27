@@ -2949,26 +2949,9 @@ s32 playerGetCrouchPos(s32 playernum) {
 		: players[playernum]->autocrouchpos;
 }
 
-#ifdef NONMATCHING
-void setptrBONDdata(s32 arg0) {
-    // Node 0
-    *pPlayer = arg0;
-    return;
+void currentPlayerSetField00(s32 value) {
+    pPlayer->unknown = value;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel setptrBONDdata
-/* 0AE580 7F079A50 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0AE584 7F079A54 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0AE588 7F079A58 03E00008 */  jr    $ra
-/* 0AE58C 7F079A5C ADC40000 */   sw    $a0, ($t6)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void *sub_GAME_7F079A60(void *arg0, void *arg1, void *arg2, s32 arg3, void *arg4) {
@@ -19276,7 +19259,7 @@ glabel MoveBond
 .L7F08474C:
 /* 0B927C 7F08474C 3C118008 */  lui   $s1, %hi(pPlayer)
 /* 0B9280 7F084750 2631A0B0 */  addiu $s1, %lo(pPlayer) # addiu $s1, $s1, -0x5f50
-/* 0B9284 7F084754 0FC1E694 */  jal   setptrBONDdata
+/* 0B9284 7F084754 0FC1E694 */  jal   currentPlayerSetField00
 /* 0B9288 7F084758 00002025 */   move  $a0, $zero
 /* 0B928C 7F08475C 0FC20FF2 */  jal   sub_GAME_7F083FC8
 /* 0B9290 7F084760 00000000 */   nop   
@@ -21816,7 +21799,7 @@ glabel MoveBond
 .Ljp7F084DFC:
 /* 0B996C 7F084DFC 3C118008 */  lui   $s1, %hi(pPlayer) # $s1, 0x8008
 /* 0B9970 7F084E00 2631A120 */  addiu $s1, %lo(pPlayer) # addiu $s1, $s1, -0x5ee0
-/* 0B9974 7F084E04 0FC1E810 */  jal   setptrBONDdata
+/* 0B9974 7F084E04 0FC1E810 */  jal   currentPlayerSetField00
 /* 0B9978 7F084E08 00002025 */   move  $a0, $zero
 /* 0B997C 7F084E0C 0FC21176 */  jal   sub_GAME_7F083FC8
 /* 0B9980 7F084E10 00000000 */   nop   
@@ -24220,14 +24203,14 @@ void sub_GAME_7F086990(s32 arg0, s32 arg1, ? arg2, ? arg_unalignedA, ? arg3, ? a
             {
                 // Node 7
                 sub_GAME_7F07B56C(arg_unalignedA, arg_unalignedE, &sp64, &sp58, &sp4C, &sp3C, &sp30);
-                setptrBONDdata(1);
+                currentPlayerSetField00(1);
                 // Node 8
-                return setptrBONDdata(0);
+                return currentPlayerSetField00(0);
             }
         }
     }
     // Node 6
-    return setptrBONDdata(0);
+    return currentPlayerSetField00(0);
 }
 #else
 GLOBAL_ASM(
@@ -24363,7 +24346,7 @@ glabel sub_GAME_7F086990
 /* 0BB6B4 7F086B84 14410005 */  bne   $v0, $at, .L7F086B9C
 /* 0BB6B8 7F086B88 97A4007A */   lhu   $a0, 0x7a($sp)
 .L7F086B8C:
-/* 0BB6BC 7F086B8C 0FC1E694 */  jal   setptrBONDdata
+/* 0BB6BC 7F086B8C 0FC1E694 */  jal   currentPlayerSetField00
 /* 0BB6C0 7F086B90 00002025 */   move  $a0, $zero
 /* 0BB6C4 7F086B94 10000015 */  b     .L7F086BEC
 /* 0BB6C8 7F086B98 8FBF0024 */   lw    $ra, 0x24($sp)
@@ -24378,7 +24361,7 @@ glabel sub_GAME_7F086990
 /* 0BB6E8 7F086BB8 27A60064 */  addiu $a2, $sp, 0x64
 /* 0BB6EC 7F086BBC 0FC1ED5B */  jal   sub_GAME_7F07B56C
 /* 0BB6F0 7F086BC0 27A70058 */   addiu $a3, $sp, 0x58
-/* 0BB6F4 7F086BC4 0FC1E694 */  jal   setptrBONDdata
+/* 0BB6F4 7F086BC4 0FC1E694 */  jal   currentPlayerSetField00
 /* 0BB6F8 7F086BC8 24040001 */   li    $a0, 1
 /* 0BB6FC 7F086BCC 27B80030 */  addiu $t8, $sp, 0x30
 /* 0BB700 7F086BD0 AFB80010 */  sw    $t8, 0x10($sp)
