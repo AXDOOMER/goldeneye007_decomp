@@ -875,24 +875,23 @@ struct Player
   f32 c_scaley;
   f32 c_recipscalex;
   f32 c_recipscaley;
-  s32 field_10C4;
-  s32 field_10C8;
-  s32 field_10CC; // 4x4 matrix
-  s32 field_10D0;
-  s32 field_10D4;
-  s32 field_10D8;
-  s32 field_10DC;
-  s32 field_10E0;
-  s32 field_10E4;
-  s32 field_10E8;
-  s32 field_10EC;
+  Mtx* field_10C4;
+  Mtx* field_10C8;
+  Mtxf* field_10CC;
+  s32 field_10D0; // ptr
+  Mtxf* field_10D4;
+  Mtx* field_10D8;
+  Mtxf* field_10DC;
+  s32 field_10E0; // ptr
+  s32 field_10E4; // ptr
+  Mtxf* field_10E8;
+  Mtxf* field_10EC;
   f32 c_scalelod60;
   f32 c_scalelod;
   f32 c_lodscalez;
   u32 c_lodscalezu32;
   struct coord c_cameratopnorm;
   struct coord c_cameraleftnorm;
-
   f32 screenxminf;
   f32 screenyminf;
   f32 screenxmaxf;

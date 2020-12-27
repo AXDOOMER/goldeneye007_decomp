@@ -1463,8 +1463,8 @@ void *video_related_F(void *arg0)
     temp_v1->unk0 = 0xbc00000e;
     temp_s0 = temp_s0 + 8;
     temp_v1->unk4 = (?32) word_CODE_bss_80060824;
-    set_BONDdata_field_10D8(m, &m);
-    set_BONDdata_field_10DC(&dword_CODE_bss_800607E0);
+    currentPlayerSetMatrix10D8(m, &m);
+    currentPlayerSetMatrix10DC(&dword_CODE_bss_800607E0);
     temp_v0_2 = temp_s0;
     if (coloroutputmode != 0)
     {
@@ -1595,10 +1595,10 @@ glabel video_related_F
 /* 004A00 70003E00 95EF0824 */  lhu   $t7, %lo(word_CODE_bss_80060824)($t7)
 /* 004A04 70003E04 26100008 */  addiu $s0, $s0, 8
 /* 004A08 70003E08 AC6F0004 */  sw    $t7, 4($v1)
-/* 004A0C 70003E0C 0FC1E0D9 */  jal   set_BONDdata_field_10D8
+/* 004A0C 70003E0C 0FC1E0D9 */  jal   currentPlayerSetMatrix10D8
 /* 004A10 70003E10 8CA40000 */   lw    $a0, ($a1)
 /* 004A14 70003E14 3C048006 */  lui   $a0, %hi(dword_CODE_bss_800607E0)
-/* 004A18 70003E18 0FC1E0F5 */  jal   set_BONDdata_field_10DC
+/* 004A18 70003E18 0FC1E0F5 */  jal   currentPlayerSetMatrix10DC
 /* 004A1C 70003E1C 248407E0 */   addiu $a0, %lo(dword_CODE_bss_800607E0) # addiu $a0, $a0, 0x7e0
 /* 004A20 70003E20 3C188002 */  lui   $t8, %hi(coloroutputmode) 
 /* 004A24 70003E24 8F1832AC */  lw    $t8, %lo(coloroutputmode)($t8)

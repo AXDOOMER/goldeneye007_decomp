@@ -12651,7 +12651,7 @@ glabel sub_GAME_7F02C4C0
 /* 061788 7F02CC58 8F290004 */  lw    $t1, 4($t9)
 /* 06178C 7F02CC5C 0FC1639E */  jal   sub_GAME_7F058E78
 /* 061790 7F02CC60 AFA900B8 */   sw    $t1, 0xb8($sp)
-/* 061794 7F02CC64 0FC1E115 */  jal   sub_GAME_7F078454
+/* 061794 7F02CC64 0FC1E115 */  jal   currentPlayerGetMatrix10EC
 /* 061798 7F02CC68 00000000 */   nop   
 /* 06179C 7F02CC6C 00402025 */  move  $a0, $v0
 /* 0617A0 7F02CC70 0FC16026 */  jal   matrix_4x4_multiply_homogeneous_in_place
@@ -12685,7 +12685,7 @@ glabel sub_GAME_7F02C4C0
 /* 06180C 7F02CCDC 00402025 */  move  $a0, $v0
 /* 061810 7F02CCE0 0FC1639E */  jal   sub_GAME_7F058E78
 /* 061814 7F02CCE4 27A50068 */   addiu $a1, $sp, 0x68
-/* 061818 7F02CCE8 0FC1E115 */  jal   sub_GAME_7F078454
+/* 061818 7F02CCE8 0FC1E115 */  jal   currentPlayerGetMatrix10EC
 /* 06181C 7F02CCEC 00000000 */   nop   
 /* 061820 7F02CCF0 00402025 */  move  $a0, $v0
 /* 061824 7F02CCF4 0FC16026 */  jal   matrix_4x4_multiply_homogeneous_in_place
@@ -13753,7 +13753,7 @@ glabel sub_GAME_7F02D630
 /* 0621D0 7F02D6A0 C4660004 */  lwc1  $f6, 4($v1)
 /* 0621D4 7F02D6A4 E6060004 */  swc1  $f6, 4($s0)
 /* 0621D8 7F02D6A8 C4680008 */  lwc1  $f8, 8($v1)
-/* 0621DC 7F02D6AC 0FC1E111 */  jal   sub_GAME_7F078444
+/* 0621DC 7F02D6AC 0FC1E111 */  jal   currentPlayerGetMatrix10D4
 /* 0621E0 7F02D6B0 E6080008 */   swc1  $f8, 8($s0)
 /* 0621E4 7F02D6B4 00402025 */  move  $a0, $v0
 /* 0621E8 7F02D6B8 8FA500B4 */  lw    $a1, 0xb4($sp)
@@ -13770,7 +13770,7 @@ glabel sub_GAME_7F02D630
 /* 062210 7F02D6E0 8FBF001C */   lw    $ra, 0x1c($sp)
 /* 062214 7F02D6E4 0FC1B198 */  jal   sub_GAME_7F06C660
 /* 062218 7F02D6E8 00003025 */   move  $a2, $zero
-/* 06221C 7F02D6EC 0FC1E111 */  jal   sub_GAME_7F078444
+/* 06221C 7F02D6EC 0FC1E111 */  jal   currentPlayerGetMatrix10D4
 /* 062220 7F02D6F0 AFA2006C */   sw    $v0, 0x6c($sp)
 /* 062224 7F02D6F4 00402025 */  move  $a0, $v0
 /* 062228 7F02D6F8 8FA5006C */  lw    $a1, 0x6c($sp)
@@ -21237,7 +21237,7 @@ glabel sub_GAME_7F0333F8
 /* 067F68 7F033438 8FA40044 */  lw    $a0, 0x44($sp)
 /* 067F6C 7F03343C 0FC1B2E6 */  jal   getsuboffset
 /* 067F70 7F033440 27A50020 */   addiu $a1, $sp, 0x20
-/* 067F74 7F033444 0FC1E0F1 */  jal   get_BONDdata_field_10CC
+/* 067F74 7F033444 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
 /* 067F78 7F033448 00000000 */   nop   
 /* 067F7C 7F03344C 00402025 */  move  $a0, $v0
 /* 067F80 7F033450 0FC1611D */  jal   matrix_4x4_transform_vector_in_place

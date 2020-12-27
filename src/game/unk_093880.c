@@ -38,7 +38,7 @@ void sub_GAME_7F093880(f32 arg0, f32 arg1, ? arg2) {
     s32 sp24;
 
     // Node 0
-    sp24 = sub_GAME_7F078444();
+    sp24 = currentPlayerGetMatrix10D4();
     sp1C = (f32) (getPlayer_c_screenleft() + arg0);
     sp18 = getPlayer_c_screentop();
     sp20 = (f32) (get_ptr_currentdata()->unk38 + (arg1 + sp18));
@@ -54,7 +54,7 @@ glabel sub_GAME_7F093880
 /* 0C83B4 7F093884 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0C83B8 7F093888 E7AC0028 */  swc1  $f12, 0x28($sp)
 /* 0C83BC 7F09388C E7AE002C */  swc1  $f14, 0x2c($sp)
-/* 0C83C0 7F093890 0FC1E111 */  jal   sub_GAME_7F078444
+/* 0C83C0 7F093890 0FC1E111 */  jal   currentPlayerGetMatrix10D4
 /* 0C83C4 7F093894 AFA60030 */   sw    $a2, 0x30($sp)
 /* 0C83C8 7F093898 0FC1E131 */  jal   getPlayer_c_screenleft
 /* 0C83CC 7F09389C AFA20024 */   sw    $v0, 0x24($sp)
@@ -2409,9 +2409,9 @@ def_7F094A38:
 .L7F0957AC:
 /* 0CA2DC 7F0957AC 5A20018E */  blezl $s1, .L7F095DE8
 /* 0CA2E0 7F0957B0 8FAA005C */   lw    $t2, 0x5c($sp)
-/* 0CA2E4 7F0957B4 0FC1E0F9 */  jal   get_BONDdata_field_10DC
+/* 0CA2E4 7F0957B4 0FC1E0F9 */  jal   currentPlayerGetMatrix10DC
 /* 0CA2E8 7F0957B8 00000000 */   nop   
-/* 0CA2EC 7F0957BC 0FC1E0F1 */  jal   get_BONDdata_field_10CC
+/* 0CA2EC 7F0957BC 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
 /* 0CA2F0 7F0957C0 00408025 */   move  $s0, $v0
 /* 0CA2F4 7F0957C4 02002025 */  move  $a0, $s0
 /* 0CA2F8 7F0957C8 00402825 */  move  $a1, $v0
@@ -3939,9 +3939,9 @@ def_7F095E0C:
 /* 0CBA18 7F096EE8 3739FE81 */  ori   $t9, (0xFC40FE81 & 0xFFFF) # ori $t9, $t9, 0xfe81
 /* 0CBA1C 7F096EEC 35ADF97C */  ori   $t5, (0x55FEF97C & 0xFFFF) # ori $t5, $t5, 0xf97c
 /* 0CBA20 7F096EF0 ADED0004 */  sw    $t5, 4($t7)
-/* 0CBA24 7F096EF4 0FC1E0F9 */  jal   get_BONDdata_field_10DC
+/* 0CBA24 7F096EF4 0FC1E0F9 */  jal   currentPlayerGetMatrix10DC
 /* 0CBA28 7F096EF8 ADF90000 */   sw    $t9, ($t7)
-/* 0CBA2C 7F096EFC 0FC1E0F1 */  jal   get_BONDdata_field_10CC
+/* 0CBA2C 7F096EFC 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
 /* 0CBA30 7F096F00 00408025 */   move  $s0, $v0
 /* 0CBA34 7F096F04 02002025 */  move  $a0, $s0
 /* 0CBA38 7F096F08 00402825 */  move  $a1, $v0

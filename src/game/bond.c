@@ -8,36 +8,16 @@
 #include "game/bondwalk.h"
 
 // bss
-//CODE.bss:80079940
-f32 flt_CODE_bss_80079940;
-//CODE.bss:80079944
-f32 flt_CODE_bss_80079944;
-//CODE.bss:80079948
-f32 flt_CODE_bss_80079948;
+struct coord flt_CODE_bss_80079940;
 //CODE.bss:8007994C
 f32 flt_CODE_bss_8007994C;
-//CODE.bss:80079950
-f32 flt_CODE_bss_80079950;
-//CODE.bss:80079954
-f32 flt_CODE_bss_80079954;
-//CODE.bss:80079958
-f32 flt_CODE_bss_80079958;
+struct coord flt_CODE_bss_80079950;
 //CODE.bss:8007995C
 f32 flt_CODE_bss_8007995C;
-//CODE.bss:80079960
-f32 flt_CODE_bss_80079960;
-//CODE.bss:80079964
-f32 flt_CODE_bss_80079964;
-//CODE.bss:80079968
-f32 flt_CODE_bss_80079968;
+struct coord flt_CODE_bss_80079960;
 //CODE.bss:8007996C
 f32 flt_CODE_bss_8007996C;
-//CODE.bss:80079970
-f32 flt_CODE_bss_80079970;
-//CODE.bss:80079974
-f32 flt_CODE_bss_80079974;
-//CODE.bss:80079978
-f32 flt_CODE_bss_80079978;
+struct coord flt_CODE_bss_80079970;
 //CODE.bss:8007997C
 f32 flt_CODE_bss_8007997C;
 //CODE.bss:80079980
@@ -673,27 +653,27 @@ glabel sub_GAME_7F078258
 )
 #endif
 
-void set_BONDdata_field_10C4(s32 arg0) {
-    pPlayer->field_10C4 = arg0;
+void currentPlayerSetMatrix10C4(Mtx *matrix) {
+    pPlayer->field_10C4 = matrix;
 }
 
-s32 get_BONDdata_field_10C4(void) {
+Mtx *currentPlayerGetMatrix10C4(void) {
     return pPlayer->field_10C4;
 }
 
-void set_BONDdata_field_10C8(s32 arg0) {
-    pPlayer->field_10C8 = arg0;
+void currentPlayerSetMatrix10C8(Mtx *matrix) {
+    pPlayer->field_10C8 = matrix;
 }
 
-s32 get_BONDdata_field_10C8(void) {
+Mtx *currentPlayerGetMatrix10C8(void) {
     return pPlayer->field_10C8;
 }
 
-void set_BONDdata_field_10D8(s32 arg0) {
-    pPlayer->field_10D8 = arg0;
+void currentPlayerSetMatrix10D8(Mtx *matrix) {
+    pPlayer->field_10D8 = matrix;
 }
 
-s32 get_BONDdata_field_10D8(void) {
+Mtx *currentPlayerGetMatrix10D8(void) {
     return pPlayer->field_10D8;
 }
 
@@ -705,25 +685,24 @@ s32 get_BONDdata_field_10E0(void) {
     return pPlayer->field_10E0;
 }
 
-void *copy_BONDdata_field_10CC_to_10E8_set_10CC(s32 arg0) {
-    pPlayer->field_10E8 = (s32) pPlayer->field_10CC;
-    pPlayer->field_10CC = arg0;
+void *currentPlayerSetMatrix10CC(Mtxf *matrix) {
+    pPlayer->field_10E8 = pPlayer->field_10CC;
+    pPlayer->field_10CC = matrix;
 }
 
-// Should be 4x4 matrix
-f32* get_BONDdata_field_10CC(void) {
+Mtxf *currentPlayerGetMatrix10CC(void) {
     return pPlayer->field_10CC;
 }
 
-void set_BONDdata_field_10DC(s32 arg0) {
-    pPlayer->field_10DC = arg0;
+void currentPlayerSetMatrix10DC(Mtxf *matrix) {
+    pPlayer->field_10DC = matrix;
 }
 
-s32 get_BONDdata_field_10DC(void) {
+Mtxf *currentPlayerGetMatrix10DC(void) {
     return pPlayer->field_10DC;
 }
 
-s32 sub_GAME_7F0783F4(void) {
+Mtxf *currentPlayerGetMatrix10E8(void) {
     return pPlayer->field_10E8;
 }
 
@@ -735,16 +714,16 @@ s32 sub_GAME_7F078414(void) {
     return pPlayer->field_10D0;
 }
 
-void sub_GAME_7F078424(s32 arg0) {
+void currentPlayerSetMatrix10D4(Mtxf *matrix) {
     pPlayer->field_10EC = pPlayer->field_10D4;
-    pPlayer->field_10D4 = arg0;
+    pPlayer->field_10D4 = matrix;
 }
 
-s32 sub_GAME_7F078444(void) {
+Mtxf *currentPlayerGetMatrix10D4(void) {
     return pPlayer->field_10D4;
 }
 
-s32 sub_GAME_7F078454(void) {
+Mtxf *currentPlayerGetMatrix10EC(void) {
     return pPlayer->field_10EC;
 }
 
@@ -829,90 +808,42 @@ f32 getPlayer_c_perspnear(void)
     return pPlayer->c_perspnear;
 }
 
-
-
-
-
-
 #ifdef NONMATCHING
-void sub_GAME_7F0785DC(void)
+// Regalloc mostly
+void sub_GAME_7F0785DC()
 {
-    f32 sp28;
-    f32 sp24;
     f32 temp_f14;
-    f32 temp_f14_2;
-    f32 temp_f16;
-    f32 temp_f16_2;
-    f32 temp_f18;
-    f32 temp_f18_2;
-    f32 temp_f20;
     f32 temp_f20_2;
-    f32 temp_f2;
-    f32 temp_f2_2;
-
-    temp_f2 = pPlayer->c_halfheight * pPlayer->c_scaley;
-    sp24 = temp_f2;
-    temp_f20 = 1.0f / sqrtf((temp_f2 * temp_f2) + 1.0f);
-    temp_f2_2 = temp_f2 * temp_f20;
-    temp_f16 = -temp_f20;
-    temp_f18 = -temp_f16;
-    flt_CODE_bss_80079940.unk0 = (f32) ((pPlayer->unk10D4->unk20 * temp_f2_2) + (temp_f18 * pPlayer->unk10D4->unk10));
-    flt_CODE_bss_80079940.unk4 = (f32) ((pPlayer->unk10D4->unk24 * temp_f2_2) + (temp_f18 * pPlayer->unk10D4->unk14));
-    flt_CODE_bss_80079940.unk8 = (f32) ((pPlayer->unk10D4->unk28 * temp_f2_2) + (temp_f18 * pPlayer->unk10D4->unk18));
-    flt_CODE_bss_8007994C = (f32) ((pPlayer->unk10D4->unk38 * flt_CODE_bss_80079940.unk8) + ((flt_CODE_bss_80079940.unk0 * pPlayer->unk10D4->unk30) + (flt_CODE_bss_80079940.unk4 * pPlayer->unk10D4->unk34)));
-    flt_CODE_bss_80079950.unk0 = (f32) ((pPlayer->unk10D4->unk20 * temp_f2_2) + (temp_f16 * pPlayer->unk10D4->unk10));
-    flt_CODE_bss_80079950.unk4 = (f32) ((pPlayer->unk10D4->unk24 * temp_f2_2) + (temp_f16 * pPlayer->unk10D4->unk14));
-    flt_CODE_bss_80079950.unk8 = (f32) ((pPlayer->unk10D4->unk28 * temp_f2_2) + (temp_f16 * pPlayer->unk10D4->unk18));
-    flt_CODE_bss_8007995C = (f32) ((pPlayer->unk10D4->unk38 * flt_CODE_bss_80079950.unk8) + ((flt_CODE_bss_80079950.unk0 * pPlayer->unk10D4->unk30) + (flt_CODE_bss_80079950.unk4 * pPlayer->unk10D4->unk34)));
-    temp_f14 = -pPlayer->unk10AC * pPlayer->unk10B4;
-    sp28 = temp_f14;
-    temp_f20_2 = 1.0f / sqrtf((temp_f14 * temp_f14) + 1.0f, temp_f14, &flt_CODE_bss_80079940, &flt_CODE_bss_80079950);
+    f32 temp_f14_2;
+    f32 test2;
+    f32 temp_f2 = pPlayer->c_halfheight * pPlayer->c_scaley;
+    f32 temp_f20 = 1.0f / sqrtf((temp_f2 * temp_f2) + 1.0f);
+    f32 temp_f2_2 = temp_f2 * temp_f20;
+    f32 test = -temp_f20;
+    flt_CODE_bss_80079940.x = (-test * pPlayer->field_10D4->m[1][0]) + (temp_f2_2 * pPlayer->field_10D4->m[2][0]);
+    flt_CODE_bss_80079940.y = (-test * pPlayer->field_10D4->m[1][1]) + (temp_f2_2 * pPlayer->field_10D4->m[2][1]);
+    flt_CODE_bss_80079940.z = (-test * pPlayer->field_10D4->m[1][2]) + (temp_f2_2 * pPlayer->field_10D4->m[2][2]);
+    flt_CODE_bss_8007994C = (flt_CODE_bss_80079940.x * pPlayer->field_10D4->m[3][0]) + (flt_CODE_bss_80079940.y * pPlayer->field_10D4->m[3][1]) + (flt_CODE_bss_80079940.z * pPlayer->field_10D4->m[3][2]);
+    flt_CODE_bss_80079950.x = (test * pPlayer->field_10D4->m[1][0]) + (temp_f2_2 * pPlayer->field_10D4->m[2][0]);
+    flt_CODE_bss_80079950.y = (test * pPlayer->field_10D4->m[1][1]) + (temp_f2_2 * pPlayer->field_10D4->m[2][1]);
+    flt_CODE_bss_80079950.z = (test * pPlayer->field_10D4->m[1][2]) + (temp_f2_2 * pPlayer->field_10D4->m[2][2]);
+    flt_CODE_bss_8007995C = (flt_CODE_bss_80079950.x * pPlayer->field_10D4->m[3][0]) + (flt_CODE_bss_80079950.y * pPlayer->field_10D4->m[3][1]) + (flt_CODE_bss_80079950.z * pPlayer->field_10D4->m[3][2]);
+    temp_f14 = -pPlayer->c_halfwidth * pPlayer->c_scalex;
+    temp_f20_2 = 1.0f / sqrtf((temp_f14 * temp_f14) + 1.0f);
     temp_f14_2 = temp_f14 * temp_f20_2;
-    temp_f16_2 = -temp_f20_2;
-    temp_f18_2 = -temp_f16_2;
-    flt_CODE_bss_80079960.unk0 = (f32) ((temp_f16_2 * pPlayer->unk10D4->unk0) - (pPlayer->unk10D4->unk20 * temp_f14_2));
-    flt_CODE_bss_80079960.unk4 = (f32) ((temp_f16_2 * pPlayer->unk10D4->unk4) - (pPlayer->unk10D4->unk24 * temp_f14_2));
-    flt_CODE_bss_80079960.unk8 = (f32) ((temp_f16_2 * pPlayer->unk10D4->unk8) - (pPlayer->unk10D4->unk28 * temp_f14_2));
-    flt_CODE_bss_8007996C = (f32) ((pPlayer->unk10D4->unk38 * flt_CODE_bss_80079960.unk8) + ((flt_CODE_bss_80079960.unk0 * pPlayer->unk10D4->unk30) + (flt_CODE_bss_80079960.unk4 * pPlayer->unk10D4->unk34)));
-    flt_CODE_bss_80079970.unk0 = (f32) ((temp_f18_2 * pPlayer->unk10D4->unk0) - (pPlayer->unk10D4->unk20 * temp_f14_2));
-    flt_CODE_bss_80079970.unk4 = (f32) ((temp_f18_2 * pPlayer->unk10D4->unk4) - (pPlayer->unk10D4->unk24 * temp_f14_2));
-    flt_CODE_bss_80079970.unk8 = (f32) ((temp_f18_2 * pPlayer->unk10D4->unk8) - (pPlayer->unk10D4->unk28 * temp_f14_2));
-    flt_CODE_bss_8007997C = (f32) ((pPlayer->unk10D4->unk38 * flt_CODE_bss_80079970.unk8) + ((flt_CODE_bss_80079970.unk0 * pPlayer->unk10D4->unk30) + (flt_CODE_bss_80079970.unk4 * pPlayer->unk10D4->unk34)));
-    flt_CODE_bss_80079980 = (f32) ((pPlayer->unk10D4->unk38 * pPlayer->unk10D4->unk28) + ((pPlayer->unk10D4->unk20 * pPlayer->unk10D4->unk30) + (pPlayer->unk10D4->unk24 * pPlayer->unk10D4->unk34)));
+    test2 = -temp_f20_2;
+    flt_CODE_bss_80079960.x = (test2 * pPlayer->field_10D4->m[0][0]) - (temp_f14_2 * pPlayer->field_10D4->m[2][0]);
+    flt_CODE_bss_80079960.y = (test2 * pPlayer->field_10D4->m[0][1]) - (temp_f14_2 * pPlayer->field_10D4->m[2][1]);
+    flt_CODE_bss_80079960.z = (test2 * pPlayer->field_10D4->m[0][2]) - (temp_f14_2 * pPlayer->field_10D4->m[2][2]);
+    flt_CODE_bss_8007996C = (flt_CODE_bss_80079960.x * pPlayer->field_10D4->m[3][0]) + (flt_CODE_bss_80079960.y * pPlayer->field_10D4->m[3][1]) + (flt_CODE_bss_80079960.z * pPlayer->field_10D4->m[3][2]);
+    flt_CODE_bss_80079970.x = (-test2 * pPlayer->field_10D4->m[0][0]) - (temp_f14_2 * pPlayer->field_10D4->m[2][0]);
+    flt_CODE_bss_80079970.y = (-test2  * pPlayer->field_10D4->m[0][1]) - (temp_f14_2 * pPlayer->field_10D4->m[2][1]);
+    flt_CODE_bss_80079970.z = (-test2  * pPlayer->field_10D4->m[0][2]) - (temp_f14_2 * pPlayer->field_10D4->m[2][2]);
+    flt_CODE_bss_8007997C = (flt_CODE_bss_80079970.x * pPlayer->field_10D4->m[3][0]) + (flt_CODE_bss_80079970.y * pPlayer->field_10D4->m[3][1]) + (flt_CODE_bss_80079970.z * pPlayer->field_10D4->m[3][2]);
+    flt_CODE_bss_80079980 = (pPlayer->field_10D4->m[2][0] * pPlayer->field_10D4->m[3][0]) + (pPlayer->field_10D4->m[2][1] * pPlayer->field_10D4->m[3][1]) + (pPlayer->field_10D4->m[2][2] * pPlayer->field_10D4->m[3][2]);
 }
-
 #else
 GLOBAL_ASM(
-.late_rodata
-glabel D_80054FB8
-.word 0
-glabel D_80054FBC
-.word 0
-
-/*D:80054FC0*/
-glabel a8s
-/*"%8s"*/
-.word 0x25387300
-
-glabel aX4_0f
-/*"x %4.0f"*/
-.word 0x78202534
-.word 0x2E306600 
-
-glabel aY4_0f
-/*"y %4.0f"*/
-.word 0x79202534
-.word 0x2E306600 
-
-glabel aZ4_0f
-/*"z %4.0f"*/
-.word 0x7A202534
-.word 0x2E306600 
-
-glabel aS3d
-/*"%s %3d"*/
-.word 0x25732025
-.word 0x33640000
 .text
 glabel sub_GAME_7F0785DC
 /* 0AD10C 7F0785DC 3C038008 */  lui   $v1, %hi(pPlayer)
@@ -3093,6 +3024,36 @@ void sub_GAME_7F0798B8(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_80054FB8
+.word 0
+glabel D_80054FBC
+.word 0
+
+/*D:80054FC0*/
+glabel a8s
+/*"%8s"*/
+.word 0x25387300
+
+glabel aX4_0f
+/*"x %4.0f"*/
+.word 0x78202534
+.word 0x2E306600 
+
+glabel aY4_0f
+/*"y %4.0f"*/
+.word 0x79202534
+.word 0x2E306600 
+
+glabel aZ4_0f
+/*"z %4.0f"*/
+.word 0x7A202534
+.word 0x2E306600 
+
+glabel aS3d
+/*"%s %3d"*/
+.word 0x25732025
+.word 0x33640000
 .text
 glabel sub_GAME_7F0798B8
 /* 0AE3E8 7F0798B8 3C0E8008 */  lui   $t6, %hi(pPlayersPerm) 
@@ -25939,7 +25900,7 @@ void store_BONDdata_curpos_to_previous(void) {
     pPlayer->previous_model_pos[0] = pPlayer->current_model_pos[0];
     pPlayer->previous_model_pos[1] = pPlayer->current_model_pos[1];
     pPlayer->previous_model_pos[2] = pPlayer->current_model_pos[2];
-    matrix_4x4_rotate_vector_in_place(get_BONDdata_field_10CC(), pPlayer->previous_model_pos);
+    matrix_4x4_rotate_vector_in_place(currentPlayerGetMatrix10CC(), pPlayer->previous_model_pos);
 }
 
 #ifdef NONMATCHING
@@ -25989,7 +25950,7 @@ void sub_GAME_7F0876C4(void *arg0, void *arg1, void *arg2) {
     matrix_4x4_7F059424(pPlayer->field_64, *arg0, arg0->unk4, arg0->unk8, (f32) *arg1, (f32) arg1->unk4, (f32) arg1->unk8, (f32) *arg2, (f32) arg2->unk4, (f32) arg2->unk8);
     matrix_4x4_7F059708(pPlayer->field_68, *arg0, arg0->unk4, arg0->unk8, (f32) *arg1, (f32) arg1->unk4, (f32) arg1->unk8, (f32) *arg2, (f32) arg2->unk4, (f32) arg2->unk8);
     temp_s0 = sub_GAME_7F0BD6E0();
-    matrix_4x4_multiply(get_BONDdata_field_10DC(), &spC4, &sp60);
+    matrix_4x4_multiply(currentPlayerGetMatrix10DC(), &spC4, &sp60);
     phi_a1 = &sp60;
 loop_1:
     // Node 1
@@ -26033,10 +25994,10 @@ loop_2:
     matrix_scalar_multiply(sub_GAME_7F0B4878(), &spC4);
     guMtxF2L(&spC4, pPlayer->field_5C);
     sub_GAME_7F059334(pPlayer->field_5C, pPlayer->field_60);
-    set_BONDdata_field_10C8(pPlayer->field_5C);
-    set_BONDdata_field_10C4(pPlayer->field_60);
-    copy_BONDdata_field_10CC_to_10E8_set_10CC(pPlayer->field_64);
-    sub_GAME_7F078424(pPlayer->field_68);
+    currentPlayerSetMatrix10C8(pPlayer->field_5C);
+    currentPlayerSetMatrix10C4(pPlayer->field_60);
+    currentPlayerSetMatrix10CC(pPlayer->field_64);
+    currentPlayerSetMatrix10D4(pPlayer->field_68);
     sub_GAME_7F078464(sp104);
     sub_GAME_7F0785DC();
     return store_BONDdata_curpos_to_previous();
@@ -26178,7 +26139,7 @@ glabel sub_GAME_7F0876C4
 /* 0BC3FC 7F0878CC E7A80024 */   swc1  $f8, 0x24($sp)
 /* 0BC400 7F0878D0 0FC2F5B8 */  jal   sub_GAME_7F0BD6E0
 /* 0BC404 7F0878D4 00000000 */   nop   
-/* 0BC408 7F0878D8 0FC1E0F9 */  jal   get_BONDdata_field_10DC
+/* 0BC408 7F0878D8 0FC1E0F9 */  jal   currentPlayerGetMatrix10DC
 /* 0BC40C 7F0878DC 00408025 */   move  $s0, $v0
 /* 0BC410 7F0878E0 27B10060 */  addiu $s1, $sp, 0x60
 /* 0BC414 7F0878E4 02203025 */  move  $a2, $s1
@@ -26235,16 +26196,16 @@ glabel sub_GAME_7F0876C4
 /* 0BC4D0 7F0879A0 0FC164CD */  jal   sub_GAME_7F059334
 /* 0BC4D4 7F0879A4 8C650060 */   lw    $a1, 0x60($v1)
 /* 0BC4D8 7F0879A8 8E4D0000 */  lw    $t5, ($s2)
-/* 0BC4DC 7F0879AC 0FC1E0D1 */  jal   set_BONDdata_field_10C8
+/* 0BC4DC 7F0879AC 0FC1E0D1 */  jal   currentPlayerSetMatrix10C8
 /* 0BC4E0 7F0879B0 8DA4005C */   lw    $a0, 0x5c($t5)
 /* 0BC4E4 7F0879B4 8E4E0000 */  lw    $t6, ($s2)
-/* 0BC4E8 7F0879B8 0FC1E0C9 */  jal   set_BONDdata_field_10C4
+/* 0BC4E8 7F0879B8 0FC1E0C9 */  jal   currentPlayerSetMatrix10C4
 /* 0BC4EC 7F0879BC 8DC40060 */   lw    $a0, 0x60($t6)
 /* 0BC4F0 7F0879C0 8E4F0000 */  lw    $t7, ($s2)
-/* 0BC4F4 7F0879C4 0FC1E0E9 */  jal   copy_BONDdata_field_10CC_to_10E8_set_10CC
+/* 0BC4F4 7F0879C4 0FC1E0E9 */  jal   currentPlayerSetMatrix10CC
 /* 0BC4F8 7F0879C8 8DE40064 */   lw    $a0, 0x64($t7)
 /* 0BC4FC 7F0879CC 8E580000 */  lw    $t8, ($s2)
-/* 0BC500 7F0879D0 0FC1E109 */  jal   sub_GAME_7F078424
+/* 0BC500 7F0879D0 0FC1E109 */  jal   currentPlayerSetMatrix10D4
 /* 0BC504 7F0879D4 8F040068 */   lw    $a0, 0x68($t8)
 /* 0BC508 7F0879D8 0FC1E119 */  jal   sub_GAME_7F078464
 /* 0BC50C 7F0879DC 8FA40104 */   lw    $a0, 0x104($sp)
@@ -26990,7 +26951,7 @@ glabel sub_GAME_7F087E74
 /* 0BCB94 7F088064 44054000 */  mfc1  $a1, $f8
 /* 0BCB98 7F088068 0FC16134 */  jal   matrix_4x4_set_position_and_rotation_around_y
 /* 0BCB9C 7F08806C 00000000 */   nop   
-/* 0BCBA0 7F088070 0FC1E0F1 */  jal   get_BONDdata_field_10CC
+/* 0BCBA0 7F088070 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
 /* 0BCBA4 7F088074 00000000 */   nop   
 /* 0BCBA8 7F088078 00402025 */  move  $a0, $v0
 /* 0BCBAC 7F08807C 0FC16026 */  jal   matrix_4x4_multiply_homogeneous_in_place
@@ -27511,7 +27472,7 @@ glabel sub_GAME_7F087E74
 /* 0BD2A0 7F088730 44054000 */  mfc1  $a1, $f8
 /* 0BD2A4 7F088734 0FC1627C */  jal   matrix_4x4_set_position_and_rotation_around_y
 /* 0BD2A8 7F088738 00000000 */   nop   
-/* 0BD2AC 7F08873C 0FC1E26D */  jal   get_BONDdata_field_10CC
+/* 0BD2AC 7F08873C 0FC1E26D */  jal   currentPlayerGetMatrix10CC
 /* 0BD2B0 7F088740 00000000 */   nop   
 /* 0BD2B4 7F088744 00402025 */  move  $a0, $v0
 /* 0BD2B8 7F088748 0FC1616E */  jal   matrix_4x4_multiply_homogeneous_in_place
@@ -27963,7 +27924,7 @@ s32 sub_GAME_7F088618(void *arg0) {
     temp_s0_11 = (temp_s0_10 + 8);
     temp_s0_10->unk4 = (s32) (pPlayer + 0x80002128);
     *temp_s0_11 = 0x1030040;
-    temp_s0_11->unk4 = osVirtualToPhysical(get_BONDdata_field_10D8(temp_s0_9, temp_s0_10, 0x6000000, temp_s0_6));
+    temp_s0_11->unk4 = osVirtualToPhysical(currentPlayerGetMatrix10D8(temp_s0_9, temp_s0_10, 0x6000000, temp_s0_6));
     return (temp_s0_11 + 8);
 }
 #else
@@ -28138,7 +28099,7 @@ glabel sub_GAME_7F088618
 /* 0BD3DC 7F0888AC 356B0040 */  ori   $t3, (0x01030040 & 0xFFFF) # ori $t3, $t3, 0x40
 /* 0BD3E0 7F0888B0 02008825 */  move  $s1, $s0
 /* 0BD3E4 7F0888B4 AE2B0000 */  sw    $t3, ($s1)
-/* 0BD3E8 7F0888B8 0FC1E0DD */  jal   get_BONDdata_field_10D8
+/* 0BD3E8 7F0888B8 0FC1E0DD */  jal   currentPlayerGetMatrix10D8
 /* 0BD3EC 7F0888BC 26100008 */   addiu $s0, $s0, 8
 /* 0BD3F0 7F0888C0 0C003A2C */  jal   osVirtualToPhysical
 /* 0BD3F4 7F0888C4 00402025 */   move  $a0, $v0
@@ -32729,7 +32690,7 @@ glabel sub_GAME_7F08B0F0
 /* 0BFD3C 7F08B20C 00000000 */   nop   
 /* 0BFD40 7F08B210 8E2A0000 */  lw    $t2, ($s1)
 /* 0BFD44 7F08B214 8D4B00D4 */  lw    $t3, 0xd4($t2)
-/* 0BFD48 7F08B218 0FC1E111 */  jal   sub_GAME_7F078444
+/* 0BFD48 7F08B218 0FC1E111 */  jal   currentPlayerGetMatrix10D4
 /* 0BFD4C 7F08B21C 8D70000C */   lw    $s0, 0xc($t3)
 /* 0BFD50 7F08B220 00402025 */  move  $a0, $v0
 /* 0BFD54 7F08B224 02002825 */  move  $a1, $s0
@@ -33754,7 +33715,7 @@ glabel sub_GAME_7F08BEEC
 /* 0C0A54 7F08BF24 00808025 */  move  $s0, $a0
 /* 0C0A58 7F08BF28 27B20040 */  addiu $s2, $sp, 0x40
 .L7F08BF2C:
-/* 0C0A5C 7F08BF2C 0FC1E111 */  jal   sub_GAME_7F078444
+/* 0C0A5C 7F08BF2C 0FC1E111 */  jal   currentPlayerGetMatrix10D4
 /* 0C0A60 7F08BF30 00000000 */   nop   
 /* 0C0A64 7F08BF34 00402025 */  move  $a0, $v0
 /* 0C0A68 7F08BF38 02002825 */  move  $a1, $s0

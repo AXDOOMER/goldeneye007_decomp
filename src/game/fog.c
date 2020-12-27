@@ -1126,7 +1126,7 @@ glabel sub_GAME_7F0BB2C8
 .L7F0BB2E8:
 /* 0EFE18 7F0BB2E8 0FC227F5 */  jal   get_BONDdata_position
 /* 0EFE1C 7F0BB2EC AFA40030 */   sw    $a0, 0x30($sp)
-/* 0EFE20 7F0BB2F0 0FC1E0F1 */  jal   get_BONDdata_field_10CC
+/* 0EFE20 7F0BB2F0 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
 /* 0EFE24 7F0BB2F4 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 0EFE28 7F0BB2F8 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0EFE2C 7F0BB2FC 8FA40030 */  lw    $a0, 0x30($sp)

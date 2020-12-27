@@ -2066,7 +2066,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F09D4EC
 /* 0D201C 7F09D4EC 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0D2020 7F09D4F0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0D2024 7F09D4F4 0FC1E0F1 */  jal   get_BONDdata_field_10CC
+/* 0D2024 7F09D4F4 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
 /* 0D2028 7F09D4F8 AFA40018 */   sw    $a0, 0x18($sp)
 /* 0D202C 7F09D4FC 8FA40018 */  lw    $a0, 0x18($sp)
 /* 0D2030 7F09D500 C4440008 */  lwc1  $f4, 8($v0)
@@ -2244,7 +2244,7 @@ glabel sub_GAME_7F09D5A0
 /* 0D227C 7F09D74C 37180040 */  ori   $t8, (0x01030040 & 0xFFFF) # ori $t8, $t8, 0x40
 /* 0D2280 7F09D750 02809025 */  move  $s2, $s4
 /* 0D2284 7F09D754 AE580000 */  sw    $t8, ($s2)
-/* 0D2288 7F09D758 0FC1E0DD */  jal   get_BONDdata_field_10D8
+/* 0D2288 7F09D758 0FC1E0DD */  jal   currentPlayerGetMatrix10D8
 /* 0D228C 7F09D75C 26940008 */   addiu $s4, $s4, 8
 /* 0D2290 7F09D760 0C003A2C */  jal   osVirtualToPhysical
 /* 0D2294 7F09D764 00402025 */   move  $a0, $v0
@@ -2336,7 +2336,7 @@ glabel sub_GAME_7F09D82C
 /* 0D2398 7F09D868 00C08825 */  move  $s1, $a2
 /* 0D239C 7F09D86C 00A09025 */  move  $s2, $a1
 /* 0D23A0 7F09D870 ADC8000C */  sw    $t0, 0xc($t6)
-/* 0D23A4 7F09D874 0FC1E111 */  jal   sub_GAME_7F078444
+/* 0D23A4 7F09D874 0FC1E111 */  jal   currentPlayerGetMatrix10D4
 /* 0D23A8 7F09D878 ADC10008 */   sw    $at, 8($t6)
 /* 0D23AC 7F09D87C 0FC227F5 */  jal   get_BONDdata_position
 /* 0D23B0 7F09D880 AFA2009C */   sw    $v0, 0x9c($sp)
@@ -2716,7 +2716,7 @@ glabel sub_GAME_7F09DDA4
 /* 0D2924 7F09DDF4 00809025 */  move  $s2, $a0
 /* 0D2928 7F09DDF8 00E09825 */  move  $s3, $a3
 /* 0D292C 7F09DDFC ADC8000C */  sw    $t0, 0xc($t6)
-/* 0D2930 7F09DE00 0FC1E111 */  jal   sub_GAME_7F078444
+/* 0D2930 7F09DE00 0FC1E111 */  jal   currentPlayerGetMatrix10D4
 /* 0D2934 7F09DE04 ADC10008 */   sw    $at, 8($t6)
 /* 0D2938 7F09DE08 0FC227F5 */  jal   get_BONDdata_position
 /* 0D293C 7F09DE0C AFA200BC */   sw    $v0, 0xbc($sp)
@@ -3962,7 +3962,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F09EF9C
 /* 0D3ACC 7F09EF9C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0D3AD0 7F09EFA0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0D3AD4 7F09EFA4 0FC1E0F1 */  jal   get_BONDdata_field_10CC
+/* 0D3AD4 7F09EFA4 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
 /* 0D3AD8 7F09EFA8 AFA40018 */   sw    $a0, 0x18($sp)
 /* 0D3ADC 7F09EFAC 8FA40018 */  lw    $a0, 0x18($sp)
 /* 0D3AE0 7F09EFB0 C4440008 */  lwc1  $f4, 8($v0)
@@ -4140,7 +4140,7 @@ glabel sub_GAME_7F09F03C
 /* 0D3D38 7F09F208 35EF0040 */  ori   $t7, (0x01030040 & 0xFFFF) # ori $t7, $t7, 0x40
 /* 0D3D3C 7F09F20C 02408025 */  move  $s0, $s2
 /* 0D3D40 7F09F210 AE0F0000 */  sw    $t7, ($s0)
-/* 0D3D44 7F09F214 0FC1E0DD */  jal   get_BONDdata_field_10D8
+/* 0D3D44 7F09F214 0FC1E0DD */  jal   currentPlayerGetMatrix10D8
 /* 0D3D48 7F09F218 26520008 */   addiu $s2, $s2, 8
 /* 0D3D4C 7F09F21C 0C003A2C */  jal   osVirtualToPhysical
 /* 0D3D50 7F09F220 00402025 */   move  $a0, $v0
@@ -5213,7 +5213,7 @@ glabel sub_GAME_7F0A0034
 /* 0D4C64 7F0A0134 00000000 */   nop   
 /* 0D4C68 7F0A0138 0FC1624B */  jal   matrix_4x4_set_position_and_rotation_around_xyz
 /* 0D4C6C 7F0A013C 02803025 */   move  $a2, $s4
-/* 0D4C70 7F0A0140 0FC1E0F1 */  jal   get_BONDdata_field_10CC
+/* 0D4C70 7F0A0140 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
 /* 0D4C74 7F0A0144 00000000 */   nop   
 /* 0D4C78 7F0A0148 00402025 */  move  $a0, $v0
 /* 0D4C7C 7F0A014C 0FC16026 */  jal   matrix_4x4_multiply_homogeneous_in_place
