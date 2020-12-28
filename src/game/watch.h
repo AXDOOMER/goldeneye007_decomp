@@ -36,6 +36,13 @@ typedef enum WATCH_BRIEF_INDEX {
     BRIEF_INDEX_OBJECTIVES
 } WATCH_BRIEF_INDEX;
 
+struct game_options {
+    u16 text[4];
+    u32 current_value;
+};
+
+extern struct game_options game_options_entries[];
+
 void reset_controller_options_index();
 
 void reset_game_options_index();
