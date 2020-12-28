@@ -9247,7 +9247,7 @@ void set_pparam1toparam2_disablejoylr_playsfx(u32 *param_1, u32 param_2)
 
 void sub_GAME_7F0AB7D8(s32 option_index)
 {
-    if ( (get_controller_buttons_pressed(0, 0x222) || sub_GAME_7F0A4FB0()) && watch_soundrelated_maybe )
+    if ( (get_controller_buttons_pressed(0, L_CBUTTONS|L_TRIG|L_JPAD) || sub_GAME_7F0A4FB0()) && watch_soundrelated_maybe )
     {
         if (game_options_entries[option_index].current_value == 1)
         {
@@ -9260,7 +9260,7 @@ void sub_GAME_7F0AB7D8(s32 option_index)
     }
     else
     {
-        if ( (get_controller_buttons_pressed(0, 0x111) || sub_GAME_7F0A4FEC()) && watch_soundrelated_maybe )
+        if ( (get_controller_buttons_pressed(0, R_CBUTTONS|R_TRIG|R_JPAD) || sub_GAME_7F0A4FEC()) && watch_soundrelated_maybe )
         {
             if (game_options_entries[option_index].current_value == 0)
             {
