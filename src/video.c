@@ -135,24 +135,11 @@ void init_both_video_buffers(void)
     }
 }
 
-/**
- * 3D90	70003190	???; 2->800232BC
- */
-#ifdef NONMATCHING
 void video_related_6(s32 arg0)
 {
-    D_800232BC = (s32) (arg0 + 2);
+    arg0 += 2;
+    D_800232BC = arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel video_related_6
-/* 003D90 70003190 24840002 */  addiu $a0, $a0, 2
-/* 003D94 70003194 3C018002 */  lui   $at, %hi(D_800232BC)
-/* 003D98 70003198 03E00008 */  jr    $ra
-/* 003D9C 7000319C AC2432BC */   sw    $a0, %lo(D_800232BC)($at)
-)
-#endif
 
 /**
  * 3DA0	700031A0
