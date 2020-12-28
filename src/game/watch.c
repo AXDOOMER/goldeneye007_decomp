@@ -9237,7 +9237,7 @@ glabel sub_GAME_7F0AB4B8
 #endif
 
 
-void set_pparam1toparam2_disablejoylr_playsfx(u32 *param_1, u32 param_2)
+void game_option_select_value(u32 *param_1, u32 param_2)
 {
     *param_1 = param_2;
     set_controlstick_lr_disabled();
@@ -9245,17 +9245,17 @@ void set_pparam1toparam2_disablejoylr_playsfx(u32 *param_1, u32 param_2)
 }
 
 
-void sub_GAME_7F0AB7D8(s32 option_index)
+void game_option_toggle_input(s32 option_index)
 {
     if ( (get_controller_buttons_pressed(0, L_CBUTTONS|L_TRIG|L_JPAD) || sub_GAME_7F0A4FB0()) && watch_soundrelated_maybe )
     {
         if (game_options_entries[option_index].current_value == 1)
         {
-            set_pparam1toparam2_disablejoylr_playsfx(&game_options_entries[option_index].current_value, 0);
+            game_option_select_value(&game_options_entries[option_index].current_value, 0);
         }
         else if (game_options_entries[option_index].current_value == 2)
         {
-            set_pparam1toparam2_disablejoylr_playsfx(&game_options_entries[option_index].current_value, 1);
+            game_option_select_value(&game_options_entries[option_index].current_value, 1);
         }
     }
     else
@@ -9264,11 +9264,11 @@ void sub_GAME_7F0AB7D8(s32 option_index)
         {
             if (game_options_entries[option_index].current_value == 0)
             {
-                set_pparam1toparam2_disablejoylr_playsfx(&game_options_entries[option_index].current_value, 1);
+                game_option_select_value(&game_options_entries[option_index].current_value, 1);
             }
             else if ( (game_options_entries[option_index].current_value == 1) && game_options_entries[option_index].text[3] )
             {
-                set_pparam1toparam2_disablejoylr_playsfx(&game_options_entries[option_index].current_value, 2);
+                game_option_select_value(&game_options_entries[option_index].current_value, 2);
             }
         }
     }
@@ -9377,7 +9377,7 @@ glabel sub_GAME_7F0AB908
 /* 0E0570 7F0ABA40 AFA50050 */  sw    $a1, 0x50($sp)
 /* 0E0574 7F0ABA44 AFA60068 */  sw    $a2, 0x68($sp)
 /* 0E0578 7F0ABA48 AFA9005C */  sw    $t1, 0x5c($sp)
-/* 0E057C 7F0ABA4C 0FC2ADF6 */  jal   sub_GAME_7F0AB7D8
+/* 0E057C 7F0ABA4C 0FC2ADF6 */  jal   game_option_toggle_input
 /* 0E0580 7F0ABA50 AFAA0058 */   sw    $t2, 0x58($sp)
 /* 0E0584 7F0ABA54 8FA60068 */  lw    $a2, 0x68($sp)
 /* 0E0588 7F0ABA58 3C0B8004 */  lui   $t3, %hi(game_options_entries) 
