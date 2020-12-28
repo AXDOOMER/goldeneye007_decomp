@@ -58,14 +58,14 @@ char dword_CODE_bss_80060890[0x400];//CC[0x3C4];
 #ifdef NONMATCHING
 void init_video_settings(void)
 {
-    video1_settings.frameb = cfb_16_a;
+    video1_settings.frameb = cfb_16[0];
     D_8002329C = 0;
     D_800232A0 = 0;
     ptr_video_settings1 = &video1_settings;
     ptr_video_settings2 = &video2_settings;
     off_CODE_bss_80060878 = 0;
     off_CODE_bss_80060879 = 1;
-    video2_settings.frameb = cfb_16_b;
+    video2_settings.frameb = cfb_16[1];
 }
 #else
 GLOBAL_ASM(
@@ -85,9 +85,9 @@ glabel init_video_settings
 /* 003C8C 7000308C 3C058006 */  lui   $a1, %hi(off_CODE_bss_80060879)
 /* 003C90 70003090 00007812 */  mflo  $t7
 /* 003C94 70003094 3C068002 */  lui   $a2, %hi(ptr_video_settings1)
-/* 003C98 70003098 3C09803B */  lui   $t1, %hi(cfb_16_a) # $t1, 0x803b
+/* 003C98 70003098 3C09803B */  lui   $t1, %hi(cfb_16) # $t1, 0x803b
 /* 003C9C 7000309C 0322C823 */  subu  $t9, $t9, $v0
-/* 003CA0 700030A0 25295000 */  addiu $t1, %lo(cfb_16_a) # addiu $t1, $t1, 0x5000
+/* 003CA0 700030A0 25295000 */  addiu $t1, %lo(cfb_16) # addiu $t1, $t1, 0x5000
 /* 003CA4 700030A4 24C632A4 */  addiu $a2, %lo(ptr_video_settings1) # addiu $a2, $a2, 0x32a4
 /* 003CA8 700030A8 24A50879 */  addiu $a1, %lo(off_CODE_bss_80060879) # addiu $a1, $a1, 0x879
 /* 003CAC 700030AC 24840878 */  addiu $a0, %lo(off_CODE_bss_80060878) # addiu $a0, $a0, 0x878
@@ -123,64 +123,17 @@ glabel init_video_settings
 )
 #endif
 
-
-
-/**
- * 3D24	70003124	initialize both video buffers
- */
-#ifdef NONMATCHING
-// 3d54:    sb      zero,0(v0)                       | 3d54:    addu    v1,a2,a0
-// 3d58:    addu    v1,a2,a0                         | 3d58:    addiu   a0,a0,4
-// 3d5c:    sb      zero,0(v1)                       i 3d5c:    sb      zero,1(v1)
-// 3d60:    sb      zero,1(v0)                       r 3d60:    sb      zero,2(v1)
-// 3d64:    sb      zero,1(v1)                       i 3d64:    sb      zero,3(v1)
-// 3d68:    sb      zero,2(v0)                       i 3d68:    sb      zero,1(v0)
-// 3d6c:    sb      zero,2(v1)                       r 3d6c:    sb      zero,2(v0)
-// 3d70:    sb      zero,3(v0)                         3d70:    sb      zero,3(v0)
-// 3d74:    addiu   a0,a0,4                          | 3d74:    sb      zero,0(v0)
 void init_both_video_buffers(void)
 {
     s32 i;
+    u8* p1 = cfb_16[0];
+    u8* p2 = cfb_16[1];
     zbufDeallocate();
     for (i = 0; i < 320*240*2; i++) {
-        *((u8*)cfb_16_a + i) = 0;
-        *((u8*)cfb_16_b + i) = 0;
-    };
+        p1[i] = 0;
+        p2[i] = 0;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel init_both_video_buffers
-/* 003D24 70003124 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 003D28 70003128 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 003D2C 7000312C 0FC348E0 */  jal   zbufDeallocate
-/* 003D30 70003130 00000000 */   nop   
-/* 003D34 70003134 3C070002 */  lui   $a3, (0x00025800 >> 16) # lui $a3, 2
-/* 003D38 70003138 3C06803E */  lui   $a2, %hi(cfb_16_b) # $a2, 0x803e
-/* 003D3C 7000313C 3C05803B */  lui   $a1, %hi(cfb_16_a) # $a1, 0x803b
-/* 003D40 70003140 24A55000 */  addiu $a1, %lo(cfb_16_a) # addiu $a1, $a1, 0x5000
-/* 003D44 70003144 24C6A800 */  addiu $a2, %lo(cfb_16_b) # addiu $a2, $a2, -0x5800
-/* 003D48 70003148 34E75800 */  ori   $a3, (0x00025800 & 0xFFFF) # ori $a3, $a3, 0x5800
-/* 003D4C 7000314C 00002025 */  move  $a0, $zero
-.L70003150:
-/* 003D50 70003150 00A41021 */  addu  $v0, $a1, $a0
-/* 003D54 70003154 A0400000 */  sb    $zero, ($v0)
-/* 003D58 70003158 00C41821 */  addu  $v1, $a2, $a0
-/* 003D5C 7000315C A0600000 */  sb    $zero, ($v1)
-/* 003D60 70003160 A0400001 */  sb    $zero, 1($v0)
-/* 003D64 70003164 A0600001 */  sb    $zero, 1($v1)
-/* 003D68 70003168 A0400002 */  sb    $zero, 2($v0)
-/* 003D6C 7000316C A0600002 */  sb    $zero, 2($v1)
-/* 003D70 70003170 A0400003 */  sb    $zero, 3($v0)
-/* 003D74 70003174 24840004 */  addiu $a0, $a0, 4
-/* 003D78 70003178 1487FFF5 */  bne   $a0, $a3, .L70003150
-/* 003D7C 7000317C A0600003 */   sb    $zero, 3($v1)
-/* 003D80 70003180 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 003D84 70003184 27BD0018 */  addiu $sp, $sp, 0x18
-/* 003D88 70003188 03E00008 */  jr    $ra
-/* 003D8C 7000318C 00000000 */   nop   
-)
-#endif
 
 /**
  * 3D90	70003190	???; 2->800232BC
@@ -639,7 +592,7 @@ block_43:
     }
     else
     {
-        fast3d_related_array->unk58 = &cfb_16_a;
+        fast3d_related_array->unk58 = &cfb_16;
     }
     temp_t7_4 = (off_CODE_bss_80060878 + 1);
     temp_t8_6 = (off_CODE_bss_80060879 + 1);
@@ -669,7 +622,7 @@ block_43:
     temp_a1 = (&video1_settings + (off_CODE_bss_80060879 * 0x2c));
     *&ptr_video_settings2 = temp_a1;
     bcopy(*&ptr_video_settings2, temp_a1, 0x2c, &video1_settings);
-    ptr_video_settings2->frameb = (s32) ((off_CODE_bss_80060879 * 0x25800) + &cfb_16_a);
+    ptr_video_settings2->frameb = (s32) ((off_CODE_bss_80060879 * 0x25800) + &cfb_16);
 }
 #else
 GLOBAL_ASM(
@@ -1198,8 +1151,8 @@ glabel video_related_8
 .L70003A0C:
 /* 00460C 70003A0C 3C198005 */  lui   $t9, %hi(fast3d_related_array) 
 /* 004610 70003A10 8F39EAB0 */  lw    $t9, %lo(fast3d_related_array)($t9)
-/* 004614 70003A14 3C0E803B */  lui   $t6, %hi(cfb_16_a) # $t6, 0x803b
-/* 004618 70003A18 25CE5000 */  addiu $t6, %lo(cfb_16_a) # addiu $t6, $t6, 0x5000
+/* 004614 70003A14 3C0E803B */  lui   $t6, %hi(cfb_16) # $t6, 0x803b
+/* 004618 70003A18 25CE5000 */  addiu $t6, %lo(cfb_16) # addiu $t6, $t6, 0x5000
 /* 00461C 70003A1C AF2E0058 */  sw    $t6, 0x58($t9)
 .L70003A20:
 /* 004620 70003A20 3C028006 */  lui   $v0, %hi(off_CODE_bss_80060878)
@@ -1244,8 +1197,8 @@ glabel video_related_8
 /* 0046B4 70003AB4 3C038006 */  lui   $v1, %hi(off_CODE_bss_80060879)
 /* 0046B8 70003AB8 24630879 */  addiu $v1, %lo(off_CODE_bss_80060879) # addiu $v1, $v1, 0x879
 /* 0046BC 70003ABC 90780000 */  lbu   $t8, ($v1)
-/* 0046C0 70003AC0 3C0E803B */  lui   $t6, %hi(cfb_16_a) # $t6, 0x803b
-/* 0046C4 70003AC4 25CE5000 */  addiu $t6, %lo(cfb_16_a) # addiu $t6, $t6, 0x5000
+/* 0046C0 70003AC0 3C0E803B */  lui   $t6, %hi(cfb_16) # $t6, 0x803b
+/* 0046C4 70003AC4 25CE5000 */  addiu $t6, %lo(cfb_16) # addiu $t6, $t6, 0x5000
 /* 0046C8 70003AC8 00187880 */  sll   $t7, $t8, 2
 /* 0046CC 70003ACC 01F87821 */  addu  $t7, $t7, $t8
 /* 0046D0 70003AD0 000F7880 */  sll   $t7, $t7, 2
@@ -2785,7 +2738,7 @@ loop_1:
         goto loop_1;
     }
     sprintf(&iFileName, "grab.%d.temp.Uix", jpg_32bit_grabnum);
-    indy_send_capture_data(&iFileName, &cfb_16_a, (get_video2_settings_txtClipH() * ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10)) * 4);
+    indy_send_capture_data(&iFileName, &cfb_16, (get_video2_settings_txtClipH() * ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10)) * 4);
     sprintf(&iFileName, "Uix2pix -xs%d grab.%d.temp.Uix", get_video2_settings_txtClipW(), jpg_32bit_grabnum);
     response_from_command_string(&iFileName);
     sprintf(&iFileName, "fromalias grab.%d.temp.pix grab.%d.temp.rgb", jpg_32bit_grabnum, jpg_32bit_grabnum);
@@ -2848,8 +2801,8 @@ glabel indy_grab_jpg_32bit
 /* 005560 70004960 0C00110B */  jal   get_video2_settings_txtClipH
 /* 005564 70004964 01C08825 */   move  $s1, $t6
 /* 005568 70004968 00510019 */  multu $v0, $s1
-/* 00556C 7000496C 3C05803B */  lui   $a1, %hi(cfb_16_a) # $a1, 0x803b
-/* 005570 70004970 24A55000 */  addiu $a1, %lo(cfb_16_a) # addiu $a1, $a1, 0x5000
+/* 00556C 7000496C 3C05803B */  lui   $a1, %hi(cfb_16) # $a1, 0x803b
+/* 005570 70004970 24A55000 */  addiu $a1, %lo(cfb_16) # addiu $a1, $a1, 0x5000
 /* 005574 70004974 02002025 */  move  $a0, $s0
 /* 005578 70004978 00003012 */  mflo  $a2
 /* 00557C 7000497C 00067880 */  sll   $t7, $a2, 2
@@ -3058,7 +3011,7 @@ loop_1:
         goto loop_1;
     }
     sprintf(&sp30, "grab.%d.temp.Uix", rgb_32bit_grabnum);
-    indy_send_capture_data(&sp30, &cfb_16_a, (get_video2_settings_txtClipH() * ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10)) * 4);
+    indy_send_capture_data(&sp30, &cfb_16, (get_video2_settings_txtClipH() * ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10)) * 4);
     sprintf(&sp30, "Uix2pix -xs%d grab.%d.temp.Uix", get_video2_settings_txtClipW(), rgb_32bit_grabnum);
     response_from_command_string(&sp30);
     sprintf(&sp30, "fromalias grab.%d.temp.pix grab.%d.rgb", rgb_32bit_grabnum, rgb_32bit_grabnum);
@@ -3118,8 +3071,8 @@ glabel indy_grab_rgb_32bit
 /* 005840 70004C40 0C00110B */  jal   get_video2_settings_txtClipH
 /* 005844 70004C44 01C08825 */   move  $s1, $t6
 /* 005848 70004C48 00510019 */  multu $v0, $s1
-/* 00584C 70004C4C 3C05803B */  lui   $a1, %hi(cfb_16_a) # $a1, 0x803b
-/* 005850 70004C50 24A55000 */  addiu $a1, %lo(cfb_16_a) # addiu $a1, $a1, 0x5000
+/* 00584C 70004C4C 3C05803B */  lui   $a1, %hi(cfb_16) # $a1, 0x803b
+/* 005850 70004C50 24A55000 */  addiu $a1, %lo(cfb_16) # addiu $a1, $a1, 0x5000
 /* 005854 70004C54 02002025 */  move  $a0, $s0
 /* 005858 70004C58 00003012 */  mflo  $a2
 /* 00585C 70004C5C 00067880 */  sll   $t7, $a2, 2

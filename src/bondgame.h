@@ -2,8 +2,7 @@
 #define _BOND_H_
 #include "ultra64.h"
 
-extern u8 cfb_16_a[];
-extern u8 cfb_16_b[];
+extern u8 cfb_16[2][320*240*2];
 
 extern u32 *_codeSegmentStart;
 extern u32 *_codeSegmentEnd;
