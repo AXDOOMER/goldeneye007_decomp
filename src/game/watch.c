@@ -9278,8 +9278,155 @@ void game_option_toggle_input(s32 option_index)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0AB908(void) {
+void sub_GAME_7F0AB908(s32 param_1, u32 param_2, int param_3, s32 param_4)
+{
+//   u32 uVar1;
+  u8 pbVar2;
+  u32 puVar3;
+  u32 uVar4;
+  
+  //s32 puVar5;
+  s32 puVar6;
+  s32 puVar7;
+  
+  u32 local_res0;
+  u32 local_14;
+  s32 local_c;
+  
+  puVar7 = 0x800080;
+  puVar6 = 0x800080;
+  local_c = 0x800080;
 
+    if (j_text_trigger != 0)
+    {
+        uVar4 = 0xAA;
+    }
+    else
+    {
+        uVar4 = 0xB4;
+    }
+
+    if (j_text_trigger != 0)
+    {
+        local_14 = 0xDC;
+    }
+    else
+    {
+        local_14 = 0xE1;
+    }
+
+
+    //L7F0AB958 - GOOD TEXT
+    if (param_4 != 0) {
+
+        if (param_4 != 1) {
+
+            if (param_4 != 2) {
+                
+                // puVar5 = game_options_entries[param_3];
+                // puVar6 = puVar7;
+
+                puVar6 = 0x800080;
+                puVar7 = 0x800080;
+            
+            } else {
+                
+                game_option_toggle_input(param_3);
+
+                // puVar5 = game_options_entries[param_3];
+                // uVar1 = game_options_entries[param_3].current_value;
+
+                puVar6 = 0x800080;
+                puVar7 = 0x800080;
+                
+                if (game_options_entries[param_3].current_value == 0) {
+                    puVar6 = 0xa0ffa0f0;
+                }
+                else {
+                    if (game_options_entries[param_3].current_value == 1) {
+                        puVar7 = 0xa0ffa0f0;
+                    }
+                    else {
+                        if (game_options_entries[param_3].current_value == 2) {
+                            local_c = 0xa0ffa0f0;
+                        }
+                    }
+                }
+            }
+
+        }
+        else {
+            //   puVar5 = game_options_entries[param_3].text;
+            // uVar1 = game_options_entries[param_3].current_value;
+            if (game_options_entries[param_3].current_value == 0) {
+                puVar6 = 0xff00b0;
+            }
+            else {
+                if (game_options_entries[param_3].current_value == 1) {
+                    puVar7 = 0xff00b0;
+                }
+                else {
+                    if (game_options_entries[param_3].current_value == 2) {
+                        local_c = 0xff00b0;
+                    }
+                }
+            }
+        }
+
+    } else {
+        // puVar5 = game_options_entries[param_3].text;
+        // uVar1 = game_options_entries[param_3].current_value;
+        
+        if (game_options_entries[param_3].current_value == 0) {
+            puVar6 = 0xff00b0;
+        }
+        
+        else {
+            if (game_options_entries[param_3].current_value == 1) {
+                puVar7 = 0xff00b0;
+            }
+            else {
+                if (game_options_entries[param_3].current_value == 2) {
+                    local_c = 0xff00b0;
+                }
+            }
+        }
+    }
+
+
+    if (game_options_entries[param_3].text[3] == 0)
+    {
+        uVar4 = 0xC8;
+        if (j_text_trigger != 0)
+        {
+            uVar4 = 0xBE;
+        }
+
+        if (j_text_trigger != 0)
+        {
+            local_14 = 0xFA;
+        }
+        else
+        {
+            local_14 = 0xFA;
+        }
+    }
+  
+  
+
+  pbVar2 = get_textptr_for_textID(game_options_entries[param_3].text[1]);
+  puVar3 = proc_7F0A9398(param_1, uVar4, param_2, pbVar2, puVar6, 0, 0xffffffff,1,0, 0x3000B0,0);
+  //arg0 = sub_GAME_7F0A9398(arg0, phi_a1_2, arg1, get_textptr_for_textID(game_options_entries[1].text, phi_a1_2, arg2), phi_t1, 0, -1, 1, 0, 0x3000B0, 0);
+  
+  pbVar2 = get_textptr_for_textID(game_options_entries[param_3].text[2]);
+  local_res0 = proc_7F0A9398(puVar3, local_14, param_2, pbVar2, puVar7,0,0xffffffff,1,0, 0x3000B0, 0);
+  
+  if (game_options_entries[param_3].text[3] != 0) {
+    pbVar2 = get_textptr_for_textID(game_options_entries[param_3].text[3]);
+    local_res0 = proc_7F0A9398(local_res0, 0x10e, param_2, pbVar2, local_c,0,0xffffffff,1,0, 0x3000B0, 0);
+  }
+
+  //return local_res0;
 }
 #else
 GLOBAL_ASM(
