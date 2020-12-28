@@ -12,12 +12,15 @@
 
 //data
 u32 D_80023240 = 0;
-struct video_settings video1_settings = {0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, 320, 240, 320, 240, 0, 0, 1, 0};
-struct video_settings video2_settings = {0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, 320, 240, 320, 240, 0, 0, 1, 0};
+struct video_settings video1_settings[] = 
+{
+    {0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, 320, 240, 320, 240, 0, 0, 1, 0},
+    {0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, 320, 240, 320, 240, 0, 0, 1, 0}
+};
 s32 D_8002329C = 0;
 s32 D_800232A0 = 0;
-video_settings * ptr_video_settings1 = &video1_settings;
-video_settings * ptr_video_settings2 = &video1_settings;
+video_settings *ptr_video_settings1 = &video1_settings[0];
+video_settings *ptr_video_settings2 = &video1_settings[0];
 s32 coloroutputmode = 1;
 s32 D_800232B0 = 1;
 s32 D_800232B4 = 0;
@@ -56,16 +59,21 @@ char dword_CODE_bss_80060890[0x400];//CC[0x3C4];
  * 3C60	70003060
  */
 #ifdef NONMATCHING
+// regalloc
 void init_video_settings(void)
 {
-    video1_settings.frameb = cfb_16[0];
-    D_8002329C = 0;
-    D_800232A0 = 0;
-    ptr_video_settings1 = &video1_settings;
-    ptr_video_settings2 = &video2_settings;
+    video_settings* v1;
+    video_settings* v2;
     off_CODE_bss_80060878 = 0;
     off_CODE_bss_80060879 = 1;
-    video2_settings.frameb = cfb_16[1];
+    v1 = &video1_settings[off_CODE_bss_80060878];
+    ptr_video_settings1 = v1;
+    ptr_video_settings1->frameb = cfb_16[off_CODE_bss_80060878];    
+    v2 = &video1_settings[off_CODE_bss_80060879];
+    ptr_video_settings2 = v2;
+    ptr_video_settings2->frameb = cfb_16[off_CODE_bss_80060879];
+    D_8002329C = 0;
+    D_800232A0 = 0;
 }
 #else
 GLOBAL_ASM(
@@ -442,7 +450,7 @@ block_19:
         phi_f0 = 1.0f;
     }
     temp_t1 = (D_800232C0 * 4);
-    (0x80020000 + temp_t1)->unk30B4 = (f32) ((f32) ptr_video_settings2->unk4 / (f32) ptr_video_settings2->unk18);
+    (0x80020000 + temp_t1)->unk30B4 = (f32) ((f32) ptr_video_settings1->unk4 / (f32) ptr_video_settings2->unk18);
     (0x80020000 + temp_t1)->unk30BC = (f32) phi_f0;
     if (*ptr_video_settings2 == 1)
     {
