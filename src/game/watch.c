@@ -7,6 +7,7 @@
 #include "game/lvl_text.h"
 #include "game/textrelated.h"
 #include "music.h"
+#include "bondconstants.h"
 
 // bss
 char dword_CODE_bss_8007B0A0[0x40];
@@ -790,74 +791,74 @@ void cur_player_set_control_type(int type)
 
 u32 get_cur_player_look_vertical_inverted(void)
 {
-    return game_options_entries[0].current_value;
+    return game_options_entries[PLAYER_OPTION_LOOK].current_value;
 }
 void set_cur_player_look_vertical_inverted(u32 param_1)
 {
-    game_options_entries[0].current_value = param_1;
+    game_options_entries[PLAYER_OPTION_LOOK].current_value = param_1;
 }
 
 u32 cur_player_get_autoaim(void)
 {
-    return game_options_entries[1].current_value;
+    return game_options_entries[PLAYER_OPTION_AUTOAIM].current_value;
 }
 void cur_player_set_autoaim(u32 param_1)
 {
-    game_options_entries[1].current_value = param_1;
+    game_options_entries[PLAYER_OPTION_AUTOAIM].current_value = param_1;
 }
 
 u32 cur_player_get_lookahead(void)
 {
-    return game_options_entries[4].current_value;
+    return game_options_entries[PLAYER_OPTION_LOOKAHEAD].current_value;
 }
 void cur_player_set_lookahead(u32 param_1)
 {
-    game_options_entries[4].current_value = param_1;
+    game_options_entries[PLAYER_OPTION_LOOKAHEAD].current_value = param_1;
 }
 
 u32 cur_player_get_aim_control(void)
 {
-    return game_options_entries[2].current_value;
+    return game_options_entries[PLAYER_OPTION_AIM].current_value;
 }
 void cur_player_set_aim_control(u32 param_1)
 {
-    game_options_entries[2].current_value = param_1;
+    game_options_entries[PLAYER_OPTION_AIM].current_value = param_1;
 }
 
 u32 cur_player_get_sight_onscreen_control(void)
 {
-    return game_options_entries[3].current_value;
+    return game_options_entries[PLAYER_OPTION_SIGHT].current_value;
 }
 void cur_player_set_sight_onscreen_control(u32 param_1)
 {
-    game_options_entries[3].current_value = param_1;
+    game_options_entries[PLAYER_OPTION_SIGHT].current_value = param_1;
 }
 
 u32 cur_player_get_ammo_onscreen_setting(void)
 {
-    return game_options_entries[5].current_value;
+    return game_options_entries[PLAYER_OPTION_AMMODISPLAY].current_value;
 }
 void cur_player_set_ammo_onscreen_setting(u32 param_1)
 {
-    game_options_entries[5].current_value = param_1;
+    game_options_entries[PLAYER_OPTION_AMMODISPLAY].current_value = param_1;
 }
 
 u32 cur_player_get_screen_setting(void)
 {
-    return game_options_entries[6].current_value;
+    return game_options_entries[PLAYER_OPTION_SCREEN].current_value;
 }
 void cur_player_set_screen_setting(u32 param_1)
 {
-    game_options_entries[6].current_value = param_1;
+    game_options_entries[PLAYER_OPTION_SCREEN].current_value = param_1;
 }
 
 u32 get_screen_ratio(void)
 {
-    return game_options_entries[7].current_value;
+    return game_options_entries[PLAYER_OPTION_RATIO].current_value;
 }
 void set_screen_ratio(u32 param_1)
 {
-    game_options_entries[7].current_value = param_1;
+    game_options_entries[PLAYER_OPTION_RATIO].current_value = param_1;
 }
 
 
@@ -9416,7 +9417,7 @@ void sub_GAME_7F0AB908(s32 param_1, u32 param_2, int param_3, s32 param_4)
 
   pbVar2 = get_textptr_for_textID(game_options_entries[param_3].text[1]);
   puVar3 = proc_7F0A9398(param_1, uVar4, param_2, pbVar2, puVar6, 0, 0xffffffff,1,0, 0x3000B0,0);
-  //arg0 = sub_GAME_7F0A9398(arg0, phi_a1_2, arg1, get_textptr_for_textID(game_options_entries[1].text, phi_a1_2, arg2), phi_t1, 0, -1, 1, 0, 0x3000B0, 0);
+  //arg0 = sub_GAME_7F0A9398(arg0, phi_a1_2, arg1, get_textptr_for_textID(game_options_entries[PLAYER_OPTION_AUTOAIM].text, phi_a1_2, arg2), phi_t1, 0, -1, 1, 0, 0x3000B0, 0);
   
   pbVar2 = get_textptr_for_textID(game_options_entries[param_3].text[2]);
   local_res0 = proc_7F0A9398(puVar3, local_14, param_2, pbVar2, puVar7,0,0xffffffff,1,0, 0x3000B0, 0);
