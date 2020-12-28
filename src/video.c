@@ -129,21 +129,22 @@ glabel init_video_settings
  * 3D24	70003124	initialize both video buffers
  */
 #ifdef NONMATCHING
+// 3d54:    sb      zero,0(v0)                       | 3d54:    addu    v1,a2,a0
+// 3d58:    addu    v1,a2,a0                         | 3d58:    addiu   a0,a0,4
+// 3d5c:    sb      zero,0(v1)                       i 3d5c:    sb      zero,1(v1)
+// 3d60:    sb      zero,1(v0)                       r 3d60:    sb      zero,2(v1)
+// 3d64:    sb      zero,1(v1)                       i 3d64:    sb      zero,3(v1)
+// 3d68:    sb      zero,2(v0)                       i 3d68:    sb      zero,1(v0)
+// 3d6c:    sb      zero,2(v1)                       r 3d6c:    sb      zero,2(v0)
+// 3d70:    sb      zero,3(v0)                         3d70:    sb      zero,3(v0)
+// 3d74:    addiu   a0,a0,4                          | 3d74:    sb      zero,0(v0)
 void init_both_video_buffers(void)
 {
     s32 i;
-    
     zbufDeallocate();
-    for (i = 0; i != 0x25800; i += 4)
-    {
-        cfb_16_a[i] = 0;
-        cfb_16_b[i] = 0;
-        cfb_16_a[i + 1] = 0;
-        cfb_16_b[i + 1] = 0;
-        cfb_16_a[i + 2] = 0;
-        cfb_16_b[i + 2] = 0;
-        cfb_16_a[i + 3] = 0;
-        cfb_16_b[i + 3] = 0;
+    for (i = 0; i < 320*240*2; i++) {
+        *((u8*)cfb_16_a + i) = 0;
+        *((u8*)cfb_16_b + i) = 0;
     };
 }
 #else

@@ -2484,9 +2484,6 @@ glabel init_player_BONDdata
 )
 #endif
 
-#endif
-
-
 #ifdef NONMATCHING
 void sub_GAME_7F0798B8(void) {
     ? temp_ret;
