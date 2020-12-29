@@ -3832,7 +3832,7 @@ glabel sub_GAME_7F0A77C8
 
 
 #ifdef NONMATCHING
-s32 sub_GAME_7F0A7C18(s32 param_1)
+s32 draw_text_mission_status(s32 param_1)
 {
   s32 txtptr = get_textptr_for_textID(0xac27);
   s32 puVar5;
@@ -3882,7 +3882,7 @@ s32 sub_GAME_7F0A7C18(s32 param_1)
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0A7C18
+glabel draw_text_mission_status
 /* 0DC748 7F0A7C18 27BDFF90 */  addiu $sp, $sp, -0x70
 /* 0DC74C 7F0A7C1C AFB20040 */  sw    $s2, 0x40($sp)
 /* 0DC750 7F0A7C20 00809025 */  move  $s2, $a0
@@ -4000,7 +4000,7 @@ u32 sub_GAME_7F0A7DBC(u32 uParm1) {
   return uParm1;
 }
 
-s32 sub_GAME_7F0A7DC4(s32 arg0)
+s32 draw_text_q_watch_v201_beta(s32 arg0)
 {
     s32 txtptr;
     s32 sp50;
@@ -4361,7 +4361,7 @@ s32 draw_watch_mission_status_page(s32 param_1, s32 param_2)
   
   if (check_watch_page_transistion_running() != 1)
   {
-    param_1 = debug_gun_watch_move_related(sub_GAME_7F0A7DBC(sub_GAME_7F0A7C18(sub_GAME_7F0A7DC4(param_1))));
+    param_1 = debug_gun_watch_move_related(sub_GAME_7F0A7DBC(draw_text_mission_status(draw_text_q_watch_v201_beta(param_1))));
   }
   else
   {
