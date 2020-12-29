@@ -1299,86 +1299,20 @@ Gfx *video_related_F(Gfx *gdl) {
 
 Gfx *zbufClearCurrentPlayer(Gfx *gdl);
 Gfx *zbufInit(Gfx *gdl);
-Gfx *video_related_10(Gfx *gdl)
-{
+Gfx *video_related_10(Gfx *gdl) {
     if (ptr_video_settings2->usezbuf != 0) {
         gdl = zbufClearCurrentPlayer(zbufInit(gdl));
     }    
     return gdl;
 }
 
-/**
- * 4AF8	70003EF8	generate a generic fillrect; fries: AT,A1,A2,A3,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9
- *     V0=new display list address
- *     accepts: A0=p->display list
- */
-#ifdef NONMATCHING
-s32 insert_generic_fillrect(void *arg0) //either of type Dynamic Struct or GFX Array, however Im betting Dynamic since Dynamic can contain a GFX plus other settings
-{
-    void *temp_a1;
-    void *temp_a3;
-	
-	// copied from a demo of what is probably going on here
-	/*
-	 * pointers to build the display list.
-	 /
-	dynamicp = &dynamic; //<arg0?
-	glistp = &(dynamicp->glist[0]);
-	*/
-	// so arg0 is probably pointer to dynamic struct containing glist.
-	// nothing is actually returned per say since its added to glist at a higher level.
+Gfx *insert_generic_fillrect(Gfx *gdl) {	
+	gDPSetCycleType(gdl++, G_CYC_FILL);
+	gDPFillRectangle(gdl++, 0, 0, ptr_video_settings2->bufx - 1, ptr_video_settings2->bufy - 1);
+	gDPPipeSync(gdl++);
 
-    //arg0->unk4 = 0x300000;
-    //arg0->unk0 = 0xba001402;
-	gDPSetCycleType(glistp++, G_CYC_1CYCLE);
-
-	//temp_a1 = arg0 + 8;	
-    //temp_a3 = temp_a1 + 8;
-    //temp_a1->unk0 = (s32) (((((ptr_video_settings2->unk18 + -1) & 0x3ff) << 0xe) | 0xf6000000) | (((ptr_video_settings2->unk1A + -1) & 0x3ff) * 4));
-    //temp_a1->unk4 = 0;
-	gDPFillRectangle(glistp++, 0, 0, SCREEN_WD-1, SCREEN_HT-1);
-    //temp_a3->unk0 = 0xe7000000;
-    //temp_a3->unk4 = 0;
-	gDPPipeSync(glistp++);
-    //return temp_a3 + 8;
+    return gdl;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel insert_generic_fillrect
-/* 004AF8 70003EF8 3C0EBA00 */  lui   $t6, (0xBA001402 >> 16) # lui $t6, 0xba00				#gsDPSetCycleType
-/* 004AFC 70003EFC 35CE1402 */  ori   $t6, (0xBA001402 & 0xFFFF) # ori $t6, $t6, 0x1402
-/* 004B00 70003F00 3C0F0030 */  lui   $t7, 0x30												#G_CYC_1CYCLE
-/* 004B04 70003F04 AC8F0004 */  sw    $t7, 4($a0)
-/* 004B08 70003F08 AC8E0000 */  sw    $t6, ($a0)
-/* 004B0C 70003F0C 3C068002 */  lui   $a2, %hi(ptr_video_settings2)
-/* 004B10 70003F10 8CC632A8 */  lw    $a2, %lo(ptr_video_settings2)($a2)
-/* 004B14 70003F14 24850008 */  addiu $a1, $a0, 8
-/* 004B18 70003F18 3C01F600 */  lui   $at, 0xf600
-/* 004B1C 70003F1C 84D80018 */  lh    $t8, 0x18($a2)
-/* 004B20 70003F20 84CB001A */  lh    $t3, 0x1a($a2)
-/* 004B24 70003F24 24A70008 */  addiu $a3, $a1, 8
-/* 004B28 70003F28 2719FFFF */  addiu $t9, $t8, -1
-/* 004B2C 70003F2C 332803FF */  andi  $t0, $t9, 0x3ff
-/* 004B30 70003F30 256CFFFF */  addiu $t4, $t3, -1
-/* 004B34 70003F34 318D03FF */  andi  $t5, $t4, 0x3ff
-/* 004B38 70003F38 00084B80 */  sll   $t1, $t0, 0xe
-/* 004B3C 70003F3C 01215025 */  or    $t2, $t1, $at
-/* 004B40 70003F40 000D7080 */  sll   $t6, $t5, 2
-/* 004B44 70003F44 014E7825 */  or    $t7, $t2, $t6
-/* 004B48 70003F48 ACAF0000 */  sw    $t7, ($a1)
-/* 004B4C 70003F4C ACA00004 */  sw    $zero, 4($a1)
-/* 004B50 70003F50 3C18E700 */  lui   $t8, 0xe700
-/* 004B54 70003F54 ACF80000 */  sw    $t8, ($a3)
-/* 004B58 70003F58 ACE00004 */  sw    $zero, 4($a3)
-/* 004B5C 70003F5C 03E00008 */  jr    $ra
-/* 004B60 70003F60 24E20008 */   addiu $v0, $a3, 8
-)
-#endif
-
-
-
 
 /**
  * 4B64	70003F64
