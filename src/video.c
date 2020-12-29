@@ -34,12 +34,6 @@ s32 rgb_32bit_grabnum = 1;
 
 //rodata
 
-
-
-
-
-
-
 //bss
 char dword_CODE_bss_800607E0[0x40];
 Mtx *m;
@@ -47,8 +41,7 @@ u16 word_CODE_bss_80060824;
 char dword_CODE_bss_80060828[0x50];
 u8 off_CODE_bss_80060878;
 u8 off_CODE_bss_80060879;
-//struct osViMode viMode;
-s32 viMode;
+OSViMode *viMode;
 s32 dword_CODE_bss_80060880;
 s32 dword_CODE_bss_80060884;
 s32 dword_CODE_bss_80060888;
@@ -153,35 +146,27 @@ void video_related_6(s32 arg0)
  * 3DA0	700031A0
  */
 #ifdef NONMATCHING
-void *video_related_7(void)
-{
+// regalloc
+void video_related_7(void) {
     s32 temp_lo;
-    s32 temp_t6;
-
-    if (D_800232B8 != 0)
-    {
-        temp_t6 = D_800232B8 + -1;
-        D_800232B8 = temp_t6;
-        if (temp_t6 == 0)
-        {
+    if (D_800232B8 != 0) {
+        D_800232B8--;
+        if (D_800232B8 == 0) {
             D_800232B4 = 0;
         }
     }
     temp_lo = D_800232B0 * D_800232B4;
-    viMode->OSViCommonRegs.hstart /*unk30*/ = (s32) (((((s32) viMode+0x8 >> 0x10) + temp_lo) << 0x10) | ((viMode+0x8 + temp_lo) & 0xffff));
-    viMode->OSViFieldRegs[0].origin /*unk44*/ = (s32) (((((s32) viMode+0xC >> 0x10) + temp_lo) << 0x10) | ((viMode+0xC + temp_lo) & 0xffff));
-    osViSetMode(viMode, &viMode);
-    osViBlack(*(D_800232BC + 3));
-    if (D_800232BC != 0)
-    {
-        if (D_800232BC < 3)
-        {
-            D_800232BC = (s32) (D_800232BC + -1);
+    viMode->fldRegs[0].vStart = (((dword_CODE_bss_80060884 >> 16) + temp_lo) << 16) | ((dword_CODE_bss_80060884 + temp_lo) & 0xffff);
+    viMode->fldRegs[1].vStart = (((dword_CODE_bss_80060888 >> 16) + temp_lo) << 16) | ((dword_CODE_bss_80060888 + temp_lo) & 0xffff);
+    osViSetMode(viMode);
+    osViBlack(D_800232BC);
+    if (D_800232BC != 0) {
+        if (D_800232BC < 3) {
+            D_800232BC--;
         }
     }
-    osViSetSpecialFeatures(0x42);
-    D_800232B0 = (s32) -(s32) D_800232B0;
-    return &D_800232B0;
+    osViSetSpecialFeatures(OS_VI_DITHER_FILTER_ON | OS_VI_GAMMA_OFF);
+    D_800232B0 = -D_800232B0;
 }
 #else
 GLOBAL_ASM(
