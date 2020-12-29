@@ -4356,19 +4356,20 @@ glabel draw_current_hand_item_and_ammo
 
 s32 draw_watch_mission_status_page(s32 param_1, s32 param_2)
 {
-
-  param_1 = draw_background_health_and_armor(param_1, param_2, 0);
+    param_1 = draw_background_health_and_armor(param_1, param_2, 0);
   
-  if (check_watch_page_transistion_running() != 1)
-  {
-    param_1 = draw_current_hand_item_and_ammo(sub_GAME_7F0A7DBC(draw_text_mission_status(draw_text_q_watch_v201_beta(param_1))));
-  }
-  else
-  {
-    check_watch_page_transistion_running();
-  }
+    if (check_watch_page_transistion_running() != 1)
+    {
+        param_1 = draw_text_q_watch_v201_beta(param_1);
+        param_1 = draw_text_mission_status(param_1);
+        param_1 = draw_current_hand_item_and_ammo(sub_GAME_7F0A7DBC(param_1));
+    }
+    else
+    {
+        check_watch_page_transistion_running();
+    }
 
-  return param_1;
+    return param_1;
 }
 
 void sub_GAME_7F0A8378(void)
