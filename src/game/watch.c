@@ -4354,7 +4354,7 @@ glabel debug_gun_watch_move_related
 #endif
 
 
-s32 sub_GAME_7F0A830C(s32 param_1, s32 param_2)
+s32 draw_watch_mission_status_page(s32 param_1, s32 param_2)
 {
 
   param_1 = sub_GAME_7F0A714C(param_1, param_2, 0);
@@ -10183,7 +10183,7 @@ s32 sub_GAME_7F0ACA28(s32 arg0, s32 arg1, s32 arg2)
         switch (watch_screen_index)
         {
             case WATCH_INDEX_MISSION_STATUS:
-                arg0 = sub_GAME_7F0A830C(arg0, arg1);
+                arg0 = draw_watch_mission_status_page(arg0, arg1);
                 break;
             case WATCH_INDEX_INVENTORY:
                 arg0 = debug_gun_watch_move_related2(arg0, arg1);
@@ -10265,7 +10265,7 @@ glabel sub_GAME_7F0ACA28
 /* 0E15FC 7F0ACACC 00000000 */   nop   
 .L7F0ACAD0:
 /* 0E1600 7F0ACAD0 02002025 */  move  $a0, $s0
-/* 0E1604 7F0ACAD4 0FC2A0C3 */  jal   sub_GAME_7F0A830C
+/* 0E1604 7F0ACAD4 0FC2A0C3 */  jal   draw_watch_mission_status_page
 /* 0E1608 7F0ACAD8 8FA50024 */   lw    $a1, 0x24($sp)
 /* 0E160C 7F0ACADC 1000001F */  b     .L7F0ACB5C
 /* 0E1610 7F0ACAE0 00408025 */   move  $s0, $v0
