@@ -3832,15 +3832,12 @@ s32 draw_text_mission_status(s32 arg0)
 {
     s32 txtptr_1;
     s32 txtptr_2;
-
     s32 sp64;
     s32 sp60;
     s32 sp5C;
     s32 sp58;
-    
     s32 ptr_first_font;
     s32 ptr_second_font;
-
     s32 sp4C;
     s32 joffset;
     
@@ -3899,7 +3896,8 @@ s32 draw_text_q_watch_v201_beta(s32 arg0)
     s32 joffset;
 
     txtptr = get_textptr_for_textID(0xAC2B);
-    if (j_text_trigger != 0)
+
+    if (j_text_trigger)
     {
         joffset = -5;
     }
