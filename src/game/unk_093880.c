@@ -2406,7 +2406,7 @@ def_7F094A38:
 .L7F0957AC:
 /* 0CA2DC 7F0957AC 5A20018E */  blezl $s1, .L7F095DE8
 /* 0CA2E0 7F0957B0 8FAA005C */   lw    $t2, 0x5c($sp)
-/* 0CA2E4 7F0957B4 0FC1E0F9 */  jal   currentPlayerGetMatrix10DC
+/* 0CA2E4 7F0957B4 0FC1E0F9 */  jal   currentPlayerGetProjectionMatrixF
 /* 0CA2E8 7F0957B8 00000000 */   nop   
 /* 0CA2EC 7F0957BC 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
 /* 0CA2F0 7F0957C0 00408025 */   move  $s0, $v0
@@ -3936,7 +3936,7 @@ def_7F095E0C:
 /* 0CBA18 7F096EE8 3739FE81 */  ori   $t9, (0xFC40FE81 & 0xFFFF) # ori $t9, $t9, 0xfe81
 /* 0CBA1C 7F096EEC 35ADF97C */  ori   $t5, (0x55FEF97C & 0xFFFF) # ori $t5, $t5, 0xf97c
 /* 0CBA20 7F096EF0 ADED0004 */  sw    $t5, 4($t7)
-/* 0CBA24 7F096EF4 0FC1E0F9 */  jal   currentPlayerGetMatrix10DC
+/* 0CBA24 7F096EF4 0FC1E0F9 */  jal   currentPlayerGetProjectionMatrixF
 /* 0CBA28 7F096EF8 ADF90000 */   sw    $t9, ($t7)
 /* 0CBA2C 7F096EFC 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
 /* 0CBA30 7F096F00 00408025 */   move  $s0, $v0
@@ -7987,8 +7987,8 @@ void initBONDdataforPlayer(PLAYER_ID player)
     (*ppPVar3)->field_10CC = 0;
     (*ppPVar3)->field_10D0 = 0;
     (*ppPVar3)->field_10D4 = 0;
-    (*ppPVar3)->field_10D8 = 0;
-    (*ppPVar3)->field_10DC = 0;
+    (*ppPVar3)->projmatrix = 0;
+    (*ppPVar3)->projmatrixf = 0;
     (*ppPVar3)->field_10E0 = 0;
     (*ppPVar3)->field_10E4 = 0;
     (*ppPVar3)->field_10E8 = 0;

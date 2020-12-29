@@ -1264,7 +1264,7 @@ glabel sub_GAME_7F0A2C44
 /* 0D79F4 7F0A2EC4 356B0040 */  ori   $t3, (0x01030040 & 0xFFFF) # ori $t3, $t3, 0x40
 /* 0D79F8 7F0A2EC8 260A0008 */  addiu $t2, $s0, 8
 /* 0D79FC 7F0A2ECC AFAA00D0 */  sw    $t2, 0xd0($sp)
-/* 0D7A00 7F0A2ED0 0FC1E0DD */  jal   currentPlayerGetMatrix10D8
+/* 0D7A00 7F0A2ED0 0FC1E0DD */  jal   currentPlayerGetProjectionMatrix
 /* 0D7A04 7F0A2ED4 AE0B0000 */   sw    $t3, ($s0)
 /* 0D7A08 7F0A2ED8 AE020004 */  sw    $v0, 4($s0)
 /* 0D7A0C 7F0A2EDC 8FB100D0 */  lw    $s1, 0xd0($sp)
@@ -2946,7 +2946,7 @@ glabel sub_GAME_7F0A3F04
 /* 0D9014 7F0A44E4 358C0040 */  ori   $t4, (0x01030040 & 0xFFFF) # ori $t4, $t4, 0x40
 /* 0D9018 7F0A44E8 262D0008 */  addiu $t5, $s1, 8
 /* 0D901C 7F0A44EC AFAD00A0 */  sw    $t5, 0xa0($sp)
-/* 0D9020 7F0A44F0 0FC1E0DD */  jal   currentPlayerGetMatrix10D8
+/* 0D9020 7F0A44F0 0FC1E0DD */  jal   currentPlayerGetProjectionMatrix
 /* 0D9024 7F0A44F4 AE2C0000 */   sw    $t4, ($s1)
 /* 0D9028 7F0A44F8 0C003A2C */  jal   osVirtualToPhysical
 /* 0D902C 7F0A44FC 00402025 */   move  $a0, $v0

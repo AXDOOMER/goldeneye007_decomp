@@ -1028,7 +1028,7 @@ glabel sub_GAME_7F0B3C8C
 /* 0E8880 7F0B3D50 56B90049 */  bnel  $s5, $t9, .L7F0B3E78
 /* 0E8884 7F0B3D54 26730001 */   addiu $s3, $s3, 1
 /* 0E8888 7F0B3D58 26100008 */  addiu $s0, $s0, 8
-/* 0E888C 7F0B3D5C 0FC1E0DD */  jal   currentPlayerGetMatrix10D8
+/* 0E888C 7F0B3D5C 0FC1E0DD */  jal   currentPlayerGetProjectionMatrix
 /* 0E8890 7F0B3D60 AE340000 */   sw    $s4, ($s1)
 /* 0E8894 7F0B3D64 0C003A2C */  jal   osVirtualToPhysical
 /* 0E8898 7F0B3D68 00402025 */   move  $a0, $v0
@@ -1081,7 +1081,7 @@ glabel sub_GAME_7F0B3C8C
 /* 0E8948 7F0B3E18 02008825 */  move  $s1, $s0
 .L7F0B3E1C:
 /* 0E894C 7F0B3E1C AE340000 */  sw    $s4, ($s1)
-/* 0E8950 7F0B3E20 0FC1E0DD */  jal   currentPlayerGetMatrix10D8
+/* 0E8950 7F0B3E20 0FC1E0DD */  jal   currentPlayerGetProjectionMatrix
 /* 0E8954 7F0B3E24 26100008 */   addiu $s0, $s0, 8
 /* 0E8958 7F0B3E28 0C003A2C */  jal   osVirtualToPhysical
 /* 0E895C 7F0B3E2C 00402025 */   move  $a0, $v0
@@ -1183,7 +1183,7 @@ glabel sub_GAME_7F0B3C8C
 /* 0E8ABC 7F0B3F8C 02008825 */  move  $s1, $s0
 .L7F0B3F90:
 /* 0E8AC0 7F0B3F90 AE340000 */  sw    $s4, ($s1)
-/* 0E8AC4 7F0B3F94 0FC1E0DD */  jal   currentPlayerGetMatrix10D8
+/* 0E8AC4 7F0B3F94 0FC1E0DD */  jal   currentPlayerGetProjectionMatrix
 /* 0E8AC8 7F0B3F98 26100008 */   addiu $s0, $s0, 8
 /* 0E8ACC 7F0B3F9C 0C003A2C */  jal   osVirtualToPhysical
 /* 0E8AD0 7F0B3FA0 00402025 */   move  $a0, $v0
@@ -2544,8 +2544,8 @@ glabel sub_GAME_7F0B4E40
 /* 0E9A9C 7F0B4F6C 35080040 */  ori   $t0, (0x01030040 & 0xFFFF) # ori $t0, $t0, 0x40
 /* 0E9AA0 7F0B4F70 00801025 */  move  $v0, $a0
 /* 0E9AA4 7F0B4F74 AC480000 */  sw    $t0, ($v0)
-/* 0E9AA8 7F0B4F78 3C098006 */  lui   $t1, %hi(m) 
-/* 0E9AAC 7F0B4F7C 8D290820 */  lw    $t1, %lo(m)($t1)
+/* 0E9AA8 7F0B4F78 3C098006 */  lui   $t1, %hi(projectionMatrix) 
+/* 0E9AAC 7F0B4F7C 8D290820 */  lw    $t1, %lo(projectionMatrix)($t1)
 /* 0E9AB0 7F0B4F80 24840008 */  addiu $a0, $a0, 8
 /* 0E9AB4 7F0B4F84 0FC22F3D */  jal   sub_GAME_7F08BCF4
 /* 0E9AB8 7F0B4F88 AC490004 */   sw    $t1, 4($v0)

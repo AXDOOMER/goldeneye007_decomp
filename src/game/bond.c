@@ -665,12 +665,12 @@ Mtx *currentPlayerGetMatrix10C8(void) {
     return pPlayer->field_10C8;
 }
 
-void currentPlayerSetMatrix10D8(Mtx *matrix) {
-    pPlayer->field_10D8 = matrix;
+void currentPlayerSetProjectionMatrix(Mtx *matrix) {
+    pPlayer->projmatrix = matrix;
 }
 
-Mtx *currentPlayerGetMatrix10D8(void) {
-    return pPlayer->field_10D8;
+Mtx *currentPlayerGetProjectionMatrix(void) {
+    return pPlayer->projmatrix;
 }
 
 void set_BONDdata_field_10E0(s32 arg0) {
@@ -690,12 +690,12 @@ Mtxf *currentPlayerGetMatrix10CC(void) {
     return pPlayer->field_10CC;
 }
 
-void currentPlayerSetMatrix10DC(Mtxf *matrix) {
-    pPlayer->field_10DC = matrix;
+void currentPlayerSetProjectionMatrixF(Mtxf *matrix) {
+    pPlayer->projmatrixf = matrix;
 }
 
-Mtxf *currentPlayerGetMatrix10DC(void) {
-    return pPlayer->field_10DC;
+Mtxf *currentPlayerGetProjectionMatrixF(void) {
+    return pPlayer->projmatrixf;
 }
 
 Mtxf *currentPlayerGetMatrix10E8(void) {
@@ -25323,7 +25323,7 @@ void sub_GAME_7F0876C4(void *arg0, void *arg1, void *arg2) {
     matrix_4x4_7F059424(pPlayer->field_64, *arg0, arg0->unk4, arg0->unk8, (f32) *arg1, (f32) arg1->unk4, (f32) arg1->unk8, (f32) *arg2, (f32) arg2->unk4, (f32) arg2->unk8);
     matrix_4x4_7F059708(pPlayer->field_68, *arg0, arg0->unk4, arg0->unk8, (f32) *arg1, (f32) arg1->unk4, (f32) arg1->unk8, (f32) *arg2, (f32) arg2->unk4, (f32) arg2->unk8);
     temp_s0 = sub_GAME_7F0BD6E0();
-    matrix_4x4_multiply(currentPlayerGetMatrix10DC(), &spC4, &sp60);
+    matrix_4x4_multiply(currentPlayerGetProjectionMatrixF(), &spC4, &sp60);
     phi_a1 = &sp60;
 loop_1:
     // Node 1
@@ -25512,7 +25512,7 @@ glabel sub_GAME_7F0876C4
 /* 0BC3FC 7F0878CC E7A80024 */   swc1  $f8, 0x24($sp)
 /* 0BC400 7F0878D0 0FC2F5B8 */  jal   sub_GAME_7F0BD6E0
 /* 0BC404 7F0878D4 00000000 */   nop   
-/* 0BC408 7F0878D8 0FC1E0F9 */  jal   currentPlayerGetMatrix10DC
+/* 0BC408 7F0878D8 0FC1E0F9 */  jal   currentPlayerGetProjectionMatrixF
 /* 0BC40C 7F0878DC 00408025 */   move  $s0, $v0
 /* 0BC410 7F0878E0 27B10060 */  addiu $s1, $sp, 0x60
 /* 0BC414 7F0878E4 02203025 */  move  $a2, $s1
@@ -27297,7 +27297,7 @@ s32 sub_GAME_7F088618(void *arg0) {
     temp_s0_11 = (temp_s0_10 + 8);
     temp_s0_10->unk4 = (s32) (pPlayer + 0x80002128);
     *temp_s0_11 = 0x1030040;
-    temp_s0_11->unk4 = osVirtualToPhysical(currentPlayerGetMatrix10D8(temp_s0_9, temp_s0_10, 0x6000000, temp_s0_6));
+    temp_s0_11->unk4 = osVirtualToPhysical(currentPlayerGetProjectionMatrix(temp_s0_9, temp_s0_10, 0x6000000, temp_s0_6));
     return (temp_s0_11 + 8);
 }
 #else
@@ -27472,7 +27472,7 @@ glabel sub_GAME_7F088618
 /* 0BD3DC 7F0888AC 356B0040 */  ori   $t3, (0x01030040 & 0xFFFF) # ori $t3, $t3, 0x40
 /* 0BD3E0 7F0888B0 02008825 */  move  $s1, $s0
 /* 0BD3E4 7F0888B4 AE2B0000 */  sw    $t3, ($s1)
-/* 0BD3E8 7F0888B8 0FC1E0DD */  jal   currentPlayerGetMatrix10D8
+/* 0BD3E8 7F0888B8 0FC1E0DD */  jal   currentPlayerGetProjectionMatrix
 /* 0BD3EC 7F0888BC 26100008 */   addiu $s0, $s0, 8
 /* 0BD3F0 7F0888C0 0C003A2C */  jal   osVirtualToPhysical
 /* 0BD3F4 7F0888C4 00402025 */   move  $a0, $v0

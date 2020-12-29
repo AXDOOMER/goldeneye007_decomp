@@ -3,6 +3,7 @@
 #include "vi.h"
 #include "video.h"
 #include "bondgame.h"
+#include "unk_093880.h" // pPlayer
 
 /**
  * @file video.c
@@ -35,9 +36,9 @@ s32 rgb_32bit_grabnum = 1;
 //rodata
 
 //bss
-char dword_CODE_bss_800607E0[0x40];
-Mtx *m;
-u16 word_CODE_bss_80060824;
+f32 projectionMatrixF[4][4];
+Mtx *projectionMatrix;
+u16 perspNorm;
 char dword_CODE_bss_80060828[0x50];
 u8 off_CODE_bss_80060878;
 u8 off_CODE_bss_80060879;
@@ -1269,223 +1270,32 @@ void set_video2buf_frameb(u8 *arg0)
  * 484C	70003C4C	V0= halfword [80060824]
  */
 u16 get_80060824(void) {
-    return word_CODE_bss_80060824;
+    return perspNorm;
 }
 
-/**
- * 4858	70003C58
- */
-#ifdef NONMATCHING
-void *video_related_F(void *arg0)
-{
-    void *temp_s0;
-    void *temp_v0;
-    void *temp_v0_2;
-    void *temp_v0_3;
-    void *temp_v1;
-    void *phi_s0;
-
-    if (pPlayer != 0)
-    {
-        (pPlayer + (off_CODE_bss_80060879 * 0x10))->unk7D0 = (s16) (ptr_video_settings2->unk1C * 2);
-        (pPlayer + (off_CODE_bss_80060879 * 0x10))->unk7D8 = (s16) ((ptr_video_settings2->unk1C * 2) + (ptr_video_settings2->unk20 * 4));
-        (pPlayer + (off_CODE_bss_80060879 * 0x10))->unk7D2 = (s16) (ptr_video_settings2->unk1E * 2);
-        (pPlayer + (off_CODE_bss_80060879 * 0x10))->unk7DA = (s16) ((ptr_video_settings2->unk1E * 2) + (ptr_video_settings2->unk22 * 4));
+Gfx *video_related_F(Gfx *gdl) {
+    if (pPlayer != NULL) {
+        pPlayer->viewports[off_CODE_bss_80060879].vp.vscale[0] = (ptr_video_settings2->width * 2);
+        pPlayer->viewports[off_CODE_bss_80060879].vp.vtrans[0] = (ptr_video_settings2->width * 2) + (ptr_video_settings2->ulx * 4);
+        pPlayer->viewports[off_CODE_bss_80060879].vp.vscale[1] = (ptr_video_settings2->height * 2);
+        pPlayer->viewports[off_CODE_bss_80060879].vp.vtrans[1] = (ptr_video_settings2->height * 2) + (ptr_video_settings2->uly * 4);
     }
-    arg0->unk0 = 0x3800010;
-    arg0->unk4 = (s32) ((pPlayer + (off_CODE_bss_80060879 * 0x10)) + 0x800007d0);
-    temp_s0 = arg0 + 8;
-    m = sub_GAME_7F0BD6E0(&off_CODE_bss_80060879, &pPlayer);
-    guPerspectiveF(&dword_CODE_bss_800607E0, &word_CODE_bss_80060824, ptr_video_settings2->far, ptr_video_settings2->scale, (f32) ptr_video_settings2->aspect, (f32) ptr_video_settings2->unk14, 1.0f);
-    guMtxF2L(&dword_CODE_bss_800607E0, m);
-    temp_v0 = temp_s0;
-    temp_v0->unk0 = 0x1030040;
-    temp_s0 = temp_s0 + 8;
-    temp_v0->unk4 = (s32) (m + 0x80000000);
-    temp_v1 = temp_s0;
-    temp_v1->unk0 = 0xbc00000e;
-    temp_s0 = temp_s0 + 8;
-    temp_v1->unk4 = (?32) word_CODE_bss_80060824;
-    currentPlayerSetMatrix10D8(m, &m);
-    currentPlayerSetMatrix10DC(&dword_CODE_bss_800607E0);
-    temp_v0_2 = temp_s0;
-    if (coloroutputmode != 0)
-    {
-        temp_v0_3 = temp_s0;
-        temp_v0_3->unk0 = (s32) (((ptr_video_settings2->unk18 + -1) & 0xfff) | 0xff100000);
-        temp_v0_3->unk4 = (s32) (ptr_video_settings2->frameb + 0x80000000);
-        phi_s0 = temp_s0 + 8;
+    gSPViewport(gdl++, ((s32)&pPlayer->viewports[off_CODE_bss_80060879] + 0x80000000));
+    projectionMatrix = sub_GAME_7F0BD6E0();
+    guPerspectiveF(projectionMatrixF, &perspNorm, ptr_video_settings2->fovy, ptr_video_settings2->aspect, ptr_video_settings2->near, ptr_video_settings2->far, 1.0f);
+    guMtxF2L(projectionMatrixF, projectionMatrix);
+    gSPMatrix(gdl++, ((s32)projectionMatrix + 0x80000000), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+    gSPPerspNormalize(gdl++, perspNorm);
+    currentPlayerSetProjectionMatrix(projectionMatrix);
+    currentPlayerSetProjectionMatrixF(projectionMatrixF);
+    if (coloroutputmode != MODE_32BIT) {
+        gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_16b, ptr_video_settings2->somethingW, (ptr_video_settings2->frameb + 0x80000000));
     }
-    else
-    {
-        temp_v0_2->unk4 = 0x3b5000;
-        temp_v0_2->unk0 = (s32) (((ptr_video_settings2->unk18 + -1) & 0xfff) | 0xff180000);
-        phi_s0 = temp_s0 + 8;
+    else {
+        gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_32b, ptr_video_settings2->somethingW, (cfb_16[0] + 0x80000000));
     }
-    return phi_s0;
+    return gdl;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel video_related_F
-/* 004858 70003C58 3C058008 */  lui   $a1, %hi(pPlayer)
-/* 00485C 70003C5C 24A5A0B0 */  addiu $a1, %lo(pPlayer) # addiu $a1, $a1, -0x5f50
-/* 004860 70003C60 8CA20000 */  lw    $v0, ($a1)
-/* 004864 70003C64 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 004868 70003C68 AFB00024 */  sw    $s0, 0x24($sp)
-/* 00486C 70003C6C 00808025 */  move  $s0, $a0
-/* 004870 70003C70 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 004874 70003C74 1040002A */  beqz  $v0, .L70003D20
-/* 004878 70003C78 AFB10028 */   sw    $s1, 0x28($sp)
-/* 00487C 70003C7C 3C118002 */  lui   $s1, %hi(ptr_video_settings2)
-/* 004880 70003C80 263132A8 */  addiu $s1, %lo(ptr_video_settings2) # addiu $s1, $s1, 0x32a8
-/* 004884 70003C84 8E2E0000 */  lw    $t6, ($s1)
-/* 004888 70003C88 3C048006 */  lui   $a0, %hi(off_CODE_bss_80060879)
-/* 00488C 70003C8C 24840879 */  addiu $a0, %lo(off_CODE_bss_80060879) # addiu $a0, $a0, 0x879
-/* 004890 70003C90 90990000 */  lbu   $t9, ($a0)
-/* 004894 70003C94 85CF001C */  lh    $t7, 0x1c($t6)
-/* 004898 70003C98 00194100 */  sll   $t0, $t9, 4
-/* 00489C 70003C9C 00484821 */  addu  $t1, $v0, $t0
-/* 0048A0 70003CA0 000FC040 */  sll   $t8, $t7, 1
-/* 0048A4 70003CA4 A53807D0 */  sh    $t8, 0x7d0($t1)
-/* 0048A8 70003CA8 8E230000 */  lw    $v1, ($s1)
-/* 0048AC 70003CAC 90990000 */  lbu   $t9, ($a0)
-/* 0048B0 70003CB0 8CAF0000 */  lw    $t7, ($a1)
-/* 0048B4 70003CB4 846A001C */  lh    $t2, 0x1c($v1)
-/* 0048B8 70003CB8 846C0020 */  lh    $t4, 0x20($v1)
-/* 0048BC 70003CBC 00194100 */  sll   $t0, $t9, 4
-/* 0048C0 70003CC0 000A5840 */  sll   $t3, $t2, 1
-/* 0048C4 70003CC4 000C6880 */  sll   $t5, $t4, 2
-/* 0048C8 70003CC8 016D7021 */  addu  $t6, $t3, $t5
-/* 0048CC 70003CCC 01E8C021 */  addu  $t8, $t7, $t0
-/* 0048D0 70003CD0 A70E07D8 */  sh    $t6, 0x7d8($t8)
-/* 0048D4 70003CD4 8E290000 */  lw    $t1, ($s1)
-/* 0048D8 70003CD8 908D0000 */  lbu   $t5, ($a0)
-/* 0048DC 70003CDC 8CAB0000 */  lw    $t3, ($a1)
-/* 0048E0 70003CE0 852A001E */  lh    $t2, 0x1e($t1)
-/* 0048E4 70003CE4 000DC900 */  sll   $t9, $t5, 4
-/* 0048E8 70003CE8 01797821 */  addu  $t7, $t3, $t9
-/* 0048EC 70003CEC 000A6040 */  sll   $t4, $t2, 1
-/* 0048F0 70003CF0 A5EC07D2 */  sh    $t4, 0x7d2($t7)
-/* 0048F4 70003CF4 8E230000 */  lw    $v1, ($s1)
-/* 0048F8 70003CF8 908B0000 */  lbu   $t3, ($a0)
-/* 0048FC 70003CFC 8CAD0000 */  lw    $t5, ($a1)
-/* 004900 70003D00 8468001E */  lh    $t0, 0x1e($v1)
-/* 004904 70003D04 84780022 */  lh    $t8, 0x22($v1)
-/* 004908 70003D08 000BC900 */  sll   $t9, $t3, 4
-/* 00490C 70003D0C 00087040 */  sll   $t6, $t0, 1
-/* 004910 70003D10 00184880 */  sll   $t1, $t8, 2
-/* 004914 70003D14 01C95021 */  addu  $t2, $t6, $t1
-/* 004918 70003D18 01B96021 */  addu  $t4, $t5, $t9
-/* 00491C 70003D1C A58A07DA */  sh    $t2, 0x7da($t4)
-.L70003D20:
-/* 004920 70003D20 3C0F0380 */  lui   $t7, (0x03800010 >> 16) # lui $t7, 0x380
-/* 004924 70003D24 3C048006 */  lui   $a0, %hi(off_CODE_bss_80060879)
-/* 004928 70003D28 35EF0010 */  ori   $t7, (0x03800010 & 0xFFFF) # ori $t7, $t7, 0x10
-/* 00492C 70003D2C 02001025 */  move  $v0, $s0
-/* 004930 70003D30 24840879 */  addiu $a0, %lo(off_CODE_bss_80060879) # addiu $a0, $a0, 0x879
-/* 004934 70003D34 AC4F0000 */  sw    $t7, ($v0)
-/* 004938 70003D38 90980000 */  lbu   $t8, ($a0)
-/* 00493C 70003D3C 8CA80000 */  lw    $t0, ($a1)
-/* 004940 70003D40 3C018000 */  lui   $at, (0x800007D0 >> 16) 
-/* 004944 70003D44 00187100 */  sll   $t6, $t8, 4
-/* 004948 70003D48 342107D0 */  ori   $at, (0x800007D0 & 0xFFFF) # ori $at, $at, 0x7d0
-/* 00494C 70003D4C 010E4821 */  addu  $t1, $t0, $t6
-/* 004950 70003D50 3C118002 */  lui   $s1, %hi(ptr_video_settings2)
-/* 004954 70003D54 01215821 */  addu  $t3, $t1, $at
-/* 004958 70003D58 263132A8 */  addiu $s1, %lo(ptr_video_settings2) # addiu $s1, $s1, 0x32a8
-/* 00495C 70003D5C AC4B0004 */  sw    $t3, 4($v0)
-/* 004960 70003D60 0FC2F5B8 */  jal   sub_GAME_7F0BD6E0
-/* 004964 70003D64 26100008 */   addiu $s0, $s0, 8
-/* 004968 70003D68 3C018006 */  lui   $at, %hi(m)
-/* 00496C 70003D6C AC220820 */  sw    $v0, %lo(m)($at)
-/* 004970 70003D70 8E230000 */  lw    $v1, ($s1)
-/* 004974 70003D74 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 004978 70003D78 44814000 */  mtc1  $at, $f8
-/* 00497C 70003D7C C4640010 */  lwc1  $f4, 0x10($v1)
-/* 004980 70003D80 8C660008 */  lw    $a2, 8($v1)
-/* 004984 70003D84 8C67000C */  lw    $a3, 0xc($v1)
-/* 004988 70003D88 E7A40010 */  swc1  $f4, 0x10($sp)
-/* 00498C 70003D8C C4660014 */  lwc1  $f6, 0x14($v1)
-/* 004990 70003D90 3C048006 */  lui   $a0, %hi(dword_CODE_bss_800607E0)
-/* 004994 70003D94 3C058006 */  lui   $a1, %hi(word_CODE_bss_80060824)
-/* 004998 70003D98 24A50824 */  addiu $a1, %lo(word_CODE_bss_80060824) # addiu $a1, $a1, 0x824
-/* 00499C 70003D9C 248407E0 */  addiu $a0, %lo(dword_CODE_bss_800607E0) # addiu $a0, $a0, 0x7e0
-/* 0049A0 70003DA0 E7A80018 */  swc1  $f8, 0x18($sp)
-/* 0049A4 70003DA4 0C003F20 */  jal   guPerspectiveF
-/* 0049A8 70003DA8 E7A60014 */   swc1  $f6, 0x14($sp)
-/* 0049AC 70003DAC 3C048006 */  lui   $a0, %hi(dword_CODE_bss_800607E0)
-/* 0049B0 70003DB0 3C058006 */  lui   $a1, %hi(m)
-/* 0049B4 70003DB4 8CA50820 */  lw    $a1, %lo(m)($a1)
-/* 0049B8 70003DB8 0C003FC4 */  jal   guMtxF2L
-/* 0049BC 70003DBC 248407E0 */   addiu $a0, %lo(dword_CODE_bss_800607E0) # addiu $a0, $a0, 0x7e0
-/* 0049C0 70003DC0 3C0D0103 */  lui   $t5, (0x01030040 >> 16) # lui $t5, 0x103
-/* 0049C4 70003DC4 3C058006 */  lui   $a1, %hi(m)
-/* 0049C8 70003DC8 35AD0040 */  ori   $t5, (0x01030040 & 0xFFFF) # ori $t5, $t5, 0x40
-/* 0049CC 70003DCC 02001025 */  move  $v0, $s0
-/* 0049D0 70003DD0 24A50820 */  addiu $a1, %lo(m) # addiu $a1, $a1, 0x820
-/* 0049D4 70003DD4 AC4D0000 */  sw    $t5, ($v0)
-/* 0049D8 70003DD8 8CB90000 */  lw    $t9, ($a1)
-/* 0049DC 70003DDC 3C018000 */  lui   $at, 0x8000
-/* 0049E0 70003DE0 26100008 */  addiu $s0, $s0, 8
-/* 0049E4 70003DE4 3C0CBC00 */  lui   $t4, (0xBC00000E >> 16) # lui $t4, 0xbc00
-/* 0049E8 70003DE8 03215021 */  addu  $t2, $t9, $at
-/* 0049EC 70003DEC AC4A0004 */  sw    $t2, 4($v0)
-/* 0049F0 70003DF0 358C000E */  ori   $t4, (0xBC00000E & 0xFFFF) # ori $t4, $t4, 0xe
-/* 0049F4 70003DF4 02001825 */  move  $v1, $s0
-/* 0049F8 70003DF8 AC6C0000 */  sw    $t4, ($v1)
-/* 0049FC 70003DFC 3C0F8006 */  lui   $t7, %hi(word_CODE_bss_80060824) 
-/* 004A00 70003E00 95EF0824 */  lhu   $t7, %lo(word_CODE_bss_80060824)($t7)
-/* 004A04 70003E04 26100008 */  addiu $s0, $s0, 8
-/* 004A08 70003E08 AC6F0004 */  sw    $t7, 4($v1)
-/* 004A0C 70003E0C 0FC1E0D9 */  jal   currentPlayerSetMatrix10D8
-/* 004A10 70003E10 8CA40000 */   lw    $a0, ($a1)
-/* 004A14 70003E14 3C048006 */  lui   $a0, %hi(dword_CODE_bss_800607E0)
-/* 004A18 70003E18 0FC1E0F5 */  jal   currentPlayerSetMatrix10DC
-/* 004A1C 70003E1C 248407E0 */   addiu $a0, %lo(dword_CODE_bss_800607E0) # addiu $a0, $a0, 0x7e0
-/* 004A20 70003E20 3C188002 */  lui   $t8, %hi(coloroutputmode) 
-/* 004A24 70003E24 8F1832AC */  lw    $t8, %lo(coloroutputmode)($t8)
-/* 004A28 70003E28 02001025 */  move  $v0, $s0
-/* 004A2C 70003E2C 3C01FF18 */  lui   $at, 0xff18
-/* 004A30 70003E30 53000011 */  beql  $t8, $zero, .L70003E78
-/* 004A34 70003E34 8E2F0000 */   lw    $t7, ($s1)
-/* 004A38 70003E38 8E280000 */  lw    $t0, ($s1)
-/* 004A3C 70003E3C 3C01FF10 */  lui   $at, 0xff10
-/* 004A40 70003E40 02001025 */  move  $v0, $s0
-/* 004A44 70003E44 850E0018 */  lh    $t6, 0x18($t0)
-/* 004A48 70003E48 26100008 */  addiu $s0, $s0, 8
-/* 004A4C 70003E4C 25C9FFFF */  addiu $t1, $t6, -1
-/* 004A50 70003E50 312B0FFF */  andi  $t3, $t1, 0xfff
-/* 004A54 70003E54 01616825 */  or    $t5, $t3, $at
-/* 004A58 70003E58 AC4D0000 */  sw    $t5, ($v0)
-/* 004A5C 70003E5C 8E390000 */  lw    $t9, ($s1)
-/* 004A60 70003E60 3C018000 */  lui   $at, 0x8000
-/* 004A64 70003E64 8F2A0028 */  lw    $t2, 0x28($t9)
-/* 004A68 70003E68 01416021 */  addu  $t4, $t2, $at
-/* 004A6C 70003E6C 1000000B */  b     .L70003E9C
-/* 004A70 70003E70 AC4C0004 */   sw    $t4, 4($v0)
-/* 004A74 70003E74 8E2F0000 */  lw    $t7, ($s1)
-.L70003E78:
-/* 004A78 70003E78 3C0B003B */  lui   $t3, %hi(0x003B5000) # $t3, 0x3b
-/* 004A7C 70003E7C 256B5000 */  addiu $t3, %lo(0x003B5000) # addiu $t3, $t3, 0x5000
-/* 004A80 70003E80 85F80018 */  lh    $t8, 0x18($t7)
-/* 004A84 70003E84 AC4B0004 */  sw    $t3, 4($v0)
-/* 004A88 70003E88 26100008 */  addiu $s0, $s0, 8
-/* 004A8C 70003E8C 2708FFFF */  addiu $t0, $t8, -1
-/* 004A90 70003E90 310E0FFF */  andi  $t6, $t0, 0xfff
-/* 004A94 70003E94 01C14825 */  or    $t1, $t6, $at
-/* 004A98 70003E98 AC490000 */  sw    $t1, ($v0)
-.L70003E9C:
-/* 004A9C 70003E9C 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 004AA0 70003EA0 02001025 */  move  $v0, $s0
-/* 004AA4 70003EA4 8FB00024 */  lw    $s0, 0x24($sp)
-/* 004AA8 70003EA8 8FB10028 */  lw    $s1, 0x28($sp)
-/* 004AAC 70003EAC 03E00008 */  jr    $ra
-/* 004AB0 70003EB0 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
-
-
 
 /**
  * 4AB4	70003EB4
@@ -2215,8 +2025,8 @@ void set_video2_settings_offset_24(int param_1) {
 #ifdef NONMATCHING
 void setvideo_far(f32 arg0)
 {
-    ptr_video_settings2->far = arg0;
-    currentPlayerSetPerspective(ptr_video_settings2->aspect, ptr_video_settings2->far, ptr_video_settings2->scale);
+    ptr_video_settings2->fovy = arg0;
+    currentPlayerSetPerspective(ptr_video_settings2->near, ptr_video_settings2->fovy, ptr_video_settings2->aspect);
     currentPlayerSetCameraScale();
 }
 #else
@@ -2253,8 +2063,8 @@ glabel setvideo_far
 #ifdef NONMATCHING
 void set_page_aspect(f32 arg0)
 {
-    ptr_video_settings2->scale = arg0;
-    currentPlayerSetPerspective(ptr_video_settings2->aspect, ptr_video_settings2->far, ptr_video_settings2->scale);
+    ptr_video_settings2->aspect = arg0;
+    currentPlayerSetPerspective(ptr_video_settings2->near, ptr_video_settings2->fovy, ptr_video_settings2->aspect);
     currentPlayerSetCameraScale();
 }
 #else
@@ -2289,7 +2099,7 @@ glabel set_page_aspect
  */
 f32 viGetFovY(void)
 {
-    return ptr_video_settings2->far;
+    return ptr_video_settings2->fovy;
 }
 
 /**
@@ -2298,9 +2108,9 @@ f32 viGetFovY(void)
 #ifdef NONMATCHING
 void video_related_24(f32 arg0, f32 arg1)
 {
-    ptr_video_settings2->far = arg1;
-    ptr_video_settings2->scale = (f32) (arg0 / arg1);
-    currentPlayerSetPerspective(ptr_video_settings2->aspect, ptr_video_settings2->far, ptr_video_settings2->scale);
+    ptr_video_settings2->fovy = arg1;
+    ptr_video_settings2->aspect = (f32) (arg0 / arg1);
+    currentPlayerSetPerspective(ptr_video_settings2->near, ptr_video_settings2->fovy, ptr_video_settings2->aspect);
     currentPlayerSetCameraScale();
 }
 #else
@@ -2341,9 +2151,9 @@ glabel video_related_24
 #ifdef NONMATCHING
 void set_page_height(f32 arg0, f32 arg1)
 {
-    ptr_video_settings2->aspect = arg0;
+    ptr_video_settings2->near = arg0;
     ptr_video_settings2->unk14 = arg1;
-    currentPlayerSetPerspective(ptr_video_settings2->aspect, ptr_video_settings2->far, ptr_video_settings2->scale);
+    currentPlayerSetPerspective(ptr_video_settings2->near, ptr_video_settings2->fovy, ptr_video_settings2->aspect);
     currentPlayerSetCameraScale();
 }
 #else
@@ -2383,7 +2193,7 @@ glabel set_page_height
 #ifdef NONMATCHING
 void *video_related_27(void *arg0)
 {
-    arg0->unk0 = (f32) ptr_video_settings2->aspect;
+    arg0->unk0 = (f32) ptr_video_settings2->near;
     arg0->unk4 = (f32) ptr_video_settings2->unk14;
     return &ptr_video_settings2;
 }

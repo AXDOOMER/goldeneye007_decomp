@@ -11,10 +11,10 @@ struct video_settings {
     s8 test3;
     s16 txtClipW;
     s16 txtClipH;
-    f32 far;
-    f32 scale;
+    f32 fovy;
     f32 aspect;
-    f32 anonymous_6;
+    f32 near;
+    f32 far;
     s16 somethingW;
     s16 somethingH;
     s16 width;

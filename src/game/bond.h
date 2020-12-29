@@ -781,14 +781,7 @@ struct player
   s32 field_7C4;
   s32 field_7C8;
   s32 field_7CC;
-  s32 field_7D0;
-  s32 field_7D4;
-  s32 field_7D8;
-  s32 field_7DC;
-  s32 field_7E0;
-  s32 field_7E4;
-  s32 field_7E8;
-  s32 field_7EC;
+  Vp viewports[2];
   s16 viewx;
   s16 viewy;
   s16 viewleft;
@@ -880,8 +873,8 @@ struct player
   Mtxf* field_10CC;
   s32 field_10D0; // ptr
   Mtxf* field_10D4;
-  Mtx* field_10D8;
-  Mtxf* field_10DC;
+  Mtx* projmatrix;
+  Mtxf* projmatrixf;
   s32 field_10E0; // ptr
   s32 field_10E4; // ptr
   Mtxf* field_10E8;

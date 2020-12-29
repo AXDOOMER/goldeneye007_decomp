@@ -20656,7 +20656,7 @@ glabel sub_GAME_7F04AC20
 /* 07FBD4 7F04B0A4 24E70008 */  addiu $a3, $a3, 8
 /* 07FBD8 7F04B0A8 AC790000 */  sw    $t9, ($v1)
 /* 07FBDC 7F04B0AC AFA70064 */  sw    $a3, 0x64($sp)
-/* 07FBE0 7F04B0B0 0FC1E0DD */  jal   currentPlayerGetMatrix10D8
+/* 07FBE0 7F04B0B0 0FC1E0DD */  jal   currentPlayerGetProjectionMatrix
 /* 07FBE4 7F04B0B4 AFA3002C */   sw    $v1, 0x2c($sp)
 /* 07FBE8 7F04B0B8 8FA3002C */  lw    $v1, 0x2c($sp)
 /* 07FBEC 7F04B0BC 8FA70064 */  lw    $a3, 0x64($sp)
