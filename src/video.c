@@ -1703,155 +1703,61 @@ glabel setupscreensfornumplayers
 )
 #endif
 
-/**
- * 4F84	70004384
- *     A0->[800232A0]
- */
-void set_D_800232A0(s32 arg0)
-{
+void set_D_800232A0(s32 arg0) {
     D_800232A0 = arg0;
 }
 
-/**
- * 4F90	70004390
- *     V0= [800232A0]
- */
-s32 get_D_800232A0(void)
-{
+s32 get_D_800232A0(void) {
     return D_800232A0;
 }
 
-/**
- * 4F9C	7000439C
- *     A0->[8002329C]
- */
-void set_D_8002329C(s32 arg0)
-{
+void set_D_8002329C(s32 arg0) {
     D_8002329C = arg0;
 }
 
-/**
- * 4FA8	700043A8
- *     V0= [8002329C]
- */
-s32 get_D_8002329C(void)
-{
+s32 get_D_8002329C(void) {
     return D_8002329C;
 }
 
-/**
- * 4FB4	700043B4
- *     A0->[p@800232A8+18], SP+0; fry V0,T0,T1
- *     A1->[p@800232A8+1A], SP+4
- */
-void set_video2_settings_offset_18_1A(s16 arg0, s16 arg1)
-{
+void set_video2_settings_offset_18_1A(s16 arg0, s16 arg1) {
     ptr_video_settings2->bufx = arg0;
     ptr_video_settings2->bufy = arg1;
 }
 
-/**
- * 4FD8	700043D8
- *     V0= [p@800232A8+18]; fry T6
- */
-s16 get_video2_settings_offset_18(void)
-{
+s16 get_video2_settings_offset_18(void) {
     return ptr_video_settings2->bufx;
 }
 
-/**
- * 4FE8	700043E8
- *     V0= [p@800232A8+1A]; fry T6
- */
-s16 get_video2_settings_offset_1A(void)
-{
+s16 get_video2_settings_offset_1A(void) {
     return ptr_video_settings2->bufy;
 }
 
-/**
- * 4FF8	700043F8
- *     set video2 text clip width (A0) and height (A1); fries V0,T0,T1
- *     A0->[p@800232A8+4], SP+0
- *     A1->[p@800232A8+6], SP+4
- */
 void set_video2_text_clip_size(s16 x, s16 y) {
     ptr_video_settings2->x = x;
     ptr_video_settings2->y = y;
 }
 
-/**
- * 501C	7000441C
- *     V0= video2 text clip width  [p@800232A8+4]; fry T6
- */
 s16 get_video2_settings_txtClipW(void) {
     return ptr_video_settings2->x;
 }
 
-/**
- * 502C	7000442C
- *     V0= video2 text clip height [p@800232A8+6]; fry T6
- */
 s16 get_video2_settings_txtClipH(void) {
     return ptr_video_settings2->y;
 }
 
-/**
- * 503C	7000443C
- *     set video2 width (A0) and height (A1)
- */
-#ifdef NONMATCHING
-void set_video2_width_height(short viewx,short viewy) {
-  ptr_video_settings2->viewx = viewx;
-  ptr_video_settings2->viewy = viewy;
-  currentPlayerSetScreenSize(ptr_video_settings2->viewx,ptr_video_settings2->viewy);
-  currentPlayerSetCameraScale();
-  return;
+void currentPlayerSetScreenSize(f32 width, f32 height);
+void currentPlayerSetCameraScale(void);
+void set_video2_width_height(s16 viewx, s16 viewy) {
+    ptr_video_settings2->viewx = viewx;
+    ptr_video_settings2->viewy = viewy;
+    currentPlayerSetScreenSize(ptr_video_settings2->viewx, ptr_video_settings2->viewy);
+    currentPlayerSetCameraScale();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_video2_width_height
-/* 00503C 7000443C 3C038002 */  lui   $v1, %hi(ptr_video_settings2)
-/* 005040 70004440 246332A8 */  addiu $v1, %lo(ptr_video_settings2) # addiu $v1, $v1, 0x32a8
-/* 005044 70004444 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 005048 70004448 8C680000 */  lw    $t0, ($v1)
-/* 00504C 7000444C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 005050 70004450 AFA40018 */  sw    $a0, 0x18($sp)
-/* 005054 70004454 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 005058 70004458 A504001C */  sh    $a0, 0x1c($t0)
-/* 00505C 7000445C 8C690000 */  lw    $t1, ($v1)
-/* 005060 70004460 A525001E */  sh    $a1, 0x1e($t1)
-/* 005064 70004464 8C620000 */  lw    $v0, ($v1)
-/* 005068 70004468 844A001C */  lh    $t2, 0x1c($v0)
-/* 00506C 7000446C 844B001E */  lh    $t3, 0x1e($v0)
-/* 005070 70004470 448A2000 */  mtc1  $t2, $f4
-/* 005074 70004474 448B3000 */  mtc1  $t3, $f6
-/* 005078 70004478 46802320 */  cvt.s.w $f12, $f4
-/* 00507C 7000447C 0FC1DEF6 */  jal   currentPlayerSetScreenSize
-/* 005080 70004480 468033A0 */   cvt.s.w $f14, $f6
-/* 005084 70004484 0FC1DF17 */  jal   currentPlayerSetCameraScale
-/* 005088 70004488 00000000 */   nop   
-/* 00508C 7000448C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 005090 70004490 27BD0018 */  addiu $sp, $sp, 0x18
-/* 005094 70004494 03E00008 */  jr    $ra
-/* 005098 70004498 00000000 */   nop   
-)
-#endif
 
-
-
-/**
- * 509C	7000449C
- *     V0= video2 lrx [p@800232A8+1C]; fry T6
- */
 s16 viGetViewWidth(void) {
     return ptr_video_settings2->viewx;
 }
 
-/**
- * 50AC	700044AC
- *     V0= video2 lry [p@800232A8+1E]; fry T6
- */
 s16 viGetViewHeight(void) {
     return ptr_video_settings2->viewy;
 }
