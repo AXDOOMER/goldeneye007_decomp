@@ -3996,8 +3996,8 @@ glabel draw_text_mission_status
 #endif
 
 
-u32 sub_GAME_7F0A7DBC(u32 uParm1) {
-  return uParm1;
+u32 empty_draw_function(u32 param) {
+  return param;
 }
 
 s32 draw_text_q_watch_v201_beta(s32 arg0)
@@ -4362,7 +4362,7 @@ s32 draw_watch_mission_status_page(s32 param_1, s32 param_2)
     {
         param_1 = draw_text_q_watch_v201_beta(param_1);
         param_1 = draw_text_mission_status(param_1);
-        param_1 = draw_current_hand_item_and_ammo(sub_GAME_7F0A7DBC(param_1));
+        param_1 = draw_current_hand_item_and_ammo(empty_draw_function(param_1));
     }
     else
     {
