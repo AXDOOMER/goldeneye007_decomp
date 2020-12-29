@@ -7485,506 +7485,107 @@ glabel sub_GAME_7F0A9AB8
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0AA7C8(u32 * displayList)
+s32 sub_GAME_7F0AA7C8(s32 phi_v0)
 {
-    u32 * DL;
-    u8 * txtptr;
-
-    DL = microcode_constructor(displayList);
-    if (get_controller_buttons_held('\0',A_BUTTON) != 0)
+    s32 phi_v0_2;
+    
+    phi_v0 = microcode_constructor(phi_v0);
+    if (get_controller_buttons_held(0, 0x8000))
     {
-        sub_GAME_7F0A9398(DL, 0x5a, 0xa7, get_textptr_for_textID(0xac03), -1, 1, 0x7000a0, 0, 0, 0x3000b0, 0);
-    } else {
-        sub_GAME_7F0A9398(DL, 0x5a, 0xa7, get_textptr_for_textID(0xac03), 0xaa00b0, 0, -1, 0, 0, 0x3000b0, 0);
+        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0x5A, 0xA7, get_textptr_for_textID(0xAC03), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0);
     }
-
-    if (get_controller_buttons_held('\0',B_BUTTON) != 0)
+    else
     {
-        sub_GAME_7F0A9398(DL, 0x5a, 0x95, get_textptr_for_textID(0xac02), -1, 1, 0x7000a0, 0, 0, 0x3000b0, 0);
-    } else {
-        sub_GAME_7F0A9398(DL, 0x5a, 0x95, get_textptr_for_textID(0xac02), 0xaa00b0, 0, -1, 0, 0, 0x3000b0, 0);
+        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0x5A, 0xA7, get_textptr_for_textID(0xAC03), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
     }
-
-
+    
+    if (get_controller_buttons_held(0, 0x4000))
+    {
+        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0x5A, 0x95, get_textptr_for_textID(0xAC02), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0);
+    }
+    else
+    {
+        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0x5A, 0x95, get_textptr_for_textID(0xAC02), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
+    }
 
     if ((pPlayer->cur_player_control_type_0 == 4) || (pPlayer->cur_player_control_type_0 == 5))
     {
-        txtptr = get_textptr_for_textID(0xac00);
-    } else {
-        txtptr = get_textptr_for_textID(0xac01);
+        phi_v0_2 = get_textptr_for_textID(0xAC00);
     }
-
-    if (get_controller_buttons_held('\0',Z_TRIG) != 0)
+    else
     {
-        sub_GAME_7F0A9398(DL, 0x5a, 0xb9, txtptr, -1, 1, 0x7000a0, 0, 0, 0x3000b0, 0);
-    } else {
-        sub_GAME_7F0A9398(DL, 0x5a, 0xb9, txtptr, 0xaa00b0, 0, -1, 0, 0, 0x3000b0, 0);
+        phi_v0_2 = get_textptr_for_textID(0xAC01);
     }
-
-
-
+    
+    if (get_controller_buttons_held(0, 0x2000) != 0)
+    {
+        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0x5A, 0xB9, phi_v0_2, -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0);
+    }
+    else
+    {
+        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0x5A, 0xB9, phi_v0_2, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
+    }
+    
     if ((pPlayer->cur_player_control_type_0 == 4) || (pPlayer->cur_player_control_type_0 == 6))
     {
-        txtptr = get_textptr_for_textID(0xac05);
-    } else {
-        txtptr = get_textptr_for_textID(0xac06);
+        phi_v0_2 = get_textptr_for_textID(0xAC05);
     }
-
-    sub_GAME_7F0A9398(DL, 0x5a, 0xcb, txtptr, 0xaa00b0, 0, -1, 0, 0, 0x3000b0, 0);
-    if (get_controller_buttons_held('\x01',A_BUTTON) != 0)
+    else
     {
-        sub_GAME_7F0A9398(DL, 0xe6, 0xa7, get_textptr_for_textID(0xac03), -1, 1, 0x7000a0, 0, 0, 0x3000b0, 1);
-    } else {
-        sub_GAME_7F0A9398(DL, 0xe6, 0xa7, get_textptr_for_textID(0xac03), 0xaa00b0, 0, -1, 0, 0, 0x3000b0, 1);
+        phi_v0_2 = get_textptr_for_textID(0xAC06);
     }
-
-    if (get_controller_buttons_held('\x01',B_BUTTON) != 0)
+    
+    phi_v0 = sub_GAME_7F0A9398(phi_v0, 0x5A, 0xCB, phi_v0_2, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
+    
+    if (get_controller_buttons_held(1, 0x8000) != 0)
     {
-        sub_GAME_7F0A9398(DL, 0xe6, 0x95, get_textptr_for_textID(0xac02), -1, 1, 0x7000a0, 0, 0, 0x3000b0, 1);
-    } else {
-        sub_GAME_7F0A9398(DL, 0xe6, 0x95, get_textptr_for_textID(0xac02), 0xaa00b0, 0, -1, 0, 0, 0x3000b0, 1);
+        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0xE6, 0xA7, get_textptr_for_textID(0xAC03), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1);
     }
-
-
-
+    else
+    {
+        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0xE6, 0xA7, get_textptr_for_textID(0xAC03), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
+    }
+    
+    if (get_controller_buttons_held(1, 0x4000) != 0)
+    {
+        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0xE6, 0x95, get_textptr_for_textID(0xAC02), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1);
+    }
+    else
+    {
+        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0xE6, 0x95, get_textptr_for_textID(0xAC02), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
+    }
+    
     if ((pPlayer->cur_player_control_type_0 == 4) || (pPlayer->cur_player_control_type_0 == 5))
     {
-        txtptr = get_textptr_for_textID(0xac01);
-    } else {
-        txtptr = get_textptr_for_textID(0xac00);
+        phi_v0_2 = get_textptr_for_textID(0xAC01);
     }
-
-    if (get_controller_buttons_held('\x01',Z_TRIG) != 0)
+    else
     {
-        sub_GAME_7F0A9398(DL, 0xe6, 0xb9, txtptr, -1, 1, 0x7000a0, 0, 0, 0x3000b0, 1);
-    } else {
-        sub_GAME_7F0A9398(DL, 0xe6, 0xb9, txtptr, 0xaa00b0, 0, -1, 0, 0, 0x3000b0, 1);
+        phi_v0_2 = get_textptr_for_textID(0xAC00);
     }
-
-
+    
+    if (get_controller_buttons_held(1, 0x2000) != 0)
+    {
+        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0xE6, 0xB9, phi_v0_2, -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1);
+    }
+    else
+    {
+        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0xE6, 0xB9, phi_v0_2, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
+    }
 
     if ((pPlayer->cur_player_control_type_0 == 4) || (pPlayer->cur_player_control_type_0 == 6))
     {
-        txtptr = get_textptr_for_textID(0xac06);
-    } else {
-        txtptr = get_textptr_for_textID(0xac05);
+        phi_v0_2 = get_textptr_for_textID(0xAC06);
     }
-
-    sub_GAME_7F0A9398(DL, 0xe6, 0xcb, txtptr, 0xaa00b0, 0, -1, 0, 0, 0x3000b0, 1);
+    else
+    {
+        phi_v0_2 = get_textptr_for_textID(0xAC05);
+    }
+    
+    phi_v0 = sub_GAME_7F0A9398(phi_v0, 0xE6, 0xCB, phi_v0_2, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
+    return phi_v0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0AA7C8
-/* 0DF2F8 7F0AA7C8 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 0DF2FC 7F0AA7CC AFBF003C */  sw    $ra, 0x3c($sp)
-/* 0DF300 7F0AA7D0 0FC2B366 */  jal   microcode_constructor
-/* 0DF304 7F0AA7D4 AFB00038 */   sw    $s0, 0x38($sp)
-/* 0DF308 7F0AA7D8 00408025 */  move  $s0, $v0
-/* 0DF30C 7F0AA7DC 00002025 */  move  $a0, $zero
-/* 0DF310 7F0AA7E0 0C0030C3 */  jal   get_controller_buttons_held
-/* 0DF314 7F0AA7E4 34058000 */   li    $a1, 32768
-/* 0DF318 7F0AA7E8 10400017 */  beqz  $v0, .L7F0AA848
-/* 0DF31C 7F0AA7EC 00000000 */   nop   
-/* 0DF320 7F0AA7F0 0FC30776 */  jal   get_textptr_for_textID
-/* 0DF324 7F0AA7F4 3404AC03 */   li    $a0, 44035
-/* 0DF328 7F0AA7F8 3C180070 */  lui   $t8, (0x007000A0 >> 16) # lui $t8, 0x70
-/* 0DF32C 7F0AA7FC 3C190030 */  lui   $t9, (0x003000B0 >> 16) # lui $t9, 0x30
-/* 0DF330 7F0AA800 373900B0 */  ori   $t9, (0x003000B0 & 0xFFFF) # ori $t9, $t9, 0xb0
-/* 0DF334 7F0AA804 371800A0 */  ori   $t8, (0x007000A0 & 0xFFFF) # ori $t8, $t8, 0xa0
-/* 0DF338 7F0AA808 240EFFFF */  li    $t6, -1
-/* 0DF33C 7F0AA80C 240F0001 */  li    $t7, 1
-/* 0DF340 7F0AA810 AFAF0014 */  sw    $t7, 0x14($sp)
-/* 0DF344 7F0AA814 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 0DF348 7F0AA818 AFB80018 */  sw    $t8, 0x18($sp)
-/* 0DF34C 7F0AA81C AFB90024 */  sw    $t9, 0x24($sp)
-/* 0DF350 7F0AA820 02002025 */  move  $a0, $s0
-/* 0DF354 7F0AA824 2405005A */  li    $a1, 90
-/* 0DF358 7F0AA828 240600A7 */  li    $a2, 167
-/* 0DF35C 7F0AA82C 00403825 */  move  $a3, $v0
-/* 0DF360 7F0AA830 AFA0001C */  sw    $zero, 0x1c($sp)
-/* 0DF364 7F0AA834 AFA00020 */  sw    $zero, 0x20($sp)
-/* 0DF368 7F0AA838 0FC2A4E6 */  jal   sub_GAME_7F0A9398
-/* 0DF36C 7F0AA83C AFA00028 */   sw    $zero, 0x28($sp)
-/* 0DF370 7F0AA840 10000015 */  b     .L7F0AA898
-/* 0DF374 7F0AA844 00408025 */   move  $s0, $v0
-.L7F0AA848:
-/* 0DF378 7F0AA848 0FC30776 */  jal   get_textptr_for_textID
-/* 0DF37C 7F0AA84C 3404AC03 */   li    $a0, 44035
-/* 0DF380 7F0AA850 3C0800AA */  lui   $t0, (0x00AA00B0 >> 16) # lui $t0, 0xaa
-/* 0DF384 7F0AA854 3C0A0030 */  lui   $t2, (0x003000B0 >> 16) # lui $t2, 0x30
-/* 0DF388 7F0AA858 354A00B0 */  ori   $t2, (0x003000B0 & 0xFFFF) # ori $t2, $t2, 0xb0
-/* 0DF38C 7F0AA85C 350800B0 */  ori   $t0, (0x00AA00B0 & 0xFFFF) # ori $t0, $t0, 0xb0
-/* 0DF390 7F0AA860 2409FFFF */  li    $t1, -1
-/* 0DF394 7F0AA864 AFA90018 */  sw    $t1, 0x18($sp)
-/* 0DF398 7F0AA868 AFA80010 */  sw    $t0, 0x10($sp)
-/* 0DF39C 7F0AA86C AFAA0024 */  sw    $t2, 0x24($sp)
-/* 0DF3A0 7F0AA870 02002025 */  move  $a0, $s0
-/* 0DF3A4 7F0AA874 2405005A */  li    $a1, 90
-/* 0DF3A8 7F0AA878 240600A7 */  li    $a2, 167
-/* 0DF3AC 7F0AA87C 00403825 */  move  $a3, $v0
-/* 0DF3B0 7F0AA880 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0DF3B4 7F0AA884 AFA0001C */  sw    $zero, 0x1c($sp)
-/* 0DF3B8 7F0AA888 AFA00020 */  sw    $zero, 0x20($sp)
-/* 0DF3BC 7F0AA88C 0FC2A4E6 */  jal   sub_GAME_7F0A9398
-/* 0DF3C0 7F0AA890 AFA00028 */   sw    $zero, 0x28($sp)
-/* 0DF3C4 7F0AA894 00408025 */  move  $s0, $v0
-.L7F0AA898:
-/* 0DF3C8 7F0AA898 00002025 */  move  $a0, $zero
-/* 0DF3CC 7F0AA89C 0C0030C3 */  jal   get_controller_buttons_held
-/* 0DF3D0 7F0AA8A0 24054000 */   li    $a1, 16384
-/* 0DF3D4 7F0AA8A4 10400017 */  beqz  $v0, .L7F0AA904
-/* 0DF3D8 7F0AA8A8 00000000 */   nop   
-/* 0DF3DC 7F0AA8AC 0FC30776 */  jal   get_textptr_for_textID
-/* 0DF3E0 7F0AA8B0 3404AC02 */   li    $a0, 44034
-/* 0DF3E4 7F0AA8B4 3C0D0070 */  lui   $t5, (0x007000A0 >> 16) # lui $t5, 0x70
-/* 0DF3E8 7F0AA8B8 3C0E0030 */  lui   $t6, (0x003000B0 >> 16) # lui $t6, 0x30
-/* 0DF3EC 7F0AA8BC 35CE00B0 */  ori   $t6, (0x003000B0 & 0xFFFF) # ori $t6, $t6, 0xb0
-/* 0DF3F0 7F0AA8C0 35AD00A0 */  ori   $t5, (0x007000A0 & 0xFFFF) # ori $t5, $t5, 0xa0
-/* 0DF3F4 7F0AA8C4 240BFFFF */  li    $t3, -1
-/* 0DF3F8 7F0AA8C8 240C0001 */  li    $t4, 1
-/* 0DF3FC 7F0AA8CC AFAC0014 */  sw    $t4, 0x14($sp)
-/* 0DF400 7F0AA8D0 AFAB0010 */  sw    $t3, 0x10($sp)
-/* 0DF404 7F0AA8D4 AFAD0018 */  sw    $t5, 0x18($sp)
-/* 0DF408 7F0AA8D8 AFAE0024 */  sw    $t6, 0x24($sp)
-/* 0DF40C 7F0AA8DC 02002025 */  move  $a0, $s0
-/* 0DF410 7F0AA8E0 2405005A */  li    $a1, 90
-/* 0DF414 7F0AA8E4 24060095 */  li    $a2, 149
-/* 0DF418 7F0AA8E8 00403825 */  move  $a3, $v0
-/* 0DF41C 7F0AA8EC AFA0001C */  sw    $zero, 0x1c($sp)
-/* 0DF420 7F0AA8F0 AFA00020 */  sw    $zero, 0x20($sp)
-/* 0DF424 7F0AA8F4 0FC2A4E6 */  jal   sub_GAME_7F0A9398
-/* 0DF428 7F0AA8F8 AFA00028 */   sw    $zero, 0x28($sp)
-/* 0DF42C 7F0AA8FC 10000015 */  b     .L7F0AA954
-/* 0DF430 7F0AA900 00408025 */   move  $s0, $v0
-.L7F0AA904:
-/* 0DF434 7F0AA904 0FC30776 */  jal   get_textptr_for_textID
-/* 0DF438 7F0AA908 3404AC02 */   li    $a0, 44034
-/* 0DF43C 7F0AA90C 3C0F00AA */  lui   $t7, (0x00AA00B0 >> 16) # lui $t7, 0xaa
-/* 0DF440 7F0AA910 3C190030 */  lui   $t9, (0x003000B0 >> 16) # lui $t9, 0x30
-/* 0DF444 7F0AA914 373900B0 */  ori   $t9, (0x003000B0 & 0xFFFF) # ori $t9, $t9, 0xb0
-/* 0DF448 7F0AA918 35EF00B0 */  ori   $t7, (0x00AA00B0 & 0xFFFF) # ori $t7, $t7, 0xb0
-/* 0DF44C 7F0AA91C 2418FFFF */  li    $t8, -1
-/* 0DF450 7F0AA920 AFB80018 */  sw    $t8, 0x18($sp)
-/* 0DF454 7F0AA924 AFAF0010 */  sw    $t7, 0x10($sp)
-/* 0DF458 7F0AA928 AFB90024 */  sw    $t9, 0x24($sp)
-/* 0DF45C 7F0AA92C 02002025 */  move  $a0, $s0
-/* 0DF460 7F0AA930 2405005A */  li    $a1, 90
-/* 0DF464 7F0AA934 24060095 */  li    $a2, 149
-/* 0DF468 7F0AA938 00403825 */  move  $a3, $v0
-/* 0DF46C 7F0AA93C AFA00014 */  sw    $zero, 0x14($sp)
-/* 0DF470 7F0AA940 AFA0001C */  sw    $zero, 0x1c($sp)
-/* 0DF474 7F0AA944 AFA00020 */  sw    $zero, 0x20($sp)
-/* 0DF478 7F0AA948 0FC2A4E6 */  jal   sub_GAME_7F0A9398
-/* 0DF47C 7F0AA94C AFA00028 */   sw    $zero, 0x28($sp)
-/* 0DF480 7F0AA950 00408025 */  move  $s0, $v0
-.L7F0AA954:
-/* 0DF484 7F0AA954 3C088008 */  lui   $t0, %hi(pPlayer) 
-/* 0DF488 7F0AA958 8D08A0B0 */  lw    $t0, %lo(pPlayer)($t0)
-/* 0DF48C 7F0AA95C 24010004 */  li    $at, 4
-/* 0DF490 7F0AA960 8D022A58 */  lw    $v0, 0x2a58($t0)
-/* 0DF494 7F0AA964 10410003 */  beq   $v0, $at, .L7F0AA974
-/* 0DF498 7F0AA968 24010005 */   li    $at, 5
-/* 0DF49C 7F0AA96C 14410005 */  bne   $v0, $at, .L7F0AA984
-/* 0DF4A0 7F0AA970 00000000 */   nop   
-.L7F0AA974:
-/* 0DF4A4 7F0AA974 0FC30776 */  jal   get_textptr_for_textID
-/* 0DF4A8 7F0AA978 3404AC00 */   li    $a0, 44032
-/* 0DF4AC 7F0AA97C 10000004 */  b     .L7F0AA990
-/* 0DF4B0 7F0AA980 00403825 */   move  $a3, $v0
-.L7F0AA984:
-/* 0DF4B4 7F0AA984 0FC30776 */  jal   get_textptr_for_textID
-/* 0DF4B8 7F0AA988 3404AC01 */   li    $a0, 44033
-/* 0DF4BC 7F0AA98C 00403825 */  move  $a3, $v0
-.L7F0AA990:
-/* 0DF4C0 7F0AA990 00002025 */  move  $a0, $zero
-/* 0DF4C4 7F0AA994 24052000 */  li    $a1, 8192
-/* 0DF4C8 7F0AA998 0C0030C3 */  jal   get_controller_buttons_held
-/* 0DF4CC 7F0AA99C AFA70044 */   sw    $a3, 0x44($sp)
-/* 0DF4D0 7F0AA9A0 10400014 */  beqz  $v0, .L7F0AA9F4
-/* 0DF4D4 7F0AA9A4 8FA70044 */   lw    $a3, 0x44($sp)
-/* 0DF4D8 7F0AA9A8 3C0B0070 */  lui   $t3, (0x007000A0 >> 16) # lui $t3, 0x70
-/* 0DF4DC 7F0AA9AC 3C0C0030 */  lui   $t4, (0x003000B0 >> 16) # lui $t4, 0x30
-/* 0DF4E0 7F0AA9B0 358C00B0 */  ori   $t4, (0x003000B0 & 0xFFFF) # ori $t4, $t4, 0xb0
-/* 0DF4E4 7F0AA9B4 356B00A0 */  ori   $t3, (0x007000A0 & 0xFFFF) # ori $t3, $t3, 0xa0
-/* 0DF4E8 7F0AA9B8 2409FFFF */  li    $t1, -1
-/* 0DF4EC 7F0AA9BC 240A0001 */  li    $t2, 1
-/* 0DF4F0 7F0AA9C0 AFAA0014 */  sw    $t2, 0x14($sp)
-/* 0DF4F4 7F0AA9C4 AFA90010 */  sw    $t1, 0x10($sp)
-/* 0DF4F8 7F0AA9C8 AFAB0018 */  sw    $t3, 0x18($sp)
-/* 0DF4FC 7F0AA9CC AFAC0024 */  sw    $t4, 0x24($sp)
-/* 0DF500 7F0AA9D0 02002025 */  move  $a0, $s0
-/* 0DF504 7F0AA9D4 2405005A */  li    $a1, 90
-/* 0DF508 7F0AA9D8 240600B9 */  li    $a2, 185
-/* 0DF50C 7F0AA9DC AFA0001C */  sw    $zero, 0x1c($sp)
-/* 0DF510 7F0AA9E0 AFA00020 */  sw    $zero, 0x20($sp)
-/* 0DF514 7F0AA9E4 0FC2A4E6 */  jal   sub_GAME_7F0A9398
-/* 0DF518 7F0AA9E8 AFA00028 */   sw    $zero, 0x28($sp)
-/* 0DF51C 7F0AA9EC 10000012 */  b     .L7F0AAA38
-/* 0DF520 7F0AA9F0 00408025 */   move  $s0, $v0
-.L7F0AA9F4:
-/* 0DF524 7F0AA9F4 3C0D00AA */  lui   $t5, (0x00AA00B0 >> 16) # lui $t5, 0xaa
-/* 0DF528 7F0AA9F8 3C0F0030 */  lui   $t7, (0x003000B0 >> 16) # lui $t7, 0x30
-/* 0DF52C 7F0AA9FC 35EF00B0 */  ori   $t7, (0x003000B0 & 0xFFFF) # ori $t7, $t7, 0xb0
-/* 0DF530 7F0AAA00 35AD00B0 */  ori   $t5, (0x00AA00B0 & 0xFFFF) # ori $t5, $t5, 0xb0
-/* 0DF534 7F0AAA04 240EFFFF */  li    $t6, -1
-/* 0DF538 7F0AAA08 AFAE0018 */  sw    $t6, 0x18($sp)
-/* 0DF53C 7F0AAA0C AFAD0010 */  sw    $t5, 0x10($sp)
-/* 0DF540 7F0AAA10 AFAF0024 */  sw    $t7, 0x24($sp)
-/* 0DF544 7F0AAA14 02002025 */  move  $a0, $s0
-/* 0DF548 7F0AAA18 2405005A */  li    $a1, 90
-/* 0DF54C 7F0AAA1C 240600B9 */  li    $a2, 185
-/* 0DF550 7F0AAA20 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0DF554 7F0AAA24 AFA0001C */  sw    $zero, 0x1c($sp)
-/* 0DF558 7F0AAA28 AFA00020 */  sw    $zero, 0x20($sp)
-/* 0DF55C 7F0AAA2C 0FC2A4E6 */  jal   sub_GAME_7F0A9398
-/* 0DF560 7F0AAA30 AFA00028 */   sw    $zero, 0x28($sp)
-/* 0DF564 7F0AAA34 00408025 */  move  $s0, $v0
-.L7F0AAA38:
-/* 0DF568 7F0AAA38 3C188008 */  lui   $t8, %hi(pPlayer) 
-/* 0DF56C 7F0AAA3C 8F18A0B0 */  lw    $t8, %lo(pPlayer)($t8)
-/* 0DF570 7F0AAA40 24010004 */  li    $at, 4
-/* 0DF574 7F0AAA44 8F022A58 */  lw    $v0, 0x2a58($t8)
-/* 0DF578 7F0AAA48 10410003 */  beq   $v0, $at, .L7F0AAA58
-/* 0DF57C 7F0AAA4C 24010006 */   li    $at, 6
-/* 0DF580 7F0AAA50 14410005 */  bne   $v0, $at, .L7F0AAA68
-/* 0DF584 7F0AAA54 00000000 */   nop   
-.L7F0AAA58:
-/* 0DF588 7F0AAA58 0FC30776 */  jal   get_textptr_for_textID
-/* 0DF58C 7F0AAA5C 3404AC05 */   li    $a0, 44037
-/* 0DF590 7F0AAA60 10000004 */  b     .L7F0AAA74
-/* 0DF594 7F0AAA64 00403825 */   move  $a3, $v0
-.L7F0AAA68:
-/* 0DF598 7F0AAA68 0FC30776 */  jal   get_textptr_for_textID
-/* 0DF59C 7F0AAA6C 3404AC06 */   li    $a0, 44038
-/* 0DF5A0 7F0AAA70 00403825 */  move  $a3, $v0
-.L7F0AAA74:
-/* 0DF5A4 7F0AAA74 3C1900AA */  lui   $t9, (0x00AA00B0 >> 16) # lui $t9, 0xaa
-/* 0DF5A8 7F0AAA78 3C090030 */  lui   $t1, (0x003000B0 >> 16) # lui $t1, 0x30
-/* 0DF5AC 7F0AAA7C 352900B0 */  ori   $t1, (0x003000B0 & 0xFFFF) # ori $t1, $t1, 0xb0
-/* 0DF5B0 7F0AAA80 373900B0 */  ori   $t9, (0x00AA00B0 & 0xFFFF) # ori $t9, $t9, 0xb0
-/* 0DF5B4 7F0AAA84 2408FFFF */  li    $t0, -1
-/* 0DF5B8 7F0AAA88 AFA80018 */  sw    $t0, 0x18($sp)
-/* 0DF5BC 7F0AAA8C AFB90010 */  sw    $t9, 0x10($sp)
-/* 0DF5C0 7F0AAA90 AFA90024 */  sw    $t1, 0x24($sp)
-/* 0DF5C4 7F0AAA94 02002025 */  move  $a0, $s0
-/* 0DF5C8 7F0AAA98 2405005A */  li    $a1, 90
-/* 0DF5CC 7F0AAA9C 240600CB */  li    $a2, 203
-/* 0DF5D0 7F0AAAA0 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0DF5D4 7F0AAAA4 AFA0001C */  sw    $zero, 0x1c($sp)
-/* 0DF5D8 7F0AAAA8 AFA00020 */  sw    $zero, 0x20($sp)
-/* 0DF5DC 7F0AAAAC 0FC2A4E6 */  jal   sub_GAME_7F0A9398
-/* 0DF5E0 7F0AAAB0 AFA00028 */   sw    $zero, 0x28($sp)
-/* 0DF5E4 7F0AAAB4 00408025 */  move  $s0, $v0
-/* 0DF5E8 7F0AAAB8 24040001 */  li    $a0, 1
-/* 0DF5EC 7F0AAABC 0C0030C3 */  jal   get_controller_buttons_held
-/* 0DF5F0 7F0AAAC0 34058000 */   li    $a1, 32768
-/* 0DF5F4 7F0AAAC4 10400018 */  beqz  $v0, .L7F0AAB28
-/* 0DF5F8 7F0AAAC8 00000000 */   nop   
-/* 0DF5FC 7F0AAACC 0FC30776 */  jal   get_textptr_for_textID
-/* 0DF600 7F0AAAD0 3404AC03 */   li    $a0, 44035
-/* 0DF604 7F0AAAD4 3C0C0070 */  lui   $t4, (0x007000A0 >> 16) # lui $t4, 0x70
-/* 0DF608 7F0AAAD8 3C0D0030 */  lui   $t5, (0x003000B0 >> 16) # lui $t5, 0x30
-/* 0DF60C 7F0AAADC 35AD00B0 */  ori   $t5, (0x003000B0 & 0xFFFF) # ori $t5, $t5, 0xb0
-/* 0DF610 7F0AAAE0 358C00A0 */  ori   $t4, (0x007000A0 & 0xFFFF) # ori $t4, $t4, 0xa0
-/* 0DF614 7F0AAAE4 240AFFFF */  li    $t2, -1
-/* 0DF618 7F0AAAE8 240B0001 */  li    $t3, 1
-/* 0DF61C 7F0AAAEC 240E0001 */  li    $t6, 1
-/* 0DF620 7F0AAAF0 AFAE0028 */  sw    $t6, 0x28($sp)
-/* 0DF624 7F0AAAF4 AFAB0014 */  sw    $t3, 0x14($sp)
-/* 0DF628 7F0AAAF8 AFAA0010 */  sw    $t2, 0x10($sp)
-/* 0DF62C 7F0AAAFC AFAC0018 */  sw    $t4, 0x18($sp)
-/* 0DF630 7F0AAB00 AFAD0024 */  sw    $t5, 0x24($sp)
-/* 0DF634 7F0AAB04 02002025 */  move  $a0, $s0
-/* 0DF638 7F0AAB08 240500E6 */  li    $a1, 230
-/* 0DF63C 7F0AAB0C 240600A7 */  li    $a2, 167
-/* 0DF640 7F0AAB10 00403825 */  move  $a3, $v0
-/* 0DF644 7F0AAB14 AFA0001C */  sw    $zero, 0x1c($sp)
-/* 0DF648 7F0AAB18 0FC2A4E6 */  jal   sub_GAME_7F0A9398
-/* 0DF64C 7F0AAB1C AFA00020 */   sw    $zero, 0x20($sp)
-/* 0DF650 7F0AAB20 10000016 */  b     .L7F0AAB7C
-/* 0DF654 7F0AAB24 00408025 */   move  $s0, $v0
-.L7F0AAB28:
-/* 0DF658 7F0AAB28 0FC30776 */  jal   get_textptr_for_textID
-/* 0DF65C 7F0AAB2C 3404AC03 */   li    $a0, 44035
-/* 0DF660 7F0AAB30 3C0F00AA */  lui   $t7, (0x00AA00B0 >> 16) # lui $t7, 0xaa
-/* 0DF664 7F0AAB34 3C190030 */  lui   $t9, (0x003000B0 >> 16) # lui $t9, 0x30
-/* 0DF668 7F0AAB38 373900B0 */  ori   $t9, (0x003000B0 & 0xFFFF) # ori $t9, $t9, 0xb0
-/* 0DF66C 7F0AAB3C 35EF00B0 */  ori   $t7, (0x00AA00B0 & 0xFFFF) # ori $t7, $t7, 0xb0
-/* 0DF670 7F0AAB40 2418FFFF */  li    $t8, -1
-/* 0DF674 7F0AAB44 24080001 */  li    $t0, 1
-/* 0DF678 7F0AAB48 AFA80028 */  sw    $t0, 0x28($sp)
-/* 0DF67C 7F0AAB4C AFB80018 */  sw    $t8, 0x18($sp)
-/* 0DF680 7F0AAB50 AFAF0010 */  sw    $t7, 0x10($sp)
-/* 0DF684 7F0AAB54 AFB90024 */  sw    $t9, 0x24($sp)
-/* 0DF688 7F0AAB58 02002025 */  move  $a0, $s0
-/* 0DF68C 7F0AAB5C 240500E6 */  li    $a1, 230
-/* 0DF690 7F0AAB60 240600A7 */  li    $a2, 167
-/* 0DF694 7F0AAB64 00403825 */  move  $a3, $v0
-/* 0DF698 7F0AAB68 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0DF69C 7F0AAB6C AFA0001C */  sw    $zero, 0x1c($sp)
-/* 0DF6A0 7F0AAB70 0FC2A4E6 */  jal   sub_GAME_7F0A9398
-/* 0DF6A4 7F0AAB74 AFA00020 */   sw    $zero, 0x20($sp)
-/* 0DF6A8 7F0AAB78 00408025 */  move  $s0, $v0
-.L7F0AAB7C:
-/* 0DF6AC 7F0AAB7C 24040001 */  li    $a0, 1
-/* 0DF6B0 7F0AAB80 0C0030C3 */  jal   get_controller_buttons_held
-/* 0DF6B4 7F0AAB84 24054000 */   li    $a1, 16384
-/* 0DF6B8 7F0AAB88 10400018 */  beqz  $v0, .L7F0AABEC
-/* 0DF6BC 7F0AAB8C 00000000 */   nop   
-/* 0DF6C0 7F0AAB90 0FC30776 */  jal   get_textptr_for_textID
-/* 0DF6C4 7F0AAB94 3404AC02 */   li    $a0, 44034
-/* 0DF6C8 7F0AAB98 3C0B0070 */  lui   $t3, (0x007000A0 >> 16) # lui $t3, 0x70
-/* 0DF6CC 7F0AAB9C 3C0C0030 */  lui   $t4, (0x003000B0 >> 16) # lui $t4, 0x30
-/* 0DF6D0 7F0AABA0 358C00B0 */  ori   $t4, (0x003000B0 & 0xFFFF) # ori $t4, $t4, 0xb0
-/* 0DF6D4 7F0AABA4 356B00A0 */  ori   $t3, (0x007000A0 & 0xFFFF) # ori $t3, $t3, 0xa0
-/* 0DF6D8 7F0AABA8 2409FFFF */  li    $t1, -1
-/* 0DF6DC 7F0AABAC 240A0001 */  li    $t2, 1
-/* 0DF6E0 7F0AABB0 240D0001 */  li    $t5, 1
-/* 0DF6E4 7F0AABB4 AFAD0028 */  sw    $t5, 0x28($sp)
-/* 0DF6E8 7F0AABB8 AFAA0014 */  sw    $t2, 0x14($sp)
-/* 0DF6EC 7F0AABBC AFA90010 */  sw    $t1, 0x10($sp)
-/* 0DF6F0 7F0AABC0 AFAB0018 */  sw    $t3, 0x18($sp)
-/* 0DF6F4 7F0AABC4 AFAC0024 */  sw    $t4, 0x24($sp)
-/* 0DF6F8 7F0AABC8 02002025 */  move  $a0, $s0
-/* 0DF6FC 7F0AABCC 240500E6 */  li    $a1, 230
-/* 0DF700 7F0AABD0 24060095 */  li    $a2, 149
-/* 0DF704 7F0AABD4 00403825 */  move  $a3, $v0
-/* 0DF708 7F0AABD8 AFA0001C */  sw    $zero, 0x1c($sp)
-/* 0DF70C 7F0AABDC 0FC2A4E6 */  jal   sub_GAME_7F0A9398
-/* 0DF710 7F0AABE0 AFA00020 */   sw    $zero, 0x20($sp)
-/* 0DF714 7F0AABE4 10000016 */  b     .L7F0AAC40
-/* 0DF718 7F0AABE8 00408025 */   move  $s0, $v0
-.L7F0AABEC:
-/* 0DF71C 7F0AABEC 0FC30776 */  jal   get_textptr_for_textID
-/* 0DF720 7F0AABF0 3404AC02 */   li    $a0, 44034
-/* 0DF724 7F0AABF4 3C0E00AA */  lui   $t6, (0x00AA00B0 >> 16) # lui $t6, 0xaa
-/* 0DF728 7F0AABF8 3C180030 */  lui   $t8, (0x003000B0 >> 16) # lui $t8, 0x30
-/* 0DF72C 7F0AABFC 371800B0 */  ori   $t8, (0x003000B0 & 0xFFFF) # ori $t8, $t8, 0xb0
-/* 0DF730 7F0AAC00 35CE00B0 */  ori   $t6, (0x00AA00B0 & 0xFFFF) # ori $t6, $t6, 0xb0
-/* 0DF734 7F0AAC04 240FFFFF */  li    $t7, -1
-/* 0DF738 7F0AAC08 24190001 */  li    $t9, 1
-/* 0DF73C 7F0AAC0C AFB90028 */  sw    $t9, 0x28($sp)
-/* 0DF740 7F0AAC10 AFAF0018 */  sw    $t7, 0x18($sp)
-/* 0DF744 7F0AAC14 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 0DF748 7F0AAC18 AFB80024 */  sw    $t8, 0x24($sp)
-/* 0DF74C 7F0AAC1C 02002025 */  move  $a0, $s0
-/* 0DF750 7F0AAC20 240500E6 */  li    $a1, 230
-/* 0DF754 7F0AAC24 24060095 */  li    $a2, 149
-/* 0DF758 7F0AAC28 00403825 */  move  $a3, $v0
-/* 0DF75C 7F0AAC2C AFA00014 */  sw    $zero, 0x14($sp)
-/* 0DF760 7F0AAC30 AFA0001C */  sw    $zero, 0x1c($sp)
-/* 0DF764 7F0AAC34 0FC2A4E6 */  jal   sub_GAME_7F0A9398
-/* 0DF768 7F0AAC38 AFA00020 */   sw    $zero, 0x20($sp)
-/* 0DF76C 7F0AAC3C 00408025 */  move  $s0, $v0
-.L7F0AAC40:
-/* 0DF770 7F0AAC40 3C088008 */  lui   $t0, %hi(pPlayer) 
-/* 0DF774 7F0AAC44 8D08A0B0 */  lw    $t0, %lo(pPlayer)($t0)
-/* 0DF778 7F0AAC48 24010004 */  li    $at, 4
-/* 0DF77C 7F0AAC4C 8D022A58 */  lw    $v0, 0x2a58($t0)
-/* 0DF780 7F0AAC50 10410003 */  beq   $v0, $at, .L7F0AAC60
-/* 0DF784 7F0AAC54 24010005 */   li    $at, 5
-/* 0DF788 7F0AAC58 14410005 */  bne   $v0, $at, .L7F0AAC70
-/* 0DF78C 7F0AAC5C 00000000 */   nop   
-.L7F0AAC60:
-/* 0DF790 7F0AAC60 0FC30776 */  jal   get_textptr_for_textID
-/* 0DF794 7F0AAC64 3404AC01 */   li    $a0, 44033
-/* 0DF798 7F0AAC68 10000004 */  b     .L7F0AAC7C
-/* 0DF79C 7F0AAC6C 00403825 */   move  $a3, $v0
-.L7F0AAC70:
-/* 0DF7A0 7F0AAC70 0FC30776 */  jal   get_textptr_for_textID
-/* 0DF7A4 7F0AAC74 3404AC00 */   li    $a0, 44032
-/* 0DF7A8 7F0AAC78 00403825 */  move  $a3, $v0
-.L7F0AAC7C:
-/* 0DF7AC 7F0AAC7C 24040001 */  li    $a0, 1
-/* 0DF7B0 7F0AAC80 24052000 */  li    $a1, 8192
-/* 0DF7B4 7F0AAC84 0C0030C3 */  jal   get_controller_buttons_held
-/* 0DF7B8 7F0AAC88 AFA70044 */   sw    $a3, 0x44($sp)
-/* 0DF7BC 7F0AAC8C 10400015 */  beqz  $v0, .L7F0AACE4
-/* 0DF7C0 7F0AAC90 8FA70044 */   lw    $a3, 0x44($sp)
-/* 0DF7C4 7F0AAC94 3C0B0070 */  lui   $t3, (0x007000A0 >> 16) # lui $t3, 0x70
-/* 0DF7C8 7F0AAC98 3C0C0030 */  lui   $t4, (0x003000B0 >> 16) # lui $t4, 0x30
-/* 0DF7CC 7F0AAC9C 358C00B0 */  ori   $t4, (0x003000B0 & 0xFFFF) # ori $t4, $t4, 0xb0
-/* 0DF7D0 7F0AACA0 356B00A0 */  ori   $t3, (0x007000A0 & 0xFFFF) # ori $t3, $t3, 0xa0
-/* 0DF7D4 7F0AACA4 2409FFFF */  li    $t1, -1
-/* 0DF7D8 7F0AACA8 240A0001 */  li    $t2, 1
-/* 0DF7DC 7F0AACAC 240D0001 */  li    $t5, 1
-/* 0DF7E0 7F0AACB0 AFAD0028 */  sw    $t5, 0x28($sp)
-/* 0DF7E4 7F0AACB4 AFAA0014 */  sw    $t2, 0x14($sp)
-/* 0DF7E8 7F0AACB8 AFA90010 */  sw    $t1, 0x10($sp)
-/* 0DF7EC 7F0AACBC AFAB0018 */  sw    $t3, 0x18($sp)
-/* 0DF7F0 7F0AACC0 AFAC0024 */  sw    $t4, 0x24($sp)
-/* 0DF7F4 7F0AACC4 02002025 */  move  $a0, $s0
-/* 0DF7F8 7F0AACC8 240500E6 */  li    $a1, 230
-/* 0DF7FC 7F0AACCC 240600B9 */  li    $a2, 185
-/* 0DF800 7F0AACD0 AFA0001C */  sw    $zero, 0x1c($sp)
-/* 0DF804 7F0AACD4 0FC2A4E6 */  jal   sub_GAME_7F0A9398
-/* 0DF808 7F0AACD8 AFA00020 */   sw    $zero, 0x20($sp)
-/* 0DF80C 7F0AACDC 10000013 */  b     .L7F0AAD2C
-/* 0DF810 7F0AACE0 00408025 */   move  $s0, $v0
-.L7F0AACE4:
-/* 0DF814 7F0AACE4 3C0E00AA */  lui   $t6, (0x00AA00B0 >> 16) # lui $t6, 0xaa
-/* 0DF818 7F0AACE8 3C180030 */  lui   $t8, (0x003000B0 >> 16) # lui $t8, 0x30
-/* 0DF81C 7F0AACEC 371800B0 */  ori   $t8, (0x003000B0 & 0xFFFF) # ori $t8, $t8, 0xb0
-/* 0DF820 7F0AACF0 35CE00B0 */  ori   $t6, (0x00AA00B0 & 0xFFFF) # ori $t6, $t6, 0xb0
-/* 0DF824 7F0AACF4 240FFFFF */  li    $t7, -1
-/* 0DF828 7F0AACF8 24190001 */  li    $t9, 1
-/* 0DF82C 7F0AACFC AFB90028 */  sw    $t9, 0x28($sp)
-/* 0DF830 7F0AAD00 AFAF0018 */  sw    $t7, 0x18($sp)
-/* 0DF834 7F0AAD04 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 0DF838 7F0AAD08 AFB80024 */  sw    $t8, 0x24($sp)
-/* 0DF83C 7F0AAD0C 02002025 */  move  $a0, $s0
-/* 0DF840 7F0AAD10 240500E6 */  li    $a1, 230
-/* 0DF844 7F0AAD14 240600B9 */  li    $a2, 185
-/* 0DF848 7F0AAD18 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0DF84C 7F0AAD1C AFA0001C */  sw    $zero, 0x1c($sp)
-/* 0DF850 7F0AAD20 0FC2A4E6 */  jal   sub_GAME_7F0A9398
-/* 0DF854 7F0AAD24 AFA00020 */   sw    $zero, 0x20($sp)
-/* 0DF858 7F0AAD28 00408025 */  move  $s0, $v0
-.L7F0AAD2C:
-/* 0DF85C 7F0AAD2C 3C088008 */  lui   $t0, %hi(pPlayer) 
-/* 0DF860 7F0AAD30 8D08A0B0 */  lw    $t0, %lo(pPlayer)($t0)
-/* 0DF864 7F0AAD34 24010004 */  li    $at, 4
-/* 0DF868 7F0AAD38 8D022A58 */  lw    $v0, 0x2a58($t0)
-/* 0DF86C 7F0AAD3C 10410003 */  beq   $v0, $at, .L7F0AAD4C
-/* 0DF870 7F0AAD40 24010006 */   li    $at, 6
-/* 0DF874 7F0AAD44 14410005 */  bne   $v0, $at, .L7F0AAD5C
-/* 0DF878 7F0AAD48 00000000 */   nop   
-.L7F0AAD4C:
-/* 0DF87C 7F0AAD4C 0FC30776 */  jal   get_textptr_for_textID
-/* 0DF880 7F0AAD50 3404AC06 */   li    $a0, 44038
-/* 0DF884 7F0AAD54 10000004 */  b     .L7F0AAD68
-/* 0DF888 7F0AAD58 00403825 */   move  $a3, $v0
-.L7F0AAD5C:
-/* 0DF88C 7F0AAD5C 0FC30776 */  jal   get_textptr_for_textID
-/* 0DF890 7F0AAD60 3404AC05 */   li    $a0, 44037
-/* 0DF894 7F0AAD64 00403825 */  move  $a3, $v0
-.L7F0AAD68:
-/* 0DF898 7F0AAD68 3C0900AA */  lui   $t1, (0x00AA00B0 >> 16) # lui $t1, 0xaa
-/* 0DF89C 7F0AAD6C 3C0B0030 */  lui   $t3, (0x003000B0 >> 16) # lui $t3, 0x30
-/* 0DF8A0 7F0AAD70 356B00B0 */  ori   $t3, (0x003000B0 & 0xFFFF) # ori $t3, $t3, 0xb0
-/* 0DF8A4 7F0AAD74 352900B0 */  ori   $t1, (0x00AA00B0 & 0xFFFF) # ori $t1, $t1, 0xb0
-/* 0DF8A8 7F0AAD78 240AFFFF */  li    $t2, -1
-/* 0DF8AC 7F0AAD7C 240C0001 */  li    $t4, 1
-/* 0DF8B0 7F0AAD80 AFAC0028 */  sw    $t4, 0x28($sp)
-/* 0DF8B4 7F0AAD84 AFAA0018 */  sw    $t2, 0x18($sp)
-/* 0DF8B8 7F0AAD88 AFA90010 */  sw    $t1, 0x10($sp)
-/* 0DF8BC 7F0AAD8C AFAB0024 */  sw    $t3, 0x24($sp)
-/* 0DF8C0 7F0AAD90 02002025 */  move  $a0, $s0
-/* 0DF8C4 7F0AAD94 240500E6 */  li    $a1, 230
-/* 0DF8C8 7F0AAD98 240600CB */  li    $a2, 203
-/* 0DF8CC 7F0AAD9C AFA00014 */  sw    $zero, 0x14($sp)
-/* 0DF8D0 7F0AADA0 AFA0001C */  sw    $zero, 0x1c($sp)
-/* 0DF8D4 7F0AADA4 0FC2A4E6 */  jal   sub_GAME_7F0A9398
-/* 0DF8D8 7F0AADA8 AFA00020 */   sw    $zero, 0x20($sp)
-/* 0DF8DC 7F0AADAC 8FBF003C */  lw    $ra, 0x3c($sp)
-/* 0DF8E0 7F0AADB0 8FB00038 */  lw    $s0, 0x38($sp)
-/* 0DF8E4 7F0AADB4 27BD0048 */  addiu $sp, $sp, 0x48
-/* 0DF8E8 7F0AADB8 03E00008 */  jr    $ra
-/* 0DF8EC 7F0AADBC 00000000 */   nop   
-)
-#endif
+
 
 
 
