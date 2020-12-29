@@ -9249,13 +9249,12 @@ glabel sub_GAME_7F0AB908
 
 
 
-s32 sub_GAME_7F0ABC1C()
+s32 draw_toggle_options(s32 param_1)
 {
-    s32 puVar1;
     s32 y_offset;
     s32 i;
   
-    puVar1 = microcode_constructor();
+    param_1 = microcode_constructor(param_1);
 
     for (i = 0, y_offset = 80; i < 8; i = i + 1, y_offset = y_offset + 15) {
         
@@ -9263,26 +9262,23 @@ s32 sub_GAME_7F0ABC1C()
         {
             if (watch_soundrelated_maybe)
             {
-                puVar1 = sub_GAME_7F0AB908(sub_GAME_7F0A9398(puVar1, 0x40, y_offset, get_textptr_for_textID(game_options_entries[i].text[0]), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0), y_offset, i, 2);
+                param_1 = sub_GAME_7F0AB908(sub_GAME_7F0A9398(param_1, 0x40, y_offset, get_textptr_for_textID(game_options_entries[i].text[0]), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0), y_offset, i, 2);
             }
             else
             {
 
-                puVar1 = sub_GAME_7F0AB908(sub_GAME_7F0A9398(puVar1, 0x40, y_offset, get_textptr_for_textID(game_options_entries[i].text[0]), 0xA0FFA0F0, 0, -1, 0, 0, 0x3000B0, 0), y_offset, i, 1);
+                param_1 = sub_GAME_7F0AB908(sub_GAME_7F0A9398(param_1, 0x40, y_offset, get_textptr_for_textID(game_options_entries[i].text[0]), 0xA0FFA0F0, 0, -1, 0, 0, 0x3000B0, 0), y_offset, i, 1);
             } 
         }
         else
         {
-            puVar1 = sub_GAME_7F0AB908(sub_GAME_7F0A9398(puVar1, 0x40, y_offset, get_textptr_for_textID(game_options_entries[i].text[0]), 0xFF00B0, 0, -1, 0, 0, 0x3000B0, 0), y_offset, i, 0);
+            param_1 = sub_GAME_7F0AB908(sub_GAME_7F0A9398(param_1, 0x40, y_offset, get_textptr_for_textID(game_options_entries[i].text[0]), 0xFF00B0, 0, -1, 0, 0, 0x3000B0, 0), y_offset, i, 0);
         }
 
     }
 
-    return puVar1;
+    return param_1;
 }
-
-
-
 
 
 #ifdef NONMATCHING
@@ -9480,7 +9476,7 @@ glabel sub_GAME_7F0ABDFC
 /* 0E0BF0 7F0AC0C0 AFA90020 */   sw    $t1, 0x20($sp)
 /* 0E0BF4 7F0AC0C4 00408025 */  move  $s0, $v0
 .L7F0AC0C8:
-/* 0E0BF8 7F0AC0C8 0FC2AF07 */  jal   sub_GAME_7F0ABC1C
+/* 0E0BF8 7F0AC0C8 0FC2AF07 */  jal   draw_toggle_options
 /* 0E0BFC 7F0AC0CC 02002025 */   move  $a0, $s0
 /* 0E0C00 7F0AC0D0 00408025 */  move  $s0, $v0
 /* 0E0C04 7F0AC0D4 8FBF003C */  lw    $ra, 0x3c($sp)
