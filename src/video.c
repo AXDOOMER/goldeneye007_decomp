@@ -1812,32 +1812,10 @@ void set_video2_settings_near_far(f32 near, f32 far) {
     currentPlayerSetCameraScale();
 }
 
-/**
- * 52AC	700046AC
- *     copies [p@800232A8+10-14] to A0; fries V0,T6,T7,F4,F6
- */
-#ifdef NONMATCHING
-void *video_related_27(void *arg0)
-{
-    arg0->unk0 = (f32) ptr_video_settings2->znear;
-    arg0->unk4 = (f32) ptr_video_settings2->unk14;
-    return &ptr_video_settings2;
+void get_video2_settings_near_far(f32 *arg0) {
+    arg0[0] = ptr_video_settings2->znear;
+    arg0[1] = ptr_video_settings2->zfar;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel video_related_27
-/* 0052AC 700046AC 3C028002 */  lui   $v0, %hi(ptr_video_settings2)
-/* 0052B0 700046B0 244232A8 */  addiu $v0, %lo(ptr_video_settings2) # addiu $v0, $v0, 0x32a8
-/* 0052B4 700046B4 8C4E0000 */  lw    $t6, ($v0)
-/* 0052B8 700046B8 C5C40010 */  lwc1  $f4, 0x10($t6)
-/* 0052BC 700046BC E4840000 */  swc1  $f4, ($a0)
-/* 0052C0 700046C0 8C4F0000 */  lw    $t7, ($v0)
-/* 0052C4 700046C4 C5E60014 */  lwc1  $f6, 0x14($t7)
-/* 0052C8 700046C8 03E00008 */  jr    $ra
-/* 0052CC 700046CC E4860004 */   swc1  $f6, 4($a0)
-)
-#endif
 
 /**
  * 52D0	700046D0

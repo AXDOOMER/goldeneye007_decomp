@@ -2883,7 +2883,7 @@ void sub_GAME_7F0B5208(s32 arg0, void *arg1) {
     s32 phi_s3_3;
 
     // Node 0
-    video_related_27(&sp3C);
+    get_video2_settings_near_far(&sp3C);
     sp40 = (f32) (sp40 / D_800413FC);
     phi_v1 = 0;
     phi_a2 = ((arg0 * 0x50) + &array_room_info);
@@ -3077,7 +3077,7 @@ glabel sub_GAME_7F0B5208
 /* 0E9D70 7F0B5240 00009825 */  move  $s3, $zero
 /* 0E9D74 7F0B5244 0000A025 */  move  $s4, $zero
 /* 0E9D78 7F0B5248 0000A825 */  move  $s5, $zero
-/* 0E9D7C 7F0B524C 0C0011AB */  jal   video_related_27
+/* 0E9D7C 7F0B524C 0C0011AB */  jal   get_video2_settings_near_far
 /* 0E9D80 7F0B5250 27A4003C */   addiu $a0, $sp, 0x3c
 /* 0E9D84 7F0B5254 3C018004 */  lui   $at, %hi(D_800413FC)
 /* 0E9D88 7F0B5258 C42613FC */  lwc1  $f6, %lo(D_800413FC)($at)
@@ -3347,7 +3347,7 @@ glabel sub_GAME_7F0B5528
 /* 0EA09C 7F0B556C AFA400B0 */   sw    $a0, 0xb0($sp)
 /* 0EA0A0 7F0B5570 AFA200AC */  sw    $v0, 0xac($sp)
 /* 0EA0A4 7F0B5574 241E0001 */  li    $fp, 1
-/* 0EA0A8 7F0B5578 0C0011AB */  jal   video_related_27
+/* 0EA0A8 7F0B5578 0C0011AB */  jal   get_video2_settings_near_far
 /* 0EA0AC 7F0B557C 27A40098 */   addiu $a0, $sp, 0x98
 /* 0EA0B0 7F0B5580 3C018004 */  lui   $at, %hi(D_800413FC)
 /* 0EA0B4 7F0B5584 C42613FC */  lwc1  $f6, %lo(D_800413FC)($at)

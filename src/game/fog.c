@@ -231,7 +231,7 @@ glabel copy_table1_env_to_current
 /* 0EF294 7F0BA764 C48C0004 */  lwc1  $f12, 4($a0)
 /* 0EF298 7F0BA768 0C001194 */  jal   set_video2_settings_near_far
 /* 0EF29C 7F0BA76C AFA40038 */   sw    $a0, 0x38($sp)
-/* 0EF2A0 7F0BA770 0C0011AB */  jal   video_related_27
+/* 0EF2A0 7F0BA770 0C0011AB */  jal   get_video2_settings_near_far
 /* 0EF2A4 7F0BA774 27A40030 */   addiu $a0, $sp, 0x30
 /* 0EF2A8 7F0BA778 0FC2D21E */  jal   sub_GAME_7F0B4878
 /* 0EF2AC 7F0BA77C 00000000 */   nop   
