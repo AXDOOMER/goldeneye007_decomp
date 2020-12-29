@@ -1798,48 +1798,12 @@ f32 viGetFovY(void) {
     return ptr_video_settings2->fovy;
 }
 
-/**
- * 51EC	700045EC
- */
-#ifdef NONMATCHING
-void video_related_24(f32 arg0, f32 arg1)
-{
-    ptr_video_settings2->fovy = arg1;
-    ptr_video_settings2->aspect = (f32) (arg0 / arg1);
+void set_video2_settings_fov(f32 fovx, f32 fovy) {
+    ptr_video_settings2->fovy = fovy;
+    ptr_video_settings2->aspect = (f32) (fovx / fovy);
     currentPlayerSetPerspective(ptr_video_settings2->near, ptr_video_settings2->fovy, ptr_video_settings2->aspect);
     currentPlayerSetCameraScale();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel video_related_24
-/* 0051EC 700045EC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0051F0 700045F0 3C038002 */  lui   $v1, %hi(ptr_video_settings2)
-/* 0051F4 700045F4 246332A8 */  addiu $v1, %lo(ptr_video_settings2) # addiu $v1, $v1, 0x32a8
-/* 0051F8 700045F8 E7AE001C */  swc1  $f14, 0x1c($sp)
-/* 0051FC 700045FC C7A4001C */  lwc1  $f4, 0x1c($sp)
-/* 005200 70004600 8C6E0000 */  lw    $t6, ($v1)
-/* 005204 70004604 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 005208 70004608 E7AC0018 */  swc1  $f12, 0x18($sp)
-/* 00520C 7000460C E5C40008 */  swc1  $f4, 8($t6)
-/* 005210 70004610 C7A8001C */  lwc1  $f8, 0x1c($sp)
-/* 005214 70004614 C7A60018 */  lwc1  $f6, 0x18($sp)
-/* 005218 70004618 8C6F0000 */  lw    $t7, ($v1)
-/* 00521C 7000461C 46083283 */  div.s $f10, $f6, $f8
-/* 005220 70004620 E5EA000C */  swc1  $f10, 0xc($t7)
-/* 005224 70004624 8C620000 */  lw    $v0, ($v1)
-/* 005228 70004628 C44C0010 */  lwc1  $f12, 0x10($v0)
-/* 00522C 7000462C C44E0008 */  lwc1  $f14, 8($v0)
-/* 005230 70004630 0FC1DF0C */  jal   currentPlayerSetPerspective
-/* 005234 70004634 8C46000C */   lw    $a2, 0xc($v0)
-/* 005238 70004638 0FC1DF17 */  jal   currentPlayerSetCameraScale
-/* 00523C 7000463C 00000000 */   nop   
-/* 005240 70004640 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 005244 70004644 27BD0018 */  addiu $sp, $sp, 0x18
-/* 005248 70004648 03E00008 */  jr    $ra
-/* 00524C 7000464C 00000000 */   nop   
-)
-#endif
 
 /**
  * 5250	70004650
