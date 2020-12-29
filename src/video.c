@@ -1762,47 +1762,12 @@ s16 viGetViewHeight(void) {
     return ptr_video_settings2->viewy;
 }
 
-/**
- * 50BC	700044BC
- *     set video2 ulx (A0) and uly (A1)
- */
-#ifdef NONMATCHING
-void set_video2_ulx_uly(s16 viewleft, s16 viewtop)
-{
+void currentPlayerSetScreenPosition(f32 left, f32 top);
+void set_video2_ulx_uly(s16 viewleft, s16 viewtop) {
     ptr_video_settings2->viewleft = viewleft;
-    ptr_video_settings2->viewleft = viewtop;
-    currentPlayerSetScreenPosition((f32) ptr_video_settings2->viewleft, (f32) ptr_video_settings2->viewtop);
+    ptr_video_settings2->viewtop = viewtop;
+    currentPlayerSetScreenPosition(ptr_video_settings2->viewleft, ptr_video_settings2->viewtop);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_video2_ulx_uly
-/* 0050BC 700044BC 3C038002 */  lui   $v1, %hi(ptr_video_settings2)
-/* 0050C0 700044C0 246332A8 */  addiu $v1, %lo(ptr_video_settings2) # addiu $v1, $v1, 0x32a8
-/* 0050C4 700044C4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0050C8 700044C8 8C680000 */  lw    $t0, ($v1)
-/* 0050CC 700044CC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0050D0 700044D0 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0050D4 700044D4 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 0050D8 700044D8 A5040020 */  sh    $a0, 0x20($t0)
-/* 0050DC 700044DC 8C690000 */  lw    $t1, ($v1)
-/* 0050E0 700044E0 A5250022 */  sh    $a1, 0x22($t1)
-/* 0050E4 700044E4 8C620000 */  lw    $v0, ($v1)
-/* 0050E8 700044E8 844A0020 */  lh    $t2, 0x20($v0)
-/* 0050EC 700044EC 844B0022 */  lh    $t3, 0x22($v0)
-/* 0050F0 700044F0 448A2000 */  mtc1  $t2, $f4
-/* 0050F4 700044F4 448B3000 */  mtc1  $t3, $f6
-/* 0050F8 700044F8 46802320 */  cvt.s.w $f12, $f4
-/* 0050FC 700044FC 0FC1DF05 */  jal   currentPlayerSetScreenPosition
-/* 005100 70004500 468033A0 */   cvt.s.w $f14, $f6
-/* 005104 70004504 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 005108 70004508 27BD0018 */  addiu $sp, $sp, 0x18
-/* 00510C 7000450C 03E00008 */  jr    $ra
-/* 005110 70004510 00000000 */   nop   
-)
-#endif
-
-
 
 /**
  * 5114	70004514
