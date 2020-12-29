@@ -1282,7 +1282,7 @@ Gfx *video_related_F(Gfx *gdl) {
     }
     gSPViewport(gdl++, ((s32)&pPlayer->viewports[off_CODE_bss_80060879] + 0x80000000));
     projectionMatrix = sub_GAME_7F0BD6E0();
-    guPerspectiveF(projectionMatrixF, &perspNorm, ptr_video_settings2->fovy, ptr_video_settings2->aspect, ptr_video_settings2->near, ptr_video_settings2->far, 1.0f);
+    guPerspectiveF(projectionMatrixF, &perspNorm, ptr_video_settings2->fovy, ptr_video_settings2->aspect, ptr_video_settings2->znear, ptr_video_settings2->zfar, 1.0f);
     guMtxF2L(projectionMatrixF, projectionMatrix);
     gSPMatrix(gdl++, ((s32)projectionMatrix + 0x80000000), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
     gSPPerspNormalize(gdl++, perspNorm);
@@ -1781,16 +1781,16 @@ void set_video2_settings_usezbuf(s32 usezbuf) {
   ptr_video_settings2->usezbuf = usezbuf;
 }
 
-void currentPlayerSetPerspective(f32 near, f32 fovy, f32 aspect);
+void currentPlayerSetPerspective(f32 znear, f32 fovy, f32 aspect);
 void set_video2_settings_fovy(f32 fovy) {
     ptr_video_settings2->fovy = fovy;
-    currentPlayerSetPerspective(ptr_video_settings2->near, ptr_video_settings2->fovy, ptr_video_settings2->aspect);
+    currentPlayerSetPerspective(ptr_video_settings2->znear, ptr_video_settings2->fovy, ptr_video_settings2->aspect);
     currentPlayerSetCameraScale();
 }
 
 void set_video2_settings_aspect(f32 aspect) {
     ptr_video_settings2->aspect = aspect;
-    currentPlayerSetPerspective(ptr_video_settings2->near, ptr_video_settings2->fovy, ptr_video_settings2->aspect);
+    currentPlayerSetPerspective(ptr_video_settings2->znear, ptr_video_settings2->fovy, ptr_video_settings2->aspect);
     currentPlayerSetCameraScale();
 }
 
@@ -1801,50 +1801,16 @@ f32 viGetFovY(void) {
 void set_video2_settings_fov(f32 fovx, f32 fovy) {
     ptr_video_settings2->fovy = fovy;
     ptr_video_settings2->aspect = (f32) (fovx / fovy);
-    currentPlayerSetPerspective(ptr_video_settings2->near, ptr_video_settings2->fovy, ptr_video_settings2->aspect);
+    currentPlayerSetPerspective(ptr_video_settings2->znear, ptr_video_settings2->fovy, ptr_video_settings2->aspect);
     currentPlayerSetCameraScale();
 }
 
-/**
- * 5250	70004650
- */
-#ifdef NONMATCHING
-void set_page_height(f32 arg0, f32 arg1)
-{
-    ptr_video_settings2->near = arg0;
-    ptr_video_settings2->unk14 = arg1;
-    currentPlayerSetPerspective(ptr_video_settings2->near, ptr_video_settings2->fovy, ptr_video_settings2->aspect);
+void set_video2_settings_near_far(f32 near, f32 far) {
+    ptr_video_settings2->znear = near;
+    ptr_video_settings2->zfar = far;
+    currentPlayerSetPerspective(ptr_video_settings2->znear, ptr_video_settings2->fovy, ptr_video_settings2->aspect);
     currentPlayerSetCameraScale();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_page_height
-/* 005250 70004650 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 005254 70004654 3C038002 */  lui   $v1, %hi(ptr_video_settings2)
-/* 005258 70004658 246332A8 */  addiu $v1, %lo(ptr_video_settings2) # addiu $v1, $v1, 0x32a8
-/* 00525C 7000465C E7AC0018 */  swc1  $f12, 0x18($sp)
-/* 005260 70004660 C7A40018 */  lwc1  $f4, 0x18($sp)
-/* 005264 70004664 8C6E0000 */  lw    $t6, ($v1)
-/* 005268 70004668 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00526C 7000466C E7AE001C */  swc1  $f14, 0x1c($sp)
-/* 005270 70004670 E5C40010 */  swc1  $f4, 0x10($t6)
-/* 005274 70004674 8C6F0000 */  lw    $t7, ($v1)
-/* 005278 70004678 C7A6001C */  lwc1  $f6, 0x1c($sp)
-/* 00527C 7000467C E5E60014 */  swc1  $f6, 0x14($t7)
-/* 005280 70004680 8C620000 */  lw    $v0, ($v1)
-/* 005284 70004684 C44C0010 */  lwc1  $f12, 0x10($v0)
-/* 005288 70004688 C44E0008 */  lwc1  $f14, 8($v0)
-/* 00528C 7000468C 0FC1DF0C */  jal   currentPlayerSetPerspective
-/* 005290 70004690 8C46000C */   lw    $a2, 0xc($v0)
-/* 005294 70004694 0FC1DF17 */  jal   currentPlayerSetCameraScale
-/* 005298 70004698 00000000 */   nop   
-/* 00529C 7000469C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0052A0 700046A0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0052A4 700046A4 03E00008 */  jr    $ra
-/* 0052A8 700046A8 00000000 */   nop   
-)
-#endif
 
 /**
  * 52AC	700046AC
@@ -1853,7 +1819,7 @@ glabel set_page_height
 #ifdef NONMATCHING
 void *video_related_27(void *arg0)
 {
-    arg0->unk0 = (f32) ptr_video_settings2->near;
+    arg0->unk0 = (f32) ptr_video_settings2->znear;
     arg0->unk4 = (f32) ptr_video_settings2->unk14;
     return &ptr_video_settings2;
 }

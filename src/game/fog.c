@@ -229,7 +229,7 @@ glabel copy_table1_env_to_current
 /* 0EF28C 7F0BA75C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0EF290 7F0BA760 C48E0008 */  lwc1  $f14, 8($a0)
 /* 0EF294 7F0BA764 C48C0004 */  lwc1  $f12, 4($a0)
-/* 0EF298 7F0BA768 0C001194 */  jal   set_page_height
+/* 0EF298 7F0BA768 0C001194 */  jal   set_video2_settings_near_far
 /* 0EF29C 7F0BA76C AFA40038 */   sw    $a0, 0x38($sp)
 /* 0EF2A0 7F0BA770 0C0011AB */  jal   video_related_27
 /* 0EF2A4 7F0BA774 27A40030 */   addiu $a0, $sp, 0x30
@@ -595,7 +595,7 @@ glabel load_enviroment
 /* 0EF748 7F0BAC18 3C018006 */  lui   $at, %hi(D_80058D74)
 /* 0EF74C 7F0BAC1C C42E8D74 */  lwc1  $f14, %lo(D_80058D74)($at)
 /* 0EF750 7F0BAC20 AFA6001C */  sw    $a2, 0x1c($sp)
-/* 0EF754 7F0BAC24 0C001194 */  jal   set_page_height
+/* 0EF754 7F0BAC24 0C001194 */  jal   set_video2_settings_near_far
 /* 0EF758 7F0BAC28 AFA70028 */   sw    $a3, 0x28($sp)
 /* 0EF75C 7F0BAC2C 3C048004 */  lui   $a0, %hi(fog_tables2)
 /* 0EF760 7F0BAC30 3C018008 */  lui   $at, %hi(sky_enabled)

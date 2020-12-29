@@ -13,8 +13,8 @@ struct video_settings {
     s16 y;
     f32 fovy;
     f32 aspect;
-    f32 near;
-    f32 far;
+    f32 znear;
+    f32 zfar;
     s16 bufx;
     s16 bufy;
     s16 viewx;
@@ -25,9 +25,9 @@ struct video_settings {
     u8* framebuf;
 };
 
-void set_video2_settings_fovy(f32 arg0);
-void set_video2_settings_aspect(f32 arg0);
-void set_page_height(f32 arg0, f32 arg1);
+void set_video2_settings_fovy(f32 fovy);
+void set_video2_settings_aspect(f32 aspect);
+void set_video2_settings_near_far(f32 near, f32 far);
 void set_video2_settings_usezbuf(s32 usezbuf);
 #endif
 
