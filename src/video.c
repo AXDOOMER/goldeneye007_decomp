@@ -14,8 +14,8 @@
 u32 D_80023240 = 0;
 struct video_settings video1_settings[] = 
 {
-    {0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, 320, 240, 320, 240, 0, 0, 1, 0},
-    {0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, 320, 240, 320, 240, 0, 0, 1, 0}
+    {0, 0, 0, 0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, 320, 240, 320, 240, 0, 0, 1, 0},
+    {0, 0, 0, 0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, 320, 240, 320, 240, 0, 0, 1, 0}
 };
 s32 D_8002329C = 0;
 s32 D_800232A0 = 0;
@@ -1209,66 +1209,21 @@ void video_related_9(f32 param_1)
     D_800232B8 = 10;
 }
 
-/**
- * 4764	70003B64
- */
-//Even though this is defined in vi.h, it also must be in this file to be seen??
-extern OSMesgQueue vi_c_debug_MQ;
-void receive_vi_c_msgs(int msgcount){
-  do {
-    osRecvMesg(&vi_c_debug_MQ,NULL,1);
-    msgcount += -1;
-  } while (0 < msgcount);
+void receive_vi_c_msgs(int msgcount) {
+    do {
+        osRecvMesg(&vi_c_debug_MQ, NULL, 1);
+        msgcount--;
+    } while (msgcount > 0);
 }
 
-
-/**
- * 47B0	70003BB0
- */
-#ifdef NONMATCHING
+const s16 widths_80028480[] = {320, 320, 640};
+const s16 heights_80028488[] = {240, 240, 480};
 void setVideoWidthHeightToMode(s32 videomode)
 {
-    u16 widths_80028480[] = {320, 320, 640};
-    u16 heights_80028488[] = {240, 240, 480};
-
     ptr_video_settings2->mode = videomode;
-
-    ptr_video_settings2->somethingW = widths_80028480[videomode];
-    ptr_video_settings2->txtClipW = widths_80028480[videomode];
-
-    ptr_video_settings2->somethingH = heights_80028488[videomode];
-    ptr_video_settings2->txtClipH = heights_80028488[videomode];
+    ptr_video_settings2->txtClipW = ptr_video_settings2->somethingW = widths_80028480[videomode];
+    ptr_video_settings2->txtClipH = ptr_video_settings2->somethingH = heights_80028488[videomode];
 }
-#else
-const u16 widths_80028480[] = {320, 320, 640};
-const u16 heights_80028488[] = {240, 240, 480}; //is this not 16bit and a list of 320x240 and 640x480 - 3 widths, 3 heights
-GLOBAL_ASM(
-.text
-glabel setVideoWidthHeightToMode
-/* 0047B0 70003BB0 3C058002 */  lui   $a1, %hi(ptr_video_settings2)
-/* 0047B4 70003BB4 24A532A8 */  addiu $a1, %lo(ptr_video_settings2) # addiu $a1, $a1, 0x32a8
-/* 0047B8 70003BB8 8CAE0000 */  lw    $t6, ($a1)
-/* 0047BC 70003BBC 00041840 */  sll   $v1, $a0, 1
-/* 0047C0 70003BC0 3C028003 */  lui   $v0, %hi(widths_80028480)
-/* 0047C4 70003BC4 A1C40000 */  sb    $a0, ($t6)
-/* 0047C8 70003BC8 00431021 */  addu  $v0, $v0, $v1
-/* 0047CC 70003BCC 84428480 */  lh    $v0, %lo(widths_80028480)($v0)
-/* 0047D0 70003BD0 8CAF0000 */  lw    $t7, ($a1)
-/* 0047D4 70003BD4 A5E20018 */  sh    $v0, 0x18($t7)
-/* 0047D8 70003BD8 8CB80000 */  lw    $t8, ($a1)
-/* 0047DC 70003BDC A7020004 */  sh    $v0, 4($t8)
-/* 0047E0 70003BE0 3C028003 */  lui   $v0, %hi(heights_80028488)
-/* 0047E4 70003BE4 00431021 */  addu  $v0, $v0, $v1
-/* 0047E8 70003BE8 84428488 */  lh    $v0, %lo(heights_80028488)($v0)
-/* 0047EC 70003BEC 8CB90000 */  lw    $t9, ($a1)
-/* 0047F0 70003BF0 A722001A */  sh    $v0, 0x1a($t9)
-/* 0047F4 70003BF4 8CA80000 */  lw    $t0, ($a1)
-/* 0047F8 70003BF8 03E00008 */  jr    $ra
-/* 0047FC 70003BFC A5020006 */   sh    $v0, 6($t0)
-)
-#endif
-
-
 
 /**
  * 4800	70003C00	sets colour output mode to 16bit	[800232AC=1]
