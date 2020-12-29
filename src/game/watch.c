@@ -7482,7 +7482,7 @@ glabel sub_GAME_7F0A9AB8
 #endif
 
 
-s32 sub_GAME_7F0AA7C8(s32 param_1)
+s32 display_text_buttons_dual_control(s32 param_1)
 {
     s32 textptr_aux;
     
@@ -8047,7 +8047,7 @@ glabel sub_GAME_7F0AADC0
 /* 0DFF80 7F0AB450 00000000 */   nop   
 /* 0DFF84 7F0AB454 10400005 */  beqz  $v0, .L7F0AB46C
 /* 0DFF88 7F0AB458 00000000 */   nop   
-/* 0DFF8C 7F0AB45C 0FC2A9F2 */  jal   sub_GAME_7F0AA7C8
+/* 0DFF8C 7F0AB45C 0FC2A9F2 */  jal   display_text_buttons_dual_control
 /* 0DFF90 7F0AB460 02002025 */   move  $a0, $s0
 /* 0DFF94 7F0AB464 10000004 */  b     .L7F0AB478
 /* 0DFF98 7F0AB468 00408025 */   move  $s0, $v0
@@ -8515,7 +8515,7 @@ glabel sub_GAME_7F0AADC0
 /* 0E0B68 7F0ABFF8 00000000 */   nop   
 /* 0E0B6C 7F0ABFFC 10400005 */  beqz  $v0, .Ljp7F0AC014
 /* 0E0B70 7F0AC000 00000000 */   nop   
-/* 0E0B74 7F0AC004 0FC2ACE2 */  jal   sub_GAME_7F0AA7C8
+/* 0E0B74 7F0AC004 0FC2ACE2 */  jal   display_text_buttons_dual_control
 /* 0E0B78 7F0AC008 02002025 */   move  $a0, $s0
 /* 0E0B7C 7F0AC00C 10000004 */  b     .Ljp7F0AC020
 /* 0E0B80 7F0AC010 00408025 */   move  $s0, $v0
