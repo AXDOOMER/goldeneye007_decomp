@@ -2966,7 +2966,7 @@ glabel sub_GAME_7F0A70AC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A714C(void) {
+void draw_background_health_and_armor(void) {
 
 }
 #else
@@ -2975,7 +2975,7 @@ GLOBAL_ASM(
 glabel D_80058508
 .word 0x3d4ccccd /*0.050000001*/
 .text
-glabel sub_GAME_7F0A714C
+glabel draw_background_health_and_armor
 /* 0DBC7C 7F0A714C 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 0DBC80 7F0A7150 AFB00018 */  sw    $s0, 0x18($sp)
 /* 0DBC84 7F0A7154 00808025 */  move  $s0, $a0
@@ -3405,7 +3405,7 @@ glabel sub_GAME_7F0A714C
 
 void sub_GAME_7F0A77A8(u32 param_1,u32 param_2)
 {
-  sub_GAME_7F0A714C(param_1,param_2,1);
+  draw_background_health_and_armor(param_1,param_2,1);
 }
 
 
@@ -4357,7 +4357,7 @@ glabel draw_current_hand_item_and_ammo
 s32 draw_watch_mission_status_page(s32 param_1, s32 param_2)
 {
 
-  param_1 = sub_GAME_7F0A714C(param_1, param_2, 0);
+  param_1 = draw_background_health_and_armor(param_1, param_2, 0);
   
   if (check_watch_page_transistion_running() != 1)
   {
@@ -4408,7 +4408,7 @@ glabel debug_gun_watch_move_related2
 /* 0DCF54 7F0A8424 27BDF6D8 */  addiu $sp, $sp, -0x928
 /* 0DCF58 7F0A8428 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0DCF5C 7F0A842C AFB00038 */  sw    $s0, 0x38($sp)
-/* 0DCF60 7F0A8430 0FC29C53 */  jal   sub_GAME_7F0A714C
+/* 0DCF60 7F0A8430 0FC29C53 */  jal   draw_background_health_and_armor
 /* 0DCF64 7F0A8434 00003025 */   move  $a2, $zero
 /* 0DCF68 7F0A8438 0FC1F97F */  jal   check_watch_page_transistion_running
 /* 0DCF6C 7F0A843C AFA20928 */   sw    $v0, 0x928($sp)
@@ -4891,7 +4891,7 @@ glabel debug_gun_watch_move_related2
 /* 0DDB2C 7F0A8FBC 27BDF6D0 */  addiu $sp, $sp, -0x930
 /* 0DDB30 7F0A8FC0 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0DDB34 7F0A8FC4 AFB00038 */  sw    $s0, 0x38($sp)
-/* 0DDB38 7F0A8FC8 0FC29F39 */  jal   sub_GAME_7F0A714C
+/* 0DDB38 7F0A8FC8 0FC29F39 */  jal   draw_background_health_and_armor
 /* 0DDB3C 7F0A8FCC 00003025 */   move  $a2, $zero
 /* 0DDB40 7F0A8FD0 0FC1FB08 */  jal   check_watch_page_transistion_running
 /* 0DDB44 7F0A8FD4 AFA20930 */   sw    $v0, 0x930($sp)
@@ -5410,7 +5410,7 @@ glabel sub_GAME_7F0A8B10
 /* 0DD680 7F0A8B50 AFA20048 */  sw    $v0, 0x48($sp)
 /* 0DD684 7F0A8B54 02002025 */  move  $a0, $s0
 /* 0DD688 7F0A8B58 8FA5007C */  lw    $a1, 0x7c($sp)
-/* 0DD68C 7F0A8B5C 0FC29C53 */  jal   sub_GAME_7F0A714C
+/* 0DD68C 7F0A8B5C 0FC29C53 */  jal   draw_background_health_and_armor
 /* 0DD690 7F0A8B60 00003025 */   move  $a2, $zero
 /* 0DD694 7F0A8B64 0FC1F97F */  jal   check_watch_page_transistion_running
 /* 0DD698 7F0A8B68 00408025 */   move  $s0, $v0
@@ -8530,7 +8530,7 @@ void proc_7F0AB4B8(u32 param_1,u32 param_2)
     ?32 phi_s1_2;
 
 
-    DL = sub_GAME_7F0A714C(param_1, param_2, 0);
+    DL = draw_background_health_and_armor(param_1, param_2, 0);
     if (check_watch_page_transistion_running() != 1)
     {
         pFirstFontTableSmall = (s32) ptrFirstFontTableSmall;
@@ -8594,7 +8594,7 @@ glabel sub_GAME_7F0AB4B8
 /* 0DFFF0 7F0AB4C0 AFB20040 */  sw    $s2, 0x40($sp)
 /* 0DFFF4 7F0AB4C4 AFB1003C */  sw    $s1, 0x3c($sp)
 /* 0DFFF8 7F0AB4C8 AFB00038 */  sw    $s0, 0x38($sp)
-/* 0DFFFC 7F0AB4CC 0FC29C53 */  jal   sub_GAME_7F0A714C
+/* 0DFFFC 7F0AB4CC 0FC29C53 */  jal   draw_background_health_and_armor
 /* 0E0000 7F0AB4D0 00003025 */   move  $a2, $zero
 /* 0E0004 7F0AB4D4 0FC1F97F */  jal   check_watch_page_transistion_running
 /* 0E0008 7F0AB4D8 00408025 */   move  $s0, $v0
@@ -9249,7 +9249,7 @@ glabel sub_GAME_7F0ABDFC
 /* 0E092C 7F0ABDFC 27BDFFA0 */  addiu $sp, $sp, -0x60
 /* 0E0930 7F0ABE00 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0E0934 7F0ABE04 AFB00038 */  sw    $s0, 0x38($sp)
-/* 0E0938 7F0ABE08 0FC29C53 */  jal   sub_GAME_7F0A714C
+/* 0E0938 7F0ABE08 0FC29C53 */  jal   draw_background_health_and_armor
 /* 0E093C 7F0ABE0C 00003025 */   move  $a2, $zero
 /* 0E0940 7F0ABE10 0FC1F97F */  jal   check_watch_page_transistion_running
 /* 0E0944 7F0ABE14 00408025 */   move  $s0, $v0
@@ -9571,7 +9571,7 @@ glabel sub_GAME_7F0AC168
 /* 0E0CB8 7F0AC188 AFB20040 */  sw    $s2, 0x40($sp)
 /* 0E0CBC 7F0AC18C AFB1003C */  sw    $s1, 0x3c($sp)
 /* 0E0CC0 7F0AC190 AFB00038 */  sw    $s0, 0x38($sp)
-/* 0E0CC4 7F0AC194 0FC29C53 */  jal   sub_GAME_7F0A714C
+/* 0E0CC4 7F0AC194 0FC29C53 */  jal   draw_background_health_and_armor
 /* 0E0CC8 7F0AC198 00003025 */   move  $a2, $zero
 /* 0E0CCC 7F0AC19C 0FC1F97F */  jal   check_watch_page_transistion_running
 /* 0E0CD0 7F0AC1A0 AFA20DE8 */   sw    $v0, 0xde8($sp)
