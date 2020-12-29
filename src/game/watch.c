@@ -4032,7 +4032,7 @@ s32 draw_text_q_watch_v201_beta(s32 arg0)
 }
 
 #ifdef NONMATCHING
-void debug_gun_watch_move_related(void) {
+void draw_current_hand_item_and_ammo(void) {
 
 }
 #else
@@ -4059,7 +4059,7 @@ glabel D_8005852C
 glabel D_80058530
 .word 0x40c90fdb /*6.2831855*/
 .text
-glabel debug_gun_watch_move_related
+glabel draw_current_hand_item_and_ammo
 /* 0DC9D8 7F0A7EA8 27BDFEE8 */  addiu $sp, $sp, -0x118
 /* 0DC9DC 7F0A7EAC AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0DC9E0 7F0A7EB0 AFB00038 */  sw    $s0, 0x38($sp)
@@ -4361,7 +4361,7 @@ s32 draw_watch_mission_status_page(s32 param_1, s32 param_2)
   
   if (check_watch_page_transistion_running() != 1)
   {
-    param_1 = debug_gun_watch_move_related(sub_GAME_7F0A7DBC(draw_text_mission_status(draw_text_q_watch_v201_beta(param_1))));
+    param_1 = draw_current_hand_item_and_ammo(sub_GAME_7F0A7DBC(draw_text_mission_status(draw_text_q_watch_v201_beta(param_1))));
   }
   else
   {
