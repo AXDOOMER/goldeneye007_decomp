@@ -4255,7 +4255,7 @@ loop_1:
         goto loop_1;
     }
     temp_t1->unk0 = (s32) temp_t6->unk0;
-    temp_s4 = insert_generic_fillrect(set_setfillcolor(arg0, 0, 0, 0));
+    temp_s4 = insert_generic_fillrect(viSetFillColor(arg0, 0, 0, 0));
     temp_ret = sub_GAME_7F0BD6F8(2);
     temp_s0 = temp_ret;
     guLookAtReflect(&spB0, temp_ret, 0.0f, 0.0f, 4000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
@@ -4337,7 +4337,7 @@ glabel constructor_menu04_goldeneyelogo
 /* 04000C 7F00B4DC 00002825 */  move  $a1, $zero
 /* 040010 7F00B4E0 00003025 */  move  $a2, $zero
 /* 040014 7F00B4E4 00003825 */  move  $a3, $zero
-/* 040018 7F00B4E8 0C0011B4 */  jal   set_setfillcolor
+/* 040018 7F00B4E8 0C0011B4 */  jal   viSetFillColor
 /* 04001C 7F00B4EC AD210000 */   sw    $at, ($t1)
 /* 040020 7F00B4F0 0C000FBE */  jal   insert_generic_fillrect
 /* 040024 7F00B4F4 00402025 */   move  $a0, $v0
@@ -7820,7 +7820,7 @@ void constructor_menu06_modesel(void)
     sp58 = 0x96;
     sp54 = 0xdc;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0 = write_text_at_abs_coord(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp58, &sp54, &a1_, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0 = write_text_at_abs_coord(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(viSetFillColor(0, 0, 0)))), &sp58, &sp54, &a1_, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     if (append_cheat_sp != 0)
     {
         phi_a0 = TEXT(LTITLE, 0x75);
@@ -7904,7 +7904,7 @@ glabel constructor_menu06_modesel
 /* 042360 7F00D830 AFB00038 */  sw    $s0, 0x38($sp)
 /* 042364 7F00D834 00002825 */  move  $a1, $zero
 /* 042368 7F00D838 00003025 */  move  $a2, $zero
-/* 04236C 7F00D83C 0C0011B4 */  jal   set_setfillcolor
+/* 04236C 7F00D83C 0C0011B4 */  jal   viSetFillColor
 /* 042370 7F00D840 00003825 */   move  $a3, $zero
 /* 042374 7F00D844 0C000FBE */  jal   insert_generic_fillrect
 /* 042378 7F00D848 00402025 */   move  $a0, $v0
@@ -9543,7 +9543,7 @@ void constructor_menu07_missionsel(void)
     s32 phi_s6;
     s32 phi_s4_2;
 
-    temp_ret = insert_generic_fillrect(set_setfillcolor(0, 0, 0));
+    temp_ret = insert_generic_fillrect(viSetFillColor(0, 0, 0));
     temp_ret->unk4 = -1;
     temp_ret->unk0 = 0xf8000000;
     spD8 = 0;
@@ -9636,7 +9636,7 @@ glabel constructor_menu07_missionsel
 /* 042FB0 7F00E480 AFB00038 */  sw    $s0, 0x38($sp)
 /* 042FB4 7F00E484 00002825 */  move  $a1, $zero
 /* 042FB8 7F00E488 00003025 */  move  $a2, $zero
-/* 042FBC 7F00E48C 0C0011B4 */  jal   set_setfillcolor
+/* 042FBC 7F00E48C 0C0011B4 */  jal   viSetFillColor
 /* 042FC0 7F00E490 00003825 */   move  $a3, $zero
 /* 042FC4 7F00E494 0C000FBE */  jal   insert_generic_fillrect
 /* 042FC8 7F00E498 00402025 */   move  $a0, $v0
@@ -10468,7 +10468,7 @@ void constructor_menu08_difficulty(s32 arg0)
     void *phi_s2_3;
 
     spC68 = get_highest_unlocked_difficulty_for_level((0x80030000 + (briefingpage * 0x1c))->unk-5408);
-    temp_ret = set_setfillcolor(arg0, 0, 0, 0);
+    temp_ret = viSetFillColor(arg0, 0, 0, 0);
     arg0 = temp_ret;
     temp_v0 = temp_ret;
     temp_ret_2 = insert_generic_fillrect(temp_v0);
@@ -10688,7 +10688,7 @@ glabel constructor_menu08_difficulty
 /* 043924 7F00EDF4 8FA40C70 */  lw    $a0, 0xc70($sp)
 /* 043928 7F00EDF8 00002825 */  move  $a1, $zero
 /* 04392C 7F00EDFC 00003025 */  move  $a2, $zero
-/* 043930 7F00EE00 0C0011B4 */  jal   set_setfillcolor
+/* 043930 7F00EE00 0C0011B4 */  jal   viSetFillColor
 /* 043934 7F00EE04 00003825 */   move  $a3, $zero
 /* 043938 7F00EE08 AFA20C70 */  sw    $v0, 0xc70($sp)
 /* 04393C 7F00EE0C 0C000FBE */  jal   insert_generic_fillrect
@@ -11590,7 +11590,7 @@ loop_1:
     spC10 = 0x37;
     spC0C = 0x8f;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0 = write_text_at_abs_coord(print_current_solo_briefing_stage_name(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp54), &spC10, &spC0C, spC14, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0 = write_text_at_abs_coord(print_current_solo_briefing_stage_name(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(viSetFillColor(0, 0, 0)))), &sp54), &spC10, &spC0C, spC14, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     spC14 = get_textptr_for_textID(TEXT(LTITLE, 0x2a));
     spC10 = 0x39;
     spC0C = 0xa4;
@@ -11682,7 +11682,7 @@ glabel constructor_menu09_007options
 /* 0442D0 7F00F7A0 AFB00038 */  sw    $s0, 0x38($sp)
 /* 0442D4 7F00F7A4 00002825 */  move  $a1, $zero
 /* 0442D8 7F00F7A8 00003025 */  move  $a2, $zero
-/* 0442DC 7F00F7AC 0C0011B4 */  jal   set_setfillcolor
+/* 0442DC 7F00F7AC 0C0011B4 */  jal   viSetFillColor
 /* 0442E0 7F00F7B0 00003825 */   move  $a3, $zero
 /* 0442E4 7F00F7B4 0C000FBE */  jal   insert_generic_fillrect
 /* 0442E8 7F00F7B8 00402025 */   move  $a0, $v0
@@ -13613,7 +13613,7 @@ void constructor_menu0E_mpoptions(void)
     sp58 = 0x37;
     sp54 = 0x5f;
     sp44 = get_video2_settings_txtClipW();
-    temp_s0 = write_text_at_abs_coord(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp58, &sp54, sp64, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
+    temp_s0 = write_text_at_abs_coord(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(viSetFillColor(0, 0, 0)))), &sp58, &sp54, sp64, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, get_video2_settings_txtClipH(), 0, 0);
     temp_ret = get_textptr_for_textID(TEXT(LTITLE, 0x4d));
     sp64 = temp_ret;
     sub_GAME_7F0AE98C(&sp50, &sp4C, temp_ret, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
@@ -13862,7 +13862,7 @@ glabel constructor_menu0E_mpoptions
 /* 045A48 7F010F18 AFB00038 */  sw    $s0, 0x38($sp)
 /* 045A4C 7F010F1C 00002825 */  move  $a1, $zero
 /* 045A50 7F010F20 00003025 */  move  $a2, $zero
-/* 045A54 7F010F24 0C0011B4 */  jal   set_setfillcolor
+/* 045A54 7F010F24 0C0011B4 */  jal   viSetFillColor
 /* 045A58 7F010F28 00003825 */   move  $a3, $zero
 /* 045A5C 7F010F2C 0C000FBE */  jal   insert_generic_fillrect
 /* 045A60 7F010F30 00402025 */   move  $a0, $v0
@@ -16104,7 +16104,7 @@ void constructor_menu0F_mpcharsel(s32 arg0)
     s32 phi_v1_4;
 
     spE4 = get_selected_num_players();
-    temp_ret = microcode_constructor_related_to_menus(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(arg0, 0, 0, 0)))), 0x26, 0xa9, 0x184, 0xab, 0x90);
+    temp_ret = microcode_constructor_related_to_menus(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(viSetFillColor(arg0, 0, 0, 0)))), 0x26, 0xa9, 0x184, 0xab, 0x90);
     temp_s1 = temp_ret;
     phi_v0 = temp_ret;
     phi_s1_7 = temp_s1;
@@ -16292,7 +16292,7 @@ glabel constructor_menu0F_mpcharsel
 /* 047300 7F0127D0 02202025 */  move  $a0, $s1
 /* 047304 7F0127D4 00002825 */  move  $a1, $zero
 /* 047308 7F0127D8 00003025 */  move  $a2, $zero
-/* 04730C 7F0127DC 0C0011B4 */  jal   set_setfillcolor
+/* 04730C 7F0127DC 0C0011B4 */  jal   viSetFillColor
 /* 047310 7F0127E0 00003825 */   move  $a3, $zero
 /* 047314 7F0127E4 0C000FBE */  jal   insert_generic_fillrect
 /* 047318 7F0127E8 00402025 */   move  $a0, $v0
@@ -17102,7 +17102,7 @@ void constructor_menu10_mphandicap(s32 arg0)
     s32 phi_v1_2;
 
     spCC = get_selected_num_players();
-    temp_ret = microcode_constructor_related_to_menus(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(arg0, 0, 0, 0)))), 0x26, 0xa9, 0x184, 0xab, 0x90);
+    temp_ret = microcode_constructor_related_to_menus(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(viSetFillColor(arg0, 0, 0, 0)))), 0x26, 0xa9, 0x184, 0xab, 0x90);
     temp_s1 = temp_ret;
     phi_v0 = temp_ret;
     phi_s1_2 = temp_s1;
@@ -17209,7 +17209,7 @@ glabel constructor_menu10_mphandicap
 /* 047CE8 7F0131B8 02202025 */  move  $a0, $s1
 /* 047CEC 7F0131BC 00002825 */  move  $a1, $zero
 /* 047CF0 7F0131C0 00003025 */  move  $a2, $zero
-/* 047CF4 7F0131C4 0C0011B4 */  jal   set_setfillcolor
+/* 047CF4 7F0131C4 0C0011B4 */  jal   viSetFillColor
 /* 047CF8 7F0131C8 00003825 */   move  $a3, $zero
 /* 047CFC 7F0131CC 0C000FBE */  jal   insert_generic_fillrect
 /* 047D00 7F0131D0 00402025 */   move  $a0, $v0
@@ -18237,7 +18237,7 @@ void constructor_menu11_mpcontrol(s32 arg0)
     s32 phi_v1_2;
 
     spCC = get_selected_num_players();
-    temp_ret = microcode_constructor_related_to_menus(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(arg0, 0, 0, 0)))), 0x26, 0xa9, 0x184, 0xab, 0x90);
+    temp_ret = microcode_constructor_related_to_menus(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(viSetFillColor(arg0, 0, 0, 0)))), 0x26, 0xa9, 0x184, 0xab, 0x90);
     temp_s1 = temp_ret;
     phi_v0 = temp_ret;
     phi_s1_2 = temp_s1;
@@ -18344,7 +18344,7 @@ glabel constructor_menu11_mpcontrol
 /* 0484EC 7F0139BC 02202025 */  move  $a0, $s1
 /* 0484F0 7F0139C0 00002825 */  move  $a1, $zero
 /* 0484F4 7F0139C4 00003025 */  move  $a2, $zero
-/* 0484F8 7F0139C8 0C0011B4 */  jal   set_setfillcolor
+/* 0484F8 7F0139C8 0C0011B4 */  jal   viSetFillColor
 /* 0484FC 7F0139CC 00003825 */   move  $a3, $zero
 /* 048500 7F0139D0 0C000FBE */  jal   insert_generic_fillrect
 /* 048504 7F0139D4 00402025 */   move  $a0, $v0
@@ -18975,7 +18975,7 @@ void constructor_menu12_mpstage(s32 arg0)
     s32 phi_s2_2;
     s32 phi_s7;
 
-    temp_ret = set_setfillcolor(0, 0, 0);
+    temp_ret = viSetFillColor(0, 0, 0);
     arg0 = temp_ret;
     temp_ret_2 = insert_generic_fillrect(temp_ret);
     arg0 = temp_ret_2;
@@ -19157,7 +19157,7 @@ glabel constructor_menu12_mpstage
 /* 048BB4 7F014084 AFA40138 */  sw    $a0, 0x138($sp)
 /* 048BB8 7F014088 00002825 */  move  $a1, $zero
 /* 048BBC 7F01408C 00003025 */  move  $a2, $zero
-/* 048BC0 7F014090 0C0011B4 */  jal   set_setfillcolor
+/* 048BC0 7F014090 0C0011B4 */  jal   viSetFillColor
 /* 048BC4 7F014094 00003825 */   move  $a3, $zero
 /* 048BC8 7F014098 AFA20138 */  sw    $v0, 0x138($sp)
 /* 048BCC 7F01409C 0C000FBE */  jal   insert_generic_fillrect
@@ -19948,7 +19948,7 @@ void constructor_menu13_mpscenario(void)
     phi_s1 = &mp_player_counts;
     phi_s2 = 0;
     phi_s5 = 0x83;
-    phi_s4 = write_text_at_abs_coord(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp88, &sp84, get_textptr_for_textID(TEXT(LTITLE, 0x57)), (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0, 0xff);
+    phi_s4 = write_text_at_abs_coord(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(viSetFillColor(0, 0, 0)))), &sp88, &sp84, get_textptr_for_textID(TEXT(LTITLE, 0x57)), (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0, 0xff);
 loop_1:
     if ((phi_s1->unk3 < get_selected_num_players()) || (get_selected_num_players() < phi_s1->unk2))
     {
@@ -20001,7 +20001,7 @@ glabel constructor_menu13_mpscenario
 /* 0495A0 7F014A70 AFB00038 */  sw    $s0, 0x38($sp)
 /* 0495A4 7F014A74 00002825 */  move  $a1, $zero
 /* 0495A8 7F014A78 00003025 */  move  $a2, $zero
-/* 0495AC 7F014A7C 0C0011B4 */  jal   set_setfillcolor
+/* 0495AC 7F014A7C 0C0011B4 */  jal   viSetFillColor
 /* 0495B0 7F014A80 00003825 */   move  $a3, $zero
 /* 0495B4 7F014A84 0C000FBE */  jal   insert_generic_fillrect
 /* 0495B8 7F014A88 00402025 */   move  $a0, $v0
@@ -20676,7 +20676,7 @@ void constructor_menu14_mpteams(s32 arg0)
     u32 phi_v0_3;
 
     spCC = get_selected_num_players();
-    temp_ret = microcode_constructor_related_to_menus(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(arg0, 0, 0, 0)))), 0x26, 0xa9, 0x184, 0xab, 0x90);
+    temp_ret = microcode_constructor_related_to_menus(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(viSetFillColor(arg0, 0, 0, 0)))), 0x26, 0xa9, 0x184, 0xab, 0x90);
     phi_s5_5 = temp_ret;
     if (spCC >= 3)
     {
@@ -20798,7 +20798,7 @@ glabel constructor_menu14_mpteams
 /* 049CA4 7F015174 02A02025 */  move  $a0, $s5
 /* 049CA8 7F015178 00002825 */  move  $a1, $zero
 /* 049CAC 7F01517C 00003025 */  move  $a2, $zero
-/* 049CB0 7F015180 0C0011B4 */  jal   set_setfillcolor
+/* 049CB0 7F015180 0C0011B4 */  jal   viSetFillColor
 /* 049CB4 7F015184 00003825 */   move  $a3, $zero
 /* 049CB8 7F015188 0C000FBE */  jal   insert_generic_fillrect
 /* 049CBC 7F01518C 00402025 */   move  $a0, $v0
@@ -21893,7 +21893,7 @@ s32 constructor_menu0A_briefing(s32 *param_1)
   u32 uStack8;
   u8 *pbStack4;
   
-  puVar1 = set_setfillcolor(param_1,0,0,0);
+  puVar1 = viSetFillColor(param_1,0,0,0);
   puVar1 = insert_generic_fillrect(puVar1);
   DL = (s32 *)proc_7F00D5E8(puVar1);
   puVar1 = (s32 *)array_80050C54;
@@ -21991,7 +21991,7 @@ glabel constructor_menu0A_briefing
 /* 04A8AC 7F015D7C AFB00038 */  sw    $s0, 0x38($sp)
 /* 04A8B0 7F015D80 00002825 */  move  $a1, $zero
 /* 04A8B4 7F015D84 00003025 */  move  $a2, $zero
-/* 04A8B8 7F015D88 0C0011B4 */  jal   set_setfillcolor
+/* 04A8B8 7F015D88 0C0011B4 */  jal   viSetFillColor
 /* 04A8BC 7F015D8C 00003825 */   move  $a3, $zero
 /* 04A8C0 7F015D90 0C000FBE */  jal   insert_generic_fillrect
 /* 04A8C4 7F015D94 00402025 */   move  $a0, $v0
@@ -22569,7 +22569,7 @@ void constructor_menu0C_missionfailed(s32 arg0)
     s32 phi_v1;
     s32 phi_s0;
 
-    arg0 = print_current_solo_briefing_stage_name(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(set_setfillcolor(0, 0, 0)))), &sp58);
+    arg0 = print_current_solo_briefing_stage_name(microcode_constructor(sub_GAME_7F00D5E8(insert_generic_fillrect(viSetFillColor(0, 0, 0)))), &sp58);
     spC14 = 0x37;
     spC10 = 0x8f;
     sp44 = get_video2_settings_txtClipW();
@@ -22623,7 +22623,7 @@ glabel constructor_menu0C_missionfailed
 /* 04AF24 7F0163F4 AFB00038 */  sw    $s0, 0x38($sp)
 /* 04AF28 7F0163F8 00002825 */  move  $a1, $zero
 /* 04AF2C 7F0163FC 00003025 */  move  $a2, $zero
-/* 04AF30 7F016400 0C0011B4 */  jal   set_setfillcolor
+/* 04AF30 7F016400 0C0011B4 */  jal   viSetFillColor
 /* 04AF34 7F016404 00003825 */   move  $a3, $zero
 /* 04AF38 7F016408 0C000FBE */  jal   insert_generic_fillrect
 /* 04AF3C 7F01640C 00402025 */   move  $a0, $v0
@@ -23181,7 +23181,7 @@ glabel constructor_menu0D_missioncomplete
 /* 04B544 7F016A14 AFB00034 */  sw    $s0, 0x34($sp)
 /* 04B548 7F016A18 00002825 */  move  $a1, $zero
 /* 04B54C 7F016A1C 00003025 */  move  $a2, $zero
-/* 04B550 7F016A20 0C0011B4 */  jal   set_setfillcolor
+/* 04B550 7F016A20 0C0011B4 */  jal   viSetFillColor
 /* 04B554 7F016A24 00003825 */   move  $a3, $zero
 /* 04B558 7F016A28 0C000FBE */  jal   insert_generic_fillrect
 /* 04B55C 7F016A2C 00402025 */   move  $a0, $v0
@@ -24786,7 +24786,7 @@ glabel constructor_menu15_cheat
 /* 04CAB4 7F017F84 AFB00038 */  sw    $s0, 0x38($sp)
 /* 04CAB8 7F017F88 00002825 */  move  $a1, $zero
 /* 04CABC 7F017F8C 00003025 */  move  $a2, $zero
-/* 04CAC0 7F017F90 0C0011B4 */  jal   set_setfillcolor
+/* 04CAC0 7F017F90 0C0011B4 */  jal   viSetFillColor
 /* 04CAC4 7F017F94 00003825 */   move  $a3, $zero
 /* 04CAC8 7F017F98 0C000FBE */  jal   insert_generic_fillrect
 /* 04CACC 7F017F9C 00402025 */   move  $a0, $v0
@@ -26907,7 +26907,7 @@ glabel constructor_menu18_displaycast
 /* 04DFDC 7F0194AC 00002825 */  move  $a1, $zero
 /* 04DFE0 7F0194B0 00003025 */  move  $a2, $zero
 /* 04DFE4 7F0194B4 00003825 */  move  $a3, $zero
-/* 04DFE8 7F0194B8 0C0011B4 */  jal   set_setfillcolor
+/* 04DFE8 7F0194B8 0C0011B4 */  jal   viSetFillColor
 /* 04DFEC 7F0194BC E7B00148 */   swc1  $f16, 0x148($sp)
 /* 04DFF0 7F0194C0 0C000FBE */  jal   insert_generic_fillrect
 /* 04DFF4 7F0194C4 00402025 */   move  $a0, $v0

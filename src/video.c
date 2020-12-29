@@ -1817,72 +1817,15 @@ void get_video2_settings_near_far(f32 *arg0) {
     arg0[1] = ptr_video_settings2->zfar;
 }
 
-/**
- * 52D0	700046D0
- *     setfillcolour(&A0,A1,A2,A3); generates a setfillcolour op
- *     mode determined by flag at 800232AC: 0=32bit, 1=16bit
- *     accepts: A0=p->display list target, A1=red, A2=green, A3=blue
- *     returns: V0=updated display list target (A0 also updated)
- *     fries: V1,A0,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9
- */
-#ifdef NONMATCHING
-s32 set_setfillcolor(void *arg0, s32 arg1, s32 arg2, s32 arg3)
-{
-    s32 temp_t5;
-
-    if (coloroutputmode != 0)
-    {
-        temp_t5 = ((((arg1 << 8) & 0xf800) | ((arg2 * 8) & 0x7c0)) | ((arg3 >> 2) & 0x3e)) | 1;
-        arg0->unk0 = 0xf7000000;
-        arg0->unk4 = (s32) ((temp_t5 << 0x10) | temp_t5);
-        return arg0 + 8;
+Gfx *viSetFillColor(Gfx *gdl, s32 r, s32 g, s32 b) {
+    if (coloroutputmode != MODE_32BIT) {
+        gDPSetFillColor(gdl++, ((GPACK_RGBA5551(r, g, b, 1) << 16) | GPACK_RGBA5551(r, g, b, 1)));
+    } else {
+        gDPSetFillColor(gdl++, ((r << 24) | (g << 16) | (b << 8) | 0xFF));
     }
-    arg0->unk4 = (s32) ((((arg1 << 0x18) | (arg2 << 0x10)) | (arg3 << 8)) | 0xff);
-    arg0->unk0 = 0xf7000000;
-    return arg0 + 8;
+    
+    return gdl;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_setfillcolor
-/* 0052D0 700046D0 3C0E8002 */  lui   $t6, %hi(coloroutputmode) 
-/* 0052D4 700046D4 8DCE32AC */  lw    $t6, %lo(coloroutputmode)($t6)
-/* 0052D8 700046D8 00801025 */  move  $v0, $a0
-/* 0052DC 700046DC 3C18F700 */  lui   $t8, 0xf700
-/* 0052E0 700046E0 11C00013 */  beqz  $t6, .L70004730
-/* 0052E4 700046E4 00054600 */   sll   $t0, $a1, 0x18
-/* 0052E8 700046E8 0005C200 */  sll   $t8, $a1, 8
-/* 0052EC 700046EC 000640C0 */  sll   $t0, $a2, 3
-/* 0052F0 700046F0 310907C0 */  andi  $t1, $t0, 0x7c0
-/* 0052F4 700046F4 3319F800 */  andi  $t9, $t8, 0xf800
-/* 0052F8 700046F8 00075883 */  sra   $t3, $a3, 2
-/* 0052FC 700046FC 316C003E */  andi  $t4, $t3, 0x3e
-/* 005300 70004700 03295025 */  or    $t2, $t9, $t1
-/* 005304 70004704 014C1825 */  or    $v1, $t2, $t4
-/* 005308 70004708 346D0001 */  ori   $t5, $v1, 1
-/* 00530C 7000470C 00801025 */  move  $v0, $a0
-/* 005310 70004710 3C0FF700 */  lui   $t7, 0xf700
-/* 005314 70004714 AC4F0000 */  sw    $t7, ($v0)
-/* 005318 70004718 000D7400 */  sll   $t6, $t5, 0x10
-/* 00531C 7000471C 01CD7825 */  or    $t7, $t6, $t5
-/* 005320 70004720 AC4F0004 */  sw    $t7, 4($v0)
-/* 005324 70004724 24840008 */  addiu $a0, $a0, 8
-/* 005328 70004728 03E00008 */  jr    $ra
-/* 00532C 7000472C 00801025 */   move  $v0, $a0
-
-.L70004730:
-/* 005330 70004730 0006CC00 */  sll   $t9, $a2, 0x10
-/* 005334 70004734 01194825 */  or    $t1, $t0, $t9
-/* 005338 70004738 00075A00 */  sll   $t3, $a3, 8
-/* 00533C 7000473C 012B5025 */  or    $t2, $t1, $t3
-/* 005340 70004740 354C00FF */  ori   $t4, $t2, 0xff
-/* 005344 70004744 AC4C0004 */  sw    $t4, 4($v0)
-/* 005348 70004748 24840008 */  addiu $a0, $a0, 8
-/* 00534C 7000474C AC580000 */  sw    $t8, ($v0)
-/* 005350 70004750 03E00008 */  jr    $ra
-/* 005354 70004754 00801025 */   move  $v0, $a0
-)
-#endif
 
 /**
  * 5358	70004758

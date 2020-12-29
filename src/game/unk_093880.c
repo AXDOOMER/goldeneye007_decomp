@@ -1191,7 +1191,7 @@ glabel sub_GAME_7F094488
 /* 0C9044 7F094514 9207000A */  lbu   $a3, 0xa($s0)
 /* 0C9048 7F094518 92060009 */  lbu   $a2, 9($s0)
 /* 0C904C 7F09451C 92050008 */  lbu   $a1, 8($s0)
-/* 0C9050 7F094520 0C0011B4 */  jal   set_setfillcolor
+/* 0C9050 7F094520 0C0011B4 */  jal   viSetFillColor
 /* 0C9054 7F094524 8FA406B0 */   lw    $a0, 0x6b0($sp)
 /* 0C9058 7F094528 244B0008 */  addiu $t3, $v0, 8
 /* 0C905C 7F09452C AFAB06B0 */  sw    $t3, 0x6b0($sp)
@@ -1300,7 +1300,7 @@ glabel sub_GAME_7F094488
 /* 0C91F4 7F0946C4 92050008 */  lbu   $a1, 8($s0)
 .L7F0946C8:
 /* 0C91F8 7F0946C8 92060009 */  lbu   $a2, 9($s0)
-/* 0C91FC 7F0946CC 0C0011B4 */  jal   set_setfillcolor
+/* 0C91FC 7F0946CC 0C0011B4 */  jal   viSetFillColor
 /* 0C9200 7F0946D0 9207000A */   lbu   $a3, 0xa($s0)
 /* 0C9204 7F0946D4 44806000 */  mtc1  $zero, $f12
 /* 0C9208 7F0946D8 27B106A4 */  addiu $s1, $sp, 0x6a4
