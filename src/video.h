@@ -25,10 +25,10 @@ struct video_settings {
     u8* framebuf;
 };
 
-void setvideo_far(f32 arg0);
+void set_video2_settings_fovy(f32 arg0);
 void set_page_aspect(f32 arg0);
 void set_page_height(f32 arg0, f32 arg1);
-void set_video2_settings_offset_24(int param_1);
+void set_video2_settings_usezbuf(s32 usezbuf);
 #endif
 
 

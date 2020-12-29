@@ -1769,65 +1769,24 @@ void set_video2_ulx_uly(s16 viewleft, s16 viewtop) {
     currentPlayerSetScreenPosition(ptr_video_settings2->viewleft, ptr_video_settings2->viewtop);
 }
 
-/**
- * 5114	70004514
- *     V0= video2 ulx [p@800232A8+20]; fry T6
- */
 s16 viGetViewLeft(void) {
     return ptr_video_settings2->viewleft;
 }
 
-/**
- * 5124	70004524
- *     V0= video2 uly [p@800232A8+22]; fry T6
- */
 s16 viGetViewTop(void) {
     return ptr_video_settings2->viewtop;
 }
 
-/**
- * 5134	70004534
- *     A0->[p@800232A8+24]; fry T6
- */
-void set_video2_settings_offset_24(int param_1) {
-  ptr_video_settings2->usezbuf = param_1;
+void set_video2_settings_usezbuf(s32 usezbuf) {
+  ptr_video_settings2->usezbuf = usezbuf;
 }
 
-/**
- * 5144	70004544
- */
-#ifdef NONMATCHING
-void setvideo_far(f32 arg0)
-{
-    ptr_video_settings2->fovy = arg0;
+void currentPlayerSetPerspective(f32 near, f32 fovy, f32 aspect);
+void set_video2_settings_fovy(f32 fovy) {
+    ptr_video_settings2->fovy = fovy;
     currentPlayerSetPerspective(ptr_video_settings2->near, ptr_video_settings2->fovy, ptr_video_settings2->aspect);
     currentPlayerSetCameraScale();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel setvideo_far
-/* 005144 70004544 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 005148 70004548 3C038002 */  lui   $v1, %hi(ptr_video_settings2)
-/* 00514C 7000454C 246332A8 */  addiu $v1, %lo(ptr_video_settings2) # addiu $v1, $v1, 0x32a8
-/* 005150 70004550 E7AC0018 */  swc1  $f12, 0x18($sp)
-/* 005154 70004554 C7A40018 */  lwc1  $f4, 0x18($sp)
-/* 005158 70004558 8C6E0000 */  lw    $t6, ($v1)
-/* 00515C 7000455C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 005160 70004560 E5C40008 */  swc1  $f4, 8($t6)
-/* 005164 70004564 8C620000 */  lw    $v0, ($v1)
-/* 005168 70004568 C44C0010 */  lwc1  $f12, 0x10($v0)
-/* 00516C 7000456C C44E0008 */  lwc1  $f14, 8($v0)
-/* 005170 70004570 0FC1DF0C */  jal   currentPlayerSetPerspective
-/* 005174 70004574 8C46000C */   lw    $a2, 0xc($v0)
-/* 005178 70004578 0FC1DF17 */  jal   currentPlayerSetCameraScale
-/* 00517C 7000457C 00000000 */   nop   
-/* 005180 70004580 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 005184 70004584 27BD0018 */  addiu $sp, $sp, 0x18
-/* 005188 70004588 03E00008 */  jr    $ra
-/* 00518C 7000458C 00000000 */   nop   
-)
-#endif
 
 
 /**
