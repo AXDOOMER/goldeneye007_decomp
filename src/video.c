@@ -62,10 +62,10 @@ void init_video_settings(void)
     off_CODE_bss_80060879 = 1;
     v1 = &video1_settings[off_CODE_bss_80060878];
     ptr_video_settings1 = v1;
-    ptr_video_settings1->frameb = cfb_16[off_CODE_bss_80060878];    
+    ptr_video_settings1->framebuf = cfb_16[off_CODE_bss_80060878];    
     v2 = &video1_settings[off_CODE_bss_80060879];
     ptr_video_settings2 = v2;
-    ptr_video_settings2->frameb = cfb_16[off_CODE_bss_80060879];
+    ptr_video_settings2->framebuf = cfb_16[off_CODE_bss_80060879];
     D_8002329C = 0;
     D_800232A0 = 0;
 }
@@ -569,7 +569,7 @@ block_43:
     D_800232C0 = (s32) phi_t9_4;
     if (coloroutputmode != 0)
     {
-        fast3d_related_array->unk58 = (void *) ptr_video_settings2->frameb;
+        fast3d_related_array->unk58 = (void *) ptr_video_settings2->framebuf;
     }
     else
     {
@@ -603,7 +603,7 @@ block_43:
     temp_a1 = (&video1_settings + (off_CODE_bss_80060879 * 0x2c));
     *&ptr_video_settings2 = temp_a1;
     bcopy(*&ptr_video_settings2, temp_a1, 0x2c, &video1_settings);
-    ptr_video_settings2->frameb = (s32) ((off_CODE_bss_80060879 * 0x25800) + &cfb_16);
+    ptr_video_settings2->framebuf = (s32) ((off_CODE_bss_80060879 * 0x25800) + &cfb_16);
 }
 #else
 GLOBAL_ASM(
@@ -1222,8 +1222,8 @@ const s16 heights_80028488[] = {240, 240, 480};
 void setVideoWidthHeightToMode(s32 videomode)
 {
     ptr_video_settings2->mode = videomode;
-    ptr_video_settings2->txtClipW = ptr_video_settings2->somethingW = widths_80028480[videomode];
-    ptr_video_settings2->txtClipH = ptr_video_settings2->somethingH = heights_80028488[videomode];
+    ptr_video_settings2->x = ptr_video_settings2->bufx = widths_80028480[videomode];
+    ptr_video_settings2->y = ptr_video_settings2->bufy = heights_80028488[videomode];
 }
 
 /**
@@ -1247,7 +1247,7 @@ void set_coloroutputmode_32bit(void)
  */
 u8 * get_video_settings2_frameb(void)
 {
-    return ptr_video_settings2->frameb;
+    return ptr_video_settings2->framebuf;
 }
 
 /**
@@ -1255,7 +1255,7 @@ u8 * get_video_settings2_frameb(void)
  */
 u8 * get_video_settings1_frameb(void)
 {
-    return ptr_video_settings1->frameb;
+    return ptr_video_settings1->framebuf;
 }
 
 /**
@@ -1263,7 +1263,7 @@ u8 * get_video_settings1_frameb(void)
  */
 void set_video2buf_frameb(u8 *arg0)
 {
-    ptr_video_settings2->frameb = arg0;
+    ptr_video_settings2->framebuf = arg0;
 }
 
 /**
@@ -1275,10 +1275,10 @@ u16 get_80060824(void) {
 
 Gfx *video_related_F(Gfx *gdl) {
     if (pPlayer != NULL) {
-        pPlayer->viewports[off_CODE_bss_80060879].vp.vscale[0] = (ptr_video_settings2->width * 2);
-        pPlayer->viewports[off_CODE_bss_80060879].vp.vtrans[0] = (ptr_video_settings2->width * 2) + (ptr_video_settings2->ulx * 4);
-        pPlayer->viewports[off_CODE_bss_80060879].vp.vscale[1] = (ptr_video_settings2->height * 2);
-        pPlayer->viewports[off_CODE_bss_80060879].vp.vtrans[1] = (ptr_video_settings2->height * 2) + (ptr_video_settings2->uly * 4);
+        pPlayer->viewports[off_CODE_bss_80060879].vp.vscale[0] = (ptr_video_settings2->viewx * 2);
+        pPlayer->viewports[off_CODE_bss_80060879].vp.vtrans[0] = (ptr_video_settings2->viewx * 2) + (ptr_video_settings2->viewleft * 4);
+        pPlayer->viewports[off_CODE_bss_80060879].vp.vscale[1] = (ptr_video_settings2->viewy * 2);
+        pPlayer->viewports[off_CODE_bss_80060879].vp.vtrans[1] = (ptr_video_settings2->viewy * 2) + (ptr_video_settings2->viewtop * 4);
     }
     gSPViewport(gdl++, ((s32)&pPlayer->viewports[off_CODE_bss_80060879] + 0x80000000));
     projectionMatrix = sub_GAME_7F0BD6E0();
@@ -1289,54 +1289,23 @@ Gfx *video_related_F(Gfx *gdl) {
     currentPlayerSetProjectionMatrix(projectionMatrix);
     currentPlayerSetProjectionMatrixF(projectionMatrixF);
     if (coloroutputmode != MODE_32BIT) {
-        gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_16b, ptr_video_settings2->somethingW, (ptr_video_settings2->frameb + 0x80000000));
+        gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_16b, ptr_video_settings2->bufx, (ptr_video_settings2->framebuf + 0x80000000));
     }
     else {
-        gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_32b, ptr_video_settings2->somethingW, (cfb_16[0] + 0x80000000));
+        gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_32b, ptr_video_settings2->bufx, (cfb_16[0] + 0x80000000));
     }
     return gdl;
 }
 
-/**
- * 4AB4	70003EB4
- */
-#ifdef NONMATCHING
-s32 video_related_10(s32 arg0)
+Gfx *zbufClearCurrentPlayer(Gfx *gdl);
+Gfx *zbufInit(Gfx *gdl);
+Gfx *video_related_10(Gfx *gdl)
 {
-    s32 phi_a0;
-
-    phi_a0 = arg0;
-    if (ptr_video_settings2->unk24 != 0)
-    {
-        phi_a0 = zbufClearCurrentPlayer(zbuf7F0D2464());
-    }
-    return phi_a0;
+    if (ptr_video_settings2->usezbuf != 0) {
+        gdl = zbufClearCurrentPlayer(zbufInit(gdl));
+    }    
+    return gdl;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel video_related_10
-/* 004AB4 70003EB4 3C0E8002 */  lui   $t6, %hi(ptr_video_settings2) 
-/* 004AB8 70003EB8 8DCE32A8 */  lw    $t6, %lo(ptr_video_settings2)($t6)
-/* 004ABC 70003EBC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 004AC0 70003EC0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 004AC4 70003EC4 8DCF0024 */  lw    $t7, 0x24($t6)
-/* 004AC8 70003EC8 51E00007 */  beql  $t7, $zero, .L70003EE8
-/* 004ACC 70003ECC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 004AD0 70003ED0 0FC34919 */  jal   zbuf7F0D2464
-/* 004AD4 70003ED4 00000000 */   nop   
-/* 004AD8 70003ED8 0FC34946 */  jal   zbufClearCurrentPlayer
-/* 004ADC 70003EDC 00402025 */   move  $a0, $v0
-/* 004AE0 70003EE0 00402025 */  move  $a0, $v0
-/* 004AE4 70003EE4 8FBF0014 */  lw    $ra, 0x14($sp)
-.L70003EE8:
-/* 004AE8 70003EE8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 004AEC 70003EEC 00801025 */  move  $v0, $a0
-/* 004AF0 70003EF0 03E00008 */  jr    $ra
-/* 004AF4 70003EF4 00000000 */   nop   
-)
-#endif
-
 
 /**
  * 4AF8	70003EF8	generate a generic fillrect; fries: AT,A1,A2,A3,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9
@@ -1843,8 +1812,8 @@ s32 get_D_8002329C(void)
  */
 void set_video2_settings_offset_18_1A(s16 arg0, s16 arg1)
 {
-    ptr_video_settings2->somethingW = arg0;
-    ptr_video_settings2->somethingH = arg1;
+    ptr_video_settings2->bufx = arg0;
+    ptr_video_settings2->bufy = arg1;
 }
 
 /**
@@ -1853,7 +1822,7 @@ void set_video2_settings_offset_18_1A(s16 arg0, s16 arg1)
  */
 s16 get_video2_settings_offset_18(void)
 {
-    return ptr_video_settings2->somethingW;
+    return ptr_video_settings2->bufx;
 }
 
 /**
@@ -1862,7 +1831,7 @@ s16 get_video2_settings_offset_18(void)
  */
 s16 get_video2_settings_offset_1A(void)
 {
-    return ptr_video_settings2->somethingH;
+    return ptr_video_settings2->bufy;
 }
 
 /**
@@ -1871,9 +1840,9 @@ s16 get_video2_settings_offset_1A(void)
  *     A0->[p@800232A8+4], SP+0
  *     A1->[p@800232A8+6], SP+4
  */
-void set_video2_text_clip_size(s16 txtClipW, s16 txtClipH) {
-    ptr_video_settings2->txtClipW = txtClipW;
-    ptr_video_settings2->txtClipH = txtClipH;
+void set_video2_text_clip_size(s16 x, s16 y) {
+    ptr_video_settings2->x = x;
+    ptr_video_settings2->y = y;
 }
 
 /**
@@ -1881,7 +1850,7 @@ void set_video2_text_clip_size(s16 txtClipW, s16 txtClipH) {
  *     V0= video2 text clip width  [p@800232A8+4]; fry T6
  */
 s16 get_video2_settings_txtClipW(void) {
-    return ptr_video_settings2->txtClipW;
+    return ptr_video_settings2->x;
 }
 
 /**
@@ -1889,7 +1858,7 @@ s16 get_video2_settings_txtClipW(void) {
  *     V0= video2 text clip height [p@800232A8+6]; fry T6
  */
 s16 get_video2_settings_txtClipH(void) {
-    return ptr_video_settings2->txtClipH;
+    return ptr_video_settings2->y;
 }
 
 /**
@@ -1897,10 +1866,10 @@ s16 get_video2_settings_txtClipH(void) {
  *     set video2 width (A0) and height (A1)
  */
 #ifdef NONMATCHING
-void set_video2_width_height(short width,short height) {
-  ptr_video_settings2->width = width;
-  ptr_video_settings2->height = height;
-  currentPlayerSetScreenSize(ptr_video_settings2->width,ptr_video_settings2->height);
+void set_video2_width_height(short viewx,short viewy) {
+  ptr_video_settings2->viewx = viewx;
+  ptr_video_settings2->viewy = viewy;
+  currentPlayerSetScreenSize(ptr_video_settings2->viewx,ptr_video_settings2->viewy);
   currentPlayerSetCameraScale();
   return;
 }
@@ -1942,7 +1911,7 @@ glabel set_video2_width_height
  *     V0= video2 lrx [p@800232A8+1C]; fry T6
  */
 s16 viGetViewWidth(void) {
-    return ptr_video_settings2->width;
+    return ptr_video_settings2->viewx;
 }
 
 /**
@@ -1950,7 +1919,7 @@ s16 viGetViewWidth(void) {
  *     V0= video2 lry [p@800232A8+1E]; fry T6
  */
 s16 viGetViewHeight(void) {
-    return ptr_video_settings2->height;
+    return ptr_video_settings2->viewy;
 }
 
 /**
@@ -1958,11 +1927,11 @@ s16 viGetViewHeight(void) {
  *     set video2 ulx (A0) and uly (A1)
  */
 #ifdef NONMATCHING
-void set_video2_ulx_uly(s16 ulx, s16 uly)
+void set_video2_ulx_uly(s16 viewleft, s16 viewtop)
 {
-    ptr_video_settings2->ulx = ulx;
-    ptr_video_settings2->ulx = uly;
-    currentPlayerSetScreenPosition((f32) ptr_video_settings2->ulx, (f32) ptr_video_settings2->uly);
+    ptr_video_settings2->viewleft = viewleft;
+    ptr_video_settings2->viewleft = viewtop;
+    currentPlayerSetScreenPosition((f32) ptr_video_settings2->viewleft, (f32) ptr_video_settings2->viewtop);
 }
 #else
 GLOBAL_ASM(
@@ -2000,7 +1969,7 @@ glabel set_video2_ulx_uly
  *     V0= video2 ulx [p@800232A8+20]; fry T6
  */
 s16 viGetViewLeft(void) {
-    return ptr_video_settings2->ulx;
+    return ptr_video_settings2->viewleft;
 }
 
 /**
@@ -2008,7 +1977,7 @@ s16 viGetViewLeft(void) {
  *     V0= video2 uly [p@800232A8+22]; fry T6
  */
 s16 viGetViewTop(void) {
-    return ptr_video_settings2->uly;
+    return ptr_video_settings2->viewtop;
 }
 
 /**
@@ -2016,7 +1985,7 @@ s16 viGetViewTop(void) {
  *     A0->[p@800232A8+24]; fry T6
  */
 void set_video2_settings_offset_24(int param_1) {
-  ptr_video_settings2->anonymous_12 = param_1;
+  ptr_video_settings2->usezbuf = param_1;
 }
 
 /**
@@ -2296,7 +2265,7 @@ void indy_grab_jpg_16bit(void)
         jpg_16bit_grabnum++;
     }
     sprintf(&iFileName, "grab.%d.temp.uix", jpg_16bit_grabnum);
-    indy_send_capture_data(&iFileName, ptr_video_settings2->frameb, (get_video2_settings_txtClipH() * get_video2_settings_txtClipW() * 2));
+    indy_send_capture_data(&iFileName, ptr_video_settings2->framebuf, (get_video2_settings_txtClipH() * get_video2_settings_txtClipW() * 2));
     sprintf(&iFileName, "uix2pix grab.%d.temp.uix", jpg_16bit_grabnum);
     response_from_command_string(&iFileName);
     sprintf(&iFileName, "fromalias grab.%d.temp.pix grab.%d.temp.rgb", jpg_16bit_grabnum, jpg_16bit_grabnum);
@@ -2582,7 +2551,7 @@ loop_1:
         goto loop_1;
     }
     sprintf(&sp30, "grab.%d.temp.uix", rgb_16bit_grabnum);
-    indy_send_capture_data(&sp30, ptr_video_settings2->frameb, (get_video2_settings_txtClipH() * ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10)) * 2);
+    indy_send_capture_data(&sp30, ptr_video_settings2->framebuf, (get_video2_settings_txtClipH() * ((s32) (get_video2_settings_txtClipW() << 0x10) >> 0x10)) * 2);
     sprintf(&sp30, "uix2pix grab.%d.temp.uix", rgb_16bit_grabnum);
     response_from_command_string(&sp30);
     sprintf(&sp30, "fromalias grab.%d.temp.pix grab.%d.rgb", rgb_16bit_grabnum, rgb_16bit_grabnum);

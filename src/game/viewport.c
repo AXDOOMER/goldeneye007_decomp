@@ -37,7 +37,7 @@ void zbufSetBuffer(s32 buffer, s32 width, s32 height) {
     z_buffer_height = height;
 }
 
-Gfx *zbuf7F0D2464(Gfx *gdl) {
+Gfx *zbufInit(Gfx *gdl) {
     s32 phi_a3;
     s32 test;
     if (z_buffer == 0) {
