@@ -1788,50 +1788,13 @@ void set_video2_settings_fovy(f32 fovy) {
     currentPlayerSetCameraScale();
 }
 
-
-/**
- * 5190	70004590
- *     F12->video2 page width [p@800232A8+C] and something else...
- */
-#ifdef NONMATCHING
-void set_page_aspect(f32 arg0)
-{
-    ptr_video_settings2->aspect = arg0;
+void set_video2_settings_aspect(f32 aspect) {
+    ptr_video_settings2->aspect = aspect;
     currentPlayerSetPerspective(ptr_video_settings2->near, ptr_video_settings2->fovy, ptr_video_settings2->aspect);
     currentPlayerSetCameraScale();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_page_aspect
-/* 005190 70004590 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 005194 70004594 3C038002 */  lui   $v1, %hi(ptr_video_settings2)
-/* 005198 70004598 246332A8 */  addiu $v1, %lo(ptr_video_settings2) # addiu $v1, $v1, 0x32a8
-/* 00519C 7000459C E7AC0018 */  swc1  $f12, 0x18($sp)
-/* 0051A0 700045A0 C7A40018 */  lwc1  $f4, 0x18($sp)
-/* 0051A4 700045A4 8C6E0000 */  lw    $t6, ($v1)
-/* 0051A8 700045A8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0051AC 700045AC E5C4000C */  swc1  $f4, 0xc($t6)
-/* 0051B0 700045B0 8C620000 */  lw    $v0, ($v1)
-/* 0051B4 700045B4 C44C0010 */  lwc1  $f12, 0x10($v0)
-/* 0051B8 700045B8 C44E0008 */  lwc1  $f14, 8($v0)
-/* 0051BC 700045BC 0FC1DF0C */  jal   currentPlayerSetPerspective
-/* 0051C0 700045C0 8C46000C */   lw    $a2, 0xc($v0)
-/* 0051C4 700045C4 0FC1DF17 */  jal   currentPlayerSetCameraScale
-/* 0051C8 700045C8 00000000 */   nop   
-/* 0051CC 700045CC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0051D0 700045D0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0051D4 700045D4 03E00008 */  jr    $ra
-/* 0051D8 700045D8 00000000 */   nop   
-)
-#endif
 
-/**
- * 51DC	700045DC
- *     F0= [p@800232A8+8]; fry T6
- */
-f32 viGetFovY(void)
-{
+f32 viGetFovY(void) {
     return ptr_video_settings2->fovy;
 }
 
