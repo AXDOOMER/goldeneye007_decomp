@@ -7482,113 +7482,107 @@ glabel sub_GAME_7F0A9AB8
 #endif
 
 
-
-
-
-s32 sub_GAME_7F0AA7C8(s32 phi_v0)
+s32 sub_GAME_7F0AA7C8(s32 param_1)
 {
-    s32 phi_v0_2;
+    s32 textptr_aux;
     
-    phi_v0 = microcode_constructor(phi_v0);
-    if (get_controller_buttons_held(0, 0x8000))
+    param_1 = microcode_constructor(param_1);
+    
+    if (get_controller_buttons_held(0, A_BUTTON))
     {
-        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0x5A, 0xA7, get_textptr_for_textID(0xAC03), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0);
+        param_1 = sub_GAME_7F0A9398(param_1, 0x5A, 0xA7, get_textptr_for_textID(0xAC03), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0);
     }
     else
     {
-        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0x5A, 0xA7, get_textptr_for_textID(0xAC03), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
+        param_1 = sub_GAME_7F0A9398(param_1, 0x5A, 0xA7, get_textptr_for_textID(0xAC03), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
     }
     
-    if (get_controller_buttons_held(0, 0x4000))
+    if (get_controller_buttons_held(0, B_BUTTON))
     {
-        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0x5A, 0x95, get_textptr_for_textID(0xAC02), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0);
+        param_1 = sub_GAME_7F0A9398(param_1, 0x5A, 0x95, get_textptr_for_textID(0xAC02), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0);
     }
     else
     {
-        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0x5A, 0x95, get_textptr_for_textID(0xAC02), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
+        param_1 = sub_GAME_7F0A9398(param_1, 0x5A, 0x95, get_textptr_for_textID(0xAC02), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
     }
 
     if ((pPlayer->cur_player_control_type_0 == 4) || (pPlayer->cur_player_control_type_0 == 5))
     {
-        phi_v0_2 = get_textptr_for_textID(0xAC00);
+        textptr_aux = get_textptr_for_textID(0xAC00);
     }
     else
     {
-        phi_v0_2 = get_textptr_for_textID(0xAC01);
+        textptr_aux = get_textptr_for_textID(0xAC01);
     }
     
-    if (get_controller_buttons_held(0, 0x2000) != 0)
+    if (get_controller_buttons_held(0, Z_TRIG))
     {
-        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0x5A, 0xB9, phi_v0_2, -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0);
+        param_1 = sub_GAME_7F0A9398(param_1, 0x5A, 0xB9, textptr_aux, -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0);
     }
     else
     {
-        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0x5A, 0xB9, phi_v0_2, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
+        param_1 = sub_GAME_7F0A9398(param_1, 0x5A, 0xB9, textptr_aux, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
     }
     
     if ((pPlayer->cur_player_control_type_0 == 4) || (pPlayer->cur_player_control_type_0 == 6))
     {
-        phi_v0_2 = get_textptr_for_textID(0xAC05);
+        textptr_aux = get_textptr_for_textID(0xAC05);
     }
     else
     {
-        phi_v0_2 = get_textptr_for_textID(0xAC06);
+        textptr_aux = get_textptr_for_textID(0xAC06);
     }
     
-    phi_v0 = sub_GAME_7F0A9398(phi_v0, 0x5A, 0xCB, phi_v0_2, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
+    param_1 = sub_GAME_7F0A9398(param_1, 0x5A, 0xCB, textptr_aux, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
     
-    if (get_controller_buttons_held(1, 0x8000) != 0)
+    if (get_controller_buttons_held(1, A_BUTTON))
     {
-        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0xE6, 0xA7, get_textptr_for_textID(0xAC03), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1);
+        param_1 = sub_GAME_7F0A9398(param_1, 0xE6, 0xA7, get_textptr_for_textID(0xAC03), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1);
     }
     else
     {
-        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0xE6, 0xA7, get_textptr_for_textID(0xAC03), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
+        param_1 = sub_GAME_7F0A9398(param_1, 0xE6, 0xA7, get_textptr_for_textID(0xAC03), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
     }
     
-    if (get_controller_buttons_held(1, 0x4000) != 0)
+    if (get_controller_buttons_held(1, B_BUTTON))
     {
-        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0xE6, 0x95, get_textptr_for_textID(0xAC02), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1);
+        param_1 = sub_GAME_7F0A9398(param_1, 0xE6, 0x95, get_textptr_for_textID(0xAC02), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1);
     }
     else
     {
-        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0xE6, 0x95, get_textptr_for_textID(0xAC02), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
+        param_1 = sub_GAME_7F0A9398(param_1, 0xE6, 0x95, get_textptr_for_textID(0xAC02), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
     }
     
     if ((pPlayer->cur_player_control_type_0 == 4) || (pPlayer->cur_player_control_type_0 == 5))
     {
-        phi_v0_2 = get_textptr_for_textID(0xAC01);
+        textptr_aux = get_textptr_for_textID(0xAC01);
     }
     else
     {
-        phi_v0_2 = get_textptr_for_textID(0xAC00);
+        textptr_aux = get_textptr_for_textID(0xAC00);
     }
     
-    if (get_controller_buttons_held(1, 0x2000) != 0)
+    if (get_controller_buttons_held(1, Z_TRIG))
     {
-        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0xE6, 0xB9, phi_v0_2, -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1);
+        param_1 = sub_GAME_7F0A9398(param_1, 0xE6, 0xB9, textptr_aux, -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1);
     }
     else
     {
-        phi_v0 = sub_GAME_7F0A9398(phi_v0, 0xE6, 0xB9, phi_v0_2, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
+        param_1 = sub_GAME_7F0A9398(param_1, 0xE6, 0xB9, textptr_aux, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
     }
 
     if ((pPlayer->cur_player_control_type_0 == 4) || (pPlayer->cur_player_control_type_0 == 6))
     {
-        phi_v0_2 = get_textptr_for_textID(0xAC06);
+        textptr_aux = get_textptr_for_textID(0xAC06);
     }
     else
     {
-        phi_v0_2 = get_textptr_for_textID(0xAC05);
+        textptr_aux = get_textptr_for_textID(0xAC05);
     }
     
-    phi_v0 = sub_GAME_7F0A9398(phi_v0, 0xE6, 0xCB, phi_v0_2, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
-    return phi_v0;
+    param_1 = sub_GAME_7F0A9398(param_1, 0xE6, 0xCB, textptr_aux, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
+    return param_1;
 }
-
-
-
-
 
 
 #ifdef NONMATCHING
