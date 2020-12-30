@@ -4293,7 +4293,7 @@ glabel triggered_on_shot_hit
 /* 05B078 7F026548 57010009 */  bnel  $t8, $at, .L7F026570
 /* 05B07C 7F02654C 82020007 */   lb    $v0, 7($s0)
 /* 05B080 7F026550 AFA700AC */  sw    $a3, 0xac($sp)
-/* 05B084 7F026554 0FC26919 */  jal   get_num_players
+/* 05B084 7F026554 0FC26919 */  jal   getPlayerCount
 /* 05B088 7F026558 E7AC00A8 */   swc1  $f12, 0xa8($sp)
 /* 05B08C 7F02655C 28410002 */  slti  $at, $v0, 2
 /* 05B090 7F026560 8FA700AC */  lw    $a3, 0xac($sp)
@@ -5081,9 +5081,9 @@ glabel play_sound_for_shot_actor
 /* 05BBB8 7F027088 0FC26C57 */  jal   sub_GAME_7F09B15C
 /* 05BBBC 7F02708C AFA00060 */   sw    $zero, 0x60($sp)
 /* 05BBC0 7F027090 0002C080 */  sll   $t8, $v0, 2
-/* 05BBC4 7F027094 3C198008 */  lui   $t9, %hi(ptr_BONDdata_p1)
+/* 05BBC4 7F027094 3C198008 */  lui   $t9, %hi(players)
 /* 05BBC8 7F027098 0338C821 */  addu  $t9, $t9, $t8
-/* 05BBCC 7F02709C 8F399EE0 */  lw    $t9, %lo(ptr_BONDdata_p1)($t9)
+/* 05BBCC 7F02709C 8F399EE0 */  lw    $t9, %lo(players)($t9)
 /* 05BBD0 7F0270A0 8FA30060 */  lw    $v1, 0x60($sp)
 /* 05BBD4 7F0270A4 8F2800D8 */  lw    $t0, 0xd8($t9)
 /* 05BBD8 7F0270A8 55000071 */  bnezl $t0, .L7F027270
@@ -5096,7 +5096,7 @@ glabel play_sound_for_shot_actor
 /* 05BBF0 7F0270C0 914B0000 */  lbu   $t3, ($t2)
 /* 05BBF4 7F0270C4 5561001D */  bnel  $t3, $at, .L7F02713C
 /* 05BBF8 7F0270C8 8328000F */   lb    $t0, 0xf($t9)
-/* 05BBFC 7F0270CC 0FC26919 */  jal   get_num_players
+/* 05BBFC 7F0270CC 0FC26919 */  jal   getPlayerCount
 /* 05BC00 7F0270D0 AFA30060 */   sw    $v1, 0x60($sp)
 /* 05BC04 7F0270D4 24010001 */  li    $at, 1
 /* 05BC08 7F0270D8 1441000D */  bne   $v0, $at, .L7F027110
@@ -5361,7 +5361,7 @@ glabel handles_shot_actors
 /* 05BF70 7F027440 46000086 */  mov.s $f2, $f0
 /* 05BF74 7F027444 51A0000B */  beql  $t5, $zero, .L7F027474
 /* 05BF78 7F027448 8FA20070 */   lw    $v0, 0x70($sp)
-/* 05BF7C 7F02744C 0FC26919 */  jal   get_num_players
+/* 05BF7C 7F02744C 0FC26919 */  jal   getPlayerCount
 /* 05BF80 7F027450 E7A2003C */   swc1  $f2, 0x3c($sp)
 /* 05BF84 7F027454 24010001 */  li    $at, 1
 /* 05BF88 7F027458 14410005 */  bne   $v0, $at, .L7F027470
@@ -7810,7 +7810,7 @@ glabel set_actor_on_path
 
 
 
-void setSeenBondTimeToNow(PCHRdata guardData)
+void setSeenBondTimeToNow(struct chrdata *guardData)
 {
   guardData->timeshooter = global_timer;
   return;
@@ -9103,7 +9103,7 @@ glabel sub_GAME_7F02A1E8
 
 
 
-s32 true_if_actor_dying_fading_limping_shot(PCHRdata chr) {
+s32 true_if_actor_dying_fading_limping_shot(struct chrdata *chr) {
     s8 currentaction = chr->actiontype;
 
     if ((currentaction == ACT_DIE) || (currentaction == ACT_DEAD) || (currentaction == ACT_PREARGH) || (currentaction == ACT_ARGH) && !(chr->chrflags & CHRFLAG_00000200))
@@ -9113,7 +9113,7 @@ s32 true_if_actor_dying_fading_limping_shot(PCHRdata chr) {
 
 
 
-s32 true_if_actor_dying_fading(PCHRdata chr) {
+s32 true_if_actor_dying_fading(struct chrdata *chr) {
     s8 currentaction = chr->actiontype;
 
     return ((currentaction == ACT_DIE) || (currentaction == ACT_DEAD));
@@ -10577,7 +10577,7 @@ glabel sub_GAME_7F02AD98
 
 
 
-void actor_reset_sleep(PCHRdata actor) {
+void actor_reset_sleep(struct chrdata *actor) {
     actor->sleep = 0;
 }
 
@@ -12651,7 +12651,7 @@ glabel sub_GAME_7F02C4C0
 /* 061788 7F02CC58 8F290004 */  lw    $t1, 4($t9)
 /* 06178C 7F02CC5C 0FC1639E */  jal   sub_GAME_7F058E78
 /* 061790 7F02CC60 AFA900B8 */   sw    $t1, 0xb8($sp)
-/* 061794 7F02CC64 0FC1E115 */  jal   sub_GAME_7F078454
+/* 061794 7F02CC64 0FC1E115 */  jal   currentPlayerGetMatrix10EC
 /* 061798 7F02CC68 00000000 */   nop   
 /* 06179C 7F02CC6C 00402025 */  move  $a0, $v0
 /* 0617A0 7F02CC70 0FC16026 */  jal   matrix_4x4_multiply_homogeneous_in_place
@@ -12685,7 +12685,7 @@ glabel sub_GAME_7F02C4C0
 /* 06180C 7F02CCDC 00402025 */  move  $a0, $v0
 /* 061810 7F02CCE0 0FC1639E */  jal   sub_GAME_7F058E78
 /* 061814 7F02CCE4 27A50068 */   addiu $a1, $sp, 0x68
-/* 061818 7F02CCE8 0FC1E115 */  jal   sub_GAME_7F078454
+/* 061818 7F02CCE8 0FC1E115 */  jal   currentPlayerGetMatrix10EC
 /* 06181C 7F02CCEC 00000000 */   nop   
 /* 061820 7F02CCF0 00402025 */  move  $a0, $v0
 /* 061824 7F02CCF4 0FC16026 */  jal   matrix_4x4_multiply_homogeneous_in_place
@@ -13753,7 +13753,7 @@ glabel sub_GAME_7F02D630
 /* 0621D0 7F02D6A0 C4660004 */  lwc1  $f6, 4($v1)
 /* 0621D4 7F02D6A4 E6060004 */  swc1  $f6, 4($s0)
 /* 0621D8 7F02D6A8 C4680008 */  lwc1  $f8, 8($v1)
-/* 0621DC 7F02D6AC 0FC1E111 */  jal   sub_GAME_7F078444
+/* 0621DC 7F02D6AC 0FC1E111 */  jal   currentPlayerGetMatrix10D4
 /* 0621E0 7F02D6B0 E6080008 */   swc1  $f8, 8($s0)
 /* 0621E4 7F02D6B4 00402025 */  move  $a0, $v0
 /* 0621E8 7F02D6B8 8FA500B4 */  lw    $a1, 0xb4($sp)
@@ -13770,7 +13770,7 @@ glabel sub_GAME_7F02D630
 /* 062210 7F02D6E0 8FBF001C */   lw    $ra, 0x1c($sp)
 /* 062214 7F02D6E4 0FC1B198 */  jal   sub_GAME_7F06C660
 /* 062218 7F02D6E8 00003025 */   move  $a2, $zero
-/* 06221C 7F02D6EC 0FC1E111 */  jal   sub_GAME_7F078444
+/* 06221C 7F02D6EC 0FC1E111 */  jal   currentPlayerGetMatrix10D4
 /* 062220 7F02D6F0 AFA2006C */   sw    $v0, 0x6c($sp)
 /* 062224 7F02D6F4 00402025 */  move  $a0, $v0
 /* 062228 7F02D6F8 8FA5006C */  lw    $a1, 0x6c($sp)
@@ -20533,10 +20533,10 @@ glabel get_angle_between_actor_cur_player
 #endif
 
 
-float distToBond3D(PCHRdata guardData)
+float distToBond3D(struct chrdata *guardData)
 {
-  struct PositionData *guardPosData;
-  struct PositionData *playerPosData;
+  struct prop *guardPosData;
+  struct prop *playerPosData;
   float xDiff;
   float yDiff;
   float zDiff;
@@ -20664,7 +20664,7 @@ glabel check_if_room_for_preset_loaded
 #endif
 
 
-s32 convertPadIf9000(PCHRdata guardData,s32 padNo)
+s32 convertPadIf9000(struct chrdata *guardData,s32 padNo)
 {
     // Guard's target pad.
     if (padNo == PAD_PRESET) {
@@ -21237,7 +21237,7 @@ glabel sub_GAME_7F0333F8
 /* 067F68 7F033438 8FA40044 */  lw    $a0, 0x44($sp)
 /* 067F6C 7F03343C 0FC1B2E6 */  jal   getsuboffset
 /* 067F70 7F033440 27A50020 */   addiu $a1, $sp, 0x20
-/* 067F74 7F033444 0FC1E0F1 */  jal   get_BONDdata_field_10CC
+/* 067F74 7F033444 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
 /* 067F78 7F033448 00000000 */   nop   
 /* 067F7C 7F03344C 00402025 */  move  $a0, $v0
 /* 067F80 7F033450 0FC1611D */  jal   matrix_4x4_transform_vector_in_place

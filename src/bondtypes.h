@@ -49,7 +49,7 @@ typedef struct PropRecord
 } PropRecord;
 
 /* unfinished struct, WIP */
-typedef struct {
+struct chrdata {
     u16 chrnum;
     s8 accuracyrating;
     s8 speedrating;
@@ -70,7 +70,7 @@ typedef struct {
     s8 flinchcnt;
     s16 hidden;
     s32 chrflags;
-    struct PositionData* posdata;
+    struct prop* posdata;
     void * model;
     /* 0x0020 */
     void * field_20;
@@ -220,7 +220,7 @@ typedef struct {
     int field_1D0;
     int field_1D4;
     int * handle_positiondata_hat;
-} CHRdata, *PCHRdata;
+};
 
 struct object_standard {
     u16 extrascale:2; 

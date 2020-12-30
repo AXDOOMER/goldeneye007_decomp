@@ -119,12 +119,19 @@ def find_files_completed():
 def find_last_modified_file():
     lastdate = 0
     lastname = ''
+    timestamp = 0
+
     for root, dirs, files in os.walk('src'):
         for file in files:
             if file.endswith(".c") or file.endswith(".s"):
                 _file = os.path.join(root, file)
-                if os.path.getmtime(_file) > lastdate:
-                    lastdate = os.path.getmtime(_file)
+
+                result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--', _file], stdout=subprocess.PIPE, universal_newlines=True)
+
+                timestamp = int(result.stdout.rstrip().replace('"', ''), 16)
+                
+                if timestamp > lastdate:
+                    lastdate = timestamp
                     lastname = _file
 
     return lastname

@@ -6,7 +6,7 @@
 #include "game/matrixmath.h"
 #include "structs.h"
 
-struct xyzpoint
+struct coord
 {
     f32 x;
     f32 y;
@@ -301,27 +301,27 @@ typedef struct textoverride {
 } textoverride;
 
 
-struct Player
+struct player
 {
   s32 unknown;
-  s32 xpos;
-  s32 ypos;
-  s32 zpos;
-  s32 xpos2;
-  s32 ypos2;
-  s32 zpos2;
-  s32 xoffset;
-  s32 yoffset;
-  s32 zoffset;
-  s32 xpos3;
-  s32 ypos3;
-  s32 zpos3;
+  f32 xpos;
+  f32 ypos;
+  f32 zpos;
+  f32 xpos2;
+  f32 ypos2;
+  f32 zpos2;
+  f32 xoffset;
+  f32 yoffset;
+  f32 zoffset;
+  f32 xpos3;
+  f32 ypos3;
+  f32 zpos3;
   s32 room_pointer;
   vec3 current_model_pos;
   vec3 previous_model_pos;
-  s32 current_room_xpos;
-  s32 current_room_ypos;
-  s32 current_room_zpos;
+  f32 current_room_xpos;
+  f32 current_room_ypos;
+  f32 current_room_zpos;
   s32 field_5C;
   s32 field_60;
   s32 field_64;
@@ -332,16 +332,16 @@ struct Player
   s32 field_78;
   s32 field_7C;
   s32 field_80;
-  s32 field_84;
-  s32 field_88;
+  f32 field_84;
+  f32 field_88;
   s32 field_8C;
-  s32 field_90;
+  f32 field_90;
   s32 field_94;
-  s32 field_98;
-  s32 crouchposition;
-  s32 ducking_height_offset;
-  s32 field_A4;
-  struct PositionData* position_data;
+  f32 field_98;
+  s32 crouchpos;
+  f32 ducking_height_offset;
+  f32 field_A4;
+  struct prop* prop;
   s32 field_AC;
   s32 field_B0;
   s32 zpos_0;
@@ -354,12 +354,12 @@ struct Player
   s32 field_D0;
   s32 ptr_char_objectinstance;
   s32 bonddead;
-  s32 bondhealth;
+  f32 bondhealth;
   f32 bondarmour;
-  s32 oldhealth;
-  s32 oldarmour;
-  s32 apparenthealth;
-  s32 apparentarmour;
+  f32 oldhealth;
+  f32 oldarmour;
+  f32 apparenthealth;
+  f32 apparentarmour;
   s32 damageshowtime;
   s32 healthshowtime;
   s32 healthshowmode;
@@ -383,26 +383,26 @@ struct Player
   s32 autoxaimtime60;
   f32 vv_theta;
   f32 speedtheta;
-  s32 vv_costheta;
-  s32 vv_sintheta;
+  f32 vv_costheta;
+  f32 vv_sintheta;
   f32 vv_verta;
-  s32 vv_verta360;
+  f32 vv_verta360;
   f32 speedverta;
-  s32 vv_cosverta;
-  s32 vv_sinverta;
+  f32 vv_cosverta;
+  f32 vv_sinverta;
   f32 speedsideways;
   f32 speedstrafe;
   f32 speedforwards;
-  s32 speedboost;
+  f32 speedboost;
   s32 speedmaxtime60;
-  s32 boost_factor_x;
-  s32 boost_factor_y;
-  s32 boost_factor_z;
-  s32 viewport_alpha;
-  s32 bondfadetime60;
-  s32 bondfadetimemax;
-  s32 bondfadefracold;
+  f32 boost_factor_x;
+  f32 boost_factor_y;
+  f32 boost_factor_z;
+  f32 bondfadetime60;
+  f32 bondfadetimemax60;
+  f32 bondfadefracold;
   f32 bondfadefracnew;
+  f32 field_19C;
   s32 field_1A0;
   s32 field_1A4;
   s32 field_1A8;
@@ -429,8 +429,8 @@ struct Player
   s32 field_1FC;
   s32 pausing_flag;
   f32 pause_starting_angle;
-  s32 field_208;
-  s32 pause_target_angle;
+  f32 field_208;
+  f32 pause_target_angle;
   f32 field_210;
   f32 field_214;
   s32 field_218;
@@ -541,23 +541,23 @@ struct Player
   s32 field_3B8;
   s32 field_3BC;
   s32 field_3C0;
-  s32 field_3C4;
-  s32 field_3C8;
-  s32 field_3CC;
-  s32 tint_red;
-  s32 tint_green;
-  s32 tint_blue;
-  f32 tint_alpha;
-  s32 screen_fade_timer;
-  f32 screen_fade_max_time;
-  s32 field_3E8;
-  s32 field_3EC;
-  s32 field_3F0;
-  s32 field_3F4;
-  s32 field_3F8;
-  s32 field_3FC;
-  s32 field_400;
-  s32 field_404;
+  f32 field_3C4;
+  f32 field_3C8;
+  f32 field_3CC;
+  s32 colourscreenred;
+  s32 colourscreengreen;
+  s32 colourscreenblue;
+  f32 colourscreenfrac;
+  f32 colourfadetime60;
+  f32 colourfadetimemax60;
+  s32 colourfaderedold;
+  s32 colourfaderednew;
+  s32 colourfadegreenold;
+  s32 colourfadegreennew;
+  s32 colourfadeblueold;
+  s32 colourfadebluenew;
+  f32 colourfadefracold;
+  f32 colourfadefracnew;
   s32 field_408;
   s32 field_40C;
   s32 field_410;
@@ -781,14 +781,7 @@ struct Player
   s32 field_7C4;
   s32 field_7C8;
   s32 field_7CC;
-  s32 field_7D0;
-  s32 field_7D4;
-  s32 field_7D8;
-  s32 field_7DC;
-  s32 field_7E0;
-  s32 field_7E4;
-  s32 field_7E8;
-  s32 field_7EC;
+  Vp viewports[2];
   s16 viewx;
   s16 viewy;
   s16 viewleft;
@@ -875,24 +868,23 @@ struct Player
   f32 c_scaley;
   f32 c_recipscalex;
   f32 c_recipscaley;
-  s32 field_10C4;
-  s32 field_10C8;
-  s32 field_10CC; // 4x4 matrix
-  s32 field_10D0;
-  s32 field_10D4;
-  s32 field_10D8;
-  s32 field_10DC;
-  s32 field_10E0;
-  s32 field_10E4;
-  s32 field_10E8;
-  s32 field_10EC;
+  Mtx* field_10C4;
+  Mtx* field_10C8;
+  Mtxf* field_10CC;
+  s32 field_10D0; // ptr
+  Mtxf* field_10D4;
+  Mtx* projmatrix;
+  Mtxf* projmatrixf;
+  s32 field_10E0; // ptr
+  s32 field_10E4; // ptr
+  Mtxf* field_10E8;
+  Mtxf* field_10EC;
   f32 c_scalelod60;
   f32 c_scalelod;
   f32 c_lodscalez;
   u32 c_lodscalezu32;
-  struct xyzpoint c_cameratopnorm;
-  struct xyzpoint c_cameraleftnorm;
-
+  struct coord c_cameratopnorm;
+  struct coord c_cameraleftnorm;
   f32 screenxminf;
   f32 screenyminf;
   f32 screenxmaxf;
@@ -980,9 +972,9 @@ struct Player
   s32 field_1268;
   s32 field_126C;
   s32 field_1270;
-  s32 field_1274;
-  s32 field_1278;
-  s32 field_127C;
+  f32 swaytarget;
+  f32 field_1278;
+  f32 field_127C;
   s32 field_1280;
   s32 players_cur_animation;
   s32 field_1288;
@@ -2474,7 +2466,7 @@ struct Player
   s32 field_29B4;
   s32 field_29B8;
   s32 field_29BC;
-  s32 field_29C0;
+  f32 field_29C0;
   s32 mpmenuon;
   s32 mpmenumode;
   s32 mpquitconfirm;
@@ -2489,11 +2481,11 @@ struct Player
   s32 field_29F0;
   s32 field_29F4;
   s32 field_29F8;
-  s32 field_29FC;
+  s32 autocrouchpos;
   s32 healthdisplaytime;
   s16 field_2A04;
-  s32 field_2A08;
-  s32 field_2A0C;
+  f32 field_2A08;
+  f32 field_2A0C;
   s32 ptr_text_first_mp_award;
   s32 ptr_text_second_mp_award;
   s32 field_2A18;
@@ -2849,6 +2841,6 @@ void sub_GAME_7F07E46C(f32 param);
 
 void trigger_watch_zoom(f32 final, f32 time);
 
-struct PositionData* get_curplayer_positiondata(void);
+struct prop* get_curplayer_positiondata(void);
 
 #endif

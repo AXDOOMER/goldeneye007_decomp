@@ -2233,7 +2233,7 @@ glabel get_screen_ratio_settings_for_mpgame_from_folder
 /* 053BB0 7F01F080 0FC2A468 */  jal   sub_GAME_7F0A91A0
 /* 053BB4 7F01F084 01202025 */   move  $a0, $t1
 /* 053BB8 7F01F088 960A000C */  lhu   $t2, 0xc($s0)
-/* 053BBC 7F01F08C 0FC26919 */  jal   get_num_players
+/* 053BBC 7F01F08C 0FC26919 */  jal   getPlayerCount
 /* 053BC0 7F01F090 A7AA0020 */   sh    $t2, 0x20($sp)
 /* 053BC4 7F01F094 24010001 */  li    $at, 1
 /* 053BC8 7F01F098 14410007 */  bne   $v0, $at, .L7F01F0B8
