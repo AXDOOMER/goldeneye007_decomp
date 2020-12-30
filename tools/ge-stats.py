@@ -130,6 +130,8 @@ def find_last_modified_file():
 
                 timestamp = int(result.stdout.rstrip().replace('"', ''), 16)
                 
+                print(timestamp, _file)
+
                 if timestamp > lastdate:
                     lastdate = timestamp
                     lastname = _file
