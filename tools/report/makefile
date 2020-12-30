@@ -5,7 +5,7 @@ CC = @gcc
 SRCDIR = ./
 OUTNAME = $(SRCDIR)report
 TEMPLATE = $(SRCDIR)template.html
-OUTHTML = $(SRCDIR)results.html
+OUTHTML = $(SRCDIR)index.html
 
 #Compiler flags
 CFLAGS = -shared -ansi -Os -std=c89

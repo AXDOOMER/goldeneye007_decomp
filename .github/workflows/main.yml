@@ -43,7 +43,7 @@ jobs:
         #git diff HEAD^ HEAD --name-only
             
         # expected args
-        # 1481 15854 12774 232276 564 1312 652 20330 15471 269772 49 336 tools/report/results.html "src/game/bond.c"
+        # 1481 15854 12774 232276 564 1312 652 20330 15471 269772 49 336 tools/report/index.html "src/game/bond.c"
       
       # Replace this with Git push to repo
       # but somehow avoid loop
@@ -51,14 +51,24 @@ jobs:
       #- uses: actions/download-artifact@v2
       #  with:
       #    name: my-artifact
-      #    path: tools/report/results.html
-      - name: Upload output file
-        uses: actions/upload-artifact@v2
+      #    path: tools/report/index.html
+      - name: Upload output files
+      
+        uses: dmnemec/copy_file_to_another_repo_action@v1.0.4
+
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+          API_TOKEN_USER: ${{ secrets.API_TOKEN_USER }}
+          API_TOKEN_EMAIL: ${{ secrets.API_TOKEN_EMAIL }}
+
         with:
-          name: ReportPage(US)
-          path: |
+          destination_repo: 'kholdfuzion/goldeneyestatus'
+          user_email: $API_TOKEN_EMAIL
+          user_name: $API_TOKEN_USER
+          commit_message: 'update page automatically'
+          source_file: |
             tools/report/cursor.cur
-            tools/report/results.html
+            tools/report/index.html
             tools/report/sfx.ogg
             tools/report/background.jpg
 
