@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/gamefile.h"
+#include "bondconstants.h"
 
 s32 sub_GAME_7F01D6C0(void) {
   return save_7000C6FC();
@@ -1732,30 +1733,10 @@ glabel check_aztec_completed_in_folder_secret_00
 )
 #endif
 
-
-
-#ifdef NONMATCHING
-void check_egypt_completed_in_folder_00(void) {
-
+s32 check_egypt_completed_in_folder_00(int foldernum)
+{
+    return isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_AZTEC, DIFFICULTY_00) == 3;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_egypt_completed_in_folder_00
-/* 0535D8 7F01EAA8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0535DC 7F01EAAC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0535E0 7F01EAB0 24050013 */  li    $a1, 19
-/* 0535E4 7F01EAB4 0FC078B0 */  jal   isStageUnlockedAtDifficulty
-/* 0535E8 7F01EAB8 24060002 */   li    $a2, 2
-/* 0535EC 7F01EABC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0535F0 7F01EAC0 384E0003 */  xori  $t6, $v0, 3
-/* 0535F4 7F01EAC4 2DC20001 */  sltiu $v0, $t6, 1
-/* 0535F8 7F01EAC8 03E00008 */  jr    $ra
-/* 0535FC 7F01EACC 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
-
-
 
 u32 check_cradle_completed_any_folder(void) {
     u32 completed;
