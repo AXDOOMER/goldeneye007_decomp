@@ -270,10 +270,6 @@ glabel load_font_tables
 )
 #endif
 
-
-
-
-
 Gfx *microcode_constructor(Gfx *gdl)
 {
 	gDPPipeSync(gdl++);
@@ -298,65 +294,15 @@ Gfx *microcode_constructor(Gfx *gdl)
 	return gdl;
 }
 
+Gfx *combiner_bayer_lod_perspective(Gfx *gdl)
+{
+	gDPPipeSync(gdl++);
+	gDPSetColorDither(gdl++, G_CD_BAYER);
+	gDPSetTexturePersp(gdl++, G_TP_PERSP);
+	gDPSetTextureLOD(gdl++, G_TL_LOD);
 
-
-
-
-#ifdef NONMATCHING
-s32 combiner_bayer_lod_perspective(void *arg0) {
-    void *temp_a1;
-    void *temp_a2;
-    void *temp_a3;
-
-    // Node 0
-    temp_a1 = (arg0 + 8);
-    *arg0 = 0xe7000000;
-    arg0->unk4 = 0;
-    temp_a2 = (temp_a1 + 8);
-    temp_a1->unk4 = 0x40;
-    *temp_a1 = 0xba000602;
-    temp_a3 = (temp_a2 + 8);
-    temp_a2->unk4 = 0x80000;
-    *temp_a2 = 0xba001301;
-    temp_a3->unk4 = 0x10000;
-    *temp_a3 = 0xba001001;
-    return;
-    // (possible return value: (temp_a3 + 8))
+	return gdl;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel combiner_bayer_lod_perspective
-/* 0E1A20 7F0ACEF0 24850008 */  addiu $a1, $a0, 8
-/* 0E1A24 7F0ACEF4 3C0EE700 */  lui   $t6, 0xe700
-/* 0E1A28 7F0ACEF8 AC8E0000 */  sw    $t6, ($a0)
-/* 0E1A2C 7F0ACEFC AC800004 */  sw    $zero, 4($a0)
-/* 0E1A30 7F0ACF00 3C0FBA00 */  lui   $t7, (0xBA000602 >> 16) # lui $t7, 0xba00
-/* 0E1A34 7F0ACF04 35EF0602 */  ori   $t7, (0xBA000602 & 0xFFFF) # ori $t7, $t7, 0x602
-/* 0E1A38 7F0ACF08 24A60008 */  addiu $a2, $a1, 8
-/* 0E1A3C 7F0ACF0C 24180040 */  li    $t8, 64
-/* 0E1A40 7F0ACF10 ACB80004 */  sw    $t8, 4($a1)
-/* 0E1A44 7F0ACF14 ACAF0000 */  sw    $t7, ($a1)
-/* 0E1A48 7F0ACF18 3C19BA00 */  lui   $t9, (0xBA001301 >> 16) # lui $t9, 0xba00
-/* 0E1A4C 7F0ACF1C 37391301 */  ori   $t9, (0xBA001301 & 0xFFFF) # ori $t9, $t9, 0x1301
-/* 0E1A50 7F0ACF20 24C70008 */  addiu $a3, $a2, 8
-/* 0E1A54 7F0ACF24 3C080008 */  lui   $t0, 8
-/* 0E1A58 7F0ACF28 3C09BA00 */  lui   $t1, (0xBA001001 >> 16) # lui $t1, 0xba00
-/* 0E1A5C 7F0ACF2C ACC80004 */  sw    $t0, 4($a2)
-/* 0E1A60 7F0ACF30 ACD90000 */  sw    $t9, ($a2)
-/* 0E1A64 7F0ACF34 35291001 */  ori   $t1, (0xBA001001 & 0xFFFF) # ori $t1, $t1, 0x1001
-/* 0E1A68 7F0ACF38 3C0A0001 */  lui   $t2, 1
-/* 0E1A6C 7F0ACF3C ACEA0004 */  sw    $t2, 4($a3)
-/* 0E1A70 7F0ACF40 ACE90000 */  sw    $t1, ($a3)
-/* 0E1A74 7F0ACF44 03E00008 */  jr    $ra
-/* 0E1A78 7F0ACF48 24E20008 */   addiu $v0, $a3, 8
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 s32 draw_blackbox_to_screen(void *arg0, void *arg1, void *arg2, void *arg3, void *arg4) {
