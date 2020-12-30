@@ -5,7 +5,7 @@
 typedef struct video_settings video_settings, *Pvideo_settings;
 
 struct video_settings {
-    s8 mode;
+    u8 mode;
     s8 test1;
     s8 test2;
     s8 test3;

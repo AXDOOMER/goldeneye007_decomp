@@ -23,7 +23,7 @@ u32 fast3d_related_1[] = {
 };
 
 //D:8004EAB0
-u32 *fast3d_related_array = &fast3d_related_0;
+u32 **fast3d_related_array = &fast3d_related_0;
 
 
 

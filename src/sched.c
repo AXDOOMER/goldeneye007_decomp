@@ -24,15 +24,11 @@ u32 setby_DPCfill_0 = 0;
 u32 setby_DPCfill_1 = 0;
 //800230b0
 f32 something_with_osVI_0 = 0.0;
-f32 something_with_osVI_4 = 1.0;
-f32 something_with_osVI_8 = 1.0;
-f32 something_with_osVI_C = 1.0;
-f32 something_with_osVI_10 = 1.0;
-f32 something_with_osVI_14 = 0.0;
-f32 something_with_osVI_18 = 0.0;
+f32 something_with_osVI_4[2] = {1.0, 1.0};
+f32 something_with_osVI_C[2] = {1.0, 1.0};
+s32 something_with_osVI_14[2] = {0, 0};
 
 u32 D_800230CC = 1;
-
 
 OSSched sc;
 //temporary until i get proper sized structs
@@ -40,8 +36,9 @@ OSScClient gfxClient[3];
 //char gfxClient[0x18];
 
 char target_for_counters_maybe[0x10];
-char dword_CODE_bss_8005DB40[0xB0];
-
+OSViMode viModes[2];
+OSViMode *viModePtrs[2];
+s32 dword_CODE_bss_8005DBE8[2];
 
 /**
  * 1570	70000970
@@ -978,8 +975,8 @@ glabel __scTaskComplete
 /* 001ED4 700012D4 34840401 */   ori   $a0, (0x00080401 & 0xFFFF) # ori $a0, $a0, 0x401
 /* 001ED8 700012D8 3C038002 */  lui   $v1, %hi(something_with_osVI_0)
 /* 001EDC 700012DC 8C6330B0 */  lw    $v1, %lo(something_with_osVI_0)($v1)
-/* 001EE0 700012E0 3C0F8006 */  lui   $t7, %hi(dword_CODE_bss_8005DB40) 
-/* 001EE4 700012E4 25EFDB40 */  addiu $t7, %lo(dword_CODE_bss_8005DB40) # addiu $t7, $t7, -0x24c0
+/* 001EE0 700012E0 3C0F8006 */  lui   $t7, %hi(viModes) 
+/* 001EE4 700012E4 25EFDB40 */  addiu $t7, %lo(viModes) # addiu $t7, $t7, -0x24c0
 /* 001EE8 700012E8 00037080 */  sll   $t6, $v1, 2
 /* 001EEC 700012EC 01C37021 */  addu  $t6, $t6, $v1
 /* 001EF0 700012F0 000E7100 */  sll   $t6, $t6, 4
