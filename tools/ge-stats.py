@@ -126,7 +126,7 @@ def find_last_modified_file():
             if file.endswith(".c") or file.endswith(".s"):
                 _file = os.path.join(root, file)
 
-                result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--', _file], capture_output=True, text=True)
+                result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--', _file], stdout=subprocess.PIPE, universal_newlines=True)
 
                 timestamp = int(result.stdout.rstrip().replace('"', ''), 16)
                 
