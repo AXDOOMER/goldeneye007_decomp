@@ -3828,7 +3828,7 @@ glabel sub_GAME_7F0A77C8
 #endif
 
 
-s32 draw_text_mission_status(s32 arg0)
+Gfx *draw_text_mission_status(Gfx *gdl)
 {
     s32 txtptr_1;
     s32 txtptr_2;
@@ -3856,11 +3856,11 @@ s32 draw_text_mission_status(s32 arg0)
         txtptr_2 = get_textptr_for_textID(0xAC29);
     }
 
-    arg0 = microcode_constructor(arg0);
+    gdl = microcode_constructor(gdl);
     sub_GAME_7F0AE98C(&sp5C, &sp58, txtptr_1, ptr_second_font, ptr_first_font, 0);
     sp64 = 0x51;
     sp60 = 0x41;
-    arg0 = en_text_write_stuff(arg0, &sp64, &sp60, txtptr_1, ptr_second_font, ptr_first_font, 0xFF00B0, sp58, sp5C, 0, 0);
+    gdl = en_text_write_stuff(gdl, &sp64, &sp60, txtptr_1, ptr_second_font, ptr_first_font, 0xFF00B0, sp58, sp5C, 0, 0);
     
     if (j_text_trigger)
     {
@@ -3874,17 +3874,17 @@ s32 draw_text_mission_status(s32 arg0)
     sp64 = sp64 + sp58 + joffset + 4;
     sp60 = sp60 - sp5C;
     sub_GAME_7F0AE98C(&sp5C, &sp58, txtptr_2, ptr_second_font, ptr_first_font, 0);
-    arg0 = en_text_write_stuff(arg0, &sp64, &sp60, txtptr_2, ptr_second_font, ptr_first_font, sp4C, sp58, sp5C, 0, 0);
-    arg0 = sub_GAME_7F0A77C8(arg0);
+    gdl = en_text_write_stuff(gdl, &sp64, &sp60, txtptr_2, ptr_second_font, ptr_first_font, sp4C, sp58, sp5C, 0, 0);
+    gdl = sub_GAME_7F0A77C8(gdl);
 
-    return arg0;
+    return gdl;
 }
 
-u32 empty_draw_function(u32 param) {
-  return param;
+Gfx *empty_draw_function(Gfx *gdl) {
+  return gdl;
 }
 
-s32 draw_text_q_watch_v201_beta(s32 arg0)
+Gfx *draw_text_q_watch_v201_beta(Gfx *gdl)
 {
     s32 txtptr;
     s32 sp50;
@@ -3911,9 +3911,10 @@ s32 draw_text_q_watch_v201_beta(s32 arg0)
     sp44 = 0;
     pFirstFontTable = ptrFirstFontTableSmall;
     pSecondFontTable = ptrSecondFontTableSmall;
-    arg0 = microcode_constructor(arg0);
+    gdl = microcode_constructor(gdl);
     sub_GAME_7F0AE98C(&sp48, &sp44, txtptr, pSecondFontTable, pFirstFontTable, 0);
-    return en_text_write_stuff(arg0, &sp50, &sp4C, txtptr, pSecondFontTable, pFirstFontTable, 0xFF00B0, sp44, sp48, 0, 0);
+    gdl = en_text_write_stuff(gdl, &sp50, &sp4C, txtptr, pSecondFontTable, pFirstFontTable, 0xFF00B0, sp44, sp48, 0, 0);
+    return gdl;
 }
 
 #ifdef NONMATCHING
@@ -4239,22 +4240,22 @@ glabel draw_current_hand_item_and_ammo
 #endif
 
 
-s32 draw_watch_mission_status_page(s32 param_1, s32 param_2)
+Gfx *draw_watch_mission_status_page(Gfx *gdl, s32 param_2)
 {
-    param_1 = draw_background_health_and_armor(param_1, param_2, 0);
+    gdl = draw_background_health_and_armor(gdl, param_2, 0);
   
     if (check_watch_page_transistion_running() != 1)
     {
-        param_1 = draw_text_q_watch_v201_beta(param_1);
-        param_1 = draw_text_mission_status(param_1);
-        param_1 = draw_current_hand_item_and_ammo(empty_draw_function(param_1));
+        gdl = draw_text_q_watch_v201_beta(gdl);
+        gdl = draw_text_mission_status(gdl);
+        gdl = draw_current_hand_item_and_ammo(empty_draw_function(gdl));
     }
     else
     {
         check_watch_page_transistion_running();
     }
 
-    return param_1;
+    return gdl;
 }
 
 void sub_GAME_7F0A8378(void)
@@ -7322,28 +7323,28 @@ glabel sub_GAME_7F0A9AB8
 #endif
 
 
-s32 display_text_buttons_dual_control(s32 param_1)
+Gfx *display_text_buttons_dual_control(Gfx *gdl)
 {
     s32 textptr_aux;
     
-    param_1 = microcode_constructor(param_1);
+    gdl = microcode_constructor(gdl);
     
     if (get_controller_buttons_held(0, A_BUTTON))
     {
-        param_1 = sub_GAME_7F0A9398(param_1, 0x5A, 0xA7, get_textptr_for_textID(0xAC03), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0);
+        gdl = sub_GAME_7F0A9398(gdl, 0x5A, 0xA7, get_textptr_for_textID(0xAC03), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0);
     }
     else
     {
-        param_1 = sub_GAME_7F0A9398(param_1, 0x5A, 0xA7, get_textptr_for_textID(0xAC03), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
+        gdl = sub_GAME_7F0A9398(gdl, 0x5A, 0xA7, get_textptr_for_textID(0xAC03), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
     }
     
     if (get_controller_buttons_held(0, B_BUTTON))
     {
-        param_1 = sub_GAME_7F0A9398(param_1, 0x5A, 0x95, get_textptr_for_textID(0xAC02), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0);
+        gdl = sub_GAME_7F0A9398(gdl, 0x5A, 0x95, get_textptr_for_textID(0xAC02), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0);
     }
     else
     {
-        param_1 = sub_GAME_7F0A9398(param_1, 0x5A, 0x95, get_textptr_for_textID(0xAC02), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
+        gdl = sub_GAME_7F0A9398(gdl, 0x5A, 0x95, get_textptr_for_textID(0xAC02), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
     }
 
     if ((pPlayer->cur_player_control_type_0 == 4) || (pPlayer->cur_player_control_type_0 == 5))
@@ -7357,11 +7358,11 @@ s32 display_text_buttons_dual_control(s32 param_1)
     
     if (get_controller_buttons_held(0, Z_TRIG))
     {
-        param_1 = sub_GAME_7F0A9398(param_1, 0x5A, 0xB9, textptr_aux, -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0);
+        gdl = sub_GAME_7F0A9398(gdl, 0x5A, 0xB9, textptr_aux, -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0);
     }
     else
     {
-        param_1 = sub_GAME_7F0A9398(param_1, 0x5A, 0xB9, textptr_aux, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
+        gdl = sub_GAME_7F0A9398(gdl, 0x5A, 0xB9, textptr_aux, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
     }
     
     if ((pPlayer->cur_player_control_type_0 == 4) || (pPlayer->cur_player_control_type_0 == 6))
@@ -7373,24 +7374,24 @@ s32 display_text_buttons_dual_control(s32 param_1)
         textptr_aux = get_textptr_for_textID(0xAC06);
     }
     
-    param_1 = sub_GAME_7F0A9398(param_1, 0x5A, 0xCB, textptr_aux, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
+    gdl = sub_GAME_7F0A9398(gdl, 0x5A, 0xCB, textptr_aux, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
     
     if (get_controller_buttons_held(1, A_BUTTON))
     {
-        param_1 = sub_GAME_7F0A9398(param_1, 0xE6, 0xA7, get_textptr_for_textID(0xAC03), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1);
+        gdl = sub_GAME_7F0A9398(gdl, 0xE6, 0xA7, get_textptr_for_textID(0xAC03), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1);
     }
     else
     {
-        param_1 = sub_GAME_7F0A9398(param_1, 0xE6, 0xA7, get_textptr_for_textID(0xAC03), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
+        gdl = sub_GAME_7F0A9398(gdl, 0xE6, 0xA7, get_textptr_for_textID(0xAC03), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
     }
     
     if (get_controller_buttons_held(1, B_BUTTON))
     {
-        param_1 = sub_GAME_7F0A9398(param_1, 0xE6, 0x95, get_textptr_for_textID(0xAC02), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1);
+        gdl = sub_GAME_7F0A9398(gdl, 0xE6, 0x95, get_textptr_for_textID(0xAC02), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1);
     }
     else
     {
-        param_1 = sub_GAME_7F0A9398(param_1, 0xE6, 0x95, get_textptr_for_textID(0xAC02), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
+        gdl = sub_GAME_7F0A9398(gdl, 0xE6, 0x95, get_textptr_for_textID(0xAC02), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
     }
     
     if ((pPlayer->cur_player_control_type_0 == 4) || (pPlayer->cur_player_control_type_0 == 5))
@@ -7404,11 +7405,11 @@ s32 display_text_buttons_dual_control(s32 param_1)
     
     if (get_controller_buttons_held(1, Z_TRIG))
     {
-        param_1 = sub_GAME_7F0A9398(param_1, 0xE6, 0xB9, textptr_aux, -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1);
+        gdl = sub_GAME_7F0A9398(gdl, 0xE6, 0xB9, textptr_aux, -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1);
     }
     else
     {
-        param_1 = sub_GAME_7F0A9398(param_1, 0xE6, 0xB9, textptr_aux, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
+        gdl = sub_GAME_7F0A9398(gdl, 0xE6, 0xB9, textptr_aux, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
     }
 
     if ((pPlayer->cur_player_control_type_0 == 4) || (pPlayer->cur_player_control_type_0 == 6))
@@ -7420,8 +7421,8 @@ s32 display_text_buttons_dual_control(s32 param_1)
         textptr_aux = get_textptr_for_textID(0xAC05);
     }
     
-    param_1 = sub_GAME_7F0A9398(param_1, 0xE6, 0xCB, textptr_aux, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
-    return param_1;
+    gdl = sub_GAME_7F0A9398(gdl, 0xE6, 0xCB, textptr_aux, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
+    return gdl;
 }
 
 
@@ -9089,12 +9090,12 @@ glabel sub_GAME_7F0AB908
 
 
 
-s32 draw_toggle_options(s32 param_1)
+Gfx *draw_toggle_options(Gfx *gdl)
 {
     s32 y_offset;
     s32 i;
   
-    param_1 = microcode_constructor(param_1);
+    gdl = microcode_constructor(gdl);
 
     for (i = 0, y_offset = 80; i < 8; i = i + 1, y_offset = y_offset + 15) {
         
@@ -9102,22 +9103,22 @@ s32 draw_toggle_options(s32 param_1)
         {
             if (watch_soundrelated_maybe)
             {
-                param_1 = sub_GAME_7F0AB908(sub_GAME_7F0A9398(param_1, 0x40, y_offset, get_textptr_for_textID(game_options_entries[i].text[0]), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0), y_offset, i, 2);
+                gdl = sub_GAME_7F0AB908(sub_GAME_7F0A9398(gdl, 0x40, y_offset, get_textptr_for_textID(game_options_entries[i].text[0]), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0), y_offset, i, 2);
             }
             else
             {
 
-                param_1 = sub_GAME_7F0AB908(sub_GAME_7F0A9398(param_1, 0x40, y_offset, get_textptr_for_textID(game_options_entries[i].text[0]), 0xA0FFA0F0, 0, -1, 0, 0, 0x3000B0, 0), y_offset, i, 1);
+                gdl = sub_GAME_7F0AB908(sub_GAME_7F0A9398(gdl, 0x40, y_offset, get_textptr_for_textID(game_options_entries[i].text[0]), 0xA0FFA0F0, 0, -1, 0, 0, 0x3000B0, 0), y_offset, i, 1);
             } 
         }
         else
         {
-            param_1 = sub_GAME_7F0AB908(sub_GAME_7F0A9398(param_1, 0x40, y_offset, get_textptr_for_textID(game_options_entries[i].text[0]), 0xFF00B0, 0, -1, 0, 0, 0x3000B0, 0), y_offset, i, 0);
+            gdl = sub_GAME_7F0AB908(sub_GAME_7F0A9398(gdl, 0x40, y_offset, get_textptr_for_textID(game_options_entries[i].text[0]), 0xFF00B0, 0, -1, 0, 0, 0x3000B0, 0), y_offset, i, 0);
         }
 
     }
 
-    return param_1;
+    return gdl;
 }
 
 
