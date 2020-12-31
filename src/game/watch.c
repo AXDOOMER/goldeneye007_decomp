@@ -3403,9 +3403,9 @@ glabel draw_background_health_and_armor
 
 
 
-void sub_GAME_7F0A77A8(u32 param_1,u32 param_2)
+void sub_GAME_7F0A77A8(u32 param_1, u32 param_2)
 {
-  draw_background_health_and_armor(param_1,param_2,1);
+  draw_background_health_and_armor(param_1, param_2, 1);
 }
 
 
