@@ -245,9 +245,9 @@ s32 allocate_something_in_mgfx(Gfx *ptr) {
     return (g_GfxBuffers[g_GfxActiveBufferIndex + 1] - ptr);
 }
 
-Vtx *sub_GAME_7F0BD6C4(s32 count) {
+void/*Vtx?*/ *sub_GAME_7F0BD6C4(s32 count) {
     void *ptr = g_GfxMemPos;
-	g_GfxMemPos += count * sizeof(Vtx);
+	g_GfxMemPos += count * 0x10/*sizeof(Vtx)?*/;
 	return ptr;
 }
 
@@ -259,30 +259,11 @@ Mtx *gfxAllocateMatrix(void)
 	return ptr;
 }
 
-
-#ifdef NONMATCHING
-s32 sub_GAME_7F0BD6F8(s32 arg0) {
-    // Node 0
-    g_GfxMemPos = (s32) (g_GfxMemPos + (arg0 * 0x10));
-    return g_GfxMemPos;
+void/*Light?*/ *sub_GAME_7F0BD6F8(s32 count) {
+    void *ptr = g_GfxMemPos;
+	g_GfxMemPos += count * 0x10/*sizeof(Light)?*/;
+	return ptr;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BD6F8
-/* 0F2228 7F0BD6F8 3C068009 */  lui   $a2, %hi(g_GfxMemPos)
-/* 0F222C 7F0BD6FC 24C6C24C */  addiu $a2, %lo(g_GfxMemPos) # addiu $a2, $a2, -0x3db4
-/* 0F2230 7F0BD700 8CC20000 */  lw    $v0, ($a2)
-/* 0F2234 7F0BD704 00047100 */  sll   $t6, $a0, 4
-/* 0F2238 7F0BD708 004E7821 */  addu  $t7, $v0, $t6
-/* 0F223C 7F0BD70C 03E00008 */  jr    $ra
-/* 0F2240 7F0BD710 ACCF0000 */   sw    $t7, ($a2)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 s32 sub_GAME_7F0BD714(s32 arg0) {
