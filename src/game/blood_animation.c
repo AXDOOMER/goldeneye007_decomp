@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "video.h"
 #include "intro_logos.h"
+#include "unk_093880.h"
 
 
 char die_blood_image_1[] = {
@@ -318,8 +319,22 @@ glabel die_blood_image_routine
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F01C400(void) {
+// Minor differences in gDPLoadTextureBlock_4b 
+Gfx *sub_GAME_7F01C400(Gfx *gdl) {
+   gDPSetTextureLUT(gdl++, G_TT_NONE);
+   gDPSetTextureFilter(gdl++, G_TF_BILERP); 
 
+   gdl = sub_GAME_7F01C1A4(gdl++);
+
+   gSPTexture(gdl++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+   gDPSetRenderMode(gdl++, G_RM_CLD_SURF, G_RM_CLD_SURF2);
+   gDPSetCombineMode(gdl++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM)
+   gDPSetColorDither(gdl++, G_CD_MAGICSQ);
+   gDPSetPrimColor(gdl++, 0, 0, 0x96, 0x00, 0x00, 0xB4);
+   gDPSetTexturePersp(gdl++, G_TP_NONE);
+   gDPLoadTextureBlock_4b(gdl++, (pPlayer->field_11B0[pPlayer->field_11B8] + 0x80000000), G_IM_FMT_I, 96, 80, 0, (G_TX_NOMIRROR | G_TX_CLAMP), (G_TX_NOMIRROR | G_TX_CLAMP), G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+   gSPTextureRectangle(gdl++, 0, 0, ((viGetX() * 4) - 1), ((viGetY() * 4) - 1), G_TX_RENDERTILE, 0, 0, 0x18000 / viGetX(), 0x14000 / viGetY());
+   return gdl;
 }
 #else
 GLOBAL_ASM(
