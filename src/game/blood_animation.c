@@ -363,14 +363,14 @@ glabel die_blood_image_routine
 /* 050E24 7F01C2F4 24041E00 */  li    $a0, 7680
 /* 050E28 7F01C2F8 8E1911B8 */  lw    $t9, 0x11b8($s0)
 /* 050E2C 7F01C2FC 01194823 */  subu  $t1, $t0, $t9
-/* 050E30 7F01C300 0FC2F5C5 */  jal   sub_GAME_7F0BD714
+/* 050E30 7F01C300 0FC2F5C5 */  jal   gfxAllocate
 /* 050E34 7F01C304 AE0911B8 */   sw    $t1, 0x11b8($s0)
 /* 050E38 7F01C308 8E300000 */  lw    $s0, ($s1)
 /* 050E3C 7F01C30C 24041E00 */  li    $a0, 7680
 /* 050E40 7F01C310 8E0A11B8 */  lw    $t2, 0x11b8($s0)
 /* 050E44 7F01C314 000A5880 */  sll   $t3, $t2, 2
 /* 050E48 7F01C318 020B6021 */  addu  $t4, $s0, $t3
-/* 050E4C 7F01C31C 0FC2F5C5 */  jal   sub_GAME_7F0BD714
+/* 050E4C 7F01C31C 0FC2F5C5 */  jal   gfxAllocate
 /* 050E50 7F01C320 AD8211B0 */   sw    $v0, 0x11b0($t4)
 /* 050E54 7F01C324 8E2D0000 */  lw    $t5, ($s1)
 /* 050E58 7F01C328 AFA20030 */  sw    $v0, 0x30($sp)

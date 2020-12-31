@@ -265,31 +265,14 @@ void/*Light?*/ *sub_GAME_7F0BD6F8(s32 count) {
 	return ptr;
 }
 
-#ifdef NONMATCHING
-s32 sub_GAME_7F0BD714(s32 arg0) {
-    // Node 0
-    g_GfxMemPos = (s32) (g_GfxMemPos + (((arg0 + 0xf) | 0xf) ^ 0xf));
-    return g_GfxMemPos;
+#define ALIGN16(val)        (((val) + 0xf | 0xf) ^ 0xf)
+void *gfxAllocate(s32 size) {
+    void *ptr = g_GfxMemPos;
+	size = ALIGN16(size);
+	g_GfxMemPos += size;
+
+	return ptr;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BD714
-/* 0F2244 7F0BD714 3C068009 */  lui   $a2, %hi(g_GfxMemPos)
-/* 0F2248 7F0BD718 24C6C24C */  addiu $a2, %lo(g_GfxMemPos) # addiu $a2, $a2, -0x3db4
-/* 0F224C 7F0BD71C 8CC20000 */  lw    $v0, ($a2)
-/* 0F2250 7F0BD720 2484000F */  addiu $a0, $a0, 0xf
-/* 0F2254 7F0BD724 348E000F */  ori   $t6, $a0, 0xf
-/* 0F2258 7F0BD728 39CF000F */  xori  $t7, $t6, 0xf
-/* 0F225C 7F0BD72C 004FC021 */  addu  $t8, $v0, $t7
-/* 0F2260 7F0BD730 03E00008 */  jr    $ra
-/* 0F2264 7F0BD734 ACD80000 */   sw    $t8, ($a2)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void *allocate_something_in_mvtx(void) {

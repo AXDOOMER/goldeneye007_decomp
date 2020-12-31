@@ -2988,10 +2988,10 @@ glabel draw_background_health_and_armor
 /* 0DBCA0 7F0A7170 0FC2F5B1 */  jal   sub_GAME_7F0BD6C4
 /* 0DBCA4 7F0A7174 2404001E */   li    $a0, 30
 /* 0DBCA8 7F0A7178 AFA20044 */  sw    $v0, 0x44($sp)
-/* 0DBCAC 7F0A717C 0FC2F5C5 */  jal   sub_GAME_7F0BD714
+/* 0DBCAC 7F0A717C 0FC2F5C5 */  jal   gfxAllocate
 /* 0DBCB0 7F0A7180 240400F8 */   li    $a0, 248
 /* 0DBCB4 7F0A7184 AFA20040 */  sw    $v0, 0x40($sp)
-/* 0DBCB8 7F0A7188 0FC2F5C5 */  jal   sub_GAME_7F0BD714
+/* 0DBCB8 7F0A7188 0FC2F5C5 */  jal   gfxAllocate
 /* 0DBCBC 7F0A718C 240400F8 */   li    $a0, 248
 /* 0DBCC0 7F0A7190 AFA2003C */  sw    $v0, 0x3c($sp)
 /* 0DBCC4 7F0A7194 02001825 */  move  $v1, $s0

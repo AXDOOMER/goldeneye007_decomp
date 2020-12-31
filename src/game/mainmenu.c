@@ -3271,7 +3271,7 @@ loop_1:
     temp_t0->unk0 = (s32) temp_t6->unk0;
     insert_imageDL(arg0);
     matrix_4x4_7F059694(&spA0, 0.0f, 0.0f, 0x457a0000, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-    temp_ret = sub_GAME_7F0BD714(something_legalscreen_constructor->unk8->unkE << 6);
+    temp_ret = gfxAllocate(something_legalscreen_constructor->unk8->unkE << 6);
     spF4 = temp_ret;
     matrix_4x4_copy(&spA0, temp_ret);
     something_legalscreen_constructor->unkC = spF4;
@@ -3359,7 +3359,7 @@ glabel constructor_menu00_legalscreen
 /* 03F4C8 7F00A998 8D2A0008 */  lw    $t2, 8($t1)
 /* 03F4CC 7F00A99C 8544000E */  lh    $a0, 0xe($t2)
 /* 03F4D0 7F00A9A0 00045980 */  sll   $t3, $a0, 6
-/* 03F4D4 7F00A9A4 0FC2F5C5 */  jal   sub_GAME_7F0BD714
+/* 03F4D4 7F00A9A4 0FC2F5C5 */  jal   gfxAllocate
 /* 03F4D8 7F00A9A8 01602025 */   move  $a0, $t3
 /* 03F4DC 7F00A9AC AFA200F4 */  sw    $v0, 0xf4($sp)
 /* 03F4E0 7F00A9B0 02002025 */  move  $a0, $s0
@@ -3689,7 +3689,7 @@ loop_1:
     matrix_4x4_7F059694(&spE0, 0.0f, 0.0f, 0x457a0000, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
     matrix_4x4_multiply_in_place(&spE0, &sp90);
     matrix_4x4_copy(&sp90, &spE0);
-    temp_ret_2 = sub_GAME_7F0BD714(something_legalscreen_constructor->unk8->unkE << 6);
+    temp_ret_2 = gfxAllocate(something_legalscreen_constructor->unk8->unkE << 6);
     sp138 = temp_ret_2;
     matrix_4x4_copy(&spE0, temp_ret_2);
     something_legalscreen_constructor->unkC = sp138;
@@ -3855,7 +3855,7 @@ glabel constructor_menu01_nintendo
 /* 03FAAC 7F00AF7C 8D2A0008 */  lw    $t2, 8($t1)
 /* 03FAB0 7F00AF80 8544000E */  lh    $a0, 0xe($t2)
 /* 03FAB4 7F00AF84 00045980 */  sll   $t3, $a0, 6
-/* 03FAB8 7F00AF88 0FC2F5C5 */  jal   sub_GAME_7F0BD714
+/* 03FAB8 7F00AF88 0FC2F5C5 */  jal   gfxAllocate
 /* 03FABC 7F00AF8C 01602025 */   move  $a0, $t3
 /* 03FAC0 7F00AF90 AFA20138 */  sw    $v0, 0x138($sp)
 /* 03FAC4 7F00AF94 02002025 */  move  $a0, $s0
@@ -4277,7 +4277,7 @@ loop_1:
     temp_s4->unk4 = (s32) (temp_s0 + 0x10);
     temp_s4->unk0 = 0x3820010;
     matrix_4x4_7F059694(&spF8, 0.0f, 0.0f, 0x453b8000, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-    sp150 = sub_GAME_7F0BD714(something_legalscreen_constructor->unk8->unkE << 6);
+    sp150 = gfxAllocate(something_legalscreen_constructor->unk8->unkE << 6);
     matrix_scalar_multiply(D_80051A18, &spF8);
     matrix_4x4_copy(&spF8, sp150);
     something_legalscreen_constructor->unkC = sp150;
@@ -4422,7 +4422,7 @@ glabel constructor_menu04_goldeneyelogo
 /* 040160 7F00B630 8D4B0008 */  lw    $t3, 8($t2)
 /* 040164 7F00B634 8564000E */  lh    $a0, 0xe($t3)
 /* 040168 7F00B638 00046180 */  sll   $t4, $a0, 6
-/* 04016C 7F00B63C 0FC2F5C5 */  jal   sub_GAME_7F0BD714
+/* 04016C 7F00B63C 0FC2F5C5 */  jal   gfxAllocate
 /* 040170 7F00B640 01802025 */   move  $a0, $t4
 /* 040174 7F00B644 3C018005 */  lui   $at, %hi(D_80051A18)
 /* 040178 7F00B648 AFA20150 */  sw    $v0, 0x150($sp)
@@ -5071,7 +5071,7 @@ loop_8:
     matrix_4x4_set_identity_and_position(sp54, &sp88);
     matrix_scalar_multiply(D_80051A24, &sp88);
     matrix_4x4_multiply_in_place(&spC8, &sp88);
-    (*phi_s0)->unkC = sub_GAME_7F0BD714((*phi_s0)->unk8->unkE << 6);
+    (*phi_s0)->unkC = gfxAllocate((*phi_s0)->unk8->unkE << 6);
     matrix_4x4_copy(&sp88, (*phi_s0)->unkC);
     temp_a0 = *phi_s0;
     phi_s1->unk0 = (f32) temp_a0->unkC->unk30;
@@ -5377,7 +5377,7 @@ glabel interface_menu05_fileselect
 /* 040860 7F00BD30 8D090008 */  lw    $t1, 8($t0)
 /* 040864 7F00BD34 8524000E */  lh    $a0, 0xe($t1)
 /* 040868 7F00BD38 00045180 */  sll   $t2, $a0, 6
-/* 04086C 7F00BD3C 0FC2F5C5 */  jal   sub_GAME_7F0BD714
+/* 04086C 7F00BD3C 0FC2F5C5 */  jal   gfxAllocate
 /* 040870 7F00BD40 01402025 */   move  $a0, $t2
 /* 040874 7F00BD44 8E0B0000 */  lw    $t3, ($s0)
 /* 040878 7F00BD48 02602025 */  move  $a0, $s3
@@ -7612,7 +7612,7 @@ loop_1:
     matrix_4x4_set_identity_and_position(&D_8002AB94 + (selected_folder_num * 0xc), &sp88);
     matrix_scalar_multiply(0x3e800000, &sp88);
     matrix_4x4_multiply_in_place(&spC8, &sp88);
-    temp_ret = sub_GAME_7F0BD714(ptr_folder_object_instance->unk8->unkE << 6);
+    temp_ret = gfxAllocate(ptr_folder_object_instance->unk8->unkE << 6);
     sp11C = temp_ret;
     matrix_4x4_copy(&sp88, temp_ret);
     ptr_folder_object_instance->unkC = sp11C;
@@ -7723,7 +7723,7 @@ glabel sub_GAME_7F00D5E8
 /* 04224C 7F00D71C 8DAE0008 */  lw    $t6, 8($t5)
 /* 042250 7F00D720 85C4000E */  lh    $a0, 0xe($t6)
 /* 042254 7F00D724 00047980 */  sll   $t7, $a0, 6
-/* 042258 7F00D728 0FC2F5C5 */  jal   sub_GAME_7F0BD714
+/* 042258 7F00D728 0FC2F5C5 */  jal   gfxAllocate
 /* 04225C 7F00D72C 01E02025 */   move  $a0, $t7
 /* 042260 7F00D730 AFA2011C */  sw    $v0, 0x11c($sp)
 /* 042264 7F00D734 02002025 */  move  $a0, $s0
@@ -27106,7 +27106,7 @@ glabel constructor_menu18_displaycast
 /* 04E2EC 7F0197BC 8DAB0008 */  lw    $t3, 8($t5)
 /* 04E2F0 7F0197C0 8564000E */  lh    $a0, 0xe($t3)
 /* 04E2F4 7F0197C4 0004C180 */  sll   $t8, $a0, 6
-/* 04E2F8 7F0197C8 0FC2F5C5 */  jal   sub_GAME_7F0BD714
+/* 04E2F8 7F0197C8 0FC2F5C5 */  jal   gfxAllocate
 /* 04E2FC 7F0197CC 03002025 */   move  $a0, $t8
 /* 04E300 7F0197D0 27B201E8 */  addiu $s2, $sp, 0x1e8
 /* 04E304 7F0197D4 AFA201B8 */  sw    $v0, 0x1b8($sp)
@@ -27387,7 +27387,7 @@ glabel constructor_menu18_displaycast
 /* 04E72C 7F019BFC 8DCF0008 */  lw    $t7, 8($t6)
 /* 04E730 7F019C00 85E4000E */  lh    $a0, 0xe($t7)
 /* 04E734 7F019C04 00046980 */  sll   $t5, $a0, 6
-/* 04E738 7F019C08 0FC2F5C5 */  jal   sub_GAME_7F0BD714
+/* 04E738 7F019C08 0FC2F5C5 */  jal   gfxAllocate
 /* 04E73C 7F019C0C 01A02025 */   move  $a0, $t5
 /* 04E740 7F019C10 AFA201B8 */  sw    $v0, 0x1b8($sp)
 /* 04E744 7F019C14 27A401A8 */  addiu $a0, $sp, 0x1a8
@@ -27426,7 +27426,7 @@ glabel constructor_menu18_displaycast
 .L7F019C98:
 /* 04E7C8 7F019C98 85E4000E */  lh    $a0, 0xe($t7)
 /* 04E7CC 7F019C9C 00046980 */  sll   $t5, $a0, 6
-/* 04E7D0 7F019CA0 0FC2F5C5 */  jal   sub_GAME_7F0BD714
+/* 04E7D0 7F019CA0 0FC2F5C5 */  jal   gfxAllocate
 /* 04E7D4 7F019CA4 01A02025 */   move  $a0, $t5
 /* 04E7D8 7F019CA8 3C058003 */  lui   $a1, %hi(ptrobjinstance)
 /* 04E7DC 7F019CAC AFA201B8 */  sw    $v0, 0x1b8($sp)
