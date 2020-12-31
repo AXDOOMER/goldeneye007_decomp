@@ -1,7 +1,7 @@
 #include "ultra64.h"
 #include "game/dyn.h"
 // bss
-u8 *gfxBuffers[3];
+Gfx *g_GfxBuffers[3];
 //CODE.bss:8008C23C
 s32 D_8008C23C;
 //CODE.bss:8008C240
@@ -13,7 +13,7 @@ s32 *ptr_mvtx_end;
 //CODE.bss:8008C24C
 s32 *ptr_mvtx_cur_pos;
 //CODE.bss:8008C250
-u8 gfxActiveBufferIndex;
+u8 g_GfxActiveBufferIndex;
 //CODE.bss:8008C254
 s32 dword_CODE_bss_8008C254;
 
@@ -56,13 +56,13 @@ void set_vtx_gfx_mem_alloc(void) {
     }
 
     mempAllocBytesInBank(dyn_c_debug_notice_list_entry[sVar1] << 1, 4);
-    gfxBuffers.unk4 = (s32) ((0x80050000 + (getPlayerCount() * 4))->unk-7D20 + gfxBuffers);
-    gfxBuffers.unk8 = (s32) ((0x80050000 + (getPlayerCount() * 4))->unk-7D20 + gfxBuffers.unk4);
+    g_GfxBuffers.unk4 = (s32) ((0x80050000 + (getPlayerCount() * 4))->unk-7D20 + g_GfxBuffers);
+    g_GfxBuffers.unk8 = (s32) ((0x80050000 + (getPlayerCount() * 4))->unk-7D20 + g_GfxBuffers.unk4);
     ptr_mvtx0_alloc_start = mempAllocBytesInBank(((0x80050000 + (getPlayerCount() * 4))->unk-7D10 * 2), 4);
     ptr_mvtx0_alloc_start.unk4 = (s32) ((0x80050000 + (getPlayerCount() * 4))->unk-7D10 + ptr_mvtx0_alloc_start);
     temp_ret = getPlayerCount();
     ptr_mvtx0_alloc_start.unk8 = (s32) ((0x80050000 + (temp_ret * 4))->unk-7D10 + ptr_mvtx0_alloc_start.unk4);
-    gfxActiveBufferIndex = (u8)0;
+    g_GfxActiveBufferIndex = (u8)0;
     dword_CODE_bss_8008C254 = 0;
     (void *)0x80090000->unk-3DB4 = (s32) ptr_mvtx0_alloc_start;
     return temp_ret;
@@ -152,24 +152,24 @@ glabel set_vtx_gfx_mem_alloc
 /* 0F2098 7F0BD568 00045840 */  sll   $t3, $a0, 1
 /* 0F209C 7F0BD56C 0C0025C8 */  jal   mempAllocBytesInBank
 /* 0F20A0 7F0BD570 01602025 */   move  $a0, $t3
-/* 0F20A4 7F0BD574 3C018009 */  lui   $at, %hi(gfxBuffers)
+/* 0F20A4 7F0BD574 3C018009 */  lui   $at, %hi(g_GfxBuffers)
 /* 0F20A8 7F0BD578 0FC26919 */  jal   getPlayerCount
-/* 0F20AC 7F0BD57C AC22C230 */   sw    $v0, %lo(gfxBuffers)($at)
-/* 0F20B0 7F0BD580 3C038009 */  lui   $v1, %hi(gfxBuffers)
+/* 0F20AC 7F0BD57C AC22C230 */   sw    $v0, %lo(g_GfxBuffers)($at)
+/* 0F20B0 7F0BD580 3C038009 */  lui   $v1, %hi(g_GfxBuffers)
 /* 0F20B4 7F0BD584 00026080 */  sll   $t4, $v0, 2
 /* 0F20B8 7F0BD588 3C0D8005 */  lui   $t5, %hi(D_800482E0)
 /* 0F20BC 7F0BD58C 01AC6821 */  addu  $t5, $t5, $t4
-/* 0F20C0 7F0BD590 2463C230 */  addiu $v1, %lo(gfxBuffers) # addiu $v1, $v1, -0x3dd0
+/* 0F20C0 7F0BD590 2463C230 */  addiu $v1, %lo(g_GfxBuffers) # addiu $v1, $v1, -0x3dd0
 /* 0F20C4 7F0BD594 8C6F0000 */  lw    $t7, ($v1)
 /* 0F20C8 7F0BD598 8DAD82E0 */  lw    $t5, %lo(D_800482E0)($t5)
 /* 0F20CC 7F0BD59C 01AF7021 */  addu  $t6, $t5, $t7
 /* 0F20D0 7F0BD5A0 0FC26919 */  jal   getPlayerCount
 /* 0F20D4 7F0BD5A4 AC6E0004 */   sw    $t6, 4($v1)
-/* 0F20D8 7F0BD5A8 3C038009 */  lui   $v1, %hi(gfxBuffers)
+/* 0F20D8 7F0BD5A8 3C038009 */  lui   $v1, %hi(g_GfxBuffers)
 /* 0F20DC 7F0BD5AC 0002C080 */  sll   $t8, $v0, 2
 /* 0F20E0 7F0BD5B0 3C088005 */  lui   $t0, %hi(D_800482E0)
 /* 0F20E4 7F0BD5B4 01184021 */  addu  $t0, $t0, $t8
-/* 0F20E8 7F0BD5B8 2463C230 */  addiu $v1, %lo(gfxBuffers) # addiu $v1, $v1, -0x3dd0
+/* 0F20E8 7F0BD5B8 2463C230 */  addiu $v1, %lo(g_GfxBuffers) # addiu $v1, $v1, -0x3dd0
 /* 0F20EC 7F0BD5BC 8C790004 */  lw    $t9, 4($v1)
 /* 0F20F0 7F0BD5C0 8D0882E0 */  lw    $t0, %lo(D_800482E0)($t0)
 /* 0F20F4 7F0BD5C4 01194821 */  addu  $t1, $t0, $t9
@@ -204,11 +204,11 @@ glabel set_vtx_gfx_mem_alloc
 /* 0F2168 7F0BD638 2463C240 */  addiu $v1, %lo(ptr_mvtx0_alloc_start) # addiu $v1, $v1, -0x3dc0
 /* 0F216C 7F0BD63C 8C790004 */  lw    $t9, 4($v1)
 /* 0F2170 7F0BD640 8D0882F0 */  lw    $t0, %lo(D_800482F0)($t0)
-/* 0F2174 7F0BD644 3C018009 */  lui   $at, %hi(gfxActiveBufferIndex)
+/* 0F2174 7F0BD644 3C018009 */  lui   $at, %hi(g_GfxActiveBufferIndex)
 /* 0F2178 7F0BD648 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0F217C 7F0BD64C 01194821 */  addu  $t1, $t0, $t9
 /* 0F2180 7F0BD650 AC690008 */  sw    $t1, 8($v1)
-/* 0F2184 7F0BD654 A020C250 */  sb    $zero, %lo(gfxActiveBufferIndex)($at)
+/* 0F2184 7F0BD654 A020C250 */  sb    $zero, %lo(g_GfxActiveBufferIndex)($at)
 /* 0F2188 7F0BD658 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C254)
 /* 0F218C 7F0BD65C AC20C254 */  sw    $zero, %lo(dword_CODE_bss_8008C254)($at)
 /* 0F2190 7F0BD660 8C6A0000 */  lw    $t2, ($v1)
@@ -222,33 +222,12 @@ glabel set_vtx_gfx_mem_alloc
 Gfx *get_ptr_displaylist(void) {
     dword_CODE_bss_8008C254 = TRUE;
 
-    return (Gfx*)gfxBuffers[gfxActiveBufferIndex];
+    return g_GfxBuffers[g_GfxActiveBufferIndex];
 }
 
-#ifdef NONMATCHING
-void allocate_something_in_mgfx(void) {
-
+s32 allocate_something_in_mgfx(Gfx *ptr) {
+    return (g_GfxBuffers[g_GfxActiveBufferIndex + 1] - ptr);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel allocate_something_in_mgfx
-/* 0F21CC 7F0BD69C 3C0E8009 */  lui   $t6, %hi(gfxActiveBufferIndex) 
-/* 0F21D0 7F0BD6A0 91CEC250 */  lbu   $t6, %lo(gfxActiveBufferIndex)($t6)
-/* 0F21D4 7F0BD6A4 3C188009 */  lui   $t8, %hi(gfxBuffers+0x4)
-/* 0F21D8 7F0BD6A8 000E7880 */  sll   $t7, $t6, 2
-/* 0F21DC 7F0BD6AC 030FC021 */  addu  $t8, $t8, $t7
-/* 0F21E0 7F0BD6B0 8F18C234 */  lw    $t8, %lo(gfxBuffers+0x4)($t8)
-/* 0F21E4 7F0BD6B4 03041023 */  subu  $v0, $t8, $a0
-/* 0F21E8 7F0BD6B8 0002C8C3 */  sra   $t9, $v0, 3
-/* 0F21EC 7F0BD6BC 03E00008 */  jr    $ra
-/* 0F21F0 7F0BD6C0 03201025 */   move  $v0, $t9
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F0BD6C4(void) {
@@ -348,17 +327,17 @@ glabel sub_GAME_7F0BD714
 #ifdef NONMATCHING
 void *allocate_something_in_mvtx(void) {
     // Node 0
-    gfxActiveBufferIndex = (s8) (gfxActiveBufferIndex ^ 1);
+    g_GfxActiveBufferIndex = (s8) (g_GfxActiveBufferIndex ^ 1);
     dword_CODE_bss_8008C254 = 0;
-    ptr_mvtx_cur_pos = (?32) (0x80090000 + (gfxActiveBufferIndex * 4))->unk-3DC0;
-    return &gfxActiveBufferIndex;
+    ptr_mvtx_cur_pos = (?32) (0x80090000 + (g_GfxActiveBufferIndex * 4))->unk-3DC0;
+    return &g_GfxActiveBufferIndex;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel allocate_something_in_mvtx
-/* 0F2268 7F0BD738 3C028009 */  lui   $v0, %hi(gfxActiveBufferIndex)
-/* 0F226C 7F0BD73C 2442C250 */  addiu $v0, %lo(gfxActiveBufferIndex) # addiu $v0, $v0, -0x3db0
+/* 0F2268 7F0BD738 3C028009 */  lui   $v0, %hi(g_GfxActiveBufferIndex)
+/* 0F226C 7F0BD73C 2442C250 */  addiu $v0, %lo(g_GfxActiveBufferIndex) # addiu $v0, $v0, -0x3db0
 /* 0F2270 7F0BD740 904E0000 */  lbu   $t6, ($v0)
 /* 0F2274 7F0BD744 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C254)
 /* 0F2278 7F0BD748 3C088009 */  lui   $t0, %hi(ptr_mvtx0_alloc_start)
@@ -391,18 +370,18 @@ void removed_debug_routine(s32 arg0) {
 #ifdef NONMATCHING
 s32 num_microcode_cmds_that_fit(s32 arg0) {
     // Node 0
-    return ((s32) ((0x80090000 + (gfxActiveBufferIndex * 4))->unk-3DCC - arg0) >> 3);
+    return ((s32) ((0x80090000 + (g_GfxActiveBufferIndex * 4))->unk-3DCC - arg0) >> 3);
 }
 #else
 GLOBAL_ASM(
 .text
 glabel num_microcode_cmds_that_fit
-/* 0F22AC 7F0BD77C 3C0E8009 */  lui   $t6, %hi(gfxActiveBufferIndex) 
-/* 0F22B0 7F0BD780 91CEC250 */  lbu   $t6, %lo(gfxActiveBufferIndex)($t6)
-/* 0F22B4 7F0BD784 3C188009 */  lui   $t8, %hi(gfxBuffers+0x4)
+/* 0F22AC 7F0BD77C 3C0E8009 */  lui   $t6, %hi(g_GfxActiveBufferIndex) 
+/* 0F22B0 7F0BD780 91CEC250 */  lbu   $t6, %lo(g_GfxActiveBufferIndex)($t6)
+/* 0F22B4 7F0BD784 3C188009 */  lui   $t8, %hi(g_GfxBuffers+0x4)
 /* 0F22B8 7F0BD788 000E7880 */  sll   $t7, $t6, 2
 /* 0F22BC 7F0BD78C 030FC021 */  addu  $t8, $t8, $t7
-/* 0F22C0 7F0BD790 8F18C234 */  lw    $t8, %lo(gfxBuffers+0x4)($t8)
+/* 0F22C0 7F0BD790 8F18C234 */  lw    $t8, %lo(g_GfxBuffers+0x4)($t8)
 /* 0F22C4 7F0BD794 03041023 */  subu  $v0, $t8, $a0
 /* 0F22C8 7F0BD798 0002C8C3 */  sra   $t9, $v0, 3
 /* 0F22CC 7F0BD79C 03E00008 */  jr    $ra
@@ -417,15 +396,15 @@ glabel num_microcode_cmds_that_fit
 #ifdef NONMATCHING
 s32 sub_GAME_7F0BD7A4(void) {
     // Node 0
-    return ((0x80090000 + (gfxActiveBufferIndex * 4))->unk-3DBC - ptr_mvtx_cur_pos);
+    return ((0x80090000 + (g_GfxActiveBufferIndex * 4))->unk-3DBC - ptr_mvtx_cur_pos);
 }
 
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0BD7A4
-/* 0F22D4 7F0BD7A4 3C0E8009 */  lui   $t6, %hi(gfxActiveBufferIndex) 
-/* 0F22D8 7F0BD7A8 91CEC250 */  lbu   $t6, %lo(gfxActiveBufferIndex)($t6)
+/* 0F22D4 7F0BD7A4 3C0E8009 */  lui   $t6, %hi(g_GfxActiveBufferIndex) 
+/* 0F22D8 7F0BD7A8 91CEC250 */  lbu   $t6, %lo(g_GfxActiveBufferIndex)($t6)
 /* 0F22DC 7F0BD7AC 3C188009 */  lui   $t8, %hi(ptr_mvtx1_alloc_start)
 /* 0F22E0 7F0BD7B0 3C198009 */  lui   $t9, %hi(ptr_mvtx_cur_pos) 
 /* 0F22E4 7F0BD7B4 000E7880 */  sll   $t7, $t6, 2
@@ -480,19 +459,19 @@ void draw_membars(s32 arg0) {
     void *temp_t7_2;
 
     // Node 0
-    temp_t7 = (&gfxBuffers + (gfxActiveBufferIndex * 4));
-    compute_membar_display_string(&membars_string2, (f32) ((s32) (temp_t7->unk4 - arg0) >> 3), (f32) ((s32) (temp_t7->unk4 - *(&gfxBuffers + (gfxActiveBufferIndex * 4))) >> 3), arg0);
-    temp_t7_2 = (&ptr_mvtx0_alloc_start + (gfxActiveBufferIndex * 4));
-    return compute_membar_display_string(&membars_string2, (f32) (temp_t7_2->unk4 - ptr_mvtx_cur_pos), (f32) (temp_t7_2->unk4 - *(&ptr_mvtx0_alloc_start + (gfxActiveBufferIndex * 4))), &ptr_mvtx0_alloc_start);
+    temp_t7 = (&g_GfxBuffers + (g_GfxActiveBufferIndex * 4));
+    compute_membar_display_string(&membars_string2, (f32) ((s32) (temp_t7->unk4 - arg0) >> 3), (f32) ((s32) (temp_t7->unk4 - *(&g_GfxBuffers + (g_GfxActiveBufferIndex * 4))) >> 3), arg0);
+    temp_t7_2 = (&ptr_mvtx0_alloc_start + (g_GfxActiveBufferIndex * 4));
+    return compute_membar_display_string(&membars_string2, (f32) (temp_t7_2->unk4 - ptr_mvtx_cur_pos), (f32) (temp_t7_2->unk4 - *(&ptr_mvtx0_alloc_start + (g_GfxActiveBufferIndex * 4))), &ptr_mvtx0_alloc_start);
 }
 #else
 GLOBAL_ASM(
 .text
 glabel draw_membars
-/* 0F2340 7F0BD810 3C028009 */  lui   $v0, %hi(gfxActiveBufferIndex)
-/* 0F2344 7F0BD814 9042C250 */  lbu   $v0, %lo(gfxActiveBufferIndex)($v0)
-/* 0F2348 7F0BD818 3C088009 */  lui   $t0, %hi(gfxBuffers) 
-/* 0F234C 7F0BD81C 2508C230 */  addiu $t0, %lo(gfxBuffers) # addiu $t0, $t0, -0x3dd0
+/* 0F2340 7F0BD810 3C028009 */  lui   $v0, %hi(g_GfxActiveBufferIndex)
+/* 0F2344 7F0BD814 9042C250 */  lbu   $v0, %lo(g_GfxActiveBufferIndex)($v0)
+/* 0F2348 7F0BD818 3C088009 */  lui   $t0, %hi(g_GfxBuffers) 
+/* 0F234C 7F0BD81C 2508C230 */  addiu $t0, %lo(g_GfxBuffers) # addiu $t0, $t0, -0x3dd0
 /* 0F2350 7F0BD820 00027080 */  sll   $t6, $v0, 2
 /* 0F2354 7F0BD824 010E7821 */  addu  $t7, $t0, $t6
 /* 0F2358 7F0BD828 00024880 */  sll   $t1, $v0, 2
@@ -516,8 +495,8 @@ glabel draw_membars
 /* 0F23A0 7F0BD870 44063000 */  mfc1  $a2, $f6
 /* 0F23A4 7F0BD874 0FC2F5F3 */  jal   compute_membar_display_string
 /* 0F23A8 7F0BD878 00000000 */   nop   
-/* 0F23AC 7F0BD87C 3C028009 */  lui   $v0, %hi(gfxActiveBufferIndex)
-/* 0F23B0 7F0BD880 9042C250 */  lbu   $v0, %lo(gfxActiveBufferIndex)($v0)
+/* 0F23AC 7F0BD87C 3C028009 */  lui   $v0, %hi(g_GfxActiveBufferIndex)
+/* 0F23B0 7F0BD880 9042C250 */  lbu   $v0, %lo(g_GfxActiveBufferIndex)($v0)
 /* 0F23B4 7F0BD884 3C078009 */  lui   $a3, %hi(ptr_mvtx0_alloc_start)
 /* 0F23B8 7F0BD888 24E7C240 */  addiu $a3, %lo(ptr_mvtx0_alloc_start) # addiu $a3, $a3, -0x3dc0
 /* 0F23BC 7F0BD88C 00027080 */  sll   $t6, $v0, 2
