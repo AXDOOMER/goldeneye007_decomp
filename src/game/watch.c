@@ -3414,9 +3414,9 @@ void sub_GAME_7F0A77A8(u32 param_1,u32 param_2)
 
 
 #ifdef NONMATCHING
-s32 sub_GAME_7F0A77C8(s32 arg0)
+Gfx *sub_GAME_7F0A77C8(Gfx *arg0)
 {
-    ?32 sp7C;
+    s32 sp7C;
     s32 sp78;
     s32 sp74;
     s32 sp70;
@@ -3430,10 +3430,7 @@ s32 sub_GAME_7F0A77C8(s32 arg0)
     s32 sp50;
     s32 sp4C;
     s16 sp44;
-    s32 temp_s0;
-    s32 temp_s0_2;
-    s32 temp_s0_3;
-    s32 temp_s0_4;
+
     s32 temp_v1;
     s32 phi_v0;
     s32 phi_v0_2;
@@ -3446,6 +3443,7 @@ s32 sub_GAME_7F0A77C8(s32 arg0)
     sp50 = get_textptr_for_textID(0xac25);
     sp4C = get_textptr_for_textID(0xac26);
     sp7C = 0x51;
+    
     if (j_text_trigger != 0)
     {
         phi_v0 = 0xf;
@@ -3472,10 +3470,13 @@ s32 sub_GAME_7F0A77C8(s32 arg0)
     {
         phi_v0_3 = 0;
     }
+    
     temp_v1 = phi_v0_3 + 0x4c;
+    
     sp6C = temp_v1;
     sp70 = temp_v1;
     sp68 = temp_v1;
+    
     if (watch_soundrelated_maybe != 0)
     {
         if (D_800409A4 == 0)
@@ -3484,10 +3485,7 @@ s32 sub_GAME_7F0A77C8(s32 arg0)
             {
                 D_800409A4 = 1;
             }
-            else
-            {
-
-            }
+            
         }
         else
         {
@@ -3497,38 +3495,39 @@ s32 sub_GAME_7F0A77C8(s32 arg0)
                 {
                     D_800409A4 = 0;
                 }
-                else
-                {
-
-                }
+                
             }
         }
     }
+    
     if (watch_soundrelated_maybe != 0)
     {
         sub_GAME_7F0AE98C(&sp60, &sp64, sp54, sp58, sp5C, 0);
-        en_text_write_stuff(arg0, &sp7C, &sp70, sp54, sp58, sp5C, 0xa0ffa0f0, sp64, sp60, 0, 0);
+
+        arg0 = en_text_write_stuff(arg0, &sp7C, &sp70, sp54, sp58, sp5C, 0xa0ffa0f0, sp64, sp60, 0, 0);
+        
         if (D_800409A4 != 0)
         {
-            jp_text_write_stuff(temp_s0, &sp78, &sp6C, sp50, sp58, sp5C, -1, 0x7000a0, get_video2_settings_txtClipW(), get_video2_settings_txtClipH(), 0, 0);
-            en_text_write_stuff(temp_s0_2, &sp74, &sp68, sp4C, sp58, sp5C, 0xff00b0, get_video2_settings_txtClipW(), get_video2_settings_txtClipH(), 0, 0);
+            arg0 = jp_text_write_stuff(arg0, &sp78, &sp6C, sp50, sp58, sp5C, -1, 0x7000a0, get_video2_settings_txtClipW(), get_video2_settings_txtClipH(), 0, 0);
+            arg0 = en_text_write_stuff(arg0, &sp74, &sp68, sp4C, sp58, sp5C, 0xff00b0, get_video2_settings_txtClipW(), get_video2_settings_txtClipH(), 0, 0);
         }
         else
         {
             if (D_800409A4 == 0)
             {
-                en_text_write_stuff(temp_s0, &sp78, &sp6C, sp50, sp58, sp5C, 0xff00b0, get_video2_settings_txtClipW(), get_video2_settings_txtClipH(), 0, 0);
-                jp_text_write_stuff(temp_s0_3, &sp74, &sp68, sp4C, sp58, sp5C, -1, 0x7000a0, get_video2_settings_txtClipW(), get_video2_settings_txtClipH(), 0, 0);
+                arg0 = en_text_write_stuff(arg0, &sp78, &sp6C, sp50, sp58, sp5C, 0xff00b0, get_video2_settings_txtClipW(), get_video2_settings_txtClipH(), 0, 0);
+                arg0 = jp_text_write_stuff(arg0, &sp74, &sp68, sp4C, sp58, sp5C, -1, 0x7000a0, get_video2_settings_txtClipW(), get_video2_settings_txtClipH(), 0, 0);
             }
         }
     }
     else
     {
         sub_GAME_7F0AE98C(&sp60, &sp64, sp54, sp58, sp5C, 0);
-        en_text_write_stuff(en_text_write_stuff(arg0, &sp7C, &sp70, sp54, sp58, sp5C, 0x800080, sp64, sp60, 0, 0), &sp78, &sp6C, sp50, sp58, sp5C, 0x800080, get_video2_settings_txtClipW(), get_video2_settings_txtClipH(), 0, 0);
-        en_text_write_stuff(temp_s0_4, &sp74, &sp68, sp4C, sp58, sp5C, 0x800080, get_video2_settings_txtClipW(), get_video2_settings_txtClipH(), 0, 0);
+        arg0 = en_text_write_stuff(arg0, &sp7C, &sp70, sp54, sp58, sp5C, 0x800080, sp64, sp60, 0, 0);
+        arg0 = en_text_write_stuff(arg0, &sp78, &sp6C, sp50, sp58, sp5C, 0x800080, get_video2_settings_txtClipW(), get_video2_settings_txtClipH(), 0, 0);
+        arg0 = en_text_write_stuff(arg0, &sp74, &sp68, sp4C, sp58, sp5C, 0x800080, get_video2_settings_txtClipW(), get_video2_settings_txtClipH(), 0, 0);
     }
-    return;
+    return arg0;
 }
 #else
 GLOBAL_ASM(
