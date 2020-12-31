@@ -26,13 +26,10 @@
 
 // bss
 Gfx *g_GfxBuffers[3];
-s32 D_8008C23C;
 u8 *g_VtxBuffers[3];
 u8 *g_GfxMemPos;
 u8 g_GfxActiveBufferIndex;
-//CODE.bss:8008C254
 s32 g_GfxRequestedDisplayList;
-
 
 // data
 //D:800482E0
@@ -42,15 +39,9 @@ s32 D_800482E4[] = {0x10000, 0x18000, 0x20000};
 //D:800482F0
 s32 D_800482F0[] = {0x28000, 0x10000, 0x18000, 0x20000, 0x28000};
 
-//D:80048304
 char membars_string1[] = ">>>>>>>>>>>>>>>>>>>>>>>>>";
-//D:80048320
 char membars_string2[] = "=========================";
-//D:8004833C
 char membars_string3[] = "-------------------------";
-
-
-//rodata
 
 void dynInitDebugNoticeList(void) {
     debCheckAddDebugNoticeListEntry(&D_800482E0, "dyn_c_debug");
@@ -326,81 +317,8 @@ glabel compute_membar_display_string
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
-void draw_membars(s32 arg0) {
-    void *temp_t7;
-    void *temp_t7_2;
-
-    // Node 0
-    temp_t7 = (&g_GfxBuffers + (g_GfxActiveBufferIndex * 4));
-    compute_membar_display_string(&membars_string2, (f32) ((s32) (temp_t7->unk4 - arg0) >> 3), (f32) ((s32) (temp_t7->unk4 - *(&g_GfxBuffers + (g_GfxActiveBufferIndex * 4))) >> 3), arg0);
-    temp_t7_2 = (&g_VtxBuffers + (g_GfxActiveBufferIndex * 4));
-    return compute_membar_display_string(&membars_string2, (f32) (temp_t7_2->unk4 - g_GfxMemPos), (f32) (temp_t7_2->unk4 - *(&g_VtxBuffers + (g_GfxActiveBufferIndex * 4))), &g_VtxBuffers);
+f32 compute_membar_display_string(const char* arg0, f32 arg1, f32 arg2);
+void draw_membars(Gfx *ptr) {
+    compute_membar_display_string(membars_string2, (g_GfxBuffers[g_GfxActiveBufferIndex + 1] - ptr), (g_GfxBuffers[g_GfxActiveBufferIndex + 1] - g_GfxBuffers[g_GfxActiveBufferIndex]));
+    compute_membar_display_string(membars_string2, (g_VtxBuffers[g_GfxActiveBufferIndex + 1] - g_GfxMemPos), (g_VtxBuffers[g_GfxActiveBufferIndex + 1] - g_VtxBuffers[g_GfxActiveBufferIndex]));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel draw_membars
-/* 0F2340 7F0BD810 3C028009 */  lui   $v0, %hi(g_GfxActiveBufferIndex)
-/* 0F2344 7F0BD814 9042C250 */  lbu   $v0, %lo(g_GfxActiveBufferIndex)($v0)
-/* 0F2348 7F0BD818 3C088009 */  lui   $t0, %hi(g_GfxBuffers) 
-/* 0F234C 7F0BD81C 2508C230 */  addiu $t0, %lo(g_GfxBuffers) # addiu $t0, $t0, -0x3dd0
-/* 0F2350 7F0BD820 00027080 */  sll   $t6, $v0, 2
-/* 0F2354 7F0BD824 010E7821 */  addu  $t7, $t0, $t6
-/* 0F2358 7F0BD828 00024880 */  sll   $t1, $v0, 2
-/* 0F235C 7F0BD82C 8DE30004 */  lw    $v1, 4($t7)
-/* 0F2360 7F0BD830 01095021 */  addu  $t2, $t0, $t1
-/* 0F2364 7F0BD834 8D4B0000 */  lw    $t3, ($t2)
-/* 0F2368 7F0BD838 00803825 */  move  $a3, $a0
-/* 0F236C 7F0BD83C 0067C023 */  subu  $t8, $v1, $a3
-/* 0F2370 7F0BD840 006B6023 */  subu  $t4, $v1, $t3
-/* 0F2374 7F0BD844 000C68C3 */  sra   $t5, $t4, 3
-/* 0F2378 7F0BD848 0018C8C3 */  sra   $t9, $t8, 3
-/* 0F237C 7F0BD84C 44992000 */  mtc1  $t9, $f4
-/* 0F2380 7F0BD850 448D3000 */  mtc1  $t5, $f6
-/* 0F2384 7F0BD854 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F2388 7F0BD858 46802120 */  cvt.s.w $f4, $f4
-/* 0F238C 7F0BD85C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F2390 7F0BD860 3C048005 */  lui   $a0, %hi(membars_string2)
-/* 0F2394 7F0BD864 24848320 */  addiu $a0, %lo(membars_string2) # addiu $a0, $a0, -0x7ce0
-/* 0F2398 7F0BD868 468031A0 */  cvt.s.w $f6, $f6
-/* 0F239C 7F0BD86C 44052000 */  mfc1  $a1, $f4
-/* 0F23A0 7F0BD870 44063000 */  mfc1  $a2, $f6
-/* 0F23A4 7F0BD874 0FC2F5F3 */  jal   compute_membar_display_string
-/* 0F23A8 7F0BD878 00000000 */   nop   
-/* 0F23AC 7F0BD87C 3C028009 */  lui   $v0, %hi(g_GfxActiveBufferIndex)
-/* 0F23B0 7F0BD880 9042C250 */  lbu   $v0, %lo(g_GfxActiveBufferIndex)($v0)
-/* 0F23B4 7F0BD884 3C078009 */  lui   $a3, %hi(g_VtxBuffers)
-/* 0F23B8 7F0BD888 24E7C240 */  addiu $a3, %lo(g_VtxBuffers) # addiu $a3, $a3, -0x3dc0
-/* 0F23BC 7F0BD88C 00027080 */  sll   $t6, $v0, 2
-/* 0F23C0 7F0BD890 00EE7821 */  addu  $t7, $a3, $t6
-/* 0F23C4 7F0BD894 00024880 */  sll   $t1, $v0, 2
-/* 0F23C8 7F0BD898 8DE30004 */  lw    $v1, 4($t7)
-/* 0F23CC 7F0BD89C 00E95021 */  addu  $t2, $a3, $t1
-/* 0F23D0 7F0BD8A0 3C188009 */  lui   $t8, %hi(g_GfxMemPos) 
-/* 0F23D4 7F0BD8A4 8F18C24C */  lw    $t8, %lo(g_GfxMemPos)($t8)
-/* 0F23D8 7F0BD8A8 8D4B0000 */  lw    $t3, ($t2)
-/* 0F23DC 7F0BD8AC 3C048005 */  lui   $a0, %hi(membars_string2)
-/* 0F23E0 7F0BD8B0 0078C823 */  subu  $t9, $v1, $t8
-/* 0F23E4 7F0BD8B4 006B6023 */  subu  $t4, $v1, $t3
-/* 0F23E8 7F0BD8B8 448C5000 */  mtc1  $t4, $f10
-/* 0F23EC 7F0BD8BC 44994000 */  mtc1  $t9, $f8
-/* 0F23F0 7F0BD8C0 24848320 */  addiu $a0, %lo(membars_string2) # addiu $a0, $a0, -0x7ce0
-/* 0F23F4 7F0BD8C4 468052A0 */  cvt.s.w $f10, $f10
-/* 0F23F8 7F0BD8C8 46804220 */  cvt.s.w $f8, $f8
-/* 0F23FC 7F0BD8CC 44065000 */  mfc1  $a2, $f10
-/* 0F2400 7F0BD8D0 44054000 */  mfc1  $a1, $f8
-/* 0F2404 7F0BD8D4 0FC2F5F3 */  jal   compute_membar_display_string
-/* 0F2408 7F0BD8D8 00000000 */   nop   
-/* 0F240C 7F0BD8DC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F2410 7F0BD8E0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F2414 7F0BD8E4 03E00008 */  jr    $ra
-/* 0F2418 7F0BD8E8 00000000 */   nop   
-)
-#endif
-
-
