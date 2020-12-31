@@ -129,8 +129,6 @@ def find_last_modified_file():
                 result = subprocess.run(['git', 'log', '-1', '--format=\"%ct\"', '--', _file], stdout=subprocess.PIPE, universal_newlines=True)
 
                 timestamp = int(result.stdout.rstrip().replace('"', ''))
-                
-                print(timestamp, _file)
 
                 if timestamp > lastdate:
                     lastdate = timestamp
