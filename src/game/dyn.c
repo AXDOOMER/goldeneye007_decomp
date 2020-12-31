@@ -284,31 +284,9 @@ void removed_debug_routine(s32 arg0) {
     return;
 }
 
-#ifdef NONMATCHING
-s32 num_microcode_cmds_that_fit(s32 arg0) {
-    // Node 0
-    return ((s32) ((0x80090000 + (g_GfxActiveBufferIndex * 4))->unk-3DCC - arg0) >> 3);
+s32 gfxGetFreeGfx(Gfx *ptr) {
+    return (g_GfxBuffers[g_GfxActiveBufferIndex + 1] - ptr);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel num_microcode_cmds_that_fit
-/* 0F22AC 7F0BD77C 3C0E8009 */  lui   $t6, %hi(g_GfxActiveBufferIndex) 
-/* 0F22B0 7F0BD780 91CEC250 */  lbu   $t6, %lo(g_GfxActiveBufferIndex)($t6)
-/* 0F22B4 7F0BD784 3C188009 */  lui   $t8, %hi(g_GfxBuffers+0x4)
-/* 0F22B8 7F0BD788 000E7880 */  sll   $t7, $t6, 2
-/* 0F22BC 7F0BD78C 030FC021 */  addu  $t8, $t8, $t7
-/* 0F22C0 7F0BD790 8F18C234 */  lw    $t8, %lo(g_GfxBuffers+0x4)($t8)
-/* 0F22C4 7F0BD794 03041023 */  subu  $v0, $t8, $a0
-/* 0F22C8 7F0BD798 0002C8C3 */  sra   $t9, $v0, 3
-/* 0F22CC 7F0BD79C 03E00008 */  jr    $ra
-/* 0F22D0 7F0BD7A0 03201025 */   move  $v0, $t9
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 s32 sub_GAME_7F0BD7A4(void) {

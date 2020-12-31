@@ -6376,7 +6376,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0B3044
 /* 0E7B74 7F0B3044 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0E7B78 7F0B3048 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E7B7C 7F0B304C 0FC2F5DF */  jal   num_microcode_cmds_that_fit
+/* 0E7B7C 7F0B304C 0FC2F5DF */  jal   gfxGetFreeGfx
 /* 0E7B80 7F0B3050 AFA0001C */   sw    $zero, 0x1c($sp)
 /* 0E7B84 7F0B3054 28411000 */  slti  $at, $v0, 0x1000
 /* 0E7B88 7F0B3058 14200005 */  bnez  $at, .L7F0B3070

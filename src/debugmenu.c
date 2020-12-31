@@ -796,7 +796,7 @@ loop_2:
         goto loop_1;
     }
     temp_a0 = phi_s1 - arg0;
-    temp_v1_2 = num_microcode_cmds_that_fit(arg0, temp_a1_2, phi_a2_2, &stdout_primary_color_table) + -0x800;
+    temp_v1_2 = gfxGetFreeGfx(arg0, temp_a1_2, phi_a2_2, &stdout_primary_color_table) + -0x800;
     if (temp_a0 <= 0)
     {
         return arg0;
@@ -856,7 +856,7 @@ loop_18:
             temp_v0_2 = phi_s0_2;
             phi_s0_3 = phi_s0_2;
             phi_s4_2 = phi_s4_3;
-            if (num_microcode_cmds_that_fit(phi_s0_2) >= 0x400)
+            if (gfxGetFreeGfx(phi_s0_2) >= 0x400)
             {
                 temp_v1_4 = phi_s1_2 * 0x10;
                 temp_a0_2 = ((phi_s5 * 8) - phi_s5) * 4;
@@ -939,7 +939,7 @@ glabel read_screen_display_block_and_write_chars
 /* 00BF04 7000B304 29010046 */  slti  $at, $t0, 0x46
 /* 00BF08 7000B308 1420FFEE */  bnez  $at, .L7000B2C4
 /* 00BF0C 7000B30C 00000000 */   nop   
-/* 00BF10 7000B310 0FC2F5DF */  jal   num_microcode_cmds_that_fit
+/* 00BF10 7000B310 0FC2F5DF */  jal   gfxGetFreeGfx
 /* 00BF14 7000B314 02002025 */   move  $a0, $s0
 /* 00BF18 7000B318 02302023 */  subu  $a0, $s1, $s0
 /* 00BF1C 7000B31C 1C800003 */  bgtz  $a0, .L7000B32C
@@ -1028,7 +1028,7 @@ glabel read_screen_display_block_and_write_chars
 /* 00C040 7000B440 014B082B */  sltu  $at, $t2, $t3
 /* 00C044 7000B444 5020002F */  beql  $at, $zero, .L7000B504
 /* 00C048 7000B448 26310001 */   addiu $s1, $s1, 1
-/* 00C04C 7000B44C 0FC2F5DF */  jal   num_microcode_cmds_that_fit
+/* 00C04C 7000B44C 0FC2F5DF */  jal   gfxGetFreeGfx
 /* 00C050 7000B450 02002025 */   move  $a0, $s0
 /* 00C054 7000B454 28410400 */  slti  $at, $v0, 0x400
 /* 00C058 7000B458 14200029 */  bnez  $at, .L7000B500
