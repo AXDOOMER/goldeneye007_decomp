@@ -195,6 +195,7 @@ Gfx *insert_imageDL(Gfx *gdl) {
    gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_16b, viGetX(), osVirtualToPhysical(viGetFrameBuf2()));
    gDPSetFillColor(gdl++, ((GPACK_RGBA5551(0,0,0,1) << 16) | GPACK_RGBA5551(0,0,0,1)));
    gDPFillRectangle(gdl++, 0, 0, (viGetX() - 1), (viGetY() - 1));
+   
    return gdl;
 }
 
@@ -205,6 +206,7 @@ Gfx *sub_GAME_7F01C1A4(Gfx *gdl) {
    gDPSetCycleType(gdl++, G_CYC_1CYCLE);
    gDPSetRenderMode(gdl++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
    gSPSetGeometryMode(gdl++, (G_SHADE | G_SHADING_SMOOTH));
+
    return gdl;
 }
 
@@ -324,7 +326,7 @@ Gfx *sub_GAME_7F01C400(Gfx *gdl) {
    gDPSetTextureLUT(gdl++, G_TT_NONE);
    gDPSetTextureFilter(gdl++, G_TF_BILERP); 
 
-   gdl = sub_GAME_7F01C1A4(gdl++);
+   gdl = sub_GAME_7F01C1A4(gdl);
 
    gSPTexture(gdl++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
    gDPSetRenderMode(gdl++, G_RM_CLD_SURF, G_RM_CLD_SURF2);
@@ -334,6 +336,7 @@ Gfx *sub_GAME_7F01C400(Gfx *gdl) {
    gDPSetTexturePersp(gdl++, G_TP_NONE);
    gDPLoadTextureBlock_4b(gdl++, (pPlayer->field_11B0[pPlayer->field_11B8] + 0x80000000), G_IM_FMT_I, 96, 80, 0, (G_TX_NOMIRROR | G_TX_CLAMP), (G_TX_NOMIRROR | G_TX_CLAMP), G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
    gSPTextureRectangle(gdl++, 0, 0, ((viGetX() * 4) - 1), ((viGetY() * 4) - 1), G_TX_RENDERTILE, 0, 0, 0x18000 / viGetX(), 0x14000 / viGetY());
+   
    return gdl;
 }
 #else
@@ -754,80 +757,14 @@ glabel sub_GAME_7F01C670
 )
 #endif
 
+Gfx *sub_GAME_7F01CA18(Gfx *gdl) {
+	gdl = sub_GAME_7F01C1A4(gdl);
 
+	gDPSetRenderMode(gdl++, G_RM_CLD_SURF, G_RM_CLD_SURF2);
+	gDPSetCombineMode(gdl++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+	gDPSetPrimColor(gdl++, 0, 0, 150, 00, 00, 180);
+	gDPSetColorDither(gdl++, G_CD_MAGICSQ);
+	gDPFillRectangle(gdl++, 0, 0, viGetX(), viGetY());
 
-#ifdef NONMATCHING
-void sub_GAME_7F01CA18(Gfx *glistp) //BloodRed_Dl_Setup
-{
-	sub_GAME_7F01C1A4();
-	//1 cycle settings
-	gDPSetRenderMode(glistp++, G_RM_CLD_SURF, G_RM_CLD_SURF2);
-	gDPSetCombineMode(glistp++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
-	gDPSetPrimColor(glistp++, 0, 0, 150, 00, 00, 180); //dark red
-	gDPSetColorDither(glistp++, G_CD_MAGICSQ);
-	
-	viGetX();
-	//...
+   return gdl;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01CA18
-/* 051548 7F01CA18 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 05154C 7F01CA1C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 051550 7F01CA20 0FC07069 */  jal   sub_GAME_7F01C1A4
-/* 051554 7F01CA24 00000000 */   nop   
-/* 051558 7F01CA28 3C0EB900 */  lui   $t6, (0xB900031D >> 16) # lui $t6, 0xb900
-/* 05155C 7F01CA2C 3C0F0050 */  lui   $t7, (0x00504340 >> 16) # lui $t7, 0x50
-/* 051560 7F01CA30 3C18FCFF */  lui   $t8, (0xFCFFFFFF >> 16) # lui $t8, 0xfcff
-/* 051564 7F01CA34 3C19FFFD */  lui   $t9, (0xFFFDF6FB >> 16) # lui $t9, 0xfffd
-/* 051568 7F01CA38 3C099600 */  lui   $t1, (0x960000B4 >> 16) # lui $t1, 0x9600
-/* 05156C 7F01CA3C 3C0ABA00 */  lui   $t2, (0xBA000602 >> 16) # lui $t2, 0xba00
-/* 051570 7F01CA40 35EF4340 */  ori   $t7, (0x00504340 & 0xFFFF) # ori $t7, $t7, 0x4340
-/* 051574 7F01CA44 35CE031D */  ori   $t6, (0xB900031D & 0xFFFF) # ori $t6, $t6, 0x31d
-/* 051578 7F01CA48 3739F6FB */  ori   $t9, (0xFFFDF6FB & 0xFFFF) # ori $t9, $t9, 0xf6fb
-/* 05157C 7F01CA4C 3718FFFF */  ori   $t8, (0xFCFFFFFF & 0xFFFF) # ori $t8, $t8, 0xffff
-/* 051580 7F01CA50 352900B4 */  ori   $t1, (0x960000B4 & 0xFFFF) # ori $t1, $t1, 0xb4
-/* 051584 7F01CA54 3C08FA00 */  lui   $t0, 0xfa00
-/* 051588 7F01CA58 354A0602 */  ori   $t2, (0xBA000602 & 0xFFFF) # ori $t2, $t2, 0x602
-/* 05158C 7F01CA5C AC4E0000 */  sw    $t6, ($v0)		#$v0 = gfx glist
-/* 051590 7F01CA60 AC4F0004 */  sw    $t7, 4($v0)
-/* 051594 7F01CA64 AC580008 */  sw    $t8, 8($v0)
-/* 051598 7F01CA68 AC59000C */  sw    $t9, 0xc($v0)
-/* 05159C 7F01CA6C AC480010 */  sw    $t0, 0x10($v0)
-/* 0515A0 7F01CA70 AC490014 */  sw    $t1, 0x14($v0)
-/* 0515A4 7F01CA74 AC4A0018 */  sw    $t2, 0x18($v0)
-/* 0515A8 7F01CA78 AC40001C */  sw    $zero, 0x1c($v0)
-/* 0515AC 7F01CA7C 244B0020 */  addiu $t3, $v0, 0x20
-/* 0515B0 7F01CA80 244C0028 */  addiu $t4, $v0, 0x28
-/* 0515B4 7F01CA84 AFAC0030 */  sw    $t4, 0x30($sp)
-/* 0515B8 7F01CA88 0C001107 */  jal   viGetX
-/* 0515BC 7F01CA8C AFAB001C */   sw    $t3, 0x1c($sp)
-/* 0515C0 7F01CA90 0C00110B */  jal   viGetY
-/* 0515C4 7F01CA94 A7A2001A */   sh    $v0, 0x1a($sp)
-/* 0515C8 7F01CA98 87B8001A */  lh    $t8, 0x1a($sp)
-/* 0515CC 7F01CA9C 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 0515D0 7F01CAA0 304D03FF */  andi  $t5, $v0, 0x3ff
-/* 0515D4 7F01CAA4 000D7080 */  sll   $t6, $t5, 2
-/* 0515D8 7F01CAA8 3C01F600 */  lui   $at, 0xf600
-/* 0515DC 7F01CAAC 331903FF */  andi  $t9, $t8, 0x3ff
-/* 0515E0 7F01CAB0 00194380 */  sll   $t0, $t9, 0xe
-/* 0515E4 7F01CAB4 01C17825 */  or    $t7, $t6, $at
-/* 0515E8 7F01CAB8 01E84825 */  or    $t1, $t7, $t0
-/* 0515EC 7F01CABC AC690000 */  sw    $t1, ($v1)
-/* 0515F0 7F01CAC0 AC600004 */  sw    $zero, 4($v1)
-/* 0515F4 7F01CAC4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0515F8 7F01CAC8 8FA20030 */  lw    $v0, 0x30($sp)
-/* 0515FC 7F01CACC 27BD0030 */  addiu $sp, $sp, 0x30
-/* 051600 7F01CAD0 03E00008 */  jr    $ra
-/* 051604 7F01CAD4 00000000 */   nop   
-)
-#endif
-
-
-
-
-
-
-
-
