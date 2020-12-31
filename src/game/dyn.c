@@ -1,18 +1,34 @@
 #include "ultra64.h"
 #include "game/dyn.h"
+
+/**
+ * This file handles memory usage for graphics related tasks.
+ *
+ * There are two pools, "gfx" and "vtx", which are used to store different data.
+ *
+ * The gfx pool (g_GfxBuffers) is sized based on the stage's -mgfx and -mgfxtra
+ * arguments. It contains only the master display list's GBI bytecode.
+ * The master gdl is passed through all rendering functions in the game engine,
+ * where each appends to the display list.
+ *
+ * The vtx pool (g_VtxBuffers) is sized based on the stage's -mvtx argument.
+ * It is used for auxiliary graphics data such as vertex arrays, matrices and
+ * colours.
+ *
+ * Both the gfx and vtx pools are split into two buffers of equal size.
+ * Only one buffer is active at a time - the other is being drawn to the screen
+ * while the active one is being built. Each time a frame is finished the active
+ * buffer index is swapped to the other one.
+ *
+ * Both the gfx and vtx pools have a third element in them, but this is just a
+ * marker for the end of the second element's allocation.
+ */
+
 // bss
 Gfx *g_GfxBuffers[3];
-//CODE.bss:8008C23C
 s32 D_8008C23C;
-//CODE.bss:8008C240
-s32 *ptr_mvtx0_alloc_start;
-//CODE.bss:8008C244
-s32 *ptr_mvtx1_alloc_start;
-//CODE.bss:8008C248
-s32 *ptr_mvtx_end;
-//CODE.bss:8008C24C
-s32 *ptr_mvtx_cur_pos;
-//CODE.bss:8008C250
+u8 *g_VtxBuffers[3];
+u8 *g_GfxMemPos;
 u8 g_GfxActiveBufferIndex;
 //CODE.bss:8008C254
 s32 dword_CODE_bss_8008C254;
@@ -58,13 +74,13 @@ void set_vtx_gfx_mem_alloc(void) {
     mempAllocBytesInBank(dyn_c_debug_notice_list_entry[sVar1] << 1, 4);
     g_GfxBuffers.unk4 = (s32) ((0x80050000 + (getPlayerCount() * 4))->unk-7D20 + g_GfxBuffers);
     g_GfxBuffers.unk8 = (s32) ((0x80050000 + (getPlayerCount() * 4))->unk-7D20 + g_GfxBuffers.unk4);
-    ptr_mvtx0_alloc_start = mempAllocBytesInBank(((0x80050000 + (getPlayerCount() * 4))->unk-7D10 * 2), 4);
-    ptr_mvtx0_alloc_start.unk4 = (s32) ((0x80050000 + (getPlayerCount() * 4))->unk-7D10 + ptr_mvtx0_alloc_start);
+    g_VtxBuffers = mempAllocBytesInBank(((0x80050000 + (getPlayerCount() * 4))->unk-7D10 * 2), 4);
+    g_VtxBuffers.unk4 = (s32) ((0x80050000 + (getPlayerCount() * 4))->unk-7D10 + g_VtxBuffers);
     temp_ret = getPlayerCount();
-    ptr_mvtx0_alloc_start.unk8 = (s32) ((0x80050000 + (temp_ret * 4))->unk-7D10 + ptr_mvtx0_alloc_start.unk4);
+    g_VtxBuffers.unk8 = (s32) ((0x80050000 + (temp_ret * 4))->unk-7D10 + g_VtxBuffers.unk4);
     g_GfxActiveBufferIndex = (u8)0;
     dword_CODE_bss_8008C254 = 0;
-    (void *)0x80090000->unk-3DB4 = (s32) ptr_mvtx0_alloc_start;
+    (void *)0x80090000->unk-3DB4 = (s32) g_VtxBuffers;
     return temp_ret;
 }
 #else
@@ -183,25 +199,25 @@ glabel set_vtx_gfx_mem_alloc
 /* 0F2114 7F0BD5E4 00045840 */  sll   $t3, $a0, 1
 /* 0F2118 7F0BD5E8 0C0025C8 */  jal   mempAllocBytesInBank
 /* 0F211C 7F0BD5EC 01602025 */   move  $a0, $t3
-/* 0F2120 7F0BD5F0 3C038009 */  lui   $v1, %hi(ptr_mvtx0_alloc_start)
-/* 0F2124 7F0BD5F4 2463C240 */  addiu $v1, %lo(ptr_mvtx0_alloc_start) # addiu $v1, $v1, -0x3dc0
+/* 0F2120 7F0BD5F0 3C038009 */  lui   $v1, %hi(g_VtxBuffers)
+/* 0F2124 7F0BD5F4 2463C240 */  addiu $v1, %lo(g_VtxBuffers) # addiu $v1, $v1, -0x3dc0
 /* 0F2128 7F0BD5F8 0FC26919 */  jal   getPlayerCount
 /* 0F212C 7F0BD5FC AC620000 */   sw    $v0, ($v1)
-/* 0F2130 7F0BD600 3C038009 */  lui   $v1, %hi(ptr_mvtx0_alloc_start)
+/* 0F2130 7F0BD600 3C038009 */  lui   $v1, %hi(g_VtxBuffers)
 /* 0F2134 7F0BD604 00026080 */  sll   $t4, $v0, 2
 /* 0F2138 7F0BD608 3C0D8005 */  lui   $t5, %hi(D_800482F0)
 /* 0F213C 7F0BD60C 01AC6821 */  addu  $t5, $t5, $t4
-/* 0F2140 7F0BD610 2463C240 */  addiu $v1, %lo(ptr_mvtx0_alloc_start) # addiu $v1, $v1, -0x3dc0
+/* 0F2140 7F0BD610 2463C240 */  addiu $v1, %lo(g_VtxBuffers) # addiu $v1, $v1, -0x3dc0
 /* 0F2144 7F0BD614 8C6F0000 */  lw    $t7, ($v1)
 /* 0F2148 7F0BD618 8DAD82F0 */  lw    $t5, %lo(D_800482F0)($t5)
 /* 0F214C 7F0BD61C 01AF7021 */  addu  $t6, $t5, $t7
 /* 0F2150 7F0BD620 0FC26919 */  jal   getPlayerCount
 /* 0F2154 7F0BD624 AC6E0004 */   sw    $t6, 4($v1)
-/* 0F2158 7F0BD628 3C038009 */  lui   $v1, %hi(ptr_mvtx0_alloc_start)
+/* 0F2158 7F0BD628 3C038009 */  lui   $v1, %hi(g_VtxBuffers)
 /* 0F215C 7F0BD62C 0002C080 */  sll   $t8, $v0, 2
 /* 0F2160 7F0BD630 3C088005 */  lui   $t0, %hi(D_800482F0)
 /* 0F2164 7F0BD634 01184021 */  addu  $t0, $t0, $t8
-/* 0F2168 7F0BD638 2463C240 */  addiu $v1, %lo(ptr_mvtx0_alloc_start) # addiu $v1, $v1, -0x3dc0
+/* 0F2168 7F0BD638 2463C240 */  addiu $v1, %lo(g_VtxBuffers) # addiu $v1, $v1, -0x3dc0
 /* 0F216C 7F0BD63C 8C790004 */  lw    $t9, 4($v1)
 /* 0F2170 7F0BD640 8D0882F0 */  lw    $t0, %lo(D_800482F0)($t0)
 /* 0F2174 7F0BD644 3C018009 */  lui   $at, %hi(g_GfxActiveBufferIndex)
@@ -212,10 +228,10 @@ glabel set_vtx_gfx_mem_alloc
 /* 0F2188 7F0BD658 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C254)
 /* 0F218C 7F0BD65C AC20C254 */  sw    $zero, %lo(dword_CODE_bss_8008C254)($at)
 /* 0F2190 7F0BD660 8C6A0000 */  lw    $t2, ($v1)
-/* 0F2194 7F0BD664 3C018009 */  lui   $at, %hi(ptr_mvtx_cur_pos)
+/* 0F2194 7F0BD664 3C018009 */  lui   $at, %hi(g_GfxMemPos)
 /* 0F2198 7F0BD668 27BD0020 */  addiu $sp, $sp, 0x20
 /* 0F219C 7F0BD66C 03E00008 */  jr    $ra
-/* 0F21A0 7F0BD670 AC2AC24C */   sw    $t2, %lo(ptr_mvtx_cur_pos)($at)
+/* 0F21A0 7F0BD670 AC2AC24C */   sw    $t2, %lo(g_GfxMemPos)($at)
 )
 #endif
 
@@ -229,23 +245,11 @@ s32 allocate_something_in_mgfx(Gfx *ptr) {
     return (g_GfxBuffers[g_GfxActiveBufferIndex + 1] - ptr);
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F0BD6C4(void) {
-
+Vtx *sub_GAME_7F0BD6C4(s32 count) {
+    void *ptr = g_GfxMemPos;
+	g_GfxMemPos += count * sizeof(Vtx);
+	return ptr;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BD6C4
-/* 0F21F4 7F0BD6C4 3C068009 */  lui   $a2, %hi(ptr_mvtx_cur_pos)
-/* 0F21F8 7F0BD6C8 24C6C24C */  addiu $a2, %lo(ptr_mvtx_cur_pos) # addiu $a2, $a2, -0x3db4
-/* 0F21FC 7F0BD6CC 8CC20000 */  lw    $v0, ($a2)
-/* 0F2200 7F0BD6D0 00047100 */  sll   $t6, $a0, 4
-/* 0F2204 7F0BD6D4 004E7821 */  addu  $t7, $v0, $t6
-/* 0F2208 7F0BD6D8 03E00008 */  jr    $ra
-/* 0F220C 7F0BD6DC ACCF0000 */   sw    $t7, ($a2)
-)
-#endif
 
 
 
@@ -254,15 +258,15 @@ glabel sub_GAME_7F0BD6C4
 #ifdef NONMATCHING
 s32 sub_GAME_7F0BD6E0(void) {
     // Node 0
-    ptr_mvtx_cur_pos = (s32) (ptr_mvtx_cur_pos + 0x40);
-    return ptr_mvtx_cur_pos;
+    g_GfxMemPos = (s32) (g_GfxMemPos + 0x40);
+    return g_GfxMemPos;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0BD6E0
-/* 0F2210 7F0BD6E0 3C058009 */  lui   $a1, %hi(ptr_mvtx_cur_pos)
-/* 0F2214 7F0BD6E4 24A5C24C */  addiu $a1, %lo(ptr_mvtx_cur_pos) # addiu $a1, $a1, -0x3db4
+/* 0F2210 7F0BD6E0 3C058009 */  lui   $a1, %hi(g_GfxMemPos)
+/* 0F2214 7F0BD6E4 24A5C24C */  addiu $a1, %lo(g_GfxMemPos) # addiu $a1, $a1, -0x3db4
 /* 0F2218 7F0BD6E8 8CA20000 */  lw    $v0, ($a1)
 /* 0F221C 7F0BD6EC 244E0040 */  addiu $t6, $v0, 0x40
 /* 0F2220 7F0BD6F0 03E00008 */  jr    $ra
@@ -277,15 +281,15 @@ glabel sub_GAME_7F0BD6E0
 #ifdef NONMATCHING
 s32 sub_GAME_7F0BD6F8(s32 arg0) {
     // Node 0
-    ptr_mvtx_cur_pos = (s32) (ptr_mvtx_cur_pos + (arg0 * 0x10));
-    return ptr_mvtx_cur_pos;
+    g_GfxMemPos = (s32) (g_GfxMemPos + (arg0 * 0x10));
+    return g_GfxMemPos;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0BD6F8
-/* 0F2228 7F0BD6F8 3C068009 */  lui   $a2, %hi(ptr_mvtx_cur_pos)
-/* 0F222C 7F0BD6FC 24C6C24C */  addiu $a2, %lo(ptr_mvtx_cur_pos) # addiu $a2, $a2, -0x3db4
+/* 0F2228 7F0BD6F8 3C068009 */  lui   $a2, %hi(g_GfxMemPos)
+/* 0F222C 7F0BD6FC 24C6C24C */  addiu $a2, %lo(g_GfxMemPos) # addiu $a2, $a2, -0x3db4
 /* 0F2230 7F0BD700 8CC20000 */  lw    $v0, ($a2)
 /* 0F2234 7F0BD704 00047100 */  sll   $t6, $a0, 4
 /* 0F2238 7F0BD708 004E7821 */  addu  $t7, $v0, $t6
@@ -301,15 +305,15 @@ glabel sub_GAME_7F0BD6F8
 #ifdef NONMATCHING
 s32 sub_GAME_7F0BD714(s32 arg0) {
     // Node 0
-    ptr_mvtx_cur_pos = (s32) (ptr_mvtx_cur_pos + (((arg0 + 0xf) | 0xf) ^ 0xf));
-    return ptr_mvtx_cur_pos;
+    g_GfxMemPos = (s32) (g_GfxMemPos + (((arg0 + 0xf) | 0xf) ^ 0xf));
+    return g_GfxMemPos;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0BD714
-/* 0F2244 7F0BD714 3C068009 */  lui   $a2, %hi(ptr_mvtx_cur_pos)
-/* 0F2248 7F0BD718 24C6C24C */  addiu $a2, %lo(ptr_mvtx_cur_pos) # addiu $a2, $a2, -0x3db4
+/* 0F2244 7F0BD714 3C068009 */  lui   $a2, %hi(g_GfxMemPos)
+/* 0F2248 7F0BD718 24C6C24C */  addiu $a2, %lo(g_GfxMemPos) # addiu $a2, $a2, -0x3db4
 /* 0F224C 7F0BD71C 8CC20000 */  lw    $v0, ($a2)
 /* 0F2250 7F0BD720 2484000F */  addiu $a0, $a0, 0xf
 /* 0F2254 7F0BD724 348E000F */  ori   $t6, $a0, 0xf
@@ -329,7 +333,7 @@ void *allocate_something_in_mvtx(void) {
     // Node 0
     g_GfxActiveBufferIndex = (s8) (g_GfxActiveBufferIndex ^ 1);
     dword_CODE_bss_8008C254 = 0;
-    ptr_mvtx_cur_pos = (?32) (0x80090000 + (g_GfxActiveBufferIndex * 4))->unk-3DC0;
+    g_GfxMemPos = (?32) (0x80090000 + (g_GfxActiveBufferIndex * 4))->unk-3DC0;
     return &g_GfxActiveBufferIndex;
 }
 #else
@@ -340,17 +344,17 @@ glabel allocate_something_in_mvtx
 /* 0F226C 7F0BD73C 2442C250 */  addiu $v0, %lo(g_GfxActiveBufferIndex) # addiu $v0, $v0, -0x3db0
 /* 0F2270 7F0BD740 904E0000 */  lbu   $t6, ($v0)
 /* 0F2274 7F0BD744 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C254)
-/* 0F2278 7F0BD748 3C088009 */  lui   $t0, %hi(ptr_mvtx0_alloc_start)
+/* 0F2278 7F0BD748 3C088009 */  lui   $t0, %hi(g_VtxBuffers)
 /* 0F227C 7F0BD74C 39CF0001 */  xori  $t7, $t6, 1
 /* 0F2280 7F0BD750 A04F0000 */  sb    $t7, ($v0)
 /* 0F2284 7F0BD754 AC20C254 */  sw    $zero, %lo(dword_CODE_bss_8008C254)($at)
 /* 0F2288 7F0BD758 90580000 */  lbu   $t8, ($v0)
-/* 0F228C 7F0BD75C 3C018009 */  lui   $at, %hi(ptr_mvtx_cur_pos)
+/* 0F228C 7F0BD75C 3C018009 */  lui   $at, %hi(g_GfxMemPos)
 /* 0F2290 7F0BD760 0018C880 */  sll   $t9, $t8, 2
 /* 0F2294 7F0BD764 01194021 */  addu  $t0, $t0, $t9
-/* 0F2298 7F0BD768 8D08C240 */  lw    $t0, %lo(ptr_mvtx0_alloc_start)($t0)
+/* 0F2298 7F0BD768 8D08C240 */  lw    $t0, %lo(g_VtxBuffers)($t0)
 /* 0F229C 7F0BD76C 03E00008 */  jr    $ra
-/* 0F22A0 7F0BD770 AC28C24C */   sw    $t0, %lo(ptr_mvtx_cur_pos)($at)
+/* 0F22A0 7F0BD770 AC28C24C */   sw    $t0, %lo(g_GfxMemPos)($at)
 )
 #endif
 
@@ -396,7 +400,7 @@ glabel num_microcode_cmds_that_fit
 #ifdef NONMATCHING
 s32 sub_GAME_7F0BD7A4(void) {
     // Node 0
-    return ((0x80090000 + (g_GfxActiveBufferIndex * 4))->unk-3DBC - ptr_mvtx_cur_pos);
+    return ((0x80090000 + (g_GfxActiveBufferIndex * 4))->unk-3DBC - g_GfxMemPos);
 }
 
 #else
@@ -405,12 +409,12 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0BD7A4
 /* 0F22D4 7F0BD7A4 3C0E8009 */  lui   $t6, %hi(g_GfxActiveBufferIndex) 
 /* 0F22D8 7F0BD7A8 91CEC250 */  lbu   $t6, %lo(g_GfxActiveBufferIndex)($t6)
-/* 0F22DC 7F0BD7AC 3C188009 */  lui   $t8, %hi(ptr_mvtx1_alloc_start)
-/* 0F22E0 7F0BD7B0 3C198009 */  lui   $t9, %hi(ptr_mvtx_cur_pos) 
+/* 0F22DC 7F0BD7AC 3C188009 */  lui   $t8, %hi(g_VtxBuffers+0x4)
+/* 0F22E0 7F0BD7B0 3C198009 */  lui   $t9, %hi(g_GfxMemPos) 
 /* 0F22E4 7F0BD7B4 000E7880 */  sll   $t7, $t6, 2
 /* 0F22E8 7F0BD7B8 030FC021 */  addu  $t8, $t8, $t7
-/* 0F22EC 7F0BD7BC 8F18C244 */  lw    $t8, %lo(ptr_mvtx1_alloc_start)($t8)
-/* 0F22F0 7F0BD7C0 8F39C24C */  lw    $t9, %lo(ptr_mvtx_cur_pos)($t9)
+/* 0F22EC 7F0BD7BC 8F18C244 */  lw    $t8, %lo(g_VtxBuffers+0x4)($t8)
+/* 0F22F0 7F0BD7C0 8F39C24C */  lw    $t9, %lo(g_GfxMemPos)($t9)
 /* 0F22F4 7F0BD7C4 03E00008 */  jr    $ra
 /* 0F22F8 7F0BD7C8 03191023 */   subu  $v0, $t8, $t9
 )
@@ -461,8 +465,8 @@ void draw_membars(s32 arg0) {
     // Node 0
     temp_t7 = (&g_GfxBuffers + (g_GfxActiveBufferIndex * 4));
     compute_membar_display_string(&membars_string2, (f32) ((s32) (temp_t7->unk4 - arg0) >> 3), (f32) ((s32) (temp_t7->unk4 - *(&g_GfxBuffers + (g_GfxActiveBufferIndex * 4))) >> 3), arg0);
-    temp_t7_2 = (&ptr_mvtx0_alloc_start + (g_GfxActiveBufferIndex * 4));
-    return compute_membar_display_string(&membars_string2, (f32) (temp_t7_2->unk4 - ptr_mvtx_cur_pos), (f32) (temp_t7_2->unk4 - *(&ptr_mvtx0_alloc_start + (g_GfxActiveBufferIndex * 4))), &ptr_mvtx0_alloc_start);
+    temp_t7_2 = (&g_VtxBuffers + (g_GfxActiveBufferIndex * 4));
+    return compute_membar_display_string(&membars_string2, (f32) (temp_t7_2->unk4 - g_GfxMemPos), (f32) (temp_t7_2->unk4 - *(&g_VtxBuffers + (g_GfxActiveBufferIndex * 4))), &g_VtxBuffers);
 }
 #else
 GLOBAL_ASM(
@@ -497,15 +501,15 @@ glabel draw_membars
 /* 0F23A8 7F0BD878 00000000 */   nop   
 /* 0F23AC 7F0BD87C 3C028009 */  lui   $v0, %hi(g_GfxActiveBufferIndex)
 /* 0F23B0 7F0BD880 9042C250 */  lbu   $v0, %lo(g_GfxActiveBufferIndex)($v0)
-/* 0F23B4 7F0BD884 3C078009 */  lui   $a3, %hi(ptr_mvtx0_alloc_start)
-/* 0F23B8 7F0BD888 24E7C240 */  addiu $a3, %lo(ptr_mvtx0_alloc_start) # addiu $a3, $a3, -0x3dc0
+/* 0F23B4 7F0BD884 3C078009 */  lui   $a3, %hi(g_VtxBuffers)
+/* 0F23B8 7F0BD888 24E7C240 */  addiu $a3, %lo(g_VtxBuffers) # addiu $a3, $a3, -0x3dc0
 /* 0F23BC 7F0BD88C 00027080 */  sll   $t6, $v0, 2
 /* 0F23C0 7F0BD890 00EE7821 */  addu  $t7, $a3, $t6
 /* 0F23C4 7F0BD894 00024880 */  sll   $t1, $v0, 2
 /* 0F23C8 7F0BD898 8DE30004 */  lw    $v1, 4($t7)
 /* 0F23CC 7F0BD89C 00E95021 */  addu  $t2, $a3, $t1
-/* 0F23D0 7F0BD8A0 3C188009 */  lui   $t8, %hi(ptr_mvtx_cur_pos) 
-/* 0F23D4 7F0BD8A4 8F18C24C */  lw    $t8, %lo(ptr_mvtx_cur_pos)($t8)
+/* 0F23D0 7F0BD8A0 3C188009 */  lui   $t8, %hi(g_GfxMemPos) 
+/* 0F23D4 7F0BD8A4 8F18C24C */  lw    $t8, %lo(g_GfxMemPos)($t8)
 /* 0F23D8 7F0BD8A8 8D4B0000 */  lw    $t3, ($t2)
 /* 0F23DC 7F0BD8AC 3C048005 */  lui   $a0, %hi(membars_string2)
 /* 0F23E0 7F0BD8B0 0078C823 */  subu  $t9, $v1, $t8
