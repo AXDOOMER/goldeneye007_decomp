@@ -181,10 +181,10 @@ def generate_report(segments, files_completed, last_modified_file, Ver):
 
     printstring = printstring + str(totals['done']) + ' ' + str(totals['total']) + ' '
     printstring = printstring + str(files_completed['completed']) + ' ' + str(files_completed['total']) + ' '
-    if Ver.upper() = 'US':
+    if Ver.upper() in ("US"):
         printstring = printstring + './tools/report/index.html ' + last_modified_file + ' 0'
-    elif Ver.upper() = 'JP':
-        printstring = printstring + './tools/report/JAP.htm ' + last_modified_file + ' 0'
+    elif Ver.upper() in ("JP"):
+        printstring = printstring + './tools/report/JP.htm ' + last_modified_file + ' 0'
     else:
         printstring = printstring + './tools/report/index.html ' + last_modified_file + ' 0'
     subprocess.Popen(printstring.split()) 
