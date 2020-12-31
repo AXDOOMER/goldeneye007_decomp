@@ -60,6 +60,6 @@ jobs:
           user_email: $API_TOKEN_EMAIL
           user_name: $API_TOKEN_USER
           source_file: |
-            tools/report/JP.htm
+            tools/report/JPN.htm
       
 #need way of telling report that JP passed/failed

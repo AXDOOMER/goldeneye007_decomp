@@ -184,7 +184,7 @@ def generate_report(segments, files_completed, last_modified_file, Ver):
     if Ver.upper() in ("US"):
         printstring = printstring + './tools/report/index.html ' + last_modified_file + ' 0'
     elif Ver.upper() in ("JP"):
-        printstring = printstring + './tools/report/JP.htm ' + last_modified_file + ' 0'
+        printstring = printstring + './tools/report/JPN.htm ' + last_modified_file + ' 0'
     else:
         printstring = printstring + './tools/report/index.html ' + last_modified_file + ' 0'
     subprocess.Popen(printstring.split()) 
