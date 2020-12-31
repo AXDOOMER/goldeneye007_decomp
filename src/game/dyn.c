@@ -29,104 +29,99 @@ u8 *g_VtxBuffers[3];
 u8 *g_GfxMemPos;
 u8 g_GfxActiveBufferIndex;
 s32 g_GfxRequestedDisplayList;
-
-s32 g_GfxSizesByPlayerCount[] = {0x00000, 0x10000, 0x18000, 0x20000};
-s32 g_VtxSizesByPlayerCount[] = {0x28000, 0x10000, 0x18000, 0x20000};
-
-s32 D_80048300 = 0x28000;
+s32 D_800482E0 = 0;
+s32 g_GfxSizesByPlayerCount[] = {0x10000, 0x18000, 0x20000, 0x28000};
+s32 g_VtxSizesByPlayerCount[] = {0x10000, 0x18000, 0x20000, 0x28000};
 
 char membars_string1[] = ">>>>>>>>>>>>>>>>>>>>>>>>>";
 char membars_string2[] = "=========================";
 char membars_string3[] = "-------------------------";
 
 void dynInitDebugNoticeList(void) {
-    debCheckAddDebugNoticeListEntry(&g_GfxSizesByPlayerCount, "dyn_c_debug");
+    debCheckAddDebugNoticeListEntry(&D_800482E0, "dyn_c_debug");
 }
 
 const char *check_token(s32 arg0, const char *arg1);
 long int strtol(const char *str, char **endptr, int base);
-u8 *mempAllocBytesInBank(u32 bytes, u8 bank);
-void gfxInitMemory(void) {
+void *mempAllocBytesInBank(u32 bytes, u8 bank);
+void dynInitMemory(void) {
     if (check_token(1, "-mgfx")) {
-        g_GfxSizesByPlayerCount[getPlayerCount()] = strtol(check_token(1, "-mgfx"), NULL, 0) * 1024;
+        g_GfxSizesByPlayerCount[getPlayerCount() - 1] = strtol(check_token(1, "-mgfx"), NULL, 0) * 1024;
     }
     if (check_token(1, "-mvtx")) {
-        g_VtxSizesByPlayerCount[getPlayerCount()] = strtol(check_token(1, "-mvtx"), NULL, 0) * 1024;
+        g_VtxSizesByPlayerCount[getPlayerCount() - 1] = strtol(check_token(1, "-mvtx"), NULL, 0) * 1024;
     }
 
-    g_GfxBuffers[0] = mempAllocBytesInBank(g_GfxSizesByPlayerCount[getPlayerCount()] * 2, 4);
-    g_GfxBuffers[1] = (g_GfxBuffers[0] + g_GfxSizesByPlayerCount[getPlayerCount()]);
-    g_GfxBuffers[2] = (g_GfxBuffers[1] + g_GfxSizesByPlayerCount[getPlayerCount()]);
+    g_GfxBuffers[0] = mempAllocBytesInBank(g_GfxSizesByPlayerCount[getPlayerCount() - 1] * 2, 4);
+    g_GfxBuffers[1] = (g_GfxBuffers[0] + g_GfxSizesByPlayerCount[getPlayerCount() - 1]);
+    g_GfxBuffers[2] = (g_GfxBuffers[1] + g_GfxSizesByPlayerCount[getPlayerCount() - 1]);
 
-    g_VtxBuffers[0] = mempAllocBytesInBank(g_VtxSizesByPlayerCount[getPlayerCount()] * 2, 4);
-    g_VtxBuffers[1] = (g_VtxBuffers[0] + g_VtxSizesByPlayerCount[getPlayerCount()]);
-    g_VtxBuffers[2] = (g_VtxBuffers[1] + g_VtxSizesByPlayerCount[getPlayerCount()]);
+    g_VtxBuffers[0] = mempAllocBytesInBank(g_VtxSizesByPlayerCount[getPlayerCount() - 1] * 2, 4);
+    g_VtxBuffers[1] = (g_VtxBuffers[0] + g_VtxSizesByPlayerCount[getPlayerCount() - 1]);
+    g_VtxBuffers[2] = (g_VtxBuffers[1] + g_VtxSizesByPlayerCount[getPlayerCount() - 1]);
 
     g_GfxActiveBufferIndex = 0;
     g_GfxRequestedDisplayList = FALSE;
     g_GfxMemPos = g_VtxBuffers[0];
 }
 
-Gfx *gfxGetMasterDisplayList(void) {
+Gfx *dynGetMasterDisplayList(void) {
     g_GfxRequestedDisplayList = TRUE;
 
     return (Gfx*)g_GfxBuffers[g_GfxActiveBufferIndex];
 }
 
-s32 allocate_something_in_mgfx(Gfx *ptr) {
-    return (Gfx*)g_GfxBuffers[g_GfxActiveBufferIndex + 1] - ptr;
+s32 dynGetFreeGfx2(Gfx *gdl) {
+    return (Gfx*)g_GfxBuffers[g_GfxActiveBufferIndex + 1] - gdl;
 }
 
-void/*Vtx?*/ *sub_GAME_7F0BD6C4(s32 count) {
+void/*Vtx?*/ *dynAllocate7F0BD6C4(s32 count) {
     void *ptr = g_GfxMemPos;
 	g_GfxMemPos += count * 0x10/*sizeof(Vtx)?*/;
 	return ptr;
 }
 
-Mtx *gfxAllocateMatrix(void)
+Mtx *dynAllocateMatrix(void)
 {
 	void *ptr = g_GfxMemPos;
 	g_GfxMemPos += sizeof(Mtx);
-
 	return ptr;
 }
 
-void/*Light?*/ *sub_GAME_7F0BD6F8(s32 count) {
+void/*Light?*/ *dynAllocate7F0BD6F8(s32 count) {
     void *ptr = g_GfxMemPos;
 	g_GfxMemPos += count * 0x10/*sizeof(Light)?*/;
 	return ptr;
 }
 
 #define ALIGN16(val)        (((val) + 0xf | 0xf) ^ 0xf)
-void *gfxAllocate(s32 size) {
+void *dynAllocate(s32 size) {
     void *ptr = g_GfxMemPos;
 	size = ALIGN16(size);
 	g_GfxMemPos += size;
-
 	return ptr;
 }
 
-void gfxSwapBuffers(void) {
+void dynSwapBuffers(void) {
     g_GfxActiveBufferIndex = (g_GfxActiveBufferIndex ^ 1);
     g_GfxRequestedDisplayList = FALSE;
     g_GfxMemPos = g_VtxBuffers[g_GfxActiveBufferIndex];
 }
 
-void removed_debug_routine(s32 arg0) {
-    return;
+void dynRemovedFunc(s32 arg) {
 }
 
-s32 gfxGetFreeGfx(Gfx *ptr) {
-    return (Gfx*)g_GfxBuffers[g_GfxActiveBufferIndex + 1] - ptr;
+s32 dynGetFreeGfx(Gfx *gdl) {
+    return (Gfx*)g_GfxBuffers[g_GfxActiveBufferIndex + 1] - gdl;
 }
 
-s32 gfxGetFreeVtx(void) {
+s32 dynGetFreeVtx(void) {
 	return g_VtxBuffers[g_GfxActiveBufferIndex + 1] - g_GfxMemPos;
 }
 
 #ifdef NONMATCHING
 // $f2 is used for 0.0f instead of $f0
-f32 compute_membar_display_string(const char* arg0, f32 arg1, f32 arg2) {
+f32 dynCalculateMembarLength(const char* arg0, f32 arg1, f32 arg2) {
     strlen(arg0);
     arg1 /= arg2;
     if (arg1 < 0.0f) {
@@ -134,9 +129,10 @@ f32 compute_membar_display_string(const char* arg0, f32 arg1, f32 arg2) {
     }
 }
 #else
+f32 dynCalculateMembarLength(const char* arg0, f32 arg1, f32 arg2);
 GLOBAL_ASM(
 .text
-glabel compute_membar_display_string
+glabel dynCalculateMembarLength
 /* 0F22FC 7F0BD7CC 44856000 */  mtc1  $a1, $f12
 /* 0F2300 7F0BD7D0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0F2304 7F0BD7D4 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -158,8 +154,7 @@ glabel compute_membar_display_string
 )
 #endif
 
-f32 compute_membar_display_string(const char* arg0, f32 arg1, f32 arg2);
-void draw_membars(Gfx *ptr) {
-    compute_membar_display_string(membars_string2, ((Gfx*)g_GfxBuffers[g_GfxActiveBufferIndex + 1] - ptr), ((Gfx*)g_GfxBuffers[g_GfxActiveBufferIndex + 1] - (Gfx*)g_GfxBuffers[g_GfxActiveBufferIndex]));
-    compute_membar_display_string(membars_string2, (g_VtxBuffers[g_GfxActiveBufferIndex + 1] - g_GfxMemPos), (g_VtxBuffers[g_GfxActiveBufferIndex + 1] - g_VtxBuffers[g_GfxActiveBufferIndex]));
+void dynDrawMembars(Gfx *gdl) {
+    dynCalculateMembarLength(membars_string2, ((Gfx*)g_GfxBuffers[g_GfxActiveBufferIndex + 1] - gdl), ((Gfx*)g_GfxBuffers[g_GfxActiveBufferIndex + 1] - (Gfx*)g_GfxBuffers[g_GfxActiveBufferIndex]));
+    dynCalculateMembarLength(membars_string2, (g_VtxBuffers[g_GfxActiveBufferIndex + 1] - g_GfxMemPos), (g_VtxBuffers[g_GfxActiveBufferIndex + 1] - g_VtxBuffers[g_GfxActiveBufferIndex]));
 }

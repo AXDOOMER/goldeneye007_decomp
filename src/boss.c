@@ -573,7 +573,7 @@ loop_44:
                         }
                         if (show_mem_bars_flag != 0)
                         {
-                            draw_membars(temp_s3_3);
+                            dynDrawMembars(temp_s3_3);
                         }
                         dynGetFreeGfx2(temp_s3_3);
                         dynSwapBuffers();
@@ -1148,7 +1148,7 @@ glabel mainloop
 /* 0073AC 700067AC 8D2941B8 */  lw    $t1, %lo(show_mem_bars_flag)($t1)
 /* 0073B0 700067B0 11200003 */  beqz  $t1, .L700067C0
 /* 0073B4 700067B4 00000000 */   nop   
-/* 0073B8 700067B8 0FC2F604 */  jal   draw_membars
+/* 0073B8 700067B8 0FC2F604 */  jal   dynDrawMembars
 /* 0073BC 700067BC 02602025 */   move  $a0, $s3
 .L700067C0:
 /* 0073C0 700067C0 0FC2F5A7 */  jal   dynGetFreeGfx2
