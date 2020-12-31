@@ -1,4 +1,4 @@
-name: GE-Status
+name: JAP-Status
 
 on:
   push:
