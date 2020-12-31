@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "video.h"
+#include "intro_logos.h"
 
 
 char die_blood_image_1[] = {
@@ -196,74 +197,15 @@ Gfx *insert_imageDL(Gfx *gdl) {
    return gdl;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F01C1A4(void) {
-
+Gfx *sub_GAME_7F01C1A4(Gfx *gdl) {
+   gSPMatrix(gdl++, osVirtualToPhysical(matrix_buffer_gunbarrel_0), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
+   gSPMatrix(gdl++, osVirtualToPhysical(&matrix_buffer_rarelogo_2[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW));
+   gDPPipeSync(gdl++);
+   gDPSetCycleType(gdl++, G_CYC_1CYCLE);
+   gDPSetRenderMode(gdl++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
+   gSPSetGeometryMode(gdl++, (G_SHADE | G_SHADING_SMOOTH));
+   return gdl;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01C1A4
-/* 050CD4 7F01C1A4 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 050CD8 7F01C1A8 3C0E0103 */  lui   $t6, (0x01030040 >> 16) # lui $t6, 0x103
-/* 050CDC 7F01C1AC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 050CE0 7F01C1B0 35CE0040 */  ori   $t6, (0x01030040 & 0xFFFF) # ori $t6, $t6, 0x40
-/* 050CE4 7F01C1B4 AC8E0000 */  sw    $t6, ($a0)
-/* 050CE8 7F01C1B8 00801825 */  move  $v1, $a0
-/* 050CEC 7F01C1BC 24850008 */  addiu $a1, $a0, 8
-/* 050CF0 7F01C1C0 3C048007 */  lui   $a0, %hi(matrix_buffer_gunbarrel_0)
-/* 050CF4 7F01C1C4 8C84955C */  lw    $a0, %lo(matrix_buffer_gunbarrel_0)($a0)
-/* 050CF8 7F01C1C8 AFA50020 */  sw    $a1, 0x20($sp)
-/* 050CFC 7F01C1CC 0C003A2C */  jal   osVirtualToPhysical
-/* 050D00 7F01C1D0 AFA3001C */   sw    $v1, 0x1c($sp)
-/* 050D04 7F01C1D4 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 050D08 7F01C1D8 8FA80020 */  lw    $t0, 0x20($sp)
-/* 050D0C 7F01C1DC 3C0F0102 */  lui   $t7, (0x01020040 >> 16) # lui $t7, 0x102
-/* 050D10 7F01C1E0 35EF0040 */  ori   $t7, (0x01020040 & 0xFFFF) # ori $t7, $t7, 0x40
-/* 050D14 7F01C1E4 AC620004 */  sw    $v0, 4($v1)
-/* 050D18 7F01C1E8 3C188003 */  lui   $t8, %hi(D_8002A7D0) 
-/* 050D1C 7F01C1EC AD0F0000 */  sw    $t7, ($t0)
-/* 050D20 7F01C1F0 8F18A7D0 */  lw    $t8, %lo(D_8002A7D0)($t8)
-/* 050D24 7F01C1F4 3C098007 */  lui   $t1, %hi(matrix_buffer_rarelogo_2) 
-/* 050D28 7F01C1F8 8D299564 */  lw    $t1, %lo(matrix_buffer_rarelogo_2)($t1)
-/* 050D2C 7F01C1FC 25050008 */  addiu $a1, $t0, 8
-/* 050D30 7F01C200 0018C980 */  sll   $t9, $t8, 6
-/* 050D34 7F01C204 AFA50020 */  sw    $a1, 0x20($sp)
-/* 050D38 7F01C208 AFA80018 */  sw    $t0, 0x18($sp)
-/* 050D3C 7F01C20C 0C003A2C */  jal   osVirtualToPhysical
-/* 050D40 7F01C210 03292021 */   addu  $a0, $t9, $t1
-/* 050D44 7F01C214 8FA30020 */  lw    $v1, 0x20($sp)
-/* 050D48 7F01C218 8FA80018 */  lw    $t0, 0x18($sp)
-/* 050D4C 7F01C21C 3C0AE700 */  lui   $t2, 0xe700
-/* 050D50 7F01C220 24640008 */  addiu $a0, $v1, 8
-/* 050D54 7F01C224 AD020004 */  sw    $v0, 4($t0)
-/* 050D58 7F01C228 3C0BBA00 */  lui   $t3, (0xBA001402 >> 16) # lui $t3, 0xba00 gDPSetCycleType(2cycle)
-/* 050D5C 7F01C22C AC600004 */  sw    $zero, 4($v1)
-/* 050D60 7F01C230 AC6A0000 */  sw    $t2, ($v1)
-/* 050D64 7F01C234 356B1402 */  ori   $t3, (0xBA001402 & 0xFFFF) # ori $t3, $t3, 0x1402
-/* 050D68 7F01C238 24860008 */  addiu $a2, $a0, 8
-/* 050D6C 7F01C23C AC8B0000 */  sw    $t3, ($a0)
-/* 050D70 7F01C240 AC800004 */  sw    $zero, 4($a0)
-/* 050D74 7F01C244 3C0CB900 */  lui   $t4, (0xB900031D >> 16) # lui $t4, 0xb900 gDPSetRenderMode(AAOpaSurf)
-/* 050D78 7F01C248 3C0D0055 */  lui   $t5, (0x00552048 >> 16) # lui $t5, 0x55
-/* 050D7C 7F01C24C 35AD2048 */  ori   $t5, (0x00552048 & 0xFFFF) # ori $t5, $t5, 0x2048
-/* 050D80 7F01C250 358C031D */  ori   $t4, (0xB900031D & 0xFFFF) # ori $t4, $t4, 0x31d
-/* 050D84 7F01C254 ACCC0000 */  sw    $t4, ($a2)
-/* 050D88 7F01C258 ACCD0004 */  sw    $t5, 4($a2)
-/* 050D8C 7F01C25C 24C70008 */  addiu $a3, $a2, 8
-/* 050D90 7F01C260 3C0EB700 */  lui   $t6, 0xb700
-/* 050D94 7F01C264 240F0204 */  li    $t7, 516
-/* 050D98 7F01C268 ACEF0004 */  sw    $t7, 4($a3)
-/* 050D9C 7F01C26C ACEE0000 */  sw    $t6, ($a3)
-/* 050DA0 7F01C270 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 050DA4 7F01C274 24E20008 */  addiu $v0, $a3, 8
-/* 050DA8 7F01C278 27BD0020 */  addiu $sp, $sp, 0x20
-/* 050DAC 7F01C27C 03E00008 */  jr    $ra
-/* 050DB0 7F01C280 00000000 */   nop   
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 void die_blood_image_routine(void) {

@@ -5,9 +5,9 @@
 extern s32 dword_CODE_bss_80069550;
 extern s32 dword_CODE_bss_80069554;
 extern s32 matrix_buffer_rarelogo_0;
-extern s32 matrix_buffer_gunbarrel_0;
+extern Mtx *matrix_buffer_gunbarrel_0;
 extern s32 matrix_buffer_rarelogo_1;
-extern s32 matrix_buffer_rarelogo_2;
+extern Mtx *matrix_buffer_rarelogo_2;
 extern s32 matrix_buffer_gunbarrel_1;
 extern s32 matrix_buffer_intro_backdrop;
 extern s32 matrix_buffer_intro_bond;

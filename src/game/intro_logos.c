@@ -10,11 +10,11 @@ s32 dword_CODE_bss_80069554;
 //CODE.bss:80069558
 s32 matrix_buffer_rarelogo_0;
 //CODE.bss:8006955C
-s32 matrix_buffer_gunbarrel_0;
+Mtx *matrix_buffer_gunbarrel_0;
 //CODE.bss:80069560
 s32 matrix_buffer_rarelogo_1;
 //CODE.bss:80069564
-s32 matrix_buffer_rarelogo_2;
+Mtx *matrix_buffer_rarelogo_2;
 //CODE.bss:80069568
 s32 matrix_buffer_gunbarrel_1;
 //CODE.bss:8006956C
