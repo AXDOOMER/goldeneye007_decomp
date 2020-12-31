@@ -1,7 +1,10 @@
 This is a working Goldeneye 007 decompilation! 
 
-[![GE-CI](https://github.com/kholdfuzion/goldeneye_src/workflows/GE-CI/badge.svg)](https://kholdfuzion.github.io/goldeneyestatus/)
+[![GE-Status](https://github.com/kholdfuzion/goldeneye_src/workflows/GE-Status/badge.svg)](https://kholdfuzion.github.io/goldeneyestatus/)
 
+This repo builds a matching US. JAP or PAL ROM.
+
+This repo does not include all assets necessary for compiling the ROMs. A prior copy of the game is required to extract the assets.
 
 ## Setup
 The only requirements for Ubuntu 16.04 and 18.04 should be 
@@ -34,6 +37,21 @@ name_baserom.sh files
 name_baserom.sh images
 ```
 to do just one or the other, default is both
+
+## Build the ROM
+Run make to build the ROM (defaults to VERSION=us). Other examples:
+``` bash
+make VERSION=jp -j4       # build (J) version instead with 4 jobs
+make VERSION=eu COMPARE=0 # build (EU) version but do not compare ROM hashes
+```
+
+
+Resulting artifacts can be found in the build directory.
+
+
+The full list of configurable variables are listed below, with the default being the first listed:
+
+VERSION: us, jp, eu
 
 ## Project Structure
 
