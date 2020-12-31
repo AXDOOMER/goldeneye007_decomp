@@ -6,9 +6,9 @@ typedef struct video_settings video_settings, *Pvideo_settings;
 
 struct video_settings {
     u8 mode;
-    s8 test1;
-    s8 test2;
-    s8 test3;
+    s8 field_01;
+    s8 field_02;
+    s8 field_03;
     s16 x;
     s16 y;
     f32 fovy;
@@ -25,10 +25,10 @@ struct video_settings {
     u8* framebuf;
 };
 
-void set_video2_settings_fovy(f32 fovy);
-void set_video2_settings_aspect(f32 aspect);
-void set_video2_settings_near_far(f32 near, f32 far);
-void set_video2_settings_usezbuf(s32 usezbuf);
+void viSetFovY(f32 fovy);
+void viSetAspect(f32 aspect);
+void viSetZRange(f32 near, f32 far);
+void viSetUseZBuf(s32 usezbuf);
 #endif
 
 

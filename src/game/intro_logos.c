@@ -404,7 +404,7 @@ glabel insert_sniper_sight_eye_intro
 /* 03C938 7F007E08 240FF7FB */  li    $t7, -2053
 /* 03C93C 7F007E0C AC4F0004 */  sw    $t7, 4($v0)
 /* 03C940 7F007E10 AC4E0000 */  sw    $t6, ($v0)
-/* 03C944 7F007E14 0C001107 */  jal   get_video2_settings_txtClipW
+/* 03C944 7F007E14 0C001107 */  jal   viGetX
 /* 03C948 7F007E18 24500008 */   addiu $s0, $v0, 8
 /* 03C94C 7F007E1C 44822000 */  mtc1  $v0, $f4
 /* 03C950 7F007E20 3C018007 */  lui   $at, %hi(x)
@@ -468,9 +468,9 @@ glabel sub_GAME_7F007E70
 /* 03CA04 7F007ED4 244C0020 */  addiu $t4, $v0, 0x20
 /* 03CA08 7F007ED8 244D0028 */  addiu $t5, $v0, 0x28
 /* 03CA0C 7F007EDC AFAD0030 */  sw    $t5, 0x30($sp)
-/* 03CA10 7F007EE0 0C001107 */  jal   get_video2_settings_txtClipW
+/* 03CA10 7F007EE0 0C001107 */  jal   viGetX
 /* 03CA14 7F007EE4 AFAC001C */   sw    $t4, 0x1c($sp)
-/* 03CA18 7F007EE8 0C00110B */  jal   get_video2_settings_txtClipH
+/* 03CA18 7F007EE8 0C00110B */  jal   viGetY
 /* 03CA1C 7F007EEC A7A2001A */   sh    $v0, 0x1a($sp)
 /* 03CA20 7F007EF0 87B9001A */  lh    $t9, 0x1a($sp)
 /* 03CA24 7F007EF4 8FA3001C */  lw    $v1, 0x1c($sp)

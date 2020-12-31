@@ -2883,7 +2883,7 @@ void sub_GAME_7F0B5208(s32 arg0, void *arg1) {
     s32 phi_s3_3;
 
     // Node 0
-    get_video2_settings_near_far(&sp3C);
+    viGetZRange(&sp3C);
     sp40 = (f32) (sp40 / D_800413FC);
     phi_v1 = 0;
     phi_a2 = ((arg0 * 0x50) + &array_room_info);
@@ -3077,7 +3077,7 @@ glabel sub_GAME_7F0B5208
 /* 0E9D70 7F0B5240 00009825 */  move  $s3, $zero
 /* 0E9D74 7F0B5244 0000A025 */  move  $s4, $zero
 /* 0E9D78 7F0B5248 0000A825 */  move  $s5, $zero
-/* 0E9D7C 7F0B524C 0C0011AB */  jal   get_video2_settings_near_far
+/* 0E9D7C 7F0B524C 0C0011AB */  jal   viGetZRange
 /* 0E9D80 7F0B5250 27A4003C */   addiu $a0, $sp, 0x3c
 /* 0E9D84 7F0B5254 3C018004 */  lui   $at, %hi(D_800413FC)
 /* 0E9D88 7F0B5258 C42613FC */  lwc1  $f6, %lo(D_800413FC)($at)
@@ -3347,7 +3347,7 @@ glabel sub_GAME_7F0B5528
 /* 0EA09C 7F0B556C AFA400B0 */   sw    $a0, 0xb0($sp)
 /* 0EA0A0 7F0B5570 AFA200AC */  sw    $v0, 0xac($sp)
 /* 0EA0A4 7F0B5574 241E0001 */  li    $fp, 1
-/* 0EA0A8 7F0B5578 0C0011AB */  jal   get_video2_settings_near_far
+/* 0EA0A8 7F0B5578 0C0011AB */  jal   viGetZRange
 /* 0EA0AC 7F0B557C 27A40098 */   addiu $a0, $sp, 0x98
 /* 0EA0B0 7F0B5580 3C018004 */  lui   $at, %hi(D_800413FC)
 /* 0EA0B4 7F0B5584 C42613FC */  lwc1  $f6, %lo(D_800413FC)($at)
@@ -9760,8 +9760,8 @@ f32 sub_GAME_7F0B908C(void) {
     // Node 0
     sp2C = (f32) D_80041404;
     sp24 = (f32) D_80041404.unk4;
-    sp28 = (f32) ((f32) D_8004140C + (f32) get_video2_settings_txtClipW());
-    sp20 = (f32) ((f32) D_80041410 + (f32) get_video2_settings_txtClipH());
+    sp28 = (f32) ((f32) D_8004140C + (f32) viGetX());
+    sp20 = (f32) ((f32) D_80041410 + (f32) viGetY());
     pPlayer->unk1118 = (f32) viGetViewLeft();
     if (pPlayer->unk1118 < sp2C)
     {
@@ -9833,7 +9833,7 @@ glabel sub_GAME_7F0B908C
 /* 0EDBDC 7F0B90AC 468021A0 */  cvt.s.w $f6, $f4
 /* 0EDBE0 7F0B90B0 468042A0 */  cvt.s.w $f10, $f8
 /* 0EDBE4 7F0B90B4 E7A6002C */  swc1  $f6, 0x2c($sp)
-/* 0EDBE8 7F0B90B8 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0EDBE8 7F0B90B8 0C001107 */  jal   viGetX
 /* 0EDBEC 7F0B90BC E7AA0024 */   swc1  $f10, 0x24($sp)
 /* 0EDBF0 7F0B90C0 3C188004 */  lui   $t8, %hi(D_8004140C) 
 /* 0EDBF4 7F0B90C4 8F18140C */  lw    $t8, %lo(D_8004140C)($t8)
@@ -9842,7 +9842,7 @@ glabel sub_GAME_7F0B908C
 /* 0EDC00 7F0B90D0 468021A0 */  cvt.s.w $f6, $f4
 /* 0EDC04 7F0B90D4 468084A0 */  cvt.s.w $f18, $f16
 /* 0EDC08 7F0B90D8 46069200 */  add.s $f8, $f18, $f6
-/* 0EDC0C 7F0B90DC 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0EDC0C 7F0B90DC 0C00110B */  jal   viGetY
 /* 0EDC10 7F0B90E0 E7A80028 */   swc1  $f8, 0x28($sp)
 /* 0EDC14 7F0B90E4 3C198004 */  lui   $t9, %hi(D_80041410) 
 /* 0EDC18 7F0B90E8 8F391410 */  lw    $t9, %lo(D_80041410)($t9)

@@ -205,14 +205,14 @@ glabel insert_imageDL
 /* 050C1C 7F01C0EC AC8E0000 */  sw    $t6, ($a0)
 /* 050C20 7F01C0F0 24900008 */  addiu $s0, $a0, 8
 /* 050C24 7F01C0F4 AFB00030 */  sw    $s0, 0x30($sp)
-/* 050C28 7F01C0F8 0C001107 */  jal   get_video2_settings_txtClipW
+/* 050C28 7F01C0F8 0C001107 */  jal   viGetX
 /* 050C2C 7F01C0FC 26100008 */   addiu $s0, $s0, 8
 /* 050C30 7F01C100 2458FFFF */  addiu $t8, $v0, -1
 /* 050C34 7F01C104 8FA90030 */  lw    $t1, 0x30($sp)
 /* 050C38 7F01C108 33190FFF */  andi  $t9, $t8, 0xfff
 /* 050C3C 7F01C10C 3C01FF10 */  lui   $at, 0xff10
 /* 050C40 7F01C110 03214025 */  or    $t0, $t9, $at
-/* 050C44 7F01C114 0C000F07 */  jal   get_video_settings2_frameb
+/* 050C44 7F01C114 0C000F07 */  jal   viGetFrameBuf2
 /* 050C48 7F01C118 AD280000 */   sw    $t0, ($t1)
 /* 050C4C 7F01C11C 0C003A2C */  jal   osVirtualToPhysical
 /* 050C50 7F01C120 00402025 */   move  $a0, $v0
@@ -226,9 +226,9 @@ glabel insert_imageDL
 /* 050C70 7F01C140 AC6C0004 */  sw    $t4, 4($v1)
 /* 050C74 7F01C144 26100008 */  addiu $s0, $s0, 8
 /* 050C78 7F01C148 AFB00028 */  sw    $s0, 0x28($sp)
-/* 050C7C 7F01C14C 0C001107 */  jal   get_video2_settings_txtClipW
+/* 050C7C 7F01C14C 0C001107 */  jal   viGetX
 /* 050C80 7F01C150 26100008 */   addiu $s0, $s0, 8
-/* 050C84 7F01C154 0C00110B */  jal   get_video2_settings_txtClipH
+/* 050C84 7F01C154 0C00110B */  jal   viGetY
 /* 050C88 7F01C158 A7A20022 */   sh    $v0, 0x22($sp)
 /* 050C8C 7F01C15C 87B90022 */  lh    $t9, 0x22($sp)
 /* 050C90 7F01C160 244DFFFF */  addiu $t5, $v0, -1
@@ -526,9 +526,9 @@ glabel sub_GAME_7F01C400
 /* 05107C 7F01C54C AC400044 */  sw    $zero, 0x44($v0)
 /* 051080 7F01C550 244D0068 */  addiu $t5, $v0, 0x68
 /* 051084 7F01C554 AFAD0030 */  sw    $t5, 0x30($sp)
-/* 051088 7F01C558 0C001107 */  jal   get_video2_settings_txtClipW
+/* 051088 7F01C558 0C001107 */  jal   viGetX
 /* 05108C 7F01C55C 24500070 */   addiu $s0, $v0, 0x70
-/* 051090 7F01C560 0C00110B */  jal   get_video2_settings_txtClipH
+/* 051090 7F01C560 0C00110B */  jal   viGetY
 /* 051094 7F01C564 A7A20026 */   sh    $v0, 0x26($sp)
 /* 051098 7F01C568 87A80026 */  lh    $t0, 0x26($sp)
 /* 05109C 7F01C56C 00027080 */  sll   $t6, $v0, 2
@@ -553,9 +553,9 @@ glabel sub_GAME_7F01C400
 /* 0510E8 7F01C5B8 3C0FB300 */  lui   $t7, 0xb300
 /* 0510EC 7F01C5BC AC8F0000 */  sw    $t7, ($a0)
 /* 0510F0 7F01C5C0 AFA40028 */  sw    $a0, 0x28($sp)
-/* 0510F4 7F01C5C4 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0510F4 7F01C5C4 0C001107 */  jal   viGetX
 /* 0510F8 7F01C5C8 26100008 */   addiu $s0, $s0, 8
-/* 0510FC 7F01C5CC 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0510FC 7F01C5CC 0C00110B */  jal   viGetY
 /* 051100 7F01C5D0 A7A20026 */   sh    $v0, 0x26($sp)
 /* 051104 7F01C5D4 3C180001 */  lui   $t8, (0x00014000 >> 16) # lui $t8, 1
 /* 051108 7F01C5D8 37184000 */  ori   $t8, (0x00014000 & 0xFFFF) # ori $t8, $t8, 0x4000
@@ -866,7 +866,7 @@ void sub_GAME_7F01CA18(Gfx *glistp) //BloodRed_Dl_Setup
 	gDPSetPrimColor(glistp++, 0, 0, 150, 00, 00, 180); //dark red
 	gDPSetColorDither(glistp++, G_CD_MAGICSQ);
 	
-	get_video2_settings_txtClipW();
+	viGetX();
 	//...
 }
 #else
@@ -901,9 +901,9 @@ glabel sub_GAME_7F01CA18
 /* 0515AC 7F01CA7C 244B0020 */  addiu $t3, $v0, 0x20
 /* 0515B0 7F01CA80 244C0028 */  addiu $t4, $v0, 0x28
 /* 0515B4 7F01CA84 AFAC0030 */  sw    $t4, 0x30($sp)
-/* 0515B8 7F01CA88 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0515B8 7F01CA88 0C001107 */  jal   viGetX
 /* 0515BC 7F01CA8C AFAB001C */   sw    $t3, 0x1c($sp)
-/* 0515C0 7F01CA90 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0515C0 7F01CA90 0C00110B */  jal   viGetY
 /* 0515C4 7F01CA94 A7A2001A */   sh    $v0, 0x1a($sp)
 /* 0515C8 7F01CA98 87B8001A */  lh    $t8, 0x1a($sp)
 /* 0515CC 7F01CA9C 8FA3001C */  lw    $v1, 0x1c($sp)

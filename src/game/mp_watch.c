@@ -2032,11 +2032,11 @@ glabel display_text_for_playerdata_on_MP_menu
 /* 0F815C 7F0C362C 01200008 */  jr    $t1
 /* 0F8160 7F0C3630 00000000 */   nop   
 green_text_normal:
-/* 0F8164 7F0C3634 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F8164 7F0C3634 0C001107 */  jal   viGetX
 /* 0F8168 7F0C3638 00000000 */   nop   
 /* 0F816C 7F0C363C 00028400 */  sll   $s0, $v0, 0x10
 /* 0F8170 7F0C3640 00105403 */  sra   $t2, $s0, 0x10
-/* 0F8174 7F0C3644 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F8174 7F0C3644 0C00110B */  jal   viGetY
 /* 0F8178 7F0C3648 01408025 */   move  $s0, $t2
 /* 0F817C 7F0C364C 3C0B8004 */  lui   $t3, %hi(ptrSecondFontTableSmall) 
 /* 0F8180 7F0C3650 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableSmall) 
@@ -2059,11 +2059,11 @@ green_text_normal:
 /* 0F81C4 7F0C3694 1000008A */  b     .L7F0C38C0
 /* 0F81C8 7F0C3698 00408825 */   move  $s1, $v0
 green_text_highlighted:
-/* 0F81CC 7F0C369C 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F81CC 7F0C369C 0C001107 */  jal   viGetX
 /* 0F81D0 7F0C36A0 00000000 */   nop   
 /* 0F81D4 7F0C36A4 00028400 */  sll   $s0, $v0, 0x10
 /* 0F81D8 7F0C36A8 00107403 */  sra   $t6, $s0, 0x10
-/* 0F81DC 7F0C36AC 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F81DC 7F0C36AC 0C00110B */  jal   viGetY
 /* 0F81E0 7F0C36B0 01C08025 */   move  $s0, $t6
 /* 0F81E4 7F0C36B4 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableSmall) 
 /* 0F81E8 7F0C36B8 3C188004 */  lui   $t8, %hi(ptrFirstFontTableSmall) 
@@ -2089,11 +2089,11 @@ green_text_highlighted:
 /* 0F8238 7F0C3708 1000006D */  b     .L7F0C38C0
 /* 0F823C 7F0C370C 00408825 */   move  $s1, $v0
 red_text_normal:
-/* 0F8240 7F0C3710 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F8240 7F0C3710 0C001107 */  jal   viGetX
 /* 0F8244 7F0C3714 00000000 */   nop   
 /* 0F8248 7F0C3718 00028400 */  sll   $s0, $v0, 0x10
 /* 0F824C 7F0C371C 00104C03 */  sra   $t1, $s0, 0x10
-/* 0F8250 7F0C3720 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F8250 7F0C3720 0C00110B */  jal   viGetY
 /* 0F8254 7F0C3724 01208025 */   move  $s0, $t1
 /* 0F8258 7F0C3728 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTableSmall) 
 /* 0F825C 7F0C372C 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableSmall) 
@@ -2116,11 +2116,11 @@ red_text_normal:
 /* 0F82A0 7F0C3770 10000053 */  b     .L7F0C38C0
 /* 0F82A4 7F0C3774 00408825 */   move  $s1, $v0
 red_text_highlighted:
-/* 0F82A8 7F0C3778 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F82A8 7F0C3778 0C001107 */  jal   viGetX
 /* 0F82AC 7F0C377C 00000000 */   nop   
 /* 0F82B0 7F0C3780 00028400 */  sll   $s0, $v0, 0x10
 /* 0F82B4 7F0C3784 00106C03 */  sra   $t5, $s0, 0x10
-/* 0F82B8 7F0C3788 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F82B8 7F0C3788 0C00110B */  jal   viGetY
 /* 0F82BC 7F0C378C 01A08025 */   move  $s0, $t5
 /* 0F82C0 7F0C3790 3C0E8004 */  lui   $t6, %hi(ptrSecondFontTableSmall) 
 /* 0F82C4 7F0C3794 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableSmall) 
@@ -2146,11 +2146,11 @@ red_text_highlighted:
 /* 0F8314 7F0C37E4 10000036 */  b     .L7F0C38C0
 /* 0F8318 7F0C37E8 00408825 */   move  $s1, $v0
 blue_text_normal:
-/* 0F831C 7F0C37EC 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F831C 7F0C37EC 0C001107 */  jal   viGetX
 /* 0F8320 7F0C37F0 00000000 */   nop   
 /* 0F8324 7F0C37F4 00028400 */  sll   $s0, $v0, 0x10
 /* 0F8328 7F0C37F8 00104403 */  sra   $t0, $s0, 0x10
-/* 0F832C 7F0C37FC 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F832C 7F0C37FC 0C00110B */  jal   viGetY
 /* 0F8330 7F0C3800 01008025 */   move  $s0, $t0
 /* 0F8334 7F0C3804 3C098004 */  lui   $t1, %hi(ptrSecondFontTableSmall) 
 /* 0F8338 7F0C3808 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableSmall) 
@@ -2173,11 +2173,11 @@ blue_text_normal:
 /* 0F837C 7F0C384C 1000001C */  b     .L7F0C38C0
 /* 0F8380 7F0C3850 00408825 */   move  $s1, $v0
 blue_text_highlighted:
-/* 0F8384 7F0C3854 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F8384 7F0C3854 0C001107 */  jal   viGetX
 /* 0F8388 7F0C3858 00000000 */   nop   
 /* 0F838C 7F0C385C 00028400 */  sll   $s0, $v0, 0x10
 /* 0F8390 7F0C3860 00106403 */  sra   $t4, $s0, 0x10
-/* 0F8394 7F0C3864 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F8394 7F0C3864 0C00110B */  jal   viGetY
 /* 0F8398 7F0C3868 01808025 */   move  $s0, $t4
 /* 0F839C 7F0C386C 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTableSmall) 
 /* 0F83A0 7F0C3870 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall) 
@@ -2999,11 +2999,11 @@ def_7F0C40C0:
 /* 0F8D1C 7F0C41EC 25CF0016 */  addiu $t7, $t6, 0x16
 /* 0F8D20 7F0C41F0 1200001E */  beqz  $s0, .L7F0C426C
 /* 0F8D24 7F0C41F4 AFAF00C8 */   sw    $t7, 0xc8($sp)
-/* 0F8D28 7F0C41F8 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F8D28 7F0C41F8 0C001107 */  jal   viGetX
 /* 0F8D2C 7F0C41FC 00000000 */   nop   
 /* 0F8D30 7F0C4200 00028400 */  sll   $s0, $v0, 0x10
 /* 0F8D34 7F0C4204 0010C403 */  sra   $t8, $s0, 0x10
-/* 0F8D38 7F0C4208 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F8D38 7F0C4208 0C00110B */  jal   viGetY
 /* 0F8D3C 7F0C420C 03008025 */   move  $s0, $t8
 /* 0F8D40 7F0C4210 3C198004 */  lui   $t9, %hi(ptrSecondFontTableSmall) 
 /* 0F8D44 7F0C4214 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableSmall) 
@@ -3029,11 +3029,11 @@ def_7F0C40C0:
 /* 0F8D94 7F0C4264 1000001A */  b     .L7F0C42D0
 /* 0F8D98 7F0C4268 00408825 */   move  $s1, $v0
 .L7F0C426C:
-/* 0F8D9C 7F0C426C 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F8D9C 7F0C426C 0C001107 */  jal   viGetX
 /* 0F8DA0 7F0C4270 00000000 */   nop   
 /* 0F8DA4 7F0C4274 00028400 */  sll   $s0, $v0, 0x10
 /* 0F8DA8 7F0C4278 00106403 */  sra   $t4, $s0, 0x10
-/* 0F8DAC 7F0C427C 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F8DAC 7F0C427C 0C00110B */  jal   viGetY
 /* 0F8DB0 7F0C4280 01808025 */   move  $s0, $t4
 /* 0F8DB4 7F0C4284 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTableSmall) 
 /* 0F8DB8 7F0C4288 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall) 
@@ -3090,11 +3090,11 @@ def_7F0C40C0:
 /* 0F8E78 7F0C4348 AFAD00C8 */  sw    $t5, 0xc8($sp)
 /* 0F8E7C 7F0C434C 15C0001C */  bnez  $t6, .L7F0C43C0
 /* 0F8E80 7F0C4350 00000000 */   nop   
-/* 0F8E84 7F0C4354 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F8E84 7F0C4354 0C001107 */  jal   viGetX
 /* 0F8E88 7F0C4358 00000000 */   nop   
 /* 0F8E8C 7F0C435C 00028400 */  sll   $s0, $v0, 0x10
 /* 0F8E90 7F0C4360 00107C03 */  sra   $t7, $s0, 0x10
-/* 0F8E94 7F0C4364 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F8E94 7F0C4364 0C00110B */  jal   viGetY
 /* 0F8E98 7F0C4368 01E08025 */   move  $s0, $t7
 /* 0F8E9C 7F0C436C 3C188004 */  lui   $t8, %hi(ptrSecondFontTableSmall) 
 /* 0F8EA0 7F0C4370 3C198004 */  lui   $t9, %hi(ptrFirstFontTableSmall) 
@@ -3118,11 +3118,11 @@ def_7F0C40C0:
 /* 0F8EE8 7F0C43B8 1000001E */  b     .L7F0C4434
 /* 0F8EEC 7F0C43BC 00408825 */   move  $s1, $v0
 .L7F0C43C0:
-/* 0F8EF0 7F0C43C0 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F8EF0 7F0C43C0 0C001107 */  jal   viGetX
 /* 0F8EF4 7F0C43C4 00000000 */   nop   
 /* 0F8EF8 7F0C43C8 00028400 */  sll   $s0, $v0, 0x10
 /* 0F8EFC 7F0C43CC 00104C03 */  sra   $t1, $s0, 0x10
-/* 0F8F00 7F0C43D0 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F8F00 7F0C43D0 0C00110B */  jal   viGetY
 /* 0F8F04 7F0C43D4 01208025 */   move  $s0, $t1
 /* 0F8F08 7F0C43D8 3C0B8004 */  lui   $t3, %hi(ptrSecondFontTableSmall) 
 /* 0F8F0C 7F0C43DC 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableSmall) 
@@ -3183,11 +3183,11 @@ def_7F0C40C0:
 /* 0F8FDC 7F0C44AC AFAC00C8 */  sw    $t4, 0xc8($sp)
 /* 0F8FE0 7F0C44B0 15A0001C */  bnez  $t5, .L7F0C4524
 /* 0F8FE4 7F0C44B4 00000000 */   nop   
-/* 0F8FE8 7F0C44B8 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F8FE8 7F0C44B8 0C001107 */  jal   viGetX
 /* 0F8FEC 7F0C44BC 00000000 */   nop   
 /* 0F8FF0 7F0C44C0 00028400 */  sll   $s0, $v0, 0x10
 /* 0F8FF4 7F0C44C4 00107403 */  sra   $t6, $s0, 0x10
-/* 0F8FF8 7F0C44C8 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F8FF8 7F0C44C8 0C00110B */  jal   viGetY
 /* 0F8FFC 7F0C44CC 01C08025 */   move  $s0, $t6
 /* 0F9000 7F0C44D0 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableSmall) 
 /* 0F9004 7F0C44D4 3C198004 */  lui   $t9, %hi(ptrFirstFontTableSmall) 
@@ -3211,11 +3211,11 @@ def_7F0C40C0:
 /* 0F904C 7F0C451C 1000001E */  b     .L7F0C4598
 /* 0F9050 7F0C4520 00408825 */   move  $s1, $v0
 .L7F0C4524:
-/* 0F9054 7F0C4524 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F9054 7F0C4524 0C001107 */  jal   viGetX
 /* 0F9058 7F0C4528 00000000 */   nop   
 /* 0F905C 7F0C452C 00028400 */  sll   $s0, $v0, 0x10
 /* 0F9060 7F0C4530 00105403 */  sra   $t2, $s0, 0x10
-/* 0F9064 7F0C4534 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F9064 7F0C4534 0C00110B */  jal   viGetY
 /* 0F9068 7F0C4538 01408025 */   move  $s0, $t2
 /* 0F906C 7F0C453C 3C098004 */  lui   $t1, %hi(ptrSecondFontTableSmall) 
 /* 0F9070 7F0C4540 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableSmall) 
@@ -3307,11 +3307,11 @@ def_7F0C40C0:
 /* 0F91B4 7F0C4684 000E7843 */  sra   $t7, $t6, 1
 /* 0F91B8 7F0C4688 004FC823 */  subu  $t9, $v0, $t7
 /* 0F91BC 7F0C468C 27380025 */  addiu $t8, $t9, 0x25
-/* 0F91C0 7F0C4690 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F91C0 7F0C4690 0C001107 */  jal   viGetX
 /* 0F91C4 7F0C4694 AFB800C8 */   sw    $t8, 0xc8($sp)
 /* 0F91C8 7F0C4698 00028400 */  sll   $s0, $v0, 0x10
 /* 0F91CC 7F0C469C 00105403 */  sra   $t2, $s0, 0x10
-/* 0F91D0 7F0C46A0 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F91D0 7F0C46A0 0C00110B */  jal   viGetY
 /* 0F91D4 7F0C46A4 01408025 */   move  $s0, $t2
 /* 0F91D8 7F0C46A8 3C098004 */  lui   $t1, %hi(ptrSecondFontTableSmall) 
 /* 0F91DC 7F0C46AC 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableSmall) 
@@ -3377,11 +3377,11 @@ def_7F0C40C0:
 /* 0F92C4 7F0C4794 000C5843 */  sra   $t3, $t4, 1
 /* 0F92C8 7F0C4798 004B6823 */  subu  $t5, $v0, $t3
 /* 0F92CC 7F0C479C 25AE0035 */  addiu $t6, $t5, 0x35
-/* 0F92D0 7F0C47A0 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F92D0 7F0C47A0 0C001107 */  jal   viGetX
 /* 0F92D4 7F0C47A4 AFAE00C8 */   sw    $t6, 0xc8($sp)
 /* 0F92D8 7F0C47A8 00028400 */  sll   $s0, $v0, 0x10
 /* 0F92DC 7F0C47AC 00107C03 */  sra   $t7, $s0, 0x10
-/* 0F92E0 7F0C47B0 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F92E0 7F0C47B0 0C00110B */  jal   viGetY
 /* 0F92E4 7F0C47B4 01E08025 */   move  $s0, $t7
 /* 0F92E8 7F0C47B8 3C198004 */  lui   $t9, %hi(ptrSecondFontTableSmall) 
 /* 0F92EC 7F0C47BC 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableSmall) 
@@ -3747,11 +3747,11 @@ def_7F0C40C0:
 /* 0F9824 7F0C4CF4 000E5043 */  sra   $t2, $t6, 1
 /* 0F9828 7F0C4CF8 004AC023 */  subu  $t8, $v0, $t2
 /* 0F982C 7F0C4CFC 27090025 */  addiu $t1, $t8, 0x25
-/* 0F9830 7F0C4D00 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F9830 7F0C4D00 0C001107 */  jal   viGetX
 /* 0F9834 7F0C4D04 AFA900C8 */   sw    $t1, 0xc8($sp)
 /* 0F9838 7F0C4D08 00028400 */  sll   $s0, $v0, 0x10
 /* 0F983C 7F0C4D0C 00106403 */  sra   $t4, $s0, 0x10
-/* 0F9840 7F0C4D10 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F9840 7F0C4D10 0C00110B */  jal   viGetY
 /* 0F9844 7F0C4D14 01808025 */   move  $s0, $t4
 /* 0F9848 7F0C4D18 3C0B8004 */  lui   $t3, %hi(ptrSecondFontTableSmall) 
 /* 0F984C 7F0C4D1C 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableSmall) 
@@ -3810,11 +3810,11 @@ def_7F0C40C0:
 /* 0F991C 7F0C4DEC 000C5843 */  sra   $t3, $t4, 1
 /* 0F9920 7F0C4DF0 004B7823 */  subu  $t7, $v0, $t3
 /* 0F9924 7F0C4DF4 25ED0035 */  addiu $t5, $t7, 0x35
-/* 0F9928 7F0C4DF8 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F9928 7F0C4DF8 0C001107 */  jal   viGetX
 /* 0F992C 7F0C4DFC AFAD00C8 */   sw    $t5, 0xc8($sp)
 /* 0F9930 7F0C4E00 00028400 */  sll   $s0, $v0, 0x10
 /* 0F9934 7F0C4E04 0010CC03 */  sra   $t9, $s0, 0x10
-/* 0F9938 7F0C4E08 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F9938 7F0C4E08 0C00110B */  jal   viGetY
 /* 0F993C 7F0C4E0C 03208025 */   move  $s0, $t9
 /* 0F9940 7F0C4E10 3C0E8004 */  lui   $t6, %hi(ptrSecondFontTableSmall) 
 /* 0F9944 7F0C4E14 3C188004 */  lui   $t8, %hi(ptrFirstFontTableSmall) 
@@ -4042,11 +4042,11 @@ def_7F0C40C0:
 /* 0F9C9C 7F0C516C 00197043 */  sra   $t6, $t9, 1
 /* 0F9CA0 7F0C5170 004EC023 */  subu  $t8, $v0, $t6
 /* 0F9CA4 7F0C5174 270A0025 */  addiu $t2, $t8, 0x25
-/* 0F9CA8 7F0C5178 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F9CA8 7F0C5178 0C001107 */  jal   viGetX
 /* 0F9CAC 7F0C517C AFAA00C8 */   sw    $t2, 0xc8($sp)
 /* 0F9CB0 7F0C5180 00028400 */  sll   $s0, $v0, 0x10
 /* 0F9CB4 7F0C5184 00104C03 */  sra   $t1, $s0, 0x10
-/* 0F9CB8 7F0C5188 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F9CB8 7F0C5188 0C00110B */  jal   viGetY
 /* 0F9CBC 7F0C518C 01208025 */   move  $s0, $t1
 /* 0F9CC0 7F0C5190 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableSmall) 
 /* 0F9CC4 7F0C5194 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableSmall) 
@@ -4105,11 +4105,11 @@ def_7F0C40C0:
 /* 0F9D94 7F0C5264 00096043 */  sra   $t4, $t1, 1
 /* 0F9D98 7F0C5268 004C7823 */  subu  $t7, $v0, $t4
 /* 0F9D9C 7F0C526C 25EB0035 */  addiu $t3, $t7, 0x35
-/* 0F9DA0 7F0C5270 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F9DA0 7F0C5270 0C001107 */  jal   viGetX
 /* 0F9DA4 7F0C5274 AFAB00C8 */   sw    $t3, 0xc8($sp)
 /* 0F9DA8 7F0C5278 00028400 */  sll   $s0, $v0, 0x10
 /* 0F9DAC 7F0C527C 00106C03 */  sra   $t5, $s0, 0x10
-/* 0F9DB0 7F0C5280 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F9DB0 7F0C5280 0C00110B */  jal   viGetY
 /* 0F9DB4 7F0C5284 01A08025 */   move  $s0, $t5
 /* 0F9DB8 7F0C5288 3C198004 */  lui   $t9, %hi(ptrSecondFontTableSmall) 
 /* 0F9DBC 7F0C528C 3C188004 */  lui   $t8, %hi(ptrFirstFontTableSmall) 
@@ -4489,11 +4489,11 @@ def_7F0C40C0:
 /* 0FA350 7F0C5820 000B7043 */  sra   $t6, $t3, 1
 /* 0FA354 7F0C5824 004E5023 */  subu  $t2, $v0, $t6
 /* 0FA358 7F0C5828 25490025 */  addiu $t1, $t2, 0x25
-/* 0FA35C 7F0C582C 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FA35C 7F0C582C 0C001107 */  jal   viGetX
 /* 0FA360 7F0C5830 AFA900C8 */   sw    $t1, 0xc8($sp)
 /* 0FA364 7F0C5834 00028400 */  sll   $s0, $v0, 0x10
 /* 0FA368 7F0C5838 00106403 */  sra   $t4, $s0, 0x10
-/* 0FA36C 7F0C583C 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FA36C 7F0C583C 0C00110B */  jal   viGetY
 /* 0FA370 7F0C5840 01808025 */   move  $s0, $t4
 /* 0FA374 7F0C5844 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableSmall) 
 /* 0FA378 7F0C5848 3C198004 */  lui   $t9, %hi(ptrFirstFontTableSmall) 
@@ -4554,11 +4554,11 @@ def_7F0C40C0:
 /* 0FA44C 7F0C591C 000DC043 */  sra   $t8, $t5, 1
 /* 0FA450 7F0C5920 03385823 */  subu  $t3, $t9, $t8
 /* 0FA454 7F0C5924 256A0035 */  addiu $t2, $t3, 0x35
-/* 0FA458 7F0C5928 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FA458 7F0C5928 0C001107 */  jal   viGetX
 /* 0FA45C 7F0C592C AFAA00C8 */   sw    $t2, 0xc8($sp)
 /* 0FA460 7F0C5930 00028400 */  sll   $s0, $v0, 0x10
 /* 0FA464 7F0C5934 00107403 */  sra   $t6, $s0, 0x10
-/* 0FA468 7F0C5938 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FA468 7F0C5938 0C00110B */  jal   viGetY
 /* 0FA46C 7F0C593C 01C08025 */   move  $s0, $t6
 /* 0FA470 7F0C5940 3C098004 */  lui   $t1, %hi(ptrSecondFontTableSmall) 
 /* 0FA474 7F0C5944 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableSmall) 
@@ -4608,11 +4608,11 @@ def_7F0C40C0:
 /* 0FA524 7F0C59F4 000E4843 */  sra   $t1, $t6, 1
 /* 0FA528 7F0C59F8 00496023 */  subu  $t4, $v0, $t1
 /* 0FA52C 7F0C59FC 258F004B */  addiu $t7, $t4, 0x4b
-/* 0FA530 7F0C5A00 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FA530 7F0C5A00 0C001107 */  jal   viGetX
 /* 0FA534 7F0C5A04 AFAF00C8 */   sw    $t7, 0xc8($sp)
 /* 0FA538 7F0C5A08 00028400 */  sll   $s0, $v0, 0x10
 /* 0FA53C 7F0C5A0C 00106C03 */  sra   $t5, $s0, 0x10
-/* 0FA540 7F0C5A10 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FA540 7F0C5A10 0C00110B */  jal   viGetY
 /* 0FA544 7F0C5A14 01A08025 */   move  $s0, $t5
 /* 0FA548 7F0C5A18 3C198004 */  lui   $t9, %hi(ptrSecondFontTableSmall) 
 /* 0FA54C 7F0C5A1C 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableSmall) 
@@ -4663,11 +4663,11 @@ def_7F0C40C0:
 /* 0FA5FC 7F0C5ACC 000DC843 */  sra   $t9, $t5, 1
 /* 0FA600 7F0C5AD0 00595823 */  subu  $t3, $v0, $t9
 /* 0FA604 7F0C5AD4 25780058 */  addiu $t8, $t3, 0x58
-/* 0FA608 7F0C5AD8 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FA608 7F0C5AD8 0C001107 */  jal   viGetX
 /* 0FA60C 7F0C5ADC AFB800C8 */   sw    $t8, 0xc8($sp)
 /* 0FA610 7F0C5AE0 00028400 */  sll   $s0, $v0, 0x10
 /* 0FA614 7F0C5AE4 00105403 */  sra   $t2, $s0, 0x10
-/* 0FA618 7F0C5AE8 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FA618 7F0C5AE8 0C00110B */  jal   viGetY
 /* 0FA61C 7F0C5AEC 01408025 */   move  $s0, $t2
 /* 0FA620 7F0C5AF0 3C0E8004 */  lui   $t6, %hi(ptrSecondFontTableSmall) 
 /* 0FA624 7F0C5AF4 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableSmall) 
@@ -4729,11 +4729,11 @@ def_7F0C40C0:
 /* 0FA6FC 7F0C5BCC 8DB929CC */  lw    $t9, 0x29cc($t5)
 /* 0FA700 7F0C5BD0 1720001E */  bnez  $t9, .L7F0C5C4C
 /* 0FA704 7F0C5BD4 00000000 */   nop   
-/* 0FA708 7F0C5BD8 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FA708 7F0C5BD8 0C001107 */  jal   viGetX
 /* 0FA70C 7F0C5BDC 00000000 */   nop   
 /* 0FA710 7F0C5BE0 00028400 */  sll   $s0, $v0, 0x10
 /* 0FA714 7F0C5BE4 0010C403 */  sra   $t8, $s0, 0x10
-/* 0FA718 7F0C5BE8 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FA718 7F0C5BE8 0C00110B */  jal   viGetY
 /* 0FA71C 7F0C5BEC 03008025 */   move  $s0, $t8
 /* 0FA720 7F0C5BF0 3C0B8004 */  lui   $t3, %hi(ptrSecondFontTableSmall) 
 /* 0FA724 7F0C5BF4 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableSmall) 
@@ -4759,11 +4759,11 @@ def_7F0C40C0:
 /* 0FA774 7F0C5C44 1000001A */  b     .L7F0C5CB0
 /* 0FA778 7F0C5C48 00408825 */   move  $s1, $v0
 .L7F0C5C4C:
-/* 0FA77C 7F0C5C4C 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FA77C 7F0C5C4C 0C001107 */  jal   viGetX
 /* 0FA780 7F0C5C50 00000000 */   nop   
 /* 0FA784 7F0C5C54 00028400 */  sll   $s0, $v0, 0x10
 /* 0FA788 7F0C5C58 00104C03 */  sra   $t1, $s0, 0x10
-/* 0FA78C 7F0C5C5C 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FA78C 7F0C5C5C 0C00110B */  jal   viGetY
 /* 0FA790 7F0C5C60 01208025 */   move  $s0, $t1
 /* 0FA794 7F0C5C64 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableSmall) 
 /* 0FA798 7F0C5C68 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableSmall) 
@@ -4819,11 +4819,11 @@ def_7F0C40C0:
 /* 0FA85C 7F0C5D2C 24010001 */  li    $at, 1
 /* 0FA860 7F0C5D30 1561001E */  bne   $t3, $at, .L7F0C5DAC
 /* 0FA864 7F0C5D34 00000000 */   nop   
-/* 0FA868 7F0C5D38 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FA868 7F0C5D38 0C001107 */  jal   viGetX
 /* 0FA86C 7F0C5D3C 00000000 */   nop   
 /* 0FA870 7F0C5D40 00028400 */  sll   $s0, $v0, 0x10
 /* 0FA874 7F0C5D44 00107403 */  sra   $t6, $s0, 0x10
-/* 0FA878 7F0C5D48 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FA878 7F0C5D48 0C00110B */  jal   viGetY
 /* 0FA87C 7F0C5D4C 01C08025 */   move  $s0, $t6
 /* 0FA880 7F0C5D50 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTableSmall) 
 /* 0FA884 7F0C5D54 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableSmall) 
@@ -4849,11 +4849,11 @@ def_7F0C40C0:
 /* 0FA8D4 7F0C5DA4 1000001A */  b     .L7F0C5E10
 /* 0FA8D8 7F0C5DA8 00408825 */   move  $s1, $v0
 .L7F0C5DAC:
-/* 0FA8DC 7F0C5DAC 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FA8DC 7F0C5DAC 0C001107 */  jal   viGetX
 /* 0FA8E0 7F0C5DB0 00000000 */   nop   
 /* 0FA8E4 7F0C5DB4 00028400 */  sll   $s0, $v0, 0x10
 /* 0FA8E8 7F0C5DB8 00106C03 */  sra   $t5, $s0, 0x10
-/* 0FA8EC 7F0C5DBC 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FA8EC 7F0C5DBC 0C00110B */  jal   viGetY
 /* 0FA8F0 7F0C5DC0 01A08025 */   move  $s0, $t5
 /* 0FA8F4 7F0C5DC4 3C198004 */  lui   $t9, %hi(ptrSecondFontTableSmall) 
 /* 0FA8F8 7F0C5DC8 3C188004 */  lui   $t8, %hi(ptrFirstFontTableSmall) 
@@ -4990,11 +4990,11 @@ def_7F0C40C0:
 /* 0FAAE8 7F0C5FB8 01434821 */  addu  $t1, $t2, $v1
 /* 0FAAEC 7F0C5FBC 000C7843 */  sra   $t7, $t4, 1
 /* 0FAAF0 7F0C5FC0 012F6823 */  subu  $t5, $t1, $t7
-/* 0FAAF4 7F0C5FC4 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FAAF4 7F0C5FC4 0C001107 */  jal   viGetX
 /* 0FAAF8 7F0C5FC8 AFAD006C */   sw    $t5, 0x6c($sp)
 /* 0FAAFC 7F0C5FCC 00028400 */  sll   $s0, $v0, 0x10
 /* 0FAB00 7F0C5FD0 0010CC03 */  sra   $t9, $s0, 0x10
-/* 0FAB04 7F0C5FD4 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FAB04 7F0C5FD4 0C00110B */  jal   viGetY
 /* 0FAB08 7F0C5FD8 03208025 */   move  $s0, $t9
 /* 0FAB0C 7F0C5FDC 3C188004 */  lui   $t8, %hi(ptrSecondFontTableSmall) 
 /* 0FAB10 7F0C5FE0 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableSmall) 
@@ -5176,11 +5176,11 @@ def_7F0C40C0:
 /* 0F9A0C 7F0C4E9C 256C0016 */  addiu $t4, $t3, 0x16
 /* 0F9A10 7F0C4EA0 1200001E */  beqz  $s0, .Ljp7F0C4F1C
 /* 0F9A14 7F0C4EA4 AFAC00C8 */   sw    $t4, 0xc8($sp)
-/* 0F9A18 7F0C4EA8 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F9A18 7F0C4EA8 0C001107 */  jal   viGetX
 /* 0F9A1C 7F0C4EAC 00000000 */   nop   
 /* 0F9A20 7F0C4EB0 00028400 */  sll   $s0, $v0, 0x10
 /* 0F9A24 7F0C4EB4 00107403 */  sra   $t6, $s0, 0x10
-/* 0F9A28 7F0C4EB8 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F9A28 7F0C4EB8 0C00110B */  jal   viGetY
 /* 0F9A2C 7F0C4EBC 01C08025 */   move  $s0, $t6
 /* 0F9A30 7F0C4EC0 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTableSmall) # $t5, 0x8004
 /* 0F9A34 7F0C4EC4 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableSmall) # $t7, 0x8004
@@ -5206,11 +5206,11 @@ def_7F0C40C0:
 /* 0F9A84 7F0C4F14 1000001A */  b     .Ljp7F0C4F80
 /* 0F9A88 7F0C4F18 00408825 */   move  $s1, $v0
 .Ljp7F0C4F1C:
-/* 0F9A8C 7F0C4F1C 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F9A8C 7F0C4F1C 0C001107 */  jal   viGetX
 /* 0F9A90 7F0C4F20 00000000 */   nop   
 /* 0F9A94 7F0C4F24 00028400 */  sll   $s0, $v0, 0x10
 /* 0F9A98 7F0C4F28 00105C03 */  sra   $t3, $s0, 0x10
-/* 0F9A9C 7F0C4F2C 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F9A9C 7F0C4F2C 0C00110B */  jal   viGetY
 /* 0F9AA0 7F0C4F30 01608025 */   move  $s0, $t3
 /* 0F9AA4 7F0C4F34 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableSmall) # $t4, 0x8004
 /* 0F9AA8 7F0C4F38 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall) # $t6, 0x8004
@@ -5267,11 +5267,11 @@ def_7F0C40C0:
 /* 0F9B68 7F0C4FF8 AFAD00C8 */  sw    $t5, 0xc8($sp)
 /* 0F9B6C 7F0C4FFC 15E0001C */  bnez  $t7, .Ljp7F0C5070
 /* 0F9B70 7F0C5000 00000000 */   nop   
-/* 0F9B74 7F0C5004 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F9B74 7F0C5004 0C001107 */  jal   viGetX
 /* 0F9B78 7F0C5008 00000000 */   nop   
 /* 0F9B7C 7F0C500C 00028400 */  sll   $s0, $v0, 0x10
 /* 0F9B80 7F0C5010 0010C403 */  sra   $t8, $s0, 0x10
-/* 0F9B84 7F0C5014 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F9B84 7F0C5014 0C00110B */  jal   viGetY
 /* 0F9B88 7F0C5018 03008025 */   move  $s0, $t8
 /* 0F9B8C 7F0C501C 3C198004 */  lui   $t9, %hi(ptrSecondFontTableSmall) # $t9, 0x8004
 /* 0F9B90 7F0C5020 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableSmall) # $t3, 0x8004
@@ -5295,11 +5295,11 @@ def_7F0C40C0:
 /* 0F9BD8 7F0C5068 1000001E */  b     .Ljp7F0C50E4
 /* 0F9BDC 7F0C506C 00408825 */   move  $s1, $v0
 .Ljp7F0C5070:
-/* 0F9BE0 7F0C5070 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F9BE0 7F0C5070 0C001107 */  jal   viGetX
 /* 0F9BE4 7F0C5074 00000000 */   nop   
 /* 0F9BE8 7F0C5078 00028400 */  sll   $s0, $v0, 0x10
 /* 0F9BEC 7F0C507C 00107403 */  sra   $t6, $s0, 0x10
-/* 0F9BF0 7F0C5080 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F9BF0 7F0C5080 0C00110B */  jal   viGetY
 /* 0F9BF4 7F0C5084 01C08025 */   move  $s0, $t6
 /* 0F9BF8 7F0C5088 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTableSmall) # $t5, 0x8004
 /* 0F9BFC 7F0C508C 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableSmall) # $t7, 0x8004
@@ -5360,11 +5360,11 @@ def_7F0C40C0:
 /* 0F9CCC 7F0C515C AFB900C8 */  sw    $t9, 0xc8($sp)
 /* 0F9CD0 7F0C5160 1560001C */  bnez  $t3, .Ljp7F0C51D4
 /* 0F9CD4 7F0C5164 00000000 */   nop   
-/* 0F9CD8 7F0C5168 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F9CD8 7F0C5168 0C001107 */  jal   viGetX
 /* 0F9CDC 7F0C516C 00000000 */   nop   
 /* 0F9CE0 7F0C5170 00028400 */  sll   $s0, $v0, 0x10
 /* 0F9CE4 7F0C5174 00107403 */  sra   $t6, $s0, 0x10
-/* 0F9CE8 7F0C5178 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F9CE8 7F0C5178 0C00110B */  jal   viGetY
 /* 0F9CEC 7F0C517C 01C08025 */   move  $s0, $t6
 /* 0F9CF0 7F0C5180 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableSmall) # $t4, 0x8004
 /* 0F9CF4 7F0C5184 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableSmall) # $t5, 0x8004
@@ -5388,11 +5388,11 @@ def_7F0C40C0:
 /* 0F9D3C 7F0C51CC 1000001E */  b     .Ljp7F0C5248
 /* 0F9D40 7F0C51D0 00408825 */   move  $s1, $v0
 .Ljp7F0C51D4:
-/* 0F9D44 7F0C51D4 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F9D44 7F0C51D4 0C001107 */  jal   viGetX
 /* 0F9D48 7F0C51D8 00000000 */   nop   
 /* 0F9D4C 7F0C51DC 00028400 */  sll   $s0, $v0, 0x10
 /* 0F9D50 7F0C51E0 0010C403 */  sra   $t8, $s0, 0x10
-/* 0F9D54 7F0C51E4 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F9D54 7F0C51E4 0C00110B */  jal   viGetY
 /* 0F9D58 7F0C51E8 03008025 */   move  $s0, $t8
 /* 0F9D5C 7F0C51EC 3C198004 */  lui   $t9, %hi(ptrSecondFontTableSmall) # $t9, 0x8004
 /* 0F9D60 7F0C51F0 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableSmall) # $t3, 0x8004
@@ -5484,11 +5484,11 @@ def_7F0C40C0:
 /* 0F9EA4 7F0C5334 0018C843 */  sra   $t9, $t8, 1
 /* 0F9EA8 7F0C5338 00595823 */  subu  $t3, $v0, $t9
 /* 0F9EAC 7F0C533C 256E0025 */  addiu $t6, $t3, 0x25
-/* 0F9EB0 7F0C5340 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F9EB0 7F0C5340 0C001107 */  jal   viGetX
 /* 0F9EB4 7F0C5344 AFAE00C8 */   sw    $t6, 0xc8($sp)
 /* 0F9EB8 7F0C5348 00028400 */  sll   $s0, $v0, 0x10
 /* 0F9EBC 7F0C534C 00106C03 */  sra   $t5, $s0, 0x10
-/* 0F9EC0 7F0C5350 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F9EC0 7F0C5350 0C00110B */  jal   viGetY
 /* 0F9EC4 7F0C5354 01A08025 */   move  $s0, $t5
 /* 0F9EC8 7F0C5358 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableSmall) # $t4, 0x8004
 /* 0F9ECC 7F0C535C 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableSmall) # $t7, 0x8004
@@ -5554,11 +5554,11 @@ def_7F0C40C0:
 /* 0F9FB4 7F0C5444 00195843 */  sra   $t3, $t9, 1
 /* 0F9FB8 7F0C5448 004B7023 */  subu  $t6, $v0, $t3
 /* 0F9FBC 7F0C544C 25CD0035 */  addiu $t5, $t6, 0x35
-/* 0F9FC0 7F0C5450 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0F9FC0 7F0C5450 0C001107 */  jal   viGetX
 /* 0F9FC4 7F0C5454 AFAD00C8 */   sw    $t5, 0xc8($sp)
 /* 0F9FC8 7F0C5458 00028400 */  sll   $s0, $v0, 0x10
 /* 0F9FCC 7F0C545C 00107C03 */  sra   $t7, $s0, 0x10
-/* 0F9FD0 7F0C5460 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0F9FD0 7F0C5460 0C00110B */  jal   viGetY
 /* 0F9FD4 7F0C5464 01E08025 */   move  $s0, $t7
 /* 0F9FD8 7F0C5468 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableSmall) # $t4, 0x8004
 /* 0F9FDC 7F0C546C 3C188004 */  lui   $t8, %hi(ptrFirstFontTableSmall) # $t8, 0x8004
@@ -5924,11 +5924,11 @@ def_7F0C40C0:
 /* 0FA514 7F0C59A4 000B6843 */  sra   $t5, $t3, 1
 /* 0FA518 7F0C59A8 004D7823 */  subu  $t7, $v0, $t5
 /* 0FA51C 7F0C59AC 25EE0025 */  addiu $t6, $t7, 0x25
-/* 0FA520 7F0C59B0 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FA520 7F0C59B0 0C001107 */  jal   viGetX
 /* 0FA524 7F0C59B4 AFAE00C8 */   sw    $t6, 0xc8($sp)
 /* 0FA528 7F0C59B8 00028400 */  sll   $s0, $v0, 0x10
 /* 0FA52C 7F0C59BC 0010C403 */  sra   $t8, $s0, 0x10
-/* 0FA530 7F0C59C0 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FA530 7F0C59C0 0C00110B */  jal   viGetY
 /* 0FA534 7F0C59C4 03008025 */   move  $s0, $t8
 /* 0FA538 7F0C59C8 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableSmall) # $t4, 0x8004
 /* 0FA53C 7F0C59CC 3C198004 */  lui   $t9, %hi(ptrFirstFontTableSmall) # $t9, 0x8004
@@ -5987,11 +5987,11 @@ def_7F0C40C0:
 /* 0FA60C 7F0C5A9C 00195843 */  sra   $t3, $t9, 1
 /* 0FA610 7F0C5AA0 004B6823 */  subu  $t5, $v0, $t3
 /* 0FA614 7F0C5AA4 25AF0035 */  addiu $t7, $t5, 0x35
-/* 0FA618 7F0C5AA8 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FA618 7F0C5AA8 0C001107 */  jal   viGetX
 /* 0FA61C 7F0C5AAC AFAF00C8 */   sw    $t7, 0xc8($sp)
 /* 0FA620 7F0C5AB0 00028400 */  sll   $s0, $v0, 0x10
 /* 0FA624 7F0C5AB4 0010C403 */  sra   $t8, $s0, 0x10
-/* 0FA628 7F0C5AB8 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FA628 7F0C5AB8 0C00110B */  jal   viGetY
 /* 0FA62C 7F0C5ABC 03008025 */   move  $s0, $t8
 /* 0FA630 7F0C5AC0 3C0E8004 */  lui   $t6, %hi(ptrSecondFontTableSmall) # $t6, 0x8004
 /* 0FA634 7F0C5AC4 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableSmall) # $t4, 0x8004
@@ -6219,11 +6219,11 @@ def_7F0C40C0:
 /* 0FA98C 7F0C5E1C 00195843 */  sra   $t3, $t9, 1
 /* 0FA990 7F0C5E20 004B6823 */  subu  $t5, $v0, $t3
 /* 0FA994 7F0C5E24 25AF0025 */  addiu $t7, $t5, 0x25
-/* 0FA998 7F0C5E28 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FA998 7F0C5E28 0C001107 */  jal   viGetX
 /* 0FA99C 7F0C5E2C AFAF00C8 */   sw    $t7, 0xc8($sp)
 /* 0FA9A0 7F0C5E30 00028400 */  sll   $s0, $v0, 0x10
 /* 0FA9A4 7F0C5E34 00107403 */  sra   $t6, $s0, 0x10
-/* 0FA9A8 7F0C5E38 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FA9A8 7F0C5E38 0C00110B */  jal   viGetY
 /* 0FA9AC 7F0C5E3C 01C08025 */   move  $s0, $t6
 /* 0FA9B0 7F0C5E40 3C188004 */  lui   $t8, %hi(ptrSecondFontTableSmall) # $t8, 0x8004
 /* 0FA9B4 7F0C5E44 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableSmall) # $t4, 0x8004
@@ -6282,11 +6282,11 @@ def_7F0C40C0:
 /* 0FAA84 7F0C5F14 000CC843 */  sra   $t9, $t4, 1
 /* 0FAA88 7F0C5F18 00595823 */  subu  $t3, $v0, $t9
 /* 0FAA8C 7F0C5F1C 256D0035 */  addiu $t5, $t3, 0x35
-/* 0FAA90 7F0C5F20 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FAA90 7F0C5F20 0C001107 */  jal   viGetX
 /* 0FAA94 7F0C5F24 AFAD00C8 */   sw    $t5, 0xc8($sp)
 /* 0FAA98 7F0C5F28 00028400 */  sll   $s0, $v0, 0x10
 /* 0FAA9C 7F0C5F2C 00107403 */  sra   $t6, $s0, 0x10
-/* 0FAAA0 7F0C5F30 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FAAA0 7F0C5F30 0C00110B */  jal   viGetY
 /* 0FAAA4 7F0C5F34 01C08025 */   move  $s0, $t6
 /* 0FAAA8 7F0C5F38 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableSmall) # $t7, 0x8004
 /* 0FAAAC 7F0C5F3C 3C188004 */  lui   $t8, %hi(ptrFirstFontTableSmall) # $t8, 0x8004
@@ -6666,11 +6666,11 @@ def_7F0C40C0:
 /* 0FB040 7F0C64D0 000CC843 */  sra   $t9, $t4, 1
 /* 0FB044 7F0C64D4 00596823 */  subu  $t5, $v0, $t9
 /* 0FB048 7F0C64D8 25AE0025 */  addiu $t6, $t5, 0x25
-/* 0FB04C 7F0C64DC 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FB04C 7F0C64DC 0C001107 */  jal   viGetX
 /* 0FB050 7F0C64E0 AFAE00C8 */   sw    $t6, 0xc8($sp)
 /* 0FB054 7F0C64E4 00028400 */  sll   $s0, $v0, 0x10
 /* 0FB058 7F0C64E8 00105C03 */  sra   $t3, $s0, 0x10
-/* 0FB05C 7F0C64EC 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FB05C 7F0C64EC 0C00110B */  jal   viGetY
 /* 0FB060 7F0C64F0 01608025 */   move  $s0, $t3
 /* 0FB064 7F0C64F4 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableSmall) # $t7, 0x8004
 /* 0FB068 7F0C64F8 3C188004 */  lui   $t8, %hi(ptrFirstFontTableSmall) # $t8, 0x8004
@@ -6731,11 +6731,11 @@ def_7F0C40C0:
 /* 0FB13C 7F0C65CC 000D5843 */  sra   $t3, $t5, 1
 /* 0FB140 7F0C65D0 032B7023 */  subu  $t6, $t9, $t3
 /* 0FB144 7F0C65D4 25CF0035 */  addiu $t7, $t6, 0x35
-/* 0FB148 7F0C65D8 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FB148 7F0C65D8 0C001107 */  jal   viGetX
 /* 0FB14C 7F0C65DC AFAF00C8 */   sw    $t7, 0xc8($sp)
 /* 0FB150 7F0C65E0 00028400 */  sll   $s0, $v0, 0x10
 /* 0FB154 7F0C65E4 0010C403 */  sra   $t8, $s0, 0x10
-/* 0FB158 7F0C65E8 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FB158 7F0C65E8 0C00110B */  jal   viGetY
 /* 0FB15C 7F0C65EC 03008025 */   move  $s0, $t8
 /* 0FB160 7F0C65F0 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableSmall) # $t4, 0x8004
 /* 0FB164 7F0C65F4 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableSmall) # $t5, 0x8004
@@ -6785,11 +6785,11 @@ def_7F0C40C0:
 /* 0FB214 7F0C66A4 000DC843 */  sra   $t9, $t5, 1
 /* 0FB218 7F0C66A8 00595823 */  subu  $t3, $v0, $t9
 /* 0FB21C 7F0C66AC 256E004B */  addiu $t6, $t3, 0x4b
-/* 0FB220 7F0C66B0 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FB220 7F0C66B0 0C001107 */  jal   viGetX
 /* 0FB224 7F0C66B4 AFAE00C8 */   sw    $t6, 0xc8($sp)
 /* 0FB228 7F0C66B8 00028400 */  sll   $s0, $v0, 0x10
 /* 0FB22C 7F0C66BC 0010C403 */  sra   $t8, $s0, 0x10
-/* 0FB230 7F0C66C0 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FB230 7F0C66C0 0C00110B */  jal   viGetY
 /* 0FB234 7F0C66C4 03008025 */   move  $s0, $t8
 /* 0FB238 7F0C66C8 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableSmall) # $t7, 0x8004
 /* 0FB23C 7F0C66CC 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableSmall) # $t4, 0x8004
@@ -6840,11 +6840,11 @@ def_7F0C40C0:
 /* 0FB2EC 7F0C677C 000C6843 */  sra   $t5, $t4, 1
 /* 0FB2F0 7F0C6780 004DC823 */  subu  $t9, $v0, $t5
 /* 0FB2F4 7F0C6784 272B0058 */  addiu $t3, $t9, 0x58
-/* 0FB2F8 7F0C6788 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FB2F8 7F0C6788 0C001107 */  jal   viGetX
 /* 0FB2FC 7F0C678C AFAB00C8 */   sw    $t3, 0xc8($sp)
 /* 0FB300 7F0C6790 00028400 */  sll   $s0, $v0, 0x10
 /* 0FB304 7F0C6794 0010C403 */  sra   $t8, $s0, 0x10
-/* 0FB308 7F0C6798 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FB308 7F0C6798 0C00110B */  jal   viGetY
 /* 0FB30C 7F0C679C 03008025 */   move  $s0, $t8
 /* 0FB310 7F0C67A0 3C0E8004 */  lui   $t6, %hi(ptrSecondFontTableSmall) # $t6, 0x8004
 /* 0FB314 7F0C67A4 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableSmall) # $t7, 0x8004
@@ -6906,11 +6906,11 @@ def_7F0C40C0:
 /* 0FB3EC 7F0C687C 8DD829CC */  lw    $t8, 0x29cc($t6)
 /* 0FB3F0 7F0C6880 1700001E */  bnez  $t8, .Ljp7F0C68FC
 /* 0FB3F4 7F0C6884 00000000 */   nop   
-/* 0FB3F8 7F0C6888 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FB3F8 7F0C6888 0C001107 */  jal   viGetX
 /* 0FB3FC 7F0C688C 00000000 */   nop   
 /* 0FB400 7F0C6890 00028400 */  sll   $s0, $v0, 0x10
 /* 0FB404 7F0C6894 00107C03 */  sra   $t7, $s0, 0x10
-/* 0FB408 7F0C6898 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FB408 7F0C6898 0C00110B */  jal   viGetY
 /* 0FB40C 7F0C689C 01E08025 */   move  $s0, $t7
 /* 0FB410 7F0C68A0 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableSmall) # $t4, 0x8004
 /* 0FB414 7F0C68A4 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableSmall) # $t5, 0x8004
@@ -6936,11 +6936,11 @@ def_7F0C40C0:
 /* 0FB464 7F0C68F4 1000001A */  b     .Ljp7F0C6960
 /* 0FB468 7F0C68F8 00408825 */   move  $s1, $v0
 .Ljp7F0C68FC:
-/* 0FB46C 7F0C68FC 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FB46C 7F0C68FC 0C001107 */  jal   viGetX
 /* 0FB470 7F0C6900 00000000 */   nop   
 /* 0FB474 7F0C6904 00028400 */  sll   $s0, $v0, 0x10
 /* 0FB478 7F0C6908 00107403 */  sra   $t6, $s0, 0x10
-/* 0FB47C 7F0C690C 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FB47C 7F0C690C 0C00110B */  jal   viGetY
 /* 0FB480 7F0C6910 01C08025 */   move  $s0, $t6
 /* 0FB484 7F0C6914 3C188004 */  lui   $t8, %hi(ptrSecondFontTableSmall) # $t8, 0x8004
 /* 0FB488 7F0C6918 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableSmall) # $t7, 0x8004
@@ -6996,11 +6996,11 @@ def_7F0C40C0:
 /* 0FB54C 7F0C69DC 24010001 */  li    $at, 1
 /* 0FB550 7F0C69E0 1561001E */  bne   $t3, $at, .Ljp7F0C6A5C
 /* 0FB554 7F0C69E4 00000000 */   nop   
-/* 0FB558 7F0C69E8 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FB558 7F0C69E8 0C001107 */  jal   viGetX
 /* 0FB55C 7F0C69EC 00000000 */   nop   
 /* 0FB560 7F0C69F0 00028400 */  sll   $s0, $v0, 0x10
 /* 0FB564 7F0C69F4 0010C403 */  sra   $t8, $s0, 0x10
-/* 0FB568 7F0C69F8 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FB568 7F0C69F8 0C00110B */  jal   viGetY
 /* 0FB56C 7F0C69FC 03008025 */   move  $s0, $t8
 /* 0FB570 7F0C6A00 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableSmall) # $t7, 0x8004
 /* 0FB574 7F0C6A04 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableSmall) # $t4, 0x8004
@@ -7026,11 +7026,11 @@ def_7F0C40C0:
 /* 0FB5C4 7F0C6A54 1000001A */  b     .Ljp7F0C6AC0
 /* 0FB5C8 7F0C6A58 00408825 */   move  $s1, $v0
 .Ljp7F0C6A5C:
-/* 0FB5CC 7F0C6A5C 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FB5CC 7F0C6A5C 0C001107 */  jal   viGetX
 /* 0FB5D0 7F0C6A60 00000000 */   nop   
 /* 0FB5D4 7F0C6A64 00028400 */  sll   $s0, $v0, 0x10
 /* 0FB5D8 7F0C6A68 00107403 */  sra   $t6, $s0, 0x10
-/* 0FB5DC 7F0C6A6C 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FB5DC 7F0C6A6C 0C00110B */  jal   viGetY
 /* 0FB5E0 7F0C6A70 01C08025 */   move  $s0, $t6
 /* 0FB5E4 7F0C6A74 3C0B8004 */  lui   $t3, %hi(ptrSecondFontTableSmall) # $t3, 0x8004
 /* 0FB5E8 7F0C6A78 3C188004 */  lui   $t8, %hi(ptrFirstFontTableSmall) # $t8, 0x8004
@@ -7180,11 +7180,11 @@ def_7F0C40C0:
 /* 0FB80C 7F0C6C9C AFA00014 */  sw    $zero, 0x14($sp)
 /* 0FB810 7F0C6CA0 0FC2B6F1 */  jal   microcode_constructor_related_to_menus
 /* 0FB814 7F0C6CA4 2545FFFF */   addiu $a1, $t2, -1
-/* 0FB818 7F0C6CA8 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0FB818 7F0C6CA8 0C001107 */  jal   viGetX
 /* 0FB81C 7F0C6CAC 00408825 */   move  $s1, $v0
 /* 0FB820 7F0C6CB0 00028400 */  sll   $s0, $v0, 0x10
 /* 0FB824 7F0C6CB4 00105C03 */  sra   $t3, $s0, 0x10
-/* 0FB828 7F0C6CB8 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0FB828 7F0C6CB8 0C00110B */  jal   viGetY
 /* 0FB82C 7F0C6CBC 01608025 */   move  $s0, $t3
 /* 0FB830 7F0C6CC0 3C188004 */  lui   $t8, %hi(ptrSecondFontTableSmall) # $t8, 0x8004
 /* 0FB834 7F0C6CC4 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableSmall) # $t4, 0x8004

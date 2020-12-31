@@ -404,7 +404,7 @@ loop_18:
     set_vtx_gfx_mem_alloc();
     test_controller_presence();
     stage_load(current_stage_num);
-    init_both_video_buffers();
+    viInitBuffers();
     debug_text_related_2();
     sub_GAME_7F0C0B4C();
     video_related_2();
@@ -488,8 +488,8 @@ loop_29:
                             {
 loop_44:
                                 set_cur_player(sub_GAME_7F09B528(phi_s1_2));
-                                set_video2_width_height(pPlayer->unk7F0, pPlayer->unk7F2);
-                                set_video2_ulx_uly(pPlayer->viewleft, pPlayer->viewtop);
+                                viSetViewSize(pPlayer->unk7F0, pPlayer->unk7F2);
+                                viSetViewPosition(pPlayer->viewleft, pPlayer->viewtop);
                                 sub_GAME_7F0BF800();
                                 temp_s1 = phi_s1_2 + 1;
                                 phi_s1_2 = temp_s1;
@@ -540,7 +540,7 @@ loop_44:
                             //gDPSetCycleType(glistp++, 2CYCLE);
                             // ...etc
 
-                            temp_s0_3->unk0 = (s32) (((((get_video2_settings_txtClipH() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW(temp_a0, temp_a1, temp_a2, -1) << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
+                            temp_s0_3->unk0 = (s32) (((((viGetY() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (viGetX(temp_a0, temp_a1, temp_a2, -1) << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
                             temp_s0_3->unk4 = 0;
                             phi_s3 = temp_s3 + 8;
                         }
@@ -879,7 +879,7 @@ glabel mainloop
 /* 006FB0 700063B0 3C048002 */  lui   $a0, %hi(current_stage_num)
 /* 006FB4 700063B4 0FC2F6AC */  jal   stage_load
 /* 006FB8 700063B8 8C8441A8 */   lw    $a0, %lo(current_stage_num)($a0)
-/* 006FBC 700063BC 0C000C49 */  jal   init_both_video_buffers
+/* 006FBC 700063BC 0C000C49 */  jal   viInitBuffers
 /* 006FC0 700063C0 00000000 */   nop   
 /* 006FC4 700063C4 0C002B6C */  jal   debug_text_related_2
 /* 006FC8 700063C8 00000000 */   nop   
@@ -1024,11 +1024,11 @@ glabel mainloop
 /* 0071D0 700065D0 00402025 */   move  $a0, $v0
 /* 0071D4 700065D4 8EB00000 */  lw    $s0, ($s5)
 /* 0071D8 700065D8 860407F0 */  lh    $a0, 0x7f0($s0)
-/* 0071DC 700065DC 0C00110F */  jal   set_video2_width_height
+/* 0071DC 700065DC 0C00110F */  jal   viSetViewSize
 /* 0071E0 700065E0 860507F2 */   lh    $a1, 0x7f2($s0)
 /* 0071E4 700065E4 8EB00000 */  lw    $s0, ($s5)
 /* 0071E8 700065E8 860407F4 */  lh    $a0, 0x7f4($s0)
-/* 0071EC 700065EC 0C00112F */  jal   set_video2_ulx_uly
+/* 0071EC 700065EC 0C00112F */  jal   viSetViewPosition
 /* 0071F0 700065F0 860507F6 */   lh    $a1, 0x7f6($s0)
 /* 0071F4 700065F4 0FC2FE00 */  jal   sub_GAME_7F0BF800
 /* 0071F8 700065F8 00000000 */   nop   
@@ -1081,11 +1081,11 @@ glabel mainloop
 /* 0072B0 700066B0 02608025 */  move  $s0, $s3
 /* 0072B4 700066B4 AC4F0000 */  sw    $t7, ($v0)
 /* 0072B8 700066B8 AC4E0004 */  sw    $t6, 4($v0)
-/* 0072BC 700066BC 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0072BC 700066BC 0C001107 */  jal   viGetX
 /* 0072C0 700066C0 26730008 */   addiu $s3, $s3, 8
 /* 0072C4 700066C4 00028C00 */  sll   $s1, $v0, 0x10
 /* 0072C8 700066C8 0011C403 */  sra   $t8, $s1, 0x10
-/* 0072CC 700066CC 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0072CC 700066CC 0C00110B */  jal   viGetY
 /* 0072D0 700066D0 03008825 */   move  $s1, $t8
 /* 0072D4 700066D4 2459FFFF */  addiu $t9, $v0, -1
 /* 0072D8 700066D8 332803FF */  andi  $t0, $t9, 0x3ff
