@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "video.h"
 
 
 char die_blood_image_1[] = {
@@ -187,71 +188,13 @@ char die_blood_image_1[] = {
 
 s32 D_8002C50C = 0;
 
-#ifdef NONMATCHING
-void insert_imageDL(void) {
-
+Gfx *insert_imageDL(Gfx *gdl) {
+   gDPSetCycleType(gdl++, G_CYC_FILL);
+   gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_16b, viGetX(), osVirtualToPhysical(viGetFrameBuf2()));
+   gDPSetFillColor(gdl++, ((GPACK_RGBA5551(0,0,0,1) << 16) | GPACK_RGBA5551(0,0,0,1)));
+   gDPFillRectangle(gdl++, 0, 0, (viGetX() - 1), (viGetY() - 1));
+   return gdl;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel insert_imageDL
-/* 050C00 7F01C0D0 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 050C04 7F01C0D4 AFB00018 */  sw    $s0, 0x18($sp)
-/* 050C08 7F01C0D8 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 050C0C 7F01C0DC 3C0EBA00 */  lui   $t6, (0xBA001402 >> 16) # lui $t6, 0xba00
-/* 050C10 7F01C0E0 35CE1402 */  ori   $t6, (0xBA001402 & 0xFFFF) # ori $t6, $t6, 0x1402
-/* 050C14 7F01C0E4 3C0F0030 */  lui   $t7, 0x30
-/* 050C18 7F01C0E8 AC8F0004 */  sw    $t7, 4($a0)
-/* 050C1C 7F01C0EC AC8E0000 */  sw    $t6, ($a0)
-/* 050C20 7F01C0F0 24900008 */  addiu $s0, $a0, 8
-/* 050C24 7F01C0F4 AFB00030 */  sw    $s0, 0x30($sp)
-/* 050C28 7F01C0F8 0C001107 */  jal   viGetX
-/* 050C2C 7F01C0FC 26100008 */   addiu $s0, $s0, 8
-/* 050C30 7F01C100 2458FFFF */  addiu $t8, $v0, -1
-/* 050C34 7F01C104 8FA90030 */  lw    $t1, 0x30($sp)
-/* 050C38 7F01C108 33190FFF */  andi  $t9, $t8, 0xfff
-/* 050C3C 7F01C10C 3C01FF10 */  lui   $at, 0xff10
-/* 050C40 7F01C110 03214025 */  or    $t0, $t9, $at
-/* 050C44 7F01C114 0C000F07 */  jal   viGetFrameBuf2
-/* 050C48 7F01C118 AD280000 */   sw    $t0, ($t1)
-/* 050C4C 7F01C11C 0C003A2C */  jal   osVirtualToPhysical
-/* 050C50 7F01C120 00402025 */   move  $a0, $v0
-/* 050C54 7F01C124 8FAA0030 */  lw    $t2, 0x30($sp)
-/* 050C58 7F01C128 02001825 */  move  $v1, $s0
-/* 050C5C 7F01C12C 3C0C0001 */  lui   $t4, (0x00010001 >> 16) # lui $t4, 1
-/* 050C60 7F01C130 AD420004 */  sw    $v0, 4($t2)
-/* 050C64 7F01C134 358C0001 */  ori   $t4, (0x00010001 & 0xFFFF) # ori $t4, $t4, 1
-/* 050C68 7F01C138 3C0BF700 */  lui   $t3, 0xf700
-/* 050C6C 7F01C13C AC6B0000 */  sw    $t3, ($v1)
-/* 050C70 7F01C140 AC6C0004 */  sw    $t4, 4($v1)
-/* 050C74 7F01C144 26100008 */  addiu $s0, $s0, 8
-/* 050C78 7F01C148 AFB00028 */  sw    $s0, 0x28($sp)
-/* 050C7C 7F01C14C 0C001107 */  jal   viGetX
-/* 050C80 7F01C150 26100008 */   addiu $s0, $s0, 8
-/* 050C84 7F01C154 0C00110B */  jal   viGetY
-/* 050C88 7F01C158 A7A20022 */   sh    $v0, 0x22($sp)
-/* 050C8C 7F01C15C 87B90022 */  lh    $t9, 0x22($sp)
-/* 050C90 7F01C160 244DFFFF */  addiu $t5, $v0, -1
-/* 050C94 7F01C164 8FA30028 */  lw    $v1, 0x28($sp)
-/* 050C98 7F01C168 31AE03FF */  andi  $t6, $t5, 0x3ff
-/* 050C9C 7F01C16C 2728FFFF */  addiu $t0, $t9, -1
-/* 050CA0 7F01C170 310903FF */  andi  $t1, $t0, 0x3ff
-/* 050CA4 7F01C174 000E7880 */  sll   $t7, $t6, 2
-/* 050CA8 7F01C178 3C01F600 */  lui   $at, 0xf600
-/* 050CAC 7F01C17C 01E1C025 */  or    $t8, $t7, $at
-/* 050CB0 7F01C180 00095380 */  sll   $t2, $t1, 0xe
-/* 050CB4 7F01C184 030A5825 */  or    $t3, $t8, $t2
-/* 050CB8 7F01C188 AC6B0000 */  sw    $t3, ($v1)
-/* 050CBC 7F01C18C AC600004 */  sw    $zero, 4($v1)
-/* 050CC0 7F01C190 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 050CC4 7F01C194 02001025 */  move  $v0, $s0
-/* 050CC8 7F01C198 8FB00018 */  lw    $s0, 0x18($sp)
-/* 050CCC 7F01C19C 03E00008 */  jr    $ra
-/* 050CD0 7F01C1A0 27BD0038 */   addiu $sp, $sp, 0x38
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F01C1A4(void) {
