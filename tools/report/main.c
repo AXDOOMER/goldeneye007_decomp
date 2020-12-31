@@ -118,13 +118,12 @@ int main(int argc, char **argv)
 	long int libultra_dir, libultra_dir_max;
 	long int decompiled_words, decompiled_words_max;
 	long int decompiled_files, decompiled_files_max;
-	int cur_mis = 0, cur_obj = OBJ_A;
+	int cur_mis = 0, cur_obj = OBJ_A, cur_time;
 	int cur_mis_objs_max = 0, max_objs = 0;
 	int tmp_obj, cur_line = 0;
 	int last_modified_file_arg_active = 0;
 	int verbosity_level = LOG_DEF;
 	float total_complete, obj_remaining;
-	int cur_time;
 	FILE *html;
 	/************************/
 
@@ -139,7 +138,7 @@ int main(int argc, char **argv)
 	}
 	if(argc != ARGS_MAX) /* incorrect number of arguments */
 	{
-		printf("\n  About: Generate decompiled statistics website\n\n  Syntax: %s src max game max inflate max libultra max decompiled_words max_words decompiled_files all_files html_output last_modified_file verbosity_level (0-2)\n\n  Note: Each dir's statistic must be followed with the total words for the dir.\n  Example: 1481 15854 12641 232276 564 1312 556 20330 15242 269772 49 336 ./results.html \"src/game/bond.c\" 1", argv[PROGRAM_NAME]);
+		printf("\n  About: Generate decompiled statistics website\n\n  Syntax: %s src max game max inflate max libultra max decompiled_words max_words decompiled_files all_files html_output last_modified_file verbosity_level (0-2)\n\n  Note: Each dir's statistic must be followed with the total words for the dir.\n  Example: 1481 15854 12641 232276 564 1312 556 20330 15242 269772 49 336 ./index.html \"src/game/bond.c\" 1", argv[PROGRAM_NAME]);
 		goto exit;
 	}
 
