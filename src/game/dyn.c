@@ -288,32 +288,9 @@ s32 gfxGetFreeGfx(Gfx *ptr) {
     return (g_GfxBuffers[g_GfxActiveBufferIndex + 1] - ptr);
 }
 
-#ifdef NONMATCHING
-s32 sub_GAME_7F0BD7A4(void) {
-    // Node 0
-    return ((0x80090000 + (g_GfxActiveBufferIndex * 4))->unk-3DBC - g_GfxMemPos);
+u32 gfxGetFreeVtx(void) {
+	return g_VtxBuffers[g_GfxActiveBufferIndex + 1] - g_GfxMemPos;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BD7A4
-/* 0F22D4 7F0BD7A4 3C0E8009 */  lui   $t6, %hi(g_GfxActiveBufferIndex) 
-/* 0F22D8 7F0BD7A8 91CEC250 */  lbu   $t6, %lo(g_GfxActiveBufferIndex)($t6)
-/* 0F22DC 7F0BD7AC 3C188009 */  lui   $t8, %hi(g_VtxBuffers+0x4)
-/* 0F22E0 7F0BD7B0 3C198009 */  lui   $t9, %hi(g_GfxMemPos) 
-/* 0F22E4 7F0BD7B4 000E7880 */  sll   $t7, $t6, 2
-/* 0F22E8 7F0BD7B8 030FC021 */  addu  $t8, $t8, $t7
-/* 0F22EC 7F0BD7BC 8F18C244 */  lw    $t8, %lo(g_VtxBuffers+0x4)($t8)
-/* 0F22F0 7F0BD7C0 8F39C24C */  lw    $t9, %lo(g_GfxMemPos)($t9)
-/* 0F22F4 7F0BD7C4 03E00008 */  jr    $ra
-/* 0F22F8 7F0BD7C8 03191023 */   subu  $v0, $t8, $t9
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void compute_membar_display_string(void) {
