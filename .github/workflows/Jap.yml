@@ -1,4 +1,4 @@
-name: JAP-Status
+name: JP-Status
 
 on:
   push:
@@ -60,6 +60,6 @@ jobs:
           user_email: $API_TOKEN_EMAIL
           user_name: $API_TOKEN_USER
           source_file: |
-            tools/report/JAP.htm
+            tools/report/JP.htm
       
-#need way of telling report that JAP passed/failed
+#need way of telling report that JP passed/failed
