@@ -35,6 +35,12 @@ enum VERBOSITY_LOGGING
 	LOG_MAX
 };
 
+int lazy_rand(unsigned int seed)
+{
+	seed = (214013 * seed + 2531011);
+	return (seed >> 16) & 0x7FFF;
+}
+
 int total_objectives(void)
 {
 	/************************/
@@ -112,7 +118,7 @@ int main(int argc, char **argv)
 	long int libultra_dir, libultra_dir_max;
 	long int decompiled_words, decompiled_words_max;
 	long int decompiled_files, decompiled_files_max;
-	int cur_mis = 0, cur_obj = OBJ_A;
+	int cur_mis = 0, cur_obj = OBJ_A, cur_time;
 	int cur_mis_objs_max = 0, max_objs = 0;
 	int tmp_obj, cur_line = 0;
 	int last_modified_file_arg_active = 0;
@@ -132,7 +138,7 @@ int main(int argc, char **argv)
 	}
 	if(argc != ARGS_MAX) /* incorrect number of arguments */
 	{
-		printf("\n  About: Generate decompiled statistics website\n\n  Syntax: %s src max game max inflate max libultra max decompiled_words max_words decompiled_files all_files html_output last_modified_file verbosity_level (0-2)\n\n  Note: Each dir's statistic must be followed with the total words for the dir.\n  Example: 1481 15854 12641 232276 564 1312 556 20330 15242 269772 49 336 ./results.html \"src/game/bond.c\" 1", argv[PROGRAM_NAME]);
+		printf("\n  About: Generate decompiled statistics website\n\n  Syntax: %s src max game max inflate max libultra max decompiled_words max_words decompiled_files all_files html_output last_modified_file verbosity_level (0-2)\n\n  Note: Each dir's statistic must be followed with the total words for the dir.\n  Example: 1481 15854 12641 232276 564 1312 556 20330 15242 269772 49 336 ./index.html \"src/game/bond.c\" 1", argv[PROGRAM_NAME]);
 		goto exit;
 	}
 
@@ -204,6 +210,11 @@ int main(int argc, char **argv)
 	obj_remaining = total_complete - (float)((int)total_complete);
 	calc_mission_and_objective(&cur_mis, &cur_obj, (int)total_complete);
 	cur_mis_objs_max = max_objectives(cur_mis);
+	cur_time = missions[cur_mis].time + 1;
+	if(cur_obj != cur_mis_objs_max) /* if mission is incomplete */
+	{
+		cur_time += 10 + (lazy_rand(decompiled_words) % 25);
+	};
 
 	fprintf(html, "<text x=\"363\" y=\"648\">%s</text>\n", missions[cur_mis].diff);
 	fprintf(html, "<text x=\"363\" y=\"754\">%s</text>\n", missions[cur_mis].title);
@@ -232,10 +243,13 @@ int main(int argc, char **argv)
 	fprintf(html, "<text x=\"363\" y=\"858\">%s</text>\n", missions[cur_mis].part);
 	fprintf(html, "<text x=\"363\" y=\"1015\">STATISTICS:</text>\n");
 	fprintf(html, "<text x=\"363\" y=\"1172\">Time:</text>\n");
-	fprintf(html, "<text x=\"856\" y=\"1172\">00:02</text>\n");
+	fprintf(html, "<text x=\"856\" y=\"1172\">%02d:%02d</text>\n", cur_time / 60, cur_time % 60);
 	fprintf(html, "<text x=\"363\" y=\"1284\">Target:</text>\n");
-	fprintf(html, "<text x=\"856\" y=\"1284\">04:00</text>\n");
-	fprintf(html, "<text x=\"1250\" y=\"1284\">(Best Time: 00:10)</text>\n");
+	fprintf(html, "<text x=\"856\" y=\"1284\">%02d:%02d</text>\n", missions[cur_mis].time / 60,  missions[cur_mis].time % 60);
+	if(cur_obj == cur_mis_objs_max)
+	{
+		fprintf(html, "<text x=\"1250\" y=\"1284\">(Best Time: %02d:%02d)</text>\n", cur_time / 60, cur_time % 60);
+	}
 	fprintf(html, "<text x=\"363\" y=\"1416\">Decomp:</text>\n");
 	fprintf(html, "<text x=\"856\" y=\"1416\">%0.1f%%</text>\n", PERCENTF(decompiled_words, decompiled_words_max));
 	if(last_modified_file_arg_active)
