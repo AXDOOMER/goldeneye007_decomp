@@ -251,31 +251,13 @@ Vtx *sub_GAME_7F0BD6C4(s32 count) {
 	return ptr;
 }
 
+Mtx *gfxAllocateMatrix(void)
+{
+	void *ptr = g_GfxMemPos;
+	g_GfxMemPos += sizeof(Mtx);
 
-
-
-
-#ifdef NONMATCHING
-s32 sub_GAME_7F0BD6E0(void) {
-    // Node 0
-    g_GfxMemPos = (s32) (g_GfxMemPos + 0x40);
-    return g_GfxMemPos;
+	return ptr;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BD6E0
-/* 0F2210 7F0BD6E0 3C058009 */  lui   $a1, %hi(g_GfxMemPos)
-/* 0F2214 7F0BD6E4 24A5C24C */  addiu $a1, %lo(g_GfxMemPos) # addiu $a1, $a1, -0x3db4
-/* 0F2218 7F0BD6E8 8CA20000 */  lw    $v0, ($a1)
-/* 0F221C 7F0BD6EC 244E0040 */  addiu $t6, $v0, 0x40
-/* 0F2220 7F0BD6F0 03E00008 */  jr    $ra
-/* 0F2224 7F0BD6F4 ACAE0000 */   sw    $t6, ($a1)
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING

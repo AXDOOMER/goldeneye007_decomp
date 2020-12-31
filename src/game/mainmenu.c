@@ -15609,8 +15609,8 @@ s32 sub_GAME_7F01231C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5
     s32 phi_s2;
     s8 phi_v0;
 
-    spD4 = sub_GAME_7F0BD6E0();
-    spD0 = sub_GAME_7F0BD6E0();
+    spD4 = gfxAllocateMatrix();
+    spD0 = gfxAllocateMatrix();
     spCC = sub_GAME_7F0BD6C4(0x10);
     arg0 = microcode_constructor(arg0);
     guOrtho(spD4, 0, 0x43dc0000, 0, 330.0f, 1.0f, 10.0f, 1.0f);
@@ -15757,9 +15757,9 @@ glabel sub_GAME_7F01231C
 /* 046E78 7F012348 AFA400D8 */  sw    $a0, 0xd8($sp)
 /* 046E7C 7F01234C AFA500DC */  sw    $a1, 0xdc($sp)
 /* 046E80 7F012350 AFA600E0 */  sw    $a2, 0xe0($sp)
-/* 046E84 7F012354 0FC2F5B8 */  jal   sub_GAME_7F0BD6E0
+/* 046E84 7F012354 0FC2F5B8 */  jal   gfxAllocateMatrix
 /* 046E88 7F012358 AFA700E4 */   sw    $a3, 0xe4($sp)
-/* 046E8C 7F01235C 0FC2F5B8 */  jal   sub_GAME_7F0BD6E0
+/* 046E8C 7F01235C 0FC2F5B8 */  jal   gfxAllocateMatrix
 /* 046E90 7F012360 AFA200D4 */   sw    $v0, 0xd4($sp)
 /* 046E94 7F012364 AFA200D0 */  sw    $v0, 0xd0($sp)
 /* 046E98 7F012368 0FC2F5B1 */  jal   sub_GAME_7F0BD6C4
