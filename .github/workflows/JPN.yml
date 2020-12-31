@@ -42,7 +42,10 @@ jobs:
 
       - name: Make JP 
         run: make -j VERSION=JP
-
+          
+      - name: Make report
+        run: make -C tools/report
+        
       - name: Stats
         run: python3 tools/ge-stats.py --version jp
      
