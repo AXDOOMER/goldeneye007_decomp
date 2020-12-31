@@ -25303,11 +25303,11 @@ void sub_GAME_7F0876C4(void *arg0, void *arg1, void *arg2) {
 
     // Node 0
     sub_GAME_7F0875E4(get_cur_players_room());
-    pPlayer->field_5C = gfxAllocateMatrix();
-    pPlayer->field_60 = gfxAllocateMatrix();
-    pPlayer->field_64 = gfxAllocateMatrix();
-    pPlayer->field_68 = gfxAllocateMatrix();
-    sp104 = sub_GAME_7F0BD6F8(2);
+    pPlayer->field_5C = dynAllocateMatrix();
+    pPlayer->field_60 = dynAllocateMatrix();
+    pPlayer->field_64 = dynAllocateMatrix();
+    pPlayer->field_68 = dynAllocateMatrix();
+    sp104 = dynAllocate7F0BD6F8(2);
     temp_f10 = ((*arg0 - pPlayer->current_model_xpos) * D_800364CC);
     spAC = temp_f10;
     temp_f6 = ((arg0->unk4 - pPlayer->current_model_ypos) * D_800364CC);
@@ -25322,7 +25322,7 @@ void sub_GAME_7F0876C4(void *arg0, void *arg1, void *arg2) {
     guLookAtReflect(&sp108, sp104, spAC, spB0, spB4, temp_f16, spBC, spC0, (f32) *arg2, (f32) arg2->unk4, (f32) arg2->unk8);
     matrix_4x4_7F059424(pPlayer->field_64, *arg0, arg0->unk4, arg0->unk8, (f32) *arg1, (f32) arg1->unk4, (f32) arg1->unk8, (f32) *arg2, (f32) arg2->unk4, (f32) arg2->unk8);
     matrix_4x4_7F059708(pPlayer->field_68, *arg0, arg0->unk4, arg0->unk8, (f32) *arg1, (f32) arg1->unk4, (f32) arg1->unk8, (f32) *arg2, (f32) arg2->unk4, (f32) arg2->unk8);
-    temp_s0 = gfxAllocateMatrix();
+    temp_s0 = dynAllocateMatrix();
     matrix_4x4_multiply(currentPlayerGetProjectionMatrixF(), &spC4, &sp60);
     phi_a1 = &sp60;
 loop_1:
@@ -25390,22 +25390,22 @@ glabel sub_GAME_7F0876C4
 /* 0BC214 7F0876E4 AFA40148 */   sw    $a0, 0x148($sp)
 /* 0BC218 7F0876E8 0FC21D79 */  jal   sub_GAME_7F0875E4
 /* 0BC21C 7F0876EC 00402025 */   move  $a0, $v0
-/* 0BC220 7F0876F0 0FC2F5B8 */  jal   gfxAllocateMatrix
+/* 0BC220 7F0876F0 0FC2F5B8 */  jal   dynAllocateMatrix
 /* 0BC224 7F0876F4 00000000 */   nop   
 /* 0BC228 7F0876F8 3C128008 */  lui   $s2, %hi(pPlayer)
 /* 0BC22C 7F0876FC 2652A0B0 */  addiu $s2, %lo(pPlayer) # addiu $s2, $s2, -0x5f50
 /* 0BC230 7F087700 8E4E0000 */  lw    $t6, ($s2)
-/* 0BC234 7F087704 0FC2F5B8 */  jal   gfxAllocateMatrix
+/* 0BC234 7F087704 0FC2F5B8 */  jal   dynAllocateMatrix
 /* 0BC238 7F087708 ADC2005C */   sw    $v0, 0x5c($t6)
 /* 0BC23C 7F08770C 8E4F0000 */  lw    $t7, ($s2)
-/* 0BC240 7F087710 0FC2F5B8 */  jal   gfxAllocateMatrix
+/* 0BC240 7F087710 0FC2F5B8 */  jal   dynAllocateMatrix
 /* 0BC244 7F087714 ADE20060 */   sw    $v0, 0x60($t7)
 /* 0BC248 7F087718 8E580000 */  lw    $t8, ($s2)
-/* 0BC24C 7F08771C 0FC2F5B8 */  jal   gfxAllocateMatrix
+/* 0BC24C 7F08771C 0FC2F5B8 */  jal   dynAllocateMatrix
 /* 0BC250 7F087720 AF020064 */   sw    $v0, 0x64($t8)
 /* 0BC254 7F087724 8E590000 */  lw    $t9, ($s2)
 /* 0BC258 7F087728 24040002 */  li    $a0, 2
-/* 0BC25C 7F08772C 0FC2F5BE */  jal   sub_GAME_7F0BD6F8
+/* 0BC25C 7F08772C 0FC2F5BE */  jal   dynAllocate7F0BD6F8
 /* 0BC260 7F087730 AF220068 */   sw    $v0, 0x68($t9)
 /* 0BC264 7F087734 8FA80148 */  lw    $t0, 0x148($sp)
 /* 0BC268 7F087738 8E430000 */  lw    $v1, ($s2)
@@ -25510,7 +25510,7 @@ glabel sub_GAME_7F0876C4
 /* 0BC3F4 7F0878C4 C6280008 */  lwc1  $f8, 8($s1)
 /* 0BC3F8 7F0878C8 0FC165C2 */  jal   matrix_4x4_7F059708
 /* 0BC3FC 7F0878CC E7A80024 */   swc1  $f8, 0x24($sp)
-/* 0BC400 7F0878D0 0FC2F5B8 */  jal   gfxAllocateMatrix
+/* 0BC400 7F0878D0 0FC2F5B8 */  jal   dynAllocateMatrix
 /* 0BC404 7F0878D4 00000000 */   nop   
 /* 0BC408 7F0878D8 0FC1E0F9 */  jal   currentPlayerGetProjectionMatrixF
 /* 0BC40C 7F0878DC 00408025 */   move  $s0, $v0
@@ -26240,7 +26240,7 @@ glabel sub_GAME_7F087E74
 /* 0BCA44 7F087F14 8D45000C */  lw    $a1, 0xc($t2)
 /* 0BCA48 7F087F18 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
 /* 0BCA4C 7F087F1C 24840230 */   addiu $a0, $a0, 0x230
-/* 0BCA50 7F087F20 0FC2F5B8 */  jal   gfxAllocateMatrix
+/* 0BCA50 7F087F20 0FC2F5B8 */  jal   dynAllocateMatrix
 /* 0BCA54 7F087F24 AFA20158 */   sw    $v0, 0x158($sp)
 /* 0BCA58 7F087F28 3C014120 */  li    $at, 0x41200000 # 10.000000
 /* 0BCA5C 7F087F2C 44812000 */  mtc1  $at, $f4
@@ -26332,7 +26332,7 @@ glabel sub_GAME_7F087E74
 /* 0BCBB4 7F088084 8FB90160 */  lw    $t9, 0x160($sp)
 /* 0BCBB8 7F088088 8724000E */  lh    $a0, 0xe($t9)
 /* 0BCBBC 7F08808C 0004C180 */  sll   $t8, $a0, 6
-/* 0BCBC0 7F088090 0FC2F5C5 */  jal   gfxAllocate
+/* 0BCBC0 7F088090 0FC2F5C5 */  jal   dynAllocate
 /* 0BCBC4 7F088094 03002025 */   move  $a0, $t8
 /* 0BCBC8 7F088098 3C048008 */  lui   $a0, %hi(pPlayer)
 /* 0BCBCC 7F08809C 8C84A0B0 */  lw    $a0, %lo(pPlayer)($a0)
@@ -26659,7 +26659,7 @@ glabel sub_GAME_7F087E74
 /* 0BD090 7F088560 8F2B0008 */  lw    $t3, 8($t9)
 /* 0BD094 7F088564 8D780008 */  lw    $t8, 8($t3)
 /* 0BD098 7F088568 8F0C0004 */  lw    $t4, 4($t8)
-/* 0BD09C 7F08856C 0FC2F5B8 */  jal   gfxAllocateMatrix
+/* 0BD09C 7F08856C 0FC2F5B8 */  jal   dynAllocateMatrix
 /* 0BD0A0 7F088570 AFAC008C */   sw    $t4, 0x8c($sp)
 /* 0BD0A4 7F088574 AFA20048 */  sw    $v0, 0x48($sp)
 /* 0BD0A8 7F088578 8FA4008C */  lw    $a0, 0x8c($sp)
@@ -26761,7 +26761,7 @@ glabel sub_GAME_7F087E74
 /* 0BD150 7F0885E0 8D45000C */  lw    $a1, 0xc($t2)
 /* 0BD154 7F0885E4 0FC1B363 */  jal   extract_id_from_object_structure_microcode
 /* 0BD158 7F0885E8 24840230 */   addiu $a0, $a0, 0x230
-/* 0BD15C 7F0885EC 0FC2F8A4 */  jal   gfxAllocateMatrix
+/* 0BD15C 7F0885EC 0FC2F8A4 */  jal   dynAllocateMatrix
 /* 0BD160 7F0885F0 AFA20158 */   sw    $v0, 0x158($sp)
 /* 0BD164 7F0885F4 3C014120 */  li    $at, 0x41200000 # 10.000000
 /* 0BD168 7F0885F8 44812000 */  mtc1  $at, $f4
@@ -26853,7 +26853,7 @@ glabel sub_GAME_7F087E74
 /* 0BD2C0 7F088750 8FB90160 */  lw    $t9, 0x160($sp)
 /* 0BD2C4 7F088754 8724000E */  lh    $a0, 0xe($t9)
 /* 0BD2C8 7F088758 0004C180 */  sll   $t8, $a0, 6
-/* 0BD2CC 7F08875C 0FC2F8B1 */  jal   gfxAllocate
+/* 0BD2CC 7F08875C 0FC2F8B1 */  jal   dynAllocate
 /* 0BD2D0 7F088760 03002025 */   move  $a0, $t8
 /* 0BD2D4 7F088764 3C048008 */  lui   $a0, %hi(pPlayer) # $a0, 0x8008
 /* 0BD2D8 7F088768 8C84A120 */  lw    $a0, %lo(pPlayer)($a0)
@@ -27182,7 +27182,7 @@ glabel sub_GAME_7F087E74
 /* 0BD7A4 7F088C34 8F190008 */  lw    $t9, 8($t8)
 /* 0BD7A8 7F088C38 8F2E0008 */  lw    $t6, 8($t9)
 /* 0BD7AC 7F088C3C 8DCD0004 */  lw    $t5, 4($t6)
-/* 0BD7B0 7F088C40 0FC2F8A4 */  jal   gfxAllocateMatrix
+/* 0BD7B0 7F088C40 0FC2F8A4 */  jal   dynAllocateMatrix
 /* 0BD7B4 7F088C44 AFAD008C */   sw    $t5, 0x8c($sp)
 /* 0BD7B8 7F088C48 AFA20048 */  sw    $v0, 0x48($sp)
 /* 0BD7BC 7F088C4C 8FA4008C */  lw    $a0, 0x8c($sp)
@@ -27257,8 +27257,8 @@ s32 sub_GAME_7F088618(void *arg0) {
     sub_GAME_7F0A3330((pPlayer + 0x19f8), (pPlayer + 0x800012b8), 0x2e);
     sub_GAME_7F0A2F30((pPlayer + 0x1598), 0x2e, -1, pPlayer->apparenthealth);
     sub_GAME_7F0A3330((pPlayer + 0x2128), (pPlayer + 0x80001598), 0x2e);
-    spBC = gfxAllocateMatrix();
-    temp_ret = gfxAllocateMatrix();
+    spBC = dynAllocateMatrix();
+    temp_ret = dynAllocateMatrix();
     spB8 = temp_ret;
     guOrtho(temp_ret, (-800.0f * D_800364CC), (800.0f * D_800364CC), (-600.0f * D_800364CC), (f32) (600.0f * D_800364CC), -100.0f, 1000.0f, 1.0f);
     *arg0 = 0x1030040;
@@ -27338,9 +27338,9 @@ glabel sub_GAME_7F088618
 /* 0BD1C4 7F088694 02212821 */  addu  $a1, $s1, $at
 /* 0BD1C8 7F088698 0FC28CCC */  jal   sub_GAME_7F0A3330
 /* 0BD1CC 7F08869C 26242128 */   addiu $a0, $s1, 0x2128
-/* 0BD1D0 7F0886A0 0FC2F5B8 */  jal   gfxAllocateMatrix
+/* 0BD1D0 7F0886A0 0FC2F5B8 */  jal   dynAllocateMatrix
 /* 0BD1D4 7F0886A4 00000000 */   nop   
-/* 0BD1D8 7F0886A8 0FC2F5B8 */  jal   gfxAllocateMatrix
+/* 0BD1D8 7F0886A8 0FC2F5B8 */  jal   dynAllocateMatrix
 /* 0BD1DC 7F0886AC AFA200BC */   sw    $v0, 0xbc($sp)
 /* 0BD1E0 7F0886B0 3C018003 */  lui   $at, %hi(D_800364CC)
 /* 0BD1E4 7F0886B4 C42064CC */  lwc1  $f0, %lo(D_800364CC)($at)

@@ -1056,7 +1056,7 @@ Gfx *video_related_F(Gfx *gdl) {
 
     gSPViewport(gdl++, ((s32)&pPlayer->viewports[off_CODE_bss_80060879] + 0x80000000));
 
-    projectionMatrix = gfxAllocateMatrix();    
+    projectionMatrix = dynAllocateMatrix();    
     guPerspectiveF(projectionMatrixF, &perspNorm, ptr_video_settings2->fovy, ptr_video_settings2->aspect, ptr_video_settings2->znear, ptr_video_settings2->zfar, 1.0f);
     guMtxF2L(projectionMatrixF, projectionMatrix);
     gSPMatrix(gdl++, ((s32)projectionMatrix + 0x80000000), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);

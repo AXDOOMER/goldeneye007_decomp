@@ -1056,7 +1056,7 @@ s32 get_numguards(void){
 }
 
 void get_ptr_allocated_block_for_vertices(int param_1) {
-  gfxAllocate(param_1 << 4);
+  dynAllocate(param_1 << 4);
 }
 
 void set_show_patrols_flag(s32 flag){
@@ -4282,7 +4282,7 @@ glabel sub_GAME_7F020EF0
 /* 055FC4 7F021494 8D6D0008 */  lw    $t5, 8($t3)
 /* 055FC8 7F021498 85A4000E */  lh    $a0, 0xe($t5)
 /* 055FCC 7F02149C 00046180 */  sll   $t4, $a0, 6
-/* 055FD0 7F0214A0 0FC2F5C5 */  jal   gfxAllocate
+/* 055FD0 7F0214A0 0FC2F5C5 */  jal   dynAllocate
 /* 055FD4 7F0214A4 01802025 */   move  $a0, $t4
 /* 055FD8 7F0214A8 3C058007 */  lui   $a1, %hi(dword_CODE_bss_80069B60)
 /* 055FDC 7F0214AC 24A59B60 */  addiu $a1, %lo(dword_CODE_bss_80069B60) # addiu $a1, $a1, -0x64a0
@@ -4351,7 +4351,7 @@ glabel sub_GAME_7F020EF0
 /* 0560D0 7F0215A0 8D6D0008 */  lw    $t5, 8($t3)
 /* 0560D4 7F0215A4 85A4000E */  lh    $a0, 0xe($t5)
 /* 0560D8 7F0215A8 00046180 */  sll   $t4, $a0, 6
-/* 0560DC 7F0215AC 0FC2F5C5 */  jal   gfxAllocate
+/* 0560DC 7F0215AC 0FC2F5C5 */  jal   dynAllocate
 /* 0560E0 7F0215B0 01802025 */   move  $a0, $t4
 /* 0560E4 7F0215B4 AFA20128 */  sw    $v0, 0x128($sp)
 /* 0560E8 7F0215B8 27A40118 */  addiu $a0, $sp, 0x118
@@ -5154,7 +5154,7 @@ glabel sub_GAME_7F020EF0
 /* 0562EC 7F02177C 8D980008 */  lw    $t8, 8($t4)
 /* 0562F0 7F021780 8704000E */  lh    $a0, 0xe($t8)
 /* 0562F4 7F021784 0004C980 */  sll   $t9, $a0, 6
-/* 0562F8 7F021788 0FC2F8B1 */  jal   gfxAllocate
+/* 0562F8 7F021788 0FC2F8B1 */  jal   dynAllocate
 /* 0562FC 7F02178C 03202025 */   move  $a0, $t9
 /* 056300 7F021790 3C058007 */  lui   $a1, %hi(dword_CODE_bss_80069B60) # $a1, 0x8007
 /* 056304 7F021794 24A59BA0 */  addiu $a1, %lo(dword_CODE_bss_80069B60) # addiu $a1, $a1, -0x6460
@@ -5223,7 +5223,7 @@ glabel sub_GAME_7F020EF0
 /* 0563F8 7F021888 8D980008 */  lw    $t8, 8($t4)
 /* 0563FC 7F02188C 8704000E */  lh    $a0, 0xe($t8)
 /* 056400 7F021890 0004C980 */  sll   $t9, $a0, 6
-/* 056404 7F021894 0FC2F8B1 */  jal   gfxAllocate
+/* 056404 7F021894 0FC2F8B1 */  jal   dynAllocate
 /* 056408 7F021898 03202025 */   move  $a0, $t9
 /* 05640C 7F02189C AFA20128 */  sw    $v0, 0x128($sp)
 /* 056410 7F0218A0 27A40118 */  addiu $a0, $sp, 0x118

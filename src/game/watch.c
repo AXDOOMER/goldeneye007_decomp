@@ -2982,16 +2982,16 @@ glabel draw_background_health_and_armor
 /* 0DBC88 7F0A7158 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 0DBC8C 7F0A715C AFA50054 */  sw    $a1, 0x54($sp)
 /* 0DBC90 7F0A7160 AFA60058 */  sw    $a2, 0x58($sp)
-/* 0DBC94 7F0A7164 0FC2F5B1 */  jal   sub_GAME_7F0BD6C4
+/* 0DBC94 7F0A7164 0FC2F5B1 */  jal   dynAllocate7F0BD6C4
 /* 0DBC98 7F0A7168 2404001E */   li    $a0, 30
 /* 0DBC9C 7F0A716C AFA20048 */  sw    $v0, 0x48($sp)
-/* 0DBCA0 7F0A7170 0FC2F5B1 */  jal   sub_GAME_7F0BD6C4
+/* 0DBCA0 7F0A7170 0FC2F5B1 */  jal   dynAllocate7F0BD6C4
 /* 0DBCA4 7F0A7174 2404001E */   li    $a0, 30
 /* 0DBCA8 7F0A7178 AFA20044 */  sw    $v0, 0x44($sp)
-/* 0DBCAC 7F0A717C 0FC2F5C5 */  jal   gfxAllocate
+/* 0DBCAC 7F0A717C 0FC2F5C5 */  jal   dynAllocate
 /* 0DBCB0 7F0A7180 240400F8 */   li    $a0, 248
 /* 0DBCB4 7F0A7184 AFA20040 */  sw    $v0, 0x40($sp)
-/* 0DBCB8 7F0A7188 0FC2F5C5 */  jal   gfxAllocate
+/* 0DBCB8 7F0A7188 0FC2F5C5 */  jal   dynAllocate
 /* 0DBCBC 7F0A718C 240400F8 */   li    $a0, 248
 /* 0DBCC0 7F0A7190 AFA2003C */  sw    $v0, 0x3c($sp)
 /* 0DBCC4 7F0A7194 02001825 */  move  $v1, $s0
@@ -3948,7 +3948,7 @@ glabel draw_current_hand_item_and_ammo
 /* 0DC9D8 7F0A7EA8 27BDFEE8 */  addiu $sp, $sp, -0x118
 /* 0DC9DC 7F0A7EAC AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0DC9E0 7F0A7EB0 AFB00038 */  sw    $s0, 0x38($sp)
-/* 0DC9E4 7F0A7EB4 0FC2F5B8 */  jal   gfxAllocateMatrix
+/* 0DC9E4 7F0A7EB4 0FC2F5B8 */  jal   dynAllocateMatrix
 /* 0DC9E8 7F0A7EB8 00808025 */   move  $s0, $a0
 /* 0DC9EC 7F0A7EBC 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall) 
 /* 0DC9F0 7F0A7EC0 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableSmall) 
@@ -4298,7 +4298,7 @@ glabel debug_gun_watch_move_related2
 /* 0DCF70 7F0A8440 24010001 */  li    $at, 1
 /* 0DCF74 7F0A8444 504101AE */  beql  $v0, $at, .L7F0A8B00
 /* 0DCF78 7F0A8448 8FBF003C */   lw    $ra, 0x3c($sp)
-/* 0DCF7C 7F0A844C 0FC2F5B8 */  jal   gfxAllocateMatrix
+/* 0DCF7C 7F0A844C 0FC2F5B8 */  jal   dynAllocateMatrix
 /* 0DCF80 7F0A8450 00000000 */   nop   
 /* 0DCF84 7F0A8454 3C048004 */  lui   $a0, %hi(D_800409B8)
 /* 0DCF88 7F0A8458 AFA20924 */  sw    $v0, 0x924($sp)
@@ -4781,7 +4781,7 @@ glabel debug_gun_watch_move_related2
 /* 0DDB48 7F0A8FD8 24010001 */  li    $at, 1
 /* 0DDB4C 7F0A8FDC 504101B8 */  beql  $v0, $at, .Ljp7F0A96C0
 /* 0DDB50 7F0A8FE0 8FBF003C */   lw    $ra, 0x3c($sp)
-/* 0DDB54 7F0A8FE4 0FC2F8A4 */  jal   gfxAllocateMatrix
+/* 0DDB54 7F0A8FE4 0FC2F8A4 */  jal   dynAllocateMatrix
 /* 0DDB58 7F0A8FE8 00000000 */   nop   
 /* 0DDB5C 7F0A8FEC 3C048004 */  lui   $a0, %hi(D_800409B8) # $a0, 0x8004
 /* 0DDB60 7F0A8FF0 AFA2092C */  sw    $v0, 0x92c($sp)
@@ -5660,7 +5660,7 @@ glabel sub_GAME_7F0A8FEC
 /* 0DDB20 7F0A8FF0 AFB00028 */  sw    $s0, 0x28($sp)
 /* 0DDB24 7F0A8FF4 00808025 */  move  $s0, $a0
 /* 0DDB28 7F0A8FF8 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0DDB2C 7F0A8FFC 0FC2F5B1 */  jal   sub_GAME_7F0BD6C4
+/* 0DDB2C 7F0A8FFC 0FC2F5B1 */  jal   dynAllocate7F0BD6C4
 /* 0DDB30 7F0A9000 2404000C */   li    $a0, 12
 /* 0DDB34 7F0A9004 0C002472 */  jal   sfx_c_700091C8
 /* 0DDB38 7F0A9008 AFA2003C */   sw    $v0, 0x3c($sp)
@@ -5810,7 +5810,7 @@ glabel sub_GAME_7F0A91C8
 /* 0DDCFC 7F0A91CC AFB00028 */  sw    $s0, 0x28($sp)
 /* 0DDD00 7F0A91D0 00808025 */  move  $s0, $a0
 /* 0DDD04 7F0A91D4 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0DDD08 7F0A91D8 0FC2F5B1 */  jal   sub_GAME_7F0BD6C4
+/* 0DDD08 7F0A91D8 0FC2F5B1 */  jal   dynAllocate7F0BD6C4
 /* 0DDD0C 7F0A91DC 2404000C */   li    $a0, 12
 /* 0DDD10 7F0A91E0 0FC2A4D6 */  jal   get_mTrack2Vol
 /* 0DDD14 7F0A91E4 AFA2003C */   sw    $v0, 0x3c($sp)
@@ -7454,7 +7454,7 @@ glabel sub_GAME_7F0AADC0
 /* 0DF8F0 7F0AADC0 27BDFAC0 */  addiu $sp, $sp, -0x540
 /* 0DF8F4 7F0AADC4 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 0DF8F8 7F0AADC8 AFB00030 */  sw    $s0, 0x30($sp)
-/* 0DF8FC 7F0AADCC 0FC2F5B8 */  jal   gfxAllocateMatrix
+/* 0DF8FC 7F0AADCC 0FC2F5B8 */  jal   dynAllocateMatrix
 /* 0DF900 7F0AADD0 00808025 */   move  $s0, $a0
 /* 0DF904 7F0AADD4 3C0F8004 */  lui   $t7, %hi(D_80040B5C) 
 /* 0DF908 7F0AADD8 AFA2053C */  sw    $v0, 0x53c($sp)
@@ -7928,7 +7928,7 @@ glabel sub_GAME_7F0AADC0
 /* 0E04F0 7F0AB980 27BDFAC0 */  addiu $sp, $sp, -0x540
 /* 0E04F4 7F0AB984 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 0E04F8 7F0AB988 AFB00030 */  sw    $s0, 0x30($sp)
-/* 0E04FC 7F0AB98C 0FC2F8A4 */  jal   gfxAllocateMatrix
+/* 0E04FC 7F0AB98C 0FC2F8A4 */  jal   dynAllocateMatrix
 /* 0E0500 7F0AB990 00808025 */   move  $s0, $a0
 /* 0E0504 7F0AB994 3C0F8004 */  lui   $t7, %hi(D_80040B5C) # $t7, 0x8004
 /* 0E0508 7F0AB998 AFA2053C */  sw    $v0, 0x53c($sp)
