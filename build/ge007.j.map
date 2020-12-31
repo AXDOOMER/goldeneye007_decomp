@@ -36,10 +36,18 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/j/src/tlb_manage.o
  .options       0x0000000000000000       0x20 build/j/src/tlb_random.o
  .reginfo       0x0000000000000000       0x18 build/j/src/tlb_random.o
- .options       0x0000000000000000       0x20 build/j/src/tlb_resolve.o
  .reginfo       0x0000000000000000       0x18 build/j/src/tlb_resolve.o
- .options       0x0000000000000000       0x20 build/j/src/tlb_hardwire.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/tlb_resolve.o
+ .pdr           0x0000000000000000        0x0 build/j/src/tlb_resolve.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/tlb_resolve.o
  .reginfo       0x0000000000000000       0x18 build/j/src/tlb_hardwire.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/tlb_hardwire.o
+ .pdr           0x0000000000000000        0x0 build/j/src/tlb_hardwire.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/tlb_hardwire.o
  .options       0x0000000000000000       0x20 build/j/src/audi.o
  .reginfo       0x0000000000000000       0x18 build/j/src/audi.o
  .options       0x0000000000000000       0x20 build/j/src/speed_graph.o
@@ -57,7 +65,7 @@ Discarded input sections
  .options       0x0000000000000000       0x20 build/j/src/ramrom.o
  .reginfo       0x0000000000000000       0x18 build/j/src/ramrom.o
  .gptab.bss     0x0000000000000000       0x20 build/j/src/ramrom.o
- .mdebug        0x0000000000000000      0x968 build/j/src/ramrom.o
+ .mdebug        0x0000000000000000      0x964 build/j/src/ramrom.o
  .options       0x0000000000000000       0x20 build/j/src/boss.o
  .reginfo       0x0000000000000000       0x18 build/j/src/boss.o
  .options       0x0000000000000000       0x20 build/j/src/music.o
@@ -1097,7 +1105,7 @@ Discarded input sections
  .mdebug        0x0000000000000000      0x39c build/j/src/game/initunk_000B60.o
  .options       0x0000000000000000       0x20 build/j/src/game/setguscale.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/setguscale.o
- .mdebug        0x0000000000000000      0x450 build/j/src/game/setguscale.o
+ .mdebug        0x0000000000000000      0x44c build/j/src/game/setguscale.o
  .options       0x0000000000000000       0x20 build/j/src/game/initnull_000BC0.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/initnull_000BC0.o
  .mdebug        0x0000000000000000      0x28c build/j/src/game/initnull_000BC0.o
@@ -1339,6 +1347,9 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/j/src/game/unk_0D1AC0.o
  .options       0x0000000000000000       0x20 build/j/src/game/viewport.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/viewport.o
+ .gptab.data    0x0000000000000000       0x18 build/j/src/game/viewport.o
+ .gptab.bss     0x0000000000000000       0x18 build/j/src/game/viewport.o
+ .mdebug        0x0000000000000000      0x730 build/j/src/game/viewport.o
  .options       0x0000000000000000       0x20 build/j/src/game/music_0D2720.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/music_0D2720.o
  .options       0x0000000000000000       0x20 build/j/src/game/spectrum.o
@@ -1446,7 +1457,7 @@ Discarded input sections
  .options       0x0000000000000000       0x20 build/j/src/cfb.o
  .reginfo       0x0000000000000000       0x18 build/j/src/cfb.o
  .gptab.bss     0x0000000000000000       0x18 build/j/src/cfb.o
- .mdebug        0x0000000000000000      0x230 build/j/src/cfb.o
+ .mdebug        0x0000000000000000      0x20c build/j/src/cfb.o
 
 Memory Configuration
 
@@ -1655,47 +1666,47 @@ Linker script and memory map
  build/j/src/video.o(.text)
  .text          0x0000000070003060     0x1cc0 build/j/src/video.o
                 0x0000000070003060                init_video_settings
-                0x0000000070003124                init_both_video_buffers
-                0x0000000070003190                video_related_6
+                0x0000000070003124                viInitBuffers
+                0x0000000070003190                viSet800232BC
                 0x00000000700031a0                video_related_7
                 0x0000000070003298                video_related_8
-                0x0000000070003b04                video_related_9
-                0x0000000070003b64                receive_vi_c_msgs
-                0x0000000070003bb0                setVideoWidthHeightToMode
-                0x0000000070003c00                set_coloroutputmode_16bit
-                0x0000000070003c10                set_coloroutputmode_32bit
-                0x0000000070003c1c                get_video_settings2_frameb
-                0x0000000070003c2c                get_video_settings1_frameb
-                0x0000000070003c3c                set_video2buf_frameb
-                0x0000000070003c4c                get_80060824
+                0x0000000070003b04                viSet800232B4
+                0x0000000070003b64                viRecvMesg
+                0x0000000070003bb0                viSetVideoMode
+                0x0000000070003c00                viSetColorMode16Bit
+                0x0000000070003c10                viSetColorMode32Bit
+                0x0000000070003c1c                viGetFrameBuf2
+                0x0000000070003c2c                viGetFrameBuf1
+                0x0000000070003c3c                viSetFrameBuf2
+                0x0000000070003c4c                viGetPerspNorm
                 0x0000000070003c58                video_related_F
-                0x0000000070003eb4                video_related_10
-                0x0000000070003ef8                insert_generic_fillrect
+                0x0000000070003eb4                viClearZBufCurrentPlayer
+                0x0000000070003ef8                viFillScreen
                 0x0000000070003f64                setupscreensfornumplayers
-                0x0000000070004384                set_D_800232A0
-                0x0000000070004390                get_D_800232A0
-                0x000000007000439c                set_D_8002329C
-                0x00000000700043a8                get_D_8002329C
-                0x00000000700043b4                set_video2_settings_offset_18_1A
-                0x00000000700043d8                get_video2_settings_offset_18
-                0x00000000700043e8                get_video2_settings_offset_1A
-                0x00000000700043f8                set_video2_text_clip_size
-                0x000000007000441c                get_video2_settings_txtClipW
-                0x000000007000442c                get_video2_settings_txtClipH
-                0x000000007000443c                set_video2_width_height
-                0x000000007000449c                get_video2_settings_width
-                0x00000000700044ac                get_video2_settings_height
-                0x00000000700044bc                set_video2_ulx_uly
-                0x0000000070004514                get_video2_settings_ulx
-                0x0000000070004524                get_video2_settings_uly
-                0x0000000070004534                set_video2_settings_offset_24
-                0x0000000070004544                setvideo_far
-                0x0000000070004590                set_page_aspect
-                0x00000000700045dc                video_related_23
-                0x00000000700045ec                video_related_24
-                0x0000000070004650                set_page_height
-                0x00000000700046ac                video_related_27
-                0x00000000700046d0                set_setfillcolor
+                0x0000000070004384                viSet800232A0
+                0x0000000070004390                viGet800232A0
+                0x000000007000439c                viSet8002329C
+                0x00000000700043a8                viGet8002329C
+                0x00000000700043b4                viSetBuf
+                0x00000000700043d8                viGetBufX
+                0x00000000700043e8                viGetBufY
+                0x00000000700043f8                viSetXY
+                0x000000007000441c                viGetX
+                0x000000007000442c                viGetY
+                0x000000007000443c                viSetViewSize
+                0x000000007000449c                viGetViewWidth
+                0x00000000700044ac                viGetViewHeight
+                0x00000000700044bc                viSetViewPosition
+                0x0000000070004514                viGetViewLeft
+                0x0000000070004524                viGetViewTop
+                0x0000000070004534                viSetUseZBuf
+                0x0000000070004544                viSetFovY
+                0x0000000070004590                viSetAspect
+                0x00000000700045dc                viGetFovY
+                0x00000000700045ec                viSetFov
+                0x0000000070004650                viSetZRange
+                0x00000000700046ac                viGetZRange
+                0x00000000700046d0                viSetFillColor
                 0x0000000070004758                indy_grab_jpg_16bit
                 0x00000000700048d4                indy_grab_jpg_32bit
                 0x0000000070004a60                indy_grab_rgb_16bit
@@ -3191,11 +3202,11 @@ Linker script and memory map
                 0x000000007f01f798                set_or_unset_GUARDdata_flag
                 0x000000007f01f7c4                sub_GAME_7F01F614
                 0x000000007f01fdc0                sub_GAME_7F01FC10
-                0x000000007f020170                get_next_available_guardID
-                0x000000007f0201c8                sub_GAME_7F020018
-                0x000000007f0201fc                sub_GAME_7F02004C
-                0x000000007f020204                sub_GAME_7F020054
-                0x000000007f020240                sub_GAME_7F020090
+                0x000000007f020170                chrGetNumFree
+                0x000000007f0201c8                chrSetMaxDamage
+                0x000000007f0201fc                chrGetMaxDamage
+                0x000000007f020204                chrAddHealth
+                0x000000007f020240                chrGetArmor
                 0x000000007f02026c                init_GUARDdata_with_set_values
                 0x000000007f020568                replace_GUARDdata_with_actual_values
                 0x000000007f0205c4                disable_sounds_attached_to_player_then_something
@@ -3793,7 +3804,7 @@ Linker script and memory map
                 0x000000007f0585b8                matrix_4x4_multiply_homogeneous_in_place
                 0x000000007f0585e8                matrix_4x4_multiply
                 0x000000007f0586ac                matrix_4x4_multiply_homogeneous
-                0x000000007f058794                sub_GAME_7F058274
+                0x000000007f058794                matrix_4x4_7F058274
                 0x000000007f0588a0                matrix_4x4_rotate_vector
                 0x000000007f0588f8                matrix_4x4_rotate_vector_in_place
                 0x000000007f058938                matrix_4x4_transform_vector
@@ -3815,30 +3826,30 @@ Linker script and memory map
                 0x000000007f059030                matrix_scalar_multiply_2
                 0x000000007f0590a0                matrix_row_3_scalar_multiply
                 0x000000007f0590d8                matrix_scalar_multiply_3
-                0x000000007f05916c                sub_GAME_7F058C4C
-                0x000000007f059184                sub_GAME_7F058C64
-                0x000000007f0591a8                sub_GAME_7F058C88
+                0x000000007f05916c                matrix_4x4_7F058C4C
+                0x000000007f059184                matrix_4x4_7F058C64
+                0x000000007f0591a8                matrix_4x4_7F058C88
                 0x000000007f0591bc                sub_GAME_7F058C9C
                 0x000000007f059398                sub_GAME_7F058E78
-                0x000000007f059564                sub_GAME_7F059044
-                0x000000007f05966c                sub_GAME_7F05914C
+                0x000000007f059564                matrix_4x4_7F059044
+                0x000000007f05966c                matrix_4x4_7F05914C
                 0x000000007f059764                sub_GAME_7F059244
                 0x000000007f059854                sub_GAME_7F059334
-                0x000000007f059944                sub_GAME_7F059424
-                0x000000007f059bb4                sub_GAME_7F059694
-                0x000000007f059c28                sub_GAME_7F059708
-                0x000000007f059e28                sub_GAME_7F059908
+                0x000000007f059944                matrix_4x4_7F059424
+                0x000000007f059bb4                matrix_4x4_7F059694
+                0x000000007f059c28                matrix_4x4_7F059708
+                0x000000007f059e28                matrix_4x4_7F059908
                 0x000000007f059e9c                sub_GAME_7F05997C
-                0x000000007f059f68                sub_GAME_7F059A48
-                0x000000007f05a078                sub_GAME_7F059B58
+                0x000000007f059f68                matrix_4x4_7F059A48
+                0x000000007f05a078                matrix_4x4_7F059B58
                 0x000000007f05a208                matrix_4x4_align
-                0x000000007f05a250                sub_GAME_7F059D30
+                0x000000007f05a250                matrix_4x4_7F059D30
                 0x000000007f05a258                matrix_4x4_set_rotation_inverse
-                0x000000007f05a2cc                sub_GAME_7F059DAC
-                0x000000007f05a384                sub_GAME_7F059E64
+                0x000000007f05a2cc                matrix_4x4_7F059DAC
+                0x000000007f05a384                matrix_4x4_7F059E64
                 0x000000007f05a4d8                sub_GAME_7F059FB8
-                0x000000007f05a770                sub_GAME_7F05A250
-                0x000000007f05a830                sub_GAME_7F05A310
+                0x000000007f05a770                matrix_4x4_7F05A250
+                0x000000007f05a830                matrix_4x4_7F05A310
                 0x000000007f05ac94                matrix_4x4_determinant
                 0x000000007f05ae48                matrix_3x3_determinant
                 0x000000007f05aed8                matrix_2x2_determinant
@@ -4220,10 +4231,10 @@ Linker script and memory map
  build/j/src/game/bond.o(.text)
  .text          0x000000007f0781c0    0x146c0 build/j/src/game/bond.o
                 0x000000007f0781c0                nullsub_75
-                0x000000007f0781c8                set_BONDdata_screensize
-                0x000000007f078204                set_ulx_uly
-                0x000000007f078220                sub_GAME_7F077C30
-                0x000000007f07824c                sub_GAME_7F077C5C
+                0x000000007f0781c8                currentPlayerSetScreenSize
+                0x000000007f078204                currentPlayerSetScreenPosition
+                0x000000007f078220                currentPlayerSetPerspective
+                0x000000007f07824c                currentPlayerSetCameraScale
                 0x000000007f0784dc                sub_GAME_7F077EEC
                 0x000000007f0785a4                sub_GAME_7F077FB4
                 0x000000007f0785e4                sub_GAME_7F077FF4
@@ -4231,24 +4242,24 @@ Linker script and memory map
                 0x000000007f0786e0                sub_GAME_7F0780F0
                 0x000000007f078730                sub_GAME_7F078140
                 0x000000007f078848                sub_GAME_7F078258
-                0x000000007f078914                set_BONDdata_field_10C4
-                0x000000007f078924                get_BONDdata_field_10C4
-                0x000000007f078934                set_BONDdata_field_10C8
-                0x000000007f078944                get_BONDdata_field_10C8
-                0x000000007f078954                set_BONDdata_field_10D8
-                0x000000007f078964                get_BONDdata_field_10D8
+                0x000000007f078914                currentPlayerSetMatrix10C4
+                0x000000007f078924                currentPlayerGetMatrix10C4
+                0x000000007f078934                currentPlayerSetMatrix10C8
+                0x000000007f078944                currentPlayerGetMatrix10C8
+                0x000000007f078954                currentPlayerSetProjectionMatrix
+                0x000000007f078964                currentPlayerGetProjectionMatrix
                 0x000000007f078974                set_BONDdata_field_10E0
                 0x000000007f078984                get_BONDdata_field_10E0
-                0x000000007f078994                copy_BONDdata_field_10CC_to_10E8_set_10CC
-                0x000000007f0789b4                get_BONDdata_field_10CC
-                0x000000007f0789c4                set_BONDdata_field_10DC
-                0x000000007f0789d4                get_BONDdata_field_10DC
-                0x000000007f0789e4                sub_GAME_7F0783F4
+                0x000000007f078994                currentPlayerSetMatrix10CC
+                0x000000007f0789b4                currentPlayerGetMatrix10CC
+                0x000000007f0789c4                currentPlayerSetProjectionMatrixF
+                0x000000007f0789d4                currentPlayerGetProjectionMatrixF
+                0x000000007f0789e4                currentPlayerGetMatrix10E8
                 0x000000007f0789f4                sub_GAME_7F078404
                 0x000000007f078a04                sub_GAME_7F078414
-                0x000000007f078a14                sub_GAME_7F078424
-                0x000000007f078a34                sub_GAME_7F078444
-                0x000000007f078a44                sub_GAME_7F078454
+                0x000000007f078a14                currentPlayerSetMatrix10D4
+                0x000000007f078a34                currentPlayerGetMatrix10D4
+                0x000000007f078a44                currentPlayerGetMatrix10EC
                 0x000000007f078a54                sub_GAME_7F078464
                 0x000000007f078a64                sub_GAME_7F078474
                 0x000000007f078a74                getPlayer_c_lodscalez
@@ -4259,10 +4270,10 @@ Linker script and memory map
                 0x000000007f078ac4                getPlayer_c_screentop
                 0x000000007f078ad4                getPlayer_c_perspfovy
                 0x000000007f078ae4                getPlayer_c_perspaspect
-                0x000000007f078af4                sub_GAME_7F078504
-                0x000000007f078b24                sub_GAME_7F078534
-                0x000000007f078b58                sub_GAME_7F078568
-                0x000000007f078b88                sub_GAME_7F078598
+                0x000000007f078af4                getPlayer_c_cameratopnorm
+                0x000000007f078b24                getPlayer_c_cameratopnorm_inverted_y
+                0x000000007f078b58                getPlayer_c_cameraleftnorm
+                0x000000007f078b88                getPlayer_c_cameraleftnorm_inverted_x
                 0x000000007f078bbc                getPlayer_c_perspnear
                 0x000000007f078bcc                sub_GAME_7F0785DC
                 0x000000007f078f40                sub_GAME_7F078950
@@ -4275,11 +4286,11 @@ Linker script and memory map
                 0x000000007f0796e0                sub_GAME_7F0790F0
                 0x000000007f0799dc                init_player_BONDdata
                 0x000000007f079ea8                sub_GAME_7F0798B8
-                0x000000007f079f78                sub_GAME_7F079988
-                0x000000007f079f9c                change_crouch_position
-                0x000000007f079fe0                sub_GAME_7F0799F0
-                0x000000007f07a00c                sub_GAME_7F079A1C
-                0x000000007f07a040                setptrBONDdata
+                0x000000007f079f78                currentPlayerSetSwayTarget
+                0x000000007f079f9c                currentPlayerAdjustCrouchPos
+                0x000000007f079fe0                currentPlayerGetCrouchPos
+                0x000000007f07a00c                playerGetCrouchPos
+                0x000000007f07a040                currentPlayerSetField00
                 0x000000007f07a050                sub_GAME_7F079A60
                 0x000000007f07a2e0                solo_char_load
                 0x000000007f07aac0                maybe_solo_intro_camera_handler
@@ -4351,17 +4362,17 @@ Linker script and memory map
                 0x000000007f0802d4                sub_GAME_7F07FCC4
                 0x000000007f08042c                sub_GAME_7F07FE1C
                 0x000000007f080584                sub_GAME_7F07FF74
-                0x000000007f080620                sub_GAME_7F080010
+                0x000000007f080620                currentPlayerUpdateSpeedVerta
                 0x000000007f080838                sub_GAME_7F080228
                 0x000000007f0808d4                sub_GAME_7F0802C4
-                0x000000007f080af0                sub_GAME_7F0804E0
-                0x000000007f080dc0                set_rgba_tint
-                0x000000007f080df0                sub_GAME_7F0807E0
-                0x000000007f080e68                fade_to_over_seconds
-                0x000000007f080e9c                check_if_fade_to_black_complete
-                0x000000007f080ecc                sub_GAME_7F0808BC
-                0x000000007f081020                set_curplayer_fade
-                0x000000007f081090                update_curplayer_fade
+                0x000000007f080af0                currentPlayerDrawFade
+                0x000000007f080dc0                currentPlayerSetFadeColour
+                0x000000007f080df0                currentPlayerAdjustFade
+                0x000000007f080e68                currentPlayerSetFadeFrac
+                0x000000007f080e9c                currentPlayerIsFadeComplete
+                0x000000007f080ecc                currentPlayerUpdateColourScreenProperties
+                0x000000007f081020                currentPlayerStartChrFade
+                0x000000007f081090                currentPlayerTickChrFade
                 0x000000007f081144                sub_GAME_7F080B34
                 0x000000007f081370                sub_GAME_7F080D60
                 0x000000007f081408                sub_GAME_7F080DF8
@@ -4503,11 +4514,11 @@ Linker script and memory map
                 0x000000007f08e5f0                sub_GAME_7F08DB08
  build/j/src/game/unk_08DBB0.o(.text)
  .text          0x000000007f08e690     0x2250 build/j/src/game/unk_08DBB0.o
-                0x000000007f08e690                sub_GAME_7F08DBB0
-                0x000000007f08e6a8                sub_GAME_7F08DBC8
-                0x000000007f08e928                sub_GAME_7F08DE48
-                0x000000007f08ea24                sub_GAME_7F08DF44
-                0x000000007f08ec44                sub_GAME_7F08E164
+                0x000000007f08e690                currentPlayerToggle5BC
+                0x000000007f08e6a8                currentPlayerUpdateIdleHeadRoll
+                0x000000007f08e928                currentPlayerUpdateHeadPos
+                0x000000007f08ea24                currentPlayerUpdateHeadRot
+                0x000000007f08ec44                currentPlayerSetHeadDamp
                 0x000000007f08ed20                sub_GAME_7F08E240
                 0x000000007f08f39c                sub_GAME_7F08E8BC
                 0x000000007f08f528                sub_GAME_7F08EA48
@@ -4639,7 +4650,7 @@ Linker script and memory map
                 0x000000007f09ae80                default_player_perspective_and_height
                 0x000000007f09aecc                reset_play_data_ptrs
                 0x000000007f09af2c                init_player_data_ptrs_construct_viewports
-                0x000000007f09b004                get_num_players
+                0x000000007f09b004                getPlayerCount
                 0x000000007f09b05c                initBONDdataforPlayer
                 0x000000007f09bcac                set_cur_player
                 0x000000007f09bcf0                get_cur_playernum
@@ -4798,14 +4809,14 @@ Linker script and memory map
                 0x000000007f0a7620                sub_GAME_7F0A6A80
                 0x000000007f0a7a80                sub_GAME_7F0A6EE8
                 0x000000007f0a7c44                sub_GAME_7F0A70AC
-                0x000000007f0a7ce4                sub_GAME_7F0A714C
+                0x000000007f0a7ce4                draw_background_health_and_armor
                 0x000000007f0a8340                sub_GAME_7F0A77A8
                 0x000000007f0a8360                sub_GAME_7F0A77C8
-                0x000000007f0a87b0                sub_GAME_7F0A7C18
-                0x000000007f0a8954                sub_GAME_7F0A7DBC
-                0x000000007f0a895c                sub_GAME_7F0A7DC4
-                0x000000007f0a8a40                debug_gun_watch_move_related
-                0x000000007f0a8ea4                sub_GAME_7F0A830C
+                0x000000007f0a87b0                draw_text_mission_status
+                0x000000007f0a8954                empty_draw_function
+                0x000000007f0a895c                draw_text_q_watch_v201_beta
+                0x000000007f0a8a40                draw_current_hand_item_and_ammo
+                0x000000007f0a8ea4                draw_watch_mission_status_page
                 0x000000007f0a8f10                sub_GAME_7F0A8378
                 0x000000007f0a8fbc                debug_gun_watch_move_related2
                 0x000000007f0a96d0                sub_GAME_7F0A8B10
@@ -4823,17 +4834,17 @@ Linker script and memory map
                 0x000000007f0aa244                sub_GAME_7F0A9684
                 0x000000007f0aa390                sub_GAME_7F0A97D0
                 0x000000007f0aa678                sub_GAME_7F0A9AB8
-                0x000000007f0ab388                sub_GAME_7F0AA7C8
+                0x000000007f0ab388                display_text_buttons_dual_control
                 0x000000007f0ab980                sub_GAME_7F0AADC0
                 0x000000007f0ac034                reset_controller_options_index
                 0x000000007f0ac040                reset_game_options_index
                 0x000000007f0ac04c                zero_D_800409A4
                 0x000000007f0ac058                return_arg0_7F0AB4B0
                 0x000000007f0ac060                sub_GAME_7F0AB4B8
-                0x000000007f0ac34c                set_pparam1toparam2_disablejoylr_playsfx
-                0x000000007f0ac380                sub_GAME_7F0AB7D8
+                0x000000007f0ac34c                game_option_select_value
+                0x000000007f0ac380                game_option_toggle_input
                 0x000000007f0ac4b0                sub_GAME_7F0AB908
-                0x000000007f0ac7c4                sub_GAME_7F0ABC1C
+                0x000000007f0ac7c4                draw_toggle_options
                 0x000000007f0ac9a4                sub_GAME_7F0ABDFC
                 0x000000007f0acc90                sub_GAME_7F0AC0E8
                 0x000000007f0accc8                sub_GAME_7F0AC120
@@ -5130,19 +5141,19 @@ Linker script and memory map
  build/j/src/game/dyn.o(.text)
  .text          0x000000007f0be010      0x490 build/j/src/game/dyn.o
                 0x000000007f0be010                dynInitDebugNoticeList
-                0x000000007f0be03c                set_vtx_gfx_mem_alloc
-                0x000000007f0be224                get_ptr_displaylist
-                0x000000007f0be24c                allocate_something_in_mgfx
-                0x000000007f0be274                sub_GAME_7F0BD6C4
-                0x000000007f0be290                sub_GAME_7F0BD6E0
-                0x000000007f0be2a8                sub_GAME_7F0BD6F8
-                0x000000007f0be2c4                sub_GAME_7F0BD714
-                0x000000007f0be2e8                allocate_something_in_mvtx
-                0x000000007f0be324                removed_debug_routine
-                0x000000007f0be32c                num_microcode_cmds_that_fit
-                0x000000007f0be354                sub_GAME_7F0BD7A4
-                0x000000007f0be37c                compute_membar_display_string
-                0x000000007f0be3c0                draw_membars
+                0x000000007f0be03c                dynInitMemory
+                0x000000007f0be224                dynGetMasterDisplayList
+                0x000000007f0be24c                dynGetFreeGfx2
+                0x000000007f0be274                dynAllocate7F0BD6C4
+                0x000000007f0be290                dynAllocateMatrix
+                0x000000007f0be2a8                dynAllocate7F0BD6F8
+                0x000000007f0be2c4                dynAllocate
+                0x000000007f0be2e8                dynSwapBuffers
+                0x000000007f0be324                dynRemovedFunc
+                0x000000007f0be32c                dynGetFreeGfx
+                0x000000007f0be354                dynGetFreeVtx
+                0x000000007f0be37c                dynCalculateMembarLength
+                0x000000007f0be3c0                dynDrawMembars
  build/j/src/game/lvl.o(.text)
  .text          0x000000007f0be4a0     0x2440 build/j/src/game/lvl.o
                 0x000000007f0be4a0                sub_GAME_7F0BD8F0
@@ -5434,11 +5445,11 @@ Linker script and memory map
                 0x000000007f0d3000                sub_GAME_7F0D2320
  build/j/src/game/viewport.o(.text)
  .text          0x000000007f0d3060      0x3a0 build/j/src/game/viewport.o
-                0x000000007f0d3060                remove_viewport_buffer
-                0x000000007f0d306c                allocate_viewport_buffer
-                0x000000007f0d3128                sub_GAME_7F0D2448
-                0x000000007f0d3144                sub_GAME_7F0D2464
-                0x000000007f0d31f8                sub_GAME_7F0D2518
+                0x000000007f0d3060                zbufDeallocate
+                0x000000007f0d306c                zbufAllocate
+                0x000000007f0d3128                zbufSetBuffer
+                0x000000007f0d3144                zbufInit
+                0x000000007f0d31f8                zbufClearCurrentPlayer
  build/j/src/game/music_0D2720.o(.text)
  .text          0x000000007f0d3400      0x1c0 build/j/src/game/music_0D2720.o
                 0x000000007f0d3400                getmusictrack_or_randomtrack
@@ -17158,11 +17169,8 @@ Linker script and memory map
                 0x00000000800230ec                setby_DPCfill_1
                 0x00000000800230f0                something_with_osVI_0
                 0x00000000800230f4                something_with_osVI_4
-                0x00000000800230f8                something_with_osVI_8
                 0x00000000800230fc                something_with_osVI_C
-                0x0000000080023100                something_with_osVI_10
                 0x0000000080023104                something_with_osVI_14
-                0x0000000080023108                something_with_osVI_18
                 0x000000008002310c                D_800230CC
  build/j/src/osMapTLB.o(.data)
  build/j/src/tlb_manage.o(.data)
@@ -17173,7 +17181,9 @@ Linker script and memory map
  .data          0x0000000080023120       0x10 build/j/src/tlb_random.o
                 0x0000000080023120                tlb_random_seed
  build/j/src/tlb_resolve.o(.data)
+ .data          0x0000000080023130        0x0 build/j/src/tlb_resolve.o
  build/j/src/tlb_hardwire.o(.data)
+ .data          0x0000000080023130        0x0 build/j/src/tlb_hardwire.o
  build/j/src/audi.o(.data)
  .data          0x0000000080023130       0xe0 build/j/src/audi.o
                 0x0000000080023130                D_800230F0
@@ -17195,7 +17205,6 @@ Linker script and memory map
  .data          0x0000000080023280       0xa0 build/j/src/video.o
                 0x0000000080023280                D_80023240
                 0x0000000080023284                video1_settings
-                0x00000000800232b0                video2_settings
                 0x00000000800232dc                D_8002329C
                 0x00000000800232e0                D_800232A0
                 0x00000000800232e4                ptr_video_settings1
@@ -17797,7 +17806,6 @@ Linker script and memory map
  .rodata        0x0000000080028410       0x30 build/j/src/init.o
  build/j/src/sched.o(.rodata)
  .rodata        0x0000000080028440       0x20 build/j/src/sched.o
-                0x0000000080028440                jpt_80028400
  build/j/src/osMapTLB.o(.rodata)
  build/j/src/tlb_manage.o(.rodata)
  build/j/src/tlb_random.o(.rodata)
@@ -20254,22 +20262,7 @@ Linker script and memory map
                 0x0000000080040a04                D_800409D4
                 0x0000000080040a08                D_800409D8
                 0x0000000080040a0c                D_800409DC
-                0x0000000080040aac                D_80040A7C
-                0x0000000080040ab4                cur_player_look_vertical_inverted
-                0x0000000080040ab8                D_80040A88
-                0x0000000080040ac0                cur_player_autoaim_setting
-                0x0000000080040ac4                D_80040A94
-                0x0000000080040acc                cur_player_aim_control
-                0x0000000080040ad0                D_80040AA0
-                0x0000000080040ad8                cur_player_sight_onscreen
-                0x0000000080040adc                D_80040AAC
-                0x0000000080040ae4                cur_player_lookahead_setting
-                0x0000000080040ae8                D_80040AB8
-                0x0000000080040af0                cur_player_ammo_onscreen_setting
-                0x0000000080040af4                D_80040AC4
-                0x0000000080040afc                cur_player_screen_setting
-                0x0000000080040b00                D_80040AD0
-                0x0000000080040b08                screen_ratio
+                0x0000000080040aac                game_options_entries
                 0x0000000080040b0c                controlstick_lr_enabled
                 0x0000000080040b10                D_80040AE0
                 0x0000000080040b14                D_80040AE4
@@ -20476,8 +20469,8 @@ Linker script and memory map
  build/j/src/game/dyn.o(.data)
  .data          0x0000000080048310       0x80 build/j/src/game/dyn.o
                 0x0000000080048310                D_800482E0
-                0x0000000080048314                D_800482E4
-                0x0000000080048320                D_800482F0
+                0x0000000080048314                g_GfxSizesByPlayerCount
+                0x0000000080048324                g_VtxSizesByPlayerCount
                 0x0000000080048334                membars_string1
                 0x0000000080048350                membars_string2
                 0x000000008004836c                membars_string3
@@ -20667,7 +20660,7 @@ Linker script and memory map
                 0x000000008004eb24                D_8004EAF4
  build/j/src/game/viewport.o(.data)
  .data          0x000000008004eb30       0x10 build/j/src/game/viewport.o
-                0x000000008004eb30                viewport_img
+                0x000000008004eb30                z_buffer
  build/j/src/game/music_0D2720.o(.data)
  .data          0x000000008004eb40      0x120 build/j/src/game/music_0D2720.o
                 0x000000008004eb40                music_setup_entries
@@ -21656,11 +21649,6 @@ Linker script and memory map
                 0x0000000080054fcc                D_80054F9C
  build/j/src/game/bond.o(.rodata)
  .rodata        0x0000000080054fd0      0x340 build/j/src/game/bond.o
-                0x0000000080054fd0                D_80054FA0
-                0x0000000080054fd4                D_80054FA4
-                0x0000000080054fd8                D_80054FA8
-                0x0000000080054fdc                D_80054FAC
-                0x0000000080054fe0                D_80054FB0
                 0x0000000080054fe4                D_80054FB4
                 0x0000000080054fe8                D_80054FB8
                 0x0000000080054fec                D_80054FBC
@@ -21697,16 +21685,12 @@ Linker script and memory map
                 0x00000000800550b8                D_80055088
                 0x00000000800550bc                D_8005508C
                 0x00000000800550c0                D_80055090
-                0x00000000800550c4                D_80055094
-                0x00000000800550c8                D_80055098
                 0x00000000800550cc                D_8005509C
                 0x00000000800550d0                D_800550A0
                 0x00000000800550d4                D_800550A4
                 0x00000000800550d8                D_800550A8
                 0x00000000800550dc                D_800550AC
                 0x00000000800550e0                D_800550B0
-                0x00000000800550e4                D_800550B4
-                0x00000000800550e8                D_800550B8
                 0x00000000800550ec                D_800550BC
                 0x00000000800550f0                D_800550C0
                 0x00000000800550f4                D_800550C4
@@ -21836,15 +21820,6 @@ Linker script and memory map
  build/j/src/game/bondinv.o(.rodata)
  build/j/src/game/unk_08DBB0.o(.rodata)
  .rodata        0x0000000080055310       0x60 build/j/src/game/unk_08DBB0.o
-                0x0000000080055310                D_800552E0
-                0x0000000080055314                D_800552E4
-                0x0000000080055318                D_800552E8
-                0x000000008005531c                D_800552EC
-                0x0000000080055320                D_800552F0
-                0x0000000080055324                D_800552F4
-                0x0000000080055328                D_800552F8
-                0x000000008005532c                master_player_perspective
-                0x0000000080055330                D_80055300
                 0x0000000080055334                D_80055304
                 0x0000000080055338                D_80055308
                 0x000000008005533c                D_8005530C
@@ -22083,10 +22058,6 @@ Linker script and memory map
                 0x000000008005b6b4                aOb_c_debug
  build/j/src/game/dyn.o(.rodata)
  .rodata        0x000000008005b6c0       0x30 build/j/src/game/dyn.o
-                0x000000008005b6cc                aMgfx
-                0x000000008005b6d4                aMgfx_1
-                0x000000008005b6dc                aMvtx
-                0x000000008005b6e4                aMvtx_0
  build/j/src/game/lvl.o(.rodata)
  .rodata        0x000000008005b6f0       0xa0 build/j/src/game/lvl.o
                 0x000000008005b6f0                aLv_c_debug
@@ -22218,7 +22189,9 @@ Linker script and memory map
                 0x000000008005da80                sc
                 0x000000008005db58                gfxClient
                 0x000000008005db70                target_for_counters_maybe
-                0x000000008005db80                dword_CODE_bss_8005DB40
+                0x000000008005db80                viModes
+                0x000000008005dc20                viModePtrs
+                0x000000008005dc28                dword_CODE_bss_8005DBE8
  build/j/src/osMapTLB.o(.bss)
  build/j/src/tlb_manage.o(.bss)
  .bss           0x000000008005dc30      0x8c0 build/j/src/tlb_manage.o
@@ -22228,6 +22201,7 @@ Linker script and memory map
                 0x000000008005e4e8                ptr_TLBallocatedblock
  build/j/src/tlb_random.o(.bss)
  build/j/src/tlb_resolve.o(.bss)
+ .bss           0x000000008005e4f0        0x0 build/j/src/tlb_resolve.o
  build/j/src/audi.o(.bss)
  .bss           0x000000008005e4f0      0xf40 build/j/src/audi.o
                 0x000000008005e4f0                dword_CODE_bss_8005E4B0
@@ -22276,9 +22250,9 @@ Linker script and memory map
                 0x000000008006081c                dword_CODE_bss_800607DC
  build/j/src/video.o(.bss)
  .bss           0x0000000080060820      0x4b0 build/j/src/video.o
-                0x0000000080060820                dword_CODE_bss_800607E0
-                0x0000000080060860                m
-                0x0000000080060864                word_CODE_bss_80060824
+                0x0000000080060820                projectionMatrixF
+                0x0000000080060860                projectionMatrix
+                0x0000000080060864                perspNorm
                 0x0000000080060868                dword_CODE_bss_80060828
                 0x00000000800608b8                off_CODE_bss_80060878
                 0x00000000800608b9                off_CODE_bss_80060879
@@ -23290,20 +23264,12 @@ Linker script and memory map
  build/j/src/game/bond.o(.bss)
  .bss           0x0000000080079980      0x510 build/j/src/game/bond.o
                 0x0000000080079980                flt_CODE_bss_80079940
-                0x0000000080079984                flt_CODE_bss_80079944
-                0x0000000080079988                flt_CODE_bss_80079948
                 0x000000008007998c                flt_CODE_bss_8007994C
                 0x0000000080079990                flt_CODE_bss_80079950
-                0x0000000080079994                flt_CODE_bss_80079954
-                0x0000000080079998                flt_CODE_bss_80079958
                 0x000000008007999c                flt_CODE_bss_8007995C
                 0x00000000800799a0                flt_CODE_bss_80079960
-                0x00000000800799a4                flt_CODE_bss_80079964
-                0x00000000800799a8                flt_CODE_bss_80079968
                 0x00000000800799ac                flt_CODE_bss_8007996C
                 0x00000000800799b0                flt_CODE_bss_80079970
-                0x00000000800799b4                flt_CODE_bss_80079974
-                0x00000000800799b8                flt_CODE_bss_80079978
                 0x00000000800799bc                flt_CODE_bss_8007997C
                 0x00000000800799c0                flt_CODE_bss_80079980
                 0x00000000800799c4                flt_CODE_bss_80079984
@@ -23383,10 +23349,7 @@ Linker script and memory map
                 0x0000000080079f00                copyof_stagenum
                 0x0000000080079f04                dword_CODE_bss_80079E94
                 0x0000000080079f08                dword_CODE_bss_80079E98
-                0x0000000080079f50                ptr_BONDdata_p1
-                0x0000000080079f54                ptr_BONDdata_p2
-                0x0000000080079f58                ptr_BONDdata_p3
-                0x0000000080079f5c                ptr_BONDdata_p4
+                0x0000000080079f50                players
                 0x0000000080079f60                player1_player_data
                 0x0000000080079fd0                player2_player_data
                 0x000000008007a040                player3_player_data
@@ -23596,16 +23559,11 @@ Linker script and memory map
                 0x0000000080088920                resource_lookup_data_array
  build/j/src/game/dyn.o(.bss)
  .bss           0x000000008008c2a0       0x30 build/j/src/game/dyn.o
-                0x000000008008c2a0                ptr_mgfx0_alloc_start
-                0x000000008008c2a4                ptr_mgfx1_alloc_start
-                0x000000008008c2a8                ptr_mgfx_end
-                0x000000008008c2ac                D_8008C23C
-                0x000000008008c2b0                ptr_mvtx0_alloc_start
-                0x000000008008c2b4                ptr_mvtx1_alloc_start
-                0x000000008008c2b8                ptr_mvtx_end
-                0x000000008008c2bc                ptr_mvtx_cur_pos
-                0x000000008008c2c0                bank_in_mgfx_alloc_table
-                0x000000008008c2c4                dword_CODE_bss_8008C254
+                0x000000008008c2a0                g_GfxBuffers
+                0x000000008008c2b0                g_VtxBuffers
+                0x000000008008c2bc                g_GfxMemPos
+                0x000000008008c2c0                g_GfxActiveBufferIndex
+                0x000000008008c2c4                g_GfxRequestedDisplayList
  build/j/src/game/lvl.o(.bss)
  .bss           0x000000008008c2d0      0x3a0 build/j/src/game/lvl.o
                 0x000000008008c2d0                ptr_jfont_DL
@@ -23738,8 +23696,8 @@ Linker script and memory map
  build/j/src/game/unk_0D1AC0.o(.bss)
  build/j/src/game/viewport.o(.bss)
  .bss           0x000000008008e380       0x10 build/j/src/game/viewport.o
-                0x000000008008e380                viewport_img_width
-                0x000000008008e384                viewport_img_height
+                0x000000008008e380                z_buffer_width
+                0x000000008008e384                z_buffer_height
  build/j/src/game/music_0D2720.o(.bss)
  build/j/src/game/spectrum.o(.bss)
  .bss           0x000000008008e390       0x40 build/j/src/game/spectrum.o
@@ -23777,6 +23735,7 @@ Linker script and memory map
                 0x000000008008e3c4                spec_PC
  .bss           0x000000008008e3d0        0x0 build/j/src/rom_header.o
  .bss           0x000000008008e3d0        0x0 build/j/src/bootcode.o
+ .bss           0x000000008008e3d0        0x0 build/j/src/tlb_hardwire.o
                 0x000000008008e3d0                _bssSegmentEnd = (ADDR (.bss) + SIZEOF (.bss))
                 0x00000000000310b0                _bssSegmentSize = SIZEOF (.bss)
                 0x0000000000c6d600                _bssSegmentRomEnd = (_bssSegmentRomStart + SIZEOF (.bss))
@@ -23828,8 +23787,7 @@ Linker script and memory map
 .cfb            0x00000000803b5000    0x4b000 load address 0x0000000000f8a2a0
  build/j/src/cfb.o(.bss)
  .bss           0x00000000803b5000    0x4b000 build/j/src/cfb.o
-                0x00000000803b5000                cfb_16_a
-                0x00000000803da800                cfb_16_b
+                0x00000000803b5000                cfb_16
                 0x0000000080400000                _cfbSegmentEnd = (ADDR (.cfb) + SIZEOF (.cfb))
                 0x0000000000fd52a0                _cfbSegmentRomEnd = (_cfbSegmentRomStart + SIZEOF (.cfb))
 
