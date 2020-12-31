@@ -473,7 +473,7 @@ loop_29:
                         video_related_3(0x20000);
                         redirect_to_ramrom_replay_and_record_handlers_if_set();
                         permit_stderr(0);
-                        temp_ret_2 = get_ptr_displaylist();
+                        temp_ret_2 = gfxGetMasterDisplayList();
                         sp1A4 = temp_ret_2;
                         if (debug_feature_flag != 0)
                         {
@@ -576,7 +576,7 @@ loop_44:
                             draw_membars(temp_s3_3);
                         }
                         allocate_something_in_mgfx(temp_s3_3);
-                        allocate_something_in_mvtx();
+                        gfxSwapBuffers();
                         video_related_8();
                         if (get_debug_taskgrab_val() != 0)
                         {
@@ -967,7 +967,7 @@ glabel mainloop
 /* 0070F4 700064F4 00000000 */   nop   
 /* 0070F8 700064F8 0C000262 */  jal   permit_stderr
 /* 0070FC 700064FC 00002025 */   move  $a0, $zero
-/* 007100 70006500 0FC2F59D */  jal   get_ptr_displaylist
+/* 007100 70006500 0FC2F59D */  jal   gfxGetMasterDisplayList
 /* 007104 70006504 00000000 */   nop   
 /* 007108 70006508 3C0A8002 */  lui   $t2, %hi(debug_feature_flag) 
 /* 00710C 7000650C 8D4A4300 */  lw    $t2, %lo(debug_feature_flag)($t2)
@@ -1153,7 +1153,7 @@ glabel mainloop
 .L700067C0:
 /* 0073C0 700067C0 0FC2F5A7 */  jal   allocate_something_in_mgfx
 /* 0073C4 700067C4 02602025 */   move  $a0, $s3
-/* 0073C8 700067C8 0FC2F5CE */  jal   allocate_something_in_mvtx
+/* 0073C8 700067C8 0FC2F5CE */  jal   gfxSwapBuffers
 /* 0073CC 700067CC 00000000 */   nop   
 /* 0073D0 700067D0 0C000CA6 */  jal   video_related_8
 /* 0073D4 700067D4 00000000 */   nop   
