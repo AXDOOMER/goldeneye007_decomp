@@ -14,13 +14,19 @@ sudo apt install binutils-mips-linux-gnu make
 ```
 Make sure you cloned the repo with git otherwise it won't build!!
 
-Place a USA rom in project root named 
+Place an unmodified USA rom in project root named 
 ```
 baserom.u.z64
 ```
 followed by
 ```
 ./extract_baserom.u.sh && make
+```
+or
+``` bash
+./extract_baserom.u.sh /path_to/rom.n64 && make
+Example (Rom located on EverDrive):
+    ./extract_baserom.u.sh /mnt/e/Goldeneye.n64 && make
 ```
 For J support also place a baserom.j.z64 in root and run:
 ```
