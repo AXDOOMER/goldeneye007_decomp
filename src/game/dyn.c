@@ -288,13 +288,18 @@ s32 gfxGetFreeGfx(Gfx *ptr) {
     return (g_GfxBuffers[g_GfxActiveBufferIndex + 1] - ptr);
 }
 
-u32 gfxGetFreeVtx(void) {
-	return g_VtxBuffers[g_GfxActiveBufferIndex + 1] - g_GfxMemPos;
+s32 gfxGetFreeVtx(void) {
+	return (g_VtxBuffers[g_GfxActiveBufferIndex + 1] - g_GfxMemPos);
 }
 
 #ifdef NONMATCHING
-void compute_membar_display_string(void) {
-
+// $f2 is used for 0.0f instead of $f0
+f32 compute_membar_display_string(const char* arg0, f32 arg1, f32 arg2) {
+    strlen(arg0);
+    arg1 /= arg2;
+    if (arg1 < 0.0f) {
+        return 0.0f;
+    }
 }
 #else
 GLOBAL_ASM(
