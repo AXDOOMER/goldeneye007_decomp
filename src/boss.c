@@ -401,7 +401,7 @@ loop_18:
         }
     }
     init_player_data_ptrs_construct_viewports(phi_s1);
-    set_vtx_gfx_mem_alloc();
+    gfxInitMemory();
     test_controller_presence();
     stage_load(current_stage_num);
     viInitBuffers();
@@ -872,7 +872,7 @@ glabel mainloop
 .L70006398:
 /* 006F98 70006398 0FC268E3 */  jal   init_player_data_ptrs_construct_viewports
 /* 006F9C 7000639C 02202025 */   move  $a0, $s1
-/* 006FA0 700063A0 0FC2F523 */  jal   set_vtx_gfx_mem_alloc
+/* 006FA0 700063A0 0FC2F523 */  jal   gfxInitMemory
 /* 006FA4 700063A4 00000000 */   nop   
 /* 006FA8 700063A8 0C002DAB */  jal   test_controller_presence
 /* 006FAC 700063AC 00000000 */   nop   

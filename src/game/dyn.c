@@ -6,8 +6,8 @@
  *
  * There are two pools, "gfx" and "vtx", which are used to store different data.
  *
- * The gfx pool (g_GfxBuffers) is sized based on the stage's -mgfx and -mgfxtra
- * arguments. It contains only the master display list's GBI bytecode.
+ * The gfx pool (g_GfxBuffers) is sized based on the stage's -mgfx
+ * argument. It contains only the master display list's GBI bytecode.
  * The master gdl is passed through all rendering functions in the game engine,
  * where each appends to the display list.
  *
@@ -24,216 +24,57 @@
  * marker for the end of the second element's allocation.
  */
 
-// bss
-Gfx *g_GfxBuffers[3];
+u8 *g_GfxBuffers[3];
 u8 *g_VtxBuffers[3];
 u8 *g_GfxMemPos;
 u8 g_GfxActiveBufferIndex;
 s32 g_GfxRequestedDisplayList;
 
-// data
-//D:800482E0
-s32 D_800482E0 = 0;
-//D:800482E4
-s32 D_800482E4[] = {0x10000, 0x18000, 0x20000};
-//D:800482F0
-s32 D_800482F0[] = {0x28000, 0x10000, 0x18000, 0x20000, 0x28000};
+s32 g_GfxSizesByPlayerCount[] = {0x00000, 0x10000, 0x18000, 0x20000};
+s32 g_VtxSizesByPlayerCount[] = {0x28000, 0x10000, 0x18000, 0x20000};
+
+s32 D_80048300 = 0x28000;
 
 char membars_string1[] = ">>>>>>>>>>>>>>>>>>>>>>>>>";
 char membars_string2[] = "=========================";
 char membars_string3[] = "-------------------------";
 
 void dynInitDebugNoticeList(void) {
-    debCheckAddDebugNoticeListEntry(&D_800482E0, "dyn_c_debug");
+    debCheckAddDebugNoticeListEntry(&g_GfxSizesByPlayerCount, "dyn_c_debug");
 }
 
-#ifdef NONMATCHING
-void set_vtx_gfx_mem_alloc(void) {
-    s32 sp18;
-    ? temp_ret;
-
-    if (check_token(1, "-mgfx") != 0)
-    {
-        dyn_c_debug_notice_list_entry[getPlayerCount()] = strtol(check_token(1, "-mgfx"), 0, 0) << 0xa;
+const char *check_token(s32 arg0, const char *arg1);
+long int strtol(const char *str, char **endptr, int base);
+u8 *mempAllocBytesInBank(u32 bytes, u8 bank);
+void gfxInitMemory(void) {
+    if (check_token(1, "-mgfx")) {
+        g_GfxSizesByPlayerCount[getPlayerCount()] = strtol(check_token(1, "-mgfx"), NULL, 0) * 1024;
+    }
+    if (check_token(1, "-mvtx")) {
+        g_VtxSizesByPlayerCount[getPlayerCount()] = strtol(check_token(1, "-mvtx"), NULL, 0) * 1024;
     }
 
-    if (check_token(1, "-mvtx") != 0)
-    {
-        D_800482F0[getPlayerCount()] = strtol(check_token(1, "-mvtx"), 0, 0) << 0xa;
-    }
+    g_GfxBuffers[0] = mempAllocBytesInBank(g_GfxSizesByPlayerCount[getPlayerCount()] * 2, 4);
+    g_GfxBuffers[1] = (g_GfxBuffers[0] + g_GfxSizesByPlayerCount[getPlayerCount()]);
+    g_GfxBuffers[2] = (g_GfxBuffers[1] + g_GfxSizesByPlayerCount[getPlayerCount()]);
 
-    mempAllocBytesInBank(dyn_c_debug_notice_list_entry[sVar1] << 1, 4);
-    g_GfxBuffers.unk4 = (s32) ((0x80050000 + (getPlayerCount() * 4))->unk-7D20 + g_GfxBuffers);
-    g_GfxBuffers.unk8 = (s32) ((0x80050000 + (getPlayerCount() * 4))->unk-7D20 + g_GfxBuffers.unk4);
-    g_VtxBuffers = mempAllocBytesInBank(((0x80050000 + (getPlayerCount() * 4))->unk-7D10 * 2), 4);
-    g_VtxBuffers.unk4 = (s32) ((0x80050000 + (getPlayerCount() * 4))->unk-7D10 + g_VtxBuffers);
-    temp_ret = getPlayerCount();
-    g_VtxBuffers.unk8 = (s32) ((0x80050000 + (temp_ret * 4))->unk-7D10 + g_VtxBuffers.unk4);
-    g_GfxActiveBufferIndex = (u8)0;
-    g_GfxRequestedDisplayList = 0;
-    (void *)0x80090000->unk-3DB4 = (s32) g_VtxBuffers;
-    return temp_ret;
+    g_VtxBuffers[0] = mempAllocBytesInBank(g_VtxSizesByPlayerCount[getPlayerCount()] * 2, 4);
+    g_VtxBuffers[1] = (g_VtxBuffers[0] + g_VtxSizesByPlayerCount[getPlayerCount()]);
+    g_VtxBuffers[2] = (g_VtxBuffers[1] + g_VtxSizesByPlayerCount[getPlayerCount()]);
+
+    g_GfxActiveBufferIndex = 0;
+    g_GfxRequestedDisplayList = FALSE;
+    g_GfxMemPos = g_VtxBuffers[0];
 }
-#else
-GLOBAL_ASM(
-.rdata
-/*D:8005B68C*/
-glabel aMgfx
-/*"-mgfx"*/
-.word 0x2D6D6766, 0x78000000
-
-/*D:8005B694*/
-glabel aMgfx_1
- /*"-mgfx"*/
-.word 0x2D6D6766, 0x78000000
-
-/*D:8005B69C*/
-glabel aMvtx
- /*"-mvtx"*/
-.word 0x2D6D7674, 0x78000000
-
-/*D:8005B6A4*/
-glabel aMvtx_0
- /*"-mvtx"*/
-.word 0x2D6D7674, 0x78000000
-
-.text
-glabel set_vtx_gfx_mem_alloc
-/* 0F1FBC 7F0BD48C 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0F1FC0 7F0BD490 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F1FC4 7F0BD494 3C058006 */  lui   $a1, %hi(aMgfx)
-/* 0F1FC8 7F0BD498 24A5B68C */  addiu $a1, %lo(aMgfx) # addiu $a1, $a1, -0x4974
-/* 0F1FCC 7F0BD49C 0C0029A8 */  jal   check_token
-/* 0F1FD0 7F0BD4A0 24040001 */   li    $a0, 1
-/* 0F1FD4 7F0BD4A4 10400012 */  beqz  $v0, .L7F0BD4F0
-/* 0F1FD8 7F0BD4A8 00000000 */   nop   
-/* 0F1FDC 7F0BD4AC 0FC26919 */  jal   getPlayerCount
-/* 0F1FE0 7F0BD4B0 00000000 */   nop   
-/* 0F1FE4 7F0BD4B4 3C058006 */  lui   $a1, %hi(aMgfx_1)
-/* 0F1FE8 7F0BD4B8 24A5B694 */  addiu $a1, %lo(aMgfx_1) # addiu $a1, $a1, -0x496c
-/* 0F1FEC 7F0BD4BC AFA20018 */  sw    $v0, 0x18($sp)
-/* 0F1FF0 7F0BD4C0 0C0029A8 */  jal   check_token
-/* 0F1FF4 7F0BD4C4 24040001 */   li    $a0, 1
-/* 0F1FF8 7F0BD4C8 00402025 */  move  $a0, $v0
-/* 0F1FFC 7F0BD4CC 00002825 */  move  $a1, $zero
-/* 0F2000 7F0BD4D0 0C002A78 */  jal   strtol
-/* 0F2004 7F0BD4D4 00003025 */   move  $a2, $zero
-/* 0F2008 7F0BD4D8 8FAF0018 */  lw    $t7, 0x18($sp)
-/* 0F200C 7F0BD4DC 3C018005 */  lui   $at, %hi(D_800482E0)
-/* 0F2010 7F0BD4E0 00027280 */  sll   $t6, $v0, 0xa
-/* 0F2014 7F0BD4E4 000FC080 */  sll   $t8, $t7, 2
-/* 0F2018 7F0BD4E8 00380821 */  addu  $at, $at, $t8
-/* 0F201C 7F0BD4EC AC2E82E0 */  sw    $t6, %lo(D_800482E0)($at)
-.L7F0BD4F0:
-/* 0F2020 7F0BD4F0 3C058006 */  lui   $a1, %hi(aMvtx)
-/* 0F2024 7F0BD4F4 24A5B69C */  addiu $a1, %lo(aMvtx) # addiu $a1, $a1, -0x4964
-/* 0F2028 7F0BD4F8 0C0029A8 */  jal   check_token
-/* 0F202C 7F0BD4FC 24040001 */   li    $a0, 1
-/* 0F2030 7F0BD500 10400012 */  beqz  $v0, .L7F0BD54C
-/* 0F2034 7F0BD504 00000000 */   nop   
-/* 0F2038 7F0BD508 0FC26919 */  jal   getPlayerCount
-/* 0F203C 7F0BD50C 00000000 */   nop   
-/* 0F2040 7F0BD510 3C058006 */  lui   $a1, %hi(aMvtx_0)
-/* 0F2044 7F0BD514 24A5B6A4 */  addiu $a1, %lo(aMvtx_0) # addiu $a1, $a1, -0x495c
-/* 0F2048 7F0BD518 AFA20018 */  sw    $v0, 0x18($sp)
-/* 0F204C 7F0BD51C 0C0029A8 */  jal   check_token
-/* 0F2050 7F0BD520 24040001 */   li    $a0, 1
-/* 0F2054 7F0BD524 00402025 */  move  $a0, $v0
-/* 0F2058 7F0BD528 00002825 */  move  $a1, $zero
-/* 0F205C 7F0BD52C 0C002A78 */  jal   strtol
-/* 0F2060 7F0BD530 00003025 */   move  $a2, $zero
-/* 0F2064 7F0BD534 8FA80018 */  lw    $t0, 0x18($sp)
-/* 0F2068 7F0BD538 3C018005 */  lui   $at, %hi(D_800482F0)
-/* 0F206C 7F0BD53C 0002CA80 */  sll   $t9, $v0, 0xa
-/* 0F2070 7F0BD540 00084880 */  sll   $t1, $t0, 2
-/* 0F2074 7F0BD544 00290821 */  addu  $at, $at, $t1
-/* 0F2078 7F0BD548 AC3982F0 */  sw    $t9, %lo(D_800482F0)($at)
-.L7F0BD54C:
-/* 0F207C 7F0BD54C 0FC26919 */  jal   getPlayerCount
-/* 0F2080 7F0BD550 00000000 */   nop   
-/* 0F2084 7F0BD554 00025080 */  sll   $t2, $v0, 2
-/* 0F2088 7F0BD558 3C048005 */  lui   $a0, %hi(D_800482E0)
-/* 0F208C 7F0BD55C 008A2021 */  addu  $a0, $a0, $t2
-/* 0F2090 7F0BD560 8C8482E0 */  lw    $a0, %lo(D_800482E0)($a0)
-/* 0F2094 7F0BD564 24050004 */  li    $a1, 4
-/* 0F2098 7F0BD568 00045840 */  sll   $t3, $a0, 1
-/* 0F209C 7F0BD56C 0C0025C8 */  jal   mempAllocBytesInBank
-/* 0F20A0 7F0BD570 01602025 */   move  $a0, $t3
-/* 0F20A4 7F0BD574 3C018009 */  lui   $at, %hi(g_GfxBuffers)
-/* 0F20A8 7F0BD578 0FC26919 */  jal   getPlayerCount
-/* 0F20AC 7F0BD57C AC22C230 */   sw    $v0, %lo(g_GfxBuffers)($at)
-/* 0F20B0 7F0BD580 3C038009 */  lui   $v1, %hi(g_GfxBuffers)
-/* 0F20B4 7F0BD584 00026080 */  sll   $t4, $v0, 2
-/* 0F20B8 7F0BD588 3C0D8005 */  lui   $t5, %hi(D_800482E0)
-/* 0F20BC 7F0BD58C 01AC6821 */  addu  $t5, $t5, $t4
-/* 0F20C0 7F0BD590 2463C230 */  addiu $v1, %lo(g_GfxBuffers) # addiu $v1, $v1, -0x3dd0
-/* 0F20C4 7F0BD594 8C6F0000 */  lw    $t7, ($v1)
-/* 0F20C8 7F0BD598 8DAD82E0 */  lw    $t5, %lo(D_800482E0)($t5)
-/* 0F20CC 7F0BD59C 01AF7021 */  addu  $t6, $t5, $t7
-/* 0F20D0 7F0BD5A0 0FC26919 */  jal   getPlayerCount
-/* 0F20D4 7F0BD5A4 AC6E0004 */   sw    $t6, 4($v1)
-/* 0F20D8 7F0BD5A8 3C038009 */  lui   $v1, %hi(g_GfxBuffers)
-/* 0F20DC 7F0BD5AC 0002C080 */  sll   $t8, $v0, 2
-/* 0F20E0 7F0BD5B0 3C088005 */  lui   $t0, %hi(D_800482E0)
-/* 0F20E4 7F0BD5B4 01184021 */  addu  $t0, $t0, $t8
-/* 0F20E8 7F0BD5B8 2463C230 */  addiu $v1, %lo(g_GfxBuffers) # addiu $v1, $v1, -0x3dd0
-/* 0F20EC 7F0BD5BC 8C790004 */  lw    $t9, 4($v1)
-/* 0F20F0 7F0BD5C0 8D0882E0 */  lw    $t0, %lo(D_800482E0)($t0)
-/* 0F20F4 7F0BD5C4 01194821 */  addu  $t1, $t0, $t9
-/* 0F20F8 7F0BD5C8 0FC26919 */  jal   getPlayerCount
-/* 0F20FC 7F0BD5CC AC690008 */   sw    $t1, 8($v1)
-/* 0F2100 7F0BD5D0 00025080 */  sll   $t2, $v0, 2
-/* 0F2104 7F0BD5D4 3C048005 */  lui   $a0, %hi(D_800482F0)
-/* 0F2108 7F0BD5D8 008A2021 */  addu  $a0, $a0, $t2
-/* 0F210C 7F0BD5DC 8C8482F0 */  lw    $a0, %lo(D_800482F0)($a0)
-/* 0F2110 7F0BD5E0 24050004 */  li    $a1, 4
-/* 0F2114 7F0BD5E4 00045840 */  sll   $t3, $a0, 1
-/* 0F2118 7F0BD5E8 0C0025C8 */  jal   mempAllocBytesInBank
-/* 0F211C 7F0BD5EC 01602025 */   move  $a0, $t3
-/* 0F2120 7F0BD5F0 3C038009 */  lui   $v1, %hi(g_VtxBuffers)
-/* 0F2124 7F0BD5F4 2463C240 */  addiu $v1, %lo(g_VtxBuffers) # addiu $v1, $v1, -0x3dc0
-/* 0F2128 7F0BD5F8 0FC26919 */  jal   getPlayerCount
-/* 0F212C 7F0BD5FC AC620000 */   sw    $v0, ($v1)
-/* 0F2130 7F0BD600 3C038009 */  lui   $v1, %hi(g_VtxBuffers)
-/* 0F2134 7F0BD604 00026080 */  sll   $t4, $v0, 2
-/* 0F2138 7F0BD608 3C0D8005 */  lui   $t5, %hi(D_800482F0)
-/* 0F213C 7F0BD60C 01AC6821 */  addu  $t5, $t5, $t4
-/* 0F2140 7F0BD610 2463C240 */  addiu $v1, %lo(g_VtxBuffers) # addiu $v1, $v1, -0x3dc0
-/* 0F2144 7F0BD614 8C6F0000 */  lw    $t7, ($v1)
-/* 0F2148 7F0BD618 8DAD82F0 */  lw    $t5, %lo(D_800482F0)($t5)
-/* 0F214C 7F0BD61C 01AF7021 */  addu  $t6, $t5, $t7
-/* 0F2150 7F0BD620 0FC26919 */  jal   getPlayerCount
-/* 0F2154 7F0BD624 AC6E0004 */   sw    $t6, 4($v1)
-/* 0F2158 7F0BD628 3C038009 */  lui   $v1, %hi(g_VtxBuffers)
-/* 0F215C 7F0BD62C 0002C080 */  sll   $t8, $v0, 2
-/* 0F2160 7F0BD630 3C088005 */  lui   $t0, %hi(D_800482F0)
-/* 0F2164 7F0BD634 01184021 */  addu  $t0, $t0, $t8
-/* 0F2168 7F0BD638 2463C240 */  addiu $v1, %lo(g_VtxBuffers) # addiu $v1, $v1, -0x3dc0
-/* 0F216C 7F0BD63C 8C790004 */  lw    $t9, 4($v1)
-/* 0F2170 7F0BD640 8D0882F0 */  lw    $t0, %lo(D_800482F0)($t0)
-/* 0F2174 7F0BD644 3C018009 */  lui   $at, %hi(g_GfxActiveBufferIndex)
-/* 0F2178 7F0BD648 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F217C 7F0BD64C 01194821 */  addu  $t1, $t0, $t9
-/* 0F2180 7F0BD650 AC690008 */  sw    $t1, 8($v1)
-/* 0F2184 7F0BD654 A020C250 */  sb    $zero, %lo(g_GfxActiveBufferIndex)($at)
-/* 0F2188 7F0BD658 3C018009 */  lui   $at, %hi(g_GfxRequestedDisplayList)
-/* 0F218C 7F0BD65C AC20C254 */  sw    $zero, %lo(g_GfxRequestedDisplayList)($at)
-/* 0F2190 7F0BD660 8C6A0000 */  lw    $t2, ($v1)
-/* 0F2194 7F0BD664 3C018009 */  lui   $at, %hi(g_GfxMemPos)
-/* 0F2198 7F0BD668 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0F219C 7F0BD66C 03E00008 */  jr    $ra
-/* 0F21A0 7F0BD670 AC2AC24C */   sw    $t2, %lo(g_GfxMemPos)($at)
-)
-#endif
 
 Gfx *gfxGetMasterDisplayList(void) {
     g_GfxRequestedDisplayList = TRUE;
 
-    return g_GfxBuffers[g_GfxActiveBufferIndex];
+    return (Gfx*)g_GfxBuffers[g_GfxActiveBufferIndex];
 }
 
 s32 allocate_something_in_mgfx(Gfx *ptr) {
-    return (g_GfxBuffers[g_GfxActiveBufferIndex + 1] - ptr);
+    return (Gfx*)g_GfxBuffers[g_GfxActiveBufferIndex + 1] - ptr;
 }
 
 void/*Vtx?*/ *sub_GAME_7F0BD6C4(s32 count) {
@@ -276,11 +117,11 @@ void removed_debug_routine(s32 arg0) {
 }
 
 s32 gfxGetFreeGfx(Gfx *ptr) {
-    return (g_GfxBuffers[g_GfxActiveBufferIndex + 1] - ptr);
+    return (Gfx*)g_GfxBuffers[g_GfxActiveBufferIndex + 1] - ptr;
 }
 
 s32 gfxGetFreeVtx(void) {
-	return (g_VtxBuffers[g_GfxActiveBufferIndex + 1] - g_GfxMemPos);
+	return g_VtxBuffers[g_GfxActiveBufferIndex + 1] - g_GfxMemPos;
 }
 
 #ifdef NONMATCHING
@@ -319,6 +160,6 @@ glabel compute_membar_display_string
 
 f32 compute_membar_display_string(const char* arg0, f32 arg1, f32 arg2);
 void draw_membars(Gfx *ptr) {
-    compute_membar_display_string(membars_string2, (g_GfxBuffers[g_GfxActiveBufferIndex + 1] - ptr), (g_GfxBuffers[g_GfxActiveBufferIndex + 1] - g_GfxBuffers[g_GfxActiveBufferIndex]));
+    compute_membar_display_string(membars_string2, ((Gfx*)g_GfxBuffers[g_GfxActiveBufferIndex + 1] - ptr), ((Gfx*)g_GfxBuffers[g_GfxActiveBufferIndex + 1] - (Gfx*)g_GfxBuffers[g_GfxActiveBufferIndex]));
     compute_membar_display_string(membars_string2, (g_VtxBuffers[g_GfxActiveBufferIndex + 1] - g_GfxMemPos), (g_VtxBuffers[g_GfxActiveBufferIndex + 1] - g_VtxBuffers[g_GfxActiveBufferIndex]));
 }
