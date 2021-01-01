@@ -270,7 +270,7 @@ int main(int argc, char **argv)
 	if(last_modified_file_arg_active)
 	{
 		fprintf(html_out, "<text x=\"363\" y=\"1520\">Last modified file:</text>\n");
-		fprintf(html_out, "<text x=\"1180\" y=\"1520\">%s</text>\n", argv[14]);
+		fprintf(html_out, "<text x=\"1180\" y=\"1520\">%s</text>\n", argv[LAST_MODIFIED_FILE]);
 	}
 	else
 	{
@@ -298,7 +298,7 @@ int main(int argc, char **argv)
 
 	if(verbosity_level != LOG_MIN)
 	{
-		printf("\n  Successfully written stats to %s\n\n", argv[13]);
+		printf("\n  Successfully written stats to %s\n\n", argv[HTML_OUTPUT]);
 	}
 	printf("    %s\n", missions[cur_mis].out_name);
 	for(tmp_obj = OBJ_A; tmp_obj < cur_mis_objs_max; tmp_obj++)
