@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "game/intro_logos.h"
+#include "video.h"
 
 // bss
 //CODE.bss:80069550
@@ -430,68 +431,18 @@ glabel insert_sniper_sight_eye_intro
 )
 #endif
 
+Gfx *sub_GAME_7F01C1A4(Gfx *gdl);
+Gfx *sub_GAME_7F007E70(Gfx *gdl, u32 a) {
+  gdl = sub_GAME_7F01C1A4(gdl);
 
+  gDPSetRenderMode(gdl++, G_RM_CLD_SURF, G_RM_CLD_SURF2);
+  gDPSetCombineMode(gdl++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+  gDPSetPrimColor(gdl++, 0, 0, 0x00, 0x00, 0x00, a);
+  gDPSetColorDither(gdl++, G_CD_MAGICSQ);
+  gDPFillRectangle(gdl++, 0, 0, viGetX(), viGetY());
 
-#ifdef NONMATCHING
-void sub_GAME_7F007E70(void) {
-
+  return gdl;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F007E70
-/* 03C9A0 7F007E70 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 03C9A4 7F007E74 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 03C9A8 7F007E78 0FC07069 */  jal   sub_GAME_7F01C1A4
-/* 03C9AC 7F007E7C AFA50034 */   sw    $a1, 0x34($sp)
-/* 03C9B0 7F007E80 3C0EB900 */  lui   $t6, (0xB900031D >> 16) # lui $t6, 0xb900
-/* 03C9B4 7F007E84 3C0F0050 */  lui   $t7, (0x00504340 >> 16) # lui $t7, 0x50
-/* 03C9B8 7F007E88 3C18FCFF */  lui   $t8, (0xFCFFFFFF >> 16) # lui $t8, 0xfcff
-/* 03C9BC 7F007E8C 3C19FFFD */  lui   $t9, (0xFFFDF6FB >> 16) # lui $t9, 0xfffd
-/* 03C9C0 7F007E90 35EF4340 */  ori   $t7, (0x00504340 & 0xFFFF) # ori $t7, $t7, 0x4340
-/* 03C9C4 7F007E94 35CE031D */  ori   $t6, (0xB900031D & 0xFFFF) # ori $t6, $t6, 0x31d
-/* 03C9C8 7F007E98 3739F6FB */  ori   $t9, (0xFFFDF6FB & 0xFFFF) # ori $t9, $t9, 0xf6fb
-/* 03C9CC 7F007E9C 3718FFFF */  ori   $t8, (0xFCFFFFFF & 0xFFFF) # ori $t8, $t8, 0xffff
-/* 03C9D0 7F007EA0 3C08FA00 */  lui   $t0, 0xfa00
-/* 03C9D4 7F007EA4 AC4E0000 */  sw    $t6, ($v0)
-/* 03C9D8 7F007EA8 AC4F0004 */  sw    $t7, 4($v0)
-/* 03C9DC 7F007EAC AC580008 */  sw    $t8, 8($v0)
-/* 03C9E0 7F007EB0 AC59000C */  sw    $t9, 0xc($v0)
-/* 03C9E4 7F007EB4 AC480010 */  sw    $t0, 0x10($v0)
-/* 03C9E8 7F007EB8 8FA90034 */  lw    $t1, 0x34($sp)
-/* 03C9EC 7F007EBC 3C0BBA00 */  lui   $t3, (0xBA000602 >> 16) # lui $t3, 0xba00
-/* 03C9F0 7F007EC0 356B0602 */  ori   $t3, (0xBA000602 & 0xFFFF) # ori $t3, $t3, 0x602
-/* 03C9F4 7F007EC4 312A00FF */  andi  $t2, $t1, 0xff
-/* 03C9F8 7F007EC8 AC4A0014 */  sw    $t2, 0x14($v0)
-/* 03C9FC 7F007ECC AC4B0018 */  sw    $t3, 0x18($v0)
-/* 03CA00 7F007ED0 AC40001C */  sw    $zero, 0x1c($v0)
-/* 03CA04 7F007ED4 244C0020 */  addiu $t4, $v0, 0x20
-/* 03CA08 7F007ED8 244D0028 */  addiu $t5, $v0, 0x28
-/* 03CA0C 7F007EDC AFAD0030 */  sw    $t5, 0x30($sp)
-/* 03CA10 7F007EE0 0C001107 */  jal   viGetX
-/* 03CA14 7F007EE4 AFAC001C */   sw    $t4, 0x1c($sp)
-/* 03CA18 7F007EE8 0C00110B */  jal   viGetY
-/* 03CA1C 7F007EEC A7A2001A */   sh    $v0, 0x1a($sp)
-/* 03CA20 7F007EF0 87B9001A */  lh    $t9, 0x1a($sp)
-/* 03CA24 7F007EF4 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 03CA28 7F007EF8 304E03FF */  andi  $t6, $v0, 0x3ff
-/* 03CA2C 7F007EFC 000E7880 */  sll   $t7, $t6, 2
-/* 03CA30 7F007F00 3C01F600 */  lui   $at, 0xf600
-/* 03CA34 7F007F04 332803FF */  andi  $t0, $t9, 0x3ff
-/* 03CA38 7F007F08 00084B80 */  sll   $t1, $t0, 0xe
-/* 03CA3C 7F007F0C 01E1C025 */  or    $t8, $t7, $at
-/* 03CA40 7F007F10 03095025 */  or    $t2, $t8, $t1
-/* 03CA44 7F007F14 AC6A0000 */  sw    $t2, ($v1)
-/* 03CA48 7F007F18 AC600004 */  sw    $zero, 4($v1)
-/* 03CA4C 7F007F1C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 03CA50 7F007F20 8FA20030 */  lw    $v0, 0x30($sp)
-/* 03CA54 7F007F24 27BD0030 */  addiu $sp, $sp, 0x30
-/* 03CA58 7F007F28 03E00008 */  jr    $ra
-/* 03CA5C 7F007F2C 00000000 */   nop   
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F007F30(void) {
