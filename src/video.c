@@ -1091,10 +1091,6 @@ Gfx *viFillScreen(Gfx *gdl) {
     return gdl;
 }
 
-s16 viGetX(void);
-s16 viGetY(void);
-s16 viGetViewTop(void);
-s16 viGetViewHeight(void);
 Gfx *setupscreensfornumplayers(Gfx *gdl) {
     gDPSetCycleType(gdl++, G_CYC_FILL);
     gDPSetScissor(gdl++, G_SC_NON_INTERLACE, 0, 0, viGetX(), viGetY());

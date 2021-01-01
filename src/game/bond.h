@@ -923,8 +923,8 @@ struct player
   s32 ammo_total_mp_token;
   s32 bloodcnt;
   s32 field_11AC;
-  s32* field_11B0;
-  s32 field_11B4;
+  u8* field_11B0[2];
+  //s32 field_11B4;
   s32 field_11B8;
   f32 zoomintime;
   f32 zoomintimemax;

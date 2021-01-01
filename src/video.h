@@ -25,8 +25,12 @@ struct video_settings {
     u8* framebuf;
 };
 
-s16 viGetX();
-s16 viGetY();
+s16 viGetX(void);
+s16 viGetY(void);
+s16 viGetViewLeft(void);
+s16 viGetViewTop(void);
+s16 viGetViewWidth(void);
+s16 viGetViewHeight(void);
 void viSetFovY(f32 fovy);
 void viSetAspect(f32 aspect);
 void viSetZRange(f32 near, f32 far);
