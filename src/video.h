@@ -31,6 +31,7 @@ s16 viGetViewLeft(void);
 s16 viGetViewTop(void);
 s16 viGetViewWidth(void);
 s16 viGetViewHeight(void);
+u8 *viGetFrameBuf2(void);
 void viSetFovY(f32 fovy);
 void viSetAspect(f32 aspect);
 void viSetZRange(f32 near, f32 far);

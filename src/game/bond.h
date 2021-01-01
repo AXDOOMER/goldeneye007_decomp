@@ -921,10 +921,9 @@ struct player
   s32 ammo_total_unknown2;
   s32 ammo_total_tank;
   s32 ammo_total_mp_token;
-  s32 bloodcnt;
-  s32 field_11AC;
-  u8* field_11B0[2];
-  //s32 field_11B4;
+  u8 *field_11A8;
+  u8 *field_11AC;
+  u8 *field_11B0[2];
   s32 field_11B8;
   f32 zoomintime;
   f32 zoomintimemax;
