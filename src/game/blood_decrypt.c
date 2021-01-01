@@ -137,8 +137,12 @@ glabel decrypt_bleeding_animation_data
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F01CC94(u8*, s32, u8*) {
-
+// Uses sltu instead of slt for comparison
+void sub_GAME_7F01CC94(u8* arg0, u16 arg1, u8* arg2) {
+    while (arg1-- != 0) {
+        *arg2++ = (arg0[0] & 0xF0) | (arg0[1] >> 4);
+        arg0 += 2;
+    }
 }
 #else
 GLOBAL_ASM(
