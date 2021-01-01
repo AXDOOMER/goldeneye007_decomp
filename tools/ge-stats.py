@@ -167,7 +167,7 @@ def do_stats(map_file, analyse_folders):
 
     return segments
 
-def generate_report(segments, files_completed, last_modified_file):
+def generate_report(segments, files_completed, last_modified_file, Ver):
     printstring = "./tools/report/report "
 
     totals = {}
@@ -181,7 +181,12 @@ def generate_report(segments, files_completed, last_modified_file):
 
     printstring = printstring + str(totals['done']) + ' ' + str(totals['total']) + ' '
     printstring = printstring + str(files_completed['completed']) + ' ' + str(files_completed['total']) + ' '
-    printstring = printstring + './tools/report/index.html ' + last_modified_file + ' 0'
+    if Ver.upper() in ("US"):
+        printstring = printstring + './tools/report/index.html ' + last_modified_file + ' 0'
+    elif Ver.upper() in ("JP"):
+        printstring = printstring + './tools/report/JPN.htm ' + last_modified_file + ' 0'
+    else:
+        printstring = printstring + './tools/report/index.html ' + last_modified_file + ' 0'
     subprocess.Popen(printstring.split()) 
 
 def print_stats(version, segments, files_completed, last_modified_file):
@@ -252,7 +257,7 @@ def main():
     print_stats(version, segments, files_completed, last_modified_file)
 
     if run_report:
-        generate_report(segments, files_completed, last_modified_file)
+        generate_report(segments, files_completed, last_modified_file, version)
 
 if __name__ == '__main__':
     main()

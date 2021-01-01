@@ -14,6 +14,27 @@
  *   - 
  */
 
+#define VIDEO_MSG       666
+#define RSP_DONE_MSG    667
+#define RDP_DONE_MSG    668
+#define PRE_NMI_MSG     669
+
+
+#define OS_SC_DP                0x0001
+#define OS_SC_SP                0x0002
+#define OS_SC_YIELD             0x0010
+#define OS_SC_YIELDED           0x0020
+
+
+#define OS_SC_XBUS      (OS_SC_SP | OS_SC_DP)
+#define OS_SC_DRAM      (OS_SC_SP | OS_SC_DP | OS_SC_DRAM_DLIST)
+#define OS_SC_DP_XBUS   (OS_SC_SP)
+#define OS_SC_DP_DRAM   (OS_SC_SP | OS_SC_DRAM_DLIST)
+#define OS_SC_SP_XBUS   (OS_SC_DP)
+#define OS_SC_SP_DRAM   (OS_SC_DP | OS_SC_DRAM_DLIST)
+
+
+
 u32 stderr_unused = 0;
 u32 stderr_enabled = 0;
 u32 stderr_active = 0;
@@ -1236,156 +1257,97 @@ void __scYield(OSSched *sc)
  *	70001704	2,6,7
  *	70001758	default; 1,4,5
  */
-#ifdef NONMATCHING
-void __scSchedule(void) {
+s32 __scSchedule(OSSched *sc, OSScTask **sp, OSScTask **dp, s32 availRCP) 
+{
+    s32 avail = availRCP;
+    OSScTask *gfx = sc->gfxListHead;
+    OSScTask *audio = sc->audioListHead;
+
+    if (sc->doAudio && (avail & OS_SC_SP))
+    {
+        if (gfx && (gfx->flags & OS_SC_PARALLEL_TASK))
+        {
+            *sp = gfx;
+            avail &= ~OS_SC_SP;
+        } else {
+            *sp = audio;
+            avail &= ~OS_SC_SP;
+            sc->doAudio = 0;
+            sc->audioListHead = sc->audioListHead->next;
+            if (sc->audioListHead == NULL)
+                sc->audioListTail = NULL; 
+        }        
+    } else {            
+        if (__scTaskReady(gfx))
+        {
+            switch (gfx->flags & OS_SC_TYPE_MASK)
+            {
+              case (OS_SC_XBUS):
+                  if (gfx->state & OS_SC_YIELDED)
+                  {
+                      if (avail & OS_SC_SP)
+                      {
+                          *sp = gfx;
+                          avail &= ~OS_SC_SP;
+                      
+                          if (gfx->state & OS_SC_DP)
+                          { 
+                              *dp = gfx;
+                              avail &= ~OS_SC_DP;
+
+                              if (avail & OS_SC_DP == 0)
+                                  assert(sc->curRDPTask == gfx);
+                              
+                          }
+                          sc->gfxListHead = sc->gfxListHead->next;
+                          if (sc->gfxListHead == NULL)
+                              sc->gfxListTail = NULL;
+                      }                  
+                  } else {
+                      if (avail == (OS_SC_SP | OS_SC_DP))
+                      {
+                          *sp = *dp = gfx;
+                          avail &= ~(OS_SC_SP | OS_SC_DP);
+                          sc->gfxListHead = sc->gfxListHead->next;
+                          if (sc->gfxListHead == NULL)
+                              sc->gfxListTail = NULL;
+                      }
+                  }
+                  break;
+          
+              case (OS_SC_DRAM):
+              case (OS_SC_DP_DRAM):
+              case (OS_SC_DP_XBUS):
+                  if (gfx->state & OS_SC_SP) 
+                  {
+                      if (avail & OS_SC_SP)
+                      {
+                          *sp = gfx;
+                          avail &= ~OS_SC_SP;
+                      }
+                  } else if (gfx->state & OS_SC_DP) {
+                      if (avail & OS_SC_DP)
+                      {
+                          *dp = gfx;
+                          avail &= ~OS_SC_DP;
+                          sc->gfxListHead = sc->gfxListHead->next;
+                          if (sc->gfxListHead == NULL)
+                              sc->gfxListTail = NULL;
+                      }
+                  }
+                  break;
+
+              case (OS_SC_SP_DRAM):
+              case (OS_SC_SP_XBUS):
+              default:
+                  break;
+            }
+        }
+    }
+
+    if (avail != availRCP)
+        avail = __scSchedule(sc, sp, dp, avail);
+
+    return avail;
     
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel jpt_80028400
-    .word .L70001758
-    .word .L70001704
-    .word .L7000167C
-    .word .L70001758
-    .word .L70001758
-    .word .L70001704
-    .word .L70001704
-
-.text
-glabel __scSchedule
-/* 00219C 7000159C 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0021A0 700015A0 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0021A4 700015A4 00808825 */  move  $s1, $a0
-/* 0021A8 700015A8 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0021AC 700015AC AFB00014 */  sw    $s0, 0x14($sp)
-/* 0021B0 700015B0 2408FFFD */  li    $t0, -3
-.L700015B4:
-/* 0021B4 700015B4 8E2E00D4 */  lw    $t6, 0xd4($s1)
-/* 0021B8 700015B8 00E01825 */  move  $v1, $a3
-/* 0021BC 700015BC 8E3000BC */  lw    $s0, 0xbc($s1)
-/* 0021C0 700015C0 11C00016 */  beqz  $t6, .L7000161C
-/* 0021C4 700015C4 8E2200B8 */   lw    $v0, 0xb8($s1)
-/* 0021C8 700015C8 30EF0002 */  andi  $t7, $a3, 2
-/* 0021CC 700015CC 51E00014 */  beql  $t7, $zero, .L70001620
-/* 0021D0 700015D0 02002025 */   move  $a0, $s0
-/* 0021D4 700015D4 52000009 */  beql  $s0, $zero, .L700015FC
-/* 0021D8 700015D8 ACA20000 */   sw    $v0, ($a1)
-/* 0021DC 700015DC 8E180008 */  lw    $t8, 8($s0)
-/* 0021E0 700015E0 00E81824 */  and   $v1, $a3, $t0
-/* 0021E4 700015E4 33190010 */  andi  $t9, $t8, 0x10
-/* 0021E8 700015E8 53200004 */  beql  $t9, $zero, .L700015FC
-/* 0021EC 700015EC ACA20000 */   sw    $v0, ($a1)
-/* 0021F0 700015F0 10000059 */  b     .L70001758
-/* 0021F4 700015F4 ACB00000 */   sw    $s0, ($a1)
-/* 0021F8 700015F8 ACA20000 */  sw    $v0, ($a1)
-.L700015FC:
-/* 0021FC 700015FC 8E2A00B8 */  lw    $t2, 0xb8($s1)
-/* 002200 70001600 AE2000D4 */  sw    $zero, 0xd4($s1)
-/* 002204 70001604 00E81824 */  and   $v1, $a3, $t0
-/* 002208 70001608 8D4B0000 */  lw    $t3, ($t2)
-/* 00220C 7000160C 15600052 */  bnez  $t3, .L70001758
-/* 002210 70001610 AE2B00B8 */   sw    $t3, 0xb8($s1)
-/* 002214 70001614 10000050 */  b     .L70001758
-/* 002218 70001618 AE2000C0 */   sw    $zero, 0xc0($s1)
-.L7000161C:
-/* 00221C 7000161C 02002025 */  move  $a0, $s0
-.L70001620:
-/* 002220 70001620 AFA30024 */  sw    $v1, 0x24($sp)
-/* 002224 70001624 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 002228 70001628 AFA60030 */  sw    $a2, 0x30($sp)
-/* 00222C 7000162C 0C000478 */  jal   __scTaskReady
-/* 002230 70001630 AFA70034 */   sw    $a3, 0x34($sp)
-/* 002234 70001634 8FA30024 */  lw    $v1, 0x24($sp)
-/* 002238 70001638 8FA5002C */  lw    $a1, 0x2c($sp)
-/* 00223C 7000163C 8FA60030 */  lw    $a2, 0x30($sp)
-/* 002240 70001640 8FA70034 */  lw    $a3, 0x34($sp)
-/* 002244 70001644 2408FFFD */  li    $t0, -3
-/* 002248 70001648 10400043 */  beqz  $v0, .L70001758
-/* 00224C 7000164C 2409FFFE */   li    $t1, -2
-/* 002250 70001650 8E0D0008 */  lw    $t5, 8($s0)
-/* 002254 70001654 31AE0007 */  andi  $t6, $t5, 7
-/* 002258 70001658 25CFFFFF */  addiu $t7, $t6, -1
-/* 00225C 7000165C 2DE10007 */  sltiu $at, $t7, 7
-/* 002260 70001660 1020003D */  beqz  $at, .L70001758
-/* 002264 70001664 000F7880 */   sll   $t7, $t7, 2
-/* 002268 70001668 3C018003 */  lui   $at, %hi(jpt_80028400)
-/* 00226C 7000166C 002F0821 */  addu  $at, $at, $t7
-/* 002270 70001670 8C2F8400 */  lw    $t7, %lo(jpt_80028400)($at) # lw    $t7, -0x7c00($at)
-/* 002274 70001674 01E00008 */  jr    $t7
-/* 002278 70001678 00000000 */   nop   
-.L7000167C:
-/* 00227C 7000167C 8E180004 */  lw    $t8, 4($s0)
-/* 002280 70001680 30EA0002 */  andi  $t2, $a3, 2
-/* 002284 70001684 24010003 */  li    $at, 3
-/* 002288 70001688 33190020 */  andi  $t9, $t8, 0x20
-/* 00228C 7000168C 13200011 */  beqz  $t9, .L700016D4
-/* 002290 70001690 00000000 */   nop   
-/* 002294 70001694 11400030 */  beqz  $t2, .L70001758
-/* 002298 70001698 00000000 */   nop   
-/* 00229C 7000169C ACB00000 */  sw    $s0, ($a1)
-/* 0022A0 700016A0 8E0B0004 */  lw    $t3, 4($s0)
-/* 0022A4 700016A4 00E81824 */  and   $v1, $a3, $t0
-/* 0022A8 700016A8 316C0001 */  andi  $t4, $t3, 1
-/* 0022AC 700016AC 51800004 */  beql  $t4, $zero, .L700016C0
-/* 0022B0 700016B0 8E2D00BC */   lw    $t5, 0xbc($s1)
-/* 0022B4 700016B4 ACD00000 */  sw    $s0, ($a2)
-/* 0022B8 700016B8 00691824 */  and   $v1, $v1, $t1
-/* 0022BC 700016BC 8E2D00BC */  lw    $t5, 0xbc($s1)
-.L700016C0:
-/* 0022C0 700016C0 8DAE0000 */  lw    $t6, ($t5)
-/* 0022C4 700016C4 15C00024 */  bnez  $t6, .L70001758
-/* 0022C8 700016C8 AE2E00BC */   sw    $t6, 0xbc($s1)
-/* 0022CC 700016CC 10000022 */  b     .L70001758
-/* 0022D0 700016D0 AE2000C4 */   sw    $zero, 0xc4($s1)
-.L700016D4:
-/* 0022D4 700016D4 14E10020 */  bne   $a3, $at, .L70001758
-/* 0022D8 700016D8 00000000 */   nop   
-/* 0022DC 700016DC ACD00000 */  sw    $s0, ($a2)
-/* 0022E0 700016E0 ACB00000 */  sw    $s0, ($a1)
-/* 0022E4 700016E4 8E3800BC */  lw    $t8, 0xbc($s1)
-/* 0022E8 700016E8 2401FFFC */  li    $at, -4
-/* 0022EC 700016EC 00E11824 */  and   $v1, $a3, $at
-/* 0022F0 700016F0 8F190000 */  lw    $t9, ($t8)
-/* 0022F4 700016F4 17200018 */  bnez  $t9, .L70001758
-/* 0022F8 700016F8 AE3900BC */   sw    $t9, 0xbc($s1)
-/* 0022FC 700016FC 10000016 */  b     .L70001758
-/* 002300 70001700 AE2000C4 */   sw    $zero, 0xc4($s1)
-.L70001704:
-/* 002304 70001704 8E020004 */  lw    $v0, 4($s0)
-/* 002308 70001708 30EC0002 */  andi  $t4, $a3, 2
-/* 00230C 7000170C 304B0002 */  andi  $t3, $v0, 2
-/* 002310 70001710 11600006 */  beqz  $t3, .L7000172C
-/* 002314 70001714 304D0001 */   andi  $t5, $v0, 1
-/* 002318 70001718 1180000F */  beqz  $t4, .L70001758
-/* 00231C 7000171C 00000000 */   nop   
-/* 002320 70001720 ACB00000 */  sw    $s0, ($a1)
-/* 002324 70001724 1000000C */  b     .L70001758
-/* 002328 70001728 00E81824 */   and   $v1, $a3, $t0
-.L7000172C:
-/* 00232C 7000172C 11A0000A */  beqz  $t5, .L70001758
-/* 002330 70001730 30EE0001 */   andi  $t6, $a3, 1
-/* 002334 70001734 11C00008 */  beqz  $t6, .L70001758
-/* 002338 70001738 00000000 */   nop   
-/* 00233C 7000173C ACD00000 */  sw    $s0, ($a2)
-/* 002340 70001740 8E2F00BC */  lw    $t7, 0xbc($s1)
-/* 002344 70001744 00E91824 */  and   $v1, $a3, $t1
-/* 002348 70001748 8DF80000 */  lw    $t8, ($t7)
-/* 00234C 7000174C 17000002 */  bnez  $t8, .L70001758
-/* 002350 70001750 AE3800BC */   sw    $t8, 0xbc($s1)
-/* 002354 70001754 AE2000C4 */  sw    $zero, 0xc4($s1)
-.L70001758:
-/* 002358 70001758 50670004 */  beql  $v1, $a3, .L7000176C
-/* 00235C 7000175C 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 002360 70001760 1000FF94 */  b     .L700015B4
-/* 002364 70001764 00603825 */   move  $a3, $v1
-/* 002368 70001768 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7000176C:
-/* 00236C 7000176C 8FB00014 */  lw    $s0, 0x14($sp)
-/* 002370 70001770 8FB10018 */  lw    $s1, 0x18($sp)
-/* 002374 70001774 27BD0028 */  addiu $sp, $sp, 0x28
-/* 002378 70001778 03E00008 */  jr    $ra
-/* 00237C 7000177C 00601025 */   move  $v0, $v1
-)
-#endif
-
