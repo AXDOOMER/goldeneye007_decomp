@@ -1,13 +1,15 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "game/intro_logos.h"
+#include "game/blood_animation.h"
 #include "video.h"
+#include "libultra/os.h"
 
 // bss
 //CODE.bss:80069550
 s32 dword_CODE_bss_80069550;
 //CODE.bss:80069554
-s32 dword_CODE_bss_80069554;
+Gfx *dword_CODE_bss_80069554;
 //CODE.bss:80069558
 s32 matrix_buffer_rarelogo_0;
 //CODE.bss:8006955C
@@ -17,19 +19,19 @@ s32 matrix_buffer_rarelogo_1;
 //CODE.bss:80069564
 Mtx *matrix_buffer_rarelogo_2;
 //CODE.bss:80069568
-s32 matrix_buffer_gunbarrel_1;
+Mtx *matrix_buffer_gunbarrel_1;
 //CODE.bss:8006956C
 s32 matrix_buffer_intro_backdrop;
 //CODE.bss:80069570
 s32 matrix_buffer_intro_bond;
 //CODE.bss:80069574
-s32 x;
+f32 x;
 //CODE.bss:80069578
-s32 y;
+f32 y;
 //CODE.bss:8006957C
-s32 dword_CODE_bss_8006957C;
+f32 dword_CODE_bss_8006957C;
 //CODE.bss:80069580
-s32 dword_CODE_bss_80069580;
+f32 dword_CODE_bss_80069580;
 //CODE.bss:80069584
 s32 word_CODE_bss_80069584;
 //CODE.bss:80069588
@@ -112,104 +114,24 @@ u32 D_8002A8B0 = 0;
 */
 
 
+// The code refers to a symbol at 0x1000000 (= 0x81000000 if you OS_K0_TO_PHYSICAL), but that variable doesn't appear
+// to exist. This one has therefor been added manually to the .ld file. Perhaps there's a better way to do this.
+extern Gfx *_unkDisplayList;
+Gfx *something_with_gunbarrel_and_rareware_logo_matrix_manip(Gfx* gdl) {
+  guTranslate(&matrix_buffer_rarelogo_2[D_8002A7D0], x, y, -5.0f);
+  guTranslate(&matrix_buffer_gunbarrel_1[D_8002A7D0], dword_CODE_bss_8006957C, dword_CODE_bss_80069580, -5.0f);
+  gSPDisplayList(gdl++, &_unkDisplayList);
 
-#ifdef NONMATCHING
-void something_with_gunbarrel_and_rareware_logo_matrix_manip(void) {
+  gdl = sub_GAME_7F01C1A4(insert_imageDL(gdl));
 
+  gDPSetCombineMode(gdl++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+  gDPSetPrimColor(gdl++, 0, 0, 0xE6, 0xE6, 0xE6, 0x00);
+  gSPDisplayList(gdl++, OS_PHYSICAL_TO_K0(dword_CODE_bss_80069554));
+  gSPMatrix(gdl++, osVirtualToPhysical(&matrix_buffer_gunbarrel_1[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW));
+  gSPDisplayList(gdl++, OS_PHYSICAL_TO_K0(dword_CODE_bss_80069554));
+
+  return gdl;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel something_with_gunbarrel_and_rareware_logo_matrix_manip
-/* 03C570 7F007A40 3C0E8003 */  lui   $t6, %hi(D_8002A7D0) 
-/* 03C574 7F007A44 8DCEA7D0 */  lw    $t6, %lo(D_8002A7D0)($t6)
-/* 03C578 7F007A48 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 03C57C 7F007A4C 3C188007 */  lui   $t8, %hi(matrix_buffer_rarelogo_2) 
-/* 03C580 7F007A50 8F189564 */  lw    $t8, %lo(matrix_buffer_rarelogo_2)($t8)
-/* 03C584 7F007A54 AFB00018 */  sw    $s0, 0x18($sp)
-/* 03C588 7F007A58 00808025 */  move  $s0, $a0
-/* 03C58C 7F007A5C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 03C590 7F007A60 3C058007 */  lui   $a1, %hi(x)
-/* 03C594 7F007A64 3C068007 */  lui   $a2, %hi(y)
-/* 03C598 7F007A68 000E7980 */  sll   $t7, $t6, 6
-/* 03C59C 7F007A6C 8CC69578 */  lw    $a2, %lo(y)($a2)
-/* 03C5A0 7F007A70 8CA59574 */  lw    $a1, %lo(x)($a1)
-/* 03C5A4 7F007A74 3C07C0A0 */  lui   $a3, 0xc0a0
-/* 03C5A8 7F007A78 0C005B46 */  jal   guTranslate
-/* 03C5AC 7F007A7C 01F82021 */   addu  $a0, $t7, $t8
-/* 03C5B0 7F007A80 3C198003 */  lui   $t9, %hi(D_8002A7D0) 
-/* 03C5B4 7F007A84 8F39A7D0 */  lw    $t9, %lo(D_8002A7D0)($t9)
-/* 03C5B8 7F007A88 3C098007 */  lui   $t1, %hi(matrix_buffer_gunbarrel_1) 
-/* 03C5BC 7F007A8C 8D299568 */  lw    $t1, %lo(matrix_buffer_gunbarrel_1)($t1)
-/* 03C5C0 7F007A90 3C058007 */  lui   $a1, %hi(dword_CODE_bss_8006957C)
-/* 03C5C4 7F007A94 3C068007 */  lui   $a2, %hi(dword_CODE_bss_80069580)
-/* 03C5C8 7F007A98 00194180 */  sll   $t0, $t9, 6
-/* 03C5CC 7F007A9C 8CC69580 */  lw    $a2, %lo(dword_CODE_bss_80069580)($a2)
-/* 03C5D0 7F007AA0 8CA5957C */  lw    $a1, %lo(dword_CODE_bss_8006957C)($a1)
-/* 03C5D4 7F007AA4 3C07C0A0 */  lui   $a3, 0xc0a0
-/* 03C5D8 7F007AA8 0C005B46 */  jal   guTranslate
-/* 03C5DC 7F007AAC 01092021 */   addu  $a0, $t0, $t1
-/* 03C5E0 7F007AB0 3C0B0100 */  lui   $t3, 0x100
-/* 03C5E4 7F007AB4 256B0000 */  addiu $t3, $t3, 0
-/* 03C5E8 7F007AB8 02001025 */  move  $v0, $s0
-/* 03C5EC 7F007ABC 3C0A0600 */  lui   $t2, 0x600
-/* 03C5F0 7F007AC0 AC4A0000 */  sw    $t2, ($v0)
-/* 03C5F4 7F007AC4 AC4B0004 */  sw    $t3, 4($v0)
-/* 03C5F8 7F007AC8 0FC07034 */  jal   insert_imageDL
-/* 03C5FC 7F007ACC 26040008 */   addiu $a0, $s0, 8
-/* 03C600 7F007AD0 0FC07069 */  jal   sub_GAME_7F01C1A4
-/* 03C604 7F007AD4 00402025 */   move  $a0, $v0
-/* 03C608 7F007AD8 3C0CFCFF */  lui   $t4, (0xFCFFFFFF >> 16) # lui $t4, 0xfcff
-/* 03C60C 7F007ADC 3C0DFFFD */  lui   $t5, (0xFFFDF6FB >> 16) # lui $t5, 0xfffd
-/* 03C610 7F007AE0 3C0FE6E6 */  lui   $t7, (0xE6E6E600 >> 16) # lui $t7, 0xe6e6
-/* 03C614 7F007AE4 35ADF6FB */  ori   $t5, (0xFFFDF6FB & 0xFFFF) # ori $t5, $t5, 0xf6fb
-/* 03C618 7F007AE8 358CFFFF */  ori   $t4, (0xFCFFFFFF & 0xFFFF) # ori $t4, $t4, 0xffff
-/* 03C61C 7F007AEC 35EFE600 */  ori   $t7, (0xE6E6E600 & 0xFFFF) # ori $t7, $t7, 0xe600
-/* 03C620 7F007AF0 3C0EFA00 */  lui   $t6, 0xfa00
-/* 03C624 7F007AF4 3C180600 */  lui   $t8, 0x600
-/* 03C628 7F007AF8 AC4C0000 */  sw    $t4, ($v0)
-/* 03C62C 7F007AFC AC4D0004 */  sw    $t5, 4($v0)
-/* 03C630 7F007B00 AC4E0008 */  sw    $t6, 8($v0)
-/* 03C634 7F007B04 AC4F000C */  sw    $t7, 0xc($v0)
-/* 03C638 7F007B08 AC580010 */  sw    $t8, 0x10($v0)
-/* 03C63C 7F007B0C 3C198007 */  lui   $t9, %hi(dword_CODE_bss_80069554) 
-/* 03C640 7F007B10 8F399554 */  lw    $t9, %lo(dword_CODE_bss_80069554)($t9)
-/* 03C644 7F007B14 3C018000 */  lui   $at, 0x8000
-/* 03C648 7F007B18 24490018 */  addiu $t1, $v0, 0x18
-/* 03C64C 7F007B1C 03214021 */  addu  $t0, $t9, $at
-/* 03C650 7F007B20 AC480014 */  sw    $t0, 0x14($v0)
-/* 03C654 7F007B24 3C0A0102 */  lui   $t2, (0x01020040 >> 16) # lui $t2, 0x102
-/* 03C658 7F007B28 354A0040 */  ori   $t2, (0x01020040 & 0xFFFF) # ori $t2, $t2, 0x40
-/* 03C65C 7F007B2C AFA90024 */  sw    $t1, 0x24($sp)
-/* 03C660 7F007B30 AC4A0018 */  sw    $t2, 0x18($v0)
-/* 03C664 7F007B34 3C0B8003 */  lui   $t3, %hi(D_8002A7D0) 
-/* 03C668 7F007B38 8D6BA7D0 */  lw    $t3, %lo(D_8002A7D0)($t3)
-/* 03C66C 7F007B3C 3C0D8007 */  lui   $t5, %hi(matrix_buffer_gunbarrel_1) 
-/* 03C670 7F007B40 8DAD9568 */  lw    $t5, %lo(matrix_buffer_gunbarrel_1)($t5)
-/* 03C674 7F007B44 000B6180 */  sll   $t4, $t3, 6
-/* 03C678 7F007B48 24500020 */  addiu $s0, $v0, 0x20
-/* 03C67C 7F007B4C 0C003A2C */  jal   osVirtualToPhysical
-/* 03C680 7F007B50 018D2021 */   addu  $a0, $t4, $t5
-/* 03C684 7F007B54 8FAE0024 */  lw    $t6, 0x24($sp)
-/* 03C688 7F007B58 02001825 */  move  $v1, $s0
-/* 03C68C 7F007B5C 3C0F0600 */  lui   $t7, 0x600
-/* 03C690 7F007B60 ADC20004 */  sw    $v0, 4($t6)
-/* 03C694 7F007B64 AC6F0000 */  sw    $t7, ($v1)
-/* 03C698 7F007B68 3C188007 */  lui   $t8, %hi(dword_CODE_bss_80069554) 
-/* 03C69C 7F007B6C 8F189554 */  lw    $t8, %lo(dword_CODE_bss_80069554)($t8)
-/* 03C6A0 7F007B70 3C018000 */  lui   $at, 0x8000
-/* 03C6A4 7F007B74 26020008 */  addiu $v0, $s0, 8
-/* 03C6A8 7F007B78 0301C821 */  addu  $t9, $t8, $at
-/* 03C6AC 7F007B7C AC790004 */  sw    $t9, 4($v1)
-/* 03C6B0 7F007B80 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 03C6B4 7F007B84 8FB00018 */  lw    $s0, 0x18($sp)
-/* 03C6B8 7F007B88 27BD0038 */  addiu $sp, $sp, 0x38
-/* 03C6BC 7F007B8C 03E00008 */  jr    $ra
-/* 03C6C0 7F007B90 00000000 */   nop   
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 void insert_sight_backdrop_eye_intro(void) {

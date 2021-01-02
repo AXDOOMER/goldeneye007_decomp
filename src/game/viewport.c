@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/bond.h"
+#include "libultra/os.h"
 
 // bss
 s32 z_buffer_width;
@@ -62,7 +63,7 @@ Gfx *zbufClearCurrentPlayer(Gfx *gdl) {
     s32 end_x;
     gDPPipeSync(gdl++);
     gDPSetRenderMode(gdl++, G_RM_NOOP, G_RM_NOOP2);
-    gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_16b, z_buffer_width, (z_buffer + 0x80000000));
+    gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_16b, z_buffer_width, OS_PHYSICAL_TO_K0(z_buffer));
     gDPSetCycleType(gdl++, G_CYC_FILL);
     gDPSetFillColor(gdl++, (GPACK_ZDZ(G_MAXFBZ, 0) << 16 | GPACK_ZDZ(G_MAXFBZ, 0)));
     gDPSetScissor(gdl++, G_SC_NON_INTERLACE, 0, 0, viGetX(), viGetY());

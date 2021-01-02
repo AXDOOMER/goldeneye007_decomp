@@ -4,6 +4,7 @@
 #include "intro_logos.h"
 #include "blood_decrypt.h"
 #include "unk_093880.h"
+#include "libultra/os.h"
 
 
 u8 die_blood_image_1[] = {
@@ -248,7 +249,7 @@ Gfx *sub_GAME_7F01C400(Gfx *gdl) {
    gDPSetColorDither(gdl++, G_CD_MAGICSQ);
    gDPSetPrimColor(gdl++, 0, 0, 0x96, 0x00, 0x00, 0xB4);
    gDPSetTexturePersp(gdl++, G_TP_NONE);
-   gDPLoadTextureBlock_4b(gdl++, (pPlayer->field_11B0[pPlayer->field_11B8] + 0x80000000), G_IM_FMT_I, 96, 80, 0, (G_TX_NOMIRROR | G_TX_CLAMP), (G_TX_NOMIRROR | G_TX_CLAMP), G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+   gDPLoadTextureBlock_4b(gdl++, OS_PHYSICAL_TO_K0(pPlayer->field_11B0[pPlayer->field_11B8]), G_IM_FMT_I, 96, 80, 0, (G_TX_NOMIRROR | G_TX_CLAMP), (G_TX_NOMIRROR | G_TX_CLAMP), G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
    gSPTextureRectangle(gdl++, 0, 0, ((viGetX() * 4) - 1), ((viGetY() * 4) - 1), G_TX_RENDERTILE, 0, 0, 0x18000 / viGetX(), 0x14000 / viGetY());
    
    return gdl;
@@ -265,7 +266,7 @@ Gfx *sub_GAME_7F01C670(Gfx *gdl) {
    gDPSetColorDither(gdl++, G_CD_MAGICSQ);
    gDPSetPrimColor(gdl++, 0, 0, 0x96, 0x00, 0x00, 0xB4);
    gDPSetTexturePersp(gdl++, G_TP_NONE);
-   gDPLoadTextureBlock_4b(gdl++, (pPlayer->field_11B0[pPlayer->field_11B8] + 0x80000000), G_IM_FMT_I, 96, 80, 0, (G_TX_NOMIRROR | G_TX_CLAMP), (G_TX_NOMIRROR | G_TX_CLAMP), G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD); 
+   gDPLoadTextureBlock_4b(gdl++, OS_PHYSICAL_TO_K0(pPlayer->field_11B0[pPlayer->field_11B8]), G_IM_FMT_I, 96, 80, 0, (G_TX_NOMIRROR | G_TX_CLAMP), (G_TX_NOMIRROR | G_TX_CLAMP), G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD); 
    gSPTextureRectangle(gdl++, (viGetViewLeft() * 4), (viGetViewTop() * 4), (((viGetViewLeft() + viGetViewWidth()) * 4) - 1), (((viGetViewTop() + viGetViewHeight()) * 4) - 1), G_TX_RENDERTILE, 0, 0, (0x18000 / viGetViewWidth()), (0x14000 / viGetViewHeight()));
    gDPPipeSync(gdl++);
    gDPSetColorDither(gdl++, G_CD_BAYER);
