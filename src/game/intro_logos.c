@@ -148,67 +148,16 @@ Gfx *insert_sight_backdrop_eye_intro(Gfx *gdl) {
   return gdl;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F007CC8(void) {
+Gfx *sub_GAME_7F01B240(Gfx*, s32, s32, struct coord*, struct coord*);
+Gfx *sub_GAME_7F007CC8(Gfx *gdl, s32 arg1, struct coord* arg2, struct coord* arg3) {
+    gDPSetRenderMode(gdl++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
+    gDPSetCycleType(gdl++, G_CYC_1CYCLE);
+    gDPSetTexturePersp(gdl++, G_TP_NONE);
+    gDPSetTextureFilter(gdl++, G_TF_POINT);
+    gDPPipeSync(gdl++);
 
+    return sub_GAME_7F01B240(gdl, OS_PHYSICAL_TO_K0(dword_CODE_bss_8006958C), arg1, arg2, arg3);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F007CC8
-/* 03C7F8 7F007CC8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 03C7FC 7F007CCC 00801025 */  move  $v0, $a0
-/* 03C800 7F007CD0 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 03C804 7F007CD4 AFA50024 */  sw    $a1, 0x24($sp)
-/* 03C808 7F007CD8 AFA60028 */  sw    $a2, 0x28($sp)
-/* 03C80C 7F007CDC AFA7002C */  sw    $a3, 0x2c($sp)
-/* 03C810 7F007CE0 24840008 */  addiu $a0, $a0, 8
-/* 03C814 7F007CE4 3C0EB900 */  lui   $t6, (0xB900031D >> 16) # lui $t6, 0xb900
-/* 03C818 7F007CE8 3C0F0F0A */  lui   $t7, (0x0F0A4000 >> 16) # lui $t7, 0xf0a
-/* 03C81C 7F007CEC 35EF4000 */  ori   $t7, (0x0F0A4000 & 0xFFFF) # ori $t7, $t7, 0x4000
-/* 03C820 7F007CF0 35CE031D */  ori   $t6, (0xB900031D & 0xFFFF) # ori $t6, $t6, 0x31d
-/* 03C824 7F007CF4 00801825 */  move  $v1, $a0
-/* 03C828 7F007CF8 AC4E0000 */  sw    $t6, ($v0)
-/* 03C82C 7F007CFC AC4F0004 */  sw    $t7, 4($v0)
-/* 03C830 7F007D00 24840008 */  addiu $a0, $a0, 8
-/* 03C834 7F007D04 3C18BA00 */  lui   $t8, (0xBA001402 >> 16) # lui $t8, 0xba00
-/* 03C838 7F007D08 37181402 */  ori   $t8, (0xBA001402 & 0xFFFF) # ori $t8, $t8, 0x1402
-/* 03C83C 7F007D0C 00804025 */  move  $t0, $a0
-/* 03C840 7F007D10 AC780000 */  sw    $t8, ($v1)
-/* 03C844 7F007D14 AC600004 */  sw    $zero, 4($v1)
-/* 03C848 7F007D18 24840008 */  addiu $a0, $a0, 8
-/* 03C84C 7F007D1C 3C19BA00 */  lui   $t9, (0xBA001301 >> 16) # lui $t9, 0xba00
-/* 03C850 7F007D20 37391301 */  ori   $t9, (0xBA001301 & 0xFFFF) # ori $t9, $t9, 0x1301
-/* 03C854 7F007D24 00804825 */  move  $t1, $a0
-/* 03C858 7F007D28 AD190000 */  sw    $t9, ($t0)
-/* 03C85C 7F007D2C AD000004 */  sw    $zero, 4($t0)
-/* 03C860 7F007D30 3C0BBA00 */  lui   $t3, (0xBA000C02 >> 16) # lui $t3, 0xba00
-/* 03C864 7F007D34 356B0C02 */  ori   $t3, (0xBA000C02 & 0xFFFF) # ori $t3, $t3, 0xc02
-/* 03C868 7F007D38 24840008 */  addiu $a0, $a0, 8
-/* 03C86C 7F007D3C AD2B0000 */  sw    $t3, ($t1)
-/* 03C870 7F007D40 AD200004 */  sw    $zero, 4($t1)
-/* 03C874 7F007D44 00805025 */  move  $t2, $a0
-/* 03C878 7F007D48 3C0CE700 */  lui   $t4, 0xe700
-/* 03C87C 7F007D4C AD4C0000 */  sw    $t4, ($t2)
-/* 03C880 7F007D50 AD400004 */  sw    $zero, 4($t2)
-/* 03C884 7F007D54 3C058007 */  lui   $a1, %hi(dword_CODE_bss_8006958C)
-/* 03C888 7F007D58 8CA5958C */  lw    $a1, %lo(dword_CODE_bss_8006958C)($a1)
-/* 03C88C 7F007D5C 8FAD002C */  lw    $t5, 0x2c($sp)
-/* 03C890 7F007D60 3C018000 */  lui   $at, 0x8000
-/* 03C894 7F007D64 24840008 */  addiu $a0, $a0, 8
-/* 03C898 7F007D68 8FA70028 */  lw    $a3, 0x28($sp)
-/* 03C89C 7F007D6C 8FA60024 */  lw    $a2, 0x24($sp)
-/* 03C8A0 7F007D70 00A12821 */  addu  $a1, $a1, $at
-/* 03C8A4 7F007D74 0FC06C90 */  jal   sub_GAME_7F01B240
-/* 03C8A8 7F007D78 AFAD0010 */   sw    $t5, 0x10($sp)
-/* 03C8AC 7F007D7C 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 03C8B0 7F007D80 27BD0020 */  addiu $sp, $sp, 0x20
-/* 03C8B4 7F007D84 03E00008 */  jr    $ra
-/* 03C8B8 7F007D88 00000000 */   nop   
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 void insert_sniper_sight_eye_intro(void) {
