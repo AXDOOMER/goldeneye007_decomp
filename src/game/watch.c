@@ -9122,8 +9122,82 @@ Gfx *draw_toggle_options(Gfx *gdl)
 
 
 #ifdef NONMATCHING
-void draw_game_options_page(void) {
+Gfx *draw_game_options_page(Gfx *gdl, s32 param_2)
+{
+    s32 textptr;
+    s32 sp5C;
+    s32 sp54; //
+    s32 sp50;
+    s32 sp4C;
+    s32 sp48;
+    s32 sp40; //
+    s32 sp44;
 
+    gdl = draw_background_health_and_armor(gdl, param_2, 0);
+    
+    if (check_watch_page_transistion_running() != 1)
+    {
+        gdl = sub_GAME_7F0A8FEC(sub_GAME_7F0A91C8(gdl));
+        sp44 = ptrFirstFontTableSmall;
+        sp40 = ptrSecondFontTableSmall;
+        gdl = microcode_constructor(gdl);
+        
+        textptr = get_textptr_for_textID(0xAC35);
+        
+        sp54 = 0x40;
+        sp50 = 0x25;
+        sp5C = 0xFF00B0;
+        
+        if (game_options_index == 0)
+        {
+            sp5C = 0xA0FFA0F0;
+            if (watch_soundrelated_maybe != 0)
+            {
+                sp5C = -1;
+            }
+        }
+        
+        //L7F0ABEA8
+        sub_GAME_7F0AE98C(&sp48, &sp4C, textptr, sp40, sp44, 0);
+        
+        if ((watch_soundrelated_maybe != 0) && (game_options_index == 0))
+        {
+            gdl = jp_text_write_stuff(gdl, &sp54, &sp50, textptr, sp40, sp44, sp5C, 0x7000A0, sp4C + 1, sp48, 0, 0);
+        }
+        else
+        {
+            gdl = en_text_write_stuff(gdl, &sp54, &sp50, textptr, sp40, sp44, sp5C, sp4C, sp48, 0, 0);
+        }
+        
+        sp5C = 0xFF00B0;
+        textptr = get_textptr_for_textID(0xAC36);
+        sp54 = 0x40;
+        sp50 = 0x3B;
+        
+        if (game_options_index == 1)
+        {
+            sp5C = 0xA0FFA0F0;
+            if (watch_soundrelated_maybe != 0)
+            {
+                sp5C = -1;
+            }
+        }
+
+        sub_GAME_7F0AE98C(&sp48, &sp4C, textptr, sp40, sp44, 0);
+        
+        if ((watch_soundrelated_maybe != 0) && (game_options_index == 1))
+        {
+            gdl = jp_text_write_stuff(gdl, &sp54, &sp50, textptr, sp40, sp44, sp5C, 0x7000A0, sp4C + 1, sp48, 0, 0);
+        }
+        else
+        {
+            gdl = en_text_write_stuff(gdl, &sp54, &sp50, textptr, sp40, sp44, sp5C, sp4C, sp48, 0, 0);
+        }
+        
+        gdl = draw_toggle_options(gdl);
+    }
+
+    return gdl;
 }
 #else
 GLOBAL_ASM(
