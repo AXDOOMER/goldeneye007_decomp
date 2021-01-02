@@ -4,6 +4,7 @@
 #include "game/blood_animation.h"
 #include "video.h"
 #include "libultra/os.h"
+#include "matrixmath.h"
 
 // bss
 //CODE.bss:80069550
@@ -21,9 +22,9 @@ Mtx *matrix_buffer_rarelogo_2;
 //CODE.bss:80069568
 Mtx *matrix_buffer_gunbarrel_1;
 //CODE.bss:8006956C
-s32 matrix_buffer_intro_backdrop;
+Mtx *matrix_buffer_intro_backdrop;
 //CODE.bss:80069570
-s32 matrix_buffer_intro_bond;
+Mtx *matrix_buffer_intro_bond;
 //CODE.bss:80069574
 f32 x;
 //CODE.bss:80069578
@@ -69,15 +70,9 @@ u32 D_8002A82C = 0;
 u32 D_8002A830 = 0;
 u32 D_8002A834 = 0;
 u32 D_8002A838 = 0;
-f32 D_8002A83C = 1758.2957f;
-f32 D_8002A840 = 220.0f;
-f32 D_8002A844 = 684.28143f;
-f32 D_8002A848 = -0.97f;
-u32 D_8002A84C = 0;
-f32 D_8002A850 = 0.24f;
-u32 D_8002A854 = 0;
-f32 D_8002A858 = 1.0f;
-u32 D_8002A85C = 0x80000000;
+f32 D_8002A83C[3] = {1758.2957f, 220.0f, 684.28143f};
+f32 D_8002A848[3] = {-0.97f, 0.0f, 0.24f};
+f32 D_8002A854[3] = {0.0f, 1.0f, -0.0f};
 struct rgba_val D_8002A860 = {0xDC, 0xDC, 0xDC, 0};
 struct rgba_val D_8002A864 = {0xDC, 0xDC, 0xDC, 0};
 struct rgba_val D_8002A868 = {0xFF, 0xFF, 0xFF, 0};
@@ -182,19 +177,14 @@ Gfx *sub_GAME_7F007E70(Gfx *gdl, u32 a) {
 }
 
 #ifdef NONMATCHING
-void sub_GAME_7F007F30(void) {
+Gfx *sub_GAME_7F007F30(Gfx*, s32, s32) {
 
 }
 #else
+Gfx *sub_GAME_7F007F30(Gfx*, s32, s32);
 GLOBAL_ASM(
 .late_rodata
 glabel D_8004F2D0
-.word 0x3f68f5c3
-glabel D_8004F2D4
-.word 0x461c4000
-glabel D_8004F2D8
-.word 0x459c4000
-glabel D_8004F2DC
 .word 0x3f68f5c3
 .text
 glabel sub_GAME_7F007F30
@@ -443,146 +433,21 @@ glabel sub_GAME_7F007F30
 )
 #endif
 
+Gfx *insert_bond_eye_intro(Gfx *gdl) {
+    Mtxf matrix;
+    u16 perspNorm;
+    guTranslate(&matrix_buffer_intro_backdrop[D_8002A7D0], 0.0f, 0.0f, 0.0f);
+    guPerspective(&matrix_buffer_intro_bond[D_8002A7D0], &perspNorm, 46.0f, (320.0f / 240.0f), 10.0f, 10000.0f, 1.0f);
+    gSPPerspNormalize(gdl++, perspNorm);
+    gDPSetCombineMode(gdl++, G_CC_SHADE, G_CC_SHADE);
+    gDPSetRenderMode(gdl++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
+    gSPMatrix(gdl++, osVirtualToPhysical(&matrix_buffer_intro_bond[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
+    gSPMatrix(gdl++, osVirtualToPhysical(&matrix_buffer_intro_backdrop[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW));
+    
+    matrix_4x4_7F059694(&matrix, D_8002A83C[0], D_8002A83C[1], D_8002A83C[2], (D_8002A83C[0] + D_8002A848[0]), (D_8002A83C[1] + D_8002A848[1]), (D_8002A83C[2] + D_8002A848[2]), D_8002A854[0], D_8002A854[1], D_8002A854[2]);
 
-
-#ifdef NONMATCHING
-void insert_bond_eye_intro(void) {
-
+    return sub_GAME_7F007F30(gdl, 2, &matrix);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel insert_bond_eye_intro
-/* 03CDF8 7F0082C8 44800000 */  mtc1  $zero, $f0
-/* 03CDFC 7F0082CC 3C0E8003 */  lui   $t6, %hi(D_8002A7D0) 
-/* 03CE00 7F0082D0 8DCEA7D0 */  lw    $t6, %lo(D_8002A7D0)($t6)
-/* 03CE04 7F0082D4 27BDFF60 */  addiu $sp, $sp, -0xa0
-/* 03CE08 7F0082D8 3C188007 */  lui   $t8, %hi(matrix_buffer_intro_backdrop) 
-/* 03CE0C 7F0082DC 8F18956C */  lw    $t8, %lo(matrix_buffer_intro_backdrop)($t8)
-/* 03CE10 7F0082E0 AFB00030 */  sw    $s0, 0x30($sp)
-/* 03CE14 7F0082E4 00808025 */  move  $s0, $a0
-/* 03CE18 7F0082E8 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 03CE1C 7F0082EC 44050000 */  mfc1  $a1, $f0
-/* 03CE20 7F0082F0 44060000 */  mfc1  $a2, $f0
-/* 03CE24 7F0082F4 44070000 */  mfc1  $a3, $f0
-/* 03CE28 7F0082F8 000E7980 */  sll   $t7, $t6, 6
-/* 03CE2C 7F0082FC 0C005B46 */  jal   guTranslate
-/* 03CE30 7F008300 01F82021 */   addu  $a0, $t7, $t8
-/* 03CE34 7F008304 3C014120 */  li    $at, 0x41200000 # 10.000000
-/* 03CE38 7F008308 44812000 */  mtc1  $at, $f4
-/* 03CE3C 7F00830C 3C018005 */  lui   $at, %hi(D_8004F2D4)
-/* 03CE40 7F008310 3C198003 */  lui   $t9, %hi(D_8002A7D0) 
-/* 03CE44 7F008314 8F39A7D0 */  lw    $t9, %lo(D_8002A7D0)($t9)
-/* 03CE48 7F008318 C426F2D4 */  lwc1  $f6, %lo(D_8004F2D4)($at)
-/* 03CE4C 7F00831C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 03CE50 7F008320 3C0C8007 */  lui   $t4, %hi(matrix_buffer_intro_bond) 
-/* 03CE54 7F008324 8D8C9570 */  lw    $t4, %lo(matrix_buffer_intro_bond)($t4)
-/* 03CE58 7F008328 44814000 */  mtc1  $at, $f8
-/* 03CE5C 7F00832C 3C073FAA */  lui   $a3, (0x3FAAAAAB >> 16) # lui $a3, 0x3faa
-/* 03CE60 7F008330 00195980 */  sll   $t3, $t9, 6
-/* 03CE64 7F008334 34E7AAAB */  ori   $a3, (0x3FAAAAAB & 0xFFFF) # ori $a3, $a3, 0xaaab
-/* 03CE68 7F008338 27A5005E */  addiu $a1, $sp, 0x5e
-/* 03CE6C 7F00833C 3C064238 */  lui   $a2, 0x4238
-/* 03CE70 7F008340 E7A40010 */  swc1  $f4, 0x10($sp)
-/* 03CE74 7F008344 E7A60014 */  swc1  $f6, 0x14($sp)
-/* 03CE78 7F008348 016C2021 */  addu  $a0, $t3, $t4
-/* 03CE7C 7F00834C 0C003FAC */  jal   guPerspective
-/* 03CE80 7F008350 E7A80018 */   swc1  $f8, 0x18($sp)
-/* 03CE84 7F008354 3C0DBC00 */  lui   $t5, (0xBC00000E >> 16) # lui $t5, 0xbc00
-/* 03CE88 7F008358 35AD000E */  ori   $t5, (0xBC00000E & 0xFFFF) # ori $t5, $t5, 0xe
-/* 03CE8C 7F00835C 02001025 */  move  $v0, $s0
-/* 03CE90 7F008360 AC4D0000 */  sw    $t5, ($v0)
-/* 03CE94 7F008364 97AE005E */  lhu   $t6, 0x5e($sp)
-/* 03CE98 7F008368 26100008 */  addiu $s0, $s0, 8
-/* 03CE9C 7F00836C 02001825 */  move  $v1, $s0
-/* 03CEA0 7F008370 26100008 */  addiu $s0, $s0, 8
-/* 03CEA4 7F008374 3C0FFCFF */  lui   $t7, (0xFCFFFFFF >> 16) # lui $t7, 0xfcff
-/* 03CEA8 7F008378 3C18FFFE */  lui   $t8, (0xFFFE793C >> 16) # lui $t8, 0xfffe
-/* 03CEAC 7F00837C AC4E0004 */  sw    $t6, 4($v0)
-/* 03CEB0 7F008380 3718793C */  ori   $t8, (0xFFFE793C & 0xFFFF) # ori $t8, $t8, 0x793c
-/* 03CEB4 7F008384 35EFFFFF */  ori   $t7, (0xFCFFFFFF & 0xFFFF) # ori $t7, $t7, 0xffff
-/* 03CEB8 7F008388 02002825 */  move  $a1, $s0
-/* 03CEBC 7F00838C AC6F0000 */  sw    $t7, ($v1)
-/* 03CEC0 7F008390 AC780004 */  sw    $t8, 4($v1)
-/* 03CEC4 7F008394 3C19B900 */  lui   $t9, (0xB900031D >> 16) # lui $t9, 0xb900
-/* 03CEC8 7F008398 3C0B0055 */  lui   $t3, (0x00552048 >> 16) # lui $t3, 0x55
-/* 03CECC 7F00839C 356B2048 */  ori   $t3, (0x00552048 & 0xFFFF) # ori $t3, $t3, 0x2048
-/* 03CED0 7F0083A0 3739031D */  ori   $t9, (0xB900031D & 0xFFFF) # ori $t9, $t9, 0x31d
-/* 03CED4 7F0083A4 26100008 */  addiu $s0, $s0, 8
-/* 03CED8 7F0083A8 3C0C0103 */  lui   $t4, (0x01030040 >> 16) # lui $t4, 0x103
-/* 03CEDC 7F0083AC ACB90000 */  sw    $t9, ($a1)
-/* 03CEE0 7F0083B0 ACAB0004 */  sw    $t3, 4($a1)
-/* 03CEE4 7F0083B4 358C0040 */  ori   $t4, (0x01030040 & 0xFFFF) # ori $t4, $t4, 0x40
-/* 03CEE8 7F0083B8 02003025 */  move  $a2, $s0
-/* 03CEEC 7F0083BC ACCC0000 */  sw    $t4, ($a2)
-/* 03CEF0 7F0083C0 3C0D8003 */  lui   $t5, %hi(D_8002A7D0) 
-/* 03CEF4 7F0083C4 8DADA7D0 */  lw    $t5, %lo(D_8002A7D0)($t5)
-/* 03CEF8 7F0083C8 3C0F8007 */  lui   $t7, %hi(matrix_buffer_intro_bond) 
-/* 03CEFC 7F0083CC 8DEF9570 */  lw    $t7, %lo(matrix_buffer_intro_bond)($t7)
-/* 03CF00 7F0083D0 000D7180 */  sll   $t6, $t5, 6
-/* 03CF04 7F0083D4 AFA6004C */  sw    $a2, 0x4c($sp)
-/* 03CF08 7F0083D8 26100008 */  addiu $s0, $s0, 8
-/* 03CF0C 7F0083DC 0C003A2C */  jal   osVirtualToPhysical
-/* 03CF10 7F0083E0 01CF2021 */   addu  $a0, $t6, $t7
-/* 03CF14 7F0083E4 8FA6004C */  lw    $a2, 0x4c($sp)
-/* 03CF18 7F0083E8 3C180102 */  lui   $t8, (0x01020040 >> 16) # lui $t8, 0x102
-/* 03CF1C 7F0083EC 37180040 */  ori   $t8, (0x01020040 & 0xFFFF) # ori $t8, $t8, 0x40
-/* 03CF20 7F0083F0 02005025 */  move  $t2, $s0
-/* 03CF24 7F0083F4 ACC20004 */  sw    $v0, 4($a2)
-/* 03CF28 7F0083F8 AD580000 */  sw    $t8, ($t2)
-/* 03CF2C 7F0083FC 3C198003 */  lui   $t9, %hi(D_8002A7D0) 
-/* 03CF30 7F008400 8F39A7D0 */  lw    $t9, %lo(D_8002A7D0)($t9)
-/* 03CF34 7F008404 3C0C8007 */  lui   $t4, %hi(matrix_buffer_intro_backdrop) 
-/* 03CF38 7F008408 8D8C956C */  lw    $t4, %lo(matrix_buffer_intro_backdrop)($t4)
-/* 03CF3C 7F00840C 00195980 */  sll   $t3, $t9, 6
-/* 03CF40 7F008410 AFAA0048 */  sw    $t2, 0x48($sp)
-/* 03CF44 7F008414 26100008 */  addiu $s0, $s0, 8
-/* 03CF48 7F008418 0C003A2C */  jal   osVirtualToPhysical
-/* 03CF4C 7F00841C 016C2021 */   addu  $a0, $t3, $t4
-/* 03CF50 7F008420 8FAA0048 */  lw    $t2, 0x48($sp)
-/* 03CF54 7F008424 3C038003 */  lui   $v1, %hi(D_8002A83C)
-/* 03CF58 7F008428 3C088003 */  lui   $t0, %hi(D_8002A848) 
-/* 03CF5C 7F00842C AD420004 */  sw    $v0, 4($t2)
-/* 03CF60 7F008430 2508A848 */  addiu $t0, %lo(D_8002A848) # addiu $t0, $t0, -0x57b8
-/* 03CF64 7F008434 2463A83C */  addiu $v1, %lo(D_8002A83C) # addiu $v1, $v1, -0x57c4
-/* 03CF68 7F008438 C4600000 */  lwc1  $f0, ($v1)
-/* 03CF6C 7F00843C C50A0000 */  lwc1  $f10, ($t0)
-/* 03CF70 7F008440 C4620004 */  lwc1  $f2, 4($v1)
-/* 03CF74 7F008444 C5120004 */  lwc1  $f18, 4($t0)
-/* 03CF78 7F008448 46005400 */  add.s $f16, $f10, $f0
-/* 03CF7C 7F00844C C46C0008 */  lwc1  $f12, 8($v1)
-/* 03CF80 7F008450 C5060008 */  lwc1  $f6, 8($t0)
-/* 03CF84 7F008454 3C098003 */  lui   $t1, %hi(D_8002A854) 
-/* 03CF88 7F008458 2529A854 */  addiu $t1, %lo(D_8002A854) # addiu $t1, $t1, -0x57ac
-/* 03CF8C 7F00845C 46029100 */  add.s $f4, $f18, $f2
-/* 03CF90 7F008460 E7B00010 */  swc1  $f16, 0x10($sp)
-/* 03CF94 7F008464 C5300004 */  lwc1  $f16, 4($t1)
-/* 03CF98 7F008468 460C3200 */  add.s $f8, $f6, $f12
-/* 03CF9C 7F00846C C5320008 */  lwc1  $f18, 8($t1)
-/* 03CFA0 7F008470 C52A0000 */  lwc1  $f10, ($t1)
-/* 03CFA4 7F008474 44050000 */  mfc1  $a1, $f0
-/* 03CFA8 7F008478 44061000 */  mfc1  $a2, $f2
-/* 03CFAC 7F00847C 44076000 */  mfc1  $a3, $f12
-/* 03CFB0 7F008480 E7A80018 */  swc1  $f8, 0x18($sp)
-/* 03CFB4 7F008484 E7A40014 */  swc1  $f4, 0x14($sp)
-/* 03CFB8 7F008488 27A40060 */  addiu $a0, $sp, 0x60
-/* 03CFBC 7F00848C E7B00020 */  swc1  $f16, 0x20($sp)
-/* 03CFC0 7F008490 E7B20024 */  swc1  $f18, 0x24($sp)
-/* 03CFC4 7F008494 0FC165A5 */  jal   matrix_4x4_7F059694
-/* 03CFC8 7F008498 E7AA001C */   swc1  $f10, 0x1c($sp)
-/* 03CFCC 7F00849C 02002025 */  move  $a0, $s0
-/* 03CFD0 7F0084A0 24050002 */  li    $a1, 2
-/* 03CFD4 7F0084A4 0FC01FCC */  jal   sub_GAME_7F007F30
-/* 03CFD8 7F0084A8 27A60060 */   addiu $a2, $sp, 0x60
-/* 03CFDC 7F0084AC 8FBF0034 */  lw    $ra, 0x34($sp)
-/* 03CFE0 7F0084B0 8FB00030 */  lw    $s0, 0x30($sp)
-/* 03CFE4 7F0084B4 27BD00A0 */  addiu $sp, $sp, 0xa0
-/* 03CFE8 7F0084B8 03E00008 */  jr    $ra
-/* 03CFEC 7F0084BC 00000000 */   nop   
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 void load_display_rare_logo(void) {
@@ -590,6 +455,9 @@ void load_display_rare_logo(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_8004F2D8
+.word 0x459c4000
 .text
 glabel load_display_rare_logo
 /* 03CFF0 7F0084C0 44872000 */  mtc1  $a3, $f4
@@ -1295,6 +1163,9 @@ void sub_GAME_7F008E80(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel D_8004F2DC
+.word 0x3f68f5c3
 .text
 glabel sub_GAME_7F008E80
 /* 03D9B0 7F008E80 240E0002 */  li    $t6, 2
