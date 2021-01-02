@@ -9122,13 +9122,13 @@ Gfx *draw_toggle_options(Gfx *gdl)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0ABDFC(void) {
+void draw_game_options_page(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0ABDFC
+glabel draw_game_options_page
 /* 0E092C 7F0ABDFC 27BDFFA0 */  addiu $sp, $sp, -0x60
 /* 0E0930 7F0ABE00 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0E0934 7F0ABE04 AFB00038 */  sw    $s0, 0x38($sp)
@@ -10075,7 +10075,7 @@ s32 sub_GAME_7F0ACA28(s32 arg0, s32 arg1, s32 arg2)
                 arg0 = sub_GAME_7F0AB4B8(arg0, arg1);
                 break;
             case WATCH_INDEX_GAME_OPTIONS:
-                arg0 = sub_GAME_7F0ABDFC(arg0, arg1);
+                arg0 = draw_game_options_page(arg0, arg1);
                 break;
             case WATCH_INDEX_MISSION_BRIEFING:
                 arg0 = sub_GAME_7F0AC168(arg0, arg1);
@@ -10166,7 +10166,7 @@ glabel sub_GAME_7F0ACA28
 /* 0E1638 7F0ACB08 00408025 */   move  $s0, $v0
 .L7F0ACB0C:
 /* 0E163C 7F0ACB0C 02002025 */  move  $a0, $s0
-/* 0E1640 7F0ACB10 0FC2AF7F */  jal   sub_GAME_7F0ABDFC
+/* 0E1640 7F0ACB10 0FC2AF7F */  jal   draw_game_options_page
 /* 0E1644 7F0ACB14 8FA50024 */   lw    $a1, 0x24($sp)
 /* 0E1648 7F0ACB18 10000010 */  b     .L7F0ACB5C
 /* 0E164C 7F0ACB1C 00408025 */   move  $s0, $v0
