@@ -4199,7 +4199,8 @@ SECTIONS
    _cfbSegmentEnd = ADDR(.cfb) + SIZEOF(.cfb);
    _cfbSegmentRomEnd = _cfbSegmentRomStart + SIZEOF(.cfb);
 
-   _unkDisplayList = 0x1000000;
+   _unkDisplayList1 = 0x1000000;
+   _unkDisplayList2 = 0x1000040;
 
    /*move em to end, out of the way*/
    /DISCARD/ : {

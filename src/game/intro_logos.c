@@ -114,13 +114,14 @@ u32 D_8002A8B0 = 0;
 */
 
 
-// The code refers to a symbol at 0x1000000 (= 0x81000000 if you OS_K0_TO_PHYSICAL), but that variable doesn't appear
-// to exist. This one has therefor been added manually to the .ld file. Perhaps there's a better way to do this.
-extern Gfx *_unkDisplayList;
+// The code below refers to a symbols around 0x1000000 (= 0x81000000 if you OS_K0_TO_PHYSICAL), but that variable 
+// doesn't appear to exist. This one has therefor been added manually to the .ld file. Perhaps there's a better way to do this.
+extern Gfx *_unkDisplayList1;
+extern Gfx *_unkDisplayList2;
 Gfx *something_with_gunbarrel_and_rareware_logo_matrix_manip(Gfx* gdl) {
   guTranslate(&matrix_buffer_rarelogo_2[D_8002A7D0], x, y, -5.0f);
   guTranslate(&matrix_buffer_gunbarrel_1[D_8002A7D0], dword_CODE_bss_8006957C, dword_CODE_bss_80069580, -5.0f);
-  gSPDisplayList(gdl++, &_unkDisplayList);
+  gSPDisplayList(gdl++, &_unkDisplayList1);
 
   gdl = sub_GAME_7F01C1A4(insert_imageDL(gdl));
 
@@ -133,95 +134,19 @@ Gfx *something_with_gunbarrel_and_rareware_logo_matrix_manip(Gfx* gdl) {
   return gdl;
 }
 
-#ifdef NONMATCHING
-void insert_sight_backdrop_eye_intro(void) {
+Gfx *insert_sight_backdrop_eye_intro(Gfx *gdl) {
+  guTranslate(&matrix_buffer_rarelogo_2[D_8002A7D0], x + 768.0f, y - 40.0f, -5.0f);
+  guScale(&matrix_buffer_gunbarrel_1[D_8002A7D0], 2.7f, 2.57f, 1.0f);
+  gSPDisplayList(gdl++, &_unkDisplayList1);
+  gSPDisplayList(gdl++, &_unkDisplayList2);
 
+  gdl = sub_GAME_7F01C1A4(gdl);
+
+  gSPMatrix(gdl++, osVirtualToPhysical(&matrix_buffer_gunbarrel_1[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW));
+  gSPDisplayList(gdl++, OS_PHYSICAL_TO_K0(dword_CODE_bss_80069554));
+
+  return gdl;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel insert_sight_backdrop_eye_intro
-/* 03C6C4 7F007B94 3C018007 */  lui   $at, %hi(x)
-/* 03C6C8 7F007B98 C4249574 */  lwc1  $f4, %lo(x)($at)
-/* 03C6CC 7F007B9C 3C014440 */  li    $at, 0x44400000 # 768.000000
-/* 03C6D0 7F007BA0 44813000 */  mtc1  $at, $f6
-/* 03C6D4 7F007BA4 3C018007 */  lui   $at, %hi(y)
-/* 03C6D8 7F007BA8 C42A9578 */  lwc1  $f10, %lo(y)($at)
-/* 03C6DC 7F007BAC 3C014220 */  li    $at, 0x42200000 # 40.000000
-/* 03C6E0 7F007BB0 44818000 */  mtc1  $at, $f16
-/* 03C6E4 7F007BB4 46062200 */  add.s $f8, $f4, $f6
-/* 03C6E8 7F007BB8 3C0E8003 */  lui   $t6, %hi(D_8002A7D0) 
-/* 03C6EC 7F007BBC 8DCEA7D0 */  lw    $t6, %lo(D_8002A7D0)($t6)
-/* 03C6F0 7F007BC0 46105481 */  sub.s $f18, $f10, $f16
-/* 03C6F4 7F007BC4 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 03C6F8 7F007BC8 3C188007 */  lui   $t8, %hi(matrix_buffer_rarelogo_2) 
-/* 03C6FC 7F007BCC 8F189564 */  lw    $t8, %lo(matrix_buffer_rarelogo_2)($t8)
-/* 03C700 7F007BD0 AFB00018 */  sw    $s0, 0x18($sp)
-/* 03C704 7F007BD4 00808025 */  move  $s0, $a0
-/* 03C708 7F007BD8 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 03C70C 7F007BDC 44069000 */  mfc1  $a2, $f18
-/* 03C710 7F007BE0 44054000 */  mfc1  $a1, $f8
-/* 03C714 7F007BE4 000E7980 */  sll   $t7, $t6, 6
-/* 03C718 7F007BE8 3C07C0A0 */  lui   $a3, 0xc0a0
-/* 03C71C 7F007BEC 0C005B46 */  jal   guTranslate
-/* 03C720 7F007BF0 01F82021 */   addu  $a0, $t7, $t8
-/* 03C724 7F007BF4 3C198003 */  lui   $t9, %hi(D_8002A7D0) 
-/* 03C728 7F007BF8 8F39A7D0 */  lw    $t9, %lo(D_8002A7D0)($t9)
-/* 03C72C 7F007BFC 3C098007 */  lui   $t1, %hi(matrix_buffer_gunbarrel_1) 
-/* 03C730 7F007C00 8D299568 */  lw    $t1, %lo(matrix_buffer_gunbarrel_1)($t1)
-/* 03C734 7F007C04 3C05402C */  lui   $a1, (0x402CCCCD >> 16) # lui $a1, 0x402c
-/* 03C738 7F007C08 3C064024 */  lui   $a2, (0x40247AE1 >> 16) # lui $a2, 0x4024
-/* 03C73C 7F007C0C 00194180 */  sll   $t0, $t9, 6
-/* 03C740 7F007C10 34C67AE1 */  ori   $a2, (0x40247AE1 & 0xFFFF) # ori $a2, $a2, 0x7ae1
-/* 03C744 7F007C14 34A5CCCD */  ori   $a1, (0x402CCCCD & 0xFFFF) # ori $a1, $a1, 0xcccd
-/* 03C748 7F007C18 3C073F80 */  lui   $a3, 0x3f80
-/* 03C74C 7F007C1C 0C005BB9 */  jal   guScale
-/* 03C750 7F007C20 01092021 */   addu  $a0, $t0, $t1
-/* 03C754 7F007C24 02001025 */  move  $v0, $s0
-/* 03C758 7F007C28 3C0A0100 */  lui   $t2, 0x100
-/* 03C75C 7F007C2C 3C050600 */  lui   $a1, 0x600
-/* 03C760 7F007C30 254A0000 */  addiu $t2, $t2, 0
-/* 03C764 7F007C34 26030008 */  addiu $v1, $s0, 8
-/* 03C768 7F007C38 3C0B0100 */  lui   $t3, 0x100
-/* 03C76C 7F007C3C AC4A0004 */  sw    $t2, 4($v0)
-/* 03C770 7F007C40 AC450000 */  sw    $a1, ($v0)
-/* 03C774 7F007C44 256B0040 */  addiu $t3, $t3, 0x40
-/* 03C778 7F007C48 AC6B0004 */  sw    $t3, 4($v1)
-/* 03C77C 7F007C4C AC650000 */  sw    $a1, ($v1)
-/* 03C780 7F007C50 0FC07069 */  jal   sub_GAME_7F01C1A4
-/* 03C784 7F007C54 24640008 */   addiu $a0, $v1, 8
-/* 03C788 7F007C58 3C0C0100 */  lui   $t4, (0x01000040 >> 16) # lui $t4, 0x100
-/* 03C78C 7F007C5C 358C0040 */  ori   $t4, (0x01000040 & 0xFFFF) # ori $t4, $t4, 0x40
-/* 03C790 7F007C60 AFA20024 */  sw    $v0, 0x24($sp)
-/* 03C794 7F007C64 AC4C0000 */  sw    $t4, ($v0)
-/* 03C798 7F007C68 3C0D8003 */  lui   $t5, %hi(D_8002A7D0) 
-/* 03C79C 7F007C6C 8DADA7D0 */  lw    $t5, %lo(D_8002A7D0)($t5)
-/* 03C7A0 7F007C70 3C0F8007 */  lui   $t7, %hi(matrix_buffer_gunbarrel_1) 
-/* 03C7A4 7F007C74 8DEF9568 */  lw    $t7, %lo(matrix_buffer_gunbarrel_1)($t7)
-/* 03C7A8 7F007C78 000D7180 */  sll   $t6, $t5, 6
-/* 03C7AC 7F007C7C 24500008 */  addiu $s0, $v0, 8
-/* 03C7B0 7F007C80 0C003A2C */  jal   osVirtualToPhysical
-/* 03C7B4 7F007C84 01CF2021 */   addu  $a0, $t6, $t7
-/* 03C7B8 7F007C88 8FB80024 */  lw    $t8, 0x24($sp)
-/* 03C7BC 7F007C8C 02001825 */  move  $v1, $s0
-/* 03C7C0 7F007C90 3C190600 */  lui   $t9, 0x600
-/* 03C7C4 7F007C94 AF020004 */  sw    $v0, 4($t8)
-/* 03C7C8 7F007C98 AC790000 */  sw    $t9, ($v1)
-/* 03C7CC 7F007C9C 3C088007 */  lui   $t0, %hi(dword_CODE_bss_80069554) 
-/* 03C7D0 7F007CA0 8D089554 */  lw    $t0, %lo(dword_CODE_bss_80069554)($t0)
-/* 03C7D4 7F007CA4 3C018000 */  lui   $at, 0x8000
-/* 03C7D8 7F007CA8 26020008 */  addiu $v0, $s0, 8
-/* 03C7DC 7F007CAC 01014821 */  addu  $t1, $t0, $at
-/* 03C7E0 7F007CB0 AC690004 */  sw    $t1, 4($v1)
-/* 03C7E4 7F007CB4 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 03C7E8 7F007CB8 8FB00018 */  lw    $s0, 0x18($sp)
-/* 03C7EC 7F007CBC 27BD0030 */  addiu $sp, $sp, 0x30
-/* 03C7F0 7F007CC0 03E00008 */  jr    $ra
-/* 03C7F4 7F007CC4 00000000 */   nop   
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F007CC8(void) {
