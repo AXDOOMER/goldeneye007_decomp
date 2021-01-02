@@ -48,13 +48,8 @@ s32 dword_CODE_bss_80069594;
 u32 D_8002A7D0 = 0;
 u8 D_8002A7D4 = 0x3;
 u32 D_8002A7D8 = 0;
-u32 D_8002A7DC = 0;
-u32 D_8002A7E0 = 0;
-u32 D_8002A7E4 = 0;
-
-u32 D_8002A7E8 = 0xFF;
-u32 D_8002A7EC = 0xFF;
-u32 D_8002A7F0 = 0xFF;
+s32 D_8002A7DC[3] = {0x00, 0x00, 0x00};
+s32 D_8002A7E8[3] = {0xFF, 0xFF, 0xFF};
 u32 D_8002A7F4 = 0;
 u32 D_8002A7F8 = 0;
 u32 D_8002A7FC = 0;
@@ -119,37 +114,37 @@ u32 D_8002A8B0 = 0;
 extern Gfx *_unkDisplayList1;
 extern Gfx *_unkDisplayList2;
 Gfx *something_with_gunbarrel_and_rareware_logo_matrix_manip(Gfx* gdl) {
-  guTranslate(&matrix_buffer_rarelogo_2[D_8002A7D0], x, y, -5.0f);
-  guTranslate(&matrix_buffer_gunbarrel_1[D_8002A7D0], dword_CODE_bss_8006957C, dword_CODE_bss_80069580, -5.0f);
-  gSPDisplayList(gdl++, &_unkDisplayList1);
+    guTranslate(&matrix_buffer_rarelogo_2[D_8002A7D0], x, y, -5.0f);
+    guTranslate(&matrix_buffer_gunbarrel_1[D_8002A7D0], dword_CODE_bss_8006957C, dword_CODE_bss_80069580, -5.0f);
+    gSPDisplayList(gdl++, &_unkDisplayList1);
 
-  gdl = sub_GAME_7F01C1A4(insert_imageDL(gdl));
+    gdl = sub_GAME_7F01C1A4(insert_imageDL(gdl));
 
-  gDPSetCombineMode(gdl++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
-  gDPSetPrimColor(gdl++, 0, 0, 0xE6, 0xE6, 0xE6, 0x00);
-  gSPDisplayList(gdl++, OS_PHYSICAL_TO_K0(dword_CODE_bss_80069554));
-  gSPMatrix(gdl++, osVirtualToPhysical(&matrix_buffer_gunbarrel_1[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW));
-  gSPDisplayList(gdl++, OS_PHYSICAL_TO_K0(dword_CODE_bss_80069554));
+    gDPSetCombineMode(gdl++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+    gDPSetPrimColor(gdl++, 0, 0, 0xE6, 0xE6, 0xE6, 0x00);
+    gSPDisplayList(gdl++, OS_PHYSICAL_TO_K0(dword_CODE_bss_80069554));
+    gSPMatrix(gdl++, osVirtualToPhysical(&matrix_buffer_gunbarrel_1[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW));
+    gSPDisplayList(gdl++, OS_PHYSICAL_TO_K0(dword_CODE_bss_80069554));
 
-  return gdl;
+    return gdl;
 }
 
 Gfx *insert_sight_backdrop_eye_intro(Gfx *gdl) {
-  guTranslate(&matrix_buffer_rarelogo_2[D_8002A7D0], x + 768.0f, y - 40.0f, -5.0f);
-  guScale(&matrix_buffer_gunbarrel_1[D_8002A7D0], 2.7f, 2.57f, 1.0f);
-  gSPDisplayList(gdl++, &_unkDisplayList1);
-  gSPDisplayList(gdl++, &_unkDisplayList2);
+    guTranslate(&matrix_buffer_rarelogo_2[D_8002A7D0], x + 768.0f, y - 40.0f, -5.0f);
+    guScale(&matrix_buffer_gunbarrel_1[D_8002A7D0], 2.7f, 2.57f, 1.0f);
+    gSPDisplayList(gdl++, &_unkDisplayList1);
+    gSPDisplayList(gdl++, &_unkDisplayList2);
 
-  gdl = sub_GAME_7F01C1A4(gdl);
+    gdl = sub_GAME_7F01C1A4(gdl);
 
-  gSPMatrix(gdl++, osVirtualToPhysical(&matrix_buffer_gunbarrel_1[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW));
-  gSPDisplayList(gdl++, OS_PHYSICAL_TO_K0(dword_CODE_bss_80069554));
+    gSPMatrix(gdl++, osVirtualToPhysical(&matrix_buffer_gunbarrel_1[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW));
+    gSPDisplayList(gdl++, OS_PHYSICAL_TO_K0(dword_CODE_bss_80069554));
 
-  return gdl;
+    return gdl;
 }
 
-Gfx *sub_GAME_7F01B240(Gfx*, s32, s32, struct coord*, struct coord*);
-Gfx *sub_GAME_7F007CC8(Gfx *gdl, s32 arg1, struct coord* arg2, struct coord* arg3) {
+Gfx *sub_GAME_7F01B240(Gfx*, s32, s32, s32[3], s32[3]);
+Gfx *sub_GAME_7F007CC8(Gfx *gdl, s32 arg1, s32 arg2[3], s32 arg3[3]) {
     gDPSetRenderMode(gdl++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
     gDPSetCycleType(gdl++, G_CYC_1CYCLE);
     gDPSetTexturePersp(gdl++, G_TP_NONE);
@@ -159,85 +154,31 @@ Gfx *sub_GAME_7F007CC8(Gfx *gdl, s32 arg1, struct coord* arg2, struct coord* arg
     return sub_GAME_7F01B240(gdl, OS_PHYSICAL_TO_K0(dword_CODE_bss_8006958C), arg1, arg2, arg3);
 }
 
-#ifdef NONMATCHING
-void insert_sniper_sight_eye_intro(void) {
+f32 truncf(f32);
+Gfx *insert_sniper_sight_eye_intro(Gfx *gdl) {
+    s32 sp3C[3] = D_8002A7DC;
+    s32 sp30[3] = D_8002A7E8;
 
+    gSPDisplayList(gdl++, &_unkDisplayList1);
+
+    gdl = insert_imageDL(gdl);
+
+    gDPSetCombineMode(gdl++, G_CC_MODULATEI_PRIM, G_CC_MODULATEI_PRIM);
+
+    return sub_GAME_7F007CC8(gdl, truncf((viGetX() * x) / 1280.0f), sp3C, sp30);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel insert_sniper_sight_eye_intro
-/* 03C8BC 7F007D8C 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 03C8C0 7F007D90 3C0F8003 */  lui   $t7, %hi(D_8002A7DC) 
-/* 03C8C4 7F007D94 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 03C8C8 7F007D98 AFB00018 */  sw    $s0, 0x18($sp)
-/* 03C8CC 7F007D9C 25EFA7DC */  addiu $t7, %lo(D_8002A7DC) # addiu $t7, $t7, -0x5824
-/* 03C8D0 7F007DA0 8DE10000 */  lw    $at, ($t7)
-/* 03C8D4 7F007DA4 27AE003C */  addiu $t6, $sp, 0x3c
-/* 03C8D8 7F007DA8 8DE80004 */  lw    $t0, 4($t7)
-/* 03C8DC 7F007DAC ADC10000 */  sw    $at, ($t6)
-/* 03C8E0 7F007DB0 8DE10008 */  lw    $at, 8($t7)
-/* 03C8E4 7F007DB4 3C0A8003 */  lui   $t2, %hi(D_8002A7E8) 
-/* 03C8E8 7F007DB8 254AA7E8 */  addiu $t2, %lo(D_8002A7E8) # addiu $t2, $t2, -0x5818
-/* 03C8EC 7F007DBC ADC80004 */  sw    $t0, 4($t6)
-/* 03C8F0 7F007DC0 ADC10008 */  sw    $at, 8($t6)
-/* 03C8F4 7F007DC4 8D410000 */  lw    $at, ($t2)
-/* 03C8F8 7F007DC8 27A90030 */  addiu $t1, $sp, 0x30
-/* 03C8FC 7F007DCC 8D4D0004 */  lw    $t5, 4($t2)
-/* 03C900 7F007DD0 AD210000 */  sw    $at, ($t1)
-/* 03C904 7F007DD4 8D410008 */  lw    $at, 8($t2)
-/* 03C908 7F007DD8 3C180100 */  lui   $t8, 0x100
-/* 03C90C 7F007DDC AD2D0004 */  sw    $t5, 4($t1)
-/* 03C910 7F007DE0 AD210008 */  sw    $at, 8($t1)
-/* 03C914 7F007DE4 27180000 */  addiu $t8, $t8, 0
-/* 03C918 7F007DE8 3C190600 */  lui   $t9, 0x600
-/* 03C91C 7F007DEC AC990000 */  sw    $t9, ($a0)
-/* 03C920 7F007DF0 AC980004 */  sw    $t8, 4($a0)
-/* 03C924 7F007DF4 24900008 */  addiu $s0, $a0, 8
-/* 03C928 7F007DF8 0FC07034 */  jal   insert_imageDL
-/* 03C92C 7F007DFC 02002025 */   move  $a0, $s0
-/* 03C930 7F007E00 3C0EFC11 */  lui   $t6, (0xFC11FE23 >> 16) # lui $t6, 0xfc11
-/* 03C934 7F007E04 35CEFE23 */  ori   $t6, (0xFC11FE23 & 0xFFFF) # ori $t6, $t6, 0xfe23
-/* 03C938 7F007E08 240FF7FB */  li    $t7, -2053
-/* 03C93C 7F007E0C AC4F0004 */  sw    $t7, 4($v0)
-/* 03C940 7F007E10 AC4E0000 */  sw    $t6, ($v0)
-/* 03C944 7F007E14 0C001107 */  jal   viGetX
-/* 03C948 7F007E18 24500008 */   addiu $s0, $v0, 8
-/* 03C94C 7F007E1C 44822000 */  mtc1  $v0, $f4
-/* 03C950 7F007E20 3C018007 */  lui   $at, %hi(x)
-/* 03C954 7F007E24 C4289574 */  lwc1  $f8, %lo(x)($at)
-/* 03C958 7F007E28 468021A0 */  cvt.s.w $f6, $f4
-/* 03C95C 7F007E2C 3C0144A0 */  li    $at, 0x44A00000 # 1280.000000
-/* 03C960 7F007E30 44818000 */  mtc1  $at, $f16
-/* 03C964 7F007E34 46083282 */  mul.s $f10, $f6, $f8
-/* 03C968 7F007E38 0FC170D8 */  jal   truncf
-/* 03C96C 7F007E3C 46105303 */   div.s $f12, $f10, $f16
-/* 03C970 7F007E40 4600048D */  trunc.w.s $f18, $f0
-/* 03C974 7F007E44 02002025 */  move  $a0, $s0
-/* 03C978 7F007E48 27A6003C */  addiu $a2, $sp, 0x3c
-/* 03C97C 7F007E4C 27A70030 */  addiu $a3, $sp, 0x30
-/* 03C980 7F007E50 44059000 */  mfc1  $a1, $f18
-/* 03C984 7F007E54 0FC01F32 */  jal   sub_GAME_7F007CC8
-/* 03C988 7F007E58 00000000 */   nop   
-/* 03C98C 7F007E5C 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 03C990 7F007E60 8FB00018 */  lw    $s0, 0x18($sp)
-/* 03C994 7F007E64 27BD0048 */  addiu $sp, $sp, 0x48
-/* 03C998 7F007E68 03E00008 */  jr    $ra
-/* 03C99C 7F007E6C 00000000 */   nop   
-)
-#endif
 
 Gfx *sub_GAME_7F01C1A4(Gfx *gdl);
 Gfx *sub_GAME_7F007E70(Gfx *gdl, u32 a) {
-  gdl = sub_GAME_7F01C1A4(gdl);
+    gdl = sub_GAME_7F01C1A4(gdl);
 
-  gDPSetRenderMode(gdl++, G_RM_CLD_SURF, G_RM_CLD_SURF2);
-  gDPSetCombineMode(gdl++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
-  gDPSetPrimColor(gdl++, 0, 0, 0x00, 0x00, 0x00, a);
-  gDPSetColorDither(gdl++, G_CD_MAGICSQ);
-  gDPFillRectangle(gdl++, 0, 0, viGetX(), viGetY());
+    gDPSetRenderMode(gdl++, G_RM_CLD_SURF, G_RM_CLD_SURF2);
+    gDPSetCombineMode(gdl++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+    gDPSetPrimColor(gdl++, 0, 0, 0x00, 0x00, 0x00, a);
+    gDPSetColorDither(gdl++, G_CD_MAGICSQ);
+    gDPFillRectangle(gdl++, 0, 0, viGetX(), viGetY());
 
-  return gdl;
+    return gdl;
 }
 
 #ifdef NONMATCHING
