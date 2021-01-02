@@ -3,8 +3,12 @@ name: JP-Status
 on:
   push:
     branches: master
-    paths-ignore:
+    paths-ignore: # Don't trigger on files that are updated by the CI or other non-breaking files
     - 'tools/**'
+    - '*.md'
+    - '.github/**'
+    - '.gitignore'
+    - 'CppProperties.json'
   pull_request:
     branches: master
     
