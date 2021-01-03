@@ -15,7 +15,7 @@ extern f32 x;
 extern f32 y;
 extern f32 dword_CODE_bss_8006957C;
 extern f32 dword_CODE_bss_80069580;
-extern s32 word_CODE_bss_80069584;
+extern s16 word_CODE_bss_80069584;
 extern s32 dword_CODE_bss_80069588;
 extern s32 dword_CODE_bss_8006958C;
 extern s32 virtualaddress;
