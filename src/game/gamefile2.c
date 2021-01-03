@@ -194,26 +194,11 @@ u32 get_foldernum_of_eeprom(struct save_data *eeprom)
   return eeprom->completion_bitflags & 7;
 }
 
-
-
-
-#ifdef NONMATCHING
-void set_eeprom_to_folder_num(void) {
-
+void set_eeprom_to_folder_num(struct save_data *eeprom, u32 folder) {
+    eeprom->completion_bitflags = eeprom->completion_bitflags & 0xFFF8;
+  
+    eeprom->completion_bitflags = eeprom->completion_bitflags | folder & 7;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_eeprom_to_folder_num
-/* 052408 7F01D8D8 908E0008 */  lbu   $t6, 8($a0)
-/* 05240C 7F01D8DC 30B90007 */  andi  $t9, $a1, 7
-/* 052410 7F01D8E0 31D8FFF8 */  andi  $t8, $t6, 0xfff8
-/* 052414 7F01D8E4 A0980008 */  sb    $t8, 8($a0)
-/* 052418 7F01D8E8 03194025 */  or    $t0, $t8, $t9
-/* 05241C 7F01D8EC 03E00008 */  jr    $ra
-/* 052420 7F01D8F0 A0880008 */   sb    $t0, 8($a0)
-)
-#endif
 
 
 u32 set_eeprom_flag_0x18(struct save_data *folder)
