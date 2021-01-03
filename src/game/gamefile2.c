@@ -208,7 +208,7 @@ u32 set_eeprom_flag_0x18(struct save_data *folder)
 
 void reset_eeprom_flag_0x18(struct save_data *folder, s32 arg1) {
     folder->completion_bitflags = folder->completion_bitflags & 0xFFE7;
-    
+
     folder->completion_bitflags = (folder->completion_bitflags | ((arg1 * 8) & 0x18));
 }
 
@@ -474,38 +474,14 @@ glabel sub_GAME_7F01DAE4
 
 
 
-#ifdef NONMATCHING
-void get_eeprom_stage_completed_for_difficulty(void) {
+s32 get_eeprom_stage_completed_for_difficulty(struct save_data *folder, LEVEL_INDEX levelid, DIFFICULTY difficulty) {
+    
+    if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007)) {
+        return get_eeprom_stage_complete_time_for_difficulty(folder, levelid, difficulty) != 0;
+    }
 
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_eeprom_stage_completed_for_difficulty
-/* 052790 7F01DC60 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 052794 7F01DC64 04A0000D */  bltz  $a1, .L7F01DC9C
-/* 052798 7F01DC68 AFBF0014 */   sw    $ra, 0x14($sp)
-/* 05279C 7F01DC6C 28A10014 */  slti  $at, $a1, 0x14
-/* 0527A0 7F01DC70 5020000B */  beql  $at, $zero, .L7F01DCA0
-/* 0527A4 7F01DC74 00001025 */   move  $v0, $zero
-/* 0527A8 7F01DC78 04C00008 */  bltz  $a2, .L7F01DC9C
-/* 0527AC 7F01DC7C 28C10004 */   slti  $at, $a2, 4
-/* 0527B0 7F01DC80 50200007 */  beql  $at, $zero, .L7F01DCA0
-/* 0527B4 7F01DC84 00001025 */   move  $v0, $zero
-/* 0527B8 7F01DC88 0FC07664 */  jal   get_eeprom_stage_complete_time_for_difficulty
-/* 0527BC 7F01DC8C 00000000 */   nop   
-/* 0527C0 7F01DC90 0002702B */  sltu  $t6, $zero, $v0
-/* 0527C4 7F01DC94 10000002 */  b     .L7F01DCA0
-/* 0527C8 7F01DC98 01C01025 */   move  $v0, $t6
-.L7F01DC9C:
-/* 0527CC 7F01DC9C 00001025 */  move  $v0, $zero
-.L7F01DCA0:
-/* 0527D0 7F01DCA0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0527D4 7F01DCA4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0527D8 7F01DCA8 03E00008 */  jr    $ra
-/* 0527DC 7F01DCAC 00000000 */   nop   
-)
-#endif
 
 
 
