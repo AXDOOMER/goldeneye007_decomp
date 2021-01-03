@@ -474,7 +474,7 @@ glabel sub_GAME_7F01DAE4
 
 
 
-s32 get_eeprom_stage_completed_for_difficulty(struct save_data *folder, LEVEL_INDEX levelid, DIFFICULTY difficulty) {
+s32 get_eeprom_stage_completed_for_difficulty(struct save_data *folder, s32 levelid, DIFFICULTY difficulty) {
     
     if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007)) {
         return get_eeprom_stage_complete_time_for_difficulty(folder, levelid, difficulty) != 0;
@@ -485,47 +485,18 @@ s32 get_eeprom_stage_completed_for_difficulty(struct save_data *folder, LEVEL_IN
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F01DCB0(void) {
+void sub_GAME_7F01DCB0(struct save_data *folder, s32 levelid, DIFFICULTY difficulty, s32 arg4) {
+    s32 temp_v0;
 
+    if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007)) {
+        
+        temp_v0 = get_eeprom_stage_complete_time_for_difficulty(folder, levelid, difficulty);
+        
+        if ((temp_v0 == 0) || (arg3 < temp_v0)) {
+            sub_GAME_7F01DAE4(folder, levelid, difficulty, arg4);
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01DCB0
-/* 0527E0 7F01DCB0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0527E4 7F01DCB4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0527E8 7F01DCB8 04A00015 */  bltz  $a1, .L7F01DD10
-/* 0527EC 7F01DCBC AFA40018 */   sw    $a0, 0x18($sp)
-/* 0527F0 7F01DCC0 28A10014 */  slti  $at, $a1, 0x14
-/* 0527F4 7F01DCC4 50200013 */  beql  $at, $zero, .L7F01DD14
-/* 0527F8 7F01DCC8 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0527FC 7F01DCCC 04C00010 */  bltz  $a2, .L7F01DD10
-/* 052800 7F01DCD0 28C10004 */   slti  $at, $a2, 4
-/* 052804 7F01DCD4 5020000F */  beql  $at, $zero, .L7F01DD14
-/* 052808 7F01DCD8 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 05280C 7F01DCDC AFA5001C */  sw    $a1, 0x1c($sp)
-/* 052810 7F01DCE0 AFA60020 */  sw    $a2, 0x20($sp)
-/* 052814 7F01DCE4 0FC07664 */  jal   get_eeprom_stage_complete_time_for_difficulty
-/* 052818 7F01DCE8 AFA70024 */   sw    $a3, 0x24($sp)
-/* 05281C 7F01DCEC 8FA5001C */  lw    $a1, 0x1c($sp)
-/* 052820 7F01DCF0 8FA60020 */  lw    $a2, 0x20($sp)
-/* 052824 7F01DCF4 10400004 */  beqz  $v0, .L7F01DD08
-/* 052828 7F01DCF8 8FA70024 */   lw    $a3, 0x24($sp)
-/* 05282C 7F01DCFC 00E2082A */  slt   $at, $a3, $v0
-/* 052830 7F01DD00 50200004 */  beql  $at, $zero, .L7F01DD14
-/* 052834 7F01DD04 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F01DD08:
-/* 052838 7F01DD08 0FC076B9 */  jal   sub_GAME_7F01DAE4
-/* 05283C 7F01DD0C 8FA40018 */   lw    $a0, 0x18($sp)
-.L7F01DD10:
-/* 052840 7F01DD10 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F01DD14:
-/* 052844 7F01DD14 27BD0018 */  addiu $sp, $sp, 0x18
-/* 052848 7F01DD18 03E00008 */  jr    $ra
-/* 05284C 7F01DD1C 00000000 */   nop   
-)
-#endif
 
 
 
