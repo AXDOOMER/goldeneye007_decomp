@@ -1084,6 +1084,8 @@ Discarded input sections
  .mdebug        0x0000000000000000      0x218 build/u/src/c_data_filler.o
  .options       0x0000000000000000       0x20 build/u/src/inflate/inflate.o
  .reginfo       0x0000000000000000       0x18 build/u/src/inflate/inflate.o
+ .gptab.data    0x0000000000000000       0x40 build/u/src/inflate/inflate.o
+ .mdebug        0x0000000000000000      0xa98 build/u/src/inflate/inflate.o
  .options       0x0000000000000000       0x20 build/u/src/game/initgamedata.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/initgamedata.o
  .mdebug        0x0000000000000000      0x7ac build/u/src/game/initgamedata.o
@@ -1192,6 +1194,8 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/u/src/game/unk_01BAE0.o
  .options       0x0000000000000000       0x20 build/u/src/game/blood_animation.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/blood_animation.o
+ .gptab.data    0x0000000000000000       0x20 build/u/src/game/blood_animation.o
+ .mdebug        0x0000000000000000      0xda0 build/u/src/game/blood_animation.o
  .options       0x0000000000000000       0x20 build/u/src/game/blood_decrypt.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/blood_decrypt.o
  .options       0x0000000000000000       0x20 build/u/src/game/gamefile.o
@@ -5358,10 +5362,10 @@ Linker script and memory map
                 0x000000007f0cff6c                init_indy_if_ready
                 0x000000007f0cff9c                load_resource_on_indy
                 0x000000007f0cffe0                indy_send_capture_data
-                0x000000007f0d001c                indy_loadfile
+                0x000000007f0d001c                indy_load_ramrom_file
                 0x000000007f0d005c                check_file_exported
                 0x000000007f0d0098                check_file_found_on_indy
-                0x000000007f0d00e0                response_from_command_string
+                0x000000007f0d00e0                send_command_string
                 0x000000007f0d0124                sub_GAME_7F0D0124
                 0x000000007f0d0154                send_indy_close_port_cmd
  build/u/src/game/indy_commands.o(.text)

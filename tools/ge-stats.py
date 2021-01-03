@@ -181,6 +181,7 @@ def generate_report(segments, files_completed, last_modified_file, Ver):
 
     printstring = printstring + str(totals['done']) + ' ' + str(totals['total']) + ' '
     printstring = printstring + str(files_completed['completed']) + ' ' + str(files_completed['total']) + ' '
+    printstring = printstring + './tools/report/template.html '
     if Ver.upper() in ("US"):
         printstring = printstring + './tools/report/index.html ' + last_modified_file + ' 0'
     elif Ver.upper() in ("JP"):
