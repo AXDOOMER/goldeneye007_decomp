@@ -251,7 +251,7 @@ glabel load_ramrom_from_devtool
 /* 0F494C 7F0BFE1C 3C048006 */   lui   $a0, %hi(aReplayDemo_load)
 /* 0F4950 7F0BFE20 2484B770 */  addiu $a0, %lo(aReplayDemo_load) # addiu $a0, $a0, -0x4890
 /* 0F4954 7F0BFE24 3C0500F0 */  lui   $a1, 0xf0
-/* 0F4958 7F0BFE28 0FC34007 */  jal   indy_loadfile
+/* 0F4958 7F0BFE28 0FC34007 */  jal   indy_load_ramrom_file
 /* 0F495C 7F0BFE2C 8FA6001C */   lw    $a2, 0x1c($sp)
 /* 0F4960 7F0BFE30 3C048009 */  lui   $a0, %hi(ramrom_data_target)
 /* 0F4964 7F0BFE34 2484C270 */  addiu $a0, %lo(ramrom_data_target) # addiu $a0, $a0, -0x3d90

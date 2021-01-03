@@ -1264,7 +1264,7 @@ Gfx *viSetFillColor(Gfx *gdl, s32 r, s32 g, s32 b) {
 #ifdef NONMATCHING
 s32 check_file_found_on_indy(s32, s32);
 void indy_send_capture_data(s32, s32, s32);
-s32 response_from_command_string(s32);
+s32 send_command_string(s32);
 int sprintf(char *str, const char *fmt, ...);
 void indy_grab_jpg_16bit(void)
 {
@@ -1279,15 +1279,15 @@ void indy_grab_jpg_16bit(void)
     sprintf(buffer, "grab.%d.temp.uix", jpg_16bit_grabnum);
     indy_send_capture_data(buffer, ptr_video_settings2->framebuf, (viGetY() * viGetX() * 2));
     sprintf(buffer, "uix2pix grab.%d.temp.uix", jpg_16bit_grabnum);
-    response_from_command_string(buffer);
+    send_command_string(buffer);
     sprintf(buffer, "fromalias grab.%d.temp.pix grab.%d.temp.rgb", jpg_16bit_grabnum, jpg_16bit_grabnum);
-    response_from_command_string(buffer);
+    send_command_string(buffer);
     sprintf(buffer, "imgcopy -fjfif grab.%d.temp.rgb grab.%d.jpeg", jpg_16bit_grabnum, jpg_16bit_grabnum);
-    response_from_command_string(buffer);
+    send_command_string(buffer);
     sprintf(buffer, "rm grab.%d.temp.uix grab.%d.temp.pix grab.%d.temp.rgb", jpg_16bit_grabnum, jpg_16bit_grabnum, jpg_16bit_grabnum);
-    response_from_command_string(buffer);
+    send_command_string(buffer);
     sprintf(buffer, "imgview grab.%d.jpeg", jpg_16bit_grabnum);
-    response_from_command_string(buffer);
+    send_command_string(buffer);
 }
 #else
 const char aGrab_D_jpeg_1[] = "grab.%d.jpeg";
@@ -1353,7 +1353,7 @@ glabel indy_grab_jpg_16bit
 /* 005418 70004818 24A584B4 */  addiu $a1, %lo(aUix2pixGrab_D_temp_uix) # addiu $a1, $a1, -0x7b4c
 /* 00541C 7000481C 0C002B25 */  jal   sprintf
 /* 005420 70004820 02002025 */   move  $a0, $s0
-/* 005424 70004824 0FC34038 */  jal   response_from_command_string
+/* 005424 70004824 0FC34038 */  jal   send_command_string
 /* 005428 70004828 02002025 */   move  $a0, $s0
 /* 00542C 7000482C 3C068002 */  lui   $a2, %hi(jpg_16bit_grabnum)
 /* 005430 70004830 8CC632C4 */  lw    $a2, %lo(jpg_16bit_grabnum)($a2)
@@ -1362,7 +1362,7 @@ glabel indy_grab_jpg_16bit
 /* 00543C 7000483C 02002025 */  move  $a0, $s0
 /* 005440 70004840 0C002B25 */  jal   sprintf
 /* 005444 70004844 00C03825 */   move  $a3, $a2
-/* 005448 70004848 0FC34038 */  jal   response_from_command_string
+/* 005448 70004848 0FC34038 */  jal   send_command_string
 /* 00544C 7000484C 02002025 */   move  $a0, $s0
 /* 005450 70004850 3C068002 */  lui   $a2, %hi(jpg_16bit_grabnum)
 /* 005454 70004854 8CC632C4 */  lw    $a2, %lo(jpg_16bit_grabnum)($a2)
@@ -1371,7 +1371,7 @@ glabel indy_grab_jpg_16bit
 /* 005460 70004860 02002025 */  move  $a0, $s0
 /* 005464 70004864 0C002B25 */  jal   sprintf
 /* 005468 70004868 00C03825 */   move  $a3, $a2
-/* 00546C 7000486C 0FC34038 */  jal   response_from_command_string
+/* 00546C 7000486C 0FC34038 */  jal   send_command_string
 /* 005470 70004870 02002025 */   move  $a0, $s0
 /* 005474 70004874 3C068002 */  lui   $a2, %hi(jpg_16bit_grabnum)
 /* 005478 70004878 8CC632C4 */  lw    $a2, %lo(jpg_16bit_grabnum)($a2)
@@ -1381,7 +1381,7 @@ glabel indy_grab_jpg_16bit
 /* 005488 70004888 00C03825 */  move  $a3, $a2
 /* 00548C 7000488C 0C002B25 */  jal   sprintf
 /* 005490 70004890 AFA60010 */   sw    $a2, 0x10($sp)
-/* 005494 70004894 0FC34038 */  jal   response_from_command_string
+/* 005494 70004894 0FC34038 */  jal   send_command_string
 /* 005498 70004898 02002025 */   move  $a0, $s0
 /* 00549C 7000489C 3C068002 */  lui   $a2, %hi(jpg_16bit_grabnum)
 /* 0054A0 700048A0 3C058003 */  lui   $a1, %hi(aImgviewGrab_D_jpeg)
@@ -1389,7 +1389,7 @@ glabel indy_grab_jpg_16bit
 /* 0054A8 700048A8 24A58564 */  addiu $a1, %lo(aImgviewGrab_D_jpeg) # addiu $a1, $a1, -0x7a9c
 /* 0054AC 700048AC 0C002B25 */  jal   sprintf
 /* 0054B0 700048B0 02002025 */   move  $a0, $s0
-/* 0054B4 700048B4 0FC34038 */  jal   response_from_command_string
+/* 0054B4 700048B4 0FC34038 */  jal   send_command_string
 /* 0054B8 700048B8 02002025 */   move  $a0, $s0
 /* 0054BC 700048BC 8FBF002C */  lw    $ra, 0x2c($sp)
 /* 0054C0 700048C0 8FB00020 */  lw    $s0, 0x20($sp)
@@ -1420,15 +1420,15 @@ loop_1:
     sprintf(&buffer, "grab.%d.temp.Uix", jpg_32bit_grabnum);
     indy_send_capture_data(&buffer, &cfb_16, (viGetY() * ((s32) (viGetX() << 0x10) >> 0x10)) * 4);
     sprintf(&buffer, "Uix2pix -xs%d grab.%d.temp.Uix", viGetX(), jpg_32bit_grabnum);
-    response_from_command_string(&buffer);
+    send_command_string(&buffer);
     sprintf(&buffer, "fromalias grab.%d.temp.pix grab.%d.temp.rgb", jpg_32bit_grabnum, jpg_32bit_grabnum);
-    response_from_command_string(&buffer);
+    send_command_string(&buffer);
     sprintf(&buffer, "imgcopy -fjfif grab.%d.temp.rgb grab.%d.jpeg", jpg_32bit_grabnum, jpg_32bit_grabnum);
-    response_from_command_string(&buffer);
+    send_command_string(&buffer);
     sprintf(&buffer, "rm grab.%d.temp.Uix grab.%d.temp.pix grab.%d.temp.rgb", jpg_32bit_grabnum, jpg_32bit_grabnum);
-    response_from_command_string(&buffer);
+    send_command_string(&buffer);
     sprintf(&buffer, "imgview grab.%d.jpeg", jpg_32bit_grabnum);
-    response_from_command_string(&buffer);
+    send_command_string(&buffer);
 }
 #else
 const char aGrab_D_jpeg[] = "grab.%d.jpeg";
@@ -1497,7 +1497,7 @@ glabel indy_grab_jpg_32bit
 /* 0055A0 700049A0 02002025 */  move  $a0, $s0
 /* 0055A4 700049A4 0C002B25 */  jal   sprintf
 /* 0055A8 700049A8 00403025 */   move  $a2, $v0
-/* 0055AC 700049AC 0FC34038 */  jal   response_from_command_string
+/* 0055AC 700049AC 0FC34038 */  jal   send_command_string
 /* 0055B0 700049B0 02002025 */   move  $a0, $s0
 /* 0055B4 700049B4 3C138002 */  lui   $s3, %hi(jpg_32bit_grabnum)
 /* 0055B8 700049B8 8E6732C8 */  lw    $a3, %lo(jpg_32bit_grabnum)($s3)
@@ -1506,7 +1506,7 @@ glabel indy_grab_jpg_32bit
 /* 0055C4 700049C4 02002025 */  move  $a0, $s0
 /* 0055C8 700049C8 0C002B25 */  jal   sprintf
 /* 0055CC 700049CC 00E03025 */   move  $a2, $a3
-/* 0055D0 700049D0 0FC34038 */  jal   response_from_command_string
+/* 0055D0 700049D0 0FC34038 */  jal   send_command_string
 /* 0055D4 700049D4 02002025 */   move  $a0, $s0
 /* 0055D8 700049D8 3C138002 */  lui   $s3, %hi(jpg_32bit_grabnum)
 /* 0055DC 700049DC 8E6732C8 */  lw    $a3, %lo(jpg_32bit_grabnum)($s3)
@@ -1515,7 +1515,7 @@ glabel indy_grab_jpg_32bit
 /* 0055E8 700049E8 02002025 */  move  $a0, $s0
 /* 0055EC 700049EC 0C002B25 */  jal   sprintf
 /* 0055F0 700049F0 00E03025 */   move  $a2, $a3
-/* 0055F4 700049F4 0FC34038 */  jal   response_from_command_string
+/* 0055F4 700049F4 0FC34038 */  jal   send_command_string
 /* 0055F8 700049F8 02002025 */   move  $a0, $s0
 /* 0055FC 700049FC 3C138002 */  lui   $s3, %hi(jpg_32bit_grabnum)
 /* 005600 70004A00 8E6732C8 */  lw    $a3, %lo(jpg_32bit_grabnum)($s3)
@@ -1525,7 +1525,7 @@ glabel indy_grab_jpg_32bit
 /* 005610 70004A10 00E03025 */  move  $a2, $a3
 /* 005614 70004A14 0C002B25 */  jal   sprintf
 /* 005618 70004A18 AFA70010 */   sw    $a3, 0x10($sp)
-/* 00561C 70004A1C 0FC34038 */  jal   response_from_command_string
+/* 00561C 70004A1C 0FC34038 */  jal   send_command_string
 /* 005620 70004A20 02002025 */   move  $a0, $s0
 /* 005624 70004A24 3C138002 */  lui   $s3, %hi(jpg_32bit_grabnum)
 /* 005628 70004A28 3C058003 */  lui   $a1, %hi(aImgviewGrab_D_jpeg_0)
@@ -1533,7 +1533,7 @@ glabel indy_grab_jpg_32bit
 /* 005630 70004A30 24A58654 */  addiu $a1, %lo(aImgviewGrab_D_jpeg_0) # addiu $a1, $a1, -0x79ac
 /* 005634 70004A34 0C002B25 */  jal   sprintf
 /* 005638 70004A38 02002025 */   move  $a0, $s0
-/* 00563C 70004A3C 0FC34038 */  jal   response_from_command_string
+/* 00563C 70004A3C 0FC34038 */  jal   send_command_string
 /* 005640 70004A40 02002025 */   move  $a0, $s0
 /* 005644 70004A44 8FBF002C */  lw    $ra, 0x2c($sp)
 /* 005648 70004A48 8FB0001C */  lw    $s0, 0x1c($sp)
@@ -1565,13 +1565,13 @@ loop_1:
     sprintf(&sp30, "grab.%d.temp.uix", rgb_16bit_grabnum);
     indy_send_capture_data(&sp30, ptr_video_settings2->framebuf, (viGetY() * ((s32) (viGetX() << 0x10) >> 0x10)) * 2);
     sprintf(&sp30, "uix2pix grab.%d.temp.uix", rgb_16bit_grabnum);
-    response_from_command_string(&sp30);
+    send_command_string(&sp30);
     sprintf(&sp30, "fromalias grab.%d.temp.pix grab.%d.rgb", rgb_16bit_grabnum, rgb_16bit_grabnum);
-    response_from_command_string(&sp30);
+    send_command_string(&sp30);
     sprintf(&sp30, "rm grab.%d.temp.uix grab.%d.temp.pix", rgb_16bit_grabnum, rgb_16bit_grabnum);
-    response_from_command_string(&sp30);
+    send_command_string(&sp30);
     sprintf(&sp30, "imgview grab.%d.rgb", rgb_16bit_grabnum);
-    response_from_command_string(&sp30);
+    send_command_string(&sp30);
 }
 #else
 const char aGrab_D_rgb[] = "grab.%d.rgb";
@@ -1636,7 +1636,7 @@ glabel indy_grab_rgb_16bit
 /* 005720 70004B20 24A5868C */  addiu $a1, %lo(aUix2pixGrab_D_temp_uix_0) # addiu $a1, $a1, -0x7974
 /* 005724 70004B24 0C002B25 */  jal   sprintf
 /* 005728 70004B28 02002025 */   move  $a0, $s0
-/* 00572C 70004B2C 0FC34038 */  jal   response_from_command_string
+/* 00572C 70004B2C 0FC34038 */  jal   send_command_string
 /* 005730 70004B30 02002025 */   move  $a0, $s0
 /* 005734 70004B34 3C068002 */  lui   $a2, %hi(rgb_16bit_grabnum)
 /* 005738 70004B38 8CC632CC */  lw    $a2, %lo(rgb_16bit_grabnum)($a2)
@@ -1645,7 +1645,7 @@ glabel indy_grab_rgb_16bit
 /* 005744 70004B44 02002025 */  move  $a0, $s0
 /* 005748 70004B48 0C002B25 */  jal   sprintf
 /* 00574C 70004B4C 00C03825 */   move  $a3, $a2
-/* 005750 70004B50 0FC34038 */  jal   response_from_command_string
+/* 005750 70004B50 0FC34038 */  jal   send_command_string
 /* 005754 70004B54 02002025 */   move  $a0, $s0
 /* 005758 70004B58 3C068002 */  lui   $a2, %hi(rgb_16bit_grabnum)
 /* 00575C 70004B5C 8CC632CC */  lw    $a2, %lo(rgb_16bit_grabnum)($a2)
@@ -1654,7 +1654,7 @@ glabel indy_grab_rgb_16bit
 /* 005768 70004B68 02002025 */  move  $a0, $s0
 /* 00576C 70004B6C 0C002B25 */  jal   sprintf
 /* 005770 70004B70 00C03825 */   move  $a3, $a2
-/* 005774 70004B74 0FC34038 */  jal   response_from_command_string
+/* 005774 70004B74 0FC34038 */  jal   send_command_string
 /* 005778 70004B78 02002025 */   move  $a0, $s0
 /* 00577C 70004B7C 3C068002 */  lui   $a2, %hi(rgb_16bit_grabnum)
 /* 005780 70004B80 3C058003 */  lui   $a1, %hi(aImgviewGrab_D_rgb)
@@ -1662,7 +1662,7 @@ glabel indy_grab_rgb_16bit
 /* 005788 70004B88 24A586F8 */  addiu $a1, %lo(aImgviewGrab_D_rgb) # addiu $a1, $a1, -0x7908
 /* 00578C 70004B8C 0C002B25 */  jal   sprintf
 /* 005790 70004B90 02002025 */   move  $a0, $s0
-/* 005794 70004B94 0FC34038 */  jal   response_from_command_string
+/* 005794 70004B94 0FC34038 */  jal   send_command_string
 /* 005798 70004B98 02002025 */   move  $a0, $s0
 /* 00579C 70004B9C 8FBF0024 */  lw    $ra, 0x24($sp)
 /* 0057A0 70004BA0 8FB00018 */  lw    $s0, 0x18($sp)
@@ -1693,13 +1693,13 @@ loop_1:
     sprintf(&sp30, "grab.%d.temp.Uix", rgb_32bit_grabnum);
     indy_send_capture_data(&sp30, &cfb_16, (viGetY() * ((s32) (viGetX() << 0x10) >> 0x10)) * 4);
     sprintf(&sp30, "Uix2pix -xs%d grab.%d.temp.Uix", viGetX(), rgb_32bit_grabnum);
-    response_from_command_string(&sp30);
+    send_command_string(&sp30);
     sprintf(&sp30, "fromalias grab.%d.temp.pix grab.%d.rgb", rgb_32bit_grabnum, rgb_32bit_grabnum);
-    response_from_command_string(&sp30);
+    send_command_string(&sp30);
     sprintf(&sp30, "rm grab.%d.temp.Uix grab.%d.temp.pix", rgb_32bit_grabnum, rgb_32bit_grabnum);
-    response_from_command_string(&sp30);
+    send_command_string(&sp30);
     sprintf(&sp30, "imgview grab.%d.rgb", rgb_32bit_grabnum);
-    response_from_command_string(&sp30);
+    send_command_string(&sp30);
 }
 #else
 const char aGrab_D_rgb_0[] = "grab.%d.rgb";
@@ -1767,7 +1767,7 @@ glabel indy_grab_rgb_32bit
 /* 005880 70004C80 02002025 */  move  $a0, $s0
 /* 005884 70004C84 0C002B25 */  jal   sprintf
 /* 005888 70004C88 00403025 */   move  $a2, $v0
-/* 00588C 70004C8C 0FC34038 */  jal   response_from_command_string
+/* 00588C 70004C8C 0FC34038 */  jal   send_command_string
 /* 005890 70004C90 02002025 */   move  $a0, $s0
 /* 005894 70004C94 3C138002 */  lui   $s3, %hi(rgb_32bit_grabnum)
 /* 005898 70004C98 8E6732D0 */  lw    $a3, %lo(rgb_32bit_grabnum)($s3)
@@ -1776,7 +1776,7 @@ glabel indy_grab_rgb_32bit
 /* 0058A4 70004CA4 02002025 */  move  $a0, $s0
 /* 0058A8 70004CA8 0C002B25 */  jal   sprintf
 /* 0058AC 70004CAC 00E03025 */   move  $a2, $a3
-/* 0058B0 70004CB0 0FC34038 */  jal   response_from_command_string
+/* 0058B0 70004CB0 0FC34038 */  jal   send_command_string
 /* 0058B4 70004CB4 02002025 */   move  $a0, $s0
 /* 0058B8 70004CB8 3C138002 */  lui   $s3, %hi(rgb_32bit_grabnum)
 /* 0058BC 70004CBC 8E6732D0 */  lw    $a3, %lo(rgb_32bit_grabnum)($s3)
@@ -1785,7 +1785,7 @@ glabel indy_grab_rgb_32bit
 /* 0058C8 70004CC8 02002025 */  move  $a0, $s0
 /* 0058CC 70004CCC 0C002B25 */  jal   sprintf
 /* 0058D0 70004CD0 00E03025 */   move  $a2, $a3
-/* 0058D4 70004CD4 0FC34038 */  jal   response_from_command_string
+/* 0058D4 70004CD4 0FC34038 */  jal   send_command_string
 /* 0058D8 70004CD8 02002025 */   move  $a0, $s0
 /* 0058DC 70004CDC 3C138002 */  lui   $s3, %hi(rgb_32bit_grabnum)
 /* 0058E0 70004CE0 3C058003 */  lui   $a1, %hi(aImgviewGrab_D_rgb_0)
@@ -1793,7 +1793,7 @@ glabel indy_grab_rgb_32bit
 /* 0058E8 70004CE8 24A5879C */  addiu $a1, %lo(aImgviewGrab_D_rgb_0) # addiu $a1, $a1, -0x7864
 /* 0058EC 70004CEC 0C002B25 */  jal   sprintf
 /* 0058F0 70004CF0 02002025 */   move  $a0, $s0
-/* 0058F4 70004CF4 0FC34038 */  jal   response_from_command_string
+/* 0058F4 70004CF4 0FC34038 */  jal   send_command_string
 /* 0058F8 70004CF8 02002025 */   move  $a0, $s0
 /* 0058FC 70004CFC 8FBF0024 */  lw    $ra, 0x24($sp)
 /* 005900 70004D00 8FB00014 */  lw    $s0, 0x14($sp)
