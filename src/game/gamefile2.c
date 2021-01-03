@@ -206,29 +206,11 @@ u32 set_eeprom_flag_0x18(struct save_data *folder)
   return (folder->completion_bitflags & 0x18) >> 3;
 }
 
-
-
-
-#ifdef NONMATCHING
-void reset_eeprom_flag_0x18(void) {
-
+void reset_eeprom_flag_0x18(struct save_data *folder, s32 arg1) {
+  
+    folder->completion_bitflags = folder->completion_bitflags & 0xFFE7;
+    folder->completion_bitflags = (folder->completion_bitflags | ((arg1 * 8) & 0x18));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel reset_eeprom_flag_0x18
-/* 052434 7F01D904 908E0008 */  lbu   $t6, 8($a0)
-/* 052438 7F01D908 0005C8C0 */  sll   $t9, $a1, 3
-/* 05243C 7F01D90C 33280018 */  andi  $t0, $t9, 0x18
-/* 052440 7F01D910 31D8FFE7 */  andi  $t8, $t6, 0xffe7
-/* 052444 7F01D914 A0980008 */  sb    $t8, 8($a0)
-/* 052448 7F01D918 03084825 */  or    $t1, $t8, $t0
-/* 05244C 7F01D91C 03E00008 */  jr    $ra
-/* 052450 7F01D920 A0890008 */   sb    $t1, 8($a0)
-)
-#endif
-
-
 
 
 u32 get_selected_bond(struct save_data *folder)
