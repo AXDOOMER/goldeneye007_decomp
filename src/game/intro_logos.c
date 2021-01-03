@@ -80,7 +80,7 @@ f32 D_8002A884[3] = {0.0f, 0.0f, -1.0f};
 f32 D_8002A890[3] = {0.0f, 1.0f, 0.0f};
 
 f32 D_8002A89C = 0.0f;
-u32 intro_eye_counter = 0;
+s32 intro_eye_counter = 0;
 u32 intro_state_blood_animation = 0;
 u32 D_8002A8A8 = 0;
 u32 D_8002A8AC = 0;
@@ -489,6 +489,7 @@ Gfx *load_display_rare_logo(Gfx *gdl, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     return gdl;
 }
 #else
+Gfx *load_display_rare_logo(Gfx *gdl, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 GLOBAL_ASM(
 .late_rodata
 glabel D_8004F2D8
@@ -938,8 +939,38 @@ void sub_GAME_7F008B58(s32 address, s32 size) {
 }
 
 #ifdef NONMATCHING
-void retrieve_display_rareware_logo(void) {
+// Uses 0x38 stack instead of 0x30
+Gfx *retrieve_display_rareware_logo(Gfx *gdl) {
+    s32 var1;
+    s32 var2;
+    D_8002A7D0 = (1 - D_8002A7D0);
+    gSPSegment(gdl++, 2, osVirtualToPhysical(virtualaddress));
+    if ((D_8002A7D4 == 0) || (D_8002A7D4 == 1)) {
+        var1 = (intro_eye_counter * 255) / 70;
+        if (var1 > 255) {
+            var1 = 255;
+        }
+        if (var1 < 0) {
+            var1 = 0;
+        }
+        var2 = 255 - (((intro_eye_counter * 255) - 40800) / 70);
+        if (var2 > 255) {
+            var2 = 255;
+        }
+        if (var2 < 0) {
+            var2 = 0;
+        }
+        gdl = load_display_rare_logo(gdl, 403, 488, x, (var1 * var2) / 255);
+        if (intro_eye_counter++ >= 260) {
+            if (intro_eye_counter >= 290) {
+                intro_eye_counter = 0;
+                D_8002A7D4++;
+                D_8002A7D4++;
+            }
+        }
+    }
 
+    return gdl;
 }
 #else
 GLOBAL_ASM(
