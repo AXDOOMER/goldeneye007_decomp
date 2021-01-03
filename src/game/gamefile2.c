@@ -492,7 +492,7 @@ void sub_GAME_7F01DCB0(struct save_data *folder, s32 levelid, DIFFICULTY difficu
         
         temp_v0 = get_eeprom_stage_complete_time_for_difficulty(folder, levelid, difficulty);
         
-        if ((temp_v0 == 0) || (arg3 < temp_v0)) {
+        if ((temp_v0 == 0) || (arg4 < temp_v0)) {
             sub_GAME_7F01DAE4(folder, levelid, difficulty, arg4);
         }
     }
