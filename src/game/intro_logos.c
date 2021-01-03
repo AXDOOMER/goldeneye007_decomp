@@ -10,11 +10,11 @@ s32 dword_CODE_bss_80069554;
 //CODE.bss:80069558
 s32 matrix_buffer_rarelogo_0;
 //CODE.bss:8006955C
-s32 matrix_buffer_gunbarrel_0;
+Mtx *matrix_buffer_gunbarrel_0;
 //CODE.bss:80069560
 s32 matrix_buffer_rarelogo_1;
 //CODE.bss:80069564
-s32 matrix_buffer_rarelogo_2;
+Mtx *matrix_buffer_rarelogo_2;
 //CODE.bss:80069568
 s32 matrix_buffer_gunbarrel_1;
 //CODE.bss:8006956C
@@ -404,7 +404,7 @@ glabel insert_sniper_sight_eye_intro
 /* 03C938 7F007E08 240FF7FB */  li    $t7, -2053
 /* 03C93C 7F007E0C AC4F0004 */  sw    $t7, 4($v0)
 /* 03C940 7F007E10 AC4E0000 */  sw    $t6, ($v0)
-/* 03C944 7F007E14 0C001107 */  jal   get_video2_settings_txtClipW
+/* 03C944 7F007E14 0C001107 */  jal   viGetX
 /* 03C948 7F007E18 24500008 */   addiu $s0, $v0, 8
 /* 03C94C 7F007E1C 44822000 */  mtc1  $v0, $f4
 /* 03C950 7F007E20 3C018007 */  lui   $at, %hi(x)
@@ -468,9 +468,9 @@ glabel sub_GAME_7F007E70
 /* 03CA04 7F007ED4 244C0020 */  addiu $t4, $v0, 0x20
 /* 03CA08 7F007ED8 244D0028 */  addiu $t5, $v0, 0x28
 /* 03CA0C 7F007EDC AFAD0030 */  sw    $t5, 0x30($sp)
-/* 03CA10 7F007EE0 0C001107 */  jal   get_video2_settings_txtClipW
+/* 03CA10 7F007EE0 0C001107 */  jal   viGetX
 /* 03CA14 7F007EE4 AFAC001C */   sw    $t4, 0x1c($sp)
-/* 03CA18 7F007EE8 0C00110B */  jal   get_video2_settings_txtClipH
+/* 03CA18 7F007EE8 0C00110B */  jal   viGetY
 /* 03CA1C 7F007EEC A7A2001A */   sh    $v0, 0x1a($sp)
 /* 03CA20 7F007EF0 87B9001A */  lh    $t9, 0x1a($sp)
 /* 03CA24 7F007EF4 8FA3001C */  lw    $v1, 0x1c($sp)
@@ -634,7 +634,7 @@ glabel sub_GAME_7F007F30
 /* 03CC24 7F0080F4 8DEE0008 */  lw    $t6, 8($t7)
 /* 03CC28 7F0080F8 85C4000E */  lh    $a0, 0xe($t6)
 /* 03CC2C 7F0080FC 00044980 */  sll   $t1, $a0, 6
-/* 03CC30 7F008100 0FC2F5C5 */  jal   sub_GAME_7F0BD714
+/* 03CC30 7F008100 0FC2F5C5 */  jal   dynAllocate
 /* 03CC34 7F008104 01202025 */   move  $a0, $t1
 /* 03CC38 7F008108 AFA200EC */  sw    $v0, 0xec($sp)
 /* 03CC3C 7F00810C 27A400DC */  addiu $a0, $sp, 0xdc
@@ -650,7 +650,7 @@ glabel sub_GAME_7F007F30
 /* 03CC64 7F008134 8D6C0008 */  lw    $t4, 8($t3)
 /* 03CC68 7F008138 8584000E */  lh    $a0, 0xe($t4)
 /* 03CC6C 7F00813C 00046980 */  sll   $t5, $a0, 6
-/* 03CC70 7F008140 0FC2F5C5 */  jal   sub_GAME_7F0BD714
+/* 03CC70 7F008140 0FC2F5C5 */  jal   dynAllocate
 /* 03CC74 7F008144 01A02025 */   move  $a0, $t5
 /* 03CC78 7F008148 AFA200EC */  sw    $v0, 0xec($sp)
 /* 03CC7C 7F00814C 27A400DC */  addiu $a0, $sp, 0xdc

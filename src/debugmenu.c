@@ -505,12 +505,12 @@ void write_char_to_screen(u8 character)
   short txtClipH;
   int start_pos;
   
-  txtClipW = get_video2_settings_txtClipW();
+  txtClipW = viGetX();
   start_pos = (int)txtClipW + -0xd;
   if (start_pos < 0) {
     start_pos = (int)txtClipW + -10;
   }
-  txtClipH = get_video2_settings_txtClipH();
+  txtClipH = viGetY();
   if ((character == 0) || ((0x1f < character && (character < 0x7f)))) {
     display_text_to_coord(debug_menu_x_text_pos,debug_menu_y_text_pos,character);
   }
@@ -529,7 +529,7 @@ GLOBAL_ASM(
 glabel write_char_to_screen
 /* 00BCC4 7000B0C4 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 00BCC8 7000B0C8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00BCCC 7000B0CC 0C001107 */  jal   get_video2_settings_txtClipW
+/* 00BCCC 7000B0CC 0C001107 */  jal   viGetX
 /* 00BCD0 7000B0D0 AFA40028 */   sw    $a0, 0x28($sp)
 /* 00BCD4 7000B0D4 244EFFF3 */  addiu $t6, $v0, -0xd
 /* 00BCD8 7000B0D8 05C10003 */  bgez  $t6, .L7000B0E8
@@ -537,7 +537,7 @@ glabel write_char_to_screen
 /* 00BCE0 7000B0E0 25C10003 */  addiu $at, $t6, 3
 /* 00BCE4 7000B0E4 00017883 */  sra   $t7, $at, 2
 .L7000B0E8:
-/* 00BCE8 7000B0E8 0C00110B */  jal   get_video2_settings_txtClipH
+/* 00BCE8 7000B0E8 0C00110B */  jal   viGetY
 /* 00BCEC 7000B0EC AFAF0024 */   sw    $t7, 0x24($sp)
 /* 00BCF0 7000B0F0 2448FFF6 */  addiu $t0, $v0, -0xa
 /* 00BCF4 7000B0F4 24010007 */  li    $at, 7
@@ -796,7 +796,7 @@ loop_2:
         goto loop_1;
     }
     temp_a0 = phi_s1 - arg0;
-    temp_v1_2 = num_microcode_cmds_that_fit(arg0, temp_a1_2, phi_a2_2, &stdout_primary_color_table) + -0x800;
+    temp_v1_2 = dynGetFreeGfx(arg0, temp_a1_2, phi_a2_2, &stdout_primary_color_table) + -0x800;
     if (temp_a0 <= 0)
     {
         return arg0;
@@ -856,7 +856,7 @@ loop_18:
             temp_v0_2 = phi_s0_2;
             phi_s0_3 = phi_s0_2;
             phi_s4_2 = phi_s4_3;
-            if (num_microcode_cmds_that_fit(phi_s0_2) >= 0x400)
+            if (dynGetFreeGfx(phi_s0_2) >= 0x400)
             {
                 temp_v1_4 = phi_s1_2 * 0x10;
                 temp_a0_2 = ((phi_s5 * 8) - phi_s5) * 4;
@@ -939,7 +939,7 @@ glabel read_screen_display_block_and_write_chars
 /* 00BF04 7000B304 29010046 */  slti  $at, $t0, 0x46
 /* 00BF08 7000B308 1420FFEE */  bnez  $at, .L7000B2C4
 /* 00BF0C 7000B30C 00000000 */   nop   
-/* 00BF10 7000B310 0FC2F5DF */  jal   num_microcode_cmds_that_fit
+/* 00BF10 7000B310 0FC2F5DF */  jal   dynGetFreeGfx
 /* 00BF14 7000B314 02002025 */   move  $a0, $s0
 /* 00BF18 7000B318 02302023 */  subu  $a0, $s1, $s0
 /* 00BF1C 7000B31C 1C800003 */  bgtz  $a0, .L7000B32C
@@ -1028,7 +1028,7 @@ glabel read_screen_display_block_and_write_chars
 /* 00C040 7000B440 014B082B */  sltu  $at, $t2, $t3
 /* 00C044 7000B444 5020002F */  beql  $at, $zero, .L7000B504
 /* 00C048 7000B448 26310001 */   addiu $s1, $s1, 1
-/* 00C04C 7000B44C 0FC2F5DF */  jal   num_microcode_cmds_that_fit
+/* 00C04C 7000B44C 0FC2F5DF */  jal   dynGetFreeGfx
 /* 00C050 7000B450 02002025 */   move  $a0, $s0
 /* 00C054 7000B454 28410400 */  slti  $at, $v0, 0x400
 /* 00C058 7000B458 14200029 */  bnez  $at, .L7000B500

@@ -62,9 +62,15 @@ typedef struct {
     s32         doAudio;
 } OSSched;
 
+extern f32 something_with_osVI_4[2];
+extern f32 something_with_osVI_C[2];
+extern s32 something_with_osVI_14[2];
 extern OSSched sc;
 extern OSScClient gfxClient[3];
 //extern char gfxClient[0x18];
+extern OSViMode viModes[2];
+extern OSViMode *viModePtrs[2];
+extern s32 dword_CODE_bss_8005DBE8[2];
 
 void activate_stderr(u32 flag);
 void enable_stderr(u32 flag);

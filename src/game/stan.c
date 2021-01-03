@@ -6376,12 +6376,12 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0B3044
 /* 0E7B74 7F0B3044 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0E7B78 7F0B3048 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E7B7C 7F0B304C 0FC2F5DF */  jal   num_microcode_cmds_that_fit
+/* 0E7B7C 7F0B304C 0FC2F5DF */  jal   dynGetFreeGfx
 /* 0E7B80 7F0B3050 AFA0001C */   sw    $zero, 0x1c($sp)
 /* 0E7B84 7F0B3054 28411000 */  slti  $at, $v0, 0x1000
 /* 0E7B88 7F0B3058 14200005 */  bnez  $at, .L7F0B3070
 /* 0E7B8C 7F0B305C 00000000 */   nop   
-/* 0E7B90 7F0B3060 0FC2F5E9 */  jal   sub_GAME_7F0BD7A4
+/* 0E7B90 7F0B3060 0FC2F5E9 */  jal   dynGetFreeVtx
 /* 0E7B94 7F0B3064 00000000 */   nop   
 /* 0E7B98 7F0B3068 28411000 */  slti  $at, $v0, 0x1000
 /* 0E7B9C 7F0B306C 10200010 */  beqz  $at, .L7F0B30B0
