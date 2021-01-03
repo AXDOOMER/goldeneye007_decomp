@@ -11,9 +11,9 @@ struct save_data
   char music_vol;
   char sfx_vol;
   short options;
-  char unlocked_cheats_1;
-  char unlocked_cheats_2;
-  char unlocked_cheats_3;
+  u8 unlocked_cheats_1;
+  u8 unlocked_cheats_2;
+  u8 unlocked_cheats_3;
   char padding;
     u8 time_dam_agent[5];
     u8 field_0x17[5];

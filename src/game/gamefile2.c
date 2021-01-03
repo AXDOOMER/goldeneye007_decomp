@@ -501,8 +501,13 @@ void sub_GAME_7F01DCB0(struct save_data *folder, s32 levelid, DIFFICULTY difficu
 
 
 #ifdef NONMATCHING
-u32 check_if_cheat_unlocked(save_file *folder,s32 cheat) {
+s32 check_if_cheat_unlocked(struct save_data *arg0, s32 arg1) {
 
+    if ((arg1 >= 0) && (arg1 < 0x14)) {
+        
+        return ((1 << arg1) & (arg0->unlocked_cheats_1 | (arg0->unlocked_cheats_3 << 0x18) | (arg0->unlocked_cheats_3 << 0x10) | (arg0->unlocked_cheats_2 << 8))) != 0;
+    }
+    return 0;
 }
 #else
 GLOBAL_ASM(
