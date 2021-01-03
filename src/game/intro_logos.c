@@ -5,6 +5,7 @@
 #include "video.h"
 #include "libultra/os.h"
 #include "matrixmath.h"
+#include "ramrom.h"
 
 // bss
 //CODE.bss:80069550
@@ -923,53 +924,18 @@ glabel load_display_rare_logo
 )
 #endif
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F008B58(void) {
-
+#define ALIGN64(val)        ((((u32)val) + 0x3f | 0x3f) ^ 0x3f)
+extern void *_GlobalimagetablecmdblkSegmentRomStart;
+extern void *D_02000000;
+extern void *D_020067F0;
+void sub_GAME_7F008B58(s32 address, s32 size) {
+    D_8002A7D4 = 0;
+    x = 880.0f;
+    D_8002A89C = -40.0f;
+    intro_eye_counter = 0;
+    virtualaddress = address;
+    romCopy(virtualaddress, &_GlobalimagetablecmdblkSegmentRomStart, ALIGN64((u32)&D_020067F0 - (u32)&D_02000000));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F008B58
-/* 03D688 7F008B58 3C018003 */  lui   $at, %hi(D_8002A7D4)
-/* 03D68C 7F008B5C A020A7D4 */  sb    $zero, %lo(D_8002A7D4)($at)
-/* 03D690 7F008B60 3C01445C */  li    $at, 0x445C0000 # 880.000000
-/* 03D694 7F008B64 44812000 */  mtc1  $at, $f4
-/* 03D698 7F008B68 3C018007 */  lui   $at, %hi(x)
-/* 03D69C 7F008B6C 3C0E0200 */  lui   $t6, %hi(0x020067F0) # $t6, 0x200
-/* 03D6A0 7F008B70 E4249574 */  swc1  $f4, %lo(x)($at)
-/* 03D6A4 7F008B74 3C01C220 */  li    $at, 0xC2200000 # -40.000000
-/* 03D6A8 7F008B78 44813000 */  mtc1  $at, $f6
-/* 03D6AC 7F008B7C 3C0F0200 */  lui   $t7, 0x200
-/* 03D6B0 7F008B80 3C018003 */  lui   $at, %hi(D_8002A89C)
-/* 03D6B4 7F008B84 25EF0000 */  addiu $t7, $t7, 0
-/* 03D6B8 7F008B88 25CE67F0 */  addiu $t6, %lo(0x020067F0) # addiu $t6, $t6, 0x67f0
-/* 03D6BC 7F008B8C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 03D6C0 7F008B90 01CF3023 */  subu  $a2, $t6, $t7
-/* 03D6C4 7F008B94 E426A89C */  swc1  $f6, %lo(D_8002A89C)($at)
-/* 03D6C8 7F008B98 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 03D6CC 7F008B9C 3C028007 */  lui   $v0, %hi(virtualaddress)
-/* 03D6D0 7F008BA0 3C018003 */  lui   $at, %hi(intro_eye_counter)
-/* 03D6D4 7F008BA4 24C6003F */  addiu $a2, $a2, 0x3f
-/* 03D6D8 7F008BA8 24429590 */  addiu $v0, %lo(virtualaddress) # addiu $v0, $v0, -0x6a70
-/* 03D6DC 7F008BAC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 03D6E0 7F008BB0 AC20A8A0 */  sw    $zero, %lo(intro_eye_counter)($at)
-/* 03D6E4 7F008BB4 34D8003F */  ori   $t8, $a2, 0x3f
-/* 03D6E8 7F008BB8 3C05002A */  lui   $a1, %hi(_GlobalimagetablecmdblkSegmentRomStart) # $a1, 0x2a
-/* 03D6EC 7F008BBC AC440000 */  sw    $a0, ($v0)
-/* 03D6F0 7F008BC0 24A5E560 */  addiu $a1, %lo(_GlobalimagetablecmdblkSegmentRomStart) # addiu $a1, $a1, -0x1aa0
-/* 03D6F4 7F008BC4 0C001707 */  jal   romCopy
-/* 03D6F8 7F008BC8 3B06003F */   xori  $a2, $t8, 0x3f
-/* 03D6FC 7F008BCC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 03D700 7F008BD0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 03D704 7F008BD4 03E00008 */  jr    $ra
-/* 03D708 7F008BD8 00000000 */   nop   
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 void retrieve_display_rareware_logo(void) {
