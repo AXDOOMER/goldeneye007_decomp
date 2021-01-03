@@ -12,11 +12,11 @@ s32 dword_CODE_bss_80069550;
 //CODE.bss:80069554
 Gfx *dword_CODE_bss_80069554;
 //CODE.bss:80069558
-s32 matrix_buffer_rarelogo_0;
+Mtx *matrix_buffer_rarelogo_0;
 //CODE.bss:8006955C
 Mtx *matrix_buffer_gunbarrel_0;
 //CODE.bss:80069560
-s32 matrix_buffer_rarelogo_1;
+Mtx *matrix_buffer_rarelogo_1;
 //CODE.bss:80069564
 Mtx *matrix_buffer_rarelogo_2;
 //CODE.bss:80069568
@@ -73,23 +73,10 @@ u32 D_8002A838 = 0;
 f32 D_8002A83C[3] = {1758.2957f, 220.0f, 684.28143f};
 f32 D_8002A848[3] = {-0.97f, 0.0f, 0.24f};
 f32 D_8002A854[3] = {0.0f, 1.0f, -0.0f};
-struct rgba_val D_8002A860 = {0xDC, 0xDC, 0xDC, 0};
-struct rgba_val D_8002A864 = {0xDC, 0xDC, 0xDC, 0};
-struct rgba_val D_8002A868 = {0xFF, 0xFF, 0xFF, 0};
-struct rgba_val D_8002A86C = {0xFF, 0xFF, 0xFF, 0};
-struct rgba_val D_8002A870 = {0x00, 0x7F, 0x00, 0};
-u32 D_8002A874 = 0;
-
-u32 D_8002A878 =  0;
-u32 D_8002A87C =  0;
-f32 D_8002A880 =  4883.0f;
-u32 D_8002A884 = 0;
-u32 D_8002A888 = 0;
-f32 D_8002A88C =  -1.0f;
-u32 D_8002A890 =  0;
-f32 D_8002A894 =  1.0f;
-u32 D_8002A898 =  0;
-
+Lights1 D_8002A860 = gdSPDefLights1(0xDC, 0xDC, 0xDC, 0xFF, 0xFF, 0xFF, 0x00, 0x7F, 0x00);
+f32 D_8002A878[3] = {0.0f, 0.0f, 4883.0f};
+f32 D_8002A884[3] = {0.0f, 0.0f, -1.0f};
+f32 D_8002A890[3] = {0.0f, 1.0f, 0.0f};
 
 f32 D_8002A89C = 0.0f;
 u32 intro_eye_counter = 0;
@@ -103,15 +90,12 @@ u32 D_8002A8B0 = 0;
                 .word 0
 */
 
-
-// The code below refers to a symbols around 0x1000000 (= 0x81000000 if you OS_K0_TO_PHYSICAL), but that variable 
-// doesn't appear to exist. This one has therefor been added manually to the .ld file. Perhaps there's a better way to do this.
-extern Gfx *_unkDisplayList1;
-extern Gfx *_unkDisplayList2;
+extern Gfx *D_01000000;
+extern Gfx *D_01000040;
 Gfx *something_with_gunbarrel_and_rareware_logo_matrix_manip(Gfx* gdl) {
     guTranslate(&matrix_buffer_rarelogo_2[D_8002A7D0], x, y, -5.0f);
     guTranslate(&matrix_buffer_gunbarrel_1[D_8002A7D0], dword_CODE_bss_8006957C, dword_CODE_bss_80069580, -5.0f);
-    gSPDisplayList(gdl++, &_unkDisplayList1);
+    gSPDisplayList(gdl++, &D_01000000);
 
     gdl = sub_GAME_7F01C1A4(insert_imageDL(gdl));
 
@@ -127,8 +111,8 @@ Gfx *something_with_gunbarrel_and_rareware_logo_matrix_manip(Gfx* gdl) {
 Gfx *insert_sight_backdrop_eye_intro(Gfx *gdl) {
     guTranslate(&matrix_buffer_rarelogo_2[D_8002A7D0], x + 768.0f, y - 40.0f, -5.0f);
     guScale(&matrix_buffer_gunbarrel_1[D_8002A7D0], 2.7f, 2.57f, 1.0f);
-    gSPDisplayList(gdl++, &_unkDisplayList1);
-    gSPDisplayList(gdl++, &_unkDisplayList2);
+    gSPDisplayList(gdl++, &D_01000000);
+    gSPDisplayList(gdl++, &D_01000040);
 
     gdl = sub_GAME_7F01C1A4(gdl);
 
@@ -154,7 +138,7 @@ Gfx *insert_sniper_sight_eye_intro(Gfx *gdl) {
     s32 sp3C[3] = D_8002A7DC;
     s32 sp30[3] = D_8002A7E8;
 
-    gSPDisplayList(gdl++, &_unkDisplayList1);
+    gSPDisplayList(gdl++, &D_01000000);
 
     gdl = insert_imageDL(gdl);
 
@@ -450,8 +434,58 @@ Gfx *insert_bond_eye_intro(Gfx *gdl) {
 }
 
 #ifdef NONMATCHING
-void load_display_rare_logo(void) {
+// Small reorderings + regalloc
+extern Gfx *D_020043E8;
+extern Gfx *D_020044B0;
+extern Gfx *D_02004758;
+extern u8 *D_02004FE8;
+extern u8 *D_02005FF0;
+void guPerspective(Mtx *m, u16 *perspNorm, float fovy, float aspect, float near, float far, float scale);
+void guLookAt(Mtx *m, float xEye, float yEye, float zEye, float xAt, float yAt, float zAt, float xUp, float yUp, float zUp);
+void guRotate(Mtx *m, float a, float x, float y, float z);
+Gfx *load_display_rare_logo(Gfx *gdl, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    u16 perspNorm;
+    D_8002A878[2] = arg3;
+    gSPDisplayList(gdl++, &D_01000000);
+    gdl = insert_imageDL(gdl);
+    guPerspective(&matrix_buffer_rarelogo_0[D_8002A7D0], &perspNorm, 60.0f, (320.0f / 240.0f), 100.0f, 5000.0f, 1.0f);
+    gSPPerspNormalize(gdl++, perspNorm);
+    gSPMatrix(gdl++, osVirtualToPhysical(&matrix_buffer_rarelogo_0[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
+    gSPClearGeometryMode(gdl++, -1);
+    gSPSetGeometryMode(gdl++, (G_SHADE | G_CULL_BACK | G_LIGHTING | G_TEXTURE_GEN | G_SHADING_SMOOTH));
+    guLookAt(&matrix_buffer_rarelogo_1[D_8002A7D0], D_8002A878[0], D_8002A878[1], D_8002A878[2], (D_8002A878[0] + D_8002A884[0]), (D_8002A878[1] + D_8002A884[1]), (D_8002A878[2] + D_8002A884[2]), D_8002A890[0], D_8002A890[1], D_8002A890[2]);
+    gSPMatrix(gdl++,  osVirtualToPhysical(&matrix_buffer_rarelogo_1[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW));
+    guRotate(&matrix_buffer_rarelogo_2[D_8002A7D0], D_8002A89C, 0.0f, 1.0f, 0.0f);
+    D_8002A89C += 2.0f;
+    gSPMatrix(gdl++, osVirtualToPhysical(&matrix_buffer_rarelogo_2[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW));
+    gSPSetLights1(gdl++, D_8002A860);
+    D_8002A860.a.l.col[0] = arg4;
+    D_8002A860.a.l.col[1] = arg4;
+    D_8002A860.a.l.col[2] = arg4;
+    D_8002A860.a.l.colc[0] = arg4;
+    D_8002A860.a.l.colc[1] = arg4;
+    D_8002A860.a.l.colc[2] = arg4;
+    gDPPipeSync(gdl++);
+    gDPPipeSync(gdl++);
+    gDPSetCombineMode(gdl++, G_CC_MODULATEI, G_CC_MODULATEI);
+    gDPSetTexturePersp(gdl++, G_TP_PERSP);
+    gDPSetTextureDetail(gdl++, G_TD_CLAMP);
+    gDPSetTextureLOD(gdl++, G_TL_TILE);
+    gDPSetTextureLUT(gdl++, G_TT_NONE);
+    gDPSetTextureFilter(gdl++, G_TF_BILERP);
+    gDPSetTextureConvert(gdl++, G_TC_FILT);
+    gDPPipeSync(gdl++);
+    gDPPipeSync(gdl++);
+    gSPTexture(gdl++, 0x0800, 0x0800, 0, G_TX_RENDERTILE, G_ON);
+    gDPLoadTextureBlock(gdl++, &D_02004FE8, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, (G_TX_NOMIRROR | G_TX_WRAP), (G_TX_NOMIRROR | G_TX_WRAP), 5, 5, G_TX_NOLOD, G_TX_NOLOD);
+    gDPSetPrimColor(gdl++, 0, 0, arg4, arg4, arg4, 0xFF);
+    gSPDisplayList(gdl++, &D_020043E8);
+    gSPDisplayList(gdl++, &D_020044B0);
+    gDPLoadTextureBlock(gdl++, &D_02005FF0, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, (G_TX_NOMIRROR | G_TX_WRAP), (G_TX_NOMIRROR | G_TX_WRAP), 5, 5, G_TX_NOLOD, G_TX_NOLOD);
+    gDPSetPrimColor(gdl++, 0, 0, ((arg4 * 0xF0) / 0xFF), ((arg4 * 0xD0) / 0xFF), ((arg4 * 0xF0) / 0xFF), 0xFF);
+    gSPDisplayList(gdl++, &D_02004758);
 
+    return gdl;
 }
 #else
 GLOBAL_ASM(
@@ -464,12 +498,12 @@ glabel load_display_rare_logo
 /* 03CFF4 7F0084C4 27BDFF18 */  addiu $sp, $sp, -0xe8
 /* 03CFF8 7F0084C8 AFB0002C */  sw    $s0, 0x2c($sp)
 /* 03CFFC 7F0084CC 468021A0 */  cvt.s.w $f6, $f4
-/* 03D000 7F0084D0 3C018003 */  lui   $at, %hi(D_8002A880)
+/* 03D000 7F0084D0 3C018003 */  lui   $at, %hi(D_8002A878+0x8)
 /* 03D004 7F0084D4 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 03D008 7F0084D8 AFB10030 */  sw    $s1, 0x30($sp)
 /* 03D00C 7F0084DC AFA500EC */  sw    $a1, 0xec($sp)
 /* 03D010 7F0084E0 AFA600F0 */  sw    $a2, 0xf0($sp)
-/* 03D014 7F0084E4 E426A880 */  swc1  $f6, %lo(D_8002A880)($at)
+/* 03D014 7F0084E4 E426A880 */  swc1  $f6, %lo(D_8002A878+0x8)($at)
 /* 03D018 7F0084E8 3C0F0100 */  lui   $t7, 0x100
 /* 03D01C 7F0084EC 25EF0000 */  addiu $t7, $t7, 0
 /* 03D020 7F0084F0 3C0E0600 */  lui   $t6, 0x600
@@ -589,7 +623,7 @@ glabel load_display_rare_logo
 /* 03D1E8 7F0086B8 44060000 */  mfc1  $a2, $f0
 /* 03D1EC 7F0086BC 0018C980 */  sll   $t9, $t8, 6
 /* 03D1F0 7F0086C0 8CA5A89C */  lw    $a1, %lo(D_8002A89C)($a1)
-/* 03D1F4 7F0086C4 3C073F80 */  lui   $a3, %hi(0x3F800004) # $a3, 0x3f80
+/* 03D1F4 7F0086C4 3C073F80 */  lui   $a3, 0x3F80 # $a3, 0x3f80
 /* 03D1F8 7F0086C8 E7A00010 */  swc1  $f0, 0x10($sp)
 /* 03D1FC 7F0086CC 0C005E2D */  jal   guRotate
 /* 03D200 7F0086D0 032E2021 */   addu  $a0, $t9, $t6
@@ -625,8 +659,8 @@ glabel load_display_rare_logo
 /* 03D278 7F008748 02002825 */  move  $a1, $s0
 /* 03D27C 7F00874C AC980004 */  sw    $t8, 4($a0)
 /* 03D280 7F008750 3C190386 */  lui   $t9, (0x03860010 >> 16) # lui $t9, 0x386
-/* 03D284 7F008754 3C0E8003 */  lui   $t6, %hi(D_8002A868) 
-/* 03D288 7F008758 25CEA868 */  addiu $t6, %lo(D_8002A868) # addiu $t6, $t6, -0x5798
+/* 03D284 7F008754 3C0E8003 */  lui   $t6, %hi(D_8002A860+0x8) 
+/* 03D288 7F008758 25CEA868 */  addiu $t6, %lo(D_8002A860+0x8) # addiu $t6, $t6, -0x5798
 /* 03D28C 7F00875C 37390010 */  ori   $t9, (0x03860010 & 0xFFFF) # ori $t9, $t9, 0x10
 /* 03D290 7F008760 26100008 */  addiu $s0, $s0, 8
 /* 03D294 7F008764 3C038003 */  lui   $v1, %hi(D_8002A860)
@@ -650,7 +684,7 @@ glabel load_display_rare_logo
 /* 03D2DC 7F0087AC 3C09E700 */  lui   $t1, 0xe700
 /* 03D2E0 7F0087B0 02005825 */  move  $t3, $s0
 /* 03D2E4 7F0087B4 ACE90000 */  sw    $t1, ($a3)
-/* 03D2E8 7F0087B8 ACE00004 */  sw    $zero, %lo(0x3F800004)($a3)
+/* 03D2E8 7F0087B8 ACE00004 */  sw    $zero, 4($a3)
 /* 03D2EC 7F0087BC 26100008 */  addiu $s0, $s0, 8
 /* 03D2F0 7F0087C0 02001025 */  move  $v0, $s0
 /* 03D2F4 7F0087C4 AD600004 */  sw    $zero, 4($t3)
@@ -716,11 +750,11 @@ glabel load_display_rare_logo
 /* 03D3E4 7F0088B4 35EF0001 */  ori   $t7, (0xBB000001 & 0xFFFF) # ori $t7, $t7, 1
 /* 03D3E8 7F0088B8 02001025 */  move  $v0, $s0
 /* 03D3EC 7F0088BC ACEF0000 */  sw    $t7, ($a3)
-/* 03D3F0 7F0088C0 ACF80004 */  sw    $t8, %lo(0x3F800004)($a3)
+/* 03D3F0 7F0088C0 ACF80004 */  sw    $t8, 4($a3)
 /* 03D3F4 7F0088C4 26100008 */  addiu $s0, $s0, 8
-/* 03D3F8 7F0088C8 3C190200 */  lui   $t9, %hi(0x02004FE8) # $t9, 0x200
+/* 03D3F8 7F0088C8 3C190200 */  lui   $t9, 0x200 # $t9, 0x200
 /* 03D3FC 7F0088CC 3C0BFD10 */  lui   $t3, 0xfd10
-/* 03D400 7F0088D0 27394FE8 */  addiu $t9, %lo(0x02004FE8) # addiu $t9, $t9, 0x4fe8
+/* 03D400 7F0088D0 27394FE8 */  addiu $t9, 0x4fe8 # addiu $t9, $t9, 0x4fe8
 /* 03D404 7F0088D4 02001825 */  move  $v1, $s0
 /* 03D408 7F0088D8 3C0D0701 */  lui   $t5, (0x07014050 >> 16) # lui $t5, 0x701
 /* 03D40C 7F0088DC 26100008 */  addiu $s0, $s0, 8
@@ -775,20 +809,20 @@ glabel load_display_rare_logo
 /* 03D4D0 7F0089A0 02003825 */  move  $a3, $s0
 /* 03D4D4 7F0089A4 ACB90004 */  sw    $t9, 4($a1)
 /* 03D4D8 7F0089A8 26100008 */  addiu $s0, $s0, 8
-/* 03D4DC 7F0089AC 3C0E0200 */  lui   $t6, %hi(0x020043E8) # $t6, 0x200
-/* 03D4E0 7F0089B0 25CE43E8 */  addiu $t6, %lo(0x020043E8) # addiu $t6, $t6, 0x43e8
+/* 03D4DC 7F0089AC 3C0E0200 */  lui   $t6, 0x200 # $t6, 0x200
+/* 03D4E0 7F0089B0 25CE43E8 */  addiu $t6, 0x43e8 # addiu $t6, $t6, 0x43e8
 /* 03D4E4 7F0089B4 3C060600 */  lui   $a2, 0x600
 /* 03D4E8 7F0089B8 02001025 */  move  $v0, $s0
 /* 03D4EC 7F0089BC ACE60000 */  sw    $a2, ($a3)
 /* 03D4F0 7F0089C0 ACEE0004 */  sw    $t6, 4($a3)
 /* 03D4F4 7F0089C4 26100008 */  addiu $s0, $s0, 8
-/* 03D4F8 7F0089C8 3C0F0200 */  lui   $t7, %hi(0x020044B0) # $t7, 0x200
-/* 03D4FC 7F0089CC 25EF44B0 */  addiu $t7, %lo(0x020044B0) # addiu $t7, $t7, 0x44b0
+/* 03D4F8 7F0089C8 3C0F0200 */  lui   $t7, 0x200 # $t7, 0x200
+/* 03D4FC 7F0089CC 25EF44B0 */  addiu $t7, 0x44b0 # addiu $t7, $t7, 0x44b0
 /* 03D500 7F0089D0 02001825 */  move  $v1, $s0
 /* 03D504 7F0089D4 AC4F0004 */  sw    $t7, 4($v0)
 /* 03D508 7F0089D8 AC460000 */  sw    $a2, ($v0)
-/* 03D50C 7F0089DC 3C180200 */  lui   $t8, %hi(0x02005FF0) # $t8, 0x200
-/* 03D510 7F0089E0 27185FF0 */  addiu $t8, %lo(0x02005FF0) # addiu $t8, $t8, 0x5ff0
+/* 03D50C 7F0089DC 3C180200 */  lui   $t8, 0x200 # $t8, 0x200
+/* 03D510 7F0089E0 27185FF0 */  addiu $t8, 0x5ff0 # addiu $t8, $t8, 0x5ff0
 /* 03D514 7F0089E4 26100008 */  addiu $s0, $s0, 8
 /* 03D518 7F0089E8 02002025 */  move  $a0, $s0
 /* 03D51C 7F0089EC AC780004 */  sw    $t8, 4($v1)
@@ -874,9 +908,9 @@ glabel load_display_rare_logo
 /* 03D64C 7F008B1C 01F8C825 */  or    $t9, $t7, $t8
 /* 03D650 7F008B20 372E00FF */  ori   $t6, $t9, 0xff
 /* 03D654 7F008B24 ACAE0004 */  sw    $t6, 4($a1)
-/* 03D658 7F008B28 3C180200 */  lui   $t8, %hi(0x02004758) # $t8, 0x200
+/* 03D658 7F008B28 3C180200 */  lui   $t8, 0x200 # $t8, 0x200
 /* 03D65C 7F008B2C 02001825 */  move  $v1, $s0
-/* 03D660 7F008B30 27184758 */  addiu $t8, %lo(0x02004758) # addiu $t8, $t8, 0x4758
+/* 03D660 7F008B30 27184758 */  addiu $t8, 0x4758 # addiu $t8, $t8, 0x4758
 /* 03D664 7F008B34 3C0F0600 */  lui   $t7, 0x600
 /* 03D668 7F008B38 AC6F0000 */  sw    $t7, ($v1)
 /* 03D66C 7F008B3C AC780004 */  sw    $t8, 4($v1)
