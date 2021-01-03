@@ -1117,29 +1117,23 @@ glabel retrieve_display_rareware_logo
 )
 #endif
 
-
-
-s32 sub_GAME_7F008DD0(void)
-{
-  return (D_8002A7D4 == 2);
+s32 sub_GAME_7F008DD0(void) {
+    return (D_8002A7D4 == 2);
 }
-
-
-
 
 #ifdef NONMATCHING
-void sub_GAME_7F008DE4(void *arg0, void *arg1)
-{
-
-    dword_CODE_bss_8006958C = (s32) *arg0;
-    *arg1 = (s32) (*arg1 + -0x40400);
-    *arg0 = *arg0 + 0x40400;
-
-    dword_CODE_bss_80069588 = arg0;
-    romCopy(arg0, &unknown2, (((&unknown2_end - &unknown2) + 0x3F) | 0x3F) ^ 0x3F);
+// Minor reordering + regalloc
+void sub_GAME_7F01B0E0(s32, s32);
+extern void *unknown2;
+extern void *unknown2_end;
+void sub_GAME_7F008DE4(u8 **arg0, s32 *arg1) {
+    dword_CODE_bss_8006958C = *arg0;
+    *arg1 -= 0x40400;
+    *arg0 += 0x40400;
+    dword_CODE_bss_80069588 = *arg0;
+    romCopy(dword_CODE_bss_80069588, &unknown2, ALIGN64(((u32)&unknown2_end - (u32)&unknown2)));
     sub_GAME_7F01B0E0(dword_CODE_bss_80069588, dword_CODE_bss_8006958C);
 }
-
 #else
 GLOBAL_ASM(
 .text
