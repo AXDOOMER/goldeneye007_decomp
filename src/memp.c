@@ -7,16 +7,16 @@
  */
 
 //bss
-struct s_mempBANK memory_bank_ptrs[0x7];
+struct s_mempBANK memory_bank_ptrs[7];
 
 //data
 void *ptr_memp_c_debug_debug_notice_list = 0;
 s32 needmemallocation = 0;
 s32 D_80024408 = 0;
 s32 D_8002440C = 0;
+s32 D_80024410 = 0;
 
 struct s_mempMVALS sdefaultmvals = {
-    0, //D_80024410
     2, //D_80024414
     0, //mf
     4, //D_8002441C
@@ -24,7 +24,7 @@ struct s_mempMVALS sdefaultmvals = {
     6, //D_80024424
     0xF, //me
     0, //D_8002442C
-    0 //D_80024430
+    0
 };
 
 struct s_mempMEMSTARTS sdefaultmemstarts = {
@@ -51,58 +51,43 @@ void mempInitDebugNoticeList(void)
     debCheckAddDebugNoticeListEntry(&ptr_memp_c_debug_debug_notice_list, "memp_c_debug"); //should be "memp_c_debug"
 }
 
-/**
- * 9FAC	700093AC
- *     initialize memory allocation table and set font and text bank sizes
- *     accepts: A0=p->buffer, A1=size
- *     uses "-mf", "-ml", "-me" strings
- */
-#ifdef NONMATCHING//
-void mempCheckMemflagTokens(int bstart,int bsize)
+#ifdef NONMATCHING
+// regalloc
+void mempSetBankStarts(s_mempMVALS *starts);
+const char *check_token(s32 arg0, const char *arg1);
+long int strtol(const char *str, char **endptr, int base);
+void mempCheckMemflagTokens(s32 bstart, s32 bsize)
 {
-    u32 iVar1;
-    u32 local_20;
-    u32 mfval;
-    u32 local_18;
-    u32 mlval;
-    u32 local_10;
-    u32 meval;
-    u32 local_8;
-    u32 local_4;
+    s_mempMVALS sp20;
+    s32 phi_v0;
     
-    memory_bank_ptrs[0].bankend = bstart + bsize;
-    local_20 = sdefaultmvals.D_80024414;
-    mfval = sdefaultmvals.mf;
-    mlval = sdefaultmvals.ml;
-    local_18 = sdefaultmvals.D_8002441C;
-    local_10 = sdefaultmvals.D_80024424;
-    meval = sdefaultmvals.me;
-    local_4 = sdefaultmvals.D_80024430;
-    local_8 = sdefaultmvals.D_8002442C;
     memory_bank_ptrs[0].bankstart = bstart;
+    memory_bank_ptrs[0].bankend = bstart + bsize;
+    
+    sp20 = sdefaultmvals;
 
-    if (check_token(1,"-mf") != 0) {
-        mfval = strtol(check_token(1,"-mf"),NULL,0);
+    if (check_token(1, "-mf") != 0) {
+        sp20.var2 = strtol(check_token(1, "-mf"), NULL, 0);
     }
-
-    if (check_token(1,"-ml") != 0) {
-        mlval = strtol(check_token(1,"-ml"),NULL,0);
+    if (check_token(1, "-ml") != 0) {
+        sp20.var4 = strtol(check_token(1, "-ml"), NULL, 0);
     }
-
-    if (check_token(1,"-me") != 0) {
-        meval = strtol(check_token(1,"-me"),NULL,0);
+    if (check_token(1, "-me") != 0) {
+        sp20.var6 = strtol(check_token(1, "-me"), NULL, 0);
     }
-
-    if (meval == 0) {
-        mfval = 0;
-        iVar1 = 0x128;
+    if (sp20.var6 == 0) {
+        sp20.var2 = 0;
         if (j_text_trigger != 0) {
-            iVar1 = 0x134;
+            phi_v0 = 308;
+        } else {            
+            phi_v0 = 296;
         }
-        meval = iVar1 * 0x400;
-        mlval = bsize + iVar1 * -0x400;
+        phi_v0 *= 1024;
+        sp20.var4 = bsize - phi_v0;
+        sp20.var6 = phi_v0;
     }
-    mempSetBankStarts(&local_20);
+
+    mempSetBankStarts(&sp20);
 }
 #else
 GLOBAL_ASM(
@@ -126,12 +111,12 @@ glabel mempCheckMemflagTokens
 /* 009FB0 700093B0 24423BB0 */  addiu $v0, %lo(memory_bank_ptrs) # addiu $v0, $v0, 0x3bb0
 /* 009FB4 700093B4 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 009FB8 700093B8 00857821 */  addu  $t7, $a0, $a1
-/* 009FBC 700093BC 3C198002 */  lui   $t9, %hi(sdefaultmvals +0x4) 
+/* 009FBC 700093BC 3C198002 */  lui   $t9, %hi(sdefaultmvals) 
 /* 009FC0 700093C0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 009FC4 700093C4 AFA50044 */  sw    $a1, 0x44($sp)
 /* 009FC8 700093C8 AC440000 */  sw    $a0, ($v0)
 /* 009FCC 700093CC AC4F0008 */  sw    $t7, 8($v0)
-/* 009FD0 700093D0 27394414 */  addiu $t9, %lo(sdefaultmvals +0x4) # addiu $t9, $t9, 0x4414
+/* 009FD0 700093D0 27394414 */  addiu $t9, %lo(sdefaultmvals) # addiu $t9, $t9, 0x4414
 /* 009FD4 700093D4 8F210000 */  lw    $at, ($t9)
 /* 009FD8 700093D8 8F290004 */  lw    $t1, 4($t9)
 /* 009FDC 700093DC 27B80020 */  addiu $t8, $sp, 0x20
