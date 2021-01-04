@@ -1,7 +1,7 @@
 #include "ultra64.h"
 #include "game/initactorpropstuff.h"
 #include "game/chr.h"
-
+#include "game/bondwalk.h"
 
 
 void reset_counter_rand_body_head(void) {
@@ -625,9 +625,6 @@ glabel somethingwith_weapon_animation_groups
 void sub_GAME_7F000980(void) {
     sub_GAME_7F0009A0();
 }
-
-
-extern char dword_CODE_bss_80075DC8[20][160]; // TODO: This seems like an array of 20 of these. Fix the other files? (Aliasing violation)
 
 void sub_GAME_7F0009A0(void) {
     u32 *end = &dword_CODE_bss_80075DC8[20];

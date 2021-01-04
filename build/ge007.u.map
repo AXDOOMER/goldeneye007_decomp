@@ -23204,8 +23204,6 @@ Linker script and memory map
                 0x0000000080075dc0                dword_CODE_bss_80075DC0
                 0x0000000080075dc4                dword_CODE_bss_80075DC4
                 0x0000000080075dc8                dword_CODE_bss_80075DC8
-                0x0000000080075e64                dword_CODE_bss_80075E64
-                0x0000000080075e68                dword_CODE_bss_80075E68
                 0x0000000080076a48                dword_CODE_bss_80076A48
  build/u/src/game/bondwalk2.o(.bss)
  build/u/src/game/objecthandler.o(.bss)
