@@ -49,7 +49,7 @@ void reset_game_options_index();
 
 void zero_D_800409A4();
 
-void sub_GAME_7F0A70AC(s32 arg1, s32 arg2);
+void draw_selected_page_rectangle(s32 watch_screen_index, s32 arg2);
 
 f32 sub_GAME_7F0A6A2C(f32 arg0);
 
