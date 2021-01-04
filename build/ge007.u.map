@@ -1545,6 +1545,15 @@ Linker script and memory map
                 0x0000000080000308                osRomBase = 0x80000308
                 0x000000008000030c                osResetType = 0x8000030c
                 0x000000008000031c                osAppNMIBuffer = 0x8000031c
+                0x0000000001000000                D_01000000 = 0x1000000
+                0x0000000001000040                D_01000040 = 0x1000040
+                0x0000000002000000                D_02000000 = 0x2000000
+                0x00000000020043e8                D_020043E8 = 0x20043e8
+                0x00000000020044b0                D_020044B0 = 0x20044b0
+                0x0000000002004758                D_02004758 = 0x2004758
+                0x0000000002004fe8                D_02004FE8 = 0x2004fe8
+                0x0000000002005ff0                D_02005FF0 = 0x2005ff0
+                0x00000000020067f0                D_020067F0 = 0x20067f0
                 0x0000000000000000                _romSegmentStart = 0x0
                 0x0000000004000000                _headerSegmentStart = ADDR (.header)
                 0x0000000000000000                _headerSegmentRomStart = _romSegmentStart
@@ -4810,9 +4819,9 @@ Linker script and memory map
                 0x000000007f0a6a2c                sub_GAME_7F0A6A2C
                 0x000000007f0a6a80                sub_GAME_7F0A6A80
                 0x000000007f0a6ee8                sub_GAME_7F0A6EE8
-                0x000000007f0a70ac                sub_GAME_7F0A70AC
+                0x000000007f0a70ac                draw_selected_page_rectangle
                 0x000000007f0a714c                draw_background_health_and_armor
-                0x000000007f0a77a8                sub_GAME_7F0A77A8
+                0x000000007f0a77a8                draw_background_health_and_armor_transitioning
                 0x000000007f0a77c8                sub_GAME_7F0A77C8
                 0x000000007f0a7c18                draw_text_mission_status
                 0x000000007f0a7dbc                empty_draw_function
@@ -4847,7 +4856,7 @@ Linker script and memory map
                 0x000000007f0ab7d8                game_option_toggle_input
                 0x000000007f0ab908                sub_GAME_7F0AB908
                 0x000000007f0abc1c                draw_toggle_options
-                0x000000007f0abdfc                sub_GAME_7F0ABDFC
+                0x000000007f0abdfc                draw_game_options_page
                 0x000000007f0ac0e8                sub_GAME_7F0AC0E8
                 0x000000007f0ac120                sub_GAME_7F0AC120
                 0x000000007f0ac168                sub_GAME_7F0AC168
@@ -18251,11 +18260,7 @@ Linker script and memory map
                 0x000000008002a7d4                D_8002A7D4
                 0x000000008002a7d8                D_8002A7D8
                 0x000000008002a7dc                D_8002A7DC
-                0x000000008002a7e0                D_8002A7E0
-                0x000000008002a7e4                D_8002A7E4
                 0x000000008002a7e8                D_8002A7E8
-                0x000000008002a7ec                D_8002A7EC
-                0x000000008002a7f0                D_8002A7F0
                 0x000000008002a7f4                D_8002A7F4
                 0x000000008002a7f8                D_8002A7F8
                 0x000000008002a7fc                D_8002A7FC
@@ -18275,29 +18280,12 @@ Linker script and memory map
                 0x000000008002a834                D_8002A834
                 0x000000008002a838                D_8002A838
                 0x000000008002a83c                D_8002A83C
-                0x000000008002a840                D_8002A840
-                0x000000008002a844                D_8002A844
                 0x000000008002a848                D_8002A848
-                0x000000008002a84c                D_8002A84C
-                0x000000008002a850                D_8002A850
                 0x000000008002a854                D_8002A854
-                0x000000008002a858                D_8002A858
-                0x000000008002a85c                D_8002A85C
                 0x000000008002a860                D_8002A860
-                0x000000008002a864                D_8002A864
-                0x000000008002a868                D_8002A868
-                0x000000008002a86c                D_8002A86C
-                0x000000008002a870                D_8002A870
-                0x000000008002a874                D_8002A874
                 0x000000008002a878                D_8002A878
-                0x000000008002a87c                D_8002A87C
-                0x000000008002a880                D_8002A880
                 0x000000008002a884                D_8002A884
-                0x000000008002a888                D_8002A888
-                0x000000008002a88c                D_8002A88C
                 0x000000008002a890                D_8002A890
-                0x000000008002a894                D_8002A894
-                0x000000008002a898                D_8002A898
                 0x000000008002a89c                D_8002A89C
                 0x000000008002a8a0                intro_eye_counter
                 0x000000008002a8a4                intro_state_blood_animation
@@ -20771,13 +20759,8 @@ Linker script and memory map
  build/u/src/game/intro_logos.o(.rodata)
  .rodata        0x000000008004f2d0       0x40 build/u/src/game/intro_logos.o
                 0x000000008004f2d0                D_8004F2D0
-                0x000000008004f2d4                D_8004F2D4
                 0x000000008004f2d8                D_8004F2D8
                 0x000000008004f2dc                D_8004F2DC
-                0x000000008004f2e0                jpt_8004F2E0
-                0x000000008004f2fc                D_8004F2FC
-                0x000000008004f300                D_8004F300
-                0x000000008004f304                D_8004F304
  build/u/src/game/mainmenu.o(.rodata)
  .rodata        0x000000008004f310     0x29e0 build/u/src/game/mainmenu.o
                 0x000000008004f488                asc_D_8004F488
@@ -22015,7 +21998,6 @@ Linker script and memory map
                 0x0000000080058568                D_80058568
                 0x000000008005856c                D_8005856C
                 0x0000000080058570                jpt_80058570
-                0x0000000080058584                jpt_80058584
  build/u/src/game/textrelated.o(.rodata)
  build/u/src/game/stan.o(.rodata)
  .rodata        0x00000000800585a0       0x40 build/u/src/game/stan.o
