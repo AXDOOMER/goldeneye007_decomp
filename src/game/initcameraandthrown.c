@@ -11,62 +11,56 @@ u32 D_8002A784 = 0;
 u32 D_8002A788 = 0;
 
 
-
-
-
-
-
-
 u32 set_weapon_model_generated_thrown_object(ITEM_IDS modelid)
-
 {
-  u32 uVar1;
-  s32 model;
+    s32 model;
   
-  model = -1;
-  switch(modelid) {
-  case ITEM_THROWKNIFE:
-    model = 0xba;
-    break;
-  case ITEM_GRENADELAUNCH:
-    model = 0xcb;
-    break;
-  case ITEM_ROCKETLAUNCH:
-    model = 0xca;
-    break;
-  case ITEM_GRENADE:
-    model = 0xc4;
-    break;
-  case ITEM_TIMEDMINE:
-    model = 0xc9;
-    break;
-  case ITEM_PROXIMITYMINE:
-    model = 200;
-    break;
-  case ITEM_REMOTEMINE:
-    model = 199;
-    break;
-  case ITEM_TANKSHELLS:
-    model = 0xca;
-    break;
-  case ITEM_BOMBCASE:
-    model = 0xe2;
-    break;
-  case ITEM_PLASTIQUE:
-    model = 0x111;
-    break;
-  case ITEM_BUG:
-    model = 0xf5;
-    break;
-  case ITEM_MICROCAMERA:
-    model = 0xf6;
-  }
+    model = -1;
+    switch(modelid)
+    {
+    case ITEM_THROWKNIFE:
+        model = 0xba;
+        break;
+    case ITEM_GRENADELAUNCH:
+        model = 0xcb;
+        break;
+    case ITEM_ROCKETLAUNCH:
+        model = 0xca;
+        break;
+    case ITEM_GRENADE:
+        model = 0xc4;
+        break;
+    case ITEM_TIMEDMINE:
+        model = 0xc9;
+        break;
+    case ITEM_PROXIMITYMINE:
+        model = 200;
+        break;
+    case ITEM_REMOTEMINE:
+        model = 199;
+        break;
+    case ITEM_TANKSHELLS:
+        model = 0xca;
+        break;
+    case ITEM_BOMBCASE:
+        model = 0xe2;
+        break;
+    case ITEM_PLASTIQUE:
+        model = 0x111;
+        break;
+    case ITEM_BUG:
+        model = 0xf5;
+        break;
+    case ITEM_MICROCAMERA:
+        model = 0xf6;
+    }
 
-  if (-1 < model) {
-    return load_model(model);
-  }
-  return 0;
-}
+    if (-1 < model)
+    {
+        return load_model(model);
+    }
+    return 0;
+}  
 
 
 #ifdef NONMATCHING
