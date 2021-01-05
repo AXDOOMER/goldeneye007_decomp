@@ -1157,6 +1157,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/j/src/game/initunk_0072B0.o
  .options       0x0000000000000000       0x20 build/j/src/game/initmttex.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/initmttex.o
+ .mdebug        0x0000000000000000      0x474 build/j/src/game/initmttex.o
  .options       0x0000000000000000       0x20 build/j/src/game/initunk_0073B0.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/initunk_0073B0.o
  .options       0x0000000000000000       0x20 build/j/src/game/initunk_007460.o
@@ -20734,8 +20735,6 @@ Linker script and memory map
  build/j/src/game/initunk_0072B0.o(.rodata)
  build/j/src/game/initmttex.o(.rodata)
  .rodata        0x000000008004f230       0x10 build/j/src/game/initmttex.o
-                0x000000008004f230                str_Mt
-                0x000000008004f234                str_Mt_0
  build/j/src/game/initunk_0073B0.o(.rodata)
  build/j/src/game/initunk_007460.o(.rodata)
  build/j/src/game/cleanup_alarms.o(.rodata)
