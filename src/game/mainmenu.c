@@ -27457,41 +27457,40 @@ glabel constructor_menu18_displaycast
 
 void init_menu19_spectrum(void)
 {
-    u8 rom;
+    u8 rom = 0;
 
-    rom = 0;
-    if (get_controller_buttons_held(2, 2) == 0)
+    if (!get_controller_buttons_held(2, L_CBUTTONS))
     {
-        if (get_controller_buttons_held(2, 1) != 0)
+        if (get_controller_buttons_held(2, R_CBUTTONS))
         {
-            rom = 1;
+            rom = ROM_ATIC;
         }
-        else if (get_controller_buttons_held(2, 8) != 0)
+        else if (get_controller_buttons_held(2, U_CBUTTONS))
         {
-            rom = 2;
+            rom = ROM_JETPAC;
         }
-        else if (get_controller_buttons_held(2, 4) != 0)
+        else if (get_controller_buttons_held(2, D_CBUTTONS))
         {
-            rom = 3;
+            rom = ROM_JETMAN;
         }
-        else if (get_controller_buttons_held(2, 0x200) != 0)
+        else if (get_controller_buttons_held(2, L_JPAD))
         {
-            rom = 4;
+            rom = ROM_ALIEN8;
         }
-        else if (get_controller_buttons_held(2, 0x100) != 0)
+        else if (get_controller_buttons_held(2, R_JPAD))
         {
-            rom = 5;
+            rom = ROM_GUNFRIGHT;
         }
-        else if (get_controller_buttons_held(2, 0x800) != 0)
+        else if (get_controller_buttons_held(2, U_JPAD))
         {
-            rom = 6;
+            rom = ROM_UNDER;
         }
         else
         {
-            rom = 0;
-            if (get_controller_buttons_held(2, 0x400) != 0)
+            rom = ROM_SABRE;
+            if (get_controller_buttons_held(2, D_JPAD))
             {
-                rom = 7;
+                rom = ROM_KNIGHTLORE;
             }
         }
     }
