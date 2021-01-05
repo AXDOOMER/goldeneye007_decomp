@@ -25378,14 +25378,7 @@ glabel D_80051B34
 .word 0x3D4CCCD0 /*0.050000012;*/
 glabel D_80051B38
 .word 0x40490FDB /*3.1415927;*/
-glabel D_80051B3C
-.word 0x3FAAAAAB /*1.3333334;*/
-glabel D_80051B40
-.word 0x461C4000 /*10000.0;*/
-glabel D_80051B44
-.word 0x3FAAAAAB /*1.3333334;*/
-glabel D_80051B48
-.word 0x3FAAAAAB /*1.3333334;*/
+
 .text
 glabel init_menu18_displaycast
 /* 04D1CC 7F01869C 3C0E8003 */  lui   $t6, %hi(ptr_logo_and_walletbond_DL) 
@@ -27615,44 +27608,14 @@ void update_menu19_spectrum(void) {
 }
 
 
-
-#ifdef NONMATCHING
-void interface_menu19_spectrum(void) {
+void interface_menu19_spectrum(void)
+{
     viSetFovY(60.0f);
-    viSetAspect(D_80051B3C);
-    viSetZRange(100.0f, D_80051B40);
+    viSetAspect(1.3333334f);
+    viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(0);
     run_spectrum_game();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel interface_menu19_spectrum
-/* 04EFB8 7F01A488 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 04EFBC 7F01A48C 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 04EFC0 7F01A490 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 04EFC4 7F01A494 44816000 */  mtc1  $at, $f12
-/* 04EFC8 7F01A498 0C001151 */  jal   viSetFovY
-/* 04EFCC 7F01A49C 00000000 */   nop   
-/* 04EFD0 7F01A4A0 3C018005 */  lui   $at, %hi(D_80051B3C)
-/* 04EFD4 7F01A4A4 0C001164 */  jal   viSetAspect
-/* 04EFD8 7F01A4A8 C42C1B3C */   lwc1  $f12, %lo(D_80051B3C)($at)
-/* 04EFDC 7F01A4AC 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 04EFE0 7F01A4B0 44816000 */  mtc1  $at, $f12
-/* 04EFE4 7F01A4B4 3C018005 */  lui   $at, %hi(D_80051B40)
-/* 04EFE8 7F01A4B8 0C001194 */  jal   viSetZRange
-/* 04EFEC 7F01A4BC C42E1B40 */   lwc1  $f14, %lo(D_80051B40)($at)
-/* 04EFF0 7F01A4C0 0C00114D */  jal   viSetUseZBuf
-/* 04EFF4 7F01A4C4 00002025 */   move  $a0, $zero
-/* 04EFF8 7F01A4C8 0FC34CDD */  jal   run_spectrum_game
-/* 04EFFC 7F01A4CC 00000000 */   nop   
-/* 04F000 7F01A4D0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 04F004 7F01A4D4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 04F008 7F01A4D8 03E00008 */  jr    $ra
-/* 04F00C 7F01A4DC 00000000 */   nop   
-)
-#endif
-
 
 
 
@@ -28102,6 +28065,10 @@ void menu_init()
 #else
 GLOBAL_ASM(
 .late_rodata
+glabel D_80051B44
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051B48
+.word 0x3FAAAAAB /*1.3333334;*/
 glabel jpt_menu_update
  .word menu_legal_screen_update
  .word menu_nintendo_logo_update
