@@ -65,7 +65,7 @@ Discarded input sections
  .options       0x0000000000000000       0x20 build/u/src/ramrom.o
  .reginfo       0x0000000000000000       0x18 build/u/src/ramrom.o
  .gptab.bss     0x0000000000000000       0x20 build/u/src/ramrom.o
- .mdebug        0x0000000000000000      0x964 build/u/src/ramrom.o
+ .mdebug        0x0000000000000000      0x968 build/u/src/ramrom.o
  .options       0x0000000000000000       0x20 build/u/src/boss.o
  .reginfo       0x0000000000000000       0x18 build/u/src/boss.o
  .options       0x0000000000000000       0x20 build/u/src/music.o
@@ -1107,7 +1107,7 @@ Discarded input sections
  .mdebug        0x0000000000000000      0x39c build/u/src/game/initunk_000B60.o
  .options       0x0000000000000000       0x20 build/u/src/game/setguscale.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/setguscale.o
- .mdebug        0x0000000000000000      0x44c build/u/src/game/setguscale.o
+ .mdebug        0x0000000000000000      0x450 build/u/src/game/setguscale.o
  .options       0x0000000000000000       0x20 build/u/src/game/initnull_000BC0.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/initnull_000BC0.o
  .mdebug        0x0000000000000000      0x28c build/u/src/game/initnull_000BC0.o
