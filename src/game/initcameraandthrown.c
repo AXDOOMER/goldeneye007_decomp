@@ -1,5 +1,5 @@
 #include "ultra64.h"
-
+#include "bondconstants.h"
 
 
 // data
@@ -11,82 +11,56 @@ u32 D_8002A784 = 0;
 u32 D_8002A788 = 0;
 
 
+u32 set_weapon_model_generated_thrown_object(ITEM_IDS modelid)
+{
+    s32 model;
+  
+    model = -1;
+    switch(modelid)
+    {
+    case ITEM_THROWKNIFE:
+        model = 0xba;
+        break;
+    case ITEM_GRENADELAUNCH:
+        model = 0xcb;
+        break;
+    case ITEM_ROCKETLAUNCH:
+        model = 0xca;
+        break;
+    case ITEM_GRENADE:
+        model = 0xc4;
+        break;
+    case ITEM_TIMEDMINE:
+        model = 0xc9;
+        break;
+    case ITEM_PROXIMITYMINE:
+        model = 200;
+        break;
+    case ITEM_REMOTEMINE:
+        model = 199;
+        break;
+    case ITEM_TANKSHELLS:
+        model = 0xca;
+        break;
+    case ITEM_BOMBCASE:
+        model = 0xe2;
+        break;
+    case ITEM_PLASTIQUE:
+        model = 0x111;
+        break;
+    case ITEM_BUG:
+        model = 0xf5;
+        break;
+    case ITEM_MICROCAMERA:
+        model = 0xf6;
+    }
 
-
-
-
-#ifdef NONMATCHING
-void set_weapon_model_generated_thrown_object(void) {
-
-}
-#else
-GLOBAL_ASM(
-.late_rodata
-.text
-glabel set_weapon_model_generated_thrown_object
-/* 03A240 7F005710 248EFFFD */  addiu $t6, $a0, -3
-/* 03A244 7F005714 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 03A248 7F005718 2DC1002E */  sltiu $at, $t6, 0x2e
-/* 03A24C 7F00571C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 03A250 7F005720 1020001E */  beqz  $at, .L7F00579C
-/* 03A254 7F005724 2405FFFF */   li    $a1, -1
-/* 03A258 7F005728 000E7080 */  sll   $t6, $t6, 2
-/* 03A25C 7F00572C 3C018005 */  lui   $at, %hi(projectile_ptr_table)
-/* 03A260 7F005730 002E0821 */  addu  $at, $at, $t6
-/* 03A264 7F005734 8C2EF0F0 */  lw    $t6, %lo(projectile_ptr_table)($at)
-/* 03A268 7F005738 01C00008 */  jr    $t6
-/* 03A26C 7F00573C 00000000 */   nop   
-throwingknife:
-/* 03A270 7F005740 10000016 */  b     .L7F00579C
-/* 03A274 7F005744 240500BA */   li    $a1, 186
-grenade_launch_round:
-/* 03A278 7F005748 10000014 */  b     .L7F00579C
-/* 03A27C 7F00574C 240500CB */   li    $a1, 203
-rocket:
-/* 03A280 7F005750 10000012 */  b     .L7F00579C
-/* 03A284 7F005754 240500CA */   li    $a1, 202
-grenade:
-/* 03A288 7F005758 10000010 */  b     .L7F00579C
-/* 03A28C 7F00575C 240500C4 */   li    $a1, 196
-timed_mine:
-/* 03A290 7F005760 1000000E */  b     .L7F00579C
-/* 03A294 7F005764 240500C9 */   li    $a1, 201
-prox_mine:
-/* 03A298 7F005768 1000000C */  b     .L7F00579C
-/* 03A29C 7F00576C 240500C8 */   li    $a1, 200
-remote_mine:
-/* 03A2A0 7F005770 1000000A */  b     .L7F00579C
-/* 03A2A4 7F005774 240500C7 */   li    $a1, 199
-rocket_0:
-/* 03A2A8 7F005778 10000008 */  b     .L7F00579C
-/* 03A2AC 7F00577C 240500CA */   li    $a1, 202
-bombcase:
-/* 03A2B0 7F005780 10000006 */  b     .L7F00579C
-/* 03A2B4 7F005784 240500E2 */   li    $a1, 226
-plastique:
-/* 03A2B8 7F005788 10000004 */  b     .L7F00579C
-/* 03A2BC 7F00578C 24050111 */   li    $a1, 273
-bug:
-/* 03A2C0 7F005790 10000002 */  b     .L7F00579C
-/* 03A2C4 7F005794 240500F5 */   li    $a1, 245
-microcamera:
-/* 03A2C8 7F005798 240500F6 */  li    $a1, 246
-default:
-.L7F00579C:
-/* 03A2CC 7F00579C 04A00005 */  bltz  $a1, .L7F0057B4
-/* 03A2D0 7F0057A0 00001025 */   move  $v0, $zero
-/* 03A2D4 7F0057A4 0FC15B0E */  jal   load_model
-/* 03A2D8 7F0057A8 00A02025 */   move  $a0, $a1
-/* 03A2DC 7F0057AC 10000002 */  b     .L7F0057B8
-/* 03A2E0 7F0057B0 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0057B4:
-/* 03A2E4 7F0057B4 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0057B8:
-/* 03A2E8 7F0057B8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 03A2EC 7F0057BC 03E00008 */  jr    $ra
-/* 03A2F0 7F0057C0 00000000 */   nop   
-)
-#endif
+    if (-1 < model)
+    {
+        return load_model(model);
+    }
+    return 0;
+}  
 
 
 #ifdef NONMATCHING
@@ -97,56 +71,8 @@ void load_camera_intro_type_values(void) {
 
 #ifdef VERSION_US
 GLOBAL_ASM(
+
 .late_rodata
-glabel projectile_ptr_table
-.word throwingknife
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word grenade_launch_round
-.word rocket
-.word grenade
-.word timed_mine
-.word prox_mine
-.word remote_mine
-.word default
-.word default
-.word rocket_0
-.word bombcase
-.word plastique
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word bug
-.word microcamera
-
-
 /*8004f1a8*/
 glabel default_zoom_speed
 .word 0x3f68ba2e
@@ -869,55 +795,6 @@ def_7F005A74:
 #ifdef VERSION_JP
 GLOBAL_ASM(
 .late_rodata
-glabel projectile_ptr_table
-.word throwingknife
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word grenade_launch_round
-.word rocket
-.word grenade
-.word timed_mine
-.word prox_mine
-.word remote_mine
-.word default
-.word default
-.word rocket_0
-.word bombcase
-.word plastique
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word default
-.word bug
-.word microcamera
-
-
 /*8004f1a8*/
 glabel default_zoom_speed
 .word 0x3f68ba2e

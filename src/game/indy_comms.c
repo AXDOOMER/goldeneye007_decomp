@@ -175,7 +175,7 @@ glabel send_command_string
 
 
 void sub_GAME_7F0D0124(void) {
-    if (indy_ready != 0)
+    if (indy_ready)
     {
         rmon_debug_returns_neg_1();
     }

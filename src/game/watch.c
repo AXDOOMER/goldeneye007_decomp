@@ -2907,13 +2907,13 @@ glabel sub_GAME_7F0A6EE8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A70AC(void) {
+void draw_selected_page_rectangle(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0A70AC
+glabel draw_selected_page_rectangle
 /* 0DBBDC 7F0A70AC 00001025 */  move  $v0, $zero
 /* 0DBBE0 7F0A70B0 00A01825 */  move  $v1, $a1
 /* 0DBBE4 7F0A70B4 24070070 */  li    $a3, 112
@@ -3403,14 +3403,10 @@ glabel draw_background_health_and_armor
 
 
 
-void sub_GAME_7F0A77A8(u32 param_1, u32 param_2)
+Gfx *draw_background_health_and_armor_transitioning(Gfx *gdl, u32 param_2)
 {
-  draw_background_health_and_armor(param_1, param_2, 1);
+    return draw_background_health_and_armor(gdl, param_2, 1);
 }
-
-
-
-
 
 
 #ifdef NONMATCHING
@@ -10118,156 +10114,45 @@ glabel sub_GAME_7F0AC168
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-//TODO: Uses v0 instead of v1
-s32 sub_GAME_7F0ACA28(s32 arg0, s32 arg1, s32 arg2)
+Gfx *sub_GAME_7F0ACA28(Gfx *gdl, s32 arg1, s32 watch_transitioning)
 {
+    draw_selected_page_rectangle(watch_screen_index, &pPlayer->buffer_for_watch_greenbackdrop_vertices);
 
-    sub_GAME_7F0A70AC(watch_screen_index, &pPlayer->buffer_for_watch_greenbackdrop_vertices);
-    
-    if (arg2 == 1)
+    if (watch_transitioning == 1)
     {
         set_BONDdata_paused_flag(0);
         sub_GAME_7F0BD8FC(0);
-        if ((watch_screen_index != 1) && (get_controller_buttons_pressed(0, 0xA000) != 0))
+
+        // Handle A or Z button click when in any page but inventory page
+        if ((watch_screen_index != 1) && (get_controller_buttons_pressed(0, Z_TRIG|A_BUTTON)))
         {
             sub_GAME_7F0A4EF8();
         }
-
+       
         switch (watch_screen_index)
         {
             case WATCH_INDEX_MISSION_STATUS:
-                arg0 = draw_watch_mission_status_page(arg0, arg1);
+                gdl = draw_watch_mission_status_page(gdl, arg1);
                 break;
             case WATCH_INDEX_INVENTORY:
-                arg0 = debug_gun_watch_move_related2(arg0, arg1);
+                gdl = debug_gun_watch_move_related2(gdl, arg1);
                 break;
             case WATCH_INDEX_CONTROL_OPTIONS:
-                arg0 = sub_GAME_7F0AB4B8(arg0, arg1);
+                gdl = sub_GAME_7F0AB4B8(gdl, arg1);
                 break;
             case WATCH_INDEX_GAME_OPTIONS:
-                arg0 = draw_game_options_page(arg0, arg1);
+                gdl = draw_game_options_page(gdl, arg1);
                 break;
             case WATCH_INDEX_MISSION_BRIEFING:
-                arg0 = sub_GAME_7F0AC168(arg0, arg1);
+                gdl = sub_GAME_7F0AC168(gdl, arg1);
         }
     }
-    else if (arg2 == 0)
+    else if (watch_transitioning == 0)
     {
-        
         sub_GAME_7F0BD8FC(1);
         set_BONDdata_paused_flag(1);
-        arg0 = sub_GAME_7F0A77A8(arg0, arg1);
-        
+        gdl = draw_background_health_and_armor_transitioning(gdl, arg1);
     }
-    return arg0;
-}
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:80058584*/
-glabel jpt_80058584
-.word .L7F0ACAD0
-.word .L7F0ACAE4
-.word .L7F0ACAF8
-.word .L7F0ACB0C
-.word .L7F0ACB20
-.text
-glabel sub_GAME_7F0ACA28
-/* 0E1558 7F0ACA28 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0E155C 7F0ACA2C AFA50024 */  sw    $a1, 0x24($sp)
-/* 0E1560 7F0ACA30 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0E1564 7F0ACA34 3C058008 */  lui   $a1, %hi(pPlayer)
-/* 0E1568 7F0ACA38 8CA5A0B0 */  lw    $a1, %lo(pPlayer)($a1)
-/* 0E156C 7F0ACA3C 00808025 */  move  $s0, $a0
-/* 0E1570 7F0ACA40 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0E1574 7F0ACA44 3C048004 */  lui   $a0, %hi(watch_screen_index)
-/* 0E1578 7F0ACA48 AFA60028 */  sw    $a2, 0x28($sp)
-/* 0E157C 7F0ACA4C 8C840994 */  lw    $a0, %lo(watch_screen_index)($a0)
-/* 0E1580 7F0ACA50 0FC29C2B */  jal   sub_GAME_7F0A70AC
-/* 0E1584 7F0ACA54 24A51878 */   addiu $a1, $a1, 0x1878
-/* 0E1588 7F0ACA58 8FA20028 */  lw    $v0, 0x28($sp)
-/* 0E158C 7F0ACA5C 24010001 */  li    $at, 1
-/* 0E1590 7F0ACA60 14410034 */  bne   $v0, $at, .L7F0ACB34
-/* 0E1594 7F0ACA64 00000000 */   nop   
-/* 0E1598 7F0ACA68 0FC1FAB4 */  jal   set_BONDdata_paused_flag
-/* 0E159C 7F0ACA6C 00002025 */   move  $a0, $zero
-/* 0E15A0 7F0ACA70 0FC2F63F */  jal   sub_GAME_7F0BD8FC
-/* 0E15A4 7F0ACA74 00002025 */   move  $a0, $zero
-/* 0E15A8 7F0ACA78 3C0E8004 */  lui   $t6, %hi(watch_screen_index) 
-/* 0E15AC 7F0ACA7C 8DCE0994 */  lw    $t6, %lo(watch_screen_index)($t6)
-/* 0E15B0 7F0ACA80 24010001 */  li    $at, 1
-/* 0E15B4 7F0ACA84 00002025 */  move  $a0, $zero
-/* 0E15B8 7F0ACA88 11C10007 */  beq   $t6, $at, .L7F0ACAA8
-/* 0E15BC 7F0ACA8C 00000000 */   nop   
-/* 0E15C0 7F0ACA90 0C0030EB */  jal   get_controller_buttons_pressed
-/* 0E15C4 7F0ACA94 3405A000 */   li    $a1, 40960
-/* 0E15C8 7F0ACA98 10400003 */  beqz  $v0, .L7F0ACAA8
-/* 0E15CC 7F0ACA9C 00000000 */   nop   
-/* 0E15D0 7F0ACAA0 0FC293BE */  jal   sub_GAME_7F0A4EF8
-/* 0E15D4 7F0ACAA4 00000000 */   nop   
-.L7F0ACAA8:
-/* 0E15D8 7F0ACAA8 3C0F8004 */  lui   $t7, %hi(watch_screen_index) 
-/* 0E15DC 7F0ACAAC 8DEF0994 */  lw    $t7, %lo(watch_screen_index)($t7)
-/* 0E15E0 7F0ACAB0 2DE10005 */  sltiu $at, $t7, 5
-/* 0E15E4 7F0ACAB4 10200029 */  beqz  $at, .L7F0ACB5C
-/* 0E15E8 7F0ACAB8 000F7880 */   sll   $t7, $t7, 2
-/* 0E15EC 7F0ACABC 3C018006 */  lui   $at, %hi(jpt_80058584)
-/* 0E15F0 7F0ACAC0 002F0821 */  addu  $at, $at, $t7
-/* 0E15F4 7F0ACAC4 8C2F8584 */  lw    $t7, %lo(jpt_80058584)($at)
-/* 0E15F8 7F0ACAC8 01E00008 */  jr    $t7
-/* 0E15FC 7F0ACACC 00000000 */   nop   
-.L7F0ACAD0:
-/* 0E1600 7F0ACAD0 02002025 */  move  $a0, $s0
-/* 0E1604 7F0ACAD4 0FC2A0C3 */  jal   draw_watch_mission_status_page
-/* 0E1608 7F0ACAD8 8FA50024 */   lw    $a1, 0x24($sp)
-/* 0E160C 7F0ACADC 1000001F */  b     .L7F0ACB5C
-/* 0E1610 7F0ACAE0 00408025 */   move  $s0, $v0
-.L7F0ACAE4:
-/* 0E1614 7F0ACAE4 02002025 */  move  $a0, $s0
-/* 0E1618 7F0ACAE8 0FC2A109 */  jal   debug_gun_watch_move_related2
-/* 0E161C 7F0ACAEC 8FA50024 */   lw    $a1, 0x24($sp)
-/* 0E1620 7F0ACAF0 1000001A */  b     .L7F0ACB5C
-/* 0E1624 7F0ACAF4 00408025 */   move  $s0, $v0
-.L7F0ACAF8:
-/* 0E1628 7F0ACAF8 02002025 */  move  $a0, $s0
-/* 0E162C 7F0ACAFC 0FC2AD2E */  jal   sub_GAME_7F0AB4B8
-/* 0E1630 7F0ACB00 8FA50024 */   lw    $a1, 0x24($sp)
-/* 0E1634 7F0ACB04 10000015 */  b     .L7F0ACB5C
-/* 0E1638 7F0ACB08 00408025 */   move  $s0, $v0
-.L7F0ACB0C:
-/* 0E163C 7F0ACB0C 02002025 */  move  $a0, $s0
-/* 0E1640 7F0ACB10 0FC2AF7F */  jal   draw_game_options_page
-/* 0E1644 7F0ACB14 8FA50024 */   lw    $a1, 0x24($sp)
-/* 0E1648 7F0ACB18 10000010 */  b     .L7F0ACB5C
-/* 0E164C 7F0ACB1C 00408025 */   move  $s0, $v0
-.L7F0ACB20:
-/* 0E1650 7F0ACB20 02002025 */  move  $a0, $s0
-/* 0E1654 7F0ACB24 0FC2B05A */  jal   sub_GAME_7F0AC168
-/* 0E1658 7F0ACB28 8FA50024 */   lw    $a1, 0x24($sp)
-/* 0E165C 7F0ACB2C 1000000B */  b     .L7F0ACB5C
-/* 0E1660 7F0ACB30 00408025 */   move  $s0, $v0
-.L7F0ACB34:
-/* 0E1664 7F0ACB34 5440000A */  bnezl $v0, .L7F0ACB60
-/* 0E1668 7F0ACB38 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0E166C 7F0ACB3C 0FC2F63F */  jal   sub_GAME_7F0BD8FC
-/* 0E1670 7F0ACB40 24040001 */   li    $a0, 1
-/* 0E1674 7F0ACB44 0FC1FAB4 */  jal   set_BONDdata_paused_flag
-/* 0E1678 7F0ACB48 24040001 */   li    $a0, 1
-/* 0E167C 7F0ACB4C 02002025 */  move  $a0, $s0
-/* 0E1680 7F0ACB50 0FC29DEA */  jal   sub_GAME_7F0A77A8
-/* 0E1684 7F0ACB54 8FA50024 */   lw    $a1, 0x24($sp)
-/* 0E1688 7F0ACB58 00408025 */  move  $s0, $v0
-.L7F0ACB5C:
-/* 0E168C 7F0ACB5C 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F0ACB60:
-/* 0E1690 7F0ACB60 02001025 */  move  $v0, $s0
-/* 0E1694 7F0ACB64 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0E1698 7F0ACB68 03E00008 */  jr    $ra
-/* 0E169C 7F0ACB6C 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
 
+    return gdl;
+}
