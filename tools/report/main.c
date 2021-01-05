@@ -321,7 +321,7 @@ int main(int argc, char **argv)
 	}
 	else if(cur_obj == cur_mis_objs_max)
 	{
-		printf(" (Next level in %0.1f%%)", -(obj_remaining - 1.f) * 100.f);
+		printf("\n\n    Progress To Next Mission: %0.1f%%", obj_remaining * 100.f);
 	}
 
 exit:
