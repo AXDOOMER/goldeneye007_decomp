@@ -27457,7 +27457,7 @@ glabel constructor_menu18_displaycast
 
 void init_menu19_spectrum(void)
 {
-    u8 rom = 0;
+    SPECTRUMROMS rom = ROM_SABRE;
 
     if (!get_controller_buttons_held(2, L_CBUTTONS))
     {
