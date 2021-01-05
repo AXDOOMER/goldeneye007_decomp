@@ -25066,39 +25066,17 @@ glabel constructor_menu16_nocontrollers
 
 #endif
 
-#ifdef NONMATCHING
-void do_extended_cast_display(u32 flag)
+
+void do_extended_cast_display(s32 flag)
 {
-  if (flag != FALSE) {
-    do_not_play_intro_movie = 0;
     full_actor_intro = flag;
-    return;
-  }
-  do_not_play_intro_movie = 1;
-  full_actor_intro = flag;
+    if (flag != 0)
+    {
+        do_not_play_intro_movie = 0;
+        return;
+    }
+    do_not_play_intro_movie = 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel do_extended_cast_display
-/* 04D1A0 7F018670 3C018003 */  lui   $at, %hi(full_actor_intro)
-/* 04D1A4 7F018674 10800004 */  beqz  $a0, .L7F018688
-/* 04D1A8 7F018678 AC24B5FC */   sw    $a0, %lo(full_actor_intro)($at)
-/* 04D1AC 7F01867C 3C018003 */  lui   $at, %hi(do_not_play_intro_movie)
-/* 04D1B0 7F018680 03E00008 */  jr    $ra
-/* 04D1B4 7F018684 AC20B5E8 */   sw    $zero, %lo(do_not_play_intro_movie)($at)
-.L7F018688:
-/* 04D1B8 7F018688 240E0001 */  li    $t6, 1
-/* 04D1BC 7F01868C 3C018003 */  lui   $at, %hi(do_not_play_intro_movie)
-/* 04D1C0 7F018690 AC2EB5E8 */  sw    $t6, %lo(do_not_play_intro_movie)($at)
-/* 04D1C4 7F018694 03E00008 */  jr    $ra
-/* 04D1C8 7F018698 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 
 #ifdef NONMATCHING
