@@ -21,19 +21,9 @@ typedef struct s_mempMVALS {
     u32 var8;
 } s_mempMVALS;
 
-typedef struct s_mempMEMSTARTS {
-    s32 bank1start;
-    s32 bank2start;
-    s32 bank3start;
-    s32 bank4start;
-    s32 bank5start;
-    s32 bank6start;
-    s32 bank7start;
-} s_mempMEMSTARTS;
-
 void mempInitDebugNoticeList(void);
 void mempCheckMemflagTokens(int bstart,int bsize);
-void mempSetBankStarts(s_mempMVALS *banks);
+void mempSetBankStarts(s32 banks[8]);
 u32 mempAllocBytesInBank(u32 bytes,u8 bank);
 s32 mempAddEntryOfSizeToBank(u8* ptrdata, u32 size, u8 bank);
 void nulled_mempLoopAllMemBanks(void);

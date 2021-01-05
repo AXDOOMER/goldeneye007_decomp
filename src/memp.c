@@ -17,41 +17,17 @@ s32 D_8002440C = 0;
 s32 D_80024410 = 0;
 
 struct s_mempMVALS sdefaultmvals = {
-    2, //D_80024414
-    0, //mf
-    4, //D_8002441C
-    0x52, //ml
-    6, //D_80024424
-    0xF, //me
-    0, //D_8002442C
-    0
+    2,  0x00,
+    4,  0x52,
+    6,  0x0F,
+    0,  0x00
 };
 
-struct s_mempMEMSTARTS sdefaultmemstarts = {
-    0, //bank1start
-    0, //bank2start
-    0, //bank3start
-    0, //bank4start
-    0, //bank5start
-    0, //bank6start
-    0  //bank7start
-};
-
-
-
-
-
-
-/**
- * 9F80	70009380
- *     V0=p->debug.notice.list entry for memp_c_debug
- */
 void mempInitDebugNoticeList(void)
 {
-    debCheckAddDebugNoticeListEntry(&ptr_memp_c_debug_debug_notice_list, "memp_c_debug"); //should be "memp_c_debug"
+    debCheckAddDebugNoticeListEntry(&ptr_memp_c_debug_debug_notice_list, "memp_c_debug");
 }
 
-void mempSetBankStarts(s_mempMVALS *starts);
 const char *check_token(s32 arg0, const char *arg1);
 long int strtol(const char *str, char **endptr, int base);
 void mempCheckMemflagTokens(s32 bstart, s32 bsize)
@@ -78,233 +54,45 @@ void mempCheckMemflagTokens(s32 bstart, s32 bsize)
         sp20.var4 = bsize - sp20.var6;
     }
 
-    mempSetBankStarts(&sp20);
+    mempSetBankStarts((s32*)&sp20);
 }
 
-/**
- * A114	70009514
- *     initialize allocations using table A0
- *     accepts: A0=p->allocation sizes
- */
-#ifdef NONMATCHING
-void mempSetBankStarts(int *banks)
+#define ALIGN16(val)        (((val) | 0xf) ^ 0xf)
+void mempSetBankStarts(s32 banks[8])
 {
-    int *piVar1;
-    int right_l;
-    longlong lVar2;
-    longlong lVar3;
-    int iVar4;
-    int iVar5;
-    s_memstarts *psVar6;
-    s_memstarts *psVar7;
-    s_memstarts bankstarts;
-    undefined auStack4 [4];
-    
-    bankstarts.bank1start = sdefaultmemstarts.bank1start;
-    bankstarts.bank2start = sdefaultmemstarts.bank2start;
-    psVar6 = &bankstarts;
-    bankstarts.bank3start = sdefaultmemstarts.bank3start;
-    bankstarts.bank4start = sdefaultmemstarts.bank4start;
-    bankstarts.bank5start = sdefaultmemstarts.bank5start;
-    bankstarts.bank6start = sdefaultmemstarts.bank6start;
-    bankstarts.bank7start = sdefaultmemstarts.bank7start;
-    right_l = *banks;
-    iVar4 = banks[1];
-    while( true ) {
-        (&bankstarts.bank1start)[right_l] = iVar4;
-        right_l = banks[2];
-        if (right_l == 0) break;
-        iVar4 = banks[3];
-        banks = banks + 2;
+    s32 i;
+    s32 bankstarts[7] = {0};
+    s32 var1;
+    s32 var3;
+    s32 var2;
+
+    i = 0;
+    do {
+        bankstarts[banks[i]] = banks[i+1];
+        i += 2;
+    } while (banks[i] != 0);
+
+    for (i = 0; i < 6; i++) {
+        bankstarts[i + 1] += bankstarts[i];
     }
-    right_l = bankstarts.bank1start;
-    do {
-        piVar1 = &psVar6->bank2start;
-        psVar6 = (s_memstarts *)&psVar6->bank2start;
-        right_l = *piVar1 + right_l;
-        psVar6->bank1start = right_l;
-        iVar4 = bankstarts.bank7start;
-    } while (psVar6 < (s_memstarts *)&bankstarts.bank7start);
-    right_l = memory_bank_ptrs[0].bankend - memory_bank_ptrs[0].bankstart;
-    lVar3 = (longlong)right_l;
-    iVar5 = bankstarts.bank7start >> 0x1f;
-    psVar6 = &bankstarts;
-    do {
-        lVar2 = __ll_mul((int)psVar6->bank1start >> 0x1f,psVar6->bank1start,right_l >> 0x1f,right_l)
-        ;
-        __ll_div((int)lVar2,(int)lVar3,iVar5,iVar4);
-        psVar7 = (s_memstarts *)&psVar6->bank2start;
-        psVar6->bank1start = (int)lVar3;
-        psVar6 = psVar7;
-    } while (psVar7 < (s_memstarts *)auStack4);
-    psVar6 = &bankstarts;
-    do {
-        psVar7 = (s_memstarts *)&psVar6->bank2start;
-        psVar6->bank1start = (psVar6->bank1start | 0xf) ^ 0xf;
-        psVar6 = psVar7;
-    } while (psVar7 < (s_memstarts *)auStack4);
-    memory_bank_ptrs[1].bankstart = bankstarts.bank1start + memory_bank_ptrs[0].bankstart;
-    memory_bank_ptrs[1].nextentry = 0;
-    memory_bank_ptrs[1].bankend = bankstarts.bank2start + memory_bank_ptrs[0].bankstart;
-    memory_bank_ptrs[2].bankstart = bankstarts.bank2start + memory_bank_ptrs[0].bankstart;
-    memory_bank_ptrs[2].nextentry = 0;
-    memory_bank_ptrs[2].bankend = bankstarts.bank3start + memory_bank_ptrs[0].bankstart;
-    memory_bank_ptrs[3].bankstart = bankstarts.bank3start + memory_bank_ptrs[0].bankstart;
-    memory_bank_ptrs[3].nextentry = 0;
-    memory_bank_ptrs[3].bankend = bankstarts.bank4start + memory_bank_ptrs[0].bankstart;
-    memory_bank_ptrs[4].bankstart = bankstarts.bank4start + memory_bank_ptrs[0].bankstart;
-    memory_bank_ptrs[4].nextentry = 0;
-    memory_bank_ptrs[4].bankend = bankstarts.bank5start + memory_bank_ptrs[0].bankstart;
-    memory_bank_ptrs[5].bankstart = bankstarts.bank5start + memory_bank_ptrs[0].bankstart;
-    memory_bank_ptrs[5].nextentry = 0;
-    memory_bank_ptrs[5].bankend = bankstarts.bank6start + memory_bank_ptrs[0].bankstart;
-    memory_bank_ptrs[6].bankstart = bankstarts.bank6start + memory_bank_ptrs[0].bankstart;
-    memory_bank_ptrs[6].nextentry = 0;
-    memory_bank_ptrs[6].bankend = bankstarts.bank7start + memory_bank_ptrs[0].bankstart;
+
+    var3 = bankstarts[6];
+    var1 = (memory_bank_ptrs[0].bankend - memory_bank_ptrs[0].bankstart);
+    for (i = 0; i < 7; i++) {
+        bankstarts[i] = ((s64)bankstarts[i] * var1) / var3;
+    }
+
+    for (i = 0; i < 7; i++) {
+        bankstarts[i] = ALIGN16(bankstarts[i]);
+    }
+
+    var2 = memory_bank_ptrs[0].bankstart;
+    for (i = 0; i < 6; i++) {
+        memory_bank_ptrs[i + 1].bankstart = bankstarts[i] + var2;
+        memory_bank_ptrs[i + 1].nextentry = 0;
+        memory_bank_ptrs[i + 1].bankend = bankstarts[i + 1] + var2;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel mempSetBankStarts
-/* 00A114 70009514 27BDFF80 */  addiu $sp, $sp, -0x80
-/* 00A118 70009518 3C0E8002 */  lui   $t6, %hi(sdefaultmemstarts) 
-/* 00A11C 7000951C AFBF0024 */  sw    $ra, 0x24($sp)
-/* 00A120 70009520 AFB30020 */  sw    $s3, 0x20($sp)
-/* 00A124 70009524 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 00A128 70009528 AFB10018 */  sw    $s1, 0x18($sp)
-/* 00A12C 7000952C AFB00014 */  sw    $s0, 0x14($sp)
-/* 00A130 70009530 25CE4434 */  addiu $t6, %lo(sdefaultmemstarts) # addiu $t6, $t6, 0x4434
-/* 00A134 70009534 8DC10000 */  lw    $at, ($t6)
-/* 00A138 70009538 27B20060 */  addiu $s2, $sp, 0x60
-/* 00A13C 7000953C 3C138006 */  lui   $s3, %hi(memory_bank_ptrs)
-/* 00A140 70009540 AE410000 */  sw    $at, ($s2)
-/* 00A144 70009544 8DD90004 */  lw    $t9, 4($t6)
-/* 00A148 70009548 00801025 */  move  $v0, $a0
-/* 00A14C 7000954C 26733BB0 */  addiu $s3, %lo(memory_bank_ptrs) # addiu $s3, $s3, 0x3bb0
-/* 00A150 70009550 AE590004 */  sw    $t9, 4($s2)
-/* 00A154 70009554 8DC10008 */  lw    $at, 8($t6)
-/* 00A158 70009558 27B00060 */  addiu $s0, $sp, 0x60
-/* 00A15C 7000955C 27B1007C */  addiu $s1, $sp, 0x7c
-/* 00A160 70009560 AE410008 */  sw    $at, 8($s2)
-/* 00A164 70009564 8DD9000C */  lw    $t9, 0xc($t6)
-/* 00A168 70009568 AE59000C */  sw    $t9, 0xc($s2)
-/* 00A16C 7000956C 8DC10010 */  lw    $at, 0x10($t6)
-/* 00A170 70009570 AE410010 */  sw    $at, 0x10($s2)
-/* 00A174 70009574 8DD90014 */  lw    $t9, 0x14($t6)
-/* 00A178 70009578 AE590014 */  sw    $t9, 0x14($s2)
-/* 00A17C 7000957C 8DC10018 */  lw    $at, 0x18($t6)
-/* 00A180 70009580 AE410018 */  sw    $at, 0x18($s2)
-/* 00A184 70009584 8C830000 */  lw    $v1, ($a0)
-/* 00A188 70009588 8C480004 */  lw    $t0, 4($v0)
-.L7000958C:
-/* 00A18C 7000958C 00034880 */  sll   $t1, $v1, 2
-/* 00A190 70009590 02495021 */  addu  $t2, $s2, $t1
-/* 00A194 70009594 AD480000 */  sw    $t0, ($t2)
-/* 00A198 70009598 8C430008 */  lw    $v1, 8($v0)
-/* 00A19C 7000959C 24420008 */  addiu $v0, $v0, 8
-/* 00A1A0 700095A0 5460FFFA */  bnezl $v1, .L7000958C
-/* 00A1A4 700095A4 8C480004 */   lw    $t0, 4($v0)
-/* 00A1A8 700095A8 8E030000 */  lw    $v1, ($s0)
-/* 00A1AC 700095AC 27A40078 */  addiu $a0, $sp, 0x78
-.L700095B0:
-/* 00A1B0 700095B0 8E0C0004 */  lw    $t4, 4($s0)
-/* 00A1B4 700095B4 26100004 */  addiu $s0, $s0, 4
-/* 00A1B8 700095B8 0204082B */  sltu  $at, $s0, $a0
-/* 00A1BC 700095BC 01831021 */  addu  $v0, $t4, $v1
-/* 00A1C0 700095C0 00401825 */  move  $v1, $v0
-/* 00A1C4 700095C4 1420FFFA */  bnez  $at, .L700095B0
-/* 00A1C8 700095C8 AE020000 */   sw    $v0, ($s0)
-/* 00A1CC 700095CC 8E6D0008 */  lw    $t5, 8($s3)
-/* 00A1D0 700095D0 8E780000 */  lw    $t8, ($s3)
-/* 00A1D4 700095D4 8FA20078 */  lw    $v0, 0x78($sp)
-/* 00A1D8 700095D8 27B00060 */  addiu $s0, $sp, 0x60
-/* 00A1DC 700095DC 01B81823 */  subu  $v1, $t5, $t8
-/* 00A1E0 700095E0 000377C3 */  sra   $t6, $v1, 0x1f
-/* 00A1E4 700095E4 000247C3 */  sra   $t0, $v0, 0x1f
-/* 00A1E8 700095E8 AFA80030 */  sw    $t0, 0x30($sp)
-/* 00A1EC 700095EC AFAE0038 */  sw    $t6, 0x38($sp)
-/* 00A1F0 700095F0 AFA3003C */  sw    $v1, 0x3c($sp)
-/* 00A1F4 700095F4 AFA20034 */  sw    $v0, 0x34($sp)
-.L700095F8:
-/* 00A1F8 700095F8 8E050000 */  lw    $a1, ($s0)
-/* 00A1FC 700095FC 8FA60038 */  lw    $a2, 0x38($sp)
-/* 00A200 70009600 8FA7003C */  lw    $a3, 0x3c($sp)
-/* 00A204 70009604 0C003B6A */  jal   __ll_mul
-/* 00A208 70009608 000527C3 */   sra   $a0, $a1, 0x1f
-/* 00A20C 7000960C 00402025 */  move  $a0, $v0
-/* 00A210 70009610 00602825 */  move  $a1, $v1
-/* 00A214 70009614 8FA60030 */  lw    $a2, 0x30($sp)
-/* 00A218 70009618 0C003B53 */  jal   __ll_div
-/* 00A21C 7000961C 8FA70034 */   lw    $a3, 0x34($sp)
-/* 00A220 70009620 26100004 */  addiu $s0, $s0, 4
-/* 00A224 70009624 0211082B */  sltu  $at, $s0, $s1
-/* 00A228 70009628 1420FFF3 */  bnez  $at, .L700095F8
-/* 00A22C 7000962C AE03FFFC */   sw    $v1, -4($s0)
-/* 00A230 70009630 27B00060 */  addiu $s0, $sp, 0x60
-/* 00A234 70009634 27A2007C */  addiu $v0, $sp, 0x7c
-.L70009638:
-/* 00A238 70009638 8E0B0000 */  lw    $t3, ($s0)
-/* 00A23C 7000963C 26100004 */  addiu $s0, $s0, 4
-/* 00A240 70009640 0202082B */  sltu  $at, $s0, $v0
-/* 00A244 70009644 356C000F */  ori   $t4, $t3, 0xf
-/* 00A248 70009648 398D000F */  xori  $t5, $t4, 0xf
-/* 00A24C 7000964C 1420FFFA */  bnez  $at, .L70009638
-/* 00A250 70009650 AE0DFFFC */   sw    $t5, -4($s0)
-/* 00A254 70009654 8E660000 */  lw    $a2, ($s3)
-/* 00A258 70009658 8FB80060 */  lw    $t8, 0x60($sp)
-/* 00A25C 7000965C 8FAF0064 */  lw    $t7, 0x64($sp)
-/* 00A260 70009660 3C018006 */  lui   $at, %hi(memory_bank_ptrs+0x14)
-/* 00A264 70009664 03067021 */  addu  $t6, $t8, $a2
-/* 00A268 70009668 AC2E3BC0 */  sw    $t6, %lo(memory_bank_ptrs+0x10)($at)
-/* 00A26C 7000966C AC203BC4 */  sw    $zero, %lo(memory_bank_ptrs+0x14)($at)
-/* 00A270 70009670 3C018006 */  lui   $at, %hi(memory_bank_ptrs+0x18)
-/* 00A274 70009674 01E61021 */  addu  $v0, $t7, $a2
-/* 00A278 70009678 AC223BC8 */  sw    $v0, %lo(memory_bank_ptrs+0x18)($at)
-/* 00A27C 7000967C 8FA80068 */  lw    $t0, 0x68($sp)
-/* 00A280 70009680 3C018006 */  lui   $at, %hi(memory_bank_ptrs+0x24)
-/* 00A284 70009684 AC223BD0 */  sw    $v0, %lo(memory_bank_ptrs+0x20)($at)
-/* 00A288 70009688 AC203BD4 */  sw    $zero, %lo(memory_bank_ptrs+0x24)($at)
-/* 00A28C 7000968C 3C018006 */  lui   $at, %hi(memory_bank_ptrs+0x28)
-/* 00A290 70009690 01064821 */  addu  $t1, $t0, $a2
-/* 00A294 70009694 AC293BD8 */  sw    $t1, %lo(memory_bank_ptrs+0x28)($at)
-/* 00A298 70009698 24070002 */  li    $a3, 2
-/* 00A29C 7000969C 0007C900 */  sll   $t9, $a3, 4
-/* 00A2A0 700096A0 02791021 */  addu  $v0, $s3, $t9
-/* 00A2A4 700096A4 00075080 */  sll   $t2, $a3, 2
-/* 00A2A8 700096A8 024A8021 */  addu  $s0, $s2, $t2
-/* 00A2AC 700096AC 8E180008 */  lw    $t8, 8($s0)
-/* 00A2B0 700096B0 8E0E000C */  lw    $t6, 0xc($s0)
-/* 00A2B4 700096B4 8E0D0004 */  lw    $t5, 4($s0)
-/* 00A2B8 700096B8 8E0F0010 */  lw    $t7, 0x10($s0)
-/* 00A2BC 700096BC 8E0B0000 */  lw    $t3, ($s0)
-/* 00A2C0 700096C0 03062021 */  addu  $a0, $t8, $a2
-/* 00A2C4 700096C4 01C62821 */  addu  $a1, $t6, $a2
-/* 00A2C8 700096C8 01A61821 */  addu  $v1, $t5, $a2
-/* 00A2CC 700096CC 01E64021 */  addu  $t0, $t7, $a2
-/* 00A2D0 700096D0 01666021 */  addu  $t4, $t3, $a2
-/* 00A2D4 700096D4 AC480048 */  sw    $t0, 0x48($v0)
-/* 00A2D8 700096D8 AC430020 */  sw    $v1, 0x20($v0)
-/* 00A2DC 700096DC AC450038 */  sw    $a1, 0x38($v0)
-/* 00A2E0 700096E0 AC450040 */  sw    $a1, 0x40($v0)
-/* 00A2E4 700096E4 AC440028 */  sw    $a0, 0x28($v0)
-/* 00A2E8 700096E8 AC440030 */  sw    $a0, 0x30($v0)
-/* 00A2EC 700096EC AC400024 */  sw    $zero, 0x24($v0)
-/* 00A2F0 700096F0 AC400034 */  sw    $zero, 0x34($v0)
-/* 00A2F4 700096F4 AC400044 */  sw    $zero, 0x44($v0)
-/* 00A2F8 700096F8 AC4C0010 */  sw    $t4, 0x10($v0)
-/* 00A2FC 700096FC AC400014 */  sw    $zero, 0x14($v0)
-/* 00A300 70009700 AC430018 */  sw    $v1, 0x18($v0)
-/* 00A304 70009704 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 00A308 70009708 8FB30020 */  lw    $s3, 0x20($sp)
-/* 00A30C 7000970C 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 00A310 70009710 8FB10018 */  lw    $s1, 0x18($sp)
-/* 00A314 70009714 8FB00014 */  lw    $s0, 0x14($sp)
-/* 00A318 70009718 03E00008 */  jr    $ra
-/* 00A31C 7000971C 27BD0080 */   addiu $sp, $sp, 0x80
-)
-#endif
-
-
 
 /**
  * A320	70009720
@@ -536,74 +324,34 @@ glabel mempAddEntryOfSizeToBank
 )
 #endif
 
-
-
-/**
- * A4F0	700098F0
- *     V0=8 -- loop eight times, needlessly; fries AT,T6
- *     used by "show mem use", step 1; probably originally listed all eight memory allocations
- */
-
-void nulled_mempLoopAllMemBanks(void)
-{
+void nulled_mempLoopAllMemBanks(void) {
     u8 bank;
-    for (bank = 1; bank < 7; bank++)
-    {
-        ;
-    };
+    for (bank = 1; bank < 7; bank++) {}
 }
 
-/**
- * A510	70009910
- *     V0= total allocated size of bank A0
- *     accepts: A0=bank#
- */
-s32 mempGetBankSizeLeft(u8 bank)
-{
-    if (needmemallocation != 0) {
+s32 mempGetBankSizeLeft(u8 bank) {
+    if (needmemallocation) {
         bank = 6;
     }
+
     if ((bank == 4) && (memory_bank_ptrs[4].bankstart == memory_bank_ptrs[4].bankend)) {
         bank = 6;
     }
+
     return memory_bank_ptrs[bank].bankend - memory_bank_ptrs[bank].nextentry;
 }
 
-
-
-
-
-/**
- * A570	70009970
- *     allocate A0 coded #bytes in bank
- *     accepts: A0=size/bank# entry (ssssssss ssssssss sssssssss sssssbbb)
- */
-
-u32 mempAllocPackedBytesInBank(u32 param_1)
-{
-    return mempAllocBytesInBank((param_1 >> 3),(param_1 & 7));
+// Last three bits contains the bank, the rest contains the size.
+u32 mempAllocPackedBytesInBank(u32 sizeandbank) {
+    return mempAllocBytesInBank((sizeandbank >> 3), (sizeandbank & 7));
 }
 
-
-
-
-/**
- * A59C	7000999C
- *     reset memory bank A0 [0-6]
- *     copies base address for memory bank A0 to +4, fry +C
- */
-void mempResetBank(u8 bank)
-{
+void mempResetBank(u8 bank) {
     memory_bank_ptrs[bank].data2 = 0;
     memory_bank_ptrs[bank].nextentry = memory_bank_ptrs[bank].bankstart;
 }
 
-/**
- * A5C4	700099C4
- *     accepts: A0=bank#
- */
-void mempNullNextEntryInBank(u8 bank)
-{
+void mempNullNextEntryInBank(u8 bank) {
     nulled_mempLoopAllMemBanks();
     if (memory_bank_ptrs[bank].nextentry != 0) {
         memory_bank_ptrs[bank].nextentry = 0;
