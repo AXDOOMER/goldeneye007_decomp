@@ -19,40 +19,40 @@ u32 set_weapon_model_generated_thrown_object(ITEM_IDS modelid)
     switch(modelid)
     {
     case ITEM_THROWKNIFE:
-        model = 0xba;
+        model = PROJECTILES_TYPE_KNIFE;
         break;
     case ITEM_GRENADELAUNCH:
-        model = 0xcb;
+        model = PROJECTILES_TYPE_GLAUNCH_ROUND;
         break;
     case ITEM_ROCKETLAUNCH:
-        model = 0xca;
+        model = PROJECTILES_TYPE_ROCKET_ROUND;
         break;
     case ITEM_GRENADE:
-        model = 0xc4;
+        model = PROJECTILES_TYPE_GRENADE;
         break;
     case ITEM_TIMEDMINE:
-        model = 0xc9;
+        model = PROJECTILES_TYPE_TIMED_MINE;
         break;
     case ITEM_PROXIMITYMINE:
-        model = 200;
+        model = PROJECTILES_TYPE_PROX_MINE;
         break;
     case ITEM_REMOTEMINE:
-        model = 199;
+        model = PROJECTILES_TYPE_REMOTE_MINE;
         break;
     case ITEM_TANKSHELLS:
-        model = 0xca;
+        model = PROJECTILES_TYPE_ROCKET_ROUND2;
         break;
     case ITEM_BOMBCASE:
-        model = 0xe2;
+        model = PROJECTILES_TYPE_BOMBCASE;
         break;
     case ITEM_PLASTIQUE:
-        model = 0x111;
+        model = PROJECTILES_TYPE_PLASTIQUE;
         break;
     case ITEM_BUG:
-        model = 0xf5;
+        model = PROJECTILES_TYPE_BUG;
         break;
     case ITEM_MICROCAMERA:
-        model = 0xf6;
+        model = PROJECTILES_TYPE_MICROCAMERA;
     }
 
     if (-1 < model)
