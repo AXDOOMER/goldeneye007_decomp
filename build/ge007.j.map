@@ -20719,7 +20719,6 @@ Linker script and memory map
  build/j/src/game/initunk_005520.o(.rodata)
  build/j/src/game/initcameraandthrown.o(.rodata)
  .rodata        0x000000008004f120      0x100 build/j/src/game/initcameraandthrown.o
-                0x000000008004f120                projectile_ptr_table
                 0x000000008004f1d8                default_zoom_speed
                 0x000000008004f1dc                jpt_8004F1AC
                 0x000000008004f200                D_8004F1D0
@@ -20798,7 +20797,6 @@ Linker script and memory map
                 0x00000000800518b4                aDD_2
                 0x00000000800518c0                aDD_3
                 0x00000000800518cc                aD_10
-                0x00000000800518d0                cheat_available_table
                 0x00000000800519f8                folder_menu_x_dim
                 0x00000000800519fc                folder_menu_z_dim
                 0x0000000080051a00                D_800519D0

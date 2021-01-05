@@ -475,10 +475,10 @@ s32 is_emulating_spectrum = FALSE;
 
 s32 is_cheat_menu_available = FALSE;
 
-s32 ptr_logo_and_walletbond_DL = 0;
-s32 ptr_menu_videobuffer = 0;
+Gfx * ptr_logo_and_walletbond_DL = 0;
+u8 * ptr_menu_videobuffer = 0;
 s32 something_legalscreen_constructor = 0;
-s32 ptr_folder_object_instance = 0;
+struct object_standard * ptr_folder_object_instance = 0;
 s32 set0_never_used = 0;
 s32 set0_never_used_0 = 0;
 s32 D_8002A968 = 0;
@@ -1145,14 +1145,9 @@ glabel write_text_at_abs_coord
 
 
 
-#ifdef NONMATCHING
+
 s32 check_if_cheat_available(s32 cheat)
 {
-  s32 uVar1;
-  save_file *folder;
-  u32 uVar2;
-  u32 BVar3;
-  
   switch(cheat) {
   case 1:
   case 4:
@@ -1205,397 +1200,83 @@ s32 check_if_cheat_available(s32 cheat)
   case 0x48:
   case 0x49:
   case 0x4a:
-    uVar1 = 0;
-    break;
+    return 0;
+
   case 2:
-    folder = getEEPROMforFoldernum(selected_folder_num);
-    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),1);
-    break;
+    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),1);
+
   case 3:
-    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0x13);
-    break;
-  case 10:
-    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),10);
-    break;
-  case 0xb:
-    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0xf);
-    break;
-  case 0xc:
-    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),2);
-    break;
-  case 0xe:
-    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),7);
-    break;
-  case 0xf:
-    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0);
-    break;
-  case 0x11:
-    uVar2 = check_cradle_completed_in_folder(selected_folder_num);
-    uVar1 = SEXT48((int)uVar2);
-    break;
-  case 0x12:
-    uVar2 = check_aztec_completed_in_folder_secret_00(selected_folder_num);
-    uVar1 = SEXT48((int)uVar2);
-    break;
-  case 0x13:
-    BVar3 = check_egypt_completed_in_folder_00(selected_folder_num);
-    uVar1 = SEXT48((int)BVar3);
-    break;
-  case 0x14:
-    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0xd);
-    break;
-  case 0x15:
-    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0x11);
-    break;
+    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),0x13);
+
   case 0x17:
-    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),6);
-    break;
-  case 0x18:
-    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),5);
-    break;
+    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),6);
+
   case 0x1a:
-    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),9);
-    break;
+    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),9);
+
+  case 10:
+    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),10);
+
+  case 0xb:
+    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),0xf);
+
+  case 0xc:
+    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),2);
+
+  case 0xe:
+    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),7);
+
   case 0x1b:
-    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0xc);
-    break;
+    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),0xc);
+
+  case 0xf:
+    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),0);
+
+  case 0x14:
+    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),0xd);
+
+  case 0x15:
+    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),0x11);
+
   case 0x1c:
-    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0xb);
-    break;
+    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),0xb);
+
   case 0x1d:
-    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),4);
-    break;
+    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),4);
+
   case 0x1e:
-    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),3);
-    break;
+    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),3);
+
   case 0x1f:
-    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0x10);
-    break;
+    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),0x10);
+
   case 0x20:
-    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),8);
-    break;
+    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),8);
+
   case 0x21:
-    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0xe);
-    break;
+    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),0xe);
+
   case 0x22:
-    uVar1 = check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0x12);
-    break;
+    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),0x12);
+
+  case 0x18:
+    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),5);
+
+  case 0x11:
+    return check_cradle_completed_in_folder(selected_folder_num);
+
+  case 0x12:
+    return check_aztec_completed_in_folder_secret_00(selected_folder_num);
+
+  case 0x13:
+    return check_egypt_completed_in_folder_00(selected_folder_num);
+
   default:
     do {
                     /* WARNING: Do nothing block with infinite loop */
-    } while( true );
+    } while( 1 );
   }
-  return uVar1;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-
-glabel cheat_available_table
- .word default_nonmenucheats
- .word cheat_invincible
- .word cheat_allguns
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word cheat_invisible
- .word cheat_infinite_ammo
- .word cheat_dk_mode
- .word default_nonmenucheats
- .word cheat_tinybond
- .word cheat_paintball
- .word default_nonmenucheats
- .word cheat_unlockcradle
- .word cheat_unlockaztec
- .word cheat_unlockegypt
- .word cheat_silverpp7
- .word cheat_goldpp7
- .word default_nonmenucheats
- .word cheat_noradar
- .word cheat_turbo
- .word default_nonmenucheats
- .word cheat_fast
- .word cheat_slow
- .word cheat_enemyrockets
- .word cheat_2xrocket
- .word cheat_2xgrenadelauncher
- .word cheat_2xrcp90
- .word cheat_2xthrowingknife
- .word cheat_2xhuntingknife
- .word cheat_2xlaser
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- .word default_nonmenucheats
- /*HACK FIXME*/
-/* .word default_nonmenucheats */
-/* .word default_nonmenucheats */
-/* .word default_nonmenucheats */
-/* .word default_nonmenucheats */
-/* .word default_nonmenucheats */
-/* .word default_nonmenucheats */
-/* .word default_nonmenucheats */
-/* .word default_nonmenucheats */
-/* .word default_nonmenucheats */
-/* .word default_nonmenucheats */
-
-.text
-glabel check_if_cheat_available
-/* 03E378 7F009848 248EFFFF */  addiu $t6, $a0, -1
-/* 03E37C 7F00984C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 03E380 7F009850 2DC1004A */  sltiu $at, $t6, 0x4a
-/* 03E384 7F009854 102000B8 */  beqz  $at, .L7F009B38
-/* 03E388 7F009858 AFBF0014 */   sw    $ra, 0x14($sp)
-/* 03E38C 7F00985C 000E7080 */  sll   $t6, $t6, 2
-/* 03E390 7F009860 3C018005 */  lui   $at, %hi(cheat_available_table)
-/* 03E394 7F009864 002E0821 */  addu  $at, $at, $t6
-/* 03E398 7F009868 8C2E18A0 */  lw    $t6, %lo(cheat_available_table)($at)
-/* 03E39C 7F00986C 01C00008 */  jr    $t6
-/* 03E3A0 7F009870 00000000 */   nop   
-default_nonmenucheats:
-/* 03E3A4 7F009874 100000B2 */  b     .L7F009B40
-/* 03E3A8 7F009878 00001025 */   move  $v0, $zero
-cheat_invincible:
-/* 03E3AC 7F00987C 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E3B0 7F009880 0FC07771 */  jal   get_save_folder_ptr
-/* 03E3B4 7F009884 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E3B8 7F009888 00402025 */  move  $a0, $v0
-/* 03E3BC 7F00988C 0FC07748 */  jal   check_if_cheat_unlocked
-/* 03E3C0 7F009890 24050001 */   li    $a1, 1
-/* 03E3C4 7F009894 100000AB */  b     .L7F009B44
-/* 03E3C8 7F009898 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_allguns:
-/* 03E3CC 7F00989C 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E3D0 7F0098A0 0FC07771 */  jal   get_save_folder_ptr
-/* 03E3D4 7F0098A4 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E3D8 7F0098A8 00402025 */  move  $a0, $v0
-/* 03E3DC 7F0098AC 0FC07748 */  jal   check_if_cheat_unlocked
-/* 03E3E0 7F0098B0 24050013 */   li    $a1, 19
-/* 03E3E4 7F0098B4 100000A3 */  b     .L7F009B44
-/* 03E3E8 7F0098B8 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_noradar:
-/* 03E3EC 7F0098BC 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E3F0 7F0098C0 0FC07771 */  jal   get_save_folder_ptr
-/* 03E3F4 7F0098C4 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E3F8 7F0098C8 00402025 */  move  $a0, $v0
-/* 03E3FC 7F0098CC 0FC07748 */  jal   check_if_cheat_unlocked
-/* 03E400 7F0098D0 24050006 */   li    $a1, 6
-/* 03E404 7F0098D4 1000009B */  b     .L7F009B44
-/* 03E408 7F0098D8 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_fast:
-/* 03E40C 7F0098DC 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E410 7F0098E0 0FC07771 */  jal   get_save_folder_ptr
-/* 03E414 7F0098E4 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E418 7F0098E8 00402025 */  move  $a0, $v0
-/* 03E41C 7F0098EC 0FC07748 */  jal   check_if_cheat_unlocked
-/* 03E420 7F0098F0 24050009 */   li    $a1, 9
-/* 03E424 7F0098F4 10000093 */  b     .L7F009B44
-/* 03E428 7F0098F8 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_invisible:
-/* 03E42C 7F0098FC 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E430 7F009900 0FC07771 */  jal   get_save_folder_ptr
-/* 03E434 7F009904 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E438 7F009908 00402025 */  move  $a0, $v0
-/* 03E43C 7F00990C 0FC07748 */  jal   check_if_cheat_unlocked
-/* 03E440 7F009910 2405000A */   li    $a1, 10
-/* 03E444 7F009914 1000008B */  b     .L7F009B44
-/* 03E448 7F009918 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_infinite_ammo:
-/* 03E44C 7F00991C 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E450 7F009920 0FC07771 */  jal   get_save_folder_ptr
-/* 03E454 7F009924 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E458 7F009928 00402025 */  move  $a0, $v0
-/* 03E45C 7F00992C 0FC07748 */  jal   check_if_cheat_unlocked
-/* 03E460 7F009930 2405000F */   li    $a1, 15
-/* 03E464 7F009934 10000083 */  b     .L7F009B44
-/* 03E468 7F009938 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_dk_mode:
-/* 03E46C 7F00993C 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E470 7F009940 0FC07771 */  jal   get_save_folder_ptr
-/* 03E474 7F009944 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E478 7F009948 00402025 */  move  $a0, $v0
-/* 03E47C 7F00994C 0FC07748 */  jal   check_if_cheat_unlocked
-/* 03E480 7F009950 24050002 */   li    $a1, 2
-/* 03E484 7F009954 1000007B */  b     .L7F009B44
-/* 03E488 7F009958 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_tinybond:
-/* 03E48C 7F00995C 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E490 7F009960 0FC07771 */  jal   get_save_folder_ptr
-/* 03E494 7F009964 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E498 7F009968 00402025 */  move  $a0, $v0
-/* 03E49C 7F00996C 0FC07748 */  jal   check_if_cheat_unlocked
-/* 03E4A0 7F009970 24050007 */   li    $a1, 7
-/* 03E4A4 7F009974 10000073 */  b     .L7F009B44
-/* 03E4A8 7F009978 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_slow:
-/* 03E4AC 7F00997C 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E4B0 7F009980 0FC07771 */  jal   get_save_folder_ptr
-/* 03E4B4 7F009984 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E4B8 7F009988 00402025 */  move  $a0, $v0
-/* 03E4BC 7F00998C 0FC07748 */  jal   check_if_cheat_unlocked
-/* 03E4C0 7F009990 2405000C */   li    $a1, 12
-/* 03E4C4 7F009994 1000006B */  b     .L7F009B44
-/* 03E4C8 7F009998 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_paintball:
-/* 03E4CC 7F00999C 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E4D0 7F0099A0 0FC07771 */  jal   get_save_folder_ptr
-/* 03E4D4 7F0099A4 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E4D8 7F0099A8 00402025 */  move  $a0, $v0
-/* 03E4DC 7F0099AC 0FC07748 */  jal   check_if_cheat_unlocked
-/* 03E4E0 7F0099B0 00002825 */   move  $a1, $zero
-/* 03E4E4 7F0099B4 10000063 */  b     .L7F009B44
-/* 03E4E8 7F0099B8 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_silverpp7:
-/* 03E4EC 7F0099BC 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E4F0 7F0099C0 0FC07771 */  jal   get_save_folder_ptr
-/* 03E4F4 7F0099C4 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E4F8 7F0099C8 00402025 */  move  $a0, $v0
-/* 03E4FC 7F0099CC 0FC07748 */  jal   check_if_cheat_unlocked
-/* 03E500 7F0099D0 2405000D */   li    $a1, 13
-/* 03E504 7F0099D4 1000005B */  b     .L7F009B44
-/* 03E508 7F0099D8 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_goldpp7:
-/* 03E50C 7F0099DC 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E510 7F0099E0 0FC07771 */  jal   get_save_folder_ptr
-/* 03E514 7F0099E4 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E518 7F0099E8 00402025 */  move  $a0, $v0
-/* 03E51C 7F0099EC 0FC07748 */  jal   check_if_cheat_unlocked
-/* 03E520 7F0099F0 24050011 */   li    $a1, 17
-/* 03E524 7F0099F4 10000053 */  b     .L7F009B44
-/* 03E528 7F0099F8 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_enemyrockets:
-/* 03E52C 7F0099FC 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E530 7F009A00 0FC07771 */  jal   get_save_folder_ptr
-/* 03E534 7F009A04 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E538 7F009A08 00402025 */  move  $a0, $v0
-/* 03E53C 7F009A0C 0FC07748 */  jal   check_if_cheat_unlocked
-/* 03E540 7F009A10 2405000B */   li    $a1, 11
-/* 03E544 7F009A14 1000004B */  b     .L7F009B44
-/* 03E548 7F009A18 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_2xrocket:
-/* 03E54C 7F009A1C 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E550 7F009A20 0FC07771 */  jal   get_save_folder_ptr
-/* 03E554 7F009A24 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E558 7F009A28 00402025 */  move  $a0, $v0
-/* 03E55C 7F009A2C 0FC07748 */  jal   check_if_cheat_unlocked
-/* 03E560 7F009A30 24050004 */   li    $a1, 4
-/* 03E564 7F009A34 10000043 */  b     .L7F009B44
-/* 03E568 7F009A38 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_2xgrenadelauncher:
-/* 03E56C 7F009A3C 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E570 7F009A40 0FC07771 */  jal   get_save_folder_ptr
-/* 03E574 7F009A44 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E578 7F009A48 00402025 */  move  $a0, $v0
-/* 03E57C 7F009A4C 0FC07748 */  jal   check_if_cheat_unlocked
-/* 03E580 7F009A50 24050003 */   li    $a1, 3
-/* 03E584 7F009A54 1000003B */  b     .L7F009B44
-/* 03E588 7F009A58 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_2xrcp90:
-/* 03E58C 7F009A5C 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E590 7F009A60 0FC07771 */  jal   get_save_folder_ptr
-/* 03E594 7F009A64 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E598 7F009A68 00402025 */  move  $a0, $v0
-/* 03E59C 7F009A6C 0FC07748 */  jal   check_if_cheat_unlocked
-/* 03E5A0 7F009A70 24050010 */   li    $a1, 16
-/* 03E5A4 7F009A74 10000033 */  b     .L7F009B44
-/* 03E5A8 7F009A78 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_2xthrowingknife:
-/* 03E5AC 7F009A7C 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E5B0 7F009A80 0FC07771 */  jal   get_save_folder_ptr
-/* 03E5B4 7F009A84 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E5B8 7F009A88 00402025 */  move  $a0, $v0
-/* 03E5BC 7F009A8C 0FC07748 */  jal   check_if_cheat_unlocked
-/* 03E5C0 7F009A90 24050008 */   li    $a1, 8
-/* 03E5C4 7F009A94 1000002B */  b     .L7F009B44
-/* 03E5C8 7F009A98 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_2xhuntingknife:
-/* 03E5CC 7F009A9C 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E5D0 7F009AA0 0FC07771 */  jal   get_save_folder_ptr
-/* 03E5D4 7F009AA4 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E5D8 7F009AA8 00402025 */  move  $a0, $v0
-/* 03E5DC 7F009AAC 0FC07748 */  jal   check_if_cheat_unlocked
-/* 03E5E0 7F009AB0 2405000E */   li    $a1, 14
-/* 03E5E4 7F009AB4 10000023 */  b     .L7F009B44
-/* 03E5E8 7F009AB8 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_2xlaser:
-/* 03E5EC 7F009ABC 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E5F0 7F009AC0 0FC07771 */  jal   get_save_folder_ptr
-/* 03E5F4 7F009AC4 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E5F8 7F009AC8 00402025 */  move  $a0, $v0
-/* 03E5FC 7F009ACC 0FC07748 */  jal   check_if_cheat_unlocked
-/* 03E600 7F009AD0 24050012 */   li    $a1, 18
-/* 03E604 7F009AD4 1000001B */  b     .L7F009B44
-/* 03E608 7F009AD8 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_turbo:
-/* 03E60C 7F009ADC 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E610 7F009AE0 0FC07771 */  jal   get_save_folder_ptr
-/* 03E614 7F009AE4 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E618 7F009AE8 00402025 */  move  $a0, $v0
-/* 03E61C 7F009AEC 0FC07748 */  jal   check_if_cheat_unlocked
-/* 03E620 7F009AF0 24050005 */   li    $a1, 5
-/* 03E624 7F009AF4 10000013 */  b     .L7F009B44
-/* 03E628 7F009AF8 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_unlockcradle:
-/* 03E62C 7F009AFC 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E630 7F009B00 0FC07A7D */  jal   check_cradle_completed_in_folder
-/* 03E634 7F009B04 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E638 7F009B08 1000000E */  b     .L7F009B44
-/* 03E63C 7F009B0C 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_unlockaztec:
-/* 03E640 7F009B10 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E644 7F009B14 0FC07A97 */  jal   check_aztec_completed_in_folder_secret_00
-/* 03E648 7F009B18 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E64C 7F009B1C 10000009 */  b     .L7F009B44
-/* 03E650 7F009B20 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_unlockegypt:
-/* 03E654 7F009B24 3C048003 */  lui   $a0, %hi(selected_folder_num)
-/* 03E658 7F009B28 0FC07AAA */  jal   check_egypt_completed_in_folder_00
-/* 03E65C 7F009B2C 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
-/* 03E660 7F009B30 10000004 */  b     .L7F009B44
-/* 03E664 7F009B34 8FBF0014 */   lw    $ra, 0x14($sp)
-def_7F00986C:
-.L7F009B38:
-/* 03E668 7F009B38 1000FFFF */  b     .L7F009B38
-/* 03E66C 7F009B3C 00000000 */   nop   
-.L7F009B40:
-/* 03E670 7F009B40 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F009B44:
-/* 03E674 7F009B44 27BD0018 */  addiu $sp, $sp, 0x18
-/* 03E678 7F009B48 03E00008 */  jr    $ra
-/* 03E67C 7F009B4C 00000000 */   nop   
-)
-#endif
-
-
 
 
 int getplayerfavoredweapon(int player,int hand) {
@@ -1745,20 +1426,6 @@ void menu_control_stick_tracking(void) {
 #ifdef VERSION_US
 GLOBAL_ASM(
 .late_rodata
-/*HACK FIXME*/
-/*from above to add bytes till fixed*/
-.word default_nonmenucheats
-.word default_nonmenucheats
-.word default_nonmenucheats
-.word default_nonmenucheats
-.word default_nonmenucheats
-.word default_nonmenucheats
-.word default_nonmenucheats
-.word default_nonmenucheats
-.word default_nonmenucheats
-.word default_nonmenucheats
-/*end from above to add bytes till fixed*/
-
 glabel folder_menu_x_dim
 .word 0x3D99999A /* 0.075000003;*/
 glabel folder_menu_z_dim
@@ -2019,20 +1686,6 @@ glabel menu_control_stick_tracking
 #ifdef VERSION_JP
 GLOBAL_ASM(
 .late_rodata
-/*HACK FIXME*/
-/*from above to add bytes till fixed*/
-.word default_nonmenucheats
-.word default_nonmenucheats
-.word default_nonmenucheats
-.word default_nonmenucheats
-.word default_nonmenucheats
-.word default_nonmenucheats
-.word default_nonmenucheats
-.word default_nonmenucheats
-.word default_nonmenucheats
-.word default_nonmenucheats
-/*end from above to add bytes till fixed*/
-
 glabel folder_menu_x_dim
 .word 0x3D99999A /* 0.075000003;*/
 glabel folder_menu_z_dim
