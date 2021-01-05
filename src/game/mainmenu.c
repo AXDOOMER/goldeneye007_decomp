@@ -27763,44 +27763,20 @@ glabel constructor_menu19_spectrum
 
 
 
-#ifdef NONMATCHING
+
 void set_menu_to_mode(MENU menu, s32 mode)
 {
-  if ((menu == MENU_RUN_STAGE) || (menu == MENU_SPECTRUM_EMU)) {
-    is_emulating_spectrum = TRUE;
-  }
-  if (mode == 0) {
+    if ((menu == MENU_RUN_STAGE) || (menu == MENU_SPECTRUM_EMU))
+    {
+        is_emulating_spectrum = 1;
+    }
+    if (mode != 0)
+    {
+        menu_update = menu;
+        return;
+    }
     maybe_prev_menu = menu;
-    return;
-  }
-  menu_update = menu;
-  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_menu_to_mode
-/* 04F104 7F01A5D4 2401000B */  li    $at, 11
-/* 04F108 7F01A5D8 10810003 */  beq   $a0, $at, .L7F01A5E8
-/* 04F10C 7F01A5DC 240E0001 */   li    $t6, 1
-/* 04F110 7F01A5E0 24010019 */  li    $at, 25
-/* 04F114 7F01A5E4 14810002 */  bne   $a0, $at, .L7F01A5F0
-.L7F01A5E8:
-/* 04F118 7F01A5E8 3C018003 */   lui   $at, %hi(is_emulating_spectrum)
-/* 04F11C 7F01A5EC AC2EA948 */  sw    $t6, %lo(is_emulating_spectrum)($at)
-.L7F01A5F0:
-/* 04F120 7F01A5F0 10A00004 */  beqz  $a1, .L7F01A604
-/* 04F124 7F01A5F4 3C018003 */   lui   $at, %hi(maybe_prev_menu)
-/* 04F128 7F01A5F8 3C018003 */  lui   $at, %hi(menu_update)
-/* 04F12C 7F01A5FC 03E00008 */  jr    $ra
-/* 04F130 7F01A600 AC24A8C4 */   sw    $a0, %lo(menu_update)($at)
-.L7F01A604:
-/* 04F134 7F01A604 AC24A8C8 */  sw    $a0, %lo(maybe_prev_menu)($at)
-/* 04F138 7F01A608 03E00008 */  jr    $ra
-/* 04F13C 7F01A60C 00000000 */   nop   
-)
-#endif
-
 
 
 MENU get_currentmenu(void)
@@ -27813,27 +27789,31 @@ MENU get_currentmenu(void)
 
 
 #ifdef NONMATCHING
-void menu_init(u32 param_1,u32 param_2)
+void menu_init()
 {
     MENU MVar1;
     
-    if (current_menu == MENU_SWITCH_SCREENS) {
-        if (spectrum_related_flag == FALSE) {
-            if ((is_emulating_spectrum != FALSE) &&
-               (viGetFrameBuf2() == cfb_16)) {
+    if (current_menu == MENU_SWITCH_SCREENS)
+    {
+        if (spectrum_related_flag == FALSE)
+        {
+            if ((is_emulating_spectrum != FALSE) && (viGetFrameBuf2() == cfb_16[0]))
+            {
                 screen_size = SCREEN_SIZE_320x240;
                 is_emulating_spectrum = FALSE;
             }
         }
         else {
-            if (viGetFrameBuf2() == cfb_16[1]) {
+            if (viGetFrameBuf2() == cfb_16[1])
+            {
                 screen_size = SCREEN_SIZE_440x330;
                 spectrum_related_flag = FALSE;
             }
         }
     }
 
-    if (screen_size == SCREEN_SIZE_320x240) {
+    if (screen_size == SCREEN_SIZE_320x240)
+    {
         viSetAspect((f32)flt_80051B48);
         viSetXY(320,240);
         viSetBuf(320,240);
@@ -27842,8 +27822,10 @@ void menu_init(u32 param_1,u32 param_2)
         set_cur_player_viewport_size(0,0);
         viSetViewPosition(0,0);
     }
-    else {
-        if (viGetFrameBuf2() == cfb_16[1]) {
+    else
+    {
+        if (viGetFrameBuf2() == cfb_16[1])
+        {
             set_video_settings2_frameb(ptr_menu_videobuffer);
         }
         viSetAspect((f32)flt_80051B44);
@@ -27854,9 +27836,10 @@ void menu_init(u32 param_1,u32 param_2)
         set_cur_player_viewport_size(0,0);
         viSetViewPosition(0,0);
     }
-    if (((-1 < menu_update) || (-1 < maybe_prev_menu)) &&
-       (current_menu != MENU_SWITCH_SCREENS)) {
-        if (true) {
+    if (((-1 < menu_update) || (-1 < maybe_prev_menu)) && (current_menu != MENU_SWITCH_SCREENS))
+    {
+        if (true)
+        {
             switch(current_menu) {
             case MENU_LEGAL_SCREEN:
                 update_menu00_legalscreen();
