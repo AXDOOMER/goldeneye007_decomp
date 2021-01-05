@@ -419,45 +419,45 @@ glabel mempAllocBytesInBank
 )
 #endif
 
-
-
-/**
- * A404	70009804
- *     ???; updates bank A2 size registry in light of entry at A0 of size A1
- *     accepts: A0=p->allocated data, A1=size of data, A2=bank#
- */
 #ifdef NONMATCHING
-s32 mempAddEntryOfSizeToBank(u8* ptrdata, u32 size, u8 bank)
+// Mostly regalloc
+s32 mempAddEntryOfSizeToBank(u8* ptrdata, u32 newsize, u8 bank)
 {
-    u32 entry;
+    s32 oldsize;
+    s32 diffsize;
     
-    if ((needmemallocation != 0) && (ptrdata == (u8*)memory_bank_ptrs[6].data2)) {
+    if (needmemallocation && (ptrdata == (u8*)memory_bank_ptrs[6].data2)) {
         bank = 6;
     }
-    entry = memory_bank_ptrs[bank].nextentry;
-    if (entry == 0) {
+
+    if (memory_bank_ptrs[bank].nextentry == 0) {
         while(TRUE) {}
     }
+
     if (ptrdata != (u8*)memory_bank_ptrs[bank].data2) {
         return 2;
-    } else {
-        s32 newsize = size - (entry - memory_bank_ptrs[bank].data2);
-        if (newsize <= 0) {
-            memory_bank_ptrs[bank].nextentry = entry + newsize;
-        }
-        else {
-            if (memory_bank_ptrs[bank].bankend < entry) {
-                nulled_mempLoopAllMemBanks();
-                while(TRUE) {}
-            }
-            if (memory_bank_ptrs[bank].bankend < entry + newsize) {
-                nulled_mempLoopAllMemBanks();
-                while(TRUE) {}
-            }
-            memory_bank_ptrs[bank].nextentry = entry + newsize;
-        }
     }
 
+    oldsize = (memory_bank_ptrs[bank].nextentry - memory_bank_ptrs[bank].data2);
+    diffsize = (newsize - oldsize);
+
+    if (diffsize <= 0) {
+        memory_bank_ptrs[bank].nextentry += diffsize;
+        return 1;
+    }
+
+    if (memory_bank_ptrs[bank].nextentry > memory_bank_ptrs[bank].bankend) {
+        nulled_mempLoopAllMemBanks();
+        while(TRUE) {}
+    }
+
+    if (memory_bank_ptrs[bank].nextentry + diffsize > memory_bank_ptrs[bank].bankend) {
+        nulled_mempLoopAllMemBanks();
+        while(TRUE) {}
+    }
+    
+    memory_bank_ptrs[bank].nextentry += diffsize;
+    
     return 1;
 }
 #else
