@@ -1148,7 +1148,8 @@ glabel write_text_at_abs_coord
 
 s32 check_if_cheat_available(s32 cheat)
 {
-  switch(cheat) {
+  switch(cheat)
+  {
   case 1:
   case 4:
   case 5:
@@ -2573,6 +2574,7 @@ u32 isontab2(void)
 
 
 #ifdef NONMATCHING
+//
 void init_menu00_legalscreen(void)
 {
     struct point sp20;
@@ -2580,11 +2582,13 @@ void init_menu00_legalscreen(void)
     musicTrack1Stop();
     maybe_is_in_menu = 1;
     menu_timer = 0;
-    sp20 = D_8002A9C0;
-    load_object_fill_header(&PitemZ_entries[0xEF4], &PitemZ_entries[0xEF8], ptr_logo_and_walletbond_DL, 0x3c000, 0);
-    set_objuse_flag_compute_grp_nums_set_obj_loaded(&PlegalpageZ_header);
+    sp20.x = D_8002A9C0.x;
+    sp20.y = D_8002A9C0.y;
+    sp20.z = D_8002A9C0.z;
+    load_object_fill_header(&PitemZ_entries[319].header, &PitemZ_entries[319].filename, ptr_logo_and_walletbond_DL, 0x3c000, 0);
+    set_objuse_flag_compute_grp_nums_set_obj_loaded(&PitemZ_entries[319].header);
 
-    something_legalscreen_constructor = get_obj_instance_controller_for_header(PlegalpageZ_header);
+    something_legalscreen_constructor = get_obj_instance_controller_for_header(&PitemZ_entries[319].header);
     set_obj_instance_controller_scale(something_legalscreen_constructor, 1.0f);
     setsuboffset(something_legalscreen_constructor, &sp20);
     sub_GAME_7F01DF90();
@@ -2657,33 +2661,27 @@ void update_menu00_legalscreen(void)
 }
 
 
-
-
-
-#ifdef NONMATCHING
 void interface_menu00_legalscreen(void)
 {
     viSetFovY(60.0f);
-    viSetAspect(1.333333f);
+    viSetAspect(1.3333334f);
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(0);
 
     menu_timer += clock_timer;
     if (menu_timer >= 0xF1)
     {
-        if ((get_attached_controller_count() > 0) && (is_first_time_on_legal_screen == 0))
+        if ((get_attached_controller_count() < 1) && (is_first_time_on_legal_screen))
         {
-            set_menu_to_mode(MENU_NINTENDO_LOGO,1);
+            set_menu_to_mode(MENU_NO_CONTROLLERS,1);
             return;
-        } else
-        {
-        set_menu_to_mode(MENU_NO_CONTROLLERS,1);
-        return;
         }
+        set_menu_to_mode(MENU_NINTENDO_LOGO,1);
+        return;
     }
-    if (get_controller_buttons_pressed(0, 0xFFFF))
+    if (get_controller_buttons_pressed(0, 0xFFFF) && (is_first_time_on_legal_screen == 0)) 
     {
-        if ((is_first_time_on_legal_screen == 0) && (is_first_time_on_main_menu == 0))
+        if (is_first_time_on_main_menu == 0)
         {
             set_menu_to_mode(MENU_FILE_SELECT,1);
             return;
@@ -2691,90 +2689,6 @@ void interface_menu00_legalscreen(void)
         set_menu_to_mode(MENU_NINTENDO_LOGO,1);
     }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_800519E4
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel D_800519E8
-.word 0x461C4000 /* 10000.0;*/
-.text
-glabel interface_menu00_legalscreen
-/* 03F20C 7F00A6DC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 03F210 7F00A6E0 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 03F214 7F00A6E4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 03F218 7F00A6E8 44816000 */  mtc1  $at, $f12
-/* 03F21C 7F00A6EC 0C001151 */  jal   viSetFovY
-/* 03F220 7F00A6F0 00000000 */   nop   
-/* 03F224 7F00A6F4 3C018005 */  lui   $at, %hi(D_800519E4)
-/* 03F228 7F00A6F8 0C001164 */  jal   viSetAspect
-/* 03F22C 7F00A6FC C42C19E4 */   lwc1  $f12, %lo(D_800519E4)($at)
-/* 03F230 7F00A700 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 03F234 7F00A704 44816000 */  mtc1  $at, $f12
-/* 03F238 7F00A708 3C018005 */  lui   $at, %hi(D_800519E8)
-/* 03F23C 7F00A70C 0C001194 */  jal   viSetZRange
-/* 03F240 7F00A710 C42E19E8 */   lwc1  $f14, %lo(D_800519E8)($at)
-/* 03F244 7F00A714 0C00114D */  jal   viSetUseZBuf
-/* 03F248 7F00A718 00002025 */   move  $a0, $zero
-/* 03F24C 7F00A71C 3C028003 */  lui   $v0, %hi(menu_timer)
-/* 03F250 7F00A720 2442A8CC */  addiu $v0, %lo(menu_timer) # addiu $v0, $v0, -0x5734
-/* 03F254 7F00A724 3C0F8005 */  lui   $t7, %hi(clock_timer) 
-/* 03F258 7F00A728 8DEF8374 */  lw    $t7, %lo(clock_timer)($t7)
-/* 03F25C 7F00A72C 8C4E0000 */  lw    $t6, ($v0)
-/* 03F260 7F00A730 00002025 */  move  $a0, $zero
-/* 03F264 7F00A734 01CFC021 */  addu  $t8, $t6, $t7
-/* 03F268 7F00A738 2B0100F1 */  slti  $at, $t8, 0xf1
-/* 03F26C 7F00A73C 14200012 */  bnez  $at, .L7F00A788
-/* 03F270 7F00A740 AC580000 */   sw    $t8, ($v0)
-/* 03F274 7F00A744 0C002E7E */  jal   get_attached_controller_count
-/* 03F278 7F00A748 00000000 */   nop   
-/* 03F27C 7F00A74C 1C400009 */  bgtz  $v0, .L7F00A774
-/* 03F280 7F00A750 3C088003 */   lui   $t0, %hi(is_first_time_on_legal_screen) 
-/* 03F284 7F00A754 8D08A92C */  lw    $t0, %lo(is_first_time_on_legal_screen)($t0)
-/* 03F288 7F00A758 24040016 */  li    $a0, 22
-/* 03F28C 7F00A75C 51000006 */  beql  $t0, $zero, .L7F00A778
-/* 03F290 7F00A760 24040001 */   li    $a0, 1
-/* 03F294 7F00A764 0FC06975 */  jal   set_menu_to_mode
-/* 03F298 7F00A768 24050001 */   li    $a1, 1
-/* 03F29C 7F00A76C 1000001A */  b     .L7F00A7D8
-/* 03F2A0 7F00A770 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F00A774:
-/* 03F2A4 7F00A774 24040001 */  li    $a0, 1
-.L7F00A778:
-/* 03F2A8 7F00A778 0FC06975 */  jal   set_menu_to_mode
-/* 03F2AC 7F00A77C 24050001 */   li    $a1, 1
-/* 03F2B0 7F00A780 10000015 */  b     .L7F00A7D8
-/* 03F2B4 7F00A784 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F00A788:
-/* 03F2B8 7F00A788 0C0030EB */  jal   get_controller_buttons_pressed
-/* 03F2BC 7F00A78C 3405FFFF */   li    $a1, 65535
-/* 03F2C0 7F00A790 10400010 */  beqz  $v0, .L7F00A7D4
-/* 03F2C4 7F00A794 3C098003 */   lui   $t1, %hi(is_first_time_on_legal_screen) 
-/* 03F2C8 7F00A798 8D29A92C */  lw    $t1, %lo(is_first_time_on_legal_screen)($t1)
-/* 03F2CC 7F00A79C 3C0A8003 */  lui   $t2, %hi(is_first_time_on_main_menu) 
-/* 03F2D0 7F00A7A0 5520000D */  bnezl $t1, .L7F00A7D8
-/* 03F2D4 7F00A7A4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 03F2D8 7F00A7A8 8D4AA930 */  lw    $t2, %lo(is_first_time_on_main_menu)($t2)
-/* 03F2DC 7F00A7AC 24050001 */  li    $a1, 1
-/* 03F2E0 7F00A7B0 24040001 */  li    $a0, 1
-/* 03F2E4 7F00A7B4 15400005 */  bnez  $t2, .L7F00A7CC
-/* 03F2E8 7F00A7B8 00000000 */   nop   
-/* 03F2EC 7F00A7BC 0FC06975 */  jal   set_menu_to_mode
-/* 03F2F0 7F00A7C0 24040005 */   li    $a0, 5
-/* 03F2F4 7F00A7C4 10000004 */  b     .L7F00A7D8
-/* 03F2F8 7F00A7C8 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F00A7CC:
-/* 03F2FC 7F00A7CC 0FC06975 */  jal   set_menu_to_mode
-/* 03F300 7F00A7D0 24050001 */   li    $a1, 1
-.L7F00A7D4:
-/* 03F304 7F00A7D4 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F00A7D8:
-/* 03F308 7F00A7D8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 03F30C 7F00A7DC 03E00008 */  jr    $ra
-/* 03F310 7F00A7E0 00000000 */   nop   
-)
-#endif
-
 
 
 #ifdef NONMATCHING
