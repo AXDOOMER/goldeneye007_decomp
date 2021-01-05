@@ -65,7 +65,7 @@ Discarded input sections
  .options       0x0000000000000000       0x20 build/j/src/ramrom.o
  .reginfo       0x0000000000000000       0x18 build/j/src/ramrom.o
  .gptab.bss     0x0000000000000000       0x20 build/j/src/ramrom.o
- .mdebug        0x0000000000000000      0x968 build/j/src/ramrom.o
+ .mdebug        0x0000000000000000      0x964 build/j/src/ramrom.o
  .options       0x0000000000000000       0x20 build/j/src/boss.o
  .reginfo       0x0000000000000000       0x18 build/j/src/boss.o
  .options       0x0000000000000000       0x20 build/j/src/music.o
@@ -1107,7 +1107,7 @@ Discarded input sections
  .mdebug        0x0000000000000000      0x39c build/j/src/game/initunk_000B60.o
  .options       0x0000000000000000       0x20 build/j/src/game/setguscale.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/setguscale.o
- .mdebug        0x0000000000000000      0x450 build/j/src/game/setguscale.o
+ .mdebug        0x0000000000000000      0x44c build/j/src/game/setguscale.o
  .options       0x0000000000000000       0x20 build/j/src/game/initnull_000BC0.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/initnull_000BC0.o
  .mdebug        0x0000000000000000      0x28c build/j/src/game/initnull_000BC0.o
@@ -17302,8 +17302,8 @@ Linker script and memory map
                 0x0000000080024444                needmemallocation
                 0x0000000080024448                D_80024408
                 0x000000008002444c                D_8002440C
-                0x0000000080024450                sdefaultmvals
-                0x0000000080024474                sdefaultmemstarts
+                0x0000000080024450                D_80024410
+                0x0000000080024454                sdefaultmvals
  build/j/src/mema.o(.data)
  .data          0x0000000080024490       0x10 build/j/src/mema.o
                 0x0000000080024490                ptr_mema_c_debug_notice_list
@@ -17888,12 +17888,6 @@ Linker script and memory map
                 0x00000000800291a0                jpt_80029160
  build/j/src/memp.o(.rodata)
  .rodata        0x00000000800291e0       0x30 build/j/src/memp.o
-                0x00000000800291f0                aMf
-                0x00000000800291f4                aMf_0
-                0x00000000800291f8                aMl
-                0x00000000800291fc                aMl_0
-                0x0000000080029200                aMe
-                0x0000000080029204                aMe_0
  build/j/src/mema.o(.rodata)
  .rodata        0x0000000080029210       0x20 build/j/src/mema.o
                 0x0000000080029220                aD_3
@@ -20865,8 +20859,6 @@ Linker script and memory map
                 0x0000000080051b60                D_80051B30
                 0x0000000080051b64                D_80051B34
                 0x0000000080051b68                D_80051B38
-                0x0000000080051b6c                D_80051B3C
-                0x0000000080051b70                D_80051B40
                 0x0000000080051b74                D_80051B44
                 0x0000000080051b78                D_80051B48
                 0x0000000080051b7c                jpt_menu_update

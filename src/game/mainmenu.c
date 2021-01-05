@@ -27454,153 +27454,49 @@ glabel constructor_menu18_displaycast
 
 
 
-#ifdef NONMATCHING
-void init_menu19_spectrum(void) {
+
+void init_menu19_spectrum(void)
+{
     u8 rom;
 
-    // Node 0
     rom = 0;
     if (get_controller_buttons_held(2, 2) == 0)
     {
-        // Node 1
         if (get_controller_buttons_held(2, 1) != 0)
         {
-            // Node 2
             rom = 1;
+        }
+        else if (get_controller_buttons_held(2, 8) != 0)
+        {
+            rom = 2;
+        }
+        else if (get_controller_buttons_held(2, 4) != 0)
+        {
+            rom = 3;
+        }
+        else if (get_controller_buttons_held(2, 0x200) != 0)
+        {
+            rom = 4;
+        }
+        else if (get_controller_buttons_held(2, 0x100) != 0)
+        {
+            rom = 5;
+        }
+        else if (get_controller_buttons_held(2, 0x800) != 0)
+        {
+            rom = 6;
         }
         else
         {
-            // Node 3
-            if (get_controller_buttons_held(2, 8) != 0)
+            rom = 0;
+            if (get_controller_buttons_held(2, 0x400) != 0)
             {
-                // Node 4
-                rom = 2;
-            }
-            else
-            {
-                // Node 5
-                if (get_controller_buttons_held(2, 4) != 0)
-                {
-                    // Node 6
-                    rom = 3;
-                }
-                else
-                {
-                    // Node 7
-                    if (get_controller_buttons_held(2, 0x200) != 0)
-                    {
-                        // Node 8
-                        rom = 4;
-                    }
-                    else
-                    {
-                        // Node 9
-                        if (get_controller_buttons_held(2, 0x100) != 0)
-                        {
-                            // Node 10
-                            rom = 5;
-                        }
-                        else
-                        {
-                            // Node 11
-                            if (get_controller_buttons_held(2, 0x800) != 0)
-                            {
-                                // Node 12
-                                rom = 6;
-                            }
-                            else
-                            {
-                                // Node 13
-                                rom = 0;
-                                if (get_controller_buttons_held(2, 0x400) != 0)
-                                {
-                                    // Node 14
-                                    rom = 7;
-                                }
-                            }
-                        }
-                    }
-                }
+                rom = 7;
             }
         }
     }
-    // Node 15
-    return init_spectrum_game(rom);
+    init_spectrum_game(rom);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel init_menu19_spectrum
-/* 04EECC 7F01A39C 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 04EED0 7F01A3A0 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 04EED4 7F01A3A4 AFB00018 */  sw    $s0, 0x18($sp)
-/* 04EED8 7F01A3A8 00008025 */  move  $s0, $zero
-/* 04EEDC 7F01A3AC 24040002 */  li    $a0, 2
-/* 04EEE0 7F01A3B0 0C0030C3 */  jal   get_controller_buttons_held
-/* 04EEE4 7F01A3B4 24050002 */   li    $a1, 2
-/* 04EEE8 7F01A3B8 1440002A */  bnez  $v0, .L7F01A464
-/* 04EEEC 7F01A3BC 24040002 */   li    $a0, 2
-/* 04EEF0 7F01A3C0 0C0030C3 */  jal   get_controller_buttons_held
-/* 04EEF4 7F01A3C4 24050001 */   li    $a1, 1
-/* 04EEF8 7F01A3C8 10400003 */  beqz  $v0, .L7F01A3D8
-/* 04EEFC 7F01A3CC 24040002 */   li    $a0, 2
-/* 04EF00 7F01A3D0 10000024 */  b     .L7F01A464
-/* 04EF04 7F01A3D4 24100001 */   li    $s0, 1
-.L7F01A3D8:
-/* 04EF08 7F01A3D8 0C0030C3 */  jal   get_controller_buttons_held
-/* 04EF0C 7F01A3DC 24050008 */   li    $a1, 8
-/* 04EF10 7F01A3E0 10400003 */  beqz  $v0, .L7F01A3F0
-/* 04EF14 7F01A3E4 24040002 */   li    $a0, 2
-/* 04EF18 7F01A3E8 1000001E */  b     .L7F01A464
-/* 04EF1C 7F01A3EC 24100002 */   li    $s0, 2
-.L7F01A3F0:
-/* 04EF20 7F01A3F0 0C0030C3 */  jal   get_controller_buttons_held
-/* 04EF24 7F01A3F4 24050004 */   li    $a1, 4
-/* 04EF28 7F01A3F8 10400003 */  beqz  $v0, .L7F01A408
-/* 04EF2C 7F01A3FC 24040002 */   li    $a0, 2
-/* 04EF30 7F01A400 10000018 */  b     .L7F01A464
-/* 04EF34 7F01A404 24100003 */   li    $s0, 3
-.L7F01A408:
-/* 04EF38 7F01A408 0C0030C3 */  jal   get_controller_buttons_held
-/* 04EF3C 7F01A40C 24050200 */   li    $a1, 512
-/* 04EF40 7F01A410 10400003 */  beqz  $v0, .L7F01A420
-/* 04EF44 7F01A414 24040002 */   li    $a0, 2
-/* 04EF48 7F01A418 10000012 */  b     .L7F01A464
-/* 04EF4C 7F01A41C 24100004 */   li    $s0, 4
-.L7F01A420:
-/* 04EF50 7F01A420 0C0030C3 */  jal   get_controller_buttons_held
-/* 04EF54 7F01A424 24050100 */   li    $a1, 256
-/* 04EF58 7F01A428 10400003 */  beqz  $v0, .L7F01A438
-/* 04EF5C 7F01A42C 24040002 */   li    $a0, 2
-/* 04EF60 7F01A430 1000000C */  b     .L7F01A464
-/* 04EF64 7F01A434 24100005 */   li    $s0, 5
-.L7F01A438:
-/* 04EF68 7F01A438 0C0030C3 */  jal   get_controller_buttons_held
-/* 04EF6C 7F01A43C 24050800 */   li    $a1, 2048
-/* 04EF70 7F01A440 10400003 */  beqz  $v0, .L7F01A450
-/* 04EF74 7F01A444 24040002 */   li    $a0, 2
-/* 04EF78 7F01A448 10000006 */  b     .L7F01A464
-/* 04EF7C 7F01A44C 24100006 */   li    $s0, 6
-.L7F01A450:
-/* 04EF80 7F01A450 0C0030C3 */  jal   get_controller_buttons_held
-/* 04EF84 7F01A454 24050400 */   li    $a1, 1024
-/* 04EF88 7F01A458 10400002 */  beqz  $v0, .L7F01A464
-/* 04EF8C 7F01A45C 00000000 */   nop   
-/* 04EF90 7F01A460 24100007 */  li    $s0, 7
-.L7F01A464:
-/* 04EF94 7F01A464 0FC34BF1 */  jal   init_spectrum_game
-/* 04EF98 7F01A468 02002025 */   move  $a0, $s0
-/* 04EF9C 7F01A46C 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 04EFA0 7F01A470 8FB00018 */  lw    $s0, 0x18($sp)
-/* 04EFA4 7F01A474 27BD0020 */  addiu $sp, $sp, 0x20
-/* 04EFA8 7F01A478 03E00008 */  jr    $ra
-/* 04EFAC 7F01A47C 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 
 void update_menu19_spectrum(void) {
