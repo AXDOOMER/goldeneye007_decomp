@@ -2679,7 +2679,7 @@ void interface_menu00_legalscreen(void)
         set_menu_to_mode(MENU_NINTENDO_LOGO,1);
         return;
     }
-    if (get_controller_buttons_pressed(0, 0xFFFF) && (is_first_time_on_legal_screen == 0)) 
+    if (get_controller_buttons_pressed(0, ANY_BUTTON && (is_first_time_on_legal_screen == 0)) 
     {
         if (is_first_time_on_main_menu == 0)
         {
@@ -3166,7 +3166,7 @@ void interface_menu01_nintendo(void)
         set_menu_to_mode(MENU_RAREWARE_LOGO, 1);
         return;
     }
-    if (get_controller_buttons_pressed(0, 0xFFFF))
+    if (get_controller_buttons_pressed(0, ANY_BUTTON)
     {
         if (is_first_time_on_main_menu == 0)
         {
@@ -3502,7 +3502,7 @@ void interface_menu02_rareware(void)
         set_menu_to_mode(MENU_EYE_INTRO, 1);
         return;
     }
-    if (get_controller_buttons_pressed(0, 0xffff) != 0)
+    if (get_controller_buttons_pressed(0, ANY_BUTTON != 0)
     {
         if (is_first_time_on_main_menu == 0)
         {
@@ -3536,7 +3536,7 @@ void interface_menu03_eye(void) {
         set_menu_to_mode(MENU_GOLDENEYE_LOGO, 1);
         return;
     }
-    if (get_controller_buttons_pressed(0, 0xffff) != 0) {
+    if (get_controller_buttons_pressed(0, ANY_BUTTON) != 0) {
         if (is_first_time_on_main_menu == 0) {
             set_menu_to_mode(MENU_FILE_SELECT, 1);
             return;
@@ -4617,7 +4617,7 @@ s32 interface_menu05_fileselect(void)
     s32 phi_s2_2;
     s32 phi_return;
 
-    if (((((get_controller_buttons_pressed(0, 0xffff) != 0) || (get_cur_controller_horz_stick_pos(0) < -5)) || (get_cur_controller_horz_stick_pos(0) >= 6)) || (get_cur_controller_vert_stick_pos(0) < -5)) || (get_cur_controller_vert_stick_pos(0) >= 6))
+    if (((((get_controller_buttons_pressed(0, ANY_BUTTON != 0) || (get_cur_controller_horz_stick_pos(0) < -5)) || (get_cur_controller_horz_stick_pos(0) >= 6)) || (get_cur_controller_vert_stick_pos(0) < -5)) || (get_cur_controller_vert_stick_pos(0) >= 6))
     {
         menu_timer = 0;
     }
