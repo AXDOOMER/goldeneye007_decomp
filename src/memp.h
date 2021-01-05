@@ -4,10 +4,10 @@
 #include "ultra64.h"
 
 typedef struct s_mempBANK {
-    s32 bankstart;
-    s32 nextentry;
-    s32 bankend;
-    s32 data2;
+    u32 bankstart;
+    u32 nextentry;
+    u32 bankend;
+    u32 data2;
 } s_mempBANK;
 
 typedef struct s_mempMVALS {
@@ -35,7 +35,7 @@ void mempInitDebugNoticeList(void);
 void mempCheckMemflagTokens(int bstart,int bsize);
 void mempSetBankStarts(s_mempMVALS *banks);
 u32 mempAllocBytesInBank(u32 bytes,u8 bank);
-u32 mempAddEntryOfSizeToBank(u8* ptrdata,u32 size,u8 bank);
+s32 mempAddEntryOfSizeToBank(u8* ptrdata, u32 size, u8 bank);
 void nulled_mempLoopAllMemBanks(void);
 s32 mempGetBankSizeLeft(u8 bank);
 u32 mempAllocPackedBytesInBank(u32 param_1);

@@ -440,47 +440,40 @@ glabel mempSetBankStarts
  *     accepts: A0=size, A1=bank
  */
 #ifdef NONMATCHING
-u32 mempAllocBytesInBank(u32 bytes,u8 bank)
+u32 mempAllocBytesInBank(u32 bytes, u8 bank)
 {
-    uint next;
-    uint end;
-    int domemalloc;
-    int bankmask;
-    
-    bankmask = (bank & 0xff) << 4;
-    while( true ) {
-        domemalloc = needmemallocation;
-        next = *(uint *)((int)&memory_bank_ptrs[0].nextentry + bankmask);
-        if (next == 0) {
-            do {
-                    /* WARNING: Do nothing block with infinite loop */
-            } while( true );
+    s32 temp_v0_2;
+    u32 next;
+    while (TRUE) {
+        if (memory_bank_ptrs[bank].nextentry == 0) {
+            while (TRUE) {}
+            needmemallocation = 1;
         }
-        end = *(uint *)((int)&memory_bank_ptrs[0].bankend + bankmask);
-        if (end < next) {
+        if (memory_bank_ptrs[bank].bankend < memory_bank_ptrs[bank].nextentry) {
             nulled_mempLoopAllMemBanks();
-            do {
-                    /* WARNING: Do nothing block with infinite loop */
-            } while( true );
+            while (TRUE) {}
         }
-        if (next + bytes <= end) {
-            *(int *)((int)&memory_bank_ptrs[0].nextentry + bankmask) = next + bytes;
-            *(uint *)((int)&memory_bank_ptrs[0].data2 + bankmask) = next;
-            return next;
+        if ((memory_bank_ptrs[bank].nextentry + bytes) >= memory_bank_ptrs[bank].bankend) {
+            break;
         }
-        if ((uint)memory_bank_ptrs[6].bankend < memory_bank_ptrs[6].nextentry + bytes) break;
-        needmemallocation = 1;
-        if (domemalloc == 0) {
-            bankmask = 0x60;
-        }
-        else {
-            bankmask = 0x60;
+        if (memory_bank_ptrs[6].bankend >= (memory_bank_ptrs[6].nextentry + bytes)) {
+            temp_v0_2 = needmemallocation;
+            needmemallocation = 1;
+            bank = 6;
+            if (temp_v0_2 == 0) {
+                continue;
+            }        
+        } else {
+            nulled_mempLoopAllMemBanks();
+            while (TRUE) {}
         }
     }
-    nulled_mempLoopAllMemBanks();
-    do {
-                    /* WARNING: Do nothing block with infinite loop */
-    } while( true );
+
+    next = memory_bank_ptrs[bank].nextentry;
+    memory_bank_ptrs[bank].nextentry += bytes;
+    memory_bank_ptrs[bank].data2 = next;
+
+    return next;
 }
 #else
 GLOBAL_ASM(
@@ -562,47 +555,38 @@ glabel mempAllocBytesInBank
  *     accepts: A0=p->allocated data, A1=size of data, A2=bank#
  */
 #ifdef NONMATCHING
-u32 mempAddEntryOfSizeToBank(u8* ptrdata,u32 size,u8 bank)
+s32 mempAddEntryOfSizeToBank(u8* ptrdata, u32 size, u8 bank)
 {
     u32 entry;
-    u32 retval;
     
-    if ((needmemallocation != 0) && (ptrdata == memory_bank_ptrs[6].data2)) {
+    if ((needmemallocation != 0) && (ptrdata == (u8*)memory_bank_ptrs[6].data2)) {
         bank = 6;
     }
     entry = memory_bank_ptrs[bank].nextentry;
     if (entry == 0) {
-        do {
-                    /* WARNING: Do nothing block with infinite loop */
-        } while( 1 );
+        while(TRUE) {}
     }
-    if (ptrdata == memory_bank_ptrs[bank].data2) {
-        size = size - (entry - (int)memory_bank_ptrs[bank].data2);
-        if (size < 1) {
-            memory_bank_ptrs[bank].nextentry = entry + size;
-            retval = 1;
+    if (ptrdata != (u8*)memory_bank_ptrs[bank].data2) {
+        return 2;
+    } else {
+        s32 newsize = size - (entry - memory_bank_ptrs[bank].data2);
+        if (newsize <= 0) {
+            memory_bank_ptrs[bank].nextentry = entry + newsize;
         }
         else {
             if (memory_bank_ptrs[bank].bankend < entry) {
                 nulled_mempLoopAllMemBanks();
-                do {
-                    /* WARNING: Do nothing block with infinite loop */
-                } while( 1 );
+                while(TRUE) {}
             }
-            if (memory_bank_ptrs[bank].bankend < entry + size) {
+            if (memory_bank_ptrs[bank].bankend < entry + newsize) {
                 nulled_mempLoopAllMemBanks();
-                do {
-                    /* WARNING: Do nothing block with infinite loop */
-                } while( 1 );
+                while(TRUE) {}
             }
-            memory_bank_ptrs[bank].nextentry = entry + size;
-            retval = 1;
+            memory_bank_ptrs[bank].nextentry = entry + newsize;
         }
     }
-    else {
-        retval = 2;
-    }
-    return retval;
+
+    return 1;
 }
 #else
 GLOBAL_ASM(
@@ -690,8 +674,8 @@ glabel mempAddEntryOfSizeToBank
 
 void nulled_mempLoopAllMemBanks(void)
 {
-    s32 bank;
-    for (bank = 1; bank < 7; bank = (bank + 1) & 0xff)
+    u8 bank;
+    for (bank = 1; bank < 7; bank++)
     {
         ;
     };
