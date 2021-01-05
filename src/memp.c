@@ -51,163 +51,35 @@ void mempInitDebugNoticeList(void)
     debCheckAddDebugNoticeListEntry(&ptr_memp_c_debug_debug_notice_list, "memp_c_debug"); //should be "memp_c_debug"
 }
 
-#ifdef NONMATCHING
-// regalloc
 void mempSetBankStarts(s_mempMVALS *starts);
 const char *check_token(s32 arg0, const char *arg1);
 long int strtol(const char *str, char **endptr, int base);
 void mempCheckMemflagTokens(s32 bstart, s32 bsize)
 {
     s_mempMVALS sp20;
-    s32 phi_v0;
     
     memory_bank_ptrs[0].bankstart = bstart;
     memory_bank_ptrs[0].bankend = bstart + bsize;
     
     sp20 = sdefaultmvals;
 
-    if (check_token(1, "-mf") != 0) {
+    if (check_token(1, "-mf")) {
         sp20.var2 = strtol(check_token(1, "-mf"), NULL, 0);
     }
-    if (check_token(1, "-ml") != 0) {
+    if (check_token(1, "-ml")) {
         sp20.var4 = strtol(check_token(1, "-ml"), NULL, 0);
     }
-    if (check_token(1, "-me") != 0) {
+    if (check_token(1, "-me")) {
         sp20.var6 = strtol(check_token(1, "-me"), NULL, 0);
     }
     if (sp20.var6 == 0) {
         sp20.var2 = 0;
-        if (j_text_trigger != 0) {
-            phi_v0 = 308;
-        } else {            
-            phi_v0 = 296;
-        }
-        phi_v0 *= 1024;
-        sp20.var4 = bsize - phi_v0;
-        sp20.var6 = phi_v0;
+        sp20.var6 = ((j_text_trigger ? 308 : 296) * 1024);
+        sp20.var4 = bsize - sp20.var6;
     }
 
     mempSetBankStarts(&sp20);
 }
-#else
-GLOBAL_ASM(
-.rdata
-glabel aMf
-.word 0x2d6d6600 /*"-mf"*/
-glabel aMf_0
-.word 0x2d6d6600 /*"-mf"*/
-glabel aMl
-.word 0x2d6d6c00 /*"-ml"*/
-glabel aMl_0
-.word 0x2d6d6c00 /*"-ml"*/
-glabel aMe
-.word 0x2d6d6500 /*"-me"*/
-glabel aMe_0
-.word 0x2d6d6500 /*"-me"*/
-
-.text
-glabel mempCheckMemflagTokens
-/* 009FAC 700093AC 3C028006 */  lui   $v0, %hi(memory_bank_ptrs)
-/* 009FB0 700093B0 24423BB0 */  addiu $v0, %lo(memory_bank_ptrs) # addiu $v0, $v0, 0x3bb0
-/* 009FB4 700093B4 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 009FB8 700093B8 00857821 */  addu  $t7, $a0, $a1
-/* 009FBC 700093BC 3C198002 */  lui   $t9, %hi(sdefaultmvals) 
-/* 009FC0 700093C0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 009FC4 700093C4 AFA50044 */  sw    $a1, 0x44($sp)
-/* 009FC8 700093C8 AC440000 */  sw    $a0, ($v0)
-/* 009FCC 700093CC AC4F0008 */  sw    $t7, 8($v0)
-/* 009FD0 700093D0 27394414 */  addiu $t9, %lo(sdefaultmvals) # addiu $t9, $t9, 0x4414
-/* 009FD4 700093D4 8F210000 */  lw    $at, ($t9)
-/* 009FD8 700093D8 8F290004 */  lw    $t1, 4($t9)
-/* 009FDC 700093DC 27B80020 */  addiu $t8, $sp, 0x20
-/* 009FE0 700093E0 AF010000 */  sw    $at, ($t8)
-/* 009FE4 700093E4 AF090004 */  sw    $t1, 4($t8)
-/* 009FE8 700093E8 8F29000C */  lw    $t1, 0xc($t9)
-/* 009FEC 700093EC 8F210008 */  lw    $at, 8($t9)
-/* 009FF0 700093F0 3C058003 */  lui   $a1, %hi(aMf)
-/* 009FF4 700093F4 AF09000C */  sw    $t1, 0xc($t8)
-/* 009FF8 700093F8 AF010008 */  sw    $at, 8($t8)
-/* 009FFC 700093FC 8F210010 */  lw    $at, 0x10($t9)
-/* 00A000 70009400 8F290014 */  lw    $t1, 0x14($t9)
-/* 00A004 70009404 24A591B0 */  addiu $a1, %lo(aMf) # addiu $a1, $a1, -0x6e50
-/* 00A008 70009408 AF010010 */  sw    $at, 0x10($t8)
-/* 00A00C 7000940C AF090014 */  sw    $t1, 0x14($t8)
-/* 00A010 70009410 8F29001C */  lw    $t1, 0x1c($t9)
-/* 00A014 70009414 8F210018 */  lw    $at, 0x18($t9)
-/* 00A018 70009418 24040001 */  li    $a0, 1
-/* 00A01C 7000941C AF09001C */  sw    $t1, 0x1c($t8)
-/* 00A020 70009420 0C0029A8 */  jal   check_token
-/* 00A024 70009424 AF010018 */   sw    $at, 0x18($t8)
-/* 00A028 70009428 10400009 */  beqz  $v0, .L70009450
-/* 00A02C 7000942C 24040001 */   li    $a0, 1
-/* 00A030 70009430 3C058003 */  lui   $a1, %hi(aMf_0)
-/* 00A034 70009434 0C0029A8 */  jal   check_token
-/* 00A038 70009438 24A591B4 */   addiu $a1, %lo(aMf_0) # addiu $a1, $a1, -0x6e4c
-/* 00A03C 7000943C 00402025 */  move  $a0, $v0
-/* 00A040 70009440 00002825 */  move  $a1, $zero
-/* 00A044 70009444 0C002A78 */  jal   strtol
-/* 00A048 70009448 00003025 */   move  $a2, $zero
-/* 00A04C 7000944C AFA20024 */  sw    $v0, 0x24($sp)
-.L70009450:
-/* 00A050 70009450 3C058003 */  lui   $a1, %hi(aMl)
-/* 00A054 70009454 24A591B8 */  addiu $a1, %lo(aMl) # addiu $a1, $a1, -0x6e48
-/* 00A058 70009458 0C0029A8 */  jal   check_token
-/* 00A05C 7000945C 24040001 */   li    $a0, 1
-/* 00A060 70009460 10400009 */  beqz  $v0, .L70009488
-/* 00A064 70009464 24040001 */   li    $a0, 1
-/* 00A068 70009468 3C058003 */  lui   $a1, %hi(aMl_0)
-/* 00A06C 7000946C 0C0029A8 */  jal   check_token
-/* 00A070 70009470 24A591BC */   addiu $a1, %lo(aMl_0) # addiu $a1, $a1, -0x6e44
-/* 00A074 70009474 00402025 */  move  $a0, $v0
-/* 00A078 70009478 00002825 */  move  $a1, $zero
-/* 00A07C 7000947C 0C002A78 */  jal   strtol
-/* 00A080 70009480 00003025 */   move  $a2, $zero
-/* 00A084 70009484 AFA2002C */  sw    $v0, 0x2c($sp)
-.L70009488:
-/* 00A088 70009488 3C058003 */  lui   $a1, %hi(aMe)
-/* 00A08C 7000948C 24A591C0 */  addiu $a1, %lo(aMe) # addiu $a1, $a1, -0x6e40
-/* 00A090 70009490 0C0029A8 */  jal   check_token
-/* 00A094 70009494 24040001 */   li    $a0, 1
-/* 00A098 70009498 10400009 */  beqz  $v0, .L700094C0
-/* 00A09C 7000949C 24040001 */   li    $a0, 1
-/* 00A0A0 700094A0 3C058003 */  lui   $a1, %hi(aMe_0)
-/* 00A0A4 700094A4 0C0029A8 */  jal   check_token
-/* 00A0A8 700094A8 24A591C4 */   addiu $a1, %lo(aMe_0) # addiu $a1, $a1, -0x6e3c
-/* 00A0AC 700094AC 00402025 */  move  $a0, $v0
-/* 00A0B0 700094B0 00002825 */  move  $a1, $zero
-/* 00A0B4 700094B4 0C002A78 */  jal   strtol
-/* 00A0B8 700094B8 00003025 */   move  $a2, $zero
-/* 00A0BC 700094BC AFA20034 */  sw    $v0, 0x34($sp)
-.L700094C0:
-/* 00A0C0 700094C0 8FA30034 */  lw    $v1, 0x34($sp)
-/* 00A0C4 700094C4 3C0A8005 */  lui   $t2, %hi(j_text_trigger) 
-/* 00A0C8 700094C8 1460000C */  bnez  $v1, .L700094FC
-/* 00A0CC 700094CC 00000000 */   nop   
-/* 00A0D0 700094D0 8D4A84D0 */  lw    $t2, %lo(j_text_trigger)($t2)
-/* 00A0D4 700094D4 AFA00024 */  sw    $zero, 0x24($sp)
-/* 00A0D8 700094D8 24020128 */  li    $v0, 296
-/* 00A0DC 700094DC 11400003 */  beqz  $t2, .L700094EC
-/* 00A0E0 700094E0 8FAB0044 */   lw    $t3, 0x44($sp)
-/* 00A0E4 700094E4 10000001 */  b     .L700094EC
-/* 00A0E8 700094E8 24020134 */   li    $v0, 308
-.L700094EC:
-/* 00A0EC 700094EC 00021A80 */  sll   $v1, $v0, 0xa
-/* 00A0F0 700094F0 01636023 */  subu  $t4, $t3, $v1
-/* 00A0F4 700094F4 AFAC002C */  sw    $t4, 0x2c($sp)
-/* 00A0F8 700094F8 AFA30034 */  sw    $v1, 0x34($sp)
-.L700094FC:
-/* 00A0FC 700094FC 0C002545 */  jal   mempSetBankStarts
-/* 00A100 70009500 27A40020 */   addiu $a0, $sp, 0x20
-/* 00A104 70009504 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00A108 70009508 27BD0040 */  addiu $sp, $sp, 0x40
-/* 00A10C 7000950C 03E00008 */  jr    $ra
-/* 00A110 70009510 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 /**
  * A114	70009514
