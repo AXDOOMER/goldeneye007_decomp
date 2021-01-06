@@ -94,23 +94,23 @@ s32 debug_menu_y_pos_offset = 1;
 s32 debug_menu_x_text_pos = 0x18;
 s32 debug_menu_y_text_pos = 0x10;
 
-u32 stdout_display_list[] = {
-    0xE7000000,         0, //gsDPPipeSync(),
-    0xBA001402,         0, //gsDPSetCycleType(G_CYC_1CYCLE),
-    0xBA000602,      0xC0, //gsDPSetTextureLOD
+Gfx stdout_display_list[] = {
+    gsDPPipeSync(),
+    gsDPSetCycleType(G_CYC_1CYCLE),
+    gsDPSetColorDither(G_CD_DISABLE),
     0xB900031D,0x500A4240, //gsDPSetRenderMode
-    0xFC30B261,0x5566DB6D, //gsDPSetCombineMode
-    0xBA001301,         0, //gsDPSetTextureLOD
+    gsDPSetCombineLERP(PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT,  PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT,  PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT,  PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT),
+    gsDPSetTexturePersp(G_TP_NONE),
     0xB9000002,         0, //gsDPSetRenderMode
-    0xFD700000,&image_resource[0], //gsDPSetTextureImage
-    0xF5700000, 0x7000000, //gsDPSetTile
-    0xE6000000,         0, //gsDPLoadSync(),
-    0xF3000000, 0x753F080, //gsDPLoadBlock
-    0xE7000000,         0, //gsDPPipeSync(),
-    0xF5682000,         0, //gsDPSetTile
-    0xF2000000,  0x1FC050, //gsDPSetTileSize
-    0xE6000000,         0, //gsDPLoadSync(),
-    0xB8000000,         0 //gsSPEndDisplayList(),
+    0xFD700000,&image_resource[0], //gsDPSetCombineMode(G_IM_FMT_IA,  G_IM_SIZ_16b, 0, &image_resource[0]),
+    0xF5700000, 0x7000000, //gsDPSetTile(G_IM_FMT_IA,  G_IM_SIZ_16b, 0, 0, 7, 0, G_TX_WRAP, 0, 0, G_TX_WRAP, 3, 0),
+    gsDPLoadSync(),
+    gsDPLoadBlock(7, 0, 0, 1343, 128),
+    gsDPPipeSync(),
+    0xF5682000,         0, //gsDPSetTile(G_IM_FMT_IA, G_IM_SIZ_8b, 10, 0, 0, 0, G_TX_WRAP, 0, 0, G_TX_WRAP, 3, 0),
+    gsDPSetTileSize(0, 0, 0, 508, 80),
+    gsDPLoadSync(),
+    gsSPEndDisplayList(),
 };
 
 u32 stdout_debug_menu_screen_buffer[1400] = {0};
