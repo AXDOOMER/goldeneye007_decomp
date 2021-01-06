@@ -8,6 +8,7 @@
 #include "music.h"
 #include "game/lvl.h"
 #include "game/lvl_text.h"
+#include "game/chrobjhandler.c"
 
 s32 alarm_timer = 0;
 s32 *ptr_alarm_sfx = 0;
