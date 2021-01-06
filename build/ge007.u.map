@@ -23643,11 +23643,11 @@ Linker script and memory map
  build/u/src/game/decompress.o(.bss)
  build/u/src/game/zlib.o(.bss)
  .bss           0x000000008008d350       0x20 build/u/src/game/zlib.o
-                0x000000008008d350                dword_CODE_bss_8008D350
-                0x000000008008d354                dword_CODE_bss_8008D354
-                0x000000008008d358                dword_CODE_bss_8008D358
-                0x000000008008d35c                dword_CODE_bss_8008D35C
-                0x000000008008d360                dword_CODE_bss_8008D360
+                0x000000008008d350                rz_inbuf
+                0x000000008008d354                rz_outbuf
+                0x000000008008d358                rz_inptr
+                0x000000008008d35c                rz_wp
+                0x000000008008d360                rz_hlist
                 0x000000008008d364                dword_CODE_bss_8008D364
                 0x000000008008d368                dword_CODE_bss_8008D368
                 0x000000008008d36c                dword_CODE_bss_8008D36C

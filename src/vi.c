@@ -12,13 +12,9 @@ u32 viDebugNoticeList[] =
 };
 
 //80024518
-u32 viDLEnd[] = {       
-    0xB8000000,0x00000000,
+Gfx viDLEnd[] = {
+	gsSPEndDisplayList()
 };
-//Gfx viDLEnd[] = {
-//	gsSPEndDisplayList()
-//};
-
 
 
 void viDebugRemoved(void) {

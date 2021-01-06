@@ -137,7 +137,9 @@ char *string_formatting[] = {0,
 
 
 
-u64 end_displaylist_command = 0xB800000000000000;
+Gfx end_displaylist_command[] = {
+	gsSPEndDisplayList()
+};
 u64 blank_C0_command =0xC000000000000000;
 u32 stdout_primary_color = 0xFA000000;
 u32 debug_text_color = 0xFFFFFF00;
