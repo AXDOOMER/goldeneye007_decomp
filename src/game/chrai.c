@@ -92,7 +92,7 @@ u32 dword_CODE_bss_80071DF8;
 //CODE.bss:80071DFC
 u32 dword_CODE_bss_80071DFC;
 //CODE.bss:80071E00
-char temp_mine_table[0x78];
+u32 temp_mine_table[30];
 
 //CODE.bss:80071E78
 f32 gas_damage_flag;
