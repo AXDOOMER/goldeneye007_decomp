@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "game/initobjects.h"
 #include "game/chrai.h"
+#include "game/chrobjhandler.h"
 //this file may very well be a few different sub files
 
 struct object_animation_controller ptr_monitorimageobjectanimationcontroller = {&monitor_animation_microcode, 0, 0xFFFF, 0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.5, 0.0, 0.0, 0.5, 0.5, 0.5, 0.0, 0.0, 0.5, 0.5, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 1.0, 0.0};
@@ -350,8 +351,10 @@ glabel reinit_between_menus
 #endif
 
 #ifdef NONMATCHING
-void sub_GAME_7F001910(void) {
-
+void sub_GAME_7F001910(struct object_standard *object)
+{
+    object->flags2 = (u32)D_80030B00;
+    D_80030B00 = object;
 }
 #else
 GLOBAL_ASM(
