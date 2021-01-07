@@ -101,7 +101,7 @@ Gfx stdout_display_list[] = {
     0xB900031D,0x500A4240, //gsDPSetRenderMode(DevDefined, DevDefined2), //(CLR_MEM A_IN CLR_IN 1.0 CLR_MEM A_IN CLR_IN 1.0) FULL OPA AA=0 Z_CMP=0 Z_UPD=0 IM_RD=1 CLR_ON_CVG=0 CVG_X_ALPHA=0 ALPHA_CVG_SEL=0 FORCE_BL=1
     gsDPSetCombineLERP(PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT,  PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT,  PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT,  PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT),
     gsDPSetTexturePersp(G_TP_NONE),
-    //gsDPSetAlphaCompare(None),
+    0xB9000002,         0, //gsDPSetAlphaCompare(None),
     0xFD700000,&image_resource[0], //gsDPSetCombineMode(G_IM_FMT_IA,  G_IM_SIZ_16b, 0, &image_resource[0]), need original hex here, cannot use variable
     0xF5700000, 0x7000000, //gsDPSetTile(G_IM_FMT_IA,  G_IM_SIZ_16b, 0, 0, 7, 0, G_TX_WRAP, 0, 0, G_TX_WRAP, 3, 0),
     gsDPLoadSync(),
