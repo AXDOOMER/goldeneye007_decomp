@@ -208,29 +208,24 @@ def_7F0C1EB4:
 
 s32 check_if_player_is_pressing_anything_right(s32 param_1)
 {
-  int iVar3;
+    int iVar3 = get_controller_3dstick_L_R(param_1, -2, 1);
 
-  iVar3 = get_controller_3dstick_L_R(param_1, -2, 1);
+    if ((get_controller_buttons_pressed(param_1, R_JPAD|R_CBUTTONS)) || ((iVar3 >= 1  && (pPlayer->mpjoywascentre)))) {
+        return 1;
+    }
 
-  
-  if ((get_controller_buttons_pressed(param_1, 0x101) != 0) || ((0 < iVar3 && (pPlayer->mpjoywascentre != 0)))) {
-    return 1;
-  }
-
-  return 0;
+    return 0;
 }
 
-s32 check_if_player_is_pressing_anything_left(s32 param_1) {
-  int iVar3;
+s32 check_if_player_is_pressing_anything_left(s32 param_1)
+{    
+    int iVar3 =  get_controller_3dstick_L_R(param_1, -2, 1);
 
-  iVar3 = get_controller_3dstick_L_R(param_1, -2, 1);
+    if ((get_controller_buttons_pressed(param_1, L_JPAD|L_CBUTTONS)) || ((iVar3 < -1 && (pPlayer->mpjoywascentre)))) {
+        return 1;
+    }
 
-  
-  if ((get_controller_buttons_pressed(param_1, 0x202) != 0) || ((iVar3 < -1 && (pPlayer->mpjoywascentre != 0)))) {
-    return 1;
-  }
-
-  return 0;
+    return 0;
 }
 
 
