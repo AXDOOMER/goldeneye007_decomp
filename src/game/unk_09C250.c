@@ -1,21 +1,22 @@
 #include "ultra64.h"
 #include "game/unk_09C250.h"
+#include "structs.h"
 
 // bss
 //CODE.bss:8007A100
 char dword_CODE_bss_8007A100[0x40];
 //CODE.bss:8007A140
-u32 *ptr_smoke_buf;
+struct prop *ptr_smoke_buf;
 //CODE.bss:8007A144
-u32 *ptr_explosion_buf;
+struct prop *ptr_explosion_buf;
 //CODE.bss:8007A148
 s32 max_casings;
 //CODE.bss:8007A14C
-u32 *ptr_ejected_casing_buf;
+u8 *ptr_ejected_casing_buf;
 //CODE.bss:8007A150
-u32 *ptr_scorch_buf;
+u8 *ptr_scorch_buf;
 //CODE.bss:8007A154
-u32 *ptr_bullet_impact_buf;
+u8 *ptr_bullet_impact_buf;
 
 // data
 //D:80040170

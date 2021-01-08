@@ -1489,7 +1489,7 @@ glabel init_standard_object
 .L7F0406CC:
 /* 0751FC 7F0406CC 52200005 */  beql  $s1, $zero, .L7F0406E4
 /* 075200 7F0406D0 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 075204 7F0406D4 0FC0E921 */  jal   set_last_obj_pos_data
+/* 075204 7F0406D4 0FC0E921 */  jal   propFree
 /* 075208 7F0406D8 02202025 */   move  $a0, $s1
 /* 07520C 7F0406DC 00008825 */  move  $s1, $zero
 .L7F0406E0:
@@ -2253,9 +2253,9 @@ glabel sub_GAME_7F040D98
 /* 075B1C 7F040FEC AE400010 */   sw    $zero, 0x10($s2)
 /* 075B20 7F040FF0 0FC0E94E */  jal   sub_GAME_7F03A538
 /* 075B24 7F040FF4 8E440010 */   lw    $a0, 0x10($s2)
-/* 075B28 7F040FF8 0FC0E905 */  jal   unset_stateflag_0x04_for_posdata
+/* 075B28 7F040FF8 0FC0E905 */  jal   propHide
 /* 075B2C 7F040FFC 8E440010 */   lw    $a0, 0x10($s2)
-/* 075B30 7F041000 0FC0E921 */  jal   set_last_obj_pos_data
+/* 075B30 7F041000 0FC0E921 */  jal   propFree
 /* 075B34 7F041004 8E440010 */   lw    $a0, 0x10($s2)
 /* 075B38 7F041008 AE400010 */  sw    $zero, 0x10($s2)
 .L7F04100C:
@@ -5471,7 +5471,7 @@ glabel sub_GAME_7F043A6C
 /* 078600 7F043AD0 AE080064 */   sw    $t0, 0x64($s0)
 /* 078604 7F043AD4 0FC0E94E */  jal   sub_GAME_7F03A538
 /* 078608 7F043AD8 02202025 */   move  $a0, $s1
-/* 07860C 7F043ADC 0FC0E905 */  jal   unset_stateflag_0x04_for_posdata
+/* 07860C 7F043ADC 0FC0E905 */  jal   propHide
 /* 078610 7F043AE0 02202025 */   move  $a0, $s1
 /* 078614 7F043AE4 8FA900F8 */  lw    $t1, 0xf8($sp)
 /* 078618 7F043AE8 8E0A0014 */  lw    $t2, 0x14($s0)
@@ -29733,7 +29733,7 @@ glabel sub_GAME_7F0510C0
 .L7F05123C:
 /* 085D6C 7F05123C 52000005 */  beql  $s0, $zero, .L7F051254
 /* 085D70 7F051240 8FBF002C */   lw    $ra, 0x2c($sp)
-/* 085D74 7F051244 0FC0E921 */  jal   set_last_obj_pos_data
+/* 085D74 7F051244 0FC0E921 */  jal   propFree
 /* 085D78 7F051248 02002025 */   move  $a0, $s0
 /* 085D7C 7F05124C 00008025 */  move  $s0, $zero
 .L7F051250:
@@ -31127,7 +31127,7 @@ glabel create_new_item_instance_of_model
 .L7F0521C0:
 /* 086CF0 7F0521C0 52000004 */  beql  $s0, $zero, .L7F0521D4
 /* 086CF4 7F0521C4 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 086CF8 7F0521C8 0FC0E921 */  jal   set_last_obj_pos_data
+/* 086CF8 7F0521C8 0FC0E921 */  jal   propFree
 /* 086CFC 7F0521CC 02002025 */   move  $a0, $s0
 /* 086D00 7F0521D0 8FBF001C */  lw    $ra, 0x1c($sp)
 .L7F0521D4:
@@ -31294,7 +31294,7 @@ glabel something_with_generating_object
 .L7F0523A4:
 /* 086ED4 7F0523A4 52200005 */  beql  $s1, $zero, .L7F0523BC
 /* 086ED8 7F0523A8 8FBF002C */   lw    $ra, 0x2c($sp)
-/* 086EDC 7F0523AC 0FC0E921 */  jal   set_last_obj_pos_data
+/* 086EDC 7F0523AC 0FC0E921 */  jal   propFree
 /* 086EE0 7F0523B0 02202025 */   move  $a0, $s1
 /* 086EE4 7F0523B4 00008825 */  move  $s1, $zero
 .L7F0523B8:

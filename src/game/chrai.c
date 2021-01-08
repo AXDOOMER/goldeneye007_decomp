@@ -5,6 +5,8 @@
 #include "snd.h"
 #include "music.h"
 #include "game/lvl_text.h"
+#include "structs.h"
+
 // bss
 //CODE.bss:80069B70
 struct sfx_register_struct sfx_related[8];
@@ -178,7 +180,7 @@ s32 D_80030A98 = 0;
 s32 D_80030A9C = 0;
 s32 *ptr_obj_pos_list_current_entry = 0;
 s32 *ptr_obj_pos_list_first_entry = 0;
-s32 *ptr_obj_pos_list_final_entry = 0;
+struct prop *ptr_obj_pos_list_final_entry = 0;
 f32 difficulty = 1.0;
 s32 D_80030AB0 = 0;
 s32 D_80030AB4 = 0;
@@ -4918,7 +4920,7 @@ action64_Type_16_Object_Equipped_On_Guard_3:
 /* 06BD80 7F037250 00000000 */   nop   
 /* 06BD84 7F037254 0FC0E94E */  jal   sub_GAME_7F03A538
 /* 06BD88 7F037258 8E040010 */   lw    $a0, 0x10($s0)
-/* 06BD8C 7F03725C 0FC0E905 */  jal   unset_stateflag_0x04_for_posdata
+/* 06BD8C 7F03725C 0FC0E905 */  jal   propHide
 /* 06BD90 7F037260 8E040010 */   lw    $a0, 0x10($s0)
 /* 06BD94 7F037264 920E0003 */  lbu   $t6, 3($s0)
 .L7F037268:
@@ -10785,7 +10787,7 @@ action64_Type_16_Object_Equipped_On_Guard_3:
 /* 06BD80 7F037250 00000000 */   nop   
 /* 06BD84 7F037254 0FC0E94E */  jal   sub_GAME_7F03A538
 /* 06BD88 7F037258 8E040010 */   lw    $a0, 0x10($s0)
-/* 06BD8C 7F03725C 0FC0E905 */  jal   unset_stateflag_0x04_for_posdata
+/* 06BD8C 7F03725C 0FC0E905 */  jal   propHide
 /* 06BD90 7F037260 8E040010 */   lw    $a0, 0x10($s0)
 /* 06BD94 7F037264 920E0003 */  lbu   $t6, 3($s0)
 .L7F037268:
@@ -14333,20 +14335,12 @@ glabel set_stateflag_0x04_for_posdata
 
 
 
-#ifdef NONMATCHING
-void unset_stateflag_0x04_for_posdata(void) {
 
+void propHide(struct prop *prop)
+{
+    prop->flags = prop->flags & 0xfffb;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel unset_stateflag_0x04_for_posdata
-/* 06EF44 7F03A414 908E0001 */  lbu   $t6, 1($a0)
-/* 06EF48 7F03A418 31CFFFFB */  andi  $t7, $t6, 0xfffb
-/* 06EF4C 7F03A41C 03E00008 */  jr    $ra
-/* 06EF50 7F03A420 A08F0001 */   sb    $t7, 1($a0)
-)
-#endif
+
 
 
 
@@ -14400,25 +14394,15 @@ glabel remove_last_obj_pos_data_entry
 
 
 
-#ifdef NONMATCHING
-void set_last_obj_pos_data(void) {
 
+void propFree(struct prop *prop)
+
+{
+    prop->nextSibling = ptr_obj_pos_list_final_entry;
+    prop->prevSibling = 0x0;
+    prop->standTile = 0x0;
+    ptr_obj_pos_list_final_entry = prop;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_last_obj_pos_data
-/* 06EFB4 7F03A484 3C028003 */  lui   $v0, %hi(ptr_obj_pos_list_final_entry)
-/* 06EFB8 7F03A488 24420AA8 */  addiu $v0, %lo(ptr_obj_pos_list_final_entry) # addiu $v0, $v0, 0xaa8
-/* 06EFBC 7F03A48C 8C4E0000 */  lw    $t6, ($v0)
-/* 06EFC0 7F03A490 AC800028 */  sw    $zero, 0x28($a0)
-/* 06EFC4 7F03A494 AC800014 */  sw    $zero, 0x14($a0)
-/* 06EFC8 7F03A498 AC8E0024 */  sw    $t6, 0x24($a0)
-/* 06EFCC 7F03A49C 03E00008 */  jr    $ra
-/* 06EFD0 7F03A4A0 AC440000 */   sw    $a0, ($v0)
-)
-#endif
-
 
 
 
@@ -16797,7 +16781,7 @@ glabel sub_GAME_7F03C2BC
 /* 070E60 7F03C330 A06C0002 */  sb    $t4, 2($v1)
 /* 070E64 7F03C334 0FC0F863 */  jal   sub_GAME_7F03E18C
 /* 070E68 7F03C338 E4640070 */   swc1  $f4, 0x70($v1)
-/* 070E6C 7F03C33C 0FC0E905 */  jal   unset_stateflag_0x04_for_posdata
+/* 070E6C 7F03C33C 0FC0E905 */  jal   propHide
 /* 070E70 7F03C340 02002025 */   move  $a0, $s0
 /* 070E74 7F03C344 10000029 */  b     .L7F03C3EC
 /* 070E78 7F03C348 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -16806,9 +16790,9 @@ glabel sub_GAME_7F03C2BC
 /* 070E80 7F03C350 02002025 */   move  $a0, $s0
 /* 070E84 7F03C354 0FC0E94E */  jal   sub_GAME_7F03A538
 /* 070E88 7F03C358 02002025 */   move  $a0, $s0
-/* 070E8C 7F03C35C 0FC0E905 */  jal   unset_stateflag_0x04_for_posdata
+/* 070E8C 7F03C35C 0FC0E905 */  jal   propHide
 /* 070E90 7F03C360 02002025 */   move  $a0, $s0
-/* 070E94 7F03C364 0FC0E921 */  jal   set_last_obj_pos_data
+/* 070E94 7F03C364 0FC0E921 */  jal   propFree
 /* 070E98 7F03C368 02002025 */   move  $a0, $s0
 /* 070E9C 7F03C36C 1000001F */  b     .L7F03C3EC
 /* 070EA0 7F03C370 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -16820,7 +16804,7 @@ glabel sub_GAME_7F03C2BC
 /* 070EB4 7F03C384 02002025 */   move  $a0, $s0
 /* 070EB8 7F03C388 0FC0E94E */  jal   sub_GAME_7F03A538
 /* 070EBC 7F03C38C 02002025 */   move  $a0, $s0
-/* 070EC0 7F03C390 0FC0E905 */  jal   unset_stateflag_0x04_for_posdata
+/* 070EC0 7F03C390 0FC0E905 */  jal   propHide
 /* 070EC4 7F03C394 02002025 */   move  $a0, $s0
 /* 070EC8 7F03C398 10000014 */  b     .L7F03C3EC
 /* 070ECC 7F03C39C 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -16832,7 +16816,7 @@ glabel sub_GAME_7F03C2BC
 /* 070EE0 7F03C3B0 02002025 */   move  $a0, $s0
 /* 070EE4 7F03C3B4 0FC0E94E */  jal   sub_GAME_7F03A538
 /* 070EE8 7F03C3B8 02002025 */   move  $a0, $s0
-/* 070EEC 7F03C3BC 0FC0E905 */  jal   unset_stateflag_0x04_for_posdata
+/* 070EEC 7F03C3BC 0FC0E905 */  jal   propHide
 /* 070EF0 7F03C3C0 02002025 */   move  $a0, $s0
 /* 070EF4 7F03C3C4 0FC13011 */  jal   sub_GAME_7F04C044
 /* 070EF8 7F03C3C8 02002025 */   move  $a0, $s0

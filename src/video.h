@@ -25,6 +25,8 @@ struct video_settings {
     u8* framebuf;
 };
 
+void viSet800232B4(f32 param_1);
+
 s16 viGetX(void);
 s16 viGetY(void);
 s16 viGetViewLeft(void);

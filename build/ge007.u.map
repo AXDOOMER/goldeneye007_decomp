@@ -65,7 +65,7 @@ Discarded input sections
  .options       0x0000000000000000       0x20 build/u/src/ramrom.o
  .reginfo       0x0000000000000000       0x18 build/u/src/ramrom.o
  .gptab.bss     0x0000000000000000       0x20 build/u/src/ramrom.o
- .mdebug        0x0000000000000000      0x964 build/u/src/ramrom.o
+ .mdebug        0x0000000000000000      0x968 build/u/src/ramrom.o
  .options       0x0000000000000000       0x20 build/u/src/boss.o
  .reginfo       0x0000000000000000       0x18 build/u/src/boss.o
  .options       0x0000000000000000       0x20 build/u/src/music.o
@@ -1107,7 +1107,7 @@ Discarded input sections
  .mdebug        0x0000000000000000      0x39c build/u/src/game/initunk_000B60.o
  .options       0x0000000000000000       0x20 build/u/src/game/setguscale.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/setguscale.o
- .mdebug        0x0000000000000000      0x44c build/u/src/game/setguscale.o
+ .mdebug        0x0000000000000000      0x450 build/u/src/game/setguscale.o
  .options       0x0000000000000000       0x20 build/u/src/game/initnull_000BC0.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/initnull_000BC0.o
  .mdebug        0x0000000000000000      0x28c build/u/src/game/initnull_000BC0.o
@@ -3498,10 +3498,10 @@ Linker script and memory map
                 0x000000007f035484                parse_handle_actionblocks
                 0x000000007f03a240                sub_GAME_7F03A240
                 0x000000007f03a404                set_stateflag_0x04_for_posdata
-                0x000000007f03a414                unset_stateflag_0x04_for_posdata
+                0x000000007f03a414                propHide
                 0x000000007f03a424                get_ptr_obj_pos_list_current_entry
                 0x000000007f03a430                remove_last_obj_pos_data_entry
-                0x000000007f03a484                set_last_obj_pos_data
+                0x000000007f03a484                propFree
                 0x000000007f03a4a4                set_current_objposdata_plus_0x28
                 0x000000007f03a4f0                sub_GAME_7F03A4F0
                 0x000000007f03a538                sub_GAME_7F03A538
