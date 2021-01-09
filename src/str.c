@@ -162,7 +162,7 @@ glabel strncmp
 )
 #endif
 
-u8 toupper(u8 c) {
+unsigned char toupper(unsigned char c) {
     if ((c >= 'a') && (c <= 'z')) {
         return ('A' + c - 'a');
     } else {
@@ -170,36 +170,9 @@ u8 toupper(u8 c) {
     }
 }
 
-#ifdef NONMATCHING
-s32 strtol_related_0(s32 arg0) {
-    // Node 0
-    if ((((arg0 & 0xff) < 0x30) ^ 1) != 0)
-    {
-        // Node 1
-        return;
-        // (possible return value: ((arg0 & 0xff) < 0x3a))
-    }
-    // (possible return value: (((arg0 & 0xff) < 0x30) ^ 1))
+int isdigit(unsigned char c) {
+    return ((c >= '0') && (c <= '9'));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel strtol_related_0
-/* 00B530 7000A930 308E00FF */  andi  $t6, $a0, 0xff
-/* 00B534 7000A934 29C20030 */  slti  $v0, $t6, 0x30
-/* 00B538 7000A938 38420001 */  xori  $v0, $v0, 1
-/* 00B53C 7000A93C 10400002 */  beqz  $v0, .L7000A948
-/* 00B540 7000A940 AFA40000 */   sw    $a0, ($sp)
-/* 00B544 7000A944 29C2003A */  slti  $v0, $t6, 0x3a
-.L7000A948:
-/* 00B548 7000A948 03E00008 */  jr    $ra
-/* 00B54C 7000A94C 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 s32 strtol_related_1(s32 arg0) {
@@ -408,7 +381,7 @@ glabel strtol
 /* 00B718 7000AB18 2414FFFF */  li    $s4, -1
 .L7000AB1C:
 /* 00B71C 7000AB1C 320400FF */  andi  $a0, $s0, 0xff
-/* 00B720 7000AB20 0C002A4C */  jal   strtol_related_0
+/* 00B720 7000AB20 0C002A4C */  jal   isdigit
 /* 00B724 7000AB24 AFA30034 */   sw    $v1, 0x34($sp)
 /* 00B728 7000AB28 10400005 */  beqz  $v0, .L7000AB40
 /* 00B72C 7000AB2C 8FA30034 */   lw    $v1, 0x34($sp)
