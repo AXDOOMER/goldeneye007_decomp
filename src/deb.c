@@ -39,7 +39,7 @@ void *debCheckIfDNLEntryExists(s32 arg0)
     if (debug_notice_list != 0)
     {
 loop_1:
-        if (something_with_strings_0(phi_s0->unk8, arg0) == 0)
+        if (strcmp(phi_s0->unk8, arg0) == 0)
         {
             return phi_s0;
         }
@@ -66,7 +66,7 @@ glabel debCheckIfDNLEntryExists
 /* 00593C 70004D3C AFBF001C */   sw    $ra, 0x1c($sp)
 /* 005940 70004D40 8E040008 */  lw    $a0, 8($s0)
 .L70004D44:
-/* 005944 70004D44 0C002A13 */  jal   something_with_strings_0
+/* 005944 70004D44 0C002A13 */  jal   strcmp
 /* 005948 70004D48 02202825 */   move  $a1, $s1
 /* 00594C 70004D4C 54400004 */  bnezl $v0, .L70004D60
 /* 005950 70004D50 8E100000 */   lw    $s0, ($s0)

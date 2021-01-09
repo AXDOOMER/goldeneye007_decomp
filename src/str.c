@@ -9,8 +9,9 @@ char *strcpy(char *dst, const char *src) {
 char *strncpy(char *dst, const char *src, size_t n) {
     unsigned char *ptr = dst;
     while((*ptr++ = *src++)) { 
-        if (--n == 0) 
+        if (--n == 0) {
             break;
+        }
     }
     while(n--) {
         (*ptr++) = '\0';
@@ -26,13 +27,38 @@ char *strcat(char *dst, const char *src) {
 }
 
 #ifdef NONMATCHING
-void something_with_strings_0(void) {
-
+//                                                   > b458:    move    a2,v0
+// b458:    beq     v0,v1,0xb478 ~>                    b45c:    beq     v0,v1,0xb47c ~>
+// b45c:    slt     at,v0,v1                           b460:    slt     at,v0,v1
+// b460:    beqz    at,0xb470 ~>                       b464:    beqz    at,0xb474 ~>
+// b464:    nop                                        b468:    nop
+// b468:    jr      ra                                 b46c:    jr      ra
+// b46c:    li      v0,-1                              b470:    li      v0,-1
+// b470:    jr      ra                                 b474:    jr      ra
+// b474:    li      v0,1                               b478:    li      v0,1
+// b478:    bnez    v0,0xb488 ~>                     r b47c:    bnez    a2,0xb48c ~>
+#define true 1
+int strcmp(const char* str1, const char* str2) {
+    while (true) {
+        unsigned char c1;
+        unsigned char c2;
+        if ((c1 = *str1++) != (c2 = *str2)) {
+            if (c1 < c2) {
+                return -1;
+            } else {
+                return 1;
+            }
+        }
+        if (c1 == '\0') {
+            return 0;
+        }
+        str2++;
+    }
 }
 #else
 GLOBAL_ASM(
 .text
-glabel something_with_strings_0
+glabel strcmp
 .L7000A84C:
 /* 00B44C 7000A84C 90820000 */  lbu   $v0, ($a0)
 /* 00B450 7000A850 90A30000 */  lbu   $v1, ($a1)
