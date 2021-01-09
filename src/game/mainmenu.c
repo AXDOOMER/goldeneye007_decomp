@@ -25066,39 +25066,17 @@ glabel constructor_menu16_nocontrollers
 
 #endif
 
-#ifdef NONMATCHING
-void do_extended_cast_display(u32 flag)
+
+void do_extended_cast_display(s32 flag)
 {
-  if (flag != FALSE) {
-    do_not_play_intro_movie = 0;
     full_actor_intro = flag;
-    return;
-  }
-  do_not_play_intro_movie = 1;
-  full_actor_intro = flag;
+    if (flag != 0)
+    {
+        do_not_play_intro_movie = 0;
+        return;
+    }
+    do_not_play_intro_movie = 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel do_extended_cast_display
-/* 04D1A0 7F018670 3C018003 */  lui   $at, %hi(full_actor_intro)
-/* 04D1A4 7F018674 10800004 */  beqz  $a0, .L7F018688
-/* 04D1A8 7F018678 AC24B5FC */   sw    $a0, %lo(full_actor_intro)($at)
-/* 04D1AC 7F01867C 3C018003 */  lui   $at, %hi(do_not_play_intro_movie)
-/* 04D1B0 7F018680 03E00008 */  jr    $ra
-/* 04D1B4 7F018684 AC20B5E8 */   sw    $zero, %lo(do_not_play_intro_movie)($at)
-.L7F018688:
-/* 04D1B8 7F018688 240E0001 */  li    $t6, 1
-/* 04D1BC 7F01868C 3C018003 */  lui   $at, %hi(do_not_play_intro_movie)
-/* 04D1C0 7F018690 AC2EB5E8 */  sw    $t6, %lo(do_not_play_intro_movie)($at)
-/* 04D1C4 7F018694 03E00008 */  jr    $ra
-/* 04D1C8 7F018698 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 
 #ifdef NONMATCHING
@@ -25378,14 +25356,7 @@ glabel D_80051B34
 .word 0x3D4CCCD0 /*0.050000012;*/
 glabel D_80051B38
 .word 0x40490FDB /*3.1415927;*/
-glabel D_80051B3C
-.word 0x3FAAAAAB /*1.3333334;*/
-glabel D_80051B40
-.word 0x461C4000 /*10000.0;*/
-glabel D_80051B44
-.word 0x3FAAAAAB /*1.3333334;*/
-glabel D_80051B48
-.word 0x3FAAAAAB /*1.3333334;*/
+
 .text
 glabel init_menu18_displaycast
 /* 04D1CC 7F01869C 3C0E8003 */  lui   $t6, %hi(ptr_logo_and_walletbond_DL) 
@@ -27461,153 +27432,48 @@ glabel constructor_menu18_displaycast
 
 
 
-#ifdef NONMATCHING
-void init_menu19_spectrum(void) {
-    u8 rom;
 
-    // Node 0
-    rom = 0;
-    if (get_controller_buttons_held(2, 2) == 0)
+void init_menu19_spectrum(void)
+{
+    SPECTRUMROMS rom = ROM_SABRE;
+
+    if (!get_controller_buttons_held(2, L_CBUTTONS))
     {
-        // Node 1
-        if (get_controller_buttons_held(2, 1) != 0)
+        if (get_controller_buttons_held(2, R_CBUTTONS))
         {
-            // Node 2
-            rom = 1;
+            rom = ROM_ATIC;
+        }
+        else if (get_controller_buttons_held(2, U_CBUTTONS))
+        {
+            rom = ROM_JETPAC;
+        }
+        else if (get_controller_buttons_held(2, D_CBUTTONS))
+        {
+            rom = ROM_JETMAN;
+        }
+        else if (get_controller_buttons_held(2, L_JPAD))
+        {
+            rom = ROM_ALIEN8;
+        }
+        else if (get_controller_buttons_held(2, R_JPAD))
+        {
+            rom = ROM_GUNFRIGHT;
+        }
+        else if (get_controller_buttons_held(2, U_JPAD))
+        {
+            rom = ROM_UNDER;
         }
         else
         {
-            // Node 3
-            if (get_controller_buttons_held(2, 8) != 0)
+            rom = ROM_SABRE;
+            if (get_controller_buttons_held(2, D_JPAD))
             {
-                // Node 4
-                rom = 2;
-            }
-            else
-            {
-                // Node 5
-                if (get_controller_buttons_held(2, 4) != 0)
-                {
-                    // Node 6
-                    rom = 3;
-                }
-                else
-                {
-                    // Node 7
-                    if (get_controller_buttons_held(2, 0x200) != 0)
-                    {
-                        // Node 8
-                        rom = 4;
-                    }
-                    else
-                    {
-                        // Node 9
-                        if (get_controller_buttons_held(2, 0x100) != 0)
-                        {
-                            // Node 10
-                            rom = 5;
-                        }
-                        else
-                        {
-                            // Node 11
-                            if (get_controller_buttons_held(2, 0x800) != 0)
-                            {
-                                // Node 12
-                                rom = 6;
-                            }
-                            else
-                            {
-                                // Node 13
-                                rom = 0;
-                                if (get_controller_buttons_held(2, 0x400) != 0)
-                                {
-                                    // Node 14
-                                    rom = 7;
-                                }
-                            }
-                        }
-                    }
-                }
+                rom = ROM_KNIGHTLORE;
             }
         }
     }
-    // Node 15
-    return init_spectrum_game(rom);
+    init_spectrum_game(rom);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel init_menu19_spectrum
-/* 04EECC 7F01A39C 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 04EED0 7F01A3A0 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 04EED4 7F01A3A4 AFB00018 */  sw    $s0, 0x18($sp)
-/* 04EED8 7F01A3A8 00008025 */  move  $s0, $zero
-/* 04EEDC 7F01A3AC 24040002 */  li    $a0, 2
-/* 04EEE0 7F01A3B0 0C0030C3 */  jal   get_controller_buttons_held
-/* 04EEE4 7F01A3B4 24050002 */   li    $a1, 2
-/* 04EEE8 7F01A3B8 1440002A */  bnez  $v0, .L7F01A464
-/* 04EEEC 7F01A3BC 24040002 */   li    $a0, 2
-/* 04EEF0 7F01A3C0 0C0030C3 */  jal   get_controller_buttons_held
-/* 04EEF4 7F01A3C4 24050001 */   li    $a1, 1
-/* 04EEF8 7F01A3C8 10400003 */  beqz  $v0, .L7F01A3D8
-/* 04EEFC 7F01A3CC 24040002 */   li    $a0, 2
-/* 04EF00 7F01A3D0 10000024 */  b     .L7F01A464
-/* 04EF04 7F01A3D4 24100001 */   li    $s0, 1
-.L7F01A3D8:
-/* 04EF08 7F01A3D8 0C0030C3 */  jal   get_controller_buttons_held
-/* 04EF0C 7F01A3DC 24050008 */   li    $a1, 8
-/* 04EF10 7F01A3E0 10400003 */  beqz  $v0, .L7F01A3F0
-/* 04EF14 7F01A3E4 24040002 */   li    $a0, 2
-/* 04EF18 7F01A3E8 1000001E */  b     .L7F01A464
-/* 04EF1C 7F01A3EC 24100002 */   li    $s0, 2
-.L7F01A3F0:
-/* 04EF20 7F01A3F0 0C0030C3 */  jal   get_controller_buttons_held
-/* 04EF24 7F01A3F4 24050004 */   li    $a1, 4
-/* 04EF28 7F01A3F8 10400003 */  beqz  $v0, .L7F01A408
-/* 04EF2C 7F01A3FC 24040002 */   li    $a0, 2
-/* 04EF30 7F01A400 10000018 */  b     .L7F01A464
-/* 04EF34 7F01A404 24100003 */   li    $s0, 3
-.L7F01A408:
-/* 04EF38 7F01A408 0C0030C3 */  jal   get_controller_buttons_held
-/* 04EF3C 7F01A40C 24050200 */   li    $a1, 512
-/* 04EF40 7F01A410 10400003 */  beqz  $v0, .L7F01A420
-/* 04EF44 7F01A414 24040002 */   li    $a0, 2
-/* 04EF48 7F01A418 10000012 */  b     .L7F01A464
-/* 04EF4C 7F01A41C 24100004 */   li    $s0, 4
-.L7F01A420:
-/* 04EF50 7F01A420 0C0030C3 */  jal   get_controller_buttons_held
-/* 04EF54 7F01A424 24050100 */   li    $a1, 256
-/* 04EF58 7F01A428 10400003 */  beqz  $v0, .L7F01A438
-/* 04EF5C 7F01A42C 24040002 */   li    $a0, 2
-/* 04EF60 7F01A430 1000000C */  b     .L7F01A464
-/* 04EF64 7F01A434 24100005 */   li    $s0, 5
-.L7F01A438:
-/* 04EF68 7F01A438 0C0030C3 */  jal   get_controller_buttons_held
-/* 04EF6C 7F01A43C 24050800 */   li    $a1, 2048
-/* 04EF70 7F01A440 10400003 */  beqz  $v0, .L7F01A450
-/* 04EF74 7F01A444 24040002 */   li    $a0, 2
-/* 04EF78 7F01A448 10000006 */  b     .L7F01A464
-/* 04EF7C 7F01A44C 24100006 */   li    $s0, 6
-.L7F01A450:
-/* 04EF80 7F01A450 0C0030C3 */  jal   get_controller_buttons_held
-/* 04EF84 7F01A454 24050400 */   li    $a1, 1024
-/* 04EF88 7F01A458 10400002 */  beqz  $v0, .L7F01A464
-/* 04EF8C 7F01A45C 00000000 */   nop   
-/* 04EF90 7F01A460 24100007 */  li    $s0, 7
-.L7F01A464:
-/* 04EF94 7F01A464 0FC34BF1 */  jal   init_spectrum_game
-/* 04EF98 7F01A468 02002025 */   move  $a0, $s0
-/* 04EF9C 7F01A46C 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 04EFA0 7F01A470 8FB00018 */  lw    $s0, 0x18($sp)
-/* 04EFA4 7F01A474 27BD0020 */  addiu $sp, $sp, 0x20
-/* 04EFA8 7F01A478 03E00008 */  jr    $ra
-/* 04EFAC 7F01A47C 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 
 void update_menu19_spectrum(void) {
@@ -27615,44 +27481,14 @@ void update_menu19_spectrum(void) {
 }
 
 
-
-#ifdef NONMATCHING
-void interface_menu19_spectrum(void) {
+void interface_menu19_spectrum(void)
+{
     viSetFovY(60.0f);
-    viSetAspect(D_80051B3C);
-    viSetZRange(100.0f, D_80051B40);
+    viSetAspect(1.3333334f);
+    viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(0);
     run_spectrum_game();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel interface_menu19_spectrum
-/* 04EFB8 7F01A488 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 04EFBC 7F01A48C 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 04EFC0 7F01A490 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 04EFC4 7F01A494 44816000 */  mtc1  $at, $f12
-/* 04EFC8 7F01A498 0C001151 */  jal   viSetFovY
-/* 04EFCC 7F01A49C 00000000 */   nop   
-/* 04EFD0 7F01A4A0 3C018005 */  lui   $at, %hi(D_80051B3C)
-/* 04EFD4 7F01A4A4 0C001164 */  jal   viSetAspect
-/* 04EFD8 7F01A4A8 C42C1B3C */   lwc1  $f12, %lo(D_80051B3C)($at)
-/* 04EFDC 7F01A4AC 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 04EFE0 7F01A4B0 44816000 */  mtc1  $at, $f12
-/* 04EFE4 7F01A4B4 3C018005 */  lui   $at, %hi(D_80051B40)
-/* 04EFE8 7F01A4B8 0C001194 */  jal   viSetZRange
-/* 04EFEC 7F01A4BC C42E1B40 */   lwc1  $f14, %lo(D_80051B40)($at)
-/* 04EFF0 7F01A4C0 0C00114D */  jal   viSetUseZBuf
-/* 04EFF4 7F01A4C4 00002025 */   move  $a0, $zero
-/* 04EFF8 7F01A4C8 0FC34CDD */  jal   run_spectrum_game
-/* 04EFFC 7F01A4CC 00000000 */   nop   
-/* 04F000 7F01A4D0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 04F004 7F01A4D4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 04F008 7F01A4D8 03E00008 */  jr    $ra
-/* 04F00C 7F01A4DC 00000000 */   nop   
-)
-#endif
-
 
 
 
@@ -27763,44 +27599,20 @@ glabel constructor_menu19_spectrum
 
 
 
-#ifdef NONMATCHING
+
 void set_menu_to_mode(MENU menu, s32 mode)
 {
-  if ((menu == MENU_RUN_STAGE) || (menu == MENU_SPECTRUM_EMU)) {
-    is_emulating_spectrum = TRUE;
-  }
-  if (mode == 0) {
+    if ((menu == MENU_RUN_STAGE) || (menu == MENU_SPECTRUM_EMU))
+    {
+        is_emulating_spectrum = 1;
+    }
+    if (mode != 0)
+    {
+        menu_update = menu;
+        return;
+    }
     maybe_prev_menu = menu;
-    return;
-  }
-  menu_update = menu;
-  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_menu_to_mode
-/* 04F104 7F01A5D4 2401000B */  li    $at, 11
-/* 04F108 7F01A5D8 10810003 */  beq   $a0, $at, .L7F01A5E8
-/* 04F10C 7F01A5DC 240E0001 */   li    $t6, 1
-/* 04F110 7F01A5E0 24010019 */  li    $at, 25
-/* 04F114 7F01A5E4 14810002 */  bne   $a0, $at, .L7F01A5F0
-.L7F01A5E8:
-/* 04F118 7F01A5E8 3C018003 */   lui   $at, %hi(is_emulating_spectrum)
-/* 04F11C 7F01A5EC AC2EA948 */  sw    $t6, %lo(is_emulating_spectrum)($at)
-.L7F01A5F0:
-/* 04F120 7F01A5F0 10A00004 */  beqz  $a1, .L7F01A604
-/* 04F124 7F01A5F4 3C018003 */   lui   $at, %hi(maybe_prev_menu)
-/* 04F128 7F01A5F8 3C018003 */  lui   $at, %hi(menu_update)
-/* 04F12C 7F01A5FC 03E00008 */  jr    $ra
-/* 04F130 7F01A600 AC24A8C4 */   sw    $a0, %lo(menu_update)($at)
-.L7F01A604:
-/* 04F134 7F01A604 AC24A8C8 */  sw    $a0, %lo(maybe_prev_menu)($at)
-/* 04F138 7F01A608 03E00008 */  jr    $ra
-/* 04F13C 7F01A60C 00000000 */   nop   
-)
-#endif
-
 
 
 MENU get_currentmenu(void)
@@ -27813,27 +27625,31 @@ MENU get_currentmenu(void)
 
 
 #ifdef NONMATCHING
-void menu_init(u32 param_1,u32 param_2)
+void menu_init()
 {
     MENU MVar1;
     
-    if (current_menu == MENU_SWITCH_SCREENS) {
-        if (spectrum_related_flag == FALSE) {
-            if ((is_emulating_spectrum != FALSE) &&
-               (viGetFrameBuf2() == cfb_16)) {
+    if (current_menu == MENU_SWITCH_SCREENS)
+    {
+        if (spectrum_related_flag == FALSE)
+        {
+            if ((is_emulating_spectrum != FALSE) && (viGetFrameBuf2() == cfb_16[0]))
+            {
                 screen_size = SCREEN_SIZE_320x240;
                 is_emulating_spectrum = FALSE;
             }
         }
         else {
-            if (viGetFrameBuf2() == cfb_16[1]) {
+            if (viGetFrameBuf2() == cfb_16[1])
+            {
                 screen_size = SCREEN_SIZE_440x330;
                 spectrum_related_flag = FALSE;
             }
         }
     }
 
-    if (screen_size == SCREEN_SIZE_320x240) {
+    if (screen_size == SCREEN_SIZE_320x240)
+    {
         viSetAspect((f32)flt_80051B48);
         viSetXY(320,240);
         viSetBuf(320,240);
@@ -27842,8 +27658,10 @@ void menu_init(u32 param_1,u32 param_2)
         set_cur_player_viewport_size(0,0);
         viSetViewPosition(0,0);
     }
-    else {
-        if (viGetFrameBuf2() == cfb_16[1]) {
+    else
+    {
+        if (viGetFrameBuf2() == cfb_16[1])
+        {
             set_video_settings2_frameb(ptr_menu_videobuffer);
         }
         viSetAspect((f32)flt_80051B44);
@@ -27854,9 +27672,10 @@ void menu_init(u32 param_1,u32 param_2)
         set_cur_player_viewport_size(0,0);
         viSetViewPosition(0,0);
     }
-    if (((-1 < menu_update) || (-1 < maybe_prev_menu)) &&
-       (current_menu != MENU_SWITCH_SCREENS)) {
-        if (true) {
+    if (((-1 < menu_update) || (-1 < maybe_prev_menu)) && (current_menu != MENU_SWITCH_SCREENS))
+    {
+        if (true)
+        {
             switch(current_menu) {
             case MENU_LEGAL_SCREEN:
                 update_menu00_legalscreen();
@@ -28119,6 +27938,10 @@ void menu_init(u32 param_1,u32 param_2)
 #else
 GLOBAL_ASM(
 .late_rodata
+glabel D_80051B44
+.word 0x3FAAAAAB /*1.3333334;*/
+glabel D_80051B48
+.word 0x3FAAAAAB /*1.3333334;*/
 glabel jpt_menu_update
  .word menu_legal_screen_update
  .word menu_nintendo_logo_update

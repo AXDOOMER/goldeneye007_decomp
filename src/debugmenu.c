@@ -94,23 +94,23 @@ s32 debug_menu_y_pos_offset = 1;
 s32 debug_menu_x_text_pos = 0x18;
 s32 debug_menu_y_text_pos = 0x10;
 
-u32 stdout_display_list[] = {
-    0xE7000000,         0, //gsDPPipeSync(),
-    0xBA001402,         0, //gsDPSetCycleType(G_CYC_1CYCLE),
-    0xBA000602,      0xC0, //gsDPSetTextureLOD
-    0xB900031D,0x500A4240, //gsDPSetRenderMode
-    0xFC30B261,0x5566DB6D, //gsDPSetCombineMode
-    0xBA001301,         0, //gsDPSetTextureLOD
-    0xB9000002,         0, //gsDPSetRenderMode
-    0xFD700000,&image_resource[0], //gsDPSetTextureImage
-    0xF5700000, 0x7000000, //gsDPSetTile
-    0xE6000000,         0, //gsDPLoadSync(),
-    0xF3000000, 0x753F080, //gsDPLoadBlock
-    0xE7000000,         0, //gsDPPipeSync(),
-    0xF5682000,         0, //gsDPSetTile
-    0xF2000000,  0x1FC050, //gsDPSetTileSize
-    0xE6000000,         0, //gsDPLoadSync(),
-    0xB8000000,         0 //gsSPEndDisplayList(),
+Gfx stdout_display_list[] = {
+    gsDPPipeSync(),
+    gsDPSetCycleType(G_CYC_1CYCLE),
+    gsDPSetColorDither(G_CD_DISABLE),
+    0xB900031D,0x500A4240, //gsDPSetRenderMode(G_RM_VISCVG, G_RM_VISCVG2), //(CLR_MEM A_IN CLR_IN 1.0 CLR_MEM A_IN CLR_IN 1.0) FULL OPA AA=0 Z_CMP=0 Z_UPD=0 IM_RD=1 CLR_ON_CVG=0 CVG_X_ALPHA=0 ALPHA_CVG_SEL=0 FORCE_BL=1
+    gsDPSetCombineLERP(PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT,  PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT,  PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT,  PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT),
+    gsDPSetTexturePersp(G_TP_NONE),
+    gsDPSetAlphaCompare( G_AC_NONE),
+    gsDPSetTextureImage(G_IM_FMT_IA,  G_IM_SIZ_16b, 1, &image_resource),
+    gsDPSetTile(G_IM_FMT_IA,  G_IM_SIZ_16b, 0, 0, 7, 0, G_TX_WRAP, 0, 0, G_TX_WRAP, 0, 0),
+    gsDPLoadSync(),
+    gsDPLoadBlock(7, 0, 0, 1343, 128),
+    gsDPPipeSync(),
+    gsDPSetTile(G_IM_FMT_IA, G_IM_SIZ_8b, 16, 0, 0, 0, G_TX_WRAP, 0, 0, G_TX_WRAP, 0, 0),
+    gsDPSetTileSize(0, 0, 0, 508, 80),
+    gsDPLoadSync(),
+    gsSPEndDisplayList(),
 };
 
 u32 stdout_debug_menu_screen_buffer[1400] = {0};
@@ -137,7 +137,9 @@ char *string_formatting[] = {0,
 
 
 
-u64 end_displaylist_command = 0xB800000000000000;
+Gfx end_displaylist_command[] = {
+	gsSPEndDisplayList()
+};
 u64 blank_C0_command =0xC000000000000000;
 u32 stdout_primary_color = 0xFA000000;
 u32 debug_text_color = 0xFFFFFF00;
