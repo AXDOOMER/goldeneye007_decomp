@@ -18,70 +18,12 @@ char *strncpy(char *dst, const char *src, size_t n) {
     return dst;
 }
 
-#ifdef NONMATCHING
-void *string_append_from_obseg_textbank(void *arg0, void *arg1) {
-    void *temp_v0;
-    void *temp_a1;
-
-    // Node 0
-    if (*arg0 != 0)
-    {
-        loop_1:
-        // Node 1
-        if (arg0->unk1 != 0)
-        {
-            goto loop_1;
-        }
-    }
-    // Node 2
-    temp_v0 = (arg0 + 1);
-    temp_a1 = (arg1 + 1);
-    temp_v0->unk-1 = (s8) *arg1;
-    if (*arg1 != 0)
-    {
-        loop_3:
-        // Node 3
-        (temp_v0 + 1)->unk-1 = (s8) *temp_a1;
-        if (*temp_a1 != 0)
-        {
-            goto loop_3;
-        }
-    }
-    // (possible return value: arg0)
+char *strcat(char *dst, const char *src) {
+    unsigned char *ptr = dst;
+    while (*ptr) { ptr++; };
+    while(*ptr++ = *src++);
+    return dst;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel string_append_from_obseg_textbank
-/* 00B3FC 7000A7FC 908E0000 */  lbu   $t6, ($a0)
-/* 00B400 7000A800 00801025 */  move  $v0, $a0
-/* 00B404 7000A804 51C00006 */  beql  $t6, $zero, .L7000A820
-/* 00B408 7000A808 90A30000 */   lbu   $v1, ($a1)
-/* 00B40C 7000A80C 904F0001 */  lbu   $t7, 1($v0)
-.L7000A810:
-/* 00B410 7000A810 24420001 */  addiu $v0, $v0, 1
-/* 00B414 7000A814 55E0FFFE */  bnezl $t7, .L7000A810
-/* 00B418 7000A818 904F0001 */   lbu   $t7, 1($v0)
-/* 00B41C 7000A81C 90A30000 */  lbu   $v1, ($a1)
-.L7000A820:
-/* 00B420 7000A820 24420001 */  addiu $v0, $v0, 1
-/* 00B424 7000A824 24A50001 */  addiu $a1, $a1, 1
-/* 00B428 7000A828 10600006 */  beqz  $v1, .L7000A844
-/* 00B42C 7000A82C A043FFFF */   sb    $v1, -1($v0)
-.L7000A830:
-/* 00B430 7000A830 90A30000 */  lbu   $v1, ($a1)
-/* 00B434 7000A834 24420001 */  addiu $v0, $v0, 1
-/* 00B438 7000A838 24A50001 */  addiu $a1, $a1, 1
-/* 00B43C 7000A83C 1460FFFC */  bnez  $v1, .L7000A830
-/* 00B440 7000A840 A043FFFF */   sb    $v1, -1($v0)
-.L7000A844:
-/* 00B444 7000A844 03E00008 */  jr    $ra
-/* 00B448 7000A848 00801025 */   move  $v0, $a0
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 void something_with_strings_0(void) {
