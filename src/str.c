@@ -48,42 +48,47 @@ glabel textpointer_load_parse_something
 
 
 #ifdef NONMATCHING
-void *something_with_strings(void *arg0, void *arg1, s32 arg2) {
-    void *temp_v1;
-    void *temp_a1;
-    s32 temp_a2;
+// b3a0:    lbu     v0,0(a1)                           b3a0:    lbu     v0,0(a1)
+// b3a4:    addiu   v1,a0,1                          r b3a4:    addiu   a1,a1,1
+// b3a8:    addiu   a1,a1,1                          r b3a8:    addiu   a3,a0,1
+// b3ac:    beqz    v0,0xb3d4 ~>                       b3ac:    beqz    v0,0xb3d4 ~>
+// b3b0:    sb      v0,0(a0)                           b3b0:    sb      v0,0(a0)
+// b3b4:    addiu   a2,a2,-1                           b3b4:    addiu   a2,a2,-1
+// b3b8:    beqzl   a2,0xb3d8 ~>                       b3b8:    beqzl   a2,0xb3d8 ~>
+// b3bc:    move v0,a2                                 b3bc:    addiu a2,a2,-1
+// b3c0:    lbu     v0,0(a1)                           b3c0:    lbu     v0,0(a1)
+// b3c4:    addiu   v1,v1,1                          r b3c4:    addiu   a1,a1,1
+// b3c8:    addiu   a1,a1,1                          r b3c8:    addiu   a3,a3,1
+// b3cc:    bnez    v0,0xb3b4 ~>                       b3cc:    bnez    v0,0xb3b4 ~>
+// b3d0:    sb      v0,-1(v1)                        r b3d0:    sb      v0,-1(a3)
+// b3d4: ~> move    v0,a2                            | b3d4: ~> addiu   a2,a2,-1
+// b3d8:    beqz    a2,0xb3f4 ~>                     i b3d8:    beqz    a2,0xb3ec ~>
+// b3dc:    addiu   a2,a2,-1                           b3dc:    addiu   a2,a2,-1
+// b3e0:    move    v0,a2                            <
+// b3e4:    sb      zero,0(v1)                       r b3e0:    sb      zero,0(a3)
+// b3e8:    addiu   v1,v1,1                          <
+// b3ec:    bnez    a2,0xb3e0 ~>                     i b3e4:    bnez    a2,0xb3dc ~>
+// b3f0:    addiu   a2,a2,-1                         r b3e8:    addiu   a3,a3,1
+void *something_with_strings(char *arg0, unsigned char *arg1, u32 arg2) {
+    char *var1 = arg0;
+    unsigned char c = *arg1++;    
+    *var1++ = c;
+    while (c != 0)
+    {
+        if (--arg2 == 0)
+        {
+            break;
+        }
 
-    // Node 0
-    temp_v1 = (arg0 + 1);
-    temp_a1 = (arg1 + 1);
-    *arg0 = (s8) *arg1;
-    if (*arg1 != 0)
-    {
-        loop_1:
-        // Node 1
-        if ((arg2 + -1) != 0)
-        {
-            // Node 2
-            (temp_v1 + 1)->unk-1 = (s8) *temp_a1;
-            if (*temp_a1 != 0)
-            {
-                goto loop_1;
-            }
-        }
+        c = *arg1++;
+        *var1++ = c;
     }
-    // Node 3
-    temp_a2 = (arg2 + -1);
-    if (temp_a2 != 0)
+
+    while (--arg2 > 0)
     {
-        loop_4:
-        // Node 4
-        *temp_v1 = (u8)0;
-        if ((temp_a2 + -1) != 0)
-        {
-            goto loop_4;
-        }
-    }
-    // (possible return value: arg0)
+        *var1++ = 0;
+    }    
+    return arg0;
 }
 
 #else
