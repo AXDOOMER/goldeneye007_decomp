@@ -179,64 +179,9 @@ int isalpha(unsigned char c) {
             ((c >= 'A') && (c <= 'Z')));
 }
 
-#ifdef NONMATCHING
-s32 strtol_related_2(s32 arg0) {
-    s32 temp_t6;
-
-    // Node 0
-    temp_t6 = (arg0 & 0xff);
-    if ((u32) (temp_t6 ^ 0x20) >= 1U)
-    {
-        // Node 1
-        if ((u32) (temp_t6 ^ 9) >= 1U)
-        {
-            // Node 2
-            if ((u32) (temp_t6 ^ 0xa) >= 1U)
-            {
-                // Node 3
-                if ((u32) (temp_t6 ^ 0xc) >= 1U)
-                {
-                    // Node 4
-                    return;
-                    // (possible return value: ((u32) (temp_t6 ^ 0xb) < 1U))
-                }
-            }
-        }
-    }
-    // (possible return value: ((u32) (temp_t6 ^ 0x20) < 1U))
+int isspace(unsigned char c) {
+    return ((c == ' ') || (c == '\t') || (c == '\n') || (c == '\f') || (c == '\v'));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel strtol_related_2
-/* 00B58C 7000A98C 308E00FF */  andi  $t6, $a0, 0xff
-/* 00B590 7000A990 39C20020 */  xori  $v0, $t6, 0x20
-/* 00B594 7000A994 2C420001 */  sltiu $v0, $v0, 1
-/* 00B598 7000A998 1440000F */  bnez  $v0, .L7000A9D8
-/* 00B59C 7000A99C AFA40000 */   sw    $a0, ($sp)
-/* 00B5A0 7000A9A0 39C20009 */  xori  $v0, $t6, 9
-/* 00B5A4 7000A9A4 2C420001 */  sltiu $v0, $v0, 1
-/* 00B5A8 7000A9A8 1440000B */  bnez  $v0, .L7000A9D8
-/* 00B5AC 7000A9AC 00000000 */   nop   
-/* 00B5B0 7000A9B0 39C2000A */  xori  $v0, $t6, 0xa
-/* 00B5B4 7000A9B4 2C420001 */  sltiu $v0, $v0, 1
-/* 00B5B8 7000A9B8 14400007 */  bnez  $v0, .L7000A9D8
-/* 00B5BC 7000A9BC 00000000 */   nop   
-/* 00B5C0 7000A9C0 39C2000C */  xori  $v0, $t6, 0xc
-/* 00B5C4 7000A9C4 2C420001 */  sltiu $v0, $v0, 1
-/* 00B5C8 7000A9C8 14400003 */  bnez  $v0, .L7000A9D8
-/* 00B5CC 7000A9CC 00000000 */   nop   
-/* 00B5D0 7000A9D0 39C2000B */  xori  $v0, $t6, 0xb
-/* 00B5D4 7000A9D4 2C420001 */  sltiu $v0, $v0, 1
-.L7000A9D8:
-/* 00B5D8 7000A9D8 03E00008 */  jr    $ra
-/* 00B5DC 7000A9DC 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void strtol(void) {
@@ -267,13 +212,13 @@ glabel strtol
 /* 00B624 7000AA24 90E40000 */  lbu   $a0, ($a3)
 .L7000AA28:
 /* 00B628 7000AA28 00E09025 */  move  $s2, $a3
-/* 00B62C 7000AA2C 0C002A63 */  jal   strtol_related_2
+/* 00B62C 7000AA2C 0C002A63 */  jal   isspace
 /* 00B630 7000AA30 AFA70060 */   sw    $a3, 0x60($sp)
 /* 00B634 7000AA34 50400007 */  beql  $v0, $zero, .L7000AA54
 /* 00B638 7000AA38 92420000 */   lbu   $v0, ($s2)
 /* 00B63C 7000AA3C 26520001 */  addiu $s2, $s2, 1
 .L7000AA40:
-/* 00B640 7000AA40 0C002A63 */  jal   strtol_related_2
+/* 00B640 7000AA40 0C002A63 */  jal   isspace
 /* 00B644 7000AA44 92440000 */   lbu   $a0, ($s2)
 /* 00B648 7000AA48 5440FFFD */  bnezl $v0, .L7000AA40
 /* 00B64C 7000AA4C 26520001 */   addiu $s2, $s2, 1
