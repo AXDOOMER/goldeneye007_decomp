@@ -279,7 +279,7 @@ s32 check_token(s32 arg0, s32 arg1)
         phi_s1 = 1;
 loop_2:
         phi_s2 = phi_s2;
-        if (string_related(arg1, *phi_s0, temp_s3) == 0)
+        if (strncmp(arg1, *phi_s0, temp_s3) == 0)
         {
             temp_s2 = phi_s2 + -1;
             phi_s2 = temp_s2;
@@ -326,7 +326,7 @@ glabel check_token
 /* 00B2F4 7000A6F4 02802025 */  move  $a0, $s4
 .L7000A6F8:
 /* 00B2F8 7000A6F8 8E050000 */  lw    $a1, ($s0)
-/* 00B2FC 7000A6FC 0C002A26 */  jal   string_related
+/* 00B2FC 7000A6FC 0C002A26 */  jal   strncmp
 /* 00B300 7000A700 02603025 */   move  $a2, $s3
 /* 00B304 7000A704 54400008 */  bnezl $v0, .L7000A728
 /* 00B308 7000A708 8EB80000 */   lw    $t8, ($s5)

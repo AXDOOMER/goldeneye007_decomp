@@ -91,13 +91,41 @@ glabel strcmp
 
 
 #ifdef NONMATCHING
-void string_related(void) {
-
+//                                                   > b4bc:    move    a3,v0
+// b4bc:    slt     at,v0,v1                           b4c0:    slt     at,v0,v1
+// b4c0:    beqz    at,0xb4d0 ~>                       b4c4:    beqz    at,0xb4d4 ~>
+// b4c4:    nop                                        b4c8:    nop
+// b4c8:    jr      ra                                 b4cc:    jr      ra
+// b4cc:    li      v0,-1                              b4d0:    li      v0,-1
+// b4d0:    jr      ra                                 b4d4:    jr      ra
+// b4d4:    li      v0,1                               b4d8:    li      v0,1
+// b4d8:    bnez    v0,0xb4e8 ~>                     r b4dc:    bnez    a3,0xb4ec ~
+#define true 1
+int strncmp(const char *str1, const char *str2, size_t n) {
+    while (true) {
+        unsigned char c1;
+        unsigned char c2;
+        if (n == 0) {
+            return 0;
+        }
+        n--;
+        if ((c1 = *str1++) != (c2 = *str2)) {
+            if (c1 < c2) {
+                return -1;
+            } else {
+                return 1;
+            }
+        }
+        if (c1 == '\0') {
+            return 0;
+        }
+        str2++;
+    }
 }
 #else
 GLOBAL_ASM(
 .text
-glabel string_related
+glabel strncmp
 .L7000A898:
 /* 00B498 7000A898 54C00004 */  bnezl $a2, .L7000A8AC
 /* 00B49C 7000A89C 90820000 */   lbu   $v0, ($a0)
