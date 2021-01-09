@@ -26,23 +26,13 @@ char *strcat(char *dst, const char *src) {
     return dst;
 }
 
-#ifdef NONMATCHING
-//                                                   > b458:    move    a2,v0
-// b458:    beq     v0,v1,0xb478 ~>                    b45c:    beq     v0,v1,0xb47c ~>
-// b45c:    slt     at,v0,v1                           b460:    slt     at,v0,v1
-// b460:    beqz    at,0xb470 ~>                       b464:    beqz    at,0xb474 ~>
-// b464:    nop                                        b468:    nop
-// b468:    jr      ra                                 b46c:    jr      ra
-// b46c:    li      v0,-1                              b470:    li      v0,-1
-// b470:    jr      ra                                 b474:    jr      ra
-// b474:    li      v0,1                               b478:    li      v0,1
-// b478:    bnez    v0,0xb488 ~>                     r b47c:    bnez    a2,0xb48c ~>
-#define true 1
 int strcmp(const char* str1, const char* str2) {
-    while (true) {
-        unsigned char c1;
-        unsigned char c2;
-        if ((c1 = *str1++) != (c2 = *str2)) {
+    unsigned int var;
+    unsigned char c1;
+    unsigned char c2;
+    while (TRUE) {
+        var = c1 = *(str1++);
+        if (var != (c2 = *str2)) {
             if (c1 < c2) {
                 return -1;
             } else {
@@ -55,61 +45,18 @@ int strcmp(const char* str1, const char* str2) {
         str2++;
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel strcmp
-.L7000A84C:
-/* 00B44C 7000A84C 90820000 */  lbu   $v0, ($a0)
-/* 00B450 7000A850 90A30000 */  lbu   $v1, ($a1)
-/* 00B454 7000A854 24840001 */  addiu $a0, $a0, 1
-/* 00B458 7000A858 10430007 */  beq   $v0, $v1, .L7000A878
-/* 00B45C 7000A85C 0043082A */   slt   $at, $v0, $v1
-/* 00B460 7000A860 10200003 */  beqz  $at, .L7000A870
-/* 00B464 7000A864 00000000 */   nop   
-/* 00B468 7000A868 03E00008 */  jr    $ra
-/* 00B46C 7000A86C 2402FFFF */   li    $v0, -1
 
-.L7000A870:
-/* 00B470 7000A870 03E00008 */  jr    $ra
-/* 00B474 7000A874 24020001 */   li    $v0, 1
-
-.L7000A878:
-/* 00B478 7000A878 14400003 */  bnez  $v0, .L7000A888
-/* 00B47C 7000A87C 00000000 */   nop   
-/* 00B480 7000A880 03E00008 */  jr    $ra
-/* 00B484 7000A884 00001025 */   move  $v0, $zero
-
-.L7000A888:
-/* 00B488 7000A888 1000FFF0 */  b     .L7000A84C
-/* 00B48C 7000A88C 24A50001 */   addiu $a1, $a1, 1
-/* 00B490 7000A890 03E00008 */  jr    $ra
-/* 00B494 7000A894 00000000 */   nop   
-)
-#endif
-
-
-
-#ifdef NONMATCHING
-//                                                   > b4bc:    move    a3,v0
-// b4bc:    slt     at,v0,v1                           b4c0:    slt     at,v0,v1
-// b4c0:    beqz    at,0xb4d0 ~>                       b4c4:    beqz    at,0xb4d4 ~>
-// b4c4:    nop                                        b4c8:    nop
-// b4c8:    jr      ra                                 b4cc:    jr      ra
-// b4cc:    li      v0,-1                              b4d0:    li      v0,-1
-// b4d0:    jr      ra                                 b4d4:    jr      ra
-// b4d4:    li      v0,1                               b4d8:    li      v0,1
-// b4d8:    bnez    v0,0xb4e8 ~>                     r b4dc:    bnez    a3,0xb4ec ~
-#define true 1
 int strncmp(const char *str1, const char *str2, size_t n) {
-    while (true) {
-        unsigned char c1;
-        unsigned char c2;
+    unsigned int var;
+    unsigned char c1;
+    unsigned char c2;
+    while (TRUE) {
         if (n == 0) {
             return 0;
         }
         n--;
-        if ((c1 = *str1++) != (c2 = *str2)) {
+        var = c1 = *str1++;
+        if (var != (c2 = *str2)) {
             if (c1 < c2) {
                 return -1;
             } else {
@@ -122,45 +69,6 @@ int strncmp(const char *str1, const char *str2, size_t n) {
         str2++;
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel strncmp
-.L7000A898:
-/* 00B498 7000A898 54C00004 */  bnezl $a2, .L7000A8AC
-/* 00B49C 7000A89C 90820000 */   lbu   $v0, ($a0)
-/* 00B4A0 7000A8A0 03E00008 */  jr    $ra
-/* 00B4A4 7000A8A4 00001025 */   move  $v0, $zero
-
-/* 00B4A8 7000A8A8 90820000 */  lbu   $v0, ($a0)
-.L7000A8AC:
-/* 00B4AC 7000A8AC 90A30000 */  lbu   $v1, ($a1)
-/* 00B4B0 7000A8B0 24C6FFFF */  addiu $a2, $a2, -1
-/* 00B4B4 7000A8B4 24840001 */  addiu $a0, $a0, 1
-/* 00B4B8 7000A8B8 10430007 */  beq   $v0, $v1, .L7000A8D8
-/* 00B4BC 7000A8BC 0043082A */   slt   $at, $v0, $v1
-/* 00B4C0 7000A8C0 10200003 */  beqz  $at, .L7000A8D0
-/* 00B4C4 7000A8C4 00000000 */   nop   
-/* 00B4C8 7000A8C8 03E00008 */  jr    $ra
-/* 00B4CC 7000A8CC 2402FFFF */   li    $v0, -1
-
-.L7000A8D0:
-/* 00B4D0 7000A8D0 03E00008 */  jr    $ra
-/* 00B4D4 7000A8D4 24020001 */   li    $v0, 1
-
-.L7000A8D8:
-/* 00B4D8 7000A8D8 14400003 */  bnez  $v0, .L7000A8E8
-/* 00B4DC 7000A8DC 00000000 */   nop   
-/* 00B4E0 7000A8E0 03E00008 */  jr    $ra
-/* 00B4E4 7000A8E4 00001025 */   move  $v0, $zero
-
-.L7000A8E8:
-/* 00B4E8 7000A8E8 1000FFEB */  b     .L7000A898
-/* 00B4EC 7000A8EC 24A50001 */   addiu $a1, $a1, 1
-/* 00B4F0 7000A8F0 03E00008 */  jr    $ra
-/* 00B4F4 7000A8F4 00000000 */   nop   
-)
-#endif
 
 unsigned char toupper(unsigned char c) {
     if ((c >= 'a') && (c <= 'z')) {
