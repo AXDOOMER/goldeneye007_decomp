@@ -162,52 +162,13 @@ glabel strncmp
 )
 #endif
 
-
-
-#ifdef NONMATCHING
-s32 strtol_related(s32 arg0) {
-    s32 temp_t6;
-
-    // Node 0
-    temp_t6 = (arg0 & 0xff);
-    if (temp_t6 >= 0x61)
-    {
-        // Node 1
-        if (temp_t6 < 0x7b)
-        {
-            // Node 2
-            return;
-            // (possible return value: temp_t6)
-        }
+u8 toupper(u8 c) {
+    if ((c >= 'a') && (c <= 'z')) {
+        return ('A' + c - 'a');
+    } else {
+        return c;
     }
-    // (possible return value: temp_t6)
 }
-#else
-GLOBAL_ASM(
-.text
-glabel strtol_related
-/* 00B4F8 7000A8F8 308E00FF */  andi  $t6, $a0, 0xff
-/* 00B4FC 7000A8FC AFA40000 */  sw    $a0, ($sp)
-/* 00B500 7000A900 29C10061 */  slti  $at, $t6, 0x61
-/* 00B504 7000A904 14200007 */  bnez  $at, .L7000A924
-/* 00B508 7000A908 01C02025 */   move  $a0, $t6
-/* 00B50C 7000A90C 29C1007B */  slti  $at, $t6, 0x7b
-/* 00B510 7000A910 10200004 */  beqz  $at, .L7000A924
-/* 00B514 7000A914 25C2FFE0 */   addiu $v0, $t6, -0x20
-/* 00B518 7000A918 304F00FF */  andi  $t7, $v0, 0xff
-/* 00B51C 7000A91C 03E00008 */  jr    $ra
-/* 00B520 7000A920 01E01025 */   move  $v0, $t7
-
-.L7000A924:
-/* 00B524 7000A924 00801025 */  move  $v0, $a0
-/* 00B528 7000A928 03E00008 */  jr    $ra
-/* 00B52C 7000A92C 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 s32 strtol_related_0(s32 arg0) {
@@ -414,7 +375,7 @@ glabel strtol
 /* 00B6A0 7000AAA0 24010030 */  li    $at, 48
 /* 00B6A4 7000AAA4 15E10007 */  bne   $t7, $at, .L7000AAC4
 /* 00B6A8 7000AAA8 00000000 */   nop   
-/* 00B6AC 7000AAAC 0C002A3E */  jal   strtol_related
+/* 00B6AC 7000AAAC 0C002A3E */  jal   toupper
 /* 00B6B0 7000AAB0 92440001 */   lbu   $a0, 1($s2)
 /* 00B6B4 7000AAB4 24010058 */  li    $at, 88
 /* 00B6B8 7000AAB8 14410002 */  bne   $v0, $at, .L7000AAC4
@@ -426,7 +387,7 @@ glabel strtol
 /* 00B6CC 7000AACC 24010030 */  li    $at, 48
 /* 00B6D0 7000AAD0 1441000B */  bne   $v0, $at, .L7000AB00
 /* 00B6D4 7000AAD4 2413000A */   li    $s3, 10
-/* 00B6D8 7000AAD8 0C002A3E */  jal   strtol_related
+/* 00B6D8 7000AAD8 0C002A3E */  jal   toupper
 /* 00B6DC 7000AADC 92440001 */   lbu   $a0, 1($s2)
 /* 00B6E0 7000AAE0 24010058 */  li    $at, 88
 /* 00B6E4 7000AAE4 14410004 */  bne   $v0, $at, .L7000AAF8
@@ -460,7 +421,7 @@ glabel strtol
 /* 00B744 7000AB44 320400FF */   andi  $a0, $s0, 0xff
 /* 00B748 7000AB48 50400026 */  beql  $v0, $zero, .L7000ABE4
 /* 00B74C 7000AB4C 8FAA0044 */   lw    $t2, 0x44($sp)
-/* 00B750 7000AB50 0C002A3E */  jal   strtol_related
+/* 00B750 7000AB50 0C002A3E */  jal   toupper
 /* 00B754 7000AB54 320400FF */   andi  $a0, $s0, 0xff
 /* 00B758 7000AB58 2450FFC9 */  addiu $s0, $v0, -0x37
 /* 00B75C 7000AB5C 321900FF */  andi  $t9, $s0, 0xff
