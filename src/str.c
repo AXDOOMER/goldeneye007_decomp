@@ -6,86 +6,17 @@ char *strcpy(char *dst, const char *src) {
     return dst;
 }
 
-#ifdef NONMATCHING
-// b3a0:    lbu     v0,0(a1)                           b3a0:    lbu     v0,0(a1)
-// b3a4:    addiu   v1,a0,1                          r b3a4:    addiu   a1,a1,1
-// b3a8:    addiu   a1,a1,1                          r b3a8:    addiu   a3,a0,1
-// b3ac:    beqz    v0,0xb3d4 ~>                       b3ac:    beqz    v0,0xb3d4 ~>
-// b3b0:    sb      v0,0(a0)                           b3b0:    sb      v0,0(a0)
-// b3b4:    addiu   a2,a2,-1                           b3b4:    addiu   a2,a2,-1
-// b3b8:    beqzl   a2,0xb3d8 ~>                       b3b8:    beqzl   a2,0xb3d8 ~>
-// b3bc:    move v0,a2                                 b3bc:    addiu a2,a2,-1
-// b3c0:    lbu     v0,0(a1)                           b3c0:    lbu     v0,0(a1)
-// b3c4:    addiu   v1,v1,1                          r b3c4:    addiu   a1,a1,1
-// b3c8:    addiu   a1,a1,1                          r b3c8:    addiu   a3,a3,1
-// b3cc:    bnez    v0,0xb3b4 ~>                       b3cc:    bnez    v0,0xb3b4 ~>
-// b3d0:    sb      v0,-1(v1)                        r b3d0:    sb      v0,-1(a3)
-// b3d4: ~> move    v0,a2                            | b3d4: ~> addiu   a2,a2,-1
-// b3d8:    beqz    a2,0xb3f4 ~>                     i b3d8:    beqz    a2,0xb3ec ~>
-// b3dc:    addiu   a2,a2,-1                           b3dc:    addiu   a2,a2,-1
-// b3e0:    move    v0,a2                            <
-// b3e4:    sb      zero,0(v1)                       r b3e0:    sb      zero,0(a3)
-// b3e8:    addiu   v1,v1,1                          <
-// b3ec:    bnez    a2,0xb3e0 ~>                     i b3e4:    bnez    a2,0xb3dc ~>
-// b3f0:    addiu   a2,a2,-1                         r b3e8:    addiu   a3,a3,1
-void *something_with_strings(char *arg0, unsigned char *arg1, u32 arg2) {
-    char *var1 = arg0;
-    unsigned char c = *arg1++;    
-    *var1++ = c;
-    while (c != 0)
-    {
-        if (--arg2 == 0)
-        {
+char *strncpy(char *dst, const char *src, size_t n) {
+    unsigned char *ptr = dst;
+    while((*ptr++ = *src++)) { 
+        if (--n == 0) 
             break;
-        }
-
-        c = *arg1++;
-        *var1++ = c;
     }
-
-    while (--arg2 > 0)
-    {
-        *var1++ = 0;
-    }    
-    return arg0;
+    while(n--) {
+        (*ptr++) = '\0';
+    }
+    return dst;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel something_with_strings
-/* 00B3A0 7000A7A0 90A20000 */  lbu   $v0, ($a1)
-/* 00B3A4 7000A7A4 24830001 */  addiu $v1, $a0, 1
-/* 00B3A8 7000A7A8 24A50001 */  addiu $a1, $a1, 1
-/* 00B3AC 7000A7AC 10400009 */  beqz  $v0, .L7000A7D4
-/* 00B3B0 7000A7B0 A0820000 */   sb    $v0, ($a0)
-.L7000A7B4:
-/* 00B3B4 7000A7B4 24C6FFFF */  addiu $a2, $a2, -1
-/* 00B3B8 7000A7B8 50C00007 */  beql  $a2, $zero, .L7000A7D8
-/* 00B3BC 7000A7BC 00C01025 */   move  $v0, $a2
-/* 00B3C0 7000A7C0 90A20000 */  lbu   $v0, ($a1)
-/* 00B3C4 7000A7C4 24630001 */  addiu $v1, $v1, 1
-/* 00B3C8 7000A7C8 24A50001 */  addiu $a1, $a1, 1
-/* 00B3CC 7000A7CC 1440FFF9 */  bnez  $v0, .L7000A7B4
-/* 00B3D0 7000A7D0 A062FFFF */   sb    $v0, -1($v1)
-.L7000A7D4:
-/* 00B3D4 7000A7D4 00C01025 */  move  $v0, $a2
-.L7000A7D8:
-/* 00B3D8 7000A7D8 10C00006 */  beqz  $a2, .L7000A7F4
-/* 00B3DC 7000A7DC 24C6FFFF */   addiu $a2, $a2, -1
-.L7000A7E0:
-/* 00B3E0 7000A7E0 00C01025 */  move  $v0, $a2
-/* 00B3E4 7000A7E4 A0600000 */  sb    $zero, ($v1)
-/* 00B3E8 7000A7E8 24630001 */  addiu $v1, $v1, 1
-/* 00B3EC 7000A7EC 14C0FFFC */  bnez  $a2, .L7000A7E0
-/* 00B3F0 7000A7F0 24C6FFFF */   addiu $a2, $a2, -1
-.L7000A7F4:
-/* 00B3F4 7000A7F4 03E00008 */  jr    $ra
-/* 00B3F8 7000A7F8 00801025 */   move  $v0, $a0
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 void *string_append_from_obseg_textbank(void *arg0, void *arg1) {

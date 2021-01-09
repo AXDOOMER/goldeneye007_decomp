@@ -30205,7 +30205,7 @@ glabel display_string_in_lower_left_corner
 /* 0BEF5C 7F08A42C 030FC021 */  addu  $t8, $t8, $t7
 /* 0BEF60 7F08A430 03192021 */  addu  $a0, $t8, $t9
 /* 0BEF64 7F08A434 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0BEF68 7F08A438 0C0029E8 */  jal   something_with_strings
+/* 0BEF68 7F08A438 0C0029E8 */  jal   strncpy
 /* 0BEF6C 7F08A43C 24060064 */   li    $a2, 100
 /* 0BEF70 7F08A440 3C078003 */  lui   $a3, %hi(display_statusbar)
 /* 0BEF74 7F08A444 24E7689C */  addiu $a3, %lo(display_statusbar) # addiu $a3, $a3, 0x689c
@@ -30229,7 +30229,7 @@ glabel display_string_in_lower_left_corner
 /* 0BEFB8 7F08A488 AFA20020 */  sw    $v0, 0x20($sp)
 /* 0BEFBC 7F08A48C 014B2021 */  addu  $a0, $t2, $t3
 /* 0BEFC0 7F08A490 8FA50028 */  lw    $a1, 0x28($sp)
-/* 0BEFC4 7F08A494 0C0029E8 */  jal   something_with_strings
+/* 0BEFC4 7F08A494 0C0029E8 */  jal   strncpy
 /* 0BEFC8 7F08A498 24060064 */   li    $a2, 100
 /* 0BEFCC 7F08A49C 8FAC0020 */  lw    $t4, 0x20($sp)
 /* 0BEFD0 7F08A4A0 3C0F8008 */  lui   $t7, %hi(pPlayer) 
@@ -30292,7 +30292,7 @@ glabel display_string_in_lower_left_corner
 /* 0BF6AC 7F08AB3C 03192021 */  addu  $a0, $t8, $t9
 /* 0BF6B0 7F08AB40 AFA40018 */  sw    $a0, 0x18($sp)
 /* 0BF6B4 7F08AB44 AFAF0024 */  sw    $t7, 0x24($sp)
-/* 0BF6B8 7F08AB48 0C0029EC */  jal   something_with_strings
+/* 0BF6B8 7F08AB48 0C0029EC */  jal   strncpy
 /* 0BF6BC 7F08AB4C 24060064 */   li    $a2, 100
 /* 0BF6C0 7F08AB50 8FA70024 */  lw    $a3, 0x24($sp)
 /* 0BF6C4 7F08AB54 8FA40018 */  lw    $a0, 0x18($sp)
@@ -30326,7 +30326,7 @@ glabel display_string_in_lower_left_corner
 /* 0BF730 7F08ABC0 01AE2021 */  addu  $a0, $t5, $t6
 /* 0BF734 7F08ABC4 8FA50028 */  lw    $a1, 0x28($sp)
 /* 0BF738 7F08ABC8 24060064 */  li    $a2, 100
-/* 0BF73C 7F08ABCC 0C0029EC */  jal   something_with_strings
+/* 0BF73C 7F08ABCC 0C0029EC */  jal   strncpy
 /* 0BF740 7F08ABD0 AFA20020 */   sw    $v0, 0x20($sp)
 /* 0BF744 7F08ABD4 8FA70020 */  lw    $a3, 0x20($sp)
 /* 0BF748 7F08ABD8 3C018008 */  lui   $at, %hi(dword_CODE_bss_80079A28+0x64) #dword_CODE_bss_80079A28
@@ -30967,7 +30967,7 @@ glabel display_string_at_top_of_screen
 /* 0BF4E8 7F08A9B8 030FC023 */  subu  $t8, $t8, $t7
 /* 0BF4EC 7F08A9BC 03192021 */  addu  $a0, $t8, $t9
 /* 0BF4F0 7F08A9C0 AFA4001C */  sw    $a0, 0x1c($sp)
-/* 0BF4F4 7F08A9C4 0C0029E8 */  jal   something_with_strings
+/* 0BF4F4 7F08A9C4 0C0029E8 */  jal   strncpy
 /* 0BF4F8 7F08A9C8 24060096 */   li    $a2, 150
 /* 0BF4FC 7F08A9CC 3C078003 */  lui   $a3, %hi(display_upper_text_window)
 /* 0BF500 7F08A9D0 24E768AC */  addiu $a3, %lo(display_upper_text_window) # addiu $a3, $a3, 0x68ac
