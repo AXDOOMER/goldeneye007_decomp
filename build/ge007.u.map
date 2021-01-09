@@ -65,7 +65,7 @@ Discarded input sections
  .options       0x0000000000000000       0x20 build/u/src/ramrom.o
  .reginfo       0x0000000000000000       0x18 build/u/src/ramrom.o
  .gptab.bss     0x0000000000000000       0x20 build/u/src/ramrom.o
- .mdebug        0x0000000000000000      0x968 build/u/src/ramrom.o
+ .mdebug        0x0000000000000000      0x964 build/u/src/ramrom.o
  .options       0x0000000000000000       0x20 build/u/src/boss.o
  .reginfo       0x0000000000000000       0x18 build/u/src/boss.o
  .options       0x0000000000000000       0x20 build/u/src/music.o
@@ -84,6 +84,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/u/src/str.o
  .options       0x0000000000000000       0x20 build/u/src/sprintf.o
  .reginfo       0x0000000000000000       0x18 build/u/src/sprintf.o
+ .mdebug        0x0000000000000000      0x344 build/u/src/sprintf.o
  .options       0x0000000000000000       0x20 build/u/src/pi.o
  .reginfo       0x0000000000000000       0x18 build/u/src/pi.o
  .gptab.bss     0x0000000000000000       0x20 build/u/src/pi.o
@@ -1107,7 +1108,7 @@ Discarded input sections
  .mdebug        0x0000000000000000      0x39c build/u/src/game/initunk_000B60.o
  .options       0x0000000000000000       0x20 build/u/src/game/setguscale.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/setguscale.o
- .mdebug        0x0000000000000000      0x450 build/u/src/game/setguscale.o
+ .mdebug        0x0000000000000000      0x44c build/u/src/game/setguscale.o
  .options       0x0000000000000000       0x20 build/u/src/game/initnull_000BC0.o
  .reginfo       0x0000000000000000       0x18 build/u/src/game/initnull_000BC0.o
  .mdebug        0x0000000000000000      0x28c build/u/src/game/initnull_000BC0.o
@@ -1893,15 +1894,15 @@ Linker script and memory map
                 0x000000007000a6a0                check_token
  build/u/src/str.o(.text)
  .text          0x000000007000a770      0x500 build/u/src/str.o
-                0x000000007000a770                textpointer_load_parse_something
-                0x000000007000a7a0                something_with_strings
-                0x000000007000a7fc                string_append_from_obseg_textbank
-                0x000000007000a84c                something_with_strings_0
-                0x000000007000a898                string_related
-                0x000000007000a8f8                strtol_related
-                0x000000007000a930                strtol_related_0
-                0x000000007000a950                strtol_related_1
-                0x000000007000a98c                strtol_related_2
+                0x000000007000a770                strcpy
+                0x000000007000a7a0                strncpy
+                0x000000007000a7fc                strcat
+                0x000000007000a84c                strcmp
+                0x000000007000a898                strncmp
+                0x000000007000a8f8                toupper
+                0x000000007000a930                isdigit
+                0x000000007000a950                isalpha
+                0x000000007000a98c                isspace
                 0x000000007000a9e0                strtol
  build/u/src/sprintf.o(.text)
  .text          0x000000007000ac70       0x80 build/u/src/sprintf.o

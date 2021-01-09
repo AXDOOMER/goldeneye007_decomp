@@ -84,6 +84,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/j/src/str.o
  .options       0x0000000000000000       0x20 build/j/src/sprintf.o
  .reginfo       0x0000000000000000       0x18 build/j/src/sprintf.o
+ .mdebug        0x0000000000000000      0x344 build/j/src/sprintf.o
  .options       0x0000000000000000       0x20 build/j/src/pi.o
  .reginfo       0x0000000000000000       0x18 build/j/src/pi.o
  .gptab.bss     0x0000000000000000       0x20 build/j/src/pi.o
@@ -1893,15 +1894,15 @@ Linker script and memory map
                 0x000000007000a6b0                check_token
  build/j/src/str.o(.text)
  .text          0x000000007000a780      0x500 build/j/src/str.o
-                0x000000007000a780                textpointer_load_parse_something
-                0x000000007000a7b0                something_with_strings
-                0x000000007000a80c                string_append_from_obseg_textbank
-                0x000000007000a85c                something_with_strings_0
-                0x000000007000a8a8                string_related
-                0x000000007000a908                strtol_related
-                0x000000007000a940                strtol_related_0
-                0x000000007000a960                strtol_related_1
-                0x000000007000a99c                strtol_related_2
+                0x000000007000a780                strcpy
+                0x000000007000a7b0                strncpy
+                0x000000007000a80c                strcat
+                0x000000007000a85c                strcmp
+                0x000000007000a8a8                strncmp
+                0x000000007000a908                toupper
+                0x000000007000a940                isdigit
+                0x000000007000a960                isalpha
+                0x000000007000a99c                isspace
                 0x000000007000a9f0                strtol
  build/j/src/sprintf.o(.text)
  .text          0x000000007000ac80       0x80 build/j/src/sprintf.o
@@ -3499,10 +3500,10 @@ Linker script and memory map
                 0x000000007f035784                parse_handle_actionblocks
                 0x000000007f03a540                sub_GAME_7F03A240
                 0x000000007f03a704                set_stateflag_0x04_for_posdata
-                0x000000007f03a714                unset_stateflag_0x04_for_posdata
+                0x000000007f03a714                propHide
                 0x000000007f03a724                get_ptr_obj_pos_list_current_entry
                 0x000000007f03a730                remove_last_obj_pos_data_entry
-                0x000000007f03a784                set_last_obj_pos_data
+                0x000000007f03a784                propFree
                 0x000000007f03a7a4                set_current_objposdata_plus_0x28
                 0x000000007f03a7f0                sub_GAME_7F03A4F0
                 0x000000007f03a838                sub_GAME_7F03A538
