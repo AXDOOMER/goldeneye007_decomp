@@ -142,7 +142,7 @@ glabel check_string_something
 
 
 void strtok(s32 arg0) {
-    textpointer_load_parse_something(&boot_token_from_indy, arg0);
+    strcpy(&boot_token_from_indy, arg0);
     check_string_something(&boot_token_from_indy);
 }
 

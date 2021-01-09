@@ -26936,11 +26936,11 @@ void generate_language_specific_text_for_weapon(char *finalstring,ITEM_IDS itemt
         numplayers = getPlayerCount();
         if ((int)numplayers < 3) {
             textfiletext = get_textptr_for_textID(0xa400);
-            textpointer_load_parse_something(finalstring,textfiletext);
+            strcpy(finalstring,textfiletext);
         }
     }
     else {
-        textpointer_load_parse_something(finalstring,"");
+        strcpy(finalstring,"");
         numplayers = getPlayerCount();
         if (2 < (int)numplayers) {
             morethan2players = true;
@@ -27192,7 +27192,7 @@ glabel generate_language_specific_text_for_weapon
 /* 08492C 7F04FDFC 11C0000B */  beqz  $t6, .L7F04FE2C
 /* 084930 7F04FE00 AFA00024 */   sw    $zero, 0x24($sp)
 /* 084934 7F04FE04 3C058005 */  lui   $a1, %hi(D_80052A3C)
-/* 084938 7F04FE08 0C0029DC */  jal   textpointer_load_parse_something
+/* 084938 7F04FE08 0C0029DC */  jal   strcpy
 /* 08493C 7F04FE0C 24A52A3C */   addiu $a1, %lo(D_80052A3C) # addiu $a1, $a1, 0x2a3c
 /* 084940 7F04FE10 0FC26919 */  jal   getPlayerCount
 /* 084944 7F04FE14 00000000 */   nop   
@@ -27210,7 +27210,7 @@ glabel generate_language_specific_text_for_weapon
 /* 084970 7F04FE40 0FC30776 */  jal   get_textptr_for_textID
 /* 084974 7F04FE44 3404A400 */   li    $a0, 41984
 /* 084978 7F04FE48 02002025 */  move  $a0, $s0
-/* 08497C 7F04FE4C 0C0029DC */  jal   textpointer_load_parse_something
+/* 08497C 7F04FE4C 0C0029DC */  jal   strcpy
 /* 084980 7F04FE50 00402825 */   move  $a1, $v0
 .L7F04FE54:
 /* 084984 7F04FE54 8FB8002C */  lw    $t8, 0x2c($sp)

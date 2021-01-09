@@ -1,51 +1,10 @@
 #include "ultra64.h"
 
-
-
-
-
-#ifdef NONMATCHING
-void *textpointer_load_parse_something(void *arg0, void *arg1) {
-    void *temp_a1;
-
-    // Node 0
-    temp_a1 = (arg1 + 1);
-    *arg0 = (s8) *arg1;
-    if (*arg1 != 0)
-    {
-        loop_1:
-        // Node 1
-        ((arg0 + 1) + 1)->unk-1 = (s8) *temp_a1;
-        if (*temp_a1 != 0)
-        {
-            goto loop_1;
-        }
-    }
-    // (possible return value: arg0)
+char *strcpy(char *dst, const char *src) {
+    unsigned char *ptr = dst;
+    while(*ptr++ = *src++);
+    return dst;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel textpointer_load_parse_something
-/* 00B370 7000A770 90A20000 */  lbu   $v0, ($a1)
-/* 00B374 7000A774 24830001 */  addiu $v1, $a0, 1
-/* 00B378 7000A778 24A50001 */  addiu $a1, $a1, 1
-/* 00B37C 7000A77C 10400006 */  beqz  $v0, .L7000A798
-/* 00B380 7000A780 A0820000 */   sb    $v0, ($a0)
-.L7000A784:
-/* 00B384 7000A784 90A20000 */  lbu   $v0, ($a1)
-/* 00B388 7000A788 24630001 */  addiu $v1, $v1, 1
-/* 00B38C 7000A78C 24A50001 */  addiu $a1, $a1, 1
-/* 00B390 7000A790 1440FFFC */  bnez  $v0, .L7000A784
-/* 00B394 7000A794 A062FFFF */   sb    $v0, -1($v1)
-.L7000A798:
-/* 00B398 7000A798 03E00008 */  jr    $ra
-/* 00B39C 7000A79C 00801025 */   move  $v0, $a0
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 // b3a0:    lbu     v0,0(a1)                           b3a0:    lbu     v0,0(a1)

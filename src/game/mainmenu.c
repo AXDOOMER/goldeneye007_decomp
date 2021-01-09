@@ -5664,7 +5664,7 @@ loop_7:
                 temp_ret_3 = get_ptr_difficulty_name(spEC);
                 if (temp_ret_3 != 0)
                 {
-                    textpointer_load_parse_something(&spD0, temp_ret_3);
+                    strcpy(&spD0, temp_ret_3);
                     string_append_from_obseg_textbank(&spD0, &asc_D_8004F488);
                     spF4 = 0;
                     spF8 = 0;
@@ -5680,7 +5680,7 @@ loop_7:
                 }
                 if (spEC != 3)
                 {
-                    textpointer_load_parse_something(&spBC, get_textptr_for_textID(TEXT(LTITLE, 0x1a));
+                    strcpy(&spBC, get_textptr_for_textID(TEXT(LTITLE, 0x1a));
                     phi_s0_2 = &mission_folder_setup_entries;
                     phi_s1_2 = 0;
                     phi_s2_2 = -1;
@@ -6259,7 +6259,7 @@ glabel constructor_menu05_fileselect
 /* 0415B4 7F00CA84 00000000 */   nop   
 /* 0415B8 7F00CA88 10400038 */  beqz  $v0, .L7F00CB6C
 /* 0415BC 7F00CA8C 27A400D0 */   addiu $a0, $sp, 0xd0
-/* 0415C0 7F00CA90 0C0029DC */  jal   textpointer_load_parse_something
+/* 0415C0 7F00CA90 0C0029DC */  jal   strcpy
 /* 0415C4 7F00CA94 00402825 */   move  $a1, $v0
 /* 0415C8 7F00CA98 3C058005 */  lui   $a1, %hi(asc_D_8004F488)
 /* 0415CC 7F00CA9C 24A5F488 */  addiu $a1, %lo(asc_D_8004F488) # addiu $a1, $a1, -0xb78
@@ -6324,7 +6324,7 @@ glabel constructor_menu05_fileselect
 /* 0416B0 7F00CB80 0FC30776 */  jal   get_textptr_for_textID
 /* 0416B4 7F00CB84 34049C1A */   li    $a0, 39962
 /* 0416B8 7F00CB88 02A02025 */  move  $a0, $s5
-/* 0416BC 7F00CB8C 0C0029DC */  jal   textpointer_load_parse_something
+/* 0416BC 7F00CB8C 0C0029DC */  jal   strcpy
 /* 0416C0 7F00CB90 00402825 */   move  $a1, $v0
 /* 0416C4 7F00CB94 3C0D8003 */  lui   $t5, %hi(mission_folder_setup_entries+0x4) 
 /* 0416C8 7F00CB98 95ADABE8 */  lhu   $t5, %lo(mission_folder_setup_entries+0x4)($t5)
@@ -9131,11 +9131,11 @@ loop_2:
         temp_v0 = (pull_and_display_text_for_folder_a0(phi_s3) * 0x1c) + &mission_folder_setup_entries;
         if (temp_v0->unk6 != 0)
         {
-            textpointer_load_parse_something(&sp90, get_textptr_for_textID(temp_v0->unk6));
+            strcpy(&sp90, get_textptr_for_textID(temp_v0->unk6));
         }
         else
         {
-            textpointer_load_parse_something(&sp90, get_textptr_for_textID(temp_v0->unk4));
+            strcpy(&sp90, get_textptr_for_textID(temp_v0->unk4));
         }
         if (j_text_trigger == 0)
         {
@@ -9257,7 +9257,7 @@ glabel constructor_menu07_missionsel
 /* 04307C 7F00E54C 0FC30776 */  jal   get_textptr_for_textID
 /* 043080 7F00E550 00602025 */   move  $a0, $v1
 /* 043084 7F00E554 02402025 */  move  $a0, $s2
-/* 043088 7F00E558 0C0029DC */  jal   textpointer_load_parse_something
+/* 043088 7F00E558 0C0029DC */  jal   strcpy
 /* 04308C 7F00E55C 00402825 */   move  $a1, $v0
 /* 043090 7F00E560 10000006 */  b     .L7F00E57C
 /* 043094 7F00E564 00000000 */   nop   
@@ -9265,7 +9265,7 @@ glabel constructor_menu07_missionsel
 /* 043098 7F00E568 0FC30776 */  jal   get_textptr_for_textID
 /* 04309C 7F00E56C 94440004 */   lhu   $a0, 4($v0)
 /* 0430A0 7F00E570 02402025 */  move  $a0, $s2
-/* 0430A4 7F00E574 0C0029DC */  jal   textpointer_load_parse_something
+/* 0430A4 7F00E574 0C0029DC */  jal   strcpy
 /* 0430A8 7F00E578 00402825 */   move  $a1, $v0
 .L7F00E57C:
 /* 0430AC 7F00E57C 3C0F8005 */  lui   $t7, %hi(j_text_trigger) 
@@ -9743,7 +9743,7 @@ void print_current_solo_briefing_stage_name(s32 arg0, s32 arg1)
 
     if (selected_difficulty >= DIFFICULTY_AGENT)
     {
-        textpointer_load_parse_something(arg1, get_ptr_difficulty_name(selected_difficulty, selected_difficulty));
+        strcpy(arg1, get_ptr_difficulty_name(selected_difficulty, selected_difficulty));
         string_append_from_obseg_textbank(arg1, get_textptr_for_textID(TEXT(LTITLE, 0x20)));
         sp54 = 0x37;
         sp50 = 0x57;
@@ -9754,7 +9754,7 @@ void print_current_solo_briefing_stage_name(s32 arg0, s32 arg1)
     sp4C = temp_ret;
     if (temp_ret >= 0)
     {
-        textpointer_load_parse_something(arg1, get_textptr_for_textID(TEXT(LTITLE, 0x21)));
+        strcpy(arg1, get_textptr_for_textID(TEXT(LTITLE, 0x21)));
         temp_v1 = (sp4C * 0x1c) + &mission_folder_setup_entries;
         sp40 = temp_v1;
         string_append_from_obseg_textbank(arg1, *temp_v1);
@@ -9766,7 +9766,7 @@ void print_current_solo_briefing_stage_name(s32 arg0, s32 arg1)
         sp44 = viGetX();
         arg0 = write_text_at_abs_coord(arg0, &sp54, &sp50, arg1, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, viGetY(), 0, 0);
     }
-    textpointer_load_parse_something(arg1, get_textptr_for_textID(TEXT(LTITLE, 0x22)));
+    strcpy(arg1, get_textptr_for_textID(TEXT(LTITLE, 0x22)));
     string_append_from_obseg_textbank(arg1, *(&mission_folder_setup_entries + (briefingpage * 0x1c)));
     string_append_from_obseg_textbank(arg1, &asc_D_8004F4AC);
     string_append_from_obseg_textbank(arg1, get_textptr_for_textID(*(&mission_folder_setup_entries + (briefingpage * 0x1c))));
@@ -9795,7 +9795,7 @@ glabel print_current_solo_briefing_stage_name
 /* 04360C 7F00EADC 0FC030E1 */  jal   get_ptr_difficulty_name
 /* 043610 7F00EAE0 00C02025 */   move  $a0, $a2
 /* 043614 7F00EAE4 02002025 */  move  $a0, $s0
-/* 043618 7F00EAE8 0C0029DC */  jal   textpointer_load_parse_something
+/* 043618 7F00EAE8 0C0029DC */  jal   strcpy
 /* 04361C 7F00EAEC 00402825 */   move  $a1, $v0
 /* 043620 7F00EAF0 0FC30776 */  jal   get_textptr_for_textID
 /* 043624 7F00EAF4 34049C20 */   li    $a0, 39968
@@ -9837,7 +9837,7 @@ glabel print_current_solo_briefing_stage_name
 /* 0436B0 7F00EB80 0FC30776 */  jal   get_textptr_for_textID
 /* 0436B4 7F00EB84 34049C21 */   li    $a0, 39969
 /* 0436B8 7F00EB88 02002025 */  move  $a0, $s0
-/* 0436BC 7F00EB8C 0C0029DC */  jal   textpointer_load_parse_something
+/* 0436BC 7F00EB8C 0C0029DC */  jal   strcpy
 /* 0436C0 7F00EB90 00402825 */   move  $a1, $v0
 /* 0436C4 7F00EB94 8FAA004C */  lw    $t2, 0x4c($sp)
 /* 0436C8 7F00EB98 3C0C8003 */  lui   $t4, %hi(mission_folder_setup_entries) 
@@ -9894,7 +9894,7 @@ glabel print_current_solo_briefing_stage_name
 /* 043790 7F00EC60 0FC30776 */  jal   get_textptr_for_textID
 /* 043794 7F00EC64 34049C22 */   li    $a0, 39970
 /* 043798 7F00EC68 02002025 */  move  $a0, $s0
-/* 04379C 7F00EC6C 0C0029DC */  jal   textpointer_load_parse_something
+/* 04379C 7F00EC6C 0C0029DC */  jal   strcpy
 /* 0437A0 7F00EC70 00402825 */   move  $a1, $v0
 /* 0437A4 7F00EC74 3C0A8003 */  lui   $t2, %hi(briefingpage) 
 /* 0437A8 7F00EC78 8D4AA8F8 */  lw    $t2, %lo(briefingpage)($t2)
@@ -21150,7 +21150,7 @@ u32 * print_objectives_and_status_to_menu(u32 *param_1,int param_2,u8 *param_3,i
       }
       else {
         pbVar2 = get_textptr_for_textID((u32)uVar1);
-        textpointer_load_parse_something((char *)param_3,aA_);
+        strcpy((char *)param_3,aA_);
         *param_3 = *param_3 + (char)iStack8;
         iStack12 = 0;
         iStack16 = 0;
@@ -21255,7 +21255,7 @@ glabel print_objectives_and_status_to_menu
 /* 04A5D8 7F015AA8 3C058005 */  lui   $a1, %hi(aA_)
 /* 04A5DC 7F015AAC 00408825 */  move  $s1, $v0
 /* 04A5E0 7F015AB0 24A50C50 */  addiu $a1, %lo(aA_) # addiu $a1, $a1, 0xc50
-/* 04A5E4 7F015AB4 0C0029DC */  jal   textpointer_load_parse_something
+/* 04A5E4 7F015AB4 0C0029DC */  jal   strcpy
 /* 04A5E8 7F015AB8 02602025 */   move  $a0, $s3
 /* 04A5EC 7F015ABC 92790000 */  lbu   $t9, ($s3)
 /* 04A5F0 7F015AC0 8FAA0098 */  lw    $t2, 0x98($sp)
@@ -23367,7 +23367,7 @@ glabel constructor_menu0D_missioncomplete
 /* 04BE9C 7F01736C 0FC026D4 */  jal   getplayerfavoredweapon
 /* 04BEA0 7F017370 00002825 */   move  $a1, $zero
 /* 04BEA4 7F017374 27A400A8 */  addiu $a0, $sp, 0xa8
-/* 04BEA8 7F017378 0C0029DC */  jal   textpointer_load_parse_something
+/* 04BEA8 7F017378 0C0029DC */  jal   strcpy
 /* 04BEAC 7F01737C 00402825 */   move  $a1, $v0
 /* 04BEB0 7F017380 3C048007 */  lui   $a0, %hi(array_favweapon)
 /* 04BEB4 7F017384 248496F0 */  addiu $a0, %lo(array_favweapon) # addiu $a0, $a0, -0x6910
