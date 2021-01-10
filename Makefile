@@ -10,12 +10,12 @@ VERSION := US
 # If COMPARE is 1, check the output sha1sum when building 'all'
 COMPARE := 1
 
-ifeq ($(shell type mips-linux-gnu-ld >/dev/null 2>/dev/null; echo $$?), 0)
-  TOOLCHAIN := mips-linux-gnu-
+ifeq ($(shell type mips64-elf-ld >/dev/null 2>/dev/null; echo $$?), 0)
+  TOOLCHAIN := mips64-elf-
 else ifeq ($(shell type mips64-linux-gnu-ld >/dev/null 2>/dev/null; echo $$?), 0)
   TOOLCHAIN := mips64-linux-gnu-
 else
-  TOOLCHAIN := mips64-elf-
+  TOOLCHAIN := mips-linux-gnu-
 endif
 
 QEMU_IRIX := $(shell which qemu-irix 2>/dev/null)
