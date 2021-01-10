@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/gamefile.h"
+#include "bondconstants.h"
 
 s32 sub_GAME_7F01D6C0(void) {
   return save_7000C6FC();
@@ -188,160 +189,64 @@ glabel sub_GAME_7F01D840
 #endif
 
 
-
-#ifdef NONMATCHING
-void get_foldernum_of_eeprom(void) {
-
+u32 get_foldernum_of_eeprom(struct save_data *eeprom)
+{
+  return eeprom->completion_bitflags & 7;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_foldernum_of_eeprom
-/* 0523F8 7F01D8C8 90820008 */  lbu   $v0, 8($a0)
-/* 0523FC 7F01D8CC 304E0007 */  andi  $t6, $v0, 7
-/* 052400 7F01D8D0 03E00008 */  jr    $ra
-/* 052404 7F01D8D4 01C01025 */   move  $v0, $t6
-)
-#endif
 
-
-
-#ifdef NONMATCHING
-void set_eeprom_to_folder_num(void) {
-
+void set_eeprom_to_folder_num(struct save_data *eeprom, u32 folder) {
+    eeprom->completion_bitflags = eeprom->completion_bitflags & 0xFFF8;
+  
+    eeprom->completion_bitflags = eeprom->completion_bitflags | folder & 7;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_eeprom_to_folder_num
-/* 052408 7F01D8D8 908E0008 */  lbu   $t6, 8($a0)
-/* 05240C 7F01D8DC 30B90007 */  andi  $t9, $a1, 7
-/* 052410 7F01D8E0 31D8FFF8 */  andi  $t8, $t6, 0xfff8
-/* 052414 7F01D8E4 A0980008 */  sb    $t8, 8($a0)
-/* 052418 7F01D8E8 03194025 */  or    $t0, $t8, $t9
-/* 05241C 7F01D8EC 03E00008 */  jr    $ra
-/* 052420 7F01D8F0 A0880008 */   sb    $t0, 8($a0)
-)
-#endif
 
 
-
-#ifdef NONMATCHING
-void set_eeprom_flag_0x18(void) {
-
+u32 set_eeprom_flag_0x18(struct save_data *folder)
+{
+  return (folder->completion_bitflags & 0x18) >> 3;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_eeprom_flag_0x18
-/* 052424 7F01D8F4 90820008 */  lbu   $v0, 8($a0)
-/* 052428 7F01D8F8 304E0018 */  andi  $t6, $v0, 0x18
-/* 05242C 7F01D8FC 03E00008 */  jr    $ra
-/* 052430 7F01D900 000E10C3 */   sra   $v0, $t6, 3
-)
-#endif
 
+void reset_eeprom_flag_0x18(struct save_data *folder, s32 arg1) {
+    folder->completion_bitflags = folder->completion_bitflags & 0xFFE7;
 
-
-#ifdef NONMATCHING
-void reset_eeprom_flag_0x18(void) {
-
+    folder->completion_bitflags = (folder->completion_bitflags | ((arg1 * 8) & 0x18));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel reset_eeprom_flag_0x18
-/* 052434 7F01D904 908E0008 */  lbu   $t6, 8($a0)
-/* 052438 7F01D908 0005C8C0 */  sll   $t9, $a1, 3
-/* 05243C 7F01D90C 33280018 */  andi  $t0, $t9, 0x18
-/* 052440 7F01D910 31D8FFE7 */  andi  $t8, $t6, 0xffe7
-/* 052444 7F01D914 A0980008 */  sb    $t8, 8($a0)
-/* 052448 7F01D918 03084825 */  or    $t1, $t8, $t0
-/* 05244C 7F01D91C 03E00008 */  jr    $ra
-/* 052450 7F01D920 A0890008 */   sb    $t1, 8($a0)
-)
-#endif
 
 
-
-#ifdef NONMATCHING
-void get_selected_bond(void) {
-
+u32 get_selected_bond(struct save_data *folder)
+{
+  return (folder->completion_bitflags & 0x60) >> 5;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_selected_bond
-/* 052454 7F01D924 90820008 */  lbu   $v0, 8($a0)
-/* 052458 7F01D928 304E0060 */  andi  $t6, $v0, 0x60
-/* 05245C 7F01D92C 03E00008 */  jr    $ra
-/* 052460 7F01D930 000E1143 */   sra   $v0, $t6, 5
-)
-#endif
 
 
 
-#ifdef NONMATCHING
-void set_selected_bond(void) {
 
+void set_selected_bond(struct save_data *folder, s32 arg1) {
+    folder->completion_bitflags = folder->completion_bitflags & 0xFF9F;
+
+    folder->completion_bitflags = (folder->completion_bitflags | ((arg1 << 5) & 0x60));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_selected_bond
-/* 052464 7F01D934 908E0008 */  lbu   $t6, 8($a0)
-/* 052468 7F01D938 0005C940 */  sll   $t9, $a1, 5
-/* 05246C 7F01D93C 33280060 */  andi  $t0, $t9, 0x60
-/* 052470 7F01D940 31D8FF9F */  andi  $t8, $t6, 0xff9f
-/* 052474 7F01D944 A0980008 */  sb    $t8, 8($a0)
-/* 052478 7F01D948 03084825 */  or    $t1, $t8, $t0
-/* 05247C 7F01D94C 03E00008 */  jr    $ra
-/* 052480 7F01D950 A0890008 */   sb    $t1, 8($a0)
-)
-#endif
 
 
 
-#ifdef NONMATCHING
-void check_if_eeprom_flag_set_0x80(void) {
 
+
+u32 check_if_eeprom_flag_set_0x80(struct save_data *folder)
+{
+  return ((folder->completion_bitflags & 0x80) != 0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_eeprom_flag_set_0x80
-/* 052484 7F01D954 90820008 */  lbu   $v0, 8($a0)
-/* 052488 7F01D958 304E0080 */  andi  $t6, $v0, 0x80
-/* 05248C 7F01D95C 03E00008 */  jr    $ra
-/* 052490 7F01D960 000E102B */   sltu  $v0, $zero, $t6
-)
-#endif
 
 
-
-#ifdef NONMATCHING
-void toggle_eeprom_flag_set_0x80(void) {
-
+void toggle_eeprom_flag_set_0x80(struct save_data *folder,u32 mode)
+{
+  if (mode != 0) {
+    folder->completion_bitflags = folder->completion_bitflags | 0x80;
+    return;
+  }
+  folder->completion_bitflags = folder->completion_bitflags & 0xff7f;
+  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel toggle_eeprom_flag_set_0x80
-/* 052494 7F01D964 50A00006 */  beql  $a1, $zero, .L7F01D980
-/* 052498 7F01D968 90980008 */   lbu   $t8, 8($a0)
-/* 05249C 7F01D96C 908E0008 */  lbu   $t6, 8($a0)
-/* 0524A0 7F01D970 35CF0080 */  ori   $t7, $t6, 0x80
-/* 0524A4 7F01D974 03E00008 */  jr    $ra
-/* 0524A8 7F01D978 A08F0008 */   sb    $t7, 8($a0)
 
-/* 0524AC 7F01D97C 90980008 */  lbu   $t8, 8($a0)
-.L7F01D980:
-/* 0524B0 7F01D980 3319FF7F */  andi  $t9, $t8, 0xff7f
-/* 0524B4 7F01D984 A0990008 */  sb    $t9, 8($a0)
-/* 0524B8 7F01D988 03E00008 */  jr    $ra
-/* 0524BC 7F01D98C 00000000 */   nop   
-)
-#endif
 
 
 
@@ -569,88 +474,40 @@ glabel sub_GAME_7F01DAE4
 
 
 
-#ifdef NONMATCHING
-void get_eeprom_stage_completed_for_difficulty(void) {
+s32 get_eeprom_stage_completed_for_difficulty(struct save_data *folder, s32 levelid, DIFFICULTY difficulty) {
+    
+    if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007)) {
+        return get_eeprom_stage_complete_time_for_difficulty(folder, levelid, difficulty) != 0;
+    }
 
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_eeprom_stage_completed_for_difficulty
-/* 052790 7F01DC60 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 052794 7F01DC64 04A0000D */  bltz  $a1, .L7F01DC9C
-/* 052798 7F01DC68 AFBF0014 */   sw    $ra, 0x14($sp)
-/* 05279C 7F01DC6C 28A10014 */  slti  $at, $a1, 0x14
-/* 0527A0 7F01DC70 5020000B */  beql  $at, $zero, .L7F01DCA0
-/* 0527A4 7F01DC74 00001025 */   move  $v0, $zero
-/* 0527A8 7F01DC78 04C00008 */  bltz  $a2, .L7F01DC9C
-/* 0527AC 7F01DC7C 28C10004 */   slti  $at, $a2, 4
-/* 0527B0 7F01DC80 50200007 */  beql  $at, $zero, .L7F01DCA0
-/* 0527B4 7F01DC84 00001025 */   move  $v0, $zero
-/* 0527B8 7F01DC88 0FC07664 */  jal   get_eeprom_stage_complete_time_for_difficulty
-/* 0527BC 7F01DC8C 00000000 */   nop   
-/* 0527C0 7F01DC90 0002702B */  sltu  $t6, $zero, $v0
-/* 0527C4 7F01DC94 10000002 */  b     .L7F01DCA0
-/* 0527C8 7F01DC98 01C01025 */   move  $v0, $t6
-.L7F01DC9C:
-/* 0527CC 7F01DC9C 00001025 */  move  $v0, $zero
-.L7F01DCA0:
-/* 0527D0 7F01DCA0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0527D4 7F01DCA4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0527D8 7F01DCA8 03E00008 */  jr    $ra
-/* 0527DC 7F01DCAC 00000000 */   nop   
-)
-#endif
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F01DCB0(void) {
+void sub_GAME_7F01DCB0(struct save_data *folder, s32 levelid, DIFFICULTY difficulty, s32 arg4) {
+    s32 temp_v0;
 
+    if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007)) {
+        
+        temp_v0 = get_eeprom_stage_complete_time_for_difficulty(folder, levelid, difficulty);
+        
+        if ((temp_v0 == 0) || (arg4 < temp_v0)) {
+            sub_GAME_7F01DAE4(folder, levelid, difficulty, arg4);
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01DCB0
-/* 0527E0 7F01DCB0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0527E4 7F01DCB4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0527E8 7F01DCB8 04A00015 */  bltz  $a1, .L7F01DD10
-/* 0527EC 7F01DCBC AFA40018 */   sw    $a0, 0x18($sp)
-/* 0527F0 7F01DCC0 28A10014 */  slti  $at, $a1, 0x14
-/* 0527F4 7F01DCC4 50200013 */  beql  $at, $zero, .L7F01DD14
-/* 0527F8 7F01DCC8 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0527FC 7F01DCCC 04C00010 */  bltz  $a2, .L7F01DD10
-/* 052800 7F01DCD0 28C10004 */   slti  $at, $a2, 4
-/* 052804 7F01DCD4 5020000F */  beql  $at, $zero, .L7F01DD14
-/* 052808 7F01DCD8 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 05280C 7F01DCDC AFA5001C */  sw    $a1, 0x1c($sp)
-/* 052810 7F01DCE0 AFA60020 */  sw    $a2, 0x20($sp)
-/* 052814 7F01DCE4 0FC07664 */  jal   get_eeprom_stage_complete_time_for_difficulty
-/* 052818 7F01DCE8 AFA70024 */   sw    $a3, 0x24($sp)
-/* 05281C 7F01DCEC 8FA5001C */  lw    $a1, 0x1c($sp)
-/* 052820 7F01DCF0 8FA60020 */  lw    $a2, 0x20($sp)
-/* 052824 7F01DCF4 10400004 */  beqz  $v0, .L7F01DD08
-/* 052828 7F01DCF8 8FA70024 */   lw    $a3, 0x24($sp)
-/* 05282C 7F01DCFC 00E2082A */  slt   $at, $a3, $v0
-/* 052830 7F01DD00 50200004 */  beql  $at, $zero, .L7F01DD14
-/* 052834 7F01DD04 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F01DD08:
-/* 052838 7F01DD08 0FC076B9 */  jal   sub_GAME_7F01DAE4
-/* 05283C 7F01DD0C 8FA40018 */   lw    $a0, 0x18($sp)
-.L7F01DD10:
-/* 052840 7F01DD10 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F01DD14:
-/* 052844 7F01DD14 27BD0018 */  addiu $sp, $sp, 0x18
-/* 052848 7F01DD18 03E00008 */  jr    $ra
-/* 05284C 7F01DD1C 00000000 */   nop   
-)
-#endif
 
 
 
 #ifdef NONMATCHING
-void check_if_cheat_unlocked(void) {
+s32 check_if_cheat_unlocked(struct save_data *arg0, s32 arg1) {
 
+    if ((arg1 >= 0) && (arg1 < 0x14)) {
+        
+        return ((1 << arg1) & (arg0->unlocked_cheats_1 | (arg0->unlocked_cheats_3 << 0x18) | (arg0->unlocked_cheats_3 << 0x10) | (arg0->unlocked_cheats_2 << 8))) != 0;
+    }
+    return 0;
 }
 #else
 GLOBAL_ASM(
@@ -1105,34 +962,18 @@ glabel sub_GAME_7F01DF90
 
 
 
-#ifdef NONMATCHING
-void check_if_valid_folder_num(void) {
-
+s32 check_if_valid_folder_num(s32 folder)
+{
+    if ((folder >= 0) && (folder < 4))
+    {
+        return 1;
+    }
+    if (folder == 100)
+    {
+        return 1;
+    }
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_valid_folder_num
-/* 052DBC 7F01E28C 04800005 */  bltz  $a0, .L7F01E2A4
-/* 052DC0 7F01E290 28810004 */   slti  $at, $a0, 4
-/* 052DC4 7F01E294 50200004 */  beql  $at, $zero, .L7F01E2A8
-/* 052DC8 7F01E298 24010064 */   li    $at, 100
-/* 052DCC 7F01E29C 03E00008 */  jr    $ra
-/* 052DD0 7F01E2A0 24020001 */   li    $v0, 1
-
-.L7F01E2A4:
-/* 052DD4 7F01E2A4 24010064 */  li    $at, 100
-.L7F01E2A8:
-/* 052DD8 7F01E2A8 14810003 */  bne   $a0, $at, .L7F01E2B8
-/* 052DDC 7F01E2AC 00001025 */   move  $v0, $zero
-/* 052DE0 7F01E2B0 03E00008 */  jr    $ra
-/* 052DE4 7F01E2B4 24020001 */   li    $v0, 1
-
-.L7F01E2B8:
-/* 052DE8 7F01E2B8 03E00008 */  jr    $ra
-/* 052DEC 7F01E2BC 00000000 */   nop   
-)
-#endif
 
 
 
@@ -1799,30 +1640,10 @@ glabel check_aztec_completed_in_folder_secret_00
 )
 #endif
 
-
-
-#ifdef NONMATCHING
-void check_egypt_completed_in_folder_00(void) {
-
+s32 check_egypt_completed_in_folder_00(int foldernum)
+{
+    return isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_AZTEC, DIFFICULTY_00) == 3;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_egypt_completed_in_folder_00
-/* 0535D8 7F01EAA8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0535DC 7F01EAAC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0535E0 7F01EAB0 24050013 */  li    $a1, 19
-/* 0535E4 7F01EAB4 0FC078B0 */  jal   isStageUnlockedAtDifficulty
-/* 0535E8 7F01EAB8 24060002 */   li    $a2, 2
-/* 0535EC 7F01EABC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0535F0 7F01EAC0 384E0003 */  xori  $t6, $v0, 3
-/* 0535F4 7F01EAC4 2DC20001 */  sltiu $v0, $t6, 1
-/* 0535F8 7F01EAC8 03E00008 */  jr    $ra
-/* 0535FC 7F01EACC 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
-
-
 
 u32 check_cradle_completed_any_folder(void) {
     u32 completed;
@@ -2187,7 +2008,7 @@ glabel update_eeprom_to_current_solo_watch_settings
 /* 053A44 7F01EF14 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 053A48 7F01EF18 AFB00018 */  sw    $s0, 0x18($sp)
 /* 053A4C 7F01EF1C AFA40020 */  sw    $a0, 0x20($sp)
-/* 053A50 7F01EF20 0FC2A4D6 */  jal   sub_GAME_7F0A9358
+/* 053A50 7F01EF20 0FC2A4D6 */  jal   get_mTrack2Vol
 /* 053A54 7F01EF24 00008025 */   move  $s0, $zero
 /* 053A58 7F01EF28 8FAF0020 */  lw    $t7, 0x20($sp)
 /* 053A5C 7F01EF2C 000271C3 */  sra   $t6, $v0, 7
@@ -2289,7 +2110,7 @@ glabel get_screen_ratio_settings_for_mpgame_from_folder
 /* 053B84 7F01F054 00027843 */  sra   $t7, $v0, 1
 /* 053B88 7F01F058 01CF2025 */  or    $a0, $t6, $t7
 /* 053B8C 7F01F05C 3098FFFF */  andi  $t8, $a0, 0xffff
-/* 053B90 7F01F060 0FC2A4D9 */  jal   sub_GAME_7F0A9364
+/* 053B90 7F01F060 0FC2A4D9 */  jal   set_mTrack2Vol
 /* 053B94 7F01F064 03002025 */   move  $a0, $t8
 /* 053B98 7F01F068 8FB00024 */  lw    $s0, 0x24($sp)
 /* 053B9C 7F01F06C 9202000B */  lbu   $v0, 0xb($s0)
@@ -2300,7 +2121,7 @@ glabel get_screen_ratio_settings_for_mpgame_from_folder
 /* 053BB0 7F01F080 0FC2A468 */  jal   sub_GAME_7F0A91A0
 /* 053BB4 7F01F084 01202025 */   move  $a0, $t1
 /* 053BB8 7F01F088 960A000C */  lhu   $t2, 0xc($s0)
-/* 053BBC 7F01F08C 0FC26919 */  jal   get_num_players
+/* 053BBC 7F01F08C 0FC26919 */  jal   getPlayerCount
 /* 053BC0 7F01F090 A7AA0020 */   sh    $t2, 0x20($sp)
 /* 053BC4 7F01F094 24010001 */  li    $at, 1
 /* 053BC8 7F01F098 14410007 */  bne   $v0, $at, .L7F01F0B8

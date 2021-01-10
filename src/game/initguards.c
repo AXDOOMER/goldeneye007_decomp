@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/chr.h"
+#include "game/chrobjdata.h"
 
 void init_guards(void) {
     animation_rate = 1.0f;
@@ -70,8 +71,19 @@ glabel alloc_init_GUARDdata_entries
 
 
 #ifdef NONMATCHING
-void set_new_rand_head_bodies(void) {
+//
+void set_new_rand_head_bodies(void)
+{
+    s32 i;
+  
+    for (i=0; c_item_entries[i].header; i++)
+    {
+        c_item_entries[i].header->offset_obj_table = 0;
+    }
 
+    current_random_male_head = get_random_value() % num_male_heads;
+    current_random_female_head = get_random_value() % num_female_heads;
+    current_random_body = get_random_value() % num_bodies;
 }
 #else
 GLOBAL_ASM(

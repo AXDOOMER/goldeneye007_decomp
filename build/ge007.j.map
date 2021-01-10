@@ -36,10 +36,18 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/j/src/tlb_manage.o
  .options       0x0000000000000000       0x20 build/j/src/tlb_random.o
  .reginfo       0x0000000000000000       0x18 build/j/src/tlb_random.o
- .options       0x0000000000000000       0x20 build/j/src/tlb_resolve.o
  .reginfo       0x0000000000000000       0x18 build/j/src/tlb_resolve.o
- .options       0x0000000000000000       0x20 build/j/src/tlb_hardwire.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/tlb_resolve.o
+ .pdr           0x0000000000000000        0x0 build/j/src/tlb_resolve.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/tlb_resolve.o
  .reginfo       0x0000000000000000       0x18 build/j/src/tlb_hardwire.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 build/j/src/tlb_hardwire.o
+ .pdr           0x0000000000000000        0x0 build/j/src/tlb_hardwire.o
+ .gnu.attributes
+                0x0000000000000000       0x10 build/j/src/tlb_hardwire.o
  .options       0x0000000000000000       0x20 build/j/src/audi.o
  .reginfo       0x0000000000000000       0x18 build/j/src/audi.o
  .options       0x0000000000000000       0x20 build/j/src/speed_graph.o
@@ -57,7 +65,7 @@ Discarded input sections
  .options       0x0000000000000000       0x20 build/j/src/ramrom.o
  .reginfo       0x0000000000000000       0x18 build/j/src/ramrom.o
  .gptab.bss     0x0000000000000000       0x20 build/j/src/ramrom.o
- .mdebug        0x0000000000000000      0x968 build/j/src/ramrom.o
+ .mdebug        0x0000000000000000      0x964 build/j/src/ramrom.o
  .options       0x0000000000000000       0x20 build/j/src/boss.o
  .reginfo       0x0000000000000000       0x18 build/j/src/boss.o
  .options       0x0000000000000000       0x20 build/j/src/music.o
@@ -76,6 +84,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/j/src/str.o
  .options       0x0000000000000000       0x20 build/j/src/sprintf.o
  .reginfo       0x0000000000000000       0x18 build/j/src/sprintf.o
+ .mdebug        0x0000000000000000      0x344 build/j/src/sprintf.o
  .options       0x0000000000000000       0x20 build/j/src/pi.o
  .reginfo       0x0000000000000000       0x18 build/j/src/pi.o
  .gptab.bss     0x0000000000000000       0x20 build/j/src/pi.o
@@ -84,7 +93,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/j/src/vi.o
  .gptab.data    0x0000000000000000       0x20 build/j/src/vi.o
  .gptab.bss     0x0000000000000000       0x20 build/j/src/vi.o
- .mdebug        0x0000000000000000      0x4f4 build/j/src/vi.o
+ .mdebug        0x0000000000000000      0x4f0 build/j/src/vi.o
  .options       0x0000000000000000       0x20 build/j/src/debugmenu.o
  .reginfo       0x0000000000000000       0x18 build/j/src/debugmenu.o
  .options       0x0000000000000000       0x20 build/j/src/joy.o
@@ -147,12 +156,9 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/j/src/libultra/createthread.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/j/src/libultra/createthread.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/startthread.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/startthread.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/startthread.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/startthread.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/startthread.o
+ .mdebug        0x0000000000000000      0x3ec build/j/src/libultra/startthread.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/createmesgqueue.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/j/src/libultra/createmesgqueue.o
@@ -171,12 +177,9 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/j/src/libultra/stopthread.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/j/src/libultra/stopthread.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/setthreadpri.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/setthreadpri.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/setthreadpri.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/setthreadpri.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/setthreadpri.o
+ .mdebug        0x0000000000000000      0x3bc build/j/src/libultra/setthreadpri.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/getcount.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/j/src/libultra/getcount.o
@@ -195,18 +198,13 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/j/src/libultra/vitbl.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/j/src/libultra/vitbl.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/seteventmesg.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/seteventmesg.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/seteventmesg.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/seteventmesg.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/seteventmesg.o
+ .gptab.bss     0x0000000000000000       0x18 build/j/src/libultra/seteventmesg.o
+ .mdebug        0x0000000000000000      0x310 build/j/src/libultra/seteventmesg.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/visetevent.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/visetevent.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/visetevent.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/visetevent.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/visetevent.o
+ .mdebug        0x0000000000000000      0x308 build/j/src/libultra/visetevent.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/setintmask.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/j/src/libultra/setintmask.o
@@ -225,12 +223,9 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/j/src/libultra/sendmesg.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/j/src/libultra/sendmesg.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/visetmode.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/visetmode.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/visetmode.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/visetmode.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/visetmode.o
+ .mdebug        0x0000000000000000      0x304 build/j/src/libultra/visetmode.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/visetxscale.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/j/src/libultra/visetxscale.o
@@ -249,18 +244,12 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/j/src/libultra/virepeatline.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/j/src/libultra/virepeatline.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/viblack.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/viblack.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/viblack.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/viblack.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/viblack.o
+ .mdebug        0x0000000000000000      0x2f8 build/j/src/libultra/viblack.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/sptaskyielded.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/sptaskyielded.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/sptaskyielded.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/sptaskyielded.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/sptaskyielded.o
+ .mdebug        0x0000000000000000      0x2c4 build/j/src/libultra/sptaskyielded.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/dpctr.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/j/src/libultra/dpctr.o
@@ -279,12 +268,9 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/j/src/libultra/vigetnextframebuf.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/j/src/libultra/vigetnextframebuf.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/viswapbuf.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/viswapbuf.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/viswapbuf.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/viswapbuf.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/viswapbuf.o
+ .mdebug        0x0000000000000000      0x304 build/j/src/libultra/viswapbuf.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/dpsetstat.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/j/src/libultra/dpsetstat.o
@@ -303,30 +289,21 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/j/src/libultra/dpsetnextbuf.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/j/src/libultra/dpsetnextbuf.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/sptaskyield.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/sptaskyield.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/sptaskyield.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/sptaskyield.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/sptaskyield.o
+ .mdebug        0x0000000000000000      0x2bc build/j/src/libultra/sptaskyield.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/gettlbhi.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/j/src/libultra/gettlbhi.o
  .pdr           0x0000000000000000        0x0 build/j/src/libultra/gettlbhi.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/j/src/libultra/gettlbhi.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/virtualtophysical.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/virtualtophysical.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/virtualtophysical.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/virtualtophysical.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/virtualtophysical.o
+ .mdebug        0x0000000000000000      0x2c8 build/j/src/libultra/virtualtophysical.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/aisetfreq.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/aisetfreq.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/aisetfreq.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/aisetfreq.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/aisetfreq.o
+ .mdebug        0x0000000000000000      0x1fc build/j/src/libultra/aisetfreq.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/sl.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/j/src/libultra/sl.o
@@ -351,18 +328,13 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/j/src/libultra/ll.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/j/src/libultra/ll.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/aisetnextbuf.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/aisetnextbuf.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/aisetnextbuf.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/aisetnextbuf.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/aisetnextbuf.o
+ .gptab.data    0x0000000000000000       0x18 build/j/src/libultra/aisetnextbuf.o
+ .mdebug        0x0000000000000000      0x3d8 build/j/src/libultra/aisetnextbuf.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/aigetlen.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/aigetlen.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/aigetlen.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/aigetlen.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/aigetlen.o
+ .mdebug        0x0000000000000000      0x1c4 build/j/src/libultra/aigetlen.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/synthesizer.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/j/src/libultra/synthesizer.o
@@ -435,12 +407,9 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/j/src/libultra/writebackdcache.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/j/src/libultra/writebackdcache.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/settimer.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/settimer.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/settimer.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/settimer.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/settimer.o
+ .mdebug        0x0000000000000000      0x30c build/j/src/libultra/settimer.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/heapinit.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/j/src/libultra/heapinit.o
@@ -663,12 +632,9 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/j/src/libultra/sirawdma.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/j/src/libultra/sirawdma.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/crc.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/crc.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/crc.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/crc.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/crc.o
+ .mdebug        0x0000000000000000      0x2ac build/j/src/libultra/crc.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/contramwrite.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/j/src/libultra/contramwrite.o
@@ -813,12 +779,9 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/j/src/libultra/kdebugserver.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/j/src/libultra/kdebugserver.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/getthreadpri.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/getthreadpri.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/getthreadpri.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/getthreadpri.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/getthreadpri.o
+ .mdebug        0x0000000000000000      0x2bc build/j/src/libultra/getthreadpri.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/vi.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/j/src/libultra/vi.o
@@ -885,12 +848,9 @@ Discarded input sections
  .pdr           0x0000000000000000        0x0 build/j/src/libultra/syndelete.o
  .gnu.attributes
                 0x0000000000000000       0x10 build/j/src/libultra/syndelete.o
+ .options       0x0000000000000000       0x20 build/j/src/libultra/ai.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/ai.o
- .MIPS.abiflags
-                0x0000000000000000       0x18 build/j/src/libultra/ai.o
- .pdr           0x0000000000000000        0x0 build/j/src/libultra/ai.o
- .gnu.attributes
-                0x0000000000000000       0x10 build/j/src/libultra/ai.o
+ .mdebug        0x0000000000000000      0x1d0 build/j/src/libultra/ai.o
  .reginfo       0x0000000000000000       0x18 build/j/src/libultra/drvrNew.o
  .MIPS.abiflags
                 0x0000000000000000       0x18 build/j/src/libultra/drvrNew.o
@@ -1125,6 +1085,8 @@ Discarded input sections
  .mdebug        0x0000000000000000      0x218 build/j/src/c_data_filler.o
  .options       0x0000000000000000       0x20 build/j/src/inflate/inflate.o
  .reginfo       0x0000000000000000       0x18 build/j/src/inflate/inflate.o
+ .gptab.data    0x0000000000000000       0x40 build/j/src/inflate/inflate.o
+ .mdebug        0x0000000000000000      0xa98 build/j/src/inflate/inflate.o
  .options       0x0000000000000000       0x20 build/j/src/game/initgamedata.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/initgamedata.o
  .mdebug        0x0000000000000000      0x7ac build/j/src/game/initgamedata.o
@@ -1146,7 +1108,7 @@ Discarded input sections
  .mdebug        0x0000000000000000      0x39c build/j/src/game/initunk_000B60.o
  .options       0x0000000000000000       0x20 build/j/src/game/setguscale.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/setguscale.o
- .mdebug        0x0000000000000000      0x450 build/j/src/game/setguscale.o
+ .mdebug        0x0000000000000000      0x44c build/j/src/game/setguscale.o
  .options       0x0000000000000000       0x20 build/j/src/game/initnull_000BC0.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/initnull_000BC0.o
  .mdebug        0x0000000000000000      0x28c build/j/src/game/initnull_000BC0.o
@@ -1196,6 +1158,7 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/j/src/game/initunk_0072B0.o
  .options       0x0000000000000000       0x20 build/j/src/game/initmttex.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/initmttex.o
+ .mdebug        0x0000000000000000      0x474 build/j/src/game/initmttex.o
  .options       0x0000000000000000       0x20 build/j/src/game/initunk_0073B0.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/initunk_0073B0.o
  .options       0x0000000000000000       0x20 build/j/src/game/initunk_007460.o
@@ -1233,6 +1196,8 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/j/src/game/unk_01BAE0.o
  .options       0x0000000000000000       0x20 build/j/src/game/blood_animation.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/blood_animation.o
+ .gptab.data    0x0000000000000000       0x20 build/j/src/game/blood_animation.o
+ .mdebug        0x0000000000000000      0xda0 build/j/src/game/blood_animation.o
  .options       0x0000000000000000       0x20 build/j/src/game/blood_decrypt.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/blood_decrypt.o
  .options       0x0000000000000000       0x20 build/j/src/game/gamefile.o
@@ -1388,6 +1353,9 @@ Discarded input sections
  .reginfo       0x0000000000000000       0x18 build/j/src/game/unk_0D1AC0.o
  .options       0x0000000000000000       0x20 build/j/src/game/viewport.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/viewport.o
+ .gptab.data    0x0000000000000000       0x18 build/j/src/game/viewport.o
+ .gptab.bss     0x0000000000000000       0x18 build/j/src/game/viewport.o
+ .mdebug        0x0000000000000000      0x730 build/j/src/game/viewport.o
  .options       0x0000000000000000       0x20 build/j/src/game/music_0D2720.o
  .reginfo       0x0000000000000000       0x18 build/j/src/game/music_0D2720.o
  .options       0x0000000000000000       0x20 build/j/src/game/spectrum.o
@@ -1495,7 +1463,7 @@ Discarded input sections
  .options       0x0000000000000000       0x20 build/j/src/cfb.o
  .reginfo       0x0000000000000000       0x18 build/j/src/cfb.o
  .gptab.bss     0x0000000000000000       0x18 build/j/src/cfb.o
- .mdebug        0x0000000000000000      0x230 build/j/src/cfb.o
+ .mdebug        0x0000000000000000      0x20c build/j/src/cfb.o
 
 Memory Configuration
 
@@ -4621,6 +4589,15 @@ LOAD build/j/src/cfb.o
                 0x0000000080000308                osRomBase = 0x80000308
                 0x000000008000030c                osResetType = 0x8000030c
                 0x000000008000031c                osAppNMIBuffer = 0x8000031c
+                0x0000000001000000                D_01000000 = 0x1000000
+                0x0000000001000040                D_01000040 = 0x1000040
+                0x0000000002000000                D_02000000 = 0x2000000
+                0x00000000020043e8                D_020043E8 = 0x20043e8
+                0x00000000020044b0                D_020044B0 = 0x20044b0
+                0x0000000002004758                D_02004758 = 0x2004758
+                0x0000000002004fe8                D_02004FE8 = 0x2004fe8
+                0x0000000002005ff0                D_02005FF0 = 0x2005ff0
+                0x00000000020067f0                D_020067F0 = 0x20067f0
                 0x0000000000000000                _romSegmentStart = 0x0
                 0x0000000004000000                _headerSegmentStart = ADDR (.header)
                 0x0000000000000000                _headerSegmentRomStart = _romSegmentStart
@@ -4746,47 +4723,47 @@ LOAD build/j/src/cfb.o
  build/j/src/video.o(.text)
  .text          0x0000000070003060     0x1cc0 build/j/src/video.o
                 0x0000000070003060                init_video_settings
-                0x0000000070003124                init_both_video_buffers
-                0x0000000070003190                video_related_6
+                0x0000000070003124                viInitBuffers
+                0x0000000070003190                viSet800232BC
                 0x00000000700031a0                video_related_7
                 0x0000000070003298                video_related_8
-                0x0000000070003b04                video_related_9
-                0x0000000070003b64                receive_vi_c_msgs
-                0x0000000070003bb0                setVideoWidthHeightToMode
-                0x0000000070003c00                set_coloroutputmode_16bit
-                0x0000000070003c10                set_coloroutputmode_32bit
-                0x0000000070003c1c                get_video_settings2_frameb
-                0x0000000070003c2c                get_video_settings1_frameb
-                0x0000000070003c3c                set_video2buf_frameb
-                0x0000000070003c4c                get_80060824
+                0x0000000070003b04                viSet800232B4
+                0x0000000070003b64                viRecvMesg
+                0x0000000070003bb0                viSetVideoMode
+                0x0000000070003c00                viSetColorMode16Bit
+                0x0000000070003c10                viSetColorMode32Bit
+                0x0000000070003c1c                viGetFrameBuf2
+                0x0000000070003c2c                viGetFrameBuf1
+                0x0000000070003c3c                viSetFrameBuf2
+                0x0000000070003c4c                viGetPerspNorm
                 0x0000000070003c58                video_related_F
-                0x0000000070003eb4                video_related_10
-                0x0000000070003ef8                insert_generic_fillrect
+                0x0000000070003eb4                viClearZBufCurrentPlayer
+                0x0000000070003ef8                viFillScreen
                 0x0000000070003f64                setupscreensfornumplayers
-                0x0000000070004384                set_D_800232A0
-                0x0000000070004390                get_D_800232A0
-                0x000000007000439c                set_D_8002329C
-                0x00000000700043a8                get_D_8002329C
-                0x00000000700043b4                set_video2_settings_offset_18_1A
-                0x00000000700043d8                get_video2_settings_offset_18
-                0x00000000700043e8                get_video2_settings_offset_1A
-                0x00000000700043f8                set_video2_text_clip_size
-                0x000000007000441c                get_video2_settings_txtClipW
-                0x000000007000442c                get_video2_settings_txtClipH
-                0x000000007000443c                set_video2_width_height
-                0x000000007000449c                get_video2_settings_width
-                0x00000000700044ac                get_video2_settings_height
-                0x00000000700044bc                set_video2_ulx_uly
-                0x0000000070004514                get_video2_settings_ulx
-                0x0000000070004524                get_video2_settings_uly
-                0x0000000070004534                set_video2_settings_offset_24
-                0x0000000070004544                setvideo_far
-                0x0000000070004590                set_page_aspect
-                0x00000000700045dc                video_related_23
-                0x00000000700045ec                video_related_24
-                0x0000000070004650                set_page_height
-                0x00000000700046ac                video_related_27
-                0x00000000700046d0                set_setfillcolor
+                0x0000000070004384                viSet800232A0
+                0x0000000070004390                viGet800232A0
+                0x000000007000439c                viSet8002329C
+                0x00000000700043a8                viGet8002329C
+                0x00000000700043b4                viSetBuf
+                0x00000000700043d8                viGetBufX
+                0x00000000700043e8                viGetBufY
+                0x00000000700043f8                viSetXY
+                0x000000007000441c                viGetX
+                0x000000007000442c                viGetY
+                0x000000007000443c                viSetViewSize
+                0x000000007000449c                viGetViewWidth
+                0x00000000700044ac                viGetViewHeight
+                0x00000000700044bc                viSetViewPosition
+                0x0000000070004514                viGetViewLeft
+                0x0000000070004524                viGetViewTop
+                0x0000000070004534                viSetUseZBuf
+                0x0000000070004544                viSetFovY
+                0x0000000070004590                viSetAspect
+                0x00000000700045dc                viGetFovY
+                0x00000000700045ec                viSetFov
+                0x0000000070004650                viSetZRange
+                0x00000000700046ac                viGetZRange
+                0x00000000700046d0                viSetFillColor
                 0x0000000070004758                indy_grab_jpg_16bit
                 0x00000000700048d4                indy_grab_jpg_32bit
                 0x0000000070004a60                indy_grab_rgb_16bit
@@ -4959,15 +4936,15 @@ LOAD build/j/src/cfb.o
                 0x000000007000a6b0                check_token
  build/j/src/str.o(.text)
  .text          0x000000007000a780      0x500 build/j/src/str.o
-                0x000000007000a780                textpointer_load_parse_something
-                0x000000007000a7b0                something_with_strings
-                0x000000007000a80c                string_append_from_obseg_textbank
-                0x000000007000a85c                something_with_strings_0
-                0x000000007000a8a8                string_related
-                0x000000007000a908                strtol_related
-                0x000000007000a940                strtol_related_0
-                0x000000007000a960                strtol_related_1
-                0x000000007000a99c                strtol_related_2
+                0x000000007000a780                strcpy
+                0x000000007000a7b0                strncpy
+                0x000000007000a80c                strcat
+                0x000000007000a85c                strcmp
+                0x000000007000a8a8                strncmp
+                0x000000007000a908                toupper
+                0x000000007000a940                isdigit
+                0x000000007000a960                isalpha
+                0x000000007000a99c                isspace
                 0x000000007000a9f0                strtol
  build/j/src/sprintf.o(.text)
  .text          0x000000007000ac80       0x80 build/j/src/sprintf.o
@@ -6282,11 +6259,11 @@ LOAD build/j/src/cfb.o
                 0x000000007f01f798                set_or_unset_GUARDdata_flag
                 0x000000007f01f7c4                sub_GAME_7F01F614
                 0x000000007f01fdc0                sub_GAME_7F01FC10
-                0x000000007f020170                get_next_available_guardID
-                0x000000007f0201c8                sub_GAME_7F020018
-                0x000000007f0201fc                sub_GAME_7F02004C
-                0x000000007f020204                sub_GAME_7F020054
-                0x000000007f020240                sub_GAME_7F020090
+                0x000000007f020170                chrGetNumFree
+                0x000000007f0201c8                chrSetMaxDamage
+                0x000000007f0201fc                chrGetMaxDamage
+                0x000000007f020204                chrAddHealth
+                0x000000007f020240                chrGetArmor
                 0x000000007f02026c                init_GUARDdata_with_set_values
                 0x000000007f020568                replace_GUARDdata_with_actual_values
                 0x000000007f0205c4                disable_sounds_attached_to_player_then_something
@@ -6565,10 +6542,10 @@ LOAD build/j/src/cfb.o
                 0x000000007f035784                parse_handle_actionblocks
                 0x000000007f03a540                sub_GAME_7F03A240
                 0x000000007f03a704                set_stateflag_0x04_for_posdata
-                0x000000007f03a714                unset_stateflag_0x04_for_posdata
+                0x000000007f03a714                propHide
                 0x000000007f03a724                get_ptr_obj_pos_list_current_entry
                 0x000000007f03a730                remove_last_obj_pos_data_entry
-                0x000000007f03a784                set_last_obj_pos_data
+                0x000000007f03a784                propFree
                 0x000000007f03a7a4                set_current_objposdata_plus_0x28
                 0x000000007f03a7f0                sub_GAME_7F03A4F0
                 0x000000007f03a838                sub_GAME_7F03A538
@@ -6884,7 +6861,7 @@ LOAD build/j/src/cfb.o
                 0x000000007f0585b8                matrix_4x4_multiply_homogeneous_in_place
                 0x000000007f0585e8                matrix_4x4_multiply
                 0x000000007f0586ac                matrix_4x4_multiply_homogeneous
-                0x000000007f058794                sub_GAME_7F058274
+                0x000000007f058794                matrix_4x4_7F058274
                 0x000000007f0588a0                matrix_4x4_rotate_vector
                 0x000000007f0588f8                matrix_4x4_rotate_vector_in_place
                 0x000000007f058938                matrix_4x4_transform_vector
@@ -6906,30 +6883,30 @@ LOAD build/j/src/cfb.o
                 0x000000007f059030                matrix_scalar_multiply_2
                 0x000000007f0590a0                matrix_row_3_scalar_multiply
                 0x000000007f0590d8                matrix_scalar_multiply_3
-                0x000000007f05916c                sub_GAME_7F058C4C
-                0x000000007f059184                sub_GAME_7F058C64
-                0x000000007f0591a8                sub_GAME_7F058C88
+                0x000000007f05916c                matrix_4x4_7F058C4C
+                0x000000007f059184                matrix_4x4_7F058C64
+                0x000000007f0591a8                matrix_4x4_7F058C88
                 0x000000007f0591bc                sub_GAME_7F058C9C
                 0x000000007f059398                sub_GAME_7F058E78
-                0x000000007f059564                sub_GAME_7F059044
-                0x000000007f05966c                sub_GAME_7F05914C
+                0x000000007f059564                matrix_4x4_7F059044
+                0x000000007f05966c                matrix_4x4_7F05914C
                 0x000000007f059764                sub_GAME_7F059244
                 0x000000007f059854                sub_GAME_7F059334
-                0x000000007f059944                sub_GAME_7F059424
-                0x000000007f059bb4                sub_GAME_7F059694
-                0x000000007f059c28                sub_GAME_7F059708
-                0x000000007f059e28                sub_GAME_7F059908
+                0x000000007f059944                matrix_4x4_7F059424
+                0x000000007f059bb4                matrix_4x4_7F059694
+                0x000000007f059c28                matrix_4x4_7F059708
+                0x000000007f059e28                matrix_4x4_7F059908
                 0x000000007f059e9c                sub_GAME_7F05997C
-                0x000000007f059f68                sub_GAME_7F059A48
-                0x000000007f05a078                sub_GAME_7F059B58
+                0x000000007f059f68                matrix_4x4_7F059A48
+                0x000000007f05a078                matrix_4x4_7F059B58
                 0x000000007f05a208                matrix_4x4_align
-                0x000000007f05a250                sub_GAME_7F059D30
+                0x000000007f05a250                matrix_4x4_7F059D30
                 0x000000007f05a258                matrix_4x4_set_rotation_inverse
-                0x000000007f05a2cc                sub_GAME_7F059DAC
-                0x000000007f05a384                sub_GAME_7F059E64
+                0x000000007f05a2cc                matrix_4x4_7F059DAC
+                0x000000007f05a384                matrix_4x4_7F059E64
                 0x000000007f05a4d8                sub_GAME_7F059FB8
-                0x000000007f05a770                sub_GAME_7F05A250
-                0x000000007f05a830                sub_GAME_7F05A310
+                0x000000007f05a770                matrix_4x4_7F05A250
+                0x000000007f05a830                matrix_4x4_7F05A310
                 0x000000007f05ac94                matrix_4x4_determinant
                 0x000000007f05ae48                matrix_3x3_determinant
                 0x000000007f05aed8                matrix_2x2_determinant
@@ -7311,10 +7288,10 @@ LOAD build/j/src/cfb.o
  build/j/src/game/bond.o(.text)
  .text          0x000000007f0781c0    0x146c0 build/j/src/game/bond.o
                 0x000000007f0781c0                nullsub_75
-                0x000000007f0781c8                set_BONDdata_screensize
-                0x000000007f078204                set_ulx_uly
-                0x000000007f078220                sub_GAME_7F077C30
-                0x000000007f07824c                sub_GAME_7F077C5C
+                0x000000007f0781c8                currentPlayerSetScreenSize
+                0x000000007f078204                currentPlayerSetScreenPosition
+                0x000000007f078220                currentPlayerSetPerspective
+                0x000000007f07824c                currentPlayerSetCameraScale
                 0x000000007f0784dc                sub_GAME_7F077EEC
                 0x000000007f0785a4                sub_GAME_7F077FB4
                 0x000000007f0785e4                sub_GAME_7F077FF4
@@ -7322,24 +7299,24 @@ LOAD build/j/src/cfb.o
                 0x000000007f0786e0                sub_GAME_7F0780F0
                 0x000000007f078730                sub_GAME_7F078140
                 0x000000007f078848                sub_GAME_7F078258
-                0x000000007f078914                set_BONDdata_field_10C4
-                0x000000007f078924                get_BONDdata_field_10C4
-                0x000000007f078934                set_BONDdata_field_10C8
-                0x000000007f078944                get_BONDdata_field_10C8
-                0x000000007f078954                set_BONDdata_field_10D8
-                0x000000007f078964                get_BONDdata_field_10D8
+                0x000000007f078914                currentPlayerSetMatrix10C4
+                0x000000007f078924                currentPlayerGetMatrix10C4
+                0x000000007f078934                currentPlayerSetMatrix10C8
+                0x000000007f078944                currentPlayerGetMatrix10C8
+                0x000000007f078954                currentPlayerSetProjectionMatrix
+                0x000000007f078964                currentPlayerGetProjectionMatrix
                 0x000000007f078974                set_BONDdata_field_10E0
                 0x000000007f078984                get_BONDdata_field_10E0
-                0x000000007f078994                copy_BONDdata_field_10CC_to_10E8_set_10CC
-                0x000000007f0789b4                get_BONDdata_field_10CC
-                0x000000007f0789c4                set_BONDdata_field_10DC
-                0x000000007f0789d4                get_BONDdata_field_10DC
-                0x000000007f0789e4                sub_GAME_7F0783F4
+                0x000000007f078994                currentPlayerSetMatrix10CC
+                0x000000007f0789b4                currentPlayerGetMatrix10CC
+                0x000000007f0789c4                currentPlayerSetProjectionMatrixF
+                0x000000007f0789d4                currentPlayerGetProjectionMatrixF
+                0x000000007f0789e4                currentPlayerGetMatrix10E8
                 0x000000007f0789f4                sub_GAME_7F078404
                 0x000000007f078a04                sub_GAME_7F078414
-                0x000000007f078a14                sub_GAME_7F078424
-                0x000000007f078a34                sub_GAME_7F078444
-                0x000000007f078a44                sub_GAME_7F078454
+                0x000000007f078a14                currentPlayerSetMatrix10D4
+                0x000000007f078a34                currentPlayerGetMatrix10D4
+                0x000000007f078a44                currentPlayerGetMatrix10EC
                 0x000000007f078a54                sub_GAME_7F078464
                 0x000000007f078a64                sub_GAME_7F078474
                 0x000000007f078a74                getPlayer_c_lodscalez
@@ -7350,10 +7327,10 @@ LOAD build/j/src/cfb.o
                 0x000000007f078ac4                getPlayer_c_screentop
                 0x000000007f078ad4                getPlayer_c_perspfovy
                 0x000000007f078ae4                getPlayer_c_perspaspect
-                0x000000007f078af4                sub_GAME_7F078504
-                0x000000007f078b24                sub_GAME_7F078534
-                0x000000007f078b58                sub_GAME_7F078568
-                0x000000007f078b88                sub_GAME_7F078598
+                0x000000007f078af4                getPlayer_c_cameratopnorm
+                0x000000007f078b24                getPlayer_c_cameratopnorm_inverted_y
+                0x000000007f078b58                getPlayer_c_cameraleftnorm
+                0x000000007f078b88                getPlayer_c_cameraleftnorm_inverted_x
                 0x000000007f078bbc                getPlayer_c_perspnear
                 0x000000007f078bcc                sub_GAME_7F0785DC
                 0x000000007f078f40                sub_GAME_7F078950
@@ -7366,11 +7343,11 @@ LOAD build/j/src/cfb.o
                 0x000000007f0796e0                sub_GAME_7F0790F0
                 0x000000007f0799dc                init_player_BONDdata
                 0x000000007f079ea8                sub_GAME_7F0798B8
-                0x000000007f079f78                sub_GAME_7F079988
-                0x000000007f079f9c                change_crouch_position
-                0x000000007f079fe0                sub_GAME_7F0799F0
-                0x000000007f07a00c                sub_GAME_7F079A1C
-                0x000000007f07a040                setptrBONDdata
+                0x000000007f079f78                currentPlayerSetSwayTarget
+                0x000000007f079f9c                currentPlayerAdjustCrouchPos
+                0x000000007f079fe0                currentPlayerGetCrouchPos
+                0x000000007f07a00c                playerGetCrouchPos
+                0x000000007f07a040                currentPlayerSetField00
                 0x000000007f07a050                sub_GAME_7F079A60
                 0x000000007f07a2e0                solo_char_load
                 0x000000007f07aac0                maybe_solo_intro_camera_handler
@@ -7442,17 +7419,17 @@ LOAD build/j/src/cfb.o
                 0x000000007f0802d4                sub_GAME_7F07FCC4
                 0x000000007f08042c                sub_GAME_7F07FE1C
                 0x000000007f080584                sub_GAME_7F07FF74
-                0x000000007f080620                sub_GAME_7F080010
+                0x000000007f080620                currentPlayerUpdateSpeedVerta
                 0x000000007f080838                sub_GAME_7F080228
                 0x000000007f0808d4                sub_GAME_7F0802C4
-                0x000000007f080af0                sub_GAME_7F0804E0
-                0x000000007f080dc0                set_rgba_tint
-                0x000000007f080df0                sub_GAME_7F0807E0
-                0x000000007f080e68                fade_to_over_seconds
-                0x000000007f080e9c                check_if_fade_to_black_complete
-                0x000000007f080ecc                sub_GAME_7F0808BC
-                0x000000007f081020                set_curplayer_fade
-                0x000000007f081090                update_curplayer_fade
+                0x000000007f080af0                currentPlayerDrawFade
+                0x000000007f080dc0                currentPlayerSetFadeColour
+                0x000000007f080df0                currentPlayerAdjustFade
+                0x000000007f080e68                currentPlayerSetFadeFrac
+                0x000000007f080e9c                currentPlayerIsFadeComplete
+                0x000000007f080ecc                currentPlayerUpdateColourScreenProperties
+                0x000000007f081020                currentPlayerStartChrFade
+                0x000000007f081090                currentPlayerTickChrFade
                 0x000000007f081144                sub_GAME_7F080B34
                 0x000000007f081370                sub_GAME_7F080D60
                 0x000000007f081408                sub_GAME_7F080DF8
@@ -7594,11 +7571,11 @@ LOAD build/j/src/cfb.o
                 0x000000007f08e5f0                sub_GAME_7F08DB08
  build/j/src/game/unk_08DBB0.o(.text)
  .text          0x000000007f08e690     0x2250 build/j/src/game/unk_08DBB0.o
-                0x000000007f08e690                sub_GAME_7F08DBB0
-                0x000000007f08e6a8                sub_GAME_7F08DBC8
-                0x000000007f08e928                sub_GAME_7F08DE48
-                0x000000007f08ea24                sub_GAME_7F08DF44
-                0x000000007f08ec44                sub_GAME_7F08E164
+                0x000000007f08e690                currentPlayerToggle5BC
+                0x000000007f08e6a8                currentPlayerUpdateIdleHeadRoll
+                0x000000007f08e928                currentPlayerUpdateHeadPos
+                0x000000007f08ea24                currentPlayerUpdateHeadRot
+                0x000000007f08ec44                currentPlayerSetHeadDamp
                 0x000000007f08ed20                sub_GAME_7F08E240
                 0x000000007f08f39c                sub_GAME_7F08E8BC
                 0x000000007f08f528                sub_GAME_7F08EA48
@@ -7730,7 +7707,7 @@ LOAD build/j/src/cfb.o
                 0x000000007f09ae80                default_player_perspective_and_height
                 0x000000007f09aecc                reset_play_data_ptrs
                 0x000000007f09af2c                init_player_data_ptrs_construct_viewports
-                0x000000007f09b004                get_num_players
+                0x000000007f09b004                getPlayerCount
                 0x000000007f09b05c                initBONDdataforPlayer
                 0x000000007f09bcac                set_cur_player
                 0x000000007f09bcf0                get_cur_playernum
@@ -7844,7 +7821,7 @@ LOAD build/j/src/cfb.o
                 0x000000007f0a5a80                get_screen_ratio
                 0x000000007f0a5a8c                set_screen_ratio
                 0x000000007f0a5a98                sub_GAME_7F0A4EF8
-                0x000000007f0a5ae4                sub_GAME_7F0A4F44
+                0x000000007f0a5ae4                reset_watch_soundrelated_maybe
                 0x000000007f0a5af0                is_holding_greater_than_2E_left_on_stick
                 0x000000007f0a5b14                is_holding_greater_than_2E_right_on_stick
                 0x000000007f0a5b38                get_controlstick_lr_enabled
@@ -7871,32 +7848,32 @@ LOAD build/j/src/cfb.o
                 0x000000007f0a6164                watch_screen2_navigation
                 0x000000007f0a6244                watch_screen3_navigation
                 0x000000007f0a6324                watch_screen4_navigation
-                0x000000007f0a6400                sub_GAME_7F0A5860
-                0x000000007f0a64a0                sub_GAME_7F0A5900
+                0x000000007f0a6400                controller_options_controlstyle_navigation
+                0x000000007f0a64a0                controller_options_inputs_navigation
                 0x000000007f0a6538                sub_GAME_7F0A5998
-                0x000000007f0a6604                sub_GAME_7F0A5A64
-                0x000000007f0a6694                sub_GAME_7F0A5AF4
+                0x000000007f0a6604                game_options_music_volume_navigation
+                0x000000007f0a6694                game_options_fx_volume_navigation
                 0x000000007f0a6720                sub_GAME_7F0A5B80
                 0x000000007f0a6cbc                sub_GAME_7F0A611C
-                0x000000007f0a71b8                sub_GAME_7F0A6618
-                0x000000007f0a7240                sub_GAME_7F0A66A0
-                0x000000007f0a72cc                sub_GAME_7F0A672C
-                0x000000007f0a735c                sub_GAME_7F0A67BC
-                0x000000007f0a73ec                sub_GAME_7F0A684C
+                0x000000007f0a71b8                mission_brief_background_navigation
+                0x000000007f0a7240                mission_brief_m_briefing_navigation
+                0x000000007f0a72cc                mission_brief_q_branch_navigation
+                0x000000007f0a735c                mission_brief_moneypenny_navigation
+                0x000000007f0a73ec                mission_brief_objectives_navigation
                 0x000000007f0a7478                sub_GAME_7F0A68D8
                 0x000000007f0a7548                sub_GAME_7F0A69A8
                 0x000000007f0a75cc                sub_GAME_7F0A6A2C
                 0x000000007f0a7620                sub_GAME_7F0A6A80
                 0x000000007f0a7a80                sub_GAME_7F0A6EE8
-                0x000000007f0a7c44                sub_GAME_7F0A70AC
-                0x000000007f0a7ce4                sub_GAME_7F0A714C
-                0x000000007f0a8340                sub_GAME_7F0A77A8
+                0x000000007f0a7c44                draw_selected_page_rectangle
+                0x000000007f0a7ce4                draw_background_health_and_armor
+                0x000000007f0a8340                draw_background_health_and_armor_transitioning
                 0x000000007f0a8360                sub_GAME_7F0A77C8
-                0x000000007f0a87b0                sub_GAME_7F0A7C18
-                0x000000007f0a8954                sub_GAME_7F0A7DBC
-                0x000000007f0a895c                sub_GAME_7F0A7DC4
-                0x000000007f0a8a40                debug_gun_watch_move_related
-                0x000000007f0a8ea4                sub_GAME_7F0A830C
+                0x000000007f0a87b0                draw_text_mission_status
+                0x000000007f0a8954                empty_draw_function
+                0x000000007f0a895c                draw_text_q_watch_v201_beta
+                0x000000007f0a8a40                draw_current_hand_item_and_ammo
+                0x000000007f0a8ea4                draw_watch_mission_status_page
                 0x000000007f0a8f10                sub_GAME_7F0A8378
                 0x000000007f0a8fbc                debug_gun_watch_move_related2
                 0x000000007f0a96d0                sub_GAME_7F0A8B10
@@ -7906,26 +7883,26 @@ LOAD build/j/src/cfb.o
                 0x000000007f0a9d40                call_sfx_c_700091C8
                 0x000000007f0a9d60                sub_GAME_7F0A91A0
                 0x000000007f0a9d88                sub_GAME_7F0A91C8
-                0x000000007f0a9f18                sub_GAME_7F0A9358
-                0x000000007f0a9f24                sub_GAME_7F0A9364
+                0x000000007f0a9f18                get_mTrack2Vol
+                0x000000007f0a9f24                set_mTrack2Vol
                 0x000000007f0a9f58                sub_GAME_7F0A9398
                 0x000000007f0aa184                sub_GAME_7F0A95C4
                 0x000000007f0aa1d0                sub_GAME_7F0A9610
                 0x000000007f0aa244                sub_GAME_7F0A9684
                 0x000000007f0aa390                sub_GAME_7F0A97D0
                 0x000000007f0aa678                sub_GAME_7F0A9AB8
-                0x000000007f0ab388                sub_GAME_7F0AA7C8
+                0x000000007f0ab388                display_text_buttons_dual_control
                 0x000000007f0ab980                sub_GAME_7F0AADC0
-                0x000000007f0ac034                zero_D_80040998
-                0x000000007f0ac040                zero_D_8004099C
+                0x000000007f0ac034                reset_controller_options_index
+                0x000000007f0ac040                reset_game_options_index
                 0x000000007f0ac04c                zero_D_800409A4
                 0x000000007f0ac058                return_arg0_7F0AB4B0
                 0x000000007f0ac060                sub_GAME_7F0AB4B8
-                0x000000007f0ac34c                set_pparam1toparam2_disablejoylr_playsfx
-                0x000000007f0ac380                sub_GAME_7F0AB7D8
+                0x000000007f0ac34c                game_option_select_value
+                0x000000007f0ac380                game_option_toggle_input
                 0x000000007f0ac4b0                sub_GAME_7F0AB908
-                0x000000007f0ac7c4                sub_GAME_7F0ABC1C
-                0x000000007f0ac9a4                sub_GAME_7F0ABDFC
+                0x000000007f0ac7c4                draw_toggle_options
+                0x000000007f0ac9a4                draw_game_options_page
                 0x000000007f0acc90                sub_GAME_7F0AC0E8
                 0x000000007f0accc8                sub_GAME_7F0AC120
                 0x000000007f0acd10                sub_GAME_7F0AC168
@@ -7965,20 +7942,27 @@ LOAD build/j/src/cfb.o
                 0x000000007f0b01e8                sub_GAME_7F0AF638
                 0x000000007f0b0310                sub_GAME_7F0AF760
                 0x000000007f0b03b8                sub_GAME_7F0AF808
-                0x000000007f0b04d4                sub_GAME_7F0AF924
-                0x000000007f0b05cc                sub_GAME_7F0AFA1C
+                0x000000007f0b04d4                getTileMidPoint
+                0x000000007f0b05cc                getPointJustInsideOfTileTriple
                 0x000000007f0b06cc                sub_GAME_7F0AFB1C
                 0x000000007f0b0728                sub_GAME_7F0AFB78
+<<<<<<< HEAD
                 0x000000007f0b08cc                sub_GAME_7F0AFD1C
                 0x000000007f0b0a20                sub_GAME_7F0AFE70
                 0x000000007f0b0b7c                sub_GAME_7F0AFFCC
                 0x000000007f0b0bc8                sub_GAME_7F0B0018
+=======
+                0x000000007f0b08cc                getShortest2dDispToInfTileEdge
+                0x000000007f0b0a20                getShortest2dDispToInfTripleEdge
+                0x000000007f0b0b7c                getShortest2dDispToInfTileEdgeUnscaled
+                0x000000007f0b0bc8                getShortest2dDispToInfTripleEdgeUnscaled
+>>>>>>> 5c7d9219866514f62ce8f20f76d1fe57071c310a
                 0x000000007f0b0c14                distToTilePnt2D
                 0x000000007f0b0c74                sub_GAME_7F0B00C4
                 0x000000007f0b0cf0                sub_GAME_7F0B0140
                 0x000000007f0b0d48                sub_GAME_7F0B0198
-                0x000000007f0b0e88                sub_GAME_7F0B02D8
-                0x000000007f0b0f1c                sub_GAME_7F0B036C
+                0x000000007f0b0e88                isPointInsideTriStandTile_Maybe
+                0x000000007f0b0f1c                isPointInsideTriStandTileUnscaled_Maybe
                 0x000000007f0b0fb0                sub_GAME_7F0B0400
                 0x000000007f0b10c8                sub_GAME_7F0B0518
                 0x000000007f0b1170                getRotationalDirectionBetween
@@ -7987,23 +7971,23 @@ LOAD build/j/src/cfb.o
                 0x000000007f0b14c4                sub_GAME_7F0B0914
                 0x000000007f0b1794                sub_GAME_7F0B0BE4
                 0x000000007f0b17d4                sub_GAME_7F0B0C24
-                0x000000007f0b1848                sub_GAME_7F0B0C98
-                0x000000007f0b189c                sub_GAME_7F0B0CEC
+                0x000000007f0b1848                noteTileRoomIfDifferentToPrev
+                0x000000007f0b189c                noteTileRoomIfDifferentToPrev_2
                 0x000000007f0b18bc                sub_GAME_7F0B0D0C
                 0x000000007f0b19d4                sub_GAME_7F0B0E24
                 0x000000007f0b1fc0                sub_GAME_7F0B1410
                 0x000000007f0b2274                sub_GAME_7F0B16C4
-                0x000000007f0b2344                sub_GAME_7F0B1794
+                0x000000007f0b2344                distBetweenPoints2d
                 0x000000007f0b2394                sub_GAME_7F0B17E4
                 0x000000007f0b2468                sub_GAME_7F0B18B8
                 0x000000007f0b2874                sub_GAME_7F0B1CC4
                 0x000000007f0b2890                sub_GAME_7F0B1CE0
                 0x000000007f0b289c                sub_GAME_7F0B1CEC
-                0x000000007f0b28a8                sub_GAME_7F0B1CF8
+                0x000000007f0b28a8                getTileEdgePoints
                 0x000000007f0b298c                sub_GAME_7F0B1DDC
                 0x000000007f0b2c80                sub_GAME_7F0B20D0
                 0x000000007f0b2cc0                sub_GAME_7F0B2110
-                0x000000007f0b2d44                sub_GAME_7F0B2194
+                0x000000007f0b2d44                incrNearEdgeCount
                 0x000000007f0b2d60                sub_GAME_7F0B21B0
                 0x000000007f0b2df4                sub_GAME_7F0B2244
                 0x000000007f0b2e24                sub_GAME_7F0B2274
@@ -8015,8 +7999,8 @@ LOAD build/j/src/cfb.o
                 0x000000007f0b31bc                sub_GAME_7F0B260C
                 0x000000007f0b3268                sub_GAME_7F0B26B8
                 0x000000007f0b32c8                sub_GAME_7F0B2718
-                0x000000007f0b3460                sub_GAME_7F0B28B0
-                0x000000007f0b3500                sub_GAME_7F0B2950
+                0x000000007f0b3460                getCollisionEdge_maybe
+                0x000000007f0b3500                setLevelScale
                 0x000000007f0b3520                sub_GAME_7F0B2970
                 0x000000007f0b37dc                copy_tile_RGB_as_24bit
                 0x000000007f0b3824                sub_GAME_7F0B2C74
@@ -8027,7 +8011,7 @@ LOAD build/j/src/cfb.o
                 0x000000007f0b3a08                stanMatchTileName
                 0x000000007f0b3ab0                sub_GAME_7F0B2F00
                 0x000000007f0b3adc                stanDetermineEOF
-                0x000000007f0b3b88                sub_GAME_7F0B2FD8
+                0x000000007f0b3b88                getTileRoom
                 0x000000007f0b3b90                sub_GAME_7F0B2FE0
                 0x000000007f0b3bb4                sub_GAME_7F0B3004
                 0x000000007f0b3bd4                sub_GAME_7F0B3024
@@ -8221,19 +8205,19 @@ LOAD build/j/src/cfb.o
  build/j/src/game/dyn.o(.text)
  .text          0x000000007f0be010      0x490 build/j/src/game/dyn.o
                 0x000000007f0be010                dynInitDebugNoticeList
-                0x000000007f0be03c                set_vtx_gfx_mem_alloc
-                0x000000007f0be224                get_ptr_displaylist
-                0x000000007f0be24c                allocate_something_in_mgfx
-                0x000000007f0be274                sub_GAME_7F0BD6C4
-                0x000000007f0be290                sub_GAME_7F0BD6E0
-                0x000000007f0be2a8                sub_GAME_7F0BD6F8
-                0x000000007f0be2c4                sub_GAME_7F0BD714
-                0x000000007f0be2e8                allocate_something_in_mvtx
-                0x000000007f0be324                removed_debug_routine
-                0x000000007f0be32c                num_microcode_cmds_that_fit
-                0x000000007f0be354                sub_GAME_7F0BD7A4
-                0x000000007f0be37c                compute_membar_display_string
-                0x000000007f0be3c0                draw_membars
+                0x000000007f0be03c                dynInitMemory
+                0x000000007f0be224                dynGetMasterDisplayList
+                0x000000007f0be24c                dynGetFreeGfx2
+                0x000000007f0be274                dynAllocate7F0BD6C4
+                0x000000007f0be290                dynAllocateMatrix
+                0x000000007f0be2a8                dynAllocate7F0BD6F8
+                0x000000007f0be2c4                dynAllocate
+                0x000000007f0be2e8                dynSwapBuffers
+                0x000000007f0be324                dynRemovedFunc
+                0x000000007f0be32c                dynGetFreeGfx
+                0x000000007f0be354                dynGetFreeVtx
+                0x000000007f0be37c                dynCalculateMembarLength
+                0x000000007f0be3c0                dynDrawMembars
  build/j/src/game/lvl.o(.text)
  .text          0x000000007f0be4a0     0x2440 build/j/src/game/lvl.o
                 0x000000007f0be4a0                sub_GAME_7F0BD8F0
@@ -8440,10 +8424,10 @@ LOAD build/j/src/cfb.o
                 0x000000007f0d0c4c                init_indy_if_ready
                 0x000000007f0d0c7c                load_resource_on_indy
                 0x000000007f0d0cc0                indy_send_capture_data
-                0x000000007f0d0cfc                indy_loadfile
+                0x000000007f0d0cfc                indy_load_ramrom_file
                 0x000000007f0d0d3c                check_file_exported
                 0x000000007f0d0d78                check_file_found_on_indy
-                0x000000007f0d0dc0                response_from_command_string
+                0x000000007f0d0dc0                send_command_string
                 0x000000007f0d0e04                sub_GAME_7F0D0124
                 0x000000007f0d0e34                send_indy_close_port_cmd
  build/j/src/game/indy_commands.o(.text)
@@ -8525,11 +8509,11 @@ LOAD build/j/src/cfb.o
                 0x000000007f0d3000                sub_GAME_7F0D2320
  build/j/src/game/viewport.o(.text)
  .text          0x000000007f0d3060      0x3a0 build/j/src/game/viewport.o
-                0x000000007f0d3060                remove_viewport_buffer
-                0x000000007f0d306c                allocate_viewport_buffer
-                0x000000007f0d3128                sub_GAME_7F0D2448
-                0x000000007f0d3144                sub_GAME_7F0D2464
-                0x000000007f0d31f8                sub_GAME_7F0D2518
+                0x000000007f0d3060                zbufDeallocate
+                0x000000007f0d306c                zbufAllocate
+                0x000000007f0d3128                zbufSetBuffer
+                0x000000007f0d3144                zbufInit
+                0x000000007f0d31f8                zbufClearCurrentPlayer
  build/j/src/game/music_0D2720.o(.text)
  .text          0x000000007f0d3400      0x1c0 build/j/src/game/music_0D2720.o
                 0x000000007f0d3400                getmusictrack_or_randomtrack
@@ -20249,11 +20233,8 @@ LOAD build/j/src/cfb.o
                 0x00000000800230ec                setby_DPCfill_1
                 0x00000000800230f0                something_with_osVI_0
                 0x00000000800230f4                something_with_osVI_4
-                0x00000000800230f8                something_with_osVI_8
                 0x00000000800230fc                something_with_osVI_C
-                0x0000000080023100                something_with_osVI_10
                 0x0000000080023104                something_with_osVI_14
-                0x0000000080023108                something_with_osVI_18
                 0x000000008002310c                D_800230CC
  build/j/src/osMapTLB.o(.data)
  build/j/src/tlb_manage.o(.data)
@@ -20264,7 +20245,9 @@ LOAD build/j/src/cfb.o
  .data          0x0000000080023120       0x10 build/j/src/tlb_random.o
                 0x0000000080023120                tlb_random_seed
  build/j/src/tlb_resolve.o(.data)
+ .data          0x0000000080023130        0x0 build/j/src/tlb_resolve.o
  build/j/src/tlb_hardwire.o(.data)
+ .data          0x0000000080023130        0x0 build/j/src/tlb_hardwire.o
  build/j/src/audi.o(.data)
  .data          0x0000000080023130       0xe0 build/j/src/audi.o
                 0x0000000080023130                D_800230F0
@@ -20286,7 +20269,6 @@ LOAD build/j/src/cfb.o
  .data          0x0000000080023280       0xa0 build/j/src/video.o
                 0x0000000080023280                D_80023240
                 0x0000000080023284                video1_settings
-                0x00000000800232b0                video2_settings
                 0x00000000800232dc                D_8002329C
                 0x00000000800232e0                D_800232A0
                 0x00000000800232e4                ptr_video_settings1
@@ -20371,8 +20353,8 @@ LOAD build/j/src/cfb.o
                 0x0000000080024444                needmemallocation
                 0x0000000080024448                D_80024408
                 0x000000008002444c                D_8002440C
-                0x0000000080024450                sdefaultmvals
-                0x0000000080024474                sdefaultmemstarts
+                0x0000000080024450                D_80024410
+                0x0000000080024454                sdefaultmvals
  build/j/src/mema.o(.data)
  .data          0x0000000080024490       0x10 build/j/src/mema.o
                 0x0000000080024490                ptr_mema_c_debug_notice_list
@@ -20482,7 +20464,6 @@ LOAD build/j/src/cfb.o
  build/j/src/libultra/createthread.o(.data)
  .data          0x00000000800269e0        0x0 build/j/src/libultra/createthread.o
  build/j/src/libultra/startthread.o(.data)
- .data          0x00000000800269e0        0x0 build/j/src/libultra/startthread.o
  build/j/src/libultra/createmesgqueue.o(.data)
  .data          0x00000000800269e0        0x0 build/j/src/libultra/createmesgqueue.o
  build/j/src/libultra/parameters.o(.data)
@@ -20490,7 +20471,6 @@ LOAD build/j/src/cfb.o
  build/j/src/libultra/stopthread.o(.data)
  .data          0x00000000800269e0        0x0 build/j/src/libultra/stopthread.o
  build/j/src/libultra/setthreadpri.o(.data)
- .data          0x00000000800269e0        0x0 build/j/src/libultra/setthreadpri.o
  build/j/src/libultra/getcount.o(.data)
  .data          0x00000000800269e0        0x0 build/j/src/libultra/getcount.o
  build/j/src/libultra/vimgr.o(.data)
@@ -20548,9 +20528,7 @@ LOAD build/j/src/cfb.o
                 0x0000000080027680                osViModeTable_osViModeMpalHpn2
                 0x00000000800276d0                osViModeTable_osViModeMpalHpf2
  build/j/src/libultra/seteventmesg.o(.data)
- .data          0x0000000080027720        0x0 build/j/src/libultra/seteventmesg.o
  build/j/src/libultra/visetevent.o(.data)
- .data          0x0000000080027720        0x0 build/j/src/libultra/visetevent.o
  build/j/src/libultra/setintmask.o(.data)
  .data          0x0000000080027720        0x0 build/j/src/libultra/setintmask.o
  build/j/src/libultra/recvmesg.o(.data)
@@ -20558,7 +20536,6 @@ LOAD build/j/src/cfb.o
  build/j/src/libultra/sendmesg.o(.data)
  .data          0x0000000080027720        0x0 build/j/src/libultra/sendmesg.o
  build/j/src/libultra/visetmode.o(.data)
- .data          0x0000000080027720        0x0 build/j/src/libultra/visetmode.o
  build/j/src/libultra/visetxscale.o(.data)
  .data          0x0000000080027720        0x0 build/j/src/libultra/visetxscale.o
  build/j/src/libultra/visetyscale.o(.data)
@@ -20566,9 +20543,7 @@ LOAD build/j/src/cfb.o
  build/j/src/libultra/virepeatline.o(.data)
  .data          0x0000000080027720        0x0 build/j/src/libultra/virepeatline.o
  build/j/src/libultra/viblack.o(.data)
- .data          0x0000000080027720        0x0 build/j/src/libultra/viblack.o
  build/j/src/libultra/sptaskyielded.o(.data)
- .data          0x0000000080027720        0x0 build/j/src/libultra/sptaskyielded.o
  build/j/src/libultra/dpctr.o(.data)
  .data          0x0000000080027720        0x0 build/j/src/libultra/dpctr.o
  build/j/src/libultra/vigetcurrframebuf.o(.data)
@@ -20576,7 +20551,6 @@ LOAD build/j/src/cfb.o
  build/j/src/libultra/vigetnextframebuf.o(.data)
  .data          0x0000000080027720        0x0 build/j/src/libultra/vigetnextframebuf.o
  build/j/src/libultra/viswapbuf.o(.data)
- .data          0x0000000080027720        0x0 build/j/src/libultra/viswapbuf.o
  build/j/src/libultra/dpsetstat.o(.data)
  .data          0x0000000080027720        0x0 build/j/src/libultra/dpsetstat.o
  build/j/src/libultra/sptask.o(.data)
@@ -20584,13 +20558,10 @@ LOAD build/j/src/cfb.o
  build/j/src/libultra/dpsetnextbuf.o(.data)
  .data          0x0000000080027720        0x0 build/j/src/libultra/dpsetnextbuf.o
  build/j/src/libultra/sptaskyield.o(.data)
- .data          0x0000000080027720        0x0 build/j/src/libultra/sptaskyield.o
  build/j/src/libultra/gettlbhi.o(.data)
  .data          0x0000000080027720        0x0 build/j/src/libultra/gettlbhi.o
  build/j/src/libultra/virtualtophysical.o(.data)
- .data          0x0000000080027720        0x0 build/j/src/libultra/virtualtophysical.o
  build/j/src/libultra/aisetfreq.o(.data)
- .data          0x0000000080027720        0x0 build/j/src/libultra/aisetfreq.o
  build/j/src/libultra/sl.o(.data)
  .data          0x0000000080027720       0x10 build/j/src/libultra/sl.o
                 0x0000000080027720                alGlobals
@@ -20602,9 +20573,8 @@ LOAD build/j/src/cfb.o
  .data          0x0000000080027730        0x0 build/j/src/libultra/ll.o
  build/j/src/libultra/aisetnextbuf.o(.data)
  .data          0x0000000080027730       0x10 build/j/src/libultra/aisetnextbuf.o
-                0x0000000080027730                B_800276F0
+                0x0000000080027730                D_80334820
  build/j/src/libultra/aigetlen.o(.data)
- .data          0x0000000080027740        0x0 build/j/src/libultra/aigetlen.o
  build/j/src/libultra/synthesizer.o(.data)
  .data          0x0000000080027740        0x0 build/j/src/libultra/synthesizer.o
  build/j/src/libultra/pidma.o(.data)
@@ -20636,7 +20606,6 @@ LOAD build/j/src/cfb.o
  build/j/src/libultra/writebackdcache.o(.data)
  .data          0x0000000080027780        0x0 build/j/src/libultra/writebackdcache.o
  build/j/src/libultra/settimer.o(.data)
- .data          0x0000000080027780        0x0 build/j/src/libultra/settimer.o
  build/j/src/libultra/heapinit.o(.data)
  .data          0x0000000080027780        0x0 build/j/src/libultra/heapinit.o
  build/j/src/libultra/bnkf.o(.data)
@@ -20725,7 +20694,6 @@ LOAD build/j/src/cfb.o
  build/j/src/libultra/sirawdma.o(.data)
  .data          0x0000000080027810        0x0 build/j/src/libultra/sirawdma.o
  build/j/src/libultra/crc.o(.data)
- .data          0x0000000080027810        0x0 build/j/src/libultra/crc.o
  build/j/src/libultra/contramwrite.o(.data)
  .data          0x0000000080027810        0x0 build/j/src/libultra/contramwrite.o
  build/j/src/libultra/contramread.o(.data)
@@ -20777,7 +20745,6 @@ LOAD build/j/src/cfb.o
  build/j/src/libultra/kdebugserver.o(.data)
  .data          0x0000000080028020        0x0 build/j/src/libultra/kdebugserver.o
  build/j/src/libultra/getthreadpri.o(.data)
- .data          0x0000000080028020        0x0 build/j/src/libultra/getthreadpri.o
  build/j/src/libultra/vi.o(.data)
  .data          0x0000000080028020       0x70 build/j/src/libultra/vi.o
                 0x0000000080028020                vi
@@ -20809,7 +20776,6 @@ LOAD build/j/src/cfb.o
  build/j/src/libultra/syndelete.o(.data)
  .data          0x0000000080028090        0x0 build/j/src/libultra/syndelete.o
  build/j/src/libultra/ai.o(.data)
- .data          0x0000000080028090        0x0 build/j/src/libultra/ai.o
  build/j/src/libultra/drvrNew.o(.data)
  .data          0x0000000080028090      0x190 build/j/src/libultra/drvrNew.o
                 0x0000000080028090                SMALLROOM_PARAMS
@@ -20904,7 +20870,6 @@ LOAD build/j/src/cfb.o
  .rodata        0x0000000080028410       0x30 build/j/src/init.o
  build/j/src/sched.o(.rodata)
  .rodata        0x0000000080028440       0x20 build/j/src/sched.o
-                0x0000000080028440                jpt_80028400
  build/j/src/osMapTLB.o(.rodata)
  build/j/src/tlb_manage.o(.rodata)
  build/j/src/tlb_random.o(.rodata)
@@ -20974,12 +20939,6 @@ LOAD build/j/src/cfb.o
                 0x00000000800291a0                jpt_80029160
  build/j/src/memp.o(.rodata)
  .rodata        0x00000000800291e0       0x30 build/j/src/memp.o
-                0x00000000800291f0                aMf
-                0x00000000800291f4                aMf_0
-                0x00000000800291f8                aMl
-                0x00000000800291fc                aMl_0
-                0x0000000080029200                aMe
-                0x0000000080029204                aMe_0
  build/j/src/mema.o(.rodata)
  .rodata        0x0000000080029210       0x20 build/j/src/mema.o
                 0x0000000080029220                aD_3
@@ -21345,11 +21304,7 @@ LOAD build/j/src/cfb.o
                 0x000000008002a814                D_8002A7D4
                 0x000000008002a818                D_8002A7D8
                 0x000000008002a81c                D_8002A7DC
-                0x000000008002a820                D_8002A7E0
-                0x000000008002a824                D_8002A7E4
                 0x000000008002a828                D_8002A7E8
-                0x000000008002a82c                D_8002A7EC
-                0x000000008002a830                D_8002A7F0
                 0x000000008002a834                D_8002A7F4
                 0x000000008002a838                D_8002A7F8
                 0x000000008002a83c                D_8002A7FC
@@ -21369,29 +21324,12 @@ LOAD build/j/src/cfb.o
                 0x000000008002a874                D_8002A834
                 0x000000008002a878                D_8002A838
                 0x000000008002a87c                D_8002A83C
-                0x000000008002a880                D_8002A840
-                0x000000008002a884                D_8002A844
                 0x000000008002a888                D_8002A848
-                0x000000008002a88c                D_8002A84C
-                0x000000008002a890                D_8002A850
                 0x000000008002a894                D_8002A854
-                0x000000008002a898                D_8002A858
-                0x000000008002a89c                D_8002A85C
                 0x000000008002a8a0                D_8002A860
-                0x000000008002a8a4                D_8002A864
-                0x000000008002a8a8                D_8002A868
-                0x000000008002a8ac                D_8002A86C
-                0x000000008002a8b0                D_8002A870
-                0x000000008002a8b4                D_8002A874
                 0x000000008002a8b8                D_8002A878
-                0x000000008002a8bc                D_8002A87C
-                0x000000008002a8c0                D_8002A880
                 0x000000008002a8c4                D_8002A884
-                0x000000008002a8c8                D_8002A888
-                0x000000008002a8cc                D_8002A88C
                 0x000000008002a8d0                D_8002A890
-                0x000000008002a8d4                D_8002A894
-                0x000000008002a8d8                D_8002A898
                 0x000000008002a8dc                D_8002A89C
                 0x000000008002a8e0                intro_eye_counter
                 0x000000008002a8e4                intro_state_blood_animation
@@ -23341,11 +23279,11 @@ LOAD build/j/src/cfb.o
                 0x00000000800409bc                D_8004098C
                 0x00000000800409c0                D_80040990
                 0x00000000800409c4                watch_screen_index
-                0x00000000800409c8                D_80040998
-                0x00000000800409cc                D_8004099C
+                0x00000000800409c8                controller_options_index
+                0x00000000800409cc                game_options_index
  build/j/src/game/watch.o(.data)
  .data          0x00000000800409d0      0x4e0 build/j/src/game/watch.o
-                0x00000000800409d0                D_800409A0
+                0x00000000800409d0                mission_brief_index
                 0x00000000800409d4                D_800409A4
                 0x00000000800409d8                watch_soundrelated_maybe
                 0x00000000800409dc                D_800409AC
@@ -23361,22 +23299,7 @@ LOAD build/j/src/cfb.o
                 0x0000000080040a04                D_800409D4
                 0x0000000080040a08                D_800409D8
                 0x0000000080040a0c                D_800409DC
-                0x0000000080040aac                D_80040A7C
-                0x0000000080040ab4                cur_player_look_vertical_inverted
-                0x0000000080040ab8                D_80040A88
-                0x0000000080040ac0                cur_player_autoaim_setting
-                0x0000000080040ac4                D_80040A94
-                0x0000000080040acc                cur_player_aim_control
-                0x0000000080040ad0                D_80040AA0
-                0x0000000080040ad8                cur_player_sight_onscreen
-                0x0000000080040adc                D_80040AAC
-                0x0000000080040ae4                cur_player_lookahead_setting
-                0x0000000080040ae8                D_80040AB8
-                0x0000000080040af0                cur_player_ammo_onscreen_setting
-                0x0000000080040af4                D_80040AC4
-                0x0000000080040afc                cur_player_screen_setting
-                0x0000000080040b00                D_80040AD0
-                0x0000000080040b08                screen_ratio
+                0x0000000080040aac                game_options_entries
                 0x0000000080040b0c                controlstick_lr_enabled
                 0x0000000080040b10                D_80040AE0
                 0x0000000080040b14                D_80040AE4
@@ -23479,10 +23402,10 @@ LOAD build/j/src/cfb.o
  .data          0x0000000080040f60      0x4c0 build/j/src/game/stan.o
                 0x0000000080040f60                D_80040F30
                 0x0000000080040f70                stan_c_debug_notice_list_entry
-                0x0000000080040f74                D_80040F44
-                0x0000000080040f78                D_80040F48
+                0x0000000080040f74                level_scale
+                0x0000000080040f78                inv_level_scale
                 0x0000000080040f7c                list_of_tilesizes
-                0x0000000080040f88                base_ptr_connection_vals
+                0x0000000080040f88                standTileStart
                 0x0000000080040f8c                ptr_firstroom_0
                 0x0000000080040f90                D_80040F60
                 0x0000000080040f94                D_80040F64
@@ -23552,14 +23475,14 @@ LOAD build/j/src/cfb.o
                 0x0000000080044950                D_80044920
                 0x0000000080044954                D_80044924
                 0x0000000080044958                D_80044928
-                0x0000000080044970                D_80044940
-                0x00000000800449f8                D_800449C8
+                0x0000000080044970                FogDL_primary_80044940
+                0x00000000800449f8                FogDL_secondary_800449C8
                 0x0000000080044ae0                D_80044AB0
                 0x0000000080044b88                D_80044B58
-                0x0000000080044c30                D_80044C00
-                0x0000000080044c58                D_80044C28
-                0x0000000080044c80                D_80044C50
-                0x0000000080044c98                D_80044C68
+                0x0000000080044c30                BillboardDL_80044C00
+                0x0000000080044c58                ParticleDL_80044C28
+                0x0000000080044c80                transparent2cloudDL_80044C50
+                0x0000000080044c98                WalletBondDL_80044C68
                 0x0000000080044cd0                D_80044CA0
                 0x0000000080044db8                ptrDynamic_CC_RM_LUT
                 0x0000000080044de0                D_80044DB0
@@ -23583,8 +23506,8 @@ LOAD build/j/src/cfb.o
  build/j/src/game/dyn.o(.data)
  .data          0x0000000080048310       0x80 build/j/src/game/dyn.o
                 0x0000000080048310                D_800482E0
-                0x0000000080048314                D_800482E4
-                0x0000000080048320                D_800482F0
+                0x0000000080048314                g_GfxSizesByPlayerCount
+                0x0000000080048324                g_VtxSizesByPlayerCount
                 0x0000000080048334                membars_string1
                 0x0000000080048350                membars_string2
                 0x000000008004836c                membars_string3
@@ -23774,7 +23697,7 @@ LOAD build/j/src/cfb.o
                 0x000000008004eb24                D_8004EAF4
  build/j/src/game/viewport.o(.data)
  .data          0x000000008004eb30       0x10 build/j/src/game/viewport.o
-                0x000000008004eb30                viewport_img
+                0x000000008004eb30                z_buffer
  build/j/src/game/music_0D2720.o(.data)
  .data          0x000000008004eb40      0x120 build/j/src/game/music_0D2720.o
                 0x000000008004eb40                music_setup_entries
@@ -23841,7 +23764,6 @@ LOAD build/j/src/cfb.o
  build/j/src/game/initunk_005520.o(.rodata)
  build/j/src/game/initcameraandthrown.o(.rodata)
  .rodata        0x000000008004f120      0x100 build/j/src/game/initcameraandthrown.o
-                0x000000008004f120                projectile_ptr_table
                 0x000000008004f1d8                default_zoom_speed
                 0x000000008004f1dc                jpt_8004F1AC
                 0x000000008004f200                D_8004F1D0
@@ -23863,8 +23785,6 @@ LOAD build/j/src/cfb.o
  build/j/src/game/initunk_0072B0.o(.rodata)
  build/j/src/game/initmttex.o(.rodata)
  .rodata        0x000000008004f230       0x10 build/j/src/game/initmttex.o
-                0x000000008004f230                str_Mt
-                0x000000008004f234                str_Mt_0
  build/j/src/game/initunk_0073B0.o(.rodata)
  build/j/src/game/initunk_007460.o(.rodata)
  build/j/src/game/cleanup_alarms.o(.rodata)
@@ -23881,13 +23801,8 @@ LOAD build/j/src/cfb.o
  build/j/src/game/intro_logos.o(.rodata)
  .rodata        0x000000008004f300       0x40 build/j/src/game/intro_logos.o
                 0x000000008004f300                D_8004F2D0
-                0x000000008004f304                D_8004F2D4
                 0x000000008004f308                D_8004F2D8
                 0x000000008004f30c                D_8004F2DC
-                0x000000008004f310                jpt_8004F2E0
-                0x000000008004f32c                D_8004F2FC
-                0x000000008004f330                D_8004F300
-                0x000000008004f334                D_8004F304
  build/j/src/game/mainmenu.o(.rodata)
  .rodata        0x000000008004f340     0x29e0 build/j/src/game/mainmenu.o
                 0x000000008004f4b8                asc_D_8004F488
@@ -23925,13 +23840,10 @@ LOAD build/j/src/cfb.o
                 0x00000000800518b4                aDD_2
                 0x00000000800518c0                aDD_3
                 0x00000000800518cc                aD_10
-                0x00000000800518d0                cheat_available_table
                 0x00000000800519f8                folder_menu_x_dim
                 0x00000000800519fc                folder_menu_z_dim
                 0x0000000080051a00                D_800519D0
                 0x0000000080051a04                D_800519D4
-                0x0000000080051a14                D_800519E4
-                0x0000000080051a18                D_800519E8
                 0x0000000080051a24                D_800519F4
                 0x0000000080051a28                D_800519F8
                 0x0000000080051a34                D_80051A04
@@ -23996,8 +23908,6 @@ LOAD build/j/src/cfb.o
                 0x0000000080051b60                D_80051B30
                 0x0000000080051b64                D_80051B34
                 0x0000000080051b68                D_80051B38
-                0x0000000080051b6c                D_80051B3C
-                0x0000000080051b70                D_80051B40
                 0x0000000080051b74                D_80051B44
                 0x0000000080051b78                D_80051B48
                 0x0000000080051b7c                jpt_menu_update
@@ -24763,11 +24673,6 @@ LOAD build/j/src/cfb.o
                 0x0000000080054fcc                D_80054F9C
  build/j/src/game/bond.o(.rodata)
  .rodata        0x0000000080054fd0      0x340 build/j/src/game/bond.o
-                0x0000000080054fd0                D_80054FA0
-                0x0000000080054fd4                D_80054FA4
-                0x0000000080054fd8                D_80054FA8
-                0x0000000080054fdc                D_80054FAC
-                0x0000000080054fe0                D_80054FB0
                 0x0000000080054fe4                D_80054FB4
                 0x0000000080054fe8                D_80054FB8
                 0x0000000080054fec                D_80054FBC
@@ -24804,16 +24709,12 @@ LOAD build/j/src/cfb.o
                 0x00000000800550b8                D_80055088
                 0x00000000800550bc                D_8005508C
                 0x00000000800550c0                D_80055090
-                0x00000000800550c4                D_80055094
-                0x00000000800550c8                D_80055098
                 0x00000000800550cc                D_8005509C
                 0x00000000800550d0                D_800550A0
                 0x00000000800550d4                D_800550A4
                 0x00000000800550d8                D_800550A8
                 0x00000000800550dc                D_800550AC
                 0x00000000800550e0                D_800550B0
-                0x00000000800550e4                D_800550B4
-                0x00000000800550e8                D_800550B8
                 0x00000000800550ec                D_800550BC
                 0x00000000800550f0                D_800550C0
                 0x00000000800550f4                D_800550C4
@@ -24943,15 +24844,6 @@ LOAD build/j/src/cfb.o
  build/j/src/game/bondinv.o(.rodata)
  build/j/src/game/unk_08DBB0.o(.rodata)
  .rodata        0x0000000080055310       0x60 build/j/src/game/unk_08DBB0.o
-                0x0000000080055310                D_800552E0
-                0x0000000080055314                D_800552E4
-                0x0000000080055318                D_800552E8
-                0x000000008005531c                D_800552EC
-                0x0000000080055320                D_800552F0
-                0x0000000080055324                D_800552F4
-                0x0000000080055328                D_800552F8
-                0x000000008005532c                master_player_perspective
-                0x0000000080055330                D_80055300
                 0x0000000080055334                D_80055304
                 0x0000000080055338                D_80055308
                 0x000000008005533c                D_8005530C
@@ -25119,10 +25011,6 @@ LOAD build/j/src/cfb.o
                 0x00000000800584e4                D_800584A4
                 0x00000000800584e8                D_800584A8
                 0x00000000800584ec                D_800584AC
-                0x00000000800584f8                D_800584B8
-                0x00000000800584fc                D_800584BC
-                0x0000000080058500                D_800584C0
-                0x0000000080058504                D_800584C4
                 0x0000000080058508                D_800584C8
                 0x000000008005850c                jpt_800584CC
                 0x0000000080058520                jpt_800584E0
@@ -25140,8 +25028,6 @@ LOAD build/j/src/cfb.o
                 0x0000000080058574                D_80058534
                 0x0000000080058578                D_80058538
                 0x000000008005857c                D_8005853C
-                0x0000000080058580                D_80058540
-                0x0000000080058584                D_80058544
                 0x0000000080058588                D_80058548
                 0x000000008005858c                D_8005854C
                 0x0000000080058590                D_80058550
@@ -25153,7 +25039,6 @@ LOAD build/j/src/cfb.o
                 0x00000000800585a8                D_80058568
                 0x00000000800585ac                D_8005856C
                 0x00000000800585b0                jpt_80058570
-                0x00000000800585c4                jpt_80058584
  build/j/src/game/textrelated.o(.rodata)
  build/j/src/game/stan.o(.rodata)
  .rodata        0x00000000800585e0       0x40 build/j/src/game/stan.o
@@ -25196,10 +25081,6 @@ LOAD build/j/src/cfb.o
                 0x000000008005b6b4                aOb_c_debug
  build/j/src/game/dyn.o(.rodata)
  .rodata        0x000000008005b6c0       0x30 build/j/src/game/dyn.o
-                0x000000008005b6cc                aMgfx
-                0x000000008005b6d4                aMgfx_1
-                0x000000008005b6dc                aMvtx
-                0x000000008005b6e4                aMvtx_0
  build/j/src/game/lvl.o(.rodata)
  .rodata        0x000000008005b6f0       0xa0 build/j/src/game/lvl.o
                 0x000000008005b6f0                aLv_c_debug
@@ -25331,7 +25212,9 @@ LOAD build/j/src/cfb.o
                 0x000000008005da80                sc
                 0x000000008005db58                gfxClient
                 0x000000008005db70                target_for_counters_maybe
-                0x000000008005db80                dword_CODE_bss_8005DB40
+                0x000000008005db80                viModes
+                0x000000008005dc20                viModePtrs
+                0x000000008005dc28                dword_CODE_bss_8005DBE8
  build/j/src/osMapTLB.o(.bss)
  build/j/src/tlb_manage.o(.bss)
  .bss           0x000000008005dc30      0x8c0 build/j/src/tlb_manage.o
@@ -25341,6 +25224,7 @@ LOAD build/j/src/cfb.o
                 0x000000008005e4e8                ptr_TLBallocatedblock
  build/j/src/tlb_random.o(.bss)
  build/j/src/tlb_resolve.o(.bss)
+ .bss           0x000000008005e4f0        0x0 build/j/src/tlb_resolve.o
  build/j/src/audi.o(.bss)
  .bss           0x000000008005e4f0      0xf40 build/j/src/audi.o
                 0x000000008005e4f0                dword_CODE_bss_8005E4B0
@@ -25389,9 +25273,9 @@ LOAD build/j/src/cfb.o
                 0x000000008006081c                dword_CODE_bss_800607DC
  build/j/src/video.o(.bss)
  .bss           0x0000000080060820      0x4b0 build/j/src/video.o
-                0x0000000080060820                dword_CODE_bss_800607E0
-                0x0000000080060860                m
-                0x0000000080060864                word_CODE_bss_80060824
+                0x0000000080060820                projectionMatrixF
+                0x0000000080060860                projectionMatrix
+                0x0000000080060864                perspNorm
                 0x0000000080060868                dword_CODE_bss_80060828
                 0x00000000800608b8                off_CODE_bss_80060878
                 0x00000000800608b9                off_CODE_bss_80060879
@@ -25539,7 +25423,6 @@ LOAD build/j/src/cfb.o
  build/j/src/libultra/createthread.o(.bss)
  .bss           0x0000000080065830        0x0 build/j/src/libultra/createthread.o
  build/j/src/libultra/startthread.o(.bss)
- .bss           0x0000000080065830        0x0 build/j/src/libultra/startthread.o
  build/j/src/libultra/createmesgqueue.o(.bss)
  .bss           0x0000000080065830        0x0 build/j/src/libultra/createmesgqueue.o
  build/j/src/libultra/parameters.o(.bss)
@@ -25547,7 +25430,6 @@ LOAD build/j/src/cfb.o
  build/j/src/libultra/stopthread.o(.bss)
  .bss           0x0000000080065830        0x0 build/j/src/libultra/stopthread.o
  build/j/src/libultra/setthreadpri.o(.bss)
- .bss           0x0000000080065830        0x0 build/j/src/libultra/setthreadpri.o
  build/j/src/libultra/getcount.o(.bss)
  .bss           0x0000000080065830        0x0 build/j/src/libultra/getcount.o
  build/j/src/libultra/vimgr.o(.bss)
@@ -25565,7 +25447,6 @@ LOAD build/j/src/cfb.o
  .bss           0x0000000080066a50       0x80 build/j/src/libultra/seteventmesg.o
                 0x0000000080066a50                __osEventStateTab
  build/j/src/libultra/visetevent.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/j/src/libultra/visetevent.o
  build/j/src/libultra/setintmask.o(.bss)
  .bss           0x0000000080066ad0        0x0 build/j/src/libultra/setintmask.o
  build/j/src/libultra/recvmesg.o(.bss)
@@ -25573,7 +25454,6 @@ LOAD build/j/src/cfb.o
  build/j/src/libultra/sendmesg.o(.bss)
  .bss           0x0000000080066ad0        0x0 build/j/src/libultra/sendmesg.o
  build/j/src/libultra/visetmode.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/j/src/libultra/visetmode.o
  build/j/src/libultra/visetxscale.o(.bss)
  .bss           0x0000000080066ad0        0x0 build/j/src/libultra/visetxscale.o
  build/j/src/libultra/visetyscale.o(.bss)
@@ -25581,9 +25461,7 @@ LOAD build/j/src/cfb.o
  build/j/src/libultra/virepeatline.o(.bss)
  .bss           0x0000000080066ad0        0x0 build/j/src/libultra/virepeatline.o
  build/j/src/libultra/viblack.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/j/src/libultra/viblack.o
  build/j/src/libultra/sptaskyielded.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/j/src/libultra/sptaskyielded.o
  build/j/src/libultra/dpctr.o(.bss)
  .bss           0x0000000080066ad0        0x0 build/j/src/libultra/dpctr.o
  build/j/src/libultra/vigetcurrframebuf.o(.bss)
@@ -25591,7 +25469,6 @@ LOAD build/j/src/cfb.o
  build/j/src/libultra/vigetnextframebuf.o(.bss)
  .bss           0x0000000080066ad0        0x0 build/j/src/libultra/vigetnextframebuf.o
  build/j/src/libultra/viswapbuf.o(.bss)
- .bss           0x0000000080066ad0        0x0 build/j/src/libultra/viswapbuf.o
  build/j/src/libultra/dpsetstat.o(.bss)
  .bss           0x0000000080066ad0        0x0 build/j/src/libultra/dpsetstat.o
  build/j/src/libultra/sptask.o(.bss)
@@ -25616,13 +25493,10 @@ LOAD build/j/src/cfb.o
  build/j/src/libultra/dpsetnextbuf.o(.bss)
  .bss           0x0000000080066b10        0x0 build/j/src/libultra/dpsetnextbuf.o
  build/j/src/libultra/sptaskyield.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/src/libultra/sptaskyield.o
  build/j/src/libultra/gettlbhi.o(.bss)
  .bss           0x0000000080066b10        0x0 build/j/src/libultra/gettlbhi.o
  build/j/src/libultra/virtualtophysical.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/src/libultra/virtualtophysical.o
  build/j/src/libultra/aisetfreq.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/src/libultra/aisetfreq.o
  build/j/src/libultra/sl.o(.bss)
  .bss           0x0000000080066b10        0x0 build/j/src/libultra/sl.o
  build/j/src/libultra/heapalloc.o(.bss)
@@ -25632,9 +25506,7 @@ LOAD build/j/src/cfb.o
  build/j/src/libultra/ll.o(.bss)
  .bss           0x0000000080066b10        0x0 build/j/src/libultra/ll.o
  build/j/src/libultra/aisetnextbuf.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/src/libultra/aisetnextbuf.o
  build/j/src/libultra/aigetlen.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/src/libultra/aigetlen.o
  build/j/src/libultra/synthesizer.o(.bss)
  .bss           0x0000000080066b10        0x0 build/j/src/libultra/synthesizer.o
  build/j/src/libultra/pidma.o(.bss)
@@ -25660,7 +25532,6 @@ LOAD build/j/src/cfb.o
  build/j/src/libultra/writebackdcache.o(.bss)
  .bss           0x0000000080066b10        0x0 build/j/src/libultra/writebackdcache.o
  build/j/src/libultra/settimer.o(.bss)
- .bss           0x0000000080066b10        0x0 build/j/src/libultra/settimer.o
  build/j/src/libultra/heapinit.o(.bss)
  .bss           0x0000000080066b10        0x0 build/j/src/libultra/heapinit.o
  build/j/src/libultra/bnkf.o(.bss)
@@ -25751,7 +25622,6 @@ LOAD build/j/src/cfb.o
  build/j/src/libultra/sirawdma.o(.bss)
  .bss           0x0000000080067e10        0x0 build/j/src/libultra/sirawdma.o
  build/j/src/libultra/crc.o(.bss)
- .bss           0x0000000080067e10        0x0 build/j/src/libultra/crc.o
  build/j/src/libultra/contramwrite.o(.bss)
  .bss           0x0000000080067e10        0x0 build/j/src/libultra/contramwrite.o
  build/j/src/libultra/contramread.o(.bss)
@@ -25810,7 +25680,6 @@ LOAD build/j/src/cfb.o
  .bss           0x0000000080068e70      0x1b0 build/j/src/libultra/kdebugserver.o
                 0x0000000080068e70                __osThreadSave
  build/j/src/libultra/getthreadpri.o(.bss)
- .bss           0x0000000080069020        0x0 build/j/src/libultra/getthreadpri.o
  build/j/src/libultra/vi.o(.bss)
  .bss           0x0000000080069020        0x0 build/j/src/libultra/vi.o
  build/j/src/libultra/vigetcurrcontext.o(.bss)
@@ -25834,7 +25703,6 @@ LOAD build/j/src/cfb.o
  build/j/src/libultra/syndelete.o(.bss)
  .bss           0x0000000080069020        0x0 build/j/src/libultra/syndelete.o
  build/j/src/libultra/ai.o(.bss)
- .bss           0x0000000080069020        0x0 build/j/src/libultra/ai.o
  build/j/src/libultra/drvrNew.o(.bss)
  .bss           0x0000000080069020        0x0 build/j/src/libultra/drvrNew.o
  build/j/src/libultra/synallocfx.o(.bss)
@@ -26185,18 +26053,9 @@ LOAD build/j/src/cfb.o
                 0x000000008006972e                cheat_activated_77
                 0x000000008006972f                cheat_activated_78
                 0x0000000080069730                array_favweapon
-                0x0000000080069750                mp_char_cur_select_player1
-                0x0000000080069754                mp_char_cur_select_player2
-                0x0000000080069758                mp_char_cur_select_player3
-                0x000000008006975c                mp_char_cur_select_player4
-                0x0000000080069760                mp_char_prev_select_player1
-                0x0000000080069764                mp_char_prev_select_player2
-                0x0000000080069768                mp_char_prev_select_player3
-                0x000000008006976c                mp_char_prev_select_player4
+                0x0000000080069750                mp_char_cur_select_player
+                0x0000000080069760                mp_char_prev_select_player
                 0x0000000080069770                dword_CODE_bss_80069730
-                0x0000000080069774                dword_CODE_bss_80069734
-                0x0000000080069778                dword_CODE_bss_80069738
-                0x000000008006977c                dword_CODE_bss_8006973C
                 0x0000000080069780                has_selected_char_player1
                 0x0000000080069784                has_selected_char_player2
                 0x0000000080069788                has_selected_char_player3
@@ -26386,8 +26245,6 @@ LOAD build/j/src/cfb.o
                 0x0000000080075e00                dword_CODE_bss_80075DC0
                 0x0000000080075e04                dword_CODE_bss_80075DC4
                 0x0000000080075e08                dword_CODE_bss_80075DC8
-                0x0000000080075ea4                dword_CODE_bss_80075E64
-                0x0000000080075ea8                dword_CODE_bss_80075E68
                 0x0000000080076a88                dword_CODE_bss_80076A48
  build/j/src/game/bondwalk2.o(.bss)
  build/j/src/game/objecthandler.o(.bss)
@@ -26428,20 +26285,12 @@ LOAD build/j/src/cfb.o
  build/j/src/game/bond.o(.bss)
  .bss           0x0000000080079980      0x510 build/j/src/game/bond.o
                 0x0000000080079980                flt_CODE_bss_80079940
-                0x0000000080079984                flt_CODE_bss_80079944
-                0x0000000080079988                flt_CODE_bss_80079948
                 0x000000008007998c                flt_CODE_bss_8007994C
                 0x0000000080079990                flt_CODE_bss_80079950
-                0x0000000080079994                flt_CODE_bss_80079954
-                0x0000000080079998                flt_CODE_bss_80079958
                 0x000000008007999c                flt_CODE_bss_8007995C
                 0x00000000800799a0                flt_CODE_bss_80079960
-                0x00000000800799a4                flt_CODE_bss_80079964
-                0x00000000800799a8                flt_CODE_bss_80079968
                 0x00000000800799ac                flt_CODE_bss_8007996C
                 0x00000000800799b0                flt_CODE_bss_80079970
-                0x00000000800799b4                flt_CODE_bss_80079974
-                0x00000000800799b8                flt_CODE_bss_80079978
                 0x00000000800799bc                flt_CODE_bss_8007997C
                 0x00000000800799c0                flt_CODE_bss_80079980
                 0x00000000800799c4                flt_CODE_bss_80079984
@@ -26521,10 +26370,7 @@ LOAD build/j/src/cfb.o
                 0x0000000080079f00                copyof_stagenum
                 0x0000000080079f04                dword_CODE_bss_80079E94
                 0x0000000080079f08                dword_CODE_bss_80079E98
-                0x0000000080079f50                ptr_BONDdata_p1
-                0x0000000080079f54                ptr_BONDdata_p2
-                0x0000000080079f58                ptr_BONDdata_p3
-                0x0000000080079f5c                ptr_BONDdata_p4
+                0x0000000080079f50                players
                 0x0000000080079f60                player1_player_data
                 0x0000000080079fd0                player2_player_data
                 0x000000008007a040                player3_player_data
@@ -26576,8 +26422,7 @@ LOAD build/j/src/cfb.o
  build/j/src/game/textrelated.o(.bss)
  build/j/src/game/stan.o(.bss)
  .bss           0x000000008007b190      0xe70 build/j/src/game/stan.o
-                0x000000008007b190                clippingfile
-                0x000000008007b194                ptr_firstroom
+                0x000000008007b190                stan_prefix
                 0x000000008007b198                dword_CODE_bss_8007B128
                 0x000000008007b19c                dword_CODE_bss_8007B12C
                 0x000000008007b1a0                dword_CODE_bss_8007B130
@@ -26590,18 +26435,16 @@ LOAD build/j/src/cfb.o
                 0x000000008007b3c8                dword_CODE_bss_8007B358
                 0x000000008007ba4c                dword_CODE_bss_8007B9DC
                 0x000000008007ba50                dword_CODE_bss_8007B9E0
-                0x000000008007ba54                dword_CODE_bss_8007B9E4
-                0x000000008007ba58                dword_CODE_bss_8007B9E8
-                0x000000008007ba5c                dword_CODE_bss_8007B9EC
-                0x000000008007ba60                flt_CODE_bss_8007B9F0
-                0x000000008007ba64                flt_CODE_bss_8007B9F4
-                0x000000008007ba68                flt_CODE_bss_8007B9F8
-                0x000000008007ba6c                flt_CODE_bss_8007B9FC
-                0x000000008007ba70                flt_CODE_bss_8007BA00
-                0x000000008007ba74                dword_CODE_bss_8007BA04
+                0x000000008007ba54                stanSavedColl_tile
+                0x000000008007ba58                stanSavedColl_pointI
+                0x000000008007ba5c                stanSavedColl_unknown
+                0x000000008007ba60                stanSavedColl_pntA
+                0x000000008007ba68                stanSavedColl_pntB
+                0x000000008007ba70                stanSavedColl_someMin
+                0x000000008007ba74                stanSavedColl_posData
                 0x000000008007ba78                dword_CODE_bss_8007BA08
                 0x000000008007ba7c                dword_CODE_bss_8007BA0C
-                0x000000008007ba80                dword_CODE_bss_8007BA10
+                0x000000008007ba80                bfsTileStack
  build/j/src/game/unk_0B3200.o(.bss)
  build/j/src/game/bg.o(.bss)
  .bss           0x000000008007c000     0x6630 build/j/src/game/bg.o
@@ -26737,16 +26580,11 @@ LOAD build/j/src/cfb.o
                 0x0000000080088920                resource_lookup_data_array
  build/j/src/game/dyn.o(.bss)
  .bss           0x000000008008c2a0       0x30 build/j/src/game/dyn.o
-                0x000000008008c2a0                ptr_mgfx0_alloc_start
-                0x000000008008c2a4                ptr_mgfx1_alloc_start
-                0x000000008008c2a8                ptr_mgfx_end
-                0x000000008008c2ac                D_8008C23C
-                0x000000008008c2b0                ptr_mvtx0_alloc_start
-                0x000000008008c2b4                ptr_mvtx1_alloc_start
-                0x000000008008c2b8                ptr_mvtx_end
-                0x000000008008c2bc                ptr_mvtx_cur_pos
-                0x000000008008c2c0                bank_in_mgfx_alloc_table
-                0x000000008008c2c4                dword_CODE_bss_8008C254
+                0x000000008008c2a0                g_GfxBuffers
+                0x000000008008c2b0                g_VtxBuffers
+                0x000000008008c2bc                g_GfxMemPos
+                0x000000008008c2c0                g_GfxActiveBufferIndex
+                0x000000008008c2c4                g_GfxRequestedDisplayList
  build/j/src/game/lvl.o(.bss)
  .bss           0x000000008008c2d0      0x3a0 build/j/src/game/lvl.o
                 0x000000008008c2d0                ptr_jfont_DL
@@ -26860,11 +26698,11 @@ LOAD build/j/src/cfb.o
  build/j/src/game/decompress.o(.bss)
  build/j/src/game/zlib.o(.bss)
  .bss           0x000000008008d3c0       0x20 build/j/src/game/zlib.o
-                0x000000008008d3c0                dword_CODE_bss_8008D350
-                0x000000008008d3c4                dword_CODE_bss_8008D354
-                0x000000008008d3c8                dword_CODE_bss_8008D358
-                0x000000008008d3cc                dword_CODE_bss_8008D35C
-                0x000000008008d3d0                dword_CODE_bss_8008D360
+                0x000000008008d3c0                rz_inbuf
+                0x000000008008d3c4                rz_outbuf
+                0x000000008008d3c8                rz_inptr
+                0x000000008008d3cc                rz_wp
+                0x000000008008d3d0                rz_hlist
                 0x000000008008d3d4                dword_CODE_bss_8008D364
                 0x000000008008d3d8                dword_CODE_bss_8008D368
                 0x000000008008d3dc                dword_CODE_bss_8008D36C
@@ -26879,8 +26717,8 @@ LOAD build/j/src/cfb.o
  build/j/src/game/unk_0D1AC0.o(.bss)
  build/j/src/game/viewport.o(.bss)
  .bss           0x000000008008e380       0x10 build/j/src/game/viewport.o
-                0x000000008008e380                viewport_img_width
-                0x000000008008e384                viewport_img_height
+                0x000000008008e380                z_buffer_width
+                0x000000008008e384                z_buffer_height
  build/j/src/game/music_0D2720.o(.bss)
  build/j/src/game/spectrum.o(.bss)
  .bss           0x000000008008e390       0x40 build/j/src/game/spectrum.o
@@ -26918,6 +26756,7 @@ LOAD build/j/src/cfb.o
                 0x000000008008e3c4                spec_PC
  .bss           0x000000008008e3d0        0x0 build/j/src/rom_header.o
  .bss           0x000000008008e3d0        0x0 build/j/src/bootcode.o
+ .bss           0x000000008008e3d0        0x0 build/j/src/tlb_hardwire.o
                 0x000000008008e3d0                _bssSegmentEnd = (ADDR (.bss) + SIZEOF (.bss))
                 0x00000000000310b0                _bssSegmentSize = SIZEOF (.bss)
                 0x0000000000c6d600                _bssSegmentRomEnd = (_bssSegmentRomStart + SIZEOF (.bss))
@@ -26969,8 +26808,7 @@ LOAD build/j/src/cfb.o
 .cfb            0x00000000803b5000    0x4b000 load address 0x0000000000f8a2a0
  build/j/src/cfb.o(.bss)
  .bss           0x00000000803b5000    0x4b000 build/j/src/cfb.o
-                0x00000000803b5000                cfb_16_a
-                0x00000000803da800                cfb_16_b
+                0x00000000803b5000                cfb_16
                 0x0000000080400000                _cfbSegmentEnd = (ADDR (.cfb) + SIZEOF (.cfb))
                 0x0000000000fd52a0                _cfbSegmentRomEnd = (_cfbSegmentRomStart + SIZEOF (.cfb))
 

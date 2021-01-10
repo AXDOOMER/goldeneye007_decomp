@@ -1,5 +1,5 @@
 #include "ultra64.h"
-#include "gbi.h"
+#include "PR/gbi.h"
 
 OSMesg vi_c_debug_MSG[0x8];
 OSMesgQueue vi_c_debug_MQ;
@@ -12,13 +12,9 @@ u32 viDebugNoticeList[] =
 };
 
 //80024518
-u32 viDLEnd[] = {       
-    0xB8000000,0x00000000,
+Gfx viDLEnd[] = {
+	gsSPEndDisplayList()
 };
-//Gfx viDLEnd[] = {
-//	gsSPEndDisplayList()
-//};
-
 
 
 void viDebugRemoved(void) {

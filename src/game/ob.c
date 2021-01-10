@@ -737,7 +737,7 @@ int get_index_num_of_named_resource(u8 *resname)
     for (i = 1; i < file_entry_max; i++)
     {
         if ((file_resource_table[i].filename) && \
-        (something_with_strings_0(resname,file_resource_table[i].filename) == 0));
+        (strcmp(resname,file_resource_table[i].filename) == 0));
         {
             return i;
         }
@@ -787,7 +787,7 @@ glabel get_index_num_of_named_resource
 .L7F0BD294:
 /* 0F1DC4 7F0BD294 50A00008 */  beql  $a1, $zero, .L7F0BD2B8
 /* 0F1DC8 7F0BD298 8E420000 */   lw    $v0, ($s2)
-/* 0F1DCC 7F0BD29C 0C002A13 */  jal   something_with_strings_0
+/* 0F1DCC 7F0BD29C 0C002A13 */  jal   strcmp
 /* 0F1DD0 7F0BD2A0 02602025 */   move  $a0, $s3
 /* 0F1DD4 7F0BD2A4 54400004 */  bnezl $v0, .L7F0BD2B8
 /* 0F1DD8 7F0BD2A8 8E420000 */   lw    $v0, ($s2)

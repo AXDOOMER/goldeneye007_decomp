@@ -424,7 +424,6 @@ SECTIONS
 
 
 
-
    _obsegSegmentStart = ADDR(.obseg);
    _obsegSegmentRomStart = _romfiles_117880SegmentRomEnd;
    .obseg _obsegSegmentRomStart : AT(_obsegSegmentRomStart) {
@@ -4198,7 +4197,6 @@ SECTIONS
    }
    _cfbSegmentEnd = ADDR(.cfb) + SIZEOF(.cfb);
    _cfbSegmentRomEnd = _cfbSegmentRomStart + SIZEOF(.cfb);
-
 
    /*move em to end, out of the way*/
    /DISCARD/ : {

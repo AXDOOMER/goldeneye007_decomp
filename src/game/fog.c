@@ -183,34 +183,21 @@ struct fog_element2 fog_tables2[] = {
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0BA720(void) {
 
+void sub_GAME_7F0BA720(s32 a, s32 b) {
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BA720
-/* 0EF250 7F0BA720 AFA40000 */  sw    $a0, ($sp)
-/* 0EF254 7F0BA724 03E00008 */  jr    $ra
-/* 0EF258 7F0BA728 AFA50004 */   sw    $a1, 4($sp)
-)
-#endif
-
-
-
-
 
 s32 get_ptr_currentdata(void){
-  return ptr_current_data;
+    return ptr_current_data;
 }
 
 f32 get_near_fog_value(void) {
-  return near_fog_value;
+    return near_fog_value;
 }
 
 f32 square_near_fog_value(void) {
-  return near_fog_value * near_fog_value;
+    return near_fog_value * near_fog_value;
 }
 
 
@@ -229,9 +216,9 @@ glabel copy_table1_env_to_current
 /* 0EF28C 7F0BA75C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0EF290 7F0BA760 C48E0008 */  lwc1  $f14, 8($a0)
 /* 0EF294 7F0BA764 C48C0004 */  lwc1  $f12, 4($a0)
-/* 0EF298 7F0BA768 0C001194 */  jal   set_page_height
+/* 0EF298 7F0BA768 0C001194 */  jal   viSetZRange
 /* 0EF29C 7F0BA76C AFA40038 */   sw    $a0, 0x38($sp)
-/* 0EF2A0 7F0BA770 0C0011AB */  jal   video_related_27
+/* 0EF2A0 7F0BA770 0C0011AB */  jal   viGetZRange
 /* 0EF2A4 7F0BA774 27A40030 */   addiu $a0, $sp, 0x30
 /* 0EF2A8 7F0BA778 0FC2D21E */  jal   sub_GAME_7F0B4878
 /* 0EF2AC 7F0BA77C 00000000 */   nop   
@@ -442,18 +429,11 @@ glabel copy_table2_env_to_current
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0BAA5C(void) {
 
+void sub_GAME_7F0BAA5C(s32 a) {
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BAA5C
-/* 0EF58C 7F0BAA5C 03E00008 */  jr    $ra
-/* 0EF590 7F0BAA60 AFA40000 */   sw    $a0, ($sp)
-)
-#endif
+
 
 
 
@@ -476,7 +456,7 @@ glabel load_enviroment
 /* 0EF598 7F0BAA68 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0EF59C 7F0BAA6C AFA5002C */  sw    $a1, 0x2c($sp)
 /* 0EF5A0 7F0BAA70 AFA0001C */  sw    $zero, 0x1c($sp)
-/* 0EF5A4 7F0BAA74 0FC26919 */  jal   get_num_players
+/* 0EF5A4 7F0BAA74 0FC26919 */  jal   getPlayerCount
 /* 0EF5A8 7F0BAA78 AFA40028 */   sw    $a0, 0x28($sp)
 /* 0EF5AC 7F0BAA7C 24010001 */  li    $at, 1
 /* 0EF5B0 7F0BAA80 8FA6001C */  lw    $a2, 0x1c($sp)
@@ -595,7 +575,7 @@ glabel load_enviroment
 /* 0EF748 7F0BAC18 3C018006 */  lui   $at, %hi(D_80058D74)
 /* 0EF74C 7F0BAC1C C42E8D74 */  lwc1  $f14, %lo(D_80058D74)($at)
 /* 0EF750 7F0BAC20 AFA6001C */  sw    $a2, 0x1c($sp)
-/* 0EF754 7F0BAC24 0C001194 */  jal   set_page_height
+/* 0EF754 7F0BAC24 0C001194 */  jal   viSetZRange
 /* 0EF758 7F0BAC28 AFA70028 */   sw    $a3, 0x28($sp)
 /* 0EF75C 7F0BAC2C 3C048004 */  lui   $a0, %hi(fog_tables2)
 /* 0EF760 7F0BAC30 3C018008 */  lui   $at, %hi(sky_enabled)
@@ -1126,7 +1106,7 @@ glabel sub_GAME_7F0BB2C8
 .L7F0BB2E8:
 /* 0EFE18 7F0BB2E8 0FC227F5 */  jal   get_BONDdata_position
 /* 0EFE1C 7F0BB2EC AFA40030 */   sw    $a0, 0x30($sp)
-/* 0EFE20 7F0BB2F0 0FC1E0F1 */  jal   get_BONDdata_field_10CC
+/* 0EFE20 7F0BB2F0 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
 /* 0EFE24 7F0BB2F4 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 0EFE28 7F0BB2F8 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0EFE2C 7F0BB2FC 8FA40030 */  lw    $a0, 0x30($sp)

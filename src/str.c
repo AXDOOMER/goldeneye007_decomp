@@ -1,462 +1,95 @@
 #include "ultra64.h"
 
-
-
-
-
-#ifdef NONMATCHING
-void *textpointer_load_parse_something(void *arg0, void *arg1) {
-    void *temp_a1;
-
-    // Node 0
-    temp_a1 = (arg1 + 1);
-    *arg0 = (s8) *arg1;
-    if (*arg1 != 0)
-    {
-        loop_1:
-        // Node 1
-        ((arg0 + 1) + 1)->unk-1 = (s8) *temp_a1;
-        if (*temp_a1 != 0)
-        {
-            goto loop_1;
-        }
-    }
-    // (possible return value: arg0)
+char *strcpy(char *dst, const char *src) {
+    unsigned char *ptr = dst;
+    while(*ptr++ = *src++);
+    return dst;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel textpointer_load_parse_something
-/* 00B370 7000A770 90A20000 */  lbu   $v0, ($a1)
-/* 00B374 7000A774 24830001 */  addiu $v1, $a0, 1
-/* 00B378 7000A778 24A50001 */  addiu $a1, $a1, 1
-/* 00B37C 7000A77C 10400006 */  beqz  $v0, .L7000A798
-/* 00B380 7000A780 A0820000 */   sb    $v0, ($a0)
-.L7000A784:
-/* 00B384 7000A784 90A20000 */  lbu   $v0, ($a1)
-/* 00B388 7000A788 24630001 */  addiu $v1, $v1, 1
-/* 00B38C 7000A78C 24A50001 */  addiu $a1, $a1, 1
-/* 00B390 7000A790 1440FFFC */  bnez  $v0, .L7000A784
-/* 00B394 7000A794 A062FFFF */   sb    $v0, -1($v1)
-.L7000A798:
-/* 00B398 7000A798 03E00008 */  jr    $ra
-/* 00B39C 7000A79C 00801025 */   move  $v0, $a0
-)
-#endif
+char *strncpy(char *dst, const char *src, size_t n) {
+    unsigned char *ptr = dst;
+    while((*ptr++ = *src++)) { 
+        if (--n == 0) {
+            break;
+        }
+    }
+    while(n--) {
+        (*ptr++) = '\0';
+    }
+    return dst;
+}
 
+char *strcat(char *dst, const char *src) {
+    unsigned char *ptr = dst;
+    while (*ptr) { ptr++; };
+    while(*ptr++ = *src++);
+    return dst;
+}
 
-
-#ifdef NONMATCHING
-void *something_with_strings(void *arg0, void *arg1, s32 arg2) {
-    void *temp_v1;
-    void *temp_a1;
-    s32 temp_a2;
-
-    // Node 0
-    temp_v1 = (arg0 + 1);
-    temp_a1 = (arg1 + 1);
-    *arg0 = (s8) *arg1;
-    if (*arg1 != 0)
-    {
-        loop_1:
-        // Node 1
-        if ((arg2 + -1) != 0)
-        {
-            // Node 2
-            (temp_v1 + 1)->unk-1 = (s8) *temp_a1;
-            if (*temp_a1 != 0)
-            {
-                goto loop_1;
+int strcmp(const char* str1, const char* str2) {
+    unsigned int var;
+    unsigned char c1;
+    unsigned char c2;
+    while (TRUE) {
+        var = c1 = *(str1++);
+        if (var != (c2 = *str2)) {
+            if (c1 < c2) {
+                return -1;
+            } else {
+                return 1;
             }
         }
-    }
-    // Node 3
-    temp_a2 = (arg2 + -1);
-    if (temp_a2 != 0)
-    {
-        loop_4:
-        // Node 4
-        *temp_v1 = (u8)0;
-        if ((temp_a2 + -1) != 0)
-        {
-            goto loop_4;
+        if (c1 == '\0') {
+            return 0;
         }
+        str2++;
     }
-    // (possible return value: arg0)
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel something_with_strings
-/* 00B3A0 7000A7A0 90A20000 */  lbu   $v0, ($a1)
-/* 00B3A4 7000A7A4 24830001 */  addiu $v1, $a0, 1
-/* 00B3A8 7000A7A8 24A50001 */  addiu $a1, $a1, 1
-/* 00B3AC 7000A7AC 10400009 */  beqz  $v0, .L7000A7D4
-/* 00B3B0 7000A7B0 A0820000 */   sb    $v0, ($a0)
-.L7000A7B4:
-/* 00B3B4 7000A7B4 24C6FFFF */  addiu $a2, $a2, -1
-/* 00B3B8 7000A7B8 50C00007 */  beql  $a2, $zero, .L7000A7D8
-/* 00B3BC 7000A7BC 00C01025 */   move  $v0, $a2
-/* 00B3C0 7000A7C0 90A20000 */  lbu   $v0, ($a1)
-/* 00B3C4 7000A7C4 24630001 */  addiu $v1, $v1, 1
-/* 00B3C8 7000A7C8 24A50001 */  addiu $a1, $a1, 1
-/* 00B3CC 7000A7CC 1440FFF9 */  bnez  $v0, .L7000A7B4
-/* 00B3D0 7000A7D0 A062FFFF */   sb    $v0, -1($v1)
-.L7000A7D4:
-/* 00B3D4 7000A7D4 00C01025 */  move  $v0, $a2
-.L7000A7D8:
-/* 00B3D8 7000A7D8 10C00006 */  beqz  $a2, .L7000A7F4
-/* 00B3DC 7000A7DC 24C6FFFF */   addiu $a2, $a2, -1
-.L7000A7E0:
-/* 00B3E0 7000A7E0 00C01025 */  move  $v0, $a2
-/* 00B3E4 7000A7E4 A0600000 */  sb    $zero, ($v1)
-/* 00B3E8 7000A7E8 24630001 */  addiu $v1, $v1, 1
-/* 00B3EC 7000A7EC 14C0FFFC */  bnez  $a2, .L7000A7E0
-/* 00B3F0 7000A7F0 24C6FFFF */   addiu $a2, $a2, -1
-.L7000A7F4:
-/* 00B3F4 7000A7F4 03E00008 */  jr    $ra
-/* 00B3F8 7000A7F8 00801025 */   move  $v0, $a0
-)
-#endif
-
-
-
-#ifdef NONMATCHING
-void *string_append_from_obseg_textbank(void *arg0, void *arg1) {
-    void *temp_v0;
-    void *temp_a1;
-
-    // Node 0
-    if (*arg0 != 0)
-    {
-        loop_1:
-        // Node 1
-        if (arg0->unk1 != 0)
-        {
-            goto loop_1;
+int strncmp(const char *str1, const char *str2, size_t n) {
+    unsigned int var;
+    unsigned char c1;
+    unsigned char c2;
+    while (TRUE) {
+        if (n == 0) {
+            return 0;
         }
-    }
-    // Node 2
-    temp_v0 = (arg0 + 1);
-    temp_a1 = (arg1 + 1);
-    temp_v0->unk-1 = (s8) *arg1;
-    if (*arg1 != 0)
-    {
-        loop_3:
-        // Node 3
-        (temp_v0 + 1)->unk-1 = (s8) *temp_a1;
-        if (*temp_a1 != 0)
-        {
-            goto loop_3;
-        }
-    }
-    // (possible return value: arg0)
-}
-
-#else
-GLOBAL_ASM(
-.text
-glabel string_append_from_obseg_textbank
-/* 00B3FC 7000A7FC 908E0000 */  lbu   $t6, ($a0)
-/* 00B400 7000A800 00801025 */  move  $v0, $a0
-/* 00B404 7000A804 51C00006 */  beql  $t6, $zero, .L7000A820
-/* 00B408 7000A808 90A30000 */   lbu   $v1, ($a1)
-/* 00B40C 7000A80C 904F0001 */  lbu   $t7, 1($v0)
-.L7000A810:
-/* 00B410 7000A810 24420001 */  addiu $v0, $v0, 1
-/* 00B414 7000A814 55E0FFFE */  bnezl $t7, .L7000A810
-/* 00B418 7000A818 904F0001 */   lbu   $t7, 1($v0)
-/* 00B41C 7000A81C 90A30000 */  lbu   $v1, ($a1)
-.L7000A820:
-/* 00B420 7000A820 24420001 */  addiu $v0, $v0, 1
-/* 00B424 7000A824 24A50001 */  addiu $a1, $a1, 1
-/* 00B428 7000A828 10600006 */  beqz  $v1, .L7000A844
-/* 00B42C 7000A82C A043FFFF */   sb    $v1, -1($v0)
-.L7000A830:
-/* 00B430 7000A830 90A30000 */  lbu   $v1, ($a1)
-/* 00B434 7000A834 24420001 */  addiu $v0, $v0, 1
-/* 00B438 7000A838 24A50001 */  addiu $a1, $a1, 1
-/* 00B43C 7000A83C 1460FFFC */  bnez  $v1, .L7000A830
-/* 00B440 7000A840 A043FFFF */   sb    $v1, -1($v0)
-.L7000A844:
-/* 00B444 7000A844 03E00008 */  jr    $ra
-/* 00B448 7000A848 00801025 */   move  $v0, $a0
-)
-#endif
-
-
-
-#ifdef NONMATCHING
-void something_with_strings_0(void) {
-
-}
-#else
-GLOBAL_ASM(
-.text
-glabel something_with_strings_0
-.L7000A84C:
-/* 00B44C 7000A84C 90820000 */  lbu   $v0, ($a0)
-/* 00B450 7000A850 90A30000 */  lbu   $v1, ($a1)
-/* 00B454 7000A854 24840001 */  addiu $a0, $a0, 1
-/* 00B458 7000A858 10430007 */  beq   $v0, $v1, .L7000A878
-/* 00B45C 7000A85C 0043082A */   slt   $at, $v0, $v1
-/* 00B460 7000A860 10200003 */  beqz  $at, .L7000A870
-/* 00B464 7000A864 00000000 */   nop   
-/* 00B468 7000A868 03E00008 */  jr    $ra
-/* 00B46C 7000A86C 2402FFFF */   li    $v0, -1
-
-.L7000A870:
-/* 00B470 7000A870 03E00008 */  jr    $ra
-/* 00B474 7000A874 24020001 */   li    $v0, 1
-
-.L7000A878:
-/* 00B478 7000A878 14400003 */  bnez  $v0, .L7000A888
-/* 00B47C 7000A87C 00000000 */   nop   
-/* 00B480 7000A880 03E00008 */  jr    $ra
-/* 00B484 7000A884 00001025 */   move  $v0, $zero
-
-.L7000A888:
-/* 00B488 7000A888 1000FFF0 */  b     .L7000A84C
-/* 00B48C 7000A88C 24A50001 */   addiu $a1, $a1, 1
-/* 00B490 7000A890 03E00008 */  jr    $ra
-/* 00B494 7000A894 00000000 */   nop   
-)
-#endif
-
-
-
-#ifdef NONMATCHING
-void string_related(void) {
-
-}
-#else
-GLOBAL_ASM(
-.text
-glabel string_related
-.L7000A898:
-/* 00B498 7000A898 54C00004 */  bnezl $a2, .L7000A8AC
-/* 00B49C 7000A89C 90820000 */   lbu   $v0, ($a0)
-/* 00B4A0 7000A8A0 03E00008 */  jr    $ra
-/* 00B4A4 7000A8A4 00001025 */   move  $v0, $zero
-
-/* 00B4A8 7000A8A8 90820000 */  lbu   $v0, ($a0)
-.L7000A8AC:
-/* 00B4AC 7000A8AC 90A30000 */  lbu   $v1, ($a1)
-/* 00B4B0 7000A8B0 24C6FFFF */  addiu $a2, $a2, -1
-/* 00B4B4 7000A8B4 24840001 */  addiu $a0, $a0, 1
-/* 00B4B8 7000A8B8 10430007 */  beq   $v0, $v1, .L7000A8D8
-/* 00B4BC 7000A8BC 0043082A */   slt   $at, $v0, $v1
-/* 00B4C0 7000A8C0 10200003 */  beqz  $at, .L7000A8D0
-/* 00B4C4 7000A8C4 00000000 */   nop   
-/* 00B4C8 7000A8C8 03E00008 */  jr    $ra
-/* 00B4CC 7000A8CC 2402FFFF */   li    $v0, -1
-
-.L7000A8D0:
-/* 00B4D0 7000A8D0 03E00008 */  jr    $ra
-/* 00B4D4 7000A8D4 24020001 */   li    $v0, 1
-
-.L7000A8D8:
-/* 00B4D8 7000A8D8 14400003 */  bnez  $v0, .L7000A8E8
-/* 00B4DC 7000A8DC 00000000 */   nop   
-/* 00B4E0 7000A8E0 03E00008 */  jr    $ra
-/* 00B4E4 7000A8E4 00001025 */   move  $v0, $zero
-
-.L7000A8E8:
-/* 00B4E8 7000A8E8 1000FFEB */  b     .L7000A898
-/* 00B4EC 7000A8EC 24A50001 */   addiu $a1, $a1, 1
-/* 00B4F0 7000A8F0 03E00008 */  jr    $ra
-/* 00B4F4 7000A8F4 00000000 */   nop   
-)
-#endif
-
-
-
-#ifdef NONMATCHING
-s32 strtol_related(s32 arg0) {
-    s32 temp_t6;
-
-    // Node 0
-    temp_t6 = (arg0 & 0xff);
-    if (temp_t6 >= 0x61)
-    {
-        // Node 1
-        if (temp_t6 < 0x7b)
-        {
-            // Node 2
-            return;
-            // (possible return value: temp_t6)
-        }
-    }
-    // (possible return value: temp_t6)
-}
-#else
-GLOBAL_ASM(
-.text
-glabel strtol_related
-/* 00B4F8 7000A8F8 308E00FF */  andi  $t6, $a0, 0xff
-/* 00B4FC 7000A8FC AFA40000 */  sw    $a0, ($sp)
-/* 00B500 7000A900 29C10061 */  slti  $at, $t6, 0x61
-/* 00B504 7000A904 14200007 */  bnez  $at, .L7000A924
-/* 00B508 7000A908 01C02025 */   move  $a0, $t6
-/* 00B50C 7000A90C 29C1007B */  slti  $at, $t6, 0x7b
-/* 00B510 7000A910 10200004 */  beqz  $at, .L7000A924
-/* 00B514 7000A914 25C2FFE0 */   addiu $v0, $t6, -0x20
-/* 00B518 7000A918 304F00FF */  andi  $t7, $v0, 0xff
-/* 00B51C 7000A91C 03E00008 */  jr    $ra
-/* 00B520 7000A920 01E01025 */   move  $v0, $t7
-
-.L7000A924:
-/* 00B524 7000A924 00801025 */  move  $v0, $a0
-/* 00B528 7000A928 03E00008 */  jr    $ra
-/* 00B52C 7000A92C 00000000 */   nop   
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-s32 strtol_related_0(s32 arg0) {
-    // Node 0
-    if ((((arg0 & 0xff) < 0x30) ^ 1) != 0)
-    {
-        // Node 1
-        return;
-        // (possible return value: ((arg0 & 0xff) < 0x3a))
-    }
-    // (possible return value: (((arg0 & 0xff) < 0x30) ^ 1))
-}
-#else
-GLOBAL_ASM(
-.text
-glabel strtol_related_0
-/* 00B530 7000A930 308E00FF */  andi  $t6, $a0, 0xff
-/* 00B534 7000A934 29C20030 */  slti  $v0, $t6, 0x30
-/* 00B538 7000A938 38420001 */  xori  $v0, $v0, 1
-/* 00B53C 7000A93C 10400002 */  beqz  $v0, .L7000A948
-/* 00B540 7000A940 AFA40000 */   sw    $a0, ($sp)
-/* 00B544 7000A944 29C2003A */  slti  $v0, $t6, 0x3a
-.L7000A948:
-/* 00B548 7000A948 03E00008 */  jr    $ra
-/* 00B54C 7000A94C 00000000 */   nop   
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-s32 strtol_related_1(s32 arg0) {
-    s32 temp_t6;
-
-    // Node 0
-    temp_t6 = (arg0 & 0xff);
-    if ((temp_t6 < 0x61) || (temp_t6 >= 0x7b))
-    {
-        // Node 2
-        if (((temp_t6 < 0x41) ^ 1) != 0)
-        {
-            // Node 3
-            return;
-            // (possible return value: (temp_t6 < 0x5b))
-        }
-    }
-    else
-    {
-
-    }
-    // (possible return value: ((temp_t6 < 0x41) ^ 1))
-}
-#else
-GLOBAL_ASM(
-.text
-glabel strtol_related_1
-/* 00B550 7000A950 308E00FF */  andi  $t6, $a0, 0xff
-/* 00B554 7000A954 29C20061 */  slti  $v0, $t6, 0x61
-/* 00B558 7000A958 AFA40000 */  sw    $a0, ($sp)
-/* 00B55C 7000A95C 14400004 */  bnez  $v0, .L7000A970
-/* 00B560 7000A960 01C01825 */   move  $v1, $t6
-/* 00B564 7000A964 29C2007B */  slti  $v0, $t6, 0x7b
-/* 00B568 7000A968 14400006 */  bnez  $v0, .L7000A984
-/* 00B56C 7000A96C 00000000 */   nop   
-.L7000A970:
-/* 00B570 7000A970 28620041 */  slti  $v0, $v1, 0x41
-/* 00B574 7000A974 38420001 */  xori  $v0, $v0, 1
-/* 00B578 7000A978 10400002 */  beqz  $v0, .L7000A984
-/* 00B57C 7000A97C 00000000 */   nop   
-/* 00B580 7000A980 2862005B */  slti  $v0, $v1, 0x5b
-.L7000A984:
-/* 00B584 7000A984 03E00008 */  jr    $ra
-/* 00B588 7000A988 00000000 */   nop   
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-s32 strtol_related_2(s32 arg0) {
-    s32 temp_t6;
-
-    // Node 0
-    temp_t6 = (arg0 & 0xff);
-    if ((u32) (temp_t6 ^ 0x20) >= 1U)
-    {
-        // Node 1
-        if ((u32) (temp_t6 ^ 9) >= 1U)
-        {
-            // Node 2
-            if ((u32) (temp_t6 ^ 0xa) >= 1U)
-            {
-                // Node 3
-                if ((u32) (temp_t6 ^ 0xc) >= 1U)
-                {
-                    // Node 4
-                    return;
-                    // (possible return value: ((u32) (temp_t6 ^ 0xb) < 1U))
-                }
+        n--;
+        var = c1 = *str1++;
+        if (var != (c2 = *str2)) {
+            if (c1 < c2) {
+                return -1;
+            } else {
+                return 1;
             }
         }
+        if (c1 == '\0') {
+            return 0;
+        }
+        str2++;
     }
-    // (possible return value: ((u32) (temp_t6 ^ 0x20) < 1U))
 }
-#else
-GLOBAL_ASM(
-.text
-glabel strtol_related_2
-/* 00B58C 7000A98C 308E00FF */  andi  $t6, $a0, 0xff
-/* 00B590 7000A990 39C20020 */  xori  $v0, $t6, 0x20
-/* 00B594 7000A994 2C420001 */  sltiu $v0, $v0, 1
-/* 00B598 7000A998 1440000F */  bnez  $v0, .L7000A9D8
-/* 00B59C 7000A99C AFA40000 */   sw    $a0, ($sp)
-/* 00B5A0 7000A9A0 39C20009 */  xori  $v0, $t6, 9
-/* 00B5A4 7000A9A4 2C420001 */  sltiu $v0, $v0, 1
-/* 00B5A8 7000A9A8 1440000B */  bnez  $v0, .L7000A9D8
-/* 00B5AC 7000A9AC 00000000 */   nop   
-/* 00B5B0 7000A9B0 39C2000A */  xori  $v0, $t6, 0xa
-/* 00B5B4 7000A9B4 2C420001 */  sltiu $v0, $v0, 1
-/* 00B5B8 7000A9B8 14400007 */  bnez  $v0, .L7000A9D8
-/* 00B5BC 7000A9BC 00000000 */   nop   
-/* 00B5C0 7000A9C0 39C2000C */  xori  $v0, $t6, 0xc
-/* 00B5C4 7000A9C4 2C420001 */  sltiu $v0, $v0, 1
-/* 00B5C8 7000A9C8 14400003 */  bnez  $v0, .L7000A9D8
-/* 00B5CC 7000A9CC 00000000 */   nop   
-/* 00B5D0 7000A9D0 39C2000B */  xori  $v0, $t6, 0xb
-/* 00B5D4 7000A9D4 2C420001 */  sltiu $v0, $v0, 1
-.L7000A9D8:
-/* 00B5D8 7000A9D8 03E00008 */  jr    $ra
-/* 00B5DC 7000A9DC 00000000 */   nop   
-)
-#endif
 
+unsigned char toupper(unsigned char c) {
+    if ((c >= 'a') && (c <= 'z')) {
+        return ('A' + c - 'a');
+    } else {
+        return c;
+    }
+}
 
+int isdigit(unsigned char c) {
+    return ((c >= '0') && (c <= '9'));
+}
 
+int isalpha(unsigned char c) {
+    return (((c >= 'a') && (c <= 'z')) || 
+            ((c >= 'A') && (c <= 'Z')));
+}
 
+int isspace(unsigned char c) {
+    return ((c == ' ') || (c == '\t') || (c == '\n') || (c == '\f') || (c == '\v'));
+}
 
 #ifdef NONMATCHING
 void strtol(void) {
@@ -487,13 +120,13 @@ glabel strtol
 /* 00B624 7000AA24 90E40000 */  lbu   $a0, ($a3)
 .L7000AA28:
 /* 00B628 7000AA28 00E09025 */  move  $s2, $a3
-/* 00B62C 7000AA2C 0C002A63 */  jal   strtol_related_2
+/* 00B62C 7000AA2C 0C002A63 */  jal   isspace
 /* 00B630 7000AA30 AFA70060 */   sw    $a3, 0x60($sp)
 /* 00B634 7000AA34 50400007 */  beql  $v0, $zero, .L7000AA54
 /* 00B638 7000AA38 92420000 */   lbu   $v0, ($s2)
 /* 00B63C 7000AA3C 26520001 */  addiu $s2, $s2, 1
 .L7000AA40:
-/* 00B640 7000AA40 0C002A63 */  jal   strtol_related_2
+/* 00B640 7000AA40 0C002A63 */  jal   isspace
 /* 00B644 7000AA44 92440000 */   lbu   $a0, ($s2)
 /* 00B648 7000AA48 5440FFFD */  bnezl $v0, .L7000AA40
 /* 00B64C 7000AA4C 26520001 */   addiu $s2, $s2, 1
@@ -523,7 +156,7 @@ glabel strtol
 /* 00B6A0 7000AAA0 24010030 */  li    $at, 48
 /* 00B6A4 7000AAA4 15E10007 */  bne   $t7, $at, .L7000AAC4
 /* 00B6A8 7000AAA8 00000000 */   nop   
-/* 00B6AC 7000AAAC 0C002A3E */  jal   strtol_related
+/* 00B6AC 7000AAAC 0C002A3E */  jal   toupper
 /* 00B6B0 7000AAB0 92440001 */   lbu   $a0, 1($s2)
 /* 00B6B4 7000AAB4 24010058 */  li    $at, 88
 /* 00B6B8 7000AAB8 14410002 */  bne   $v0, $at, .L7000AAC4
@@ -535,7 +168,7 @@ glabel strtol
 /* 00B6CC 7000AACC 24010030 */  li    $at, 48
 /* 00B6D0 7000AAD0 1441000B */  bne   $v0, $at, .L7000AB00
 /* 00B6D4 7000AAD4 2413000A */   li    $s3, 10
-/* 00B6D8 7000AAD8 0C002A3E */  jal   strtol_related
+/* 00B6D8 7000AAD8 0C002A3E */  jal   toupper
 /* 00B6DC 7000AADC 92440001 */   lbu   $a0, 1($s2)
 /* 00B6E0 7000AAE0 24010058 */  li    $at, 88
 /* 00B6E4 7000AAE4 14410004 */  bne   $v0, $at, .L7000AAF8
@@ -556,7 +189,7 @@ glabel strtol
 /* 00B718 7000AB18 2414FFFF */  li    $s4, -1
 .L7000AB1C:
 /* 00B71C 7000AB1C 320400FF */  andi  $a0, $s0, 0xff
-/* 00B720 7000AB20 0C002A4C */  jal   strtol_related_0
+/* 00B720 7000AB20 0C002A4C */  jal   isdigit
 /* 00B724 7000AB24 AFA30034 */   sw    $v1, 0x34($sp)
 /* 00B728 7000AB28 10400005 */  beqz  $v0, .L7000AB40
 /* 00B72C 7000AB2C 8FA30034 */   lw    $v1, 0x34($sp)
@@ -565,11 +198,11 @@ glabel strtol
 /* 00B738 7000AB38 1000000A */  b     .L7000AB64
 /* 00B73C 7000AB3C 03008025 */   move  $s0, $t8
 .L7000AB40:
-/* 00B740 7000AB40 0C002A54 */  jal   strtol_related_1
+/* 00B740 7000AB40 0C002A54 */  jal   isalpha
 /* 00B744 7000AB44 320400FF */   andi  $a0, $s0, 0xff
 /* 00B748 7000AB48 50400026 */  beql  $v0, $zero, .L7000ABE4
 /* 00B74C 7000AB4C 8FAA0044 */   lw    $t2, 0x44($sp)
-/* 00B750 7000AB50 0C002A3E */  jal   strtol_related
+/* 00B750 7000AB50 0C002A3E */  jal   toupper
 /* 00B754 7000AB54 320400FF */   andi  $a0, $s0, 0xff
 /* 00B758 7000AB58 2450FFC9 */  addiu $s0, $v0, -0x37
 /* 00B75C 7000AB5C 321900FF */  andi  $t9, $s0, 0xff

@@ -539,7 +539,7 @@ glabel debug_menu_processor
 /* 0C5108 7F0905D8 0C0012ED */  jal   indy_grab_rgb_32bit
 /* 0C510C 7F0905DC 00000000 */   nop   
 /* 0C5110 7F0905E0 3C018003 */  lui   $at, %hi(grab_rgb_screenshot_flag)
-/* 0C5114 7F0905E4 0C000F00 */  jal   set_coloroutputmode_16bit
+/* 0C5114 7F0905E4 0C000F00 */  jal   viSetColorMode16Bit
 /* 0C5118 7F0905E8 AC206FFC */   sw    $zero, %lo(grab_rgb_screenshot_flag)($at)
 /* 0C511C 7F0905EC 0C0038B4 */  jal   osViBlack
 /* 0C5120 7F0905F0 00002025 */   move  $a0, $zero
@@ -555,7 +555,7 @@ glabel debug_menu_processor
 /* 0C5144 7F090614 0C001235 */  jal   indy_grab_jpg_32bit
 /* 0C5148 7F090618 00000000 */   nop   
 /* 0C514C 7F09061C 3C018003 */  lui   $at, %hi(grab_jpeg_screenshot_flag)
-/* 0C5150 7F090620 0C000F00 */  jal   set_coloroutputmode_16bit
+/* 0C5150 7F090620 0C000F00 */  jal   viSetColorMode16Bit
 /* 0C5154 7F090624 AC207000 */   sw    $zero, %lo(grab_jpeg_screenshot_flag)($at)
 /* 0C5158 7F090628 0C0038B4 */  jal   osViBlack
 /* 0C515C 7F09062C 00002025 */   move  $a0, $zero
@@ -760,7 +760,7 @@ debug_collisions:
 /* 0C540C 7F0908DC 10000166 */  b     .L7F090E78
 /* 0C5410 7F0908E0 8FB80018 */   lw    $t8, 0x18($sp)
 debug_allguns:
-/* 0C5414 7F0908E4 0FC26919 */  jal   get_num_players
+/* 0C5414 7F0908E4 0FC26919 */  jal   getPlayerCount
 /* 0C5418 7F0908E8 AFA0005C */   sw    $zero, 0x5c($sp)
 /* 0C541C 7F0908EC 58400162 */  blezl $v0, .L7F090E78
 /* 0C5420 7F0908F0 8FB80018 */   lw    $t8, 0x18($sp)
@@ -773,7 +773,7 @@ debug_allguns:
 /* 0C5438 7F090908 2C440001 */   sltiu $a0, $v0, 1
 /* 0C543C 7F09090C 8FAA005C */  lw    $t2, 0x5c($sp)
 /* 0C5440 7F090910 254B0001 */  addiu $t3, $t2, 1
-/* 0C5444 7F090914 0FC26919 */  jal   get_num_players
+/* 0C5444 7F090914 0FC26919 */  jal   getPlayerCount
 /* 0C5448 7F090918 AFAB005C */   sw    $t3, 0x5c($sp)
 /* 0C544C 7F09091C 8FAC005C */  lw    $t4, 0x5c($sp)
 /* 0C5450 7F090920 0182082A */  slt   $at, $t4, $v0
@@ -785,7 +785,7 @@ debug_maxammo:
 /* 0C5464 7F090934 0FC26C54 */  jal   get_cur_playernum
 /* 0C5468 7F090938 00000000 */   nop   
 /* 0C546C 7F09093C AFA20054 */  sw    $v0, 0x54($sp)
-/* 0C5470 7F090940 0FC26919 */  jal   get_num_players
+/* 0C5470 7F090940 0FC26919 */  jal   getPlayerCount
 /* 0C5474 7F090944 AFA00058 */   sw    $zero, 0x58($sp)
 /* 0C5478 7F090948 1840000D */  blez  $v0, .L7F090980
 /* 0C547C 7F09094C 00000000 */   nop   
@@ -796,7 +796,7 @@ debug_maxammo:
 /* 0C548C 7F09095C 00000000 */   nop   
 /* 0C5490 7F090960 8FAD0058 */  lw    $t5, 0x58($sp)
 /* 0C5494 7F090964 25AE0001 */  addiu $t6, $t5, 1
-/* 0C5498 7F090968 0FC26919 */  jal   get_num_players
+/* 0C5498 7F090968 0FC26919 */  jal   getPlayerCount
 /* 0C549C 7F09096C AFAE0058 */   sw    $t6, 0x58($sp)
 /* 0C54A0 7F090970 8FAF0058 */  lw    $t7, 0x58($sp)
 /* 0C54A4 7F090974 01E2082A */  slt   $at, $t7, $v0
@@ -900,7 +900,7 @@ debug_grabrgb:
 /* 0C55F0 7F090AC0 AC236FFC */  sw    $v1, %lo(grab_rgb_screenshot_flag)($at)
 /* 0C55F4 7F090AC4 0C0038B4 */  jal   osViBlack
 /* 0C55F8 7F090AC8 24040001 */   li    $a0, 1
-/* 0C55FC 7F090ACC 0C000F04 */  jal   set_coloroutputmode_32bit
+/* 0C55FC 7F090ACC 0C000F04 */  jal   viSetColorMode32Bit
 /* 0C5600 7F090AD0 00000000 */   nop   
 /* 0C5604 7F090AD4 100000E8 */  b     .L7F090E78
 /* 0C5608 7F090AD8 8FB80018 */   lw    $t8, 0x18($sp)
@@ -910,7 +910,7 @@ debug_grabjpeg:
 /* 0C5614 7F090AE4 AC237000 */  sw    $v1, %lo(grab_jpeg_screenshot_flag)($at)
 /* 0C5618 7F090AE8 0C0038B4 */  jal   osViBlack
 /* 0C561C 7F090AEC 24040001 */   li    $a0, 1
-/* 0C5620 7F090AF0 0C000F04 */  jal   set_coloroutputmode_32bit
+/* 0C5620 7F090AF0 0C000F04 */  jal   viSetColorMode32Bit
 /* 0C5624 7F090AF4 00000000 */   nop   
 /* 0C5628 7F090AF8 100000DF */  b     .L7F090E78
 /* 0C562C 7F090AFC 8FB80018 */   lw    $t8, 0x18($sp)
