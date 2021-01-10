@@ -8,8 +8,7 @@ int main(int argc, char **argv)
 {
 	/************************/
 	FILE *input, *output;
-	long int filesize;
-	int offset, length, offset_output;
+	long int filesize, offset, length, offset_output;
 	unsigned char *in_buf, *out_buf;
 	/************************/
 
@@ -34,9 +33,9 @@ int main(int argc, char **argv)
 	}
 
 	/* load length/offset arguments */
-	offset = atoi(argv[3]);
-	length = atoi(argv[4]);
-	offset_output = (argc == 6) ? atoi(argv[5]) : 0;
+	offset = atol(argv[3]);
+	length = atol(argv[4]);
+	offset_output = (argc == 6) ? atol(argv[5]) : 0;
 	if(offset < 0)
 	{
 		printf("\n  Error: Aborted, invalid offset argument");
@@ -69,20 +68,20 @@ int main(int argc, char **argv)
 		printf("\n  Error: Aborted, length goes beyond end of file");
 		goto error_input;
 	}
-	printf("\n  Input File: %s\n  Output File: %s\n  Offset: %d\n  Length: %d", argv[1], argv[2],offset, length);
+	printf("\n  Input File: %s\n  Output File: %s\n  Offset: %ld\n  Length: %ld", argv[1], argv[2], offset, length);
 	if(argc == 6)
 	{
-		printf("\n  Output Offset: %d", offset_output);
+		printf("\n  Output Offset: %ld", offset_output);
 	}
 
 	/* read input to file buffer */
-	in_buf = (unsigned char *)malloc(length);
+	in_buf = (unsigned char *)malloc((size_t)length);
 	if(in_buf == NULL)
 	{
 		printf("\n  Error: Aborted, not enough memory to load input");
 		goto error_input;
 	}
-	fread(in_buf, length, 1, input);
+	fread(in_buf, (size_t)length, 1, input);
 
 	/* open output file */
 	if(argc == 6)
@@ -115,14 +114,14 @@ int main(int argc, char **argv)
 		}
 
 		/* read output file to buffer */
-		out_buf = (unsigned char *)calloc(filesize, 1);
+		out_buf = (unsigned char *)calloc((size_t)filesize, 1);
 		if(out_buf == NULL)
 		{
 			printf("\n  Error: Aborted, not enough memory to load output");
 			goto error_offset_output;
 		}
-		fread(out_buf, filesize, 1, output);
-		memcpy(&out_buf[offset_output], &in_buf[offset], length);
+		fread(out_buf, (size_t)filesize, 1, output);
+		memcpy(&out_buf[offset_output], &in_buf[offset], (size_t)length);
 		fclose(output);
 
 		output = fopen(argv[2], "wb");
@@ -132,7 +131,7 @@ int main(int argc, char **argv)
 			free(out_buf);
 			goto error_output;
 		}
-		fwrite(out_buf, filesize, 1, output);
+		fwrite(out_buf, (size_t)filesize, 1, output);
 		free(out_buf);
 	}
 	else
@@ -143,7 +142,7 @@ int main(int argc, char **argv)
 			printf("\n  Error: Aborted, output file cannot be written");
 			goto error_output;
 		}
-		fwrite(in_buf, length, 1, output);
+		fwrite(in_buf, (size_t)length, 1, output);
 	}
 
 error_offset_output:

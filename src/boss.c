@@ -401,10 +401,10 @@ loop_18:
         }
     }
     init_player_data_ptrs_construct_viewports(phi_s1);
-    set_vtx_gfx_mem_alloc();
+    dynInitMemory();
     test_controller_presence();
     stage_load(current_stage_num);
-    init_both_video_buffers();
+    viInitBuffers();
     debug_text_related_2();
     sub_GAME_7F0C0B4C();
     video_related_2();
@@ -473,7 +473,7 @@ loop_29:
                         video_related_3(0x20000);
                         redirect_to_ramrom_replay_and_record_handlers_if_set();
                         permit_stderr(0);
-                        temp_ret_2 = get_ptr_displaylist();
+                        temp_ret_2 = dynGetMasterDisplayList();
                         sp1A4 = temp_ret_2;
                         if (debug_feature_flag != 0)
                         {
@@ -484,16 +484,16 @@ loop_29:
                         if (current_stage_num != 0x5a)
                         {
                             phi_s1_2 = 0;
-                            if (get_num_players() > 0)
+                            if (getPlayerCount() > 0)
                             {
 loop_44:
                                 set_cur_player(sub_GAME_7F09B528(phi_s1_2));
-                                set_video2_width_height(pPlayer->unk7F0, pPlayer->unk7F2);
-                                set_video2_ulx_uly(pPlayer->viewleft, pPlayer->viewtop);
+                                viSetViewSize(pPlayer->unk7F0, pPlayer->unk7F2);
+                                viSetViewPosition(pPlayer->viewleft, pPlayer->viewtop);
                                 sub_GAME_7F0BF800();
                                 temp_s1 = phi_s1_2 + 1;
                                 phi_s1_2 = temp_s1;
-                                if (temp_s1 < get_num_players())
+                                if (temp_s1 < getPlayerCount())
                                 {
                                     goto loop_44;
                                 }
@@ -540,7 +540,7 @@ loop_44:
                             //gDPSetCycleType(glistp++, 2CYCLE);
                             // ...etc
 
-                            temp_s0_3->unk0 = (s32) (((((get_video2_settings_txtClipH() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (get_video2_settings_txtClipW(temp_a0, temp_a1, temp_a2, -1) << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
+                            temp_s0_3->unk0 = (s32) (((((viGetY() + -1) & 0x3ff) * 4) | 0xf6000000) | (((((s32) (viGetX(temp_a0, temp_a1, temp_a2, -1) << 0x10) >> 0x10) + -1) & 0x3ff) << 0xe));
                             temp_s0_3->unk4 = 0;
                             phi_s3 = temp_s3 + 8;
                         }
@@ -567,16 +567,16 @@ loop_44:
                         {
                             nulled_mempLoopAllMemBanks();
                             memaGenerateListsBeforeAfterMerge();
-                            removed_debug_routine(temp_s3_3);
+                            dynRemovedFunc(temp_s3_3);
                             nullsub_41(0);
                             show_mem_use_flag = 0;
                         }
                         if (show_mem_bars_flag != 0)
                         {
-                            draw_membars(temp_s3_3);
+                            dynDrawMembars(temp_s3_3);
                         }
-                        allocate_something_in_mgfx(temp_s3_3);
-                        allocate_something_in_mvtx();
+                        dynGetFreeGfx2(temp_s3_3);
+                        dynSwapBuffers();
                         video_related_8();
                         if (get_debug_taskgrab_val() != 0)
                         {
@@ -872,14 +872,14 @@ glabel mainloop
 .L70006398:
 /* 006F98 70006398 0FC268E3 */  jal   init_player_data_ptrs_construct_viewports
 /* 006F9C 7000639C 02202025 */   move  $a0, $s1
-/* 006FA0 700063A0 0FC2F523 */  jal   set_vtx_gfx_mem_alloc
+/* 006FA0 700063A0 0FC2F523 */  jal   dynInitMemory
 /* 006FA4 700063A4 00000000 */   nop   
 /* 006FA8 700063A8 0C002DAB */  jal   test_controller_presence
 /* 006FAC 700063AC 00000000 */   nop   
 /* 006FB0 700063B0 3C048002 */  lui   $a0, %hi(current_stage_num)
 /* 006FB4 700063B4 0FC2F6AC */  jal   stage_load
 /* 006FB8 700063B8 8C8441A8 */   lw    $a0, %lo(current_stage_num)($a0)
-/* 006FBC 700063BC 0C000C49 */  jal   init_both_video_buffers
+/* 006FBC 700063BC 0C000C49 */  jal   viInitBuffers
 /* 006FC0 700063C0 00000000 */   nop   
 /* 006FC4 700063C4 0C002B6C */  jal   debug_text_related_2
 /* 006FC8 700063C8 00000000 */   nop   
@@ -967,7 +967,7 @@ glabel mainloop
 /* 0070F4 700064F4 00000000 */   nop   
 /* 0070F8 700064F8 0C000262 */  jal   permit_stderr
 /* 0070FC 700064FC 00002025 */   move  $a0, $zero
-/* 007100 70006500 0FC2F59D */  jal   get_ptr_displaylist
+/* 007100 70006500 0FC2F59D */  jal   dynGetMasterDisplayList
 /* 007104 70006504 00000000 */   nop   
 /* 007108 70006508 3C0A8002 */  lui   $t2, %hi(debug_feature_flag) 
 /* 00710C 7000650C 8D4A4300 */  lw    $t2, %lo(debug_feature_flag)($t2)
@@ -1013,7 +1013,7 @@ glabel mainloop
 /* 0071A8 700065A8 2401005A */  li    $at, 90
 /* 0071AC 700065AC 13210018 */  beq   $t9, $at, .L70006610
 /* 0071B0 700065B0 00000000 */   nop   
-/* 0071B4 700065B4 0FC26919 */  jal   get_num_players
+/* 0071B4 700065B4 0FC26919 */  jal   getPlayerCount
 /* 0071B8 700065B8 00008825 */   move  $s1, $zero
 /* 0071BC 700065BC 18400014 */  blez  $v0, .L70006610
 /* 0071C0 700065C0 00000000 */   nop   
@@ -1024,15 +1024,15 @@ glabel mainloop
 /* 0071D0 700065D0 00402025 */   move  $a0, $v0
 /* 0071D4 700065D4 8EB00000 */  lw    $s0, ($s5)
 /* 0071D8 700065D8 860407F0 */  lh    $a0, 0x7f0($s0)
-/* 0071DC 700065DC 0C00110F */  jal   set_video2_width_height
+/* 0071DC 700065DC 0C00110F */  jal   viSetViewSize
 /* 0071E0 700065E0 860507F2 */   lh    $a1, 0x7f2($s0)
 /* 0071E4 700065E4 8EB00000 */  lw    $s0, ($s5)
 /* 0071E8 700065E8 860407F4 */  lh    $a0, 0x7f4($s0)
-/* 0071EC 700065EC 0C00112F */  jal   set_video2_ulx_uly
+/* 0071EC 700065EC 0C00112F */  jal   viSetViewPosition
 /* 0071F0 700065F0 860507F6 */   lh    $a1, 0x7f6($s0)
 /* 0071F4 700065F4 0FC2FE00 */  jal   sub_GAME_7F0BF800
 /* 0071F8 700065F8 00000000 */   nop   
-/* 0071FC 700065FC 0FC26919 */  jal   get_num_players
+/* 0071FC 700065FC 0FC26919 */  jal   getPlayerCount
 /* 007200 70006600 26310001 */   addiu $s1, $s1, 1
 /* 007204 70006604 0222082A */  slt   $at, $s1, $v0
 /* 007208 70006608 1420FFEE */  bnez  $at, .L700065C4
@@ -1081,11 +1081,11 @@ glabel mainloop
 /* 0072B0 700066B0 02608025 */  move  $s0, $s3
 /* 0072B4 700066B4 AC4F0000 */  sw    $t7, ($v0)
 /* 0072B8 700066B8 AC4E0004 */  sw    $t6, 4($v0)
-/* 0072BC 700066BC 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0072BC 700066BC 0C001107 */  jal   viGetX
 /* 0072C0 700066C0 26730008 */   addiu $s3, $s3, 8
 /* 0072C4 700066C4 00028C00 */  sll   $s1, $v0, 0x10
 /* 0072C8 700066C8 0011C403 */  sra   $t8, $s1, 0x10
-/* 0072CC 700066CC 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0072CC 700066CC 0C00110B */  jal   viGetY
 /* 0072D0 700066D0 03008825 */   move  $s1, $t8
 /* 0072D4 700066D4 2459FFFF */  addiu $t9, $v0, -1
 /* 0072D8 700066D8 332803FF */  andi  $t0, $t9, 0x3ff
@@ -1137,7 +1137,7 @@ glabel mainloop
 /* 007384 70006784 00000000 */   nop   
 /* 007388 70006788 0C0028A7 */  jal   memaGenerateListsBeforeAfterMerge
 /* 00738C 7000678C 00000000 */   nop   
-/* 007390 70006790 0FC2F5DD */  jal   removed_debug_routine
+/* 007390 70006790 0FC2F5DD */  jal   dynRemovedFunc
 /* 007394 70006794 02602025 */   move  $a0, $s3
 /* 007398 70006798 0FC31994 */  jal   nullsub_41
 /* 00739C 7000679C 00002025 */   move  $a0, $zero
@@ -1148,12 +1148,12 @@ glabel mainloop
 /* 0073AC 700067AC 8D2941B8 */  lw    $t1, %lo(show_mem_bars_flag)($t1)
 /* 0073B0 700067B0 11200003 */  beqz  $t1, .L700067C0
 /* 0073B4 700067B4 00000000 */   nop   
-/* 0073B8 700067B8 0FC2F604 */  jal   draw_membars
+/* 0073B8 700067B8 0FC2F604 */  jal   dynDrawMembars
 /* 0073BC 700067BC 02602025 */   move  $a0, $s3
 .L700067C0:
-/* 0073C0 700067C0 0FC2F5A7 */  jal   allocate_something_in_mgfx
+/* 0073C0 700067C0 0FC2F5A7 */  jal   dynGetFreeGfx2
 /* 0073C4 700067C4 02602025 */   move  $a0, $s3
-/* 0073C8 700067C8 0FC2F5CE */  jal   allocate_something_in_mvtx
+/* 0073C8 700067C8 0FC2F5CE */  jal   dynSwapBuffers
 /* 0073CC 700067CC 00000000 */   nop   
 /* 0073D0 700067D0 0C000CA6 */  jal   video_related_8
 /* 0073D4 700067D4 00000000 */   nop   

@@ -250,237 +250,219 @@ u32 D_80044924 = 0;
 */
 //D:80044928
 Gfx D_80044928[] = {
-    0xFC26A004, 0x1F1093FF, 0xFC232DFF, 0xFFFFFE38, 
-    //gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2), 
-    //gDPSetCombineLERP(TEXEL1, 0, COMBINED_ALPHA, 0, TEXEL1, 0, PRIM_LOD_FRAC, 0, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
-    0x0,0x0
+    gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEIA2),
+    gsDPSetCombineLERP(TEXEL1, 0, SCALE, 0,  TEXEL1, 0, PRIM_LOD_FRAC, 0,  0, 0, 0, COMBINED,  0, 0, 0, COMBINED),
+    0,0
 };
 
 //D:80044940 - Primary
-Gfx D_80044940[] = {
-    0xB900031D, 0x0C192078, 0xB900031D, 0xC8112078, 
-    0xB900031D, 0x0C182078, 0xB900031D, 0xC8102078, 
-    0xB900031D, 0x0C192D58, 0xB900031D, 0xC8112D58, 
-    0xB900031D, 0x0C184DD8, 0xB900031D, 0xC8104DD8, 
-    0xB900031D, 0x0C1849D8, 0xB900031D, 0xC81049D8,
-    0xB900031D, 0x0C193078, 0xB900031D, 0xC8113078, 
-    0xB900031D, 0x0C192048, 0xB900031D, 0xC8112048, 
-    0xB900031D, 0x0C182048, 0xB900031D, 0xC8102048, 
-
-    /*
+Gfx FogDL_primary_80044940[] = {
     //Add FOG to all rendermodes 
     //Standard HiQuality Surface to Standard Fogable HiQuality Surface
-    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_OPA_SURF2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+    gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_OPA_SURF2),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
     //Terrain to Fogable Terrain
-    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_OPA_TERR2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_TERR2),
+    gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_OPA_TERR2),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_TERR2),
     //Standard DECAL to FOG DECAL
-    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_OPA_DECAL2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_DECAL2),
+    gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_OPA_DECAL2),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_DECAL2),
     //Transparent DECAL to  FOG Transparent DECAL
-    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_DECAL2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2),
+    gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_DECAL2),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2),
     //Transparent Surface to FOG Transparent Surface
-    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_SURF2),
+    gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_SURF2),
     // Billboard Cut-out to FOG Billboard Cut-out - eg, Mario Tree or Depot lamp
     // See PGDLists\Transparent Textures.htm for more info
-    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_TEX_EDGE2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
+    gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_TEX_EDGE2),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
     //Standard Z-Less OPA to Standard FOG Z-Less OPA
-    gDPSetRenderMode(G_RM_PASS, G_RM_AA_OPA_SURF2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_OPA_SURF2),
+    gsDPSetRenderMode(G_RM_PASS, G_RM_AA_OPA_SURF2),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_OPA_SURF2),
     //Z-Less OPA Terrain to Z-Less Fog OPA Terrain
-    gDPSetRenderMode(G_RM_PASS, G_RM_AA_OPA_TERR2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_OPA_TERR2),
-    */
-0x0, 0x0
+    gsDPSetRenderMode(G_RM_PASS, G_RM_AA_OPA_TERR2),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_OPA_TERR2),
+    0x0, 0x0
 };
 
 //D:800449C8 - Secondary
-Gfx D_800449C8[] = {
-    0xB900031D, 0x0C184DD8, 0xB900031D, 0xC8104DD8,
-    0xB900031D, 0x0C1849D8, 0xB900031D, 0xC81049D8, 
-    0xB900031D, 0x0C193078, 0xB900031D, 0xC8113078,
-    0xFC26A004, 0x1F1093FF, 0xFC26A004, 0x1F1493FF, 
-    0xFC121824, 0xFF33FFFF, 0xFC121A24, 0xFF37FFFF,
-    0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD,
-    0xFC127E24, 0xFFFFF9FC, 0xFC127E24, 0xFFFFFBFD,
-    0xFC26A004, 0x1F1093FF, 0xFC26A004, 0x1F1493FF,
-    0xFC121824, 0xFF33FFFF, 0xFC121A24, 0xFF37FFFF,
-    0xFC26A004, 0x1FFC93FC, 0xFC26A004, 0x1FFC93FD,
-    0xFC127E24, 0xFFFFF9FC, 0xFC127E24, 0xFFFFFBFD,
-    0xFCFFFFFF, 0xFFFE7838, 0xFCFFFFFF, 0xFFFE7A38, 
-    0xFCFFFFFF, 0xFFFE793C, 0xFCFFFFFF, 0xFFFE7B3D,
-    0xFC26E404, 0x1F10FFFF, 0xFC26E404, 0x1F14FFFF,   
-    /*
+Gfx FogDL_secondary_800449C8[] = {
     //Add FOG to Rendermodes
     //Transparent DECAL to  FOG Transparent DECAL
-    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_DECAL2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2),
+    gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_DECAL2),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_DECAL2),
     //Transparent Surface to FOG Transparent Surface
-    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_SURF2),
+    gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2),
+    gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_SURF2),
     // Billboard Cut-out to FOG Billboard Cut-out - eg, Mario Tree or Depot lamp
-    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_TEX_EDGE2), gDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_TEX_EDGE2),
-
+    0xB900031D, 0x0C193078,
+    0xB900031D, 0xC8113078,
     // Swap all refrences to Shade in Alpha to Environment
-    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGBA_EnvA2), 
-    gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA) , gDPSetCombineMode(ModulateRGBA_EnvA, ModulateRGBA_EnvA), 
-    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGB2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGB_EnvA2),
-    gDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB) , gDPSetCombineMode(ModulateRGB_EnvA, ModulateRGB_EnvA), 
-    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGBA_EnvA2), 
-    gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA) , gDPSetCombineMode(ModulateRGBA_EnvA, ModulateRGBA_EnvA), 
-    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGB2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGB_EnvA2), 
-    gDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB) , gDPSetCombineMode(ModulateRGB_EnvA, ModulateRGB_EnvA),
-    gDPSetCombineMode(G_CC_SHADE, G_CC_PASS2) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_PASS2),
-    gDPSetCombineMode(G_CC_SHADE, G_CC_SHADE) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_SHADE_EnvA),
+    gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEIA2),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SHADE, 0,  COMBINED, 0, ENVIRONMENT, 0),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  TEXEL0, 0, ENVIRONMENT, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, ENVIRONMENT, 0),
+    gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEI2),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SHADE, 0,  0, 0, 0, ENVIRONMENT),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE,  TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, ENVIRONMENT,  TEXEL0, 0, SHADE, 0,  0, 0, 0, ENVIRONMENT),
+    gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEIA2),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SHADE, 0,  COMBINED, 0, ENVIRONMENT, 0),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  TEXEL0, 0, ENVIRONMENT, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, ENVIRONMENT, 0),
+    gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEI2),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SHADE, 0,  0, 0, 0, ENVIRONMENT),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE,  TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, ENVIRONMENT,  TEXEL0, 0, SHADE, 0,  0, 0, 0, ENVIRONMENT),
+    gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, SHADE,  0, 0, 0, COMBINED,  0, 0, 0, COMBINED),
+    gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, ENVIRONMENT,  0, 0, 0, COMBINED,  0, 0, 0, COMBINED),
+    gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, SHADE,  0, 0, 0, SHADE,  0, 0, 0, SHADE),
+    gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, ENVIRONMENT,  0, 0, 0, SHADE,  0, 0, 0, ENVIRONMENT),
     // This one is an oddball... its extra here AND is weird using Tile1 only for Alpha
-    gDPSetCombineMode(TLRGB_ATile1, G_CC_MODULATERGBA) , gDPSetCombineMode(TLRGB_ATile1, ModulateRGB_EnvA2),
-    */
-    0x0, 0x0
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  1, 0, TEXEL1, 0,  COMBINED, 0, SHADE, 0,  COMBINED, 0, SHADE, 0),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  1, 0, TEXEL1, 0,  COMBINED, 0, SHADE, 0,  COMBINED, 0, ENVIRONMENT, 0),   
+    0x0,
+    0x0
 };
 
 //D:80044AB0
 // Loaded once on first time entering level, only once ever
-u64 D_80044AB0[] = {
-    0xFC26A0041F1093FF, 0xFC26A0041F1493FF,
-    0xFC121824FF33FFFF, 0xFC121A24FF37FFFF, 
-    0xFC26A0041FFC93FC, 0xFC26A0041FFC93FD,
-    0xFC127E24FFFFF9FC, 0xFC127E24FFFFFBFD, 
-    0xFC26A0041F1093FF, 0xFC26A0041F1493FF,
-    0xFC121824FF33FFFF, 0xFC121A24FF37FFFF,
-    0xFC26A0041FFC93FC, 0xFC26A0041FFC93FD, 
-    0xFC127E24FFFFF9FC, 0xFC127E24FFFFFBFD,
-    0xFCFFFFFFFFFE7838, 0xFCFFFFFFFFFE7A38,
-    0xFCFFFFFFFFFE793C, 0xFCFFFFFFFFFE7B3D, 
-    /*
-    // Swap all refrences to Shade in Alpha to Environment
-    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGBA_EnvA2), 
-    gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA) , gDPSetCombineMode(ModulateRGBA_EnvA, ModulateRGBA_EnvA), 
-    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGB2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGB_EnvA2),
-    gDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB) , gDPSetCombineMode(ModulateRGB_EnvA, ModulateRGB_EnvA), 
-    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGBA_EnvA2), 
-    gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA) , gDPSetCombineMode(ModulateRGBA_EnvA, ModulateRGBA_EnvA), 
-    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGB2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGB_EnvA2), 
-    gDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB) , gDPSetCombineMode(ModulateRGB_EnvA, ModulateRGB_EnvA),
-    gDPSetCombineMode(G_CC_SHADE, G_CC_PASS2) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_PASS2),
-    gDPSetCombineMode(G_CC_SHADE, G_CC_SHADE) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_SHADE_EnvA),
-    */
-    0x0
+Gfx D_80044AB0[] = {
+    gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEIA2),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SHADE, 0,  COMBINED, 0, ENVIRONMENT, 0),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  TEXEL0, 0, ENVIRONMENT, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, ENVIRONMENT, 0),
+    gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEI2),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SHADE, 0,  0, 0, 0, ENVIRONMENT),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE,  TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, ENVIRONMENT,  TEXEL0, 0, SHADE, 0,  0, 0, 0, ENVIRONMENT),
+    gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEIA2),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SHADE, 0,  COMBINED, 0, ENVIRONMENT, 0),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  TEXEL0, 0, ENVIRONMENT, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, ENVIRONMENT, 0),
+    gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEI2),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SHADE, 0,  0, 0, 0, ENVIRONMENT),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE,  TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, ENVIRONMENT,  TEXEL0, 0, SHADE, 0,  0, 0, 0, ENVIRONMENT),
+    gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, SHADE,  0, 0, 0, COMBINED,  0, 0, 0, COMBINED),
+    gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, ENVIRONMENT,  0, 0, 0, COMBINED,  0, 0, 0, COMBINED),
+    gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, SHADE,  0, 0, 0, SHADE,  0, 0, 0, SHADE),
+    gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, ENVIRONMENT,  0, 0, 0, SHADE,  0, 0, 0, ENVIRONMENT),
+    0,0
 };
 
 //D:80044B58
 // Loaded once on first time entering level, only once ever
-u64 D_80044B58[] = {
-    0xFC26A0041F1093FF, 0xFC26A0041F1493FF, 
-    0xFC121824FF33FFFF, 0xFC121A24FF37FFFF, 
-    0xFC26A0041FFC93FC, 0xFC26A0041FFC93FD,
-    0xFC127E24FFFFF9FC, 0xFC127E24FFFFFBFD, 
-    0xFC26A0041F1093FF, 0xFC26A0041F1493FF, 
-    0xFC121824FF33FFFF, 0xFC121A24FF37FFFF,
-    0xFC26A0041FFC93FC, 0xFC26A0041FFC93FD, 
-    0xFC127E24FFFFF9FC, 0xFC127E24FFFFFBFD, 
-    0xFCFFFFFFFFFE7838, 0xFCFFFFFFFFFE7A38,
-    0xFCFFFFFFFFFE793C, 0xFCFFFFFFFFFE7B3D, 
-    /*
-    // Swap all refrences to Shade in Alpha to Environment
-    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGBA_EnvA2), 
-    gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA2) , gDPSetCombineMode(ModulateRGBA_EnvA, ModulateRGBA_EnvA2), 
-    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGB2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGB_EnvA2),
-    gDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB2) , gDPSetCombineMode(ModulateRGB_EnvA, ModulateRGB_EnvA2), 
-    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGBA_EnvA2), 
-    gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA2) , gDPSetCombineMode(ModulateRGBA_EnvA, ModulateRGBA_EnvA2), 
-    gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGB2) , gDPSetCombineMode(G_CC_TRILERP, ModulateRGB_EnvA2), 
-    gDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB2) , gDPSetCombineMode(ModulateRGB_EnvA, ModulateRGB_EnvA2),
-    gDPSetCombineMode(G_CC_SHADE, G_CC_PASS2) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_PASS2),
-    gDPSetCombineMode(G_CC_SHADE, G_CC_SHADE2) , gDPSetCombineMode(G_CC_SHADE_EnvA, G_CC_SHADE_EnvA2),
-    */
-    0x0
+Gfx D_80044B58[] = {
+    gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEIA2),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SHADE, 0,  COMBINED, 0, ENVIRONMENT, 0),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  TEXEL0, 0, ENVIRONMENT, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, ENVIRONMENT, 0),
+    gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEI2),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SHADE, 0,  0, 0, 0, ENVIRONMENT),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE,  TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, ENVIRONMENT,  TEXEL0, 0, SHADE, 0,  0, 0, 0, ENVIRONMENT),
+    gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEIA2),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SHADE, 0,  COMBINED, 0, ENVIRONMENT, 0),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  TEXEL0, 0, ENVIRONMENT, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, ENVIRONMENT, 0),
+    gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEI2),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SHADE, 0,  0, 0, 0, ENVIRONMENT),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE,  TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, ENVIRONMENT,  TEXEL0, 0, SHADE, 0,  0, 0, 0, ENVIRONMENT),
+    gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, SHADE,  0, 0, 0, COMBINED,  0, 0, 0, COMBINED),
+    gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, ENVIRONMENT,  0, 0, 0, COMBINED,  0, 0, 0, COMBINED),
+    gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, SHADE,  0, 0, 0, SHADE,  0, 0, 0, SHADE),
+    gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, ENVIRONMENT,  0, 0, 0, SHADE,  0, 0, 0, ENVIRONMENT),
+    0,0
 };
 
 //D:80044C00
-u64 D_80044C00[] = {
-    0xB900031D005049D8, 0xB900031D00553078, 
-    0xB900031D0C1849D8, 0xB900031D0C193078, 
-    /*
+Gfx BillboardDL_80044C00[] = {
     //Transparent 1Cycle to  BillBoard 1Cycle
-    gDPSetRenderMode(G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2), gDPSetRenderMode(G_RM_AA_ZB_TEX_EDGE, G_RM_AA_ZB_TEX_EDGE2),
+    gsDPSetRenderMode(G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2), gsDPSetRenderMode(G_RM_AA_ZB_TEX_EDGE, G_RM_AA_ZB_TEX_EDGE2),
     //Transparent Surface to Billboard 
-    gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_TEX_EDGE2),
-    */
-    0x0
+    gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_TEX_EDGE2),
+    0x0,0x0
 };
 
 //D:80044C28
 //water
-u64 D_80044C28[] = {
-    0xB900031D00552078, 0xB900031D00502078, 
-    0xB900031D0C192078, 0xB900031D0C182078,
+Gfx ParticleDL_80044C28[] = {
+    0xB900031D, 0x00552078, 0xB900031D, 0x00502078, 
+    0xB900031D, 0x0C192078, 0xB900031D, 0x0C182078,
 	/*
 	//1 Cycle Opa to Particle
 	gDPSetRenderMode(RM_AA_ZB_OPA_SURF, RM_AA_ZB_OPA_SURF2), gDPSetRenderMode(G_RM_AA_ZB_PCL_SURF, G_RM_AA_ZB_PCL_SURF2),
 	//2 cycle Opa to Particle
 	gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_OPA_SURF2), gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_PCL_SURF2),
 	*/
-    0x0
+    0x0, 0
 };
 
 //D:80044C50
-u64 D_80044C50[] = {
-    0xB900031D0C1849D8, 0xB900031D0C184B50, 
-	/*
+Gfx transparent2cloudDL_80044C50[] = {
 	//Transparent to Cloud (Saves AA - Stops Jaggies from appearing behind BillBoard)
-	gDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gDPSetRenderMode(G_RM_PASS, G_RM_ZB_CLD_SURF2),
-	*/
-	0x0
+	gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_SURF2), gsDPSetRenderMode(G_RM_PASS, G_RM_ZB_CLD_SURF2),
+	0,0
 };
 
 //D:80044C68
 //(Wallet Bond - Main Menu)
-u64 D_80044C68[] = {
-    0xBA00140200000000, 0xBA00140200100000, //1Cycle --> 2Cycle
-    0xB900031D00502048, 0xB900031D08D02048, 
-    0xFC127E24FFFFF9FC, 0xFC127FFFFFFFF838, 
+Gfx WalletBondDL_80044C68[] = {
+    gsDPSetCycleType(G_CYC_1CYCLE),
+    gsDPSetCycleType(G_CYC_2CYCLE), //1Cycle --> 2Cycle
+    0xB900031D, 0x00502048,
+    0xB900031D, 0x08D02048,
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE,  TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE,  0, 0, 0, COMBINED,  0, 0, 0, COMBINED),
     /*
 	//1 Cycle particle Surface to 2 Cycle colour + 1-a*Fog ???
 	gsDPSetCycleType(G_CYC_2CYCLE),
 	gDPSetRenderMode(G_RM_AA_PCL_SURF, G_RM_AA_PCL_SURF2), gDPSetRenderMode(AA_EN | IM_RD | CVG_DST_CLAMP | ALPHA_CVG_SEL | ZMODE_OPA | GBL_c1(G_BL_CLR_IN, G_BL_A_SHADE, G_BL_CLR_FOG, G_BL_1MA) | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA)),
 	gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_PASS2), gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2),
 	*/
-	0x0
+	0x0, 0
 };
 
 //D:80044CA0
-u64 D_80044CA0[] = {
-    0xFC127E24FFFFF9FC, 0xFC137E26FFFFFBFD, 
-    0xFC121824FF33FFFF, 0xFC131A26FF37FFFF, 
-    0xFC127E24FFFFF9FC, 0xFC137E26FFFFFBFD,
-    0xFC121824FF33FFFF, 0xFC131A26FF37FFFF, 
-    0xFCFFFFFFFFFE793C, 0xFC637EC6FFFFFBFD, 
-    0xFC26A0041FFC93FC, 0xFC26A0061FFC93FD,
-    0xFC26A0041F1093FF, 0xFC26A0061F1493FF, 
-    0xFC26A0041FFC93FC, 0xFC26A0061FFC93FD, 
-    0xFC26A0041F1093FF, 0xFC26A0061F1493FF,
-    0xFC26E4041FFCFFFC, 0xFC26E4061FFCFFFD, 
-    0xFC26E4041F10FFFF, 0xFC26E4061F14FFFF, 
-    0xFC26E4041FFCFFFC, 0xFC26E4061FFCFFFD,
-    0xFC26E4041F10FFFF, 0xFC26E4061F14FFFF, 
-    0xFCFFFFFFFFFE7838, 0xFC637FFFFFFFFA38, 
-    /*
-	gDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB2) , gDPSetCombineMode(ModulateRGB_EnvA, ModulateRGB_EnvA2), 
- 	gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA2) , gDPSetCombineMode(ModulateRGBA_EnvA, ModulateRGBA_EnvA2), 
- 	gDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB2) , gDPSetCombineMode(ModulateRGB_EnvA, ModulateRGB_EnvA2), 
- 	gDPSetCombineMode(G_CC_MODULATERGBA, G_CC_MODULATERGBA2) , gDPSetCombineMode(ModulateRGBA_EnvA, ModulateRGBA_EnvA2), 
- 	gDPSetCombineMode(G_CC_SHADE, G_CC_SHADE2), gDPSetCombineLERP(CENTER, 0, COMBINED_ALPHA, 0, 0, 0, 0, ENVIRONMENT, CENTER, 0, COMBINED_ALPHA, 0, 0, 0, 0, ENVIRONMENT),
- 	gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGB2) , gDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, COMBINED, 0, COMBINED_ALPHA, 0, 0, 0, 0, ENVIRONMENT),
- 	gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2), gDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, COMBINED, 0, COMBINED_ALPHA, 0, COMBINED, 0, ENVIRONMENT, 0),
- 	gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGB2) , gDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, COMBINED, 0, COMBINED_ALPHA, 0, 0, 0, 0, ENVIRONMENT),
- 	gDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATERGBA2), gDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, COMBINED, 0, COMBINED_ALPHA, 0, COMBINED, 0, ENVIRONMENT, 0),
- 	gDPSetCombineMode(TLRGB_ATile1, G_CC_MODULATERGB2), gDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, TEXEL1, 0, COMBINED, 0, COMBINED_ALPHA, 0, 0, 0, 0, ENVIRONMENT),
- 	gDPSetCombineMode(TLRGB_ATile1, G_CC_MODULATERGBA2), gDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, TEXEL1, 0, COMBINED, 0, COMBINED_ALPHA, 0, COMBINED, 0, ENVIRONMENT, 0),
- 	gDPSetCombineMode(TLRGB_ATile1, G_CC_MODULATERGB2), gDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, TEXEL1, 0, COMBINED, 0, COMBINED_ALPHA, 0, 0, 0, 0, ENVIRONMENT),
- 	gDPSetCombineMode(TLRGB_ATile1, G_CC_MODULATERGBA2), gDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, TEXEL1, 0, COMBINED, 0, COMBINED_ALPHA, 0, COMBINED, 0, ENVIRONMENT, 0),
- 	gDPSetCombineMode(G_CC_SHADE, G_CC_PASS2), gDPSetCombineLERP(CENTER, 0, COMBINED_ALPHA, 0, 0, 0, 0, ENVIRONMENT 0, 0, 0, COMBINED, 0, 0, 0, COMBINED),
-	*/
-	0x0
+Gfx D_80044CA0[] = {
+	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE,  TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE),
+    gsDPSetCombineLERP(TEXEL0, 0, SCALE, 0,  0, 0, 0, ENVIRONMENT,  TEXEL0, 0, SCALE, 0,  0, 0, 0, ENVIRONMENT),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0),
+    gsDPSetCombineLERP(TEXEL0, 0, SCALE, 0,  TEXEL0, 0, ENVIRONMENT, 0,  TEXEL0, 0, SCALE, 0,  TEXEL0, 0, ENVIRONMENT, 0),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE,  TEXEL0, 0, SHADE, 0,  0, 0, 0, SHADE),
+    gsDPSetCombineLERP(TEXEL0, 0, SCALE, 0,  0, 0, 0, ENVIRONMENT,  TEXEL0, 0, SCALE, 0,  0, 0, 0, ENVIRONMENT),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0,  TEXEL0, 0, SHADE, 0),
+    gsDPSetCombineLERP(TEXEL0, 0, SCALE, 0,  TEXEL0, 0, ENVIRONMENT, 0,  TEXEL0, 0, SCALE, 0,  TEXEL0, 0, ENVIRONMENT, 0),
+    gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, SHADE,  0, 0, 0, SHADE,  0, 0, 0, SHADE),
+    gsDPSetCombineLERP(CENTER, 0, SCALE, 0,  0, 0, 0, ENVIRONMENT,  CENTER, 0, SCALE, 0,  0, 0, 0, ENVIRONMENT),
+    gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEI2),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SCALE, 0,  0, 0, 0, ENVIRONMENT),
+    gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEIA2),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SCALE, 0,  COMBINED, 0, ENVIRONMENT, 0),
+    gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEI2),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SCALE, 0,  0, 0, 0, ENVIRONMENT),
+    gsDPSetCombineMode(G_CC_TRILERP, G_CC_MODULATEIA2),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  COMBINED, 0, SCALE, 0,  COMBINED, 0, ENVIRONMENT, 0),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  1, 0, TEXEL1, 0,  COMBINED, 0, SHADE, 0,  0, 0, 0, SHADE),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  1, 0, TEXEL1, 0,  COMBINED, 0, SCALE, 0,  0, 0, 0, ENVIRONMENT),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  1, 0, TEXEL1, 0,  COMBINED, 0, SHADE, 0,  COMBINED, 0, SHADE, 0),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  1, 0, TEXEL1, 0,  COMBINED, 0, SCALE, 0,  COMBINED, 0, ENVIRONMENT, 0),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  1, 0, TEXEL1, 0,  COMBINED, 0, SHADE, 0,  0, 0, 0, SHADE),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  1, 0, TEXEL1, 0,  COMBINED, 0, SCALE, 0,  0, 0, 0, ENVIRONMENT),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  1, 0, TEXEL1, 0,  COMBINED, 0, SHADE, 0,  COMBINED, 0, SHADE, 0),
+    gsDPSetCombineLERP(TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  1, 0, TEXEL1, 0,  COMBINED, 0, SCALE, 0,  COMBINED, 0, ENVIRONMENT, 0),
+    gsDPSetCombineLERP(0, 0, 0, SHADE,  0, 0, 0, SHADE,  0, 0, 0, COMBINED,  0, 0, 0, COMBINED),
+    gsDPSetCombineLERP(CENTER, 0, SCALE, 0,  0, 0, 0, ENVIRONMENT,  0, 0, 0, COMBINED,  0, 0, 0, COMBINED),
+	0,0
 };
 
 //D:80044D88
 s32 *ptrDynamic_CC_RM_LUT[] = {
-    &D_80044928, &D_80044940, &D_80044C00, &D_80044C28, &D_80044C50,
-    &D_800449C8, &D_80044AB0, &D_80044B58, &D_80044C68, &D_80044CA0
+    &D_80044928, &FogDL_primary_80044940, &BillboardDL_80044C00, &ParticleDL_80044C28, &transparent2cloudDL_80044C50,
+    &FogDL_secondary_800449C8, &D_80044AB0, &D_80044B58, &WalletBondDL_80044C68, &D_80044CA0
 };
 //D:80044DB0
 s32 D_80044DB0 = 0;
@@ -1028,7 +1010,7 @@ glabel sub_GAME_7F0B3C8C
 /* 0E8880 7F0B3D50 56B90049 */  bnel  $s5, $t9, .L7F0B3E78
 /* 0E8884 7F0B3D54 26730001 */   addiu $s3, $s3, 1
 /* 0E8888 7F0B3D58 26100008 */  addiu $s0, $s0, 8
-/* 0E888C 7F0B3D5C 0FC1E0DD */  jal   get_BONDdata_field_10D8
+/* 0E888C 7F0B3D5C 0FC1E0DD */  jal   currentPlayerGetProjectionMatrix
 /* 0E8890 7F0B3D60 AE340000 */   sw    $s4, ($s1)
 /* 0E8894 7F0B3D64 0C003A2C */  jal   osVirtualToPhysical
 /* 0E8898 7F0B3D68 00402025 */   move  $a0, $v0
@@ -1081,7 +1063,7 @@ glabel sub_GAME_7F0B3C8C
 /* 0E8948 7F0B3E18 02008825 */  move  $s1, $s0
 .L7F0B3E1C:
 /* 0E894C 7F0B3E1C AE340000 */  sw    $s4, ($s1)
-/* 0E8950 7F0B3E20 0FC1E0DD */  jal   get_BONDdata_field_10D8
+/* 0E8950 7F0B3E20 0FC1E0DD */  jal   currentPlayerGetProjectionMatrix
 /* 0E8954 7F0B3E24 26100008 */   addiu $s0, $s0, 8
 /* 0E8958 7F0B3E28 0C003A2C */  jal   osVirtualToPhysical
 /* 0E895C 7F0B3E2C 00402025 */   move  $a0, $v0
@@ -1183,7 +1165,7 @@ glabel sub_GAME_7F0B3C8C
 /* 0E8ABC 7F0B3F8C 02008825 */  move  $s1, $s0
 .L7F0B3F90:
 /* 0E8AC0 7F0B3F90 AE340000 */  sw    $s4, ($s1)
-/* 0E8AC4 7F0B3F94 0FC1E0DD */  jal   get_BONDdata_field_10D8
+/* 0E8AC4 7F0B3F94 0FC1E0DD */  jal   currentPlayerGetProjectionMatrix
 /* 0E8AC8 7F0B3F98 26100008 */   addiu $s0, $s0, 8
 /* 0E8ACC 7F0B3F9C 0C003A2C */  jal   osVirtualToPhysical
 /* 0E8AD0 7F0B3FA0 00402025 */   move  $a0, $v0
@@ -1531,7 +1513,7 @@ glabel load_bg_file
 /* 0E8DFC 7F0B42CC 01F40019 */  multu $t7, $s4
 /* 0E8E00 7F0B42D0 0000C012 */  mflo  $t8
 /* 0E8E04 7F0B42D4 0238C821 */  addu  $t9, $s1, $t8
-/* 0E8E08 7F0B42D8 0FC2CA54 */  jal   sub_GAME_7F0B2950
+/* 0E8E08 7F0B42D8 0FC2CA54 */  jal   setLevelScale
 /* 0E8E0C 7F0B42DC C72C000C */   lwc1  $f12, 0xc($t9)
 /* 0E8E10 7F0B42E0 8E480000 */  lw    $t0, ($s2)
 /* 0E8E14 7F0B42E4 01140019 */  multu $t0, $s4
@@ -1555,7 +1537,7 @@ glabel load_bg_file
 /* 0E8E5C 7F0B432C E6040000 */  swc1  $f4, ($s0)
 /* 0E8E60 7F0B4330 0FC225DB */  jal   sub_GAME_7F08976C
 /* 0E8E64 7F0B4334 C60C0000 */   lwc1  $f12, ($s0)
-/* 0E8E68 7F0B4338 0FC16313 */  jal   sub_GAME_7F058C4C
+/* 0E8E68 7F0B4338 0FC16313 */  jal   matrix_4x4_7F058C4C
 /* 0E8E6C 7F0B433C C60C0000 */   lwc1  $f12, ($s0)
 /* 0E8E70 7F0B4340 8EE20000 */  lw    $v0, ($s7)
 /* 0E8E74 7F0B4344 3C038008 */  lui   $v1, %hi(dword_CODE_bss_8007BF98)
@@ -1893,7 +1875,7 @@ glabel load_bg_file
 #ifdef NONMATCHING
 void sub_GAME_7F0B47E0(void) {
     sub_GAME_7F0B667C();
-    sub_GAME_7F058C4C(1.0);
+    matrix_4x4_7F058C4C(1.0);
 }
 #else
 GLOBAL_ASM(
@@ -1905,7 +1887,7 @@ glabel sub_GAME_7F0B47E0
 /* 0E931C 7F0B47EC 00000000 */   nop   
 /* 0E9320 7F0B47F0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0E9324 7F0B47F4 44816000 */  mtc1  $at, $f12
-/* 0E9328 7F0B47F8 0FC16313 */  jal   sub_GAME_7F058C4C
+/* 0E9328 7F0B47F8 0FC16313 */  jal   matrix_4x4_7F058C4C
 /* 0E932C 7F0B47FC 00000000 */   nop   
 /* 0E9330 7F0B4800 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0E9334 7F0B4804 27BD0018 */  addiu $sp, $sp, 0x18
@@ -2544,8 +2526,8 @@ glabel sub_GAME_7F0B4E40
 /* 0E9A9C 7F0B4F6C 35080040 */  ori   $t0, (0x01030040 & 0xFFFF) # ori $t0, $t0, 0x40
 /* 0E9AA0 7F0B4F70 00801025 */  move  $v0, $a0
 /* 0E9AA4 7F0B4F74 AC480000 */  sw    $t0, ($v0)
-/* 0E9AA8 7F0B4F78 3C098006 */  lui   $t1, %hi(m) 
-/* 0E9AAC 7F0B4F7C 8D290820 */  lw    $t1, %lo(m)($t1)
+/* 0E9AA8 7F0B4F78 3C098006 */  lui   $t1, %hi(projectionMatrix) 
+/* 0E9AAC 7F0B4F7C 8D290820 */  lw    $t1, %lo(projectionMatrix)($t1)
 /* 0E9AB0 7F0B4F80 24840008 */  addiu $a0, $a0, 8
 /* 0E9AB4 7F0B4F84 0FC22F3D */  jal   sub_GAME_7F08BCF4
 /* 0E9AB8 7F0B4F88 AC490004 */   sw    $t1, 4($v0)
@@ -2561,7 +2543,7 @@ glabel sub_GAME_7F0B4E40
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B4F9C(s32 arg0) {
+s32 sub_GAME_7F0B4F9C(u8 arg0) {
     return (dword_CODE_bss_8007FF94 + (arg0 * 4))->unk4;
 }
 #else
@@ -2883,7 +2865,7 @@ void sub_GAME_7F0B5208(s32 arg0, void *arg1) {
     s32 phi_s3_3;
 
     // Node 0
-    video_related_27(&sp3C);
+    viGetZRange(&sp3C);
     sp40 = (f32) (sp40 / D_800413FC);
     phi_v1 = 0;
     phi_a2 = ((arg0 * 0x50) + &array_room_info);
@@ -3077,7 +3059,7 @@ glabel sub_GAME_7F0B5208
 /* 0E9D70 7F0B5240 00009825 */  move  $s3, $zero
 /* 0E9D74 7F0B5244 0000A025 */  move  $s4, $zero
 /* 0E9D78 7F0B5248 0000A825 */  move  $s5, $zero
-/* 0E9D7C 7F0B524C 0C0011AB */  jal   video_related_27
+/* 0E9D7C 7F0B524C 0C0011AB */  jal   viGetZRange
 /* 0E9D80 7F0B5250 27A4003C */   addiu $a0, $sp, 0x3c
 /* 0E9D84 7F0B5254 3C018004 */  lui   $at, %hi(D_800413FC)
 /* 0E9D88 7F0B5258 C42613FC */  lwc1  $f6, %lo(D_800413FC)($at)
@@ -3255,7 +3237,7 @@ void sub_GAME_7F0B5488(void *arg0, void *arg1) {
     *arg1 = (f32) (*arg0 * room_data_float2);
     arg1->unk4 = (f32) (arg0->unk4 * room_data_float2);
     arg1->unk8 = (f32) (arg0->unk8 * room_data_float2);
-    matrix_4x4_transform_vector_in_place(get_BONDdata_field_10CC(), arg1, arg0);
+    matrix_4x4_transform_vector_in_place(currentPlayerGetMatrix10CC(), arg1, arg0);
     sub_GAME_7F078060(arg1, arg1);
     if (0.0f < arg1->unk8)
     {
@@ -3272,7 +3254,7 @@ glabel sub_GAME_7F0B5488
 /* 0E9FBC 7F0B548C AFBF001C */  sw    $ra, 0x1c($sp)
 /* 0E9FC0 7F0B5490 AFB00018 */  sw    $s0, 0x18($sp)
 /* 0E9FC4 7F0B5494 00A08025 */  move  $s0, $a1
-/* 0E9FC8 7F0B5498 0FC1E0F1 */  jal   get_BONDdata_field_10CC
+/* 0E9FC8 7F0B5498 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
 /* 0E9FCC 7F0B549C AFA40020 */   sw    $a0, 0x20($sp)
 /* 0E9FD0 7F0B54A0 8FA60020 */  lw    $a2, 0x20($sp)
 /* 0E9FD4 7F0B54A4 3C038004 */  lui   $v1, %hi(room_data_float2)
@@ -3343,11 +3325,11 @@ glabel sub_GAME_7F0B5528
 /* 0EA08C 7F0B555C AFB00030 */  sw    $s0, 0x30($sp)
 /* 0EA090 7F0B5560 F7B80028 */  sdc1  $f24, 0x28($sp)
 /* 0EA094 7F0B5564 F7B60020 */  sdc1  $f22, 0x20($sp)
-/* 0EA098 7F0B5568 0FC1E0F1 */  jal   get_BONDdata_field_10CC
+/* 0EA098 7F0B5568 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
 /* 0EA09C 7F0B556C AFA400B0 */   sw    $a0, 0xb0($sp)
 /* 0EA0A0 7F0B5570 AFA200AC */  sw    $v0, 0xac($sp)
 /* 0EA0A4 7F0B5574 241E0001 */  li    $fp, 1
-/* 0EA0A8 7F0B5578 0C0011AB */  jal   video_related_27
+/* 0EA0A8 7F0B5578 0C0011AB */  jal   viGetZRange
 /* 0EA0AC 7F0B557C 27A40098 */   addiu $a0, $sp, 0x98
 /* 0EA0B0 7F0B5580 3C018004 */  lui   $at, %hi(D_800413FC)
 /* 0EA0B4 7F0B5584 C42613FC */  lwc1  $f6, %lo(D_800413FC)($at)
@@ -9760,9 +9742,9 @@ f32 sub_GAME_7F0B908C(void) {
     // Node 0
     sp2C = (f32) D_80041404;
     sp24 = (f32) D_80041404.unk4;
-    sp28 = (f32) ((f32) D_8004140C + (f32) get_video2_settings_txtClipW());
-    sp20 = (f32) ((f32) D_80041410 + (f32) get_video2_settings_txtClipH());
-    pPlayer->unk1118 = (f32) get_video2_settings_ulx();
+    sp28 = (f32) ((f32) D_8004140C + (f32) viGetX());
+    sp20 = (f32) ((f32) D_80041410 + (f32) viGetY());
+    pPlayer->unk1118 = (f32) viGetViewLeft();
     if (pPlayer->unk1118 < sp2C)
     {
         // Node 1
@@ -9775,7 +9757,7 @@ f32 sub_GAME_7F0B908C(void) {
         pPlayer->unk1118 = sp28;
     }
     // Node 4
-    pPlayer->unk111C = (f32) get_video2_settings_uly(sp28, &pPlayer);
+    pPlayer->unk111C = (f32) viGetViewTop(sp28, &pPlayer);
     if (pPlayer->unk111C < sp24)
     {
         // Node 5
@@ -9788,8 +9770,8 @@ f32 sub_GAME_7F0B908C(void) {
         pPlayer->unk111C = sp20;
     }
     // Node 8
-    sp1E = get_video2_settings_ulx(sp20, &pPlayer);
-    pPlayer->unk1120 = (f32) (get_video2_settings_width() + sp1E);
+    sp1E = viGetViewLeft(sp20, &pPlayer);
+    pPlayer->unk1120 = (f32) (viGetViewWidth() + sp1E);
     if (pPlayer->unk1120 < sp2C)
     {
         // Node 9
@@ -9802,8 +9784,8 @@ f32 sub_GAME_7F0B908C(void) {
         pPlayer->unk1120 = sp28;
     }
     // Node 12
-    sp1E = get_video2_settings_uly(&pPlayer);
-    pPlayer->unk1124 = (f32) (get_video2_settings_height() + sp1E);
+    sp1E = viGetViewTop(&pPlayer);
+    pPlayer->unk1124 = (f32) (viGetViewHeight() + sp1E);
     if (pPlayer->unk1124 < sp24)
     {
         // Node 13
@@ -9833,7 +9815,7 @@ glabel sub_GAME_7F0B908C
 /* 0EDBDC 7F0B90AC 468021A0 */  cvt.s.w $f6, $f4
 /* 0EDBE0 7F0B90B0 468042A0 */  cvt.s.w $f10, $f8
 /* 0EDBE4 7F0B90B4 E7A6002C */  swc1  $f6, 0x2c($sp)
-/* 0EDBE8 7F0B90B8 0C001107 */  jal   get_video2_settings_txtClipW
+/* 0EDBE8 7F0B90B8 0C001107 */  jal   viGetX
 /* 0EDBEC 7F0B90BC E7AA0024 */   swc1  $f10, 0x24($sp)
 /* 0EDBF0 7F0B90C0 3C188004 */  lui   $t8, %hi(D_8004140C) 
 /* 0EDBF4 7F0B90C4 8F18140C */  lw    $t8, %lo(D_8004140C)($t8)
@@ -9842,7 +9824,7 @@ glabel sub_GAME_7F0B908C
 /* 0EDC00 7F0B90D0 468021A0 */  cvt.s.w $f6, $f4
 /* 0EDC04 7F0B90D4 468084A0 */  cvt.s.w $f18, $f16
 /* 0EDC08 7F0B90D8 46069200 */  add.s $f8, $f18, $f6
-/* 0EDC0C 7F0B90DC 0C00110B */  jal   get_video2_settings_txtClipH
+/* 0EDC0C 7F0B90DC 0C00110B */  jal   viGetY
 /* 0EDC10 7F0B90E0 E7A80028 */   swc1  $f8, 0x28($sp)
 /* 0EDC14 7F0B90E4 3C198004 */  lui   $t9, %hi(D_80041410) 
 /* 0EDC18 7F0B90E8 8F391410 */  lw    $t9, %lo(D_80041410)($t9)
@@ -9851,7 +9833,7 @@ glabel sub_GAME_7F0B908C
 /* 0EDC24 7F0B90F4 468024A0 */  cvt.s.w $f18, $f4
 /* 0EDC28 7F0B90F8 46805420 */  cvt.s.w $f16, $f10
 /* 0EDC2C 7F0B90FC 46128180 */  add.s $f6, $f16, $f18
-/* 0EDC30 7F0B9100 0C001145 */  jal   get_video2_settings_ulx
+/* 0EDC30 7F0B9100 0C001145 */  jal   viGetViewLeft
 /* 0EDC34 7F0B9104 E7A60020 */   swc1  $f6, 0x20($sp)
 /* 0EDC38 7F0B9108 44824000 */  mtc1  $v0, $f8
 /* 0EDC3C 7F0B910C 3C048008 */  lui   $a0, %hi(pPlayer)
@@ -9877,7 +9859,7 @@ glabel sub_GAME_7F0B908C
 /* 0EDC88 7F0B9158 00000000 */   nop   
 /* 0EDC8C 7F0B915C E46C1118 */  swc1  $f12, 0x1118($v1)
 .L7F0B9160:
-/* 0EDC90 7F0B9160 0C001149 */  jal   get_video2_settings_uly
+/* 0EDC90 7F0B9160 0C001149 */  jal   viGetViewTop
 /* 0EDC94 7F0B9164 00000000 */   nop   
 /* 0EDC98 7F0B9168 44822000 */  mtc1  $v0, $f4
 /* 0EDC9C 7F0B916C 3C048008 */  lui   $a0, %hi(pPlayer)
@@ -9903,9 +9885,9 @@ glabel sub_GAME_7F0B908C
 /* 0EDCE8 7F0B91B8 00000000 */   nop   
 /* 0EDCEC 7F0B91BC E46C111C */  swc1  $f12, 0x111c($v1)
 .L7F0B91C0:
-/* 0EDCF0 7F0B91C0 0C001145 */  jal   get_video2_settings_ulx
+/* 0EDCF0 7F0B91C0 0C001145 */  jal   viGetViewLeft
 /* 0EDCF4 7F0B91C4 00000000 */   nop   
-/* 0EDCF8 7F0B91C8 0C001127 */  jal   get_video2_settings_width
+/* 0EDCF8 7F0B91C8 0C001127 */  jal   viGetViewWidth
 /* 0EDCFC 7F0B91CC A7A2001E */   sh    $v0, 0x1e($sp)
 /* 0EDD00 7F0B91D0 87AA001E */  lh    $t2, 0x1e($sp)
 /* 0EDD04 7F0B91D4 3C048008 */  lui   $a0, %hi(pPlayer)
@@ -9933,9 +9915,9 @@ glabel sub_GAME_7F0B908C
 /* 0EDD58 7F0B9228 00000000 */   nop   
 /* 0EDD5C 7F0B922C E46A1120 */  swc1  $f10, 0x1120($v1)
 .L7F0B9230:
-/* 0EDD60 7F0B9230 0C001149 */  jal   get_video2_settings_uly
+/* 0EDD60 7F0B9230 0C001149 */  jal   viGetViewTop
 /* 0EDD64 7F0B9234 00000000 */   nop   
-/* 0EDD68 7F0B9238 0C00112B */  jal   get_video2_settings_height
+/* 0EDD68 7F0B9238 0C00112B */  jal   viGetViewHeight
 /* 0EDD6C 7F0B923C A7A2001E */   sh    $v0, 0x1e($sp)
 /* 0EDD70 7F0B9240 87AD001E */  lh    $t5, 0x1e($sp)
 /* 0EDD74 7F0B9244 3C048008 */  lui   $a0, %hi(pPlayer)
@@ -12002,11 +11984,11 @@ u32 sub_GAME_7F0BA5C0(u32 arg0, u32 arg1) {
         phi_v0 = arg0;
 loop_2:
         // Node 2
-        if (D_80044940 != 0)
+        if (FogDL_primary_80044940 != 0)
         {
             // Node 3
-            phi_a0 = D_80044940;
-            phi_v1 = &D_80044940;
+            phi_a0 = FogDL_primary_80044940;
+            phi_v1 = &FogDL_primary_80044940;
 loop_4:
             // Node 4
             if (*phi_v0 == phi_a0)
@@ -12046,12 +12028,12 @@ glabel sub_GAME_7F0BA5C0
 /* 0EF0F0 7F0BA5C0 0085082B */  sltu  $at, $a0, $a1
 /* 0EF0F4 7F0BA5C4 1020001C */  beqz  $at, .L7F0BA638
 /* 0EF0F8 7F0BA5C8 00801025 */   move  $v0, $a0
-/* 0EF0FC 7F0BA5CC 3C068004 */  lui   $a2, %hi(D_80044940)
-/* 0EF100 7F0BA5D0 24C64940 */  addiu $a2, %lo(D_80044940) # addiu $a2, $a2, 0x4940
+/* 0EF0FC 7F0BA5CC 3C068004 */  lui   $a2, %hi(FogDL_primary_80044940)
+/* 0EF100 7F0BA5D0 24C64940 */  addiu $a2, %lo(FogDL_primary_80044940) # addiu $a2, $a2, 0x4940
 /* 0EF104 7F0BA5D4 8CCE0000 */  lw    $t6, ($a2)
 .L7F0BA5D8:
-/* 0EF108 7F0BA5D8 3C0F8004 */  lui   $t7, %hi(D_80044940) 
-/* 0EF10C 7F0BA5DC 25EF4940 */  addiu $t7, %lo(D_80044940) # addiu $t7, $t7, 0x4940
+/* 0EF108 7F0BA5D8 3C0F8004 */  lui   $t7, %hi(FogDL_primary_80044940) 
+/* 0EF10C 7F0BA5DC 25EF4940 */  addiu $t7, %lo(FogDL_primary_80044940) # addiu $t7, $t7, 0x4940
 /* 0EF110 7F0BA5E0 11C00011 */  beqz  $t6, .L7F0BA628
 /* 0EF114 7F0BA5E4 00C01825 */   move  $v1, $a2
 /* 0EF118 7F0BA5E8 8DE40000 */  lw    $a0, ($t7)

@@ -4,4 +4,6 @@
 
 void rspInitDebugNoticeList(void);
 
+extern u32 **fast3d_related_array;
+
 #endif

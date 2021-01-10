@@ -361,29 +361,14 @@ extern u8 cheat_activated_78;
 //CODE.bss:800696F0
 extern s32 array_favweapon[4][2];
 //CODE.bss:80069710
-extern s32 mp_char_cur_select_player1;
-//CODE.bss:80069714
-extern s32 mp_char_cur_select_player2;
-//CODE.bss:80069718
-extern s32 mp_char_cur_select_player3;
-//CODE.bss:8006971C
-extern s32 mp_char_cur_select_player4;
+extern s32 mp_char_cur_select_player[4];
+
 //CODE.bss:80069720
-extern s32 mp_char_prev_select_player1;
-//CODE.bss:80069724
-extern s32 mp_char_prev_select_player2;
-//CODE.bss:80069728
-extern s32 mp_char_prev_select_player3;
-//CODE.bss:8006972C
-extern s32 mp_char_prev_select_player4;
+extern s32 mp_char_prev_select_player[4];
+
 //CODE.bss:80069730
-extern s32 dword_CODE_bss_80069730;
-//CODE.bss:80069734
-extern s32 dword_CODE_bss_80069734;
-//CODE.bss:80069738
-extern s32 dword_CODE_bss_80069738;
-//CODE.bss:8006973C
-extern s32 dword_CODE_bss_8006973C;
+extern s32 dword_CODE_bss_80069730[4];
+
 //CODE.bss:80069740
 extern s32 has_selected_char_player1;
 //CODE.bss:80069744
@@ -472,9 +457,9 @@ extern s32 highlight_aimadjustment;
 CODE.bss:800697F0     dword_CODE_bss_800697F0:.space 0x130
 */
 
-extern s32 current_menu;
-extern s32 menu_update;
-extern s32 maybe_prev_menu;
+extern MENU current_menu;
+extern MENU menu_update;
+extern MENU maybe_prev_menu;
 extern s32 menu_timer;
 extern s32 tab_1_selected;
 extern s32 tab_2_selected;
@@ -489,7 +474,7 @@ extern f32 tab2_bottom_y_coord;
 
 extern s32 selected_folder_num;
 extern s32 selected_folder_num_copy;
-extern s32 gamemode;
+extern GAMEMODE gamemode;
 extern s32 selected_stage;
 extern s32 briefingpage;
 extern DIFFICULTY selected_difficulty;
@@ -513,10 +498,10 @@ extern s32 screen_size;
 extern s32 spectrum_related_flag;
 extern s32 is_emulating_spectrum;
 extern s32 is_cheat_menu_available;
-extern s32 ptr_logo_and_walletbond_DL;
-extern s32 ptr_menu_videobuffer;
+extern Gfx * ptr_logo_and_walletbond_DL;
+extern u8 * ptr_menu_videobuffer;
 extern s32 something_legalscreen_constructor;
-extern s32 ptr_folder_object_instance;
+extern struct object_standard * ptr_folder_object_instance;
 extern s32 set0_never_used;
 extern s32 set0_never_used_0;
 extern s32 D_8002A968;
@@ -538,6 +523,8 @@ extern f32 slider_007_mode_health;
 extern f32 slider_007_mode_damage;
 extern f32 slider_007_mode_accuracy;
 
+
+extern struct mission_folder_setup mission_folder_setup_entries[];
 /*
 dword_D_8002A9B0:.word 0xA0000000
 dword_D_8002A9B4:.word 0x96000000
@@ -760,6 +747,7 @@ extern s32 unlock_weapon_select;
 extern s32 unlock_handicap;
 extern s32 unlock_control_style;
 extern s32 unlock_aim_sight;
+extern struct solo_target_times solo_target_time_array[];
 /*
 dword_D_8002B560:.word 0
                 solo_target_times <0, 160, 0>

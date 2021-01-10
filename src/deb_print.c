@@ -415,7 +415,7 @@ void print_to_vidbuff1(s32 arg0, s32 arg1, ? arg2, s32 arg6, s32 arg7, s32 arg8)
         {
             // Node 4
             temp_a0 = (0x80020000 + (arg8 * 4));
-            temp_v1 = (((arg6 * 2) + ptr_videobuffer1) + ((arg7 * get_video2_settings_txtClipW()) * 2));
+            temp_v1 = (((arg6 * 2) + ptr_videobuffer1) + ((arg7 * viGetX()) * 2));
             // Node 5
             if ((temp_a0->unk3F80 & 0x80000000) != 0)
             {
@@ -470,7 +470,7 @@ void print_to_vidbuff1(s32 arg0, s32 arg1, ? arg2, s32 arg6, s32 arg7, s32 arg8)
             }
         }
     }
-    // (possible return value: get_video2_settings_txtClipW())
+    // (possible return value: viGetX())
 }
 
 #else
@@ -481,7 +481,7 @@ glabel print_to_vidbuff1
 /* 006460 70005860 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 006464 70005864 AFA40018 */  sw    $a0, 0x18($sp)
 /* 006468 70005868 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 00646C 7000586C 0C001107 */  jal   get_video2_settings_txtClipW
+/* 00646C 7000586C 0C001107 */  jal   viGetX
 /* 006470 70005870 AFA60020 */   sw    $a2, 0x20($sp)
 /* 006474 70005874 93A50023 */  lbu   $a1, 0x23($sp)
 /* 006478 70005878 54A00003 */  bnezl $a1, .L70005888
@@ -590,7 +590,7 @@ void set_ptr_video_buffers(s32 arg0, s32 arg1) {
  *     calls 70005984: A0=803B5000, A1=803DA800
  */
 void set_video_buffer_pointers(void) {
-    set_ptr_video_buffers(&cfb_16_a, &cfb_16_b);
+    set_ptr_video_buffers(&cfb_16[0], &cfb_16[1]);
 }
 
 
@@ -626,7 +626,7 @@ glabel write_stderr_to_buffer
 /* 006604 70005A04 3C01A000 */  lui   $at, 0xa000
 /* 006608 70005A08 02017025 */  or    $t6, $s0, $at
 /* 00660C 70005A0C 3C018002 */  lui   $at, %hi(ptr_videobuffer1)
-/* 006610 70005A10 0C001107 */  jal   get_video2_settings_txtClipW
+/* 006610 70005A10 0C001107 */  jal   viGetX
 /* 006614 70005A14 AC2E417C */   sw    $t6, %lo(ptr_videobuffer1)($at)
 /* 006618 70005A18 2450FFF3 */  addiu $s0, $v0, -0xd
 /* 00661C 70005A1C 06010003 */  bgez  $s0, .L70005A2C
@@ -634,7 +634,7 @@ glabel write_stderr_to_buffer
 /* 006624 70005A24 26010003 */  addiu $at, $s0, 3
 /* 006628 70005A28 00017883 */  sra   $t7, $at, 2
 .L70005A2C:
-/* 00662C 70005A2C 0C00110B */  jal   get_video2_settings_txtClipH
+/* 00662C 70005A2C 0C00110B */  jal   viGetY
 /* 006630 70005A30 01E08025 */   move  $s0, $t7
 /* 006634 70005A34 2443FFF6 */  addiu $v1, $v0, -0xa
 /* 006638 70005A38 24010007 */  li    $at, 7

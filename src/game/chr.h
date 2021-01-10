@@ -3,7 +3,7 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "chrai.h"
-#include "bondtypes.h"  // CHRdata
+#include "bondtypes.h"  // chrdata
 
  struct animation_something
  {
@@ -175,7 +175,7 @@ extern s32 D_8002C910;
 extern s32 D_8002CC58;
 extern s32 show_patrols_flag;
 extern s32 player1_guardID;
-extern s32 ptr_guard_data;
+extern struct chrdata *ptr_guard_data;
 extern s32 num_guards;
 extern s32 D_8002CC6C[];
 extern s32 D_8002CCA8;
@@ -183,10 +183,13 @@ extern s32 D_8002CCAC;
 extern s32 D_8002CCB0;
 extern s32 D_8002CCB4;
 extern u8 D_8002CCB8;
-extern s32 num_bodies;
-extern s32 num_male_heads;
-extern s32 num_female_heads;
+extern u32 num_bodies;
+extern u32 num_male_heads;
+extern u32 num_female_heads;
 extern s32 list_of_bodies[];
 extern s32 random_male_heads[];
 extern s32 random_female_heads[];
+extern u32 current_random_body;
+extern u32 current_random_male_head;
+extern u32 current_random_female_head;
 #endif
