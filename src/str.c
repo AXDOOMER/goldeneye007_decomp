@@ -92,8 +92,89 @@ int isspace(unsigned char c) {
 }
 
 #ifdef NONMATCHING
-void strtol(void) {
-
+// Mostly regalloc
+long int strtol(const char *str, char **endptr, int base) {
+    int neg;
+    unsigned char *ptr;
+    unsigned int cutoff;
+    unsigned int cutlim;
+    unsigned int accum;
+    unsigned char c;
+    unsigned char *before;
+    int overflow;
+    unsigned int new_var;
+    if ((base < 0) || (base == 1) || (base > 36)) {
+        base = 10;
+    }
+    ptr = str;
+    while (isspace(*ptr)) { ptr++; };
+    if (*ptr) {
+        if (*ptr == '-') {
+            neg = 1;
+            ptr++;
+        } else if (*ptr == '+') {
+            neg = 0;
+            ptr++;
+        } else {
+            neg = 0;
+        }
+        if (base == 16) {
+            if ((ptr[0] == '0') && (toupper(ptr[1]) == 'X')) {
+                ptr += 2;
+            }
+        }
+        if (base == 0) {
+            if (ptr[0] == '0') {
+                if (toupper(ptr[1]) == 'X') {
+                    ptr += 2;
+                    base = 16;
+                } else {                    
+                    base = 8;
+                }
+            } else {
+                base = 10;
+            }
+        }
+        before = ptr;
+        cutoff = -1U / base;
+        cutlim = -1U % base;
+        for (overflow = 0, accum = 0; (s32)(c = *ptr); ptr++) {
+            if (isdigit(c)) {
+                c -= '0';
+            } else if (isalpha(c)) {
+                c = (toupper(c) - ('A' - 0xA));
+            } else {
+                break;
+            }
+            if (c >= base) {
+                break;
+            }
+            new_var = c;
+            if ((accum > cutoff) || ((accum == cutoff) && (c > cutlim))) {
+                overflow = 1;
+            } else {
+                accum *= base;
+                accum += new_var;
+            }
+        }
+        if (ptr != before) {
+            if (endptr != NULL) {
+                *endptr = ptr;
+            }
+            if (overflow) {
+                return -1;
+            }
+            if (neg) {
+                return -accum;
+            } else {
+                return accum;
+            }
+        }
+    }
+    if (endptr != NULL) {
+        *endptr = str;
+    }
+    return 0;
 }
 #else
 GLOBAL_ASM(
