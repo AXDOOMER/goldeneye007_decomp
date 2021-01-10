@@ -27013,4 +27013,4 @@ LOAD build/u/src/cfb.o
  build/u/src/rspboot.o(.bss)
  build/u/src/gspboot.o(.bss)
  build/u/src/aspboot.o(.bss)
-OUTPUT(ge007.u.elf elf32-tradbigmips)
+OUTPUT(build/u/ge007.u.elf elf32-tradbigmips)

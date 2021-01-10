@@ -59,7 +59,9 @@ LCDEFS := -DVERSION_JP
 ASMDEFS := --defsym VERSION_JP=1
 endif
 
-BUILD_DIR := build/$(COUNTRYCODE)
+BUILD_DIR_BASE := build
+# BUILD_DIR is the location where all build artifacts are placed
+BUILD_DIR      := $(BUILD_DIR_BASE)/$(COUNTRYCODE)
 include assets/Makefile.obseg
 include assets/Makefile.music
 BUILD_SUB_DIRS := \
@@ -71,15 +73,9 @@ BUILD_SUB_DIRS := \
 $(shell mkdir -p $(BUILD_DIR))
 $(foreach subdir,$(BUILD_SUB_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(subdir)))
 
-
-
-
-
-
-
-APPELF := ge007.$(COUNTRYCODE).elf
-APPROM := ge007.$(COUNTRYCODE).z64
-APPBIN := ge007.$(COUNTRYCODE).bin
+APPELF := $(BUILD_DIR)/ge007.$(COUNTRYCODE).elf
+APPROM := $(BUILD_DIR)/ge007.$(COUNTRYCODE).z64
+APPBIN := $(BUILD_DIR)/ge007.$(COUNTRYCODE).bin
 
 HEADERFILES := $(foreach dir,src,$(wildcard $(dir)/*.s))
 HEADEROBJECTS := $(foreach file,$(HEADERFILES),$(BUILD_DIR)/$(file:.s=.o))
@@ -164,7 +160,6 @@ ifeq ($(filter clean dataclean codeclean print-%,$(MAKECMDGOALS)),)
   $(info Building ROM...)
 
 endif
-
 
 codeclean:
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \

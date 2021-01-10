@@ -13,20 +13,20 @@ fi
 echo "patching $1"
 echo "extract data segment"
 if [ -f tools/aaa_rip/aaa_rip ]; then
-    tools/aaa_rip/aaa_rip $1 data_seg ${DATASEG_START} ${DATASEG_LEN}
+    tools/aaa_rip/aaa_rip $1 build/$2/data_seg ${DATASEG_START} ${DATASEG_LEN}
 else
-    dd skip=${DATASEG_START} count=${DATASEG_LEN} if=$1 of=data_seg bs=1
+    dd skip=${DATASEG_START} count=${DATASEG_LEN} if=$1 of=build/$2/data_seg bs=1
 fi
 
 echo "truncate $1 to 0x$(printf "%x\n" ${DATASEG_START})"
 cat $1 | head --bytes=${DATASEG_START} > $1.tmp
 
 echo "compress data segment"
-tools/1172compress.sh data_seg data_seg.rz
+tools/1172compress.sh build/$2/data_seg build/$2/data_seg.rz
 
 
 echo "inject data segment"
-RZSIZE=$(stat -c%s "data_seg.rz")
+RZSIZE=$(stat -c%s "build/$2/data_seg.rz")
 echo "size=${RZSIZE}"
 
 #fixme as I will fail if position of c_data gets moved!!!
@@ -38,10 +38,10 @@ CDATA_MAX_SIZE=72704
 echo "maxsize=${CDATA_MAX_SIZE}"
 
 if [ -f tools/aaa_rip/aaa_rip ]; then
-    tools/aaa_rip/aaa_rip data_seg.rz $1.tmp 0 0 ${CDATA_POS}
+    tools/aaa_rip/aaa_rip build/$2/data_seg.rz $1.tmp 0 0 ${CDATA_POS}
 else
     echo "one byte at a time is slow, sorry"
-    dd if=data_seg.rz of=$1.tmp obs=1 seek=${CDATA_POS} conv=notrunc
+    dd if=build/$2/data_seg.rz of=$1.tmp obs=1 seek=${CDATA_POS} conv=notrunc
 fi
 
 mv $1.tmp $1
