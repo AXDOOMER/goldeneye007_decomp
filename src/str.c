@@ -91,8 +91,6 @@ int isspace(unsigned char c) {
     return ((c == ' ') || (c == '\t') || (c == '\n') || (c == '\f') || (c == '\v'));
 }
 
-#ifdef NONMATCHING
-// Mostly regalloc
 long int strtol(const char *str, char **endptr, int base) {
     int neg;
     unsigned char *ptr;
@@ -102,13 +100,12 @@ long int strtol(const char *str, char **endptr, int base) {
     unsigned char c;
     unsigned char *before;
     int overflow;
-    unsigned int new_var;
     if ((base < 0) || (base == 1) || (base > 36)) {
         base = 10;
     }
     ptr = str;
     while (isspace(*ptr)) { ptr++; };
-    if (*ptr) {
+    if ((int)*ptr) {
         if (*ptr == '-') {
             neg = 1;
             ptr++;
@@ -136,9 +133,11 @@ long int strtol(const char *str, char **endptr, int base) {
             }
         }
         before = ptr;
+        overflow = 0;
+        accum = 0;
         cutoff = -1U / base;
         cutlim = -1U % base;
-        for (overflow = 0, accum = 0; (s32)(c = *ptr); ptr++) {
+        for (; (int)(c = *ptr); ptr++) {
             if (isdigit(c)) {
                 c -= '0';
             } else if (isalpha(c)) {
@@ -149,12 +148,11 @@ long int strtol(const char *str, char **endptr, int base) {
             if (c >= base) {
                 break;
             }
-            new_var = c;
-            if ((accum > cutoff) || ((accum == cutoff) && (c > cutlim))) {
+            if ((accum > cutoff) || ((accum == cutoff) && ((unsigned int)c > cutlim))) {
                 overflow = 1;
             } else {
                 accum *= base;
-                accum += new_var;
+                accum += (unsigned int)c;
             }
         }
         if (ptr != before) {
@@ -164,11 +162,7 @@ long int strtol(const char *str, char **endptr, int base) {
             if (overflow) {
                 return -1;
             }
-            if (neg) {
-                return -accum;
-            } else {
-                return accum;
-            }
+            return (neg ? -accum : accum);
         }
     }
     if (endptr != NULL) {
@@ -176,194 +170,3 @@ long int strtol(const char *str, char **endptr, int base) {
     }
     return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel strtol
-/* 00B5E0 7000A9E0 27BDFFA0 */  addiu $sp, $sp, -0x60
-/* 00B5E4 7000A9E4 AFB30024 */  sw    $s3, 0x24($sp)
-/* 00B5E8 7000A9E8 00C09825 */  move  $s3, $a2
-/* 00B5EC 7000A9EC AFBF002C */  sw    $ra, 0x2c($sp)
-/* 00B5F0 7000A9F0 AFB40028 */  sw    $s4, 0x28($sp)
-/* 00B5F4 7000A9F4 AFB20020 */  sw    $s2, 0x20($sp)
-/* 00B5F8 7000A9F8 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 00B5FC 7000A9FC AFB00018 */  sw    $s0, 0x18($sp)
-/* 00B600 7000AA00 AFA50064 */  sw    $a1, 0x64($sp)
-/* 00B604 7000AA04 04C00006 */  bltz  $a2, .L7000AA20
-/* 00B608 7000AA08 00803825 */   move  $a3, $a0
-/* 00B60C 7000AA0C 24010001 */  li    $at, 1
-/* 00B610 7000AA10 10C10003 */  beq   $a2, $at, .L7000AA20
-/* 00B614 7000AA14 28C10025 */   slti  $at, $a2, 0x25
-/* 00B618 7000AA18 54200003 */  bnezl $at, .L7000AA28
-/* 00B61C 7000AA1C 90E40000 */   lbu   $a0, ($a3)
-.L7000AA20:
-/* 00B620 7000AA20 2413000A */  li    $s3, 10
-/* 00B624 7000AA24 90E40000 */  lbu   $a0, ($a3)
-.L7000AA28:
-/* 00B628 7000AA28 00E09025 */  move  $s2, $a3
-/* 00B62C 7000AA2C 0C002A63 */  jal   isspace
-/* 00B630 7000AA30 AFA70060 */   sw    $a3, 0x60($sp)
-/* 00B634 7000AA34 50400007 */  beql  $v0, $zero, .L7000AA54
-/* 00B638 7000AA38 92420000 */   lbu   $v0, ($s2)
-/* 00B63C 7000AA3C 26520001 */  addiu $s2, $s2, 1
-.L7000AA40:
-/* 00B640 7000AA40 0C002A63 */  jal   isspace
-/* 00B644 7000AA44 92440000 */   lbu   $a0, ($s2)
-/* 00B648 7000AA48 5440FFFD */  bnezl $v0, .L7000AA40
-/* 00B64C 7000AA4C 26520001 */   addiu $s2, $s2, 1
-/* 00B650 7000AA50 92420000 */  lbu   $v0, ($s2)
-.L7000AA54:
-/* 00B654 7000AA54 2401002D */  li    $at, 45
-/* 00B658 7000AA58 50400075 */  beql  $v0, $zero, .L7000AC30
-/* 00B65C 7000AA5C 8FA20064 */   lw    $v0, 0x64($sp)
-/* 00B660 7000AA60 14410004 */  bne   $v0, $at, .L7000AA74
-/* 00B664 7000AA64 240E0001 */   li    $t6, 1
-/* 00B668 7000AA68 AFAE005C */  sw    $t6, 0x5c($sp)
-/* 00B66C 7000AA6C 10000008 */  b     .L7000AA90
-/* 00B670 7000AA70 26520001 */   addiu $s2, $s2, 1
-.L7000AA74:
-/* 00B674 7000AA74 2401002B */  li    $at, 43
-/* 00B678 7000AA78 54410005 */  bnel  $v0, $at, .L7000AA90
-/* 00B67C 7000AA7C AFA0005C */   sw    $zero, 0x5c($sp)
-/* 00B680 7000AA80 AFA0005C */  sw    $zero, 0x5c($sp)
-/* 00B684 7000AA84 10000002 */  b     .L7000AA90
-/* 00B688 7000AA88 26520001 */   addiu $s2, $s2, 1
-/* 00B68C 7000AA8C AFA0005C */  sw    $zero, 0x5c($sp)
-.L7000AA90:
-/* 00B690 7000AA90 24010010 */  li    $at, 16
-/* 00B694 7000AA94 1661000B */  bne   $s3, $at, .L7000AAC4
-/* 00B698 7000AA98 00000000 */   nop   
-/* 00B69C 7000AA9C 924F0000 */  lbu   $t7, ($s2)
-/* 00B6A0 7000AAA0 24010030 */  li    $at, 48
-/* 00B6A4 7000AAA4 15E10007 */  bne   $t7, $at, .L7000AAC4
-/* 00B6A8 7000AAA8 00000000 */   nop   
-/* 00B6AC 7000AAAC 0C002A3E */  jal   toupper
-/* 00B6B0 7000AAB0 92440001 */   lbu   $a0, 1($s2)
-/* 00B6B4 7000AAB4 24010058 */  li    $at, 88
-/* 00B6B8 7000AAB8 14410002 */  bne   $v0, $at, .L7000AAC4
-/* 00B6BC 7000AABC 00000000 */   nop   
-/* 00B6C0 7000AAC0 26520002 */  addiu $s2, $s2, 2
-.L7000AAC4:
-/* 00B6C4 7000AAC4 1660000E */  bnez  $s3, .L7000AB00
-/* 00B6C8 7000AAC8 92420000 */   lbu   $v0, ($s2)
-/* 00B6CC 7000AACC 24010030 */  li    $at, 48
-/* 00B6D0 7000AAD0 1441000B */  bne   $v0, $at, .L7000AB00
-/* 00B6D4 7000AAD4 2413000A */   li    $s3, 10
-/* 00B6D8 7000AAD8 0C002A3E */  jal   toupper
-/* 00B6DC 7000AADC 92440001 */   lbu   $a0, 1($s2)
-/* 00B6E0 7000AAE0 24010058 */  li    $at, 88
-/* 00B6E4 7000AAE4 14410004 */  bne   $v0, $at, .L7000AAF8
-/* 00B6E8 7000AAE8 24130008 */   li    $s3, 8
-/* 00B6EC 7000AAEC 26520002 */  addiu $s2, $s2, 2
-/* 00B6F0 7000AAF0 10000001 */  b     .L7000AAF8
-/* 00B6F4 7000AAF4 24130010 */   li    $s3, 16
-.L7000AAF8:
-/* 00B6F8 7000AAF8 10000001 */  b     .L7000AB00
-/* 00B6FC 7000AAFC 92420000 */   lbu   $v0, ($s2)
-.L7000AB00:
-/* 00B700 7000AB00 305000FF */  andi  $s0, $v0, 0xff
-/* 00B704 7000AB04 AFB20044 */  sw    $s2, 0x44($sp)
-/* 00B708 7000AB08 AFA00040 */  sw    $zero, 0x40($sp)
-/* 00B70C 7000AB0C 00008825 */  move  $s1, $zero
-/* 00B710 7000AB10 12000033 */  beqz  $s0, .L7000ABE0
-/* 00B714 7000AB14 02001825 */   move  $v1, $s0
-/* 00B718 7000AB18 2414FFFF */  li    $s4, -1
-.L7000AB1C:
-/* 00B71C 7000AB1C 320400FF */  andi  $a0, $s0, 0xff
-/* 00B720 7000AB20 0C002A4C */  jal   isdigit
-/* 00B724 7000AB24 AFA30034 */   sw    $v1, 0x34($sp)
-/* 00B728 7000AB28 10400005 */  beqz  $v0, .L7000AB40
-/* 00B72C 7000AB2C 8FA30034 */   lw    $v1, 0x34($sp)
-/* 00B730 7000AB30 2470FFD0 */  addiu $s0, $v1, -0x30
-/* 00B734 7000AB34 321800FF */  andi  $t8, $s0, 0xff
-/* 00B738 7000AB38 1000000A */  b     .L7000AB64
-/* 00B73C 7000AB3C 03008025 */   move  $s0, $t8
-.L7000AB40:
-/* 00B740 7000AB40 0C002A54 */  jal   isalpha
-/* 00B744 7000AB44 320400FF */   andi  $a0, $s0, 0xff
-/* 00B748 7000AB48 50400026 */  beql  $v0, $zero, .L7000ABE4
-/* 00B74C 7000AB4C 8FAA0044 */   lw    $t2, 0x44($sp)
-/* 00B750 7000AB50 0C002A3E */  jal   toupper
-/* 00B754 7000AB54 320400FF */   andi  $a0, $s0, 0xff
-/* 00B758 7000AB58 2450FFC9 */  addiu $s0, $v0, -0x37
-/* 00B75C 7000AB5C 321900FF */  andi  $t9, $s0, 0xff
-/* 00B760 7000AB60 03208025 */  move  $s0, $t9
-.L7000AB64:
-/* 00B764 7000AB64 0213082A */  slt   $at, $s0, $s3
-/* 00B768 7000AB68 1020001D */  beqz  $at, .L7000ABE0
-/* 00B76C 7000AB6C 24090001 */   li    $t1, 1
-/* 00B770 7000AB70 0293001B */  divu  $zero, $s4, $s3
-/* 00B774 7000AB74 00001012 */  mflo  $v0
-/* 00B778 7000AB78 0051082B */  sltu  $at, $v0, $s1
-/* 00B77C 7000AB7C 16600002 */  bnez  $s3, .L7000AB88
-/* 00B780 7000AB80 00000000 */   nop   
-/* 00B784 7000AB84 0007000D */  break 7
-.L7000AB88:
-/* 00B788 7000AB88 1420000B */  bnez  $at, .L7000ABB8
-/* 00B78C 7000AB8C 00000000 */   nop   
-/* 00B790 7000AB90 1622000B */  bne   $s1, $v0, .L7000ABC0
-/* 00B794 7000AB94 00000000 */   nop   
-/* 00B798 7000AB98 0293001B */  divu  $zero, $s4, $s3
-/* 00B79C 7000AB9C 00004010 */  mfhi  $t0
-/* 00B7A0 7000ABA0 0110082B */  sltu  $at, $t0, $s0
-/* 00B7A4 7000ABA4 16600002 */  bnez  $s3, .L7000ABB0
-/* 00B7A8 7000ABA8 00000000 */   nop   
-/* 00B7AC 7000ABAC 0007000D */  break 7
-.L7000ABB0:
-/* 00B7B0 7000ABB0 10200003 */  beqz  $at, .L7000ABC0
-/* 00B7B4 7000ABB4 00000000 */   nop   
-.L7000ABB8:
-/* 00B7B8 7000ABB8 10000005 */  b     .L7000ABD0
-/* 00B7BC 7000ABBC AFA90040 */   sw    $t1, 0x40($sp)
-.L7000ABC0:
-/* 00B7C0 7000ABC0 02330019 */  multu $s1, $s3
-/* 00B7C4 7000ABC4 00008812 */  mflo  $s1
-/* 00B7C8 7000ABC8 02308821 */  addu  $s1, $s1, $s0
-/* 00B7CC 7000ABCC 00000000 */  nop   
-.L7000ABD0:
-/* 00B7D0 7000ABD0 92500001 */  lbu   $s0, 1($s2)
-/* 00B7D4 7000ABD4 26520001 */  addiu $s2, $s2, 1
-/* 00B7D8 7000ABD8 1600FFD0 */  bnez  $s0, .L7000AB1C
-/* 00B7DC 7000ABDC 02001825 */   move  $v1, $s0
-.L7000ABE0:
-/* 00B7E0 7000ABE0 8FAA0044 */  lw    $t2, 0x44($sp)
-.L7000ABE4:
-/* 00B7E4 7000ABE4 8FA20064 */  lw    $v0, 0x64($sp)
-/* 00B7E8 7000ABE8 524A0011 */  beql  $s2, $t2, .L7000AC30
-/* 00B7EC 7000ABEC 8FA20064 */   lw    $v0, 0x64($sp)
-/* 00B7F0 7000ABF0 50400003 */  beql  $v0, $zero, .L7000AC00
-/* 00B7F4 7000ABF4 8FAB0040 */   lw    $t3, 0x40($sp)
-/* 00B7F8 7000ABF8 AC520000 */  sw    $s2, ($v0)
-/* 00B7FC 7000ABFC 8FAB0040 */  lw    $t3, 0x40($sp)
-.L7000AC00:
-/* 00B800 7000AC00 8FAC005C */  lw    $t4, 0x5c($sp)
-/* 00B804 7000AC04 11600003 */  beqz  $t3, .L7000AC14
-/* 00B808 7000AC08 00000000 */   nop   
-/* 00B80C 7000AC0C 1000000D */  b     .L7000AC44
-/* 00B810 7000AC10 2402FFFF */   li    $v0, -1
-.L7000AC14:
-/* 00B814 7000AC14 11800003 */  beqz  $t4, .L7000AC24
-/* 00B818 7000AC18 02201825 */   move  $v1, $s1
-/* 00B81C 7000AC1C 10000009 */  b     .L7000AC44
-/* 00B820 7000AC20 00111023 */   negu  $v0, $s1
-.L7000AC24:
-/* 00B824 7000AC24 10000007 */  b     .L7000AC44
-/* 00B828 7000AC28 00601025 */   move  $v0, $v1
-/* 00B82C 7000AC2C 8FA20064 */  lw    $v0, 0x64($sp)
-.L7000AC30:
-/* 00B830 7000AC30 8FAD0060 */  lw    $t5, 0x60($sp)
-/* 00B834 7000AC34 50400003 */  beql  $v0, $zero, .L7000AC44
-/* 00B838 7000AC38 00001025 */   move  $v0, $zero
-/* 00B83C 7000AC3C AC4D0000 */  sw    $t5, ($v0)
-/* 00B840 7000AC40 00001025 */  move  $v0, $zero
-.L7000AC44:
-/* 00B844 7000AC44 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 00B848 7000AC48 8FB00018 */  lw    $s0, 0x18($sp)
-/* 00B84C 7000AC4C 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 00B850 7000AC50 8FB20020 */  lw    $s2, 0x20($sp)
-/* 00B854 7000AC54 8FB30024 */  lw    $s3, 0x24($sp)
-/* 00B858 7000AC58 8FB40028 */  lw    $s4, 0x28($sp)
-/* 00B85C 7000AC5C 03E00008 */  jr    $ra
-/* 00B860 7000AC60 27BD0060 */   addiu $sp, $sp, 0x60
-)
-#endif
