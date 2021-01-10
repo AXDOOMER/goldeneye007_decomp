@@ -8,10 +8,18 @@ This repo builds a matching USA. JPN or PAL ROM.
 This repo does not include all assets necessary for compiling the ROMs. A prior copy of the game is required to extract the assets.
 
 ## Setup
-The only requirements for Ubuntu 16.04 and 18.04 should be 
+The only requirements for Ubuntu 16.04+ should be
 ```bash
 sudo apt install binutils-mips-linux-gnu make
 ```
+
+Additionally [qemu-irix](https://github.com/n64decomp/qemu-irix/releases) is needed
+
+Install the package after download:
+```bash
+sudo dpkg -i qemu-irix-2.11.0-2169-g32ab296eef_amd64.deb
+```
+
 Make sure you cloned the repo with git otherwise it won't build!!
 
 Place an unmodified USA rom in project root named 
