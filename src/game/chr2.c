@@ -9787,37 +9787,21 @@ glabel actor_kneel_aim_at_actor
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02AAF4(void) {
+int actor_fire_or_aim_at_target_update(struct chrdata *chr, u32 newflag, u32 newtarget)
+{
+	if(chr->actiontype == ACT_ATTACK)
+    {
+        if((chr->targetflag & (TARGET_AIM_ONLY | TARGET_DONTTURN)) != 0)
+        {
+            chr->targetflag = newflag;
+            chr->targettoshoot = newtarget;
+            sub_GAME_7F024F8C(chr);
+            return 1;
+        }
+    }
 
+	return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02AAF4
-/* 05F624 7F02AAF4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 05F628 7F02AAF8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05F62C 7F02AAFC 808E0007 */  lb    $t6, 7($a0)
-/* 05F630 7F02AB00 24010008 */  li    $at, 8
-/* 05F634 7F02AB04 00001025 */  move  $v0, $zero
-/* 05F638 7F02AB08 15C1000A */  bne   $t6, $at, .L7F02AB34
-/* 05F63C 7F02AB0C 00000000 */   nop   
-/* 05F640 7F02AB10 8C8F004C */  lw    $t7, 0x4c($a0)
-/* 05F644 7F02AB14 31F80060 */  andi  $t8, $t7, 0x60
-/* 05F648 7F02AB18 13000006 */  beqz  $t8, .L7F02AB34
-/* 05F64C 7F02AB1C 00000000 */   nop   
-/* 05F650 7F02AB20 AC85004C */  sw    $a1, 0x4c($a0)
-/* 05F654 7F02AB24 0FC093E3 */  jal   sub_GAME_7F024F8C
-/* 05F658 7F02AB28 AC860050 */   sw    $a2, 0x50($a0)
-/* 05F65C 7F02AB2C 10000001 */  b     .L7F02AB34
-/* 05F660 7F02AB30 24020001 */   li    $v0, 1
-.L7F02AB34:
-/* 05F664 7F02AB34 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05F668 7F02AB38 27BD0018 */  addiu $sp, $sp, 0x18
-/* 05F66C 7F02AB3C 03E00008 */  jr    $ra
-/* 05F670 7F02AB40 00000000 */   nop   
-)
-#endif
 
 
 
