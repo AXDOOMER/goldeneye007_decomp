@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include "str.h"
 
 char *strcpy(char *dst, const char *src) {
     unsigned char *ptr = dst;
