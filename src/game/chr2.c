@@ -9789,7 +9789,7 @@ glabel actor_kneel_aim_at_actor
 
 int actor_fire_or_aim_at_target_update(struct chrdata *chr, u32 newflag, u32 newtarget)
 {
-	if(chr->actiontype == ACT_ATTACK)
+    if(chr->actiontype == ACT_ATTACK)
     {
         if((chr->targetflag & (TARGET_AIM_ONLY | TARGET_DONTTURN)) != 0)
         {
@@ -9800,7 +9800,7 @@ int actor_fire_or_aim_at_target_update(struct chrdata *chr, u32 newflag, u32 new
         }
     }
 
-	return 0;
+    return 0;
 }
 
 
