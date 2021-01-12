@@ -31,7 +31,7 @@ struct deblistentry *debFind(const char *name)
     return NULL;
 }
 
-#if 1//def NONMATCHING
+#ifdef NONMATCHING
 // 5980:    lui     v0,0x8002                        r 5980:    lui     a1,0x8002
 // 5984:    lw      v0,0x32f8(v0)                    r 5984:    lw      a1,0x32e8(a1)
 // 5988:    lui     t6,0x8006                          5988:    lui     t6,0x8006
