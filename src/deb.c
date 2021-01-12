@@ -21,10 +21,13 @@ extern char dword_CODE_bss_80060890[0x400];
 u32 D_800232E0[] = {0, 0};
 u32 debug_notice_list[] = {0, 0, 0, 0};
 char * debug_notice_list_data = &dword_CODE_bss_80060890;
-
-
-
-
+struct entry
+{
+    u32 var1;
+    u32 var2;
+    const char *name;
+    s32 var4;
+};
 
 /**
  * 5920	70004D20
@@ -120,6 +123,7 @@ u32 debAllocateDNLEntry(u32 size)
     return temp_v0;
 }
 #else
+u32 debAllocateDNLEntry(u32);
 GLOBAL_ASM(
 .text
 glabel debAllocateDNLEntry
@@ -152,53 +156,14 @@ glabel debAllocateDNLEntry
 )
 #endif
 
-
-
-
-/**
- * 59E0	70004DE0
- *     V0=p->new entry added in debug.notice.list
- *     accepts: A0=p->name, A1=p->data
- */
-#ifdef NONMATCHING
-void debAllocateAndAddDNLEntry(s32 arg0, s32 arg1)
+void debAllocateAndAddDNLEntry(const char *name, u32 arg1)
 {
-    ? temp_ret;
-
-    temp_ret = debAllocateDNLEntry(0x10);
-    *temp_ret = (s32) debug_notice_list;
-    temp_ret->unk4 = arg1;
-    temp_ret->unk8 = arg0;
-    debug_notice_list = temp_ret;
+    struct entry *temp_v0 = debAllocateDNLEntry(sizeof(struct entry));
+    temp_v0->var1 = (u32)debug_notice_list[0];
+    temp_v0->var2 = arg1;
+    temp_v0->name = name;
+    debug_notice_list[0] = temp_v0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel debAllocateAndAddDNLEntry
-/* 0059E0 70004DE0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0059E4 70004DE4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0059E8 70004DE8 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0059EC 70004DEC AFA5001C */  sw    $a1, 0x1c($sp)
-/* 0059F0 70004DF0 0C001360 */  jal   debAllocateDNLEntry
-/* 0059F4 70004DF4 24040010 */   li    $a0, 16
-/* 0059F8 70004DF8 3C038002 */  lui   $v1, %hi(debug_notice_list)
-/* 0059FC 70004DFC 246332E8 */  addiu $v1, %lo(debug_notice_list) # addiu $v1, $v1, 0x32e8
-/* 005A00 70004E00 8C6E0000 */  lw    $t6, ($v1)
-/* 005A04 70004E04 AC4E0000 */  sw    $t6, ($v0)
-/* 005A08 70004E08 8FAF001C */  lw    $t7, 0x1c($sp)
-/* 005A0C 70004E0C AC4F0004 */  sw    $t7, 4($v0)
-/* 005A10 70004E10 8FB80018 */  lw    $t8, 0x18($sp)
-/* 005A14 70004E14 AC580008 */  sw    $t8, 8($v0)
-/* 005A18 70004E18 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 005A1C 70004E1C AC620000 */  sw    $v0, ($v1)
-/* 005A20 70004E20 27BD0018 */  addiu $sp, $sp, 0x18
-/* 005A24 70004E24 03E00008 */  jr    $ra
-/* 005A28 70004E28 00000000 */   nop   
-)
-#endif
-
-
-
 
 /**
  * 5A2C	70004E2C
