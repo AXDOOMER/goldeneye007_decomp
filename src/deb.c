@@ -2,6 +2,8 @@
 #include "bondgame.h"
 #include "ramrom.h"
 #include "deb.h"
+#include "str.h"
+#include "memp.h"
 
 /**
  * @file deb.c
@@ -30,16 +32,13 @@ char * debug_notice_list_data = &dword_CODE_bss_80060890;
  *     accepts: A0=p->name, A1=p->data
  */
 #ifdef NONMATCHING
-void *debCheckIfDNLEntryExists(s32 arg0)
+void *debCheckIfDNLEntryExists(const char *str)
 {
-    void *temp_s0;
-    void *phi_s0;
-
-    phi_s0 = debug_notice_list;
+    //phi_s0 = debug_notice_list;
     if (debug_notice_list != 0)
     {
 loop_1:
-        if (strcmp(phi_s0->unk8, arg0) == 0)
+        if (strcmp(debug_notice_list[2], str) == 0)
         {
             return phi_s0;
         }
@@ -87,24 +86,38 @@ glabel debCheckIfDNLEntryExists
 )
 #endif
 
-/**
- * 5980	70004D80
- *     V0=p->entry of size A0 allocated in debug.notice.list; entry allocated in block 6 on failure
- *     accepts: A0=size
- */
 #ifdef NONMATCHING
-u32 debAllocateDNLEntry(s32 arg0)
+// 5980:    lui     v0,0x8002                        r 5980:    lui     a1,0x8002
+// 5984:    lw      v0,0x32f8(v0)                    r 5984:    lw      a1,0x32e8(a1)
+// 5988:    lui     t6,0x8006                          5988:    lui     t6,0x8006
+// 598c:    addiu   t6,t6,0xc90                      i 598c:    addiu   t6,t6,0xc80
+// 5990:    move    v1,v0                            <
+// 5994:    addu    v0,v0,a0                         r 5990:    addu    v1,a1,a0
+// 5998:    addiu   sp,sp,-0x18                        5994:    addiu   sp,sp,-0x18
+// 599c:    sltu    at,t6,v0                         r 5998:    sltu    at,t6,v1
+// 59a0:    beqz    at,0x59c4 ~>                       599c:    beqz    at,0x59c0 ~>
+// 59a4:    sw      ra,0x14(sp)                        59a0:    sw      ra,0x14(sp)
+// 59a8:    subu    v0,v0,a0                         r 59a4:    subu    t7,v1,a0
+// 59ac:    lui     at,0x8002                          59a8:    lui     at,0x8002
+// 59b0:    sw      v0,0x32f8(at)                    r 59ac:    sw      t7,0x32e8(at)
+// 59b4:    jal     0x9720                           i 59b0:    jal     0x9710
+// 59b8:    li      a1,6                               59b4:    li      a1,6
+// 59bc:    b       0x59d4 ~>                          59b8:    b       0x59d0 ~>
+// 59c0:    lw      ra,0x14(sp)                        59bc:    lw      ra,0x14(sp)
+// 59c4:    lui     at,0x8002                          59c0:    lui     at,0x8002
+// 59c8:    sw      v0,0x32f8(at)                    r 59c4:    sw      v1,0x32e8(at)
+// 59cc:    move    v0,v1                            r 59c8:    move    v0,a1
+extern char tlbthread[0x6B0];
+u32 debAllocateDNLEntry(u32 size)
 {
-    u32 temp_v0;
-
-    temp_v0 = (debug_notice_list_data + arg0);
-    if (&tlbthread >= temp_v0)
-    {
-        debug_notice_list_data = temp_v0;
-        return debug_notice_list_data;
+    u32 temp_v0 = debug_notice_list_data;
+    u32 temp_v0_2 = temp_v0 + size;
+    if ((u32)&tlbthread < temp_v0_2) {
+        debug_notice_list_data = (temp_v0_2 - size);
+        return mempAllocBytesInBank(size, 6);
     }
-    debug_notice_list_data = (u32) (temp_v0 - arg0);
-    return mempAllocBytesInBank(6);
+    debug_notice_list_data = temp_v0_2;
+    return temp_v0;
 }
 #else
 GLOBAL_ASM(
