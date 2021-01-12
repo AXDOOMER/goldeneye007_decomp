@@ -3355,7 +3355,7 @@ action16_Guard_Shoots_Guards_Without_Animation_Change_RVL_6:
 /* 06A794 7F035C64 000FC200 */  sll   $t8, $t7, 8
 /* 06A798 7F035C68 02E02025 */  move  $a0, $s7
 /* 06A79C 7F035C6C 01AE3025 */  or    $a2, $t5, $t6
-/* 06A7A0 7F035C70 0FC0AABD */  jal   sub_GAME_7F02AAF4
+/* 06A7A0 7F035C70 0FC0AABD */  jal   actor_fire_or_aim_at_target_update
 /* 06A7A4 7F035C74 03192825 */   or    $a1, $t8, $t9
 /* 06A7A8 7F035C78 10400007 */  beqz  $v0, .L7F035C98
 /* 06A7AC 7F035C7C 02C02025 */   move  $a0, $s6
@@ -9222,7 +9222,7 @@ action16_Guard_Shoots_Guards_Without_Animation_Change_RVL_6:
 /* 06A794 7F035C64 000FC200 */  sll   $t8, $t7, 8
 /* 06A798 7F035C68 02E02025 */  move  $a0, $s7
 /* 06A79C 7F035C6C 01AE3025 */  or    $a2, $t5, $t6
-/* 06A7A0 7F035C70 0FC0AABD */  jal   sub_GAME_7F02AAF4
+/* 06A7A0 7F035C70 0FC0AABD */  jal   actor_fire_or_aim_at_target_update
 /* 06A7A4 7F035C74 03192825 */   or    $a1, $t8, $t9
 /* 06A7A8 7F035C78 10400007 */  beqz  $v0, .L7F035C98
 /* 06A7AC 7F035C7C 02C02025 */   move  $a0, $s6
