@@ -23,7 +23,7 @@ void viDebugRemoved(void) {
 
 void viInitDebugNoticeList(void)
 {
-    debCheckAddDebugNoticeListEntry(&viDebugNoticeList, "vi_c_debug");
+    debTryAdd(&viDebugNoticeList, "vi_c_debug");
     osCreateMesgQueue(&vi_c_debug_MQ, &vi_c_debug_MSG, 8);
 }
 

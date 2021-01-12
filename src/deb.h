@@ -4,6 +4,6 @@
 #include "ultra64.h"
 
 void debInit(void);
-void debCheckAddDebugNoticeListEntry(void *data, const char *name);
+void debTryAdd(void *data, const char *name);
 
 #endif

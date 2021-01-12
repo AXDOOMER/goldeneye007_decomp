@@ -38,7 +38,7 @@ char membars_string2[] = "=========================";
 char membars_string3[] = "-------------------------";
 
 void dynInitDebugNoticeList(void) {
-    debCheckAddDebugNoticeListEntry(&D_800482E0, "dyn_c_debug");
+    debTryAdd(&D_800482E0, "dyn_c_debug");
 }
 
 const char *check_token(s32 arg0, const char *arg1);

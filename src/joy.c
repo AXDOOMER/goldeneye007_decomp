@@ -110,7 +110,7 @@ void *joyInitDebugNoticeList(void) {
     void *temp_v0_2;
 
     // Node 0
-    debCheckAddDebugNoticeListEntry(&D_800268C0, &aJoy_c_debug);
+    debTryAdd(&D_800268C0, &aJoy_c_debug);
     osCreateMesgQueue(&cont1MesgMQ, &cont1Mesg, 1);
     osCreateMesgQueue(&cont2MesgMQ, &cont2Mesg, 1);
     osCreateMesgQueue(&cont3MesgMQ, &cont3Mesg, 1);
@@ -159,7 +159,7 @@ glabel joyInitDebugNoticeList
 /* 00C168 7000B568 3C048002 */  lui   $a0, %hi(D_800268C0)
 /* 00C16C 7000B56C 3C058003 */  lui   $a1, %hi(aJoy_c_debug)
 /* 00C170 7000B570 24A59390 */  addiu $a1, %lo(aJoy_c_debug) # addiu $a1, $a1, -0x6c70
-/* 00C174 7000B574 0C001398 */  jal   debCheckAddDebugNoticeListEntry
+/* 00C174 7000B574 0C001398 */  jal   debTryAdd
 /* 00C178 7000B578 248468C0 */   addiu $a0, %lo(D_800268C0) # addiu $a0, $a0, 0x68c0
 /* 00C17C 7000B57C 3C048006 */  lui   $a0, %hi(cont1MesgMQ)
 /* 00C180 7000B580 3C058006 */  lui   $a1, %hi(cont1Mesg)

@@ -157,7 +157,7 @@ void sub_GAME_7F0BD8FC(s32 arg0) {
 #ifdef NONMATCHING
 void lvInitDebugNoticeList(void)
 {
-    debCheckAddDebugNoticeListEntry(&lvl_c_debug_notice_list, "lv_c_debug");
+    debTryAdd(&lvl_c_debug_notice_list, "lv_c_debug");
     lvl_c_debug_notice_list = 1;
     ptr_jfont_DL = mempAllocBytesInBank(0xc0,'\x06');
     romCopy(ptr_jfont_DL, _jfontdlSegmentStart, 0xc0);
@@ -171,7 +171,7 @@ glabel lvInitDebugNoticeList
 /* 0F2440 7F0BD910 3C048005 */  lui   $a0, %hi(lvl_c_debug_notice_list)
 /* 0F2444 7F0BD914 3C058006 */  lui   $a1, %hi(aLv_c_debug)
 /* 0F2448 7F0BD918 24A5B6B0 */  addiu $a1, %lo(aLv_c_debug) # addiu $a1, $a1, -0x4950
-/* 0F244C 7F0BD91C 0C001398 */  jal   debCheckAddDebugNoticeListEntry
+/* 0F244C 7F0BD91C 0C001398 */  jal   debTryAdd
 /* 0F2450 7F0BD920 24848360 */   addiu $a0, %lo(lvl_c_debug_notice_list) # addiu $a0, $a0, -0x7ca0
 /* 0F2454 7F0BD924 3C0F0011 */  lui   $t7, %hi(_jfontdlSegmentEnd) # $t7, 0x11
 /* 0F2458 7F0BD928 3C180011 */  lui   $t8, %hi(_jfontdlSegmentStart) # $t8, 0x11

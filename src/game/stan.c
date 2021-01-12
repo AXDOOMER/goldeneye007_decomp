@@ -234,7 +234,7 @@ u32 stanRemovedAnimationRoutine(s32 arg0) {
 }
 
 void stanInitDebugNoticeList(void) {
-    debCheckAddDebugNoticeListEntry(&stan_c_debug_notice_list_entry, &aStan_c_debug);//"stan_c_debug");
+    debTryAdd(&stan_c_debug_notice_list_entry, &aStan_c_debug);//"stan_c_debug");
 }
 
 
