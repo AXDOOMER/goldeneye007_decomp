@@ -7,8 +7,7 @@
 //OSMesg boot_token_from_indy[160];
 char boot_token_from_indy[0x280];
 s32 strstr_numstings = 1;
-s32 strstr_ptrcurrent_string = 0;
-u32 D_80024478[34] = {0};
+u32 strstr_ptrcurrent_string[35] = {0};
 
 
 //const char str_empty[] = "";
@@ -259,103 +258,16 @@ glabel check_boot_switches
 )
 #endif
 
-
-
-#ifdef NONMATCHING
-s32 check_token(s32 arg0, s32 arg1)
+const char *check_token(s32 arg0, const char *str)
 {
-    s32 temp_s1;
-    s32 temp_s2;
-    s32 temp_s3;
-    void *phi_s0;
-    s32 phi_s2;
-    s32 phi_s1;
-
-    temp_s3 = strlen(arg1);
-    if (strstr_numstings >= 2)
-    {
-        phi_s0 = &D_80024478;
-        phi_s2 = arg0;
-        phi_s1 = 1;
-loop_2:
-        phi_s2 = phi_s2;
-        if (strncmp(arg1, *phi_s0, temp_s3) == 0)
-        {
-            temp_s2 = phi_s2 + -1;
-            phi_s2 = temp_s2;
-            if (temp_s2 == 0)
-            {
-                return *phi_s0 + temp_s3;
+    s32 length = strlen(str);
+    s32 i = 1;
+    for (; i < strstr_numstings; i++) {
+        if (strncmp(str, strstr_ptrcurrent_string[i], length) == 0) {
+            if (--arg0 == 0) {
+                return ((const char*)strstr_ptrcurrent_string[i] + length);
             }
         }
-        temp_s1 = phi_s1 + 1;
-        phi_s0 = phi_s0 + 4;
-        phi_s1 = temp_s1;
-        if (temp_s1 < strstr_numstings)
-        {
-            goto loop_2;
-        }
     }
-    return 0;
+    return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_token
-/* 00B2A0 7000A6A0 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 00B2A4 7000A6A4 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 00B2A8 7000A6A8 00809025 */  move  $s2, $a0
-/* 00B2AC 7000A6AC AFBF002C */  sw    $ra, 0x2c($sp)
-/* 00B2B0 7000A6B0 AFB40024 */  sw    $s4, 0x24($sp)
-/* 00B2B4 7000A6B4 00A0A025 */  move  $s4, $a1
-/* 00B2B8 7000A6B8 AFB50028 */  sw    $s5, 0x28($sp)
-/* 00B2BC 7000A6BC AFB30020 */  sw    $s3, 0x20($sp)
-/* 00B2C0 7000A6C0 AFB10018 */  sw    $s1, 0x18($sp)
-/* 00B2C4 7000A6C4 AFB00014 */  sw    $s0, 0x14($sp)
-/* 00B2C8 7000A6C8 0C004E1F */  jal   strlen
-/* 00B2CC 7000A6CC 00A02025 */   move  $a0, $a1
-/* 00B2D0 7000A6D0 3C158002 */  lui   $s5, %hi(strstr_numstings)
-/* 00B2D4 7000A6D4 26B54470 */  addiu $s5, %lo(strstr_numstings) # addiu $s5, $s5, 0x4470
-/* 00B2D8 7000A6D8 8EAE0000 */  lw    $t6, ($s5)
-/* 00B2DC 7000A6DC 00409825 */  move  $s3, $v0
-/* 00B2E0 7000A6E0 24110001 */  li    $s1, 1
-/* 00B2E4 7000A6E4 29C10002 */  slti  $at, $t6, 2
-/* 00B2E8 7000A6E8 14200014 */  bnez  $at, .L7000A73C
-/* 00B2EC 7000A6EC 3C108002 */   lui   $s0, %hi(D_80024478)
-/* 00B2F0 7000A6F0 26104478 */  addiu $s0, %lo(D_80024478) # addiu $s0, $s0, 0x4478
-/* 00B2F4 7000A6F4 02802025 */  move  $a0, $s4
-.L7000A6F8:
-/* 00B2F8 7000A6F8 8E050000 */  lw    $a1, ($s0)
-/* 00B2FC 7000A6FC 0C002A26 */  jal   strncmp
-/* 00B300 7000A700 02603025 */   move  $a2, $s3
-/* 00B304 7000A704 54400008 */  bnezl $v0, .L7000A728
-/* 00B308 7000A708 8EB80000 */   lw    $t8, ($s5)
-/* 00B30C 7000A70C 2652FFFF */  addiu $s2, $s2, -1
-/* 00B310 7000A710 56400005 */  bnezl $s2, .L7000A728
-/* 00B314 7000A714 8EB80000 */   lw    $t8, ($s5)
-/* 00B318 7000A718 8E0F0000 */  lw    $t7, ($s0)
-/* 00B31C 7000A71C 10000008 */  b     .L7000A740
-/* 00B320 7000A720 01F31021 */   addu  $v0, $t7, $s3
-/* 00B324 7000A724 8EB80000 */  lw    $t8, ($s5)
-.L7000A728:
-/* 00B328 7000A728 26310001 */  addiu $s1, $s1, 1
-/* 00B32C 7000A72C 26100004 */  addiu $s0, $s0, 4
-/* 00B330 7000A730 0238082A */  slt   $at, $s1, $t8
-/* 00B334 7000A734 5420FFF0 */  bnezl $at, .L7000A6F8
-/* 00B338 7000A738 02802025 */   move  $a0, $s4
-.L7000A73C:
-/* 00B33C 7000A73C 00001025 */  move  $v0, $zero
-.L7000A740:
-/* 00B340 7000A740 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 00B344 7000A744 8FB00014 */  lw    $s0, 0x14($sp)
-/* 00B348 7000A748 8FB10018 */  lw    $s1, 0x18($sp)
-/* 00B34C 7000A74C 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 00B350 7000A750 8FB30020 */  lw    $s3, 0x20($sp)
-/* 00B354 7000A754 8FB40024 */  lw    $s4, 0x24($sp)
-/* 00B358 7000A758 8FB50028 */  lw    $s5, 0x28($sp)
-/* 00B35C 7000A75C 03E00008 */  jr    $ra
-/* 00B360 7000A760 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
-
-
