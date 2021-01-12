@@ -15,7 +15,7 @@
 struct entry
 {
     u32 next;
-    u32 var2;
+    u32 data;
     const char *name;
     s32 var4;
 };
@@ -30,65 +30,17 @@ u32 D_800232E0[] = {0, 0};
 struct entry *debug_notice_list[] = {NULL, NULL, NULL, NULL};
 char * debug_notice_list_data = &dword_CODE_bss_80060890;
 
-/**
- * 5920	70004D20
- *     V0=p->match in debug.notice.list [800232E8] or NULL if not found
- *     accepts: A0=p->name, A1=p->data
- */
-#ifdef NONMATCHING
-void *debCheckIfDNLEntryExists(const char *str)
+struct entry *debFind(const char *name)
 {
-    //phi_s0 = debug_notice_list;
-    if (debug_notice_list != 0)
-    {
-loop_1:
-        if (strcmp(debug_notice_list[2], str) == 0)
-        {
-            return phi_s0;
+    struct entry *entry = debug_notice_list[0];
+    while (entry != NULL) {
+        if (strcmp(entry->name, name) == 0) {
+            return entry;
         }
-        temp_s0 = phi_s0->unk0;
-        phi_s0 = temp_s0;
-        if (temp_s0 != 0)
-        {
-            goto loop_1;
-        }
+        entry = entry->next; 
     }
     return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel debCheckIfDNLEntryExists
-/* 005920 70004D20 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 005924 70004D24 AFB00014 */  sw    $s0, 0x14($sp)
-/* 005928 70004D28 3C108002 */  lui   $s0, %hi(debug_notice_list)
-/* 00592C 70004D2C 8E1032E8 */  lw    $s0, %lo(debug_notice_list)($s0)
-/* 005930 70004D30 AFB10018 */  sw    $s1, 0x18($sp)
-/* 005934 70004D34 00808825 */  move  $s1, $a0
-/* 005938 70004D38 1200000B */  beqz  $s0, .L70004D68
-/* 00593C 70004D3C AFBF001C */   sw    $ra, 0x1c($sp)
-/* 005940 70004D40 8E040008 */  lw    $a0, 8($s0)
-.L70004D44:
-/* 005944 70004D44 0C002A13 */  jal   strcmp
-/* 005948 70004D48 02202825 */   move  $a1, $s1
-/* 00594C 70004D4C 54400004 */  bnezl $v0, .L70004D60
-/* 005950 70004D50 8E100000 */   lw    $s0, ($s0)
-/* 005954 70004D54 10000005 */  b     .L70004D6C
-/* 005958 70004D58 02001025 */   move  $v0, $s0
-/* 00595C 70004D5C 8E100000 */  lw    $s0, ($s0)
-.L70004D60:
-/* 005960 70004D60 5600FFF8 */  bnezl $s0, .L70004D44
-/* 005964 70004D64 8E040008 */   lw    $a0, 8($s0)
-.L70004D68:
-/* 005968 70004D68 00001025 */  move  $v0, $zero
-.L70004D6C:
-/* 00596C 70004D6C 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 005970 70004D70 8FB00014 */  lw    $s0, 0x14($sp)
-/* 005974 70004D74 8FB10018 */  lw    $s1, 0x18($sp)
-/* 005978 70004D78 03E00008 */  jr    $ra
-/* 00597C 70004D7C 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
 
 #ifdef NONMATCHING
 // 5980:    lui     v0,0x8002                        r 5980:    lui     a1,0x8002
@@ -112,7 +64,7 @@ glabel debCheckIfDNLEntryExists
 // 59c8:    sw      v0,0x32f8(at)                    r 59c4:    sw      v1,0x32e8(at)
 // 59cc:    move    v0,v1                            r 59c8:    move    v0,a1
 extern char tlbthread[0x6B0];
-u32 debAllocateDNLEntry(u32 size)
+u32 debAllocate(u32 size)
 {
     u32 temp_v0 = debug_notice_list_data;
     u32 temp_v0_2 = temp_v0 + size;
@@ -124,10 +76,10 @@ u32 debAllocateDNLEntry(u32 size)
     return temp_v0;
 }
 #else
-u32 debAllocateDNLEntry(u32);
+u32 debAllocate(u32);
 GLOBAL_ASM(
 .text
-glabel debAllocateDNLEntry
+glabel debAllocate
 /* 005980 70004D80 3C028002 */  lui   $v0, %hi(debug_notice_list_data)
 /* 005984 70004D84 8C4232F8 */  lw    $v0, %lo(debug_notice_list_data)($v0)
 /* 005988 70004D88 3C0E8006 */  lui   $t6, %hi(tlbthread) 
@@ -157,61 +109,37 @@ glabel debAllocateDNLEntry
 )
 #endif
 
-void debAllocateAndAddDNLEntry(const char *name, u32 arg1)
-{
-    struct entry *temp_v0 = debAllocateDNLEntry(sizeof(struct entry));
-    temp_v0->next = (u32)debug_notice_list[0];
-    temp_v0->var2 = arg1;
-    temp_v0->name = name;
-    debug_notice_list[0] = temp_v0;
+void debAdd(const char *name, u32 data) {
+    struct entry *entry = debAllocate(sizeof(struct entry));
+    entry->next = (u32)debug_notice_list[0];
+    entry->data = data;
+    entry->name = name;
+    debug_notice_list[0] = entry;
 }
 
-/**
- * 5A2C	70004E2C
- *     V0= p->debug.notice.list entry for boss_c_debug using data at 800241A0
- */
-void debInitDebugNoticeList(void)
-{
+void debInit(void) {
     debCheckAddDebugNoticeListEntry(&D_800232E0, "deb_c_debug");
     init_tlb();
 }
 
-
-/**
- * 5A60	70004E60
- *     V0=p->debug.notice.list entry for name A1 and data A0; generates if not found
- *     accepts: A0=p->data, A1=p->name
- */
-void debCheckAddDebugNoticeListEntry(void* data, char * string)
-{
-    if (debCheckIfDNLEntryExists(string) == 0)
-    {
-        debAllocateAndAddDNLEntry(string, data);
+void debCheckAddDebugNoticeListEntry(void* data, const char *name) {
+    if (debFind(name) == NULL) {
+        debAdd(name, data);
     }
 }
 
-void debScanDNLEntries_NEUTERED(void)
-{
+void deb70004E98(void) {
     struct entry *entry = debug_notice_list[0];
-    while (entry != NULL) { entry = entry->next; }
+    while (entry != NULL) {
+        // Removed
+        entry = entry->next; 
+    }
 }
 
-/**
- * 5ABC	70004EBC
- *     unconditional return
- */
-void debRemoved70004EBC(void)
-{
-    return;
+void deb70004EBC(void) {
+    // Removed
 }
 
-/**
- * 5AC4	70004EC4
- *     A0->SP+0, A1->SP+4, A2->SP+8
- */
-void debRemoved70004EC4(s32 arg0, s32 arg1, s32 arg2)
-{
-    return;
+void deb70004EC4(s32 arg0, s32 arg1, s32 arg2) {
+    // Removed
 }
-
-

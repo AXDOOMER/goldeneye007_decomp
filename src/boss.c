@@ -110,7 +110,7 @@ void init_mainthread_data(void)
     s32 i;
 
 
-    debInitDebugNoticeList();
+    debInit();
     romCreateMesgQueue();
     establish_TLB_buffer_management_table();
     image_entries_load();
