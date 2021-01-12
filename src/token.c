@@ -2,20 +2,13 @@
 #include "pi.h"
 #include "snd.h"
 #include "game/lvl_text.h"
+#include "rmon.h"
 
 
 //OSMesg boot_token_from_indy[160];
-char boot_token_from_indy[0x280];
+u32 boot_token_from_indy[160];
 s32 strstr_numstings = 1;
 u32 strstr_ptrcurrent_string[35] = {0};
-
-
-//const char str_empty[] = "";
-
-
-
-
-
 
 #ifdef NONMATCHING
 void *check_string_something(void *arg0)
@@ -140,47 +133,45 @@ glabel check_string_something
 #endif
 
 
+void check_string_something(const char* str);
 void strtok(s32 arg0) {
     strcpy(&boot_token_from_indy, arg0);
     check_string_something(&boot_token_from_indy);
 }
 
-//const char aD_6[] = "-d";
-//const char aS_2[] = "-s";
-//const char aJ[] = "-j";
-
 #ifdef NONMATCHING
+// Matching, but the rodata is offset by 4 bytes. Probably need to decompile check_string_something first.
+const char *check_token(s32 arg0, const char *str);
 s32 check_boot_switches(void)
 {
-    s32 is_debug;
-    s32 devAddr;
     u32 *data;
-
-    is_debug = 0;
-    if (rmon_debug_is_final_build() != 0)
-    {
+    u32* end;
+    uintptr_t devAddr;
+    s32 isDebug = 0;
+    devAddr = 0xFFB000;
+    if (rmon_debug_is_final_build()) {
         boot_token_from_indy[0] = 0;
-    }
-    else
-    {
-        for (devAddr = 0xffb000, data = &boot_token_from_indy; data != &piCmdBuf; data += 4, devAddr += 4)
-        {
+    } else {
+        for (data = boot_token_from_indy, end = (boot_token_from_indy + 160); data != end; data++) {
             osPiReadIo(devAddr, data);
+            devAddr += sizeof(u32);
         }
     }
-    check_string_something(&boot_token_from_indy);
+    check_string_something(boot_token_from_indy);
 
-    is_debug = (check_token(1, "-d") != 0);
+    if (check_token(1, "-d") != NULL) {
+        isDebug = 1;
+    }
 
-    if (check_token(1, "-s") != 0) {
+    if (check_token(1, "-s") != NULL) {
         bootswitch_sound = 1;
     }
 
-    if (check_token(1, "-j") != 0) {
+    if (check_token(1, "-j") != NULL) {
         j_text_trigger = 1;
     }
 
-    return is_debug;
+    return isDebug;
 }
 #else
 GLOBAL_ASM(
