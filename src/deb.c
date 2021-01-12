@@ -12,6 +12,14 @@
  * In particular, it seems to handle debug_notice_list
  */
 
+struct entry
+{
+    u32 next;
+    u32 var2;
+    const char *name;
+    s32 var4;
+};
+
 /* bss */
 extern char dword_CODE_bss_80060890[0x400];
 
@@ -19,15 +27,8 @@ extern char dword_CODE_bss_80060890[0x400];
 
 /* data */
 u32 D_800232E0[] = {0, 0};
-u32 debug_notice_list[] = {0, 0, 0, 0};
+struct entry *debug_notice_list[] = {NULL, NULL, NULL, NULL};
 char * debug_notice_list_data = &dword_CODE_bss_80060890;
-struct entry
-{
-    u32 var1;
-    u32 var2;
-    const char *name;
-    s32 var4;
-};
 
 /**
  * 5920	70004D20
@@ -159,7 +160,7 @@ glabel debAllocateDNLEntry
 void debAllocateAndAddDNLEntry(const char *name, u32 arg1)
 {
     struct entry *temp_v0 = debAllocateDNLEntry(sizeof(struct entry));
-    temp_v0->var1 = (u32)debug_notice_list[0];
+    temp_v0->next = (u32)debug_notice_list[0];
     temp_v0->var2 = arg1;
     temp_v0->name = name;
     debug_notice_list[0] = temp_v0;
@@ -189,51 +190,11 @@ void debCheckAddDebugNoticeListEntry(void* data, char * string)
     }
 }
 
-
-
-/**
- * 5A98	70004E98
- *     V0=0; scan debug.notice.list until a NULL pointer
- *     likely this would have executed some function for each entry...
- */
-#ifdef NONMATCHING
-void *debScanDNLEntries_NEUTERED(void)
+void debScanDNLEntries_NEUTERED(void)
 {
-    void *temp_v0;
-    void *phi_v0;
-
-    phi_v0 = debug_notice_list;
-    if (debug_notice_list != 0)
-    {
-loop_1:
-        temp_v0 = *phi_v0;
-        phi_v0 = temp_v0;
-        if (temp_v0 != 0)
-        {
-            goto loop_1;
-        }
-    }
-    return debug_notice_list;
+    struct entry *entry = debug_notice_list[0];
+    while (entry != NULL) { entry = entry->next; }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel debScanDNLEntries_NEUTERED
-/* 005A98 70004E98 3C028002 */  lui   $v0, %hi(debug_notice_list)
-/* 005A9C 70004E9C 8C4232E8 */  lw    $v0, %lo(debug_notice_list)($v0)
-/* 005AA0 70004EA0 10400004 */  beqz  $v0, .L70004EB4
-/* 005AA4 70004EA4 00000000 */   nop   
-/* 005AA8 70004EA8 8C420000 */  lw    $v0, ($v0)
-.L70004EAC:
-/* 005AAC 70004EAC 5440FFFF */  bnezl $v0, .L70004EAC
-/* 005AB0 70004EB0 8C420000 */   lw    $v0, ($v0)
-.L70004EB4:
-/* 005AB4 70004EB4 03E00008 */  jr    $ra
-/* 005AB8 70004EB8 00000000 */   nop   
-)
-#endif
-
-
 
 /**
  * 5ABC	70004EBC
