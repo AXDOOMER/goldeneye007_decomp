@@ -91,6 +91,7 @@ int isspace(unsigned char c) {
     return ((c == ' ') || (c == '\t') || (c == '\n') || (c == '\f') || (c == '\v'));
 }
 
+#define	ULONG_MAX ((unsigned long)(~0L)) /* 0xFFFFFFFF */
 long int strtol(const char *str, char **endptr, int base) {
     int neg;
     unsigned char *ptr;
@@ -135,8 +136,8 @@ long int strtol(const char *str, char **endptr, int base) {
         before = ptr;
         overflow = 0;
         accum = 0;
-        cutoff = -1U / base;
-        cutlim = -1U % base;
+        cutoff = ULONG_MAX / base;
+        cutlim = ULONG_MAX % base;
         for (; (int)(c = *ptr); ptr++) {
             if (isdigit(c)) {
                 c -= '0';
