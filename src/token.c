@@ -1,4 +1,4 @@
-#include "ultra64.h"
+#include "token.h"
 #include "pi.h"
 #include "snd.h"
 #include "game/lvl_text.h"
@@ -26,12 +26,11 @@ unsigned char *check_string_something(unsigned char *str)
     return str;
 }
 
-void strtok(const char *arg0) {
-    strcpy(&boot_token_from_indy, arg0);
+void strtok(const char *str) {
+    strcpy(&boot_token_from_indy, str);
     check_string_something(&boot_token_from_indy);
 }
 
-const char *check_token(s32 arg0, const char *str);
 s32 check_boot_switches(void)
 {
     u32 *data;
