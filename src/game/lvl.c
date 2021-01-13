@@ -1508,12 +1508,12 @@ glabel sub_GAME_7F0BE30C
 .L7F0BE694:
 /* 0F31C4 7F0BE694 3C058006 */  lui   $a1, %hi(aStanshow_)
 /* 0F31C8 7F0BE698 24A5B6BC */  addiu $a1, %lo(aStanshow_) # addiu $a1, $a1, -0x4944
-/* 0F31CC 7F0BE69C 0C0029A8 */  jal   check_token
+/* 0F31CC 7F0BE69C 0C0029A8 */  jal   tokenFind
 /* 0F31D0 7F0BE6A0 24040001 */   li    $a0, 1
 /* 0F31D4 7F0BE6A4 10400011 */  beqz  $v0, .L7F0BE6EC
 /* 0F31D8 7F0BE6A8 24040001 */   li    $a0, 1
 /* 0F31DC 7F0BE6AC 3C058006 */  lui   $a1, %hi(aStanshow__5)
-/* 0F31E0 7F0BE6B0 0C0029A8 */  jal   check_token
+/* 0F31E0 7F0BE6B0 0C0029A8 */  jal   tokenFind
 /* 0F31E4 7F0BE6B4 24A5B6C8 */   addiu $a1, %lo(aStanshow__5) # addiu $a1, $a1, -0x4938
 /* 0F31E8 7F0BE6B8 0FC2CB96 */  jal   stanMatchTileName
 /* 0F31EC 7F0BE6BC 00402025 */   move  $a0, $v0
@@ -1531,12 +1531,12 @@ glabel sub_GAME_7F0BE30C
 .L7F0BE6EC:
 /* 0F321C 7F0BE6EC 3C058006 */  lui   $a1, %hi(aStanshow__0)
 /* 0F3220 7F0BE6F0 24A5B6D4 */  addiu $a1, %lo(aStanshow__0) # addiu $a1, $a1, -0x492c
-/* 0F3224 7F0BE6F4 0C0029A8 */  jal   check_token
+/* 0F3224 7F0BE6F4 0C0029A8 */  jal   tokenFind
 /* 0F3228 7F0BE6F8 24040002 */   li    $a0, 2
 /* 0F322C 7F0BE6FC 10400011 */  beqz  $v0, .L7F0BE744
 /* 0F3230 7F0BE700 24040002 */   li    $a0, 2
 /* 0F3234 7F0BE704 3C058006 */  lui   $a1, %hi(aStanshow__1)
-/* 0F3238 7F0BE708 0C0029A8 */  jal   check_token
+/* 0F3238 7F0BE708 0C0029A8 */  jal   tokenFind
 /* 0F323C 7F0BE70C 24A5B6E0 */   addiu $a1, %lo(aStanshow__1) # addiu $a1, $a1, -0x4920
 /* 0F3240 7F0BE710 0FC2CB96 */  jal   stanMatchTileName
 /* 0F3244 7F0BE714 00402025 */   move  $a0, $v0
@@ -1554,12 +1554,12 @@ glabel sub_GAME_7F0BE30C
 .L7F0BE744:
 /* 0F3274 7F0BE744 3C058006 */  lui   $a1, %hi(aStanshow__2)
 /* 0F3278 7F0BE748 24A5B6EC */  addiu $a1, %lo(aStanshow__2) # addiu $a1, $a1, -0x4914
-/* 0F327C 7F0BE74C 0C0029A8 */  jal   check_token
+/* 0F327C 7F0BE74C 0C0029A8 */  jal   tokenFind
 /* 0F3280 7F0BE750 24040003 */   li    $a0, 3
 /* 0F3284 7F0BE754 10400010 */  beqz  $v0, .L7F0BE798
 /* 0F3288 7F0BE758 24040003 */   li    $a0, 3
 /* 0F328C 7F0BE75C 3C058006 */  lui   $a1, %hi(aStanshow__3)
-/* 0F3290 7F0BE760 0C0029A8 */  jal   check_token
+/* 0F3290 7F0BE760 0C0029A8 */  jal   tokenFind
 /* 0F3294 7F0BE764 24A5B6F8 */   addiu $a1, %lo(aStanshow__3) # addiu $a1, $a1, -0x4908
 /* 0F3298 7F0BE768 0FC2CB96 */  jal   stanMatchTileName
 /* 0F329C 7F0BE76C 00402025 */   move  $a0, $v0
@@ -1901,12 +1901,12 @@ glabel sub_GAME_7F0BE30C
 .Ljp7F0BF254:
 /* 0F3DC4 7F0BF254 3C058006 */  lui   $a1, %hi(aStanshow_) # $a1, 0x8006
 /* 0F3DC8 7F0BF258 24A5B6FC */  addiu $a1, %lo(aStanshow_) # addiu $a1, $a1, -0x4904
-/* 0F3DCC 7F0BF25C 0C0029AC */  jal   check_token
+/* 0F3DCC 7F0BF25C 0C0029AC */  jal   tokenFind
 /* 0F3DD0 7F0BF260 24040001 */   li    $a0, 1
 /* 0F3DD4 7F0BF264 10400011 */  beqz  $v0, .Ljp7F0BF2AC
 /* 0F3DD8 7F0BF268 24040001 */   li    $a0, 1
 /* 0F3DDC 7F0BF26C 3C058006 */  lui   $a1, %hi(aStanshow__5) # $a1, 0x8006
-/* 0F3DE0 7F0BF270 0C0029AC */  jal   check_token
+/* 0F3DE0 7F0BF270 0C0029AC */  jal   tokenFind
 /* 0F3DE4 7F0BF274 24A5B708 */   addiu $a1, %lo(aStanshow__5) # addiu $a1, $a1, -0x48f8
 /* 0F3DE8 7F0BF278 0FC2CE82 */  jal   stanMatchTileName
 /* 0F3DEC 7F0BF27C 00402025 */   move  $a0, $v0
@@ -1924,12 +1924,12 @@ glabel sub_GAME_7F0BE30C
 .Ljp7F0BF2AC:
 /* 0F3E1C 7F0BF2AC 3C058006 */  lui   $a1, %hi(aStanshow__0) # $a1, 0x8006
 /* 0F3E20 7F0BF2B0 24A5B714 */  addiu $a1, %lo(aStanshow__0) # addiu $a1, $a1, -0x48ec
-/* 0F3E24 7F0BF2B4 0C0029AC */  jal   check_token
+/* 0F3E24 7F0BF2B4 0C0029AC */  jal   tokenFind
 /* 0F3E28 7F0BF2B8 24040002 */   li    $a0, 2
 /* 0F3E2C 7F0BF2BC 10400011 */  beqz  $v0, .Ljp7F0BF304
 /* 0F3E30 7F0BF2C0 24040002 */   li    $a0, 2
 /* 0F3E34 7F0BF2C4 3C058006 */  lui   $a1, %hi(aStanshow__1) # $a1, 0x8006
-/* 0F3E38 7F0BF2C8 0C0029AC */  jal   check_token
+/* 0F3E38 7F0BF2C8 0C0029AC */  jal   tokenFind
 /* 0F3E3C 7F0BF2CC 24A5B720 */   addiu $a1, %lo(aStanshow__1) # addiu $a1, $a1, -0x48e0
 /* 0F3E40 7F0BF2D0 0FC2CE82 */  jal   stanMatchTileName
 /* 0F3E44 7F0BF2D4 00402025 */   move  $a0, $v0
@@ -1947,12 +1947,12 @@ glabel sub_GAME_7F0BE30C
 .Ljp7F0BF304:
 /* 0F3E74 7F0BF304 3C058006 */  lui   $a1, %hi(aStanshow__2) # $a1, 0x8006
 /* 0F3E78 7F0BF308 24A5B72C */  addiu $a1, %lo(aStanshow__2) # addiu $a1, $a1, -0x48d4
-/* 0F3E7C 7F0BF30C 0C0029AC */  jal   check_token
+/* 0F3E7C 7F0BF30C 0C0029AC */  jal   tokenFind
 /* 0F3E80 7F0BF310 24040003 */   li    $a0, 3
 /* 0F3E84 7F0BF314 10400010 */  beqz  $v0, .Ljp7F0BF358
 /* 0F3E88 7F0BF318 24040003 */   li    $a0, 3
 /* 0F3E8C 7F0BF31C 3C058006 */  lui   $a1, %hi(aStanshow__3) # $a1, 0x8006
-/* 0F3E90 7F0BF320 0C0029AC */  jal   check_token
+/* 0F3E90 7F0BF320 0C0029AC */  jal   tokenFind
 /* 0F3E94 7F0BF324 24A5B738 */   addiu $a1, %lo(aStanshow__3) # addiu $a1, $a1, -0x48c8
 /* 0F3E98 7F0BF328 0FC2CE82 */  jal   stanMatchTileName
 /* 0F3E9C 7F0BF32C 00402025 */   move  $a0, $v0

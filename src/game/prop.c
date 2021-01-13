@@ -2620,26 +2620,26 @@ glabel proplvreset2
 /* 038750 7F003C20 AFB00020 */  sw    $s0, 0x20($sp)
 /* 038754 7F003C24 F7B40018 */  sdc1  $f20, 0x18($sp)
 /* 038758 7F003C28 24A5ED90 */  addiu $a1, %lo(aNochr) # addiu $a1, $a1, -0x1270
-/* 03875C 7F003C2C 0C0029A8 */  jal   check_token
+/* 03875C 7F003C2C 0C0029A8 */  jal   tokenFind
 /* 038760 7F003C30 24040001 */   li    $a0, 1
 /* 038764 7F003C34 2C460001 */  sltiu $a2, $v0, 1
 /* 038768 7F003C38 10C00005 */  beqz  $a2, .L7F003C50
 /* 03876C 7F003C3C 24040001 */   li    $a0, 1
 /* 038770 7F003C40 3C058005 */  lui   $a1, %hi(aNoprop)
-/* 038774 7F003C44 0C0029A8 */  jal   check_token
+/* 038774 7F003C44 0C0029A8 */  jal   tokenFind
 /* 038778 7F003C48 24A5ED98 */   addiu $a1, %lo(aNoprop) # addiu $a1, $a1, -0x1268
 /* 03877C 7F003C4C 2C460001 */  sltiu $a2, $v0, 1
 .L7F003C50:
 /* 038780 7F003C50 3C058005 */  lui   $a1, %hi(aNoobj)
 /* 038784 7F003C54 AFA60278 */  sw    $a2, 0x278($sp)
 /* 038788 7F003C58 24A5EDA0 */  addiu $a1, %lo(aNoobj) # addiu $a1, $a1, -0x1260
-/* 03878C 7F003C5C 0C0029A8 */  jal   check_token
+/* 03878C 7F003C5C 0C0029A8 */  jal   tokenFind
 /* 038790 7F003C60 24040001 */   li    $a0, 1
 /* 038794 7F003C64 2C430001 */  sltiu $v1, $v0, 1
 /* 038798 7F003C68 10600005 */  beqz  $v1, .L7F003C80
 /* 03879C 7F003C6C 24040001 */   li    $a0, 1
 /* 0387A0 7F003C70 3C058005 */  lui   $a1, %hi(aNoprop_0)
-/* 0387A4 7F003C74 0C0029A8 */  jal   check_token
+/* 0387A4 7F003C74 0C0029A8 */  jal   tokenFind
 /* 0387A8 7F003C78 24A5EDA8 */   addiu $a1, %lo(aNoprop_0) # addiu $a1, $a1, -0x1258
 /* 0387AC 7F003C7C 2C430001 */  sltiu $v1, $v0, 1
 .L7F003C80:
@@ -4013,26 +4013,26 @@ glabel jpt_8004F02C
 /* 038790 7F003C20 AFB00020 */  sw    $s0, 0x20($sp)
 /* 038794 7F003C24 F7B40018 */  sdc1  $f20, 0x18($sp)
 /* 038798 7F003C28 24A5EDC0 */  addiu $a1, %lo(aNochr) # addiu $a1, $a1, -0x1240
-/* 03879C 7F003C2C 0C0029AC */  jal   check_token
+/* 03879C 7F003C2C 0C0029AC */  jal   tokenFind
 /* 0387A0 7F003C30 24040001 */   li    $a0, 1
 /* 0387A4 7F003C34 2C460001 */  sltiu $a2, $v0, 1
 /* 0387A8 7F003C38 10C00005 */  beqz  $a2, .L7F003C50
 /* 0387AC 7F003C3C 24040001 */   li    $a0, 1
 /* 0387B0 7F003C40 3C058005 */  lui   $a1, %hi(aNoprop) # $a1, 0x8005
-/* 0387B4 7F003C44 0C0029AC */  jal   check_token
+/* 0387B4 7F003C44 0C0029AC */  jal   tokenFind
 /* 0387B8 7F003C48 24A5EDC8 */   addiu $a1, %lo(aNoprop) # addiu $a1, $a1, -0x1238
 /* 0387BC 7F003C4C 2C460001 */  sltiu $a2, $v0, 1
 .L7F003C50:
 /* 0387C0 7F003C50 3C058005 */  lui   $a1, %hi(aNoobj) # $a1, 0x8005
 /* 0387C4 7F003C54 AFA60278 */  sw    $a2, 0x278($sp)
 /* 0387C8 7F003C58 24A5EDD0 */  addiu $a1, %lo(aNoobj) # addiu $a1, $a1, -0x1230
-/* 0387CC 7F003C5C 0C0029AC */  jal   check_token
+/* 0387CC 7F003C5C 0C0029AC */  jal   tokenFind
 /* 0387D0 7F003C60 24040001 */   li    $a0, 1
 /* 0387D4 7F003C64 2C430001 */  sltiu $v1, $v0, 1
 /* 0387D8 7F003C68 10600005 */  beqz  $v1, .L7F003C80
 /* 0387DC 7F003C6C 24040001 */   li    $a0, 1
 /* 0387E0 7F003C70 3C058005 */  lui   $a1, %hi(aNoprop_0) # $a1, 0x8005
-/* 0387E4 7F003C74 0C0029AC */  jal   check_token
+/* 0387E4 7F003C74 0C0029AC */  jal   tokenFind
 /* 0387E8 7F003C78 24A5EDD8 */   addiu $a1, %lo(aNoprop_0) # addiu $a1, $a1, -0x1228
 /* 0387EC 7F003C7C 2C430001 */  sltiu $v1, $v0, 1
 .L7F003C80:

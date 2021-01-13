@@ -28,7 +28,7 @@ void mempInitDebugNoticeList(void)
     debTryAdd(&ptr_memp_c_debug_debug_notice_list, "memp_c_debug");
 }
 
-const char *check_token(s32 arg0, const char *arg1);
+const char *tokenFind(s32 arg0, const char *arg1);
 long int strtol(const char *str, char **endptr, int base);
 void mempCheckMemflagTokens(s32 bstart, s32 bsize)
 {
@@ -39,14 +39,14 @@ void mempCheckMemflagTokens(s32 bstart, s32 bsize)
     
     sp20 = sdefaultmvals;
 
-    if (check_token(1, "-mf")) {
-        sp20.var2 = strtol(check_token(1, "-mf"), NULL, 0);
+    if (tokenFind(1, "-mf")) {
+        sp20.var2 = strtol(tokenFind(1, "-mf"), NULL, 0);
     }
-    if (check_token(1, "-ml")) {
-        sp20.var4 = strtol(check_token(1, "-ml"), NULL, 0);
+    if (tokenFind(1, "-ml")) {
+        sp20.var4 = strtol(tokenFind(1, "-ml"), NULL, 0);
     }
-    if (check_token(1, "-me")) {
-        sp20.var6 = strtol(check_token(1, "-me"), NULL, 0);
+    if (tokenFind(1, "-me")) {
+        sp20.var6 = strtol(tokenFind(1, "-me"), NULL, 0);
     }
     if (sp20.var6 == 0) {
         sp20.var2 = 0;

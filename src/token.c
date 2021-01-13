@@ -5,20 +5,22 @@
 #include "rmon.h"
 #include "str.h"
 
-u32 boot_token_from_indy[160];
-s32 strstr_numstings = 1;
-const char *strstr_ptrcurrent_string[35] = {0};
+u32 g_TokenString[160];
+s32 g_TokenCount = 1;
+const char *g_Tokens[35] = {0};
 
-unsigned char *check_string_something(unsigned char *str)
+// Splits a string into tokens delimited by spaces and stores 
+// them in g_Tokens.
+unsigned char *tokenSplit(unsigned char *str)
 {
     unsigned char c;
-    strstr_ptrcurrent_string[0] = "";
-    strstr_numstings = 1;
+    g_Tokens[0] = "";
+    g_TokenCount = 1;
     while ((s32)*str) {
         while (*str == ' ') {
             *str++ = '\0';
         }
-        strstr_ptrcurrent_string[strstr_numstings++] = str;
+        g_Tokens[g_TokenCount++] = str;
         while (*str > ' ') {
             str++; 
         }
@@ -26,51 +28,55 @@ unsigned char *check_string_something(unsigned char *str)
     return str;
 }
 
-void strtok(const char *str) {
-    strcpy(&boot_token_from_indy, str);
-    check_string_something(&boot_token_from_indy);
+// Sets a new token string.
+void tokenSetString(const char *str) {
+    strcpy(g_TokenString, str);
+    tokenSplit(g_TokenString);
 }
 
-s32 check_boot_switches(void)
+// Reads a new token string from the PI device at address 0xFFB000. Also handles the 
+// -d (debug), -s (sound) and -j (japanese) switches.
+s32 tokenReadIo(void)
 {
-    u32 *data;
-    u32* end;
-    uintptr_t devAddr;
-    s32 isDebug = 0;
-    devAddr = 0xFFB000;
+    u32 *ptr;
+    u32 *end;
+    u32 address;
+    s32 debug = FALSE;
+    address = 0xFFB000;
     if (rmon_debug_is_final_build()) {
-        boot_token_from_indy[0] = 0;
+        g_TokenString[0] = 0;
     } else {
-        for (data = boot_token_from_indy, end = (boot_token_from_indy + 160); data != end; data++) {
-            osPiReadIo(devAddr, data);
-            devAddr += sizeof(u32);
+        for (ptr = g_TokenString, end = (g_TokenString + 160); (ptr != end); ptr++) {
+            osPiReadIo(address, ptr);
+            address += sizeof(u32);
         }
     }
-    check_string_something(boot_token_from_indy);
-
-    if (check_token(1, "-d") != NULL) {
-        isDebug = 1;
+    tokenSplit(g_TokenString);
+    if (tokenFind(1, "-d") != NULL) {
+        debug = TRUE;
     }
-
-    if (check_token(1, "-s") != NULL) {
-        bootswitch_sound = 1;
+    if (tokenFind(1, "-s") != NULL) {
+        bootswitch_sound = TRUE;
     }
-
-    if (check_token(1, "-j") != NULL) {
-        j_text_trigger = 1;
+    if (tokenFind(1, "-j") != NULL) {
+        j_text_trigger = TRUE;
     }
-
-    return isDebug;
+    return debug;
 }
 
-const char *check_token(s32 arg0, const char *str)
+// Attempts to find the specified token in g_Tokens. If successful,
+// returns a pointer to the start of the value following the token,
+// otherwise it returns NULL. E.g. if the token string was "-abc 123", then 
+// tokenFind(1, "-abc") would return " 123". The index is used in cases where
+// the same token appears multiple times. Note that the index is 1-based.
+const char *tokenFind(s32 index, const char *token)
 {
-    s32 length = strlen(str);
+    s32 length = strlen(token);
     s32 i = 1;
-    for (; i < strstr_numstings; i++) {
-        if (strncmp(str, strstr_ptrcurrent_string[i], length) == 0) {
-            if (--arg0 == 0) {
-                return (strstr_ptrcurrent_string[i] + length);
+    for (; i < g_TokenCount; i++) {
+        if (strncmp(token, g_Tokens[i], length) == 0) {
+            if (--index == 0) {
+                return (g_Tokens[i] + length);
             }
         }
     }
