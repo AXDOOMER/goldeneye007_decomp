@@ -1,26 +1,22 @@
 #include "ultra64.h"
 #include "joy.h"
-const char aJoy_c_debug[] = "joy_c_debug";
 
+struct contsample {
+	OSContPad pads[4];
+};
 
-char controller_input_index[0x1E0];
-s32 dword_CODE_bss_80065110;
-s32 dword_CODE_bss_80065114;
-s32 dword_CODE_bss_80065118;
-s32 dword_CODE_bss_8006511C;
-s32 dword_CODE_bss_80065120;
-s32 dword_CODE_bss_80065124;
-s32 dword_CODE_bss_80065128;
-s32 dword_CODE_bss_8006512C;
-s32 dword_code_bss_80065130[0x76];
-s32 dword_CODE_bss_80065308;
-s32 dword_CODE_bss_8006530C;
-s32 dword_CODE_bss_80065310;
-s32 dword_CODE_bss_80065314;
-s32 dword_CODE_bss_80065318;
-s32 dword_CODE_bss_8006531C;
-s32 dword_CODE_bss_80065320;
-s32 dword_CODE_bss_80065324;
+struct contdata {
+    /* 0x000 */ struct contsample samples[20];
+    /* 0x1E0 */ s32 curlast; 
+	/* 0x1E4 */ s32 curstart;
+	/* 0x1E8 */ s32 nextlast;
+	/* 0x1EC */ s32 nextsecondlast;
+    /* 0x1F0 */ s32 unknown1; //u16 buttonspressed[4];
+    /* 0x1F4 */ s32 unknown2; //u16 buttonsreleased[4];	
+	/* 0x1F8 */ s32 unk1f8; // 0x1F8
+};
+
+struct contdata g_ContData[2];
 //80065328
 char contdemoMesg[0x28];
 //80065350
@@ -52,7 +48,7 @@ char player1_controller_packet[0x1A8];
 
 
 s32 D_800268C0 = 0;
-void *ptr_current_point_in_controller_input_index = controller_input_index;
+void *ptr_current_point_in_controller_input_index = &g_ContData[0];
 s32 D_800268C8 = 0;
 s32 D_800268CC = 0;
 u8 num_controller_plugged_in_flags = 0;
@@ -73,7 +69,7 @@ s32 controller_1_rumble_pulse = 0;
 s32 controller_2_rumble_pulse = 0;
 s32 controller_3_rumble_pulse = 0;
 s32 controller_4_rumble_pulse = 0;
-s32 enableControllers = 0;
+s32 g_ContQueuesCreated = 0;
 s32 D_8002691C = 0;
 s32 D_80026920 = 0;
 s32 disable_all_rumble = 0;
@@ -97,158 +93,47 @@ s32 pl3_controller_failure_pressed = 0;
 s32 pl4_controller_failure_pressed = 0;
 s32 D_80026970 = 0;
 
+void contSystemInit(void) {
+    s32 i;
+    s32 j;
 
+    debTryAdd(&D_800268C0, "joy_c_debug");
 
-
-
-
-
-
-#ifdef NONMATCHING
-void *joyInitDebugNoticeList(void) {
-    void *temp_v0;
-    void *temp_v0_2;
-
-    // Node 0
-    debTryAdd(&D_800268C0, &aJoy_c_debug);
     osCreateMesgQueue(&cont1MesgMQ, &cont1Mesg, 1);
     osCreateMesgQueue(&cont2MesgMQ, &cont2Mesg, 1);
     osCreateMesgQueue(&cont3MesgMQ, &cont3Mesg, 1);
     osCreateMesgQueue(&cont4MesgMQ, &cont4Mesg, 1);
-    osCreateMesgQueue(&contdemoMesgMQ, &contdemoMesg, 0xa);
-    osSetEventMesg(5, &contdemoMesgMQ, 0);
-    enableControllers = 1;
+    osCreateMesgQueue(&contdemoMesgMQ, &contdemoMesg, 10);
+
+    osSetEventMesg(OS_EVENT_SI, &contdemoMesgMQ, NULL);
+
+    g_ContQueuesCreated = 1;
+
     disable_all_rumble = 0;
-    temp_v0 = (0x80060000 + 0x4f30);
     ptr_to_tlb_ramrom_record = 0;
-    // Node 1
-    temp_v0->unk1E0 = 0;
-    temp_v0->unk1E4 = 0;
-    temp_v0->unk1E8 = 0;
-    temp_v0->unk1EC = 0;
-    temp_v0->unk1F8 = -1;
-    temp_v0_2 = (temp_v0 + 0x1fc);
-    temp_v0_2->unk-1E6 = (u8)0;
-    temp_v0_2->unk-1E7 = (u8)0;
-    temp_v0_2->unk-1E8 = (u8)0;
-    temp_v0_2->unk-1EA = (u16)0;
-    temp_v0_2->unk-1EC = (u8)0;
-    temp_v0_2->unk-1ED = (u8)0;
-    temp_v0_2->unk-1EE = (u8)0;
-    temp_v0_2->unk-1F0 = (u16)0;
-    temp_v0_2->unk-1F2 = (u8)0;
-    temp_v0_2->unk-1F3 = (u8)0;
-    temp_v0_2->unk-1F4 = (u8)0;
-    temp_v0_2->unk-1F6 = (u16)0;
-    temp_v0_2->unk-1FC = (u16)0;
-    temp_v0_2->unk-1FA = (u8)0;
-    temp_v0_2->unk-1F9 = (u8)0;
-    temp_v0_2->unk-1F8 = (u8)0;
-    if (temp_v0_2 != &contdemoMesg)
-    {
-        goto loop_1;
+
+    for (i = 0; i < 2; i++) {
+        g_ContData[i].curlast = 0;
+		g_ContData[i].curstart = 0;
+		g_ContData[i].nextlast = 0;
+		g_ContData[i].nextsecondlast = 0;
+		g_ContData[i].unk1f8 = -1;
+
+		for (j = 0; j < 4; j++) {
+			g_ContData[i].samples[0].pads[j].button = 0;
+			g_ContData[i].samples[0].pads[j].stick_x = 0;
+			g_ContData[i].samples[0].pads[j].stick_y = 0;
+			g_ContData[i].samples[0].pads[j].errnum = 0;
+		}
+
     }
-    // (possible return value: temp_v0_2)
 }
-#else
-GLOBAL_ASM(
-.text
-glabel joyInitDebugNoticeList
-/* 00C160 7000B560 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 00C164 7000B564 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00C168 7000B568 3C048002 */  lui   $a0, %hi(D_800268C0)
-/* 00C16C 7000B56C 3C058003 */  lui   $a1, %hi(aJoy_c_debug)
-/* 00C170 7000B570 24A59390 */  addiu $a1, %lo(aJoy_c_debug) # addiu $a1, $a1, -0x6c70
-/* 00C174 7000B574 0C001398 */  jal   debTryAdd
-/* 00C178 7000B578 248468C0 */   addiu $a0, %lo(D_800268C0) # addiu $a0, $a0, 0x68c0
-/* 00C17C 7000B57C 3C048006 */  lui   $a0, %hi(cont1MesgMQ)
-/* 00C180 7000B580 3C058006 */  lui   $a1, %hi(cont1Mesg)
-/* 00C184 7000B584 24A55368 */  addiu $a1, %lo(cont1Mesg) # addiu $a1, $a1, 0x5368
-/* 00C188 7000B588 24845370 */  addiu $a0, %lo(cont1MesgMQ) # addiu $a0, $a0, 0x5370
-/* 00C18C 7000B58C 0C0035B4 */  jal   osCreateMesgQueue
-/* 00C190 7000B590 24060001 */   li    $a2, 1
-/* 00C194 7000B594 3C048006 */  lui   $a0, %hi(cont2MesgMQ)
-/* 00C198 7000B598 3C058006 */  lui   $a1, %hi(cont2Mesg)
-/* 00C19C 7000B59C 24A55388 */  addiu $a1, %lo(cont2Mesg) # addiu $a1, $a1, 0x5388
-/* 00C1A0 7000B5A0 24845390 */  addiu $a0, %lo(cont2MesgMQ) # addiu $a0, $a0, 0x5390
-/* 00C1A4 7000B5A4 0C0035B4 */  jal   osCreateMesgQueue
-/* 00C1A8 7000B5A8 24060001 */   li    $a2, 1
-/* 00C1AC 7000B5AC 3C048006 */  lui   $a0, %hi(cont3MesgMQ)
-/* 00C1B0 7000B5B0 3C058006 */  lui   $a1, %hi(cont3Mesg)
-/* 00C1B4 7000B5B4 24A553A8 */  addiu $a1, %lo(cont3Mesg) # addiu $a1, $a1, 0x53a8
-/* 00C1B8 7000B5B8 248453B0 */  addiu $a0, %lo(cont3MesgMQ) # addiu $a0, $a0, 0x53b0
-/* 00C1BC 7000B5BC 0C0035B4 */  jal   osCreateMesgQueue
-/* 00C1C0 7000B5C0 24060001 */   li    $a2, 1
-/* 00C1C4 7000B5C4 3C048006 */  lui   $a0, %hi(cont4MesgMQ)
-/* 00C1C8 7000B5C8 3C058006 */  lui   $a1, %hi(cont4Mesg)
-/* 00C1CC 7000B5CC 24A553C8 */  addiu $a1, %lo(cont4Mesg) # addiu $a1, $a1, 0x53c8
-/* 00C1D0 7000B5D0 248453D0 */  addiu $a0, %lo(cont4MesgMQ) # addiu $a0, $a0, 0x53d0
-/* 00C1D4 7000B5D4 0C0035B4 */  jal   osCreateMesgQueue
-/* 00C1D8 7000B5D8 24060001 */   li    $a2, 1
-/* 00C1DC 7000B5DC 3C048006 */  lui   $a0, %hi(contdemoMesgMQ)
-/* 00C1E0 7000B5E0 3C058006 */  lui   $a1, %hi(contdemoMesg)
-/* 00C1E4 7000B5E4 24A55328 */  addiu $a1, %lo(contdemoMesg) # addiu $a1, $a1, 0x5328
-/* 00C1E8 7000B5E8 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
-/* 00C1EC 7000B5EC 0C0035B4 */  jal   osCreateMesgQueue
-/* 00C1F0 7000B5F0 2406000A */   li    $a2, 10
-/* 00C1F4 7000B5F4 3C058006 */  lui   $a1, %hi(contdemoMesgMQ)
-/* 00C1F8 7000B5F8 24A55350 */  addiu $a1, %lo(contdemoMesgMQ) # addiu $a1, $a1, 0x5350
-/* 00C1FC 7000B5FC 24040005 */  li    $a0, 5
-/* 00C200 7000B600 0C003714 */  jal   osSetEventMesg
-/* 00C204 7000B604 00003025 */   move  $a2, $zero
-/* 00C208 7000B608 240E0001 */  li    $t6, 1
-/* 00C20C 7000B60C 3C018002 */  lui   $at, %hi(enableControllers)
-/* 00C210 7000B610 AC2E6918 */  sw    $t6, %lo(enableControllers)($at)
-/* 00C214 7000B614 3C018002 */  lui   $at, %hi(disable_all_rumble)
-/* 00C218 7000B618 AC206924 */  sw    $zero, %lo(disable_all_rumble)($at)
-/* 00C21C 7000B61C 3C0F8006 */  lui   $t7, %hi(controller_input_index)
-/* 00C220 7000B620 3C018002 */  lui   $at, %hi(ptr_to_tlb_ramrom_record)
-/* 00C224 7000B624 25E24F30 */  addiu $v0, $t7, %lo(controller_input_index)
-/* 00C228 7000B628 3C058006 */  lui   $a1, %hi(contdemoMesg)
-/* 00C22C 7000B62C AC206928 */  sw    $zero, %lo(ptr_to_tlb_ramrom_record)($at)
-/* 00C230 7000B630 24A55328 */  addiu $a1, %lo(contdemoMesg) # addiu $a1, $a1, 0x5328
-/* 00C234 7000B634 00401825 */  move  $v1, $v0
-/* 00C238 7000B638 2404FFFF */  li    $a0, -1
-.L7000B63C:
-/* 00C23C 7000B63C AC6001E0 */  sw    $zero, 0x1e0($v1)
-/* 00C240 7000B640 AC6001E4 */  sw    $zero, 0x1e4($v1)
-/* 00C244 7000B644 AC6001E8 */  sw    $zero, 0x1e8($v1)
-/* 00C248 7000B648 AC6001EC */  sw    $zero, 0x1ec($v1)
-/* 00C24C 7000B64C AC6401F8 */  sw    $a0, 0x1f8($v1)
-/* 00C250 7000B650 244201FC */  addiu $v0, $v0, 0x1fc
-/* 00C254 7000B654 246301FC */  addiu $v1, $v1, 0x1fc
-/* 00C258 7000B658 A040FE1A */  sb    $zero, -0x1e6($v0)
-/* 00C25C 7000B65C A040FE19 */  sb    $zero, -0x1e7($v0)
-/* 00C260 7000B660 A040FE18 */  sb    $zero, -0x1e8($v0)
-/* 00C264 7000B664 A440FE16 */  sh    $zero, -0x1ea($v0)
-/* 00C268 7000B668 A040FE14 */  sb    $zero, -0x1ec($v0)
-/* 00C26C 7000B66C A040FE13 */  sb    $zero, -0x1ed($v0)
-/* 00C270 7000B670 A040FE12 */  sb    $zero, -0x1ee($v0)
-/* 00C274 7000B674 A440FE10 */  sh    $zero, -0x1f0($v0)
-/* 00C278 7000B678 A040FE0E */  sb    $zero, -0x1f2($v0)
-/* 00C27C 7000B67C A040FE0D */  sb    $zero, -0x1f3($v0)
-/* 00C280 7000B680 A040FE0C */  sb    $zero, -0x1f4($v0)
-/* 00C284 7000B684 A440FE0A */  sh    $zero, -0x1f6($v0)
-/* 00C288 7000B688 A440FE04 */  sh    $zero, -0x1fc($v0)
-/* 00C28C 7000B68C A040FE06 */  sb    $zero, -0x1fa($v0)
-/* 00C290 7000B690 A040FE07 */  sb    $zero, -0x1f9($v0)
-/* 00C294 7000B694 1445FFE9 */  bne   $v0, $a1, .L7000B63C
-/* 00C298 7000B698 A040FE08 */   sb    $zero, -0x1f8($v0)
-/* 00C29C 7000B69C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00C2A0 7000B6A0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 00C2A4 7000B6A4 03E00008 */  jr    $ra
-/* 00C2A8 7000B6A8 00000000 */   nop   
-)
-#endif
-
-
-
 
 void test_controller_presence(void)
 {
     OSMesg  sp1C;
 
-    if (enableControllers != 0)
+    if (g_ContQueuesCreated != 0)
     {
         osSendMesg(&cont1MesgMQ, &sp1C, 0);
         osRecvMesg(&cont2MesgMQ, &sp1C, 1);
@@ -996,7 +881,8 @@ glabel controller_rumble_related
 
 void set_disable_all_rumble_and_something(s32 arg0, s32 arg1) {
     disable_all_rumble = arg0;
-    dword_CODE_bss_80065324 = arg1;
+    g_ContData[1].unk1f8 = arg1;
+    //dword_CODE_bss_80065324 = arg1;
 }
 
 void set_ptr_tlb_ramrom_record(s32 arg0)
@@ -1141,24 +1027,24 @@ glabel redirect_to_ramrom_replay_and_record_handlers_if_set
 /* 00C914 7000BD14 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00C918 7000BD18 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00C91C 7000BD1C 1040000A */  beqz  $v0, .L7000BD48
-/* 00C920 7000BD20 3C048006 */   lui   $a0, %hi(dword_CODE_bss_8006512C)
-/* 00C924 7000BD24 3C058006 */  lui   $a1, %hi(dword_CODE_bss_8006530C)
-/* 00C928 7000BD28 8CA5530C */  lw    $a1, %lo(dword_CODE_bss_8006530C)($a1)
+/* 00C920 7000BD20 3C048006 */   lui   $a0, %hi(g_ContData+0x1FC)
+/* 00C924 7000BD24 3C058006 */  lui   $a1, %hi(g_ContData+0x3DC)
+/* 00C928 7000BD28 8CA5530C */  lw    $a1, %lo(g_ContData+0x3DC)($a1)
 /* 00C92C 7000BD2C 0040F809 */  jalr  $v0
-/* 00C930 7000BD30 2484512C */  addiu $a0, %lo(dword_CODE_bss_8006512C) # addiu $a0, $a0, 0x512c
-/* 00C934 7000BD34 3C018006 */  lui   $at, %hi(dword_CODE_bss_80065314)
-/* 00C938 7000BD38 3C048006 */  lui   $a0, %hi(dword_CODE_bss_8006512C)
-/* 00C93C 7000BD3C AC225314 */  sw    $v0, %lo(dword_CODE_bss_80065314)($at)
+/* 00C930 7000BD30 2484512C */  addiu $a0, %lo(g_ContData+0x1FC) # addiu $a0, $a0, 0x512c
+/* 00C934 7000BD34 3C018006 */  lui   $at, %hi(g_ContData+0x3E4)
+/* 00C938 7000BD38 3C048006 */  lui   $a0, %hi(g_ContData+0x1FC)
+/* 00C93C 7000BD3C AC225314 */  sw    $v0, %lo(g_ContData+0x3E4)($at)
 /* 00C940 7000BD40 0C002EF2 */  jal   probably_ramrom_related
-/* 00C944 7000BD44 2484512C */   addiu $a0, %lo(dword_CODE_bss_8006512C) # addiu $a0, $a0, 0x512c
+/* 00C944 7000BD44 2484512C */   addiu $a0, %lo(g_ContData+0x1FC) # addiu $a0, $a0, 0x512c
 .L7000BD48:
-/* 00C948 7000BD48 3C048006 */  lui   $a0, %hi(controller_input_index)
+/* 00C948 7000BD48 3C048006 */  lui   $a0, %hi(g_ContData)
 /* 00C94C 7000BD4C 0C002EF2 */  jal   probably_ramrom_related
-/* 00C950 7000BD50 24844F30 */   addiu $a0, %lo(controller_input_index) # addiu $a0, $a0, 0x4f30
+/* 00C950 7000BD50 24844F30 */   addiu $a0, %lo(g_ContData) # addiu $a0, $a0, 0x4f30
 /* 00C954 7000BD54 3C028002 */  lui   $v0, %hi(ptr_to_tlb_ramrom_record)
 /* 00C958 7000BD58 8C426928 */  lw    $v0, %lo(ptr_to_tlb_ramrom_record)($v0)
-/* 00C95C 7000BD5C 3C048006 */  lui   $a0, %hi(controller_input_index)
-/* 00C960 7000BD60 24844F30 */  addiu $a0, %lo(controller_input_index) # addiu $a0, $a0, 0x4f30
+/* 00C95C 7000BD5C 3C048006 */  lui   $a0, %hi(g_ContData)
+/* 00C960 7000BD60 24844F30 */  addiu $a0, %lo(g_ContData) # addiu $a0, $a0, 0x4f30
 /* 00C964 7000BD64 50400005 */  beql  $v0, $zero, .L7000BD7C
 /* 00C968 7000BD68 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 00C96C 7000BD6C 8C8501E4 */  lw    $a1, 0x1e4($a0)
@@ -1394,9 +1280,9 @@ glabel controllerSchedulerRelated
 /* 00CA84 7000BE84 0C003774 */  jal   osRecvMesg
 /* 00CA88 7000BE88 00003025 */   move  $a2, $zero
 /* 00CA8C 7000BE8C 14400093 */  bnez  $v0, .L7000C0DC
-/* 00CA90 7000BE90 3C058006 */   lui   $a1, %hi(controller_input_index)
+/* 00CA90 7000BE90 3C058006 */   lui   $a1, %hi(g_ContData)
 /* 00CA94 7000BE94 3C018002 */  lui   $at, %hi(D_800268C8)
-/* 00CA98 7000BE98 24A54F30 */  addiu $a1, %lo(controller_input_index) # addiu $a1, $a1, 0x4f30
+/* 00CA98 7000BE98 24A54F30 */  addiu $a1, %lo(g_ContData) # addiu $a1, $a1, 0x4f30
 /* 00CA9C 7000BE9C AC2068C8 */  sw    $zero, %lo(D_800268C8)($at)
 /* 00CAA0 7000BEA0 8CA201E8 */  lw    $v0, 0x1e8($a1)
 /* 00CAA4 7000BEA4 24010014 */  li    $at, 20
@@ -1425,8 +1311,8 @@ glabel controllerSchedulerRelated
 /* 00CAFC 7000BEFC 24010078 */  li    $at, 120
 /* 00CB00 7000BF00 25AE0001 */  addiu $t6, $t5, 1
 /* 00CB04 7000BF04 01C1001A */  div   $zero, $t6, $at
-/* 00CB08 7000BF08 3C058006 */  lui   $a1, %hi(controller_input_index)
-/* 00CB0C 7000BF0C 24A54F30 */  addiu $a1, %lo(controller_input_index) # addiu $a1, $a1, 0x4f30
+/* 00CB08 7000BF08 3C058006 */  lui   $a1, %hi(g_ContData)
+/* 00CB0C 7000BF0C 24A54F30 */  addiu $a1, %lo(g_ContData) # addiu $a1, $a1, 0x4f30
 /* 00CB10 7000BF10 0000C010 */  mfhi  $t8
 /* 00CB14 7000BF14 ACAC01EC */  sw    $t4, 0x1ec($a1)
 /* 00CB18 7000BF18 AC8E0000 */  sw    $t6, ($a0)
@@ -1434,8 +1320,8 @@ glabel controllerSchedulerRelated
 /* 00CB20 7000BF20 ACA201E8 */   sw    $v0, 0x1e8($a1)
 /* 00CB24 7000BF24 0C002E04 */  jal   controller_check_for_rumble_maybe
 /* 00CB28 7000BF28 00000000 */   nop   
-/* 00CB2C 7000BF2C 3C058006 */  lui   $a1, %hi(controller_input_index)
-/* 00CB30 7000BF30 24A54F30 */  addiu $a1, %lo(controller_input_index) # addiu $a1, $a1, 0x4f30
+/* 00CB2C 7000BF2C 3C058006 */  lui   $a1, %hi(g_ContData)
+/* 00CB30 7000BF30 24A54F30 */  addiu $a1, %lo(g_ContData) # addiu $a1, $a1, 0x4f30
 /* 00CB34 7000BF34 8CA201E8 */  lw    $v0, 0x1e8($a1)
 .L7000BF38:
 /* 00CB38 7000BF38 0002C880 */  sll   $t9, $v0, 2
@@ -2726,8 +2612,8 @@ GLOBAL_ASM(
 glabel controller_7000C930
 /* 00D530 7000C930 000471C0 */  sll   $t6, $a0, 7
 /* 00D534 7000C934 01C47023 */  subu  $t6, $t6, $a0
-/* 00D538 7000C938 3C0F8006 */  lui   $t7, %hi(controller_input_index) 
-/* 00D53C 7000C93C 25EF4F30 */  addiu $t7, %lo(controller_input_index) # addiu $t7, $t7, 0x4f30
+/* 00D538 7000C938 3C0F8006 */  lui   $t7, %hi(g_ContData) 
+/* 00D53C 7000C93C 25EF4F30 */  addiu $t7, %lo(g_ContData) # addiu $t7, $t7, 0x4f30
 /* 00D540 7000C940 000E7080 */  sll   $t6, $t6, 2
 /* 00D544 7000C944 01CFC021 */  addu  $t8, $t6, $t7
 /* 00D548 7000C948 3C018002 */  lui   $at, %hi(ptr_current_point_in_controller_input_index)
@@ -2750,8 +2636,8 @@ GLOBAL_ASM(
 glabel controller_7000C954
 /* 00D554 7000C954 3C0E8002 */  lui   $t6, %hi(ptr_current_point_in_controller_input_index) 
 /* 00D558 7000C958 8DCE68C4 */  lw    $t6, %lo(ptr_current_point_in_controller_input_index)($t6)
-/* 00D55C 7000C95C 3C0F8006 */  lui   $t7, %hi(controller_input_index) 
-/* 00D560 7000C960 25EF4F30 */  addiu $t7, %lo(controller_input_index) # addiu $t7, $t7, 0x4f30
+/* 00D55C 7000C95C 3C0F8006 */  lui   $t7, %hi(g_ContData) 
+/* 00D560 7000C960 25EF4F30 */  addiu $t7, %lo(g_ContData) # addiu $t7, $t7, 0x4f30
 /* 00D564 7000C964 240101FC */  li    $at, 508
 /* 00D568 7000C968 01CF1023 */  subu  $v0, $t6, $t7
 /* 00D56C 7000C96C 0041001A */  div   $zero, $v0, $at
