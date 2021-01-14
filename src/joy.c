@@ -1,8 +1,9 @@
 #include "ultra64.h"
 #include "joy.h"
+#include "libultra/os.h"
 
 struct contsample {
-	OSContPad pads[4];
+	OSContPad pads[MAXCONTROLLERS];
 };
 
 struct contdata {
@@ -39,13 +40,8 @@ OSMesg cont4Mesg;
 OSMesgQueue cont4MesgMQ;
 
 //800653e8
-s32 player1_controllerstatus;
-s32 player2_controllerstatus;
-s32 player3_controllerstatus;
-s32 player4_controllerstatus;
-
-char player1_controller_packet[0x1A8];
-
+OSContStatus player1_controllerstatus[MAXCONTROLLERS];
+OSPfs player1_controller_packet[MAXCONTROLLERS];
 
 s32 D_800268C0 = 0;
 void *ptr_current_point_in_controller_input_index = &g_ContData[0];
@@ -53,10 +49,7 @@ s32 D_800268C8 = 0;
 s32 D_800268CC = 0;
 u8 num_controller_plugged_in_flags = 0;
 s32 num_controller_plugged_in_flags_0 = 0;
-s32 controller_1_rumble_inserted = 0;
-s32 controller_2_rumble_inserted = 0;
-s32 controller_3_rumble_inserted = 0;
-s32 controller_4_rumble_inserted = 0;
+s32 controller_1_rumble_inserted[MAXCONTROLLERS] = {0};
 s32 controller_1_rumble_state = 0;
 s32 controller_2_rumble_state = 0;
 s32 controller_3_rumble_state = 0;
@@ -129,140 +122,40 @@ void contSystemInit(void) {
     }
 }
 
-void test_controller_presence(void)
-{
-    OSMesg  sp1C;
+void test_controller_presence(void) {
+    OSMesg  msg;
 
-    if (g_ContQueuesCreated != 0)
-    {
-        osSendMesg(&cont1MesgMQ, &sp1C, 0);
-        osRecvMesg(&cont2MesgMQ, &sp1C, 1);
+    if (g_ContQueuesCreated) {
+        osSendMesg(&cont1MesgMQ, &msg, OS_MESG_NOBLOCK);
+        osRecvMesg(&cont2MesgMQ, &msg, OS_MESG_BLOCK);
+        
         controller_check_for_rumble_maybe();
-        osSendMesg(&cont3MesgMQ, &sp1C, 0);
-        osRecvMesg(&cont4MesgMQ, &sp1C, 1);
+
+        osSendMesg(&cont3MesgMQ, &msg, OS_MESG_NOBLOCK);
+        osRecvMesg(&cont4MesgMQ, &msg, OS_MESG_BLOCK);
     }
 }
 
-s32 osPfsChecker(u32 *param_1) //OSPfs *param_1
-{
+s32 osPfsChecker(OSPfs *arg0) {
     return 3;
 }
 
-
-
-
-
-
-#ifdef NONMATCHING
-s32 controller_7000B734(s32 arg0)
+s32 controller_7000B734(s32 index)
 {
-    s32 temp_ret;
-    s32 temp_ret_2;
-    s32 temp_v0;
-    void *temp_a3;
-    void *temp_v1;
-    s32 phi_return;
-
-    temp_v0 = arg0 * 4;
-    temp_a3 = temp_v0 + &controller_1_rumble_inserted;
-    phi_return = temp_v0;
-    if (*temp_a3 >= 0)
-    {
-        temp_v1 = temp_v0 + &player1_controllerstatus;
-        phi_return = temp_v0;
-        if ((temp_v1->unk0 & 4) != 0)
-        {
-            phi_return = temp_v0;
-            if ((temp_v1->unk2 & 1) != 0)
-            {
-                temp_ret = osPfsInit(&contdemoMesgMQ, (arg0 * 0x68) + &player1_controller_packet, arg0, temp_a3);
-                if ((temp_ret == 0xa) || (temp_ret == 0xb))
-                {
-                    temp_ret_2 = osMotorInit(&contdemoMesgMQ, sp20, arg0, sp1C);
-                    if (temp_ret_2 == 0)
-                    {
-                        *sp1C = 1;
-                        return temp_ret_2;
-                    }
-                    *sp1C = -1;
-                    phi_return = temp_ret_2;
-                }
-                else
-                {
-
+    s32 ret;
+    if (controller_1_rumble_inserted[index] >= 0) {
+        if ((player1_controllerstatus[index].type & CONT_JOYPORT) && (player1_controllerstatus[index].status & CONT_CARD_ON)) {        
+            ret = osPfsInit(&contdemoMesgMQ, &player1_controller_packet[index], index);
+            if ((ret == PFS_ERR_ID_FATAL) || (ret == PFS_ERR_DEVICE)) {
+                if (osMotorInit(&contdemoMesgMQ, &player1_controller_packet[index], index) == 0) {
+                    controller_1_rumble_inserted[index] = 1;
+                } else {
+                    controller_1_rumble_inserted[index] = -1;
                 }
             }
         }
     }
-    return phi_return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel controller_7000B734
-/* 00C334 7000B734 3C0E8002 */  lui   $t6, %hi(controller_1_rumble_inserted) 
-/* 00C338 7000B738 25CE68D8 */  addiu $t6, %lo(controller_1_rumble_inserted) # addiu $t6, $t6, 0x68d8
-/* 00C33C 7000B73C 00041080 */  sll   $v0, $a0, 2
-/* 00C340 7000B740 004E3821 */  addu  $a3, $v0, $t6
-/* 00C344 7000B744 8CEF0000 */  lw    $t7, ($a3)
-/* 00C348 7000B748 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 00C34C 7000B74C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00C350 7000B750 05E0002B */  bltz  $t7, .L7000B800
-/* 00C354 7000B754 00803025 */   move  $a2, $a0
-/* 00C358 7000B758 3C188006 */  lui   $t8, %hi(player1_controllerstatus) 
-/* 00C35C 7000B75C 271853E8 */  addiu $t8, %lo(player1_controllerstatus) # addiu $t8, $t8, 0x53e8
-/* 00C360 7000B760 00581821 */  addu  $v1, $v0, $t8
-/* 00C364 7000B764 94790000 */  lhu   $t9, ($v1)
-/* 00C368 7000B768 33280004 */  andi  $t0, $t9, 4
-/* 00C36C 7000B76C 51000025 */  beql  $t0, $zero, .L7000B804
-/* 00C370 7000B770 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 00C374 7000B774 90690002 */  lbu   $t1, 2($v1)
-/* 00C378 7000B778 3C048006 */  lui   $a0, %hi(contdemoMesgMQ)
-/* 00C37C 7000B77C 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
-/* 00C380 7000B780 312A0001 */  andi  $t2, $t1, 1
-/* 00C384 7000B784 1140001E */  beqz  $t2, .L7000B800
-/* 00C388 7000B788 00065880 */   sll   $t3, $a2, 2
-/* 00C38C 7000B78C 01665823 */  subu  $t3, $t3, $a2
-/* 00C390 7000B790 000B5880 */  sll   $t3, $t3, 2
-/* 00C394 7000B794 01665821 */  addu  $t3, $t3, $a2
-/* 00C398 7000B798 3C0C8006 */  lui   $t4, %hi(player1_controller_packet) 
-/* 00C39C 7000B79C 258C53F8 */  addiu $t4, %lo(player1_controller_packet) # addiu $t4, $t4, 0x53f8
-/* 00C3A0 7000B7A0 000B58C0 */  sll   $t3, $t3, 3
-/* 00C3A4 7000B7A4 016C2821 */  addu  $a1, $t3, $t4
-/* 00C3A8 7000B7A8 AFA50020 */  sw    $a1, 0x20($sp)
-/* 00C3AC 7000B7AC AFA60028 */  sw    $a2, 0x28($sp)
-/* 00C3B0 7000B7B0 0C0051D0 */  jal   osPfsInit
-/* 00C3B4 7000B7B4 AFA7001C */   sw    $a3, 0x1c($sp)
-/* 00C3B8 7000B7B8 2401000A */  li    $at, 10
-/* 00C3BC 7000B7BC 8FA50020 */  lw    $a1, 0x20($sp)
-/* 00C3C0 7000B7C0 8FA60028 */  lw    $a2, 0x28($sp)
-/* 00C3C4 7000B7C4 10410003 */  beq   $v0, $at, .L7000B7D4
-/* 00C3C8 7000B7C8 8FA7001C */   lw    $a3, 0x1c($sp)
-/* 00C3CC 7000B7CC 2401000B */  li    $at, 11
-/* 00C3D0 7000B7D0 1441000B */  bne   $v0, $at, .L7000B800
-.L7000B7D4:
-/* 00C3D4 7000B7D4 3C048006 */   lui   $a0, %hi(contdemoMesgMQ)
-/* 00C3D8 7000B7D8 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
-/* 00C3DC 7000B7DC 0C00334E */  jal   osMotorInit
-/* 00C3E0 7000B7E0 AFA7001C */   sw    $a3, 0x1c($sp)
-/* 00C3E4 7000B7E4 14400004 */  bnez  $v0, .L7000B7F8
-/* 00C3E8 7000B7E8 8FA7001C */   lw    $a3, 0x1c($sp)
-/* 00C3EC 7000B7EC 240D0001 */  li    $t5, 1
-/* 00C3F0 7000B7F0 10000003 */  b     .L7000B800
-/* 00C3F4 7000B7F4 ACED0000 */   sw    $t5, ($a3)
-.L7000B7F8:
-/* 00C3F8 7000B7F8 240EFFFF */  li    $t6, -1
-/* 00C3FC 7000B7FC ACEE0000 */  sw    $t6, ($a3)
-.L7000B800:
-/* 00C400 7000B800 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7000B804:
-/* 00C404 7000B804 27BD0028 */  addiu $sp, $sp, 0x28
-/* 00C408 7000B808 03E00008 */  jr    $ra
-/* 00C40C 7000B80C 00000000 */   nop   
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 s32 controller_check_for_rumble_maybe(void)
@@ -413,27 +306,27 @@ glabel controller_check_for_rumble_maybe
 /* 00C488 7000B888 248453E8 */   addiu $a0, %lo(player1_controllerstatus) # addiu $a0, $a0, 0x53e8
 /* 00C48C 7000B88C 3C188006 */  lui   $t8, %hi(player1_controllerstatus+3) 
 /* 00C490 7000B890 931853EB */  lbu   $t8, %lo(player1_controllerstatus+3)($t8)
-/* 00C494 7000B894 3C088006 */  lui   $t0, %hi(player2_controllerstatus+3) 
-/* 00C498 7000B898 3C0A8006 */  lui   $t2, %hi(player3_controllerstatus+3) 
+/* 00C494 7000B894 3C088006 */  lui   $t0, %hi(player1_controllerstatus+7) 
+/* 00C498 7000B898 3C0A8006 */  lui   $t2, %hi(player1_controllerstatus+11) 
 /* 00C49C 7000B89C 33190008 */  andi  $t9, $t8, 8
 /* 00C4A0 7000B8A0 13200002 */  beqz  $t9, .L7000B8AC
-/* 00C4A4 7000B8A4 3C0C8006 */   lui   $t4, %hi(player4_controllerstatus+3) 
+/* 00C4A4 7000B8A4 3C0C8006 */   lui   $t4, %hi(player1_controllerstatus+15) 
 /* 00C4A8 7000B8A8 2410000E */  li    $s0, 14
 .L7000B8AC:
-/* 00C4AC 7000B8AC 910853EF */  lbu   $t0, %lo(player2_controllerstatus+3)($t0)
+/* 00C4AC 7000B8AC 910853EF */  lbu   $t0, %lo(player1_controllerstatus+7)($t0)
 /* 00C4B0 7000B8B0 3C018002 */  lui   $at, %hi(num_controller_plugged_in_flags)
 /* 00C4B4 7000B8B4 31090008 */  andi  $t1, $t0, 8
 /* 00C4B8 7000B8B8 11200002 */  beqz  $t1, .L7000B8C4
 /* 00C4BC 7000B8BC 00000000 */   nop   
 /* 00C4C0 7000B8C0 2610FFFE */  addiu $s0, $s0, -2
 .L7000B8C4:
-/* 00C4C4 7000B8C4 914A53F3 */  lbu   $t2, %lo(player3_controllerstatus+3)($t2)
+/* 00C4C4 7000B8C4 914A53F3 */  lbu   $t2, %lo(player1_controllerstatus+11)($t2)
 /* 00C4C8 7000B8C8 314B0008 */  andi  $t3, $t2, 8
 /* 00C4CC 7000B8CC 11600002 */  beqz  $t3, .L7000B8D8
 /* 00C4D0 7000B8D0 00000000 */   nop   
 /* 00C4D4 7000B8D4 2610FFFC */  addiu $s0, $s0, -4
 .L7000B8D8:
-/* 00C4D8 7000B8D8 918C53F7 */  lbu   $t4, %lo(player4_controllerstatus+3)($t4)
+/* 00C4D8 7000B8D8 918C53F7 */  lbu   $t4, %lo(player1_controllerstatus+15)($t4)
 /* 00C4DC 7000B8DC 318D0008 */  andi  $t5, $t4, 8
 /* 00C4E0 7000B8E0 11A00002 */  beqz  $t5, .L7000B8EC
 /* 00C4E4 7000B8E4 00000000 */   nop   
