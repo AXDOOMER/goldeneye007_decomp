@@ -249,7 +249,7 @@ Gfx *sub_GAME_7F01C400(Gfx *gdl) {
    gDPSetColorDither(gdl++, G_CD_MAGICSQ);
    gDPSetPrimColor(gdl++, 0, 0, 0x96, 0x00, 0x00, 0xB4);
    gDPSetTexturePersp(gdl++, G_TP_NONE);
-   gDPLoadTextureBlock_4b(gdl++, OS_PHYSICAL_TO_K0(pPlayer->field_11B0[pPlayer->field_11B8]), G_IM_FMT_I, 96, 80, 0, (G_TX_NOMIRROR | G_TX_CLAMP), (G_TX_NOMIRROR | G_TX_CLAMP), G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+   gDPLoadTextureBlock_4b(gdl++, OS_K0_TO_PHYSICAL(pPlayer->field_11B0[pPlayer->field_11B8]), G_IM_FMT_I, 96, 80, 0, (G_TX_NOMIRROR | G_TX_CLAMP), (G_TX_NOMIRROR | G_TX_CLAMP), G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
    gSPTextureRectangle(gdl++, 0, 0, ((viGetX() * 4) - 1), ((viGetY() * 4) - 1), G_TX_RENDERTILE, 0, 0, 0x18000 / viGetX(), 0x14000 / viGetY());
    
    return gdl;

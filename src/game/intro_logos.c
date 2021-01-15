@@ -102,9 +102,9 @@ Gfx *something_with_gunbarrel_and_rareware_logo_matrix_manip(Gfx *gdl) {
 
     gDPSetCombineMode(gdl++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
     gDPSetPrimColor(gdl++, 0, 0, 0xE6, 0xE6, 0xE6, 0x00);
-    gSPDisplayList(gdl++, OS_PHYSICAL_TO_K0(dword_CODE_bss_80069554));
+    gSPDisplayList(gdl++, OS_K0_TO_PHYSICAL(dword_CODE_bss_80069554));
     gSPMatrix(gdl++, osVirtualToPhysical(&matrix_buffer_gunbarrel_1[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW));
-    gSPDisplayList(gdl++, OS_PHYSICAL_TO_K0(dword_CODE_bss_80069554));
+    gSPDisplayList(gdl++, OS_K0_TO_PHYSICAL(dword_CODE_bss_80069554));
 
     return gdl;
 }
@@ -118,7 +118,7 @@ Gfx *insert_sight_backdrop_eye_intro(Gfx *gdl) {
     gdl = sub_GAME_7F01C1A4(gdl);
 
     gSPMatrix(gdl++, osVirtualToPhysical(&matrix_buffer_gunbarrel_1[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW));
-    gSPDisplayList(gdl++, OS_PHYSICAL_TO_K0(dword_CODE_bss_80069554));
+    gSPDisplayList(gdl++, OS_K0_TO_PHYSICAL(dword_CODE_bss_80069554));
 
     return gdl;
 }
@@ -131,7 +131,7 @@ Gfx *sub_GAME_7F007CC8(Gfx *gdl, s32 arg1, s32 arg2[3], s32 arg3[3]) {
     gDPSetTextureFilter(gdl++, G_TF_POINT);
     gDPPipeSync(gdl++);
 
-    return sub_GAME_7F01B240(gdl, OS_PHYSICAL_TO_K0(dword_CODE_bss_8006958C), arg1, arg2, arg3);
+    return sub_GAME_7F01B240(gdl, OS_K0_TO_PHYSICAL(dword_CODE_bss_8006958C), arg1, arg2, arg3);
 }
 
 f32 truncf(f32);

@@ -1053,20 +1053,20 @@ Gfx *video_related_F(Gfx *gdl) {
         pPlayer->viewports[off_CODE_bss_80060879].vp.vtrans[1] = (ptr_video_settings2->viewy * 2) + (ptr_video_settings2->viewtop * 4);
     }
 
-    gSPViewport(gdl++, OS_PHYSICAL_TO_K0(&pPlayer->viewports[off_CODE_bss_80060879]));
+    gSPViewport(gdl++, OS_K0_TO_PHYSICAL(&pPlayer->viewports[off_CODE_bss_80060879]));
 
     projectionMatrix = dynAllocateMatrix();    
     guPerspectiveF(projectionMatrixF, &perspNorm, ptr_video_settings2->fovy, ptr_video_settings2->aspect, ptr_video_settings2->znear, ptr_video_settings2->zfar, 1.0f);
     guMtxF2L(projectionMatrixF, projectionMatrix);
-    gSPMatrix(gdl++, OS_PHYSICAL_TO_K0(projectionMatrix), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+    gSPMatrix(gdl++, OS_K0_TO_PHYSICAL(projectionMatrix), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
     gSPPerspNormalize(gdl++, perspNorm);
     currentPlayerSetProjectionMatrix(projectionMatrix);
     currentPlayerSetProjectionMatrixF(projectionMatrixF);
     if (coloroutputmode != COLORMODE_32BIT) {
-        gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_16b, ptr_video_settings2->bufx, OS_PHYSICAL_TO_K0(ptr_video_settings2->framebuf));
+        gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_16b, ptr_video_settings2->bufx, OS_K0_TO_PHYSICAL(ptr_video_settings2->framebuf));
     }
     else {
-        gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_32b, ptr_video_settings2->bufx, /*OS_PHYSICAL_TO_K0*/(cfb_16[0] + 0x80000000));
+        gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_32b, ptr_video_settings2->bufx, OS_K0_TO_PHYSICAL(cfb_16[0]));
     }
 
     return gdl;
