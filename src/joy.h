@@ -5,5 +5,6 @@
 void contSystemInit(void);
 s32 get_attached_controller_count(void);
 s32 get_controller_buttons_pressed(s8 arg0, s32 arg1);
+void controller_check_for_rumble_maybe(void);
 
 #endif

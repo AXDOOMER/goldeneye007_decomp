@@ -40,15 +40,15 @@ OSMesg cont4Mesg;
 OSMesgQueue cont4MesgMQ;
 
 //800653e8
-OSContStatus player1_controllerstatus[MAXCONTROLLERS];
+OSContStatus g_ContStatus[MAXCONTROLLERS];
 OSPfs player1_controller_packet[MAXCONTROLLERS];
 
 s32 D_800268C0 = 0;
 void *ptr_current_point_in_controller_input_index = &g_ContData[0];
 s32 D_800268C8 = 0;
 s32 D_800268CC = 0;
-u8 num_controller_plugged_in_flags = 0;
-s32 num_controller_plugged_in_flags_0 = 0;
+u8 g_ConnectedControllers = 0;
+u8 D_800268D4 = 0;
 s32 controller_1_rumble_inserted[MAXCONTROLLERS] = {0};
 s32 controller_1_rumble_state = 0;
 s32 controller_2_rumble_state = 0;
@@ -63,11 +63,11 @@ s32 controller_2_rumble_pulse = 0;
 s32 controller_3_rumble_pulse = 0;
 s32 controller_4_rumble_pulse = 0;
 s32 g_ContQueuesCreated = 0;
-s32 D_8002691C = 0;
+s32 g_ContInitDone = 0;
 s32 D_80026920 = 0;
 s32 disable_all_rumble = 0;
 s32 ptr_to_tlb_ramrom_record = 0;
-s32 D_8002692C = 1;
+s32 g_ContNeedsInit = 1;
 s32 pl1_controller_failure_lr = 0;
 s32 pl2_controller_failure_lr = 0;
 s32 pl3_controller_failure_lr = 0;
@@ -140,11 +140,11 @@ s32 osPfsChecker(OSPfs *arg0) {
     return 3;
 }
 
-s32 controller_7000B734(s32 index)
+void controller_7000B734(s32 index)
 {
     s32 ret;
     if (controller_1_rumble_inserted[index] >= 0) {
-        if ((player1_controllerstatus[index].type & CONT_JOYPORT) && (player1_controllerstatus[index].status & CONT_CARD_ON)) {        
+        if ((g_ContStatus[index].type & CONT_JOYPORT) && (g_ContStatus[index].status & CONT_CARD_ON)) {        
             ret = osPfsInit(&contdemoMesgMQ, &player1_controller_packet[index], index);
             if ((ret == PFS_ERR_ID_FATAL) || (ret == PFS_ERR_DEVICE)) {
                 if (osMotorInit(&contdemoMesgMQ, &player1_controller_packet[index], index) == 0) {
@@ -158,139 +158,72 @@ s32 controller_7000B734(s32 index)
 }
 
 #ifdef NONMATCHING
-s32 controller_check_for_rumble_maybe(void)
+// Regalloc + Needs 4 extra bytes on the stack
+void controller_check_for_rumble_maybe(void)
 {
-    s32 temp_a0;
-    s32 temp_a1;
-    s32 temp_s0;
-    s32 temp_s0_2;
-    s32 temp_v0_2;
-    u32 temp_v1;
-    void *temp_v0;
-    s8 phi_s0;
-    s32 phi_s0_2;
-    s32 phi_s0_3;
-    void *phi_a3;
-    void *phi_a2;
-    u32 phi_v1;
-    s32 phi_a1;
-    void *phi_a3_2;
-    s32 phi_return;
-    s8 phi_s0_4;
-    s32 phi_return_2;
-    s8 phi_s0_5;
-    s8 phi_s0_6;
+    s8 i;
+    if (g_ContNeedsInit) {
+        g_ContNeedsInit = FALSE;
+        osContInit(&contdemoMesgMQ, &g_ConnectedControllers, g_ContStatus);
+        g_ContInitDone = TRUE;
+    } else {
+        u32 slots = 0xF;
+        s32 i;
 
-    if (D_8002692C != 0)
-    {
-        D_8002692C = 0;
-        D_8002691C = 1;
-        phi_return_2 = osContInit(&contdemoMesgMQ, &num_controller_plugged_in_flags, &player1_controllerstatus);
-    }
-    else
-    {
         osContStartQuery(&contdemoMesgMQ);
-        osRecvMesg(&contdemoMesgMQ, 0, 1);
-        phi_s0_6 = (u8)0xf;
-        if ((*(player1_controllerstatus + 3) & 8) != 0)
-        {
-            phi_s0_6 = (u8)0xe;
-        }
-        phi_s0_5 = phi_s0_6;
-        if ((*(player2_controllerstatus + 3) & 8) != 0)
-        {
-            phi_s0_5 = phi_s0_6 + -2;
-        }
-        phi_s0_4 = phi_s0_5;
-        if ((*(player3_controllerstatus + 3) & 8) != 0)
-        {
-            phi_s0_4 = phi_s0_5 + -4;
-        }
-        phi_s0 = phi_s0_4;
-        if ((*(player4_controllerstatus + 3) & 8) != 0)
-        {
-            phi_s0 = phi_s0_4 + -8;
-        }
-        num_controller_plugged_in_flags = (s8) phi_s0;
-        phi_return_2 = osContGetQuery(&player1_controllerstatus);
-    }
-    phi_s0_2 = 0;
-loop_12:
-    temp_s0 = (s32) ((phi_s0_2 + 1) << 0x18) >> 0x18;
-    phi_s0_2 = temp_s0;
-    if (temp_s0 < 4)
-    {
-        goto loop_12;
-    }
-    phi_s0_3 = 0;
-    phi_a3 = &num_controller_plugged_in_flags_0;
-    phi_a2 = &controller_1_rumble_inserted;
-loop_14:
-    temp_a1 = 1 << phi_s0_3;
-    temp_v1 = *phi_a3;
-    if ((((num_controller_plugged_in_flags & temp_a1) != 0) && ((temp_v0->unk0 & 3) != 0)) && (temp_v0->unk3 == 0))
-    {
-        if (((temp_v0_2 & temp_a1) != 0) || (*(phi_a2 + temp_a0) <= 0))
-        {
-            phi_v1 = num_controller_plugged_in_flags_0;
-            phi_a1 = sp24;
-            phi_a3_2 = &num_controller_plugged_in_flags_0;
-            phi_return = controller_7000B734(phi_s0_3, temp_a1, phi_a2, phi_a3);
-            phi_a2 = &controller_1_rumble_inserted;
-        }
-        else
-        {
+        osRecvMesg(&contdemoMesgMQ, NULL, OS_MESG_BLOCK);
+        osContGetQuery(g_ContStatus);
 
+        for (i = 0; i < MAXCONTROLLERS; i++) {
+			if (g_ContStatus[i].errnum & CONT_NO_RESPONSE_ERROR) {
+				slots -= 1 << i;
+			}
+		}
+
+        g_ConnectedControllers = slots;
+    }
+
+    for (i = 0; i < MAXCONTROLLERS; i++) {
+        // Removed
+    }
+
+    for (i = 0; i < MAXCONTROLLERS; i++) {
+        if ((g_ConnectedControllers & (1 << i)) && (g_ContStatus[i].type & (CONT_ABSOLUTE | CONT_RELATIVE)) && (g_ContStatus[i].errnum == 0)) {             
+            if (((D_800268D4 == 0) & (1 << i)) || (controller_1_rumble_inserted[i] <= 0)) {
+                controller_7000B734(i);
+            }
+            D_800268D4 |= (1 << i);
+        } else if (D_800268D4 & (1 << i)) {
+            D_800268D4 ^= (1 << i);
+            controller_1_rumble_inserted[i] = 0;                
         }
-        *phi_a3_2 = (s8) (phi_v1 | phi_a1);
-        phi_a3 = phi_a3_2;
     }
-    else
-    {
-        phi_return = phi_return_2;
-        phi_a3 = phi_a3;
-        phi_a2 = phi_a2;
-        if ((temp_v1 & temp_a1) != 0)
-        {
-            *phi_a3 = (s8) (temp_v1 ^ temp_a1);
-            *(phi_a2 + (phi_s0_3 * 4)) = 0;
-            phi_return = phi_return_2;
-            phi_a3 = phi_a3;
-            phi_a2 = phi_a2;
-        }
-    }
-    temp_s0_2 = (s32) ((phi_s0_3 + 1) << 0x18) >> 0x18;
-    phi_s0_3 = temp_s0_2;
-    phi_return_2 = phi_return;
-    if (temp_s0_2 < 4)
-    {
-        goto loop_14;
-    }
-    return phi_return;
+
+    if (0);
 }
 #else
 GLOBAL_ASM(
 .text
 glabel controller_check_for_rumble_maybe
-/* 00C410 7000B810 3C028002 */  lui   $v0, %hi(D_8002692C)
-/* 00C414 7000B814 2442692C */  addiu $v0, %lo(D_8002692C) # addiu $v0, $v0, 0x692c
+/* 00C410 7000B810 3C028002 */  lui   $v0, %hi(g_ContNeedsInit)
+/* 00C414 7000B814 2442692C */  addiu $v0, %lo(g_ContNeedsInit) # addiu $v0, $v0, 0x692c
 /* 00C418 7000B818 8C4E0000 */  lw    $t6, ($v0)
 /* 00C41C 7000B81C 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 00C420 7000B820 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 00C424 7000B824 11C0000D */  beqz  $t6, .L7000B85C
 /* 00C428 7000B828 AFB00018 */   sw    $s0, 0x18($sp)
 /* 00C42C 7000B82C 3C048006 */  lui   $a0, %hi(contdemoMesgMQ)
-/* 00C430 7000B830 3C058002 */  lui   $a1, %hi(num_controller_plugged_in_flags)
-/* 00C434 7000B834 3C068006 */  lui   $a2, %hi(player1_controllerstatus)
+/* 00C430 7000B830 3C058002 */  lui   $a1, %hi(g_ConnectedControllers)
+/* 00C434 7000B834 3C068006 */  lui   $a2, %hi(g_ContStatus)
 /* 00C438 7000B838 AC400000 */  sw    $zero, ($v0)
-/* 00C43C 7000B83C 24C653E8 */  addiu $a2, %lo(player1_controllerstatus) # addiu $a2, $a2, 0x53e8
-/* 00C440 7000B840 24A568D0 */  addiu $a1, %lo(num_controller_plugged_in_flags) # addiu $a1, $a1, 0x68d0
+/* 00C43C 7000B83C 24C653E8 */  addiu $a2, %lo(g_ContStatus) # addiu $a2, $a2, 0x53e8
+/* 00C440 7000B840 24A568D0 */  addiu $a1, %lo(g_ConnectedControllers) # addiu $a1, $a1, 0x68d0
 /* 00C444 7000B844 0C005240 */  jal   osContInit
 /* 00C448 7000B848 24845350 */   addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
 /* 00C44C 7000B84C 240F0001 */  li    $t7, 1
-/* 00C450 7000B850 3C018002 */  lui   $at, %hi(D_8002691C)
+/* 00C450 7000B850 3C018002 */  lui   $at, %hi(g_ContInitDone)
 /* 00C454 7000B854 10000026 */  b     .L7000B8F0
-/* 00C458 7000B858 AC2F691C */   sw    $t7, %lo(D_8002691C)($at)
+/* 00C458 7000B858 AC2F691C */   sw    $t7, %lo(g_ContInitDone)($at)
 .L7000B85C:
 /* 00C45C 7000B85C 3C048006 */  lui   $a0, %hi(contdemoMesgMQ)
 /* 00C460 7000B860 2410000F */  li    $s0, 15
@@ -301,38 +234,38 @@ glabel controller_check_for_rumble_maybe
 /* 00C474 7000B874 00002825 */  move  $a1, $zero
 /* 00C478 7000B878 0C003774 */  jal   osRecvMesg
 /* 00C47C 7000B87C 24060001 */   li    $a2, 1
-/* 00C480 7000B880 3C048006 */  lui   $a0, %hi(player1_controllerstatus)
+/* 00C480 7000B880 3C048006 */  lui   $a0, %hi(g_ContStatus)
 /* 00C484 7000B884 0C005351 */  jal   osContGetQuery
-/* 00C488 7000B888 248453E8 */   addiu $a0, %lo(player1_controllerstatus) # addiu $a0, $a0, 0x53e8
-/* 00C48C 7000B88C 3C188006 */  lui   $t8, %hi(player1_controllerstatus+3) 
-/* 00C490 7000B890 931853EB */  lbu   $t8, %lo(player1_controllerstatus+3)($t8)
-/* 00C494 7000B894 3C088006 */  lui   $t0, %hi(player1_controllerstatus+7) 
-/* 00C498 7000B898 3C0A8006 */  lui   $t2, %hi(player1_controllerstatus+11) 
+/* 00C488 7000B888 248453E8 */   addiu $a0, %lo(g_ContStatus) # addiu $a0, $a0, 0x53e8
+/* 00C48C 7000B88C 3C188006 */  lui   $t8, %hi(g_ContStatus+3) 
+/* 00C490 7000B890 931853EB */  lbu   $t8, %lo(g_ContStatus+3)($t8)
+/* 00C494 7000B894 3C088006 */  lui   $t0, %hi(g_ContStatus+7) 
+/* 00C498 7000B898 3C0A8006 */  lui   $t2, %hi(g_ContStatus+11) 
 /* 00C49C 7000B89C 33190008 */  andi  $t9, $t8, 8
 /* 00C4A0 7000B8A0 13200002 */  beqz  $t9, .L7000B8AC
-/* 00C4A4 7000B8A4 3C0C8006 */   lui   $t4, %hi(player1_controllerstatus+15) 
+/* 00C4A4 7000B8A4 3C0C8006 */   lui   $t4, %hi(g_ContStatus+15) 
 /* 00C4A8 7000B8A8 2410000E */  li    $s0, 14
 .L7000B8AC:
-/* 00C4AC 7000B8AC 910853EF */  lbu   $t0, %lo(player1_controllerstatus+7)($t0)
-/* 00C4B0 7000B8B0 3C018002 */  lui   $at, %hi(num_controller_plugged_in_flags)
+/* 00C4AC 7000B8AC 910853EF */  lbu   $t0, %lo(g_ContStatus+7)($t0)
+/* 00C4B0 7000B8B0 3C018002 */  lui   $at, %hi(g_ConnectedControllers)
 /* 00C4B4 7000B8B4 31090008 */  andi  $t1, $t0, 8
 /* 00C4B8 7000B8B8 11200002 */  beqz  $t1, .L7000B8C4
 /* 00C4BC 7000B8BC 00000000 */   nop   
 /* 00C4C0 7000B8C0 2610FFFE */  addiu $s0, $s0, -2
 .L7000B8C4:
-/* 00C4C4 7000B8C4 914A53F3 */  lbu   $t2, %lo(player1_controllerstatus+11)($t2)
+/* 00C4C4 7000B8C4 914A53F3 */  lbu   $t2, %lo(g_ContStatus+11)($t2)
 /* 00C4C8 7000B8C8 314B0008 */  andi  $t3, $t2, 8
 /* 00C4CC 7000B8CC 11600002 */  beqz  $t3, .L7000B8D8
 /* 00C4D0 7000B8D0 00000000 */   nop   
 /* 00C4D4 7000B8D4 2610FFFC */  addiu $s0, $s0, -4
 .L7000B8D8:
-/* 00C4D8 7000B8D8 918C53F7 */  lbu   $t4, %lo(player1_controllerstatus+15)($t4)
+/* 00C4D8 7000B8D8 918C53F7 */  lbu   $t4, %lo(g_ContStatus+15)($t4)
 /* 00C4DC 7000B8DC 318D0008 */  andi  $t5, $t4, 8
 /* 00C4E0 7000B8E0 11A00002 */  beqz  $t5, .L7000B8EC
 /* 00C4E4 7000B8E4 00000000 */   nop   
 /* 00C4E8 7000B8E8 2610FFF8 */  addiu $s0, $s0, -8
 .L7000B8EC:
-/* 00C4EC 7000B8EC A03068D0 */  sb    $s0, %lo(num_controller_plugged_in_flags)($at)
+/* 00C4EC 7000B8EC A03068D0 */  sb    $s0, %lo(g_ConnectedControllers)($at)
 .L7000B8F0:
 /* 00C4F0 7000B8F0 00008025 */  move  $s0, $zero
 /* 00C4F4 7000B8F4 26100001 */  addiu $s0, $s0, 1
@@ -342,21 +275,21 @@ glabel controller_check_for_rumble_maybe
 /* 00C500 7000B900 2A010004 */  slti  $at, $s0, 4
 /* 00C504 7000B904 5420FFFC */  bnezl $at, .L7000B8F8
 /* 00C508 7000B908 26100001 */   addiu $s0, $s0, 1
-/* 00C50C 7000B90C 3C078002 */  lui   $a3, %hi(num_controller_plugged_in_flags_0)
+/* 00C50C 7000B90C 3C078002 */  lui   $a3, %hi(D_800268D4)
 /* 00C510 7000B910 3C068002 */  lui   $a2, %hi(controller_1_rumble_inserted)
 /* 00C514 7000B914 24C668D8 */  addiu $a2, %lo(controller_1_rumble_inserted) # addiu $a2, $a2, 0x68d8
-/* 00C518 7000B918 24E768D4 */  addiu $a3, %lo(num_controller_plugged_in_flags_0) # addiu $a3, $a3, 0x68d4
+/* 00C518 7000B918 24E768D4 */  addiu $a3, %lo(D_800268D4) # addiu $a3, $a3, 0x68d4
 /* 00C51C 7000B91C 00008025 */  move  $s0, $zero
 .L7000B920:
-/* 00C520 7000B920 3C198002 */  lui   $t9, %hi(num_controller_plugged_in_flags) 
-/* 00C524 7000B924 933968D0 */  lbu   $t9, %lo(num_controller_plugged_in_flags)($t9)
+/* 00C520 7000B920 3C198002 */  lui   $t9, %hi(g_ConnectedControllers) 
+/* 00C524 7000B924 933968D0 */  lbu   $t9, %lo(g_ConnectedControllers)($t9)
 /* 00C528 7000B928 24180001 */  li    $t8, 1
 /* 00C52C 7000B92C 02182804 */  sllv  $a1, $t8, $s0
 /* 00C530 7000B930 03254024 */  and   $t0, $t9, $a1
 /* 00C534 7000B934 1100001E */  beqz  $t0, .L7000B9B0
 /* 00C538 7000B938 90E30000 */   lbu   $v1, ($a3)
-/* 00C53C 7000B93C 3C098006 */  lui   $t1, %hi(player1_controllerstatus) 
-/* 00C540 7000B940 252953E8 */  addiu $t1, %lo(player1_controllerstatus) # addiu $t1, $t1, 0x53e8
+/* 00C53C 7000B93C 3C098006 */  lui   $t1, %hi(g_ContStatus) 
+/* 00C540 7000B940 252953E8 */  addiu $t1, %lo(g_ContStatus) # addiu $t1, $t1, 0x53e8
 /* 00C544 7000B944 00102080 */  sll   $a0, $s0, 2
 /* 00C548 7000B948 00891021 */  addu  $v0, $a0, $t1
 /* 00C54C 7000B94C 944A0000 */  lhu   $t2, ($v0)
@@ -376,8 +309,8 @@ glabel controller_check_for_rumble_maybe
 /* 00C580 7000B980 02002025 */   move  $a0, $s0
 /* 00C584 7000B984 0C002DCD */  jal   controller_7000B734
 /* 00C588 7000B988 AFA50024 */   sw    $a1, 0x24($sp)
-/* 00C58C 7000B98C 3C078002 */  lui   $a3, %hi(num_controller_plugged_in_flags_0)
-/* 00C590 7000B990 24E768D4 */  addiu $a3, %lo(num_controller_plugged_in_flags_0) # addiu $a3, $a3, 0x68d4
+/* 00C58C 7000B98C 3C078002 */  lui   $a3, %hi(D_800268D4)
+/* 00C590 7000B990 24E768D4 */  addiu $a3, %lo(D_800268D4) # addiu $a3, $a3, 0x68d4
 /* 00C594 7000B994 3C068002 */  lui   $a2, %hi(controller_1_rumble_inserted)
 /* 00C598 7000B998 24C668D8 */  addiu $a2, %lo(controller_1_rumble_inserted) # addiu $a2, $a2, 0x68d8
 /* 00C59C 7000B99C 90E30000 */  lbu   $v1, ($a3)
@@ -443,7 +376,7 @@ GLOBAL_ASM(
 glabel get_attached_controller_count
 /* 00C5F8 7000B9F8 3C0E8002 */  lui   $t6, %hi(ptr_current_point_in_controller_input_index) 
 /* 00C5FC 7000B9FC 8DCE68C4 */  lw    $t6, %lo(ptr_current_point_in_controller_input_index)($t6)
-/* 00C600 7000BA00 3C028002 */  lui   $v0, %hi(num_controller_plugged_in_flags)
+/* 00C600 7000BA00 3C028002 */  lui   $v0, %hi(g_ConnectedControllers)
 /* 00C604 7000BA04 8DC301F8 */  lw    $v1, 0x1f8($t6)
 /* 00C608 7000BA08 04600005 */  bltz  $v1, .L7000BA20
 /* 00C60C 7000BA0C 00000000 */   nop   
@@ -453,7 +386,7 @@ glabel get_attached_controller_count
 /* 00C61C 7000BA1C 01E01025 */   move  $v0, $t7
 
 .L7000BA20:
-/* 00C620 7000BA20 904268D0 */  lbu   $v0, %lo(num_controller_plugged_in_flags)($v0)
+/* 00C620 7000BA20 904268D0 */  lbu   $v0, %lo(g_ConnectedControllers)($v0)
 /* 00C624 7000BA24 30580001 */  andi  $t8, $v0, 1
 /* 00C628 7000BA28 17000003 */  bnez  $t8, .L7000BA38
 /* 00C62C 7000BA2C 30590002 */   andi  $t9, $v0, 2
@@ -491,7 +424,7 @@ glabel get_attached_controller_count
 
 u8 get_num_controllers_plugged_in(void)
 {
-    return num_controller_plugged_in_flags;
+    return g_ConnectedControllers;
 }
 
 
@@ -1000,7 +933,7 @@ void controllerSchedulerRelated(void)
     }
     if (D_800268CC == 0)
     {
-        if (D_8002691C != 0)
+        if (g_ContInitDone != 0)
         {
             if (osRecvMesg(&contdemoMesgMQ, &sp4C, 0) == 0)
             {
@@ -1162,10 +1095,10 @@ glabel controllerSchedulerRelated
 /* 00CA58 7000BE58 3C038002 */  lui   $v1, %hi(D_800268CC)
 /* 00CA5C 7000BE5C 246368CC */  addiu $v1, %lo(D_800268CC) # addiu $v1, $v1, 0x68cc
 /* 00CA60 7000BE60 8C6D0000 */  lw    $t5, ($v1)
-/* 00CA64 7000BE64 3C0E8002 */  lui   $t6, %hi(D_8002691C) 
+/* 00CA64 7000BE64 3C0E8002 */  lui   $t6, %hi(g_ContInitDone) 
 /* 00CA68 7000BE68 55A0009D */  bnezl $t5, .L7000C0E0
 /* 00CA6C 7000BE6C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 00CA70 7000BE70 8DCE691C */  lw    $t6, %lo(D_8002691C)($t6)
+/* 00CA70 7000BE70 8DCE691C */  lw    $t6, %lo(g_ContInitDone)($t6)
 /* 00CA74 7000BE74 3C048006 */  lui   $a0, %hi(contdemoMesgMQ)
 /* 00CA78 7000BE78 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
 /* 00CA7C 7000BE7C 11C00097 */  beqz  $t6, .L7000C0DC
@@ -1353,7 +1286,7 @@ glabel controllerSchedulerRelated
     temp_t7 = (s32) (arg0 << 0x18) >> 0x18;
     if (ptr_current_point_in_controller_input_index->unk1F8 < 0)
     {
-        if ((((s32) num_controller_plugged_in_flags >> temp_t7) & 1) == 0)
+        if ((((s32) g_ConnectedControllers >> temp_t7) & 1) == 0)
         {
             temp_v1 = (temp_t7 * 4) + &pl1_controller_failure_lr;
             *temp_v1 = (s32) (*temp_v1 + 1);
@@ -1374,8 +1307,8 @@ glabel get_cur_controller_horz_stick_pos
 /* 00CD00 7000C100 000E7E03 */  sra   $t7, $t6, 0x18
 /* 00CD04 7000C104 01E02025 */  move  $a0, $t7
 /* 00CD08 7000C108 0701000E */  bgez  $t8, .L7000C144
-/* 00CD0C 7000C10C 3C198002 */   lui   $t9, %hi(num_controller_plugged_in_flags) 
-/* 00CD10 7000C110 933968D0 */  lbu   $t9, %lo(num_controller_plugged_in_flags)($t9)
+/* 00CD0C 7000C10C 3C198002 */   lui   $t9, %hi(g_ConnectedControllers) 
+/* 00CD10 7000C110 933968D0 */  lbu   $t9, %lo(g_ConnectedControllers)($t9)
 /* 00CD14 7000C114 3C0B8002 */  lui   $t3, %hi(pl1_controller_failure_lr) 
 /* 00CD18 7000C118 256B6930 */  addiu $t3, %lo(pl1_controller_failure_lr) # addiu $t3, $t3, 0x6930
 /* 00CD1C 7000C11C 01F94007 */  srav  $t0, $t9, $t7
@@ -1419,7 +1352,7 @@ void controller_7000C174(s32 arg0) {
     if (ptr_current_point_in_controller_input_index->unk1F8 < 0)
     {
         // Node 1
-        if ((((s32) num_controller_plugged_in_flags >> temp_t7) & 1) == 0)
+        if ((((s32) g_ConnectedControllers >> temp_t7) & 1) == 0)
         {
             // Node 2
             temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_lr);
@@ -1442,8 +1375,8 @@ glabel controller_7000C174
 /* 00CD88 7000C188 000E7E03 */  sra   $t7, $t6, 0x18
 /* 00CD8C 7000C18C 01E02025 */  move  $a0, $t7
 /* 00CD90 7000C190 0701000E */  bgez  $t8, .L7000C1CC
-/* 00CD94 7000C194 3C198002 */   lui   $t9, %hi(num_controller_plugged_in_flags) 
-/* 00CD98 7000C198 933968D0 */  lbu   $t9, %lo(num_controller_plugged_in_flags)($t9)
+/* 00CD94 7000C194 3C198002 */   lui   $t9, %hi(g_ConnectedControllers) 
+/* 00CD98 7000C198 933968D0 */  lbu   $t9, %lo(g_ConnectedControllers)($t9)
 /* 00CD9C 7000C19C 3C0B8002 */  lui   $t3, %hi(pl1_controller_failure_lr) 
 /* 00CDA0 7000C1A0 256B6930 */  addiu $t3, %lo(pl1_controller_failure_lr) # addiu $t3, $t3, 0x6930
 /* 00CDA4 7000C1A4 01F94007 */  srav  $t0, $t9, $t7
@@ -1487,7 +1420,7 @@ void get_cur_controller_vert_stick_pos(s32 arg0) {
     if (ptr_current_point_in_controller_input_index->unk1F8 < 0)
     {
         // Node 1
-        if ((((s32) num_controller_plugged_in_flags >> temp_t7) & 1) == 0)
+        if ((((s32) g_ConnectedControllers >> temp_t7) & 1) == 0)
         {
             // Node 2
             temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_ud);
@@ -1510,8 +1443,8 @@ glabel get_cur_controller_vert_stick_pos
 /* 00CE10 7000C210 000E7E03 */  sra   $t7, $t6, 0x18
 /* 00CE14 7000C214 01E02025 */  move  $a0, $t7
 /* 00CE18 7000C218 0701000E */  bgez  $t8, .L7000C254
-/* 00CE1C 7000C21C 3C198002 */   lui   $t9, %hi(num_controller_plugged_in_flags) 
-/* 00CE20 7000C220 933968D0 */  lbu   $t9, %lo(num_controller_plugged_in_flags)($t9)
+/* 00CE1C 7000C21C 3C198002 */   lui   $t9, %hi(g_ConnectedControllers) 
+/* 00CE20 7000C220 933968D0 */  lbu   $t9, %lo(g_ConnectedControllers)($t9)
 /* 00CE24 7000C224 3C0B8002 */  lui   $t3, %hi(pl1_controller_failure_ud) 
 /* 00CE28 7000C228 256B6940 */  addiu $t3, %lo(pl1_controller_failure_ud) # addiu $t3, $t3, 0x6940
 /* 00CE2C 7000C22C 01F94007 */  srav  $t0, $t9, $t7
@@ -1555,7 +1488,7 @@ void controller_7000C284(s32 arg0) {
     if (ptr_current_point_in_controller_input_index->unk1F8 < 0)
     {
         // Node 1
-        if ((((s32) num_controller_plugged_in_flags >> temp_t7) & 1) == 0)
+        if ((((s32) g_ConnectedControllers >> temp_t7) & 1) == 0)
         {
             // Node 2
             temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_ud);
@@ -1578,8 +1511,8 @@ glabel controller_7000C284
 /* 00CE98 7000C298 000E7E03 */  sra   $t7, $t6, 0x18
 /* 00CE9C 7000C29C 01E02025 */  move  $a0, $t7
 /* 00CEA0 7000C2A0 0701000E */  bgez  $t8, .L7000C2DC
-/* 00CEA4 7000C2A4 3C198002 */   lui   $t9, %hi(num_controller_plugged_in_flags) 
-/* 00CEA8 7000C2A8 933968D0 */  lbu   $t9, %lo(num_controller_plugged_in_flags)($t9)
+/* 00CEA4 7000C2A4 3C198002 */   lui   $t9, %hi(g_ConnectedControllers) 
+/* 00CEA8 7000C2A8 933968D0 */  lbu   $t9, %lo(g_ConnectedControllers)($t9)
 /* 00CEAC 7000C2AC 3C0B8002 */  lui   $t3, %hi(pl1_controller_failure_ud) 
 /* 00CEB0 7000C2B0 256B6940 */  addiu $t3, %lo(pl1_controller_failure_ud) # addiu $t3, $t3, 0x6940
 /* 00CEB4 7000C2B4 01F94007 */  srav  $t0, $t9, $t7
@@ -1623,7 +1556,7 @@ s32 get_controller_buttons_held(s32 arg0, s32 arg1) {
     if (ptr_current_point_in_controller_input_index->unk1F8 < 0)
     {
         // Node 1
-        if ((((s32) num_controller_plugged_in_flags >> temp_t7) & 1) == 0)
+        if ((((s32) g_ConnectedControllers >> temp_t7) & 1) == 0)
         {
             // Node 2
             temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_held);
@@ -1649,8 +1582,8 @@ glabel get_controller_buttons_held
 /* 00CF2C 7000C32C 03002825 */  move  $a1, $t8
 /* 00CF30 7000C330 0721000F */  bgez  $t9, .L7000C370
 /* 00CF34 7000C334 01E02025 */   move  $a0, $t7
-/* 00CF38 7000C338 3C088002 */  lui   $t0, %hi(num_controller_plugged_in_flags) 
-/* 00CF3C 7000C33C 910868D0 */  lbu   $t0, %lo(num_controller_plugged_in_flags)($t0)
+/* 00CF38 7000C338 3C088002 */  lui   $t0, %hi(g_ConnectedControllers) 
+/* 00CF3C 7000C33C 910868D0 */  lbu   $t0, %lo(g_ConnectedControllers)($t0)
 /* 00CF40 7000C340 3C0C8002 */  lui   $t4, %hi(pl1_controller_failure_held) 
 /* 00CF44 7000C344 258C6950 */  addiu $t4, %lo(pl1_controller_failure_held) # addiu $t4, $t4, 0x6950
 /* 00CF48 7000C348 01E84807 */  srav  $t1, $t0, $t7
@@ -1697,7 +1630,7 @@ s32 get_controller_buttons_pressed(s8 arg0, s32 arg1) {
     if (ptr_current_point_in_controller_input_index->unk1F8 < 0)
     {
         // Node 1
-        if ((((s32) num_controller_plugged_in_flags >> temp_t7) & 1) == 0)
+        if ((((s32) g_ConnectedControllers >> temp_t7) & 1) == 0)
         {
             // Node 2
             temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_pressed);
@@ -1723,8 +1656,8 @@ glabel get_controller_buttons_pressed
 /* 00CFCC 7000C3CC 03002825 */  move  $a1, $t8
 /* 00CFD0 7000C3D0 0721000F */  bgez  $t9, .L7000C410
 /* 00CFD4 7000C3D4 01E02025 */   move  $a0, $t7
-/* 00CFD8 7000C3D8 3C088002 */  lui   $t0, %hi(num_controller_plugged_in_flags) 
-/* 00CFDC 7000C3DC 910868D0 */  lbu   $t0, %lo(num_controller_plugged_in_flags)($t0)
+/* 00CFD8 7000C3D8 3C088002 */  lui   $t0, %hi(g_ConnectedControllers) 
+/* 00CFDC 7000C3DC 910868D0 */  lbu   $t0, %lo(g_ConnectedControllers)($t0)
 /* 00CFE0 7000C3E0 3C0C8002 */  lui   $t4, %hi(pl1_controller_failure_pressed) 
 /* 00CFE4 7000C3E4 258C6960 */  addiu $t4, %lo(pl1_controller_failure_pressed) # addiu $t4, $t4, 0x6960
 /* 00CFE8 7000C3E8 01E84807 */  srav  $t1, $t0, $t7
