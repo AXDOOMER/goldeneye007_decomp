@@ -50,18 +50,9 @@ s32 D_800268CC = 0;
 u8 g_ConnectedControllers = 0;
 u8 D_800268D4 = 0;
 s32 controller_1_rumble_inserted[MAXCONTROLLERS] = {0};
-s32 controller_1_rumble_state = 0;
-s32 controller_2_rumble_state = 0;
-s32 controller_3_rumble_state = 0;
-s32 controller_4_rumble_state = 0;
-s32 controller_1_rumble_duration = 0;
-s32 controller_2_rumble_duration = 0;
-s32 controller_3_rumble_duration = 0;
-s32 controller_4_rumble_duration = 0;
-s32 controller_1_rumble_pulse = 0;
-s32 controller_2_rumble_pulse = 0;
-s32 controller_3_rumble_pulse = 0;
-s32 controller_4_rumble_pulse = 0;
+s32 controller_1_rumble_state[MAXCONTROLLERS] = {0};
+s32 controller_1_rumble_duration[MAXCONTROLLERS] = {0};
+s32 controller_1_rumble_pulse[MAXCONTROLLERS] = {0};
 s32 g_ContQueuesCreated = 0;
 s32 g_ContInitDone = 0;
 s32 D_80026920 = 0;
@@ -343,8 +334,7 @@ glabel controller_check_for_rumble_maybe
 )
 #endif
 
-s8 get_attached_controller_count(void)
-{
+s8 get_attached_controller_count(void) {
     s32 i;
 
 	if (g_ContDataPtr->unk1f8 >= 0) {
@@ -360,84 +350,51 @@ s8 get_attached_controller_count(void)
 	return 4;
 }
 
-u8 get_num_controllers_plugged_in(void)
-{
+u8 get_num_controllers_plugged_in(void) {
     return g_ConnectedControllers;
 }
 
-
-
-
-
-
-
 #ifdef NONMATCHING
-s32 controller_rumble_related(void) {
-    s32 temp_t1;
-    s32 temp_a0;
-
-    // Node 0
-    // Node 1
-    if (controller_1_rumble_state != controller_1_rumble_pulse)
-    {
-        // Node 2
-        temp_a0 = ((0 * 0x68) + &player1_controller_packet);
-        if (1 == controller_1_rumble_pulse)
-        {
-            // Node 3
-            if (osMotorStart(temp_a0) == 0)
-            {
-                // Node 4
-                controller_1_rumble_state = 1;
-            }
-            else
-            {
-                // Node 5
-                *(0 + &controller_1_rumble_inserted) = 0;
-            }
-        }
-        else
-        {
-            // Node 6
-            if (osMotorStop(temp_a0) == 0)
-            {
-                // Node 7
-                controller_1_rumble_state = 0;
-            }
-            else
-            {
-                // Node 8
-                *(0 + &controller_1_rumble_inserted) = 0;
-            }
-        }
-    }
-    // Node 9
-    if (controller_1_rumble_duration <= 0)
-    {
-        // Node 10
-        controller_1_rumble_duration = 0;
-    }
-    else
-    {
-        // Node 11
-        temp_t1 = (controller_1_rumble_duration + -1);
-        controller_1_rumble_duration = temp_t1;
-        if (temp_t1 <= 0)
-        {
-            // Node 12
-            controller_1_rumble_duration = 0;
-            controller_1_rumble_pulse = 0;
-        }
-    }
-    // Node 13
-    if ((0 + 1) != 4)
-    {
-        goto loop_1;
-    }
-    // (possible return value: controller_1_rumble_duration)
-}
+// controller_1_rumble_inserted loaded only once instead of twice + regalloc
+void controller_rumble_related(void) {
+    s32 i;
+    for (i = 0; i < MAXCONTROLLERS; i++) {
+        if (controller_1_rumble_state[i] != controller_1_rumble_pulse[i]) {
+            if (controller_1_rumble_pulse[i] == 1) { // enum/define?
+                if (osMotorStart(&player1_controller_packet[i]) == 0) {
+                    controller_1_rumble_state[i] = 1;
+                } else {
+                    controller_1_rumble_inserted[i] = FALSE;
+                }
+#ifdef VERSION_JP
+            } else if (controller_1_rumble_pulse[i] == 2) {
+                if (osMotorInit(&contdemosMesgMQ, &player1_controller_packet[i], i) != 0) {
+                    controller_1_rumble_inserted[i] = FALSE;                    
+                }
+                osMotorStop(&player1_controller_packet[i]);
+                controller_1_rumble_state[i] = 0;
+                controller_1_rumble_pack[i] = 0;
 #endif
-
+            } else {
+                if (osMotorStop(&player1_controller_packet[i]) == 0) {
+                    controller_1_rumble_state[i] = 0;
+                } else {
+                    controller_1_rumble_inserted[i] = FALSE;
+                }
+            } 
+        }
+        if (controller_1_rumble_duration[i] <= 0) {
+            controller_1_rumble_duration[i] = 0;
+        } else {
+            controller_1_rumble_duration[i]--;
+            if (controller_1_rumble_duration[i] <= 0) {
+                controller_1_rumble_duration[i] = 0;
+                controller_1_rumble_pulse[i] = 0;
+            }
+        }
+    }
+}
+#else 
 #ifdef VERSION_US
 GLOBAL_ASM(
 .text
@@ -526,7 +483,6 @@ glabel controller_rumble_related
 /* 00C7A4 7000BBA4 27BD0038 */   addiu $sp, $sp, 0x38
 )
 #endif
-
 #ifdef VERSION_JP
 GLOBAL_ASM(
 .text
@@ -638,26 +594,16 @@ glabel controller_rumble_related
 /* 00C808 7000BC08 27BD0040 */   addiu $sp, $sp, 0x40
 )
 #endif
-
-
-
-
+#endif
 
 void set_disable_all_rumble_and_something(s32 arg0, s32 arg1) {
     disable_all_rumble = arg0;
     g_ContData[1].unk1f8 = arg1;
-    //dword_CODE_bss_80065324 = arg1;
 }
 
-void set_ptr_tlb_ramrom_record(s32 arg0)
-{
+void set_ptr_tlb_ramrom_record(s32 arg0){
     ptr_to_tlb_ramrom_record = arg0;
 }
-
-
-
-
-
 
 #ifdef NONMATCHING
 void probably_ramrom_related(void) {
@@ -2320,22 +2266,22 @@ glabel reset_cont_rumble_detect
 /* 00D4E4 7000C8E4 AC2E68E8 */  sw    $t6, %lo(controller_1_rumble_state)($at)
 /* 00D4E8 7000C8E8 3C018002 */  lui   $at, %hi(controller_1_rumble_pulse)
 /* 00D4EC 7000C8EC AC206908 */  sw    $zero, %lo(controller_1_rumble_pulse)($at)
-/* 00D4F0 7000C8F0 3C018002 */  lui   $at, %hi(controller_2_rumble_state)
+/* 00D4F0 7000C8F0 3C018002 */  lui   $at, %hi(controller_1_rumble_state+0x4)
 /* 00D4F4 7000C8F4 240F0001 */  li    $t7, 1
-/* 00D4F8 7000C8F8 AC2F68EC */  sw    $t7, %lo(controller_2_rumble_state)($at)
-/* 00D4FC 7000C8FC 3C018002 */  lui   $at, %hi(controller_2_rumble_pulse)
-/* 00D500 7000C900 AC20690C */  sw    $zero, %lo(controller_2_rumble_pulse)($at)
-/* 00D504 7000C904 3C018002 */  lui   $at, %hi(controller_3_rumble_state)
+/* 00D4F8 7000C8F8 AC2F68EC */  sw    $t7, %lo(controller_1_rumble_state+0x4)($at)
+/* 00D4FC 7000C8FC 3C018002 */  lui   $at, %hi(controller_1_rumble_pulse+0x4)
+/* 00D500 7000C900 AC20690C */  sw    $zero, %lo(controller_1_rumble_pulse+0x4)($at)
+/* 00D504 7000C904 3C018002 */  lui   $at, %hi(controller_1_rumble_state+0x8)
 /* 00D508 7000C908 24180001 */  li    $t8, 1
-/* 00D50C 7000C90C AC3868F0 */  sw    $t8, %lo(controller_3_rumble_state)($at)
-/* 00D510 7000C910 3C018002 */  lui   $at, %hi(controller_3_rumble_pulse)
-/* 00D514 7000C914 AC206910 */  sw    $zero, %lo(controller_3_rumble_pulse)($at)
-/* 00D518 7000C918 3C018002 */  lui   $at, %hi(controller_4_rumble_state)
+/* 00D50C 7000C90C AC3868F0 */  sw    $t8, %lo(controller_1_rumble_state+0x8)($at)
+/* 00D510 7000C910 3C018002 */  lui   $at, %hi(controller_1_rumble_pulse+0x8)
+/* 00D514 7000C914 AC206910 */  sw    $zero, %lo(controller_1_rumble_pulse+0x8)($at)
+/* 00D518 7000C918 3C018002 */  lui   $at, %hi(controller_1_rumble_state+0xC)
 /* 00D51C 7000C91C 24190001 */  li    $t9, 1
-/* 00D520 7000C920 AC3968F4 */  sw    $t9, %lo(controller_4_rumble_state)($at)
-/* 00D524 7000C924 3C018002 */  lui   $at, %hi( controller_4_rumble_pulse)
+/* 00D520 7000C920 AC3968F4 */  sw    $t9, %lo(controller_1_rumble_state+0xC)($at)
+/* 00D524 7000C924 3C018002 */  lui   $at, %hi( controller_1_rumble_pulse+0xC)
 /* 00D528 7000C928 03E00008 */  jr    $ra
-/* 00D52C 7000C92C AC206914 */   sw    $zero, %lo( controller_4_rumble_pulse)($at)
+/* 00D52C 7000C92C AC206914 */   sw    $zero, %lo( controller_1_rumble_pulse+0xC)($at)
 )
 #endif
 
