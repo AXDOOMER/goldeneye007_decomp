@@ -93,7 +93,7 @@ u32 D_8002A8B0 = 0;
 
 extern Gfx *D_01000000;
 extern Gfx *D_01000040;
-Gfx *something_with_gunbarrel_and_rareware_logo_matrix_manip(Gfx* gdl) {
+Gfx *something_with_gunbarrel_and_rareware_logo_matrix_manip(Gfx *gdl) {
     guTranslate(&matrix_buffer_rarelogo_2[D_8002A7D0], x, y, -5.0f);
     guTranslate(&matrix_buffer_gunbarrel_1[D_8002A7D0], dword_CODE_bss_8006957C, dword_CODE_bss_80069580, -5.0f);
     gSPDisplayList(gdl++, &D_01000000);

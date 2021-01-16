@@ -110,7 +110,7 @@ void init_mainthread_data(void)
     s32 i;
 
 
-    debInitDebugNoticeList();
+    debInit();
     romCreateMesgQueue();
     establish_TLB_buffer_management_table();
     image_entries_load();
@@ -141,7 +141,7 @@ void init_mainthread_data(void)
         }
     }
 
-    if (check_token(1, "-level_") == 0)
+    if (tokenFind(1, "-level_") == 0)
     {
         debug_and_update_stage_flag = 1;
     }
@@ -149,11 +149,11 @@ void init_mainthread_data(void)
     gameInitDebugNoticeList();
     if (debug_and_update_stage_flag != 0)
     {
-        strtok("          -ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400");
+        tokenSetString("          -ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400");
     }
-    if (check_token(1, "-m") != 0)
+    if (tokenFind(1, "-m") != 0)
     {
-        current_m_malloc_value = (s32) (strtol(check_token(1, "-m"), 0, 0) << 0xa);
+        current_m_malloc_value = (s32) (strtol(tokenFind(1, "-m"), 0, 0) << 0xa);
     }
     temp_s0 = (osVirtualToPhysical(&room_model_buffer) | 0x80000000);
     mempCheckMemflagTokens(temp_s0, (return_ptr_TLBallocatedblock() - temp_s0));
@@ -286,9 +286,9 @@ void mainloop(void)
 
     sp1DC = 0;
     reset_mem_bank_5();
-    if (check_token(1, "-level_") != 0)
+    if (tokenFind(1, "-level_") != 0)
     {
-        temp_ret = check_token(1, "-level_");
+        temp_ret = tokenFind(1, "-level_");
         current_stage_num = (s32) ((temp_ret->unk1 + (temp_ret->unk0 * 0xa)) + -0x210);
     }
     if (current_stage_num != 0x5a)
@@ -297,10 +297,10 @@ void mainloop(void)
         set_selected_folder_num(0);
         set_selected_difficulty(0);
         set_solo_and_ptr_briefing(current_stage_num);
-        if (check_token(1, "-hard") != 0)
+        if (tokenFind(1, "-hard") != 0)
         {
-            set_selected_difficulty(*check_token(1, "-hard") + -0x30);
-            set_difficulty(*check_token(1, "-hard") + -0x30);
+            set_selected_difficulty(*tokenFind(1, "-hard") + -0x30);
+            set_difficulty(*tokenFind(1, "-hard") + -0x30);
         }
     }
     increment_random_num(osGetCount());
@@ -381,13 +381,13 @@ loop_18:
                 }
             }
         }
-        strtok((&memallocstringtable + (phi_s0_3 * 8))->unk4, &memallocstringtable);
+        tokenSetString((&memallocstringtable + (phi_s0_3 * 8))->unk4, &memallocstringtable);
     }
     mempResetBank(4);
     obBlankResourcesLoadedInBank(4);
-    if (check_token(1, &aMa) != 0)
+    if (tokenFind(1, &aMa) != 0)
     {
-        current_ma_malloc_value = (s32) (strtol(check_token(1, &aMa_0), 0, 0) << 0xa);
+        current_ma_malloc_value = (s32) (strtol(tokenFind(1, &aMa_0), 0, 0) << 0xa);
     }
     mempInitMallocTable(mempAllocBytesInBank(current_ma_malloc_value, 4), current_ma_malloc_value);
     reset_play_data_ptrs();
@@ -666,12 +666,12 @@ glabel mainloop
 /* 006C90 70006090 AFA001DC */   sw    $zero, 0x1dc($sp)
 /* 006C94 70006094 3C058003 */  lui   $a1, %hi(aLevel__0)
 /* 006C98 70006098 24A59104 */  addiu $a1, %lo(aLevel__0) # addiu $a1, $a1, -0x6efc
-/* 006C9C 7000609C 0C0029A8 */  jal   check_token
+/* 006C9C 7000609C 0C0029A8 */  jal   tokenFind
 /* 006CA0 700060A0 24040001 */   li    $a0, 1
 /* 006CA4 700060A4 1040000D */  beqz  $v0, .L700060DC
 /* 006CA8 700060A8 24040001 */   li    $a0, 1
 /* 006CAC 700060AC 3C058003 */  lui   $a1, %hi(aLevel__1)
-/* 006CB0 700060B0 0C0029A8 */  jal   check_token
+/* 006CB0 700060B0 0C0029A8 */  jal   tokenFind
 /* 006CB4 700060B4 24A5910C */   addiu $a1, %lo(aLevel__1) # addiu $a1, $a1, -0x6ef4
 /* 006CB8 700060B8 904F0000 */  lbu   $t7, ($v0)
 /* 006CBC 700060BC 904E0001 */  lbu   $t6, 1($v0)
@@ -699,19 +699,19 @@ glabel mainloop
 /* 006D10 70006110 8C8441A8 */   lw    $a0, %lo(current_stage_num)($a0)
 /* 006D14 70006114 3C058003 */  lui   $a1, %hi(aHard)
 /* 006D18 70006118 24A59114 */  addiu $a1, %lo(aHard) # addiu $a1, $a1, -0x6eec
-/* 006D1C 7000611C 0C0029A8 */  jal   check_token
+/* 006D1C 7000611C 0C0029A8 */  jal   tokenFind
 /* 006D20 70006120 24040001 */   li    $a0, 1
 /* 006D24 70006124 1040000E */  beqz  $v0, .L70006160
 /* 006D28 70006128 24040001 */   li    $a0, 1
 /* 006D2C 7000612C 3C058003 */  lui   $a1, %hi(aHard_1)
-/* 006D30 70006130 0C0029A8 */  jal   check_token
+/* 006D30 70006130 0C0029A8 */  jal   tokenFind
 /* 006D34 70006134 24A5911C */   addiu $a1, %lo(aHard_1) # addiu $a1, $a1, -0x6ee4
 /* 006D38 70006138 90440000 */  lbu   $a0, ($v0)
 /* 006D3C 7000613C 0FC07567 */  jal   set_selected_difficulty
 /* 006D40 70006140 2484FFD0 */   addiu $a0, $a0, -0x30
 /* 006D44 70006144 3C058003 */  lui   $a1, %hi(aHard_2)
 /* 006D48 70006148 24A59124 */  addiu $a1, %lo(aHard_2) # addiu $a1, $a1, -0x6edc
-/* 006D4C 7000614C 0C0029A8 */  jal   check_token
+/* 006D4C 7000614C 0C0029A8 */  jal   tokenFind
 /* 006D50 70006150 24040001 */   li    $a0, 1
 /* 006D54 70006154 90440000 */  lbu   $a0, ($v0)
 /* 006D58 70006158 0FC2FF07 */  jal   set_difficulty
@@ -822,7 +822,7 @@ glabel mainloop
 /* 006EDC 700062DC 001078C0 */  sll   $t7, $s0, 3
 .L700062E0:
 /* 006EE0 700062E0 00AF7021 */  addu  $t6, $a1, $t7
-/* 006EE4 700062E4 0C002963 */  jal   strtok
+/* 006EE4 700062E4 0C002963 */  jal   tokenSetString
 /* 006EE8 700062E8 8DC40004 */   lw    $a0, 4($t6)
 .L700062EC:
 /* 006EEC 700062EC 0C002667 */  jal   mempResetBank
@@ -831,12 +831,12 @@ glabel mainloop
 /* 006EF8 700062F8 24040004 */   li    $a0, 4
 /* 006EFC 700062FC 3C058003 */  lui   $a1, %hi(aMa)
 /* 006F00 70006300 24A5912C */  addiu $a1, %lo(aMa) # addiu $a1, $a1, -0x6ed4
-/* 006F04 70006304 0C0029A8 */  jal   check_token
+/* 006F04 70006304 0C0029A8 */  jal   tokenFind
 /* 006F08 70006308 24040001 */   li    $a0, 1
 /* 006F0C 7000630C 1040000B */  beqz  $v0, .L7000633C
 /* 006F10 70006310 24040001 */   li    $a0, 1
 /* 006F14 70006314 3C058003 */  lui   $a1, %hi(aMa_0)
-/* 006F18 70006318 0C0029A8 */  jal   check_token
+/* 006F18 70006318 0C0029A8 */  jal   tokenFind
 /* 006F1C 7000631C 24A59130 */   addiu $a1, %lo(aMa_0) # addiu $a1, $a1, -0x6ed0
 /* 006F20 70006320 00402025 */  move  $a0, $v0
 /* 006F24 70006324 00002825 */  move  $a1, $zero
@@ -1309,7 +1309,7 @@ s32 get_debug_parse_flag(void) {
  *     V0= p->debug.notice.list entry for boss_c_debug using data at 800241A0
  */
 void bossInitDebugNoticeList(void) {
-    debCheckAddDebugNoticeListEntry(&boss_c_ptr_debug_notice_list_entry, "boss_c_debug");
+    debTryAdd(&boss_c_ptr_debug_notice_list_entry, "boss_c_debug");
 }
 
 

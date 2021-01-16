@@ -29,7 +29,7 @@ u32 **fast3d_related_array = &fast3d_related_0;
 
 
 void rspInitDebugNoticeList(void) {
-    debCheckAddDebugNoticeListEntry(&D_8004E9E0, "rsp_c_debug");
+    debTryAdd(&D_8004E9E0, "rsp_c_debug");
 }
 
 

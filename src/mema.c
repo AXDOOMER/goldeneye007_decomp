@@ -461,7 +461,7 @@ glabel memaAllocRoomBuffer
 
 
 void memaInitDebugNoticeList(void) {
-    debCheckAddDebugNoticeListEntry(&ptr_mema_c_debug_notice_list, "mema_c_debug");
+    debTryAdd(&ptr_mema_c_debug_notice_list, "mema_c_debug");
 }
 
 

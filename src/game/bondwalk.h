@@ -65,6 +65,9 @@ struct ejected_cart {
     char * text;
 };
 
+
+extern char dword_CODE_bss_80075DC8[20][160];
+
 f32 bondwalkGetItemField68(ITEM_IDS item);
 u32 bondwalkItemCheckBitflags(ITEM_IDS item, u32 mask);
 

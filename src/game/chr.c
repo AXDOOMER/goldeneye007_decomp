@@ -50,9 +50,9 @@ u32 D_8002CCBC = 0;
 u32 D_8002CCC0[] = {1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 s32 D_8002CCF8 = 0;
 s32 D_8002CCFC = 0;
-s32 num_bodies = 0;
-s32 num_male_heads = 0;
-s32 num_female_heads = 0;
+u32 num_bodies = 0;
+u32 num_male_heads = 0;
+u32 num_female_heads = 0;
 
 s32 list_of_bodies[] = {
     BODY_Jungle_Commando,BODY_St_Petersburg_Guard,BODY_Russian_Soldier,BODY_Russian_Infantry,
@@ -81,9 +81,9 @@ s32 random_female_heads[] = {
     HEAD_Female_Sally,HEAD_Female_Marion_Rosika,HEAD_Female_Mandy,HEAD_Female_Vivien, -1
 };
 
-s32 current_random_body = 0;
-s32 current_random_male_head = 0;
-s32 current_random_female_head = 0;
+u32 current_random_body = 0;
+u32 current_random_male_head = 0;
+u32 current_random_female_head = 0;
 f32 ai_accuracy_modifier = 1.0f;
 f32 ai_damage_modifier = 1.0f;
 f32 ai_health_modifier = 1.0f;

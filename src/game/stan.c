@@ -234,7 +234,7 @@ u32 stanRemovedAnimationRoutine(s32 arg0) {
 }
 
 void stanInitDebugNoticeList(void) {
-    debCheckAddDebugNoticeListEntry(&stan_c_debug_notice_list_entry, &aStan_c_debug);//"stan_c_debug");
+    debTryAdd(&stan_c_debug_notice_list_entry, &aStan_c_debug);//"stan_c_debug");
 }
 
 
@@ -796,7 +796,7 @@ void stanLoadFile(void *arg0) {
     stanLoaded = 1;
     stan_prefix.clippingfile = arg0;
     standTileStart = (s32) (arg0->unk4 + -0x80);
-    if (check_token(1, "-stanlinelog") != 0)
+    if (tokenFind(1, "-stanlinelog") != 0)
     {
         stanlinelog_flag = 1;
     }
@@ -822,7 +822,7 @@ glabel stanLoadFile
 /* 0E4114 7F0AF5E4 2719FF80 */  addiu $t9, $t8, -0x80
 /* 0E4118 7F0AF5E8 AC390F58 */  sw    $t9, %lo(standTileStart)($at)
 /* 0E411C 7F0AF5EC 24A585BC */  addiu $a1, %lo(aStanlinelog) # addiu $a1, $a1, -0x7a44
-/* 0E4120 7F0AF5F0 0C0029A8 */  jal   check_token
+/* 0E4120 7F0AF5F0 0C0029A8 */  jal   tokenFind
 /* 0E4124 7F0AF5F4 24040001 */   li    $a0, 1
 /* 0E4128 7F0AF5F8 10400003 */  beqz  $v0, .L7F0AF608
 /* 0E412C 7F0AF5FC 24080001 */   li    $t0, 1

@@ -320,7 +320,7 @@ void mainproc(void *args)
 	viDebugRemoved();
 	piCreateManager();
 	rmonCreateThread();
-	if (check_boot_switches() != 0)
+	if (tokenReadIo() != 0)
 	{
 		osStopThread(0);
 	}

@@ -183,34 +183,21 @@ struct fog_element2 fog_tables2[] = {
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0BA720(void) {
 
+void sub_GAME_7F0BA720(s32 a, s32 b) {
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BA720
-/* 0EF250 7F0BA720 AFA40000 */  sw    $a0, ($sp)
-/* 0EF254 7F0BA724 03E00008 */  jr    $ra
-/* 0EF258 7F0BA728 AFA50004 */   sw    $a1, 4($sp)
-)
-#endif
-
-
-
-
 
 s32 get_ptr_currentdata(void){
-  return ptr_current_data;
+    return ptr_current_data;
 }
 
 f32 get_near_fog_value(void) {
-  return near_fog_value;
+    return near_fog_value;
 }
 
 f32 square_near_fog_value(void) {
-  return near_fog_value * near_fog_value;
+    return near_fog_value * near_fog_value;
 }
 
 
@@ -442,18 +429,11 @@ glabel copy_table2_env_to_current
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0BAA5C(void) {
 
+void sub_GAME_7F0BAA5C(s32 a) {
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BAA5C
-/* 0EF58C 7F0BAA5C 03E00008 */  jr    $ra
-/* 0EF590 7F0BAA60 AFA40000 */   sw    $a0, ($sp)
-)
-#endif
+
 
 
 

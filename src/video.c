@@ -50,8 +50,6 @@ s32 dword_CODE_bss_80060880;
 s32 dword_CODE_bss_80060884;
 s32 dword_CODE_bss_80060888;
 s32 dword_CODE_bss_8006088C;
-char dword_CODE_bss_80060890[0x400];//CC[0x3C4];
-                                    //90[0x400];
 /**
  * 3C60	70003060
  */

@@ -1,5 +1,8 @@
 #include "ultra64.h"
 #include "game/dyn.h"
+#include "token.h"
+#include "str.h"
+#include "memp.h"
 
 /**
  * This file handles memory usage for graphics related tasks.
@@ -38,18 +41,15 @@ char membars_string2[] = "=========================";
 char membars_string3[] = "-------------------------";
 
 void dynInitDebugNoticeList(void) {
-    debCheckAddDebugNoticeListEntry(&D_800482E0, "dyn_c_debug");
+    debTryAdd(&D_800482E0, "dyn_c_debug");
 }
 
-const char *check_token(s32 arg0, const char *arg1);
-long int strtol(const char *str, char **endptr, int base);
-void *mempAllocBytesInBank(u32 bytes, u8 bank);
 void dynInitMemory(void) {
-    if (check_token(1, "-mgfx")) {
-        g_GfxSizesByPlayerCount[getPlayerCount() - 1] = strtol(check_token(1, "-mgfx"), NULL, 0) * 1024;
+    if (tokenFind(1, "-mgfx")) {
+        g_GfxSizesByPlayerCount[getPlayerCount() - 1] = strtol(tokenFind(1, "-mgfx"), NULL, 0) * 1024;
     }
-    if (check_token(1, "-mvtx")) {
-        g_VtxSizesByPlayerCount[getPlayerCount() - 1] = strtol(check_token(1, "-mvtx"), NULL, 0) * 1024;
+    if (tokenFind(1, "-mvtx")) {
+        g_VtxSizesByPlayerCount[getPlayerCount() - 1] = strtol(tokenFind(1, "-mvtx"), NULL, 0) * 1024;
     }
 
     g_GfxBuffers[0] = mempAllocBytesInBank(g_GfxSizesByPlayerCount[getPlayerCount() - 1] * 2, 4);

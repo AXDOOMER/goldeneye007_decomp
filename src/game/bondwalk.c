@@ -18,9 +18,7 @@ s32 dword_CODE_bss_80075DB8;
 s32 dword_CODE_bss_80075DBC;
 s32 dword_CODE_bss_80075DC0;
 s32 dword_CODE_bss_80075DC4;
-char dword_CODE_bss_80075DC8[0x9C];
-s32 dword_CODE_bss_80075E64;
-char dword_CODE_bss_80075E68[0xBE0];
+char dword_CODE_bss_80075DC8[20][160];
 s32 dword_CODE_bss_80076A48;
 
 
@@ -20442,7 +20440,7 @@ u32 sub_GAME_7F068420(s32 arg0, void *arg1) {
 
     // Node 0
     phi_v1_2 = &dword_CODE_bss_80075DC8;
-    if (dword_CODE_bss_80075E64 != 0)
+    if (dword_CODE_bss_80075DC8+0x9C != 0)
     {
         // Node 1
         phi_v1 = &dword_CODE_bss_80075DC8;
@@ -20493,8 +20491,8 @@ u32 sub_GAME_7F068420(s32 arg0, void *arg1) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F068420
-/* 09CF50 7F068420 3C0E8007 */  lui   $t6, %hi(dword_CODE_bss_80075E64) 
-/* 09CF54 7F068424 8DCE5E64 */  lw    $t6, %lo(dword_CODE_bss_80075E64)($t6)
+/* 09CF50 7F068420 3C0E8007 */  lui   $t6, %hi(dword_CODE_bss_80075DC8+0x9C) 
+/* 09CF54 7F068424 8DCE5E64 */  lw    $t6, %lo(dword_CODE_bss_80075DC8+0x9C)($t6)
 /* 09CF58 7F068428 3C038007 */  lui   $v1, %hi(dword_CODE_bss_80075DC8)
 /* 09CF5C 7F06842C 24635DC8 */  addiu $v1, %lo(dword_CODE_bss_80075DC8) # addiu $v1, $v1, 0x5dc8
 /* 09CF60 7F068430 11C00009 */  beqz  $t6, .L7F068458

@@ -319,6 +319,10 @@ int main(int argc, char **argv)
 	{
 		printf("\n\n    Baron has been defeated - decomp is complete!!");
 	}
+	else if(cur_obj == cur_mis_objs_max)
+	{
+		printf("\n\n    Progress To Next Mission: %0.1f%%", obj_remaining * 100.f);
+	}
 
 exit:
 	if(verbosity_level != LOG_MIN)

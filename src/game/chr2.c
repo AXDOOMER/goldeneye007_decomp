@@ -5,39 +5,17 @@
 #include "game/lvl.h"
 #include "bondconstants.h"
 
-#ifdef NONMATCHING
-void load_body_head_if_not_loaded(void) {
 
+s32 load_body_head_if_not_loaded(s32 model)
+{
+    if (c_item_entries[model].header->offset_obj_table == 0)
+    {
+        load_object_into_memory(c_item_entries[model].header, c_item_entries[model].filename);
+        return 1;
+    }
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel load_body_head_if_not_loaded
-/* 057DC0 7F023290 00047080 */  sll   $t6, $a0, 2
-/* 057DC4 7F023294 01C47021 */  addu  $t6, $t6, $a0
-/* 057DC8 7F023298 3C0F8004 */  lui   $t7, %hi(c_item_entries) 
-/* 057DCC 7F02329C 25EFDE10 */  addiu $t7, %lo(c_item_entries) # addiu $t7, $t7, -0x21f0
-/* 057DD0 7F0232A0 000E7080 */  sll   $t6, $t6, 2
-/* 057DD4 7F0232A4 01CF1021 */  addu  $v0, $t6, $t7
-/* 057DD8 7F0232A8 8C460000 */  lw    $a2, ($v0)
-/* 057DDC 7F0232AC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 057DE0 7F0232B0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 057DE4 7F0232B4 8CD80000 */  lw    $t8, ($a2)
-/* 057DE8 7F0232B8 00C02025 */  move  $a0, $a2
-/* 057DEC 7F0232BC 57000006 */  bnezl $t8, .L7F0232D8
-/* 057DF0 7F0232C0 00001025 */   move  $v0, $zero
-/* 057DF4 7F0232C4 0FC1D953 */  jal   load_object_into_memory
-/* 057DF8 7F0232C8 8C450004 */   lw    $a1, 4($v0)
-/* 057DFC 7F0232CC 10000002 */  b     .L7F0232D8
-/* 057E00 7F0232D0 24020001 */   li    $v0, 1
-/* 057E04 7F0232D4 00001025 */  move  $v0, $zero
-.L7F0232D8:
-/* 057E08 7F0232D8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 057E0C 7F0232DC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 057E10 7F0232E0 03E00008 */  jr    $ra
-/* 057E14 7F0232E4 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -9809,37 +9787,21 @@ glabel actor_kneel_aim_at_actor
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02AAF4(void) {
+int actor_fire_or_aim_at_target_update(struct chrdata *chr, u32 newflag, u32 newtarget)
+{
+    if(chr->actiontype == ACT_ATTACK)
+    {
+        if((chr->targetflag & (TARGET_AIM_ONLY | TARGET_DONTTURN)) != 0)
+        {
+            chr->targetflag = newflag;
+            chr->targettoshoot = newtarget;
+            sub_GAME_7F024F8C(chr);
+            return 1;
+        }
+    }
 
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02AAF4
-/* 05F624 7F02AAF4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 05F628 7F02AAF8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05F62C 7F02AAFC 808E0007 */  lb    $t6, 7($a0)
-/* 05F630 7F02AB00 24010008 */  li    $at, 8
-/* 05F634 7F02AB04 00001025 */  move  $v0, $zero
-/* 05F638 7F02AB08 15C1000A */  bne   $t6, $at, .L7F02AB34
-/* 05F63C 7F02AB0C 00000000 */   nop   
-/* 05F640 7F02AB10 8C8F004C */  lw    $t7, 0x4c($a0)
-/* 05F644 7F02AB14 31F80060 */  andi  $t8, $t7, 0x60
-/* 05F648 7F02AB18 13000006 */  beqz  $t8, .L7F02AB34
-/* 05F64C 7F02AB1C 00000000 */   nop   
-/* 05F650 7F02AB20 AC85004C */  sw    $a1, 0x4c($a0)
-/* 05F654 7F02AB24 0FC093E3 */  jal   sub_GAME_7F024F8C
-/* 05F658 7F02AB28 AC860050 */   sw    $a2, 0x50($a0)
-/* 05F65C 7F02AB2C 10000001 */  b     .L7F02AB34
-/* 05F660 7F02AB30 24020001 */   li    $v0, 1
-.L7F02AB34:
-/* 05F664 7F02AB34 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05F668 7F02AB38 27BD0018 */  addiu $sp, $sp, 0x18
-/* 05F66C 7F02AB3C 03E00008 */  jr    $ra
-/* 05F670 7F02AB40 00000000 */   nop   
-)
-#endif
 
 
 
