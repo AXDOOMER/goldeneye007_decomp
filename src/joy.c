@@ -1125,29 +1125,9 @@ void reset_cont_rumble_detect(void) {
     }
 }
 
-#ifdef NONMATCHING
-void controller_7000C930(s32 arg0) {
-    g_ContDataPtr = &g_ContData[arg0];
+void joy7000C930(s32 index) {
+    g_ContDataPtr = &g_ContData[index];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel controller_7000C930
-/* 00D530 7000C930 000471C0 */  sll   $t6, $a0, 7
-/* 00D534 7000C934 01C47023 */  subu  $t6, $t6, $a0
-/* 00D538 7000C938 3C0F8006 */  lui   $t7, %hi(g_ContData) 
-/* 00D53C 7000C93C 25EF4F30 */  addiu $t7, %lo(g_ContData) # addiu $t7, $t7, 0x4f30
-/* 00D540 7000C940 000E7080 */  sll   $t6, $t6, 2
-/* 00D544 7000C944 01CFC021 */  addu  $t8, $t6, $t7
-/* 00D548 7000C948 3C018002 */  lui   $at, %hi(g_ContDataPtr)
-/* 00D54C 7000C94C 03E00008 */  jr    $ra
-/* 00D550 7000C950 AC3868C4 */   sw    $t8, %lo(g_ContDataPtr)($at)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 s32 controller_7000C954(void) {

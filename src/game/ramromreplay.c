@@ -551,7 +551,7 @@ glabel ramrom_replay_handler
 /* 0F4D40 7F0C0210 0FC30232 */  jal   ensureCameraModeA
 /* 0F4D44 7F0C0214 00000000 */   nop   
 .L7F0C0218:
-/* 0F4D48 7F0C0218 0C00324C */  jal   controller_7000C930
+/* 0F4D48 7F0C0218 0C00324C */  jal   joy7000C930
 /* 0F4D4C 7F0C021C 00002025 */   move  $a0, $zero
 /* 0F4D50 7F0C0220 00002025 */  move  $a0, $zero
 /* 0F4D54 7F0C0224 0C0030EB */  jal   joyGetButtonsPressedThisFrame
@@ -564,7 +564,7 @@ glabel ramrom_replay_handler
 /* 0F4D70 7F0C0240 3C018003 */  lui   $at, %hi(prev_keypresses)
 /* 0F4D74 7F0C0244 AC2DA934 */  sw    $t5, %lo(prev_keypresses)($at)
 .L7F0C0248:
-/* 0F4D78 7F0C0248 0C00324C */  jal   controller_7000C930
+/* 0F4D78 7F0C0248 0C00324C */  jal   joy7000C930
 /* 0F4D7C 7F0C024C 24040001 */   li    $a0, 1
 /* 0F4D80 7F0C0250 8FBF001C */  lw    $ra, 0x1c($sp)
 /* 0F4D84 7F0C0254 02001025 */  move  $v0, $s0
@@ -1079,7 +1079,7 @@ glabel test_if_recording_demos_this_stage_load
 /* 0F52BC 7F0C078C 24840080 */  addiu $a0, %lo(ramrom_replay_handler) # addiu $a0, $a0, 0x80
 /* 0F52C0 7F0C0790 0C002EEA */  jal   set_disable_all_rumble_and_something
 /* 0F52C4 7F0C0794 8D450018 */   lw    $a1, 0x18($t2)
-/* 0F52C8 7F0C0798 0C00324C */  jal   controller_7000C930
+/* 0F52C8 7F0C0798 0C00324C */  jal   joy7000C930
 /* 0F52CC 7F0C079C 24040001 */   li    $a0, 1
 /* 0F52D0 7F0C07A0 3C018005 */  lui   $at, %hi(ramrom_demo_related_4)
 /* 0F52D4 7F0C07A4 AC20847C */  sw    $zero, %lo(ramrom_demo_related_4)($at)
@@ -1199,7 +1199,7 @@ void stop_demo_playback(void)
         if (ramrom_demo_related_3 != 0) {
             copy_recorded_ramrom_registers_to_proper_place_ingame(&ramromsettingsbackup);
             set_disable_all_rumble_and_something(0,0xffffffff);
-            controller_7000C930(0);
+            joy7000C930(0);
             ramrom_demo_related_3 = 0;
             is_ramrom_flag = 0;
         }
@@ -1232,7 +1232,7 @@ glabel stop_demo_playback
 /* 0F546C 7F0C093C 00002025 */  move  $a0, $zero
 /* 0F5470 7F0C0940 0C002EEA */  jal   set_disable_all_rumble_and_something
 /* 0F5474 7F0C0944 2405FFFF */   li    $a1, -1
-/* 0F5478 7F0C0948 0C00324C */  jal   controller_7000C930
+/* 0F5478 7F0C0948 0C00324C */  jal   joy7000C930
 /* 0F547C 7F0C094C 00002025 */   move  $a0, $zero
 /* 0F5480 7F0C0950 3C018005 */  lui   $at, %hi(ramrom_demo_related_3)
 /* 0F5484 7F0C0954 AC208478 */  sw    $zero, %lo(ramrom_demo_related_3)($at)
