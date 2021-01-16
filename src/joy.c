@@ -1093,43 +1093,13 @@ s32 joy7000C7BC(u8 address, u8 *buffer, s32 nbytes) {
     return ret;
 }
 
-#ifdef NONMATCHING
-s32 save_7000C808(u8 address, u8 *buffer, s32 nbytes) {
+s32 joy7000C808(u8 address, u8 *buffer, s32 nbytes) {
     s32 ret;
     joy7000C67C();
     ret = osEepromLongWrite(&contdemoMesgMQ, address, buffer, nbytes);
     joy7000C6BC();
     return ret;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel save_7000C808
-/* 00D408 7000C808 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 00D40C 7000C80C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00D410 7000C810 AFA40020 */  sw    $a0, 0x20($sp)
-/* 00D414 7000C814 AFA50024 */  sw    $a1, 0x24($sp)
-/* 00D418 7000C818 0C00319F */  jal   joy7000C67C
-/* 00D41C 7000C81C AFA60028 */   sw    $a2, 0x28($sp)
-/* 00D420 7000C820 3C048006 */  lui   $a0, %hi(contdemoMesgMQ)
-/* 00D424 7000C824 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
-/* 00D428 7000C828 93A50023 */  lbu   $a1, 0x23($sp)
-/* 00D42C 7000C82C 8FA60024 */  lw    $a2, 0x24($sp)
-/* 00D430 7000C830 0C005658 */  jal   osEepromLongWrite
-/* 00D434 7000C834 8FA70028 */   lw    $a3, 0x28($sp)
-/* 00D438 7000C838 0C0031AF */  jal   joy7000C6BC
-/* 00D43C 7000C83C AFA2001C */   sw    $v0, 0x1c($sp)
-/* 00D440 7000C840 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00D444 7000C844 8FA2001C */  lw    $v0, 0x1c($sp)
-/* 00D448 7000C848 27BD0020 */  addiu $sp, $sp, 0x20
-/* 00D44C 7000C84C 03E00008 */  jr    $ra
-/* 00D450 7000C850 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void controller_7000C854(s32 arg0, f32 arg1) {
