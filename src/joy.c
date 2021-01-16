@@ -983,39 +983,12 @@ u16 joyGetButtonsPressedThisFrame(s8 contpadnum, u16 mask) {
     return g_ContDataPtr->buttonspressed[contpadnum] & mask;
 }
 
-#ifdef NONMATCHING
-void controller_7000C430(s8 *arg0, u16 arg1) {
+void joy7000C430(s8 *arg0, u16 arg1) {
     s32 i;
     for (i = 15; i >= 0; i--) {
-        arg0[15 - i] = ((/*(*/((arg1 >> i) & 1)/* > 0)*/ * 17) + 32);
+        *arg0++ = (((((arg1 >> i) & 1) > 0) * 17) + 32);
     }
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel controller_7000C430
-/* 00D030 7000C430 AFA50004 */  sw    $a1, 4($sp)
-/* 00D034 7000C434 30A3FFFF */  andi  $v1, $a1, 0xffff
-/* 00D038 7000C438 24050011 */  li    $a1, 17
-/* 00D03C 7000C43C 2402000F */  li    $v0, 15
-.L7000C440:
-/* 00D040 7000C440 00437807 */  srav  $t7, $v1, $v0
-/* 00D044 7000C444 31F80001 */  andi  $t8, $t7, 1
-/* 00D048 7000C448 0018C82A */  slt   $t9, $zero, $t8
-/* 00D04C 7000C44C 03250019 */  multu $t9, $a1
-/* 00D050 7000C450 2442FFFF */  addiu $v0, $v0, -1
-/* 00D054 7000C454 24840001 */  addiu $a0, $a0, 1
-/* 00D058 7000C458 00004012 */  mflo  $t0
-/* 00D05C 7000C45C 25090020 */  addiu $t1, $t0, 0x20
-/* 00D060 7000C460 0441FFF7 */  bgez  $v0, .L7000C440
-/* 00D064 7000C464 A089FFFF */   sb    $t1, -1($a0)
-/* 00D068 7000C468 03E00008 */  jr    $ra
-/* 00D06C 7000C46C 00000000 */   nop   
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 void controller_7000C470(void) {
