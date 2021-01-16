@@ -1077,41 +1077,13 @@ s32 joy7000C734(u8 address, u8 *buffer) {
     return ret;
 }
 
-#ifdef NONMATCHING
-s32 save_7000C778(u8 address, u8 *buffer) {
+s32 joy7000C778(u8 address, u8 *buffer) {
     s32 ret;
     joy7000C67C();
     ret = osEepromWrite(&contdemoMesgMQ, address, buffer);
     joy7000C6BC();
     return ret;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel save_7000C778
-/* 00D378 7000C778 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 00D37C 7000C77C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00D380 7000C780 AFA40020 */  sw    $a0, 0x20($sp)
-/* 00D384 7000C784 0C00319F */  jal   joy7000C67C
-/* 00D388 7000C788 AFA50024 */   sw    $a1, 0x24($sp)
-/* 00D38C 7000C78C 3C048006 */  lui   $a0, %hi(contdemoMesgMQ)
-/* 00D390 7000C790 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
-/* 00D394 7000C794 93A50023 */  lbu   $a1, 0x23($sp)
-/* 00D398 7000C798 0C0054D0 */  jal   osEepromWrite
-/* 00D39C 7000C79C 8FA60024 */   lw    $a2, 0x24($sp)
-/* 00D3A0 7000C7A0 0C0031AF */  jal   joy7000C6BC
-/* 00D3A4 7000C7A4 AFA2001C */   sw    $v0, 0x1c($sp)
-/* 00D3A8 7000C7A8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00D3AC 7000C7AC 8FA2001C */  lw    $v0, 0x1c($sp)
-/* 00D3B0 7000C7B0 27BD0020 */  addiu $sp, $sp, 0x20
-/* 00D3B4 7000C7B4 03E00008 */  jr    $ra
-/* 00D3B8 7000C7B8 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 s32 save_7000C7BC(u8 address, u8 *buffer, s32 nbytes) {
