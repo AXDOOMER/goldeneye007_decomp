@@ -554,7 +554,7 @@ glabel ramrom_replay_handler
 /* 0F4D48 7F0C0218 0C00324C */  jal   controller_7000C930
 /* 0F4D4C 7F0C021C 00002025 */   move  $a0, $zero
 /* 0F4D50 7F0C0220 00002025 */  move  $a0, $zero
-/* 0F4D54 7F0C0224 0C0030EB */  jal   get_controller_buttons_pressed
+/* 0F4D54 7F0C0224 0C0030EB */  jal   joyGetButtonsPressedThisFrame
 /* 0F4D58 7F0C0228 3405FFFF */   li    $a1, 65535
 /* 0F4D5C 7F0C022C 10400006 */  beqz  $v0, .L7F0C0248
 /* 0F4D60 7F0C0230 00000000 */   nop   

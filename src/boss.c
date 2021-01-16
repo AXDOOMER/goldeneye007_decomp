@@ -477,7 +477,7 @@ loop_29:
                         sp1A4 = temp_ret_2;
                         if (debug_feature_flag != 0)
                         {
-                            debug_feature_flag = debug_menu_processor((s32) (((s32) (joyGetStickX(0) << 0x18) >> 0x18) << 0x18) >> 0x18, (s32) (((s32) (joyGetStickY(0) << 0x18) >> 0x18) << 0x18) >> 0x18, (joyGetButtons(0, 0xffff) & 0xffff) & 0xffff, get_controller_buttons_pressed(0, 0xffff) & 0xffff);
+                            debug_feature_flag = debug_menu_processor((s32) (((s32) (joyGetStickX(0) << 0x18) >> 0x18) << 0x18) >> 0x18, (s32) (((s32) (joyGetStickY(0) << 0x18) >> 0x18) << 0x18) >> 0x18, (joyGetButtons(0, 0xffff) & 0xffff) & 0xffff, joyGetButtonsPressedThisFrame(0, 0xffff) & 0xffff);
                         }
                         manage_mp_game();
                         sub_GAME_7F09B41C();
@@ -580,7 +580,7 @@ loop_44:
                         video_related_8();
                         if (get_debug_taskgrab_val() != 0)
                         {
-                            if (get_controller_buttons_pressed(0, 0xc000) != 0)
+                            if (joyGetButtonsPressedThisFrame(0, 0xc000) != 0)
                             {
                                 if (joyGetButtons(0, 0xc000) == 0xc000)
                                 {
@@ -990,7 +990,7 @@ glabel mainloop
 /* 007150 70006550 3405FFFF */   li    $a1, 65535
 /* 007154 70006554 3052FFFF */  andi  $s2, $v0, 0xffff
 /* 007158 70006558 00002025 */  move  $a0, $zero
-/* 00715C 7000655C 0C0030EB */  jal   get_controller_buttons_pressed
+/* 00715C 7000655C 0C0030EB */  jal   joyGetButtonsPressedThisFrame
 /* 007160 70006560 3405FFFF */   li    $a1, 65535
 /* 007164 70006564 00102600 */  sll   $a0, $s0, 0x18
 /* 007168 70006568 00112E00 */  sll   $a1, $s1, 0x18
@@ -1161,7 +1161,7 @@ glabel mainloop
 /* 0073DC 700067DC 00000000 */   nop   
 /* 0073E0 700067E0 1040001C */  beqz  $v0, .L70006854
 /* 0073E4 700067E4 00002025 */   move  $a0, $zero
-/* 0073E8 700067E8 0C0030EB */  jal   get_controller_buttons_pressed
+/* 0073E8 700067E8 0C0030EB */  jal   joyGetButtonsPressedThisFrame
 /* 0073EC 700067EC 3405C000 */   li    $a1, 49152
 /* 0073F0 700067F0 10400018 */  beqz  $v0, .L70006854
 /* 0073F4 700067F4 00002025 */   move  $a0, $zero

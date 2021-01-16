@@ -400,7 +400,7 @@ glabel cheat_buttons_mp_related
 /* 0C6498 7F091968 00022600 */  sll   $a0, $v0, 0x18
 /* 0C649C 7F09196C 00047E03 */  sra   $t7, $a0, 0x18
 /* 0C64A0 7F091970 01E02025 */  move  $a0, $t7
-/* 0C64A4 7F091974 0C0030EB */  jal   get_controller_buttons_pressed
+/* 0C64A4 7F091974 0C0030EB */  jal   joyGetButtonsPressedThisFrame
 /* 0C64A8 7F091978 3405FFFF */   li    $a1, 65535
 /* 0C64AC 7F09197C 97A30026 */  lhu   $v1, 0x26($sp)
 /* 0C64B0 7F091980 30780030 */  andi  $t8, $v1, 0x30

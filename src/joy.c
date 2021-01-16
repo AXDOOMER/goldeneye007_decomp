@@ -975,59 +975,13 @@ u16 joyGetButtons(s8 contpadnum, u16 mask) {
 
 }
 
-#ifdef NONMATCHING
-u16 get_controller_buttons_pressed(s8 contpadnum, u16 mask) {
+u16 joyGetButtonsPressedThisFrame(s8 contpadnum, u16 mask) {
 	if (g_ContDataPtr->unk1f8 < 0 && (g_ConnectedControllers >> contpadnum & 1) == 0) {
 		g_ContBadReadsButtonsPressed[contpadnum]++;
 		return 0;
 	}
     return g_ContDataPtr->buttonspressed[contpadnum] & mask;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_controller_buttons_pressed
-/* 00CFAC 7000C3AC 3C038002 */  lui   $v1, %hi(g_ContDataPtr)
-/* 00CFB0 7000C3B0 8C6368C4 */  lw    $v1, %lo(g_ContDataPtr)($v1)
-/* 00CFB4 7000C3B4 AFA40000 */  sw    $a0, ($sp)
-/* 00CFB8 7000C3B8 AFA50004 */  sw    $a1, 4($sp)
-/* 00CFBC 7000C3BC 8C7901F8 */  lw    $t9, 0x1f8($v1)
-/* 00CFC0 7000C3C0 00047600 */  sll   $t6, $a0, 0x18
-/* 00CFC4 7000C3C4 000E7E03 */  sra   $t7, $t6, 0x18
-/* 00CFC8 7000C3C8 30B8FFFF */  andi  $t8, $a1, 0xffff
-/* 00CFCC 7000C3CC 03002825 */  move  $a1, $t8
-/* 00CFD0 7000C3D0 0721000F */  bgez  $t9, .L7000C410
-/* 00CFD4 7000C3D4 01E02025 */   move  $a0, $t7
-/* 00CFD8 7000C3D8 3C088002 */  lui   $t0, %hi(g_ConnectedControllers) 
-/* 00CFDC 7000C3DC 910868D0 */  lbu   $t0, %lo(g_ConnectedControllers)($t0)
-/* 00CFE0 7000C3E0 3C0C8002 */  lui   $t4, %hi(g_ContBadReadsButtonsPressed) 
-/* 00CFE4 7000C3E4 258C6960 */  addiu $t4, %lo(g_ContBadReadsButtonsPressed) # addiu $t4, $t4, 0x6960
-/* 00CFE8 7000C3E8 01E84807 */  srav  $t1, $t0, $t7
-/* 00CFEC 7000C3EC 312A0001 */  andi  $t2, $t1, 1
-/* 00CFF0 7000C3F0 15400007 */  bnez  $t2, .L7000C410
-/* 00CFF4 7000C3F4 000F5880 */   sll   $t3, $t7, 2
-/* 00CFF8 7000C3F8 016C1821 */  addu  $v1, $t3, $t4
-/* 00CFFC 7000C3FC 8C6D0000 */  lw    $t5, ($v1)
-/* 00D000 7000C400 00001025 */  move  $v0, $zero
-/* 00D004 7000C404 25AE0001 */  addiu $t6, $t5, 1
-/* 00D008 7000C408 03E00008 */  jr    $ra
-/* 00D00C 7000C40C AC6E0000 */   sw    $t6, ($v1)
-
-.L7000C410:
-/* 00D010 7000C410 00047840 */  sll   $t7, $a0, 1
-/* 00D014 7000C414 006FC021 */  addu  $t8, $v1, $t7
-/* 00D018 7000C418 971901F0 */  lhu   $t9, 0x1f0($t8)
-/* 00D01C 7000C41C 03251024 */  and   $v0, $t9, $a1
-/* 00D020 7000C420 3048FFFF */  andi  $t0, $v0, 0xffff
-/* 00D024 7000C424 01001025 */  move  $v0, $t0
-/* 00D028 7000C428 03E00008 */  jr    $ra
-/* 00D02C 7000C42C 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void controller_7000C430(s8 *arg0, u16 arg1) {
