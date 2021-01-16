@@ -990,41 +990,12 @@ void joy7000C430(s8 *arg0, u16 arg1) {
     }
 }
 
-#ifdef NONMATCHING
-void controller_7000C470(void) {
+void joy7000C470(void) {
     s32 i = 0;
     for (i = 0; i < get_attached_controller_count(); i++) {
         // Removed
     }
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel controller_7000C470
-/* 00D070 7000C470 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 00D074 7000C474 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 00D078 7000C478 AFB00018 */  sw    $s0, 0x18($sp)
-/* 00D07C 7000C47C 0C002E7E */  jal   get_attached_controller_count
-/* 00D080 7000C480 00008025 */   move  $s0, $zero
-/* 00D084 7000C484 58400007 */  blezl $v0, .L7000C4A4
-/* 00D088 7000C488 8FBF001C */   lw    $ra, 0x1c($sp)
-.L7000C48C:
-/* 00D08C 7000C48C 0C002E7E */  jal   get_attached_controller_count
-/* 00D090 7000C490 26100001 */   addiu $s0, $s0, 1
-/* 00D094 7000C494 0202082A */  slt   $at, $s0, $v0
-/* 00D098 7000C498 1420FFFC */  bnez  $at, .L7000C48C
-/* 00D09C 7000C49C 00000000 */   nop   
-/* 00D0A0 7000C4A0 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7000C4A4:
-/* 00D0A4 7000C4A4 8FB00018 */  lw    $s0, 0x18($sp)
-/* 00D0A8 7000C4A8 27BD0020 */  addiu $sp, $sp, 0x20
-/* 00D0AC 7000C4AC 03E00008 */  jr    $ra
-/* 00D0B0 7000C4B0 00000000 */   nop   
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 s8 get_controller_3dstick_L_R(s8 contpadnum, s32 rangemin, s32 rangemax) {
