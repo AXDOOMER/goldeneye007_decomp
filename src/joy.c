@@ -942,60 +942,13 @@ s8 joyGetStickX(s8 contpadnum)
 
 }
 
-#if 0//def NONMATCHING
-s8 controller_7000C174(s8 contpadnum) {
+s8 joy7000C174(s8 contpadnum) {
     if (g_ContDataPtr->unk1f8 < 0 && (g_ConnectedControllers >> contpadnum & 1) == 0) {
 		g_ContBadReadsStickX[contpadnum]++;
 		return 0;
 	}
 	return g_ContDataPtr->samples[g_ContDataPtr->curstart].pads[contpadnum].stick_x;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel controller_7000C174
-/* 00CD74 7000C174 3C038002 */  lui   $v1, %hi(g_ContDataPtr)
-/* 00CD78 7000C178 8C6368C4 */  lw    $v1, %lo(g_ContDataPtr)($v1)
-/* 00CD7C 7000C17C AFA40000 */  sw    $a0, ($sp)
-/* 00CD80 7000C180 00047600 */  sll   $t6, $a0, 0x18
-/* 00CD84 7000C184 8C7801F8 */  lw    $t8, 0x1f8($v1)
-/* 00CD88 7000C188 000E7E03 */  sra   $t7, $t6, 0x18
-/* 00CD8C 7000C18C 01E02025 */  move  $a0, $t7
-/* 00CD90 7000C190 0701000E */  bgez  $t8, .L7000C1CC
-/* 00CD94 7000C194 3C198002 */   lui   $t9, %hi(g_ConnectedControllers) 
-/* 00CD98 7000C198 933968D0 */  lbu   $t9, %lo(g_ConnectedControllers)($t9)
-/* 00CD9C 7000C19C 3C0B8002 */  lui   $t3, %hi(g_ContBadReadsStickX) 
-/* 00CDA0 7000C1A0 256B6930 */  addiu $t3, %lo(g_ContBadReadsStickX) # addiu $t3, $t3, 0x6930
-/* 00CDA4 7000C1A4 01F94007 */  srav  $t0, $t9, $t7
-/* 00CDA8 7000C1A8 31090001 */  andi  $t1, $t0, 1
-/* 00CDAC 7000C1AC 15200007 */  bnez  $t1, .L7000C1CC
-/* 00CDB0 7000C1B0 000F5080 */   sll   $t2, $t7, 2
-/* 00CDB4 7000C1B4 014B1821 */  addu  $v1, $t2, $t3
-/* 00CDB8 7000C1B8 8C6C0000 */  lw    $t4, ($v1)
-/* 00CDBC 7000C1BC 00001025 */  move  $v0, $zero
-/* 00CDC0 7000C1C0 258D0001 */  addiu $t5, $t4, 1
-/* 00CDC4 7000C1C4 03E00008 */  jr    $ra
-/* 00CDC8 7000C1C8 AC6D0000 */   sw    $t5, ($v1)
-
-.L7000C1CC:
-/* 00CDCC 7000C1CC 8C6E01E4 */  lw    $t6, 0x1e4($v1)
-/* 00CDD0 7000C1D0 0004C880 */  sll   $t9, $a0, 2
-/* 00CDD4 7000C1D4 0324C823 */  subu  $t9, $t9, $a0
-/* 00CDD8 7000C1D8 000E7880 */  sll   $t7, $t6, 2
-/* 00CDDC 7000C1DC 01EE7823 */  subu  $t7, $t7, $t6
-/* 00CDE0 7000C1E0 000F78C0 */  sll   $t7, $t7, 3
-/* 00CDE4 7000C1E4 006FC021 */  addu  $t8, $v1, $t7
-/* 00CDE8 7000C1E8 0019C840 */  sll   $t9, $t9, 1
-/* 00CDEC 7000C1EC 03194021 */  addu  $t0, $t8, $t9
-/* 00CDF0 7000C1F0 81020002 */  lb    $v0, 2($t0)
-/* 00CDF4 7000C1F4 03E00008 */  jr    $ra
-/* 00CDF8 7000C1F8 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 s8 get_cur_controller_vert_stick_pos(s8 contpadnum) {
