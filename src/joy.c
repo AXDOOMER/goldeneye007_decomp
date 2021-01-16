@@ -12,8 +12,7 @@ struct contdata {
 	/* 0x1E4 */ s32 curstart;
 	/* 0x1E8 */ s32 nextlast;
 	/* 0x1EC */ s32 nextsecondlast;
-    /* 0x1F0 */ s32 unknown1; //u16 buttonspressed[4];
-    /* 0x1F4 */ s32 unknown2; //u16 buttonsreleased[4];	
+    /* 0x1F0 */ u16 buttonspressed[4];
 	/* 0x1F8 */ s32 unk1f8;
 };
 
@@ -605,109 +604,28 @@ void set_ptr_tlb_ramrom_record(s32 arg0){
     ptr_to_tlb_ramrom_record = arg0;
 }
 
-#ifdef NONMATCHING
-void probably_ramrom_related(void) {
-
+void joyConsumeSamples(struct contdata *contdata) {
+    s8 i;
+    s32 samplenum;
+    u16 buttons1;
+    u16 buttons2;
+    contdata->curstart = contdata->curlast;
+    contdata->curlast = contdata->nextlast;
+    for (i = 0; i < 4; i++) {
+        contdata->buttonspressed[i] = 0;
+        if (contdata->curlast != contdata->curstart) {
+            samplenum = ((contdata->curstart + 1) % 20); while (TRUE) {
+                buttons1 = contdata->samples[samplenum].pads[i].button;
+                buttons2 = contdata->samples[(samplenum + 19) % 20].pads[i].button;
+                contdata->buttonspressed[i] |= buttons1 & ~buttons2;
+                if (samplenum == contdata->curlast) {
+                    break;
+                }
+                samplenum = ((samplenum + 1) % 20);
+            }
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel probably_ramrom_related
-/* 00C7C8 7000BBC8 8C8E01E0 */  lw    $t6, 0x1e0($a0)
-/* 00C7CC 7000BBCC 8C8F01E8 */  lw    $t7, 0x1e8($a0)
-/* 00C7D0 7000BBD0 00001025 */  move  $v0, $zero
-/* 00C7D4 7000BBD4 24090014 */  li    $t1, 20
-/* 00C7D8 7000BBD8 AC8E01E4 */  sw    $t6, 0x1e4($a0)
-/* 00C7DC 7000BBDC AC8F01E0 */  sw    $t7, 0x1e0($a0)
-/* 00C7E0 7000BBE0 0002C040 */  sll   $t8, $v0, 1
-.L7000BBE4:
-/* 00C7E4 7000BBE4 00981821 */  addu  $v1, $a0, $t8
-/* 00C7E8 7000BBE8 A46001F0 */  sh    $zero, 0x1f0($v1)
-/* 00C7EC 7000BBEC 8C9901E0 */  lw    $t9, 0x1e0($a0)
-/* 00C7F0 7000BBF0 8C8501E4 */  lw    $a1, 0x1e4($a0)
-/* 00C7F4 7000BBF4 10B9003D */  beq   $a1, $t9, .L7000BCEC
-/* 00C7F8 7000BBF8 24AA0001 */   addiu $t2, $a1, 1
-/* 00C7FC 7000BBFC 0149001A */  div   $zero, $t2, $t1
-/* 00C800 7000BC00 00023880 */  sll   $a3, $v0, 2
-/* 00C804 7000BC04 00003010 */  mfhi  $a2
-/* 00C808 7000BC08 00E23823 */  subu  $a3, $a3, $v0
-/* 00C80C 7000BC0C 00073840 */  sll   $a3, $a3, 1
-/* 00C810 7000BC10 15200002 */  bnez  $t1, .L7000BC1C
-/* 00C814 7000BC14 00000000 */   nop   
-/* 00C818 7000BC18 0007000D */  break 7
-.L7000BC1C:
-/* 00C81C 7000BC1C 2401FFFF */  li    $at, -1
-/* 00C820 7000BC20 15210004 */  bne   $t1, $at, .L7000BC34
-/* 00C824 7000BC24 3C018000 */   lui   $at, 0x8000
-/* 00C828 7000BC28 15410002 */  bne   $t2, $at, .L7000BC34
-/* 00C82C 7000BC2C 00000000 */   nop   
-/* 00C830 7000BC30 0006000D */  break 6
-.L7000BC34:
-/* 00C834 7000BC34 24CE0013 */  addiu $t6, $a2, 0x13
-.L7000BC38:
-/* 00C838 7000BC38 01C9001A */  div   $zero, $t6, $t1
-/* 00C83C 7000BC3C 00007810 */  mfhi  $t7
-/* 00C840 7000BC40 000FC080 */  sll   $t8, $t7, 2
-/* 00C844 7000BC44 00065880 */  sll   $t3, $a2, 2
-/* 00C848 7000BC48 030FC023 */  subu  $t8, $t8, $t7
-/* 00C84C 7000BC4C 01665823 */  subu  $t3, $t3, $a2
-/* 00C850 7000BC50 0018C0C0 */  sll   $t8, $t8, 3
-/* 00C854 7000BC54 000B58C0 */  sll   $t3, $t3, 3
-/* 00C858 7000BC58 0098C821 */  addu  $t9, $a0, $t8
-/* 00C85C 7000BC5C 008B6021 */  addu  $t4, $a0, $t3
-/* 00C860 7000BC60 03275021 */  addu  $t2, $t9, $a3
-/* 00C864 7000BC64 95480000 */  lhu   $t0, ($t2)
-/* 00C868 7000BC68 01876821 */  addu  $t5, $t4, $a3
-/* 00C86C 7000BC6C 95A50000 */  lhu   $a1, ($t5)
-/* 00C870 7000BC70 946B01F0 */  lhu   $t3, 0x1f0($v1)
-/* 00C874 7000BC74 01006027 */  not   $t4, $t0
-/* 00C878 7000BC78 15200002 */  bnez  $t1, .L7000BC84
-/* 00C87C 7000BC7C 00000000 */   nop   
-/* 00C880 7000BC80 0007000D */  break 7
-.L7000BC84:
-/* 00C884 7000BC84 2401FFFF */  li    $at, -1
-/* 00C888 7000BC88 15210004 */  bne   $t1, $at, .L7000BC9C
-/* 00C88C 7000BC8C 3C018000 */   lui   $at, 0x8000
-/* 00C890 7000BC90 15C10002 */  bne   $t6, $at, .L7000BC9C
-/* 00C894 7000BC94 00000000 */   nop   
-/* 00C898 7000BC98 0006000D */  break 6
-.L7000BC9C:
-/* 00C89C 7000BC9C 00AC6824 */  and   $t5, $a1, $t4
-/* 00C8A0 7000BCA0 016D7025 */  or    $t6, $t3, $t5
-/* 00C8A4 7000BCA4 A46E01F0 */  sh    $t6, 0x1f0($v1)
-/* 00C8A8 7000BCA8 8C8F01E0 */  lw    $t7, 0x1e0($a0)
-/* 00C8AC 7000BCAC 24D80001 */  addiu $t8, $a2, 1
-/* 00C8B0 7000BCB0 50CF000F */  beql  $a2, $t7, .L7000BCF0
-/* 00C8B4 7000BCB4 24420001 */   addiu $v0, $v0, 1
-/* 00C8B8 7000BCB8 0309001A */  div   $zero, $t8, $t1
-/* 00C8BC 7000BCBC 00003010 */  mfhi  $a2
-/* 00C8C0 7000BCC0 15200002 */  bnez  $t1, .L7000BCCC
-/* 00C8C4 7000BCC4 00000000 */   nop   
-/* 00C8C8 7000BCC8 0007000D */  break 7
-.L7000BCCC:
-/* 00C8CC 7000BCCC 2401FFFF */  li    $at, -1
-/* 00C8D0 7000BCD0 15210004 */  bne   $t1, $at, .L7000BCE4
-/* 00C8D4 7000BCD4 3C018000 */   lui   $at, 0x8000
-/* 00C8D8 7000BCD8 17010002 */  bne   $t8, $at, .L7000BCE4
-/* 00C8DC 7000BCDC 00000000 */   nop   
-/* 00C8E0 7000BCE0 0006000D */  break 6
-.L7000BCE4:
-/* 00C8E4 7000BCE4 1000FFD4 */  b     .L7000BC38
-/* 00C8E8 7000BCE8 24CE0013 */   addiu $t6, $a2, 0x13
-.L7000BCEC:
-/* 00C8EC 7000BCEC 24420001 */  addiu $v0, $v0, 1
-.L7000BCF0:
-/* 00C8F0 7000BCF0 0002CE00 */  sll   $t9, $v0, 0x18
-/* 00C8F4 7000BCF4 00191603 */  sra   $v0, $t9, 0x18
-/* 00C8F8 7000BCF8 28410004 */  slti  $at, $v0, 4
-/* 00C8FC 7000BCFC 5420FFB9 */  bnezl $at, .L7000BBE4
-/* 00C900 7000BD00 0002C040 */   sll   $t8, $v0, 1
-/* 00C904 7000BD04 03E00008 */  jr    $ra
-/* 00C908 7000BD08 00000000 */   nop   
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 s32 redirect_to_ramrom_replay_and_record_handlers_if_set(void) {
@@ -718,7 +636,7 @@ s32 redirect_to_ramrom_replay_and_record_handlers_if_set(void) {
         // Error: I don't know how to handle jalr!
     }
     // Node 2
-    probably_ramrom_related(&controller_input_index);
+    joyConsumeSamples(&controller_input_index);
     if (ptr_to_tlb_ramrom_record != 0)
     {
         // Node 3
@@ -745,11 +663,11 @@ glabel redirect_to_ramrom_replay_and_record_handlers_if_set
 /* 00C934 7000BD34 3C018006 */  lui   $at, %hi(g_ContData+0x3E4)
 /* 00C938 7000BD38 3C048006 */  lui   $a0, %hi(g_ContData+0x1FC)
 /* 00C93C 7000BD3C AC225314 */  sw    $v0, %lo(g_ContData+0x3E4)($at)
-/* 00C940 7000BD40 0C002EF2 */  jal   probably_ramrom_related
+/* 00C940 7000BD40 0C002EF2 */  jal   joyConsumeSamples
 /* 00C944 7000BD44 2484512C */   addiu $a0, %lo(g_ContData+0x1FC) # addiu $a0, $a0, 0x512c
 .L7000BD48:
 /* 00C948 7000BD48 3C048006 */  lui   $a0, %hi(g_ContData)
-/* 00C94C 7000BD4C 0C002EF2 */  jal   probably_ramrom_related
+/* 00C94C 7000BD4C 0C002EF2 */  jal   joyConsumeSamples
 /* 00C950 7000BD50 24844F30 */   addiu $a0, %lo(g_ContData) # addiu $a0, $a0, 0x4f30
 /* 00C954 7000BD54 3C028002 */  lui   $v0, %hi(ptr_to_tlb_ramrom_record)
 /* 00C958 7000BD58 8C426928 */  lw    $v0, %lo(ptr_to_tlb_ramrom_record)($v0)
