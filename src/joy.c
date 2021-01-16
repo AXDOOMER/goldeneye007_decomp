@@ -958,60 +958,13 @@ s8 joyGetStickY(s8 contpadnum) {
 	return g_ContDataPtr->samples[g_ContDataPtr->curlast].pads[contpadnum].stick_y;
 }
 
-#ifdef NONMATCHING
-s8 controller_7000C284(s8 contpadnum) {
+s8 joy7000C284(s8 contpadnum) {
     if (g_ContDataPtr->unk1f8 < 0 && (g_ConnectedControllers >> contpadnum & 1) == 0) {
 		g_ContBadReadsStickY[contpadnum]++;
 		return 0;
 	}
 	return g_ContDataPtr->samples[g_ContDataPtr->curstart].pads[contpadnum].stick_y;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel controller_7000C284
-/* 00CE84 7000C284 3C038002 */  lui   $v1, %hi(g_ContDataPtr)
-/* 00CE88 7000C288 8C6368C4 */  lw    $v1, %lo(g_ContDataPtr)($v1)
-/* 00CE8C 7000C28C AFA40000 */  sw    $a0, ($sp)
-/* 00CE90 7000C290 00047600 */  sll   $t6, $a0, 0x18
-/* 00CE94 7000C294 8C7801F8 */  lw    $t8, 0x1f8($v1)
-/* 00CE98 7000C298 000E7E03 */  sra   $t7, $t6, 0x18
-/* 00CE9C 7000C29C 01E02025 */  move  $a0, $t7
-/* 00CEA0 7000C2A0 0701000E */  bgez  $t8, .L7000C2DC
-/* 00CEA4 7000C2A4 3C198002 */   lui   $t9, %hi(g_ConnectedControllers) 
-/* 00CEA8 7000C2A8 933968D0 */  lbu   $t9, %lo(g_ConnectedControllers)($t9)
-/* 00CEAC 7000C2AC 3C0B8002 */  lui   $t3, %hi(g_ContBadReadsStickY) 
-/* 00CEB0 7000C2B0 256B6940 */  addiu $t3, %lo(g_ContBadReadsStickY) # addiu $t3, $t3, 0x6940
-/* 00CEB4 7000C2B4 01F94007 */  srav  $t0, $t9, $t7
-/* 00CEB8 7000C2B8 31090001 */  andi  $t1, $t0, 1
-/* 00CEBC 7000C2BC 15200007 */  bnez  $t1, .L7000C2DC
-/* 00CEC0 7000C2C0 000F5080 */   sll   $t2, $t7, 2
-/* 00CEC4 7000C2C4 014B1821 */  addu  $v1, $t2, $t3
-/* 00CEC8 7000C2C8 8C6C0000 */  lw    $t4, ($v1)
-/* 00CECC 7000C2CC 00001025 */  move  $v0, $zero
-/* 00CED0 7000C2D0 258D0001 */  addiu $t5, $t4, 1
-/* 00CED4 7000C2D4 03E00008 */  jr    $ra
-/* 00CED8 7000C2D8 AC6D0000 */   sw    $t5, ($v1)
-
-.L7000C2DC:
-/* 00CEDC 7000C2DC 8C6E01E4 */  lw    $t6, 0x1e4($v1)
-/* 00CEE0 7000C2E0 0004C880 */  sll   $t9, $a0, 2
-/* 00CEE4 7000C2E4 0324C823 */  subu  $t9, $t9, $a0
-/* 00CEE8 7000C2E8 000E7880 */  sll   $t7, $t6, 2
-/* 00CEEC 7000C2EC 01EE7823 */  subu  $t7, $t7, $t6
-/* 00CEF0 7000C2F0 000F78C0 */  sll   $t7, $t7, 3
-/* 00CEF4 7000C2F4 006FC021 */  addu  $t8, $v1, $t7
-/* 00CEF8 7000C2F8 0019C840 */  sll   $t9, $t9, 1
-/* 00CEFC 7000C2FC 03194021 */  addu  $t0, $t8, $t9
-/* 00CF00 7000C300 81020003 */  lb    $v0, 3($t0)
-/* 00CF04 7000C304 03E00008 */  jr    $ra
-/* 00CF08 7000C308 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 u16 get_controller_buttons_held(s8 contpadnum, u16 mask) {
