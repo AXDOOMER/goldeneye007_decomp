@@ -55,8 +55,8 @@ s32 controller_1_rumble_pulse[MAXCONTROLLERS] = {0};
 s32 g_ContQueuesCreated = 0;
 s32 g_ContInitDone = 0;
 s32 D_80026920 = 0;
-s32 disable_all_rumble = 0;
-s32 ptr_to_tlb_ramrom_record = 0;
+s32 (*D_80026924)(struct contsample *samples, s32 samplenum) = NULL;
+void (*D_80026928)(struct contsample *samples, s32 samplenum, s32 samplenum2) = NULL;
 s32 g_ContNeedsInit = 1;
 s32 pl1_controller_failure_lr = 0;
 s32 pl2_controller_failure_lr = 0;
@@ -92,8 +92,8 @@ void contSystemInit(void) {
 
     g_ContQueuesCreated = 1;
 
-    disable_all_rumble = 0;
-    ptr_to_tlb_ramrom_record = 0;
+    D_80026924 = 0;
+    D_80026928 = 0;
 
     for (i = 0; i < 2; i++) {
         g_ContData[i].curlast = 0;
@@ -596,12 +596,12 @@ glabel controller_rumble_related
 #endif
 
 void set_disable_all_rumble_and_something(s32 arg0, s32 arg1) {
-    disable_all_rumble = arg0;
+    D_80026924 = arg0;
     g_ContData[1].unk1f8 = arg1;
 }
 
 void set_ptr_tlb_ramrom_record(s32 arg0){
-    ptr_to_tlb_ramrom_record = arg0;
+    D_80026928 = arg0;
 }
 
 void joyConsumeSamples(struct contdata *contdata) {
@@ -627,68 +627,16 @@ void joyConsumeSamples(struct contdata *contdata) {
     }
 }
 
-#ifdef NONMATCHING
-s32 redirect_to_ramrom_replay_and_record_handlers_if_set(void) {
-    // Node 0
-    if (disable_all_rumble != 0)
-    {
-        // Node 1
-        // Error: I don't know how to handle jalr!
+void redirect_to_ramrom_replay_and_record_handlers_if_set(void) {
+    if (D_80026924) {
+        g_ContData[1].nextlast = D_80026924(g_ContData[1].samples, g_ContData[1].curlast);
+        joyConsumeSamples(&g_ContData[1]);
     }
-    // Node 2
-    joyConsumeSamples(&controller_input_index);
-    if (ptr_to_tlb_ramrom_record != 0)
-    {
-        // Node 3
-        // Error: I don't know how to handle jalr!
-        return;
-        // (function likely void)
+    joyConsumeSamples(&g_ContData[0]);
+    if (D_80026928) {
+        D_80026928(g_ContData[0].samples, g_ContData[0].curstart, g_ContData[0].curlast);
     }
-    // (possible return value: ptr_to_tlb_ramrom_record)
 }
-#else
-GLOBAL_ASM(
-.text
-glabel redirect_to_ramrom_replay_and_record_handlers_if_set
-/* 00C90C 7000BD0C 3C028002 */  lui   $v0, %hi(disable_all_rumble)
-/* 00C910 7000BD10 8C426924 */  lw    $v0, %lo(disable_all_rumble)($v0)
-/* 00C914 7000BD14 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 00C918 7000BD18 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00C91C 7000BD1C 1040000A */  beqz  $v0, .L7000BD48
-/* 00C920 7000BD20 3C048006 */   lui   $a0, %hi(g_ContData+0x1FC)
-/* 00C924 7000BD24 3C058006 */  lui   $a1, %hi(g_ContData+0x3DC)
-/* 00C928 7000BD28 8CA5530C */  lw    $a1, %lo(g_ContData+0x3DC)($a1)
-/* 00C92C 7000BD2C 0040F809 */  jalr  $v0
-/* 00C930 7000BD30 2484512C */  addiu $a0, %lo(g_ContData+0x1FC) # addiu $a0, $a0, 0x512c
-/* 00C934 7000BD34 3C018006 */  lui   $at, %hi(g_ContData+0x3E4)
-/* 00C938 7000BD38 3C048006 */  lui   $a0, %hi(g_ContData+0x1FC)
-/* 00C93C 7000BD3C AC225314 */  sw    $v0, %lo(g_ContData+0x3E4)($at)
-/* 00C940 7000BD40 0C002EF2 */  jal   joyConsumeSamples
-/* 00C944 7000BD44 2484512C */   addiu $a0, %lo(g_ContData+0x1FC) # addiu $a0, $a0, 0x512c
-.L7000BD48:
-/* 00C948 7000BD48 3C048006 */  lui   $a0, %hi(g_ContData)
-/* 00C94C 7000BD4C 0C002EF2 */  jal   joyConsumeSamples
-/* 00C950 7000BD50 24844F30 */   addiu $a0, %lo(g_ContData) # addiu $a0, $a0, 0x4f30
-/* 00C954 7000BD54 3C028002 */  lui   $v0, %hi(ptr_to_tlb_ramrom_record)
-/* 00C958 7000BD58 8C426928 */  lw    $v0, %lo(ptr_to_tlb_ramrom_record)($v0)
-/* 00C95C 7000BD5C 3C048006 */  lui   $a0, %hi(g_ContData)
-/* 00C960 7000BD60 24844F30 */  addiu $a0, %lo(g_ContData) # addiu $a0, $a0, 0x4f30
-/* 00C964 7000BD64 50400005 */  beql  $v0, $zero, .L7000BD7C
-/* 00C968 7000BD68 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 00C96C 7000BD6C 8C8501E4 */  lw    $a1, 0x1e4($a0)
-/* 00C970 7000BD70 0040F809 */  jalr  $v0
-/* 00C974 7000BD74 8C8601E0 */  lw    $a2, 0x1e0($a0)
-/* 00C978 7000BD78 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7000BD7C:
-/* 00C97C 7000BD7C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 00C980 7000BD80 03E00008 */  jr    $ra
-/* 00C984 7000BD84 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void controllerSchedulerRelated(void)
@@ -2120,8 +2068,8 @@ s32 controller_7000C854(s32 arg0, s32 arg1) {
 GLOBAL_ASM(
 .text
 glabel controller_7000C854
-/* 00D454 7000C854 3C0E8002 */  lui   $t6, %hi(disable_all_rumble) 
-/* 00D458 7000C858 8DCE6924 */  lw    $t6, %lo(disable_all_rumble)($t6)
+/* 00D454 7000C854 3C0E8002 */  lui   $t6, %hi(D_80026924) 
+/* 00D458 7000C858 8DCE6924 */  lw    $t6, %lo(D_80026924)($t6)
 /* 00D45C 7000C85C 44856000 */  mtc1  $a1, $f12
 /* 00D460 7000C860 00041880 */  sll   $v1, $a0, 2
 /* 00D464 7000C864 15C0001B */  bnez  $t6, .L7000C8D4
