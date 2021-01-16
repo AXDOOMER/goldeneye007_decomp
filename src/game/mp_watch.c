@@ -241,11 +241,6 @@ void unpause_game(void)
     is_paused = 0;
 }
 
-
-
-
-
-
 #ifdef NONMATCHING
 void sub_GAME_7F0C2024(void) {
 
