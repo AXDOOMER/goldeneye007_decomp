@@ -4393,13 +4393,13 @@ glabel sub_GAME_7F020EF0
 /* 056178 7F021648 AFA00054 */  sw    $zero, 0x54($sp)
 /* 05617C 7F02164C 00002025 */  move  $a0, $zero
 /* 056180 7F021650 24050020 */  li    $a1, 32
-/* 056184 7F021654 0C0030C3 */  jal   get_controller_buttons_held
+/* 056184 7F021654 0C0030C3 */  jal   joyGetButtons
 /* 056188 7F021658 AFA30058 */   sw    $v1, 0x58($sp)
 /* 05618C 7F02165C 1040004F */  beqz  $v0, .L7F02179C
 /* 056190 7F021660 8FA30058 */   lw    $v1, 0x58($sp)
 /* 056194 7F021664 00002025 */  move  $a0, $zero
 /* 056198 7F021668 34058000 */  li    $a1, 32768
-/* 05619C 7F02166C 0C0030C3 */  jal   get_controller_buttons_held
+/* 05619C 7F02166C 0C0030C3 */  jal   joyGetButtons
 /* 0561A0 7F021670 AFA30058 */   sw    $v1, 0x58($sp)
 /* 0561A4 7F021674 10400008 */  beqz  $v0, .L7F021698
 /* 0561A8 7F021678 8FA30058 */   lw    $v1, 0x58($sp)
@@ -4413,7 +4413,7 @@ glabel sub_GAME_7F020EF0
 .L7F021698:
 /* 0561C8 7F021698 00002025 */  move  $a0, $zero
 /* 0561CC 7F02169C 24054000 */  li    $a1, 16384
-/* 0561D0 7F0216A0 0C0030C3 */  jal   get_controller_buttons_held
+/* 0561D0 7F0216A0 0C0030C3 */  jal   joyGetButtons
 /* 0561D4 7F0216A4 AFA30058 */   sw    $v1, 0x58($sp)
 /* 0561D8 7F0216A8 10400008 */  beqz  $v0, .L7F0216CC
 /* 0561DC 7F0216AC 8FA30058 */   lw    $v1, 0x58($sp)
@@ -4427,7 +4427,7 @@ glabel sub_GAME_7F020EF0
 .L7F0216CC:
 /* 0561FC 7F0216CC 00002025 */  move  $a0, $zero
 /* 056200 7F0216D0 24050004 */  li    $a1, 4
-/* 056204 7F0216D4 0C0030C3 */  jal   get_controller_buttons_held
+/* 056204 7F0216D4 0C0030C3 */  jal   joyGetButtons
 /* 056208 7F0216D8 AFA30058 */   sw    $v1, 0x58($sp)
 /* 05620C 7F0216DC 10400008 */  beqz  $v0, .L7F021700
 /* 056210 7F0216E0 8FA30058 */   lw    $v1, 0x58($sp)
@@ -4441,7 +4441,7 @@ glabel sub_GAME_7F020EF0
 .L7F021700:
 /* 056230 7F021700 00002025 */  move  $a0, $zero
 /* 056234 7F021704 24050008 */  li    $a1, 8
-/* 056238 7F021708 0C0030C3 */  jal   get_controller_buttons_held
+/* 056238 7F021708 0C0030C3 */  jal   joyGetButtons
 /* 05623C 7F02170C AFA30058 */   sw    $v1, 0x58($sp)
 /* 056240 7F021710 10400008 */  beqz  $v0, .L7F021734
 /* 056244 7F021714 8FA30058 */   lw    $v1, 0x58($sp)
@@ -4455,7 +4455,7 @@ glabel sub_GAME_7F020EF0
 .L7F021734:
 /* 056264 7F021734 00002025 */  move  $a0, $zero
 /* 056268 7F021738 24050002 */  li    $a1, 2
-/* 05626C 7F02173C 0C0030C3 */  jal   get_controller_buttons_held
+/* 05626C 7F02173C 0C0030C3 */  jal   joyGetButtons
 /* 056270 7F021740 AFA30058 */   sw    $v1, 0x58($sp)
 /* 056274 7F021744 10400008 */  beqz  $v0, .L7F021768
 /* 056278 7F021748 8FA30058 */   lw    $v1, 0x58($sp)
@@ -4469,7 +4469,7 @@ glabel sub_GAME_7F020EF0
 .L7F021768:
 /* 056298 7F021768 00002025 */  move  $a0, $zero
 /* 05629C 7F02176C 24050001 */  li    $a1, 1
-/* 0562A0 7F021770 0C0030C3 */  jal   get_controller_buttons_held
+/* 0562A0 7F021770 0C0030C3 */  jal   joyGetButtons
 /* 0562A4 7F021774 AFA30058 */   sw    $v1, 0x58($sp)
 /* 0562A8 7F021778 10400008 */  beqz  $v0, .L7F02179C
 /* 0562AC 7F02177C 8FA30058 */   lw    $v1, 0x58($sp)
@@ -4483,13 +4483,13 @@ glabel sub_GAME_7F020EF0
 .L7F02179C:
 /* 0562CC 7F02179C 00002025 */  move  $a0, $zero
 /* 0562D0 7F0217A0 24050010 */  li    $a1, 16
-/* 0562D4 7F0217A4 0C0030C3 */  jal   get_controller_buttons_held
+/* 0562D4 7F0217A4 0C0030C3 */  jal   joyGetButtons
 /* 0562D8 7F0217A8 AFA30058 */   sw    $v1, 0x58($sp)
 /* 0562DC 7F0217AC 1040004F */  beqz  $v0, .L7F0218EC
 /* 0562E0 7F0217B0 8FA30058 */   lw    $v1, 0x58($sp)
 /* 0562E4 7F0217B4 00002025 */  move  $a0, $zero
 /* 0562E8 7F0217B8 34058000 */  li    $a1, 32768
-/* 0562EC 7F0217BC 0C0030C3 */  jal   get_controller_buttons_held
+/* 0562EC 7F0217BC 0C0030C3 */  jal   joyGetButtons
 /* 0562F0 7F0217C0 AFA30058 */   sw    $v1, 0x58($sp)
 /* 0562F4 7F0217C4 10400008 */  beqz  $v0, .L7F0217E8
 /* 0562F8 7F0217C8 8FA30058 */   lw    $v1, 0x58($sp)
@@ -4503,7 +4503,7 @@ glabel sub_GAME_7F020EF0
 .L7F0217E8:
 /* 056318 7F0217E8 00002025 */  move  $a0, $zero
 /* 05631C 7F0217EC 24054000 */  li    $a1, 16384
-/* 056320 7F0217F0 0C0030C3 */  jal   get_controller_buttons_held
+/* 056320 7F0217F0 0C0030C3 */  jal   joyGetButtons
 /* 056324 7F0217F4 AFA30058 */   sw    $v1, 0x58($sp)
 /* 056328 7F0217F8 10400008 */  beqz  $v0, .L7F02181C
 /* 05632C 7F0217FC 8FA30058 */   lw    $v1, 0x58($sp)
@@ -4517,7 +4517,7 @@ glabel sub_GAME_7F020EF0
 .L7F02181C:
 /* 05634C 7F02181C 00002025 */  move  $a0, $zero
 /* 056350 7F021820 24050004 */  li    $a1, 4
-/* 056354 7F021824 0C0030C3 */  jal   get_controller_buttons_held
+/* 056354 7F021824 0C0030C3 */  jal   joyGetButtons
 /* 056358 7F021828 AFA30058 */   sw    $v1, 0x58($sp)
 /* 05635C 7F02182C 10400008 */  beqz  $v0, .L7F021850
 /* 056360 7F021830 8FA30058 */   lw    $v1, 0x58($sp)
@@ -4531,7 +4531,7 @@ glabel sub_GAME_7F020EF0
 .L7F021850:
 /* 056380 7F021850 00002025 */  move  $a0, $zero
 /* 056384 7F021854 24050008 */  li    $a1, 8
-/* 056388 7F021858 0C0030C3 */  jal   get_controller_buttons_held
+/* 056388 7F021858 0C0030C3 */  jal   joyGetButtons
 /* 05638C 7F02185C AFA30058 */   sw    $v1, 0x58($sp)
 /* 056390 7F021860 10400008 */  beqz  $v0, .L7F021884
 /* 056394 7F021864 8FA30058 */   lw    $v1, 0x58($sp)
@@ -4545,7 +4545,7 @@ glabel sub_GAME_7F020EF0
 .L7F021884:
 /* 0563B4 7F021884 00002025 */  move  $a0, $zero
 /* 0563B8 7F021888 24050002 */  li    $a1, 2
-/* 0563BC 7F02188C 0C0030C3 */  jal   get_controller_buttons_held
+/* 0563BC 7F02188C 0C0030C3 */  jal   joyGetButtons
 /* 0563C0 7F021890 AFA30058 */   sw    $v1, 0x58($sp)
 /* 0563C4 7F021894 10400008 */  beqz  $v0, .L7F0218B8
 /* 0563C8 7F021898 8FA30058 */   lw    $v1, 0x58($sp)
@@ -4559,7 +4559,7 @@ glabel sub_GAME_7F020EF0
 .L7F0218B8:
 /* 0563E8 7F0218B8 00002025 */  move  $a0, $zero
 /* 0563EC 7F0218BC 24050001 */  li    $a1, 1
-/* 0563F0 7F0218C0 0C0030C3 */  jal   get_controller_buttons_held
+/* 0563F0 7F0218C0 0C0030C3 */  jal   joyGetButtons
 /* 0563F4 7F0218C4 AFA30058 */   sw    $v1, 0x58($sp)
 /* 0563F8 7F0218C8 10400008 */  beqz  $v0, .L7F0218EC
 /* 0563FC 7F0218CC 8FA30058 */   lw    $v1, 0x58($sp)
@@ -5265,13 +5265,13 @@ glabel sub_GAME_7F020EF0
 /* 0564A0 7F021930 AFA00054 */  sw    $zero, 0x54($sp)
 /* 0564A4 7F021934 00002025 */  move  $a0, $zero
 /* 0564A8 7F021938 24050020 */  li    $a1, 32
-/* 0564AC 7F02193C 0C0030DC */  jal   get_controller_buttons_held
+/* 0564AC 7F02193C 0C0030DC */  jal   joyGetButtons
 /* 0564B0 7F021940 AFA30058 */   sw    $v1, 0x58($sp)
 /* 0564B4 7F021944 1040004F */  beqz  $v0, .Ljp7F021A84
 /* 0564B8 7F021948 8FA30058 */   lw    $v1, 0x58($sp)
 /* 0564BC 7F02194C 00002025 */  move  $a0, $zero
 /* 0564C0 7F021950 34058000 */  li    $a1, 32768
-/* 0564C4 7F021954 0C0030DC */  jal   get_controller_buttons_held
+/* 0564C4 7F021954 0C0030DC */  jal   joyGetButtons
 /* 0564C8 7F021958 AFA30058 */   sw    $v1, 0x58($sp)
 /* 0564CC 7F02195C 10400008 */  beqz  $v0, .Ljp7F021980
 /* 0564D0 7F021960 8FA30058 */   lw    $v1, 0x58($sp)
@@ -5285,7 +5285,7 @@ glabel sub_GAME_7F020EF0
 .Ljp7F021980:
 /* 0564F0 7F021980 00002025 */  move  $a0, $zero
 /* 0564F4 7F021984 24054000 */  li    $a1, 16384
-/* 0564F8 7F021988 0C0030DC */  jal   get_controller_buttons_held
+/* 0564F8 7F021988 0C0030DC */  jal   joyGetButtons
 /* 0564FC 7F02198C AFA30058 */   sw    $v1, 0x58($sp)
 /* 056500 7F021990 10400008 */  beqz  $v0, .Ljp7F0219B4
 /* 056504 7F021994 8FA30058 */   lw    $v1, 0x58($sp)
@@ -5299,7 +5299,7 @@ glabel sub_GAME_7F020EF0
 .Ljp7F0219B4:
 /* 056524 7F0219B4 00002025 */  move  $a0, $zero
 /* 056528 7F0219B8 24050004 */  li    $a1, 4
-/* 05652C 7F0219BC 0C0030DC */  jal   get_controller_buttons_held
+/* 05652C 7F0219BC 0C0030DC */  jal   joyGetButtons
 /* 056530 7F0219C0 AFA30058 */   sw    $v1, 0x58($sp)
 /* 056534 7F0219C4 10400008 */  beqz  $v0, .Ljp7F0219E8
 /* 056538 7F0219C8 8FA30058 */   lw    $v1, 0x58($sp)
@@ -5313,7 +5313,7 @@ glabel sub_GAME_7F020EF0
 .Ljp7F0219E8:
 /* 056558 7F0219E8 00002025 */  move  $a0, $zero
 /* 05655C 7F0219EC 24050008 */  li    $a1, 8
-/* 056560 7F0219F0 0C0030DC */  jal   get_controller_buttons_held
+/* 056560 7F0219F0 0C0030DC */  jal   joyGetButtons
 /* 056564 7F0219F4 AFA30058 */   sw    $v1, 0x58($sp)
 /* 056568 7F0219F8 10400008 */  beqz  $v0, .Ljp7F021A1C
 /* 05656C 7F0219FC 8FA30058 */   lw    $v1, 0x58($sp)
@@ -5327,7 +5327,7 @@ glabel sub_GAME_7F020EF0
 .Ljp7F021A1C:
 /* 05658C 7F021A1C 00002025 */  move  $a0, $zero
 /* 056590 7F021A20 24050002 */  li    $a1, 2
-/* 056594 7F021A24 0C0030DC */  jal   get_controller_buttons_held
+/* 056594 7F021A24 0C0030DC */  jal   joyGetButtons
 /* 056598 7F021A28 AFA30058 */   sw    $v1, 0x58($sp)
 /* 05659C 7F021A2C 10400008 */  beqz  $v0, .Ljp7F021A50
 /* 0565A0 7F021A30 8FA30058 */   lw    $v1, 0x58($sp)
@@ -5341,7 +5341,7 @@ glabel sub_GAME_7F020EF0
 .Ljp7F021A50:
 /* 0565C0 7F021A50 00002025 */  move  $a0, $zero
 /* 0565C4 7F021A54 24050001 */  li    $a1, 1
-/* 0565C8 7F021A58 0C0030DC */  jal   get_controller_buttons_held
+/* 0565C8 7F021A58 0C0030DC */  jal   joyGetButtons
 /* 0565CC 7F021A5C AFA30058 */   sw    $v1, 0x58($sp)
 /* 0565D0 7F021A60 10400008 */  beqz  $v0, .Ljp7F021A84
 /* 0565D4 7F021A64 8FA30058 */   lw    $v1, 0x58($sp)
@@ -5355,13 +5355,13 @@ glabel sub_GAME_7F020EF0
 .Ljp7F021A84:
 /* 0565F4 7F021A84 00002025 */  move  $a0, $zero
 /* 0565F8 7F021A88 24050010 */  li    $a1, 16
-/* 0565FC 7F021A8C 0C0030DC */  jal   get_controller_buttons_held
+/* 0565FC 7F021A8C 0C0030DC */  jal   joyGetButtons
 /* 056600 7F021A90 AFA30058 */   sw    $v1, 0x58($sp)
 /* 056604 7F021A94 1040004F */  beqz  $v0, .Ljp7F021BD4
 /* 056608 7F021A98 8FA30058 */   lw    $v1, 0x58($sp)
 /* 05660C 7F021A9C 00002025 */  move  $a0, $zero
 /* 056610 7F021AA0 34058000 */  li    $a1, 32768
-/* 056614 7F021AA4 0C0030DC */  jal   get_controller_buttons_held
+/* 056614 7F021AA4 0C0030DC */  jal   joyGetButtons
 /* 056618 7F021AA8 AFA30058 */   sw    $v1, 0x58($sp)
 /* 05661C 7F021AAC 10400008 */  beqz  $v0, .Ljp7F021AD0
 /* 056620 7F021AB0 8FA30058 */   lw    $v1, 0x58($sp)
@@ -5375,7 +5375,7 @@ glabel sub_GAME_7F020EF0
 .Ljp7F021AD0:
 /* 056640 7F021AD0 00002025 */  move  $a0, $zero
 /* 056644 7F021AD4 24054000 */  li    $a1, 16384
-/* 056648 7F021AD8 0C0030DC */  jal   get_controller_buttons_held
+/* 056648 7F021AD8 0C0030DC */  jal   joyGetButtons
 /* 05664C 7F021ADC AFA30058 */   sw    $v1, 0x58($sp)
 /* 056650 7F021AE0 10400008 */  beqz  $v0, .Ljp7F021B04
 /* 056654 7F021AE4 8FA30058 */   lw    $v1, 0x58($sp)
@@ -5389,7 +5389,7 @@ glabel sub_GAME_7F020EF0
 .Ljp7F021B04:
 /* 056674 7F021B04 00002025 */  move  $a0, $zero
 /* 056678 7F021B08 24050004 */  li    $a1, 4
-/* 05667C 7F021B0C 0C0030DC */  jal   get_controller_buttons_held
+/* 05667C 7F021B0C 0C0030DC */  jal   joyGetButtons
 /* 056680 7F021B10 AFA30058 */   sw    $v1, 0x58($sp)
 /* 056684 7F021B14 10400008 */  beqz  $v0, .Ljp7F021B38
 /* 056688 7F021B18 8FA30058 */   lw    $v1, 0x58($sp)
@@ -5403,7 +5403,7 @@ glabel sub_GAME_7F020EF0
 .Ljp7F021B38:
 /* 0566A8 7F021B38 00002025 */  move  $a0, $zero
 /* 0566AC 7F021B3C 24050008 */  li    $a1, 8
-/* 0566B0 7F021B40 0C0030DC */  jal   get_controller_buttons_held
+/* 0566B0 7F021B40 0C0030DC */  jal   joyGetButtons
 /* 0566B4 7F021B44 AFA30058 */   sw    $v1, 0x58($sp)
 /* 0566B8 7F021B48 10400008 */  beqz  $v0, .Ljp7F021B6C
 /* 0566BC 7F021B4C 8FA30058 */   lw    $v1, 0x58($sp)
@@ -5417,7 +5417,7 @@ glabel sub_GAME_7F020EF0
 .Ljp7F021B6C:
 /* 0566DC 7F021B6C 00002025 */  move  $a0, $zero
 /* 0566E0 7F021B70 24050002 */  li    $a1, 2
-/* 0566E4 7F021B74 0C0030DC */  jal   get_controller_buttons_held
+/* 0566E4 7F021B74 0C0030DC */  jal   joyGetButtons
 /* 0566E8 7F021B78 AFA30058 */   sw    $v1, 0x58($sp)
 /* 0566EC 7F021B7C 10400008 */  beqz  $v0, .Ljp7F021BA0
 /* 0566F0 7F021B80 8FA30058 */   lw    $v1, 0x58($sp)
@@ -5431,7 +5431,7 @@ glabel sub_GAME_7F020EF0
 .Ljp7F021BA0:
 /* 056710 7F021BA0 00002025 */  move  $a0, $zero
 /* 056714 7F021BA4 24050001 */  li    $a1, 1
-/* 056718 7F021BA8 0C0030DC */  jal   get_controller_buttons_held
+/* 056718 7F021BA8 0C0030DC */  jal   joyGetButtons
 /* 05671C 7F021BAC AFA30058 */   sw    $v1, 0x58($sp)
 /* 056720 7F021BB0 10400008 */  beqz  $v0, .Ljp7F021BD4
 /* 056724 7F021BB4 8FA30058 */   lw    $v1, 0x58($sp)

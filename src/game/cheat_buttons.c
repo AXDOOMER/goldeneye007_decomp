@@ -393,7 +393,7 @@ glabel cheat_buttons_mp_related
 /* 0C647C 7F09194C 00022600 */  sll   $a0, $v0, 0x18
 /* 0C6480 7F091950 00047603 */  sra   $t6, $a0, 0x18
 /* 0C6484 7F091954 01C02025 */  move  $a0, $t6
-/* 0C6488 7F091958 0C0030C3 */  jal   get_controller_buttons_held
+/* 0C6488 7F091958 0C0030C3 */  jal   joyGetButtons
 /* 0C648C 7F09195C 3405FFFF */   li    $a1, 65535
 /* 0C6490 7F091960 0FC26C54 */  jal   get_cur_playernum
 /* 0C6494 7F091964 A7A20026 */   sh    $v0, 0x26($sp)

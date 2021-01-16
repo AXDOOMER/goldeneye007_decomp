@@ -10643,7 +10643,7 @@ void interface_menu09_007options(void)
     viSetAspect(D_80051A58);
     viSetZRange(0x42c80000, D_80051A5C);
     viSetUseZBuf(0);
-    if (get_controller_buttons_held(0, 0xa000) == 0)
+    if (joyGetButtons(0, 0xa000) == 0)
     {
         tab_3_highlight = 0;
         tab_2_highlight = 0;
@@ -10742,7 +10742,7 @@ void interface_menu09_007options(void)
             }
         }
     }
-    if (get_controller_buttons_held(0, 0xa000) != 0)
+    if (joyGetButtons(0, 0xa000) != 0)
     {
         temp_f0 = (cursor_h_pos - 55.0f) / 300.0f;
         phi_f0 = temp_f0;
@@ -10829,7 +10829,7 @@ glabel interface_menu09_007options
 /* 043EDC 7F00F3AC 0C00114D */  jal   viSetUseZBuf
 /* 043EE0 7F00F3B0 00002025 */   move  $a0, $zero
 /* 043EE4 7F00F3B4 00002025 */  move  $a0, $zero
-/* 043EE8 7F00F3B8 0C0030C3 */  jal   get_controller_buttons_held
+/* 043EE8 7F00F3B8 0C0030C3 */  jal   joyGetButtons
 /* 043EEC 7F00F3BC 3405A000 */   li    $a1, 40960
 /* 043EF0 7F00F3C0 14400042 */  bnez  $v0, .L7F00F4CC
 /* 043EF4 7F00F3C4 3C018003 */   lui   $at, %hi(tab_3_highlight)
@@ -10971,7 +10971,7 @@ glabel interface_menu09_007options
 .L7F00F5B0:
 /* 0440E0 7F00F5B0 00002025 */  move  $a0, $zero
 .L7F00F5B4:
-/* 0440E4 7F00F5B4 0C0030C3 */  jal   get_controller_buttons_held
+/* 0440E4 7F00F5B4 0C0030C3 */  jal   joyGetButtons
 /* 0440E8 7F00F5B8 3405A000 */   li    $a1, 40960
 /* 0440EC 7F00F5BC 1040003E */  beqz  $v0, .L7F00F6B8
 /* 0440F0 7F00F5C0 3C048003 */   lui   $a0, %hi(ptr_folder_object_instance)
@@ -12412,7 +12412,7 @@ void interface_menu0E_mpoptions(void)
     {
         init_mp_options_for_scenario(get_attached_controller_count());
     }
-    if (get_controller_buttons_held(0, Z_TRIG|A_BUTTON) == 0)
+    if (joyGetButtons(0, Z_TRIG|A_BUTTON) == 0)
     {
         tab_3_highlight = 0;
         tab_2_highlight = 0;
@@ -12681,7 +12681,7 @@ glabel interface_menu0E_mpoptions
 /* 045428 7F0108F8 00402025 */   move  $a0, $v0
 /* 04542C 7F0108FC 00002025 */  move  $a0, $zero
 .L7F010900:
-/* 045430 7F010900 0C0030C3 */  jal   get_controller_buttons_held
+/* 045430 7F010900 0C0030C3 */  jal   joyGetButtons
 /* 045434 7F010904 3405A000 */   li    $a1, 40960
 /* 045438 7F010908 1440007A */  bnez  $v0, .L7F010AF4
 /* 04543C 7F01090C 3C018003 */   lui   $at, %hi(tab_3_highlight)
@@ -18199,7 +18199,7 @@ void interface_menu12_mpstage(void)
     viSetAspect(D_80051AA0);
     viSetZRange(0x42c80000, D_80051AA4);
     viSetUseZBuf(0);
-    if (get_controller_buttons_held(0, 0xb000) == 0)
+    if (joyGetButtons(0, 0xb000) == 0)
     {
         tab_3_highlight = 0;
         tab_2_highlight = 0;
@@ -18323,7 +18323,7 @@ glabel interface_menu12_mpstage
 /* 04893C 7F013E0C 0C00114D */  jal   viSetUseZBuf
 /* 048940 7F013E10 00002025 */   move  $a0, $zero
 /* 048944 7F013E14 00002025 */  move  $a0, $zero
-/* 048948 7F013E18 0C0030C3 */  jal   get_controller_buttons_held
+/* 048948 7F013E18 0C0030C3 */  jal   joyGetButtons
 /* 04894C 7F013E1C 3405B000 */   li    $a1, 45056
 /* 048950 7F013E20 1440003D */  bnez  $v0, .L7F013F18
 /* 048954 7F013E24 3C018003 */   lui   $at, %hi(tab_3_highlight)
@@ -19216,7 +19216,7 @@ void interface_menu13_mpscenario(void)
     viSetAspect(D_80051AA8);
     viSetZRange(0x42c80000, D_80051AAC);
     viSetUseZBuf(0);
-    if (get_controller_buttons_held(0, 0xa000) == 0)
+    if (joyGetButtons(0, 0xa000) == 0)
     {
         tab_3_highlight = 0;
         tab_2_highlight = 0;
@@ -19324,7 +19324,7 @@ glabel interface_menu13_mpscenario
 /* 04932C 7F0147FC 0C00114D */  jal   viSetUseZBuf
 /* 049330 7F014800 00002025 */   move  $a0, $zero
 /* 049334 7F014804 00002025 */  move  $a0, $zero
-/* 049338 7F014808 0C0030C3 */  jal   get_controller_buttons_held
+/* 049338 7F014808 0C0030C3 */  jal   joyGetButtons
 /* 04933C 7F01480C 3405A000 */   li    $a1, 40960
 /* 049340 7F014810 14400030 */  bnez  $v0, .L7F0148D4
 /* 049344 7F014814 3C018003 */   lui   $at, %hi(tab_3_highlight)
@@ -24043,7 +24043,7 @@ void interface_menu15_cheat(u32 param_1,u32 param_2)
   viSetUseZBuf(0);
   MP_menu_selected_option = 0;
   iVar1 = dword_8002B5E0;
-  if (get_controller_buttons_held(0,Z_TRIG|A_BUTTON) == 0) {
+  if (joyGetButtons(0,Z_TRIG|A_BUTTON) == 0) {
     tab_3_highlight = FALSE;
     tab_2_highlight = FALSE;
     tab_1_highlight = FALSE;
@@ -24150,7 +24150,7 @@ glabel interface_menu15_cheat
 /* 04C7F8 7F017CC8 3C018003 */  lui   $at, %hi(MP_menu_selected_option)
 /* 04C7FC 7F017CCC AC20B5E4 */  sw    $zero, %lo(MP_menu_selected_option)($at)
 /* 04C800 7F017CD0 00002025 */  move  $a0, $zero
-/* 04C804 7F017CD4 0C0030C3 */  jal   get_controller_buttons_held
+/* 04C804 7F017CD4 0C0030C3 */  jal   joyGetButtons
 /* 04C808 7F017CD8 3405A000 */   li    $a1, 40960
 /* 04C80C 7F017CDC 14400049 */  bnez  $v0, .L7F017E04
 /* 04C810 7F017CE0 3C018003 */   lui   $at, %hi(tab_3_highlight)
@@ -27437,36 +27437,36 @@ void init_menu19_spectrum(void)
 {
     SPECTRUMROMS rom = ROM_SABRE;
 
-    if (!get_controller_buttons_held(2, L_CBUTTONS))
+    if (!joyGetButtons(2, L_CBUTTONS))
     {
-        if (get_controller_buttons_held(2, R_CBUTTONS))
+        if (joyGetButtons(2, R_CBUTTONS))
         {
             rom = ROM_ATIC;
         }
-        else if (get_controller_buttons_held(2, U_CBUTTONS))
+        else if (joyGetButtons(2, U_CBUTTONS))
         {
             rom = ROM_JETPAC;
         }
-        else if (get_controller_buttons_held(2, D_CBUTTONS))
+        else if (joyGetButtons(2, D_CBUTTONS))
         {
             rom = ROM_JETMAN;
         }
-        else if (get_controller_buttons_held(2, L_JPAD))
+        else if (joyGetButtons(2, L_JPAD))
         {
             rom = ROM_ALIEN8;
         }
-        else if (get_controller_buttons_held(2, R_JPAD))
+        else if (joyGetButtons(2, R_JPAD))
         {
             rom = ROM_GUNFRIGHT;
         }
-        else if (get_controller_buttons_held(2, U_JPAD))
+        else if (joyGetButtons(2, U_JPAD))
         {
             rom = ROM_UNDER;
         }
         else
         {
             rom = ROM_SABRE;
-            if (get_controller_buttons_held(2, D_JPAD))
+            if (joyGetButtons(2, D_JPAD))
             {
                 rom = ROM_KNIGHTLORE;
             }

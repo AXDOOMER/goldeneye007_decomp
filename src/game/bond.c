@@ -15445,7 +15445,7 @@ glabel controller_gameplay_interaction
 /* 0B674C 7F081C1C 3405FFFF */  li    $a1, 65535
 /* 0B6750 7F081C20 00582021 */  addu  $a0, $v0, $t8
 /* 0B6754 7F081C24 0004CE00 */  sll   $t9, $a0, 0x18
-/* 0B6758 7F081C28 0C0030C3 */  jal   get_controller_buttons_held
+/* 0B6758 7F081C28 0C0030C3 */  jal   joyGetButtons
 /* 0B675C 7F081C2C 00192603 */   sra   $a0, $t9, 0x18
 /* 0B6760 7F081C30 8E0B0000 */  lw    $t3, ($s0)
 /* 0B6764 7F081C34 83AC011F */  lb    $t4, 0x11f($sp)
@@ -28469,7 +28469,7 @@ glabel maybe_mp_interface
 /* 0BE164 7F089634 00022600 */  sll   $a0, $v0, 0x18
 /* 0BE168 7F089638 00046E03 */  sra   $t5, $a0, 0x18
 /* 0BE16C 7F08963C 01A02025 */  move  $a0, $t5
-/* 0BE170 7F089640 0C0030C3 */  jal   get_controller_buttons_held
+/* 0BE170 7F089640 0C0030C3 */  jal   joyGetButtons
 /* 0BE174 7F089644 3405B000 */   li    $a1, 45056
 /* 0BE178 7F089648 10400003 */  beqz  $v0, .L7F089658
 /* 0BE17C 7F08964C 00000000 */   nop   

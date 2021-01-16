@@ -477,7 +477,7 @@ loop_29:
                         sp1A4 = temp_ret_2;
                         if (debug_feature_flag != 0)
                         {
-                            debug_feature_flag = debug_menu_processor((s32) (((s32) (joyGetStickX(0) << 0x18) >> 0x18) << 0x18) >> 0x18, (s32) (((s32) (joyGetStickY(0) << 0x18) >> 0x18) << 0x18) >> 0x18, (get_controller_buttons_held(0, 0xffff) & 0xffff) & 0xffff, get_controller_buttons_pressed(0, 0xffff) & 0xffff);
+                            debug_feature_flag = debug_menu_processor((s32) (((s32) (joyGetStickX(0) << 0x18) >> 0x18) << 0x18) >> 0x18, (s32) (((s32) (joyGetStickY(0) << 0x18) >> 0x18) << 0x18) >> 0x18, (joyGetButtons(0, 0xffff) & 0xffff) & 0xffff, get_controller_buttons_pressed(0, 0xffff) & 0xffff);
                         }
                         manage_mp_game();
                         sub_GAME_7F09B41C();
@@ -582,7 +582,7 @@ loop_44:
                         {
                             if (get_controller_buttons_pressed(0, 0xc000) != 0)
                             {
-                                if (get_controller_buttons_held(0, 0xc000) == 0xc000)
+                                if (joyGetButtons(0, 0xc000) == 0xc000)
                                 {
 loop_58:
                                     sprintf(&sp5C, &aU64_taskgrab_D_core, taskgrab_ramdump_num);
@@ -986,7 +986,7 @@ glabel mainloop
 /* 007140 70006540 00117E03 */  sra   $t7, $s1, 0x18
 /* 007144 70006544 01E08825 */  move  $s1, $t7
 /* 007148 70006548 00002025 */  move  $a0, $zero
-/* 00714C 7000654C 0C0030C3 */  jal   get_controller_buttons_held
+/* 00714C 7000654C 0C0030C3 */  jal   joyGetButtons
 /* 007150 70006550 3405FFFF */   li    $a1, 65535
 /* 007154 70006554 3052FFFF */  andi  $s2, $v0, 0xffff
 /* 007158 70006558 00002025 */  move  $a0, $zero
@@ -1165,7 +1165,7 @@ glabel mainloop
 /* 0073EC 700067EC 3405C000 */   li    $a1, 49152
 /* 0073F0 700067F0 10400018 */  beqz  $v0, .L70006854
 /* 0073F4 700067F4 00002025 */   move  $a0, $zero
-/* 0073F8 700067F8 0C0030C3 */  jal   get_controller_buttons_held
+/* 0073F8 700067F8 0C0030C3 */  jal   joyGetButtons
 /* 0073FC 700067FC 3405C000 */   li    $a1, 49152
 /* 007400 70006800 3401C000 */  li    $at, 49152
 /* 007404 70006804 14410013 */  bne   $v0, $at, .L70006854
