@@ -1296,7 +1296,7 @@ void menu_control_stick_tracking(void) {
 
     // Node 0
     sp1F = joyGetStickX(0);
-    temp_t2 = ((s32) (-get_cur_controller_vert_stick_pos(0) << 0x18) >> 0x18);
+    temp_t2 = ((s32) (-joyGetStickY(0) << 0x18) >> 0x18);
     if (sp1F < -5)
     {
         // Node 1
@@ -1443,7 +1443,7 @@ glabel menu_control_stick_tracking
 /* 03E6BC 7F009B8C 0C00303B */  jal   joyGetStickX
 /* 03E6C0 7F009B90 00002025 */   move  $a0, $zero
 /* 03E6C4 7F009B94 00002025 */  move  $a0, $zero
-/* 03E6C8 7F009B98 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 03E6C8 7F009B98 0C00307F */  jal   joyGetStickY
 /* 03E6CC 7F009B9C A3A2001F */   sb    $v0, 0x1f($sp)
 /* 03E6D0 7F009BA0 83A5001F */  lb    $a1, 0x1f($sp)
 /* 03E6D4 7F009BA4 00021823 */  negu  $v1, $v0
@@ -1703,7 +1703,7 @@ glabel menu_control_stick_tracking
 /* 03E71C 7F009BAC 0C003054 */  jal   joyGetStickX
 /* 03E720 7F009BB0 00002025 */   move  $a0, $zero
 /* 03E724 7F009BB4 00002025 */  move  $a0, $zero
-/* 03E728 7F009BB8 0C003098 */  jal   get_cur_controller_vert_stick_pos
+/* 03E728 7F009BB8 0C003098 */  jal   joyGetStickY
 /* 03E72C 7F009BBC A3A2001F */   sb    $v0, 0x1f($sp)
 /* 03E730 7F009BC0 83A5001F */  lb    $a1, 0x1f($sp)
 /* 03E734 7F009BC4 00021823 */  negu  $v1, $v0
@@ -4617,7 +4617,7 @@ s32 interface_menu05_fileselect(void)
     s32 phi_s2_2;
     s32 phi_return;
 
-    if (((((get_controller_buttons_pressed(0, ANY_BUTTON) != 0) || (joyGetStickX(0) < -5)) || (joyGetStickX(0) >= 6)) || (get_cur_controller_vert_stick_pos(0) < -5)) || (get_cur_controller_vert_stick_pos(0) >= 6))
+    if (((((get_controller_buttons_pressed(0, ANY_BUTTON) != 0) || (joyGetStickX(0) < -5)) || (joyGetStickX(0) >= 6)) || (joyGetStickY(0) < -5)) || (joyGetStickY(0) >= 6))
     {
         menu_timer = 0;
     }
@@ -4870,12 +4870,12 @@ glabel interface_menu05_fileselect
 /* 040748 7F00BC18 28410006 */  slti  $at, $v0, 6
 /* 04074C 7F00BC1C 1020000B */  beqz  $at, .L7F00BC4C
 /* 040750 7F00BC20 00000000 */   nop   
-/* 040754 7F00BC24 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 040754 7F00BC24 0C00307F */  jal   joyGetStickY
 /* 040758 7F00BC28 00002025 */   move  $a0, $zero
 /* 04075C 7F00BC2C 2841FFFB */  slti  $at, $v0, -5
 /* 040760 7F00BC30 14200006 */  bnez  $at, .L7F00BC4C
 /* 040764 7F00BC34 00000000 */   nop   
-/* 040768 7F00BC38 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 040768 7F00BC38 0C00307F */  jal   joyGetStickY
 /* 04076C 7F00BC3C 00002025 */   move  $a0, $zero
 /* 040770 7F00BC40 28410006 */  slti  $at, $v0, 6
 /* 040774 7F00BC44 14200004 */  bnez  $at, .L7F00BC58

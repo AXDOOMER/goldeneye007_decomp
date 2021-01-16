@@ -540,11 +540,11 @@ void controller_deadzone_related(void)
     {
         D_80040B50 = D_80040B50 + -1;
     }
-    if (10 < get_cur_controller_vert_stick_pos('\0'))
+    if (10 < joyGetStickY('\0'))
     {
         D_80040B54 = D_80040B54 + -1;
     }
-    if (get_cur_controller_vert_stick_pos('\0') < -10)
+    if (joyGetStickY('\0') < -10)
     {
         D_80040B54 = D_80040B54 + 1;
     }
@@ -574,11 +574,11 @@ void proc_7F0A4B40(undefined4 *param_1)
     if (sVar1 < -10) {
         D_80040B48 = D_80040B48 - 1;
     }
-    sVar1 = get_cur_controller_vert_stick_pos('\0');
+    sVar1 = joyGetStickY('\0');
     if (10 < sVar1) {
         D_80040B4C = D_80040B4C - 1;
     }
-    sVar1 = get_cur_controller_vert_stick_pos('\0');
+    sVar1 = joyGetStickY('\0');
     if (sVar1 < -10) {
         D_80040B4C = D_80040B4C + 1;
     }
@@ -631,7 +631,7 @@ glabel sub_GAME_7F0A4B40
 /* 0D96CC 7F0A4B9C 2719FFFF */  addiu $t9, $t8, -1
 /* 0D96D0 7F0A4BA0 AE590000 */  sw    $t9, ($s2)
 .L7F0A4BA4:
-/* 0D96D4 7F0A4BA4 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0D96D4 7F0A4BA4 0C00307F */  jal   joyGetStickY
 /* 0D96D8 7F0A4BA8 00002025 */   move  $a0, $zero
 /* 0D96DC 7F0A4BAC 2841000B */  slti  $at, $v0, 0xb
 /* 0D96E0 7F0A4BB0 14200006 */  bnez  $at, .L7F0A4BCC
@@ -643,7 +643,7 @@ glabel sub_GAME_7F0A4B40
 /* 0D96F8 7F0A4BC8 AE2B0000 */  sw    $t3, ($s1)
 .L7F0A4BCC:
 /* 0D96FC 7F0A4BCC 3C118004 */  lui   $s1, %hi(D_80040B4C)
-/* 0D9700 7F0A4BD0 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0D9700 7F0A4BD0 0C00307F */  jal   joyGetStickY
 /* 0D9704 7F0A4BD4 26310B4C */   addiu $s1, %lo(D_80040B4C) # addiu $s1, $s1, 0xb4c
 /* 0D9708 7F0A4BD8 2841FFF6 */  slti  $at, $v0, -0xa
 /* 0D970C 7F0A4BDC 10200004 */  beqz  $at, .L7F0A4BF0
@@ -908,12 +908,12 @@ s32 sub_GAME_7F0A4FEC(void)
 
 u32 is_holding_greater_than_2E_up_on_stick(void)
 {
-  return (get_cur_controller_vert_stick_pos('\0') < 0x2e) ^ 1;
+  return (joyGetStickY('\0') < 0x2e) ^ 1;
 }
 
 u32 is_holding_greater_than_2E_down_on_stick(void)
 {
-  return (get_cur_controller_vert_stick_pos('\0') < -0x2d);
+  return (joyGetStickY('\0') < -0x2d);
 }
 
 u32 get_D_80040AE0(void)
@@ -938,12 +938,12 @@ s32 sub_GAME_7F0A50C4(void)
 
 u32 is_holding_less_than_10_up_on_stick(void)
 {
-  return (get_cur_controller_vert_stick_pos('\0') < 0x10) ^ 1;
+  return (joyGetStickY('\0') < 0x10) ^ 1;
 }
 
 u32 is_holding_less_than_10_down_on_stick(void)
 {
-  return (get_cur_controller_vert_stick_pos('\0') < -0xf);
+  return (joyGetStickY('\0') < -0xf);
 }
 
 u32 get_D_80040AE4(void) {
@@ -1332,7 +1332,7 @@ glabel sub_GAME_7F0A5B80
 /* 0DA6D4 7F0A5BA4 24050808 */   li    $a1, 2056
 /* 0DA6D8 7F0A5BA8 14400005 */  bnez  $v0, .L7F0A5BC0
 /* 0DA6DC 7F0A5BAC 00000000 */   nop   
-/* 0DA6E0 7F0A5BB0 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0DA6E0 7F0A5BB0 0C00307F */  jal   joyGetStickY
 /* 0DA6E4 7F0A5BB4 00002025 */   move  $a0, $zero
 /* 0DA6E8 7F0A5BB8 28410047 */  slti  $at, $v0, 0x47
 /* 0DA6EC 7F0A5BBC 14200012 */  bnez  $at, .L7F0A5C08
@@ -1361,7 +1361,7 @@ glabel sub_GAME_7F0A5B80
 /* 0DA740 7F0A5C10 24050404 */   li    $a1, 1028
 /* 0DA744 7F0A5C14 14400008 */  bnez  $v0, .L7F0A5C38
 /* 0DA748 7F0A5C18 00000000 */   nop   
-/* 0DA74C 7F0A5C1C 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0DA74C 7F0A5C1C 0C00307F */  jal   joyGetStickY
 /* 0DA750 7F0A5C20 00002025 */   move  $a0, $zero
 /* 0DA754 7F0A5C24 2841FFBA */  slti  $at, $v0, -0x46
 /* 0DA758 7F0A5C28 14200003 */  bnez  $at, .L7F0A5C38
@@ -1437,12 +1437,12 @@ glabel sub_GAME_7F0A5B80
 /* 0DA860 7F0A5D30 46100480 */  add.s $f18, $f0, $f16
 /* 0DA864 7F0A5D34 E4D20000 */  swc1  $f18, ($a2)
 .L7F0A5D38:
-/* 0DA868 7F0A5D38 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0DA868 7F0A5D38 0C00307F */  jal   joyGetStickY
 /* 0DA86C 7F0A5D3C 00002025 */   move  $a0, $zero
 /* 0DA870 7F0A5D40 2841001F */  slti  $at, $v0, 0x1f
 /* 0DA874 7F0A5D44 1420001A */  bnez  $at, .L7F0A5DB0
 /* 0DA878 7F0A5D48 00000000 */   nop   
-/* 0DA87C 7F0A5D4C 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0DA87C 7F0A5D4C 0C00307F */  jal   joyGetStickY
 /* 0DA880 7F0A5D50 00002025 */   move  $a0, $zero
 /* 0DA884 7F0A5D54 28410046 */  slti  $at, $v0, 0x46
 /* 0DA888 7F0A5D58 10200015 */  beqz  $at, .L7F0A5DB0
@@ -1454,7 +1454,7 @@ glabel sub_GAME_7F0A5B80
 /* 0DA8A0 7F0A5D70 8DEF09A8 */  lw    $t7, %lo(watch_soundrelated_maybe)($t7)
 /* 0DA8A4 7F0A5D74 15E0000E */  bnez  $t7, .L7F0A5DB0
 /* 0DA8A8 7F0A5D78 00000000 */   nop   
-/* 0DA8AC 7F0A5D7C 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0DA8AC 7F0A5D7C 0C00307F */  jal   joyGetStickY
 /* 0DA8B0 7F0A5D80 00002025 */   move  $a0, $zero
 /* 0DA8B4 7F0A5D84 44822000 */  mtc1  $v0, $f4
 /* 0DA8B8 7F0A5D88 3C014396 */  li    $at, 0x43960000 # 300.000000
@@ -1468,12 +1468,12 @@ glabel sub_GAME_7F0A5B80
 /* 0DA8D8 7F0A5DA8 10000025 */  b     .L7F0A5E40
 /* 0DA8DC 7F0A5DAC E4D20000 */   swc1  $f18, ($a2)
 .L7F0A5DB0:
-/* 0DA8E0 7F0A5DB0 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0DA8E0 7F0A5DB0 0C00307F */  jal   joyGetStickY
 /* 0DA8E4 7F0A5DB4 00002025 */   move  $a0, $zero
 /* 0DA8E8 7F0A5DB8 2841FFE2 */  slti  $at, $v0, -0x1e
 /* 0DA8EC 7F0A5DBC 10200020 */  beqz  $at, .L7F0A5E40
 /* 0DA8F0 7F0A5DC0 00000000 */   nop   
-/* 0DA8F4 7F0A5DC4 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0DA8F4 7F0A5DC4 0C00307F */  jal   joyGetStickY
 /* 0DA8F8 7F0A5DC8 00002025 */   move  $a0, $zero
 /* 0DA8FC 7F0A5DCC 3C068004 */  lui   $a2, %hi(D_800409BC)
 /* 0DA900 7F0A5DD0 2841FFBB */  slti  $at, $v0, -0x45
@@ -1492,7 +1492,7 @@ glabel sub_GAME_7F0A5B80
 /* 0DA934 7F0A5E04 8D8C09A8 */  lw    $t4, %lo(watch_soundrelated_maybe)($t4)
 /* 0DA938 7F0A5E08 1580000D */  bnez  $t4, .L7F0A5E40
 /* 0DA93C 7F0A5E0C 00000000 */   nop   
-/* 0DA940 7F0A5E10 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0DA940 7F0A5E10 0C00307F */  jal   joyGetStickY
 /* 0DA944 7F0A5E14 00002025 */   move  $a0, $zero
 /* 0DA948 7F0A5E18 44824000 */  mtc1  $v0, $f8
 /* 0DA94C 7F0A5E1C 3C014396 */  li    $at, 0x43960000 # 300.000000
@@ -1746,7 +1746,7 @@ glabel sub_GAME_7F0A611C
 /* 0DAC78 7F0A6148 24050808 */   li    $a1, 2056
 /* 0DAC7C 7F0A614C 54400007 */  bnezl $v0, .L7F0A616C
 /* 0DAC80 7F0A6150 C6000000 */   lwc1  $f0, ($s0)
-/* 0DAC84 7F0A6154 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0DAC84 7F0A6154 0C00307F */  jal   joyGetStickY
 /* 0DAC88 7F0A6158 00002025 */   move  $a0, $zero
 /* 0DAC8C 7F0A615C 28410047 */  slti  $at, $v0, 0x47
 /* 0DAC90 7F0A6160 1420000F */  bnez  $at, .L7F0A61A0
@@ -1771,7 +1771,7 @@ glabel sub_GAME_7F0A611C
 /* 0DACD4 7F0A61A4 24050404 */   li    $a1, 1028
 /* 0DACD8 7F0A61A8 54400007 */  bnezl $v0, .L7F0A61C8
 /* 0DACDC 7F0A61AC C6000000 */   lwc1  $f0, ($s0)
-/* 0DACE0 7F0A61B0 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0DACE0 7F0A61B0 0C00307F */  jal   joyGetStickY
 /* 0DACE4 7F0A61B4 00002025 */   move  $a0, $zero
 /* 0DACE8 7F0A61B8 2841FFBA */  slti  $at, $v0, -0x46
 /* 0DACEC 7F0A61BC 50200012 */  beql  $at, $zero, .L7F0A6208
@@ -1834,12 +1834,12 @@ glabel sub_GAME_7F0A611C
 /* 0DADC0 7F0A6290 46100480 */  add.s $f18, $f0, $f16
 /* 0DADC4 7F0A6294 E6120000 */  swc1  $f18, ($s0)
 .L7F0A6298:
-/* 0DADC8 7F0A6298 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0DADC8 7F0A6298 0C00307F */  jal   joyGetStickY
 /* 0DADCC 7F0A629C 00002025 */   move  $a0, $zero
 /* 0DADD0 7F0A62A0 2841001F */  slti  $at, $v0, 0x1f
 /* 0DADD4 7F0A62A4 14200017 */  bnez  $at, .L7F0A6304
 /* 0DADD8 7F0A62A8 00000000 */   nop   
-/* 0DADDC 7F0A62AC 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0DADDC 7F0A62AC 0C00307F */  jal   joyGetStickY
 /* 0DADE0 7F0A62B0 00002025 */   move  $a0, $zero
 /* 0DADE4 7F0A62B4 28410046 */  slti  $at, $v0, 0x46
 /* 0DADE8 7F0A62B8 10200012 */  beqz  $at, .L7F0A6304
@@ -1850,7 +1850,7 @@ glabel sub_GAME_7F0A611C
 /* 0DADFC 7F0A62CC 00000000 */   nop   
 /* 0DAE00 7F0A62D0 1180000C */  beqz  $t4, .L7F0A6304
 /* 0DAE04 7F0A62D4 00000000 */   nop   
-/* 0DAE08 7F0A62D8 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0DAE08 7F0A62D8 0C00307F */  jal   joyGetStickY
 /* 0DAE0C 7F0A62DC 00002025 */   move  $a0, $zero
 /* 0DAE10 7F0A62E0 44822000 */  mtc1  $v0, $f4
 /* 0DAE14 7F0A62E4 3C014396 */  li    $at, 0x43960000 # 300.000000
@@ -1862,12 +1862,12 @@ glabel sub_GAME_7F0A611C
 /* 0DAE2C 7F0A62FC 10000021 */  b     .L7F0A6384
 /* 0DAE30 7F0A6300 E6120000 */   swc1  $f18, ($s0)
 .L7F0A6304:
-/* 0DAE34 7F0A6304 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0DAE34 7F0A6304 0C00307F */  jal   joyGetStickY
 /* 0DAE38 7F0A6308 00002025 */   move  $a0, $zero
 /* 0DAE3C 7F0A630C 2841FFE2 */  slti  $at, $v0, -0x1e
 /* 0DAE40 7F0A6310 1020001C */  beqz  $at, .L7F0A6384
 /* 0DAE44 7F0A6314 00000000 */   nop   
-/* 0DAE48 7F0A6318 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0DAE48 7F0A6318 0C00307F */  jal   joyGetStickY
 /* 0DAE4C 7F0A631C 00002025 */   move  $a0, $zero
 /* 0DAE50 7F0A6320 2841FFBB */  slti  $at, $v0, -0x45
 /* 0DAE54 7F0A6324 14200017 */  bnez  $at, .L7F0A6384
@@ -1884,7 +1884,7 @@ glabel sub_GAME_7F0A611C
 /* 0DAE80 7F0A6350 00000000 */   nop   
 /* 0DAE84 7F0A6354 1300000B */  beqz  $t8, .L7F0A6384
 /* 0DAE88 7F0A6358 00000000 */   nop   
-/* 0DAE8C 7F0A635C 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0DAE8C 7F0A635C 0C00307F */  jal   joyGetStickY
 /* 0DAE90 7F0A6360 00002025 */   move  $a0, $zero
 /* 0DAE94 7F0A6364 44824000 */  mtc1  $v0, $f8
 /* 0DAE98 7F0A6368 3C014396 */  li    $at, 0x43960000 # 300.000000
@@ -2307,15 +2307,15 @@ void sub_GAME_7F0A6A80(void)
 
     if (D_80040AE0 == 0)
     {
-        if ((get_cur_controller_vert_stick_pos(0) >= -0xA) && (get_cur_controller_vert_stick_pos(0) < 0xB))
+        if ((joyGetStickY(0) >= -0xA) && (joyGetStickY(0) < 0xB))
         {
             D_80040AE0 = 1;
         }
-        else if ((get_cur_controller_vert_stick_pos(0) < 0xB) && (controller_7000C284(0) >= 0xB))
+        else if ((joyGetStickY(0) < 0xB) && (controller_7000C284(0) >= 0xB))
         {
             D_80040AE0 = 1;
         }
-        else if ((get_cur_controller_vert_stick_pos(0) >= -0xA) && (controller_7000C284(0) < -0xA))
+        else if ((joyGetStickY(0) >= -0xA) && (controller_7000C284(0) < -0xA))
         {
             D_80040AE0 = 1;
         }
@@ -2522,12 +2522,12 @@ glabel sub_GAME_7F0A6A80
 /* 0DC260 7F0A76F0 8D080B10 */  lw    $t0, %lo(D_80040AE0)($t0)
 /* 0DC264 7F0A76F4 15000027 */  bnez  $t0, .Ljp7F0A7794
 /* 0DC268 7F0A76F8 00000000 */   nop   
-/* 0DC26C 7F0A76FC 0C003098 */  jal   get_cur_controller_vert_stick_pos
+/* 0DC26C 7F0A76FC 0C003098 */  jal   joyGetStickY
 /* 0DC270 7F0A7700 00002025 */   move  $a0, $zero
 /* 0DC274 7F0A7704 2841FFF6 */  slti  $at, $v0, -0xa
 /* 0DC278 7F0A7708 14200009 */  bnez  $at, .Ljp7F0A7730
 /* 0DC27C 7F0A770C 00000000 */   nop   
-/* 0DC280 7F0A7710 0C003098 */  jal   get_cur_controller_vert_stick_pos
+/* 0DC280 7F0A7710 0C003098 */  jal   joyGetStickY
 /* 0DC284 7F0A7714 00002025 */   move  $a0, $zero
 /* 0DC288 7F0A7718 2841000B */  slti  $at, $v0, 0xb
 /* 0DC28C 7F0A771C 10200004 */  beqz  $at, .Ljp7F0A7730
@@ -2536,7 +2536,7 @@ glabel sub_GAME_7F0A6A80
 /* 0DC298 7F0A7728 1000001A */  b     .Ljp7F0A7794
 /* 0DC29C 7F0A772C AC290B10 */   sw    $t1, %lo(D_80040AE0)($at)
 .Ljp7F0A7730:
-/* 0DC2A0 7F0A7730 0C003098 */  jal   get_cur_controller_vert_stick_pos
+/* 0DC2A0 7F0A7730 0C003098 */  jal   joyGetStickY
 /* 0DC2A4 7F0A7734 00002025 */   move  $a0, $zero
 /* 0DC2A8 7F0A7738 2841000B */  slti  $at, $v0, 0xb
 /* 0DC2AC 7F0A773C 10200009 */  beqz  $at, .Ljp7F0A7764
@@ -2550,7 +2550,7 @@ glabel sub_GAME_7F0A6A80
 /* 0DC2CC 7F0A775C 1000000D */  b     .Ljp7F0A7794
 /* 0DC2D0 7F0A7760 AC2A0B10 */   sw    $t2, %lo(D_80040AE0)($at)
 .Ljp7F0A7764:
-/* 0DC2D4 7F0A7764 0C003098 */  jal   get_cur_controller_vert_stick_pos
+/* 0DC2D4 7F0A7764 0C003098 */  jal   joyGetStickY
 /* 0DC2D8 7F0A7768 00002025 */   move  $a0, $zero
 /* 0DC2DC 7F0A776C 2841FFF6 */  slti  $at, $v0, -0xa
 /* 0DC2E0 7F0A7770 14200008 */  bnez  $at, .Ljp7F0A7794
@@ -7554,7 +7554,7 @@ glabel sub_GAME_7F0AADC0
 /* 0DFA84 7F0AAF54 24010001 */  li    $at, 1
 /* 0DFA88 7F0AAF58 15210012 */  bne   $t1, $at, .L7F0AAFA4
 /* 0DFA8C 7F0AAF5C 00000000 */   nop   
-/* 0DFA90 7F0AAF60 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0DFA90 7F0AAF60 0C00307F */  jal   joyGetStickY
 /* 0DFA94 7F0AAF64 00002025 */   move  $a0, $zero
 /* 0DFA98 7F0AAF68 44824000 */  mtc1  $v0, $f8
 /* 0DFA9C 7F0AAF6C 3C018004 */  lui   $at, %hi(D_80040B20)
@@ -7754,7 +7754,7 @@ glabel sub_GAME_7F0AADC0
 /* 0DFD8C 7F0AB25C 24010001 */  li    $at, 1
 /* 0DFD90 7F0AB260 15E10012 */  bne   $t7, $at, .L7F0AB2AC
 /* 0DFD94 7F0AB264 00000000 */   nop   
-/* 0DFD98 7F0AB268 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0DFD98 7F0AB268 0C00307F */  jal   joyGetStickY
 /* 0DFD9C 7F0AB26C 24040001 */   li    $a0, 1
 /* 0DFDA0 7F0AB270 44824000 */  mtc1  $v0, $f8
 /* 0DFDA4 7F0AB274 3C018004 */  lui   $at, %hi(D_80040B30)
@@ -8025,7 +8025,7 @@ glabel sub_GAME_7F0AADC0
 /* 0E0678 7F0ABB08 24010001 */  li    $at, 1
 /* 0E067C 7F0ABB0C 15E10012 */  bne   $t7, $at, .Ljp7F0ABB58
 /* 0E0680 7F0ABB10 00000000 */   nop   
-/* 0E0684 7F0ABB14 0C003098 */  jal   get_cur_controller_vert_stick_pos
+/* 0E0684 7F0ABB14 0C003098 */  jal   joyGetStickY
 /* 0E0688 7F0ABB18 00002025 */   move  $a0, $zero
 /* 0E068C 7F0ABB1C 44823000 */  mtc1  $v0, $f6
 /* 0E0690 7F0ABB20 3C018004 */  lui   $at, %hi(D_80040B20) # $at, 0x8004
@@ -8222,7 +8222,7 @@ glabel sub_GAME_7F0AADC0
 /* 0E0974 7F0ABE04 24010001 */  li    $at, 1
 /* 0E0978 7F0ABE08 15A10012 */  bne   $t5, $at, .Ljp7F0ABE54
 /* 0E097C 7F0ABE0C 00000000 */   nop   
-/* 0E0980 7F0ABE10 0C003098 */  jal   get_cur_controller_vert_stick_pos
+/* 0E0980 7F0ABE10 0C003098 */  jal   joyGetStickY
 /* 0E0984 7F0ABE14 24040001 */   li    $a0, 1
 /* 0E0988 7F0ABE18 44822000 */  mtc1  $v0, $f4
 /* 0E098C 7F0ABE1C 3C018004 */  lui   $at, %hi(D_80040B30) # $at, 0x8004

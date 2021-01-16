@@ -15435,7 +15435,7 @@ glabel controller_gameplay_interaction
 /* 0B6724 7F081BF4 8FAD0064 */  lw    $t5, 0x64($sp)
 /* 0B6728 7F081BF8 004D2021 */  addu  $a0, $v0, $t5
 /* 0B672C 7F081BFC 00047E00 */  sll   $t7, $a0, 0x18
-/* 0B6730 7F081C00 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0B6730 7F081C00 0C00307F */  jal   joyGetStickY
 /* 0B6734 7F081C04 000F2603 */   sra   $a0, $t7, 0x18
 /* 0B6738 7F081C08 0FC26C54 */  jal   get_cur_playernum
 /* 0B673C 7F081C0C A3A2011E */   sb    $v0, 0x11e($sp)
@@ -28776,7 +28776,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0898E8
 /* 0BE418 7F0898E8 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0BE41C 7F0898EC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0BE420 7F0898F0 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 0BE420 7F0898F0 0C00307F */  jal   joyGetStickY
 /* 0BE424 7F0898F4 00002025 */   move  $a0, $zero
 /* 0BE428 7F0898F8 000270C0 */  sll   $t6, $v0, 3
 /* 0BE42C 7F0898FC 25C20280 */  addiu $v0, $t6, 0x280

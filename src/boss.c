@@ -477,7 +477,7 @@ loop_29:
                         sp1A4 = temp_ret_2;
                         if (debug_feature_flag != 0)
                         {
-                            debug_feature_flag = debug_menu_processor((s32) (((s32) (joyGetStickX(0) << 0x18) >> 0x18) << 0x18) >> 0x18, (s32) (((s32) (get_cur_controller_vert_stick_pos(0) << 0x18) >> 0x18) << 0x18) >> 0x18, (get_controller_buttons_held(0, 0xffff) & 0xffff) & 0xffff, get_controller_buttons_pressed(0, 0xffff) & 0xffff);
+                            debug_feature_flag = debug_menu_processor((s32) (((s32) (joyGetStickX(0) << 0x18) >> 0x18) << 0x18) >> 0x18, (s32) (((s32) (joyGetStickY(0) << 0x18) >> 0x18) << 0x18) >> 0x18, (get_controller_buttons_held(0, 0xffff) & 0xffff) & 0xffff, get_controller_buttons_pressed(0, 0xffff) & 0xffff);
                         }
                         manage_mp_game();
                         sub_GAME_7F09B41C();
@@ -980,7 +980,7 @@ glabel mainloop
 /* 007128 70006528 00028600 */  sll   $s0, $v0, 0x18
 /* 00712C 7000652C 00105E03 */  sra   $t3, $s0, 0x18
 /* 007130 70006530 01608025 */  move  $s0, $t3
-/* 007134 70006534 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 007134 70006534 0C00307F */  jal   joyGetStickY
 /* 007138 70006538 00002025 */   move  $a0, $zero
 /* 00713C 7000653C 00028E00 */  sll   $s1, $v0, 0x18
 /* 007140 70006540 00117E03 */  sra   $t7, $s1, 0x18

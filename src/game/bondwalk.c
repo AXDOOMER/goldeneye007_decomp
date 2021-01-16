@@ -11110,7 +11110,7 @@ glabel sub_GAME_7F06359C
 /* 09823C 7F06370C 46128102 */  mul.s $f4, $f16, $f18
 /* 098240 7F063710 0FC161A2 */  jal   matrix_4x4_set_rotation_around_z
 /* 098244 7F063714 46062303 */   div.s $f12, $f4, $f6
-/* 098248 7F063718 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 098248 7F063718 0C00307F */  jal   joyGetStickY
 /* 09824C 7F06371C 82840000 */   lb    $a0, ($s4)
 /* 098250 7F063720 44824000 */  mtc1  $v0, $f8
 /* 098254 7F063724 3C018005 */  lui   $at, %hi(D_80053EDC)
@@ -11300,7 +11300,7 @@ glabel sub_GAME_7F06359C
 /* 098514 7F0639E4 46128102 */  mul.s $f4, $f16, $f18
 /* 098518 7F0639E8 0FC161A2 */  jal   matrix_4x4_set_rotation_around_z
 /* 09851C 7F0639EC 46062303 */   div.s $f12, $f4, $f6
-/* 098520 7F0639F0 0C00307F */  jal   get_cur_controller_vert_stick_pos
+/* 098520 7F0639F0 0C00307F */  jal   joyGetStickY
 /* 098524 7F0639F4 82840000 */   lb    $a0, ($s4)
 /* 098528 7F0639F8 44824000 */  mtc1  $v0, $f8
 /* 09852C 7F0639FC 3C018005 */  lui   $at, %hi(D_80053EF0)
