@@ -3,6 +3,7 @@
 #include "sched.h"
 #include "bondgame.h"
 #include "deb_print.h"
+#include "video.h"
 
 /**
  * @file sched.c
@@ -41,8 +42,8 @@ u32 stderr_active = 0;
 u32 stderr_permitted = 0;
 u32 userCompareValue = 45000000;
 u32 currentcount = 0;
-u32 setby_DPCfill_0 = 0;
-u32 setby_DPCfill_1 = 0;
+u32 dp_busy = 0;
+u32 dpCount = 0;
 //800230b0
 f32 something_with_osVI_0 = 0.0;
 f32 something_with_osVI_4[2] = {1.0, 1.0};
@@ -161,10 +162,10 @@ void osCreateScheduler (OSSched * sc, void * stack, u8 mode, u8 numFields)
     osCreateMesgQueue(&sc->cmdQ, sc->cmdMsgBuf, 8);
     osCreateViManager(0xfe);
 
-    viMode = osViModeTable[mode];
-    viMode.comRegs.ctrl = osViModeTable[mode].comRegs.hStart;
-    viMode.comRegs.width = osViModeTable[mode].fldRegs[0].vStart;
-    viMode.comRegs.burst = osViModeTable[mode].fldRegs[1].vStart;
+    viMode = (osViMode *)osViModeTable[mode];
+    viMode->comRegs.ctrl = osViModeTable[mode].comRegs.hStart;
+    viMode->comRegs.width = osViModeTable[mode].fldRegs[0].vStart;
+    viMode->comRegs.burst = osViModeTable[mode].fldRegs[1].vStart;
 
     osSetEventMesg(4, &sc->interruptQ, 0x29b);
     osSetEventMesg(9, &sc->interruptQ, 0x29c);
@@ -330,34 +331,34 @@ OSMesgQueue *osScGetCmdQ(OSSched *sc)
  * 1900	70000D00
  */
 #ifdef NONMATCHING
-void __scMain(void *arg)
+void __scMain(OSSched *arg)
 {
     OSMesg msg;
-    OSSched *sc = (OSSched *)arg;
+    //OSSched *sc = (OSSched *)arg;
     OSScClient *client;
     static int count = 0;
     
     while (1) {
         
-        osRecvMesg(&sc->interruptQ, (OSMesg *)&msg, OS_MESG_BLOCK);
+        osRecvMesg(&arg->interruptQ, (OSMesg *)&msg, OS_MESG_BLOCK);
 
         switch ((int) msg) {
             case (0x29a):
-                __scHandleRetrace(sc);
+                __scHandleRetrace(arg);
                 break;
 
             case (0x29b):
-                __scHandleRSP(sc);
+                __scHandleRSP(arg);
                 break;
 
             case (0x29c):
-                __scHandleRDP(sc);
+                __scHandleRDP(arg);
                 break;
 
             case (0x29d):
                 reset_cont_rumble_detect();
-                for (client = sc->clientList;client != 0;client = client->next) {
-                      osSendMesg(client->msgQ, (OSMesg) &sc->prenmiMsg, OS_MESG_NOBLOCK);
+                for (client = arg->clientList;client != 0;client = client->next) {
+                      osSendMesg(client->msgQ, (OSMesg) &arg->prenmiMsg, OS_MESG_NOBLOCK);
                 }
                 break;
         }
@@ -377,7 +378,7 @@ void __scMain(void *arg)
 
     while (1) {
         while ((u32)msg != 0x29a) {
-            osRecvMesg(&sc->interruptQ,&msg,1);
+            osRecvMesg(&arg->interruptQ,&msg,1);
         }
         controllerSchedulerRelated();
     }
@@ -1101,27 +1102,20 @@ void __scAppendList(OSSched *sc, OSScTask *t)
  * (DPC fill)
  */
 #ifdef NONMATCHING
-void __scExec(void *arg0, void *arg1, void *arg2)
+void __scExec(OSSched *sc, OSScTask *sp, OSScTask *dp)
 {
-    s32 phi_v0;
-
-    if (arg1 != 0)
+    if (sp)
     {
-        if (arg1->unk10 == 2)
+        if (sp->list.t.type == 2)
         {
             osWritebackDCacheAll();
-        }
-        phi_v0 = arg1->unk10;
-        if (arg1->unk10 != 2)
-        {
-            phi_v0 = arg1->unk10;
-            if ((arg1->unk4 & 0x10) == 0)
+        } 
+         if (sp->state &= 0x10)
             {
                 osDpSetStatus(0x3c0);
-                phi_v0 = arg1->unk10;
             }
-        }
-        if (phi_v0 == 2)
+        
+        if (sp->list.t.type == 2)
         {
             video_related_3(0x30001);
         }
@@ -1130,24 +1124,24 @@ void __scExec(void *arg0, void *arg1, void *arg2)
             video_related_3(0x30001);
             video_related_3(0x20002);
         }
-        arg1->unk4 = (s32) (arg1->unk4 & -0x31);
-        osSpTaskLoad((arg1 + 0x10));
-        osSpTaskStartGo(sp20);
-        arg0->unkC8 = arg1;
-        if (arg1 == arg2)
+        sp->state = (s32) (sp->state & -0x31);
+        osSpTaskLoad(&sp->list);
+        osSpTaskStartGo(&sp->list);
+        sc->curRSPTask = sp;
+        if (sp == dp)
         {
-            arg0->unkCC = arg2;
+            sc->curRDPTask = dp;
         }
     }
-    if (arg2 != 0)
+    if (dp && (dp != sp))
     {
-        if (arg2 != arg1)
-        {
-            osDpSetNextBuffer(arg2->unk38, *arg2->unk3C, arg2->unk3C->unk4);
-            setby_DPCfill_0 = 1;
-            setby_DPCfill_1 = 0;
-            arg0->unkCC = arg2;
-        }
+            osDpSetNextBuffer(dp->list.t.output_buff, dp->list.t.output_buff_size);
+
+            dp_busy = 1;
+            dpCount = 0;
+
+            sc->curRDPTask = dp;
+        
     }
 }
 #else
@@ -1219,11 +1213,11 @@ glabel __scExec
 /* 002128 70001528 0C0039EC */  jal   osDpSetNextBuffer
 /* 00212C 7000152C 8D270004 */   lw    $a3, 4($t1)
 /* 002130 70001530 240A0001 */  li    $t2, 1
-/* 002134 70001534 3C018002 */  lui   $at, %hi(setby_DPCfill_0)
+/* 002134 70001534 3C018002 */  lui   $at, %hi(dp_busy)
 /* 002138 70001538 8FAB0028 */  lw    $t3, 0x28($sp)
-/* 00213C 7000153C AC2A30A8 */  sw    $t2, %lo(setby_DPCfill_0)($at)
-/* 002140 70001540 3C018002 */  lui   $at, %hi(setby_DPCfill_1)
-/* 002144 70001544 AC2030AC */  sw    $zero, %lo(setby_DPCfill_1)($at)
+/* 00213C 7000153C AC2A30A8 */  sw    $t2, %lo(dp_busy)($at)
+/* 002140 70001540 3C018002 */  lui   $at, %hi(dpCount)
+/* 002144 70001544 AC2030AC */  sw    $zero, %lo(dpCount)($at)
 /* 002148 70001548 AD7100CC */  sw    $s1, 0xcc($t3)
 /* 00214C 7000154C 8FBF001C */  lw    $ra, 0x1c($sp)
 .L70001550:

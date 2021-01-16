@@ -25,6 +25,8 @@ struct video_settings {
     u8* framebuf;
 };
 
+extern OSViMode *viMode;
+
 void viSet800232B4(f32 param_1);
 
 s16 viGetX(void);
