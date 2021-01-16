@@ -1055,45 +1055,18 @@ void joy7000C67C(void) {
     osRecvMesg(&cont2MesgMQ, &msg, OS_MESG_BLOCK);
 }
 
-#ifdef NONMATCHING
-void controller_7000C6BC(void) {
+void joy7000C6BC(void) {
     OSMesg msg;
     osSendMesg(&cont3MesgMQ, &msg, OS_MESG_NOBLOCK);
     osRecvMesg(&cont4MesgMQ, &msg, OS_MESG_BLOCK);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel controller_7000C6BC
-/* 00D2BC 7000C6BC 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 00D2C0 7000C6C0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00D2C4 7000C6C4 3C048006 */  lui   $a0, %hi(cont3MesgMQ)
-/* 00D2C8 7000C6C8 248453B0 */  addiu $a0, %lo(cont3MesgMQ) # addiu $a0, $a0, 0x53b0
-/* 00D2CC 7000C6CC 27A5001C */  addiu $a1, $sp, 0x1c
-/* 00D2D0 7000C6D0 0C0037C4 */  jal   osSendMesg
-/* 00D2D4 7000C6D4 00003025 */   move  $a2, $zero
-/* 00D2D8 7000C6D8 3C048006 */  lui   $a0, %hi(cont4MesgMQ)
-/* 00D2DC 7000C6DC 248453D0 */  addiu $a0, %lo(cont4MesgMQ) # addiu $a0, $a0, 0x53d0
-/* 00D2E0 7000C6E0 27A5001C */  addiu $a1, $sp, 0x1c
-/* 00D2E4 7000C6E4 0C003774 */  jal   osRecvMesg
-/* 00D2E8 7000C6E8 24060001 */   li    $a2, 1
-/* 00D2EC 7000C6EC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00D2F0 7000C6F0 27BD0020 */  addiu $sp, $sp, 0x20
-/* 00D2F4 7000C6F4 03E00008 */  jr    $ra
-/* 00D2F8 7000C6F8 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 s32 save_7000C6FC(void) {
     s32 type;
     joy7000C67C();
     type = osEepromProbe(&contdemoMesgMQ);
-    controller_7000C6BC();
+    joy7000C6BC();
     return type;
 }
 #else
@@ -1107,7 +1080,7 @@ glabel save_7000C6FC
 /* 00D30C 7000C70C 3C048006 */  lui   $a0, %hi(contdemoMesgMQ)
 /* 00D310 7000C710 0C0053F4 */  jal   osEepromProbe
 /* 00D314 7000C714 24845350 */   addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
-/* 00D318 7000C718 0C0031AF */  jal   controller_7000C6BC
+/* 00D318 7000C718 0C0031AF */  jal   joy7000C6BC
 /* 00D31C 7000C71C AFA2001C */   sw    $v0, 0x1c($sp)
 /* 00D320 7000C720 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 00D324 7000C724 8FA2001C */  lw    $v0, 0x1c($sp)
@@ -1126,7 +1099,7 @@ s32 save_7000C734(u8 address, u8 *buffer)
     s32 ret;
     joy7000C67C();
     ret = osEepromRead(&contdemoMesgMQ, address, buffer);
-    controller_7000C6BC();
+    joy7000C6BC();
     return ret;
 }
 #else
@@ -1143,7 +1116,7 @@ glabel save_7000C734
 /* 00D350 7000C750 93A50023 */  lbu   $a1, 0x23($sp)
 /* 00D354 7000C754 0C005410 */  jal   osEepromRead
 /* 00D358 7000C758 8FA60024 */   lw    $a2, 0x24($sp)
-/* 00D35C 7000C75C 0C0031AF */  jal   controller_7000C6BC
+/* 00D35C 7000C75C 0C0031AF */  jal   joy7000C6BC
 /* 00D360 7000C760 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 00D364 7000C764 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 00D368 7000C768 8FA2001C */  lw    $v0, 0x1c($sp)
@@ -1162,7 +1135,7 @@ s32 save_7000C778(u8 address, u8 *buffer) {
     s32 ret;
     joy7000C67C();
     ret = osEepromWrite(&contdemoMesgMQ, address, buffer);
-    controller_7000C6BC();
+    joy7000C6BC();
     return ret;
 }
 #else
@@ -1179,7 +1152,7 @@ glabel save_7000C778
 /* 00D394 7000C794 93A50023 */  lbu   $a1, 0x23($sp)
 /* 00D398 7000C798 0C0054D0 */  jal   osEepromWrite
 /* 00D39C 7000C79C 8FA60024 */   lw    $a2, 0x24($sp)
-/* 00D3A0 7000C7A0 0C0031AF */  jal   controller_7000C6BC
+/* 00D3A0 7000C7A0 0C0031AF */  jal   joy7000C6BC
 /* 00D3A4 7000C7A4 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 00D3A8 7000C7A8 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 00D3AC 7000C7AC 8FA2001C */  lw    $v0, 0x1c($sp)
@@ -1198,7 +1171,7 @@ s32 save_7000C7BC(u8 address, u8 *buffer, s32 nbytes) {
     s32 ret;
     joy7000C67C();
     ret = osEepromLongRead(&contdemoMesgMQ, address, buffer, nbytes);
-    controller_7000C6BC();
+    joy7000C6BC();
     return ret;
 }
 #else
@@ -1217,7 +1190,7 @@ glabel save_7000C7BC
 /* 00D3E0 7000C7E0 8FA60024 */  lw    $a2, 0x24($sp)
 /* 00D3E4 7000C7E4 0C005608 */  jal   osEepromLongRead
 /* 00D3E8 7000C7E8 8FA70028 */   lw    $a3, 0x28($sp)
-/* 00D3EC 7000C7EC 0C0031AF */  jal   controller_7000C6BC
+/* 00D3EC 7000C7EC 0C0031AF */  jal   joy7000C6BC
 /* 00D3F0 7000C7F0 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 00D3F4 7000C7F4 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 00D3F8 7000C7F8 8FA2001C */  lw    $v0, 0x1c($sp)
@@ -1236,7 +1209,7 @@ s32 save_7000C808(u8 address, u8 *buffer, s32 nbytes) {
     s32 ret;
     joy7000C67C();
     ret = osEepromLongWrite(&contdemoMesgMQ, address, buffer, nbytes);
-    controller_7000C6BC();
+    joy7000C6BC();
     return ret;
 }
 #else
@@ -1255,7 +1228,7 @@ glabel save_7000C808
 /* 00D42C 7000C82C 8FA60024 */  lw    $a2, 0x24($sp)
 /* 00D430 7000C830 0C005658 */  jal   osEepromLongWrite
 /* 00D434 7000C834 8FA70028 */   lw    $a3, 0x28($sp)
-/* 00D438 7000C838 0C0031AF */  jal   controller_7000C6BC
+/* 00D438 7000C838 0C0031AF */  jal   joy7000C6BC
 /* 00D43C 7000C83C AFA2001C */   sw    $v0, 0x1c($sp)
 /* 00D440 7000C840 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 00D444 7000C844 8FA2001C */  lw    $v0, 0x1c($sp)
