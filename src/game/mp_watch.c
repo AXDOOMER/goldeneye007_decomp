@@ -4,6 +4,7 @@
 #include "music.h"
 #include "bondgame.h"
 #include "bondconstants.h"
+#include "joy.h"
 
 
 // bss
@@ -205,143 +206,27 @@ def_7F0C1EB4:
 
 
 
-#ifdef NONMATCHING
-void check_if_player_is_pressing_anything_right(s32 arg0) {
-    s32 sp18;
-    s32 sp1C;
-    s32 temp_t6;
-    ? temp_ret;
+s32 check_if_player_is_pressing_anything_right(s32 param_1)
+{
+    s32 iVar3 = joyGetStickXInRange(param_1, -2, 1);
 
-    // Node 0
-    temp_t6 = ((s32) (arg0 << 0x18) >> 0x18);
-    sp18 = temp_t6;
-    sp1C = joyGetStickXInRange(temp_t6, -2, 1);
-    temp_ret = joyGetButtonsPressedThisFrame(sp18, 0x101);
-    if ((temp_ret == 0) && (sp1C > 0))
-    {
-        // Node 2
-        if (pPlayer->unk29D0 != 0)
-        {
-            // Node 3
-        }
+    if ((joyGetButtonsPressedThisFrame(param_1, R_JPAD|R_CBUTTONS)) || ((iVar3 >= 1  && (pPlayer->mpjoywascentre)))) {
+        return 1;
     }
-    else
-    {
-        // Node 3
-    }
-    // Node 4
-    return temp_ret;
-}
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_player_is_pressing_anything_right
-/* 0F6A28 7F0C1EF8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0F6A2C 7F0C1EFC 00042600 */  sll   $a0, $a0, 0x18
-/* 0F6A30 7F0C1F00 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F6A34 7F0C1F04 00047603 */  sra   $t6, $a0, 0x18
-/* 0F6A38 7F0C1F08 01C02025 */  move  $a0, $t6
-/* 0F6A3C 7F0C1F0C AFAE0018 */  sw    $t6, 0x18($sp)
-/* 0F6A40 7F0C1F10 2405FFFE */  li    $a1, -2
-/* 0F6A44 7F0C1F14 0C00312D */  jal   joyGetStickXInRange
-/* 0F6A48 7F0C1F18 24060001 */   li    $a2, 1
-/* 0F6A4C 7F0C1F1C 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0F6A50 7F0C1F20 AFA2001C */  sw    $v0, 0x1c($sp)
-/* 0F6A54 7F0C1F24 0C0030EB */  jal   joyGetButtonsPressedThisFrame
-/* 0F6A58 7F0C1F28 24050101 */   li    $a1, 257
-/* 0F6A5C 7F0C1F2C 1440000A */  bnez  $v0, .L7F0C1F58
-/* 0F6A60 7F0C1F30 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F6A64 7F0C1F34 8FAF001C */  lw    $t7, 0x1c($sp)
-/* 0F6A68 7F0C1F38 3C188008 */  lui   $t8, %hi(pPlayer) 
-/* 0F6A6C 7F0C1F3C 00001025 */  move  $v0, $zero
-/* 0F6A70 7F0C1F40 19E00007 */  blez  $t7, .L7F0C1F60
-/* 0F6A74 7F0C1F44 00000000 */   nop   
-/* 0F6A78 7F0C1F48 8F18A0B0 */  lw    $t8, %lo(pPlayer)($t8)
-/* 0F6A7C 7F0C1F4C 8F1929D0 */  lw    $t9, 0x29d0($t8)
-/* 0F6A80 7F0C1F50 13200003 */  beqz  $t9, .L7F0C1F60
-/* 0F6A84 7F0C1F54 00000000 */   nop   
-.L7F0C1F58:
-/* 0F6A88 7F0C1F58 10000001 */  b     .L7F0C1F60
-/* 0F6A8C 7F0C1F5C 24020001 */   li    $v0, 1
-.L7F0C1F60:
-/* 0F6A90 7F0C1F60 03E00008 */  jr    $ra
-/* 0F6A94 7F0C1F64 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void check_if_player_is_pressing_anything_left(s32 arg0) {
-    s32 sp18;
-    s32 sp1C;
-    s32 temp_t6;
-
-    // Node 0
-    temp_t6 = ((s32) (arg0 << 0x18) >> 0x18);
-    sp18 = temp_t6;
-    sp1C = joyGetStickXInRange(temp_t6, -2, 1);
-    if ((joyGetButtonsPressedThisFrame(sp18, 0x202) == 0) && (sp1C < -1))
-    {
-        // Node 2
-        if (pPlayer->unk29D0 != 0)
-        {
-            // Node 3
-            return;
-            // (possible return value: 1)
-        }
-    }
-    else
-    {
-        // Node 3
-        return;
-        // (possible return value: 1)
-    }
-    // (possible return value: 1)
+    return 0;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_player_is_pressing_anything_left
-/* 0F6A98 7F0C1F68 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0F6A9C 7F0C1F6C 00042600 */  sll   $a0, $a0, 0x18
-/* 0F6AA0 7F0C1F70 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F6AA4 7F0C1F74 00047603 */  sra   $t6, $a0, 0x18
-/* 0F6AA8 7F0C1F78 01C02025 */  move  $a0, $t6
-/* 0F6AAC 7F0C1F7C AFAE0018 */  sw    $t6, 0x18($sp)
-/* 0F6AB0 7F0C1F80 2405FFFE */  li    $a1, -2
-/* 0F6AB4 7F0C1F84 0C00312D */  jal   joyGetStickXInRange
-/* 0F6AB8 7F0C1F88 24060001 */   li    $a2, 1
-/* 0F6ABC 7F0C1F8C 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0F6AC0 7F0C1F90 AFA2001C */  sw    $v0, 0x1c($sp)
-/* 0F6AC4 7F0C1F94 0C0030EB */  jal   joyGetButtonsPressedThisFrame
-/* 0F6AC8 7F0C1F98 24050202 */   li    $a1, 514
-/* 0F6ACC 7F0C1F9C 1440000B */  bnez  $v0, .L7F0C1FCC
-/* 0F6AD0 7F0C1FA0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F6AD4 7F0C1FA4 8FAF001C */  lw    $t7, 0x1c($sp)
-/* 0F6AD8 7F0C1FA8 3C188008 */  lui   $t8, %hi(pPlayer) 
-/* 0F6ADC 7F0C1FAC 00001025 */  move  $v0, $zero
-/* 0F6AE0 7F0C1FB0 29E1FFFF */  slti  $at, $t7, -1
-/* 0F6AE4 7F0C1FB4 10200007 */  beqz  $at, .L7F0C1FD4
-/* 0F6AE8 7F0C1FB8 00000000 */   nop   
-/* 0F6AEC 7F0C1FBC 8F18A0B0 */  lw    $t8, %lo(pPlayer)($t8)
-/* 0F6AF0 7F0C1FC0 8F1929D0 */  lw    $t9, 0x29d0($t8)
-/* 0F6AF4 7F0C1FC4 13200003 */  beqz  $t9, .L7F0C1FD4
-/* 0F6AF8 7F0C1FC8 00000000 */   nop   
-.L7F0C1FCC:
-/* 0F6AFC 7F0C1FCC 10000001 */  b     .L7F0C1FD4
-/* 0F6B00 7F0C1FD0 24020001 */   li    $v0, 1
-.L7F0C1FD4:
-/* 0F6B04 7F0C1FD4 03E00008 */  jr    $ra
-/* 0F6B08 7F0C1FD8 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
+s32 check_if_player_is_pressing_anything_left(s32 param_1)
+{    
+    s32 iVar3 =  joyGetStickXInRange(param_1, -2, 1);
 
+    if ((joyGetButtonsPressedThisFrame(param_1, L_JPAD|L_CBUTTONS)) || ((iVar3 < -1 && (pPlayer->mpjoywascentre)))) {
+        return 1;
+    }
 
-
+    return 0;
+}
 
 
 void play_watch_sfx_beep(void)
@@ -355,11 +240,6 @@ void unpause_game(void)
     is_gameover_flag = 0;
     is_paused = 0;
 }
-
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F0C2024(void) {
