@@ -15426,7 +15426,7 @@ glabel controller_gameplay_interaction
 /* 0B6700 7F081BD0 8FAA0064 */  lw    $t2, 0x64($sp)
 /* 0B6704 7F081BD4 004A2021 */  addu  $a0, $v0, $t2
 /* 0B6708 7F081BD8 00046600 */  sll   $t4, $a0, 0x18
-/* 0B670C 7F081BDC 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 0B670C 7F081BDC 0C00303B */  jal   joyGetStickX
 /* 0B6710 7F081BE0 000C2603 */   sra   $a0, $t4, 0x18
 /* 0B6714 7F081BE4 0FC26C54 */  jal   get_cur_playernum
 /* 0B6718 7F081BE8 A3A2011F */   sb    $v0, 0x11f($sp)

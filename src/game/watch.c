@@ -532,11 +532,11 @@ glabel init_watch_at_start_of_stage
 
 void controller_deadzone_related(void)
 {
-    if (10 < get_cur_controller_horz_stick_pos('\0'))
+    if (10 < joyGetStickX('\0'))
     {
         D_80040B50 = D_80040B50 + 1;
     }
-    if (get_cur_controller_horz_stick_pos('\0') < -10)
+    if (joyGetStickX('\0') < -10)
     {
         D_80040B50 = D_80040B50 + -1;
     }
@@ -566,11 +566,11 @@ void proc_7F0A4B40(undefined4 *param_1)
     int *piStack40;
     byte abStack36 [36];
     
-    sVar1 = get_cur_controller_horz_stick_pos('\0');
+    sVar1 = joyGetStickX('\0');
     if (10 < sVar1) {
         D_80040B48 = D_80040B48 + 1;
     }
-    sVar1 = get_cur_controller_horz_stick_pos('\0');
+    sVar1 = joyGetStickX('\0');
     if (sVar1 < -10) {
         D_80040B48 = D_80040B48 - 1;
     }
@@ -610,7 +610,7 @@ glabel sub_GAME_7F0A4B40
 /* 0D967C 7F0A4B4C AFBF0044 */  sw    $ra, 0x44($sp)
 /* 0D9680 7F0A4B50 AFB20040 */  sw    $s2, 0x40($sp)
 /* 0D9684 7F0A4B54 AFB1003C */  sw    $s1, 0x3c($sp)
-/* 0D9688 7F0A4B58 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 0D9688 7F0A4B58 0C00303B */  jal   joyGetStickX
 /* 0D968C 7F0A4B5C 00002025 */   move  $a0, $zero
 /* 0D9690 7F0A4B60 2841000B */  slti  $at, $v0, 0xb
 /* 0D9694 7F0A4B64 14200006 */  bnez  $at, .L7F0A4B80
@@ -622,7 +622,7 @@ glabel sub_GAME_7F0A4B40
 /* 0D96AC 7F0A4B7C AE4F0000 */  sw    $t7, ($s2)
 .L7F0A4B80:
 /* 0D96B0 7F0A4B80 3C128004 */  lui   $s2, %hi(D_80040B48)
-/* 0D96B4 7F0A4B84 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 0D96B4 7F0A4B84 0C00303B */  jal   joyGetStickX
 /* 0D96B8 7F0A4B88 26520B48 */   addiu $s2, %lo(D_80040B48) # addiu $s2, $s2, 0xb48
 /* 0D96BC 7F0A4B8C 2841FFF6 */  slti  $at, $v0, -0xa
 /* 0D96C0 7F0A4B90 10200004 */  beqz  $at, .L7F0A4BA4
@@ -880,12 +880,12 @@ void reset_watch_soundrelated_maybe(void){
 
 u32 is_holding_greater_than_2E_left_on_stick(void)
 {
-    return (get_cur_controller_horz_stick_pos('\0') < -0x2d);
+    return (joyGetStickX('\0') < -0x2d);
 }
 
 u32 is_holding_greater_than_2E_right_on_stick(void)
 {
-    return ((get_cur_controller_horz_stick_pos('\0') < 0x2e) ^ 1);
+    return ((joyGetStickX('\0') < 0x2e) ^ 1);
 }
 
 u32 get_controlstick_lr_enabled(void) {
@@ -2291,15 +2291,15 @@ void sub_GAME_7F0A6A80(void)
 
     if (controlstick_lr_enabled == 0)
     {
-        if ((get_cur_controller_horz_stick_pos(0) >= -0xA) && (get_cur_controller_horz_stick_pos(0) < 0xB))
+        if ((joyGetStickX(0) >= -0xA) && (joyGetStickX(0) < 0xB))
         {
             controlstick_lr_enabled = 1;
         }
-        else if ((get_cur_controller_horz_stick_pos(0) < 0xB) && (controller_7000C174(0) >= 0xB))
+        else if ((joyGetStickX(0) < 0xB) && (controller_7000C174(0) >= 0xB))
         {
             controlstick_lr_enabled = 1;
         }
-        else if ((get_cur_controller_horz_stick_pos(0) >= -0xA) && (controller_7000C174(0) < -0xA))
+        else if ((joyGetStickX(0) >= -0xA) && (controller_7000C174(0) < -0xA))
         {
             controlstick_lr_enabled = 1;
         }
@@ -2477,12 +2477,12 @@ glabel sub_GAME_7F0A6A80
 /* 0DC1B8 7F0A7648 8DCE0B0C */  lw    $t6, %lo(controlstick_lr_enabled)($t6)
 /* 0DC1BC 7F0A764C 15C00027 */  bnez  $t6, .Ljp7F0A76EC
 /* 0DC1C0 7F0A7650 00000000 */   nop   
-/* 0DC1C4 7F0A7654 0C003054 */  jal   get_cur_controller_horz_stick_pos
+/* 0DC1C4 7F0A7654 0C003054 */  jal   joyGetStickX
 /* 0DC1C8 7F0A7658 00002025 */   move  $a0, $zero
 /* 0DC1CC 7F0A765C 2841FFF6 */  slti  $at, $v0, -0xa
 /* 0DC1D0 7F0A7660 14200009 */  bnez  $at, .Ljp7F0A7688
 /* 0DC1D4 7F0A7664 00000000 */   nop   
-/* 0DC1D8 7F0A7668 0C003054 */  jal   get_cur_controller_horz_stick_pos
+/* 0DC1D8 7F0A7668 0C003054 */  jal   joyGetStickX
 /* 0DC1DC 7F0A766C 00002025 */   move  $a0, $zero
 /* 0DC1E0 7F0A7670 2841000B */  slti  $at, $v0, 0xb
 /* 0DC1E4 7F0A7674 10200004 */  beqz  $at, .Ljp7F0A7688
@@ -2491,7 +2491,7 @@ glabel sub_GAME_7F0A6A80
 /* 0DC1F0 7F0A7680 1000001A */  b     .Ljp7F0A76EC
 /* 0DC1F4 7F0A7684 AC2F0B0C */   sw    $t7, %lo(controlstick_lr_enabled)($at)
 .Ljp7F0A7688:
-/* 0DC1F8 7F0A7688 0C003054 */  jal   get_cur_controller_horz_stick_pos
+/* 0DC1F8 7F0A7688 0C003054 */  jal   joyGetStickX
 /* 0DC1FC 7F0A768C 00002025 */   move  $a0, $zero
 /* 0DC200 7F0A7690 2841000B */  slti  $at, $v0, 0xb
 /* 0DC204 7F0A7694 10200009 */  beqz  $at, .Ljp7F0A76BC
@@ -2505,7 +2505,7 @@ glabel sub_GAME_7F0A6A80
 /* 0DC224 7F0A76B4 1000000D */  b     .Ljp7F0A76EC
 /* 0DC228 7F0A76B8 AC380B0C */   sw    $t8, %lo(controlstick_lr_enabled)($at)
 .Ljp7F0A76BC:
-/* 0DC22C 7F0A76BC 0C003054 */  jal   get_cur_controller_horz_stick_pos
+/* 0DC22C 7F0A76BC 0C003054 */  jal   joyGetStickX
 /* 0DC230 7F0A76C0 00002025 */   move  $a0, $zero
 /* 0DC234 7F0A76C4 2841FFF6 */  slti  $at, $v0, -0xa
 /* 0DC238 7F0A76C8 14200008 */  bnez  $at, .Ljp7F0A76EC
@@ -3477,7 +3477,7 @@ Gfx *sub_GAME_7F0A77C8(Gfx *arg0)
     {
         if (D_800409A4 == 0)
         {
-            if ((get_cur_controller_horz_stick_pos(0) >= 0x2e) || (get_controller_buttons_held(0, 0x111) != 0))
+            if ((joyGetStickX(0) >= 0x2e) || (get_controller_buttons_held(0, 0x111) != 0))
             {
                 D_800409A4 = 1;
             }
@@ -3487,7 +3487,7 @@ Gfx *sub_GAME_7F0A77C8(Gfx *arg0)
         {
             if (D_800409A4 != 0)
             {
-                if ((get_cur_controller_horz_stick_pos(0) < -0x2d) || (get_controller_buttons_held(0, 0x222) != 0))
+                if ((joyGetStickX(0) < -0x2d) || (get_controller_buttons_held(0, 0x222) != 0))
                 {
                     D_800409A4 = 0;
                 }
@@ -3585,7 +3585,7 @@ glabel sub_GAME_7F0A77C8
 /* 0DC3B4 7F0A7884 8C6309A4 */  lw    $v1, %lo(D_800409A4)($v1)
 /* 0DC3B8 7F0A7888 1460000D */  bnez  $v1, .L7F0A78C0
 /* 0DC3BC 7F0A788C 00000000 */   nop   
-/* 0DC3C0 7F0A7890 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 0DC3C0 7F0A7890 0C00303B */  jal   joyGetStickX
 /* 0DC3C4 7F0A7894 00002025 */   move  $a0, $zero
 /* 0DC3C8 7F0A7898 2841002E */  slti  $at, $v0, 0x2e
 /* 0DC3CC 7F0A789C 10200004 */  beqz  $at, .L7F0A78B0
@@ -3601,7 +3601,7 @@ glabel sub_GAME_7F0A77C8
 .L7F0A78C0:
 /* 0DC3F0 7F0A78C0 1060000B */  beqz  $v1, .L7F0A78F0
 /* 0DC3F4 7F0A78C4 00000000 */   nop   
-/* 0DC3F8 7F0A78C8 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 0DC3F8 7F0A78C8 0C00303B */  jal   joyGetStickX
 /* 0DC3FC 7F0A78CC 00002025 */   move  $a0, $zero
 /* 0DC400 7F0A78D0 2841FFD3 */  slti  $at, $v0, -0x2d
 /* 0DC404 7F0A78D4 14200004 */  bnez  $at, .L7F0A78E8
@@ -5556,7 +5556,7 @@ glabel sub_GAME_7F0A8ED0
 /* 0DDA00 7F0A8ED0 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0DDA04 7F0A8ED4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0DDA08 7F0A8ED8 AFA40020 */  sw    $a0, 0x20($sp)
-/* 0DDA0C 7F0A8EDC 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 0DDA0C 7F0A8EDC 0C00303B */  jal   joyGetStickX
 /* 0DDA10 7F0A8EE0 00002025 */   move  $a0, $zero
 /* 0DDA14 7F0A8EE4 8FAE0020 */  lw    $t6, 0x20($sp)
 /* 0DDA18 7F0A8EE8 00002025 */  move  $a0, $zero
@@ -6125,13 +6125,13 @@ glabel sub_GAME_7F0A9684
 /* 0DE1C0 7F0A9690 AFA60020 */  sw    $a2, 0x20($sp)
 /* 0DE1C4 7F0A9694 AFA70024 */  sw    $a3, 0x24($sp)
 /* 0DE1C8 7F0A9698 83A4001B */  lb    $a0, 0x1b($sp)
-/* 0DE1CC 7F0A969C 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 0DE1CC 7F0A969C 0C00303B */  jal   joyGetStickX
 /* 0DE1D0 7F0A96A0 AFA5001C */   sw    $a1, 0x1c($sp)
 /* 0DE1D4 7F0A96A4 2841000A */  slti  $at, $v0, 0xa
 /* 0DE1D8 7F0A96A8 10200007 */  beqz  $at, .L7F0A96C8
 /* 0DE1DC 7F0A96AC 8FA5001C */   lw    $a1, 0x1c($sp)
 /* 0DE1E0 7F0A96B0 83A4001B */  lb    $a0, 0x1b($sp)
-/* 0DE1E4 7F0A96B4 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 0DE1E4 7F0A96B4 0C00303B */  jal   joyGetStickX
 /* 0DE1E8 7F0A96B8 AFA5001C */   sw    $a1, 0x1c($sp)
 /* 0DE1EC 7F0A96BC 2841FFF7 */  slti  $at, $v0, -9
 /* 0DE1F0 7F0A96C0 1020000B */  beqz  $at, .L7F0A96F0
@@ -6183,7 +6183,7 @@ glabel sub_GAME_7F0A9684
 /* 0DE294 7F0A9764 24010001 */  li    $at, 1
 /* 0DE298 7F0A9768 55610016 */  bnel  $t3, $at, .L7F0A97C4
 /* 0DE29C 7F0A976C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0DE2A0 7F0A9770 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 0DE2A0 7F0A9770 0C00303B */  jal   joyGetStickX
 /* 0DE2A4 7F0A9774 83A4001B */   lb    $a0, 0x1b($sp)
 /* 0DE2A8 7F0A9778 44825000 */  mtc1  $v0, $f10
 /* 0DE2AC 7F0A977C 3C018006 */  lui   $at, %hi(D_80058548)

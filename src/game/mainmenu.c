@@ -1295,7 +1295,7 @@ void menu_control_stick_tracking(void) {
     s32 temp_t2;
 
     // Node 0
-    sp1F = get_cur_controller_horz_stick_pos(0);
+    sp1F = joyGetStickX(0);
     temp_t2 = ((s32) (-get_cur_controller_vert_stick_pos(0) << 0x18) >> 0x18);
     if (sp1F < -5)
     {
@@ -1440,7 +1440,7 @@ glabel D_800519D4
 glabel menu_control_stick_tracking
 /* 03E6B4 7F009B84 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 03E6B8 7F009B88 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 03E6BC 7F009B8C 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 03E6BC 7F009B8C 0C00303B */  jal   joyGetStickX
 /* 03E6C0 7F009B90 00002025 */   move  $a0, $zero
 /* 03E6C4 7F009B94 00002025 */  move  $a0, $zero
 /* 03E6C8 7F009B98 0C00307F */  jal   get_cur_controller_vert_stick_pos
@@ -1700,7 +1700,7 @@ glabel D_800519D4
 glabel menu_control_stick_tracking
 /* 03E714 7F009BA4 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 03E718 7F009BA8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 03E71C 7F009BAC 0C003054 */  jal   get_cur_controller_horz_stick_pos
+/* 03E71C 7F009BAC 0C003054 */  jal   joyGetStickX
 /* 03E720 7F009BB0 00002025 */   move  $a0, $zero
 /* 03E724 7F009BB4 00002025 */  move  $a0, $zero
 /* 03E728 7F009BB8 0C003098 */  jal   get_cur_controller_vert_stick_pos
@@ -4617,7 +4617,7 @@ s32 interface_menu05_fileselect(void)
     s32 phi_s2_2;
     s32 phi_return;
 
-    if (((((get_controller_buttons_pressed(0, ANY_BUTTON) != 0) || (get_cur_controller_horz_stick_pos(0) < -5)) || (get_cur_controller_horz_stick_pos(0) >= 6)) || (get_cur_controller_vert_stick_pos(0) < -5)) || (get_cur_controller_vert_stick_pos(0) >= 6))
+    if (((((get_controller_buttons_pressed(0, ANY_BUTTON) != 0) || (joyGetStickX(0) < -5)) || (joyGetStickX(0) >= 6)) || (get_cur_controller_vert_stick_pos(0) < -5)) || (get_cur_controller_vert_stick_pos(0) >= 6))
     {
         menu_timer = 0;
     }
@@ -4695,14 +4695,14 @@ loop_8:
                 }
             }
         }
-        if ((get_cur_controller_horz_stick_pos(0) < -0x2d) && (*&folder_selected_for_deletion_choice == 0))
+        if ((joyGetStickX(0) < -0x2d) && (*&folder_selected_for_deletion_choice == 0))
         {
             *&folder_selected_for_deletion_choice = 1;
             play_sfx_a1(ptr_sfx_buf, 0x12, 0);
         }
         else
         {
-            if (get_cur_controller_horz_stick_pos(0) >= 0x2e)
+            if (joyGetStickX(0) >= 0x2e)
             {
                 if (*&folder_selected_for_deletion_choice != 0)
                 {
@@ -4860,12 +4860,12 @@ glabel interface_menu05_fileselect
 /* 040720 7F00BBF0 3405FFFF */   li    $a1, 65535
 /* 040724 7F00BBF4 14400015 */  bnez  $v0, .L7F00BC4C
 /* 040728 7F00BBF8 00000000 */   nop   
-/* 04072C 7F00BBFC 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 04072C 7F00BBFC 0C00303B */  jal   joyGetStickX
 /* 040730 7F00BC00 00002025 */   move  $a0, $zero
 /* 040734 7F00BC04 2841FFFB */  slti  $at, $v0, -5
 /* 040738 7F00BC08 14200010 */  bnez  $at, .L7F00BC4C
 /* 04073C 7F00BC0C 00000000 */   nop   
-/* 040740 7F00BC10 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 040740 7F00BC10 0C00303B */  jal   joyGetStickX
 /* 040744 7F00BC14 00002025 */   move  $a0, $zero
 /* 040748 7F00BC18 28410006 */  slti  $at, $v0, 6
 /* 04074C 7F00BC1C 1020000B */  beqz  $at, .L7F00BC4C
@@ -5053,7 +5053,7 @@ glabel interface_menu05_fileselect
 .L7F00BED0:
 /* 040A00 7F00BED0 3C138006 */  lui   $s3, %hi(ptr_sfx_buf)
 /* 040A04 7F00BED4 26733720 */  addiu $s3, %lo(ptr_sfx_buf) # addiu $s3, $s3, 0x3720
-/* 040A08 7F00BED8 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 040A08 7F00BED8 0C00303B */  jal   joyGetStickX
 /* 040A0C 7F00BEDC 00002025 */   move  $a0, $zero
 /* 040A10 7F00BEE0 2841FFD3 */  slti  $at, $v0, -0x2d
 /* 040A14 7F00BEE4 1020000B */  beqz  $at, .L7F00BF14
@@ -5069,7 +5069,7 @@ glabel interface_menu05_fileselect
 /* 040A3C 7F00BF0C 1000000F */  b     .L7F00BF4C
 /* 040A40 7F00BF10 00002025 */   move  $a0, $zero
 .L7F00BF14:
-/* 040A44 7F00BF14 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 040A44 7F00BF14 0C00303B */  jal   joyGetStickX
 /* 040A48 7F00BF18 00002025 */   move  $a0, $zero
 /* 040A4C 7F00BF1C 2841002E */  slti  $at, $v0, 0x2e
 /* 040A50 7F00BF20 5420000A */  bnezl $at, .L7F00BF4C

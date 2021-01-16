@@ -4291,7 +4291,7 @@ glabel sub_GAME_7F0BF800
 /* 0F4398 7F0BF868 05C10010 */  bgez  $t6, .L7F0BF8AC
 /* 0F439C 7F0BF86C 00000000 */   nop   
 .L7F0BF870:
-/* 0F43A0 7F0BF870 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 0F43A0 7F0BF870 0C00303B */  jal   joyGetStickX
 /* 0F43A4 7F0BF874 83A4002F */   lb    $a0, 0x2f($sp)
 /* 0F43A8 7F0BF878 A3A20018 */  sb    $v0, 0x18($sp)
 /* 0F43AC 7F0BF87C 0C00307F */  jal   get_cur_controller_vert_stick_pos
@@ -4307,7 +4307,7 @@ glabel sub_GAME_7F0BF800
 /* 0F43D4 7F0BF8A4 10000050 */  b     .L7F0BF9E8
 /* 0F43D8 7F0BF8A8 00000000 */   nop   
 .L7F0BF8AC:
-/* 0F43DC 7F0BF8AC 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 0F43DC 7F0BF8AC 0C00303B */  jal   joyGetStickX
 /* 0F43E0 7F0BF8B0 83A4002F */   lb    $a0, 0x2f($sp)
 /* 0F43E4 7F0BF8B4 A3A20018 */  sb    $v0, 0x18($sp)
 /* 0F43E8 7F0BF8B8 0C00307F */  jal   get_cur_controller_vert_stick_pos
@@ -4326,7 +4326,7 @@ glabel sub_GAME_7F0BF800
 /* 0F4418 7F0BF8E8 24010001 */  li    $at, 1
 /* 0F441C 7F0BF8EC 14410010 */  bne   $v0, $at, .L7F0BF930
 /* 0F4420 7F0BF8F0 00000000 */   nop   
-/* 0F4424 7F0BF8F4 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 0F4424 7F0BF8F4 0C00303B */  jal   joyGetStickX
 /* 0F4428 7F0BF8F8 83A4002F */   lb    $a0, 0x2f($sp)
 /* 0F442C 7F0BF8FC A3A20018 */  sb    $v0, 0x18($sp)
 /* 0F4430 7F0BF900 0C00307F */  jal   get_cur_controller_vert_stick_pos
@@ -4342,7 +4342,7 @@ glabel sub_GAME_7F0BF800
 /* 0F4458 7F0BF928 1000002F */  b     .L7F0BF9E8
 /* 0F445C 7F0BF92C 00000000 */   nop   
 .L7F0BF930:
-/* 0F4460 7F0BF930 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 0F4460 7F0BF930 0C00303B */  jal   joyGetStickX
 /* 0F4464 7F0BF934 83A4002F */   lb    $a0, 0x2f($sp)
 /* 0F4468 7F0BF938 A3A20018 */  sb    $v0, 0x18($sp)
 /* 0F446C 7F0BF93C 0C00307F */  jal   get_cur_controller_vert_stick_pos
@@ -4361,7 +4361,7 @@ glabel sub_GAME_7F0BF800
 /* 0F449C 7F0BF96C 24010002 */  li    $at, 2
 /* 0F44A0 7F0BF970 14410010 */  bne   $v0, $at, .L7F0BF9B4
 /* 0F44A4 7F0BF974 00000000 */   nop   
-/* 0F44A8 7F0BF978 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 0F44A8 7F0BF978 0C00303B */  jal   joyGetStickX
 /* 0F44AC 7F0BF97C 83A4002F */   lb    $a0, 0x2f($sp)
 /* 0F44B0 7F0BF980 A3A20018 */  sb    $v0, 0x18($sp)
 /* 0F44B4 7F0BF984 0C00307F */  jal   get_cur_controller_vert_stick_pos
@@ -4377,7 +4377,7 @@ glabel sub_GAME_7F0BF800
 /* 0F44DC 7F0BF9AC 1000000C */  b     .L7F0BF9E0
 /* 0F44E0 7F0BF9B0 00000000 */   nop   
 .L7F0BF9B4:
-/* 0F44E4 7F0BF9B4 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 0F44E4 7F0BF9B4 0C00303B */  jal   joyGetStickX
 /* 0F44E8 7F0BF9B8 83A4002F */   lb    $a0, 0x2f($sp)
 /* 0F44EC 7F0BF9BC A3A20018 */  sb    $v0, 0x18($sp)
 /* 0F44F0 7F0BF9C0 0C00307F */  jal   get_cur_controller_vert_stick_pos

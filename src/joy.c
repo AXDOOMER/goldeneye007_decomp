@@ -932,10 +932,7 @@ glabel controllerSchedulerRelated
 )
 #endif
 
-
-
-#ifdef NONMATCHING
-s8 get_cur_controller_horz_stick_pos(s8 contpadnum)
+s8 joyGetStickX(s8 contpadnum)
 {
     if (g_ContDataPtr->unk1f8 < 0 && (g_ConnectedControllers >> contpadnum & 1) == 0) {
 		g_ContBadReadsStickX[contpadnum]++;
@@ -944,52 +941,6 @@ s8 get_cur_controller_horz_stick_pos(s8 contpadnum)
 	return g_ContDataPtr->samples[g_ContDataPtr->curlast].pads[contpadnum].stick_x;
 
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_cur_controller_horz_stick_pos
-/* 00CCEC 7000C0EC 3C038002 */  lui   $v1, %hi(g_ContDataPtr)
-/* 00CCF0 7000C0F0 8C6368C4 */  lw    $v1, %lo(g_ContDataPtr)($v1)
-/* 00CCF4 7000C0F4 AFA40000 */  sw    $a0, ($sp)
-/* 00CCF8 7000C0F8 00047600 */  sll   $t6, $a0, 0x18
-/* 00CCFC 7000C0FC 8C7801F8 */  lw    $t8, 0x1f8($v1)
-/* 00CD00 7000C100 000E7E03 */  sra   $t7, $t6, 0x18
-/* 00CD04 7000C104 01E02025 */  move  $a0, $t7
-/* 00CD08 7000C108 0701000E */  bgez  $t8, .L7000C144
-/* 00CD0C 7000C10C 3C198002 */   lui   $t9, %hi(g_ConnectedControllers) 
-/* 00CD10 7000C110 933968D0 */  lbu   $t9, %lo(g_ConnectedControllers)($t9)
-/* 00CD14 7000C114 3C0B8002 */  lui   $t3, %hi(g_ContBadReadsStickX) 
-/* 00CD18 7000C118 256B6930 */  addiu $t3, %lo(g_ContBadReadsStickX) # addiu $t3, $t3, 0x6930
-/* 00CD1C 7000C11C 01F94007 */  srav  $t0, $t9, $t7
-/* 00CD20 7000C120 31090001 */  andi  $t1, $t0, 1
-/* 00CD24 7000C124 15200007 */  bnez  $t1, .L7000C144
-/* 00CD28 7000C128 000F5080 */   sll   $t2, $t7, 2
-/* 00CD2C 7000C12C 014B1821 */  addu  $v1, $t2, $t3
-/* 00CD30 7000C130 8C6C0000 */  lw    $t4, ($v1)
-/* 00CD34 7000C134 00001025 */  move  $v0, $zero
-/* 00CD38 7000C138 258D0001 */  addiu $t5, $t4, 1
-/* 00CD3C 7000C13C 03E00008 */  jr    $ra
-/* 00CD40 7000C140 AC6D0000 */   sw    $t5, ($v1)
-
-.L7000C144:
-/* 00CD44 7000C144 8C6E01E0 */  lw    $t6, 0x1e0($v1)
-/* 00CD48 7000C148 0004C880 */  sll   $t9, $a0, 2
-/* 00CD4C 7000C14C 0324C823 */  subu  $t9, $t9, $a0
-/* 00CD50 7000C150 000E7880 */  sll   $t7, $t6, 2
-/* 00CD54 7000C154 01EE7823 */  subu  $t7, $t7, $t6
-/* 00CD58 7000C158 000F78C0 */  sll   $t7, $t7, 3
-/* 00CD5C 7000C15C 006FC021 */  addu  $t8, $v1, $t7
-/* 00CD60 7000C160 0019C840 */  sll   $t9, $t9, 1
-/* 00CD64 7000C164 03194021 */  addu  $t0, $t8, $t9
-/* 00CD68 7000C168 81020002 */  lb    $v0, 2($t0)
-/* 00CD6C 7000C16C 03E00008 */  jr    $ra
-/* 00CD70 7000C170 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #if 0//def NONMATCHING
 s8 controller_7000C174(s8 contpadnum) {
@@ -1346,7 +1297,7 @@ glabel controller_7000C470
 
 #ifdef NONMATCHING
 s8 get_controller_3dstick_L_R(s8 contpadnum, s32 rangemin, s32 rangemax) {
-    s8 stick_x = get_cur_controller_horz_stick_pos(contpadnum) + 60;
+    s8 stick_x = joyGetStickX(contpadnum) + 60;
     if (stick_x > 120) {
         stick_x = 120;
     }
@@ -1365,7 +1316,7 @@ glabel get_controller_3dstick_L_R
 /* 00D0C0 7000C4C0 00047600 */  sll   $t6, $a0, 0x18
 /* 00D0C4 7000C4C4 000E2603 */  sra   $a0, $t6, 0x18
 /* 00D0C8 7000C4C8 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 00D0CC 7000C4CC 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 00D0CC 7000C4CC 0C00303B */  jal   joyGetStickX
 /* 00D0D0 7000C4D0 AFA60020 */   sw    $a2, 0x20($sp)
 /* 00D0D4 7000C4D4 2444003C */  addiu $a0, $v0, 0x3c
 /* 00D0D8 7000C4D8 28810079 */  slti  $at, $a0, 0x79
@@ -1452,7 +1403,7 @@ glabel get_controller_3dstick_U_D
 
 #ifdef NONMATCHING
 f32 controller_7000C59C(s8 contpadnum, f32 rangemin, f32 rangemax) {
-    s8 stick_x = get_cur_controller_horz_stick_pos(contpadnum) + 60;
+    s8 stick_x = joyGetStickX(contpadnum) + 60;
     if (stick_x > 120) {
         stick_x = 120;
     }
@@ -1471,7 +1422,7 @@ glabel controller_7000C59C
 /* 00D1A8 7000C5A8 00047600 */  sll   $t6, $a0, 0x18
 /* 00D1AC 7000C5AC 000E2603 */  sra   $a0, $t6, 0x18
 /* 00D1B0 7000C5B0 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 00D1B4 7000C5B4 0C00303B */  jal   get_cur_controller_horz_stick_pos
+/* 00D1B4 7000C5B4 0C00303B */  jal   joyGetStickX
 /* 00D1B8 7000C5B8 AFA60020 */   sw    $a2, 0x20($sp)
 /* 00D1BC 7000C5BC 2444003C */  addiu $a0, $v0, 0x3c
 /* 00D1C0 7000C5C0 28810079 */  slti  $at, $a0, 0x79
