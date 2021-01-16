@@ -1010,58 +1010,18 @@ s32 joyGetStickXInRange(s8 contpadnum, s32 rangemin, s32 rangemax) {
     return (((stick_x * range) / 120) + rangemin);
 }
 
-#ifdef NONMATCHING
-s8 get_controller_3dstick_U_D(s8 contpadnum, s32 rangemin, s32 rangemax) {
-    s8 stick_y = joyGetStickY(contpadnum) + 60;
+s32 joyGetStickYInRange(s8 contpadnum, s32 rangemin, s32 rangemax) {
+    s32 range;
+    s32 stick_y = joyGetStickY(contpadnum) + 60;
     if (stick_y > 120) {
         stick_y = 120;
     }
     if (stick_y < 0) {
         stick_y = 0;
     }
-    return (((stick_y * (rangemax - rangemin)) / 120) + rangemin);
+    range = (rangemax - rangemin);
+    return (((stick_y * range) / 120) + rangemin);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_controller_3dstick_U_D
-/* 00D128 7000C528 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 00D12C 7000C52C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00D130 7000C530 AFA40018 */  sw    $a0, 0x18($sp)
-/* 00D134 7000C534 00047600 */  sll   $t6, $a0, 0x18
-/* 00D138 7000C538 000E2603 */  sra   $a0, $t6, 0x18
-/* 00D13C 7000C53C AFA5001C */  sw    $a1, 0x1c($sp)
-/* 00D140 7000C540 0C00307F */  jal   joyGetStickY
-/* 00D144 7000C544 AFA60020 */   sw    $a2, 0x20($sp)
-/* 00D148 7000C548 2444003C */  addiu $a0, $v0, 0x3c
-/* 00D14C 7000C54C 28810079 */  slti  $at, $a0, 0x79
-/* 00D150 7000C550 14200002 */  bnez  $at, .L7000C55C
-/* 00D154 7000C554 8FA5001C */   lw    $a1, 0x1c($sp)
-/* 00D158 7000C558 24040078 */  li    $a0, 120
-.L7000C55C:
-/* 00D15C 7000C55C 04810002 */  bgez  $a0, .L7000C568
-/* 00D160 7000C560 8FB80020 */   lw    $t8, 0x20($sp)
-/* 00D164 7000C564 00002025 */  move  $a0, $zero
-.L7000C568:
-/* 00D168 7000C568 0305C823 */  subu  $t9, $t8, $a1
-/* 00D16C 7000C56C 00990019 */  multu $a0, $t9
-/* 00D170 7000C570 24010078 */  li    $at, 120
-/* 00D174 7000C574 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00D178 7000C578 27BD0018 */  addiu $sp, $sp, 0x18
-/* 00D17C 7000C57C 00004012 */  mflo  $t0
-/* 00D180 7000C580 00000000 */  nop   
-/* 00D184 7000C584 00000000 */  nop   
-/* 00D188 7000C588 0101001A */  div   $zero, $t0, $at
-/* 00D18C 7000C58C 00004812 */  mflo  $t1
-/* 00D190 7000C590 01251021 */  addu  $v0, $t1, $a1
-/* 00D194 7000C594 03E00008 */  jr    $ra
-/* 00D198 7000C598 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 f32 controller_7000C59C(s8 contpadnum, f32 rangemin, f32 rangemax) {

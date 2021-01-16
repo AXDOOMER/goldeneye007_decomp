@@ -19817,7 +19817,7 @@ void interface_menu14_mpteams(void)
     }
     else
     {
-        if ((joyGetButtonsPressedThisFrame(0, 0x808) != 0) || (get_controller_3dstick_U_D(0, -2, 1) > 0))
+        if ((joyGetButtonsPressedThisFrame(0, 0x808) != 0) || (joyGetStickYInRange(0, -2, 1) > 0))
         {
             if (scenario == 5)
             {
@@ -19859,7 +19859,7 @@ void interface_menu14_mpteams(void)
             }
             else
             {
-                if ((joyGetButtonsPressedThisFrame(0, 0x404) != 0) || (get_controller_3dstick_U_D(0, -2, 1) < -1))
+                if ((joyGetButtonsPressedThisFrame(0, 0x404) != 0) || (joyGetStickYInRange(0, -2, 1) < -1))
                 {
                     if (scenario == 7)
                     {
@@ -20010,7 +20010,7 @@ glabel interface_menu14_mpteams
 /* 04998C 7F014E5C 14400005 */  bnez  $v0, .L7F014E74
 /* 049990 7F014E60 00002025 */   move  $a0, $zero
 /* 049994 7F014E64 2405FFFE */  li    $a1, -2
-/* 049998 7F014E68 0C00314A */  jal   get_controller_3dstick_U_D
+/* 049998 7F014E68 0C00314A */  jal   joyGetStickYInRange
 /* 04999C 7F014E6C 24060001 */   li    $a2, 1
 /* 0499A0 7F014E70 18400020 */  blez  $v0, .L7F014EF4
 .L7F014E74:
@@ -20099,7 +20099,7 @@ glabel interface_menu14_mpteams
 /* 049AD8 7F014FA8 14400006 */  bnez  $v0, .L7F014FC4
 /* 049ADC 7F014FAC 00002025 */   move  $a0, $zero
 /* 049AE0 7F014FB0 2405FFFE */  li    $a1, -2
-/* 049AE4 7F014FB4 0C00314A */  jal   get_controller_3dstick_U_D
+/* 049AE4 7F014FB4 0C00314A */  jal   joyGetStickYInRange
 /* 049AE8 7F014FB8 24060001 */   li    $a2, 1
 /* 049AEC 7F014FBC 2841FFFF */  slti  $at, $v0, -1
 /* 049AF0 7F014FC0 1020001E */  beqz  $at, .L7F01503C
