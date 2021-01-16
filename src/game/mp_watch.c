@@ -215,7 +215,7 @@ void check_if_player_is_pressing_anything_right(s32 arg0) {
     // Node 0
     temp_t6 = ((s32) (arg0 << 0x18) >> 0x18);
     sp18 = temp_t6;
-    sp1C = get_controller_3dstick_L_R(temp_t6, -2, 1);
+    sp1C = joyGetStickXInRange(temp_t6, -2, 1);
     temp_ret = joyGetButtonsPressedThisFrame(sp18, 0x101);
     if ((temp_ret == 0) && (sp1C > 0))
     {
@@ -243,7 +243,7 @@ glabel check_if_player_is_pressing_anything_right
 /* 0F6A38 7F0C1F08 01C02025 */  move  $a0, $t6
 /* 0F6A3C 7F0C1F0C AFAE0018 */  sw    $t6, 0x18($sp)
 /* 0F6A40 7F0C1F10 2405FFFE */  li    $a1, -2
-/* 0F6A44 7F0C1F14 0C00312D */  jal   get_controller_3dstick_L_R
+/* 0F6A44 7F0C1F14 0C00312D */  jal   joyGetStickXInRange
 /* 0F6A48 7F0C1F18 24060001 */   li    $a2, 1
 /* 0F6A4C 7F0C1F1C 8FA40018 */  lw    $a0, 0x18($sp)
 /* 0F6A50 7F0C1F20 AFA2001C */  sw    $v0, 0x1c($sp)
@@ -282,7 +282,7 @@ void check_if_player_is_pressing_anything_left(s32 arg0) {
     // Node 0
     temp_t6 = ((s32) (arg0 << 0x18) >> 0x18);
     sp18 = temp_t6;
-    sp1C = get_controller_3dstick_L_R(temp_t6, -2, 1);
+    sp1C = joyGetStickXInRange(temp_t6, -2, 1);
     if ((joyGetButtonsPressedThisFrame(sp18, 0x202) == 0) && (sp1C < -1))
     {
         // Node 2
@@ -313,7 +313,7 @@ glabel check_if_player_is_pressing_anything_left
 /* 0F6AA8 7F0C1F78 01C02025 */  move  $a0, $t6
 /* 0F6AAC 7F0C1F7C AFAE0018 */  sw    $t6, 0x18($sp)
 /* 0F6AB0 7F0C1F80 2405FFFE */  li    $a1, -2
-/* 0F6AB4 7F0C1F84 0C00312D */  jal   get_controller_3dstick_L_R
+/* 0F6AB4 7F0C1F84 0C00312D */  jal   joyGetStickXInRange
 /* 0F6AB8 7F0C1F88 24060001 */   li    $a2, 1
 /* 0F6ABC 7F0C1F8C 8FA40018 */  lw    $a0, 0x18($sp)
 /* 0F6AC0 7F0C1F90 AFA2001C */  sw    $v0, 0x1c($sp)
@@ -1483,7 +1483,7 @@ glabel sub_GAME_7F0C2E80
 /* 0F79CC 7F0C2E9C 2405FFFE */  li    $a1, -2
 /* 0F79D0 7F0C2EA0 24060001 */  li    $a2, 1
 /* 0F79D4 7F0C2EA4 AFA20030 */  sw    $v0, 0x30($sp)
-/* 0F79D8 7F0C2EA8 0C00312D */  jal   get_controller_3dstick_L_R
+/* 0F79D8 7F0C2EA8 0C00312D */  jal   joyGetStickXInRange
 /* 0F79DC 7F0C2EAC AFA40018 */   sw    $a0, 0x18($sp)
 /* 0F79E0 7F0C2EB0 AFA2002C */  sw    $v0, 0x2c($sp)
 /* 0F79E4 7F0C2EB4 0FC26D36 */  jal   sub_GAME_7F09B4D8

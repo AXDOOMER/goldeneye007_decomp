@@ -399,7 +399,7 @@ glabel spectrum_p1controller_to_kempston
 /* 1077E0 7F0D2CB0 00002025 */  move  $a0, $zero
 /* 1077E4 7F0D2CB4 2405FFFD */  li    $a1, -3
 /* 1077E8 7F0D2CB8 24060003 */  li    $a2, 3
-/* 1077EC 7F0D2CBC 0C00312D */  jal   get_controller_3dstick_L_R
+/* 1077EC 7F0D2CBC 0C00312D */  jal   joyGetStickXInRange
 /* 1077F0 7F0D2CC0 AFA20020 */   sw    $v0, 0x20($sp)
 /* 1077F4 7F0D2CC4 00002025 */  move  $a0, $zero
 /* 1077F8 7F0D2CC8 2405FFFD */  li    $a1, -3

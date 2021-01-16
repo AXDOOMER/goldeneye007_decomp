@@ -997,58 +997,18 @@ void joy7000C470(void) {
     }
 }
 
-#ifdef NONMATCHING
-s8 get_controller_3dstick_L_R(s8 contpadnum, s32 rangemin, s32 rangemax) {
-    s8 stick_x = joyGetStickX(contpadnum) + 60;
+s32 joyGetStickXInRange(s8 contpadnum, s32 rangemin, s32 rangemax) {
+    s32 range;
+    s32 stick_x = joyGetStickX(contpadnum) + 60;
     if (stick_x > 120) {
         stick_x = 120;
     }
     if (stick_x < 0) {
         stick_x = 0;
     }
-    return (((stick_x * (rangemax - rangemin)) / 120) + rangemin);
+    range = (rangemax - rangemin);
+    return (((stick_x * range) / 120) + rangemin);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_controller_3dstick_L_R
-/* 00D0B4 7000C4B4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 00D0B8 7000C4B8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00D0BC 7000C4BC AFA40018 */  sw    $a0, 0x18($sp)
-/* 00D0C0 7000C4C0 00047600 */  sll   $t6, $a0, 0x18
-/* 00D0C4 7000C4C4 000E2603 */  sra   $a0, $t6, 0x18
-/* 00D0C8 7000C4C8 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 00D0CC 7000C4CC 0C00303B */  jal   joyGetStickX
-/* 00D0D0 7000C4D0 AFA60020 */   sw    $a2, 0x20($sp)
-/* 00D0D4 7000C4D4 2444003C */  addiu $a0, $v0, 0x3c
-/* 00D0D8 7000C4D8 28810079 */  slti  $at, $a0, 0x79
-/* 00D0DC 7000C4DC 14200002 */  bnez  $at, .L7000C4E8
-/* 00D0E0 7000C4E0 8FA5001C */   lw    $a1, 0x1c($sp)
-/* 00D0E4 7000C4E4 24040078 */  li    $a0, 120
-.L7000C4E8:
-/* 00D0E8 7000C4E8 04810002 */  bgez  $a0, .L7000C4F4
-/* 00D0EC 7000C4EC 8FB80020 */   lw    $t8, 0x20($sp)
-/* 00D0F0 7000C4F0 00002025 */  move  $a0, $zero
-.L7000C4F4:
-/* 00D0F4 7000C4F4 0305C823 */  subu  $t9, $t8, $a1
-/* 00D0F8 7000C4F8 00990019 */  multu $a0, $t9
-/* 00D0FC 7000C4FC 24010078 */  li    $at, 120
-/* 00D100 7000C500 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00D104 7000C504 27BD0018 */  addiu $sp, $sp, 0x18
-/* 00D108 7000C508 00004012 */  mflo  $t0
-/* 00D10C 7000C50C 00000000 */  nop   
-/* 00D110 7000C510 00000000 */  nop   
-/* 00D114 7000C514 0101001A */  div   $zero, $t0, $at
-/* 00D118 7000C518 00004812 */  mflo  $t1
-/* 00D11C 7000C51C 01251021 */  addu  $v0, $t1, $a1
-/* 00D120 7000C520 03E00008 */  jr    $ra
-/* 00D124 7000C524 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 s8 get_controller_3dstick_U_D(s8 contpadnum, s32 rangemin, s32 rangemax) {
