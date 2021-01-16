@@ -28874,7 +28874,7 @@ glabel record_damage_kills
 /* 0BE544 7F089A14 0FC26C54 */  jal   get_cur_playernum
 /* 0BE548 7F089A18 00000000 */   nop   
 /* 0BE54C 7F089A1C 00402025 */  move  $a0, $v0
-/* 0BE550 7F089A20 0C003215 */  jal   controller_7000C854
+/* 0BE550 7F089A20 0C003215 */  jal   joy7000C854
 /* 0BE554 7F089A24 3C053E80 */   lui   $a1, 0x3e80
 /* 0BE558 7F089A28 0FC29370 */  jal   cur_player_get_control_type
 /* 0BE55C 7F089A2C 00000000 */   nop   
@@ -28887,7 +28887,7 @@ glabel record_damage_kills
 /* 0BE578 7F089A48 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 0BE57C 7F089A4C 8FAC001C */  lw    $t4, 0x1c($sp)
 /* 0BE580 7F089A50 3C053E80 */  lui   $a1, 0x3e80
-/* 0BE584 7F089A54 0C003215 */  jal   controller_7000C854
+/* 0BE584 7F089A54 0C003215 */  jal   joy7000C854
 /* 0BE588 7F089A58 004C2021 */   addu  $a0, $v0, $t4
 .L7F089A5C:
 /* 0BE58C 7F089A5C 0FC26919 */  jal   getPlayerCount
@@ -29238,7 +29238,7 @@ glabel record_damage_kills
 /* 0BEC58 7F08A0E8 0FC26F3C */  jal   get_cur_playernum
 /* 0BEC5C 7F08A0EC 00000000 */   nop   
 /* 0BEC60 7F08A0F0 00402025 */  move  $a0, $v0
-/* 0BEC64 7F08A0F4 0C00322E */  jal   controller_7000C854
+/* 0BEC64 7F08A0F4 0C00322E */  jal   joy7000C854
 /* 0BEC68 7F08A0F8 3C053E80 */   lui   $a1, 0x3e80
 /* 0BEC6C 7F08A0FC 0FC29658 */  jal   cur_player_get_control_type
 /* 0BEC70 7F08A100 00000000 */   nop   
@@ -29251,7 +29251,7 @@ glabel record_damage_kills
 /* 0BEC8C 7F08A11C AFA2001C */   sw    $v0, 0x1c($sp)
 /* 0BEC90 7F08A120 8FAC001C */  lw    $t4, 0x1c($sp)
 /* 0BEC94 7F08A124 3C053E80 */  lui   $a1, 0x3e80
-/* 0BEC98 7F08A128 0C00322E */  jal   controller_7000C854
+/* 0BEC98 7F08A128 0C00322E */  jal   joy7000C854
 /* 0BEC9C 7F08A12C 004C2021 */   addu  $a0, $v0, $t4
 .Ljp7F08A130:
 /* 0BECA0 7F08A130 0FC26C01 */  jal   getPlayerCount

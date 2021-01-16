@@ -13915,7 +13915,7 @@ Weapon_shooting_throwable:
 /* 099DD8 7F0652A8 00000000 */   nop   
 /* 099DDC 7F0652AC 3C053DCC */  lui   $a1, (0x3DCCCCCD >> 16) # lui $a1, 0x3dcc
 /* 099DE0 7F0652B0 34A5CCCD */  ori   $a1, (0x3DCCCCCD & 0xFFFF) # ori $a1, $a1, 0xcccd
-/* 099DE4 7F0652B4 0C003215 */  jal   controller_7000C854
+/* 099DE4 7F0652B4 0C003215 */  jal   joy7000C854
 /* 099DE8 7F0652B8 00402025 */   move  $a0, $v0
 /* 099DEC 7F0652BC 0FC29370 */  jal   cur_player_get_control_type
 /* 099DF0 7F0652C0 00000000 */   nop   
@@ -13929,7 +13929,7 @@ Weapon_shooting_throwable:
 /* 099E10 7F0652E0 8FAE0048 */  lw    $t6, 0x48($sp)
 /* 099E14 7F0652E4 3C053DCC */  lui   $a1, (0x3DCCCCCD >> 16) # lui $a1, 0x3dcc
 /* 099E18 7F0652E8 34A5CCCD */  ori   $a1, (0x3DCCCCCD & 0xFFFF) # ori $a1, $a1, 0xcccd
-/* 099E1C 7F0652EC 0C003215 */  jal   controller_7000C854
+/* 099E1C 7F0652EC 0C003215 */  jal   joy7000C854
 /* 099E20 7F0652F0 004E2021 */   addu  $a0, $v0, $t6
 /* 099E24 7F0652F4 8E18002C */  lw    $t8, 0x2c($s0)
 .L7F0652F8:
@@ -16759,7 +16759,7 @@ Weapon_shooting_throwable:
 /* 09A3AC 7F06583C 00000000 */   nop   
 /* 09A3B0 7F065840 3C053DCC */  lui   $a1, (0x3DCCCCCD >> 16) # lui $a1, 0x3dcc
 /* 09A3B4 7F065844 34A5CCCD */  ori   $a1, (0x3DCCCCCD & 0xFFFF) # ori $a1, $a1, 0xcccd
-/* 09A3B8 7F065848 0C00322E */  jal   controller_7000C854
+/* 09A3B8 7F065848 0C00322E */  jal   joy7000C854
 /* 09A3BC 7F06584C 00402025 */   move  $a0, $v0
 /* 09A3C0 7F065850 0FC29658 */  jal   cur_player_get_control_type
 /* 09A3C4 7F065854 00000000 */   nop   
@@ -16773,7 +16773,7 @@ Weapon_shooting_throwable:
 /* 09A3E4 7F065874 8FB8004C */  lw    $t8, 0x4c($sp)
 /* 09A3E8 7F065878 3C053DCC */  lui   $a1, (0x3DCCCCCD >> 16) # lui $a1, 0x3dcc
 /* 09A3EC 7F06587C 34A5CCCD */  ori   $a1, (0x3DCCCCCD & 0xFFFF) # ori $a1, $a1, 0xcccd
-/* 09A3F0 7F065880 0C00322E */  jal   controller_7000C854
+/* 09A3F0 7F065880 0C00322E */  jal   joy7000C854
 /* 09A3F4 7F065884 00582021 */   addu  $a0, $v0, $t8
 /* 09A3F8 7F065888 8E0E002C */  lw    $t6, 0x2c($s0)
 .Ljp7F06588C:
