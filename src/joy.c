@@ -1113,77 +1113,17 @@ void joy7000C854(s32 arg0, f32 arg1) {
     }
 }
 
-#ifdef NONMATCHING
-void reset_cont_rumble_detect(void) { // Loop?
-#ifdef VERION_US
-    controller_1_rumble_state[0] = 1;
-    controller_1_rumble_pulse[0] = 0;
-    controller_1_rumble_state[1] = 1;
-    controller_1_rumble_pulse[1] = 0;
-    controller_1_rumble_state[2] = 1;
-    controller_1_rumble_pulse[2] = 0;
-    controller_1_rumble_state[3] = 1;
-    controller_1_rumble_pulse[3] = 0;
-#endif
-#ifdef VERSION_JP
-    controller_1_rumble_pulse[0] = 2;
-    controller_1_rumble_pulse[1] = 2;
-    controller_1_rumble_pulse[2] = 2;
-    controller_1_rumble_pulse[3] = 2;
-#endif
-}
-#else
+void reset_cont_rumble_detect(void) {
+    s32 i;
+    for (i = 0; i < MAXCONTROLLERS; i++) {
 #ifdef VERSION_US
-GLOBAL_ASM(
-.text
-glabel reset_cont_rumble_detect
-/* 00D4DC 7000C8DC 240E0001 */  li    $t6, 1
-/* 00D4E0 7000C8E0 3C018002 */  lui   $at, %hi(controller_1_rumble_state)
-/* 00D4E4 7000C8E4 AC2E68E8 */  sw    $t6, %lo(controller_1_rumble_state)($at)
-/* 00D4E8 7000C8E8 3C018002 */  lui   $at, %hi(controller_1_rumble_pulse)
-/* 00D4EC 7000C8EC AC206908 */  sw    $zero, %lo(controller_1_rumble_pulse)($at)
-/* 00D4F0 7000C8F0 3C018002 */  lui   $at, %hi(controller_1_rumble_state+0x4)
-/* 00D4F4 7000C8F4 240F0001 */  li    $t7, 1
-/* 00D4F8 7000C8F8 AC2F68EC */  sw    $t7, %lo(controller_1_rumble_state+0x4)($at)
-/* 00D4FC 7000C8FC 3C018002 */  lui   $at, %hi(controller_1_rumble_pulse+0x4)
-/* 00D500 7000C900 AC20690C */  sw    $zero, %lo(controller_1_rumble_pulse+0x4)($at)
-/* 00D504 7000C904 3C018002 */  lui   $at, %hi(controller_1_rumble_state+0x8)
-/* 00D508 7000C908 24180001 */  li    $t8, 1
-/* 00D50C 7000C90C AC3868F0 */  sw    $t8, %lo(controller_1_rumble_state+0x8)($at)
-/* 00D510 7000C910 3C018002 */  lui   $at, %hi(controller_1_rumble_pulse+0x8)
-/* 00D514 7000C914 AC206910 */  sw    $zero, %lo(controller_1_rumble_pulse+0x8)($at)
-/* 00D518 7000C918 3C018002 */  lui   $at, %hi(controller_1_rumble_state+0xC)
-/* 00D51C 7000C91C 24190001 */  li    $t9, 1
-/* 00D520 7000C920 AC3968F4 */  sw    $t9, %lo(controller_1_rumble_state+0xC)($at)
-/* 00D524 7000C924 3C018002 */  lui   $at, %hi( controller_1_rumble_pulse+0xC)
-/* 00D528 7000C928 03E00008 */  jr    $ra
-/* 00D52C 7000C92C AC206914 */   sw    $zero, %lo( controller_1_rumble_pulse+0xC)($at)
-)
+        controller_1_rumble_state[i] = 1;
+        controller_1_rumble_pulse[i] = 0;
+#else if VERSION_JP
+        controller_1_rumble_pulse[i] = 2;
 #endif
-
-#ifdef VERSION_JP
-GLOBAL_ASM(
-.text
-glabel reset_cont_rumble_detect
-/* 00D4E8 7000C8E8 3C018002 */  lui   $at, %hi(controller_1_rumble_pulse)
-/* 00D4F4 7000C8F4 240F0001 */  li    $t7, 2
-/* 00D4DC 7000C8DC 240E0001 */  li    $t6, 2
-/* 00D500 7000C900 AC20690C */  sw    $t7, %lo(controller_2_rumble_pulse)($at)
-/* 00D4EC 7000C8EC AC206908 */  sw    $t6, %lo(controller_1_rumble_pulse)($at)
-/* 00D510 7000C910 3C018002 */  lui   $at, %hi(controller_3_rumble_pulse)
-/* 00D508 7000C908 24180001 */  li    $t8, 2
-/* 00D51C 7000C91C 24190001 */  li    $t9, 2
-/* 00D514 7000C914 AC206910 */  sw    $t9, %lo(controller_4_rumble_pulse)($at)
-/* 00D528 7000C928 03E00008 */  jr    $ra
-/* 00D52C 7000C92C AC206914 */   sw    $t8, %lo( controller_3_rumble_pulse)($at)
-)
-#endif
-
-#endif
-
-
-
-
+    }
+}
 
 #ifdef NONMATCHING
 void controller_7000C930(s32 arg0) {
