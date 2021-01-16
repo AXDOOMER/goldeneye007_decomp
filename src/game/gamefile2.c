@@ -3,7 +3,7 @@
 #include "bondconstants.h"
 
 s32 sub_GAME_7F01D6C0(void) {
-  return save_7000C6FC();
+  return joy7000C6FC();
 }
 
 

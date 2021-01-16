@@ -1061,38 +1061,13 @@ void joy7000C6BC(void) {
     osRecvMesg(&cont4MesgMQ, &msg, OS_MESG_BLOCK);
 }
 
-#ifdef NONMATCHING
-s32 save_7000C6FC(void) {
+s32 joy7000C6FC(void) {
     s32 type;
     joy7000C67C();
     type = osEepromProbe(&contdemoMesgMQ);
     joy7000C6BC();
     return type;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel save_7000C6FC
-/* 00D2FC 7000C6FC 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 00D300 7000C700 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00D304 7000C704 0C00319F */  jal   joy7000C67C
-/* 00D308 7000C708 00000000 */   nop   
-/* 00D30C 7000C70C 3C048006 */  lui   $a0, %hi(contdemoMesgMQ)
-/* 00D310 7000C710 0C0053F4 */  jal   osEepromProbe
-/* 00D314 7000C714 24845350 */   addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
-/* 00D318 7000C718 0C0031AF */  jal   joy7000C6BC
-/* 00D31C 7000C71C AFA2001C */   sw    $v0, 0x1c($sp)
-/* 00D320 7000C720 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00D324 7000C724 8FA2001C */  lw    $v0, 0x1c($sp)
-/* 00D328 7000C728 27BD0020 */  addiu $sp, $sp, 0x20
-/* 00D32C 7000C72C 03E00008 */  jr    $ra
-/* 00D330 7000C730 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 s32 save_7000C734(u8 address, u8 *buffer)
