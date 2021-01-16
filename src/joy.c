@@ -44,7 +44,7 @@ OSPfs player1_controller_packet[MAXCONTROLLERS];
 
 s32 D_800268C0 = 0;
 struct contdata *g_ContDataPtr = &g_ContData[0];
-s32 D_800268C8 = 0;
+s32 g_ContBusy = 0;
 s32 D_800268CC = 0;
 u8 g_ConnectedControllers = 0;
 u8 D_800268D4 = 0;
@@ -58,22 +58,10 @@ s32 D_80026920 = 0;
 s32 (*D_80026924)(struct contsample *samples, s32 samplenum) = NULL;
 void (*D_80026928)(struct contsample *samples, s32 samplenum, s32 samplenum2) = NULL;
 s32 g_ContNeedsInit = 1;
-s32 pl1_controller_failure_lr = 0;
-s32 pl2_controller_failure_lr = 0;
-s32 pl3_controller_failure_lr = 0;
-s32 pl4_controller_failure_lr = 0;
-s32 pl1_controller_failure_ud = 0;
-s32 pl2_controller_failure_ud = 0;
-s32 pl3_controller_failure_ud = 0;
-s32 pl4_controller_failure_ud = 0;
-s32 pl1_controller_failure_held = 0;
-s32 pl2_controller_failure_held = 0;
-s32 pl3_controller_failure_held = 0;
-s32 pl4_controller_failure_held = 0;
-s32 pl1_controller_failure_pressed = 0;
-s32 pl2_controller_failure_pressed = 0;
-s32 pl3_controller_failure_pressed = 0;
-s32 pl4_controller_failure_pressed = 0;
+u32 g_ContBadReadsStickX[4] = {0};
+u32 g_ContBadReadsStickY[4] = {0};
+u32 g_ContBadReadsButtons[4] = {0};
+u32 g_ContBadReadsButtonsPressed[4] = {0};
 s32 D_80026970 = 0;
 
 void contSystemInit(void) {
@@ -639,146 +627,65 @@ void redirect_to_ramrom_replay_and_record_handlers_if_set(void) {
 }
 
 #ifdef NONMATCHING
+// Stack + Regalloc
 void controllerSchedulerRelated(void)
 {
-    ? sp4C;
-    s32 sp40;
-    s32 temp_a0;
-    s32 temp_a0_2;
-    s32 temp_a2;
-    s32 temp_hi;
-    s32 temp_lo;
-    s32 temp_t6;
-    s32 temp_t8;
-    s32 temp_v1;
-    void *temp_t3;
-    void *temp_v1_2;
-    s32 phi_v1;
-    s32 phi_v0;
-    s32 phi_a0;
-    s32 phi_a0_2;
-    void *phi_t1;
-    void *phi_a0_3;
-    void *phi_a1;
-    void *phi_v1_2;
-
-    if (osRecvMesg(&cont1MesgMQ, &sp4C, 0) == 0)
-    {
-        if (D_800268C8 != 0)
-        {
-            osRecvMesg(&contdemoMesgMQ, &sp4C, 1);
-            D_800268C8 = 0;
+    OSMesg msg;
+    if (osRecvMesg(&cont1MesgMQ, &msg, OS_MESG_NOBLOCK) == 0) {
+        if (g_ContBusy) {
+            osRecvMesg(&contdemoMesgMQ, &msg, OS_MESG_BLOCK);
+            g_ContBusy = FALSE;
         }
-        osSendMesg(&cont2MesgMQ, &sp4C, 0);
-        D_800268CC = (s32) (D_800268CC + 1);
+        osSendMesg(&cont2MesgMQ, &msg, OS_MESG_NOBLOCK);
+        D_800268CC++;
         return;
     }
-    if (osRecvMesg(&cont3MesgMQ, &sp4C, 0) == 0)
-    {
+    if (osRecvMesg(&cont3MesgMQ, &msg, OS_MESG_NOBLOCK) == 0) {
         osContStartReadData(&contdemoMesgMQ);
-        D_800268C8 = 1;
-        osSendMesg(&cont4MesgMQ, &sp4C, 0);
-        D_800268CC = (s32) (D_800268CC + -1);
+        g_ContBusy = TRUE;
+        osSendMesg(&cont4MesgMQ, &msg, OS_MESG_NOBLOCK);
+        D_800268CC--;
         return;
     }
-    if (D_800268CC == 0)
-    {
-        if (g_ContInitDone != 0)
-        {
-            if (osRecvMesg(&contdemoMesgMQ, &sp4C, 0) == 0)
-            {
-                D_800268C8 = 0;
-                temp_hi = (s32) (controller_input_index.unk1E8 + 1) % 0x14;
-                phi_v1 = temp_hi;
-                if (temp_hi == controller_input_index.unk1E4)
-                {
-                    phi_v1 = controller_input_index.unk1E8;
+    if ((D_800268CC == 0) && g_ContInitDone) {
+        if (osRecvMesg(&contdemoMesgMQ, &msg, OS_MESG_NOBLOCK) == 0) {
+            static s32 count = 0;
+            s32 index;
+            s8 i;
+            g_ContBusy = FALSE;
+            index = ((g_ContData[0].nextlast + 1) % 20);
+            if (index == g_ContData[0].curstart) {
+                index = g_ContData[0].nextlast;
+            }
+            osContGetReadData(g_ContData[0].samples[index].pads);
+            g_ContData[0].nextlast = index;
+            g_ContData[0].nextsecondlast = ((g_ContData[0].nextlast + 19) % 20);
+            D_80026920++;
+            if ((D_80026920 % 120) == 0) {
+                controller_check_for_rumble_maybe();
+            }
+            for (i = 0; i < MAXCONTROLLERS; i++) {
+                if (((g_ContData[0].samples[g_ContData[0].nextlast].pads[i].errnum == 0) && (g_ContData[0].samples[g_ContData[0].nextsecondlast].pads[i].errnum != 0)) || 
+                    ((g_ContData[0].samples[g_ContData[0].nextlast].pads[i].errnum != 0) && (g_ContData[0].samples[g_ContData[0].nextsecondlast].pads[i].errnum == 0))) {
+					controller_check_for_rumble_maybe();
+					break;
+				}
+            }
+            controller_rumble_related();
+            osContStartReadData(&contdemoMesgMQ);
+            g_ContBusy = TRUE;
+            count++;
+            if (count >= 60) {
+                s32 i;
+                for (i = 0; i < MAXCONTROLLERS; i++) {
+                    if (g_ContBadReadsStickX[i] || g_ContBadReadsStickY[i] || g_ContBadReadsButtons[i] || g_ContBadReadsButtonsPressed[i]) {
+						g_ContBadReadsStickX[i] = 0;
+						g_ContBadReadsStickY[i] = 0;
+						g_ContBadReadsButtons[i] = 0;
+						g_ContBadReadsButtonsPressed[i] = 0;
+					}
                 }
-                sp40 = (s32) phi_v1;
-                osContGetReadData(&controller_input_index + (((phi_v1 * 4) - phi_v1) * 8), &controller_input_index);
-                temp_t6 = D_80026920 + 1;
-                temp_t8 = temp_t6 % 0x78;
-                controller_input_index.unk1EC = (s32) ((s32) (sp40 + 0x13) % 0x14);
-                D_80026920 = temp_t6;
-                controller_input_index.unk1E8 = sp40;
-                phi_v0 = sp40;
-                if (temp_t8 == 0)
-                {
-                    controller_check_for_rumble_maybe(&D_80026920, &controller_input_index);
-                    phi_v0 = controller_input_index.unk1E8;
-                }
-                temp_a2 = &controller_input_index + (((phi_v0 * 4) - phi_v0) * 8);
-                phi_a0 = 0;
-loop_14:
-                temp_lo = phi_a0 * 6;
-                temp_t3 = temp_a2 + temp_lo;
-                if ((temp_t3->unk4 != 0) || (((&controller_input_index + (&controller_input_index->unk1EC * 0x18)) + temp_lo)->unk4 == 0))
-                {
-                    temp_a0 = phi_a0 + 1;
-                    if ((temp_t3->unk4 != 0) && (((&controller_input_index + (&controller_input_index->unk1EC * 0x18)) + temp_lo)->unk4 == 0))
-                    {
-block_18:
-                        controller_check_for_rumble_maybe(phi_a0_2, &controller_input_index, temp_a2, 6);
-                    }
-                    else
-                    {
-                        temp_a0_2 = (s32) (temp_a0 << 0x18) >> 0x18;
-                        phi_a0 = temp_a0_2;
-                        if (temp_a0_2 < 4)
-                        {
-                            goto loop_14;
-                        }
-                    }
-                }
-                else
-                {
-                    goto block_18;
-                }
-                controller_rumble_related();
-                osContStartReadData(&contdemoMesgMQ);
-                D_800268C8 = 1;
-                temp_v1 = D_80026970 + 1;
-                D_80026970 = temp_v1;
-                if (temp_v1 >= 0x3c)
-                {
-                    phi_t1 = &pl1_controller_failure_lr;
-                    phi_a0_3 = &pl1_controller_failure_ud;
-                    phi_a1 = &pl1_controller_failure_held;
-                    phi_v1_2 = &pl1_controller_failure_pressed;
-loop_22:
-                    if ((((phi_t1->unk0 != 0) || (phi_a0_3->unk0 != 0)) || (phi_a1->unk0 != 0)) || (phi_v1_2->unk0 != 0))
-                    {
-                        phi_t1->unk0 = 0;
-                        phi_a0_3->unk0 = 0;
-                        phi_a1->unk0 = 0;
-                        phi_v1_2->unk0 = 0;
-                    }
-                    else
-                    {
-
-                    }
-                    if ((((phi_t1->unk4 != 0) || (phi_a0_3->unk4 != 0)) || (phi_a1->unk4 != 0)) || (phi_v1_2->unk4 != 0))
-                    {
-                        phi_t1->unk4 = 0;
-                        phi_a0_3->unk4 = 0;
-                        phi_a1->unk4 = 0;
-                        phi_v1_2->unk4 = 0;
-                    }
-                    else
-                    {
-
-                    }
-                    temp_v1_2 = phi_v1_2 + 8;
-                    phi_t1 = phi_t1 + 8;
-                    phi_a0_3 = phi_a0_3 + 8;
-                    phi_a1 = phi_a1 + 8;
-                    phi_v1_2 = temp_v1_2;
-                    if (temp_v1_2 != &D_80026970)
-                    {
-                        goto loop_22;
-                    }
-                    D_80026970 = 0;
-                }
+                count = 0;
             }
         }
     }
@@ -795,16 +702,16 @@ glabel controllerSchedulerRelated
 /* 00C99C 7000BD9C 0C003774 */  jal   osRecvMesg
 /* 00C9A0 7000BDA0 00003025 */   move  $a2, $zero
 /* 00C9A4 7000BDA4 14400015 */  bnez  $v0, .L7000BDFC
-/* 00C9A8 7000BDA8 3C0E8002 */   lui   $t6, %hi(D_800268C8) 
-/* 00C9AC 7000BDAC 8DCE68C8 */  lw    $t6, %lo(D_800268C8)($t6)
+/* 00C9A8 7000BDA8 3C0E8002 */   lui   $t6, %hi(g_ContBusy) 
+/* 00C9AC 7000BDAC 8DCE68C8 */  lw    $t6, %lo(g_ContBusy)($t6)
 /* 00C9B0 7000BDB0 3C048006 */  lui   $a0, %hi(contdemoMesgMQ)
 /* 00C9B4 7000BDB4 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
 /* 00C9B8 7000BDB8 11C00005 */  beqz  $t6, .L7000BDD0
 /* 00C9BC 7000BDBC 27A5004C */   addiu $a1, $sp, 0x4c
 /* 00C9C0 7000BDC0 0C003774 */  jal   osRecvMesg
 /* 00C9C4 7000BDC4 24060001 */   li    $a2, 1
-/* 00C9C8 7000BDC8 3C018002 */  lui   $at, %hi(D_800268C8)
-/* 00C9CC 7000BDCC AC2068C8 */  sw    $zero, %lo(D_800268C8)($at)
+/* 00C9C8 7000BDC8 3C018002 */  lui   $at, %hi(g_ContBusy)
+/* 00C9CC 7000BDCC AC2068C8 */  sw    $zero, %lo(g_ContBusy)($at)
 .L7000BDD0:
 /* 00C9D0 7000BDD0 3C048006 */  lui   $a0, %hi(cont2MesgMQ)
 /* 00C9D4 7000BDD4 24845390 */  addiu $a0, %lo(cont2MesgMQ) # addiu $a0, $a0, 0x5390
@@ -828,9 +735,9 @@ glabel controllerSchedulerRelated
 /* 00CA18 7000BE18 0C00535C */  jal   osContStartReadData
 /* 00CA1C 7000BE1C 24845350 */   addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
 /* 00CA20 7000BE20 24190001 */  li    $t9, 1
-/* 00CA24 7000BE24 3C018002 */  lui   $at, %hi(D_800268C8)
+/* 00CA24 7000BE24 3C018002 */  lui   $at, %hi(g_ContBusy)
 /* 00CA28 7000BE28 3C048006 */  lui   $a0, %hi(cont4MesgMQ)
-/* 00CA2C 7000BE2C AC3968C8 */  sw    $t9, %lo(D_800268C8)($at)
+/* 00CA2C 7000BE2C AC3968C8 */  sw    $t9, %lo(g_ContBusy)($at)
 /* 00CA30 7000BE30 248453D0 */  addiu $a0, %lo(cont4MesgMQ) # addiu $a0, $a0, 0x53d0
 /* 00CA34 7000BE34 27A5004C */  addiu $a1, $sp, 0x4c
 /* 00CA38 7000BE38 0C0037C4 */  jal   osSendMesg
@@ -857,9 +764,9 @@ glabel controllerSchedulerRelated
 /* 00CA88 7000BE88 00003025 */   move  $a2, $zero
 /* 00CA8C 7000BE8C 14400093 */  bnez  $v0, .L7000C0DC
 /* 00CA90 7000BE90 3C058006 */   lui   $a1, %hi(g_ContData)
-/* 00CA94 7000BE94 3C018002 */  lui   $at, %hi(D_800268C8)
+/* 00CA94 7000BE94 3C018002 */  lui   $at, %hi(g_ContBusy)
 /* 00CA98 7000BE98 24A54F30 */  addiu $a1, %lo(g_ContData) # addiu $a1, $a1, 0x4f30
-/* 00CA9C 7000BE9C AC2068C8 */  sw    $zero, %lo(D_800268C8)($at)
+/* 00CA9C 7000BE9C AC2068C8 */  sw    $zero, %lo(g_ContBusy)($at)
 /* 00CAA0 7000BEA0 8CA201E8 */  lw    $v0, 0x1e8($a1)
 /* 00CAA4 7000BEA4 24010014 */  li    $at, 20
 /* 00CAA8 7000BEA8 8CB801E4 */  lw    $t8, 0x1e4($a1)
@@ -955,23 +862,23 @@ glabel controllerSchedulerRelated
 /* 00CBF0 7000BFF0 3C038002 */  lui   $v1, %hi(D_80026970)
 /* 00CBF4 7000BFF4 8C636970 */  lw    $v1, %lo(D_80026970)($v1)
 /* 00CBF8 7000BFF8 24190001 */  li    $t9, 1
-/* 00CBFC 7000BFFC 3C018002 */  lui   $at, %hi(D_800268C8)
-/* 00CC00 7000C000 AC3968C8 */  sw    $t9, %lo(D_800268C8)($at)
+/* 00CBFC 7000BFFC 3C018002 */  lui   $at, %hi(g_ContBusy)
+/* 00CC00 7000C000 AC3968C8 */  sw    $t9, %lo(g_ContBusy)($at)
 /* 00CC04 7000C004 3C018002 */  lui   $at, %hi(D_80026970)
 /* 00CC08 7000C008 24630001 */  addiu $v1, $v1, 1
 /* 00CC0C 7000C00C AC236970 */  sw    $v1, %lo(D_80026970)($at)
 /* 00CC10 7000C010 2861003C */  slti  $at, $v1, 0x3c
 /* 00CC14 7000C014 14200031 */  bnez  $at, .L7000C0DC
-/* 00CC18 7000C018 3C098002 */   lui   $t1, %hi(pl1_controller_failure_lr) 
-/* 00CC1C 7000C01C 3C048002 */  lui   $a0, %hi(pl1_controller_failure_ud)
-/* 00CC20 7000C020 3C058002 */  lui   $a1, %hi(pl1_controller_failure_held)
-/* 00CC24 7000C024 3C038002 */  lui   $v1, %hi(pl1_controller_failure_pressed)
+/* 00CC18 7000C018 3C098002 */   lui   $t1, %hi(g_ContBadReadsStickX) 
+/* 00CC1C 7000C01C 3C048002 */  lui   $a0, %hi(g_ContBadReadsStickY)
+/* 00CC20 7000C020 3C058002 */  lui   $a1, %hi(g_ContBadReadsButtons)
+/* 00CC24 7000C024 3C038002 */  lui   $v1, %hi(g_ContBadReadsButtonsPressed)
 /* 00CC28 7000C028 3C0A8002 */  lui   $t2, %hi(D_80026970) 
 /* 00CC2C 7000C02C 254A6970 */  addiu $t2, %lo(D_80026970) # addiu $t2, $t2, 0x6970
-/* 00CC30 7000C030 24636960 */  addiu $v1, %lo(pl1_controller_failure_pressed) # addiu $v1, $v1, 0x6960
-/* 00CC34 7000C034 24A56950 */  addiu $a1, %lo(pl1_controller_failure_held) # addiu $a1, $a1, 0x6950
-/* 00CC38 7000C038 24846940 */  addiu $a0, %lo(pl1_controller_failure_ud) # addiu $a0, $a0, 0x6940
-/* 00CC3C 7000C03C 25296930 */  addiu $t1, %lo(pl1_controller_failure_lr) # addiu $t1, $t1, 0x6930
+/* 00CC30 7000C030 24636960 */  addiu $v1, %lo(g_ContBadReadsButtonsPressed) # addiu $v1, $v1, 0x6960
+/* 00CC34 7000C034 24A56950 */  addiu $a1, %lo(g_ContBadReadsButtons) # addiu $a1, $a1, 0x6950
+/* 00CC38 7000C038 24846940 */  addiu $a0, %lo(g_ContBadReadsStickY) # addiu $a0, $a0, 0x6940
+/* 00CC3C 7000C03C 25296930 */  addiu $t1, %lo(g_ContBadReadsStickX) # addiu $t1, $t1, 0x6930
 .L7000C040:
 /* 00CC40 7000C040 8D220000 */  lw    $v0, ($t1)
 /* 00CC44 7000C044 5440000B */  bnezl $v0, .L7000C074
@@ -1028,22 +935,14 @@ glabel controllerSchedulerRelated
 
 
 #ifdef NONMATCHING
-? get_cur_controller_horz_stick_pos(s32 arg0)
+s8 get_cur_controller_horz_stick_pos(s8 contpadnum)
 {
-    s32 temp_t7;
-    void *temp_v1;
+    if (g_ContDataPtr->unk1f8 < 0 && (g_ConnectedControllers >> contpadnum & 1) == 0) {
+		g_ContBadReadsStickX[contpadnum]++;
+		return 0;
+	}
+	return g_ContDataPtr->samples[g_ContDataPtr->curlast].pads[contpadnum].stick_x;
 
-    temp_t7 = (s32) (arg0 << 0x18) >> 0x18;
-    if (g_ContDataPtr->unk1F8 < 0)
-    {
-        if ((((s32) g_ConnectedControllers >> temp_t7) & 1) == 0)
-        {
-            temp_v1 = (temp_t7 * 4) + &pl1_controller_failure_lr;
-            *temp_v1 = (s32) (*temp_v1 + 1);
-            return 0;
-        }
-    }
-    return ((g_ContDataPtr + (g_ContDataPtr->unk1E0 * 0x18)) + (temp_t7 * 6))->unk2;
 }
 #else
 GLOBAL_ASM(
@@ -1059,8 +958,8 @@ glabel get_cur_controller_horz_stick_pos
 /* 00CD08 7000C108 0701000E */  bgez  $t8, .L7000C144
 /* 00CD0C 7000C10C 3C198002 */   lui   $t9, %hi(g_ConnectedControllers) 
 /* 00CD10 7000C110 933968D0 */  lbu   $t9, %lo(g_ConnectedControllers)($t9)
-/* 00CD14 7000C114 3C0B8002 */  lui   $t3, %hi(pl1_controller_failure_lr) 
-/* 00CD18 7000C118 256B6930 */  addiu $t3, %lo(pl1_controller_failure_lr) # addiu $t3, $t3, 0x6930
+/* 00CD14 7000C114 3C0B8002 */  lui   $t3, %hi(g_ContBadReadsStickX) 
+/* 00CD18 7000C118 256B6930 */  addiu $t3, %lo(g_ContBadReadsStickX) # addiu $t3, $t3, 0x6930
 /* 00CD1C 7000C11C 01F94007 */  srav  $t0, $t9, $t7
 /* 00CD20 7000C120 31090001 */  andi  $t1, $t0, 1
 /* 00CD24 7000C124 15200007 */  bnez  $t1, .L7000C144
@@ -1092,26 +991,13 @@ glabel get_cur_controller_horz_stick_pos
 
 
 
-#ifdef NONMATCHING
-void controller_7000C174(s32 arg0) {
-    s32 temp_t7;
-    void *temp_v1;
-
-    // Node 0
-    temp_t7 = ((s32) (arg0 << 0x18) >> 0x18);
-    if (g_ContDataPtr->unk1F8 < 0)
-    {
-        // Node 1
-        if ((((s32) g_ConnectedControllers >> temp_t7) & 1) == 0)
-        {
-            // Node 2
-            temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_lr);
-            *temp_v1 = (s32) (*temp_v1 + 1);
-            return;
-            // (possible return value: ((g_ContDataPtr + (g_ContDataPtr->unk1E4 * 0x18)) + (temp_t7 * 6))->unk2)
-        }
-    }
-    // (possible return value: ((g_ContDataPtr + (g_ContDataPtr->unk1E4 * 0x18)) + (temp_t7 * 6))->unk2)
+#if 0//def NONMATCHING
+s8 controller_7000C174(s8 contpadnum) {
+    if (g_ContDataPtr->unk1f8 < 0 && (g_ConnectedControllers >> contpadnum & 1) == 0) {
+		g_ContBadReadsStickX[contpadnum]++;
+		return 0;
+	}
+	return g_ContDataPtr->samples[g_ContDataPtr->curstart].pads[contpadnum].stick_x;
 }
 #else
 GLOBAL_ASM(
@@ -1127,8 +1013,8 @@ glabel controller_7000C174
 /* 00CD90 7000C190 0701000E */  bgez  $t8, .L7000C1CC
 /* 00CD94 7000C194 3C198002 */   lui   $t9, %hi(g_ConnectedControllers) 
 /* 00CD98 7000C198 933968D0 */  lbu   $t9, %lo(g_ConnectedControllers)($t9)
-/* 00CD9C 7000C19C 3C0B8002 */  lui   $t3, %hi(pl1_controller_failure_lr) 
-/* 00CDA0 7000C1A0 256B6930 */  addiu $t3, %lo(pl1_controller_failure_lr) # addiu $t3, $t3, 0x6930
+/* 00CD9C 7000C19C 3C0B8002 */  lui   $t3, %hi(g_ContBadReadsStickX) 
+/* 00CDA0 7000C1A0 256B6930 */  addiu $t3, %lo(g_ContBadReadsStickX) # addiu $t3, $t3, 0x6930
 /* 00CDA4 7000C1A4 01F94007 */  srav  $t0, $t9, $t7
 /* 00CDA8 7000C1A8 31090001 */  andi  $t1, $t0, 1
 /* 00CDAC 7000C1AC 15200007 */  bnez  $t1, .L7000C1CC
@@ -1161,25 +1047,12 @@ glabel controller_7000C174
 
 
 #ifdef NONMATCHING
-void get_cur_controller_vert_stick_pos(s32 arg0) {
-    s32 temp_t7;
-    void *temp_v1;
-
-    // Node 0
-    temp_t7 = ((s32) (arg0 << 0x18) >> 0x18);
-    if (g_ContDataPtr->unk1F8 < 0)
-    {
-        // Node 1
-        if ((((s32) g_ConnectedControllers >> temp_t7) & 1) == 0)
-        {
-            // Node 2
-            temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_ud);
-            *temp_v1 = (s32) (*temp_v1 + 1);
-            return;
-            // (possible return value: ((g_ContDataPtr + (g_ContDataPtr->unk1E0 * 0x18)) + (temp_t7 * 6))->unk3)
-        }
-    }
-    // (possible return value: ((g_ContDataPtr + (g_ContDataPtr->unk1E0 * 0x18)) + (temp_t7 * 6))->unk3)
+s8 get_cur_controller_vert_stick_pos(s8 contpadnum) {
+    if (g_ContDataPtr->unk1f8 < 0 && (g_ConnectedControllers >> contpadnum & 1) == 0) {
+		g_ContBadReadsStickY[contpadnum]++;
+		return 0;
+	}
+	return g_ContDataPtr->samples[g_ContDataPtr->curlast].pads[contpadnum].stick_y;
 }
 #else
 GLOBAL_ASM(
@@ -1195,8 +1068,8 @@ glabel get_cur_controller_vert_stick_pos
 /* 00CE18 7000C218 0701000E */  bgez  $t8, .L7000C254
 /* 00CE1C 7000C21C 3C198002 */   lui   $t9, %hi(g_ConnectedControllers) 
 /* 00CE20 7000C220 933968D0 */  lbu   $t9, %lo(g_ConnectedControllers)($t9)
-/* 00CE24 7000C224 3C0B8002 */  lui   $t3, %hi(pl1_controller_failure_ud) 
-/* 00CE28 7000C228 256B6940 */  addiu $t3, %lo(pl1_controller_failure_ud) # addiu $t3, $t3, 0x6940
+/* 00CE24 7000C224 3C0B8002 */  lui   $t3, %hi(g_ContBadReadsStickY) 
+/* 00CE28 7000C228 256B6940 */  addiu $t3, %lo(g_ContBadReadsStickY) # addiu $t3, $t3, 0x6940
 /* 00CE2C 7000C22C 01F94007 */  srav  $t0, $t9, $t7
 /* 00CE30 7000C230 31090001 */  andi  $t1, $t0, 1
 /* 00CE34 7000C234 15200007 */  bnez  $t1, .L7000C254
@@ -1229,25 +1102,12 @@ glabel get_cur_controller_vert_stick_pos
 
 
 #ifdef NONMATCHING
-void controller_7000C284(s32 arg0) {
-    s32 temp_t7;
-    void *temp_v1;
-
-    // Node 0
-    temp_t7 = ((s32) (arg0 << 0x18) >> 0x18);
-    if (g_ContDataPtr->unk1F8 < 0)
-    {
-        // Node 1
-        if ((((s32) g_ConnectedControllers >> temp_t7) & 1) == 0)
-        {
-            // Node 2
-            temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_ud);
-            *temp_v1 = (s32) (*temp_v1 + 1);
-            return;
-            // (possible return value: ((g_ContDataPtr + (g_ContDataPtr->unk1E4 * 0x18)) + (temp_t7 * 6))->unk3)
-        }
-    }
-    // (possible return value: ((g_ContDataPtr + (g_ContDataPtr->unk1E4 * 0x18)) + (temp_t7 * 6))->unk3)
+s8 controller_7000C284(s8 contpadnum) {
+    if (g_ContDataPtr->unk1f8 < 0 && (g_ConnectedControllers >> contpadnum & 1) == 0) {
+		g_ContBadReadsStickY[contpadnum]++;
+		return 0;
+	}
+	return g_ContDataPtr->samples[g_ContDataPtr->curstart].pads[contpadnum].stick_y;
 }
 #else
 GLOBAL_ASM(
@@ -1263,8 +1123,8 @@ glabel controller_7000C284
 /* 00CEA0 7000C2A0 0701000E */  bgez  $t8, .L7000C2DC
 /* 00CEA4 7000C2A4 3C198002 */   lui   $t9, %hi(g_ConnectedControllers) 
 /* 00CEA8 7000C2A8 933968D0 */  lbu   $t9, %lo(g_ConnectedControllers)($t9)
-/* 00CEAC 7000C2AC 3C0B8002 */  lui   $t3, %hi(pl1_controller_failure_ud) 
-/* 00CEB0 7000C2B0 256B6940 */  addiu $t3, %lo(pl1_controller_failure_ud) # addiu $t3, $t3, 0x6940
+/* 00CEAC 7000C2AC 3C0B8002 */  lui   $t3, %hi(g_ContBadReadsStickY) 
+/* 00CEB0 7000C2B0 256B6940 */  addiu $t3, %lo(g_ContBadReadsStickY) # addiu $t3, $t3, 0x6940
 /* 00CEB4 7000C2B4 01F94007 */  srav  $t0, $t9, $t7
 /* 00CEB8 7000C2B8 31090001 */  andi  $t1, $t0, 1
 /* 00CEBC 7000C2BC 15200007 */  bnez  $t1, .L7000C2DC
@@ -1297,25 +1157,15 @@ glabel controller_7000C284
 
 
 #ifdef NONMATCHING
-s32 get_controller_buttons_held(s32 arg0, s32 arg1) {
-    s32 temp_t7;
-    void *temp_v1;
+u16 get_controller_buttons_held(s8 contpadnum, u16 mask) {
+    u16 button;
+	if (g_ContDataPtr->unk1f8 < 0 && (g_ConnectedControllers >> contpadnum & 1) == 0) {
+		g_ContBadReadsButtons[contpadnum]++;
+		return 0;
+	}
+	button = g_ContDataPtr->samples[g_ContDataPtr->curlast].pads[contpadnum].button;
+	return button & mask;
 
-    // Node 0
-    temp_t7 = ((s32) (arg0 << 0x18) >> 0x18);
-    if (g_ContDataPtr->unk1F8 < 0)
-    {
-        // Node 1
-        if ((((s32) g_ConnectedControllers >> temp_t7) & 1) == 0)
-        {
-            // Node 2
-            temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_held);
-            *temp_v1 = (s32) (*temp_v1 + 1);
-            return;
-            // (possible return value: ((*((g_ContDataPtr + (g_ContDataPtr->unk1E0 * 0x18)) + (temp_t7 * 6)) & (arg1 & 0xffff)) & 0xffff))
-        }
-    }
-    // (possible return value: ((*((g_ContDataPtr + (g_ContDataPtr->unk1E0 * 0x18)) + (temp_t7 * 6)) & (arg1 & 0xffff)) & 0xffff))
 }
 #else
 GLOBAL_ASM(
@@ -1334,8 +1184,8 @@ glabel get_controller_buttons_held
 /* 00CF34 7000C334 01E02025 */   move  $a0, $t7
 /* 00CF38 7000C338 3C088002 */  lui   $t0, %hi(g_ConnectedControllers) 
 /* 00CF3C 7000C33C 910868D0 */  lbu   $t0, %lo(g_ConnectedControllers)($t0)
-/* 00CF40 7000C340 3C0C8002 */  lui   $t4, %hi(pl1_controller_failure_held) 
-/* 00CF44 7000C344 258C6950 */  addiu $t4, %lo(pl1_controller_failure_held) # addiu $t4, $t4, 0x6950
+/* 00CF40 7000C340 3C0C8002 */  lui   $t4, %hi(g_ContBadReadsButtons) 
+/* 00CF44 7000C344 258C6950 */  addiu $t4, %lo(g_ContBadReadsButtons) # addiu $t4, $t4, 0x6950
 /* 00CF48 7000C348 01E84807 */  srav  $t1, $t0, $t7
 /* 00CF4C 7000C34C 312A0001 */  andi  $t2, $t1, 1
 /* 00CF50 7000C350 15400007 */  bnez  $t2, .L7000C370
@@ -1371,25 +1221,12 @@ glabel get_controller_buttons_held
 
 
 #ifdef NONMATCHING
-s32 get_controller_buttons_pressed(s8 arg0, s32 arg1) {
-    s32 temp_t7;
-    void *temp_v1;
-
-    // Node 0
-    temp_t7 = ((s32) (arg0 << 0x18) >> 0x18);
-    if (g_ContDataPtr->unk1F8 < 0)
-    {
-        // Node 1
-        if ((((s32) g_ConnectedControllers >> temp_t7) & 1) == 0)
-        {
-            // Node 2
-            temp_v1 = ((temp_t7 * 4) + &pl1_controller_failure_pressed);
-            *temp_v1 = (s32) (*temp_v1 + 1);
-            return;
-            // (possible return value: (((g_ContDataPtr + (temp_t7 * 2))->unk1F0 & (arg1 & 0xffff)) & 0xffff))
-        }
-    }
-    // (possible return value: (((g_ContDataPtr + (temp_t7 * 2))->unk1F0 & (arg1 & 0xffff)) & 0xffff))
+u16 get_controller_buttons_pressed(s8 contpadnum, u16 mask) {
+	if (g_ContDataPtr->unk1f8 < 0 && (g_ConnectedControllers >> contpadnum & 1) == 0) {
+		g_ContBadReadsButtonsPressed[contpadnum]++;
+		return 0;
+	}
+    return g_ContDataPtr->buttonspressed[contpadnum] & mask;
 }
 #else
 GLOBAL_ASM(
@@ -1408,8 +1245,8 @@ glabel get_controller_buttons_pressed
 /* 00CFD4 7000C3D4 01E02025 */   move  $a0, $t7
 /* 00CFD8 7000C3D8 3C088002 */  lui   $t0, %hi(g_ConnectedControllers) 
 /* 00CFDC 7000C3DC 910868D0 */  lbu   $t0, %lo(g_ConnectedControllers)($t0)
-/* 00CFE0 7000C3E0 3C0C8002 */  lui   $t4, %hi(pl1_controller_failure_pressed) 
-/* 00CFE4 7000C3E4 258C6960 */  addiu $t4, %lo(pl1_controller_failure_pressed) # addiu $t4, $t4, 0x6960
+/* 00CFE0 7000C3E0 3C0C8002 */  lui   $t4, %hi(g_ContBadReadsButtonsPressed) 
+/* 00CFE4 7000C3E4 258C6960 */  addiu $t4, %lo(g_ContBadReadsButtonsPressed) # addiu $t4, $t4, 0x6960
 /* 00CFE8 7000C3E8 01E84807 */  srav  $t1, $t0, $t7
 /* 00CFEC 7000C3EC 312A0001 */  andi  $t2, $t1, 1
 /* 00CFF0 7000C3F0 15400007 */  bnez  $t2, .L7000C410
@@ -1438,15 +1275,11 @@ glabel get_controller_buttons_pressed
 
 
 #ifdef NONMATCHING
-s32 controller_7000C430(s32 arg0, s32 arg1) {
-    // Node 0
-    // Node 1
-    (arg0 + 1)->unk-1 = (s8) (((0 < (((s32) (arg1 & 0xffff) >> 0xf) & 1)) * 0x11) + 0x20);
-    if ((0xf + -1) >= 0)
-    {
-        goto loop_1;
+void controller_7000C430(s8 *arg0, u16 arg1) {
+    s32 i;
+    for (i = 15; i >= 0; i--) {
+        arg0[15 - i] = ((/*(*/((arg1 >> i) & 1)/* > 0)*/ * 17) + 32);
     }
-    // (possible return value: (0xf + -1))
 }
 
 #else
@@ -1477,17 +1310,10 @@ glabel controller_7000C430
 
 #ifdef NONMATCHING
 void controller_7000C470(void) {
-    // Node 0
-    if (get_attached_controller_count() > 0)
-    {
-        loop_1:
-        // Node 1
-        if ((0 + 1) < get_attached_controller_count())
-        {
-            goto loop_1;
-        }
+    s32 i = 0;
+    for (i = 0; i < get_attached_controller_count(); i++) {
+        // Removed
     }
-    // (possible return value: get_attached_controller_count())
 }
 
 #else
@@ -1519,23 +1345,15 @@ glabel controller_7000C470
 
 
 #ifdef NONMATCHING
-s32 get_controller_3dstick_L_R(s32 arg0, s32 arg1, ? arg2, s32 arg7, s32 arg8) {
-    s32 temp_a0;
-
-    // Node 0
-    temp_a0 = (get_cur_controller_horz_stick_pos(((s32) (arg0 << 0x18) >> 0x18)) + 0x3c);
-    if (temp_a0 >= 0x79)
-    {
-        // Node 1
+s8 get_controller_3dstick_L_R(s8 contpadnum, s32 rangemin, s32 rangemax) {
+    s8 stick_x = get_cur_controller_horz_stick_pos(contpadnum) + 60;
+    if (stick_x > 120) {
+        stick_x = 120;
     }
-    // Node 2
-    if (temp_a0 < 0)
-    {
-        // Node 3
-        return;
-        // (possible return value: (((s32) (temp_a0 * (arg8 - arg7)) / 0x78) + arg7))
+    if (stick_x < 0) {
+        stick_x = 0;
     }
-    // (possible return value: (((s32) (temp_a0 * (arg8 - arg7)) / 0x78) + arg7))
+    return (((stick_x * (rangemax - rangemin)) / 120) + rangemin);
 }
 #else
 GLOBAL_ASM(
@@ -1580,23 +1398,15 @@ glabel get_controller_3dstick_L_R
 
 
 #ifdef NONMATCHING
-s32 get_controller_3dstick_U_D(s32 arg0, s32 arg1, ? arg2, s32 arg7, s32 arg8) {
-    s32 temp_a0;
-
-    // Node 0
-    temp_a0 = (get_cur_controller_vert_stick_pos(((s32) (arg0 << 0x18) >> 0x18)) + 0x3c);
-    if (temp_a0 >= 0x79)
-    {
-        // Node 1
+s8 get_controller_3dstick_U_D(s8 contpadnum, s32 rangemin, s32 rangemax) {
+    s8 stick_y = get_cur_controller_vert_stick_pos(contpadnum) + 60;
+    if (stick_y > 120) {
+        stick_y = 120;
     }
-    // Node 2
-    if (temp_a0 < 0)
-    {
-        // Node 3
-        return;
-        // (possible return value: (((s32) (temp_a0 * (arg8 - arg7)) / 0x78) + arg7))
+    if (stick_y < 0) {
+        stick_y = 0;
     }
-    // (possible return value: (((s32) (temp_a0 * (arg8 - arg7)) / 0x78) + arg7))
+    return (((stick_y * (rangemax - rangemin)) / 120) + rangemin);
 }
 #else
 GLOBAL_ASM(
@@ -1641,23 +1451,15 @@ glabel get_controller_3dstick_U_D
 
 
 #ifdef NONMATCHING
-f32 controller_7000C59C(s32 arg0, s32 arg1, ? arg2, f32 arg7, f32 arg8) {
-    s32 temp_a0;
-
-    // Node 0
-    temp_a0 = (get_cur_controller_horz_stick_pos(((s32) (arg0 << 0x18) >> 0x18)) + 0x3c);
-    if (temp_a0 >= 0x79)
-    {
-        // Node 1
+f32 controller_7000C59C(s8 contpadnum, f32 rangemin, f32 rangemax) {
+    s8 stick_x = get_cur_controller_horz_stick_pos(contpadnum) + 60;
+    if (stick_x > 120) {
+        stick_x = 120;
     }
-    // Node 2
-    if (temp_a0 < 0)
-    {
-        // Node 3
-        return;
-        // (possible return value: ((((f32) temp_a0 / 120.0f) * (arg8 - arg7)) + arg7))
+    if (stick_x < 0) {
+        stick_x = 0;
     }
-    // (possible return value: ((((f32) temp_a0 / 120.0f) * (arg8 - arg7)) + arg7))
+    return (((stick_x / 120.0f) * (rangemax - rangemin)) + rangemin);
 }
 #else
 GLOBAL_ASM(
@@ -1701,23 +1503,15 @@ glabel controller_7000C59C
 
 
 #ifdef NONMATCHING
-f32 controller_7000C60C(s32 arg0, s32 arg1, ? arg2, f32 arg7, f32 arg8) {
-    s32 temp_a0;
-
-    // Node 0
-    temp_a0 = (get_cur_controller_vert_stick_pos(((s32) (arg0 << 0x18) >> 0x18)) + 0x3c);
-    if (temp_a0 >= 0x79)
-    {
-        // Node 1
+f32 controller_7000C60C(s8 contpadnum, f32 rangemin, f32 rangemax) {
+    s8 stick_y = get_cur_controller_vert_stick_pos(contpadnum) + 60;
+    if (stick_y > 120) {
+        stick_y = 120;
     }
-    // Node 2
-    if (temp_a0 < 0)
-    {
-        // Node 3
-        return;
-        // (possible return value: ((((f32) temp_a0 / 120.0f) * (arg8 - arg7)) + arg7))
+    if (stick_y < 0) {
+        stick_y = 0;
     }
-    // (possible return value: ((((f32) temp_a0 / 120.0f) * (arg8 - arg7)) + arg7))
+    return (((stick_y / 120.0f) * (rangemax - rangemin)) + rangemin);
 }
 #else
 GLOBAL_ASM(
@@ -1762,13 +1556,9 @@ glabel controller_7000C60C
 
 #ifdef NONMATCHING
 void controller_7000C67C(void) {
-    ? sp1C;
-
-    // Node 0
-    osSendMesg(&cont1MesgMQ, &sp1C, 0);
-    osRecvMesg(&cont2MesgMQ, &sp1C, 1);
-    return;
-    // (possible return value: osRecvMesg(&cont2MesgMQ, &sp1C, 1))
+    OSMesg msg;
+    osSendMesg(&cont1MesgMQ, &msg, OS_MESG_NOBLOCK);
+    osRecvMesg(&cont2MesgMQ, &msg, OS_MESG_BLOCK);
 }
 #else
 GLOBAL_ASM(
@@ -1799,13 +1589,9 @@ glabel controller_7000C67C
 
 #ifdef NONMATCHING
 void controller_7000C6BC(void) {
-    ? sp1C;
-
-    // Node 0
-    osSendMesg(&cont3MesgMQ, &sp1C, 0);
-    osRecvMesg(&cont4MesgMQ, &sp1C, 1);
-    return;
-    // (possible return value: osRecvMesg(&cont4MesgMQ, &sp1C, 1))
+    OSMesg msg;
+    osSendMesg(&cont3MesgMQ, &msg, OS_MESG_NOBLOCK);
+    osRecvMesg(&cont4MesgMQ, &msg, OS_MESG_BLOCK);
 }
 #else
 GLOBAL_ASM(
@@ -1836,14 +1622,11 @@ glabel controller_7000C6BC
 
 #ifdef NONMATCHING
 s32 save_7000C6FC(void) {
-    s32 sp1C;
-
-    // Node 0
+    s32 type;
     controller_7000C67C();
-    sp1C = osEepromProbe(&contdemoMesgMQ);
+    type = osEepromProbe(&contdemoMesgMQ);
     controller_7000C6BC();
-    return;
-    // (possible return value: sp1C)
+    return type;
 }
 #else
 GLOBAL_ASM(
@@ -1871,15 +1654,12 @@ glabel save_7000C6FC
 
 
 #ifdef NONMATCHING
-s32 save_7000C734(s32 arg0, s32 arg1, ? arg8, ? arg9) {
-    s32 sp1C;
-
-    // Node 0
+s32 save_7000C734(u8 address, u8 *buffer)
+    s32 ret;
     controller_7000C67C();
-    sp1C = osEepromRead(&contdemoMesgMQ, arg8, arg9);
+    ret = osEepromRead(&contdemoMesgMQ, address, buffer);
     controller_7000C6BC();
-    return;
-    // (possible return value: sp1C)
+    return ret;
 }
 #else
 GLOBAL_ASM(
@@ -1910,15 +1690,12 @@ glabel save_7000C734
 
 
 #ifdef NONMATCHING
-s32 save_7000C778(s32 arg0, s32 arg1, ? arg8, ? arg9) {
-    s32 sp1C;
-
-    // Node 0
+s32 save_7000C778(u8 address, u8 *buffer) {
+    s32 ret;
     controller_7000C67C();
-    sp1C = osEepromWrite(&contdemoMesgMQ, arg8, arg9);
+    ret = osEepromWrite(&contdemoMesgMQ, address, buffer);
     controller_7000C6BC();
-    return;
-    // (possible return value: sp1C)
+    return ret;
 }
 #else
 GLOBAL_ASM(
@@ -1949,15 +1726,12 @@ glabel save_7000C778
 
 
 #ifdef NONMATCHING
-s32 save_7000C7BC(s32 arg0, s32 arg1, ? arg2, ? arg8, ? arg9, ? argA) {
-    s32 sp1C;
-
-    // Node 0
+s32 save_7000C7BC(u8 address, u8 *buffer, s32 nbytes) {
+    s32 ret;
     controller_7000C67C();
-    sp1C = osEepromLongRead(&contdemoMesgMQ, arg8, arg9, argA);
+    ret = osEepromLongRead(&contdemoMesgMQ, address, buffer, nbytes);
     controller_7000C6BC();
-    return;
-    // (possible return value: sp1C)
+    return ret;
 }
 #else
 GLOBAL_ASM(
@@ -1990,15 +1764,12 @@ glabel save_7000C7BC
 
 
 #ifdef NONMATCHING
-s32 save_7000C808(s32 arg0, s32 arg1, ? arg2, ? arg8, ? arg9, ? argA) {
-    s32 sp1C;
-
-    // Node 0
+s32 save_7000C808(u8 address, u8 *buffer, s32 nbytes) {
+    s32 ret;
     controller_7000C67C();
-    sp1C = osEepromLongWrite(&contdemoMesgMQ, arg8, arg9, argA);
+    ret = osEepromLongWrite(&contdemoMesgMQ, address, buffer, nbytes);
     controller_7000C6BC();
-    return;
-    // (possible return value: sp1C)
+    return ret;
 }
 #else
 GLOBAL_ASM(
@@ -2031,37 +1802,17 @@ glabel save_7000C808
 
 
 #ifdef NONMATCHING
-s32 controller_7000C854(s32 arg0, s32 arg1) {
-    s32 temp_v1;
-    void *temp_a0;
-    s32 temp_f8;
-
-    // Node 0
-    temp_v1 = (arg0 * 4);
-    if (disable_all_rumble == 0)
-    {
-        // Node 1
-        if (*(&controller_1_rumble_inserted + temp_v1) > 0)
-        {
-            // Node 2
-            temp_a0 = (temp_v1 + &controller_1_rumble_duration);
-            temp_f8 = (s32) (arg1 * 60.0f);
-            if (*temp_a0 < temp_f8)
-            {
-                // Node 3
-                *temp_a0 = temp_f8;
-            }
-            // Node 4
-            if (*(&controller_1_rumble_state + temp_v1) == 0)
-            {
-                // Node 5
-                *(&controller_1_rumble_pulse + temp_v1) = 1;
-                return;
-                // (possible return value: temp_f8)
-            }
+void controller_7000C854(s32 arg0, f32 arg1) {
+    s32 var1;
+    if ((D_80026924 == NULL) && (controller_1_rumble_inserted[arg0] > 0)) {
+        var1 = (arg1 * 60.0f);
+        if (controller_1_rumble_duration[arg0] < var1) {
+            controller_1_rumble_duration[arg0] = var1;
+        }
+        if (controller_1_rumble_state[arg0]) == 0) {
+            controller_1_rumble_pulse[arg0]) = 1;
         }
     }
-    // (function likely void)
 }
 
 #else
@@ -2112,15 +1863,23 @@ glabel controller_7000C854
 
 
 #ifdef NONMATCHING
-void reset_cont_rumble_detect(void) {
-    controller_1_rumble_state = 1;
-    controller_1_rumble_pulse = 0;
-    controller_2_rumble_state = 1;
-    controller_2_rumble_pulse = 0;
-    controller_3_rumble_state = 1;
-    controller_3_rumble_pulse = 0;
-    controller_4_rumble_state = 1;
-    controller_4_rumble_pulse = 0;
+void reset_cont_rumble_detect(void) { // Loop?
+#ifdef VERION_US
+    controller_1_rumble_state[0] = 1;
+    controller_1_rumble_pulse[0] = 0;
+    controller_1_rumble_state[1] = 1;
+    controller_1_rumble_pulse[1] = 0;
+    controller_1_rumble_state[2] = 1;
+    controller_1_rumble_pulse[2] = 0;
+    controller_1_rumble_state[3] = 1;
+    controller_1_rumble_pulse[3] = 0;
+#endif
+#ifdef VERSION_JP
+    controller_1_rumble_pulse[0] = 2;
+    controller_1_rumble_pulse[1] = 2;
+    controller_1_rumble_pulse[2] = 2;
+    controller_1_rumble_pulse[3] = 2;
+#endif
 }
 #else
 #ifdef VERSION_US
@@ -2177,10 +1936,7 @@ glabel reset_cont_rumble_detect
 
 #ifdef NONMATCHING
 void controller_7000C930(s32 arg0) {
-    // Node 0
-    (void *)0x80020000->unk68C4 = (s32) ((arg0 * 0x1fc) + &controller_input_index);
-    return;
-    // (function likely void)
+    g_ContDataPtr = &g_ContData[arg0];
 }
 #else
 GLOBAL_ASM(
@@ -2204,7 +1960,8 @@ glabel controller_7000C930
 
 #ifdef NONMATCHING
 s32 controller_7000C954(void) {
-    // (possible return value: ((s32) (g_ContDataPtr - &controller_input_index) / 0x1fc))
+    return (g_ContDataPtr - g_ContData);
+    //return (s32) (g_ContDataPtr - &g_ContData) / 0x1FC;
 }
 #else
 GLOBAL_ASM(
