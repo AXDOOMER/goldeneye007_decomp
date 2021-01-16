@@ -12,7 +12,7 @@
  *   - 
  */
 
-u32 maybe_cur_TLB_entries = 0;
+s32 maybe_cur_TLB_entries = 0;
 u32 tlb_segment_num = 0;
 
 struct s_tlbmanage_table_entry TLB_managment_table[128];
@@ -110,19 +110,23 @@ glabel establish_TLB_buffer_management_table
  * ???; pointless conditional tests, will reset 800230D0
  */
 #ifdef NONMATCHING
-s32 mp_tlb_related(void)
+
+/********************************************
+ * 24b0:    beqz    at,0x24b8 ~>                     i 24b0:    beqz    at,0x24bc ~>
+ * 24b4:    nop                                        24b4:    nop
+ *                                                   > 24b8:    sw      zero,0(v1)
+ * 24b8:    jr      ra                                 24bc:    jr      ra
+ * 24bc:    sw      zero,0(v1)                       | 24c0:    nop
+***************************/
+void mp_tlb_related(void)
 {
-    s32 temp_v0;
-
-    temp_v0 = maybe_cur_TLB_entries;
-    if ((temp_v0 >= 0x33) || (temp_v0 < 0x1A))
+    if ((maybe_cur_TLB_entries > 0x32) || (maybe_cur_TLB_entries < 0x1a))
     {
-
+        maybe_cur_TLB_entries = 0;
+        return;
     }
-    maybe_cur_TLB_entries = 0;
-    return temp_v0;
+    
 }
-
 #else
 GLOBAL_ASM(
 glabel mp_tlb_related
