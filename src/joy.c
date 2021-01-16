@@ -1129,28 +1129,6 @@ void joy7000C930(s32 index) {
     g_ContDataPtr = &g_ContData[index];
 }
 
-#ifdef NONMATCHING
-s32 controller_7000C954(void) {
+s32 joy7000C954(void) {
     return (g_ContDataPtr - g_ContData);
-    //return (s32) (g_ContDataPtr - &g_ContData) / 0x1FC;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel controller_7000C954
-/* 00D554 7000C954 3C0E8002 */  lui   $t6, %hi(g_ContDataPtr) 
-/* 00D558 7000C958 8DCE68C4 */  lw    $t6, %lo(g_ContDataPtr)($t6)
-/* 00D55C 7000C95C 3C0F8006 */  lui   $t7, %hi(g_ContData) 
-/* 00D560 7000C960 25EF4F30 */  addiu $t7, %lo(g_ContData) # addiu $t7, $t7, 0x4f30
-/* 00D564 7000C964 240101FC */  li    $at, 508
-/* 00D568 7000C968 01CF1023 */  subu  $v0, $t6, $t7
-/* 00D56C 7000C96C 0041001A */  div   $zero, $v0, $at
-/* 00D570 7000C970 00001012 */  mflo  $v0
-/* 00D574 7000C974 03E00008 */  jr    $ra
-/* 00D578 7000C978 00000000 */   nop   
-)  
-#endif
-
-
-
-
