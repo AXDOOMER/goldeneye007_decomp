@@ -759,7 +759,7 @@ glabel sub_GAME_7F0A4B40
 
 u32 controllerCheckDualControllerTypesAllowed(void)
 {
-    if (get_attached_controller_count() >= 2)
+    if (joyGetControllerCount() >= 2)
     {
         if (cur_player_get_control_type() >= 4)
         {
@@ -2245,7 +2245,7 @@ glabel sub_GAME_7F0A68D8
 
 void sub_GAME_7F0A69A8(void)
 {
-    if (get_attached_controller_count() < 2)
+    if (joyGetControllerCount() < 2)
     {
         D_800409D8 = 4;
     }

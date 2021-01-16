@@ -124,7 +124,7 @@ void init_mainthread_data(void)
     obInitDebugNoticeList();
     rspInitDebugNoticeList();
     dynInitDebugNoticeList();
-    contSystemInit();
+    joySystemInit();
     osCreateMesgQueue(&bossmq, &bossmsg, 1);
 
     for (i = 0; i != 4; i++)

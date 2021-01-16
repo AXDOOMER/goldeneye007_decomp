@@ -64,7 +64,7 @@ u32 g_ContBadReadsButtons[4] = {0};
 u32 g_ContBadReadsButtonsPressed[4] = {0};
 s32 D_80026970 = 0;
 
-void contSystemInit(void) {
+void joySystemInit(void) {
     s32 i;
     s32 j;
 
@@ -80,8 +80,8 @@ void contSystemInit(void) {
 
     g_ContQueuesCreated = 1;
 
-    D_80026924 = 0;
-    D_80026928 = 0;
+    D_80026924 = NULL;
+    D_80026928 = NULL;
 
     for (i = 0; i < 2; i++) {
         g_ContData[i].curlast = 0;
@@ -321,7 +321,7 @@ glabel controller_check_for_rumble_maybe
 )
 #endif
 
-s8 get_attached_controller_count(void) {
+s8 joyGetControllerCount(void) {
     s32 i;
 
 	if (g_ContDataPtr->unk1f8 >= 0) {
@@ -337,7 +337,7 @@ s8 get_attached_controller_count(void) {
 	return 4;
 }
 
-u8 get_num_controllers_plugged_in(void) {
+u8 joyGetConnectedControllers(void) {
     return g_ConnectedControllers;
 }
 
@@ -583,13 +583,13 @@ glabel controller_rumble_related
 #endif
 #endif
 
-void set_disable_all_rumble_and_something(s32 arg0, s32 arg1) {
-    D_80026924 = arg0;
+void joySetFunc80026924(s32 (*func)(struct contsample*, s32), s32 arg1) {
+    D_80026924 = func;
     g_ContData[1].unk1f8 = arg1;
 }
 
-void set_ptr_tlb_ramrom_record(s32 arg0){
-    D_80026928 = arg0;
+void joySetFunc80026928(void (*func)(struct contsample*, s32, s32)){
+    D_80026928 = func;
 }
 
 void joyConsumeSamples(struct contdata *contdata) {
@@ -992,7 +992,7 @@ void joy7000C430(s8 *arg0, u16 arg1) {
 
 void joy7000C470(void) {
     s32 i = 0;
-    for (i = 0; i < get_attached_controller_count(); i++) {
+    for (i = 0; i < joyGetControllerCount(); i++) {
         // Removed
     }
 }
