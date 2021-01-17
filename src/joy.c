@@ -2,10 +2,6 @@
 #include "joy.h"
 #include "libultra/os.h"
 
-struct contsample {
-	OSContPad pads[MAXCONTROLLERS];
-};
-
 struct contdata {
     /* 0x000 */ struct contsample samples[20];
     /* 0x1E0 */ s32 curlast; 
@@ -60,8 +56,8 @@ s32 g_ContQueuesCreated = 0;
 s32 g_ContInitDone = 0;
 s32 g_ContCheckStatusTimer60 = 0;
 
-s32 (*g_ContPlaybackFunc)(struct contsample *samples, s32 samplenum) = NULL;
-void (*g_ContRecordFunc)(struct contsample *samples, s32 samplenum, s32 samplenum2) = NULL;
+contplaybackfunc g_ContPlaybackFunc = NULL;
+contrecordfunc g_ContRecordFunc = NULL;
 
 s32 g_ContNeedsInit = 1;
 
@@ -185,7 +181,6 @@ void joyCheckStatus(void) {
     }
 }
 #else
-void joyCheckStatus(void);
 GLOBAL_ASM(
 .text
 glabel joyCheckStatus
@@ -590,12 +585,12 @@ glabel joyRumblePakTick
 #endif
 #endif
 
-void joySetPlaybackFunc(s32 (*func)(struct contsample*, s32), s32 controllercount) {
+void joySetPlaybackFunc(contplaybackfunc func, s32 controllercount) {
     g_ContPlaybackFunc = func;
     g_ContData[1].playbackcontcount = controllercount;
 }
 
-void joySetRecordFunc(void (*func)(struct contsample*, s32, s32)) {
+void joySetRecordFunc(contrecordfunc func) {
     g_ContRecordFunc = func;
 }
 

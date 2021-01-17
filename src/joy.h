@@ -3,12 +3,19 @@
 
 #include "ultra64.h"
 
+struct contsample {
+	OSContPad pads[MAXCONTROLLERS];
+};
+
+typedef s32 (*contplaybackfunc)(struct contsample*, s32);
+typedef void (*contrecordfunc)(struct contsample*, s32, s32);
+
 void joyInit(void);
 void joyCheckStatusThreadSafe(void);
 s8 joyGetControllerCount(void);
 u8 joyGetConnectedControllers(void);
-void joySetPlaybackFunc(s32 (*func)(struct contsample*, s32), s32 controllercount);
-void joySetRecordFunc(void (*func)(struct contsample*, s32, s32));
+void joySetPlaybackFunc(contplaybackfunc func, s32 controllercount);
+void joySetRecordFunc(contrecordfunc func);
 void joyConsumeSamplesWrapper(void);
 void joyPoll(void);
 s8 joyGetStickX(s8 contpadnum);

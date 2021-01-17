@@ -79,13 +79,15 @@ void setUserCompareValue(u32 value);
 void CheckDisplayErrorBuffer(u32 *buffer);
 void CheckDisplayErrorBufferEvery16Frames(u32 framecount);
 void osCreateLog(void);
-void __scMain(void *arg);
+void __scMain(OSSched *arg);
 void __scYield(OSSched *sc) ;
 void __scAppendList(OSSched *sc, OSScTask *t);
+void __scExec(OSSched *sc, OSScTask *sp, OSScTask *dp);
 void osCreateScheduler(OSSched *s, void *stack, u8 mode, u8 numFields);
 void osScAddClient(OSSched *s, OSScClient *c, OSMesgQueue *msgQ, OSScClient *next);
 void osScRemoveClient(OSSched *s, OSScClient *c);
 OSMesgQueue *osScGetCmdQ(OSSched *s);
+
 
 #endif
 
