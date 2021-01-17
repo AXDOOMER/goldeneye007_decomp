@@ -20,7 +20,7 @@ void sub_GAME_7F0D0180(u8 *buffer,u32 size)
   int i;
   
   for (i = 4; i != 100000; i + 4){;}
-  rmon_debug_stub_0();
+  rmon7000CEC0();
   for (i = 4; i != 100000; i + 4){;}
 }
 #else
@@ -36,7 +36,7 @@ glabel sub_GAME_7F0D0180
 .L7F0D0198:
 /* 104CC8 7F0D0198 5443FFFF */  bnel  $v0, $v1, .L7F0D0198
 /* 104CCC 7F0D019C 24420004 */   addiu $v0, $v0, 4
-/* 104CD0 7F0D01A0 0C0033B0 */  jal   rmon_debug_stub_0
+/* 104CD0 7F0D01A0 0C0033B0 */  jal   rmon7000CEC0
 /* 104CD4 7F0D01A4 00000000 */   nop   
 /* 104CD8 7F0D01A8 3C030001 */  lui   $v1, (0x000186A0 >> 16) # lui $v1, 1
 /* 104CDC 7F0D01AC 346386A0 */  ori   $v1, (0x000186A0 & 0xFFFF) # ori $v1, $v1, 0x86a0
@@ -62,7 +62,7 @@ void sub_GAME_7F0D01D0(u8 *buffer,u32 size)
   int i;
   
   for (i = 4; i != 100000; i + 4){;}
-  rmon_debug_stub();
+  rmon7000CEB8();
   for (i = 4; i != 100000; i + 4){;}
 }
 #else
@@ -78,7 +78,7 @@ glabel sub_GAME_7F0D01D0
 .L7F0D01E8:
 /* 104D18 7F0D01E8 5443FFFF */  bnel  $v0, $v1, .L7F0D01E8
 /* 104D1C 7F0D01EC 24420004 */   addiu $v0, $v0, 4
-/* 104D20 7F0D01F0 0C0033AE */  jal   rmon_debug_stub
+/* 104D20 7F0D01F0 0C0033AE */  jal   rmon7000CEB8
 /* 104D24 7F0D01F4 00000000 */   nop   
 /* 104D28 7F0D01F8 3C030001 */  lui   $v1, (0x000186A0 >> 16) # lui $v1, 1
 /* 104D2C 7F0D01FC 346386A0 */  ori   $v1, (0x000186A0 & 0xFFFF) # ori $v1, $v1, 0x86a0

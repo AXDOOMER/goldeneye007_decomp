@@ -43,7 +43,7 @@ s32 tokenReadIo(void)
     u32 address;
     s32 debug = FALSE;
     address = 0xFFB000;
-    if (rmon_debug_is_final_build()) {
+    if (rmonIsFinalBuild()) {
         g_TokenString[0] = 0;
     } else {
         for (ptr = g_TokenString, end = (g_TokenString + 160); (ptr != end); ptr++) {

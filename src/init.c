@@ -285,7 +285,7 @@ void idleCreateThread(void)
  */
 void rmonCreateThread(void) 
 {
-    osCreateThread(&rmonThread, (OSId)0, rmonproc, 0, set_stack_entry(&sp_rmon, 0x300), (OSPri)250);
+    osCreateThread(&rmonThread, (OSId)0, rmonMain, 0, set_stack_entry(&sp_rmon, 0x300), (OSPri)250);
     osStartThread(&rmonThread);
 }
 

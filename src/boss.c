@@ -120,7 +120,7 @@ void init_mainthread_data(void)
     viInitDebugNoticeList();
     init_video_settings();
     init_indy_if_not_ready();
-    debug_and_update_stage_flag = rmon_debug_is_final_build();
+    debug_and_update_stage_flag = rmonIsFinalBuild();
     obInitDebugNoticeList();
     rspInitDebugNoticeList();
     dynInitDebugNoticeList();

@@ -2,7 +2,11 @@
 #define _RMON_H_
 #include <ultra64.h>
 
-void rmonproc(void);
-s32 rmon_debug_is_final_build(void);
+void rmonMain(void);
+s32 rmonIsFinalBuild(void);
+s32 rmon7000CEB0(void);
+void rmon7000CEB8(void);
+void rmon7000CEC0(void);
+s32 osSyncPrintf(const char *fmt, ...);
 
 #endif
