@@ -13,90 +13,38 @@ s32 rmon_debug_returns_neg_1(void) {
     return -1;
 }
 
-
 void rmon_debug_stub(void) {
-    // (function likely void)
+    // Removed
 }
 
-
 void rmon_debug_stub_0(void) {
-    // (function likely void)
+    // Removed
 }
 
 void rmon_debug_stub_1(void) {
-    // (function likely void)
+    // Removed
 }
 
 void rmon_debug_stub_2(void) {
-    // (function likely void)
+    // Removed
 }
 
 void rmon_debug_stub_3(void) {
-    // (function likely void)
+    // Removed
 }
 
 void rmon_debug_stub_4(void) {
-    // (function likely void)
+    // Removed
 }
 
-
-
-#ifdef NONMATCHING
-? proutSyncPrintf(s32 arg0, void *arg1, s32 arg2)
-{
-    s32 temp_s0;
-    void *phi_s1;
-    s32 phi_s0;
-
-    if (arg2 != 0)
-    {
-        phi_s1 = arg1;
-        phi_s0 = 0;
-loop_2:
-        temp_s0 = phi_s0 + 1;
-        __osRdbSend(*phi_s1);
-        phi_s1 = phi_s1 + 1;
-        phi_s0 = temp_s0;
-        if (temp_s0 != arg2)
-        {
-            goto loop_2;
-        }
-    }
+void __osRdbSend(unsigned char);
+char *proutSyncPrintf(char *dst, const char *src, size_t count) {
+    s32 i = 0;
+    while (i != count) {
+        __osRdbSend(src[i++]);
+    }    
     return 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel proutSyncPrintf
-/* 00DAE8 7000CEE8 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 00DAEC 7000CEEC AFB20020 */  sw    $s2, 0x20($sp)
-/* 00DAF0 7000CEF0 AFB00018 */  sw    $s0, 0x18($sp)
-/* 00DAF4 7000CEF4 00C09025 */  move  $s2, $a2
-/* 00DAF8 7000CEF8 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 00DAFC 7000CEFC AFB1001C */  sw    $s1, 0x1c($sp)
-/* 00DB00 7000CF00 AFA40028 */  sw    $a0, 0x28($sp)
-/* 00DB04 7000CF04 10C00008 */  beqz  $a2, .L7000CF28
-/* 00DB08 7000CF08 00008025 */   move  $s0, $zero
-/* 00DB0C 7000CF0C 00A08825 */  move  $s1, $a1
-/* 00DB10 7000CF10 92240000 */  lbu   $a0, ($s1)
-.L7000CF14:
-/* 00DB14 7000CF14 26100001 */  addiu $s0, $s0, 1
-/* 00DB18 7000CF18 0C0015AF */  jal   __osRdbSend
-/* 00DB1C 7000CF1C 26310001 */   addiu $s1, $s1, 1
-/* 00DB20 7000CF20 5612FFFC */  bnel  $s0, $s2, .L7000CF14
-/* 00DB24 7000CF24 92240000 */   lbu   $a0, ($s1)
-.L7000CF28:
-/* 00DB28 7000CF28 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 00DB2C 7000CF2C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 00DB30 7000CF30 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 00DB34 7000CF34 8FB20020 */  lw    $s2, 0x20($sp)
-/* 00DB38 7000CF38 27BD0028 */  addiu $sp, $sp, 0x28
-/* 00DB3C 7000CF3C 03E00008 */  jr    $ra
-/* 00DB40 7000CF40 24020001 */   li    $v0, 1
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 void osSyncPrintf(s32 arg0, s32 arg1, ? arg2, ? arg3)
