@@ -3,7 +3,7 @@
 #include "bondconstants.h"
 
 s32 sub_GAME_7F01D6C0(void) {
-  return joy7000C6FC();
+  return joyGamePakProbe();
 }
 
 
@@ -74,7 +74,7 @@ glabel sub_GAME_7F01D758
 /* 0522AC 7F01D77C 00E03025 */   move  $a2, $a3
 /* 0522B0 7F01D780 8FA50018 */  lw    $a1, 0x18($sp)
 /* 0522B4 7F01D784 00002025 */  move  $a0, $zero
-/* 0522B8 7F01D788 0C003202 */  jal   joy7000C808
+/* 0522B8 7F01D788 0C003202 */  jal   joyGamePakLongWrite
 /* 0522BC 7F01D78C 24060020 */   li    $a2, 32
 .L7F01D790:
 /* 0522C0 7F01D790 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -128,7 +128,7 @@ glabel sub_GAME_7F01D7A0
 /* 05234C 7F01D81C 25240004 */  addiu $a0, $t1, 4
 /* 052350 7F01D820 308A00FF */  andi  $t2, $a0, 0xff
 /* 052354 7F01D824 01402025 */  move  $a0, $t2
-/* 052358 7F01D828 0C003202 */  jal   joy7000C808
+/* 052358 7F01D828 0C003202 */  jal   joyGamePakLongWrite
 /* 05235C 7F01D82C 24060060 */   li    $a2, 96
 .L7F01D830:
 /* 052360 7F01D830 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -765,7 +765,7 @@ glabel sub_GAME_7F01DF90
 /* 052AF8 7F01DFC8 24100001 */  li    $s0, 1
 /* 052AFC 7F01DFCC 00002025 */  move  $a0, $zero
 /* 052B00 7F01DFD0 02202825 */  move  $a1, $s1
-/* 052B04 7F01DFD4 0C0031EF */  jal   joy7000C7BC
+/* 052B04 7F01DFD4 0C0031EF */  jal   joyGamePakLongRead
 /* 052B08 7F01DFD8 24060020 */   li    $a2, 32
 /* 052B0C 7F01DFDC 93AE009C */  lbu   $t6, 0x9c($sp)
 /* 052B10 7F01DFE0 24010042 */  li    $at, 66
@@ -828,7 +828,7 @@ glabel sub_GAME_7F01DF90
 /* 052BE4 7F01E0B4 3C058007 */  lui   $a1, %hi(save1)
 /* 052BE8 7F01E0B8 24A59920 */  addiu $a1, %lo(save1) # addiu $a1, $a1, -0x66e0
 /* 052BEC 7F01E0BC 24040004 */  li    $a0, 4
-/* 052BF0 7F01E0C0 0C0031EF */  jal   joy7000C7BC
+/* 052BF0 7F01E0C0 0C0031EF */  jal   joyGamePakLongRead
 /* 052BF4 7F01E0C4 240601E0 */   li    $a2, 480
 /* 052BF8 7F01E0C8 3C108007 */  lui   $s0, %hi(save1)
 /* 052BFC 7F01E0CC 3C138007 */  lui   $s3, %hi(save1+8)

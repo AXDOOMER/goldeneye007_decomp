@@ -551,7 +551,7 @@ glabel ramrom_replay_handler
 /* 0F4D40 7F0C0210 0FC30232 */  jal   ensureCameraModeA
 /* 0F4D44 7F0C0214 00000000 */   nop   
 .L7F0C0218:
-/* 0F4D48 7F0C0218 0C00324C */  jal   joy7000C930
+/* 0F4D48 7F0C0218 0C00324C */  jal   joySetContDataIndex
 /* 0F4D4C 7F0C021C 00002025 */   move  $a0, $zero
 /* 0F4D50 7F0C0220 00002025 */  move  $a0, $zero
 /* 0F4D54 7F0C0224 0C0030EB */  jal   joyGetButtonsPressedThisFrame
@@ -564,7 +564,7 @@ glabel ramrom_replay_handler
 /* 0F4D70 7F0C0240 3C018003 */  lui   $at, %hi(prev_keypresses)
 /* 0F4D74 7F0C0244 AC2DA934 */  sw    $t5, %lo(prev_keypresses)($at)
 .L7F0C0248:
-/* 0F4D78 7F0C0248 0C00324C */  jal   joy7000C930
+/* 0F4D78 7F0C0248 0C00324C */  jal   joySetContDataIndex
 /* 0F4D7C 7F0C024C 24040001 */   li    $a0, 1
 /* 0F4D80 7F0C0250 8FBF001C */  lw    $ra, 0x1c($sp)
 /* 0F4D84 7F0C0254 02001025 */  move  $v0, $s0
@@ -1030,7 +1030,7 @@ glabel test_if_recording_demos_this_stage_load
 /* 0F51FC 7F0C06CC 3C018005 */  lui   $at, %hi(ramrom_demo_related_6)
 /* 0F5200 7F0C06D0 3C047F0C */  lui   $a0, %hi(record_player_input_as_packet) # $a0, 0x7f0c
 /* 0F5204 7F0C06D4 AC228484 */  sw    $v0, %lo(ramrom_demo_related_6)($at)
-/* 0F5208 7F0C06D8 0C002EEF */  jal   joySetFunc80026928
+/* 0F5208 7F0C06D8 0C002EEF */  jal   joySetRecordFunc
 /* 0F520C 7F0C06DC 2484FE5C */   addiu $a0, %lo(record_player_input_as_packet) # addiu $a0, $a0, -0x1a4
 /* 0F5210 7F0C06E0 3C028009 */  lui   $v0, %hi(address_demo_loaded)
 /* 0F5214 7F0C06E4 2442C5F4 */  addiu $v0, %lo(address_demo_loaded) # addiu $v0, $v0, -0x3a0c
@@ -1077,9 +1077,9 @@ glabel test_if_recording_demos_this_stage_load
 /* 0F52B4 7F0C0784 8E0A0000 */  lw    $t2, ($s0)
 /* 0F52B8 7F0C0788 3C047F0C */  lui   $a0, %hi(ramrom_replay_handler) # $a0, 0x7f0c
 /* 0F52BC 7F0C078C 24840080 */  addiu $a0, %lo(ramrom_replay_handler) # addiu $a0, $a0, 0x80
-/* 0F52C0 7F0C0790 0C002EEA */  jal   joySetFunc80026924
+/* 0F52C0 7F0C0790 0C002EEA */  jal   joySetPlaybackFunc
 /* 0F52C4 7F0C0794 8D450018 */   lw    $a1, 0x18($t2)
-/* 0F52C8 7F0C0798 0C00324C */  jal   joy7000C930
+/* 0F52C8 7F0C0798 0C00324C */  jal   joySetContDataIndex
 /* 0F52CC 7F0C079C 24040001 */   li    $a0, 1
 /* 0F52D0 7F0C07A0 3C018005 */  lui   $at, %hi(ramrom_demo_related_4)
 /* 0F52D4 7F0C07A4 AC20847C */  sw    $zero, %lo(ramrom_demo_related_4)($at)
@@ -1106,7 +1106,7 @@ void stop_recording_ramrom(void) {
     if (ramrom_demo_related_6 != 0)
     {
         finalize_ramrom_on_hw();
-        joySetFunc80026928(0);
+        joySetRecordFunc(0);
         ramrom_demo_related_6 = 0;
         recording_ramrom_flag = 0;
     }
@@ -1198,8 +1198,8 @@ void stop_demo_playback(void)
     if (ramrom_demo_related_6 == 0) {
         if (ramrom_demo_related_3 != 0) {
             copy_recorded_ramrom_registers_to_proper_place_ingame(&ramromsettingsbackup);
-            joySetFunc80026924(0,0xffffffff);
-            joy7000C930(0);
+            joySetPlaybackFunc(0,0xffffffff);
+            joySetContDataIndex(0);
             ramrom_demo_related_3 = 0;
             is_ramrom_flag = 0;
         }
@@ -1230,9 +1230,9 @@ glabel stop_demo_playback
 /* 0F5464 7F0C0934 0FC3013D */  jal   copy_recorded_ramrom_registers_to_proper_place_ingame
 /* 0F5468 7F0C0938 2484C380 */   addiu $a0, %lo(ramrom_data_target + 0x110) # addiu $a0, $a0, -0x3c80
 /* 0F546C 7F0C093C 00002025 */  move  $a0, $zero
-/* 0F5470 7F0C0940 0C002EEA */  jal   joySetFunc80026924
+/* 0F5470 7F0C0940 0C002EEA */  jal   joySetPlaybackFunc
 /* 0F5474 7F0C0944 2405FFFF */   li    $a1, -1
-/* 0F5478 7F0C0948 0C00324C */  jal   joy7000C930
+/* 0F5478 7F0C0948 0C00324C */  jal   joySetContDataIndex
 /* 0F547C 7F0C094C 00002025 */   move  $a0, $zero
 /* 0F5480 7F0C0950 3C018005 */  lui   $at, %hi(ramrom_demo_related_3)
 /* 0F5484 7F0C0954 AC208478 */  sw    $zero, %lo(ramrom_demo_related_3)($at)

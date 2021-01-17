@@ -4515,7 +4515,7 @@ void unload_stage_text_data(void) {
 void set_controls_locked_flag(s32 arg0) {
     #ifdef VERSION_JP
     if ((arg0 != 0) && (controls_locked_flag == 0)) {
-        reset_cont_rumble_detect();
+        joyRumblePakStop();
     }
     #endif
     controls_locked_flag = arg0;

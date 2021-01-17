@@ -14,7 +14,7 @@ struct deblistentry
 };
 
 u8 g_DebBuffer[0x400];
-u32 D_800232E0[] = {0, 0};
+u32 g_DebDebugData[] = {0, 0};
 struct deblistentry *g_DebList = NULL;
 s32 D_800232EC[] = {0, 0, 0};
 u8 *g_DebMemPos = g_DebBuffer;
@@ -55,7 +55,7 @@ void debAdd(const char *name, u32 data) {
 }
 
 void debInit(void) {
-    debTryAdd(&D_800232E0, "deb_c_debug");
+    debTryAdd(&g_DebDebugData, "deb_c_debug");
     init_tlb();
 }
 

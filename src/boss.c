@@ -124,7 +124,7 @@ void init_mainthread_data(void)
     obInitDebugNoticeList();
     rspInitDebugNoticeList();
     dynInitDebugNoticeList();
-    joySystemInit();
+    joyInit();
     osCreateMesgQueue(&bossmq, &bossmsg, 1);
 
     for (i = 0; i != 4; i++)
@@ -133,11 +133,11 @@ void init_mainthread_data(void)
         osRecvMesg(&bossmq, &bossmsg, 1);
         if (i == 1)
         {
-            test_controller_presence();
+            joyCheckStatusThreadSafe();
         }
         else if (i >= 2)
         {
-            redirect_to_ramrom_replay_and_record_handlers_if_set();
+            joyConsumeSamplesWrapper();
         }
     }
 
@@ -402,7 +402,7 @@ loop_18:
     }
     init_player_data_ptrs_construct_viewports(phi_s1);
     dynInitMemory();
-    test_controller_presence();
+    joyCheckStatusThreadSafe();
     stage_load(current_stage_num);
     viInitBuffers();
     debug_text_related_2();
@@ -471,7 +471,7 @@ loop_29:
                         video_DL_related_4();
                         video_related_2();
                         video_related_3(0x20000);
-                        redirect_to_ramrom_replay_and_record_handlers_if_set();
+                        joyConsumeSamplesWrapper();
                         permit_stderr(0);
                         temp_ret_2 = dynGetMasterDisplayList();
                         sp1A4 = temp_ret_2;
@@ -874,7 +874,7 @@ glabel mainloop
 /* 006F9C 7000639C 02202025 */   move  $a0, $s1
 /* 006FA0 700063A0 0FC2F523 */  jal   dynInitMemory
 /* 006FA4 700063A4 00000000 */   nop   
-/* 006FA8 700063A8 0C002DAB */  jal   test_controller_presence
+/* 006FA8 700063A8 0C002DAB */  jal   joyCheckStatusThreadSafe
 /* 006FAC 700063AC 00000000 */   nop   
 /* 006FB0 700063B0 3C048002 */  lui   $a0, %hi(current_stage_num)
 /* 006FB4 700063B4 0FC2F6AC */  jal   stage_load
@@ -963,7 +963,7 @@ glabel mainloop
 /* 0070E4 700064E4 00000000 */   nop   
 /* 0070E8 700064E8 0C000A15 */  jal   video_related_3
 /* 0070EC 700064EC 3C040002 */   lui   $a0, 2
-/* 0070F0 700064F0 0C002F43 */  jal   redirect_to_ramrom_replay_and_record_handlers_if_set
+/* 0070F0 700064F0 0C002F43 */  jal   joyConsumeSamplesWrapper
 /* 0070F4 700064F4 00000000 */   nop   
 /* 0070F8 700064F8 0C000262 */  jal   permit_stderr
 /* 0070FC 700064FC 00002025 */   move  $a0, $zero

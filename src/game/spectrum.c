@@ -391,7 +391,7 @@ glabel spectrum_p1controller_to_kempston
 /* 1077C0 7F0D2C90 AFA00030 */  sw    $zero, 0x30($sp)
 /* 1077C4 7F0D2C94 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 1077C8 7F0D2C98 AFA00028 */  sw    $zero, 0x28($sp)
-/* 1077CC 7F0D2C9C 0C002F43 */  jal   redirect_to_ramrom_replay_and_record_handlers_if_set
+/* 1077CC 7F0D2C9C 0C002F43 */  jal   joyConsumeSamplesWrapper
 /* 1077D0 7F0D2CA0 AFA00024 */   sw    $zero, 0x24($sp)
 /* 1077D4 7F0D2CA4 00002025 */  move  $a0, $zero
 /* 1077D8 7F0D2CA8 0C0030C3 */  jal   joyGetButtons

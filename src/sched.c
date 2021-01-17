@@ -355,7 +355,7 @@ void __scMain(void *arg)
                 break;
 
             case (0x29d):
-                reset_cont_rumble_detect();
+                joyRumblePakStop();
                 for (client = sc->clientList;client != 0;client = client->next) {
                       osSendMesg(client->msgQ, (OSMesg) &sc->prenmiMsg, OS_MESG_NOBLOCK);
                 }
@@ -379,7 +379,7 @@ void __scMain(void *arg)
         while ((u32)msg != 0x29a) {
             osRecvMesg(&sc->interruptQ,&msg,1);
         }
-        controllerSchedulerRelated();
+        joyPoll();
     }
 
 }
@@ -433,7 +433,7 @@ glabel __scMain
 /* 0019A0 70000DA0 1000000F */  b     .L70000DE0
 /* 0019A4 70000DA4 00000000 */   nop   
 .L70000DA8:
-/* 0019A8 70000DA8 0C003237 */  jal   reset_cont_rumble_detect
+/* 0019A8 70000DA8 0C003237 */  jal   joyRumblePakStop
 /* 0019AC 70000DAC 00000000 */   nop   
 /* 0019B0 70000DB0 8E5000B4 */  lw    $s0, 0xb4($s2)
 /* 0019B4 70000DB4 26510020 */  addiu $s1, $s2, 0x20
@@ -486,7 +486,7 @@ glabel __scMain
 /* 001A5C 70000E5C 8FB8004C */  lw    $t8, 0x4c($sp)
 /* 001A60 70000E60 5715FFFB */  bnel  $t8, $s5, .L70000E50
 /* 001A64 70000E64 02602025 */   move  $a0, $s3
-/* 001A68 70000E68 0C002F62 */  jal   controllerSchedulerRelated
+/* 001A68 70000E68 0C002F62 */  jal   joyPoll
 /* 001A6C 70000E6C 00000000 */   nop   
 /* 001A70 70000E70 1000FFF7 */  b     .L70000E50
 /* 001A74 70000E74 02602025 */   move  $a0, $s3
@@ -526,7 +526,7 @@ void __scHandleRetrace(OSSched *sc)
     video_related_1();
     sc->frameCount++;
     video_related_7();
-    controllerSchedulerRelated();
+    joyPoll();
     music_related_15();
     while (osRecvMesg(&sc->cmdQ, (OSMesg *)&rspTask, OS_MESG_NOBLOCK) != -1) {
         __scAppendList(sc, rspTask);
@@ -563,7 +563,7 @@ glabel __scHandleRetrace
 /* 001AE4 70000EE4 25CF0001 */  addiu $t7, $t6, 1
 /* 001AE8 70000EE8 0C000C68 */  jal   video_related_7
 /* 001AEC 70000EEC AE2F00D0 */   sw    $t7, 0xd0($s1)
-/* 001AF0 70000EF0 0C002F62 */  jal   controllerSchedulerRelated
+/* 001AF0 70000EF0 0C002F62 */  jal   joyPoll
 /* 001AF4 70000EF4 00000000 */   nop   
 /* 001AF8 70000EF8 0C001E45 */  jal   music_related_15
 /* 001AFC 70000EFC 00000000 */   nop   

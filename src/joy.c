@@ -12,85 +12,92 @@ struct contdata {
 	/* 0x1E4 */ s32 curstart;
 	/* 0x1E8 */ s32 nextlast;
 	/* 0x1EC */ s32 nextsecondlast;
-    /* 0x1F0 */ u16 buttonspressed[4];
-	/* 0x1F8 */ s32 unk1f8;
+    /* 0x1F0 */ u16 buttonspressed[MAXCONTROLLERS];
+	/* 0x1F8 */ s32 playbackcontcount;
 };
 
-struct contdata g_ContData[2];
-//80065328
-char contdemoMesg[0x28];
-//80065350
-OSMesgQueue contdemoMesgMQ;
+struct contdata g_ContData[2]; // 0 = Regular, 1 = Playback
 
-//80065368
-OSMesg cont1Mesg;
-OSMesgQueue cont1MesgMQ;
+OSMesg g_ContInputMessageBuffer[10];
+OSMesgQueue g_ContInputMessageQueue;
+OSMesg g_ContDisablePollSendMessageBuffer[1];
+OSMesgQueue g_ContDisablePollSendMessageQueue;
+OSMesg g_ContDisablePollReceiveMessageBuffer[1];
+OSMesgQueue g_ContDisablePollReceiveMessageQueue;
+OSMesg g_ContEnablePollSendMessageBuffer[1];
+OSMesgQueue g_ContEnablePollSendMessageQueue;
+OSMesg g_ContEnablePollReceiveMessageBuffer[1];
+OSMesgQueue g_ContEnablePollReceiveMessageQueue;
 
-//80065388
-OSMesg cont2Mesg;
-OSMesgQueue cont2MesgMQ;
-
-//800653a8
-OSMesg cont3Mesg;
-OSMesgQueue cont3MesgMQ;
-
-//800653c8
-OSMesg cont4Mesg;
-OSMesgQueue cont4MesgMQ;
-
-//800653e8
 OSContStatus g_ContStatus[MAXCONTROLLERS];
-OSPfs player1_controller_packet[MAXCONTROLLERS];
+OSPfs g_ContPfs[MAXCONTROLLERS];
 
-s32 D_800268C0 = 0;
+s32 g_ContDebugData = 0;
 struct contdata *g_ContDataPtr = &g_ContData[0];
 s32 g_ContBusy = 0;
-s32 D_800268CC = 0;
+s32 g_ContPollDisableCount = 0;
 u8 g_ConnectedControllers = 0;
-u8 D_800268D4 = 0;
-s32 controller_1_rumble_inserted[MAXCONTROLLERS] = {0};
-s32 controller_1_rumble_state[MAXCONTROLLERS] = {0};
-s32 controller_1_rumble_duration[MAXCONTROLLERS] = {0};
-s32 controller_1_rumble_pulse[MAXCONTROLLERS] = {0};
+u8 g_ControllerStates = 0; // 1 bit per controller
+
+typedef enum {
+    RUMBLEPAKINITSTATE_ERROR = -1,
+    RUMBLEPAKINITSTATE_NOT_READY = 0,
+    RUMBLEPAKINITSTATE_READY = 1
+} RUMBLEPAKINITSTATE;
+
+typedef enum {
+  RUMBLEPAKSTATE_OFF = 0,
+  RUMBLEPAKSTATE_ON = 1,
+  RUMBLEPAKSTATE_UNKNOWN = 2
+} RUMBLEPAKSTATE;
+
+s32 g_ContRumblePakInitState[MAXCONTROLLERS] = {0};
+s32 g_ContRumblePakCurrentState[MAXCONTROLLERS] = {0};
+s32 g_ContRumblePakTimer60[MAXCONTROLLERS] = {0};
+s32 g_ContRumblePakTargetState[MAXCONTROLLERS] = {0};
+
 s32 g_ContQueuesCreated = 0;
 s32 g_ContInitDone = 0;
-s32 D_80026920 = 0;
-s32 (*D_80026924)(struct contsample *samples, s32 samplenum) = NULL;
-void (*D_80026928)(struct contsample *samples, s32 samplenum, s32 samplenum2) = NULL;
-s32 g_ContNeedsInit = 1;
-u32 g_ContBadReadsStickX[4] = {0};
-u32 g_ContBadReadsStickY[4] = {0};
-u32 g_ContBadReadsButtons[4] = {0};
-u32 g_ContBadReadsButtonsPressed[4] = {0};
-s32 D_80026970 = 0;
+s32 g_ContCheckStatusTimer60 = 0;
 
-void joySystemInit(void) {
+s32 (*g_ContPlaybackFunc)(struct contsample *samples, s32 samplenum) = NULL;
+void (*g_ContRecordFunc)(struct contsample *samples, s32 samplenum, s32 samplenum2) = NULL;
+
+s32 g_ContNeedsInit = 1;
+
+u32 g_ContBadReadsStickX[MAXCONTROLLERS] = {0};
+u32 g_ContBadReadsStickY[MAXCONTROLLERS] = {0};
+u32 g_ContBadReadsButtons[MAXCONTROLLERS] = {0};
+u32 g_ContBadReadsButtonsPressed[MAXCONTROLLERS] = {0};
+
+s32 g_ContBadReadTimer60 = 0; // Static variable?
+
+void joyInit(void) {
     s32 i;
     s32 j;
 
-    debTryAdd(&D_800268C0, "joy_c_debug");
+    debTryAdd(&g_ContDebugData, "joy_c_debug");
 
-    osCreateMesgQueue(&cont1MesgMQ, &cont1Mesg, 1);
-    osCreateMesgQueue(&cont2MesgMQ, &cont2Mesg, 1);
-    osCreateMesgQueue(&cont3MesgMQ, &cont3Mesg, 1);
-    osCreateMesgQueue(&cont4MesgMQ, &cont4Mesg, 1);
-    osCreateMesgQueue(&contdemoMesgMQ, &contdemoMesg, 10);
+    osCreateMesgQueue(&g_ContDisablePollSendMessageQueue, g_ContDisablePollSendMessageBuffer, 1);
+    osCreateMesgQueue(&g_ContDisablePollReceiveMessageQueue, g_ContDisablePollReceiveMessageBuffer, 1);
+    osCreateMesgQueue(&g_ContEnablePollSendMessageQueue, g_ContEnablePollSendMessageBuffer, 1);
+    osCreateMesgQueue(&g_ContEnablePollReceiveMessageQueue, g_ContEnablePollReceiveMessageBuffer, 1);
+    osCreateMesgQueue(&g_ContInputMessageQueue, g_ContInputMessageBuffer, 10);
 
-    osSetEventMesg(OS_EVENT_SI, &contdemoMesgMQ, NULL);
+    osSetEventMesg(OS_EVENT_SI, &g_ContInputMessageQueue, NULL);
 
-    g_ContQueuesCreated = 1;
-
-    D_80026924 = NULL;
-    D_80026928 = NULL;
+    g_ContQueuesCreated = TRUE;
+    g_ContPlaybackFunc = NULL;
+    g_ContRecordFunc = NULL;
 
     for (i = 0; i < 2; i++) {
         g_ContData[i].curlast = 0;
 		g_ContData[i].curstart = 0;
 		g_ContData[i].nextlast = 0;
 		g_ContData[i].nextsecondlast = 0;
-		g_ContData[i].unk1f8 = -1;
+		g_ContData[i].playbackcontcount = -1;
 
-		for (j = 0; j < 4; j++) {
+		for (j = 0; j < MAXCONTROLLERS; j++) {
 			g_ContData[i].samples[0].pads[j].button = 0;
 			g_ContData[i].samples[0].pads[j].stick_x = 0;
 			g_ContData[i].samples[0].pads[j].stick_y = 0;
@@ -100,35 +107,34 @@ void joySystemInit(void) {
     }
 }
 
-void test_controller_presence(void) {
+void joyCheckStatusThreadSafe(void) {
     OSMesg  msg;
 
     if (g_ContQueuesCreated) {
-        osSendMesg(&cont1MesgMQ, &msg, OS_MESG_NOBLOCK);
-        osRecvMesg(&cont2MesgMQ, &msg, OS_MESG_BLOCK);
+        osSendMesg(&g_ContDisablePollSendMessageQueue, &msg, OS_MESG_NOBLOCK);
+        osRecvMesg(&g_ContDisablePollReceiveMessageQueue, &msg, OS_MESG_BLOCK);
         
-        controller_check_for_rumble_maybe();
+        joyCheckStatus();
 
-        osSendMesg(&cont3MesgMQ, &msg, OS_MESG_NOBLOCK);
-        osRecvMesg(&cont4MesgMQ, &msg, OS_MESG_BLOCK);
+        osSendMesg(&g_ContEnablePollSendMessageQueue, &msg, OS_MESG_NOBLOCK);
+        osRecvMesg(&g_ContEnablePollReceiveMessageQueue, &msg, OS_MESG_BLOCK);
     }
 }
 
-s32 osPfsChecker(OSPfs *arg0) {
+s32 osPfsChecker(OSPfs *pfs) {
     return 3;
 }
 
-void controller_7000B734(s32 index)
-{
+void joyRumblePakInit(s32 index) {
     s32 ret;
-    if (controller_1_rumble_inserted[index] >= 0) {
+    if (g_ContRumblePakInitState[index] > RUMBLEPAKINITSTATE_ERROR) {
         if ((g_ContStatus[index].type & CONT_JOYPORT) && (g_ContStatus[index].status & CONT_CARD_ON)) {        
-            ret = osPfsInit(&contdemoMesgMQ, &player1_controller_packet[index], index);
+            ret = osPfsInit(&g_ContInputMessageQueue, &g_ContPfs[index], index);
             if ((ret == PFS_ERR_ID_FATAL) || (ret == PFS_ERR_DEVICE)) {
-                if (osMotorInit(&contdemoMesgMQ, &player1_controller_packet[index], index) == 0) {
-                    controller_1_rumble_inserted[index] = 1;
+                if (osMotorInit(&g_ContInputMessageQueue, &g_ContPfs[index], index) == 0) {
+                    g_ContRumblePakInitState[index] = RUMBLEPAKINITSTATE_READY;
                 } else {
-                    controller_1_rumble_inserted[index] = -1;
+                    g_ContRumblePakInitState[index] = RUMBLEPAKINITSTATE_ERROR;
                 }
             }
         }
@@ -137,19 +143,18 @@ void controller_7000B734(s32 index)
 
 #ifdef NONMATCHING
 // Regalloc + Needs 4 extra bytes on the stack
-void controller_check_for_rumble_maybe(void)
-{
+void joyCheckStatus(void) {
     s8 i;
     if (g_ContNeedsInit) {
         g_ContNeedsInit = FALSE;
-        osContInit(&contdemoMesgMQ, &g_ConnectedControllers, g_ContStatus);
+        osContInit(&g_ContInputMessageQueue, &g_ConnectedControllers, g_ContStatus);
         g_ContInitDone = TRUE;
     } else {
         u32 slots = 0xF;
         s32 i;
 
-        osContStartQuery(&contdemoMesgMQ);
-        osRecvMesg(&contdemoMesgMQ, NULL, OS_MESG_BLOCK);
+        osContStartQuery(&g_ContInputMessageQueue);
+        osRecvMesg(&g_ContInputMessageQueue, NULL, OS_MESG_BLOCK);
         osContGetQuery(g_ContStatus);
 
         for (i = 0; i < MAXCONTROLLERS; i++) {
@@ -160,6 +165,8 @@ void controller_check_for_rumble_maybe(void)
 
         g_ConnectedControllers = slots;
     }
+    
+    if (0) {}
 
     for (i = 0; i < MAXCONTROLLERS; i++) {
         // Removed
@@ -167,22 +174,21 @@ void controller_check_for_rumble_maybe(void)
 
     for (i = 0; i < MAXCONTROLLERS; i++) {
         if ((g_ConnectedControllers & (1 << i)) && (g_ContStatus[i].type & (CONT_ABSOLUTE | CONT_RELATIVE)) && (g_ContStatus[i].errnum == 0)) {             
-            if (((D_800268D4 == 0) & (1 << i)) || (controller_1_rumble_inserted[i] <= 0)) {
-                controller_7000B734(i);
+            if (((g_ControllerStates == 0) & (1 << i)) || (g_ContRumblePakInitState[i] < RUMBLEPAKINITSTATE_READY)) {
+                joyRumblePakInit(i);
             }
-            D_800268D4 |= (1 << i);
-        } else if (D_800268D4 & (1 << i)) {
-            D_800268D4 ^= (1 << i);
-            controller_1_rumble_inserted[i] = 0;                
+            g_ControllerStates |= (1 << i);
+        } else if (g_ControllerStates & (1 << i)) {
+            g_ControllerStates ^= (1 << i);
+            g_ContRumblePakInitState[i] = RUMBLEPAKINITSTATE_NOT_READY;                
         }
     }
-
-    if (0);
 }
 #else
+void joyCheckStatus(void);
 GLOBAL_ASM(
 .text
-glabel controller_check_for_rumble_maybe
+glabel joyCheckStatus
 /* 00C410 7000B810 3C028002 */  lui   $v0, %hi(g_ContNeedsInit)
 /* 00C414 7000B814 2442692C */  addiu $v0, %lo(g_ContNeedsInit) # addiu $v0, $v0, 0x692c
 /* 00C418 7000B818 8C4E0000 */  lw    $t6, ($v0)
@@ -190,25 +196,25 @@ glabel controller_check_for_rumble_maybe
 /* 00C420 7000B820 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 00C424 7000B824 11C0000D */  beqz  $t6, .L7000B85C
 /* 00C428 7000B828 AFB00018 */   sw    $s0, 0x18($sp)
-/* 00C42C 7000B82C 3C048006 */  lui   $a0, %hi(contdemoMesgMQ)
+/* 00C42C 7000B82C 3C048006 */  lui   $a0, %hi(g_ContInputMessageQueue)
 /* 00C430 7000B830 3C058002 */  lui   $a1, %hi(g_ConnectedControllers)
 /* 00C434 7000B834 3C068006 */  lui   $a2, %hi(g_ContStatus)
 /* 00C438 7000B838 AC400000 */  sw    $zero, ($v0)
 /* 00C43C 7000B83C 24C653E8 */  addiu $a2, %lo(g_ContStatus) # addiu $a2, $a2, 0x53e8
 /* 00C440 7000B840 24A568D0 */  addiu $a1, %lo(g_ConnectedControllers) # addiu $a1, $a1, 0x68d0
 /* 00C444 7000B844 0C005240 */  jal   osContInit
-/* 00C448 7000B848 24845350 */   addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
+/* 00C448 7000B848 24845350 */   addiu $a0, %lo(g_ContInputMessageQueue) # addiu $a0, $a0, 0x5350
 /* 00C44C 7000B84C 240F0001 */  li    $t7, 1
 /* 00C450 7000B850 3C018002 */  lui   $at, %hi(g_ContInitDone)
 /* 00C454 7000B854 10000026 */  b     .L7000B8F0
 /* 00C458 7000B858 AC2F691C */   sw    $t7, %lo(g_ContInitDone)($at)
 .L7000B85C:
-/* 00C45C 7000B85C 3C048006 */  lui   $a0, %hi(contdemoMesgMQ)
+/* 00C45C 7000B85C 3C048006 */  lui   $a0, %hi(g_ContInputMessageQueue)
 /* 00C460 7000B860 2410000F */  li    $s0, 15
 /* 00C464 7000B864 0C005330 */  jal   osContStartQuery
-/* 00C468 7000B868 24845350 */   addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
-/* 00C46C 7000B86C 3C048006 */  lui   $a0, %hi(contdemoMesgMQ)
-/* 00C470 7000B870 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
+/* 00C468 7000B868 24845350 */   addiu $a0, %lo(g_ContInputMessageQueue) # addiu $a0, $a0, 0x5350
+/* 00C46C 7000B86C 3C048006 */  lui   $a0, %hi(g_ContInputMessageQueue)
+/* 00C470 7000B870 24845350 */  addiu $a0, %lo(g_ContInputMessageQueue) # addiu $a0, $a0, 0x5350
 /* 00C474 7000B874 00002825 */  move  $a1, $zero
 /* 00C478 7000B878 0C003774 */  jal   osRecvMesg
 /* 00C47C 7000B87C 24060001 */   li    $a2, 1
@@ -253,10 +259,10 @@ glabel controller_check_for_rumble_maybe
 /* 00C500 7000B900 2A010004 */  slti  $at, $s0, 4
 /* 00C504 7000B904 5420FFFC */  bnezl $at, .L7000B8F8
 /* 00C508 7000B908 26100001 */   addiu $s0, $s0, 1
-/* 00C50C 7000B90C 3C078002 */  lui   $a3, %hi(D_800268D4)
-/* 00C510 7000B910 3C068002 */  lui   $a2, %hi(controller_1_rumble_inserted)
-/* 00C514 7000B914 24C668D8 */  addiu $a2, %lo(controller_1_rumble_inserted) # addiu $a2, $a2, 0x68d8
-/* 00C518 7000B918 24E768D4 */  addiu $a3, %lo(D_800268D4) # addiu $a3, $a3, 0x68d4
+/* 00C50C 7000B90C 3C078002 */  lui   $a3, %hi(g_ControllerStates)
+/* 00C510 7000B910 3C068002 */  lui   $a2, %hi(g_ContRumblePakInitState)
+/* 00C514 7000B914 24C668D8 */  addiu $a2, %lo(g_ContRumblePakInitState) # addiu $a2, $a2, 0x68d8
+/* 00C518 7000B918 24E768D4 */  addiu $a3, %lo(g_ControllerStates) # addiu $a3, $a3, 0x68d4
 /* 00C51C 7000B91C 00008025 */  move  $s0, $zero
 .L7000B920:
 /* 00C520 7000B920 3C198002 */  lui   $t9, %hi(g_ConnectedControllers) 
@@ -285,12 +291,12 @@ glabel controller_check_for_rumble_maybe
 /* 00C57C 7000B97C 1DE00009 */  bgtz  $t7, .L7000B9A4
 .L7000B980:
 /* 00C580 7000B980 02002025 */   move  $a0, $s0
-/* 00C584 7000B984 0C002DCD */  jal   controller_7000B734
+/* 00C584 7000B984 0C002DCD */  jal   joyRumblePakInit
 /* 00C588 7000B988 AFA50024 */   sw    $a1, 0x24($sp)
-/* 00C58C 7000B98C 3C078002 */  lui   $a3, %hi(D_800268D4)
-/* 00C590 7000B990 24E768D4 */  addiu $a3, %lo(D_800268D4) # addiu $a3, $a3, 0x68d4
-/* 00C594 7000B994 3C068002 */  lui   $a2, %hi(controller_1_rumble_inserted)
-/* 00C598 7000B998 24C668D8 */  addiu $a2, %lo(controller_1_rumble_inserted) # addiu $a2, $a2, 0x68d8
+/* 00C58C 7000B98C 3C078002 */  lui   $a3, %hi(g_ControllerStates)
+/* 00C590 7000B990 24E768D4 */  addiu $a3, %lo(g_ControllerStates) # addiu $a3, $a3, 0x68d4
+/* 00C594 7000B994 3C068002 */  lui   $a2, %hi(g_ContRumblePakInitState)
+/* 00C598 7000B998 24C668D8 */  addiu $a2, %lo(g_ContRumblePakInitState) # addiu $a2, $a2, 0x68d8
 /* 00C59C 7000B99C 90E30000 */  lbu   $v1, ($a3)
 /* 00C5A0 7000B9A0 8FA50024 */  lw    $a1, 0x24($sp)
 .L7000B9A4:
@@ -324,17 +330,17 @@ glabel controller_check_for_rumble_maybe
 s8 joyGetControllerCount(void) {
     s32 i;
 
-	if (g_ContDataPtr->unk1f8 >= 0) {
-		return g_ContDataPtr->unk1f8;
+	if (g_ContDataPtr->playbackcontcount >= 0) {
+		return g_ContDataPtr->playbackcontcount;
 	}
 
-	for (i = 0; i < 4; i++) {
+	for (i = 0; i < MAXCONTROLLERS; i++) {
 		if ((g_ConnectedControllers & (1 << i)) == 0) {
 			return i;
 		}
 	}
 
-	return 4;
+	return MAXCONTROLLERS;
 }
 
 u8 joyGetConnectedControllers(void) {
@@ -342,50 +348,51 @@ u8 joyGetConnectedControllers(void) {
 }
 
 #ifdef NONMATCHING
-// controller_1_rumble_inserted loaded only once instead of twice + regalloc
-void controller_rumble_related(void) {
+// g_ContRumblePakInitState loaded only once instead of twice + regalloc
+void joyRumblePakTick(void) {
     s32 i;
     for (i = 0; i < MAXCONTROLLERS; i++) {
-        if (controller_1_rumble_state[i] != controller_1_rumble_pulse[i]) {
-            if (controller_1_rumble_pulse[i] == 1) { // enum/define?
-                if (osMotorStart(&player1_controller_packet[i]) == 0) {
-                    controller_1_rumble_state[i] = 1;
+        if (g_ContRumblePakCurrentState[i] != g_ContRumblePakTargetState[i]) {
+            if (g_ContRumblePakTargetState[i] == RUMBLEPAKSTATE_ON) {
+                if (osMotorStart(&g_ContPfs[i]) == 0) {
+                    g_ContRumblePakCurrentState[i] = RUMBLEPAKSTATE_ON;
                 } else {
-                    controller_1_rumble_inserted[i] = FALSE;
+                    g_ContRumblePakInitState[i] = RUMBLEPAKINITSTATE_NOT_READY;
                 }
 #ifdef VERSION_JP
-            } else if (controller_1_rumble_pulse[i] == 2) {
-                if (osMotorInit(&contdemosMesgMQ, &player1_controller_packet[i], i) != 0) {
-                    controller_1_rumble_inserted[i] = FALSE;                    
+            } else if (g_ContRumblePakTargetState[i] == RUMBLEPAKSTATE_UNKNOWN) {
+                if (osMotorInit(&g_ContInputMessageQueue, &g_ContPfs[i], i) != 0) {
+                    g_ContRumblePakInitState[i] = RUMBLEPAKINITSTATE_NOT_READY;                    
                 }
-                osMotorStop(&player1_controller_packet[i]);
-                controller_1_rumble_state[i] = 0;
-                controller_1_rumble_pack[i] = 0;
+                osMotorStop(&g_ContPfs[i]);
+                g_ContRumblePakCurrentState[i] = RUMBLEPAKSTATE_OFF;
+                g_ContRumblePakTargetState[i] = RUMBLEPAKSTATE_OFF;
 #endif
             } else {
-                if (osMotorStop(&player1_controller_packet[i]) == 0) {
-                    controller_1_rumble_state[i] = 0;
+                if (osMotorStop(&g_ContPfs[i]) == 0) {
+                    g_ContRumblePakCurrentState[i] = RUMBLEPAKSTATE_OFF;
                 } else {
-                    controller_1_rumble_inserted[i] = FALSE;
+                    g_ContRumblePakInitState[i] = RUMBLEPAKINITSTATE_NOT_READY;
                 }
             } 
         }
-        if (controller_1_rumble_duration[i] <= 0) {
-            controller_1_rumble_duration[i] = 0;
+        if (g_ContRumblePakTimer60[i] <= 0) {
+            g_ContRumblePakTimer60[i] = 0;
         } else {
-            controller_1_rumble_duration[i]--;
-            if (controller_1_rumble_duration[i] <= 0) {
-                controller_1_rumble_duration[i] = 0;
-                controller_1_rumble_pulse[i] = 0;
+            g_ContRumblePakTimer60[i]--;
+            if (g_ContRumblePakTimer60[i] <= 0) {
+                g_ContRumblePakTimer60[i] = 0;
+                g_ContRumblePakTargetState[i] = 0;
             }
         }
     }
 }
-#else 
+#else
+void joyRumblePakTick(void);
 #ifdef VERSION_US
 GLOBAL_ASM(
 .text
-glabel controller_rumble_related
+glabel joyRumblePakTick
 /* 00C67C 7000BA7C 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 00C680 7000BA80 AFB40028 */  sw    $s4, 0x28($sp)
 /* 00C684 7000BA84 AFB1001C */  sw    $s1, 0x1c($sp)
@@ -394,13 +401,13 @@ glabel controller_rumble_related
 /* 00C690 7000BA90 AFB5002C */  sw    $s5, 0x2c($sp)
 /* 00C694 7000BA94 AFB30024 */  sw    $s3, 0x24($sp)
 /* 00C698 7000BA98 AFB20020 */  sw    $s2, 0x20($sp)
-/* 00C69C 7000BA9C 3C108002 */  lui   $s0, %hi(controller_1_rumble_duration)
-/* 00C6A0 7000BAA0 3C118002 */  lui   $s1, %hi(controller_1_rumble_state)
-/* 00C6A4 7000BAA4 3C148002 */  lui   $s4, %hi(controller_1_rumble_pulse)
+/* 00C69C 7000BA9C 3C108002 */  lui   $s0, %hi(g_ContRumblePakTimer60)
+/* 00C6A0 7000BAA0 3C118002 */  lui   $s1, %hi(g_ContRumblePakCurrentState)
+/* 00C6A4 7000BAA4 3C148002 */  lui   $s4, %hi(g_ContRumblePakTargetState)
 /* 00C6A8 7000BAA8 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 00C6AC 7000BAAC 26946908 */  addiu $s4, %lo(controller_1_rumble_pulse) # addiu $s4, $s4, 0x6908
-/* 00C6B0 7000BAB0 263168E8 */  addiu $s1, %lo(controller_1_rumble_state) # addiu $s1, $s1, 0x68e8
-/* 00C6B4 7000BAB4 261068F8 */  addiu $s0, %lo(controller_1_rumble_duration) # addiu $s0, $s0, 0x68f8
+/* 00C6AC 7000BAAC 26946908 */  addiu $s4, %lo(g_ContRumblePakTargetState) # addiu $s4, $s4, 0x6908
+/* 00C6B0 7000BAB0 263168E8 */  addiu $s1, %lo(g_ContRumblePakCurrentState) # addiu $s1, $s1, 0x68e8
+/* 00C6B4 7000BAB4 261068F8 */  addiu $s0, %lo(g_ContRumblePakTimer60) # addiu $s0, $s0, 0x68f8
 /* 00C6B8 7000BAB8 00009025 */  move  $s2, $zero
 /* 00C6BC 7000BABC 00009825 */  move  $s3, $zero
 /* 00C6C0 7000BAC0 24150001 */  li    $s5, 1
@@ -413,19 +420,19 @@ glabel controller_rumble_related
 /* 00C6D8 7000BAD8 11C2001A */  beq   $t6, $v0, .L7000BB44
 /* 00C6DC 7000BADC 000F7880 */   sll   $t7, $t7, 2
 /* 00C6E0 7000BAE0 01F27821 */  addu  $t7, $t7, $s2
-/* 00C6E4 7000BAE4 3C188006 */  lui   $t8, %hi(player1_controller_packet) 
-/* 00C6E8 7000BAE8 271853F8 */  addiu $t8, %lo(player1_controller_packet) # addiu $t8, $t8, 0x53f8
+/* 00C6E4 7000BAE4 3C188006 */  lui   $t8, %hi(g_ContPfs) 
+/* 00C6E8 7000BAE8 271853F8 */  addiu $t8, %lo(g_ContPfs) # addiu $t8, $t8, 0x53f8
 /* 00C6EC 7000BAEC 000F78C0 */  sll   $t7, $t7, 3
 /* 00C6F0 7000BAF0 16A2000B */  bne   $s5, $v0, .L7000BB20
 /* 00C6F4 7000BAF4 01F82021 */   addu  $a0, $t7, $t8
 /* 00C6F8 7000BAF8 0C0032AB */  jal   osMotorStart
 /* 00C6FC 7000BAFC 00000000 */   nop   
 /* 00C700 7000BB00 14400003 */  bnez  $v0, .L7000BB10
-/* 00C704 7000BB04 3C198002 */   lui   $t9, %hi(controller_1_rumble_inserted) 
+/* 00C704 7000BB04 3C198002 */   lui   $t9, %hi(g_ContRumblePakInitState) 
 /* 00C708 7000BB08 1000000E */  b     .L7000BB44
 /* 00C70C 7000BB0C AE350000 */   sw    $s5, ($s1)
 .L7000BB10:
-/* 00C710 7000BB10 273968D8 */  addiu $t9, %lo(controller_1_rumble_inserted) # addiu $t9, $t9, 0x68d8
+/* 00C710 7000BB10 273968D8 */  addiu $t9, %lo(g_ContRumblePakInitState) # addiu $t9, $t9, 0x68d8
 /* 00C714 7000BB14 02791021 */  addu  $v0, $s3, $t9
 /* 00C718 7000BB18 1000000A */  b     .L7000BB44
 /* 00C71C 7000BB1C AC400000 */   sw    $zero, ($v0)
@@ -433,11 +440,11 @@ glabel controller_rumble_related
 /* 00C720 7000BB20 0C003260 */  jal   osMotorStop
 /* 00C724 7000BB24 00000000 */   nop   
 /* 00C728 7000BB28 14400003 */  bnez  $v0, .L7000BB38
-/* 00C72C 7000BB2C 3C088002 */   lui   $t0, %hi(controller_1_rumble_inserted) 
+/* 00C72C 7000BB2C 3C088002 */   lui   $t0, %hi(g_ContRumblePakInitState) 
 /* 00C730 7000BB30 10000004 */  b     .L7000BB44
 /* 00C734 7000BB34 AE200000 */   sw    $zero, ($s1)
 .L7000BB38:
-/* 00C738 7000BB38 250868D8 */  addiu $t0, %lo(controller_1_rumble_inserted) # addiu $t0, $t0, 0x68d8
+/* 00C738 7000BB38 250868D8 */  addiu $t0, %lo(g_ContRumblePakInitState) # addiu $t0, $t0, 0x68d8
 /* 00C73C 7000BB3C 02681021 */  addu  $v0, $s3, $t0
 /* 00C740 7000BB40 AC400000 */  sw    $zero, ($v0)
 .L7000BB44:
@@ -473,7 +480,7 @@ glabel controller_rumble_related
 #ifdef VERSION_JP
 GLOBAL_ASM(
 .text
-glabel controller_rumble_related
+glabel joyRumblePakTick
 /* 00C68C 7000BA8C 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 00C690 7000BA90 AFB5002C */  sw    $s5, 0x2c($sp)
 /* 00C694 7000BA94 AFB20020 */  sw    $s2, 0x20($sp)
@@ -483,14 +490,14 @@ glabel controller_rumble_related
 /* 00C6A4 7000BAA4 AFB60030 */  sw    $s6, 0x30($sp)
 /* 00C6A8 7000BAA8 AFB40028 */  sw    $s4, 0x28($sp)
 /* 00C6AC 7000BAAC AFB30024 */  sw    $s3, 0x24($sp)
-/* 00C6B0 7000BAB0 3C118002 */  lui   $s1, %hi(controller_1_rumble_duration) # $s1, 0x8002
-/* 00C6B4 7000BAB4 3C128002 */  lui   $s2, %hi(controller_1_rumble_state) # $s2, 0x8002
-/* 00C6B8 7000BAB8 3C158002 */  lui   $s5, %hi(controller_1_rumble_pulse) # $s5, 0x8002
+/* 00C6B0 7000BAB0 3C118002 */  lui   $s1, %hi(g_ContRumblePakTimer60) # $s1, 0x8002
+/* 00C6B4 7000BAB4 3C128002 */  lui   $s2, %hi(g_ContRumblePakCurrentState) # $s2, 0x8002
+/* 00C6B8 7000BAB8 3C158002 */  lui   $s5, %hi(g_ContRumblePakTargetState) # $s5, 0x8002
 /* 00C6BC 7000BABC AFBF003C */  sw    $ra, 0x3c($sp)
 /* 00C6C0 7000BAC0 AFB00018 */  sw    $s0, 0x18($sp)
-/* 00C6C4 7000BAC4 26B56948 */  addiu $s5, %lo(controller_1_rumble_pulse) # addiu $s5, $s5, 0x6948
-/* 00C6C8 7000BAC8 26526928 */  addiu $s2, %lo(controller_1_rumble_state) # addiu $s2, $s2, 0x6928
-/* 00C6CC 7000BACC 26316938 */  addiu $s1, %lo(controller_1_rumble_duration) # addiu $s1, $s1, 0x6938
+/* 00C6C4 7000BAC4 26B56948 */  addiu $s5, %lo(g_ContRumblePakTargetState) # addiu $s5, $s5, 0x6948
+/* 00C6C8 7000BAC8 26526928 */  addiu $s2, %lo(g_ContRumblePakCurrentState) # addiu $s2, $s2, 0x6928
+/* 00C6CC 7000BACC 26316938 */  addiu $s1, %lo(g_ContRumblePakTimer60) # addiu $s1, $s1, 0x6938
 /* 00C6D0 7000BAD0 00009825 */  move  $s3, $zero
 /* 00C6D4 7000BAD4 0000A025 */  move  $s4, $zero
 /* 00C6D8 7000BAD8 24160001 */  li    $s6, 1
@@ -504,32 +511,32 @@ glabel controller_rumble_related
 /* 00C6F4 7000BAF4 11C2002A */  beq   $t6, $v0, .Ljp7000BBA0
 /* 00C6F8 7000BAF8 000F7880 */   sll   $t7, $t7, 2
 /* 00C6FC 7000BAFC 01F37821 */  addu  $t7, $t7, $s3
-/* 00C700 7000BB00 3C188006 */  lui   $t8, %hi(player1_controller_packet) # $t8, 0x8006
-/* 00C704 7000BB04 27185438 */  addiu $t8, %lo(player1_controller_packet) # addiu $t8, $t8, 0x5438
+/* 00C700 7000BB00 3C188006 */  lui   $t8, %hi(g_ContPfs) # $t8, 0x8006
+/* 00C704 7000BB04 27185438 */  addiu $t8, %lo(g_ContPfs) # addiu $t8, $t8, 0x5438
 /* 00C708 7000BB08 000F78C0 */  sll   $t7, $t7, 3
 /* 00C70C 7000BB0C 16C2000B */  bne   $s6, $v0, .Ljp7000BB3C
 /* 00C710 7000BB10 01F88021 */   addu  $s0, $t7, $t8
 /* 00C714 7000BB14 0C0032BB */  jal   osMotorStart
 /* 00C718 7000BB18 02002025 */   move  $a0, $s0
 /* 00C71C 7000BB1C 14400003 */  bnez  $v0, .Ljp7000BB2C
-/* 00C720 7000BB20 3C198002 */   lui   $t9, %hi(controller_1_rumble_inserted) # $t9, 0x8002
+/* 00C720 7000BB20 3C198002 */   lui   $t9, %hi(g_ContRumblePakInitState) # $t9, 0x8002
 /* 00C724 7000BB24 1000001E */  b     .Ljp7000BBA0
 /* 00C728 7000BB28 AE560000 */   sw    $s6, ($s2)
 .Ljp7000BB2C:
-/* 00C72C 7000BB2C 27396918 */  addiu $t9, %lo(controller_1_rumble_inserted) # addiu $t9, $t9, 0x6918
+/* 00C72C 7000BB2C 27396918 */  addiu $t9, %lo(g_ContRumblePakInitState) # addiu $t9, $t9, 0x6918
 /* 00C730 7000BB30 02991021 */  addu  $v0, $s4, $t9
 /* 00C734 7000BB34 1000001A */  b     .Ljp7000BBA0
 /* 00C738 7000BB38 AC400000 */   sw    $zero, ($v0)
 .Ljp7000BB3C:
 /* 00C73C 7000BB3C 17C2000F */  bne   $fp, $v0, .Ljp7000BB7C
-/* 00C740 7000BB40 3C048006 */   lui   $a0, %hi(contdemoMesgMQ) # $a0, 0x8006
-/* 00C744 7000BB44 24845390 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5390
+/* 00C740 7000BB40 3C048006 */   lui   $a0, %hi(g_ContInputMessageQueue) # $a0, 0x8006
+/* 00C744 7000BB44 24845390 */  addiu $a0, %lo(g_ContInputMessageQueue) # addiu $a0, $a0, 0x5390
 /* 00C748 7000BB48 02002825 */  move  $a1, $s0
 /* 00C74C 7000BB4C 0C00335E */  jal   osMotorInit
 /* 00C750 7000BB50 02603025 */   move  $a2, $s3
 /* 00C754 7000BB54 10400004 */  beqz  $v0, .Ljp7000BB68
-/* 00C758 7000BB58 3C088002 */   lui   $t0, %hi(controller_1_rumble_inserted) # $t0, 0x8002
-/* 00C75C 7000BB5C 25086918 */  addiu $t0, %lo(controller_1_rumble_inserted) # addiu $t0, $t0, 0x6918
+/* 00C758 7000BB58 3C088002 */   lui   $t0, %hi(g_ContRumblePakInitState) # $t0, 0x8002
+/* 00C75C 7000BB5C 25086918 */  addiu $t0, %lo(g_ContRumblePakInitState) # addiu $t0, $t0, 0x6918
 /* 00C760 7000BB60 02881021 */  addu  $v0, $s4, $t0
 /* 00C764 7000BB64 AC400000 */  sw    $zero, ($v0)
 .Ljp7000BB68:
@@ -542,11 +549,11 @@ glabel controller_rumble_related
 /* 00C77C 7000BB7C 0C003270 */  jal   osMotorStop
 /* 00C780 7000BB80 02002025 */   move  $a0, $s0
 /* 00C784 7000BB84 14400003 */  bnez  $v0, .Ljp7000BB94
-/* 00C788 7000BB88 3C098002 */   lui   $t1, %hi(controller_1_rumble_inserted) # $t1, 0x8002
+/* 00C788 7000BB88 3C098002 */   lui   $t1, %hi(g_ContRumblePakInitState) # $t1, 0x8002
 /* 00C78C 7000BB8C 10000004 */  b     .Ljp7000BBA0
 /* 00C790 7000BB90 AE400000 */   sw    $zero, ($s2)
 .Ljp7000BB94:
-/* 00C794 7000BB94 25296918 */  addiu $t1, %lo(controller_1_rumble_inserted) # addiu $t1, $t1, 0x6918
+/* 00C794 7000BB94 25296918 */  addiu $t1, %lo(g_ContRumblePakInitState) # addiu $t1, $t1, 0x6918
 /* 00C798 7000BB98 02891021 */  addu  $v0, $s4, $t1
 /* 00C79C 7000BB9C AC400000 */  sw    $zero, ($v0)
 .Ljp7000BBA0:
@@ -583,13 +590,13 @@ glabel controller_rumble_related
 #endif
 #endif
 
-void joySetFunc80026924(s32 (*func)(struct contsample*, s32), s32 arg1) {
-    D_80026924 = func;
-    g_ContData[1].unk1f8 = arg1;
+void joySetPlaybackFunc(s32 (*func)(struct contsample*, s32), s32 controllercount) {
+    g_ContPlaybackFunc = func;
+    g_ContData[1].playbackcontcount = controllercount;
 }
 
-void joySetFunc80026928(void (*func)(struct contsample*, s32, s32)){
-    D_80026928 = func;
+void joySetRecordFunc(void (*func)(struct contsample*, s32, s32)) {
+    g_ContRecordFunc = func;
 }
 
 void joyConsumeSamples(struct contdata *contdata) {
@@ -599,7 +606,7 @@ void joyConsumeSamples(struct contdata *contdata) {
     u16 buttons2;
     contdata->curstart = contdata->curlast;
     contdata->curlast = contdata->nextlast;
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < MAXCONTROLLERS; i++) {
         contdata->buttonspressed[i] = 0;
         if (contdata->curlast != contdata->curstart) {
             samplenum = ((contdata->curstart + 1) % 20); while (TRUE) {
@@ -615,40 +622,42 @@ void joyConsumeSamples(struct contdata *contdata) {
     }
 }
 
-void redirect_to_ramrom_replay_and_record_handlers_if_set(void) {
-    if (D_80026924) {
-        g_ContData[1].nextlast = D_80026924(g_ContData[1].samples, g_ContData[1].curlast);
+void joyConsumeSamplesWrapper(void) {
+    if (g_ContPlaybackFunc) {
+        g_ContData[1].nextlast = g_ContPlaybackFunc(g_ContData[1].samples, g_ContData[1].curlast);
         joyConsumeSamples(&g_ContData[1]);
     }
     joyConsumeSamples(&g_ContData[0]);
-    if (D_80026928) {
-        D_80026928(g_ContData[0].samples, g_ContData[0].curstart, g_ContData[0].curlast);
+    if (g_ContRecordFunc) {
+        g_ContRecordFunc(g_ContData[0].samples, g_ContData[0].curstart, g_ContData[0].curlast);
     }
 }
 
 #ifdef NONMATCHING
 // Stack + Regalloc
-void controllerSchedulerRelated(void)
-{
+void joyPoll(void) {
     OSMesg msg;
-    if (osRecvMesg(&cont1MesgMQ, &msg, OS_MESG_NOBLOCK) == 0) {
+    // Check if there are any disable requests
+    if (osRecvMesg(&g_ContDisablePollSendMessageQueue, &msg, OS_MESG_NOBLOCK) == 0) {
         if (g_ContBusy) {
-            osRecvMesg(&contdemoMesgMQ, &msg, OS_MESG_BLOCK);
+            osRecvMesg(&g_ContInputMessageQueue, &msg, OS_MESG_BLOCK);
             g_ContBusy = FALSE;
         }
-        osSendMesg(&cont2MesgMQ, &msg, OS_MESG_NOBLOCK);
-        D_800268CC++;
+        osSendMesg(&g_ContDisablePollReceiveMessageQueue, &msg, OS_MESG_NOBLOCK);
+        g_ContPollDisableCount++;
         return;
     }
-    if (osRecvMesg(&cont3MesgMQ, &msg, OS_MESG_NOBLOCK) == 0) {
-        osContStartReadData(&contdemoMesgMQ);
+    // Check if there are any enable requests
+    if (osRecvMesg(&g_ContEnablePollSendMessageQueue, &msg, OS_MESG_NOBLOCK) == 0) {
+        osContStartPollData(&g_ContInputMessageQueue);
         g_ContBusy = TRUE;
-        osSendMesg(&cont4MesgMQ, &msg, OS_MESG_NOBLOCK);
-        D_800268CC--;
+        osSendMesg(&g_ContEnablePollReceiveMessageQueue, &msg, OS_MESG_NOBLOCK);
+        g_ContPollDisableCount--;
         return;
     }
-    if ((D_800268CC == 0) && g_ContInitDone) {
-        if (osRecvMesg(&contdemoMesgMQ, &msg, OS_MESG_NOBLOCK) == 0) {
+    if ((g_ContPollDisableCount == 0) && g_ContInitDone) {
+        // Poll controller input from SI
+        if (osRecvMesg(&g_ContInputMessageQueue, &msg, OS_MESG_NOBLOCK) == 0) {
             static s32 count = 0;
             s32 index;
             s8 i;
@@ -660,19 +669,19 @@ void controllerSchedulerRelated(void)
             osContGetReadData(g_ContData[0].samples[index].pads);
             g_ContData[0].nextlast = index;
             g_ContData[0].nextsecondlast = ((g_ContData[0].nextlast + 19) % 20);
-            D_80026920++;
-            if ((D_80026920 % 120) == 0) {
-                controller_check_for_rumble_maybe();
+            g_ContCheckStatusTimer60++;
+            if ((g_ContCheckStatusTimer60 % 120) == 0) {
+                joyCheckStatus();
             }
             for (i = 0; i < MAXCONTROLLERS; i++) {
                 if (((g_ContData[0].samples[g_ContData[0].nextlast].pads[i].errnum == 0) && (g_ContData[0].samples[g_ContData[0].nextsecondlast].pads[i].errnum != 0)) || 
                     ((g_ContData[0].samples[g_ContData[0].nextlast].pads[i].errnum != 0) && (g_ContData[0].samples[g_ContData[0].nextsecondlast].pads[i].errnum == 0))) {
-					controller_check_for_rumble_maybe();
+					joyCheckStatus();
 					break;
 				}
             }
-            controller_rumble_related();
-            osContStartReadData(&contdemoMesgMQ);
+            joyRumblePakTick();
+            osContStartReadData(&g_ContInputMessageQueue);
             g_ContBusy = TRUE;
             count++;
             if (count >= 60) {
@@ -691,21 +700,22 @@ void controllerSchedulerRelated(void)
     }
 }
 #else
+void joyPoll(void);
 GLOBAL_ASM(
 .text
-glabel controllerSchedulerRelated
+glabel joyPoll
 /* 00C988 7000BD88 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 00C98C 7000BD8C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00C990 7000BD90 3C048006 */  lui   $a0, %hi(cont1MesgMQ)
-/* 00C994 7000BD94 24845370 */  addiu $a0, %lo(cont1MesgMQ) # addiu $a0, $a0, 0x5370
+/* 00C990 7000BD90 3C048006 */  lui   $a0, %hi(g_ContDisablePollSendMessageQueue)
+/* 00C994 7000BD94 24845370 */  addiu $a0, %lo(g_ContDisablePollSendMessageQueue) # addiu $a0, $a0, 0x5370
 /* 00C998 7000BD98 27A5004C */  addiu $a1, $sp, 0x4c
 /* 00C99C 7000BD9C 0C003774 */  jal   osRecvMesg
 /* 00C9A0 7000BDA0 00003025 */   move  $a2, $zero
 /* 00C9A4 7000BDA4 14400015 */  bnez  $v0, .L7000BDFC
 /* 00C9A8 7000BDA8 3C0E8002 */   lui   $t6, %hi(g_ContBusy) 
 /* 00C9AC 7000BDAC 8DCE68C8 */  lw    $t6, %lo(g_ContBusy)($t6)
-/* 00C9B0 7000BDB0 3C048006 */  lui   $a0, %hi(contdemoMesgMQ)
-/* 00C9B4 7000BDB4 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
+/* 00C9B0 7000BDB0 3C048006 */  lui   $a0, %hi(g_ContInputMessageQueue)
+/* 00C9B4 7000BDB4 24845350 */  addiu $a0, %lo(g_ContInputMessageQueue) # addiu $a0, $a0, 0x5350
 /* 00C9B8 7000BDB8 11C00005 */  beqz  $t6, .L7000BDD0
 /* 00C9BC 7000BDBC 27A5004C */   addiu $a1, $sp, 0x4c
 /* 00C9C0 7000BDC0 0C003774 */  jal   osRecvMesg
@@ -713,51 +723,51 @@ glabel controllerSchedulerRelated
 /* 00C9C8 7000BDC8 3C018002 */  lui   $at, %hi(g_ContBusy)
 /* 00C9CC 7000BDCC AC2068C8 */  sw    $zero, %lo(g_ContBusy)($at)
 .L7000BDD0:
-/* 00C9D0 7000BDD0 3C048006 */  lui   $a0, %hi(cont2MesgMQ)
-/* 00C9D4 7000BDD4 24845390 */  addiu $a0, %lo(cont2MesgMQ) # addiu $a0, $a0, 0x5390
+/* 00C9D0 7000BDD0 3C048006 */  lui   $a0, %hi(g_ContDisablePollReceiveMessageQueue)
+/* 00C9D4 7000BDD4 24845390 */  addiu $a0, %lo(g_ContDisablePollReceiveMessageQueue) # addiu $a0, $a0, 0x5390
 /* 00C9D8 7000BDD8 27A5004C */  addiu $a1, $sp, 0x4c
 /* 00C9DC 7000BDDC 0C0037C4 */  jal   osSendMesg
 /* 00C9E0 7000BDE0 00003025 */   move  $a2, $zero
-/* 00C9E4 7000BDE4 3C038002 */  lui   $v1, %hi(D_800268CC)
-/* 00C9E8 7000BDE8 246368CC */  addiu $v1, %lo(D_800268CC) # addiu $v1, $v1, 0x68cc
+/* 00C9E4 7000BDE4 3C038002 */  lui   $v1, %hi(g_ContPollDisableCount)
+/* 00C9E8 7000BDE8 246368CC */  addiu $v1, %lo(g_ContPollDisableCount) # addiu $v1, $v1, 0x68cc
 /* 00C9EC 7000BDEC 8C6F0000 */  lw    $t7, ($v1)
 /* 00C9F0 7000BDF0 25F80001 */  addiu $t8, $t7, 1
 /* 00C9F4 7000BDF4 100000B9 */  b     .L7000C0DC
 /* 00C9F8 7000BDF8 AC780000 */   sw    $t8, ($v1)
 .L7000BDFC:
-/* 00C9FC 7000BDFC 3C048006 */  lui   $a0, %hi(cont3MesgMQ)
-/* 00CA00 7000BE00 248453B0 */  addiu $a0, %lo(cont3MesgMQ) # addiu $a0, $a0, 0x53b0
+/* 00C9FC 7000BDFC 3C048006 */  lui   $a0, %hi(g_ContEnablePollSendMessageQueue)
+/* 00CA00 7000BE00 248453B0 */  addiu $a0, %lo(g_ContEnablePollSendMessageQueue) # addiu $a0, $a0, 0x53b0
 /* 00CA04 7000BE04 27A5004C */  addiu $a1, $sp, 0x4c
 /* 00CA08 7000BE08 0C003774 */  jal   osRecvMesg
 /* 00CA0C 7000BE0C 00003025 */   move  $a2, $zero
 /* 00CA10 7000BE10 14400011 */  bnez  $v0, .L7000BE58
-/* 00CA14 7000BE14 3C048006 */   lui   $a0, %hi(contdemoMesgMQ)
+/* 00CA14 7000BE14 3C048006 */   lui   $a0, %hi(g_ContInputMessageQueue)
 /* 00CA18 7000BE18 0C00535C */  jal   osContStartReadData
-/* 00CA1C 7000BE1C 24845350 */   addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
+/* 00CA1C 7000BE1C 24845350 */   addiu $a0, %lo(g_ContInputMessageQueue) # addiu $a0, $a0, 0x5350
 /* 00CA20 7000BE20 24190001 */  li    $t9, 1
 /* 00CA24 7000BE24 3C018002 */  lui   $at, %hi(g_ContBusy)
-/* 00CA28 7000BE28 3C048006 */  lui   $a0, %hi(cont4MesgMQ)
+/* 00CA28 7000BE28 3C048006 */  lui   $a0, %hi(g_ContEnablePollReceiveMessageQueue)
 /* 00CA2C 7000BE2C AC3968C8 */  sw    $t9, %lo(g_ContBusy)($at)
-/* 00CA30 7000BE30 248453D0 */  addiu $a0, %lo(cont4MesgMQ) # addiu $a0, $a0, 0x53d0
+/* 00CA30 7000BE30 248453D0 */  addiu $a0, %lo(g_ContEnablePollReceiveMessageQueue) # addiu $a0, $a0, 0x53d0
 /* 00CA34 7000BE34 27A5004C */  addiu $a1, $sp, 0x4c
 /* 00CA38 7000BE38 0C0037C4 */  jal   osSendMesg
 /* 00CA3C 7000BE3C 00003025 */   move  $a2, $zero
-/* 00CA40 7000BE40 3C038002 */  lui   $v1, %hi(D_800268CC)
-/* 00CA44 7000BE44 246368CC */  addiu $v1, %lo(D_800268CC) # addiu $v1, $v1, 0x68cc
+/* 00CA40 7000BE40 3C038002 */  lui   $v1, %hi(g_ContPollDisableCount)
+/* 00CA44 7000BE44 246368CC */  addiu $v1, %lo(g_ContPollDisableCount) # addiu $v1, $v1, 0x68cc
 /* 00CA48 7000BE48 8C6B0000 */  lw    $t3, ($v1)
 /* 00CA4C 7000BE4C 256CFFFF */  addiu $t4, $t3, -1
 /* 00CA50 7000BE50 100000A2 */  b     .L7000C0DC
 /* 00CA54 7000BE54 AC6C0000 */   sw    $t4, ($v1)
 .L7000BE58:
-/* 00CA58 7000BE58 3C038002 */  lui   $v1, %hi(D_800268CC)
-/* 00CA5C 7000BE5C 246368CC */  addiu $v1, %lo(D_800268CC) # addiu $v1, $v1, 0x68cc
+/* 00CA58 7000BE58 3C038002 */  lui   $v1, %hi(g_ContPollDisableCount)
+/* 00CA5C 7000BE5C 246368CC */  addiu $v1, %lo(g_ContPollDisableCount) # addiu $v1, $v1, 0x68cc
 /* 00CA60 7000BE60 8C6D0000 */  lw    $t5, ($v1)
 /* 00CA64 7000BE64 3C0E8002 */  lui   $t6, %hi(g_ContInitDone) 
 /* 00CA68 7000BE68 55A0009D */  bnezl $t5, .L7000C0E0
 /* 00CA6C 7000BE6C 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 00CA70 7000BE70 8DCE691C */  lw    $t6, %lo(g_ContInitDone)($t6)
-/* 00CA74 7000BE74 3C048006 */  lui   $a0, %hi(contdemoMesgMQ)
-/* 00CA78 7000BE78 24845350 */  addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
+/* 00CA74 7000BE74 3C048006 */  lui   $a0, %hi(g_ContInputMessageQueue)
+/* 00CA78 7000BE78 24845350 */  addiu $a0, %lo(g_ContInputMessageQueue) # addiu $a0, $a0, 0x5350
 /* 00CA7C 7000BE7C 11C00097 */  beqz  $t6, .L7000C0DC
 /* 00CA80 7000BE80 27A5004C */   addiu $a1, $sp, 0x4c
 /* 00CA84 7000BE84 0C003774 */  jal   osRecvMesg
@@ -785,10 +795,10 @@ glabel controllerSchedulerRelated
 /* 00CAD8 7000BED8 AFA30040 */   sw    $v1, 0x40($sp)
 /* 00CADC 7000BEDC 8FA20040 */  lw    $v0, 0x40($sp)
 /* 00CAE0 7000BEE0 24010014 */  li    $at, 20
-/* 00CAE4 7000BEE4 3C048002 */  lui   $a0, %hi(D_80026920)
+/* 00CAE4 7000BEE4 3C048002 */  lui   $a0, %hi(g_ContCheckStatusTimer60)
 /* 00CAE8 7000BEE8 244B0013 */  addiu $t3, $v0, 0x13
 /* 00CAEC 7000BEEC 0161001A */  div   $zero, $t3, $at
-/* 00CAF0 7000BEF0 24846920 */  addiu $a0, %lo(D_80026920) # addiu $a0, $a0, 0x6920
+/* 00CAF0 7000BEF0 24846920 */  addiu $a0, %lo(g_ContCheckStatusTimer60) # addiu $a0, $a0, 0x6920
 /* 00CAF4 7000BEF4 8C8D0000 */  lw    $t5, ($a0)
 /* 00CAF8 7000BEF8 00006010 */  mfhi  $t4
 /* 00CAFC 7000BEFC 24010078 */  li    $at, 120
@@ -801,7 +811,7 @@ glabel controllerSchedulerRelated
 /* 00CB18 7000BF18 AC8E0000 */  sw    $t6, ($a0)
 /* 00CB1C 7000BF1C 17000006 */  bnez  $t8, .L7000BF38
 /* 00CB20 7000BF20 ACA201E8 */   sw    $v0, 0x1e8($a1)
-/* 00CB24 7000BF24 0C002E04 */  jal   controller_check_for_rumble_maybe
+/* 00CB24 7000BF24 0C002E04 */  jal   joyCheckStatus
 /* 00CB28 7000BF28 00000000 */   nop   
 /* 00CB2C 7000BF2C 3C058006 */  lui   $a1, %hi(g_ContData)
 /* 00CB30 7000BF30 24A54F30 */  addiu $a1, %lo(g_ContData) # addiu $a1, $a1, 0x4f30
@@ -842,7 +852,7 @@ glabel controllerSchedulerRelated
 /* 00CBB0 7000BFB0 55C00006 */  bnezl $t6, .L7000BFCC
 /* 00CBB4 7000BFB4 00047E00 */   sll   $t7, $a0, 0x18
 .L7000BFB8:
-/* 00CBB8 7000BFB8 0C002E04 */  jal   controller_check_for_rumble_maybe
+/* 00CBB8 7000BFB8 0C002E04 */  jal   joyCheckStatus
 /* 00CBBC 7000BFBC 00000000 */   nop   
 /* 00CBC0 7000BFC0 10000006 */  b     .L7000BFDC
 /* 00CBC4 7000BFC4 00000000 */   nop   
@@ -854,27 +864,27 @@ glabel controllerSchedulerRelated
 /* 00CBD4 7000BFD4 1420FFDE */  bnez  $at, .L7000BF50
 /* 00CBD8 7000BFD8 00000000 */   nop   
 .L7000BFDC:
-/* 00CBDC 7000BFDC 0C002E9F */  jal   controller_rumble_related
+/* 00CBDC 7000BFDC 0C002E9F */  jal   joyRumblePakTick
 /* 00CBE0 7000BFE0 00000000 */   nop   
-/* 00CBE4 7000BFE4 3C048006 */  lui   $a0, %hi(contdemoMesgMQ)
+/* 00CBE4 7000BFE4 3C048006 */  lui   $a0, %hi(g_ContInputMessageQueue)
 /* 00CBE8 7000BFE8 0C00535C */  jal   osContStartReadData
-/* 00CBEC 7000BFEC 24845350 */   addiu $a0, %lo(contdemoMesgMQ) # addiu $a0, $a0, 0x5350
-/* 00CBF0 7000BFF0 3C038002 */  lui   $v1, %hi(D_80026970)
-/* 00CBF4 7000BFF4 8C636970 */  lw    $v1, %lo(D_80026970)($v1)
+/* 00CBEC 7000BFEC 24845350 */   addiu $a0, %lo(g_ContInputMessageQueue) # addiu $a0, $a0, 0x5350
+/* 00CBF0 7000BFF0 3C038002 */  lui   $v1, %hi(g_ContBadReadTimer60)
+/* 00CBF4 7000BFF4 8C636970 */  lw    $v1, %lo(g_ContBadReadTimer60)($v1)
 /* 00CBF8 7000BFF8 24190001 */  li    $t9, 1
 /* 00CBFC 7000BFFC 3C018002 */  lui   $at, %hi(g_ContBusy)
 /* 00CC00 7000C000 AC3968C8 */  sw    $t9, %lo(g_ContBusy)($at)
-/* 00CC04 7000C004 3C018002 */  lui   $at, %hi(D_80026970)
+/* 00CC04 7000C004 3C018002 */  lui   $at, %hi(g_ContBadReadTimer60)
 /* 00CC08 7000C008 24630001 */  addiu $v1, $v1, 1
-/* 00CC0C 7000C00C AC236970 */  sw    $v1, %lo(D_80026970)($at)
+/* 00CC0C 7000C00C AC236970 */  sw    $v1, %lo(g_ContBadReadTimer60)($at)
 /* 00CC10 7000C010 2861003C */  slti  $at, $v1, 0x3c
 /* 00CC14 7000C014 14200031 */  bnez  $at, .L7000C0DC
 /* 00CC18 7000C018 3C098002 */   lui   $t1, %hi(g_ContBadReadsStickX) 
 /* 00CC1C 7000C01C 3C048002 */  lui   $a0, %hi(g_ContBadReadsStickY)
 /* 00CC20 7000C020 3C058002 */  lui   $a1, %hi(g_ContBadReadsButtons)
 /* 00CC24 7000C024 3C038002 */  lui   $v1, %hi(g_ContBadReadsButtonsPressed)
-/* 00CC28 7000C028 3C0A8002 */  lui   $t2, %hi(D_80026970) 
-/* 00CC2C 7000C02C 254A6970 */  addiu $t2, %lo(D_80026970) # addiu $t2, $t2, 0x6970
+/* 00CC28 7000C028 3C0A8002 */  lui   $t2, %hi(g_ContBadReadTimer60) 
+/* 00CC2C 7000C02C 254A6970 */  addiu $t2, %lo(g_ContBadReadTimer60) # addiu $t2, $t2, 0x6970
 /* 00CC30 7000C030 24636960 */  addiu $v1, %lo(g_ContBadReadsButtonsPressed) # addiu $v1, $v1, 0x6960
 /* 00CC34 7000C034 24A56950 */  addiu $a1, %lo(g_ContBadReadsButtons) # addiu $a1, $a1, 0x6950
 /* 00CC38 7000C038 24846940 */  addiu $a0, %lo(g_ContBadReadsStickY) # addiu $a0, $a0, 0x6940
@@ -921,8 +931,8 @@ glabel controllerSchedulerRelated
 /* 00CCC8 7000C0C8 24840008 */  addiu $a0, $a0, 8
 /* 00CCCC 7000C0CC 146AFFDC */  bne   $v1, $t2, .L7000C040
 /* 00CCD0 7000C0D0 24A50008 */   addiu $a1, $a1, 8
-/* 00CCD4 7000C0D4 3C018002 */  lui   $at, %hi(D_80026970)
-/* 00CCD8 7000C0D8 AC206970 */  sw    $zero, %lo(D_80026970)($at)
+/* 00CCD4 7000C0D4 3C018002 */  lui   $at, %hi(g_ContBadReadTimer60)
+/* 00CCD8 7000C0D8 AC206970 */  sw    $zero, %lo(g_ContBadReadTimer60)($at)
 .L7000C0DC:
 /* 00CCDC 7000C0DC 8FBF0014 */  lw    $ra, 0x14($sp)
 .L7000C0E0:
@@ -932,18 +942,16 @@ glabel controllerSchedulerRelated
 )
 #endif
 
-s8 joyGetStickX(s8 contpadnum)
-{
-    if (g_ContDataPtr->unk1f8 < 0 && (g_ConnectedControllers >> contpadnum & 1) == 0) {
+s8 joyGetStickX(s8 contpadnum) {
+    if ((g_ContDataPtr->playbackcontcount < 0) && ((g_ConnectedControllers >> contpadnum & 1) == 0)) {
 		g_ContBadReadsStickX[contpadnum]++;
 		return 0;
 	}
 	return g_ContDataPtr->samples[g_ContDataPtr->curlast].pads[contpadnum].stick_x;
-
 }
 
 s8 joy7000C174(s8 contpadnum) {
-    if (g_ContDataPtr->unk1f8 < 0 && (g_ConnectedControllers >> contpadnum & 1) == 0) {
+    if ((g_ContDataPtr->playbackcontcount < 0) && ((g_ConnectedControllers >> contpadnum & 1) == 0)) {
 		g_ContBadReadsStickX[contpadnum]++;
 		return 0;
 	}
@@ -951,7 +959,7 @@ s8 joy7000C174(s8 contpadnum) {
 }
 
 s8 joyGetStickY(s8 contpadnum) {
-    if (g_ContDataPtr->unk1f8 < 0 && (g_ConnectedControllers >> contpadnum & 1) == 0) {
+    if ((g_ContDataPtr->playbackcontcount < 0) && ((g_ConnectedControllers >> contpadnum & 1) == 0)) {
 		g_ContBadReadsStickY[contpadnum]++;
 		return 0;
 	}
@@ -959,7 +967,7 @@ s8 joyGetStickY(s8 contpadnum) {
 }
 
 s8 joy7000C284(s8 contpadnum) {
-    if (g_ContDataPtr->unk1f8 < 0 && (g_ConnectedControllers >> contpadnum & 1) == 0) {
+    if ((g_ContDataPtr->playbackcontcount < 0) && ((g_ConnectedControllers >> contpadnum & 1) == 0)) {
 		g_ContBadReadsStickY[contpadnum]++;
 		return 0;
 	}
@@ -967,26 +975,25 @@ s8 joy7000C284(s8 contpadnum) {
 }
 
 u16 joyGetButtons(s8 contpadnum, u16 mask) {
-	if (g_ContDataPtr->unk1f8 < 0 && (g_ConnectedControllers >> contpadnum & 1) == 0) {
+	if ((g_ContDataPtr->playbackcontcount < 0) && ((g_ConnectedControllers >> contpadnum & 1) == 0)) {
 		g_ContBadReadsButtons[contpadnum]++;
 		return 0;
 	}
 	return g_ContDataPtr->samples[g_ContDataPtr->curlast].pads[contpadnum].button & mask;
-
 }
 
 u16 joyGetButtonsPressedThisFrame(s8 contpadnum, u16 mask) {
-	if (g_ContDataPtr->unk1f8 < 0 && (g_ConnectedControllers >> contpadnum & 1) == 0) {
+	if ((g_ContDataPtr->playbackcontcount < 0) && ((g_ConnectedControllers >> contpadnum & 1) == 0)) {
 		g_ContBadReadsButtonsPressed[contpadnum]++;
 		return 0;
 	}
     return g_ContDataPtr->buttonspressed[contpadnum] & mask;
 }
 
-void joy7000C430(s8 *arg0, u16 arg1) {
+void joy7000C430(s8 *bytes, u16 bitfield) {
     s32 i;
     for (i = 15; i >= 0; i--) {
-        *arg0++ = (((((arg1 >> i) & 1) > 0) * 17) + 32);
+        *bytes++ = (((((bitfield >> i) & 1) > 0) * 17) + 32);
     }
 }
 
@@ -1049,86 +1056,86 @@ f32 joyGetStickYInRangef(s8 contpadnum, f32 rangemin, f32 rangemax) {
     return (((stick_y / 120.0f) * range) + rangemin);
 }
 
-void joy7000C67C(void) {
+void joyDisablePoll(void) {
     OSMesg msg;
-    osSendMesg(&cont1MesgMQ, &msg, OS_MESG_NOBLOCK);
-    osRecvMesg(&cont2MesgMQ, &msg, OS_MESG_BLOCK);
+    osSendMesg(&g_ContDisablePollSendMessageQueue, &msg, OS_MESG_NOBLOCK);
+    osRecvMesg(&g_ContDisablePollReceiveMessageQueue, &msg, OS_MESG_BLOCK);
 }
 
-void joy7000C6BC(void) {
+void joyEnablePoll(void) {
     OSMesg msg;
-    osSendMesg(&cont3MesgMQ, &msg, OS_MESG_NOBLOCK);
-    osRecvMesg(&cont4MesgMQ, &msg, OS_MESG_BLOCK);
+    osSendMesg(&g_ContEnablePollSendMessageQueue, &msg, OS_MESG_NOBLOCK);
+    osRecvMesg(&g_ContEnablePollReceiveMessageQueue, &msg, OS_MESG_BLOCK);
 }
 
-s32 joy7000C6FC(void) {
+s32 joyGamePakProbe(void) {
     s32 type;
-    joy7000C67C();
-    type = osEepromProbe(&contdemoMesgMQ);
-    joy7000C6BC();
+    joyDisablePoll();
+    type = osEepromProbe(&g_ContInputMessageQueue);
+    joyEnablePoll();
     return type;
 }
 
-s32 joy7000C734(u8 address, u8 *buffer) {
+s32 joyGamePakRead(u8 address, u8 *buffer) {
     s32 ret;
-    joy7000C67C();
-    ret = osEepromRead(&contdemoMesgMQ, address, buffer);
-    joy7000C6BC();
+    joyDisablePoll();
+    ret = osEepromRead(&g_ContInputMessageQueue, address, buffer);
+    joyEnablePoll();
     return ret;
 }
 
-s32 joy7000C778(u8 address, u8 *buffer) {
+s32 joyGamePakWrite(u8 address, u8 *buffer) {
     s32 ret;
-    joy7000C67C();
-    ret = osEepromWrite(&contdemoMesgMQ, address, buffer);
-    joy7000C6BC();
+    joyDisablePoll();
+    ret = osEepromWrite(&g_ContInputMessageQueue, address, buffer);
+    joyEnablePoll();
     return ret;
 }
 
-s32 joy7000C7BC(u8 address, u8 *buffer, s32 nbytes) {
+s32 joyGamePakLongRead(u8 address, u8 *buffer, s32 nbytes) {
     s32 ret;
-    joy7000C67C();
-    ret = osEepromLongRead(&contdemoMesgMQ, address, buffer, nbytes);
-    joy7000C6BC();
+    joyDisablePoll();
+    ret = osEepromLongRead(&g_ContInputMessageQueue, address, buffer, nbytes);
+    joyEnablePoll();
     return ret;
 }
 
-s32 joy7000C808(u8 address, u8 *buffer, s32 nbytes) {
+s32 joyGamePakLongWrite(u8 address, u8 *buffer, s32 nbytes) {
     s32 ret;
-    joy7000C67C();
-    ret = osEepromLongWrite(&contdemoMesgMQ, address, buffer, nbytes);
-    joy7000C6BC();
+    joyDisablePoll();
+    ret = osEepromLongWrite(&g_ContInputMessageQueue, address, buffer, nbytes);
+    joyEnablePoll();
     return ret;
 }
 
-void joy7000C854(s32 arg0, f32 arg1) {
-    s32 var1 = (arg1 * 60.0f);
-    if ((D_80026924 == NULL) && (controller_1_rumble_inserted[arg0] > 0)) {
-        if (controller_1_rumble_duration[arg0] < var1) {
-            controller_1_rumble_duration[arg0] = var1;
+void joyRumblePakStart(s32 controller, f32 duration) {
+    s32 duration60 = (duration * 60.0f);
+    if ((g_ContPlaybackFunc == NULL) && (g_ContRumblePakInitState[controller] > RUMBLEPAKINITSTATE_NOT_READY)) {
+        if (g_ContRumblePakTimer60[controller] < duration60) {
+            g_ContRumblePakTimer60[controller] = duration60;
         }
-        if (controller_1_rumble_state[arg0] == 0) {
-            controller_1_rumble_pulse[arg0] = 1;
+        if (g_ContRumblePakCurrentState[controller] == RUMBLEPAKSTATE_OFF) {
+            g_ContRumblePakTargetState[controller] = RUMBLEPAKSTATE_ON;
         }
     }
 }
 
-void reset_cont_rumble_detect(void) {
+void joyRumblePakStop(void) {
     s32 i;
     for (i = 0; i < MAXCONTROLLERS; i++) {
 #ifdef VERSION_US
-        controller_1_rumble_state[i] = 1;
-        controller_1_rumble_pulse[i] = 0;
+        g_ContRumblePakCurrentState[i] = RUMBLEPAKSTATE_ON;
+        g_ContRumblePakTargetState[i] = RUMBLEPAKSTATE_OFF;        
 #else if VERSION_JP
-        controller_1_rumble_pulse[i] = 2;
+        g_ContRumblePakTargetState[i] = RUMBLEPAKSTATE_UNKNOWN;
 #endif
     }
 }
 
-void joy7000C930(s32 index) {
+void joySetContDataIndex(s32 index) {
     g_ContDataPtr = &g_ContData[index];
 }
 
-s32 joy7000C954(void) {
+s32 joyGetContDataIndex(void) {
     return (g_ContDataPtr - g_ContData);
 }
