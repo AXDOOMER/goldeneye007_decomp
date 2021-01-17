@@ -118,7 +118,7 @@ void joyCheckStatusThreadSafe(void) {
 }
 
 s32 osPfsChecker(OSPfs *pfs) {
-    return 3;
+    return PFS_ERR_INCONSISTENT;
 }
 
 void joyRumblePakInit(s32 index) {
