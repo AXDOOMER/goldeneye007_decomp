@@ -39,100 +39,37 @@ s32 osMotorStop(OSPfs *pfs) {
     return ret;
 }
 
-#ifdef NONMATCHING
 s32 osMotorStart(OSPfs *pfs)
 {
+    int i;
+    s32 ret;
+    u8 *ptr;
+    __OSContRamReadFormat ramreadformat;
 
+    ptr = (u8 *)&__osPfsPifRam;
+
+    __osSiGetAccess();
+
+    __osContLastCmd = CONT_CMD_WRITE_MEMPACK;
+    __osSiRawStartDma(OS_WRITE, &_MotorStartData[pfs->channel]);
+    osRecvMesg(pfs->queue, NULL, OS_MESG_BLOCK);
+    ret = __osSiRawStartDma(OS_READ, &__osPfsPifRam);
+    osRecvMesg(pfs->queue, NULL, OS_MESG_BLOCK);
+    ptr = (u8 *)&__osPfsPifRam;
+
+    if (pfs->channel != 0)
+        for (i = 0; i < pfs->channel; i++)
+            ptr++;
+
+    ramreadformat = *(__OSContRamReadFormat *)ptr;
+    ret = CHNL_ERR(ramreadformat);
+    if (ret == 0 && ramreadformat.datacrc != 0xEB)
+    {
+        ret = PFS_ERR_CONTRFAIL;
+    }
+    __osSiRelAccess();
+    return ret;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel osMotorStart
-/* 00D6AC 7000CAAC 27BDFFB0 */  addiu $sp, $sp, -0x50
-/* 00D6B0 7000CAB0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00D6B4 7000CAB4 0C005798 */  jal   __osSiGetAccess
-/* 00D6B8 7000CAB8 AFA40050 */   sw    $a0, 0x50($sp)
-/* 00D6BC 7000CABC 8FAF0050 */  lw    $t7, 0x50($sp)
-/* 00D6C0 7000CAC0 240E0003 */  li    $t6, 3
-/* 00D6C4 7000CAC4 3C018006 */  lui   $at, %hi(__osContLastCmd)
-/* 00D6C8 7000CAC8 A02E7CE0 */  sb    $t6, %lo(__osContLastCmd)($at)
-/* 00D6CC 7000CACC 8DF80008 */  lw    $t8, 8($t7)
-/* 00D6D0 7000CAD0 3C088006 */  lui   $t0, %hi(_MotorStartData) 
-/* 00D6D4 7000CAD4 250856A0 */  addiu $t0, %lo(_MotorStartData) # addiu $t0, $t0, 0x56a0
-/* 00D6D8 7000CAD8 0018C980 */  sll   $t9, $t8, 6
-/* 00D6DC 7000CADC 03282821 */  addu  $a1, $t9, $t0
-/* 00D6E0 7000CAE0 0C0057B4 */  jal   __osSiRawStartDma
-/* 00D6E4 7000CAE4 24040001 */   li    $a0, 1
-/* 00D6E8 7000CAE8 8FA90050 */  lw    $t1, 0x50($sp)
-/* 00D6EC 7000CAEC 00002825 */  move  $a1, $zero
-/* 00D6F0 7000CAF0 24060001 */  li    $a2, 1
-/* 00D6F4 7000CAF4 0C003774 */  jal   osRecvMesg
-/* 00D6F8 7000CAF8 8D240004 */   lw    $a0, 4($t1)
-/* 00D6FC 7000CAFC 3C058006 */  lui   $a1, %hi(__osPfsPifRam)
-/* 00D700 7000CB00 24A57D70 */  addiu $a1, %lo(__osPfsPifRam) # addiu $a1, $a1, 0x7d70
-/* 00D704 7000CB04 0C0057B4 */  jal   __osSiRawStartDma
-/* 00D708 7000CB08 00002025 */   move  $a0, $zero
-/* 00D70C 7000CB0C 8FAA0050 */  lw    $t2, 0x50($sp)
-/* 00D710 7000CB10 00002825 */  move  $a1, $zero
-/* 00D714 7000CB14 24060001 */  li    $a2, 1
-/* 00D718 7000CB18 0C003774 */  jal   osRecvMesg
-/* 00D71C 7000CB1C 8D440004 */   lw    $a0, 4($t2)
-/* 00D720 7000CB20 8FAB0050 */  lw    $t3, 0x50($sp)
-/* 00D724 7000CB24 3C038006 */  lui   $v1, %hi(__osPfsPifRam)
-/* 00D728 7000CB28 24637D70 */  addiu $v1, %lo(__osPfsPifRam) # addiu $v1, $v1, 0x7d70
-/* 00D72C 7000CB2C 8D640008 */  lw    $a0, 8($t3)
-/* 00D730 7000CB30 27AC001C */  addiu $t4, $sp, 0x1c
-/* 00D734 7000CB34 50800008 */  beql  $a0, $zero, .L7000CB58
-/* 00D738 7000CB38 00607825 */   move  $t7, $v1
-/* 00D73C 7000CB3C 18800005 */  blez  $a0, .L7000CB54
-/* 00D740 7000CB40 00001025 */   move  $v0, $zero
-.L7000CB44:
-/* 00D744 7000CB44 24420001 */  addiu $v0, $v0, 1
-/* 00D748 7000CB48 0044082A */  slt   $at, $v0, $a0
-/* 00D74C 7000CB4C 1420FFFD */  bnez  $at, .L7000CB44
-/* 00D750 7000CB50 24630001 */   addiu $v1, $v1, 1
-.L7000CB54:
-/* 00D754 7000CB54 00607825 */  move  $t7, $v1
-.L7000CB58:
-/* 00D758 7000CB58 246E0024 */  addiu $t6, $v1, 0x24
-.L7000CB5C:
-/* 00D75C 7000CB5C 89E10000 */  lwl   $at, ($t7)
-/* 00D760 7000CB60 99E10003 */  lwr   $at, 3($t7)
-/* 00D764 7000CB64 25EF000C */  addiu $t7, $t7, 0xc
-/* 00D768 7000CB68 258C000C */  addiu $t4, $t4, 0xc
-/* 00D76C 7000CB6C AD81FFF4 */  sw    $at, -0xc($t4)
-/* 00D770 7000CB70 89E1FFF8 */  lwl   $at, -8($t7)
-/* 00D774 7000CB74 99E1FFFB */  lwr   $at, -5($t7)
-/* 00D778 7000CB78 AD81FFF8 */  sw    $at, -8($t4)
-/* 00D77C 7000CB7C 89E1FFFC */  lwl   $at, -4($t7)
-/* 00D780 7000CB80 99E1FFFF */  lwr   $at, -1($t7)
-/* 00D784 7000CB84 15EEFFF5 */  bne   $t7, $t6, .L7000CB5C
-/* 00D788 7000CB88 AD81FFFC */   sw    $at, -4($t4)
-/* 00D78C 7000CB8C 89E10000 */  lwl   $at, ($t7)
-/* 00D790 7000CB90 99E10003 */  lwr   $at, 3($t7)
-/* 00D794 7000CB94 AD810000 */  sw    $at, ($t4)
-/* 00D798 7000CB98 93A2001E */  lbu   $v0, 0x1e($sp)
-/* 00D79C 7000CB9C 93A80042 */  lbu   $t0, 0x42($sp)
-/* 00D7A0 7000CBA0 240100EB */  li    $at, 235
-/* 00D7A4 7000CBA4 305800C0 */  andi  $t8, $v0, 0xc0
-/* 00D7A8 7000CBA8 00182103 */  sra   $a0, $t8, 4
-/* 00D7AC 7000CBAC 14800004 */  bnez  $a0, .L7000CBC0
-/* 00D7B0 7000CBB0 00000000 */   nop   
-/* 00D7B4 7000CBB4 11010002 */  beq   $t0, $at, .L7000CBC0
-/* 00D7B8 7000CBB8 00000000 */   nop   
-/* 00D7BC 7000CBBC 24040004 */  li    $a0, 4
-.L7000CBC0:
-/* 00D7C0 7000CBC0 0C0057A9 */  jal   __osSiRelAccess
-/* 00D7C4 7000CBC4 AFA40048 */   sw    $a0, 0x48($sp)
-/* 00D7C8 7000CBC8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00D7CC 7000CBCC 8FA20048 */  lw    $v0, 0x48($sp)
-/* 00D7D0 7000CBD0 27BD0050 */  addiu $sp, $sp, 0x50
-/* 00D7D4 7000CBD4 03E00008 */  jr    $ra
-/* 00D7D8 7000CBD8 00000000 */   nop   
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 void _MakeMotorData(int channel,u16 address,u8 *buffer,OSPifRam *mdata)
