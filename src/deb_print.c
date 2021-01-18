@@ -99,7 +99,7 @@ void *stack_ptrs_1[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
 void *stack_ptrs_2[] = {&sp_idle, &sp_shed, &sp_main, &sp_audi, &sp_debug};
 void *stack_ptrs_3[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
 
-char stderr_buffer[2272] = {0};
+unsigned char stderr_buffer[32][71] = {0};
 s32 D_80023FF8 = 0;
 s32 D_80023FFC = 0;
 
@@ -139,7 +139,7 @@ void write_char_to_pos_stderr(s32 x, s32 y, unsigned char c) {
         c = '?';
     }
     if (((x >= 0) && (x <= 71)) && ((y >= 0) && (y <= 31))) {
-        stderr_buffer[(y * 71) + x] = c;
+        stderr_buffer[y][x] = c;
     }
 }
 
@@ -254,101 +254,17 @@ glabel __osRdbSend
 )
 #endif
 
-
-
-
-/**
- * 63CC	700057CC
- *     scroll stderr down one line
- *     accepts: A0=ypos
- */
-#ifdef NONMATCHING
-s32 scroll_stderr_oneline(s32 arg0) {
-    void *temp_a1_2;
-    void *temp_a1;
-
-    // Node 0
-    if (0 < arg0)
-    {
-        // Node 1
-        // Node 2
-        // Node 3
-        temp_a1_2 = (&stderr_buffer + 3);
-        stderr_buffer = (s8) stderr_buffer.unk47;
-        stderr_buffer.unk1 = (s8) stderr_buffer.unk48;
-        stderr_buffer.unk2 = (s8) stderr_buffer.unk49;
-        // Node 4
-        temp_a1 = (temp_a1_2 + 4);
-        temp_a1->unk-3 = (s8) temp_a1_2->unk48;
-        temp_a1->unk-2 = (s8) temp_a1_2->unk49;
-        temp_a1->unk-1 = (s8) temp_a1_2->unk4A;
-        temp_a1->unk-4 = (s8) temp_a1_2->unk47;
-        if ((3 + 4) != 0x47)
-        {
-            goto loop_4;
-        }
-        // Node 5
-        if ((&stderr_buffer + 0x47) != (stderr_buffer + 0x899))
-        {
-            goto loop_3;
-        }
-        // Node 6
-        if (0 < (arg0 + -1))
-        {
-            goto loop_2;
+void scroll_stderr_oneline(s32 count) {
+    s32 y;
+    s32 x;
+    while (count-- > 0) {
+        for (y = 0; y < 31; y++) {
+            for (x = 0; x < 71; x++) {
+                stderr_buffer[y][x] = stderr_buffer[y + 1][x];
+            }
         }
     }
-    // (possible return value: (0 < arg0))
 }
-#else
-GLOBAL_ASM(
-.text
-glabel scroll_stderr_oneline
-/* 0063CC 700057CC 0004102A */  slt   $v0, $zero, $a0
-/* 0063D0 700057D0 10400020 */  beqz  $v0, .L70005854
-/* 0063D4 700057D4 2484FFFF */   addiu $a0, $a0, -1
-/* 0063D8 700057D8 3C088002 */  lui   $t0, %hi(stderr_buffer + 0x899) 
-/* 0063DC 700057DC 25083FB1 */  addiu $t0, %lo(stderr_buffer + 0x899) # addiu $t0, $t0, 0x3fb1
-/* 0063E0 700057E0 24070047 */  li    $a3, 71
-.L700057E4:
-/* 0063E4 700057E4 3C0E8002 */  lui   $t6, %hi(stderr_buffer)
-/* 0063E8 700057E8 25C63718 */  addiu $a2, $t6, %lo(stderr_buffer)
-/* 0063EC 700057EC 00C01825 */  move  $v1, $a2
-.L700057F0:
-/* 0063F0 700057F0 90CF0047 */  lbu   $t7, 0x47($a2)
-/* 0063F4 700057F4 90D80048 */  lbu   $t8, 0x48($a2)
-/* 0063F8 700057F8 90D90049 */  lbu   $t9, 0x49($a2)
-/* 0063FC 700057FC 24020003 */  li    $v0, 3
-/* 006400 70005800 24650003 */  addiu $a1, $v1, 3
-/* 006404 70005804 A0CF0000 */  sb    $t7, ($a2)
-/* 006408 70005808 A0D80001 */  sb    $t8, 1($a2)
-/* 00640C 7000580C A0D90002 */  sb    $t9, 2($a2)
-.L70005810:
-/* 006410 70005810 90AA0048 */  lbu   $t2, 0x48($a1)
-/* 006414 70005814 90AB0049 */  lbu   $t3, 0x49($a1)
-/* 006418 70005818 90AC004A */  lbu   $t4, 0x4a($a1)
-/* 00641C 7000581C 90A90047 */  lbu   $t1, 0x47($a1)
-/* 006420 70005820 24420004 */  addiu $v0, $v0, 4
-/* 006424 70005824 24A50004 */  addiu $a1, $a1, 4
-/* 006428 70005828 A0AAFFFD */  sb    $t2, -3($a1)
-/* 00642C 7000582C A0ABFFFE */  sb    $t3, -2($a1)
-/* 006430 70005830 A0ACFFFF */  sb    $t4, -1($a1)
-/* 006434 70005834 1447FFF6 */  bne   $v0, $a3, .L70005810
-/* 006438 70005838 A0A9FFFC */   sb    $t1, -4($a1)
-/* 00643C 7000583C 24C60047 */  addiu $a2, $a2, 0x47
-/* 006440 70005840 14C8FFEB */  bne   $a2, $t0, .L700057F0
-/* 006444 70005844 24630047 */   addiu $v1, $v1, 0x47
-/* 006448 70005848 0004102A */  slt   $v0, $zero, $a0
-/* 00644C 7000584C 1440FFE5 */  bnez  $v0, .L700057E4
-/* 006450 70005850 2484FFFF */   addiu $a0, $a0, -1
-.L70005854:
-/* 006454 70005854 03E00008 */  jr    $ra
-/* 006458 70005858 00000000 */   nop   
-)
-#endif
-
-
-
 
 /**
  * 645C	7000585C
