@@ -99,7 +99,9 @@ void *stack_ptrs_1[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
 void *stack_ptrs_2[] = {&sp_idle, &sp_shed, &sp_main, &sp_audi, &sp_debug};
 void *stack_ptrs_3[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
 
-char stderr_buffer[2280] = {0x0};
+char stderr_buffer[2272] = {0};
+s32 D_80023FF8 = 0;
+s32 D_80023FFC = 0;
 
 
 //split more here likely
@@ -124,8 +126,8 @@ u32 std_error_font_bitcode[] = {
   0x555700,   0x552200,   0x577500,   0x562500,   0x552220,
   0x703700, 0x12242210,  0x2222220, 0x42212240,   0x5A0000 };
 
-void *ptr_videobuffer1 = 0;
-void *ptr_videobuffer2 = 0;
+void *ptr_videobuffer1 = NULL;
+void *ptr_videobuffer2 = NULL;
 
 u32 padding_80024184[4] = {0};
 
@@ -147,8 +149,29 @@ void write_char_to_pos_stderr(s32 x, s32 y, unsigned char c) {
  *     accepts: A0=char
  */
 #ifdef NONMATCHING
-void __osRdbSend(void) {
-
+void __osRdbSend(unsigned char c) {
+    if (c) {
+        if (c == '\t') {
+            do {
+                __osRdbSend(' ');
+            } while (D_80023FF8 & 7);
+        } else if (c == '\n') {
+            D_80023FFC++;
+            D_80023FF8 = 0;
+        }
+        if (D_80023FFC >= 31) {
+            scroll_stderr_oneline(D_80023FFC - 30);
+            D_80023FFC = 30;
+        }
+        if (c != '\n') {
+            write_char_to_pos_stderr(D_80023FF8, D_80023FFC, c);
+            D_80023FF8++;
+            if (D_80023FF8 >= 71) {
+                D_80023FF8 = 0;
+                D_80023FFC++;
+            }
+        }
+    }
 }
 #else
 GLOBAL_ASM(
