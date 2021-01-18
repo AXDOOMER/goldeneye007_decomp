@@ -20,5 +20,6 @@ extern void *stack_ptrs_3[];
 
 void write_stderr_to_buffer(u32 *buffer);
 void __osRdbSend(unsigned char c);
+void scroll_stderr_oneline(s32 count);
 
 #endif

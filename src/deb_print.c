@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "deb_print.h"
 #include "bondgame.h"
+#include "video.h"
 
 /**
  * @file deb_print.c
@@ -100,8 +101,8 @@ void *stack_ptrs_2[] = {&sp_idle, &sp_shed, &sp_main, &sp_audi, &sp_debug};
 void *stack_ptrs_3[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
 
 unsigned char stderr_buffer[32][71] = {0};
-s32 D_80023FF8 = 0;
-s32 D_80023FFC = 0;
+s32 D_80023FF8 = 0; // x
+s32 D_80023FFC = 0; // y
 
 
 //split more here likely
@@ -126,8 +127,8 @@ u32 std_error_font_bitcode[] = {
   0x555700,   0x552200,   0x577500,   0x562500,   0x552220,
   0x703700, 0x12242210,  0x2222220, 0x42212240,   0x5A0000 };
 
-void *ptr_videobuffer1 = NULL;
-void *ptr_videobuffer2 = NULL;
+u16 *ptr_videobuffer1 = NULL;
+u16 *ptr_videobuffer2 = NULL;
 
 u32 padding_80024184[4] = {0};
 
@@ -272,84 +273,27 @@ void scroll_stderr_oneline(s32 count) {
  *     accepts: A0=xpos, A1=ypos, A2=char
  */
 #ifdef NONMATCHING
-void print_to_vidbuff1(s32 arg0, s32 arg1, ? arg2, s32 arg6, s32 arg7, s32 arg8) {
-    s32 temp_at;
-    void *temp_a0;
-    void *temp_v1;
-    void *temp_v1_2;
-    void *temp_v1_3;
-    void *temp_v1_4;
-
-    // Node 0
-    if (arg8 == 0)
-    {
-        // Node 1
+void print_to_vidbuff1(s32 x, s32 y, unsigned char c) {
+    s32 i;
+    s32 j;
+    s16 width = viGetX();
+    u16 *ptr;
+    u32 bitcode;
+    if (c == '\0') {
+        c = ' ';
     }
-    // Node 2
-    temp_at = (arg8 < 0x7f);
-    if (temp_at == 0)
-    {
-        // Node 3
-        if (temp_at != 0)
-        {
-            // Node 4
-            temp_a0 = (0x80020000 + (arg8 * 4));
-            temp_v1 = (((arg6 * 2) + ptr_videobuffer1) + ((arg7 * viGetX()) * 2));
-            // Node 5
-            if ((temp_a0->unk3F80 & 0x80000000) != 0)
-            {
-                // Node 6
-                *temp_v1 = (u16)0xffff;
+    if ((c >= ' ') && (c < 0x7F)) {
+        ptr = &ptr_videobuffer1[(y * width) + x];
+        bitcode = std_error_font_bitcode[c - ' '];
+        for (i = 0; i < 7; i++) {
+            for (j = 0; j < 4; j++) {
+                *ptr++ = (bitcode & 0x80000000) ? GPACK_RGBA5551(255, 255, 255, 1) :  GPACK_RGBA5551(0, 0, 0, 1);
+                bitcode <<= 1;
             }
-            else
-            {
-                // Node 7
-                *temp_v1 = (u16)1;
-            }
-            // Node 8
-            temp_v1_2 = (temp_v1 + 2);
-            if (((temp_a0->unk3F80 * 2) & 0x80000000) != 0)
-            {
-                // Node 9
-                *temp_v1_2 = (u16)0xffff;
-            }
-            else
-            {
-                // Node 10
-                *temp_v1_2 = (u16)1;
-            }
-            // Node 11
-            temp_v1_3 = (temp_v1_2 + 2);
-            if (((temp_a0->unk3F80 * 4) & 0x80000000) != 0)
-            {
-                // Node 12
-                *temp_v1_3 = (u16)0xffff;
-            }
-            else
-            {
-                // Node 13
-                *temp_v1_3 = (u16)1;
-            }
-            // Node 14
-            temp_v1_4 = (temp_v1_3 + 2);
-            if (((temp_a0->unk3F80 * 8) & 0x80000000) != 0)
-            {
-                // Node 15
-                *temp_v1_4 = (u16)0xffff;
-            }
-            else
-            {
-                // Node 16
-                *temp_v1_4 = (u16)1;
-            }
-            // Node 17
-            if ((0 + 1) != 7)
-            {
-                goto loop_5;
-            }
+            ptr += width;
+            ptr -= 4;
         }
     }
-    // (possible return value: viGetX())
 }
 
 #else
@@ -456,8 +400,8 @@ glabel print_to_vidbuff1
  */
 
 void set_ptr_video_buffers(s32 arg0, s32 arg1) {
-    ptr_videobuffer1 = (s32) (arg0 | 0xa0000000);
-    ptr_videobuffer2 = (s32) (arg1 | 0xa0000000);
+    ptr_videobuffer1 = (arg0 | 0xA0000000);
+    ptr_videobuffer2 = (arg1 | 0xA0000000);
 }
 
 
