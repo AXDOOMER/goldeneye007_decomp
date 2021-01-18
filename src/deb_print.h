@@ -18,7 +18,7 @@ extern void *stack_ptrs_1[];
 extern void *stack_ptrs_2[];
 extern void *stack_ptrs_3[];
 
-void write_stderr_to_buffer(u32 *buffer);
+void write_stderr_to_buffer(u16 *buffer);
 void __osRdbSend(unsigned char c);
 void scroll_stderr_oneline(s32 count);
 

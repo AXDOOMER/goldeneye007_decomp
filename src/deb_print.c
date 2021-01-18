@@ -276,27 +276,27 @@ void scroll_stderr_oneline(s32 count) {
 void print_to_vidbuff1(s32 x, s32 y, unsigned char c) {
     s32 i;
     s32 j;
-    s16 width = viGetX();
+    s16 totalwidth = viGetX();
     u16 *ptr;
     u32 bitcode;
     if (c == '\0') {
         c = ' ';
     }
     if ((c >= ' ') && (c < 0x7F)) {
-        ptr = &ptr_videobuffer1[(y * width) + x];
+        ptr = &ptr_videobuffer1[(y * totalwidth) + x];
         bitcode = std_error_font_bitcode[c - ' '];
         for (i = 0; i < 7; i++) {
             for (j = 0; j < 4; j++) {
                 *ptr++ = (bitcode & 0x80000000) ? GPACK_RGBA5551(255, 255, 255, 1) :  GPACK_RGBA5551(0, 0, 0, 1);
                 bitcode <<= 1;
             }
-            ptr += width;
+            ptr += totalwidth;
             ptr -= 4;
         }
     }
 }
-
 #else
+void print_to_vidbuff1(s32 x, s32 y, unsigned char c);
 GLOBAL_ASM(
 .text
 glabel print_to_vidbuff1
@@ -416,106 +416,22 @@ void set_video_buffer_pointers(void) {
     set_ptr_video_buffers(&cfb_16[0], &cfb_16[1]);
 }
 
-
-
-
-
-/**
- * 65D0	700059D0
- *     write stderr to video buffer A0
- *     accepts: A0=p->video buffer
- */
-#ifdef NONMATCHING
-void write_stderr_to_buffer(void) {
-
+void write_stderr_to_buffer(u16 *buffer) {
+    s32 screen_w;
+    s32 screen_h;
+    s32 output_w;
+    s32 output_h;
+    s32 x;
+    s32 y;
+    set_video_buffer_pointers();
+    ptr_videobuffer1 = ((u32)buffer | 0xA0000000);
+    screen_w = ((viGetX() - 13) / 4);
+    screen_h = ((viGetY() - 10) / 7);
+    output_w = screen_w - 5; // - margin_w
+    output_h = screen_h - 1; // - margin_h
+    for (y = 0; ((y < output_h) && (y < 31)); y++) {
+        for (x = 0; ((x < output_w) && (x < 71)); x++) {
+            print_to_vidbuff1(((x + 5) * 4), ((y + 1) * 7), stderr_buffer[y][x]);
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel write_stderr_to_buffer
-/* 0065D0 700059D0 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 0065D4 700059D4 AFBF003C */  sw    $ra, 0x3c($sp)
-/* 0065D8 700059D8 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0065DC 700059DC 00808025 */  move  $s0, $a0
-/* 0065E0 700059E0 AFBE0038 */  sw    $fp, 0x38($sp)
-/* 0065E4 700059E4 AFB70034 */  sw    $s7, 0x34($sp)
-/* 0065E8 700059E8 AFB60030 */  sw    $s6, 0x30($sp)
-/* 0065EC 700059EC AFB5002C */  sw    $s5, 0x2c($sp)
-/* 0065F0 700059F0 AFB40028 */  sw    $s4, 0x28($sp)
-/* 0065F4 700059F4 AFB30024 */  sw    $s3, 0x24($sp)
-/* 0065F8 700059F8 AFB20020 */  sw    $s2, 0x20($sp)
-/* 0065FC 700059FC 0C001669 */  jal   set_video_buffer_pointers
-/* 006600 70005A00 AFB1001C */   sw    $s1, 0x1c($sp)
-/* 006604 70005A04 3C01A000 */  lui   $at, 0xa000
-/* 006608 70005A08 02017025 */  or    $t6, $s0, $at
-/* 00660C 70005A0C 3C018002 */  lui   $at, %hi(ptr_videobuffer1)
-/* 006610 70005A10 0C001107 */  jal   viGetX
-/* 006614 70005A14 AC2E417C */   sw    $t6, %lo(ptr_videobuffer1)($at)
-/* 006618 70005A18 2450FFF3 */  addiu $s0, $v0, -0xd
-/* 00661C 70005A1C 06010003 */  bgez  $s0, .L70005A2C
-/* 006620 70005A20 00107883 */   sra   $t7, $s0, 2
-/* 006624 70005A24 26010003 */  addiu $at, $s0, 3
-/* 006628 70005A28 00017883 */  sra   $t7, $at, 2
-.L70005A2C:
-/* 00662C 70005A2C 0C00110B */  jal   viGetY
-/* 006630 70005A30 01E08025 */   move  $s0, $t7
-/* 006634 70005A34 2443FFF6 */  addiu $v1, $v0, -0xa
-/* 006638 70005A38 24010007 */  li    $at, 7
-/* 00663C 70005A3C 0061001A */  div   $zero, $v1, $at
-/* 006640 70005A40 00001812 */  mflo  $v1
-/* 006644 70005A44 247EFFFF */  addiu $fp, $v1, -1
-/* 006648 70005A48 1BC00023 */  blez  $fp, .L70005AD8
-/* 00664C 70005A4C 0000A825 */   move  $s5, $zero
-/* 006650 70005A50 2616FFFB */  addiu $s6, $s0, -5
-/* 006654 70005A54 2417001F */  li    $s7, 31
-/* 006658 70005A58 24140130 */  li    $s4, 304
-.L70005A5C:
-/* 00665C 70005A5C 1AC00018 */  blez  $s6, .L70005AC0
-/* 006660 70005A60 00008080 */   sll   $s0, $zero, 2
-/* 006664 70005A64 0015C8C0 */  sll   $t9, $s5, 3
-/* 006668 70005A68 0335C821 */  addu  $t9, $t9, $s5
-/* 00666C 70005A6C 0019C8C0 */  sll   $t9, $t9, 3
-/* 006670 70005A70 001590C0 */  sll   $s2, $s5, 3
-/* 006674 70005A74 3C098002 */  lui   $t1, %hi(stderr_buffer) 
-/* 006678 70005A78 25293718 */  addiu $t1, %lo(stderr_buffer) # addiu $t1, $t1, 0x3718
-/* 00667C 70005A7C 02559023 */  subu  $s2, $s2, $s5
-/* 006680 70005A80 0335C823 */  subu  $t9, $t9, $s5
-/* 006684 70005A84 00169880 */  sll   $s3, $s6, 2
-/* 006688 70005A88 26730014 */  addiu $s3, $s3, 0x14
-/* 00668C 70005A8C 03298821 */  addu  $s1, $t9, $t1
-/* 006690 70005A90 26520007 */  addiu $s2, $s2, 7
-/* 006694 70005A94 26100014 */  addiu $s0, $s0, 0x14
-/* 006698 70005A98 02002025 */  move  $a0, $s0
-.L70005A9C:
-/* 00669C 70005A9C 02402825 */  move  $a1, $s2
-/* 0066A0 70005AA0 0C001617 */  jal   print_to_vidbuff1
-/* 0066A4 70005AA4 92260000 */   lbu   $a2, ($s1)
-/* 0066A8 70005AA8 26100004 */  addiu $s0, $s0, 4
-/* 0066AC 70005AAC 0213082A */  slt   $at, $s0, $s3
-/* 0066B0 70005AB0 10200003 */  beqz  $at, .L70005AC0
-/* 0066B4 70005AB4 26310001 */   addiu $s1, $s1, 1
-/* 0066B8 70005AB8 5614FFF8 */  bnel  $s0, $s4, .L70005A9C
-/* 0066BC 70005ABC 02002025 */   move  $a0, $s0
-.L70005AC0:
-/* 0066C0 70005AC0 26B50001 */  addiu $s5, $s5, 1
-/* 0066C4 70005AC4 02BE082A */  slt   $at, $s5, $fp
-/* 0066C8 70005AC8 50200004 */  beql  $at, $zero, .L70005ADC
-/* 0066CC 70005ACC 8FBF003C */   lw    $ra, 0x3c($sp)
-/* 0066D0 70005AD0 16B7FFE2 */  bne   $s5, $s7, .L70005A5C
-/* 0066D4 70005AD4 00000000 */   nop   
-.L70005AD8:
-/* 0066D8 70005AD8 8FBF003C */  lw    $ra, 0x3c($sp)
-.L70005ADC:
-/* 0066DC 70005ADC 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0066E0 70005AE0 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 0066E4 70005AE4 8FB20020 */  lw    $s2, 0x20($sp)
-/* 0066E8 70005AE8 8FB30024 */  lw    $s3, 0x24($sp)
-/* 0066EC 70005AEC 8FB40028 */  lw    $s4, 0x28($sp)
-/* 0066F0 70005AF0 8FB5002C */  lw    $s5, 0x2c($sp)
-/* 0066F4 70005AF4 8FB60030 */  lw    $s6, 0x30($sp)
-/* 0066F8 70005AF8 8FB70034 */  lw    $s7, 0x34($sp)
-/* 0066FC 70005AFC 8FBE0038 */  lw    $fp, 0x38($sp)
-/* 006700 70005B00 03E00008 */  jr    $ra
-/* 006704 70005B04 27BD0040 */   addiu $sp, $sp, 0x40
-)
-#endif
