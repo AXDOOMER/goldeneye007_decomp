@@ -129,77 +129,17 @@ void *ptr_videobuffer2 = 0;
 
 u32 padding_80024184[4] = {0};
 
-
-
-
-/**
- * 6230	70005630
- *     write char A2 to (A0,A1) in stderr
- *     accepts: A0=xpos, A1=ypos, A2=char
- */
-#ifdef NONMATCHING
-void write_char_to_pos_stderr(int xpos,int ypos,u8 letter) {
-  if ((letter == 9) || (letter == 10)) {
-    letter = 0;
-  }
-  if ((letter <= 0 || letter >= 0x20) && letter >= 0x7f) {
-    letter = 0x3f;
-  }
-  if ((0 <  xpos && xpos < 0x48) && (0 < ypos && ypos < 0x20)) {
-    stderr_buffer[ypos * 0x47 + xpos] = letter;
-  }
-  return;
+void write_char_to_pos_stderr(s32 x, s32 y, unsigned char c) {
+    if ((c == '\t') || (c == '\n')) {
+        c = '\0';
+    }
+    if (((c > '\0') && (c < ' ')) || (c >= 0x7F)) {
+        c = '?';
+    }
+    if (((x >= 0) && (x <= 71)) && ((y >= 0) && (y <= 31))) {
+        stderr_buffer[(y * 71) + x] = c;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel write_char_to_pos_stderr
-/* 006230 70005630 30CE00FF */  andi  $t6, $a2, 0xff
-/* 006234 70005634 AFA60008 */  sw    $a2, 8($sp)
-/* 006238 70005638 24010009 */  li    $at, 9
-/* 00623C 7000563C 01C03025 */  move  $a2, $t6
-/* 006240 70005640 11C10004 */  beq   $t6, $at, .L70005654
-/* 006244 70005644 01C01025 */   move  $v0, $t6
-/* 006248 70005648 2401000A */  li    $at, 10
-/* 00624C 7000564C 15C10003 */  bne   $t6, $at, .L7000565C
-/* 006250 70005650 00000000 */   nop   
-.L70005654:
-/* 006254 70005654 00003025 */  move  $a2, $zero
-/* 006258 70005658 00001025 */  move  $v0, $zero
-.L7000565C:
-/* 00625C 7000565C 18400002 */  blez  $v0, .L70005668
-/* 006260 70005660 28410020 */   slti  $at, $v0, 0x20
-/* 006264 70005664 14200003 */  bnez  $at, .L70005674
-.L70005668:
-/* 006268 70005668 2841007F */   slti  $at, $v0, 0x7f
-/* 00626C 7000566C 14200002 */  bnez  $at, .L70005678
-/* 006270 70005670 00000000 */   nop   
-.L70005674:
-/* 006274 70005674 2406003F */  li    $a2, 63
-.L70005678:
-/* 006278 70005678 0480000E */  bltz  $a0, .L700056B4
-/* 00627C 7000567C 28810048 */   slti  $at, $a0, 0x48
-/* 006280 70005680 1020000C */  beqz  $at, .L700056B4
-/* 006284 70005684 00000000 */   nop   
-/* 006288 70005688 04A0000A */  bltz  $a1, .L700056B4
-/* 00628C 7000568C 28A10020 */   slti  $at, $a1, 0x20
-/* 006290 70005690 10200008 */  beqz  $at, .L700056B4
-/* 006294 70005694 000578C0 */   sll   $t7, $a1, 3
-/* 006298 70005698 01E57821 */  addu  $t7, $t7, $a1
-/* 00629C 7000569C 000F78C0 */  sll   $t7, $t7, 3
-/* 0062A0 700056A0 01E57823 */  subu  $t7, $t7, $a1
-/* 0062A4 700056A4 01E4C021 */  addu  $t8, $t7, $a0
-/* 0062A8 700056A8 3C018002 */  lui   $at, %hi(stderr_buffer)
-/* 0062AC 700056AC 00380821 */  addu  $at, $at, $t8
-/* 0062B0 700056B0 A0263718 */  sb    $a2, %lo(stderr_buffer)($at)
-.L700056B4:
-/* 0062B4 700056B4 03E00008 */  jr    $ra
-/* 0062B8 700056B8 00000000 */   nop   
-)
-#endif
-
-
-
 
 /**
  * 62BC	700056BC
