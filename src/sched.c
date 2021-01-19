@@ -106,7 +106,7 @@ void CheckDisplayErrorBuffer(u32 *buffer)
 {
 	if ((stderr_permitted && stderr_active) || stderr_enabled )
     {
-		write_stderr_to_buffer(buffer);
+		deboutDrawToBuffer(buffer);
 		currentcount = osGetCount();
 	}
 }
@@ -124,8 +124,8 @@ void CheckDisplayErrorBufferEvery16Frames(u32 framecount)
         {
 			if (userCompareValue < (osGetCount() - currentcount))
             {
-				write_stderr_to_buffer((u32*)cfb_16[0]);
-				write_stderr_to_buffer((u32*)cfb_16[1]);
+				deboutDrawToBuffer((u32*)cfb_16[0]);
+				deboutDrawToBuffer((u32*)cfb_16[1]);
 			}
 		}
 	}

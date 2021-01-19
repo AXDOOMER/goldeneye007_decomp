@@ -27,7 +27,7 @@ char indy_read_buffer[0x60];
  * 5AE0	70004EE0
  */
 void init_tlb(void) {
-    set_video_buffer_pointers();
+    deboutInitBuffers();
     osCreateMesgQueue(&tlbMesgQ, &tlbMesgBuf, 1);
     osCreateThread(&tlbthread, 5, &tlbproc, 0, &tlbStack, 0x28);
     osStartThread(&tlbthread);

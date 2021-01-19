@@ -42,7 +42,7 @@ void rmon7000CEE0(void) {
 char *rmonprout(char *dst, const char *src, size_t count) {
     s32 i = 0;
     while (i != count) {
-        __osRdbSend(src[i++]);
+        deboutWriteChar(src[i++]);
     }    
     return 1;
 }

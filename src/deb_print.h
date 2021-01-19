@@ -18,8 +18,9 @@ extern void *stack_ptrs_1[];
 extern void *stack_ptrs_2[];
 extern void *stack_ptrs_3[];
 
-void write_stderr_to_buffer(u16 *buffer);
-void __osRdbSend(unsigned char c);
-void scroll_stderr_oneline(s32 count);
+void deboutWriteChar(unsigned char c);
+void deboutScrollUp(s32 count);
+void deboutInitBuffers();
+void deboutDrawToBuffer(u16 *buffer);
 
 #endif

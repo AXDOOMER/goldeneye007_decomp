@@ -2,6 +2,7 @@
 #include "deb_print.h"
 #include "bondgame.h"
 #include "video.h"
+#include "PR/R4300.h"
 
 // Padding
 u32 D_80023300 = 0;
@@ -94,14 +95,14 @@ void *stack_ptrs_1[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
 void *stack_ptrs_2[] = {&sp_idle, &sp_shed, &sp_main, &sp_audi, &sp_debug};
 void *stack_ptrs_3[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
 
-// 71 x 32 character buffer (32th line is not drawn)
-unsigned char stderr_buffer[32][71] = {0};
+// 71 x 32 text buffer (32th line is not drawn)
+unsigned char g_DebugOutputTextBuffer[32][71] = {0};
 
-s32 D_80023FF8 = 0; // x
-s32 D_80023FFC = 0; // y
+s32 g_DebugOutputCurrentPosX = 0;
+s32 g_DebugOutputCurrentPosY = 0;
 
 // 4 x 7 bitmaps of ascii characters (0x20 - 0x7E), each padded to 32 bits
-u32 std_error_font_bitcode[] = {
+u32 g_DebugOutputBitmaps[] = {
     0x00000000, 0x22220200, 0x55000000, 0x05F5F500, 0x27427200,     // ' ',  '!',  '\"', '#',  '$'
     0x05124500, 0x34255300, 0x22000000, 0x24444420, 0x42222240,     // '%',  '&',  '\'', '(',  ')'
     0x06F6F600, 0x00272000, 0x00000240, 0x00070000, 0x00000200,     // '*',  '+',  '´',  '-',  '.'
@@ -123,13 +124,13 @@ u32 std_error_font_bitcode[] = {
     0x00703700, 0x12242210, 0x02222220, 0x42212240, 0x005A0000      // 'z',  '{',  '|',  '}',  '~'
 };
 
-u16 *ptr_videobuffer1 = NULL;
-u16 *ptr_videobuffer2 = NULL;
+u16 *g_DebugOutputVideoBuffer1 = NULL;
+u16 *g_DebugOutputVideoBuffer2 = NULL;
 
 // Padding
 u32 D_80024184[4] = {0};
 
-void write_char_to_pos_stderr(s32 x, s32 y, unsigned char c) {
+void deboutWriteCharAtPos(s32 x, s32 y, unsigned char c) {
     if ((c == '\t') || (c == '\n')) {
         c = '\0';
     }
@@ -137,31 +138,31 @@ void write_char_to_pos_stderr(s32 x, s32 y, unsigned char c) {
         c = '?';
     }
     if (((x >= 0) && (x <= 71)) && ((y >= 0) && (y <= 31))) {
-        stderr_buffer[y][x] = c;
+        g_DebugOutputTextBuffer[y][x] = c;
     }
 }
 
 #ifdef NONMATCHING
-void __osRdbSend(unsigned char c) {
+void deboutWriteChar(unsigned char c) {
     if (c) {
         if (c == '\t') {
             do {
-                __osRdbSend(' ');
-            } while (D_80023FF8 & 7);
+                deboutWriteChar(' ');
+            } while (g_DebugOutputCurrentPosX & 7);
         } else if (c == '\n') {
-            D_80023FF8 = 0;
-            D_80023FFC++;
+            g_DebugOutputCurrentPosX = 0;
+            g_DebugOutputCurrentPosY++;
         }        
-        if (D_80023FFC > 30) {
-            scroll_stderr_oneline(D_80023FFC - 30);
-            D_80023FFC = 30;
+        if (g_DebugOutputCurrentPosY > 30) {
+            deboutScrollUp(g_DebugOutputCurrentPosY - 30);
+            g_DebugOutputCurrentPosY = 30;
         }
         if (c != '\n') {
-            write_char_to_pos_stderr(D_80023FF8, D_80023FFC, c);
-            D_80023FF8++;
-            if (D_80023FF8 > 70) {
-                D_80023FF8 = 0;
-                D_80023FFC++;
+            deboutWriteCharAtPos(g_DebugOutputCurrentPosX, g_DebugOutputCurrentPosY, c);
+            g_DebugOutputCurrentPosX++;
+            if (g_DebugOutputCurrentPosX > 70) {
+                g_DebugOutputCurrentPosX = 0;
+                g_DebugOutputCurrentPosY++;
             }
         }
     }
@@ -169,7 +170,7 @@ void __osRdbSend(unsigned char c) {
 #else
 GLOBAL_ASM(
 .text
-glabel __osRdbSend
+glabel deboutWriteChar
 /* 0062BC 700056BC 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0062C0 700056C0 308600FF */  andi  $a2, $a0, 0xff
 /* 0062C4 700056C4 AFBF001C */  sw    $ra, 0x1c($sp)
@@ -179,10 +180,10 @@ glabel __osRdbSend
 /* 0062D4 700056D4 00C01025 */   move  $v0, $a2
 /* 0062D8 700056D8 24010009 */  li    $at, 9
 /* 0062DC 700056DC 14C1000A */  bne   $a2, $at, .L70005708
-/* 0062E0 700056E0 3C108002 */   lui   $s0, %hi(stderr_buffer + 0x8E0)
-/* 0062E4 700056E4 26103FF8 */  addiu $s0, %lo(stderr_buffer + 0x8E0) # addiu $s0, $s0, 0x3ff8
+/* 0062E0 700056E0 3C108002 */   lui   $s0, %hi(g_DebugOutputTextBuffer + 0x8E0)
+/* 0062E4 700056E4 26103FF8 */  addiu $s0, %lo(g_DebugOutputTextBuffer + 0x8E0) # addiu $s0, $s0, 0x3ff8
 .L700056E8:
-/* 0062E8 700056E8 0C0015AF */  jal   __osRdbSend
+/* 0062E8 700056E8 0C0015AF */  jal   deboutWriteChar
 /* 0062EC 700056EC 24040020 */   li    $a0, 32
 /* 0062F0 700056F0 8E0E0000 */  lw    $t6, ($s0)
 /* 0062F4 700056F4 31CF0007 */  andi  $t7, $t6, 7
@@ -193,28 +194,28 @@ glabel __osRdbSend
 .L70005708:
 /* 006308 70005708 2401000A */  li    $at, 10
 /* 00630C 7000570C 14410008 */  bne   $v0, $at, .L70005730
-/* 006310 70005710 3C038002 */   lui   $v1, %hi(stderr_buffer + 0x8E4)
-/* 006314 70005714 24633FFC */  addiu $v1, %lo(stderr_buffer + 0x8E4) # addiu $v1, $v1, 0x3ffc
+/* 006310 70005710 3C038002 */   lui   $v1, %hi(g_DebugOutputTextBuffer + 0x8E4)
+/* 006314 70005714 24633FFC */  addiu $v1, %lo(g_DebugOutputTextBuffer + 0x8E4) # addiu $v1, $v1, 0x3ffc
 /* 006318 70005718 8C780000 */  lw    $t8, ($v1)
-/* 00631C 7000571C 3C108002 */  lui   $s0, %hi(stderr_buffer + 0x8E0)
-/* 006320 70005720 26103FF8 */  addiu $s0, %lo(stderr_buffer + 0x8E0) # addiu $s0, $s0, 0x3ff8
+/* 00631C 7000571C 3C108002 */  lui   $s0, %hi(g_DebugOutputTextBuffer + 0x8E0)
+/* 006320 70005720 26103FF8 */  addiu $s0, %lo(g_DebugOutputTextBuffer + 0x8E0) # addiu $s0, $s0, 0x3ff8
 /* 006324 70005724 27190001 */  addiu $t9, $t8, 1
 /* 006328 70005728 AC790000 */  sw    $t9, ($v1)
 /* 00632C 7000572C AE000000 */  sw    $zero, ($s0)
 .L70005730:
-/* 006330 70005730 3C038002 */  lui   $v1, %hi(stderr_buffer + 0x8E4)
-/* 006334 70005734 24633FFC */  addiu $v1, %lo(stderr_buffer + 0x8E4) # addiu $v1, $v1, 0x3ffc
+/* 006330 70005730 3C038002 */  lui   $v1, %hi(g_DebugOutputTextBuffer + 0x8E4)
+/* 006334 70005734 24633FFC */  addiu $v1, %lo(g_DebugOutputTextBuffer + 0x8E4) # addiu $v1, $v1, 0x3ffc
 /* 006338 70005738 8C650000 */  lw    $a1, ($v1)
-/* 00633C 7000573C 3C108002 */  lui   $s0, %hi(stderr_buffer + 0x8E0)
-/* 006340 70005740 26103FF8 */  addiu $s0, %lo(stderr_buffer + 0x8E0) # addiu $s0, $s0, 0x3ff8
+/* 00633C 7000573C 3C108002 */  lui   $s0, %hi(g_DebugOutputTextBuffer + 0x8E0)
+/* 006340 70005740 26103FF8 */  addiu $s0, %lo(g_DebugOutputTextBuffer + 0x8E0) # addiu $s0, $s0, 0x3ff8
 /* 006344 70005744 28A1001F */  slti  $at, $a1, 0x1f
 /* 006348 70005748 1420000A */  bnez  $at, .L70005774
 /* 00634C 7000574C 24A4FFE2 */   addiu $a0, $a1, -0x1e
 /* 006350 70005750 AFA20024 */  sw    $v0, 0x24($sp)
-/* 006354 70005754 0C0015F3 */  jal   scroll_stderr_oneline
+/* 006354 70005754 0C0015F3 */  jal   deboutScrollUp
 /* 006358 70005758 A3A6002B */   sb    $a2, 0x2b($sp)
-/* 00635C 7000575C 3C038002 */  lui   $v1, %hi(stderr_buffer + 0x8E4)
-/* 006360 70005760 24633FFC */  addiu $v1, %lo(stderr_buffer + 0x8E4) # addiu $v1, $v1, 0x3ffc
+/* 00635C 7000575C 3C038002 */  lui   $v1, %hi(g_DebugOutputTextBuffer + 0x8E4)
+/* 006360 70005760 24633FFC */  addiu $v1, %lo(g_DebugOutputTextBuffer + 0x8E4) # addiu $v1, $v1, 0x3ffc
 /* 006364 70005764 2408001E */  li    $t0, 30
 /* 006368 70005768 8FA20024 */  lw    $v0, 0x24($sp)
 /* 00636C 7000576C 93A6002B */  lbu   $a2, 0x2b($sp)
@@ -224,11 +225,11 @@ glabel __osRdbSend
 /* 006378 70005778 50410010 */  beql  $v0, $at, .L700057BC
 /* 00637C 7000577C 8FBF001C */   lw    $ra, 0x1c($sp)
 /* 006380 70005780 8E040000 */  lw    $a0, ($s0)
-/* 006384 70005784 0C00158C */  jal   write_char_to_pos_stderr
+/* 006384 70005784 0C00158C */  jal   deboutWriteCharAtPos
 /* 006388 70005788 8C650000 */   lw    $a1, ($v1)
 /* 00638C 7000578C 8E090000 */  lw    $t1, ($s0)
-/* 006390 70005790 3C038002 */  lui   $v1, %hi(stderr_buffer + 0x8E4)
-/* 006394 70005794 24633FFC */  addiu $v1, %lo(stderr_buffer + 0x8E4) # addiu $v1, $v1, 0x3ffc
+/* 006390 70005790 3C038002 */  lui   $v1, %hi(g_DebugOutputTextBuffer + 0x8E4)
+/* 006394 70005794 24633FFC */  addiu $v1, %lo(g_DebugOutputTextBuffer + 0x8E4) # addiu $v1, $v1, 0x3ffc
 /* 006398 70005798 252A0001 */  addiu $t2, $t1, 1
 /* 00639C 7000579C 29410047 */  slti  $at, $t2, 0x47
 /* 0063A0 700057A0 14200005 */  bnez  $at, .L700057B8
@@ -247,19 +248,19 @@ glabel __osRdbSend
 )
 #endif
 
-void scroll_stderr_oneline(s32 count) {
+void deboutScrollUp(s32 numlines) {
     s32 y;
     s32 x;
-    while (count-- > 0) {
+    while (numlines-- > 0) {
         for (y = 0; y < 31; y++) {
             for (x = 0; x < 71; x++) {
-                stderr_buffer[y][x] = stderr_buffer[y + 1][x];
+                g_DebugOutputTextBuffer[y][x] = g_DebugOutputTextBuffer[y + 1][x];
             }
         }
     }
 }
 
-void print_to_vidbuff1(s32 x, s32 y, unsigned char c) {
+void deboutDrawChar(s32 x, s32 y, unsigned char c) {
     s32 bitmap_x;
     s32 bitmap_y;
     u32 bitmap;
@@ -269,8 +270,8 @@ void print_to_vidbuff1(s32 x, s32 y, unsigned char c) {
         c = ' ';
     }
     if ((c >= ' ') && (c <= '~')) {
-        ptr = (ptr_videobuffer1 + x + (y * screen_w));
-        bitmap = std_error_font_bitcode[c - ' '];
+        ptr = (g_DebugOutputVideoBuffer1 + x + (y * screen_w));
+        bitmap = g_DebugOutputBitmaps[c - ' '];
         for (bitmap_y = 0; bitmap_y < 7; bitmap_y++) {
             for (bitmap_x = 0; bitmap_x < 4; bitmap_x++) {
                 if (bitmap & (1 << 31)) {
@@ -287,31 +288,31 @@ void print_to_vidbuff1(s32 x, s32 y, unsigned char c) {
     }
 }
 
-void set_ptr_video_buffers(u16 *buffer1, u16 *buffer2) {
-    ptr_videobuffer1 = (u16*)((u32)buffer1 | 0xA0000000);
-    ptr_videobuffer2 = (u16*)((u32)buffer2 | 0xA0000000);
+void deboutSetBuffers(u16 *buffer1, u16 *buffer2) {
+    g_DebugOutputVideoBuffer1 = K0_TO_K1(buffer1);
+    g_DebugOutputVideoBuffer2 = K0_TO_K1(buffer2);
 }
 
-void set_video_buffer_pointers(void) {
-    set_ptr_video_buffers(&cfb_16[0], &cfb_16[1]);
+void deboutInitBuffers(void) {
+    deboutSetBuffers(&cfb_16[0], &cfb_16[1]);
 }
 
-void write_stderr_to_buffer(u16 *buffer) {
+void deboutDrawToBuffer(u16 *buffer) {
     s32 screen_w;
     s32 screen_h;
     s32 output_w;
     s32 output_h;
     s32 x;
     s32 y;
-    set_video_buffer_pointers();
-    ptr_videobuffer1 = (u16*)((u32)buffer | 0xA0000000);
+    deboutInitBuffers();
+    g_DebugOutputVideoBuffer1 = K0_TO_K1(buffer);
     screen_w = ((viGetX() - 13) / 4);
     screen_h = ((viGetY() - 10) / 7);
     output_w = screen_w - 5; // - margin_w
     output_h = screen_h - 1; // - margin_h
     for (y = 0; ((y < output_h) && (y < 31)); y++) {
         for (x = 0; ((x < output_w) && (x < 71)); x++) {
-            print_to_vidbuff1(((x + 5) * 4), ((y + 1) * 7), stderr_buffer[y][x]);
+            deboutDrawChar(((x + 5) * 4), ((y + 1) * 7), g_DebugOutputTextBuffer[y][x]);
         }
     }
 }
