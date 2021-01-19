@@ -545,16 +545,16 @@ s32 debug_sp_related_11(u32 arg0, u32 arg1)
     s32 temp_v0;
     void *temp_t8;
 
-    sp1C = (?32) stack_ptrs_1;
-    sp1C.unk4 = (?32) stack_ptrs_1.unk4;
-    sp1C.unk8 = (?32) stack_ptrs_1.unk8;
-    sp1C.unkC = (?32) stack_ptrs_1.unkC;
-    sp1C.unk10 = (?32) stack_ptrs_1.unk10;
-    sp8 = (?32) stack_ptrs_2;
-    sp8.unk4 = (?32) stack_ptrs_2.unk4;
-    sp8.unk8 = (?32) stack_ptrs_2.unk8;
-    sp8.unkC = (?32) stack_ptrs_2.unkC;
-    sp8.unk10 = (?32) stack_ptrs_2.unk10;
+    sp1C = (?32) g_StackPtrs1;
+    sp1C.unk4 = (?32) g_StackPtrs1.unk4;
+    sp1C.unk8 = (?32) g_StackPtrs1.unk8;
+    sp1C.unkC = (?32) g_StackPtrs1.unkC;
+    sp1C.unk10 = (?32) g_StackPtrs1.unk10;
+    sp8 = (?32) g_StackPtrs2;
+    sp8.unk4 = (?32) g_StackPtrs2.unk4;
+    sp8.unk8 = (?32) g_StackPtrs2.unk8;
+    sp8.unkC = (?32) g_StackPtrs2.unkC;
+    sp8.unk10 = (?32) g_StackPtrs2.unk10;
     if (arg1 <= 0)
     {
         return 0;
@@ -575,15 +575,15 @@ s32 debug_sp_related_11(u32 arg0, u32 arg1)
 GLOBAL_ASM(
 .text
 glabel debug_sp_related_11
-/* 006020 70005420 3C0E8002 */  lui   $t6, %hi(stack_ptrs_1) 
-/* 006024 70005424 25CE36DC */  addiu $t6, %lo(stack_ptrs_1) # addiu $t6, $t6, 0x36dc
+/* 006020 70005420 3C0E8002 */  lui   $t6, %hi(g_StackPtrs1) 
+/* 006024 70005424 25CE36DC */  addiu $t6, %lo(g_StackPtrs1) # addiu $t6, $t6, 0x36dc
 /* 006028 70005428 8DC10000 */  lw    $at, ($t6)
 /* 00602C 7000542C 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 006030 70005430 27A7001C */  addiu $a3, $sp, 0x1c
 /* 006034 70005434 ACE10000 */  sw    $at, ($a3)
 /* 006038 70005438 8DD90004 */  lw    $t9, 4($t6)
-/* 00603C 7000543C 3C098002 */  lui   $t1, %hi(stack_ptrs_2) 
-/* 006040 70005440 252936F0 */  addiu $t1, %lo(stack_ptrs_2) # addiu $t1, $t1, 0x36f0
+/* 00603C 7000543C 3C098002 */  lui   $t1, %hi(g_StackPtrs2) 
+/* 006040 70005440 252936F0 */  addiu $t1, %lo(g_StackPtrs2) # addiu $t1, $t1, 0x36f0
 /* 006044 70005444 ACF90004 */  sw    $t9, 4($a3)
 /* 006048 70005448 8DC10008 */  lw    $at, 8($t6)
 /* 00604C 7000544C 27A80008 */  addiu $t0, $sp, 8
@@ -645,11 +645,11 @@ s32 debug_sp_related_12(u32 arg0, u32 arg1) {
     u32 sp4;
 
     // Node 0
-    sp4 = (?32) stack_ptrs_3;
-    sp4.unk4 = (?32) stack_ptrs_3.unk4;
-    sp4.unk8 = (?32) stack_ptrs_3.unk8;
-    sp4.unkC = (?32) stack_ptrs_3.unkC;
-    sp4.unk10 = (?32) stack_ptrs_3.unk10;
+    sp4 = (?32) g_StackPtrs3;
+    sp4.unk4 = (?32) g_StackPtrs3.unk4;
+    sp4.unk8 = (?32) g_StackPtrs3.unk8;
+    sp4.unkC = (?32) g_StackPtrs3.unkC;
+    sp4.unk10 = (?32) g_StackPtrs3.unk10;
     if (arg1 <= 0)
     {
         // Node 2
@@ -678,8 +678,8 @@ s32 debug_sp_related_12(u32 arg0, u32 arg1) {
 GLOBAL_ASM(
 .text
 glabel debug_sp_related_12
-/* 0060E4 700054E4 3C0E8002 */  lui   $t6, %hi(stack_ptrs_3) 
-/* 0060E8 700054E8 25CE3704 */  addiu $t6, %lo(stack_ptrs_3) # addiu $t6, $t6, 0x3704
+/* 0060E4 700054E4 3C0E8002 */  lui   $t6, %hi(g_StackPtrs3) 
+/* 0060E8 700054E8 25CE3704 */  addiu $t6, %lo(g_StackPtrs3) # addiu $t6, $t6, 0x3704
 /* 0060EC 700054EC 8DC10000 */  lw    $at, ($t6)
 /* 0060F0 700054F0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0060F4 700054F4 27A20004 */  addiu $v0, $sp, 4

@@ -7,93 +7,120 @@
 // Padding
 u32 D_80023300 = 0;
 
-struct debug_processor_error_entry debug_processor_error_table[] = { 
-{0x80000000, 0x80000000, "BD"},
-{0x8000, 0x8000, "IP8"},
-{0x4000, 0x4000, "IP7"},
-{0x2000, 0x2000, "IP6"},
-{0x1000, 0x1000, "IP5"},
-{0x800, 0x800, "IP4"},
-{0x400, 0x400, "IP3"},
-{0x200, 0x200, "IP2"},
-{0x100, 0x100, "IP1"},
-{0x7C, 0, "Int"},
-{0x7C, 4, "TLBmod"},
-{0x7C, 8, "TLBload"},
-{0x7C, 0xC, "TLBstore"},
-{0x7C, 0x10, "Address error on load or instruction fetch"},
-{0x7C, 0x14, "Address error on store"},
-{0x7C, 0x18, "Bus error exception on instruction fetch"},
-{0x7C, 0x1C, "Bus error exception on data reference"},
-{0x7C, 0x20, "Syscall"},
-{0x7C, 0x24, "Brk"},
-{0x7C, 0x28, "Reserved instruction"},
-{0x7C, 0x2C, "Cop unusable"},
-{0x7C, 0x30, "Overflow"},
-{0x7C, 0x34, "Trap"},
-{0x7C, 0x38, "Virtual coherency exception on intruction fetch"},
-{0x7C, 0x3C, "Fp exception"},
-{0x7C, 0x5C, "Watchpoint"},
-{0x7C, 0x7C, "Virtual coherency exception on data reference"},
-{0, 0, ""},
-{0x80000000, 0x80000000, "CU3"},
-{0x40000000, 0x40000000, "CU2"},
-{0x20000000, 0x20000000, "CU1"},
-{0x10000000, 0x10000000, "CU0"},
-{0x8000000, 0x8000000, "RP"},
-{0x4000000, 0x4000000, "FR"},
-{0x2000000, 0x2000000, "RE"},
-{0x400000, 0x400000, "BEV"},
-{0x200000, 0x200000, "TS"},
-{0x100000, 0x100000, "SR"},
-{0x40000, 0x40000, "CH"},
-{0x20000, 0x20000, "CE"},
-{0x10000, 0x10000, "DE"},
-{0x8000, 0x8000, "IM8"},
-{0x4000, 0x4000, "IM7"},
-{0x2000, 0x2000, "IM6"},
-{0x1000, 0x1000, "IM5"},
-{0x800, 0x800, "IM4"},
-{0x400, 0x400, "IM3"},
-{0x200, 0x200, "IM2"},
-{0x100, 0x100, "IM1"},
-{0x80, 0x80, "KX"},
-{0x40, 0x40, "SX"},
-{0x20, 0x20, "UX"},
-{0x18, 0x10, "USR"},
-{0x18, 8, "SUP"},
-{0x18, 0, "KER"},
-{4, 4, "ERL"},
-{2, 2, "EXL"},
-{1, 1, "IE"},
-{0, 0, ""},
-{0x1000000, 0x1000000, "FS"},
-{0x800000, 0x800000, "C"},
-{0x20000, 0x20000, "Unimplemented"},
-{0x10000, 0x10000, "Invalid op"},
-{0x8000, 0x8000, "/ by 0.0"},
-{0x4000, 0x4000, "Overflow"},
-{0x2000, 0x2000, "Underflow"},
-{0x1000, 0x1000, "Inexact op"},
-{0x800, 0x800, "EV"},
-{0x400, 0x400, "EZ"},
-{0x200, 0x200, "EO"},
-{0x100, 0x100, "EU"},
-{0x80, 0x80, "EI"},
-{0x40, 0x40, "FV"},
-{0x20, 0x20, "FZ"},
-{0x10, 0x10, "FO"},
-{8, 8, "FU"},
-{4, 4, "FI"},
-{3, 0, "RN"},
-{3, 1, "RZ"},
-{3, 2, "RP"},
-{3, 3, "RM"},
-{0, 0, ""} };
+//The following regDesc's are similar to PR/Tools/Gload/Server.c 
+/*
+ * Cause Register
+ */
+static regDesc_t causeDesc[] = {
+    {CAUSE_BD, CAUSE_BD, "BD"},
+    /* Interrupt pending bits */
+    {CAUSE_IP8, CAUSE_IP8, "IP8"},
+    {CAUSE_IP7, CAUSE_IP7, "IP7"},
+    {CAUSE_IP6, CAUSE_IP6, "IP6"},
+    {CAUSE_IP5, CAUSE_IP5, "IP5"},
+    {CAUSE_IP4, CAUSE_IP4, "IP4"},
+    {CAUSE_IP3, CAUSE_IP3, "IP3"},
+    {CAUSE_SW2, CAUSE_SW2, "IP2"},
+    {CAUSE_SW1, CAUSE_SW1, "IP1"},
+    /* Hardware exception codes */
+    {CAUSE_EXCMASK, EXC_INT, "Int"},
+    {CAUSE_EXCMASK, EXC_MOD, "TLBmod"},
+    {CAUSE_EXCMASK, EXC_RMISS, "TLBload"},
+    {CAUSE_EXCMASK, EXC_WMISS, "TLBstore"},
+    {CAUSE_EXCMASK, EXC_RADE, "Address error on load or instruction fetch"},
+    {CAUSE_EXCMASK, EXC_WADE, "Address error on store"},
+    {CAUSE_EXCMASK, EXC_IBE, "Bus error exception on instruction fetch"},
+    {CAUSE_EXCMASK, EXC_DBE, "Bus error exception on data reference"},
+    {CAUSE_EXCMASK, EXC_SYSCALL, "Syscall"},
+    {CAUSE_EXCMASK, EXC_BREAK, "Brk"},
+    {CAUSE_EXCMASK, EXC_II, "Reserved instruction"},
+    {CAUSE_EXCMASK, EXC_CPU, "Cop unusable"},
+    {CAUSE_EXCMASK, EXC_OV, "Overflow"},
+    {CAUSE_EXCMASK, EXC_TRAP, "Trap"},
+    {CAUSE_EXCMASK,
+     EXC_VCEI,
+     "Virtual coherency exception on intruction fetch"},
+    {CAUSE_EXCMASK, EXC_FPE, "Fp exception"},
+    {CAUSE_EXCMASK, EXC_WATCH, "Watchpoint"},
+    {CAUSE_EXCMASK, EXC_VCED, "Virtual coherency exception on data reference"},
+    {0, 0, ""},
+};
 
-void *stack_ptrs_1[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
-void *stack_ptrs_2[] = {&sp_idle, &sp_shed, &sp_main, &sp_audi, &sp_debug};
-void *stack_ptrs_3[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
+/*
+ * Status register
+ */
+static regDesc_t srDesc[] = {
+    {SR_CU3, SR_CU3, "CU3"},
+    {SR_CU2, SR_CU2, "CU2"},
+    {SR_CU1, SR_CU1, "CU1"},
+    {SR_CU0, SR_CU0, "CU0"},
+    {SR_RP, SR_RP, "RP"},
+    {SR_FR, SR_FR, "FR"},
+    {SR_RE, SR_RE, "RE"},
+    {SR_BEV, SR_BEV, "BEV"},
+    {SR_TS, SR_TS, "TS"},
+    {SR_SR, SR_SR, "SR"},
+    {SR_CH, SR_CH, "CH"},
+    {SR_CE, SR_CE, "CE"},
+    {SR_DE, SR_DE, "DE"},
+
+    /*
+     * Interrupt enable bits
+     * (NOTE: bits set to 1 enable the corresponding level interrupt)
+     */
+
+    {SR_IBIT8, SR_IBIT8, "IM8"},
+    {SR_IBIT7, SR_IBIT7, "IM7"},
+    {SR_IBIT6, SR_IBIT6, "IM6"},
+    {SR_IBIT5, SR_IBIT5, "IM5"},
+    {SR_IBIT4, SR_IBIT4, "IM4"},
+    {SR_IBIT3, SR_IBIT3, "IM3"},
+    {SR_IBIT2, SR_IBIT2, "IM2"},
+    {SR_IBIT1, SR_IBIT1, "IM1"},
+    {SR_KX, SR_KX, "KX"},
+    {SR_SX, SR_SX, "SX"},
+    {SR_UX, SR_UX, "UX"},
+    {SR_KSU_MASK, SR_KSU_USR, "USR"},
+    {SR_KSU_MASK, SR_KSU_SUP, "SUP"},
+    {SR_KSU_MASK, SR_KSU_KER, "KER"},
+    {SR_ERL, SR_ERL, "ERL"},
+    {SR_EXL, SR_EXL, "EXL"},
+    {SR_IE, SR_IE, "IE"},
+    {0, 0, ""}
+};
+
+/*
+ * floating-point status register
+ */
+static regDesc_t fpcsrDesc[] = {
+    {FPCSR_FS, FPCSR_FS, "FS"},
+    {FPCSR_C, FPCSR_C, "C"},
+    {FPCSR_CE, FPCSR_CE, "Unimplemented"},
+    {FPCSR_CV, FPCSR_CV, "Invalid op"},
+    {FPCSR_CZ, FPCSR_CZ, "/ by 0.0"},
+    {FPCSR_CO, FPCSR_CO, "Overflow"},
+    {FPCSR_CU, FPCSR_CU, "Underflow"},
+    {FPCSR_CI, FPCSR_CI, "Inexact op"},
+    {FPCSR_EV, FPCSR_EV, "EV"},
+    {FPCSR_EZ, FPCSR_EZ, "EZ"},
+    {FPCSR_EO, FPCSR_EO, "EO"},
+    {FPCSR_EU, FPCSR_EU, "EU"},
+    {FPCSR_EI, FPCSR_EI, "EI"},
+    {FPCSR_FV, FPCSR_FV, "FV"},
+    {FPCSR_FZ, FPCSR_FZ, "FZ"},
+    {FPCSR_FO, FPCSR_FO, "FO"},
+    {FPCSR_FU, FPCSR_FU, "FU"},
+    {FPCSR_FI, FPCSR_FI, "FI"},
+    {FPCSR_RM_MASK, FPCSR_RM_RN, "RN"},
+    {FPCSR_RM_MASK, FPCSR_RM_RZ, "RZ"},
+    {FPCSR_RM_MASK, FPCSR_RM_RP, "RP"},
+    {FPCSR_RM_MASK, FPCSR_RM_RM, "RM"},
+    {0, 0, ""}
+};
+
+void *g_StackPtrs1[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
+void *g_StackPtrs2[] = {&sp_idle, &sp_shed, &sp_main, &sp_audi, &sp_debug};
+void *g_StackPtrs3[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
 
 // 71 x 32 text buffer (32th line is not drawn)
 unsigned char g_DebugOutputTextBuffer[32][71] = {0};

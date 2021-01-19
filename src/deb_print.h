@@ -3,17 +3,16 @@
 
 #include "ultra64.h"
 
-struct debug_processor_error_entry
+typedef struct 
 {
-  u32 val1;
-  u32 val2;
-  void *string;
-};
+  u32 mask;
+  u32 value;
+  char *string;
+} regDesc_t;
 
-extern struct debug_processor_error_entry debug_processor_error_table[];
-extern void *stack_ptrs_1[];
-extern void *stack_ptrs_2[];
-extern void *stack_ptrs_3[];
+extern void *g_StackPtrs1[];
+extern void *g_StackPtrs2[];
+extern void *g_StackPtrs3[];
 
 void deboutWriteChar(unsigned char c);
 void deboutScrollUp(s32 numlines);
