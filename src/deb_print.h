@@ -3,9 +3,6 @@
 
 #include "ultra64.h"
 
-//im just padding
-extern u32 D_80023300;
-
 struct debug_processor_error_entry
 {
   u32 val1;
@@ -19,7 +16,7 @@ extern void *stack_ptrs_2[];
 extern void *stack_ptrs_3[];
 
 void deboutWriteChar(unsigned char c);
-void deboutScrollUp(s32 count);
+void deboutScrollUp(s32 numlines);
 void deboutInitBuffers();
 void deboutDrawToBuffer(u16 *buffer);
 
