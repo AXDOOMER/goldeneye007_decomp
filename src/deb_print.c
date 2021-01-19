@@ -3,14 +3,8 @@
 #include "bondgame.h"
 #include "video.h"
 
-/**
- * @file deb_print.c
- * This file contains the stderr manager. 
- */
-
-//im just padding
+// Padding
 u32 D_80023300 = 0;
-
 
 struct debug_processor_error_entry debug_processor_error_table[] = { 
 {0x80000000, 0x80000000, "BD"},
@@ -100,43 +94,46 @@ void *stack_ptrs_1[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
 void *stack_ptrs_2[] = {&sp_idle, &sp_shed, &sp_main, &sp_audi, &sp_debug};
 void *stack_ptrs_3[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
 
+// 71 x 32 character buffer (32th line is not drawn)
 unsigned char stderr_buffer[32][71] = {0};
+
 s32 D_80023FF8 = 0; // x
 s32 D_80023FFC = 0; // y
 
-
-//split more here likely
+// 4 x 7 bitmaps of ascii characters (0x20 - 0x7E), each padded to 32 bits
 u32 std_error_font_bitcode[] = {
-0x00000000, 0x22220200, 0x55000000,  0x5F5F500, 0x27427200,
-0x05124500, 0x34255300, 0x22000000, 0x24444420, 0x42222240,
-0x06F6F600,   0x272000,      0x240,    0x70000,      0x200,
-0x11224480, 0x25555200, 0x26222700, 0x25125700, 0x61211600,
-0x33557300, 0x64611600, 0x24655200, 0x71112200, 0x25755200,
-0x25531600,   0x200200,   0x200640,  0x1242100,   0x707000,
- 0x4212400,  0x7120200, 0x25FF5700,  0x2557D00,  0x6575E00,
- 0x7445300,  0x7555600,  0x7565700,  0x7564400,  0x7C95700,
- 0x5575500,  0x7222700,  0x3111600,  0x5665500,  0x4445F00,
- 0xDFF9D00,  0xF777D00,  0x7DD5700,  0x7564600,  0x7995770,
- 0x7565500,  0x7461E00,  0x7222200,  0xD999600,  0xD552200,
- 0xDF77500,  0xD625500,  0x5622600,  0x7125700, 0x32222230,
-0x44222110, 0x62222260, 0x25000000,      0x700, 0x42200000,
-  0x67D700, 0x44755700,   0x788600, 0x117DD700,   0x6FC700,
-0x32722700,   0x7DD730, 0x44755500,  0x2622700,  0x2711130,
-0x44766500, 0x62222700,   0xFFFF00,   0x755D00,   0x6DD600,
-  0x755740,   0x799710,   0x744600,   0x775700,  0x2722300,
-  0x555700,   0x552200,   0x577500,   0x562500,   0x552220,
-  0x703700, 0x12242210,  0x2222220, 0x42212240,   0x5A0000 };
+    0x00000000, 0x22220200, 0x55000000, 0x05F5F500, 0x27427200,     // ' ',  '!',  '\"', '#',  '$'
+    0x05124500, 0x34255300, 0x22000000, 0x24444420, 0x42222240,     // '%',  '&',  '\'', '(',  ')'
+    0x06F6F600, 0x00272000, 0x00000240, 0x00070000, 0x00000200,     // '*',  '+',  '´',  '-',  '.'
+    0x11224480, 0x25555200, 0x26222700, 0x25125700, 0x61211600,     // '/',  '0',  '1',  '2',  '3'
+    0x33557300, 0x64611600, 0x24655200, 0x71112200, 0x25755200,     // '4',  '5',  '6',  '7',  '8'
+    0x25531600, 0x00200200, 0x00200640, 0x01242100, 0x00707000,     // '9',  ':',  ';',  '<',  '='
+    0x04212400, 0x07120200, 0x25FF5700, 0x02557D00, 0x06575E00,     // '>',  '?',  '@',  'A',  'B'
+    0x07445300, 0x07555600, 0x07565700, 0x07564400, 0x07C95700,     // 'C',  'D',  'E',  'F',  'G'
+    0x05575500, 0x07222700, 0x03111600, 0x05665500, 0x04445F00,     // 'H',  'I',  'J',  'K',  'L'
+    0x0DFF9D00, 0x0F777D00, 0x07DD5700, 0x07564600, 0x07995770,     // 'M',  'N',  'O',  'P',  'Q'
+    0x07565500, 0x07461E00, 0x07222200, 0x0D999600, 0x0D552200,     // 'R',  'S',  'T',  'U',  'V'
+    0x0DF77500, 0x0D625500, 0x05622600, 0x07125700, 0x32222230,     // 'W',  'X',  'Y',  'Z',  '['
+    0x44222110, 0x62222260, 0x25000000, 0x00000700, 0x42200000,     // '\\', ']',  '^',  '_',  '`'
+    0x0067D700, 0x44755700, 0x00788600, 0x117DD700, 0x006FC700,     // 'a',  'b',  'c',  'd',  'e'
+    0x32722700, 0x007DD730, 0x44755500, 0x02622700, 0x02711130,     // 'f',  'g',  'h',  'i',  'j',
+    0x44766500, 0x62222700, 0x00FFFF00, 0x00755D00, 0x006DD600,     // 'k',  'l',  'm',  'n',  'o'
+    0x00755740, 0x00799710, 0x00744600, 0x00775700, 0x02722300,     // 'p',  'q',  'r',  's',  't'
+    0x00555700, 0x00552200, 0x00577500, 0x00562500, 0x00552220,     // 'u',  'v',  'w',  'x',  'y'
+    0x00703700, 0x12242210, 0x02222220, 0x42212240, 0x005A0000      // 'z',  '{',  '|',  '}',  '~'
+};
 
 u16 *ptr_videobuffer1 = NULL;
 u16 *ptr_videobuffer2 = NULL;
 
-u32 padding_80024184[4] = {0};
+// Padding
+u32 D_80024184[4] = {0};
 
 void write_char_to_pos_stderr(s32 x, s32 y, unsigned char c) {
     if ((c == '\t') || (c == '\n')) {
         c = '\0';
     }
-    if (((c > '\0') && (c < ' ')) || (c >= 0x7F)) {
+    if ((c > '\0') && (c < ' ') || (c > '~')) {
         c = '?';
     }
     if (((x >= 0) && (x <= 71)) && ((y >= 0) && (y <= 31))) {
@@ -144,11 +141,6 @@ void write_char_to_pos_stderr(s32 x, s32 y, unsigned char c) {
     }
 }
 
-/**
- * 62BC	700056BC
- *     write char A0 to stderr
- *     accepts: A0=char
- */
 #ifdef NONMATCHING
 void __osRdbSend(unsigned char c) {
     if (c) {
@@ -157,17 +149,17 @@ void __osRdbSend(unsigned char c) {
                 __osRdbSend(' ');
             } while (D_80023FF8 & 7);
         } else if (c == '\n') {
-            D_80023FFC++;
             D_80023FF8 = 0;
-        }
-        if (D_80023FFC >= 31) {
+            D_80023FFC++;
+        }        
+        if (D_80023FFC > 30) {
             scroll_stderr_oneline(D_80023FFC - 30);
             D_80023FFC = 30;
         }
         if (c != '\n') {
             write_char_to_pos_stderr(D_80023FF8, D_80023FFC, c);
             D_80023FF8++;
-            if (D_80023FF8 >= 71) {
+            if (D_80023FF8 > 70) {
                 D_80023FF8 = 0;
                 D_80023FFC++;
             }
@@ -267,151 +259,39 @@ void scroll_stderr_oneline(s32 count) {
     }
 }
 
-/**
- * 645C	7000585C
- *     print char A2 to stderr screen position (A0,A1) in video buffer 1
- *     accepts: A0=xpos, A1=ypos, A2=char
- */
-#ifdef NONMATCHING
 void print_to_vidbuff1(s32 x, s32 y, unsigned char c) {
-    s32 i;
-    s32 j;
-    s16 totalwidth = viGetX();
+    s32 bitmap_x;
+    s32 bitmap_y;
+    u32 bitmap;
+    s16 screen_w = viGetX();
     u16 *ptr;
-    u32 bitcode;
     if (c == '\0') {
         c = ' ';
     }
-    if ((c >= ' ') && (c < 0x7F)) {
-        ptr = &ptr_videobuffer1[(y * totalwidth) + x];
-        bitcode = std_error_font_bitcode[c - ' '];
-        for (i = 0; i < 7; i++) {
-            for (j = 0; j < 4; j++) {
-                *ptr++ = (bitcode & 0x80000000) ? GPACK_RGBA5551(255, 255, 255, 1) :  GPACK_RGBA5551(0, 0, 0, 1);
-                bitcode <<= 1;
+    if ((c >= ' ') && (c <= '~')) {
+        ptr = (ptr_videobuffer1 + x + (y * screen_w));
+        bitmap = std_error_font_bitcode[c - ' '];
+        for (bitmap_y = 0; bitmap_y < 7; bitmap_y++) {
+            for (bitmap_x = 0; bitmap_x < 4; bitmap_x++) {
+                if (bitmap & (1 << 31)) {
+                    *ptr = GPACK_RGBA5551(255, 255, 255, 1);
+                } else {
+                    *ptr = GPACK_RGBA5551(0, 0, 0, 1);
+                }
+                ptr++;
+                bitmap <<= 1;
             }
-            ptr += totalwidth;
+            ptr += screen_w;
             ptr -= 4;
         }
     }
 }
-#else
-void print_to_vidbuff1(s32 x, s32 y, unsigned char c);
-GLOBAL_ASM(
-.text
-glabel print_to_vidbuff1
-/* 00645C 7000585C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 006460 70005860 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 006464 70005864 AFA40018 */  sw    $a0, 0x18($sp)
-/* 006468 70005868 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 00646C 7000586C 0C001107 */  jal   viGetX
-/* 006470 70005870 AFA60020 */   sw    $a2, 0x20($sp)
-/* 006474 70005874 93A50023 */  lbu   $a1, 0x23($sp)
-/* 006478 70005878 54A00003 */  bnezl $a1, .L70005888
-/* 00647C 7000587C 28A10020 */   slti  $at, $a1, 0x20
-/* 006480 70005880 24050020 */  li    $a1, 32
-/* 006484 70005884 28A10020 */  slti  $at, $a1, 0x20
-.L70005888:
-/* 006488 70005888 1420003A */  bnez  $at, .L70005974
-/* 00648C 7000588C 28A1007F */   slti  $at, $a1, 0x7f
-/* 006490 70005890 10200038 */  beqz  $at, .L70005974
-/* 006494 70005894 8FAE0018 */   lw    $t6, 0x18($sp)
-/* 006498 70005898 8FAB001C */  lw    $t3, 0x1c($sp)
-/* 00649C 7000589C 3C188002 */  lui   $t8, %hi(ptr_videobuffer1) 
-/* 0064A0 700058A0 8F18417C */  lw    $t8, %lo(ptr_videobuffer1)($t8)
-/* 0064A4 700058A4 01620019 */  multu $t3, $v0
-/* 0064A8 700058A8 000E7840 */  sll   $t7, $t6, 1
-/* 0064AC 700058AC 00057080 */  sll   $t6, $a1, 2
-/* 0064B0 700058B0 3C048002 */  lui   $a0, %hi(stderr_buffer+0x868)
-/* 0064B4 700058B4 008E2021 */  addu  $a0, $a0, $t6
-/* 0064B8 700058B8 01F8C821 */  addu  $t9, $t7, $t8
-/* 0064BC 700058BC 8C843F80 */  lw    $a0, %lo(stderr_buffer+0x868)($a0)
-/* 0064C0 700058C0 3C058000 */  lui   $a1, 0x8000
-/* 0064C4 700058C4 00004025 */  move  $t0, $zero
-/* 0064C8 700058C8 00024840 */  sll   $t1, $v0, 1
-/* 0064CC 700058CC 00006012 */  mflo  $t4
-/* 0064D0 700058D0 000C6840 */  sll   $t5, $t4, 1
-/* 0064D4 700058D4 032D1821 */  addu  $v1, $t9, $t5
-/* 0064D8 700058D8 240A0007 */  li    $t2, 7
-/* 0064DC 700058DC 24070001 */  li    $a3, 1
-/* 0064E0 700058E0 3406FFFF */  li    $a2, 65535
-.L700058E4:
-/* 0064E4 700058E4 00857824 */  and   $t7, $a0, $a1
-/* 0064E8 700058E8 11E00003 */  beqz  $t7, .L700058F8
-/* 0064EC 700058EC 0004C040 */   sll   $t8, $a0, 1
-/* 0064F0 700058F0 10000002 */  b     .L700058FC
-/* 0064F4 700058F4 A4660000 */   sh    $a2, ($v1)
-.L700058F8:
-/* 0064F8 700058F8 A4670000 */  sh    $a3, ($v1)
-.L700058FC:
-/* 0064FC 700058FC 03055824 */  and   $t3, $t8, $a1
-/* 006500 70005900 24630002 */  addiu $v1, $v1, 2
-/* 006504 70005904 11600003 */  beqz  $t3, .L70005914
-/* 006508 70005908 03002025 */   move  $a0, $t8
-/* 00650C 7000590C 10000002 */  b     .L70005918
-/* 006510 70005910 A4660000 */   sh    $a2, ($v1)
-.L70005914:
-/* 006514 70005914 A4670000 */  sh    $a3, ($v1)
-.L70005918:
-/* 006518 70005918 00046040 */  sll   $t4, $a0, 1
-/* 00651C 7000591C 0185C824 */  and   $t9, $t4, $a1
-/* 006520 70005920 01802025 */  move  $a0, $t4
-/* 006524 70005924 13200003 */  beqz  $t9, .L70005934
-/* 006528 70005928 24630002 */   addiu $v1, $v1, 2
-/* 00652C 7000592C 10000002 */  b     .L70005938
-/* 006530 70005930 A4660000 */   sh    $a2, ($v1)
-.L70005934:
-/* 006534 70005934 A4670000 */  sh    $a3, ($v1)
-.L70005938:
-/* 006538 70005938 00046840 */  sll   $t5, $a0, 1
-/* 00653C 7000593C 01A57024 */  and   $t6, $t5, $a1
-/* 006540 70005940 01A02025 */  move  $a0, $t5
-/* 006544 70005944 11C00003 */  beqz  $t6, .L70005954
-/* 006548 70005948 24630002 */   addiu $v1, $v1, 2
-/* 00654C 7000594C 10000002 */  b     .L70005958
-/* 006550 70005950 A4660000 */   sh    $a2, ($v1)
-.L70005954:
-/* 006554 70005954 A4670000 */  sh    $a3, ($v1)
-.L70005958:
-/* 006558 70005958 24630002 */  addiu $v1, $v1, 2
-/* 00655C 7000595C 25080001 */  addiu $t0, $t0, 1
-/* 006560 70005960 00047840 */  sll   $t7, $a0, 1
-/* 006564 70005964 00691821 */  addu  $v1, $v1, $t1
-/* 006568 70005968 01E02025 */  move  $a0, $t7
-/* 00656C 7000596C 150AFFDD */  bne   $t0, $t2, .L700058E4
-/* 006570 70005970 2463FFF8 */   addiu $v1, $v1, -8
-.L70005974:
-/* 006574 70005974 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 006578 70005978 27BD0018 */  addiu $sp, $sp, 0x18
-/* 00657C 7000597C 03E00008 */  jr    $ra
-/* 006580 70005980 00000000 */   nop   
-)
-#endif
 
-
-
-
-/**
- * 6584	70005984
- *     set pointers to video buffers 1 & 2 to A0 and A1, respectively
- *     sets values to uncached addresses
- *     A0 | A0000000 -> 8002417C
- *     A1 | A0000000 -> 80024180
- */
-
-void set_ptr_video_buffers(s32 arg0, s32 arg1) {
-    ptr_videobuffer1 = (arg0 | 0xA0000000);
-    ptr_videobuffer2 = (arg1 | 0xA0000000);
+void set_ptr_video_buffers(u16 *buffer1, u16 *buffer2) {
+    ptr_videobuffer1 = (u16*)((u32)buffer1 | 0xA0000000);
+    ptr_videobuffer2 = (u16*)((u32)buffer2 | 0xA0000000);
 }
 
-
-
-
-/**
- * 65A4	700059A4
- *     set pointers to video buffers 1 & 2
- *     calls 70005984: A0=803B5000, A1=803DA800
- */
 void set_video_buffer_pointers(void) {
     set_ptr_video_buffers(&cfb_16[0], &cfb_16[1]);
 }
@@ -424,7 +304,7 @@ void write_stderr_to_buffer(u16 *buffer) {
     s32 x;
     s32 y;
     set_video_buffer_pointers();
-    ptr_videobuffer1 = ((u32)buffer | 0xA0000000);
+    ptr_videobuffer1 = (u16*)((u32)buffer | 0xA0000000);
     screen_w = ((viGetX() - 13) / 4);
     screen_h = ((viGetY() - 10) / 7);
     output_w = screen_w - 5; // - margin_w
