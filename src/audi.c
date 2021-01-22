@@ -64,9 +64,13 @@ typedef struct _DMAState {
 } DMAState;
 
 u32 D_800230F0 = 0;
-u32 audFrameCt = 0;
+
+u32 audioFrameCount = 0;
+
 u32 nextDMA = 0;
+
 u32 curAcmdList = 0;
+
 u64 D_80023100[]= {
  {0x000600001900},
  {0x0000000000A0},
@@ -137,7 +141,7 @@ char audDMAMessageBuf[0x108];
 
 // Forward declarations
 s32 dmaCallBack(s32 addr, s32 len, void* state);
-
+void clear_audio_dma(void);
 
 /**
  * 29D0	70001BD0
@@ -167,7 +171,7 @@ void amCreateAudioMgr(void *arg0)
     s32 phi_s2;
     void *phi_s0_3;
 
-    arg0->unk10 = &__amDmaNew;
+    arg0->unk10 = &audio_manager_dma_new;
     temp_ret = osAiSetFrequency(0x5622);
     arg0->unk18 = temp_ret;
     temp_f0 = (f32) (temp_ret * 2) / 60.0f;
@@ -262,13 +266,13 @@ GLOBAL_ASM(
 glabel amCreateAudioMgr
 /* 0027D0 70001BD0 27BDFEE8 */  addiu $sp, $sp, -0x118
 /* 0027D4 70001BD4 AFB3002C */  sw    $s3, 0x2c($sp)
-/* 0027D8 70001BD8 3C0E7000 */  lui   $t6, %hi(__amDmaNew) # $t6, 0x7000
+/* 0027D8 70001BD8 3C0E7000 */  lui   $t6, %hi(audio_manager_dma_new) # $t6, 0x7000
 /* 0027DC 70001BDC AFBF0034 */  sw    $ra, 0x34($sp)
 /* 0027E0 70001BE0 AFB40030 */  sw    $s4, 0x30($sp)
 /* 0027E4 70001BE4 AFB20028 */  sw    $s2, 0x28($sp)
 /* 0027E8 70001BE8 AFB10024 */  sw    $s1, 0x24($sp)
 /* 0027EC 70001BEC AFB00020 */  sw    $s0, 0x20($sp)
-/* 0027F0 70001BF0 25CE25D8 */  addiu $t6, %lo(__amDmaNew) # addiu $t6, $t6, 0x25d8
+/* 0027F0 70001BF0 25CE25D8 */  addiu $t6, %lo(audio_manager_dma_new) # addiu $t6, $t6, 0x25d8
 /* 0027F4 70001BF4 00809825 */  move  $s3, $a0
 /* 0027F8 70001BF8 AC8E0010 */  sw    $t6, 0x10($a0)
 /* 0027FC 70001BFC 0C003A4C */  jal   osAiSetFrequency
@@ -584,7 +588,7 @@ loop_1:
         dword_CODE_bss_8005E4D8 = temp_ret;
         dword_CODE_bss_8005E4D8.unk4 = temp_ret;
         video_related_3(0x30000);
-        _amHandleFrameMsg((0x80060000 + (((u32) audFrameCt % 3U) * 4))->unk-1AE0, sp60);
+        _amHandleFrameMsg((0x80060000 + (((u32) audioFrameCount % 3U) * 4))->unk-1AE0, sp60);
         temp_s1 = (phi_s1 + 1);
         video_related_3(0x60000);
         temp_ret_2 = osGetTime();
@@ -704,8 +708,8 @@ glabel _amMain
 /* 002C50 70002050 AE830004 */  sw    $v1, 4($s4)
 /* 002C54 70002054 0C000A15 */  jal   video_related_3
 /* 002C58 70002058 3C040003 */   lui   $a0, 3
-/* 002C5C 7000205C 3C0F8002 */  lui   $t7, %hi(audFrameCt) 
-/* 002C60 70002060 8DEF30F4 */  lw    $t7, %lo(audFrameCt)($t7)
+/* 002C5C 7000205C 3C0F8002 */  lui   $t7, %hi(audioFrameCount) 
+/* 002C60 70002060 8DEF30F4 */  lw    $t7, %lo(audioFrameCount)($t7)
 /* 002C64 70002064 24010003 */  li    $at, 3
 /* 002C68 70002068 3C048006 */  lui   $a0, %hi(_am+8)
 /* 002C6C 7000206C 01E1001B */  divu  $zero, $t7, $at
@@ -844,7 +848,7 @@ void _amHandleFrameMsg(void *arg0, s32 arg1, void *argB) {
     s32 sp24;
 
     // Node 0
-    __clearAudioDMA();
+    clear_audio_dma();
     sp24 = osVirtualToPhysical(*arg0);
     if (argB != 0)
     {
@@ -887,7 +891,7 @@ glabel _amHandleFrameMsg
 /* 002E48 70002248 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 002E4C 7000224C AFB00018 */  sw    $s0, 0x18($sp)
 /* 002E50 70002250 00808025 */  move  $s0, $a0
-/* 002E54 70002254 0C000984 */  jal   __clearAudioDMA
+/* 002E54 70002254 0C000984 */  jal   clear_audio_dma
 /* 002E58 70002258 AFA5002C */   sw    $a1, 0x2c($sp)
 /* 002E5C 7000225C 0C003A2C */  jal   osVirtualToPhysical
 /* 002E60 70002260 8E040000 */   lw    $a0, ($s0)
@@ -1053,7 +1057,7 @@ s32 dmaCallBack(s32 addr, s32 len, void* state) {
             if ((dmaState_initialized.unk4->unk8 + 0x200) >= (arg0 + arg1))
             {
                 // Node 3
-                dmaState_initialized.unk4->unkC = (?32) audFrameCt;
+                dmaState_initialized.unk4->unkC = (?32) audioFrameCount;
                 osVirtualToPhysical(((dmaState_initialized.unk4->unk10 + arg0) - dmaState_initialized.unk4->unk8), dmaState_initialized.unk4, arg0);
                 return;
                 // (possible return value: osVirtualToPhysical(((dmaState_initialized.unk4->unk10 + arg0) - dmaState_initialized.unk4->unk8), dmaState_initialized.unk4, arg0))
@@ -1109,7 +1113,7 @@ s32 dmaCallBack(s32 addr, s32 len, void* state) {
         // Node 14
         temp_a3 = (arg14 - sp48);
         dmaState_initialized.unk8->unk8 = temp_a3;
-        dmaState_initialized.unk8->unkC = (?32) audFrameCt;
+        dmaState_initialized.unk8->unkC = (?32) audioFrameCount;
         nextDMA = (s32) (nextDMA + 1);
         sp4C = (?32) dmaState_initialized.unk8->unk10;
         osPiStartDma(((nextDMA * 0x18) + &audDMAIOMesgBuf), 1, 0, temp_a3, (?32) dmaState_initialized.unk8->unk10, 0x200, &audDMAMessageQ);
@@ -1146,8 +1150,8 @@ glabel dmaCallBack
 /* 003070 70002470 1420000A */  bnez  $at, .L7000249C
 /* 003074 70002474 02003025 */   move  $a2, $s0
 /* 003078 70002478 8E180010 */  lw    $t8, 0x10($s0)
-/* 00307C 7000247C 3C0F8002 */  lui   $t7, %hi(audFrameCt) 
-/* 003080 70002480 8DEF30F4 */  lw    $t7, %lo(audFrameCt)($t7)
+/* 00307C 7000247C 3C0F8002 */  lui   $t7, %hi(audioFrameCount) 
+/* 003080 70002480 8DEF30F4 */  lw    $t7, %lo(audioFrameCount)($t7)
 /* 003084 70002484 0307C821 */  addu  $t9, $t8, $a3
 /* 003088 70002488 03222023 */  subu  $a0, $t9, $v0
 /* 00308C 7000248C 0C003A2C */  jal   osVirtualToPhysical
@@ -1204,11 +1208,11 @@ glabel dmaCallBack
 /* 003140 70002540 AE000004 */  sw    $zero, 4($s0)
 .L70002544:
 /* 003144 70002544 8FAC0048 */  lw    $t4, 0x48($sp)
-/* 003148 70002548 3C0D8002 */  lui   $t5, %hi(audFrameCt) 
+/* 003148 70002548 3C0D8002 */  lui   $t5, %hi(audioFrameCount) 
 /* 00314C 7000254C 3C088002 */  lui   $t0, %hi(nextDMA) 
 /* 003150 70002550 00EC3823 */  subu  $a3, $a3, $t4
 /* 003154 70002554 AE070008 */  sw    $a3, 8($s0)
-/* 003158 70002558 8DAD30F4 */  lw    $t5, %lo(audFrameCt)($t5)
+/* 003158 70002558 8DAD30F4 */  lw    $t5, %lo(audioFrameCount)($t5)
 /* 00315C 7000255C 250830F8 */  addiu $t0, %lo(nextDMA) # addiu $t0, $t0, 0x30f8
 /* 003160 70002560 8E030010 */  lw    $v1, 0x10($s0)
 /* 003164 70002564 AE0D000C */  sw    $t5, 0xc($s0)
@@ -1252,6 +1256,7 @@ glabel dmaCallBack
  *     ALDMAproc __amDmaNew(AMDMAState **state)
  * from the n64devkit demos_old/simple/audiomgr.c.
  *
+ * original documentation:
  * Initialize the dma buffers and return the address of the
  * procedure that will be used to dma the samples from rom to ram. This 
  * routine will be called once for each physical voice that is created. 
@@ -1263,7 +1268,7 @@ glabel dmaCallBack
  * @param state will point to dmaState after call.
  * @return Address of dma callback function.
  */
-ALDMAproc __amDmaNew(DMAState** state)
+ALDMAproc audio_manager_dma_new(DMAState** state)
 {
     if (dmaState.u.initialized == 0) {
         dmaState.firstUsed = NULL;
@@ -1276,146 +1281,69 @@ ALDMAproc __amDmaNew(DMAState** state)
 }
 
 /**
- *  3210	70002610
+ * 3210 70002610
+ * Based on method
+ *     static void __clearAudioDMA(void)
+ * from the n64devkit demos_old/simple/audiomgr.c.
+ *
+ * original documentation:
+ * Routine to move dma buffers back to the unused list.
+ * First clear out your dma messageQ. Then check each buffer to see when
+ * it was last used. If that was more than FRAME_LAG frames ago, move it
+ * back to the unused list. 
  */
-#ifdef NONMATCHING
-void __clearAudioDMA(void) {
-    ?32 sp40;
+void clear_audio_dma(void) {
+    u32 i;
+    OSMesg osmesg;
+    DMABuffer *dmaPtr, *nextPtr;
+    
+    osmesg = 0;
 
-    // Node 0
-    sp40 = 0;
-    if (nextDMA != 0)
+   /*
+    * Don't block here. If dma's aren't complete, you've had an audio
+    * overrun. (Bad news, but go for it anyway, and try and recover.
+    */
+   for (i=0; i<nextDMA; i++)
+   {
+       if (osRecvMesg(&audDMAMessageQ, (OSMesg *)&osmesg, OS_MESG_NOBLOCK) == -1)
+        /*
+            The audiomgr example has an ifndef for a debug statement as follows:
+            PRINTF("Dma not done\n");
+        */
+        ;
+   }
+
+    dmaPtr = dmaState.firstUsed;
+    while (dmaPtr)
     {
-        // Node 1
-        // Node 2
-        osRecvMesg(&audDMAMessageQ, &sp40, 0);
-        if ((u32) (0 + 1) < (u32) nextDMA)
+        nextPtr = (DMABuffer*)dmaPtr->node.next;
+
+        /* remove old dma's from list */
+        /* Can change FRAME_LAG value.  Should be at least one.  */
+        /* Larger values mean more buffers needed, but fewer DMA's */
+        if (dmaPtr->lastFrame + 1 < audioFrameCount)
         {
-            goto loop_2;
-        }
-    }
-    // Node 3
-    if (dmaState_initialized.unk4 != 0)
-    {
-        loop_4:
-        // Node 4
-        if ((u32) (dmaState_initialized.unk4->unkC + 1) < (u32) audFrameCt)
-        {
-            // Node 5
-            if (dmaState_initialized.unk4 == dmaState_initialized.unk4)
-            {
-                // Node 6
-                dmaState_initialized.unk4 = (void *) *dmaState_initialized.unk4;
+            if (dmaState.firstUsed == dmaPtr) {
+                dmaState.firstUsed = (DMABuffer*)dmaPtr->node.next;
             }
-            // Node 7
-            alUnlink(dmaState_initialized.unk4);
-            if (dmaState_initialized.unk8 != 0)
+
+            alUnlink((ALLink*)dmaPtr);
+
+            if (dmaState.firstFree)
             {
-                // Node 8
-                alLink(dmaState_initialized.unk4, dmaState_initialized.unk8);
+                alLink((ALLink*)dmaPtr, (ALLink*)dmaState.firstFree);
             }
             else
             {
-                // Node 9
-                dmaState_initialized.unk8 = (void *) dmaState_initialized.unk4;
-                *dmaState_initialized.unk4 = NULL;
-                dmaState_initialized.unk4->unk4 = 0;
+                dmaState.firstFree = dmaPtr;
+                dmaPtr->node.next = 0;
+                dmaPtr->node.prev = 0;
             }
         }
-        // Node 10
-        if (*dmaState_initialized.unk4 != 0)
-        {
-            goto loop_4;
-        }
+        dmaPtr = nextPtr;
     }
-    // Node 11
+
     nextDMA = 0U;
-    audFrameCt = (u32) (audFrameCt + 1);
-    return;
-    // (function likely void)
+    audioFrameCount = (s32)(audioFrameCount + 1);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel __clearAudioDMA
-/* 003210 70002610 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 003214 70002614 AFB40028 */  sw    $s4, 0x28($sp)
-/* 003218 70002618 3C148002 */  lui   $s4, %hi(nextDMA)
-/* 00321C 7000261C 269430F8 */  addiu $s4, %lo(nextDMA) # addiu $s4, $s4, 0x30f8
-/* 003220 70002620 8E8E0000 */  lw    $t6, ($s4)
-/* 003224 70002624 AFB00018 */  sw    $s0, 0x18($sp)
-/* 003228 70002628 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 00322C 7000262C AFB30024 */  sw    $s3, 0x24($sp)
-/* 003230 70002630 AFB20020 */  sw    $s2, 0x20($sp)
-/* 003234 70002634 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 003238 70002638 AFA00040 */  sw    $zero, 0x40($sp)
-/* 00323C 7000263C 11C0000D */  beqz  $t6, .L70002674
-/* 003240 70002640 00008025 */   move  $s0, $zero
-/* 003244 70002644 3C118006 */  lui   $s1, %hi(audDMAMessageQ)
-/* 003248 70002648 2631F2D0 */  addiu $s1, %lo(audDMAMessageQ) # addiu $s1, $s1, -0xd30
-/* 00324C 7000264C 27B20040 */  addiu $s2, $sp, 0x40
-/* 003250 70002650 02202025 */  move  $a0, $s1
-.L70002654:
-/* 003254 70002654 02402825 */  move  $a1, $s2
-/* 003258 70002658 0C003774 */  jal   osRecvMesg
-/* 00325C 7000265C 00003025 */   move  $a2, $zero
-/* 003260 70002660 8E8F0000 */  lw    $t7, ($s4)
-/* 003264 70002664 26100001 */  addiu $s0, $s0, 1
-/* 003268 70002668 020F082B */  sltu  $at, $s0, $t7
-/* 00326C 7000266C 5420FFF9 */  bnezl $at, .L70002654
-/* 003270 70002670 02202025 */   move  $a0, $s1
-.L70002674:
-/* 003274 70002674 3C128006 */  lui   $s2, %hi(dmaState)
-/* 003278 70002678 2652E7B0 */  addiu $s2, %lo(dmaState) # addiu $s2, $s2, -0x1850
-/* 00327C 7000267C 8E500004 */  lw    $s0, 4($s2)
-/* 003280 70002680 3C138002 */  lui   $s3, %hi(audFrameCt)
-/* 003284 70002684 267330F4 */  addiu $s3, %lo(audFrameCt) # addiu $s3, $s3, 0x30f4
-/* 003288 70002688 1200001A */  beqz  $s0, .L700026F4
-/* 00328C 7000268C 00000000 */   nop   
-.L70002690:
-/* 003290 70002690 8E19000C */  lw    $t9, 0xc($s0)
-/* 003294 70002694 8E780000 */  lw    $t8, ($s3)
-/* 003298 70002698 8E020000 */  lw    $v0, ($s0)
-/* 00329C 7000269C 27280001 */  addiu $t0, $t9, 1
-/* 0032A0 700026A0 0118082B */  sltu  $at, $t0, $t8
-/* 0032A4 700026A4 10200011 */  beqz  $at, .L700026EC
-/* 0032A8 700026A8 00408825 */   move  $s1, $v0
-/* 0032AC 700026AC 8E490004 */  lw    $t1, 4($s2)
-/* 0032B0 700026B0 16090002 */  bne   $s0, $t1, .L700026BC
-/* 0032B4 700026B4 00000000 */   nop   
-/* 0032B8 700026B8 AE420004 */  sw    $v0, 4($s2)
-.L700026BC:
-/* 0032BC 700026BC 0C003AA4 */  jal   alUnlink
-/* 0032C0 700026C0 02002025 */   move  $a0, $s0
-/* 0032C4 700026C4 8E450008 */  lw    $a1, 8($s2)
-/* 0032C8 700026C8 50A00006 */  beql  $a1, $zero, .L700026E4
-/* 0032CC 700026CC AE500008 */   sw    $s0, 8($s2)
-/* 0032D0 700026D0 0C003AB0 */  jal   alLink
-/* 0032D4 700026D4 02002025 */   move  $a0, $s0
-/* 0032D8 700026D8 10000004 */  b     .L700026EC
-/* 0032DC 700026DC 00000000 */   nop   
-/* 0032E0 700026E0 AE500008 */  sw    $s0, 8($s2)
-.L700026E4:
-/* 0032E4 700026E4 AE000000 */  sw    $zero, ($s0)
-/* 0032E8 700026E8 AE000004 */  sw    $zero, 4($s0)
-.L700026EC:
-/* 0032EC 700026EC 1620FFE8 */  bnez  $s1, .L70002690
-/* 0032F0 700026F0 02208025 */   move  $s0, $s1
-.L700026F4:
-/* 0032F4 700026F4 3C138002 */  lui   $s3, %hi(audFrameCt)
-/* 0032F8 700026F8 267330F4 */  addiu $s3, %lo(audFrameCt) # addiu $s3, $s3, 0x30f4
-/* 0032FC 700026FC 8E6A0000 */  lw    $t2, ($s3)
-/* 003300 70002700 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 003304 70002704 AE800000 */  sw    $zero, ($s4)
-/* 003308 70002708 254B0001 */  addiu $t3, $t2, 1
-/* 00330C 7000270C AE6B0000 */  sw    $t3, ($s3)
-/* 003310 70002710 8FB30024 */  lw    $s3, 0x24($sp)
-/* 003314 70002714 8FB40028 */  lw    $s4, 0x28($sp)
-/* 003318 70002718 8FB00018 */  lw    $s0, 0x18($sp)
-/* 00331C 7000271C 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 003320 70002720 8FB20020 */  lw    $s2, 0x20($sp)
-/* 003324 70002724 03E00008 */  jr    $ra
-/* 003328 70002728 27BD0048 */   addiu $sp, $sp, 0x48
-)
-#endif
 
