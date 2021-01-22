@@ -275,7 +275,7 @@ loop_4:
         spD8 = 0x40;
         spE0 = 8;
         sfx_c_70007B20(&spD8);
-        startaudiThread();
+        start_audio_thread();
     }
     // Node 8
     return;
@@ -555,7 +555,7 @@ glabel setupaudio
 /* 007A54 70006E54 AFB000E4 */  sw    $s0, 0xe4($sp)
 /* 007A58 70006E58 0C001EC8 */  jal   sfx_c_70007B20
 /* 007A5C 70006E5C 27A400D8 */   addiu $a0, $sp, 0xd8
-/* 007A60 70006E60 0C0007D6 */  jal   startaudiThread
+/* 007A60 70006E60 0C0007D6 */  jal   start_audio_thread
 /* 007A64 70006E64 00000000 */   nop   
 .L70006E68:
 /* 007A68 70006E68 8FBF0024 */  lw    $ra, 0x24($sp)

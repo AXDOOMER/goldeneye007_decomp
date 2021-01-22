@@ -594,28 +594,13 @@ glabel amCreateAudioMgr
 #endif
 
 /**
- * 2B58	70001F58
+ * 2B58 70001F58
  * insert sound manager thread
  *	redirect to 7000D580: A0=8005E530
  */
-#ifdef NONMATCHING
-void startaudiThread(void) {
-    osStartThread(&AudioManager+0x18);
+void start_audio_thread(void) {
+    osStartThread(&AudioManager.audioThread);
 }
-#else
-GLOBAL_ASM(
-glabel startaudiThread
-/* 002B58 70001F58 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 002B5C 70001F5C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 002B60 70001F60 3C048006 */  lui   $a0, %hi(AudioManager+0x18)
-/* 002B64 70001F64 0C003560 */  jal   osStartThread
-/* 002B68 70001F68 2484E530 */  addiu $a0, $a0, %lo(AudioManager+0x18)
-/* 002B6C 70001F6C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 002B70 70001F70 27BD0018 */  addiu $sp, $sp, 0x18
-/* 002B74 70001F74 03E00008 */  jr    $ra
-/* 002B78 70001F78 00000000 */  nop   
-)
-#endif
 
 /**
  * 2B7C	70001F7C
