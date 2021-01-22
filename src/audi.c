@@ -15,6 +15,9 @@
 #define AUDIO_FRAME_MESSAGE_QUEUE_SIZE      8
 #define AUDIO_REPLY_MESSAGE_QUEUE_SIZE      8
 
+#define MAIN_QUIT_MESSAGE   10
+#define AUDIO_MANAGER_COUNT_INTERVAL    0xf0
+
 extern long long int rspbootTextStart[];
 extern long long int gsp3DTextStart[];
 extern long long int aspMainTextStart[];
@@ -72,6 +75,19 @@ typedef struct _DMAState {
      */
     DMABuffer *firstFree;
 } DMAState;
+
+typedef union AudioMessage_u {
+    struct {
+        s16 type;
+    } gen;
+    
+    struct {
+        s16 type;
+        struct AudioInfo_s *info;
+    } done;
+    
+    OSScMsg app;
+} AudioMessage;
 
 /**
 * Modified from n64devkit example.
@@ -138,14 +154,68 @@ s32 firstTime = 1;
 
 /*bss needs fixing */
 s32 dword_CODE_bss_8005E4B0[2];
-s32 dword_CODE_bss_8005E4B8[2];
+
+
+/**
+ * Address 8005E4B8.
+ * (type is u64)
+ * Used in audio_manager_main.
+ * This looks like it stores the largest sDeltaTime between
+ * counts of AUDIO_MANAGER_COUNT_INTERVAL.
+ */
+OSTime largestDeltaTime;
+
+/**
+ * Address 8005E4C0.
+ * (type is u64)
+ * Used in audio_manager_main.
+ * Stores the elpased time of main loop (difference between sEndTime and sStartTime).
+ */
+#ifdef NONMATCHING
+OSTime deltaTime;
+#else
 s32 dword_CODE_bss_8005E4C0;
 s32 dword_CODE_bss_8005E4C4;
+#endif
+
+/**
+ * Address 8005E4C8.
+ * Every AUDIO_MANAGER_COUNT_INTERVAL number of events, the average for sDeltaTimeSum
+ * is computed and stored here.
+ */
+#ifdef NONMATCHING
+u64 deltaAverage;
+#else
 s32 dword_CODE_bss_8005E4C8;
 s32 dword_CODE_bss_8005E4CC;
-s32 dword_CODE_bss_8005E4D0[2];
-s32 dword_CODE_bss_8005E4D8[2];
-char dword_CODE_bss_8005E4E0[0x38];
+#endif
+
+/**
+ * Address 8005E4D0.
+ * Tracks the sum total elapsed time. Reset every AUDIO_MANAGER_COUNT_INTERVAL.
+ */
+u64 deltaTimeSum;
+
+/**
+ * Address 8005E4D8.
+ * (type is u64)
+ * Used in audio_manager_main.
+ * Stores the time at the start of the loop.
+ */
+OSTime startTime;
+
+/**
+ * Address 8005E4E0.
+ * (type is u64)
+ * Used in audio_manager_main.
+ * Stores the time after primary processing is done.
+ */
+OSTime endTime;
+
+/**
+ * bss needs fixing
+ */
+char dword_CODE_bss_8005E4E8[0x30];
 
 /**
  * Address 8005e518.
@@ -182,24 +252,31 @@ struct _AudioManager {
      */
     OSMesg frameMessageBuffer[AUDIO_FRAME_MESSAGE_QUEUE_SIZE - 1];
     
+
+    u32 numberAcmdLists;
+
     /**
      * 0x200.
      */
     OSMesgQueue replyMessageQueue;
 
-    u32 numberAcmdLists;
+    
 
     /**
      * 0x218.
      */
     OSMesg replyMessageBuffer[AUDIO_REPLY_MESSAGE_QUEUE_SIZE - 1];
-    
-    s32 pad[16];
-    
+
+    s32 pad1;
+
     /**
-     * 0x238.
+     * 0x
      */
     DMABuffer dmaBuffer;
+    
+    s32 pad[15];
+    
+    
 
 } AudioManager;
 
@@ -209,7 +286,7 @@ struct _AudioManager {
 
 
 //8005e7a0
-OSScClient audi_client[2];
+OSScClient audioClient[2];
 
 /**
  * Address 0x8005e7b0.
@@ -230,6 +307,8 @@ char audDMAMessageBuf[0x108];
 // Forward declarations
 s32 dmaCallBack(s32 addr, s32 len, void* state);
 void clear_audio_dma(void);
+void audio_manager_handle_frame_message(AudioInfo *info, AudioInfo *lastInfo);
+void audio_manager_handle_done_message(AudioInfo *info);
 
 /**
  * 29D0	70001BD0
@@ -346,7 +425,7 @@ loop_14:
     {
         goto loop_14;
     }
-    osCreateThread(&AudioManager+0x18, 4, &_amMain, 0, set_stack_entry(&sp_audi, 0x1000), 0x14);
+    osCreateThread(&AudioManager+0x18, 4, &audio_manager_main, 0, set_stack_entry(&sp_audi, 0x1000), 0x14);
 }
 #else
 GLOBAL_ASM(
@@ -573,10 +652,10 @@ glabel amCreateAudioMgr
 /* 002B08 70001F08 0C0001BC */  jal   set_stack_entry
 /* 002B0C 70001F0C 24051000 */   li    $a1, 4096
 /* 002B10 70001F10 3C048006 */  lui   $a0, %hi(AudioManager+0x18)
-/* 002B14 70001F14 3C067000 */  lui   $a2, %hi(_amMain) # $a2, 0x7000
+/* 002B14 70001F14 3C067000 */  lui   $a2, %hi(audio_manager_main) # $a2, 0x7000
 /* 002B18 70001F18 24190014 */  li    $t9, 20
 /* 002B1C 70001F1C AFB90014 */  sw    $t9, 0x14($sp)
-/* 002B20 70001F20 24C61F7C */  addiu $a2, %lo(_amMain) # addiu $a2, $a2, 0x1f7c
+/* 002B20 70001F20 24C61F7C */  addiu $a2, %lo(audio_manager_main) # addiu $a2, $a2, 0x1f7c
 /* 002B24 70001F24 2484E530 */  addiu $a0, %lo(AudioManager+0x18) # addiu $a0, $a0, -0x1ad0
 /* 002B28 70001F28 24050004 */  li    $a1, 4
 /* 002B2C 70001F2C 00003825 */  move  $a3, $zero
@@ -602,127 +681,113 @@ void start_audio_thread(void) {
     osStartThread(&AudioManager.audioThread);
 }
 
-/**
- * 2B7C	70001F7C
- */
 #ifdef NONMATCHING
-void _amMain(s32 arg0)
+/**
+ * 2B7C 70001F7C
+ * Looks to be loosely based on method
+ *     __amMain
+ * from the n64devkit. This method makes some kind of video calls,
+ * but also does some kind of debug tracking of the time spent between
+ * beginning and end of processing.
+ *
+ * @param arg unused.
+ *
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: yes
+ * - identical registers: fail
+ * - number of attempts: 1
+ * - last attempt: 2021.01.17
+ *
+ * notes: It looks like there are two issues.
+ * 1) The static variables are being loaded into the wrong registers.
+ *     This is sEndTime, sStartTime, sLargestDeltaTime, sDeltaTimeSum.
+ *     This causes trickle down differences.
+ * 2) Inside the first if block, registers are saved onto the stack,
+ *     but the stack locations differ.
+ *     This causes trickle down differences.
+ */
+void audio_manager_main(void* arg)
 {
-    void *sp64;
-    ?32 sp60;
-    u32 sp54;
-    s32 sp50;
-    u32 sp4C;
-    s32 sp48;
-    u32 sp44;
-    u32 sp40;
-    ? temp_ret;
-    s32 temp_s1;
-    ? temp_ret_2;
-    u32 temp_t8;
-    u32 temp_t9;
-    ? temp_ret_3;
-    u32 temp_t7;
-    s32 phi_s1;
-    s32 phi_s2;
-    s32 phi_s2_2;
+    // eventually overflows.
+    s32 counter = 0;
+    
+    s32 done = 0;
+    AudioMessage *msg = 0;
+    AudioInfo *lastInfo = 0;
+    u64 localDelta;
+    
+    osScAddClient(&sc, &(audioClient[0]), &(AudioManager.frameMessageQueue), (void*)1);
 
-    sp64 = NULL;
-    sp60 = 0;
-    osScAddClient(&sc, &audi_client, &AudioManager+0x1C8, 1);
-    phi_s1 = 0;
-    phi_s2_2 = 0;
-loop_1:
-    osRecvMesg(&AudioManager+0x1C8, &sp64, 1);
-    if (*sp64 != 1)
+    while (!done)
     {
-        if (*sp64 != 5)
+        osRecvMesg(&AudioManager.frameMessageQueue, (OSMesg *)&msg, OS_MESG_BLOCK);
+        
+        switch (msg->gen.type)
         {
-            if (*sp64 != 0xa)
+            case (OS_SC_RETRACE_MSG):
             {
-                phi_s2 = phi_s2_2;
-                phi_s1 = phi_s1;
-            }
-            else
-            {
-                phi_s2 = 1;
-                phi_s1 = phi_s1;
-            }
-        }
-        else
-        {
-            phi_s2 = 1;
-            phi_s1 = phi_s1;
-        }
-    }
-    else
-    {
-        temp_ret = osGetTime(*sp64);
-        dword_CODE_bss_8005E4D8 = temp_ret;
-        dword_CODE_bss_8005E4D8.unk4 = temp_ret;
-        video_related_3(0x30000);
-        audio_manager_handle_frame_message((0x80060000 + (((u32) audioFrameCount % 3U) * 4))->unk-1AE0, sp60);
-        temp_s1 = (phi_s1 + 1);
-        video_related_3(0x60000);
-        temp_ret_2 = osGetTime();
-        dword_CODE_bss_8005E4E0 = temp_ret_2;
-        temp_t8 = ((temp_ret_2 - dword_CODE_bss_8005E4D8) - (temp_ret_2 < (u32) dword_CODE_bss_8005E4D8.unk4));
-        dword_CODE_bss_8005E4E0.unk4 = temp_ret_2;
-        temp_t9 = (temp_ret_2 - dword_CODE_bss_8005E4D8.unk4);
-        dword_CODE_bss_8005E4C0 = temp_t9;
-        dword_CODE_bss_8005E4C0 = temp_t8;
-        sp44 = temp_t9;
-        sp40 = temp_t8;
-        sp50 = temp_ret_2;
-        sp54 = temp_ret_2;
-        sp48 = (s32) dword_CODE_bss_8005E4D8;
-        sp4C = (u32) dword_CODE_bss_8005E4D8.unk4;
-        if ((temp_s1 % 0xf0) == 0)
-        {
-            temp_ret_3 = __ull_div(dword_CODE_bss_8005E4D0, dword_CODE_bss_8005E4D0.unk4, 0, 0xf0);
-            dword_CODE_bss_8005E4CC = temp_ret_3;
-            dword_CODE_bss_8005E4CC = temp_ret_3;
-            sp44 = (u32) (dword_CODE_bss_8005E4E0.unk4 - dword_CODE_bss_8005E4D8.unk4);
-            dword_CODE_bss_8005E4B8.unk4 = 0U;
-            dword_CODE_bss_8005E4B8 = 0U;
-            dword_CODE_bss_8005E4D0.unk4 = 0;
-            sp40 = (u32) ((dword_CODE_bss_8005E4E0 - dword_CODE_bss_8005E4D8) - ((u32) dword_CODE_bss_8005E4E0.unk4 < (u32) dword_CODE_bss_8005E4D8.unk4));
-            dword_CODE_bss_8005E4D0 = 0;
-        }
-        else
-        {
-            temp_t7 = (dword_CODE_bss_8005E4D0.unk4 + sp54);
-            dword_CODE_bss_8005E4D0.unk4 = (s32) (temp_t7 - sp4C);
-            dword_CODE_bss_8005E4D0 = (s32) (((((temp_t7 < sp54) + dword_CODE_bss_8005E4D0) + sp50) - sp48) - (temp_t7 < sp4C));
-        }
-        if (sp40 >= (u32) dword_CODE_bss_8005E4B8)
-        {
-            if (((u32) dword_CODE_bss_8005E4B8 < sp40) || ((u32) dword_CODE_bss_8005E4B8.unk4 < sp44))
-            {
-                dword_CODE_bss_8005E4B8 = sp40;
-                dword_CODE_bss_8005E4B8.unk4 = sp44;
-            }
-            else
-            {
+                startTime = osGetTime();
+                
+                video_related_3(0x30000);
+                audio_manager_handle_frame_message(AudioManager.audioInfo[audioFrameCount % 3U], lastInfo);
+                counter++;
+                video_related_3(0x60000);
 
+                endTime = osGetTime();
+                
+                localDelta = endTime - startTime;
+                
+                // deltaTime doesn't seem to be used...
+                deltaTime = localDelta;
+            
+                if ((counter % AUDIO_MANAGER_COUNT_INTERVAL) == 0)
+                {
+                    deltaAverage = deltaTimeSum / AUDIO_MANAGER_COUNT_INTERVAL;
+                    
+                    // Why is this computed a second time?
+                    localDelta = endTime - startTime;
+                    
+                    deltaTimeSum = 0U;
+                    largestDeltaTime = 0U;
+                }
+                else
+                {
+                    // First use of sDeltaTimeSum, uninitialized (hopefully zero)
+                    deltaTimeSum = deltaTimeSum + endTime - startTime;
+                }
+                
+                if (largestDeltaTime < localDelta)
+                {
+                    largestDeltaTime = localDelta;
+                }
+                
+                osRecvMesg(&AudioManager.replyMessageQueue, (OSMesg *)&lastInfo, OS_MESG_BLOCK);
+                
+                audio_manager_handle_done_message(lastInfo);
             }
+                break;
+                
+            case (5):
+                done = 1;
+                break;
+                
+            case (MAIN_QUIT_MESSAGE):
+                done = 1;
+                break;
+                
+            default:
+                break;
         }
-        osRecvMesg(&AudioManager+0x200, &sp60, 1);
-        audio_manager_handle_done_message(sp60);
-        phi_s2 = phi_s2_2;
-        phi_s1 = temp_s1;
     }
-    phi_s2_2 = phi_s2;
-    if (phi_s2 == 0)
-    {
-        goto loop_1;
-    }
-    alClose(&AudioManager+0x238);
+    
+    alClose(&(AudioManager.dmaBuffer));
 }
 #else
 GLOBAL_ASM(
 .text
-glabel _amMain
+glabel audio_manager_main
 /* 002B7C 70001F7C 27BDFF90 */  addiu $sp, $sp, -0x70
 /* 002B80 70001F80 AFB60030 */  sw    $s6, 0x30($sp)
 /* 002B84 70001F84 3C168006 */  lui   $s6, %hi(AudioManager+0x1C8)
@@ -732,7 +797,7 @@ glabel _amMain
 /* 002B94 70001F94 AFB20020 */  sw    $s2, 0x20($sp)
 /* 002B98 70001F98 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 002B9C 70001F9C 3C048006 */  lui   $a0, %hi(sc)
-/* 002BA0 70001FA0 3C058006 */  lui   $a1, %hi(audi_client)
+/* 002BA0 70001FA0 3C058006 */  lui   $a1, %hi(audioClient)
 /* 002BA4 70001FA4 AFBE0038 */  sw    $fp, 0x38($sp)
 /* 002BA8 70001FA8 AFB70034 */  sw    $s7, 0x34($sp)
 /* 002BAC 70001FAC AFB5002C */  sw    $s5, 0x2c($sp)
@@ -743,19 +808,19 @@ glabel _amMain
 /* 002BC0 70001FC0 00009025 */  move  $s2, $zero
 /* 002BC4 70001FC4 AFA00064 */  sw    $zero, 0x64($sp)
 /* 002BC8 70001FC8 AFA00060 */  sw    $zero, 0x60($sp)
-/* 002BCC 70001FCC 24A5E7A0 */  addiu $a1, %lo(audi_client) # addiu $a1, $a1, -0x1860
+/* 002BCC 70001FCC 24A5E7A0 */  addiu $a1, %lo(audioClient) # addiu $a1, $a1, -0x1860
 /* 002BD0 70001FD0 2484DA40 */  addiu $a0, %lo(sc) # addiu $a0, $a0, -0x25c0
 /* 002BD4 70001FD4 02C03025 */  move  $a2, $s6
 /* 002BD8 70001FD8 0C000305 */  jal   osScAddClient
 /* 002BDC 70001FDC 24070001 */   li    $a3, 1
-/* 002BE0 70001FE0 3C158006 */  lui   $s5, %hi(dword_CODE_bss_8005E4E0)
-/* 002BE4 70001FE4 3C148006 */  lui   $s4, %hi(dword_CODE_bss_8005E4D8)
-/* 002BE8 70001FE8 3C138006 */  lui   $s3, %hi(dword_CODE_bss_8005E4B8)
-/* 002BEC 70001FEC 3C108006 */  lui   $s0, %hi(dword_CODE_bss_8005E4D0)
-/* 002BF0 70001FF0 2610E4D0 */  addiu $s0, %lo(dword_CODE_bss_8005E4D0) # addiu $s0, $s0, -0x1b30
-/* 002BF4 70001FF4 2673E4B8 */  addiu $s3, %lo(dword_CODE_bss_8005E4B8) # addiu $s3, $s3, -0x1b48
-/* 002BF8 70001FF8 2694E4D8 */  addiu $s4, %lo(dword_CODE_bss_8005E4D8) # addiu $s4, $s4, -0x1b28
-/* 002BFC 70001FFC 26B5E4E0 */  addiu $s5, %lo(dword_CODE_bss_8005E4E0) # addiu $s5, $s5, -0x1b20
+/* 002BE0 70001FE0 3C158006 */  lui   $s5, %hi(endTime)
+/* 002BE4 70001FE4 3C148006 */  lui   $s4, %hi(startTime)
+/* 002BE8 70001FE8 3C138006 */  lui   $s3, %hi(largestDeltaTime)
+/* 002BEC 70001FEC 3C108006 */  lui   $s0, %hi(deltaTimeSum)
+/* 002BF0 70001FF0 2610E4D0 */  addiu $s0, %lo(deltaTimeSum) # addiu $s0, $s0, -0x1b30
+/* 002BF4 70001FF4 2673E4B8 */  addiu $s3, %lo(largestDeltaTime) # addiu $s3, $s3, -0x1b48
+/* 002BF8 70001FF8 2694E4D8 */  addiu $s4, %lo(startTime) # addiu $s4, $s4, -0x1b28
+/* 002BFC 70001FFC 26B5E4E0 */  addiu $s5, %lo(endTime) # addiu $s5, $s5, -0x1b20
 /* 002C00 70002000 241E0001 */  li    $fp, 1
 /* 002C04 70002004 27B70064 */  addiu $s7, $sp, 0x64
 /* 002C08 70002008 02C02025 */  move  $a0, $s6
@@ -912,7 +977,6 @@ glabel _amMain
 )
 #endif
 
-
 /**
  * 2E44	70002244
  * Based on method
@@ -970,7 +1034,7 @@ void audio_manager_handle_frame_message(AudioInfo *info, AudioInfo *lastInfo) {
     info->task.flags = 0;
 
     /* reply to when finished */
-    info->task.msgQ = (void *) (&(AudioManager.replyMessageQueue.fullqueue));
+    info->task.msgQ = (void *) (&(AudioManager.replyMessageQueue.mtqueue));
 
     /* reply with this message */
     info->task.msg = info;
