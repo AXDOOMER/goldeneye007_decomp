@@ -63,6 +63,30 @@ typedef struct _DMAState {
     DMABuffer *firstFree;
 } DMAState;
 
+/**
+* Modified from n64devkit example.
+* sizeof(struct _DMAState) == 0xc (12).
+*/
+typedef struct AudioInfo_s {
+    /**
+    * Output data pointer.
+    * 0x0.
+    */
+    s16 *data;
+
+    /**
+     * # of samples synthesized in this frame
+     * 0x4.
+     */
+    s16 frameSamples;
+
+    /**
+     * scheduler structure
+     * 0x8
+     */
+    OSScTask task;
+} AudioInfo;
+
 u32 D_800230F0 = 0;
 
 u32 audioFrameCount = 0;
@@ -588,7 +612,7 @@ loop_1:
         dword_CODE_bss_8005E4D8 = temp_ret;
         dword_CODE_bss_8005E4D8.unk4 = temp_ret;
         video_related_3(0x30000);
-        _amHandleFrameMsg((0x80060000 + (((u32) audioFrameCount % 3U) * 4))->unk-1AE0, sp60);
+        audio_manager_handle_frame_message((0x80060000 + (((u32) audioFrameCount % 3U) * 4))->unk-1AE0, sp60);
         temp_s1 = (phi_s1 + 1);
         video_related_3(0x60000);
         temp_ret_2 = osGetTime();
@@ -635,7 +659,7 @@ loop_1:
             }
         }
         osRecvMesg(&_am+0x200, &sp60, 1);
-        __amHandleDoneMsg(sp60);
+        audio_manager_handle_done_message(sp60);
         phi_s2 = phi_s2_2;
         phi_s1 = temp_s1;
     }
@@ -717,7 +741,7 @@ glabel _amMain
 /* 002C74 70002074 0018C880 */  sll   $t9, $t8, 2
 /* 002C78 70002078 00992021 */  addu  $a0, $a0, $t9
 /* 002C7C 7000207C 8C84E520 */  lw    $a0, %lo(_am+8)($a0)
-/* 002C80 70002080 0C000891 */  jal   _amHandleFrameMsg
+/* 002C80 70002080 0C000891 */  jal   audio_manager_handle_frame_message
 /* 002C84 70002084 8FA50060 */   lw    $a1, 0x60($sp)
 /* 002C88 70002088 26310001 */  addiu $s1, $s1, 1
 /* 002C8C 7000208C 0C000A15 */  jal   video_related_3
@@ -810,7 +834,7 @@ glabel _amMain
 /* 002DD8 700021D8 27A50060 */  addiu $a1, $sp, 0x60
 /* 002DDC 700021DC 0C003774 */  jal   osRecvMesg
 /* 002DE0 700021E0 03C03025 */   move  $a2, $fp
-/* 002DE4 700021E4 0C0008F9 */  jal   __amHandleDoneMsg
+/* 002DE4 700021E4 0C0008F9 */  jal   audio_manager_handle_done_message
 /* 002DE8 700021E8 8FA40060 */   lw    $a0, 0x60($sp)
 /* 002DEC 700021EC 10000004 */  b     .L70002200
 /* 002DF0 700021F0 00000000 */   nop   
@@ -844,7 +868,7 @@ glabel _amMain
  *	accepts: A0=, A1=p->audio packet
  */
 #ifdef NONMATCHING
-void _amHandleFrameMsg(void *arg0, s32 arg1, void *argB) {
+void audio_manager_handle_frame_message(void *arg0, s32 arg1, void *argB) {
     s32 sp24;
 
     // Node 0
@@ -886,7 +910,7 @@ void _amHandleFrameMsg(void *arg0, s32 arg1, void *argB) {
 #else
 GLOBAL_ASM(
 .text
-glabel _amHandleFrameMsg
+glabel audio_manager_handle_frame_message
 /* 002E44 70002244 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 002E48 70002248 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 002E4C 7000224C AFB00018 */  sw    $s0, 0x18($sp)
@@ -998,40 +1022,38 @@ glabel _amHandleFrameMsg
 
 /**
  * 2FE4	700023E4
+ * Based on method
+ *     static void __amHandleDoneMsg(AudioInfo *info)
+ * from the n64devkit demos_old/simple/audiomgr.c.
+ *
+ * original documentation:
+ * Really just debugging info in this frame. Checks
+ * to make sure we completed before we were out of samples.
+ * 
+ * @param info Unused.
  */
-#ifdef NONMATCHING
-void __amHandleDoneMsg(AudioInfo *info) {
-  int samplesLeft;
-  
-  samplesLeft = osAiGetLength();
-  if ((samplesLeft >> 2 == 0) && (firstTime == 0)) {
-    firstTime = 0;
-  }
+void audio_manager_handle_done_message(AudioInfo *info) {
+    s32 samplesLeft;
+    /*
+    * in the audiomgr example, firstTime is declared here with
+    * the static keyword. That breaks the build, but the following
+    * code will compile to a matching binary,
+    */
+    int *b;
+    
+    samplesLeft = (s32)osAiGetLength() >> 2;
+
+    /*
+    * The initial code probably looked like the following (and this
+    * is what you get with mips_to_c):
+    * 
+    *     if (samplesLeft == 0 && !firstTime) 
+    */   
+    b = &firstTime;
+    if (!samplesLeft && !(*b)) {
+        firstTime = 0;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel __amHandleDoneMsg
-/* 002FE4 700023E4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 002FE8 700023E8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 002FEC 700023EC 0C003BEC */  jal   osAiGetLength
-/* 002FF0 700023F0 AFA40018 */   sw    $a0, 0x18($sp)
-/* 002FF4 700023F4 00027083 */  sra   $t6, $v0, 2
-/* 002FF8 700023F8 15C00006 */  bnez  $t6, .L70002414
-/* 002FFC 700023FC 3C0F8002 */   lui   $t7, %hi(firstTime) 
-/* 003000 70002400 8DEF31C8 */  lw    $t7, %lo(firstTime)($t7)
-/* 003004 70002404 3C018002 */  lui   $at, %hi(firstTime)
-/* 003008 70002408 55E00003 */  bnezl $t7, .L70002418
-/* 00300C 7000240C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 003010 70002410 AC2031C8 */  sw    $zero, %lo(firstTime)($at)
-.L70002414:
-/* 003014 70002414 8FBF0014 */  lw    $ra, 0x14($sp)
-.L70002418:
-/* 003018 70002418 27BD0018 */  addiu $sp, $sp, 0x18
-/* 00301C 7000241C 03E00008 */  jr    $ra
-/* 003020 70002420 00000000 */   nop   
-)
-#endif
 
 /**
  * 3024	70002424
@@ -1248,7 +1270,6 @@ glabel dmaCallBack
 /* 0031D4 700025D4 00000000 */   nop   
 )
 #endif
-
 
 /**
  * 31D8 700025D8
