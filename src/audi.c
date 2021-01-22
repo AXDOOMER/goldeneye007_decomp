@@ -144,7 +144,10 @@ u32 gCurrentAcmdList = 0;
 
 #define CUSTOM_FX_SECTION_COUNT   6
 #define CUSTOM_FX_SECTION_SIZE    8
-s32 D_80023100[CUSTOM_FX_SECTION_COUNT * CUSTOM_FX_SECTION_SIZE + 2]= {
+/*
+* Following the libultra and libnaudio naming convention ...
+*/
+s32 CUSTOM_FX_PARAMS_N[CUSTOM_FX_SECTION_COUNT * CUSTOM_FX_SECTION_SIZE + 2]= {
 
     /* sections	   length */
              6,     160 ms,
@@ -315,7 +318,7 @@ void audio_manager_handle_done_message(AudioInfo *info);
 void audio_manager_main(void* arg);
 ALDMAproc audio_manager_dma_new(DMAState** state);
 
-#ifdef NONMATCHING
+
 /**
  * Address 29D0 70001BD0
  *
@@ -324,14 +327,6 @@ ALDMAproc audio_manager_dma_new(DMAState** state);
  * from the n64devkit. 
  *
  * @param alconf hw setup/config.
- *
- * decomp status:
- * - compiles: yes
- * - stack resize: wrong
- * - identical instructions: yes
- * - identical registers: fail
- *
- * notes: The if(AL_FX_CUSTOM) seems to be the problem area. It's also adding the extra stack space for variables.
  */
 void create_audio_manager(ALSynConfig* alconf) {
 
@@ -355,27 +350,9 @@ void create_audio_manager(ALSynConfig* alconf) {
     gMinFrameSize = (u32)(gFrameSize - 0x10);
     gMaxFrameSize = (u32)(gFrameSize + EXTRA_SAMPLES + 0x10);
     
-    if (alconf->fxType == AL_FX_CUSTOM) {        
-        u32 sp48[50];
-        //do {
-            register int t;
-
-            u32* src = (u32*)&D_80023100;
-            u32 count = ((u32)50 / (u32)3) * (u32)3;
-            u32* pend = &src[count];
-            
-            u32* dest = (u32*)&sp48;
-            do {
-                *src++ = t = *dest++;
-                *src++ = t = *dest++;
-                *src++ = t = *dest++;
-            } while (dest != pend);
-            src[0] = t = dest[0];
-            src[1] = t = dest[1];
-            
-        //} while (0);
-
-        alconf->params = (void*)&sp48;
+    if (alconf->fxType == AL_FX_CUSTOM) {    
+        s32 sp48[CUSTOM_FX_SECTION_COUNT * CUSTOM_FX_SECTION_SIZE + 2] = CUSTOM_FX_PARAMS_N;
+        alconf->params = sp48;
         alInit(&gAudioManager.dmaBuffer, alconf);
     }
     else {
@@ -395,7 +372,7 @@ void create_audio_manager(ALSynConfig* alconf) {
     gDmaBuffers[0].node.prev = NULL;
     gDmaBuffers[0].node.next = NULL;
 
-    for (j=0; j < NUMBER_DMA_BUFFERS - 1; j++)
+    for (j=0; (s32)j < NUMBER_DMA_BUFFERS - 1; j++)
     {
         alLink((ALLink*)&gDmaBuffers[j+1], (ALLink*)&gDmaBuffers[j]);
         gDmaBuffers[j].ptr = (void*)alHeapDBAlloc(0, 0, alconf->heap, 1, AUDIO_DMA_MAX_BUFFER_LENGTH);
@@ -410,250 +387,6 @@ void create_audio_manager(ALSynConfig* alconf) {
 
     osCreateThread(&gAudioManager.audioThread, 4, &audio_manager_main, 0, (void*)set_stack_entry((u8*)(&sp_audi), 0x1000), 0x14);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel create_audio_manager
-/* 0027D0 70001BD0 27BDFEE8 */  addiu $sp, $sp, -0x118
-/* 0027D4 70001BD4 AFB3002C */  sw    $s3, 0x2c($sp)
-/* 0027D8 70001BD8 3C0E7000 */  lui   $t6, %hi(audio_manager_dma_new) # $t6, 0x7000
-/* 0027DC 70001BDC AFBF0034 */  sw    $ra, 0x34($sp)
-/* 0027E0 70001BE0 AFB40030 */  sw    $s4, 0x30($sp)
-/* 0027E4 70001BE4 AFB20028 */  sw    $s2, 0x28($sp)
-/* 0027E8 70001BE8 AFB10024 */  sw    $s1, 0x24($sp)
-/* 0027EC 70001BEC AFB00020 */  sw    $s0, 0x20($sp)
-/* 0027F0 70001BF0 25CE25D8 */  addiu $t6, %lo(audio_manager_dma_new) # addiu $t6, $t6, 0x25d8
-/* 0027F4 70001BF4 00809825 */  move  $s3, $a0
-/* 0027F8 70001BF8 AC8E0010 */  sw    $t6, 0x10($a0)
-/* 0027FC 70001BFC 0C003A4C */  jal   osAiSetFrequency
-/* 002800 70001C00 24045622 */   li    $a0, 22050
-/* 002804 70001C04 00027840 */  sll   $t7, $v0, 1
-/* 002808 70001C08 448F2000 */  mtc1  $t7, $f4
-/* 00280C 70001C0C 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 002810 70001C10 44814000 */  mtc1  $at, $f8
-/* 002814 70001C14 468021A0 */  cvt.s.w $f6, $f4
-/* 002818 70001C18 24190001 */  li    $t9, 1
-/* 00281C 70001C1C 3C048006 */  lui   $a0, %hi(gFrameSize)
-/* 002820 70001C20 3C148006 */  lui   $s4, %hi(gMaxFrameSize)
-/* 002824 70001C24 2484ECC4 */  addiu $a0, %lo(gFrameSize) # addiu $a0, $a0, -0x133c
-/* 002828 70001C28 AE620018 */  sw    $v0, 0x18($s3)
-/* 00282C 70001C2C 46083003 */  div.s $f0, $f6, $f8
-/* 002830 70001C30 2694ECC8 */  addiu $s4, %lo(gMaxFrameSize) # addiu $s4, $s4, -0x1338
-/* 002834 70001C34 4458F800 */  cfc1  $t8, $31
-/* 002838 70001C38 44D9F800 */  ctc1  $t9, $31
-/* 00283C 70001C3C 00000000 */  nop   
-/* 002840 70001C40 460002A4 */  cvt.w.s $f10, $f0
-/* 002844 70001C44 4459F800 */  cfc1  $t9, $31
-/* 002848 70001C48 00000000 */  nop   
-/* 00284C 70001C4C 33390078 */  andi  $t9, $t9, 0x78
-/* 002850 70001C50 13200012 */  beqz  $t9, .L70001C9C
-/* 002854 70001C54 3C014F00 */   li    $at, 0x4F000000 # 2147483648.000000
-/* 002858 70001C58 44815000 */  mtc1  $at, $f10
-/* 00285C 70001C5C 24190001 */  li    $t9, 1
-/* 002860 70001C60 460A0281 */  sub.s $f10, $f0, $f10
-/* 002864 70001C64 44D9F800 */  ctc1  $t9, $31
-/* 002868 70001C68 00000000 */  nop   
-/* 00286C 70001C6C 460052A4 */  cvt.w.s $f10, $f10
-/* 002870 70001C70 4459F800 */  cfc1  $t9, $31
-/* 002874 70001C74 00000000 */  nop   
-/* 002878 70001C78 33390078 */  andi  $t9, $t9, 0x78
-/* 00287C 70001C7C 17200005 */  bnez  $t9, .L70001C94
-/* 002880 70001C80 00000000 */   nop   
-/* 002884 70001C84 44195000 */  mfc1  $t9, $f10
-/* 002888 70001C88 3C018000 */  lui   $at, 0x8000
-/* 00288C 70001C8C 10000007 */  b     .L70001CAC
-/* 002890 70001C90 0321C825 */   or    $t9, $t9, $at
-.L70001C94:
-/* 002894 70001C94 10000005 */  b     .L70001CAC
-/* 002898 70001C98 2419FFFF */   li    $t9, -1
-.L70001C9C:
-/* 00289C 70001C9C 44195000 */  mfc1  $t9, $f10
-/* 0028A0 70001CA0 00000000 */  nop   
-/* 0028A4 70001CA4 0720FFFB */  bltz  $t9, .L70001C94
-/* 0028A8 70001CA8 00000000 */   nop   
-.L70001CAC:
-/* 0028AC 70001CAC 03201825 */  move  $v1, $t9
-/* 0028B0 70001CB0 44D8F800 */  ctc1  $t8, $31
-/* 0028B4 70001CB4 44838000 */  mtc1  $v1, $f16
-/* 0028B8 70001CB8 AC990000 */  sw    $t9, ($a0)
-/* 0028BC 70001CBC 07210005 */  bgez  $t9, .L70001CD4
-/* 0028C0 70001CC0 468084A0 */   cvt.s.w $f18, $f16
-/* 0028C4 70001CC4 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 0028C8 70001CC8 44812000 */  mtc1  $at, $f4
-/* 0028CC 70001CCC 00000000 */  nop   
-/* 0028D0 70001CD0 46049480 */  add.s $f18, $f18, $f4
-.L70001CD4:
-/* 0028D4 70001CD4 4600903C */  c.lt.s $f18, $f0
-/* 0028D8 70001CD8 00000000 */  nop   
-/* 0028DC 70001CDC 45000003 */  bc1f  .L70001CEC
-/* 0028E0 70001CE0 24680001 */   addiu $t0, $v1, 1
-/* 0028E4 70001CE4 AC880000 */  sw    $t0, ($a0)
-/* 0028E8 70001CE8 01001825 */  move  $v1, $t0
-.L70001CEC:
-/* 0028EC 70001CEC 3069000F */  andi  $t1, $v1, 0xf
-/* 0028F0 70001CF0 11200004 */  beqz  $t1, .L70001D04
-/* 0028F4 70001CF4 2401FFF0 */   li    $at, -16
-/* 0028F8 70001CF8 00615024 */  and   $t2, $v1, $at
-/* 0028FC 70001CFC 25430010 */  addiu $v1, $t2, 0x10
-/* 002900 70001D00 AC830000 */  sw    $v1, ($a0)
-.L70001D04:
-/* 002904 70001D04 246CFFF0 */  addiu $t4, $v1, -0x10
-/* 002908 70001D08 3C018006 */  lui   $at, %hi(gMinFrameSize)
-/* 00290C 70001D0C AC2CECC0 */  sw    $t4, %lo(gMinFrameSize)($at)
-/* 002910 70001D10 246D0035 */  addiu $t5, $v1, 0x35
-/* 002914 70001D14 AE8D0000 */  sw    $t5, ($s4)
-/* 002918 70001D18 926E001C */  lbu   $t6, 0x1c($s3)
-/* 00291C 70001D1C 24010006 */  li    $at, 6
-/* 002920 70001D20 3C048006 */  lui   $a0, %hi(gAudioManager+0x238)
-/* 002924 70001D24 15C1001A */  bne   $t6, $at, .L70001D90
-/* 002928 70001D28 2484E750 */   addiu $a0, %lo(gAudioManager+0x238) # addiu $a0, $a0, -0x18b0
-/* 00292C 70001D2C 3C0F8002 */  lui   $t7, %hi(D_80023100) 
-/* 002930 70001D30 27A20048 */  addiu $v0, $sp, 0x48
-/* 002934 70001D34 25EF3100 */  addiu $t7, %lo(D_80023100) # addiu $t7, $t7, 0x3100
-/* 002938 70001D38 25F900C0 */  addiu $t9, $t7, 0xc0
-/* 00293C 70001D3C 00404025 */  move  $t0, $v0
-.L70001D40:
-/* 002940 70001D40 8DE10000 */  lw    $at, ($t7)
-/* 002944 70001D44 25EF000C */  addiu $t7, $t7, 0xc
-/* 002948 70001D48 2508000C */  addiu $t0, $t0, 0xc
-/* 00294C 70001D4C AD01FFF4 */  sw    $at, -0xc($t0)
-/* 002950 70001D50 8DE1FFF8 */  lw    $at, -8($t7)
-/* 002954 70001D54 AD01FFF8 */  sw    $at, -8($t0)
-/* 002958 70001D58 8DE1FFFC */  lw    $at, -4($t7)
-/* 00295C 70001D5C 15F9FFF8 */  bne   $t7, $t9, .L70001D40
-/* 002960 70001D60 AD01FFFC */   sw    $at, -4($t0)
-/* 002964 70001D64 8DE10000 */  lw    $at, ($t7)
-/* 002968 70001D68 3C048006 */  lui   $a0, %hi(gAudioManager+0x238)
-/* 00296C 70001D6C 2484E750 */  addiu $a0, %lo(gAudioManager+0x238) # addiu $a0, $a0, -0x18b0
-/* 002970 70001D70 AD010000 */  sw    $at, ($t0)
-/* 002974 70001D74 8DF90004 */  lw    $t9, 4($t7)
-/* 002978 70001D78 02602825 */  move  $a1, $s3
-/* 00297C 70001D7C AD190004 */  sw    $t9, 4($t0)
-/* 002980 70001D80 0C003AC7 */  jal   alInit
-/* 002984 70001D84 AE620020 */   sw    $v0, 0x20($s3)
-/* 002988 70001D88 10000003 */  b     .L70001D98
-/* 00298C 70001D8C 00000000 */   nop   
-.L70001D90:
-/* 002990 70001D90 0C003AC7 */  jal   alInit
-/* 002994 70001D94 02602825 */   move  $a1, $s3
-.L70001D98:
-/* 002998 70001D98 3C108006 */  lui   $s0, %hi(gAudioManager)
-/* 00299C 70001D9C 3C118006 */  lui   $s1, %hi(gAudioManager+0xC)
-/* 0029A0 70001DA0 2631E524 */  addiu $s1, %lo(gAudioManager+0xC) # addiu $s1, $s1, -0x1adc
-/* 0029A4 70001DA4 2610E518 */  addiu $s0, %lo(gAudioManager) # addiu $s0, $s0, -0x1ae8
-.L70001DA8:
-/* 0029A8 70001DA8 8E660014 */  lw    $a2, 0x14($s3)
-/* 0029AC 70001DAC 24090060 */  li    $t1, 96
-/* 0029B0 70001DB0 AFA90010 */  sw    $t1, 0x10($sp)
-/* 0029B4 70001DB4 00002025 */  move  $a0, $zero
-/* 0029B8 70001DB8 00002825 */  move  $a1, $zero
-/* 0029BC 70001DBC 0C003AD4 */  jal   alHeapDBAlloc
-/* 0029C0 70001DC0 24070001 */   li    $a3, 1
-/* 0029C4 70001DC4 8E8A0000 */  lw    $t2, ($s4)
-/* 0029C8 70001DC8 AE020008 */  sw    $v0, 8($s0)
-/* 0029CC 70001DCC 8E660014 */  lw    $a2, 0x14($s3)
-/* 0029D0 70001DD0 000A5880 */  sll   $t3, $t2, 2
-/* 0029D4 70001DD4 AFAB0010 */  sw    $t3, 0x10($sp)
-/* 0029D8 70001DD8 00002025 */  move  $a0, $zero
-/* 0029DC 70001DDC 00002825 */  move  $a1, $zero
-/* 0029E0 70001DE0 0C003AD4 */  jal   alHeapDBAlloc
-/* 0029E4 70001DE4 24070001 */   li    $a3, 1
-/* 0029E8 70001DE8 8E0C0008 */  lw    $t4, 8($s0)
-/* 0029EC 70001DEC 26100004 */  addiu $s0, $s0, 4
-/* 0029F0 70001DF0 0211082B */  sltu  $at, $s0, $s1
-/* 0029F4 70001DF4 1420FFEC */  bnez  $at, .L70001DA8
-/* 0029F8 70001DF8 AD820000 */   sw    $v0, ($t4)
-/* 0029FC 70001DFC 3C048006 */  lui   $a0, %hi(gAudioManager+0x200)
-/* 002A00 70001E00 3C058006 */  lui   $a1, %hi(gAudioManager+0x218)
-/* 002A04 70001E04 24A5E730 */  addiu $a1, %lo(gAudioManager+0x218) # addiu $a1, $a1, -0x18d0
-/* 002A08 70001E08 2484E718 */  addiu $a0, %lo(gAudioManager+0x200) # addiu $a0, $a0, -0x18e8
-/* 002A0C 70001E0C 0C0035B4 */  jal   osCreateMesgQueue
-/* 002A10 70001E10 24060008 */   li    $a2, 8
-/* 002A14 70001E14 3C048006 */  lui   $a0, %hi(gAudioManager+0x1C8)
-/* 002A18 70001E18 3C058006 */  lui   $a1, %hi(gAudioManager+0x1E0)
-/* 002A1C 70001E1C 24A5E6F8 */  addiu $a1, %lo(gAudioManager+0x1E0) # addiu $a1, $a1, -0x1908
-/* 002A20 70001E20 2484E6E0 */  addiu $a0, %lo(gAudioManager+0x1C8) # addiu $a0, $a0, -0x1920
-/* 002A24 70001E24 0C0035B4 */  jal   osCreateMesgQueue
-/* 002A28 70001E28 24060008 */   li    $a2, 8
-/* 002A2C 70001E2C 3C048006 */  lui   $a0, %hi(gDmaMessageQueue)
-/* 002A30 70001E30 3C058006 */  lui   $a1, %hi(gDmaMessageBuffer)
-/* 002A34 70001E34 24A5F2E8 */  addiu $a1, %lo(gDmaMessageBuffer) # addiu $a1, $a1, -0xd18
-/* 002A38 70001E38 2484F2D0 */  addiu $a0, %lo(gDmaMessageQueue) # addiu $a0, $a0, -0xd30
-/* 002A3C 70001E3C 0C0035B4 */  jal   osCreateMesgQueue
-/* 002A40 70001E40 24060040 */   li    $a2, 64
-/* 002A44 70001E44 3C028006 */  lui   $v0, %hi(gDmaBuffers)
-/* 002A48 70001E48 2442E7C0 */  addiu $v0, %lo(gDmaBuffers) # addiu $v0, $v0, -0x1840
-/* 002A4C 70001E4C 3C118006 */  lui   $s1, %hi(gDmaBuffers)
-/* 002A50 70001E50 3C108006 */  lui   $s0, %hi(gDmaBuffers+20)
-/* 002A54 70001E54 AC400004 */  sw    $zero, 4($v0)
-/* 002A58 70001E58 AC400000 */  sw    $zero, ($v0)
-/* 002A5C 70001E5C 2610E7D4 */  addiu $s0, $s0, %lo(gDmaBuffers+20)
-/* 002A60 70001E60 2631E7C0 */  addiu $s1, %lo(gDmaBuffers) # addiu $s1, $s1, -0x1840
-/* 002A64 70001E64 00009025 */  move  $s2, $zero
-.L70001E68:
-/* 002A68 70001E68 02002025 */  move  $a0, $s0
-/* 002A6C 70001E6C 0C003AB0 */  jal   alLink
-/* 002A70 70001E70 02202825 */   move  $a1, $s1
-/* 002A74 70001E74 8E660014 */  lw    $a2, 0x14($s3)
-/* 002A78 70001E78 240D0200 */  li    $t5, 512
-/* 002A7C 70001E7C AFAD0010 */  sw    $t5, 0x10($sp)
-/* 002A80 70001E80 00002025 */  move  $a0, $zero
-/* 002A84 70001E84 00002825 */  move  $a1, $zero
-/* 002A88 70001E88 0C003AD4 */  jal   alHeapDBAlloc
-/* 002A8C 70001E8C 24070001 */   li    $a3, 1
-/* 002A90 70001E90 26520001 */  addiu $s2, $s2, 1
-/* 002A94 70001E94 2A41003F */  slti  $at, $s2, 0x3f
-/* 002A98 70001E98 26310014 */  addiu $s1, $s1, 0x14
-/* 002A9C 70001E9C 26100014 */  addiu $s0, $s0, 0x14
-/* 002AA0 70001EA0 1420FFF1 */  bnez  $at, .L70001E68
-/* 002AA4 70001EA4 AE22FFFC */   sw    $v0, -4($s1)
-/* 002AA8 70001EA8 8E660014 */  lw    $a2, 0x14($s3)
-/* 002AAC 70001EAC 240E0200 */  li    $t6, 512
-/* 002AB0 70001EB0 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 002AB4 70001EB4 00002025 */  move  $a0, $zero
-/* 002AB8 70001EB8 00002825 */  move  $a1, $zero
-/* 002ABC 70001EBC 0C003AD4 */  jal   alHeapDBAlloc
-/* 002AC0 70001EC0 24070001 */   li    $a3, 1
-/* 002AC4 70001EC4 AE220010 */  sw    $v0, 0x10($s1)
-/* 002AC8 70001EC8 3C118006 */  lui   $s1, %hi(gAudioManager+0x8)
-/* 002ACC 70001ECC 3C108006 */  lui   $s0, %hi(gAudioManager)
-/* 002AD0 70001ED0 2610E518 */  addiu $s0, %lo(gAudioManager) # addiu $s0, $s0, -0x1ae8
-/* 002AD4 70001ED4 2631E520 */  addiu $s1, %lo(gAudioManager+0x8) # addiu $s1, $s1, -0x1ae0
-.L70001ED8:
-/* 002AD8 70001ED8 8E660014 */  lw    $a2, 0x14($s3)
-/* 002ADC 70001EDC 24185DC0 */  li    $t8, 24000
-/* 002AE0 70001EE0 AFB80010 */  sw    $t8, 0x10($sp)
-/* 002AE4 70001EE4 00002025 */  move  $a0, $zero
-/* 002AE8 70001EE8 00002825 */  move  $a1, $zero
-/* 002AEC 70001EEC 0C003AD4 */  jal   alHeapDBAlloc
-/* 002AF0 70001EF0 24070001 */   li    $a3, 1
-/* 002AF4 70001EF4 26100004 */  addiu $s0, $s0, 4
-/* 002AF8 70001EF8 1611FFF7 */  bne   $s0, $s1, .L70001ED8
-/* 002AFC 70001EFC AE02FFFC */   sw    $v0, -4($s0)
-/* 002B00 70001F00 3C04803B */  lui   $a0, %hi(sp_audi) # $a0, 0x803b
-/* 002B04 70001F04 24843950 */  addiu $a0, %lo(sp_audi) # addiu $a0, $a0, 0x3950
-/* 002B08 70001F08 0C0001BC */  jal   set_stack_entry
-/* 002B0C 70001F0C 24051000 */   li    $a1, 4096
-/* 002B10 70001F10 3C048006 */  lui   $a0, %hi(gAudioManager+0x18)
-/* 002B14 70001F14 3C067000 */  lui   $a2, %hi(audio_manager_main) # $a2, 0x7000
-/* 002B18 70001F18 24190014 */  li    $t9, 20
-/* 002B1C 70001F1C AFB90014 */  sw    $t9, 0x14($sp)
-/* 002B20 70001F20 24C61F7C */  addiu $a2, %lo(audio_manager_main) # addiu $a2, $a2, 0x1f7c
-/* 002B24 70001F24 2484E530 */  addiu $a0, %lo(gAudioManager+0x18) # addiu $a0, $a0, -0x1ad0
-/* 002B28 70001F28 24050004 */  li    $a1, 4
-/* 002B2C 70001F2C 00003825 */  move  $a3, $zero
-/* 002B30 70001F30 0C00350C */  jal   osCreateThread
-/* 002B34 70001F34 AFA20010 */   sw    $v0, 0x10($sp)
-/* 002B38 70001F38 8FBF0034 */  lw    $ra, 0x34($sp)
-/* 002B3C 70001F3C 8FB00020 */  lw    $s0, 0x20($sp)
-/* 002B40 70001F40 8FB10024 */  lw    $s1, 0x24($sp)
-/* 002B44 70001F44 8FB20028 */  lw    $s2, 0x28($sp)
-/* 002B48 70001F48 8FB3002C */  lw    $s3, 0x2c($sp)
-/* 002B4C 70001F4C 8FB40030 */  lw    $s4, 0x30($sp)
-/* 002B50 70001F50 03E00008 */  jr    $ra
-/* 002B54 70001F54 27BD0118 */   addiu $sp, $sp, 0x118
-)
-#endif
 
 /**
  * 2B58 70001F58
