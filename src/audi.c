@@ -8,6 +8,61 @@
  * This file contains audio code.
  */
 
+#define NUMBER_DMA_BUFFERS 64
+
+/**
+ * Copied from the n64devkit audio examples.
+ * sizeof(struct _DMABuffer) == 0x14 (20)
+ */
+typedef struct _DMABuffer {
+    /**
+     * 0x0.
+     */
+    ALLink node;
+
+    /**
+     * 0x8.
+     */
+    int startAddr;
+
+    /**
+     * 0xc.
+     */
+    u32 lastFrame;
+
+    /**
+     * 0x10.
+     */
+    char* ptr;
+} DMABuffer;
+
+/**
+ * Copied from the n64devkit audio examples.
+ * sizeof(struct _DMAState) == 0xc (12).
+ */
+typedef struct _DMAState {
+    /**
+     * This was defined (in the devkit) as u8 (and code expects a byte), but the size 
+     * of the struct and offset for firstUsed seems to make this u32/s32.
+     * I'm adding the union to make this explicit.
+     * 0x0.
+     */
+    union {
+        u8 initialized;
+        s32 _unusedAlign;
+    } u;
+
+    /**
+     * 0x4.
+     */
+    DMABuffer *firstUsed;
+
+    /**
+     * 0x8.
+     */
+    DMABuffer *firstFree;
+} DMAState;
+
 u32 D_800230F0 = 0;
 u32 audFrameCt = 0;
 u32 nextDMA = 0;
@@ -63,11 +118,14 @@ char _am[0x284];
 
 //8005e7a0
 OSScClient audi_client[2];
-//8005e7b0
-s32 dmaState_initialized;
-s32 dmaState_firstUsed;
-s32 dmaState_firstFree[2];
-char dmaBuffs[0x500];
+
+/**
+ * Address 0x8005e7b0.
+ */
+DMAState dmaState;
+
+DMABuffer dmaBuffers[NUMBER_DMA_BUFFERS];
+
 s32 minFrameSize;
 s32 frameSize;
 s32 maxFrameSize;
@@ -76,6 +134,9 @@ s32 cmdLen;
 OSIoMesg audDMAIOMesgBuf[0x40];
 OSMesgQueue audDMAMessageQ;
 char audDMAMessageBuf[0x108];
+
+// Forward declarations
+s32 dmaCallBack(s32 addr, s32 len, void* state);
 
 
 /**
@@ -166,10 +227,10 @@ loop_10:
     osCreateMesgQueue(&_am+0x200, &_am+0x218, 8);
     osCreateMesgQueue(&_am+0x1C8, &_am+0x1E0, 8);
     osCreateMesgQueue(&audDMAMessageQ, &audDMAMessageBuf, 0x40);
-    dmaBuffs.unk4 = 0;
-    dmaBuffs.unk0 = 0;
-    phi_s0_2 = dmaBuffs + 0xe;
-    phi_s1 = &dmaBuffs;
+    dmaBuffers.unk4 = 0;
+    dmaBuffers.unk0 = 0;
+    phi_s0_2 = dmaBuffers + 0xe;
+    phi_s1 = &dmaBuffers;
     phi_s2 = 0;
 loop_12:
     alLink(phi_s0_2, phi_s1);
@@ -366,14 +427,14 @@ glabel amCreateAudioMgr
 /* 002A38 70001E38 2484F2D0 */  addiu $a0, %lo(audDMAMessageQ) # addiu $a0, $a0, -0xd30
 /* 002A3C 70001E3C 0C0035B4 */  jal   osCreateMesgQueue
 /* 002A40 70001E40 24060040 */   li    $a2, 64
-/* 002A44 70001E44 3C028006 */  lui   $v0, %hi(dmaBuffs)
-/* 002A48 70001E48 2442E7C0 */  addiu $v0, %lo(dmaBuffs) # addiu $v0, $v0, -0x1840
-/* 002A4C 70001E4C 3C118006 */  lui   $s1, %hi(dmaBuffs)
-/* 002A50 70001E50 3C108006 */  lui   $s0, %hi(dmaBuffs+20)
+/* 002A44 70001E44 3C028006 */  lui   $v0, %hi(dmaBuffers)
+/* 002A48 70001E48 2442E7C0 */  addiu $v0, %lo(dmaBuffers) # addiu $v0, $v0, -0x1840
+/* 002A4C 70001E4C 3C118006 */  lui   $s1, %hi(dmaBuffers)
+/* 002A50 70001E50 3C108006 */  lui   $s0, %hi(dmaBuffers+20)
 /* 002A54 70001E54 AC400004 */  sw    $zero, 4($v0)
 /* 002A58 70001E58 AC400000 */  sw    $zero, ($v0)
-/* 002A5C 70001E5C 2610E7D4 */  addiu $s0, $s0, %lo(dmaBuffs+20)
-/* 002A60 70001E60 2631E7C0 */  addiu $s1, %lo(dmaBuffs) # addiu $s1, $s1, -0x1840
+/* 002A5C 70001E5C 2610E7D4 */  addiu $s0, $s0, %lo(dmaBuffers+20)
+/* 002A60 70001E60 2631E7C0 */  addiu $s1, %lo(dmaBuffers) # addiu $s1, $s1, -0x1840
 /* 002A64 70001E64 00009025 */  move  $s2, $zero
 .L70001E68:
 /* 002A68 70001E68 02002025 */  move  $a0, $s0
@@ -972,7 +1033,7 @@ glabel __amHandleDoneMsg
  * 3024	70002424
  */
 #ifdef NONMATCHING
-s32 __amDMA(u32 arg0, s32 arg1, ? arg2, s32 arg14) {
+s32 dmaCallBack(s32 addr, s32 len, void* state) {
     s32 sp30;
     s32 sp48;
     ?32 sp4C;
@@ -1061,9 +1122,9 @@ s32 __amDMA(u32 arg0, s32 arg1, ? arg2, s32 arg14) {
 #else
 GLOBAL_ASM(
 .text
-glabel __amDMA
-/* 003024 70002424 3C098006 */  lui   $t1, %hi(dmaState_initialized) 
-/* 003028 70002428 2529E7B0 */  addiu $t1, %lo(dmaState_initialized) # addiu $t1, $t1, -0x1850
+glabel dmaCallBack
+/* 003024 70002424 3C098006 */  lui   $t1, %hi(dmaState) 
+/* 003028 70002428 2529E7B0 */  addiu $t1, %lo(dmaState) # addiu $t1, $t1, -0x1850
 /* 00302C 7000242C 8D280004 */  lw    $t0, 4($t1)
 /* 003030 70002430 27BDFFB0 */  addiu $sp, $sp, -0x50
 /* 003034 70002434 AFB00028 */  sw    $s0, 0x28($sp)
@@ -1118,8 +1179,8 @@ glabel __amDMA
 /* 0030E4 700024E4 0C003AA4 */  jal   alUnlink
 /* 0030E8 700024E8 AD2B0008 */   sw    $t3, 8($t1)
 /* 0030EC 700024EC 8FA60038 */  lw    $a2, 0x38($sp)
-/* 0030F0 700024F0 3C098006 */  lui   $t1, %hi(dmaState_initialized) 
-/* 0030F4 700024F4 2529E7B0 */  addiu $t1, %lo(dmaState_initialized) # addiu $t1, $t1, -0x1850
+/* 0030F0 700024F0 3C098006 */  lui   $t1, %hi(dmaState) 
+/* 0030F4 700024F4 2529E7B0 */  addiu $t1, %lo(dmaState) # addiu $t1, $t1, -0x1850
 /* 0030F8 700024F8 10C00007 */  beqz  $a2, .L70002518
 /* 0030FC 700024FC 8FA70050 */   lw    $a3, 0x50($sp)
 /* 003100 70002500 02002025 */  move  $a0, $s0
@@ -1184,45 +1245,35 @@ glabel __amDMA
 )
 #endif
 
+
 /**
- * 31D8	700025D8
+ * 31D8 700025D8
+ * Based on method
+ *     ALDMAproc __amDmaNew(AMDMAState **state)
+ * from the n64devkit demos_old/simple/audiomgr.c.
+ *
+ * Initialize the dma buffers and return the address of the
+ * procedure that will be used to dma the samples from rom to ram. This 
+ * routine will be called once for each physical voice that is created. 
+ * In this case, because we know where all the buffers are, and since 
+ * they are not attached to a specific voice, we will only really do any
+ * initialization the first time. After that we just return the address
+ * to the dma routine.
+ * 
+ * @param state will point to dmaState after call.
+ * @return Address of dma callback function.
  */
-#ifdef NONMATCHING
-void *__amDmaNew(void *arg0) {
-    // Node 0
-    if (dmaState_initialized == 0)
-    {
-        // Node 1
-        dmaState_initialized.unk4 = 0;
-        dmaState_initialized.unk8 = &dmaBuffs;
-        dmaState_initialized = (u8)1;
+ALDMAproc __amDmaNew(DMAState** state)
+{
+    if (dmaState.u.initialized == 0) {
+        dmaState.firstUsed = NULL;
+        dmaState.firstFree = dmaBuffers;
+        dmaState.u.initialized = (u8)1U;
     }
-    // Node 2
-    *arg0 = &dmaState_initialized;
-    return;
-    // (possible return value: &__amDMA)
+
+    *state = &dmaState;
+    return &dmaCallBack;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel __amDmaNew
-/* 0031D8 700025D8 3C038006 */  lui   $v1, %hi(dmaState_initialized)
-/* 0031DC 700025DC 2463E7B0 */  addiu $v1, %lo(dmaState_initialized) # addiu $v1, $v1, -0x1850
-/* 0031E0 700025E0 906E0000 */  lbu   $t6, ($v1)
-/* 0031E4 700025E4 3C027000 */  lui   $v0, %hi(__amDMA) # $v0, 0x7000
-/* 0031E8 700025E8 3C0F8006 */  lui   $t7, %hi(dmaBuffs) 
-/* 0031EC 700025EC 15C00006 */  bnez  $t6, .L70002608
-/* 0031F0 700025F0 24422424 */   addiu $v0, %lo(__amDMA) # addiu $v0, $v0, 0x2424
-/* 0031F4 700025F4 25EFE7C0 */  addiu $t7, %lo(dmaBuffs) # addiu $t7, $t7, -0x1840
-/* 0031F8 700025F8 24180001 */  li    $t8, 1
-/* 0031FC 700025FC AC600004 */  sw    $zero, 4($v1)
-/* 003200 70002600 AC6F0008 */  sw    $t7, 8($v1)
-/* 003204 70002604 A0780000 */  sb    $t8, ($v1)
-.L70002608:
-/* 003208 70002608 03E00008 */  jr    $ra
-/* 00320C 7000260C AC830000 */   sw    $v1, ($a0)
-)
-#endif
 
 /**
  *  3210	70002610
@@ -1314,8 +1365,8 @@ glabel __clearAudioDMA
 /* 00326C 7000266C 5420FFF9 */  bnezl $at, .L70002654
 /* 003270 70002670 02202025 */   move  $a0, $s1
 .L70002674:
-/* 003274 70002674 3C128006 */  lui   $s2, %hi(dmaState_initialized)
-/* 003278 70002678 2652E7B0 */  addiu $s2, %lo(dmaState_initialized) # addiu $s2, $s2, -0x1850
+/* 003274 70002674 3C128006 */  lui   $s2, %hi(dmaState)
+/* 003278 70002678 2652E7B0 */  addiu $s2, %lo(dmaState) # addiu $s2, $s2, -0x1850
 /* 00327C 7000267C 8E500004 */  lw    $s0, 4($s2)
 /* 003280 70002680 3C138002 */  lui   $s3, %hi(audFrameCt)
 /* 003284 70002684 267330F4 */  addiu $s3, %lo(audFrameCt) # addiu $s3, $s3, 0x30f4

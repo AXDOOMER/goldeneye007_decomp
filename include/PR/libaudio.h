@@ -3,6 +3,21 @@
 
 #include "abi.h"
 
+/***********************************************************************
+ * Audio Library global routines
+ ***********************************************************************/
+typedef struct ALLink_s {
+    struct ALLink_s      *next;
+    struct ALLink_s      *prev;
+} ALLink;
+
+typedef s32 (*ALDMAproc)(s32 addr, s32 len, void *state);
+typedef ALDMAproc (*ALDMANew)(void *state);
+
+/***********************************************************************
+ * Sequence Files
+ ***********************************************************************/
+
 typedef struct
 {
     u8 *offset;
