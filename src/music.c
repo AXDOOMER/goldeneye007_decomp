@@ -240,7 +240,7 @@ loop_4:
         spB4 = 0;
         spC0 = (u8)6;
         spBC = 0;
-        amCreateAudioMgr(&spA4, temp_a1, &D_80063836, &D_8006383C);
+        create_audio_manager(&spA4, temp_a1, &D_80063836, &D_8006383C);
         
         sp88 = 0x10;
         sp8C = 0x40;
@@ -460,7 +460,7 @@ glabel setupaudio
 /* 0078D8 70006CD8 A3A800C0 */  sb    $t0, 0xc0($sp)
 /* 0078DC 70006CDC AFA000BC */  sw    $zero, 0xbc($sp)
 /* 0078E0 70006CE0 AFB000B8 */  sw    $s0, 0xb8($sp)
-/* 0078E4 70006CE4 0C0006F4 */  jal   amCreateAudioMgr
+/* 0078E4 70006CE4 0C0006F4 */  jal   create_audio_manager
 /* 0078E8 70006CE8 27A400A4 */   addiu $a0, $sp, 0xa4
 /* 0078EC 70006CEC 24090010 */  li    $t1, 16
 /* 0078F0 70006CF0 240A0040 */  li    $t2, 64

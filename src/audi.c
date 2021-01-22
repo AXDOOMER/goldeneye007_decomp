@@ -8,8 +8,19 @@
  * This file contains audio code. Starts main audio thread, handles some audio DMA.
  */
 
+// 0x5622 = 22050
+#define OUTPUT_RATE        0x5622
+#define MAYBE_FRAME_RATE   60
+#define FRAMES_PER_FIELD_AS_POW2   1
+#define AUDIO_FRAME_MESSAGE_QUEUE_SIZE   8
+#define AUDIO_REPLY_MESSAGE_QUEUE_SIZE   8
+#define AUDIO_DMA_IO_QUEUE_SIZE         64
+#define AUDIO_DMA_QUEUE_SIZE            66
+#define AUDIO_DMA_MAX_BUFFER_LENGTH  0x200
+
 #define NUMBER_OUTPUT_BUFFERS               3
 #define NUMBER_ACMD_LISTS                   2
+#define MAX_ACMD_SIZE                    3000
 #define NUMBER_DMA_BUFFERS                 64
 #define EXTRA_SAMPLES                    0x25
 #define AUDIO_FRAME_MESSAGE_QUEUE_SIZE      8
@@ -22,6 +33,7 @@ extern long long int rspbootTextStart[];
 extern long long int gsp3DTextStart[];
 extern long long int aspMainTextStart[];
 extern long long int aspMainDataStart[];
+extern u8 sp_audi[];
 
 /**
  * Copied from the n64devkit audio examples.
@@ -295,142 +307,125 @@ DMAState dmaState;
 
 DMABuffer dmaBuffers[NUMBER_DMA_BUFFERS];
 
-s32 minFrameSize;
-s32 frameSize;
-s32 maxFrameSize;
+u32 minFrameSize;
+u32 frameSize;
+u32 maxFrameSize;
 s32 commandLength;
 
-OSIoMesg audDMAIOMesgBuf[0x40];
-OSMesgQueue audDMAMessageQ;
-char audDMAMessageBuf[0x108];
+OSIoMesg dmaIOMessageBuffer[AUDIO_DMA_IO_QUEUE_SIZE];
+
+OSMesgQueue dmaMessageQueue;
+
+OSMesg dmaMessageBuffer[AUDIO_DMA_QUEUE_SIZE];
+
 
 // Forward declarations
 s32 dmaCallBack(s32 addr, s32 len, void* state);
 void clear_audio_dma(void);
 void audio_manager_handle_frame_message(AudioInfo *info, AudioInfo *lastInfo);
 void audio_manager_handle_done_message(AudioInfo *info);
+void audio_manager_main(void* arg);
+ALDMAproc audio_manager_dma_new(DMAState** state);
 
-/**
- * 29D0	70001BD0
- */
 #ifdef NONMATCHING
-void amCreateAudioMgr(void *arg0)
-{
-    ? sp48;
-    f32 temp_f0;
-    s32 temp_ret;
-    s32 temp_s2;
-    u32 temp_s0;
-    u32 temp_t0;
-    u32 temp_t9;
-    u32 temp_v1;
-    void *temp_s0_2;
-    void *temp_s1;
-    void *temp_t0_2;
-    void *temp_t7;
-    u32 phi_v1;
-    u32 phi_v1_2;
-    void *phi_t7;
-    void *phi_t0;
-    void *phi_s0;
-    s32 phi_s0_2;
-    void *phi_s1;
-    s32 phi_s2;
-    void *phi_s0_3;
+/**
+ * Address 29D0 70001BD0
+ *
+ * Looks to be loosely based on method
+ *     amCreateAudioMgr
+ * from the n64devkit. 
+ *
+ * @param alconf hw setup/config.
+ *
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: wrong
+ * - identical instructions: yes
+ * - identical registers: fail
+ *
+ * notes: The if(AL_FX_CUSTOM) seems to be the problem area. It's also adding the extra stack space for variables.
+ */
+void create_audio_manager(ALSynConfig* alconf) {
 
-    arg0->unk10 = &audio_manager_dma_new;
-    temp_ret = osAiSetFrequency(0x5622);
-    arg0->unk18 = temp_ret;
-    temp_f0 = (f32) (temp_ret * 2) / 60.0f;
-    temp_t9 = (u32) temp_f0;
-    frameSize = temp_t9;
-    temp_t0 = temp_t9 + 1;
-    phi_v1 = temp_t9;
-    if ((f32) temp_t9 < temp_f0)
-    {
-        frameSize = temp_t0;
-        phi_v1 = temp_t0;
+    u32 j;
+    f32 fsize;
+
+    alconf->dmaproc = &audio_manager_dma_new;
+    alconf->outputRate = osAiSetFrequency(OUTPUT_RATE);
+    
+    fsize = (f32) ((alconf->outputRate << FRAMES_PER_FIELD_AS_POW2) / (f32)MAYBE_FRAME_RATE);
+    
+    frameSize = (u32) fsize;
+
+    if (frameSize < fsize)
+        frameSize++;
+    
+    // This rounds up to the next multiple of 16.
+    if (frameSize & 0xf)
+        frameSize = (frameSize & ~0xf) + 0x10;
+    
+    minFrameSize = (u32)(frameSize - 0x10);
+    maxFrameSize = (u32)(frameSize + EXTRA_SAMPLES + 0x10);
+    
+    if (alconf->fxType == AL_FX_CUSTOM) {        
+        u32 sp48[50];
+        //do {
+            register int t;
+
+            u32* src = (u32*)&D_80023100;
+            u32 count = ((u32)50 / (u32)3) * (u32)3;
+            u32* pend = &src[count];
+            
+            u32* dest = (u32*)&sp48;
+            do {
+                *src++ = t = *dest++;
+                *src++ = t = *dest++;
+                *src++ = t = *dest++;
+            } while (dest != pend);
+            src[0] = t = dest[0];
+            src[1] = t = dest[1];
+            
+        //} while (0);
+
+        alconf->params = (void*)&sp48;
+        alInit(&AudioManager.dmaBuffer, alconf);
     }
-    phi_v1_2 = phi_v1;
-    if ((phi_v1 & 0xf) != 0)
-    {
-        temp_v1 = (phi_v1 & -0x10) + 0x10;
-        frameSize = temp_v1;
-        phi_v1_2 = temp_v1;
+    else {
+        alInit(&AudioManager.dmaBuffer, alconf);
     }
-    minFrameSize = (s32) (phi_v1_2 + -0x10);
-    maxFrameSize = (s32) (phi_v1_2 + 0x35);
-    if (arg0->unk1C == 6)
+    
+    for (j=0; j < NUMBER_OUTPUT_BUFFERS; j++)
     {
-        phi_t7 = &D_80023100;
-        phi_t0 = &sp48;
-loop_6:
-        temp_t7 = phi_t7 + 0xc;
-        temp_t0_2 = phi_t0 + 0xc;
-        temp_t0_2->unk-C = (?32) *phi_t7;
-        temp_t0_2->unk-8 = (?32) temp_t7->unk-8;
-        temp_t0_2->unk-4 = (?32) temp_t7->unk-4;
-        phi_t7 = temp_t7;
-        phi_t0 = temp_t0_2;
-        if (temp_t7 != (&D_80023100 + 0xc0))
-        {
-            goto loop_6;
-        }
-        temp_t0_2->unk0 = (?32) temp_t7->unk0;
-        temp_t0_2->unk4 = (?32) temp_t7->unk4;
-        arg0->unk20 = &sp48;
-        alInit(&AudioManager+0x238, arg0);
+        AudioManager.audioInfo[j] = (AudioInfo *)alHeapDBAlloc(0, 0, alconf->heap, 1, sizeof(AudioInfo));
+        AudioManager.audioInfo[j]->data = (s16*)alHeapDBAlloc(0, 0, alconf->heap, 1, maxFrameSize * 4);
     }
-    else
+    
+    osCreateMesgQueue(&AudioManager.replyMessageQueue, (OSMesg*)&AudioManager.replyMessageBuffer, AUDIO_REPLY_MESSAGE_QUEUE_SIZE);
+    osCreateMesgQueue(&AudioManager.frameMessageQueue, (OSMesg*)&AudioManager.frameMessageBuffer, AUDIO_FRAME_MESSAGE_QUEUE_SIZE);
+    osCreateMesgQueue(&dmaMessageQueue, (OSMesg*)&dmaMessageBuffer, AUDIO_DMA_IO_QUEUE_SIZE);
+    
+    dmaBuffers[0].node.prev = NULL;
+    dmaBuffers[0].node.next = NULL;
+
+    for (j=0; j < NUMBER_DMA_BUFFERS - 1; j++)
     {
-        alInit(&AudioManager+0x238, arg0);
+        alLink((ALLink*)&dmaBuffers[j+1], (ALLink*)&dmaBuffers[j]);
+        dmaBuffers[j].ptr = (void*)alHeapDBAlloc(0, 0, alconf->heap, 1, AUDIO_DMA_MAX_BUFFER_LENGTH);
     }
-    phi_s0 = &AudioManager;
-loop_10:
-    phi_s0->unk8 = alHeapDBAlloc(0, 0, arg0->unk14, 1, 0x60);
-    temp_s0 = phi_s0 + 4;
-    *phi_s0->unk8 = alHeapDBAlloc(0, 0, arg0->unk14, 1, (s32) (maxFrameSize * 4));
-    phi_s0 = temp_s0;
-    if (temp_s0 < &AudioManager+0xC)
+    // last buffer already linked, but still needs buffer
+    dmaBuffers[j].ptr = (void*)alHeapDBAlloc(0, 0, alconf->heap, 1, AUDIO_DMA_MAX_BUFFER_LENGTH);
+    
+    for (j=0; j < NUMBER_ACMD_LISTS; j++)
     {
-        goto loop_10;
+        AudioManager.cmdList[j] = (Acmd *)alHeapDBAlloc(0, 0, alconf->heap, 1, MAX_ACMD_SIZE * sizeof(Acmd));
     }
-    osCreateMesgQueue(&AudioManager+0x200, &AudioManager+0x218, 8);
-    osCreateMesgQueue(&AudioManager+0x1C8, &AudioManager+0x1E0, 8);
-    osCreateMesgQueue(&audDMAMessageQ, &audDMAMessageBuf, 0x40);
-    dmaBuffers.unk4 = 0;
-    dmaBuffers.unk0 = 0;
-    phi_s0_2 = dmaBuffers + 0xe;
-    phi_s1 = &dmaBuffers;
-    phi_s2 = 0;
-loop_12:
-    alLink(phi_s0_2, phi_s1);
-    temp_s2 = phi_s2 + 1;
-    temp_s1 = phi_s1 + 0x14;
-    temp_s1->unk-4 = alHeapDBAlloc(0, 0, arg0->unk14, 1, 0x200);
-    phi_s0_2 = phi_s0_2 + 0x14;
-    phi_s1 = temp_s1;
-    phi_s2 = temp_s2;
-    if (temp_s2 < 0x3f)
-    {
-        goto loop_12;
-    }
-    temp_s1->unk10 = alHeapDBAlloc(0, 0, arg0->unk14, 1, 0x200);
-    phi_s0_3 = &AudioManager;
-loop_14:
-    temp_s0_2 = phi_s0_3 + 4;
-    temp_s0_2->unk-4 = alHeapDBAlloc(0, 0, arg0->unk14, 1, 0x5dc0);
-    phi_s0_3 = temp_s0_2;
-    if (temp_s0_2 != &AudioManager+0x8)
-    {
-        goto loop_14;
-    }
-    osCreateThread(&AudioManager+0x18, 4, &audio_manager_main, 0, set_stack_entry(&sp_audi, 0x1000), 0x14);
+
+    osCreateThread(&AudioManager.audioThread, 4, &audio_manager_main, 0, (void*)set_stack_entry((u8*)(&sp_audi), 0x1000), 0x14);
 }
 #else
 GLOBAL_ASM(
 .text
-glabel amCreateAudioMgr
+glabel create_audio_manager
 /* 0027D0 70001BD0 27BDFEE8 */  addiu $sp, $sp, -0x118
 /* 0027D4 70001BD4 AFB3002C */  sw    $s3, 0x2c($sp)
 /* 0027D8 70001BD8 3C0E7000 */  lui   $t6, %hi(audio_manager_dma_new) # $t6, 0x7000
@@ -592,10 +587,10 @@ glabel amCreateAudioMgr
 /* 002A20 70001E20 2484E6E0 */  addiu $a0, %lo(AudioManager+0x1C8) # addiu $a0, $a0, -0x1920
 /* 002A24 70001E24 0C0035B4 */  jal   osCreateMesgQueue
 /* 002A28 70001E28 24060008 */   li    $a2, 8
-/* 002A2C 70001E2C 3C048006 */  lui   $a0, %hi(audDMAMessageQ)
-/* 002A30 70001E30 3C058006 */  lui   $a1, %hi(audDMAMessageBuf)
-/* 002A34 70001E34 24A5F2E8 */  addiu $a1, %lo(audDMAMessageBuf) # addiu $a1, $a1, -0xd18
-/* 002A38 70001E38 2484F2D0 */  addiu $a0, %lo(audDMAMessageQ) # addiu $a0, $a0, -0xd30
+/* 002A2C 70001E2C 3C048006 */  lui   $a0, %hi(dmaMessageQueue)
+/* 002A30 70001E30 3C058006 */  lui   $a1, %hi(dmaMessageBuffer)
+/* 002A34 70001E34 24A5F2E8 */  addiu $a1, %lo(dmaMessageBuffer) # addiu $a1, $a1, -0xd18
+/* 002A38 70001E38 2484F2D0 */  addiu $a0, %lo(dmaMessageQueue) # addiu $a0, $a0, -0xd30
 /* 002A3C 70001E3C 0C0035B4 */  jal   osCreateMesgQueue
 /* 002A40 70001E40 24060040 */   li    $a2, 64
 /* 002A44 70001E44 3C028006 */  lui   $v0, %hi(dmaBuffers)
@@ -697,8 +692,6 @@ void start_audio_thread(void) {
  * - stack resize: ok
  * - identical instructions: yes
  * - identical registers: fail
- * - number of attempts: 1
- * - last attempt: 2021.01.17
  *
  * notes: It looks like there are two issues.
  * 1) The static variables are being loaded into the wrong registers.
@@ -1176,7 +1169,7 @@ s32 dmaCallBack(s32 addr, s32 len, void* state) {
         dmaState_initialized.unk8->unkC = (?32) audioFrameCount;
         nextDMA = (s32) (nextDMA + 1);
         sp4C = (?32) dmaState_initialized.unk8->unk10;
-        osPiStartDma(((nextDMA * 0x18) + &audDMAIOMesgBuf), 1, 0, temp_a3, (?32) dmaState_initialized.unk8->unk10, 0x200, &audDMAMessageQ);
+        osPiStartDma(((nextDMA * 0x18) + &dmaIOMessageBuffer), 1, 0, temp_a3, (?32) dmaState_initialized.unk8->unk10, 0x200, &dmaMessageQueue);
         osVirtualToPhysical(sp4C);
     }
     // Node 15
@@ -1277,13 +1270,13 @@ glabel dmaCallBack
 /* 003160 70002560 8E030010 */  lw    $v1, 0x10($s0)
 /* 003164 70002564 AE0D000C */  sw    $t5, 0xc($s0)
 /* 003168 70002568 8D020000 */  lw    $v0, ($t0)
-/* 00316C 7000256C 3C0F8006 */  lui   $t7, %hi(audDMAIOMesgBuf) 
-/* 003170 70002570 3C198006 */  lui   $t9, %hi(audDMAMessageQ) 
+/* 00316C 7000256C 3C0F8006 */  lui   $t7, %hi(dmaIOMessageBuffer) 
+/* 003170 70002570 3C198006 */  lui   $t9, %hi(dmaMessageQueue) 
 /* 003174 70002574 00027080 */  sll   $t6, $v0, 2
 /* 003178 70002578 01C27023 */  subu  $t6, $t6, $v0
 /* 00317C 7000257C 000E70C0 */  sll   $t6, $t6, 3
-/* 003180 70002580 2739F2D0 */  addiu $t9, %lo(audDMAMessageQ) # addiu $t9, $t9, -0xd30
-/* 003184 70002584 25EFECD0 */  addiu $t7, %lo(audDMAIOMesgBuf) # addiu $t7, $t7, -0x1330
+/* 003180 70002580 2739F2D0 */  addiu $t9, %lo(dmaMessageQueue) # addiu $t9, $t9, -0xd30
+/* 003184 70002584 25EFECD0 */  addiu $t7, %lo(dmaIOMessageBuffer) # addiu $t7, $t7, -0x1330
 /* 003188 70002588 24180200 */  li    $t8, 512
 /* 00318C 7000258C 244B0001 */  addiu $t3, $v0, 1
 /* 003190 70002590 AD0B0000 */  sw    $t3, ($t0)
@@ -1364,7 +1357,7 @@ void clear_audio_dma(void) {
     */
    for (i=0; i<nextDMA; i++)
    {
-       if (osRecvMesg(&audDMAMessageQ, (OSMesg *)&osmesg, OS_MESG_NOBLOCK) == -1)
+       if (osRecvMesg(&dmaMessageQueue, (OSMesg *)&osmesg, OS_MESG_NOBLOCK) == -1)
         /*
             The audiomgr example has an ifndef for a debug statement as follows:
             PRINTF("Dma not done\n");

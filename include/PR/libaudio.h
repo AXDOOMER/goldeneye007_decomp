@@ -14,6 +14,35 @@ typedef struct ALLink_s {
 typedef s32 (*ALDMAproc)(s32 addr, s32 len, void *state);
 typedef ALDMAproc (*ALDMANew)(void *state);
 
+#define AL_FX_NONE      0
+#define AL_FX_SMALLROOM 1
+#define AL_FX_BIGROOM   2
+#define AL_FX_CHORUS    3
+#define AL_FX_FLANGE    4
+#define AL_FX_ECHO      5
+#define AL_FX_CUSTOM    6
+
+typedef u8 ALFxId;
+
+typedef struct {
+    u8 *base;
+    u8 *current;
+    s32 len;
+    s32 count;
+} ALHeap;
+
+typedef struct {
+    s32 maxVVoices; /* obsolete */
+    s32 maxPVoices;
+    s32 maxUpdates;
+    s32 maxFXbusses;
+    void *dmaproc;
+    ALHeap *heap;
+    s32 outputRate;
+    ALFxId fxType;
+    s32 *params;
+} ALSynConfig;
+
 /***********************************************************************
  * Sequence Files
  ***********************************************************************/
