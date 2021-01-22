@@ -13,6 +13,11 @@ The only requirements for Ubuntu 16.04+ should be
 sudo apt install binutils-mips-linux-gnu make
 ```
 
+If you don't have host development tools already installed then you will also need
+```bash
+sudo apt install build-essential
+```
+
 Additionally [qemu-irix](https://github.com/n64decomp/qemu-irix/releases) is needed
 
 Install the package after download:
