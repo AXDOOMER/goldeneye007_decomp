@@ -129,7 +129,7 @@ u32 D_800230F0 = 0;
 
 u32 audioFrameCount = 0;
 
-u32 nextDMA = 0;
+u32 nextDma = 0;
 
 u32 currentAcmdList = 0;
 
@@ -320,7 +320,7 @@ OSMesg dmaMessageBuffer[AUDIO_DMA_QUEUE_SIZE];
 
 
 // Forward declarations
-s32 dmaCallBack(s32 addr, s32 len, void* state);
+s32 audio_manager_dma_callback(s32 addr, s32 len, void* state);
 void clear_audio_dma(void);
 void audio_manager_handle_frame_message(AudioInfo *info, AudioInfo *lastInfo);
 void audio_manager_handle_done_message(AudioInfo *info);
@@ -1087,220 +1087,121 @@ void audio_manager_handle_done_message(AudioInfo *info) {
 }
 
 /**
- * 3024	70002424
+ * 3024 70002424
+ * Looks to be based on method
+ *     s32 __amDMA(s32 addr, s32 len, void *state)
+ * from the n64devkit.
+ * 
+ *  original documentation:
+ * This routine handles the dma'ing of samples from rom to ram.
+ * First it checks the current buffers to see if the samples needed are
+ * already in place. Because buffers are linked sequentially by the
+ * addresses where the samples are on rom, it doesn't need to check all
+ * of them, only up to the address that it needs. If it finds one, it
+ * returns the address of that buffer. If it doesn't find the samples 
+ * that it needs, it will initiate a DMA of the samples that it needs.
+ * In either case, it updates the lastFrame variable, to indicate that
+ * this buffer was last used in this frame. This is important for the
+ * __clearAudioDMA routine.
+ * 
+ * @param addr ?.
+ * @param len ?.
+ * @param state unused.
+ * @return result from call to osVirtualToPhysical
  */
-#ifdef NONMATCHING
-s32 dmaCallBack(s32 addr, s32 len, void* state) {
-    s32 sp30;
-    s32 sp48;
-    ?32 sp4C;
-    s32 temp_t2;
-    s32 temp_a3;
+s32 audio_manager_dma_callback(s32 addr, s32 len, void* state) {
 
-    // Node 0
-    temp_t2 = (arg0 & 1);
-    sp48 = temp_t2;
-    if (dmaState_initialized.unk4 != 0)
-    {
-        loop_1:
-        // Node 1
-        if (arg0 >= (u32) dmaState_initialized.unk4->unk8)
+    void *freeBuffer;
+    s32 delta;
+    DMABuffer *dmaPtr;
+    s32 addrEnd;
+    s32 buffEnd;
+    DMABuffer *lastDmaPtr;
+
+    lastDmaPtr = NULL;
+    dmaPtr = dmaState.firstUsed;
+    delta = addr & 0x1;
+    addrEnd = addr + len;
+
+    /* first check to see if a currently existing buffer contains the
+       sample that you need.  */
+    while (dmaPtr) {
+
+        buffEnd = dmaPtr->startAddr + AUDIO_DMA_MAX_BUFFER_LENGTH;
+
+        /* since buffers are ordered */
+        /* abort if past possible */
+        if ((u32)dmaPtr->startAddr > (u32)addr)
         {
-            // Node 2
-            if ((dmaState_initialized.unk4->unk8 + 0x200) >= (arg0 + arg1))
-            {
-                // Node 3
-                dmaState_initialized.unk4->unkC = (?32) audioFrameCount;
-                osVirtualToPhysical(((dmaState_initialized.unk4->unk10 + arg0) - dmaState_initialized.unk4->unk8), dmaState_initialized.unk4, arg0);
-                return;
-                // (possible return value: osVirtualToPhysical(((dmaState_initialized.unk4->unk10 + arg0) - dmaState_initialized.unk4->unk8), dmaState_initialized.unk4, arg0))
-            }
-            // Node 4
-            if (*dmaState_initialized.unk4 != 0)
-            {
-                goto loop_1;
-            }
+            break;
         }
-    }
-    // Node 5
-    if (dmaState_initialized.unk8 == 0)
-    {
-        // Node 6
-        if (NULL == 0)
+        /* yes, found a buffer with samples */
+        else if (addrEnd <= buffEnd)
         {
-            // Node 7
+            /* mark it used */
+            dmaPtr->lastFrame = (s32) audioFrameCount;
+            freeBuffer = (dmaPtr->ptr + addr) - dmaPtr->startAddr;
+            return osVirtualToPhysical(freeBuffer);
         }
-        // Node 8
-        sp30 = temp_t2;
-        osVirtualToPhysical(NULL->unk10, NULL, arg0);
+    
+        lastDmaPtr = dmaPtr;
+        dmaPtr = (DMABuffer*)dmaPtr->node.next;
     }
+
+    /* get here, and you didn't find a buffer, so dma a new one */
+    /* get a buffer from the free list */
+    dmaPtr = dmaState.firstFree;
+
+    /* 
+     * if you get here and dmaPtr is null, send back a bogus
+     * pointer, it's better than nothing
+     */
+    if (!dmaPtr)
+    {
+        if (!lastDmaPtr)
+        {
+            lastDmaPtr = dmaState.firstUsed;
+        }
+
+        return osVirtualToPhysical(lastDmaPtr->ptr) + delta;
+    }
+
+    dmaState.firstFree = (DMABuffer*)dmaPtr->node.next;
+    alUnlink((ALLink*)dmaPtr);
+
+    /* add it to the used list */
+    /* if you have other dmabuffers used, add this one */
+    /* to the list, after the last one checked above */
+    if (lastDmaPtr)
+    {
+        alLink((ALLink*)dmaPtr, (ALLink*)lastDmaPtr);
+    }
+    /* if this buffer is before any others */
+    // Jam at begining of list
+    else if (dmaState.firstUsed)
+    {
+        lastDmaPtr = dmaState.firstUsed;
+        dmaState.firstUsed = dmaPtr;
+        dmaPtr->node.next = (ALLink*)lastDmaPtr;
+        dmaPtr->node.prev = 0;
+        lastDmaPtr->node.prev = (ALLink*)dmaPtr;
+    }
+    /* no buffers in list, this is the first one */
     else
     {
-        // Node 9
-        dmaState_initialized.unk8 = (void *) *dmaState_initialized.unk8;
-        alUnlink(dmaState_initialized.unk8, NULL, arg0);
-        if (sp38 != 0)
-        {
-            // Node 10
-            alLink(dmaState_initialized.unk8, sp38, sp38, arg14);
-        }
-        else
-        {
-            // Node 11
-            if (dmaState_initialized.unk4 != 0)
-            {
-                // Node 12
-                dmaState_initialized.unk4 = (void *) dmaState_initialized.unk8;
-                *dmaState_initialized.unk8 = (void *) dmaState_initialized.unk4;
-                dmaState_initialized.unk8->unk4 = 0;
-                dmaState_initialized.unk4->unk4 = (void *) dmaState_initialized.unk8;
-            }
-            else
-            {
-                // Node 13
-                dmaState_initialized.unk4 = (void *) dmaState_initialized.unk8;
-                *dmaState_initialized.unk8 = NULL;
-                dmaState_initialized.unk8->unk4 = 0;
-            }
-        }
-        // Node 14
-        temp_a3 = (arg14 - sp48);
-        dmaState_initialized.unk8->unk8 = temp_a3;
-        dmaState_initialized.unk8->unkC = (?32) audioFrameCount;
-        nextDMA = (s32) (nextDMA + 1);
-        sp4C = (?32) dmaState_initialized.unk8->unk10;
-        osPiStartDma(((nextDMA * 0x18) + &dmaIOMessageBuffer), 1, 0, temp_a3, (?32) dmaState_initialized.unk8->unk10, 0x200, &dmaMessageQueue);
-        osVirtualToPhysical(sp4C);
+        dmaState.firstUsed = dmaPtr;
+        dmaPtr->node.next = 0;
+        dmaPtr->node.prev = 0;
     }
-    // Node 15
-    return;
-    // (possible return value: (osVirtualToPhysical(sp4C) + sp48))
+
+    freeBuffer = dmaPtr->ptr;
+    addr -= delta;
+    dmaPtr->startAddr = addr;
+    dmaPtr->lastFrame = audioFrameCount;
+
+    osPiStartDma(&dmaIOMessageBuffer[nextDma++], OS_MESG_PRI_HIGH, OS_READ, (u32)addr, freeBuffer, AUDIO_DMA_MAX_BUFFER_LENGTH, &dmaMessageQueue);
+    return (s32)osVirtualToPhysical(freeBuffer) + delta;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel dmaCallBack
-/* 003024 70002424 3C098006 */  lui   $t1, %hi(dmaState) 
-/* 003028 70002428 2529E7B0 */  addiu $t1, %lo(dmaState) # addiu $t1, $t1, -0x1850
-/* 00302C 7000242C 8D280004 */  lw    $t0, 4($t1)
-/* 003030 70002430 27BDFFB0 */  addiu $sp, $sp, -0x50
-/* 003034 70002434 AFB00028 */  sw    $s0, 0x28($sp)
-/* 003038 70002438 AFA60058 */  sw    $a2, 0x58($sp)
-/* 00303C 7000243C 308A0001 */  andi  $t2, $a0, 1
-/* 003040 70002440 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 003044 70002444 00803825 */  move  $a3, $a0
-/* 003048 70002448 00003025 */  move  $a2, $zero
-/* 00304C 7000244C AFAA0048 */  sw    $t2, 0x48($sp)
-/* 003050 70002450 11000015 */  beqz  $t0, .L700024A8
-/* 003054 70002454 01008025 */   move  $s0, $t0
-/* 003058 70002458 8E020008 */  lw    $v0, 8($s0)
-.L7000245C:
-/* 00305C 7000245C 00E57021 */  addu  $t6, $a3, $a1
-/* 003060 70002460 00E2082B */  sltu  $at, $a3, $v0
-/* 003064 70002464 14200010 */  bnez  $at, .L700024A8
-/* 003068 70002468 24430200 */   addiu $v1, $v0, 0x200
-/* 00306C 7000246C 006E082A */  slt   $at, $v1, $t6
-/* 003070 70002470 1420000A */  bnez  $at, .L7000249C
-/* 003074 70002474 02003025 */   move  $a2, $s0
-/* 003078 70002478 8E180010 */  lw    $t8, 0x10($s0)
-/* 00307C 7000247C 3C0F8002 */  lui   $t7, %hi(audioFrameCount) 
-/* 003080 70002480 8DEF30F4 */  lw    $t7, %lo(audioFrameCount)($t7)
-/* 003084 70002484 0307C821 */  addu  $t9, $t8, $a3
-/* 003088 70002488 03222023 */  subu  $a0, $t9, $v0
-/* 00308C 7000248C 0C003A2C */  jal   osVirtualToPhysical
-/* 003090 70002490 AE0F000C */   sw    $t7, 0xc($s0)
-/* 003094 70002494 1000004C */  b     .L700025C8
-/* 003098 70002498 8FBF002C */   lw    $ra, 0x2c($sp)
-.L7000249C:
-/* 00309C 7000249C 8E100000 */  lw    $s0, ($s0)
-/* 0030A0 700024A0 5600FFEE */  bnezl $s0, .L7000245C
-/* 0030A4 700024A4 8E020008 */   lw    $v0, 8($s0)
-.L700024A8:
-/* 0030A8 700024A8 8D300008 */  lw    $s0, 8($t1)
-/* 0030AC 700024AC 1600000A */  bnez  $s0, .L700024D8
-/* 0030B0 700024B0 02002025 */   move  $a0, $s0
-/* 0030B4 700024B4 54C00003 */  bnezl $a2, .L700024C4
-/* 0030B8 700024B8 8CC40010 */   lw    $a0, 0x10($a2)
-/* 0030BC 700024BC 01003025 */  move  $a2, $t0
-/* 0030C0 700024C0 8CC40010 */  lw    $a0, 0x10($a2)
-.L700024C4:
-/* 0030C4 700024C4 0C003A2C */  jal   osVirtualToPhysical
-/* 0030C8 700024C8 AFAA0030 */   sw    $t2, 0x30($sp)
-/* 0030CC 700024CC 8FAA0030 */  lw    $t2, 0x30($sp)
-/* 0030D0 700024D0 1000003C */  b     .L700025C4
-/* 0030D4 700024D4 004A1021 */   addu  $v0, $v0, $t2
-.L700024D8:
-/* 0030D8 700024D8 8E0B0000 */  lw    $t3, ($s0)
-/* 0030DC 700024DC AFA70050 */  sw    $a3, 0x50($sp)
-/* 0030E0 700024E0 AFA60038 */  sw    $a2, 0x38($sp)
-/* 0030E4 700024E4 0C003AA4 */  jal   alUnlink
-/* 0030E8 700024E8 AD2B0008 */   sw    $t3, 8($t1)
-/* 0030EC 700024EC 8FA60038 */  lw    $a2, 0x38($sp)
-/* 0030F0 700024F0 3C098006 */  lui   $t1, %hi(dmaState) 
-/* 0030F4 700024F4 2529E7B0 */  addiu $t1, %lo(dmaState) # addiu $t1, $t1, -0x1850
-/* 0030F8 700024F8 10C00007 */  beqz  $a2, .L70002518
-/* 0030FC 700024FC 8FA70050 */   lw    $a3, 0x50($sp)
-/* 003100 70002500 02002025 */  move  $a0, $s0
-/* 003104 70002504 00C02825 */  move  $a1, $a2
-/* 003108 70002508 0C003AB0 */  jal   alLink
-/* 00310C 7000250C AFA70050 */   sw    $a3, 0x50($sp)
-/* 003110 70002510 1000000C */  b     .L70002544
-/* 003114 70002514 8FA70050 */   lw    $a3, 0x50($sp)
-.L70002518:
-/* 003118 70002518 8D280004 */  lw    $t0, 4($t1)
-/* 00311C 7000251C 51000007 */  beql  $t0, $zero, .L7000253C
-/* 003120 70002520 AD300004 */   sw    $s0, 4($t1)
-/* 003124 70002524 AD300004 */  sw    $s0, 4($t1)
-/* 003128 70002528 AE080000 */  sw    $t0, ($s0)
-/* 00312C 7000252C AE000004 */  sw    $zero, 4($s0)
-/* 003130 70002530 10000004 */  b     .L70002544
-/* 003134 70002534 AD100004 */   sw    $s0, 4($t0)
-/* 003138 70002538 AD300004 */  sw    $s0, 4($t1)
-.L7000253C:
-/* 00313C 7000253C AE000000 */  sw    $zero, ($s0)
-/* 003140 70002540 AE000004 */  sw    $zero, 4($s0)
-.L70002544:
-/* 003144 70002544 8FAC0048 */  lw    $t4, 0x48($sp)
-/* 003148 70002548 3C0D8002 */  lui   $t5, %hi(audioFrameCount) 
-/* 00314C 7000254C 3C088002 */  lui   $t0, %hi(nextDMA) 
-/* 003150 70002550 00EC3823 */  subu  $a3, $a3, $t4
-/* 003154 70002554 AE070008 */  sw    $a3, 8($s0)
-/* 003158 70002558 8DAD30F4 */  lw    $t5, %lo(audioFrameCount)($t5)
-/* 00315C 7000255C 250830F8 */  addiu $t0, %lo(nextDMA) # addiu $t0, $t0, 0x30f8
-/* 003160 70002560 8E030010 */  lw    $v1, 0x10($s0)
-/* 003164 70002564 AE0D000C */  sw    $t5, 0xc($s0)
-/* 003168 70002568 8D020000 */  lw    $v0, ($t0)
-/* 00316C 7000256C 3C0F8006 */  lui   $t7, %hi(dmaIOMessageBuffer) 
-/* 003170 70002570 3C198006 */  lui   $t9, %hi(dmaMessageQueue) 
-/* 003174 70002574 00027080 */  sll   $t6, $v0, 2
-/* 003178 70002578 01C27023 */  subu  $t6, $t6, $v0
-/* 00317C 7000257C 000E70C0 */  sll   $t6, $t6, 3
-/* 003180 70002580 2739F2D0 */  addiu $t9, %lo(dmaMessageQueue) # addiu $t9, $t9, -0xd30
-/* 003184 70002584 25EFECD0 */  addiu $t7, %lo(dmaIOMessageBuffer) # addiu $t7, $t7, -0x1330
-/* 003188 70002588 24180200 */  li    $t8, 512
-/* 00318C 7000258C 244B0001 */  addiu $t3, $v0, 1
-/* 003190 70002590 AD0B0000 */  sw    $t3, ($t0)
-/* 003194 70002594 AFB80014 */  sw    $t8, 0x14($sp)
-/* 003198 70002598 01CF2021 */  addu  $a0, $t6, $t7
-/* 00319C 7000259C AFB90018 */  sw    $t9, 0x18($sp)
-/* 0031A0 700025A0 24050001 */  li    $a1, 1
-/* 0031A4 700025A4 00003025 */  move  $a2, $zero
-/* 0031A8 700025A8 AFA3004C */  sw    $v1, 0x4c($sp)
-/* 0031AC 700025AC 0C003DA8 */  jal   osPiStartDma
-/* 0031B0 700025B0 AFA30010 */   sw    $v1, 0x10($sp)
-/* 0031B4 700025B4 0C003A2C */  jal   osVirtualToPhysical
-/* 0031B8 700025B8 8FA4004C */   lw    $a0, 0x4c($sp)
-/* 0031BC 700025BC 8FAC0048 */  lw    $t4, 0x48($sp)
-/* 0031C0 700025C0 004C1021 */  addu  $v0, $v0, $t4
-.L700025C4:
-/* 0031C4 700025C4 8FBF002C */  lw    $ra, 0x2c($sp)
-.L700025C8:
-/* 0031C8 700025C8 8FB00028 */  lw    $s0, 0x28($sp)
-/* 0031CC 700025CC 27BD0050 */  addiu $sp, $sp, 0x50
-/* 0031D0 700025D0 03E00008 */  jr    $ra
-/* 0031D4 700025D4 00000000 */   nop   
-)
-#endif
 
 /**
  * 31D8 700025D8
@@ -1329,7 +1230,7 @@ ALDMAproc audio_manager_dma_new(DMAState** state)
     }
 
     *state = &dmaState;
-    return &dmaCallBack;
+    return &audio_manager_dma_callback;
 }
 
 /**
@@ -1355,7 +1256,7 @@ void clear_audio_dma(void) {
     * Don't block here. If dma's aren't complete, you've had an audio
     * overrun. (Bad news, but go for it anyway, and try and recover.
     */
-   for (i=0; i<nextDMA; i++)
+   for (i=0; i<nextDma; i++)
    {
        if (osRecvMesg(&dmaMessageQueue, (OSMesg *)&osmesg, OS_MESG_NOBLOCK) == -1)
         /*
@@ -1395,7 +1296,7 @@ void clear_audio_dma(void) {
         dmaPtr = nextPtr;
     }
 
-    nextDMA = 0U;
+    nextDma = 0U;
     audioFrameCount = (s32)(audioFrameCount + 1);
 }
 
