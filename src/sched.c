@@ -1096,24 +1096,20 @@ void __scAppendList(OSSched *sc, OSScTask *t)
     t->state = t->flags & OS_SC_RCP_MASK;    
 }
 
-
-/**
- * 2040	70001440
- * (DPC fill)
- */
-#ifdef NONMATCHING
 void __scExec(OSSched *sc, OSScTask *sp, OSScTask *dp)
 {
+    int rv;
     if (sp)
     {
-        if (sp->list.t.type == 2)
+        if (sp->list.t.type == M_AUDTASK)
         {
             osWritebackDCacheAll();
         } 
-         if (sp->state &= 0x10)
-            {
-                osDpSetStatus(0x3c0);
-            }
+        
+        if ((sp->list.t.type != M_AUDTASK) && (sp->state & 0x10) == 0)
+        {
+            osDpSetStatus(0x3c0);
+        }
         
         if (sp->list.t.type == 2)
         {
@@ -1121,10 +1117,10 @@ void __scExec(OSSched *sc, OSScTask *sp, OSScTask *dp)
         }
         else
         {
-            video_related_3(0x30001);
+            video_related_3(0x40001);
             video_related_3(0x20002);
         }
-        sp->state = (s32) (sp->state & -0x31);
+        sp->state &= ~(OS_SC_YIELD | OS_SC_YIELDED); 
         osSpTaskLoad(&sp->list);
         osSpTaskStartGo(&sp->list);
         sc->curRSPTask = sp;
@@ -1135,98 +1131,14 @@ void __scExec(OSSched *sc, OSScTask *sp, OSScTask *dp)
     }
     if (dp && (dp != sp))
     {
-            osDpSetNextBuffer(dp->list.t.output_buff, dp->list.t.output_buff_size);
+        rv = osDpSetNextBuffer(dp->list.t.output_buff, *dp->list.t.output_buff_size);
 
-            dp_busy = 1;
-            dpCount = 0;
+        dp_busy = 1;
+        dpCount = 0;
 
-            sc->curRDPTask = dp;
-        
+        sc->curRDPTask = dp;        
     }
 }
-#else
-GLOBAL_ASM(
-glabel __scExec
-/* 002040 70001440 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 002044 70001444 AFB10018 */  sw    $s1, 0x18($sp)
-/* 002048 70001448 AFB00014 */  sw    $s0, 0x14($sp)
-/* 00204C 7000144C 00A08025 */  move  $s0, $a1
-/* 002050 70001450 00C08825 */  move  $s1, $a2
-/* 002054 70001454 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 002058 70001458 10A0002C */  beqz  $a1, .L7000150C
-/* 00205C 7000145C AFA40028 */   sw    $a0, 0x28($sp)
-/* 002060 70001460 8CA20010 */  lw    $v0, 0x10($a1)
-/* 002064 70001464 24010002 */  li    $at, 2
-/* 002068 70001468 54410005 */  bnel  $v0, $at, .L70001480
-/* 00206C 7000146C 24010002 */   li    $at, 2
-/* 002070 70001470 0C0034C8 */  jal   osWritebackDCacheAll
-/* 002074 70001474 00000000 */   nop   
-/* 002078 70001478 8E020010 */  lw    $v0, 0x10($s0)
-/* 00207C 7000147C 24010002 */  li    $at, 2
-.L70001480:
-/* 002080 70001480 50410009 */  beql  $v0, $at, .L700014A8
-/* 002084 70001484 24010002 */   li    $at, 2
-/* 002088 70001488 8E0E0004 */  lw    $t6, 4($s0)
-/* 00208C 7000148C 31CF0010 */  andi  $t7, $t6, 0x10
-/* 002090 70001490 55E00005 */  bnezl $t7, .L700014A8
-/* 002094 70001494 24010002 */   li    $at, 2
-/* 002098 70001498 0C003938 */  jal   osDpSetStatus
-/* 00209C 7000149C 240403C0 */   li    $a0, 960
-/* 0020A0 700014A0 8E020010 */  lw    $v0, 0x10($s0)
-/* 0020A4 700014A4 24010002 */  li    $at, 2
-.L700014A8:
-/* 0020A8 700014A8 14410006 */  bne   $v0, $at, .L700014C4
-/* 0020AC 700014AC 3C040004 */   lui   $a0, 4
-/* 0020B0 700014B0 3C040003 */  lui   $a0, (0x00030001 >> 16) # lui $a0, 3
-/* 0020B4 700014B4 0C000A15 */  jal   video_related_3
-/* 0020B8 700014B8 34840001 */   ori   $a0, (0x00030001 & 0xFFFF) # ori $a0, $a0, 1
-/* 0020BC 700014BC 10000007 */  b     .L700014DC
-/* 0020C0 700014C0 8E180004 */   lw    $t8, 4($s0)
-.L700014C4:
-/* 0020C4 700014C4 0C000A15 */  jal   video_related_3
-/* 0020C8 700014C8 34840001 */   ori   $a0, (0x00030001 & 0xFFFF) # ori $a0, $a0, 1
-/* 0020CC 700014CC 3C040002 */  lui   $a0, (0x00020002 >> 16) # lui $a0, 2
-/* 0020D0 700014D0 0C000A15 */  jal   video_related_3
-/* 0020D4 700014D4 34840002 */   ori   $a0, (0x00020002 & 0xFFFF) # ori $a0, $a0, 2
-/* 0020D8 700014D8 8E180004 */  lw    $t8, 4($s0)
-.L700014DC:
-/* 0020DC 700014DC 2401FFCF */  li    $at, -49
-/* 0020E0 700014E0 26040010 */  addiu $a0, $s0, 0x10
-/* 0020E4 700014E4 0301C824 */  and   $t9, $t8, $at
-/* 0020E8 700014E8 AE190004 */  sw    $t9, 4($s0)
-/* 0020EC 700014EC 0C003983 */  jal   osSpTaskLoad
-/* 0020F0 700014F0 AFA40020 */   sw    $a0, 0x20($sp)
-/* 0020F4 700014F4 0C0039DB */  jal   osSpTaskStartGo
-/* 0020F8 700014F8 8FA40020 */   lw    $a0, 0x20($sp)
-/* 0020FC 700014FC 8FA80028 */  lw    $t0, 0x28($sp)
-/* 002100 70001500 16110002 */  bne   $s0, $s1, .L7000150C
-/* 002104 70001504 AD1000C8 */   sw    $s0, 0xc8($t0)
-/* 002108 70001508 AD1100CC */  sw    $s1, 0xcc($t0)
-.L7000150C:
-/* 00210C 7000150C 52200010 */  beql  $s1, $zero, .L70001550
-/* 002110 70001510 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 002114 70001514 5230000E */  beql  $s1, $s0, .L70001550
-/* 002118 70001518 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 00211C 7000151C 8E29003C */  lw    $t1, 0x3c($s1)
-/* 002120 70001520 8E240038 */  lw    $a0, 0x38($s1)
-/* 002124 70001524 8D260000 */  lw    $a2, ($t1)
-/* 002128 70001528 0C0039EC */  jal   osDpSetNextBuffer
-/* 00212C 7000152C 8D270004 */   lw    $a3, 4($t1)
-/* 002130 70001530 240A0001 */  li    $t2, 1
-/* 002134 70001534 3C018002 */  lui   $at, %hi(dp_busy)
-/* 002138 70001538 8FAB0028 */  lw    $t3, 0x28($sp)
-/* 00213C 7000153C AC2A30A8 */  sw    $t2, %lo(dp_busy)($at)
-/* 002140 70001540 3C018002 */  lui   $at, %hi(dpCount)
-/* 002144 70001544 AC2030AC */  sw    $zero, %lo(dpCount)($at)
-/* 002148 70001548 AD7100CC */  sw    $s1, 0xcc($t3)
-/* 00214C 7000154C 8FBF001C */  lw    $ra, 0x1c($sp)
-.L70001550:
-/* 002150 70001550 8FB00014 */  lw    $s0, 0x14($sp)
-/* 002154 70001554 8FB10018 */  lw    $s1, 0x18($sp)
-/* 002158 70001558 03E00008 */  jr    $ra
-/* 00215C 7000155C 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
 
 /**
  * 2160	70001560
