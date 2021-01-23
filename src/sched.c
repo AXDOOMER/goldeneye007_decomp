@@ -145,7 +145,20 @@ void osCreateLog(void){
  * (thread management)
  */
 #ifdef NONMATCHING
-void osCreateScheduler (OSSched * sc, void * stack, u8 mode, u8 numFields)
+// 175c:    lui     at,0x8006                        | 175c:    li      a0,4
+// 1760:    li      a0,4                             | 1760:    move    a1,s1
+// 1764:    sw      t3,0x880(at)                     r 1764:    sw      t3,4(t2)
+// 1768:    lw      t4,0x30(t2)                      r 1768:    lw      v0,0(v1)
+// 176c:    lui     at,0x8006                        | 176c:    li      a2,0x29b
+// 1770:    move    a1,s1                            | 1770:    lw      t4,0x30(v0)
+// 1774:    sw      t4,0x884(at)                     r 1774:    sw      t4,8(v0)
+// 1778:    lw      t5,0x44(t2)                      r 1778:    lw      v0,0(v1)
+// 177c:    lui     at,0x8006                        <
+// 1780:    li      a2,0x29b                         | 177c:    lw      t5,0x44(v0)
+// 1784:    jal     0xdc50                             1780:    jal     0xdc50
+// 1788:    sw      t5,0x888(at)                     r 1784:    sw      t5,0xc(v0)
+extern OSViMode *viMode;
+void osCreateScheduler (OSSched * sc, void * stack, u8 mode, u32 numFields)
 {
     sc->curRSPTask = 0;
     sc->curRDPTask = 0;
@@ -155,22 +168,22 @@ void osCreateScheduler (OSSched * sc, void * stack, u8 mode, u8 numFields)
     sc->gfxListHead = 0;
     sc->audioListTail = 0;
     sc->gfxListTail = 0;
-    sc->retraceMsg.type = 1;
-    sc->prenmiMsg.type = 5;
+    sc->retraceMsg.type = OS_SC_RETRACE_MSG;
+    sc->prenmiMsg.type = 5; // OS_SC_PRE_NMI_MSG
     sc->thread = stack;
-    osCreateMesgQueue(&sc->interruptQ, sc->intBuf, 8);
-    osCreateMesgQueue(&sc->cmdQ, sc->cmdMsgBuf, 8);
-    osCreateViManager(0xfe);
+    osCreateMesgQueue(&sc->interruptQ, sc->intBuf, OS_SC_MAX_MESGS);
+    osCreateMesgQueue(&sc->cmdQ, sc->cmdMsgBuf, OS_SC_MAX_MESGS);
+    osCreateViManager(OS_PRIORITY_VIMGR);
 
-    viMode = (osViMode *)osViModeTable[mode];
-    viMode->comRegs.ctrl = osViModeTable[mode].comRegs.hStart;
-    viMode->comRegs.width = osViModeTable[mode].fldRegs[0].vStart;
-    viMode->comRegs.burst = osViModeTable[mode].fldRegs[1].vStart;
+    viMode = &osViModeTable[mode];
+    viMode->comRegs.ctrl = viMode->comRegs.hStart;
+    viMode->comRegs.width = viMode->fldRegs[0].vStart;
+    viMode->comRegs.burst = viMode->fldRegs[1].vStart;
 
-    osSetEventMesg(4, &sc->interruptQ, 0x29b);
-    osSetEventMesg(9, &sc->interruptQ, 0x29c);
-    osSetEventMesg(0xe, &sc->interruptQ, 0x29d);
-    osViSetEvent(&sc->interruptQ, 0x29a, numFields);
+    osSetEventMesg(OS_EVENT_SP, &sc->interruptQ, (OSMesg)RSP_DONE_MSG); 
+    osSetEventMesg(OS_EVENT_DP, &sc->interruptQ, (OSMesg)RDP_DONE_MSG);
+    osSetEventMesg(OS_EVENT_PRENMI, &sc->interruptQ, (OSMesg)PRE_NMI_MSG);
+    osViSetEvent(&sc->interruptQ, (OSMesg)VIDEO_MSG, numFields);
     osCreateLog();
     osCreateThread(sc->thread, 2, &__scMain, sc, set_stack_entry(&sp_shed, 0x200), 0x1e);
     osStartThread(sc->thread);
