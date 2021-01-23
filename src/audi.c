@@ -416,7 +416,7 @@ void start_audio_thread(void) {
  *
  * notes: It looks like there are two issues.
  * 1) The static variables are being loaded into the wrong registers.
- *     This is sEndTime, sStartTime, sLargestDeltaTime, sDeltaTimeSum.
+ *     This is sEndTime, sStartTime, sLargestDeltaTime.
  *     This causes trickle down differences.
  * 2) Inside the first if block, registers are saved onto the stack,
  *     but the stack locations differ.
@@ -424,7 +424,6 @@ void start_audio_thread(void) {
  */
 void audio_manager_main(void* arg)
 {
-    // eventually overflows.
     s32 counter = 0;
     
     s32 done = 0;
@@ -440,7 +439,7 @@ void audio_manager_main(void* arg)
         
         switch (msg->gen.type)
         {
-            case (OS_SC_RETRACE_MSG):
+            case OS_SC_RETRACE_MSG:
             {
                 gStartTime = osGetTime();
                 
@@ -453,14 +452,12 @@ void audio_manager_main(void* arg)
                 
                 localDelta = gEndTime - gStartTime;
                 
-                // gDeltaTime doesn't seem to be used...
                 gDeltaTime = localDelta;
             
                 if ((counter % AUDIO_MANAGER_COUNT_INTERVAL) == 0)
                 {
                     gDeltaAverage = gDeltaTimeSum / AUDIO_MANAGER_COUNT_INTERVAL;
                     
-                    // Why is this computed a second time?
                     localDelta = gEndTime - gStartTime;
                     
                     gDeltaTimeSum = 0U;
@@ -468,7 +465,6 @@ void audio_manager_main(void* arg)
                 }
                 else
                 {
-                    // First use of sDeltaTimeSum, uninitialized (hopefully zero)
                     gDeltaTimeSum = gDeltaTimeSum + gEndTime - gStartTime;
                 }
                 
@@ -483,11 +479,11 @@ void audio_manager_main(void* arg)
             }
                 break;
                 
-            case (5):
+            case 5:
                 done = 1;
                 break;
                 
-            case (MAIN_QUIT_MESSAGE):
+            case MAIN_QUIT_MESSAGE:
                 done = 1;
                 break;
                 
