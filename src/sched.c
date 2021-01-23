@@ -1,9 +1,11 @@
 #include <ultra64.h>
+#include "libultra/os.h"
 #include "init.h"
 #include "sched.h"
 #include "bondgame.h"
 #include "deb_print.h"
 #include "video.h"
+#include "joy.h"
 
 /**
  * @file sched.c
@@ -344,58 +346,50 @@ OSMesgQueue *osScGetCmdQ(OSSched *sc)
  * 1900	70000D00
  */
 #ifdef NONMATCHING
-void __scMain(OSSched *arg)
+void __scMain(OSSched *sc)
 {
     OSMesg msg;
-    //OSSched *sc = (OSSched *)arg;
     OSScClient *client;
-    static int count = 0;
-    
-    while (1) {
-        
-        osRecvMesg(&arg->interruptQ, (OSMesg *)&msg, OS_MESG_BLOCK);
-
-        switch ((int) msg) {
-            case (0x29a):
-                __scHandleRetrace(arg);
+    s32 done = FALSE;
+    while (!done) {        
+        osRecvMesg(&sc->interruptQ, &msg, OS_MESG_BLOCK);
+        switch ((s32)msg) {
+            case VIDEO_MSG:
+                __scHandleRetrace(sc);
                 break;
 
-            case (0x29b):
-                __scHandleRSP(arg);
+            case RSP_DONE_MSG:
+                __scHandleRSP(sc);
                 break;
 
-            case (0x29c):
-                __scHandleRDP(arg);
+            case RDP_DONE_MSG:
+                __scHandleRDP(sc);
                 break;
 
-            case (0x29d):
+            case PRE_NMI_MSG:
                 joyRumblePakStop();
-                for (client = arg->clientList;client != 0;client = client->next) {
-                      osSendMesg(client->msgQ, (OSMesg) &arg->prenmiMsg, OS_MESG_NOBLOCK);
+                for (client = sc->clientList; (client != NULL); client = client->next) {
+                      osSendMesg(client->msgQ, (OSMesg)&sc->prenmiMsg, OS_MESG_NOBLOCK);
                 }
+                done = TRUE;
                 break;
         }
     }
-    if (osTvType == 2)
-    {
-        osViSetMode(0x80027320);
+    if (osTvType == TV_TYPE_MPAL) {
+        osViSetMode(&osViModeTable[OS_VI_NTSC_LAN1]);
+    } else {
+        osViSetMode(&osViModeTable[OS_VI_MPAL_LAN1]);
     }
-    else
-    {
-        osViSetMode(0x80026a60);
-    }
-    osViSetXScale(1.00000000);
-    osViSetYScale(1.00000000);
+    osViSetXScale(1.0f);
+    osViSetYScale(1.0f);
     osViRepeatLine(0);
-    osViBlack(1);
-
-    while (1) {
-        while ((u32)msg != 0x29a) {
-            osRecvMesg(&arg->interruptQ,&msg,1);
-        }
+    osViBlack(TRUE);
+    while (TRUE) {
+        do {
+            osRecvMesg(&sc->interruptQ, &msg, OS_MESG_BLOCK);
+        } while((s32)msg != VIDEO_MSG);
         joyPoll();
     }
-
 }
 #else
 GLOBAL_ASM(
