@@ -131,11 +131,11 @@ typedef struct AudioInfo_s {
 // unknown purpose
 u32 D_800230F0 = 0;
 
-u32 gAudioFrameCount = 0;
+u32 g_AudioFrameCount = 0;
 
-u32 gNextDMa = 0;
+u32 g_NextDMa = 0;
 
-u32 gCurrentAcmdList = 0;
+u32 g_CurrentAcmdList = 0;
 
 /*
 * This macro is used/defined in both libultra and libnaudio
@@ -147,7 +147,7 @@ u32 gCurrentAcmdList = 0;
 /*
 * Following the libultra and libnaudio naming convention ...
 */
-s32 CUSTOM_FX_PARAMS_N[CUSTOM_FX_SECTION_COUNT * CUSTOM_FX_SECTION_SIZE + 2]= {
+s32 CUSTOM_FX_PARAMS_N[CUSTOM_FX_SECTION_COUNT * CUSTOM_FX_SECTION_SIZE + 2] = {
 
     /* sections	   length */
              6,     160 ms,
@@ -162,7 +162,7 @@ s32 CUSTOM_FX_PARAMS_N[CUSTOM_FX_SECTION_COUNT * CUSTOM_FX_SECTION_SIZE + 2]= {
         0,   148 ms,  13000, -13000,      0,   0x017C,   0xA,  0x4500
 };
 
-s32 gFirstTime = 1;
+s32 g_FirstTime = 1;
 
 /*bss needs fixing */
 s32 dword_CODE_bss_8005E4B0[2];
@@ -170,20 +170,20 @@ s32 dword_CODE_bss_8005E4B0[2];
 /**
  * Address 8005E4B8.
  * (type is u64)
- * Used in audio_manager_main.
+ * Used in amMain.
  * This looks like it stores the largest sDeltaTime between
  * counts of AUDIO_MANAGER_COUNT_INTERVAL.
  */
-OSTime gLargestDeltaTime;
+OSTime g_LargestDeltaTime;
 
 /**
  * Address 8005E4C0.
  * (type is u64)
- * Used in audio_manager_main.
+ * Used in amMain.
  * Stores the elpased time of main loop (difference between sEndTime and sStartTime).
  */
 #ifdef NONMATCHING
-OSTime gDeltaTime;
+OSTime g_DeltaTime;
 #else
 s32 dword_CODE_bss_8005E4C0;
 s32 dword_CODE_bss_8005E4C4;
@@ -195,7 +195,7 @@ s32 dword_CODE_bss_8005E4C4;
  * is computed and stored here.
  */
 #ifdef NONMATCHING
-u64 gDeltaAverage;
+u64 g_DeltaAverage;
 #else
 s32 dword_CODE_bss_8005E4C8;
 s32 dword_CODE_bss_8005E4CC;
@@ -205,23 +205,23 @@ s32 dword_CODE_bss_8005E4CC;
  * Address 8005E4D0.
  * Tracks the sum total elapsed time. Reset every AUDIO_MANAGER_COUNT_INTERVAL.
  */
-u64 gDeltaTimeSum;
+u64 g_DeltaTimeSum;
 
 /**
  * Address 8005E4D8.
  * (type is u64)
- * Used in audio_manager_main.
+ * Used in amMain.
  * Stores the time at the start of the loop.
  */
-OSTime gStartTime;
+OSTime g_StartTime;
 
 /**
  * Address 8005E4E0.
  * (type is u64)
- * Used in audio_manager_main.
+ * Used in amMain.
  * Stores the time after primary processing is done.
  */
-OSTime gEndTime;
+OSTime g_EndTime;
 
 /**
  * Unknown / unused
@@ -279,7 +279,7 @@ struct AudioManager_s {
      */
     DMABuffer dmaBuffer;
 
-} gAudioManager;
+} g_AudioManager;
 
 /**
  * Unknown / unused.
@@ -289,34 +289,34 @@ u32 D_8005e764[14];
 /**
  * Address 0x8005e7a0.
  */
-OSScClient gAudioClient[2];
+OSScClient g_AudioClient[2];
 
 /**
  * Address 0x8005e7b0.
  */
-DMAState gDmaState;
+DMAState g_DmaState;
 
-DMABuffer gDmaBuffers[NUMBER_DMA_BUFFERS];
+DMABuffer g_DmaBuffers[NUMBER_DMA_BUFFERS];
 
-u32 gMinFrameSize;
-u32 gFrameSize;
-u32 gMaxFrameSize;
-s32 gCommandLength;
+u32 g_MinFrameSize;
+u32 g_FrameSize;
+u32 g_MaxFrameSize;
+s32 g_CommandLength;
 
-OSIoMesg gDmaIOMessageBuffer[AUDIO_DMA_IO_QUEUE_SIZE];
+OSIoMesg g_DmaIOMessageBuffer[AUDIO_DMA_IO_QUEUE_SIZE];
 
-OSMesgQueue gDmaMessageQueue;
+OSMesgQueue g_DmaMessageQueue;
 
-OSMesg gDmaMessageBuffer[AUDIO_DMA_QUEUE_SIZE];
+OSMesg g_DmaMessageBuffer[AUDIO_DMA_QUEUE_SIZE];
 
 
 // Forward declarations
-s32 audio_manager_dma_callback(s32 addr, s32 len, void* state);
-void clear_audio_dma(void);
-void audio_manager_handle_frame_message(AudioInfo *info, AudioInfo *lastInfo);
-void audio_manager_handle_done_message(AudioInfo *info);
-void audio_manager_main(void* arg);
-ALDMAproc audio_manager_dma_new(DMAState** state);
+s32 amDmaCallback(s32 addr, s32 len, void* state);
+void amClearDmaBuffers(void);
+void amHandleFrameMessage(AudioInfo *info, AudioInfo *lastInfo);
+void amHandleDoneMessage(AudioInfo *info);
+void amMain(void* arg);
+ALDMAproc amDmaNew(DMAState** state);
 
 
 /**
@@ -328,64 +328,70 @@ ALDMAproc audio_manager_dma_new(DMAState** state);
  *
  * @param alconf hw setup/config.
  */
-void create_audio_manager(ALSynConfig* alconf) {
-
+void amCreateAudioManager(ALSynConfig* alconf)
+{
     u32 j;
     f32 fsize;
 
-    alconf->dmaproc = &audio_manager_dma_new;
+    alconf->dmaproc = &amDmaNew;
     alconf->outputRate = osAiSetFrequency(OUTPUT_RATE);
     
     fsize = (f32) ((alconf->outputRate << FRAMES_PER_FIELD_AS_POW2) / (f32)MAYBE_FRAME_RATE);
     
-    gFrameSize = (u32) fsize;
+    g_FrameSize = (u32) fsize;
 
-    if (gFrameSize < fsize)
-        gFrameSize++;
+    if (g_FrameSize < fsize)
+    {
+        g_FrameSize++;
+    }
     
     // This rounds up to the next multiple of 16.
-    if (gFrameSize & 0xf)
-        gFrameSize = (gFrameSize & ~0xf) + 0x10;
+    if (g_FrameSize & 0xf)
+    {
+        g_FrameSize = (g_FrameSize & ~0xf) + 0x10;
+    }
     
-    gMinFrameSize = (u32)(gFrameSize - 0x10);
-    gMaxFrameSize = (u32)(gFrameSize + EXTRA_SAMPLES + 0x10);
+    g_MinFrameSize = (u32)(g_FrameSize - 0x10);
+    g_MaxFrameSize = (u32)(g_FrameSize + EXTRA_SAMPLES + 0x10);
     
-    if (alconf->fxType == AL_FX_CUSTOM) {    
+    if (alconf->fxType == AL_FX_CUSTOM)
+    {
         s32 sp48[CUSTOM_FX_SECTION_COUNT * CUSTOM_FX_SECTION_SIZE + 2] = CUSTOM_FX_PARAMS_N;
         alconf->params = sp48;
-        alInit(&gAudioManager.dmaBuffer, alconf);
+        alInit(&g_AudioManager.dmaBuffer, alconf);
     }
-    else {
-        alInit(&gAudioManager.dmaBuffer, alconf);
+    else
+    {
+        alInit(&g_AudioManager.dmaBuffer, alconf);
     }
     
     for (j=0; j < NUMBER_OUTPUT_BUFFERS; j++)
     {
-        gAudioManager.audioInfo[j] = (AudioInfo *)alHeapDBAlloc(0, 0, alconf->heap, 1, sizeof(AudioInfo));
-        gAudioManager.audioInfo[j]->data = (s16*)alHeapDBAlloc(0, 0, alconf->heap, 1, gMaxFrameSize * 4);
+        g_AudioManager.audioInfo[j] = (AudioInfo *)alHeapDBAlloc(0, 0, alconf->heap, 1, sizeof(AudioInfo));
+        g_AudioManager.audioInfo[j]->data = (s16*)alHeapDBAlloc(0, 0, alconf->heap, 1, g_MaxFrameSize * 4);
     }
     
-    osCreateMesgQueue(&gAudioManager.replyMessageQueue, (OSMesg*)&gAudioManager.replyMessageBuffer, AUDIO_REPLY_MESSAGE_QUEUE_SIZE);
-    osCreateMesgQueue(&gAudioManager.frameMessageQueue, (OSMesg*)&gAudioManager.frameMessageBuffer, AUDIO_FRAME_MESSAGE_QUEUE_SIZE);
-    osCreateMesgQueue(&gDmaMessageQueue, (OSMesg*)&gDmaMessageBuffer, AUDIO_DMA_IO_QUEUE_SIZE);
+    osCreateMesgQueue(&g_AudioManager.replyMessageQueue, (OSMesg*)&g_AudioManager.replyMessageBuffer, AUDIO_REPLY_MESSAGE_QUEUE_SIZE);
+    osCreateMesgQueue(&g_AudioManager.frameMessageQueue, (OSMesg*)&g_AudioManager.frameMessageBuffer, AUDIO_FRAME_MESSAGE_QUEUE_SIZE);
+    osCreateMesgQueue(&g_DmaMessageQueue, (OSMesg*)&g_DmaMessageBuffer, AUDIO_DMA_IO_QUEUE_SIZE);
     
-    gDmaBuffers[0].node.prev = NULL;
-    gDmaBuffers[0].node.next = NULL;
+    g_DmaBuffers[0].node.prev = NULL;
+    g_DmaBuffers[0].node.next = NULL;
 
     for (j=0; (s32)j < NUMBER_DMA_BUFFERS - 1; j++)
     {
-        alLink((ALLink*)&gDmaBuffers[j+1], (ALLink*)&gDmaBuffers[j]);
-        gDmaBuffers[j].ptr = (void*)alHeapDBAlloc(0, 0, alconf->heap, 1, AUDIO_DMA_MAX_BUFFER_LENGTH);
+        alLink((ALLink*)&g_DmaBuffers[j+1], (ALLink*)&g_DmaBuffers[j]);
+        g_DmaBuffers[j].ptr = (void*)alHeapDBAlloc(0, 0, alconf->heap, 1, AUDIO_DMA_MAX_BUFFER_LENGTH);
     }
     // last buffer already linked, but still needs buffer
-    gDmaBuffers[j].ptr = (void*)alHeapDBAlloc(0, 0, alconf->heap, 1, AUDIO_DMA_MAX_BUFFER_LENGTH);
+    g_DmaBuffers[j].ptr = (void*)alHeapDBAlloc(0, 0, alconf->heap, 1, AUDIO_DMA_MAX_BUFFER_LENGTH);
     
     for (j=0; j < NUMBER_ACMD_LISTS; j++)
     {
-        gAudioManager.cmdList[j] = (Acmd *)alHeapDBAlloc(0, 0, alconf->heap, 1, MAX_ACMD_SIZE * sizeof(Acmd));
+        g_AudioManager.cmdList[j] = (Acmd *)alHeapDBAlloc(0, 0, alconf->heap, 1, MAX_ACMD_SIZE * sizeof(Acmd));
     }
 
-    osCreateThread(&gAudioManager.audioThread, 4, &audio_manager_main, 0, (void*)set_stack_entry((u8*)(&sp_audi), 0x1000), 0x14);
+    osCreateThread(&g_AudioManager.audioThread, 4, &amMain, 0, (void*)set_stack_entry((u8*)(&sp_audi), 0x1000), 0x14);
 }
 
 /**
@@ -393,8 +399,9 @@ void create_audio_manager(ALSynConfig* alconf) {
  * insert sound manager thread
  *	redirect to 7000D580: A0=8005E530
  */
-void start_audio_thread(void) {
-    osStartThread(&gAudioManager.audioThread);
+void amStartAudioThread(void)
+{
+    osStartThread(&g_AudioManager.audioThread);
 }
 
 #ifdef NONMATCHING
@@ -411,18 +418,30 @@ void start_audio_thread(void) {
  * decomp status:
  * - compiles: yes
  * - stack resize: ok
- * - identical instructions: yes
+ * - identical instructions: fail
  * - identical registers: fail
  *
- * notes: It looks like there are two issues.
+ * notes: It looks like there are a few issues.
  * 1) The static variables are being loaded into the wrong registers.
  *     This is sEndTime, sStartTime, sLargestDeltaTime.
  *     This causes trickle down differences.
  * 2) Inside the first if block, registers are saved onto the stack,
  *     but the stack locations differ.
  *     This causes trickle down differences.
+ * 3) localDelta is probably a red herring, it makes the code close, but ...
+ * 4) g_DeltaAverage and g_DeltaTime don't seem to be written correctly as u64.
+ * Compare:
+ 4e8:	3c010000 	lui	at,0x0	4e8: R_MIPS_HI16	dword_CODE_bss_8005E4C0
+ 4ec:	006bc823 	subu	t9,v1,t3
+ 4f0:	ac390000 	sw	t9,0(at)	4f0: R_MIPS_LO16	dword_CODE_bss_8005E4C4
+ 4f4:	ac380000 	sw	t8,0(at)	4f4: R_MIPS_LO16	dword_CODE_bss_8005E4C0
+ to
+4e8:	3c010000 	lui	at,0x0	4e8: R_MIPS_HI16	g_DeltaTime
+ 4ec:	006bc823 	subu	t9,v1,t3
+ 4f0:	ac390004 	sw	t9,4(at)	4f0: R_MIPS_LO16	g_DeltaTime
+ 4f4:	ac380000 	sw	t8,0(at)	4f4: R_MIPS_LO16	g_DeltaTime
  */
-void audio_manager_main(void* arg)
+void amMain(void* arg)
 {
     s32 counter = 0;
     
@@ -430,52 +449,51 @@ void audio_manager_main(void* arg)
     AudioMessage *msg = 0;
     AudioInfo *lastInfo = 0;
     u64 localDelta;
-    
-    osScAddClient(&sc, &(gAudioClient[0]), &(gAudioManager.frameMessageQueue), (void*)1);
+
+    osScAddClient(&sc, &(g_AudioClient[0]), &(g_AudioManager.frameMessageQueue), (void*)1);
 
     while (!done)
     {
-        osRecvMesg(&gAudioManager.frameMessageQueue, (OSMesg *)&msg, OS_MESG_BLOCK);
+        osRecvMesg(&g_AudioManager.frameMessageQueue, (OSMesg *)&msg, OS_MESG_BLOCK);
         
         switch (msg->gen.type)
         {
             case OS_SC_RETRACE_MSG:
             {
-                gStartTime = osGetTime();
+                g_StartTime = osGetTime();
                 
                 video_related_3(0x30000);
-                audio_manager_handle_frame_message(gAudioManager.audioInfo[gAudioFrameCount % 3U], lastInfo);
+                amHandleFrameMessage(g_AudioManager.audioInfo[g_AudioFrameCount % 3U], lastInfo);
                 counter++;
                 video_related_3(0x60000);
 
-                gEndTime = osGetTime();
+                g_EndTime = osGetTime();
                 
-                localDelta = gEndTime - gStartTime;
-                
-                gDeltaTime = localDelta;
+                localDelta = g_EndTime - g_StartTime;
+                g_DeltaTime = localDelta;
             
                 if ((counter % AUDIO_MANAGER_COUNT_INTERVAL) == 0)
                 {
-                    gDeltaAverage = gDeltaTimeSum / AUDIO_MANAGER_COUNT_INTERVAL;
+                    g_DeltaAverage = g_DeltaTimeSum / AUDIO_MANAGER_COUNT_INTERVAL;
                     
-                    localDelta = gEndTime - gStartTime;
+                    localDelta = g_EndTime - g_StartTime;
                     
-                    gDeltaTimeSum = 0U;
-                    gLargestDeltaTime = 0U;
+                    g_DeltaTimeSum = 0U;
+                    g_LargestDeltaTime = 0U;
                 }
                 else
                 {
-                    gDeltaTimeSum = gDeltaTimeSum + gEndTime - gStartTime;
+                    g_DeltaTimeSum = g_DeltaTimeSum + g_EndTime - g_StartTime;
                 }
-                
-                if (gLargestDeltaTime < localDelta)
+
+                if (g_LargestDeltaTime < localDelta)
                 {
-                    gLargestDeltaTime = localDelta;
+                    g_LargestDeltaTime = localDelta;
                 }
                 
-                osRecvMesg(&gAudioManager.replyMessageQueue, (OSMesg *)&lastInfo, OS_MESG_BLOCK);
+                osRecvMesg(&g_AudioManager.replyMessageQueue, (OSMesg *)&lastInfo, OS_MESG_BLOCK);
                 
-                audio_manager_handle_done_message(lastInfo);
+                amHandleDoneMessage(lastInfo);
             }
                 break;
                 
@@ -492,22 +510,22 @@ void audio_manager_main(void* arg)
         }
     }
     
-    alClose(&(gAudioManager.dmaBuffer));
+    alClose(&(g_AudioManager.dmaBuffer));
 }
 #else
 GLOBAL_ASM(
 .text
-glabel audio_manager_main
+glabel amMain
 /* 002B7C 70001F7C 27BDFF90 */  addiu $sp, $sp, -0x70
 /* 002B80 70001F80 AFB60030 */  sw    $s6, 0x30($sp)
-/* 002B84 70001F84 3C168006 */  lui   $s6, %hi(gAudioManager+0x1C8)
+/* 002B84 70001F84 3C168006 */  lui   $s6, %hi(g_AudioManager+0x1C8)
 /* 002B88 70001F88 AFA40070 */  sw    $a0, 0x70($sp)
-/* 002B8C 70001F8C 26D6E6E0 */  addiu $s6, %lo(gAudioManager+0x1C8) # addiu $s6, $s6, -0x1920
+/* 002B8C 70001F8C 26D6E6E0 */  addiu $s6, %lo(g_AudioManager+0x1C8) # addiu $s6, $s6, -0x1920
 /* 002B90 70001F90 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 002B94 70001F94 AFB20020 */  sw    $s2, 0x20($sp)
 /* 002B98 70001F98 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 002B9C 70001F9C 3C048006 */  lui   $a0, %hi(sc)
-/* 002BA0 70001FA0 3C058006 */  lui   $a1, %hi(gAudioClient)
+/* 002BA0 70001FA0 3C058006 */  lui   $a1, %hi(g_AudioClient)
 /* 002BA4 70001FA4 AFBE0038 */  sw    $fp, 0x38($sp)
 /* 002BA8 70001FA8 AFB70034 */  sw    $s7, 0x34($sp)
 /* 002BAC 70001FAC AFB5002C */  sw    $s5, 0x2c($sp)
@@ -518,19 +536,19 @@ glabel audio_manager_main
 /* 002BC0 70001FC0 00009025 */  move  $s2, $zero
 /* 002BC4 70001FC4 AFA00064 */  sw    $zero, 0x64($sp)
 /* 002BC8 70001FC8 AFA00060 */  sw    $zero, 0x60($sp)
-/* 002BCC 70001FCC 24A5E7A0 */  addiu $a1, %lo(gAudioClient) # addiu $a1, $a1, -0x1860
+/* 002BCC 70001FCC 24A5E7A0 */  addiu $a1, %lo(g_AudioClient) # addiu $a1, $a1, -0x1860
 /* 002BD0 70001FD0 2484DA40 */  addiu $a0, %lo(sc) # addiu $a0, $a0, -0x25c0
 /* 002BD4 70001FD4 02C03025 */  move  $a2, $s6
 /* 002BD8 70001FD8 0C000305 */  jal   osScAddClient
 /* 002BDC 70001FDC 24070001 */   li    $a3, 1
-/* 002BE0 70001FE0 3C158006 */  lui   $s5, %hi(gEndTime)
-/* 002BE4 70001FE4 3C148006 */  lui   $s4, %hi(gStartTime)
-/* 002BE8 70001FE8 3C138006 */  lui   $s3, %hi(gLargestDeltaTime)
-/* 002BEC 70001FEC 3C108006 */  lui   $s0, %hi(gDeltaTimeSum)
-/* 002BF0 70001FF0 2610E4D0 */  addiu $s0, %lo(gDeltaTimeSum) # addiu $s0, $s0, -0x1b30
-/* 002BF4 70001FF4 2673E4B8 */  addiu $s3, %lo(gLargestDeltaTime) # addiu $s3, $s3, -0x1b48
-/* 002BF8 70001FF8 2694E4D8 */  addiu $s4, %lo(gStartTime) # addiu $s4, $s4, -0x1b28
-/* 002BFC 70001FFC 26B5E4E0 */  addiu $s5, %lo(gEndTime) # addiu $s5, $s5, -0x1b20
+/* 002BE0 70001FE0 3C158006 */  lui   $s5, %hi(g_EndTime)
+/* 002BE4 70001FE4 3C148006 */  lui   $s4, %hi(g_StartTime)
+/* 002BE8 70001FE8 3C138006 */  lui   $s3, %hi(g_LargestDeltaTime)
+/* 002BEC 70001FEC 3C108006 */  lui   $s0, %hi(g_DeltaTimeSum)
+/* 002BF0 70001FF0 2610E4D0 */  addiu $s0, %lo(g_DeltaTimeSum) # addiu $s0, $s0, -0x1b30
+/* 002BF4 70001FF4 2673E4B8 */  addiu $s3, %lo(g_LargestDeltaTime) # addiu $s3, $s3, -0x1b48
+/* 002BF8 70001FF8 2694E4D8 */  addiu $s4, %lo(g_StartTime) # addiu $s4, $s4, -0x1b28
+/* 002BFC 70001FFC 26B5E4E0 */  addiu $s5, %lo(g_EndTime) # addiu $s5, $s5, -0x1b20
 /* 002C00 70002000 241E0001 */  li    $fp, 1
 /* 002C04 70002004 27B70064 */  addiu $s7, $sp, 0x64
 /* 002C08 70002008 02C02025 */  move  $a0, $s6
@@ -556,16 +574,16 @@ glabel audio_manager_main
 /* 002C50 70002050 AE830004 */  sw    $v1, 4($s4)
 /* 002C54 70002054 0C000A15 */  jal   video_related_3
 /* 002C58 70002058 3C040003 */   lui   $a0, 3
-/* 002C5C 7000205C 3C0F8002 */  lui   $t7, %hi(gAudioFrameCount) 
-/* 002C60 70002060 8DEF30F4 */  lw    $t7, %lo(gAudioFrameCount)($t7)
+/* 002C5C 7000205C 3C0F8002 */  lui   $t7, %hi(g_AudioFrameCount) 
+/* 002C60 70002060 8DEF30F4 */  lw    $t7, %lo(g_AudioFrameCount)($t7)
 /* 002C64 70002064 24010003 */  li    $at, 3
-/* 002C68 70002068 3C048006 */  lui   $a0, %hi(gAudioManager+8)
+/* 002C68 70002068 3C048006 */  lui   $a0, %hi(g_AudioManager+8)
 /* 002C6C 7000206C 01E1001B */  divu  $zero, $t7, $at
 /* 002C70 70002070 0000C010 */  mfhi  $t8
 /* 002C74 70002074 0018C880 */  sll   $t9, $t8, 2
 /* 002C78 70002078 00992021 */  addu  $a0, $a0, $t9
-/* 002C7C 7000207C 8C84E520 */  lw    $a0, %lo(gAudioManager+8)($a0)
-/* 002C80 70002080 0C000891 */  jal   audio_manager_handle_frame_message
+/* 002C7C 7000207C 8C84E520 */  lw    $a0, %lo(g_AudioManager+8)($a0)
+/* 002C80 70002080 0C000891 */  jal   amHandleFrameMessage
 /* 002C84 70002084 8FA50060 */   lw    $a1, 0x60($sp)
 /* 002C88 70002088 26310001 */  addiu $s1, $s1, 1
 /* 002C8C 7000208C 0C000A15 */  jal   video_related_3
@@ -644,7 +662,7 @@ glabel audio_manager_main
 /* 002DA8 700021A8 8FAD0044 */  lw    $t5, 0x44($sp)
 /* 002DAC 700021AC 018A082B */  sltu  $at, $t4, $t2
 /* 002DB0 700021B0 14200008 */  bnez  $at, .L700021D4
-/* 002DB4 700021B4 3C048006 */   lui   $a0, %hi(gAudioManager+0x200)
+/* 002DB4 700021B4 3C048006 */   lui   $a0, %hi(g_AudioManager+0x200)
 /* 002DB8 700021B8 014C082B */  sltu  $at, $t2, $t4
 /* 002DBC 700021BC 14200003 */  bnez  $at, .L700021CC
 /* 002DC0 700021C0 016D082B */   sltu  $at, $t3, $t5
@@ -654,11 +672,11 @@ glabel audio_manager_main
 /* 002DCC 700021CC AE6C0000 */  sw    $t4, ($s3)
 /* 002DD0 700021D0 AE6D0004 */  sw    $t5, 4($s3)
 .L700021D4:
-/* 002DD4 700021D4 2484E718 */  addiu $a0, %lo(gAudioManager+0x200) # addiu $a0, $a0, -0x18e8
+/* 002DD4 700021D4 2484E718 */  addiu $a0, %lo(g_AudioManager+0x200) # addiu $a0, $a0, -0x18e8
 /* 002DD8 700021D8 27A50060 */  addiu $a1, $sp, 0x60
 /* 002DDC 700021DC 0C003774 */  jal   osRecvMesg
 /* 002DE0 700021E0 03C03025 */   move  $a2, $fp
-/* 002DE4 700021E4 0C0008F9 */  jal   audio_manager_handle_done_message
+/* 002DE4 700021E4 0C0008F9 */  jal   amHandleDoneMessage
 /* 002DE8 700021E8 8FA40060 */   lw    $a0, 0x60($sp)
 /* 002DEC 700021EC 10000004 */  b     .L70002200
 /* 002DF0 700021F0 00000000 */   nop   
@@ -669,9 +687,9 @@ glabel audio_manager_main
 .L70002200:
 /* 002E00 70002200 5240FF82 */  beql  $s2, $zero, .L7000200C
 /* 002E04 70002204 02C02025 */   move  $a0, $s6
-/* 002E08 70002208 3C048006 */  lui   $a0, %hi(gAudioManager+0x238)
+/* 002E08 70002208 3C048006 */  lui   $a0, %hi(g_AudioManager+0x238)
 /* 002E0C 7000220C 0C003AB9 */  jal   alClose
-/* 002E10 70002210 2484E750 */   addiu $a0, %lo(gAudioManager+0x238) # addiu $a0, $a0, -0x18b0
+/* 002E10 70002210 2484E750 */   addiu $a0, %lo(g_AudioManager+0x238) # addiu $a0, $a0, -0x18b0
 /* 002E14 70002214 8FBF003C */  lw    $ra, 0x3c($sp)
 /* 002E18 70002218 8FB00018 */  lw    $s0, 0x18($sp)
 /* 002E1C 7000221C 8FB1001C */  lw    $s1, 0x1c($sp)
@@ -710,13 +728,14 @@ glabel audio_manager_main
  * @param info audio info.
  * @param lastInfo last info.
  */
-void audio_manager_handle_frame_message(AudioInfo *info, AudioInfo *lastInfo) {
+void amHandleFrameMessage(AudioInfo *info, AudioInfo *lastInfo)
+{
     s16* outBuffer;
     Acmd *cmdlp;
     s32 temp_v1;
 
     /* call once a frame, before doing alAudioFrame */
-    clear_audio_dma();
+    amClearDmaBuffers();
     
     outBuffer = (s16*)osVirtualToPhysical(info->data);
     
@@ -729,28 +748,28 @@ void audio_manager_handle_frame_message(AudioInfo *info, AudioInfo *lastInfo) {
     /* this will vary slightly frame to frame, must recalculate every frame */
     /* divide by four, to convert bytes */
     /* to stereo 16 bit samples */
-    info->frameSamples = (u16)(((gFrameSize - (osAiGetLength() >> 2)) + 16 + EXTRA_SAMPLES) & ~0xf);  
-    temp_v1 = gMinFrameSize;
+    info->frameSamples = (u16)(((g_FrameSize - (osAiGetLength() >> 2)) + 16 + EXTRA_SAMPLES) & ~0xf);  
+    temp_v1 = g_MinFrameSize;
     
     if ((s32)info->frameSamples < (s32)(s16)temp_v1)
     {
         info->frameSamples = (s16)temp_v1;
     }
     
-    cmdlp = (Acmd*)alAudioFrame(gAudioManager.cmdList[gCurrentAcmdList], &gCommandLength, outBuffer, info->frameSamples);
+    cmdlp = (Acmd*)alAudioFrame(g_AudioManager.cmdList[g_CurrentAcmdList], &g_CommandLength, outBuffer, info->frameSamples);
     
     /* paranoia */
     info->task.next = 0;
     info->task.flags = 0;
 
     /* reply to when finished */
-    info->task.msgQ = (void *) (&(gAudioManager.replyMessageQueue.mtqueue));
+    info->task.msgQ = (void *) (&(g_AudioManager.replyMessageQueue.mtqueue));
 
     /* reply with this message */
     info->task.msg = info;
     info->task.flags = OS_SC_NEEDS_RSP;
-    info->task.list.t.data_ptr = (u64*)(gAudioManager.cmdList[gCurrentAcmdList]);
-    info->task.list.t.data_size = (((s32)cmdlp - (s32)gAudioManager.cmdList[gCurrentAcmdList]) >> 3) * sizeof(Acmd);
+    info->task.list.t.data_ptr = (u64*)(g_AudioManager.cmdList[g_CurrentAcmdList]);
+    info->task.list.t.data_size = (((s32)cmdlp - (s32)g_AudioManager.cmdList[g_CurrentAcmdList]) >> 3) * sizeof(Acmd);
     info->task.list.t.type = M_AUDTASK;
     info->task.list.t.ucode_boot = (u64*)rspbootTextStart;
     info->task.list.t.ucode_boot_size = ((s32)gsp3DTextStart - (s32)rspbootTextStart);
@@ -764,7 +783,7 @@ void audio_manager_handle_frame_message(AudioInfo *info, AudioInfo *lastInfo) {
     /* swap which acmd list you use each frame */
     osSendMesg(osScGetCmdQ(&sc), (OSMesg)&info->task, OS_MESG_NOBLOCK);
     
-    gCurrentAcmdList ^= 1;
+    g_CurrentAcmdList ^= 1;
 }
 
 
@@ -780,7 +799,8 @@ void audio_manager_handle_frame_message(AudioInfo *info, AudioInfo *lastInfo) {
  * 
  * @param info Unused.
  */
-void audio_manager_handle_done_message(AudioInfo *info) {
+void amHandleDoneMessage(AudioInfo *info)
+{
     s32 samplesLeft;
     /*
     * in the audiomgr example, firstTime is declared here with
@@ -797,9 +817,10 @@ void audio_manager_handle_done_message(AudioInfo *info) {
     * 
     *     if (samplesLeft == 0 && !firstTime) 
     */   
-    b = &gFirstTime;
-    if (!samplesLeft && !(*b)) {
-        gFirstTime = 0;
+    b = &g_FirstTime;
+    if (!samplesLeft && !(*b))
+    {
+        g_FirstTime = 0;
     }
 }
 
@@ -826,8 +847,8 @@ void audio_manager_handle_done_message(AudioInfo *info) {
  * @param state unused.
  * @return result from call to osVirtualToPhysical
  */
-s32 audio_manager_dma_callback(s32 addr, s32 len, void* state) {
-
+s32 amDmaCallback(s32 addr, s32 len, void* state)
+{
     void *freeBuffer;
     s32 delta;
     DMABuffer *dmaPtr;
@@ -836,14 +857,14 @@ s32 audio_manager_dma_callback(s32 addr, s32 len, void* state) {
     DMABuffer *lastDmaPtr;
 
     lastDmaPtr = NULL;
-    dmaPtr = gDmaState.firstUsed;
+    dmaPtr = g_DmaState.firstUsed;
     delta = addr & 0x1;
     addrEnd = addr + len;
 
     /* first check to see if a currently existing buffer contains the
        sample that you need.  */
-    while (dmaPtr) {
-
+    while (dmaPtr)
+    {
         buffEnd = dmaPtr->startAddr + AUDIO_DMA_MAX_BUFFER_LENGTH;
 
         /* since buffers are ordered */
@@ -856,7 +877,7 @@ s32 audio_manager_dma_callback(s32 addr, s32 len, void* state) {
         else if (addrEnd <= buffEnd)
         {
             /* mark it used */
-            dmaPtr->lastFrame = (s32) gAudioFrameCount;
+            dmaPtr->lastFrame = (s32) g_AudioFrameCount;
             freeBuffer = (dmaPtr->ptr + addr) - dmaPtr->startAddr;
             return osVirtualToPhysical(freeBuffer);
         }
@@ -867,7 +888,7 @@ s32 audio_manager_dma_callback(s32 addr, s32 len, void* state) {
 
     /* get here, and you didn't find a buffer, so dma a new one */
     /* get a buffer from the free list */
-    dmaPtr = gDmaState.firstFree;
+    dmaPtr = g_DmaState.firstFree;
 
     /* 
      * if you get here and dmaPtr is null, send back a bogus
@@ -877,13 +898,13 @@ s32 audio_manager_dma_callback(s32 addr, s32 len, void* state) {
     {
         if (!lastDmaPtr)
         {
-            lastDmaPtr = gDmaState.firstUsed;
+            lastDmaPtr = g_DmaState.firstUsed;
         }
 
         return osVirtualToPhysical(lastDmaPtr->ptr) + delta;
     }
 
-    gDmaState.firstFree = (DMABuffer*)dmaPtr->node.next;
+    g_DmaState.firstFree = (DMABuffer*)dmaPtr->node.next;
     alUnlink((ALLink*)dmaPtr);
 
     /* add it to the used list */
@@ -895,10 +916,10 @@ s32 audio_manager_dma_callback(s32 addr, s32 len, void* state) {
     }
     /* if this buffer is before any others */
     // Jam at begining of list
-    else if (gDmaState.firstUsed)
+    else if (g_DmaState.firstUsed)
     {
-        lastDmaPtr = gDmaState.firstUsed;
-        gDmaState.firstUsed = dmaPtr;
+        lastDmaPtr = g_DmaState.firstUsed;
+        g_DmaState.firstUsed = dmaPtr;
         dmaPtr->node.next = (ALLink*)lastDmaPtr;
         dmaPtr->node.prev = 0;
         lastDmaPtr->node.prev = (ALLink*)dmaPtr;
@@ -906,7 +927,7 @@ s32 audio_manager_dma_callback(s32 addr, s32 len, void* state) {
     /* no buffers in list, this is the first one */
     else
     {
-        gDmaState.firstUsed = dmaPtr;
+        g_DmaState.firstUsed = dmaPtr;
         dmaPtr->node.next = 0;
         dmaPtr->node.prev = 0;
     }
@@ -914,9 +935,9 @@ s32 audio_manager_dma_callback(s32 addr, s32 len, void* state) {
     freeBuffer = dmaPtr->ptr;
     addr -= delta;
     dmaPtr->startAddr = addr;
-    dmaPtr->lastFrame = gAudioFrameCount;
+    dmaPtr->lastFrame = g_AudioFrameCount;
 
-    osPiStartDma(&gDmaIOMessageBuffer[gNextDMa++], OS_MESG_PRI_HIGH, OS_READ, (u32)addr, freeBuffer, AUDIO_DMA_MAX_BUFFER_LENGTH, &gDmaMessageQueue);
+    osPiStartDma(&g_DmaIOMessageBuffer[g_NextDMa++], OS_MESG_PRI_HIGH, OS_READ, (u32)addr, freeBuffer, AUDIO_DMA_MAX_BUFFER_LENGTH, &g_DmaMessageQueue);
     return (s32)osVirtualToPhysical(freeBuffer) + delta;
 }
 
@@ -935,19 +956,20 @@ s32 audio_manager_dma_callback(s32 addr, s32 len, void* state) {
  * initialization the first time. After that we just return the address
  * to the dma routine.
  * 
- * @param state will point to gDmaState after call.
+ * @param state will point to g_DmaState after call.
  * @return Address of dma callback function.
  */
-ALDMAproc audio_manager_dma_new(DMAState** state)
+ALDMAproc amDmaNew(DMAState** state)
 {
-    if (gDmaState.u.initialized == 0) {
-        gDmaState.firstUsed = NULL;
-        gDmaState.firstFree = gDmaBuffers;
-        gDmaState.u.initialized = (u8)1U;
+    if (g_DmaState.u.initialized == 0)
+    {
+        g_DmaState.firstUsed = NULL;
+        g_DmaState.firstFree = g_DmaBuffers;
+        g_DmaState.u.initialized = (u8)1U;
     }
 
-    *state = &gDmaState;
-    return &audio_manager_dma_callback;
+    *state = &g_DmaState;
+    return &amDmaCallback;
 }
 
 /**
@@ -962,7 +984,8 @@ ALDMAproc audio_manager_dma_new(DMAState** state)
  * it was last used. If that was more than FRAME_LAG frames ago, move it
  * back to the unused list. 
  */
-void clear_audio_dma(void) {
+void amClearDmaBuffers(void)
+{
     u32 i;
     OSMesg osmesg;
     DMABuffer *dmaPtr, *nextPtr;
@@ -973,9 +996,9 @@ void clear_audio_dma(void) {
     * Don't block here. If dma's aren't complete, you've had an audio
     * overrun. (Bad news, but go for it anyway, and try and recover.
     */
-   for (i=0; i < gNextDMa; i++)
+   for (i=0; i < g_NextDMa; i++)
    {
-       if (osRecvMesg(&gDmaMessageQueue, (OSMesg *)&osmesg, OS_MESG_NOBLOCK) == -1)
+       if (osRecvMesg(&g_DmaMessageQueue, (OSMesg *)&osmesg, OS_MESG_NOBLOCK) == -1)
         /*
             The audiomgr example has an ifndef for a debug statement as follows:
             PRINTF("Dma not done\n");
@@ -983,7 +1006,7 @@ void clear_audio_dma(void) {
         ;
    }
 
-    dmaPtr = gDmaState.firstUsed;
+    dmaPtr = g_DmaState.firstUsed;
     while (dmaPtr)
     {
         nextPtr = (DMABuffer*)dmaPtr->node.next;
@@ -991,21 +1014,22 @@ void clear_audio_dma(void) {
         /* remove old dma's from list */
         /* Can change FRAME_LAG value.  Should be at least one.  */
         /* Larger values mean more buffers needed, but fewer DMA's */
-        if (dmaPtr->lastFrame + 1 < gAudioFrameCount)
+        if (dmaPtr->lastFrame + 1 < g_AudioFrameCount)
         {
-            if (gDmaState.firstUsed == dmaPtr) {
-                gDmaState.firstUsed = (DMABuffer*)dmaPtr->node.next;
+            if (g_DmaState.firstUsed == dmaPtr)
+            {
+                g_DmaState.firstUsed = (DMABuffer*)dmaPtr->node.next;
             }
 
             alUnlink((ALLink*)dmaPtr);
 
-            if (gDmaState.firstFree)
+            if (g_DmaState.firstFree)
             {
-                alLink((ALLink*)dmaPtr, (ALLink*)gDmaState.firstFree);
+                alLink((ALLink*)dmaPtr, (ALLink*)g_DmaState.firstFree);
             }
             else
             {
-                gDmaState.firstFree = dmaPtr;
+                g_DmaState.firstFree = dmaPtr;
                 dmaPtr->node.next = 0;
                 dmaPtr->node.prev = 0;
             }
@@ -1013,7 +1037,7 @@ void clear_audio_dma(void) {
         dmaPtr = nextPtr;
     }
 
-    gNextDMa = 0U;
-    gAudioFrameCount = (s32)(gAudioFrameCount + 1);
+    g_NextDMa = 0U;
+    g_AudioFrameCount = (s32)(g_AudioFrameCount + 1);
 }
 

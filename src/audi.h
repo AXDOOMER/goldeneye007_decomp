@@ -3,7 +3,7 @@
 
 #include "ultra64.h"
 
-void create_audio_manager(ALSynConfig* alconf);
-void start_audio_thread(void);
+void amCreateAudioManager(ALSynConfig* alconf);
+void amStartAudioThread(void);
 
 #endif
