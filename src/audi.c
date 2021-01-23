@@ -153,9 +153,9 @@ s32 CUSTOM_FX_PARAMS_N[CUSTOM_FX_SECTION_COUNT * CUSTOM_FX_SECTION_SIZE + 2] = {
              6,     160 ms,
 
     /*                                         chorus  chorus   filter
-    input    output  fbcoef  ffcoef   gain      rate   depth    coef  */
+    input    output  fbcoef  ffcoef    gain     rate   depth    coef  */
         0,     4 ms,   9830,  -9830,      0,        0,     0,       0,
-    4 ms,     8 ms,   9830,   -9830, 0x2B84,        0,     0,  0x2500,
+     4 ms,     8 ms,   9830,  -9830, 0x2B84,        0,     0,  0x2500,
     20 ms,    64 ms,  16384, -16384, 0x11EB,        0,     0,  0x3000,
     80 ms,   140 ms,  16384, -16384, 0x11EB,        0,     0,  0x3500,
     84 ms,   120 ms,   8192,  -8192,      0,        0,     0,  0x4000,
@@ -230,7 +230,7 @@ char dword_CODE_bss_8005E4E8[0x30];
 
 /**
  * Address 8005e518.
- * sizeof(struct AudioManager_s) == 0x2e8 (744)
+ * sizeof(struct AudioManager_s) == 0x288 (648)
  */
 struct AudioManager_s {
 
@@ -277,14 +277,9 @@ struct AudioManager_s {
     /**
      * 0x238
      */
-    DMABuffer dmaBuffer;
+    ALGlobals g;
 
 } g_AudioManager;
-
-/**
- * Unknown / unused.
- */
-u32 D_8005e764[14];
 
 /**
  * Address 0x8005e7a0.
@@ -358,11 +353,11 @@ void amCreateAudioManager(ALSynConfig* alconf)
     {
         s32 sp48[CUSTOM_FX_SECTION_COUNT * CUSTOM_FX_SECTION_SIZE + 2] = CUSTOM_FX_PARAMS_N;
         alconf->params = sp48;
-        alInit(&g_AudioManager.dmaBuffer, alconf);
+        alInit(&g_AudioManager.g, alconf);
     }
     else
     {
-        alInit(&g_AudioManager.dmaBuffer, alconf);
+        alInit(&g_AudioManager.g, alconf);
     }
     
     for (j=0; j < NUMBER_OUTPUT_BUFFERS; j++)
@@ -510,7 +505,7 @@ void amMain(void* arg)
         }
     }
     
-    alClose(&(g_AudioManager.dmaBuffer));
+    alClose(&(g_AudioManager.g));
 }
 #else
 GLOBAL_ASM(
@@ -780,9 +775,9 @@ void amHandleFrameMessage(AudioInfo *info, AudioInfo *lastInfo)
     info->task.list.t.yield_data_ptr = NULL; // 50
     info->task.list.t.yield_data_size = 0; // 54
     
-    /* swap which acmd list you use each frame */
     osSendMesg(osScGetCmdQ(&sc), (OSMesg)&info->task, OS_MESG_NOBLOCK);
-    
+
+    /* swap which acmd list you use each frame */
     g_CurrentAcmdList ^= 1;
 }
 
