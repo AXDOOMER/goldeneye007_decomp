@@ -516,8 +516,7 @@ glabel __scMain
 )
 #endif
 
-void __scHandleRetrace(OSSched *sc)
-{
+void __scHandleRetrace(OSSched *sc) {
     OSScTask    *rspTask = 0;    
     OSScClient  *client;
     s32         state;
@@ -546,118 +545,30 @@ void __scHandleRetrace(OSSched *sc)
     CheckDisplayErrorBufferEvery16Frames(sc->frameCount);
 }
 
-/**
- * 1C14	70001014
- */
-#ifdef NONMATCHING
-void __scHandleRSP(OSSched *sc)
-{
+void __scHandleRSP(OSSched *sc) {
     OSScTask *t, *sp = 0, *dp = 0;
     s32 state;
-
     t = sc->curRSPTask;
     sc->curRSPTask = 0;
     video_related_3(0x10001);
-    if (((t->state & 0x10) != 0) && (osSpTaskYielded(t->list) != 0))
-    {
-        t->state = (s32) (t->state | 0x20);
-        if ((t->flags & 7) == 3)
-        {
-            *t = (void *) sc->gfxListHead;
+    if ((t->state & OS_SC_YIELD) && osSpTaskYielded(&t->list)) {
+        t->state |= OS_SC_YIELDED;
+        if ((t->flags & OS_SC_TYPE_MASK) == OS_SC_XBUS) {
+            t->next = sc->gfxListHead;
             sc->gfxListHead = t;
-            if (sc->gfxListTail == 0)
-            {
+            if (sc->gfxListTail == 0) {
                 sc->gfxListTail = t;
             }
         }
-    }
-    else
-    {
-        t->state = (s32) (t->state & -3);
+    } else {
+        t->state &= ~OS_SC_NEEDS_RSP;
         __scTaskComplete(sc, t);
     }
-    if (__scSchedule(sc, &sp, &dp, ((((u32) sc->curRSPTask < 1U) * 2) | ((u32) sc->curRDPTask < 1U))))
-    {
+    state = ((sc->curRSPTask == 0) << 1) | (sc->curRDPTask == 0);
+    if (__scSchedule(sc, &sp, &dp, state) != state) {
         __scExec(sc, sp, dp);
     }
 }
-
-#else
-GLOBAL_ASM(
-glabel __scHandleRSP
-/* 001C14 70001014 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 001C18 70001018 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 001C1C 7000101C AFB00018 */  sw    $s0, 0x18($sp)
-/* 001C20 70001020 AFA00028 */  sw    $zero, 0x28($sp)
-/* 001C24 70001024 AFA00024 */  sw    $zero, 0x24($sp)
-/* 001C28 70001028 8C8500C8 */  lw    $a1, 0xc8($a0)
-/* 001C2C 7000102C 00808025 */  move  $s0, $a0
-/* 001C30 70001030 AC8000C8 */  sw    $zero, 0xc8($a0)
-/* 001C34 70001034 3C040001 */  lui   $a0, (0x00010001 >> 16) # lui $a0, 1
-/* 001C38 70001038 34840001 */  ori   $a0, (0x00010001 & 0xFFFF) # ori $a0, $a0, 1
-/* 001C3C 7000103C 0C000A15 */  jal   video_related_3
-/* 001C40 70001040 AFA5002C */   sw    $a1, 0x2c($sp)
-/* 001C44 70001044 8FA5002C */  lw    $a1, 0x2c($sp)
-/* 001C48 70001048 8CAE0004 */  lw    $t6, 4($a1)
-/* 001C4C 7000104C 24A40010 */  addiu $a0, $a1, 0x10
-/* 001C50 70001050 31CF0010 */  andi  $t7, $t6, 0x10
-/* 001C54 70001054 51E00015 */  beql  $t7, $zero, .L700010AC
-/* 001C58 70001058 8CAC0004 */   lw    $t4, 4($a1)
-/* 001C5C 7000105C 0C0038D0 */  jal   osSpTaskYielded
-/* 001C60 70001060 AFA5002C */   sw    $a1, 0x2c($sp)
-/* 001C64 70001064 10400010 */  beqz  $v0, .L700010A8
-/* 001C68 70001068 8FA5002C */   lw    $a1, 0x2c($sp)
-/* 001C6C 7000106C 8CB80004 */  lw    $t8, 4($a1)
-/* 001C70 70001070 8CA80008 */  lw    $t0, 8($a1)
-/* 001C74 70001074 24010003 */  li    $at, 3
-/* 001C78 70001078 37190020 */  ori   $t9, $t8, 0x20
-/* 001C7C 7000107C 31090007 */  andi  $t1, $t0, 7
-/* 001C80 70001080 1521000F */  bne   $t1, $at, .L700010C0
-/* 001C84 70001084 ACB90004 */   sw    $t9, 4($a1)
-/* 001C88 70001088 8E0A00BC */  lw    $t2, 0xbc($s0)
-/* 001C8C 7000108C ACAA0000 */  sw    $t2, ($a1)
-/* 001C90 70001090 8E0B00C4 */  lw    $t3, 0xc4($s0)
-/* 001C94 70001094 AE0500BC */  sw    $a1, 0xbc($s0)
-/* 001C98 70001098 5560000A */  bnezl $t3, .L700010C4
-/* 001C9C 7000109C 8E0E00C8 */   lw    $t6, 0xc8($s0)
-/* 001CA0 700010A0 10000007 */  b     .L700010C0
-/* 001CA4 700010A4 AE0500C4 */   sw    $a1, 0xc4($s0)
-.L700010A8:
-/* 001CA8 700010A8 8CAC0004 */  lw    $t4, 4($a1)
-.L700010AC:
-/* 001CAC 700010AC 2401FFFD */  li    $at, -3
-/* 001CB0 700010B0 02002025 */  move  $a0, $s0
-/* 001CB4 700010B4 01816824 */  and   $t5, $t4, $at
-/* 001CB8 700010B8 0C00048C */  jal   __scTaskComplete
-/* 001CBC 700010BC ACAD0004 */   sw    $t5, 4($a1)
-.L700010C0:
-/* 001CC0 700010C0 8E0E00C8 */  lw    $t6, 0xc8($s0)
-.L700010C4:
-/* 001CC4 700010C4 8E1900CC */  lw    $t9, 0xcc($s0)
-/* 001CC8 700010C8 02002025 */  move  $a0, $s0
-/* 001CCC 700010CC 2DCF0001 */  sltiu $t7, $t6, 1
-/* 001CD0 700010D0 000FC040 */  sll   $t8, $t7, 1
-/* 001CD4 700010D4 2F280001 */  sltiu $t0, $t9, 1
-/* 001CD8 700010D8 03083825 */  or    $a3, $t8, $t0
-/* 001CDC 700010DC AFA70020 */  sw    $a3, 0x20($sp)
-/* 001CE0 700010E0 27A50028 */  addiu $a1, $sp, 0x28
-/* 001CE4 700010E4 0C000567 */  jal   __scSchedule
-/* 001CE8 700010E8 27A60024 */   addiu $a2, $sp, 0x24
-/* 001CEC 700010EC 8FA70020 */  lw    $a3, 0x20($sp)
-/* 001CF0 700010F0 02002025 */  move  $a0, $s0
-/* 001CF4 700010F4 8FA50028 */  lw    $a1, 0x28($sp)
-/* 001CF8 700010F8 50470004 */  beql  $v0, $a3, .L7000110C
-/* 001CFC 700010FC 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 001D00 70001100 0C000510 */  jal   __scExec
-/* 001D04 70001104 8FA60024 */   lw    $a2, 0x24($sp)
-/* 001D08 70001108 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7000110C:
-/* 001D0C 7000110C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 001D10 70001110 27BD0030 */  addiu $sp, $sp, 0x30
-/* 001D14 70001114 03E00008 */  jr    $ra
-/* 001D18 70001118 00000000 */   nop   
-)
-#endif
 
 /**
  * 1D1C	7000111C
