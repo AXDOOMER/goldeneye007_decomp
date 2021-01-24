@@ -26,6 +26,9 @@ struct video_settings {
 };
 
 extern OSViMode *viMode;
+extern u32 dword_CODE_bss_80060880;
+extern u32 dword_CODE_bss_80060884;
+extern u32 dword_CODE_bss_80060888;
 
 void viSet800232B4(f32 param_1);
 

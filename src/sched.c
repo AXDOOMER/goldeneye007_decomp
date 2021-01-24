@@ -139,26 +139,7 @@ void osCreateLog(void){
 	currentcount=osGetCount();
 }
 
-/**
- * 16AC	70000AAC
- * (thread management)
- */
-#ifdef NONMATCHING
-// 175c:    lui     at,0x8006                        | 175c:    li      a0,4
-// 1760:    li      a0,4                             | 1760:    move    a1,s1
-// 1764:    sw      t3,0x880(at)                     r 1764:    sw      t3,4(t2)
-// 1768:    lw      t4,0x30(t2)                      r 1768:    lw      v0,0(v1)
-// 176c:    lui     at,0x8006                        | 176c:    li      a2,0x29b
-// 1770:    move    a1,s1                            | 1770:    lw      t4,0x30(v0)
-// 1774:    sw      t4,0x884(at)                     r 1774:    sw      t4,8(v0)
-// 1778:    lw      t5,0x44(t2)                      r 1778:    lw      v0,0(v1)
-// 177c:    lui     at,0x8006                        <
-// 1780:    li      a2,0x29b                         | 177c:    lw      t5,0x44(v0)
-// 1784:    jal     0xdc50                             1780:    jal     0xdc50
-// 1788:    sw      t5,0x888(at)                     r 1784:    sw      t5,0xc(v0)
-extern OSViMode *viMode;
-void osCreateScheduler (OSSched * sc, void * stack, u8 mode, u32 numFields)
-{
+void osCreateScheduler (OSSched * sc, void * stack, u8 mode, u32 numFields) {
     sc->curRSPTask = 0;
     sc->curRDPTask = 0;
     sc->clientList = 0;
@@ -173,12 +154,10 @@ void osCreateScheduler (OSSched * sc, void * stack, u8 mode, u32 numFields)
     osCreateMesgQueue(&sc->interruptQ, sc->intBuf, OS_SC_MAX_MESGS);
     osCreateMesgQueue(&sc->cmdQ, sc->cmdMsgBuf, OS_SC_MAX_MESGS);
     osCreateViManager(OS_PRIORITY_VIMGR);
-
     viMode = &osViModeTable[mode];
-    viMode->comRegs.ctrl = viMode->comRegs.hStart;
-    viMode->comRegs.width = viMode->fldRegs[0].vStart;
-    viMode->comRegs.burst = viMode->fldRegs[1].vStart;
-
+    dword_CODE_bss_80060880 = viMode->comRegs.hStart;
+    dword_CODE_bss_80060884 = viMode->fldRegs[0].vStart;
+    dword_CODE_bss_80060888 = viMode->fldRegs[1].vStart;
     osSetEventMesg(OS_EVENT_SP, &sc->interruptQ, (OSMesg)RSP_DONE_MSG); 
     osSetEventMesg(OS_EVENT_DP, &sc->interruptQ, (OSMesg)RDP_DONE_MSG);
     osSetEventMesg(OS_EVENT_PRENMI, &sc->interruptQ, (OSMesg)PRE_NMI_MSG);
@@ -187,105 +166,7 @@ void osCreateScheduler (OSSched * sc, void * stack, u8 mode, u32 numFields)
     osCreateThread(sc->thread, 2, &__scMain, sc, set_stack_entry(&sp_shed, 0x200), 0x1e);
     osStartThread(sc->thread);
 }
-#else
-GLOBAL_ASM(
-glabel osCreateScheduler
-/* 0016AC 70000AAC 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0016B0 70000AB0 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0016B4 70000AB4 AFB10020 */  sw    $s1, 0x20($sp)
-/* 0016B8 70000AB8 AFB0001C */  sw    $s0, 0x1c($sp)
-/* 0016BC 70000ABC AFA5002C */  sw    $a1, 0x2c($sp)
-/* 0016C0 70000AC0 AFA60030 */  sw    $a2, 0x30($sp)
-/* 0016C4 70000AC4 AFA70034 */  sw    $a3, 0x34($sp)
-/* 0016C8 70000AC8 240E0001 */  li    $t6, 1
-/* 0016CC 70000ACC 240F0005 */  li    $t7, 5
-/* 0016D0 70000AD0 AC8000C8 */  sw    $zero, 0xc8($a0)
-/* 0016D4 70000AD4 AC8000CC */  sw    $zero, 0xcc($a0)
-/* 0016D8 70000AD8 AC8000B4 */  sw    $zero, 0xb4($a0)
-/* 0016DC 70000ADC AC8000D0 */  sw    $zero, 0xd0($a0)
-/* 0016E0 70000AE0 AC8000B8 */  sw    $zero, 0xb8($a0)
-/* 0016E4 70000AE4 AC8000BC */  sw    $zero, 0xbc($a0)
-/* 0016E8 70000AE8 AC8000C0 */  sw    $zero, 0xc0($a0)
-/* 0016EC 70000AEC AC8000C4 */  sw    $zero, 0xc4($a0)
-/* 0016F0 70000AF0 A48E0000 */  sh    $t6, ($a0)
-/* 0016F4 70000AF4 A48F0020 */  sh    $t7, 0x20($a0)
-/* 0016F8 70000AF8 8FB8002C */  lw    $t8, 0x2c($sp)
-/* 0016FC 70000AFC 00808025 */  move  $s0, $a0
-/* 001700 70000B00 24910040 */  addiu $s1, $a0, 0x40
-/* 001704 70000B04 AC9800B0 */  sw    $t8, 0xb0($a0)
-/* 001708 70000B08 02202025 */  move  $a0, $s1
-/* 00170C 70000B0C 26050058 */  addiu $a1, $s0, 0x58
-/* 001710 70000B10 0C0035B4 */  jal   osCreateMesgQueue
-/* 001714 70000B14 24060008 */   li    $a2, 8
-/* 001718 70000B18 26040078 */  addiu $a0, $s0, 0x78
-/* 00171C 70000B1C 26050090 */  addiu $a1, $s0, 0x90
-/* 001720 70000B20 0C0035B4 */  jal   osCreateMesgQueue
-/* 001724 70000B24 24060008 */   li    $a2, 8
-/* 001728 70000B28 0C00363C */  jal   osCreateViManager
-/* 00172C 70000B2C 240400FE */   li    $a0, 254
-/* 001730 70000B30 93B90033 */  lbu   $t9, 0x33($sp)
-/* 001734 70000B34 3C098002 */  lui   $t1, %hi(osViModeTable) 
-/* 001738 70000B38 3C038006 */  lui   $v1, %hi(viMode)
-/* 00173C 70000B3C 00194080 */  sll   $t0, $t9, 2
-/* 001740 70000B40 01194021 */  addu  $t0, $t0, $t9
-/* 001744 70000B44 00084100 */  sll   $t0, $t0, 4
-/* 001748 70000B48 252969C0 */  addiu $t1, %lo(osViModeTable) # addiu $t1, $t1, 0x69c0
-/* 00174C 70000B4C 2463087C */  addiu $v1, %lo(viMode) # addiu $v1, $v1, 0x87c
-/* 001750 70000B50 01095021 */  addu  $t2, $t0, $t1
-/* 001754 70000B54 AC6A0000 */  sw    $t2, ($v1)
-/* 001758 70000B58 8D4B001C */  lw    $t3, 0x1c($t2)
-/* 00175C 70000B5C 3C018006 */  lui   $at, %hi(viMode+0x4)
-/* 001760 70000B60 24040004 */  li    $a0, 4
-/* 001764 70000B64 AC2B0880 */  sw    $t3, %lo(viMode+0x4)($at)
-/* 001768 70000B68 8D4C0030 */  lw    $t4, 0x30($t2)
-/* 00176C 70000B6C 3C018006 */  lui   $at, %hi(viMode+0x8)
-/* 001770 70000B70 02202825 */  move  $a1, $s1
-/* 001774 70000B74 AC2C0884 */  sw    $t4, %lo(viMode+0x8)($at)
-/* 001778 70000B78 8D4D0044 */  lw    $t5, 0x44($t2)
-/* 00177C 70000B7C 3C018006 */  lui   $at, %hi(viMode+0xC)
-/* 001780 70000B80 2406029B */  li    $a2, 667
-/* 001784 70000B84 0C003714 */  jal   osSetEventMesg
-/* 001788 70000B88 AC2D0888 */   sw    $t5, %lo(viMode+0xC)($at)
-/* 00178C 70000B8C 24040009 */  li    $a0, 9
-/* 001790 70000B90 02202825 */  move  $a1, $s1
-/* 001794 70000B94 0C003714 */  jal   osSetEventMesg
-/* 001798 70000B98 2406029C */   li    $a2, 668
-/* 00179C 70000B9C 2404000E */  li    $a0, 14
-/* 0017A0 70000BA0 02202825 */  move  $a1, $s1
-/* 0017A4 70000BA4 0C003714 */  jal   osSetEventMesg
-/* 0017A8 70000BA8 2406029D */   li    $a2, 669
-/* 0017AC 70000BAC 02202025 */  move  $a0, $s1
-/* 0017B0 70000BB0 2405029A */  li    $a1, 666
-/* 0017B4 70000BB4 0C003730 */  jal   osViSetEvent
-/* 0017B8 70000BB8 8FA60034 */   lw    $a2, 0x34($sp)
-/* 0017BC 70000BBC 0C0002A2 */  jal   osCreateLog
-/* 0017C0 70000BC0 00000000 */   nop   
-/* 0017C4 70000BC4 3C04803B */  lui   $a0, %hi(sp_shed) # $a0, 0x803b
-/* 0017C8 70000BC8 2484B750 */  addiu $a0, %lo(sp_shed) # addiu $a0, $a0, -0x48b0
-/* 0017CC 70000BCC 0C0001BC */  jal   set_stack_entry
-/* 0017D0 70000BD0 24050200 */   li    $a1, 512
-/* 0017D4 70000BD4 8E0400B0 */  lw    $a0, 0xb0($s0)
-/* 0017D8 70000BD8 3C067000 */  lui   $a2, %hi(__scMain) # $a2, 0x7000
-/* 0017DC 70000BDC 240E001E */  li    $t6, 30
-/* 0017E0 70000BE0 AFAE0014 */  sw    $t6, 0x14($sp)
-/* 0017E4 70000BE4 24C60D00 */  addiu $a2, %lo(__scMain) # addiu $a2, $a2, 0xd00
-/* 0017E8 70000BE8 AFA20010 */  sw    $v0, 0x10($sp)
-/* 0017EC 70000BEC 24050002 */  li    $a1, 2
-/* 0017F0 70000BF0 0C00350C */  jal   osCreateThread
-/* 0017F4 70000BF4 02003825 */   move  $a3, $s0
-/* 0017F8 70000BF8 0C003560 */  jal   osStartThread
-/* 0017FC 70000BFC 8E0400B0 */   lw    $a0, 0xb0($s0)
-/* 001800 70000C00 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 001804 70000C04 8FB0001C */  lw    $s0, 0x1c($sp)
-/* 001808 70000C08 8FB10020 */  lw    $s1, 0x20($sp)
-/* 00180C 70000C0C 03E00008 */  jr    $ra
-/* 001810 70000C10 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
 
-/**
- * 1814	70000C14
- */
 void osScAddClient(OSSched *sc, OSScClient *c, OSMesgQueue *msgQ, OSScClient *next)
 {
     OSIntMask mask;
