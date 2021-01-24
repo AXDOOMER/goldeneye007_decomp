@@ -47,12 +47,10 @@ u32 currentcount = 0;
 u32 dp_busy = 0;
 u32 dpCount = 0;
 //800230b0
-f32 something_with_osVI_0 = 0.0;
-f32 something_with_osVI_4[2] = {1.0, 1.0};
-f32 something_with_osVI_C[2] = {1.0, 1.0};
-s32 something_with_osVI_14[2] = {0, 0};
-
-u32 D_800230CC = 1;
+s32 g_ViCurrentIndex = 0;
+f32 g_ViXScales[2] = {1.0, 1.0};
+f32 g_ViYScales[2] = {1.0, 1.0};
+s32 something_with_osVI_14[2] = {0, 0}; // boolean
 
 OSSched sc;
 //temporary until i get proper sized structs
@@ -60,9 +58,8 @@ OSScClient gfxClient[3];
 //char gfxClient[0x18];
 
 char target_for_counters_maybe[0x10];
-OSViMode viModes[2];
-OSViMode *viModePtrs[2];
-s32 dword_CODE_bss_8005DBE8[2];
+OSViMode g_ViModes[2];
+OSViMode *g_ViModePtrs[2];
 
 /**
  * 1570	70000970
@@ -609,204 +606,34 @@ OSScTask *__scTaskReady(OSScTask *t)
     return 0;
 }
 
-#ifdef NONMATCHING
-void __scTaskComplete(s32 arg0, void *arg1)
+s32 __scTaskComplete(OSSched *sc, OSScTask *t)
 {
-    s32 temp_t2;
-    void *temp_t8;
-    void *temp_t8_2;
-    void *temp_t5;
-    s32 temp_t7;
-    s32 temp_t0;
-    void *phi_t8;
-    void *phi_t5;
-    s32 phi_v1;
-    s32 phi_t0;
-    ? phi_return;
-
-    phi_return = 0;
-    if ((arg1->unk4 & 3) == 0)
-    {
-        osSendMesg(arg1->unk50, arg1->unk54, 1);
-        if (arg1->unk10 == 1)
-        {
-            if ((arg1->unk8 & 0x40) != 0)
-            {
-                if ((arg1->unk8 & 0x20) != 0)
-                {
-                    if (D_800230CC != 0)
-                    {
-                        osViBlack(0);
-                        D_800230CC = 0;
-                    }
-                    temp_t2 = (something_with_osVI * 4);
-                    phi_v1 = temp_t2;
-                    if ((0x80020000 + temp_t2)->unk30C4 != 0)
-                    {
-                        temp_t8 = ((something_with_osVI * 0x50) + &dword_CODE_bss_8005DB40);
-                        phi_t8 = temp_t8;
-                        phi_t5 = (0x80060000 + (something_with_osVI * 4))->unk-2420;
-block_8:
-                        temp_t8_2 = (phi_t8 + 0xc);
-                        temp_t5 = (phi_t5 + 0xc);
-                        temp_t5->unk-C = (?32) *phi_t8;
-                        temp_t5->unk-8 = (?32) temp_t8_2->unk-8;
-                        temp_t5->unk-4 = (?32) temp_t8_2->unk-4;
-                        phi_t8 = temp_t8_2;
-                        phi_t5 = temp_t5;
-                        if (temp_t8_2 != (temp_t8 + 0x48))
-                        {
-                            goto block_8;
-                        }
-                        *temp_t5 = (?32) *temp_t8_2;
-                        temp_t5->unk4 = (?32) temp_t8_2->unk4;
-                        osSetIntMask(osSetIntMask(0x80401));
-                        phi_v1 = (something_with_osVI * 4);
-                    }
-                    osViSetXScale((0x80020000 + phi_v1)->unk30B4);
-                    osViSetYScale((0x80020000 + (something_with_osVI * 4))->unk30BC);
-                    temp_t7 = (something_with_osVI + 1);
-                    temp_t0 = (temp_t7 & 1);
-                    phi_t0 = temp_t0;
-                    if (temp_t7 < 0)
-                    {
-                        phi_t0 = temp_t0;
-                        if (temp_t0 != 0)
-                        {
-                            phi_t0 = (temp_t0 + -2);
-                        }
-                    }
-                    something_with_osVI = (s32) phi_t0;
-                    CheckDisplayErrorBuffer(arg1->unkC);
-                    osViSwapBuffer(arg1->unkC);
+    int rv;
+    static int firsttime = 1;
+    if ((t->state & OS_SC_RCP_MASK) == 0) {
+        rv = osSendMesg(t->msgQ, t->msg, OS_MESG_BLOCK);
+        if (t->list.t.type == M_GFXTASK) {
+            if ((t->flags & OS_SC_SWAPBUFFER) && (t->flags & OS_SC_LAST_TASK)){
+                if (firsttime) {
+                    osViBlack(FALSE);
+                    firsttime = 0;
                 }
+                if (something_with_osVI_14[g_ViCurrentIndex]) {
+                    OSIntMask mask = osSetIntMask(0x80401);
+                    *g_ViModePtrs[g_ViCurrentIndex] = g_ViModes[g_ViCurrentIndex];
+                    osSetIntMask(mask);
+                }
+                osViSetXScale(g_ViXScales[g_ViCurrentIndex]);
+                osViSetYScale(g_ViYScales[g_ViCurrentIndex]);
+                g_ViCurrentIndex = ((g_ViCurrentIndex + 1) % 2);
+                CheckDisplayErrorBuffer(t->framebuffer);
+                osViSwapBuffer(t->framebuffer);
             }
         }
-        phi_return = 1;
-    }
-    return phi_return;
+        return 1;
+    }    
+    return 0;
 }
-#else
-GLOBAL_ASM(
-glabel __scTaskComplete
-/* 001E30 70001230 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 001E34 70001234 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 001E38 70001238 AFB00018 */  sw    $s0, 0x18($sp)
-/* 001E3C 7000123C AFA40020 */  sw    $a0, 0x20($sp)
-/* 001E40 70001240 8CAE0004 */  lw    $t6, 4($a1)
-/* 001E44 70001244 00A08025 */  move  $s0, $a1
-/* 001E48 70001248 24060001 */  li    $a2, 1
-/* 001E4C 7000124C 31CF0003 */  andi  $t7, $t6, 3
-/* 001E50 70001250 15E0005C */  bnez  $t7, .L700013C4
-/* 001E54 70001254 00001025 */   move  $v0, $zero
-/* 001E58 70001258 8CA40050 */  lw    $a0, 0x50($a1)
-/* 001E5C 7000125C 0C0037C4 */  jal   osSendMesg
-/* 001E60 70001260 8CA50054 */   lw    $a1, 0x54($a1)
-/* 001E64 70001264 8E180010 */  lw    $t8, 0x10($s0)
-/* 001E68 70001268 24010001 */  li    $at, 1
-/* 001E6C 7000126C 17010053 */  bne   $t8, $at, .L700013BC
-/* 001E70 70001270 00000000 */   nop   
-/* 001E74 70001274 8E020008 */  lw    $v0, 8($s0)
-/* 001E78 70001278 30590040 */  andi  $t9, $v0, 0x40
-/* 001E7C 7000127C 1320004F */  beqz  $t9, .L700013BC
-/* 001E80 70001280 30480020 */   andi  $t0, $v0, 0x20
-/* 001E84 70001284 1100004D */  beqz  $t0, .L700013BC
-/* 001E88 70001288 3C098002 */   lui   $t1, %hi(D_800230CC) 
-/* 001E8C 7000128C 8D2930CC */  lw    $t1, %lo(D_800230CC)($t1)
-/* 001E90 70001290 11200005 */  beqz  $t1, .L700012A8
-/* 001E94 70001294 00000000 */   nop   
-/* 001E98 70001298 0C0038B4 */  jal   osViBlack
-/* 001E9C 7000129C 00002025 */   move  $a0, $zero
-/* 001EA0 700012A0 3C018002 */  lui   $at, %hi(D_800230CC)
-/* 001EA4 700012A4 AC2030CC */  sw    $zero, %lo(D_800230CC)($at)
-.L700012A8:
-/* 001EA8 700012A8 3C038002 */  lui   $v1, %hi(something_with_osVI_0)
-/* 001EAC 700012AC 8C6330B0 */  lw    $v1, %lo(something_with_osVI_0)($v1)
-/* 001EB0 700012B0 3C0B8002 */  lui   $t3, %hi(something_with_osVI_14)
-/* 001EB4 700012B4 3C040008 */  lui   $a0, (0x00080401 >> 16) # lui $a0, 8
-/* 001EB8 700012B8 00035080 */  sll   $t2, $v1, 2
-/* 001EBC 700012BC 016A5821 */  addu  $t3, $t3, $t2
-/* 001EC0 700012C0 8D6B30C4 */  lw    $t3, %lo(something_with_osVI_14)($t3)
-/* 001EC4 700012C4 01401825 */  move  $v1, $t2
-/* 001EC8 700012C8 11600023 */  beqz  $t3, .L70001358
-/* 001ECC 700012CC 00000000 */   nop   
-/* 001ED0 700012D0 0C00374C */  jal   osSetIntMask
-/* 001ED4 700012D4 34840401 */   ori   $a0, (0x00080401 & 0xFFFF) # ori $a0, $a0, 0x401
-/* 001ED8 700012D8 3C038002 */  lui   $v1, %hi(something_with_osVI_0)
-/* 001EDC 700012DC 8C6330B0 */  lw    $v1, %lo(something_with_osVI_0)($v1)
-/* 001EE0 700012E0 3C0F8006 */  lui   $t7, %hi(viModes) 
-/* 001EE4 700012E4 25EFDB40 */  addiu $t7, %lo(viModes) # addiu $t7, $t7, -0x24c0
-/* 001EE8 700012E8 00037080 */  sll   $t6, $v1, 2
-/* 001EEC 700012EC 01C37021 */  addu  $t6, $t6, $v1
-/* 001EF0 700012F0 000E7100 */  sll   $t6, $t6, 4
-/* 001EF4 700012F4 3C0D8006 */  lui   $t5, %hi(sc+416)
-/* 001EF8 700012F8 00036080 */  sll   $t4, $v1, 2
-/* 001EFC 700012FC 01AC6821 */  addu  $t5, $t5, $t4
-/* 001F00 70001300 01CFC021 */  addu  $t8, $t6, $t7
-/* 001F04 70001304 27090048 */  addiu $t1, $t8, 0x48
-/* 001F08 70001308 8DADDBE0 */  lw    $t5, %lo(sc+416)($t5)
-.L7000130C:
-/* 001F0C 7000130C 8F010000 */  lw    $at, ($t8)
-/* 001F10 70001310 2718000C */  addiu $t8, $t8, 0xc
-/* 001F14 70001314 25AD000C */  addiu $t5, $t5, 0xc
-/* 001F18 70001318 ADA1FFF4 */  sw    $at, -0xc($t5)
-/* 001F1C 7000131C 8F01FFF8 */  lw    $at, -8($t8)
-/* 001F20 70001320 ADA1FFF8 */  sw    $at, -8($t5)
-/* 001F24 70001324 8F01FFFC */  lw    $at, -4($t8)
-/* 001F28 70001328 1709FFF8 */  bne   $t8, $t1, .L7000130C
-/* 001F2C 7000132C ADA1FFFC */   sw    $at, -4($t5)
-/* 001F30 70001330 8F010000 */  lw    $at, ($t8)
-/* 001F34 70001334 00402025 */  move  $a0, $v0
-/* 001F38 70001338 ADA10000 */  sw    $at, ($t5)
-/* 001F3C 7000133C 8F090004 */  lw    $t1, 4($t8)
-/* 001F40 70001340 0C00374C */  jal   osSetIntMask
-/* 001F44 70001344 ADA90004 */   sw    $t1, 4($t5)
-/* 001F48 70001348 3C038002 */  lui   $v1, %hi(something_with_osVI_0)
-/* 001F4C 7000134C 8C6330B0 */  lw    $v1, %lo(something_with_osVI_0)($v1)
-/* 001F50 70001350 00035080 */  sll   $t2, $v1, 2
-/* 001F54 70001354 01401825 */  move  $v1, $t2
-.L70001358:
-/* 001F58 70001358 3C018002 */  lui   $at, %hi(something_with_osVI_4)
-/* 001F5C 7000135C 00230821 */  addu  $at, $at, $v1
-/* 001F60 70001360 0C003834 */  jal   osViSetXScale
-/* 001F64 70001364 C42C30B4 */   lwc1  $f12, %lo(something_with_osVI_4)($at)
-/* 001F68 70001368 3C0B8002 */  lui   $t3, %hi(something_with_osVI_0) 
-/* 001F6C 7000136C 8D6B30B0 */  lw    $t3, %lo(something_with_osVI_0)($t3)
-/* 001F70 70001370 3C018002 */  lui   $at, %hi(something_with_osVI_C)
-/* 001F74 70001374 000B6080 */  sll   $t4, $t3, 2
-/* 001F78 70001378 002C0821 */  addu  $at, $at, $t4
-/* 001F7C 7000137C 0C003880 */  jal   osViSetYScale
-/* 001F80 70001380 C42C30BC */   lwc1  $f12, %lo(something_with_osVI_C)($at)
-/* 001F84 70001384 3C0E8002 */  lui   $t6, %hi(something_with_osVI_0) 
-/* 001F88 70001388 8DCE30B0 */  lw    $t6, %lo(something_with_osVI_0)($t6)
-/* 001F8C 7000138C 3C018002 */  lui   $at, %hi(something_with_osVI_0)
-/* 001F90 70001390 25CF0001 */  addiu $t7, $t6, 1
-/* 001F94 70001394 05E10004 */  bgez  $t7, .L700013A8
-/* 001F98 70001398 31E80001 */   andi  $t0, $t7, 1
-/* 001F9C 7000139C 11000002 */  beqz  $t0, .L700013A8
-/* 001FA0 700013A0 00000000 */   nop   
-/* 001FA4 700013A4 2508FFFE */  addiu $t0, $t0, -2
-.L700013A8:
-/* 001FA8 700013A8 AC2830B0 */  sw    $t0, %lo(something_with_osVI_0)($at)
-/* 001FAC 700013AC 0C000268 */  jal   CheckDisplayErrorBuffer
-/* 001FB0 700013B0 8E04000C */   lw    $a0, 0xc($s0)
-/* 001FB4 700013B4 0C003924 */  jal   osViSwapBuffer
-/* 001FB8 700013B8 8E04000C */   lw    $a0, 0xc($s0)
-.L700013BC:
-/* 001FBC 700013BC 10000001 */  b     .L700013C4
-/* 001FC0 700013C0 24020001 */   li    $v0, 1
-.L700013C4:
-/* 001FC4 700013C4 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 001FC8 700013C8 8FB00018 */  lw    $s0, 0x18($sp)
-/* 001FCC 700013CC 27BD0020 */  addiu $sp, $sp, 0x20
-/* 001FD0 700013D0 03E00008 */  jr    $ra
-/* 001FD4 700013D4 00000000 */   nop   
-)
-#endif
-
-/**
- * 1FD8	700013D8
- */
 
 void __scAppendList(OSSched *sc, OSScTask *t) 
 {
