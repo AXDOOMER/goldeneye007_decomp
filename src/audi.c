@@ -816,7 +816,7 @@ void amHandleDoneMessage(AudioInfo *info)
     {
         // debug printf from audioMgr demo
 #ifdef DEBUG
-      PRINTF("audio: ai out of samples\n");    
+      osSyncPrintf("audio: ai out of samples\n");    
 #endif
         g_FirstTime = 0;
     }
@@ -997,11 +997,11 @@ void amClearDmaBuffers(void)
    for (i=0; i < g_NextDMa; i++)
    {
        if (osRecvMesg(&g_DmaMessageQueue, (OSMesg *)&osmesg, OS_MESG_NOBLOCK) == -1)
+       {
 #ifdef DEBUG
-	  PRINTF("Dma not done\n");
-#else
-	 ;
+	        osSyncPrintf("Dma not done\n");
 #endif
+       }
 
 #ifdef DEBUG
     /* debug logging from audioMgr.c, I think this requires #include <ultralog.h>
