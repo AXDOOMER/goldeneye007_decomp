@@ -1,4 +1,3 @@
-//FIXME i still need data/bss love.
 #include "ultra64.h"
 #include "sched.h"
 #include "audi.h"
@@ -58,7 +57,7 @@ typedef struct DMABuffer_s {
     /**
      * 0x10.
      */
-    char* ptr;
+    u8* ptr;
 } DMABuffer;
 
 /**
@@ -815,6 +814,10 @@ void amHandleDoneMessage(AudioInfo *info)
     b = &g_FirstTime;
     if (!samplesLeft && !(*b))
     {
+        // debug printf from audioMgr demo
+#ifdef DEBUG
+      PRINTF("audio: ai out of samples\n");    
+#endif
         g_FirstTime = 0;
     }
 }
@@ -994,11 +997,18 @@ void amClearDmaBuffers(void)
    for (i=0; i < g_NextDMa; i++)
    {
        if (osRecvMesg(&g_DmaMessageQueue, (OSMesg *)&osmesg, OS_MESG_NOBLOCK) == -1)
-        /*
-            The audiomgr example has an ifndef for a debug statement as follows:
-            PRINTF("Dma not done\n");
-        */
-        ;
+#ifdef DEBUG
+	  PRINTF("Dma not done\n");
+#else
+	 ;
+#endif
+
+#ifdef DEBUG
+    /* debug logging from audioMgr.c, I think this requires #include <ultralog.h>
+    * //    if (logging)
+    * //        osLogEvent(log, 17, 2, osmesg->devAddr, osmesg->size);
+    */
+#endif
    }
 
     dmaPtr = g_DmaState.firstUsed;
