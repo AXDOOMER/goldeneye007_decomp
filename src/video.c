@@ -46,9 +46,11 @@ OSViMode dword_CODE_bss_80060828;
 u8 off_CODE_bss_80060878;
 u8 off_CODE_bss_80060879;
 OSViMode *viMode;
-s32 dword_CODE_bss_80060880;
-s32 dword_CODE_bss_80060884;
-s32 dword_CODE_bss_80060888;
+/*
+u32 dword_CODE_bss_80060880;
+u32 dword_CODE_bss_80060884;
+u32 dword_CODE_bss_80060888;
+*/
 s32 dword_CODE_bss_8006088C;
 /**
  * 3C60	70003060
