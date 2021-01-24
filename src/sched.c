@@ -516,27 +516,19 @@ glabel __scMain
 )
 #endif
 
-/**
- * 1AB4	70000EB4
- */
-#ifdef NONMATCHING
 void __scHandleRetrace(OSSched *sc)
 {
-    OSScTask    *rspTask = 0;
-    
+    OSScTask    *rspTask = 0;    
     OSScClient  *client;
-    //s32         i;
     s32         state;
     OSScTask    *sp = 0;
     OSScTask    *dp = 0;
-    
-
     video_related_1();
     sc->frameCount++;
     video_related_7();
     joyPoll();
     music_related_15();
-    while (osRecvMesg(&sc->cmdQ, (OSMesg *)&rspTask, OS_MESG_NOBLOCK) != -1) {
+    while (osRecvMesg(&sc->cmdQ, (OSMesg*)&rspTask, OS_MESG_NOBLOCK) != -1) {
         __scAppendList(sc, rspTask);
     }
     if (sc->doAudio && sc->curRSPTask) {
@@ -546,115 +538,13 @@ void __scHandleRetrace(OSSched *sc)
         if ( __scSchedule (sc, &sp, &dp, state) != state)
             __scExec(sc, sp, dp);
     }
-
     for (client = sc->clientList; client != 0; client = client->next) {
-        osSendMesg(client->msgQ, (OSMesg) &sc->retraceMsg, OS_MESG_NOBLOCK);
+        if ((*((s32*)client + 2) == 0) || ((sc->frameCount & 1) == 0)) {
+            osSendMesg(client->msgQ, (OSMesg) &sc->retraceMsg, OS_MESG_NOBLOCK);
+        }
     }
-
     CheckDisplayErrorBufferEvery16Frames(sc->frameCount);
 }
-#else
-GLOBAL_ASM(
-glabel __scHandleRetrace
-/* 001AB4 70000EB4 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 001AB8 70000EB8 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 001ABC 70000EBC AFB10018 */  sw    $s1, 0x18($sp)
-/* 001AC0 70000EC0 00808825 */  move  $s1, $a0
-/* 001AC4 70000EC4 AFB30020 */  sw    $s3, 0x20($sp)
-/* 001AC8 70000EC8 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 001ACC 70000ECC AFB00014 */  sw    $s0, 0x14($sp)
-/* 001AD0 70000ED0 AFA0003C */  sw    $zero, 0x3c($sp)
-/* 001AD4 70000ED4 AFA00030 */  sw    $zero, 0x30($sp)
-/* 001AD8 70000ED8 0C0009E9 */  jal   video_related_1
-/* 001ADC 70000EDC AFA0002C */   sw    $zero, 0x2c($sp)
-/* 001AE0 70000EE0 8E2E00D0 */  lw    $t6, 0xd0($s1)
-/* 001AE4 70000EE4 25CF0001 */  addiu $t7, $t6, 1
-/* 001AE8 70000EE8 0C000C68 */  jal   video_related_7
-/* 001AEC 70000EEC AE2F00D0 */   sw    $t7, 0xd0($s1)
-/* 001AF0 70000EF0 0C002F62 */  jal   joyPoll
-/* 001AF4 70000EF4 00000000 */   nop   
-/* 001AF8 70000EF8 0C001E45 */  jal   music_related_15
-/* 001AFC 70000EFC 00000000 */   nop   
-/* 001B00 70000F00 27B3003C */  addiu $s3, $sp, 0x3c
-/* 001B04 70000F04 26320078 */  addiu $s2, $s1, 0x78
-/* 001B08 70000F08 02402025 */  move  $a0, $s2
-/* 001B0C 70000F0C 02602825 */  move  $a1, $s3
-/* 001B10 70000F10 0C003774 */  jal   osRecvMesg
-/* 001B14 70000F14 00003025 */   move  $a2, $zero
-/* 001B18 70000F18 2410FFFF */  li    $s0, -1
-/* 001B1C 70000F1C 10500009 */  beq   $v0, $s0, .L70000F44
-/* 001B20 70000F20 02202025 */   move  $a0, $s1
-.L70000F24:
-/* 001B24 70000F24 0C0004F6 */  jal   __scAppendList
-/* 001B28 70000F28 8FA5003C */   lw    $a1, 0x3c($sp)
-/* 001B2C 70000F2C 02402025 */  move  $a0, $s2
-/* 001B30 70000F30 02602825 */  move  $a1, $s3
-/* 001B34 70000F34 0C003774 */  jal   osRecvMesg
-/* 001B38 70000F38 00003025 */   move  $a2, $zero
-/* 001B3C 70000F3C 5450FFF9 */  bnel  $v0, $s0, .L70000F24
-/* 001B40 70000F40 02202025 */   move  $a0, $s1
-.L70000F44:
-/* 001B44 70000F44 8E3800D4 */  lw    $t8, 0xd4($s1)
-/* 001B48 70000F48 02202025 */  move  $a0, $s1
-/* 001B4C 70000F4C 27A50030 */  addiu $a1, $sp, 0x30
-/* 001B50 70000F50 53000009 */  beql  $t8, $zero, .L70000F78
-/* 001B54 70000F54 8E2800C8 */   lw    $t0, 0xc8($s1)
-/* 001B58 70000F58 8E3900C8 */  lw    $t9, 0xc8($s1)
-/* 001B5C 70000F5C 53200006 */  beql  $t9, $zero, .L70000F78
-/* 001B60 70000F60 8E2800C8 */   lw    $t0, 0xc8($s1)
-/* 001B64 70000F64 0C000558 */  jal   __scYield
-/* 001B68 70000F68 02202025 */   move  $a0, $s1
-/* 001B6C 70000F6C 10000010 */  b     .L70000FB0
-/* 001B70 70000F70 8E3000B4 */   lw    $s0, 0xb4($s1)
-/* 001B74 70000F74 8E2800C8 */  lw    $t0, 0xc8($s1)
-.L70000F78:
-/* 001B78 70000F78 8E2B00CC */  lw    $t3, 0xcc($s1)
-/* 001B7C 70000F7C 27A6002C */  addiu $a2, $sp, 0x2c
-/* 001B80 70000F80 2D090001 */  sltiu $t1, $t0, 1
-/* 001B84 70000F84 00095040 */  sll   $t2, $t1, 1
-/* 001B88 70000F88 2D6C0001 */  sltiu $t4, $t3, 1
-/* 001B8C 70000F8C 014C8025 */  or    $s0, $t2, $t4
-/* 001B90 70000F90 0C000567 */  jal   __scSchedule
-/* 001B94 70000F94 02003825 */   move  $a3, $s0
-/* 001B98 70000F98 10500004 */  beq   $v0, $s0, .L70000FAC
-/* 001B9C 70000F9C 02202025 */   move  $a0, $s1
-/* 001BA0 70000FA0 8FA50030 */  lw    $a1, 0x30($sp)
-/* 001BA4 70000FA4 0C000510 */  jal   __scExec
-/* 001BA8 70000FA8 8FA6002C */   lw    $a2, 0x2c($sp)
-.L70000FAC:
-/* 001BAC 70000FAC 8E3000B4 */  lw    $s0, 0xb4($s1)
-.L70000FB0:
-/* 001BB0 70000FB0 1200000F */  beqz  $s0, .L70000FF0
-/* 001BB4 70000FB4 00000000 */   nop   
-/* 001BB8 70000FB8 8E0D0008 */  lw    $t5, 8($s0)
-.L70000FBC:
-/* 001BBC 70000FBC 02202825 */  move  $a1, $s1
-/* 001BC0 70000FC0 00003025 */  move  $a2, $zero
-/* 001BC4 70000FC4 11A00005 */  beqz  $t5, .L70000FDC
-/* 001BC8 70000FC8 00000000 */   nop   
-/* 001BCC 70000FCC 8E2E00D0 */  lw    $t6, 0xd0($s1)
-/* 001BD0 70000FD0 31CF0001 */  andi  $t7, $t6, 1
-/* 001BD4 70000FD4 55E00004 */  bnezl $t7, .L70000FE8
-/* 001BD8 70000FD8 8E100000 */   lw    $s0, ($s0)
-.L70000FDC:
-/* 001BDC 70000FDC 0C0037C4 */  jal   osSendMesg
-/* 001BE0 70000FE0 8E040004 */   lw    $a0, 4($s0)
-/* 001BE4 70000FE4 8E100000 */  lw    $s0, ($s0)
-.L70000FE8:
-/* 001BE8 70000FE8 5600FFF4 */  bnezl $s0, .L70000FBC
-/* 001BEC 70000FEC 8E0D0008 */   lw    $t5, 8($s0)
-.L70000FF0:
-/* 001BF0 70000FF0 0C00027E */  jal   CheckDisplayErrorBufferEvery16Frames
-/* 001BF4 70000FF4 8E2400D0 */   lw    $a0, 0xd0($s1)
-/* 001BF8 70000FF8 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 001BFC 70000FFC 8FB00014 */  lw    $s0, 0x14($sp)
-/* 001C00 70001000 8FB10018 */  lw    $s1, 0x18($sp)
-/* 001C04 70001004 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 001C08 70001008 8FB30020 */  lw    $s3, 0x20($sp)
-/* 001C0C 7000100C 03E00008 */  jr    $ra
-/* 001C10 70001010 27BD0040 */   addiu $sp, $sp, 0x40
-)
-#endif
 
 /**
  * 1C14	70001014
