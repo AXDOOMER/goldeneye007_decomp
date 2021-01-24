@@ -570,97 +570,29 @@ void __scHandleRSP(OSSched *sc) {
     }
 }
 
-/**
- * 1D1C	7000111C
- * V0= 8005DB30: target for DP Cmd clock, buffer counter, pipe counter, and tmem counter
- */
 char *get_counters(void)
 {
     return &target_for_counters_maybe;
 }
 
-/**
- * 1D28	70001128
- */
-#ifdef NONMATCHING
-void __scHandleRDP(void *arg0)
+void __scHandleRDP(OSSched *sc)
 {
-    ?32 sp28;
-    ?32 sp24;
-
-    sp28 = 0;
-    sp24 = 0;
-    if (arg0->unkCC != 0)
-    {
+    OSScTask *t, *sp = NULL, *dp = NULL; 
+    s32 state;
+    if (sc->curRDPTask != NULL) {
         video_related_3(0x10002);
         osDpGetCounters(&target_for_counters_maybe);
-        arg0->unkCC = NULL;
-        arg0->unkCC->unk4 = (s32) (arg0->unkCC->unk4 & -2);
-        __scTaskComplete(arg0, arg0->unkCC);
-        if (__scSchedule(arg0, &sp28, &sp24, ((((u32) arg0->unkC8 < 1U) * 2) | ((u32) arg0->unkCC < 1U))) != sp20)
-        {
-            __scExec(arg0, sp28, sp24, sp20);
+        t = sc->curRDPTask;
+        sc->curRDPTask = NULL;
+        t->state &= ~OS_SC_NEEDS_RDP;
+        __scTaskComplete(sc, t);
+        state = ((sc->curRSPTask == 0) << 1) | (sc->curRDPTask == 0);
+        if (__scSchedule(sc, &sp, &dp, state) != state) {
+            __scExec(sc, sp, dp);
         }
     }
 }
 
-#else
-GLOBAL_ASM(
-glabel __scHandleRDP
-/* 001D28 70001128 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 001D2C 7000112C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 001D30 70001130 AFB00018 */  sw    $s0, 0x18($sp)
-/* 001D34 70001134 AFA00028 */  sw    $zero, 0x28($sp)
-/* 001D38 70001138 AFA00024 */  sw    $zero, 0x24($sp)
-/* 001D3C 7000113C 8C8E00CC */  lw    $t6, 0xcc($a0)
-/* 001D40 70001140 00808025 */  move  $s0, $a0
-/* 001D44 70001144 3C040001 */  lui   $a0, (0x00010002 >> 16) # lui $a0, 1
-/* 001D48 70001148 51C00021 */  beql  $t6, $zero, .L700011D0
-/* 001D4C 7000114C 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 001D50 70001150 0C000A15 */  jal   video_related_3
-/* 001D54 70001154 34840002 */   ori   $a0, (0x00010002 & 0xFFFF) # ori $a0, $a0, 2
-/* 001D58 70001158 3C048006 */  lui   $a0, %hi(target_for_counters_maybe)
-/* 001D5C 7000115C 0C0038F0 */  jal   osDpGetCounters
-/* 001D60 70001160 2484DB30 */   addiu $a0, %lo(target_for_counters_maybe) # addiu $a0, $a0, -0x24d0
-/* 001D64 70001164 8E0500CC */  lw    $a1, 0xcc($s0)
-/* 001D68 70001168 AE0000CC */  sw    $zero, 0xcc($s0)
-/* 001D6C 7000116C 2401FFFE */  li    $at, -2
-/* 001D70 70001170 8CAF0004 */  lw    $t7, 4($a1)
-/* 001D74 70001174 02002025 */  move  $a0, $s0
-/* 001D78 70001178 01E1C024 */  and   $t8, $t7, $at
-/* 001D7C 7000117C 0C00048C */  jal   __scTaskComplete
-/* 001D80 70001180 ACB80004 */   sw    $t8, 4($a1)
-/* 001D84 70001184 8E1900C8 */  lw    $t9, 0xc8($s0)
-/* 001D88 70001188 8E0A00CC */  lw    $t2, 0xcc($s0)
-/* 001D8C 7000118C 02002025 */  move  $a0, $s0
-/* 001D90 70001190 2F280001 */  sltiu $t0, $t9, 1
-/* 001D94 70001194 00084840 */  sll   $t1, $t0, 1
-/* 001D98 70001198 2D4B0001 */  sltiu $t3, $t2, 1
-/* 001D9C 7000119C 012B3825 */  or    $a3, $t1, $t3
-/* 001DA0 700011A0 AFA70020 */  sw    $a3, 0x20($sp)
-/* 001DA4 700011A4 27A50028 */  addiu $a1, $sp, 0x28
-/* 001DA8 700011A8 0C000567 */  jal   __scSchedule
-/* 001DAC 700011AC 27A60024 */   addiu $a2, $sp, 0x24
-/* 001DB0 700011B0 8FA70020 */  lw    $a3, 0x20($sp)
-/* 001DB4 700011B4 02002025 */  move  $a0, $s0
-/* 001DB8 700011B8 8FA50028 */  lw    $a1, 0x28($sp)
-/* 001DBC 700011BC 50470004 */  beql  $v0, $a3, .L700011D0
-/* 001DC0 700011C0 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 001DC4 700011C4 0C000510 */  jal   __scExec
-/* 001DC8 700011C8 8FA60024 */   lw    $a2, 0x24($sp)
-/* 001DCC 700011CC 8FBF001C */  lw    $ra, 0x1c($sp)
-.L700011D0:
-/* 001DD0 700011D0 8FB00018 */  lw    $s0, 0x18($sp)
-/* 001DD4 700011D4 27BD0030 */  addiu $sp, $sp, 0x30
-/* 001DD8 700011D8 03E00008 */  jr    $ra
-/* 001DDC 700011DC 00000000 */   nop   
-)
-#endif
-
-/**
- * 1DE0	700011E0
- * 
- */
 OSScTask *__scTaskReady(OSScTask *t) 
 {
     void *a;
@@ -677,9 +609,6 @@ OSScTask *__scTaskReady(OSScTask *t)
     return 0;
 }
 
-/**
- * 1E30	70001230
- */
 #ifdef NONMATCHING
 void __scTaskComplete(s32 arg0, void *arg1)
 {
