@@ -61,24 +61,23 @@ Dynamic	dynamic[2];
 /* tempory types confirm me */
 s32 dword_CODE_bss_8005F3F0[4]; //Gfx Tiles_Setup? oh... unless thats what the next 2 are... the first command I recognised did start at 8005f400...
 // dynamic glist, though it lacks the format above...
-Gfx displaylist_0[266];
-Gfx displaylist_1[266];
+Gfx displaylist_0[2][266];
 s32 displaylist_bank; //0 or 1? current?
 s32 dword_CODE_bss_800604A4;
 u32 dword_CODE_bss_800604A8;
 u32 dword_CODE_bss_800604AC;
 s32 dword_CODE_bss_800604B0[0xC0];
-s32 dword_CODE_bss_800607B0;
-s32 dword_CODE_bss_800607B4;
-s32 dword_CODE_bss_800607B8;
+s32 dword_CODE_bss_800607B0[3];
+// s32 dword_CODE_bss_800607B4;
+// s32 dword_CODE_bss_800607B8;
 s32 dword_CODE_bss_800607BC;
 s32 dword_CODE_bss_800607C0;
 s32 dword_CODE_bss_800607C4;
 s32 dword_CODE_bss_800607C8;
 s32 dword_CODE_bss_800607CC;
-s32 dword_CODE_bss_800607D0;
-s32 dword_CODE_bss_800607D4;
-s32 dword_CODE_bss_800607D8;
+s32 dword_CODE_bss_800607D0[3];
+// s32 dword_CODE_bss_800607D4;
+// s32 dword_CODE_bss_800607D8;
 s32 dword_CODE_bss_800607DC;
 
 s32 D_800231D0 = 0;
@@ -101,76 +100,20 @@ const char a2dFrames[] = "%2d frames";
 const char a2d[] = " [%2d]";
 const char asc_D_80028468[] = "     ";
 const char aIL0[] = "I=l0";
-//)
 
-
-/**
- * 3330	70002730	(DL generator)
- */
-#ifdef NONMATCHING
+void video_related_2(void);
 void displaylist_related(void)
 {
-    void *temp_v0;
-    void *temp_v1;
-    void *phi_v1;
-    void *phi_v0;
-
-    gSPEndDisplayList(displaylist_0++);
-    displaylist_0.unk850 = 0xb800000000000000; //? is this not dlist2?
+    s32 i;
+    gSPEndDisplayList(displaylist_0[0]);
+    gSPEndDisplayList(displaylist_0[1]);
     displaylist_bank = 0;
-    phi_v1 = &dword_CODE_bss_800607B0;
-    phi_v0 = &dword_CODE_bss_800607D0;
-block_1:
-    temp_v0 = (phi_v0 + 4);
-    temp_v1 = (phi_v1 + 4);
-    temp_v1->unk-4 = 0;
-    temp_v0->unk-4 = 1;
-    phi_v1 = temp_v1;
-    phi_v0 = temp_v0;
-    if (temp_v0 != &dword_CODE_bss_800607DC)
-    {
-        goto block_1;
+    for (i = 0; i < 3; i++) {
+        dword_CODE_bss_800607B0[i] = 0;
+        dword_CODE_bss_800607D0[i] = 1;
     }
-    video_related_2(1, &dword_CODE_bss_800607DC, 0xb8000000);
+    video_related_2();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel displaylist_related
-/* 003330 70002730 3C048006 */  lui   $a0, %hi(displaylist_0)
-/* 003334 70002734 2484F400 */  addiu $a0, %lo(displaylist_0) # addiu $a0, $a0, -0xc00
-/* 003338 70002738 3C06B800 */  lui   $a2, 0xb800
-/* 00333C 7000273C AC860000 */  sw    $a2, ($a0)
-/* 003340 70002740 AC800004 */  sw    $zero, 4($a0)
-/* 003344 70002744 AC860850 */  sw    $a2, 0x850($a0)
-/* 003348 70002748 AC800854 */  sw    $zero, 0x854($a0)
-/* 00334C 7000274C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 003350 70002750 3C018006 */  lui   $at, %hi(displaylist_bank)
-/* 003354 70002754 3C038006 */  lui   $v1, %hi(dword_CODE_bss_800607B0)
-/* 003358 70002758 3C028006 */  lui   $v0, %hi(dword_CODE_bss_800607D0)
-/* 00335C 7000275C 3C058006 */  lui   $a1, %hi(dword_CODE_bss_800607DC)
-/* 003360 70002760 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 003364 70002764 AC2004A0 */  sw    $zero, %lo(displaylist_bank)($at)
-/* 003368 70002768 24A507DC */  addiu $a1, %lo(dword_CODE_bss_800607DC) # addiu $a1, $a1, 0x7dc
-/* 00336C 7000276C 244207D0 */  addiu $v0, %lo(dword_CODE_bss_800607D0) # addiu $v0, $v0, 0x7d0
-/* 003370 70002770 246307B0 */  addiu $v1, %lo(dword_CODE_bss_800607B0) # addiu $v1, $v1, 0x7b0
-/* 003374 70002774 24040001 */  li    $a0, 1
-.L70002778:
-/* 003378 70002778 24420004 */  addiu $v0, $v0, 4
-/* 00337C 7000277C 24630004 */  addiu $v1, $v1, 4
-/* 003380 70002780 AC60FFFC */  sw    $zero, -4($v1)
-/* 003384 70002784 1445FFFC */  bne   $v0, $a1, .L70002778
-/* 003388 70002788 AC44FFFC */   sw    $a0, -4($v0)
-/* 00338C 7000278C 0C000A04 */  jal   video_related_2
-/* 003390 70002790 00000000 */   nop   
-/* 003394 70002794 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 003398 70002798 27BD0018 */  addiu $sp, $sp, 0x18
-/* 00339C 7000279C 03E00008 */  jr    $ra
-/* 0033A0 700027A0 00000000 */   nop   
-)
-#endif
-
-
 
 /**
  * 33A4	700027A4
