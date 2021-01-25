@@ -21,7 +21,6 @@ void init_indy_if_ready(void) {
     }
 }
 
-
 void load_resource_on_indy(u8 *filename, u8 *targetloc)
 {
     u8 response1 [8];
@@ -36,7 +35,6 @@ void load_resource_on_indy(u8 *filename, u8 *targetloc)
     return;
 }
 
-
 void indy_send_capture_data(u8 *filename, u8 *data, u32 size)
 {
     u8 auStack4 [4];
@@ -48,7 +46,6 @@ void indy_send_capture_data(u8 *filename, u8 *data, u32 size)
     }
     return;
 }
-
 
 void indy_load_ramrom_file(u8 *filename, u8 *target, s32 size)
 {
@@ -64,7 +61,6 @@ void indy_load_ramrom_file(u8 *filename, u8 *target, s32 size)
     return;
 }
 
-
 void check_file_exported(u8 *filename, s32 size, u8 * data)
 {
     u8 auStack4 [4];
@@ -74,57 +70,19 @@ void check_file_exported(u8 *filename, s32 size, u8 * data)
         post_indyrescmd_game_prof_sendfile(filename,data,size);
         response_indyrescmd_1_E_2(auStack4);
     }
-  return;
 }
-
-#ifdef NONMATCHING
-//0010 4BE0: 10 00 00 06 AF A0 00 1C
-//instead of 
-//0010 4BE0: 10 00 00 07 00 00 10 25
-
-//0010 4BFC: 8F BF 00 14
-//swappped with
-//0010 4C00: 8F A2 00 1C
-
 
 u8 * check_file_found_on_indy(u8 *name, s32 size)
 {
-    u8 *response;
-  
+    u8 *response;  
     if (!indy_ready) {
-        response = 0x0;
+        return NULL;
     } else {
         post_indyrescmd_game_printf_send(name);
         response_indyrescmd_1_6_2(&response,size);
     }
     return response;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_file_found_on_indy
-/* 104BC8 7F0D0098 3C0E8005 */  lui   $t6, %hi(indy_ready) 
-/* 104BCC 7F0D009C 8DCEEAC8 */  lw    $t6, %lo(indy_ready)($t6)
-/* 104BD0 7F0D00A0 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 104BD4 7F0D00A4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 104BD8 7F0D00A8 15C00003 */  bnez  $t6, .L7F0D00B8
-/* 104BDC 7F0D00AC AFA50024 */   sw    $a1, 0x24($sp)
-/* 104BE0 7F0D00B0 10000007 */  b     .L7F0D00D0
-/* 104BE4 7F0D00B4 00001025 */   move  $v0, $zero
-.L7F0D00B8:
-/* 104BE8 7F0D00B8 0FC342C3 */  jal   post_indyrescmd_game_printf_send
-/* 104BEC 7F0D00BC 00000000 */   nop   
-/* 104BF0 7F0D00C0 27A4001C */  addiu $a0, $sp, 0x1c
-/* 104BF4 7F0D00C4 0FC345EB */  jal   response_indyrescmd_1_6_2
-/* 104BF8 7F0D00C8 8FA50024 */   lw    $a1, 0x24($sp)
-/* 104BFC 7F0D00CC 8FA2001C */  lw    $v0, 0x1c($sp)
-.L7F0D00D0:
-/* 104C00 7F0D00D0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 104C04 7F0D00D4 27BD0020 */  addiu $sp, $sp, 0x20
-/* 104C08 7F0D00D8 03E00008 */  jr    $ra
-/* 104C0C 7F0D00DC 00000000 */   nop   
-)
-#endif
 
 u8 *send_command_string(u8 *cmdstr)
 {
@@ -144,7 +102,6 @@ void sub_GAME_7F0D0124(void) {
     {
         rmon7000CEB0();
     }
-    return;
 }
 
 void send_indy_close_port_cmd(void) {
