@@ -63,14 +63,14 @@ s32 dword_CODE_bss_8005F3F0[4]; //Gfx Tiles_Setup? oh... unless thats what the n
 // dynamic glist, though it lacks the format above...
 Gfx displaylist_0[2][266];
 s32 displaylist_bank; //0 or 1? current?
-s32 dword_CODE_bss_800604A4;
+u32 dword_CODE_bss_800604A4;
 u32 dword_CODE_bss_800604A8;
 u32 dword_CODE_bss_800604AC;
 s32 dword_CODE_bss_800604B0[0xC0];
 s32 dword_CODE_bss_800607B0[3];
 // s32 dword_CODE_bss_800607B4;
 // s32 dword_CODE_bss_800607B8;
-s32 dword_CODE_bss_800607BC;
+s32 dword_CODE_bss_800607BC; // Padding?
 s32 dword_CODE_bss_800607C0[3];
 // s32 dword_CODE_bss_800607C4;
 // s32 dword_CODE_bss_800607C8;
@@ -123,56 +123,13 @@ void video_related_1(void) {
     }
 }
 
-/**
- * 3410	70002810
- */
-#ifdef NONMATCHING
-void *video_related_2(void)
-{
-    void *temp_a0;
-    void *temp_v1;
-    void *phi_a0;
-    void *phi_v1;
-
-    dword_CODE_bss_800604A4 = (?32) dword_CODE_bss_800604A8;
-    phi_a0 = &dword_CODE_bss_800607C0;
-    phi_v1 = &dword_CODE_bss_800607B0;
-block_1:
-    temp_a0 = (phi_a0 + 4);
-    temp_v1 = (phi_v1 + 4);
-    temp_v1->unk-4 = (?32) *phi_a0;
-    phi_a0 = temp_a0;
-    phi_v1 = temp_v1;
-    if (temp_a0 != &dword_CODE_bss_800607CC)
-    {
-        goto block_1;
+void video_related_2(void) {
+    s32 i;
+    dword_CODE_bss_800604A4 = dword_CODE_bss_800604A8;
+    for (i = 0; i < 3; i++) {
+        dword_CODE_bss_800607B0[i] = dword_CODE_bss_800607C0[i];
     }
-    return &dword_CODE_bss_800607CC;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel video_related_2
-/* 003410 70002810 3C0E8006 */  lui   $t6, %hi(dword_CODE_bss_800604A8) 
-/* 003414 70002814 8DCE04A8 */  lw    $t6, %lo(dword_CODE_bss_800604A8)($t6)
-/* 003418 70002818 3C018006 */  lui   $at, %hi(dword_CODE_bss_800604A4)
-/* 00341C 7000281C 3C038006 */  lui   $v1, %hi(dword_CODE_bss_800607B0)
-/* 003420 70002820 3C048006 */  lui   $a0, %hi(dword_CODE_bss_800607C0)
-/* 003424 70002824 3C028006 */  lui   $v0, %hi(dword_CODE_bss_800607CC)
-/* 003428 70002828 244207CC */  addiu $v0, %lo(dword_CODE_bss_800607CC) # addiu $v0, $v0, 0x7cc
-/* 00342C 7000282C 248407C0 */  addiu $a0, %lo(dword_CODE_bss_800607C0) # addiu $a0, $a0, 0x7c0
-/* 003430 70002830 246307B0 */  addiu $v1, %lo(dword_CODE_bss_800607B0) # addiu $v1, $v1, 0x7b0
-/* 003434 70002834 AC2E04A4 */  sw    $t6, %lo(dword_CODE_bss_800604A4)($at)
-.L70002838:
-/* 003438 70002838 8C8F0000 */  lw    $t7, ($a0)
-/* 00343C 7000283C 24840004 */  addiu $a0, $a0, 4
-/* 003440 70002840 24630004 */  addiu $v1, $v1, 4
-/* 003444 70002844 1482FFFC */  bne   $a0, $v0, .L70002838
-/* 003448 70002848 AC6FFFFC */   sw    $t7, -4($v1)
-/* 00344C 7000284C 03E00008 */  jr    $ra
-/* 003450 70002850 00000000 */   nop   
-)
-#endif
 
 
 /**
