@@ -59,26 +59,21 @@ Dynamic	dynamic[2];
 */
     
 /* tempory types confirm me */
-s32 dword_CODE_bss_8005F3F0[4]; //Gfx Tiles_Setup? oh... unless thats what the next 2 are... the first command I recognised did start at 8005f400...
+s32 dword_CODE_bss_8005F3F0[3]; //Gfx Tiles_Setup? oh... unless thats what the next 2 are... the first command I recognised did start at 8005f400...
 // dynamic glist, though it lacks the format above...
 Gfx displaylist_0[2][266];
 s32 displaylist_bank; //0 or 1? current?
 u32 dword_CODE_bss_800604A4;
 u32 dword_CODE_bss_800604A8;
 u32 dword_CODE_bss_800604AC;
-s32 dword_CODE_bss_800604B0[0xC0];
+typedef struct {
+    u32 unk0;
+    u32 unk4;
+} unknown_s;
+unknown_s dword_CODE_bss_800604B0[3][32];
 s32 dword_CODE_bss_800607B0[3];
-// s32 dword_CODE_bss_800607B4;
-// s32 dword_CODE_bss_800607B8;
-s32 dword_CODE_bss_800607BC; // Padding?
 s32 dword_CODE_bss_800607C0[3];
-// s32 dword_CODE_bss_800607C4;
-// s32 dword_CODE_bss_800607C8;
-s32 dword_CODE_bss_800607CC;
 s32 dword_CODE_bss_800607D0[3];
-// s32 dword_CODE_bss_800607D4;
-// s32 dword_CODE_bss_800607D8;
-s32 dword_CODE_bss_800607DC;
 
 s32 D_800231D0 = 0;
 s32 D_800231D4[] = { 0, 0, 2, 0, 1, 0, 2, 0, 2, 0xFF000000, 2, 0, 3, 0x9200, 4, 0xFFFFFFFF, 4, 0xDB000000, 4, 0xFFFFFFFF };
@@ -131,58 +126,30 @@ void video_related_2(void) {
     }
 }
 
-
-/**
- * 3454	70002854
- */
 #ifdef NONMATCHING
-void video_related_3(s32 arg0)
-{
-    s32 sp34;
-    void *sp2C;
-    void *sp24;
-    void *sp1C;
-    s32 temp_a3;
-    s32 temp_v1;
-    void *temp_t0;
-    s32 temp_a0;
-    void *temp_v0;
-    s32 temp_a1;
-    s32 phi_a2;
-    s32 phi_a1;
-
-    temp_a3 = (arg0 & 0xffff);
-    temp_v1 = (temp_a3 * 4);
-    temp_t0 = (temp_v1 + &dword_CODE_bss_800607D0);
-    temp_a0 = (arg0 >> 0x10);
-    sp34 = osSetIntMask(1);
-    if (temp_a0 == 3)
-    {
-        phi_a2 = ((0x80060000 + temp_v1)->unk-C10 | 0x8000);
+// Stack + Regalloc
+void video_related_3(s32 arg0) {
+    s32 index;
+    s32 var2;
+    OSIntMask mask;
+    s32 index2;
+    index = arg0 & 0xFFFF;
+    mask = osSetIntMask(0x00000001);
+    var2 = arg0 >> 16;
+    index2 = dword_CODE_bss_800607D0[index];
+    if (var2 == 3) {
+        var2 = dword_CODE_bss_8005F3F0[index] | 0x8000;
+    } else if (var2 == 6) {
+        var2 = dword_CODE_bss_8005F3F0[index] & 0x7FFF;
     }
-    else
-    {
-        phi_a2 = temp_a0;
-        if (temp_a0 == 6)
-        {
-            phi_a2 = ((0x80060000 + temp_v1)->unk-C10 & 0x7fff);
-        }
+    dword_CODE_bss_800604B0[index][index2].unk0 = var2;
+    dword_CODE_bss_800604B0[index][index2].unk4 = osGetCount();
+    dword_CODE_bss_8005F3F0[index] = var2;
+    dword_CODE_bss_800607D0[index]++;
+    if (dword_CODE_bss_800607D0[index] >= 32) {
+        dword_CODE_bss_800607D0[index] = 0;
     }
-    temp_v0 = (((temp_a3 << 8) + (*temp_t0 * 8)) + &dword_CODE_bss_800604B0);
-    sp2C = temp_v0;
-    *temp_v0 = (s32) phi_a2;
-    sp24 = (void *) (temp_v1 + &dword_CODE_bss_8005F3F0);
-    sp1C = temp_t0;
-    sp2C->unk4 = osGetCount(temp_a0, *temp_t0, phi_a2, temp_a3);
-    temp_a1 = (sp30 + 1);
-    *sp24 = sp38;
-    phi_a1 = temp_a1;
-    if (temp_a1 >= 0x20)
-    {
-        phi_a1 = 0;
-    }
-    *temp_t0 = (s32) phi_a1;
-    osSetIntMask(sp34, phi_a1, sp38);
+    osSetIntMask(mask);
 }
 #else
 GLOBAL_ASM(
