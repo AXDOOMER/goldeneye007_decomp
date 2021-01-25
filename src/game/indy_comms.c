@@ -126,20 +126,11 @@ glabel check_file_found_on_indy
 )
 #endif
 
-
-
-
-#ifdef NONMATCHING
-
-//0010 4C20: 15 C0 00 03 00 00 00 00  10 00 00 05 AF A0 00 1C
-//instead of
-//0010 4C20: 15 C0 00 03 00 00 00 00  10 00 00 06 00 00 10 25
 u8 *send_command_string(u8 *cmdstr)
 {
-    u8 *local_4;
-  
+    u8 *local_4;  
     if (!indy_ready) {
-        local_4 = 0;
+        return NULL;
     }
     else {
         post_indyrescmd_1_B_2(cmdstr);
@@ -147,32 +138,6 @@ u8 *send_command_string(u8 *cmdstr)
     }
     return local_4;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel send_command_string
-/* 104C10 7F0D00E0 3C0E8005 */  lui   $t6, %hi(indy_ready) 
-/* 104C14 7F0D00E4 8DCEEAC8 */  lw    $t6, %lo(indy_ready)($t6)
-/* 104C18 7F0D00E8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 104C1C 7F0D00EC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 104C20 7F0D00F0 15C00003 */  bnez  $t6, .L7F0D0100
-/* 104C24 7F0D00F4 00000000 */   nop   
-/* 104C28 7F0D00F8 10000006 */  b     .L7F0D0114
-/* 104C2C 7F0D00FC 00001025 */   move  $v0, $zero
-.L7F0D0100:
-/* 104C30 7F0D0100 0FC3439D */  jal   post_indyrescmd_1_B_2
-/* 104C34 7F0D0104 00000000 */   nop   
-/* 104C38 7F0D0108 0FC34654 */  jal   response_indyrescmd_1_C_2
-/* 104C3C 7F0D010C 27A4001C */   addiu $a0, $sp, 0x1c
-/* 104C40 7F0D0110 8FA2001C */  lw    $v0, 0x1c($sp)
-.L7F0D0114:
-/* 104C44 7F0D0114 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 104C48 7F0D0118 27BD0020 */  addiu $sp, $sp, 0x20
-/* 104C4C 7F0D011C 03E00008 */  jr    $ra
-/* 104C50 7F0D0120 00000000 */   nop   
-)
-#endif
-
 
 void sub_GAME_7F0D0124(void) {
     if (indy_ready)
@@ -185,7 +150,3 @@ void sub_GAME_7F0D0124(void) {
 void send_indy_close_port_cmd(void) {
     send_command_string("sleep 5; /etc/killall ghost gload");
 }
-
-
-
-
