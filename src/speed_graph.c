@@ -71,9 +71,9 @@ s32 dword_CODE_bss_800607B0[3];
 // s32 dword_CODE_bss_800607B4;
 // s32 dword_CODE_bss_800607B8;
 s32 dword_CODE_bss_800607BC;
-s32 dword_CODE_bss_800607C0;
-s32 dword_CODE_bss_800607C4;
-s32 dword_CODE_bss_800607C8;
+s32 dword_CODE_bss_800607C0[3];
+// s32 dword_CODE_bss_800607C4;
+// s32 dword_CODE_bss_800607C8;
 s32 dword_CODE_bss_800607CC;
 s32 dword_CODE_bss_800607D0[3];
 // s32 dword_CODE_bss_800607D4;
@@ -115,82 +115,13 @@ void displaylist_related(void)
     video_related_2();
 }
 
-/**
- * 33A4	700027A4
- */
-#ifdef NONMATCHING
-void *video_related_1(void)
-{
-    void *temp_v1;
-    void *temp_a0;
-    s32 temp_t7;
-    s32 temp_t8;
-    void *phi_v1;
-    s32 phi_t8;
-    void *phi_a0;
-
+void video_related_1(void) {
+    s32 i;
     dword_CODE_bss_800604A8 = osGetCount();
-    phi_v1 = &dword_CODE_bss_800607D0;
-    phi_a0 = &dword_CODE_bss_800607C0;
-block_1:
-    temp_v1 = (phi_v1 + 4);
-    temp_a0 = (phi_a0 + 4);
-    temp_t7 = (*phi_v1 + 0x1f);
-    temp_t8 = (temp_t7 & 0x1f);
-    phi_t8 = temp_t8;
-    if (temp_t7 < 0)
-    {
-        phi_t8 = temp_t8;
-        if (temp_t8 != 0)
-        {
-            phi_t8 = (temp_t8 + -0x20);
-        }
+    for (i = 0; i < 3; i++) {        
+        dword_CODE_bss_800607C0[i] = ((dword_CODE_bss_800607D0[i] + 31) % 32);
     }
-    temp_a0->unk-4 = (s32) phi_t8;
-    phi_v1 = temp_v1;
-    phi_a0 = temp_a0;
-    if (temp_v1 != &dword_CODE_bss_800607DC)
-    {
-        goto block_1;
-    }
-    return &dword_CODE_bss_800607DC;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel video_related_1
-/* 0033A4 700027A4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0033A8 700027A8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0033AC 700027AC 0C003638 */  jal   osGetCount
-/* 0033B0 700027B0 00000000 */   nop   
-/* 0033B4 700027B4 3C018006 */  lui   $at, %hi(dword_CODE_bss_800604A8)
-/* 0033B8 700027B8 AC2204A8 */  sw    $v0, %lo(dword_CODE_bss_800604A8)($at)
-/* 0033BC 700027BC 3C028006 */  lui   $v0, %hi(dword_CODE_bss_800607DC)
-/* 0033C0 700027C0 3C048006 */  lui   $a0, %hi(dword_CODE_bss_800607C0)
-/* 0033C4 700027C4 3C038006 */  lui   $v1, %hi(dword_CODE_bss_800607D0)
-/* 0033C8 700027C8 246307D0 */  addiu $v1, %lo(dword_CODE_bss_800607D0) # addiu $v1, $v1, 0x7d0
-/* 0033CC 700027CC 248407C0 */  addiu $a0, %lo(dword_CODE_bss_800607C0) # addiu $a0, $a0, 0x7c0
-/* 0033D0 700027D0 244207DC */  addiu $v0, %lo(dword_CODE_bss_800607DC) # addiu $v0, $v0, 0x7dc
-.L700027D4:
-/* 0033D4 700027D4 8C6E0000 */  lw    $t6, ($v1)
-/* 0033D8 700027D8 24630004 */  addiu $v1, $v1, 4
-/* 0033DC 700027DC 24840004 */  addiu $a0, $a0, 4
-/* 0033E0 700027E0 25CF001F */  addiu $t7, $t6, 0x1f
-/* 0033E4 700027E4 05E10004 */  bgez  $t7, .L700027F8
-/* 0033E8 700027E8 31F8001F */   andi  $t8, $t7, 0x1f
-/* 0033EC 700027EC 13000002 */  beqz  $t8, .L700027F8
-/* 0033F0 700027F0 00000000 */   nop   
-/* 0033F4 700027F4 2718FFE0 */  addiu $t8, $t8, -0x20
-.L700027F8:
-/* 0033F8 700027F8 1462FFF6 */  bne   $v1, $v0, .L700027D4
-/* 0033FC 700027FC AC98FFFC */   sw    $t8, -4($a0)
-/* 003400 70002800 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 003404 70002804 27BD0018 */  addiu $sp, $sp, 0x18
-/* 003408 70002808 03E00008 */  jr    $ra
-/* 00340C 7000280C 00000000 */   nop   
-)
-#endif
-
 
 /**
  * 3410	70002810
