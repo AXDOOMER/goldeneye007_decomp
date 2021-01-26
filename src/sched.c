@@ -57,7 +57,7 @@ OSSched sc;
 OSScClient gfxClient[3];
 //char gfxClient[0x18];
 
-char target_for_counters_maybe[0x10];
+u32 g_DisplayPerformanceCounters[4]; // clock, cmc, pipe, tmem
 OSViMode g_ViModes[2];
 OSViMode *g_ViModePtrs[2];
 
@@ -448,9 +448,9 @@ void __scHandleRSP(OSSched *sc) {
     }
 }
 
-char *get_counters(void)
+u32 *get_counters(void)
 {
-    return &target_for_counters_maybe;
+    return g_DisplayPerformanceCounters;
 }
 
 void __scHandleRDP(OSSched *sc)
@@ -459,7 +459,7 @@ void __scHandleRDP(OSSched *sc)
     s32 state;
     if (sc->curRDPTask != NULL) {
         video_related_3(0x10002);
-        osDpGetCounters(&target_for_counters_maybe);
+        osDpGetCounters(g_DisplayPerformanceCounters);
         t = sc->curRDPTask;
         sc->curRDPTask = NULL;
         t->state &= ~OS_SC_NEEDS_RDP;

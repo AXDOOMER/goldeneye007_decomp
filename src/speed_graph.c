@@ -1,68 +1,10 @@
 #include "ultra64.h"
-/**
- * @file speed_graph.c
- * This file contains code to draw speedgraph. 
- * 
- */
+#include "unk_0C0A70.h"
+#include "debugmenu.h"
 
-
-/*   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    | Snippet of building glist buffers   |
-    |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
-
-== H file ==
-#define	GLIST_LEN	2048 // GE seems to be 266
-
-/*
- * Layout of dynamic data.
- *
- * This structure holds the things which change per frame. It is advantageous
- * to keep dynamic data together so that we may selectively write back dirty
- * data cache lines to DRAM prior to processing by the RCP.
- *
- * /
-typedef struct {
-	Mtx	projection;
-	Mtx	modeling;
-	Mtx	modeling2;
-	Mtx	viewing;
-	LookAt	lookat;
-	Hilite	hilite;
-	Lightsn	light;          //Oh interesting, since we found this and LookAt, it seems dynamic gfx should astart right after.
-	Gfx	glist[GLIST_LEN];
-} Dynamic;
-
-extern Dynamic	dynamic;
-
-== H file End ==
-
-/*
- * global variables
- *
-Gfx		*glistp;	/* RSP display list pointer * /
-//Dynamic		dynamic;	/* dynamic data * /
-/ *
- * Double-buffered dynamic segments
- * /
-Dynamic	dynamic[2];
-...
-
-// some function()
-{
-    ...
-    int		current = 0;
-    dynamicp = &dynamic[current];
-    glistp = dynamicp->glist;
-    //example gfx build
-    gSPSegment(glistp++, 0, 0x0); // glist++ ready for next instruction (held in dynamic 1 or 2)
-}
-*/
-    
-/* tempory types confirm me */
-s32 dword_CODE_bss_8005F3F0[3]; //Gfx Tiles_Setup? oh... unless thats what the next 2 are... the first command I recognised did start at 8005f400...
-// dynamic glist, though it lacks the format above...
+s32 dword_CODE_bss_8005F3F0[3];
 Gfx displaylist_0[2][266];
-s32 displaylist_bank; //0 or 1? current?
+s32 displaylist_bank;
 u32 dword_CODE_bss_800604A4;
 u32 dword_CODE_bss_800604A8;
 u32 dword_CODE_bss_800604AC;
@@ -78,15 +20,14 @@ s32 dword_CODE_bss_800607D0[3];
 s32 D_800231D0 = 0;
 s32 D_800231D4[] = { 0, 0, 2, 0, 1, 0, 2, 0, 2, 0xFF000000, 2, 0, 3, 0x9200, 4, 0xFFFFFFFF, 4, 0xDB000000, 4, 0xFFFFFFFF };
 
-s32 D_80023224 = 0;
+u32 D_80023224 = 0;
 s32 D_80023228 = 0;
 s32 D_8002322C = 0;
 s32 counterforframes = 0;
 s32 D_80023234 = 1;
 
-
-//GLOBAL_ASM(
 /*    .rodata*/
+#ifndef NONMATCHING
 const char aUtz2_0f[] = "utz %2.0f%%\n";
 const char aRsp2_0f[] = "rsp %2.0f%%\n";
 const char aTex2_0f[] = "tex %2.0f%%";
@@ -94,6 +35,7 @@ const char a2dHz[] = "%2d hz";
 const char a2dFrames[] = "%2d frames";
 const char a2d[] = " [%2d]";
 const char asc_D_80028468[] = "     ";
+#endif
 const char aIL0[] = "I=l0";
 
 void video_related_2(void);
@@ -227,14 +169,48 @@ glabel video_related_3
 )
 #endif
 
-
-/**
- * 3558	70002958	draw "display speed" display
- *     accepts: A0=p->display list
- */
 #ifdef NONMATCHING
-void display_speed_graph(void) {
-
+int sprintf(char *dst, const char *fmt, ...);
+u32 *get_counters(void);
+Gfx *display_speed_graph(Gfx *gdl) {
+    u32 *counters;
+    char buffer[20];
+    u32 test = D_80023224 + D_80048498;
+    if (D_80023228 < D_80048498) {
+        D_80023228 = D_80048498;
+    }
+    if (test  > 20) {
+        while (test  > 20) {
+            test -= 20;
+        }
+        counters = get_counters();
+        set_debug_text_color(255, 255, 255, 255);
+        set_color_speedgraph(0, 0, 0, 255);
+        set_final_debug_text_positions(8, 5);
+        sprintf(buffer, "utz %2.0f%%\n", (((counters[1] - counters[3]) * 100.0f) / counters[0]));
+        write_string_stdout(buffer);
+        set_final_debug_text_positions(8, 6);
+        sprintf(buffer, "rsp %2.0f%%\n", (((counters[0] - counters[1]) * 100.0f) / counters[0]));
+        write_string_stdout(buffer);
+        set_final_debug_text_positions(8, 7);
+        sprintf(buffer, "tex %2.0f%%", ((counters[3] * 100.0f) / counters[0]));
+        write_string_stdout(buffer);
+        set_final_debug_text_positions(28, 5);
+        sprintf(buffer, "%2d hz", ((D_80048498 == 0) ? 0 : (60 / D_80048498)));
+        write_string_stdout(buffer);
+        set_final_debug_text_positions(28, 6);
+        sprintf(buffer, "%2d frames", D_80048498);
+        write_string_stdout(buffer);
+        if (D_80023228 != D_80048498) {
+            sprintf(buffer, " [%2d]", D_80023228);
+        } else {
+            sprintf(buffer, "     ");
+        }
+        write_string_stdout(buffer);
+        D_80023228 = 0;
+    }
+    gSPDisplayList(gdl++, displaylist_0[displaylist_bank ^ 1]);
+    return gdl;
 }
 #else
 GLOBAL_ASM(
