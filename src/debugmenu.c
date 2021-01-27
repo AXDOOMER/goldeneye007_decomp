@@ -327,115 +327,21 @@ void set_color_speedgraph(s32 red,s32 green,s32 blue,s32 alpha)
   debug_text_bg_color.unk4 = red << 0x18 | green << 0x10 | blue << 8 | 0xffU - alpha;
 }
 
-
-
-
-
-#ifdef NONMATCHING
-void write_char_to_screen(u8 character)
-
-{
-  short txtClipW;
-  short txtClipH;
-  int start_pos;
-  
-  txtClipW = viGetX();
-  start_pos = (int)txtClipW + -0xd;
-  if (start_pos < 0) {
-    start_pos = (int)txtClipW + -10;
-  }
-  txtClipH = viGetY();
-  if ((character == 0) || ((0x1f < character && (character < 0x7f)))) {
-    display_text_to_coord(debug_menu_x_text_pos,debug_menu_y_text_pos,character);
-  }
-  debug_menu_x_text_pos += 1;
-  if (((character == 0xd) || (character == 10)) || (start_pos >> 2 <= debug_menu_x_text_pos)) {
-    debug_menu_y_text_pos += 1;
-    debug_menu_x_text_pos = debug_menu_x_pos_offset;
-    if (((int)txtClipH + -10) / 7 <= debug_menu_y_text_pos) {
-      debug_menu_y_text_pos = debug_menu_y_pos_offset;
+void write_char_to_screen(unsigned char c) {
+    s32 width = ((viGetX() - 13) / 4);
+    s32 height = ((viGetY() - 10) / 7);
+    if ((c == '\0') || ((c >= ' ') && (c <= '~'))) {
+        display_text_to_coord(debug_menu_x_text_pos, debug_menu_y_text_pos, c);
     }
-  }
+    debug_menu_x_text_pos++;
+    if ((c == '\r') || (c == '\n') || (debug_menu_x_text_pos >= width)) {
+        debug_menu_x_text_pos = debug_menu_x_pos_offset;        
+        debug_menu_y_text_pos++;
+        if (debug_menu_y_text_pos >= height) {
+            debug_menu_y_text_pos = debug_menu_y_pos_offset;
+        }
+    }
 }
-#else
-void write_char_to_screen(unsigned char c);
-GLOBAL_ASM(
-.text
-glabel write_char_to_screen
-/* 00BCC4 7000B0C4 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 00BCC8 7000B0C8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00BCCC 7000B0CC 0C001107 */  jal   viGetX
-/* 00BCD0 7000B0D0 AFA40028 */   sw    $a0, 0x28($sp)
-/* 00BCD4 7000B0D4 244EFFF3 */  addiu $t6, $v0, -0xd
-/* 00BCD8 7000B0D8 05C10003 */  bgez  $t6, .L7000B0E8
-/* 00BCDC 7000B0DC 000E7883 */   sra   $t7, $t6, 2
-/* 00BCE0 7000B0E0 25C10003 */  addiu $at, $t6, 3
-/* 00BCE4 7000B0E4 00017883 */  sra   $t7, $at, 2
-.L7000B0E8:
-/* 00BCE8 7000B0E8 0C00110B */  jal   viGetY
-/* 00BCEC 7000B0EC AFAF0024 */   sw    $t7, 0x24($sp)
-/* 00BCF0 7000B0F0 2448FFF6 */  addiu $t0, $v0, -0xa
-/* 00BCF4 7000B0F4 24010007 */  li    $at, 7
-/* 00BCF8 7000B0F8 0101001A */  div   $zero, $t0, $at
-/* 00BCFC 7000B0FC 93A6002B */  lbu   $a2, 0x2b($sp)
-/* 00BD00 7000B100 00004012 */  mflo  $t0
-/* 00BD04 7000B104 3C028002 */  lui   $v0, %hi(debug_menu_x_text_pos)
-/* 00BD08 7000B108 10C00005 */  beqz  $a2, .L7000B120
-/* 00BD0C 7000B10C 00C01825 */   move  $v1, $a2
-/* 00BD10 7000B110 28610020 */  slti  $at, $v1, 0x20
-/* 00BD14 7000B114 1420000C */  bnez  $at, .L7000B148
-/* 00BD18 7000B118 2861007F */   slti  $at, $v1, 0x7f
-/* 00BD1C 7000B11C 1020000A */  beqz  $at, .L7000B148
-.L7000B120:
-/* 00BD20 7000B120 3C078002 */   lui   $a3, %hi(debug_menu_y_text_pos)
-/* 00BD24 7000B124 24E74FAC */  addiu $a3, %lo(debug_menu_y_text_pos) # addiu $a3, $a3, 0x4fac
-/* 00BD28 7000B128 24424FA8 */  addiu $v0, %lo(debug_menu_x_text_pos) # addiu $v0, $v0, 0x4fa8
-/* 00BD2C 7000B12C 8C440000 */  lw    $a0, ($v0)
-/* 00BD30 7000B130 8CE50000 */  lw    $a1, ($a3)
-/* 00BD34 7000B134 AFA3001C */  sw    $v1, 0x1c($sp)
-/* 00BD38 7000B138 0C002B74 */  jal   display_text_to_coord
-/* 00BD3C 7000B13C AFA80020 */   sw    $t0, 0x20($sp)
-/* 00BD40 7000B140 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 00BD44 7000B144 8FA80020 */  lw    $t0, 0x20($sp)
-.L7000B148:
-/* 00BD48 7000B148 3C028002 */  lui   $v0, %hi(debug_menu_x_text_pos)
-/* 00BD4C 7000B14C 24424FA8 */  addiu $v0, %lo(debug_menu_x_text_pos) # addiu $v0, $v0, 0x4fa8
-/* 00BD50 7000B150 8C590000 */  lw    $t9, ($v0)
-/* 00BD54 7000B154 3C078002 */  lui   $a3, %hi(debug_menu_y_text_pos)
-/* 00BD58 7000B158 2401000D */  li    $at, 13
-/* 00BD5C 7000B15C 27290001 */  addiu $t1, $t9, 1
-/* 00BD60 7000B160 24E74FAC */  addiu $a3, %lo(debug_menu_y_text_pos) # addiu $a3, $a3, 0x4fac
-/* 00BD64 7000B164 10610007 */  beq   $v1, $at, .L7000B184
-/* 00BD68 7000B168 AC490000 */   sw    $t1, ($v0)
-/* 00BD6C 7000B16C 2401000A */  li    $at, 10
-/* 00BD70 7000B170 10610004 */  beq   $v1, $at, .L7000B184
-/* 00BD74 7000B174 8FAB0024 */   lw    $t3, 0x24($sp)
-/* 00BD78 7000B178 012B082A */  slt   $at, $t1, $t3
-/* 00BD7C 7000B17C 5420000D */  bnezl $at, .L7000B1B4
-/* 00BD80 7000B180 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7000B184:
-/* 00BD84 7000B184 8CED0000 */  lw    $t5, ($a3)
-/* 00BD88 7000B188 3C0C8002 */  lui   $t4, %hi(debug_menu_x_pos_offset) 
-/* 00BD8C 7000B18C 8D8C4FA0 */  lw    $t4, %lo(debug_menu_x_pos_offset)($t4)
-/* 00BD90 7000B190 25AE0001 */  addiu $t6, $t5, 1
-/* 00BD94 7000B194 01C8082A */  slt   $at, $t6, $t0
-/* 00BD98 7000B198 ACEE0000 */  sw    $t6, ($a3)
-/* 00BD9C 7000B19C 14200004 */  bnez  $at, .L7000B1B0
-/* 00BDA0 7000B1A0 AC4C0000 */   sw    $t4, ($v0)
-/* 00BDA4 7000B1A4 3C188002 */  lui   $t8, %hi(debug_menu_y_pos_offset) 
-/* 00BDA8 7000B1A8 8F184FA4 */  lw    $t8, %lo(debug_menu_y_pos_offset)($t8)
-/* 00BDAC 7000B1AC ACF80000 */  sw    $t8, ($a3)
-.L7000B1B0:
-/* 00BDB0 7000B1B0 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7000B1B4:
-/* 00BDB4 7000B1B4 27BD0028 */  addiu $sp, $sp, 0x28
-/* 00BDB8 7000B1B8 03E00008 */  jr    $ra
-/* 00BDBC 7000B1BC 00000000 */   nop   
-)
-#endif
-
-
-
 
 void debug_printcharatpos(int x,int y, u8 character)
 {
