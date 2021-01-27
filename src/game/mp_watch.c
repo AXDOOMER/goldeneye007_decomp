@@ -7139,18 +7139,9 @@ glabel sub_GAME_7F0C6048
 
 
 
-#ifdef NONMATCHING
 s32 checkGamePaused(void) {
     return is_paused;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel checkGamePaused
-/* 0FABB0 7F0C6080 3C028009 */  lui   $v0, %hi(is_paused)
-/* 0FABB4 7F0C6084 03E00008 */  jr    $ra
-/* 0FABB8 7F0C6088 8C42C718 */   lw    $v0, %lo(is_paused)($v0)
-)
-#endif
+
 
 
