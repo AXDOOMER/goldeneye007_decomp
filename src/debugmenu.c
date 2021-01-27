@@ -230,61 +230,30 @@ void blank_debug_buffer_chars(void)
   g_CurrentColorIndex = 0;
 }
 
-
-
-
-void stubbed_function_7000AF84(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
-{
-    return;
+void stubbed_function_7000AF84(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    // Removed
 }
 
-
-
-
-
-
 #ifdef NONMATCHING
-void something_debug_info_related(s32 arg0)
+s32 something_debug_info_related(s32 height)
 {
-    s32 temp_s0;
-    s32 temp_s0_2;
-    s32 phi_s3;
-    s32 phi_s0;
-    s32 phi_s1;
-    s32 phi_s0_2;
-
-    phi_s3 = arg0 + 0x21;
-    phi_s1 = 0x21;
-loop_1:
-    if ((phi_s3 >= 0) && (phi_s3 < 0x23))
-    {
-loop_3:
-        stubbed_function_7000AF84(phi_s0, phi_s3, phi_s0, phi_s1);
-        temp_s0 = phi_s0 + 1;
-        phi_s0 = temp_s0;
-        if (temp_s0 != 0x50)
-        {
-            goto loop_3;
+    s32 x;
+    s32 y;
+    s32 ret;
+    for (y = 33; y > 0; y--) {
+        s32 y2 = (y + height);
+        if (y2 >= 0 && y2 < 35) {
+            for (x = 0; x < 80; x++) {
+                stubbed_function_7000AF84(x, y2, x, y);
+            }
+        } else {            
+            for (x = 0; x < 80; x++) {
+                display_text_to_coord(x, y, '\0');
+            }
         }
+        ret = y;
     }
-    else
-    {
-        phi_s0_2 = 0;
-loop_6:
-        display_text_to_coord(phi_s0_2, phi_s1, 0);
-        temp_s0_2 = phi_s0_2 + 1;
-        phi_s0_2 = temp_s0_2;
-        if (temp_s0_2 != 0x50)
-        {
-            goto loop_6;
-        }
-    }
-    phi_s3 = phi_s3 - 1;
-    phi_s1 = phi_s1 - 1;
-    if (phi_s1 != 0)
-    {
-        goto loop_1;
-    }
+    return ret;
 }
 #else
 GLOBAL_ASM(
@@ -480,8 +449,7 @@ void write_string_stdout(const unsigned char *str) {
     }
 }
 
-void debug_text_related(s32 xadjust, s32 yadjust, const unsigned char *str)
-{  
+void debug_text_related(s32 xadjust, s32 yadjust, const unsigned char *str) {  
     set_final_debug_text_positions(xadjust, yadjust);
     while (*str != '\0') {
         write_char_to_screen(*str++);
