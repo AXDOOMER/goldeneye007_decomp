@@ -207,7 +207,7 @@ glabel lvInitDebugNoticeList
 #ifdef NONMATCHING
 void playrandommusictrack1(void)
 {
-    musictrack1_playing = get_random_value() % 0x3d + M_INTRO;
+    musictrack1_playing = randomGetNext() % 0x3d + M_INTRO;
     musicTrack1Play(musictrack1_playing);
 }
 #else
@@ -216,7 +216,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0BD984
 /* 0F24B4 7F0BD984 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0F24B8 7F0BD988 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F24BC 7F0BD98C 0C002914 */  jal   get_random_value
+/* 0F24BC 7F0BD98C 0C002914 */  jal   randomGetNext
 /* 0F24C0 7F0BD990 00000000 */   nop   
 /* 0F24C4 7F0BD994 2401003D */  li    $at, 61
 /* 0F24C8 7F0BD998 0041001B */  divu  $zero, $v0, $at

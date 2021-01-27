@@ -303,7 +303,7 @@ void mainloop(void)
             set_difficulty(*tokenFind(1, "-hard") + -0x30);
         }
     }
-    increment_random_num(osGetCount());
+    randomSetSeed(osGetCount());
 loop_6:
     sp1D4 = NULL;
     sp1B4.unk0 = (?32) D_80024304.unk0;
@@ -719,7 +719,7 @@ glabel mainloop
 .L70006160:
 /* 006D60 70006160 0C003638 */  jal   osGetCount
 /* 006D64 70006164 00000000 */   nop   
-/* 006D68 70006168 0C002926 */  jal   increment_random_num
+/* 006D68 70006168 0C002926 */  jal   randomSetSeed
 /* 006D6C 7000616C 00402025 */   move  $a0, $v0
 /* 006D70 70006170 3C168003 */  lui   $s6, %hi(aU64_taskgrab_D_core)
 /* 006D74 70006174 3C158008 */  lui   $s5, %hi(pPlayer)

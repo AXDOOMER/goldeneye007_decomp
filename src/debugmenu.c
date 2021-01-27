@@ -372,7 +372,7 @@ Gfx *debmenuDraw(Gfx *gdl) {
                     *(gdl++) = g_DebugMenuEnvironmentColors[var1];
                     index = var1;
                 }
-                if ((get_random_value() & 0xFF) < g_DebugMenuRandomThreshold) {
+                if ((randomGetNext() & 0xFF) < g_DebugMenuRandomThreshold) {
                     if (dynGetFreeGfx(gdl) >= 1024) {
                         s32 s = ((var2 - 32) % 32);
                         s32 t = ((var2 - 32) / 32);
@@ -509,7 +509,7 @@ glabel debmenuDraw
 /* 00C024 7000B424 8F090004 */  lw    $t1, 4($t8)
 /* 00C028 7000B428 AE09FFFC */  sw    $t1, -4($s0)
 .L7000B42C:
-/* 00C02C 7000B42C 0C002914 */  jal   get_random_value
+/* 00C02C 7000B42C 0C002914 */  jal   randomGetNext
 /* 00C030 7000B430 00000000 */   nop   
 /* 00C034 7000B434 3C0B8002 */  lui   $t3, %hi(g_DebugMenuRandomThreshold) 
 /* 00C038 7000B438 8D6B68B8 */  lw    $t3, %lo(g_DebugMenuRandomThreshold)($t3)

@@ -976,7 +976,7 @@ void sub_GAME_7F0A5210(void)
 {
     set_controlstick_lr_disabled();
     play_sfx_a1(ptr_sfx_buf,0x9f,NULL);
-    if ((D_80040B10 << 0x10) < get_random_value()) {
+    if ((D_80040B10 << 0x10) < randomGetNext()) {
         sub_GAME_7F0A51D8();
     }
     return;
@@ -2352,14 +2352,14 @@ void sub_GAME_7F0A6A80(void)
     D_80040B14 = sub_GAME_7F0A6A2C(D_80040B14);
     
     temp_1 = D_80040B0C << 0x10;
-    if (temp_1 < get_random_value())
+    if (temp_1 < randomGetNext())
     {
         sub_GAME_7F0A51D8();
     }
 
     if (D_80040B04 < 0xE0)
     {
-        random_value = get_random_value();
+        random_value = randomGetNext();
         D_80040B04 += (random_value >> 0x1E);
     }
 
@@ -2635,7 +2635,7 @@ glabel sub_GAME_7F0A6A80
 /* 0DC408 7F0A7898 3C0E8004 */  lui   $t6, %hi(D_80040B0C) # $t6, 0x8004
 /* 0DC40C 7F0A789C 8DCE0B3C */  lw    $t6, %lo(D_80040B0C)($t6)
 /* 0DC410 7F0A78A0 000E7C00 */  sll   $t7, $t6, 0x10
-/* 0DC414 7F0A78A4 0C002918 */  jal   get_random_value
+/* 0DC414 7F0A78A4 0C002918 */  jal   randomGetNext
 /* 0DC418 7F0A78A8 AFAF001C */   sw    $t7, 0x1c($sp)
 /* 0DC41C 7F0A78AC 8FB8001C */  lw    $t8, 0x1c($sp)
 /* 0DC420 7F0A78B0 0302082B */  sltu  $at, $t8, $v0
@@ -2650,7 +2650,7 @@ glabel sub_GAME_7F0A6A80
 /* 0DC440 7F0A78D0 286100E0 */  slti  $at, $v1, 0xe0
 /* 0DC444 7F0A78D4 5020000A */  beql  $at, $zero, .Ljp7F0A7900
 /* 0DC448 7F0A78D8 286100E1 */   slti  $at, $v1, 0xe1
-/* 0DC44C 7F0A78DC 0C002918 */  jal   get_random_value
+/* 0DC44C 7F0A78DC 0C002918 */  jal   randomGetNext
 /* 0DC450 7F0A78E0 00000000 */   nop   
 /* 0DC454 7F0A78E4 3C048004 */  lui   $a0, %hi(D_80040B04) # $a0, 0x8004
 /* 0DC458 7F0A78E8 24840B34 */  addiu $a0, %lo(D_80040B04) # addiu $a0, $a0, 0xb34
