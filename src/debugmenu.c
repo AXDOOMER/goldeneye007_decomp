@@ -853,7 +853,7 @@ loop_18:
         }
         phi_s0_3 = phi_s0_2;
         phi_s4_2 = phi_s4_3;
-        if ((u32) (get_random_value() & 0xff) < (u32) D_800268B8)
+        if ((u32) (randomGetNext() & 0xff) < (u32) D_800268B8)
         {
             temp_v0_2 = phi_s0_2;
             phi_s0_3 = phi_s0_2;
@@ -1022,7 +1022,7 @@ glabel read_screen_display_block_and_write_chars
 /* 00C024 7000B424 8F090004 */  lw    $t1, 4($t8)
 /* 00C028 7000B428 AE09FFFC */  sw    $t1, -4($s0)
 .L7000B42C:
-/* 00C02C 7000B42C 0C002914 */  jal   get_random_value
+/* 00C02C 7000B42C 0C002914 */  jal   randomGetNext
 /* 00C030 7000B430 00000000 */   nop   
 /* 00C034 7000B434 3C0B8002 */  lui   $t3, %hi(D_800268B8) 
 /* 00C038 7000B438 8D6B68B8 */  lw    $t3, %lo(D_800268B8)($t3)

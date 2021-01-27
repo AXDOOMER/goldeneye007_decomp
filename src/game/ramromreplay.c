@@ -388,11 +388,11 @@ glabel record_player_input_as_packet
 /* 0F4B10 7F0BFFE0 3C0D8005 */  lui   $t5, %hi(D_80048498) 
 /* 0F4B14 7F0BFFE4 8DAD8498 */  lw    $t5, %lo(D_80048498)($t5)
 /* 0F4B18 7F0BFFE8 8D8E0000 */  lw    $t6, ($t4)
-/* 0F4B1C 7F0BFFEC 3C198002 */  lui   $t9, %hi(randseed + 0x4) 
+/* 0F4B1C 7F0BFFEC 3C198002 */  lui   $t9, %hi(g_randomSeed + 0x4) 
 /* 0F4B20 7F0BFFF0 3C118009 */  lui   $s1, %hi(address_demo_loaded)
 /* 0F4B24 7F0BFFF4 A1CD0000 */  sb    $t5, ($t6)
 /* 0F4B28 7F0BFFF8 8D8D0000 */  lw    $t5, ($t4)
-/* 0F4B2C 7F0BFFFC 8F394464 */  lw    $t9, %lo(randseed + 0x4)($t9)
+/* 0F4B2C 7F0BFFFC 8F394464 */  lw    $t9, %lo(g_randomSeed + 0x4)($t9)
 /* 0F4B30 7F0C0000 2631C5F4 */  addiu $s1, %lo(address_demo_loaded) # addiu $s1, $s1, -0x3a0c
 /* 0F4B34 7F0C0004 A1B90002 */  sb    $t9, 2($t5)
 /* 0F4B38 7F0C0008 8D820000 */  lw    $v0, ($t4)
@@ -526,8 +526,8 @@ glabel ramrom_replay_handler
 /* 0F4CE4 7F0C01B4 3C028005 */  lui   $v0, %hi(ramrom_blkbuf_2)
 /* 0F4CE8 7F0C01B8 8C42846C */  lw    $v0, %lo(ramrom_blkbuf_2)($v0)
 .L7F0C01BC:
-/* 0F4CEC 7F0C01BC 3C0F8002 */  lui   $t7, %hi(randseed + 0x4) 
-/* 0F4CF0 7F0C01C0 8DEF4464 */  lw    $t7, %lo(randseed + 0x4)($t7)
+/* 0F4CEC 7F0C01BC 3C0F8002 */  lui   $t7, %hi(g_randomSeed + 0x4) 
+/* 0F4CF0 7F0C01C0 8DEF4464 */  lw    $t7, %lo(g_randomSeed + 0x4)($t7)
 /* 0F4CF4 7F0C01C4 90430002 */  lbu   $v1, 2($v0)
 /* 0F4CF8 7F0C01C8 31F900FF */  andi  $t9, $t7, 0xff
 /* 0F4CFC 7F0C01CC 53230008 */  beql  $t9, $v1, .L7F0C01F0
@@ -736,10 +736,10 @@ void copy_current_ingame_registers_before_ramrom_playback(void *arg0) {
     ? temp_ret;
 
     // Node 0
-    arg0->unk4 = (?32) randseed + 0x4;
-    *arg0 = (?32) randseed;
-    arg0->unkC = (?32) random_val + 0x4;
-    arg0->unk8 = (?32) random_val;
+    arg0->unk4 = (?32) g_randomSeed + 0x4;
+    *arg0 = (?32) g_randomSeed;
+    arg0->unkC = (?32) g_chrObjRandomSeed + 0x4;
+    arg0->unk8 = (?32) g_chrObjRandomSeed;
     arg0->unk84 = (?32) gamemode;
     arg0->unk8C = (?32) selected_num_players;
     arg0->unk90 = (?32) scenario;
@@ -770,18 +770,18 @@ GLOBAL_ASM(
 .text
 glabel copy_current_ingame_registers_before_ramrom_playback
 /* 0F4ED8 7F0C03A8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0F4EDC 7F0C03AC 3C0E8002 */  lui   $t6, %hi(randseed) 
-/* 0F4EE0 7F0C03B0 3C0F8002 */  lui   $t7, %hi(randseed + 0x4) 
-/* 0F4EE4 7F0C03B4 8DEF4464 */  lw    $t7, %lo(randseed + 0x4)($t7)
-/* 0F4EE8 7F0C03B8 8DCE4460 */  lw    $t6, %lo(randseed)($t6)
+/* 0F4EDC 7F0C03AC 3C0E8002 */  lui   $t6, %hi(g_randomSeed) 
+/* 0F4EE0 7F0C03B0 3C0F8002 */  lui   $t7, %hi(g_randomSeed + 0x4) 
+/* 0F4EE4 7F0C03B4 8DEF4464 */  lw    $t7, %lo(g_randomSeed + 0x4)($t7)
+/* 0F4EE8 7F0C03B8 8DCE4460 */  lw    $t6, %lo(g_randomSeed)($t6)
 /* 0F4EEC 7F0C03BC AFBF001C */  sw    $ra, 0x1c($sp)
 /* 0F4EF0 7F0C03C0 AFB00018 */  sw    $s0, 0x18($sp)
 /* 0F4EF4 7F0C03C4 AC8F0004 */  sw    $t7, 4($a0)
 /* 0F4EF8 7F0C03C8 AC8E0000 */  sw    $t6, ($a0)
-/* 0F4EFC 7F0C03CC 3C188004 */  lui   $t8, %hi(random_val) 
-/* 0F4F00 7F0C03D0 3C198004 */  lui   $t9, %hi(random_val + 0x4) 
-/* 0F4F04 7F0C03D4 8F390164 */  lw    $t9, %lo(random_val + 0x4)($t9)
-/* 0F4F08 7F0C03D8 8F180160 */  lw    $t8, %lo(random_val)($t8)
+/* 0F4EFC 7F0C03CC 3C188004 */  lui   $t8, %hi(g_chrObjRandomSeed) 
+/* 0F4F00 7F0C03D0 3C198004 */  lui   $t9, %hi(g_chrObjRandomSeed + 0x4) 
+/* 0F4F04 7F0C03D4 8F390164 */  lw    $t9, %lo(g_chrObjRandomSeed + 0x4)($t9)
+/* 0F4F08 7F0C03D8 8F180160 */  lw    $t8, %lo(g_chrObjRandomSeed)($t8)
 /* 0F4F0C 7F0C03DC 3C088003 */  lui   $t0, %hi(gamemode) 
 /* 0F4F10 7F0C03E0 AC99000C */  sw    $t9, 0xc($a0)
 /* 0F4F14 7F0C03E4 AC980008 */  sw    $t8, 8($a0)
@@ -862,10 +862,10 @@ glabel copy_current_ingame_registers_before_ramrom_playback
 #ifdef NONMATCHING
 void copy_recorded_ramrom_registers_to_proper_place_ingame(void *arg0) {
     // Node 0
-    randseed = (?32) *arg0;
-    randseed + 0x4 = (?32) arg0->unk4;
-    random_val = (?32) arg0->unk8;
-    random_val + 0x4 = (?32) arg0->unkC;
+    g_randomSeed = (?32) *arg0;
+    g_randomSeed + 0x4 = (?32) arg0->unk4;
+    g_chrObjRandomSeed = (?32) arg0->unk8;
+    g_chrObjRandomSeed + 0x4 = (?32) arg0->unkC;
     gamemode = (?32) arg0->unk84;
     selected_num_players = (?32) arg0->unk8C;
     scenario = (?32) arg0->unk90;
@@ -899,16 +899,16 @@ glabel copy_recorded_ramrom_registers_to_proper_place_ingame
 /* 0F502C 7F0C04FC AFB00018 */  sw    $s0, 0x18($sp)
 /* 0F5030 7F0C0500 8C8E0000 */  lw    $t6, ($a0)
 /* 0F5034 7F0C0504 8C8F0004 */  lw    $t7, 4($a0)
-/* 0F5038 7F0C0508 3C018002 */  lui   $at, %hi(randseed)
-/* 0F503C 7F0C050C AC2E4460 */  sw    $t6, %lo(randseed)($at)
-/* 0F5040 7F0C0510 3C018002 */  lui   $at, %hi(randseed + 0x4)
-/* 0F5044 7F0C0514 AC2F4464 */  sw    $t7, %lo(randseed + 0x4)($at)
+/* 0F5038 7F0C0508 3C018002 */  lui   $at, %hi(g_randomSeed)
+/* 0F503C 7F0C050C AC2E4460 */  sw    $t6, %lo(g_randomSeed)($at)
+/* 0F5040 7F0C0510 3C018002 */  lui   $at, %hi(g_randomSeed + 0x4)
+/* 0F5044 7F0C0514 AC2F4464 */  sw    $t7, %lo(g_randomSeed + 0x4)($at)
 /* 0F5048 7F0C0518 8C980008 */  lw    $t8, 8($a0)
 /* 0F504C 7F0C051C 8C99000C */  lw    $t9, 0xc($a0)
-/* 0F5050 7F0C0520 3C018004 */  lui   $at, %hi(random_val)
-/* 0F5054 7F0C0524 AC380160 */  sw    $t8, %lo(random_val)($at)
-/* 0F5058 7F0C0528 3C018004 */  lui   $at, %hi(random_val + 0x4)
-/* 0F505C 7F0C052C AC390164 */  sw    $t9, %lo(random_val + 0x4)($at)
+/* 0F5050 7F0C0520 3C018004 */  lui   $at, %hi(g_chrObjRandomSeed)
+/* 0F5054 7F0C0524 AC380160 */  sw    $t8, %lo(g_chrObjRandomSeed)($at)
+/* 0F5058 7F0C0528 3C018004 */  lui   $at, %hi(g_chrObjRandomSeed + 0x4)
+/* 0F505C 7F0C052C AC390164 */  sw    $t9, %lo(g_chrObjRandomSeed + 0x4)($at)
 /* 0F5060 7F0C0530 8C880084 */  lw    $t0, 0x84($a0)
 /* 0F5064 7F0C0534 3C018003 */  lui   $at, %hi(gamemode)
 /* 0F5068 7F0C0538 00808025 */  move  $s0, $a0
@@ -1286,7 +1286,7 @@ glabel select_ramrom_to_play
 /* 0F5500 7F0C09D0 5020FFF9 */  beql  $at, $zero, .L7F0C09B8
 /* 0F5504 7F0C09D4 8C480008 */   lw    $t0, 8($v0)
 .L7F0C09D8:
-/* 0F5508 7F0C09D8 0C002914 */  jal   get_random_value
+/* 0F5508 7F0C09D8 0C002914 */  jal   randomGetNext
 /* 0F550C 7F0C09DC AFA3001C */   sw    $v1, 0x1c($sp)
 /* 0F5510 7F0C09E0 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0F5514 7F0C09E4 3C048005 */  lui   $a0, %hi(ramrom_table)

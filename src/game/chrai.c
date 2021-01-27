@@ -3720,7 +3720,7 @@ action2E_Run_To_Character_Position_RVL_On_Arrival_3:
 /* 06ACB0 7F036180 1000FD02 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06ACB4 7F036184 26310003 */   addiu $s1, $s1, 3
 action33_Seed_Random_Byte_1:
-/* 06ACB8 7F036188 0C002914 */  jal   get_random_value
+/* 06ACB8 7F036188 0C002914 */  jal   randomGetNext
 /* 06ACBC 7F03618C 00000000 */   nop   
 /* 06ACC0 7F036190 A2E2010F */  sb    $v0, 0x10f($s7)
 /* 06ACC4 7F036194 26520001 */  addiu $s2, $s2, 1
@@ -9587,7 +9587,7 @@ action2E_Run_To_Character_Position_RVL_On_Arrival_3:
 /* 06ACB0 7F036180 1000FD02 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06ACB4 7F036184 26310003 */   addiu $s1, $s1, 3
 action33_Seed_Random_Byte_1:
-/* 06ACB8 7F036188 0C002914 */  jal   get_random_value
+/* 06ACB8 7F036188 0C002914 */  jal   randomGetNext
 /* 06ACBC 7F03618C 00000000 */   nop   
 /* 06ACC0 7F036190 A2E2010F */  sb    $v0, 0x10f($s7)
 /* 06ACC4 7F036194 26520001 */  addiu $s2, $s2, 1
@@ -15931,7 +15931,7 @@ glabel sub_GAME_7F03B15C
 /* 070324 7F03B7F4 00000000 */   nop   
 /* 070328 7F03B7F8 13210014 */  beq   $t9, $at, .L7F03B84C
 /* 07032C 7F03B7FC 00000000 */   nop   
-/* 070330 7F03B800 0C002914 */  jal   get_random_value
+/* 070330 7F03B800 0C002914 */  jal   randomGetNext
 /* 070334 7F03B804 00000000 */   nop   
 /* 070338 7F03B808 8608000A */  lh    $t0, 0xa($s0)
 /* 07033C 7F03B80C 8E090004 */  lw    $t1, 4($s0)
