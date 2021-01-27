@@ -162,7 +162,7 @@ void init_mainthread_data(void)
     lvInitDebugNoticeList();
     bossInitDebugNoticeList();
     textrelatedInit_REMOVED();
-    debugmenuInit_REMOVED();
+    debmenu7000ADA8();
     default_player_perspective_and_height();
     store_osgetcount();
     null_init_main_1();
@@ -405,7 +405,7 @@ loop_18:
     joyCheckStatusThreadSafe();
     stage_load(current_stage_num);
     viInitBuffers();
-    debug_text_related_2();
+    debmenuInit();
     sub_GAME_7F0C0B4C();
     video_related_2();
     if (osRecvMesg(&gfxFrameMsgQ, &sp1D4, 0) == 0)
@@ -544,7 +544,7 @@ loop_44:
                             temp_s0_3->unk4 = 0;
                             phi_s3 = temp_s3 + 8;
                         }
-                        temp_s3_2 = read_screen_display_block_and_write_chars(phi_s3);
+                        temp_s3_2 = debmenuDraw(phi_s3);
                         phi_s3_2 = temp_s3_2;
                         if (get_memusage_display_flag() != 0)
                         {
@@ -881,7 +881,7 @@ glabel mainloop
 /* 006FB8 700063B8 8C8441A8 */   lw    $a0, %lo(current_stage_num)($a0)
 /* 006FBC 700063BC 0C000C49 */  jal   viInitBuffers
 /* 006FC0 700063C0 00000000 */   nop   
-/* 006FC4 700063C4 0C002B6C */  jal   debug_text_related_2
+/* 006FC4 700063C4 0C002B6C */  jal   debmenuInit
 /* 006FC8 700063C8 00000000 */   nop   
 /* 006FCC 700063CC 0FC302D3 */  jal   sub_GAME_7F0C0B4C
 /* 006FD0 700063D0 00000000 */   nop   
@@ -1099,7 +1099,7 @@ glabel mainloop
 /* 0072F8 700066F8 AE0F0000 */  sw    $t7, ($s0)
 /* 0072FC 700066FC AE000004 */  sw    $zero, 4($s0)
 .L70006700:
-/* 007300 70006700 0C002C9F */  jal   read_screen_display_block_and_write_chars
+/* 007300 70006700 0C002C9F */  jal   debmenuDraw
 /* 007304 70006704 02602025 */   move  $a0, $s3
 /* 007308 70006708 0FC243CD */  jal   get_memusage_display_flag
 /* 00730C 7000670C 00409825 */   move  $s3, $v0

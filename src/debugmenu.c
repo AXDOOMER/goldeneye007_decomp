@@ -3,7 +3,7 @@
 #include "vi.h"
 #include "game/dyn.h"
 
-u32 image_resource[] = {  
+u32 g_DebugMenuTexture[] = {  
          0,  0x227A00,  0x7A348B,  0x223434,  0x115811,  0x696900,         0,    0x9C00,
     0x4600,  0x460000,    0x4600,         0,         0,         0,         0,      0x46,
   0x229C11,  0x346900,  0x229C11,  0x699C11,    0x5834,  0xADAD34,  0x118B34,  0x9CAD7A,
@@ -90,150 +90,118 @@ u32 image_resource[] = {
          0,  0x226900,         0,    0x8B46,    0x8B00,  0x467A00,         0,         0 
 };
 
-s32 debug_menu_x_pos_offset = 5;
-s32 debug_menu_y_pos_offset = 1;
-s32 debug_menu_x_text_pos = 0x18;
-s32 debug_menu_y_text_pos = 0x10;
+typedef struct {
+    u8 chr;
+    u8 color;
+} character;
 
-Gfx stdout_display_list[] = {
+s32 g_DebugMenuTextStartX = 5;
+s32 g_DebugMenuTextStartY = 1;
+s32 g_DebugMenuTextCurrentX = 24;
+s32 g_DebugMenuTextCurrentY = 16;
+Gfx g_DebugMenuTextureDisplayList[] = {
     gsDPPipeSync(),
     gsDPSetCycleType(G_CYC_1CYCLE),
     gsDPSetColorDither(G_CD_DISABLE),
-    0xB900031D,0x500A4240, //gsDPSetRenderMode(G_RM_VISCVG, G_RM_VISCVG2), //(CLR_MEM A_IN CLR_IN 1.0 CLR_MEM A_IN CLR_IN 1.0) FULL OPA AA=0 Z_CMP=0 Z_UPD=0 IM_RD=1 CLR_ON_CVG=0 CVG_X_ALPHA=0 ALPHA_CVG_SEL=0 FORCE_BL=1
-    gsDPSetCombineLERP(PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT,  PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT,  PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT,  PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT),
+    gsDPSetRenderMode(IM_RD | CVG_DST_FULL | ZMODE_OPA | FORCE_BL | GBL_c1(G_BL_CLR_MEM, G_BL_A_IN, G_BL_CLR_IN, G_BL_1), IM_RD | CVG_DST_FULL | ZMODE_OPA | FORCE_BL | GBL_c2(G_BL_CLR_MEM, G_BL_A_IN, G_BL_CLR_IN, G_BL_1)),
+    gsDPSetCombineLERP(PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT),
     gsDPSetTexturePersp(G_TP_NONE),
-    gsDPSetAlphaCompare( G_AC_NONE),
-    gsDPSetTextureImage(G_IM_FMT_IA,  G_IM_SIZ_16b, 1, &image_resource),
-    gsDPSetTile(G_IM_FMT_IA,  G_IM_SIZ_16b, 0, 0, 7, 0, G_TX_WRAP, 0, 0, G_TX_WRAP, 0, 0),
+    gsDPSetAlphaCompare(G_AC_NONE),
+    gsDPLoadTextureBlock(&g_DebugMenuTexture, G_IM_FMT_IA, G_IM_SIZ_8b, 128, 21, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD),
     gsDPLoadSync(),
-    gsDPLoadBlock(7, 0, 0, 1343, 128),
-    gsDPPipeSync(),
-    gsDPSetTile(G_IM_FMT_IA, G_IM_SIZ_8b, 16, 0, 0, 0, G_TX_WRAP, 0, 0, G_TX_WRAP, 0, 0),
-    gsDPSetTileSize(0, 0, 0, 508, 80),
-    gsDPLoadSync(),
-    gsSPEndDisplayList(),
+    gsSPEndDisplayList()
 };
-
-typedef struct {
-    u8 unk0;
-    u8 unk1;
-} charandindex_t;
-charandindex_t stdout_debug_menu_screen_buffer[80][35] = {0};
-Gfx stdout_primary_color_table[32] = {0};
-Gfx stdout_environment_color_table[32] = {0};
-
-s32 g_CurrentColorIndex = 0;
-char *string_formatting[] = {
-"\x1B[31m\x1B[40m", "\x1B[37m\x1B[40m",
-"\x1B[32m\x1B[40m", "\x1B[33m\x1B[40m",
-"\x1B[34m\x1B[40m", "\x1B[35m\x1B[40m",
-"\x1B[36m\x1B[40m", "\x1B[37m\x1B[44m",
-"\x1B[31m\x1B[44m", "\x1B[32m\x1B[44m",
-"\x1B[33m\x1B[44m", "\x1B[30m\x1B[44m",
-"\x1B[35m\x1B[44m", "\x1B[36m\x1B[44m",
-"\x1B[37m\x1B[41m", "\x1B[30m\x1B[41m",
-"\x1B[32m\x1B[41m", "\x1B[33m\x1B[41m",
-"\x1B[34m\x1B[41m", "\x1B[35m\x1B[41m",
-"\x1B[36m\x1B[41m", "\x1B[37m\x1B[45m",
-"\x1B[31m\x1B[45m", "\x1B[32m\x1B[45m",
-"\x1B[33m\x1B[45m", "\x1B[34m\x1B[45m",
-"\x1B[30m\x1B[45m", "\x1B[36m\x1B[45m",
-"\x1B[37m\x1B[42m", "\x1B[31m\x1B[42m",
-"\x1B[30m\x1B[42m", "\x1B[33m\x1B[42m"};
-
-
-
-Gfx end_displaylist_command[] = {
-	gsSPEndDisplayList()
+character g_DebugMenuTextBuffer[80][35] = {0};
+Gfx g_DebugMenuPrimitiveColors[32] = {0};
+Gfx g_DebugMenuEnvironmentColors[32] = {0};
+s32 g_DebugMenuCurrentColorIndex = 0;
+const char *g_DebugMenuUnusedStrings[] = {
+    "\x1B[31m\x1B[40m", "\x1B[37m\x1B[40m",
+    "\x1B[32m\x1B[40m", "\x1B[33m\x1B[40m",
+    "\x1B[34m\x1B[40m", "\x1B[35m\x1B[40m",
+    "\x1B[36m\x1B[40m", "\x1B[37m\x1B[44m",
+    "\x1B[31m\x1B[44m", "\x1B[32m\x1B[44m",
+    "\x1B[33m\x1B[44m", "\x1B[30m\x1B[44m",
+    "\x1B[35m\x1B[44m", "\x1B[36m\x1B[44m",
+    "\x1B[37m\x1B[41m", "\x1B[30m\x1B[41m",
+    "\x1B[32m\x1B[41m", "\x1B[33m\x1B[41m",
+    "\x1B[34m\x1B[41m", "\x1B[35m\x1B[41m",
+    "\x1B[36m\x1B[41m", "\x1B[37m\x1B[45m",
+    "\x1B[31m\x1B[45m", "\x1B[32m\x1B[45m",
+    "\x1B[33m\x1B[45m", "\x1B[34m\x1B[45m",
+    "\x1B[30m\x1B[45m", "\x1B[36m\x1B[45m",
+    "\x1B[37m\x1B[42m", "\x1B[31m\x1B[42m",
+    "\x1B[30m\x1B[42m", "\x1B[33m\x1B[42m"
 };
-u64 blank_C0_command =0xC000000000000000;
-Gfx stdout_primary_color = {0xFA000000, 0xFFFFFF00};
-Gfx debug_text_bg_color = {0xFB000000, 0x0};
-u32 D_800268B8 = 0xFF;
+Gfx g_DebugMenuEndDisplayList = gsSPEndDisplayList();
+Gfx g_DebugMenuNoOp = gsDPNoOp();
+Gfx g_DebugMenuPrimitiveColor = gsDPSetPrimColor(0, 0, 255, 255, 255, 0);
+Gfx g_DebugMenuEnvironmentColor = gsDPSetEnvColor(0, 0, 0, 0);
+u32 g_DebugMenuRandomThreshold = 0xFF; // Static?
 
-
-
-
-
-u32 dummied_function_7000AD80(s32 arg0, s32 arg1)
-{
+u32 debmenu7000AD80(s32 arg0, s32 arg1) {
+    // Removed
     return 0;
 }
 
-
-u32 dummied_function_7000AD90(s32 arg0, s32 arg1)
-{
+u32 debmenu7000AD90(s32 arg0, s32 arg1) {
+    // Removed
     return 0;
 }
 
-
-void null_function_7000ADA0(void)
-{
-//empty
+void debmenu7000ADA0(void) {
+    // Removed
 }
 
-
-void debugmenuInit_REMOVED(void)
-{
-//empty
+void debmenu7000ADA8(void) {
+    // Removed
 }
 
-
-void debug_text_related_2(void)
-{
-    blank_debug_buffer_chars();
+void debmenuInit(void) {
+    debmenuReset();
 }
 
-void display_text_to_coord(s32 x, s32 y, unsigned char c) {
+void debmenuWriteCharAtPos(s32 x, s32 y, unsigned char c) {
     s32 i;
     for (i = 0; i < 32; i++) {
-        if ((stdout_primary_color.words.w1 == stdout_primary_color_table[i].words.w1) &&
-            (debug_text_bg_color.words.w1 == stdout_environment_color_table[i].words.w1)) {
+        if ((g_DebugMenuPrimitiveColor.words.w1 == g_DebugMenuPrimitiveColors[i].words.w1) &&
+            (g_DebugMenuEnvironmentColor.words.w1 == g_DebugMenuEnvironmentColors[i].words.w1)) {
             goto end;
         }
     }
-    stdout_primary_color_table[g_CurrentColorIndex] = stdout_primary_color;
-    stdout_environment_color_table[g_CurrentColorIndex] = debug_text_bg_color;
-    g_CurrentColorIndex = (g_CurrentColorIndex + 1) % 32;
-    i = g_CurrentColorIndex;
+    g_DebugMenuPrimitiveColors[g_DebugMenuCurrentColorIndex] = g_DebugMenuPrimitiveColor;
+    g_DebugMenuEnvironmentColors[g_DebugMenuCurrentColorIndex] = g_DebugMenuEnvironmentColor;
+    g_DebugMenuCurrentColorIndex = ((g_DebugMenuCurrentColorIndex + 1) % 32);
+    i = g_DebugMenuCurrentColorIndex;
 end:
-    stdout_debug_menu_screen_buffer[x][y].unk0 = c;
-    stdout_debug_menu_screen_buffer[x][y].unk1 = i;
+    g_DebugMenuTextBuffer[x][y].chr = c;
+    g_DebugMenuTextBuffer[x][y].color = i;
 }
 
-void debugMenuSetTextPOStoOffset(void)
-{
-    debug_menu_x_text_pos = debug_menu_x_pos_offset;
-    debug_menu_y_text_pos = debug_menu_y_pos_offset;
+void debmenuResetPosition(void) {
+    g_DebugMenuTextCurrentX = g_DebugMenuTextStartX;
+    g_DebugMenuTextCurrentY = g_DebugMenuTextStartY;
 }
 
-
-
-
-void blank_debug_buffer_chars(void)
-{
-  int x;
-  int y;
-  
-  for (y = 0; y < 35; y++)
-  {
-    for (x = 0; x < 80; x++)
-    {
-      display_text_to_coord(x,y,'\0');
+void debmenuReset(void) {
+    s32 x;
+    s32 y;  
+    for (y = 0; y < 35; y++) {
+        for (x = 0; x < 80; x++) {
+            debmenuWriteCharAtPos(x, y, '\0');
+        }
     }
-  }
-  debugMenuSetTextPOStoOffset();
-  null_function_7000ADA0();
-  g_CurrentColorIndex = 0;
+    debmenuResetPosition();
+    debmenu7000ADA0();
+    g_DebugMenuCurrentColorIndex = 0;
 }
 
-void stubbed_function_7000AF84(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+void debmenu7000AF84(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     // Removed
 }
 
 #ifdef NONMATCHING
-s32 something_debug_info_related(s32 height)
-{
+s32 debmenu7000AF98(s32 height) {
     s32 x;
     s32 y;
     s32 ret;
@@ -241,11 +209,11 @@ s32 something_debug_info_related(s32 height)
         s32 y2 = (y + height);
         if (y2 >= 0 && y2 < 35) {
             for (x = 0; x < 80; x++) {
-                stubbed_function_7000AF84(x, y2, x, y);
+                debmenu7000AF84(x, y2, x, y);
             }
         } else {            
             for (x = 0; x < 80; x++) {
-                display_text_to_coord(x, y, '\0');
+                debmenuWriteCharAtPos(x, y, '\0');
             }
         }
         ret = y;
@@ -255,7 +223,7 @@ s32 something_debug_info_related(s32 height)
 #else
 GLOBAL_ASM(
 .text
-glabel something_debug_info_related
+glabel debmenu7000AF98
 /* 00BB98 7000AF98 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 00BB9C 7000AF9C AFB30020 */  sw    $s3, 0x20($sp)
 /* 00BBA0 7000AFA0 AFB2001C */  sw    $s2, 0x1c($sp)
@@ -274,7 +242,7 @@ glabel something_debug_info_related
 .L7000AFD0:
 /* 00BBD0 7000AFD0 02602825 */  move  $a1, $s3
 /* 00BBD4 7000AFD4 02003025 */  move  $a2, $s0
-/* 00BBD8 7000AFD8 0C002BE1 */  jal   stubbed_function_7000AF84
+/* 00BBD8 7000AFD8 0C002BE1 */  jal   debmenu7000AF84
 /* 00BBDC 7000AFDC 02203825 */   move  $a3, $s1
 /* 00BBE0 7000AFE0 26100001 */  addiu $s0, $s0, 1
 /* 00BBE4 7000AFE4 5612FFFA */  bnel  $s0, $s2, .L7000AFD0
@@ -286,7 +254,7 @@ glabel something_debug_info_related
 /* 00BBF8 7000AFF8 02002025 */  move  $a0, $s0
 .L7000AFFC:
 /* 00BBFC 7000AFFC 02202825 */  move  $a1, $s1
-/* 00BC00 7000B000 0C002B74 */  jal   display_text_to_coord
+/* 00BC00 7000B000 0C002B74 */  jal   debmenuWriteCharAtPos
 /* 00BC04 7000B004 00003025 */   move  $a2, $zero
 /* 00BC08 7000B008 26100001 */  addiu $s0, $s0, 1
 /* 00BC0C 7000B00C 5612FFFB */  bnel  $s0, $s2, .L7000AFFC
@@ -306,73 +274,70 @@ glabel something_debug_info_related
 )
 #endif
 
-void set_final_debug_text_positions(s32 xadjust,s32 yadjust) {
-    xadjust += debug_menu_x_pos_offset;
-    yadjust += debug_menu_y_pos_offset;
-    debug_menu_x_text_pos = xadjust;
-    debug_menu_y_text_pos = yadjust;
+void debmenuSetPosition(s32 x, s32 y) {
+    x += g_DebugMenuTextStartX;
+    y += g_DebugMenuTextStartY;
+    g_DebugMenuTextCurrentX = x;
+    g_DebugMenuTextCurrentY = y;
 }
 
-void set_debug_text_color(s32 red,s32 blue,s32 green,s32 alpha)
-{
-  stdout_primary_color.words.w1 = red << 0x18 | blue << 0x10 | green << 8 | 0xffU - alpha;
+void debmenuSetPrimColor(s32 r, s32 g, s32 b, s32 a) {
+    g_DebugMenuPrimitiveColor.words.w1 = ((r << 24) | (g << 16) | (b << 8) | (255 - a));
 }
 
-
-void set_color_speedgraph(s32 red,s32 green,s32 blue,s32 alpha)
-{
-  debug_text_bg_color.words.w1 = red << 0x18 | green << 0x10 | blue << 8 | 0xffU - alpha;
+void debmenuSetEnvColor(s32 r, s32 g, s32 b, s32 a) {
+    g_DebugMenuEnvironmentColor.words.w1 = ((r << 24) | (g << 16) | (b << 8) | (255 - a));
 }
 
-void write_char_to_screen(unsigned char c) {
+void debmenuWriteChar(unsigned char c) {
     s32 width = ((viGetX() - 13) / 4);
     s32 height = ((viGetY() - 10) / 7);
     if ((c == '\0') || ((c >= ' ') && (c <= '~'))) {
-        display_text_to_coord(debug_menu_x_text_pos, debug_menu_y_text_pos, c);
+        debmenuWriteCharAtPos(g_DebugMenuTextCurrentX, g_DebugMenuTextCurrentY, c);
     }
-    debug_menu_x_text_pos++;
-    if ((c == '\r') || (c == '\n') || (debug_menu_x_text_pos >= width)) {
-        debug_menu_x_text_pos = debug_menu_x_pos_offset;        
-        debug_menu_y_text_pos++;
-        if (debug_menu_y_text_pos >= height) {
-            debug_menu_y_text_pos = debug_menu_y_pos_offset;
+    g_DebugMenuTextCurrentX++;
+    if ((c == '\r') || (c == '\n') || (g_DebugMenuTextCurrentX >= width)) {
+        g_DebugMenuTextCurrentX = g_DebugMenuTextStartX;        
+        g_DebugMenuTextCurrentY++;
+        if (g_DebugMenuTextCurrentY >= height) {
+            g_DebugMenuTextCurrentY = g_DebugMenuTextStartY;
         }
     }
 }
 
-void debug_printcharatpos(int x,int y, u8 character)
+void debmenuSetPositionAndWriteChar(s32 x, s32 y, unsigned char c)
 {
-  set_final_debug_text_positions(x,y);
-  write_char_to_screen(character);
+    debmenuSetPosition(x, y);
+    debmenuWriteChar(c);
 }
 
-void write_string_stdout(const unsigned char *str) {
+void debmenuWriteString(const unsigned char *str) {
     while (*str != '\0') {
-        write_char_to_screen(*str++);
+        debmenuWriteChar(*str++);
     }
 }
 
-void debug_text_related(s32 xadjust, s32 yadjust, const unsigned char *str) {  
-    set_final_debug_text_positions(xadjust, yadjust);
+void debmenuSetPositionAndWriteString(s32 x, s32 y, const unsigned char *str) {  
+    debmenuSetPosition(x, y);
     while (*str != '\0') {
-        write_char_to_screen(*str++);
+        debmenuWriteChar(*str++);
     }
 }
 
 #ifdef NONMATCHING
 u32 get_random_value(void);
 // Decent attempt but still lots of diffs
-Gfx *read_screen_display_block_and_write_chars(Gfx *gdl) {
-    s32 i;
-    s32 j;
+Gfx *debmenuDraw(Gfx *gdl) {
+    s32 y;
+    s32 x;
     s32 index = -1;
     Gfx *end;
     s32 size;
     s32 free;
-    for (i = 0; i < 35; i++) {
-        for (j = 0; j < 80; j++) {
-            u8 var = stdout_debug_menu_screen_buffer[j][i].unk1;
-            if (stdout_debug_menu_screen_buffer[j][i].unk0 != '\0') {
+    for (y = 0; y < 35; y++) {
+        for (x = 0; x < 80; x++) {
+            u8 var = g_DebugMenuTextBuffer[x][y].color;
+            if (g_DebugMenuTextBuffer[x][y].chr != '\0') {
                 if (var != index) {
                     end += 2;
                     index = var;
@@ -388,30 +353,30 @@ Gfx *read_screen_display_block_and_write_chars(Gfx *gdl) {
     }
     free -= 2048;
     if (free <= 0) {
-        D_800268B8 = 0;
+        g_DebugMenuRandomThreshold = 0;
     } else if (free < size) {
-        D_800268B8 = ((free * 255) / size);
+        g_DebugMenuRandomThreshold = ((free * 255) / size);
     } else {
-        D_800268B8 = 256;
+        g_DebugMenuRandomThreshold = 256;
     }
-    gSPDisplayList(gdl++, stdout_display_list);
+    gSPDisplayList(gdl++, g_DebugMenuTextureDisplayList);
     index = -1;
-    for (i = 0; i < 35; i++) {
-        for (j = 0; j < 80; j++) {
-            charandindex_t *ptr = &stdout_debug_menu_screen_buffer[j][i];
-            u32 var2 = ptr->unk0;
-            u8 var1 = ptr->unk1;
-            if (ptr->unk0 != '\0') {
+    for (y = 0; y < 35; y++) {
+        for (x = 0; x < 80; x++) {
+            character *ptr = &g_DebugMenuTextBuffer[x][y];
+            u32 var2 = ptr->chr;
+            u8 var1 = ptr->color;
+            if (var2 != '\0') {
                 if (var1 != index) {
-                    *(gdl++) = stdout_primary_color_table[var1];
-                    *(gdl++) = stdout_environment_color_table[var1];
+                    *(gdl++) = g_DebugMenuPrimitiveColors[var1];
+                    *(gdl++) = g_DebugMenuEnvironmentColors[var1];
                     index = var1;
                 }
-                if ((get_random_value() & 0xFF)  < D_800268B8) {
+                if ((get_random_value() & 0xFF) < g_DebugMenuRandomThreshold) {
                     if (dynGetFreeGfx(gdl) >= 1024) {
                         s32 s = ((var2 - 32) % 32);
                         s32 t = ((var2 - 32) / 32);
-                        gSPTextureRectangle(gdl++, ((j * 4) * 4), ((i * 7) * 4), (((j + 1) * 4) * 4), (((i + 1) * 7) * 4), G_TX_RENDERTILE, ((s * 4) * 32), ((t * 7) * 32), (1 << 10), (1 << 10));
+                        gSPTextureRectangle(gdl++, ((x * 4) * 4), ((y * 7) * 4), (((x + 1) * 4) * 4), (((y + 1) * 7) * 4), G_TX_RENDERTILE, ((s * 4) * 32), ((t * 7) * 32), (1 << 10), (1 << 10));
                     }
                 }
             }
@@ -422,12 +387,12 @@ Gfx *read_screen_display_block_and_write_chars(Gfx *gdl) {
 #else
 GLOBAL_ASM(
 .text
-glabel read_screen_display_block_and_write_chars
+glabel debmenuDraw
 /* 00BE7C 7000B27C 27BDFF78 */  addiu $sp, $sp, -0x88
 /* 00BE80 7000B280 AFB5002C */  sw    $s5, 0x2c($sp)
 /* 00BE84 7000B284 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 00BE88 7000B288 AFB00018 */  sw    $s0, 0x18($sp)
-/* 00BE8C 7000B28C 3C078002 */  lui   $a3, %hi(stdout_primary_color_table)
+/* 00BE8C 7000B28C 3C078002 */  lui   $a3, %hi(g_DebugMenuPrimitiveColors)
 /* 00BE90 7000B290 00808025 */  move  $s0, $a0
 /* 00BE94 7000B294 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 00BE98 7000B298 AFBE0038 */  sw    $fp, 0x38($sp)
@@ -438,12 +403,12 @@ glabel read_screen_display_block_and_write_chars
 /* 00BEAC 7000B2AC AFB20020 */  sw    $s2, 0x20($sp)
 /* 00BEB0 7000B2B0 00808825 */  move  $s1, $a0
 /* 00BEB4 7000B2B4 2406FFFF */  li    $a2, -1
-/* 00BEB8 7000B2B8 24E76610 */  addiu $a3, %lo(stdout_primary_color_table) # addiu $a3, $a3, 0x6610
+/* 00BEB8 7000B2B8 24E76610 */  addiu $a3, %lo(g_DebugMenuPrimitiveColors) # addiu $a3, $a3, 0x6610
 /* 00BEBC 7000B2BC 0000A825 */  move  $s5, $zero
 /* 00BEC0 7000B2C0 00004025 */  move  $t0, $zero
 .L7000B2C4:
-/* 00BEC4 7000B2C4 3C0E8002 */  lui   $t6, %hi(stdout_debug_menu_screen_buffer)
-/* 00BEC8 7000B2C8 25C55030 */  addiu $a1, $t6, %lo(stdout_debug_menu_screen_buffer)
+/* 00BEC4 7000B2C4 3C0E8002 */  lui   $t6, %hi(g_DebugMenuTextBuffer)
+/* 00BEC8 7000B2C8 25C55030 */  addiu $a1, $t6, %lo(g_DebugMenuTextBuffer)
 /* 00BECC 7000B2CC 01052021 */  addu  $a0, $t0, $a1
 .L7000B2D0:
 /* 00BED0 7000B2D0 90820000 */  lbu   $v0, ($a0)
@@ -473,9 +438,9 @@ glabel read_screen_display_block_and_write_chars
 .L7000B32C:
 /* 00BF2C 7000B32C 1C600004 */  bgtz  $v1, .L7000B340
 /* 00BF30 7000B330 2414FFFF */   li    $s4, -1
-/* 00BF34 7000B334 3C018002 */  lui   $at, %hi(D_800268B8)
+/* 00BF34 7000B334 3C018002 */  lui   $at, %hi(g_DebugMenuRandomThreshold)
 /* 00BF38 7000B338 10000017 */  b     .L7000B398
-/* 00BF3C 7000B33C AC2068B8 */   sw    $zero, %lo(D_800268B8)($at)
+/* 00BF3C 7000B33C AC2068B8 */   sw    $zero, %lo(g_DebugMenuRandomThreshold)($at)
 .L7000B340:
 /* 00BF40 7000B340 0064082A */  slt   $at, $v1, $a0
 /* 00BF44 7000B344 10200011 */  beqz  $at, .L7000B38C
@@ -493,35 +458,35 @@ glabel read_screen_display_block_and_write_chars
 /* 00BF70 7000B370 00000000 */   nop   
 /* 00BF74 7000B374 0006000D */  break 6
 .L7000B378:
-/* 00BF78 7000B378 3C018002 */  lui   $at, %hi(D_800268B8)
+/* 00BF78 7000B378 3C018002 */  lui   $at, %hi(g_DebugMenuRandomThreshold)
 /* 00BF7C 7000B37C 0000C012 */  mflo  $t8
-/* 00BF80 7000B380 AC3868B8 */  sw    $t8, %lo(D_800268B8)($at)
+/* 00BF80 7000B380 AC3868B8 */  sw    $t8, %lo(g_DebugMenuRandomThreshold)($at)
 /* 00BF84 7000B384 10000005 */  b     .L7000B39C
 /* 00BF88 7000B388 02001025 */   move  $v0, $s0
 .L7000B38C:
 /* 00BF8C 7000B38C 24190100 */  li    $t9, 256
-/* 00BF90 7000B390 3C018002 */  lui   $at, %hi(D_800268B8)
-/* 00BF94 7000B394 AC3968B8 */  sw    $t9, %lo(D_800268B8)($at)
+/* 00BF90 7000B390 3C018002 */  lui   $at, %hi(g_DebugMenuRandomThreshold)
+/* 00BF94 7000B394 AC3968B8 */  sw    $t9, %lo(g_DebugMenuRandomThreshold)($at)
 .L7000B398:
 /* 00BF98 7000B398 02001025 */  move  $v0, $s0
 .L7000B39C:
-/* 00BF9C 7000B39C 3C0A8002 */  lui   $t2, %hi(stdout_display_list) 
-/* 00BFA0 7000B3A0 254A4FB0 */  addiu $t2, %lo(stdout_display_list) # addiu $t2, $t2, 0x4fb0
+/* 00BF9C 7000B39C 3C0A8002 */  lui   $t2, %hi(g_DebugMenuTextureDisplayList) 
+/* 00BFA0 7000B3A0 254A4FB0 */  addiu $t2, %lo(g_DebugMenuTextureDisplayList) # addiu $t2, $t2, 0x4fb0
 /* 00BFA4 7000B3A4 3C090600 */  lui   $t1, 0x600
 /* 00BFA8 7000B3A8 AC490000 */  sw    $t1, ($v0)
 /* 00BFAC 7000B3AC AC4A0004 */  sw    $t2, 4($v0)
-/* 00BFB0 7000B3B0 3C1E8002 */  lui   $fp, %hi(stdout_environment_color_table) 
-/* 00BFB4 7000B3B4 3C178002 */  lui   $s7, %hi(stdout_primary_color_table) 
+/* 00BFB0 7000B3B0 3C1E8002 */  lui   $fp, %hi(g_DebugMenuEnvironmentColors) 
+/* 00BFB4 7000B3B4 3C178002 */  lui   $s7, %hi(g_DebugMenuPrimitiveColors) 
 /* 00BFB8 7000B3B8 26100008 */  addiu $s0, $s0, 8
-/* 00BFBC 7000B3BC 26F76610 */  addiu $s7, %lo(stdout_primary_color_table) # addiu $s7, $s7, 0x6610
-/* 00BFC0 7000B3C0 27DE6710 */  addiu $fp, %lo(stdout_environment_color_table) # addiu $fp, $fp, 0x6710
+/* 00BFBC 7000B3BC 26F76610 */  addiu $s7, %lo(g_DebugMenuPrimitiveColors) # addiu $s7, $s7, 0x6610
+/* 00BFC0 7000B3C0 27DE6710 */  addiu $fp, %lo(g_DebugMenuEnvironmentColors) # addiu $fp, $fp, 0x6710
 /* 00BFC4 7000B3C4 AFA00040 */  sw    $zero, 0x40($sp)
 /* 00BFC8 7000B3C8 0000A825 */  move  $s5, $zero
 /* 00BFCC 7000B3CC 24160050 */  li    $s6, 80
 .L7000B3D0:
 /* 00BFD0 7000B3D0 8FAB0040 */  lw    $t3, 0x40($sp)
-/* 00BFD4 7000B3D4 3C0C8002 */  lui   $t4, %hi(stdout_debug_menu_screen_buffer) 
-/* 00BFD8 7000B3D8 258C5030 */  addiu $t4, %lo(stdout_debug_menu_screen_buffer) # addiu $t4, $t4, 0x5030
+/* 00BFD4 7000B3D4 3C0C8002 */  lui   $t4, %hi(g_DebugMenuTextBuffer) 
+/* 00BFD8 7000B3D8 258C5030 */  addiu $t4, %lo(g_DebugMenuTextBuffer) # addiu $t4, $t4, 0x5030
 /* 00BFDC 7000B3DC 00008825 */  move  $s1, $zero
 /* 00BFE0 7000B3E0 016C9021 */  addu  $s2, $t3, $t4
 .L7000B3E4:
@@ -546,8 +511,8 @@ glabel read_screen_display_block_and_write_chars
 .L7000B42C:
 /* 00C02C 7000B42C 0C002914 */  jal   get_random_value
 /* 00C030 7000B430 00000000 */   nop   
-/* 00C034 7000B434 3C0B8002 */  lui   $t3, %hi(D_800268B8) 
-/* 00C038 7000B438 8D6B68B8 */  lw    $t3, %lo(D_800268B8)($t3)
+/* 00C034 7000B434 3C0B8002 */  lui   $t3, %hi(g_DebugMenuRandomThreshold) 
+/* 00C038 7000B438 8D6B68B8 */  lw    $t3, %lo(g_DebugMenuRandomThreshold)($t3)
 /* 00C03C 7000B43C 304A00FF */  andi  $t2, $v0, 0xff
 /* 00C040 7000B440 014B082B */  sltu  $at, $t2, $t3
 /* 00C044 7000B444 5020002F */  beql  $at, $zero, .L7000B504
