@@ -340,36 +340,12 @@ glabel something_debug_info_related
 )
 #endif
 
-
-
-#ifdef NONMATCHING
-void set_final_debug_text_positions(s32 xadjust,s32 yadjust)
-{
-  debug_menu_x_text_pos = xadjust + debug_menu_x_pos_offset;
-  debug_menu_y_text_pos = yadjust + debug_menu_y_pos_offset;
+void set_final_debug_text_positions(s32 xadjust,s32 yadjust) {
+    xadjust += debug_menu_x_pos_offset;
+    yadjust += debug_menu_y_pos_offset;
+    debug_menu_x_text_pos = xadjust;
+    debug_menu_y_text_pos = yadjust;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_final_debug_text_positions
-/* 00BC40 7000B040 3C0E8002 */  lui   $t6, %hi(debug_menu_x_pos_offset) 
-/* 00BC44 7000B044 8DCE4FA0 */  lw    $t6, %lo(debug_menu_x_pos_offset)($t6)
-/* 00BC48 7000B048 3C0F8002 */  lui   $t7, %hi(debug_menu_y_pos_offset) 
-/* 00BC4C 7000B04C 8DEF4FA4 */  lw    $t7, %lo(debug_menu_y_pos_offset)($t7)
-/* 00BC50 7000B050 3C018002 */  lui   $at, %hi(debug_menu_x_text_pos)
-/* 00BC54 7000B054 008E2021 */  addu  $a0, $a0, $t6
-/* 00BC58 7000B058 AC244FA8 */  sw    $a0, %lo(debug_menu_x_text_pos)($at)
-/* 00BC5C 7000B05C 3C018002 */  lui   $at, %hi(debug_menu_y_text_pos)
-/* 00BC60 7000B060 00AF2821 */  addu  $a1, $a1, $t7
-/* 00BC64 7000B064 03E00008 */  jr    $ra
-/* 00BC68 7000B068 AC254FAC */   sw    $a1, %lo(debug_menu_y_text_pos)($at)
-)
-#endif
-
-
-
-
-
 
 void set_debug_text_color(s32 red,s32 blue,s32 green,s32 alpha)
 {
