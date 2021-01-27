@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "debugmenu.h"
 #include "vi.h"
+#include "game/dyn.h"
 
 u32 image_resource[] = {  
          0,  0x227A00,  0x7A348B,  0x223434,  0x115811,  0x696900,         0,    0x9C00,
@@ -114,16 +115,12 @@ Gfx stdout_display_list[] = {
 };
 
 typedef struct {
-    s8 unk0;
-    s8 unk4;
+    u8 unk0;
+    u8 unk1;
 } charandindex_t;
 charandindex_t stdout_debug_menu_screen_buffer[80][35] = {0};
-typedef struct {
-    s32 unk0;
-    s32 unk4;
-} color_t;
-color_t stdout_primary_color_table[32] = {0};
-color_t stdout_environment_color_table[32] = {0};
+Gfx stdout_primary_color_table[32] = {0};
+Gfx stdout_environment_color_table[32] = {0};
 
 s32 g_CurrentColorIndex = 0;
 char *string_formatting[] = {
@@ -150,8 +147,8 @@ Gfx end_displaylist_command[] = {
 	gsSPEndDisplayList()
 };
 u64 blank_C0_command =0xC000000000000000;
-color_t stdout_primary_color = {0xFA000000, 0xFFFFFF00};
-color_t debug_text_bg_color = {0xFB000000, 0x0};
+Gfx stdout_primary_color = {0xFA000000, 0xFFFFFF00};
+Gfx debug_text_bg_color = {0xFB000000, 0x0};
 u32 D_800268B8 = 0xFF;
 
 
@@ -190,8 +187,8 @@ void debug_text_related_2(void)
 void display_text_to_coord(s32 x, s32 y, unsigned char c) {
     s32 i;
     for (i = 0; i < 32; i++) {
-        if ((stdout_primary_color.unk4 == stdout_primary_color_table[i].unk4) &&
-            (debug_text_bg_color.unk4 == stdout_environment_color_table[i].unk4)) {
+        if ((stdout_primary_color.words.w1 == stdout_primary_color_table[i].words.w1) &&
+            (debug_text_bg_color.words.w1 == stdout_environment_color_table[i].words.w1)) {
             goto end;
         }
     }
@@ -201,7 +198,7 @@ void display_text_to_coord(s32 x, s32 y, unsigned char c) {
     i = g_CurrentColorIndex;
 end:
     stdout_debug_menu_screen_buffer[x][y].unk0 = c;
-    stdout_debug_menu_screen_buffer[x][y].unk4 = i;
+    stdout_debug_menu_screen_buffer[x][y].unk1 = i;
 }
 
 void debugMenuSetTextPOStoOffset(void)
@@ -318,13 +315,13 @@ void set_final_debug_text_positions(s32 xadjust,s32 yadjust) {
 
 void set_debug_text_color(s32 red,s32 blue,s32 green,s32 alpha)
 {
-  stdout_primary_color.unk4 = red << 0x18 | blue << 0x10 | green << 8 | 0xffU - alpha;
+  stdout_primary_color.words.w1 = red << 0x18 | blue << 0x10 | green << 8 | 0xffU - alpha;
 }
 
 
 void set_color_speedgraph(s32 red,s32 green,s32 blue,s32 alpha)
 {
-  debug_text_bg_color.unk4 = red << 0x18 | green << 0x10 | blue << 8 | 0xffU - alpha;
+  debug_text_bg_color.words.w1 = red << 0x18 | green << 0x10 | blue << 8 | 0xffU - alpha;
 }
 
 void write_char_to_screen(unsigned char c) {
@@ -363,185 +360,64 @@ void debug_text_related(s32 xadjust, s32 yadjust, const unsigned char *str) {
 }
 
 #ifdef NONMATCHING
-void *read_screen_display_block_and_write_chars(void *arg0)
-{
-    s32 sp40;
-    s32 temp_a0;
-    s32 temp_a0_2;
-    s32 temp_a1;
-    s32 temp_a1_2;
-    s32 temp_a2;
-    s32 temp_s1;
-    s32 temp_s3;
-    s32 temp_s5;
-    s32 temp_t0;
-    s32 temp_v0;
-    s32 temp_v1;
-    s32 temp_v1_2;
-    s32 temp_v1_3;
-    s32 temp_v1_4;
-    void *temp_a1_3;
-    void *temp_s0;
-    void *temp_s0_2;
-    void *temp_t5;
-    void *temp_t8;
-    void *temp_v0_2;
-    void *phi_a0;
-    s32 phi_a2;
-    s32 phi_a1;
-    s32 phi_t0;
-    s32 phi_a2_2;
-    void *phi_s1;
-    void *phi_s2;
-    s32 phi_s4;
-    void *phi_s0;
-    void *phi_s0_2;
-    s32 phi_s1_2;
-    s32 phi_s5;
-    void *phi_s0_3;
-    void *phi_s1_3;
-    void *phi_s1_4;
-    s32 phi_s4_2;
-    s32 phi_s4_3;
-
-    phi_t0 = 0;
-    phi_a2 = -1;
-    phi_s1_4 = arg0;
-loop_1:
-    temp_a1 = 0x80020000 + 0x5030;
-    phi_a0 = phi_t0 + temp_a1;
-    phi_a1 = temp_a1;
-loop_2:
-    temp_a1_2 = phi_a1 + 0x46;
-    temp_v1 = phi_a0->unk1;
-    phi_a2_2 = phi_a2;
-    phi_s1 = phi_s1_4;
-    if (phi_a0->unk0 != 0)
-    {
-        phi_a2_2 = phi_a2;
-        phi_s1_3 = phi_s1_4;
-        if (temp_v1 != phi_a2)
-        {
-            phi_a2_2 = temp_v1;
-            phi_s1_3 = phi_s1_4 + 0x10;
-        }
-        phi_s1 = phi_s1_3 + 0x18;
-    }
-    phi_a0 = phi_a0 + 0x46;
-    phi_a2 = phi_a2_2;
-    phi_a1 = temp_a1_2;
-    phi_s1_4 = phi_s1;
-    if (temp_a1_2 != &stdout_primary_color_table)
-    {
-        goto loop_2;
-    }
-    temp_t0 = phi_t0 + 2;
-    phi_t0 = temp_t0;
-    phi_a2 = phi_a2_2;
-    phi_s1_4 = phi_s1;
-    if (temp_t0 < 0x46)
-    {
-        goto loop_1;
-    }
-    temp_a0 = phi_s1 - arg0;
-    temp_v1_2 = dynGetFreeGfx(arg0, temp_a1_2, phi_a2_2, &stdout_primary_color_table) + -0x800;
-    if (temp_a0 <= 0)
-    {
-        return arg0;
-    }
-    if (temp_v1_2 <= 0)
-    {
-        D_800268B8 = 0;
-block_15:
-    }
-    else
-    {
-        if (temp_v1_2 < temp_a0)
-        {
-            D_800268B8 = (s32) ((s32) (temp_v1_2 * 0xff) / temp_a0);
-        }
-        else
-        {
-            D_800268B8 = 0x100;
-            goto block_15;
-        }
-    }
-    arg0->unk0 = 0x6000000;
-    arg0->unk4 = &stdout_display_list;
-    sp40 = 0;
-    phi_s5 = 0;
-    phi_s4 = -1;
-    phi_s0 = arg0 + 8;
-loop_17:
-    phi_s2 = sp40 + &stdout_debug_menu_screen_buffer;
-    phi_s1_2 = 0;
-loop_18:
-    temp_s3 = phi_s2->unk0;
-    temp_v1_3 = phi_s2->unk1;
-    phi_s0_3 = phi_s0;
-    phi_s4_2 = phi_s4;
-    if (temp_s3 != 0)
-    {
-        temp_v0 = temp_v1_3 * 8;
-        phi_s0_2 = phi_s0;
-        phi_s4_3 = phi_s4;
-        if (temp_v1_3 != phi_s4)
-        {
-            temp_t5 = &stdout_primary_color_table + temp_v0;
-            temp_t8 = &stdout_environment_color_table + temp_v0;
-            temp_s0 = phi_s0 + 0x10;
-            temp_s0->unk-10 = (?32) temp_t5->unk0;
-            temp_s0->unk-C = (?32) temp_t5->unk4;
-            temp_s0->unk-8 = (?32) temp_t8->unk0;
-            temp_s0->unk-4 = (?32) temp_t8->unk4;
-            phi_s0_2 = temp_s0;
-            phi_s4_3 = temp_v1_3;
-        }
-        phi_s0_3 = phi_s0_2;
-        phi_s4_2 = phi_s4_3;
-        if ((u32) (get_random_value() & 0xff) < (u32) D_800268B8)
-        {
-            temp_v0_2 = phi_s0_2;
-            phi_s0_3 = phi_s0_2;
-            phi_s4_2 = phi_s4_3;
-            if (dynGetFreeGfx(phi_s0_2) >= 0x400)
-            {
-                temp_v1_4 = phi_s1_2 * 0x10;
-                temp_a0_2 = ((phi_s5 * 8) - phi_s5) * 4;
-                temp_a2 = temp_s3 + -0x20;
-                temp_s0_2 = phi_s0_2 + 8;
-                temp_a1_3 = temp_s0_2;
-                temp_v0_2->unk0 = (s32) (((((temp_v1_4 + 0x10) & 0xfff) << 0xc) | 0xe4000000) | ((temp_a0_2 + 0x1c) & 0xfff));
-                temp_v0_2->unk4 = (s32) (((temp_v1_4 & 0xfff) << 0xc) | (temp_a0_2 & 0xfff));
-                temp_s0_2 = temp_s0_2 + 8;
-                temp_a1_3->unk0 = 0xb4000000;
-                temp_a1_3->unk4 = (s32) (((temp_a2 & 0x1f) << 0x17) | (((temp_a2 >> 5) * 0xe0) & 0xffff));
-                temp_s0_2->unk0 = 0xb3000000;
-                temp_s0_2->unk4 = 0x4000400;
-                phi_s0_3 = temp_s0_2 + 8;
-                phi_s4_2 = phi_s4_3;
+u32 get_random_value(void);
+// Decent attempt but still lots of diffs
+Gfx *read_screen_display_block_and_write_chars(Gfx *gdl) {
+    s32 i;
+    s32 j;
+    s32 index = -1;
+    Gfx *end;
+    s32 size;
+    s32 free;
+    for (i = 0; i < 35; i++) {
+        for (j = 0; j < 80; j++) {
+            u8 var = stdout_debug_menu_screen_buffer[j][i].unk1;
+            if (stdout_debug_menu_screen_buffer[j][i].unk0 != '\0') {
+                if (var != index) {
+                    end += 2;
+                    index = var;
+                }
+                end += 3;
             }
         }
     }
-    temp_s1 = phi_s1_2 + 1;
-    phi_s2 = phi_s2 + 0x46;
-    phi_s4 = phi_s4_2;
-    phi_s0 = phi_s0_3;
-    phi_s1_2 = temp_s1;
-    if (temp_s1 != 0x50)
-    {
-        goto loop_18;
+    size = ((u8*)end - (u8*)gdl);
+    free = dynGetFreeGfx(gdl);
+    if (size <= 0) {
+        return gdl;
     }
-    temp_s5 = phi_s5 + 1;
-    sp40 = (s32) (sp40 + 2);
-    phi_s5 = temp_s5;
-    phi_s4 = phi_s4_2;
-    phi_s0 = phi_s0_3;
-    if (temp_s5 != 0x23)
-    {
-        goto loop_17;
+    free -= 2048;
+    if (free <= 0) {
+        D_800268B8 = 0;
+    } else if (free < size) {
+        D_800268B8 = ((free * 255) / size);
+    } else {
+        D_800268B8 = 256;
     }
-    return phi_s0_3;
+    gSPDisplayList(gdl++, stdout_display_list);
+    index = -1;
+    for (i = 0; i < 35; i++) {
+        for (j = 0; j < 80; j++) {
+            charandindex_t *ptr = &stdout_debug_menu_screen_buffer[j][i];
+            u32 var2 = ptr->unk0;
+            u8 var1 = ptr->unk1;
+            if (ptr->unk0 != '\0') {
+                if (var1 != index) {
+                    *(gdl++) = stdout_primary_color_table[var1];
+                    *(gdl++) = stdout_environment_color_table[var1];
+                    index = var1;
+                }
+                if ((get_random_value() & 0xFF)  < D_800268B8) {
+                    if (dynGetFreeGfx(gdl) >= 1024) {
+                        s32 s = ((var2 - 32) % 32);
+                        s32 t = ((var2 - 32) / 32);
+                        gSPTextureRectangle(gdl++, ((j * 4) * 4), ((i * 7) * 4), (((j + 1) * 4) * 4), (((i + 1) * 7) * 4), G_TX_RENDERTILE, ((s * 4) * 32), ((t * 7) * 32), (1 << 10), (1 << 10));
+                    }
+                }
+            }
+        }
+    }
+    return gdl;
 }
 #else
 GLOBAL_ASM(
