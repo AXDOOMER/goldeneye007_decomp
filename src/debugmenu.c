@@ -114,23 +114,17 @@ Gfx stdout_display_list[] = {
 };
 
 typedef struct {
-    s8 unk0; // char?
+    s8 unk0;
     s8 unk4;
 } charandindex_t;
 charandindex_t stdout_debug_menu_screen_buffer[80][35] = {0};
-#if 1//def NONMATCHING
 typedef struct {
     s32 unk0;
     s32 unk4;
 } color_t;
 color_t stdout_primary_color_table[32] = {0};
 color_t stdout_environment_color_table[32] = {0};
-#else
-u32 stdout_primary_color_table[64] = {0};
-u32 stdout_environment_color_table[64] = {0};
-#endif
 
-#if 1//def NONMATCHING
 s32 g_CurrentColorIndex = 0;
 char *string_formatting[] = {
 "\x1B[31m\x1B[40m", "\x1B[37m\x1B[40m",
@@ -149,25 +143,6 @@ char *string_formatting[] = {
 "\x1B[30m\x1B[45m", "\x1B[36m\x1B[45m",
 "\x1B[37m\x1B[42m", "\x1B[31m\x1B[42m",
 "\x1B[30m\x1B[42m", "\x1B[33m\x1B[42m"};
-#else
-char *string_formatting[] = {0,
-"\x1B[31m\x1B[40m", "\x1B[37m\x1B[40m",
-"\x1B[32m\x1B[40m", "\x1B[33m\x1B[40m",
-"\x1B[34m\x1B[40m", "\x1B[35m\x1B[40m",
-"\x1B[36m\x1B[40m", "\x1B[37m\x1B[44m",
-"\x1B[31m\x1B[44m", "\x1B[32m\x1B[44m",
-"\x1B[33m\x1B[44m", "\x1B[30m\x1B[44m",
-"\x1B[35m\x1B[44m", "\x1B[36m\x1B[44m",
-"\x1B[37m\x1B[41m", "\x1B[30m\x1B[41m",
-"\x1B[32m\x1B[41m", "\x1B[33m\x1B[41m",
-"\x1B[34m\x1B[41m", "\x1B[35m\x1B[41m",
-"\x1B[36m\x1B[41m", "\x1B[37m\x1B[45m",
-"\x1B[31m\x1B[45m", "\x1B[32m\x1B[45m",
-"\x1B[33m\x1B[45m", "\x1B[34m\x1B[45m",
-"\x1B[30m\x1B[45m", "\x1B[36m\x1B[45m",
-"\x1B[37m\x1B[42m", "\x1B[31m\x1B[42m",
-"\x1B[30m\x1B[42m", "\x1B[33m\x1B[42m"};
-#endif
 
 
 
@@ -438,6 +413,7 @@ void write_char_to_screen(u8 character)
   }
 }
 #else
+void write_char_to_screen(unsigned char c);
 GLOBAL_ASM(
 .text
 glabel write_char_to_screen
@@ -522,58 +498,11 @@ void debug_printcharatpos(int x,int y, u8 character)
   write_char_to_screen(character);
 }
 
-
-
-#ifdef NONMATCHING
-void write_string_stdout(void *arg0)
-{
-    void *temp_s1;
-    s32 phi_s0;
-    void *phi_s1;
-
-    phi_s0 = *arg0;
-    phi_s1 = arg0;
-    if (*arg0 != 0)
-    {
-loop_1:
-        temp_s1 = phi_s1 + 1;
-        write_char_to_screen(phi_s0 & 0xff);
-        phi_s0 = *temp_s1;
-        phi_s1 = temp_s1;
-        if (*temp_s1 != 0)
-        {
-            goto loop_1;
-        }
+void write_string_stdout(const unsigned char *str) {
+    while (*str != '\0') {
+        write_char_to_screen(*str++);
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel write_string_stdout
-/* 00BDE8 7000B1E8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 00BDEC 7000B1EC AFBF001C */  sw    $ra, 0x1c($sp)
-/* 00BDF0 7000B1F0 AFB10018 */  sw    $s1, 0x18($sp)
-/* 00BDF4 7000B1F4 AFB00014 */  sw    $s0, 0x14($sp)
-/* 00BDF8 7000B1F8 90900000 */  lbu   $s0, ($a0)
-/* 00BDFC 7000B1FC 00808825 */  move  $s1, $a0
-/* 00BE00 7000B200 12000006 */  beqz  $s0, .L7000B21C
-/* 00BE04 7000B204 320400FF */   andi  $a0, $s0, 0xff
-.L7000B208:
-/* 00BE08 7000B208 0C002C31 */  jal   write_char_to_screen
-/* 00BE0C 7000B20C 26310001 */   addiu $s1, $s1, 1
-/* 00BE10 7000B210 92300000 */  lbu   $s0, ($s1)
-/* 00BE14 7000B214 5600FFFC */  bnezl $s0, .L7000B208
-/* 00BE18 7000B218 320400FF */   andi  $a0, $s0, 0xff
-.L7000B21C:
-/* 00BE1C 7000B21C 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 00BE20 7000B220 8FB00014 */  lw    $s0, 0x14($sp)
-/* 00BE24 7000B224 8FB10018 */  lw    $s1, 0x18($sp)
-/* 00BE28 7000B228 03E00008 */  jr    $ra
-/* 00BE2C 7000B22C 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 void debug_text_related(void *arg2)
