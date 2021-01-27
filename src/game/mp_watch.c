@@ -7101,47 +7101,11 @@ def_7F0C40C0:
 #endif
 
 
-
-#ifdef NONMATCHING
 s32 sub_GAME_7F0C6048(void)
 {
-    if (is_gameover_flag != 0)
-    {
-        return 0;
-    }
-    return (pPlayer->mpmenuon | (0 < pPlayer->healthdisplaytime));
+    return is_gameover_flag ? 0 : (pPlayer->mpmenuon | (pPlayer->healthdisplaytime > 0));
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C6048
-/* 0FAB78 7F0C6048 3C0E8009 */  lui   $t6, %hi(is_gameover_flag) 
-/* 0FAB7C 7F0C604C 8DCEC704 */  lw    $t6, %lo(is_gameover_flag)($t6)
-/* 0FAB80 7F0C6050 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 0FAB84 7F0C6054 11C00003 */  beqz  $t6, .L7F0C6064
-/* 0FAB88 7F0C6058 00000000 */   nop   
-/* 0FAB8C 7F0C605C 03E00008 */  jr    $ra
-/* 0FAB90 7F0C6060 00001025 */   move  $v0, $zero
-
-.L7F0C6064:
-/* 0FAB94 7F0C6064 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
-/* 0FAB98 7F0C6068 8C582A00 */  lw    $t8, 0x2a00($v0)
-/* 0FAB9C 7F0C606C 8C4F29C4 */  lw    $t7, 0x29c4($v0)
-/* 0FABA0 7F0C6070 0018C82A */  slt   $t9, $zero, $t8
-/* 0FABA4 7F0C6074 01F91825 */  or    $v1, $t7, $t9
-/* 0FABA8 7F0C6078 03E00008 */  jr    $ra
-/* 0FABAC 7F0C607C 00601025 */   move  $v0, $v1
-)
-#endif
-
-
-
-
 
 s32 checkGamePaused(void) {
     return is_paused;
 }
-
-
-
