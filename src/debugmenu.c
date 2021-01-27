@@ -480,58 +480,13 @@ void write_string_stdout(const unsigned char *str) {
     }
 }
 
-#ifdef NONMATCHING
-void debug_text_related(void *arg2)
-{
-    void *temp_s1;
-    s32 phi_s0;
-    void *phi_s1;
-
-    set_final_debug_text_positions();
-    phi_s0 = *arg2;
-    phi_s1 = arg2;
-    if (*arg2 != 0)
-    {
-loop_1:
-        temp_s1 = phi_s1 + 1;
-        write_char_to_screen(phi_s0 & 0xff);
-        phi_s0 = *temp_s1;
-        phi_s1 = temp_s1;
-        if (*temp_s1 != 0)
-        {
-            goto loop_1;
-        }
+void debug_text_related(s32 xadjust, s32 yadjust, const unsigned char *str)
+{  
+    set_final_debug_text_positions(xadjust, yadjust);
+    while (*str != '\0') {
+        write_char_to_screen(*str++);
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel debug_text_related
-/* 00BE30 7000B230 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 00BE34 7000B234 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 00BE38 7000B238 AFB10018 */  sw    $s1, 0x18($sp)
-/* 00BE3C 7000B23C 00C08825 */  move  $s1, $a2
-/* 00BE40 7000B240 0C002C10 */  jal   set_final_debug_text_positions
-/* 00BE44 7000B244 AFB00014 */   sw    $s0, 0x14($sp)
-/* 00BE48 7000B248 92300000 */  lbu   $s0, ($s1)
-/* 00BE4C 7000B24C 12000006 */  beqz  $s0, .L7000B268
-/* 00BE50 7000B250 320400FF */   andi  $a0, $s0, 0xff
-.L7000B254:
-/* 00BE54 7000B254 0C002C31 */  jal   write_char_to_screen
-/* 00BE58 7000B258 26310001 */   addiu $s1, $s1, 1
-/* 00BE5C 7000B25C 92300000 */  lbu   $s0, ($s1)
-/* 00BE60 7000B260 5600FFFC */  bnezl $s0, .L7000B254
-/* 00BE64 7000B264 320400FF */   andi  $a0, $s0, 0xff
-.L7000B268:
-/* 00BE68 7000B268 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 00BE6C 7000B26C 8FB00014 */  lw    $s0, 0x14($sp)
-/* 00BE70 7000B270 8FB10018 */  lw    $s1, 0x18($sp)
-/* 00BE74 7000B274 03E00008 */  jr    $ra
-/* 00BE78 7000B278 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 void *read_screen_display_block_and_write_chars(void *arg0)
