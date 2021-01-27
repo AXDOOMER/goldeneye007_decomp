@@ -113,10 +113,43 @@ Gfx stdout_display_list[] = {
     gsSPEndDisplayList(),
 };
 
-u32 stdout_debug_menu_screen_buffer[1400] = {0};
+typedef struct {
+    s8 unk0; // char?
+    s8 unk4;
+} charandindex_t;
+charandindex_t stdout_debug_menu_screen_buffer[80][35] = {0};
+#if 1//def NONMATCHING
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+} color_t;
+color_t stdout_primary_color_table[32] = {0};
+color_t stdout_environment_color_table[32] = {0};
+#else
 u32 stdout_primary_color_table[64] = {0};
 u32 stdout_environment_color_table[64] = {0};
+#endif
 
+#if 1//def NONMATCHING
+s32 g_CurrentColorIndex = 0;
+char *string_formatting[] = {
+"\x1B[31m\x1B[40m", "\x1B[37m\x1B[40m",
+"\x1B[32m\x1B[40m", "\x1B[33m\x1B[40m",
+"\x1B[34m\x1B[40m", "\x1B[35m\x1B[40m",
+"\x1B[36m\x1B[40m", "\x1B[37m\x1B[44m",
+"\x1B[31m\x1B[44m", "\x1B[32m\x1B[44m",
+"\x1B[33m\x1B[44m", "\x1B[30m\x1B[44m",
+"\x1B[35m\x1B[44m", "\x1B[36m\x1B[44m",
+"\x1B[37m\x1B[41m", "\x1B[30m\x1B[41m",
+"\x1B[32m\x1B[41m", "\x1B[33m\x1B[41m",
+"\x1B[34m\x1B[41m", "\x1B[35m\x1B[41m",
+"\x1B[36m\x1B[41m", "\x1B[37m\x1B[45m",
+"\x1B[31m\x1B[45m", "\x1B[32m\x1B[45m",
+"\x1B[33m\x1B[45m", "\x1B[34m\x1B[45m",
+"\x1B[30m\x1B[45m", "\x1B[36m\x1B[45m",
+"\x1B[37m\x1B[42m", "\x1B[31m\x1B[42m",
+"\x1B[30m\x1B[42m", "\x1B[33m\x1B[42m"};
+#else
 char *string_formatting[] = {0,
 "\x1B[31m\x1B[40m", "\x1B[37m\x1B[40m",
 "\x1B[32m\x1B[40m", "\x1B[33m\x1B[40m",
@@ -134,6 +167,7 @@ char *string_formatting[] = {0,
 "\x1B[30m\x1B[45m", "\x1B[36m\x1B[45m",
 "\x1B[37m\x1B[42m", "\x1B[31m\x1B[42m",
 "\x1B[30m\x1B[42m", "\x1B[33m\x1B[42m"};
+#endif
 
 
 
@@ -141,10 +175,8 @@ Gfx end_displaylist_command[] = {
 	gsSPEndDisplayList()
 };
 u64 blank_C0_command =0xC000000000000000;
-u32 stdout_primary_color = 0xFA000000;
-u32 debug_text_color = 0xFFFFFF00;
-u32 debug_text_bg_color = 0xFB000000;
-u32 speedgraph_color = 0;
+color_t stdout_primary_color = {0xFA000000, 0xFFFFFF00};
+color_t debug_text_bg_color = {0xFB000000, 0x0};
 u32 D_800268B8 = 0xFF;
 
 
@@ -180,142 +212,22 @@ void debug_text_related_2(void)
     blank_debug_buffer_chars();
 }
 
-
-
-
-
-
-#ifdef NONMATCHING
-s32 display_text_to_coord(s32 arg0, s32 arg1, s32 arg2) {
-    s32 temp_a0;
-    void *temp_t5;
-    void *temp_t8;
-    s32 temp_t7;
-    s32 temp_t5_2;
-    void *temp_v1;
-
-    // Node 0
-    // Node 1
-    if ((debug_text_color != stdout_primary_color_table.unk4) || (debug_text_bg_color.unk4 != (&stdout_environment_color_table + 0)->unk4))
-    {
-        // Node 3
-        if ((0 + 1) < 0x20)
-        {
-            goto loop_1;
+void display_text_to_coord(s32 x, s32 y, unsigned char c) {
+    s32 i;
+    for (i = 0; i < 32; i++) {
+        if ((stdout_primary_color.unk4 == stdout_primary_color_table[i].unk4) &&
+            (debug_text_bg_color.unk4 == stdout_environment_color_table[i].unk4)) {
+            goto end;
         }
-        // Node 4
-        temp_a0 = (string_formatting * 8);
-        temp_t5 = (temp_a0 + &stdout_primary_color_table);
-        *temp_t5 = (?32) stdout_primary_color;
-        temp_t8 = (&stdout_environment_color_table + temp_a0);
-        temp_t7 = (string_formatting + 1);
-        temp_t5->unk4 = (?32) stdout_primary_color.unk4;
-        *temp_t8 = (?32) debug_text_bg_color;
-        temp_t8->unk4 = (s32) debug_text_bg_color.unk4;
-        temp_t5_2 = (temp_t7 & 0x1f);
-        if (temp_t7 < 0)
-        {
-            // Node 5
-            if (temp_t5_2 != 0)
-            {
-                // Node 6
-            }
-        }
-        // Node 7
-        string_formatting = temp_t5_2;
     }
-    else
-    {
-
-    }
-    // Node 8
-    temp_v1 = (((arg0 * 0x46) + (arg1 * 2)) + &stdout_debug_menu_screen_buffer);
-    *temp_v1 = (s8) (arg2 & 0xff);
-    temp_v1->unk1 = temp_t5_2;
-    return;
-    // (possible return value: temp_t5_2)
+    stdout_primary_color_table[g_CurrentColorIndex] = stdout_primary_color;
+    stdout_environment_color_table[g_CurrentColorIndex] = debug_text_bg_color;
+    g_CurrentColorIndex = (g_CurrentColorIndex + 1) % 32;
+    i = g_CurrentColorIndex;
+end:
+    stdout_debug_menu_screen_buffer[x][y].unk0 = c;
+    stdout_debug_menu_screen_buffer[x][y].unk4 = i;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel display_text_to_coord
-/* 00B9D0 7000ADD0 AFA60008 */  sw    $a2, 8($sp)
-/* 00B9D4 7000ADD4 30CE00FF */  andi  $t6, $a2, 0xff
-/* 00B9D8 7000ADD8 3C038002 */  lui   $v1, %hi(debug_text_color)
-/* 00B9DC 7000ADDC 3C088002 */  lui   $t0, %hi(stdout_primary_color_table) 
-/* 00B9E0 7000ADE0 3C0A8002 */  lui   $t2, %hi(stdout_environment_color_table) 
-/* 00B9E4 7000ADE4 3C098002 */  lui   $t1, %hi(debug_text_bg_color) 
-/* 00B9E8 7000ADE8 01C03025 */  move  $a2, $t6
-/* 00B9EC 7000ADEC AFA40000 */  sw    $a0, ($sp)
-/* 00B9F0 7000ADF0 252968B0 */  addiu $t1, %lo(debug_text_bg_color) # addiu $t1, $t1, 0x68b0
-/* 00B9F4 7000ADF4 254A6710 */  addiu $t2, %lo(stdout_environment_color_table) # addiu $t2, $t2, 0x6710
-/* 00B9F8 7000ADF8 25086610 */  addiu $t0, %lo(stdout_primary_color_table) # addiu $t0, $t0, 0x6610
-/* 00B9FC 7000ADFC 8C6368AC */  lw    $v1, %lo(debug_text_color)($v1)
-/* 00BA00 7000AE00 00001025 */  move  $v0, $zero
-/* 00BA04 7000AE04 00003825 */  move  $a3, $zero
-.L7000AE08:
-/* 00BA08 7000AE08 8D0F0004 */  lw    $t7, 4($t0)
-/* 00BA0C 7000AE0C 25080008 */  addiu $t0, $t0, 8
-/* 00BA10 7000AE10 0147C821 */  addu  $t9, $t2, $a3
-/* 00BA14 7000AE14 546F0006 */  bnel  $v1, $t7, .L7000AE30
-/* 00BA18 7000AE18 24420001 */   addiu $v0, $v0, 1
-/* 00BA1C 7000AE1C 8D380004 */  lw    $t8, 4($t1)
-/* 00BA20 7000AE20 8F2B0004 */  lw    $t3, 4($t9)
-/* 00BA24 7000AE24 530B0020 */  beql  $t8, $t3, .L7000AEA8
-/* 00BA28 7000AE28 8FAE0000 */   lw    $t6, ($sp)
-/* 00BA2C 7000AE2C 24420001 */  addiu $v0, $v0, 1
-.L7000AE30:
-/* 00BA30 7000AE30 28410020 */  slti  $at, $v0, 0x20
-/* 00BA34 7000AE34 1420FFF4 */  bnez  $at, .L7000AE08
-/* 00BA38 7000AE38 24E70008 */   addiu $a3, $a3, 8
-/* 00BA3C 7000AE3C 3C078002 */  lui   $a3, %hi(string_formatting)
-/* 00BA40 7000AE40 24E76810 */  addiu $a3, %lo(string_formatting) # addiu $a3, $a3, 0x6810
-/* 00BA44 7000AE44 8CE30000 */  lw    $v1, ($a3)
-/* 00BA48 7000AE48 3C0E8002 */  lui   $t6, %hi(stdout_primary_color) 
-/* 00BA4C 7000AE4C 25CE68A8 */  addiu $t6, %lo(stdout_primary_color) # addiu $t6, $t6, 0x68a8
-/* 00BA50 7000AE50 8DC10000 */  lw    $at, ($t6)
-/* 00BA54 7000AE54 3C0C8002 */  lui   $t4, %hi(stdout_primary_color_table) 
-/* 00BA58 7000AE58 258C6610 */  addiu $t4, %lo(stdout_primary_color_table) # addiu $t4, $t4, 0x6610
-/* 00BA5C 7000AE5C 000320C0 */  sll   $a0, $v1, 3
-/* 00BA60 7000AE60 008C6821 */  addu  $t5, $a0, $t4
-/* 00BA64 7000AE64 ADA10000 */  sw    $at, ($t5)
-/* 00BA68 7000AE68 8DD90004 */  lw    $t9, 4($t6)
-/* 00BA6C 7000AE6C 0144C021 */  addu  $t8, $t2, $a0
-/* 00BA70 7000AE70 246F0001 */  addiu $t7, $v1, 1
-/* 00BA74 7000AE74 ADB90004 */  sw    $t9, 4($t5)
-/* 00BA78 7000AE78 8D210000 */  lw    $at, ($t1)
-/* 00BA7C 7000AE7C AF010000 */  sw    $at, ($t8)
-/* 00BA80 7000AE80 8D2C0004 */  lw    $t4, 4($t1)
-/* 00BA84 7000AE84 AF0C0004 */  sw    $t4, 4($t8)
-/* 00BA88 7000AE88 05E10004 */  bgez  $t7, .L7000AE9C
-/* 00BA8C 7000AE8C 31ED001F */   andi  $t5, $t7, 0x1f
-/* 00BA90 7000AE90 11A00002 */  beqz  $t5, .L7000AE9C
-/* 00BA94 7000AE94 00000000 */   nop   
-/* 00BA98 7000AE98 25ADFFE0 */  addiu $t5, $t5, -0x20
-.L7000AE9C:
-/* 00BA9C 7000AE9C ACED0000 */  sw    $t5, ($a3)
-/* 00BAA0 7000AEA0 01A01025 */  move  $v0, $t5
-/* 00BAA4 7000AEA4 8FAE0000 */  lw    $t6, ($sp)
-.L7000AEA8:
-/* 00BAA8 7000AEA8 00055840 */  sll   $t3, $a1, 1
-/* 00BAAC 7000AEAC 3C0C8002 */  lui   $t4, %hi(stdout_debug_menu_screen_buffer) 
-/* 00BAB0 7000AEB0 000EC8C0 */  sll   $t9, $t6, 3
-/* 00BAB4 7000AEB4 032EC821 */  addu  $t9, $t9, $t6
-/* 00BAB8 7000AEB8 0019C880 */  sll   $t9, $t9, 2
-/* 00BABC 7000AEBC 032EC823 */  subu  $t9, $t9, $t6
-/* 00BAC0 7000AEC0 0019C840 */  sll   $t9, $t9, 1
-/* 00BAC4 7000AEC4 032BC021 */  addu  $t8, $t9, $t3
-/* 00BAC8 7000AEC8 258C5030 */  addiu $t4, %lo(stdout_debug_menu_screen_buffer) # addiu $t4, $t4, 0x5030
-/* 00BACC 7000AECC 030C1821 */  addu  $v1, $t8, $t4
-/* 00BAD0 7000AED0 A0660000 */  sb    $a2, ($v1)
-/* 00BAD4 7000AED4 03E00008 */  jr    $ra
-/* 00BAD8 7000AED8 A0620001 */   sb    $v0, 1($v1)
-)
-#endif
-
-
-
 
 void debugMenuSetTextPOStoOffset(void)
 {
@@ -331,16 +243,16 @@ void blank_debug_buffer_chars(void)
   int x;
   int y;
   
-  for (y = 0; y < 0x23; y++)
+  for (y = 0; y < 35; y++)
   {
-    for (x = 0; x < 0x50; x++)
+    for (x = 0; x < 80; x++)
     {
       display_text_to_coord(x,y,'\0');
     }
   }
   debugMenuSetTextPOStoOffset();
   null_function_7000ADA0();
-  string_formatting[0] = NULL;
+  g_CurrentColorIndex = 0;
 }
 
 
@@ -486,13 +398,13 @@ glabel set_final_debug_text_positions
 
 void set_debug_text_color(s32 red,s32 blue,s32 green,s32 alpha)
 {
-  debug_text_color = red << 0x18 | blue << 0x10 | green << 8 | 0xffU - alpha;
+  stdout_primary_color.unk4 = red << 0x18 | blue << 0x10 | green << 8 | 0xffU - alpha;
 }
 
 
 void set_color_speedgraph(s32 red,s32 green,s32 blue,s32 alpha)
 {
-  speedgraph_color = red << 0x18 | green << 0x10 | blue << 8 | 0xffU - alpha;
+  debug_text_bg_color.unk4 = red << 0x18 | green << 0x10 | blue << 8 | 0xffU - alpha;
 }
 
 
