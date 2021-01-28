@@ -2,19 +2,10 @@
 #include "mema.h"
 #include "deb.h"
 
-/**
- * @file mema.c
- * This file contains memory allocation code. 
- * 
- */
-
-//bss
-void *ptr_model_room_buf_secondary;
-u32 size_modelroom_buf;
+s32 g_MemoryAllocationBuffer;
+s32 g_MemoryAllocationBufferSize;
 allocation g_MemoryAllocations[512];
-
-//data
-void *ptr_mema_c_debug_notice_list = 0;
+void *g_MemoryAllocationDebugData = NULL;
 
 void memaSwap(allocation *a, allocation *b) {
     u32 tempaddr = a->addr;
@@ -95,141 +86,28 @@ allocation *memaFindOpening(allocation *allocations) {
     return best;
 }
 
-#ifdef NONMATCHING
-void memaAllocRoomBuffer(uint addr,uint size)
-{
-    int iVar1;
-    int iVar2;
-    allocation *psVar3;
-    allocation *psVar4;
-    allocation *psVar5;
-    s32 sVar6;
-    int iVar7;
-    
-    iVar7 = (addr - ptr_model_room_buf_secondary) * 0x1fc;
-    iVar2 = iVar7 / size_modelroom_buf;
-    iVar1 = g_MemoryAllocations.entries[iVar2 + 2].size;
-    psVar4 = g_MemoryAllocations.entries + iVar2 + 2;
-    if (size_modelroom_buf == 0) {
-        trap(0x1c00);
+void memaAllocRoomBuffer(s32 addr, s32 size) {
+    s32 index = ((addr - g_MemoryAllocationBuffer) * 508) / g_MemoryAllocationBufferSize;
+    allocation *curr = &g_MemoryAllocations[index + 2];
+    while (curr->size != 0) {
+        curr++;
     }
-    if ((size_modelroom_buf == -1) && (iVar7 == -0x80000000)) {
-        trap(0x1800);
-    }
-    if (iVar1 == 0) {
-        sVar6 = psVar4->addr;
-        psVar5 = psVar4;
-    }
-    else {
-        sVar6 = g_MemoryAllocations.entries[iVar2 + 3].size;
-        psVar3 = psVar4;
-        while (psVar5 = psVar3 + 1, sVar6 != 0) {
-            sVar6 = psVar3[2].size;
-            psVar3 = psVar5;
+    if (curr->addr == 0xFFFFFFFF) {
+        curr = &g_MemoryAllocations[index + 2];
+        while (curr->size != 0) {
+            curr--;
         }
-        sVar6 = psVar5->addr;
-    }
-    if (sVar6 == -1) {
-        psVar5 = psVar4;
-        if (iVar1 != 0) {
-            sVar6 = g_MemoryAllocations.entries[iVar2 + 1].size;
-            while (psVar5 = psVar4 + -1, sVar6 != 0) {
-                sVar6 = psVar4[-2].size;
-                psVar4 = psVar5;
-            }
-        }
-        if (psVar5->addr == 0) {
-            psVar5 = (allocation *)memaFindOpening(&g_MemoryAllocations);
+        if (curr->addr == 0) {
+            curr = memaFindOpening(g_MemoryAllocations);
         }
     }
-    psVar5->addr = addr;
-    psVar5->size = size;
-    return;
+    curr->addr = addr;
+    curr->size = size;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel memaAllocRoomBuffer
-/* 00A874 70009C74 3C0F8006 */  lui   $t7, %hi(ptr_model_room_buf_secondary) 
-/* 00A878 70009C78 8DEF3C20 */  lw    $t7, %lo(ptr_model_room_buf_secondary)($t7)
-/* 00A87C 70009C7C 3C098006 */  lui   $t1, %hi(size_modelroom_buf) 
-/* 00A880 70009C80 8D293C24 */  lw    $t1, %lo(size_modelroom_buf)($t1)
-/* 00A884 70009C84 008FC023 */  subu  $t8, $a0, $t7
-/* 00A888 70009C88 0018C9C0 */  sll   $t9, $t8, 7
-/* 00A88C 70009C8C 0338C823 */  subu  $t9, $t9, $t8
-/* 00A890 70009C90 0019C880 */  sll   $t9, $t9, 2
-/* 00A894 70009C94 0329001A */  div   $zero, $t9, $t1
-/* 00A898 70009C98 00003012 */  mflo  $a2
-/* 00A89C 70009C9C 3C0B8006 */  lui   $t3, %hi(g_MemoryAllocations) 
-/* 00A8A0 70009CA0 256B3C28 */  addiu $t3, %lo(g_MemoryAllocations) # addiu $t3, $t3, 0x3c28
-/* 00A8A4 70009CA4 000650C0 */  sll   $t2, $a2, 3
-/* 00A8A8 70009CA8 014B1021 */  addu  $v0, $t2, $t3
-/* 00A8AC 70009CAC 8C480014 */  lw    $t0, 0x14($v0)
-/* 00A8B0 70009CB0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 00A8B4 70009CB4 24470010 */  addiu $a3, $v0, 0x10
-/* 00A8B8 70009CB8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00A8BC 70009CBC AFA40018 */  sw    $a0, 0x18($sp)
-/* 00A8C0 70009CC0 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 00A8C4 70009CC4 00807025 */  move  $t6, $a0
-/* 00A8C8 70009CC8 15200002 */  bnez  $t1, .L70009CD4
-/* 00A8CC 70009CCC 00000000 */   nop   
-/* 00A8D0 70009CD0 0007000D */  break 7
-.L70009CD4:
-/* 00A8D4 70009CD4 2401FFFF */  li    $at, -1
-/* 00A8D8 70009CD8 15210004 */  bne   $t1, $at, .L70009CEC
-/* 00A8DC 70009CDC 3C018000 */   lui   $at, 0x8000
-/* 00A8E0 70009CE0 17210002 */  bne   $t9, $at, .L70009CEC
-/* 00A8E4 70009CE4 00000000 */   nop   
-/* 00A8E8 70009CE8 0006000D */  break 6
-.L70009CEC:
-/* 00A8EC 70009CEC 00E01825 */  move  $v1, $a3
-/* 00A8F0 70009CF0 51000006 */  beql  $t0, $zero, .L70009D0C
-/* 00A8F4 70009CF4 8C6D0000 */   lw    $t5, ($v1)
-/* 00A8F8 70009CF8 8C6C000C */  lw    $t4, 0xc($v1)
-.L70009CFC:
-/* 00A8FC 70009CFC 24630008 */  addiu $v1, $v1, 8
-/* 00A900 70009D00 5580FFFE */  bnezl $t4, .L70009CFC
-/* 00A904 70009D04 8C6C000C */   lw    $t4, 0xc($v1)
-/* 00A908 70009D08 8C6D0000 */  lw    $t5, ($v1)
-.L70009D0C:
-/* 00A90C 70009D0C 2401FFFF */  li    $at, -1
-/* 00A910 70009D10 55A1000F */  bnel  $t5, $at, .L70009D50
-/* 00A914 70009D14 8FB80018 */   lw    $t8, 0x18($sp)
-/* 00A918 70009D18 11000005 */  beqz  $t0, .L70009D30
-/* 00A91C 70009D1C 00E01825 */   move  $v1, $a3
-/* 00A920 70009D20 8C6EFFFC */  lw    $t6, -4($v1)
-.L70009D24:
-/* 00A924 70009D24 2463FFF8 */  addiu $v1, $v1, -8
-/* 00A928 70009D28 55C0FFFE */  bnezl $t6, .L70009D24
-/* 00A92C 70009D2C 8C6EFFFC */   lw    $t6, -4($v1)
-.L70009D30:
-/* 00A930 70009D30 8C6F0000 */  lw    $t7, ($v1)
-/* 00A934 70009D34 3C048006 */  lui   $a0, %hi(g_MemoryAllocations)
-/* 00A938 70009D38 55E00005 */  bnezl $t7, .L70009D50
-/* 00A93C 70009D3C 8FB80018 */   lw    $t8, 0x18($sp)
-/* 00A940 70009D40 0C0026D8 */  jal   memaFindOpening
-/* 00A944 70009D44 24843C28 */   addiu $a0, %lo(g_MemoryAllocations) # addiu $a0, $a0, 0x3c28
-/* 00A948 70009D48 00401825 */  move  $v1, $v0
-/* 00A94C 70009D4C 8FB80018 */  lw    $t8, 0x18($sp)
-.L70009D50:
-/* 00A950 70009D50 AC780000 */  sw    $t8, ($v1)
-/* 00A954 70009D54 8FB9001C */  lw    $t9, 0x1c($sp)
-/* 00A958 70009D58 AC790004 */  sw    $t9, 4($v1)
-/* 00A95C 70009D5C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00A960 70009D60 27BD0018 */  addiu $sp, $sp, 0x18
-/* 00A964 70009D64 03E00008 */  jr    $ra
-/* 00A968 70009D68 00000000 */   nop   
-)
-#endif
-
-
 
 void memaInitDebugNoticeList(void) {
-    debTryAdd(&ptr_mema_c_debug_notice_list, "mema_c_debug");
+    debTryAdd(&g_MemoryAllocationDebugData, "mema_c_debug");
 }
-
-
-
 
 #ifdef NONMATCHING
 void mempInitMallocTable(void *ptr_allocmem,u32 size)
@@ -249,8 +127,8 @@ void mempInitMallocTable(void *ptr_allocmem,u32 size)
         entry->addr = 0;
         entry->size = 0;
     };
-    ptr_model_room_buf_secondary = ptr_allocmem;
-    size_modelroom_buf = size;
+    g_MemoryAllocationBuffer = ptr_allocmem;
+    g_MemoryAllocationBufferSize = size;
     g_MemoryAllocations.entries[2].addr = (s32)ptr_allocmem;
     g_MemoryAllocations.entries[2].size = size;
 }
@@ -280,10 +158,10 @@ glabel mempInitMallocTable
 /* 00A9E0 70009DE0 AC40FFF8 */  sw    $zero, -8($v0)
 /* 00A9E4 70009DE4 1020FFFC */  beqz  $at, .L70009DD8
 /* 00A9E8 70009DE8 AC40FFFC */   sw    $zero, -4($v0)
-/* 00A9EC 70009DEC 3C028006 */  lui   $v0, %hi(ptr_model_room_buf_secondary)
-/* 00A9F0 70009DF0 3C068006 */  lui   $a2, %hi(size_modelroom_buf)
-/* 00A9F4 70009DF4 24C63C24 */  addiu $a2, %lo(size_modelroom_buf) # addiu $a2, $a2, 0x3c24
-/* 00A9F8 70009DF8 24423C20 */  addiu $v0, %lo(ptr_model_room_buf_secondary) # addiu $v0, $v0, 0x3c20
+/* 00A9EC 70009DEC 3C028006 */  lui   $v0, %hi(g_MemoryAllocationBuffer)
+/* 00A9F0 70009DF0 3C068006 */  lui   $a2, %hi(g_MemoryAllocationBufferSize)
+/* 00A9F4 70009DF4 24C63C24 */  addiu $a2, %lo(g_MemoryAllocationBufferSize) # addiu $a2, $a2, 0x3c24
+/* 00A9F8 70009DF8 24423C20 */  addiu $v0, %lo(g_MemoryAllocationBuffer) # addiu $v0, $v0, 0x3c20
 /* 00A9FC 70009DFC AC440000 */  sw    $a0, ($v0)
 /* 00AA00 70009E00 AC640010 */  sw    $a0, 0x10($v1)
 /* 00AA04 70009E04 ACC50000 */  sw    $a1, ($a2)
