@@ -181,73 +181,50 @@ void mem_related_calls_sort_merge_entries(void) {
 }
 
 #ifdef NONMATCHING
-int mem_related_something_find_first(uint size)
-
-{
-  uint uVar1;
-  allocation *psVar2;
-  uint uVar3;
-  s32 sVar4;
-  int iVar5;
-  int iVar6;
-  allocation *psVar7;
-  
-  psVar7 = g_MemoryAllocations.entries + 2;
-  uVar3 = 0xffffffff;
-  psVar2 = (allocation *)0x0;
-  iVar6 = 0;
-  do {
-    iVar6 = iVar6 + 1;
-    uVar1 = psVar7->size - size;
-    if (size <= (uint)psVar7->size) {
-      if ((psVar7->addr == -1) ||
-         ((uVar1 < uVar3 && ((psVar2 = psVar7, uVar1 < 0x40 || (uVar3 = uVar1, uVar1 < size >> 2))))
-         )) break;
-    }
-    psVar7 = psVar7 + 1;
-  } while (iVar6 != 0x10);
-  if (psVar2 == (allocation *)0x0) {
-    iVar6 = 0;
-    psVar2 = psVar7;
-    if ((uint)psVar7->size < size) {
-      uVar3 = psVar7[1].size;
-      while (psVar2 = psVar7 + 1, uVar3 < size) {
-        uVar3 = psVar7[2].size;
-        psVar7 = psVar2;
-      }
-    }
-    if (psVar2->addr == -1) {
-      psVar2 = g_MemoryAllocations.entries + 2;
-      do {
-        memaSortMergeEntries(&g_MemoryAllocations);
-        iVar6 = iVar6 + 1;
-      } while (iVar6 != 8);
-      uVar3 = g_MemoryAllocations.entries[3].size;
-      sVar4 = g_MemoryAllocations.entries[2].addr;
-      psVar7 = psVar2;
-      if ((uint)g_MemoryAllocations.entries[2].size < size) {
-        while (psVar2 = psVar7 + 1, uVar3 < size) {
-          uVar3 = psVar7[2].size;
-          psVar7 = psVar2;
+s32 mem_related_something_find_first(u32 size) {
+    s32 prev;
+    u32 diff;
+    s32 i;
+    allocation *curr = &g_MemoryAllocations[2];
+    allocation *best = NULL;
+    for (i = 0; i < 16; i++, curr++) {
+        if (curr->size >= size) {
+            if (curr->addr == 0xFFFFFFFF) {
+                break;
+            }
+            diff = (curr->size - size);
+            if (diff < 0xFFFFFFFF) {
+                best = curr;
+                if ((diff < 64) || (diff < (size / 4))) {
+                    break;
+                }
+            }            
         }
-        sVar4 = psVar2->addr;
-      }
-      if (sVar4 == -1) {
-        return 0;
-      }
     }
-    iVar6 = psVar2->addr;
-  }
-  else {
-    iVar6 = psVar2->addr;
-  }
-  iVar5 = psVar2->size - size;
-  psVar2->addr = iVar6 + size;
-  psVar2->size = iVar5;
-  if (iVar5 == 0) {
-    psVar2->addr = 0;
-  }
-  return iVar6;
+    if (best == NULL) {
+        while (curr->size < size) {
+            curr++;
+        }
+        if (curr->addr == 0xFFFFFFFF) {
+            for (i = 0; i < 8; i++) {
+                memaSortMergeEntries(g_MemoryAllocations);
+            }
+            curr = &g_MemoryAllocations[2];
+            while (curr->size < size) {
+                curr++;
+            }
+            if (curr->addr == 0xFFFFFFFF) {
+                return 0;
+            }
+        }
+    }
+    prev = curr->addr;
+    curr->addr += size;
+    curr->size -= size;
+    if (curr->size == 0) {
+        curr->addr = 0;
+    }
+    return prev;
 }
 #else
 GLOBAL_ASM(
