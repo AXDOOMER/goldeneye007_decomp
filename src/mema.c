@@ -110,27 +110,33 @@ void memaInitDebugNoticeList(void) {
 }
 
 #ifdef NONMATCHING
-void mempInitMallocTable(void *ptr_allocmem,u32 size)
-{
-    allocation *entry;
-    
-    g_MemoryAllocations.entries[510].addr = -1;
-    g_MemoryAllocations.entries[511].addr = -1;
-    g_MemoryAllocations.entries[0].addr = 0;
-    g_MemoryAllocations.entries[0].size = 0;
-    g_MemoryAllocations.entries[1].addr = 0;
-    g_MemoryAllocations.entries[1].size = 0;
-    g_MemoryAllocations.entries[510].size = 0;
-    g_MemoryAllocations.entries[511].size = -1;
-    for (entry = g_MemoryAllocations.entries[2]; (entry < (allocation *)(&g_MemoryAllocations.entries[0x1fd].addr+1)); ++entry)
-    {
-        entry->addr = 0;
-        entry->size = 0;
-    };
-    g_MemoryAllocationBuffer = ptr_allocmem;
-    g_MemoryAllocationBufferSize = size;
-    g_MemoryAllocations.entries[2].addr = (s32)ptr_allocmem;
-    g_MemoryAllocations.entries[2].size = size;
+// a9ac:    li      t6,-1                            | a9ac:    sw      a2,0xffc(v1)
+// a9b0:    lui     a2,0x8006                        r a9b0:    lui     v0,0x8006
+// a9b4:    lui     v0,0x8006                        r a9b4:    lui     a2,0x8006
+// a9b8:    sw      zero,0(v1)                       <
+// a9bc:    sw      zero,4(v1)                       i a9b8:    sw      zero,0(v1)
+// a9c0:    sw      zero,8(v1)                       i a9bc:    sw      zero,4(v1)
+// a9c4:    sw      zero,0xc(v1)                     i a9c0:    sw      zero,8(v1)
+// a9c8:    sw      zero,0xff4(v1)                   i a9c4:    sw      zero,0xc(v1)
+// a9cc:    sw      t6,0xffc(v1)                     | a9c8:    sw      zero,0xff4(v1)
+void mempInitMallocTable(s32 buffer, s32 size) {
+    allocation *curr;
+    g_MemoryAllocations[0].addr = 0;
+    g_MemoryAllocations[0].size = 0;
+    g_MemoryAllocations[1].addr = 0;
+    g_MemoryAllocations[1].size = 0;
+    g_MemoryAllocations[510].addr = 0xFFFFFFFF;
+    g_MemoryAllocations[510].size = 0;
+    g_MemoryAllocations[511].addr = 0xFFFFFFFF;
+    g_MemoryAllocations[511].size = 0xFFFFFFFF;
+    curr = &g_MemoryAllocations[2];
+    while (curr <= &g_MemoryAllocations[509]) {
+        curr->addr = 0;
+        curr->size = 0;
+        curr++;
+    }
+    g_MemoryAllocations[2].addr = g_MemoryAllocationBuffer = buffer;
+    g_MemoryAllocations[2].size = g_MemoryAllocationBufferSize = size;
 }
 #else
 GLOBAL_ASM(
@@ -170,12 +176,9 @@ glabel mempInitMallocTable
 )
 #endif
 
-
 void mem_related_calls_sort_merge_entries(void) {
     memaSortMergeEntries(&g_MemoryAllocations);
 }
-
-
 
 #ifdef NONMATCHING
 int mem_related_something_find_first(uint size)

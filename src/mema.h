@@ -15,7 +15,7 @@ void memaSortMergeAllEntries(void);
 allocation *memaFindOpening(allocation *allocations);
 void memaAllocRoomBuffer(s32 addr, s32 size);
 void memaInitDebugNoticeList(void);
-void mempInitMallocTable(void *ptr_allocmem,u32 size);
+void mempInitMallocTable(s32 buffer, s32 size);
 void mem_related_calls_sort_merge_entries(void);
 s32 mem_related_something_find_first(u32 arg0);
 s32 mem_related_something_find_first_0(s32 arg0, u32 arg1);
