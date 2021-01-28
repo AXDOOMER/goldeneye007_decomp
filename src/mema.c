@@ -11,184 +11,64 @@
 //bss
 void *ptr_model_room_buf_secondary;
 u32 size_modelroom_buf;
-struct s_mem_alloc_table ptr_table_allocated_mem_blocks;
+allocation g_MemoryAllocations[512];
 
 //data
 void *ptr_mema_c_debug_notice_list = 0;
 
-
-
-
-
-
-void memaSwap(s_mem_alloc_entry *a, s_mem_alloc_entry *b) {
-    s32 temp_v0;
-    s32 temp_v1;
-
-    temp_v0 = a->addr;
-    temp_v1 = a->size;
-    a->addr = (s32) b->addr;
-    a->size = (s32) b->size;
-    b->addr = temp_v0;
-    b->size = temp_v1;
+void memaSwap(allocation *a, allocation *b) {
+    u32 tempaddr = a->addr;
+    u32 tempsize = a->size;
+    a->addr = b->addr;
+    a->size = b->size;
+    b->addr = tempaddr;
+    b->size = tempsize;
 }
 
-void memaMerge(s_mem_alloc_entry *a, s_mem_alloc_entry *b) {
-    a->size = (s32) (a->size + b->size);
+void memaMerge(allocation *a, allocation *b) {
+    a->size = (a->size + b->size);
     b->addr = 0;
     b->size = 0;
 }
 
-
-
-
-
-
-#ifdef NONMATCHING
-u32 memaSortMergeEntries(s_mem_alloc_table *param_1)
-{
-    u32 temp_s0;
-    u32 temp_s0_2;
-    u32 temp_s4;
-    void *phi_s0;
-    u32 phi_s2;
-    void *phi_s1;
-    void *phi_s0_2;
-    ? phi_s3;
-    void *phi_s0_3;
-    ? phi_s3_2;
-    u32 phi_v0;
-    ? phi_s3_3;
-
-    temp_s0 = arg0 + 0x10;
-    temp_s4 = arg0 + 0xfe8;
-    phi_s0 = temp_s0;
-    phi_s2 = 0U;
-    phi_s1 = arg0 + 8;
-    phi_s3 = 0;
-    phi_s3_3 = 0;
-    if (temp_s4 >= temp_s0)
-    {
-loop_1:
-        phi_s0_2 = phi_s0;
-        phi_s2 = phi_s2;
-        phi_s1 = phi_s1;
-        phi_s3_2 = phi_s3_3;
-        if (phi_s0->unk4 != 0)
-        {
-            if ((u32) phi_s0->unk0 < (u32) phi_s2)
-            {
-                memaSwap(phi_s0, phi_s1);
+s32 memaSortMergeEntries(allocation *allocations) {
+    s32 merged = FALSE;
+    allocation *prev = &allocations[1];
+    allocation *curr = &allocations[2];
+    allocation *last = &allocations[509];
+    u32 prevaddr = 0;
+    while (curr <= last) {
+        if (curr->size != 0) {
+            if (curr->addr < prevaddr) {
+                memaSwap(curr, prev);
             }
-            phi_s0_3 = phi_s0;
-            phi_v0 = phi_s0->unk0;
-            phi_s3_2 = phi_s3_3;
-            if (phi_s0->unk0 == (phi_s1->unk4 + phi_s2))
-            {
-                memaMerge(phi_s1, phi_s0);
-                phi_s0_3 = phi_s1;
-                phi_v0 = phi_s1->unk0;
-                phi_s3_2 = 1;
+            if ((prev->size + prevaddr) == curr->addr) {
+                memaMerge(prev, curr);
+                curr = prev;
+                merged = TRUE;
             }
-            phi_s0_2 = phi_s0_3;
-            phi_s2 = phi_v0;
-            phi_s1 = phi_s0_3;
+            prev = curr;
+            prevaddr = curr->addr;
         }
-        temp_s0_2 = phi_s0_2 + 8;
-        phi_s0 = temp_s0_2;
-        phi_s3 = phi_s3_2;
-        phi_s3_3 = phi_s3_2;
-        if (temp_s4 >= temp_s0_2)
-        {
-            goto loop_1;
-        }
+        curr++;
     }
-    return phi_s3;
-}
-#else
-GLOBAL_ASM(
-.text
-glabel memaSortMergeEntries
-/* 00A650 70009A50 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 00A654 70009A54 AFB40028 */  sw    $s4, 0x28($sp)
-/* 00A658 70009A58 AFB00018 */  sw    $s0, 0x18($sp)
-/* 00A65C 70009A5C 24900010 */  addiu $s0, $a0, 0x10
-/* 00A660 70009A60 24940FE8 */  addiu $s4, $a0, 0xfe8
-/* 00A664 70009A64 AFB30024 */  sw    $s3, 0x24($sp)
-/* 00A668 70009A68 AFB20020 */  sw    $s2, 0x20($sp)
-/* 00A66C 70009A6C AFB1001C */  sw    $s1, 0x1c($sp)
-/* 00A670 70009A70 0290082B */  sltu  $at, $s4, $s0
-/* 00A674 70009A74 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 00A678 70009A78 00009825 */  move  $s3, $zero
-/* 00A67C 70009A7C 24910008 */  addiu $s1, $a0, 8
-/* 00A680 70009A80 1420001C */  bnez  $at, .L70009AF4
-/* 00A684 70009A84 00009025 */   move  $s2, $zero
-/* 00A688 70009A88 8E0E0004 */  lw    $t6, 4($s0)
-.L70009A8C:
-/* 00A68C 70009A8C 51C00016 */  beql  $t6, $zero, .L70009AE8
-/* 00A690 70009A90 26100008 */   addiu $s0, $s0, 8
-/* 00A694 70009A94 8E020000 */  lw    $v0, ($s0)
-/* 00A698 70009A98 02002025 */  move  $a0, $s0
-/* 00A69C 70009A9C 0052082B */  sltu  $at, $v0, $s2
-/* 00A6A0 70009AA0 50200005 */  beql  $at, $zero, .L70009AB8
-/* 00A6A4 70009AA4 8E2F0004 */   lw    $t7, 4($s1)
-/* 00A6A8 70009AA8 0C002684 */  jal   memaSwap
-/* 00A6AC 70009AAC 02202825 */   move  $a1, $s1
-/* 00A6B0 70009AB0 8E020000 */  lw    $v0, ($s0)
-/* 00A6B4 70009AB4 8E2F0004 */  lw    $t7, 4($s1)
-.L70009AB8:
-/* 00A6B8 70009AB8 02202025 */  move  $a0, $s1
-/* 00A6BC 70009ABC 02002825 */  move  $a1, $s0
-/* 00A6C0 70009AC0 01F2C021 */  addu  $t8, $t7, $s2
-/* 00A6C4 70009AC4 54580006 */  bnel  $v0, $t8, .L70009AE0
-/* 00A6C8 70009AC8 02008825 */   move  $s1, $s0
-/* 00A6CC 70009ACC 0C00268D */  jal   memaMerge
-/* 00A6D0 70009AD0 24130001 */   li    $s3, 1
-/* 00A6D4 70009AD4 02208025 */  move  $s0, $s1
-/* 00A6D8 70009AD8 8E220000 */  lw    $v0, ($s1)
-/* 00A6DC 70009ADC 02008825 */  move  $s1, $s0
-.L70009AE0:
-/* 00A6E0 70009AE0 00409025 */  move  $s2, $v0
-/* 00A6E4 70009AE4 26100008 */  addiu $s0, $s0, 8
-.L70009AE8:
-/* 00A6E8 70009AE8 0290082B */  sltu  $at, $s4, $s0
-/* 00A6EC 70009AEC 5020FFE7 */  beql  $at, $zero, .L70009A8C
-/* 00A6F0 70009AF0 8E0E0004 */   lw    $t6, 4($s0)
-.L70009AF4:
-/* 00A6F4 70009AF4 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 00A6F8 70009AF8 02601025 */  move  $v0, $s3
-/* 00A6FC 70009AFC 8FB30024 */  lw    $s3, 0x24($sp)
-/* 00A700 70009B00 8FB00018 */  lw    $s0, 0x18($sp)
-/* 00A704 70009B04 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 00A708 70009B08 8FB20020 */  lw    $s2, 0x20($sp)
-/* 00A70C 70009B0C 8FB40028 */  lw    $s4, 0x28($sp)
-/* 00A710 70009B10 03E00008 */  jr    $ra
-/* 00A714 70009B14 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
-
-
-
-
-void memaSortMergeAllEntries(void)
-{
-    while (memaSortMergeEntries(&ptr_table_allocated_mem_blocks) != 0) {
-        ;
-    }
+    return merged;
 }
 
-
+void memaSortMergeAllEntries(void) {
+    while (memaSortMergeEntries(&g_MemoryAllocations) != 0);
+}
 
 #ifdef NONMATCHING
-s_mem_alloc_entry * memaFindOpening(s_mem_alloc_table *param_1)
+allocation * memaFindOpening(s_mem_alloc_table *param_1)
 {
   u32 entrySize;
-  s_mem_alloc_entry *pAStart;
-  s_mem_alloc_entry *a;
+  allocation *pAStart;
+  allocation *a;
   int iVar1;
   u32 invalidSize;
-  s_mem_alloc_entry *pStart;
-  s_mem_alloc_entry *pEnd;
+  allocation *pStart;
+  allocation *pEnd;
   int count;
   
   pStart = param_1->entries + 2;
@@ -336,16 +216,16 @@ void memaAllocRoomBuffer(uint addr,uint size)
 {
     int iVar1;
     int iVar2;
-    s_mem_alloc_entry *psVar3;
-    s_mem_alloc_entry *psVar4;
-    s_mem_alloc_entry *psVar5;
+    allocation *psVar3;
+    allocation *psVar4;
+    allocation *psVar5;
     s32 sVar6;
     int iVar7;
     
     iVar7 = (addr - ptr_model_room_buf_secondary) * 0x1fc;
     iVar2 = iVar7 / size_modelroom_buf;
-    iVar1 = ptr_table_allocated_mem_blocks.entries[iVar2 + 2].size;
-    psVar4 = ptr_table_allocated_mem_blocks.entries + iVar2 + 2;
+    iVar1 = g_MemoryAllocations.entries[iVar2 + 2].size;
+    psVar4 = g_MemoryAllocations.entries + iVar2 + 2;
     if (size_modelroom_buf == 0) {
         trap(0x1c00);
     }
@@ -357,7 +237,7 @@ void memaAllocRoomBuffer(uint addr,uint size)
         psVar5 = psVar4;
     }
     else {
-        sVar6 = ptr_table_allocated_mem_blocks.entries[iVar2 + 3].size;
+        sVar6 = g_MemoryAllocations.entries[iVar2 + 3].size;
         psVar3 = psVar4;
         while (psVar5 = psVar3 + 1, sVar6 != 0) {
             sVar6 = psVar3[2].size;
@@ -368,14 +248,14 @@ void memaAllocRoomBuffer(uint addr,uint size)
     if (sVar6 == -1) {
         psVar5 = psVar4;
         if (iVar1 != 0) {
-            sVar6 = ptr_table_allocated_mem_blocks.entries[iVar2 + 1].size;
+            sVar6 = g_MemoryAllocations.entries[iVar2 + 1].size;
             while (psVar5 = psVar4 + -1, sVar6 != 0) {
                 sVar6 = psVar4[-2].size;
                 psVar4 = psVar5;
             }
         }
         if (psVar5->addr == 0) {
-            psVar5 = (s_mem_alloc_entry *)memaFindOpening(&ptr_table_allocated_mem_blocks);
+            psVar5 = (allocation *)memaFindOpening(&g_MemoryAllocations);
         }
     }
     psVar5->addr = addr;
@@ -396,8 +276,8 @@ glabel memaAllocRoomBuffer
 /* 00A890 70009C90 0019C880 */  sll   $t9, $t9, 2
 /* 00A894 70009C94 0329001A */  div   $zero, $t9, $t1
 /* 00A898 70009C98 00003012 */  mflo  $a2
-/* 00A89C 70009C9C 3C0B8006 */  lui   $t3, %hi(ptr_table_allocated_mem_blocks) 
-/* 00A8A0 70009CA0 256B3C28 */  addiu $t3, %lo(ptr_table_allocated_mem_blocks) # addiu $t3, $t3, 0x3c28
+/* 00A89C 70009C9C 3C0B8006 */  lui   $t3, %hi(g_MemoryAllocations) 
+/* 00A8A0 70009CA0 256B3C28 */  addiu $t3, %lo(g_MemoryAllocations) # addiu $t3, $t3, 0x3c28
 /* 00A8A4 70009CA4 000650C0 */  sll   $t2, $a2, 3
 /* 00A8A8 70009CA8 014B1021 */  addu  $v0, $t2, $t3
 /* 00A8AC 70009CAC 8C480014 */  lw    $t0, 0x14($v0)
@@ -440,11 +320,11 @@ glabel memaAllocRoomBuffer
 /* 00A92C 70009D2C 8C6EFFFC */   lw    $t6, -4($v1)
 .L70009D30:
 /* 00A930 70009D30 8C6F0000 */  lw    $t7, ($v1)
-/* 00A934 70009D34 3C048006 */  lui   $a0, %hi(ptr_table_allocated_mem_blocks)
+/* 00A934 70009D34 3C048006 */  lui   $a0, %hi(g_MemoryAllocations)
 /* 00A938 70009D38 55E00005 */  bnezl $t7, .L70009D50
 /* 00A93C 70009D3C 8FB80018 */   lw    $t8, 0x18($sp)
 /* 00A940 70009D40 0C0026D8 */  jal   memaFindOpening
-/* 00A944 70009D44 24843C28 */   addiu $a0, %lo(ptr_table_allocated_mem_blocks) # addiu $a0, $a0, 0x3c28
+/* 00A944 70009D44 24843C28 */   addiu $a0, %lo(g_MemoryAllocations) # addiu $a0, $a0, 0x3c28
 /* 00A948 70009D48 00401825 */  move  $v1, $v0
 /* 00A94C 70009D4C 8FB80018 */  lw    $t8, 0x18($sp)
 .L70009D50:
@@ -470,46 +350,46 @@ void memaInitDebugNoticeList(void) {
 #ifdef NONMATCHING
 void mempInitMallocTable(void *ptr_allocmem,u32 size)
 {
-    s_mem_alloc_entry *entry;
+    allocation *entry;
     
-    ptr_table_allocated_mem_blocks.entries[510].addr = -1;
-    ptr_table_allocated_mem_blocks.entries[511].addr = -1;
-    ptr_table_allocated_mem_blocks.entries[0].addr = 0;
-    ptr_table_allocated_mem_blocks.entries[0].size = 0;
-    ptr_table_allocated_mem_blocks.entries[1].addr = 0;
-    ptr_table_allocated_mem_blocks.entries[1].size = 0;
-    ptr_table_allocated_mem_blocks.entries[510].size = 0;
-    ptr_table_allocated_mem_blocks.entries[511].size = -1;
-    for (entry = ptr_table_allocated_mem_blocks.entries[2]; (entry < (s_mem_alloc_entry *)(&ptr_table_allocated_mem_blocks.entries[0x1fd].addr+1)); ++entry)
+    g_MemoryAllocations.entries[510].addr = -1;
+    g_MemoryAllocations.entries[511].addr = -1;
+    g_MemoryAllocations.entries[0].addr = 0;
+    g_MemoryAllocations.entries[0].size = 0;
+    g_MemoryAllocations.entries[1].addr = 0;
+    g_MemoryAllocations.entries[1].size = 0;
+    g_MemoryAllocations.entries[510].size = 0;
+    g_MemoryAllocations.entries[511].size = -1;
+    for (entry = g_MemoryAllocations.entries[2]; (entry < (allocation *)(&g_MemoryAllocations.entries[0x1fd].addr+1)); ++entry)
     {
         entry->addr = 0;
         entry->size = 0;
     };
     ptr_model_room_buf_secondary = ptr_allocmem;
     size_modelroom_buf = size;
-    ptr_table_allocated_mem_blocks.entries[2].addr = (s32)ptr_allocmem;
-    ptr_table_allocated_mem_blocks.entries[2].size = size;
+    g_MemoryAllocations.entries[2].addr = (s32)ptr_allocmem;
+    g_MemoryAllocations.entries[2].size = size;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel mempInitMallocTable
-/* 00A998 70009D98 3C038006 */  lui   $v1, %hi(ptr_table_allocated_mem_blocks)
-/* 00A99C 70009D9C 24633C28 */  addiu $v1, %lo(ptr_table_allocated_mem_blocks) # addiu $v1, $v1, 0x3c28
+/* 00A998 70009D98 3C038006 */  lui   $v1, %hi(g_MemoryAllocations)
+/* 00A99C 70009D9C 24633C28 */  addiu $v1, %lo(g_MemoryAllocations) # addiu $v1, $v1, 0x3c28
 /* 00A9A0 70009DA0 2406FFFF */  li    $a2, -1
 /* 00A9A4 70009DA4 AC660FF0 */  sw    $a2, 0xff0($v1)
 /* 00A9A8 70009DA8 AC660FF8 */  sw    $a2, 0xff8($v1)
 /* 00A9AC 70009DAC 240EFFFF */  li    $t6, -1
-/* 00A9B0 70009DB0 3C068006 */  lui   $a2, %hi(ptr_table_allocated_mem_blocks + 0xFE8)
-/* 00A9B4 70009DB4 3C028006 */  lui   $v0, %hi(ptr_table_allocated_mem_blocks + 0x10)
+/* 00A9B0 70009DB0 3C068006 */  lui   $a2, %hi(g_MemoryAllocations + 0xFE8)
+/* 00A9B4 70009DB4 3C028006 */  lui   $v0, %hi(g_MemoryAllocations + 0x10)
 /* 00A9B8 70009DB8 AC600000 */  sw    $zero, ($v1)
 /* 00A9BC 70009DBC AC600004 */  sw    $zero, 4($v1)
 /* 00A9C0 70009DC0 AC600008 */  sw    $zero, 8($v1)
 /* 00A9C4 70009DC4 AC60000C */  sw    $zero, 0xc($v1)
 /* 00A9C8 70009DC8 AC600FF4 */  sw    $zero, 0xff4($v1)
 /* 00A9CC 70009DCC AC6E0FFC */  sw    $t6, 0xffc($v1)
-/* 00A9D0 70009DD0 24423C38 */  addiu $v0, %lo(ptr_table_allocated_mem_blocks + 0x10) # addiu $v0, $v0, 0x3c38
-/* 00A9D4 70009DD4 24C64C10 */  addiu $a2, %lo(ptr_table_allocated_mem_blocks + 0xFE8) # addiu $a2, $a2, 0x4c10
+/* 00A9D0 70009DD0 24423C38 */  addiu $v0, %lo(g_MemoryAllocations + 0x10) # addiu $v0, $v0, 0x3c38
+/* 00A9D4 70009DD4 24C64C10 */  addiu $a2, %lo(g_MemoryAllocations + 0xFE8) # addiu $a2, $a2, 0x4c10
 .L70009DD8:
 /* 00A9D8 70009DD8 24420008 */  addiu $v0, $v0, 8
 /* 00A9DC 70009DDC 00C2082B */  sltu  $at, $a2, $v0
@@ -530,7 +410,7 @@ glabel mempInitMallocTable
 
 
 void mem_related_calls_sort_merge_entries(void) {
-    memaSortMergeEntries(&ptr_table_allocated_mem_blocks);
+    memaSortMergeEntries(&g_MemoryAllocations);
 }
 
 
@@ -540,16 +420,16 @@ int mem_related_something_find_first(uint size)
 
 {
   uint uVar1;
-  s_mem_alloc_entry *psVar2;
+  allocation *psVar2;
   uint uVar3;
   s32 sVar4;
   int iVar5;
   int iVar6;
-  s_mem_alloc_entry *psVar7;
+  allocation *psVar7;
   
-  psVar7 = ptr_table_allocated_mem_blocks.entries + 2;
+  psVar7 = g_MemoryAllocations.entries + 2;
   uVar3 = 0xffffffff;
-  psVar2 = (s_mem_alloc_entry *)0x0;
+  psVar2 = (allocation *)0x0;
   iVar6 = 0;
   do {
     iVar6 = iVar6 + 1;
@@ -561,7 +441,7 @@ int mem_related_something_find_first(uint size)
     }
     psVar7 = psVar7 + 1;
   } while (iVar6 != 0x10);
-  if (psVar2 == (s_mem_alloc_entry *)0x0) {
+  if (psVar2 == (allocation *)0x0) {
     iVar6 = 0;
     psVar2 = psVar7;
     if ((uint)psVar7->size < size) {
@@ -572,15 +452,15 @@ int mem_related_something_find_first(uint size)
       }
     }
     if (psVar2->addr == -1) {
-      psVar2 = ptr_table_allocated_mem_blocks.entries + 2;
+      psVar2 = g_MemoryAllocations.entries + 2;
       do {
-        memaSortMergeEntries(&ptr_table_allocated_mem_blocks);
+        memaSortMergeEntries(&g_MemoryAllocations);
         iVar6 = iVar6 + 1;
       } while (iVar6 != 8);
-      uVar3 = ptr_table_allocated_mem_blocks.entries[3].size;
-      sVar4 = ptr_table_allocated_mem_blocks.entries[2].addr;
+      uVar3 = g_MemoryAllocations.entries[3].size;
+      sVar4 = g_MemoryAllocations.entries[2].addr;
       psVar7 = psVar2;
-      if ((uint)ptr_table_allocated_mem_blocks.entries[2].size < size) {
+      if ((uint)g_MemoryAllocations.entries[2].size < size) {
         while (psVar2 = psVar7 + 1, uVar3 < size) {
           uVar3 = psVar7[2].size;
           psVar7 = psVar2;
@@ -614,11 +494,11 @@ glabel mem_related_something_find_first
 /* 00AA40 70009E40 00809025 */  move  $s2, $a0
 /* 00AA44 70009E44 AFB50028 */  sw    $s5, 0x28($sp)
 /* 00AA48 70009E48 AFB00014 */  sw    $s0, 0x14($sp)
-/* 00AA4C 70009E4C 3C118006 */  lui   $s1, %hi(ptr_table_allocated_mem_blocks + 0x10)
+/* 00AA4C 70009E4C 3C118006 */  lui   $s1, %hi(g_MemoryAllocations + 0x10)
 /* 00AA50 70009E50 AFBF002C */  sw    $ra, 0x2c($sp)
 /* 00AA54 70009E54 AFB40024 */  sw    $s4, 0x24($sp)
 /* 00AA58 70009E58 AFB30020 */  sw    $s3, 0x20($sp)
-/* 00AA5C 70009E5C 26313C38 */  addiu $s1, %lo(ptr_table_allocated_mem_blocks + 0x10) # addiu $s1, $s1, 0x3c38
+/* 00AA5C 70009E5C 26313C38 */  addiu $s1, %lo(g_MemoryAllocations + 0x10) # addiu $s1, $s1, 0x3c38
 /* 00AA60 70009E60 2404FFFF */  li    $a0, -1
 /* 00AA64 70009E64 00002825 */  move  $a1, $zero
 /* 00AA68 70009E68 00008025 */  move  $s0, $zero
@@ -654,7 +534,7 @@ glabel mem_related_something_find_first
 /* 00AAD4 70009ED4 24140008 */  li    $s4, 8
 /* 00AAD8 70009ED8 0312082B */  sltu  $at, $t8, $s2
 /* 00AADC 70009EDC 10200006 */  beqz  $at, .L70009EF8
-/* 00AAE0 70009EE0 3C138006 */   lui   $s3, %hi(ptr_table_allocated_mem_blocks)
+/* 00AAE0 70009EE0 3C138006 */   lui   $s3, %hi(g_MemoryAllocations)
 /* 00AAE4 70009EE4 8E39000C */  lw    $t9, 0xc($s1)
 .L70009EE8:
 /* 00AAE8 70009EE8 26310008 */  addiu $s1, $s1, 8
@@ -663,11 +543,11 @@ glabel mem_related_something_find_first
 /* 00AAF4 70009EF4 8E39000C */   lw    $t9, 0xc($s1)
 .L70009EF8:
 /* 00AAF8 70009EF8 8E280000 */  lw    $t0, ($s1)
-/* 00AAFC 70009EFC 26733C28 */  addiu $s3, %lo(ptr_table_allocated_mem_blocks) # addiu $s3, $s3, 0x3c28
+/* 00AAFC 70009EFC 26733C28 */  addiu $s3, %lo(g_MemoryAllocations) # addiu $s3, $s3, 0x3c28
 /* 00AB00 70009F00 56A80017 */  bnel  $s5, $t0, .L70009F60
 /* 00AB04 70009F04 02202825 */   move  $a1, $s1
-/* 00AB08 70009F08 3C118006 */  lui   $s1, %hi(ptr_table_allocated_mem_blocks + 0x10)
-/* 00AB0C 70009F0C 26313C38 */  addiu $s1, %lo(ptr_table_allocated_mem_blocks + 0x10) # addiu $s1, $s1, 0x3c38
+/* 00AB08 70009F08 3C118006 */  lui   $s1, %hi(g_MemoryAllocations + 0x10)
+/* 00AB0C 70009F0C 26313C38 */  addiu $s1, %lo(g_MemoryAllocations + 0x10) # addiu $s1, $s1, 0x3c38
 .L70009F10:
 /* 00AB10 70009F10 0C002694 */  jal   memaSortMergeEntries
 /* 00AB14 70009F14 02602025 */   move  $a0, $s3
@@ -727,12 +607,12 @@ s32 mem_related_something_find_first_0(s32 arg0, u32 arg1)
     s32 phi_a1;
     void *phi_v1;
 
-    if (-1 == ptr_table_allocated_mem_blocks + 0x10)
+    if (-1 == g_MemoryAllocations + 0x10)
     {
         return 0;
     }
-    phi_a1 = ptr_table_allocated_mem_blocks + 0x10;
-    phi_v1 = &ptr_table_allocated_mem_blocks + 0x10;
+    phi_a1 = g_MemoryAllocations + 0x10;
+    phi_v1 = &g_MemoryAllocations + 0x10;
 loop_2:
     if (arg0 != phi_a1)
     {
@@ -764,11 +644,11 @@ block_4:
 GLOBAL_ASM(
 .text
 glabel mem_related_something_find_first_0
-/* 00ABA8 70009FA8 3C198006 */  lui   $t9, %hi(ptr_table_allocated_mem_blocks + 0x10) 
-/* 00ABAC 70009FAC 8F393C38 */  lw    $t9, %lo(ptr_table_allocated_mem_blocks + 0x10)($t9)
-/* 00ABB0 70009FB0 3C188006 */  lui   $t8, %hi(ptr_table_allocated_mem_blocks + 0x10) 
+/* 00ABA8 70009FA8 3C198006 */  lui   $t9, %hi(g_MemoryAllocations + 0x10) 
+/* 00ABAC 70009FAC 8F393C38 */  lw    $t9, %lo(g_MemoryAllocations + 0x10)($t9)
+/* 00ABB0 70009FB0 3C188006 */  lui   $t8, %hi(g_MemoryAllocations + 0x10) 
 /* 00ABB4 70009FB4 240AFFFF */  li    $t2, -1
-/* 00ABB8 70009FB8 27183C38 */  addiu $t8, %lo(ptr_table_allocated_mem_blocks + 0x10) # addiu $t8, $t8, 0x3c38
+/* 00ABB8 70009FB8 27183C38 */  addiu $t8, %lo(g_MemoryAllocations + 0x10) # addiu $t8, $t8, 0x3c38
 /* 00ABBC 70009FBC 00A03825 */  move  $a3, $a1
 /* 00ABC0 70009FC0 1159000C */  beq   $t2, $t9, .L70009FF4
 /* 00ABC4 70009FC4 03001825 */   move  $v1, $t8
@@ -820,24 +700,24 @@ void *mem_related_allocated_table_related(void)
     void *temp_v1;
     void *phi_v1;
 
-    phi_v1 = &ptr_table_allocated_mem_blocks;
+    phi_v1 = &g_MemoryAllocations;
 loop_1:
     temp_v1 = phi_v1 + 0x20;
     phi_v1 = temp_v1;
-    if (temp_v1 != &ptr_table_allocated_mem_blocks + 0xFE0)
+    if (temp_v1 != &g_MemoryAllocations + 0xFE0)
     {
         goto loop_1;
     }
-    return &ptr_table_allocated_mem_blocks + 0xFE0;
+    return &g_MemoryAllocations + 0xFE0;
 }
 #else
 GLOBAL_ASM(
 .text
 glabel mem_related_allocated_table_related
-/* 00AC40 7000A040 3C038006 */  lui   $v1, %hi(ptr_table_allocated_mem_blocks)
-/* 00AC44 7000A044 3C028006 */  lui   $v0, %hi(ptr_table_allocated_mem_blocks + 0xFE0)
-/* 00AC48 7000A048 24424C08 */  addiu $v0, %lo(ptr_table_allocated_mem_blocks + 0xFE0) # addiu $v0, $v0, 0x4c08
-/* 00AC4C 7000A04C 24633C28 */  addiu $v1, %lo(ptr_table_allocated_mem_blocks) # addiu $v1, $v1, 0x3c28
+/* 00AC40 7000A040 3C038006 */  lui   $v1, %hi(g_MemoryAllocations)
+/* 00AC44 7000A044 3C028006 */  lui   $v0, %hi(g_MemoryAllocations + 0xFE0)
+/* 00AC48 7000A048 24424C08 */  addiu $v0, %lo(g_MemoryAllocations + 0xFE0) # addiu $v0, $v0, 0x4c08
+/* 00AC4C 7000A04C 24633C28 */  addiu $v1, %lo(g_MemoryAllocations) # addiu $v1, $v1, 0x3c28
 /* 00AC50 7000A050 24630020 */  addiu $v1, $v1, 0x20
 .L7000A054:
 /* 00AC54 7000A054 5462FFFF */  bnel  $v1, $v0, .L7000A054
@@ -862,11 +742,11 @@ f32 mem_related_something_first_related(void)
     u32 phi_v0_2;
 
     phi_v1 = 0U;
-    phi_a0 = &ptr_table_allocated_mem_blocks + 0x10;
+    phi_a0 = &g_MemoryAllocations + 0x10;
     phi_v0 = 0U;
     phi_v1_2 = 0U;
     phi_v0_2 = 0U;
-    if (-1 != ptr_table_allocated_mem_blocks + 0x10)
+    if (-1 != g_MemoryAllocations + 0x10)
     {
 loop_1:
         temp_a1 = phi_a0->unk4;
@@ -896,14 +776,14 @@ loop_1:
 GLOBAL_ASM(
 .text
 glabel mem_related_something_first_related
-/* 00AC64 7000A064 3C0E8006 */  lui   $t6, %hi(ptr_table_allocated_mem_blocks + 0x10) 
-/* 00AC68 7000A068 8DCE3C38 */  lw    $t6, %lo(ptr_table_allocated_mem_blocks + 0x10)($t6)
+/* 00AC64 7000A064 3C0E8006 */  lui   $t6, %hi(g_MemoryAllocations + 0x10) 
+/* 00AC68 7000A068 8DCE3C38 */  lw    $t6, %lo(g_MemoryAllocations + 0x10)($t6)
 /* 00AC6C 7000A06C 2406FFFF */  li    $a2, -1
-/* 00AC70 7000A070 3C048006 */  lui   $a0, %hi(ptr_table_allocated_mem_blocks + 0x10)
+/* 00AC70 7000A070 3C048006 */  lui   $a0, %hi(g_MemoryAllocations + 0x10)
 /* 00AC74 7000A074 00001025 */  move  $v0, $zero
 /* 00AC78 7000A078 00001825 */  move  $v1, $zero
 /* 00AC7C 7000A07C 10CE000A */  beq   $a2, $t6, .L7000A0A8
-/* 00AC80 7000A080 24843C38 */   addiu $a0, %lo(ptr_table_allocated_mem_blocks + 0x10) # addiu $a0, $a0, 0x3c38
+/* 00AC80 7000A080 24843C38 */   addiu $a0, %lo(g_MemoryAllocations + 0x10) # addiu $a0, $a0, 0x3c38
 /* 00AC84 7000A084 8C850004 */  lw    $a1, 4($a0)
 .L7000A088:
 /* 00AC88 7000A088 0065082B */  sltu  $at, $v1, $a1
@@ -958,13 +838,13 @@ GLOBAL_ASM(
 .text
 glabel generate_list_alloc_mem
 /* 00AD00 7000A100 27BDEF98 */  addiu $sp, $sp, -0x1068
-/* 00AD04 7000A104 3C048006 */  lui   $a0, %hi(ptr_table_allocated_mem_blocks + 0x10)
-/* 00AD08 7000A108 8C843C38 */  lw    $a0, %lo(ptr_table_allocated_mem_blocks + 0x10)($a0)
+/* 00AD04 7000A104 3C048006 */  lui   $a0, %hi(g_MemoryAllocations + 0x10)
+/* 00AD08 7000A108 8C843C38 */  lw    $a0, %lo(g_MemoryAllocations + 0x10)($a0)
 /* 00AD0C 7000A10C AFB5002C */  sw    $s5, 0x2c($sp)
 /* 00AD10 7000A110 AFB00018 */  sw    $s0, 0x18($sp)
 /* 00AD14 7000A114 2415FFFF */  li    $s5, -1
 /* 00AD18 7000A118 AFB20020 */  sw    $s2, 0x20($sp)
-/* 00AD1C 7000A11C 3C108006 */  lui   $s0, %hi(ptr_table_allocated_mem_blocks + 0x10)
+/* 00AD1C 7000A11C 3C108006 */  lui   $s0, %hi(g_MemoryAllocations + 0x10)
 /* 00AD20 7000A120 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 00AD24 7000A124 AFBE0038 */  sw    $fp, 0x38($sp)
 /* 00AD28 7000A128 AFB70034 */  sw    $s7, 0x34($sp)
@@ -974,7 +854,7 @@ glabel generate_list_alloc_mem
 /* 00AD38 7000A138 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 00AD3C 7000A13C 3C038000 */  lui   $v1, 0x8000
 /* 00AD40 7000A140 00009025 */  move  $s2, $zero
-/* 00AD44 7000A144 26103C38 */  addiu $s0, %lo(ptr_table_allocated_mem_blocks + 0x10) # addiu $s0, $s0, 0x3c38
+/* 00AD44 7000A144 26103C38 */  addiu $s0, %lo(g_MemoryAllocations + 0x10) # addiu $s0, $s0, 0x3c38
 /* 00AD48 7000A148 12A40008 */  beq   $s5, $a0, .L7000A16C
 /* 00AD4C 7000A14C 00001025 */   move  $v0, $zero
 .L7000A150:
@@ -983,8 +863,8 @@ glabel generate_list_alloc_mem
 /* 00AD58 7000A158 26100008 */  addiu $s0, $s0, 8
 /* 00AD5C 7000A15C 16AFFFFC */  bne   $s5, $t7, .L7000A150
 /* 00AD60 7000A160 004E1021 */   addu  $v0, $v0, $t6
-/* 00AD64 7000A164 3C108006 */  lui   $s0, %hi(ptr_table_allocated_mem_blocks + 0x10)
-/* 00AD68 7000A168 26103C38 */  addiu $s0, %lo(ptr_table_allocated_mem_blocks + 0x10) # addiu $s0, $s0, 0x3c38
+/* 00AD64 7000A164 3C108006 */  lui   $s0, %hi(g_MemoryAllocations + 0x10)
+/* 00AD68 7000A168 26103C38 */  addiu $s0, %lo(g_MemoryAllocations + 0x10) # addiu $s0, $s0, 0x3c38
 .L7000A16C:
 /* 00AD6C 7000A16C 3C1E8003 */  lui   $fp, %hi(a___) 
 /* 00AD70 7000A170 3C168003 */  lui   $s6, %hi(aD_3)
@@ -1014,8 +894,8 @@ glabel generate_list_alloc_mem
 /* 00ADC0 7000A1C0 8E020004 */   lw    $v0, 4($s0)
 .L7000A1C4:
 /* 00ADC4 7000A1C4 12800022 */  beqz  $s4, .L7000A250
-/* 00ADC8 7000A1C8 3C108006 */   lui   $s0, %hi(ptr_table_allocated_mem_blocks + 0x10)
-/* 00ADCC 7000A1CC 26103C38 */  addiu $s0, %lo(ptr_table_allocated_mem_blocks + 0x10) # addiu $s0, $s0, 0x3c38
+/* 00ADC8 7000A1C8 3C108006 */   lui   $s0, %hi(g_MemoryAllocations + 0x10)
+/* 00ADCC 7000A1CC 26103C38 */  addiu $s0, %lo(g_MemoryAllocations + 0x10) # addiu $s0, $s0, 0x3c38
 /* 00ADD0 7000A1D0 12A4001C */  beq   $s5, $a0, .L7000A244
 /* 00ADD4 7000A1D4 0000A025 */   move  $s4, $zero
 /* 00ADD8 7000A1D8 8E020004 */  lw    $v0, 4($s0)
@@ -1045,10 +925,10 @@ glabel generate_list_alloc_mem
 /* 00AE28 7000A228 26100008 */  addiu $s0, $s0, 8
 /* 00AE2C 7000A22C 56A8FFEB */  bnel  $s5, $t0, .L7000A1DC
 /* 00AE30 7000A230 8E020004 */   lw    $v0, 4($s0)
-/* 00AE34 7000A234 3C108006 */  lui   $s0, %hi(ptr_table_allocated_mem_blocks + 0x10)
-/* 00AE38 7000A238 3C048006 */  lui   $a0, %hi(ptr_table_allocated_mem_blocks + 0x10)
-/* 00AE3C 7000A23C 8C843C38 */  lw    $a0, %lo(ptr_table_allocated_mem_blocks + 0x10)($a0)
-/* 00AE40 7000A240 26103C38 */  addiu $s0, %lo(ptr_table_allocated_mem_blocks + 0x10) # addiu $s0, $s0, 0x3c38
+/* 00AE34 7000A234 3C108006 */  lui   $s0, %hi(g_MemoryAllocations + 0x10)
+/* 00AE38 7000A238 3C048006 */  lui   $a0, %hi(g_MemoryAllocations + 0x10)
+/* 00AE3C 7000A23C 8C843C38 */  lw    $a0, %lo(g_MemoryAllocations + 0x10)($a0)
+/* 00AE40 7000A240 26103C38 */  addiu $s0, %lo(g_MemoryAllocations + 0x10) # addiu $s0, $s0, 0x3c38
 .L7000A244:
 /* 00AE44 7000A244 02601825 */  move  $v1, $s3
 /* 00AE48 7000A248 1000FFD0 */  b     .L7000A18C
@@ -1087,7 +967,7 @@ void memaGenerateListsBeforeAfterMerge(void)
     generate_list_alloc_mem();
     for (count = 0; count != 0x1fc; count +=1)
     {
-        memaSortMergeEntries(&ptr_table_allocated_mem_blocks);
+        memaSortMergeEntries(&g_MemoryAllocations);
     }
     generate_list_alloc_mem();
 }
@@ -1101,10 +981,10 @@ void mem_related_something_first_related_0(void *arg0)
     s32 phi_s1;
     void *phi_s0;
 
-    if (-1 != ptr_table_allocated_mem_blocks + 0x10)
+    if (-1 != g_MemoryAllocations + 0x10)
     {
-        phi_s1 = ptr_table_allocated_mem_blocks + 0x10;
-        phi_s0 = &ptr_table_allocated_mem_blocks + 0x10;
+        phi_s1 = g_MemoryAllocations + 0x10;
+        phi_s0 = &g_MemoryAllocations + 0x10;
 loop_2:
         arg0(phi_s1 + phi_s0->unk4, phi_s0);
         temp_s1 = phi_s0->unk8;
@@ -1121,14 +1001,14 @@ GLOBAL_ASM(
 .text
 glabel mem_related_something_first_related_0
 /* 00AEF8 7000A2F8 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 00AEFC 7000A2FC 3C0F8006 */  lui   $t7, %hi(ptr_table_allocated_mem_blocks + 0x10) 
-/* 00AF00 7000A300 8DEF3C38 */  lw    $t7, %lo(ptr_table_allocated_mem_blocks + 0x10)($t7)
+/* 00AEFC 7000A2FC 3C0F8006 */  lui   $t7, %hi(g_MemoryAllocations + 0x10) 
+/* 00AF00 7000A300 8DEF3C38 */  lw    $t7, %lo(g_MemoryAllocations + 0x10)($t7)
 /* 00AF04 7000A304 AFB30020 */  sw    $s3, 0x20($sp)
-/* 00AF08 7000A308 3C0E8006 */  lui   $t6, %hi(ptr_table_allocated_mem_blocks + 0x10) 
+/* 00AF08 7000A308 3C0E8006 */  lui   $t6, %hi(g_MemoryAllocations + 0x10) 
 /* 00AF0C 7000A30C 2413FFFF */  li    $s3, -1
 /* 00AF10 7000A310 AFB2001C */  sw    $s2, 0x1c($sp)
 /* 00AF14 7000A314 AFB00014 */  sw    $s0, 0x14($sp)
-/* 00AF18 7000A318 25CE3C38 */  addiu $t6, %lo(ptr_table_allocated_mem_blocks + 0x10) # addiu $t6, $t6, 0x3c38
+/* 00AF18 7000A318 25CE3C38 */  addiu $t6, %lo(g_MemoryAllocations + 0x10) # addiu $t6, $t6, 0x3c38
 /* 00AF1C 7000A31C 00809025 */  move  $s2, $a0
 /* 00AF20 7000A320 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 00AF24 7000A324 AFB10018 */  sw    $s1, 0x18($sp)
@@ -1164,16 +1044,16 @@ u32 mem_related_0(void) {
     // Node 0
     sp18 = 0U;
     memaSortMergeAllEntries();
-    if (-1 != ptr_table_allocated_mem_blocks + 0x10)
+    if (-1 != g_MemoryAllocations + 0x10)
     {
         loop_1:
         // Node 1
-        if (sp18 < (u32) ptr_table_allocated_mem_blocks + 0x10.unk4)
+        if (sp18 < (u32) g_MemoryAllocations + 0x10.unk4)
         {
             // Node 2
         }
         // Node 3
-        if (-1 != ptr_table_allocated_mem_blocks + 0x10.unk8)
+        if (-1 != g_MemoryAllocations + 0x10.unk8)
         {
             goto loop_1;
         }
@@ -1198,13 +1078,13 @@ glabel mem_related_0
 /* 00AF74 7000A374 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 00AF78 7000A378 0C0026C6 */  jal   memaSortMergeAllEntries
 /* 00AF7C 7000A37C AFA00018 */   sw    $zero, 0x18($sp)
-/* 00AF80 7000A380 3C0E8006 */  lui   $t6, %hi(ptr_table_allocated_mem_blocks + 0x10) 
-/* 00AF84 7000A384 8DCE3C38 */  lw    $t6, %lo(ptr_table_allocated_mem_blocks + 0x10)($t6)
+/* 00AF80 7000A380 3C0E8006 */  lui   $t6, %hi(g_MemoryAllocations + 0x10) 
+/* 00AF84 7000A384 8DCE3C38 */  lw    $t6, %lo(g_MemoryAllocations + 0x10)($t6)
 /* 00AF88 7000A388 2405FFFF */  li    $a1, -1
-/* 00AF8C 7000A38C 3C028006 */  lui   $v0, %hi(ptr_table_allocated_mem_blocks + 0x10)
+/* 00AF8C 7000A38C 3C028006 */  lui   $v0, %hi(g_MemoryAllocations + 0x10)
 /* 00AF90 7000A390 8FA40018 */  lw    $a0, 0x18($sp)
 /* 00AF94 7000A394 10AE000A */  beq   $a1, $t6, .L7000A3C0
-/* 00AF98 7000A398 24423C38 */   addiu $v0, %lo(ptr_table_allocated_mem_blocks + 0x10) # addiu $v0, $v0, 0x3c38
+/* 00AF98 7000A398 24423C38 */   addiu $v0, %lo(g_MemoryAllocations + 0x10) # addiu $v0, $v0, 0x3c38
 /* 00AF9C 7000A39C 8C430004 */  lw    $v1, 4($v0)
 .L7000A3A0:
 /* 00AFA0 7000A3A0 0083082B */  sltu  $at, $a0, $v1
