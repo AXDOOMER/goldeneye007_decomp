@@ -59,157 +59,41 @@ void memaSortMergeAllEntries(void) {
     while (memaSortMergeEntries(&g_MemoryAllocations) != 0);
 }
 
-#ifdef NONMATCHING
-allocation * memaFindOpening(s_mem_alloc_table *param_1)
-{
-  u32 entrySize;
-  allocation *pAStart;
-  allocation *a;
-  int iVar1;
-  u32 invalidSize;
-  allocation *pStart;
-  allocation *pEnd;
-  int count;
-  
-  pStart = param_1->entries + 2;
-  pEnd = param_1->entries + 0x1fd;
-  count = 0;
-  pAStart = pStart;
-  while( 1 ) {
-    while (a = pAStart, pEnd < a) {
-      count = count + 1;
-      pAStart = pStart;
-      if (0x1fb < count) {
-        if (pEnd < pStart) {
-          return pStart;
+#define U32_MAX 0xFFFFFFFF;
+allocation *memaFindOpening(allocation *allocations) {
+    allocation *curr = &allocations[2];
+    allocation *best;
+    u32 minsize;
+    s32 i;
+    for (i = 0; i < 508; i++) {
+        while (curr <= &allocations[509]) {
+            if (curr->size == 0) {
+                return curr;
+            }
+            if (curr[1].addr < curr[0].addr) {
+                memaSwap(&curr[0], &curr[1]);
+            }
+            if (curr[1].addr == (curr[0].size + curr[0].addr)) {
+                curr[0].size += curr[1].size;
+                curr[1].addr = 0;
+                curr[1].size = 0;
+                return &curr[1];
+            }
+            curr++;
         }
-        invalidSize = 0xffffffff;
-        entrySize = param_1->entries[2].size;
-        while( 1 ) {
-          a = pStart;
-          if (invalidSize <= entrySize) {
-            entrySize = invalidSize;
-            a = pAStart;
-          }
-          if (pEnd < pStart + 1) break;
-          invalidSize = entrySize;
-          entrySize = pStart[1].size;
-          pStart = pStart + 1;
-          pAStart = a;
+        curr = &allocations[2];
+    }
+    minsize = U32_MAX;
+    best = curr;
+    while (curr <= &allocations[509]) {
+        if (curr->size < minsize) {            
+            best = curr;
+            minsize = curr->size;
         }
-        return a;
-      }
+        curr++;
     }
-    iVar1 = a->size;
-    if (iVar1 == 0) break;
-    entrySize = a[1].addr;
-    if (entrySize < (u32)a->addr) {
-      memaSwap((u8 *)a,(u8 *)(a + 1));
-      iVar1 = a->size;
-      entrySize = a[1].addr;
-      invalidSize = a->addr + iVar1;
-    }
-    else {
-      invalidSize = a->addr + iVar1;
-    }
-    pAStart = a + 1;
-    if (entrySize == invalidSize) {
-      count = a[1].size;
-      a[1].addr = 0;
-      a[1].size = 0;
-      a->size = iVar1 + count;
-      return a + 1;
-    }
-  }
-  return a;
+    return best;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel memaFindOpening
-/* 00A760 70009B60 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 00A764 70009B64 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 00A768 70009B68 AFB30020 */  sw    $s3, 0x20($sp)
-/* 00A76C 70009B6C AFB10018 */  sw    $s1, 0x18($sp)
-/* 00A770 70009B70 AFB00014 */  sw    $s0, 0x14($sp)
-/* 00A774 70009B74 24920010 */  addiu $s2, $a0, 0x10
-/* 00A778 70009B78 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 00A77C 70009B7C 02408025 */  move  $s0, $s2
-/* 00A780 70009B80 24910FE8 */  addiu $s1, $a0, 0xfe8
-/* 00A784 70009B84 00009825 */  move  $s3, $zero
-/* 00A788 70009B88 0232082B */  sltu  $at, $s1, $s2
-.L70009B8C:
-/* 00A78C 70009B8C 54200020 */  bnezl $at, .L70009C10
-/* 00A790 70009B90 26730001 */   addiu $s3, $s3, 1
-.L70009B94:
-/* 00A794 70009B94 8E040004 */  lw    $a0, 4($s0)
-/* 00A798 70009B98 26050008 */  addiu $a1, $s0, 8
-/* 00A79C 70009B9C 54800004 */  bnezl $a0, .L70009BB0
-/* 00A7A0 70009BA0 8E020008 */   lw    $v0, 8($s0)
-/* 00A7A4 70009BA4 1000002C */  b     .L70009C58
-/* 00A7A8 70009BA8 02001025 */   move  $v0, $s0
-/* 00A7AC 70009BAC 8E020008 */  lw    $v0, 8($s0)
-.L70009BB0:
-/* 00A7B0 70009BB0 8E030000 */  lw    $v1, ($s0)
-/* 00A7B4 70009BB4 0043082B */  sltu  $at, $v0, $v1
-/* 00A7B8 70009BB8 50200007 */  beql  $at, $zero, .L70009BD8
-/* 00A7BC 70009BBC 00647021 */   addu  $t6, $v1, $a0
-/* 00A7C0 70009BC0 0C002684 */  jal   memaSwap
-/* 00A7C4 70009BC4 02002025 */   move  $a0, $s0
-/* 00A7C8 70009BC8 8E040004 */  lw    $a0, 4($s0)
-/* 00A7CC 70009BCC 8E020008 */  lw    $v0, 8($s0)
-/* 00A7D0 70009BD0 8E030000 */  lw    $v1, ($s0)
-/* 00A7D4 70009BD4 00647021 */  addu  $t6, $v1, $a0
-.L70009BD8:
-/* 00A7D8 70009BD8 144E0008 */  bne   $v0, $t6, .L70009BFC
-/* 00A7DC 70009BDC 26050008 */   addiu $a1, $s0, 8
-/* 00A7E0 70009BE0 8E0F000C */  lw    $t7, 0xc($s0)
-/* 00A7E4 70009BE4 AE000008 */  sw    $zero, 8($s0)
-/* 00A7E8 70009BE8 AE00000C */  sw    $zero, 0xc($s0)
-/* 00A7EC 70009BEC 008FC021 */  addu  $t8, $a0, $t7
-/* 00A7F0 70009BF0 AE180004 */  sw    $t8, 4($s0)
-/* 00A7F4 70009BF4 10000018 */  b     .L70009C58
-/* 00A7F8 70009BF8 00A01025 */   move  $v0, $a1
-.L70009BFC:
-/* 00A7FC 70009BFC 0225082B */  sltu  $at, $s1, $a1
-/* 00A800 70009C00 1020FFE4 */  beqz  $at, .L70009B94
-/* 00A804 70009C04 00A08025 */   move  $s0, $a1
-/* 00A808 70009C08 02408025 */  move  $s0, $s2
-/* 00A80C 70009C0C 26730001 */  addiu $s3, $s3, 1
-.L70009C10:
-/* 00A810 70009C10 2A6101FC */  slti  $at, $s3, 0x1fc
-/* 00A814 70009C14 5420FFDD */  bnezl $at, .L70009B8C
-/* 00A818 70009C18 0232082B */   sltu  $at, $s1, $s2
-/* 00A81C 70009C1C 0232082B */  sltu  $at, $s1, $s2
-/* 00A820 70009C20 2402FFFF */  li    $v0, -1
-/* 00A824 70009C24 1420000B */  bnez  $at, .L70009C54
-/* 00A828 70009C28 02401825 */   move  $v1, $s2
-/* 00A82C 70009C2C 8E040004 */  lw    $a0, 4($s0)
-.L70009C30:
-/* 00A830 70009C30 0082082B */  sltu  $at, $a0, $v0
-/* 00A834 70009C34 50200004 */  beql  $at, $zero, .L70009C48
-/* 00A838 70009C38 26100008 */   addiu $s0, $s0, 8
-/* 00A83C 70009C3C 02001825 */  move  $v1, $s0
-/* 00A840 70009C40 00801025 */  move  $v0, $a0
-/* 00A844 70009C44 26100008 */  addiu $s0, $s0, 8
-.L70009C48:
-/* 00A848 70009C48 0230082B */  sltu  $at, $s1, $s0
-/* 00A84C 70009C4C 5020FFF8 */  beql  $at, $zero, .L70009C30
-/* 00A850 70009C50 8E040004 */   lw    $a0, 4($s0)
-.L70009C54:
-/* 00A854 70009C54 00601025 */  move  $v0, $v1
-.L70009C58:
-/* 00A858 70009C58 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 00A85C 70009C5C 8FB00014 */  lw    $s0, 0x14($sp)
-/* 00A860 70009C60 8FB10018 */  lw    $s1, 0x18($sp)
-/* 00A864 70009C64 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 00A868 70009C68 8FB30020 */  lw    $s3, 0x20($sp)
-/* 00A86C 70009C6C 03E00008 */  jr    $ra
-/* 00A870 70009C70 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 void memaAllocRoomBuffer(uint addr,uint size)

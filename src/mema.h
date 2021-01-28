@@ -12,7 +12,7 @@ void memaSwap(allocation *a,allocation *b);
 void memaMerge(allocation *a, allocation *b);
 s32 memaSortMergeEntries(allocation *allocations);
 void memaSortMergeAllEntries(void);
-allocation * memaFindOpening(void *param_1);
+allocation *memaFindOpening(allocation *allocations);
 void memaAllocRoomBuffer(u32 addr,u32 size);
 void memaInitDebugNoticeList(void);
 void mempInitMallocTable(void *ptr_allocmem,u32 size);
