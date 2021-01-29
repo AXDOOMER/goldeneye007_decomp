@@ -61,7 +61,7 @@ allocation *memaFindOpening(allocation *allocations) {
             if (curr->size == 0) {
                 return curr;
             }
-            if (curr[1].addr < curr[0].addr) {
+            if ((u32)curr[1].addr < (u32)curr[0].addr) {
                 memaSwap(&curr[0], &curr[1]);
             }
             if (curr[1].addr == (curr[0].size + curr[0].addr)) {
@@ -92,7 +92,7 @@ void memaAllocRoomBuffer(s32 addr, s32 size) {
     while (curr->size != 0) {
         curr++;
     }
-    if (curr->addr == 0xFFFFFFFF) {
+    if (curr->addr == -1) {
         curr = &g_MemoryAllocations[index + 2];
         while (curr->size != 0) {
             curr--;
@@ -109,72 +109,23 @@ void memaInitDebugNoticeList(void) {
     debTryAdd(&g_MemoryAllocationDebugData, "mema_c_debug");
 }
 
-#ifdef NONMATCHING
-// a9ac:    li      t6,-1                            | a9ac:    sw      a2,0xffc(v1)
-// a9b0:    lui     a2,0x8006                        r a9b0:    lui     v0,0x8006
-// a9b4:    lui     v0,0x8006                        r a9b4:    lui     a2,0x8006
-// a9b8:    sw      zero,0(v1)                       <
-// a9bc:    sw      zero,4(v1)                       i a9b8:    sw      zero,0(v1)
-// a9c0:    sw      zero,8(v1)                       i a9bc:    sw      zero,4(v1)
-// a9c4:    sw      zero,0xc(v1)                     i a9c0:    sw      zero,8(v1)
-// a9c8:    sw      zero,0xff4(v1)                   i a9c4:    sw      zero,0xc(v1)
-// a9cc:    sw      t6,0xffc(v1)                     | a9c8:    sw      zero,0xff4(v1)
 void mempInitMallocTable(s32 buffer, s32 size) {
     allocation *curr;
     g_MemoryAllocations[0].addr = 0;
     g_MemoryAllocations[0].size = 0;
     g_MemoryAllocations[1].addr = 0;
     g_MemoryAllocations[1].size = 0;
-    g_MemoryAllocations[510].addr = 0xFFFFFFFF;
+    g_MemoryAllocations[510].addr = -1;
     g_MemoryAllocations[510].size = 0;
-    g_MemoryAllocations[511].addr = 0xFFFFFFFF;
+    g_MemoryAllocations[511].addr = -1;
     g_MemoryAllocations[511].size = 0xFFFFFFFF;
-    curr = &g_MemoryAllocations[2];
-    while (curr <= &g_MemoryAllocations[509]) {
+    for (curr = &g_MemoryAllocations[2]; curr <= &g_MemoryAllocations[509]; curr++) {
         curr->addr = 0;
         curr->size = 0;
-        curr++;
     }
     g_MemoryAllocations[2].addr = g_MemoryAllocationBuffer = buffer;
     g_MemoryAllocations[2].size = g_MemoryAllocationBufferSize = size;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel mempInitMallocTable
-/* 00A998 70009D98 3C038006 */  lui   $v1, %hi(g_MemoryAllocations)
-/* 00A99C 70009D9C 24633C28 */  addiu $v1, %lo(g_MemoryAllocations) # addiu $v1, $v1, 0x3c28
-/* 00A9A0 70009DA0 2406FFFF */  li    $a2, -1
-/* 00A9A4 70009DA4 AC660FF0 */  sw    $a2, 0xff0($v1)
-/* 00A9A8 70009DA8 AC660FF8 */  sw    $a2, 0xff8($v1)
-/* 00A9AC 70009DAC 240EFFFF */  li    $t6, -1
-/* 00A9B0 70009DB0 3C068006 */  lui   $a2, %hi(g_MemoryAllocations + 0xFE8)
-/* 00A9B4 70009DB4 3C028006 */  lui   $v0, %hi(g_MemoryAllocations + 0x10)
-/* 00A9B8 70009DB8 AC600000 */  sw    $zero, ($v1)
-/* 00A9BC 70009DBC AC600004 */  sw    $zero, 4($v1)
-/* 00A9C0 70009DC0 AC600008 */  sw    $zero, 8($v1)
-/* 00A9C4 70009DC4 AC60000C */  sw    $zero, 0xc($v1)
-/* 00A9C8 70009DC8 AC600FF4 */  sw    $zero, 0xff4($v1)
-/* 00A9CC 70009DCC AC6E0FFC */  sw    $t6, 0xffc($v1)
-/* 00A9D0 70009DD0 24423C38 */  addiu $v0, %lo(g_MemoryAllocations + 0x10) # addiu $v0, $v0, 0x3c38
-/* 00A9D4 70009DD4 24C64C10 */  addiu $a2, %lo(g_MemoryAllocations + 0xFE8) # addiu $a2, $a2, 0x4c10
-.L70009DD8:
-/* 00A9D8 70009DD8 24420008 */  addiu $v0, $v0, 8
-/* 00A9DC 70009DDC 00C2082B */  sltu  $at, $a2, $v0
-/* 00A9E0 70009DE0 AC40FFF8 */  sw    $zero, -8($v0)
-/* 00A9E4 70009DE4 1020FFFC */  beqz  $at, .L70009DD8
-/* 00A9E8 70009DE8 AC40FFFC */   sw    $zero, -4($v0)
-/* 00A9EC 70009DEC 3C028006 */  lui   $v0, %hi(g_MemoryAllocationBuffer)
-/* 00A9F0 70009DF0 3C068006 */  lui   $a2, %hi(g_MemoryAllocationBufferSize)
-/* 00A9F4 70009DF4 24C63C24 */  addiu $a2, %lo(g_MemoryAllocationBufferSize) # addiu $a2, $a2, 0x3c24
-/* 00A9F8 70009DF8 24423C20 */  addiu $v0, %lo(g_MemoryAllocationBuffer) # addiu $v0, $v0, 0x3c20
-/* 00A9FC 70009DFC AC440000 */  sw    $a0, ($v0)
-/* 00AA00 70009E00 AC640010 */  sw    $a0, 0x10($v1)
-/* 00AA04 70009E04 ACC50000 */  sw    $a1, ($a2)
-/* 00AA08 70009E08 03E00008 */  jr    $ra
-/* 00AA0C 70009E0C AC650014 */   sw    $a1, 0x14($v1)
-)
-#endif
 
 void mem_related_calls_sort_merge_entries(void) {
     memaSortMergeEntries(&g_MemoryAllocations);
@@ -189,7 +140,7 @@ s32 mem_related_something_find_first(u32 size) {
     allocation *best = NULL;
     for (i = 0; i < 16; i++, curr++) {
         if (curr->size >= size) {
-            if (curr->addr == 0xFFFFFFFF) {
+            if (curr->addr == -1) {
                 break;
             }
             diff = (curr->size - size);
@@ -205,7 +156,7 @@ s32 mem_related_something_find_first(u32 size) {
         while (curr->size < size) {
             curr++;
         }
-        if (curr->addr == 0xFFFFFFFF) {
+        if (curr->addr == -1) {
             for (i = 0; i < 8; i++) {
                 memaSortMergeEntries(g_MemoryAllocations);
             }
@@ -213,7 +164,7 @@ s32 mem_related_something_find_first(u32 size) {
             while (curr->size < size) {
                 curr++;
             }
-            if (curr->addr == 0xFFFFFFFF) {
+            if (curr->addr == -1) {
                 return 0;
             }
         }
