@@ -200,29 +200,29 @@ Gfx *display_speed_graph(Gfx *gdl) {
             test -= 20;
         }
         counters = get_counters();
-        set_debug_text_color(255, 255, 255, 255);
-        set_color_speedgraph(0, 0, 0, 255);
-        set_final_debug_text_positions(8, 5);
+        debmenuSetPrimColor(255, 255, 255, 255);
+        debmenuSetEnvColor(0, 0, 0, 255);
+        debmenuSetPosition(8, 5);
         sprintf(buffer, "utz %2.0f%%\n", (((counters[1] - counters[3]) * 100.0f) / counters[0]));
-        write_string_stdout(buffer);
-        set_final_debug_text_positions(8, 6);
+        debmenuWriteString(buffer);
+        debmenuSetPosition(8, 6);
         sprintf(buffer, "rsp %2.0f%%\n", (((counters[0] - counters[1]) * 100.0f) / counters[0]));
-        write_string_stdout(buffer);
-        set_final_debug_text_positions(8, 7);
+        debmenuWriteString(buffer);
+        debmenuSetPosition(8, 7);
         sprintf(buffer, "tex %2.0f%%", ((counters[3] * 100.0f) / counters[0]));
-        write_string_stdout(buffer);
-        set_final_debug_text_positions(28, 5);
+        debmenuWriteString(buffer);
+        debmenuSetPosition(28, 5);
         sprintf(buffer, "%2d hz", ((D_80048498 == 0) ? 0 : (60 / D_80048498)));
-        write_string_stdout(buffer);
-        set_final_debug_text_positions(28, 6);
+        debmenuWriteString(buffer);
+        debmenuSetPosition(28, 6);
         sprintf(buffer, "%2d frames", D_80048498);
-        write_string_stdout(buffer);
+        debmenuWriteString(buffer);
         if (D_80023228 != D_80048498) {
             sprintf(buffer, " [%2d]", D_80023228);
         } else {
             sprintf(buffer, "     ");
         }
-        write_string_stdout(buffer);
+        debmenuWriteString(buffer);
         D_80023228 = 0;
     }
     gSPDisplayList(gdl++, displaylist_0[displaylist_bank ^ 1]);
@@ -269,15 +269,15 @@ glabel display_speed_graph
 /* 0035D4 700029D4 240400FF */  li    $a0, 255
 /* 0035D8 700029D8 240500FF */  li    $a1, 255
 /* 0035DC 700029DC 240600FF */  li    $a2, 255
-/* 0035E0 700029E0 0C002C1B */  jal   set_debug_text_color
+/* 0035E0 700029E0 0C002C1B */  jal   debmenuSetPrimColor
 /* 0035E4 700029E4 240700FF */   li    $a3, 255
 /* 0035E8 700029E8 00002025 */  move  $a0, $zero
 /* 0035EC 700029EC 00002825 */  move  $a1, $zero
 /* 0035F0 700029F0 00003025 */  move  $a2, $zero
-/* 0035F4 700029F4 0C002C26 */  jal   set_color_speedgraph
+/* 0035F4 700029F4 0C002C26 */  jal   debmenuSetEnvColor
 /* 0035F8 700029F8 240700FF */   li    $a3, 255
 /* 0035FC 700029FC 24040008 */  li    $a0, 8
-/* 003600 70002A00 0C002C10 */  jal   set_final_debug_text_positions
+/* 003600 70002A00 0C002C10 */  jal   debmenuSetPosition
 /* 003604 70002A04 24050005 */   li    $a1, 5
 /* 003608 70002A08 8FA20044 */  lw    $v0, 0x44($sp)
 /* 00360C 70002A0C 27B00030 */  addiu $s0, $sp, 0x30
@@ -313,10 +313,10 @@ glabel display_speed_graph
 /* 00367C 70002A7C 44065800 */  mfc1  $a2, $f11
 /* 003680 70002A80 0C002B25 */  jal   sprintf
 /* 003684 70002A84 00000000 */   nop   
-/* 003688 70002A88 0C002C7A */  jal   write_string_stdout
+/* 003688 70002A88 0C002C7A */  jal   debmenuWriteString
 /* 00368C 70002A8C 02002025 */   move  $a0, $s0
 /* 003690 70002A90 24040008 */  li    $a0, 8
-/* 003694 70002A94 0C002C10 */  jal   set_final_debug_text_positions
+/* 003694 70002A94 0C002C10 */  jal   debmenuSetPosition
 /* 003698 70002A98 24050006 */   li    $a1, 6
 /* 00369C 70002A9C 8FA30044 */  lw    $v1, 0x44($sp)
 /* 0036A0 70002AA0 3C058003 */  lui   $a1, %hi(aRsp2_0f)
@@ -350,10 +350,10 @@ glabel display_speed_graph
 /* 003708 70002B08 44062800 */  mfc1  $a2, $f5
 /* 00370C 70002B0C 0C002B25 */  jal   sprintf
 /* 003710 70002B10 00000000 */   nop   
-/* 003714 70002B14 0C002C7A */  jal   write_string_stdout
+/* 003714 70002B14 0C002C7A */  jal   debmenuWriteString
 /* 003718 70002B18 02002025 */   move  $a0, $s0
 /* 00371C 70002B1C 24040008 */  li    $a0, 8
-/* 003720 70002B20 0C002C10 */  jal   set_final_debug_text_positions
+/* 003720 70002B20 0C002C10 */  jal   debmenuSetPosition
 /* 003724 70002B24 24050007 */   li    $a1, 7
 /* 003728 70002B28 8FAB0044 */  lw    $t3, 0x44($sp)
 /* 00372C 70002B2C 3C058003 */  lui   $a1, %hi(aTex2_0f)
@@ -386,10 +386,10 @@ glabel display_speed_graph
 /* 003790 70002B90 44069800 */  mfc1  $a2, $f19
 /* 003794 70002B94 0C002B25 */  jal   sprintf
 /* 003798 70002B98 00000000 */   nop   
-/* 00379C 70002B9C 0C002C7A */  jal   write_string_stdout
+/* 00379C 70002B9C 0C002C7A */  jal   debmenuWriteString
 /* 0037A0 70002BA0 02002025 */   move  $a0, $s0
 /* 0037A4 70002BA4 2404001C */  li    $a0, 28
-/* 0037A8 70002BA8 0C002C10 */  jal   set_final_debug_text_positions
+/* 0037A8 70002BA8 0C002C10 */  jal   debmenuSetPosition
 /* 0037AC 70002BAC 24050005 */   li    $a1, 5
 /* 0037B0 70002BB0 3C038005 */  lui   $v1, %hi(D_80048498)
 /* 0037B4 70002BB4 8C638498 */  lw    $v1, %lo(D_80048498)($v1)
@@ -415,10 +415,10 @@ glabel display_speed_graph
 .L70002BFC:
 /* 0037FC 70002BFC 0C002B25 */  jal   sprintf
 /* 003800 70002C00 24A5844C */   addiu $a1, %lo(a2dHz) # addiu $a1, $a1, -0x7bb4
-/* 003804 70002C04 0C002C7A */  jal   write_string_stdout
+/* 003804 70002C04 0C002C7A */  jal   debmenuWriteString
 /* 003808 70002C08 02002025 */   move  $a0, $s0
 /* 00380C 70002C0C 2404001C */  li    $a0, 28
-/* 003810 70002C10 0C002C10 */  jal   set_final_debug_text_positions
+/* 003810 70002C10 0C002C10 */  jal   debmenuSetPosition
 /* 003814 70002C14 24050006 */   li    $a1, 6
 /* 003818 70002C18 3C058003 */  lui   $a1, %hi(a2dFrames)
 /* 00381C 70002C1C 3C068005 */  lui   $a2, %hi(D_80048498)
@@ -426,7 +426,7 @@ glabel display_speed_graph
 /* 003824 70002C24 24A58454 */  addiu $a1, %lo(a2dFrames) # addiu $a1, $a1, -0x7bac
 /* 003828 70002C28 0C002B25 */  jal   sprintf
 /* 00382C 70002C2C 02002025 */   move  $a0, $s0
-/* 003830 70002C30 0C002C7A */  jal   write_string_stdout
+/* 003830 70002C30 0C002C7A */  jal   debmenuWriteString
 /* 003834 70002C34 02002025 */   move  $a0, $s0
 /* 003838 70002C38 3C0F8002 */  lui   $t7, %hi(D_80023228) 
 /* 00383C 70002C3C 3C188005 */  lui   $t8, %hi(D_80048498) 
@@ -446,7 +446,7 @@ glabel display_speed_graph
 /* 003870 70002C70 0C002B25 */  jal   sprintf
 /* 003874 70002C74 24A58468 */   addiu $a1, $a1, %lo(asc_D_80028468)
 .L70002C78:
-/* 003878 70002C78 0C002C7A */  jal   write_string_stdout
+/* 003878 70002C78 0C002C7A */  jal   debmenuWriteString
 /* 00387C 70002C7C 02002025 */   move  $a0, $s0
 /* 003880 70002C80 3C018002 */  lui   $at, %hi(D_80023228)
 /* 003884 70002C84 AC203228 */  sw    $zero, %lo(D_80023228)($at)

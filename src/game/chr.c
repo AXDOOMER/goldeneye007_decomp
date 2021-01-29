@@ -2802,7 +2802,7 @@ glabel sub_GAME_7F0206D4
 /* 055220 7F0206F0 A08F0011 */  sb    $t7, 0x11($a0)
 /* 055224 7F0206F4 33190FFF */  andi  $t9, $t8, 0xfff
 /* 055228 7F0206F8 A4990012 */  sh    $t9, 0x12($a0)
-/* 05522C 7F0206FC 0C002914 */  jal   get_random_value
+/* 05522C 7F0206FC 0C002914 */  jal   randomGetNext
 /* 055230 7F020700 AFA40018 */   sw    $a0, 0x18($sp)
 /* 055234 7F020704 24010003 */  li    $at, 3
 /* 055238 7F020708 0041001B */  divu  $zero, $v0, $at
@@ -2821,7 +2821,7 @@ glabel sub_GAME_7F0206D4
 /* 055268 7F020738 354B2000 */  ori   $t3, $t2, 0x2000
 /* 05526C 7F02073C A48B0012 */  sh    $t3, 0x12($a0)
 .L7F020740:
-/* 055270 7F020740 0C002914 */  jal   get_random_value
+/* 055270 7F020740 0C002914 */  jal   randomGetNext
 /* 055274 7F020744 AFA40018 */   sw    $a0, 0x18($sp)
 /* 055278 7F020748 24010003 */  li    $at, 3
 /* 05527C 7F02074C 0041001B */  divu  $zero, $v0, $at
@@ -6071,7 +6071,7 @@ glabel sub_GAME_7F022078
 /* 056C20 7F0220F0 8E190010 */  lw    $t9, 0x10($s0)
 /* 056C24 7F0220F4 5320002C */  beql  $t9, $zero, .L7F0221A8
 /* 056C28 7F0220F8 8E050004 */   lw    $a1, 4($s0)
-/* 056C2C 7F0220FC 0C002914 */  jal   get_random_value
+/* 056C2C 7F0220FC 0C002914 */  jal   randomGetNext
 /* 056C30 7F022100 AFA60058 */   sw    $a2, 0x58($sp)
 /* 056C34 7F022104 304C0004 */  andi  $t4, $v0, 4
 /* 056C38 7F022108 15800026 */  bnez  $t4, .L7F0221A4
@@ -6286,7 +6286,7 @@ glabel sub_GAME_7F0221DC
 /* 056F04 7F0223D4 0040A025 */  move  $s4, $v0
 /* 056F08 7F0223D8 00008825 */  move  $s1, $zero
 /* 056F0C 7F0223DC 00009825 */  move  $s3, $zero
-/* 056F10 7F0223E0 0C002914 */  jal   get_random_value
+/* 056F10 7F0223E0 0C002914 */  jal   randomGetNext
 /* 056F14 7F0223E4 AFA00060 */   sw    $zero, 0x60($sp)
 /* 056F18 7F0223E8 24010032 */  li    $at, 50
 /* 056F1C 7F0223EC 0041001B */  divu  $zero, $v0, $at
@@ -6848,7 +6848,7 @@ glabel sub_GAME_7F022980
 .L7F022BD0:
 /* 057700 7F022BD0 AFA30088 */  sw    $v1, 0x88($sp)
 /* 057704 7F022BD4 AFA40054 */  sw    $a0, 0x54($sp)
-/* 057708 7F022BD8 0C002914 */  jal   get_random_value
+/* 057708 7F022BD8 0C002914 */  jal   randomGetNext
 /* 05770C 7F022BDC AFA50050 */   sw    $a1, 0x50($sp)
 /* 057710 7F022BE0 8FA30088 */  lw    $v1, 0x88($sp)
 /* 057714 7F022BE4 8FA40054 */  lw    $a0, 0x54($sp)
@@ -6898,7 +6898,7 @@ glabel sub_GAME_7F022980
 /* 0577B4 7F022C84 02AE7821 */  addu  $t7, $s5, $t6
 /* 0577B8 7F022C88 8DF00000 */  lw    $s0, ($t7)
 .L7F022C8C:
-/* 0577BC 7F022C8C 0C002914 */  jal   get_random_value
+/* 0577BC 7F022C8C 0C002914 */  jal   randomGetNext
 /* 0577C0 7F022C90 00000000 */   nop   
 /* 0577C4 7F022C94 8618000A */  lh    $t8, 0xa($s0)
 /* 0577C8 7F022C98 8E190004 */  lw    $t9, 4($s0)

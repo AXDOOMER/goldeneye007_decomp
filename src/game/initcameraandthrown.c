@@ -528,7 +528,7 @@ def_7F005A74:
 /* 03A930 7F005E00 2652A0B0 */  addiu $s2, %lo(pPlayer) # addiu $s2, $s2, -0x5f50
 /* 03A934 7F005E04 10400012 */  beqz  $v0, .L7F005E50
 /* 03A938 7F005E08 3C018003 */   lui   $at, %hi(ptr_random06cam_entry)
-/* 03A93C 7F005E0C 0C002914 */  jal   get_random_value
+/* 03A93C 7F005E0C 0C002914 */  jal   randomGetNext
 /* 03A940 7F005E10 AC2264C0 */   sw    $v0, %lo(ptr_random06cam_entry)($at)
 /* 03A944 7F005E14 3C0B8003 */  lui   $t3, %hi(D_800364BC) 
 /* 03A948 7F005E18 8D6B64BC */  lw    $t3, %lo(D_800364BC)($t3)
@@ -1243,7 +1243,7 @@ def_7F005A74:
 /* 03A974 7F005E04 2652A120 */  addiu $s2, %lo(pPlayer) # addiu $s2, $s2, -0x5ee0
 /* 03A978 7F005E08 10400012 */  beqz  $v0, .L7F005E54
 /* 03A97C 7F005E0C 3C018003 */   lui   $at, %hi(ptr_random06cam_entry) # $at, 0x8003
-/* 03A980 7F005E10 0C002918 */  jal   get_random_value
+/* 03A980 7F005E10 0C002918 */  jal   randomGetNext
 /* 03A984 7F005E14 AC226500 */   sw    $v0, %lo(ptr_random06cam_entry)($at)
 /* 03A988 7F005E18 3C0E8003 */  lui   $t6, %hi(D_800364BC) # $t6, 0x8003
 /* 03A98C 7F005E1C 8DCE64FC */  lw    $t6, %lo(D_800364BC)($t6)

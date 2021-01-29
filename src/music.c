@@ -240,7 +240,7 @@ loop_4:
         spB4 = 0;
         spC0 = (u8)6;
         spBC = 0;
-        amCreateAudioMgr(&spA4, temp_a1, &D_80063836, &D_8006383C);
+        amCreateAudioManager(&spA4, temp_a1, &D_80063836, &D_8006383C);
         
         sp88 = 0x10;
         sp8C = 0x40;
@@ -275,7 +275,7 @@ loop_4:
         spD8 = 0x40;
         spE0 = 8;
         sfx_c_70007B20(&spD8);
-        startaudiThread();
+        amStartAudioThread();
     }
     // Node 8
     return;
@@ -460,7 +460,7 @@ glabel setupaudio
 /* 0078D8 70006CD8 A3A800C0 */  sb    $t0, 0xc0($sp)
 /* 0078DC 70006CDC AFA000BC */  sw    $zero, 0xbc($sp)
 /* 0078E0 70006CE0 AFB000B8 */  sw    $s0, 0xb8($sp)
-/* 0078E4 70006CE4 0C0006F4 */  jal   amCreateAudioMgr
+/* 0078E4 70006CE4 0C0006F4 */  jal   amCreateAudioManager
 /* 0078E8 70006CE8 27A400A4 */   addiu $a0, $sp, 0xa4
 /* 0078EC 70006CEC 24090010 */  li    $t1, 16
 /* 0078F0 70006CF0 240A0040 */  li    $t2, 64
@@ -555,7 +555,7 @@ glabel setupaudio
 /* 007A54 70006E54 AFB000E4 */  sw    $s0, 0xe4($sp)
 /* 007A58 70006E58 0C001EC8 */  jal   sfx_c_70007B20
 /* 007A5C 70006E5C 27A400D8 */   addiu $a0, $sp, 0xd8
-/* 007A60 70006E60 0C0007D6 */  jal   startaudiThread
+/* 007A60 70006E60 0C0007D6 */  jal   amStartAudioThread
 /* 007A64 70006E64 00000000 */   nop   
 .L70006E68:
 /* 007A68 70006E68 8FBF0024 */  lw    $ra, 0x24($sp)

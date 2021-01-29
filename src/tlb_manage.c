@@ -261,7 +261,7 @@ void translate_load_rom_from_TLBaddress(u32 address)
   maybe_cur_TLB_entries += 1;
   find_remove_TLB_entry(address & 0x7fffe000);
 
-  tlbnum = return_tlb_random_value() % 0x5a;
+  tlbnum = tlbRandomGetNext() % 0x5a;
   tlb_segment_num = tlbnum;
   remove_TLB_entry_from_table(tlbnum);
 
@@ -290,7 +290,7 @@ glabel translate_load_rom_from_TLBaddress
 /* 002600 70001A00 AC4F0000 */  sw    $t7, ($v0)
 /* 002604 70001A04 0C000648 */  jal   find_remove_TLB_entry
 /* 002608 70001A08 AFA40028 */   sw    $a0, 0x28($sp)
-/* 00260C 70001A0C 0C0006C4 */  jal   return_tlb_random_value
+/* 00260C 70001A0C 0C0006C4 */  jal   tlbRandomGetNext
 /* 002610 70001A10 00000000 */   nop   
 /* 002614 70001A14 2401005A */  li    $at, 90
 /* 002618 70001A18 0041001B */  divu  $zero, $v0, $at
