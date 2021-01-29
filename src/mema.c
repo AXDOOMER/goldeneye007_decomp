@@ -383,103 +383,22 @@ glabel mem_related_allocated_table_related
 )
 #endif
 
-
-
-#ifdef NONMATCHING
-f32 mem_related_something_first_related(void)
-{
-    u32 temp_a1;
-    u32 temp_v0;
-    u32 phi_v1;
-    void *phi_a0;
-    u32 phi_v0;
-    u32 phi_v1_2;
-    u32 phi_v1_3;
-    u32 phi_v0_2;
-
-    phi_v1 = 0U;
-    phi_a0 = &g_MemoryAllocations + 0x10;
-    phi_v0 = 0U;
-    phi_v1_2 = 0U;
-    phi_v0_2 = 0U;
-    if (-1 != g_MemoryAllocations + 0x10)
-    {
-loop_1:
-        temp_a1 = phi_a0->unk4;
-        temp_v0 = phi_v0_2 + temp_a1;
-        phi_v1_3 = phi_v1;
-        if ((u32) phi_v1 < temp_a1)
-        {
-            phi_v1_3 = temp_a1;
+f32 mem_related_something_first_related(void) {
+    u32 tot = 0;
+    u32 max = 0;
+    allocation *curr = &g_MemoryAllocations[2];
+    while (curr->addr != -1) {
+        tot += curr->size;
+        if (max < curr->size) {
+            max = curr->size;
         }
-        phi_v1 = phi_v1_3;
-        phi_a0 = phi_a0 + 8;
-        phi_v0 = temp_v0;
-        phi_v1_2 = phi_v1_3;
-        phi_v0_2 = temp_v0;
-        if (-1 != phi_a0->unk8)
-        {
-            goto loop_1;
-        }
+        curr++;
     }
-    if (phi_v0 == 0)
-    {
-        return 0;
+    if (tot == 0) {
+        return 0.0f;
     }
-    return (f32) (u32) (phi_v0 - phi_v1_2) / (f32) (u32) phi_v0;
+    return ((f32)(tot - max) / tot);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel mem_related_something_first_related
-/* 00AC64 7000A064 3C0E8006 */  lui   $t6, %hi(g_MemoryAllocations + 0x10) 
-/* 00AC68 7000A068 8DCE3C38 */  lw    $t6, %lo(g_MemoryAllocations + 0x10)($t6)
-/* 00AC6C 7000A06C 2406FFFF */  li    $a2, -1
-/* 00AC70 7000A070 3C048006 */  lui   $a0, %hi(g_MemoryAllocations + 0x10)
-/* 00AC74 7000A074 00001025 */  move  $v0, $zero
-/* 00AC78 7000A078 00001825 */  move  $v1, $zero
-/* 00AC7C 7000A07C 10CE000A */  beq   $a2, $t6, .L7000A0A8
-/* 00AC80 7000A080 24843C38 */   addiu $a0, %lo(g_MemoryAllocations + 0x10) # addiu $a0, $a0, 0x3c38
-/* 00AC84 7000A084 8C850004 */  lw    $a1, 4($a0)
-.L7000A088:
-/* 00AC88 7000A088 0065082B */  sltu  $at, $v1, $a1
-/* 00AC8C 7000A08C 10200002 */  beqz  $at, .L7000A098
-/* 00AC90 7000A090 00451021 */   addu  $v0, $v0, $a1
-/* 00AC94 7000A094 00A01825 */  move  $v1, $a1
-.L7000A098:
-/* 00AC98 7000A098 8C8F0008 */  lw    $t7, 8($a0)
-/* 00AC9C 7000A09C 24840008 */  addiu $a0, $a0, 8
-/* 00ACA0 7000A0A0 54CFFFF9 */  bnel  $a2, $t7, .L7000A088
-/* 00ACA4 7000A0A4 8C850004 */   lw    $a1, 4($a0)
-.L7000A0A8:
-/* 00ACA8 7000A0A8 14400004 */  bnez  $v0, .L7000A0BC
-/* 00ACAC 7000A0AC 0043C023 */   subu  $t8, $v0, $v1
-/* 00ACB0 7000A0B0 44800000 */  mtc1  $zero, $f0
-/* 00ACB4 7000A0B4 03E00008 */  jr    $ra
-/* 00ACB8 7000A0B8 00000000 */   nop   
-
-.L7000A0BC:
-/* 00ACBC 7000A0BC 44982000 */  mtc1  $t8, $f4
-/* 00ACC0 7000A0C0 44825000 */  mtc1  $v0, $f10
-/* 00ACC4 7000A0C4 07010005 */  bgez  $t8, .L7000A0DC
-/* 00ACC8 7000A0C8 468021A0 */   cvt.s.w $f6, $f4
-/* 00ACCC 7000A0CC 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 00ACD0 7000A0D0 44814000 */  mtc1  $at, $f8
-/* 00ACD4 7000A0D4 00000000 */  nop   
-/* 00ACD8 7000A0D8 46083180 */  add.s $f6, $f6, $f8
-.L7000A0DC:
-/* 00ACDC 7000A0DC 04410005 */  bgez  $v0, .L7000A0F4
-/* 00ACE0 7000A0E0 46805420 */   cvt.s.w $f16, $f10
-/* 00ACE4 7000A0E4 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 00ACE8 7000A0E8 44819000 */  mtc1  $at, $f18
-/* 00ACEC 7000A0EC 00000000 */  nop   
-/* 00ACF0 7000A0F0 46128400 */  add.s $f16, $f16, $f18
-.L7000A0F4:
-/* 00ACF4 7000A0F4 46103003 */  div.s $f0, $f6, $f16
-/* 00ACF8 7000A0F8 03E00008 */  jr    $ra
-/* 00ACFC 7000A0FC 00000000 */   nop   
-)
-#endif
 
 const char aD_3[] = "%d ";
 const char a___[] = "...";
