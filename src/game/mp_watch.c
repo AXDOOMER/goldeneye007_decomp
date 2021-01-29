@@ -36,86 +36,24 @@ const char ascii_pnum_LOSSES[] = "%s%d %s";
 // rodata
 
 
-#ifdef NONMATCHING
-u32 check_can_advance_right_on_mpmenu(void) {
-  switch(pPlayer->mpmenumode) {
-  case 0:
-    return 1;
-  case 1:
-    return 1;
-  case 2:
-    return 1;
-  case 3:
-    if (is_gameover_flag == 0) {
+s32 check_can_advance_right_on_mpmenu(void) {
+  switch(pPlayer->mpmenumode)
+  {
+    case 0:
+    case 1:
+    case 2:
+    case 4:
       return 1;
-    }
-    return 0;
-  case 4:
-    return 1;
-  case 5:
-    return 0;
-  case 6:
-    return 0;
-  case 7:
-    return 0;
-  default:
-    return 0;
+    case 5:
+    case 6:
+    case 7:
+      return 0;
+    case 3:
+      return is_gameover_flag ? 0 : 1;
+    default:
+      return 0;
   }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:8005BC40*/
-glabel jpt_MP_menu_page_adv_right
-.word page_adv_right_yes
-.word page_adv_right_yes
-.word page_adv_right_yes
-.word page_adv_right_gameover
-.word page_adv_right_yes
-.word page_adv_right_no
-.word page_adv_right_no
-.word page_adv_right_no
-.text
-glabel check_can_advance_right_on_mpmenu
-/* 0F6950 7F0C1E20 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0F6954 7F0C1E24 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0F6958 7F0C1E28 00001025 */  move  $v0, $zero
-/* 0F695C 7F0C1E2C 8DCF29C8 */  lw    $t7, 0x29c8($t6)
-/* 0F6960 7F0C1E30 2DE10008 */  sltiu $at, $t7, 8
-/* 0F6964 7F0C1E34 10200013 */  beqz  $at, .L7F0C1E84
-/* 0F6968 7F0C1E38 000F7880 */   sll   $t7, $t7, 2
-/* 0F696C 7F0C1E3C 3C018006 */  lui   $at, %hi(jpt_MP_menu_page_adv_right)
-/* 0F6970 7F0C1E40 002F0821 */  addu  $at, $at, $t7
-/* 0F6974 7F0C1E44 8C2FBC40 */  lw    $t7, %lo(jpt_MP_menu_page_adv_right)($at)
-/* 0F6978 7F0C1E48 01E00008 */  jr    $t7
-/* 0F697C 7F0C1E4C 00000000 */   nop   
-page_adv_right_yes:
-/* 0F6980 7F0C1E50 03E00008 */  jr    $ra
-/* 0F6984 7F0C1E54 24020001 */   li    $v0, 1
-
-page_adv_right_no:
-/* 0F6988 7F0C1E58 03E00008 */  jr    $ra
-/* 0F698C 7F0C1E5C 00001025 */   move  $v0, $zero
-
-page_adv_right_gameover:
-/* 0F6990 7F0C1E60 3C188009 */  lui   $t8, %hi(is_gameover_flag) 
-/* 0F6994 7F0C1E64 8F18C704 */  lw    $t8, %lo(is_gameover_flag)($t8)
-/* 0F6998 7F0C1E68 24030001 */  li    $v1, 1
-/* 0F699C 7F0C1E6C 13000003 */  beqz  $t8, .L7F0C1E7C
-/* 0F69A0 7F0C1E70 00000000 */   nop   
-/* 0F69A4 7F0C1E74 03E00008 */  jr    $ra
-/* 0F69A8 7F0C1E78 00001025 */   move  $v0, $zero
-
-.L7F0C1E7C:
-/* 0F69AC 7F0C1E7C 03E00008 */  jr    $ra
-/* 0F69B0 7F0C1E80 00601025 */   move  $v0, $v1
-
-.L7F0C1E84:
-/* 0F69B4 7F0C1E84 03E00008 */  jr    $ra
-/* 0F69B8 7F0C1E88 00000000 */   nop   
-)
-#endif
-
 
 s32 check_can_advance_left_on_mpmenu(void) {
   switch(pPlayer->mpmenumode)
