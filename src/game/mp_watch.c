@@ -2553,10 +2553,8 @@ s32 true_if_displaying_rank_in_mp(s32 param_1)
     case 6:
     case 7:
       return 1;
-      break;
     case 1:
       return param_1 ? 0 : 1;
-      break;
     default:
       do {
         /* WARNING: Do nothing block with infinite loop */
