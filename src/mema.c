@@ -590,79 +590,22 @@ void mem_related_something_first_related_0(void (*func)(u32, allocation*)) {
     }
 }
 
-#ifdef NONMATCHING
 u32 mem_related_0(void) {
-    u32 sp18;
-
-    // Node 0
-    sp18 = 0U;
+    allocation *curr;
+    u32 max = 0;
     memaSortMergeAllEntries();
-    if (-1 != g_MemoryAllocations + 0x10)
-    {
-        loop_1:
-        // Node 1
-        if (sp18 < (u32) g_MemoryAllocations + 0x10.unk4)
-        {
-            // Node 2
+    curr = &g_MemoryAllocations[2];
+    while (curr->addr != -1) {
+        if (max < curr->size) {
+            max = curr->size;
         }
-        // Node 3
-        if (-1 != g_MemoryAllocations + 0x10.unk8)
-        {
-            goto loop_1;
-        }
+        curr++;
     }
-    // Node 4
-    if (sp18 != 0)
-    {
-        // Node 5
-        return;
-        // (possible return value: sp18)
+    if (max != 0) {
+        return max;
     }
-    // Node 6
-    return;
-    // (possible return value: 0U)
+    return 0;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel mem_related_0
-/* 00AF70 7000A370 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 00AF74 7000A374 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 00AF78 7000A378 0C0026C6 */  jal   memaSortMergeAllEntries
-/* 00AF7C 7000A37C AFA00018 */   sw    $zero, 0x18($sp)
-/* 00AF80 7000A380 3C0E8006 */  lui   $t6, %hi(g_MemoryAllocations + 0x10) 
-/* 00AF84 7000A384 8DCE3C38 */  lw    $t6, %lo(g_MemoryAllocations + 0x10)($t6)
-/* 00AF88 7000A388 2405FFFF */  li    $a1, -1
-/* 00AF8C 7000A38C 3C028006 */  lui   $v0, %hi(g_MemoryAllocations + 0x10)
-/* 00AF90 7000A390 8FA40018 */  lw    $a0, 0x18($sp)
-/* 00AF94 7000A394 10AE000A */  beq   $a1, $t6, .L7000A3C0
-/* 00AF98 7000A398 24423C38 */   addiu $v0, %lo(g_MemoryAllocations + 0x10) # addiu $v0, $v0, 0x3c38
-/* 00AF9C 7000A39C 8C430004 */  lw    $v1, 4($v0)
-.L7000A3A0:
-/* 00AFA0 7000A3A0 0083082B */  sltu  $at, $a0, $v1
-/* 00AFA4 7000A3A4 50200003 */  beql  $at, $zero, .L7000A3B4
-/* 00AFA8 7000A3A8 8C4F0008 */   lw    $t7, 8($v0)
-/* 00AFAC 7000A3AC 00602025 */  move  $a0, $v1
-/* 00AFB0 7000A3B0 8C4F0008 */  lw    $t7, 8($v0)
-.L7000A3B4:
-/* 00AFB4 7000A3B4 24420008 */  addiu $v0, $v0, 8
-/* 00AFB8 7000A3B8 54AFFFF9 */  bnel  $a1, $t7, .L7000A3A0
-/* 00AFBC 7000A3BC 8C430004 */   lw    $v1, 4($v0)
-.L7000A3C0:
-/* 00AFC0 7000A3C0 10800003 */  beqz  $a0, .L7000A3D0
-/* 00AFC4 7000A3C4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 00AFC8 7000A3C8 10000002 */  b     .L7000A3D4
-/* 00AFCC 7000A3CC 00801025 */   move  $v0, $a0
-.L7000A3D0:
-/* 00AFD0 7000A3D0 00001025 */  move  $v0, $zero
-.L7000A3D4:
-/* 00AFD4 7000A3D4 03E00008 */  jr    $ra
-/* 00AFD8 7000A3D8 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 //close C, regalloc
