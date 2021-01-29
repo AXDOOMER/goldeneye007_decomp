@@ -151,28 +151,28 @@ void memaIterateAndMerge(void) {
 // for a suitable one. If none is found, then look through the rest for any that are
 // large enough. If this also fails, then do 8 merge iterations and then look through
 // entire buffer again. If successful, return the address to the freed memory, otherwise 0.
-s32 memaFree(u32 size) {
+s32 memaFree(u32 amount) {
     s32 addr;
     u32 diff;
     s32 i;
     allocation *curr = &g_MemoryAllocations[2];
     allocation *best = NULL;
     for (i = 0; i < 16; i++, curr++) {
-        if (curr->size >= size) {
+        if (curr->size >= amount) {
             if (curr->addr == -1) {
                 break;
             }
-            diff = (curr->size - size);
+            diff = (curr->size - amount);
             if (diff < 0xFFFFFFFF) {
                 best = curr;
-                if ((diff < 64) || (diff < (size / 4))) {
+                if ((diff < 64) || (diff < (amount / 4))) {
                     break;
                 }
             }            
         }
     }
     if (best == NULL) {
-        while (curr->size < size) {
+        while (curr->size < amount) {
             curr++;
         }
         if (curr->addr == -1) {
@@ -180,7 +180,7 @@ s32 memaFree(u32 size) {
                 memaIterateAndMergeInternal(g_MemoryAllocations);
             }
             curr = &g_MemoryAllocations[2];
-            while (curr->size < size) {
+            while (curr->size < amount) {
                 curr++;
             }
             if (curr->addr == -1) {
@@ -189,8 +189,8 @@ s32 memaFree(u32 size) {
         }
     }
     addr = curr->addr;
-    curr->addr += size;
-    curr->size -= size;
+    curr->addr += amount;
+    curr->size -= amount;
     if (curr->size == 0) {
         curr->addr = 0;
     }
@@ -311,10 +311,10 @@ glabel memaFree
 #ifdef NONMATCHING
 // Find the allocation of the given address and reduce its size by the given 
 // amount. If successful, return the same address, otherwise 0.
-s32 memaShrink(s32 addr, u32 size) {
+s32 memaShrink(s32 addr, u32 amount) {
     allocation *curr = &g_MemoryAllocations[2];
     while (curr->addr != -1) {
-        if ((curr->addr == addr) && (curr->size >= size)) {
+        if ((curr->addr == addr) && (curr->size >= amount)) {
             break;
         }        
         curr++;
@@ -322,8 +322,8 @@ s32 memaShrink(s32 addr, u32 size) {
             return 0;
         }
     }
-    curr->addr += size;
-    curr->size -= size;
+    curr->addr += amount;
+    curr->size -= amount;
     if (curr->size == 0) {
         curr->addr = 0;
     }
@@ -422,7 +422,7 @@ f32 memaCalculateNonLargestToTotalRatio(void) {
 
 #ifdef NONMATCHING
 // Print a list of allocations, in descending size order. Sizes are specified in
-// kilobytes, rounded up. Up to 200 allocations can be listed.
+// kilobytes, rounded to nearest integer. Up to 200 allocations can be listed.
 void memaDump(void) {
     const char buffer[4096];
     const char *pos;
