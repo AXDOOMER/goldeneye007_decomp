@@ -133,7 +133,7 @@ void mem_related_calls_sort_merge_entries(void) {
 
 #ifdef NONMATCHING
 s32 mem_related_something_find_first(u32 size) {
-    s32 prev;
+    s32 addr;
     u32 diff;
     s32 i;
     allocation *curr = &g_MemoryAllocations[2];
@@ -169,13 +169,13 @@ s32 mem_related_something_find_first(u32 size) {
             }
         }
     }
-    prev = curr->addr;
+    addr = curr->addr;
     curr->addr += size;
     curr->size -= size;
     if (curr->size == 0) {
         curr->addr = 0;
     }
-    return prev;
+    return addr;
 }
 #else
 GLOBAL_ASM(
@@ -292,46 +292,24 @@ glabel mem_related_something_find_first
 
 
 #ifdef NONMATCHING
-s32 mem_related_something_find_first_0(s32 arg0, u32 arg1)
-{
-    s32 temp_a1;
-    u32 temp_a2;
-    u32 temp_t4;
-    s32 phi_a1;
-    void *phi_v1;
-
-    if (-1 == g_MemoryAllocations + 0x10)
-    {
-        return 0;
-    }
-    phi_a1 = g_MemoryAllocations + 0x10;
-    phi_v1 = &g_MemoryAllocations + 0x10;
-loop_2:
-    if (arg0 != phi_a1)
-    {
-block_4:
-        temp_a1 = phi_v1->unk8;
-        phi_a1 = temp_a1;
-        phi_v1 = phi_v1 + 8;
-        if (-1 != temp_a1)
-        {
-            goto loop_2;
+// Can't figure out how to make the loop and return match.
+s32 mem_related_something_find_first_0(s32 addr, u32 size) {
+    allocation *curr = &g_MemoryAllocations[2];
+    while (curr->addr != -1) {
+        if (curr->addr == addr && curr->size >= size) {
+            break;
+        }        
+        curr++;
+        if (curr->addr == -1) {
+            return 0;
         }
-        return 0;
     }
-    temp_a2 = phi_v1->unk4;
-    if (temp_a2 < arg1)
-    {
-        goto block_4;
+    curr->addr += size;
+    curr->size -= size;
+    if (curr->size == 0) {
+        curr->addr = 0;
     }
-    temp_t4 = temp_a2 - arg1;
-    phi_v1->unk0 = (s32) (phi_a1 + arg1);
-    phi_v1->unk4 = temp_t4;
-    if (temp_t4 == 0)
-    {
-        phi_v1->unk0 = 0;
-    }
-    return arg0;
+    return addr;
 }
 #else
 GLOBAL_ASM(
@@ -376,16 +354,9 @@ glabel mem_related_something_find_first_0
 )
 #endif
 
-
-
-
-void mem_related_model_room_buffers_0(u32 addr,u32 size) {
+void mem_related_model_room_buffers_0(u32 addr, u32 size) {
     memaAllocRoomBuffer(addr, size);
 }
-
-
-
-
 
 #ifdef NONMATCHING
 void *mem_related_allocated_table_related(void)
