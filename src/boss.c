@@ -115,7 +115,7 @@ void init_mainthread_data(void)
     establish_TLB_buffer_management_table();
     image_entries_load();
     mempInitDebugNoticeList();
-    memaInitDebugNoticeList();
+    memaInit();
     bgInitDebugNoticeList();
     viInitDebugNoticeList();
     init_video_settings();
@@ -389,7 +389,7 @@ loop_18:
     {
         current_ma_malloc_value = (s32) (strtol(tokenFind(1, &aMa_0), 0, 0) << 0xa);
     }
-    mempInitMallocTable(mempAllocBytesInBank(current_ma_malloc_value, 4), current_ma_malloc_value);
+    memaSetBuffer(mempAllocBytesInBank(current_ma_malloc_value, 4), current_ma_malloc_value);
     reset_play_data_ptrs();
     phi_s1 = 0;
     if (current_stage_num != 0x5a)
@@ -566,7 +566,7 @@ loop_44:
                         if (show_mem_use_flag != 0)
                         {
                             nulled_mempLoopAllMemBanks();
-                            memaGenerateListsBeforeAfterMerge();
+                            memaDumpPrePostMerge();
                             dynRemovedFunc(temp_s3_3);
                             nullsub_41(0);
                             show_mem_use_flag = 0;
@@ -596,7 +596,7 @@ loop_58:
                             }
                         }
                         load_rsp_microcode(sp1A4, temp_s3_3, 0, sp48);
-                        mem_related_calls_sort_merge_entries();
+                        memaIterateAndMerge();
                         sp1AC = (s32) (sp1AC ^ 1);
                         video_related_3(0x10000);
                         phi_v0_3 = loadedstage;
@@ -852,7 +852,7 @@ glabel mainloop
 /* 006F48 70006348 24050004 */   li    $a1, 4
 /* 006F4C 7000634C 3C058002 */  lui   $a1, %hi(current_ma_malloc_value)
 /* 006F50 70006350 8CA541B0 */  lw    $a1, %lo(current_ma_malloc_value)($a1)
-/* 006F54 70006354 0C002766 */  jal   mempInitMallocTable
+/* 006F54 70006354 0C002766 */  jal   memaSetBuffer
 /* 006F58 70006358 00402025 */   move  $a0, $v0
 /* 006F5C 7000635C 0FC268CB */  jal   reset_play_data_ptrs
 /* 006F60 70006360 00000000 */   nop   
@@ -1135,7 +1135,7 @@ glabel mainloop
 /* 00737C 7000677C 00000000 */   nop   
 /* 007380 70006780 0C00263C */  jal   nulled_mempLoopAllMemBanks
 /* 007384 70006784 00000000 */   nop   
-/* 007388 70006788 0C0028A7 */  jal   memaGenerateListsBeforeAfterMerge
+/* 007388 70006788 0C0028A7 */  jal   memaDumpPrePostMerge
 /* 00738C 7000678C 00000000 */   nop   
 /* 007390 70006790 0FC2F5DD */  jal   dynRemovedFunc
 /* 007394 70006794 02602025 */   move  $a0, $s3
@@ -1196,7 +1196,7 @@ glabel mainloop
 /* 00745C 7000685C 00003025 */  move  $a2, $zero
 /* 007460 70006860 0FC33F86 */  jal   load_rsp_microcode
 /* 007464 70006864 8FA70048 */   lw    $a3, 0x48($sp)
-/* 007468 70006868 0C002784 */  jal   mem_related_calls_sort_merge_entries
+/* 007468 70006868 0C002784 */  jal   memaIterateAndMerge
 /* 00746C 7000686C 27DE0001 */   addiu $fp, $fp, 1
 /* 007470 70006870 8FAC01AC */  lw    $t4, 0x1ac($sp)
 /* 007474 70006874 3C040001 */  lui   $a0, 1

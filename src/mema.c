@@ -7,6 +7,7 @@ s32 g_MemoryAllocationBufferSize;
 allocation g_MemoryAllocations[512];
 void *g_MemoryAllocationDebugData = NULL;
 
+// Swap two allocations.
 void memaSwap(allocation *a, allocation *b) {
     u32 tempaddr = a->addr;
     u32 tempsize = a->size;
@@ -16,45 +17,53 @@ void memaSwap(allocation *a, allocation *b) {
     b->size = tempsize;
 }
 
+// Merge two allocations.
 void memaMerge(allocation *a, allocation *b) {
     a->size = (a->size + b->size);
     b->addr = 0;
     b->size = 0;
 }
 
-s32 memaSortMergeEntries(allocation *allocations) {
-    s32 merged = FALSE;
+// Do a single iteration over the allocations and attempt to
+// merge adjacent ones. Return value indicates if there were
+// any merges.
+s32 memaIterateAndMergeInternal(allocation *allocations) {
+    s32 any = FALSE;
     allocation *prev = &allocations[1];
     allocation *curr = &allocations[2];
     allocation *last = &allocations[509];
-    u32 prevaddr = 0;
+    u32 addr = 0;
     while (curr <= last) {
         if (curr->size != 0) {
-            if (curr->addr < prevaddr) {
+            if (curr->addr < addr) {
                 memaSwap(curr, prev);
             }
-            if ((prev->size + prevaddr) == curr->addr) {
+            if ((prev->size + addr) == curr->addr) {
                 memaMerge(prev, curr);
                 curr = prev;
-                merged = TRUE;
+                any = TRUE;
             }
             prev = curr;
-            prevaddr = curr->addr;
+            addr = curr->addr;
         }
         curr++;
     }
-    return merged;
+    return any;
 }
 
-void memaSortMergeAllEntries(void) {
-    while (memaSortMergeEntries(&g_MemoryAllocations) != 0);
+// Do multiple merge iterations until there are no
+// mergable pairs left.
+void memaMergeAll(void) {
+    while (memaIterateAndMergeInternal(&g_MemoryAllocations));
 }
 
-#define U32_MAX 0xFFFFFFFF;
-allocation *memaFindOpening(allocation *allocations) {
+// Loop through all allocations and attempt to find a free one. Alternatively,
+// if two can be merged, then do that and use the leftover one. If none is found,
+// then use the smallest allocation in the buffer.
+allocation *memaSearch(allocation *allocations) {
     allocation *curr = &allocations[2];
     allocation *best;
-    u32 minsize;
+    u32 min;
     s32 i;
     for (i = 0; i < 508; i++) {
         while (curr <= &allocations[509]) {
@@ -74,19 +83,22 @@ allocation *memaFindOpening(allocation *allocations) {
         }
         curr = &allocations[2];
     }
-    minsize = U32_MAX;
+    min = 0xFFFFFFFF;
     best = curr;
     while (curr <= &allocations[509]) {
-        if (curr->size < minsize) {            
+        if (curr->size < min) {            
             best = curr;
-            minsize = curr->size;
+            min = curr->size;
         }
         curr++;
     }
     return best;
 }
 
-void memaAllocRoomBuffer(s32 addr, s32 size) {
+// Register a new allocation. Start by calculating a suitable index to start search from 
+// based on the relative address in the buffer. Then look forward and backwards
+// for a free allocation. If none is found, then use the more advanced memaSearch method.
+void memaRegisterInternal(s32 addr, s32 size) {
     s32 index = ((addr - g_MemoryAllocationBuffer) * 508) / g_MemoryAllocationBufferSize;
     allocation *curr = &g_MemoryAllocations[index + 2];
     while (curr->size != 0) {
@@ -98,18 +110,21 @@ void memaAllocRoomBuffer(s32 addr, s32 size) {
             curr--;
         }
         if (curr->addr == 0) {
-            curr = memaFindOpening(g_MemoryAllocations);
+            curr = memaSearch(g_MemoryAllocations);
         }
     }
     curr->addr = addr;
     curr->size = size;
 }
 
-void memaInitDebugNoticeList(void) {
+// Initialize the (removed) debug features.
+void memaInit(void) {
     debTryAdd(&g_MemoryAllocationDebugData, "mema_c_debug");
 }
 
-void mempInitMallocTable(s32 buffer, s32 size) {
+// Initialize g_MemoryAllocations given a new buffer. The first
+// and last two allocations serve as sentinels.
+void memaSetBuffer(s32 buffer, s32 size) {
     allocation *curr;
     g_MemoryAllocations[0].addr = 0;
     g_MemoryAllocations[0].size = 0;
@@ -127,12 +142,16 @@ void mempInitMallocTable(s32 buffer, s32 size) {
     g_MemoryAllocations[2].size = g_MemoryAllocationBufferSize = size;
 }
 
-void mem_related_calls_sort_merge_entries(void) {
-    memaSortMergeEntries(&g_MemoryAllocations);
+void memaIterateAndMerge(void) {
+    memaIterateAndMergeInternal(&g_MemoryAllocations);
 }
 
 #ifdef NONMATCHING
-s32 mem_related_something_find_first(u32 size) {
+// Attempt to free up some memory. Start by looking through the first 16 allocations
+// for a suitable one. If none is found, then look through the rest for any that are
+// large enough. If this also fails, then do 8 merge iterations and then look through
+// entire buffer again. If successful, return the address to the freed memory, otherwise 0.
+s32 memaFree(u32 size) {
     s32 addr;
     u32 diff;
     s32 i;
@@ -158,7 +177,7 @@ s32 mem_related_something_find_first(u32 size) {
         }
         if (curr->addr == -1) {
             for (i = 0; i < 8; i++) {
-                memaSortMergeEntries(g_MemoryAllocations);
+                memaIterateAndMergeInternal(g_MemoryAllocations);
             }
             curr = &g_MemoryAllocations[2];
             while (curr->size < size) {
@@ -180,7 +199,7 @@ s32 mem_related_something_find_first(u32 size) {
 #else
 GLOBAL_ASM(
 .text
-glabel mem_related_something_find_first
+glabel memaFree
 /* 00AA34 70009E34 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 00AA38 70009E38 AFB2001C */  sw    $s2, 0x1c($sp)
 /* 00AA3C 70009E3C AFB10018 */  sw    $s1, 0x18($sp)
@@ -242,7 +261,7 @@ glabel mem_related_something_find_first
 /* 00AB08 70009F08 3C118006 */  lui   $s1, %hi(g_MemoryAllocations + 0x10)
 /* 00AB0C 70009F0C 26313C38 */  addiu $s1, %lo(g_MemoryAllocations + 0x10) # addiu $s1, $s1, 0x3c38
 .L70009F10:
-/* 00AB10 70009F10 0C002694 */  jal   memaSortMergeEntries
+/* 00AB10 70009F10 0C002694 */  jal   memaIterateAndMergeInternal
 /* 00AB14 70009F14 02602025 */   move  $a0, $s3
 /* 00AB18 70009F18 26100001 */  addiu $s0, $s0, 1
 /* 00AB1C 70009F1C 1614FFFC */  bne   $s0, $s4, .L70009F10
@@ -289,14 +308,13 @@ glabel mem_related_something_find_first
 )
 #endif
 
-
-
 #ifdef NONMATCHING
-// Can't figure out how to make the loop and return match.
-s32 mem_related_something_find_first_0(s32 addr, u32 size) {
+// Find the allocation of the given address and reduce its size by the given 
+// amount. If successful, return the same address, otherwise 0.
+s32 memaShrink(s32 addr, u32 size) {
     allocation *curr = &g_MemoryAllocations[2];
     while (curr->addr != -1) {
-        if (curr->addr == addr && curr->size >= size) {
+        if ((curr->addr == addr) && (curr->size >= size)) {
             break;
         }        
         curr++;
@@ -314,7 +332,7 @@ s32 mem_related_something_find_first_0(s32 addr, u32 size) {
 #else
 GLOBAL_ASM(
 .text
-glabel mem_related_something_find_first_0
+glabel memaShrink
 /* 00ABA8 70009FA8 3C198006 */  lui   $t9, %hi(g_MemoryAllocations + 0x10) 
 /* 00ABAC 70009FAC 8F393C38 */  lw    $t9, %lo(g_MemoryAllocations + 0x10)($t9)
 /* 00ABB0 70009FB0 3C188006 */  lui   $t8, %hi(g_MemoryAllocations + 0x10) 
@@ -354,13 +372,13 @@ glabel mem_related_something_find_first_0
 )
 #endif
 
-void mem_related_model_room_buffers_0(u32 addr, u32 size) {
-    memaAllocRoomBuffer(addr, size);
+void memaRegister(u32 addr, u32 size) {
+    memaRegisterInternal(addr, size);
 }
 
 #ifdef NONMATCHING
 // ac54:    bnel    v1,v0,0xac54 ~>                  r ac54:    bnel    v0,v1,0xac54 ~>
-void mem_related_allocated_table_related(void) {
+void mema7000A040(void) {
     s32 i;
     for (i = 0; &g_MemoryAllocations[i] != &g_MemoryAllocations[508]; i += 4) {
         // Removed
@@ -369,7 +387,7 @@ void mem_related_allocated_table_related(void) {
 #else
 GLOBAL_ASM(
 .text
-glabel mem_related_allocated_table_related
+glabel mema7000A040
 /* 00AC40 7000A040 3C038006 */  lui   $v1, %hi(g_MemoryAllocations)
 /* 00AC44 7000A044 3C028006 */  lui   $v0, %hi(g_MemoryAllocations + 0xFE0)
 /* 00AC48 7000A048 24424C08 */  addiu $v0, %lo(g_MemoryAllocations + 0xFE0) # addiu $v0, $v0, 0x4c08
@@ -383,7 +401,9 @@ glabel mem_related_allocated_table_related
 )
 #endif
 
-f32 mem_related_something_first_related(void) {
+// Calculate the ratio between the sum of all allocations minus
+// the largest one, and the sum of all allocations.
+f32 memaCalculateNonLargestToTotalRatio(void) {
     u32 tot = 0;
     u32 max = 0;
     allocation *curr = &g_MemoryAllocations[2];
@@ -401,14 +421,14 @@ f32 mem_related_something_first_related(void) {
 }
 
 #ifdef NONMATCHING
-void generate_list_alloc_mem(void) {
+// Print a list of allocations, in descending size order. Sizes are specified in
+// kilobytes, rounded up. Up to 200 allocations can be listed.
+void memaDump(void) {
     const char buffer[4096];
     const char *pos;
-    u32 acc;
-    u32 val;
     s32 count = 0;
     u32 tot = 0;
-    s32 max = 0x80000000;
+    s32 lim = (1 << 31);
     allocation *curr = &g_MemoryAllocations[2];
     while (curr->addr != -1) {
         tot += curr->size;
@@ -416,12 +436,12 @@ void generate_list_alloc_mem(void) {
     }
     pos = buffer;
     while (TRUE) {
-        val = 0;
-        acc = 0;
+        u32 max = 0;
+        u32 acc = 0;
         curr = &g_MemoryAllocations[2];
         while (curr->addr != -1) {
-            if ((curr->size < max) && (curr->size > val)) {
-                val = curr->size;
+            if ((curr->size < lim) && (curr->size > max)) {
+                max = curr->size;
                 acc++;
             }
             curr++;
@@ -431,7 +451,7 @@ void generate_list_alloc_mem(void) {
         }
         curr = &g_MemoryAllocations[2];
         while (curr->addr != -1) {
-            if (val == curr->size) {
+            if (curr->size == max) {
                 if (count < 200) {
                     pos += sprintf(pos, "%d ", ((curr->size + 512) / 1024));
                 } else if (count == 200) {
@@ -452,7 +472,7 @@ const char a___[] = "...";
 const char aD_5[] = "[%d]";
 GLOBAL_ASM(
 .text
-glabel generate_list_alloc_mem
+glabel memaDump
 /* 00AD00 7000A100 27BDEF98 */  addiu $sp, $sp, -0x1068
 /* 00AD04 7000A104 3C048006 */  lui   $a0, %hi(g_MemoryAllocations + 0x10)
 /* 00AD08 7000A108 8C843C38 */  lw    $a0, %lo(g_MemoryAllocations + 0x10)($a0)
@@ -573,16 +593,18 @@ glabel generate_list_alloc_mem
 )
 #endif
 
-void memaGenerateListsBeforeAfterMerge(void) {
+// Dump a list of allocations before and after a full
+// merge pass.
+void memaDumpPrePostMerge(void) {
     s32 i;    
-    generate_list_alloc_mem();
+    memaDump();
     for (i = 0; i < 508; i++) {
-        memaSortMergeEntries(&g_MemoryAllocations);
+        memaIterateAndMergeInternal(&g_MemoryAllocations);
     }
-    generate_list_alloc_mem();
+    memaDump();
 }
 
-void mem_related_something_first_related_0(void (*func)(u32, allocation*)) {
+void mema7000A2F8(void (*func)(u32, allocation*)) {
     allocation *curr = &g_MemoryAllocations[2];
     while (curr->addr != -1) {
         func((curr->addr + curr->size), curr);
@@ -590,10 +612,12 @@ void mem_related_something_first_related_0(void (*func)(u32, allocation*)) {
     }
 }
 
-u32 mem_related_0(void) {
+// Return the size of the largest allocation, after
+// a full merge pass.
+u32 memaGetLargestAllocSize(void) {
     allocation *curr;
     u32 max = 0;
-    memaSortMergeAllEntries();
+    memaMergeAll();
     curr = &g_MemoryAllocations[2];
     while (curr->addr != -1) {
         if (max < curr->size) {
@@ -608,20 +632,19 @@ u32 mem_related_0(void) {
 }
 
 #ifdef NONMATCHING
-//close C, regalloc
-u32 mem_related_1(u32 addr,u32 length,u32 maxsize)
-{
-    if (length < maxsize) {
-        if (mem_related_something_find_first_0((addr + length), (maxsize - length)) == 0) {
+// Resize an existing allocation. Either by shrinking the old one, or
+// by registering a new allocation containing the remaining bytes.
+s32 memaResize(s32 addr, u32 newsize, u32 oldsize) {
+    if (newsize < oldsize) {
+        if (memaShrink((addr + newsize), (oldsize - newsize)) == 0) {
             return 0;
-        }
-        else {
+        } else {
             return 1;
         }
     }
     else {
-        if (maxsize < length) {
-            mem_related_model_room_buffers_0((addr + maxsize), (length - maxsize));
+        if (newsize > oldsize) {
+            memaRegister((addr + oldsize), (newsize - oldsize));
         }
         return 1;
     }
@@ -629,7 +652,7 @@ u32 mem_related_1(u32 addr,u32 length,u32 maxsize)
 #else
 GLOBAL_ASM(
 .text
-glabel mem_related_1
+glabel memaResize
 /* 00AFDC 7000A3DC 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 00AFE0 7000A3E0 00A6082B */  sltu  $at, $a1, $a2
 /* 00AFE4 7000A3E4 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -637,7 +660,7 @@ glabel mem_related_1
 /* 00AFEC 7000A3EC 1020000A */  beqz  $at, .L7000A418
 /* 00AFF0 7000A3F0 00A03825 */   move  $a3, $a1
 /* 00AFF4 7000A3F4 00852021 */  addu  $a0, $a0, $a1
-/* 00AFF8 7000A3F8 0C0027EA */  jal   mem_related_something_find_first_0
+/* 00AFF8 7000A3F8 0C0027EA */  jal   memaShrink
 /* 00AFFC 7000A3FC 00C52823 */   subu  $a1, $a2, $a1
 /* 00B000 7000A400 14400003 */  bnez  $v0, .L7000A410
 /* 00B004 7000A404 00000000 */   nop   
@@ -651,7 +674,7 @@ glabel mem_related_1
 /* 00B01C 7000A41C 10200004 */  beqz  $at, .L7000A430
 /* 00B020 7000A420 8FA90018 */   lw    $t1, 0x18($sp)
 /* 00B024 7000A424 01262021 */  addu  $a0, $t1, $a2
-/* 00B028 7000A428 0C002808 */  jal   mem_related_model_room_buffers_0
+/* 00B028 7000A428 0C002808 */  jal   memaRegister
 /* 00B02C 7000A42C 00E62823 */   subu  $a1, $a3, $a2
 .L7000A430:
 /* 00B030 7000A430 24020001 */  li    $v0, 1
