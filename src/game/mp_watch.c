@@ -2610,68 +2610,28 @@ glabel write_playerrank_to_buffer
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void true_if_displaying_rank_in_mp(void) {
-
+s32 true_if_displaying_rank_in_mp(s32 param_1)
+{
+  switch(get_scenario())
+  {
+    case 0:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+      return 1;
+      break;
+    case 1:
+      return param_1 ? 0 : 1;
+      break;
+    default:
+      do {
+        /* WARNING: Do nothing block with infinite loop */
+      } while(1);
+  }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:8005BCC0*/
-glabel jpt_MP_overlays_scoring_scenario_1
-.word not_yolt
-.word yolt
-.word not_yolt
-.word not_yolt
-.word not_yolt
-.word not_yolt
-.word not_yolt
-.word not_yolt
-.text
-glabel true_if_displaying_rank_in_mp
-/* 0F8A8C 7F0C3F5C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F8A90 7F0C3F60 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F8A94 7F0C3F64 0FC051D6 */  jal   get_scenario
-/* 0F8A98 7F0C3F68 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0F8A9C 7F0C3F6C 2C410008 */  sltiu $at, $v0, 8
-/* 0F8AA0 7F0C3F70 10200010 */  beqz  $at, .L7F0C3FB4
-/* 0F8AA4 7F0C3F74 00027080 */   sll   $t6, $v0, 2
-/* 0F8AA8 7F0C3F78 3C018006 */  lui   $at, %hi(jpt_MP_overlays_scoring_scenario_1)
-/* 0F8AAC 7F0C3F7C 002E0821 */  addu  $at, $at, $t6
-/* 0F8AB0 7F0C3F80 8C2EBCC0 */  lw    $t6, %lo(jpt_MP_overlays_scoring_scenario_1)($at)
-/* 0F8AB4 7F0C3F84 01C00008 */  jr    $t6
-/* 0F8AB8 7F0C3F88 00000000 */   nop   
-not_yolt:
-/* 0F8ABC 7F0C3F8C 1000000B */  b     .L7F0C3FBC
-/* 0F8AC0 7F0C3F90 24020001 */   li    $v0, 1
-yolt:
-/* 0F8AC4 7F0C3F94 8FAF0018 */  lw    $t7, 0x18($sp)
-/* 0F8AC8 7F0C3F98 24030001 */  li    $v1, 1
-/* 0F8ACC 7F0C3F9C 11E00003 */  beqz  $t7, .L7F0C3FAC
-/* 0F8AD0 7F0C3FA0 00000000 */   nop   
-/* 0F8AD4 7F0C3FA4 10000005 */  b     .L7F0C3FBC
-/* 0F8AD8 7F0C3FA8 00001025 */   move  $v0, $zero
-.L7F0C3FAC:
-/* 0F8ADC 7F0C3FAC 10000003 */  b     .L7F0C3FBC
-/* 0F8AE0 7F0C3FB0 00601025 */   move  $v0, $v1
-def_7F0C3F84:
-.L7F0C3FB4:
-/* 0F8AE4 7F0C3FB4 1000FFFF */  b     .L7F0C3FB4
-/* 0F8AE8 7F0C3FB8 00000000 */   nop   
-.L7F0C3FBC:
-/* 0F8AEC 7F0C3FBC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F8AF0 7F0C3FC0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F8AF4 7F0C3FC4 03E00008 */  jr    $ra
-/* 0F8AF8 7F0C3FC8 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void true_if_displaying_score_in_mp(void) {
