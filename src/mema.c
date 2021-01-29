@@ -400,15 +400,56 @@ f32 mem_related_something_first_related(void) {
     return ((f32)(tot - max) / tot);
 }
 
+#ifdef NONMATCHING
+void generate_list_alloc_mem(void) {
+    const char buffer[4096];
+    const char *pos;
+    u32 acc;
+    u32 val;
+    s32 count = 0;
+    u32 tot = 0;
+    s32 max = 0x80000000;
+    allocation *curr = &g_MemoryAllocations[2];
+    while (curr->addr != -1) {
+        tot += curr->size;
+        curr++;
+    }
+    pos = buffer;
+    while (TRUE) {
+        val = 0;
+        acc = 0;
+        curr = &g_MemoryAllocations[2];
+        while (curr->addr != -1) {
+            if ((curr->size < max) && (curr->size > val)) {
+                val = curr->size;
+                acc++;
+            }
+            curr++;
+        }
+        if (acc == 0) {
+            break;
+        }
+        curr = &g_MemoryAllocations[2];
+        while (curr->addr != -1) {
+            if (val == curr->size) {
+                if (count < 200) {
+                    pos += sprintf(pos, "%d ", ((curr->size + 512) / 1024));
+                } else if (count == 200) {
+                    pos += sprintf(pos, "...");
+                }
+                count++;
+            }
+            curr++;
+        }
+    }
+    if (count > 200) {
+        sprintf(pos, "[%d]", count);
+    }
+}
+#else
 const char aD_3[] = "%d ";
 const char a___[] = "...";
 const char aD_5[] = "[%d]";
-
-#ifdef NONMATCHING
-void generate_list_alloc_mem(void) {
-
-}
-#else
 GLOBAL_ASM(
 .text
 glabel generate_list_alloc_mem
@@ -540,7 +581,7 @@ void memaGenerateListsBeforeAfterMerge(void)
     s32 count;
     
     generate_list_alloc_mem();
-    for (count = 0; count != 0x1fc; count +=1)
+    for (count = 0; count != 0x1fc; count++)
     {
         memaSortMergeEntries(&g_MemoryAllocations);
     }
