@@ -573,85 +573,22 @@ glabel generate_list_alloc_mem
 )
 #endif
 
-
-
-
-void memaGenerateListsBeforeAfterMerge(void)
-{
-    s32 count;
-    
+void memaGenerateListsBeforeAfterMerge(void) {
+    s32 i;    
     generate_list_alloc_mem();
-    for (count = 0; count != 0x1fc; count++)
-    {
+    for (i = 0; i < 508; i++) {
         memaSortMergeEntries(&g_MemoryAllocations);
     }
     generate_list_alloc_mem();
 }
 
-
-
-#ifdef NONMATCHING
-void mem_related_something_first_related_0(void *arg0)
-{
-    s32 temp_s1;
-    s32 phi_s1;
-    void *phi_s0;
-
-    if (-1 != g_MemoryAllocations + 0x10)
-    {
-        phi_s1 = g_MemoryAllocations + 0x10;
-        phi_s0 = &g_MemoryAllocations + 0x10;
-loop_2:
-        arg0(phi_s1 + phi_s0->unk4, phi_s0);
-        temp_s1 = phi_s0->unk8;
-        phi_s1 = temp_s1;
-        phi_s0 = phi_s0 + 8;
-        if (-1 != temp_s1)
-        {
-            goto loop_2;
-        }
+void mem_related_something_first_related_0(void (*func)(u32, allocation*)) {
+    allocation *curr = &g_MemoryAllocations[2];
+    while (curr->addr != -1) {
+        func((curr->addr + curr->size), curr);
+        curr++;
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel mem_related_something_first_related_0
-/* 00AEF8 7000A2F8 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 00AEFC 7000A2FC 3C0F8006 */  lui   $t7, %hi(g_MemoryAllocations + 0x10) 
-/* 00AF00 7000A300 8DEF3C38 */  lw    $t7, %lo(g_MemoryAllocations + 0x10)($t7)
-/* 00AF04 7000A304 AFB30020 */  sw    $s3, 0x20($sp)
-/* 00AF08 7000A308 3C0E8006 */  lui   $t6, %hi(g_MemoryAllocations + 0x10) 
-/* 00AF0C 7000A30C 2413FFFF */  li    $s3, -1
-/* 00AF10 7000A310 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 00AF14 7000A314 AFB00014 */  sw    $s0, 0x14($sp)
-/* 00AF18 7000A318 25CE3C38 */  addiu $t6, %lo(g_MemoryAllocations + 0x10) # addiu $t6, $t6, 0x3c38
-/* 00AF1C 7000A31C 00809025 */  move  $s2, $a0
-/* 00AF20 7000A320 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 00AF24 7000A324 AFB10018 */  sw    $s1, 0x18($sp)
-/* 00AF28 7000A328 126F000A */  beq   $s3, $t7, .L7000A354
-/* 00AF2C 7000A32C 01C08025 */   move  $s0, $t6
-/* 00AF30 7000A330 8DD10000 */  lw    $s1, ($t6)
-/* 00AF34 7000A334 8E180004 */  lw    $t8, 4($s0)
-.L7000A338:
-/* 00AF38 7000A338 02002825 */  move  $a1, $s0
-/* 00AF3C 7000A33C 0240F809 */  jalr  $s2
-/* 00AF40 7000A340 02382021 */  addu  $a0, $s1, $t8
-/* 00AF44 7000A344 8E110008 */  lw    $s1, 8($s0)
-/* 00AF48 7000A348 26100008 */  addiu $s0, $s0, 8
-/* 00AF4C 7000A34C 5671FFFA */  bnel  $s3, $s1, .L7000A338
-/* 00AF50 7000A350 8E180004 */   lw    $t8, 4($s0)
-.L7000A354:
-/* 00AF54 7000A354 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 00AF58 7000A358 8FB00014 */  lw    $s0, 0x14($sp)
-/* 00AF5C 7000A35C 8FB10018 */  lw    $s1, 0x18($sp)
-/* 00AF60 7000A360 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 00AF64 7000A364 8FB30020 */  lw    $s3, 0x20($sp)
-/* 00AF68 7000A368 03E00008 */  jr    $ra
-/* 00AF6C 7000A36C 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
-
-
 
 #ifdef NONMATCHING
 u32 mem_related_0(void) {
