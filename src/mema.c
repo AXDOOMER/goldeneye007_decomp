@@ -359,20 +359,12 @@ void mem_related_model_room_buffers_0(u32 addr, u32 size) {
 }
 
 #ifdef NONMATCHING
-void *mem_related_allocated_table_related(void)
-{
-    void *temp_v1;
-    void *phi_v1;
-
-    phi_v1 = &g_MemoryAllocations;
-loop_1:
-    temp_v1 = phi_v1 + 0x20;
-    phi_v1 = temp_v1;
-    if (temp_v1 != &g_MemoryAllocations + 0xFE0)
-    {
-        goto loop_1;
+// ac54:    bnel    v1,v0,0xac54 ~>                  r ac54:    bnel    v0,v1,0xac54 ~>
+void mem_related_allocated_table_related(void) {
+    s32 i;
+    for (i = 0; &g_MemoryAllocations[i] != &g_MemoryAllocations[508]; i += 4) {
+        // Removed
     }
-    return &g_MemoryAllocations + 0xFE0;
 }
 #else
 GLOBAL_ASM(
