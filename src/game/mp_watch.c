@@ -117,93 +117,24 @@ page_adv_right_gameover:
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-u32 check_can_advance_left_on_mpmenu(void) {
-  switch(pPlayer->mpmenumode) {
-  case 0:
-    return 0;
-  case 1:
-    if (is_gameover_flag == 0) {
+s32 check_can_advance_left_on_mpmenu(void) {
+  switch(pPlayer->mpmenumode)
+  {
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+      return 1;
+    case 0:
+    case 6:
+    case 7:
       return 0;
-    }
-    return 1;
-  case 2:
-    return 1;
-  case 3:
-    return 1;
-  case 4:
-    return 1;
-  case 5:
-    return 1;
-  case 6:
-    return 0;
-  case 7:
-    return 0;
-  default:
-    return 0;
+    case 1:
+      return is_gameover_flag ? 1 : 0;
+    default:
+      return 0;
   }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:8005BC60*/
-glabel jpt_MP_menu_page_adv_left
-.word page_adv_left_no
-.word page_adv_left_gameover
-.word page_adv_left_yes
-.word page_adv_left_yes
-.word page_adv_left_yes
-.word page_adv_left_yes
-.word page_adv_left_no
-.word page_adv_left_no
-
-.text
-glabel check_can_advance_left_on_mpmenu
-/* 0F69BC 7F0C1E8C 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0F69C0 7F0C1E90 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0F69C4 7F0C1E94 00001025 */  move  $v0, $zero
-/* 0F69C8 7F0C1E98 8DCF29C8 */  lw    $t7, 0x29c8($t6)
-/* 0F69CC 7F0C1E9C 2DE10008 */  sltiu $at, $t7, 8
-/* 0F69D0 7F0C1EA0 10200013 */  beqz  $at, .L7F0C1EF0
-/* 0F69D4 7F0C1EA4 000F7880 */   sll   $t7, $t7, 2
-/* 0F69D8 7F0C1EA8 3C018006 */  lui   $at, %hi(jpt_MP_menu_page_adv_left)
-/* 0F69DC 7F0C1EAC 002F0821 */  addu  $at, $at, $t7
-/* 0F69E0 7F0C1EB0 8C2FBC60 */  lw    $t7, %lo(jpt_MP_menu_page_adv_left)($at)
-/* 0F69E4 7F0C1EB4 01E00008 */  jr    $t7
-/* 0F69E8 7F0C1EB8 00000000 */   nop   
-page_adv_left_yes:
-/* 0F69EC 7F0C1EBC 03E00008 */  jr    $ra
-/* 0F69F0 7F0C1EC0 24020001 */   li    $v0, 1
-
-page_adv_left_no:
-/* 0F69F4 7F0C1EC4 03E00008 */  jr    $ra
-/* 0F69F8 7F0C1EC8 00001025 */   move  $v0, $zero
-
-page_adv_left_gameover:
-/* 0F69FC 7F0C1ECC 3C188009 */  lui   $t8, %hi(is_gameover_flag) 
-/* 0F6A00 7F0C1ED0 8F18C704 */  lw    $t8, %lo(is_gameover_flag)($t8)
-/* 0F6A04 7F0C1ED4 00001825 */  move  $v1, $zero
-/* 0F6A08 7F0C1ED8 13000003 */  beqz  $t8, .L7F0C1EE8
-/* 0F6A0C 7F0C1EDC 00000000 */   nop   
-/* 0F6A10 7F0C1EE0 03E00008 */  jr    $ra
-/* 0F6A14 7F0C1EE4 24020001 */   li    $v0, 1
-
-.L7F0C1EE8:
-/* 0F6A18 7F0C1EE8 03E00008 */  jr    $ra
-/* 0F6A1C 7F0C1EEC 00601025 */   move  $v0, $v1
-
-def_7F0C1EB4:
-.L7F0C1EF0:
-/* 0F6A20 7F0C1EF0 03E00008 */  jr    $ra
-/* 0F6A24 7F0C1EF4 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 s32 check_if_player_is_pressing_anything_right(s32 param_1)
