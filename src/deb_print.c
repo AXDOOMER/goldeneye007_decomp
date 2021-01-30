@@ -122,11 +122,13 @@ void *g_StackPtrs1[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
 void *g_StackPtrs2[] = {&sp_idle, &sp_shed, &sp_main, &sp_audi, &sp_debug};
 void *g_StackPtrs3[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
 
+
+
 // 71 x 32 text buffer (32th line is not drawn)
 unsigned char g_DebugOutputTextBuffer[32][71] = {0};
 
-s32 g_DebugOutputCurrentPosX = 0;
-s32 g_DebugOutputCurrentPosY = 0;
+static s32 g_DebugOutputCurrentPosX = 0;
+static s32 g_DebugOutputCurrentPosY = 0;
 
 // 4 x 7 bitmaps of ascii characters (0x20 - 0x7E), each padded to 32 bits
 u32 g_DebugOutputBitmaps[] = {
@@ -169,17 +171,19 @@ void deboutWriteCharAtPos(s32 x, s32 y, unsigned char c) {
     }
 }
 
-#ifdef NONMATCHING
 void deboutWriteChar(unsigned char c) {
-    if (c) {
+    if (c != '\0') {
         if (c == '\t') {
             do {
                 deboutWriteChar(' ');
             } while (g_DebugOutputCurrentPosX & 7);
-        } else if (c == '\n') {
-            g_DebugOutputCurrentPosX = 0;
+
+            return;
+        }
+        if (c == '\n') {
             g_DebugOutputCurrentPosY++;
-        }        
+            g_DebugOutputCurrentPosX = 0;
+        }
         if (g_DebugOutputCurrentPosY > 30) {
             deboutScrollUp(g_DebugOutputCurrentPosY - 30);
             g_DebugOutputCurrentPosY = 30;
@@ -194,86 +198,6 @@ void deboutWriteChar(unsigned char c) {
         }
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel deboutWriteChar
-/* 0062BC 700056BC 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0062C0 700056C0 308600FF */  andi  $a2, $a0, 0xff
-/* 0062C4 700056C4 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0062C8 700056C8 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0062CC 700056CC AFA40028 */  sw    $a0, 0x28($sp)
-/* 0062D0 700056D0 10C00039 */  beqz  $a2, .L700057B8
-/* 0062D4 700056D4 00C01025 */   move  $v0, $a2
-/* 0062D8 700056D8 24010009 */  li    $at, 9
-/* 0062DC 700056DC 14C1000A */  bne   $a2, $at, .L70005708
-/* 0062E0 700056E0 3C108002 */   lui   $s0, %hi(g_DebugOutputTextBuffer + 0x8E0)
-/* 0062E4 700056E4 26103FF8 */  addiu $s0, %lo(g_DebugOutputTextBuffer + 0x8E0) # addiu $s0, $s0, 0x3ff8
-.L700056E8:
-/* 0062E8 700056E8 0C0015AF */  jal   deboutWriteChar
-/* 0062EC 700056EC 24040020 */   li    $a0, 32
-/* 0062F0 700056F0 8E0E0000 */  lw    $t6, ($s0)
-/* 0062F4 700056F4 31CF0007 */  andi  $t7, $t6, 7
-/* 0062F8 700056F8 15E0FFFB */  bnez  $t7, .L700056E8
-/* 0062FC 700056FC 00000000 */   nop   
-/* 006300 70005700 1000002E */  b     .L700057BC
-/* 006304 70005704 8FBF001C */   lw    $ra, 0x1c($sp)
-.L70005708:
-/* 006308 70005708 2401000A */  li    $at, 10
-/* 00630C 7000570C 14410008 */  bne   $v0, $at, .L70005730
-/* 006310 70005710 3C038002 */   lui   $v1, %hi(g_DebugOutputTextBuffer + 0x8E4)
-/* 006314 70005714 24633FFC */  addiu $v1, %lo(g_DebugOutputTextBuffer + 0x8E4) # addiu $v1, $v1, 0x3ffc
-/* 006318 70005718 8C780000 */  lw    $t8, ($v1)
-/* 00631C 7000571C 3C108002 */  lui   $s0, %hi(g_DebugOutputTextBuffer + 0x8E0)
-/* 006320 70005720 26103FF8 */  addiu $s0, %lo(g_DebugOutputTextBuffer + 0x8E0) # addiu $s0, $s0, 0x3ff8
-/* 006324 70005724 27190001 */  addiu $t9, $t8, 1
-/* 006328 70005728 AC790000 */  sw    $t9, ($v1)
-/* 00632C 7000572C AE000000 */  sw    $zero, ($s0)
-.L70005730:
-/* 006330 70005730 3C038002 */  lui   $v1, %hi(g_DebugOutputTextBuffer + 0x8E4)
-/* 006334 70005734 24633FFC */  addiu $v1, %lo(g_DebugOutputTextBuffer + 0x8E4) # addiu $v1, $v1, 0x3ffc
-/* 006338 70005738 8C650000 */  lw    $a1, ($v1)
-/* 00633C 7000573C 3C108002 */  lui   $s0, %hi(g_DebugOutputTextBuffer + 0x8E0)
-/* 006340 70005740 26103FF8 */  addiu $s0, %lo(g_DebugOutputTextBuffer + 0x8E0) # addiu $s0, $s0, 0x3ff8
-/* 006344 70005744 28A1001F */  slti  $at, $a1, 0x1f
-/* 006348 70005748 1420000A */  bnez  $at, .L70005774
-/* 00634C 7000574C 24A4FFE2 */   addiu $a0, $a1, -0x1e
-/* 006350 70005750 AFA20024 */  sw    $v0, 0x24($sp)
-/* 006354 70005754 0C0015F3 */  jal   deboutScrollUp
-/* 006358 70005758 A3A6002B */   sb    $a2, 0x2b($sp)
-/* 00635C 7000575C 3C038002 */  lui   $v1, %hi(g_DebugOutputTextBuffer + 0x8E4)
-/* 006360 70005760 24633FFC */  addiu $v1, %lo(g_DebugOutputTextBuffer + 0x8E4) # addiu $v1, $v1, 0x3ffc
-/* 006364 70005764 2408001E */  li    $t0, 30
-/* 006368 70005768 8FA20024 */  lw    $v0, 0x24($sp)
-/* 00636C 7000576C 93A6002B */  lbu   $a2, 0x2b($sp)
-/* 006370 70005770 AC680000 */  sw    $t0, ($v1)
-.L70005774:
-/* 006374 70005774 2401000A */  li    $at, 10
-/* 006378 70005778 50410010 */  beql  $v0, $at, .L700057BC
-/* 00637C 7000577C 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 006380 70005780 8E040000 */  lw    $a0, ($s0)
-/* 006384 70005784 0C00158C */  jal   deboutWriteCharAtPos
-/* 006388 70005788 8C650000 */   lw    $a1, ($v1)
-/* 00638C 7000578C 8E090000 */  lw    $t1, ($s0)
-/* 006390 70005790 3C038002 */  lui   $v1, %hi(g_DebugOutputTextBuffer + 0x8E4)
-/* 006394 70005794 24633FFC */  addiu $v1, %lo(g_DebugOutputTextBuffer + 0x8E4) # addiu $v1, $v1, 0x3ffc
-/* 006398 70005798 252A0001 */  addiu $t2, $t1, 1
-/* 00639C 7000579C 29410047 */  slti  $at, $t2, 0x47
-/* 0063A0 700057A0 14200005 */  bnez  $at, .L700057B8
-/* 0063A4 700057A4 AE0A0000 */   sw    $t2, ($s0)
-/* 0063A8 700057A8 8C6C0000 */  lw    $t4, ($v1)
-/* 0063AC 700057AC AE000000 */  sw    $zero, ($s0)
-/* 0063B0 700057B0 258D0001 */  addiu $t5, $t4, 1
-/* 0063B4 700057B4 AC6D0000 */  sw    $t5, ($v1)
-.L700057B8:
-/* 0063B8 700057B8 8FBF001C */  lw    $ra, 0x1c($sp)
-.L700057BC:
-/* 0063BC 700057BC 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0063C0 700057C0 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0063C4 700057C4 03E00008 */  jr    $ra
-/* 0063C8 700057C8 00000000 */   nop   
-)
-#endif
 
 void deboutScrollUp(s32 numlines) {
     s32 y;
