@@ -18,92 +18,26 @@ u32 tlb_segment_num = 0;
 struct s_tlbmanage_table_entry TLB_managment_table[128];
 struct s_tlbmapping_table_entry TLB_manager_mapping_table[90];
 u32 TLB_manager_mapping_table_end;
- u8 (*ptr_TLBallocatedblock) [8192];
-
+ u8 (*ptr_TLBallocatedblock) [0x2000];
 
 extern u8 *_gameSegmentRomStart;
 extern u8 *_tlbbufSegmentStart;
+extern u8 *sp_boot;
 
-
-/**
- * 23E0	700017E0
- * establishes 7F- TLB buffer and management table
- */
-#ifdef NONMATCHING
-void establish_TLB_buffer_management_table(void)
-
-{
+void establish_TLB_buffer_management_table(void) {
     s32 i;
-  
-    for (i=0;i<128;i++)
-    {
-        TLB_managment_table[i]->context_value = 1;
-        TLB_managment_table[i]->pagenum = 0;
+    s32 value = 1;  
+    for (i = 0; i < 128; i++) {
+        TLB_managment_table[i].context_value = value;
+        TLB_managment_table[i].pagenum = 0;
     }
-
-    for (i=0;i<90;i++)
-    {
-        TLB_manager_mapping_table[i].entry1 = '\0';
-        TLB_manager_mapping_table[i].entry0 = '\x01';
+    for (i = 0; i < 90; i++) {
+        TLB_manager_mapping_table[i].entry1 = 0;
+        TLB_manager_mapping_table[i].entry0 = value;
     }
-
-    TLB_manager_mapping_table_end = 0x7fc65bf0;
-    ptr_TLBallocatedblock = (u8 (*) [8192])&_tlbbufSegmentStart;
+    ptr_TLBallocatedblock = ((u32)&sp_boot & ~0x1FFF) + 0xFFF4C000;
+    TLB_manager_mapping_table_end = ((u32)&TLB_managment_table) + 0xFFC08000;
 }
-
-#else
-GLOBAL_ASM(
-glabel establish_TLB_buffer_management_table
-/* 0023E0 700017E0 3C038006 */  lui   $v1, %hi(TLB_managment_table)
-/* 0023E4 700017E4 3C028006 */  lui   $v0, %hi(TLB_manager_mapping_table)
-/* 0023E8 700017E8 2442E3F0 */  addiu $v0, %lo(TLB_manager_mapping_table) # addiu $v0, $v0, -0x1c10
-/* 0023EC 700017EC 2463DBF0 */  addiu $v1, %lo(TLB_managment_table) # addiu $v1, $v1, -0x2410
-/* 0023F0 700017F0 24040001 */  li    $a0, 1
-.L700017F4:
-/* 0023F4 700017F4 24630010 */  addiu $v1, $v1, 0x10
-/* 0023F8 700017F8 0062082B */  sltu  $at, $v1, $v0
-/* 0023FC 700017FC AC64FFF0 */  sw    $a0, -0x10($v1)
-/* 002400 70001800 1420FFFC */  bnez  $at, .L700017F4
-/* 002404 70001804 AC60FFF4 */   sw    $zero, -0xc($v1)
-/* 002408 70001808 3C018006 */  lui   $at, %hi(TLB_manager_mapping_table + 2)
-/* 00240C 7000180C 3C038006 */  lui   $v1, %hi(TLB_manager_mapping_table + 4)
-/* 002410 70001810 3C028006 */  lui   $v0, %hi(TLB_manager_mapping_table_end)
-/* 002414 70001814 2442E4A4 */  addiu $v0, %lo(TLB_manager_mapping_table_end) # addiu $v0, $v0, -0x1b5c
-/* 002418 70001818 2463E3F4 */  addiu $v1, %lo(TLB_manager_mapping_table + 4) # addiu $v1, $v1, -0x1c0c
-/* 00241C 7000181C A020E3F1 */  sb    $zero, %lo(TLB_manager_mapping_table + 1)($at)
-/* 002420 70001820 A024E3F0 */  sb    $a0, %lo(TLB_manager_mapping_table)($at)
-/* 002424 70001824 A020E3F3 */  sb    $zero, %lo(TLB_manager_mapping_table + 3)($at)
-/* 002428 70001828 A024E3F2 */  sb    $a0, %lo(TLB_manager_mapping_table + 2)($at)
-.L7000182C:
-/* 00242C 7000182C 24630008 */  addiu $v1, $v1, 8
-/* 002430 70001830 A060FFFB */  sb    $zero, -5($v1)
-/* 002434 70001834 A064FFFA */  sb    $a0, -6($v1)
-/* 002438 70001838 A060FFFD */  sb    $zero, -3($v1)
-/* 00243C 7000183C A064FFFC */  sb    $a0, -4($v1)
-/* 002440 70001840 A060FFFF */  sb    $zero, -1($v1)
-/* 002444 70001844 A064FFFE */  sb    $a0, -2($v1)
-/* 002448 70001848 A060FFF9 */  sb    $zero, -7($v1)
-/* 00244C 7000184C 1462FFF7 */  bne   $v1, $v0, .L7000182C
-/* 002450 70001850 A064FFF8 */   sb    $a0, -8($v1)
-/* 002454 70001854 3C0E803B */  lui   $t6, %hi(sp_boot) # $t6, 0x803b
-/* 002458 70001858 25CEB400 */  addiu $t6, %lo(sp_boot) # addiu $t6, $t6, -0x4c00
-/* 00245C 7000185C 2401E000 */  li    $at, -8192
-/* 002460 70001860 01C17824 */  and   $t7, $t6, $at
-/* 002464 70001864 3C01FFF4 */  lui   $at, (0xFFF4C000 >> 16) # lui $at, 0xfff4
-/* 002468 70001868 3421C000 */  ori   $at, (0xFFF4C000 & 0xFFFF) # ori $at, $at, 0xc000
-/* 00246C 7000186C 01E1C021 */  addu  $t8, $t7, $at
-/* 002470 70001870 3C018006 */  lui   $at, %hi(ptr_TLBallocatedblock)
-/* 002474 70001874 AC38E4A8 */  sw    $t8, %lo(ptr_TLBallocatedblock)($at)
-/* 002478 70001878 3C01FFC0 */  lui   $at, (0xFFC08000 >> 16) # lui $at, 0xffc0
-/* 00247C 7000187C 3C198006 */  lui   $t9, %hi(TLB_managment_table) 
-/* 002480 70001880 2739DBF0 */  addiu $t9, %lo(TLB_managment_table) # addiu $t9, $t9, -0x2410
-/* 002484 70001884 34218000 */  ori   $at, (0xFFC08000 & 0xFFFF) # ori $at, $at, 0x8000
-/* 002488 70001888 03214021 */  addu  $t0, $t9, $at
-/* 00248C 7000188C 3C018006 */  lui   $at, %hi(TLB_manager_mapping_table_end)
-/* 002490 70001890 03E00008 */  jr    $ra
-/* 002494 70001894 AC28E4A4 */   sw    $t0, %lo(TLB_manager_mapping_table_end)($at)
-)
-#endif
 
 /**
  * 2498	70001898
