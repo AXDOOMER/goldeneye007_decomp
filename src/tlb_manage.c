@@ -26,40 +26,26 @@ extern u8 *sp_boot;
 
 void establish_TLB_buffer_management_table(void) {
     s32 i;
-    s32 value = 1;  
     for (i = 0; i < 128; i++) {
-        TLB_managment_table[i].context_value = value;
+        TLB_managment_table[i].context_value = 1;
         TLB_managment_table[i].pagenum = 0;
     }
     for (i = 0; i < 90; i++) {
         TLB_manager_mapping_table[i].entry1 = 0;
-        TLB_manager_mapping_table[i].entry0 = value;
+        TLB_manager_mapping_table[i].entry0 = 1;
     }
     ptr_TLBallocatedblock = ((u32)&sp_boot & ~0x1FFF) + 0xFFF4C000;
     TLB_manager_mapping_table_end = ((u32)&TLB_managment_table) + 0xFFC08000;
 }
 
-/**
- * 2498	70001898
- * ???; pointless conditional tests, will reset 800230D0
- */
 #ifdef NONMATCHING
-
-/********************************************
- * 24b0:    beqz    at,0x24b8 ~>                     i 24b0:    beqz    at,0x24bc ~>
- * 24b4:    nop                                        24b4:    nop
- *                                                   > 24b8:    sw      zero,0(v1)
- * 24b8:    jr      ra                                 24bc:    jr      ra
- * 24bc:    sw      zero,0(v1)                       | 24c0:    nop
-***************************/
-void mp_tlb_related(void)
-{
-    if ((maybe_cur_TLB_entries > 0x32) || (maybe_cur_TLB_entries < 0x1a))
-    {
-        maybe_cur_TLB_entries = 0;
-        return;
+// If-statement gets optimized out
+void mp_tlb_related(void) {
+    if ((maybe_cur_TLB_entries > 0x32) || (maybe_cur_TLB_entries < 0x1a)) {
+        // Removed
     }
-    
+    maybe_cur_TLB_entries = 0;
+        
 }
 #else
 GLOBAL_ASM(
@@ -118,24 +104,15 @@ void find_remove_TLB_entry(u32 entry) {
  *		0x1	chunk # (7F000000 | chunk<<D)
  */
 #ifdef NONMATCHING
-void remove_TLB_entry_from_table(s32 arg0)
-{
-    void *sp18;
-    void *temp_v1;
-    ? temp_ret;
-
-    temp_v1 = ((arg0 * 2) + &TLB_manager_mapping_table);
-    if (*temp_v1 == 0)
-    {
-        sp18 = temp_v1;
-        temp_ret = return_TLB_index_for_entry(((temp_v1->unk1 << 0xd) | 0x7f000000));
-        if ((temp_ret << 0) >= 0)
-        {
-            sp18 = temp_v1;
-            osUnmapTLB(temp_ret);
+void remove_TLB_entry_from_table(s32 index) {
+    s32 ret;
+    if (TLB_manager_mapping_table[index].entry0 == 0) {
+        ret = return_TLB_index_for_entry((TLB_manager_mapping_table[index].entry1 << 13) | 0x7F000000);
+        if (ret >= 0) {
+            osUnmapTLB(ret);
         }
-        (0x80060000 + (temp_v1->unk1 * 0x10))->unk-2410 = 1;
-        *temp_v1 = 1;
+        TLB_managment_table[TLB_manager_mapping_table[index].entry1].context_value = 1;
+        TLB_manager_mapping_table[index].entry0 = 1;
     }
 }
 #else
@@ -184,15 +161,10 @@ glabel remove_TLB_entry_from_table
  * loads ROM range for 7F- TLB entries
  */
 #ifdef NONMATCHING
-void translate_load_rom_from_TLBaddress(u32 address)
-{
-  //uint randval;
-  //u32 uVar1;
-  //u8 (*src) [8192];
-  //u32 uVar2;
+void translate_load_rom_from_TLBaddress(u32 address) {
   u32 tlbnum;
   
-  maybe_cur_TLB_entries += 1;
+  maybe_cur_TLB_entries++;
   find_remove_TLB_entry(address & 0x7fffe000);
 
   tlbnum = tlbRandomGetNext() % 0x5a;
@@ -204,7 +176,7 @@ void translate_load_rom_from_TLBaddress(u32 address)
   osInvalICache(0x80000000, 0x10000000);
 
   TLB_managment_table[(address & 0xffe000) >> 0xd].pagenum = tlbnum;
-  TLB_manager_mapping_table[tlbnum].entry0 = '\0';
+  TLB_manager_mapping_table[tlbnum].entry0 = 0;
   TLB_manager_mapping_table[tlbnum].entry1 = (address & 0xffe000) >> 0xd;
   TLB_managment_table[(address & 0xffe000) >> 0xd].context_value = (osVirtualToPhysical(ptr_TLBallocatedblock[tlbnum]) >> 0xc) << 6 | 0x1f;
 }

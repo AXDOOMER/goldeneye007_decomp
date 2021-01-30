@@ -4,7 +4,7 @@
 
 struct s_tlbmanage_table_entry
 {
-    s32 context_value;
+    u32 context_value;
     s32 pagenum;
     s64 RESERVED;
 };
