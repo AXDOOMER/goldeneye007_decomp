@@ -487,60 +487,31 @@ glabel sub_GAME_7F0C234C
 #endif
 
 
-
-
-
 void pauseAndLockControls(void) {
     set_controls_locked_flag(1);
     is_paused = 1;
 }
 
 
+s32 sub_GAME_7F0C24BC(void)
+{
+    if (getPlayerCount() == 1)
+    {
+        return 1;
+    }
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0C24BC(void) {
-
+    if (stop_play_flag != 0)
+    {
+        return 0;
+    }
+    
+    if (pPlayer->mpmenuon != 0)
+    {
+        return 0;
+    }
+    
+    return 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C24BC
-/* 0F6FEC 7F0C24BC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F6FF0 7F0C24C0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F6FF4 7F0C24C4 0FC26919 */  jal   getPlayerCount
-/* 0F6FF8 7F0C24C8 00000000 */   nop   
-/* 0F6FFC 7F0C24CC 24010001 */  li    $at, 1
-/* 0F7000 7F0C24D0 14410003 */  bne   $v0, $at, .L7F0C24E0
-/* 0F7004 7F0C24D4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F7008 7F0C24D8 1000000F */  b     .L7F0C2518
-/* 0F700C 7F0C24DC 24020001 */   li    $v0, 1
-.L7F0C24E0:
-/* 0F7010 7F0C24E0 3C0E8009 */  lui   $t6, %hi(stop_play_flag) 
-/* 0F7014 7F0C24E4 8DCEC700 */  lw    $t6, %lo(stop_play_flag)($t6)
-/* 0F7018 7F0C24E8 3C0F8008 */  lui   $t7, %hi(pPlayer) 
-/* 0F701C 7F0C24EC 11C00003 */  beqz  $t6, .L7F0C24FC
-/* 0F7020 7F0C24F0 00000000 */   nop   
-/* 0F7024 7F0C24F4 10000008 */  b     .L7F0C2518
-/* 0F7028 7F0C24F8 00001025 */   move  $v0, $zero
-.L7F0C24FC:
-/* 0F702C 7F0C24FC 8DEFA0B0 */  lw    $t7, %lo(pPlayer)($t7)
-/* 0F7030 7F0C2500 24020001 */  li    $v0, 1
-/* 0F7034 7F0C2504 8DF829C4 */  lw    $t8, 0x29c4($t7)
-/* 0F7038 7F0C2508 13000003 */  beqz  $t8, .L7F0C2518
-/* 0F703C 7F0C250C 00000000 */   nop   
-/* 0F7040 7F0C2510 10000001 */  b     .L7F0C2518
-/* 0F7044 7F0C2514 00001025 */   move  $v0, $zero
-.L7F0C2518:
-/* 0F7048 7F0C2518 03E00008 */  jr    $ra
-/* 0F704C 7F0C251C 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
-
-
-
 
 
 void set_stopplay_flag(void) {
