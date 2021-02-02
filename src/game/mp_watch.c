@@ -111,85 +111,41 @@ void unpause_game(void)
     is_paused = 0;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F0C2024(void) {
+s32 sub_GAME_7F0C2024(int param_1, int param_2, int param_3, int param_4, int param_5)
+{
+  s32 aux;
+  s32 result;
+  
+  if ((param_2 < param_3) ||
+     ((param_3 == param_2 && ((randomGetNext() & 1))))) {
+    result = 1;
+    aux = param_3;
+  }
+  else {
+    result = 0;
+    aux = param_2;
+  }
 
+  if (param_1 >= 3) {
+    
+    if ((aux < param_4) ||
+       ((param_4 == aux && ((randomGetNext() & 1))))) {
+      result = 2;
+      aux = param_4;
+    }
+
+    if (param_1 >= 4) {
+
+      if ((aux < param_5) ||
+        ((param_5 == aux && ((randomGetNext() & 1))))) {
+        result = 3;
+      }
+    }
+
+  }
+
+  return result;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C2024
-/* 0F6B54 7F0C2024 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0F6B58 7F0C2028 00A6082A */  slt   $at, $a1, $a2
-/* 0F6B5C 7F0C202C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F6B60 7F0C2030 1420000C */  bnez  $at, .L7F0C2064
-/* 0F6B64 7F0C2034 AFA40020 */   sw    $a0, 0x20($sp)
-/* 0F6B68 7F0C2038 54C5000E */  bnel  $a2, $a1, .L7F0C2074
-/* 0F6B6C 7F0C203C 00002025 */   move  $a0, $zero
-/* 0F6B70 7F0C2040 AFA50024 */  sw    $a1, 0x24($sp)
-/* 0F6B74 7F0C2044 AFA60028 */  sw    $a2, 0x28($sp)
-/* 0F6B78 7F0C2048 0C002914 */  jal   randomGetNext
-/* 0F6B7C 7F0C204C AFA7002C */   sw    $a3, 0x2c($sp)
-/* 0F6B80 7F0C2050 304E0001 */  andi  $t6, $v0, 1
-/* 0F6B84 7F0C2054 8FA50024 */  lw    $a1, 0x24($sp)
-/* 0F6B88 7F0C2058 8FA60028 */  lw    $a2, 0x28($sp)
-/* 0F6B8C 7F0C205C 11C00004 */  beqz  $t6, .L7F0C2070
-/* 0F6B90 7F0C2060 8FA7002C */   lw    $a3, 0x2c($sp)
-.L7F0C2064:
-/* 0F6B94 7F0C2064 24040001 */  li    $a0, 1
-/* 0F6B98 7F0C2068 10000003 */  b     .L7F0C2078
-/* 0F6B9C 7F0C206C 00C01825 */   move  $v1, $a2
-.L7F0C2070:
-/* 0F6BA0 7F0C2070 00002025 */  move  $a0, $zero
-.L7F0C2074:
-/* 0F6BA4 7F0C2074 00A01825 */  move  $v1, $a1
-.L7F0C2078:
-/* 0F6BA8 7F0C2078 8FAF0020 */  lw    $t7, 0x20($sp)
-/* 0F6BAC 7F0C207C 29E10003 */  slti  $at, $t7, 3
-/* 0F6BB0 7F0C2080 1420001F */  bnez  $at, .L7F0C2100
-/* 0F6BB4 7F0C2084 0067082A */   slt   $at, $v1, $a3
-/* 0F6BB8 7F0C2088 5420000D */  bnezl $at, .L7F0C20C0
-/* 0F6BBC 7F0C208C 24040002 */   li    $a0, 2
-/* 0F6BC0 7F0C2090 54E3000D */  bnel  $a3, $v1, .L7F0C20C8
-/* 0F6BC4 7F0C2094 8FB90020 */   lw    $t9, 0x20($sp)
-/* 0F6BC8 7F0C2098 AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0F6BCC 7F0C209C AFA40018 */  sw    $a0, 0x18($sp)
-/* 0F6BD0 7F0C20A0 0C002914 */  jal   randomGetNext
-/* 0F6BD4 7F0C20A4 AFA7002C */   sw    $a3, 0x2c($sp)
-/* 0F6BD8 7F0C20A8 30580001 */  andi  $t8, $v0, 1
-/* 0F6BDC 7F0C20AC 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 0F6BE0 7F0C20B0 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0F6BE4 7F0C20B4 13000003 */  beqz  $t8, .L7F0C20C4
-/* 0F6BE8 7F0C20B8 8FA7002C */   lw    $a3, 0x2c($sp)
-/* 0F6BEC 7F0C20BC 24040002 */  li    $a0, 2
-.L7F0C20C0:
-/* 0F6BF0 7F0C20C0 00E01825 */  move  $v1, $a3
-.L7F0C20C4:
-/* 0F6BF4 7F0C20C4 8FB90020 */  lw    $t9, 0x20($sp)
-.L7F0C20C8:
-/* 0F6BF8 7F0C20C8 8FA20030 */  lw    $v0, 0x30($sp)
-/* 0F6BFC 7F0C20CC 2B210004 */  slti  $at, $t9, 4
-/* 0F6C00 7F0C20D0 1420000B */  bnez  $at, .L7F0C2100
-/* 0F6C04 7F0C20D4 0062082A */   slt   $at, $v1, $v0
-/* 0F6C08 7F0C20D8 54200009 */  bnezl $at, .L7F0C2100
-/* 0F6C0C 7F0C20DC 24040003 */   li    $a0, 3
-/* 0F6C10 7F0C20E0 54430008 */  bnel  $v0, $v1, .L7F0C2104
-/* 0F6C14 7F0C20E4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F6C18 7F0C20E8 0C002914 */  jal   randomGetNext
-/* 0F6C1C 7F0C20EC AFA40018 */   sw    $a0, 0x18($sp)
-/* 0F6C20 7F0C20F0 30480001 */  andi  $t0, $v0, 1
-/* 0F6C24 7F0C20F4 11000002 */  beqz  $t0, .L7F0C2100
-/* 0F6C28 7F0C20F8 8FA40018 */   lw    $a0, 0x18($sp)
-/* 0F6C2C 7F0C20FC 24040003 */  li    $a0, 3
-.L7F0C2100:
-/* 0F6C30 7F0C2100 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0C2104:
-/* 0F6C34 7F0C2104 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0F6C38 7F0C2108 00801025 */  move  $v0, $a0
-/* 0F6C3C 7F0C210C 03E00008 */  jr    $ra
-/* 0F6C40 7F0C2110 00000000 */   nop   
-)
-#endif
 
 
 s32 sub_GAME_7F0C2114(int param_1, int param_2, int param_3, int param_4, int param_5)
