@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "game/unk_0C0A70.h"
 #include "game/unk_093880.h"
+#include "game/mp_watch.h"
 #include "music.h"
 #include "bondgame.h"
 #include "bondconstants.h"
@@ -191,91 +192,40 @@ glabel sub_GAME_7F0C2024
 #endif
 
 
+s32 sub_GAME_7F0C2114(int param_1, int param_2, int param_3, int param_4, int param_5)
+{
+  s32 aux;
+  s32 result;
 
+  if ((param_3 < param_2) ||
+     ((param_3 == param_2 && ((randomGetNext() & 1))))) {
+    result = 1;
+    aux = param_3;
+  }
+  else {
+    result = 0;
+    aux = param_2;
+  }
 
+  if (param_1 >= 3) {
+    
+    if ((param_4 < aux) ||
+       ((param_4 == aux && ((randomGetNext() & 1))))) {
+      result = 2;
+      aux = param_4;
+    }
 
-#ifdef NONMATCHING
-void sub_GAME_7F0C2114(void) {
+    if (param_1 >= 4) {
 
+      if ((param_5 < aux) ||
+        ((param_5 == aux && ((randomGetNext() & 1))))) {
+        result = 3;
+      }
+    }
+  }
+
+  return result;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C2114
-/* 0F6C44 7F0C2114 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0F6C48 7F0C2118 00C5082A */  slt   $at, $a2, $a1
-/* 0F6C4C 7F0C211C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F6C50 7F0C2120 1420000C */  bnez  $at, .L7F0C2154
-/* 0F6C54 7F0C2124 AFA40020 */   sw    $a0, 0x20($sp)
-/* 0F6C58 7F0C2128 54C5000E */  bnel  $a2, $a1, .L7F0C2164
-/* 0F6C5C 7F0C212C 00002025 */   move  $a0, $zero
-/* 0F6C60 7F0C2130 AFA50024 */  sw    $a1, 0x24($sp)
-/* 0F6C64 7F0C2134 AFA60028 */  sw    $a2, 0x28($sp)
-/* 0F6C68 7F0C2138 0C002914 */  jal   randomGetNext
-/* 0F6C6C 7F0C213C AFA7002C */   sw    $a3, 0x2c($sp)
-/* 0F6C70 7F0C2140 304E0001 */  andi  $t6, $v0, 1
-/* 0F6C74 7F0C2144 8FA50024 */  lw    $a1, 0x24($sp)
-/* 0F6C78 7F0C2148 8FA60028 */  lw    $a2, 0x28($sp)
-/* 0F6C7C 7F0C214C 11C00004 */  beqz  $t6, .L7F0C2160
-/* 0F6C80 7F0C2150 8FA7002C */   lw    $a3, 0x2c($sp)
-.L7F0C2154:
-/* 0F6C84 7F0C2154 24040001 */  li    $a0, 1
-/* 0F6C88 7F0C2158 10000003 */  b     .L7F0C2168
-/* 0F6C8C 7F0C215C 00C01825 */   move  $v1, $a2
-.L7F0C2160:
-/* 0F6C90 7F0C2160 00002025 */  move  $a0, $zero
-.L7F0C2164:
-/* 0F6C94 7F0C2164 00A01825 */  move  $v1, $a1
-.L7F0C2168:
-/* 0F6C98 7F0C2168 8FAF0020 */  lw    $t7, 0x20($sp)
-/* 0F6C9C 7F0C216C 29E10003 */  slti  $at, $t7, 3
-/* 0F6CA0 7F0C2170 1420001F */  bnez  $at, .L7F0C21F0
-/* 0F6CA4 7F0C2174 00E3082A */   slt   $at, $a3, $v1
-/* 0F6CA8 7F0C2178 5420000D */  bnezl $at, .L7F0C21B0
-/* 0F6CAC 7F0C217C 24040002 */   li    $a0, 2
-/* 0F6CB0 7F0C2180 54E3000D */  bnel  $a3, $v1, .L7F0C21B8
-/* 0F6CB4 7F0C2184 8FB90020 */   lw    $t9, 0x20($sp)
-/* 0F6CB8 7F0C2188 AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0F6CBC 7F0C218C AFA40018 */  sw    $a0, 0x18($sp)
-/* 0F6CC0 7F0C2190 0C002914 */  jal   randomGetNext
-/* 0F6CC4 7F0C2194 AFA7002C */   sw    $a3, 0x2c($sp)
-/* 0F6CC8 7F0C2198 30580001 */  andi  $t8, $v0, 1
-/* 0F6CCC 7F0C219C 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 0F6CD0 7F0C21A0 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0F6CD4 7F0C21A4 13000003 */  beqz  $t8, .L7F0C21B4
-/* 0F6CD8 7F0C21A8 8FA7002C */   lw    $a3, 0x2c($sp)
-/* 0F6CDC 7F0C21AC 24040002 */  li    $a0, 2
-.L7F0C21B0:
-/* 0F6CE0 7F0C21B0 00E01825 */  move  $v1, $a3
-.L7F0C21B4:
-/* 0F6CE4 7F0C21B4 8FB90020 */  lw    $t9, 0x20($sp)
-.L7F0C21B8:
-/* 0F6CE8 7F0C21B8 8FA20030 */  lw    $v0, 0x30($sp)
-/* 0F6CEC 7F0C21BC 2B210004 */  slti  $at, $t9, 4
-/* 0F6CF0 7F0C21C0 1420000B */  bnez  $at, .L7F0C21F0
-/* 0F6CF4 7F0C21C4 0043082A */   slt   $at, $v0, $v1
-/* 0F6CF8 7F0C21C8 54200009 */  bnezl $at, .L7F0C21F0
-/* 0F6CFC 7F0C21CC 24040003 */   li    $a0, 3
-/* 0F6D00 7F0C21D0 54430008 */  bnel  $v0, $v1, .L7F0C21F4
-/* 0F6D04 7F0C21D4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F6D08 7F0C21D8 0C002914 */  jal   randomGetNext
-/* 0F6D0C 7F0C21DC AFA40018 */   sw    $a0, 0x18($sp)
-/* 0F6D10 7F0C21E0 30480001 */  andi  $t0, $v0, 1
-/* 0F6D14 7F0C21E4 11000002 */  beqz  $t0, .L7F0C21F0
-/* 0F6D18 7F0C21E8 8FA40018 */   lw    $a0, 0x18($sp)
-/* 0F6D1C 7F0C21EC 24040003 */  li    $a0, 3
-.L7F0C21F0:
-/* 0F6D20 7F0C21F0 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0C21F4:
-/* 0F6D24 7F0C21F4 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0F6D28 7F0C21F8 00801025 */  move  $v0, $a0
-/* 0F6D2C 7F0C21FC 03E00008 */  jr    $ra
-/* 0F6D30 7F0C2200 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
