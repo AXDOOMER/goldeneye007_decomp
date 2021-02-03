@@ -219,108 +219,40 @@ s32 sub_GAME_7F0C2204(s32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
   return result;
 }
 
+s32 sub_GAME_7F0C234C(s32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
+{
+  s32 aux;
+  s32 result;
 
-#ifdef NONMATCHING
-void sub_GAME_7F0C234C(void) {
+  if ((arg2 < arg1) ||
+      ((arg2 == arg1 && ((randomGetNext() & 1))))) {
+    aux = (s32) arg2;
+    result = 1;
+  }
+  else {
+    aux = (s32) arg1;
+    result = 0;
+  }
+    
+  if (arg0 >= 3)
+  {
+    if ((arg3 < aux) ||
+      ((arg3 == aux && ((randomGetNext() & 1))))) {
+      aux = (s32) arg3;
+      result = 2;
+    }
 
+    if (arg0 >= 4)
+    {
+
+      if ((arg4 < aux) ||
+        ((arg4 == aux && ((randomGetNext() & 1))))) {
+        result = 3;
+      }
+    }
+  }
+  return result;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C234C
-/* 0F6E7C 7F0C234C 44856000 */  mtc1  $a1, $f12
-/* 0F6E80 7F0C2350 44867000 */  mtc1  $a2, $f14
-/* 0F6E84 7F0C2354 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0F6E88 7F0C2358 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F6E8C 7F0C235C 460C703C */  c.lt.s $f14, $f12
-/* 0F6E90 7F0C2360 AFA40020 */  sw    $a0, 0x20($sp)
-/* 0F6E94 7F0C2364 AFA7002C */  sw    $a3, 0x2c($sp)
-/* 0F6E98 7F0C2368 4503000D */  bc1tl .L7F0C23A0
-/* 0F6E9C 7F0C236C 4600710D */   trunc.w.s $f4, $f14
-/* 0F6EA0 7F0C2370 460C7032 */  c.eq.s $f14, $f12
-/* 0F6EA4 7F0C2374 00000000 */  nop   
-/* 0F6EA8 7F0C2378 4502000E */  bc1fl .L7F0C23B4
-/* 0F6EAC 7F0C237C 4600618D */   trunc.w.s $f6, $f12
-/* 0F6EB0 7F0C2380 E7AC0024 */  swc1  $f12, 0x24($sp)
-/* 0F6EB4 7F0C2384 0C002914 */  jal   randomGetNext
-/* 0F6EB8 7F0C2388 E7AE0028 */   swc1  $f14, 0x28($sp)
-/* 0F6EBC 7F0C238C 304E0001 */  andi  $t6, $v0, 1
-/* 0F6EC0 7F0C2390 C7AC0024 */  lwc1  $f12, 0x24($sp)
-/* 0F6EC4 7F0C2394 11C00006 */  beqz  $t6, .L7F0C23B0
-/* 0F6EC8 7F0C2398 C7AE0028 */   lwc1  $f14, 0x28($sp)
-/* 0F6ECC 7F0C239C 4600710D */  trunc.w.s $f4, $f14
-.L7F0C23A0:
-/* 0F6ED0 7F0C23A0 24040001 */  li    $a0, 1
-/* 0F6ED4 7F0C23A4 44032000 */  mfc1  $v1, $f4
-/* 0F6ED8 7F0C23A8 10000006 */  b     .L7F0C23C4
-/* 0F6EDC 7F0C23AC 8FB90020 */   lw    $t9, 0x20($sp)
-.L7F0C23B0:
-/* 0F6EE0 7F0C23B0 4600618D */  trunc.w.s $f6, $f12
-.L7F0C23B4:
-/* 0F6EE4 7F0C23B4 00002025 */  move  $a0, $zero
-/* 0F6EE8 7F0C23B8 44033000 */  mfc1  $v1, $f6
-/* 0F6EEC 7F0C23BC 00000000 */  nop   
-/* 0F6EF0 7F0C23C0 8FB90020 */  lw    $t9, 0x20($sp)
-.L7F0C23C4:
-/* 0F6EF4 7F0C23C4 2B210003 */  slti  $at, $t9, 3
-/* 0F6EF8 7F0C23C8 5420002E */  bnezl $at, .L7F0C2484
-/* 0F6EFC 7F0C23CC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F6F00 7F0C23D0 44834000 */  mtc1  $v1, $f8
-/* 0F6F04 7F0C23D4 C7AA002C */  lwc1  $f10, 0x2c($sp)
-/* 0F6F08 7F0C23D8 46804020 */  cvt.s.w $f0, $f8
-/* 0F6F0C 7F0C23DC 4600503C */  c.lt.s $f10, $f0
-/* 0F6F10 7F0C23E0 00000000 */  nop   
-/* 0F6F14 7F0C23E4 4503000D */  bc1tl .L7F0C241C
-/* 0F6F18 7F0C23E8 C7B0002C */   lwc1  $f16, 0x2c($sp)
-/* 0F6F1C 7F0C23EC 46005032 */  c.eq.s $f10, $f0
-/* 0F6F20 7F0C23F0 00000000 */  nop   
-/* 0F6F24 7F0C23F4 4502000E */  bc1fl .L7F0C2430
-/* 0F6F28 7F0C23F8 8FAA0020 */   lw    $t2, 0x20($sp)
-/* 0F6F2C 7F0C23FC AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0F6F30 7F0C2400 0C002914 */  jal   randomGetNext
-/* 0F6F34 7F0C2404 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0F6F38 7F0C2408 30480001 */  andi  $t0, $v0, 1
-/* 0F6F3C 7F0C240C 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 0F6F40 7F0C2410 11000006 */  beqz  $t0, .L7F0C242C
-/* 0F6F44 7F0C2414 8FA40018 */   lw    $a0, 0x18($sp)
-/* 0F6F48 7F0C2418 C7B0002C */  lwc1  $f16, 0x2c($sp)
-.L7F0C241C:
-/* 0F6F4C 7F0C241C 24040002 */  li    $a0, 2
-/* 0F6F50 7F0C2420 4600848D */  trunc.w.s $f18, $f16
-/* 0F6F54 7F0C2424 44039000 */  mfc1  $v1, $f18
-/* 0F6F58 7F0C2428 00000000 */  nop   
-.L7F0C242C:
-/* 0F6F5C 7F0C242C 8FAA0020 */  lw    $t2, 0x20($sp)
-.L7F0C2430:
-/* 0F6F60 7F0C2430 29410004 */  slti  $at, $t2, 4
-/* 0F6F64 7F0C2434 54200013 */  bnezl $at, .L7F0C2484
-/* 0F6F68 7F0C2438 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F6F6C 7F0C243C 44832000 */  mtc1  $v1, $f4
-/* 0F6F70 7F0C2440 C7A20030 */  lwc1  $f2, 0x30($sp)
-/* 0F6F74 7F0C2444 46802020 */  cvt.s.w $f0, $f4
-/* 0F6F78 7F0C2448 4600103C */  c.lt.s $f2, $f0
-/* 0F6F7C 7F0C244C 00000000 */  nop   
-/* 0F6F80 7F0C2450 4503000B */  bc1tl .L7F0C2480
-/* 0F6F84 7F0C2454 24040003 */   li    $a0, 3
-/* 0F6F88 7F0C2458 46001032 */  c.eq.s $f2, $f0
-/* 0F6F8C 7F0C245C 00000000 */  nop   
-/* 0F6F90 7F0C2460 45020008 */  bc1fl .L7F0C2484
-/* 0F6F94 7F0C2464 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F6F98 7F0C2468 0C002914 */  jal   randomGetNext
-/* 0F6F9C 7F0C246C AFA40018 */   sw    $a0, 0x18($sp)
-/* 0F6FA0 7F0C2470 304B0001 */  andi  $t3, $v0, 1
-/* 0F6FA4 7F0C2474 11600002 */  beqz  $t3, .L7F0C2480
-/* 0F6FA8 7F0C2478 8FA40018 */   lw    $a0, 0x18($sp)
-/* 0F6FAC 7F0C247C 24040003 */  li    $a0, 3
-.L7F0C2480:
-/* 0F6FB0 7F0C2480 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0C2484:
-/* 0F6FB4 7F0C2484 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0F6FB8 7F0C2488 00801025 */  move  $v0, $a0
-/* 0F6FBC 7F0C248C 03E00008 */  jr    $ra
-/* 0F6FC0 7F0C2490 00000000 */   nop   
-)
-#endif
 
 
 void pauseAndLockControls(void) {
