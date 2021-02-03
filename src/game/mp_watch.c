@@ -2239,56 +2239,28 @@ s32 true_if_displaying_rank_in_mp(s32 param_1)
   }
 }
 
-#ifdef NONMATCHING
-void true_if_displaying_score_in_mp(void) {
-
+s32 true_if_displaying_score_in_mp(s32 param_1)
+{
+  switch(get_scenario())
+  {
+    case 0:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+      return 1;
+      break;
+    case 1:
+    case 2:
+      return 0;
+      break;
+    default:
+      do {
+        /* WARNING: Do nothing block with infinite loop */             
+      } while(1);
+  }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:8005BCE0*/
-glabel jpt_MP_overlays_scoring_scenario_2
-.word not_yolt_tld
-.word yolt_tld
-.word yolt_tld
-.word not_yolt_tld
-.word not_yolt_tld
-.word not_yolt_tld
-.word not_yolt_tld
-/*.word not_yolt_tld*/
-.text
-glabel true_if_displaying_score_in_mp
-/* 0F8AFC 7F0C3FCC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F8B00 7F0C3FD0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F8B04 7F0C3FD4 0FC051D6 */  jal   get_scenario
-/* 0F8B08 7F0C3FD8 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0F8B0C 7F0C3FDC 2C410008 */  sltiu $at, $v0, 8
-/* 0F8B10 7F0C3FE0 1020000A */  beqz  $at, .L7F0C400C
-/* 0F8B14 7F0C3FE4 00027080 */   sll   $t6, $v0, 2
-/* 0F8B18 7F0C3FE8 3C018006 */  lui   $at, %hi(jpt_MP_overlays_scoring_scenario_2)
-/* 0F8B1C 7F0C3FEC 002E0821 */  addu  $at, $at, $t6
-/* 0F8B20 7F0C3FF0 8C2EBCE0 */  lw    $t6, %lo(jpt_MP_overlays_scoring_scenario_2)($at)
-/* 0F8B24 7F0C3FF4 01C00008 */  jr    $t6
-/* 0F8B28 7F0C3FF8 00000000 */   nop   
-not_yolt_tld:
-/* 0F8B2C 7F0C3FFC 10000005 */  b     .L7F0C4014
-/* 0F8B30 7F0C4000 24020001 */   li    $v0, 1
-yolt_tld:
-/* 0F8B34 7F0C4004 10000003 */  b     .L7F0C4014
-/* 0F8B38 7F0C4008 00001025 */   move  $v0, $zero
-def_7F0C3FF4:
-.L7F0C400C:
-/* 0F8B3C 7F0C400C 1000FFFF */  b     .L7F0C400C
-/* 0F8B40 7F0C4010 00000000 */   nop   
-.L7F0C4014:
-/* 0F8B44 7F0C4014 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F8B48 7F0C4018 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F8B4C 7F0C401C 03E00008 */  jr    $ra
-/* 0F8B50 7F0C4020 00000000 */   nop   
-)
-#endif
-
-
 
 
 
@@ -2300,8 +2272,6 @@ void mp_watch_menu_display(void) {
 #ifdef VERSION_US
 GLOBAL_ASM(
 .late_rodata
-/*jtbl hacks*/
-.word not_yolt_tld
 
 /*D:8005BD00*/
 glabel jpt_MP_menu_window_text
@@ -4477,8 +4447,6 @@ def_7F0C40C0:
 #ifdef VERSION_JP
 GLOBAL_ASM(
 .late_rodata
-/*jtbl hacks*/
-.word not_yolt_tld
 
 /*D:8005BD00*/
 glabel jpt_MP_menu_window_text
