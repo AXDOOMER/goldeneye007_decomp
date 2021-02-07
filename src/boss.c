@@ -166,7 +166,7 @@ void init_mainthread_data(void)
     default_player_perspective_and_height();
     store_osgetcount();
     null_init_main_1();
-    displaylist_related();
+    speedGraphDisplayListRelated();
     set_gu_scale();
     null_init_main_2();
     sub_GAME_7F000980();
@@ -407,7 +407,7 @@ loop_18:
     viInitBuffers();
     debmenuInit();
     sub_GAME_7F0C0B4C();
-    video_related_2();
+    speedGraphVideoRelated_2();
     if (osRecvMesg(&gfxFrameMsgQ, &sp1D4, 0) == 0)
     {
 loop_27:
@@ -469,8 +469,8 @@ loop_29:
                             sub_GAME_7F0C0B4C();
                         }
                         video_DL_related_4();
-                        video_related_2();
-                        video_related_3(0x20000);
+                        speedGraphVideoRelated_2();
+                        speedGraphVideoRelated_3(0x20000);
                         joyConsumeSamplesWrapper();
                         permit_stderr(0);
                         temp_ret_2 = dynGetMasterDisplayList();
@@ -598,7 +598,7 @@ loop_58:
                         load_rsp_microcode(sp1A4, temp_s3_3, 0, sp48);
                         memaIterateAndMerge();
                         sp1AC = (s32) (sp1AC ^ 1);
-                        video_related_3(0x10000);
+                        speedGraphVideoRelated_3(0x10000);
                         phi_v0_3 = loadedstage;
                         phi_fp_2 = phi_fp;
                     }
@@ -885,7 +885,7 @@ glabel mainloop
 /* 006FC8 700063C8 00000000 */   nop   
 /* 006FCC 700063CC 0FC302D3 */  jal   sub_GAME_7F0C0B4C
 /* 006FD0 700063D0 00000000 */   nop   
-/* 006FD4 700063D4 0C000A04 */  jal   video_related_2
+/* 006FD4 700063D4 0C000A04 */  jal   speedGraphVideoRelated_2
 /* 006FD8 700063D8 00000000 */   nop   
 /* 006FDC 700063DC 3C048006 */  lui   $a0, %hi(gfxFrameMsgQ)
 /* 006FE0 700063E0 2484D9A0 */  addiu $a0, %lo(gfxFrameMsgQ) # addiu $a0, $a0, -0x2660
@@ -959,9 +959,9 @@ glabel mainloop
 .L700064D8:
 /* 0070D8 700064D8 0C000B36 */  jal   video_DL_related_4
 /* 0070DC 700064DC 00000000 */   nop   
-/* 0070E0 700064E0 0C000A04 */  jal   video_related_2
+/* 0070E0 700064E0 0C000A04 */  jal   speedGraphVideoRelated_2
 /* 0070E4 700064E4 00000000 */   nop   
-/* 0070E8 700064E8 0C000A15 */  jal   video_related_3
+/* 0070E8 700064E8 0C000A15 */  jal   speedGraphVideoRelated_3
 /* 0070EC 700064EC 3C040002 */   lui   $a0, 2
 /* 0070F0 700064F0 0C002F43 */  jal   joyConsumeSamplesWrapper
 /* 0070F4 700064F4 00000000 */   nop   
@@ -1201,7 +1201,7 @@ glabel mainloop
 /* 007470 70006870 8FAC01AC */  lw    $t4, 0x1ac($sp)
 /* 007474 70006874 3C040001 */  lui   $a0, 1
 /* 007478 70006878 398A0001 */  xori  $t2, $t4, 1
-/* 00747C 7000687C 0C000A15 */  jal   video_related_3
+/* 00747C 7000687C 0C000A15 */  jal   speedGraphVideoRelated_3
 /* 007480 70006880 AFAA01AC */   sw    $t2, 0x1ac($sp)
 /* 007484 70006884 3C028002 */  lui   $v0, %hi(loadedstage)
 /* 007488 70006888 10000006 */  b     .L700068A4

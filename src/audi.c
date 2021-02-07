@@ -456,10 +456,10 @@ void amMain(void* arg)
             {
                 g_StartTime = osGetTime();
                 
-                video_related_3(0x30000);
+                speedGraphVideoRelated_3(0x30000);
                 amHandleFrameMessage(g_AudioManager.audioInfo[g_AudioFrameCount % 3U], lastInfo);
                 counter++;
-                video_related_3(0x60000);
+                speedGraphVideoRelated_3(0x60000);
 
                 g_EndTime = osGetTime();
                 
@@ -566,7 +566,7 @@ glabel amMain
 /* 002C48 70002048 00000000 */   nop   
 /* 002C4C 7000204C AE820000 */  sw    $v0, ($s4)
 /* 002C50 70002050 AE830004 */  sw    $v1, 4($s4)
-/* 002C54 70002054 0C000A15 */  jal   video_related_3
+/* 002C54 70002054 0C000A15 */  jal   speedGraphVideoRelated_3
 /* 002C58 70002058 3C040003 */   lui   $a0, 3
 /* 002C5C 7000205C 3C0F8002 */  lui   $t7, %hi(g_AudioFrameCount) 
 /* 002C60 70002060 8DEF30F4 */  lw    $t7, %lo(g_AudioFrameCount)($t7)
@@ -580,7 +580,7 @@ glabel amMain
 /* 002C80 70002080 0C000891 */  jal   amHandleFrameMessage
 /* 002C84 70002084 8FA50060 */   lw    $a1, 0x60($sp)
 /* 002C88 70002088 26310001 */  addiu $s1, $s1, 1
-/* 002C8C 7000208C 0C000A15 */  jal   video_related_3
+/* 002C8C 7000208C 0C000A15 */  jal   speedGraphVideoRelated_3
 /* 002C90 70002090 3C040006 */   lui   $a0, 6
 /* 002C94 70002094 0C003AEC */  jal   osGetTime
 /* 002C98 70002098 00000000 */   nop   
