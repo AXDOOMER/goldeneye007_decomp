@@ -4,6 +4,10 @@
 // data
 s32 D_80048490 = -1;
 s32 D_80048494 = 0;
+
+/**
+ * Appears to be rendered framerate, or some kind of counter since the last frame update.
+ */
 s32 D_80048498 = 1;
 #ifdef VERSION_JP
 f32 jpD_800484CC = 1.0f;

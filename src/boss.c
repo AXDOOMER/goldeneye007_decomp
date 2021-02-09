@@ -548,7 +548,7 @@ loop_44:
                         phi_s3_2 = temp_s3_2;
                         if (get_memusage_display_flag() != 0)
                         {
-                            phi_s3_2 = display_speed_graph(temp_s3_2);
+                            phi_s3_2 = speedGraphDisplay(temp_s3_2);
                         }
                         phi_s3_3 = (void *) phi_s3_2;
                         if (debug_feature_flag != 0)
@@ -1105,7 +1105,7 @@ glabel mainloop
 /* 00730C 7000670C 00409825 */   move  $s3, $v0
 /* 007310 70006710 10400004 */  beqz  $v0, .L70006724
 /* 007314 70006714 00000000 */   nop   
-/* 007318 70006718 0C000A56 */  jal   display_speed_graph
+/* 007318 70006718 0C000A56 */  jal   speedGraphDisplay
 /* 00731C 7000671C 02602025 */   move  $a0, $s3
 /* 007320 70006720 00409825 */  move  $s3, $v0
 .L70006724:

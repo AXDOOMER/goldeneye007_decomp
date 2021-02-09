@@ -2,6 +2,21 @@
 #include "unk_0C0A70.h"
 #include "debugmenu.h"
 
+/**
+* Used in speedGraphDisplay to check if D_80048498 and g_speedGraphCountAccumulator are
+* over the threshold for output.
+*/
+#define COUNT_REQUIRED_FOR_OUTPUT 20
+
+/**
+ * Used in speedGraphDisplay to calculate display Hz.
+ */
+#ifdef VERSION_EU
+#define VICLOCK 50
+#else
+#define VICLOCK 60
+#endif
+
 s32 dword_CODE_bss_8005F3F0[3];
 Gfx g_speedGraphDisplayList[2][266];
 s32 g_speedGraphDisplayListBank;
@@ -38,14 +53,35 @@ s_800231D4 D_800231D4[5] = {
 s32 D_800231D4[] = { 0, 0, 2, 0, 1, 0, 2, 0, 2, 0xFF000000, 2, 0, 3, 0x9200, 4, 0xFFFFFFFF, 4, 0xDB000000, 4, 0xFFFFFFFF };
 #endif
 
-u32 D_80023224 = 0;
-s32 D_80023228 = 0;
+/**
+ * 80023224. Seems to accumulate D_80048498 in speedGraphDisplay. Once above the threshold COUNT_REQUIRED_FOR_OUTPUT,
+ * the value COUNT_REQUIRED_FOR_OUTPUT is repeatedly subtracted until below the threshold.
+ */
+u32 g_speedGraphCountAccumulator = 0;
+
+/**
+ * 80023228. Stores max value of D_80048498 seen in speedGraphDisplay. Resets to zero once
+ * output is rendered.
+ */
+s32 g_speedGraphMaxSeenCount = 0;
+
+/**
+ * 8002322C.
+ */
 s32 D_8002322C = 0;
+
+/**
+ * 80023230.
+ */
 u32 g_speedGraphCounterForFrames = 0;
+
+/**
+ * 80023234.
+ */
 s32 D_80023234 = 1;
 
 /*    .rodata*/
-#ifndef NONMATCHING
+//#ifndef NONMATCHING
 const char aUtz2_0f[] = "utz %2.0f%%\n";
 const char aRsp2_0f[] = "rsp %2.0f%%\n";
 const char aTex2_0f[] = "tex %2.0f%%";
@@ -54,11 +90,13 @@ const char a2dFrames[] = "%2d frames";
 const char a2d[] = " [%2d]";
 const char asc_D_80028468[] = "     ";
 const char aIL0[] = "I=l0"; // 775875.0f
-#endif
+//#endif
 
 // forward declarations
 void speedGraphVideoRelated_2(void);
 
+int sprintf(char *dst, const char *fmt, ...);
+u32 *get_counters(void);
 /////
 
 void speedGraphDisplayListRelated(void)
@@ -140,294 +178,95 @@ void speedGraphVideoRelated_3(s32 arg0) {
     osSetIntMask(mask);
 }
 
-#ifdef NONMATCHING
-int sprintf(char *dst, const char *fmt, ...);
-u32 *get_counters(void);
-Gfx *display_speed_graph(Gfx *gdl) {
+Gfx *speedGraphDisplay(Gfx *gdl)
+{
     u32 *counters;
-    char buffer[20];
-    u32 test = D_80023224 + D_80048498;
-    if (D_80023228 < D_80048498) {
-        D_80023228 = D_80048498;
+    u32 localCountAccumulator = g_speedGraphCountAccumulator;
+    s32 *pmaxSeenCount = &g_speedGraphMaxSeenCount;
+    char buffer[12];
+    volatile u32 *pcountAccumulator = &g_speedGraphCountAccumulator;
+    
+    localCountAccumulator += D_80048498;
+
+    if (*pmaxSeenCount < D_80048498)
+    {
+        *pmaxSeenCount = D_80048498;
     }
-    if (test  > 20) {
-        while (test  > 20) {
-            test -= 20;
+
+    *pcountAccumulator = localCountAccumulator;
+    
+    if (localCountAccumulator > COUNT_REQUIRED_FOR_OUTPUT)
+    {
+        *pcountAccumulator = localCountAccumulator;
+
+        if (localCountAccumulator > COUNT_REQUIRED_FOR_OUTPUT)
+        {
+            do
+            {
+                localCountAccumulator -= COUNT_REQUIRED_FOR_OUTPUT;
+            }
+            while (localCountAccumulator > COUNT_REQUIRED_FOR_OUTPUT);
+
+            *pcountAccumulator = localCountAccumulator;
         }
+        
         counters = get_counters();
+
         debmenuSetPrimColor(255, 255, 255, 255);
         debmenuSetEnvColor(0, 0, 0, 255);
+
+        // utz %
+        // sprintf string is: "utz %2.0f%%\n"
         debmenuSetPosition(8, 5);
-        sprintf(buffer, "utz %2.0f%%\n", (((counters[1] - counters[3]) * 100.0f) / counters[0]));
+        sprintf(buffer, aUtz2_0f, (((counters[1] - counters[3]) * 100.0f) / counters[0]));
         debmenuWriteString(buffer);
+
+        // rsp %
+        // sprintf string is: "rsp %2.0f%%\n"
         debmenuSetPosition(8, 6);
-        sprintf(buffer, "rsp %2.0f%%\n", (((counters[0] - counters[1]) * 100.0f) / counters[0]));
+        sprintf(buffer, aRsp2_0f, (((counters[0] - counters[1]) * 100.0f) / counters[0]));
         debmenuWriteString(buffer);
+
+        // tex %
+        // sprintf string is: "tex %2.0f%%"
         debmenuSetPosition(8, 7);
-        sprintf(buffer, "tex %2.0f%%", ((counters[3] * 100.0f) / counters[0]));
+        sprintf(buffer, aTex2_0f, ((counters[3] * 100.0f) / counters[0]));
         debmenuWriteString(buffer);
+
+        // hz (60 / framerate)
+        // -- or 50 for PAL
+        // sprintf string is: "%2d hz"
         debmenuSetPosition(28, 5);
-        sprintf(buffer, "%2d hz", ((D_80048498 == 0) ? 0 : (60 / D_80048498)));
+        sprintf(buffer, a2dHz, ((D_80048498 == 0) ? 0 : (VICLOCK / D_80048498)));
         debmenuWriteString(buffer);
+
+        // framerate
+        // sprintf string is: "%2d frames"
         debmenuSetPosition(28, 6);
-        sprintf(buffer, "%2d frames", D_80048498);
+        sprintf(buffer, a2dFrames, D_80048498);
         debmenuWriteString(buffer);
-        if (D_80023228 != D_80048498) {
-            sprintf(buffer, " [%2d]", D_80023228);
-        } else {
-            sprintf(buffer, "     ");
+
+        // (continues framerate output)
+        if (D_80048498 != g_speedGraphMaxSeenCount)
+        {
+            // sprintf string is: " [%2d]"
+            sprintf(buffer, a2d, *pmaxSeenCount);
         }
+        else
+        {
+            // sprintf string is: "     "
+            sprintf(buffer, asc_D_80028468);
+        }
+
         debmenuWriteString(buffer);
-        D_80023228 = 0;
+        
+        g_speedGraphMaxSeenCount = 0;
     }
+
     gSPDisplayList(gdl++, g_speedGraphDisplayList[g_speedGraphDisplayListBank ^ 1]);
+
     return gdl;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel display_speed_graph
-/* 003558 70002958 3C038005 */  lui   $v1, %hi(D_80048498)
-/* 00355C 7000295C 3C0E8002 */  lui   $t6, %hi(D_80023228) 
-/* 003560 70002960 8C638498 */  lw    $v1, %lo(D_80048498)($v1)
-/* 003564 70002964 8DCE3228 */  lw    $t6, %lo(D_80023228)($t6)
-/* 003568 70002968 3C028002 */  lui   $v0, %hi(D_80023224)
-/* 00356C 7000296C 8C423224 */  lw    $v0, %lo(D_80023224)($v0)
-/* 003570 70002970 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 003574 70002974 01C3082A */  slt   $at, $t6, $v1
-/* 003578 70002978 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 00357C 7000297C AFB00018 */  sw    $s0, 0x18($sp)
-/* 003580 70002980 10200003 */  beqz  $at, .L70002990
-/* 003584 70002984 00431021 */   addu  $v0, $v0, $v1
-/* 003588 70002988 3C018002 */  lui   $at, %hi(D_80023228)
-/* 00358C 7000298C AC233228 */  sw    $v1, %lo(D_80023228)($at)
-.L70002990:
-/* 003590 70002990 3C018002 */  lui   $at, %hi(D_80023224)
-/* 003594 70002994 AC223224 */  sw    $v0, %lo(D_80023224)($at)
-/* 003598 70002998 2C410015 */  sltiu $at, $v0, 0x15
-/* 00359C 7000299C 142000BB */  bnez  $at, .L70002C8C
-/* 0035A0 700029A0 3C018002 */   lui   $at, %hi(D_80023224)
-/* 0035A4 700029A4 AC223224 */  sw    $v0, %lo(D_80023224)($at)
-/* 0035A8 700029A8 2C410015 */  sltiu $at, $v0, 0x15
-/* 0035AC 700029AC 14200006 */  bnez  $at, .L700029C8
-/* 0035B0 700029B0 2442FFEC */   addiu $v0, $v0, -0x14
-.L700029B4:
-/* 0035B4 700029B4 2C410015 */  sltiu $at, $v0, 0x15
-/* 0035B8 700029B8 5020FFFE */  beql  $at, $zero, .L700029B4
-/* 0035BC 700029BC 2442FFEC */   addiu $v0, $v0, -0x14
-/* 0035C0 700029C0 3C018002 */  lui   $at, %hi(D_80023224)
-/* 0035C4 700029C4 AC223224 */  sw    $v0, %lo(D_80023224)($at)
-.L700029C8:
-/* 0035C8 700029C8 0C000447 */  jal   get_counters
-/* 0035CC 700029CC AFA40048 */   sw    $a0, 0x48($sp)
-/* 0035D0 700029D0 AFA20044 */  sw    $v0, 0x44($sp)
-/* 0035D4 700029D4 240400FF */  li    $a0, 255
-/* 0035D8 700029D8 240500FF */  li    $a1, 255
-/* 0035DC 700029DC 240600FF */  li    $a2, 255
-/* 0035E0 700029E0 0C002C1B */  jal   debmenuSetPrimColor
-/* 0035E4 700029E4 240700FF */   li    $a3, 255
-/* 0035E8 700029E8 00002025 */  move  $a0, $zero
-/* 0035EC 700029EC 00002825 */  move  $a1, $zero
-/* 0035F0 700029F0 00003025 */  move  $a2, $zero
-/* 0035F4 700029F4 0C002C26 */  jal   debmenuSetEnvColor
-/* 0035F8 700029F8 240700FF */   li    $a3, 255
-/* 0035FC 700029FC 24040008 */  li    $a0, 8
-/* 003600 70002A00 0C002C10 */  jal   debmenuSetPosition
-/* 003604 70002A04 24050005 */   li    $a1, 5
-/* 003608 70002A08 8FA20044 */  lw    $v0, 0x44($sp)
-/* 00360C 70002A0C 27B00030 */  addiu $s0, $sp, 0x30
-/* 003610 70002A10 3C058003 */  lui   $a1, %hi(aUtz2_0f)
-/* 003614 70002A14 8C4F0004 */  lw    $t7, 4($v0)
-/* 003618 70002A18 8C58000C */  lw    $t8, 0xc($v0)
-/* 00361C 70002A1C 24A58420 */  addiu $a1, %lo(aUtz2_0f) # addiu $a1, $a1, -0x7be0
-/* 003620 70002A20 02002025 */  move  $a0, $s0
-/* 003624 70002A24 01F8C823 */  subu  $t9, $t7, $t8
-/* 003628 70002A28 44992000 */  mtc1  $t9, $f4
-/* 00362C 70002A2C 07210005 */  bgez  $t9, .L70002A44
-/* 003630 70002A30 468021A0 */   cvt.s.w $f6, $f4
-/* 003634 70002A34 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 003638 70002A38 44814000 */  mtc1  $at, $f8
-/* 00363C 70002A3C 00000000 */  nop   
-/* 003640 70002A40 46083180 */  add.s $f6, $f6, $f8
-.L70002A44:
-/* 003644 70002A44 8C480000 */  lw    $t0, ($v0)
-/* 003648 70002A48 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 00364C 70002A4C 44815000 */  mtc1  $at, $f10
-/* 003650 70002A50 44889000 */  mtc1  $t0, $f18
-/* 003654 70002A54 460A3402 */  mul.s $f16, $f6, $f10
-/* 003658 70002A58 05010005 */  bgez  $t0, .L70002A70
-/* 00365C 70002A5C 46809120 */   cvt.s.w $f4, $f18
-/* 003660 70002A60 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 003664 70002A64 44814000 */  mtc1  $at, $f8
-/* 003668 70002A68 00000000 */  nop   
-/* 00366C 70002A6C 46082100 */  add.s $f4, $f4, $f8
-.L70002A70:
-/* 003670 70002A70 46048183 */  div.s $f6, $f16, $f4
-/* 003674 70002A74 460032A1 */  cvt.d.s $f10, $f6
-/* 003678 70002A78 44075000 */  mfc1  $a3, $f10
-/* 00367C 70002A7C 44065800 */  mfc1  $a2, $f11
-/* 003680 70002A80 0C002B25 */  jal   sprintf
-/* 003684 70002A84 00000000 */   nop   
-/* 003688 70002A88 0C002C7A */  jal   debmenuWriteString
-/* 00368C 70002A8C 02002025 */   move  $a0, $s0
-/* 003690 70002A90 24040008 */  li    $a0, 8
-/* 003694 70002A94 0C002C10 */  jal   debmenuSetPosition
-/* 003698 70002A98 24050006 */   li    $a1, 6
-/* 00369C 70002A9C 8FA30044 */  lw    $v1, 0x44($sp)
-/* 0036A0 70002AA0 3C058003 */  lui   $a1, %hi(aRsp2_0f)
-/* 0036A4 70002AA4 24A58430 */  addiu $a1, %lo(aRsp2_0f) # addiu $a1, $a1, -0x7bd0
-/* 0036A8 70002AA8 8C620000 */  lw    $v0, ($v1)
-/* 0036AC 70002AAC 8C690004 */  lw    $t1, 4($v1)
-/* 0036B0 70002AB0 02002025 */  move  $a0, $s0
-/* 0036B4 70002AB4 44825000 */  mtc1  $v0, $f10
-/* 0036B8 70002AB8 00495023 */  subu  $t2, $v0, $t1
-/* 0036BC 70002ABC 448A9000 */  mtc1  $t2, $f18
-/* 0036C0 70002AC0 05410005 */  bgez  $t2, .L70002AD8
-/* 0036C4 70002AC4 46809220 */   cvt.s.w $f8, $f18
-/* 0036C8 70002AC8 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 0036CC 70002ACC 44818000 */  mtc1  $at, $f16
-/* 0036D0 70002AD0 00000000 */  nop   
-/* 0036D4 70002AD4 46104200 */  add.s $f8, $f8, $f16
-.L70002AD8:
-/* 0036D8 70002AD8 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 0036DC 70002ADC 44812000 */  mtc1  $at, $f4
-/* 0036E0 70002AE0 468054A0 */  cvt.s.w $f18, $f10
-/* 0036E4 70002AE4 46044182 */  mul.s $f6, $f8, $f4
-/* 0036E8 70002AE8 04410004 */  bgez  $v0, .L70002AFC
-/* 0036EC 70002AEC 3C014F80 */   li    $at, 0x4F800000 # 4294967296.000000
-/* 0036F0 70002AF0 44818000 */  mtc1  $at, $f16
-/* 0036F4 70002AF4 00000000 */  nop   
-/* 0036F8 70002AF8 46109480 */  add.s $f18, $f18, $f16
-.L70002AFC:
-/* 0036FC 70002AFC 46123203 */  div.s $f8, $f6, $f18
-/* 003700 70002B00 46004121 */  cvt.d.s $f4, $f8
-/* 003704 70002B04 44072000 */  mfc1  $a3, $f4
-/* 003708 70002B08 44062800 */  mfc1  $a2, $f5
-/* 00370C 70002B0C 0C002B25 */  jal   sprintf
-/* 003710 70002B10 00000000 */   nop   
-/* 003714 70002B14 0C002C7A */  jal   debmenuWriteString
-/* 003718 70002B18 02002025 */   move  $a0, $s0
-/* 00371C 70002B1C 24040008 */  li    $a0, 8
-/* 003720 70002B20 0C002C10 */  jal   debmenuSetPosition
-/* 003724 70002B24 24050007 */   li    $a1, 7
-/* 003728 70002B28 8FAB0044 */  lw    $t3, 0x44($sp)
-/* 00372C 70002B2C 3C058003 */  lui   $a1, %hi(aTex2_0f)
-/* 003730 70002B30 24A58440 */  addiu $a1, %lo(aTex2_0f) # addiu $a1, $a1, -0x7bc0
-/* 003734 70002B34 8D6C000C */  lw    $t4, 0xc($t3)
-/* 003738 70002B38 02002025 */  move  $a0, $s0
-/* 00373C 70002B3C 448C5000 */  mtc1  $t4, $f10
-/* 003740 70002B40 05810005 */  bgez  $t4, .L70002B58
-/* 003744 70002B44 46805420 */   cvt.s.w $f16, $f10
-/* 003748 70002B48 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 00374C 70002B4C 44813000 */  mtc1  $at, $f6
-/* 003750 70002B50 00000000 */  nop   
-/* 003754 70002B54 46068400 */  add.s $f16, $f16, $f6
-.L70002B58:
-/* 003758 70002B58 8D6D0000 */  lw    $t5, ($t3)
-/* 00375C 70002B5C 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 003760 70002B60 44819000 */  mtc1  $at, $f18
-/* 003764 70002B64 448D2000 */  mtc1  $t5, $f4
-/* 003768 70002B68 46128202 */  mul.s $f8, $f16, $f18
-/* 00376C 70002B6C 05A10005 */  bgez  $t5, .L70002B84
-/* 003770 70002B70 468022A0 */   cvt.s.w $f10, $f4
-/* 003774 70002B74 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 003778 70002B78 44813000 */  mtc1  $at, $f6
-/* 00377C 70002B7C 00000000 */  nop   
-/* 003780 70002B80 46065280 */  add.s $f10, $f10, $f6
-.L70002B84:
-/* 003784 70002B84 460A4403 */  div.s $f16, $f8, $f10
-/* 003788 70002B88 460084A1 */  cvt.d.s $f18, $f16
-/* 00378C 70002B8C 44079000 */  mfc1  $a3, $f18
-/* 003790 70002B90 44069800 */  mfc1  $a2, $f19
-/* 003794 70002B94 0C002B25 */  jal   sprintf
-/* 003798 70002B98 00000000 */   nop   
-/* 00379C 70002B9C 0C002C7A */  jal   debmenuWriteString
-/* 0037A0 70002BA0 02002025 */   move  $a0, $s0
-/* 0037A4 70002BA4 2404001C */  li    $a0, 28
-/* 0037A8 70002BA8 0C002C10 */  jal   debmenuSetPosition
-/* 0037AC 70002BAC 24050005 */   li    $a1, 5
-/* 0037B0 70002BB0 3C038005 */  lui   $v1, %hi(D_80048498)
-/* 0037B4 70002BB4 8C638498 */  lw    $v1, %lo(D_80048498)($v1)
-/* 0037B8 70002BB8 02002025 */  move  $a0, $s0
-/* 0037BC 70002BBC 3C058003 */  lui   $a1, %hi(a2dHz)
-/* 0037C0 70002BC0 14600003 */  bnez  $v1, .L70002BD0
-/* 0037C4 70002BC4 240E003C */   li    $t6, 60
-/* 0037C8 70002BC8 1000000C */  b     .L70002BFC
-/* 0037CC 70002BCC 00003025 */   move  $a2, $zero
-.L70002BD0:
-/* 0037D0 70002BD0 01C3001A */  div   $zero, $t6, $v1
-/* 0037D4 70002BD4 00003012 */  mflo  $a2
-/* 0037D8 70002BD8 14600002 */  bnez  $v1, .L70002BE4
-/* 0037DC 70002BDC 00000000 */   nop   
-/* 0037E0 70002BE0 0007000D */  break 7
-.L70002BE4:
-/* 0037E4 70002BE4 2401FFFF */  li    $at, -1
-/* 0037E8 70002BE8 14610004 */  bne   $v1, $at, .L70002BFC
-/* 0037EC 70002BEC 3C018000 */   lui   $at, 0x8000
-/* 0037F0 70002BF0 15C10002 */  bne   $t6, $at, .L70002BFC
-/* 0037F4 70002BF4 00000000 */   nop   
-/* 0037F8 70002BF8 0006000D */  break 6
-.L70002BFC:
-/* 0037FC 70002BFC 0C002B25 */  jal   sprintf
-/* 003800 70002C00 24A5844C */   addiu $a1, %lo(a2dHz) # addiu $a1, $a1, -0x7bb4
-/* 003804 70002C04 0C002C7A */  jal   debmenuWriteString
-/* 003808 70002C08 02002025 */   move  $a0, $s0
-/* 00380C 70002C0C 2404001C */  li    $a0, 28
-/* 003810 70002C10 0C002C10 */  jal   debmenuSetPosition
-/* 003814 70002C14 24050006 */   li    $a1, 6
-/* 003818 70002C18 3C058003 */  lui   $a1, %hi(a2dFrames)
-/* 00381C 70002C1C 3C068005 */  lui   $a2, %hi(D_80048498)
-/* 003820 70002C20 8CC68498 */  lw    $a2, %lo(D_80048498)($a2)
-/* 003824 70002C24 24A58454 */  addiu $a1, %lo(a2dFrames) # addiu $a1, $a1, -0x7bac
-/* 003828 70002C28 0C002B25 */  jal   sprintf
-/* 00382C 70002C2C 02002025 */   move  $a0, $s0
-/* 003830 70002C30 0C002C7A */  jal   debmenuWriteString
-/* 003834 70002C34 02002025 */   move  $a0, $s0
-/* 003838 70002C38 3C0F8002 */  lui   $t7, %hi(D_80023228) 
-/* 00383C 70002C3C 3C188005 */  lui   $t8, %hi(D_80048498) 
-/* 003840 70002C40 8F188498 */  lw    $t8, %lo(D_80048498)($t8)
-/* 003844 70002C44 8DEF3228 */  lw    $t7, %lo(D_80023228)($t7)
-/* 003848 70002C48 02002025 */  move  $a0, $s0
-/* 00384C 70002C4C 3C058003 */  lui   $a1, %hi(asc_D_80028468)
-/* 003850 70002C50 11F80007 */  beq   $t7, $t8, .L70002C70
-/* 003854 70002C54 01E03025 */   move  $a2, $t7
-/* 003858 70002C58 3C058003 */  lui   $a1, %hi(a2d)
-/* 00385C 70002C5C 24A58460 */  addiu $a1, %lo(a2d) # addiu $a1, $a1, -0x7ba0
-/* 003860 70002C60 0C002B25 */  jal   sprintf
-/* 003864 70002C64 02002025 */   move  $a0, $s0
-/* 003868 70002C68 10000003 */  b     .L70002C78
-/* 00386C 70002C6C 00000000 */   nop   
-.L70002C70:
-/* 003870 70002C70 0C002B25 */  jal   sprintf
-/* 003874 70002C74 24A58468 */   addiu $a1, $a1, %lo(asc_D_80028468)
-.L70002C78:
-/* 003878 70002C78 0C002C7A */  jal   debmenuWriteString
-/* 00387C 70002C7C 02002025 */   move  $a0, $s0
-/* 003880 70002C80 3C018002 */  lui   $at, %hi(D_80023228)
-/* 003884 70002C84 AC203228 */  sw    $zero, %lo(D_80023228)($at)
-/* 003888 70002C88 8FA40048 */  lw    $a0, 0x48($sp)
-.L70002C8C:
-/* 00388C 70002C8C 3C190600 */  lui   $t9, 0x600
-/* 003890 70002C90 AC990000 */  sw    $t9, ($a0)
-/* 003894 70002C94 3C088006 */  lui   $t0, %hi(g_speedGraphDisplayListBank) 
-/* 003898 70002C98 8D0804A0 */  lw    $t0, %lo(g_speedGraphDisplayListBank)($t0)
-/* 00389C 70002C9C 3C0C8006 */  lui   $t4, %hi(g_speedGraphDisplayList) 
-/* 0038A0 70002CA0 258CF400 */  addiu $t4, %lo(g_speedGraphDisplayList) # addiu $t4, $t4, -0xc00
-/* 0038A4 70002CA4 39090001 */  xori  $t1, $t0, 1
-/* 0038A8 70002CA8 00095140 */  sll   $t2, $t1, 5
-/* 0038AC 70002CAC 01495021 */  addu  $t2, $t2, $t1
-/* 0038B0 70002CB0 000A5080 */  sll   $t2, $t2, 2
-/* 0038B4 70002CB4 01495021 */  addu  $t2, $t2, $t1
-/* 0038B8 70002CB8 000A5100 */  sll   $t2, $t2, 4
-/* 0038BC 70002CBC 014C5821 */  addu  $t3, $t2, $t4
-/* 0038C0 70002CC0 AC8B0004 */  sw    $t3, 4($a0)
-/* 0038C4 70002CC4 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0038C8 70002CC8 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0038CC 70002CCC 24820008 */  addiu $v0, $a0, 8
-/* 0038D0 70002CD0 03E00008 */  jr    $ra
-/* 0038D4 70002CD4 27BD0048 */   addiu $sp, $sp, 0x48
-)
-#endif
 
 #ifdef NONMATCHING
 Gfx *sub_GAME_7F0D1AC0(Gfx *gdl);
