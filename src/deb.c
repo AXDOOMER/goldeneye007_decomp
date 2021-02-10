@@ -73,10 +73,16 @@ void deb70004E98(void) {
     }
 }
 
+/**
+ * Removed
+ */
 void deb70004EBC(void) {
     // Removed
 }
 
+/**
+ * Removed
+ */
 void deb70004EC4(s32 arg0, s32 arg1, s32 arg2) {
     // Removed
 }

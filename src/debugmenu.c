@@ -115,23 +115,62 @@ character g_DebugMenuTextBuffer[80][35] = {0};
 Gfx g_DebugMenuPrimitiveColors[32] = {0};
 Gfx g_DebugMenuEnvironmentColors[32] = {0};
 s32 g_DebugMenuCurrentColorIndex = 0;
+
+#define ANSI_COLOR_CODE_FG_BLACK   "\x1B[30m"
+#define ANSI_COLOR_CODE_FG_RED     "\x1B[31m"
+#define ANSI_COLOR_CODE_FG_GREEN   "\x1B[32m"
+#define ANSI_COLOR_CODE_FG_YELLOW  "\x1B[33m"
+#define ANSI_COLOR_CODE_FG_BLUE    "\x1B[34m"
+#define ANSI_COLOR_CODE_FG_MAGENTA "\x1B[35m"
+#define ANSI_COLOR_CODE_FG_CYAN    "\x1B[36m"
+#define ANSI_COLOR_CODE_FG_WHITE   "\x1B[37m"
+
+#define ANSI_COLOR_CODE_BG_BLACK   "\x1B[40m"
+#define ANSI_COLOR_CODE_BG_RED     "\x1B[41m"
+#define ANSI_COLOR_CODE_BG_GREEN   "\x1B[42m"
+#define ANSI_COLOR_CODE_BG_YELLOW  "\x1B[43m"
+#define ANSI_COLOR_CODE_BG_BLUE    "\x1B[44m"
+#define ANSI_COLOR_CODE_BG_MAGENTA "\x1B[45m"
+#define ANSI_COLOR_CODE_BG_CYAN    "\x1B[46m"
+#define ANSI_COLOR_CODE_BG_WHITE   "\x1B[47m"
+
 const char *g_DebugMenuUnusedStrings[] = {
-    "\x1B[31m\x1B[40m", "\x1B[37m\x1B[40m",
-    "\x1B[32m\x1B[40m", "\x1B[33m\x1B[40m",
-    "\x1B[34m\x1B[40m", "\x1B[35m\x1B[40m",
-    "\x1B[36m\x1B[40m", "\x1B[37m\x1B[44m",
-    "\x1B[31m\x1B[44m", "\x1B[32m\x1B[44m",
-    "\x1B[33m\x1B[44m", "\x1B[30m\x1B[44m",
-    "\x1B[35m\x1B[44m", "\x1B[36m\x1B[44m",
-    "\x1B[37m\x1B[41m", "\x1B[30m\x1B[41m",
-    "\x1B[32m\x1B[41m", "\x1B[33m\x1B[41m",
-    "\x1B[34m\x1B[41m", "\x1B[35m\x1B[41m",
-    "\x1B[36m\x1B[41m", "\x1B[37m\x1B[45m",
-    "\x1B[31m\x1B[45m", "\x1B[32m\x1B[45m",
-    "\x1B[33m\x1B[45m", "\x1B[34m\x1B[45m",
-    "\x1B[30m\x1B[45m", "\x1B[36m\x1B[45m",
-    "\x1B[37m\x1B[42m", "\x1B[31m\x1B[42m",
-    "\x1B[30m\x1B[42m", "\x1B[33m\x1B[42m"
+    ANSI_COLOR_CODE_FG_RED     ANSI_COLOR_CODE_BG_BLACK,
+    ANSI_COLOR_CODE_FG_WHITE   ANSI_COLOR_CODE_BG_BLACK,
+    ANSI_COLOR_CODE_FG_GREEN   ANSI_COLOR_CODE_BG_BLACK,
+    ANSI_COLOR_CODE_FG_YELLOW  ANSI_COLOR_CODE_BG_BLACK,
+    ANSI_COLOR_CODE_FG_BLUE    ANSI_COLOR_CODE_BG_BLACK,
+    ANSI_COLOR_CODE_FG_MAGENTA ANSI_COLOR_CODE_BG_BLACK,
+    ANSI_COLOR_CODE_FG_CYAN    ANSI_COLOR_CODE_BG_BLACK,
+
+    ANSI_COLOR_CODE_FG_WHITE   ANSI_COLOR_CODE_BG_BLUE,
+    ANSI_COLOR_CODE_FG_RED     ANSI_COLOR_CODE_BG_BLUE,
+    ANSI_COLOR_CODE_FG_GREEN   ANSI_COLOR_CODE_BG_BLUE,
+    ANSI_COLOR_CODE_FG_YELLOW  ANSI_COLOR_CODE_BG_BLUE,
+    ANSI_COLOR_CODE_FG_BLACK   ANSI_COLOR_CODE_BG_BLUE,
+    ANSI_COLOR_CODE_FG_MAGENTA ANSI_COLOR_CODE_BG_BLUE,
+    ANSI_COLOR_CODE_FG_CYAN    ANSI_COLOR_CODE_BG_BLUE,
+
+    ANSI_COLOR_CODE_FG_WHITE   ANSI_COLOR_CODE_BG_RED,
+    ANSI_COLOR_CODE_FG_BLACK   ANSI_COLOR_CODE_BG_RED,
+    ANSI_COLOR_CODE_FG_GREEN   ANSI_COLOR_CODE_BG_RED,
+    ANSI_COLOR_CODE_FG_YELLOW  ANSI_COLOR_CODE_BG_RED,
+    ANSI_COLOR_CODE_FG_BLUE    ANSI_COLOR_CODE_BG_RED,
+    ANSI_COLOR_CODE_FG_MAGENTA ANSI_COLOR_CODE_BG_RED,
+    ANSI_COLOR_CODE_FG_CYAN    ANSI_COLOR_CODE_BG_RED,
+
+    ANSI_COLOR_CODE_FG_WHITE   ANSI_COLOR_CODE_BG_MAGENTA,
+    ANSI_COLOR_CODE_FG_RED     ANSI_COLOR_CODE_BG_MAGENTA,
+    ANSI_COLOR_CODE_FG_GREEN   ANSI_COLOR_CODE_BG_MAGENTA,
+    ANSI_COLOR_CODE_FG_YELLOW  ANSI_COLOR_CODE_BG_MAGENTA,
+    ANSI_COLOR_CODE_FG_BLUE    ANSI_COLOR_CODE_BG_MAGENTA,
+    ANSI_COLOR_CODE_FG_BLACK   ANSI_COLOR_CODE_BG_MAGENTA,
+    ANSI_COLOR_CODE_FG_CYAN    ANSI_COLOR_CODE_BG_MAGENTA,
+
+    ANSI_COLOR_CODE_FG_WHITE   ANSI_COLOR_CODE_BG_GREEN,
+    ANSI_COLOR_CODE_FG_RED     ANSI_COLOR_CODE_BG_GREEN,
+    ANSI_COLOR_CODE_FG_BLACK   ANSI_COLOR_CODE_BG_GREEN,
+    ANSI_COLOR_CODE_FG_YELLOW  ANSI_COLOR_CODE_BG_GREEN
 };
 Gfx g_DebugMenuEndDisplayList = gsSPEndDisplayList();
 Gfx g_DebugMenuNoOp = gsDPNoOp();
@@ -139,20 +178,32 @@ Gfx g_DebugMenuPrimitiveColor = gsDPSetPrimColor(0, 0, 255, 255, 255, 0);
 Gfx g_DebugMenuEnvironmentColor = gsDPSetEnvColor(0, 0, 0, 0);
 u32 g_DebugMenuRandomThreshold = 0xFF; // Static?
 
+/**
+ * Removed
+ */
 u32 debmenu7000AD80(s32 arg0, s32 arg1) {
     // Removed
     return 0;
 }
 
+/**
+ * Removed
+ */
 u32 debmenu7000AD90(s32 arg0, s32 arg1) {
     // Removed
     return 0;
 }
 
+/**
+ * Removed
+ */
 void debmenu7000ADA0(void) {
     // Removed
 }
 
+/**
+ * Removed
+ */
 void debmenu7000ADA8(void) {
     // Removed
 }
@@ -196,7 +247,11 @@ void debmenuReset(void) {
     g_DebugMenuCurrentColorIndex = 0;
 }
 
-void debmenu7000AF84(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+/**
+ * Removed.
+ * Called from debmenu7000AF98
+ */
+void debmenu7000AF84(s32 x1, s32 y1, s32 x2, s32 y2) {
     // Removed
 }
 
