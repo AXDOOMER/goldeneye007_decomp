@@ -2888,7 +2888,7 @@ glabel sub_GAME_7F02516C
 /* 059E84 7F025354 0FC08C0B */  jal   something_with_weaponpos_of_guarddata_hand
 /* 059E88 7F025358 02202825 */   move  $a1, $s1
 /* 059E8C 7F02535C 8C500004 */  lw    $s0, 4($v0)
-/* 059E90 7F025360 0FC177F3 */  jal   get_automatic_firing_rate
+/* 059E90 7F025360 0FC177F3 */  jal   bondwalkItemGetAutomaticFiringRate
 /* 059E94 7F025364 82040080 */   lb    $a0, 0x80($s0)
 /* 059E98 7F025368 04410008 */  bgez  $v0, .L7F02538C
 /* 059E9C 7F02536C 03B24821 */   addu  $t1, $sp, $s2
@@ -3464,7 +3464,7 @@ glabel sub_GAME_7F02587C
 /* 05A624 7F025AF4 0FC08C0B */  jal   something_with_weaponpos_of_guarddata_hand
 /* 05A628 7F025AF8 02202825 */   move  $a1, $s1
 /* 05A62C 7F025AFC 8C500004 */  lw    $s0, 4($v0)
-/* 05A630 7F025B00 0FC177F3 */  jal   get_automatic_firing_rate
+/* 05A630 7F025B00 0FC177F3 */  jal   bondwalkItemGetAutomaticFiringRate
 /* 05A634 7F025B04 82040080 */   lb    $a0, 0x80($s0)
 /* 05A638 7F025B08 04410002 */  bgez  $v0, .L7F025B14
 /* 05A63C 7F025B0C 03B2C821 */   addu  $t9, $sp, $s2
@@ -3730,7 +3730,7 @@ glabel sub_GAME_7F025C40
 /* 05A9CC 7F025E9C AFA70034 */   sw    $a3, 0x34($sp)
 /* 05A9D0 7F025EA0 8C430004 */  lw    $v1, 4($v0)
 /* 05A9D4 7F025EA4 80640080 */  lb    $a0, 0x80($v1)
-/* 05A9D8 7F025EA8 0FC177F3 */  jal   get_automatic_firing_rate
+/* 05A9D8 7F025EA8 0FC177F3 */  jal   bondwalkItemGetAutomaticFiringRate
 /* 05A9DC 7F025EAC AFA30070 */   sw    $v1, 0x70($sp)
 /* 05A9E0 7F025EB0 8FA30070 */  lw    $v1, 0x70($sp)
 /* 05A9E4 7F025EB4 8FA60038 */  lw    $a2, 0x38($sp)
@@ -4548,7 +4548,7 @@ glabel triggered_on_shot_hit
 .L7F026968:
 /* 05B498 7F026968 8FA400B0 */  lw    $a0, 0xb0($sp)
 .L7F02696C:
-/* 05B49C 7F02696C 0FC177EA */  jal   bondwalkGetItemField68
+/* 05B49C 7F02696C 0FC177EA */  jal   bondwalkItemGetForceOfImpact
 /* 05B4A0 7F026970 AFA8005C */   sw    $t0, 0x5c($sp)
 /* 05B4A4 7F026974 44806000 */  mtc1  $zero, $f12
 /* 05B4A8 7F026978 8FA8005C */  lw    $t0, 0x5c($sp)
@@ -5333,7 +5333,7 @@ glabel handles_shot_actors
 /* 05BF58 7F027428 24010005 */   li    $at, 5
 /* 05BF5C 7F02742C 504100F0 */  beql  $v0, $at, .L7F0277F0
 /* 05BF60 7F027430 24020001 */   li    $v0, 1
-/* 05BF64 7F027434 0FC177E1 */  jal   bondwalkGetItemDestructionAmount
+/* 05BF64 7F027434 0FC177E1 */  jal   bondwalkItemGetDestructionAmount
 /* 05BF68 7F027438 8FA40074 */   lw    $a0, 0x74($sp)
 /* 05BF6C 7F02743C 8FAD0078 */  lw    $t5, 0x78($sp)
 /* 05BF70 7F027440 46000086 */  mov.s $f2, $f0
@@ -11470,7 +11470,7 @@ glabel sub_GAME_7F02BFE4
 /* 060B30 7F02C000 8C430004 */  lw    $v1, 4($v0)
 /* 060B34 7F02C004 80640080 */  lb    $a0, 0x80($v1)
 /* 060B38 7F02C008 AFA00034 */  sw    $zero, 0x34($sp)
-/* 060B3C 7F02C00C 0FC177FC */  jal   get_sound_trigger_rate
+/* 060B3C 7F02C00C 0FC177FC */  jal   bondwalkItemGetSoundTriggerRate
 /* 060B40 7F02C010 AFA30038 */   sw    $v1, 0x38($sp)
 /* 060B44 7F02C014 8FA30038 */  lw    $v1, 0x38($sp)
 /* 060B48 7F02C018 A3A20033 */  sb    $v0, 0x33($sp)
@@ -13358,7 +13358,7 @@ glabel sub_GAME_7F02D2E4
 /* 062058 7F02D528 C428CE40 */  lwc1  $f8, %lo(ai_accuracy_modifier)($at)
 /* 06205C 7F02D52C 8FA4006C */  lw    $a0, 0x6c($sp)
 /* 062060 7F02D530 46081082 */  mul.s $f2, $f2, $f8
-/* 062064 7F02D534 0FC177F3 */  jal   get_automatic_firing_rate
+/* 062064 7F02D534 0FC177F3 */  jal   bondwalkItemGetAutomaticFiringRate
 /* 062068 7F02D538 E7A2002C */   swc1  $f2, 0x2c($sp)
 /* 06206C 7F02D53C 1C400002 */  bgtz  $v0, .L7F02D548
 /* 062070 7F02D540 C7A2002C */   lwc1  $f2, 0x2c($sp)
@@ -13384,7 +13384,7 @@ glabel sub_GAME_7F02D2E4
 /* 0620B4 7F02D584 00000000 */  nop   
 /* 0620B8 7F02D588 45020026 */  bc1fl .L7F02D624
 /* 0620BC 7F02D58C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0620C0 7F02D590 0FC177E1 */  jal   bondwalkGetItemDestructionAmount
+/* 0620C0 7F02D590 0FC177E1 */  jal   bondwalkItemGetDestructionAmount
 /* 0620C4 7F02D594 00000000 */   nop   
 /* 0620C8 7F02D598 0FC074C9 */  jal   get_007_damage_mod
 /* 0620CC 7F02D59C E7A00020 */   swc1  $f0, 0x20($sp)
@@ -13601,7 +13601,7 @@ glabel sub_GAME_7F02D2E4
 /* 062058 7F02D528 C428CE40 */  lwc1  $f8, %lo(ai_accuracy_modifier)($at)
 /* 06205C 7F02D52C 8FA4006C */  lw    $a0, 0x6c($sp)
 /* 062060 7F02D530 46081082 */  mul.s $f2, $f2, $f8
-/* 062064 7F02D534 0FC177F3 */  jal   get_automatic_firing_rate
+/* 062064 7F02D534 0FC177F3 */  jal   bondwalkItemGetAutomaticFiringRate
 /* 062068 7F02D538 E7A2002C */   swc1  $f2, 0x2c($sp)
 /* 06206C 7F02D53C 1C400002 */  bgtz  $v0, .L7F02D548
 /* 062070 7F02D540 C7A2002C */   lwc1  $f2, 0x2c($sp)
@@ -13627,7 +13627,7 @@ glabel sub_GAME_7F02D2E4
 /* 0620B4 7F02D584 00000000 */  nop   
 /* 0620B8 7F02D588 45020026 */  bc1fl .L7F02D624
 /* 0620BC 7F02D58C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0620C0 7F02D590 0FC177E1 */  jal   bondwalkGetItemDestructionAmount
+/* 0620C0 7F02D590 0FC177E1 */  jal   bondwalkItemGetDestructionAmount
 /* 0620C4 7F02D594 00000000 */   nop   
 /* 0620C8 7F02D598 0FC074C9 */  jal   get_007_damage_mod
 /* 0620CC 7F02D59C E7A00020 */   swc1  $f0, 0x20($sp)
@@ -13834,7 +13834,7 @@ glabel sub_GAME_7F02D734
 /* 0622DC 7F02D7AC 012B082A */  slt   $at, $t1, $t3
 /* 0622E0 7F02D7B0 50200006 */  beql  $at, $zero, .L7F02D7CC
 /* 0622E4 7F02D7B4 8FAD028C */   lw    $t5, 0x28c($sp)
-/* 0622E8 7F02D7B8 0FC177F3 */  jal   get_automatic_firing_rate
+/* 0622E8 7F02D7B8 0FC177F3 */  jal   bondwalkItemGetAutomaticFiringRate
 /* 0622EC 7F02D7BC 81840080 */   lb    $a0, 0x80($t4)
 /* 0622F0 7F02D7C0 044102A2 */  bgez  $v0, .L7F02E24C
 /* 0622F4 7F02D7C4 8FA50288 */   lw    $a1, 0x288($sp)
@@ -13849,7 +13849,7 @@ glabel sub_GAME_7F02D734
 /* 062310 7F02D7E0 A04F0004 */  sb    $t7, 4($v0)
 /* 062314 7F02D7E4 8FB80274 */  lw    $t8, 0x274($sp)
 /* 062318 7F02D7E8 83040080 */  lb    $a0, 0x80($t8)
-/* 06231C 7F02D7EC 0FC177F3 */  jal   get_automatic_firing_rate
+/* 06231C 7F02D7EC 0FC177F3 */  jal   bondwalkItemGetAutomaticFiringRate
 /* 062320 7F02D7F0 AFA20040 */   sw    $v0, 0x40($sp)
 /* 062324 7F02D7F4 04410006 */  bgez  $v0, .L7F02D810
 /* 062328 7F02D7F8 8FAA0274 */   lw    $t2, 0x274($sp)
@@ -13859,7 +13859,7 @@ glabel sub_GAME_7F02D734
 /* 062338 7F02D808 10000031 */  b     .L7F02D8D0
 /* 06233C 7F02D80C AFA80264 */   sw    $t0, 0x264($sp)
 .L7F02D810:
-/* 062340 7F02D810 0FC177F3 */  jal   get_automatic_firing_rate
+/* 062340 7F02D810 0FC177F3 */  jal   bondwalkItemGetAutomaticFiringRate
 /* 062344 7F02D814 81440080 */   lb    $a0, 0x80($t2)
 /* 062348 7F02D818 8FA90040 */  lw    $t1, 0x40($sp)
 /* 06234C 7F02D81C 240D0001 */  li    $t5, 1
@@ -13881,7 +13881,7 @@ glabel sub_GAME_7F02D734
 /* 062384 7F02D854 240C0001 */   li    $t4, 1
 /* 062388 7F02D858 8FAE0274 */  lw    $t6, 0x274($sp)
 /* 06238C 7F02D85C AFAD0268 */  sw    $t5, 0x268($sp)
-/* 062390 7F02D860 0FC177F3 */  jal   get_automatic_firing_rate
+/* 062390 7F02D860 0FC177F3 */  jal   bondwalkItemGetAutomaticFiringRate
 /* 062394 7F02D864 81C40080 */   lb    $a0, 0x80($t6)
 /* 062398 7F02D868 8FAF0040 */  lw    $t7, 0x40($sp)
 /* 06239C 7F02D86C 0002C840 */  sll   $t9, $v0, 1
@@ -14483,7 +14483,7 @@ glabel sub_GAME_7F02D734
 /* 062C7C 7F02E14C 54410014 */  bnel  $v0, $at, .L7F02E1A0
 /* 062C80 7F02E150 8FAC0264 */   lw    $t4, 0x264($sp)
 .L7F02E154:
-/* 062C84 7F02E154 0FC177E1 */  jal   bondwalkGetItemDestructionAmount
+/* 062C84 7F02E154 0FC177E1 */  jal   bondwalkItemGetDestructionAmount
 /* 062C88 7F02E158 81240080 */   lb    $a0, 0x80($t1)
 /* 062C8C 7F02E15C 0FC26C54 */  jal   get_cur_playernum
 /* 062C90 7F02E160 E7A0004C */   swc1  $f0, 0x4c($sp)

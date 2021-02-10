@@ -6817,7 +6817,7 @@ glabel sub_GAME_7F022980
 /* 05768C 7F022B5C 96C90012 */  lhu   $t1, 0x12($s6)
 /* 057690 7F022B60 352A0001 */  ori   $t2, $t1, 1
 /* 057694 7F022B64 A6CA0012 */  sh    $t2, 0x12($s6)
-/* 057698 7F022B68 0FC177E1 */  jal   bondwalkGetItemDestructionAmount
+/* 057698 7F022B68 0FC177E1 */  jal   bondwalkItemGetDestructionAmount
 /* 05769C 7F022B6C 8E840018 */   lw    $a0, 0x18($s4)
 /* 0576A0 7F022B70 0FC26C54 */  jal   get_cur_playernum
 /* 0576A4 7F022B74 46000506 */   mov.s $f20, $f0

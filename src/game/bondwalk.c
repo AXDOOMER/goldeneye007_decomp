@@ -90,197 +90,197 @@ struct ejected_cart ejected_cartridge[] = {
 #define SCALEVAL_LAUNCHER 0.9048
 #endif
 //D:80032494
-struct weapon_stats default_weaponstats = {
+struct WeaponStats default_weaponstats = {
 	1.0, 0.0, 0.0, 0.0, 3.0, 3.0, 8.5, 0, 0, 0xFF, 0x00, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL1, 0.89999998, 1.0, 0xFF, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 4.0, 0.0, 0x110
 };
 //D:80032504
-struct weapon_stats GfistZ_stats = {
+struct WeaponStats GfistZ_stats = {
 	1.0, 11.0, -50.0, -33.0, 3.0, 3.0, 8.5, 0, 0, 0xFF, 0x06, 1, 0, 0, NULL, 2.0, 0.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 2.0, 4.0,0.0, 0x64D91
 };
 //D:80032574
-struct weapon_stats GknifeZ_stats = {
+struct WeaponStats GknifeZ_stats = {
 	1.0, 14.0, -24.799999, -34.0, 3.0, 3.0, 8.5, 0, 0, 0xFF, 0x06, 1, 0, 0, NULL, 3.0, 0.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 2.0,4.0, 0.0, 0x160D91
 };
 //D:800325E4
-struct weapon_stats GthrowknifeZ_stats = {
+struct WeaponStats GthrowknifeZ_stats = {
 	1.0, 14.0, -24.799999, -34.0, 3.0, 3.0, 8.5, 0xA, 1, 0xFF, 0x06, 1, 0, 0, NULL, 3.0, 0.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0,2.0, 4.0, 1.0, 0x560D83
 };
 
 //D:80032654
-struct weapon_stats GwppkZ_stats = {
+struct WeaponStats GwppkZ_stats = {
 	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 1, 7, 0xFF, 0x10, 1, 0, 0x6B, &GcartridgeZ_struct, 1.0, 1.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0x4080300, 3.0, 10.0, 29.999998, 1.0, 12.0, 2.0, 2.0, 4.0, 0.0, 0x170FB9
 };
 //D:800326C4
-struct weapon_stats GwppksilZ_stats = {
+struct WeaponStats GwppksilZ_stats = {
 	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 1, 7, 0xFF, 0x10, 1, 0, 0x2E, &GcartridgeZ_struct, 1.0, 3.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0x4080300, 1.5, 5.0, 29.999998, 0.0, 5.0, 1.0, 2.0, 4.0, 0.0, 0x170FB9
 };
 //D:80032734
-struct weapon_stats Gtt33Z_stats = {
+struct WeaponStats Gtt33Z_stats = {
 	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 1, 8, 0xFF, 0x10, 1, 0, 0x70, &GcartridgeZ_struct, 1.0, 6.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0x4080300, 5.0, 10.0, 59.999996, 2.0, 16.0, 3.0, 2.0, 4.0, 0.0, 0x170FB9
 };
 //D:800327A4
-struct weapon_stats GskorpianZ_stats = {
+struct WeaponStats GskorpianZ_stats = {
 	2.0, 11.5, -25.0, -27.5, 3.0, 5.0, 10.0, 1, 0x14, 0x03, 0x00, 1, 0xB, 0x6A, &GcartridgeZ_struct, 0.60000002, 15.0, 0.0, SCALEVAL_SKORPIAN, 0.88999999, 1.0, 6, 0.0, 0.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x170B79
 };
 //D:80032814
-struct weapon_stats Gak47Z_stats = {
+struct WeaponStats Gak47Z_stats = {
 	2.0, 11.0, -19.0, -16.0, 3.0, 3.0, 8.5, 3, 0x1E, 0x03, 0x00, 1, 4, 0x6D, &GcartrifleZ_struct, 1.0, 10.0, 30.0, SCALEVAL_AK47, 0.91000003, 1.0, 0x40C0006,4.5, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 3.0, 0x171A7C
 };
 //D:80032884
-struct weapon_stats GuziZ_stats = {
+struct WeaponStats GuziZ_stats = {
 	3.0, 11.0, -24.5, -37.0, 3.0, 8.0, 15.0, 1, 0x20, 0x02, 0x00, 1, 4, 0x6E, &GcartridgeZ_struct, 1.0, 9.0, 0.0, SCALEVAL_UZI, 0.88, 1.0, 0x6120006, 4.0, 3.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x171B79
 };
 //D:800328F4
-struct weapon_stats Gmp5kZ_stats = {
+struct WeaponStats Gmp5kZ_stats = {
 	2.0, 11.0, -26.4, -35.0, 3.0, 8.0, 15.0, 1, 0x1E, 0x03, 0x00, 1, 4, 0x75, &GcartridgeZ_struct, 1.0, 7.0, 0.0, SCALEVAL_SKORPIAN, 0.88999999, 1.0, 0x6120006, 4.0, 3.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x171A79
 };
 //D:80032964
-struct weapon_stats Gmp5ksilZ_stats = {
+struct WeaponStats Gmp5ksilZ_stats = {
 	2.0, 11.0, -26.4, -35.0, 3.0, 8.0, 15.0, 1, 0x1E, 0x03, 0x00, 1, 4, 0x2E, &GcartridgeZ_struct, 1.0, 9.0, 0.0, SCALEVAL_SKORPIAN, 0.88999999, 1.0, 0x6120006, 3.5, 2.0, 0.0, 0.0, 7.0, 1.2, 2.0, 4.0, 0.0, 0x171A79
 };
 //D:800329D4
-struct weapon_stats GspectreZ_stats = {
+struct WeaponStats GspectreZ_stats = {
 	2.0, 11.0, -21.9, -35.0, 3.0, 8.0, 15.0, 1, 0x32, 0x03, 0x00, 1, 4, 0x6D, &GcartridgeZ_struct, 1.4, 12.0, 0.0, SCALEVAL_SKORPIAN, 0.88999999, 1.0, 0x40C0006, 4.5, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x171A79
 };
 //D:80032A44
-struct weapon_stats Gm16Z_stats = {
+struct WeaponStats Gm16Z_stats = {
 	6.0, 11.0, -19.200001, -21.5, 3.0, 3.0, 8.5, 3, 0x1E, 0x02, 0x00, 2, 5, 0x71, &GcartblueZ_struct, 1.4, 6.0, 20.0, SCALEVAL_AK47, 0.91000003, 0.5, 0x6120208, 5.0, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 4.0, 0x171A7C
 };
 //D:80032AB4
-struct weapon_stats Gfnp90Z_stats = {
+struct WeaponStats Gfnp90Z_stats = {
 	4.0, 12.5, -25.299999, -32.5, 3.0, 8.0, 15.0, 1, 0x50, 0x02, 0x00, 3, 2, 0xFD, &GcartridgeZ_struct, 1.8, 6.0, 0.0, SCALEVAL_P90, 0.87, 1.0, 0x4080003, 3.5, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 4.0, 0x171A78
 };
 //D:80032B24
-struct weapon_stats GshotgunZ_stats = {
+struct WeaponStats GshotgunZ_stats = {
 	4.0, 11.0, -20.6, -19.5, 3.0, 3.0, 8.5, 4, 5, 0xFF, 0x0A, 1, 0, 0x79, &GcartshellZ_struct, 0.40000001, 20.0, 0.0, SCALEVAL1, 0.89999998, 1.0, 0x812080C, 9.0, 10.0, 0.0, 2.0, 25.0, 4.0, 2.0, 4.0, 5.0, 0x170AF9
 };
 
 //D:80032B94
-struct weapon_stats GautoshotZ_stats = {
+struct WeaponStats GautoshotZ_stats = {
 	4.0, 12.0, -24.1, -19.0, 3.0, 3.0, 8.5, 4, 5, 0xFF, 0x0A, 1, 0, 0x74, NULL, 0.60000002, 16.0, 0.0, SCALEVAL1, 0.89999998, 1.0, 0x812080C, 4.5, 3.0, 0.0, 2.0, 20.0, 3.0, 2.0, 4.0, 5.0, 0x170AF9
 };
 
 //D:80032C04
-struct weapon_stats GsniperrifleZ_stats = {
+struct WeaponStats GsniperrifleZ_stats = {
 	6.0, 11.0, -20.700001, -31.5, 3.0, 3.0, 8.5, 3, 8, 0xFF, 0x10, 1, 0, 0x2E, &GcartblueZ_struct, 1.0, 0.0, 15.0, SCALEVAL_AK47, 0.91000003, 0.25, 0, 0.0, 0.0, 0.0, 0.0, 7.0, 1.2, 2.0, 4.0, 0.0, 0x178A70
 };
 
 //D:80032C74
-struct weapon_stats GrugerZ_stats = {
+struct WeaponStats GrugerZ_stats = {
 	2.0, 12.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 0xC, 6, 0xFF, 0x14, 0xA, 0, 0x6F, NULL, 2.0, 0.0, 0.0, SCALEVAL_RUGER, 0.86000001, 1.0, 0x81000FF, 12.0, 35.0, 0.0, 2.0, 20.0, 3.0, 2.0, 4.0, 6.0, 0x170FB9
 };
 //D:80032CE4
-struct weapon_stats GgoldengunZ_stats = {
+struct WeaponStats GgoldengunZ_stats = {
 	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 0xD, 1, 0xFF, 0x00, 1, 0, 0x75, NULL, 100.0, 0.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0x40800FF, 5.0, 10.0, 0.0, 1.0, 9.0, 1.5, 2.0, 4.0, 0.0, 0x170F99
 };
 
 //D:80032D54
-struct weapon_stats GsilverwppkZ_stats = {
+struct WeaponStats GsilverwppkZ_stats = {
 	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 1, 7, 0xFF, 0x10, 0xA, 0, 0x6B, &GcartridgeZ_struct, 2.0, 1.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0x4080300, 3.0, 10.0, 29.999998, 1.0, 12.0, 2.0, 2.0, 4.0, 0.0, 0x170FB9
 };
 //D:80032DC4
-struct weapon_stats GgoldwppkZ_stats = {
+struct WeaponStats GgoldwppkZ_stats = {
 	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 1, 7, 0xFF, 0x10, 1, 0, 0x6B, &GcartridgeZ_struct, 100.0, 1.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0x4080300,3.0, 10.0, 29.999998, 1.0, 12.0, 2.0, 2.0, 4.0, 0.0, 0x170FB9
 };
 
 //D:80032E34
-struct weapon_stats GlaserZ_stats = {
+struct WeaponStats GlaserZ_stats = {
 	1.0, 11.0, -19.5, -28.0, 3.0, 3.0, 8.5, 0, 0, 0xFF, 0x06, 2, 0, 0xE4, NULL, 2.0, 0.0, 0.0, SCALEVAL_SKORPIAN, 0.88999999, 1.0, 0x6000606, 0.0, 0.0, 0.0, 2.0, 16.0, 2.0, 2.0, 4.0, 2.0, 0x170B99
 };
 //D:80032EA4
-struct weapon_stats GwatchlaserZ_stats = {
+struct WeaponStats GwatchlaserZ_stats = {
 	1.0, -2.0, -21.5, -19.0, 3.0, 3.0, 8.5, 0x18, 0x3E8, 0xFF, 0x00, 1, 0, 0, NULL, 2.0, 0.0, 0.0, SCALEVAL_SKORPIAN, 0.88999999, 1.0, 0xFF, 0.0, 0.0, 0.0, 1.0, 4.0, 0.2, 1.0, 4.0, 0.0, 0x600F91
 };
 //D:80032F14
-struct weapon_stats GgrenadelaunchZ_stats = {
+struct WeaponStats GgrenadelaunchZ_stats = {
 	1.0, 9.5, -18.0, -18.5, 3.0, 3.0, 8.5, 0xB, 6, 0xFF, 0x14, 1, 0, 0xC, NULL, 1.0, 0.0, 0.0, SCALEVAL_LAUNCHER, 0.92000002, 1.0, 0x81000FF, 10.5, 15.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x120AF1
 };
 //D:80032F84
-struct weapon_stats GrocketlaunchZ_stats = {
+struct WeaponStats GrocketlaunchZ_stats = {
 	1.0, 10.5, -22.200001, -14.5, 3.0, 3.0, 8.5, 6, 1, 0xFF, 0x14, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL_LAUNCHER, 0.92000002, 0.5, 0xFF, 0.0, 0.0, 0.0, 2.0, 25.0, 10.0,2.0, 4.0, 0.0, 0x120FF1
 };
 //D:80032FF4
-struct weapon_stats GgrenadeZ_stats = {
+struct WeaponStats GgrenadeZ_stats = {
 	1.0, 11.0, -41.799999, -33.0, 3.0, 3.0, 8.5, 5, 1, 0xFF, 0x00, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0xFF, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 2.0, 4.0, 0.0, 0x422982
 };
 //D:80033064
-struct weapon_stats GtimedmineZ_stats = {
+struct WeaponStats GtimedmineZ_stats = {
 	1.0, 11.0, -21.0, -37.0, 3.0, 3.0, 8.5, 9, 1, 0xFF, 0x06, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 2.0, 4.0,0.0, 0x422D82
 };
 //D:800330D4
-struct weapon_stats GproximitymineZ_stats = {
+struct WeaponStats GproximitymineZ_stats = {
 	1.0, 11.0, -21.0, -37.0, 3.0, 3.0, 8.5, 8, 1, 0xFF, 0x06, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 2.0, 4.0,0.0, 0x422D82
 };
 //D:80033144
-struct weapon_stats GremotemineZ_stats = {
+struct WeaponStats GremotemineZ_stats = {
 	1.0, 11.0, -21.0, -37.0, 3.0, 3.0, 8.5, 7, 1, 0xFF, 0x06, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 2.0, 4.0,0.0, 0x422D82
 };
 //D:800331B4
-struct weapon_stats GtriggerZ_stats = {
+struct WeaponStats GtriggerZ_stats = {
 	1.0, -2.0, -21.5, -19.0, 3.0, 3.0, 8.5, 0, 0, 0xFF, 0xFF, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 4.0,0.0, 0x890
 };
 //D:80033224
-struct weapon_stats GtaserZ_stats = {
+struct WeaponStats GtaserZ_stats = {
 	1.0, 16.0, -16.700001, -22.0, 3.0, 3.0, 8.5, 0, 0, 0xFF, 0x00, 1, 0, 0x64, NULL, 1.0, 0.0, 0.0, SCALEVAL1, 0.89999998, 1.0, 0xFF, 0.0, 0.0, 0.0, 2.0, 10.0, 2.0, 2.0, 4.0, 0.0, 0x620F70
 };
 //D:80033294
-struct weapon_stats GtankZ_stats = {
+struct WeaponStats GtankZ_stats = {
 	1.0, 8.0, -19.200001, -11.5, 3.0, 3.0, 8.5, 0x1C, 1, 0xFF, 0x14, 1, 0, 0xB, NULL, 1.0, 0.0, 0.0, SCALEVAL_LAUNCHER, 0.92000002, 1.0, 0x780078FF, 0.0, 0.0, 0.0, 2.0, 25.0, 10.0, 2.0, 4.0, 0.0, 0x76781
 };
 //D:80033304
-struct weapon_stats GbombcaseZ_stats = {
+struct WeaponStats GbombcaseZ_stats = {
 	1.0, 11.0, -21.0, -37.0, 3.0, 3.0, 8.5, 0x10, 1, 0xFF, 0x06, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 2.0,4.0, 0.0, 0x402D82
 };
 //D:80033374
-struct weapon_stats GplastiqueZ_stats = {
+struct WeaponStats GplastiqueZ_stats = {
 	1.0, 11.0, -21.0, -37.0, 3.0, 3.0, 8.5, 0x17, 1, 0xFF, 0x06, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 2.0,4.0, 0.0, 0x422D82
 };
 //D:800333E4
-struct weapon_stats GflarepistolZ_stats = {
+struct WeaponStats GflarepistolZ_stats = {
 	1.0, 9.5, -18.0, -18.5, 3.0, 3.0, 8.5, 0x11, 1, 0xFF, 0x14, 1, 0, 0xC, NULL, 1.0, 0.0, 0.0, SCALEVAL_LAUNCHER, 0.92000002, 1.0, 0x81000FF, 10.5, 15.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0xAF1
 };
 //D:80033454
-struct weapon_stats GpitongunZ_stats = {
+struct WeaponStats GpitongunZ_stats = {
 	1.0, 9.5, -18.0, -18.5, 3.0, 3.0, 8.5, 0x12, 1, 0xFF, 0x14, 1, 0, 0xC, NULL, 1.0, 0.0, 0.0, SCALEVAL_LAUNCHER, 0.92000002, 1.0, 0x81000FF, 10.5, 15.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0xAF1
 };
 //D:800334C4
-struct weapon_stats GbugZ_stats = {
+struct WeaponStats GbugZ_stats = {
 	1.0, 11.0, -21.0, -37.0, 3.0, 3.0, 8.5, 0x14, 1, 0xFF, 0x00, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0xFF, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 4.0, 0.0, 0x402982
 };
 //D:80033534
-struct weapon_stats GmicrocameraZ_stats = {
+struct WeaponStats GmicrocameraZ_stats = {
 	1.0, 11.0, -21.0, -37.0, 3.0, 3.0, 8.5, 0x15, 1, 0xFF, 0x00, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0xFF, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 4.0, 0.0, 0x402982
 };
 //D:800335A4
-struct weapon_stats GwatchmagnetattractZ_stats = {
+struct WeaponStats GwatchmagnetattractZ_stats = {
 	1.0, 11.0, -41.799999, -33.0, 3.0, 3.0, 8.5, 0x19, 0xA, 0xFF, 0xFF, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0xFF, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 4.0, 0.0, 0x602980
 };
 //D:80033614
-struct weapon_stats GgoldeneyekeyZ_stats = {
+struct WeaponStats GgoldeneyekeyZ_stats = {
 	1.0, 11.0, -41.799999, -33.0, 3.0, 3.0, 8.5, 0x16, 1, 0xFF, 0x00, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0xFF, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 4.0, 0.0, 0x482982
 };
 //D:80033684
-struct weapon_stats GcameraZ_stats = {
+struct WeaponStats GcameraZ_stats = {
 	1.0, 11.0, -41.799999, -33.0, 3.0, 3.0, 8.5, 0, 0, 0xFF, 0xFF, 1, 0, 0xF4, NULL, 1.0, 0.0, 20.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0xFF, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0xA990
 };
 //D:800336F4
-struct weapon_stats Csuit_lf_handz_stats = {
+struct WeaponStats Csuit_lf_handz_stats = {
 	1.0, 0.0, 0.0, 0.0, 3.0, 3.0, 8.5, 0, 0, 0xFF, 0x00, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL1, 0.89999998, 1.0, 0xFF, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 4.0, 0.0, 0x110
 };
 //D:80033764
-struct weapon_stats GjoypadZ_stats = {
+struct WeaponStats GjoypadZ_stats = {
 	1.0, 0.0, 0.0, 0.0, 3.0, 3.0, 8.5, 0, 0, 0xFF, 0x00, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL1, 0.89999998, 1.0, 0xFF, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 4.0, 0.0, 0x110
 };
 //D:800337D4
-struct weapon_stats stru_D_800337D4 = {
+struct WeaponStats stru_D_800337D4 = {
 	1.0, 0.0, 0.0, 0.0, 3.0, 3.0, 8.5, 6, 0, 0xFF, 0x00, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL1, 0.89999998, 1.0, 0xFF, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 4.0, 0.0, 0x110
 };
 //D:80033844
-struct weapon_stats stru_D_80033844 = {
+struct WeaponStats stru_D_80033844 = {
 	1.0, 0.0, 0.0, 0.0, 3.0, 3.0, 8.5, 0xB, 0, 0xFF, 0x00, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL1, 0.89999998, 1.0, 0xFF, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 4.0, 0.0, 0x110
 };
 //D:800338B4
-struct weapon_stats stru_D_800338B4 = {
+struct WeaponStats stru_D_800338B4 = {
 	1.0, 11.0, -41.799999, -33.0, 3.0, 3.0, 8.5, 0x1D, 0, 0xFF, 0x00, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0xFF, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 4.0, 0.0, 0x82182
 };
 
@@ -1209,7 +1209,7 @@ glabel sub_GAME_7F05C6FC
 
 
 
-struct weapon_stats *get_ptr_item_statistics(int item) {
+struct WeaponStats *get_ptr_item_statistics(int item) {
     if (gitem_structs[item].has_no_model == 0) { /* weapon has model, return stats struct */
         return gitem_structs[item].item_weapon_stats;
     }
@@ -2694,11 +2694,11 @@ f32 sub_GAME_7F05DCE8(HANDEDNESS hand)
 
 	if (hand == RIGHT_HAND) 
 	{
-		ret = get_ptr_item_statistics(get_item_in_hand_or_watch_menu(RIGHT_HAND))->pos_x;
+		ret = get_ptr_item_statistics(get_item_in_hand_or_watch_menu(RIGHT_HAND))->PosX;
 	}
 	else 
 	{
-		ret = -get_ptr_item_statistics(get_item_in_hand_or_watch_menu(LEFT_HAND))->pos_x;
+		ret = -get_ptr_item_statistics(get_item_in_hand_or_watch_menu(LEFT_HAND))->PosX;
 	}
 
 	return ret;
@@ -2711,7 +2711,7 @@ f32 get_item_in_hand_zoom(void) {
     if (get_item_in_hand_or_watch_menu(RIGHT_HAND) == ITEM_CAMERA) {
         return pPlayer->camera_zoom;
     }
-    return get_ptr_item_statistics(get_item_in_hand_or_watch_menu(RIGHT_HAND))->zoom;
+    return get_ptr_item_statistics(get_item_in_hand_or_watch_menu(RIGHT_HAND))->Zoom;
 }
 
 void camera_sniper_zoom_in(f32 zoom)
@@ -2752,37 +2752,37 @@ void camera_sniper_zoom_out(f32 zoom)
 	}
 }
 
-f32 bondwalkGetItemDestructionAmount(ITEM_IDS item)
+f32 bondwalkItemGetDestructionAmount(ITEM_IDS item)
 {
-  return get_ptr_item_statistics(item)->destruction_amount;
+  return get_ptr_item_statistics(item)->DestructionAmount;
 }
 
 
-f32 bondwalkGetItemField68(ITEM_IDS item)
+f32 bondwalkItemGetForceOfImpact(ITEM_IDS item)
 {
-	return get_ptr_item_statistics(item)->field_68;
+	return get_ptr_item_statistics(item)->ForceOfImpact;
 }
 
 
-s8 get_automatic_firing_rate(ITEM_IDS item) {
-    return get_ptr_item_statistics(item)->automatic_firing_rate;
+s8 bondwalkItemGetAutomaticFiringRate(ITEM_IDS item) {
+    return get_ptr_item_statistics(item)->AutomaticFiringRate;
 }
 
 
-u8 get_sound_trigger_rate(ITEM_IDS item) {
-    return get_ptr_item_statistics(item)->sound_trigger_rate;
+u8 bondwalkItemGetSoundTriggerRate(ITEM_IDS item) {
+    return get_ptr_item_statistics(item)->SoundTriggerRate;
 }
 
 
 u16 bondwalkItemGetSound(ITEM_IDS item)
 {
-  return get_ptr_item_statistics(item)->sound;
+  return get_ptr_item_statistics(item)->Sound;
 }
 
 
-u8 bondwalkItemGetShootThroughFlag(ITEM_IDS item)
+u8 bondwalkItemGetObjectsShootThrough(ITEM_IDS item)
 {
-  return get_ptr_item_statistics(item)->objects_shoot_through;
+  return get_ptr_item_statistics(item)->ObjectsShootThrough;
 }
 
 
@@ -2801,7 +2801,7 @@ s32 bondwalkItemHasAmmo(ITEM_IDS item)
 
 u32 bondwalkItemCheckBitflags(ITEM_IDS item, u32 mask)
 {
-  return ((get_ptr_item_statistics(item)->bitflags & mask) != 0);
+  return ((get_ptr_item_statistics(item)->BitFlags & mask) != 0);
 }
 
 
@@ -13796,7 +13796,7 @@ Weapon_shooting_machinegun:
 /* 099C40 7F065110 51E0002B */  beql  $t7, $zero, .L7F0651C0
 /* 099C44 7F065114 240E0003 */   li    $t6, 3
 .L7F065118:
-/* 099C48 7F065118 0FC177F3 */  jal   get_automatic_firing_rate
+/* 099C48 7F065118 0FC177F3 */  jal   bondwalkItemGetAutomaticFiringRate
 /* 099C4C 7F06511C 02202025 */   move  $a0, $s1
 /* 099C50 7F065120 8E0E001C */  lw    $t6, 0x1c($s0)
 /* 099C54 7F065124 01C2001A */  div   $zero, $t6, $v0
@@ -13944,7 +13944,7 @@ Weapon_shooting_throwable:
 /* 099E44 7F065314 02202025 */  move  $a0, $s1
 /* 099E48 7F065318 55A1008C */  bnel  $t5, $at, .L7F06554C
 /* 099E4C 7F06531C 8E0B0024 */   lw    $t3, 0x24($s0)
-/* 099E50 7F065320 0FC177FC */  jal   get_sound_trigger_rate
+/* 099E50 7F065320 0FC177FC */  jal   bondwalkItemGetSoundTriggerRate
 /* 099E54 7F065324 AFA001B4 */   sw    $zero, 0x1b4($sp)
 /* 099E58 7F065328 18400017 */  blez  $v0, .L7F065388
 /* 099E5C 7F06532C 3C0F8008 */   lui   $t7, %hi(pPlayer) 
@@ -13961,7 +13961,7 @@ Weapon_shooting_throwable:
 /* 099E88 7F065358 0182082A */  slt   $at, $t4, $v0
 /* 099E8C 7F06535C 1020000F */  beqz  $at, .L7F06539C
 /* 099E90 7F065360 00000000 */   nop   
-/* 099E94 7F065364 0FC177FC */  jal   get_sound_trigger_rate
+/* 099E94 7F065364 0FC177FC */  jal   bondwalkItemGetSoundTriggerRate
 /* 099E98 7F065368 02202025 */   move  $a0, $s1
 /* 099E9C 7F06536C 3C0D8005 */  lui   $t5, %hi(global_timer) 
 /* 099EA0 7F065370 8DAD837C */  lw    $t5, %lo(global_timer)($t5)
@@ -16641,7 +16641,7 @@ Weapon_shooting_machinegun:
 /* 09A214 7F0656A4 5320002B */  beql  $t9, $zero, .Ljp7F065754
 /* 09A218 7F0656A8 24190003 */   li    $t9, 3
 .Ljp7F0656AC:
-/* 09A21C 7F0656AC 0FC1793B */  jal   get_automatic_firing_rate
+/* 09A21C 7F0656AC 0FC1793B */  jal   bondwalkItemGetAutomaticFiringRate
 /* 09A220 7F0656B0 02202025 */   move  $a0, $s1
 /* 09A224 7F0656B4 8E0F001C */  lw    $t7, 0x1c($s0)
 /* 09A228 7F0656B8 01E2001A */  div   $zero, $t7, $v0
@@ -16788,7 +16788,7 @@ Weapon_shooting_throwable:
 /* 09A418 7F0658A8 02202025 */  move  $a0, $s1
 /* 09A41C 7F0658AC 55C10090 */  bnel  $t6, $at, .Ljp7F065AF0
 /* 09A420 7F0658B0 8E0E0024 */   lw    $t6, 0x24($s0)
-/* 09A424 7F0658B4 0FC17944 */  jal   get_sound_trigger_rate
+/* 09A424 7F0658B4 0FC17944 */  jal   bondwalkItemGetSoundTriggerRate
 /* 09A428 7F0658B8 AFA001C4 */   sw    $zero, 0x1c4($sp)
 /* 09A42C 7F0658BC 18400017 */  blez  $v0, .Ljp7F06591C
 /* 09A430 7F0658C0 3C198008 */   lui   $t9, %hi(pPlayer) # $t9, 0x8008
@@ -16805,7 +16805,7 @@ Weapon_shooting_throwable:
 /* 09A45C 7F0658EC 0322082A */  slt   $at, $t9, $v0
 /* 09A460 7F0658F0 1020000F */  beqz  $at, .Ljp7F065930
 /* 09A464 7F0658F4 00000000 */   nop   
-/* 09A468 7F0658F8 0FC17944 */  jal   get_sound_trigger_rate
+/* 09A468 7F0658F8 0FC17944 */  jal   bondwalkItemGetSoundTriggerRate
 /* 09A46C 7F0658FC 02202025 */   move  $a0, $s1
 /* 09A470 7F065900 3C188005 */  lui   $t8, %hi(global_timer) # $t8, 0x8005
 /* 09A474 7F065904 8F1883AC */  lw    $t8, %lo(global_timer)($t8)
@@ -18770,12 +18770,12 @@ int get_keyanalyzer_flag(void)
 
 void sub_GAME_7F066F08(void)
 {
-  add_ammo_to_inventory(AMMO_KNIFE,2,0,1);
-  add_ammo_to_inventory(AMMO_GRENADE,2,0,1);
+  add_ammo_to_inventory(AMMO_KNIFE, 2, 0, 1);
+  add_ammo_to_inventory(AMMO_GRENADE, 2, 0, 1);
   add_item_to_inventory(ITEM_SNIPERRIFLE);
   set_sound_effect_for_weapontype_collection(ITEM_SNIPERRIFLE);
   display_text_for_weapon_in_lower_left_corner(ITEM_SNIPERRIFLE);
-  give_cur_player_ammo(GsniperrifleZ_stats.ammotype,check_cur_player_ammo_amount_in_inventory(GsniperrifleZ_stats.ammotype) + GsniperrifleZ_stats.mag_size);
+  give_cur_player_ammo(GsniperrifleZ_stats.AmmoType, check_cur_player_ammo_amount_in_inventory(GsniperrifleZ_stats.AmmoType) + GsniperrifleZ_stats.MagSize);
   sub_GAME_7F08C61C(0x2c);
   draw_item_in_hand_has_more_ammo(RIGHT_HAND,ITEM_SNIPERRIFLE);
   draw_item_in_hand_has_more_ammo(LEFT_HAND,ITEM_UNARMED);
@@ -18902,8 +18902,8 @@ void sub_GAME_7F0671A4(void)
 {
   ITEM_IDS item;
   ITEM_IDS item_00;
-  struct weapon_stats *pwVar2;
-  struct weapon_stats *pwVar3;
+  struct WeaponStats *pwVar2;
+  struct WeaponStats *pwVar3;
 
   float fVar4;
   float fVar5;
