@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "ramrom.h"
 #include "tlb_manage.h"
+#include "tlb_random.h"
 
 /**
  * @file tlb_manage.c
@@ -116,6 +117,7 @@ void remove_TLB_entry_from_table(s32 index) {
     }
 }
 #else
+void remove_TLB_entry_from_table(s32 index);
 GLOBAL_ASM(
 glabel remove_TLB_entry_from_table
 /* 002554 70001954 3C0F8006 */  lui   $t7, %hi(TLB_manager_mapping_table) 
@@ -162,23 +164,28 @@ glabel remove_TLB_entry_from_table
  */
 #ifdef NONMATCHING
 void translate_load_rom_from_TLBaddress(u32 address) {
-  u32 tlbnum;
-  
-  maybe_cur_TLB_entries++;
-  find_remove_TLB_entry(address & 0x7fffe000);
-
-  tlbnum = tlbRandomGetNext() % 0x5a;
-  tlb_segment_num = tlbnum;
-  remove_TLB_entry_from_table(tlbnum);
-
-  romCopy(ptr_TLBallocatedblock[tlbnum], ((address & 0xffe000) + &_gameSegmentRomStart), 0x2000);
-  osInvalICache(0x40000000, 0x40000000);
-  osInvalICache(0x80000000, 0x10000000);
-
-  TLB_managment_table[(address & 0xffe000) >> 0xd].pagenum = tlbnum;
-  TLB_manager_mapping_table[tlbnum].entry0 = 0;
-  TLB_manager_mapping_table[tlbnum].entry1 = (address & 0xffe000) >> 0xd;
-  TLB_managment_table[(address & 0xffe000) >> 0xd].context_value = (osVirtualToPhysical(ptr_TLBallocatedblock[tlbnum]) >> 0xc) << 6 | 0x1f;
+    u32 var1;
+    u32 var2;
+    u32 var4;
+    u32 var5;
+    struct s_tlbmapping_table_entry *entry;
+    address &= 0x7FFFE000;
+    maybe_cur_TLB_entries++;
+    find_remove_TLB_entry(address);
+    var4 = tlbRandomGetNext() % 90;
+    tlb_segment_num = (var4);
+    remove_TLB_entry_from_table(var4);
+    var1 = (address & 0xFFE000);
+    var5 = &(*ptr_TLBallocatedblock)[var4 << 13];
+    romCopy(var5, ((u32)&_gameSegmentRomStart) + var1, 0x2000);
+    osInvalICache(0x40000000, 0x40000000);
+    osInvalICache(0x80000000, 0x10000000);
+    var2 = var1 >> 13;
+    TLB_managment_table[var2].pagenum = var4;
+    TLB_managment_table[var2].context_value = ((osVirtualToPhysical(var5) >> 0xC) << 6) | 0x1F;
+    entry = &TLB_manager_mapping_table[var4];
+    entry->entry0 = 0;
+    entry->entry1 = var2;
 }
 #else
 GLOBAL_ASM(
