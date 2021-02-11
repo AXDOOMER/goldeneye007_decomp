@@ -80,18 +80,6 @@ u32 g_speedGraphCounterForFrames = 0;
  */
 s32 D_80023234 = 1;
 
-/*    .rodata*/
-//#ifndef NONMATCHING
-const char aUtz2_0f[] = "utz %2.0f%%\n";
-const char aRsp2_0f[] = "rsp %2.0f%%\n";
-const char aTex2_0f[] = "tex %2.0f%%";
-const char a2dHz[] = "%2d hz";
-const char a2dFrames[] = "%2d frames";
-const char a2d[] = " [%2d]";
-const char asc_D_80028468[] = "     ";
-const char aIL0[] = "I=l0"; // 775875.0f
-//#endif
-
 // forward declarations
 void speedGraphVideoRelated_2(void);
 
@@ -216,46 +204,39 @@ Gfx *speedGraphDisplay(Gfx *gdl)
         debmenuSetEnvColor(0, 0, 0, 255);
 
         // utz %
-        // sprintf string is: "utz %2.0f%%\n"
         debmenuSetPosition(8, 5);
-        sprintf(buffer, aUtz2_0f, (((counters[1] - counters[3]) * 100.0f) / counters[0]));
+        sprintf(buffer, "utz %2.0f%%\n", (((counters[1] - counters[3]) * 100.0f) / counters[0]));
         debmenuWriteString(buffer);
 
         // rsp %
-        // sprintf string is: "rsp %2.0f%%\n"
         debmenuSetPosition(8, 6);
-        sprintf(buffer, aRsp2_0f, (((counters[0] - counters[1]) * 100.0f) / counters[0]));
+        sprintf(buffer, "rsp %2.0f%%\n", (((counters[0] - counters[1]) * 100.0f) / counters[0]));
         debmenuWriteString(buffer);
 
         // tex %
-        // sprintf string is: "tex %2.0f%%"
         debmenuSetPosition(8, 7);
-        sprintf(buffer, aTex2_0f, ((counters[3] * 100.0f) / counters[0]));
+        sprintf(buffer, "tex %2.0f%%", ((counters[3] * 100.0f) / counters[0]));
         debmenuWriteString(buffer);
 
         // hz (60 / framerate)
         // -- or 50 for PAL
-        // sprintf string is: "%2d hz"
         debmenuSetPosition(28, 5);
-        sprintf(buffer, a2dHz, ((D_80048498 == 0) ? 0 : (VICLOCK / D_80048498)));
+        sprintf(buffer, "%2d hz", ((D_80048498 == 0) ? 0 : (VICLOCK / D_80048498)));
         debmenuWriteString(buffer);
 
         // framerate
-        // sprintf string is: "%2d frames"
         debmenuSetPosition(28, 6);
-        sprintf(buffer, a2dFrames, D_80048498);
+        sprintf(buffer, "%2d frames", D_80048498);
         debmenuWriteString(buffer);
 
         // (continues framerate output)
         if (D_80048498 != g_speedGraphMaxSeenCount)
         {
-            // sprintf string is: " [%2d]"
-            sprintf(buffer, a2d, *pmaxSeenCount);
+            sprintf(buffer, " [%2d]", *pmaxSeenCount);
         }
         else
         {
-            // sprintf string is: "     "
-            sprintf(buffer, asc_D_80028468);
+            sprintf(buffer, "     ");
         }
 
         debmenuWriteString(buffer);
@@ -334,6 +315,11 @@ void video_DL_related_4(void) {
 }
 #else
 GLOBAL_ASM(
+.late_rodata
+glabel aIL0
+/* "I=l0"; // 775875.0f */
+.word 0x493d6c30
+.word 0
 .text
 glabel video_DL_related_4
 /* 0038D8 70002CD8 27BDFF30 */  addiu $sp, $sp, -0xd0
