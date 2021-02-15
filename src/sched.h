@@ -79,7 +79,7 @@ void setUserCompareValue(u32 value);
 void CheckDisplayErrorBuffer(u32 *buffer);
 void CheckDisplayErrorBufferEvery16Frames(u32 framecount);
 void osCreateLog(void);
-void __scMain(OSSched *arg);
+void __scMain(void *arg);
 void __scYield(OSSched *sc) ;
 void __scAppendList(OSSched *sc, OSScTask *t);
 void __scExec(OSSched *sc, OSScTask *sp, OSScTask *dp);

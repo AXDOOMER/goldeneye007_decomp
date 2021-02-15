@@ -36,7 +36,11 @@
 #define OS_SC_SP_XBUS   (OS_SC_DP)
 #define OS_SC_SP_DRAM   (OS_SC_DP | OS_SC_DRAM_DLIST)
 
-
+// forward declarations
+void __scHandleRetrace(OSSched *sc);
+void __scHandleRSP(OSSched *sc);
+void __scHandleRDP(OSSched *sc);
+void __scMain(void *arg);
 
 u32 stderr_unused = 0;
 u32 stderr_enabled = 0;
@@ -222,16 +226,22 @@ OSMesgQueue *osScGetCmdQ(OSSched *sc)
 
 /**
  * 1900	70000D00
+ * Based on libultra\sched\sched.c. In particular, unlike the other scheduler methods,
+ * the arg is actually void* instead of OSSched *sc.
  */
-#ifdef NONMATCHING
-void __scMain(OSSched *sc)
+void __scMain(void *arg)
 {
-    OSMesg msg;
+    OSMesg msg = NULL;
+    OSSched *sc = (OSSched *)arg;
     OSScClient *client;
     s32 done = FALSE;
-    while (!done) {        
+
+    while (!done)
+    {        
         osRecvMesg(&sc->interruptQ, &msg, OS_MESG_BLOCK);
-        switch ((s32)msg) {
+
+        switch ((s32)msg)
+        {
             case VIDEO_MSG:
                 __scHandleRetrace(sc);
                 break;
@@ -245,154 +255,46 @@ void __scMain(OSSched *sc)
                 break;
 
             case PRE_NMI_MSG:
+            do {
                 joyRumblePakStop();
-                for (client = sc->clientList; (client != NULL); client = client->next) {
+
+                for (client = sc->clientList; (client != NULL); client = client->next)
+                {
                       osSendMesg(client->msgQ, (OSMesg)&sc->prenmiMsg, OS_MESG_NOBLOCK);
                 }
                 done = TRUE;
                 break;
+            } while(0);
+
+            default:
+                break;
         }
     }
-    if (osTvType == TV_TYPE_MPAL) {
-        osViSetMode(&osViModeTable[OS_VI_NTSC_LAN1]);
-    } else {
+
+    if (osTvType == TV_TYPE_MPAL)
+    {
         osViSetMode(&osViModeTable[OS_VI_MPAL_LAN1]);
     }
+    else
+    {
+        osViSetMode(&osViModeTable[OS_VI_NTSC_LAN1]);
+    }
+
     osViSetXScale(1.0f);
     osViSetYScale(1.0f);
     osViRepeatLine(0);
     osViBlack(TRUE);
-    while (TRUE) {
-        do {
+
+    while (TRUE)
+    {
+        do
+        {
             osRecvMesg(&sc->interruptQ, &msg, OS_MESG_BLOCK);
         } while((s32)msg != VIDEO_MSG);
+
         joyPoll();
     }
 }
-#else
-GLOBAL_ASM(
-glabel __scMain
-/* 001900 70000D00 27BDFFB0 */  addiu $sp, $sp, -0x50
-/* 001904 70000D04 AFB50028 */  sw    $s5, 0x28($sp)
-/* 001908 70000D08 AFB40024 */  sw    $s4, 0x24($sp)
-/* 00190C 70000D0C AFB30020 */  sw    $s3, 0x20($sp)
-/* 001910 70000D10 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 001914 70000D14 AFB00014 */  sw    $s0, 0x14($sp)
-/* 001918 70000D18 00809025 */  move  $s2, $a0
-/* 00191C 70000D1C AFBF002C */  sw    $ra, 0x2c($sp)
-/* 001920 70000D20 AFB10018 */  sw    $s1, 0x18($sp)
-/* 001924 70000D24 AFA0004C */  sw    $zero, 0x4c($sp)
-/* 001928 70000D28 00008025 */  move  $s0, $zero
-/* 00192C 70000D2C 24930040 */  addiu $s3, $a0, 0x40
-/* 001930 70000D30 27B4004C */  addiu $s4, $sp, 0x4c
-/* 001934 70000D34 2415029A */  li    $s5, 666
-/* 001938 70000D38 02602025 */  move  $a0, $s3
-.L70000D3C:
-/* 00193C 70000D3C 02802825 */  move  $a1, $s4
-/* 001940 70000D40 0C003774 */  jal   osRecvMesg
-/* 001944 70000D44 24060001 */   li    $a2, 1
-/* 001948 70000D48 8FAE004C */  lw    $t6, 0x4c($sp)
-/* 00194C 70000D4C 2401029B */  li    $at, 667
-/* 001950 70000D50 11D50009 */  beq   $t6, $s5, .L70000D78
-/* 001954 70000D54 00000000 */   nop   
-/* 001958 70000D58 11C1000B */  beq   $t6, $at, .L70000D88
-/* 00195C 70000D5C 2401029C */   li    $at, 668
-/* 001960 70000D60 11C1000D */  beq   $t6, $at, .L70000D98
-/* 001964 70000D64 2401029D */   li    $at, 669
-/* 001968 70000D68 11C1000F */  beq   $t6, $at, .L70000DA8
-/* 00196C 70000D6C 00000000 */   nop   
-/* 001970 70000D70 1000001B */  b     .L70000DE0
-/* 001974 70000D74 00000000 */   nop   
-.L70000D78:
-/* 001978 70000D78 0C0003AD */  jal   __scHandleRetrace
-/* 00197C 70000D7C 02402025 */   move  $a0, $s2
-/* 001980 70000D80 10000017 */  b     .L70000DE0
-/* 001984 70000D84 00000000 */   nop   
-.L70000D88:
-/* 001988 70000D88 0C000405 */  jal   __scHandleRSP
-/* 00198C 70000D8C 02402025 */   move  $a0, $s2
-/* 001990 70000D90 10000013 */  b     .L70000DE0
-/* 001994 70000D94 00000000 */   nop   
-.L70000D98:
-/* 001998 70000D98 0C00044A */  jal   __scHandleRDP
-/* 00199C 70000D9C 02402025 */   move  $a0, $s2
-/* 0019A0 70000DA0 1000000F */  b     .L70000DE0
-/* 0019A4 70000DA4 00000000 */   nop   
-.L70000DA8:
-/* 0019A8 70000DA8 0C003237 */  jal   joyRumblePakStop
-/* 0019AC 70000DAC 00000000 */   nop   
-/* 0019B0 70000DB0 8E5000B4 */  lw    $s0, 0xb4($s2)
-/* 0019B4 70000DB4 26510020 */  addiu $s1, $s2, 0x20
-/* 0019B8 70000DB8 52000009 */  beql  $s0, $zero, .L70000DE0
-/* 0019BC 70000DBC 24100001 */   li    $s0, 1
-/* 0019C0 70000DC0 8E040004 */  lw    $a0, 4($s0)
-.L70000DC4:
-/* 0019C4 70000DC4 02202825 */  move  $a1, $s1
-/* 0019C8 70000DC8 0C0037C4 */  jal   osSendMesg
-/* 0019CC 70000DCC 00003025 */   move  $a2, $zero
-/* 0019D0 70000DD0 8E100000 */  lw    $s0, ($s0)
-/* 0019D4 70000DD4 5600FFFB */  bnezl $s0, .L70000DC4
-/* 0019D8 70000DD8 8E040004 */   lw    $a0, 4($s0)
-/* 0019DC 70000DDC 24100001 */  li    $s0, 1
-.L70000DE0:
-/* 0019E0 70000DE0 5200FFD6 */  beql  $s0, $zero, .L70000D3C
-/* 0019E4 70000DE4 02602025 */   move  $a0, $s3
-/* 0019E8 70000DE8 3C0F8000 */  lui   $t7, %hi(osTvType) 
-/* 0019EC 70000DEC 8DEF0300 */  lw    $t7, %lo(osTvType)($t7)
-/* 0019F0 70000DF0 24010002 */  li    $at, 2
-/* 0019F4 70000DF4 3C048002 */  lui   $a0, %hi(osViModeTable_osViModeNtscLan1)
-/* 0019F8 70000DF8 15E10006 */  bne   $t7, $at, .L70000E14
-/* 0019FC 70000DFC 00000000 */   nop   
-/* 001A00 70000E00 3C048002 */  lui   $a0, %hi(osViModeTable_osViModeMpalLan1)
-/* 001A04 70000E04 0C003818 */  jal   osViSetMode
-/* 001A08 70000E08 24847320 */   addiu $a0, %lo(osViModeTable_osViModeMpalLan1) # addiu $a0, $a0, 0x7320
-/* 001A0C 70000E0C 10000004 */  b     .L70000E20
-/* 001A10 70000E10 3C013F80 */   lui   $at, 0x3f80
-.L70000E14:
-/* 001A14 70000E14 0C003818 */  jal   osViSetMode
-/* 001A18 70000E18 24846A60 */   addiu $a0, $a0, %lo(osViModeTable_osViModeNtscLan1)
-/* 001A1C 70000E1C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-.L70000E20:
-/* 001A20 70000E20 44816000 */  mtc1  $at, $f12
-/* 001A24 70000E24 0C003834 */  jal   osViSetXScale
-/* 001A28 70000E28 00000000 */   nop   
-/* 001A2C 70000E2C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 001A30 70000E30 44816000 */  mtc1  $at, $f12
-/* 001A34 70000E34 0C003880 */  jal   osViSetYScale
-/* 001A38 70000E38 00000000 */   nop   
-/* 001A3C 70000E3C 0C003898 */  jal   osViRepeatLine
-/* 001A40 70000E40 00002025 */   move  $a0, $zero
-/* 001A44 70000E44 0C0038B4 */  jal   osViBlack
-/* 001A48 70000E48 24040001 */   li    $a0, 1
-/* 001A4C 70000E4C 02602025 */  move  $a0, $s3
-.L70000E50:
-/* 001A50 70000E50 02802825 */  move  $a1, $s4
-/* 001A54 70000E54 0C003774 */  jal   osRecvMesg
-/* 001A58 70000E58 24060001 */   li    $a2, 1
-/* 001A5C 70000E5C 8FB8004C */  lw    $t8, 0x4c($sp)
-/* 001A60 70000E60 5715FFFB */  bnel  $t8, $s5, .L70000E50
-/* 001A64 70000E64 02602025 */   move  $a0, $s3
-/* 001A68 70000E68 0C002F62 */  jal   joyPoll
-/* 001A6C 70000E6C 00000000 */   nop   
-/* 001A70 70000E70 1000FFF7 */  b     .L70000E50
-/* 001A74 70000E74 02602025 */   move  $a0, $s3
-/* 001A78 70000E78 00000000 */  nop   
-/* 001A7C 70000E7C 00000000 */  nop   
-/* 001A80 70000E80 00000000 */  nop   
-/* 001A84 70000E84 00000000 */  nop   
-/* 001A88 70000E88 00000000 */  nop   
-/* 001A8C 70000E8C 00000000 */  nop   
-/* 001A90 70000E90 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 001A94 70000E94 8FB00014 */  lw    $s0, 0x14($sp)
-/* 001A98 70000E98 8FB10018 */  lw    $s1, 0x18($sp)
-/* 001A9C 70000E9C 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 001AA0 70000EA0 8FB30020 */  lw    $s3, 0x20($sp)
-/* 001AA4 70000EA4 8FB40024 */  lw    $s4, 0x24($sp)
-/* 001AA8 70000EA8 8FB50028 */  lw    $s5, 0x28($sp)
-/* 001AAC 70000EAC 03E00008 */  jr    $ra
-/* 001AB0 70000EB0 27BD0050 */   addiu $sp, $sp, 0x50
-)
-#endif
 
 void __scHandleRetrace(OSSched *sc) {
     OSScTask    *rspTask = 0;    
