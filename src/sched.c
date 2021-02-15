@@ -302,7 +302,7 @@ void __scHandleRetrace(OSSched *sc) {
     s32         state;
     OSScTask    *sp = 0;
     OSScTask    *dp = 0;
-    video_related_1();
+    speedGraphVideoRelated_1();
     sc->frameCount++;
     video_related_7();
     joyPoll();
@@ -330,7 +330,7 @@ void __scHandleRSP(OSSched *sc) {
     s32 state;
     t = sc->curRSPTask;
     sc->curRSPTask = 0;
-    video_related_3(0x10001);
+    speedGraphVideoRelated_3(0x10001);
     if ((t->state & OS_SC_YIELD) && osSpTaskYielded(&t->list)) {
         t->state |= OS_SC_YIELDED;
         if ((t->flags & OS_SC_TYPE_MASK) == OS_SC_XBUS) {
@@ -360,7 +360,7 @@ void __scHandleRDP(OSSched *sc)
     OSScTask *t, *sp = NULL, *dp = NULL; 
     s32 state;
     if (sc->curRDPTask != NULL) {
-        video_related_3(0x10002);
+        speedGraphVideoRelated_3(0x10002);
         osDpGetCounters(g_DisplayPerformanceCounters);
         t = sc->curRDPTask;
         sc->curRDPTask = NULL;
@@ -460,12 +460,12 @@ void __scExec(OSSched *sc, OSScTask *sp, OSScTask *dp)
         
         if (sp->list.t.type == 2)
         {
-            video_related_3(0x30001);
+            speedGraphVideoRelated_3(0x30001);
         }
         else
         {
-            video_related_3(0x40001);
-            video_related_3(0x20002);
+            speedGraphVideoRelated_3(0x40001);
+            speedGraphVideoRelated_3(0x20002);
         }
         sp->state &= ~(OS_SC_YIELD | OS_SC_YIELDED); 
         osSpTaskLoad(&sp->list);
