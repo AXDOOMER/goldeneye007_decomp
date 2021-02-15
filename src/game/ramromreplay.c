@@ -788,130 +788,33 @@ void copy_current_ingame_registers_before_ramrom_playback(state *state) {
     state->unkE0 = get_players_team_or_scenario_item_flag(3);
 }
 
-#ifdef NONMATCHING
-void copy_recorded_ramrom_registers_to_proper_place_ingame(void *arg0) {
-    // Node 0
-    g_randomSeed = (?32) *arg0;
-    g_randomSeed + 0x4 = (?32) arg0->unk4;
-    g_chrObjRandomSeed = (?32) arg0->unk8;
-    g_chrObjRandomSeed + 0x4 = (?32) arg0->unkC;
-    gamemode = (?32) arg0->unk84;
-    selected_num_players = (?32) arg0->unk8C;
-    scenario = (?32) arg0->unk90;
-    MP_stage_selected = (?32) arg0->unk94;
-    game_length = (?32) arg0->unk98;
-    setMPWeaponSet(arg0->unk9C);
-    player_1_char = (?32) arg0->unkA0;
-    player_1_char.unk4 = (?32) arg0->unkA4;
-    player_1_char.unk8 = (?32) arg0->unkA8;
-    player_1_char.unkC = (?32) arg0->unkAC;
-    handicap_player1 = (?32) arg0->unkB0;
-    handicap_player1.unk4 = (?32) arg0->unkB4;
-    handicap_player1.unk8 = (?32) arg0->unkB8;
-    handicap_player1.unkC = (?32) arg0->unkBC;
-    controlstyle_player = (?32) arg0->unkC0;
-    controlstyle_player.unk4 = (?32) arg0->unkC4;
-    controlstyle_player.unk8 = (?32) arg0->unkC8;
-    controlstyle_player.unkC = (?32) arg0->unkCC;
-    aim_sight_adjustment = (?32) arg0->unkD0;
-    set_players_team_or_scenario_item_flag(0, arg0->unkD4, &controlstyle_player);
-    set_players_team_or_scenario_item_flag(1, arg0->unkD8);
-    set_players_team_or_scenario_item_flag(2, arg0->unkDC);
-    return set_players_team_or_scenario_item_flag(3, arg0->unkE0);
+void copy_recorded_ramrom_registers_to_proper_place_ingame(state *state) {
+    g_randomSeed = state->unk0;
+    g_chrObjRandomSeed = state->unk8;
+    gamemode = state->unk84;
+    selected_num_players = state->unk8C;
+    scenario = state->unk90;
+    MP_stage_selected = state->unk94;
+    game_length = state->unk98;
+    setMPWeaponSet(state->unk9C);
+    (&player_1_char)[0] = state->unkA0;
+    (&player_1_char)[1] = state->unkA4;
+    (&player_1_char)[2] = state->unkA8;
+    (&player_1_char)[3] = state->unkAC;
+    (&handicap_player1)[0] = state->unkB0;
+    (&handicap_player1)[1] = state->unkB4;
+    (&handicap_player1)[2] = state->unkB8;
+    (&handicap_player1)[3] = state->unkBC;
+    controlstyle_player[0] = state->unkC0;
+    controlstyle_player[1] = state->unkC4;
+    controlstyle_player[2] = state->unkC8;
+    controlstyle_player[3] = state->unkCC;
+    aim_sight_adjustment = state->unkD0;
+    set_players_team_or_scenario_item_flag(0, state->unkD4);
+    set_players_team_or_scenario_item_flag(1, state->unkD8);
+    set_players_team_or_scenario_item_flag(2, state->unkDC);
+    set_players_team_or_scenario_item_flag(3, state->unkE0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel copy_recorded_ramrom_registers_to_proper_place_ingame
-/* 0F5024 7F0C04F4 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0F5028 7F0C04F8 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0F502C 7F0C04FC AFB00018 */  sw    $s0, 0x18($sp)
-/* 0F5030 7F0C0500 8C8E0000 */  lw    $t6, ($a0)
-/* 0F5034 7F0C0504 8C8F0004 */  lw    $t7, 4($a0)
-/* 0F5038 7F0C0508 3C018002 */  lui   $at, %hi(g_randomSeed)
-/* 0F503C 7F0C050C AC2E4460 */  sw    $t6, %lo(g_randomSeed)($at)
-/* 0F5040 7F0C0510 3C018002 */  lui   $at, %hi(g_randomSeed + 0x4)
-/* 0F5044 7F0C0514 AC2F4464 */  sw    $t7, %lo(g_randomSeed + 0x4)($at)
-/* 0F5048 7F0C0518 8C980008 */  lw    $t8, 8($a0)
-/* 0F504C 7F0C051C 8C99000C */  lw    $t9, 0xc($a0)
-/* 0F5050 7F0C0520 3C018004 */  lui   $at, %hi(g_chrObjRandomSeed)
-/* 0F5054 7F0C0524 AC380160 */  sw    $t8, %lo(g_chrObjRandomSeed)($at)
-/* 0F5058 7F0C0528 3C018004 */  lui   $at, %hi(g_chrObjRandomSeed + 0x4)
-/* 0F505C 7F0C052C AC390164 */  sw    $t9, %lo(g_chrObjRandomSeed + 0x4)($at)
-/* 0F5060 7F0C0530 8C880084 */  lw    $t0, 0x84($a0)
-/* 0F5064 7F0C0534 3C018003 */  lui   $at, %hi(gamemode)
-/* 0F5068 7F0C0538 00808025 */  move  $s0, $a0
-/* 0F506C 7F0C053C AC28A8F0 */  sw    $t0, %lo(gamemode)($at)
-/* 0F5070 7F0C0540 8C89008C */  lw    $t1, 0x8c($a0)
-/* 0F5074 7F0C0544 3C018003 */  lui   $at, %hi(selected_num_players)
-/* 0F5078 7F0C0548 AC29B520 */  sw    $t1, %lo(selected_num_players)($at)
-/* 0F507C 7F0C054C 8C8A0090 */  lw    $t2, 0x90($a0)
-/* 0F5080 7F0C0550 3C018003 */  lui   $at, %hi(scenario)
-/* 0F5084 7F0C0554 AC2AB540 */  sw    $t2, %lo(scenario)($at)
-/* 0F5088 7F0C0558 8C8B0094 */  lw    $t3, 0x94($a0)
-/* 0F508C 7F0C055C 3C018003 */  lui   $at, %hi(MP_stage_selected)
-/* 0F5090 7F0C0560 AC2BB534 */  sw    $t3, %lo(MP_stage_selected)($at)
-/* 0F5094 7F0C0564 8C8C0098 */  lw    $t4, 0x98($a0)
-/* 0F5098 7F0C0568 3C018003 */  lui   $at, %hi(game_length)
-/* 0F509C 7F0C056C AC2CB538 */  sw    $t4, %lo(game_length)($at)
-/* 0F50A0 7F0C0570 0FC3198C */  jal   setMPWeaponSet
-/* 0F50A4 7F0C0574 8C84009C */   lw    $a0, 0x9c($a0)
-/* 0F50A8 7F0C0578 8E0D00A0 */  lw    $t5, 0xa0($s0)
-/* 0F50AC 7F0C057C 3C028003 */  lui   $v0, %hi(player_1_char)
-/* 0F50B0 7F0C0580 2442B524 */  addiu $v0, %lo(player_1_char) # addiu $v0, $v0, -0x4adc
-/* 0F50B4 7F0C0584 AC4D0000 */  sw    $t5, ($v0)
-/* 0F50B8 7F0C0588 8E0E00A4 */  lw    $t6, 0xa4($s0)
-/* 0F50BC 7F0C058C 3C038007 */  lui   $v1, %hi(handicap_player1)
-/* 0F50C0 7F0C0590 246397A8 */  addiu $v1, %lo(handicap_player1) # addiu $v1, $v1, -0x6858
-/* 0F50C4 7F0C0594 AC4E0004 */  sw    $t6, 4($v0)
-/* 0F50C8 7F0C0598 8E0F00A8 */  lw    $t7, 0xa8($s0)
-/* 0F50CC 7F0C059C 3C068007 */  lui   $a2, %hi(controlstyle_player)
-/* 0F50D0 7F0C05A0 24C697B8 */  addiu $a2, %lo(controlstyle_player) # addiu $a2, $a2, -0x6848
-/* 0F50D4 7F0C05A4 AC4F0008 */  sw    $t7, 8($v0)
-/* 0F50D8 7F0C05A8 8E1800AC */  lw    $t8, 0xac($s0)
-/* 0F50DC 7F0C05AC 3C018003 */  lui   $at, %hi(aim_sight_adjustment)
-/* 0F50E0 7F0C05B0 00002025 */  move  $a0, $zero
-/* 0F50E4 7F0C05B4 AC58000C */  sw    $t8, 0xc($v0)
-/* 0F50E8 7F0C05B8 8E1900B0 */  lw    $t9, 0xb0($s0)
-/* 0F50EC 7F0C05BC AC790000 */  sw    $t9, ($v1)
-/* 0F50F0 7F0C05C0 8E0800B4 */  lw    $t0, 0xb4($s0)
-/* 0F50F4 7F0C05C4 AC680004 */  sw    $t0, 4($v1)
-/* 0F50F8 7F0C05C8 8E0900B8 */  lw    $t1, 0xb8($s0)
-/* 0F50FC 7F0C05CC AC690008 */  sw    $t1, 8($v1)
-/* 0F5100 7F0C05D0 8E0A00BC */  lw    $t2, 0xbc($s0)
-/* 0F5104 7F0C05D4 AC6A000C */  sw    $t2, 0xc($v1)
-/* 0F5108 7F0C05D8 8E0B00C0 */  lw    $t3, 0xc0($s0)
-/* 0F510C 7F0C05DC ACCB0000 */  sw    $t3, ($a2)
-/* 0F5110 7F0C05E0 8E0C00C4 */  lw    $t4, 0xc4($s0)
-/* 0F5114 7F0C05E4 ACCC0004 */  sw    $t4, 4($a2)
-/* 0F5118 7F0C05E8 8E0D00C8 */  lw    $t5, 0xc8($s0)
-/* 0F511C 7F0C05EC ACCD0008 */  sw    $t5, 8($a2)
-/* 0F5120 7F0C05F0 8E0E00CC */  lw    $t6, 0xcc($s0)
-/* 0F5124 7F0C05F4 ACCE000C */  sw    $t6, 0xc($a2)
-/* 0F5128 7F0C05F8 8E0F00D0 */  lw    $t7, 0xd0($s0)
-/* 0F512C 7F0C05FC AC2FB53C */  sw    $t7, %lo(aim_sight_adjustment)($at)
-/* 0F5130 7F0C0600 0FC05329 */  jal   set_players_team_or_scenario_item_flag
-/* 0F5134 7F0C0604 8E0500D4 */   lw    $a1, 0xd4($s0)
-/* 0F5138 7F0C0608 24040001 */  li    $a0, 1
-/* 0F513C 7F0C060C 0FC05329 */  jal   set_players_team_or_scenario_item_flag
-/* 0F5140 7F0C0610 8E0500D8 */   lw    $a1, 0xd8($s0)
-/* 0F5144 7F0C0614 24040002 */  li    $a0, 2
-/* 0F5148 7F0C0618 0FC05329 */  jal   set_players_team_or_scenario_item_flag
-/* 0F514C 7F0C061C 8E0500DC */   lw    $a1, 0xdc($s0)
-/* 0F5150 7F0C0620 24040003 */  li    $a0, 3
-/* 0F5154 7F0C0624 0FC05329 */  jal   set_players_team_or_scenario_item_flag
-/* 0F5158 7F0C0628 8E0500E0 */   lw    $a1, 0xe0($s0)
-/* 0F515C 7F0C062C 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0F5160 7F0C0630 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0F5164 7F0C0634 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0F5168 7F0C0638 03E00008 */  jr    $ra
-/* 0F516C 7F0C063C 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void test_if_recording_demos_this_stage_load(void) {
