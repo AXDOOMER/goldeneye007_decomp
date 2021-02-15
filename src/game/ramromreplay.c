@@ -727,137 +727,66 @@ glabel iterate_ramrom_entries_handle_camera_out
 )
 #endif
 
+typedef struct {
+    u64 unk0;
+    u64 unk8;
+    s32 unkC[28];
+    s32 unk80;
+    s32 unk84;
+    s32 unk88;
+    s32 unk8C;
+    s32 unk90;
+    s32 unk94;
+    s32 unk98;
+    s32 unk9C;
+    s32 unkA0;
+    s32 unkA4;
+    s32 unkA8;
+    s32 unkAC;
+    s32 unkB0;
+    s32 unkB4;
+    s32 unkB8;
+    s32 unkBC;
+    s32 unkC0;
+    s32 unkC4;
+    s32 unkC8;
+    s32 unkCC;
+    s32 unkD0;
+    s32 unkD4;
+    s32 unkD8;
+    s32 unkDC;
+    s32 unkE0;
+} state;
 
-
-
-
-#ifdef NONMATCHING
-void copy_current_ingame_registers_before_ramrom_playback(void *arg0) {
-    ? temp_ret;
-
-    // Node 0
-    arg0->unk4 = (?32) g_randomSeed + 0x4;
-    *arg0 = (?32) g_randomSeed;
-    arg0->unkC = (?32) g_chrObjRandomSeed + 0x4;
-    arg0->unk8 = (?32) g_chrObjRandomSeed;
-    arg0->unk84 = (?32) gamemode;
-    arg0->unk8C = (?32) selected_num_players;
-    arg0->unk90 = (?32) scenario;
-    arg0->unk94 = (?32) MP_stage_selected;
-    arg0->unk98 = (?32) game_length;
-    arg0->unk9C = getMPWeaponSet();
-    arg0->unkA0 = (?32) player_1_char;
-    arg0->unkA4 = (?32) player_1_char.unk4;
-    arg0->unkA8 = (?32) player_1_char.unk8;
-    arg0->unkAC = (?32) player_1_char.unkC;
-    arg0->unkB0 = (?32) handicap_player1;
-    arg0->unkB4 = (?32) handicap_player1.unk4;
-    arg0->unkB8 = (?32) handicap_player1.unk8;
-    arg0->unkBC = (?32) handicap_player1.unkC;
-    arg0->unkC0 = (?32) controlstyle_player;
-    arg0->unkC4 = (?32) controlstyle_player.unk4;
-    arg0->unkC8 = (?32) controlstyle_player.unk8;
-    arg0->unkCC = (?32) controlstyle_player.unkC;
-    arg0->unkD0 = (?32) aim_sight_adjustment;
-    arg0->unkD4 = get_players_team_or_scenario_item_flag(0);
-    arg0->unkD8 = get_players_team_or_scenario_item_flag(1);
-    arg0->unkDC = get_players_team_or_scenario_item_flag(2);
-    arg0->unkE0 = get_players_team_or_scenario_item_flag(3);
+extern u64 g_randomSeed;
+extern u64 g_chrObjRandomSeed;
+void copy_current_ingame_registers_before_ramrom_playback(state *state) {
+    state->unk0 = g_randomSeed;
+    state->unk8 = g_chrObjRandomSeed;
+    state->unk84 = gamemode;
+    state->unk8C = selected_num_players;
+    state->unk90 = scenario;
+    state->unk94 = MP_stage_selected;
+    state->unk98 = game_length;
+    state->unk9C = getMPWeaponSet();
+    state->unkA0 = (&player_1_char)[0];
+    state->unkA4 = (&player_1_char)[1];
+    state->unkA8 = (&player_1_char)[2];
+    state->unkAC = (&player_1_char)[3];
+    state->unkB0 = (&handicap_player1)[0];
+    state->unkB4 = (&handicap_player1)[1];
+    state->unkB8 = (&handicap_player1)[2];
+    state->unkBC = (&handicap_player1)[3];
+    state->unkC0 = controlstyle_player[0];
+    state->unkC4 = controlstyle_player[1];
+    state->unkC8 = controlstyle_player[2];
+    state->unkCC = controlstyle_player[3];
+    state->unkD0 = aim_sight_adjustment;
+    state->unkD4 = get_players_team_or_scenario_item_flag(0);
+    state->unkD8 = get_players_team_or_scenario_item_flag(1);
+    state->unkDC = get_players_team_or_scenario_item_flag(2);
+    state->unkE0 = get_players_team_or_scenario_item_flag(3);
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel copy_current_ingame_registers_before_ramrom_playback
-/* 0F4ED8 7F0C03A8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0F4EDC 7F0C03AC 3C0E8002 */  lui   $t6, %hi(g_randomSeed) 
-/* 0F4EE0 7F0C03B0 3C0F8002 */  lui   $t7, %hi(g_randomSeed + 0x4) 
-/* 0F4EE4 7F0C03B4 8DEF4464 */  lw    $t7, %lo(g_randomSeed + 0x4)($t7)
-/* 0F4EE8 7F0C03B8 8DCE4460 */  lw    $t6, %lo(g_randomSeed)($t6)
-/* 0F4EEC 7F0C03BC AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0F4EF0 7F0C03C0 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0F4EF4 7F0C03C4 AC8F0004 */  sw    $t7, 4($a0)
-/* 0F4EF8 7F0C03C8 AC8E0000 */  sw    $t6, ($a0)
-/* 0F4EFC 7F0C03CC 3C188004 */  lui   $t8, %hi(g_chrObjRandomSeed) 
-/* 0F4F00 7F0C03D0 3C198004 */  lui   $t9, %hi(g_chrObjRandomSeed + 0x4) 
-/* 0F4F04 7F0C03D4 8F390164 */  lw    $t9, %lo(g_chrObjRandomSeed + 0x4)($t9)
-/* 0F4F08 7F0C03D8 8F180160 */  lw    $t8, %lo(g_chrObjRandomSeed)($t8)
-/* 0F4F0C 7F0C03DC 3C088003 */  lui   $t0, %hi(gamemode) 
-/* 0F4F10 7F0C03E0 AC99000C */  sw    $t9, 0xc($a0)
-/* 0F4F14 7F0C03E4 AC980008 */  sw    $t8, 8($a0)
-/* 0F4F18 7F0C03E8 8D08A8F0 */  lw    $t0, %lo(gamemode)($t0)
-/* 0F4F1C 7F0C03EC 3C098003 */  lui   $t1, %hi(selected_num_players) 
-/* 0F4F20 7F0C03F0 3C0A8003 */  lui   $t2, %hi(scenario) 
-/* 0F4F24 7F0C03F4 AC880084 */  sw    $t0, 0x84($a0)
-/* 0F4F28 7F0C03F8 8D29B520 */  lw    $t1, %lo(selected_num_players)($t1)
-/* 0F4F2C 7F0C03FC 3C0B8003 */  lui   $t3, %hi(MP_stage_selected) 
-/* 0F4F30 7F0C0400 3C0C8003 */  lui   $t4, %hi(game_length) 
-/* 0F4F34 7F0C0404 AC89008C */  sw    $t1, 0x8c($a0)
-/* 0F4F38 7F0C0408 8D4AB540 */  lw    $t2, %lo(scenario)($t2)
-/* 0F4F3C 7F0C040C 00808025 */  move  $s0, $a0
-/* 0F4F40 7F0C0410 AC8A0090 */  sw    $t2, 0x90($a0)
-/* 0F4F44 7F0C0414 8D6BB534 */  lw    $t3, %lo(MP_stage_selected)($t3)
-/* 0F4F48 7F0C0418 AC8B0094 */  sw    $t3, 0x94($a0)
-/* 0F4F4C 7F0C041C 8D8CB538 */  lw    $t4, %lo(game_length)($t4)
-/* 0F4F50 7F0C0420 0FC3198F */  jal   getMPWeaponSet
-/* 0F4F54 7F0C0424 AC8C0098 */   sw    $t4, 0x98($a0)
-/* 0F4F58 7F0C0428 3C038003 */  lui   $v1, %hi(player_1_char)
-/* 0F4F5C 7F0C042C 2463B524 */  addiu $v1, %lo(player_1_char) # addiu $v1, $v1, -0x4adc
-/* 0F4F60 7F0C0430 AE02009C */  sw    $v0, 0x9c($s0)
-/* 0F4F64 7F0C0434 8C6D0000 */  lw    $t5, ($v1)
-/* 0F4F68 7F0C0438 3C058007 */  lui   $a1, %hi(handicap_player1)
-/* 0F4F6C 7F0C043C 24A597A8 */  addiu $a1, %lo(handicap_player1) # addiu $a1, $a1, -0x6858
-/* 0F4F70 7F0C0440 AE0D00A0 */  sw    $t5, 0xa0($s0)
-/* 0F4F74 7F0C0444 8C6E0004 */  lw    $t6, 4($v1)
-/* 0F4F78 7F0C0448 3C068007 */  lui   $a2, %hi(controlstyle_player)
-/* 0F4F7C 7F0C044C 24C697B8 */  addiu $a2, %lo(controlstyle_player) # addiu $a2, $a2, -0x6848
-/* 0F4F80 7F0C0450 AE0E00A4 */  sw    $t6, 0xa4($s0)
-/* 0F4F84 7F0C0454 8C6F0008 */  lw    $t7, 8($v1)
-/* 0F4F88 7F0C0458 00002025 */  move  $a0, $zero
-/* 0F4F8C 7F0C045C AE0F00A8 */  sw    $t7, 0xa8($s0)
-/* 0F4F90 7F0C0460 8C78000C */  lw    $t8, 0xc($v1)
-/* 0F4F94 7F0C0464 3C0F8003 */  lui   $t7, %hi(aim_sight_adjustment) 
-/* 0F4F98 7F0C0468 AE1800AC */  sw    $t8, 0xac($s0)
-/* 0F4F9C 7F0C046C 8CB90000 */  lw    $t9, ($a1)
-/* 0F4FA0 7F0C0470 AE1900B0 */  sw    $t9, 0xb0($s0)
-/* 0F4FA4 7F0C0474 8CA80004 */  lw    $t0, 4($a1)
-/* 0F4FA8 7F0C0478 AE0800B4 */  sw    $t0, 0xb4($s0)
-/* 0F4FAC 7F0C047C 8CA90008 */  lw    $t1, 8($a1)
-/* 0F4FB0 7F0C0480 AE0900B8 */  sw    $t1, 0xb8($s0)
-/* 0F4FB4 7F0C0484 8CAA000C */  lw    $t2, 0xc($a1)
-/* 0F4FB8 7F0C0488 AE0A00BC */  sw    $t2, 0xbc($s0)
-/* 0F4FBC 7F0C048C 8CCB0000 */  lw    $t3, ($a2)
-/* 0F4FC0 7F0C0490 AE0B00C0 */  sw    $t3, 0xc0($s0)
-/* 0F4FC4 7F0C0494 8CCC0004 */  lw    $t4, 4($a2)
-/* 0F4FC8 7F0C0498 AE0C00C4 */  sw    $t4, 0xc4($s0)
-/* 0F4FCC 7F0C049C 8CCD0008 */  lw    $t5, 8($a2)
-/* 0F4FD0 7F0C04A0 AE0D00C8 */  sw    $t5, 0xc8($s0)
-/* 0F4FD4 7F0C04A4 8CCE000C */  lw    $t6, 0xc($a2)
-/* 0F4FD8 7F0C04A8 AE0E00CC */  sw    $t6, 0xcc($s0)
-/* 0F4FDC 7F0C04AC 8DEFB53C */  lw    $t7, %lo(aim_sight_adjustment)($t7)
-/* 0F4FE0 7F0C04B0 0FC05322 */  jal   get_players_team_or_scenario_item_flag
-/* 0F4FE4 7F0C04B4 AE0F00D0 */   sw    $t7, 0xd0($s0)
-/* 0F4FE8 7F0C04B8 AE0200D4 */  sw    $v0, 0xd4($s0)
-/* 0F4FEC 7F0C04BC 0FC05322 */  jal   get_players_team_or_scenario_item_flag
-/* 0F4FF0 7F0C04C0 24040001 */   li    $a0, 1
-/* 0F4FF4 7F0C04C4 AE0200D8 */  sw    $v0, 0xd8($s0)
-/* 0F4FF8 7F0C04C8 0FC05322 */  jal   get_players_team_or_scenario_item_flag
-/* 0F4FFC 7F0C04CC 24040002 */   li    $a0, 2
-/* 0F5000 7F0C04D0 AE0200DC */  sw    $v0, 0xdc($s0)
-/* 0F5004 7F0C04D4 0FC05322 */  jal   get_players_team_or_scenario_item_flag
-/* 0F5008 7F0C04D8 24040003 */   li    $a0, 3
-/* 0F500C 7F0C04DC AE0200E0 */  sw    $v0, 0xe0($s0)
-/* 0F5010 7F0C04E0 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0F5014 7F0C04E4 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0F5018 7F0C04E8 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0F501C 7F0C04EC 03E00008 */  jr    $ra
-/* 0F5020 7F0C04F0 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void copy_recorded_ramrom_registers_to_proper_place_ingame(void *arg0) {
