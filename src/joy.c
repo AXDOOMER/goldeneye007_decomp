@@ -1,54 +1,50 @@
-
+#include "ultra64.h"
 #include "joy.h"
 #include "libultra/os.h"
-#include "ultra64.h"
 
-typedef struct ContData
-{
-     struct contsample samples[20];     /* 0x000 */
-     s32 curlast;                       /* 0x1E0 */
-     s32 curstart;                      /* 0x1E4 */
-     s32 nextlast;                      /* 0x1E8 */
-     s32 nextsecondlast;                /* 0x1EC */
-     u16 buttonspressed[MAXCONTROLLERS];/* 0x1F0 */
-     s32 playbackcontcount;             /* 0x1F8 */
-}ContData;
+struct contdata {
+    /* 0x000 */ struct contsample samples[20];
+    /* 0x1E0 */ s32 curlast;
+	/* 0x1E4 */ s32 curstart;
+	/* 0x1E8 */ s32 nextlast;
+	/* 0x1EC */ s32 nextsecondlast;
+    /* 0x1F0 */ u16 buttonspressed[MAXCONTROLLERS];
+	/* 0x1F8 */ s32 playbackcontcount;
+};
 
-ContData g_ContData[2]; // 0 = Regular, 1 = Playback
+struct contdata g_ContData[2]; // 0 = Regular, 1 = Playback
 
-OSMesg      g_ContInputMessageBuffer[10];
+OSMesg g_ContInputMessageBuffer[10];
 OSMesgQueue g_ContInputMessageQueue;
-OSMesg      g_ContDisablePollSendMessageBuffer[1];
+OSMesg g_ContDisablePollSendMessageBuffer[1];
 OSMesgQueue g_ContDisablePollSendMessageQueue;
-OSMesg      g_ContDisablePollReceiveMessageBuffer[1];
+OSMesg g_ContDisablePollReceiveMessageBuffer[1];
 OSMesgQueue g_ContDisablePollReceiveMessageQueue;
-OSMesg      g_ContEnablePollSendMessageBuffer[1];
+OSMesg g_ContEnablePollSendMessageBuffer[1];
 OSMesgQueue g_ContEnablePollSendMessageQueue;
-OSMesg      g_ContEnablePollReceiveMessageBuffer[1];
+OSMesg g_ContEnablePollReceiveMessageBuffer[1];
 OSMesgQueue g_ContEnablePollReceiveMessageQueue;
 
 OSContStatus g_ContStatus[MAXCONTROLLERS];
 OSPfs g_ContPfs[MAXCONTROLLERS];
 
-s32 g_ContDebugData        = 0;
-ContData *g_ContDataPtr    = &g_ContData[0];
-s32 g_ContBusy             = 0;
+s32 g_ContDebugData = 0;
+struct contdata *g_ContDataPtr = &g_ContData[0];
+s32 g_ContBusy = 0;
 s32 g_ContPollDisableCount = 0;
-u8 g_ConnectedControllers  = 0;
-u8 g_ControllerStates      = 0; // 1 bit per controller
+u8 g_ConnectedControllers = 0;
+u8 g_ControllerStates = 0; // 1 bit per controller
 
-typedef enum
-{
+typedef enum {
     RUMBLEPAKINITSTATE_ERROR = -1,
     RUMBLEPAKINITSTATE_NOT_READY,
     RUMBLEPAKINITSTATE_READY
 } RUMBLEPAKINITSTATE;
 
-typedef enum
-{
-    RUMBLEPAKSTATE_OFF,
-    RUMBLEPAKSTATE_ON,
-    RUMBLEPAKSTATE_UNKNOWN
+typedef enum {
+  RUMBLEPAKSTATE_OFF,
+  RUMBLEPAKSTATE_ON,
+  RUMBLEPAKSTATE_UNKNOWN 
 } RUMBLEPAKSTATE;
 
 // forward declarations
@@ -57,83 +53,67 @@ void joyCheckStatus(void);
 
 s32 g_ContRumblePakInitState[MAXCONTROLLERS] = {0};
 
-#define set_rumble_pak_init_state_not_ready(i)                      \
-    do                                                              \
-    {                                                               \
-        g_ContRumblePakInitState[i] = RUMBLEPAKINITSTATE_NOT_READY; \
-    } while (0)
+#define set_rumble_pak_init_state_not_ready(i) do { g_ContRumblePakInitState[i] = RUMBLEPAKINITSTATE_NOT_READY; } while (0)
 
 s32 g_ContRumblePakCurrentState[MAXCONTROLLERS] = {0};
-s32 g_ContRumblePakTimer60[MAXCONTROLLERS]      = {0};
-s32 g_ContRumblePakTargetState[MAXCONTROLLERS]  = {0};
+s32 g_ContRumblePakTimer60[MAXCONTROLLERS] = {0};
+s32 g_ContRumblePakTargetState[MAXCONTROLLERS] = {0};
 
-s32 g_ContQueuesCreated      = 0;
-s32 g_ContInitDone           = 0;
+s32 g_ContQueuesCreated = 0;
+s32 g_ContInitDone = 0;
 s32 g_ContCheckStatusTimer60 = 0;
 
 contplaybackfunc g_ContPlaybackFunc = NULL;
-contrecordfunc g_ContRecordFunc     = NULL;
+contrecordfunc g_ContRecordFunc = NULL;
 
 s32 g_ContNeedsInit = 1;
 
-u32 g_ContBadReadsStickX[MAXCONTROLLERS]         = {0};
-u32 g_ContBadReadsStickY[MAXCONTROLLERS]         = {0};
-u32 g_ContBadReadsButtons[MAXCONTROLLERS]        = {0};
+u32 g_ContBadReadsStickX[MAXCONTROLLERS] = {0};
+u32 g_ContBadReadsStickY[MAXCONTROLLERS] = {0};
+u32 g_ContBadReadsButtons[MAXCONTROLLERS] = {0};
 u32 g_ContBadReadsButtonsPressed[MAXCONTROLLERS] = {0};
 
 s32 g_ContBadReadTimer60 = 0; // Static variable?
 
-void joyInit(void)
-{
+void joyInit(void) {
     s32 i;
     s32 j;
 
     debTryAdd(&g_ContDebugData, "joy_c_debug");
 
-    osCreateMesgQueue(&g_ContDisablePollSendMessageQueue,
-                      g_ContDisablePollSendMessageBuffer,
-                      1);
-    osCreateMesgQueue(&g_ContDisablePollReceiveMessageQueue,
-                      g_ContDisablePollReceiveMessageBuffer,
-                      1);
-    osCreateMesgQueue(&g_ContEnablePollSendMessageQueue,
-                      g_ContEnablePollSendMessageBuffer,
-                      1);
-    osCreateMesgQueue(&g_ContEnablePollReceiveMessageQueue,
-                      g_ContEnablePollReceiveMessageBuffer,
-                      1);
+    osCreateMesgQueue(&g_ContDisablePollSendMessageQueue, g_ContDisablePollSendMessageBuffer, 1);
+    osCreateMesgQueue(&g_ContDisablePollReceiveMessageQueue, g_ContDisablePollReceiveMessageBuffer, 1);
+    osCreateMesgQueue(&g_ContEnablePollSendMessageQueue, g_ContEnablePollSendMessageBuffer, 1);
+    osCreateMesgQueue(&g_ContEnablePollReceiveMessageQueue, g_ContEnablePollReceiveMessageBuffer, 1);
     osCreateMesgQueue(&g_ContInputMessageQueue, g_ContInputMessageBuffer, 10);
 
     osSetEventMesg(OS_EVENT_SI, &g_ContInputMessageQueue, NULL);
 
     g_ContQueuesCreated = TRUE;
-    g_ContPlaybackFunc  = NULL;
-    g_ContRecordFunc    = NULL;
+    g_ContPlaybackFunc = NULL;
+    g_ContRecordFunc = NULL;
 
-    for (i = 0; i < 2; i++)
-    {
-        g_ContData[i].curlast           = 0;
-        g_ContData[i].curstart          = 0;
-        g_ContData[i].nextlast          = 0;
-        g_ContData[i].nextsecondlast    = 0;
-        g_ContData[i].playbackcontcount = -1;
+    for (i = 0; i < 2; i++) {
+        g_ContData[i].curlast = 0;
+		g_ContData[i].curstart = 0;
+		g_ContData[i].nextlast = 0;
+		g_ContData[i].nextsecondlast = 0;
+		g_ContData[i].playbackcontcount = -1;
 
-        for (j = 0; j < MAXCONTROLLERS; j++)
-        {
-            g_ContData[i].samples[0].pads[j].button  = 0;
-            g_ContData[i].samples[0].pads[j].stick_x = 0;
-            g_ContData[i].samples[0].pads[j].stick_y = 0;
-            g_ContData[i].samples[0].pads[j].errnum  = 0;
-        }
+		for (j = 0; j < MAXCONTROLLERS; j++) {
+			g_ContData[i].samples[0].pads[j].button = 0;
+			g_ContData[i].samples[0].pads[j].stick_x = 0;
+			g_ContData[i].samples[0].pads[j].stick_y = 0;
+			g_ContData[i].samples[0].pads[j].errnum = 0;
+		}
+
     }
 }
 
-void joyCheckStatusThreadSafe(void)
-{
-    OSMesg msg;
+void joyCheckStatusThreadSafe(void) {
+    OSMesg  msg;
 
-    if (g_ContQueuesCreated)
-    {
+    if (g_ContQueuesCreated) {
         osSendMesg(&g_ContDisablePollSendMessageQueue, &msg, OS_MESG_NOBLOCK);
         osRecvMesg(&g_ContDisablePollReceiveMessageQueue, &msg, OS_MESG_BLOCK);
 
@@ -144,30 +124,19 @@ void joyCheckStatusThreadSafe(void)
     }
 }
 
-s32 osPfsChecker(OSPfs *pfs)
-{
+s32 osPfsChecker(OSPfs *pfs) {
     return PFS_ERR_INCONSISTENT;
 }
 
-void joyRumblePakInit(s32 index)
-{
+void joyRumblePakInit(s32 index) {
     s32 ret;
-    if (g_ContRumblePakInitState[index] > RUMBLEPAKINITSTATE_ERROR)
-    {
-        if ((g_ContStatus[index].type & CONT_JOYPORT) &&
-            (g_ContStatus[index].status & CONT_CARD_ON))
-        {
+    if (g_ContRumblePakInitState[index] > RUMBLEPAKINITSTATE_ERROR) {
+        if ((g_ContStatus[index].type & CONT_JOYPORT) && (g_ContStatus[index].status & CONT_CARD_ON)) {
             ret = osPfsInit(&g_ContInputMessageQueue, &g_ContPfs[index], index);
-            if ((ret == PFS_ERR_ID_FATAL) || (ret == PFS_ERR_DEVICE))
-            {
-                if (osMotorInit(&g_ContInputMessageQueue,
-                                &g_ContPfs[index],
-                                index) == 0)
-                {
+            if ((ret == PFS_ERR_ID_FATAL) || (ret == PFS_ERR_DEVICE)) {
+                if (osMotorInit(&g_ContInputMessageQueue, &g_ContPfs[index], index) == 0) {
                     g_ContRumblePakInitState[index] = RUMBLEPAKINITSTATE_READY;
-                }
-                else
-                {
+                } else {
                     g_ContRumblePakInitState[index] = RUMBLEPAKINITSTATE_ERROR;
                 }
             }
@@ -176,16 +145,13 @@ void joyRumblePakInit(s32 index)
 }
 
 // Regalloc + Needs 4 extra bytes on the stack
-void joyCheckStatus(void)
-{
+void joyCheckStatus(void) {
     s8 i;
 
     if (g_ContNeedsInit)
     {
         g_ContNeedsInit = FALSE;
-        osContInit(&g_ContInputMessageQueue,
-                   &g_ConnectedControllers,
-                   g_ContStatus);
+        osContInit(&g_ContInputMessageQueue, &g_ConnectedControllers, g_ContStatus);
         g_ContInitDone = TRUE;
     }
     else
@@ -193,9 +159,9 @@ void joyCheckStatus(void)
         u32 slots = 0xF;
         s32 i;
 
-        // The following three function calls (+for) show up in the same
-        // sequence in devkit demos, but there doesn't seem to be much else in
-        // common with Rare's implementation.
+        // The following three function calls (+for) show up in the same sequence
+        // in devkit demos, but there doesn't seem to be much else in common
+        // with Rare's implementation.
         // n64devkit\ultra\usr\src\pr\demos\gbpak\siproc.c line 244
         // n64devkit\ultra\usr\src\pr\demos\voice\siproc.c line 89
         osContStartQuery(&g_ContInputMessageQueue);
@@ -205,11 +171,11 @@ void joyCheckStatus(void)
 
         for (i = 0; i < MAXCONTROLLERS; i++)
         {
-            if (g_ContStatus[i].errnum & CONT_NO_RESPONSE_ERROR)
+			if (g_ContStatus[i].errnum & CONT_NO_RESPONSE_ERROR)
             {
-                slots -= 1 << i;
-            }
-        }
+				slots -= 1 << i;
+			}
+		}
         // end similarity to voice\siproc.c
 
         g_ConnectedControllers = slots;
@@ -227,14 +193,13 @@ void joyCheckStatus(void)
 
     for (i = 0; i < MAXCONTROLLERS; i++)
     {
-        if ((g_ConnectedControllers & (1 << i)) &&
-            (g_ContStatus[i].type & (CONT_ABSOLUTE | CONT_RELATIVE)) &&
-            !(g_ContStatus[i].errnum))
+        if ((g_ConnectedControllers & (1 << i))
+            && (g_ContStatus[i].type & (CONT_ABSOLUTE | CONT_RELATIVE))
+            && !(g_ContStatus[i].errnum))
         {
             // This seems like a typo in the original, doing a bitwise AND
             // between a logical test on the left and a bitshift on the right.
-            if ((!(g_ControllerStates) & (1 << i)) ||
-                (g_ContRumblePakInitState[i] < RUMBLEPAKINITSTATE_READY))
+            if ((!(g_ControllerStates) & (1 << i)) || (g_ContRumblePakInitState[i] < RUMBLEPAKINITSTATE_READY))
             {
                 joyRumblePakInit(i);
             }
@@ -249,34 +214,28 @@ void joyCheckStatus(void)
     }
 }
 
-s8 joyGetControllerCount(void)
-{
+s8 joyGetControllerCount(void) {
     s32 i;
 
-    if (g_ContDataPtr->playbackcontcount >= 0)
-    {
-        return g_ContDataPtr->playbackcontcount;
-    }
+	if (g_ContDataPtr->playbackcontcount >= 0) {
+		return g_ContDataPtr->playbackcontcount;
+	}
 
-    for (i = 0; i < MAXCONTROLLERS; i++)
-    {
-        if ((g_ConnectedControllers & (1 << i)) == 0)
-        {
-            return i;
-        }
-    }
+	for (i = 0; i < MAXCONTROLLERS; i++) {
+		if ((g_ConnectedControllers & (1 << i)) == 0) {
+			return i;
+		}
+	}
 
-    return MAXCONTROLLERS;
+	return MAXCONTROLLERS;
 }
 
-u8 joyGetConnectedControllers(void)
-{
+u8 joyGetConnectedControllers(void) {
     return g_ConnectedControllers;
 }
 
 #ifdef VERSION_US
-void joyRumblePakTick(void)
-{
+void joyRumblePakTick(void) {
     s32 i;
 
     for (i = 0; i < MAXCONTROLLERS; i++)
@@ -293,22 +252,20 @@ void joyRumblePakTick(void)
                 {
                     set_rumble_pak_init_state_not_ready(i);
                 }
-#    ifdef VERSION_JP
+#ifdef VERSION_JP
             }
             else if (g_ContRumblePakTargetState[i] == RUMBLEPAKSTATE_UNKNOWN)
             {
-                if (osMotorInit(&g_ContInputMessageQueue, &g_ContPfs[i], i) !=
-                    0)
+                if (osMotorInit(&g_ContInputMessageQueue, &g_ContPfs[i], i) != 0)
                 {
-                    // untested, this probably needs to change to
-                    // set_rumble_pak_init_state_not_ready(i);
+                    // untested, this probably needs to change to set_rumble_pak_init_state_not_ready(i);
                     g_ContRumblePakInitState[i] = RUMBLEPAKINITSTATE_NOT_READY;
                 }
 
                 osMotorStop(&g_ContPfs[i]);
                 g_ContRumblePakCurrentState[i] = RUMBLEPAKSTATE_OFF;
-                g_ContRumblePakTargetState[i]  = RUMBLEPAKSTATE_OFF;
-#    endif
+                g_ContRumblePakTargetState[i] = RUMBLEPAKSTATE_OFF;
+#endif
             }
             else
             {
@@ -333,7 +290,7 @@ void joyRumblePakTick(void)
 
             if (g_ContRumblePakTimer60[i] <= 0)
             {
-                g_ContRumblePakTimer60[i]     = 0;
+                g_ContRumblePakTimer60[i] = 0;
                 g_ContRumblePakTargetState[i] = 0;
             }
         }
@@ -453,38 +410,30 @@ glabel joyRumblePakTick
 #endif
 #endif
 
-void joySetPlaybackFunc(contplaybackfunc func, s32 controllercount)
-{
-    g_ContPlaybackFunc              = func;
+void joySetPlaybackFunc(contplaybackfunc func, s32 controllercount) {
+    g_ContPlaybackFunc = func;
     g_ContData[1].playbackcontcount = controllercount;
 }
 
-void joySetRecordFunc(contrecordfunc func)
-{
+void joySetRecordFunc(contrecordfunc func) {
     g_ContRecordFunc = func;
 }
 
-void joyConsumeSamples(ContData *contdata)
-{
+void joyConsumeSamples(struct contdata *contdata) {
     s8 i;
     s32 samplenum;
     u16 buttons1;
     u16 buttons2;
     contdata->curstart = contdata->curlast;
-    contdata->curlast  = contdata->nextlast;
-    for (i = 0; i < MAXCONTROLLERS; i++)
-    {
+    contdata->curlast = contdata->nextlast;
+    for (i = 0; i < MAXCONTROLLERS; i++) {
         contdata->buttonspressed[i] = 0;
-        if (contdata->curlast != contdata->curstart)
-        {
-            samplenum = ((contdata->curstart + 1) % 20);
-            while (TRUE)
-            {
+        if (contdata->curlast != contdata->curstart) {
+            samplenum = ((contdata->curstart + 1) % 20); while (TRUE) {
                 buttons1 = contdata->samples[samplenum].pads[i].button;
                 buttons2 = contdata->samples[(samplenum + 19) % 20].pads[i].button;
                 contdata->buttonspressed[i] |= buttons1 & ~buttons2;
-                if (samplenum == contdata->curlast)
-                {
+                if (samplenum == contdata->curlast) {
                     break;
                 }
                 samplenum = ((samplenum + 1) % 20);
@@ -493,114 +442,77 @@ void joyConsumeSamples(ContData *contdata)
     }
 }
 
-void joyConsumeSamplesWrapper(void)
-{
-    if (g_ContPlaybackFunc)
-    {
-        g_ContData[1].nextlast = g_ContPlaybackFunc(g_ContData[1].samples, 
-                                                    g_ContData[1].curlast);
+void joyConsumeSamplesWrapper(void) {
+    if (g_ContPlaybackFunc) {
+        g_ContData[1].nextlast = g_ContPlaybackFunc(g_ContData[1].samples, g_ContData[1].curlast);
         joyConsumeSamples(&g_ContData[1]);
     }
     joyConsumeSamples(&g_ContData[0]);
-    if (g_ContRecordFunc)
-    {
-        g_ContRecordFunc(g_ContData[0].samples,
-                         g_ContData[0].curstart,
-                         g_ContData[0].curlast);
+    if (g_ContRecordFunc) {
+        g_ContRecordFunc(g_ContData[0].samples, g_ContData[0].curstart, g_ContData[0].curlast);
     }
 }
 
 #ifdef NONMATCHING
 // Stack + Regalloc
-void joyPoll(void)
-{
+void joyPoll(void) {
     OSMesg msg;
     // Check if there are any disable requests
-    if (!osRecvMesg(&g_ContDisablePollSendMessageQueue, &msg, OS_MESG_NOBLOCK))
-    {
-        if (g_ContBusy)
-        {
+    if (osRecvMesg(&g_ContDisablePollSendMessageQueue, &msg, OS_MESG_NOBLOCK) == 0) {
+        if (g_ContBusy) {
             osRecvMesg(&g_ContInputMessageQueue, &msg, OS_MESG_BLOCK);
             g_ContBusy = FALSE;
         }
-        osSendMesg(&g_ContDisablePollReceiveMessageQueue,
-                   &msg,
-                   OS_MESG_NOBLOCK);
+        osSendMesg(&g_ContDisablePollReceiveMessageQueue, &msg, OS_MESG_NOBLOCK);
         g_ContPollDisableCount++;
         return;
     }
     // Check if there are any enable requests
-    if (!osRecvMesg(&g_ContEnablePollSendMessageQueue, &msg, OS_MESG_NOBLOCK))
-    {
+    if (osRecvMesg(&g_ContEnablePollSendMessageQueue, &msg, OS_MESG_NOBLOCK) == 0) {
         osContStartPollData(&g_ContInputMessageQueue);
         g_ContBusy = TRUE;
         osSendMesg(&g_ContEnablePollReceiveMessageQueue, &msg, OS_MESG_NOBLOCK);
         g_ContPollDisableCount--;
         return;
     }
-    if ((!g_ContPollDisableCount) && g_ContInitDone)
-    {
+    if ((g_ContPollDisableCount == 0) && g_ContInitDone) {
         // Poll controller input from SI
-        if (!osRecvMesg(&g_ContInputMessageQueue, &msg, OS_MESG_NOBLOCK))
-        {
+        if (osRecvMesg(&g_ContInputMessageQueue, &msg, OS_MESG_NOBLOCK) == 0) {
             static s32 count = 0;
             s32 index;
             s8 i;
             g_ContBusy = FALSE;
-            index      = ((g_ContData[0].nextlast + 1) % 20);
-            if (index == g_ContData[0].curstart)
-            {
+            index = ((g_ContData[0].nextlast + 1) % 20);
+            if (index == g_ContData[0].curstart) {
                 index = g_ContData[0].nextlast;
             }
             osContGetReadData(g_ContData[0].samples[index].pads);
-            g_ContData[0].nextlast       = index;
+            g_ContData[0].nextlast = index;
             g_ContData[0].nextsecondlast = ((g_ContData[0].nextlast + 19) % 20);
             g_ContCheckStatusTimer60++;
-            if ((g_ContCheckStatusTimer60 % 120) == 0)
-            {
+            if ((g_ContCheckStatusTimer60 % 120) == 0) {
                 joyCheckStatus();
             }
-            for (i = 0; i < MAXCONTROLLERS; i++)
-            {
-                if (((g_ContData[0]
-                          .samples[g_ContData[0].nextlast]
-                          .pads[i]
-                          .errnum == 0) &&
-                     (g_ContData[0]
-                          .samples[g_ContData[0].nextsecondlast]
-                          .pads[i]
-                          .errnum != 0)) ||
-                    ((g_ContData[0]
-                          .samples[g_ContData[0].nextlast]
-                          .pads[i]
-                          .errnum != 0) &&
-                     (g_ContData[0]
-                          .samples[g_ContData[0].nextsecondlast]
-                          .pads[i]
-                          .errnum == 0)))
-                {
-                    joyCheckStatus();
-                    break;
-                }
+            for (i = 0; i < MAXCONTROLLERS; i++) {
+                if (((g_ContData[0].samples[g_ContData[0].nextlast].pads[i].errnum == 0) && (g_ContData[0].samples[g_ContData[0].nextsecondlast].pads[i].errnum != 0)) ||
+                    ((g_ContData[0].samples[g_ContData[0].nextlast].pads[i].errnum != 0) && (g_ContData[0].samples[g_ContData[0].nextsecondlast].pads[i].errnum == 0))) {
+					joyCheckStatus();
+					break;
+				}
             }
             joyRumblePakTick();
             osContStartReadData(&g_ContInputMessageQueue);
             g_ContBusy = TRUE;
             count++;
-            if (count >= 60)
-            {
+            if (count >= 60) {
                 s32 i;
-                for (i = 0; i < MAXCONTROLLERS; i++)
-                {
-                    if (g_ContBadReadsStickX[i] || g_ContBadReadsStickY[i] ||
-                        g_ContBadReadsButtons[i] ||
-                        g_ContBadReadsButtonsPressed[i])
-                    {
-                        g_ContBadReadsStickX[i]         = 0;
-                        g_ContBadReadsStickY[i]         = 0;
-                        g_ContBadReadsButtons[i]        = 0;
-                        g_ContBadReadsButtonsPressed[i] = 0;
-                    }
+                for (i = 0; i < MAXCONTROLLERS; i++) {
+                    if (g_ContBadReadsStickX[i] || g_ContBadReadsStickY[i] || g_ContBadReadsButtons[i] || g_ContBadReadsButtonsPressed[i]) {
+						g_ContBadReadsStickX[i] = 0;
+						g_ContBadReadsStickY[i] = 0;
+						g_ContBadReadsButtons[i] = 0;
+						g_ContBadReadsButtonsPressed[i] = 0;
+					}
                 }
                 count = 0;
             }
@@ -850,181 +762,133 @@ glabel joyPoll
 )
 #endif
 
-s8 joyGetStickX(s8 contpadnum)
-{
-    if ((g_ContDataPtr->playbackcontcount < 0) &&
-        ((g_ConnectedControllers >> contpadnum & 1) == 0))
-    {
-        g_ContBadReadsStickX[contpadnum]++;
-        return 0;
-    }
-    return g_ContDataPtr->samples[g_ContDataPtr->curlast]
-                                .pads[contpadnum]
-                                .stick_x;
+s8 joyGetStickX(s8 contpadnum) {
+    if ((g_ContDataPtr->playbackcontcount < 0) && ((g_ConnectedControllers >> contpadnum & 1) == 0)) {
+		g_ContBadReadsStickX[contpadnum]++;
+		return 0;
+	}
+	return g_ContDataPtr->samples[g_ContDataPtr->curlast].pads[contpadnum].stick_x;
 }
 
-s8 joy7000C174(s8 contpadnum)
-{
-    if ((g_ContDataPtr->playbackcontcount < 0) &&
-        ((g_ConnectedControllers >> contpadnum & 1) == 0))
-    {
-        g_ContBadReadsStickX[contpadnum]++;
-        return 0;
-    }
-    return g_ContDataPtr->samples[g_ContDataPtr->curstart]
-                                .pads[contpadnum]
-                                .stick_x;
+s8 joy7000C174(s8 contpadnum) {
+    if ((g_ContDataPtr->playbackcontcount < 0) && ((g_ConnectedControllers >> contpadnum & 1) == 0)) {
+		g_ContBadReadsStickX[contpadnum]++;
+		return 0;
+	}
+	return g_ContDataPtr->samples[g_ContDataPtr->curstart].pads[contpadnum].stick_x;
 }
 
-s8 joyGetStickY(s8 contpadnum)
-{
-    if ((g_ContDataPtr->playbackcontcount < 0) &&
-        ((g_ConnectedControllers >> contpadnum & 1) == 0))
-    {
-        g_ContBadReadsStickY[contpadnum]++;
-        return 0;
-    }
-    return g_ContDataPtr->samples[g_ContDataPtr->curlast]
-                                .pads[contpadnum]
-                                .stick_y;
+s8 joyGetStickY(s8 contpadnum) {
+    if ((g_ContDataPtr->playbackcontcount < 0) && ((g_ConnectedControllers >> contpadnum & 1) == 0)) {
+		g_ContBadReadsStickY[contpadnum]++;
+		return 0;
+	}
+	return g_ContDataPtr->samples[g_ContDataPtr->curlast].pads[contpadnum].stick_y;
 }
 
-s8 joy7000C284(s8 contpadnum)
-{
-    if ((g_ContDataPtr->playbackcontcount < 0) &&
-        ((g_ConnectedControllers >> contpadnum & 1) == 0))
-    {
-        g_ContBadReadsStickY[contpadnum]++;
-        return 0;
-    }
-    return g_ContDataPtr->samples[g_ContDataPtr->curstart]
-                                .pads[contpadnum]
-                                .stick_y;
+s8 joy7000C284(s8 contpadnum) {
+    if ((g_ContDataPtr->playbackcontcount < 0) && ((g_ConnectedControllers >> contpadnum & 1) == 0)) {
+		g_ContBadReadsStickY[contpadnum]++;
+		return 0;
+	}
+	return g_ContDataPtr->samples[g_ContDataPtr->curstart].pads[contpadnum].stick_y;
 }
 
-u16 joyGetButtons(s8 contpadnum, u16 mask)
-{
-    if ((g_ContDataPtr->playbackcontcount < 0) &&
-        ((g_ConnectedControllers >> contpadnum & 1) == 0))
-    {
-        g_ContBadReadsButtons[contpadnum]++;
-        return 0;
-    }
-    return g_ContDataPtr->samples[g_ContDataPtr->curlast]
-                               .pads[contpadnum]
-                               .button & mask;
-           
+u16 joyGetButtons(s8 contpadnum, u16 mask) {
+	if ((g_ContDataPtr->playbackcontcount < 0) && ((g_ConnectedControllers >> contpadnum & 1) == 0)) {
+		g_ContBadReadsButtons[contpadnum]++;
+		return 0;
+	}
+	return g_ContDataPtr->samples[g_ContDataPtr->curlast].pads[contpadnum].button & mask;
 }
 
-u16 joyGetButtonsPressedThisFrame(s8 contpadnum, u16 mask)
-{
-    if ((g_ContDataPtr->playbackcontcount < 0) &&
-        ((g_ConnectedControllers >> contpadnum & 1) == 0))
-    {
-        g_ContBadReadsButtonsPressed[contpadnum]++;
-        return 0;
-    }
+u16 joyGetButtonsPressedThisFrame(s8 contpadnum, u16 mask) {
+	if ((g_ContDataPtr->playbackcontcount < 0) && ((g_ConnectedControllers >> contpadnum & 1) == 0)) {
+		g_ContBadReadsButtonsPressed[contpadnum]++;
+		return 0;
+	}
     return g_ContDataPtr->buttonspressed[contpadnum] & mask;
 }
 
-void joy7000C430(s8 *bytes, u16 bitfield)
-{
+void joy7000C430(s8 *bytes, u16 bitfield) {
     s32 i;
-    for (i = 15; i >= 0; i--)
-    {
+    for (i = 15; i >= 0; i--) {
         *bytes++ = (((((bitfield >> i) & 1) > 0) * 17) + 32);
     }
 }
 
-void joy7000C470(void)
-{
+void joy7000C470(void) {
     s32 i = 0;
-    for (i = 0; i < joyGetControllerCount(); i++)
-    {
+    for (i = 0; i < joyGetControllerCount(); i++) {
         // Removed
     }
 }
 
-s32 joyGetStickXInRange(s8 contpadnum, s32 rangemin, s32 rangemax)
-{
+s32 joyGetStickXInRange(s8 contpadnum, s32 rangemin, s32 rangemax) {
     s32 range;
     s32 stick_x = joyGetStickX(contpadnum) + 60;
-    if (stick_x > 120)
-    {
+    if (stick_x > 120) {
         stick_x = 120;
     }
-    if (stick_x < 0)
-    {
+    if (stick_x < 0) {
         stick_x = 0;
     }
     range = (rangemax - rangemin);
     return (((stick_x * range) / 120) + rangemin);
 }
 
-s32 joyGetStickYInRange(s8 contpadnum, s32 rangemin, s32 rangemax)
-{
+s32 joyGetStickYInRange(s8 contpadnum, s32 rangemin, s32 rangemax) {
     s32 range;
     s32 stick_y = joyGetStickY(contpadnum) + 60;
-    if (stick_y > 120)
-    {
+    if (stick_y > 120) {
         stick_y = 120;
     }
-    if (stick_y < 0)
-    {
+    if (stick_y < 0) {
         stick_y = 0;
     }
     range = (rangemax - rangemin);
     return (((stick_y * range) / 120) + rangemin);
 }
 
-f32 joyGetStickXInRangef(s8 contpadnum, f32 rangemin, f32 rangemax)
-{
+f32 joyGetStickXInRangef(s8 contpadnum, f32 rangemin, f32 rangemax) {
     f32 range;
     s32 stick_x = joyGetStickX(contpadnum) + 60;
-    if (stick_x > 120)
-    {
+    if (stick_x > 120) {
         stick_x = 120;
     }
-    if (stick_x < 0)
-    {
+    if (stick_x < 0) {
         stick_x = 0;
     }
     range = (rangemax - rangemin);
     return (((stick_x / 120.0f) * range) + rangemin);
 }
 
-f32 joyGetStickYInRangef(s8 contpadnum, f32 rangemin, f32 rangemax)
-{
+f32 joyGetStickYInRangef(s8 contpadnum, f32 rangemin, f32 rangemax) {
     f32 range;
     s32 stick_y = joyGetStickY(contpadnum) + 60;
-    if (stick_y > 120)
-    {
+    if (stick_y > 120) {
         stick_y = 120;
     }
-    if (stick_y < 0)
-    {
+    if (stick_y < 0) {
         stick_y = 0;
     }
     range = (rangemax - rangemin);
     return (((stick_y / 120.0f) * range) + rangemin);
 }
 
-void joyDisablePoll(void)
-{
+void joyDisablePoll(void) {
     OSMesg msg;
     osSendMesg(&g_ContDisablePollSendMessageQueue, &msg, OS_MESG_NOBLOCK);
     osRecvMesg(&g_ContDisablePollReceiveMessageQueue, &msg, OS_MESG_BLOCK);
 }
 
-void joyEnablePoll(void)
-{
+void joyEnablePoll(void) {
     OSMesg msg;
     osSendMesg(&g_ContEnablePollSendMessageQueue, &msg, OS_MESG_NOBLOCK);
     osRecvMesg(&g_ContEnablePollReceiveMessageQueue, &msg, OS_MESG_BLOCK);
 }
 
-s32 joyGamePakProbe(void)
-{
+s32 joyGamePakProbe(void) {
     s32 type;
     joyDisablePoll();
     type = osEepromProbe(&g_ContInputMessageQueue);
@@ -1032,8 +896,7 @@ s32 joyGamePakProbe(void)
     return type;
 }
 
-s32 joyGamePakRead(u8 address, u8 *buffer)
-{
+s32 joyGamePakRead(u8 address, u8 *buffer) {
     s32 ret;
     joyDisablePoll();
     ret = osEepromRead(&g_ContInputMessageQueue, address, buffer);
@@ -1041,8 +904,7 @@ s32 joyGamePakRead(u8 address, u8 *buffer)
     return ret;
 }
 
-s32 joyGamePakWrite(u8 address, u8 *buffer)
-{
+s32 joyGamePakWrite(u8 address, u8 *buffer) {
     s32 ret;
     joyDisablePoll();
     ret = osEepromWrite(&g_ContInputMessageQueue, address, buffer);
@@ -1050,8 +912,7 @@ s32 joyGamePakWrite(u8 address, u8 *buffer)
     return ret;
 }
 
-s32 joyGamePakLongRead(u8 address, u8 *buffer, s32 nbytes)
-{
+s32 joyGamePakLongRead(u8 address, u8 *buffer, s32 nbytes) {
     s32 ret;
     joyDisablePoll();
     ret = osEepromLongRead(&g_ContInputMessageQueue, address, buffer, nbytes);
@@ -1059,8 +920,7 @@ s32 joyGamePakLongRead(u8 address, u8 *buffer, s32 nbytes)
     return ret;
 }
 
-s32 joyGamePakLongWrite(u8 address, u8 *buffer, s32 nbytes)
-{
+s32 joyGamePakLongWrite(u8 address, u8 *buffer, s32 nbytes) {
     s32 ret;
     joyDisablePoll();
     ret = osEepromLongWrite(&g_ContInputMessageQueue, address, buffer, nbytes);
@@ -1068,43 +928,34 @@ s32 joyGamePakLongWrite(u8 address, u8 *buffer, s32 nbytes)
     return ret;
 }
 
-void joyRumblePakStart(s32 controller, f32 duration)
-{
+void joyRumblePakStart(s32 controller, f32 duration) {
     s32 duration60 = (duration * 60.0f);
-    if ((g_ContPlaybackFunc == NULL) &&
-        (g_ContRumblePakInitState[controller] > RUMBLEPAKINITSTATE_NOT_READY))
-    {
-        if (g_ContRumblePakTimer60[controller] < duration60)
-        {
+    if ((g_ContPlaybackFunc == NULL) && (g_ContRumblePakInitState[controller] > RUMBLEPAKINITSTATE_NOT_READY)) {
+        if (g_ContRumblePakTimer60[controller] < duration60) {
             g_ContRumblePakTimer60[controller] = duration60;
         }
-        if (g_ContRumblePakCurrentState[controller] == RUMBLEPAKSTATE_OFF)
-        {
+        if (g_ContRumblePakCurrentState[controller] == RUMBLEPAKSTATE_OFF) {
             g_ContRumblePakTargetState[controller] = RUMBLEPAKSTATE_ON;
         }
     }
 }
 
-void joyRumblePakStop(void)
-{
+void joyRumblePakStop(void) {
     s32 i;
-    for (i = 0; i < MAXCONTROLLERS; i++)
-    {
+    for (i = 0; i < MAXCONTROLLERS; i++) {
 #ifdef VERSION_US
         g_ContRumblePakCurrentState[i] = RUMBLEPAKSTATE_ON;
-        g_ContRumblePakTargetState[i]  = RUMBLEPAKSTATE_OFF;
+        g_ContRumblePakTargetState[i] = RUMBLEPAKSTATE_OFF;
 #else if VERSION_JP
         g_ContRumblePakTargetState[i] = RUMBLEPAKSTATE_UNKNOWN;
 #endif
     }
 }
 
-void joySetContDataIndex(s32 index)
-{
+void joySetContDataIndex(s32 index) {
     g_ContDataPtr = &g_ContData[index];
 }
 
-s32 joyGetContDataIndex(void)
-{
+s32 joyGetContDataIndex(void) {
     return (g_ContDataPtr - g_ContData);
 }
