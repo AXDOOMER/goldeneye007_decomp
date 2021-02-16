@@ -4,7 +4,7 @@
 
 struct contdata {
     /* 0x000 */ struct contsample samples[20];
-    /* 0x1E0 */ s32 curlast; 
+    /* 0x1E0 */ s32 curlast;
 	/* 0x1E4 */ s32 curstart;
 	/* 0x1E8 */ s32 nextlast;
 	/* 0x1EC */ s32 nextsecondlast;
@@ -52,6 +52,9 @@ typedef enum {
 void joyCheckStatus(void);
 
 s32 g_ContRumblePakInitState[MAXCONTROLLERS] = {0};
+
+#define set_rumble_pak_init_state_not_ready(i) do { g_ContRumblePakInitState[i] = RUMBLEPAKINITSTATE_NOT_READY; } while (0)
+
 s32 g_ContRumblePakCurrentState[MAXCONTROLLERS] = {0};
 s32 g_ContRumblePakTimer60[MAXCONTROLLERS] = {0};
 s32 g_ContRumblePakTargetState[MAXCONTROLLERS] = {0};
@@ -113,7 +116,7 @@ void joyCheckStatusThreadSafe(void) {
     if (g_ContQueuesCreated) {
         osSendMesg(&g_ContDisablePollSendMessageQueue, &msg, OS_MESG_NOBLOCK);
         osRecvMesg(&g_ContDisablePollReceiveMessageQueue, &msg, OS_MESG_BLOCK);
-        
+
         joyCheckStatus();
 
         osSendMesg(&g_ContEnablePollSendMessageQueue, &msg, OS_MESG_NOBLOCK);
@@ -128,7 +131,7 @@ s32 osPfsChecker(OSPfs *pfs) {
 void joyRumblePakInit(s32 index) {
     s32 ret;
     if (g_ContRumblePakInitState[index] > RUMBLEPAKINITSTATE_ERROR) {
-        if ((g_ContStatus[index].type & CONT_JOYPORT) && (g_ContStatus[index].status & CONT_CARD_ON)) {        
+        if ((g_ContStatus[index].type & CONT_JOYPORT) && (g_ContStatus[index].status & CONT_CARD_ON)) {
             ret = osPfsInit(&g_ContInputMessageQueue, &g_ContPfs[index], index);
             if ((ret == PFS_ERR_ID_FATAL) || (ret == PFS_ERR_DEVICE)) {
                 if (osMotorInit(&g_ContInputMessageQueue, &g_ContPfs[index], index) == 0) {
@@ -164,7 +167,7 @@ void joyCheckStatus(void) {
         osContStartQuery(&g_ContInputMessageQueue);
         osRecvMesg(&g_ContInputMessageQueue, NULL, OS_MESG_BLOCK);
         osContGetQuery(g_ContStatus);
-        // end similarity to gbpak\siproc.c 
+        // end similarity to gbpak\siproc.c
 
         for (i = 0; i < MAXCONTROLLERS; i++)
         {
@@ -177,7 +180,7 @@ void joyCheckStatus(void) {
 
         g_ConnectedControllers = slots;
     }
-    
+
     if (0)
     {
         // Removed
@@ -206,7 +209,7 @@ void joyCheckStatus(void) {
         else if (g_ControllerStates & (1 << i))
         {
             g_ControllerStates ^= (1 << i);
-            g_ContRumblePakInitState[i] = RUMBLEPAKINITSTATE_NOT_READY;                
+            g_ContRumblePakInitState[i] = RUMBLEPAKINITSTATE_NOT_READY;
         }
     }
 }
@@ -231,40 +234,62 @@ u8 joyGetConnectedControllers(void) {
     return g_ConnectedControllers;
 }
 
-#ifdef NONMATCHING
-// g_ContRumblePakInitState loaded only once instead of twice + regalloc
+#ifdef VERSION_US
 void joyRumblePakTick(void) {
     s32 i;
-    for (i = 0; i < MAXCONTROLLERS; i++) {
-        if (g_ContRumblePakCurrentState[i] != g_ContRumblePakTargetState[i]) {
-            if (g_ContRumblePakTargetState[i] == RUMBLEPAKSTATE_ON) {
-                if (osMotorStart(&g_ContPfs[i]) == 0) {
+
+    for (i = 0; i < MAXCONTROLLERS; i++)
+    {
+        if (g_ContRumblePakCurrentState[i] != g_ContRumblePakTargetState[i])
+        {
+            if (g_ContRumblePakTargetState[i] == RUMBLEPAKSTATE_ON)
+            {
+                if (0 == osMotorStart(&g_ContPfs[i]))
+                {
                     g_ContRumblePakCurrentState[i] = RUMBLEPAKSTATE_ON;
-                } else {
-                    g_ContRumblePakInitState[i] = RUMBLEPAKINITSTATE_NOT_READY;
+                }
+                else
+                {
+                    set_rumble_pak_init_state_not_ready(i);
                 }
 #ifdef VERSION_JP
-            } else if (g_ContRumblePakTargetState[i] == RUMBLEPAKSTATE_UNKNOWN) {
-                if (osMotorInit(&g_ContInputMessageQueue, &g_ContPfs[i], i) != 0) {
-                    g_ContRumblePakInitState[i] = RUMBLEPAKINITSTATE_NOT_READY;                    
+            }
+            else if (g_ContRumblePakTargetState[i] == RUMBLEPAKSTATE_UNKNOWN)
+            {
+                if (osMotorInit(&g_ContInputMessageQueue, &g_ContPfs[i], i) != 0)
+                {
+                    // untested, this probably needs to change to set_rumble_pak_init_state_not_ready(i);
+                    g_ContRumblePakInitState[i] = RUMBLEPAKINITSTATE_NOT_READY;
                 }
+
                 osMotorStop(&g_ContPfs[i]);
                 g_ContRumblePakCurrentState[i] = RUMBLEPAKSTATE_OFF;
                 g_ContRumblePakTargetState[i] = RUMBLEPAKSTATE_OFF;
 #endif
-            } else {
-                if (osMotorStop(&g_ContPfs[i]) == 0) {
+            }
+            else
+            {
+                if (0 == osMotorStop(&g_ContPfs[i]))
+                {
                     g_ContRumblePakCurrentState[i] = RUMBLEPAKSTATE_OFF;
-                } else {
-                    g_ContRumblePakInitState[i] = RUMBLEPAKINITSTATE_NOT_READY;
                 }
-            } 
+                else
+                {
+                    set_rumble_pak_init_state_not_ready(i);
+                }
+            }
         }
-        if (g_ContRumblePakTimer60[i] <= 0) {
+
+        if (g_ContRumblePakTimer60[i] <= 0)
+        {
             g_ContRumblePakTimer60[i] = 0;
-        } else {
+        }
+        else
+        {
             g_ContRumblePakTimer60[i]--;
-            if (g_ContRumblePakTimer60[i] <= 0) {
+
+            if (g_ContRumblePakTimer60[i] <= 0)
+            {
                 g_ContRumblePakTimer60[i] = 0;
                 g_ContRumblePakTargetState[i] = 0;
             }
@@ -272,95 +297,6 @@ void joyRumblePakTick(void) {
     }
 }
 #else
-void joyRumblePakTick(void);
-#ifdef VERSION_US
-GLOBAL_ASM(
-.text
-glabel joyRumblePakTick
-/* 00C67C 7000BA7C 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 00C680 7000BA80 AFB40028 */  sw    $s4, 0x28($sp)
-/* 00C684 7000BA84 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 00C688 7000BA88 AFB00018 */  sw    $s0, 0x18($sp)
-/* 00C68C 7000BA8C AFB60030 */  sw    $s6, 0x30($sp)
-/* 00C690 7000BA90 AFB5002C */  sw    $s5, 0x2c($sp)
-/* 00C694 7000BA94 AFB30024 */  sw    $s3, 0x24($sp)
-/* 00C698 7000BA98 AFB20020 */  sw    $s2, 0x20($sp)
-/* 00C69C 7000BA9C 3C108002 */  lui   $s0, %hi(g_ContRumblePakTimer60)
-/* 00C6A0 7000BAA0 3C118002 */  lui   $s1, %hi(g_ContRumblePakCurrentState)
-/* 00C6A4 7000BAA4 3C148002 */  lui   $s4, %hi(g_ContRumblePakTargetState)
-/* 00C6A8 7000BAA8 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 00C6AC 7000BAAC 26946908 */  addiu $s4, %lo(g_ContRumblePakTargetState) # addiu $s4, $s4, 0x6908
-/* 00C6B0 7000BAB0 263168E8 */  addiu $s1, %lo(g_ContRumblePakCurrentState) # addiu $s1, $s1, 0x68e8
-/* 00C6B4 7000BAB4 261068F8 */  addiu $s0, %lo(g_ContRumblePakTimer60) # addiu $s0, $s0, 0x68f8
-/* 00C6B8 7000BAB8 00009025 */  move  $s2, $zero
-/* 00C6BC 7000BABC 00009825 */  move  $s3, $zero
-/* 00C6C0 7000BAC0 24150001 */  li    $s5, 1
-/* 00C6C4 7000BAC4 24160004 */  li    $s6, 4
-.L7000BAC8:
-/* 00C6C8 7000BAC8 8E820000 */  lw    $v0, ($s4)
-/* 00C6CC 7000BACC 8E2E0000 */  lw    $t6, ($s1)
-/* 00C6D0 7000BAD0 00127880 */  sll   $t7, $s2, 2
-/* 00C6D4 7000BAD4 01F27823 */  subu  $t7, $t7, $s2
-/* 00C6D8 7000BAD8 11C2001A */  beq   $t6, $v0, .L7000BB44
-/* 00C6DC 7000BADC 000F7880 */   sll   $t7, $t7, 2
-/* 00C6E0 7000BAE0 01F27821 */  addu  $t7, $t7, $s2
-/* 00C6E4 7000BAE4 3C188006 */  lui   $t8, %hi(g_ContPfs) 
-/* 00C6E8 7000BAE8 271853F8 */  addiu $t8, %lo(g_ContPfs) # addiu $t8, $t8, 0x53f8
-/* 00C6EC 7000BAEC 000F78C0 */  sll   $t7, $t7, 3
-/* 00C6F0 7000BAF0 16A2000B */  bne   $s5, $v0, .L7000BB20
-/* 00C6F4 7000BAF4 01F82021 */   addu  $a0, $t7, $t8
-/* 00C6F8 7000BAF8 0C0032AB */  jal   osMotorStart
-/* 00C6FC 7000BAFC 00000000 */   nop   
-/* 00C700 7000BB00 14400003 */  bnez  $v0, .L7000BB10
-/* 00C704 7000BB04 3C198002 */   lui   $t9, %hi(g_ContRumblePakInitState) 
-/* 00C708 7000BB08 1000000E */  b     .L7000BB44
-/* 00C70C 7000BB0C AE350000 */   sw    $s5, ($s1)
-.L7000BB10:
-/* 00C710 7000BB10 273968D8 */  addiu $t9, %lo(g_ContRumblePakInitState) # addiu $t9, $t9, 0x68d8
-/* 00C714 7000BB14 02791021 */  addu  $v0, $s3, $t9
-/* 00C718 7000BB18 1000000A */  b     .L7000BB44
-/* 00C71C 7000BB1C AC400000 */   sw    $zero, ($v0)
-.L7000BB20:
-/* 00C720 7000BB20 0C003260 */  jal   osMotorStop
-/* 00C724 7000BB24 00000000 */   nop   
-/* 00C728 7000BB28 14400003 */  bnez  $v0, .L7000BB38
-/* 00C72C 7000BB2C 3C088002 */   lui   $t0, %hi(g_ContRumblePakInitState) 
-/* 00C730 7000BB30 10000004 */  b     .L7000BB44
-/* 00C734 7000BB34 AE200000 */   sw    $zero, ($s1)
-.L7000BB38:
-/* 00C738 7000BB38 250868D8 */  addiu $t0, %lo(g_ContRumblePakInitState) # addiu $t0, $t0, 0x68d8
-/* 00C73C 7000BB3C 02681021 */  addu  $v0, $s3, $t0
-/* 00C740 7000BB40 AC400000 */  sw    $zero, ($v0)
-.L7000BB44:
-/* 00C744 7000BB44 8E020000 */  lw    $v0, ($s0)
-/* 00C748 7000BB48 26520001 */  addiu $s2, $s2, 1
-/* 00C74C 7000BB4C 26730004 */  addiu $s3, $s3, 4
-/* 00C750 7000BB50 1C400003 */  bgtz  $v0, .L7000BB60
-/* 00C754 7000BB54 26310004 */   addiu $s1, $s1, 4
-/* 00C758 7000BB58 10000006 */  b     .L7000BB74
-/* 00C75C 7000BB5C AE000000 */   sw    $zero, ($s0)
-.L7000BB60:
-/* 00C760 7000BB60 2449FFFF */  addiu $t1, $v0, -1
-/* 00C764 7000BB64 1D200003 */  bgtz  $t1, .L7000BB74
-/* 00C768 7000BB68 AE090000 */   sw    $t1, ($s0)
-/* 00C76C 7000BB6C AE000000 */  sw    $zero, ($s0)
-/* 00C770 7000BB70 AE800000 */  sw    $zero, ($s4)
-.L7000BB74:
-/* 00C774 7000BB74 26940004 */  addiu $s4, $s4, 4
-/* 00C778 7000BB78 1656FFD3 */  bne   $s2, $s6, .L7000BAC8
-/* 00C77C 7000BB7C 26100004 */   addiu $s0, $s0, 4
-/* 00C780 7000BB80 8FBF0034 */  lw    $ra, 0x34($sp)
-/* 00C784 7000BB84 8FB00018 */  lw    $s0, 0x18($sp)
-/* 00C788 7000BB88 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 00C78C 7000BB8C 8FB20020 */  lw    $s2, 0x20($sp)
-/* 00C790 7000BB90 8FB30024 */  lw    $s3, 0x24($sp)
-/* 00C794 7000BB94 8FB40028 */  lw    $s4, 0x28($sp)
-/* 00C798 7000BB98 8FB5002C */  lw    $s5, 0x2c($sp)
-/* 00C79C 7000BB9C 8FB60030 */  lw    $s6, 0x30($sp)
-/* 00C7A0 7000BBA0 03E00008 */  jr    $ra
-/* 00C7A4 7000BBA4 27BD0038 */   addiu $sp, $sp, 0x38
-)
-#endif
 #ifdef VERSION_JP
 GLOBAL_ASM(
 .text
@@ -558,7 +494,7 @@ void joyPoll(void) {
                 joyCheckStatus();
             }
             for (i = 0; i < MAXCONTROLLERS; i++) {
-                if (((g_ContData[0].samples[g_ContData[0].nextlast].pads[i].errnum == 0) && (g_ContData[0].samples[g_ContData[0].nextsecondlast].pads[i].errnum != 0)) || 
+                if (((g_ContData[0].samples[g_ContData[0].nextlast].pads[i].errnum == 0) && (g_ContData[0].samples[g_ContData[0].nextsecondlast].pads[i].errnum != 0)) ||
                     ((g_ContData[0].samples[g_ContData[0].nextlast].pads[i].errnum != 0) && (g_ContData[0].samples[g_ContData[0].nextsecondlast].pads[i].errnum == 0))) {
 					joyCheckStatus();
 					break;
@@ -596,7 +532,7 @@ glabel joyPoll
 /* 00C99C 7000BD9C 0C003774 */  jal   osRecvMesg
 /* 00C9A0 7000BDA0 00003025 */   move  $a2, $zero
 /* 00C9A4 7000BDA4 14400015 */  bnez  $v0, .L7000BDFC
-/* 00C9A8 7000BDA8 3C0E8002 */   lui   $t6, %hi(g_ContBusy) 
+/* 00C9A8 7000BDA8 3C0E8002 */   lui   $t6, %hi(g_ContBusy)
 /* 00C9AC 7000BDAC 8DCE68C8 */  lw    $t6, %lo(g_ContBusy)($t6)
 /* 00C9B0 7000BDB0 3C048006 */  lui   $a0, %hi(g_ContInputMessageQueue)
 /* 00C9B4 7000BDB4 24845350 */  addiu $a0, %lo(g_ContInputMessageQueue) # addiu $a0, $a0, 0x5350
@@ -646,7 +582,7 @@ glabel joyPoll
 /* 00CA58 7000BE58 3C038002 */  lui   $v1, %hi(g_ContPollDisableCount)
 /* 00CA5C 7000BE5C 246368CC */  addiu $v1, %lo(g_ContPollDisableCount) # addiu $v1, $v1, 0x68cc
 /* 00CA60 7000BE60 8C6D0000 */  lw    $t5, ($v1)
-/* 00CA64 7000BE64 3C0E8002 */  lui   $t6, %hi(g_ContInitDone) 
+/* 00CA64 7000BE64 3C0E8002 */  lui   $t6, %hi(g_ContInitDone)
 /* 00CA68 7000BE68 55A0009D */  bnezl $t5, .L7000C0E0
 /* 00CA6C 7000BE6C 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 00CA70 7000BE70 8DCE691C */  lw    $t6, %lo(g_ContInitDone)($t6)
@@ -696,7 +632,7 @@ glabel joyPoll
 /* 00CB1C 7000BF1C 17000006 */  bnez  $t8, .L7000BF38
 /* 00CB20 7000BF20 ACA201E8 */   sw    $v0, 0x1e8($a1)
 /* 00CB24 7000BF24 0C002E04 */  jal   joyCheckStatus
-/* 00CB28 7000BF28 00000000 */   nop   
+/* 00CB28 7000BF28 00000000 */   nop
 /* 00CB2C 7000BF2C 3C058006 */  lui   $a1, %hi(g_ContData)
 /* 00CB30 7000BF30 24A54F30 */  addiu $a1, %lo(g_ContData) # addiu $a1, $a1, 0x4f30
 /* 00CB34 7000BF34 8CA201E8 */  lw    $v0, 0x1e8($a1)
@@ -713,7 +649,7 @@ glabel joyPoll
 /* 00CB58 7000BF58 00C25821 */  addu  $t3, $a2, $v0
 /* 00CB5C 7000BF5C 91630004 */  lbu   $v1, 4($t3)
 /* 00CB60 7000BF60 1460000A */  bnez  $v1, .L7000BF8C
-/* 00CB64 7000BF64 00000000 */   nop   
+/* 00CB64 7000BF64 00000000 */   nop
 /* 00CB68 7000BF68 8CAC01EC */  lw    $t4, 0x1ec($a1)
 /* 00CB6C 7000BF6C 000C6880 */  sll   $t5, $t4, 2
 /* 00CB70 7000BF70 01AC6823 */  subu  $t5, $t5, $t4
@@ -722,7 +658,7 @@ glabel joyPoll
 /* 00CB7C 7000BF7C 01C27821 */  addu  $t7, $t6, $v0
 /* 00CB80 7000BF80 91F80004 */  lbu   $t8, 4($t7)
 /* 00CB84 7000BF84 1700000C */  bnez  $t8, .L7000BFB8
-/* 00CB88 7000BF88 00000000 */   nop   
+/* 00CB88 7000BF88 00000000 */   nop
 .L7000BF8C:
 /* 00CB8C 7000BF8C 1060000E */  beqz  $v1, .L7000BFC8
 /* 00CB90 7000BF90 24840001 */   addiu $a0, $a0, 1
@@ -737,19 +673,19 @@ glabel joyPoll
 /* 00CBB4 7000BFB4 00047E00 */   sll   $t7, $a0, 0x18
 .L7000BFB8:
 /* 00CBB8 7000BFB8 0C002E04 */  jal   joyCheckStatus
-/* 00CBBC 7000BFBC 00000000 */   nop   
+/* 00CBBC 7000BFBC 00000000 */   nop
 /* 00CBC0 7000BFC0 10000006 */  b     .L7000BFDC
-/* 00CBC4 7000BFC4 00000000 */   nop   
+/* 00CBC4 7000BFC4 00000000 */   nop
 .L7000BFC8:
 /* 00CBC8 7000BFC8 00047E00 */  sll   $t7, $a0, 0x18
 .L7000BFCC:
 /* 00CBCC 7000BFCC 000F2603 */  sra   $a0, $t7, 0x18
 /* 00CBD0 7000BFD0 28810004 */  slti  $at, $a0, 4
 /* 00CBD4 7000BFD4 1420FFDE */  bnez  $at, .L7000BF50
-/* 00CBD8 7000BFD8 00000000 */   nop   
+/* 00CBD8 7000BFD8 00000000 */   nop
 .L7000BFDC:
 /* 00CBDC 7000BFDC 0C002E9F */  jal   joyRumblePakTick
-/* 00CBE0 7000BFE0 00000000 */   nop   
+/* 00CBE0 7000BFE0 00000000 */   nop
 /* 00CBE4 7000BFE4 3C048006 */  lui   $a0, %hi(g_ContInputMessageQueue)
 /* 00CBE8 7000BFE8 0C00535C */  jal   osContStartReadData
 /* 00CBEC 7000BFEC 24845350 */   addiu $a0, %lo(g_ContInputMessageQueue) # addiu $a0, $a0, 0x5350
@@ -763,11 +699,11 @@ glabel joyPoll
 /* 00CC0C 7000C00C AC236970 */  sw    $v1, %lo(g_ContBadReadTimer60)($at)
 /* 00CC10 7000C010 2861003C */  slti  $at, $v1, 0x3c
 /* 00CC14 7000C014 14200031 */  bnez  $at, .L7000C0DC
-/* 00CC18 7000C018 3C098002 */   lui   $t1, %hi(g_ContBadReadsStickX) 
+/* 00CC18 7000C018 3C098002 */   lui   $t1, %hi(g_ContBadReadsStickX)
 /* 00CC1C 7000C01C 3C048002 */  lui   $a0, %hi(g_ContBadReadsStickY)
 /* 00CC20 7000C020 3C058002 */  lui   $a1, %hi(g_ContBadReadsButtons)
 /* 00CC24 7000C024 3C038002 */  lui   $v1, %hi(g_ContBadReadsButtonsPressed)
-/* 00CC28 7000C028 3C0A8002 */  lui   $t2, %hi(g_ContBadReadTimer60) 
+/* 00CC28 7000C028 3C0A8002 */  lui   $t2, %hi(g_ContBadReadTimer60)
 /* 00CC2C 7000C02C 254A6970 */  addiu $t2, %lo(g_ContBadReadTimer60) # addiu $t2, $t2, 0x6970
 /* 00CC30 7000C030 24636960 */  addiu $v1, %lo(g_ContBadReadsButtonsPressed) # addiu $v1, $v1, 0x6960
 /* 00CC34 7000C034 24A56950 */  addiu $a1, %lo(g_ContBadReadsButtons) # addiu $a1, $a1, 0x6950
@@ -822,7 +758,7 @@ glabel joyPoll
 .L7000C0E0:
 /* 00CCE0 7000C0E0 27BD0050 */  addiu $sp, $sp, 0x50
 /* 00CCE4 7000C0E4 03E00008 */  jr    $ra
-/* 00CCE8 7000C0E8 00000000 */   nop   
+/* 00CCE8 7000C0E8 00000000 */   nop
 )
 #endif
 
@@ -1009,7 +945,7 @@ void joyRumblePakStop(void) {
     for (i = 0; i < MAXCONTROLLERS; i++) {
 #ifdef VERSION_US
         g_ContRumblePakCurrentState[i] = RUMBLEPAKSTATE_ON;
-        g_ContRumblePakTargetState[i] = RUMBLEPAKSTATE_OFF;        
+        g_ContRumblePakTargetState[i] = RUMBLEPAKSTATE_OFF;
 #else if VERSION_JP
         g_ContRumblePakTargetState[i] = RUMBLEPAKSTATE_UNKNOWN;
 #endif
