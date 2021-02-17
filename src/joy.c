@@ -234,7 +234,6 @@ u8 joyGetConnectedControllers(void) {
     return g_ConnectedControllers;
 }
 
-#ifdef VERSION_US
 void joyRumblePakTick(void) {
     s32 i;
 
@@ -258,8 +257,7 @@ void joyRumblePakTick(void) {
             {
                 if (osMotorInit(&g_ContInputMessageQueue, &g_ContPfs[i], i) != 0)
                 {
-                    // untested, this probably needs to change to set_rumble_pak_init_state_not_ready(i);
-                    g_ContRumblePakInitState[i] = RUMBLEPAKINITSTATE_NOT_READY;
+                    set_rumble_pak_init_state_not_ready(i);
                 }
 
                 osMotorStop(&g_ContPfs[i]);
@@ -296,119 +294,6 @@ void joyRumblePakTick(void) {
         }
     }
 }
-#else
-#ifdef VERSION_JP
-GLOBAL_ASM(
-.text
-glabel joyRumblePakTick
-/* 00C68C 7000BA8C 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 00C690 7000BA90 AFB5002C */  sw    $s5, 0x2c($sp)
-/* 00C694 7000BA94 AFB20020 */  sw    $s2, 0x20($sp)
-/* 00C698 7000BA98 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 00C69C 7000BA9C AFBE0038 */  sw    $fp, 0x38($sp)
-/* 00C6A0 7000BAA0 AFB70034 */  sw    $s7, 0x34($sp)
-/* 00C6A4 7000BAA4 AFB60030 */  sw    $s6, 0x30($sp)
-/* 00C6A8 7000BAA8 AFB40028 */  sw    $s4, 0x28($sp)
-/* 00C6AC 7000BAAC AFB30024 */  sw    $s3, 0x24($sp)
-/* 00C6B0 7000BAB0 3C118002 */  lui   $s1, %hi(g_ContRumblePakTimer60) # $s1, 0x8002
-/* 00C6B4 7000BAB4 3C128002 */  lui   $s2, %hi(g_ContRumblePakCurrentState) # $s2, 0x8002
-/* 00C6B8 7000BAB8 3C158002 */  lui   $s5, %hi(g_ContRumblePakTargetState) # $s5, 0x8002
-/* 00C6BC 7000BABC AFBF003C */  sw    $ra, 0x3c($sp)
-/* 00C6C0 7000BAC0 AFB00018 */  sw    $s0, 0x18($sp)
-/* 00C6C4 7000BAC4 26B56948 */  addiu $s5, %lo(g_ContRumblePakTargetState) # addiu $s5, $s5, 0x6948
-/* 00C6C8 7000BAC8 26526928 */  addiu $s2, %lo(g_ContRumblePakCurrentState) # addiu $s2, $s2, 0x6928
-/* 00C6CC 7000BACC 26316938 */  addiu $s1, %lo(g_ContRumblePakTimer60) # addiu $s1, $s1, 0x6938
-/* 00C6D0 7000BAD0 00009825 */  move  $s3, $zero
-/* 00C6D4 7000BAD4 0000A025 */  move  $s4, $zero
-/* 00C6D8 7000BAD8 24160001 */  li    $s6, 1
-/* 00C6DC 7000BADC 24170004 */  li    $s7, 4
-/* 00C6E0 7000BAE0 241E0002 */  li    $fp, 2
-.Ljp7000BAE4:
-/* 00C6E4 7000BAE4 8EA20000 */  lw    $v0, ($s5)
-/* 00C6E8 7000BAE8 8E4E0000 */  lw    $t6, ($s2)
-/* 00C6EC 7000BAEC 00137880 */  sll   $t7, $s3, 2
-/* 00C6F0 7000BAF0 01F37823 */  subu  $t7, $t7, $s3
-/* 00C6F4 7000BAF4 11C2002A */  beq   $t6, $v0, .Ljp7000BBA0
-/* 00C6F8 7000BAF8 000F7880 */   sll   $t7, $t7, 2
-/* 00C6FC 7000BAFC 01F37821 */  addu  $t7, $t7, $s3
-/* 00C700 7000BB00 3C188006 */  lui   $t8, %hi(g_ContPfs) # $t8, 0x8006
-/* 00C704 7000BB04 27185438 */  addiu $t8, %lo(g_ContPfs) # addiu $t8, $t8, 0x5438
-/* 00C708 7000BB08 000F78C0 */  sll   $t7, $t7, 3
-/* 00C70C 7000BB0C 16C2000B */  bne   $s6, $v0, .Ljp7000BB3C
-/* 00C710 7000BB10 01F88021 */   addu  $s0, $t7, $t8
-/* 00C714 7000BB14 0C0032BB */  jal   osMotorStart
-/* 00C718 7000BB18 02002025 */   move  $a0, $s0
-/* 00C71C 7000BB1C 14400003 */  bnez  $v0, .Ljp7000BB2C
-/* 00C720 7000BB20 3C198002 */   lui   $t9, %hi(g_ContRumblePakInitState) # $t9, 0x8002
-/* 00C724 7000BB24 1000001E */  b     .Ljp7000BBA0
-/* 00C728 7000BB28 AE560000 */   sw    $s6, ($s2)
-.Ljp7000BB2C:
-/* 00C72C 7000BB2C 27396918 */  addiu $t9, %lo(g_ContRumblePakInitState) # addiu $t9, $t9, 0x6918
-/* 00C730 7000BB30 02991021 */  addu  $v0, $s4, $t9
-/* 00C734 7000BB34 1000001A */  b     .Ljp7000BBA0
-/* 00C738 7000BB38 AC400000 */   sw    $zero, ($v0)
-.Ljp7000BB3C:
-/* 00C73C 7000BB3C 17C2000F */  bne   $fp, $v0, .Ljp7000BB7C
-/* 00C740 7000BB40 3C048006 */   lui   $a0, %hi(g_ContInputMessageQueue) # $a0, 0x8006
-/* 00C744 7000BB44 24845390 */  addiu $a0, %lo(g_ContInputMessageQueue) # addiu $a0, $a0, 0x5390
-/* 00C748 7000BB48 02002825 */  move  $a1, $s0
-/* 00C74C 7000BB4C 0C00335E */  jal   osMotorInit
-/* 00C750 7000BB50 02603025 */   move  $a2, $s3
-/* 00C754 7000BB54 10400004 */  beqz  $v0, .Ljp7000BB68
-/* 00C758 7000BB58 3C088002 */   lui   $t0, %hi(g_ContRumblePakInitState) # $t0, 0x8002
-/* 00C75C 7000BB5C 25086918 */  addiu $t0, %lo(g_ContRumblePakInitState) # addiu $t0, $t0, 0x6918
-/* 00C760 7000BB60 02881021 */  addu  $v0, $s4, $t0
-/* 00C764 7000BB64 AC400000 */  sw    $zero, ($v0)
-.Ljp7000BB68:
-/* 00C768 7000BB68 0C003270 */  jal   osMotorStop
-/* 00C76C 7000BB6C 02002025 */   move  $a0, $s0
-/* 00C770 7000BB70 AE400000 */  sw    $zero, ($s2)
-/* 00C774 7000BB74 1000000A */  b     .Ljp7000BBA0
-/* 00C778 7000BB78 AEA00000 */   sw    $zero, ($s5)
-.Ljp7000BB7C:
-/* 00C77C 7000BB7C 0C003270 */  jal   osMotorStop
-/* 00C780 7000BB80 02002025 */   move  $a0, $s0
-/* 00C784 7000BB84 14400003 */  bnez  $v0, .Ljp7000BB94
-/* 00C788 7000BB88 3C098002 */   lui   $t1, %hi(g_ContRumblePakInitState) # $t1, 0x8002
-/* 00C78C 7000BB8C 10000004 */  b     .Ljp7000BBA0
-/* 00C790 7000BB90 AE400000 */   sw    $zero, ($s2)
-.Ljp7000BB94:
-/* 00C794 7000BB94 25296918 */  addiu $t1, %lo(g_ContRumblePakInitState) # addiu $t1, $t1, 0x6918
-/* 00C798 7000BB98 02891021 */  addu  $v0, $s4, $t1
-/* 00C79C 7000BB9C AC400000 */  sw    $zero, ($v0)
-.Ljp7000BBA0:
-/* 00C7A0 7000BBA0 8E220000 */  lw    $v0, ($s1)
-/* 00C7A4 7000BBA4 26730001 */  addiu $s3, $s3, 1
-/* 00C7A8 7000BBA8 26940004 */  addiu $s4, $s4, 4
-/* 00C7AC 7000BBAC 1C400003 */  bgtz  $v0, .Ljp7000BBBC
-/* 00C7B0 7000BBB0 26520004 */   addiu $s2, $s2, 4
-/* 00C7B4 7000BBB4 10000006 */  b     .Ljp7000BBD0
-/* 00C7B8 7000BBB8 AE200000 */   sw    $zero, ($s1)
-.Ljp7000BBBC:
-/* 00C7BC 7000BBBC 244AFFFF */  addiu $t2, $v0, -1
-/* 00C7C0 7000BBC0 1D400003 */  bgtz  $t2, .Ljp7000BBD0
-/* 00C7C4 7000BBC4 AE2A0000 */   sw    $t2, ($s1)
-/* 00C7C8 7000BBC8 AE200000 */  sw    $zero, ($s1)
-/* 00C7CC 7000BBCC AEA00000 */  sw    $zero, ($s5)
-.Ljp7000BBD0:
-/* 00C7D0 7000BBD0 26B50004 */  addiu $s5, $s5, 4
-/* 00C7D4 7000BBD4 1677FFC3 */  bne   $s3, $s7, .Ljp7000BAE4
-/* 00C7D8 7000BBD8 26310004 */   addiu $s1, $s1, 4
-/* 00C7DC 7000BBDC 8FBF003C */  lw    $ra, 0x3c($sp)
-/* 00C7E0 7000BBE0 8FB00018 */  lw    $s0, 0x18($sp)
-/* 00C7E4 7000BBE4 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 00C7E8 7000BBE8 8FB20020 */  lw    $s2, 0x20($sp)
-/* 00C7EC 7000BBEC 8FB30024 */  lw    $s3, 0x24($sp)
-/* 00C7F0 7000BBF0 8FB40028 */  lw    $s4, 0x28($sp)
-/* 00C7F4 7000BBF4 8FB5002C */  lw    $s5, 0x2c($sp)
-/* 00C7F8 7000BBF8 8FB60030 */  lw    $s6, 0x30($sp)
-/* 00C7FC 7000BBFC 8FB70034 */  lw    $s7, 0x34($sp)
-/* 00C800 7000BC00 8FBE0038 */  lw    $fp, 0x38($sp)
-/* 00C804 7000BC04 03E00008 */  jr    $ra
-/* 00C808 7000BC08 27BD0040 */   addiu $sp, $sp, 0x40
-)
-#endif
-#endif
 
 void joySetPlaybackFunc(contplaybackfunc func, s32 controllercount) {
     g_ContPlaybackFunc = func;
