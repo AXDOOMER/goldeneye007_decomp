@@ -782,10 +782,27 @@ struct player
   s32 field_7C8;
   s32 field_7CC;
   Vp viewports[2];
+
+  /**
+   * Offset 0x7f0.
+   */
   s16 viewx;
+
+  /**
+   * Offset 0x7f2.
+   */
   s16 viewy;
+
+  /**
+   * Offset 0x7f4.
+   */
   s16 viewleft;
+
+  /**
+   * Offset 0x7f6.
+   */
   s16 viewtop;
+  
   s32 hand_invisible[2];
   s32 hand_item[2];
   u8 *ptr_hand_weapon_buffer[2];

@@ -426,7 +426,7 @@ void removed_do_debug_profile_flag_true(void) {
 
 
 #ifdef NONMATCHING
-void debug_menu_processor(void) {
+s32 debug_menu_processor(s8 arg0, s8 arg1, u16 arg2, u16 arg3) {
 
 }
 #else
