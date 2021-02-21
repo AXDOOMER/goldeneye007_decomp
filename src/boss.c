@@ -48,7 +48,7 @@ void mainloop(void);
 /* data */
 u32 boss_c_ptr_debug_notice_list_entry = 0;
 s32 debug_and_update_stage_flag = 0;
-LEVELID current_stage_num = LEVELID_TITLE;
+LEVELID g_StageNum = LEVELID_TITLE;
 u32 current_m_malloc_value = 0x234800;
 u32 current_ma_malloc_value = 0x4B000;
 s32 show_mem_use_flag = 0;
@@ -97,7 +97,7 @@ struct memallocstring memallocstringtable[] = {
 { 0x0, }
 };
 
-LEVELID loadedstage = LEVELID_NONE;
+LEVELID g_MainStageNum = LEVELID_NONE;
 s32 debug_feature_flag = 0;
 
 // s32 D_80024304 = 0x20000;
@@ -309,7 +309,7 @@ void mainloop(void)
 
     struct player *localPlayer;
 
-    s32 localLoadedStage;
+    s32 localMainStageNum;
 
     //struct D_80024304_s localD_80024304;
 
@@ -325,15 +325,15 @@ void mainloop(void)
         tokenFindLevel = (const unsigned char *)tokenFind(1, "-level_");
 
         // quick hack strltolon, converts the two digit ASCII level to 32bit int
-        current_stage_num = (s32) (((s32)tokenFindLevel[1] + (s32)(tokenFindLevel[0] * 10)) - 0x210);
+        g_StageNum = (s32) (((s32)tokenFindLevel[1] + (s32)(tokenFindLevel[0] * 10)) - 0x210);
     }
 
-    if (current_stage_num != LEVELID_TITLE)
+    if (g_StageNum != LEVELID_TITLE)
     {
         sub_GAME_7F01DF90();
         set_selected_folder_num(0);
         set_selected_difficulty(DIFFICULTY_AGENT);
-        set_solo_and_ptr_briefing(current_stage_num);
+        set_solo_and_ptr_briefing(g_StageNum);
 
         if (tokenFind(1, "-hard") != 0)
         {
@@ -352,23 +352,14 @@ void mainloop(void)
         struct D_80024304_s localD_80024304 = D_80024304;
         struct D_80024304_s *plocalD_80024304;
 
-        // sp1B4.unk0 = (?32) D_80024304.unk0;
-        // sp1B4.unk4 = (?32) D_80024304.unk4;
-        // sp1B4.unkC = (?32) D_80024304.unkC;
-        // sp1B4.unk8 = (?32) D_80024304.unk8;
-        // sp1B4.unk10 = (?32) D_80024304.unk10;
-        // sp1B4.unk14 = (?32) D_80024304.unk14;
-        // sp1B4.unk1C = (?32) D_80024304.unk1C;
-        // sp1B4.unk18 = (?32) D_80024304.unk18;
-
         toggleFlag = 0;
 
-        test_if_recording_demos_this_stage_load(current_stage_num, get_current_difficulty());
+        test_if_recording_demos_this_stage_load(g_StageNum, get_current_difficulty());
         if (debug_and_update_stage_flag != 0)
         {
             stringIndex = -1;
 
-            if (current_stage_num != LEVELID_TITLE && get_selected_num_players() >= 2)
+            if (g_StageNum != LEVELID_TITLE && get_selected_num_players() >= 2)
             {
                 stringIndex = 0;
                 if (memallocstringtable != 0)
@@ -376,7 +367,7 @@ void mainloop(void)
                     pallocStringIndex = &memallocstringtable[0];
                     while(pallocStringIndex->id)
                     {
-                        if (pallocStringIndex->id == (current_stage_num + 400))
+                        if (pallocStringIndex->id == (g_StageNum + 400))
                         {
                             break;
                         }
@@ -392,10 +383,10 @@ void mainloop(void)
                 }
             }
 
-            if (stringIndex) {
+            if (stringIndex)
+            {
                 // empty
             }
-
 
             if (stringIndex < 0)
             {
@@ -406,7 +397,7 @@ void mainloop(void)
                     pallocStringIndex = &memallocstringtable[0];
                     while(pallocStringIndex->id)
                     {
-                        if (pallocStringIndex->id == current_stage_num)
+                        if (pallocStringIndex->id == g_StageNum)
                         {
                             break;
                         }
@@ -420,18 +411,6 @@ void mainloop(void)
             tokenSetString(memallocstringtable[stringIndex].string);
         }
 
-        // instruction padding, remove
-        do {
-            *((s32*)(0x80000000)) = 65;
-        } while (0);
-        do {
-            *((s32*)(0x80010001)) = 66;
-        } while (0);
-        do {
-            *((s32*)(0x80020002)) = 67;
-        } while (0);
-        // end instruction padding
-
         mempResetBank(4);
         obBlankResourcesLoadedInBank(4);
         if (tokenFind(1, "-ma") != 0)
@@ -443,7 +422,7 @@ void mainloop(void)
         reset_play_data_ptrs();
 
         localSelectedNumPlayers = 0;
-        if (current_stage_num != LEVELID_TITLE)
+        if (g_StageNum != LEVELID_TITLE)
         {
             localSelectedNumPlayers = 1;
             if (get_selected_num_players() >= 2)
@@ -455,7 +434,7 @@ void mainloop(void)
         init_player_data_ptrs_construct_viewports(localSelectedNumPlayers);
         dynInitMemory();
         joyCheckStatusThreadSafe();
-        stage_load(current_stage_num);
+        stage_load(g_StageNum);
         viInitBuffers();
         debmenuInit();
         sub_GAME_7F0C0B4C();
@@ -467,223 +446,176 @@ void mainloop(void)
         }
 
         unknownVal = 0;
-        if (loadedstage < 0)
+
+        // loop29
+        while (g_MainStageNum < 0 || unknownVal != 0)
         {
-            // loop29
-            while (1)
+            osRecvMesg(&gfxFrameMsgQ, (OSMesg *)&localGfxFrameMsg, 1);
+
+            switch (localGfxFrameMsg->gen.type)
             {
-                osRecvMesg(&gfxFrameMsgQ, (OSMesg *)&localGfxFrameMsg, 1);
 
-                switch (localGfxFrameMsg->gen.type)
+                case 1:
                 {
-                    default:
-                        localLoadedStage = loadedstage;
-                        break;
-
-                    case 5:
-                        localLoadedStage = *(s32 *)(0x800242FC);
-                        unknownVal = 4U;
-                        break;
-
-                    case 2:
-                        localLoadedStage = *(s32 *)(0x800242FC);
-                        break;
-
-                    case 1:
+                    if ((u32) (osGetCount() - copy_of_osgetcount_value_1) < 0x5eb61U)
                     {
-                        if ((u32) (osGetCount() - copy_of_osgetcount_value_1) < 0x5eb61U)
-                        {
-                            localLoadedStage = loadedstage;
-                        }
-                        else
-                        {
-                            localLoadedStage = loadedstage;
+                        localMainStageNum = g_MainStageNum;
+                    }
+                    else
+                    {
+                        localMainStageNum = g_MainStageNum;
 
-                            if (loadedstage < 0 && unknownVal < 2U)
+                        if (g_MainStageNum < 0 && unknownVal < 2U)
+                        {
+                            plocalD_80024304 = &localD_80024304;
+
+                            if (get_is_ramrom_flag() != 0)
                             {
-                                plocalD_80024304 = &localD_80024304;
-
-                                if (get_is_ramrom_flag() != 0)
-                                {
-                                    iterate_ramrom_entries_handle_camera_out();
-                                }
-                                else
-                                {
-                                    sub_GAME_7F0C0B4C();
-                                }
-
-                                video_DL_related_4();
-                                speedGraphVideoRelated_2();
-                                speedGraphVideoRelated_3(0x20000);
-                                joyConsumeSamplesWrapper();
-                                permit_stderr(0);
-                                gdl = dynGetMasterDisplayList();
-                                firstGdl = gdl;
-
-                                if (debug_feature_flag != 0)
-                                {
-                                    joyStickXPos = joyGetStickX(0);
-                                    joyStickYPos = joyGetStickY(0);
-                                    joyButtons = joyGetButtons(0, 0xFFFF) & 0xFFFF;
-                                    debug_feature_flag = debug_menu_processor(joyStickXPos, joyStickYPos, joyButtons & 0xFFFF, joyGetButtonsPressedThisFrame(0, 0xFFFF) & 0xFFFF);
-                                }
-
-                                manage_mp_game();
-                                sub_GAME_7F09B41C();
-
-                                if (current_stage_num != LEVELID_TITLE)
-                                {
-                                    for (i=0; i<getPlayerCount(); i++)
-                                    {
-                                        set_cur_player(sub_GAME_7F09B528(i));
-
-                                        localPlayer = pPlayer;
-                                        viSetViewSize(localPlayer->viewx, localPlayer->viewy);
-
-                                        localPlayer = pPlayer;
-                                        viSetViewPosition(localPlayer->viewleft, localPlayer->viewtop);
-
-                                        sub_GAME_7F0BF800();
-                                    }
-                                }
-
-                                gdl = sub_GAME_7F0BE30C(gdl);
-
-                                if (get_debug_VisCVG_flag() != 0)
-                                {
-                                    // begin gbi macro calls.
-
-                                    // temp_s3_2 = temp_s3 + 8;
-                                    // temp_s3->unk0 = 0xE7000000;
-                                    // temp_s3->unk4 = 0;
-                                    // temp_s3_3 = temp_s3_2 + 8;
-                                    // temp_s3_4 = temp_s3_3 + 8;
-                                    // temp_s3_2->unk0 = 0xBA001402;
-                                    // temp_s3_2->unk4 = 0;
-                                    // temp_s3_5 = temp_s3_4 + 8;
-                                    // temp_s3_3->unk0 = 0xF9000000;
-                                    // temp_s3_3->unk4 = -1;
-                                    // temp_s3_6 = temp_s3_5 + 8;
-                                    // temp_s3_4->unk0 = 0xEE000000;
-                                    // temp_s3_4->unk4 = -1;
-                                    // temp_s3_7 = temp_s3_6 + 8;
-                                    // temp_s3_5->unk4 = 4;
-                                    // temp_s3_5->unk0 = 0xB9000201;
-                                    // temp_s3_6->unk0 = 0xB900031D;
-                                    // temp_s3_6->unk4 = 0xFA54040;
-                                    // temp_s1_3 = viGetX(temp_s3_3, temp_s3_4, temp_s3_5, -1);
-                                    // temp_s3_7->unk0 = (s32) ((((viGetY() - 1) & 0x3FF) * 4) | 0xF6000000 | (((temp_s1_3 - 1) & 0x3FF) << 0xE));
-                                    // temp_s3_7->unk4 = 0;
-                                    // phi_s3 = temp_s3_7 + 8;
-
-                                    // these are filler / random guess.
-                                    gDPPipeSync(gdl++);
-                                    gDPSetCycleType(gdl++, G_CYC_2CYCLE);
-                                    gDPSetAlphaCompare(gdl++, G_AC_NONE);
-                                    gDPSetRenderMode(gdl++, G_RM_CLD_SURF, G_RM_CLD_SURF2);
-                                    gDPFillRectangle(gdl++, 0, 0, viGetX() - 1, viGetY() - 1);
-
-                                    // end gbi macro calls.
-                                }
-
-                                gdl = debmenuDraw(gdl);
-
-                                if (get_memusage_display_flag() != 0)
-                                {
-                                    gdl = speedGraphDisplay(gdl);
-                                }
-
-                                if (debug_feature_flag != 0)
-                                {
-                                    display_debug_menu_text_onscreen();
-                                    gdl = print_debug_mcm_to_stdout(gdl);
-                                }
-
-                                // begin gbi macro calls.
-
-                                // temp_v0_4 = phi_s3_3;
-                                // temp_s3_9 = phi_s3_3 + 8;
-                                // temp_v0_4->unk0 = 0xE9000000;
-                                // temp_v0_4->unk4 = 0;
-                                // temp_s3_9->unk0 = 0xB8000000;
-                                // temp_s3_9->unk4 = 0;
-                                // temp_s3_10 = temp_s3_9 + 8;
-
-                                // these are filler / random guess.
-                                gDPFullSync(gdl++);
-                                gDPSetAlphaCompare(gdl++, G_AC_NONE);
-
-                                // end gbi macro calls.
-
-                                if (show_mem_use_flag != 0)
-                                {
-                                    nulled_mempLoopAllMemBanks();
-                                    memaDumpPrePostMerge();
-                                    dynRemovedFunc(gdl);
-                                    nullsub_41(0);
-                                    show_mem_use_flag = 0;
-                                }
-
-                                if (show_mem_bars_flag != 0)
-                                {
-                                    dynDrawMembars(gdl);
-                                }
-
-                                dynGetFreeGfx2(gdl);
-                                dynSwapBuffers();
-                                video_related_8();
-
-                                if ((get_debug_taskgrab_val() != 0)
-                                    && (joyGetButtonsPressedThisFrame(0, 0xC000) != 0)
-                                    && (joyGetButtons(0, 0xC000) == 0xC000))
-                                {
-                                    static s32 taskgrab_ramdump_num = 1;
-
-                                    while (1)
-                                    {
-                                        sprintf(taskGrabBuffer, "u64.taskgrab.%d.core", taskgrab_ramdump_num);
-
-                                        if (check_file_found_on_indy(taskGrabBuffer, taskGrabFilename) != 0)
-                                        {
-                                            taskgrab_ramdump_num++;
-                                            continue;
-                                        }
-
-                                        break;
-                                    }
-
-                                    indy_send_capture_data(taskGrabBuffer, 0x80000000, 0x400000);
-                                }
-
-                                load_rsp_microcode(firstGdl, gdl, 0, plocalD_80024304);
-                                memaIterateAndMerge();
-                                toggleFlag ^= 1;
-                                speedGraphVideoRelated_3(0x10000);
-                                unknownVal++;
+                                iterate_ramrom_entries_handle_camera_out();
                             }
+                            else
+                            {
+                                sub_GAME_7F0C0B4C();
+                            }
+
+                            video_DL_related_4();
+                            speedGraphVideoRelated_2();
+                            speedGraphVideoRelated_3(0x20000);
+                            joyConsumeSamplesWrapper();
+                            permit_stderr(0);
+                            gdl = dynGetMasterDisplayList();
+                            firstGdl = gdl;
+
+                            if (debug_feature_flag != 0)
+                            {
+                                joyStickXPos = joyGetStickX(0);
+                                joyStickYPos = joyGetStickY(0);
+                                joyButtons = joyGetButtons(0, ANY_BUTTON);
+                                debug_feature_flag = debug_menu_processor(joyStickXPos, joyStickYPos, joyButtons, joyGetButtonsPressedThisFrame(0, ANY_BUTTON));
+                            }
+
+                            manage_mp_game();
+                            sub_GAME_7F09B41C();
+
+                            if (g_StageNum != LEVELID_TITLE)
+                            {
+                                for (i=0; i<getPlayerCount(); i++)
+                                {
+                                    set_cur_player(sub_GAME_7F09B528(i));
+
+                                    localPlayer = pPlayer;
+                                    viSetViewSize(localPlayer->viewx, localPlayer->viewy);
+
+                                    localPlayer = pPlayer;
+                                    viSetViewPosition(localPlayer->viewleft, localPlayer->viewtop);
+
+                                    sub_GAME_7F0BF800();
+                                }
+                            }
+
+                            gdl = sub_GAME_7F0BE30C(gdl);
+
+                            // // Lets Visualise the Coverage Value used for Scilohete Anti-Ailising (edges)
+                            // (done on the VI), also produces a cool looking linemode - providing AA is working.
+                            if (get_debug_VisCVG_flag() != 0)
+                            {
+                                gDPPipeSync(gdl++); // 0xe7000000, 0x00000000
+                                gDPSetCycleType(gdl++, G_CYC_1CYCLE); // 0xba001402, 0x00000000
+                                gDPSetBlendColor(gdl++, 0xff, 0xff, 0xff, 0xff); // 0xf9000000, 0xffffffff
+                                gDPSetPrimDepth(gdl++, 0xffff, 0xffff); // 0xee000000, 0xffffffff
+                                gDPSetDepthSource(gdl++, G_ZS_PRIM); // 0xb9000201, 0x00000004
+                                gDPSetRenderMode(gdl++, G_RM_VISCVG, G_RM_VISCVG2); // 0xb900031d, 0x0fa54040
+                                gDPFillRectangle(gdl++, 0, 0, viGetX() - 1, viGetY() - 1);
+                            }
+
+                            gdl = debmenuDraw(gdl);
+
+                            if (get_memusage_display_flag() != 0)
+                            {
+                                gdl = speedGraphDisplay(gdl);
+                            }
+
+                            if (debug_feature_flag != 0)
+                            {
+                                display_debug_menu_text_onscreen();
+                                gdl = print_debug_mcm_to_stdout(gdl);
+                            }
+
+                            gDPFullSync(gdl++); // 0xe9000000, 0x00000000
+                            gSPEndDisplayList(gdl++); // 0xb8000000, 0x00000000
+
+                            if (show_mem_use_flag != 0)
+                            {
+                                nulled_mempLoopAllMemBanks();
+                                memaDumpPrePostMerge();
+                                dynRemovedFunc(gdl);
+                                nullsub_41(0);
+                                show_mem_use_flag = 0;
+                            }
+
+                            if (show_mem_bars_flag != 0)
+                            {
+                                dynDrawMembars(gdl);
+                            }
+
+                            dynGetFreeGfx2(gdl);
+                            dynSwapBuffers();
+                            video_related_8();
+
+                            if ((get_debug_taskgrab_val() != 0)
+                                && (joyGetButtonsPressedThisFrame(0, (A_BUTTON | B_BUTTON)) != 0)
+                                && (joyGetButtons(0, (A_BUTTON | B_BUTTON)) == (A_BUTTON | B_BUTTON)))
+                            {
+                                static s32 taskgrab_ramdump_num = 1;
+
+                                while (1)
+                                {
+                                    sprintf(taskGrabBuffer, "u64.taskgrab.%d.core", taskgrab_ramdump_num);
+
+                                    if (check_file_found_on_indy(taskGrabBuffer, taskGrabFilename) != 0)
+                                    {
+                                        taskgrab_ramdump_num++;
+                                        continue;
+                                    }
+
+                                    break;
+                                }
+
+                                indy_send_capture_data(taskGrabBuffer, 0x80000000, 0x400000);
+                            }
+
+                            load_rsp_microcode(firstGdl, gdl, 0, plocalD_80024304);
+                            memaIterateAndMerge();
+                            toggleFlag ^= 1;
+                            speedGraphVideoRelated_3(0x10000);
+                            unknownVal++;
                         }
-                    }
-                    break;
-
-                    if (loadedstage >= 0)
-                    {
-                        break;
-                    }
-
-                    if (unknownVal == 0)
-                    {
-                        break;
                     }
                 }
+                break;
+
+                case 2:
+                    localMainStageNum = *(s32 *)(0x800242FC);
+                    break;
+
+                case 5:
+                    localMainStageNum = *(s32 *)(0x800242FC);
+                    unknownVal = 4U;
+                    break;
+
+                default:
+                    localMainStageNum = g_MainStageNum;
+                    break;
             }
+
         }
 
         unload_stage_text_data();
         stop_demo_playback();
         mempNullNextEntryInBank(4);
         obBlankResourcesLoadedInBank(4);
-        current_stage_num = loadedstage;
-        loadedstage = -1;
+        g_StageNum = g_MainStageNum;
+        g_MainStageNum = -1;
     }
 
     sub_GAME_7F0D1A7C();
@@ -706,7 +638,7 @@ void run_title_stage(void) {
  *     0x63 
  */
 void set_loaded_stage(LEVELID stage){
-    loadedstage = stage;
+    g_MainStageNum = stage;
 }
 
 /**
@@ -714,7 +646,7 @@ void set_loaded_stage(LEVELID stage){
  *     V0= stage# [800241A8]
  */
 LEVELID get_stage_num(){
-    return current_stage_num;
+    return g_StageNum;
 }
 
 /**
