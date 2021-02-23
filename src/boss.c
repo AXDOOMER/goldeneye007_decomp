@@ -19,6 +19,7 @@
 #include "video.h"
 #include "bond.h"
 #include "lvl.h"
+#include "indy_comms.h"
 
 /**
  * @file boss.c
@@ -179,7 +180,7 @@ void init_mainthread_data(void)
     for (i = 0; i != MAXCONTROLLERS; i++)
     {
         osSetTimer(&bosstimer, OS_USEC_TO_CYCLES(100000), 0, &bossmq, &bossmsg);
-        osRecvMesg(&bossmq, &bossmsg, 1);
+        osRecvMesg(&bossmq, &bossmsg, OS_MESG_BLOCK);
         if (i == 1)
         {
             joyCheckStatusThreadSafe();
@@ -288,17 +289,13 @@ void mainloop(void)
 {
     s32 done;
     s32 localSelectedNumPlayers;
-    //////GFXMsg *localGfxFrameMsg;
-    //OSMesg localGfxFrameMsg;
-
-    s32 toggleFlag;
     s32 count;
-    s32 stringIndex;
-    s32 i;
-    f32 f;
-    u32 unknownVal;
+    struct D_80024304_s localD_80024304; // sp 436
 
-    struct memallocstring *pallocStringIndex;
+    s32 stringIndex;
+    s32 toggleFlag; // sp 428
+    s32 i;
+    u32 unknownVal;
 
     s8 joyStickXPos;
     s8 joyStickYPos;
@@ -311,11 +308,9 @@ void mainloop(void)
 
     s32 localMainStageNum;
 
-    //struct D_80024304_s localD_80024304;
-
     const unsigned char *tokenFindLevel;
-    char taskGrabBuffer[20];
-    char taskGrabFilename[20];
+
+    u32 stackpadding[50];
 
     done = 0;
     reset_mem_bank_5();
@@ -338,8 +333,8 @@ void mainloop(void)
         if (tokenFind(1, "-hard") != 0)
         {
             // convert ASCII difficulty value to int in set difficulty calls
-            set_selected_difficulty(*tokenFind(1, "-hard") - '0');
-            set_difficulty(*tokenFind(1, "-hard") - '0');
+            set_selected_difficulty(*(const unsigned char*)tokenFind(1, "-hard") - '0');
+            set_difficulty(*(const unsigned char*)tokenFind(1, "-hard") - '0');
         }
     }
 
@@ -347,10 +342,9 @@ void mainloop(void)
 
     while (!done)
     {
+        u32 stackpaddingaa[10];
         GFXMsg *localGfxFrameMsg = NULL;
-
-        struct D_80024304_s localD_80024304 = D_80024304;
-        struct D_80024304_s *plocalD_80024304;
+        localD_80024304 = D_80024304;
 
         toggleFlag = 0;
 
@@ -362,24 +356,20 @@ void mainloop(void)
             if (g_StageNum != LEVELID_TITLE && get_selected_num_players() >= 2)
             {
                 stringIndex = 0;
-                if (memallocstringtable != 0)
-                {
-                    pallocStringIndex = &memallocstringtable[0];
-                    while(pallocStringIndex->id)
-                    {
-                        if (pallocStringIndex->id == (g_StageNum + 400))
-                        {
-                            break;
-                        }
 
-                        stringIndex++;
-                        pallocStringIndex++;
-                    }
-                    
-                    if (memallocstringtable[stringIndex].id == 0)
+                while(memallocstringtable[stringIndex].id)
+                {
+                    if (memallocstringtable[stringIndex].id == (g_StageNum + 400))
                     {
-                        stringIndex = -1;
+                        break;
                     }
+
+                    stringIndex++;
+                }
+                
+                if (memallocstringtable[stringIndex].id == 0)
+                {
+                    stringIndex = -1;
                 }
             }
 
@@ -392,19 +382,14 @@ void mainloop(void)
             {
                 stringIndex = 0;
 
-                if (memallocstringtable != 0)
+                while(memallocstringtable[stringIndex].id)
                 {
-                    pallocStringIndex = &memallocstringtable[0];
-                    while(pallocStringIndex->id)
+                    if (memallocstringtable[stringIndex].id == g_StageNum)
                     {
-                        if (pallocStringIndex->id == g_StageNum)
-                        {
-                            break;
-                        }
-
-                        stringIndex++;
-                        pallocStringIndex++;
+                        break;
                     }
+
+                    stringIndex++;
                 }
             }
 
@@ -440,36 +425,30 @@ void mainloop(void)
         sub_GAME_7F0C0B4C();
         speedGraphVideoRelated_2();
 
-        while (osRecvMesg(&gfxFrameMsgQ, (OSMesg *)&localGfxFrameMsg, 0) == 0)
+        while (osRecvMesg(&gfxFrameMsgQ, (OSMesg *)&localGfxFrameMsg, OS_MESG_NOBLOCK) == 0)
         {
             // empty
         }
 
         unknownVal = 0;
 
-        // loop29
         while (g_MainStageNum < 0 || unknownVal != 0)
         {
-            osRecvMesg(&gfxFrameMsgQ, (OSMesg *)&localGfxFrameMsg, 1);
+            osRecvMesg(&gfxFrameMsgQ, (OSMesg *)&localGfxFrameMsg, OS_MESG_BLOCK);
 
             switch (localGfxFrameMsg->gen.type)
             {
-
                 case 1:
                 {
                     if ((u32) (osGetCount() - copy_of_osgetcount_value_1) < 0x5eb61U)
                     {
-                        localMainStageNum = g_MainStageNum;
+                        // nothing to do.
                     }
                     else
                     {
-                        localMainStageNum = g_MainStageNum;
-
                         if (g_MainStageNum < 0 && unknownVal < 2U)
                         {
-                            plocalD_80024304 = &localD_80024304;
-
-                            if (get_is_ramrom_flag() != 0)
+                            if (get_is_ramrom_flag())
                             {
                                 iterate_ramrom_entries_handle_camera_out();
                             }
@@ -567,12 +546,14 @@ void mainloop(void)
                                 && (joyGetButtons(0, (A_BUTTON | B_BUTTON)) == (A_BUTTON | B_BUTTON)))
                             {
                                 static s32 taskgrab_ramdump_num = 1;
+                                char taskGrabBuffer[24];
+                                s32 taskGrabFileSize;
 
                                 while (1)
                                 {
                                     sprintf(taskGrabBuffer, "u64.taskgrab.%d.core", taskgrab_ramdump_num);
 
-                                    if (check_file_found_on_indy(taskGrabBuffer, taskGrabFilename) != 0)
+                                    if (check_file_found_on_indy(taskGrabBuffer, &taskGrabFileSize) != NULL)
                                     {
                                         taskgrab_ramdump_num++;
                                         continue;
@@ -584,7 +565,7 @@ void mainloop(void)
                                 indy_send_capture_data(taskGrabBuffer, 0x80000000, 0x400000);
                             }
 
-                            load_rsp_microcode(firstGdl, gdl, 0, plocalD_80024304);
+                            load_rsp_microcode(firstGdl, gdl, 0, &localD_80024304);
                             memaIterateAndMerge();
                             toggleFlag ^= 1;
                             speedGraphVideoRelated_3(0x10000);
@@ -595,25 +576,20 @@ void mainloop(void)
                 break;
 
                 case 2:
-                    localMainStageNum = *(s32 *)(0x800242FC);
+                    unknownVal--;
                     break;
 
                 case 5:
-                    localMainStageNum = *(s32 *)(0x800242FC);
                     unknownVal = 4U;
                     break;
-
-                default:
-                    localMainStageNum = g_MainStageNum;
-                    break;
             }
-
         }
 
         unload_stage_text_data();
         stop_demo_playback();
         mempNullNextEntryInBank(4);
         obBlankResourcesLoadedInBank(4);
+
         g_StageNum = g_MainStageNum;
         g_MainStageNum = -1;
     }
