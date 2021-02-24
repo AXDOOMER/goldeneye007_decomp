@@ -49,7 +49,7 @@ void mainloop(void);
 /* data */
 u32 boss_c_ptr_debug_notice_list_entry = 0;
 s32 debug_and_update_stage_flag = 0;
-LEVELID g_StageNum = LEVELID_TITLE;
+s32 g_StageNum = LEVELID_TITLE;
 u32 current_m_malloc_value = 0x234800;
 u32 current_ma_malloc_value = 0x4B000;
 s32 show_mem_use_flag = 0;
@@ -98,7 +98,7 @@ struct memallocstring memallocstringtable[] = {
 { 0x0, }
 };
 
-LEVELID g_MainStageNum = LEVELID_NONE;
+s32 g_MainStageNum = LEVELID_NONE;
 s32 debug_feature_flag = 0;
 
 // s32 D_80024304 = 0x20000;
@@ -289,20 +289,24 @@ void mainloop(void)
 {
     s32 done;
     s32 localSelectedNumPlayers;
-    s32 count;
+    
+    GFXMsg *localGfxFrameMsg; // sp 468
     struct D_80024304_s localD_80024304; // sp 436
 
     s32 stringIndex;
     s32 toggleFlag; // sp 428
+    Gfx *gdl;
+    Gfx *firstGdl;
+
+
     s32 i;
-    u32 unknownVal;
+    s32 count;
 
     s8 joyStickXPos;
     s8 joyStickYPos;
     u16 joyButtons;
 
-    Gfx *gdl;
-    Gfx *firstGdl;
+    //struct D_80024304_s* ppp = &localD_80024304;
 
     struct player *localPlayer;
 
@@ -310,7 +314,8 @@ void mainloop(void)
 
     const unsigned char *tokenFindLevel;
 
-    u32 stackpadding[50];
+    u32 stackpadding[52];
+    u32 unknownVal;
 
     done = 0;
     reset_mem_bank_5();
@@ -342,11 +347,12 @@ void mainloop(void)
 
     while (!done)
     {
-        u32 stackpaddingaa[10];
-        GFXMsg *localGfxFrameMsg = NULL;
+        u32 stackpaddingaa[8];
+        localGfxFrameMsg = NULL;
         localD_80024304 = D_80024304;
 
         toggleFlag = 0;
+        unknownVal = 0;
 
         test_if_recording_demos_this_stage_load(g_StageNum, get_current_difficulty());
         if (debug_and_update_stage_flag != 0)
@@ -430,12 +436,15 @@ void mainloop(void)
             // empty
         }
 
-        unknownVal = 0;
-
         while (g_MainStageNum < 0 || unknownVal != 0)
         {
             osRecvMesg(&gfxFrameMsgQ, (OSMesg *)&localGfxFrameMsg, OS_MESG_BLOCK);
-
+            
+            if (1)
+            {
+                // removed
+            }
+            
             switch (localGfxFrameMsg->gen.type)
             {
                 case 1:
@@ -448,6 +457,8 @@ void mainloop(void)
                     {
                         if (g_MainStageNum < 0 && unknownVal < 2U)
                         {
+                            localD_80024304.unk0 = gdl;
+
                             if (get_is_ramrom_flag())
                             {
                                 iterate_ramrom_entries_handle_camera_out();
@@ -462,8 +473,7 @@ void mainloop(void)
                             speedGraphVideoRelated_3(0x20000);
                             joyConsumeSamplesWrapper();
                             permit_stderr(0);
-                            gdl = dynGetMasterDisplayList();
-                            firstGdl = gdl;
+                            gdl = firstGdl = dynGetMasterDisplayList();
 
                             if (debug_feature_flag != 0)
                             {
@@ -494,7 +504,7 @@ void mainloop(void)
 
                             gdl = sub_GAME_7F0BE30C(gdl);
 
-                            // // Lets Visualise the Coverage Value used for Scilohete Anti-Ailising (edges)
+                            // Lets Visualise the Coverage Value used for Scilohete Anti-Ailising (edges)
                             // (done on the VI), also produces a cool looking linemode - providing AA is working.
                             if (get_debug_VisCVG_flag() != 0)
                             {
@@ -565,11 +575,13 @@ void mainloop(void)
                                 indy_send_capture_data(taskGrabBuffer, 0x80000000, 0x400000);
                             }
 
-                            load_rsp_microcode(firstGdl, gdl, 0, &localD_80024304);
+                            if (1){
+                                load_rsp_microcode(firstGdl, gdl, 0, localD_80024304.unk0);
+                            }
+                            unknownVal++;
                             memaIterateAndMerge();
                             toggleFlag ^= 1;
                             speedGraphVideoRelated_3(0x10000);
-                            unknownVal++;
                         }
                     }
                 }
@@ -582,7 +594,9 @@ void mainloop(void)
                 case 5:
                     unknownVal = 4U;
                     break;
+            
             }
+
         }
 
         unload_stage_text_data();
