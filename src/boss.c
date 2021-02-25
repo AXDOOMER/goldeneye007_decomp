@@ -288,7 +288,7 @@ void bossEntry(void) {
 void mainloop(void)
 {
     s32 done;
-    s32 localSelectedNumPlayers;
+    const unsigned char *tokenFindLevel;
     
     GFXMsg *localGfxFrameMsg; // sp 468
     struct D_80024304_s localD_80024304; // sp 436
@@ -296,8 +296,8 @@ void mainloop(void)
     s32 stringIndex;
     s32 toggleFlag; // sp 428
     Gfx *gdl;
+    Gfx *gdlcopy;
     Gfx *firstGdl;
-
 
     s32 i;
     s32 count;
@@ -306,21 +306,21 @@ void mainloop(void)
     s8 joyStickYPos;
     u16 joyButtons;
 
-    //struct D_80024304_s* ppp = &localD_80024304;
-
     struct player *localPlayer;
 
     s32 localMainStageNum;
 
-    const unsigned char *tokenFindLevel;
+    s32 localSelectedNumPlayers;
 
-    u32 stackpadding[52];
+    u32 stackpadding[50];
     u32 unknownVal;
+    s32 * p1;
+    s32 a1;
 
     done = 0;
     reset_mem_bank_5();
 
-    if (tokenFind(1, "-level_") != 0)
+    if (tokenFind(1, "-level_"))
     {
         tokenFindLevel = (const unsigned char *)tokenFind(1, "-level_");
 
@@ -335,7 +335,7 @@ void mainloop(void)
         set_selected_difficulty(DIFFICULTY_AGENT);
         set_solo_and_ptr_briefing(g_StageNum);
 
-        if (tokenFind(1, "-hard") != 0)
+        if (tokenFind(1, "-hard"))
         {
             // convert ASCII difficulty value to int in set difficulty calls
             set_selected_difficulty(*(const unsigned char*)tokenFind(1, "-hard") - '0');
@@ -347,7 +347,8 @@ void mainloop(void)
 
     while (!done)
     {
-        u32 stackpaddingaa[8];
+        
+        u32 stackpaddingaa[6];
         localGfxFrameMsg = NULL;
         localD_80024304 = D_80024304;
 
@@ -355,7 +356,7 @@ void mainloop(void)
         unknownVal = 0;
 
         test_if_recording_demos_this_stage_load(g_StageNum, get_current_difficulty());
-        if (debug_and_update_stage_flag != 0)
+        if (debug_and_update_stage_flag)
         {
             stringIndex = -1;
 
@@ -404,7 +405,7 @@ void mainloop(void)
 
         mempResetBank(4);
         obBlankResourcesLoadedInBank(4);
-        if (tokenFind(1, "-ma") != 0)
+        if (tokenFind(1, "-ma"))
         {
             current_ma_malloc_value = (s32) (strtol(tokenFind(1, "-ma"), NULL, 0) * 1024);
         }
@@ -438,6 +439,8 @@ void mainloop(void)
 
         while (g_MainStageNum < 0 || unknownVal != 0)
         {
+            s32 tmp;
+
             osRecvMesg(&gfxFrameMsgQ, (OSMesg *)&localGfxFrameMsg, OS_MESG_BLOCK);
             
             if (1)
@@ -449,7 +452,8 @@ void mainloop(void)
             {
                 case 1:
                 {
-                    if ((u32) (osGetCount() - copy_of_osgetcount_value_1) < 0x5eb61U)
+                    tmp = (u32) (osGetCount() - copy_of_osgetcount_value_1);
+                    if (tmp < 0x5eb61U)
                     {
                         // nothing to do.
                     }
@@ -457,7 +461,7 @@ void mainloop(void)
                     {
                         if (g_MainStageNum < 0 && unknownVal < 2U)
                         {
-                            localD_80024304.unk0 = gdl;
+                            //gdlcopy = gdl;
 
                             if (get_is_ramrom_flag())
                             {
@@ -575,9 +579,7 @@ void mainloop(void)
                                 indy_send_capture_data(taskGrabBuffer, 0x80000000, 0x400000);
                             }
 
-                            if (1){
-                                load_rsp_microcode(firstGdl, gdl, 0, localD_80024304.unk0);
-                            }
+                            load_rsp_microcode(firstGdl, gdl, 0, (s32)(&localD_80024304));
                             unknownVal++;
                             memaIterateAndMerge();
                             toggleFlag ^= 1;
@@ -594,9 +596,7 @@ void mainloop(void)
                 case 5:
                     unknownVal = 4U;
                     break;
-            
             }
-
         }
 
         unload_stage_text_data();
@@ -607,6 +607,8 @@ void mainloop(void)
         g_StageNum = g_MainStageNum;
         g_MainStageNum = -1;
     }
+
+    gdl = NULL;
 
     sub_GAME_7F0D1A7C();
 }
