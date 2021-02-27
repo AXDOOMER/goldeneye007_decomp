@@ -24205,7 +24205,7 @@ void *increment_num_kills_display_text_in_MP(void) {
     {
         // Node 1
         sp34 = get_mission_timer();
-        sprintf(&sp40, &aSD, get_textptr_for_textID(0x98da), pPlayersPerm->killcount);
+        sprintf(&sp40, &aSD, get_textptr_for_textID(TEXT(LGUN, 0xDA)), pPlayersPerm->killcount); // kill count
         display_string_in_lower_left_corner(&sp40);
         if (pPlayersPerm->killcount >= 2)
         {
@@ -24526,11 +24526,11 @@ void increment_num_deaths(void)
     {
         if (pPlayer->deathcount == 1)
         {
-            sprintf(acStack256, get_textptr_for_textID(0x98db));
+            sprintf(acStack256, get_textptr_for_textID(TEXT(LGUN, 0xDB))); //died once
         }
         else
         {
-            sprintf(acStack256, &aSDS, get_textptr_for_textID(0x98dc), pPlayer->deathcount, get_textptr_for_textID(0x98dd));
+            sprintf(acStack256, &aSDS, get_textptr_for_textID(TEXT(LGUN, 0xDC))), pPlayer->deathcount, get_textptr_for_textID(TEXT(LGUN, 0xDD))); //died times
         }
 		display_string_in_lower_left_corner(acStack256);
     }
@@ -24664,7 +24664,7 @@ void *increment_num_suicides_display_MP(void) {
     {
         // Node 1
         sp34 = get_mission_timer();
-        sprintf(&sp40, &aSD_0, get_textptr_for_textID(0x98de), pPlayer->num_suicides);
+        sprintf(&sp40, &aSD_0, get_textptr_for_textID(TEXT(LGUN, 0xDE)), pPlayer->num_suicides); //suicide count
         display_string_in_lower_left_corner(&sp40);
         if (pPlayersPerm->killcount >= 2)
         {
