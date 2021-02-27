@@ -25912,7 +25912,7 @@ void append_text_picked_up(u8 *buffer,u8 * param2,u8 * param3)
 {
   u8 *puVar1;
   
-  puVar1 = get_textptr_for_textID(0xa400);
+  puVar1 = get_textptr_for_textID(TEXT(LPROPOBJ, 0x00)); //Picked up
   strcat(buffer,puVar1);
   return;
 }
@@ -25931,7 +25931,7 @@ void append_text_ammo_amount_word(u8 *buffer,AMMOTYPES ammotype,u32 amount)
     case AMMO_9MM_2:
     case AMMO_RIFLE:
     case AMMO_PLASTIQUE:
-        textfiletext = get_textptr_for_textID(0xa401);
+        textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x01)); //some
         strcat(buffer,textfiletext);
         break;
     case AMMO_SHOTGUN:
@@ -25951,33 +25951,33 @@ void append_text_ammo_amount_word(u8 *buffer,AMMOTYPES ammotype,u32 amount)
     case AMMO_BUG:
     case AMMO_MICRO_CAMERA:
         if (amount == 1) {
-            textfiletext = get_textptr_for_textID(0xa402);
+            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x02)); //a
             strcat(buffer,textfiletext);
         }
         else {
-            textfiletext = get_textptr_for_textID(0xa401);
+            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x01)); //some
             strcat(buffer,textfiletext);
         }
         break;
     case AMMO_EXPLOSIVEPEN:
     case AMMO_BOMBCASE:
         if (amount == 1) {
-            textfiletext = get_textptr_for_textID(0xa403);
+            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x03)); //an
             strcat(buffer,textfiletext);
         }
         else {
-            textfiletext = get_textptr_for_textID(0xa401);
+            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x01)); //some
             strcat(buffer,textfiletext);
         }
         break;
     case AMMO_GEKEY:
     case AMMO_TOKEN:
         if (amount == 1) {
-            textfiletext = get_textptr_for_textID(0xa404);
+            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x04)); //the
             strcat(buffer,textfiletext);
         }
         else {
-            textfiletext = get_textptr_for_textID(0xa401);
+            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x01)); //some
             strcat(buffer,textfiletext);
         }
     }
@@ -25996,115 +25996,115 @@ void apped_text_ammotype(u8 *buffer,AMMOTYPES ammotype,u32 amount)
     u8 *textfiletext;
     
     if (((ammotype == AMMO_9MM) || (ammotype == AMMO_9MM_2)) || (ammotype == AMMO_RIFLE)) {
-        textfiletext = get_textptr_for_textID(0xa405);
+        textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x05)); //ammo
         strcat(buffer,textfiletext);
     }
     else {
         if (ammotype == AMMO_KNIFE) {
-            textfiletext = get_textptr_for_textID(41999);
+            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x0F)); //throwing
             strcat(buffer,textfiletext);
             if (amount == 1) {
-                textfiletext = get_textptr_for_textID(42000);
+                textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x10)); //knife
                 strcat(buffer,textfiletext);
             }
             else {
-                textfiletext = get_textptr_for_textID(0xa411);
+                textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x11)); //knives
                 strcat(buffer,textfiletext);
             }
         }
         else {
             if (ammotype == AMMO_DYNAMITE) {
                 if (amount == 1) {
-                    textfiletext = get_textptr_for_textID(0xa419);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x19)); //stick
                     strcat(buffer,textfiletext);
                 }
                 else {
-                    textfiletext = get_textptr_for_textID(0xa41a);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x1A)); //sticks
                     strcat(buffer,textfiletext);
                 }
-                textfiletext = get_textptr_for_textID(0xa418);
+                textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x18)); //of dynamite
                 strcat(buffer,textfiletext);
             }
             else {
                 switch(ammotype) {
                 case AMMO_SHOTGUN:
-                    textfiletext = get_textptr_for_textID(0xa406);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x06)); //shotgun cartridge
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_GRENADE:
-                    textfiletext = get_textptr_for_textID(0xa409);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x09)); //hand grenade
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_ROCKETS:
-                    textfiletext = get_textptr_for_textID(0xa40b);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x0B)); //rocket
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_REMOTEMINE:
-                    textfiletext = get_textptr_for_textID(0xa40c);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x0C)); //remote mine
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_PROXMINE:
-                    textfiletext = get_textptr_for_textID(0xa40d);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x0D)); //proximity mine
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_TIMEDMINE:
-                    textfiletext = get_textptr_for_textID(0xa40e);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x0E)); //timed mine
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_GRENADEROUND:
-                    textfiletext = get_textptr_for_textID(0xa40a);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x0A)); //grenade round
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_MAGNUM:
-                    textfiletext = get_textptr_for_textID(0xa407);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x07)); //magnum bullet
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_GGUN:
-                    textfiletext = get_textptr_for_textID(0xa408);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x08)); //golden bullet
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_DARTS:
-                    textfiletext = get_textptr_for_textID(0xa413);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x13)); //dart
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_EXPLOSIVEPEN:
-                    textfiletext = get_textptr_for_textID(0xa414);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x14)); //explosive pen
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_BOMBCASE:
-                    textfiletext = get_textptr_for_textID(0xa415);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x15)); //explosive case
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_FLARE:
-                    textfiletext = get_textptr_for_textID(0xa416);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x16)); //flare
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_PITON:
-                    textfiletext = get_textptr_for_textID(0xa417);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x17)); //piton
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_BUG:
-                    textfiletext = get_textptr_for_textID(0xa41b);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x1b)); //bug
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_MICRO_CAMERA:
-                    textfiletext = get_textptr_for_textID(0xa41c);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x1c)); //micro camera
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_GEKEY:
-                    textfiletext = get_textptr_for_textID(0xa41d);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x1d)); //GoldenEye key
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_PLASTIQUE:
-                    textfiletext = get_textptr_for_textID(0xa41f);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x1f)); //plastique
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_TOKEN:
-                    textfiletext = get_textptr_for_textID(0xa41e);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x1e)); //token
                     strcat(buffer,textfiletext);
                 }
                 if (1 < (int)amount) {
-                    textfiletext = get_textptr_for_textID(0xa412);
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x12)); //s
                     strcat(buffer,textfiletext);
                 }
             }

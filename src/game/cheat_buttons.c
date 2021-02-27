@@ -654,19 +654,19 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
   case CHEAT_INVINCIBILITY:
     if (get_bondata_invincible_flag() == 0)
     {
-      display_string_in_lower_left_corner(get_textptr_for_textID(0xb00f));
+      display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x0F))); //invincibility on
       set_bondata_invincible_flag(1);
     }
     break;
   case CHEAT_ALLGUNS:
     if (get_BONDdata_allguns_flag() == 0)
     {
-      display_string_in_lower_left_corner(get_textptr_for_textID(0xb010));
+      display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x10)))); //all guns on
       set_BONDdata_allguns_flag(1);
     }
     break;
   case CHEAT_MAXAMMO:
-    display_string_in_lower_left_corner(get_textptr_for_textID(0xb011));
+    display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x11)))); //maximum ammo
     set_max_ammo_for_cur_player();
     break;
   case CHEAT_REMOVE_INVINCIBILITY:
@@ -697,7 +697,7 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
   case cheats_cheat_2x_health:
     if ((pPlayer->actual_health == 1.00000000) || (pPlayer->bondhealth < 1.00000000))
     {
-      display_string_in_lower_left_corner(get_textptr_for_textID(0xb012));
+      display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x12)))); //super 2x health
       pPlayer->bondhealth = 1.00000000;
       pPlayer->actual_health = 2.00000000;
     }
@@ -705,7 +705,7 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
   case cheats_cheat_2x_armor:
     if ((pPlayer->actual_armor == 1.00000000) || (pPlayer->bondarmour < 1.00000000))
     {
-      display_string_in_lower_left_corner(get_textptr_for_textID(0xb013));
+      display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x13))); //super x2 armor
       pPlayer->bondarmour = 1.00000000;
       pPlayer->actual_armor = 2.00000000;
     }
@@ -713,15 +713,15 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
   case cheats_cheat_invisibility:
     if (get_invisible_to_guards_flag() != 0)
     {
-      display_string_in_lower_left_corner(get_textptr_for_textID(0xb014));
+      display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x14))); //invisibility on
       set_invisible_to_guards_flag(0);
     }
     break;
   case cheats_cheat_infinite_ammo:
-    display_string_in_lower_left_corner(get_textptr_for_textID(0xb016));
+    display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x16))); //infinite ammo on
     break;
   case cheats_cheat_dk_mode:
-    display_string_in_lower_left_corner(get_textptr_for_textID(0xb017));
+    display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x17))); //dk mode on
     set_DKMode(1);
     break;
   case cheats_cheat_extra_weapons:
@@ -732,14 +732,14 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
       give_cur_player_ammo(AMMO_9MM, get_max_ammo_for_type(AMMO_9MM));
       if (0 < (add_item_to_inventory(ITEM_RUGER) + add_item_to_inventory(ITEM_LASER) + add_item_to_inventory(ITEM_GOLDENGUN) + add_item_to_inventory(ITEM_SILVERWPPK) + add_item_to_inventory(ITEM_GOLDWPPK)))
       {
-        display_string_in_lower_left_corner(get_textptr_for_textID(0xb018));
+        display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x18))); //extra weapons
       }
     }
     break;
   case cheats_cheat_tiny_bond:
     if ((numplayers == PLAYER2) && (pPlayersPerm->player_perspective_height == 1.00000000))
     {
-      display_string_in_lower_left_corner(get_textptr_for_textID(0xb019));
+      display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x19))); //tiny bond on
       pPlayersPerm->player_perspective_height = 0.50000000;
       if (pPlayer->ptr_char_objectinstance != 0)
       {
@@ -748,12 +748,12 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
     }
     break;
   case cheats_cheat_paintball:
-    display_string_in_lower_left_corner(get_textptr_for_textID(0xb01a));
+    display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x1A))); //paintball mod on
     break;
   case cheats_cheat_10x_health:
     if ((pPlayer->actual_health == 1.00000000) || (pPlayer->bondhealth < 1.00000000))
     {
-      display_string_in_lower_left_corner(get_textptr_for_textID(0xb01b));
+      display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x1B)));
       pPlayer->bondhealth = 1.00000000;
       pPlayer->actual_health = 10.00000000;
     }
@@ -797,7 +797,7 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
   case cheats_cheat_fast:
     if (get_debug_fast_bond_flag() == FALSE)
     {
-      display_string_in_lower_left_corner(get_textptr_for_textID(0xb01d));
+      display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x1D))); //fast mode on
       set_debug_fast_bond_flag(TRUE);
     }
     break;
@@ -810,14 +810,14 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
   case cheats_debug_fast_ani:
     if (get_animation_rate() < 4.00000000)
     {
-      display_string_in_lower_left_corner(get_textptr_for_textID(0xb034));
+      display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x34))); //fast motion
       animation_speed_related(4.00000000);
     }
     break;
   case cheats_debug_slow_ani:
     if (0.25000000 < get_animation_rate())
     {
-      display_string_in_lower_left_corner(get_textptr_for_textID(0xb032));
+      display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x32))); //slow motion
       animation_speed_related(0.25000000);
     }
     break;
