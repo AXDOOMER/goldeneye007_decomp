@@ -301,7 +301,7 @@ void bossMainloop(void)
     s32 mainTickElapsed;
     s32 rsparg;
 
-    u32 unused_stackpadding_[59];
+    u32 unused_stackpadding_[56];
 
     // end declarations
 
@@ -547,7 +547,7 @@ void bossMainloop(void)
                                 && (joyGetButtons(0, (A_BUTTON | B_BUTTON)) == (A_BUTTON | B_BUTTON)))
                             {
                                 static s32 taskgrab_ramdump_num = 1;
-                                u8 taskGrabBuffer[16];
+                                u8 taskGrabBuffer[28];
                                 s32 taskGrabFileSize;
 
                                 while (1)
@@ -567,7 +567,7 @@ void bossMainloop(void)
                             }
 
                             rsparg = (s32)(&localD_80024304);
-                            load_rsp_microcode(firstGdl, gdl, 0, rsparg);
+                            load_rsp_microcode(firstGdl, gdl, 0, (s32*)rsparg);
                             
                             unknownVal++;
                             memaIterateAndMerge();
