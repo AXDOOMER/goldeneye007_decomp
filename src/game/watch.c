@@ -3436,9 +3436,9 @@ Gfx *sub_GAME_7F0A77C8(Gfx *arg0)
 
     sp5C = (s32) ptrFirstFontTableSmall;
     sp58 = (s32) ptrSecondFontTableSmall;
-    sp54 = get_textptr_for_textID(0xac24);
-    sp50 = get_textptr_for_textID(0xac25);
-    sp4C = get_textptr_for_textID(0xac26);
+    sp54 = get_textptr_for_textID(TEXT(LOPTIONS, 0x24)); //abort:
+    sp50 = get_textptr_for_textID(TEXT(LOPTIONS, 0x25)); //confirm
+    sp4C = get_textptr_for_textID(TEXT(LOPTIONS, 0x26)); //cancel
     sp7C = 0x51;
     
     if (j_text_trigger != 0)
@@ -3837,19 +3837,19 @@ Gfx *draw_text_mission_status(Gfx *gdl)
     s32 sp4C;
     s32 joffset;
     
-    txtptr_1 = get_textptr_for_textID(0xAC27);
+    txtptr_1 = get_textptr_for_textID(TEXT(LOPTIONS, 0x27)); //mission status:
     ptr_first_font = ptrFirstFontTableSmall;
     ptr_second_font = ptrSecondFontTableSmall;
     
     if (check_objectives_complete())
     {
         sp4C = 0xFF00B0;
-        txtptr_2 = get_textptr_for_textID(0xAC28);
+        txtptr_2 = get_textptr_for_textID(TEXT(LOPTIONS, 0x28)); //complete
     }
     else
     {
         sp4C = D_80040AF4;
-        txtptr_2 = get_textptr_for_textID(0xAC29);
+        txtptr_2 = get_textptr_for_textID(TEXT(LOPTIONS, 0x29)); //incomplete
     }
 
     gdl = microcode_constructor(gdl);
@@ -3891,7 +3891,7 @@ Gfx *draw_text_q_watch_v201_beta(Gfx *gdl)
     s32 pSecondFontTable;
     s32 joffset;
 
-    txtptr = get_textptr_for_textID(0xAC2B);
+    txtptr = get_textptr_for_textID(TEXT(LOPTIONS, 0x2B)); //q watch v2.01 beta
 
     if (j_text_trigger)
     {
@@ -7327,29 +7327,29 @@ Gfx *display_text_buttons_dual_control(Gfx *gdl)
     
     if (joyGetButtons(0, A_BUTTON))
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0x5A, 0xA7, get_textptr_for_textID(0xAC03), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0);
+        gdl = sub_GAME_7F0A9398(gdl, 0x5A, 0xA7, get_textptr_for_textID(TEXT(LOPTIONS, 0x03)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0); //weapon
     }
     else
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0x5A, 0xA7, get_textptr_for_textID(0xAC03), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
+        gdl = sub_GAME_7F0A9398(gdl, 0x5A, 0xA7, get_textptr_for_textID(TEXT(LOPTIONS, 0x03)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0); //weapon
     }
     
     if (joyGetButtons(0, B_BUTTON))
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0x5A, 0x95, get_textptr_for_textID(0xAC02), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0);
+        gdl = sub_GAME_7F0A9398(gdl, 0x5A, 0x95, get_textptr_for_textID(TEXT(LOPTIONS, 0x02)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0); //action
     }
     else
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0x5A, 0x95, get_textptr_for_textID(0xAC02), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
+        gdl = sub_GAME_7F0A9398(gdl, 0x5A, 0x95, get_textptr_for_textID(TEXT(LOPTIONS, 0x02)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0); //action
     }
 
     if ((pPlayer->cur_player_control_type_0 == 4) || (pPlayer->cur_player_control_type_0 == 5))
     {
-        textptr_aux = get_textptr_for_textID(0xAC00);
+        textptr_aux = get_textptr_for_textID(TEXT(LOPTIONS, 0x00)); //fire
     }
     else
     {
-        textptr_aux = get_textptr_for_textID(0xAC01);
+        textptr_aux = get_textptr_for_textID(TEXT(LOPTIONS, 0x01)); //aim
     }
     
     if (joyGetButtons(0, Z_TRIG))
@@ -7363,40 +7363,40 @@ Gfx *display_text_buttons_dual_control(Gfx *gdl)
     
     if ((pPlayer->cur_player_control_type_0 == 4) || (pPlayer->cur_player_control_type_0 == 6))
     {
-        textptr_aux = get_textptr_for_textID(0xAC05);
+        textptr_aux = get_textptr_for_textID(TEXT(LOPTIONS, 0x05)); //move
     }
     else
     {
-        textptr_aux = get_textptr_for_textID(0xAC06);
+        textptr_aux = get_textptr_for_textID(TEXT(LOPTIONS, 0x06)); //look
     }
     
     gdl = sub_GAME_7F0A9398(gdl, 0x5A, 0xCB, textptr_aux, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
     
     if (joyGetButtons(1, A_BUTTON))
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0xE6, 0xA7, get_textptr_for_textID(0xAC03), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1);
+        gdl = sub_GAME_7F0A9398(gdl, 0xE6, 0xA7, get_textptr_for_textID(TEXT(LOPTIONS, 0x03)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1); //weapon
     }
     else
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0xE6, 0xA7, get_textptr_for_textID(0xAC03), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
+        gdl = sub_GAME_7F0A9398(gdl, 0xE6, 0xA7, get_textptr_for_textID(TEXT(LOPTIONS, 0x03)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1); //weapon
     }
     
     if (joyGetButtons(1, B_BUTTON))
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0xE6, 0x95, get_textptr_for_textID(0xAC02), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1);
+        gdl = sub_GAME_7F0A9398(gdl, 0xE6, 0x95, get_textptr_for_textID(TEXT(LOPTIONS, 0x02)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1); //action
     }
     else
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0xE6, 0x95, get_textptr_for_textID(0xAC02), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
+        gdl = sub_GAME_7F0A9398(gdl, 0xE6, 0x95, get_textptr_for_textID(TEXT(LOPTIONS, 0x02)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1); //action
     }
     
     if ((pPlayer->cur_player_control_type_0 == 4) || (pPlayer->cur_player_control_type_0 == 5))
     {
-        textptr_aux = get_textptr_for_textID(0xAC01);
+        textptr_aux = get_textptr_for_textID(TEXT(LOPTIONS, 0x01)); //aim
     }
     else
     {
-        textptr_aux = get_textptr_for_textID(0xAC00);
+        textptr_aux = get_textptr_for_textID(TEXT(LOPTIONS, 0x00)); //fire
     }
     
     if (joyGetButtons(1, Z_TRIG))
@@ -7410,11 +7410,11 @@ Gfx *display_text_buttons_dual_control(Gfx *gdl)
 
     if ((pPlayer->cur_player_control_type_0 == 4) || (pPlayer->cur_player_control_type_0 == 6))
     {
-        textptr_aux = get_textptr_for_textID(0xAC06);
+        textptr_aux = get_textptr_for_textID(TEXT(LOPTIONS, 0x06)); //look
     }
     else
     {
-        textptr_aux = get_textptr_for_textID(0xAC05);
+        textptr_aux = get_textptr_for_textID(TEXT(LOPTIONS, 0x05)); //move
     }
     
     gdl = sub_GAME_7F0A9398(gdl, 0xE6, 0xCB, textptr_aux, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
@@ -8416,7 +8416,7 @@ void proc_7F0AB4B8(u32 param_1,u32 param_2)
         pFirstFontTableSmall = (s32) ptrFirstFontTableSmall;
         pSecondFontTableSmall = (s32) ptrSecondFontTableSmall;
         microcode_constructor(sub_GAME_7F0AADC0(DL));
-        txtptr = get_textptr_for_textID(0xac32);
+        txtptr = get_textptr_for_textID(TEXT(LOPTIONS, 0x32)); //control style
         sp5C = 0x40;
         sp58 = 0x1a;
         phi_s1 = 0xff00b0;
@@ -8438,10 +8438,10 @@ void proc_7F0AB4B8(u32 param_1,u32 param_2)
             en_text_write_stuff(DL, &sp5C, &sp58, txtptr, pSecondFontTableSmall, pFirstFontTableSmall, (?32) phi_s1, sp54, sp50, 0, 0);
         }
         sub_GAME_7F0A97D0(DL);
-        txtptr = get_textptr_for_textID(0xac33);
+        txtptr = get_textptr_for_textID(TEXT(LOPTIONS, 0x33)); //controller
         if (controllerCheckDualControllerTypesAllowed() != 0)
         {
-            txtptr = get_textptr_for_textID(0xac34);
+            txtptr = get_textptr_for_textID(TEXT(LOPTIONS, 0x34)); //controllers
         }
         sp5C = 0x40;
         sp58 = 0x2b;
@@ -9139,7 +9139,7 @@ Gfx *draw_game_options_page(Gfx *gdl, s32 param_2)
         sp40 = ptrSecondFontTableSmall;
         gdl = microcode_constructor(gdl);
         
-        textptr = get_textptr_for_textID(0xAC35);
+        textptr = get_textptr_for_textID(TEXT(LOPTIONS, 0x35)); //music
         
         sp54 = 0x40;
         sp50 = 0x25;
@@ -9167,7 +9167,7 @@ Gfx *draw_game_options_page(Gfx *gdl, s32 param_2)
         }
         
         sp5C = 0xFF00B0;
-        textptr = get_textptr_for_textID(0xAC36);
+        textptr = get_textptr_for_textID(TEXT(LOPTIONS, 0x36)); //fx
         sp54 = 0x40;
         sp50 = 0x3B;
         
