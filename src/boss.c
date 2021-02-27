@@ -20,6 +20,18 @@
 #include "bond.h"
 #include "lvl.h"
 #include "indy_comms.h"
+#include "gamefile2.h"
+#include "gamefile.h"
+#include "random.h"
+#include "memp.h"
+#include "ob.h"
+#include "mema.h"
+#include "game/unk_093880.h"
+#include "game/unk_0C0A70.h"
+#include "game/ramromreplay.h"
+#include "game_debug.h"
+#include "game/mainmenu.h"
+#include "image.h"
 
 /**
  * @file boss.c
@@ -299,14 +311,14 @@ void mainloop(void)
     s32 toggleFlag; // sp 428
     Gfx *gdl; // sp424
     Gfx *firstGdl;
-    u32 stackpadding_1_[1];
+    u32 nowCount;
     s32 i;
     s32 count;
     s8 joyStickXPos;
     s8 joyStickYPos;
     u16 joyButtons;
     struct player *localPlayer;
-    s32 localMainStageNum;
+    s32 stackpadding_0_[1];
     s32 localSelectedNumPlayers;
     u32 stackpadding_2_[50];
     s32 unknownVal = 0;
@@ -315,7 +327,7 @@ void mainloop(void)
     u32 stackpadding_4_[3];
     s32 mainTickElapsed;
     s32 rsparg;
-    u32 nowCount;
+    u32 stackpadding_1_[1];
     s32 t;
     OSMesg * addr;
 
@@ -358,9 +370,7 @@ void mainloop(void)
         localD_80024304 = D_80024304;
         toggleFlag = 0;
         unknownVal = 0;
-
-        if(1){} // regalloc
-
+        
         test_if_recording_demos_this_stage_load(g_StageNum, get_current_difficulty());
         if (debug_and_update_stage_flag)
         {
@@ -409,9 +419,6 @@ void mainloop(void)
             tokenSetString(memallocstringtable[stringIndex].string);
         }
 
-        if(1){} // regalloc
-        if(0){} // regalloc
-
         mempResetBank(4);
         obBlankResourcesLoadedInBank(4);
         if (tokenFind(1, "-ma"))
@@ -431,7 +438,7 @@ void mainloop(void)
                 localSelectedNumPlayers = get_selected_num_players();
             }
         }
-
+        
         init_player_data_ptrs_construct_viewports(localSelectedNumPlayers);
         dynInitMemory();
         joyCheckStatusThreadSafe();
@@ -441,20 +448,22 @@ void mainloop(void)
         sub_GAME_7F0C0B4C();
         speedGraphVideoRelated_2();
 
+        // The following 4 empty blocks are to make s2/s3 match.
+
+        if(1){} // regalloc
+        do{}while(0); // regalloc
+
         while (osRecvMesg(&gfxFrameMsgQ, (OSMesg *)&localGfxFrameMsg, OS_MESG_NOBLOCK) == 0)
         {
-            // empty
+           // empty
         }
+
+        if(1){} // regalloc
+        do{}while(0); // regalloc
 
         while (g_MainStageNum < 0 || unknownVal != 0)
         {
             osRecvMesg(&gfxFrameMsgQ, (OSMesg *)&localGfxFrameMsg, OS_MESG_BLOCK);
-            
-            if (1)
-            {
-                // Removed ... ?
-                // Not sure if osRecvMesg function call is used in if condition
-            }
 
             switch (localGfxFrameMsg->gen.type)
             {
@@ -566,7 +575,7 @@ void mainloop(void)
                                 && (joyGetButtons(0, (A_BUTTON | B_BUTTON)) == (A_BUTTON | B_BUTTON)))
                             {
                                 static s32 taskgrab_ramdump_num = 1;
-                                char taskGrabBuffer[16];
+                                u8 taskGrabBuffer[16];
                                 s32 taskGrabFileSize;
 
                                 while (1)
@@ -582,7 +591,7 @@ void mainloop(void)
                                     break;
                                 }
 
-                                indy_send_capture_data(taskGrabBuffer, 0x80000000, 0x400000);
+                                indy_send_capture_data(taskGrabBuffer, (u8*)0x80000000, 0x400000);
                             }
 
                             rsparg = (s32)(&localD_80024304);

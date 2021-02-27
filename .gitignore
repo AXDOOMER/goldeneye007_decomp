@@ -7,6 +7,8 @@
 *.tmp
 *.z64
 *.o
+baserom.*.dump
+ge007.*.dump
 /.vs
 021990.bin
 0219D0.bin

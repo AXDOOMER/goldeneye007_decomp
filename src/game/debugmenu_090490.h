@@ -40,4 +40,5 @@ s32  get_debug_profile_flag(void);
 s32 get_debug_taskgrab_val(void);
 Gfx * print_debug_mcm_to_stdout(Gfx *);
 s32 debug_menu_processor(s8 arg0, s8 arg1, u16 arg2, u16 arg3);
+void display_debug_menu_text_onscreen(void);
 #endif

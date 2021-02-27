@@ -780,6 +780,8 @@ extern u32 intro_animation_count;
 extern u32 objinstance;
 extern u32 ptrobjinstance;
 extern u32 full_actor_intro;
+
 void set_menu_to_mode(MENU menu, s32 mode);
+s32 get_selected_num_players(void);
 
 #endif

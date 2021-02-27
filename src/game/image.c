@@ -2772,7 +2772,7 @@ struct image_entry image_entries[] = {
 
 
 
-void nullsub_41(void) {
+void nullsub_41(s32 arg0) {
     return;
 }
 
