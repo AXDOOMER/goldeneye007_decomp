@@ -32,10 +32,7 @@
 #include "token.h"
 #include "ultra64.h"
 #include "video.h"
-
-// Don't #include image.h.
-// To match the build, nullsub_41 is declared with void argument, but
-// the use below expects at least one argument defined.
+#include "image.h"
 
 /**
  * @file boss.c

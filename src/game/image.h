@@ -18,7 +18,6 @@ extern struct image_entry image_entries[];
 extern s32 dword_CODE_bss_8008D090;
 extern u32 bytes;
 
-// don't declare nullsub_41, the only use (in bossMainloop) expects it
-// to have an argument, but the build is defined with void argument.
+void nullsub_41(s32 arg0);
 
 #endif
