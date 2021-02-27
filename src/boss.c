@@ -26,6 +26,8 @@
  * This file contains the main game loop code. 
  */
 
+#define MAIN_LOOP_TICK_INTERVAL 0x5eb61U
+
 /**
  * Copied from n64devkit\ultra\usr\src\pr\demos_old\simple\gfx.h
  */
@@ -145,10 +147,10 @@ extern struct player *pPlayer;
 //const char aU64_taskgrab_D_core[] = "u64.taskgrab.%d.core";
 
 /**
- * 6930	70005D30
+ * 6930    70005D30
  *     ??? - uses "-level_", "-m" strings
  */
-#define OS_USEC_TO_CYCLES(n)	(((u64)(n)*(osClockRate))/1000000LL)
+#define OS_USEC_TO_CYCLES(n)    (((u64)(n)*(osClockRate))/1000000LL)
 
 void init_mainthread_data(void)
 {
@@ -231,7 +233,7 @@ void init_mainthread_data(void)
 }
 
 /**
- * 6BF4	70005FF4
+ * 6BF4    70005FF4
  *     1 ->"show mem use" debug memory display [800241B4]; fry AT,T6
  */
 void enable_show_mem_use_flag(void) {
@@ -239,7 +241,7 @@ void enable_show_mem_use_flag(void) {
 }
 
 /**
- * 6C04	70006004
+ * 6C04    70006004
  *     toggle "show mem bars" [800241B8]; fries V0,T6,T7
  */
 void mem_bars_flag_toggle(void) {
@@ -247,7 +249,7 @@ void mem_bars_flag_toggle(void) {
 }
 
 /**
- * 6C1C	7000601C
+ * 6C1C    7000601C
  *     loads primary resources and starts main program loop
  *     this is infinite.  Loops unconditionally: JAL 70006060
  */
@@ -263,7 +265,7 @@ void bossEntry(void) {
 
 
 /**
- * 6C60	70006060
+ * 6C60    70006060
  *     main program loop
  *         70006090 tests memstring for "-level_##"
  *         700060DC if not title, tests memstring for "-hard#"
@@ -279,53 +281,55 @@ void bossEntry(void) {
  *         70006708 displays memory usage when active
  *         70006724 displays in-game debugger when active
  *         7000674C writes a full sync, end display list combo
- *         7000676C display mem use when active	[800241B4]
- *         700067A8 display mem bars when active	[800241B8]
+ *         7000676C display mem use when active    [800241B4]
+ *         700067A8 display mem bars when active    [800241B8]
  *         700067C0 follows...
  *         700067D8 tests if "u64.taskgrab.#.core" activated and dumps memory
  *         70006854 follows... (700068BC - stop demos)
  */
 void mainloop(void)
 {
+    // declarations
+
     s32 done;
     const unsigned char *tokenFindLevel;
-    
     GFXMsg *localGfxFrameMsg; // sp 468
     struct D_80024304_s localD_80024304; // sp 436
-
     s32 stringIndex;
     s32 toggleFlag; // sp 428
-    Gfx *gdl;
-    Gfx *gdlcopy;
+    Gfx *gdl; // sp424
     Gfx *firstGdl;
-
+    u32 stackpadding_1_[1];
     s32 i;
     s32 count;
-
     s8 joyStickXPos;
     s8 joyStickYPos;
     u16 joyButtons;
-
     struct player *localPlayer;
-
     s32 localMainStageNum;
-
     s32 localSelectedNumPlayers;
+    u32 stackpadding_2_[50];
+    s32 unknownVal = 0;
+    u32 stackpadding_3_[2];
+    s32 freeGfx;
+    u32 stackpadding_4_[3];
+    s32 mainTickElapsed;
+    s32 rsparg;
+    u32 nowCount;
+    s32 t;
+    OSMesg * addr;
 
-    u32 stackpadding[50];
-    u32 unknownVal;
-    s32 * p1;
-    s32 a1;
+    // end declarations
 
     done = 0;
     reset_mem_bank_5();
 
-    if (tokenFind(1, "-level_"))
+    if (tokenFind(1, "-level_") != NULL)
     {
         tokenFindLevel = (const unsigned char *)tokenFind(1, "-level_");
 
         // quick hack strltolon, converts the two digit ASCII level to 32bit int
-        g_StageNum = (s32) (((s32)tokenFindLevel[1] + (s32)(tokenFindLevel[0] * 10)) - 0x210);
+        g_StageNum = (((s32)(tokenFindLevel[0] * 10) + (s32)tokenFindLevel[1]) - 0x210);
     }
 
     if (g_StageNum != LEVELID_TITLE)
@@ -343,17 +347,19 @@ void mainloop(void)
         }
     }
 
-    randomSetSeed(osGetCount());
+    nowCount = osGetCount();
+    randomSetSeed(nowCount);
 
+    // 'done' value never changes, and control never breaks --
+    // probably infinite loop
     while (!done)
     {
-        
-        u32 stackpaddingaa[6];
-        localGfxFrameMsg = NULL;
+        localGfxFrameMsg = NULL; 
         localD_80024304 = D_80024304;
-
         toggleFlag = 0;
         unknownVal = 0;
+
+        if(1){} // regalloc
 
         test_if_recording_demos_this_stage_load(g_StageNum, get_current_difficulty());
         if (debug_and_update_stage_flag)
@@ -403,6 +409,9 @@ void mainloop(void)
             tokenSetString(memallocstringtable[stringIndex].string);
         }
 
+        if(1){} // regalloc
+        if(0){} // regalloc
+
         mempResetBank(4);
         obBlankResourcesLoadedInBank(4);
         if (tokenFind(1, "-ma"))
@@ -439,21 +448,20 @@ void mainloop(void)
 
         while (g_MainStageNum < 0 || unknownVal != 0)
         {
-            s32 tmp;
-
             osRecvMesg(&gfxFrameMsgQ, (OSMesg *)&localGfxFrameMsg, OS_MESG_BLOCK);
             
             if (1)
             {
-                // removed
+                // Removed ... ?
+                // Not sure if osRecvMesg function call is used in if condition
             }
-            
+
             switch (localGfxFrameMsg->gen.type)
             {
                 case 1:
                 {
-                    tmp = (u32) (osGetCount() - copy_of_osgetcount_value_1);
-                    if (tmp < 0x5eb61U)
+                    mainTickElapsed = (u32) (osGetCount() - copy_of_osgetcount_value_1);
+                    if (mainTickElapsed < MAIN_LOOP_TICK_INTERVAL)
                     {
                         // nothing to do.
                     }
@@ -461,8 +469,6 @@ void mainloop(void)
                     {
                         if (g_MainStageNum < 0 && unknownVal < 2U)
                         {
-                            //gdlcopy = gdl;
-
                             if (get_is_ramrom_flag())
                             {
                                 iterate_ramrom_entries_handle_camera_out();
@@ -479,7 +485,7 @@ void mainloop(void)
                             permit_stderr(0);
                             gdl = firstGdl = dynGetMasterDisplayList();
 
-                            if (debug_feature_flag != 0)
+                            if (debug_feature_flag)
                             {
                                 joyStickXPos = joyGetStickX(0);
                                 joyStickYPos = joyGetStickY(0);
@@ -492,7 +498,7 @@ void mainloop(void)
 
                             if (g_StageNum != LEVELID_TITLE)
                             {
-                                for (i=0; i<getPlayerCount(); i++)
+                                for (i = 0; i < getPlayerCount(); i++)
                                 {
                                     set_cur_player(sub_GAME_7F09B528(i));
 
@@ -510,7 +516,7 @@ void mainloop(void)
 
                             // Lets Visualise the Coverage Value used for Scilohete Anti-Ailising (edges)
                             // (done on the VI), also produces a cool looking linemode - providing AA is working.
-                            if (get_debug_VisCVG_flag() != 0)
+                            if (get_debug_VisCVG_flag())
                             {
                                 gDPPipeSync(gdl++); // 0xe7000000, 0x00000000
                                 gDPSetCycleType(gdl++, G_CYC_1CYCLE); // 0xba001402, 0x00000000
@@ -523,12 +529,12 @@ void mainloop(void)
 
                             gdl = debmenuDraw(gdl);
 
-                            if (get_memusage_display_flag() != 0)
+                            if (get_memusage_display_flag())
                             {
                                 gdl = speedGraphDisplay(gdl);
                             }
 
-                            if (debug_feature_flag != 0)
+                            if (debug_feature_flag)
                             {
                                 display_debug_menu_text_onscreen();
                                 gdl = print_debug_mcm_to_stdout(gdl);
@@ -537,7 +543,7 @@ void mainloop(void)
                             gDPFullSync(gdl++); // 0xe9000000, 0x00000000
                             gSPEndDisplayList(gdl++); // 0xb8000000, 0x00000000
 
-                            if (show_mem_use_flag != 0)
+                            if (show_mem_use_flag)
                             {
                                 nulled_mempLoopAllMemBanks();
                                 memaDumpPrePostMerge();
@@ -546,26 +552,26 @@ void mainloop(void)
                                 show_mem_use_flag = 0;
                             }
 
-                            if (show_mem_bars_flag != 0)
+                            if (show_mem_bars_flag)
                             {
                                 dynDrawMembars(gdl);
                             }
 
-                            dynGetFreeGfx2(gdl);
+                            freeGfx = dynGetFreeGfx2(gdl);
                             dynSwapBuffers();
                             video_related_8();
 
-                            if ((get_debug_taskgrab_val() != 0)
-                                && (joyGetButtonsPressedThisFrame(0, (A_BUTTON | B_BUTTON)) != 0)
+                            if ((get_debug_taskgrab_val())
+                                && (joyGetButtonsPressedThisFrame(0, (A_BUTTON | B_BUTTON)))
                                 && (joyGetButtons(0, (A_BUTTON | B_BUTTON)) == (A_BUTTON | B_BUTTON)))
                             {
                                 static s32 taskgrab_ramdump_num = 1;
-                                char taskGrabBuffer[24];
+                                char taskGrabBuffer[16];
                                 s32 taskGrabFileSize;
 
                                 while (1)
                                 {
-                                    sprintf(taskGrabBuffer, "u64.taskgrab.%d.core", taskgrab_ramdump_num);
+                                    s32 unusedSprintf = sprintf(taskGrabBuffer, "u64.taskgrab.%d.core", taskgrab_ramdump_num);
 
                                     if (check_file_found_on_indy(taskGrabBuffer, &taskGrabFileSize) != NULL)
                                     {
@@ -579,7 +585,9 @@ void mainloop(void)
                                 indy_send_capture_data(taskGrabBuffer, 0x80000000, 0x400000);
                             }
 
-                            load_rsp_microcode(firstGdl, gdl, 0, (s32)(&localD_80024304));
+                            rsparg = (s32)(&localD_80024304);
+                            load_rsp_microcode(firstGdl, gdl, 0, rsparg);
+                            
                             unknownVal++;
                             memaIterateAndMerge();
                             toggleFlag ^= 1;
@@ -605,16 +613,19 @@ void mainloop(void)
         obBlankResourcesLoadedInBank(4);
 
         g_StageNum = g_MainStageNum;
-        g_MainStageNum = -1;
+        g_MainStageNum = LEVELID_NONE;
     }
 
-    gdl = NULL;
+    // if(gdl) also works here.
+    if (!gdl)
+        // removed ... or ido?
+    ;
 
     sub_GAME_7F0D1A7C();
 }
 
 /**
- * 7530	70006930
+ * 7530    70006930
  *     run title [0x5A->loaded stage#]; fry AT
  *     redirect to 70006950: A0=0x5A
  */
@@ -623,7 +634,7 @@ void run_title_stage(void) {
 }
 
 /**
- * 7550	70006950
+ * 7550    70006950
  *     A0->loaded stage# [800242FC]; fry AT
  *     0x5A jumps to folder select
  *     0x5B 
@@ -634,7 +645,7 @@ void set_loaded_stage(LEVELID stage){
 }
 
 /**
- * 755C	7000695C
+ * 755C    7000695C
  *     V0= stage# [800241A8]
  */
 LEVELID get_stage_num(){
@@ -642,7 +653,7 @@ LEVELID get_stage_num(){
 }
 
 /**
- * 7568	70006968
+ * 7568    70006968
  *     return to title screen from stage
  */
 void return_to_title_from_level_end(void) {
@@ -657,7 +668,7 @@ void return_to_title_from_level_end(void) {
 }
 
 /**
- * 75B4	700069B4
+ * 75B4    700069B4
  *     V0=state of debug menu (1:on; 0:off) [80024300]
  */
 s32 get_debug_parse_flag(void) {
@@ -665,7 +676,7 @@ s32 get_debug_parse_flag(void) {
 }
 
 /**
- * 75C0	700069C0
+ * 75C0    700069C0
  *     V0= p->debug.notice.list entry for boss_c_debug using data at 800241A0
  */
 void bossInitDebugNoticeList(void) {
