@@ -1630,7 +1630,7 @@ glabel sub_GAME_7F08CE70
 
 #ifdef NONMATCHING
 //NOT MATCHING YET -> Wrong Register values
-void sub_GAME_7F08CF0C(void) {
+void checkHasGEKey(void) {
 
     InvItem *item = pPlayer->ptr_inventory_first_in_cycle;
 
@@ -1638,7 +1638,7 @@ void sub_GAME_7F08CF0C(void) {
 
         if (item->type == 2 ) {
             struct prop *temp_a0 = item->type_inv_item.type_prop.prop;
-            if (item->type_inv_item.type_prop.prop->type == 4 && temp_a0->obj->type == 0xF8) {
+            if (item->type_inv_item.type_prop.prop->type == 4 && temp_a0->obj->type == PROJECTILES_TYPE_GE_KEY) {
                 return TRUE;
             }
         }
@@ -1656,7 +1656,7 @@ void sub_GAME_7F08CF0C(void) {
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F08CF0C
+glabel checkHasGEKey
 /* 0C1A3C 7F08CF0C 3C0E8008 */  lui   $t6, %hi(pPlayer) 
 /* 0C1A40 7F08CF10 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
 /* 0C1A44 7F08CF14 240800F8 */  li    $t0, 248

@@ -15784,7 +15784,7 @@ weapon_reload_none_sfx:
 /* 09B858 7F066D28 8E0B001C */  lw    $t3, 0x1c($s0)
 /* 09B85C 7F066D2C 15600003 */  bnez  $t3, .L7F066D3C
 /* 09B860 7F066D30 00000000 */   nop   
-/* 09B864 7F066D34 0FC19B99 */  jal   sub_GAME_7F066E64
+/* 09B864 7F066D34 0FC19B99 */  jal   analyzeGEKey
 /* 09B868 7F066D38 00000000 */   nop   
 .L7F066D3C:
 /* 09B86C 7F066D3C 1000003F */  b     .L7F066E3C
@@ -18642,7 +18642,7 @@ weapon_reload_none_sfx:
 /* 09BE70 7F067300 8E19001C */  lw    $t9, 0x1c($s0)
 /* 09BE74 7F067304 17200003 */  bnez  $t9, .Ljp7F067314
 /* 09BE78 7F067308 00000000 */   nop   
-/* 09BE7C 7F06730C 0FC19D0F */  jal   sub_GAME_7F066E64
+/* 09BE7C 7F06730C 0FC19D0F */  jal   analyzeGEKey
 /* 09BE80 7F067310 00000000 */   nop   
 .Ljp7F067314:
 /* 09BE84 7F067314 1000003F */  b     .Ljp7F067414
@@ -18734,14 +18734,14 @@ weapon_reload_none_sfx:
 #endif
 
 
-void sub_GAME_7F066E64(void)
+void analyzeGEKey(void)
 {
-    if (sub_GAME_7F08CF0C())
+    if (checkHasGEKey())
     {
 	    #ifndef VERSION_JP
-    	    display_string_in_lower_left_corner(get_textptr_for_textID(0x98d8));
+    	    display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD8))); //Analyzing the GoldenEye key...
 		#else
-		    jp_display_string_in_lower_left_corner(get_textptr_for_textID(0x98d8));
+		    jp_display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD8))); //Analyzing the GoldenEye key...
 		#endif
     	pPlayer->copiedgoldeneye = 1;
     	play_sfx_a1(ptr_sfx_buf, 0xf5, 0x0);
@@ -18751,9 +18751,9 @@ void sub_GAME_7F066E64(void)
   	else
   	{
 		#ifndef VERSION_JP
-	        display_string_in_lower_left_corner(get_textptr_for_textID(0x98d9));
+	        display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD9))); //You do not have the GoldenEye key.
 		#else
-		    jp_display_string_in_lower_left_corner(get_textptr_for_textID(0x98d9));
+		    jp_display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD9))); //You do not have the GoldenEye key.
 		#endif
 	    sub_GAME_7F05D690();
   	}
