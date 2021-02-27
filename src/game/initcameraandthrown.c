@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "bondconstants.h"
+#include "boss.h"
 
 
 // data
@@ -134,7 +135,7 @@ glabel load_camera_intro_type_values
 /* 03A370 7F005840 3C018003 */  lui   $at, %hi(camera_80036434)
 /* 03A374 7F005844 AFA0007C */  sw    $zero, 0x7c($sp)
 /* 03A378 7F005848 AC206434 */  sw    $zero, %lo(camera_80036434)($at)
-/* 03A37C 7F00584C 0C001A57 */  jal   get_stage_num
+/* 03A37C 7F00584C 0C001A57 */  jal   bossGetStageNum
 /* 03A380 7F005850 E7A40088 */   swc1  $f4, 0x88($sp)
 /* 03A384 7F005854 24010036 */  li    $at, 54
 /* 03A388 7F005858 1441000B */  bne   $v0, $at, .L7F005888
@@ -857,7 +858,7 @@ glabel load_camera_intro_type_values
 /* 03A3D4 7F005864 3C018003 */  lui   $at, %hi(camera_80036434) # $at, 0x8003
 /* 03A3D8 7F005868 AFA00084 */  sw    $zero, 0x84($sp)
 /* 03A3DC 7F00586C AC206474 */  sw    $zero, %lo(camera_80036434)($at)
-/* 03A3E0 7F005870 0C001A57 */  jal   get_stage_num
+/* 03A3E0 7F005870 0C001A57 */  jal   bossGetStageNum
 /* 03A3E4 7F005874 E7B80090 */   swc1  $f24, 0x90($sp)
 /* 03A3E8 7F005878 24010036 */  li    $at, 54
 /* 03A3EC 7F00587C 1441000B */  bne   $v0, $at, .L7F0058AC

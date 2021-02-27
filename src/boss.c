@@ -1,37 +1,41 @@
-#include "ultra64.h"
-#include "ramrom.h"
-#include "boss.h"
-#include "bondgame.h"
 #include "game/debugmenu_090490.h"
+#include "game/mainmenu.h"
+#include "game/ramromreplay.h"
 #include "game/room_model_buffer.h"
-#include "deb.h"
-#include "game/stan.h"
 #include "game/rsp.h"
-#include "bondconstants.h"
-#include "token.h"
-#include "init.h"
-#include "sched.h"
-#include "game/unk_0C0A70.h"
-#include "joy.h"
-#include "dyn.h"
-#include "debugmenu.h"
-#include "speed_graph.h"
-#include "video.h"
-#include "bond.h"
-#include "lvl.h"
-#include "indy_comms.h"
-#include "gamefile2.h"
-#include "gamefile.h"
-#include "random.h"
-#include "memp.h"
-#include "ob.h"
-#include "mema.h"
+#include "game/stan.h"
 #include "game/unk_093880.h"
 #include "game/unk_0C0A70.h"
-#include "game/ramromreplay.h"
+#include "game/unk_0C0A70.h"
+#include "bond.h"
+#include "bondconstants.h"
+#include "bondgame.h"
+#include "boss.h"
+#include "deb.h"
+#include "debugmenu.h"
+#include "dyn.h"
 #include "game_debug.h"
-#include "game/mainmenu.h"
-#include "image.h"
+#include "gamefile.h"
+#include "gamefile2.h"
+#include "indy_comms.h"
+#include "init.h"
+#include "joy.h"
+#include "lvl.h"
+#include "mainmenu.h"
+#include "mema.h"
+#include "memp.h"
+#include "ob.h"
+#include "ramrom.h"
+#include "random.h"
+#include "sched.h"
+#include "speed_graph.h"
+#include "token.h"
+#include "ultra64.h"
+#include "video.h"
+
+// Don't #include image.h.
+// To match the build, nullsub_41 is declared with void argument, but
+// the use below expects at least one argument defined.
 
 /**
  * @file boss.c
@@ -58,16 +62,16 @@ typedef union {
 } GFXMsg;
 
 // forward declarations
-void mainloop(void);
+void bossMainloop(void);
 
 /* data */
-u32 boss_c_ptr_debug_notice_list_entry = 0;
-s32 debug_and_update_stage_flag = 0;
+u32 g_BossDebugNoticeEntry = 0;
+s32 g_DebugAndUpdateStageFlag = 0;
 s32 g_StageNum = LEVELID_TITLE;
-u32 current_m_malloc_value = 0x234800;
-u32 current_ma_malloc_value = 0x4B000;
-s32 show_mem_use_flag = 0;
-s32 show_mem_bars_flag = 0;
+u32 g_CurentMMallocValue = 0x234800;
+u32 g_CurentMaMallocValue = 0x4B000;
+s32 g_ShowMemUseFlag = 0;
+s32 g_ShowMemBarsFlag = 0;
 
 struct memallocstring memallocstringtable[] = {
 { LEVELID_DAM,          "-ml0 -me0 -mgfx70  -mvtx50 -mt625 -ma275"},
@@ -113,17 +117,9 @@ struct memallocstring memallocstringtable[] = {
 };
 
 s32 g_MainStageNum = LEVELID_NONE;
-s32 debug_feature_flag = 0;
+s32 g_DebugFeatureFlag = 0;
 
-// s32 D_80024304 = 0x20000;
-// s32 D_80024308 = 0;
-// s32 D_8002430C = 0;
-// s32 D_80024310 = 0;
-// s32 D_80024314 = 0;
-// s32 D_80024318 = 0;
-// s32 D_8002431C = 0;
-// s32 D_80024320 = 0;
-
+// Declared as array in PD. Might be array here too?
 struct D_80024304_s {
     s32 unk0;
     s32 unk4;
@@ -135,28 +131,8 @@ struct D_80024304_s {
     s32 unk1c;
 } D_80024304 = { 0x20000 };
 
-//s32 taskgrab_ramdump_num = 1;
-
 // extern declarations
 extern struct player *pPlayer;
-
-
-/* rodata */
-
-//const char aLevel_[] = "-level_";
-//const char aMl0Me0Mgfx100Mvtx50Mt700Ma400_1[] = "          -ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400";
-//const char aM[] = "-m";
-//const char aM_1[] = "-m";
-
-//***moved to mainloop
-//const char aLevel__0[] = "-level_";
-//const char aLevel__1[] = "-level_";
-//const char aHard[] = "-hard";
-//const char aHard_1[] = "-hard";
-//const char aHard_2[] = "-hard";
-//const char aMa[] = "-ma";
-//const char aMa_0[] = "-ma";
-//const char aU64_taskgrab_D_core[] = "u64.taskgrab.%d.core";
 
 /**
  * 6930    70005D30
@@ -164,7 +140,7 @@ extern struct player *pPlayer;
  */
 #define OS_USEC_TO_CYCLES(n)    (((u64)(n)*(osClockRate))/1000000LL)
 
-void init_mainthread_data(void)
+void bossInitMainthreadData(void)
 {
     OSMesg bossmsg;
     OSTimer bosstimer;
@@ -172,7 +148,6 @@ void init_mainthread_data(void)
     u32 temp_s0;
     u32 unused;
     s32 i;
-
 
     debInit();
     romCreateMesgQueue();
@@ -184,7 +159,7 @@ void init_mainthread_data(void)
     viInitDebugNoticeList();
     init_video_settings();
     init_indy_if_not_ready();
-    debug_and_update_stage_flag = rmonIsFinalBuild();
+    g_DebugAndUpdateStageFlag = rmonIsFinalBuild();
     obInitDebugNoticeList();
     rspInitDebugNoticeList();
     dynInitDebugNoticeList();
@@ -207,18 +182,22 @@ void init_mainthread_data(void)
 
     if (tokenFind(1, "-level_") == 0)
     {
-        debug_and_update_stage_flag = 1;
+        g_DebugAndUpdateStageFlag = 1;
     }
+
     stanInitDebugNoticeList();
     gameInitDebugNoticeList();
-    if (debug_and_update_stage_flag != 0)
+
+    if (g_DebugAndUpdateStageFlag != 0)
     {
         tokenSetString("          -ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400");
     }
+
     if (tokenFind(1, "-m") != 0)
     {
-        current_m_malloc_value = (s32) (strtol(tokenFind(1, "-m"), 0, 0) << 0xa);
+        g_CurentMMallocValue = (s32) (strtol(tokenFind(1, "-m"), 0, 0) << 0xa);
     }
+
     temp_s0 = (osVirtualToPhysical(&room_model_buffer) | 0x80000000);
     mempCheckMemflagTokens(temp_s0, (return_ptr_TLBallocatedblock() - temp_s0));
     mempResetBank(6);
@@ -248,16 +227,16 @@ void init_mainthread_data(void)
  * 6BF4    70005FF4
  *     1 ->"show mem use" debug memory display [800241B4]; fry AT,T6
  */
-void enable_show_mem_use_flag(void) {
-    show_mem_use_flag=TRUE;
+void bossEnableShowMemUseFlag(void) {
+    g_ShowMemUseFlag=TRUE;
 }
 
 /**
  * 6C04    70006004
  *     toggle "show mem bars" [800241B8]; fries V0,T6,T7
  */
-void mem_bars_flag_toggle(void) {
-    show_mem_bars_flag = show_mem_bars_flag ^ 1;
+void bossMemBarsFlagToggle(void) {
+    g_ShowMemBarsFlag = g_ShowMemBarsFlag ^ 1;
 }
 
 /**
@@ -266,15 +245,13 @@ void mem_bars_flag_toggle(void) {
  *     this is infinite.  Loops unconditionally: JAL 70006060
  */
 void bossEntry(void) {
-    init_mainthread_data();
+    bossInitMainthreadData();
     allocate_init_rsp_buffers();
     setupaudio();
     while(1){
-       mainloop();
+       bossMainloop();
     }    
 }
-
-
 
 /**
  * 6C60    70006060
@@ -299,7 +276,7 @@ void bossEntry(void) {
  *         700067D8 tests if "u64.taskgrab.#.core" activated and dumps memory
  *         70006854 follows... (700068BC - stop demos)
  */
-void mainloop(void)
+void bossMainloop(void)
 {
     // declarations
 
@@ -318,18 +295,13 @@ void mainloop(void)
     s8 joyStickYPos;
     u16 joyButtons;
     struct player *localPlayer;
-    s32 stackpadding_0_[1];
     s32 localSelectedNumPlayers;
-    u32 stackpadding_2_[50];
     s32 unknownVal = 0;
-    u32 stackpadding_3_[2];
     s32 freeGfx;
-    u32 stackpadding_4_[3];
     s32 mainTickElapsed;
     s32 rsparg;
-    u32 stackpadding_1_[1];
-    s32 t;
-    OSMesg * addr;
+
+    u32 unused_stackpadding_[59];
 
     // end declarations
 
@@ -362,8 +334,7 @@ void mainloop(void)
     nowCount = osGetCount();
     randomSetSeed(nowCount);
 
-    // 'done' value never changes, and control never breaks --
-    // probably infinite loop
+    // 'done' value never changes, and control never breaks -- infinite loop
     while (!done)
     {
         localGfxFrameMsg = NULL; 
@@ -372,7 +343,7 @@ void mainloop(void)
         unknownVal = 0;
         
         test_if_recording_demos_this_stage_load(g_StageNum, get_current_difficulty());
-        if (debug_and_update_stage_flag)
+        if (g_DebugAndUpdateStageFlag)
         {
             stringIndex = -1;
 
@@ -423,10 +394,10 @@ void mainloop(void)
         obBlankResourcesLoadedInBank(4);
         if (tokenFind(1, "-ma"))
         {
-            current_ma_malloc_value = (s32) (strtol(tokenFind(1, "-ma"), NULL, 0) * 1024);
+            g_CurentMaMallocValue = (s32) (strtol(tokenFind(1, "-ma"), NULL, 0) * 1024);
         }
 
-        memaSetBuffer(mempAllocBytesInBank(current_ma_malloc_value, 4), current_ma_malloc_value);
+        memaSetBuffer(mempAllocBytesInBank(g_CurentMaMallocValue, 4), g_CurentMaMallocValue);
         reset_play_data_ptrs();
 
         localSelectedNumPlayers = 0;
@@ -492,14 +463,15 @@ void mainloop(void)
                             speedGraphVideoRelated_3(0x20000);
                             joyConsumeSamplesWrapper();
                             permit_stderr(0);
+
                             gdl = firstGdl = dynGetMasterDisplayList();
 
-                            if (debug_feature_flag)
+                            if (g_DebugFeatureFlag)
                             {
                                 joyStickXPos = joyGetStickX(0);
                                 joyStickYPos = joyGetStickY(0);
                                 joyButtons = joyGetButtons(0, ANY_BUTTON);
-                                debug_feature_flag = debug_menu_processor(joyStickXPos, joyStickYPos, joyButtons, joyGetButtonsPressedThisFrame(0, ANY_BUTTON));
+                                g_DebugFeatureFlag = debug_menu_processor(joyStickXPos, joyStickYPos, joyButtons, joyGetButtonsPressedThisFrame(0, ANY_BUTTON));
                             }
 
                             manage_mp_game();
@@ -543,7 +515,7 @@ void mainloop(void)
                                 gdl = speedGraphDisplay(gdl);
                             }
 
-                            if (debug_feature_flag)
+                            if (g_DebugFeatureFlag)
                             {
                                 display_debug_menu_text_onscreen();
                                 gdl = print_debug_mcm_to_stdout(gdl);
@@ -552,16 +524,16 @@ void mainloop(void)
                             gDPFullSync(gdl++); // 0xe9000000, 0x00000000
                             gSPEndDisplayList(gdl++); // 0xb8000000, 0x00000000
 
-                            if (show_mem_use_flag)
+                            if (g_ShowMemUseFlag)
                             {
                                 nulled_mempLoopAllMemBanks();
                                 memaDumpPrePostMerge();
                                 dynRemovedFunc(gdl);
                                 nullsub_41(0);
-                                show_mem_use_flag = 0;
+                                g_ShowMemUseFlag = 0;
                             }
 
-                            if (show_mem_bars_flag)
+                            if (g_ShowMemBarsFlag)
                             {
                                 dynDrawMembars(gdl);
                             }
@@ -638,8 +610,8 @@ void mainloop(void)
  *     run title [0x5A->loaded stage#]; fry AT
  *     redirect to 70006950: A0=0x5A
  */
-void run_title_stage(void) {
-    set_loaded_stage(LEVELID_TITLE);
+void bossRunTitleStage(void) {
+    bossSetLoadedStage(LEVELID_TITLE);
 }
 
 /**
@@ -649,7 +621,7 @@ void run_title_stage(void) {
  *     0x5B 
  *     0x63 
  */
-void set_loaded_stage(LEVELID stage){
+void bossSetLoadedStage(LEVELID stage){
     g_MainStageNum = stage;
 }
 
@@ -657,7 +629,7 @@ void set_loaded_stage(LEVELID stage){
  * 755C    7000695C
  *     V0= stage# [800241A8]
  */
-LEVELID get_stage_num(){
+LEVELID bossGetStageNum() {
     return g_StageNum;
 }
 
@@ -670,18 +642,18 @@ void return_to_title_from_level_end(void) {
     display_objective_status_text_on_status_change();
     FUN_7f057a40();
 #endif
-    if ((get_stage_num() != LEVELID_CUBA) && (check_objectives_complete() != 0x0)) {
+    if ((bossGetStageNum() != LEVELID_CUBA) && (check_objectives_complete() != 0x0)) {
         end_of_mission_briefing();
     }
-    run_title_stage();
+    bossRunTitleStage();
 }
 
 /**
  * 75B4    700069B4
  *     V0=state of debug menu (1:on; 0:off) [80024300]
  */
-s32 get_debug_parse_flag(void) {
-    return debug_feature_flag;
+s32 bossGetDebugParseFlag(void) {
+    return g_DebugFeatureFlag;
 }
 
 /**
@@ -689,7 +661,6 @@ s32 get_debug_parse_flag(void) {
  *     V0= p->debug.notice.list entry for boss_c_debug using data at 800241A0
  */
 void bossInitDebugNoticeList(void) {
-    debTryAdd(&boss_c_ptr_debug_notice_list_entry, "boss_c_debug");
+    debTryAdd(&g_BossDebugNoticeEntry, "boss_c_debug");
 }
-
 

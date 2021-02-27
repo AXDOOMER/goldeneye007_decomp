@@ -6,6 +6,7 @@
 #include "game/lvl.h"
 #include "game/bondinv.h"
 #include "game/bondwalk.h"
+#include "boss.h"
 
 // bss
 struct coord flt_CODE_bss_80079940;
@@ -4478,7 +4479,7 @@ glabel set_camera_mode
 /* 0AF56C 7F07AA3C 44807000 */  mtc1  $zero, $f14
 /* 0AF570 7F07AA40 0FC20216 */  jal   currentPlayerSetFadeFrac
 /* 0AF574 7F07AA44 00000000 */   nop   
-/* 0AF578 7F07AA48 0C001A57 */  jal   get_stage_num
+/* 0AF578 7F07AA48 0C001A57 */  jal   bossGetStageNum
 /* 0AF57C 7F07AA4C 00000000 */   nop   
 /* 0AF580 7F07AA50 00402025 */  move  $a0, $v0
 /* 0AF584 7F07AA54 0FC2EA99 */  jal   load_enviroment
@@ -4524,7 +4525,7 @@ glabel set_camera_mode
 /* 0AF618 7F07AAE8 3C0142A0 */  li    $at, 0x42A00000 # 80.000000
 /* 0AF61C 7F07AAEC 44814000 */  mtc1  $at, $f8
 /* 0AF620 7F07AAF0 3C018008 */  lui   $at, %hi(flt_CODE_bss_80079E10)
-/* 0AF624 7F07AAF4 0C001A57 */  jal   get_stage_num
+/* 0AF624 7F07AAF4 0C001A57 */  jal   bossGetStageNum
 /* 0AF628 7F07AAF8 E4289E10 */   swc1  $f8, %lo(flt_CODE_bss_80079E10)($at)
 /* 0AF62C 7F07AAFC 00402025 */  move  $a0, $v0
 /* 0AF630 7F07AB00 0FC2EA99 */  jal   load_enviroment
@@ -4546,7 +4547,7 @@ glabel set_camera_mode
 /* 0AF66C 7F07AB3C 44807000 */  mtc1  $zero, $f14
 /* 0AF670 7F07AB40 0FC20216 */  jal   currentPlayerSetFadeFrac
 /* 0AF674 7F07AB44 00000000 */   nop   
-/* 0AF678 7F07AB48 0C001A57 */  jal   get_stage_num
+/* 0AF678 7F07AB48 0C001A57 */  jal   bossGetStageNum
 /* 0AF67C 7F07AB4C 00000000 */   nop   
 /* 0AF680 7F07AB50 00402025 */  move  $a0, $v0
 /* 0AF684 7F07AB54 0FC2EA99 */  jal   load_enviroment
@@ -4629,7 +4630,7 @@ glabel set_camera_mode
 /* 0AF7AC 7F07AC7C 24010004 */  li    $at, 4
 /* 0AF7B0 7F07AC80 5441003A */  bnel  $v0, $at, .L7F07AD6C
 /* 0AF7B4 7F07AC84 24010005 */   li    $at, 5
-/* 0AF7B8 7F07AC88 0C001A57 */  jal   get_stage_num
+/* 0AF7B8 7F07AC88 0C001A57 */  jal   bossGetStageNum
 /* 0AF7BC 7F07AC8C 00000000 */   nop   
 /* 0AF7C0 7F07AC90 24010036 */  li    $at, 54
 /* 0AF7C4 7F07AC94 1441000D */  bne   $v0, $at, .L7F07ACCC
@@ -4665,7 +4666,7 @@ glabel set_camera_mode
 /* 0AF834 7F07AD04 28410002 */  slti  $at, $v0, 2
 /* 0AF838 7F07AD08 14200006 */  bnez  $at, .L7F07AD24
 /* 0AF83C 7F07AD0C 00000000 */   nop   
-/* 0AF840 7F07AD10 0C001A57 */  jal   get_stage_num
+/* 0AF840 7F07AD10 0C001A57 */  jal   bossGetStageNum
 /* 0AF844 7F07AD14 00000000 */   nop   
 /* 0AF848 7F07AD18 00402025 */  move  $a0, $v0
 /* 0AF84C 7F07AD1C 0FC2EA99 */  jal   load_enviroment
@@ -4900,7 +4901,7 @@ glabel set_camera_mode
 /* 0AFBB8 7F07B088 10000042 */  b     .L7F07B194
 /* 0AFBBC 7F07B08C 8FBF002C */   lw    $ra, 0x2c($sp)
 .L7F07B090:
-/* 0AFBC0 7F07B090 0C001A4C */  jal   run_title_stage
+/* 0AFBC0 7F07B090 0C001A4C */  jal   bossRunTitleStage
 /* 0AFBC4 7F07B094 00000000 */   nop   
 /* 0AFBC8 7F07B098 1000003E */  b     .L7F07B194
 /* 0AFBCC 7F07B09C 8FBF002C */   lw    $ra, 0x2c($sp)
@@ -24754,7 +24755,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BC0B4 7F087584 2B210003 */  slti  $at, $t9, 3
 /* 0BC0B8 7F087588 14200003 */  bnez  $at, .L7F087598
 /* 0BC0BC 7F08758C 00000000 */   nop   
-/* 0BC0C0 7F087590 0C001A4C */  jal   run_title_stage
+/* 0BC0C0 7F087590 0C001A4C */  jal   bossRunTitleStage
 /* 0BC0C4 7F087594 00000000 */   nop   
 .L7F087598:
 /* 0BC0C8 7F087598 3C088003 */  lui   $t0, %hi(cameramode) 
@@ -24766,7 +24767,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BC0E0 7F0875B0 00000000 */   nop   
 /* 0BC0E4 7F0875B4 10400003 */  beqz  $v0, .L7F0875C4
 /* 0BC0E8 7F0875B8 00000000 */   nop   
-/* 0BC0EC 7F0875BC 0C001A4C */  jal   run_title_stage
+/* 0BC0EC 7F0875BC 0C001A4C */  jal   bossRunTitleStage
 /* 0BC0F0 7F0875C0 00000000 */   nop   
 .L7F0875C4:
 /* 0BC0F4 7F0875C4 3C0A8008 */  lui   $t2, %hi(pPlayer) 
@@ -25191,7 +25192,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BC7C0 7F087C50 29C10003 */  slti  $at, $t6, 3
 /* 0BC7C4 7F087C54 14200003 */  bnez  $at, .Ljp7F087C64
 /* 0BC7C8 7F087C58 00000000 */   nop   
-/* 0BC7CC 7F087C5C 0C001A4C */  jal   run_title_stage
+/* 0BC7CC 7F087C5C 0C001A4C */  jal   bossRunTitleStage
 /* 0BC7D0 7F087C60 00000000 */   nop   
 .Ljp7F087C64:
 /* 0BC7D4 7F087C64 3C0F8003 */  lui   $t7, %hi(cameramode) # $t7, 0x8003
@@ -25203,7 +25204,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BC7EC 7F087C7C 00000000 */   nop   
 /* 0BC7F0 7F087C80 10400003 */  beqz  $v0, .Ljp7F087C90
 /* 0BC7F4 7F087C84 00000000 */   nop   
-/* 0BC7F8 7F087C88 0C001A4C */  jal   run_title_stage
+/* 0BC7F8 7F087C88 0C001A4C */  jal   bossRunTitleStage
 /* 0BC7FC 7F087C8C 00000000 */   nop   
 .Ljp7F087C90:
 /* 0BC800 7F087C90 3C198008 */  lui   $t9, %hi(pPlayer) # $t9, 0x8008
@@ -27817,7 +27818,7 @@ glabel sub_GAME_7F088CD8
 /* 0BD828 7F088CF8 AFB30044 */  sw    $s3, 0x44($sp)
 /* 0BD82C 7F088CFC AFB20040 */  sw    $s2, 0x40($sp)
 /* 0BD830 7F088D00 AFB1003C */  sw    $s1, 0x3c($sp)
-/* 0BD834 7F088D04 0C001A57 */  jal   get_stage_num
+/* 0BD834 7F088D04 0C001A57 */  jal   bossGetStageNum
 /* 0BD838 7F088D08 AFB00038 */   sw    $s0, 0x38($sp)
 /* 0BD83C 7F088D0C 24010036 */  li    $at, 54
 /* 0BD840 7F088D10 14410130 */  bne   $v0, $at, .L7F0891D4
