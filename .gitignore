@@ -42,6 +42,7 @@ assets/obseg/text/j/*.bin
 assets/obseg/text/u/*.bin
 assets/ramrom/*.bin
 build/*
+build-*/*
 tools/extractor/*.o
 tools/extractor/extractor
 tools/aaa_rip/main.o
