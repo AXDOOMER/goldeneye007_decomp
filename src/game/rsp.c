@@ -73,7 +73,7 @@ glabel allocate_init_rsp_buffers
 
 
 #ifdef NONMATCHING
-void *load_rsp_microcode(s32 arg0, s32 arg1, ? arg2, ?32 arg3) {
+void *load_rsp_microcode(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     void *temp_v0;
 
     // Node 0

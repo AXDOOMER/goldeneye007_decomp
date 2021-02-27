@@ -62,7 +62,7 @@ glabel randomGetNext
  * 
  * Same assembly instructions as chrObjRandomSetSeed.
  */ 
-void randomSetSeed(u64 param_1) {
+void randomSetSeed(u32 param_1) {
     g_randomSeed = param_1 + 1;
 }
 #else

@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "game/debugmenu_090490.h"
 #include "game/initgamedata.h"
+#include "boss.h"
 
 // data
 //D:80036BA0
@@ -426,7 +427,7 @@ void removed_do_debug_profile_flag_true(void) {
 
 
 #ifdef NONMATCHING
-void debug_menu_processor(void) {
+s32 debug_menu_processor(s8 arg0, s8 arg1, u16 arg2, u16 arg3) {
 
 }
 #else
@@ -868,7 +869,7 @@ debug_testingmanpos:
 /* 0C5588 7F090A58 10000106 */  b     .L7F090E74
 /* 0C558C 7F090A5C AC4C0000 */   sw    $t4, ($v0)
 debug_playtitle:
-/* 0C5590 7F090A60 0C001A54 */  jal   set_loaded_stage
+/* 0C5590 7F090A60 0C001A54 */  jal   bossSetLoadedStage
 /* 0C5594 7F090A64 2404005A */   li    $a0, 90
 /* 0C5598 7F090A68 10000103 */  b     .L7F090E78
 /* 0C559C 7F090A6C 8FB80018 */   lw    $t8, 0x18($sp)
@@ -885,12 +886,12 @@ debug_prroomloads:
 /* 0C55C0 7F090A90 100000F8 */  b     .L7F090E74
 /* 0C55C4 7F090A94 AC4E0000 */   sw    $t6, ($v0)
 debug_showmemuse:
-/* 0C55C8 7F090A98 0C0017FD */  jal   enable_show_mem_use_flag
+/* 0C55C8 7F090A98 0C0017FD */  jal   bossEnableShowMemUseFlag
 /* 0C55CC 7F090A9C 00000000 */   nop   
 /* 0C55D0 7F090AA0 100000F5 */  b     .L7F090E78
 /* 0C55D4 7F090AA4 8FB80018 */   lw    $t8, 0x18($sp)
 debug_showmembars:
-/* 0C55D8 7F090AA8 0C001801 */  jal   mem_bars_flag_toggle
+/* 0C55D8 7F090AA8 0C001801 */  jal   bossMemBarsFlagToggle
 /* 0C55DC 7F090AAC 00000000 */   nop   
 /* 0C55E0 7F090AB0 100000F1 */  b     .L7F090E78
 /* 0C55E4 7F090AB4 8FB80018 */   lw    $t8, 0x18($sp)

@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "bondgame.h"
+#include "boss.h"
 #include "game/chr.h"
 #include "game/chrai.h"
 #include "snd.h"
@@ -5650,7 +5651,7 @@ action75_Go_To_RVL_If_Power_On_Time_GTV_4:
 /* 06C7C4 7F037C94 1000F63D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C7C8 7F037C98 26310004 */   addiu $s1, $s1, 4
 action76_Go_To_RVL_If_Stage_Number_LTV_3:
-/* 06C7CC 7F037C9C 0C001A57 */  jal   get_stage_num
+/* 06C7CC 7F037C9C 0C001A57 */  jal   bossGetStageNum
 /* 06C7D0 7F037CA0 00000000 */   nop   
 /* 06C7D4 7F037CA4 92290001 */  lbu   $t1, 1($s1)
 /* 06C7D8 7F037CA8 02C02025 */  move  $a0, $s6
@@ -5668,7 +5669,7 @@ action76_Go_To_RVL_If_Stage_Number_LTV_3:
 /* 06C804 7F037CD4 1000F62D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C808 7F037CD8 26310003 */   addiu $s1, $s1, 3
 action77_Go_To_RVL_If_Stage_Number_GTV_3:
-/* 06C80C 7F037CDC 0C001A57 */  jal   get_stage_num
+/* 06C80C 7F037CDC 0C001A57 */  jal   bossGetStageNum
 /* 06C810 7F037CE0 00000000 */   nop   
 /* 06C814 7F037CE4 922A0001 */  lbu   $t2, 1($s1)
 /* 06C818 7F037CE8 02C02025 */  move  $a0, $s6
@@ -11517,7 +11518,7 @@ action75_Go_To_RVL_If_Power_On_Time_GTV_4:
 /* 06C7C4 7F037C94 1000F63D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C7C8 7F037C98 26310004 */   addiu $s1, $s1, 4
 action76_Go_To_RVL_If_Stage_Number_LTV_3:
-/* 06C7CC 7F037C9C 0C001A57 */  jal   get_stage_num
+/* 06C7CC 7F037C9C 0C001A57 */  jal   bossGetStageNum
 /* 06C7D0 7F037CA0 00000000 */   nop   
 /* 06C7D4 7F037CA4 92290001 */  lbu   $t1, 1($s1)
 /* 06C7D8 7F037CA8 02C02025 */  move  $a0, $s6
@@ -11535,7 +11536,7 @@ action76_Go_To_RVL_If_Stage_Number_LTV_3:
 /* 06C804 7F037CD4 1000F62D */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C808 7F037CD8 26310003 */   addiu $s1, $s1, 3
 action77_Go_To_RVL_If_Stage_Number_GTV_3:
-/* 06C80C 7F037CDC 0C001A57 */  jal   get_stage_num
+/* 06C80C 7F037CDC 0C001A57 */  jal   bossGetStageNum
 /* 06C810 7F037CE0 00000000 */   nop   
 /* 06C814 7F037CE4 922A0001 */  lbu   $t2, 1($s1)
 /* 06C818 7F037CE8 02C02025 */  move  $a0, $s6
@@ -14678,7 +14679,7 @@ glabel sub_GAME_7F03A6F4
 /* 06F248 7F03A718 AFB30020 */  sw    $s3, 0x20($sp)
 /* 06F24C 7F03A71C AFB2001C */  sw    $s2, 0x1c($sp)
 /* 06F250 7F03A720 AFB10018 */  sw    $s1, 0x18($sp)
-/* 06F254 7F03A724 0C001A57 */  jal   get_stage_num
+/* 06F254 7F03A724 0C001A57 */  jal   bossGetStageNum
 /* 06F258 7F03A728 AFB00014 */   sw    $s0, 0x14($sp)
 /* 06F25C 7F03A72C 24010036 */  li    $at, 54
 /* 06F260 7F03A730 14410008 */  bne   $v0, $at, .L7F03A754

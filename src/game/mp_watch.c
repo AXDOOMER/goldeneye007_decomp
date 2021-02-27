@@ -5,6 +5,7 @@
 #include "music.h"
 #include "bondgame.h"
 #include "bondconstants.h"
+#include "boss.h"
 #include "joy.h"
 
 
@@ -1342,7 +1343,7 @@ glabel sub_GAME_7F0C2E80
 .L7F0C33F8:
 /* 0F7F28 7F0C33F8 54680044 */  bnel  $v1, $t0, .L7F0C350C
 /* 0F7F2C 7F0C33FC 8FA2002C */   lw    $v0, 0x2c($sp)
-/* 0F7F30 7F0C3400 0C001A54 */  jal   set_loaded_stage
+/* 0F7F30 7F0C3400 0C001A54 */  jal   bossSetLoadedStage
 /* 0F7F34 7F0C3404 2404005A */   li    $a0, 90
 /* 0F7F38 7F0C3408 10000040 */  b     .L7F0C350C
 /* 0F7F3C 7F0C340C 8FA2002C */   lw    $v0, 0x2c($sp)

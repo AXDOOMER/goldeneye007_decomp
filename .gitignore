@@ -7,6 +7,9 @@
 *.tmp
 *.z64
 *.o
+branchdiff.sh
+baserom.*.dump
+ge007.*.dump
 /.vs
 021990.bin
 0219D0.bin
@@ -40,6 +43,7 @@ assets/obseg/text/j/*.bin
 assets/obseg/text/u/*.bin
 assets/ramrom/*.bin
 build/*
+build-*/*
 tools/extractor/*.o
 tools/extractor/extractor
 tools/aaa_rip/main.o

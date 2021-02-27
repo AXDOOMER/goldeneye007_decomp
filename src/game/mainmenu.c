@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "bondgame.h"
+#include "boss.h"
 #include "game/spectrum.h"
 #include "game/mainmenu.h"
 #include "game/unk_093880.h"
@@ -21764,7 +21765,7 @@ def_7F015E0C:
 
 void init_menu0B_runstage(void)
 {
-    set_loaded_stage(selected_stage);
+    bossSetLoadedStage(selected_stage);
     set_difficulty(selected_difficulty);
 }
 

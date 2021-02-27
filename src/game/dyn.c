@@ -108,7 +108,7 @@ void dynSwapBuffers(void) {
     g_GfxMemPos = g_VtxBuffers[g_GfxActiveBufferIndex];
 }
 
-void dynRemovedFunc(s32 arg) {
+void dynRemovedFunc(Gfx *gdl) {
 }
 
 s32 dynGetFreeGfx(Gfx *gdl) {

@@ -1,6 +1,9 @@
 #ifndef _GAMEFILE_H_
 #define _GAMEFILE_H_
 #include "ultra64.h"
+
+#include "bondconstants.h"
+
 //i am not "correct", i need proper fields for times again
 struct save_data
 {
@@ -35,5 +38,9 @@ struct save_data
 };
 
 extern u32 save_selected_bond[];
+
+void set_selected_folder_num(u32 foldernum);
+void set_selected_difficulty(DIFFICULTY difficulty);
+void set_solo_and_ptr_briefing(LEVELID stage);
 
 #endif
