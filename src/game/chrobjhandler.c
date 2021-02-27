@@ -26927,31 +26927,29 @@ weapon_has_default_ammo:
 #ifdef NONMATCHING
 void generate_language_specific_text_for_weapon(char *finalstring,ITEM_IDS itemtype)
 {
-    bool morethan2players;
-    u32 numplayers;
-    AMMOTYPES ammotype;
-    char *textfiletext;
-    size_t strlen;
+    u32 morethan2players;
+    //u32 numplayers;
+    //AMMOTYPES ammotype;
+    //char *textfiletext;
+    //size_t strlength;
     
-    morethan2players = false;
-    if (j_text_trigger == 0) {
-        numplayers = getPlayerCount();
-        if ((int)numplayers < 3) {
-            textfiletext = get_textptr_for_textID(0xa400);
-            strcpy(finalstring,textfiletext);
-        }
+    morethan2players = FALSE;
+    if (j_text_trigger==0) {
+          strcpy(finalstring,"");
+          if (2 < getPlayerCount()) {
+              morethan2players = TRUE;
+          }
     }
     else {
-        strcpy(finalstring,"");
-        numplayers = getPlayerCount();
-        if (2 < (int)numplayers) {
-            morethan2players = true;
-        }
+          if (getPlayerCount() < 3) {
+             //Picked up
+            strcpy(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x00))); 
+          }
     }
     switch(itemtype) {
     case ITEM_KNIFE:
-        textfiletext = get_textptr_for_textID(0xa420);
-        strcat(finalstring,textfiletext);
+        //a hunting knife.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x20)));  
         break;
     case ITEM_THROWKNIFE:
     case ITEM_GRENADE:
@@ -26966,125 +26964,124 @@ void generate_language_specific_text_for_weapon(char *finalstring,ITEM_IDS itemt
     case ITEM_56:
     case ITEM_57:
     case ITEM_TOKEN:
-        ammotype = get_ammo_type_for_weapon(itemtype);
-        prepare_ammo_type_collection_text((u8 *)finalstring,ammotype,1);
+        prepare_ammo_type_collection_text(finalstring,get_ammo_type_for_weapon(itemtype),1);
         return;
     case ITEM_WPPK:
-        textfiletext = get_textptr_for_textID(0xa421);
-        strcat(finalstring,textfiletext);
+        //a PP7.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x21)));
         break;
     case ITEM_WPPKSIL:
-        textfiletext = get_textptr_for_textID(0xa422);
-        strcat(finalstring,textfiletext);
+        //a silenced PP7.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x22)));
         break;
     case ITEM_TT33:
-        textfiletext = get_textptr_for_textID(0xa423);
-        strcat(finalstring,textfiletext);
+        //a DD44 Dostovei.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x23)));
         break;
     case ITEM_SKORPION:
-        textfiletext = get_textptr_for_textID(0xa424);
-        strcat(finalstring,textfiletext);
+        //a Klobb.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x24)));
         break;
     case ITEM_AK47:
-        textfiletext = get_textptr_for_textID(0xa425);
-        strcat(finalstring,textfiletext);
+        //a KF7 Soviet.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x25)));
         break;
     case ITEM_UZI:
-        textfiletext = get_textptr_for_textID(0xa426);
-        strcat(finalstring,textfiletext);
+        //a ZMG (9mm).
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x26)));
         break;
     case ITEM_MP5K:
-        textfiletext = get_textptr_for_textID(0xa427);
-        strcat(finalstring,textfiletext);
+        //a D5K Deutsche.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x27)));
         break;
     case ITEM_MP5KSIL:
-        textfiletext = get_textptr_for_textID(0xa428);
-        strcat(finalstring,textfiletext);
+        //a silenced D5K.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x28)));
         break;
     case ITEM_SPECTRE:
-        textfiletext = get_textptr_for_textID(0xa429);
-        strcat(finalstring,textfiletext);
+        //a Phantom.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x29)));
         break;
     case ITEM_M16:
-        textfiletext = get_textptr_for_textID(0xa42a);
-        strcat(finalstring,textfiletext);
+        //an AR33 assault rifle.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x2a)));
         break;
     case ITEM_FNP90:
-        textfiletext = get_textptr_for_textID(0xa42b);
-        strcat(finalstring,textfiletext);
+        //an RC-P90.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x2b)));
         break;
     case ITEM_SHOTGUN:
-        textfiletext = get_textptr_for_textID(0xa42c);
-        strcat(finalstring,textfiletext);
+        //a shotgun.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x2c)));
         break;
     case ITEM_AUTOSHOT:
-        textfiletext = get_textptr_for_textID(0xa42d);
-        strcat(finalstring,textfiletext);
+        //an automatic shotgun.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x2d)));
         break;
     case ITEM_SNIPERRIFLE:
-        textfiletext = get_textptr_for_textID(0xa42e);
-        strcat(finalstring,textfiletext);
+        //a sniper rifle.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x2e)));
         break;
     case ITEM_RUGER:
-        textfiletext = get_textptr_for_textID(0xa431);
-        strcat(finalstring,textfiletext);
+        //a Cougar Magnum.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x31)));
         break;
     case ITEM_GOLDENGUN:
-        textfiletext = get_textptr_for_textID(0xa432);
-        strcat(finalstring,textfiletext);
+        //the Golden Gun.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x32)));
         break;
     case ITEM_SILVERWPPK:
-        textfiletext = get_textptr_for_textID(0xa436);
-        strcat(finalstring,textfiletext);
+        //a silver PP7.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x36)));
         break;
     case ITEM_GOLDWPPK:
-        textfiletext = get_textptr_for_textID(0xa437);
-        strcat(finalstring,textfiletext);
+        //a gold PP7.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x37)));
         break;
     case ITEM_LASER:
-        textfiletext = get_textptr_for_textID(0xa433);
-        strcat(finalstring,textfiletext);
+        //a Moonraker laser.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x33)));
         break;
     default:
-        textfiletext = get_textptr_for_textID(0xa43b);
-        strcat(finalstring,textfiletext);
+        //a new weapon.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x3b)));
         break;
     case ITEM_GRENADELAUNCH:
-        textfiletext = get_textptr_for_textID(0xa42f);
-        strcat(finalstring,textfiletext);
+        //a grenade launcher.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x2f)));
         break;
     case ITEM_ROCKETLAUNCH:
-        textfiletext = get_textptr_for_textID(0xa430);
-        strcat(finalstring,textfiletext);
+        //a rocket launcher.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x30)));
         break;
     case ITEM_FLAREPISTOL:
-        textfiletext = get_textptr_for_textID(0xa434);
-        strcat(finalstring,textfiletext);
+        //a flare pistol.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x34)));
         break;
     case ITEM_PITONGUN:
-        textfiletext = get_textptr_for_textID(0xa435);
-        strcat(finalstring,textfiletext);
+        //a piton gun.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x35)));
         break;
     case ITEM_KEYCARD:
-        textfiletext = get_textptr_for_textID(0xa438);
-        strcat(finalstring,textfiletext);
+        //a keycard.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x38)));
         break;
     case ITEM_KEYYALE:
-        textfiletext = get_textptr_for_textID(0xa439);
-        strcat(finalstring,textfiletext);
+        //a yale key.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x39)));
         break;
     case ITEM_KEYBOLT:
-        textfiletext = get_textptr_for_textID(0xa43a);
-        strcat(finalstring,textfiletext);
+        //a bolt key.
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x3a)));
     }
-    if ((j_text_trigger != 0) && (!morethan2players)) {
-        strlen = strlen(finalstring);
-        if (finalstring[strlen - 1] == '\n') {
-            strlen = strlen(finalstring);
-            finalstring[strlen - 1] = '\0';
+    if ((j_text_trigger != 0) && (!morethan2players))
+    {
+        if (finalstring[strlen(finalstring) - 1] == '\n')
+        {
+            finalstring[strlen(finalstring) - 1] = '\0';
         }
-        textfiletext = get_textptr_for_textID(0xa400);
-        strcat(finalstring,textfiletext);
+        //Picked up 
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x00)));
         strcat(finalstring,"\n");
     }
     return;
