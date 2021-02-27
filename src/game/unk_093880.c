@@ -9686,7 +9686,7 @@ glabel initBONDdataforPlayer
 
 
 #ifdef NONMATCHING
-void set_cur_player(PLAYER_ID playernum)
+void set_cur_player(s32 playernum)
 {
     pPlayer = players[playernum];
     pPlayersPerm = player1_playerdata[playernum];
@@ -10287,7 +10287,7 @@ glabel sub_GAME_7F09B4D8
 
 
 #ifdef NONMATCHING
-int proc_7F09B528(int param_1)
+s32 sub_GAME_7F09B528(s32 param_1)
 {
     if (players[dword_CODE_bss_8007A0C0] != NULL) {
         if (param_1 == 0) {

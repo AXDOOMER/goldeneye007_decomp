@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "bondgame.h"
+#include "boss.h"
 #include "game/bond.h"
 #include "game/bondinv.h"
 #include "game/chr.h"
@@ -6022,7 +6023,7 @@ glabel handle_thrown_explosive_detonation
 /* 078B7C 7F04404C 8FA7001C */   lw    $a3, 0x1c($sp)
 /* 078B80 7F044050 AFA60018 */  sw    $a2, 0x18($sp)
 .L7F044054:
-/* 078B84 7F044054 0C001A57 */  jal   get_stage_num
+/* 078B84 7F044054 0C001A57 */  jal   bossGetStageNum
 /* 078B88 7F044058 AFA7001C */   sw    $a3, 0x1c($sp)
 /* 078B8C 7F04405C 24010022 */  li    $at, 34
 /* 078B90 7F044060 8FA60018 */  lw    $a2, 0x18($sp)
@@ -6343,7 +6344,7 @@ glabel handle_thrown_explosive_detonation
 /* 078EB4 7F044344 AFA5001C */  sw    $a1, 0x1c($sp)
 .L7F044348:
 /* 078EB8 7F044348 AFA60028 */  sw    $a2, 0x28($sp)
-/* 078EBC 7F04434C 0C001A57 */  jal   get_stage_num
+/* 078EBC 7F04434C 0C001A57 */  jal   bossGetStageNum
 /* 078EC0 7F044350 AFA7002C */   sw    $a3, 0x2c($sp)
 /* 078EC4 7F044354 24010022 */  li    $at, 34
 /* 078EC8 7F044358 8FA5001C */  lw    $a1, 0x1c($sp)
@@ -11025,7 +11026,7 @@ glabel object_interaction
 /* 07CA58 7F047F28 10000024 */  b     .L7F047FBC
 /* 07CA5C 7F047F2C 00000000 */   nop   
 .L7F047F30:
-/* 07CA60 7F047F30 0C001A57 */  jal   get_stage_num
+/* 07CA60 7F047F30 0C001A57 */  jal   bossGetStageNum
 /* 07CA64 7F047F34 00000000 */   nop   
 /* 07CA68 7F047F38 24010016 */  li    $at, 22
 /* 07CA6C 7F047F3C 1441000A */  bne   $v0, $at, .L7F047F68
@@ -11040,7 +11041,7 @@ glabel object_interaction
 /* 07CA90 7F047F60 10000016 */  b     .L7F047FBC
 /* 07CA94 7F047F64 00000000 */   nop   
 .L7F047F68:
-/* 07CA98 7F047F68 0C001A57 */  jal   get_stage_num
+/* 07CA98 7F047F68 0C001A57 */  jal   bossGetStageNum
 /* 07CA9C 7F047F6C 00000000 */   nop   
 /* 07CAA0 7F047F70 2401001A */  li    $at, 26
 /* 07CAA4 7F047F74 1441000B */  bne   $v0, $at, .L7F047FA4
@@ -16131,7 +16132,7 @@ glabel object_interaction
 /* 07CE9C 7F04832C 10000024 */  b     .Ljp7F0483C0
 /* 07CEA0 7F048330 00000000 */   nop   
 .Ljp7F048334:
-/* 07CEA4 7F048334 0C001A57 */  jal   get_stage_num
+/* 07CEA4 7F048334 0C001A57 */  jal   bossGetStageNum
 /* 07CEA8 7F048338 00000000 */   nop   
 /* 07CEAC 7F04833C 24010016 */  li    $at, 22
 /* 07CEB0 7F048340 1441000A */  bne   $v0, $at, .Ljp7F04836C
@@ -16146,7 +16147,7 @@ glabel object_interaction
 /* 07CED4 7F048364 10000016 */  b     .Ljp7F0483C0
 /* 07CED8 7F048368 00000000 */   nop   
 .Ljp7F04836C:
-/* 07CEDC 7F04836C 0C001A57 */  jal   get_stage_num
+/* 07CEDC 7F04836C 0C001A57 */  jal   bossGetStageNum
 /* 07CEE0 7F048370 00000000 */   nop   
 /* 07CEE4 7F048374 2401001A */  li    $at, 26
 /* 07CEE8 7F048378 1441000B */  bne   $v0, $at, .Ljp7F0483A8
@@ -36320,7 +36321,7 @@ glabel init_trigger_toxic_gas_effect
 /* 08A9C4 7F055E94 C4880004 */  lwc1  $f8, 4($a0)
 /* 08A9C8 7F055E98 E4480004 */  swc1  $f8, 4($v0)
 /* 08A9CC 7F055E9C C48A0008 */  lwc1  $f10, 8($a0)
-/* 08A9D0 7F055EA0 0C001A57 */  jal   get_stage_num
+/* 08A9D0 7F055EA0 0C001A57 */  jal   bossGetStageNum
 /* 08A9D4 7F055EA4 E44A0008 */   swc1  $f10, 8($v0)
 /* 08A9D8 7F055EA8 24010020 */  li    $at, 32
 /* 08A9DC 7F055EAC 14410007 */  bne   $v0, $at, .L7F055ECC

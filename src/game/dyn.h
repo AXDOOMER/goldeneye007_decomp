@@ -12,7 +12,7 @@ Mtx *dynAllocateMatrix(void);
 void *dynAllocate7F0BD6F8(s32 count);
 void *dynAllocate(s32 size);
 void dynSwapBuffers(void);
-void dynRemovedFunc(s32 arg);
+void dynRemovedFunc(Gfx *gdl);
 s32 dynGetFreeGfx(Gfx *gdl);
 s32 dynGetFreeVtx(void);
 void dynDrawMembars(Gfx *gdl);

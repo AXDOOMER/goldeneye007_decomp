@@ -43,6 +43,10 @@ void viSetFovY(f32 fovy);
 void viSetAspect(f32 aspect);
 void viSetZRange(f32 near, f32 far);
 void viSetUseZBuf(s32 usezbuf);
+void viSetViewSize(s16 x, s16 y);
+void viSetViewPosition(s16 left, s16 top);
+void viInitBuffers(void);
+void video_related_8(void);
 #endif
 
 

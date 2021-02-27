@@ -8,6 +8,7 @@
 #include "game/textrelated.h"
 #include "music.h"
 #include "bondconstants.h"
+#include "boss.h"
 
 // bss
 char dword_CODE_bss_8007B0A0[0x40];
@@ -1033,7 +1034,7 @@ void watch_screen0_navigation(void)
     {
         D_800409A4 = 0;
         set_missionstate(0);
-        run_title_stage();
+        bossRunTitleStage();
         mission_failed_or_aborted = 1;
         deleteCurrentSelectedFolder();
     }

@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "boss.h"
 
 
 #ifdef NONMATCHING
@@ -13,7 +14,7 @@ GLOBAL_ASM(
 glabel something_with_stage_objectives
 /* 0399F0 7F004EC0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0399F4 7F004EC4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0399F8 7F004EC8 0C001A57 */  jal   get_stage_num
+/* 0399F8 7F004EC8 0C001A57 */  jal   bossGetStageNum
 /* 0399FC 7F004ECC 00000000 */   nop   
 /* 039A00 7F004ED0 2401005A */  li    $at, 90
 /* 039A04 7F004ED4 10410011 */  beq   $v0, $at, .L7F004F1C
@@ -73,7 +74,7 @@ GLOBAL_ASM(
 glabel something_with_stage_objectives
 /* 039A40 7F004ED0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 039A44 7F004ED4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 039A48 7F004ED8 0C001A57 */  jal   get_stage_num
+/* 039A48 7F004ED8 0C001A57 */  jal   bossGetStageNum
 /* 039A4C 7F004EDC 00000000 */   nop   
 /* 039A50 7F004EE0 2401005A */  li    $at, 90
 /* 039A54 7F004EE4 10410011 */  beq   $v0, $at, .L7F004F2C

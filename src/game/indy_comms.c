@@ -72,7 +72,7 @@ void check_file_exported(u8 *filename, s32 size, u8 * data)
     }
 }
 
-u8 * check_file_found_on_indy(u8 *name, s32 size)
+u8 * check_file_found_on_indy(u8 *name, s32 *size)
 {
     u8 *response;  
     if (!indy_ready) {
