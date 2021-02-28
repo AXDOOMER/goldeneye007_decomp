@@ -235,7 +235,7 @@ glabel set_missionstate
 /* 0F58A8 7F0C0D78 3C018002 */  lui   $at, %hi(music2_playing)
 /* 0F58AC 7F0C0D7C 3C048009 */  lui   $a0, %hi(dword_CODE_bss_8008C600)
 /* 0F58B0 7F0C0D80 AC204350 */  sw    $zero, %lo(music2_playing)($at)
-/* 0F58B4 7F0C0D84 0FC34A24 */  jal   sub_GAME_7F0D2890
+/* 0F58B4 7F0C0D84 0FC34A24 */  jal   musicGetXTrackForStage
 /* 0F58B8 7F0C0D88 8C84C600 */   lw    $a0, %lo(dword_CODE_bss_8008C600)($a0)
 /* 0F58BC 7F0C0D8C 0C001C81 */  jal   musicTrack2Play
 /* 0F58C0 7F0C0D90 00402025 */   move  $a0, $v0
@@ -355,7 +355,7 @@ glabel set_missionstate
 /* 0F5A60 7F0C0F30 3C018002 */  lui   $at, %hi(music2_playing)
 /* 0F5A64 7F0C0F34 3C048009 */  lui   $a0, %hi(dword_CODE_bss_8008C600)
 /* 0F5A68 7F0C0F38 AC204350 */  sw    $zero, %lo(music2_playing)($at)
-/* 0F5A6C 7F0C0F3C 0FC34A24 */  jal   sub_GAME_7F0D2890
+/* 0F5A6C 7F0C0F3C 0FC34A24 */  jal   musicGetXTrackForStage
 /* 0F5A70 7F0C0F40 8C84C600 */   lw    $a0, %lo(dword_CODE_bss_8008C600)($a0)
 /* 0F5A74 7F0C0F44 0C001C81 */  jal   musicTrack2Play
 /* 0F5A78 7F0C0F48 00402025 */   move  $a0, $v0
@@ -394,7 +394,7 @@ glabel set_missionstate
 /* 0F5AF4 7F0C0FC4 3C018002 */  lui   $at, %hi(music2_playing)
 /* 0F5AF8 7F0C0FC8 3C048009 */  lui   $a0, %hi(dword_CODE_bss_8008C600)
 /* 0F5AFC 7F0C0FCC AC204350 */  sw    $zero, %lo(music2_playing)($at)
-/* 0F5B00 7F0C0FD0 0FC34A24 */  jal   sub_GAME_7F0D2890
+/* 0F5B00 7F0C0FD0 0FC34A24 */  jal   musicGetXTrackForStage
 /* 0F5B04 7F0C0FD4 8C84C600 */   lw    $a0, %lo(dword_CODE_bss_8008C600)($a0)
 /* 0F5B08 7F0C0FD8 0C001C81 */  jal   musicTrack2Play
 /* 0F5B0C 7F0C0FDC 00402025 */   move  $a0, $v0
@@ -445,7 +445,7 @@ glabel set_missionstate
 /* 0F5BB0 7F0C1080 3C018002 */  lui   $at, %hi(music2_playing)
 /* 0F5BB4 7F0C1084 3C048009 */  lui   $a0, %hi(dword_CODE_bss_8008C600)
 /* 0F5BB8 7F0C1088 AC204350 */  sw    $zero, %lo(music2_playing)($at)
-/* 0F5BBC 7F0C108C 0FC34A24 */  jal   sub_GAME_7F0D2890
+/* 0F5BBC 7F0C108C 0FC34A24 */  jal   musicGetXTrackForStage
 /* 0F5BC0 7F0C1090 8C84C600 */   lw    $a0, %lo(dword_CODE_bss_8008C600)($a0)
 /* 0F5BC4 7F0C1094 0C001C81 */  jal   musicTrack2Play
 /* 0F5BC8 7F0C1098 00402025 */   move  $a0, $v0
@@ -737,7 +737,7 @@ glabel set_missionstate
 /* 0F6598 7F0C1A28 3C018002 */  lui   $at, %hi(music2_playing) # $at, 0x8002
 /* 0F659C 7F0C1A2C 3C048009 */  lui   $a0, %hi(dword_CODE_bss_8008C600) # $a0, 0x8009
 /* 0F65A0 7F0C1A30 AC204390 */  sw    $zero, %lo(music2_playing)($at)
-/* 0F65A4 7F0C1A34 0FC34D5C */  jal   sub_GAME_7F0D2890
+/* 0F65A4 7F0C1A34 0FC34D5C */  jal   musicGetXTrackForStage
 /* 0F65A8 7F0C1A38 8C84C670 */   lw    $a0, %lo(dword_CODE_bss_8008C600)($a0)
 /* 0F65AC 7F0C1A3C 0C001C85 */  jal   musicTrack2Play
 /* 0F65B0 7F0C1A40 00402025 */   move  $a0, $v0
@@ -857,7 +857,7 @@ glabel set_missionstate
 /* 0F6750 7F0C1BE0 3C018002 */  lui   $at, %hi(music2_playing) # $at, 0x8002
 /* 0F6754 7F0C1BE4 3C048009 */  lui   $a0, %hi(dword_CODE_bss_8008C600) # $a0, 0x8009
 /* 0F6758 7F0C1BE8 AC204390 */  sw    $zero, %lo(music2_playing)($at)
-/* 0F675C 7F0C1BEC 0FC34D5C */  jal   sub_GAME_7F0D2890
+/* 0F675C 7F0C1BEC 0FC34D5C */  jal   musicGetXTrackForStage
 /* 0F6760 7F0C1BF0 8C84C670 */   lw    $a0, %lo(dword_CODE_bss_8008C600)($a0)
 /* 0F6764 7F0C1BF4 0C001C85 */  jal   musicTrack2Play
 /* 0F6768 7F0C1BF8 00402025 */   move  $a0, $v0
@@ -896,7 +896,7 @@ glabel set_missionstate
 /* 0F67E4 7F0C1C74 3C018002 */  lui   $at, %hi(music2_playing) # $at, 0x8002
 /* 0F67E8 7F0C1C78 3C048009 */  lui   $a0, %hi(dword_CODE_bss_8008C600) # $a0, 0x8009
 /* 0F67EC 7F0C1C7C AC204390 */  sw    $zero, %lo(music2_playing)($at)
-/* 0F67F0 7F0C1C80 0FC34D5C */  jal   sub_GAME_7F0D2890
+/* 0F67F0 7F0C1C80 0FC34D5C */  jal   musicGetXTrackForStage
 /* 0F67F4 7F0C1C84 8C84C670 */   lw    $a0, %lo(dword_CODE_bss_8008C600)($a0)
 /* 0F67F8 7F0C1C88 0C001C85 */  jal   musicTrack2Play
 /* 0F67FC 7F0C1C8C 00402025 */   move  $a0, $v0
@@ -947,7 +947,7 @@ glabel set_missionstate
 /* 0F68A0 7F0C1D30 3C018002 */  lui   $at, %hi(music2_playing) # $at, 0x8002
 /* 0F68A4 7F0C1D34 3C048009 */  lui   $a0, %hi(dword_CODE_bss_8008C600) # $a0, 0x8009
 /* 0F68A8 7F0C1D38 AC204390 */  sw    $zero, %lo(music2_playing)($at)
-/* 0F68AC 7F0C1D3C 0FC34D5C */  jal   sub_GAME_7F0D2890
+/* 0F68AC 7F0C1D3C 0FC34D5C */  jal   musicGetXTrackForStage
 /* 0F68B0 7F0C1D40 8C84C670 */   lw    $a0, %lo(dword_CODE_bss_8008C600)($a0)
 /* 0F68B4 7F0C1D44 0C001C85 */  jal   musicTrack2Play
 /* 0F68B8 7F0C1D48 00402025 */   move  $a0, $v0
