@@ -251,8 +251,14 @@ void bossEntry(void) {
 }
 
 /**
+ * Main program loop.
+ * 
  * 6C60    70006060
- *     main program loop
+ * 
+ * Seems to have been based on devkit example at one point,
+ * n64devkit\ultra\usr\src\pr\demos_old\simple\simple.c
+ * 
+ * loop:
  *         70006090 tests memstring for "-level_##"
  *         700060DC if not title, tests memstring for "-hard#"
  *         70006160 follows...
@@ -293,7 +299,7 @@ void bossMainloop(void)
     u16 joyButtons;
     struct player *localPlayer;
     s32 localSelectedNumPlayers;
-    s32 unknownVal = 0;
+    u32 pendingGfx = 0;
     s32 freeGfx;
     s32 mainTickElapsed;
     s32 rsparg;
@@ -337,7 +343,7 @@ void bossMainloop(void)
         localGfxFrameMsg = NULL; 
         localD_80024304 = D_80024304;
         toggleFlag = 0;
-        unknownVal = 0;
+        pendingGfx = 0;
         
         test_if_recording_demos_this_stage_load(g_StageNum, get_current_difficulty());
         if (g_DebugAndUpdateStageFlag)
@@ -429,14 +435,21 @@ void bossMainloop(void)
         if(1){} // regalloc
         do{}while(0); // regalloc
 
-        while (g_MainStageNum < 0 || unknownVal != 0)
+        while (g_MainStageNum < 0 || pendingGfx != 0)
         {
             osRecvMesg(&gfxFrameMsgQ, (OSMesg *)&localGfxFrameMsg, OS_MESG_BLOCK);
 
             switch (localGfxFrameMsg->gen.type)
             {
-                case 1:
+                case (OS_SC_RETRACE_MSG):
                 {
+#ifdef DEBUG
+    /* debug logging from simple.c, I think this requires #include <ultralog.h>
+    * //    if (logging)
+    * //        osLogEvent(log, LOG_RETRACE, 1, pendingGfx);
+    */
+#endif
+
                     mainTickElapsed = (u32) (osGetCount() - copy_of_osgetcount_value_1);
                     if (mainTickElapsed < MAIN_LOOP_TICK_INTERVAL)
                     {
@@ -444,7 +457,7 @@ void bossMainloop(void)
                     }
                     else
                     {
-                        if (g_MainStageNum < 0 && unknownVal < 2U)
+                        if (g_MainStageNum < 0 && pendingGfx < 2U)
                         {
                             if (get_is_ramrom_flag())
                             {
@@ -566,7 +579,7 @@ void bossMainloop(void)
                             rsparg = (s32)(&localD_80024304);
                             load_rsp_microcode(firstGdl, gdl, 0, (s32*)rsparg);
                             
-                            unknownVal++;
+                            pendingGfx++;
                             memaIterateAndMerge();
                             toggleFlag ^= 1;
                             speedGraphVideoRelated_3(0x10000);
@@ -575,12 +588,12 @@ void bossMainloop(void)
                 }
                 break;
 
-                case 2:
-                    unknownVal--;
+                case (OS_SC_DONE_MSG):
+                    pendingGfx--;
                     break;
 
                 case 5:
-                    unknownVal = 4U;
+                    pendingGfx = 4U;
                     break;
             }
         }
