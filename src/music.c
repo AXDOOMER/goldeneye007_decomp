@@ -7,6 +7,12 @@
  * This file contains code to handle music.
  */
 
+#ifdef DEBUG
+#define alHeapAlloc(hp, elem ,size) alHeapDBAlloc((u8 *) __FILE__,__LINE__,(hp),(elem),(size))
+#else
+#define alHeapAlloc(hp, elem ,size) alHeapDBAlloc(0, 0,(hp),(elem),(size))
+#endif
+
 s32 music_unused = 0;
 s32 music1_track_num = 0;
 u16 music1len = 0x7FFF;
@@ -62,51 +68,26 @@ s32 D_80063BA4;
 s32 D_80063BA8;
 
 
-
+struct audio_struct_a {
+    u16 unk0;
+    u16 unk2;
+    s32 unk4;
+};
 
 /**
  * 75F0	700069F0
  */
-#ifdef NONMATCHING
-s32 audio_related(void *arg0, s32 arg1) {
-    // Node 0
-    if (*arg0 > 0)
+void audio_related(struct audio_struct_a *arg0, u32 arg1)
+{
+    s32 count;
+    struct audio_struct_a *p;
+
+    for (count = 0, p = arg0; count < arg0->unk0; count++, p++)
     {
-        loop_1:
-        // Node 1
-        (arg0 + 8)->unk-4 = (s32) (arg0->unk4 + arg1);
-        if ((0 + 1) < *arg0)
-        {
-            goto loop_1;
-        }
+        p->unk4 += arg1;
     }
-    // (possible return value: 0)
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel audio_related
-/* 0075F0 700069F0 948E0000 */  lhu   $t6, ($a0)
-/* 0075F4 700069F4 00001025 */  move  $v0, $zero
-/* 0075F8 700069F8 00801825 */  move  $v1, $a0
-/* 0075FC 700069FC 19C0000A */  blez  $t6, .L70006A28
-/* 007600 70006A00 00000000 */   nop   
-/* 007604 70006A04 8C6F0004 */  lw    $t7, 4($v1)
-.L70006A08:
-/* 007608 70006A08 24420001 */  addiu $v0, $v0, 1
-/* 00760C 70006A0C 24630008 */  addiu $v1, $v1, 8
-/* 007610 70006A10 01E5C021 */  addu  $t8, $t7, $a1
-/* 007614 70006A14 AC78FFFC */  sw    $t8, -4($v1)
-/* 007618 70006A18 94990000 */  lhu   $t9, ($a0)
-/* 00761C 70006A1C 0059082A */  slt   $at, $v0, $t9
-/* 007620 70006A20 5420FFF9 */  bnezl $at, .L70006A08
-/* 007624 70006A24 8C6F0004 */   lw    $t7, 4($v1)
-.L70006A28:
-/* 007628 70006A28 03E00008 */  jr    $ra
-/* 00762C 70006A2C 00000000 */   nop   
-)
-#endif
 
 
 /**
