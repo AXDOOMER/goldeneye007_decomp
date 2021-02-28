@@ -7,7 +7,7 @@
 #include "bondconstants.h"
 #include "boss.h"
 #include "joy.h"
-
+#include "textrelated.h"
 
 // bss
 s32 stop_play_flag;
@@ -1465,10 +1465,46 @@ glabel sub_GAME_7F0C2E80
 
 
 
-#ifdef NONMATCHING
-void display_text_for_playerdata_on_MP_menu(void) {
 
+
+
+#ifdef NONMATCHING
+
+void display_text_for_playerdata_on_MP_menu(u32 *param_1,int param_2,u32 param_3,char* param_4,TEXTCOLORS param_5)
+{
+  short sVar2;
+  char textbuf[8];
+  int iStack16;
+  int iStack12;
+  u32 uStack8;
+  u32 uStack4;
+  
+  sprintf(textbuf,"%d",param_4);
+  sub_GAME_7F0AE98C(&iStack16,&iStack12,textbuf,ptrSecondFontTableSmall,ptrFirstFontTableSmall,0);
+  uStack4 = param_2 - (iStack12 >> 1);
+  uStack8 = param_3;
+  switch(param_5) {
+  case GREEN_NORMAL:
+    en_text_write_stuff(param_1,&uStack4,&uStack8,textbuf,ptrSecondFontTableSmall,ptrFirstFontTableSmall,0xff00b0,viGetX(),viGetY(),0,0);
+    break;
+  case GREEN_HIGHLIGHT:
+    jp_text_write_stuff(param_1,&uStack4,&uStack8,textbuf,ptrSecondFontTableSmall,ptrFirstFontTableSmall,0xa0ffa0f0,0x007000a0,viGetX(),viGetY(),0,0);
+    break;
+  case RED_NORMAL:
+    en_text_write_stuff(param_1,&uStack4,&uStack8,textbuf,ptrSecondFontTableSmall,ptrFirstFontTableSmall,0xff4040b0,viGetX(),viGetY(),0,0);
+    break;
+  case RED_HIGHLIGHT:
+    jp_text_write_stuff(param_1,&uStack4,&uStack8,textbuf,ptrSecondFontTableSmall,ptrFirstFontTableSmall,0xffa0a0f0,0x700000a0,viGetX(),viGetY(),0,0);
+    break;
+  case BLUE_NORMAL:
+    en_text_write_stuff(param_1,&uStack4,&uStack8,textbuf,ptrSecondFontTableSmall,ptrFirstFontTableSmall,0x4040ffb0,viGetX(),viGetY(),0,0);
+    break;
+  case BLUE_HIGHLIGHT:
+    jp_text_write_stuff(param_1,&uStack4,&uStack8,textbuf,ptrSecondFontTableSmall,ptrFirstFontTableSmall,0xa0a0fff0,0x70a0,viGetX(),viGetY(),0,0);
+  }
+  return;
 }
+
 #else
 GLOBAL_ASM(
 .late_rodata
