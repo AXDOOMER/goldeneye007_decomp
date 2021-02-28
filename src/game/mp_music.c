@@ -1,5 +1,5 @@
 #include "ultra64.h"
-//#include ""
+#include "music_0D2720.h"
 
 // bss
 //CODE.bss:8008C600
@@ -203,7 +203,7 @@ glabel set_missionstate
 /* 0F5834 7F0C0D04 3C018002 */  lui   $at, %hi(music3_playing)
 /* 0F5838 7F0C0D08 3C048009 */  lui   $a0, %hi(dword_CODE_bss_8008C600)
 /* 0F583C 7F0C0D0C AC204354 */  sw    $zero, %lo(music3_playing)($at)
-/* 0F5840 7F0C0D10 0FC34A12 */  jal   sub_GAME_7F0D2848
+/* 0F5840 7F0C0D10 0FC34A12 */  jal   musicGetBgTrackForStage
 /* 0F5844 7F0C0D14 8C84C600 */   lw    $a0, %lo(dword_CODE_bss_8008C600)($a0)
 /* 0F5848 7F0C0D18 0C001D63 */  jal   music_related_3rd_block
 /* 0F584C 7F0C0D1C 00402025 */   move  $a0, $v0
@@ -705,7 +705,7 @@ glabel set_missionstate
 /* 0F6524 7F0C19B4 3C018002 */  lui   $at, %hi(music3_playing) # $at, 0x8002
 /* 0F6528 7F0C19B8 3C048009 */  lui   $a0, %hi(dword_CODE_bss_8008C600) # $a0, 0x8009
 /* 0F652C 7F0C19BC AC204394 */  sw    $zero, %lo(music3_playing)($at)
-/* 0F6530 7F0C19C0 0FC34D4A */  jal   sub_GAME_7F0D2848
+/* 0F6530 7F0C19C0 0FC34D4A */  jal   musicGetBgTrackForStage
 /* 0F6534 7F0C19C4 8C84C670 */   lw    $a0, %lo(dword_CODE_bss_8008C600)($a0)
 /* 0F6538 7F0C19C8 0C001D67 */  jal   music_related_3rd_block
 /* 0F653C 7F0C19CC 00402025 */   move  $a0, $v0
@@ -1066,7 +1066,7 @@ void sub_GAME_7F0C11FC(s16 param_1)
     mission_state = 0;
     dword_CODE_bss_8008C600 = (int)param_1;
 
-    if (sub_GAME_7F0D2848(param_1) < 0)
+    if (musicGetBgTrackForStage(param_1) < 0)
     {
         set_missionstate(1);
     }
@@ -1092,7 +1092,7 @@ glabel sub_GAME_7F0C11FC
 /* 0F5D54 7F0C1224 3C018005 */  lui   $at, %hi(mission_state)
 /* 0F5D58 7F0C1228 2442C600 */  addiu $v0, %lo(dword_CODE_bss_8008C600) # addiu $v0, $v0, -0x3a00
 /* 0F5D5C 7F0C122C AC2084C0 */  sw    $zero, %lo(mission_state)($at)
-/* 0F5D60 7F0C1230 0FC34A12 */  jal   sub_GAME_7F0D2848
+/* 0F5D60 7F0C1230 0FC34A12 */  jal   musicGetBgTrackForStage
 /* 0F5D64 7F0C1234 AC440000 */   sw    $a0, ($v0)
 /* 0F5D68 7F0C1238 04410005 */  bgez  $v0, .L7F0C1250
 /* 0F5D6C 7F0C123C 00000000 */   nop   
@@ -1122,7 +1122,7 @@ void sub_GAME_7F0C1268(void)
 
 void sub_GAME_7F0C1288(void)
 {
-  if (sub_GAME_7F0D2848(dword_CODE_bss_8008C600) < 0)
+  if (musicGetBgTrackForStage(dword_CODE_bss_8008C600) < 0)
   {
     set_missionstate(2);
   }
@@ -1134,7 +1134,7 @@ void sub_GAME_7F0C1288(void)
 
 void sub_GAME_7F0C12CC(void)
 {
-  if (sub_GAME_7F0D2848(dword_CODE_bss_8008C600) < 0)
+  if (musicGetBgTrackForStage(dword_CODE_bss_8008C600) < 0)
   {
     set_missionstate(1);
   }
