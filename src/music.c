@@ -1,17 +1,12 @@
 #include "ultra64.h"
 #include "ramrom.h"
 #include "snd.h"
+#include "include/PR/libaudio.h"
 
 /**
  * @file music.c
  * This file contains code to handle music.
  */
-
-#ifdef DEBUG
-#define alHeapAlloc(hp, elem ,size) alHeapDBAlloc((u8 *) __FILE__,__LINE__,(hp),(elem),(size))
-#else
-#define alHeapAlloc(hp, elem ,size) alHeapDBAlloc(0, 0,(hp),(elem),(size))
-#endif
 
 s32 music_unused = 0;
 s32 music1_track_num = 0;
@@ -24,24 +19,23 @@ s32 music1_playing = 0;
 s32 music2_playing = 0;
 s32 music3_playing = 0;
 s16 music_tempo_array[] = {
-0x6665,0x7332,0x7332,0x7998,0x7332,0x5998,0x6665,0x6665,0x6665,0x6665,0x7332,
-0x6665,0x7332,0x6665,0x6665,0x7332,0x7332,0x6665,0x3FFF,0x6665,0x6665,
-0x3FFF,0x6665,0x6665,0x6665,0x6665,0x6665,0x7998,0x6665,0x5998,0x6665,
-0x6665,0x6665,0x6665,0x6665,0x6665,0x6665,0x5998,0x6665,0x3332,0x6665,
-0x7332,0x7332,0x5998,0x7332,0x6665,0x6665,0x6665,0x6665,0x6665,0x6665,
-0x6665,0x6CCB,0x6665,0x6665,0x6665,0x6665,0x6665,0x6665,0x6665,0x7332,
-0x6665,0x7332,0x7998,0xFFFF };
-
-
+    0x6665,0x7332,0x7332,0x7998,0x7332,0x5998,0x6665,0x6665,0x6665,0x6665,0x7332,
+    0x6665,0x7332,0x6665,0x6665,0x7332,0x7332,0x6665,0x3FFF,0x6665,0x6665,
+    0x3FFF,0x6665,0x6665,0x6665,0x6665,0x6665,0x7998,0x6665,0x5998,0x6665,
+    0x6665,0x6665,0x6665,0x6665,0x6665,0x6665,0x5998,0x6665,0x3332,0x6665,
+    0x7332,0x7332,0x5998,0x7332,0x6665,0x6665,0x6665,0x6665,0x6665,0x6665,
+    0x6665,0x6CCB,0x6665,0x6665,0x6665,0x6665,0x6665,0x6665,0x6665,0x7332,
+    0x6665,0x7332,0x7998,0xFFFF
+};
 
 
 /*not sure why this is called hp, maybe for heap? */
 u32 hp[4];
 u32 *ptr_sfx_buf;
 s32 D_80063724;
-s32 seqp_1;
-s32 seqp_2;
-s32 seqp_3;
+ALCSPlayer *seqp_1;
+ALCSPlayer *seqp_2;
+ALCSPlayer *seqp_3;
 void *ptr_musicdatatable;
 
 char D_80063738[0x80];
@@ -67,7 +61,6 @@ char D_80063B50[0x54];
 s32 D_80063BA4;
 s32 D_80063BA8;
 
-
 struct audio_struct_a {
     u16 unk0;
     u16 unk2;
@@ -88,14 +81,13 @@ void audio_related(struct audio_struct_a *arg0, u32 arg1)
     }
 }
 
-
-
 /**
  * 7630	70006A30
  *     loads sound and music banks into memory segment 6
  */
 #ifdef NONMATCHING
-void setupaudio(void) {
+void setupaudio(void)
+{
     s32 sp38;
     s32 sp40;
     ?32 sp50;
@@ -553,7 +545,8 @@ glabel setupaudio
  *     play first music track A0
  */
 #ifdef NONMATCHING
-void musicTrack1Play(s32 arg0, s32 arg852) {
+void musicTrack1Play(s32 arg0, s32 arg852)
+{
     ? sp34;
     s32 sp2140;
     void *temp_t2;
@@ -707,10 +700,12 @@ glabel musicTrack1Play
  * 7BD0	70006FD0
  *     stop playing first music track
  */
-void musicTrack1Stop(void) {
+void musicTrack1Stop(void)
+{
     if (bootswitch_sound == 0)
     {
         music1_playing = 0;
+
         if (music1_track_num != 0)
         {
             if (alCSPGetState(seqp_1) == 1)
@@ -718,6 +713,7 @@ void musicTrack1Stop(void) {
                 alCSPStop(seqp_1);
             }
         }
+
         music1_track_num = 0;
     }
 }
@@ -726,7 +722,8 @@ void musicTrack1Stop(void) {
  * 7C30	70007030
  *     V0= [80024338]
  */
-u16 musicTrack1Length(void) {
+u16 musicTrack1Length(void)
+{
     return music1len;
 }
 
@@ -739,50 +736,22 @@ u16 musicTrack1Length(void) {
  * 7C3C	7000703C
  *     ??? - sets something for currently running music track...
  *     accepts: A0=value
+ * 
+ * There's only one other relevant place in the code base that has a SRL by 0xf,
+ * it matches __vsVol in n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\seqplayer.c
+ * but it's hard to say if it's related here or not.
  */
-#ifdef NONMATCHING
-void musicTrack1Vol(s32 arg0) {
-    s16 temp_a2;
+void musicTrack1Vol(u16 arg0)
+{
+    u32 t1 = arg0;
 
-    // Node 0
-    temp_a2 = (arg0 & 0xffff);
-    music1len = temp_a2;
-    alCSPSetVol(seqp_1, ((s32) (((u32) (temp_a2 * *(&music_tempo_array + (music1_track_num * 2))) >> 0xf) << 0x10) >> 0x10), temp_a2);
-    return;
-    // (possible return value: alCSPSetVol(seqp_1, ((s32) (((u32) (temp_a2 * *(&music_tempo_array + (music1_track_num * 2))) >> 0xf) << 0x10) >> 0x10), temp_a2))
+    music1len = (u16)t1;
+
+    t1 *= music_tempo_array[music1_track_num];
+    t1 >>= 15;
+
+    alCSPSetVol(seqp_1, t1);
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel musicTrack1Vol
-/* 007C3C 7000703C 3C0E8002 */  lui   $t6, %hi(music1_track_num) 
-/* 007C40 70007040 8DCE4334 */  lw    $t6, %lo(music1_track_num)($t6)
-/* 007C44 70007044 3C188002 */  lui   $t8, %hi(music_tempo_array)
-/* 007C48 70007048 3086FFFF */  andi  $a2, $a0, 0xffff
-/* 007C4C 7000704C 000E7840 */  sll   $t7, $t6, 1
-/* 007C50 70007050 030FC021 */  addu  $t8, $t8, $t7
-/* 007C54 70007054 87184358 */  lh    $t8, %lo(music_tempo_array)($t8)
-/* 007C58 70007058 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 007C5C 7000705C AFA40018 */  sw    $a0, 0x18($sp)
-/* 007C60 70007060 00D80019 */  multu $a2, $t8
-/* 007C64 70007064 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 007C68 70007068 3C018002 */  lui   $at, %hi(music1len)
-/* 007C6C 7000706C 3C048006 */  lui   $a0, %hi(seqp_1)
-/* 007C70 70007070 A4264338 */  sh    $a2, %lo(music1len)($at)
-/* 007C74 70007074 8C843728 */  lw    $a0, %lo(seqp_1)($a0)
-/* 007C78 70007078 00001012 */  mflo  $v0
-/* 007C7C 7000707C 0002CBC2 */  srl   $t9, $v0, 0xf
-/* 007C80 70007080 00192C00 */  sll   $a1, $t9, 0x10
-/* 007C84 70007084 00054403 */  sra   $t0, $a1, 0x10
-/* 007C88 70007088 0C004B68 */  jal   alCSPSetVol
-/* 007C8C 7000708C 01002825 */   move  $a1, $t0
-/* 007C90 70007090 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 007C94 70007094 27BD0018 */  addiu $sp, $sp, 0x18
-/* 007C98 70007098 03E00008 */  jr    $ra
-/* 007C9C 7000709C 00000000 */   nop   
-)
-#endif
 
 
 
@@ -794,7 +763,8 @@ glabel musicTrack1Vol
  * 7CA0	700070A0
  */
 #ifdef NONMATCHING
-void *musicTrack1Tempo(void) {
+void *musicTrack1Tempo(void)
+{
     // Node 0
     *(&music_tempo_array + (music1_track_num * 2)) = musicTrack1Length();
     if (music_tempo_array >= 0)
@@ -845,7 +815,8 @@ glabel musicTrack1Tempo
 /**
  * 7CF8	700070F8
  */
-void music_related_1(f32 rate) {
+void music_related_1(f32 rate)
+{
     if (music1_playing >= 0)
     {
         musicTrack1_length = musicTrack1Length();
@@ -864,7 +835,8 @@ void music_related_1(f32 rate) {
  * 7D68	70007168
  */
 #ifdef NONMATCHING
-s16 music_related_3(f32 arg0, s32 arg1, f32 rate, s16 length) {
+s16 music_related_3(f32 arg0, s32 arg1, f32 rate, s16 length)
+{
     if (music1_playing <= 0)
     {
         alCSPPlay(seqp_1);
@@ -939,7 +911,8 @@ glabel music_related_3
  * 7E04	70007204
  */
 #ifdef NONMATCHING
-void musicTrack2Play(s32 arg0, s32 arg852) {
+void musicTrack2Play(s32 arg0, s32 arg852)
+{
     ? sp34;
     s32 sp2140;
     void *temp_t2;
@@ -1094,7 +1067,8 @@ glabel musicTrack2Play
  * 7F58	70007358
  */
 #ifdef NONMATCHING
-void musicTrack2Stop(void) {
+void musicTrack2Stop(void)
+{
     // Node 0
     if (bootswitch_sound == 0)
     {
@@ -1160,7 +1134,8 @@ glabel musicTrack2Stop
  * 7FB8	700073B8
  *     V0= [80024340]
  */
-u16 musicTrack2Length(void) {
+u16 musicTrack2Length(void)
+{
     return music2len;
 }
 
@@ -1172,49 +1147,20 @@ u16 musicTrack2Length(void) {
 
 /**
  * 7FC4	700073C4
+ * 
+ * See comments on musicTrack1Vol
  */
-#ifdef NONMATCHING
-void musicTrack2Vol(s32 arg0) {
-    s16 temp_a2;
+void musicTrack2Vol(u16 arg0)
+{
+    u32 t1 = arg0;
 
-    // Node 0
-    temp_a2 = (arg0 & 0xffff);
-    music2len = temp_a2;
-    return alCSPSetVol(seqp_2, ((s32) (((u32) (temp_a2 * *(&music_tempo_array + (music2_track_num * 2))) >> 0xf) << 0x10) >> 0x10), temp_a2);
+    music2len = (u16)t1;
+
+    t1 *= music_tempo_array[music2_track_num];
+    t1 >>= 15;
+
+    alCSPSetVol(seqp_2, t1);
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel musicTrack2Vol
-/* 007FC4 700073C4 3C0E8002 */  lui   $t6, %hi(music2_track_num) 
-/* 007FC8 700073C8 8DCE433C */  lw    $t6, %lo(music2_track_num)($t6)
-/* 007FCC 700073CC 3C188002 */  lui   $t8, %hi(music_tempo_array)
-/* 007FD0 700073D0 3086FFFF */  andi  $a2, $a0, 0xffff
-/* 007FD4 700073D4 000E7840 */  sll   $t7, $t6, 1
-/* 007FD8 700073D8 030FC021 */  addu  $t8, $t8, $t7
-/* 007FDC 700073DC 87184358 */  lh    $t8, %lo(music_tempo_array)($t8)
-/* 007FE0 700073E0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 007FE4 700073E4 AFA40018 */  sw    $a0, 0x18($sp)
-/* 007FE8 700073E8 00D80019 */  multu $a2, $t8
-/* 007FEC 700073EC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 007FF0 700073F0 3C018002 */  lui   $at, %hi(music2len)
-/* 007FF4 700073F4 3C048006 */  lui   $a0, %hi(seqp_2)
-/* 007FF8 700073F8 A4264340 */  sh    $a2, %lo(music2len)($at)
-/* 007FFC 700073FC 8C84372C */  lw    $a0, %lo(seqp_2)($a0)
-/* 008000 70007400 00001012 */  mflo  $v0
-/* 008004 70007404 0002CBC2 */  srl   $t9, $v0, 0xf
-/* 008008 70007408 00192C00 */  sll   $a1, $t9, 0x10
-/* 00800C 7000740C 00054403 */  sra   $t0, $a1, 0x10
-/* 008010 70007410 0C004B68 */  jal   alCSPSetVol
-/* 008014 70007414 01002825 */   move  $a1, $t0
-/* 008018 70007418 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00801C 7000741C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 008020 70007420 03E00008 */  jr    $ra
-/* 008024 70007424 00000000 */   nop   
-)
-#endif
-
 
 
 
@@ -1225,7 +1171,8 @@ glabel musicTrack2Vol
  * 8028	70007428
  */
 #ifdef NONMATCHING
-void *musicTrack2Tempo(void) {
+void *musicTrack2Tempo(void)
+{
     void *phi_v0;
 
     // Node 0
@@ -1280,7 +1227,8 @@ glabel musicTrack2Tempo
  * 8080	70007480
  */
 #ifdef NONMATCHING
-void music_related_6(f32 arg0) {
+void music_related_6(f32 arg0)
+{
     // Node 0
     if (music2_playing >= 0)
     {
@@ -1338,7 +1286,8 @@ glabel music_related_6
  * 80F0	700074F0
  */
 #ifdef NONMATCHING
-void music_related_8(f32 arg0, s32 arg1, s16 arg_unaligned6) {
+void music_related_8(f32 arg0, s32 arg1, s16 arg_unaligned6)
+{
     // Node 0
     if (music2_playing <= 0)
     {
@@ -1420,7 +1369,8 @@ glabel music_related_8
  * 818C	7000758C
  */
 #ifdef NONMATCHING
-void music_related_3rd_block(s32 arg0, s32 arg852) {
+void music_related_3rd_block(s32 arg0, s32 arg852)
+{
     ? sp34;
     s32 sp2140;
     void *temp_t2;
@@ -1575,7 +1525,8 @@ glabel music_related_3rd_block
  * 82E0	700076E0
  */
 #ifdef NONMATCHING
-void musicTrack3Stop(void) {
+void musicTrack3Stop(void)
+{
     // Node 0
     if (bootswitch_sound == 0)
     {
@@ -1639,7 +1590,8 @@ glabel musicTrack3Stop
  * 8340	70007740
  *     V0= 7FFF [80024348]
  */
-u16 get_music3len(void) {
+u16 get_music3len(void)
+{
     return music3len;
 }
 
@@ -1651,49 +1603,21 @@ u16 get_music3len(void) {
 
 /**
  * 834C	7000774C
+ * 
+ * See comments on musicTrack1Vol.
  */
-#ifdef NONMATCHING
-void musicTrack3Vol(s32 arg0) {
-    s16 temp_a2;
+void musicTrack3Vol(u16 arg0)
+{
+    u32 t1 = arg0;
 
-    // Node 0
-    temp_a2 = (arg0 & 0xffff);
-    music3len = temp_a2;
-    alCSPSetVol(seqp_3, ((s32) (((u32) (temp_a2 * (0x80020000 + (music3_track_num * 2))->unk4358) >> 0xf) << 0x10) >> 0x10), temp_a2);
-    return;
-    // (possible return value: alCSPSetVol(seqp_3, ((s32) (((u32) (temp_a2 * (0x80020000 + (music3_track_num * 2))->unk4358) >> 0xf) << 0x10) >> 0x10), temp_a2))
+    music3len = (u16)t1;
+
+    t1 *= music_tempo_array[music3_track_num];
+    t1 >>= 15;
+
+    alCSPSetVol(seqp_3, t1);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel musicTrack3Vol
-/* 00834C 7000774C 3C0E8002 */  lui   $t6, %hi(music3_track_num) 
-/* 008350 70007750 8DCE4344 */  lw    $t6, %lo(music3_track_num)($t6)
-/* 008354 70007754 3C188002 */  lui   $t8, %hi(music_tempo_array)
-/* 008358 70007758 3086FFFF */  andi  $a2, $a0, 0xffff
-/* 00835C 7000775C 000E7840 */  sll   $t7, $t6, 1
-/* 008360 70007760 030FC021 */  addu  $t8, $t8, $t7
-/* 008364 70007764 87184358 */  lh    $t8, %lo(music_tempo_array)($t8)
-/* 008368 70007768 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 00836C 7000776C AFA40018 */  sw    $a0, 0x18($sp)
-/* 008370 70007770 00D80019 */  multu $a2, $t8
-/* 008374 70007774 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 008378 70007778 3C018002 */  lui   $at, %hi(music3len)
-/* 00837C 7000777C 3C048006 */  lui   $a0, %hi(seqp_3)
-/* 008380 70007780 A4264348 */  sh    $a2, %lo(music3len)($at)
-/* 008384 70007784 8C843730 */  lw    $a0, %lo(seqp_3)($a0)
-/* 008388 70007788 00001012 */  mflo  $v0
-/* 00838C 7000778C 0002CBC2 */  srl   $t9, $v0, 0xf
-/* 008390 70007790 00192C00 */  sll   $a1, $t9, 0x10
-/* 008394 70007794 00054403 */  sra   $t0, $a1, 0x10
-/* 008398 70007798 0C004B68 */  jal   alCSPSetVol
-/* 00839C 7000779C 01002825 */   move  $a1, $t0
-/* 0083A0 700077A0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0083A4 700077A4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0083A8 700077A8 03E00008 */  jr    $ra
-/* 0083AC 700077AC 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -1705,7 +1629,8 @@ glabel musicTrack3Vol
  * 83B0	700077B0
  */
 #ifdef NONMATCHING
-void *music_related_10(void) {
+void *music_related_10(void)
+{
     // Node 0
     *(&music_tempo_array + (music3_track_num * 2)) = get_music3len();
     if (music_tempo_array >= 0)
@@ -1756,7 +1681,8 @@ glabel music_related_10
  * 8408	70007808
  */
 #ifdef NONMATCHING
-void music_related_11(f32 arg0, f32 arg6) {
+void music_related_11(f32 arg0, f32 arg6)
+{
     // Node 0
     if (music3_playing >= 0)
     {
@@ -1814,7 +1740,8 @@ glabel music_related_11
  * 8478	70007878
  */
 #ifdef NONMATCHING
-s16 music_related_13(f32 arg0, s32 arg1, f32 arg6, s16 arg7) {
+s16 music_related_13(f32 arg0, s32 arg1, f32 arg6, s16 arg7)
+{
     // Node 0
     if (music3_playing <= 0)
     {
@@ -1897,7 +1824,8 @@ glabel music_related_13
  * 8514	70007914
  */
 #ifdef NONMATCHING
-void music_related_15(void) {
+void music_related_15(void)
+{
     s16 sp1E;
     s16 sp26;
     s16 sp2E;
