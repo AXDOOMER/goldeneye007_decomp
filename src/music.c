@@ -993,63 +993,23 @@ glabel musicTrack2Play
 /**
  * 7F58	70007358
  */
-#ifdef NONMATCHING
 void musicTrack2Stop(void)
 {
-    // Node 0
     if (bootswitch_sound == 0)
     {
-        // Node 1
         music2_playing = 0;
+
         if (music2_track_num != 0)
         {
-            // Node 2
             if (alCSPGetState(seqp_2) == 1)
             {
-                // Node 3
                 alCSPStop(seqp_2);
             }
         }
-        // Node 4
-        music2_track_num = 0;
-        return;
-        // (function likely void)
-    }
-    // (function likely void)
-}
-#else
-GLOBAL_ASM(
-.text
-glabel musicTrack2Stop
-/* 007F58 70007358 3C0E8002 */  lui   $t6, %hi(bootswitch_sound) 
-/* 007F5C 7000735C 81CE43F8 */  lb    $t6, %lo(bootswitch_sound)($t6)
-/* 007F60 70007360 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 007F64 70007364 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 007F68 70007368 15C0000F */  bnez  $t6, .L700073A8
-/* 007F6C 7000736C 3C0F8002 */   lui   $t7, %hi(music2_track_num) 
-/* 007F70 70007370 8DEF433C */  lw    $t7, %lo(music2_track_num)($t7)
-/* 007F74 70007374 3C018002 */  lui   $at, %hi(music2_playing)
-/* 007F78 70007378 AC204350 */  sw    $zero, %lo(music2_playing)($at)
-/* 007F7C 7000737C 11E00008 */  beqz  $t7, .L700073A0
-/* 007F80 70007380 3C048006 */   lui   $a0, %hi(seqp_2)
-/* 007F84 70007384 0C00488C */  jal   alCSPGetState
-/* 007F88 70007388 8C84372C */   lw    $a0, %lo(seqp_2)($a0)
-/* 007F8C 7000738C 24010001 */  li    $at, 1
-/* 007F90 70007390 14410003 */  bne   $v0, $at, .L700073A0
-/* 007F94 70007394 3C048006 */   lui   $a0, %hi(seqp_2)
-/* 007F98 70007398 0C004B5C */  jal   alCSPStop
-/* 007F9C 7000739C 8C84372C */   lw    $a0, %lo(seqp_2)($a0)
-.L700073A0:
-/* 007FA0 700073A0 3C018002 */  lui   $at, %hi(music2_track_num)
-/* 007FA4 700073A4 AC20433C */  sw    $zero, %lo(music2_track_num)($at)
-.L700073A8:
-/* 007FA8 700073A8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 007FAC 700073AC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 007FB0 700073B0 03E00008 */  jr    $ra
-/* 007FB4 700073B4 00000000 */   nop   
-)
-#endif
 
+        music2_track_num = 0;
+    }
+}
 
 
 
@@ -1318,62 +1278,24 @@ glabel music_related_3rd_block
 /**
  * 82E0	700076E0
  */
-#ifdef NONMATCHING
 void musicTrack3Stop(void)
 {
-    // Node 0
     if (bootswitch_sound == 0)
     {
-        // Node 1
         music3_playing = 0;
+
         if (music3_track_num != 0)
         {
-            // Node 2
             if (alCSPGetState(seqp_3) == 1)
             {
-                // Node 3
                 alCSPStop(seqp_3);
             }
         }
-        // Node 4
+
         music3_track_num = 0;
-        return;
-        // (function likely void)
     }
-    // (function likely void)
 }
-#else
-GLOBAL_ASM(
-.text
-glabel musicTrack3Stop
-/* 0082E0 700076E0 3C0E8002 */  lui   $t6, %hi(bootswitch_sound) 
-/* 0082E4 700076E4 81CE43F8 */  lb    $t6, %lo(bootswitch_sound)($t6)
-/* 0082E8 700076E8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0082EC 700076EC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0082F0 700076F0 15C0000F */  bnez  $t6, .L70007730
-/* 0082F4 700076F4 3C0F8002 */   lui   $t7, %hi(music3_track_num) 
-/* 0082F8 700076F8 8DEF4344 */  lw    $t7, %lo(music3_track_num)($t7)
-/* 0082FC 700076FC 3C018002 */  lui   $at, %hi(music3_playing)
-/* 008300 70007700 AC204354 */  sw    $zero, %lo(music3_playing)($at)
-/* 008304 70007704 11E00008 */  beqz  $t7, .L70007728
-/* 008308 70007708 3C048006 */   lui   $a0, %hi(seqp_3)
-/* 00830C 7000770C 0C00488C */  jal   alCSPGetState
-/* 008310 70007710 8C843730 */   lw    $a0, %lo(seqp_3)($a0)
-/* 008314 70007714 24010001 */  li    $at, 1
-/* 008318 70007718 14410003 */  bne   $v0, $at, .L70007728
-/* 00831C 7000771C 3C048006 */   lui   $a0, %hi(seqp_3)
-/* 008320 70007720 0C004B5C */  jal   alCSPStop
-/* 008324 70007724 8C843730 */   lw    $a0, %lo(seqp_3)($a0)
-.L70007728:
-/* 008328 70007728 3C018002 */  lui   $at, %hi(music3_track_num)
-/* 00832C 7000772C AC204344 */  sw    $zero, %lo(music3_track_num)($at)
-.L70007730:
-/* 008330 70007730 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 008334 70007734 27BD0018 */  addiu $sp, $sp, 0x18
-/* 008338 70007738 03E00008 */  jr    $ra
-/* 00833C 7000773C 00000000 */   nop   
-)
-#endif
+
 
 
 
