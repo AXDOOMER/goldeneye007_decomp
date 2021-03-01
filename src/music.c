@@ -1115,56 +1115,17 @@ void musicTrack2Tempo(void)
 /**
  * 8080	70007480
  */
-#ifdef NONMATCHING
-void music_related_6(f32 arg0)
+void music_related_6(f32 rate)
 {
-    // Node 0
     if (music2_playing >= 0)
     {
-        // Node 1
         D_80063846 = musicTrack2Length();
-        music2_length = (u16)0;
-        music2_rate = (s32) (arg0 * 60.0f);
+        music2_length = 0;
+        music2_rate = (s32) (rate * 60.0f);
         music2_playing = -1;
     }
-    // Node 2
-    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel music_related_6
-/* 008080 70007480 3C0E8002 */  lui   $t6, %hi(music2_playing) 
-/* 008084 70007484 8DCE4350 */  lw    $t6, %lo(music2_playing)($t6)
-/* 008088 70007488 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 00808C 7000748C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 008090 70007490 05C00013 */  bltz  $t6, .L700074E0
-/* 008094 70007494 E7AC0018 */   swc1  $f12, 0x18($sp)
-/* 008098 70007498 0C001CEE */  jal   musicTrack2Length
-/* 00809C 7000749C 00000000 */   nop   
-/* 0080A0 700074A0 3C018006 */  lui   $at, %hi(D_80063846)
-/* 0080A4 700074A4 A4223846 */  sh    $v0, %lo(D_80063846)($at)
-/* 0080A8 700074A8 3C018006 */  lui   $at, %hi(music2_length)
-/* 0080AC 700074AC A420384C */  sh    $zero, %lo(music2_length)($at)
-/* 0080B0 700074B0 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 0080B4 700074B4 44813000 */  mtc1  $at, $f6
-/* 0080B8 700074B8 C7A40018 */  lwc1  $f4, 0x18($sp)
-/* 0080BC 700074BC 3C018006 */  lui   $at, %hi(music2_rate)
-/* 0080C0 700074C0 2419FFFF */  li    $t9, -1
-/* 0080C4 700074C4 46062202 */  mul.s $f8, $f4, $f6
-/* 0080C8 700074C8 4600428D */  trunc.w.s $f10, $f8
-/* 0080CC 700074CC 44185000 */  mfc1  $t8, $f10
-/* 0080D0 700074D0 00000000 */  nop   
-/* 0080D4 700074D4 AC383854 */  sw    $t8, %lo(music2_rate)($at)
-/* 0080D8 700074D8 3C018002 */  lui   $at, %hi(music2_playing)
-/* 0080DC 700074DC AC394350 */  sw    $t9, %lo(music2_playing)($at)
-.L700074E0:
-/* 0080E0 700074E0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0080E4 700074E4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0080E8 700074E8 03E00008 */  jr    $ra
-/* 0080EC 700074EC 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -1485,57 +1446,16 @@ void music_related_10(void)
 /**
  * 8408	70007808
  */
-#ifdef NONMATCHING
-void music_related_11(f32 arg0, f32 arg6)
+void music_related_11(f32 rate)
 {
-    // Node 0
     if (music3_playing >= 0)
     {
-        // Node 1
         D_80063848 = get_music3len();
-        music3_length = (u16)0;
-        music3_rate = (s32) (arg6 * 60.0f);
+        music3_length = 0;
+        music3_rate = (s32) (rate * 60.0f);
         music3_playing = -1;
-        return;
-        // (possible return value: get_music3len())
     }
-    // (function likely void)
 }
-#else
-GLOBAL_ASM(
-.text
-glabel music_related_11
-/* 008408 70007808 3C0E8002 */  lui   $t6, %hi(music3_playing) 
-/* 00840C 7000780C 8DCE4354 */  lw    $t6, %lo(music3_playing)($t6)
-/* 008410 70007810 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 008414 70007814 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 008418 70007818 05C00013 */  bltz  $t6, .L70007868
-/* 00841C 7000781C E7AC0018 */   swc1  $f12, 0x18($sp)
-/* 008420 70007820 0C001DD0 */  jal   get_music3len
-/* 008424 70007824 00000000 */   nop   
-/* 008428 70007828 3C018006 */  lui   $at, %hi(D_80063848)
-/* 00842C 7000782C A4223848 */  sh    $v0, %lo(D_80063848)($at)
-/* 008430 70007830 3C018006 */  lui   $at, %hi(music3_length)
-/* 008434 70007834 A420384E */  sh    $zero, %lo(music3_length)($at)
-/* 008438 70007838 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 00843C 7000783C 44813000 */  mtc1  $at, $f6
-/* 008440 70007840 C7A40018 */  lwc1  $f4, 0x18($sp)
-/* 008444 70007844 3C018006 */  lui   $at, %hi(music3_rate)
-/* 008448 70007848 2419FFFF */  li    $t9, -1
-/* 00844C 7000784C 46062202 */  mul.s $f8, $f4, $f6
-/* 008450 70007850 4600428D */  trunc.w.s $f10, $f8
-/* 008454 70007854 44185000 */  mfc1  $t8, $f10
-/* 008458 70007858 00000000 */  nop   
-/* 00845C 7000785C AC383858 */  sw    $t8, %lo(music3_rate)($at)
-/* 008460 70007860 3C018002 */  lui   $at, %hi(music3_playing)
-/* 008464 70007864 AC394354 */  sw    $t9, %lo(music3_playing)($at)
-.L70007868:
-/* 008468 70007868 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00846C 7000786C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 008470 70007870 03E00008 */  jr    $ra
-/* 008474 70007874 00000000 */   nop   
-)
-#endif
 
 
 
