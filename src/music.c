@@ -10,10 +10,16 @@
 
 s32 music_unused = 0;
 s32 music1_track_num = 0;
+
+// rename, should be volume.
 u16 music1len = 0x7FFF;
 s32 music2_track_num = 0;
+
+// rename, should be volume.
 u16 music2len = 0x7FFF;
 s32 music3_track_num = 0;
+
+// rename, should be volume.
 u16 music3len = 0x7FFF;
 s32 music1_playing = 0;
 s32 music2_playing = 0;
@@ -722,6 +728,10 @@ void musicTrack1Stop(void)
  * 7C30	70007030
  *     V0= [80024338]
  */
+
+
+
+// rename, should be volume
 u16 musicTrack1Length(void)
 {
     return music1len;
@@ -762,53 +772,17 @@ void musicTrack1Vol(u16 arg0)
 /**
  * 7CA0	700070A0
  */
-#ifdef NONMATCHING
-void *musicTrack1Tempo(void)
+void musicTrack1Tempo(void)
 {
-    // Node 0
-    *(&music_tempo_array + (music1_track_num * 2)) = musicTrack1Length();
-    if (music_tempo_array >= 0)
-    {
-        loop_1:
-        // Node 1
-        if (music_tempo_array.unk2 >= 0)
-        {
-            goto loop_1;
-        }
-    }
-    // (possible return value: &music_tempo_array)
-}
+    s32 i;
+    
+    music_tempo_array[music1_track_num] = musicTrack1Length();
 
-#else
-GLOBAL_ASM(
-.text
-glabel musicTrack1Tempo
-/* 007CA0 700070A0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 007CA4 700070A4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 007CA8 700070A8 0C001C0C */  jal   musicTrack1Length
-/* 007CAC 700070AC 00000000 */   nop   
-/* 007CB0 700070B0 3C0E8002 */  lui   $t6, %hi(music1_track_num) 
-/* 007CB4 700070B4 8DCE4334 */  lw    $t6, %lo(music1_track_num)($t6)
-/* 007CB8 700070B8 3C048002 */  lui   $a0, %hi(music_tempo_array)
-/* 007CBC 700070BC 24844358 */  addiu $a0, %lo(music_tempo_array) # addiu $a0, $a0, 0x4358
-/* 007CC0 700070C0 000E7840 */  sll   $t7, $t6, 1
-/* 007CC4 700070C4 008FC021 */  addu  $t8, $a0, $t7
-/* 007CC8 700070C8 A7020000 */  sh    $v0, ($t8)
-/* 007CCC 700070CC 84990000 */  lh    $t9, ($a0)
-/* 007CD0 700070D0 3C028002 */  lui   $v0, %hi(music_tempo_array)
-/* 007CD4 700070D4 24424358 */  addiu $v0, %lo(music_tempo_array) # addiu $v0, $v0, 0x4358
-/* 007CD8 700070D8 07200005 */  bltz  $t9, .L700070F0
-/* 007CDC 700070DC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 007CE0 700070E0 84480002 */  lh    $t0, 2($v0)
-.L700070E4:
-/* 007CE4 700070E4 24420002 */  addiu $v0, $v0, 2
-/* 007CE8 700070E8 0503FFFE */  bgezl $t0, .L700070E4
-/* 007CEC 700070EC 84480002 */   lh    $t0, 2($v0)
-.L700070F0:
-/* 007CF0 700070F0 03E00008 */  jr    $ra
-/* 007CF4 700070F4 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
+    for (i = 0; music_tempo_array[i] >= 0; i++)
+    {
+        // removed;
+    }
+}
 
 
 
@@ -1134,6 +1108,8 @@ glabel musicTrack2Stop
  * 7FB8	700073B8
  *     V0= [80024340]
  */
+
+// rename, should be volume
 u16 musicTrack2Length(void)
 {
     return music2len;
@@ -1170,57 +1146,17 @@ void musicTrack2Vol(u16 arg0)
 /**
  * 8028	70007428
  */
-#ifdef NONMATCHING
-void *musicTrack2Tempo(void)
+void musicTrack2Tempo(void)
 {
-    void *phi_v0;
+    s32 i;
+    
+    music_tempo_array[music2_track_num] = musicTrack2Length();
 
-    // Node 0
-    *(&music_tempo_array + (music2_track_num * 2)) = musicTrack2Length();
-    phi_v0 = &music_tempo_array;
-    if (music_tempo_array >= 0)
+    for (i = 0; music_tempo_array[i] >= 0; i++)
     {
-        loop_1:
-        // Node 1
-        phi_v0 = (phi_v0 + 2);
-        if (phi_v0->unk2 >= 0)
-        {
-            goto loop_1;
-        }
+        // removed;
     }
-    // Node 2
-    return &music_tempo_array;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel musicTrack2Tempo
-/* 008028 70007428 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 00802C 7000742C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 008030 70007430 0C001CEE */  jal   musicTrack2Length
-/* 008034 70007434 00000000 */   nop   
-/* 008038 70007438 3C0E8002 */  lui   $t6, %hi(music2_track_num) 
-/* 00803C 7000743C 8DCE433C */  lw    $t6, %lo(music2_track_num)($t6)
-/* 008040 70007440 3C048002 */  lui   $a0, %hi(music_tempo_array)
-/* 008044 70007444 24844358 */  addiu $a0, %lo(music_tempo_array) # addiu $a0, $a0, 0x4358
-/* 008048 70007448 000E7840 */  sll   $t7, $t6, 1
-/* 00804C 7000744C 008FC021 */  addu  $t8, $a0, $t7
-/* 008050 70007450 A7020000 */  sh    $v0, ($t8)
-/* 008054 70007454 84990000 */  lh    $t9, ($a0)
-/* 008058 70007458 3C028002 */  lui   $v0, %hi(music_tempo_array)
-/* 00805C 7000745C 24424358 */  addiu $v0, %lo(music_tempo_array) # addiu $v0, $v0, 0x4358
-/* 008060 70007460 07200005 */  bltz  $t9, .L70007478
-/* 008064 70007464 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 008068 70007468 84480002 */  lh    $t0, 2($v0)
-.L7000746C:
-/* 00806C 7000746C 24420002 */  addiu $v0, $v0, 2
-/* 008070 70007470 0503FFFE */  bgezl $t0, .L7000746C
-/* 008074 70007474 84480002 */   lh    $t0, 2($v0)
-.L70007478:
-/* 008078 70007478 03E00008 */  jr    $ra
-/* 00807C 7000747C 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
 
 
 /**
@@ -1590,6 +1526,8 @@ glabel musicTrack3Stop
  * 8340	70007740
  *     V0= 7FFF [80024348]
  */
+
+// rename, should be volume, and should match the other naming convention
 u16 get_music3len(void)
 {
     return music3len;
@@ -1628,53 +1566,23 @@ void musicTrack3Vol(u16 arg0)
 /**
  * 83B0	700077B0
  */
-#ifdef NONMATCHING
-void *music_related_10(void)
+
+
+
+
+// rename, should be musicTrack3Tempo
+void music_related_10(void)
 {
-    // Node 0
-    *(&music_tempo_array + (music3_track_num * 2)) = get_music3len();
-    if (music_tempo_array >= 0)
+    s32 i;
+    
+    music_tempo_array[music3_track_num] = get_music3len();
+
+    for (i = 0; music_tempo_array[i] >= 0; i++)
     {
-        loop_1:
-        // Node 1
-        if (music_tempo_array.unk2 >= 0)
-        {
-            goto loop_1;
-        }
+        // removed;
     }
-    // (possible return value: &music_tempo_array)
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel music_related_10
-/* 0083B0 700077B0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0083B4 700077B4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0083B8 700077B8 0C001DD0 */  jal   get_music3len
-/* 0083BC 700077BC 00000000 */   nop   
-/* 0083C0 700077C0 3C0E8002 */  lui   $t6, %hi(music3_track_num) 
-/* 0083C4 700077C4 8DCE4344 */  lw    $t6, %lo(music3_track_num)($t6)
-/* 0083C8 700077C8 3C048002 */  lui   $a0, %hi(music_tempo_array)
-/* 0083CC 700077CC 24844358 */  addiu $a0, %lo(music_tempo_array) # addiu $a0, $a0, 0x4358
-/* 0083D0 700077D0 000E7840 */  sll   $t7, $t6, 1
-/* 0083D4 700077D4 008FC021 */  addu  $t8, $a0, $t7
-/* 0083D8 700077D8 A7020000 */  sh    $v0, ($t8)
-/* 0083DC 700077DC 84990000 */  lh    $t9, ($a0)
-/* 0083E0 700077E0 3C028002 */  lui   $v0, %hi(music_tempo_array)
-/* 0083E4 700077E4 24424358 */  addiu $v0, %lo(music_tempo_array) # addiu $v0, $v0, 0x4358
-/* 0083E8 700077E8 07200005 */  bltz  $t9, .L70007800
-/* 0083EC 700077EC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0083F0 700077F0 84480002 */  lh    $t0, 2($v0)
-.L700077F4:
-/* 0083F4 700077F4 24420002 */  addiu $v0, $v0, 2
-/* 0083F8 700077F8 0503FFFE */  bgezl $t0, .L700077F4
-/* 0083FC 700077FC 84480002 */   lh    $t0, 2($v0)
-.L70007800:
-/* 008400 70007800 03E00008 */  jr    $ra
-/* 008404 70007804 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
 
 
 /**
