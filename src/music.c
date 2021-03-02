@@ -2,11 +2,34 @@
 #include "ramrom.h"
 #include "snd.h"
 #include "include/PR/libaudio.h"
+#include "inflate/inflate.h"
+#include "decompress.h"
+#include "dyn.h"
+#include "bondconstants.h"
 
 /**
  * @file music.c
  * This file contains code to handle music.
  */
+
+/**
+ * Counting definitions for music in this file, there
+ * are 63 distinct entries. This exlcudes the "NONE" music
+ * and control sequence entries.
+ */
+#define NUM_MUSIC_TRACKS  63
+
+/**
+ * Similar to NUM_MUSIC_TRACKS, but also counts "NONE" track
+ * and control sequeence.
+ */
+#define MAX_NUM_MUSIC_TRACKS_W_NONE  (NUM_MUSIC_TRACKS + 2)
+
+
+struct music_struct_c {
+    s32 unk0;
+    void *unk4;
+};
 
 s32 music_unused = 0;
 s32 music1_track_num = 0;
@@ -24,14 +47,332 @@ u16 music3len = 0x7FFF;
 s32 music1_playing = 0;
 s32 music2_playing = 0;
 s32 music3_playing = 0;
-s16 music_tempo_array[] = {
-    0x6665,0x7332,0x7332,0x7998,0x7332,0x5998,0x6665,0x6665,0x6665,0x6665,0x7332,
-    0x6665,0x7332,0x6665,0x6665,0x7332,0x7332,0x6665,0x3FFF,0x6665,0x6665,
-    0x3FFF,0x6665,0x6665,0x6665,0x6665,0x6665,0x7998,0x6665,0x5998,0x6665,
-    0x6665,0x6665,0x6665,0x6665,0x6665,0x6665,0x5998,0x6665,0x3332,0x6665,
-    0x7332,0x7332,0x5998,0x7332,0x6665,0x6665,0x6665,0x6665,0x6665,0x6665,
-    0x6665,0x6CCB,0x6665,0x6665,0x6665,0x6665,0x6665,0x6665,0x6665,0x7332,
-    0x6665,0x7332,0x7998,0xFFFF
+
+s16 music_tempo_array[MAX_NUM_MUSIC_TRACKS_W_NONE] = {
+    /**
+     * Index 0, M_NONE.
+     */
+    0x6665,
+
+    /**
+     * Index 1, M_SHORT_SOLO_DEATH.
+     */
+    0x7332,
+    
+    /**
+     * Index 2, M_INTRO.
+     */
+    0x7332,
+    
+    /**
+     * Index 3, M_TRAIN.
+     */
+    0x7998,
+    
+    /**
+     * Index 4, M_DEPOT.
+     */
+    0x7332,
+    
+    /**
+     * Index 5, M_MPTHEME.
+     */
+    0x5998,
+    
+    /**
+     * Index 6, M_CITADEL.
+     */
+    0x6665,
+    
+    /**
+     * Index 7, M_FACILITY.
+     */
+    0x6665,
+    
+    /**
+     * Index 8, M_CONTROL.
+     */
+    0x6665,
+    
+    /**
+     * Index 9, M_DAM.
+     */
+    0x6665,
+    
+    /**
+     * Index 10, M_FRIGATE.
+     */
+    0x7332,
+    
+    /**
+     * Index 11, M_ARCHIVES.
+     */
+    0x6665,
+    
+    /**
+     * Index 12, M_SILO.
+     */
+    0x7332,
+    
+    /**
+     * Index 13, M_MPTHEME2.
+     */
+    0x6665,
+    
+    /**
+     * Index 14, M_STREETS.
+     */
+    0x6665,
+    
+    /**
+     * Index 15, M_BUNKER1.
+     */
+    0x7332,
+    
+    /**
+     * Index 16, M_BUNKER2.
+     */
+    0x7332,
+    
+    /**
+     * Index 17, M_STATUE.
+     */
+    0x6665,
+    
+    /**
+     * Index 18, M_ELEVATOR_CONTROL.
+     */
+    0x3FFF,
+    
+    /**
+     * Index 19, M_CRADLE.
+     */
+    0x6665,
+    
+    /**
+     * Index 20, M_UNK.
+     */
+    0x6665,
+    
+    /**
+     * Index 21, M_ELEVATOR_WC.
+     */
+    0x3FFF,
+    
+    /**
+     * Index 22, M_EGYPTIAN.
+     */
+    0x6665,
+    
+    /**
+     * Index 23, M_FOLDERS.
+     */
+    0x6665,
+    
+    /**
+     * Index 24, M_WATCH.
+     */
+    0x6665,
+    
+    /**
+     * Index 25, M_AZTEC.
+     */
+    0x6665,
+    
+    /**
+     * Index 26, M_WATERCAVERNS.
+     */
+    0x6665,
+    
+    /**
+     * Index 27, M_DEATHSOLO.
+     */
+    0x7998,
+    
+    /**
+     * Index 28, M_SURFACE2.
+     */
+    0x6665,
+    
+    /**
+     * Index 29, M_TRAINX.
+     */
+    0x5998,
+    
+    /**
+     * Index 30, M_UNK2.
+     */
+    0x6665,
+    
+    /**
+     * Index 31, M_FACILITYX.
+     */
+    0x6665,
+    
+    /**
+     * Index 32, M_DEPOTX.
+     */
+    0x6665,
+    
+    /**
+     * Index 33, M_CONTROLX.
+     */
+    0x6665,
+    
+    /**
+     * Index 34, M_WATERCAVERNSX.
+     */
+    0x6665,
+    
+    /**
+     * Index 35, M_DAMX.
+     */
+    0x6665,
+    
+    /**
+     * Index 36, M_FRIGATEX.
+     */
+    0x6665,
+    
+    /**
+     * Index 37, M_ARCHIVESX.
+     */
+    0x5998,
+    
+    /**
+     * Index 38, M_SILOX.
+     */
+    0x6665,
+    
+    /**
+     * Index 39, M_EGYPTIANX.
+     */
+    0x3332,
+    
+    /**
+     * Index 40, M_STREETSX.
+     */
+    0x6665,
+    
+    /**
+     * Index 41, M_BUNKER1X.
+     */
+    0x7332,
+    
+    /**
+     * Index 42, M_BUNKER2X.
+     */
+    0x7332,
+    
+    /**
+     * Index 43, M_JUNGLEX.
+     */
+    0x5998,
+    
+    /**
+     * Index 44, M_INTROSWOOSH.
+     */
+    0x7332,
+    
+    /**
+     * Index 45, M_STATUEX.
+     */
+    0x6665,
+    
+    /**
+     * Index 46, M_AZTECX.
+     */
+    0x6665,
+    
+    /**
+     * Index 47, M_EGYPTX.
+     */
+    0x6665,
+    
+    /**
+     * Index 48, M_CRADLEX.
+     */
+    0x6665,
+    
+    /**
+     * Index 49, M_CUBA.
+     */
+    0x6665,
+    
+    /**
+     * Index 50, M_RUNWAY.
+     */
+    0x6665,
+    
+    /**
+     * Index 51, M_RUNWAYPLANE.
+     */
+    0x6665,
+    
+    /**
+     * Index 52, M_MPTHEME3.
+     */
+    0x6CCB,
+    
+    /**
+     * Index 53, M_WIND.
+     */
+    0x6665,
+    
+    /**
+     * Index 54, M_GUITARGLISS.
+     */
+    0x6665,
+    
+    /**
+     * Index 55, M_JUNGLE.
+     */
+    0x6665,
+    
+    /**
+     * Index 56, M_RUNWAYX.
+     */
+    0x6665,
+    
+    /**
+     * Index 57, M_SURFACE1.
+     */
+    0x6665,
+    
+    /**
+     * Index 58, M_MPDEATH.
+     */
+    0x6665,
+    
+    /**
+     * Index 59, M_SURFACE2X.
+     */
+    0x6665,
+    
+    /**
+     * Index 60, M_SURFACE2END.
+     */
+    0x7332,
+    
+    /**
+     * Index 61, M_STATUEPART.
+     */
+    0x6665,
+    
+    /**
+     * Index 62, M_END_SOMETHING.
+     */
+    0x7332,
+    
+    /**
+     * Index 63, unknown / unused / removed.
+     */
+    0x7998,
+
+    /**
+     * Index 64, control sequence. (some loops check for 0xffff).
+     */
+    0xFFFF
 };
 
 
@@ -42,12 +383,23 @@ s32 D_80063724;
 ALCSPlayer *seqp_1;
 ALCSPlayer *seqp_2;
 ALCSPlayer *seqp_3;
-void *ptr_musicdatatable;
+struct music_struct_c *ptr_musicdatatable;
 
-char D_80063738[0x80];
-char D_800637B8[0x7E];
+/**
+ * Something about starting offset of track data (maybe).
+ */
+u16 D_80063738[NUM_MUSIC_TRACKS + 1];
+
+/**
+ * Something about music track size (in bytes).
+ */
+u16 D_800637B8[NUM_MUSIC_TRACKS];
 s16 D_80063836;
-s32 D_80063838;
+
+/**
+* Compact sequence data pointer, track 1.
+*/
+u8 *D_80063838;
 s32 D_8006383C;
 s32 D_80063840;
 u16 musicTrack1_length;
@@ -60,7 +412,11 @@ s32 music1_rate;
 s32 music2_rate;
 s32 music3_rate;
 s32 D_8006385C;
-char D_80063860[0xF8];
+
+/**
+ *  compact sequence, track 1
+ */
+ALCSeq D_80063860;
 char D_80063958[0xF8];
 char D_80063A50[0x100];
 char D_80063B50[0x54];
@@ -72,6 +428,14 @@ struct audio_struct_a {
     u16 unk2;
     s32 unk4;
 };
+
+// forward declarations
+
+void musicTrack1Stop();
+u16 musicTrack1Length();
+void musicTrack1Vol(u16 arg0);
+
+// done with forward declarations
 
 /**
  * 75F0	700069F0
@@ -546,161 +910,62 @@ glabel setupaudio
 #endif
 
 
+struct music_struct_b {
+    u8 data[8438];
+    u8 *unk_0;
+};
+
 /**
  * 7A7C	70006E7C
  *     play first music track A0
  */
-#ifdef NONMATCHING
-void musicTrack1Play(s32 arg0, s32 arg852)
+void musicTrack1Play(s32 arg0)
 {
-    ? sp34;
-    s32 sp2140;
-    void *temp_t2;
-    s32 temp_v0;
-    s32 temp_a2;
+    u32 trackSizeBytes;
+    struct music_struct_b thing;
+    u8 *temp_a0;
+    void *romAddress;
+    u8 *t3;
+    struct huft sp34;
 
-    // Node 0
-    if (bootswitch_sound == 0)
+    if (bootswitch_sound)
     {
-        // Node 1
-        if (music1_track_num != 0)
-        {
-            // Node 2
-            musicTrack1Stop();
-        }
-        // Node 3
-        music1_track_num = arg852;
-        if (alCSPGetState(seqp_1) != 0)
-        {
-            loop_4:
-            // Node 4
-            if (alCSPGetState(seqp_1) != 0)
-            {
-                goto loop_4;
-            }
-        }
-        // Node 5
-        temp_t2 = (ptr_musicdatatable + (music1_track_num * 8));
-        temp_v0 = (music1_track_num * 2);
-        if ((u32) temp_t2->unk4 < 0x10000U)
-        {
-            // Node 6
-            musicTrack1Play(1, temp_t2->unk4, music1_track_num);
-            return;
-            // (possible return value: musicTrack1Play(1, temp_t2->unk4, music1_track_num))
-        }
-        // Node 7
-        temp_a2 = (((*(&D_800637B8 + temp_v0) + 0xf) | 0xf) ^ 0xf);
-        sp2140 = (s32) D_80063838;
-        romCopy(((D_80063838 + (((((0x80060000 + temp_v0)->unk3738 + 0xf) | 0xf) ^ 0xf) + 0x40)) - temp_a2), temp_t2->unk4, temp_a2, music1_track_num);
-        decompressdata(sp28, sp2140, &sp34);
-        alCSeqNew(&D_80063860, D_80063838);
-        alCSPSetSeq(seqp_1, &D_80063860);
-        musicTrack1Vol((musicTrack1Length() & 0xffff));
-        alCSPPlay(seqp_1);
+        return;
     }
-    // Node 8
-    return;
-    // (function likely void)
+
+    if (music1_track_num)
+    {
+        musicTrack1Stop();
+    }
+
+    music1_track_num = arg0;
+
+    while (alCSPGetState(seqp_1))
+        ;
+
+    romAddress = ptr_musicdatatable[music1_track_num].unk4;
+
+    if (romAddress < (void*)0x10000U)
+    {
+        musicTrack1Play(M_SHORT_SOLO_DEATH);
+
+        return;
+    }
+
+    t3 = ALIGN16_a(D_80063738[music1_track_num]) + (NUM_MUSIC_TRACKS + 1);
+    trackSizeBytes = ALIGN16_a(D_800637B8[music1_track_num]);
+    thing.unk_0 = D_80063838;
+    temp_a0 = (t3 + (s32)thing.unk_0) - trackSizeBytes;
+
+    romCopy(temp_a0, romAddress, trackSizeBytes);
+    
+    decompressdata(temp_a0, thing.unk_0, &sp34);
+    alCSeqNew(&D_80063860, D_80063838);
+    alCSPSetSeq(seqp_1, &D_80063860);
+    musicTrack1Vol(musicTrack1Length());
+    alCSPPlay(seqp_1);
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel musicTrack1Play
-/* 007A7C 70006E7C 3C0E8002 */  lui   $t6, %hi(bootswitch_sound) 
-/* 007A80 70006E80 81CE43F8 */  lb    $t6, %lo(bootswitch_sound)($t6)
-/* 007A84 70006E84 27BDDEB8 */  addiu $sp, $sp, -0x2148
-/* 007A88 70006E88 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 007A8C 70006E8C AFB00018 */  sw    $s0, 0x18($sp)
-/* 007A90 70006E90 15C0004A */  bnez  $t6, .L70006FBC
-/* 007A94 70006E94 AFA42148 */   sw    $a0, 0x2148($sp)
-/* 007A98 70006E98 3C0F8002 */  lui   $t7, %hi(music1_track_num) 
-/* 007A9C 70006E9C 8DEF4334 */  lw    $t7, %lo(music1_track_num)($t7)
-/* 007AA0 70006EA0 51E00004 */  beql  $t7, $zero, .L70006EB4
-/* 007AA4 70006EA4 8FB82148 */   lw    $t8, 0x2148($sp)
-/* 007AA8 70006EA8 0C001BF4 */  jal   musicTrack1Stop
-/* 007AAC 70006EAC 00000000 */   nop   
-/* 007AB0 70006EB0 8FB82148 */  lw    $t8, 0x2148($sp)
-.L70006EB4:
-/* 007AB4 70006EB4 3C108006 */  lui   $s0, %hi(seqp_1)
-/* 007AB8 70006EB8 3C018002 */  lui   $at, %hi(music1_track_num)
-/* 007ABC 70006EBC 26103728 */  addiu $s0, %lo(seqp_1) # addiu $s0, $s0, 0x3728
-/* 007AC0 70006EC0 AC384334 */  sw    $t8, %lo(music1_track_num)($at)
-/* 007AC4 70006EC4 0C00488C */  jal   alCSPGetState
-/* 007AC8 70006EC8 8E040000 */   lw    $a0, ($s0)
-/* 007ACC 70006ECC 10400005 */  beqz  $v0, .L70006EE4
-/* 007AD0 70006ED0 00000000 */   nop   
-.L70006ED4:
-/* 007AD4 70006ED4 0C00488C */  jal   alCSPGetState
-/* 007AD8 70006ED8 8E040000 */   lw    $a0, ($s0)
-/* 007ADC 70006EDC 1440FFFD */  bnez  $v0, .L70006ED4
-/* 007AE0 70006EE0 00000000 */   nop   
-.L70006EE4:
-/* 007AE4 70006EE4 3C078002 */  lui   $a3, %hi(music1_track_num)
-/* 007AE8 70006EE8 8CE74334 */  lw    $a3, %lo(music1_track_num)($a3)
-/* 007AEC 70006EEC 3C198006 */  lui   $t9, %hi(ptr_musicdatatable) 
-/* 007AF0 70006EF0 8F393734 */  lw    $t9, %lo(ptr_musicdatatable)($t9)
-/* 007AF4 70006EF4 000748C0 */  sll   $t1, $a3, 3
-/* 007AF8 70006EF8 3C010001 */  lui   $at, 1
-/* 007AFC 70006EFC 03295021 */  addu  $t2, $t9, $t1
-/* 007B00 70006F00 8D450004 */  lw    $a1, 4($t2)
-/* 007B04 70006F04 3C038006 */  lui   $v1, %hi(D_80063738)
-/* 007B08 70006F08 00071040 */  sll   $v0, $a3, 1
-/* 007B0C 70006F0C 00A1082B */  sltu  $at, $a1, $at
-/* 007B10 70006F10 10200005 */  beqz  $at, .L70006F28
-/* 007B14 70006F14 00621821 */   addu  $v1, $v1, $v0
-/* 007B18 70006F18 0C001B9F */  jal   musicTrack1Play
-/* 007B1C 70006F1C 24040001 */   li    $a0, 1
-/* 007B20 70006F20 10000027 */  b     .L70006FC0
-/* 007B24 70006F24 8FBF001C */   lw    $ra, 0x1c($sp)
-.L70006F28:
-/* 007B28 70006F28 94633738 */  lhu   $v1, %lo(D_80063738)($v1)
-/* 007B2C 70006F2C 3C068006 */  lui   $a2, %hi(D_800637B8)
-/* 007B30 70006F30 00C23021 */  addu  $a2, $a2, $v0
-/* 007B34 70006F34 94C637B8 */  lhu   $a2, %lo(D_800637B8)($a2)
-/* 007B38 70006F38 3C088006 */  lui   $t0, %hi(D_80063838) 
-/* 007B3C 70006F3C 2463000F */  addiu $v1, $v1, 0xf
-/* 007B40 70006F40 8D083838 */  lw    $t0, %lo(D_80063838)($t0)
-/* 007B44 70006F44 346B000F */  ori   $t3, $v1, 0xf
-/* 007B48 70006F48 396C000F */  xori  $t4, $t3, 0xf
-/* 007B4C 70006F4C 24C6000F */  addiu $a2, $a2, 0xf
-/* 007B50 70006F50 25830040 */  addiu $v1, $t4, 0x40
-/* 007B54 70006F54 34CD000F */  ori   $t5, $a2, 0xf
-/* 007B58 70006F58 39A6000F */  xori  $a2, $t5, 0xf
-/* 007B5C 70006F5C 01037821 */  addu  $t7, $t0, $v1
-/* 007B60 70006F60 01E62023 */  subu  $a0, $t7, $a2
-/* 007B64 70006F64 AFA40028 */  sw    $a0, 0x28($sp)
-/* 007B68 70006F68 0C001707 */  jal   romCopy
-/* 007B6C 70006F6C AFA82140 */   sw    $t0, 0x2140($sp)
-/* 007B70 70006F70 8FA40028 */  lw    $a0, 0x28($sp)
-/* 007B74 70006F74 8FA52140 */  lw    $a1, 0x2140($sp)
-/* 007B78 70006F78 0FC339FC */  jal   decompressdata
-/* 007B7C 70006F7C 27A60034 */   addiu $a2, $sp, 0x34
-/* 007B80 70006F80 3C048006 */  lui   $a0, %hi(D_80063860)
-/* 007B84 70006F84 3C058006 */  lui   $a1, %hi(D_80063838)
-/* 007B88 70006F88 8CA53838 */  lw    $a1, %lo(D_80063838)($a1)
-/* 007B8C 70006F8C 0C0049E7 */  jal   alCSeqNew
-/* 007B90 70006F90 24843860 */   addiu $a0, %lo(D_80063860) # addiu $a0, $a0, 0x3860
-/* 007B94 70006F94 3C058006 */  lui   $a1, %hi(D_80063860)
-/* 007B98 70006F98 24A53860 */  addiu $a1, %lo(D_80063860) # addiu $a1, $a1, 0x3860
-/* 007B9C 70006F9C 0C004B40 */  jal   alCSPSetSeq
-/* 007BA0 70006FA0 8E040000 */   lw    $a0, ($s0)
-/* 007BA4 70006FA4 0C001C0C */  jal   musicTrack1Length
-/* 007BA8 70006FA8 00000000 */   nop   
-/* 007BAC 70006FAC 0C001C0F */  jal   musicTrack1Vol
-/* 007BB0 70006FB0 3044FFFF */   andi  $a0, $v0, 0xffff
-/* 007BB4 70006FB4 0C004B50 */  jal   alCSPPlay
-/* 007BB8 70006FB8 8E040000 */   lw    $a0, ($s0)
-.L70006FBC:
-/* 007BBC 70006FBC 8FBF001C */  lw    $ra, 0x1c($sp)
-.L70006FC0:
-/* 007BC0 70006FC0 8FB00018 */  lw    $s0, 0x18($sp)
-/* 007BC4 70006FC4 27BD2148 */  addiu $sp, $sp, 0x2148
-/* 007BC8 70006FC8 03E00008 */  jr    $ra
-/* 007BCC 70006FCC 00000000 */   nop   
-)
-#endif
 
 /**
  * 7BD0	70006FD0

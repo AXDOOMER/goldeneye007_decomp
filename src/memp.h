@@ -3,6 +3,11 @@
 
 #include "ultra64.h"
 
+/*
+* Align to 16 bit boundary. Version "b", without preliminary addition.
+*/
+#define ALIGN16_b(val)        (((val) | 0xf) ^ 0xf)
+
 typedef struct s_mempBANK {
     u32 bankstart;
     u32 nextentry;
