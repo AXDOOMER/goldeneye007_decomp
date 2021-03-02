@@ -737,7 +737,7 @@
 9351168,1024,assets/obseg/text/LcaveE,1,0
 9352192,1120,assets/obseg/text/LcaveJ,1,0
 9353312,1232,assets/obseg/text/LcradE,1,0
-9354544,1184,assets/obseg/text/j/LcradJ,1,1
+9354544,1184,assets/obseg/text/j/LcradJ,1,0
 9355728,592,assets/obseg/text/LcrypE,1,0
 9356320,672,assets/obseg/text/j/LcrypJ,1,0
 9356992,1104,assets/obseg/text/LdamE,1,0
@@ -745,7 +745,7 @@
 9359200,880,assets/obseg/text/LdepoE,1,0
 9360080,816,assets/obseg/text/j/LdepoJ,1,0
 9360896,1168,assets/obseg/text/LdestE,1,0
-9362064,1120,assets/obseg/text/LdestJ,1,1
+9362064,1120,assets/obseg/text/LdestJ,1,0
 9363184,16,assets/obseg/text/LdishE,1,0
 9363200,16,assets/obseg/text/LdishJ,1,0
 9363216,16,assets/obseg/text/LearE,1,0
@@ -787,7 +787,7 @@
 9380752,16,assets/obseg/text/LritE,1,0
 9380768,16,assets/obseg/text/LritJ,1,0
 9380784,624,assets/obseg/text/LrunE,1,0
-9381408,656,assets/obseg/text/LrunJ,1,1
+9381408,656,assets/obseg/text/LrunJ,1,0
 9382064,1376,assets/obseg/text/LsevE,1,0
 9383440,1296,assets/obseg/text/j/LsevJ,1,0
 9384736,1872,assets/obseg/text/LsevbE,1,0
@@ -795,7 +795,7 @@
 9388640,1120,assets/obseg/text/LsevxE,1,0
 9389760,976,assets/obseg/text/j/LsevxJ,1,0
 9390736,1168,assets/obseg/text/LsevxbE,1,0
-9391904,1104,assets/obseg/text/LsevxbJ,1,1
+9391904,1104,assets/obseg/text/LsevxbJ,1,0
 9393008,16,assets/obseg/text/LshoE,1,0
 9393024,16,assets/obseg/text/LshoJ,1,0
 9393040,1456,assets/obseg/text/LsiloE,1,0
