@@ -155,6 +155,14 @@ typedef struct ALBank_s {
     ALInstrument        *instArray[1];  /* ARRAY of instruments            */
 } ALBank;
 
+typedef struct {                /* Note: sizeof won't be correct        */
+    s16         revision;       /* format revision of this file         */
+    s16         bankCount;      /* number of banks                      */
+    ALBank      *bankArray[1];  /* ARRAY of bank offsets                */
+} ALBankFile;
+
+void    alBnkfNew(ALBankFile *f, u8 *table);
+
 /***********************************************************************
  * Synthesis driver stuff
  ***********************************************************************/
@@ -435,19 +443,6 @@ typedef struct ALSeqpConfig_s {
     void        *updateOsc;
     void        *stopOsc;
 } ALSeqpConfig;
-
-/**
- * Added for goldeneye.
- */
-typedef struct ALSeqpSfxConfig_s {
-    s32         maxVoices;         /* max number of voices to alloc    */
-    s32         maxEvents;         /* max internal events to support   */
-    u32         channelWord;
-    ALHeap      *heap;             /* ptr to initialized heap          */
-    //void        *initOsc;
-    //void        *updateOsc;
-    //void        *stopOsc;
-} ALSeqpSfxConfig;
 
 typedef ALMicroTime   (*ALOscInit)(void **oscState,f32 *initVal, u8 oscType,
                                    u8 oscRate, u8 oscDepth, u8 oscDelay);

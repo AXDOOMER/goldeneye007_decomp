@@ -27,21 +27,39 @@
  */
 #define MAX_NUM_MUSIC_TRACKS_W_NONE  (NUM_MUSIC_TRACKS + 2)
 
+#define MUSIC_ALLOCATION_BYTES   0x2E000
+#define MUSIC_MEMP_BANK                6
+
+/**
+ * The number of bytes allocated in the method call (alHeapDBAlloc) is close to num*size.
+ * This is always set to one in this file...
+ */
+#define MUSIC_HEAP_NUMBER              1
+
+#define MUSIC_SYN_CONFIG_MAX_P_VOICES 0x18
+#define MUSIC_SYN_CONFIG_MAX_UPDATES  0x80
+
+#define MUSIC_SEQ_CONFIG_MAX_VOICES    0x10
+#define MUSIC_SEQ_CONFIG_MAX_EVENTS    0x40
+#define MUSIC_SEQ_CONFIG_MAX_CHANNELS    16
+
+#define MUSIC_SFX_SEQ_CONFIG_MAX_VOICES 0x40
+#define MUSIC_SFX_SEQ_CONFIG_MAX_EVENTS 0x40
+#define MUSIC_SFX_SEQ_CONFIG_CHANNEL       8
+
+#define TRACK_1_DATA_SEQ_SIZE_BYTES   6344
+#define TRACK_2_DATA_SEQ_SIZE_BYTES   2000
+#define TRACK_3_DATA_SEQ_SIZE_BYTES   4000
+
 struct audio_struct_a {
     u16 unk0;
     u16 unk2;
-    s32 unk4;
+    u8 *unk4;
 };
 
 struct music_struct_b {
     u8 data[8438];
     u8 *unk_0;
-};
-
-struct music_struct_c {
-    u16 unk0;
-    u16 unk2;
-    void *unk4;
 };
 
 s32 music_unused = 0;
@@ -391,12 +409,12 @@ s16 music_tempo_array[MAX_NUM_MUSIC_TRACKS_W_NONE] = {
 
 /*not sure why this is called hp, maybe for heap? */
 ALHeap hp;
-u32 *ptr_sfx_buf;
-s32 D_80063724;
+ALBank *ptr_sfx_buf;
+ALBank *D_80063724;
 ALCSPlayer *seqp_1;
 ALCSPlayer *seqp_2;
 ALCSPlayer *seqp_3;
-struct music_struct_c *ptr_musicdatatable;
+struct audio_struct_a *ptr_musicdatatable;
 
 /**
  * Something about starting offset of track data (maybe).
@@ -481,29 +499,34 @@ void musicTrack3Vol(u16 arg0);
 /**
  * 75F0	700069F0
  */
-void audio_related(struct audio_struct_a *arg0, u32 arg1)
+void audio_related(struct audio_struct_a *arg0, u32 romOffset)
 {
     s32 count;
     struct audio_struct_a *p;
 
     for (count = 0, p = arg0; count < arg0->unk0; count++, p++)
     {
-        p->unk4 += arg1;
+        p->unk4 = p->unk4 + romOffset;
     }
 }
 
 /**
  * 7630	70006A30
  *     loads sound and music banks into memory segment 6
+ * 
+ * Seems to be roughly based on n64devkit\ultra\usr\src\pr\demos_old\nnsample2\audio.c
  */
 void setupaudio(void)
 {
     // guess at struct.
     ALSeqpSfxConfig sfxSeqpConfig; // sp 216-228
-    u32 *heapAddr; // sp 212
+    ALBankFile *sfxBank; // sp 212
     u32 ui;
-    u32 *instrumentHeapAddr; // sp 204
+    ALBankFile *instrumentBank; // sp 204
+
+    // This type/cast is not correct, but this is how it matches.
     s32 tblSegmentRomStartAddress = (s32)&_musicsampletblSegmentRomStart; // ??
+
     ALSynConfig synconfig; // sp 164-192
     ALSeqpConfig track1SeqpConfig; // sp 136-160
     ALSeqpConfig track2SeqpConfig; // sp 108-132
@@ -519,52 +542,54 @@ void setupaudio(void)
         return;
     }
 
-    p = (u8 *)mempAllocBytesInBank(0x2E000, 6);
+    p = (u8 *)mempAllocBytesInBank(MUSIC_ALLOCATION_BYTES, MUSIC_MEMP_BANK);
 
     mempAddress = p;
     do
     {
         *p++ = 0;
-    } while (p < mempAddress + 0x2E000);
+    } while (p < mempAddress + MUSIC_ALLOCATION_BYTES);
 
-    alHeapInit(&hp, mempAddress, 0x2E000);
+    alHeapInit(&hp, mempAddress, MUSIC_ALLOCATION_BYTES);
 
     if (1)
     {
         size = (u32)&_sfxtblSegmentRomStart - (u32)&_sfxctlSegmentRomStart;
 
-        heapAddr = alHeapAlloc(&hp, 1, size);
-        romCopy(heapAddr, &_sfxctlSegmentRomStart, size);
-        alBnkfNew(heapAddr, &_sfxtblSegmentRomStart);
-        ptr_sfx_buf = heapAddr[1];
+        sfxBank = alHeapAlloc(&hp, MUSIC_HEAP_NUMBER, size);
+        romCopy(sfxBank, &_sfxctlSegmentRomStart, size);
+        alBnkfNew(sfxBank, (u8 *)&_sfxtblSegmentRomStart);
+        ptr_sfx_buf = sfxBank->bankArray[0];
     }
 
     if (1)
     {
         size = (u32)&_instrumentstblSegmentRomStart - (u32)&_instrumentsctlSegmentRomStart;
 
-        instrumentHeapAddr = alHeapAlloc(&hp, 1, size);
-        romCopy(instrumentHeapAddr, &_instrumentsctlSegmentRomStart, size);
-        alBnkfNew(instrumentHeapAddr, &_instrumentstblSegmentRomStart);
-        D_80063724 = instrumentHeapAddr[1];
+        instrumentBank = alHeapAlloc(&hp, MUSIC_HEAP_NUMBER, size);
+        romCopy(instrumentBank, &_instrumentsctlSegmentRomStart, size);
+        alBnkfNew(instrumentBank, (u8 *)&_instrumentstblSegmentRomStart);
+        D_80063724 = instrumentBank->bankArray[0];
     }
 
     size = 0x10;
-    ptr_musicdatatable = alHeapAlloc(&hp, 1, size);
-    romCopy(ptr_musicdatatable, tblSegmentRomStartAddress, size);
-    tblSegmentSize = (sizeof(struct music_struct_c) * ptr_musicdatatable[0].unk0) + 4;
-    ptr_musicdatatable = alHeapAlloc(&hp, 1, tblSegmentSize);
-    romCopy(ptr_musicdatatable, tblSegmentRomStartAddress, ALIGN16_a(tblSegmentSize));
+    ptr_musicdatatable = alHeapAlloc(&hp, MUSIC_HEAP_NUMBER, size);
+    romCopy(ptr_musicdatatable, (void *)tblSegmentRomStartAddress, size);
+    tblSegmentSize = (sizeof(struct audio_struct_a) * ptr_musicdatatable[0].unk0) + 4;
+    ptr_musicdatatable = alHeapAlloc(&hp, MUSIC_HEAP_NUMBER, tblSegmentSize);
+    romCopy(ptr_musicdatatable, (void *)tblSegmentRomStartAddress, ALIGN16_a(tblSegmentSize));
 
-    audio_related(ptr_musicdatatable, &_musicsampletblSegmentRomStart);
+    audio_related(ptr_musicdatatable, (u32)&_musicsampletblSegmentRomStart);
     
-    size = 0x18C8;
-    D_80063838 = alHeapAlloc(&hp, 1, size);
-    size = 0x1770;
-    D_8006383C = alHeapAlloc(&hp, 1, size);
-    D_80063840 = (s32) ((u8*)D_8006383C + 0x7D0);
+    size = TRACK_1_DATA_SEQ_SIZE_BYTES;
+    D_80063838 = alHeapAlloc(&hp, MUSIC_HEAP_NUMBER, size);
 
-    for (ui = 0; ui < 63; ui++)
+    size = TRACK_2_DATA_SEQ_SIZE_BYTES + TRACK_3_DATA_SEQ_SIZE_BYTES;
+    D_8006383C = alHeapAlloc(&hp, MUSIC_HEAP_NUMBER, size);
+    
+    D_80063840 = (u8*)D_8006383C + TRACK_2_DATA_SEQ_SIZE_BYTES;
+
+    for (ui = 0; ui < NUM_MUSIC_TRACKS; ui++)
     {
         D_80063738[ui] = ptr_musicdatatable[ui+1].unk0;
         D_800637B8[ui] = ptr_musicdatatable[ui+1].unk2;
@@ -576,58 +601,61 @@ void setupaudio(void)
     }
 
     synconfig.maxVVoices = 0;
-    synconfig.maxPVoices = 0x18;
-    synconfig.maxUpdates = 0x80;
+    synconfig.maxPVoices = MUSIC_SYN_CONFIG_MAX_P_VOICES;
+    synconfig.maxUpdates = MUSIC_SYN_CONFIG_MAX_UPDATES;
     // synconfig.maxFXbusses, not set.
     synconfig.dmaproc = 0;
     synconfig.fxType = AL_FX_CUSTOM;
     synconfig.outputRate = 0;
-    synconfig.heap = (ALHeap *)&hp;
+    synconfig.heap = &hp;
     // synconfig.params, not set.
 
     amCreateAudioManager(&synconfig);
 
-    track1SeqpConfig.maxVoices = 0x10;
-    track1SeqpConfig.maxEvents = 0x40;
-    track1SeqpConfig.maxChannels = 16;
-    track1SeqpConfig.heap = (ALHeap *)&hp;
+    track1SeqpConfig.maxVoices = MUSIC_SEQ_CONFIG_MAX_VOICES;
+    track1SeqpConfig.maxEvents = MUSIC_SEQ_CONFIG_MAX_EVENTS;
+    track1SeqpConfig.maxChannels = MUSIC_SEQ_CONFIG_MAX_CHANNELS;
+    track1SeqpConfig.heap = &hp;
     track1SeqpConfig.initOsc = NULL;
     track1SeqpConfig.updateOsc = NULL;
     track1SeqpConfig.stopOsc = NULL;
 
-    track2SeqpConfig.maxVoices = 0x10;
-    track2SeqpConfig.maxEvents = 0x40;
-    track2SeqpConfig.maxChannels = 16;
-    track2SeqpConfig.heap = (ALHeap *)&hp;
+    track2SeqpConfig.maxVoices = MUSIC_SEQ_CONFIG_MAX_VOICES;
+    track2SeqpConfig.maxEvents = MUSIC_SEQ_CONFIG_MAX_EVENTS;
+    track2SeqpConfig.maxChannels = MUSIC_SEQ_CONFIG_MAX_CHANNELS;
+    track2SeqpConfig.heap = &hp;
     track2SeqpConfig.initOsc = NULL;
     track2SeqpConfig.updateOsc = NULL;
     track2SeqpConfig.stopOsc = NULL;
 
-    track3SeqpConfig.maxVoices = 0x10;
-    track3SeqpConfig.maxEvents = 0x40;
-    track3SeqpConfig.maxChannels = 16;
-    track3SeqpConfig.heap = (ALHeap *)&hp;
+    track3SeqpConfig.maxVoices = MUSIC_SEQ_CONFIG_MAX_VOICES;
+    track3SeqpConfig.maxEvents = MUSIC_SEQ_CONFIG_MAX_EVENTS;
+    track3SeqpConfig.maxChannels = MUSIC_SEQ_CONFIG_MAX_CHANNELS;
+    track3SeqpConfig.heap = &hp;
     track3SeqpConfig.initOsc = NULL;
     track3SeqpConfig.updateOsc = NULL;
     track3SeqpConfig.stopOsc = NULL;
 
-    size = 0x7C;
-    seqp_1 = alHeapAlloc(&hp, 1, size);
-    seqp_2 = alHeapAlloc(&hp, 1, size);
-    seqp_3 = alHeapAlloc(&hp, 1, size);
-    alCSPNew(seqp_1, &track1SeqpConfig);
-    alSeqpSetBank(seqp_1, D_80063724);
-    alCSPNew(seqp_2, &track2SeqpConfig);
-    alSeqpSetBank(seqp_2, D_80063724);
-    alCSPNew(seqp_3, &track3SeqpConfig);
-    alSeqpSetBank(seqp_3, D_80063724);
+    size = sizeof(ALCSPlayer); // 0x7C
+    seqp_1 = alHeapAlloc(&hp, MUSIC_HEAP_NUMBER, size);
+    seqp_2 = alHeapAlloc(&hp, MUSIC_HEAP_NUMBER, size);
+    seqp_3 = alHeapAlloc(&hp, MUSIC_HEAP_NUMBER, size);
 
-    sfxSeqpConfig.maxEvents = 0x40;
-    sfxSeqpConfig.maxVoices = 0x40;
-    sfxSeqpConfig.channelWord = 8;
-    sfxSeqpConfig.heap = (ALHeap *)&hp;
+    // Typo / mistake, the following calls to alSeqpSetBank should actually
+    // be to alCSPSetBank.
+    alCSPNew(seqp_1, &track1SeqpConfig);
+    alSeqpSetBank((ALSeqPlayer *)seqp_1, D_80063724);
+    alCSPNew(seqp_2, &track2SeqpConfig);
+    alSeqpSetBank((ALSeqPlayer *)seqp_2, D_80063724);
+    alCSPNew(seqp_3, &track3SeqpConfig);
+    alSeqpSetBank((ALSeqPlayer *)seqp_3, D_80063724);
+
+    sfxSeqpConfig.maxEvents = MUSIC_SFX_SEQ_CONFIG_MAX_EVENTS;
+    sfxSeqpConfig.maxVoices = MUSIC_SFX_SEQ_CONFIG_MAX_VOICES;
+    sfxSeqpConfig.channelWord = MUSIC_SFX_SEQ_CONFIG_CHANNEL;
+    sfxSeqpConfig.heap = &hp;
     
-    sfx_c_70007B20((void*)&sfxSeqpConfig);
+    sfx_c_70007B20(&sfxSeqpConfig);
     amStartAudioThread();
 }
 
@@ -642,7 +670,7 @@ void musicTrack1Play(s32 arg0)
     struct music_struct_b thing;
     u8 *temp_a0;
     void *romAddress;
-    u8 *t3;
+    u32 t3;
     struct huft sp34;
 
     if (bootswitch_sound)
@@ -672,7 +700,7 @@ void musicTrack1Play(s32 arg0)
     t3 = ALIGN16_a(D_80063738[music1_track_num]) + (NUM_MUSIC_TRACKS + 1);
     trackSizeBytes = ALIGN16_a(D_800637B8[music1_track_num]);
     thing.unk_0 = D_80063838;
-    temp_a0 = (t3 + (s32)thing.unk_0) - trackSizeBytes;
+    temp_a0 = (u8*)((t3 + (s32)thing.unk_0) - trackSizeBytes);
 
     romCopy(temp_a0, romAddress, trackSizeBytes);
     
@@ -827,7 +855,7 @@ void musicTrack2Play(s32 arg0)
     struct music_struct_b thing;
     u8 *temp_a0;
     void *romAddress;
-    u8 *t3;
+    u32 t3;
     struct huft sp34;
 
     if (bootswitch_sound)
@@ -857,7 +885,7 @@ void musicTrack2Play(s32 arg0)
     t3 = ALIGN16_a(D_80063738[music2_track_num]) + (NUM_MUSIC_TRACKS + 1);
     trackSizeBytes = ALIGN16_a(D_800637B8[music2_track_num]);
     thing.unk_0 = D_8006383C;
-    temp_a0 = (t3 + (s32)thing.unk_0) - trackSizeBytes;
+    temp_a0 = (u8*)((t3 + (s32)thing.unk_0) - trackSizeBytes);
 
     romCopy(temp_a0, romAddress, trackSizeBytes);
     
@@ -1009,7 +1037,7 @@ void music_related_3rd_block(s32 arg0)
     struct music_struct_b thing;
     u8 *temp_a0;
     void *romAddress;
-    u8 *t3;
+    u32 t3;
     struct huft sp34;
 
     if (bootswitch_sound)
@@ -1039,7 +1067,7 @@ void music_related_3rd_block(s32 arg0)
     t3 = ALIGN16_a(D_80063738[music3_track_num]) + (NUM_MUSIC_TRACKS + 1);
     trackSizeBytes = ALIGN16_a(D_800637B8[music3_track_num]);
     thing.unk_0 = D_80063840;
-    temp_a0 = (t3 + (s32)thing.unk_0) - trackSizeBytes;
+    temp_a0 = (u8*)((t3 + (s32)thing.unk_0) - trackSizeBytes);
 
     romCopy(temp_a0, romAddress, trackSizeBytes);
     
