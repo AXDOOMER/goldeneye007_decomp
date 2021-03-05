@@ -227,7 +227,7 @@ typedef struct {
  */
 typedef struct
 {
-    u32 *address;
+    u8 *address;
     u16 len;
     u16 offset;
 #ifdef VERSION_SH

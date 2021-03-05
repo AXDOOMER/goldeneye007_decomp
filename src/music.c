@@ -51,12 +51,6 @@
 #define TRACK_2_DATA_SEQ_SIZE_BYTES   2000
 #define TRACK_3_DATA_SEQ_SIZE_BYTES   4000
 
-struct audio_struct_a {
-    u16 unk0;
-    u16 unk2;
-    u8 *unk4;
-};
-
 struct music_struct_b {
     u8 data[8438];
     u8 *unk_0;
@@ -498,15 +492,19 @@ void musicTrack3Vol(u16 arg0);
 
 /**
  * 75F0	700069F0
+ * Patch the file so that offsets are pointers.
+ * This is a copy of alSeqFileNew from n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\bnkf.c
  */
-void audio_related(struct audio_struct_a *arg0, u32 romOffset)
+void musicSeqFileNew(ALSeqFile *file, u8 *base)
 {
-    s32 count;
-    struct audio_struct_a *p;
-
-    for (count = 0, p = arg0; count < arg0->unk0; count++, p++)
-    {
-        p->unk4 = p->unk4 + romOffset;
+    s32 offset = (s32) base;
+    s32 i;
+    
+    /*
+     * patch the file so that offsets are pointers
+     */
+    for (i = 0; i < file->seqCount; i++) {
+        file->seqArray[i].address = (u8 *)((u8 *)file->seqArray[i].address + offset);
     }
 }
 
@@ -578,11 +576,13 @@ void setupaudio(void)
     ptr_musicdatatable = alHeapAlloc(&hp, MUSIC_HEAP_NUMBER, size);
     romCopy(ptr_musicdatatable, (void *)tblSegmentRomStartAddress, size);
 
-    tblSegmentSize = (sizeof(struct audio_struct_a) * ptr_musicdatatable->seqCount) + 4;
+    tblSegmentSize = (sizeof(ALSeqData) * ptr_musicdatatable->seqCount) + 4;
     ptr_musicdatatable = alHeapAlloc(&hp, MUSIC_HEAP_NUMBER, tblSegmentSize);
     romCopy(ptr_musicdatatable, (void *)tblSegmentRomStartAddress, ALIGN16_a(tblSegmentSize));
 
-    audio_related(ptr_musicdatatable, (u32)&_musicsampletblSegmentRomStart);
+    // end auReadSeqFileHeader
+
+    musicSeqFileNew(ptr_musicdatatable, (u8*)&_musicsampletblSegmentRomStart);
     
     size = TRACK_1_DATA_SEQ_SIZE_BYTES;
     D_80063838 = alHeapAlloc(&hp, MUSIC_HEAP_NUMBER, size);
