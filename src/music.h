@@ -3,6 +3,8 @@
 #include "ultra64.h"
 #include "bondgame.h"
 
+void setupaudio(void);
+
 extern s32 music_unused;
 extern s32 music1_track_num;
 extern s32 music1len;

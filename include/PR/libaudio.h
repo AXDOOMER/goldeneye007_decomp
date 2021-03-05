@@ -49,6 +49,10 @@ typedef struct {
     s32 *params;
 } ALSynConfig;
 
+
+void    alHeapInit(ALHeap *hp, u8 *base, s32 len);
+void    *alHeapDBAlloc(u8 *file, s32 line, ALHeap *hp, s32 num, s32 size);
+
 #ifdef DEBUG
 #define alHeapAlloc(hp, elem ,size) alHeapDBAlloc((u8 *) __FILE__,__LINE__,(hp),(elem),(size))
 #else
@@ -421,7 +425,7 @@ typedef struct {
     u32         evtDeltaTicks[16];
 } ALCSeqMarker;
 
-typedef struct {
+typedef struct ALSeqpConfig_s {
     s32         maxVoices;         /* max number of voices to alloc    */
     s32         maxEvents;         /* max internal events to support   */
     u8          maxChannels;       /* max MIDI channels to support (16)*/
@@ -431,6 +435,19 @@ typedef struct {
     void        *updateOsc;
     void        *stopOsc;
 } ALSeqpConfig;
+
+/**
+ * Added for goldeneye.
+ */
+typedef struct ALSeqpSfxConfig_s {
+    s32         maxVoices;         /* max number of voices to alloc    */
+    s32         maxEvents;         /* max internal events to support   */
+    u32         channelWord;
+    ALHeap      *heap;             /* ptr to initialized heap          */
+    //void        *initOsc;
+    //void        *updateOsc;
+    //void        *stopOsc;
+} ALSeqpSfxConfig;
 
 typedef ALMicroTime   (*ALOscInit)(void **oscState,f32 *initVal, u8 oscType,
                                    u8 oscRate, u8 oscDepth, u8 oscDelay);

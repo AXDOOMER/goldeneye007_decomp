@@ -24,6 +24,7 @@
 #include "mainmenu.h"
 #include "mema.h"
 #include "memp.h"
+#include "music.h"
 #include "ob.h"
 #include "ramrom.h"
 #include "random.h"

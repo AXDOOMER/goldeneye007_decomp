@@ -1,11 +1,13 @@
 #include "ultra64.h"
-#include "ramrom.h"
-#include "snd.h"
 #include "include/PR/libaudio.h"
 #include "inflate/inflate.h"
+#include "audi.h"
+#include "bondconstants.h"
 #include "decompress.h"
 #include "dyn.h"
-#include "bondconstants.h"
+#include "memp.h"
+#include "ramrom.h"
+#include "snd.h"
 
 /**
  * @file music.c
@@ -25,9 +27,20 @@
  */
 #define MAX_NUM_MUSIC_TRACKS_W_NONE  (NUM_MUSIC_TRACKS + 2)
 
+struct audio_struct_a {
+    u16 unk0;
+    u16 unk2;
+    s32 unk4;
+};
+
+struct music_struct_b {
+    u8 data[8438];
+    u8 *unk_0;
+};
 
 struct music_struct_c {
-    s32 unk0;
+    u16 unk0;
+    u16 unk2;
     void *unk4;
 };
 
@@ -377,7 +390,7 @@ s16 music_tempo_array[MAX_NUM_MUSIC_TRACKS_W_NONE] = {
 
 
 /*not sure why this is called hp, maybe for heap? */
-u32 hp[4];
+ALHeap hp;
 u32 *ptr_sfx_buf;
 s32 D_80063724;
 ALCSPlayer *seqp_1;
@@ -394,6 +407,7 @@ u16 D_80063738[NUM_MUSIC_TRACKS + 1];
  * Something about music track size (in bytes).
  */
 u16 D_800637B8[NUM_MUSIC_TRACKS];
+
 s16 D_80063836;
 
 /**
@@ -443,11 +457,11 @@ char D_80063B50[0x54];
 s32 D_80063BA4;
 s32 D_80063BA8;
 
-struct audio_struct_a {
-    u16 unk0;
-    u16 unk2;
-    s32 unk4;
-};
+extern u32 _sfxtblSegmentRomStart;
+extern u32 _sfxctlSegmentRomStart;
+extern u32 _instrumentstblSegmentRomStart;
+extern u32 _instrumentsctlSegmentRomStart;
+extern u32 _musicsampletblSegmentRomStart;
 
 // forward declarations
 
@@ -482,465 +496,141 @@ void audio_related(struct audio_struct_a *arg0, u32 arg1)
  * 7630	70006A30
  *     loads sound and music banks into memory segment 6
  */
-#ifdef NONMATCHING
 void setupaudio(void)
 {
-    s32 sp38;
-    s32 sp40;
-    ?32 sp50;
-    ?32 sp54;
-    s8 sp58;
-    ?32 sp60;
-    ?32 sp64;
-    ?32 sp68;
-    ?32 sp6C;
-    ?32 sp70;
-    s8 sp74;
-    ?32 sp7C;
-    ?32 sp80;
-    ?32 sp84;
-    ?32 sp88;
-    ?32 sp8C;
-    s8 sp90;
-    ?32 sp98;
-    ?32 sp9C;
-    ?32 spA0;
-    ?32 spA4;
-    ?32 spA8;
-    ?32 spAC;
-    ?32 spB4;
-    ?32 spBC;
-    s8 spC0;
-    s32 spCC;
-    s32 spD4;
-    ?32 spD8;
-    ?32 spDC;
-    ?32 spE0;
-    ? temp_ret;
-    u32 temp_v1;
-    s32 temp_v0;
-    ? temp_ret_2;
-    s32 temp_v0_2;
-    ? temp_ret_3;
-    ? temp_ret_4;
-    s32 temp_v1_2;
-    ? temp_ret_5;
-    ? temp_ret_6;
-    s16 temp_t4;
-    void *temp_a0;
-    void *temp_a1;
-    s32 temp_v0_3;
-    u32 phi_v1;
-    void *phi_a0;
-    void *phi_v1_2;
-    void *phi_a1;
-
-    // Node 0
-    if (bootswitch_sound == 0)
+    // guess at struct.
+    ALSeqpSfxConfig sfxSeqpConfig; // sp 216-228
+    u32 *heapAddr; // sp 212
+    u32 ui;
+    u32 *instrumentHeapAddr; // sp 204
+    s32 tblSegmentRomStartAddress = (s32)&_musicsampletblSegmentRomStart; // ??
+    ALSynConfig synconfig; // sp 164-192
+    ALSeqpConfig track1SeqpConfig; // sp 136-160
+    ALSeqpConfig track2SeqpConfig; // sp 108-132
+    ALSeqpConfig track3SeqpConfig; // sp 80-104
+    u8 *mempAddress;
+    u8 *p;
+    u16 d;
+    u32 tblSegmentSize; // sp 64
+    u32 size; // sp56;
+    
+    if (bootswitch_sound)
     {
-        // Node 1
-        temp_ret = mempAllocBytesInBank(0x2e000, 6);
-        phi_v1 = temp_ret;
-loop_2:
-        // Node 2
-        temp_v1 = (phi_v1 + 1);
-        temp_v1->unk-1 = (u8)0;
-        phi_v1 = temp_v1;
-        if (temp_v1 < (u32) (temp_ret + 0x2e000))
-        {
-            goto loop_2;
-        }
-        // Node 3
-        alHeapInit(&hp, temp_ret, 0x2e000);
-        temp_v0 = (&_sfxtblSegmentRomStart - &_sfxctlSegmentRomStart);
-        sp38 = temp_v0;
-        temp_ret_2 = alHeapDBAlloc(0, 0, &hp, 1, temp_v0);
-        spD4 = temp_ret_2;
-        romCopy(temp_ret_2, &_sfxctlSegmentRomStart, sp38);
-        alBnkfNew(spD4, &_sfxtblSegmentRomStart);
-        temp_v0_2 = (&_instrumentstblSegmentRomStart - &_instrumentsctlSegmentRomStart);
-        sp38 = temp_v0_2;
-        ptr_sfx_buf = (?32) spD4->unk4;
-        temp_ret_3 = alHeapDBAlloc(0, 0, &hp, 1, temp_v0_2);
-        spCC = temp_ret_3;
-        romCopy(temp_ret_3, &_instrumentsctlSegmentRomStart, sp38);
-        alBnkfNew(spCC, &_instrumentstblSegmentRomStart);
-        D_80063724 = (?32) spCC->unk4;
-        temp_ret_4 = alHeapDBAlloc(0, 0, &hp, 1, 0x10);
-        ptr_musicdatatable = temp_ret_4;
-        romCopy(temp_ret_4, &_musicsampletblSegmentRomStart, 0x10);
-        temp_v1_2 = ((*ptr_musicdatatable * 8) + 4);
-        sp40 = temp_v1_2;
-        temp_ret_5 = alHeapDBAlloc(0, 0, &hp, 1, temp_v1_2);
-        ptr_musicdatatable = temp_ret_5;
-        romCopy(temp_ret_5, sp38, (((temp_v1_2 + 0xf) | 0xf) ^ 0xf), &ptr_musicdatatable);
-        audio_related(ptr_musicdatatable, &_musicsampletblSegmentRomStart);
-        D_80063838 = alHeapDBAlloc(0, 0, &hp, 1, 0x18c8);
-        temp_ret_6 = alHeapDBAlloc(0, 0, &hp, 1, 0x1770);
-        D_8006383C = temp_ret_6;
-        D_80063840 = (s32) (temp_ret_6 + 0x7d0);
-        phi_a0 = (void *) ptr_musicdatatable;
-        phi_v1_2 = &D_80063738;
-        phi_a1 = &D_800637B8;
-loop_4:
-        // Node 4
-        temp_t4 = phi_a0->unk8;
-        temp_a0 = (phi_a0 + 8);
-        temp_a1 = (phi_a1 + 2);
-        *phi_v1_2 = temp_t4;
-        temp_v0_3 = (temp_t4 & 0xffff);
-        temp_a1->unk-2 = (s16) temp_a0->unk2;
-        if ((temp_v0_3 & 1) != 0)
-        {
-            // Node 5
-            *phi_v1_2 = (s16) (temp_v0_3 + 1);
-        }
-        // Node 6
-        phi_a0 = temp_a0;
-        phi_v1_2 = (phi_v1_2 + 2);
-        phi_a1 = temp_a1;
-        if (temp_a1 != &D_80063836)
-        {
-            goto loop_4;
-        }
-        // Node 7
-        spA4 = 0;
-        spA8 = 0x18;
-        spAC = 0x80;
-        spB4 = 0;
-        spC0 = (u8)6;
-        spBC = 0;
-        amCreateAudioManager(&spA4, temp_a1, &D_80063836, &D_8006383C);
-        
-        sp88 = 0x10;
-        sp8C = 0x40;
-        sp90 = (u8)0x10;
-        sp98 = 0;
-        sp9C = 0;
-        spA0 = 0;
-
-        sp6C = 0x10;
-        sp70 = 0x40;
-        sp74 = (u8)0x10;
-        sp7C = 0;
-        sp80 = 0;
-        sp84 = 0;
-
-        sp50 = 0x10;
-        sp54 = 0x40;
-        sp58 = (u8)0x10;
-        sp60 = 0;
-        sp64 = 0;
-        sp68 = 0;
-        seqp_1 = alHeapDBAlloc(0, 0, &hp, 1, 0x7c);
-        seqp_2 = alHeapDBAlloc(0, 0, &hp, 1, 0x7c);
-        seqp_3 = alHeapDBAlloc(0, 0, &hp, 1, 0x7c);
-        alCSPNew(seqp_1, &sp88);
-        alSeqpSetBank(seqp_1, D_80063724);
-        alCSPNew(seqp_2, &sp6C);
-        alSeqpSetBank(seqp_2, D_80063724);
-        alCSPNew(seqp_3, &sp50);
-        alSeqpSetBank(seqp_3, D_80063724);
-        spDC = 0x40;
-        spD8 = 0x40;
-        spE0 = 8;
-        sfx_c_70007B20(&spD8);
-        amStartAudioThread();
+        return;
     }
-    // Node 8
-    return;
+
+    p = (u8 *)mempAllocBytesInBank(0x2E000, 6);
+
+    mempAddress = p;
+    do
+    {
+        *p++ = 0;
+    } while (p < mempAddress + 0x2E000);
+
+    alHeapInit(&hp, mempAddress, 0x2E000);
+
+    if (1)
+    {
+        size = (u32)&_sfxtblSegmentRomStart - (u32)&_sfxctlSegmentRomStart;
+
+        heapAddr = alHeapAlloc(&hp, 1, size);
+        romCopy(heapAddr, &_sfxctlSegmentRomStart, size);
+        alBnkfNew(heapAddr, &_sfxtblSegmentRomStart);
+        ptr_sfx_buf = heapAddr[1];
+    }
+
+    if (1)
+    {
+        size = (u32)&_instrumentstblSegmentRomStart - (u32)&_instrumentsctlSegmentRomStart;
+
+        instrumentHeapAddr = alHeapAlloc(&hp, 1, size);
+        romCopy(instrumentHeapAddr, &_instrumentsctlSegmentRomStart, size);
+        alBnkfNew(instrumentHeapAddr, &_instrumentstblSegmentRomStart);
+        D_80063724 = instrumentHeapAddr[1];
+    }
+
+    size = 0x10;
+    ptr_musicdatatable = alHeapAlloc(&hp, 1, size);
+    romCopy(ptr_musicdatatable, tblSegmentRomStartAddress, size);
+    tblSegmentSize = (sizeof(struct music_struct_c) * ptr_musicdatatable[0].unk0) + 4;
+    ptr_musicdatatable = alHeapAlloc(&hp, 1, tblSegmentSize);
+    romCopy(ptr_musicdatatable, tblSegmentRomStartAddress, ALIGN16_a(tblSegmentSize));
+
+    audio_related(ptr_musicdatatable, &_musicsampletblSegmentRomStart);
+    
+    size = 0x18C8;
+    D_80063838 = alHeapAlloc(&hp, 1, size);
+    size = 0x1770;
+    D_8006383C = alHeapAlloc(&hp, 1, size);
+    D_80063840 = (s32) ((u8*)D_8006383C + 0x7D0);
+
+    for (ui = 0; ui < 63; ui++)
+    {
+        D_80063738[ui] = ptr_musicdatatable[ui+1].unk0;
+        D_800637B8[ui] = ptr_musicdatatable[ui+1].unk2;
+
+        if (D_80063738[ui] & 1)
+        {
+            D_80063738[ui]++;
+        }
+    }
+
+    synconfig.maxVVoices = 0;
+    synconfig.maxPVoices = 0x18;
+    synconfig.maxUpdates = 0x80;
+    // synconfig.maxFXbusses, not set.
+    synconfig.dmaproc = 0;
+    synconfig.fxType = AL_FX_CUSTOM;
+    synconfig.outputRate = 0;
+    synconfig.heap = (ALHeap *)&hp;
+    // synconfig.params, not set.
+
+    amCreateAudioManager(&synconfig);
+
+    track1SeqpConfig.maxVoices = 0x10;
+    track1SeqpConfig.maxEvents = 0x40;
+    track1SeqpConfig.maxChannels = 16;
+    track1SeqpConfig.heap = (ALHeap *)&hp;
+    track1SeqpConfig.initOsc = NULL;
+    track1SeqpConfig.updateOsc = NULL;
+    track1SeqpConfig.stopOsc = NULL;
+
+    track2SeqpConfig.maxVoices = 0x10;
+    track2SeqpConfig.maxEvents = 0x40;
+    track2SeqpConfig.maxChannels = 16;
+    track2SeqpConfig.heap = (ALHeap *)&hp;
+    track2SeqpConfig.initOsc = NULL;
+    track2SeqpConfig.updateOsc = NULL;
+    track2SeqpConfig.stopOsc = NULL;
+
+    track3SeqpConfig.maxVoices = 0x10;
+    track3SeqpConfig.maxEvents = 0x40;
+    track3SeqpConfig.maxChannels = 16;
+    track3SeqpConfig.heap = (ALHeap *)&hp;
+    track3SeqpConfig.initOsc = NULL;
+    track3SeqpConfig.updateOsc = NULL;
+    track3SeqpConfig.stopOsc = NULL;
+
+    size = 0x7C;
+    seqp_1 = alHeapAlloc(&hp, 1, size);
+    seqp_2 = alHeapAlloc(&hp, 1, size);
+    seqp_3 = alHeapAlloc(&hp, 1, size);
+    alCSPNew(seqp_1, &track1SeqpConfig);
+    alSeqpSetBank(seqp_1, D_80063724);
+    alCSPNew(seqp_2, &track2SeqpConfig);
+    alSeqpSetBank(seqp_2, D_80063724);
+    alCSPNew(seqp_3, &track3SeqpConfig);
+    alSeqpSetBank(seqp_3, D_80063724);
+
+    sfxSeqpConfig.maxEvents = 0x40;
+    sfxSeqpConfig.maxVoices = 0x40;
+    sfxSeqpConfig.channelWord = 8;
+    sfxSeqpConfig.heap = (ALHeap *)&hp;
+    
+    sfx_c_70007B20((void*)&sfxSeqpConfig);
+    amStartAudioThread();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel setupaudio
-/* 007630 70006A30 3C0E8002 */  lui   $t6, %hi(bootswitch_sound) 
-/* 007634 70006A34 81CE43F8 */  lb    $t6, %lo(bootswitch_sound)($t6)
-/* 007638 70006A38 27BDFF18 */  addiu $sp, $sp, -0xe8
-/* 00763C 70006A3C AFBF0024 */  sw    $ra, 0x24($sp)
-/* 007640 70006A40 15C00109 */  bnez  $t6, .L70006E68
-/* 007644 70006A44 AFB00020 */   sw    $s0, 0x20($sp)
-/* 007648 70006A48 3C040002 */  lui   $a0, (0x0002E000 >> 16) # lui $a0, 2
-/* 00764C 70006A4C 3484E000 */  ori   $a0, (0x0002E000 & 0xFFFF) # ori $a0, $a0, 0xe000
-/* 007650 70006A50 0C0025C8 */  jal   mempAllocBytesInBank
-/* 007654 70006A54 24050006 */   li    $a1, 6
-/* 007658 70006A58 3C010002 */  lui   $at, (0x0002E000 >> 16) # lui $at, 2
-/* 00765C 70006A5C 3421E000 */  ori   $at, (0x0002E000 & 0xFFFF) # ori $at, $at, 0xe000
-/* 007660 70006A60 00401825 */  move  $v1, $v0
-/* 007664 70006A64 00402825 */  move  $a1, $v0
-/* 007668 70006A68 00412021 */  addu  $a0, $v0, $at
-.L70006A6C:
-/* 00766C 70006A6C 24630001 */  addiu $v1, $v1, 1
-/* 007670 70006A70 0064082B */  sltu  $at, $v1, $a0
-/* 007674 70006A74 1420FFFD */  bnez  $at, .L70006A6C
-/* 007678 70006A78 A060FFFF */   sb    $zero, -1($v1)
-/* 00767C 70006A7C 3C108006 */  lui   $s0, %hi(hp)
-/* 007680 70006A80 26103710 */  addiu $s0, %lo(hp) # addiu $s0, $s0, 0x3710
-/* 007684 70006A84 3C060002 */  lui   $a2, (0x0002E000 >> 16) # lui $a2, 2
-/* 007688 70006A88 34C6E000 */  ori   $a2, (0x0002E000 & 0xFFFF) # ori $a2, $a2, 0xe000
-/* 00768C 70006A8C 0C00434C */  jal   alHeapInit
-/* 007690 70006A90 02002025 */   move  $a0, $s0
-/* 007694 70006A94 3C0F002F */  lui   $t7, %hi(_sfxtblSegmentRomStart) # $t7, 0x2f
-/* 007698 70006A98 3C18002F */  lui   $t8, %hi(_sfxctlSegmentRomStart) # $t8, 0x2f
-/* 00769C 70006A9C 2718BDE0 */  addiu $t8, %lo(_sfxctlSegmentRomStart) # addiu $t8, $t8, -0x4220
-/* 0076A0 70006AA0 25EF19A0 */  addiu $t7, %lo(_sfxtblSegmentRomStart) # addiu $t7, $t7, 0x19a0
-/* 0076A4 70006AA4 01F81023 */  subu  $v0, $t7, $t8
-/* 0076A8 70006AA8 AFA20010 */  sw    $v0, 0x10($sp)
-/* 0076AC 70006AAC AFA20038 */  sw    $v0, 0x38($sp)
-/* 0076B0 70006AB0 00002025 */  move  $a0, $zero
-/* 0076B4 70006AB4 00002825 */  move  $a1, $zero
-/* 0076B8 70006AB8 02003025 */  move  $a2, $s0
-/* 0076BC 70006ABC 0C003AD4 */  jal   alHeapDBAlloc
-/* 0076C0 70006AC0 24070001 */   li    $a3, 1
-/* 0076C4 70006AC4 3C05002F */  lui   $a1, %hi(_sfxctlSegmentRomStart) # $a1, 0x2f
-/* 0076C8 70006AC8 AFA200D4 */  sw    $v0, 0xd4($sp)
-/* 0076CC 70006ACC 24A5BDE0 */  addiu $a1, %lo(_sfxctlSegmentRomStart) # addiu $a1, $a1, -0x4220
-/* 0076D0 70006AD0 00402025 */  move  $a0, $v0
-/* 0076D4 70006AD4 0C001707 */  jal   romCopy
-/* 0076D8 70006AD8 8FA60038 */   lw    $a2, 0x38($sp)
-/* 0076DC 70006ADC 3C05002F */  lui   $a1, %hi(_sfxtblSegmentRomStart) # $a1, 0x2f
-/* 0076E0 70006AE0 24A519A0 */  addiu $a1, %lo(_sfxtblSegmentRomStart) # addiu $a1, $a1, 0x19a0
-/* 0076E4 70006AE4 0C00439D */  jal   alBnkfNew
-/* 0076E8 70006AE8 8FA400D4 */   lw    $a0, 0xd4($sp)
-/* 0076EC 70006AEC 8FB900D4 */  lw    $t9, 0xd4($sp)
-/* 0076F0 70006AF0 3C09003C */  lui   $t1, %hi(_instrumentstblSegmentRomStart) # $t1, 0x3c
-/* 0076F4 70006AF4 3C0A003B */  lui   $t2, %hi(_instrumentsctlSegmentRomStart) # $t2, 0x3b
-/* 0076F8 70006AF8 8F280004 */  lw    $t0, 4($t9)
-/* 0076FC 70006AFC 254A4450 */  addiu $t2, %lo(_instrumentsctlSegmentRomStart) # addiu $t2, $t2, 0x4450
-/* 007700 70006B00 252987F0 */  addiu $t1, %lo(_instrumentstblSegmentRomStart) # addiu $t1, $t1, -0x7810
-/* 007704 70006B04 3C018006 */  lui   $at, %hi(ptr_sfx_buf)
-/* 007708 70006B08 012A1023 */  subu  $v0, $t1, $t2
-/* 00770C 70006B0C AFA20010 */  sw    $v0, 0x10($sp)
-/* 007710 70006B10 AFA20038 */  sw    $v0, 0x38($sp)
-/* 007714 70006B14 00002025 */  move  $a0, $zero
-/* 007718 70006B18 00002825 */  move  $a1, $zero
-/* 00771C 70006B1C 02003025 */  move  $a2, $s0
-/* 007720 70006B20 24070001 */  li    $a3, 1
-/* 007724 70006B24 0C003AD4 */  jal   alHeapDBAlloc
-/* 007728 70006B28 AC283720 */   sw    $t0, %lo(ptr_sfx_buf)($at)
-/* 00772C 70006B2C 3C05003B */  lui   $a1, %hi(_instrumentsctlSegmentRomStart) # $a1, 0x3b
-/* 007730 70006B30 AFA200CC */  sw    $v0, 0xcc($sp)
-/* 007734 70006B34 24A54450 */  addiu $a1, %lo(_instrumentsctlSegmentRomStart) # addiu $a1, $a1, 0x4450
-/* 007738 70006B38 00402025 */  move  $a0, $v0
-/* 00773C 70006B3C 0C001707 */  jal   romCopy
-/* 007740 70006B40 8FA60038 */   lw    $a2, 0x38($sp)
-/* 007744 70006B44 3C05003C */  lui   $a1, %hi(_instrumentstblSegmentRomStart) # $a1, 0x3c
-/* 007748 70006B48 24A587F0 */  addiu $a1, %lo(_instrumentstblSegmentRomStart) # addiu $a1, $a1, -0x7810
-/* 00774C 70006B4C 0C00439D */  jal   alBnkfNew
-/* 007750 70006B50 8FA400CC */   lw    $a0, 0xcc($sp)
-/* 007754 70006B54 8FAB00CC */  lw    $t3, 0xcc($sp)
-/* 007758 70006B58 3C018006 */  lui   $at, %hi(D_80063724)
-/* 00775C 70006B5C 240D0010 */  li    $t5, 16
-/* 007760 70006B60 8D6C0004 */  lw    $t4, 4($t3)
-/* 007764 70006B64 AFAD0010 */  sw    $t5, 0x10($sp)
-/* 007768 70006B68 00002025 */  move  $a0, $zero
-/* 00776C 70006B6C 00002825 */  move  $a1, $zero
-/* 007770 70006B70 02003025 */  move  $a2, $s0
-/* 007774 70006B74 24070001 */  li    $a3, 1
-/* 007778 70006B78 0C003AD4 */  jal   alHeapDBAlloc
-/* 00777C 70006B7C AC2C3724 */   sw    $t4, %lo(D_80063724)($at)
-/* 007780 70006B80 3C038006 */  lui   $v1, %hi(ptr_musicdatatable)
-/* 007784 70006B84 3C050042 */  lui   $a1, %hi(_musicsampletblSegmentRomStart) # $a1, 0x42
-/* 007788 70006B88 24633734 */  addiu $v1, %lo(ptr_musicdatatable) # addiu $v1, $v1, 0x3734
-/* 00778C 70006B8C 24A59790 */  addiu $a1, %lo(_musicsampletblSegmentRomStart) # addiu $a1, $a1, -0x6870
-/* 007790 70006B90 AC620000 */  sw    $v0, ($v1)
-/* 007794 70006B94 AFA50038 */  sw    $a1, 0x38($sp)
-/* 007798 70006B98 00402025 */  move  $a0, $v0
-/* 00779C 70006B9C 0C001707 */  jal   romCopy
-/* 0077A0 70006BA0 24060010 */   li    $a2, 16
-/* 0077A4 70006BA4 3C0E8006 */  lui   $t6, %hi(ptr_musicdatatable) 
-/* 0077A8 70006BA8 8DCE3734 */  lw    $t6, %lo(ptr_musicdatatable)($t6)
-/* 0077AC 70006BAC 00002025 */  move  $a0, $zero
-/* 0077B0 70006BB0 00002825 */  move  $a1, $zero
-/* 0077B4 70006BB4 95C30000 */  lhu   $v1, ($t6)
-/* 0077B8 70006BB8 02003025 */  move  $a2, $s0
-/* 0077BC 70006BBC 24070001 */  li    $a3, 1
-/* 0077C0 70006BC0 000378C0 */  sll   $t7, $v1, 3
-/* 0077C4 70006BC4 25E30004 */  addiu $v1, $t7, 4
-/* 0077C8 70006BC8 AFA30010 */  sw    $v1, 0x10($sp)
-/* 0077CC 70006BCC 0C003AD4 */  jal   alHeapDBAlloc
-/* 0077D0 70006BD0 AFA30040 */   sw    $v1, 0x40($sp)
-/* 0077D4 70006BD4 8FA30040 */  lw    $v1, 0x40($sp)
-/* 0077D8 70006BD8 3C078006 */  lui   $a3, %hi(ptr_musicdatatable)
-/* 0077DC 70006BDC 24E73734 */  addiu $a3, %lo(ptr_musicdatatable) # addiu $a3, $a3, 0x3734
-/* 0077E0 70006BE0 2466000F */  addiu $a2, $v1, 0xf
-/* 0077E4 70006BE4 34D8000F */  ori   $t8, $a2, 0xf
-/* 0077E8 70006BE8 ACE20000 */  sw    $v0, ($a3)
-/* 0077EC 70006BEC 3B06000F */  xori  $a2, $t8, 0xf
-/* 0077F0 70006BF0 00402025 */  move  $a0, $v0
-/* 0077F4 70006BF4 0C001707 */  jal   romCopy
-/* 0077F8 70006BF8 8FA50038 */   lw    $a1, 0x38($sp)
-/* 0077FC 70006BFC 3C048006 */  lui   $a0, %hi(ptr_musicdatatable)
-/* 007800 70006C00 3C050042 */  lui   $a1, %hi(_musicsampletblSegmentRomStart) # $a1, 0x42
-/* 007804 70006C04 24A59790 */  addiu $a1, %lo(_musicsampletblSegmentRomStart) # addiu $a1, $a1, -0x6870
-/* 007808 70006C08 0C001A7C */  jal   audio_related
-/* 00780C 70006C0C 8C843734 */   lw    $a0, %lo(ptr_musicdatatable)($a0)
-/* 007810 70006C10 240818C8 */  li    $t0, 6344
-/* 007814 70006C14 AFA80010 */  sw    $t0, 0x10($sp)
-/* 007818 70006C18 00002025 */  move  $a0, $zero
-/* 00781C 70006C1C 00002825 */  move  $a1, $zero
-/* 007820 70006C20 02003025 */  move  $a2, $s0
-/* 007824 70006C24 0C003AD4 */  jal   alHeapDBAlloc
-/* 007828 70006C28 24070001 */   li    $a3, 1
-/* 00782C 70006C2C 3C018006 */  lui   $at, %hi(D_80063838)
-/* 007830 70006C30 24091770 */  li    $t1, 6000
-/* 007834 70006C34 AC223838 */  sw    $v0, %lo(D_80063838)($at)
-/* 007838 70006C38 AFA90010 */  sw    $t1, 0x10($sp)
-/* 00783C 70006C3C 00002025 */  move  $a0, $zero
-/* 007840 70006C40 00002825 */  move  $a1, $zero
-/* 007844 70006C44 02003025 */  move  $a2, $s0
-/* 007848 70006C48 0C003AD4 */  jal   alHeapDBAlloc
-/* 00784C 70006C4C 24070001 */   li    $a3, 1
-/* 007850 70006C50 3C078006 */  lui   $a3, %hi(D_8006383C)
-/* 007854 70006C54 24E7383C */  addiu $a3, %lo(D_8006383C) # addiu $a3, $a3, 0x383c
-/* 007858 70006C58 ACE20000 */  sw    $v0, ($a3)
-/* 00785C 70006C5C 244B07D0 */  addiu $t3, $v0, 0x7d0
-/* 007860 70006C60 3C018006 */  lui   $at, %hi(D_80063840)
-/* 007864 70006C64 3C038006 */  lui   $v1, %hi(D_80063738)
-/* 007868 70006C68 3C048006 */  lui   $a0, %hi(ptr_musicdatatable)
-/* 00786C 70006C6C 3C058006 */  lui   $a1, %hi(D_800637B8)
-/* 007870 70006C70 3C068006 */  lui   $a2, %hi(D_80063836)
-/* 007874 70006C74 AC2B3840 */  sw    $t3, %lo(D_80063840)($at)
-/* 007878 70006C78 24C63836 */  addiu $a2, %lo(D_80063836) # addiu $a2, $a2, 0x3836
-/* 00787C 70006C7C 24A537B8 */  addiu $a1, %lo(D_800637B8) # addiu $a1, $a1, 0x37b8
-/* 007880 70006C80 8C843734 */  lw    $a0, %lo(ptr_musicdatatable)($a0)
-/* 007884 70006C84 24633738 */  addiu $v1, %lo(D_80063738) # addiu $v1, $v1, 0x3738
-.L70006C88:
-/* 007888 70006C88 948C0008 */  lhu   $t4, 8($a0)
-/* 00788C 70006C8C 24840008 */  addiu $a0, $a0, 8
-/* 007890 70006C90 24A50002 */  addiu $a1, $a1, 2
-/* 007894 70006C94 A46C0000 */  sh    $t4, ($v1)
-/* 007898 70006C98 948D0002 */  lhu   $t5, 2($a0)
-/* 00789C 70006C9C 3182FFFF */  andi  $v0, $t4, 0xffff
-/* 0078A0 70006CA0 304E0001 */  andi  $t6, $v0, 1
-/* 0078A4 70006CA4 11C00003 */  beqz  $t6, .L70006CB4
-/* 0078A8 70006CA8 A4ADFFFE */   sh    $t5, -2($a1)
-/* 0078AC 70006CAC 244F0001 */  addiu $t7, $v0, 1
-/* 0078B0 70006CB0 A46F0000 */  sh    $t7, ($v1)
-.L70006CB4:
-/* 0078B4 70006CB4 14A6FFF4 */  bne   $a1, $a2, .L70006C88
-/* 0078B8 70006CB8 24630002 */   addiu $v1, $v1, 2
-/* 0078BC 70006CBC 24180018 */  li    $t8, 24
-/* 0078C0 70006CC0 24190080 */  li    $t9, 128
-/* 0078C4 70006CC4 24080006 */  li    $t0, 6
-/* 0078C8 70006CC8 AFA000A4 */  sw    $zero, 0xa4($sp)
-/* 0078CC 70006CCC AFB800A8 */  sw    $t8, 0xa8($sp)
-/* 0078D0 70006CD0 AFB900AC */  sw    $t9, 0xac($sp)
-/* 0078D4 70006CD4 AFA000B4 */  sw    $zero, 0xb4($sp)
-/* 0078D8 70006CD8 A3A800C0 */  sb    $t0, 0xc0($sp)
-/* 0078DC 70006CDC AFA000BC */  sw    $zero, 0xbc($sp)
-/* 0078E0 70006CE0 AFB000B8 */  sw    $s0, 0xb8($sp)
-/* 0078E4 70006CE4 0C0006F4 */  jal   amCreateAudioManager
-/* 0078E8 70006CE8 27A400A4 */   addiu $a0, $sp, 0xa4
-/* 0078EC 70006CEC 24090010 */  li    $t1, 16
-/* 0078F0 70006CF0 240A0040 */  li    $t2, 64
-/* 0078F4 70006CF4 240B0010 */  li    $t3, 16
-/* 0078F8 70006CF8 240C0010 */  li    $t4, 16
-/* 0078FC 70006CFC 240D0040 */  li    $t5, 64
-/* 007900 70006D00 240E0010 */  li    $t6, 16
-/* 007904 70006D04 240F0010 */  li    $t7, 16
-/* 007908 70006D08 24180040 */  li    $t8, 64
-/* 00790C 70006D0C 24190010 */  li    $t9, 16
-/* 007910 70006D10 2408007C */  li    $t0, 124
-/* 007914 70006D14 AFA90088 */  sw    $t1, 0x88($sp)
-/* 007918 70006D18 AFAA008C */  sw    $t2, 0x8c($sp)
-/* 00791C 70006D1C A3AB0090 */  sb    $t3, 0x90($sp)
-/* 007920 70006D20 AFB00094 */  sw    $s0, 0x94($sp)
-/* 007924 70006D24 AFA00098 */  sw    $zero, 0x98($sp)
-/* 007928 70006D28 AFA0009C */  sw    $zero, 0x9c($sp)
-/* 00792C 70006D2C AFA000A0 */  sw    $zero, 0xa0($sp)
-/* 007930 70006D30 AFAC006C */  sw    $t4, 0x6c($sp)
-/* 007934 70006D34 AFAD0070 */  sw    $t5, 0x70($sp)
-/* 007938 70006D38 A3AE0074 */  sb    $t6, 0x74($sp)
-/* 00793C 70006D3C AFB00078 */  sw    $s0, 0x78($sp)
-/* 007940 70006D40 AFA0007C */  sw    $zero, 0x7c($sp)
-/* 007944 70006D44 AFA00080 */  sw    $zero, 0x80($sp)
-/* 007948 70006D48 AFA00084 */  sw    $zero, 0x84($sp)
-/* 00794C 70006D4C AFAF0050 */  sw    $t7, 0x50($sp)
-/* 007950 70006D50 AFB80054 */  sw    $t8, 0x54($sp)
-/* 007954 70006D54 A3B90058 */  sb    $t9, 0x58($sp)
-/* 007958 70006D58 AFB0005C */  sw    $s0, 0x5c($sp)
-/* 00795C 70006D5C AFA00060 */  sw    $zero, 0x60($sp)
-/* 007960 70006D60 AFA00064 */  sw    $zero, 0x64($sp)
-/* 007964 70006D64 AFA00068 */  sw    $zero, 0x68($sp)
-/* 007968 70006D68 AFA80010 */  sw    $t0, 0x10($sp)
-/* 00796C 70006D6C 00002025 */  move  $a0, $zero
-/* 007970 70006D70 00002825 */  move  $a1, $zero
-/* 007974 70006D74 02003025 */  move  $a2, $s0
-/* 007978 70006D78 0C003AD4 */  jal   alHeapDBAlloc
-/* 00797C 70006D7C 24070001 */   li    $a3, 1
-/* 007980 70006D80 3C018006 */  lui   $at, %hi(seqp_1)
-/* 007984 70006D84 2409007C */  li    $t1, 124
-/* 007988 70006D88 AC223728 */  sw    $v0, %lo(seqp_1)($at)
-/* 00798C 70006D8C AFA90010 */  sw    $t1, 0x10($sp)
-/* 007990 70006D90 00002025 */  move  $a0, $zero
-/* 007994 70006D94 00002825 */  move  $a1, $zero
-/* 007998 70006D98 02003025 */  move  $a2, $s0
-/* 00799C 70006D9C 0C003AD4 */  jal   alHeapDBAlloc
-/* 0079A0 70006DA0 24070001 */   li    $a3, 1
-/* 0079A4 70006DA4 3C018006 */  lui   $at, %hi(seqp_2)
-/* 0079A8 70006DA8 240A007C */  li    $t2, 124
-/* 0079AC 70006DAC AC22372C */  sw    $v0, %lo(seqp_2)($at)
-/* 0079B0 70006DB0 AFAA0010 */  sw    $t2, 0x10($sp)
-/* 0079B4 70006DB4 00002025 */  move  $a0, $zero
-/* 0079B8 70006DB8 00002825 */  move  $a1, $zero
-/* 0079BC 70006DBC 02003025 */  move  $a2, $s0
-/* 0079C0 70006DC0 0C003AD4 */  jal   alHeapDBAlloc
-/* 0079C4 70006DC4 24070001 */   li    $a3, 1
-/* 0079C8 70006DC8 3C018006 */  lui   $at, %hi(seqp_3)
-/* 0079CC 70006DCC 3C048006 */  lui   $a0, %hi(seqp_1)
-/* 0079D0 70006DD0 AC223730 */  sw    $v0, %lo(seqp_3)($at)
-/* 0079D4 70006DD4 8C843728 */  lw    $a0, %lo(seqp_1)($a0)
-/* 0079D8 70006DD8 0C004820 */  jal   alCSPNew
-/* 0079DC 70006DDC 27A50088 */   addiu $a1, $sp, 0x88
-/* 0079E0 70006DE0 3C048006 */  lui   $a0, %hi(seqp_1)
-/* 0079E4 70006DE4 3C058006 */  lui   $a1, %hi(D_80063724)
-/* 0079E8 70006DE8 8CA53724 */  lw    $a1, %lo(D_80063724)($a1)
-/* 0079EC 70006DEC 0C00487C */  jal   alSeqpSetBank
-/* 0079F0 70006DF0 8C843728 */   lw    $a0, %lo(seqp_1)($a0)
-/* 0079F4 70006DF4 3C048006 */  lui   $a0, %hi(seqp_2)
-/* 0079F8 70006DF8 8C84372C */  lw    $a0, %lo(seqp_2)($a0)
-/* 0079FC 70006DFC 0C004820 */  jal   alCSPNew
-/* 007A00 70006E00 27A5006C */   addiu $a1, $sp, 0x6c
-/* 007A04 70006E04 3C048006 */  lui   $a0, %hi(seqp_2)
-/* 007A08 70006E08 3C058006 */  lui   $a1, %hi(D_80063724)
-/* 007A0C 70006E0C 8CA53724 */  lw    $a1, %lo(D_80063724)($a1)
-/* 007A10 70006E10 0C00487C */  jal   alSeqpSetBank
-/* 007A14 70006E14 8C84372C */   lw    $a0, %lo(seqp_2)($a0)
-/* 007A18 70006E18 3C048006 */  lui   $a0, %hi(seqp_3)
-/* 007A1C 70006E1C 8C843730 */  lw    $a0, %lo(seqp_3)($a0)
-/* 007A20 70006E20 0C004820 */  jal   alCSPNew
-/* 007A24 70006E24 27A50050 */   addiu $a1, $sp, 0x50
-/* 007A28 70006E28 3C048006 */  lui   $a0, %hi(seqp_3)
-/* 007A2C 70006E2C 3C058006 */  lui   $a1, %hi(D_80063724)
-/* 007A30 70006E30 8CA53724 */  lw    $a1, %lo(D_80063724)($a1)
-/* 007A34 70006E34 0C00487C */  jal   alSeqpSetBank
-/* 007A38 70006E38 8C843730 */   lw    $a0, %lo(seqp_3)($a0)
-/* 007A3C 70006E3C 240B0040 */  li    $t3, 64
-/* 007A40 70006E40 240C0040 */  li    $t4, 64
-/* 007A44 70006E44 240D0008 */  li    $t5, 8
-/* 007A48 70006E48 AFAB00DC */  sw    $t3, 0xdc($sp)
-/* 007A4C 70006E4C AFAC00D8 */  sw    $t4, 0xd8($sp)
-/* 007A50 70006E50 AFAD00E0 */  sw    $t5, 0xe0($sp)
-/* 007A54 70006E54 AFB000E4 */  sw    $s0, 0xe4($sp)
-/* 007A58 70006E58 0C001EC8 */  jal   sfx_c_70007B20
-/* 007A5C 70006E5C 27A400D8 */   addiu $a0, $sp, 0xd8
-/* 007A60 70006E60 0C0007D6 */  jal   amStartAudioThread
-/* 007A64 70006E64 00000000 */   nop   
-.L70006E68:
-/* 007A68 70006E68 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 007A6C 70006E6C 8FB00020 */  lw    $s0, 0x20($sp)
-/* 007A70 70006E70 27BD00E8 */  addiu $sp, $sp, 0xe8
-/* 007A74 70006E74 03E00008 */  jr    $ra
-/* 007A78 70006E78 00000000 */   nop   
-)
-#endif
 
-
-struct music_struct_b {
-    u8 data[8438];
-    u8 *unk_0;
-};
 
 /**
  * 7A7C	70006E7C
