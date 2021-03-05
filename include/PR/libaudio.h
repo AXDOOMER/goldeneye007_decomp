@@ -221,10 +221,15 @@ typedef struct {
  * Sequence Files
  ***********************************************************************/
 
+/**
+ * Metadata for a sequence "file" entry / data content of single sequence.
+ * Based on original ALSeqData in n64devkit\ultra\usr\include\PR\libaudio.h.
+ */
 typedef struct
 {
-    u8 *offset;
-    s32 len;
+    u32 *address;
+    u16 len;
+    u16 offset;
 #ifdef VERSION_SH
     s8 magic[2]; // tbl: 0x0204, otherwise: 0x0203
 
@@ -247,17 +252,32 @@ typedef struct
 #endif
 } ALSeqData;
 
+/**
+ * Structure for storing collection of sequence metadatas.
+ * Based on original ALSeqFile in n64devkit\ultra\usr\include\PR\libaudio.h.
+ */
 typedef struct
 {
-#ifndef VERSION_SH
-    s16 revision;
-#endif
-    s16 seqCount;
+    /**
+     * number of sequences.
+     */
+    u16 seqCount;
+
+    /**
+     * Unknown, maybe revision.
+     */
+    u16 unk;
+
 #ifdef VERSION_SH
     s16 unk2;
     u8 *data;
     s32 pad[2];
 #endif
+
+    /**
+     * ARRAY of sequence info. This is a "dynamic" array, more space
+     * will be allocated from ALHeap at runtime.
+     */
     ALSeqData seqArray[1];
 } ALSeqFile;
 

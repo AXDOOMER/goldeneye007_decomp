@@ -414,7 +414,7 @@ ALBank *D_80063724;
 ALCSPlayer *seqp_1;
 ALCSPlayer *seqp_2;
 ALCSPlayer *seqp_3;
-struct audio_struct_a *ptr_musicdatatable;
+ALSeqFile *ptr_musicdatatable;
 
 /**
  * Something about starting offset of track data (maybe).
@@ -572,10 +572,13 @@ void setupaudio(void)
         D_80063724 = instrumentBank->bankArray[0];
     }
 
+    // this area based on auReadSeqFileHeader
+
     size = 0x10;
     ptr_musicdatatable = alHeapAlloc(&hp, MUSIC_HEAP_NUMBER, size);
     romCopy(ptr_musicdatatable, (void *)tblSegmentRomStartAddress, size);
-    tblSegmentSize = (sizeof(struct audio_struct_a) * ptr_musicdatatable[0].unk0) + 4;
+
+    tblSegmentSize = (sizeof(struct audio_struct_a) * ptr_musicdatatable->seqCount) + 4;
     ptr_musicdatatable = alHeapAlloc(&hp, MUSIC_HEAP_NUMBER, tblSegmentSize);
     romCopy(ptr_musicdatatable, (void *)tblSegmentRomStartAddress, ALIGN16_a(tblSegmentSize));
 
@@ -591,8 +594,8 @@ void setupaudio(void)
 
     for (ui = 0; ui < NUM_MUSIC_TRACKS; ui++)
     {
-        D_80063738[ui] = ptr_musicdatatable[ui+1].unk0;
-        D_800637B8[ui] = ptr_musicdatatable[ui+1].unk2;
+        D_80063738[ui] = ptr_musicdatatable->seqArray[ui].len;
+        D_800637B8[ui] = ptr_musicdatatable->seqArray[ui].offset;
 
         if (D_80063738[ui] & 1)
         {
@@ -688,7 +691,7 @@ void musicTrack1Play(s32 arg0)
     while (alCSPGetState(seqp_1))
         ;
 
-    romAddress = ptr_musicdatatable[music1_track_num].unk4;
+    romAddress = ptr_musicdatatable->seqArray[music1_track_num].address;
 
     if (romAddress < (void*)0x10000U)
     {
@@ -873,7 +876,7 @@ void musicTrack2Play(s32 arg0)
     while (alCSPGetState(seqp_2))
         ;
 
-    romAddress = ptr_musicdatatable[music2_track_num].unk4;
+    romAddress = ptr_musicdatatable->seqArray[music2_track_num].address;
 
     if (romAddress < (void*)0x10000U)
     {
@@ -1055,7 +1058,7 @@ void music_related_3rd_block(s32 arg0)
     while (alCSPGetState(seqp_3))
         ;
 
-    romAddress = ptr_musicdatatable[music3_track_num].unk4;
+    romAddress = ptr_musicdatatable->seqArray[music3_track_num].address;
 
     if (romAddress < (void*)0x10000U)
     {
