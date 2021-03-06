@@ -370,8 +370,8 @@ glabel set_sound_effect_to_slot
 /* 0694C4 7F034994 AC600010 */  sw    $zero, 0x10($v1)
 /* 0694C8 7F034998 AC600014 */  sw    $zero, 0x14($v1)
 .L7F03499C:
-/* 0694CC 7F03499C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 0694D0 7F0349A0 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0694CC 7F03499C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 0694D0 7F0349A0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0694D4 7F0349A4 0C002382 */  jal   play_sfx_a1
 /* 0694D8 7F0349A8 87A50026 */   lh    $a1, 0x26($sp)
 /* 0694DC 7F0349AC 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -16558,8 +16558,8 @@ glabel sub_GAME_7F03BDEC
 /* 070BCC 7F03C09C 55A00008 */  bnezl $t5, .L7F03C0C0
 /* 070BD0 7F03C0A0 8FBF0064 */   lw    $ra, 0x64($sp)
 /* 070BD4 7F03C0A4 16C10005 */  bne   $s6, $at, .L7F03C0BC
-/* 070BD8 7F03C0A8 3C048006 */   lui   $a0, %hi(ptr_sfx_buf)
-/* 070BDC 7F03C0AC 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 070BD8 7F03C0A8 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 070BDC 7F03C0AC 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 070BE0 7F03C0B0 24050069 */  li    $a1, 105
 /* 070BE4 7F03C0B4 0C002382 */  jal   play_sfx_a1
 /* 070BE8 7F03C0B8 00003025 */   move  $a2, $zero
@@ -17237,7 +17237,7 @@ glabel handle_mp_respawn_and_some_things
 /* 0713DC 7F03C8AC 92180003 */  lbu   $t8, 3($s0)
 .L7F03C8B0:
 /* 0713E0 7F03C8B0 24010015 */  li    $at, 21
-/* 0713E4 7F03C8B4 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
+/* 0713E4 7F03C8B4 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0713E8 7F03C8B8 17010003 */  bne   $t8, $at, .L7F03C8C8
 /* 0713EC 7F03C8BC 24050052 */   li    $a1, 82
 /* 0713F0 7F03C8C0 C6060080 */  lwc1  $f6, 0x80($s0)
@@ -17246,7 +17246,7 @@ glabel handle_mp_respawn_and_some_things
 /* 0713F8 7F03C8C8 16600006 */  bnez  $s3, .L7F03C8E4
 /* 0713FC 7F03C8CC 00003025 */   move  $a2, $zero
 /* 071400 7F03C8D0 0C002382 */  jal   play_sfx_a1
-/* 071404 7F03C8D4 8C843720 */   lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 071404 7F03C8D4 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 071408 7F03C8D8 00402025 */  move  $a0, $v0
 /* 07140C 7F03C8DC 0FC14E84 */  jal   sub_GAME_7F053A10
 /* 071410 7F03C8E0 26250008 */   addiu $a1, $s1, 8

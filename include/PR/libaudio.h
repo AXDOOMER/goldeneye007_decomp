@@ -228,28 +228,8 @@ typedef struct {
 typedef struct
 {
     u8 *address;
-    u16 len;
     u16 offset;
-#ifdef VERSION_SH
-    s8 magic[2]; // tbl: 0x0204, otherwise: 0x0203
-
-    // for ctl (else zeros):
-    union {
-        // unused, just for clarification (big endian)
-        struct {
-            u8 bank;
-            u8 ff;
-            u8 numInstruments;
-            u8 numDrums;
-        } as_u8;
-
-        // used
-        struct {
-            s16 bankAndFf;
-            s16 numInstrumentsAndDrums;
-        } as_s16;
-    } ctl;
-#endif
+    u16 len;
 } ALSeqData;
 
 /**
@@ -267,12 +247,6 @@ typedef struct
      * Unknown, maybe revision.
      */
     u16 unk;
-
-#ifdef VERSION_SH
-    s16 unk2;
-    u8 *data;
-    s32 pad[2];
-#endif
 
     /**
      * ARRAY of sequence info. This is a "dynamic" array, more space

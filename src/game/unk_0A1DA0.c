@@ -168,10 +168,10 @@ glabel sub_GAME_7F0A1DA0
 /* 0D6A6C 7F0A1F3C C6320000 */  lwc1  $f18, ($s1)
 /* 0D6A70 7F0A1F40 44023000 */  mfc1  $v0, $f6
 /* 0D6A74 7F0A1F44 C7A60084 */  lwc1  $f6, 0x84($sp)
-/* 0D6A78 7F0A1F48 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
+/* 0D6A78 7F0A1F48 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0D6A7C 7F0A1F4C 0002C843 */  sra   $t9, $v0, 1
 /* 0D6A80 7F0A1F50 44995000 */  mtc1  $t9, $f10
-/* 0D6A84 7F0A1F54 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0D6A84 7F0A1F54 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0D6A88 7F0A1F58 24050047 */  li    $a1, 71
 /* 0D6A8C 7F0A1F5C 468053A0 */  cvt.s.w $f14, $f10
 /* 0D6A90 7F0A1F60 00003025 */  move  $a2, $zero

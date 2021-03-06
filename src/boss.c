@@ -245,7 +245,7 @@ void bossMemBarsFlagToggle(void) {
 void bossEntry(void) {
     bossInitMainthreadData();
     allocate_init_rsp_buffers();
-    setupaudio();
+    musicSeqPlayerInit();
     while(1){
        bossMainloop();
     }    
