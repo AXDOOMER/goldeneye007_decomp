@@ -24,6 +24,7 @@
 #include "mainmenu.h"
 #include "mema.h"
 #include "memp.h"
+#include "music.h"
 #include "ob.h"
 #include "ramrom.h"
 #include "random.h"
@@ -244,7 +245,7 @@ void bossMemBarsFlagToggle(void) {
 void bossEntry(void) {
     bossInitMainthreadData();
     allocate_init_rsp_buffers();
-    setupaudio();
+    musicSeqPlayerInit();
     while(1){
        bossMainloop();
     }    

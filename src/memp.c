@@ -57,7 +57,6 @@ void mempCheckMemflagTokens(s32 bstart, s32 bsize)
     mempSetBankStarts((s32*)&sp20);
 }
 
-#define ALIGN16(val)        (((val) | 0xf) ^ 0xf)
 void mempSetBankStarts(s32 banks[8])
 {
     s32 i;
@@ -83,7 +82,7 @@ void mempSetBankStarts(s32 banks[8])
     }
 
     for (i = 0; i < 7; i++) {
-        bankstarts[i] = ALIGN16(bankstarts[i]);
+        bankstarts[i] = ALIGN16_b(bankstarts[i]);
     }
 
     var2 = memory_bank_ptrs[0].bankstart;

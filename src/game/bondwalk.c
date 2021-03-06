@@ -3961,7 +3961,7 @@ glabel sub_GAME_7F05EE24
 /* 093B5C 7F05F02C 3C018005 */  lui   $at, %hi(D_80053C90)
 /* 093B60 7F05F030 240F003C */  li    $t7, 60
 /* 093B64 7F05F034 8C4B0000 */  lw    $t3, ($v0)
-/* 093B68 7F05F038 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
+/* 093B68 7F05F038 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 093B6C 7F05F03C 24050004 */  li    $a1, 4
 /* 093B70 7F05F040 356C0002 */  ori   $t4, $t3, 2
 /* 093B74 7F05F044 AC4C0000 */  sw    $t4, ($v0)
@@ -3976,7 +3976,7 @@ glabel sub_GAME_7F05EE24
 /* 093B98 7F05F068 8E18006C */  lw    $t8, 0x6c($s0)
 /* 093B9C 7F05F06C AF0F00BC */  sw    $t7, 0xbc($t8)
 /* 093BA0 7F05F070 0C002382 */  jal   play_sfx_a1
-/* 093BA4 7F05F074 8C843720 */   lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 093BA4 7F05F074 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 093BA8 7F05F078 10400003 */  beqz  $v0, .L7F05F088
 /* 093BAC 7F05F07C 00402025 */   move  $a0, $v0
 /* 093BB0 7F05F080 0FC14E84 */  jal   sub_GAME_7F053A10
@@ -4543,7 +4543,7 @@ generate_temp_default:
 /* 09420C 7F05F6DC 3C018005 */  lui   $at, %hi(D_80053DC8)
 /* 094210 7F05F6E0 240B003C */  li    $t3, 60
 /* 094214 7F05F6E4 8C480000 */  lw    $t0, ($v0)
-/* 094218 7F05F6E8 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
+/* 094218 7F05F6E8 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 09421C 7F05F6EC 24050004 */  li    $a1, 4
 /* 094220 7F05F6F0 35090002 */  ori   $t1, $t0, 2
 /* 094224 7F05F6F4 AC490000 */  sw    $t1, ($v0)
@@ -4554,7 +4554,7 @@ generate_temp_default:
 /* 094238 7F05F708 8E0C006C */  lw    $t4, 0x6c($s0)
 /* 09423C 7F05F70C AD8B00BC */  sw    $t3, 0xbc($t4)
 /* 094240 7F05F710 0C002382 */  jal   play_sfx_a1
-/* 094244 7F05F714 8C843720 */   lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 094244 7F05F714 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 094248 7F05F718 10400003 */  beqz  $v0, .L7F05F728
 /* 09424C 7F05F71C 00402025 */   move  $a0, $v0
 /* 094250 7F05F720 0FC14E84 */  jal   sub_GAME_7F053A10
@@ -5197,23 +5197,23 @@ glabel sub_GAME_7F05FB64
 /* 094A9C 7F05FF6C 8C8D006C */  lw    $t5, 0x6c($a0)
 /* 094AA0 7F05FF70 ADAC00BC */  sw    $t4, 0xbc($t5)
 /* 094AA4 7F05FF74 8C82006C */  lw    $v0, 0x6c($a0)
-/* 094AA8 7F05FF78 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
+/* 094AA8 7F05FF78 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 094AAC 7F05FF7C 8C4E0098 */  lw    $t6, 0x98($v0)
 /* 094AB0 7F05FF80 24460098 */  addiu $a2, $v0, 0x98
 /* 094AB4 7F05FF84 55C00006 */  bnezl $t6, .L7F05FFA0
 /* 094AB8 7F05FF88 8C4F009C */   lw    $t7, 0x9c($v0)
 /* 094ABC 7F05FF8C 0C002382 */  jal   play_sfx_a1
-/* 094AC0 7F05FF90 8C843720 */   lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 094AC0 7F05FF90 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 094AC4 7F05FF94 10000009 */  b     .L7F05FFBC
 /* 094AC8 7F05FF98 8FBF001C */   lw    $ra, 0x1c($sp)
 /* 094ACC 7F05FF9C 8C4F009C */  lw    $t7, 0x9c($v0)
 .L7F05FFA0:
-/* 094AD0 7F05FFA0 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
+/* 094AD0 7F05FFA0 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 094AD4 7F05FFA4 24050001 */  li    $a1, 1
 /* 094AD8 7F05FFA8 15E00003 */  bnez  $t7, .L7F05FFB8
 /* 094ADC 7F05FFAC 2446009C */   addiu $a2, $v0, 0x9c
 /* 094AE0 7F05FFB0 0C002382 */  jal   play_sfx_a1
-/* 094AE4 7F05FFB4 8C843720 */   lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 094AE4 7F05FFB4 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 .L7F05FFB8:
 /* 094AE8 7F05FFB8 8FBF001C */  lw    $ra, 0x1c($sp)
 .L7F05FFBC:
@@ -13964,8 +13964,8 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 /* 099020 7F0644F0 24010016 */   li    $at, 22
 /* 099024 7F0644F4 14E10008 */  bne   $a3, $at, .L7F064518
 /* 099028 7F0644F8 27A20038 */   addiu $v0, $sp, 0x38
-/* 09902C 7F0644FC 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 099030 7F064500 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09902C 7F0644FC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 099030 7F064500 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 099034 7F064504 2405005B */  li    $a1, 91
 /* 099038 7F064508 0C002382 */  jal   play_sfx_a1
 /* 09903C 7F06450C AFA60060 */   sw    $a2, 0x60($sp)
@@ -13987,11 +13987,11 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 /* 099074 7F064544 1709FFF8 */  bne   $t8, $t1, .L7F064528
 /* 099078 7F064548 AD41FFFC */   sw    $at, -4($t2)
 /* 09907C 7F06454C 8F010000 */  lw    $at, ($t8)
-/* 099080 7F064550 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
+/* 099080 7F064550 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 099084 7F064554 AD410000 */  sw    $at, ($t2)
 /* 099088 7F064558 8FAB0068 */  lw    $t3, 0x68($sp)
 /* 09908C 7F06455C 24010014 */  li    $at, 20
-/* 099090 7F064560 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 099090 7F064560 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 099094 7F064564 0161001B */  divu  $zero, $t3, $at
 /* 099098 7F064568 00006010 */  mfhi  $t4
 /* 09909C 7F06456C 000C6840 */  sll   $t5, $t4, 1
@@ -14012,8 +14012,8 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 .L7F0645A4:
 /* 0990D4 7F0645A4 24010002 */  li    $at, 2
 /* 0990D8 7F0645A8 14E10007 */  bne   $a3, $at, .L7F0645C8
-/* 0990DC 7F0645AC 3C048006 */   lui   $a0, %hi(ptr_sfx_buf)
-/* 0990E0 7F0645B0 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0990DC 7F0645AC 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 0990E0 7F0645B0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0990E4 7F0645B4 2405004A */  li    $a1, 74
 /* 0990E8 7F0645B8 0C002382 */  jal   play_sfx_a1
 /* 0990EC 7F0645BC AFA60060 */   sw    $a2, 0x60($sp)
@@ -14027,13 +14027,13 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 /* 099108 7F0645D8 25085E2C */  addiu $t0, %lo(D_80035E2C) # addiu $t0, $t0, 0x5e2c
 /* 09910C 7F0645DC 8D010000 */  lw    $at, ($t0)
 /* 099110 7F0645E0 27A20030 */  addiu $v0, $sp, 0x30
-/* 099114 7F0645E4 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
+/* 099114 7F0645E4 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 099118 7F0645E8 AC410000 */  sw    $at, ($v0)
 /* 09911C 7F0645EC 95010004 */  lhu   $at, 4($t0)
 /* 099120 7F0645F0 A4410004 */  sh    $at, 4($v0)
 /* 099124 7F0645F4 8FB80068 */  lw    $t8, 0x68($sp)
 /* 099128 7F0645F8 24010003 */  li    $at, 3
-/* 09912C 7F0645FC 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09912C 7F0645FC 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 099130 7F064600 0301001B */  divu  $zero, $t8, $at
 /* 099134 7F064604 00005010 */  mfhi  $t2
 /* 099138 7F064608 000A5840 */  sll   $t3, $t2, 1
@@ -14047,10 +14047,10 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 /* 099154 7F064624 25AD5E34 */  addiu $t5, %lo(D_80035E34) # addiu $t5, $t5, 0x5e34
 /* 099158 7F064628 8DA10000 */  lw    $at, ($t5)
 /* 09915C 7F06462C 27A2002C */  addiu $v0, $sp, 0x2c
-/* 099160 7F064630 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
+/* 099160 7F064630 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 099164 7F064634 AC410000 */  sw    $at, ($v0)
 /* 099168 7F064638 8FA80068 */  lw    $t0, 0x68($sp)
-/* 09916C 7F06463C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09916C 7F06463C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 099170 7F064640 31090001 */  andi  $t1, $t0, 1
 /* 099174 7F064644 0009C040 */  sll   $t8, $t1, 1
 /* 099178 7F064648 00585021 */  addu  $t2, $v0, $t8
@@ -14085,7 +14085,7 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 /* 0991E4 7F0646B4 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0991E8 7F0646B8 84470008 */  lh    $a3, 8($v0)
 /* 0991EC 7F0646BC 8FA80064 */  lw    $t0, 0x64($sp)
-/* 0991F0 7F0646C0 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
+/* 0991F0 7F0646C0 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0991F4 7F0646C4 18E0000C */  blez  $a3, .L7F0646F8
 /* 0991F8 7F0646C8 8FA60060 */   lw    $a2, 0x60($sp)
 /* 0991FC 7F0646CC 0107001B */  divu  $zero, $t0, $a3
@@ -14099,7 +14099,7 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 /* 099218 7F0646E8 01385021 */  addu  $t2, $t1, $t8
 /* 09921C 7F0646EC 85450000 */  lh    $a1, ($t2)
 /* 099220 7F0646F0 0C002382 */  jal   play_sfx_a1
-/* 099224 7F0646F4 8C843720 */   lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 099224 7F0646F4 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 .L7F0646F8:
 /* 099228 7F0646F8 8FAB0060 */  lw    $t3, 0x60($sp)
 /* 09922C 7F0646FC 8D640000 */  lw    $a0, ($t3)
@@ -14180,8 +14180,8 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 /* 099598 7F064A28 24010016 */   li    $at, 22
 /* 09959C 7F064A2C 14E10008 */  bne   $a3, $at, .L7F064A50
 /* 0995A0 7F064A30 27A20038 */   addiu $v0, $sp, 0x38
-/* 0995A4 7F064A34 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
-/* 0995A8 7F064A38 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0995A4 7F064A34 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
+/* 0995A8 7F064A38 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0995AC 7F064A3C 2405005B */  li    $a1, 91
 /* 0995B0 7F064A40 0C002386 */  jal   play_sfx_a1
 /* 0995B4 7F064A44 AFA60060 */   sw    $a2, 0x60($sp)
@@ -14203,11 +14203,11 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 /* 0995EC 7F064A7C 172AFFF8 */  bne   $t9, $t2, .L7F064A60
 /* 0995F0 7F064A80 AD61FFFC */   sw    $at, -4($t3)
 /* 0995F4 7F064A84 8F210000 */  lw    $at, ($t9)
-/* 0995F8 7F064A88 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
+/* 0995F8 7F064A88 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
 /* 0995FC 7F064A8C AD610000 */  sw    $at, ($t3)
 /* 099600 7F064A90 8FAC0068 */  lw    $t4, 0x68($sp)
 /* 099604 7F064A94 24010014 */  li    $at, 20
-/* 099608 7F064A98 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 099608 7F064A98 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09960C 7F064A9C 0181001B */  divu  $zero, $t4, $at
 /* 099610 7F064AA0 00006810 */  mfhi  $t5
 /* 099614 7F064AA4 000D7040 */  sll   $t6, $t5, 1
@@ -14228,8 +14228,8 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 .L7F064ADC:
 /* 09964C 7F064ADC 24010002 */  li    $at, 2
 /* 099650 7F064AE0 14E10007 */  bne   $a3, $at, .L7F064B00
-/* 099654 7F064AE4 3C048006 */   lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
-/* 099658 7F064AE8 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 099654 7F064AE4 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
+/* 099658 7F064AE8 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09965C 7F064AEC 2405004A */  li    $a1, 74
 /* 099660 7F064AF0 0C002386 */  jal   play_sfx_a1
 /* 099664 7F064AF4 AFA60060 */   sw    $a2, 0x60($sp)
@@ -14243,13 +14243,13 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 /* 099680 7F064B10 25295E6C */  addiu $t1, %lo(D_80035E2C) # addiu $t1, $t1, 0x5e6c
 /* 099684 7F064B14 8D210000 */  lw    $at, ($t1)
 /* 099688 7F064B18 27A20030 */  addiu $v0, $sp, 0x30
-/* 09968C 7F064B1C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
+/* 09968C 7F064B1C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
 /* 099690 7F064B20 AC410000 */  sw    $at, ($v0)
 /* 099694 7F064B24 95210004 */  lhu   $at, 4($t1)
 /* 099698 7F064B28 A4410004 */  sh    $at, 4($v0)
 /* 09969C 7F064B2C 8FB90068 */  lw    $t9, 0x68($sp)
 /* 0996A0 7F064B30 24010003 */  li    $at, 3
-/* 0996A4 7F064B34 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0996A4 7F064B34 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0996A8 7F064B38 0321001B */  divu  $zero, $t9, $at
 /* 0996AC 7F064B3C 00005810 */  mfhi  $t3
 /* 0996B0 7F064B40 000B6040 */  sll   $t4, $t3, 1
@@ -14263,10 +14263,10 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 /* 0996CC 7F064B5C 25CE5E74 */  addiu $t6, %lo(D_80035E34) # addiu $t6, $t6, 0x5e74
 /* 0996D0 7F064B60 8DC10000 */  lw    $at, ($t6)
 /* 0996D4 7F064B64 27A2002C */  addiu $v0, $sp, 0x2c
-/* 0996D8 7F064B68 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
+/* 0996D8 7F064B68 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
 /* 0996DC 7F064B6C AC410000 */  sw    $at, ($v0)
 /* 0996E0 7F064B70 8FA90068 */  lw    $t1, 0x68($sp)
-/* 0996E4 7F064B74 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0996E4 7F064B74 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0996E8 7F064B78 312A0001 */  andi  $t2, $t1, 1
 /* 0996EC 7F064B7C 000AC840 */  sll   $t9, $t2, 1
 /* 0996F0 7F064B80 00595821 */  addu  $t3, $v0, $t9
@@ -14301,7 +14301,7 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 /* 09975C 7F064BEC 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 099760 7F064BF0 84470008 */  lh    $a3, 8($v0)
 /* 099764 7F064BF4 8FA90064 */  lw    $t1, 0x64($sp)
-/* 099768 7F064BF8 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
+/* 099768 7F064BF8 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
 /* 09976C 7F064BFC 18E0000C */  blez  $a3, .L7F064C30
 /* 099770 7F064C00 8FA60060 */   lw    $a2, 0x60($sp)
 /* 099774 7F064C04 0127001B */  divu  $zero, $t1, $a3
@@ -14315,7 +14315,7 @@ glabel recall_joy2_hits_edit_detail_edit_flag
 /* 099790 7F064C20 01595821 */  addu  $t3, $t2, $t9
 /* 099794 7F064C24 85650000 */  lh    $a1, ($t3)
 /* 099798 7F064C28 0C002386 */  jal   play_sfx_a1
-/* 09979C 7F064C2C 8C843760 */   lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09979C 7F064C2C 8C843760 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 .L7F064C30:
 /* 0997A0 7F064C30 8FAC0060 */  lw    $t4, 0x60($sp)
 /* 0997A4 7F064C34 8D840000 */  lw    $a0, ($t4)
@@ -14565,8 +14565,8 @@ glabel sub_GAME_7F064720
 /* 09925C 7F06472C AFA40020 */   sw    $a0, 0x20($sp)
 /* 099260 7F064730 1040000C */  beqz  $v0, .L7F064764
 /* 099264 7F064734 00403025 */   move  $a2, $v0
-/* 099268 7F064738 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 09926C 7F06473C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 099268 7F064738 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 09926C 7F06473C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 099270 7F064740 24050046 */  li    $a1, 70
 /* 099274 7F064744 0C002382 */  jal   play_sfx_a1
 /* 099278 7F064748 AFA2001C */   sw    $v0, 0x1c($sp)
@@ -14599,8 +14599,8 @@ glabel sub_GAME_7F064720
 /* 0997E4 7F064C74 00000000 */   nop   
 /* 0997E8 7F064C78 1040000C */  beqz  $v0, .L7F064CAC
 /* 0997EC 7F064C7C 00403025 */   move  $a2, $v0
-/* 0997F0 7F064C80 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
-/* 0997F4 7F064C84 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0997F0 7F064C80 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
+/* 0997F4 7F064C84 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0997F8 7F064C88 24050046 */  li    $a1, 70
 /* 0997FC 7F064C8C 0C002386 */  jal   play_sfx_a1
 /* 099800 7F064C90 AFA2001C */   sw    $v0, 0x1c($sp)
@@ -14691,10 +14691,10 @@ glabel recall_joy2_hits_edit_flag
 /* 099304 7F0647D4 25EF5E38 */  addiu $t7, %lo(D_80035E38) # addiu $t7, $t7, 0x5e38
 /* 099308 7F0647D8 8DE10000 */  lw    $at, ($t7)
 /* 09930C 7F0647DC 27A20070 */  addiu $v0, $sp, 0x70
-/* 099310 7F0647E0 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
+/* 099310 7F0647E0 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 099314 7F0647E4 AC410000 */  sw    $at, ($v0)
 /* 099318 7F0647E8 8FA80078 */  lw    $t0, 0x78($sp)
-/* 09931C 7F0647EC 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09931C 7F0647EC 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 099320 7F0647F0 31090001 */  andi  $t1, $t0, 1
 /* 099324 7F0647F4 00095040 */  sll   $t2, $t1, 1
 /* 099328 7F0647F8 004A5821 */  addu  $t3, $v0, $t2
@@ -14720,7 +14720,7 @@ glabel recall_joy2_hits_edit_flag
 /* 099370 7F064840 ADE1FFFC */   sw    $at, -4($t7)
 /* 099374 7F064844 8FB90078 */  lw    $t9, 0x78($sp)
 /* 099378 7F064848 24010024 */  li    $at, 36
-/* 09937C 7F06484C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
+/* 09937C 7F06484C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 099380 7F064850 0321001B */  divu  $zero, $t9, $at
 /* 099384 7F064854 00004010 */  mfhi  $t0
 /* 099388 7F064858 00084840 */  sll   $t1, $t0, 1
@@ -14728,7 +14728,7 @@ glabel recall_joy2_hits_edit_flag
 /* 099390 7F064860 85450000 */  lh    $a1, ($t2)
 /* 099394 7F064864 AFA6007C */  sw    $a2, 0x7c($sp)
 /* 099398 7F064868 0C002382 */  jal   play_sfx_a1
-/* 09939C 7F06486C 8C843720 */   lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09939C 7F06486C 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0993A0 7F064870 8FA6007C */  lw    $a2, 0x7c($sp)
 .L7F064874:
 /* 0993A4 7F064874 8CC40000 */  lw    $a0, ($a2)
@@ -14767,8 +14767,8 @@ glabel recall_joy2_hits_edit_flag
 /* 099424 7F0648F4 0007000D */  break 7
 .L7F0648F8:
 /* 099428 7F0648F8 85250000 */  lh    $a1, ($t1)
-/* 09942C 7F0648FC 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 099430 7F064900 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09942C 7F0648FC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 099430 7F064900 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 099434 7F064904 0C002382 */  jal   play_sfx_a1
 /* 099438 7F064908 AFA6007C */   sw    $a2, 0x7c($sp)
 /* 09943C 7F06490C 8FA6007C */  lw    $a2, 0x7c($sp)
@@ -14822,10 +14822,10 @@ glabel recall_joy2_hits_edit_flag
 /* 09989C 7F064D2C 27185E78 */  addiu $t8, %lo(D_80035E38) # addiu $t8, $t8, 0x5e78
 /* 0998A0 7F064D30 8F010000 */  lw    $at, ($t8)
 /* 0998A4 7F064D34 27A20070 */  addiu $v0, $sp, 0x70
-/* 0998A8 7F064D38 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
+/* 0998A8 7F064D38 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
 /* 0998AC 7F064D3C AC410000 */  sw    $at, ($v0)
 /* 0998B0 7F064D40 8FA90078 */  lw    $t1, 0x78($sp)
-/* 0998B4 7F064D44 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0998B4 7F064D44 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0998B8 7F064D48 312A0001 */  andi  $t2, $t1, 1
 /* 0998BC 7F064D4C 000A5840 */  sll   $t3, $t2, 1
 /* 0998C0 7F064D50 004B6021 */  addu  $t4, $v0, $t3
@@ -14851,7 +14851,7 @@ glabel recall_joy2_hits_edit_flag
 /* 099908 7F064D98 AF01FFFC */   sw    $at, -4($t8)
 /* 09990C 7F064D9C 8FA80078 */  lw    $t0, 0x78($sp)
 /* 099910 7F064DA0 24010024 */  li    $at, 36
-/* 099914 7F064DA4 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
+/* 099914 7F064DA4 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
 /* 099918 7F064DA8 0101001B */  divu  $zero, $t0, $at
 /* 09991C 7F064DAC 00004810 */  mfhi  $t1
 /* 099920 7F064DB0 00095040 */  sll   $t2, $t1, 1
@@ -14859,7 +14859,7 @@ glabel recall_joy2_hits_edit_flag
 /* 099928 7F064DB8 85650000 */  lh    $a1, ($t3)
 /* 09992C 7F064DBC AFA6007C */  sw    $a2, 0x7c($sp)
 /* 099930 7F064DC0 0C002386 */  jal   play_sfx_a1
-/* 099934 7F064DC4 8C843760 */   lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 099934 7F064DC4 8C843760 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 099938 7F064DC8 8FA6007C */  lw    $a2, 0x7c($sp)
 .L7F064DCC:
 /* 09993C 7F064DCC 8CC40000 */  lw    $a0, ($a2)
@@ -14898,8 +14898,8 @@ glabel recall_joy2_hits_edit_flag
 /* 0999BC 7F064E4C 0007000D */  break 7
 .L7F064E50:
 /* 0999C0 7F064E50 85450000 */  lh    $a1, ($t2)
-/* 0999C4 7F064E54 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
-/* 0999C8 7F064E58 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0999C4 7F064E54 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
+/* 0999C8 7F064E58 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0999CC 7F064E5C 0C002386 */  jal   play_sfx_a1
 /* 0999D0 7F064E60 AFA6007C */   sw    $a2, 0x7c($sp)
 /* 0999D4 7F064E64 8FA6007C */  lw    $a2, 0x7c($sp)
@@ -15080,8 +15080,8 @@ glabel sub_GAME_7F064934
 /* 0994AC 7F06497C 00004010 */  mfhi  $t0
 /* 0994B0 7F064980 00084840 */  sll   $t1, $t0, 1
 /* 0994B4 7F064984 03A92821 */  addu  $a1, $sp, $t1
-/* 0994B8 7F064988 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 0994BC 7F06498C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0994B8 7F064988 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 0994BC 7F06498C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0994C0 7F064990 84A5001C */  lh    $a1, 0x1c($a1)
 /* 0994C4 7F064994 0C002382 */  jal   play_sfx_a1
 /* 0994C8 7F064998 00003025 */   move  $a2, $zero
@@ -15121,8 +15121,8 @@ glabel sub_GAME_7F064934
 /* 099A50 7F064EE0 00004810 */  mfhi  $t1
 /* 099A54 7F064EE4 00095040 */  sll   $t2, $t1, 1
 /* 099A58 7F064EE8 03AA2821 */  addu  $a1, $sp, $t2
-/* 099A5C 7F064EEC 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
-/* 099A60 7F064EF0 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 099A5C 7F064EEC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
+/* 099A60 7F064EF0 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 099A64 7F064EF4 84A5001C */  lh    $a1, 0x1c($a1)
 /* 099A68 7F064EF8 0C002386 */  jal   play_sfx_a1
 /* 099A6C 7F064EFC 00003025 */   move  $a2, $zero
@@ -16252,8 +16252,8 @@ Weapon_shooting_throwable:
 /* 099F74 7F065444 02202025 */   move  $a0, $s1
 /* 099F78 7F065448 00022C00 */  sll   $a1, $v0, 0x10
 /* 099F7C 7F06544C 00057C03 */  sra   $t7, $a1, 0x10
-/* 099F80 7F065450 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 099F84 7F065454 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 099F80 7F065450 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 099F84 7F065454 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 099F88 7F065458 01E02825 */  move  $a1, $t7
 /* 099F8C 7F06545C 0C002382 */  jal   play_sfx_a1
 /* 099F90 7F065460 260601D4 */   addiu $a2, $s0, 0x1d4
@@ -16267,8 +16267,8 @@ Weapon_shooting_throwable:
 /* 099FAC 7F06547C 02202025 */   move  $a0, $s1
 /* 099FB0 7F065480 00022C00 */  sll   $a1, $v0, 0x10
 /* 099FB4 7F065484 0005CC03 */  sra   $t9, $a1, 0x10
-/* 099FB8 7F065488 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 099FBC 7F06548C 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 099FB8 7F065488 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 099FBC 7F06548C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 099FC0 7F065490 03202825 */  move  $a1, $t9
 /* 099FC4 7F065494 0C002382 */  jal   play_sfx_a1
 /* 099FC8 7F065498 260601D8 */   addiu $a2, $s0, 0x1d8
@@ -16286,8 +16286,8 @@ Weapon_shooting_throwable:
 /* 099FF0 7F0654C0 304D0001 */  andi  $t5, $v0, 1
 /* 099FF4 7F0654C4 000D7040 */  sll   $t6, $t5, 1
 /* 099FF8 7F0654C8 03AE2821 */  addu  $a1, $sp, $t6
-/* 099FFC 7F0654CC 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 09A000 7F0654D0 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 099FFC 7F0654CC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 09A000 7F0654D0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09A004 7F0654D4 84A501B0 */  lh    $a1, 0x1b0($a1)
 /* 09A008 7F0654D8 0C002382 */  jal   play_sfx_a1
 /* 09A00C 7F0654DC 00003025 */   move  $a2, $zero
@@ -16315,8 +16315,8 @@ Weapon_shooting_throwable:
 /* 09A05C 7F06552C 00000000 */   nop   
 /* 09A060 7F065530 14400005 */  bnez  $v0, .L7F065548
 .L7F065534:
-/* 09A064 7F065534 3C048006 */   lui   $a0, %hi(ptr_sfx_buf)
-/* 09A068 7F065538 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09A064 7F065534 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 09A068 7F065538 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09A06C 7F06553C 24050059 */  li    $a1, 89
 /* 09A070 7F065540 0C002382 */  jal   play_sfx_a1
 /* 09A074 7F065544 00003025 */   move  $a2, $zero
@@ -16943,24 +16943,24 @@ Weapon_shooting_throwable:
 /* 09A97C 7F065E4C 01A00008 */  jr    $t5
 /* 09A980 7F065E50 00000000 */   nop   
 weapon_playsfx_F2:
-/* 09A984 7F065E54 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 09A988 7F065E58 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09A984 7F065E54 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 09A988 7F065E58 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09A98C 7F065E5C 240500F2 */  li    $a1, 242
 /* 09A990 7F065E60 0C002382 */  jal   play_sfx_a1
 /* 09A994 7F065E64 00003025 */   move  $a2, $zero
 /* 09A998 7F065E68 10000015 */  b     .L7F065EC0
 /* 09A99C 7F065E6C 8E0E0020 */   lw    $t6, 0x20($s0)
 weapon_playsfx_knife:
-/* 09A9A0 7F065E70 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 09A9A4 7F065E74 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09A9A0 7F065E70 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 09A9A4 7F065E74 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09A9A8 7F065E78 240500E9 */  li    $a1, 233
 /* 09A9AC 7F065E7C 0C002382 */  jal   play_sfx_a1
 /* 09A9B0 7F065E80 00003025 */   move  $a2, $zero
 /* 09A9B4 7F065E84 1000000E */  b     .L7F065EC0
 /* 09A9B8 7F065E88 8E0E0020 */   lw    $t6, 0x20($s0)
 weapon_playsfx_mine:
-/* 09A9BC 7F065E8C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 09A9C0 7F065E90 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09A9BC 7F065E8C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 09A9C0 7F065E90 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09A9C4 7F065E94 240500EB */  li    $a1, 235
 /* 09A9C8 7F065E98 0C002382 */  jal   play_sfx_a1
 /* 09A9CC 7F065E9C 00003025 */   move  $a2, $zero
@@ -16968,8 +16968,8 @@ weapon_playsfx_mine:
 /* 09A9D4 7F065EA4 8E0E0020 */   lw    $t6, 0x20($s0)
 weapon_playsfx_gun:
 .L7F065EA8:
-/* 09A9D8 7F065EA8 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 09A9DC 7F065EAC 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09A9D8 7F065EA8 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 09A9DC 7F065EAC 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09A9E0 7F065EB0 240500E8 */  li    $a1, 232
 /* 09A9E4 7F065EB4 0C002382 */  jal   play_sfx_a1
 /* 09A9E8 7F065EB8 00003025 */   move  $a2, $zero
@@ -17182,8 +17182,8 @@ weapon_switchstyle_NONE:
 /* 09ACD8 7F0661A8 00000000 */   nop   
 weapon_reload_gun_sfx:
 .L7F0661AC:
-/* 09ACDC 7F0661AC 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 09ACE0 7F0661B0 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09ACDC 7F0661AC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 09ACE0 7F0661B0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09ACE4 7F0661B4 24050032 */  li    $a1, 50
 /* 09ACE8 7F0661B8 0C002382 */  jal   play_sfx_a1
 /* 09ACEC 7F0661BC 00003025 */   move  $a2, $zero
@@ -17586,8 +17586,8 @@ weapon_reload_none_sfx:
 /* 09B298 7F066768 0000C810 */  mfhi  $t9
 /* 09B29C 7F06676C 00195840 */  sll   $t3, $t9, 1
 /* 09B2A0 7F066770 03AB2821 */  addu  $a1, $sp, $t3
-/* 09B2A4 7F066774 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 09B2A8 7F066778 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09B2A4 7F066774 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 09B2A8 7F066778 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09B2AC 7F06677C 84A5007C */  lh    $a1, 0x7c($a1)
 /* 09B2B0 7F066780 0C002382 */  jal   play_sfx_a1
 /* 09B2B4 7F066784 00003025 */   move  $a2, $zero
@@ -19096,8 +19096,8 @@ Weapon_shooting_throwable:
 /* 09A548 7F0659D8 02202025 */   move  $a0, $s1
 /* 09A54C 7F0659DC 00022C00 */  sll   $a1, $v0, 0x10
 /* 09A550 7F0659E0 00057403 */  sra   $t6, $a1, 0x10
-/* 09A554 7F0659E4 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
-/* 09A558 7F0659E8 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09A554 7F0659E4 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
+/* 09A558 7F0659E8 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09A55C 7F0659EC 01C02825 */  move  $a1, $t6
 /* 09A560 7F0659F0 0C002386 */  jal   play_sfx_a1
 /* 09A564 7F0659F4 260601D4 */   addiu $a2, $s0, 0x1d4
@@ -19111,8 +19111,8 @@ Weapon_shooting_throwable:
 /* 09A580 7F065A10 02202025 */   move  $a0, $s1
 /* 09A584 7F065A14 00022C00 */  sll   $a1, $v0, 0x10
 /* 09A588 7F065A18 0005CC03 */  sra   $t9, $a1, 0x10
-/* 09A58C 7F065A1C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
-/* 09A590 7F065A20 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09A58C 7F065A1C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
+/* 09A590 7F065A20 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09A594 7F065A24 03202825 */  move  $a1, $t9
 /* 09A598 7F065A28 0C002386 */  jal   play_sfx_a1
 /* 09A59C 7F065A2C 260601D8 */   addiu $a2, $s0, 0x1d8
@@ -19130,8 +19130,8 @@ Weapon_shooting_throwable:
 /* 09A5C4 7F065A54 304F0001 */  andi  $t7, $v0, 1
 /* 09A5C8 7F065A58 000FC840 */  sll   $t9, $t7, 1
 /* 09A5CC 7F065A5C 03B92821 */  addu  $a1, $sp, $t9
-/* 09A5D0 7F065A60 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
-/* 09A5D4 7F065A64 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09A5D0 7F065A60 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
+/* 09A5D4 7F065A64 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09A5D8 7F065A68 84A501C0 */  lh    $a1, 0x1c0($a1)
 /* 09A5DC 7F065A6C 0C002386 */  jal   play_sfx_a1
 /* 09A5E0 7F065A70 00003025 */   move  $a2, $zero
@@ -19163,8 +19163,8 @@ Weapon_shooting_throwable:
 /* 09A640 7F065AD0 8F3829C4 */  lw    $t8, 0x29c4($t9)
 /* 09A644 7F065AD4 17000005 */  bnez  $t8, .Ljp7F065AEC
 .Ljp7F065AD8:
-/* 09A648 7F065AD8 3C048006 */   lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
-/* 09A64C 7F065ADC 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09A648 7F065AD8 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
+/* 09A64C 7F065ADC 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09A650 7F065AE0 24050059 */  li    $a1, 89
 /* 09A654 7F065AE4 0C002386 */  jal   play_sfx_a1
 /* 09A658 7F065AE8 00003025 */   move  $a2, $zero
@@ -19796,32 +19796,32 @@ Weapon_shooting_throwable:
 /* 09AF74 7F066404 01C00008 */  jr    $t6
 /* 09AF78 7F066408 00000000 */   nop   
 weapon_playsfx_F2:
-/* 09AF7C 7F06640C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
-/* 09AF80 7F066410 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09AF7C 7F06640C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
+/* 09AF80 7F066410 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09AF84 7F066414 240500F2 */  li    $a1, 242
 /* 09AF88 7F066418 0C002386 */  jal   play_sfx_a1
 /* 09AF8C 7F06641C 00003025 */   move  $a2, $zero
 /* 09AF90 7F066420 10000015 */  b     .Ljp7F066478
 /* 09AF94 7F066424 8E0F0020 */   lw    $t7, 0x20($s0)
 weapon_playsfx_knife:
-/* 09AF98 7F066428 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
-/* 09AF9C 7F06642C 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09AF98 7F066428 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
+/* 09AF9C 7F06642C 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09AFA0 7F066430 240500E9 */  li    $a1, 233
 /* 09AFA4 7F066434 0C002386 */  jal   play_sfx_a1
 /* 09AFA8 7F066438 00003025 */   move  $a2, $zero
 /* 09AFAC 7F06643C 1000000E */  b     .Ljp7F066478
 /* 09AFB0 7F066440 8E0F0020 */   lw    $t7, 0x20($s0)
 weapon_playsfx_mine:
-/* 09AFB4 7F066444 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
-/* 09AFB8 7F066448 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09AFB4 7F066444 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
+/* 09AFB8 7F066448 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09AFBC 7F06644C 240500EB */  li    $a1, 235
 /* 09AFC0 7F066450 0C002386 */  jal   play_sfx_a1
 /* 09AFC4 7F066454 00003025 */   move  $a2, $zero
 /* 09AFC8 7F066458 10000007 */  b     .Ljp7F066478
 /* 09AFCC 7F06645C 8E0F0020 */   lw    $t7, 0x20($s0)
 weapon_playsfx_gun:
-/* 09AFD0 7F066460 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
-/* 09AFD4 7F066464 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09AFD0 7F066460 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
+/* 09AFD4 7F066464 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09AFD8 7F066468 240500E8 */  li    $a1, 232
 /* 09AFDC 7F06646C 0C002386 */  jal   play_sfx_a1
 /* 09AFE0 7F066470 00003025 */   move  $a2, $zero
@@ -20041,8 +20041,8 @@ weapon_switchstyle_NONE:
 /* 09B2F0 7F066780 03200008 */  jr    $t9
 /* 09B2F4 7F066784 00000000 */   nop   
 weapon_reload_gun_sfx:
-/* 09B2F8 7F066788 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
-/* 09B2FC 7F06678C 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09B2F8 7F066788 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
+/* 09B2FC 7F06678C 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09B300 7F066790 24050032 */  li    $a1, 50
 /* 09B304 7F066794 0C002386 */  jal   play_sfx_a1
 /* 09B308 7F066798 00003025 */   move  $a2, $zero
@@ -20444,8 +20444,8 @@ weapon_reload_none_sfx:
 /* 09B8B0 7F066D40 00007810 */  mfhi  $t7
 /* 09B8B4 7F066D44 000FC840 */  sll   $t9, $t7, 1
 /* 09B8B8 7F066D48 03B92821 */  addu  $a1, $sp, $t9
-/* 09B8BC 7F066D4C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
-/* 09B8C0 7F066D50 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09B8BC 7F066D4C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
+/* 09B8C0 7F066D50 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09B8C4 7F066D54 84A50080 */  lh    $a1, 0x80($a1)
 /* 09B8C8 7F066D58 0C002386 */  jal   play_sfx_a1
 /* 09B8CC 7F066D5C 00003025 */   move  $a2, $zero
@@ -23805,7 +23805,7 @@ void analyzeGEKey(void)
 		    jp_display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LGUN, 0xD8))); //Analyzing the GoldenEye key...
 		#endif
     	pPlayer->copiedgoldeneye = 1;
-    	play_sfx_a1(ptr_sfx_buf, 0xf5, 0x0);
+    	play_sfx_a1(g_musicSfxBufferPtr, 0xf5, 0x0);
     	draw_item_in_hand_has_more_ammo(RIGHT_HAND, ITEM_GOLDENEYEKEY);
     	draw_item_in_hand_has_more_ammo(LEFT_HAND, ITEM_UNARMED);
   	}
@@ -24632,8 +24632,8 @@ glabel sub_GAME_7F067420
 /* 09C570 7F067A40 AFA70034 */   sw    $a3, 0x34($sp)
 /* 09C574 7F067A44 14400012 */  bnez  $v0, .L7F067A90
 /* 09C578 7F067A48 8FA70034 */   lw    $a3, 0x34($sp)
-/* 09C57C 7F067A4C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 09C580 7F067A50 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09C57C 7F067A4C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 09C580 7F067A50 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09C584 7F067A54 240500F6 */  li    $a1, 246
 /* 09C588 7F067A58 0C002382 */  jal   play_sfx_a1
 /* 09C58C 7F067A5C 24E601D4 */   addiu $a2, $a3, 0x1d4
@@ -26295,11 +26295,11 @@ glabel sub_GAME_7F068D20
 /* 09D8E4 7F068DB4 106F000A */  beq   $v1, $t7, .L7F068DE0
 /* 09D8E8 7F068DB8 00000000 */   nop   
 /* 09D8EC 7F068DBC 8C580C3C */  lw    $t8, 0xc3c($v0)
-/* 09D8F0 7F068DC0 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
+/* 09D8F0 7F068DC0 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 09D8F4 7F068DC4 2405007A */  li    $a1, 122
 /* 09D8F8 7F068DC8 10780005 */  beq   $v1, $t8, .L7F068DE0
 /* 09D8FC 7F068DCC 00000000 */   nop   
-/* 09D900 7F068DD0 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09D900 7F068DD0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09D904 7F068DD4 0C002382 */  jal   play_sfx_a1
 /* 09D908 7F068DD8 AFA70028 */   sw    $a3, 0x28($sp)
 /* 09D90C 7F068DDC 8FA70028 */  lw    $a3, 0x28($sp)
@@ -26397,11 +26397,11 @@ glabel sub_GAME_7F068D20
 /* 09DF10 7F0693A0 1078000A */  beq   $v1, $t8, .Ljp7F0693CC
 /* 09DF14 7F0693A4 00000000 */   nop   
 /* 09DF18 7F0693A8 8C590C3C */  lw    $t9, 0xc3c($v0)
-/* 09DF1C 7F0693AC 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
+/* 09DF1C 7F0693AC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
 /* 09DF20 7F0693B0 2405007A */  li    $a1, 122
 /* 09DF24 7F0693B4 10790005 */  beq   $v1, $t9, .Ljp7F0693CC
 /* 09DF28 7F0693B8 00000000 */   nop   
-/* 09DF2C 7F0693BC 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 09DF2C 7F0693BC 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 09DF30 7F0693C0 0C002386 */  jal   play_sfx_a1
 /* 09DF34 7F0693C4 AFA70028 */   sw    $a3, 0x28($sp)
 /* 09DF38 7F0693C8 8FA70028 */  lw    $a3, 0x28($sp)

@@ -102,7 +102,7 @@ s32 check_if_player_is_pressing_anything_left(s32 param_1)
 
 void play_watch_sfx_beep(void)
 {
-    play_sfx_a1(ptr_sfx_buf, 0x9f, 0);
+    play_sfx_a1(g_musicSfxBufferPtr, 0x9f, 0);
 }
 
 void unpause_game(void)
@@ -326,10 +326,10 @@ glabel sub_GAME_7F0C2530
 /* 0F70A8 7F0C2578 00002025 */   move  $a0, $zero
 /* 0F70AC 7F0C257C 0FC302FC */  jal   sub_GAME_7F0C0BF0
 /* 0F70B0 7F0C2580 00000000 */   nop   
-/* 0F70B4 7F0C2584 0C001C0F */  jal   musicTrack1Vol
+/* 0F70B4 7F0C2584 0C001C0F */  jal   musicTrack1ApplySeqpVol
 /* 0F70B8 7F0C2588 3044FFFF */   andi  $a0, $v0, 0xffff
-/* 0F70BC 7F0C258C 3C018002 */  lui   $at, %hi(music1_playing)
-/* 0F70C0 7F0C2590 AC20434C */  sw    $zero, %lo(music1_playing)($at)
+/* 0F70BC 7F0C258C 3C018002 */  lui   $at, %hi(g_musicXTrack1Fade)
+/* 0F70C0 7F0C2590 AC20434C */  sw    $zero, %lo(g_musicXTrack1Fade)($at)
 /* 0F70C4 7F0C2594 0C001B9F */  jal   musicTrack1Play
 /* 0F70C8 7F0C2598 2404002C */   li    $a0, 44
 /* 0F70CC 7F0C259C 0FC30925 */  jal   pauseAndLockControls

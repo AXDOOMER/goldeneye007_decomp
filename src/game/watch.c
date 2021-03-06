@@ -871,7 +871,7 @@ void sub_GAME_7F0A4EF8(void) {
         
     } else {
         watch_soundrelated_maybe = 1;
-        play_sfx_a1(ptr_sfx_buf, 0x9F, 0);
+        play_sfx_a1(g_musicSfxBufferPtr, 0x9F, 0);
     }
 }
 
@@ -969,14 +969,14 @@ s32 sub_GAME_7F0A519C(void)
 void sub_GAME_7F0A51D8(void)
 {
     D_80040B04 = 0x80;
-    play_sfx_a1(ptr_sfx_buf,0xec,NULL);
+    play_sfx_a1(g_musicSfxBufferPtr,0xec,NULL);
     return;
 }
 
 void sub_GAME_7F0A5210(void)
 {
     set_controlstick_lr_disabled();
-    play_sfx_a1(ptr_sfx_buf,0x9f,NULL);
+    play_sfx_a1(g_musicSfxBufferPtr,0x9f,NULL);
     if ((D_80040B10 << 0x10) < randomGetNext()) {
         sub_GAME_7F0A51D8();
     }
@@ -4272,7 +4272,7 @@ void sub_GAME_7F0A8378(void)
     remove_hands_item(1, 0);
     set_BONDdata_equipcuritem(D_800409B8);
     D_800409C4 = 10;
-    play_sfx_a1(ptr_sfx_buf, 0x9F, 0);
+    play_sfx_a1(g_musicSfxBufferPtr, 0x9F, 0);
 }
 
 
@@ -6400,7 +6400,7 @@ u16 get_mTrack2Vol(void)
 void set_mTrack2Vol(u16 param_1)
 {
     mTrack2Vol = param_1;
-    musicTrack2Vol(mTrack2Vol);
+    musicTrack2ApplySeqpVol(mTrack2Vol);
 }
 
 
@@ -9631,7 +9631,7 @@ void game_option_select_value(u32 *param_1, u32 param_2)
 {
     *param_1 = param_2;
     set_controlstick_lr_disabled();
-    play_sfx_a1(ptr_sfx_buf, 0x2b, NULL);
+    play_sfx_a1(g_musicSfxBufferPtr, 0x2b, NULL);
 }
 
 

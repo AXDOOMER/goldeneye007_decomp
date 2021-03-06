@@ -687,7 +687,7 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
         } while (local_10 != numplayers);
       }
       if (bVar2) {
-        play_sfx_a1(ptr_sfx_buf,0x9f,(ALSndPlayer *)0x0);
+        play_sfx_a1(g_musicSfxBufferPtr,0x9f,(ALSndPlayer *)0x0);
       }
     }
     break;
@@ -883,7 +883,7 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
   case UNLOCK_CHEATS:
     if ((-1 < selected_folder_num) && (selected_folder_num < 4)) {
       proc_7F01E760(selected_folder_num,cheat + ~cheats_debug_2x_laser);
-      play_sfx_a1(ptr_sfx_buf,0x9f,(ALSndPlayer *)0x0);
+      play_sfx_a1(g_musicSfxBufferPtr,0x9f,(ALSndPlayer *)0x0);
     }
     break;
   case UNUSED_37:
@@ -921,7 +921,7 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
       if (SVar11 == amount + SP_STAGE_FACILITY) {
         unlock_stage_in_folder_on_difficulty
                   (selected_folder_num,(longlong)(int)(cheat + ~UNUSED_37),0,99999999);
-        play_sfx_a1(ptr_sfx_buf,0x9f,(ALSndPlayer *)0x0);
+        play_sfx_a1(g_musicSfxBufferPtr,0x9f,(ALSndPlayer *)0x0);
       }
     }
   }
@@ -1128,12 +1128,12 @@ cheats_cheat_deactivate_invincibility:
 /* 0C6830 7F091D00 AFAC0030 */   sw    $t4, 0x30($sp)
 .L7F091D04:
 /* 0C6834 7F091D04 8FAE002C */  lw    $t6, 0x2c($sp)
-/* 0C6838 7F091D08 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
+/* 0C6838 7F091D08 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0C683C 7F091D0C 2405009F */  li    $a1, 159
 /* 0C6840 7F091D10 11C001C5 */  beqz  $t6, .L7F092428
 /* 0C6844 7F091D14 00003025 */   move  $a2, $zero
 /* 0C6848 7F091D18 0C002382 */  jal   play_sfx_a1
-/* 0C684C 7F091D1C 8C843720 */   lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0C684C 7F091D1C 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0C6850 7F091D20 100001C2 */  b     .L7F09242C
 /* 0C6854 7F091D24 8FBF0014 */   lw    $ra, 0x14($sp)
 cheats_cheat_linemode:
@@ -1565,8 +1565,8 @@ cheats_debug_unlockcheat:
 /* 0C6E88 7F092358 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0C6E8C 7F09235C 0FC079D8 */  jal   sub_GAME_7F01E760
 /* 0C6E90 7F092360 00000000 */   nop   
-/* 0C6E94 7F092364 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 0C6E98 7F092368 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0C6E94 7F092364 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 0C6E98 7F092368 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0C6E9C 7F09236C 2405009F */  li    $a1, 159
 /* 0C6EA0 7F092370 0C002382 */  jal   play_sfx_a1
 /* 0C6EA4 7F092374 00003025 */   move  $a2, $zero
@@ -1613,8 +1613,8 @@ cheats_debug_unlocklevel:
 /* 0C6F38 7F092408 8C440000 */  lw    $a0, ($v0)
 /* 0C6F3C 7F09240C 0FC0797E */  jal   unlock_stage_in_folder_on_difficulty
 /* 0C6F40 7F092410 00003025 */   move  $a2, $zero
-/* 0C6F44 7F092414 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 0C6F48 7F092418 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0C6F44 7F092414 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 0C6F48 7F092418 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0C6F4C 7F09241C 2405009F */  li    $a1, 159
 /* 0C6F50 7F092420 0C002382 */  jal   play_sfx_a1
 /* 0C6F54 7F092424 00003025 */   move  $a2, $zero
@@ -1829,12 +1829,12 @@ cheats_cheat_deactivate_invincibility:
 /* 0C7350 7F0927E0 AFAC0030 */   sw    $t4, 0x30($sp)
 .Ljp7F0927E4:
 /* 0C7354 7F0927E4 8FAE002C */  lw    $t6, 0x2c($sp)
-/* 0C7358 7F0927E8 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
+/* 0C7358 7F0927E8 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
 /* 0C735C 7F0927EC 2405009F */  li    $a1, 159
 /* 0C7360 7F0927F0 11C001ED */  beqz  $t6, .Ljp7F092FA8
 /* 0C7364 7F0927F4 00003025 */   move  $a2, $zero
 /* 0C7368 7F0927F8 0C002386 */  jal   play_sfx_a1
-/* 0C736C 7F0927FC 8C843760 */   lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0C736C 7F0927FC 8C843760 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0C7370 7F092800 100001EA */  b     .Ljp7F092FAC
 /* 0C7374 7F092804 8FBF0014 */   lw    $ra, 0x14($sp)
 cheats_cheat_linemode:
@@ -2307,8 +2307,8 @@ cheats_debug_unlockcheat:
 /* 0C7A48 7F092ED8 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0C7A4C 7F092EDC 0FC07A44 */  jal   sub_GAME_7F01E760
 /* 0C7A50 7F092EE0 00000000 */   nop   
-/* 0C7A54 7F092EE4 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
-/* 0C7A58 7F092EE8 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0C7A54 7F092EE4 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
+/* 0C7A58 7F092EE8 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0C7A5C 7F092EEC 2405009F */  li    $a1, 159
 /* 0C7A60 7F092EF0 0C002386 */  jal   play_sfx_a1
 /* 0C7A64 7F092EF4 00003025 */   move  $a2, $zero
@@ -2355,8 +2355,8 @@ cheats_debug_unlocklevel:
 /* 0C7AF8 7F092F88 8C440000 */  lw    $a0, ($v0)
 /* 0C7AFC 7F092F8C 0FC079EA */  jal   unlock_stage_in_folder_on_difficulty
 /* 0C7B00 7F092F90 00003025 */   move  $a2, $zero
-/* 0C7B04 7F092F94 3C048006 */  lui   $a0, %hi(ptr_sfx_buf) # $a0, 0x8006
-/* 0C7B08 7F092F98 8C843760 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0C7B04 7F092F94 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
+/* 0C7B08 7F092F98 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0C7B0C 7F092F9C 2405009F */  li    $a1, 159
 /* 0C7B10 7F092FA0 0C002386 */  jal   play_sfx_a1
 /* 0C7B14 7F092FA4 00003025 */   move  $a2, $zero
