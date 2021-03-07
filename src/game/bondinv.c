@@ -2078,7 +2078,7 @@ glabel sub_GAME_7F08CE70
 
 s32 checkHasGEKey(void) {
     InvItem *item;
-    struct PropRecord *prop;
+    PropRecord *prop;
     ObjectRecord *obj;
     
     item = pPlayer->ptr_inventory_first_in_cycle;
