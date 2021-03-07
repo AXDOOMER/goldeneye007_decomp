@@ -98,59 +98,22 @@ void find_remove_TLB_entry(u32 entry) {
  *        0x0    1 if dirty
  *        0x1    chunk # (7F000000 | chunk<<D)
  */
-#ifdef NONMATCHING
 void remove_TLB_entry_from_table(s32 index) {
     s32 ret;
-    if (TLB_manager_mapping_table[index].entry0 == 0) {
+
+    if (TLB_manager_mapping_table[index].entry0 == 0)
+    {
         ret = return_TLB_index_for_entry((TLB_manager_mapping_table[index].entry1 << 13) | 0x7F000000);
-        if (ret >= 0) {
+
+        if (!(ret & 0x80000000))
+        {
             osUnmapTLB(ret);
         }
+
         TLB_managment_table[TLB_manager_mapping_table[index].entry1].context_value = 1;
         TLB_manager_mapping_table[index].entry0 = 1;
     }
 }
-#else
-void remove_TLB_entry_from_table(s32 index);
-GLOBAL_ASM(
-glabel remove_TLB_entry_from_table
-/* 002554 70001954 3C0F8006 */  lui   $t7, %hi(TLB_manager_mapping_table) 
-/* 002558 70001958 25EFE3F0 */  addiu $t7, %lo(TLB_manager_mapping_table) # addiu $t7, $t7, -0x1c10
-/* 00255C 7000195C 00047040 */  sll   $t6, $a0, 1
-/* 002560 70001960 01CF1821 */  addu  $v1, $t6, $t7
-/* 002564 70001964 90780000 */  lbu   $t8, ($v1)
-/* 002568 70001968 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 00256C 7000196C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 002570 70001970 57000016 */  bnezl $t8, .L700019CC
-/* 002574 70001974 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 002578 70001978 90640001 */  lbu   $a0, 1($v1)
-/* 00257C 7000197C 3C017F00 */  lui   $at, 0x7f00
-/* 002580 70001980 AFA30018 */  sw    $v1, 0x18($sp)
-/* 002584 70001984 0004CB40 */  sll   $t9, $a0, 0xd
-/* 002588 70001988 0C000630 */  jal   return_TLB_index_for_entry
-/* 00258C 7000198C 03212025 */   or    $a0, $t9, $at
-/* 002590 70001990 00024800 */  sll   $t1, $v0, 0
-/* 002594 70001994 8FA30018 */  lw    $v1, 0x18($sp)
-/* 002598 70001998 05200004 */  bltz  $t1, .L700019AC
-/* 00259C 7000199C 00402025 */   move  $a0, $v0
-/* 0025A0 700019A0 0C0034F4 */  jal   osUnmapTLB
-/* 0025A4 700019A4 AFA30018 */   sw    $v1, 0x18($sp)
-/* 0025A8 700019A8 8FA30018 */  lw    $v1, 0x18($sp)
-.L700019AC:
-/* 0025AC 700019AC 906A0001 */  lbu   $t2, 1($v1)
-/* 0025B0 700019B0 3C018006 */  lui   $at, %hi(TLB_managment_table)
-/* 0025B4 700019B4 24020001 */  li    $v0, 1
-/* 0025B8 700019B8 000A5900 */  sll   $t3, $t2, 4
-/* 0025BC 700019BC 002B0821 */  addu  $at, $at, $t3
-/* 0025C0 700019C0 AC22DBF0 */  sw    $v0, %lo(TLB_managment_table)($at)
-/* 0025C4 700019C4 A0620000 */  sb    $v0, ($v1)
-/* 0025C8 700019C8 8FBF0014 */  lw    $ra, 0x14($sp)
-.L700019CC:
-/* 0025CC 700019CC 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0025D0 700019D0 03E00008 */  jr    $ra
-/* 0025D4 700019D4 00000000 */   nop   
-)
-#endif
 
 /**
  * 25D8    700019D8
