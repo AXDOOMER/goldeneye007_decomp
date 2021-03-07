@@ -39,37 +39,31 @@ void establish_TLB_buffer_management_table(void) {
     TLB_manager_mapping_table_end = ((u32)&TLB_managment_table) + 0xFFC08000;
 }
 
-#ifdef NONMATCHING
-// If-statement gets optimized out
-void mp_tlb_related(void) {
-    if ((maybe_cur_TLB_entries > 0x32) || (maybe_cur_TLB_entries < 0x1a)) {
-        // Removed
+void mp_tlb_related(void)
+{
+    s32 *t = &maybe_cur_TLB_entries;
+
+    if (maybe_cur_TLB_entries < 51)
+    {
+        if (maybe_cur_TLB_entries < 26)
+        {
+            s32 t3 = *t;
+            if (t3)
+            {
+                // removed
+            }
+        }
     }
+
     maybe_cur_TLB_entries = 0;
-        
 }
-#else
-GLOBAL_ASM(
-glabel mp_tlb_related
-/* 002498 70001898 3C038002 */  lui   $v1, %hi(maybe_cur_TLB_entries)
-/* 00249C 7000189C 246330D0 */  addiu $v1, %lo(maybe_cur_TLB_entries) # addiu $v1, $v1, 0x30d0
-/* 0024A0 700018A0 8C620000 */  lw    $v0, ($v1)
-/* 0024A4 700018A4 28410033 */  slti  $at, $v0, 0x33
-/* 0024A8 700018A8 10200003 */  beqz  $at, .L700018B8
-/* 0024AC 700018AC 2841001A */   slti  $at, $v0, 0x1a
-/* 0024B0 700018B0 10200001 */  beqz  $at, .L700018B8
-/* 0024B4 700018B4 00000000 */   nop   
-.L700018B8:
-/* 0024B8 700018B8 03E00008 */  jr    $ra
-/* 0024BC 700018BC AC600000 */   sw    $zero, ($v1)
-)
-#endif
+
 
 /**
- * 24C0	700018C0
+ * 24C0    700018C0
  * searches TLB index for an entry matching A0
- *	V0=index of match or 80000000 if not found
- *	accepts: A0=TLB pointer
+ *    V0=index of match or 80000000 if not found
+ *    accepts: A0=TLB pointer
  */
 s32 return_TLB_index_for_entry(int entry) {
     s32 index = 0;
@@ -83,10 +77,10 @@ s32 return_TLB_index_for_entry(int entry) {
 }
 
 /**
- *  2520	70001920
+ *  2520    70001920
  * find and remove TLB entry A0
- *	accepts: A0=TLB pointer
- *	redirects to 700018C0, 7000D3D0
+ *    accepts: A0=TLB pointer
+ *    redirects to 700018C0, 7000D3D0
  */
 void find_remove_TLB_entry(u32 entry) {
     s32 index = return_TLB_index_for_entry(entry);
@@ -98,11 +92,11 @@ void find_remove_TLB_entry(u32 entry) {
 }
 
 /**
- * 2554	70001954
+ * 2554    70001954
  * remove index A0 TLB entry from table at 8005E3F0
- *	table format:
- *		0x0	1 if dirty
- *		0x1	chunk # (7F000000 | chunk<<D)
+ *    table format:
+ *        0x0    1 if dirty
+ *        0x1    chunk # (7F000000 | chunk<<D)
  */
 #ifdef NONMATCHING
 void remove_TLB_entry_from_table(s32 index) {
@@ -159,7 +153,7 @@ glabel remove_TLB_entry_from_table
 #endif
 
 /**
- * 25D8	700019D8
+ * 25D8    700019D8
  * loads ROM range for 7F- TLB entries
  */
 #ifdef NONMATCHING
@@ -266,7 +260,7 @@ glabel translate_load_rom_from_TLBaddress
 #endif
 
 /**
- * 26F8	70001AF8
+ * 26F8    70001AF8
  * V0=p->TLB memory, or alternately end of free memory [8005E4A8]
  */
 u8 * return_ptr_TLBallocatedblock(void)
