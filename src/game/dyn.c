@@ -94,10 +94,9 @@ void/*Light?*/ *dynAllocate7F0BD6F8(s32 count) {
 	return ptr;
 }
 
-#define ALIGN16(val)        (((val) + 0xf | 0xf) ^ 0xf)
 void *dynAllocate(s32 size) {
     void *ptr = g_GfxMemPos;
-	size = ALIGN16(size);
+	size = ALIGN16_a(size);
 	g_GfxMemPos += size;
 	return ptr;
 }

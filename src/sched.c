@@ -6,6 +6,7 @@
 #include "deb_print.h"
 #include "video.h"
 #include "joy.h"
+#include "music.h"
 
 /**
  * @file sched.c
@@ -306,7 +307,7 @@ void __scHandleRetrace(OSSched *sc) {
     sc->frameCount++;
     video_related_7();
     joyPoll();
-    music_related_15();
+    musicFadeTick();
     while (osRecvMesg(&sc->cmdQ, (OSMesg*)&rspTask, OS_MESG_NOBLOCK) != -1) {
         __scAppendList(sc, rspTask);
     }
