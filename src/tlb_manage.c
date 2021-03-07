@@ -2,6 +2,7 @@
 #include "ramrom.h"
 #include "tlb_manage.h"
 #include "tlb_random.h"
+#include "PR/os_cache.h"
 
 /**
  * @file tlb_manage.c
@@ -119,108 +120,38 @@ void remove_TLB_entry_from_table(s32 index) {
  * 25D8    700019D8
  * loads ROM range for 7F- TLB entries
  */
-#ifdef NONMATCHING
-void translate_load_rom_from_TLBaddress(u32 address) {
+void translate_load_rom_from_TLBaddress(u32 address)
+{
+    u32 unused_0[1];
     u32 var1;
     u32 var2;
     u32 var4;
-    u32 var5;
-    struct s_tlbmapping_table_entry *entry;
-    address &= 0x7FFFE000;
+    u32 unused_1[1];
+    u32 addr_copy;
+    u32 var5; // sp 52
+    u32 unused_2[1];
+    u32 unused_3[1];
+
+    addr_copy = address & 0x7FFFE000;
     maybe_cur_TLB_entries++;
-    find_remove_TLB_entry(address);
-    var4 = tlbRandomGetNext() % 90;
-    tlb_segment_num = (var4);
+    find_remove_TLB_entry(addr_copy);
+    tlb_segment_num = tlbRandomGetNext() % 90;
+    var4 = tlb_segment_num;
     remove_TLB_entry_from_table(var4);
-    var1 = (address & 0xFFE000);
+    
+    var1 = addr_copy & 0xFFE000;
     var5 = &(*ptr_TLBallocatedblock)[var4 << 13];
+
     romCopy(var5, ((u32)&_gameSegmentRomStart) + var1, 0x2000);
-    osInvalICache(0x40000000, 0x40000000);
-    osInvalICache(0x80000000, 0x10000000);
+
+    osInvalICache((void *)0x40000000, 0x40000000);
+    osInvalICache((void *)0x80000000, 0x10000000);
     var2 = var1 >> 13;
     TLB_managment_table[var2].pagenum = var4;
     TLB_managment_table[var2].context_value = ((osVirtualToPhysical(var5) >> 0xC) << 6) | 0x1F;
-    entry = &TLB_manager_mapping_table[var4];
-    entry->entry0 = 0;
-    entry->entry1 = var2;
+    TLB_manager_mapping_table[var4].entry0 = 0;
+    TLB_manager_mapping_table[var4].entry1 = var2;
 }
-#else
-GLOBAL_ASM(
-glabel translate_load_rom_from_TLBaddress
-/* 0025D8 700019D8 3C028002 */  lui   $v0, %hi(maybe_cur_TLB_entries)
-/* 0025DC 700019DC 244230D0 */  addiu $v0, %lo(maybe_cur_TLB_entries) # addiu $v0, $v0, 0x30d0
-/* 0025E0 700019E0 8C4E0000 */  lw    $t6, ($v0)
-/* 0025E4 700019E4 3C017FFF */  lui   $at, (0x7FFFE000 >> 16) # lui $at, 0x7fff
-/* 0025E8 700019E8 27BDFFB0 */  addiu $sp, $sp, -0x50
-/* 0025EC 700019EC 3421E000 */  ori   $at, (0x7FFFE000 & 0xFFFF) # ori $at, $at, 0xe000
-/* 0025F0 700019F0 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0025F4 700019F4 00812024 */  and   $a0, $a0, $at
-/* 0025F8 700019F8 25CF0001 */  addiu $t7, $t6, 1
-/* 0025FC 700019FC AFB00018 */  sw    $s0, 0x18($sp)
-/* 002600 70001A00 AC4F0000 */  sw    $t7, ($v0)
-/* 002604 70001A04 0C000648 */  jal   find_remove_TLB_entry
-/* 002608 70001A08 AFA40028 */   sw    $a0, 0x28($sp)
-/* 00260C 70001A0C 0C0006C4 */  jal   tlbRandomGetNext
-/* 002610 70001A10 00000000 */   nop   
-/* 002614 70001A14 2401005A */  li    $at, 90
-/* 002618 70001A18 0041001B */  divu  $zero, $v0, $at
-/* 00261C 70001A1C 00002010 */  mfhi  $a0
-/* 002620 70001A20 3C038002 */  lui   $v1, %hi(tlb_segment_num)
-/* 002624 70001A24 246330D4 */  addiu $v1, %lo(tlb_segment_num) # addiu $v1, $v1, 0x30d4
-/* 002628 70001A28 AC640000 */  sw    $a0, ($v1)
-/* 00262C 70001A2C 0C000655 */  jal   remove_TLB_entry_from_table
-/* 002630 70001A30 00808025 */   move  $s0, $a0
-/* 002634 70001A34 8FA20028 */  lw    $v0, 0x28($sp)
-/* 002638 70001A38 3C198006 */  lui   $t9, %hi(ptr_TLBallocatedblock) 
-/* 00263C 70001A3C 8F39E4A8 */  lw    $t9, %lo(ptr_TLBallocatedblock)($t9)
-/* 002640 70001A40 3C0100FF */  lui   $at, (0x00FFE000 >> 16) # lui $at, 0xff
-/* 002644 70001A44 3421E000 */  ori   $at, (0x00FFE000 & 0xFFFF) # ori $at, $at, 0xe000
-/* 002648 70001A48 00104340 */  sll   $t0, $s0, 0xd
-/* 00264C 70001A4C 3C0A0003 */  lui   $t2, %hi(_gameSegmentRomStart) # $t2, 3
-/* 002650 70001A50 00414824 */  and   $t1, $v0, $at
-/* 002654 70001A54 254A4B30 */  addiu $t2, %lo(_gameSegmentRomStart) # addiu $t2, $t2, 0x4b30
-/* 002658 70001A58 03282021 */  addu  $a0, $t9, $t0
-/* 00265C 70001A5C AFA40034 */  sw    $a0, 0x34($sp)
-/* 002660 70001A60 012A2821 */  addu  $a1, $t1, $t2
-/* 002664 70001A64 01201025 */  move  $v0, $t1
-/* 002668 70001A68 AFA90024 */  sw    $t1, 0x24($sp)
-/* 00266C 70001A6C 0C001707 */  jal   romCopy
-/* 002670 70001A70 24062000 */   li    $a2, 8192
-/* 002674 70001A74 3C044000 */  lui   $a0, 0x4000
-/* 002678 70001A78 0C0034D4 */  jal   osInvalICache
-/* 00267C 70001A7C 3C054000 */   lui   $a1, 0x4000
-/* 002680 70001A80 3C048000 */  lui   $a0, 0x8000
-/* 002684 70001A84 0C0034D4 */  jal   osInvalICache
-/* 002688 70001A88 3C051000 */   lui   $a1, 0x1000
-/* 00268C 70001A8C 8FA50024 */  lw    $a1, 0x24($sp)
-/* 002690 70001A90 3C0D8006 */  lui   $t5, %hi(TLB_managment_table) 
-/* 002694 70001A94 25ADDBF0 */  addiu $t5, %lo(TLB_managment_table) # addiu $t5, $t5, -0x2410
-/* 002698 70001A98 00055B42 */  srl   $t3, $a1, 0xd
-/* 00269C 70001A9C 000B6100 */  sll   $t4, $t3, 4
-/* 0026A0 70001AA0 018D3021 */  addu  $a2, $t4, $t5
-/* 0026A4 70001AA4 ACD00004 */  sw    $s0, 4($a2)
-/* 0026A8 70001AA8 AFA60020 */  sw    $a2, 0x20($sp)
-/* 0026AC 70001AAC AFAB0028 */  sw    $t3, 0x28($sp)
-/* 0026B0 70001AB0 0C003A2C */  jal   osVirtualToPhysical
-/* 0026B4 70001AB4 8FA40034 */   lw    $a0, 0x34($sp)
-/* 0026B8 70001AB8 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0026BC 70001ABC 00027302 */  srl   $t6, $v0, 0xc
-/* 0026C0 70001AC0 0010C840 */  sll   $t9, $s0, 1
-/* 0026C4 70001AC4 3C088006 */  lui   $t0, %hi(TLB_manager_mapping_table) 
-/* 0026C8 70001AC8 8FA50028 */  lw    $a1, 0x28($sp)
-/* 0026CC 70001ACC 8FA60020 */  lw    $a2, 0x20($sp)
-/* 0026D0 70001AD0 000E7980 */  sll   $t7, $t6, 6
-/* 0026D4 70001AD4 2508E3F0 */  addiu $t0, %lo(TLB_manager_mapping_table) # addiu $t0, $t0, -0x1c10
-/* 0026D8 70001AD8 35F8001F */  ori   $t8, $t7, 0x1f
-/* 0026DC 70001ADC 03281821 */  addu  $v1, $t9, $t0
-/* 0026E0 70001AE0 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0026E4 70001AE4 A0600000 */  sb    $zero, ($v1)
-/* 0026E8 70001AE8 27BD0050 */  addiu $sp, $sp, 0x50
-/* 0026EC 70001AEC A0650001 */  sb    $a1, 1($v1)
-/* 0026F0 70001AF0 03E00008 */  jr    $ra
-/* 0026F4 70001AF4 ACD80000 */   sw    $t8, ($a2)
-)
-#endif
 
 /**
  * 26F8    70001AF8
