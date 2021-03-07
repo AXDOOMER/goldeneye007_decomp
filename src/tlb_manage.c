@@ -35,10 +35,7 @@
  */
 #define MAPPING_TABLE_COUNT  90
 
-/**
- * Block size, in bytes.
- */
-#define TLB_ALLOCATION_BLOCK_SIZE 0x2000
+
 
 /**
  * Chosen by fair dice roll.
@@ -86,7 +83,7 @@ void tlbmanageEstablishManagementTable(void)
         g_tlbmanageMappingTable[i].entry0 = 1;
     }
 
-    g_tlbmanageTlbAllocatedBlock = ((u32)&sp_boot & ~0x1FFF) + 0xFFF4C000;
+    g_tlbmanageTlbAllocatedBlock = (u8(*)[TLB_ALLOCATION_BLOCK_SIZE]) (((u32)&sp_boot & ~0x1FFF) + 0xFFF4C000);
     g_tlbmanageMappingTableEnd = ((u32)&g_tlbmanageMangementTable) + 0xFFC08000;
 }
 
@@ -191,7 +188,7 @@ void tlbmanageTranslateLoadRomFromTlbAddress(u32 address)
     u32 var4;
     u32 unused_1[1];
     u32 addr_copy;
-    u32 var5; // sp 52
+    u8 *var5; // sp 52
     u32 unused_2[1];
     u32 unused_3[1];
 
@@ -202,12 +199,12 @@ void tlbmanageTranslateLoadRomFromTlbAddress(u32 address)
     var4 = g_tlbmanageTlbSegmentNumber;
     tlbmanageRemoveEntryByIndex(var4);
     
-    // This is treated as a TLB mask a few lines later, but a mask should
-    // be 12 bits, while this is only 11 (losing highest bit).
+    // This is treated as a TLB mask a few lines later.
+    // Some (some ...) documentation implies the mask should be 12 bits, but this is only 11 (losing highest bit).
     var1 = addr_copy & 0xFFE000;
     var5 = &(*g_tlbmanageTlbAllocatedBlock)[VAL_TO_TLB_MASK(var4)];
 
-    romCopy(var5, ((u32)&_gameSegmentRomStart) + var1, TLB_ALLOCATION_BLOCK_SIZE);
+    romCopy(var5, (void*)(((u32)&_gameSegmentRomStart) + (u32)var1), TLB_ALLOCATION_BLOCK_SIZE);
 
     osInvalICache((void *)0x40000000, 0x40000000);
     osInvalICache((void *)0x80000000, 0x10000000);
@@ -223,9 +220,9 @@ void tlbmanageTranslateLoadRomFromTlbAddress(u32 address)
 /**
  * 26F8    70001AF8
  * V0=p->TLB memory, or alternately end of free memory [8005E4A8]
+ * Returns pointer to (an array of TLB blocksize).
  */
-u8 * tlbmanageGetTlbAllocatedBlock(void)
+u8 (*tlbmanageGetTlbAllocatedBlock(void))[TLB_ALLOCATION_BLOCK_SIZE]
 {
     return g_tlbmanageTlbAllocatedBlock;
 }
-

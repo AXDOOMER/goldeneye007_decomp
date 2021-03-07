@@ -198,7 +198,7 @@ void bossInitMainthreadData(void)
     }
 
     temp_s0 = (osVirtualToPhysical(&room_model_buffer) | 0x80000000);
-    mempCheckMemflagTokens(temp_s0, (tlbmanageGetTlbAllocatedBlock() - temp_s0));
+    mempCheckMemflagTokens(temp_s0, ((u32)tlbmanageGetTlbAllocatedBlock() - (u32)temp_s0));
     mempResetBank(6);
     init_LnameX();
     lvInitDebugNoticeList();
