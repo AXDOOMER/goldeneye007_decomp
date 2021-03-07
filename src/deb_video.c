@@ -2,6 +2,7 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "deb_video.h"
+#include "tlb_manage.h"
 
 /**
  * @file deb_video.c
@@ -98,7 +99,7 @@ glabel tlbproc
 /* 005C08 70005008 16790014 */  bne   $s3, $t9, .L7000505C
 /* 005C0C 7000500C 00000000 */   nop   
 /* 005C10 70005010 8D08365C */  lw    $t0, %lo(ptr_tlbthread_maybe)($t0)
-/* 005C14 70005014 0C000676 */  jal   translate_load_rom_from_TLBaddress
+/* 005C14 70005014 0C000676 */  jal   tlbmanageTranslateLoadRomFromTlbAddress
 /* 005C18 70005018 8D040124 */   lw    $a0, 0x124($t0)
 /* 005C1C 7000501C 3C098006 */  lui   $t1, %hi(ptr_tlbthread_maybe) 
 /* 005C20 70005020 8D29365C */  lw    $t1, %lo(ptr_tlbthread_maybe)($t1)

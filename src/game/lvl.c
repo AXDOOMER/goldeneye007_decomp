@@ -5,6 +5,7 @@
 #include "game/mainmenu.h"
 #include "game/bondinv.h"
 #include "music.h"
+#include "tlb_manage.h"
 
 // bss
 //CODE.bss:8008C260
@@ -3403,7 +3404,7 @@ GLOBAL_ASM(
 glabel manage_mp_game
 /* 0F36B8 7F0BEB88 27BDFE68 */  addiu $sp, $sp, -0x198
 /* 0F36BC 7F0BEB8C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F36C0 7F0BEB90 0C000626 */  jal   mp_tlb_related
+/* 0F36C0 7F0BEB90 0C000626 */  jal   tlbmanageResetCurrentEntriesCount
 /* 0F36C4 7F0BEB94 00000000 */   nop   
 /* 0F36C8 7F0BEB98 3C0E8005 */  lui   $t6, %hi(controls_locked_flag) 
 /* 0F36CC 7F0BEB9C 8DCE8370 */  lw    $t6, %lo(controls_locked_flag)($t6)
@@ -4276,7 +4277,7 @@ GLOBAL_ASM(
 glabel manage_mp_game
 /* 0F431C 7F0BF7AC 27BDFE68 */  addiu $sp, $sp, -0x198
 /* 0F4320 7F0BF7B0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F4324 7F0BF7B4 0C000626 */  jal   mp_tlb_related
+/* 0F4324 7F0BF7B4 0C000626 */  jal   tlbmanageResetCurrentEntriesCount
 /* 0F4328 7F0BF7B8 00000000 */   nop   
 /* 0F432C 7F0BF7BC 3C0E8005 */  lui   $t6, %hi(controls_locked_flag) # $t6, 0x8005
 /* 0F4330 7F0BF7C0 8DCE83A0 */  lw    $t6, %lo(controls_locked_flag)($t6)
@@ -5154,7 +5155,7 @@ GLOBAL_ASM(
 glabel manage_mp_game
 /* 0F36B8 7F0BEB88 27BDFE68 */  addiu $sp, $sp, -0x198
 /* 0F36BC 7F0BEB8C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F36C0 7F0BEB90 0C000626 */  jal   mp_tlb_related
+/* 0F36C0 7F0BEB90 0C000626 */  jal   tlbmanageResetCurrentEntriesCount
 /* 0F36C4 7F0BEB94 00000000 */   nop   
 /* 0F36C8 7F0BEB98 3C0E8005 */  lui   $t6, %hi(controls_locked_flag) 
 /* 0F36CC 7F0BEB9C 8DCE8370 */  lw    $t6, %lo(controls_locked_flag)($t6)
