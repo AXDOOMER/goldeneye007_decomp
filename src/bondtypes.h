@@ -20,6 +20,30 @@ struct rgba_valf32{
 
 /******
 
+ The following struct ObjHeaderData was copied from AIListLogic branch
+ and should be removed when merged
+
+ note: only the necessary fields were copied in order to compile (not the full struct)
+
+******/
+typedef struct ObjHeaderData
+{
+    u16 extrascale; /*0x0 Fixed-Point format u8.8 eg: 0x03.80 = 3.5*/
+    u8 hidden2;     // state - Destroyed, respawn, defused etc /*0x2*/
+                    /*
+                    8x	destroyed
+                    4x	datathief/defuser/decoder used on obj (activated?)
+                    2x
+                    1x
+                    x8	external allocated collision block present
+                    x4	respawn enabled
+                    x2
+                    x1	damaged*/
+    u8 type;        /*0x3*/
+} ObjHeaderData;
+
+/******
+
  The following struct ObjectRecord was copied from AIListLogic branch
  and should be removed when merged
 
@@ -28,7 +52,8 @@ struct rgba_valf32{
 ******/
 typedef struct ObjectRecord
 {
-  u16 obj;     
+    ObjHeaderData head;
+    s16 obj;
 } ObjectRecord;
 
 /******

@@ -1626,20 +1626,26 @@ glabel sub_GAME_7F08CE70
 
 
 
-
-
-#ifdef NONMATCHING
-//NOT MATCHING YET -> Wrong Register values
-void checkHasGEKey(void) {
-
-    InvItem *item = pPlayer->ptr_inventory_first_in_cycle;
+s32 checkHasGEKey(void) {
+    InvItem *item;
+    struct PropRecord *prop;
+    ObjectRecord *obj;
+    
+    item = pPlayer->ptr_inventory_first_in_cycle;
 
     while (item) {
 
-        if (item->type == 2 ) {
-            struct prop *temp_a0 = item->type_inv_item.type_prop.prop;
-            if (item->type_inv_item.type_prop.prop->type == 4 && temp_a0->obj->type == PROJECTILES_TYPE_GE_KEY) {
-                return TRUE;
+        if (item->type == INV_ITEM_PROP) {
+
+            prop = item->type_inv_item.type_prop.prop;
+            
+            if (prop->type == 4) {
+
+                obj = prop->Entityp.obj;
+                
+                if (obj->obj == PROJECTILES_TYPE_GE_KEY) {
+                    return TRUE;
+               }
             }
         }
 
@@ -1651,48 +1657,7 @@ void checkHasGEKey(void) {
     }
 
     return FALSE;
-
 }
-#else
-GLOBAL_ASM(
-.text
-glabel checkHasGEKey
-/* 0C1A3C 7F08CF0C 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0C1A40 7F08CF10 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0C1A44 7F08CF14 240800F8 */  li    $t0, 248
-/* 0C1A48 7F08CF18 24070004 */  li    $a3, 4
-/* 0C1A4C 7F08CF1C 8DC311E0 */  lw    $v1, 0x11e0($t6)
-/* 0C1A50 7F08CF20 24060002 */  li    $a2, 2
-/* 0C1A54 7F08CF24 10600013 */  beqz  $v1, .L7F08CF74
-/* 0C1A58 7F08CF28 00601025 */   move  $v0, $v1
-/* 0C1A5C 7F08CF2C 8C4F0000 */  lw    $t7, ($v0)
-.L7F08CF30:
-/* 0C1A60 7F08CF30 54CF000C */  bnel  $a2, $t7, .L7F08CF64
-/* 0C1A64 7F08CF34 8C42000C */   lw    $v0, 0xc($v0)
-/* 0C1A68 7F08CF38 8C440004 */  lw    $a0, 4($v0)
-/* 0C1A6C 7F08CF3C 90980000 */  lbu   $t8, ($a0)
-/* 0C1A70 7F08CF40 54F80008 */  bnel  $a3, $t8, .L7F08CF64
-/* 0C1A74 7F08CF44 8C42000C */   lw    $v0, 0xc($v0)
-/* 0C1A78 7F08CF48 8C850004 */  lw    $a1, 4($a0)
-/* 0C1A7C 7F08CF4C 84B90004 */  lh    $t9, 4($a1)
-/* 0C1A80 7F08CF50 55190004 */  bnel  $t0, $t9, .L7F08CF64
-/* 0C1A84 7F08CF54 8C42000C */   lw    $v0, 0xc($v0)
-/* 0C1A88 7F08CF58 03E00008 */  jr    $ra
-/* 0C1A8C 7F08CF5C 24020001 */   li    $v0, 1
-
-/* 0C1A90 7F08CF60 8C42000C */  lw    $v0, 0xc($v0)
-.L7F08CF64:
-/* 0C1A94 7F08CF64 50430004 */  beql  $v0, $v1, .L7F08CF78
-/* 0C1A98 7F08CF68 00001025 */   move  $v0, $zero
-/* 0C1A9C 7F08CF6C 5440FFF0 */  bnezl $v0, .L7F08CF30
-/* 0C1AA0 7F08CF70 8C4F0000 */   lw    $t7, ($v0)
-.L7F08CF74:
-/* 0C1AA4 7F08CF74 00001025 */  move  $v0, $zero
-.L7F08CF78:
-/* 0C1AA8 7F08CF78 03E00008 */  jr    $ra
-/* 0C1AAC 7F08CF7C 00000000 */   nop   
-)
-#endif
 
 /**
  * Is the player alive with flag tag token in inventory
