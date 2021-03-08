@@ -281,60 +281,25 @@ s32 tlbIsJumpOpInCodeSeg(u32 *currop)
  * 5E58	70005258
  *     V0= strlen(A0); used exclusively for scanning ind.rea.buf
  *     accepts: A0=p->string
+ * 
+ * Max length returned is 256.
  */
-#ifdef NONMATCHING
-s32 return_strlen(void *arg0)
+s32 return_strlen(u8 *arg0)
 {
-    s32 temp_v1;
-    s32 phi_v1;
-    void *phi_a0;
-    s32 phi_v1_2;
+    s32 count = 0;
+    u8 c;
 
-    phi_v1 = 0;
-    phi_a0 = (arg0 + 1);
-    phi_v1_2 = 0;
-    if (*arg0 != 0)
+    for (c = *arg0++; c != '\0'; c = *arg0++)
     {
-loop_1:
-        temp_v1 = (phi_v1 + 1);
-        phi_v1_2 = temp_v1;
-        if (temp_v1 < 0x100)
+        count++;
+        if (count > 255)
         {
-            phi_v1 = temp_v1;
-            phi_a0 = (phi_a0 + 1);
-            phi_v1_2 = temp_v1;
-            if (*phi_a0 != 0)
-            {
-                goto loop_1;
-            }
+            break;
         }
     }
-    return phi_v1_2;
-}
-#else
-GLOBAL_ASM(
-.text
-glabel return_strlen
-/* 005E58 70005258 90820000 */  lbu   $v0, ($a0)
-/* 005E5C 7000525C 00001825 */  move  $v1, $zero
-/* 005E60 70005260 24840001 */  addiu $a0, $a0, 1
-/* 005E64 70005264 10400009 */  beqz  $v0, .L7000528C
-/* 005E68 70005268 00000000 */   nop   
-/* 005E6C 7000526C 24630001 */  addiu $v1, $v1, 1
-.L70005270:
-/* 005E70 70005270 28610100 */  slti  $at, $v1, 0x100
-/* 005E74 70005274 10200005 */  beqz  $at, .L7000528C
-/* 005E78 70005278 00000000 */   nop   
-/* 005E7C 7000527C 90820000 */  lbu   $v0, ($a0)
-/* 005E80 70005280 24840001 */  addiu $a0, $a0, 1
-/* 005E84 70005284 5440FFFA */  bnezl $v0, .L70005270
-/* 005E88 70005288 24630001 */   addiu $v1, $v1, 1
-.L7000528C:
-/* 005E8C 7000528C 03E00008 */  jr    $ra
-/* 005E90 70005290 00601025 */   move  $v0, $v1
-)
-#endif
 
+    return count;
+}
 
 
 /**
