@@ -741,9 +741,6 @@ s32 _is_normal_single_precision_float(f32 arg0)
     return (fraction == 0) || (exponent != 0 && (exponent != 0xff));
 }
 
-
-
-
 /**
  * 61A4	700055A4
  *     V0= TRUE if A1 a normal single precision float; would have set result as short at A0
@@ -754,54 +751,19 @@ s32 is_normal_single_precision_float(s32 arg0, f32 arg1)
     return _is_normal_single_precision_float(arg1);
 }
 
-
-
-
-
 /**
  * 61C8	700055C8
  *     removed: set normality of single-precision floats A1, A2, A3, SP+10 in table at A0
  */
-#ifdef NONMATCHING
-void set_normality_of_single_precision_floats(s32 arg0, s32 arg1, ? arg2, ? arg3, s32 arg6, ? arg8, ? arg9, ? argA) {
-    // Node 0
-    is_normal_single_precision_float(arg1, arg1);
-    is_normal_single_precision_float((arg6 + 2), arg8);
-    is_normal_single_precision_float((arg6 + 4), arg9);
-    is_normal_single_precision_float((arg6 + 6), argA);
+void set_normality_of_single_precision_floats(s32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7)
+{
+    is_normal_single_precision_float(arg0, arg1);
+    is_normal_single_precision_float((arg0 + 2), arg2);
+    is_normal_single_precision_float((arg0 + 4), arg3);
+    is_normal_single_precision_float((arg0 + 6), arg4);
+
     return;
-    // (possible return value: is_normal_single_precision_float((arg6 + 6), argA))
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_normality_of_single_precision_floats
-/* 0061C8 700055C8 44856000 */  mtc1  $a1, $f12
-/* 0061CC 700055CC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0061D0 700055D0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0061D4 700055D4 44056000 */  mfc1  $a1, $f12
-/* 0061D8 700055D8 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0061DC 700055DC AFA60020 */  sw    $a2, 0x20($sp)
-/* 0061E0 700055E0 0C001569 */  jal   is_normal_single_precision_float
-/* 0061E4 700055E4 AFA70024 */   sw    $a3, 0x24($sp)
-/* 0061E8 700055E8 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0061EC 700055EC 8FA50020 */  lw    $a1, 0x20($sp)
-/* 0061F0 700055F0 0C001569 */  jal   is_normal_single_precision_float
-/* 0061F4 700055F4 24840002 */   addiu $a0, $a0, 2
-/* 0061F8 700055F8 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0061FC 700055FC 8FA50024 */  lw    $a1, 0x24($sp)
-/* 006200 70005600 0C001569 */  jal   is_normal_single_precision_float
-/* 006204 70005604 24840004 */   addiu $a0, $a0, 4
-/* 006208 70005608 8FA40018 */  lw    $a0, 0x18($sp)
-/* 00620C 7000560C 8FA50028 */  lw    $a1, 0x28($sp)
-/* 006210 70005610 0C001569 */  jal   is_normal_single_precision_float
-/* 006214 70005614 24840006 */   addiu $a0, $a0, 6
-/* 006218 70005618 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 00621C 7000561C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 006220 70005620 03E00008 */  jr    $ra
-/* 006224 70005624 00000000 */   nop   
-)
-#endif
 
 /**
  * 6228	70005628
