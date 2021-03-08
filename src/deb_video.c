@@ -749,25 +749,10 @@ s32 _is_normal_single_precision_float(f32 arg0)
  *     V0= TRUE if A1 a normal single precision float; would have set result as short at A0
  *     accepts: A0=(unused) p->target, A1=single-precision float
  */
-#ifdef NONMATCHING
-void is_normal_single_precision_float(s32 arg0, s32 arg1) {
-    _is_normal_single_precision_float(arg1);
+s32 is_normal_single_precision_float(s32 arg0, f32 arg1)
+{
+    return _is_normal_single_precision_float(arg1);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel is_normal_single_precision_float
-/* 0061A4 700055A4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0061A8 700055A8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0061AC 700055AC 44856000 */  mtc1  $a1, $f12
-/* 0061B0 700055B0 0C001558 */  jal   _is_normal_single_precision_float
-/* 0061B4 700055B4 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0061B8 700055B8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0061BC 700055BC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0061C0 700055C0 03E00008 */  jr    $ra
-/* 0061C4 700055C4 00000000 */   nop   
-)
-#endif
 
 
 
