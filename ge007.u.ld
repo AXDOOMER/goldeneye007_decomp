@@ -55,6 +55,7 @@ SECTIONS
       build/u/src/video.o (.text);
       build/u/src/deb.o (.text);
       build/u/src/deb_video.o (.text);
+      build/u/src/unused_fp.o (.text);
       build/u/src/deb_print.o (.text);
       build/u/src/debug_getlastRA.o (.text);
       build/u/src/ramrom.o (.text);
@@ -3171,6 +3172,7 @@ SECTIONS
       build/u/src/video.o (.data);
       build/u/src/deb.o (.data);
       build/u/src/deb_video.o (.data);
+      build/u/src/unused_fp.o (.data);
       build/u/src/deb_print.o (.data);
       build/u/src/debug_getlastRA.o (.data);
       build/u/src/ramrom.o (.data);
@@ -3378,6 +3380,7 @@ SECTIONS
       build/u/src/video.o (.rodata);
       build/u/src/deb.o (.rodata);
       build/u/src/deb_video.o (.rodata);
+      build/u/src/unused_fp.o (.rodata);
       build/u/src/deb_print.o (.rodata);
       build/u/src/debug_getlastRA.o (.rodata);
       build/u/src/ramrom.o (.rodata);
@@ -3838,6 +3841,7 @@ SECTIONS
       build/u/src/video.o (.bss);
       build/u/src/deb.o (.bss);
       build/u/src/deb_video.o (.bss);
+      build/u/src/unused_fp.o (.bss);
       build/u/src/deb_print.o (.bss);
       build/u/src/debug_getlastRA.o (.bss);
       build/u/src/ramrom.o (.bss);
