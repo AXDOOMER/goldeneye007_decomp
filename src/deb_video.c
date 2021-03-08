@@ -478,31 +478,11 @@ glabel scan_load_resourceID_from_indy_read_buf
  * 5FC8	700053C8
  *     V0= TRUE if valid indy.read.buf.resourceID	[matches 826475BE]
  */
-#ifdef NONMATCHING
 u32 is_valid_indy_read_buf_resourceID(void)
 {
     indy_file_get_address_subsequent_data(0xe00000);
-    return ((u32) (current_indy_read_buf_resourceID ^ 0x826475be) < 1U);
+    return ((u32)current_indy_read_buf_resourceID ^ 0x826475be) == 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel is_valid_indy_read_buf_resourceID
-/* 005FC8 700053C8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 005FCC 700053CC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 005FD0 700053D0 0C0014A5 */  jal   indy_file_get_address_subsequent_data
-/* 005FD4 700053D4 3C0400E0 */   lui   $a0, 0xe0
-/* 005FD8 700053D8 3C028006 */  lui   $v0, %hi(current_indy_read_buf_resourceID)
-/* 005FDC 700053DC 8C423664 */  lw    $v0, %lo(current_indy_read_buf_resourceID)($v0)
-/* 005FE0 700053E0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 005FE4 700053E4 3C018264 */  lui   $at, (0x826475BE >> 16) # lui $at, 0x8264
-/* 005FE8 700053E8 342175BE */  ori   $at, (0x826475BE & 0xFFFF) # ori $at, $at, 0x75be
-/* 005FEC 700053EC 00417026 */  xor   $t6, $v0, $at
-/* 005FF0 700053F0 2DC20001 */  sltiu $v0, $t6, 1
-/* 005FF4 700053F4 03E00008 */  jr    $ra
-/* 005FF8 700053F8 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
 
 
 
