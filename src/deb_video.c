@@ -11,6 +11,13 @@
  * I should probably be renamed...
  */
 
+#define IEEE_FLOAT_FRACTION_BITMASK   0x7FFFFF
+#define IEEE_FLOAT_FRACTION_BIT_COUNT       23
+#define IEEE_FLOAT_EXPONENT_BITMASK 0x7F800000
+#define IEEE_FLOAT_EXPONENT_BIT_COUNT        8
+#define IEEE_FLOAT_SIGN_BITMASK     0x80000000
+#define IEEE_FLOAT_SIGN_BIT_COUNT            1
+
 //bss
 char tlbthread[0x6B0];
 char tlbStack[0x2300];
@@ -725,45 +732,14 @@ glabel debug_sp_related_12
  *     V0= TRUE if F12 a normal single precision float
  *     accepts: F12= single-precision float
  */
-#ifdef NONMATCHING
-s32 _is_normal_single_precision_float(f32 arg0) {
-    // Node 0
-    if ((u32) (arg0 & 0x7fffff) >= 1U)
-    {
-        // Node 1
-        if (0U < (u32) ((arg0 >> 0x17) & 0xff))
-        {
-            // Node 2
-            return;
-            // (possible return value: (0U < (u32) (((arg0 >> 0x17) & 0xff) ^ 0xff)))
-        }
-    }
-    // (possible return value: ((u32) (arg0 & 0x7fffff) < 1U))
+s32 _is_normal_single_precision_float(f32 arg0)
+{
+    u32 bits = *(u32*)&arg0;
+    u32 fraction = bits & IEEE_FLOAT_FRACTION_BITMASK;
+    u8 exponent = (u8)(bits >> IEEE_FLOAT_FRACTION_BIT_COUNT);
+    
+    return (fraction == 0) || (exponent != 0 && (exponent != 0xff));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel _is_normal_single_precision_float
-/* 006160 70005560 E7AC0000 */  swc1  $f12, ($sp)
-/* 006164 70005564 8FA40000 */  lw    $a0, ($sp)
-/* 006168 70005568 3C01007F */  lui   $at, (0x007FFFFF >> 16) # lui $at, 0x7f
-/* 00616C 7000556C 3421FFFF */  ori   $at, (0x007FFFFF & 0xFFFF) # ori $at, $at, 0xffff
-/* 006170 70005570 00811024 */  and   $v0, $a0, $at
-/* 006174 70005574 2C4E0001 */  sltiu $t6, $v0, 1
-/* 006178 70005578 15C00008 */  bnez  $t6, .L7000559C
-/* 00617C 7000557C 01C01025 */   move  $v0, $t6
-/* 006180 70005580 00041DC2 */  srl   $v1, $a0, 0x17
-/* 006184 70005584 306F00FF */  andi  $t7, $v1, 0xff
-/* 006188 70005588 000F102B */  sltu  $v0, $zero, $t7
-/* 00618C 7000558C 10400003 */  beqz  $v0, .L7000559C
-/* 006190 70005590 00000000 */   nop   
-/* 006194 70005594 39E200FF */  xori  $v0, $t7, 0xff
-/* 006198 70005598 0002102B */  sltu  $v0, $zero, $v0
-.L7000559C:
-/* 00619C 7000559C 03E00008 */  jr    $ra
-/* 0061A0 700055A0 00000000 */   nop   
-)
-#endif
 
 
 
