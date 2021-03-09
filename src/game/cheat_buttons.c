@@ -2570,12 +2570,12 @@ cheats_cheat_deactivate_invincibility:
 /* 0C6830 7F091D00 AFAC0030 */   sw    $t4, 0x30($sp)
 .L7F091D04:
 /* 0C6834 7F091D04 8FAE002C */  lw    $t6, 0x2c($sp)
-/* 0C6838 7F091D08 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
+/* 0C6838 7F091D08 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0C683C 7F091D0C 2405009F */  li    $a1, 159
 /* 0C6840 7F091D10 11C001C5 */  beqz  $t6, .L7F092428
 /* 0C6844 7F091D14 00003025 */   move  $a2, $zero
 /* 0C6848 7F091D18 0C002382 */  jal   play_sfx_a1
-/* 0C684C 7F091D1C 8C843720 */   lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0C684C 7F091D1C 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0C6850 7F091D20 100001C2 */  b     .L7F09242C
 /* 0C6854 7F091D24 8FBF0014 */   lw    $ra, 0x14($sp)
 cheats_cheat_linemode:
@@ -3007,8 +3007,8 @@ cheats_debug_unlockcheat:
 /* 0C6E88 7F092358 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0C6E8C 7F09235C 0FC079D8 */  jal   sub_GAME_7F01E760
 /* 0C6E90 7F092360 00000000 */   nop   
-/* 0C6E94 7F092364 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 0C6E98 7F092368 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0C6E94 7F092364 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 0C6E98 7F092368 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0C6E9C 7F09236C 2405009F */  li    $a1, 159
 /* 0C6EA0 7F092370 0C002382 */  jal   play_sfx_a1
 /* 0C6EA4 7F092374 00003025 */   move  $a2, $zero
@@ -3055,8 +3055,8 @@ cheats_debug_unlocklevel:
 /* 0C6F38 7F092408 8C440000 */  lw    $a0, ($v0)
 /* 0C6F3C 7F09240C 0FC0797E */  jal   unlock_stage_in_folder_on_difficulty
 /* 0C6F40 7F092410 00003025 */   move  $a2, $zero
-/* 0C6F44 7F092414 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 0C6F48 7F092418 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0C6F44 7F092414 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 0C6F48 7F092418 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0C6F4C 7F09241C 2405009F */  li    $a1, 159
 /* 0C6F50 7F092420 0C002382 */  jal   play_sfx_a1
 /* 0C6F54 7F092424 00003025 */   move  $a2, $zero
