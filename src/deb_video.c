@@ -482,101 +482,41 @@ u32 * return_indy_read_buf_resourceID(void) {
  * 6020	70005420
  *     V0=hardcoded SP for debug thread A1, corrected for address range A0
  *     accepts: A0=p->address space, A1=entry#
+ * 
+ * If arg0 is above 0x80000000U and arg1 is valid, returns g_StackPtrs2 entry.
+ * Otherwise, if arg1 is valid, returns arg0 & 0xF0000000, bitwise OR'd
+ * with the difference from g_StackPtrs2 entry (pointer value) to 
+ * g_StackPtrs1 entry (pointer value).
+ * Otherwise, returns null.
+ * 
+ * @param arg0: address / address space
+ * @param arg1: index into g_StackPtrs2/3. Must be (1 <= arg1 <= STACK_POINTER_COUNT).
  */
-#ifdef NONMATCHING
-s32 debug_sp_related_11(u32 arg0, u32 arg1)
+void * debug_sp_related_11(u32 arg0, u32 arg1)
 {
-    ? sp1C;
-    ? sp8;
-    s32 temp_v0;
-    void *temp_t8;
+    void *localStackPointers1[STACK_POINTER_COUNT] = g_StackPtrs1;
+    void *localStackPointers2[STACK_POINTER_COUNT] = g_StackPtrs2;
+    void *p2;
+    void *p1;
 
-    sp1C = (?32) g_StackPtrs1;
-    sp1C.unk4 = (?32) g_StackPtrs1.unk4;
-    sp1C.unk8 = (?32) g_StackPtrs1.unk8;
-    sp1C.unkC = (?32) g_StackPtrs1.unkC;
-    sp1C.unk10 = (?32) g_StackPtrs1.unk10;
-    sp8 = (?32) g_StackPtrs2;
-    sp8.unk4 = (?32) g_StackPtrs2.unk4;
-    sp8.unk8 = (?32) g_StackPtrs2.unk8;
-    sp8.unkC = (?32) g_StackPtrs2.unkC;
-    sp8.unk10 = (?32) g_StackPtrs2.unk10;
-    if (arg1 <= 0)
+    if ((s32)arg1 <= (s32)0 || (u32)arg1 > (u32)STACK_POINTER_COUNT)
     {
-        return 0;
+        return NULL;
     }
-    temp_v0 = (arg1 * 4);
-    if (arg1 >= 6U)
+
+    p1 = localStackPointers1[arg1];
+    p2 = localStackPointers2[arg1];
+    
+    if (arg0 >= 0x80000000U)
     {
-        return 0;
+        return p2;
     }
-    temp_t8 = (&sp8 + temp_v0);
-    if (arg0 < 0x80000000U)
-    {
-        return ((arg0 & 0xf0000000) | (*temp_t8 - *(&sp1C + temp_v0)));
-    }
-    return *temp_t8;
+    
+    p2 = (void*)(
+        (arg0 & 0xF0000000) | ((u32)p2 - (u32)p1)
+        );
+    return p2;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel debug_sp_related_11
-/* 006020 70005420 3C0E8002 */  lui   $t6, %hi(g_StackPtrs1) 
-/* 006024 70005424 25CE36DC */  addiu $t6, %lo(g_StackPtrs1) # addiu $t6, $t6, 0x36dc
-/* 006028 70005428 8DC10000 */  lw    $at, ($t6)
-/* 00602C 7000542C 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 006030 70005430 27A7001C */  addiu $a3, $sp, 0x1c
-/* 006034 70005434 ACE10000 */  sw    $at, ($a3)
-/* 006038 70005438 8DD90004 */  lw    $t9, 4($t6)
-/* 00603C 7000543C 3C098002 */  lui   $t1, %hi(g_StackPtrs2) 
-/* 006040 70005440 252936F0 */  addiu $t1, %lo(g_StackPtrs2) # addiu $t1, $t1, 0x36f0
-/* 006044 70005444 ACF90004 */  sw    $t9, 4($a3)
-/* 006048 70005448 8DC10008 */  lw    $at, 8($t6)
-/* 00604C 7000544C 27A80008 */  addiu $t0, $sp, 8
-/* 006050 70005450 00803025 */  move  $a2, $a0
-/* 006054 70005454 ACE10008 */  sw    $at, 8($a3)
-/* 006058 70005458 8DD9000C */  lw    $t9, 0xc($t6)
-/* 00605C 7000545C ACF9000C */  sw    $t9, 0xc($a3)
-/* 006060 70005460 8DC10010 */  lw    $at, 0x10($t6)
-/* 006064 70005464 ACE10010 */  sw    $at, 0x10($a3)
-/* 006068 70005468 8D210000 */  lw    $at, ($t1)
-/* 00606C 7000546C AD010000 */  sw    $at, ($t0)
-/* 006070 70005470 8D2C0004 */  lw    $t4, 4($t1)
-/* 006074 70005474 AD0C0004 */  sw    $t4, 4($t0)
-/* 006078 70005478 8D210008 */  lw    $at, 8($t1)
-/* 00607C 7000547C AD010008 */  sw    $at, 8($t0)
-/* 006080 70005480 8D2C000C */  lw    $t4, 0xc($t1)
-/* 006084 70005484 AD0C000C */  sw    $t4, 0xc($t0)
-/* 006088 70005488 8D210010 */  lw    $at, 0x10($t1)
-/* 00608C 7000548C 18A00004 */  blez  $a1, .L700054A0
-/* 006090 70005490 AD010010 */   sw    $at, 0x10($t0)
-/* 006094 70005494 2CA10006 */  sltiu $at, $a1, 6
-/* 006098 70005498 14200003 */  bnez  $at, .L700054A8
-/* 00609C 7000549C 00051080 */   sll   $v0, $a1, 2
-.L700054A0:
-/* 0060A0 700054A0 1000000E */  b     .L700054DC
-/* 0060A4 700054A4 00001025 */   move  $v0, $zero
-.L700054A8:
-/* 0060A8 700054A8 3C018000 */  lui   $at, 0x8000
-/* 0060AC 700054AC 00E26821 */  addu  $t5, $a3, $v0
-/* 0060B0 700054B0 0102C021 */  addu  $t8, $t0, $v0
-/* 0060B4 700054B4 00C1082B */  sltu  $at, $a2, $at
-/* 0060B8 700054B8 8DA30000 */  lw    $v1, ($t5)
-/* 0060BC 700054BC 14200003 */  bnez  $at, .L700054CC
-/* 0060C0 700054C0 8F040000 */   lw    $a0, ($t8)
-/* 0060C4 700054C4 10000005 */  b     .L700054DC
-/* 0060C8 700054C8 00801025 */   move  $v0, $a0
-.L700054CC:
-/* 0060CC 700054CC 3C01F000 */  lui   $at, 0xf000
-/* 0060D0 700054D0 00C17824 */  and   $t7, $a2, $at
-/* 0060D4 700054D4 00837023 */  subu  $t6, $a0, $v1
-/* 0060D8 700054D8 01EE1025 */  or    $v0, $t7, $t6
-.L700054DC:
-/* 0060DC 700054DC 03E00008 */  jr    $ra
-/* 0060E0 700054E0 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
-
 
 /**
  * 60E4	700054E4
@@ -592,7 +532,7 @@ glabel debug_sp_related_11
  */
 void * debug_sp_related_12(u32 arg0, u32 arg1)
 {
-    void *sp4[STACK_POINTER_COUNT] = g_StackPtrs3;
+    void *localStackPointers3[STACK_POINTER_COUNT] = g_StackPtrs3;
     void *p;
 
     if ((s32)arg1 <= (s32)0 || (u32)arg1 > (u32)STACK_POINTER_COUNT)
@@ -600,7 +540,7 @@ void * debug_sp_related_12(u32 arg0, u32 arg1)
         return NULL;
     }
 
-    p = sp4[arg1];
+    p = localStackPointers3[arg1];
 
     if (arg0 >= 0x80000000U)
     {
