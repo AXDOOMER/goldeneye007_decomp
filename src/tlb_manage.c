@@ -41,7 +41,11 @@
  * Chosen by fair dice roll.
  * Guaranteed to be random.
  */
+#ifndef VERSION_EU
 #define TLB_RANDOM_MOD 90
+#else
+#define TLB_RANDOM_MOD 93
+#endif
 
 struct TlbManageTableEntry
 {
