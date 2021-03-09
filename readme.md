@@ -2,6 +2,7 @@ This is a working Goldeneye 007 decompilation!
 
 [![NTSC-Status](https://github.com/kholdfuzion/goldeneye_src/workflows/NTSC-Status/badge.svg)](https://kholdfuzion.github.io/goldeneyestatus/)
 [![JP-Status](https://github.com/kholdfuzion/goldeneye_src/workflows/JP-Status/badge.svg)](https://kholdfuzion.github.io/goldeneyestatus/JPN.htm)
+[![PAL-Status](https://github.com/kholdfuzion/goldeneye_src/workflows/PAL-Status/badge.svg)](https://kholdfuzion.github.io/goldeneyestatus/PAL.htm)
 
 This repo builds a matching USA. JPN or PAL ROM.
 
@@ -106,7 +107,7 @@ goldeneye_src
 
 Documentation has been moved to https://github.com/kholdfuzion/goldeneye_docs/tree/master/notes
 
-Style Guide is https://github.com/kholdfuzion/goldeneye_docs/tree/master/notes/StyleGuide.txt
+Style Guide is https://github.com/kholdfuzion/goldeneye_src/blob/AIListLogic/notes/StyleGuide.md
 
 This decompilation was only made possible thanks to many awesome 00 Agents who will be revealed only if they wish.
 
