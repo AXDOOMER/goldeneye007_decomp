@@ -3,6 +3,7 @@
 #include "deb_video.h"
 #include "tlb_manage.h"
 #include "deb_print.h"
+#include "ramrom.h"
 
 /**
  * @file deb_video.c
@@ -10,6 +11,11 @@
  * 
  * I should probably be renamed...
  */
+
+/**
+ * Size in bytes.
+ */
+#define INDY_READ_BUFFER_LEN 0x60
 
 //bss
 char tlbthread[0x6B0];
@@ -19,9 +25,9 @@ u32 tlbMesgBuf;
 OSThread *ptr_tlbthread_maybe;
 u32 dword_CODE_bss_80063660;
 u32 *current_indy_read_buf_resourceID;
-u32 *ptr_indy_read_buf_string1;
-u32 *ptr_indy_read_buf_string2;
-char indy_read_buffer[0x60];
+u8 *ptr_indy_read_buf_string1;
+u8 *ptr_indy_read_buf_string2;
+char indy_read_buffer[INDY_READ_BUFFER_LEN];
 
 
 /**
@@ -301,80 +307,31 @@ s32 return_strlen(u8 *arg0)
  *     V0= total size of one word, two strings at hardware A0
  *     accepts: A0=hardware address
  */
-u8 *indy_file_get_address_subsequent_data(u8 *arg0);
+u8 *indy_file_get_address_subsequent_data(u8 *arg0)
+{
+    u32 returnAddress;
 
-#ifdef NONMATCHING
-s32 indy_file_get_address_subsequent_data(s32 arg0) {
-    s32 sp18;
-    s32 temp_v1;
-    s32 phi_a0;
+    romCopy(&indy_read_buffer, arg0, INDY_READ_BUFFER_LEN);
+    
+    current_indy_read_buf_resourceID = *(s32*) &indy_read_buffer;
+    ptr_indy_read_buf_string1 = &indy_read_buffer[4];
+    ptr_indy_read_buf_string2 = (u8 *) (
+        return_strlen(ptr_indy_read_buf_string1)
+        + (u32)ptr_indy_read_buf_string1
+        + 1);
+    
+    returnAddress = 
+        return_strlen(ptr_indy_read_buf_string1) 
+        + ((u32)arg0 + return_strlen(ptr_indy_read_buf_string2))
+        + 6;
 
-    // Node 0
-    romCopy(&indy_read_buffer, arg0, 0x60);
-    current_indy_read_buf_resourceID = (?32) indy_read_buffer;
-    ptr_indy_read_buf_string1 = &indy_read_buffer;
-    ptr_indy_read_buf_string2 = (s32) ((return_strlen(&indy_read_buffer) + ptr_indy_read_buf_string1) + 1);
-    sp18 = return_strlen(ptr_indy_read_buf_string1);
-    temp_v1 = (((return_strlen(ptr_indy_read_buf_string2) + arg0) + sp18) + 6);
-    phi_a0 = temp_v1;
-    if ((temp_v1 & 3) != 0)
+    if (returnAddress & 3)
     {
-        // Node 1
-        phi_a0 = ((temp_v1 | 3) + 1);
+        returnAddress = ((returnAddress | 3) + 1);
     }
-    // Node 2
-    return phi_a0;
+
+    return (u8 *)returnAddress;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel indy_file_get_address_subsequent_data
-/* 005E94 70005294 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 005E98 70005298 AFA40020 */  sw    $a0, 0x20($sp)
-/* 005E9C 7000529C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 005EA0 700052A0 3C048006 */  lui   $a0, %hi(indy_read_buffer)
-/* 005EA4 700052A4 24843670 */  addiu $a0, %lo(indy_read_buffer) # addiu $a0, $a0, 0x3670
-/* 005EA8 700052A8 8FA50020 */  lw    $a1, 0x20($sp)
-/* 005EAC 700052AC 0C001707 */  jal   romCopy
-/* 005EB0 700052B0 24060060 */   li    $a2, 96
-/* 005EB4 700052B4 3C0E8006 */  lui   $t6, %hi(indy_read_buffer) 
-/* 005EB8 700052B8 8DCE3670 */  lw    $t6, %lo(indy_read_buffer)($t6)
-/* 005EBC 700052BC 3C028006 */  lui   $v0, %hi(ptr_indy_read_buf_string1)
-/* 005EC0 700052C0 3C018006 */  lui   $at, %hi(current_indy_read_buf_resourceID)
-/* 005EC4 700052C4 3C0F8006 */  lui   $t7, %hi(indy_read_buffer+4)
-/* 005EC8 700052C8 24423668 */  addiu $v0, %lo(ptr_indy_read_buf_string1) # addiu $v0, $v0, 0x3668
-/* 005ECC 700052CC 25E43674 */  addiu $a0, $t7, %lo(indy_read_buffer+4)
-/* 005ED0 700052D0 AC2E3664 */  sw    $t6, %lo(current_indy_read_buf_resourceID)($at)
-/* 005ED4 700052D4 0C001496 */  jal   return_strlen
-/* 005ED8 700052D8 AC440000 */   sw    $a0, ($v0)
-/* 005EDC 700052DC 3C048006 */  lui   $a0, %hi(ptr_indy_read_buf_string1)
-/* 005EE0 700052E0 8C843668 */  lw    $a0, %lo(ptr_indy_read_buf_string1)($a0)
-/* 005EE4 700052E4 3C018006 */  lui   $at, %hi(ptr_indy_read_buf_string2)
-/* 005EE8 700052E8 0044C021 */  addu  $t8, $v0, $a0
-/* 005EEC 700052EC 27190001 */  addiu $t9, $t8, 1
-/* 005EF0 700052F0 0C001496 */  jal   return_strlen
-/* 005EF4 700052F4 AC39366C */   sw    $t9, %lo(ptr_indy_read_buf_string2)($at)
-/* 005EF8 700052F8 3C048006 */  lui   $a0, %hi(ptr_indy_read_buf_string2)
-/* 005EFC 700052FC 8C84366C */  lw    $a0, %lo(ptr_indy_read_buf_string2)($a0)
-/* 005F00 70005300 0C001496 */  jal   return_strlen
-/* 005F04 70005304 AFA20018 */   sw    $v0, 0x18($sp)
-/* 005F08 70005308 8FA80020 */  lw    $t0, 0x20($sp)
-/* 005F0C 7000530C 8FAA0018 */  lw    $t2, 0x18($sp)
-/* 005F10 70005310 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 005F14 70005314 00484821 */  addu  $t1, $v0, $t0
-/* 005F18 70005318 012A1821 */  addu  $v1, $t1, $t2
-/* 005F1C 7000531C 24630006 */  addiu $v1, $v1, 6
-/* 005F20 70005320 306B0003 */  andi  $t3, $v1, 3
-/* 005F24 70005324 11600003 */  beqz  $t3, .L70005334
-/* 005F28 70005328 00602025 */   move  $a0, $v1
-/* 005F2C 7000532C 34640003 */  ori   $a0, $v1, 3
-/* 005F30 70005330 24840001 */  addiu $a0, $a0, 1
-.L70005334:
-/* 005F34 70005334 00801025 */  move  $v0, $a0
-/* 005F38 70005338 03E00008 */  jr    $ra
-/* 005F3C 7000533C 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
 
 
 
