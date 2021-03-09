@@ -118,9 +118,9 @@ static regDesc_t fpcsrDesc[] = {
     {0, 0, ""}
 };
 
-void *g_StackPtrs1[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
-void *g_StackPtrs2[] = {&sp_idle, &sp_shed, &sp_main, &sp_audi, &sp_debug};
-void *g_StackPtrs3[] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
+void *g_StackPtrs1[STACK_POINTER_COUNT] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
+void *g_StackPtrs2[STACK_POINTER_COUNT] = {&sp_idle, &sp_shed, &sp_main, &sp_audi, &sp_debug};
+void *g_StackPtrs3[STACK_POINTER_COUNT] = {&sp_rmon, &sp_idle, &sp_shed, &sp_main, &sp_audi};
 
 
 

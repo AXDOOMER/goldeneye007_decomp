@@ -1,8 +1,8 @@
-//FIXME my c code is modtly copy/paste from mips_to_c
 #include "ultra64.h"
 #include "bondgame.h"
 #include "deb_video.h"
 #include "tlb_manage.h"
+#include "deb_print.h"
 
 /**
  * @file deb_video.c
@@ -10,13 +10,6 @@
  * 
  * I should probably be renamed...
  */
-
-#define IEEE_FLOAT_FRACTION_BITMASK   0x7FFFFF
-#define IEEE_FLOAT_FRACTION_BIT_COUNT       23
-#define IEEE_FLOAT_EXPONENT_BITMASK 0x7F800000
-#define IEEE_FLOAT_EXPONENT_BIT_COUNT        8
-#define IEEE_FLOAT_SIGN_BITMASK     0x80000000
-#define IEEE_FLOAT_SIGN_BIT_COUNT            1
 
 //bss
 char tlbthread[0x6B0];
@@ -585,88 +578,37 @@ glabel debug_sp_related_11
 #endif
 
 
-
-
-
 /**
  * 60E4	700054E4
  *     V0=hardcoded SP for debug thread A1, corrected for address range A0
  *     accepts: A0=p->address space, A1=entry#
+ * 
+ * If arg0 is above 0x80000000U and arg1 is valid, returns g_StackPtrs3 entry.
+ * Otherwise, if arg1 is valid, returns arg0 & 0xF0000000.
+ * Otherwise, returns null.
+ * 
+ * @param arg0: address / address space
+ * @param arg1: index into g_StackPtrs3. Must be (1 <= arg1 <= STACK_POINTER_COUNT).
  */
-#ifdef NONMATCHING
-s32 debug_sp_related_12(u32 arg0, u32 arg1) {
-    u32 sp4;
+void * debug_sp_related_12(u32 arg0, u32 arg1)
+{
+    void *sp4[STACK_POINTER_COUNT] = g_StackPtrs3;
+    void *p;
 
-    // Node 0
-    sp4 = (?32) g_StackPtrs3;
-    sp4.unk4 = (?32) g_StackPtrs3.unk4;
-    sp4.unk8 = (?32) g_StackPtrs3.unk8;
-    sp4.unkC = (?32) g_StackPtrs3.unkC;
-    sp4.unk10 = (?32) g_StackPtrs3.unk10;
-    if (arg1 <= 0)
+    if ((s32)arg1 <= (s32)0 || (u32)arg1 > (u32)STACK_POINTER_COUNT)
     {
-        // Node 2
-        return;
-        // (possible return value: 0)
+        return NULL;
     }
-    // Node 1
-    if (arg1 >= 6U)
-    {
-        // Node 2
-        return;
-        // (possible return value: 0)
-    }
-    // Node 3
+
+    p = sp4[arg1];
+
     if (arg0 >= 0x80000000U)
     {
-        // Node 4
-        return;
-        // (possible return value: *(&sp4 + (arg1 * 4)))
+        return p;
     }
-    // Node 5
-    return;
-    // (possible return value: (arg0 & 0xf0000000))
+
+    p = (void*)(arg0 & 0xF0000000);
+    return p;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel debug_sp_related_12
-/* 0060E4 700054E4 3C0E8002 */  lui   $t6, %hi(g_StackPtrs3) 
-/* 0060E8 700054E8 25CE3704 */  addiu $t6, %lo(g_StackPtrs3) # addiu $t6, $t6, 0x3704
-/* 0060EC 700054EC 8DC10000 */  lw    $at, ($t6)
-/* 0060F0 700054F0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0060F4 700054F4 27A20004 */  addiu $v0, $sp, 4
-/* 0060F8 700054F8 AC410000 */  sw    $at, ($v0)
-/* 0060FC 700054FC 8DD90004 */  lw    $t9, 4($t6)
-/* 006100 70005500 AC590004 */  sw    $t9, 4($v0)
-/* 006104 70005504 8DC10008 */  lw    $at, 8($t6)
-/* 006108 70005508 AC410008 */  sw    $at, 8($v0)
-/* 00610C 7000550C 8DD9000C */  lw    $t9, 0xc($t6)
-/* 006110 70005510 AC59000C */  sw    $t9, 0xc($v0)
-/* 006114 70005514 8DC10010 */  lw    $at, 0x10($t6)
-/* 006118 70005518 18A00004 */  blez  $a1, .L7000552C
-/* 00611C 7000551C AC410010 */   sw    $at, 0x10($v0)
-/* 006120 70005520 2CA10006 */  sltiu $at, $a1, 6
-/* 006124 70005524 14200003 */  bnez  $at, .L70005534
-/* 006128 70005528 00054080 */   sll   $t0, $a1, 2
-.L7000552C:
-/* 00612C 7000552C 1000000A */  b     .L70005558
-/* 006130 70005530 00001025 */   move  $v0, $zero
-.L70005534:
-/* 006134 70005534 3C018000 */  lui   $at, 0x8000
-/* 006138 70005538 00484821 */  addu  $t1, $v0, $t0
-/* 00613C 7000553C 0081082B */  sltu  $at, $a0, $at
-/* 006140 70005540 14200003 */  bnez  $at, .L70005550
-/* 006144 70005544 8D230000 */   lw    $v1, ($t1)
-/* 006148 70005548 10000003 */  b     .L70005558
-/* 00614C 7000554C 00601025 */   move  $v0, $v1
-.L70005550:
-/* 006150 70005550 3C01F000 */  lui   $at, 0xf000
-/* 006154 70005554 00811024 */  and   $v0, $a0, $at
-.L70005558:
-/* 006158 70005558 03E00008 */  jr    $ra
-/* 00615C 7000555C 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
 
 
