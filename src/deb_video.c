@@ -1,9 +1,13 @@
 #include "ultra64.h"
+#include "libultra/libultra_internal.h"
+#include "PR/os_thread.h"
 #include "bondgame.h"
 #include "deb_video.h"
 #include "tlb_manage.h"
 #include "deb_print.h"
 #include "ramrom.h"
+#include "PR/R4300.h"
+
 
 /**
  * @file deb_video.c
@@ -16,6 +20,11 @@
  * Size in bytes.
  */
 #define INDY_READ_BUFFER_LEN 0x60
+
+/**
+ * Copied from n64devkit\ultra\usr\src\pr\demos\fault\fault.c
+ */
+#define MSG_FAULT	0x10
 
 /*
 -----------------------------------------------------------------
@@ -138,7 +147,6 @@ u8 *ptr_indy_read_buf_string1;
 u8 *ptr_indy_read_buf_string2;
 char indy_read_buffer[INDY_READ_BUFFER_LEN];
 
-
 /**
  * 5AE0	70004EE0
  */
@@ -149,16 +157,53 @@ void init_tlb(void) {
     osStartThread(&tlbthread);
 }
 
-
-
-
-
 /**
  * 5B54	70004F54
+ * 
+ * @param arg0 Unused.
  */
 #ifdef NONMATCHING
-void tlbproc(void) {
+void tlbproc(s32 arg0)
+{
+    OSMesg msg = 0;
+    OSIntMask startingInterruptMask;
+    OSThread *faultedThread;
+    OSThread **ptr_ptr_tlbthread = &ptr_tlbthread_maybe;
 
+    osSetEventMesg(OS_EVENT_FAULT, &tlbMesgQ, (OSMesg)MSG_FAULT);
+    dword_CODE_bss_80063660 = 0;
+
+    while (1)
+    {
+        osRecvMesg(&tlbMesgQ, &msg, OS_MESG_BLOCK);
+        startingInterruptMask = osSetIntMask(OS_IM_NONE);
+        faultedThread = __osGetCurrFaultedThread();
+        *ptr_ptr_tlbthread = faultedThread;
+
+        if (faultedThread == NULL)
+        {
+            continue;
+        }
+        else if (((faultedThread->context.cause & CAUSE_EXCMASK) == EXC_RMISS) && ((faultedThread->context.badvaddr & 0xFFC00000) == (u32)0x7F000000))
+        {
+            tlbmanageTranslateLoadRomFromTlbAddress((*ptr_ptr_tlbthread)->context.badvaddr);
+            (*ptr_ptr_tlbthread)->state = (u16)0xA;
+            (*ptr_ptr_tlbthread)->flags = (u16)0;
+
+            __osEnqueueThread(&__osRunQueue, *ptr_ptr_tlbthread);
+            osSetIntMask(startingInterruptMask);
+            osYieldThread();
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    osSetIntMask(startingInterruptMask);
+
+    // infinite loop
+    while (1) {}
 }
 #else
 GLOBAL_ASM(

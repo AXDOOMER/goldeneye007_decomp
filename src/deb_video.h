@@ -3,6 +3,6 @@
 
 #include "ultra64.h"
 
-void tlbproc(void);
+void tlbproc(s32 arg0);
 
 #endif
