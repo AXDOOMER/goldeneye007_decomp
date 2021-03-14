@@ -17,6 +17,115 @@
  */
 #define INDY_READ_BUFFER_LEN 0x60
 
+/*
+-----------------------------------------------------------------
+| ADDIU     | ADD Immediate Unsigned word                       |
+|-----------|---------------------------------------------------|
+|001001 (9) |   rs    |   rt    |          immediate            |
+------6----------5---------5-------------------16----------------
+ Format:  ADDIU rt, rs, immediate
+ Purpose: To add a constant to a 32-bit integer.
+ Descrip: rt = rs + immediate
+
+-----------------------------------------------------------------
+| SW        | Store Word                                        |
+|-----------|---------------------------------------------------|
+|101011 (43)|  base   |   rt    |             offset            |
+------6----------5---------5-------------------16----------------
+ Format:  SW rt, offset(base)
+ Purpose: To store a word to memory.
+ Descrip: word[base+offset] = rt
+
+-----------------------------------------------------------------
+| JR        | Jump Register                                     |
+|-----------|---------------------------------------------------|
+|  000000   |   rs    |     0000 0000 0000 000      |001000 (8) |
+------6----------5------------------15--------------------6------
+ Format:  JR rs
+ Purpose: To branch to an instruction address in a register.
+*/
+
+/**
+ * Add immediate unsigned word. Upper 6 bits out of 32.
+ */
+#define MIPS_OP_BITS_ADDIU 0x09
+
+/**
+ * Store word. Upper 6 bits out of 32.
+ */
+#define MIPS_OP_BITS_SW 0x2b
+
+/**
+ * Jump to register. Upper 6 bits out of 32.
+ */
+#define MIPS_OP_BITS_JR 0x00
+
+/**
+ * Five bits defining register source or destination, for stack pointer register.
+ */
+#define MIPS_REG_SOURCE_BITS_SP 0x1d
+
+/**
+ * Five bits defining register source or destination, for return address register.
+ */
+#define MIPS_REG_SOURCE_BITS_RA 0x1f
+
+/**
+ * Builds 32 bit word to perform ADDIU.
+ * 
+ * No error checking or input size validation are performed here.
+ * 
+ * @param source_r: source register number (5 bits).
+ * @param dest_r: destination register number (5 bits).
+ * @param imm: 16 bit immediate value to add.
+ */
+#define MIPS_INSTR_ADDIU(source_r, dest_r, imm) ((MIPS_OP_BITS_ADDIU << 26) | (source_r << 21) | (dest_r << 16) | imm)
+
+/**
+ * Builds 32 bit word to perform SW.
+ * 
+ * No error checking or input size validation are performed here.
+ * 
+ * @param val_r: source register holding value to store (5 bits).
+ * @param dest_r: register holding destination base address (5 bits).
+ * @param offset: 16 bit offset from base address to store value at.
+ */
+#define MIPS_INSTR_SW(val_r, dest_r, offset) ((MIPS_OP_BITS_SW << 26) | (dest_r << 21) | (val_r << 16) | offset)
+
+/**
+ * Builds 32 bit word to perform SW.
+ * 
+ * No error checking or input size validation are performed here.
+ * 
+ * Note: lower 6 bits of JR instruction are always 0x08.
+ * 
+ * @param dest_r: register holding destination address (5 bits).
+ */
+#define MIPS_INSTR_JR(dest_r) ((MIPS_OP_BITS_JR << 26) | (dest_r << 21) | 8)
+
+/**
+ * Any MIPS 32-bit instruction matching $sp increment
+ * 
+ * 0x27BD0000 = # addiu $sp, $sp <any_immediate>
+ */
+#define MIPS_ADDIU_SP_SP_ANY        MIPS_INSTR_ADDIU(MIPS_REG_SOURCE_BITS_SP, MIPS_REG_SOURCE_BITS_SP, 0)
+#define MIPS_ADDIU_SP_SP_ANY_MASK   0xFFFF0000
+
+/**
+ * Any MIPS 32-bit instruction matching sw into $sp
+ * 
+ * 0xAFA00000 = sw <any_register>, 0x[any_offset]($sp)
+ */
+#define MIPS_SW_SP_ANY       MIPS_INSTR_SW(0, MIPS_REG_SOURCE_BITS_SP, 0)
+#define MIPS_SW_SP_ANY_MASK  0xFFE00000
+
+/**
+ * Any MIPS 32-bit instruction (should only be one...) matching jump to return address.
+ * 
+ * 0x03E00008 = jr ra
+ */
+#define MIPS_JR_RA MIPS_INSTR_JR(MIPS_REG_SOURCE_BITS_RA)
+
 //bss
 char tlbthread[0x6B0];
 char tlbStack[0x2300];
@@ -152,10 +261,120 @@ glabel tlbproc
  * 5CAC	700050AC
  *     V0= SP, A3=SP usage within function range (A1,A0) with initial SP A2
  *     accepts: A0=p->opcode.cur, A1=p->opcode.start, A2=SP w/i function, A3=p->register buffer
+ * 
+ * @param startAddress Starting address to get stack pointer for. Will decrement this value for search.
+ * @param minAddress Low address cutoff. Will continue searching while the current address is higher than this.
+ * @param startStackPointer Starting stack pointer address.
+ * @param buffer Register buffer. Tracks which registers have been saved on the stack.
+ * 
+ * @returns Stack pointer, accounting for adjustments since @param startAddress, as long as
+ * instructions for restoring the stack and `ra` have been found, otherwise NULL.
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: yes
+ * - identical registers: fail
  */
 #ifdef NONMATCHING
-void debug_related_8(void) {
+u32 * debug_related_8(const u32 *startAddress, const u32 *minAddress, const u32 *startStackPointer, u32 *buffer)
+{
+    // I don't think this is (u16*). There are two places where
+    // an offset is calculated using ssl 0x2 which implies this is
+    // a u32 pointer, but I couldn't get that to match.
+    const u16 *sp = (u16*)startStackPointer;
+    u32 sp_found = 0; // v0
+    u32 ra_found = 0; // t0
+    s32 i;
+    const u32 *addr;
+    u32 addrval;
+    
+    // Do not remove the following trailing backslash. The while condition
+    // needs to be on the same line as previous, otherwise the build breaks.
+    // Search for WHILE_ONE_LINE to see other places in code like this.
+    //
+    // Note: this also occurs in PD:
+    // src/game/game_0b69d0.c (bd15d298664e1a22cd31886cf87bfc40ab6842e9)
+    // line 382:    p = i; while (sllen < 4) {
+    i = 0; \
+    while(i < 32)
+    {
+        buffer[i++] = 0;
+    }
 
+    for (addr = startAddress; addr >= minAddress; addr--) // else bnez L700051B8
+    {
+        // no validation on pointer
+        addrval = *addr;
+
+        // Dereferencing addr again after this point (in the for loop) will
+        // insert an extra "move" instruction, but it might help explain why
+        // addrval is being lw into 'a2' instead of 't1'.
+        // (Currently addrval is being loaded into 'a2'.)
+        // Also, dereferencing it further changes the instructions much
+        // more (more mismatch from target).
+        // 
+        // adding this line here:
+        //     if (*addr);
+        // generates:
+        // 238:   8c890000   lw     t1,0(a0)   # t1 matches
+        // 23c:   2484fffc   addiu  a0,a0,-4   # addr--
+        // 240:   0085082b   sltu   at,a0,a1
+        // 244:   012b7824   and    t7,t1,t3   # if ((addrval & MIPS_ADDIU_SP_SP_ANY_MASK) == MIPS_ADDIU_SP_SP_ANY)
+        // 248:   154f000b   bne    t2,t7,278  # jump to second if (first else if) in for loop
+        // 24c:   01203025   move   a2,t1      # shouldnt be here
+
+        //L7000511C:
+        if ((addrval & MIPS_ADDIU_SP_SP_ANY_MASK) == MIPS_ADDIU_SP_SP_ANY)
+        {
+            sp_found = 1;
+
+            if ((s16)addrval > 0)
+            {
+                break;
+            }
+
+            sp -= (((s16)addrval >> 2) << 1);
+            
+            if (ra_found) // beqz  $t0, .L700051B0
+            {
+                break;// b     .L700051B8
+            }
+        }
+        //L70005158:
+        else if ((addrval & MIPS_SW_SP_ANY_MASK) == MIPS_SW_SP_ANY)
+        {
+            u32 sw_reg = (addrval >> 0x10) & 0x1F;
+
+            buffer[sw_reg] = sp + (((s16)addrval >> 2) << 1);
+            // alternatively, get address of indexing into array:
+            //buffer[sw_reg] = &sp[(((s16)addrval >> 2) << 1)];
+
+            if (sw_reg == MIPS_REG_SOURCE_BITS_RA)
+            {
+                ra_found = 1;
+            }
+
+            //L70005190:
+            if (sp_found && ra_found)
+            {
+                break;
+            }
+        }
+        //L700051A8:
+        else if (addrval == MIPS_JR_RA)
+        {
+            break;
+        }
+    }
+
+    //L700051B8:
+    if (sp_found && ra_found)
+    {
+        return (u32 *)sp;
+    }
+
+    return NULL;
 }
 #else
 GLOBAL_ASM(

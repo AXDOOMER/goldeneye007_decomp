@@ -389,6 +389,7 @@ void joyConsumeSamples(struct contdata *contdata)
         {
             // Do not remove the following trailing backslash. The "while(true)"
             // needs to be on the same line as previous, otherwise the build breaks.
+            // Search for WHILE_ONE_LINE to see other places in code like this.
             samplenum = ((contdata->curstart + 1) % CONTSAMPLE_LEN); \
             while (TRUE)
             {
