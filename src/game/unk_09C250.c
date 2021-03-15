@@ -987,11 +987,11 @@ glabel sub_GAME_7F09C250
 /* 0D0E34 7F09C304 8FA80040 */  lw    $t0, 0x40($sp)
 /* 0D0E38 7F09C308 00403825 */  move  $a3, $v0
 /* 0D0E3C 7F09C30C 1860000E */  blez  $v1, .L7F09C348
-/* 0D0E40 7F09C310 3C048006 */   lui   $a0, %hi(ptr_sfx_buf)
+/* 0D0E40 7F09C310 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0D0E44 7F09C314 00032C00 */  sll   $a1, $v1, 0x10
 /* 0D0E48 7F09C318 0005C403 */  sra   $t8, $a1, 0x10
 /* 0D0E4C 7F09C31C 03002825 */  move  $a1, $t8
-/* 0D0E50 7F09C320 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0D0E50 7F09C320 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0D0E54 7F09C324 00003025 */  move  $a2, $zero
 /* 0D0E58 7F09C328 AFA20030 */  sw    $v0, 0x30($sp)
 /* 0D0E5C 7F09C32C 0C002382 */  jal   play_sfx_a1
