@@ -6,6 +6,7 @@
 #include "deb_print.h"
 #include "ramrom.h"
 #include "PR/R4300.h"
+#include "thread_config.h"
 
 /**
  * @file deb_video.c
@@ -166,7 +167,7 @@ void tlbInit(void)
 {
     deboutInitBuffers();
     osCreateMesgQueue(&g_tlbMesgQ, (OSMesg *)&g_tlbMesgBuf, TLB_MESSAGE_QUEUE_SIZE);
-    osCreateThread(&g_tlbThread, 5, &tlbMain, NULL, &g_tlbStack, 0x28);
+    osCreateThread(&g_tlbThread, TLB_THREAD_ID, &tlbMain, NULL, &g_tlbStack, TLB_THREAD_PRIORITY);
     osStartThread(&g_tlbThread);
 }
 

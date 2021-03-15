@@ -6,6 +6,7 @@
 #include "tlb_resolve.h"
 #include "tlb_hardwire.h"
 #include "init.h"
+#include "thread_config.h"
 
 /**
  * @file init.c
@@ -111,7 +112,7 @@ void init(void)
 	}
 
     __osSetFpcCsr((__osGetFpcCsr() | 0xe80));
-    osCreateThread(&mainThread, 3, &mainproc, 0, set_stack_entry(&sp_main, 0x8000), 0xa);
+    osCreateThread(&mainThread, MAIN_THREAD_ID, &mainproc, 0, set_stack_entry(&sp_main, 0x8000), MAIN_THREAD_PRIORITY);
     osStartThread(&mainThread);
 }
 
@@ -287,7 +288,7 @@ void idleproc(void *arg)
  */
 void idleCreateThread(void) 
 {
-    osCreateThread(&idleThread, (OSId)1, idleproc, 0, set_stack_entry(&sp_idle, 0x40), (OSPri)0);
+    osCreateThread(&idleThread, IDLE_THREAD_ID, idleproc, 0, set_stack_entry(&sp_idle, 0x40), IDLE_THREAD_PRIORITY);
     osStartThread(&idleThread);
 }
 
@@ -297,7 +298,7 @@ void idleCreateThread(void)
  */
 void rmonCreateThread(void) 
 {
-    osCreateThread(&rmonThread, (OSId)0, rmonMain, 0, set_stack_entry(&sp_rmon, 0x300), (OSPri)250);
+    osCreateThread(&rmonThread, RMON_THREAD_ID, rmonMain, 0, set_stack_entry(&sp_rmon, 0x300), RMON_THREAD_PRIORITY);
     osStartThread(&rmonThread);
 }
 
