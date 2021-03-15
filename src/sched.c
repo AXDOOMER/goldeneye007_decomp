@@ -7,6 +7,7 @@
 #include "video.h"
 #include "joy.h"
 #include "music.h"
+#include "speed_graph.h"
 
 /**
  * @file sched.c
@@ -176,7 +177,7 @@ void osScAddClient(OSSched *sc, OSScClient *c, OSMesgQueue *msgQ, OSScClient *ne
 {
     OSIntMask mask;
 
-    mask = osSetIntMask(1);
+    mask = osSetIntMask(OS_IM_NONE);
 
     c->msgQ = msgQ;
     c[1].next = next;
@@ -196,7 +197,7 @@ void osScRemoveClient(OSSched *sc, OSScClient *c)
     OSScClient *prev   = 0;
     OSIntMask  mask;
 
-    mask = osSetIntMask(1);
+    mask = osSetIntMask(OS_IM_NONE);
     
     while (client != 0) 
     {
@@ -403,7 +404,7 @@ s32 __scTaskComplete(OSSched *sc, OSScTask *t)
                     firsttime = 0;
                 }
                 if (something_with_osVI_14[g_ViCurrentIndex]) {
-                    OSIntMask mask = osSetIntMask(0x80401);
+                    OSIntMask mask = osSetIntMask(OS_IM_VI);
                     *g_ViModePtrs[g_ViCurrentIndex] = g_ViModes[g_ViCurrentIndex];
                     osSetIntMask(mask);
                 }

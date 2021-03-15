@@ -134,7 +134,7 @@ void speedGraphVideoRelated_3(s32 arg0) {
     unknown_s *pp;
 
     index = arg0 & 0xFFFF;
-    mask = osSetIntMask(0x00000001);
+    mask = osSetIntMask(OS_IM_NONE);
     var2 = arg0 >> 16;
     index2 = dword_CODE_bss_800607D0[index];
 

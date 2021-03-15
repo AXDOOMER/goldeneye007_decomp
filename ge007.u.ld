@@ -54,7 +54,7 @@ SECTIONS
       build/u/src/speed_graph.o (.text);
       build/u/src/video.o (.text);
       build/u/src/deb.o (.text);
-      build/u/src/deb_video.o (.text);
+      build/u/src/tlb_paging.o (.text);
       build/u/src/unused_fp.o (.text);
       build/u/src/deb_print.o (.text);
       build/u/src/debug_getlastRA.o (.text);
@@ -3171,7 +3171,7 @@ SECTIONS
       build/u/src/speed_graph.o (.data);
       build/u/src/video.o (.data);
       build/u/src/deb.o (.data);
-      build/u/src/deb_video.o (.data);
+      build/u/src/tlb_paging.o (.data);
       build/u/src/unused_fp.o (.data);
       build/u/src/deb_print.o (.data);
       build/u/src/debug_getlastRA.o (.data);
@@ -3379,7 +3379,7 @@ SECTIONS
       build/u/src/speed_graph.o (.rodata);
       build/u/src/video.o (.rodata);
       build/u/src/deb.o (.rodata);
-      build/u/src/deb_video.o (.rodata);
+      build/u/src/tlb_paging.o (.rodata);
       build/u/src/unused_fp.o (.rodata);
       build/u/src/deb_print.o (.rodata);
       build/u/src/debug_getlastRA.o (.rodata);
@@ -3840,7 +3840,7 @@ SECTIONS
       build/u/src/speed_graph.o (.bss);
       build/u/src/video.o (.bss);
       build/u/src/deb.o (.bss);
-      build/u/src/deb_video.o (.bss);
+      build/u/src/tlb_paging.o (.bss);
       build/u/src/unused_fp.o (.bss);
       build/u/src/deb_print.o (.bss);
       build/u/src/debug_getlastRA.o (.bss);

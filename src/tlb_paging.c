@@ -2,29 +2,30 @@
 #include "libultra/libultra_internal.h"
 #include "PR/os_thread.h"
 #include "bondgame.h"
-#include "deb_video.h"
 #include "tlb_manage.h"
 #include "deb_print.h"
 #include "ramrom.h"
 #include "PR/R4300.h"
 
-
 /**
  * @file deb_video.c
  * This file contains code to handle tlb paging. 
  * 
- * I should probably be renamed...
+ * Additionally, it contains unused/removed debug code, and code for indy.
+ * The function addresses seem to indicate these methods are all in the same file ...
  */
 
 /**
  * Size in bytes.
  */
-#define INDY_READ_BUFFER_LEN 0x60
+#define g_indyReadBuffer_LEN 0x60
 
 /**
  * Copied from n64devkit\ultra\usr\src\pr\demos\fault\fault.c
  */
-#define MSG_FAULT	0x10
+#define MSG_FAULT    0x10
+
+#define TLB_MESSAGE_QUEUE_SIZE      1
 
 /*
 -----------------------------------------------------------------
@@ -135,50 +136,83 @@
  */
 #define MIPS_JR_RA MIPS_INSTR_JR(MIPS_REG_SOURCE_BITS_RA)
 
-//bss
-char tlbthread[0x6B0];
-char tlbStack[0x2300];
-OSMesgQueue tlbMesgQ;
-u32 tlbMesgBuf;
-OSThread *ptr_tlbthread_maybe;
+// bss - TLB section
+
+OSThread g_tlbThread;
+u8 g_tlbUnused[0x500];
+char g_tlbStack[0x2300];
+OSMesgQueue g_tlbMesgQ;
+OSMesg *g_tlbMesgBuf;
+OSThread *g_tlbFaultedThreadPtr;
 u32 dword_CODE_bss_80063660;
-u32 *current_indy_read_buf_resourceID;
-u8 *ptr_indy_read_buf_string1;
-u8 *ptr_indy_read_buf_string2;
-char indy_read_buffer[INDY_READ_BUFFER_LEN];
+
+// bss - indy/debug section
+
+u32 *g_indyCurrentReadBufferResourceId;
+u8 *g_indyReadBufferString1;
+u8 *g_indyReadBufferString2;
+char g_indyReadBuffer[g_indyReadBuffer_LEN];
+
+// forward declarations
+
+void tlbMain(void* arg0);
+
+// end forward declarations
 
 /**
- * 5AE0	70004EE0
+ * 5AE0    70004EE0
  */
-void init_tlb(void) {
+void tlbInit(void)
+{
     deboutInitBuffers();
-    osCreateMesgQueue(&tlbMesgQ, &tlbMesgBuf, 1);
-    osCreateThread(&tlbthread, 5, &tlbproc, 0, &tlbStack, 0x28);
-    osStartThread(&tlbthread);
+    osCreateMesgQueue(&g_tlbMesgQ, (OSMesg *)&g_tlbMesgBuf, TLB_MESSAGE_QUEUE_SIZE);
+    osCreateThread(&g_tlbThread, 5, &tlbMain, NULL, &g_tlbStack, 0x28);
+    osStartThread(&g_tlbThread);
 }
 
 /**
- * 5B54	70004F54
+ * 5B54    70004F54
  * 
  * @param arg0 Unused.
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: fail
+ * - identical instructions: yes
+ * - identical registers: yes
+ * 
+ * Only 5 words differ. Two are the location of `msg` on the stack, fixing
+ * whatever is off should fix the 'msg' location automatically.
+ * 
+ * current                                target
+ * addiu	sp,sp,-72                     addiu	sp,sp,-64
+ * sw	a0,72(sp)                         sw	a0,64(sp)
+ * sw	zero,68(sp)                       sw	zero,60(sp)
+ * addiu	s1,sp,68                      addiu	s1,sp,60
+ * addiu	sp,sp,72                      addiu	sp,sp,64
  */
 #ifdef NONMATCHING
-void tlbproc(s32 arg0)
+void tlbMain(void* arg0)
 {
     OSMesg msg = 0;
     OSIntMask startingInterruptMask;
     OSThread *faultedThread;
-    OSThread **ptr_ptr_tlbthread = &ptr_tlbthread_maybe;
 
-    osSetEventMesg(OS_EVENT_FAULT, &tlbMesgQ, (OSMesg)MSG_FAULT);
+    /**
+     * Target generates 5 separate dereferences of g_tlbFaultedThreadPtr,
+     * only way I can get that to happen is with a pointer to a pointer.
+     */
+    OSThread **ppfaultedThread = &g_tlbFaultedThreadPtr;
+
+    osSetEventMesg(OS_EVENT_FAULT, &g_tlbMesgQ, (OSMesg)MSG_FAULT);
     dword_CODE_bss_80063660 = 0;
 
     while (1)
     {
-        osRecvMesg(&tlbMesgQ, &msg, OS_MESG_BLOCK);
+        osRecvMesg(&g_tlbMesgQ, &msg, OS_MESG_BLOCK);
         startingInterruptMask = osSetIntMask(OS_IM_NONE);
         faultedThread = __osGetCurrFaultedThread();
-        *ptr_ptr_tlbthread = faultedThread;
+        *ppfaultedThread = faultedThread;
 
         if (faultedThread == NULL)
         {
@@ -186,11 +220,11 @@ void tlbproc(s32 arg0)
         }
         else if (((faultedThread->context.cause & CAUSE_EXCMASK) == EXC_RMISS) && ((faultedThread->context.badvaddr & 0xFFC00000) == (u32)0x7F000000))
         {
-            tlbmanageTranslateLoadRomFromTlbAddress((*ptr_ptr_tlbthread)->context.badvaddr);
-            (*ptr_ptr_tlbthread)->state = (u16)0xA;
-            (*ptr_ptr_tlbthread)->flags = (u16)0;
+            tlbmanageTranslateLoadRomFromTlbAddress((*ppfaultedThread)->context.badvaddr);
+            (*ppfaultedThread)->state = (u16)0xA;
+            (*ppfaultedThread)->flags = (u16)0;
 
-            __osEnqueueThread(&__osRunQueue, *ptr_ptr_tlbthread);
+            __osEnqueueThread(&__osRunQueue, *ppfaultedThread);
             osSetIntMask(startingInterruptMask);
             osYieldThread();
         }
@@ -208,11 +242,11 @@ void tlbproc(s32 arg0)
 #else
 GLOBAL_ASM(
 .text
-glabel tlbproc
+glabel tlbMain
 /* 005B54 70004F54 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 005B58 70004F58 AFB70030 */  sw    $s7, 0x30($sp)
-/* 005B5C 70004F5C 3C178006 */  lui   $s7, %hi(tlbMesgQ) 
-/* 005B60 70004F60 26F73640 */  addiu $s7, %lo(tlbMesgQ) # addiu $s7, $s7, 0x3640
+/* 005B5C 70004F5C 3C178006 */  lui   $s7, %hi(g_tlbMesgQ) 
+/* 005B60 70004F60 26F73640 */  addiu $s7, %lo(g_tlbMesgQ) # addiu $s7, $s7, 0x3640
 /* 005B64 70004F64 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 005B68 70004F68 AFA40040 */  sw    $a0, 0x40($sp)
 /* 005B6C 70004F6C AFB6002C */  sw    $s6, 0x2c($sp)
@@ -246,11 +280,11 @@ glabel tlbproc
 /* 005BD4 70004FD4 24040001 */   li    $a0, 1
 /* 005BD8 70004FD8 0C004060 */  jal   __osGetCurrFaultedThread
 /* 005BDC 70004FDC 00408025 */   move  $s0, $v0
-/* 005BE0 70004FE0 3C018006 */  lui   $at, %hi(ptr_tlbthread_maybe)
+/* 005BE0 70004FE0 3C018006 */  lui   $at, %hi(g_tlbFaultedThreadPtr)
 /* 005BE4 70004FE4 1040FFF6 */  beqz  $v0, .L70004FC0
-/* 005BE8 70004FE8 AC22365C */   sw    $v0, %lo(ptr_tlbthread_maybe)($at)
+/* 005BE8 70004FE8 AC22365C */   sw    $v0, %lo(g_tlbFaultedThreadPtr)($at)
 /* 005BEC 70004FEC 8C4E0120 */  lw    $t6, 0x120($v0)
-/* 005BF0 70004FF0 3C088006 */  lui   $t0, %hi(ptr_tlbthread_maybe) 
+/* 005BF0 70004FF0 3C088006 */  lui   $t0, %hi(g_tlbFaultedThreadPtr) 
 /* 005BF4 70004FF4 31CF007C */  andi  $t7, $t6, 0x7c
 /* 005BF8 70004FF8 164F0018 */  bne   $s2, $t7, .L7000505C
 /* 005BFC 70004FFC 00000000 */   nop   
@@ -258,19 +292,19 @@ glabel tlbproc
 /* 005C04 70005004 0314C824 */  and   $t9, $t8, $s4
 /* 005C08 70005008 16790014 */  bne   $s3, $t9, .L7000505C
 /* 005C0C 7000500C 00000000 */   nop   
-/* 005C10 70005010 8D08365C */  lw    $t0, %lo(ptr_tlbthread_maybe)($t0)
+/* 005C10 70005010 8D08365C */  lw    $t0, %lo(g_tlbFaultedThreadPtr)($t0)
 /* 005C14 70005014 0C000676 */  jal   tlbmanageTranslateLoadRomFromTlbAddress
 /* 005C18 70005018 8D040124 */   lw    $a0, 0x124($t0)
-/* 005C1C 7000501C 3C098006 */  lui   $t1, %hi(ptr_tlbthread_maybe) 
-/* 005C20 70005020 8D29365C */  lw    $t1, %lo(ptr_tlbthread_maybe)($t1)
-/* 005C24 70005024 3C0A8006 */  lui   $t2, %hi(ptr_tlbthread_maybe) 
-/* 005C28 70005028 3C058006 */  lui   $a1, %hi(ptr_tlbthread_maybe)
+/* 005C1C 7000501C 3C098006 */  lui   $t1, %hi(g_tlbFaultedThreadPtr) 
+/* 005C20 70005020 8D29365C */  lw    $t1, %lo(g_tlbFaultedThreadPtr)($t1)
+/* 005C24 70005024 3C0A8006 */  lui   $t2, %hi(g_tlbFaultedThreadPtr) 
+/* 005C28 70005028 3C058006 */  lui   $a1, %hi(g_tlbFaultedThreadPtr)
 /* 005C2C 7000502C A5350010 */  sh    $s5, 0x10($t1)
-/* 005C30 70005030 8D4A365C */  lw    $t2, %lo(ptr_tlbthread_maybe)($t2)
+/* 005C30 70005030 8D4A365C */  lw    $t2, %lo(g_tlbFaultedThreadPtr)($t2)
 /* 005C34 70005034 02C02025 */  move  $a0, $s6
 /* 005C38 70005038 A5400012 */  sh    $zero, 0x12($t2)
 /* 005C3C 7000503C 0C00422B */  jal   __osEnqueueThread
-/* 005C40 70005040 8CA5365C */   lw    $a1, %lo(ptr_tlbthread_maybe)($a1)
+/* 005C40 70005040 8CA5365C */   lw    $a1, %lo(g_tlbFaultedThreadPtr)($a1)
 /* 005C44 70005044 0C00374C */  jal   osSetIntMask
 /* 005C48 70005048 02002025 */   move  $a0, $s0
 /* 005C4C 7000504C 0C0042B4 */  jal   osYieldThread
@@ -303,7 +337,7 @@ glabel tlbproc
 #endif
 
 /**
- * 5CAC	700050AC
+ * 5CAC    700050AC
  *     V0= SP, A3=SP usage within function range (A1,A0) with initial SP A2
  *     accepts: A0=p->opcode.cur, A1=p->opcode.start, A2=SP w/i function, A3=p->register buffer
  * 
@@ -356,7 +390,7 @@ u32 * debug_related_8(const u32 *startAddress, const u32 *minAddress, const u32 
         // insert an extra "move" instruction, but it might help explain why
         // addrval is being lw into 'a2' instead of 't1'.
         // (Currently addrval is being loaded into 'a2'.)
-        // Also, dereferencing it further changes the instructions much
+        // Dereferencing it lower changes the instructions much
         // more (more mismatch from target).
         // 
         // adding this line here:
@@ -515,7 +549,7 @@ glabel debug_related_8
 #endif
 
 /**
- * 5DE0	700051E0
+ * 5DE0    700051E0
  *     V0=TRUE if opcode that set RA A0 was a JAL or JALR type within bounds (70000450,70020D90)
  *     accepts: A0=p->70-mapped TLB function, presumably from RA
  */
@@ -538,16 +572,14 @@ s32 tlbIsJumpOpInCodeSeg(u32 *currop)
     return 0;
 }
 
-
-
 /**
- * 5E58	70005258
+ * 5E58    70005258
  *     V0= strlen(A0); used exclusively for scanning ind.rea.buf
  *     accepts: A0=p->string
  * 
  * Max length returned is 256.
  */
-s32 return_strlen(u8 *arg0)
+s32 indyStrlen(u8 *arg0)
 {
     s32 count = 0;
     u8 c;
@@ -564,29 +596,27 @@ s32 return_strlen(u8 *arg0)
     return count;
 }
 
-
-
 /**
- * 5E94	70005294
+ * 5E94    70005294
  *     V0= total size of one word, two strings at hardware A0
  *     accepts: A0=hardware address
  */
-u8 *indy_file_get_address_subsequent_data(u8 *arg0)
+u8 *indyFileGetAddressSubsequentData(u8 *arg0)
 {
     u32 returnAddress;
 
-    romCopy(&indy_read_buffer, arg0, INDY_READ_BUFFER_LEN);
+    romCopy(&g_indyReadBuffer, arg0, g_indyReadBuffer_LEN);
     
-    current_indy_read_buf_resourceID = *(s32*) &indy_read_buffer;
-    ptr_indy_read_buf_string1 = &indy_read_buffer[4];
-    ptr_indy_read_buf_string2 = (u8 *) (
-        return_strlen(ptr_indy_read_buf_string1)
-        + (u32)ptr_indy_read_buf_string1
+    g_indyCurrentReadBufferResourceId = (u32*)(*(s32*) &g_indyReadBuffer);
+    g_indyReadBufferString1 = (u8*)&g_indyReadBuffer[4];
+    g_indyReadBufferString2 = (u8 *) (
+        indyStrlen(g_indyReadBufferString1)
+        + (u32)g_indyReadBufferString1
         + 1);
     
     returnAddress = 
-        return_strlen(ptr_indy_read_buf_string1) 
-        + ((u32)arg0 + return_strlen(ptr_indy_read_buf_string2))
+        indyStrlen(g_indyReadBufferString1) 
+        + ((u32)arg0 + indyStrlen(g_indyReadBufferString2))
         + 6;
 
     if (returnAddress & 3)
@@ -597,14 +627,12 @@ u8 *indy_file_get_address_subsequent_data(u8 *arg0)
     return (u8 *)returnAddress;
 }
 
-
-
 /**
- * 5F40	70005340
+ * 5F40    70005340
  *     scan for and load resourceID A0 from indy.read.buf
  *     accepts: A0=resourceID
  */
-s32 scan_load_resourceID_from_indy_read_buf(u32 arg0)
+s32 indyScanLoadResourceIdFromBuffer(u32 arg0)
 {
     u32 *temp_v1;
     u8 *phi_s0 = (u8 *)0xE00004;
@@ -616,9 +644,9 @@ s32 scan_load_resourceID_from_indy_read_buf(u32 arg0)
 
     while (1)
     {
-        v0 = indy_file_get_address_subsequent_data(phi_s0);
+        v0 = indyFileGetAddressSubsequentData(phi_s0);
 
-        temp_v1 = current_indy_read_buf_resourceID;
+        temp_v1 = g_indyCurrentReadBufferResourceId;
 
         if (a0 < (u32)temp_v1)
         {
@@ -635,55 +663,59 @@ s32 scan_load_resourceID_from_indy_read_buf(u32 arg0)
         phi_s0 = v0;
     }
 
-    indy_file_get_address_subsequent_data(phi_s3);
+    indyFileGetAddressSubsequentData(phi_s3);
 
     return 1;
 }
 
 /**
- * 5FC8	700053C8
- *     V0= TRUE if valid indy.read.buf.resourceID	[matches 826475BE]
+ * 5FC8    700053C8
+ *     V0= TRUE if valid indy.read.buf.resourceID    [matches 826475BE]
  */
-u32 is_valid_indy_read_buf_resourceID(void)
+u32 indyIsValidReadBufferResourceId(void)
 {
-    indy_file_get_address_subsequent_data((u8*)0xe00000);
-    return ((u32)current_indy_read_buf_resourceID ^ 0x826475be) == 0;
+    indyFileGetAddressSubsequentData((u8*)0xe00000);
+    return ((u32)g_indyCurrentReadBufferResourceId ^ 0x826475be) == 0;
 }
 
 /**
- * 5FFC	700053FC
+ * 5FFC    700053FC
  *     unconditional return
  */
-void debug_indy_stub(void) {
+void indyRemoved01(void)
+{
     return;
 }
 
 /**
- * 6004	70005404
+ * 6004    70005404
  *     unconditional return
  */
-void debug_indy_stub_0(void) {
+void indyRemoved02(void)
+{
     return;
 }
 
 /**
- * 600C	7000540C
+ * 600C    7000540C
  *     unconditional return
  */
-void debug_indy_stub_1(void) {
+void indyRemoved03(void)
+{
     return;
 }
 
 /**
- * 6014	70005414
- *     V0= indy.read.buf.resourceID	[80063664]
+ * 6014    70005414
+ *     V0= indy.read.buf.resourceID    [80063664]
  */
-u32 * return_indy_read_buf_resourceID(void) {
-  return current_indy_read_buf_resourceID;
+u32 * indyGetReadBufferResourceId(void)
+{
+    return g_indyCurrentReadBufferResourceId;
 }
 
 /**
- * 6020	70005420
+ * 6020    70005420
  *     V0=hardcoded SP for debug thread A1, corrected for address range A0
  *     accepts: A0=p->address space, A1=entry#
  * 
@@ -723,7 +755,7 @@ void * debug_sp_related_11(u32 arg0, u32 arg1)
 }
 
 /**
- * 60E4	700054E4
+ * 60E4    700054E4
  *     V0=hardcoded SP for debug thread A1, corrected for address range A0
  *     accepts: A0=p->address space, A1=entry#
  * 
