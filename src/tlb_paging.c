@@ -338,36 +338,44 @@ glabel tlbMain
 #endif
 
 /**
- * 5CAC    700050AC
- *     V0= SP, A3=SP usage within function range (A1,A0) with initial SP A2
- *     accepts: A0=p->opcode.cur, A1=p->opcode.start, A2=SP w/i function, A3=p->register buffer
+ * Given a pointer to an instruction and a stack frame pointer, attempt to find
+ * the calling function. Return the address of the caller's stack frame and
+ * populate regs with stack addresses where that register was saved. This can be
+ * used to retrieve the RA value and invoke crashGetParentStackFrame again to
+ * build a backtrace.
+ *
+ * @param origptr is a pointer to an instruction. This should be either the value of
+ *     the PC register of the faulted thread, or an RA register if searching a
+ *     parent.
+ * @param minaddr is the memory address of the start of the code segment,
+ *     ie. 0x70001050. This is used to prevent the function from walking out of
+ *     the code segment.
+ * @param origsp is the address of the stack frame for the given origptr.
+ * @param regs is a pointer to an array of 32 words.
+ *
+ * The function works by walking backwards one instruction at a time, looking
+ * for stack frame adjustments and stores of $ra to the stack. Once both of
+ * these are are found, the function returns with this information.
+ *
+ * @returns The function will return 0 if it can't reliably find the caller. This will
+ * happen if the function being analysed didn't adjust the stack pointer or
+ * store $ra in the stack. It can also fail if the function being analysed uses
+ * returns within branches.
  * 
- * @param startAddress Starting address to get stack pointer for. Will decrement this value for search.
- * @param minAddress Low address cutoff. Will continue searching while the current address is higher than this.
- * @param startStackPointer Starting stack pointer address.
- * @param buffer Register buffer. Tracks which registers have been saved on the stack.
- * 
- * @returns Stack pointer, accounting for adjustments since @param startAddress, as long as
- * instructions for restoring the stack and `ra` have been found, otherwise NULL.
- * 
- * decomp status:
- * - compiles: yes
- * - stack resize: ok
- * - identical instructions: yes
- * - identical registers: fail
+ * note: name copied from PD.
  */
-#ifdef NONMATCHING
-u32 * debug_related_8(const u32 *startAddress, const u32 *minAddress, const u32 *startStackPointer, u32 *buffer)
+const u32 *crashGetParentStackFrame(const u32 *origptr, const u32 *minaddr, const u32 *origsp, u32 *regs)
 {
-    // I don't think this is (u16*). There are two places where
-    // an offset is calculated using ssl 0x2 which implies this is
-    // a u32 pointer, but I couldn't get that to match.
-    const u16 *sp = (u16*)startStackPointer;
+    const u32 *sp = origsp;
+    const u32 *addr;
     u32 sp_found = 0; // v0
     u32 ra_found = 0; // t0
-    s32 i;
-    const u32 *addr;
+    s32 sw_reg;
+    
+    // Holds value of address while iterating, but also reused
+    // to iterate while loop at start of method.
     u32 addrval;
+    s16 value;    
     
     // Do not remove the following trailing backslash. The while condition
     // needs to be on the same line as previous, otherwise the build breaks.
@@ -376,178 +384,87 @@ u32 * debug_related_8(const u32 *startAddress, const u32 *minAddress, const u32 
     // Note: this also occurs in PD:
     // src/game/game_0b69d0.c (bd15d298664e1a22cd31886cf87bfc40ab6842e9)
     // line 382:    p = i; while (sllen < 4) {
-    i = 0; \
-    while(i < 32)
+    addrval = 0; \
+    while(addrval < 32)
     {
-        buffer[i++] = 0;
+        regs[addrval++] = 0;
     }
 
-    for (addr = startAddress; addr >= minAddress; addr--) // else bnez L700051B8
+    // Walk backwards through the instructions
+    for (addr = origptr; addr >= minaddr; addr--)
     {
         // no validation on pointer
         addrval = *addr;
+        value = addrval & 0xffff;
 
-        // Dereferencing addr again after this point (in the for loop) will
-        // insert an extra "move" instruction, but it might help explain why
-        // addrval is being lw into 'a2' instead of 't1'.
-        // (Currently addrval is being loaded into 'a2'.)
-        // Dereferencing it lower changes the instructions much
-        // more (more mismatch from target).
-        // 
-        // adding this line here:
-        //     if (*addr);
-        // generates:
-        // 238:   8c890000   lw     t1,0(a0)   # t1 matches
-        // 23c:   2484fffc   addiu  a0,a0,-4   # addr--
-        // 240:   0085082b   sltu   at,a0,a1
-        // 244:   012b7824   and    t7,t1,t3   # if ((addrval & MIPS_ADDIU_SP_SP_ANY_MASK) == MIPS_ADDIU_SP_SP_ANY)
-        // 248:   154f000b   bne    t2,t7,278  # jump to second if (first else if) in for loop
-        // 24c:   01203025   move   a2,t1      # shouldnt be here
-
-        //L7000511C:
         if ((addrval & MIPS_ADDIU_SP_SP_ANY_MASK) == MIPS_ADDIU_SP_SP_ANY)
         {
+            // Found an addiu $sp, $sp, <amount> instruction, which adjusts the
+			// stack pointer. These can exist near the start and end of any
+			// function. The "add" at the start is done with a negative value
+			// which increases the size of the stack, as the stack expands to
+			// the left. This function is interested in these negative adds,
+			// because it needs to reverse it and move the sp variable forward
+			// to the next stack frame (the frame of the caller).
             sp_found = 1;
 
-            if ((s16)addrval > 0)
+            if (value > 0)
             {
+                // Found the addiu sp at the end of the function. It's pretty
+				// rare to crash (or jump elsewhere) after restoring the sp,
+				// so this situation is not supported by this function.
+
                 break;
             }
 
-            sp -= (((s16)addrval >> 2) << 1);
-            
-            if (ra_found) // beqz  $t0, .L700051B0
+            // Change sp to point to the caller's stack frame
+            sp -= (value >> 2);
+
+            if (ra_found)
             {
-                break;// b     .L700051B8
+                break;
             }
         }
-        //L70005158:
         else if ((addrval & MIPS_SW_SP_ANY_MASK) == MIPS_SW_SP_ANY)
         {
-            u32 sw_reg = (addrval >> 0x10) & 0x1F;
-
-            buffer[sw_reg] = sp + (((s16)addrval >> 2) << 1);
-            // alternatively, get address of indexing into array:
-            //buffer[sw_reg] = &sp[(((s16)addrval >> 2) << 1)];
+            // This looks for a store from $ra to the stack, so the value can
+			// be read from the stack and used to find the caller's address.
+            sw_reg = (addrval >> 16) & 0x1F;
+            regs[sw_reg] = (u32)(sp + (value >> 2));
 
             if (sw_reg == MIPS_REG_SOURCE_BITS_RA)
             {
                 ra_found = 1;
             }
 
-            //L70005190:
             if (sp_found && ra_found)
             {
+                // Found a jr $ra statement, which is a return. This will happen if
+                // this loop has walked out of the current function and into the one
+                // prior to it, so bail.
+
+                // It can also happen if the function has return statements within
+                // branches, but handling these correctly would involve a lot of
+                // complexity so that's unsupported. Because of this, this function
+                // can end the backtrace prematurely if it encounters a function
+                // that does this.
+
                 break;
             }
         }
-        //L700051A8:
         else if (addrval == MIPS_JR_RA)
         {
             break;
         }
     }
 
-    //L700051B8:
     if (sp_found && ra_found)
     {
-        return (u32 *)sp;
+        return sp;
     }
 
-    return NULL;
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel debug_related_8
-/* 005CAC 700050AC 27BDFFF0 */  addiu $sp, $sp, -0x10
-/* 005CB0 700050B0 AFA40010 */  sw    $a0, 0x10($sp)
-/* 005CB4 700050B4 AFB1000C */  sw    $s1, 0xc($sp)
-/* 005CB8 700050B8 AFB00008 */  sw    $s0, 8($sp)
-/* 005CBC 700050BC 00C01825 */  move  $v1, $a2
-/* 005CC0 700050C0 00001025 */  move  $v0, $zero
-/* 005CC4 700050C4 00004025 */  move  $t0, $zero
-/* 005CC8 700050C8 24040020 */  li    $a0, 32
-/* 005CCC 700050CC 00004825 */  move  $t1, $zero
-/* 005CD0 700050D0 00E05025 */  move  $t2, $a3
-.L700050D4:
-/* 005CD4 700050D4 25290004 */  addiu $t1, $t1, 4
-/* 005CD8 700050D8 AD400000 */  sw    $zero, ($t2)
-/* 005CDC 700050DC AD400004 */  sw    $zero, 4($t2)
-/* 005CE0 700050E0 AD400008 */  sw    $zero, 8($t2)
-/* 005CE4 700050E4 AD40000C */  sw    $zero, 0xc($t2)
-/* 005CE8 700050E8 1524FFFA */  bne   $t1, $a0, .L700050D4
-/* 005CEC 700050EC 254A0010 */   addiu $t2, $t2, 0x10
-/* 005CF0 700050F0 8FA40010 */  lw    $a0, 0x10($sp)
-/* 005CF4 700050F4 3C1103E0 */  lui   $s1, (0x03E00008 >> 16) # lui $s1, 0x3e0
-/* 005CF8 700050F8 36310008 */  ori   $s1, (0x03E00008 & 0xFFFF) # ori $s1, $s1, 8
-/* 005CFC 700050FC 0085082B */  sltu  $at, $a0, $a1
-/* 005D00 70005100 1420002D */  bnez  $at, .L700051B8
-/* 005D04 70005104 2410001F */   li    $s0, 31
-/* 005D08 70005108 3C0DFFE0 */  lui   $t5, 0xffe0
-/* 005D0C 7000510C 3C0CAFA0 */  lui   $t4, 0xafa0
-/* 005D10 70005110 3C0BFFFF */  lui   $t3, 0xffff
-/* 005D14 70005114 3C0A27BD */  lui   $t2, 0x27bd
-/* 005D18 70005118 8C890000 */  lw    $t1, ($a0)
-.L7000511C:
-/* 005D1C 7000511C 2484FFFC */  addiu $a0, $a0, -4
-/* 005D20 70005120 0085082B */  sltu  $at, $a0, $a1
-/* 005D24 70005124 012B7824 */  and   $t7, $t1, $t3
-/* 005D28 70005128 154F000B */  bne   $t2, $t7, .L70005158
-/* 005D2C 7000512C 012DC024 */   and   $t8, $t1, $t5
-/* 005D30 70005130 0009C400 */  sll   $t8, $t1, 0x10
-/* 005D34 70005134 0018CC03 */  sra   $t9, $t8, 0x10
-/* 005D38 70005138 1F20001F */  bgtz  $t9, .L700051B8
-/* 005D3C 7000513C 24020001 */   li    $v0, 1
-/* 005D40 70005140 00197083 */  sra   $t6, $t9, 2
-/* 005D44 70005144 000E7880 */  sll   $t7, $t6, 2
-/* 005D48 70005148 11000019 */  beqz  $t0, .L700051B0
-/* 005D4C 7000514C 006F1823 */   subu  $v1, $v1, $t7
-/* 005D50 70005150 10000019 */  b     .L700051B8
-/* 005D54 70005154 00000000 */   nop   
-.L70005158:
-/* 005D58 70005158 15980013 */  bne   $t4, $t8, .L700051A8
-/* 005D5C 7000515C 00093402 */   srl   $a2, $t1, 0x10
-/* 005D60 70005160 30D9001F */  andi  $t9, $a2, 0x1f
-/* 005D64 70005164 00097C00 */  sll   $t7, $t1, 0x10
-/* 005D68 70005168 000FC403 */  sra   $t8, $t7, 0x10
-/* 005D6C 7000516C 03203025 */  move  $a2, $t9
-/* 005D70 70005170 0018C883 */  sra   $t9, $t8, 2
-/* 005D74 70005174 00197080 */  sll   $t6, $t9, 2
-/* 005D78 70005178 0006C080 */  sll   $t8, $a2, 2
-/* 005D7C 7000517C 00F8C821 */  addu  $t9, $a3, $t8
-/* 005D80 70005180 01C37821 */  addu  $t7, $t6, $v1
-/* 005D84 70005184 16060002 */  bne   $s0, $a2, .L70005190
-/* 005D88 70005188 AF2F0000 */   sw    $t7, ($t9)
-/* 005D8C 7000518C 24080001 */  li    $t0, 1
-.L70005190:
-/* 005D90 70005190 10400007 */  beqz  $v0, .L700051B0
-/* 005D94 70005194 00000000 */   nop   
-/* 005D98 70005198 11000005 */  beqz  $t0, .L700051B0
-/* 005D9C 7000519C 00000000 */   nop   
-/* 005DA0 700051A0 10000005 */  b     .L700051B8
-/* 005DA4 700051A4 00000000 */   nop   
-.L700051A8:
-/* 005DA8 700051A8 11310003 */  beq   $t1, $s1, .L700051B8
-/* 005DAC 700051AC 00000000 */   nop   
-.L700051B0:
-/* 005DB0 700051B0 5020FFDA */  beql  $at, $zero, .L7000511C
-/* 005DB4 700051B4 8C890000 */   lw    $t1, ($a0)
-.L700051B8:
-/* 005DB8 700051B8 10400005 */  beqz  $v0, .L700051D0
-/* 005DBC 700051BC 8FB00008 */   lw    $s0, 8($sp)
-/* 005DC0 700051C0 51000004 */  beql  $t0, $zero, .L700051D4
-/* 005DC4 700051C4 00001025 */   move  $v0, $zero
-/* 005DC8 700051C8 10000002 */  b     .L700051D4
-/* 005DCC 700051CC 00601025 */   move  $v0, $v1
-.L700051D0:
-/* 005DD0 700051D0 00001025 */  move  $v0, $zero
-.L700051D4:
-/* 005DD4 700051D4 8FB1000C */  lw    $s1, 0xc($sp)
-/* 005DD8 700051D8 03E00008 */  jr    $ra
-/* 005DDC 700051DC 27BD0010 */   addiu $sp, $sp, 0x10
-)
-#endif
 
 /**
  * 5DE0    700051E0
