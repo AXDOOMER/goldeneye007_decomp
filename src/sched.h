@@ -64,10 +64,9 @@ typedef struct {
 
 extern f32 g_ViXScales[2];
 extern f32 g_ViYScales[2];
-extern s32 something_with_osVI_14[2];
+extern s32 g_ViChangeVideoModes[2];
 extern OSSched sc;
 extern OSScClient gfxClient[3];
-//extern char gfxClient[0x18];
 extern OSViMode g_ViModes[2];
 extern OSViMode *g_ViModePtrs[2];
 extern s32 dword_CODE_bss_8005DBE8[2];
