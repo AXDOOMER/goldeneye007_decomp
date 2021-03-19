@@ -8,6 +8,7 @@
 #include "game/bondwalk.h"
 #include "boss.h"
 #include "music.h"
+#include "video.h"
 
 // bss
 struct coord flt_CODE_bss_80079940;

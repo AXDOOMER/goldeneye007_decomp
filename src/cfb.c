@@ -1,4 +1,6 @@
 #include "ultra64.h"
 #include "bondgame.h"
 
-u8 cfb_16[2][320*240*2];
+#include "video.h"
+
+u8 cfb_16[NUM_VIDEO_FRAME_BUFFERS][SCREEN_WIDTH * SCREEN_HEIGHT * 2];

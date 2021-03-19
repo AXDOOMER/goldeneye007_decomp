@@ -2,6 +2,7 @@
 #include "vi.h"
 #include "video.h"
 #include "bondgame.h"
+#include "bondconstants.h"
 #include "unk_093880.h" // pPlayer
 #include "sched.h"
 #include "rsp.h"
@@ -13,15 +14,22 @@
  * This file contains video handling code. 
  */
 
-
 //data
 u32 D_80023240 = 0;
-struct video_settings video1_settings[] = 
+struct video_settings video1_settings[NUM_VIDEO_SETTINGS] = 
 {
-    {0, 0, 0, 0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, 320, 240, 320, 240, 0, 0, 1, 0},
-    {0, 0, 0, 0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, 320, 240, 320, 240, 0, 0, 1, 0}
+    {0, 0, 0, 0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 320, 240, 0, 0, 1, NULL},
+    {0, 0, 0, 0, 320, 240, 60.0f, 1.3333334f, 30.0f, 10000.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 320, 240, 0, 0, 1, NULL}
 };
+
+/**
+ * Horizontal offset.
+ */
 s32 D_8002329C = 0;
+
+/**
+ * Vertical offset.
+ */
 s32 D_800232A0 = 0;
 video_settings *ptr_video_settings1 = &video1_settings[0];
 video_settings *ptr_video_settings2 = &video1_settings[0];
@@ -30,6 +38,10 @@ s32 D_800232B0 = 1;
 s32 D_800232B4 = 0;
 s32 D_800232B8 = 0;
 s32 D_800232BC = 3;
+
+/**
+ * should correlate to g_schedViCurrentFrameBuffer
+ */
 s32 D_800232C0 = 0;
 s32 jpg_16bit_grabnum = 1;
 s32 jpg_32bit_grabnum = 1;
@@ -42,14 +54,38 @@ s32 rgb_32bit_grabnum = 1;
 f32 projectionMatrixF[4][4];
 Mtx *projectionMatrix;
 u16 perspNorm;
+
+/**
+ * Original vi mode.
+ */
 OSViMode dword_CODE_bss_80060828;
+
 u8 off_CODE_bss_80060878;
 u8 off_CODE_bss_80060879;
+
+/**
+ * Current vi mode pointer.
+ */
 OSViMode *viMode;
+
+/**
+ * Original viMode->comRegs.hStart.
+ * 
+ */
 u32 dword_CODE_bss_80060880;
+
+/**
+ * Original viMode->fldRegs[0].vStart.
+ */
 u32 dword_CODE_bss_80060884;
+
+/**
+ * Original viMode->fldRegs[1].vStart.
+ */
 u32 dword_CODE_bss_80060888;
-s32 dword_CODE_bss_8006088C;
+
+s32 g_unused8006088C;
+
 /**
  * 3C60	70003060
  */
@@ -132,7 +168,7 @@ void viInitBuffers(void)
     u8* p1 = cfb_16[0];
     u8* p2 = cfb_16[1];
     zbufDeallocate();
-    for (i = 0; i < 320*240*2; i++) {
+    for (i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT * 2; i++) {
         p1[i] = 0;
         p2[i] = 0;
     }
@@ -241,34 +277,39 @@ glabel video_related_7
 )
 #endif
 
+/**
+ * 3E98 70003298
+ * Some code (and defines) based on n64devkit\ultra\usr\src\pr\demos\blockmonkey\block.c
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: fail
+ * - identical registers: fail
+ * 
+ * // First half matching very well, second half less so.
+ */
 #ifdef NONMATCHING
-// First half matching very well, second half less so.
-void osViSetYScale(f32);
 void video_related_8(void) {
-    f32 var1;
-    f32 var1_5;
+    f32 calculatedYScale;
+    f32 calculatedXScale;
     OSViMode *viModeTmp;
-    s32 var2;
-    s32 var3;
-    s32 var4;
-    s32 var5;
-    s32 var6;
-    s32 var7;
-    s32 var8;
-    s32 var9;
-    s32 varA;
     video_settings *settings;
-    if (ptr_video_settings2->mode != ptr_video_settings1->mode) {
+    s32 registerValue;
+
+    if (ptr_video_settings2->mode != ptr_video_settings1->mode)
+    {
         switch (ptr_video_settings2->mode)
         {
-            case 0: {
+            case VIDEOMODE_DISABLE_320x240:
+            {
                 osViSetYScale(1.0f);
                 osViBlack(TRUE);
 
                 break;
             }
 
-            case 1: {
+            case VIDEOMODE_320x240: {
                 if (coloroutputmode != COLORMODE_32BIT) {
                     if (osTvType == TV_TYPE_MPAL) {
                         dword_CODE_bss_80060828 = osViModeTable[OS_VI_MPAL_LAN1];
@@ -277,7 +318,7 @@ void video_related_8(void) {
                     }
                 } else {
                     if (osTvType == TV_TYPE_MPAL) {
-                        dword_CODE_bss_80060828 = osViModeTable[34/*OS_VI_MPAL_LAN2*/];
+                        dword_CODE_bss_80060828 = osViModeTable[OS_VI_MPAL_LAN2];
                     } else {
                         dword_CODE_bss_80060828 = osViModeTable[OS_VI_NTSC_LAN2];
                     }
@@ -294,9 +335,9 @@ void video_related_8(void) {
                 break;
             }
 
-            case 2: {
+            case VIDEOMODE_640x480: {
                 if (osTvType == TV_TYPE_MPAL) {
-                    viMode = &osViModeTable[39/*OS_VI_MPAL_HAF1*/];
+                    viMode = &osViModeTable[OS_VI_MPAL_HAF1];
                 } else {
                     viMode = &osViModeTable[OS_VI_NTSC_HAF1];
                 }
@@ -313,15 +354,21 @@ void video_related_8(void) {
 
         osViSetSpecialFeatures(OS_VI_DITHER_FILTER_ON | OS_VI_GAMMA_OFF);
     }
-    var1 = (f32)ptr_video_settings2->y / (f32)ptr_video_settings2->bufy;
-    var1_5 = (f32)ptr_video_settings2->x / (f32)ptr_video_settings2->bufx;
-    if (ptr_video_settings2->mode == 0) {
-        var1 = 1.0f;
+    
+    calculatedXScale = (f32)ptr_video_settings2->x / (f32)ptr_video_settings2->bufx;
+    calculatedYScale = (f32)ptr_video_settings2->y / (f32)ptr_video_settings2->bufy;
+
+    if (ptr_video_settings2->mode == VIDEOMODE_DISABLE_320x240) {
+        calculatedYScale = 1.0f;
     }
-    g_ViXScales[D_800232C0] = var1_5;
-    g_ViYScales[D_800232C0] = var1;
-    if (ptr_video_settings2->mode == 1) {
+    
+    g_ViXScales[D_800232C0] = calculatedXScale;
+    g_ViYScales[D_800232C0] = calculatedYScale;
+    
+    if (ptr_video_settings2->mode == VIDEOMODE_320x240)
+    {
         g_ViModePtrs[D_800232C0] = &dword_CODE_bss_80060828;
+
         if (coloroutputmode != COLORMODE_32BIT) {
             if (osTvType == TV_TYPE_MPAL) {
                 g_ViModes[D_800232C0] = osViModeTable[OS_VI_MPAL_LAN1];
@@ -330,7 +377,7 @@ void video_related_8(void) {
             }
         } else {
             if (osTvType == TV_TYPE_MPAL) {
-                g_ViModes[D_800232C0] = osViModeTable[34/*OS_VI_MPAL_LAN2*/];
+                g_ViModes[D_800232C0] = osViModeTable[OS_VI_MPAL_LAN2];
             } else {                
                 g_ViModes[D_800232C0] = osViModeTable[OS_VI_NTSC_LAN2];
             }
@@ -339,59 +386,48 @@ void video_related_8(void) {
         viModeTmp = &g_ViModes[D_800232C0];
 
         viModeTmp->comRegs.width = ptr_video_settings2->bufx;
-        viModeTmp->comRegs.xScale = ((ptr_video_settings2->bufx << 10) / 640);
-        viModeTmp->fldRegs[0].yScale = ((ptr_video_settings2->bufy << 11) / 480);
-        viModeTmp->fldRegs[1].yScale = ((ptr_video_settings2->bufy << 11) / 480);
+        viModeTmp->comRegs.xScale = ((ptr_video_settings2->bufx * XSCALE_MAX) / SCREEN_WIDTH_MAX);
+        viModeTmp->fldRegs[0].yScale = ((ptr_video_settings2->bufy * YSCALE_MAX) / SCREEN_HEIGHT_MAX);
+        viModeTmp->fldRegs[1].yScale = ((ptr_video_settings2->bufy * YSCALE_MAX) / SCREEN_HEIGHT_MAX);
         viModeTmp->fldRegs[0].origin = (ptr_video_settings2->bufx * 2);
         viModeTmp->fldRegs[1].origin = (ptr_video_settings2->bufx * 2);
-        var2 = viModeTmp->comRegs.hStart;
-        var2 = (((((var2 >> 16) & 0xffff) + D_8002329C) % 0xffff) << 16) | (((var2 & 0xffff) + D_8002329C) % 0xffff);
-        viModeTmp->comRegs.hStart = var2;
-        dword_CODE_bss_80060880 = var2;
-        var3 = viModeTmp->fldRegs[0].vStart;
-        var3 = (((((var3 >> 16) & 0xffff) + D_800232A0) % 0xffff) << 16) | (((var3 & 0xffff) + D_800232A0) % 0xffff);
-        viModeTmp->fldRegs[0].vStart = var3;
-        dword_CODE_bss_80060884 = var3;
-        var4 = viModeTmp->fldRegs[1].vStart;
-        var4 = (((((var4 >> 16) & 0xffff) + D_800232A0) % 0xffff) << 16) | (((var4 & 0xffff) + D_800232A0) % 0xffff);
-        viModeTmp->fldRegs[1].vStart = var4;
-        dword_CODE_bss_80060888 = var4;
-        something_with_osVI_14[D_800232C0] = 1;
-    } else {
-        something_with_osVI_14[D_800232C0] = 0;
+
+        registerValue = viModeTmp->comRegs.hStart;
+        registerValue = (((((registerValue >> 16) & 0xffff) + D_8002329C) % 0xffff) << 16) | (((((registerValue >> 0) & 0xffff) + D_8002329C) % 0xffff) << 0);
+        viModeTmp->comRegs.hStart = registerValue;
+        dword_CODE_bss_80060880 = registerValue;
+
+        registerValue = viModeTmp->fldRegs[0].vStart;
+        registerValue = (((((registerValue >> 16) & 0xffff) + D_800232A0) % 0xffff) << 16) | (((((registerValue >> 0) & 0xffff) + D_800232A0) % 0xffff) << 0);
+        viModeTmp->fldRegs[0].vStart = registerValue;
+        dword_CODE_bss_80060884 = registerValue;
+
+        registerValue = viModeTmp->fldRegs[1].vStart;
+        registerValue = (((((registerValue >> 16) & 0xffff) + D_800232A0) % 0xffff) << 16) | (((((registerValue >> 0) & 0xffff) + D_800232A0) % 0xffff) <<  0);
+        viModeTmp->fldRegs[1].vStart = registerValue;
+        dword_CODE_bss_80060888 = registerValue;
+
+        g_ViChangeVideoModes[D_800232C0] = 1;
     }
-    var5 = (D_800232C0 + 1);
-    var6 = (var5 & 1);
-    if (var5 < 0) {
-        if (var6 != 0) {
-            var6 -= 2;
-        }
+    else
+    {
+        g_ViChangeVideoModes[D_800232C0] = 0;
     }
-    D_800232C0 = var6;
+
+    D_800232C0 = (D_800232C0 + 1) % NUM_VIDEO_FRAME_BUFFERS;
+
     if (coloroutputmode != COLORMODE_32BIT) {
         (*fast3d_related_array)[22] = ptr_video_settings2->framebuf;
     } else {
         (*fast3d_related_array)[22] = cfb_16[0];
     }
-    var7 = (off_CODE_bss_80060878 + 1);
-    var8 = (off_CODE_bss_80060879 + 1);
-    var9 = (var7 & 1);
-    if (var7 < 0) {
-        if (var9 != 0) {
-            var9 -= 2;
-        }
-    }
-    off_CODE_bss_80060878 = var9;
-    varA = (var8 & 1);
-    if (var8 < 0) {
-        if (varA != 0) {
-            varA -= 2;
-        }
-    }
-    off_CODE_bss_80060879 = varA;
+
+    off_CODE_bss_80060878 = (off_CODE_bss_80060878 + 1) % NUM_VIDEO_SETTINGS;
+    off_CODE_bss_80060879 = (off_CODE_bss_80060879 + 1) % NUM_VIDEO_SETTINGS;
+    
     settings = ptr_video_settings2;
-    ptr_video_settings1 = &video1_settings[off_CODE_bss_80060878];
-    ptr_video_settings2 = &video1_settings[off_CODE_bss_80060879];
+    ptr_video_settings1 = &video1_settings + (off_CODE_bss_80060878 * sizeof(video_settings));
+    ptr_video_settings2 = &video1_settings + (off_CODE_bss_80060879 * sizeof(video_settings));
     bcopy(settings, ptr_video_settings2, sizeof(video_settings));
     ptr_video_settings2->framebuf = cfb_16[off_CODE_bss_80060879];
 }
@@ -893,16 +929,16 @@ glabel video_related_8
 /* 0045A4 700039A4 AC640044 */  sw    $a0, 0x44($v1)
 /* 0045A8 700039A8 3C018006 */  lui   $at, %hi(viMode+0xC)
 /* 0045AC 700039AC AC240888 */  sw    $a0, %lo(viMode+0xC)($at)
-/* 0045B0 700039B0 3C018002 */  lui   $at, %hi(something_with_osVI_14)
+/* 0045B0 700039B0 3C018002 */  lui   $at, %hi(g_ViChangeVideoModes)
 /* 0045B4 700039B4 00290821 */  addu  $at, $at, $t1
 /* 0045B8 700039B8 10000006 */  b     .L700039D4
-/* 0045BC 700039BC AC2E30C4 */   sw    $t6, %lo(something_with_osVI_14)($at)
+/* 0045BC 700039BC AC2E30C4 */   sw    $t6, %lo(g_ViChangeVideoModes)($at)
 .L700039C0:
-/* 0045C0 700039C0 3C018002 */  lui   $at, %hi(something_with_osVI_14)
+/* 0045C0 700039C0 3C018002 */  lui   $at, %hi(g_ViChangeVideoModes)
 /* 0045C4 700039C4 00290821 */  addu  $at, $at, $t1
 /* 0045C8 700039C8 3C0B8002 */  lui   $t3, %hi(coloroutputmode) 
 /* 0045CC 700039CC 8D6B32AC */  lw    $t3, %lo(coloroutputmode)($t3)
-/* 0045D0 700039D0 AC2030C4 */  sw    $zero, %lo(something_with_osVI_14)($at)
+/* 0045D0 700039D0 AC2030C4 */  sw    $zero, %lo(g_ViChangeVideoModes)($at)
 .L700039D4:
 /* 0045D4 700039D4 254A0001 */  addiu $t2, $t2, 1
 /* 0045D8 700039D8 05410004 */  bgez  $t2, .L700039EC

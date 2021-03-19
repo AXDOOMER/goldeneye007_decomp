@@ -12,6 +12,7 @@
 #include "game/chrobjdata.h"
 #include "joy.h"
 #include "video.h"
+
 struct point {
     f32 x;
     f32 y;

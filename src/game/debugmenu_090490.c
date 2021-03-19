@@ -2,6 +2,7 @@
 #include "game/debugmenu_090490.h"
 #include "game/initgamedata.h"
 #include "boss.h"
+#include "video.h"
 
 // data
 //D:80036BA0
