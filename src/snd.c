@@ -1298,7 +1298,7 @@ void sfx_c_70008A30(void *arg0, s32 arg1, s32 arg2)
     void *temp_s1;
     void *phi_s0;
 
-    sp30 = osSetIntMask(1);
+    sp30 = osSetIntMask(OS_IM_NONE);
     phi_s0 = arg0->unk8;
     if (arg0->unk8 != 0)
     {

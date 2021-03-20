@@ -5,6 +5,7 @@
 #include "game/mainmenu.h"
 #include "game/bondinv.h"
 #include "music.h"
+#include "tlb_manage.h"
 
 // bss
 //CODE.bss:8008C260
@@ -1023,11 +1024,11 @@ glabel stage_load
 /* 0F268C 7F0BDB5C AFA40038 */  sw    $a0, 0x38($sp)
 /* 0F2690 7F0BDB60 0C00248E */  jal   sfx_c_70009238
 /* 0F2694 7F0BDB64 AC2083A0 */   sw    $zero, %lo(D_800483A0)($at)
-/* 0F2698 7F0BDB68 0C001C0F */  jal   musicTrack1Vol
+/* 0F2698 7F0BDB68 0C001C0F */  jal   musicTrack1ApplySeqpVol
 /* 0F269C 7F0BDB6C 24047FFF */   li    $a0, 32767
-/* 0F26A0 7F0BDB70 0C001CF1 */  jal   musicTrack2Vol
+/* 0F26A0 7F0BDB70 0C001CF1 */  jal   musicTrack2ApplySeqpVol
 /* 0F26A4 7F0BDB74 24047FFF */   li    $a0, 32767
-/* 0F26A8 7F0BDB78 0C001DD3 */  jal   musicTrack3Vol
+/* 0F26A8 7F0BDB78 0C001DD3 */  jal   musicTrack3ApplySeqpVol
 /* 0F26AC 7F0BDB7C 24047FFF */   li    $a0, 32767
 /* 0F26B0 7F0BDB80 0FC304D9 */  jal   sub_GAME_7F0C1364
 /* 0F26B4 7F0BDB84 00000000 */   nop   
@@ -3403,7 +3404,7 @@ GLOBAL_ASM(
 glabel manage_mp_game
 /* 0F36B8 7F0BEB88 27BDFE68 */  addiu $sp, $sp, -0x198
 /* 0F36BC 7F0BEB8C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F36C0 7F0BEB90 0C000626 */  jal   mp_tlb_related
+/* 0F36C0 7F0BEB90 0C000626 */  jal   tlbmanageResetCurrentEntriesCount
 /* 0F36C4 7F0BEB94 00000000 */   nop   
 /* 0F36C8 7F0BEB98 3C0E8005 */  lui   $t6, %hi(controls_locked_flag) 
 /* 0F36CC 7F0BEB9C 8DCE8370 */  lw    $t6, %lo(controls_locked_flag)($t6)
@@ -4276,7 +4277,7 @@ GLOBAL_ASM(
 glabel manage_mp_game
 /* 0F431C 7F0BF7AC 27BDFE68 */  addiu $sp, $sp, -0x198
 /* 0F4320 7F0BF7B0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F4324 7F0BF7B4 0C000626 */  jal   mp_tlb_related
+/* 0F4324 7F0BF7B4 0C000626 */  jal   tlbmanageResetCurrentEntriesCount
 /* 0F4328 7F0BF7B8 00000000 */   nop   
 /* 0F432C 7F0BF7BC 3C0E8005 */  lui   $t6, %hi(controls_locked_flag) # $t6, 0x8005
 /* 0F4330 7F0BF7C0 8DCE83A0 */  lw    $t6, %lo(controls_locked_flag)($t6)
@@ -5154,7 +5155,7 @@ GLOBAL_ASM(
 glabel manage_mp_game
 /* 0F36B8 7F0BEB88 27BDFE68 */  addiu $sp, $sp, -0x198
 /* 0F36BC 7F0BEB8C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F36C0 7F0BEB90 0C000626 */  jal   mp_tlb_related
+/* 0F36C0 7F0BEB90 0C000626 */  jal   tlbmanageResetCurrentEntriesCount
 /* 0F36C4 7F0BEB94 00000000 */   nop   
 /* 0F36C8 7F0BEB98 3C0E8005 */  lui   $t6, %hi(controls_locked_flag) 
 /* 0F36CC 7F0BEB9C 8DCE8370 */  lw    $t6, %lo(controls_locked_flag)($t6)
@@ -5338,10 +5339,10 @@ glabel manage_mp_game
 /* 0F3960 7F0BEE30 0FC2FF01 */  jal   get_controls_locked_flag
 /* 0F3964 7F0BEE34 00000000 */   nop   
 /* 0F3968 7F0BEE38 14400006 */  bnez  $v0, .L7F0BEE54
-/* 0F396C 7F0BEE3C 3C048006 */   lui   $a0, %hi(ptr_sfx_buf)
+/* 0F396C 7F0BEE3C 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0F3970 7F0BEE40 3C068005 */  lui   $a2, %hi(D_800483A0)
 /* 0F3974 7F0BEE44 24C683A0 */  addiu $a2, %lo(D_800483A0) # addiu $a2, $a2, -0x7c60
-/* 0F3978 7F0BEE48 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0F3978 7F0BEE48 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0F397C 7F0BEE4C 0C002382 */  jal   play_sfx_a1
 /* 0F3980 7F0BEE50 240500A1 */   li    $a1, 161
 .L7F0BEE54:
@@ -5958,7 +5959,7 @@ glabel manage_mp_game
 /* 0F424C 7F0BF71C 24054000 */   li    $a1, 16384
 /* 0F4250 7F0BF720 50400034 */  beql  $v0, $zero, .L7F0BF7F4
 /* 0F4254 7F0BF724 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F4258 7F0BF728 0C001C28 */  jal   musicTrack1Tempo
+/* 0F4258 7F0BF728 0C001C28 */  jal   musicTrack1SaveCurrentVolumeAsTrackDefault
 /* 0F425C 7F0BF72C 00000000 */   nop   
 /* 0F4260 7F0BF730 10000030 */  b     .L7F0BF7F4
 /* 0F4264 7F0BF734 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -5968,13 +5969,13 @@ glabel manage_mp_game
 /* 0F4270 7F0BF740 1040000B */  beqz  $v0, .L7F0BF770
 /* 0F4274 7F0BF744 3C058005 */   lui   $a1, 0x8005
 /* 0F4278 7F0BF748 84A583E4 */  lh    $a1, %lo(D_800483E4)($a1)
-/* 0F427C 7F0BF74C 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
+/* 0F427C 7F0BF74C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0F4280 7F0BF750 3C018005 */  lui   $at, %hi(D_800483E4)
 /* 0F4284 7F0BF754 24A5FFFF */  addiu $a1, $a1, -1
 /* 0F4288 7F0BF758 00057400 */  sll   $t6, $a1, 0x10
 /* 0F428C 7F0BF75C 000E2C03 */  sra   $a1, $t6, 0x10
 /* 0F4290 7F0BF760 A42583E4 */  sh    $a1, %lo(D_800483E4)($at)
-/* 0F4294 7F0BF764 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0F4294 7F0BF764 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0F4298 7F0BF768 0C002382 */  jal   play_sfx_a1
 /* 0F429C 7F0BF76C 00003025 */   move  $a2, $zero
 .L7F0BF770:
@@ -5984,13 +5985,13 @@ glabel manage_mp_game
 /* 0F42AC 7F0BF77C 1040000B */  beqz  $v0, .L7F0BF7AC
 /* 0F42B0 7F0BF780 3C058005 */   lui   $a1, 0x8005
 /* 0F42B4 7F0BF784 84A583E4 */  lh    $a1, %lo(D_800483E4)($a1)
-/* 0F42B8 7F0BF788 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
+/* 0F42B8 7F0BF788 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0F42BC 7F0BF78C 3C018005 */  lui   $at, %hi(D_800483E4)
 /* 0F42C0 7F0BF790 24A50001 */   addiu $a1, $a1, 1
 /* 0F42C4 7F0BF794 0005C400 */  sll   $t8, $a1, 0x10
 /* 0F42C8 7F0BF798 00182C03 */  sra   $a1, $t8, 0x10
 /* 0F42CC 7F0BF79C A42583E4 */  sh    $a1, %lo(D_800483E4)($at)
-/* 0F42D0 7F0BF7A0 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0F42D0 7F0BF7A0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0F42D4 7F0BF7A4 0C002382 */  jal   play_sfx_a1
 /* 0F42D8 7F0BF7A8 00003025 */   move  $a2, $zero
 .L7F0BF7AC:
@@ -6007,8 +6008,8 @@ glabel manage_mp_game
 /* 0F4300 7F0BF7D0 24050008 */   li    $a1, 8
 /* 0F4304 7F0BF7D4 10400006 */  beqz  $v0, .L7F0BF7F0
 /* 0F4308 7F0BF7D8 3C058005 */   lui   $a1, %hi(D_800483E4)
-/* 0F430C 7F0BF7DC 3C048006 */  lui   $a0, %hi(ptr_sfx_buf)
-/* 0F4310 7F0BF7E0 8C843720 */  lw    $a0, %lo(ptr_sfx_buf)($a0)
+/* 0F430C 7F0BF7DC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
+/* 0F4310 7F0BF7E0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0F4314 7F0BF7E4 84A583E4 */  lh    $a1, %lo(D_800483E4)($a1)
 /* 0F4318 7F0BF7E8 0C002382 */  jal   play_sfx_a1
 /* 0F431C 7F0BF7EC 00003025 */   move  $a2, $zero

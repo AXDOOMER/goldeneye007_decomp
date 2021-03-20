@@ -58,7 +58,8 @@ SECTIONS
       build/e/src/speed_graph.o (.text);
       build/e/src/video.o (.text);
       build/e/src/deb.o (.text);
-      build/e/src/deb_video.o (.text);
+      build/e/src/tlb_paging.o (.text);
+      build/e/src/unused_fp.o (.text);
       build/e/src/deb_print.o (.text);
       build/e/src/debug_getlastRA.o (.text);
       build/e/src/ramrom.o (.text);
@@ -3178,7 +3179,8 @@ SECTIONS
       build/e/src/speed_graph.o (.data);
       build/e/src/video.o (.data);
       build/e/src/deb.o (.data);
-      build/e/src/deb_video.o (.data);
+      build/e/src/tlb_paging.o (.data);
+      build/e/src/unused_fp.o (.data);
       build/e/src/deb_print.o (.data);
       build/e/src/debug_getlastRA.o (.data);
       build/e/src/ramrom.o (.data);
@@ -3389,7 +3391,8 @@ SECTIONS
       build/e/src/speed_graph.o (.rodata);
       build/e/src/video.o (.rodata);
       build/e/src/deb.o (.rodata);
-      build/e/src/deb_video.o (.rodata);
+      build/e/src/tlb_paging.o (.rodata);
+      build/e/src/unused_fp.o (.rodata);
       build/e/src/deb_print.o (.rodata);
       build/e/src/debug_getlastRA.o (.rodata);
       build/e/src/ramrom.o (.rodata);
@@ -3853,7 +3856,8 @@ SECTIONS
       build/e/src/speed_graph.o (.bss);
       build/e/src/video.o (.bss);
       build/e/src/deb.o (.bss);
-      build/e/src/deb_video.o (.bss);
+      build/e/src/tlb_paging.o (.bss);
+      build/e/src/unused_fp.o (.bss);
       build/e/src/deb_print.o (.bss);
       build/e/src/debug_getlastRA.o (.bss);
       build/e/src/ramrom.o (.bss);

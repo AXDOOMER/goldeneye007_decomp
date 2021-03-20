@@ -31,6 +31,7 @@
 #include "sched.h"
 #include "speed_graph.h"
 #include "token.h"
+#include "tlb_manage.h"
 #include "ultra64.h"
 #include "video.h"
 #include "image.h"
@@ -149,7 +150,7 @@ void bossInitMainthreadData(void)
 
     debInit();
     romCreateMesgQueue();
-    establish_TLB_buffer_management_table();
+    tlbmanageEstablishManagementTable();
     image_entries_load();
     mempInitDebugNoticeList();
     memaInit();
@@ -197,7 +198,7 @@ void bossInitMainthreadData(void)
     }
 
     temp_s0 = (osVirtualToPhysical(&room_model_buffer) | 0x80000000);
-    mempCheckMemflagTokens(temp_s0, (return_ptr_TLBallocatedblock() - temp_s0));
+    mempCheckMemflagTokens(temp_s0, ((u32)tlbmanageGetTlbAllocatedBlock() - (u32)temp_s0));
     mempResetBank(6);
     init_LnameX();
     lvInitDebugNoticeList();
