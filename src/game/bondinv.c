@@ -3169,7 +3169,7 @@ int sub_GAME_7F08D5A0(int index) {
 }
 
 #ifdef VERSION_US
-u16 *sub_GAME_7F08D5C8(s32 index) {
+u16 *inv_get_first_title_name_by_index(s32 index) {
     
     InvItem *item = inv_get_item_by_index(index);
 	s32 weaponnum = 0;
@@ -3212,7 +3212,7 @@ u16 *sub_GAME_7F08D5C8(s32 index) {
 #ifdef VERSION_JP
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F08D5C8
+glabel inv_get_first_title_name_by_index
 /* 0C2BA0 7F08E030 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0C2BA4 7F08E034 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0C2BA8 7F08E038 0FC236A1 */  jal   inv_get_item_by_index
@@ -3303,7 +3303,7 @@ glabel sub_GAME_7F08D5C8
 #ifdef VERSION_EU
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F08D5C8
+glabel inv_get_first_title_name_by_index
 /* 0C20F8 7F08D5C8 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0C20FC 7F08D5CC AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0C2100 7F08D5D0 0FC23442 */  jal   inv_get_item_by_index

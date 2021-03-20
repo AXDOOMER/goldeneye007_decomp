@@ -3979,7 +3979,7 @@ glabel draw_current_hand_item_and_ammo
 /* 0DCA60 7F0A7F30 0FC2361E */  jal   sub_GAME_7F08D878
 /* 0DCA64 7F0A7F34 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0DCA68 7F0A7F38 E7A00058 */  swc1  $f0, 0x58($sp)
-/* 0DCA6C 7F0A7F3C 0FC23572 */  jal   sub_GAME_7F08D5C8
+/* 0DCA6C 7F0A7F3C 0FC23572 */  jal   inv_get_first_title_name_by_index
 /* 0DCA70 7F0A7F40 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0DCA74 7F0A7F44 AFA20054 */  sw    $v0, 0x54($sp)
 /* 0DCA78 7F0A7F48 0FC235AF */  jal   sub_GAME_7F08D6BC
