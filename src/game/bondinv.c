@@ -3376,82 +3376,45 @@ glabel inv_get_first_title_name_by_index
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08D6BC(void) {
-
-}
-#else
 #ifdef VERSION_US
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08D6BC
-/* 0C21EC 7F08D6BC 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0C21F0 7F08D6C0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C21F4 7F08D6C4 0FC23442 */  jal   inv_get_item_by_index
-/* 0C21F8 7F08D6C8 AFA40020 */   sw    $a0, 0x20($sp)
-/* 0C21FC 7F08D6CC 8FA50020 */  lw    $a1, 0x20($sp)
-/* 0C2200 7F08D6D0 00401825 */  move  $v1, $v0
-/* 0C2204 7F08D6D4 10400024 */  beqz  $v0, .L7F08D768
-/* 0C2208 7F08D6D8 00003025 */   move  $a2, $zero
-/* 0C220C 7F08D6DC 8C440000 */  lw    $a0, ($v0)
-/* 0C2210 7F08D6E0 24010002 */  li    $at, 2
-/* 0C2214 7F08D6E4 54810012 */  bnel  $a0, $at, .L7F08D730
-/* 0C2218 7F08D6E8 24010001 */   li    $at, 1
-/* 0C221C 7F08D6EC 8C420004 */  lw    $v0, 4($v0)
-/* 0C2220 7F08D6F0 8C440004 */  lw    $a0, 4($v0)
-/* 0C2224 7F08D6F4 0FC23487 */  jal   get_textoverride_by_obj
-/* 0C2228 7F08D6F8 AFA00018 */   sw    $zero, 0x18($sp)
-/* 0C222C 7F08D6FC 8FA60018 */  lw    $a2, 0x18($sp)
-/* 0C2230 7F08D700 10400025 */  beqz  $v0, .L7F08D798
-/* 0C2234 7F08D704 00401825 */   move  $v1, $v0
-/* 0C2238 7F08D708 8C4E0010 */  lw    $t6, 0x10($v0)
-/* 0C223C 7F08D70C 11C00005 */  beqz  $t6, .L7F08D724
-/* 0C2240 7F08D710 00000000 */   nop   
-/* 0C2244 7F08D714 0FC30776 */  jal   get_textptr_for_textID
-/* 0C2248 7F08D718 8C640010 */   lw    $a0, 0x10($v1)
-/* 0C224C 7F08D71C 10000021 */  b     .L7F08D7A4
-/* 0C2250 7F08D720 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F08D724:
-/* 0C2254 7F08D724 1000001C */  b     .L7F08D798
-/* 0C2258 7F08D728 8C460008 */   lw    $a2, 8($v0)
-/* 0C225C 7F08D72C 24010001 */  li    $at, 1
-.L7F08D730:
-/* 0C2260 7F08D730 14810019 */  bne   $a0, $at, .L7F08D798
-/* 0C2264 7F08D734 00000000 */   nop   
-/* 0C2268 7F08D738 8C640004 */  lw    $a0, 4($v1)
-/* 0C226C 7F08D73C 0FC23497 */  jal   get_textoverride_by_weaponum
-/* 0C2270 7F08D740 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0C2274 7F08D744 10400014 */  beqz  $v0, .L7F08D798
-/* 0C2278 7F08D748 8FA60018 */   lw    $a2, 0x18($sp)
-/* 0C227C 7F08D74C 8C4F0010 */  lw    $t7, 0x10($v0)
-/* 0C2280 7F08D750 11E00011 */  beqz  $t7, .L7F08D798
-/* 0C2284 7F08D754 00000000 */   nop   
-/* 0C2288 7F08D758 0FC30776 */  jal   get_textptr_for_textID
-/* 0C228C 7F08D75C 8C440010 */   lw    $a0, 0x10($v0)
-/* 0C2290 7F08D760 10000010 */  b     .L7F08D7A4
-/* 0C2294 7F08D764 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F08D768:
-/* 0C2298 7F08D768 3C188008 */  lui   $t8, %hi(pPlayer) 
-/* 0C229C 7F08D76C 8F18A0B0 */  lw    $t8, %lo(pPlayer)($t8)
-/* 0C22A0 7F08D770 28A10020 */  slti  $at, $a1, 0x20
-/* 0C22A4 7F08D774 8F1911EC */  lw    $t9, 0x11ec($t8)
-/* 0C22A8 7F08D778 13200007 */  beqz  $t9, .L7F08D798
-/* 0C22AC 7F08D77C 00000000 */   nop   
-/* 0C22B0 7F08D780 10200005 */  beqz  $at, .L7F08D798
-/* 0C22B4 7F08D784 00000000 */   nop   
-/* 0C22B8 7F08D788 0FC19C1D */  jal   get_ptr_second_title_line_item
-/* 0C22BC 7F08D78C 24A40001 */   addiu $a0, $a1, 1
-/* 0C22C0 7F08D790 10000004 */  b     .L7F08D7A4
-/* 0C22C4 7F08D794 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F08D798:
-/* 0C22C8 7F08D798 0FC19C1D */  jal   get_ptr_second_title_line_item
-/* 0C22CC 7F08D79C 00C02025 */   move  $a0, $a2
-/* 0C22D0 7F08D7A0 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F08D7A4:
-/* 0C22D4 7F08D7A4 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0C22D8 7F08D7A8 03E00008 */  jr    $ra
-/* 0C22DC 7F08D7AC 00000000 */   nop   
-)
+u16 *sub_GAME_7F08D6BC(s32 index) {
+    
+    InvItem *item = inv_get_item_by_index(index);
+	s32 weaponnum = 0;
+	textoverride *override;
+
+	if (item) {
+
+		if (item->type == INV_ITEM_PROP) {
+			
+            PropRecord *prop = item->type_inv_item.type_prop.prop;
+			override = get_textoverride_by_obj(prop->Entityp.obj);
+
+			if (override) {
+				
+                if (override->unk5) {
+					return get_textptr_for_textID(override->unk5);
+				}
+
+				weaponnum = override->weapon;
+			}
+
+		} else if (item->type == INV_ITEM_WEAPON) {
+			
+            weaponnum = item->type_inv_item.type_weap.weapon;
+			override = get_textoverride_by_weaponum(weaponnum);
+
+			if (override && override->unk5) {
+				return get_textptr_for_textID(override->unk5);
+			}
+		}
+
+	} else if ((pPlayer->equipallguns) && (index < ITEM_TANKSHELLS)) {
+        return get_ptr_second_title_line_item(index + 1);
+	}
+
+	return get_ptr_second_title_line_item(weaponnum);
+}
 #endif
 
 #ifdef VERSION_JP
@@ -3617,10 +3580,6 @@ glabel sub_GAME_7F08D6BC
 /* 0C22DC 7F08D7AC 00000000 */   nop   
 )
 #endif
-
-
-#endif
-
 
 
 
