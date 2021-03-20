@@ -2056,7 +2056,8 @@ s32 sub_GAME_7F08CE70(u32 wantkeyflags)
 
 
 
-s32 checkHasGEKey(void) {
+s32 checkHasGEKey(void)
+{
     InvItem *item;
     PropRecord *prop;
     ObjectRecord *obj;
@@ -2095,10 +2096,11 @@ s32 checkHasGEKey(void) {
  */
 s32 bondinvIsAliveWithFlag(void)
 {
-  if (!pPlayer->bonddead) {
-    return is_weapon_in_inv(ITEM_TOKEN);
-  }
-  return 0;
+    if (!pPlayer->bonddead) {
+        return is_weapon_in_inv(ITEM_TOKEN);
+    }
+
+    return FALSE;
 }
 
 
@@ -2110,8 +2112,6 @@ int checkforgoldengun(void)
 {
     return is_weapon_in_inv(ITEM_GOLDENGUN);
 }
-
-
 
 int sub_GAME_7F08CFE0(PropRecord *prop) {
 
