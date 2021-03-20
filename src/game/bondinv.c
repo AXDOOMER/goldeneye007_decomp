@@ -3136,8 +3136,6 @@ glabel inv_get_long_name_by_index
 )
 #endif
 
-#endif
-
 
 
 
