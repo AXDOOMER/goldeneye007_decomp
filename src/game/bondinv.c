@@ -2136,24 +2136,23 @@ int sub_GAME_7F08CFE0(PropRecord *prop) {
 
 
 
+#ifdef VERSION_US
+s32 count_total_items_in_inventory(void) {
 
-#ifdef NONMATCHING
-void count_total_items_in_inventory(void) {
-
-    InvItem *inv_item;
+    InvItem *item;
     s32 numitems = 0;
 
     if (pPlayer->equipallguns) {
-        numitems = 0x20;
+        numitems = 32;
     }
 
-    inv_item = pPlayer->ptr_inventory_first_in_cycle;
+    item = pPlayer->ptr_inventory_first_in_cycle;
 
-    while (inv_item) {
+    while (item) {
       
-      if (inv_item->type == INV_ITEM_PROP) { 
+        if (item->type == INV_ITEM_PROP) { 
             
-            PropRecord *prop = inv_item->type_inv_item.type_prop.prop;
+            PropRecord *prop = item->type_inv_item.type_prop.prop;
 
             if (prop->type == 4) {
 
@@ -2169,88 +2168,23 @@ void count_total_items_in_inventory(void) {
                     numitems = numitems + 1;
                 }
             }
-        } else if (inv_item->type == INV_ITEM_WEAPON) { 
+
+        } else if (item->type == INV_ITEM_WEAPON) { 
             
-            if ((pPlayer->equipallguns == 0) || ( inv_item->type_inv_item.type_weap.weapon < 0x21) == 0) {
+            if ((pPlayer->equipallguns == FALSE) || ( item->type_inv_item.type_weap.weapon > ITEM_TANKSHELLS)) {
                 numitems = numitems + 1;
             }
         }
 
-        inv_item = inv_item->next;
+        item = item->next;
 
-        if (inv_item == pPlayer->ptr_inventory_first_in_cycle) {
-          break;
+        if (item == pPlayer->ptr_inventory_first_in_cycle) {
+            break;
         }
     }
 
     return numitems;
-
 }
-#else
-#ifdef VERSION_US
-GLOBAL_ASM(
-.text
-glabel count_total_items_in_inventory
-/* 0C1B68 7F08D038 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 0C1B6C 7F08D03C 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
-/* 0C1B70 7F08D040 00001825 */  move  $v1, $zero
-/* 0C1B74 7F08D044 3C0B0004 */  lui   $t3, 4
-/* 0C1B78 7F08D048 8C4411EC */  lw    $a0, 0x11ec($v0)
-/* 0C1B7C 7F08D04C 240A0001 */  li    $t2, 1
-/* 0C1B80 7F08D050 24090004 */  li    $t1, 4
-/* 0C1B84 7F08D054 10800002 */  beqz  $a0, .L7F08D060
-/* 0C1B88 7F08D058 24080002 */   li    $t0, 2
-/* 0C1B8C 7F08D05C 24030020 */  li    $v1, 32
-.L7F08D060:
-/* 0C1B90 7F08D060 8C4611E0 */  lw    $a2, 0x11e0($v0)
-/* 0C1B94 7F08D064 10C00026 */  beqz  $a2, .L7F08D100
-/* 0C1B98 7F08D068 00C02825 */   move  $a1, $a2
-/* 0C1B9C 7F08D06C 8CA20000 */  lw    $v0, ($a1)
-.L7F08D070:
-/* 0C1BA0 7F08D070 15020015 */  bne   $t0, $v0, .L7F08D0C8
-/* 0C1BA4 7F08D074 00000000 */   nop   
-/* 0C1BA8 7F08D078 8CA20004 */  lw    $v0, 4($a1)
-/* 0C1BAC 7F08D07C 90470000 */  lbu   $a3, ($v0)
-/* 0C1BB0 7F08D080 15270008 */  bne   $t1, $a3, .L7F08D0A4
-/* 0C1BB4 7F08D084 00000000 */   nop   
-/* 0C1BB8 7F08D088 8C470004 */  lw    $a3, 4($v0)
-/* 0C1BBC 7F08D08C 8CEE0064 */  lw    $t6, 0x64($a3)
-/* 0C1BC0 7F08D090 31CF0400 */  andi  $t7, $t6, 0x400
-/* 0C1BC4 7F08D094 51E00016 */  beql  $t7, $zero, .L7F08D0F0
-/* 0C1BC8 7F08D098 8CA5000C */   lw    $a1, 0xc($a1)
-/* 0C1BCC 7F08D09C 10000013 */  b     .L7F08D0EC
-/* 0C1BD0 7F08D0A0 24630001 */   addiu $v1, $v1, 1
-.L7F08D0A4:
-/* 0C1BD4 7F08D0A4 55470012 */  bnel  $t2, $a3, .L7F08D0F0
-/* 0C1BD8 7F08D0A8 8CA5000C */   lw    $a1, 0xc($a1)
-/* 0C1BDC 7F08D0AC 8C580004 */  lw    $t8, 4($v0)
-/* 0C1BE0 7F08D0B0 8F19000C */  lw    $t9, 0xc($t8)
-/* 0C1BE4 7F08D0B4 032B6024 */  and   $t4, $t9, $t3
-/* 0C1BE8 7F08D0B8 5580000D */  bnezl $t4, .L7F08D0F0
-/* 0C1BEC 7F08D0BC 8CA5000C */   lw    $a1, 0xc($a1)
-/* 0C1BF0 7F08D0C0 1000000A */  b     .L7F08D0EC
-/* 0C1BF4 7F08D0C4 24630001 */   addiu $v1, $v1, 1
-.L7F08D0C8:
-/* 0C1BF8 7F08D0C8 55420009 */  bnel  $t2, $v0, .L7F08D0F0
-/* 0C1BFC 7F08D0CC 8CA5000C */   lw    $a1, 0xc($a1)
-/* 0C1C00 7F08D0D0 50800006 */  beql  $a0, $zero, .L7F08D0EC
-/* 0C1C04 7F08D0D4 24630001 */   addiu $v1, $v1, 1
-/* 0C1C08 7F08D0D8 8CAD0004 */  lw    $t5, 4($a1)
-/* 0C1C0C 7F08D0DC 29A10021 */  slti  $at, $t5, 0x21
-/* 0C1C10 7F08D0E0 54200003 */  bnezl $at, .L7F08D0F0
-/* 0C1C14 7F08D0E4 8CA5000C */   lw    $a1, 0xc($a1)
-/* 0C1C18 7F08D0E8 24630001 */  addiu $v1, $v1, 1
-.L7F08D0EC:
-/* 0C1C1C 7F08D0EC 8CA5000C */  lw    $a1, 0xc($a1)
-.L7F08D0F0:
-/* 0C1C20 7F08D0F0 10A60003 */  beq   $a1, $a2, .L7F08D100
-/* 0C1C24 7F08D0F4 00000000 */   nop   
-/* 0C1C28 7F08D0F8 54A0FFDD */  bnezl $a1, .L7F08D070
-/* 0C1C2C 7F08D0FC 8CA20000 */   lw    $v0, ($a1)
-.L7F08D100:
-/* 0C1C30 7F08D100 03E00008 */  jr    $ra
-/* 0C1C34 7F08D104 00601025 */   move  $v0, $v1
-)
 #endif
 
 #ifdef VERSION_JP
@@ -2389,9 +2323,6 @@ glabel count_total_items_in_inventory
 /* 0C1C30 7F08D100 03E00008 */  jr    $ra
 /* 0C1C34 7F08D104 00601025 */   move  $v0, $v1
 )
-#endif
-
-
 #endif
 
 
