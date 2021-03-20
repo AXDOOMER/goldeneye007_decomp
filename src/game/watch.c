@@ -5768,7 +5768,7 @@ glabel sub_GAME_7F0A8B10
 /* 0DD66C 7F0A8B3C AFA00054 */  sw    $zero, 0x54($sp)
 /* 0DD670 7F0A8B40 8C8409B8 */  lw    $a0, %lo(D_800409B8)($a0)
 /* 0DD674 7F0A8B44 AFAE0050 */  sw    $t6, 0x50($sp)
-/* 0DD678 7F0A8B48 0FC2350D */  jal   sub_GAME_7F08D434
+/* 0DD678 7F0A8B48 0FC2350D */  jal   inv_get_long_name_by_index
 /* 0DD67C 7F0A8B4C AFAF004C */   sw    $t7, 0x4c($sp)
 /* 0DD680 7F0A8B50 AFA20048 */  sw    $v0, 0x48($sp)
 /* 0DD684 7F0A8B54 02002025 */  move  $a0, $s0
