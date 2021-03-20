@@ -2020,59 +2020,39 @@ glabel sub_GAME_7F08CB10
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08CE70(void) {
+s32 sub_GAME_7F08CE70(u32 wantkeyflags)
+{
+	u32 heldkeyflags = 0;
+	InvItem *item = pPlayer->ptr_inventory_first_in_cycle;
 
+	while (item) {
+		if (item->type == INV_ITEM_PROP) {
+			PropRecord *prop = item->type_inv_item.type_prop.prop;
+
+			if (prop->type == 1) {
+				ObjectRecord *obj = prop->Entityp.obj;
+
+				if (obj->head.type == 4) {
+					KeyRecord *key = (KeyRecord *)prop->Entityp.obj;
+
+					heldkeyflags |= key->keyflags;
+
+					if ((wantkeyflags & heldkeyflags) == wantkeyflags) {
+						return TRUE;
+					}
+				}
+			}
+		}
+
+		item = item->next;
+
+		if (item == pPlayer->ptr_inventory_first_in_cycle) {
+			break;
+		}
+	}
+
+	return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08CE70
-/* 0C19A0 7F08CE70 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0C19A4 7F08CE74 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0C19A8 7F08CE78 27BDFFF8 */  addiu $sp, $sp, -8
-/* 0C19AC 7F08CE7C AFB00004 */  sw    $s0, 4($sp)
-/* 0C19B0 7F08CE80 8DC511E0 */  lw    $a1, 0x11e0($t6)
-/* 0C19B4 7F08CE84 00808025 */  move  $s0, $a0
-/* 0C19B8 7F08CE88 00001025 */  move  $v0, $zero
-/* 0C19BC 7F08CE8C 10A0001B */  beqz  $a1, .L7F08CEFC
-/* 0C19C0 7F08CE90 00A01825 */   move  $v1, $a1
-/* 0C19C4 7F08CE94 240A0004 */  li    $t2, 4
-/* 0C19C8 7F08CE98 24090001 */  li    $t1, 1
-/* 0C19CC 7F08CE9C 24080002 */  li    $t0, 2
-/* 0C19D0 7F08CEA0 8C6F0000 */  lw    $t7, ($v1)
-.L7F08CEA4:
-/* 0C19D4 7F08CEA4 550F0011 */  bnel  $t0, $t7, .L7F08CEEC
-/* 0C19D8 7F08CEA8 8C63000C */   lw    $v1, 0xc($v1)
-/* 0C19DC 7F08CEAC 8C640004 */  lw    $a0, 4($v1)
-/* 0C19E0 7F08CEB0 90980000 */  lbu   $t8, ($a0)
-/* 0C19E4 7F08CEB4 5538000D */  bnel  $t1, $t8, .L7F08CEEC
-/* 0C19E8 7F08CEB8 8C63000C */   lw    $v1, 0xc($v1)
-/* 0C19EC 7F08CEBC 8C870004 */  lw    $a3, 4($a0)
-/* 0C19F0 7F08CEC0 90F90003 */  lbu   $t9, 3($a3)
-/* 0C19F4 7F08CEC4 55590009 */  bnel  $t2, $t9, .L7F08CEEC
-/* 0C19F8 7F08CEC8 8C63000C */   lw    $v1, 0xc($v1)
-/* 0C19FC 7F08CECC 8CEB0080 */  lw    $t3, 0x80($a3)
-/* 0C1A00 7F08CED0 004B1025 */  or    $v0, $v0, $t3
-/* 0C1A04 7F08CED4 02026024 */  and   $t4, $s0, $v0
-/* 0C1A08 7F08CED8 560C0004 */  bnel  $s0, $t4, .L7F08CEEC
-/* 0C1A0C 7F08CEDC 8C63000C */   lw    $v1, 0xc($v1)
-/* 0C1A10 7F08CEE0 10000007 */  b     .L7F08CF00
-/* 0C1A14 7F08CEE4 24020001 */   li    $v0, 1
-/* 0C1A18 7F08CEE8 8C63000C */  lw    $v1, 0xc($v1)
-.L7F08CEEC:
-/* 0C1A1C 7F08CEEC 50650004 */  beql  $v1, $a1, .L7F08CF00
-/* 0C1A20 7F08CEF0 00001025 */   move  $v0, $zero
-/* 0C1A24 7F08CEF4 5460FFEB */  bnezl $v1, .L7F08CEA4
-/* 0C1A28 7F08CEF8 8C6F0000 */   lw    $t7, ($v1)
-.L7F08CEFC:
-/* 0C1A2C 7F08CEFC 00001025 */  move  $v0, $zero
-.L7F08CF00:
-/* 0C1A30 7F08CF00 8FB00004 */  lw    $s0, 4($sp)
-/* 0C1A34 7F08CF04 03E00008 */  jr    $ra
-/* 0C1A38 7F08CF08 27BD0008 */   addiu $sp, $sp, 8
-)
-#endif
 
 
 
