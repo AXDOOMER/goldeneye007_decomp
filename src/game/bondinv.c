@@ -2020,7 +2020,7 @@ glabel sub_GAME_7F08CB10
 
 
 
-s32 sub_GAME_7F08CE70(u32 wantkeyflags)
+s32 inv_has_key_flags(u32 wantkeyflags)
 {
     u32 heldkeyflags = 0;
     InvItem *item = pPlayer->ptr_inventory_first_in_cycle;
