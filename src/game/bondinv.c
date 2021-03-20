@@ -2022,36 +2022,36 @@ glabel sub_GAME_7F08CB10
 
 s32 sub_GAME_7F08CE70(u32 wantkeyflags)
 {
-	u32 heldkeyflags = 0;
-	InvItem *item = pPlayer->ptr_inventory_first_in_cycle;
+    u32 heldkeyflags = 0;
+    InvItem *item = pPlayer->ptr_inventory_first_in_cycle;
 
-	while (item) {
-		if (item->type == INV_ITEM_PROP) {
-			PropRecord *prop = item->type_inv_item.type_prop.prop;
+    while (item) {
+        if (item->type == INV_ITEM_PROP) {
+            PropRecord *prop = item->type_inv_item.type_prop.prop;
 
-			if (prop->type == 1) {
-				ObjectRecord *obj = prop->Entityp.obj;
+            if (prop->type == 1) {
+                ObjectRecord *obj = prop->Entityp.obj;
 
-				if (obj->head.type == 4) {
-					KeyRecord *key = (KeyRecord *)prop->Entityp.obj;
+                if (obj->head.type == 4) {
+                    KeyRecord *key = (KeyRecord *)prop->Entityp.obj;
 
-					heldkeyflags |= key->keyflags;
+                    heldkeyflags |= key->keyflags;
 
-					if ((wantkeyflags & heldkeyflags) == wantkeyflags) {
-						return TRUE;
-					}
-				}
-			}
-		}
+                    if ((wantkeyflags & heldkeyflags) == wantkeyflags) {
+                        return TRUE;
+                    }
+                }
+            }
+        }
 
-		item = item->next;
+        item = item->next;
 
-		if (item == pPlayer->ptr_inventory_first_in_cycle) {
-			break;
-		}
-	}
+        if (item == pPlayer->ptr_inventory_first_in_cycle) {
+            break;
+        }
+    }
 
-	return FALSE;
+    return FALSE;
 }
 
 
@@ -2329,23 +2329,23 @@ glabel count_total_items_in_inventory
 #ifdef VERSION_US
 InvItem *inv_get_item_by_index(s32 index)
 {
-	InvItem *item;
+    InvItem *item;
 
-	if (pPlayer->equipallguns) {
+    if (pPlayer->equipallguns) {
 
-		if (index < ITEM_TANKSHELLS) {
-			return NULL;
-		}
+        if (index < ITEM_TANKSHELLS) {
+            return NULL;
+        }
 
-		index = index - ITEM_TANKSHELLS;
-	}
+        index = index - ITEM_TANKSHELLS;
+    }
 
-	item = pPlayer->ptr_inventory_first_in_cycle;
+    item = pPlayer->ptr_inventory_first_in_cycle;
 
-	while (item) {
-		
+    while (item) {
+        
         if (item->type == INV_ITEM_PROP) {
-			
+            
             PropRecord *prop = item->type_inv_item.type_prop.prop;
 
             if (prop->type == 4) {
@@ -2368,25 +2368,25 @@ InvItem *inv_get_item_by_index(s32 index)
                     index--;
                 }
             }
-			
-		} else if (item->type == INV_ITEM_WEAPON) {
+            
+        } else if (item->type == INV_ITEM_WEAPON) {
 
             if ((pPlayer->equipallguns == FALSE) || ( item->type_inv_item.type_weap.weapon > ITEM_TANKSHELLS)) {
                 if (index == 0) {
-					return item;
-				}
-				index--;
+                    return item;
+                }
+                index--;
             }
-		}
+        }
 
-		item = item->next;
+        item = item->next;
 
-		if (item == pPlayer->ptr_inventory_first_in_cycle) {
-			break;
-		}
-	}
+        if (item == pPlayer->ptr_inventory_first_in_cycle) {
+            break;
+        }
+    }
 
-	return NULL;
+    return NULL;
 }
 #endif
 
@@ -2728,40 +2728,40 @@ glabel get_weaponnum_by_inv_index
 u16 *inv_get_name_by_index(s32 index) {
     
     InvItem *item = inv_get_item_by_index(index);
-	s32 weaponnum = 0;
-	textoverride *override;
+    s32 weaponnum = 0;
+    textoverride *override;
 
-	if (item) {
+    if (item) {
 
-		if (item->type == INV_ITEM_PROP) {
-			
+        if (item->type == INV_ITEM_PROP) {
+            
             PropRecord *prop = item->type_inv_item.type_prop.prop;
-			override = get_textoverride_by_obj(prop->Entityp.obj);
+            override = get_textoverride_by_obj(prop->Entityp.obj);
 
-			if (override) {
-				
+            if (override) {
+                
                 if (override->unk6) {
-					return get_textptr_for_textID(override->unk6);
-				}
+                    return get_textptr_for_textID(override->unk6);
+                }
 
-				weaponnum = override->weapon;
-			}
+                weaponnum = override->weapon;
+            }
 
-		} else if (item->type == INV_ITEM_WEAPON) {
-			
+        } else if (item->type == INV_ITEM_WEAPON) {
+            
             weaponnum = item->type_inv_item.type_weap.weapon;
-			override = get_textoverride_by_weaponum(weaponnum);
+            override = get_textoverride_by_weaponum(weaponnum);
 
-			if (override && override->unk6) {
-				return get_textptr_for_textID(override->unk6);
-			}
-		}
+            if (override && override->unk6) {
+                return get_textptr_for_textID(override->unk6);
+            }
+        }
 
-	} else if ((pPlayer->equipallguns) && (index < ITEM_TANKSHELLS)) {
+    } else if ((pPlayer->equipallguns) && (index < ITEM_TANKSHELLS)) {
         return get_ptr_short_watch_text_for_item(index + 1);
-	}
+    }
 
-	return get_ptr_short_watch_text_for_item(weaponnum);
+    return get_ptr_short_watch_text_for_item(weaponnum);
 }
 #endif
 
@@ -2935,40 +2935,40 @@ glabel inv_get_name_by_index
 u16 *inv_get_long_name_by_index(s32 index) {
     
     InvItem *item = inv_get_item_by_index(index);
-	s32 weaponnum = 0;
-	textoverride *override;
+    s32 weaponnum = 0;
+    textoverride *override;
 
-	if (item) {
+    if (item) {
 
-		if (item->type == INV_ITEM_PROP) {
-			
+        if (item->type == INV_ITEM_PROP) {
+            
             PropRecord *prop = item->type_inv_item.type_prop.prop;
-			override = get_textoverride_by_obj(prop->Entityp.obj);
+            override = get_textoverride_by_obj(prop->Entityp.obj);
 
-			if (override) {
-				
+            if (override) {
+                
                 if (override->unk7) {
-					return get_textptr_for_textID(override->unk7);
-				}
+                    return get_textptr_for_textID(override->unk7);
+                }
 
-				weaponnum = override->weapon;
-			}
+                weaponnum = override->weapon;
+            }
 
-		} else if (item->type == INV_ITEM_WEAPON) {
-			
+        } else if (item->type == INV_ITEM_WEAPON) {
+            
             weaponnum = item->type_inv_item.type_weap.weapon;
-			override = get_textoverride_by_weaponum(weaponnum);
+            override = get_textoverride_by_weaponum(weaponnum);
 
-			if (override && override->unk7) {
-				return get_textptr_for_textID(override->unk7);
-			}
-		}
+            if (override && override->unk7) {
+                return get_textptr_for_textID(override->unk7);
+            }
+        }
 
-	} else if ((pPlayer->equipallguns) && (index < ITEM_TANKSHELLS)) {
+    } else if ((pPlayer->equipallguns) && (index < ITEM_TANKSHELLS)) {
         return get_ptr_long_watch_text_for_item(index + 1);
-	}
+    }
 
-	return get_ptr_long_watch_text_for_item(weaponnum);
+    return get_ptr_long_watch_text_for_item(weaponnum);
 }
 #endif
 
@@ -3172,40 +3172,40 @@ int sub_GAME_7F08D5A0(int index) {
 u16 *inv_get_first_title_name_by_index(s32 index) {
     
     InvItem *item = inv_get_item_by_index(index);
-	s32 weaponnum = 0;
-	textoverride *override;
+    s32 weaponnum = 0;
+    textoverride *override;
 
-	if (item) {
+    if (item) {
 
-		if (item->type == INV_ITEM_PROP) {
-			
+        if (item->type == INV_ITEM_PROP) {
+            
             PropRecord *prop = item->type_inv_item.type_prop.prop;
-			override = get_textoverride_by_obj(prop->Entityp.obj);
+            override = get_textoverride_by_obj(prop->Entityp.obj);
 
-			if (override) {
-				
+            if (override) {
+                
                 if (override->unk4) {
-					return get_textptr_for_textID(override->unk4);
-				}
+                    return get_textptr_for_textID(override->unk4);
+                }
 
-				weaponnum = override->weapon;
-			}
+                weaponnum = override->weapon;
+            }
 
-		} else if (item->type == INV_ITEM_WEAPON) {
-			
+        } else if (item->type == INV_ITEM_WEAPON) {
+            
             weaponnum = item->type_inv_item.type_weap.weapon;
-			override = get_textoverride_by_weaponum(weaponnum);
+            override = get_textoverride_by_weaponum(weaponnum);
 
-			if (override && override->unk4) {
-				return get_textptr_for_textID(override->unk4);
-			}
-		}
+            if (override && override->unk4) {
+                return get_textptr_for_textID(override->unk4);
+            }
+        }
 
-	} else if ((pPlayer->equipallguns) && (index < ITEM_TANKSHELLS)) {
+    } else if ((pPlayer->equipallguns) && (index < ITEM_TANKSHELLS)) {
         return get_ptr_first_title_line_item(index + 1);
-	}
+    }
 
-	return get_ptr_first_title_line_item(weaponnum);
+    return get_ptr_first_title_line_item(weaponnum);
 }
 #endif
 
@@ -3380,36 +3380,36 @@ glabel inv_get_first_title_name_by_index
 u16 *inv_get_second_title_name_by_index(s32 index) {
     
     InvItem *item = inv_get_item_by_index(index);
-	s32 weaponnum = 0;
-	textoverride *override;
+    s32 weaponnum = 0;
+    textoverride *override;
 
-	if (item) {
+    if (item) {
 
-		if (item->type == INV_ITEM_PROP) {
-			
+        if (item->type == INV_ITEM_PROP) {
+            
             PropRecord *prop = item->type_inv_item.type_prop.prop;
-			override = get_textoverride_by_obj(prop->Entityp.obj);
+            override = get_textoverride_by_obj(prop->Entityp.obj);
 
-			if (override) {
-				
+            if (override) {
+                
                 if (override->unk5) {
-					return get_textptr_for_textID(override->unk5);
-				}
+                    return get_textptr_for_textID(override->unk5);
+                }
 
-				weaponnum = override->weapon;
-			}
+                weaponnum = override->weapon;
+            }
 
-		} else if (item->type == INV_ITEM_WEAPON) {
-			
+        } else if (item->type == INV_ITEM_WEAPON) {
+            
             weaponnum = item->type_inv_item.type_weap.weapon;
-			override = get_textoverride_by_weaponum(weaponnum);
+            override = get_textoverride_by_weaponum(weaponnum);
 
-			if (override && override->unk5) {
-				return get_textptr_for_textID(override->unk5);
-			}
-		}
+            if (override && override->unk5) {
+                return get_textptr_for_textID(override->unk5);
+            }
+        }
 
-	} else { 
+    } else { 
     
         if (pPlayer->equipallguns) {
 #ifdef VERSION_JP
@@ -3428,9 +3428,9 @@ u16 *inv_get_second_title_name_by_index(s32 index) {
            }
 #endif
         }
-	}
+    }
 
-	return get_ptr_second_title_line_item(weaponnum);
+    return get_ptr_second_title_line_item(weaponnum);
 }
 #endif
 
