@@ -4502,7 +4502,7 @@ glabel debug_gun_watch_move_related2
 /* 0DD290 7F0A8760 1840000B */  blez  $v0, .L7F0A8790
 /* 0DD294 7F0A8764 00000000 */   nop   
 .L7F0A8768:
-/* 0DD298 7F0A8768 0FC234D0 */  jal   sub_GAME_7F08D340
+/* 0DD298 7F0A8768 0FC234D0 */  jal   inv_get_name_by_index
 /* 0DD29C 7F0A876C 02002025 */   move  $a0, $s0
 /* 0DD2A0 7F0A8770 27A40084 */  addiu $a0, $sp, 0x84
 /* 0DD2A4 7F0A8774 0C0029FF */  jal   strcat
@@ -4637,7 +4637,7 @@ glabel debug_gun_watch_move_related2
 /* 0DD470 7F0A8940 AFA20928 */  sw    $v0, 0x928($sp)
 /* 0DD474 7F0A8944 8E100EAC */  lw    $s0, %lo(ptrFirstFontTableSmall)($s0)
 /* 0DD478 7F0A8948 8C8409B8 */  lw    $a0, %lo(D_800409B8)($a0)
-/* 0DD47C 7F0A894C 0FC234D0 */  jal   sub_GAME_7F08D340
+/* 0DD47C 7F0A894C 0FC234D0 */  jal   inv_get_name_by_index
 /* 0DD480 7F0A8950 AFAD0058 */   sw    $t5, 0x58($sp)
 /* 0DD484 7F0A8954 3C018004 */  lui   $at, %hi(D_800409BC)
 /* 0DD488 7F0A8958 C43209BC */  lwc1  $f18, %lo(D_800409BC)($at)
@@ -4995,7 +4995,7 @@ glabel debug_gun_watch_move_related2
 /* 0DDE88 7F0A9318 1840000B */  blez  $v0, .Ljp7F0A9348
 /* 0DDE8C 7F0A931C 00000000 */   nop   
 .Ljp7F0A9320:
-/* 0DDE90 7F0A9320 0FC2374A */  jal   sub_GAME_7F08D340
+/* 0DDE90 7F0A9320 0FC2374A */  jal   inv_get_name_by_index
 /* 0DDE94 7F0A9324 02002025 */   move  $a0, $s0
 /* 0DDE98 7F0A9328 27A4008C */  addiu $a0, $sp, 0x8c
 /* 0DDE9C 7F0A932C 0C002A03 */  jal   strcat
@@ -5131,7 +5131,7 @@ glabel debug_gun_watch_move_related2
 /* 0DE06C 7F0A94FC AFA20930 */  sw    $v0, 0x930($sp)
 /* 0DE070 7F0A9500 8E100EDC */  lw    $s0, %lo(ptrFirstFontTableSmall)($s0)
 /* 0DE074 7F0A9504 8C8409E8 */  lw    $a0, %lo(D_800409B8)($a0)
-/* 0DE078 7F0A9508 0FC2374A */  jal   sub_GAME_7F08D340
+/* 0DE078 7F0A9508 0FC2374A */  jal   inv_get_name_by_index
 /* 0DE07C 7F0A950C AFB8005C */   sw    $t8, 0x5c($sp)
 /* 0DE080 7F0A9510 3C018004 */  lui   $at, %hi(D_800409BC) # $at, 0x8004
 /* 0DE084 7F0A9514 C43209EC */  lwc1  $f18, %lo(D_800409BC)($at)
@@ -5480,7 +5480,7 @@ glabel debug_gun_watch_move_related2
 /* 0DD290 7F0A8760 1840000B */  blez  $v0, .L7F0A8790
 /* 0DD294 7F0A8764 00000000 */   nop   
 .L7F0A8768:
-/* 0DD298 7F0A8768 0FC234D0 */  jal   sub_GAME_7F08D340
+/* 0DD298 7F0A8768 0FC234D0 */  jal   inv_get_name_by_index
 /* 0DD29C 7F0A876C 02002025 */   move  $a0, $s0
 /* 0DD2A0 7F0A8770 27A40084 */  addiu $a0, $sp, 0x84
 /* 0DD2A4 7F0A8774 0C0029FF */  jal   strcat
@@ -5615,7 +5615,7 @@ glabel debug_gun_watch_move_related2
 /* 0DD470 7F0A8940 AFA20928 */  sw    $v0, 0x928($sp)
 /* 0DD474 7F0A8944 8E100EAC */  lw    $s0, %lo(ptrFirstFontTableSmall)($s0)
 /* 0DD478 7F0A8948 8C8409B8 */  lw    $a0, %lo(D_800409B8)($a0)
-/* 0DD47C 7F0A894C 0FC234D0 */  jal   sub_GAME_7F08D340
+/* 0DD47C 7F0A894C 0FC234D0 */  jal   inv_get_name_by_index
 /* 0DD480 7F0A8950 AFAD0058 */   sw    $t5, 0x58($sp)
 /* 0DD484 7F0A8954 3C018004 */  lui   $at, %hi(D_800409BC)
 /* 0DD488 7F0A8958 C43209BC */  lwc1  $f18, %lo(D_800409BC)($at)

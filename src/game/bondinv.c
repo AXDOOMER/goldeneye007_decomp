@@ -2725,7 +2725,7 @@ glabel get_weaponnum_by_inv_index
 
 
 #ifdef VERSION_US
-u16 *sub_GAME_7F08D340(s32 index) {
+u16 *inv_get_name_by_index(s32 index) {
     
     InvItem *item = inv_get_item_by_index(index);
 	s32 weaponnum = 0;
@@ -2768,7 +2768,7 @@ u16 *sub_GAME_7F08D340(s32 index) {
 #ifdef VERSION_JP
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F08D340
+glabel inv_get_name_by_index
 /* 0C2898 7F08DD28 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0C289C 7F08DD2C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0C28A0 7F08DD30 0FC236A1 */  jal   inv_get_item_by_index
@@ -2859,7 +2859,7 @@ glabel sub_GAME_7F08D340
 #ifdef VERSION_EU
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F08D340
+glabel inv_get_name_by_index
 /* 0C1E70 7F08D340 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0C1E74 7F08D344 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0C1E78 7F08D348 0FC23442 */  jal   inv_get_item_by_index
