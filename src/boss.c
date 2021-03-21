@@ -156,7 +156,7 @@ void bossInitMainthreadData(void)
     memaInit();
     bgInitDebugNoticeList();
     viInitDebugNoticeList();
-    init_video_settings();
+    viInitVideoSettings();
     init_indy_if_not_ready();
     g_DebugAndUpdateStageFlag = rmonIsFinalBuild();
     obInitDebugNoticeList();

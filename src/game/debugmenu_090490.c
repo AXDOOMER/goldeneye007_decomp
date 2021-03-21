@@ -2,6 +2,7 @@
 #include "game/debugmenu_090490.h"
 #include "game/initgamedata.h"
 #include "boss.h"
+#include "video.h"
 
 // data
 //D:80036BA0
@@ -537,7 +538,7 @@ glabel debug_menu_processor
 /* 0C50FC 7F0905CC 3C018003 */  lui   $at, %hi(grab_rgb_screenshot_flag)
 /* 0C5100 7F0905D0 14400008 */  bnez  $v0, .L7F0905F4
 /* 0C5104 7F0905D4 AC236FFC */   sw    $v1, %lo(grab_rgb_screenshot_flag)($at)
-/* 0C5108 7F0905D8 0C0012ED */  jal   indy_grab_rgb_32bit
+/* 0C5108 7F0905D8 0C0012ED */  jal   indyGrabRgb32bit
 /* 0C510C 7F0905DC 00000000 */   nop   
 /* 0C5110 7F0905E0 3C018003 */  lui   $at, %hi(grab_rgb_screenshot_flag)
 /* 0C5114 7F0905E4 0C000F00 */  jal   viSetColorMode16Bit
@@ -553,7 +554,7 @@ glabel debug_menu_processor
 /* 0C5138 7F090608 24630001 */  addiu $v1, $v1, 1
 /* 0C513C 7F09060C 14400008 */  bnez  $v0, .L7F090630
 /* 0C5140 7F090610 AC237000 */   sw    $v1, %lo(grab_jpeg_screenshot_flag)($at)
-/* 0C5144 7F090614 0C001235 */  jal   indy_grab_jpg_32bit
+/* 0C5144 7F090614 0C001235 */  jal   indyGrabJpg32bit
 /* 0C5148 7F090618 00000000 */   nop   
 /* 0C514C 7F09061C 3C018003 */  lui   $at, %hi(grab_jpeg_screenshot_flag)
 /* 0C5150 7F090620 0C000F00 */  jal   viSetColorMode16Bit

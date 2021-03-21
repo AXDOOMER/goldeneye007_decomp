@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/bg.h"
+#include "video.h"
 
 // bss
 //CODE.bss:8007BF90
@@ -2526,8 +2527,8 @@ glabel sub_GAME_7F0B4E40
 /* 0E9A9C 7F0B4F6C 35080040 */  ori   $t0, (0x01030040 & 0xFFFF) # ori $t0, $t0, 0x40
 /* 0E9AA0 7F0B4F70 00801025 */  move  $v0, $a0
 /* 0E9AA4 7F0B4F74 AC480000 */  sw    $t0, ($v0)
-/* 0E9AA8 7F0B4F78 3C098006 */  lui   $t1, %hi(projectionMatrix) 
-/* 0E9AAC 7F0B4F7C 8D290820 */  lw    $t1, %lo(projectionMatrix)($t1)
+/* 0E9AA8 7F0B4F78 3C098006 */  lui   $t1, %hi(g_viProjectionMatrix) 
+/* 0E9AAC 7F0B4F7C 8D290820 */  lw    $t1, %lo(g_viProjectionMatrix)($t1)
 /* 0E9AB0 7F0B4F80 24840008 */  addiu $a0, $a0, 8
 /* 0E9AB4 7F0B4F84 0FC22F3D */  jal   sub_GAME_7F08BCF4
 /* 0E9AB8 7F0B4F88 AC490004 */   sw    $t1, 4($v0)

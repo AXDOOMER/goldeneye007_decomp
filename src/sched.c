@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "libultra/os.h"
+#include "include/PR/os_vi.h"
 #include "init.h"
 #include "sched.h"
 #include "bondgame.h"
@@ -54,10 +55,10 @@ u32 currentcount = 0;
 u32 dp_busy = 0;
 u32 dpCount = 0;
 //800230b0
-s32 g_ViCurrentIndex = 0;
-f32 g_ViXScales[2] = {1.0, 1.0};
-f32 g_ViYScales[2] = {1.0, 1.0};
-s32 something_with_osVI_14[2] = {0, 0}; // boolean
+s32 g_schedViCurrentFrameBuffer = 0;
+f32 g_ViXScales[NUM_VIDEO_FRAME_BUFFERS] = {1.0, 1.0};
+f32 g_ViYScales[NUM_VIDEO_FRAME_BUFFERS] = {1.0, 1.0};
+s32 g_ViChangeVideoModes[NUM_VIDEO_FRAME_BUFFERS] = {0, 0}; // boolean
 
 OSSched sc;
 //temporary until i get proper sized structs
@@ -65,8 +66,8 @@ OSScClient gfxClient[3];
 //char gfxClient[0x18];
 
 u32 g_DisplayPerformanceCounters[4]; // clock, cmc, pipe, tmem
-OSViMode g_ViModes[2];
-OSViMode *g_ViModePtrs[2];
+OSViMode g_ViModes[NUM_VIDEO_FRAME_BUFFERS];
+OSViMode *g_ViModePtrs[NUM_VIDEO_FRAME_BUFFERS];
 
 /**
  * 1570	70000970
@@ -307,7 +308,7 @@ void __scHandleRetrace(OSSched *sc) {
     OSScTask    *dp = 0;
     speedGraphVideoRelated_1();
     sc->frameCount++;
-    video_related_7();
+    viVsyncRelated();
     joyPoll();
     musicFadeTick();
     while (osRecvMesg(&sc->cmdQ, (OSMesg*)&rspTask, OS_MESG_NOBLOCK) != -1) {
@@ -404,14 +405,14 @@ s32 __scTaskComplete(OSSched *sc, OSScTask *t)
                     osViBlack(FALSE);
                     firsttime = 0;
                 }
-                if (something_with_osVI_14[g_ViCurrentIndex]) {
+                if (g_ViChangeVideoModes[g_schedViCurrentFrameBuffer]) {
                     OSIntMask mask = osSetIntMask(OS_IM_VI);
-                    *g_ViModePtrs[g_ViCurrentIndex] = g_ViModes[g_ViCurrentIndex];
+                    *g_ViModePtrs[g_schedViCurrentFrameBuffer] = g_ViModes[g_schedViCurrentFrameBuffer];
                     osSetIntMask(mask);
                 }
-                osViSetXScale(g_ViXScales[g_ViCurrentIndex]);
-                osViSetYScale(g_ViYScales[g_ViCurrentIndex]);
-                g_ViCurrentIndex = ((g_ViCurrentIndex + 1) % 2);
+                osViSetXScale(g_ViXScales[g_schedViCurrentFrameBuffer]);
+                osViSetYScale(g_ViYScales[g_schedViCurrentFrameBuffer]);
+                g_schedViCurrentFrameBuffer = ((g_schedViCurrentFrameBuffer + 1) % 2);
                 CheckDisplayErrorBuffer(t->framebuffer);
                 osViSwapBuffer(t->framebuffer);
             }

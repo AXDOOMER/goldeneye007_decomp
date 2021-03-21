@@ -2859,4 +2859,9 @@ void trigger_watch_zoom(f32 final, f32 time);
 
 struct prop* get_curplayer_positiondata(void);
 
+void currentPlayerSetScreenSize(f32 width, f32 height);
+void currentPlayerSetCameraScale(void);
+void currentPlayerSetScreenPosition(f32 left, f32 top);
+void currentPlayerSetPerspective(f32 near, f32 fovy, f32 aspect);
+
 #endif
