@@ -7,6 +7,7 @@
 #include "sched.h"
 #include "rsp.h"
 #include "libultra/os.h"
+#include "include/PR/os_vi.h"
 #include "indy_comms.h"
 
 /**
@@ -34,10 +35,27 @@ s32 D_800232A0 = 0;
 video_settings *ptr_video_settings1 = &video1_settings[0];
 video_settings *ptr_video_settings2 = &video1_settings[0];
 s32 coloroutputmode = 1;
+
+/**
+ * 800232B0.
+ * D_800232B4 multiplier sign. This is only ever 1 or -1.
+ */
 s32 D_800232B0 = 1;
+
+/**
+ * vimode vStart vertical offset.
+ */
 s32 D_800232B4 = 0;
-s32 D_800232B8 = 0;
-s32 D_800232BC = 3;
+
+/**
+ * Some kind of counter for how frequently D_800232B4 is zero'd in video_related_7.
+ */
+u32 D_800232B8 = 0;
+
+/**
+ * Some kind of counter for how frequently osViBlack is called with "active" parameter.
+ */
+u32 D_800232BC = 3;
 
 /**
  * should correlate to g_schedViCurrentFrameBuffer
@@ -48,9 +66,7 @@ s32 jpg_32bit_grabnum = 1;
 s32 rgb_16bit_grabnum = 1;
 s32 rgb_32bit_grabnum = 1;
 
-//rodata
 
-//bss
 f32 projectionMatrixF[4][4];
 Mtx *projectionMatrix;
 u16 perspNorm;
@@ -70,7 +86,6 @@ OSViMode *viMode;
 
 /**
  * Original viMode->comRegs.hStart.
- * 
  */
 u32 dword_CODE_bss_80060880;
 
@@ -174,7 +189,7 @@ void viInitBuffers(void)
     }
 }
 
-void viSet800232BC(s32 arg0)
+void viSet800232BC(u32 arg0)
 {
     arg0 += 2;
     D_800232BC = arg0;
@@ -182,28 +197,50 @@ void viSet800232BC(s32 arg0)
 
 /**
  * 3DA0	700031A0
+ * Looks related to n64devkit\ultra\usr\src\pr\demos\blockmonkey\block.c
+ * in particular, ModifyVStart
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: yes
+ * - identical registers: fail
  */
 #ifdef NONMATCHING
-// regalloc
 void video_related_7(void) {
-    s32 temp_lo;
-    if (D_800232B8 != 0) {
+    s32 verticalOffset;
+
+    if (D_800232B8 > 0) {
         D_800232B8--;
+        
         if (D_800232B8 == 0) {
             D_800232B4 = 0;
         }
     }
-    temp_lo = D_800232B0 * D_800232B4;
-    viMode->fldRegs[0].vStart = (((dword_CODE_bss_80060884 >> 16) + temp_lo) << 16) | ((dword_CODE_bss_80060884 + temp_lo) & 0xffff);
-    viMode->fldRegs[1].vStart = (((dword_CODE_bss_80060888 >> 16) + temp_lo) << 16) | ((dword_CODE_bss_80060888 + temp_lo) & 0xffff);
+
+    verticalOffset = D_800232B0 * D_800232B4;
+
+#define TO_U16(x) ((u16)(x & 0xffff))
+#define TO_U32(x) ((u32)(x))
+#define TO_S32(x) ((s32)(x))
+#define ADD_UPPER_16(x32, add16) ((TO_U16((TO_S32(x32) >> 16) + (add16))) << 16)
+#define ADD_LOWER_16(x32, add16) ((TO_U16(((x32) >> 0) + (add16))) << 0)
+#define ADD_LOW_AND_HI_16(x32, add16) (ADD_UPPER_16((x32), (add16)) | ADD_LOWER_16((x32), (add16)))
+
+    (*viMode).fldRegs[0].vStart = ADD_LOW_AND_HI_16(dword_CODE_bss_80060884, verticalOffset);
+
+    (*viMode).fldRegs[1].vStart = ADD_LOW_AND_HI_16(dword_CODE_bss_80060888, verticalOffset);
+
     osViSetMode(viMode);
     osViBlack(D_800232BC);
-    if (D_800232BC != 0) {
-        if (D_800232BC < 3) {
-            D_800232BC--;
-        }
+
+    if (D_800232BC > 0 && (s32)D_800232BC < 3)
+    {
+        D_800232BC--;
     }
+
     osViSetSpecialFeatures(OS_VI_DITHER_FILTER_ON | OS_VI_GAMMA_OFF);
+
     D_800232B0 = -D_800232B0;
 }
 #else
@@ -358,6 +395,10 @@ void video_related_8(void) {
     calculatedXScale = (f32)ptr_video_settings2->x / (f32)ptr_video_settings2->bufx;
     calculatedYScale = (f32)ptr_video_settings2->y / (f32)ptr_video_settings2->bufy;
 
+    // osViBlack requires YScale to be 1.0, otherwise, 
+    //     "Using it for YScale factors that are not 1.0 creates the potential
+    //     for the video interface to malfunction and enter a state that cannot
+    //     be exited without resetting the system."
     if (ptr_video_settings2->mode == VIDEOMODE_DISABLE_320x240) {
         calculatedYScale = 1.0f;
     }
@@ -1032,7 +1073,7 @@ void viSet800232B4(f32 param_1)
     if (param_1 < 0.0f) {
         param_1 = 0.0f;
     }
-    D_800232B4 = param_1;
+    D_800232B4 = (s32)param_1;
     D_800232B8 = 10;
 }
 

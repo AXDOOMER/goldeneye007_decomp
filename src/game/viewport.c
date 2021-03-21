@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "game/bond.h"
 #include "libultra/os.h"
+#include "include/PR/gbi.h"
 
 // bss
 s32 z_buffer_width;
