@@ -11,6 +11,7 @@
 #include "indy_comms.h"
 #include "game/bond.h"
 #include "game/viewport.h"
+#include "game/dyn.h"
 
 /**
  * @file video.c
@@ -52,13 +53,13 @@ s32 D_800232B0 = 1;
 
 /**
  * Address 800232B4.
- * vimode vStart vertical offset in video_related_7.
+ * vimode vStart vertical offset in viVsyncRelated.
  */
 s32 D_800232B4 = 0;
 
 /**
  * Address 800232B8.
- * Some kind of counter for how frequently D_800232B4 is zero'd in video_related_7.
+ * Some kind of counter for how frequently D_800232B4 is zero'd in viVsyncRelated.
  */
 u32 D_800232B8 = 0;
 
@@ -179,19 +180,17 @@ void viSet800232BC(u32 arg0)
 
 /**
  * 3DA0	700031A0
+ * Calls osViSetMode with current viMode.
+ * Also calls osViBlack.
+ * Applies verticalOffset to vstart.
+ * 
  * Looks related to n64devkit\ultra\usr\src\pr\demos\blockmonkey\block.c
  * in particular, ModifyVStart
- * 
- * decomp status:
- * - compiles: yes
- * - stack resize: ok
- * - identical instructions: yes
- * - identical registers: fail
  */
-#ifdef NONMATCHING
-void video_related_7(void)
+void viVsyncRelated(void)
 {
     s32 verticalOffset;
+    s32 registerValue;
 
     if (D_800232B8 > 0)
     {
@@ -205,16 +204,28 @@ void video_related_7(void)
 
     verticalOffset = D_800232B0 * D_800232B4;
 
-#define TO_U16(x) ((u16)(x & 0xffff))
-#define TO_U32(x) ((u32)(x))
-#define TO_S32(x) ((s32)(x))
-#define ADD_UPPER_16(x32, add16) ((TO_U16((TO_S32(x32) >> 16) + (add16))) << 16)
-#define ADD_LOWER_16(x32, add16) ((TO_U16(((x32) >> 0) + (add16))) << 0)
-#define ADD_LOW_AND_HI_16(x32, add16) (ADD_UPPER_16((x32), (add16)) | ADD_LOWER_16((x32), (add16)))
+// same codegen as (x & 0xffff)
+#define TO_U16_A(x) ((u16)(x))
+// same codegen as ((u16)(x))
+#define TO_U16_B(x) (x & 0xffff)
 
-    (*viMode).fldRegs[0].vStart = ADD_LOW_AND_HI_16(dword_CODE_bss_80060884, verticalOffset);
+#define TO_U16_C(x) ((u16)(x & 0xffff))
 
-    (*viMode).fldRegs[1].vStart = ADD_LOW_AND_HI_16(dword_CODE_bss_80060888, verticalOffset);
+/**
+ * Splits a 32 bit value into upper and lower 16, adds a 16 bit value to each, and combines back to 32 bits.
+ * 
+ * Note: both unsigned 16 bit casts result in the same codegen, but I'm using different
+ * macros to give a more "natural" explanation of the asm codegen.
+ * 
+ * TODO: Move this to top of file/cleanup after determining how this is used in video_related_8.
+ */
+#define ADD_LOW_AND_HI_16(x32, add16) ((TO_U16_B(TO_U16_A((x32) >> 16) + (add16)) << 16) | TO_U16_B(TO_U16_A(x32) + (add16)))
+
+    registerValue = dword_CODE_bss_80060884;
+    (*viMode).fldRegs[0].vStart = ADD_LOW_AND_HI_16(registerValue, verticalOffset);
+
+    registerValue = dword_CODE_bss_80060888;
+    (*viMode).fldRegs[1].vStart = ADD_LOW_AND_HI_16(registerValue, verticalOffset);
 
     osViSetMode(viMode);
     osViBlack(D_800232BC);
@@ -228,76 +239,6 @@ void video_related_7(void)
 
     D_800232B0 = -D_800232B0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel video_related_7
-/* 003DA0 700031A0 3C038002 */  lui   $v1, %hi(D_800232B8)
-/* 003DA4 700031A4 246332B8 */  addiu $v1, %lo(D_800232B8) # addiu $v1, $v1, 0x32b8
-/* 003DA8 700031A8 8C620000 */  lw    $v0, ($v1)
-/* 003DAC 700031AC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 003DB0 700031B0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 003DB4 700031B4 10400006 */  beqz  $v0, .L700031D0
-/* 003DB8 700031B8 3C188002 */   lui   $t8, %hi(D_800232B0) 
-/* 003DBC 700031BC 244EFFFF */  addiu $t6, $v0, -1
-/* 003DC0 700031C0 15C00003 */  bnez  $t6, .L700031D0
-/* 003DC4 700031C4 AC6E0000 */   sw    $t6, ($v1)
-/* 003DC8 700031C8 3C018002 */  lui   $at, %hi(D_800232B4)
-/* 003DCC 700031CC AC2032B4 */  sw    $zero, %lo(D_800232B4)($at)
-.L700031D0:
-/* 003DD0 700031D0 3C198002 */  lui   $t9, %hi(D_800232B4) 
-/* 003DD4 700031D4 8F3932B4 */  lw    $t9, %lo(D_800232B4)($t9)
-/* 003DD8 700031D8 8F1832B0 */  lw    $t8, %lo(D_800232B0)($t8)
-/* 003DDC 700031DC 3C028006 */  lui   $v0, %hi(viMode+0x8)
-/* 003DE0 700031E0 8C4D0884 */  lw    $t5, %lo(viMode+0x8)($v0)
-/* 003DE4 700031E4 03190019 */  multu $t8, $t9
-/* 003DE8 700031E8 3C058006 */  lui   $a1, %hi(viMode)
-/* 003DEC 700031EC 24A5087C */  addiu $a1, %lo(viMode) # addiu $a1, $a1, 0x87c
-/* 003DF0 700031F0 000D4C03 */  sra   $t1, $t5, 0x10
-/* 003DF4 700031F4 8CB90000 */  lw    $t9, ($a1)
-/* 003DF8 700031F8 3C028006 */  lui   $v0, %hi(viMode+0xC)
-/* 003DFC 700031FC 00001812 */  mflo  $v1
-/* 003E00 70003200 01235821 */  addu  $t3, $t1, $v1
-/* 003E04 70003204 01A37021 */  addu  $t6, $t5, $v1
-/* 003E08 70003208 31CFFFFF */  andi  $t7, $t6, 0xffff
-/* 003E0C 7000320C 000B6400 */  sll   $t4, $t3, 0x10
-/* 003E10 70003210 018FC025 */  or    $t8, $t4, $t7
-/* 003E14 70003214 AF380030 */  sw    $t8, 0x30($t9)
-/* 003E18 70003218 8C4E0888 */  lw    $t6, %lo(viMode+0xC)($v0)
-/* 003E1C 7000321C 8CB90000 */  lw    $t9, ($a1)
-/* 003E20 70003220 000E4C03 */  sra   $t1, $t6, 0x10
-/* 003E24 70003224 01235821 */  addu  $t3, $t1, $v1
-/* 003E28 70003228 01C36021 */  addu  $t4, $t6, $v1
-/* 003E2C 7000322C 318FFFFF */  andi  $t7, $t4, 0xffff
-/* 003E30 70003230 000B6C00 */  sll   $t5, $t3, 0x10
-/* 003E34 70003234 01AFC025 */  or    $t8, $t5, $t7
-/* 003E38 70003238 AF380044 */  sw    $t8, 0x44($t9)
-/* 003E3C 7000323C 0C003818 */  jal   osViSetMode
-/* 003E40 70003240 8CA40000 */   lw    $a0, ($a1)
-/* 003E44 70003244 3C048002 */  lui   $a0, %hi(D_800232BC + 3)
-/* 003E48 70003248 0C0038B4 */  jal   osViBlack
-/* 003E4C 7000324C 908432BF */   lbu   $a0, %lo(D_800232BC + 3)($a0)
-/* 003E50 70003250 3C038002 */  lui   $v1, %hi(D_800232BC)
-/* 003E54 70003254 246332BC */  addiu $v1, %lo(D_800232BC) # addiu $v1, $v1, 0x32bc
-/* 003E58 70003258 8C620000 */  lw    $v0, ($v1)
-/* 003E5C 7000325C 10400004 */  beqz  $v0, .L70003270
-/* 003E60 70003260 28410003 */   slti  $at, $v0, 3
-/* 003E64 70003264 10200002 */  beqz  $at, .L70003270
-/* 003E68 70003268 2448FFFF */   addiu $t0, $v0, -1
-/* 003E6C 7000326C AC680000 */  sw    $t0, ($v1)
-.L70003270:
-/* 003E70 70003270 0C003DEC */  jal   osViSetSpecialFeatures
-/* 003E74 70003274 24040042 */   li    $a0, 66
-/* 003E78 70003278 3C028002 */  lui   $v0, %hi(D_800232B0)
-/* 003E7C 7000327C 244232B0 */  addiu $v0, %lo(D_800232B0) # addiu $v0, $v0, 0x32b0
-/* 003E80 70003280 8C490000 */  lw    $t1, ($v0)
-/* 003E84 70003284 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 003E88 70003288 27BD0018 */  addiu $sp, $sp, 0x18
-/* 003E8C 7000328C 00095023 */  negu  $t2, $t1
-/* 003E90 70003290 03E00008 */  jr    $ra
-/* 003E94 70003294 AC4A0000 */   sw    $t2, ($v0)
-)
-#endif
 
 /**
  * 3E98 70003298
