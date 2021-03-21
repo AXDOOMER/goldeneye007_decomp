@@ -308,7 +308,7 @@ void __scHandleRetrace(OSSched *sc) {
     OSScTask    *dp = 0;
     speedGraphVideoRelated_1();
     sc->frameCount++;
-    video_related_7();
+    viVsyncRelated();
     joyPoll();
     musicFadeTick();
     while (osRecvMesg(&sc->cmdQ, (OSMesg*)&rspTask, OS_MESG_NOBLOCK) != -1) {

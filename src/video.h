@@ -79,6 +79,7 @@ void viSetUseZBuf(s32 usezbuf);
 void viSetViewSize(s16 x, s16 y);
 void viSetViewPosition(s16 left, s16 top);
 void viInitBuffers(void);
+void viVsyncRelated(void);
 void video_related_8(void);
 
 Gfx *viSetupScreensForNumPlayers(Gfx *gdl);
