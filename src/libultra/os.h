@@ -238,88 +238,6 @@ typedef struct {
 
 #define    OS_MIN_STACKSIZE    72
 
-/*
- * Values for osTvType 
- */
-#define    OS_TV_PAL        0
-#define    OS_TV_NTSC        1
-#define    OS_TV_MPAL        2
-
-/*
- * Video Interface (VI) mode type
- */
-#define OS_VI_NTSC_LPN1        0    /* NTSC */
-#define OS_VI_NTSC_LPF1        1
-#define OS_VI_NTSC_LAN1        2
-#define OS_VI_NTSC_LAF1        3
-#define OS_VI_NTSC_LPN2        4
-#define OS_VI_NTSC_LPF2        5
-#define OS_VI_NTSC_LAN2        6
-#define OS_VI_NTSC_LAF2        7
-#define OS_VI_NTSC_HPN1        8
-#define OS_VI_NTSC_HPF1        9
-#define OS_VI_NTSC_HAN1        10
-#define OS_VI_NTSC_HAF1        11
-#define OS_VI_NTSC_HPN2        12
-#define OS_VI_NTSC_HPF2        13
-
-#define OS_VI_PAL_LPN1        14    /* PAL */
-#define OS_VI_PAL_LPF1        15
-#define OS_VI_PAL_LAN1        16
-#define OS_VI_PAL_LAF1        17
-#define OS_VI_PAL_LPN2        18
-#define OS_VI_PAL_LPF2        19
-#define OS_VI_PAL_LAN2        20
-#define OS_VI_PAL_LAF2        21
-#define OS_VI_PAL_HPN1        22
-#define OS_VI_PAL_HPF1        23
-#define OS_VI_PAL_HAN1        24
-#define OS_VI_PAL_HAF1        25
-#define OS_VI_PAL_HPN2        26
-#define OS_VI_PAL_HPF2        27
-
-#define OS_VI_MPAL_LPN1        28    /* MPAL - mainly Brazil */
-#define OS_VI_MPAL_LPF1        29
-#define OS_VI_MPAL_LAN1        30
-#define OS_VI_MPAL_LAF1        31
-#define OS_VI_MPAL_LPN2        32
-#define OS_VI_MPAL_LPF2        33
-#define OS_VI_MPAL_LAN2        34
-#define OS_VI_MPAL_LAF2        35
-#define OS_VI_MPAL_HPN1        36
-#define OS_VI_MPAL_HPF1        37
-#define OS_VI_MPAL_HAN1        38
-#define OS_VI_MPAL_HAF1        39
-#define OS_VI_MPAL_HPN2        40
-#define OS_VI_MPAL_HPF2        41
-
-/*
- * Video Interface (VI) special features
- */
-#define    OS_VI_GAMMA_ON            0x0001
-#define    OS_VI_GAMMA_OFF            0x0002
-#define    OS_VI_GAMMA_DITHER_ON        0x0004
-#define    OS_VI_GAMMA_DITHER_OFF        0x0008
-#define    OS_VI_DIVOT_ON            0x0010
-#define    OS_VI_DIVOT_OFF            0x0020
-#define    OS_VI_DITHER_FILTER_ON        0x0040
-#define    OS_VI_DITHER_FILTER_OFF        0x0080
-
-/*
- * Video Interface (VI) mode attribute bit
- */
-#define OS_VI_BIT_NONINTERLACE        0x0001          /* lo-res */
-#define OS_VI_BIT_INTERLACE        0x0002          /* lo-res */
-#define OS_VI_BIT_NORMALINTERLACE    0x0004          /* hi-res */
-#define OS_VI_BIT_DEFLICKINTERLACE    0x0008          /* hi-res */
-#define OS_VI_BIT_ANTIALIAS        0x0010
-#define OS_VI_BIT_POINTSAMPLE        0x0020
-#define OS_VI_BIT_16PIXEL        0x0040
-#define OS_VI_BIT_32PIXEL        0x0080
-#define OS_VI_BIT_LORES            0x0100
-#define OS_VI_BIT_HIRES            0x0200
-#define OS_VI_BIT_NTSC            0x0400
-#define OS_VI_BIT_PAL            0x0800
 
 /* 
  * Leo Disk 
@@ -514,53 +432,6 @@ extern u64 osClockRate;
  * Extern variables
  *
  */
-extern OSViMode    osViModeTable[];    /* Global VI mode table */
-
-extern OSViMode    osViModeNtscLpn1;    /* Individual VI NTSC modes */
-extern OSViMode    osViModeNtscLpf1;
-extern OSViMode    osViModeNtscLan1;
-extern OSViMode    osViModeNtscLaf1;
-extern OSViMode    osViModeNtscLpn2;
-extern OSViMode    osViModeNtscLpf2;
-extern OSViMode    osViModeNtscLan2;
-extern OSViMode    osViModeNtscLaf2;
-extern OSViMode    osViModeNtscHpn1;
-extern OSViMode    osViModeNtscHpf1;
-extern OSViMode    osViModeNtscHan1;
-extern OSViMode    osViModeNtscHaf1;
-extern OSViMode    osViModeNtscHpn2;
-extern OSViMode    osViModeNtscHpf2;
-
-extern OSViMode    osViModePalLpn1;    /* Individual VI PAL modes */
-extern OSViMode    osViModePalLpf1;
-extern OSViMode    osViModePalLan1;
-extern OSViMode    osViModePalLaf1;
-extern OSViMode    osViModePalLpn2;
-extern OSViMode    osViModePalLpf2;
-extern OSViMode    osViModePalLan2;
-extern OSViMode    osViModePalLaf2;
-extern OSViMode    osViModePalHpn1;
-extern OSViMode    osViModePalHpf1;
-extern OSViMode    osViModePalHan1;
-extern OSViMode    osViModePalHaf1;
-extern OSViMode    osViModePalHpn2;
-extern OSViMode    osViModePalHpf2;
-
-extern OSViMode    osViModeMpalLpn1;    /* Individual VI MPAL modes */
-extern OSViMode    osViModeMpalLpf1;
-extern OSViMode    osViModeMpalLan1;
-extern OSViMode    osViModeMpalLaf1;
-extern OSViMode    osViModeMpalLpn2;
-extern OSViMode    osViModeMpalLpf2;
-extern OSViMode    osViModeMpalLan2;
-extern OSViMode    osViModeMpalLaf2;
-extern OSViMode    osViModeMpalHpn1;
-extern OSViMode    osViModeMpalHpf1;
-extern OSViMode    osViModeMpalHan1;
-extern OSViMode    osViModeMpalHaf1;
-extern OSViMode    osViModeMpalHpn2;
-extern OSViMode    osViModeMpalHpf2;
-
 extern s32     osRomType;    /* Bulk or cartridge ROM. 0=cartridge 1=bulk */
 extern u32  osRomBase;    /* Rom base address of the game image */
 extern u32     osTvType;    /* 0 = PAL, 1 = NTSC, 2 = MPAL */
@@ -668,24 +539,6 @@ extern s32        osPiReadIo(u32, u32 *);
 extern s32        osPiStartDma(OSIoMesg *, s32, s32, u32, void *, u32,
                      OSMesgQueue *);
 extern void        osCreatePiManager(OSPri, OSMesgQueue *, OSMesg *, s32);
-
-/* Video interface (Vi) */
-extern u32        osViGetStatus(void);
-extern u32        osViGetCurrentMode(void);
-extern u32        osViGetCurrentLine(void);
-extern u32        osViGetCurrentField(void);
-extern void        *osViGetCurrentFramebuffer(void);
-extern void        *osViGetNextFramebuffer(void);
-extern void        osViSetXScale(f32);
-extern void        osViSetYScale(f32);
-extern void        osViSetSpecialFeatures(u32);
-extern void        osViSetMode(OSViMode *);
-extern void        osViSetEvent(OSMesgQueue *, OSMesg, u32);
-extern void        osViSwapBuffer(void *);
-extern void        osViBlack(u8);
-extern void        osViFade(u8, u16);
-extern void        osViRepeatLine(u8);
-extern void        osCreateViManager(OSPri);
 
 /* Timer interface */
 

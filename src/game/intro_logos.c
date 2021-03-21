@@ -4,6 +4,7 @@
 #include "game/blood_animation.h"
 #include "video.h"
 #include "libultra/os.h"
+#include "include/PR/gbi.h"
 #include "matrixmath.h"
 #include "ramrom.h"
 
