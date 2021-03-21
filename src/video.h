@@ -22,9 +22,7 @@
 #define XSCALE_MAX      0x400
 #define YSCALE_MAX      0x800
 
-typedef struct video_settings video_settings, *Pvideo_settings;
-
-struct video_settings {
+typedef struct VideoSettings_s {
     /**
      * enum VIDEOMODE.
      */
@@ -54,17 +52,19 @@ struct video_settings {
     s16 viewtop;
     s32 usezbuf;
     u8* framebuf;
-};
+} VideoSettings;
 
 extern OSViMode *viMode;
 extern u32 dword_CODE_bss_80060880;
 extern u32 dword_CODE_bss_80060884;
 extern u32 dword_CODE_bss_80060888;
+extern Mtx *g_viProjectionMatrix;
 
 extern u8 cfb_16[NUM_VIDEO_FRAME_BUFFERS][SCREEN_WIDTH * SCREEN_HEIGHT * 2];
 
 void viSet800232B4(f32 param_1);
 
+void viInitVideoSettings(void);
 s16 viGetX(void);
 s16 viGetY(void);
 s16 viGetViewLeft(void);
@@ -81,10 +81,12 @@ void viSetViewPosition(s16 left, s16 top);
 void viInitBuffers(void);
 void video_related_8(void);
 
-void indy_grab_jpg_16bit(void);
-void indy_grab_jpg_32bit(void);
-void indy_grab_rgb_16bit(void);
-void indy_grab_rgb_32bit(void);
+Gfx *viSetupScreensForNumPlayers(Gfx *gdl);
+
+void indyGrabJpg16bit(void);
+void indyGrabJpg32bit(void);
+void indyGrabRgb16bit(void);
+void indyGrabRgb32bit(void);
 #endif
 
 
