@@ -6,6 +6,7 @@
 #include "game/bondinv.h"
 #include "music.h"
 #include "tlb_manage.h"
+#include "video.h"
 
 // bss
 //CODE.bss:8008C260
@@ -1743,7 +1744,7 @@ glabel sub_GAME_7F0BE30C
 /* 0F30B4 7F0BE584 8FA40060 */   lw    $a0, 0x60($sp)
 /* 0F30B8 7F0BE588 AFA20060 */  sw    $v0, 0x60($sp)
 .L7F0BE58C:
-/* 0F30BC 7F0BE58C 0C000FD9 */  jal   setupscreensfornumplayers
+/* 0F30BC 7F0BE58C 0C000FD9 */  jal   viSetupScreensForNumPlayers
 /* 0F30C0 7F0BE590 8FA40060 */   lw    $a0, 0x60($sp)
 /* 0F30C4 7F0BE594 AFA20060 */  sw    $v0, 0x60($sp)
 /* 0F30C8 7F0BE598 0FC25122 */  jal   sub_GAME_7F094488
@@ -2136,7 +2137,7 @@ glabel sub_GAME_7F0BE30C
 /* 0F3CB4 7F0BF144 8FA40060 */   lw    $a0, 0x60($sp)
 /* 0F3CB8 7F0BF148 AFA20060 */  sw    $v0, 0x60($sp)
 .Ljp7F0BF14C:
-/* 0F3CBC 7F0BF14C 0C000FD9 */  jal   setupscreensfornumplayers
+/* 0F3CBC 7F0BF14C 0C000FD9 */  jal   viSetupScreensForNumPlayers
 /* 0F3CC0 7F0BF150 8FA40060 */   lw    $a0, 0x60($sp)
 /* 0F3CC4 7F0BF154 AFA20060 */  sw    $v0, 0x60($sp)
 /* 0F3CC8 7F0BF158 0FC2540A */  jal   sub_GAME_7F094488
@@ -2539,7 +2540,7 @@ glabel sub_GAME_7F0BE30C
 /* 0F30B4 7F0BE584 8FA40060 */   lw    $a0, 0x60($sp)
 /* 0F30B8 7F0BE588 AFA20060 */  sw    $v0, 0x60($sp)
 .L7F0BE58C:
-/* 0F30BC 7F0BE58C 0C000FD9 */  jal   setupscreensfornumplayers
+/* 0F30BC 7F0BE58C 0C000FD9 */  jal   viSetupScreensForNumPlayers
 /* 0F30C0 7F0BE590 8FA40060 */   lw    $a0, 0x60($sp)
 /* 0F30C4 7F0BE594 AFA20060 */  sw    $v0, 0x60($sp)
 /* 0F30C8 7F0BE598 0FC25122 */  jal   sub_GAME_7F094488
