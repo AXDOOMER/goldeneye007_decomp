@@ -104,78 +104,20 @@ s32 g_unused8006088C;
 /**
  * 3C60	70003060
  */
-#ifdef NONMATCHING
-// regalloc
 void init_video_settings(void)
 {
-    video_settings* v1;
-    video_settings* v2;
     off_CODE_bss_80060878 = 0;
     off_CODE_bss_80060879 = 1;
-    v1 = &video1_settings[off_CODE_bss_80060878];
-    ptr_video_settings1 = v1;
-    ptr_video_settings1->framebuf = cfb_16[off_CODE_bss_80060878];    
-    v2 = &video1_settings[off_CODE_bss_80060879];
-    ptr_video_settings2 = v2;
+
+    ptr_video_settings1 = (video_settings*)((u8*)&video1_settings + (off_CODE_bss_80060878 * sizeof(video_settings)));
+    ptr_video_settings1->framebuf = cfb_16[off_CODE_bss_80060878]; 
+
+    ptr_video_settings2 = (video_settings*)((u8*)&video1_settings + (off_CODE_bss_80060879 * sizeof(video_settings)));
     ptr_video_settings2->framebuf = cfb_16[off_CODE_bss_80060879];
+    
     D_8002329C = 0;
     D_800232A0 = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel init_video_settings
-/* 003C60 70003060 2408002C */  li    $t0, 44
-/* 003C64 70003064 300200FF */  andi  $v0, $zero, 0xff
-/* 003C68 70003068 00480019 */  multu $v0, $t0
-/* 003C6C 7000306C 0002C880 */  sll   $t9, $v0, 2
-/* 003C70 70003070 0322C821 */  addu  $t9, $t9, $v0
-/* 003C74 70003074 0019C880 */  sll   $t9, $t9, 2
-/* 003C78 70003078 0322C823 */  subu  $t9, $t9, $v0
-/* 003C7C 7000307C 3C078002 */  lui   $a3, %hi(video1_settings)
-/* 003C80 70003080 0019C880 */  sll   $t9, $t9, 2
-/* 003C84 70003084 24E73244 */  addiu $a3, %lo(video1_settings) # addiu $a3, $a3, 0x3244
-/* 003C88 70003088 3C048006 */  lui   $a0, %hi(off_CODE_bss_80060878)
-/* 003C8C 7000308C 3C058006 */  lui   $a1, %hi(off_CODE_bss_80060879)
-/* 003C90 70003090 00007812 */  mflo  $t7
-/* 003C94 70003094 3C068002 */  lui   $a2, %hi(ptr_video_settings1)
-/* 003C98 70003098 3C09803B */  lui   $t1, %hi(cfb_16) # $t1, 0x803b
-/* 003C9C 7000309C 0322C823 */  subu  $t9, $t9, $v0
-/* 003CA0 700030A0 25295000 */  addiu $t1, %lo(cfb_16) # addiu $t1, $t1, 0x5000
-/* 003CA4 700030A4 24C632A4 */  addiu $a2, %lo(ptr_video_settings1) # addiu $a2, $a2, 0x32a4
-/* 003CA8 700030A8 24A50879 */  addiu $a1, %lo(off_CODE_bss_80060879) # addiu $a1, $a1, 0x879
-/* 003CAC 700030AC 24840878 */  addiu $a0, %lo(off_CODE_bss_80060878) # addiu $a0, $a0, 0x878
-/* 003CB0 700030B0 240E0001 */  li    $t6, 1
-/* 003CB4 700030B4 00EFC021 */  addu  $t8, $a3, $t7
-/* 003CB8 700030B8 0019CAC0 */  sll   $t9, $t9, 0xb
-/* 003CBC 700030BC A0800000 */  sb    $zero, ($a0)
-/* 003CC0 700030C0 A0AE0000 */  sb    $t6, ($a1)
-/* 003CC4 700030C4 ACD80000 */  sw    $t8, ($a2)
-/* 003CC8 700030C8 01395821 */  addu  $t3, $t1, $t9
-/* 003CCC 700030CC AF0B0028 */  sw    $t3, 0x28($t8)
-/* 003CD0 700030D0 90A30000 */  lbu   $v1, ($a1)
-/* 003CD4 700030D4 3C0A8002 */  lui   $t2, %hi(ptr_video_settings2) 
-/* 003CD8 700030D8 254A32A8 */  addiu $t2, %lo(ptr_video_settings2) # addiu $t2, $t2, 0x32a8
-/* 003CDC 700030DC 00680019 */  multu $v1, $t0
-/* 003CE0 700030E0 00037880 */  sll   $t7, $v1, 2
-/* 003CE4 700030E4 01E37821 */  addu  $t7, $t7, $v1
-/* 003CE8 700030E8 000F7880 */  sll   $t7, $t7, 2
-/* 003CEC 700030EC 01E37823 */  subu  $t7, $t7, $v1
-/* 003CF0 700030F0 000F7880 */  sll   $t7, $t7, 2
-/* 003CF4 700030F4 01E37823 */  subu  $t7, $t7, $v1
-/* 003CF8 700030F8 000F7AC0 */  sll   $t7, $t7, 0xb
-/* 003CFC 700030FC 012FC021 */  addu  $t8, $t1, $t7
-/* 003D00 70003100 3C018002 */  lui   $at, %hi(D_8002329C)
-/* 003D04 70003104 00006812 */  mflo  $t5
-/* 003D08 70003108 00ED7021 */  addu  $t6, $a3, $t5
-/* 003D0C 7000310C AD4E0000 */  sw    $t6, ($t2)
-/* 003D10 70003110 ADD80028 */  sw    $t8, 0x28($t6)
-/* 003D14 70003114 AC20329C */  sw    $zero, %lo(D_8002329C)($at)
-/* 003D18 70003118 3C018002 */  lui   $at, %hi(D_800232A0)
-/* 003D1C 7000311C 03E00008 */  jr    $ra
-/* 003D20 70003120 AC2032A0 */   sw    $zero, %lo(D_800232A0)($at)
-)
-#endif
 
 void viInitBuffers(void)
 {
