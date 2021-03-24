@@ -432,11 +432,11 @@ void video_related_8(void)
 
     if (g_viColorOutputMode != COLORMODE_32BIT)
     {
-        (*fast3d_related_array)[22] = ptr_video_settings2->framebuf;
+        (*g_gfxTaskSettingsList)->framebuffer = ptr_video_settings2->framebuf;
     }
     else
     {
-        (*fast3d_related_array)[22] = cfb_16[0];
+        (*g_gfxTaskSettingsList)->framebuffer = cfb_16[0];
     }
 
     off_CODE_bss_80060878 = (off_CODE_bss_80060878 + 1) % NUM_VIDEO_SETTINGS;
