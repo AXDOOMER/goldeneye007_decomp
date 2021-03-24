@@ -304,7 +304,7 @@ void bossMainloop(void)
     u32 pendingGfx = 0;
     s32 freeGfx;
     s32 mainTickElapsed;
-    s32 rsparg;
+    s32 rspReplyMsg;
 
     u32 unused_stackpadding_[56];
 
@@ -578,8 +578,8 @@ void bossMainloop(void)
                                 indy_send_capture_data(taskGrabBuffer, (u8*)0x80000000, 0x400000);
                             }
 
-                            rsparg = (s32)(&localD_80024304);
-                            load_rsp_microcode(firstGdl, gdl, 0, (s32*)rsparg);
+                            rspReplyMsg = (s32)(&localD_80024304);
+                            rspGfxTaskStart(firstGdl, gdl, 0, (s32*)rspReplyMsg);
                             
                             pendingGfx++;
                             memaIterateAndMerge();
