@@ -118,17 +118,7 @@ struct memallocstring memallocstringtable[] = {
 s32 g_MainStageNum = LEVELID_NONE;
 s32 g_DebugFeatureFlag = 0;
 
-// Declared as array in PD. Might be array here too?
-struct D_80024304_s {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-    s32 unkc;
-    s32 unk10;
-    s32 unk14;
-    s32 unk18;
-    s32 unk1c;
-} D_80024304 = { 0x20000 };
+OSScMsg g_bossGfxDoneMsg = { OS_SC_DONE_MSG };
 
 // extern declarations
 extern struct player *pPlayer;
@@ -288,7 +278,7 @@ void bossMainloop(void)
     s32 done;
     const unsigned char *tokenFindLevel;
     GFXMsg *localGfxFrameMsg; // sp 468
-    struct D_80024304_s localD_80024304; // sp 436
+    OSScMsg localGfxDoneMsg; // sp 436
     s32 stringIndex;
     s32 toggleFlag; // sp 428
     Gfx *gdl; // sp424
@@ -343,7 +333,7 @@ void bossMainloop(void)
     while (!done)
     {
         localGfxFrameMsg = NULL; 
-        localD_80024304 = D_80024304;
+        localGfxDoneMsg = g_bossGfxDoneMsg;
         toggleFlag = 0;
         pendingGfx = 0;
         
@@ -578,7 +568,7 @@ void bossMainloop(void)
                                 indy_send_capture_data(taskGrabBuffer, (u8*)0x80000000, 0x400000);
                             }
 
-                            rsparg = (s32)(&localD_80024304);
+                            rsparg = (s32)(&localGfxDoneMsg);
                             load_rsp_microcode(firstGdl, gdl, 0, (s32*)rsparg);
                             
                             pendingGfx++;
