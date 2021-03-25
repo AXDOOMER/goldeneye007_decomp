@@ -15,7 +15,7 @@
 struct GfxInfo_s {
     OSScTask task;
     u32 cfb;
-    u32 framebuffer;
+    u32 unk5C;
 };
 
 void rspInitDebugNoticeList(void);
