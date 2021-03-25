@@ -224,7 +224,7 @@ void rspAllocateBuffers(void)
  * decomp status:
  * - compiles: yes
  * - stack resize: ok
- * - identical instructions: fail
+ * - identical opcode-lines: fail
  * - identical registers: fail
  */
 #ifdef NONMATCHING

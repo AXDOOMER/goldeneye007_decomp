@@ -179,7 +179,7 @@ void tlbInit(void)
  * decomp status:
  * - compiles: yes
  * - stack resize: fail
- * - identical instructions: yes
+ * - identical opcode-lines: yes
  * - identical registers: yes
  * 
  * Only 5 words differ. Two are the location of `msg` on the stack, fixing

@@ -4137,7 +4137,7 @@ glabel manage_mp_game
 /* 0F414C 7F0BF61C 24010038 */  li    $at, 56
 /* 0F4150 7F0BF620 54410074 */  bnel  $v0, $at, .L7F0BF7F4
 /* 0F4154 7F0BF624 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F4158 7F0BF628 0C0010EA */  jal   viGet8002329C
+/* 0F4158 7F0BF628 0C0010EA */  jal   viGetHorizontalOffset
 /* 0F415C 7F0BF62C 00000000 */   nop   
 /* 0F4160 7F0BF630 0C0010E4 */  jal   viGet800232A0
 /* 0F4164 7F0BF634 AFA20030 */   sw    $v0, 0x30($sp)
@@ -4174,7 +4174,7 @@ glabel manage_mp_game
 /* 0F41D4 7F0BF6A4 270FFFFF */  addiu $t7, $t8, -1
 /* 0F41D8 7F0BF6A8 AFAF0030 */  sw    $t7, 0x30($sp)
 .L7F0BF6AC:
-/* 0F41DC 7F0BF6AC 0C0010E7 */  jal   viSet8002329C
+/* 0F41DC 7F0BF6AC 0C0010E7 */  jal   viSetHorizontalOffset
 /* 0F41E0 7F0BF6B0 8FA40030 */   lw    $a0, 0x30($sp)
 /* 0F41E4 7F0BF6B4 0C0010E1 */  jal   viSet800232A0
 /* 0F41E8 7F0BF6B8 8FA4002C */   lw    $a0, 0x2c($sp)
@@ -5015,7 +5015,7 @@ glabel manage_mp_game
 /* 0F4DC4 7F0C0254 24010038 */  li    $at, 56
 /* 0F4DC8 7F0C0258 54410074 */  bnel  $v0, $at, .Ljp7F0C042C
 /* 0F4DCC 7F0C025C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F4DD0 7F0C0260 0C0010EA */  jal   viGet8002329C
+/* 0F4DD0 7F0C0260 0C0010EA */  jal   viGetHorizontalOffset
 /* 0F4DD4 7F0C0264 00000000 */   nop   
 /* 0F4DD8 7F0C0268 0C0010E4 */  jal   viGet800232A0
 /* 0F4DDC 7F0C026C AFA20030 */   sw    $v0, 0x30($sp)
@@ -5052,7 +5052,7 @@ glabel manage_mp_game
 /* 0F4E4C 7F0C02DC 270FFFFF */  addiu $t7, $t8, -1
 /* 0F4E50 7F0C02E0 AFAF0030 */  sw    $t7, 0x30($sp)
 .Ljp7F0C02E4:
-/* 0F4E54 7F0C02E4 0C0010E7 */  jal   viSet8002329C
+/* 0F4E54 7F0C02E4 0C0010E7 */  jal   viSetHorizontalOffset
 /* 0F4E58 7F0C02E8 8FA40030 */   lw    $a0, 0x30($sp)
 /* 0F4E5C 7F0C02EC 0C0010E1 */  jal   viSet800232A0
 /* 0F4E60 7F0C02F0 8FA4002C */   lw    $a0, 0x2c($sp)
@@ -5888,7 +5888,7 @@ glabel manage_mp_game
 /* 0F414C 7F0BF61C 24010038 */  li    $at, 56
 /* 0F4150 7F0BF620 54410074 */  bnel  $v0, $at, .L7F0BF7F4
 /* 0F4154 7F0BF624 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F4158 7F0BF628 0C0010EA */  jal   viGet8002329C
+/* 0F4158 7F0BF628 0C0010EA */  jal   viGetHorizontalOffset
 /* 0F415C 7F0BF62C 00000000 */   nop   
 /* 0F4160 7F0BF630 0C0010E4 */  jal   viGet800232A0
 /* 0F4164 7F0BF634 AFA20030 */   sw    $v0, 0x30($sp)
@@ -5925,7 +5925,7 @@ glabel manage_mp_game
 /* 0F41D4 7F0BF6A4 270FFFFF */  addiu $t7, $t8, -1
 /* 0F41D8 7F0BF6A8 AFAF0030 */  sw    $t7, 0x30($sp)
 .L7F0BF6AC:
-/* 0F41DC 7F0BF6AC 0C0010E7 */  jal   viSet8002329C
+/* 0F41DC 7F0BF6AC 0C0010E7 */  jal   viSetHorizontalOffset
 /* 0F41E0 7F0BF6B0 8FA40030 */   lw    $a0, 0x30($sp)
 /* 0F41E4 7F0BF6B4 0C0010E1 */  jal   viSet800232A0
 /* 0F41E8 7F0BF6B8 8FA4002C */   lw    $a0, 0x2c($sp)
