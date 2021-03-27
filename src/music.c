@@ -49,12 +49,6 @@
  */
 #define ROM_MUSIC_START_OFFSET 0x10000U
 
-/**
- * The number of bytes allocated in the method call (alHeapDBAlloc) is approx NUMBER*size.
- * This is always set to one in this file...
- */
-#define MUSIC_HEAP_NUMBER              1
-
 #define MUSIC_SYN_CONFIG_MAX_P_VOICES   0x18
 #define MUSIC_SYN_CONFIG_MAX_UPDATES    0x80
 
@@ -62,9 +56,9 @@
 #define MUSIC_SEQ_CONFIG_MAX_EVENTS     0x40
 #define MUSIC_SEQ_CONFIG_MAX_CHANNELS     16
 
-#define MUSIC_SFX_SEQ_CONFIG_MAX_VOICES 0x40
-#define MUSIC_SFX_SEQ_CONFIG_MAX_EVENTS 0x40
-#define MUSIC_SFX_SEQ_CONFIG_CHANNEL       8
+#define MUSIC_SFX_SEQ_CONFIG_MAYBE_SND_STATE_COUNT  0x40
+#define MUSIC_SFX_SEQ_CONFIG_MAX_EVENTS             0x40
+#define MUSIC_SFX_SEQ_MAYBE_MAX_SOUNDS                 8
 
 // 
 // carnivorous shared default midi allocations from editor:
@@ -587,9 +581,9 @@ ALCSeq g_musicXTrack3Seq;
 s32 g_musicUnused80063B58;
 s32 g_musicUnused80063B54;
 
-char D_80063B50[0x54];
-s32 D_80063BA4;
-s32 D_80063BA8;
+ALSndPlayer g_sndPlayer;
+s16 *D_80063BA4;
+s16 *D_80063BA8;
 
 extern u32 _sfxtblSegmentRomStart;
 extern u32 _sfxctlSegmentRomStart;
@@ -661,7 +655,7 @@ void musicSeqPlayerInit(void)
     {
         size = (u32)&_sfxtblSegmentRomStart - (u32)&_sfxctlSegmentRomStart;
 
-        sfxBank = alHeapAlloc(&g_musicHeap, MUSIC_HEAP_NUMBER, size);
+        sfxBank = alHeapAlloc(&g_musicHeap, 1, size);
         romCopy(sfxBank, &_sfxctlSegmentRomStart, size);
         alBnkfNew(sfxBank, (u8 *)&_sfxtblSegmentRomStart);
         g_musicSfxBufferPtr = sfxBank->bankArray[0];
@@ -671,7 +665,7 @@ void musicSeqPlayerInit(void)
     {
         size = (u32)&_instrumentstblSegmentRomStart - (u32)&_instrumentsctlSegmentRomStart;
 
-        instrumentBank = alHeapAlloc(&g_musicHeap, MUSIC_HEAP_NUMBER, size);
+        instrumentBank = alHeapAlloc(&g_musicHeap, 1, size);
         romCopy(instrumentBank, &_instrumentsctlSegmentRomStart, size);
         alBnkfNew(instrumentBank, (u8 *)&_instrumentstblSegmentRomStart);
         g_musicInstrumentBufferPtr = instrumentBank->bankArray[0];
@@ -681,11 +675,11 @@ void musicSeqPlayerInit(void)
 
     // is this sizeof(ALSeqFile) ? which implies the struct isn't right...
     size = 0x10;
-    g_musicDataTable = alHeapAlloc(&g_musicHeap, MUSIC_HEAP_NUMBER, size);
+    g_musicDataTable = alHeapAlloc(&g_musicHeap, 1, size);
     romCopy(g_musicDataTable, (void *)tblSegmentRomStartAddress, size);
 
     tblSegmentSize = (sizeof(ALSeqData) * g_musicDataTable->seqCount) + 4;
-    g_musicDataTable = alHeapAlloc(&g_musicHeap, MUSIC_HEAP_NUMBER, tblSegmentSize);
+    g_musicDataTable = alHeapAlloc(&g_musicHeap, 1, tblSegmentSize);
     romCopy(g_musicDataTable, (void *)tblSegmentRomStartAddress, ALIGN16_a(tblSegmentSize));
 
     // end auReadSeqFileHeader
@@ -693,10 +687,10 @@ void musicSeqPlayerInit(void)
     musicSeqFileNew(g_musicDataTable, (u8*)&_musicsampletblSegmentRomStart);
     
     size = TRACK_1_DATA_SEQ_SIZE_BYTES;
-    g_musicXTrack1SeqData = alHeapAlloc(&g_musicHeap, MUSIC_HEAP_NUMBER, size);
+    g_musicXTrack1SeqData = alHeapAlloc(&g_musicHeap, 1, size);
 
     size = TRACK_2_DATA_SEQ_SIZE_BYTES + TRACK_3_DATA_SEQ_SIZE_BYTES;
-    g_musicXTrack2SeqData = alHeapAlloc(&g_musicHeap, MUSIC_HEAP_NUMBER, size);
+    g_musicXTrack2SeqData = alHeapAlloc(&g_musicHeap, 1, size);
     
     g_musicXTrack3SeqData = (u8*)g_musicXTrack2SeqData + TRACK_2_DATA_SEQ_SIZE_BYTES;
 
@@ -752,9 +746,9 @@ void musicSeqPlayerInit(void)
     track3SeqpConfig.stopOsc = NULL;
 
     size = sizeof(ALCSPlayer); // 0x7C
-    g_musicXTrack1SeqPlayer = alHeapAlloc(&g_musicHeap, MUSIC_HEAP_NUMBER, size);
-    g_musicXTrack2SeqPlayer = alHeapAlloc(&g_musicHeap, MUSIC_HEAP_NUMBER, size);
-    g_musicXTrack3SeqPlayer = alHeapAlloc(&g_musicHeap, MUSIC_HEAP_NUMBER, size);
+    g_musicXTrack1SeqPlayer = alHeapAlloc(&g_musicHeap, 1, size);
+    g_musicXTrack2SeqPlayer = alHeapAlloc(&g_musicHeap, 1, size);
+    g_musicXTrack3SeqPlayer = alHeapAlloc(&g_musicHeap, 1, size);
 
     // Typo / mistake, the following calls to alSeqpSetBank should actually
     // be to alCSPSetBank.
@@ -766,17 +760,17 @@ void musicSeqPlayerInit(void)
     alSeqpSetBank((ALSeqPlayer *)g_musicXTrack3SeqPlayer, g_musicInstrumentBufferPtr);
 
     sfxSeqpConfig.maxEvents = MUSIC_SFX_SEQ_CONFIG_MAX_EVENTS;
-    sfxSeqpConfig.maxVoices = MUSIC_SFX_SEQ_CONFIG_MAX_VOICES;
-    sfxSeqpConfig.channelWord = MUSIC_SFX_SEQ_CONFIG_CHANNEL;
+    sfxSeqpConfig.maybeSndStateCount = MUSIC_SFX_SEQ_CONFIG_MAYBE_SND_STATE_COUNT;
+    sfxSeqpConfig.maybeMaxSounds = MUSIC_SFX_SEQ_MAYBE_MAX_SOUNDS;
     sfxSeqpConfig.heap = &g_musicHeap;
     
-    sfx_c_70007B20(&sfxSeqpConfig);
+    sndNewPlayerInit(&sfxSeqpConfig);
     amStartAudioThread();
 }
 
 /**
  * 7A7C	70006E7C
- * If sound boot flag is is set, nothing happens.
+ * If sound boot flag is set, nothing happens.
  * If current track number is set, will call the stop playing method.
  * Does not change g_musicXTrack1Fade, but will update current track number.
  * Waits for the sequence playing to finish "doing things" and then loads music:

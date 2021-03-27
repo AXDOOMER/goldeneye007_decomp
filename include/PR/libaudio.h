@@ -8,13 +8,37 @@
  ***********************************************************************/    
 typedef u8      ALPan;
 
+#define AL_USEC_PER_FRAME_60FPS       16000
+#define AL_USEC_PER_FRAME_30FPS       33000
+
+typedef enum {
+    AL_SNDP_PLAY_EVT,
+    AL_SNDP_STOP_EVT,
+    AL_SNDP_PAN_EVT,
+    AL_SNDP_VOL_EVT,
+    AL_SNDP_PITCH_EVT,
+    AL_SNDP_API_EVT,
+    AL_SNDP_DECAY_EVT,
+    AL_SNDP_END_EVT,
+    AL_SNDP_FX_EVT,
+
+    AL_SNDP_UNKNOWN_EVT = 0x20
+} ALSndpMsgType;
+
 /***********************************************************************
  * Audio Library global routines
  ***********************************************************************/
+
+/**
+ * sizeof == 8.
+ */
 typedef struct ALLink_s {
     struct ALLink_s      *next;
     struct ALLink_s      *prev;
 } ALLink;
+
+void    alUnlink(ALLink *element);
+void    alLink(ALLink *element, ALLink *after);
 
 typedef s32 (*ALDMAproc)(s32 addr, s32 len, void *state);
 typedef ALDMAproc (*ALDMANew)(void *state);
@@ -51,11 +75,35 @@ typedef struct {
 
 
 void    alHeapInit(ALHeap *hp, u8 *base, s32 len);
+
+/**
+ * Allocates cache-aligned memory from an audio DRAM heap.
+ * 
+ * @param file: file.
+ * @param line: line.
+ * @param hp: pointer to the ALHeap structure.
+ * @param num: number of records to allocate.
+ * @param size: size, in bytes, of the records to allocate.
+ */
 void    *alHeapDBAlloc(u8 *file, s32 line, ALHeap *hp, s32 num, s32 size);
 
 #ifdef DEBUG
+/**
+ * Allocates cache-aligned memory from an audio DRAM heap.
+ * 
+ * @param hp: pointer to the ALHeap structure.
+ * @param num: number of records to allocate.
+ * @param size: size, in bytes, of the records to allocate.
+ */
 #define alHeapAlloc(hp, elem ,size) alHeapDBAlloc((u8 *) __FILE__,__LINE__,(hp),(elem),(size))
 #else
+/**
+ * Allocates cache-aligned memory from an audio DRAM heap.
+ * 
+ * @param hp: pointer to the ALHeap structure.
+ * @param num: number of records to allocate.
+ * @param size: size, in bytes, of the records to allocate.
+ */
 #define alHeapAlloc(hp, elem ,size) alHeapDBAlloc(0, 0,(hp),(elem),(size))
 #endif
 
@@ -164,60 +212,6 @@ typedef struct {                /* Note: sizeof won't be correct        */
 void    alBnkfNew(ALBankFile *f, u8 *table);
 
 /***********************************************************************
- * Synthesis driver stuff
- ***********************************************************************/
-typedef ALMicroTime (*ALVoiceHandler)(void *);
-
-typedef struct ALPlayer_s {
-    struct ALPlayer_s   *next;
-    void                *clientData;    /* storage for client callback  */
-    ALVoiceHandler      handler;        /* voice handler for player     */
-    ALMicroTime         callTime;       /* usec requested callback      */
-    s32                 samplesLeft;    /* usec remaining to callback   */
-} ALPlayer;
-
-typedef struct ALVoice_s {
-    ALLink              node;
-    struct PVoice_s     *pvoice;
-    ALWaveTable         *table;
-    void                *clientPrivate;
-    s16                 state;
-    s16                 priority;
-    s16                 fxBus;
-    s16                 unityPitch;
-} ALVoice;
-
-typedef struct {
-    ALPlayer    *head;          /* client list head                     */
-    ALLink      pFreeList;      /* list of free physical voices         */
-    ALLink      pAllocList;     /* list of allocated physical voices    */
-    ALLink      pLameList;      /* list of voices ready to be freed     */
-    s32         paramSamples;
-    s32         curSamples;     /* samples from start of game           */
-    ALDMANew    dma;
-    ALHeap      *heap;
-    
-    struct ALParam_s    *paramList;
-    
-    struct ALMainBus_s  *mainBus;
-    struct ALAuxBus_s   *auxBus;        /* ptr to array of aux bus structs */
-    struct ALFilter_s   *outputFilter;  /* last filter in the filter chain */
-
-    s32                 numPVoices;
-    s32                 maxAuxBusses;
-    s32                 outputRate;     /* output sample rate */
-    s32                 maxOutSamples;  /* Maximum samples rsp can generate
-                                           at one time at output rate */
-} ALSynth;
-
-/***********************************************************************
- * Audio Library (AL) stuff
- ***********************************************************************/
-typedef struct {
-    ALSynth     drvr;
-} ALGlobals;
-
-/***********************************************************************
  * Sequence Files
  ***********************************************************************/
 
@@ -258,12 +252,111 @@ typedef struct
 void alSeqFileNew(ALSeqFile *f, u8 *base);
 
 /***********************************************************************
+ * Synthesis driver stuff
+ ***********************************************************************/
+typedef ALMicroTime (*ALVoiceHandler)(void *);
+
+typedef struct ALPlayer_s {
+    struct ALPlayer_s   *next;
+    void                *clientData;    /* storage for client callback  */
+    ALVoiceHandler      handler;        /* voice handler for player     */
+    ALMicroTime         callTime;       /* usec requested callback      */
+    s32                 samplesLeft;    /* usec remaining to callback   */
+} ALPlayer;
+
+// sizeof == 0x1c
+typedef struct ALVoice_s {
+    // 0
+    ALLink              node;
+    // 0x8
+    struct PVoice_s     *pvoice;
+    // 0xc
+    ALWaveTable         *table;
+    // 0x10
+    void                *clientPrivate;
+    // 0x14
+    s16                 state;
+    // 0x16
+    s16                 priority;
+    // 0x18
+    s16                 fxBus;
+    // 0x1a
+    s16                 unityPitch;
+} ALVoice;
+
+typedef struct ALVoiceConfig_s {
+    s16                 priority;       /* voice priority               */
+    s16                 fxBus;          /* bus assignment               */
+    u8                  unityPitch;     /* unity pitch flag             */
+} ALVoiceConfig;
+
+typedef struct {
+    ALPlayer    *head;          /* client list head                     */
+    ALLink      pFreeList;      /* list of free physical voices         */
+    ALLink      pAllocList;     /* list of allocated physical voices    */
+    ALLink      pLameList;      /* list of voices ready to be freed     */
+    s32         paramSamples;
+    s32         curSamples;     /* samples from start of game           */
+    ALDMANew    dma;
+    ALHeap      *heap;
+    
+    struct ALParam_s    *paramList;
+    
+    struct ALMainBus_s  *mainBus;
+    struct ALAuxBus_s   *auxBus;        /* ptr to array of aux bus structs */
+    struct ALFilter_s   *outputFilter;  /* last filter in the filter chain */
+
+    s32                 numPVoices;
+    s32                 maxAuxBusses;
+    s32                 outputRate;     /* output sample rate */
+    s32                 maxOutSamples;  /* Maximum samples rsp can generate
+                                           at one time at output rate */
+} ALSynth;
+
+//void    alSynNew(ALSynth *s, ALSynConfig *config);
+//void    alSynDelete(ALSynth *s);
+
+void    alSynAddPlayer(ALSynth *s, ALPlayer *client);
+//void    alSynRemovePlayer(ALSynth *s, ALPlayer *client);
+
+s32     alSynAllocVoice(ALSynth *s, ALVoice *v, ALVoiceConfig *vc);
+void    alSynFreeVoice(ALSynth *s, ALVoice *voice);
+
+void    alSynStartVoice(ALSynth *s, ALVoice *voice, ALWaveTable *w);
+//void    alSynStartVoiceParams(ALSynth *s, ALVoice *voice, ALWaveTable *w,
+//                              f32 pitch, s16 vol, ALPan pan, u8 fxmix,
+//                              ALMicroTime t);
+void    alSynStopVoice(ALSynth *s, ALVoice *voice);
+
+void    alSynSetVol(ALSynth *s, ALVoice *v, s16 vol, ALMicroTime delta);
+void    alSynSetPitch(ALSynth *s, ALVoice *voice, f32 ratio);
+void    alSynSetPan(ALSynth *s, ALVoice *voice, ALPan pan);
+void    alSynSetFXMix(ALSynth *s, ALVoice *voice, u8 fxmix);
+//void    alSynSetPriority(ALSynth *s, ALVoice *voice, s16 priority);
+//s16     alSynGetPriority(ALSynth *s, ALVoice *voice);
+
+//ALFxRef *alSynAllocFX(ALSynth *s, s16 bus, ALSynConfig *c, ALHeap *hp);
+//ALFxRef alSynGetFXRef(ALSynth *s, s16 bus, s16 index);
+//void    alSynFreeFX(ALSynth *s, ALFxRef *fx);
+//void    alSynSetFXParam(ALSynth *s, ALFxRef fx, s16 paramID, void *param);
+
+/***********************************************************************
  * Audio Library (AL) stuff
  ***********************************************************************/
 typedef struct {
+    ALSynth     drvr;
+} ALGlobals;
+
+extern ALGlobals *alGlobals;
+
+/***********************************************************************
+ * Sequence Player stuff
+ ***********************************************************************/
+
+typedef struct {
     u8          *curPtr;                /* ptr to the next event */
     s32         lastTicks;              /* sequence clock ticks (used by alSeqSetLoc) */
-    s32               curTicks;        /* sequence clock ticks of next event (used by loop end test) */
+    s32	       	curTicks;		/* sequence clock ticks of next event (used by loop end test) */
     s16         lastStatus;             /* the last status msg */
 } ALSeqMarker;
 
@@ -313,16 +406,16 @@ typedef struct {
 } ALSeqpLoopEvent;
 
 typedef struct {
-    u8            chan;
-    u8            priority;
+    u8			chan;
+    u8			priority;
 } ALSeqpPriorityEvent;
 
 typedef struct {
-    void        *seq;    /* pointer to a seq (could be an ALSeq or an ALCSeq). */
+    void		*seq;	/* pointer to a seq (could be an ALSeq or an ALCSeq). */
 } ALSeqpSeqEvent;
 
 typedef struct {
-    ALBank        *bank;
+    ALBank		*bank;
 } ALSeqpBankEvent;
 
 typedef struct {
@@ -332,27 +425,83 @@ typedef struct {
 } ALOscEvent;
 
 typedef struct {
-    s16                     type;
+    s16                 	type;
     union {
-        ALMIDIEvent         midi;
-        ALTempoEvent        tempo;
-        ALEndEvent          end;
-        ALNoteEvent         note;
-        ALVolumeEvent       vol;
-        ALSeqpLoopEvent     loop;
-        ALSeqpVolEvent      spvol;
-        ALSeqpPriorityEvent    sppriority;
-        ALSeqpSeqEvent        spseq;
-        ALSeqpBankEvent        spbank;
-        ALOscEvent          osc;
+        ALMIDIEvent     	midi;
+        ALTempoEvent    	tempo;
+        ALEndEvent      	end;
+        ALNoteEvent     	note;
+        ALVolumeEvent   	vol;
+        ALSeqpLoopEvent 	loop;
+        ALSeqpVolEvent  	spvol;
+        ALSeqpPriorityEvent	sppriority;
+        ALSeqpSeqEvent		spseq;
+        ALSeqpBankEvent		spbank;
+        ALOscEvent      	osc;
     } msg;
 } ALEvent;
+
+typedef struct {
+    ALLink      node;
+    ALMicroTime delta;
+    ALEvent     evt;
+} ALEventListItem;
 
 typedef struct {
     ALLink      freeList;
     ALLink      allocList;
     s32         eventCount;
 } ALEventQueue;
+
+void            alEvtqNew(ALEventQueue *evtq, ALEventListItem *items, s32 itemCount);
+ALMicroTime     alEvtqNextEvent(ALEventQueue *evtq, ALEvent *evt);
+void            alEvtqPostEvent(ALEventQueue *evtq, ALEvent *evt, ALMicroTime delta);
+
+/***********************************************************************
+ * Sound Player stuff
+ ***********************************************************************/
+
+typedef struct {
+    s32         maxSounds;
+    s32         maxEvents;
+    ALHeap      *heap;
+} ALSndpConfig;
+
+typedef struct {
+    ALPlayer            node;           /* note: must be first in structure */
+    // 0x14
+    ALEventQueue        evtq;
+    // 0x28
+    ALEvent             nextEvent;
+    ALSynth             *drvr;          /* reference to the client driver   */
+    // 0x3c
+    s32                 target;
+    // 0x40
+    void                *sndState;
+    // 0x44
+    s32                 maxSounds;
+    // 0x48
+    ALMicroTime         frameTime;
+    // 0x4c
+    ALMicroTime         nextDelta;      /* microseconds to next callback    */
+    ALMicroTime         curTime;
+} ALSndPlayer;
+
+/***********************************************************************
+ * Audio Library (AL) stuff
+ ***********************************************************************/
+
+// from n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndp.h
+typedef struct {
+    ALVoice     voice;     
+    ALSound     *sound;         /* sound referenced here */
+    s16         priority;
+    f32         pitch;          /* current playback pitch                    */
+    s32         state;          /* play state for this sound                 */
+    s16         vol;            /* volume - combined with volume from bank   */
+    ALPan       pan;            /* pan - 0 = left, 127 = right               */
+    u8          fxMix;          /* wet/dry mix - 0 = dry, 127 = wet          */
+} ALSoundState;
 
 typedef struct {
     ALInstrument        *instrument;    /* instrument assigned to this chan */

@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "PR/libaudio.h"
 #include "music.h"
 #include "snd.h"
 
@@ -8,262 +9,113 @@
  * This file contains code to deal with snd.
  */
 
-s32 sfx_unused = 0;
+
+// TODO: move to snd.h, identify D_80063BA4 and D_80063BA8 then name this.
+#define SFX_HEAP_B_SIZE   7
+
+/**
+ * TODO:
+ * This is a temporary struct for work-in-progress
+ * of this file. It will either be matched to something from libaudio (and removed),
+ * or it may be identified as modified struct from libaudio in
+ * which case this define should be moved to snd.h.
+ */
+struct SndUnknownSoundState {
+    ALLink node;
+    u32 unk8;
+    u32 unkC;
+    u32 unk10;
+    u32 unk14;
+    u32 unk18;
+    u32 unk1C;
+    u32 unk20;
+    u32 unk24;
+    u32 unk28;
+    u32 unk2C;
+    u32 unk30;
+    u32 unk34;
+    u32 unk38;
+    u32 unk3C;
+};
+
+s32 g_sndUnused800243E0 = 0;
 s32 D_800243E4 = 0;
 s32 D_800243E8 = 0;
-s32 D_800243EC = 0;
-void *D_800243F0 = &D_80063B50;
+struct SndUnknownSoundState *g_sndPlayerSoundStatePtr = NULL;
+ALSndPlayer *g_sndPlayerPtr = &g_sndPlayer;
 s32 D_800243F4 = 0;
 s8 bootswitch_sound = 0;
 f32 F32_800243FC = 1.0;
 
+// forward declarations
+ALMicroTime sfx_c_70007DDC(void *arg0);
 
-
-
-
-
+// end forward declarations
 
 /**
  * 8720	70007B20
+ * 
+ * Mostly identical to n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndplayer.c
+ * method alSndpNew.
  */
-
-#ifdef NONMATCHING
-void sfx_c_70007B20(void *arg0)
+void sndNewPlayerInit(ALSeqpSfxConfig *sfxSeqpConfig)
 {
-    s16 sp38;
-    s32 temp_a0;
-    u32 temp_s0;
-    s32 temp_v0;
-    u32 phi_s0;
+    u8 *ptr;
+    struct SndUnknownSoundState *sState;
+    ALEvent evt;
+    u32 i;
 
-    D_800243F0->unk44 = (?32) arg0->unk8;
-    D_800243F0->unk3C = 0;
-    D_800243F0->unk48 = 0x80e8;
-    D_800243F0->unk40 = alHeapDBAlloc(0, 0, arg0->unkC, 1, (s32) (*arg0 << 6));
-    alEvtqNew((D_800243F0 + 0x14), alHeapDBAlloc(0, 0, arg0->unkC, 1, (s32) (arg0->unk4 * 0x1c)), arg0->unk4);
-    D_800243EC = (s32) D_800243F0->unk40;
-    phi_s0 = 1U;
-    if ((u32) *arg0 >= 2U)
+    /*
+     * Init member variables
+     */
+    g_sndPlayerPtr->maxSounds = sfxSeqpConfig->maybeMaxSounds;
+    g_sndPlayerPtr->target = 0;
+    g_sndPlayerPtr->frameTime = AL_USEC_PER_FRAME_30FPS;
+    sState = alHeapAlloc(sfxSeqpConfig->heap, 1, sfxSeqpConfig->maybeSndStateCount * sizeof(struct SndUnknownSoundState));
+    g_sndPlayerPtr->sndState = sState;
+
+    /*
+     * init the event queue
+     */
+    ptr = alHeapAlloc(sfxSeqpConfig->heap, 1, sfxSeqpConfig->maxEvents * sizeof(ALEventListItem));
+    alEvtqNew(&g_sndPlayerPtr->evtq, (ALEventListItem *)ptr, sfxSeqpConfig->maxEvents);
+
+    g_sndPlayerSoundStatePtr = g_sndPlayerPtr->sndState;
+
+    for(i = 1; i < sfxSeqpConfig->maybeSndStateCount; i++)
     {
-block_1:
-        temp_a0 = ((phi_s0 << 6) + D_800243F0->unk40);
-        alLink(temp_a0, (temp_a0 + -0x40));
-        temp_s0 = (phi_s0 + 1);
-        phi_s0 = temp_s0;
-        if (temp_s0 < (u32) *arg0)
-        {
-            goto block_1;
-        }
+        // The compiler says this reassignment matters ...
+        sState = (struct SndUnknownSoundState*)g_sndPlayerPtr->sndState;
+
+        // this works because `ALLink node` is at offset zero.
+        alLink((ALLink*)(&sState[i]), (ALLink*)(&sState[i]-1));
     }
-    D_80063BA4 = alHeapDBAlloc(0, 0, arg0->unkC, 2, 7);
-    D_80063BA8 = alHeapDBAlloc(0, 0, arg0->unkC, 2, 7);
-    *D_80063BA4 = (u16)0x7fff;
-    temp_v0 = (3 * 2);
-    *D_80063BA8 = (s16) *D_80063BA4;
-    D_80063BA4->unk2 = (u16)0x7fff;
-    D_80063BA8->unk2 = (s16) D_80063BA4->unk2;
-    D_80063BA4->unk4 = (u16)0x7fff;
-    D_80063BA8->unk4 = (s16) D_80063BA4->unk4;
-    *(D_80063BA4 + temp_v0) = (u16)0x7fff;
-    *(D_80063BA8 + temp_v0) = (s16) *(D_80063BA4 + temp_v0);
-    (D_80063BA4 + temp_v0)->unk2 = (u16)0x7fff;
-    (D_80063BA8 + temp_v0)->unk2 = (s16) (D_80063BA4 + temp_v0)->unk2;
-    (D_80063BA4 + temp_v0)->unk4 = (u16)0x7fff;
-    (D_80063BA8 + temp_v0)->unk4 = (s16) (D_80063BA4 + temp_v0)->unk4;
-    (D_80063BA4 + temp_v0)->unk6 = (u16)0x7fff;
-    (D_80063BA8 + temp_v0)->unk6 = (s16) (D_80063BA4 + temp_v0)->unk6;
-    D_800243F0->unk38 = (?32) alGlobals;
-    *D_800243F0 = 0;
-    D_800243F0->unk8 = &sfx_c_70007DDC;
-    D_800243F0->unk4 = (void *) D_800243F0;
-    alSynAddPlayer(D_800243F0->unk38, D_800243F0);
-    sp38 = (u16)0x20;
-    alEvtqPostEvent((D_800243F0 + 0x14), &sp38, D_800243F0->unk48);
-    D_800243F0->unk4C = alEvtqNextEvent((D_800243F0 + 0x14), (D_800243F0 + 0x28));
+
+    D_80063BA4 = alHeapAlloc(sfxSeqpConfig->heap, sizeof(s16), SFX_HEAP_B_SIZE);
+    D_80063BA8 = alHeapAlloc(sfxSeqpConfig->heap, sizeof(s16), SFX_HEAP_B_SIZE);
+
+    for(i = 0; i < SFX_HEAP_B_SIZE; i++)
+    {
+        D_80063BA8[i] = \
+            D_80063BA4[i] = (s16)0x7FFF;
+    }
+
+    /*
+     * add ourselves to the driver
+     */
+    g_sndPlayerPtr->drvr = &alGlobals->drvr;
+    g_sndPlayerPtr->node.next = NULL;
+    g_sndPlayerPtr->node.handler = &sfx_c_70007DDC;
+    g_sndPlayerPtr->node.clientData = g_sndPlayerPtr;
+    alSynAddPlayer(g_sndPlayerPtr->drvr, &g_sndPlayerPtr->node);
+
+    /*
+     * Start responding to API events
+     */
+    evt.type = AL_SNDP_UNKNOWN_EVT;
+    alEvtqPostEvent(&g_sndPlayerPtr->evtq, (ALEvent *)&evt, g_sndPlayerPtr->frameTime);
+    g_sndPlayerPtr->nextDelta = alEvtqNextEvent(&g_sndPlayerPtr->evtq, &g_sndPlayerPtr->nextEvent);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sfx_c_70007B20
-/* 008720 70007B20 27BDFFB0 */  addiu $sp, $sp, -0x50
-/* 008724 70007B24 AFB20028 */  sw    $s2, 0x28($sp)
-/* 008728 70007B28 3C128002 */  lui   $s2, %hi(D_800243F0)
-/* 00872C 70007B2C 265243F0 */  addiu $s2, %lo(D_800243F0) # addiu $s2, $s2, 0x43f0
-/* 008730 70007B30 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 008734 70007B34 AFB10024 */  sw    $s1, 0x24($sp)
-/* 008738 70007B38 AFB00020 */  sw    $s0, 0x20($sp)
-/* 00873C 70007B3C 8C8E0008 */  lw    $t6, 8($a0)
-/* 008740 70007B40 8E4F0000 */  lw    $t7, ($s2)
-/* 008744 70007B44 341980E8 */  li    $t9, 33000
-/* 008748 70007B48 00808825 */  move  $s1, $a0
-/* 00874C 70007B4C ADEE0044 */  sw    $t6, 0x44($t7)
-/* 008750 70007B50 8E580000 */  lw    $t8, ($s2)
-/* 008754 70007B54 00002025 */  move  $a0, $zero
-/* 008758 70007B58 00002825 */  move  $a1, $zero
-/* 00875C 70007B5C AF00003C */  sw    $zero, 0x3c($t8)
-/* 008760 70007B60 8E480000 */  lw    $t0, ($s2)
-/* 008764 70007B64 24070001 */  li    $a3, 1
-/* 008768 70007B68 AD190048 */  sw    $t9, 0x48($t0)
-/* 00876C 70007B6C 8E290000 */  lw    $t1, ($s1)
-/* 008770 70007B70 8E26000C */  lw    $a2, 0xc($s1)
-/* 008774 70007B74 00095180 */  sll   $t2, $t1, 6
-/* 008778 70007B78 0C003AD4 */  jal   alHeapDBAlloc
-/* 00877C 70007B7C AFAA0010 */   sw    $t2, 0x10($sp)
-/* 008780 70007B80 8E4B0000 */  lw    $t3, ($s2)
-/* 008784 70007B84 00002025 */  move  $a0, $zero
-/* 008788 70007B88 00002825 */  move  $a1, $zero
-/* 00878C 70007B8C AD620040 */  sw    $v0, 0x40($t3)
-/* 008790 70007B90 8E2C0004 */  lw    $t4, 4($s1)
-/* 008794 70007B94 8E26000C */  lw    $a2, 0xc($s1)
-/* 008798 70007B98 24070001 */  li    $a3, 1
-/* 00879C 70007B9C 000C68C0 */  sll   $t5, $t4, 3
-/* 0087A0 70007BA0 01AC6823 */  subu  $t5, $t5, $t4
-/* 0087A4 70007BA4 000D6880 */  sll   $t5, $t5, 2
-/* 0087A8 70007BA8 0C003AD4 */  jal   alHeapDBAlloc
-/* 0087AC 70007BAC AFAD0010 */   sw    $t5, 0x10($sp)
-/* 0087B0 70007BB0 8E440000 */  lw    $a0, ($s2)
-/* 0087B4 70007BB4 00402825 */  move  $a1, $v0
-/* 0087B8 70007BB8 8E260004 */  lw    $a2, 4($s1)
-/* 0087BC 70007BBC 0C004C2B */  jal   alEvtqNew
-/* 0087C0 70007BC0 24840014 */   addiu $a0, $a0, 0x14
-/* 0087C4 70007BC4 8E4E0000 */  lw    $t6, ($s2)
-/* 0087C8 70007BC8 3C018002 */  lui   $at, %hi(D_800243EC)
-/* 0087CC 70007BCC 24100001 */  li    $s0, 1
-/* 0087D0 70007BD0 8DCF0040 */  lw    $t7, 0x40($t6)
-/* 0087D4 70007BD4 AC2F43EC */  sw    $t7, %lo(D_800243EC)($at)
-/* 0087D8 70007BD8 8E380000 */  lw    $t8, ($s1)
-/* 0087DC 70007BDC 2F010002 */  sltiu $at, $t8, 2
-/* 0087E0 70007BE0 5420000D */  bnezl $at, .L70007C18
-/* 0087E4 70007BE4 8E26000C */   lw    $a2, 0xc($s1)
-/* 0087E8 70007BE8 8E590000 */  lw    $t9, ($s2)
-.L70007BEC:
-/* 0087EC 70007BEC 00104180 */  sll   $t0, $s0, 6
-/* 0087F0 70007BF0 8F220040 */  lw    $v0, 0x40($t9)
-/* 0087F4 70007BF4 01022021 */  addu  $a0, $t0, $v0
-/* 0087F8 70007BF8 0C003AB0 */  jal   alLink
-/* 0087FC 70007BFC 2485FFC0 */   addiu $a1, $a0, -0x40
-/* 008800 70007C00 8E290000 */  lw    $t1, ($s1)
-/* 008804 70007C04 26100001 */  addiu $s0, $s0, 1
-/* 008808 70007C08 0209082B */  sltu  $at, $s0, $t1
-/* 00880C 70007C0C 5420FFF7 */  bnezl $at, .L70007BEC
-/* 008810 70007C10 8E590000 */   lw    $t9, ($s2)
-/* 008814 70007C14 8E26000C */  lw    $a2, 0xc($s1)
-.L70007C18:
-/* 008818 70007C18 240A0007 */  li    $t2, 7
-/* 00881C 70007C1C AFAA0010 */  sw    $t2, 0x10($sp)
-/* 008820 70007C20 00002025 */  move  $a0, $zero
-/* 008824 70007C24 00002825 */  move  $a1, $zero
-/* 008828 70007C28 0C003AD4 */  jal   alHeapDBAlloc
-/* 00882C 70007C2C 24070002 */   li    $a3, 2
-/* 008830 70007C30 3C038006 */  lui   $v1, %hi(D_80063BA4)
-/* 008834 70007C34 24633BA4 */  addiu $v1, %lo(D_80063BA4) # addiu $v1, $v1, 0x3ba4
-/* 008838 70007C38 AC620000 */  sw    $v0, ($v1)
-/* 00883C 70007C3C 8E26000C */  lw    $a2, 0xc($s1)
-/* 008840 70007C40 240B0007 */  li    $t3, 7
-/* 008844 70007C44 AFAB0010 */  sw    $t3, 0x10($sp)
-/* 008848 70007C48 00002025 */  move  $a0, $zero
-/* 00884C 70007C4C 00002825 */  move  $a1, $zero
-/* 008850 70007C50 0C003AD4 */  jal   alHeapDBAlloc
-/* 008854 70007C54 24070002 */   li    $a3, 2
-/* 008858 70007C58 3C038006 */  lui   $v1, %hi(D_80063BA4)
-/* 00885C 70007C5C 24633BA4 */  addiu $v1, %lo(D_80063BA4) # addiu $v1, $v1, 0x3ba4
-/* 008860 70007C60 8C6C0000 */  lw    $t4, ($v1)
-/* 008864 70007C64 3C048006 */  lui   $a0, %hi(D_80063BA8)
-/* 008868 70007C68 24843BA8 */  addiu $a0, %lo(D_80063BA8) # addiu $a0, $a0, 0x3ba8
-/* 00886C 70007C6C AC820000 */  sw    $v0, ($a0)
-/* 008870 70007C70 24057FFF */  li    $a1, 32767
-/* 008874 70007C74 A5850000 */  sh    $a1, ($t4)
-/* 008878 70007C78 8C6D0000 */  lw    $t5, ($v1)
-/* 00887C 70007C7C 8C8F0000 */  lw    $t7, ($a0)
-/* 008880 70007C80 24100003 */  li    $s0, 3
-/* 008884 70007C84 85AE0000 */  lh    $t6, ($t5)
-/* 008888 70007C88 00101040 */  sll   $v0, $s0, 1
-/* 00888C 70007C8C A5EE0000 */  sh    $t6, ($t7)
-/* 008890 70007C90 8C780000 */  lw    $t8, ($v1)
-/* 008894 70007C94 A7050002 */  sh    $a1, 2($t8)
-/* 008898 70007C98 8C790000 */  lw    $t9, ($v1)
-/* 00889C 70007C9C 8C890000 */  lw    $t1, ($a0)
-/* 0088A0 70007CA0 87280002 */  lh    $t0, 2($t9)
-/* 0088A4 70007CA4 A5280002 */  sh    $t0, 2($t1)
-/* 0088A8 70007CA8 8C6A0000 */  lw    $t2, ($v1)
-/* 0088AC 70007CAC A5450004 */  sh    $a1, 4($t2)
-/* 0088B0 70007CB0 8C6B0000 */  lw    $t3, ($v1)
-/* 0088B4 70007CB4 8C8D0000 */  lw    $t5, ($a0)
-/* 0088B8 70007CB8 856C0004 */  lh    $t4, 4($t3)
-/* 0088BC 70007CBC A5AC0004 */  sh    $t4, 4($t5)
-/* 0088C0 70007CC0 8C6E0000 */  lw    $t6, ($v1)
-/* 0088C4 70007CC4 01C27821 */  addu  $t7, $t6, $v0
-/* 0088C8 70007CC8 A5E50000 */  sh    $a1, ($t7)
-/* 0088CC 70007CCC 8C780000 */  lw    $t8, ($v1)
-/* 0088D0 70007CD0 8C890000 */  lw    $t1, ($a0)
-/* 0088D4 70007CD4 0302C821 */  addu  $t9, $t8, $v0
-/* 0088D8 70007CD8 87280000 */  lh    $t0, ($t9)
-/* 0088DC 70007CDC 01225021 */  addu  $t2, $t1, $v0
-/* 0088E0 70007CE0 A5480000 */  sh    $t0, ($t2)
-/* 0088E4 70007CE4 8C6B0000 */  lw    $t3, ($v1)
-/* 0088E8 70007CE8 01626021 */  addu  $t4, $t3, $v0
-/* 0088EC 70007CEC A5850002 */  sh    $a1, 2($t4)
-/* 0088F0 70007CF0 8C6D0000 */  lw    $t5, ($v1)
-/* 0088F4 70007CF4 8C980000 */  lw    $t8, ($a0)
-/* 0088F8 70007CF8 01A27021 */  addu  $t6, $t5, $v0
-/* 0088FC 70007CFC 85CF0002 */  lh    $t7, 2($t6)
-/* 008900 70007D00 0302C821 */  addu  $t9, $t8, $v0
-/* 008904 70007D04 A72F0002 */  sh    $t7, 2($t9)
-/* 008908 70007D08 8C690000 */  lw    $t1, ($v1)
-/* 00890C 70007D0C 01224021 */  addu  $t0, $t1, $v0
-/* 008910 70007D10 A5050004 */  sh    $a1, 4($t0)
-/* 008914 70007D14 8C6A0000 */  lw    $t2, ($v1)
-/* 008918 70007D18 8C8D0000 */  lw    $t5, ($a0)
-/* 00891C 70007D1C 01425821 */  addu  $t3, $t2, $v0
-/* 008920 70007D20 856C0004 */  lh    $t4, 4($t3)
-/* 008924 70007D24 01A27021 */  addu  $t6, $t5, $v0
-/* 008928 70007D28 3C0D8002 */  lui   $t5, %hi(alGlobals) 
-/* 00892C 70007D2C A5CC0004 */  sh    $t4, 4($t6)
-/* 008930 70007D30 8C780000 */  lw    $t8, ($v1)
-/* 008934 70007D34 03027821 */  addu  $t7, $t8, $v0
-/* 008938 70007D38 A5E50006 */  sh    $a1, 6($t7)
-/* 00893C 70007D3C 8C790000 */  lw    $t9, ($v1)
-/* 008940 70007D40 8C8A0000 */  lw    $t2, ($a0)
-/* 008944 70007D44 3C187000 */  lui   $t8, %hi(sfx_c_70007DDC) # $t8, 0x7000
-/* 008948 70007D48 03224821 */  addu  $t1, $t9, $v0
-/* 00894C 70007D4C 85280006 */  lh    $t0, 6($t1)
-/* 008950 70007D50 01425821 */  addu  $t3, $t2, $v0
-/* 008954 70007D54 27187DDC */  addiu $t8, %lo(sfx_c_70007DDC) # addiu $t8, $t8, 0x7ddc
-/* 008958 70007D58 A5680006 */  sh    $t0, 6($t3)
-/* 00895C 70007D5C 8E4C0000 */  lw    $t4, ($s2)
-/* 008960 70007D60 8DAD76E0 */  lw    $t5, %lo(alGlobals)($t5)
-/* 008964 70007D64 AD8D0038 */  sw    $t5, 0x38($t4)
-/* 008968 70007D68 8E4E0000 */  lw    $t6, ($s2)
-/* 00896C 70007D6C ADC00000 */  sw    $zero, ($t6)
-/* 008970 70007D70 8E4F0000 */  lw    $t7, ($s2)
-/* 008974 70007D74 ADF80008 */  sw    $t8, 8($t7)
-/* 008978 70007D78 8E500000 */  lw    $s0, ($s2)
-/* 00897C 70007D7C AE100004 */  sw    $s0, 4($s0)
-/* 008980 70007D80 8E500000 */  lw    $s0, ($s2)
-/* 008984 70007D84 8E040038 */  lw    $a0, 0x38($s0)
-/* 008988 70007D88 0C004C48 */  jal   alSynAddPlayer
-/* 00898C 70007D8C 02002825 */   move  $a1, $s0
-/* 008990 70007D90 8E500000 */  lw    $s0, ($s2)
-/* 008994 70007D94 24190020 */  li    $t9, 32
-/* 008998 70007D98 A7B90038 */  sh    $t9, 0x38($sp)
-/* 00899C 70007D9C 27A50038 */  addiu $a1, $sp, 0x38
-/* 0089A0 70007DA0 8E060048 */  lw    $a2, 0x48($s0)
-/* 0089A4 70007DA4 0C004BBF */  jal   alEvtqPostEvent
-/* 0089A8 70007DA8 26040014 */   addiu $a0, $s0, 0x14
-/* 0089AC 70007DAC 8E500000 */  lw    $s0, ($s2)
-/* 0089B0 70007DB0 26040014 */  addiu $a0, $s0, 0x14
-/* 0089B4 70007DB4 0C004C08 */  jal   alEvtqNextEvent
-/* 0089B8 70007DB8 26050028 */   addiu $a1, $s0, 0x28
-/* 0089BC 70007DBC 8E490000 */  lw    $t1, ($s2)
-/* 0089C0 70007DC0 AD22004C */  sw    $v0, 0x4c($t1)
-/* 0089C4 70007DC4 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0089C8 70007DC8 8FB20028 */  lw    $s2, 0x28($sp)
-/* 0089CC 70007DCC 8FB10024 */  lw    $s1, 0x24($sp)
-/* 0089D0 70007DD0 8FB00020 */  lw    $s0, 0x20($sp)
-/* 0089D4 70007DD4 03E00008 */  jr    $ra
-/* 0089D8 70007DD8 27BD0050 */   addiu $sp, $sp, 0x50
-)
-#endif
 
 
 
@@ -274,7 +126,8 @@ glabel sfx_c_70007B20
  * 89DC	70007DDC
  */
 #ifdef NONMATCHING
-void sfx_c_70007DDC(void *arg0)
+ALMicroTime sfx_c_70007DDC(void *arg0)
+//ALMicroTime _sndpVoiceHandler(void *node)
 {
     s16 sp3C;
     s32 temp_s1;
@@ -1174,11 +1027,11 @@ void sfx_c_70008948(void *arg0)
 {
     if ((arg0->unk3E & 4) != 0)
     {
-        alSynStopVoice(D_800243F0->unk38, (arg0 + 0xc));
-        alSynFreeVoice(D_800243F0->unk38, sp1C);
+        alSynStopVoice(g_sndPlayerPtr->unk38, (arg0 + 0xc));
+        alSynFreeVoice(g_sndPlayerPtr->unk38, sp1C);
     }
     sfx_c_70008D04(arg0);
-    sfx_c_70008A30((D_800243F0 + 0x14), arg0, 0xffff);
+    sfx_c_70008A30((g_sndPlayerPtr + 0x14), arg0, 0xffff);
 }
 #else
 GLOBAL_ASM(
@@ -1189,25 +1042,25 @@ glabel sfx_c_70008948
 /* 009550 70008950 AFA40020 */  sw    $a0, 0x20($sp)
 /* 009554 70008954 908F003E */  lbu   $t7, 0x3e($a0)
 /* 009558 70008958 00807025 */  move  $t6, $a0
-/* 00955C 7000895C 3C198002 */  lui   $t9, %hi(D_800243F0) 
+/* 00955C 7000895C 3C198002 */  lui   $t9, %hi(g_sndPlayerPtr) 
 /* 009560 70008960 31F80004 */  andi  $t8, $t7, 4
 /* 009564 70008964 1300000B */  beqz  $t8, .L70008994
 /* 009568 70008968 00000000 */   nop   
-/* 00956C 7000896C 8F3943F0 */  lw    $t9, %lo(D_800243F0)($t9)
+/* 00956C 7000896C 8F3943F0 */  lw    $t9, %lo(g_sndPlayerPtr)($t9)
 /* 009570 70008970 25C5000C */  addiu $a1, $t6, 0xc
 /* 009574 70008974 8F240038 */  lw    $a0, 0x38($t9)
 /* 009578 70008978 0C004DA4 */  jal   alSynStopVoice
 /* 00957C 7000897C AFA5001C */   sw    $a1, 0x1c($sp)
-/* 009580 70008980 3C088002 */  lui   $t0, %hi(D_800243F0) 
-/* 009584 70008984 8D0843F0 */  lw    $t0, %lo(D_800243F0)($t0)
+/* 009580 70008980 3C088002 */  lui   $t0, %hi(g_sndPlayerPtr) 
+/* 009584 70008984 8D0843F0 */  lw    $t0, %lo(g_sndPlayerPtr)($t0)
 /* 009588 70008988 8FA5001C */  lw    $a1, 0x1c($sp)
 /* 00958C 7000898C 0C004DC4 */  jal   alSynFreeVoice
 /* 009590 70008990 8D040038 */   lw    $a0, 0x38($t0)
 .L70008994:
 /* 009594 70008994 0C002341 */  jal   sfx_c_70008D04
 /* 009598 70008998 8FA40020 */   lw    $a0, 0x20($sp)
-/* 00959C 7000899C 3C048002 */  lui   $a0, %hi(D_800243F0)
-/* 0095A0 700089A0 8C8443F0 */  lw    $a0, %lo(D_800243F0)($a0)
+/* 00959C 7000899C 3C048002 */  lui   $a0, %hi(g_sndPlayerPtr)
+/* 0095A0 700089A0 8C8443F0 */  lw    $a0, %lo(g_sndPlayerPtr)($a0)
 /* 0095A4 700089A4 8FA50020 */  lw    $a1, 0x20($sp)
 /* 0095A8 700089A8 3406FFFF */  li    $a2, 65535
 /* 0095AC 700089AC 0C00228C */  jal   sfx_c_70008A30
@@ -1242,7 +1095,7 @@ void sfx_c_700089C4(void *arg0)
     sp20 = (u16)0x10;
     sp1C = (f32) (alCents2Ratio(arg0->unk8->unk4->unk5, arg0) * arg0->unk2C);
     sp28 = sp1C;
-    alEvtqPostEvent((D_800243F0 + 0x14), &sp20, 0x8235, arg0);
+    alEvtqPostEvent((g_sndPlayerPtr + 0x14), &sp20, 0x8235, arg0);
 }
 #else
 GLOBAL_ASM(
@@ -1257,8 +1110,8 @@ glabel sfx_c_700089C4
 /* 0095DC 700089DC 0C004DF0 */  jal   alCents2Ratio
 /* 0095E0 700089E0 AFA70030 */   sw    $a3, 0x30($sp)
 /* 0095E4 700089E4 8FA70030 */  lw    $a3, 0x30($sp)
-/* 0095E8 700089E8 3C048002 */  lui   $a0, %hi(D_800243F0)
-/* 0095EC 700089EC 8C8443F0 */  lw    $a0, %lo(D_800243F0)($a0)
+/* 0095E8 700089E8 3C048002 */  lui   $a0, %hi(g_sndPlayerPtr)
+/* 0095EC 700089EC 8C8443F0 */  lw    $a0, %lo(g_sndPlayerPtr)($a0)
 /* 0095F0 700089F0 C4E4002C */  lwc1  $f4, 0x2c($a3)
 /* 0095F4 700089F4 24180010 */  li    $t8, 16
 /* 0095F8 700089F8 A7B80020 */  sh    $t8, 0x20($sp)
@@ -1941,19 +1794,19 @@ block_5:
     temp_s0 = temp_ret;
     if (temp_ret != 0)
     {
-        D_800243F0->unk3C = temp_ret;
+        g_sndPlayerPtr->unk3C = temp_ret;
         sp50 = (u16)1;
         sp54 = temp_ret;
         temp_t4 = (temp_t0->unkC->unk4->unk1 * 0x8235);
         if ((temp_ret->unk3E & 0x10) != 0)
         {
             temp_ret->unk3E = (s8) (temp_ret->unk3E & 0xffef);
-            alEvtqPostEvent((D_800243F0 + 0x14), &sp50, (phi_s4 + 1));
+            alEvtqPostEvent((g_sndPlayerPtr + 0x14), &sp50, (phi_s4 + 1));
             sp68 = (s32) (temp_t4 + 1);
         }
         else
         {
-            alEvtqPostEvent((D_800243F0 + 0x14), &sp50, (temp_t4 + 1));
+            alEvtqPostEvent((g_sndPlayerPtr + 0x14), &sp50, (temp_t4 + 1));
         }
         phi_s7 = temp_s0;
         phi_s3 = temp_t4;
@@ -1980,7 +1833,7 @@ block_5:
             phi_s7->unk3E = (s8) (temp_t7 | 0x10);
             sp40 = (u16)0x200;
             sp48 = sp6E;
-            alEvtqPostEvent((D_800243F0 + 0x14), &sp40, sp68);
+            alEvtqPostEvent((g_sndPlayerPtr + 0x14), &sp40, sp68);
         }
     }
     if (arg2 != 0)
@@ -2024,8 +1877,8 @@ glabel play_sfx_a1
 /* 009A74 70008E74 1000005E */  b     .L70008FF0
 /* 009A78 70008E78 00001025 */   move  $v0, $zero
 .L70008E7C:
-/* 009A7C 70008E7C 3C158002 */  lui   $s5, %hi(D_800243F0)
-/* 009A80 70008E80 26B543F0 */  addiu $s5, %lo(D_800243F0) # addiu $s5, $s5, 0x43f0
+/* 009A7C 70008E7C 3C158002 */  lui   $s5, %hi(g_sndPlayerPtr)
+/* 009A80 70008E80 26B543F0 */  addiu $s5, %lo(g_sndPlayerPtr) # addiu $s5, $s5, 0x43f0
 /* 009A84 70008E84 8FB30064 */  lw    $s3, 0x64($sp)
 /* 009A88 70008E88 8FD8000C */  lw    $t8, 0xc($fp)
 .L70008E8C:
@@ -2159,7 +2012,7 @@ void sfxDeactivate(void *arg0)
     if (arg0 != 0)
     {
         arg0->unk3E = (s8) (arg0->unk3E & 0xffef);
-        alEvtqPostEvent((D_800243F0 + 0x14), &sp18, 0);
+        alEvtqPostEvent((g_sndPlayerPtr + 0x14), &sp18, 0);
     }
 }
 #else
@@ -2177,8 +2030,8 @@ glabel sfxDeactivate
 /* 009C40 70009040 00003025 */  move  $a2, $zero
 /* 009C44 70009044 31F8FFEF */  andi  $t8, $t7, 0xffef
 /* 009C48 70009048 A098003E */  sb    $t8, 0x3e($a0)
-/* 009C4C 7000904C 3C048002 */  lui   $a0, %hi(D_800243F0)
-/* 009C50 70009050 8C8443F0 */  lw    $a0, %lo(D_800243F0)($a0)
+/* 009C4C 7000904C 3C048002 */  lui   $a0, %hi(g_sndPlayerPtr)
+/* 009C50 70009050 8C8443F0 */  lw    $a0, %lo(g_sndPlayerPtr)($a0)
 /* 009C54 70009054 0C004BBF */  jal   alEvtqPostEvent
 /* 009C58 70009058 24840014 */   addiu $a0, $a0, 0x14
 .L7000905C:
@@ -2221,7 +2074,7 @@ block_2:
         if (temp_s2 == (temp_v0 & temp_s2))
         {
             phi_s0->unk3E = (s8) (temp_v0 & -0x11);
-            alEvtqPostEvent((D_800243F0 + 0x14), &sp3C, 0);
+            alEvtqPostEvent((g_sndPlayerPtr + 0x14), &sp3C, 0);
         }
         temp_s0 = *phi_s0;
         phi_s0 = temp_s0;
@@ -2253,8 +2106,8 @@ glabel sfx_c_7000906C
 /* 009CA4 700090A4 02408825 */  move  $s1, $s2
 /* 009CA8 700090A8 12000014 */  beqz  $s0, .L700090FC
 /* 009CAC 700090AC 27B4003C */   addiu $s4, $sp, 0x3c
-/* 009CB0 700090B0 3C138002 */  lui   $s3, %hi(D_800243F0)
-/* 009CB4 700090B4 267343F0 */  addiu $s3, %lo(D_800243F0) # addiu $s3, $s3, 0x43f0
+/* 009CB0 700090B0 3C138002 */  lui   $s3, %hi(g_sndPlayerPtr)
+/* 009CB4 700090B4 267343F0 */  addiu $s3, %lo(g_sndPlayerPtr) # addiu $s3, $s3, 0x43f0
 /* 009CB8 700090B8 2412FFEF */  li    $s2, -17
 /* 009CBC 700090BC 240E0400 */  li    $t6, 1024
 .L700090C0:
@@ -2334,7 +2187,7 @@ void sfx_c_70009184(s32 arg0, s32 arg1, ? arg2)
 
     if (arg0 != 0)
     {
-        alEvtqPostEvent((D_800243F0 + 0x14), &sp18, 0);
+        alEvtqPostEvent((g_sndPlayerPtr + 0x14), &sp18, 0);
     }
 }
 #else
@@ -2348,8 +2201,8 @@ glabel sfx_c_70009184
 /* 009D94 70009194 AFA4001C */  sw    $a0, 0x1c($sp)
 /* 009D98 70009198 10800007 */  beqz  $a0, .L700091B8
 /* 009D9C 7000919C AFA60020 */   sw    $a2, 0x20($sp)
-/* 009DA0 700091A0 3C048002 */  lui   $a0, %hi(D_800243F0)
-/* 009DA4 700091A4 8C8443F0 */  lw    $a0, %lo(D_800243F0)($a0)
+/* 009DA0 700091A0 3C048002 */  lui   $a0, %hi(g_sndPlayerPtr)
+/* 009DA4 700091A4 8C8443F0 */  lw    $a0, %lo(g_sndPlayerPtr)($a0)
 /* 009DA8 700091A8 27A50018 */  addiu $a1, $sp, 0x18
 /* 009DAC 700091AC 00003025 */  move  $a2, $zero
 /* 009DB0 700091B0 0C004BBF */  jal   alEvtqPostEvent
@@ -2519,7 +2372,7 @@ block_1:
             if (temp_s3 == (temp_v0_2->unk4->unk2 & 0x3f))
             {
                 sp30 = (u16)0x800;
-                phi_return = alEvtqPostEvent((D_800243F0 + 0x14), &sp30, 0);
+                phi_return = alEvtqPostEvent((g_sndPlayerPtr + 0x14), &sp30, 0);
             }
         }
         temp_s0 = *phi_s0;
@@ -2565,9 +2418,9 @@ glabel sfx_c_70009284
 /* 009EEC 700092EC 3C098006 */  lui   $t1, %hi(D_80063BA4) 
 /* 009EF0 700092F0 8D293BA4 */  lw    $t1, %lo(D_80063BA4)($t1)
 /* 009EF4 700092F4 460A3402 */  mul.s $f16, $f6, $f10
-/* 009EF8 700092F8 3C118002 */  lui   $s1, %hi(D_800243F0)
+/* 009EF8 700092F8 3C118002 */  lui   $s1, %hi(g_sndPlayerPtr)
 /* 009EFC 700092FC 01225021 */  addu  $t2, $t1, $v0
-/* 009F00 70009300 263143F0 */  addiu $s1, %lo(D_800243F0) # addiu $s1, $s1, 0x43f0
+/* 009F00 70009300 263143F0 */  addiu $s1, %lo(g_sndPlayerPtr) # addiu $s1, $s1, 0x43f0
 /* 009F04 70009304 27B20030 */  addiu $s2, $sp, 0x30
 /* 009F08 70009308 4600848D */  trunc.w.s $f18, $f16
 /* 009F0C 7000930C 44089000 */  mfc1  $t0, $f18

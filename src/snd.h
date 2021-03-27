@@ -5,18 +5,41 @@
 
 /**
  * This is a guess struct, used by music setup function call into snd.
- * There's some setup of ALSeqpConfig just above the section, so
- * that's what this is based on.
+ * The method call makes it seem like this should be ALSndpConfig,
+ * but there's an extra field here.
  */
 typedef struct ALSeqpSfxConfig_s {
-    s32         maxVoices;         /* max number of voices to alloc    */
-    s32         maxEvents;         /* max internal events to support   */
-    u32         channelWord;
-    ALHeap      *heap;             /* ptr to initialized heap          */
+
+    /**
+     * (actual field is unknown)
+     * Used to calculate size in call to alHeapAlloc for sndState,
+     * this is the number of ALSndPlayer.sndState entries.
+     * Offset 0.
+     */
+    s32 maybeSndStateCount;
+
+    /**
+     * max internal events to support
+     * Offset 4.
+     */
+    s32 maxEvents;
+
+    /**
+     * (actual field is unknown)
+     * ALSndPlayer.maxSounds will be assigned this value
+     * Offset 8.
+     */
+    u32 maybeMaxSounds;
+
+    /**
+     * ptr to initialized heap
+     * Offset 0xc.
+     */
+    ALHeap *heap;
 } ALSeqpSfxConfig;
 
 void play_sfx_a1 (void * buffer, short entry, void * data);
-void sfx_c_70007B20(ALSeqpSfxConfig *arg0);
+void sndNewPlayerInit(ALSeqpSfxConfig *arg0);
 
 extern s8 bootswitch_sound;
 

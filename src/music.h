@@ -54,8 +54,8 @@ extern s32 g_musicXTrack3Fade;
 
 extern ALBank *g_musicSfxBufferPtr;
 
-extern char D_80063B50[0x54];
-extern s32 D_80063BA4;
-extern s32 D_80063BA8;
+extern ALSndPlayer g_sndPlayer;
+extern s16 *D_80063BA4;
+extern s16 *D_80063BA8;
 
 #endif
