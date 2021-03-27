@@ -287,17 +287,17 @@ typedef struct InvItem {
 } InvItem;
 
 typedef struct textoverride {
-	s32 unk1;
-	s32 objoffset;
-	s32 weapon;
-	s32 unk4;
-	s32 unk5;
-	s32 unk6;
-	s32 unk7;
-	s32 unk8;
 
-	struct textoverride *next;
-	struct ObjectRecord *obj;
+  /*0x00*/ u32 unk1;
+	/*0x04*/ s32 objoffset;
+	/*0x08*/ s32 weapon;
+	/*0x0c*/ u32 unk4;
+	/*0x10*/ u32 unk5;
+	/*0x14*/ u32 unk6;
+	/*0x18*/ u32 unk7;
+	/*0x1c*/ u32 unk8;
+	/*0x20*/ struct textoverride *next;
+	/*0x24*/ struct ObjectRecord *obj;
 } textoverride;
 
 
