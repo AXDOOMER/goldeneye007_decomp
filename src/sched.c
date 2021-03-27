@@ -163,9 +163,9 @@ void osCreateScheduler (OSSched * sc, void * stack, u8 mode, u32 numFields) {
     osCreateMesgQueue(&sc->cmdQ, sc->cmdMsgBuf, OS_SC_MAX_MESGS);
     osCreateViManager(OS_PRIORITY_VIMGR);
     viMode = &osViModeTable[mode];
-    dword_CODE_bss_80060880 = viMode->comRegs.hStart;
-    dword_CODE_bss_80060884 = viMode->fldRegs[0].vStart;
-    dword_CODE_bss_80060888 = viMode->fldRegs[1].vStart;
+    g_viOriginalHstart = viMode->comRegs.hStart;
+    g_viOriginalVstart0 = viMode->fldRegs[0].vStart;
+    g_viOriginalVstart1 = viMode->fldRegs[1].vStart;
     osSetEventMesg(OS_EVENT_SP, &sc->interruptQ, (OSMesg)RSP_DONE_MSG); 
     osSetEventMesg(OS_EVENT_DP, &sc->interruptQ, (OSMesg)RDP_DONE_MSG);
     osSetEventMesg(OS_EVENT_PRENMI, &sc->interruptQ, (OSMesg)PRE_NMI_MSG);
