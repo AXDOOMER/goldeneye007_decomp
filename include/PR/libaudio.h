@@ -11,7 +11,7 @@ typedef u8      ALPan;
 #define AL_USEC_PER_FRAME_60FPS       16000
 #define AL_USEC_PER_FRAME_30FPS       33000
 
-typedef enum {
+typedef enum ALSndpMsgType_e {
     AL_SNDP_PLAY_EVT,
     AL_SNDP_STOP_EVT,
     AL_SNDP_PAN_EVT,
@@ -22,7 +22,7 @@ typedef enum {
     AL_SNDP_END_EVT,
     AL_SNDP_FX_EVT,
 
-    AL_SNDP_UNKNOWN_EVT = 0x20
+    AL_SNDP_UNKNOWN_EVT = 32
 } ALSndpMsgType;
 
 /***********************************************************************

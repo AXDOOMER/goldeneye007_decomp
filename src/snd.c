@@ -38,6 +38,48 @@ struct SndUnknownSoundState {
     u32 unk3C;
 };
 
+/**
+ * Based on \n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndp.h
+ * ALSndpEvent
+ */
+typedef union ALSndpEvent_u {
+
+    // Added to match target, this might not be in the original ...
+    u16 unsignedType;
+
+    ALEvent             msg;
+
+    struct {
+        s16             type;
+        ALSoundState    *state;
+    } common;
+    
+    struct {
+        s16             type;
+        ALSoundState    *state;
+        s16             vol;
+    } vol;
+    
+    struct {
+        s16             type;
+        ALSoundState    *state;
+        f32             pitch;
+    } pitch;
+    
+    struct {
+        s16             type;
+        ALSoundState    *state;
+        ALPan           pan;
+    } pan;
+    
+    struct {
+        s16             type;
+        ALSoundState    *state;
+        u8              mix;
+    } fx;
+    
+} ALSndpEvent;
+
 s32 g_sndUnused800243E0 = 0;
 s32 D_800243E4 = 0;
 s32 D_800243E8 = 0;
@@ -48,12 +90,13 @@ s8 bootswitch_sound = 0;
 f32 F32_800243FC = 1.0;
 
 // forward declarations
-ALMicroTime sfx_c_70007DDC(void *arg0);
+ALMicroTime sndPlayerVoiceHandler(void *node);
+void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event);
 
 // end forward declarations
 
 /**
- * 8720	70007B20
+ * 8720    70007B20
  * 
  * Mostly identical to n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndplayer.c
  * method alSndpNew.
@@ -105,7 +148,7 @@ void sndNewPlayerInit(ALSeqpSfxConfig *sfxSeqpConfig)
      */
     g_sndPlayerPtr->drvr = &alGlobals->drvr;
     g_sndPlayerPtr->node.next = NULL;
-    g_sndPlayerPtr->node.handler = &sfx_c_70007DDC;
+    g_sndPlayerPtr->node.handler = &sndPlayerVoiceHandler;
     g_sndPlayerPtr->node.clientData = g_sndPlayerPtr;
     alSynAddPlayer(g_sndPlayerPtr->drvr, &g_sndPlayerPtr->node);
 
@@ -117,93 +160,41 @@ void sndNewPlayerInit(ALSeqpSfxConfig *sfxSeqpConfig)
     g_sndPlayerPtr->nextDelta = alEvtqNextEvent(&g_sndPlayerPtr->evtq, &g_sndPlayerPtr->nextEvent);
 }
 
-
-
-
-
-
 /**
- * 89DC	70007DDC
+ * 89DC    70007DDC
+ * 
+ * Almost identical to \n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndplayer.c
+ * method ALMicroTime _sndpVoiceHandler(void *node).
  */
-#ifdef NONMATCHING
-ALMicroTime sfx_c_70007DDC(void *arg0)
-//ALMicroTime _sndpVoiceHandler(void *node)
+ALMicroTime sndPlayerVoiceHandler(void *node)
 {
-    s16 sp3C;
-    s32 temp_s1;
-    s32 temp_s2;
-    ? temp_ret;
+    ALSndPlayer *sndp = (ALSndPlayer *) node;
+    ALSndpEvent evt;
 
-    temp_s1 = (arg0 + 0x28);
-    temp_s2 = (arg0 + 0x14);
-block_1:
-    if (0x20 == arg0->unk28)
+    do
     {
-        sp3C = (u16)0x20;
-        alEvtqPostEvent(temp_s2, &sp3C, arg0->unk48);
-    }
-    else
-    {
-        sfx_c_70007E80(arg0, temp_s1);
-    }
-    temp_ret = alEvtqNextEvent(temp_s2, temp_s1);
-    arg0->unk4C = temp_ret;
-    if (temp_ret == 0)
-    {
-        goto block_1;
-    }
-    arg0->unk50 = (s32) (arg0->unk50 + temp_ret);
+        switch (sndp->nextEvent.type)
+        {
+            case (AL_SNDP_UNKNOWN_EVT):
+                // Had trouble ematching against target until adding the "unsignedType"
+                // field in the union.
+                evt.unsignedType = (s16)AL_SNDP_UNKNOWN_EVT;
+                alEvtqPostEvent(&sndp->evtq, (ALEvent *)&evt, sndp->frameTime);
+                break;
+
+            default:
+                sfx_c_70007E80(sndp, (ALSndpEvent *)&sndp->nextEvent);
+                break;
+        }
+
+        sndp->nextDelta = alEvtqNextEvent(&sndp->evtq, &sndp->nextEvent);
+        
+    } while (sndp->nextDelta == 0);
+
+    sndp->curTime += sndp->nextDelta;
+
+    return sndp->nextDelta;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sfx_c_70007DDC
-/* 0089DC 70007DDC 27BDFFB0 */  addiu $sp, $sp, -0x50
-/* 0089E0 70007DE0 AFB40028 */  sw    $s4, 0x28($sp)
-/* 0089E4 70007DE4 AFB30024 */  sw    $s3, 0x24($sp)
-/* 0089E8 70007DE8 AFB20020 */  sw    $s2, 0x20($sp)
-/* 0089EC 70007DEC AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0089F0 70007DF0 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0089F4 70007DF4 00808025 */  move  $s0, $a0
-/* 0089F8 70007DF8 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0089FC 70007DFC 24910028 */  addiu $s1, $a0, 0x28
-/* 008A00 70007E00 24920014 */  addiu $s2, $a0, 0x14
-/* 008A04 70007E04 24130020 */  li    $s3, 32
-/* 008A08 70007E08 27B4003C */  addiu $s4, $sp, 0x3c
-.L70007E0C:
-/* 008A0C 70007E0C 860E0028 */  lh    $t6, 0x28($s0)
-/* 008A10 70007E10 240F0020 */  li    $t7, 32
-/* 008A14 70007E14 02802825 */  move  $a1, $s4
-/* 008A18 70007E18 166E0007 */  bne   $s3, $t6, .L70007E38
-/* 008A1C 70007E1C 02002025 */   move  $a0, $s0
-/* 008A20 70007E20 A7AF003C */  sh    $t7, 0x3c($sp)
-/* 008A24 70007E24 8E060048 */  lw    $a2, 0x48($s0)
-/* 008A28 70007E28 0C004BBF */  jal   alEvtqPostEvent
-/* 008A2C 70007E2C 02402025 */   move  $a0, $s2
-/* 008A30 70007E30 10000004 */  b     .L70007E44
-/* 008A34 70007E34 02402025 */   move  $a0, $s2
-.L70007E38:
-/* 008A38 70007E38 0C001FA0 */  jal   sfx_c_70007E80
-/* 008A3C 70007E3C 02202825 */   move  $a1, $s1
-/* 008A40 70007E40 02402025 */  move  $a0, $s2
-.L70007E44:
-/* 008A44 70007E44 0C004C08 */  jal   alEvtqNextEvent
-/* 008A48 70007E48 02202825 */   move  $a1, $s1
-/* 008A4C 70007E4C 1040FFEF */  beqz  $v0, .L70007E0C
-/* 008A50 70007E50 AE02004C */   sw    $v0, 0x4c($s0)
-/* 008A54 70007E54 8E180050 */  lw    $t8, 0x50($s0)
-/* 008A58 70007E58 0302C821 */  addu  $t9, $t8, $v0
-/* 008A5C 70007E5C AE190050 */  sw    $t9, 0x50($s0)
-/* 008A60 70007E60 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 008A64 70007E64 8FB40028 */  lw    $s4, 0x28($sp)
-/* 008A68 70007E68 8FB30024 */  lw    $s3, 0x24($sp)
-/* 008A6C 70007E6C 8FB20020 */  lw    $s2, 0x20($sp)
-/* 008A70 70007E70 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 008A74 70007E74 8FB00018 */  lw    $s0, 0x18($sp)
-/* 008A78 70007E78 03E00008 */  jr    $ra
-/* 008A7C 70007E7C 27BD0050 */   addiu $sp, $sp, 0x50
-)
-#endif
 
 
 
@@ -211,20 +202,23 @@ glabel sfx_c_70007DDC
 
 
 /**
- * 8A80	70007E80
+ * 8A80    70007E80
  *     ???
  *     accepts: A0=???, A1=???
  *     uses TLB pointer table at 80029160
- *     70007FBC	entry 0
- *     70008388	entry 1
- *     7000847C	entry 3
- *     700084F0	entry F
- *     700085C8	entry 7
- *     700088D4	default: entries 2,4,5,6,8,9,A,B,C,D,E
+ *     70007FBC    entry 0
+ *     70008388    entry 1
+ *     7000847C    entry 3
+ *     700084F0    entry F
+ *     700085C8    entry 7
+ *     700088D4    default: entries 2,4,5,6,8,9,A,B,C,D,E
  */
 
 #ifdef NONMATCHING
-void sfx_c_70007E80(void) {
+
+void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
+// void _handleEvent(ALSndPlayer *sndp, ALSndpEvent *event) 
+{
 
 }
 #else
@@ -1019,7 +1013,7 @@ glabel jpt_80029160
 
 
 /**
- * 9548	70008948
+ * 9548    70008948
  */
 
 #ifdef NONMATCHING
@@ -1082,7 +1076,7 @@ glabel sfx_c_70008948
 
 
 /**
- * 95C4	700089C4
+ * 95C4    700089C4
  */
 
 #ifdef NONMATCHING
@@ -1141,7 +1135,7 @@ glabel sfx_c_700089C4
 
 
 /**
- * 9630 	70008A30
+ * 9630     70008A30
  */
 
 #ifdef NONMATCHING
@@ -1242,7 +1236,7 @@ glabel sfx_c_70008A30
 
 
 /**
- * 96F0 	70008AF0
+ * 96F0     70008AF0
  */
 
 #ifdef NONMATCHING
@@ -1367,7 +1361,7 @@ glabel sfx_c_70008AF0
 
 
 /**
- * 9770	70008B70
+ * 9770    70008B70
  *     accepts: A0=sound data offset?, A1=sample address?
  */
 
@@ -1549,7 +1543,7 @@ glabel sfx_c_70008B70
 
 
 /**
- * 9904	70008D04
+ * 9904    70008D04
  */
 
 #ifdef NONMATCHING
@@ -1668,7 +1662,7 @@ glabel sfx_c_70008D04
 
 
 /**
- * 99D8	70008DD8
+ * 99D8    70008DD8
  *     A1->A0+0x36.  value is set in sound effect buffer?
  *     accepts: A0=p->SE buffer?, A1=value truncated to byte
  */
@@ -1704,7 +1698,7 @@ glabel sfx_c_70008DD8
 
 
 /**
- * 99F0	70008DF0
+ * 99F0    70008DF0
  *     V0= TRUE if SE playing flag set [A0+0x3F]
  *     value is set only when sound defaults have been set
  *     accepts: A0=p->SE buffer
@@ -1742,15 +1736,15 @@ glabel sfxGetArg0Unk3F
 
 
 /**
- * 9A08	70008E08
+ * 9A08    70008E08
  *     sets sound effect; used by sound effect routines
  *     accepts: A0=p->SE buffer, A1=SE #, A2=p->data
- *          data:	0x0	4	p->SE entry
- *              0x4	4	target volume
- *              0x8	4	audible range (timer)
- *              0xC	4	initial volume
- *              0x10	4	p->preset emitting sound
- *              0x14	4	p->object emitting sound
+ *          data:    0x0    4    p->SE entry
+ *              0x4    4    target volume
+ *              0x8    4    audible range (timer)
+ *              0xC    4    initial volume
+ *              0x10    4    p->preset emitting sound
+ *              0x14    4    p->object emitting sound
  */
 
 #ifdef NONMATCHING
@@ -1998,7 +1992,7 @@ glabel play_sfx_a1
 
 
 /**
- * 9C20	70009020
+ * 9C20    70009020
  *     decativates sound effect
  *     accepts: A0=p->SE buffer
  */
@@ -2050,7 +2044,7 @@ glabel sfxDeactivate
 
 
 /**
- * 9C6C	7000906C
+ * 9C6C    7000906C
  */
 
 #ifdef NONMATCHING
@@ -2148,7 +2142,7 @@ glabel sfx_c_7000906C
 
 
 /**
- * 9D24	70009124
+ * 9D24    70009124
  *     redirect to 7000906C: A0=1
  */
 void sfx_c_70009124(void)
@@ -2157,7 +2151,7 @@ void sfx_c_70009124(void)
 }
 
 /**
- * 9D44	70009144
+ * 9D44    70009144
  *     redirect to 7000906C: A0=11
  */
 void sfx_c_70009144(void)
@@ -2166,7 +2160,7 @@ void sfx_c_70009144(void)
 }
 
 /**
- * 9D64	70009164
+ * 9D64    70009164
  *     redirect to 7000906C: A0=3
  */
 void sfx_c_70009164(void)
@@ -2178,7 +2172,7 @@ void sfx_c_70009164(void)
 
 
 /**
- * 9D84	70009184
+ * 9D84    70009184
  */
 #ifdef NONMATCHING
 void sfx_c_70009184(s32 arg0, s32 arg1, ? arg2)
@@ -2218,7 +2212,7 @@ glabel sfx_c_70009184
 
 
 /**
- * 9DC8	700091C8
+ * 9DC8    700091C8
  *     redirect to 70009264: A0=0
  */
 u32 sfx_c_700091C8(void)
@@ -2235,7 +2229,7 @@ u32 sfx_c_700091C8(void)
 
 
 /**
- * 9DE8	700091E8
+ * 9DE8    700091E8
  */
 #ifdef NONMATCHING
 void sfx_c_700091E8(s32 arg0)
@@ -2288,7 +2282,7 @@ glabel sfx_c_700091E8
 
 
 /**
- * 9E38	70009238
+ * 9E38    70009238
  */
 
 void sfx_c_70009238(f32 arg0)
@@ -2307,7 +2301,7 @@ void sfx_c_70009238(f32 arg0)
 
 
 /**
- * 9E64	70009264
+ * 9E64    70009264
  *     V0= halfword A0 in table at [80063BA8]; fries T6,T7,T8,T9
  */
 #ifdef NONMATCHING
@@ -2340,7 +2334,7 @@ glabel sfx_c_70009264
 
 
 /**
- * 9E84	70009284
+ * 9E84    70009284
  */
 #ifdef NONMATCHING
 s32 sfx_c_70009284(s32 arg0, s32 arg1)
