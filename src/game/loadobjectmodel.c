@@ -344,7 +344,7 @@ glabel sub_GAME_7F056BA8
 #ifdef NONMATCHING
 u32 load_model(u32 modelid)
 {
-    struct p_itementry fileentry = PitemZ_entries[modelid];
+    ItemModelFileRecord fileentry = PitemZ_entries[modelid];
     if (fileentry.header == 0)
     {
         load_object_into_memory(PitemZ_entries[modelid].header, PitemZ_entries[modelid].filename);

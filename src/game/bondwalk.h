@@ -88,7 +88,7 @@ struct WeaponStats
      * that point to code possibly, I haven't explored the area a lot near that address
      * (8003CB60)
      */
-    struct Gitemheader * ptr_cartridge_struct;
+    struct ModelFileHeader * ptr_cartridge_struct;
 
     /**
      * Amount of destruction or power each bullet packs.
@@ -184,7 +184,7 @@ struct WeaponStats
 
 struct gitem_data_struct
 {
-  struct Gitemheader * item_header;
+  struct ModelFileHeader * item_header;
   char * item_file_name;
   s32 has_no_model;
   struct WeaponStats * item_weapon_stats;
@@ -203,7 +203,7 @@ struct gitem_data_struct
 };
 
 struct ejected_cart {
-    struct Gitemheader * header;
+    struct ModelFileHeader * header;
     char * text;
 };
 

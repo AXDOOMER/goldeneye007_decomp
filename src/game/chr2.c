@@ -8,7 +8,7 @@
 
 s32 load_body_head_if_not_loaded(s32 model)
 {
-    if (c_item_entries[model].header->offset_obj_table == 0)
+    if (c_item_entries[model].header->RootNode == 0)
     {
         load_object_into_memory(c_item_entries[model].header, c_item_entries[model].filename);
         return 1;

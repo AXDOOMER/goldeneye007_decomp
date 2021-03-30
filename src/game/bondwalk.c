@@ -1801,7 +1801,7 @@ char * get_ptr_item_text_call_line(ITEM_IDS item)
 }
 
 
-struct Gitemheader * get_ptr_weapon_model_header_line(ITEM_IDS weapon)
+struct ModelFileHeader * get_ptr_weapon_model_header_line(ITEM_IDS weapon)
 {
     if (weapon == ITEM_FIST) {
         weapon = pPlayer->cur_item_weapon_getname;
