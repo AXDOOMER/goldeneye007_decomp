@@ -3979,10 +3979,10 @@ glabel draw_current_hand_item_and_ammo
 /* 0DCA60 7F0A7F30 0FC2361E */  jal   sub_GAME_7F08D878
 /* 0DCA64 7F0A7F34 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0DCA68 7F0A7F38 E7A00058 */  swc1  $f0, 0x58($sp)
-/* 0DCA6C 7F0A7F3C 0FC23572 */  jal   sub_GAME_7F08D5C8
+/* 0DCA6C 7F0A7F3C 0FC23572 */  jal   inv_get_first_title_name_by_index
 /* 0DCA70 7F0A7F40 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0DCA74 7F0A7F44 AFA20054 */  sw    $v0, 0x54($sp)
-/* 0DCA78 7F0A7F48 0FC235AF */  jal   sub_GAME_7F08D6BC
+/* 0DCA78 7F0A7F48 0FC235AF */  jal   inv_get_second_title_name_by_index
 /* 0DCA7C 7F0A7F4C 8FA40074 */   lw    $a0, 0x74($sp)
 /* 0DCA80 7F0A7F50 0FC24415 */  jal   get_debug_gunwatchpos_flag
 /* 0DCA84 7F0A7F54 AFA20050 */   sw    $v0, 0x50($sp)
@@ -4502,7 +4502,7 @@ glabel debug_gun_watch_move_related2
 /* 0DD290 7F0A8760 1840000B */  blez  $v0, .L7F0A8790
 /* 0DD294 7F0A8764 00000000 */   nop   
 .L7F0A8768:
-/* 0DD298 7F0A8768 0FC234D0 */  jal   sub_GAME_7F08D340
+/* 0DD298 7F0A8768 0FC234D0 */  jal   inv_get_name_by_index
 /* 0DD29C 7F0A876C 02002025 */   move  $a0, $s0
 /* 0DD2A0 7F0A8770 27A40084 */  addiu $a0, $sp, 0x84
 /* 0DD2A4 7F0A8774 0C0029FF */  jal   strcat
@@ -4637,7 +4637,7 @@ glabel debug_gun_watch_move_related2
 /* 0DD470 7F0A8940 AFA20928 */  sw    $v0, 0x928($sp)
 /* 0DD474 7F0A8944 8E100EAC */  lw    $s0, %lo(ptrFirstFontTableSmall)($s0)
 /* 0DD478 7F0A8948 8C8409B8 */  lw    $a0, %lo(D_800409B8)($a0)
-/* 0DD47C 7F0A894C 0FC234D0 */  jal   sub_GAME_7F08D340
+/* 0DD47C 7F0A894C 0FC234D0 */  jal   inv_get_name_by_index
 /* 0DD480 7F0A8950 AFAD0058 */   sw    $t5, 0x58($sp)
 /* 0DD484 7F0A8954 3C018004 */  lui   $at, %hi(D_800409BC)
 /* 0DD488 7F0A8958 C43209BC */  lwc1  $f18, %lo(D_800409BC)($at)
@@ -4995,7 +4995,7 @@ glabel debug_gun_watch_move_related2
 /* 0DDE88 7F0A9318 1840000B */  blez  $v0, .Ljp7F0A9348
 /* 0DDE8C 7F0A931C 00000000 */   nop   
 .Ljp7F0A9320:
-/* 0DDE90 7F0A9320 0FC2374A */  jal   sub_GAME_7F08D340
+/* 0DDE90 7F0A9320 0FC2374A */  jal   inv_get_name_by_index
 /* 0DDE94 7F0A9324 02002025 */   move  $a0, $s0
 /* 0DDE98 7F0A9328 27A4008C */  addiu $a0, $sp, 0x8c
 /* 0DDE9C 7F0A932C 0C002A03 */  jal   strcat
@@ -5131,7 +5131,7 @@ glabel debug_gun_watch_move_related2
 /* 0DE06C 7F0A94FC AFA20930 */  sw    $v0, 0x930($sp)
 /* 0DE070 7F0A9500 8E100EDC */  lw    $s0, %lo(ptrFirstFontTableSmall)($s0)
 /* 0DE074 7F0A9504 8C8409E8 */  lw    $a0, %lo(D_800409B8)($a0)
-/* 0DE078 7F0A9508 0FC2374A */  jal   sub_GAME_7F08D340
+/* 0DE078 7F0A9508 0FC2374A */  jal   inv_get_name_by_index
 /* 0DE07C 7F0A950C AFB8005C */   sw    $t8, 0x5c($sp)
 /* 0DE080 7F0A9510 3C018004 */  lui   $at, %hi(D_800409BC) # $at, 0x8004
 /* 0DE084 7F0A9514 C43209EC */  lwc1  $f18, %lo(D_800409BC)($at)
@@ -5480,7 +5480,7 @@ glabel debug_gun_watch_move_related2
 /* 0DD290 7F0A8760 1840000B */  blez  $v0, .L7F0A8790
 /* 0DD294 7F0A8764 00000000 */   nop   
 .L7F0A8768:
-/* 0DD298 7F0A8768 0FC234D0 */  jal   sub_GAME_7F08D340
+/* 0DD298 7F0A8768 0FC234D0 */  jal   inv_get_name_by_index
 /* 0DD29C 7F0A876C 02002025 */   move  $a0, $s0
 /* 0DD2A0 7F0A8770 27A40084 */  addiu $a0, $sp, 0x84
 /* 0DD2A4 7F0A8774 0C0029FF */  jal   strcat
@@ -5615,7 +5615,7 @@ glabel debug_gun_watch_move_related2
 /* 0DD470 7F0A8940 AFA20928 */  sw    $v0, 0x928($sp)
 /* 0DD474 7F0A8944 8E100EAC */  lw    $s0, %lo(ptrFirstFontTableSmall)($s0)
 /* 0DD478 7F0A8948 8C8409B8 */  lw    $a0, %lo(D_800409B8)($a0)
-/* 0DD47C 7F0A894C 0FC234D0 */  jal   sub_GAME_7F08D340
+/* 0DD47C 7F0A894C 0FC234D0 */  jal   inv_get_name_by_index
 /* 0DD480 7F0A8950 AFAD0058 */   sw    $t5, 0x58($sp)
 /* 0DD484 7F0A8954 3C018004 */  lui   $at, %hi(D_800409BC)
 /* 0DD488 7F0A8958 C43209BC */  lwc1  $f18, %lo(D_800409BC)($at)
@@ -5768,7 +5768,7 @@ glabel sub_GAME_7F0A8B10
 /* 0DD66C 7F0A8B3C AFA00054 */  sw    $zero, 0x54($sp)
 /* 0DD670 7F0A8B40 8C8409B8 */  lw    $a0, %lo(D_800409B8)($a0)
 /* 0DD674 7F0A8B44 AFAE0050 */  sw    $t6, 0x50($sp)
-/* 0DD678 7F0A8B48 0FC2350D */  jal   sub_GAME_7F08D434
+/* 0DD678 7F0A8B48 0FC2350D */  jal   inv_get_long_name_by_index
 /* 0DD67C 7F0A8B4C AFAF004C */   sw    $t7, 0x4c($sp)
 /* 0DD680 7F0A8B50 AFA20048 */  sw    $v0, 0x48($sp)
 /* 0DD684 7F0A8B54 02002025 */  move  $a0, $s0

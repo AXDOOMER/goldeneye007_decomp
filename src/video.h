@@ -55,9 +55,9 @@ typedef struct VideoSettings_s {
 } VideoSettings;
 
 extern OSViMode *viMode;
-extern u32 dword_CODE_bss_80060880;
-extern u32 dword_CODE_bss_80060884;
-extern u32 dword_CODE_bss_80060888;
+extern u32 g_viOriginalHstart;
+extern u32 g_viOriginalVstart0;
+extern u32 g_viOriginalVstart1;
 extern Mtx *g_viProjectionMatrix;
 
 extern u8 cfb_16[NUM_VIDEO_FRAME_BUFFERS][SCREEN_WIDTH * SCREEN_HEIGHT * 2];
@@ -80,6 +80,8 @@ void viSetViewSize(s16 x, s16 y);
 void viSetViewPosition(s16 left, s16 top);
 void viInitBuffers(void);
 void viVsyncRelated(void);
+void viSetHorizontalOffset(s32 arg0);
+s32 viGetHorizontalOffset(void);
 void video_related_8(void);
 
 Gfx *viSetupScreensForNumPlayers(Gfx *gdl);

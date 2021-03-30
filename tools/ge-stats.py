@@ -66,19 +66,43 @@ def parse_map(version):
 # Find and return all
 # ASM Function names that still
 # exists in Source Files 
+# Only scans for C and S files
 # --------------------------
-def find_asm_functions():
+def find_asm_functions(version):
     
-    p = re.compile(r"^glabel (\S+)$")
+    p1 = re.compile(r"^glabel (\S+)$")
+    p2 = re.compile(r"^#ifdef VERSION_(\S+)$")
+    p3 = re.compile(r"^#endif$")
+
     asm_functions = []
+    version = version.upper()
+    func_version = None
 
     for root, dirs, files in os.walk('src'):
         for file in files:
-            with open(os.path.join(root, file)) as _file:
-                for i, line in enumerate(_file.readlines()):
-                    m = p.findall(line)
-                    if m:
-                        asm_functions.append(m[0])
+            if file.endswith(".c") or file.endswith(".s"):
+                func_version = None
+                with open(os.path.join(root, file)) as _file:
+                    for i, line in enumerate(_file.readlines()):  
+                        
+                        m1 = p1.findall(line)
+                        m2 = p2.findall(line)
+                        m3 = p3.findall(line)
+
+                        # Found an #endif command
+                        if m3: 
+                            func_version = None
+
+                        # Found a version definition
+                        elif m2:
+                            func_version = m2[0]
+
+                        # Found an asm function
+                        elif m1:
+                            if not func_version or (func_version == version):
+                                asm_functions.append(m1[0])
+                            
+                            func_version = None
 
     return asm_functions
 
@@ -140,9 +164,9 @@ def find_last_modified_file():
 # Calculate the decomp stats
 # on each folder
 # --------------------------
-def do_stats(map_file, analyse_folders):
+def do_stats(version, map_file, analyse_folders):
 
-    asm_functions = find_asm_functions()
+    asm_functions = find_asm_functions(version)
     segments = {}
 
     for folder in analyse_folders:
@@ -253,7 +277,7 @@ def main():
     
     folders = ['src', 'src/game', 'src/inflate', 'src/libultra']
     
-    segments = do_stats(map_file, folders)
+    segments = do_stats(version, map_file, folders)
 
     print_stats(version, segments, files_completed, last_modified_file)
 
