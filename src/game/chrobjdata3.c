@@ -2,595 +2,562 @@
 #include "bondgame.h"
 #include "game/chrobjdata.h"
 
-struct c_itementry c_item_entries[] = {
-    {&CcamguardZ_struct, "CcamguardZ", 1.0, 1.0, 0x1000000},
-    {&CgreyguardZ_struct, "CgreyguardZ", 1.0, 1.0, 0x1000000},
-    {&ColiveguardZ_struct, "ColiveguardZ", 1.0, 1.0, 0x1000000},
-    {&CrusguardZ_struct, "CrusguardZ", 1.0, 1.0, 0x1000000},
-    {&CtrevguardZ_struct, "CtrevguardZ", 1.0, 1.0, 0x1000000},
-    {&CdjbondZ_struct, "CdjbondZ", 1.0, 1.0446, 0x1000000},
-    {&CborisZ_struct, "CborisZ", 1.0, 0.9702, 0x1010000},
-    {&CorumovZ_struct, "CorumovZ", 1.0, 1.0778, 0x1010000},
-    {&CtrevelyanZ_struct, "CtrevelyanZ", 1.0, 1.0, 0x1010000},
-    {&CboilertrevZ_struct, "CboilertrevZ", 1.0, 1.0, 0x1010000},
-    {&CvalentinZ_struct, "CvalentinZ", 1.0, 0.93239999, 0x1010000},
-    {&CxeniaZ_struct, "CxeniaZ", 1.0, 1.0, 0x10000},
-    {&CbaronsamediZ_struct, "CbaronsamediZ", 1.0, 1.0, 0x1010000},
-    {&CjawsZ_struct, "CjawsZ", 1.0, 1.199, 0x1010000},
-    {&CmaydayZ_struct, "CmaydayZ", 1.0, 1.0, 0x10000},
-    {&CoddjobZ_struct, "CoddjobZ", 1.0, 0.78780001, 0x1010000},
-    {&CnatalyaZ_struct, "CnatalyaZ", 1.0, 0.96609998, 0x10000},
-    {&CarmourguardZ_struct, "CarmourguardZ", 1.0, 1.0, 0x1000000},
-    {&CcommguardZ_struct, "CcommguardZ", 1.0, 1.0, 0x1000000},
-    {&CgreatguardZ_struct, "CgreatguardZ", 1.0, 1.0, 0x1000000},
-    {&CnavyguardZ_struct, "CnavyguardZ", 1.0, 1.0, 0x1000000},
-    {&CsnowguardZ_struct, "CsnowguardZ", 1.0, 1.0, 0x1010000},
-    {&CboilerbondZ_struct, "CboilerbondZ", 1.0, 1.0403, 0x1000000},
-    {&CsuitbondZ_struct, "CsuitbondZ", 1.0, 1.058, 0x1000000},
-    {&CtimberbondZ_struct, "CtimberbondZ", 1.0, 1.0438, 0x1000000},
-    {&CsnowbondZ_struct, "CsnowbondZ", 1.0, 1.0438, 0x1000000},
-    {&CbluewomanZ_struct, "CbluewomanZ", 1.0, 0.88529998, 0},
-    {&CfattechwomanZ_struct, "CfattechwomanZ", 1.0, 0.88529998, 0},
-    {&CtechwomanZ_struct, "CtechwomanZ", 1.0, 0.91600001, 0},
-    {&CjeanwomanZ_struct, "CjeanwomanZ", 1.0, 0.88529998, 0},
-    {&CgreymanZ_struct, "CgreymanZ", 1.0, 1.0, 0x1000000},
-    {&CbluemanZ_struct, "CbluemanZ", 1.0, 1.0, 0x1000000},
-    {&CredmanZ_struct, "CredmanZ", 1.0, 1.0, 0x1000000},
-    {&CcardimanZ_struct, "CcardimanZ", 1.0, 1.0, 0x1000000},
-    {&CcheckmanZ_struct, "CcheckmanZ", 1.0, 1.0, 0x1000000},
-    {&CtechmanZ_struct, "CtechmanZ", 1.0, 1.0, 0x1000000},
-    {&CpilotZ_struct, "CpilotZ", 1.0, 1.0, 0x1010000},
-    {&Cgreatguard2Z_struct, "Cgreatguard2Z", 1.0, 1.0, 0x1000000},
-    {&CbluecamguardZ_struct, "CbluecamguardZ", 1.0, 1.0, 0x1000000},
-    {&CmoonguardZ_struct, "CmoonguardZ", 1.0, 1.0, 0x1000000},
-    {&CmoonfemaleZ_struct, "CmoonfemaleZ", 1.0, 0.88529998, 0},
-    {&Csuit_lf_handz_struct, "Csuit_lf_handZ", 0.1, 1.0, 0x1000000},
-    {&CheadkarlZ_struct, "CheadkarlZ", 1.0, 1.0, 0x1010000},
-    {&CheadalanZ_struct, "CheadalanZ", 1.0, 1.0, 0x1010000},
-    {&CheadpeteZ_struct, "CheadpeteZ", 1.0, 1.0, 0x1010000},
-    {&CheadmartinZ_struct, "CheadmartinZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003D9D0, "CheadmarkZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003D9F0, "CheadduncanZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DA30, "CheadshaunZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DA50, "CheaddwayneZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DA10, "CheadbZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DA70, "CheaddaveZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DA90, "CheadgrantZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DAB0, "CheaddesZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DAD0, "CheadchrisZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DAF0, "CheadleeZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DB10, "CheadneilZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DB30, "CheadjimZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DB50, "CheadrobinZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DB70, "CheadstevehZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DB90, "CheadbalaclavaZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DBB0, "CheadbikeZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DBD0, "CheadgrahamZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DBF0, "CheadsteveeZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DC10, "CheadjoelZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DC30, "CheadscottZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DC50, "CheadjoeZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DC70, "CheadkenZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DC90, "Cheadjoe2Z", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DCB0, "CheadmishkinZ", 1.0, 1.0, 0x1010000},
-    {&stru_D_8003DCD0, "CheadsallyZ", 1.0, 1.0, 0x10000},
-    {&stru_D_8003DCF0, "CheadmarionZ", 1.0, 1.0, 0x10000},
-    {&stru_D_8003DD10, "CheadmandyZ", 1.0, 1.0, 0x10000},
-    {&stru_D_8003DD30, "CheadvivienZ", 1.0, 1.0, 0x10000},
-    {&stru_D_8003DD50, "CheadbrosnanboilerZ", 1.0, 1.0, 0x1010000},
-    {&CheadbrosnansuitZ_struct, "CheadbrosnansuitZ", 1.0, 1.0, 0x1010000},
-    {&CheadbrosnantimberZ_struct, "CheadbrosnantimberZ", 1.0, 1.0, 0x1010000},
-    {&CheadbrosnansnowZ_struct, "CheadbrosnansnowZ", 1.0, 1.0, 0x1010000},
-    {&CheadbrosnanZ_struct, "CheadbrosnanZ", 1.0, 1.0, 0x1010000},
-    {&CspicebondZ_struct, "CspicebondZ", 0.94999999, 0.96609998, 0x10000},
-    {0, 0, 1.0, 0.0, 0}
+//D:8003C4D0
+struct prop_pos_data word_D_8003C4D0[] = {
+    {0x0002, 0x0000, 0x0000}
+};
+//D:8003C4D6                     .half 0
+//D:8003C4D8
+struct item_related model_object_standard_object = {1, 0, word_D_8003C4D0, 3, 0};
+
+//FIXME for rest of this skelton/joint section, the extra s32 between are file split padding most likely, and should be located in source model folder
+//FIXME File split likely
+//D:8003C4E4
+s32 D_8003C4E4 = 0;
+//D:8003C4E8
+s32 D_8003C4E8 = 0;
+//D:8003C4EC
+s32 D_8003C4EC = 0;
+
+//D:8003C4F0
+struct prop_pos_data word_D_8003C4F0[] = {
+    {0x0015, 0x0000, 0x0000},
+    {0x0015, 0x0001, 0x0001}
+};
+//D:8003C4FC
+struct item_related prop_weapon_related = {2, 0, word_D_8003C4F0, 0, 0};
+
+//FIXME File split likely
+//D:8003C508
+s32 D_8003C508 = 0;
+//D:8003C50C
+s32 D_8003C50C = 0;
+
+//D:8003C510
+struct prop_pos_data dword_D_8003C510[] = {
+    {0x0401, 0x0000, 0x0000},
+    {0x0002, 0x0000, 0x0000},
+    {0x0002, 0x0003, 0x0003},
+    {0x0002, 0x0006, 0x0006},
+    {0x0002, 0x0009, 0x000C},
+    {0x0002, 0x000C, 0x0009},
+    {0x0002, 0x000F, 0x0012},
+    {0x0002, 0x0012, 0x000F},
+    {0x0002, 0x0015, 0x0018},
+    {0x0002, 0x0018, 0x0015},
+    {0x0002, 0x001B, 0x001E},
+    {0x0002, 0x001E, 0x001B},
+    {0x0002, 0x0021, 0x0024},
+    {0x0002, 0x0024, 0x0021},
+    {0x0002, 0x0027, 0x002A},
+    {0x0002, 0x002A, 0x0027}
 };
 
-//D:8003E464
-struct headHat headHat_array_8003E464[] = 
-{
-  {
-    -0.076300003, 0.77999997, -1.2696, 1.1694109, 1.120654, 1.05959
-  },
-  {
-    -0.25760001, -0.47319999, -1.5686001, 1.132916, 1.0, 1.080207
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.039999999, 0.74000001, -0.63999999, 1.132795, 1.167207, 1.035167
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.033500001, 0.24959999, 0.16599999, 1.115045, 0.94169998, 1.042492
-  },
-  {
-    -0.070299998, 0.4919, -0.83359998, 1.072812, 1.088326, 0.926121
-  },
-  {
-    -0.1, 0.42750001, -0.48249999, 1.033368, 0.96552098, 0.929905
-  },
-  {
-    0.18000001, 0.0, 0.0, 1.072214, 1.0, 1.0
-  },
-  {
-    0.237, 0.977, -0.44, 1.178463, 1.14061, 1.143465
-  },
-  {
-    -0.090300001, 0.23190001, 0.12639999, 0.99080002, 1.02, 0.8466
-  },
-  {
-    0.0, 0.1485, 0.3793, 1.1548001, 0.99190003, 0.95139998
-  },
-  {
-    -0.14820001, 0.44100001, 0.1727, 1.050034, 1.0, 1.05445
-  },
-  {
-    -0.4941, -0.26409999, -0.18000001, 0.90368301, 0.72551203, 1.001314
-  },
-  {
-    0.1318, 0.30100101, 1.572699, 0.98799503, 1.0, 1.05445
-  },
-  {
-    0.0, 0.73019999, 0.71740001, 1.1923, 1.1834, 1.091924
-  },
-  {
-    -0.0942, -0.74190003, 0.94260001, 0.98659998, 0.91689998, 0.94760001
-  },
-  {
-    0.0535, 0.61510003, 1.076, 1.05092, 0.90002, 1.122508
-  },
-  {
-    -0.079999998, 0.1085, -0.56629997, 1.192598, 1.079134, 1.199971
-  },
-  {
-    -0.35640001, -0.28709999, -0.36950001, 1.035176, 0.838543, 1.121092
-  },
-  {
-    0.065300003, -0.4664, 0.72000003, 1.050106, 1.0, 1.11042
-  },
-  {
-    -0.079999998, 0.4885, 0.093699999, 1.158567, 1.2356189, 1.194388
-  },
-  {
-    -0.0942, -0.3017, 0.59450001, 1.0671999, 1.0218, 1.0174
-  },
-  {
-    0.12, -0.1515, 0.95370001, 1.124017, 0.966048, 1.206121
-  },
-  {
-    -0.19310001, 0.2334, -0.64850003, 1.1800359, 1.0401829, 1.154537
-  },
-  {
-    -0.36230001, -0.133, -0.486, 1.0536211, 1.0, 1.1495841
-  },
-  {
-    0.0955, 0.68099999, 0.78799999, 1.0152, 1.1926, 1.1308
-  },
-  {
-    -0.0823, 0.36700001, 0.37400001, 1.311748, 1.115972, 1.166244
-  },
-  {
-    -0.0942, 0.1768, 0.5248, 1.0470001, 1.0218, 0.99800003
-  },
-  {
-    0.0, -0.0964, 0.82999998, 1.1109999, 0.85180199, 1.180503
-  },
-  {
-    -0.1832, 0.32120001, -1.2381001, 1.125683, 1.091681, 0.98079097
-  },
-  {
-    -0.55049998, -0.60839999, -1.189499, 1.023566, 0.8326, 1.0637
-  },
-  {
-    0.076800004, 0.32120001, -0.118101, 1.059677, 1.091681, 1.000479
-  },
-  {
-    0.0, 0.29890001, -0.67299998, 1.1367, 1.0526, 0.99227399
-  },
-  {
-    -0.0942, 0.032000002, -0.29699999, 1.0402, 0.92860001, 0.88690001
-  },
-  {
-    0.0, 0.26879999, 0.057399999, 1.041842, 0.81959999, 0.99637401
-  },
-  {
-    0.079700001, 0.3511, 0.0, 1.0, 1.0, 1.0835
-  },
-  {
-    0.14, 0.1965, -0.058398999, 1.012674, 0.96799999, 1.098917
-  },
-  {
-    0.1629, 0.78799999, 1.0746, 0.92205501, 1.0688, 1.055297
-  },
-  {
-    -0.074500002, 0.8477, 0.71810001, 1.154819, 1.177258, 1.031684
-  },
-  {
-    -0.0145, 0.047699999, 0.89810002, 1.0404, 1.0, 0.94309998
-  },
-  {
-    0.32550001, 0.36770001, 0.93809998, 1.044217, 0.97841102, 1.127771
-  },
-  {
-    -0.1832, -0.058800001, -1.5781, 1.095929, 0.96300697, 0.92348999
-  },
-  {
-    -0.4411, -0.64840001, -1.839099, 1.059271, 0.8326, 0.96849501
-  },
-  {
-    0.19679999, -0.3188, -0.43810099, 1.070675, 1.053777, 0.88628101
-  },
-  {
-    0.0, 0.29890001, -0.83139998, 1.1154, 1.0328, 1.0036
-  },
-  {
-    -0.0942, -0.1275, -0.52109998, 1.0402, 0.92180002, 0.8617
-  },
-  {
-    0.079999998, -0.2383, -0.22940101, 1.063022, 0.80879998, 0.90789998
-  },
-  {
-    0.1165, 0.58780003, -1.3096, 1.136481, 1.0409, 1.065612
-  },
-  {
-    -0.070600003, 0.0152, -1.2391, 1.002256, 0.76669598, 1.029659
-  },
-  {
-    0.2218, 0.0, 0.0, 1.0852, 1.0, 1.0
-  },
-  {
-    0.063000001, 0.7561, -0.45269999, 1.2085, 1.1014, 1.0664001
-  },
-  {
-    0.065499999, -0.1097, -0.3497, 1.0404, 0.90915602, 0.94940001
-  },
-  {
-    0.0, 0.336, 0.082999997, 1.150862, 0.94169998, 1.0
-  },
-  {
-    -0.054200001, 0.27079999, -0.082099997, 1.0367, 1.0367, 1.0367
-  },
-  {
-    0.34119999, -0.55879998, -0.3044, 1.113436, 0.96799999, 1.076647
-  },
-  {
-    0.0495, 0.63980001, 1.2178, 0.95099998, 1.1126, 1.0413001
-  },
-  {
-    0.0, 0.53640002, 0.75220001, 1.1976, 1.1463, 1.1374
-  },
-  {
-    -0.0145, -0.64749998, 1.0477999, 0.95289999, 0.92180002, 0.90579998
-  },
-  {
-    0.16, 0.61830002, 1.128299, 1.083438, 0.91670603, 1.0666929
-  },
-  {
-    -0.2586, 0.93580002, -0.2463, 1.1057, 1.0116, 1.0927
-  },
-  {
-    -0.1788, -0.31310001, -0.55299997, 1.1071, 1.0, 1.071945
-  },
-  {
-    0.0955, 0.16230001, 0.50150001, 1.0506001, 1.0, 1.1032
-  },
-  {
-    0.081200004, 0.2269, 0.50700003, 1.1071, 1.178908, 1.189239
-  },
-  {
-    -0.0145, -0.68440002, 0.54070002, 1.0470001, 0.92699999, 1.027078
-  },
-  {
-    0.0, -0.0164, 0.66399997, 1.2108999, 1.0, 1.0729001
-  },
-  {
-    -0.1487, 0.88779998, -0.41060001, 1.110018, 0.98460901, 1.110518
-  },
-  {
-    0.0012000001, -0.61879998, -0.34439901, 1.099178, 0.916071, 1.054984
-  },
-  {
-    0.0429, 0.2149, 0.4298, 1.0455, 1.0688, 1.1514
-  },
-  {
-    0.0012000001, -0.0188, 0.65560102, 1.1957231, 1.079964, 1.200996
-  },
-  {
-    -0.0145, -0.48769999, 0.44909999, 1.003074, 1.0, 0.98259997
-  },
-  {
-    0.0, 0.396, 0.8362, 1.1622, 0.91339999, 1.066853
-  },
-  {
-    -0.29030001, 1.0714999, -0.3504, 1.125893, 1.127159, 1.177758
-  },
-  {
-    0.0, -0.079999998, -0.373, 1.099718, 1.0, 1.0947551
-  },
-  {
-    0.0, 0.78799999, 0.64469999, 1.0, 1.0, 1.0963
-  },
-  {
-    -0.074699998, 1.5436, 0.1979, 1.1497999, 1.1835999, 1.0791
-  },
-  {
-    -0.090300001, -0.1085, 0.68959999, 1.024099, 1.0, 0.98965299
-  },
-  {
-    0.0, 0.63230002, 0.7913, 1.1081001, 0.93440002, 1.0779999
-  },
-  {
-    0.12, 0.40000001, 0.039999999, 1.022947, 0.92226201, 1.004824
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.0429, 0.75889999, 1.2895, 0.94440001, 1.0, 1.0551
-  },
-  {
-    0.0, 0.546, 0.79729998, 1.1483001, 1.1267999, 1.1388
-  },
-  {
-    0.065099999, -0.54320002, 1.1224999, 0.93949997, 0.92699999, 0.93040001
-  },
-  {
-    0.1265, 0.36359999, 1.079, 1.1109999, 1.0, 1.1166
-  },
-  {
-    -0.278, 1.272301, -0.55269998, 1.24701, 1.0737129, 1.118222
-  },
-  {
-    -0.23639999, 0.58200002, -0.30950001, 1.225595, 1.077682, 1.066005
-  },
-  {
-    -0.0845, 0.68099999, 0.64469999, 1.1204081, 1.1927, 1.1308
-  },
-  {
-    -0.1364, 1.021999, 0.5905, 1.153587, 1.226897, 1.2252491
-  },
-  {
-    -0.2534, 0.57560003, 0.3856, 1.0405, 1.0405, 1.0585999
-  },
-  {
-    -0.1265, 0.6081, 0.71200001, 1.222, 1.0, 1.111666
-  },
-  {
-    -0.4637, 1.3971, -0.49270001, 1.1752, 1.0116, 1.1762
-  },
-  {
-    -0.2976, -0.1049, -0.49649999, 1.2345999, 0.86470801, 1.077117
-  },
-  {
-    -0.1151, 0.7353, 0.57309997, 1.0759, 1.0, 1.1308
-  },
-  {
-    -0.189, 0.99910003, 0.2396, 1.2269, 1.2039, 1.1698999
-  },
-  {
-    -0.2534, -0.0647, 0.30070001, 1.0470001, 0.92699999, 1.0124
-  },
-  {
-    -0.1265, 0.61260003, 0.76700002, 1.2108999, 1.0, 1.096216
-  },
-  {
-    -0.51429999, 1.0894001, -0.082099997, 1.1003, 1.0316, 1.0278
-  },
-  {
-    -0.53280002, -0.13060001, -0.25999999, 1.080464, 1.0, 1.019003
-  },
-  {
-    -0.1969, 0.45930001, 0.64469999, 0.96219999, 1.0, 1.0895
-  },
-  {
-    -0.32690001, 1.1438, 0.46720001, 1.1339, 1.1339, 1.0436
-  },
-  {
-    -0.29879999, 0.0, 0.41429999, 0.96219999, 1.0, 0.95630002
-  },
-  {
-    -0.17640001, 0.39500001, 0.86699998, 1.0972, 0.94625998, 1.0529979
-  },
-  {
-    0.02, 0.56910002, -0.25299999, 1.1205291, 0.999475, 1.072994
-  },
-  {
-    -0.0823, -0.3784, -0.38249999, 1.077682, 1.0, 1.066239
-  },
-  {
-    0.02, -0.1909, 0.90700001, 1.049657, 0.999475, 1.072994
-  },
-  {
-    0.0, 0.60549998, 0.47510001, 1.1236, 1.1236, 1.1236
-  },
-  {
-    -0.0942, 0.077600002, 0.5248, 1.0403, 0.95950001, 0.98580003
-  },
-  {
-    0.0, 0.20550001, 0.8951, 1.1519721, 0.92378497, 1.0316401
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.0836, -0.66259998, 0.14210001, 0.95139998, 1.090098, 0.92760003
-  },
-  {
-    0.1141, -1.1931, -0.25400001, 0.98102301, 0.83667898, 0.88798702
-  },
-  {
-    0.1481, -0.15360001, 1.1461999, 0.91399997, 1.0, 0.94489998
-  },
-  {
-    0.0, -0.53250003, 0.3563, 1.0727, 1.0526, 1.0228
-  },
-  {
-    -0.0942, -0.6857, 1.1224999, 0.95959997, 0.92860001, 0.88690001
-  },
-  {
-    0.079999998, -0.7396, 0.963, 1.1032, 0.875673, 0.97771698
-  },
-  {
-    -0.29030001, 1.0714999, -0.3504, 1.125893, 1.127159, 1.177758
-  },
-  {
-    0.0, -0.079999998, -0.373, 1.099718, 1.0, 1.0947551
-  },
-  {
-    0.0, 0.78799999, 0.64469999, 1.0, 1.0, 1.0963
-  },
-  {
-    -0.074699998, 1.5436, 0.1979, 1.1497999, 1.1835999, 1.0791
-  },
-  {
-    -0.090300001, -0.1085, 0.68959999, 1.024099, 1.0, 0.98965299
-  },
-  {
-    0.0, 0.63230002, 0.7913, 1.1081001, 0.93440002, 1.0779999
-  },
-  {
-    -0.13699999, 0.286001, -0.32229999, 1.142894, 0.89638299, 1.15
-  },
-  {
-    -0.16680001, -0.1365, -0.43650001, 1.1452, 1.0, 1.061306
-  },
-  {
-    0.1376, 0.0, 0.71600002, 1.05312, 1.0, 1.0687751
-  },
-  {
-    -0.074699998, 0.9393, 0.2658, 1.1815, 1.1216, 1.0822999
-  },
-  {
-    -0.103, -0.2269, 0.5722, 0.99080002, 1.02, 1.0034
-  },
-  {
-    0.0, 0.1373, 0.79430002, 1.1813999, 0.86186302, 1.0998
-  },
-  {
-    0.12, 0.40000001, 0.039999999, 1.022947, 0.92226201, 1.004824
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.0429, 0.75889999, 1.2895, 0.94440001, 1.0, 1.0551
-  },
-  {
-    0.0, 0.546, 0.79729998, 1.1483001, 1.1267999, 1.1388
-  },
-  {
-    0.065099999, -0.54320002, 1.1224999, 0.93949997, 0.92699999, 0.93040001
-  },
-  {
-    0.1265, 0.36359999, 1.079, 1.1109999, 1.0, 1.1166
-  },
-  {
-    0.0836, -0.66259998, 0.14210001, 0.95139998, 1.090098, 0.92760003
-  },
-  {
-    0.1141, -1.1931, -0.25400001, 0.98102301, 0.83667898, 0.88798702
-  },
-  {
-    0.1481, -0.15360001, 1.1461999, 0.91399997, 1.0, 0.94489998
-  },
-  {
-    0.0, -0.53250003, 0.3563, 1.0727, 1.0526, 1.0228
-  },
-  {
-    -0.0942, -0.6857, 1.1224999, 0.95959997, 0.92860001, 0.88690001
-  },
-  {
-    0.079999998, -0.7396, 0.963, 1.1032, 0.875673, 0.97771698
-  },
-  {
-    -0.29030001, 1.0714999, -0.3504, 1.125893, 1.127159, 1.177758
-  },
-  {
-    0.0, -0.079999998, -0.373, 1.099718, 1.0, 1.0947551
-  },
-  {
-    0.0, 0.78799999, 0.64469999, 1.0, 1.0, 1.0963
-  },
-  {
-    -0.074699998, 1.5436, 0.1979, 1.1497999, 1.1835999, 1.0791
-  },
-  {
-    -0.090300001, -0.1085, 0.68959999, 1.024099, 1.0, 0.98965299
-  },
-  {
-    0.0, 0.63230002, 0.7913, 1.1081001, 0.93440002, 1.0779999
-  },
-  {
-    0.0836, -0.66259998, 0.14210001, 0.95139998, 1.090098, 0.92760003
-  },
-  {
-    0.1141, -1.1931, -0.25400001, 0.98102301, 0.83667898, 0.88798702
-  },
-  {
-    0.1481, -0.15360001, 1.1461999, 0.91399997, 1.0, 0.94489998
-  },
-  {
-    0.0, -0.53250003, 0.3563, 1.0727, 1.0526, 1.0228
-  },
-  {
-    -0.0942, -0.6857, 1.1224999, 0.95959997, 0.92860001, 0.88690001
-  },
-  {
-    0.079999998, -0.7396, 0.963, 1.1032, 0.875673, 0.97771698
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  },
-  {
-    0.0, 0.0, 0.0, 1.0, 1.0, 1.0
-  }
+
+//item_related struct
+//D:8003C570
+struct item_related dword_D_8003C570 = {0x10, 0x0000, dword_D_8003C510, 0x2D, 0x0000};
+
+//FIXME File split likely
+//D:8003C57C
+s32 D_8003C57C = 0;
+
+
+//D:8003C580
+struct player_gait_header player_gait_hdr = {0, 1, 0, &player_gait_obj, NULL, 0, 0, &player_gait_pos_hdr_1};
+//D:8003C598
+struct player_gait_pos_header player_gait_pos_hdr_1 = {0, 2, 0, &player_gait_pos_1, (struct player_gait_pos_header *)&player_gait_hdr, 0, 0, &player_gait_pos_hdr_2};
+//D:8003C5B0
+struct player_gait_pos_header player_gait_pos_hdr_2 = {0, 2, 0, &player_gait_pos_2, &player_gait_pos_hdr_1, 0, 0, &player_gait_pos_hdr_3};
+//D:8003C5C8
+struct player_gait_pos_header player_gait_pos_hdr_3 = {0, 2, 0, &player_gait_pos_3, &player_gait_pos_hdr_2, 0, 0, 0};
+//D:8003C5E0
+struct player_gait_object_entry player_gait_obj = {1, &player_gait_pos_hdr_1, 0, 0};
+//D:8003C5F0
+struct player_gait_position_entry player_gait_pos_1 = {0.0, 0.0, 0.0, 0x0001, 0x0002, 0xFFFF, 0xFFFF, &player_gait_pos_hdr_2, 0};
+//D:8003C60C
+struct player_gait_position_entry player_gait_pos_2 = {1.177982, 41.14437, 0, 0x0002, 0x0003, 0xFFFF, 0xFFFF, &player_gait_pos_hdr_3, 0};
+//D:8003C628
+struct player_gait_position_entry player_gait_pos_3 = {-2.576027, 480.42902, 0, 0x0003, 0x0000, 0xFFFF, 0xFFFF, NULL, 0};
+
+//FIXME File split likely
+//D:8003C644
+s32 D_8003C644 = 0;
+//D:8003C648
+s32 D_8003C648 = 0;
+//D:8003C64C
+s32 D_8003C64C = 0;
+
+
+//D:8003C650
+struct object_header player_gait_object = {0, &dword_D_8003C570,0,0, 4, 41.16123,0,0,0,0};
+
+//FIXME File split likely
+//D:8003C670
+struct prop_pos_data dword_D_8003C670[] = {
+    {0x0401, 0x0000, 0x0000},
+    {0x0002, 0x0000, 0x0000},
+    {0x0002, 0x0003, 0x0003},
+    {0x0002, 0x0006, 0x0006},
+    {0x0002, 0x0009, 0x000C},
+    {0x0002, 0x000C, 0x0009},
+    {0x0002, 0x000F, 0x0012},
+    {0x0002, 0x0012, 0x000F},
+    {0x0002, 0x0015, 0x0018},
+    {0x0002, 0x0018, 0x0015},
+    {0x0002, 0x001B, 0x001E},
+    {0x0002, 0x001E, 0x001B},
+    {0x0002, 0x0021, 0x0024},
+    {0x0002, 0x0024, 0x0021},
+    {0x0002, 0x0027, 0x002A},
+    {0x0002, 0x002A, 0x0027},
+    {0x0015, 0x002D, 0x002D},
+    {0x0015, 0x002E, 0x002E},
+    {0x0015, 0x002F, 0x002F},
 };
+
+//D:8003C6E4
+struct item_related model_suit_lf_hand = {0x13, 0x0000, dword_D_8003C670, 0x2D, 0x0000};
+
+//FIXME File split likely
+//D:8003C6F0
+struct prop_pos_data dword_D_8003C6F0[] = {
+    {0x0002, 0x0000, 0x0000},
+    {0x0002, 0x0003, 0x0003},
+    {0x0002, 0x0006, 0x0006},
+    {0x0015, 0x000F, 0x000F},
+    {0x0002, 0x0009, 0x0009},
+    {0x0002, 0x000C, 0x000C}
+};
+//D:8003C714
+struct item_related weapon_gun_standard_gun = {0x6, 0x0000, dword_D_8003C6F0, 0xF, 0x0000};
+
+//FIXME File split likely
+//D:8003C720
+struct prop_pos_data dword_D_8003C720[] = {
+    {0x0002, 0x0000, 0x0000}
+};
+//D:8003C728
+struct item_related weapon_gun_unassigned = {0x1, 0x0000, dword_D_8003C720, 0x3, 0x0000};
+
+//FIXME File split likely
+//D:8003C734
+s32 D_8003C734 = 0;
+//D:8003C738
+s32 D_8003C738 = 0;
+//D:8003C73C
+s32 D_8003C73C = 0;
+//D:8003C740
+struct prop_pos_data dword_D_8003C740[] = {
+    {0x0002, 0x0000, 0x0000},
+    {0x0002, 0x0003, 0x0003},
+    {0x0002, 0x0006, 0x0006},
+    {0x0002, 0x0009, 0x0009},
+    {0x0002, 0x000C, 0x000C},
+    {0x0002, 0x000F, 0x000F},
+    {0x0002, 0x0012, 0x0012}
+};
+//D:8003C76C
+struct item_related weapon_gun_revolver = {0x7, 0x0000, dword_D_8003C740, 0x15, 0x0000};
+
+//FIXME File split likely
+//D:8003C778
+s32 D_8003C778 = 0;
+//D:8003C77C
+s32 D_8003C77C = 0;
+//D:8003C780
+struct prop_pos_data dword_D_8003C780[] = {
+    {0x0002, 0x0000, 0x0000},
+    {0x0002, 0x0003, 0x0003},
+    {0x0002, 0x0006, 0x0006},
+    {0x0002, 0x0009, 0x0009},
+    {0x0015, 0x0012, 0x0012},
+    {0x0002, 0x000C, 0x000C},
+    {0x0002, 0x000F, 0x000F}
+};
+//D:8003C7AC
+struct item_related weapon_gun_kf7 = {0x7, 0x0000, dword_D_8003C780, 0x12, 0x0000};
+
+//FIXME File split likely
+//D:8003C7B8
+s32 D_8003C7B8 = 0;
+//D:8003C7BC
+s32 D_8003C7BC = 0;
+
+//D:8003C7C0
+struct Gitemheader GwppkZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 6, 293.60767, 0, 0xC, 0, 0};
+//D:8003C7E0
+struct Gitemheader GwppksilZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 6, 438.66476, 0, 0xC, 0, 0};
+//D:8003C800
+struct Gitemheader Gtt33Z_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 6, 438.16788, 0, 0xF, 0, 0};
+//D:8003C820
+struct Gitemheader GskorpianZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 390.40039, 0, 0xC, 0, 0};
+//D:8003C840
+struct Gitemheader Gak47Z_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 941.9339, 0, 0x12, 0, 0};
+//D:8003C860
+struct Gitemheader GuziZ_struct = {0, &weapon_gun_kf7, 0, 0x24, 5, 436.95404, 0, 0xC, 0, 0};
+//D:8003C880
+struct Gitemheader Gmp5kZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 499.24536, 0, 9, 0, 0};
+//D:8003C8A0
+struct Gitemheader Gmp5ksilZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 655.97717, 0, 9, 0, 0};
+//D:8003C8C0
+struct Gitemheader Gm16Z_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 1096.2413, 0, 8, 0, 0};
+//D:8003C8E0
+struct Gitemheader Gfnp90Z_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 460.81909, 0, 0xA, 0, 0};
+//D:8003C900
+struct Gitemheader G8003C900_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 238.62167, 0, 4, 0, 0};
+//D:8003C920
+struct Gitemheader GrugerZ_struct = {0, &weapon_gun_revolver, 0, 0x24, 6, 553.44312, 0, 0xE, 0, 0};
+//D:8003C940
+struct Gitemheader GgoldengunZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 5, 384.92172, 0, 0xB, 0, 0};
+//D:8003C960
+struct Gitemheader GshotgunZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 4, 919.33038, 0, 0xD, 0, 0};
+//D:8003C980
+struct Gitemheader GautoshotZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 840.15125, 0, 0x10, 0, 0};
+//D:8003C9A0
+struct Gitemheader GgrenadelaunchZ_struct = {0, &weapon_gun_revolver, 0, 0x24, 5, 768.33496, 0, 0xF, 0, 0};
+//D:8003C9C0
+struct Gitemheader GspectreZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 598.42865, 0, 0xB, 0, 0};
+//D:8003C9E0
+struct Gitemheader GlaserZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 3, 442.81848, 0, 0xD, 0, 0};
+//D:8003CA00
+struct Gitemheader GrocketlaunchZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 3, 566.51208, 0, 0xA, 0, 0};
+//D:8003CA20
+struct Gitemheader GknifeZ_header = {0, &weapon_gun_standard_gun, 0, 0x24, 3, 376.97263, 0, 9, 0, 0};
+//D:8003CA40
+struct Gitemheader GthrowknifeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 3, 373.31387, 0, 9, 0, 0};
+//D:8003CA60
+struct Gitemheader GtaserZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 182.78622, 0, 0x11, 0, 0};
+//D:8003CA80
+struct Gitemheader GremotemineZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 50.999378, 0, 3, 0, 0};
+//D:8003CAA0
+struct Gitemheader GproximitymineZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 51.00029, 0, 3, 0, 0};
+//D:8003CAC0
+struct Gitemheader GtimedmineZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 49.368877, 0, 4, 0, 0};
+//D:8003CAE0
+struct Gitemheader GtriggerZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 283.9006, 0, 0x16, 0, 0};
+//D:8003CB00
+struct Gitemheader GgrenadeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 3, 427.27081, 0, 5, 0, 0};
+//D:8003CB20
+struct Gitemheader GfistZ_header = {0, &weapon_gun_standard_gun, 0, 0x24, 3, 243.84764, 0, 0xE, 0, 0};
+//D:8003CB40
+struct Gitemheader GsniperrifleZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 808.03253, 0, 7, 0, 0};
+//D:8003CB60
+struct Gitemheader GcartridgeZ_struct = {0, &weapon_gun_unassigned, 0, 0, 1, 14.128822, 0, 2, 0, 0};
+//D:8003CB80
+struct Gitemheader GcartrifleZ_struct = {0, &weapon_gun_unassigned, 0, 0, 1, 30.122747, 0, 2, 0, 0};
+//D:8003CBA0
+struct Gitemheader GcartblueZ_struct = {0, &weapon_gun_unassigned, 0, 0, 1, 30.122747, 0, 2, 0, 0};
+//D:8003CBC0
+struct Gitemheader GcartshellZ_struct = {0, &weapon_gun_unassigned, 0, 0, 1, 29.8451, 0, 2, 0, 0};
+//D:8003CBE0
+struct Gitemheader GjoypadZ_struct = {0, &weapon_gun_controller, 0, 0xE, 0xD, 523.96826, 0, 4, 0, 0};
+//D:8003CC00
+struct Gitemheader G8003CC00_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CC20
+struct Gitemheader G8003CC20_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CC40
+struct Gitemheader GbombcaseZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 0, 6, 0, 0};
+//D:8003CC60
+struct Gitemheader GflarepistolZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CC80
+struct Gitemheader GpitongunZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CCA0
+struct Gitemheader G8003CCA0_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CCC0
+struct Gitemheader GsilverwppkZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 6, 293.60767, 0, 0xB, 0, 0};
+//D:8003CCE0
+struct Gitemheader GgoldwppkZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 6, 293.60767, 0, 0xB, 0, 0};
+//D:8003CD00
+struct Gitemheader G8003CD00_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CD20
+struct Gitemheader GbungeeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CD40
+struct Gitemheader GdoordecoderZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 60.850407, 0, 0x10, 0, 0};
+//D:8003CD60
+struct Gitemheader GbombdefuserZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 84.370705, 0, 0xC, 0, 0};
+//D:8003CD80
+struct Gitemheader GbugdetectorZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CDA0
+struct Gitemheader GsafecrackercaseZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 0, 6, 0, 0};
+//D:8003CDC0
+struct Gitemheader GcameraZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 52.775627, 0, 0xB, 0, 0};
+//D:8003CDE0
+struct Gitemheader GlockexploderZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CE00
+struct Gitemheader GdoorexploderZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CE20
+struct Gitemheader GkeyanalysercaseZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 0, 6, 0, 0};
+//D:8003CE40
+struct Gitemheader GweaponcaseZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 0, 6, 0, 0};
+//D:8003CE60
+struct Gitemheader GkeycardZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 123.088844, 0, 2, 0, 0};
+//D:8003CE80
+struct Gitemheader GkeyyaleZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 414.25156, 0, 1, 0, 0};
+//D:8003CEA0
+struct Gitemheader GkeyboltZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 759.26581, 0, 1, 0, 0};
+//D:8003CEC0
+struct Gitemheader GbugZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 106.2163, 0, 6, 0, 0};
+//D:8003CEE0
+struct Gitemheader GmicrocameraZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 70.039436, 0, 7, 0, 0};
+//D:8003CF00
+struct Gitemheader GexplosivefloppyZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 60.902443, 0, 5, 0, 0};
+//D:8003CF20
+struct Gitemheader GgoldeneyekeyZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 98.987083, 0, 5, 0, 0};
+//D:8003CF40
+struct Gitemheader GpolarizedglassesZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 53.776386, 0, 2, 0, 0};
+//D:8003CF60
+struct Gitemheader GcreditcardZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CF80
+struct Gitemheader GdarkglassesZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003CFA0
+struct Gitemheader GwatchidentifierZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 0, 9, 0, 0};
+//D:8003CFC0
+struct Gitemheader GwatchcommunicatorZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 0, 9, 0, 0};
+//D:8003CFE0
+struct Gitemheader GwatchlaserZ_struct = {0, &weapon_gun_standard_gun, 0, 0x24, 4, 283.9006, 0, 0x16, 0, 0};
+//D:8003D000
+struct Gitemheader GwatchgeigercounterZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 0, 9, 0, 0};
+//D:8003D020
+struct Gitemheader GwatchmagnetrepelZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 384.9288, 0, 9, 0, 0};
+//D:8003D040
+struct Gitemheader GwatchmagnetattractZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1D, 3, 384.9288, 0, 9, 0, 0};
+//D:8003D060
+struct Gitemheader GgaskeyringZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 111.59859, 0, 9, 0, 0};
+//D:8003D080
+struct Gitemheader GdatathiefZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 119.78231, 0, 3, 0, 0};
+//D:8003D0A0
+struct Gitemheader GbriefcaseZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 116.11074, 0, 6, 0, 0};
+//D:8003D0C0
+struct Gitemheader GblackboxZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 128.31796, 0, 5, 0, 0};
+//D:8003D0E0
+struct Gitemheader GplastiqueZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 255.35242, 0, 3, 0, 0};
+//D:8003D100
+struct Gitemheader GvideotapeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 122.69632, 0, 9, 0, 0};
+//D:8003D120
+struct Gitemheader GclipboardZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 190.41742, 0, 3, 0, 0};
+//D:8003D140
+struct Gitemheader GstafflistZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 215.17534, 0, 4, 0, 0};
+//D:8003D160
+struct Gitemheader GdossierredZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 183.54231, 0, 4, 0, 0};
+//D:8003D180
+struct Gitemheader GaudiotapeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 97.531075, 0, 9, 0, 0};
+//D:8003D1A0
+struct Gitemheader GdattapeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 79.868584, 0, 4, 0, 0};
+//D:8003D1C0
+struct Gitemheader GplansZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 81.950996, 0, 5, 0, 0};
+//D:8003D1E0
+struct Gitemheader GspyfileZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003D200
+struct Gitemheader GblueprintsZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 125.3834, 0, 4, 0, 0};
+//D:8003D220
+struct Gitemheader GcircuitboardZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 138.90285, 0, 3, 0, 0};
+//D:8003D240
+struct Gitemheader GmapZ_struct = {0, &weapon_gun_standard_gun, 0, 0x23, 3, 125.3834, 0, 4, 0, 0};
+//D:8003D260
+struct Gitemheader GspooltapeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003D280
+struct Gitemheader GmicrofilmZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003D2A0
+struct Gitemheader GmicrocodeZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003D2C0
+struct Gitemheader GlectreZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003D2E0
+struct Gitemheader GmoneyZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003D300
+struct Gitemheader GgoldbarZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+//D:8003D320
+struct Gitemheader GheroinZ_struct = {0, &weapon_gun_standard_gun, 0, 0x1C, 3, 134.8334, 0, 2, 0, 0};
+
+//FIXME File split likely
+//D:8003D340
+u32 dword_D_8003D340[] = {0x20000,         2,   0x30003,   0x20006,
+                          0x60002,   0x90009,   0x2000C,   0xC0002,
+                          0xF000F,   0x20012,  0x120002,  0x150015,
+                          0x20018,  0x180002,  0x1B001B,   0x2001E,
+                          0x1E0002,  0x210021,   0x20024,  0x240000};
+
+
+//D:8003D390
+struct model_data weapon_gun_controller = {0xD0000, dword_D_8003D340, 0x270000};
+
+//FIXME File split likely
+//D:8003D39C
+s32 D_8003D39C = 0;
+
+u32 dword_D_8003D3A0[] = {0x4010000,         2,         0,   0x20003,
+                          0x30002,   0x60006,   0x20009,   0xC0002,
+                          0xC0009,   0x2000F,  0x120002,  0x12000F,
+                          0x20015,  0x180002,  0x180015,   0x2001B,
+                          0x1E0002,  0x1E001B,   0x20021,  0x240002,
+                          0x240021,   0x20027,  0x2A0002,  0x2A0027};
+
+
+//D:8003D400
+     struct model_data model_guard_character = {0x100000, dword_D_8003D3A0, 0x2D0000};
+//D:8003D40C
+
+//FIXME File split likely
+s32 D_8003D40C = 0;
+
+//D:8003D410
+struct object_header CcamguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xE, 0, 0};
+//D:8003D430
+struct object_header CgreyguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1292.6892, 0, 0xD, 0, 0};
+//D:8003D450
+struct object_header ColiveguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0x10, 0, 0};
+//D:8003D470
+struct object_header CrusguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xD, 0, 0};
+//D:8003D490
+struct object_header CtrevguardZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1260.4969, 0, 0x12, 0, 0};
+//D:8003D4B0
+struct object_header CborisZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1223.1553, 0, 0x15, 0, 0};
+//D:8003D4D0
+struct object_header CorumovZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1347.004, 0, 0x15, 0, 0};
+//D:8003D4F0
+struct object_header CtrevelyanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1263.2534, 0, 0x10, 0, 0};
+//D:8003D510
+struct object_header CboilertrevZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1263.2534, 0, 0x10, 0, 0};
+//D:8003D530
+struct object_header CvalentinZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1208.6277, 0, 0x10, 0, 0};
+//D:8003D550
+struct object_header CxeniaZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1285.4487, 0, 0x13, 0, 0};
+//D:8003D570
+struct object_header CbaronsamediZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1292.5995, 0, 0x19, 0, 0};
+//D:8003D590
+struct object_header CjawsZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1550.059, 0, 0x14, 0, 0};
+//D:8003D5B0
+struct object_header CmaydayZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1260.657, 0, 0x10, 0, 0};
+//D:8003D5D0
+struct object_header CoddjobZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1082.4603, 0, 0x12, 0, 0};
+//D:8003D5F0
+struct object_header CnatalyaZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1226.1493, 0, 0x10, 0, 0};
+//D:8003D610
+struct object_header CarmourguardZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1260.4969, 0, 0x11, 0, 0};
+//D:8003D630
+struct object_header CcommguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xF, 0, 0};
+//D:8003D650
+struct object_header CgreatguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1283.0787, 0, 0xB, 0, 0};
+//D:8003D670
+struct object_header CnavyguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xF, 0, 0};
+//D:8003D690
+struct object_header CsnowguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1261.1731, 0, 0x11, 0, 0};
+//D:8003D6B0
+struct object_header CbluewomanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1148.2167, 0, 0xD, 0, 0};
+//D:8003D6D0
+struct object_header CfattechwomanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1149.4025, 0, 0xC, 0, 0};
+//D:8003D6F0
+struct object_header CtechwomanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1158.2109, 0, 0xC, 0, 0};
+//D:8003D710
+struct object_header CjeanwomanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1124.0725, 0, 0xF, 0, 0};
+//D:8003D730
+struct object_header CgreymanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1293.0195, 0, 0xF, 0, 0};
+//D:8003D750
+struct object_header CbluemanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1292.6892, 0, 0xF, 0, 0};
+//D:8003D770
+struct object_header CredmanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1292.6892, 0, 0xF, 0, 0};
+//D:8003D790
+struct object_header CcardimanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1292.6892, 0, 0xE, 0, 0};
+//D:8003D7B0
+struct object_header CcheckmanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1292.6892, 0, 0x10, 0, 0};
+//D:8003D7D0
+struct object_header CtechmanZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1292.6892, 0, 0xC, 0, 0};
+//D:8003D7F0
+struct object_header CpilotZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1260.4969, 0, 0x18, 0, 0};
+//D:8003D810
+struct object_header Cgreatguard2Z_struct = {0, &model_guard_character, 0, 7, 0x14, 1283.0787, 0, 0x10, 0, 0};
+//D:8003D830
+struct object_header CbluecamguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xE, 0, 0};
+//D:8003D850
+struct object_header CmoonguardZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1260.4969, 0, 0xD, 0, 0};
+//D:8003D870
+struct object_header CmoonfemaleZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1124.0725, 0, 0xB, 0, 0};
+//D:8003D890
+struct object_header CboilerbondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1273.6262, 0, 0xD, 0, 0};
+//D:8003D8B0
+struct object_header CsuitbondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1292.3391, 0, 0xE, 0, 0};
+//D:8003D8D0
+struct object_header CtimberbondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1282.7715, 0, 0x10, 0, 0};
+//D:8003D8F0
+struct object_header CsnowbondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1299.1359, 0, 0xE, 0, 0};
+//D:8003D910
+struct object_header CdjbondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1285.0543, 0, 0xD, 0, 0};
+//D:8003D930
+struct object_header Csuit_lf_handz_struct = {0, &model_suit_lf_hand, 0, 0xA, 9, 12231.949, 0, 0x16, 0, 0};
+//D:8003D950
+struct object_header CheadkarlZ_struct = {0, NULL, 0, 2, 1, 218.15375, 0, 6, 0, 0};
+//D:8003D970
+struct object_header CheadalanZ_struct = {0, NULL, 0, 2, 1, 215.03685, 0, 4, 0, 0};
+//D:8003D990
+struct object_header CheadpeteZ_struct = {0, NULL, 0, 2, 1, 216.28949, 0, 4, 0, 0};
+//D:8003D9B0
+struct object_header CheadmartinZ_struct = {0, NULL, 0, 2, 1, 222.34796, 0, 6, 0, 0};
+//D:8003D9D0
+struct object_header stru_D_8003D9D0 = {0, NULL, 0, 2, 1, 220.2446, 0, 5, 0, 0};
+//D:8003D9F0
+struct object_header stru_D_8003D9F0 = {0, NULL, 0, 2, 1, 201.51955, 0, 5, 0, 0};
+//D:8003DA10
+struct object_header stru_D_8003DA10 = {0, NULL, 0, 2, 1, 212.62949, 0, 5, 0, 0};
+//D:8003DA30
+struct object_header stru_D_8003DA30 = {0, NULL, 0, 2, 1, 218.35564, 0, 4, 0, 0};
+//D:8003DA50
+struct object_header stru_D_8003DA50 = {0, NULL, 0, 2, 1, 192.53412, 0, 4, 0, 0};
+//D:8003DA70
+struct object_header stru_D_8003DA70 = {0, NULL, 0, 2, 1, 218.35564, 0, 4, 0, 0};
+//D:8003DA90
+struct object_header stru_D_8003DA90 = {0, NULL, 0, 2, 1, 227.52234, 0, 4, 0, 0};
+//D:8003DAB0
+struct object_header stru_D_8003DAB0 = {0, NULL, 0, 2, 1, 228.29831, 0, 4, 0, 0};
+//D:8003DAD0
+struct object_header stru_D_8003DAD0 = {0, NULL, 0, 2, 1, 235.64778, 0, 6, 0, 0};
+//D:8003DAF0
+struct object_header stru_D_8003DAF0 = {0, NULL, 0, 2, 1, 218.35564, 0, 5, 0, 0};
+//D:8003DB10
+struct object_header stru_D_8003DB10 = {0, NULL, 0, 2, 1, 240.50017, 0, 4, 0, 0};
+//D:8003DB30
+struct object_header stru_D_8003DB30 = {0, NULL, 0, 2, 1, 234.83342, 0, 4, 0, 0};
+//D:8003DB50
+struct object_header stru_D_8003DB50 = {0, NULL, 0, 2, 1, 228.24614, 0, 4, 0, 0};
+//D:8003DB70
+struct object_header stru_D_8003DB70 = {0, NULL, 0, 2, 1, 228.55029, 0, 4, 0, 0};
+//D:8003DB90
+struct object_header stru_D_8003DB90 = {0, NULL, 0, 2, 1, 212.62949, 0, 2, 0, 0};
+//D:8003DBB0
+struct object_header stru_D_8003DBB0 = {0, NULL, 0, 2, 1, 219.82707, 0, 6, 0, 0};
+//D:8003DBD0
+struct object_header stru_D_8003DBD0 = {0, NULL, 0, 2, 1, 193.20615, 0, 5, 0, 0};
+//D:8003DBF0
+struct object_header stru_D_8003DBF0 = {0, NULL, 0, 2, 1, 235.64778, 0, 4, 0, 0};
+//D:8003DC10
+struct object_header stru_D_8003DC10 = {0, NULL, 0, 2, 1, 223.18559, 0, 4, 0, 0};
+//D:8003DC30
+struct object_header stru_D_8003DC30 = {0, NULL, 0, 2, 1, 218.35564, 0, 5, 0, 0};
+//D:8003DC50
+struct object_header stru_D_8003DC50 = {0, NULL, 0, 2, 1, 193.20615, 0, 4, 0, 0};
+//D:8003DC70
+struct object_header stru_D_8003DC70 = {0, NULL, 0, 2, 1, 235.64778, 0, 5, 0, 0};
+//D:8003DC90
+struct object_header stru_D_8003DC90 = {0, NULL, 0, 2, 1, 193.20615, 0, 3, 0, 0};
+//D:8003DCB0
+struct object_header stru_D_8003DCB0 = {0, NULL, 0, 2, 1, 224.83139, 0, 3, 0, 0};
+//D:8003DCD0
+struct object_header stru_D_8003DCD0 = {0, NULL, 0, 2, 1, 219.97256, 0, 3, 0, 0};
+//D:8003DCF0
+struct object_header stru_D_8003DCF0 = {0, NULL, 0, 2, 1, 203.44904, 0, 3, 0, 0};
+//D:8003DD10
+struct object_header stru_D_8003DD10 = {0, NULL, 0, 2, 1, 196.83067, 0, 3, 0, 0};
+//D:8003DD30
+struct object_header stru_D_8003DD30 = {0, NULL, 0, 2, 1, 176.67717, 0, 1, 0, 0};
+//D:8003DD50
+struct object_header stru_D_8003DD50 = {0, NULL, 0, 2, 1, 190.61967, 0, 4, 0, 0};
+//D:8003DD70
+struct object_header CheadbrosnansuitZ_struct = {0, NULL, 0, 2, 1, 212.45657, 0, 5, 0, 0};
+//D:8003DD90
+struct object_header CheadbrosnantimberZ_struct = {0, NULL, 0, 2, 1, 179.28358, 0, 4, 0, 0};
+//D:8003DDB0
+struct object_header CheadbrosnansnowZ_struct = {0, NULL, 0, 2, 1, 225.0605, 0, 6, 0, 0};
+//D:8003DDD0
+struct object_header CheadbrosnanZ_struct = {0, NULL, 0, 2, 1, 189.48112, 0, 5, 0, 0};
+//D:8003DDF0
+struct object_header CspicebondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1208.6448, 0, 0x11, 0, 0};
+
