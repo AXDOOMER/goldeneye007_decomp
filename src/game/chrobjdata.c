@@ -472,685 +472,685 @@ char * setup_text_pointers[] = {
 
 
 //D:800375D0
-struct PitemZ_header Palarm1z_header = {0, &model_object_standard_object, 0, 0, 1, 304.6402, 2, 0, 0};
+struct PitemZ_header Palarm1z_header = {0, &model_object_standard_object, 0, 0, 1, 304.6402, 0, 2, 0, 0};
 //D:800375F0
-struct PitemZ_header Palarm2Z_header = {0, &model_object_standard_object, 0, 0, 1, 208.22205, 3, 0, 0};
+struct PitemZ_header Palarm2Z_header = {0, &model_object_standard_object, 0, 0, 1, 208.22205, 0, 3, 0, 0};
 //D:80037610
-struct PitemZ_header PexplosionbitZ_header = {0, &model_object_standard_object, 0, 0, 1, 208.22205, 0, 0, 0};
+struct PitemZ_header PexplosionbitZ_header = {0, &model_object_standard_object, 0, 0, 1, 208.22205, 0, 0, 0, 0};
 //D:80037630
-struct PitemZ_header Pammo_crate1Z_header = {0, &model_object_standard_object, 0, 0, 1, 691.83429, 3, 0, 0};
+struct PitemZ_header Pammo_crate1Z_header = {0, &model_object_standard_object, 0, 0, 1, 691.83429, 0, 3, 0, 0};
 //D:80037650
-struct PitemZ_header Pammo_crate2Z_header = {0, &model_object_standard_object, 0, 0, 1, 691.83429, 4, 0, 0};
+struct PitemZ_header Pammo_crate2Z_header = {0, &model_object_standard_object, 0, 0, 1, 691.83429, 0, 4, 0, 0};
 //D:80037670
-struct PitemZ_header Pammo_crate3Z_header = {0, &model_object_standard_object, 0, 0, 1, 691.83429, 4, 0, 0};
+struct PitemZ_header Pammo_crate3Z_header = {0, &model_object_standard_object, 0, 0, 1, 691.83429, 0, 4, 0, 0};
 //D:80037690
-struct PitemZ_header Pammo_crate4Z_header = {0, &model_object_standard_object, 0, 0, 1, 691.83429, 5, 0, 0};
+struct PitemZ_header Pammo_crate4Z_header = {0, &model_object_standard_object, 0, 0, 1, 691.83429, 0, 5, 0, 0};
 //D:800376B0
-struct PitemZ_header Pammo_crate5Z_header = {0, &model_object_standard_object, 0, 0, 1, 691.83429, 5, 0, 0};
+struct PitemZ_header Pammo_crate5Z_header = {0, &model_object_standard_object, 0, 0, 1, 691.83429, 0, 5, 0, 0};
 //D:800376D0
-struct PitemZ_header Pbin1Z_header = {0, &model_object_standard_object, 0, 0, 1, 3027.6262, 2, 0};
+struct PitemZ_header Pbin1Z_header = {0, &model_object_standard_object, 0, 0, 1, 3027.6262,0, 2, 0, 0};
 //D:800376F0
-struct PitemZ_header Pblotter1Z_header = {0, &model_object_standard_object, 0, 0, 1, 432.46707, 1, 0, 0};
+struct PitemZ_header Pblotter1Z_header = {0, &model_object_standard_object, 0, 0, 1, 432.46707, 0, 1, 0, 0};
 //D:80037710
-struct PitemZ_header Pbook1Z_header = {0, &model_object_standard_object, 0, 0, 1, 171.37482, 2, 0, };
+struct PitemZ_header Pbook1Z_header = {0, &model_object_standard_object, 0, 0, 1, 171.37482, 0, 2, 0, 0};
 //D:80037730
-struct PitemZ_header Pbookshelf1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1166.7578, 0xD, 0, 0};
+struct PitemZ_header Pbookshelf1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1166.7578, 0, 0xD, 0, 0};
 //D:80037750
-struct PitemZ_header Pbridge_console1aZ_header = {0, &prop_console_four_screen_related, 0, 0, 0x40001, 788.03992, 0xF, 0, 0};
+struct PitemZ_header Pbridge_console1aZ_header = {0, &prop_console_four_screen_related, 0, 0x4, 0x1, 788.03992, 0, 0xF, 0, 0};
 //D:80037770
-struct PitemZ_header Pbridge_console1bZ_header = {0, &prop_console_one_screen_related, 0, 0, 0x10001, 788.03992, 0x10, 0, 0};
+struct PitemZ_header Pbridge_console1bZ_header = {0, &prop_console_one_screen_related, 0, 0x1, 0x1, 788.03992, 0, 0x10, 0, 0};
 //D:80037790
-struct PitemZ_header Pbridge_console2aZ_header = {0, &prop_console_four_screen_related, 0, 0, 0x40001, 788.03992, 0xF, 0, 0};
+struct PitemZ_header Pbridge_console2aZ_header = {0, &prop_console_four_screen_related, 0, 0x4, 0x1, 788.03992, 0, 0xF, 0, 0};
 //D:800377B0
-struct PitemZ_header Pbridge_console2bZ_header = {0, &model_object_standard_object, 0, 0, 1, 788.03992, 0xF, 0, 0};
+struct PitemZ_header Pbridge_console2bZ_header = {0, &model_object_standard_object, 0, 0, 1, 788.03992, 0, 0xF, 0, 0};
 //D:800377D0
-struct PitemZ_header Pbridge_console3aZ_header = {0, &prop_console_four_screen_related, 0, 0, 0x40001, 788.03992, 0xF, 0, 0};
+struct PitemZ_header Pbridge_console3aZ_header = {0, &prop_console_four_screen_related, 0, 0x4, 0x1, 788.03992, 0, 0xF, 0, 0};
 //D:800377F0
-struct PitemZ_header Pbridge_console3bZ_header = {0, &prop_console_four_screen_related, 0, 0, 0x40001, 788.03992, 0x10, 0, 0};
+struct PitemZ_header Pbridge_console3bZ_header = {0, &prop_console_four_screen_related, 0, 0x4, 0x1, 788.03992, 0, 0x10, 0, 0};
 //D:80037810
-struct PitemZ_header Pcard_box1Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 5, 0, 0};
+struct PitemZ_header Pcard_box1Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 0, 5, 0, 0};
 //D:80037830
-struct PitemZ_header Pcard_box2Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 6, 0, 0};
+struct PitemZ_header Pcard_box2Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 0, 6, 0, 0};
 //D:80037850
-struct PitemZ_header Pcard_box3Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 5, 0, 0};
+struct PitemZ_header Pcard_box3Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 0, 5, 0, 0};
 //D:80037870
-struct PitemZ_header Pcard_box4_lgZ_header = {0, &model_object_standard_object, 0, 0, 1, 800.2074, 4, 0, 0};
+struct PitemZ_header Pcard_box4_lgZ_header = {0, &model_object_standard_object, 0, 0, 1, 800.2074, 0, 4, 0, 0};
 //D:80037890
-struct PitemZ_header Pcard_box5_lgZ_header = {0, &model_object_standard_object, 0, 0, 1, 800.2074, 5, 0, 0};
+struct PitemZ_header Pcard_box5_lgZ_header = {0, &model_object_standard_object, 0, 0, 1, 800.2074, 0, 5, 0, 0};
 //D:800378B0
-struct PitemZ_header Pcard_box6_lgZ_header = {0, &model_object_standard_object, 0, 0, 1, 800.2074, 5, 0, 0};
+struct PitemZ_header Pcard_box6_lgZ_header = {0, &model_object_standard_object, 0, 0, 1, 800.2074, 0, 5, 0, 0};
 //D:800378D0
-struct PitemZ_header PcctvZ_header = {0, &prop_cctv_related, 0, 0, 0x40002, 558.90094, 6, 0};
+struct PitemZ_header PcctvZ_header = {0, &prop_cctv_related, 0, 0x4, 0x2, 558.90094, 0, 6, 0, 0};
 //D:800378F0
-struct PitemZ_header Pconsole1Z_header = {0, &prop_console_four_screen_related, 0, 0, 0x40001, 1611.2357, 0xA, 0, 0};
+struct PitemZ_header Pconsole1Z_header = {0, &prop_console_four_screen_related, 0, 0x4, 0x1, 1611.2357, 0, 0xA, 0, 0};
 //D:80037910
-struct PitemZ_header Pconsole2Z_header = {0, &prop_console_four_screen_related, 0, 0, 0x40001, 1611.2357, 0xA, 0, 0};
+struct PitemZ_header Pconsole2Z_header = {0, &prop_console_four_screen_related, 0, 0x4, 0x1, 1611.2357, 0, 0xA, 0, 0};
 //D:80037930
-struct PitemZ_header Pconsole3Z_header = {0, &prop_console_four_screen_related, 0, 0, 0x40001, 1611.2357, 0xA, 0, 0};
+struct PitemZ_header Pconsole3Z_header = {0, &prop_console_four_screen_related, 0, 0x4, 0x1, 1611.2357, 0, 0xA, 0, 0};
 //D:80037950
-struct PitemZ_header Pconsole_sevaZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0xE, 0, 0};
+struct PitemZ_header Pconsole_sevaZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0, 0xE, 0, 0};
 //D:80037970
-struct PitemZ_header Pconsole_sevbZ_header = {0, &prop_console_one_screen_related, 0, 0, 0x10001, 994.23688, 0xB, 0, 0};
+struct PitemZ_header Pconsole_sevbZ_header = {0, &prop_console_one_screen_related, 0, 0x1, 0x1, 994.23688, 0, 0xB, 0, 0};
 //D:80037990
-struct PitemZ_header Pconsole_sevcZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0xF, 0, 0};
+struct PitemZ_header Pconsole_sevcZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0, 0xF, 0, 0};
 //D:800379B0
-struct PitemZ_header Pconsole_sevdZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0xD, 0, 0};
+struct PitemZ_header Pconsole_sevdZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0, 0xD, 0, 0};
 //D:800379D0
-struct PitemZ_header Pconsole_sev2aZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0xD, 0, 0};
+struct PitemZ_header Pconsole_sev2aZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0, 0xD, 0, 0};
 //D:800379F0
-struct PitemZ_header Pconsole_sev2bZ_header = {0, &prop_console_one_screen_related, 0, 0, 0x10001, 994.23688, 0xD, 0, 0};
+struct PitemZ_header Pconsole_sev2bZ_header = {0, &prop_console_one_screen_related, 0, 0x1, 0x1, 994.23688, 0, 0xD, 0, 0};
 //D:80037A10
-struct PitemZ_header Pconsole_sev2cZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0xF, 0, 0};
+struct PitemZ_header Pconsole_sev2cZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0, 0xF, 0, 0};
 //D:80037A30
-struct PitemZ_header Pconsole_sev2dZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0xD, 0, 0};
+struct PitemZ_header Pconsole_sev2dZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0, 0xD, 0, 0};
 //D:80037A50
-struct PitemZ_header Pconsole_sev_GEaZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0xD, 0, 0};
+struct PitemZ_header Pconsole_sev_GEaZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0, 0xD, 0, 0};
 //D:80037A70
-struct PitemZ_header Pconsole_sev_GEbZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0xD, 0, 0};
+struct PitemZ_header Pconsole_sev_GEbZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0, 0xD, 0, 0};
 //D:80037A90
-struct PitemZ_header Pdesk1Z_header = {0, &model_object_standard_object, 0, 0, 1, 957.18225, 3, 0, };
+struct PitemZ_header Pdesk1Z_header = {0, &model_object_standard_object, 0, 0, 1, 957.18225, 0, 3, 0, 0};
 //D:80037AB0
-struct PitemZ_header Pdesk2Z_header = {0, &model_object_standard_object, 0, 0, 1, 957.18225, 3, 0, };
+struct PitemZ_header Pdesk2Z_header = {0, &model_object_standard_object, 0, 0, 1, 957.18225, 0, 3, 0, 0};
 //D:80037AD0
-struct PitemZ_header Pdesk_lamp2Z_header = {0, &model_object_standard_object, 0, 0, 1, 804.59833, 4, 0, 0};
+struct PitemZ_header Pdesk_lamp2Z_header = {0, &model_object_standard_object, 0, 0, 1, 804.59833, 0, 4, 0, 0};
 //D:80037AF0
-struct PitemZ_header Pdisc_readerZ_header = {0, &model_object_standard_object, 0, 0, 1, 214.33035, 6, 0, 0};
+struct PitemZ_header Pdisc_readerZ_header = {0, &model_object_standard_object, 0, 0, 1, 214.33035, 0, 6, 0, 0};
 //D:80037B10
-struct PitemZ_header Pdisk_drive1Z_header = {0, &model_object_standard_object, 0, 0, 1, 191.85779, 4, 0, 0};
+struct PitemZ_header Pdisk_drive1Z_header = {0, &model_object_standard_object, 0, 0, 1, 191.85779, 0, 4, 0, 0};
 //D:80037B30
-struct PitemZ_header Pfiling_cabinet1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1055.5693, 2, 0, 0};
+struct PitemZ_header Pfiling_cabinet1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1055.5693, 0, 2, 0, 0};
 //D:80037B50
-struct PitemZ_header Pjerry_can1Z_header = {0, &model_object_standard_object, 0, 0, 1, 366.61932, 4, 0, 0};
+struct PitemZ_header Pjerry_can1Z_header = {0, &model_object_standard_object, 0, 0, 1, 366.61932, 0, 4, 0, 0};
 //D:80037B70
-struct PitemZ_header Pkeyboard1Z_header = {0, &model_object_standard_object, 0, 0, 1, 278.23227, 2, 0, 0};
+struct PitemZ_header Pkeyboard1Z_header = {0, &model_object_standard_object, 0, 0, 1, 278.23227, 0, 2, 0, 0};
 //D:80037B90
-struct PitemZ_header Pkit_units1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1661.4763, 4, 0, 0};
+struct PitemZ_header Pkit_units1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1661.4763, 0, 4, 0, 0};
 //D:80037BB0
-struct PitemZ_header Pletter_tray1Z_header = {0, &model_object_standard_object, 0, 0, 1, 252.06836, 1, 0, 0};
+struct PitemZ_header Pletter_tray1Z_header = {0, &model_object_standard_object, 0, 0, 1, 252.06836, 0, 1, 0, 0};
 //D:80037BD0
-struct PitemZ_header Pmainframe1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1119.4073, 7, 0, 0};
+struct PitemZ_header Pmainframe1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1119.4073, 0, 7, 0, 0};
 //D:80037BF0
-struct PitemZ_header Pmainframe2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1119.4073, 7, 0, 0};
+struct PitemZ_header Pmainframe2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1119.4073, 0, 7, 0, 0};
 //D:80037C10
-struct PitemZ_header Pmetal_chair1Z_header = {0, &model_object_standard_object, 0, 0, 1, 639.18097, 2, 0, 0};
+struct PitemZ_header Pmetal_chair1Z_header = {0, &model_object_standard_object, 0, 0, 1, 639.18097, 0, 2, 0, 0};
 //D:80037C30
-struct PitemZ_header Pmetal_crate1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 3, 0, 0};
+struct PitemZ_header Pmetal_crate1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 0, 3, 0, 0};
 //D:80037C50
-struct PitemZ_header Pmetal_crate2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 3, 0, 0};
+struct PitemZ_header Pmetal_crate2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 0, 3, 0, 0};
 //D:80037C70
-struct PitemZ_header Pmetal_crate3Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 2, 0, 0};
+struct PitemZ_header Pmetal_crate3Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 0, 2, 0, 0};
 //D:80037C90
-struct PitemZ_header Pmetal_crate4Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 3, 0, 0};
+struct PitemZ_header Pmetal_crate4Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 0, 3, 0, 0};
 //D:80037CB0
-struct PitemZ_header Pmissile_rackZ_header = {0, &model_object_standard_object, 0, 0, 1, 964.16296, 4, 0, 0};
+struct PitemZ_header Pmissile_rackZ_header = {0, &model_object_standard_object, 0, 0, 1, 964.16296, 0, 4, 0, 0};
 //D:80037CD0
-struct PitemZ_header Pmissile_rack2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1148.4724, 4, 0, 0};
+struct PitemZ_header Pmissile_rack2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1148.4724, 0, 4, 0, 0};
 //D:80037CF0
-struct PitemZ_header Poil_drum1Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 2, 0, 0};
+struct PitemZ_header Poil_drum1Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 0, 2, 0, 0};
 //D:80037D10
-struct PitemZ_header Poil_drum2Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 4, 0, 0};
+struct PitemZ_header Poil_drum2Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 0, 4, 0, 0};
 //D:80037D30
-struct PitemZ_header Poil_drum3Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 4, 0, 0};
+struct PitemZ_header Poil_drum3Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 0, 4, 0, 0};
 //D:80037D50
-struct PitemZ_header Poil_drum5Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 3, 0, 0};
+struct PitemZ_header Poil_drum5Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 0, 3, 0, 0};
 //D:80037D70
-struct PitemZ_header Poil_drum6Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 3, 0, 0};
+struct PitemZ_header Poil_drum6Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 0, 3, 0, 0};
 //D:80037D90
-struct PitemZ_header Poil_drum7Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 4, 0, 0};
+struct PitemZ_header Poil_drum7Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 0, 4, 0, 0};
 //D:80037DB0
-struct PitemZ_header PpadlockZ_header = {0, &model_object_standard_object, 0, 0, 1, 225.64145, 4, 0, 0};
+struct PitemZ_header PpadlockZ_header = {0, &model_object_standard_object, 0, 0, 1, 225.64145, 0, 4, 0, 0};
 //D:80037DD0
-struct PitemZ_header Pphone1Z_header = {0, &model_object_standard_object, 0, 0, 1, 166.03481, 2, 0, 0};
+struct PitemZ_header Pphone1Z_header = {0, &model_object_standard_object, 0, 0, 1, 166.03481, 0, 2, 0, 0};
 //D:80037DF0
-struct PitemZ_header Pradio_unit1Z_header = {0, &model_object_standard_object, 0, 0, 1, 354.59534, 5, 0, 0};
+struct PitemZ_header Pradio_unit1Z_header = {0, &model_object_standard_object, 0, 0, 1, 354.59534, 0, 5, 0, 0};
 //D:80037E10
-struct PitemZ_header Pradio_unit2Z_header = {0, &model_object_standard_object, 0, 0, 1, 354.59534, 5, 0, 0};
+struct PitemZ_header Pradio_unit2Z_header = {0, &model_object_standard_object, 0, 0, 1, 354.59534, 0, 5, 0, 0};
 //D:80037E30
-struct PitemZ_header Pradio_unit3Z_header = {0, &model_object_standard_object, 0, 0, 1, 354.59534, 5, 0, 0};
+struct PitemZ_header Pradio_unit3Z_header = {0, &model_object_standard_object, 0, 0, 1, 354.59534, 0, 5, 0, 0};
 //D:80037E50
-struct PitemZ_header Pradio_unit4Z_header = {0, &model_object_standard_object, 0, 0, 1, 354.59534, 5, 0, 0};
+struct PitemZ_header Pradio_unit4Z_header = {0, &model_object_standard_object, 0, 0, 1, 354.59534, 0, 5, 0, 0};
 //D:80037E70
-struct PitemZ_header Psat1_reflectZ_header = {0, &model_object_standard_object, 0, 0, 1, 5185.9409, 0xD, 0, 0};
+struct PitemZ_header Psat1_reflectZ_header = {0, &model_object_standard_object, 0, 0, 1, 5185.9409, 0, 0xD, 0, 0};
 //D:80037E90
-struct PitemZ_header PsatdishZ_header = {0, &model_object_standard_object, 0, 0, 1, 2437.468, 2, 0, 0};
+struct PitemZ_header PsatdishZ_header = {0, &model_object_standard_object, 0, 0, 1, 2437.468, 0, 2, 0, 0};
 //D:80037EB0
-struct PitemZ_header PsatboxZ_header = {0, &model_object_standard_object, 0, 0, 1, 89.935875, 1, 0, 0};
+struct PitemZ_header PsatboxZ_header = {0, &model_object_standard_object, 0, 0, 1, 89.935875, 0, 1, 0, 0};
 //D:80037ED0
-struct PitemZ_header Pstool1Z_header = {0, &model_object_standard_object, 0, 0, 1, 353.11398, 2, 0, 0};
+struct PitemZ_header Pstool1Z_header = {0, &model_object_standard_object, 0, 0, 1, 353.11398, 0, 2, 0, 0};
 //D:80037EF0
-struct PitemZ_header Pswivel_chair1Z_header = {0, &model_object_standard_object, 0, 0, 1, 581.16394, 3, 0, 0};
+struct PitemZ_header Pswivel_chair1Z_header = {0, &model_object_standard_object, 0, 0, 1, 581.16394, 0, 3, 0, 0};
 //D:80037F10
-struct PitemZ_header Ptorpedo_rackZ_header = {0, &model_object_standard_object, 0, 0, 1, 765.61725, 3, 0, 0};
+struct PitemZ_header Ptorpedo_rackZ_header = {0, &model_object_standard_object, 0, 0, 1, 765.61725, 0, 3, 0, 0};
 //D:80037F30
-struct PitemZ_header Ptv1Z_header = {0, &prop_console_one_screen_related, 0, 0, 0x10001, 347.0235, 5, 0};
+struct PitemZ_header Ptv1Z_header = {0, &prop_console_one_screen_related, 0, 0x1, 0x1, 347.0235, 0, 5, 0, 0};
 //D:80037F50
-struct PitemZ_header Ptv_holderZ_header = {0, &prop_tv_holder_related, 0, 0, 0x40005, 1352.4841, 2, 0, 0};
+struct PitemZ_header Ptv_holderZ_header = {0, &prop_tv_holder_related, 0, 0x4, 0x5, 1352.4841, 0, 2, 0, 0};
 //D:80037F70
-struct PitemZ_header PtvscreenZ_header = {0, &prop_console_one_screen_related, 0, 0, 0x10001, 211.74477, 1, 0, 0};
+struct PitemZ_header PtvscreenZ_header = {0, &prop_console_one_screen_related, 0, 0x1, 0x1, 211.74477, 0, 1, 0, 0};
 //D:80037F90
-struct PitemZ_header Ptv4screenZ_header = {0, &prop_console_four_screen_related, 0, 0, 0x40001, 211.74477, 1, 0, 0};
+struct PitemZ_header Ptv4screenZ_header = {0, &prop_console_four_screen_related, 0, 0x4, 0x1, 211.74477, 0, 1, 0, 0};
 //D:80037FB0
-struct PitemZ_header Pwood_lg_crate1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 3, 0, 0};
+struct PitemZ_header Pwood_lg_crate1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 0, 3, 0, 0};
 //D:80037FD0
-struct PitemZ_header Pwood_lg_crate2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 2, 0, 0};
+struct PitemZ_header Pwood_lg_crate2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 0, 2, 0, 0};
 //D:80037FF0
-struct PitemZ_header Pwood_md_crate3Z_header = {0, &model_object_standard_object, 0, 0, 1, 909.32666, 2, 0, 0};
+struct PitemZ_header Pwood_md_crate3Z_header = {0, &model_object_standard_object, 0, 0, 1, 909.32666, 0, 2, 0, 0};
 //D:80038010
-struct PitemZ_header Pwood_sm_crate4Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 3, 0, 0};
+struct PitemZ_header Pwood_sm_crate4Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 0, 3, 0, 0};
 //D:80038030
-struct PitemZ_header Pwood_sm_crate5Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 4, 0, 0};
+struct PitemZ_header Pwood_sm_crate5Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 0, 4, 0, 0};
 //D:80038050
-struct PitemZ_header Pwood_sm_crate6Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 4, 0, 0};
+struct PitemZ_header Pwood_sm_crate6Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 0, 4, 0, 0};
 //D:80038070
-struct PitemZ_header Pwooden_table1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1095.1365, 2, 0, 0};
+struct PitemZ_header Pwooden_table1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1095.1365, 0, 2, 0, 0};
 //D:80038090
-struct PitemZ_header Pswipe_card2Z_header = {0, &model_object_standard_object, 0, 0, 1, 123.088844, 2, 0, 0};
+struct PitemZ_header Pswipe_card2Z_header = {0, &model_object_standard_object, 0, 0, 1, 123.088844, 0, 2, 0, 0};
 //D:800380B0
-struct PitemZ_header Pborg_crateZ_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 1, 0, 0};
+struct PitemZ_header Pborg_crateZ_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 0, 1, 0, 0};
 //D:800380D0
-struct PitemZ_header Pboxes4x4Z_header = {0, &model_object_standard_object, 0, 0, 1, 2424.8711, 7, 0, 0};
+struct PitemZ_header Pboxes4x4Z_header = {0, &model_object_standard_object, 0, 0, 1, 2424.8711, 0, 7, 0, 0};
 //D:800380F0
-struct PitemZ_header Pboxes3x4Z_header = {0, &model_object_standard_object, 0, 0, 1, 2241.0935, 6, 0, 0};
+struct PitemZ_header Pboxes3x4Z_header = {0, &model_object_standard_object, 0, 0, 1, 2241.0935, 0, 6, 0, 0};
 //D:80038110
-struct PitemZ_header Pboxes2x4Z_header = {0, &model_object_standard_object, 0, 0, 1, 2100.0, 6, 0, 0};
+struct PitemZ_header Pboxes2x4Z_header = {0, &model_object_standard_object, 0, 0, 1, 2100.0, 0, 6, 0, 0};
 //D:80038130
-struct PitemZ_header Psec_panelZ_header = {0, &model_object_standard_object, 0, 0, 1, 1567.2454, 3, 0, 0};
+struct PitemZ_header Psec_panelZ_header = {0, &model_object_standard_object, 0, 0, 1, 1567.2454, 0, 3, 0, 0};
 //D:80038150
-struct PitemZ_header PICBM_noseZ_header = {0, &model_object_standard_object, 0, 0, 1, 2782.7126, 8, 0, 0};
+struct PitemZ_header PICBM_noseZ_header = {0, &model_object_standard_object, 0, 0, 1, 2782.7126, 0, 8, 0, 0};
 //D:80038170
-struct PitemZ_header PICBMZ_header = {0, &model_object_standard_object, 0, 0, 1, 14790.535, 0xE, 0};
+struct PitemZ_header PICBMZ_header = {0, &model_object_standard_object, 0, 0, 1, 14790.535, 0, 0xE, 0, 0};
 //D:80038190
-struct PitemZ_header Ptuning_console1Z_header = {0, &prop_console_one_screen_related, 0, 0, 0x10001, 1139.5872, 0xE, 0, 0};
+struct PitemZ_header Ptuning_console1Z_header = {0, &prop_console_one_screen_related, 0, 0x1, 0x1, 1139.5872, 0, 0xE, 0, 0};
 //D:800381B0
-struct PitemZ_header Pdesk_arecibo1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1829.1477, 3, 0, 0};
+struct PitemZ_header Pdesk_arecibo1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1829.1477, 0, 3, 0, 0};
 //D:800381D0
-struct PitemZ_header Plocker3Z_header = {0, &model_object_standard_object, 0, 0, 1, 916.99805, 3, 0, 0};
+struct PitemZ_header Plocker3Z_header = {0, &model_object_standard_object, 0, 0, 1, 916.99805, 0, 3, 0, 0};
 //D:800381F0
-struct PitemZ_header Plocker4Z_header = {0, &model_object_standard_object, 0, 0, 1, 916.99805, 3, 0, 0};
+struct PitemZ_header Plocker4Z_header = {0, &model_object_standard_object, 0, 0, 1, 916.99805, 0, 3, 0, 0};
 //D:80038210
-struct PitemZ_header ProofgunZ_header = {0, &prop_rotating_stuff_related, 0, 0, 0x80005, 1910.908, 0xE, 0, 0};
+struct PitemZ_header ProofgunZ_header = {0, &prop_rotating_stuff_related, 0, 0x8, 0x5, 1910.908, 0, 0xE, 0, 0};
 //D:80038230
-struct PitemZ_header Pdest_engineZ_header = {0, &model_object_standard_object, 0, 0, 1, 6459.439, 0xA, 0, 0};
+struct PitemZ_header Pdest_engineZ_header = {0, &model_object_standard_object, 0, 0, 1, 6459.439, 0, 0xA, 0, 0};
 //D:80038250
-struct PitemZ_header Pdest_exocetZ_header = {0, &model_object_standard_object, 0, 0, 1, 1644.8435, 8, 0, 0};
+struct PitemZ_header Pdest_exocetZ_header = {0, &model_object_standard_object, 0, 0, 1, 1644.8435, 0, 8, 0, 0};
 //D:80038270
-struct PitemZ_header Pdest_gunZ_header = {0, &model_object_standard_object, 0, 0, 1, 2124.0735, 5, 0, 0};
+struct PitemZ_header Pdest_gunZ_header = {0, &model_object_standard_object, 0, 0, 1, 2124.0735, 0, 5, 0, 0};
 //D:80038290
-struct PitemZ_header Pdest_harpoonZ_header = {0, &model_object_standard_object, 0, 0, 1, 1798.7655, 5, 0, 0};
+struct PitemZ_header Pdest_harpoonZ_header = {0, &model_object_standard_object, 0, 0, 1, 1798.7655, 0, 5, 0, 0};
 //D:800382B0
-struct PitemZ_header Pdest_seawolfZ_header = {0, &model_object_standard_object, 0, 0, 1, 2282.0623, 0xA, 0, 0};
+struct PitemZ_header Pdest_seawolfZ_header = {0, &model_object_standard_object, 0, 0, 1, 2282.0623, 0, 0xA, 0, 0};
 //D:800382D0
-struct PitemZ_header PwindowZ_header = {0, &model_object_standard_object, 0, 0, 1, 423.48956, 1, 0, 0};
+struct PitemZ_header PwindowZ_header = {0, &model_object_standard_object, 0, 0, 1, 423.48956, 0, 1, 0, 0};
 //D:800382F0
-struct PitemZ_header Pwindow_lib_lg1Z_header = {0, &model_object_standard_object, 0, 0, 1, 835.20624, 1, 0, 0};
+struct PitemZ_header Pwindow_lib_lg1Z_header = {0, &model_object_standard_object, 0, 0, 1, 835.20624, 0, 1, 0, 0};
 //D:80038310
-struct PitemZ_header Pwindow_lib_sm1Z_header = {0, &model_object_standard_object, 0, 0, 1, 601.28625, 1, 0, 0};
+struct PitemZ_header Pwindow_lib_sm1Z_header = {0, &model_object_standard_object, 0, 0, 1, 601.28625, 0, 1, 0, 0};
 //D:80038330
-struct PitemZ_header Pwindow_cor11Z_header = {0, &model_object_standard_object, 0, 0, 1, 414.53622, 1, 0, 0};
+struct PitemZ_header Pwindow_cor11Z_header = {0, &model_object_standard_object, 0, 0, 1, 414.53622, 0, 1, 0, 0};
 //D:80038350
-struct PitemZ_header Pjungle3_treeZ_header = {0, &model_object_standard_object, 0, 0, 1, 28729.467, 5, 0, 0};
+struct PitemZ_header Pjungle3_treeZ_header = {0, &model_object_standard_object, 0, 0, 1, 28729.467, 0, 5, 0, 0};
 //D:80038370
-struct PitemZ_header PpalmZ_header = {0, &model_object_standard_object, 0, 0, 1, 15501.406, 3, 0};
+struct PitemZ_header PpalmZ_header = {0, &model_object_standard_object, 0, 0, 1, 15501.406, 0, 3, 0, 0};
 //D:80038390
-struct PitemZ_header PpalmtreeZ_header = {0, &model_object_standard_object, 0, 0, 1, 1781.4542, 2, 0, 0};
+struct PitemZ_header PpalmtreeZ_header = {0, &model_object_standard_object, 0, 0, 1, 1781.4542, 0, 2, 0, 0};
 //D:800383B0
-struct PitemZ_header Pplant2bZ_header = {0, &model_object_standard_object, 0, 0, 1, 1252.9539, 2, 0, 0};
+struct PitemZ_header Pplant2bZ_header = {0, &model_object_standard_object, 0, 0, 1, 1252.9539, 0, 2, 0, 0};
 //D:800383D0
-struct PitemZ_header PlabbenchZ_header = {0, &model_object_standard_object, 0, 0, 1, 844.09717, 4, 0, 0};
+struct PitemZ_header PlabbenchZ_header = {0, &model_object_standard_object, 0, 0, 1, 844.09717, 0, 4, 0, 0};
 //D:800383F0
-struct PitemZ_header PgasbarrelZ_header = {0, &model_object_standard_object, 0, 0, 1, 725.94379, 2, 0, 0};
+struct PitemZ_header PgasbarrelZ_header = {0, &model_object_standard_object, 0, 0, 1, 725.94379, 0, 2, 0, 0};
 //D:80038410
-struct PitemZ_header PgasbarrelsZ_header = {0, &model_object_standard_object, 0, 0, 1, 1174.1927, 2, 0, 0};
+struct PitemZ_header PgasbarrelsZ_header = {0, &model_object_standard_object, 0, 0, 1, 1174.1927, 0, 2, 0, 0};
 //D:80038430
-struct PitemZ_header PbodyarmourZ_header = {0, &model_object_standard_object, 0, 0, 1, 246.94099, 7, 0, 0};
+struct PitemZ_header PbodyarmourZ_header = {0, &model_object_standard_object, 0, 0, 1, 246.94099, 0, 7, 0, 0};
 //D:80038450
-struct PitemZ_header PbodyarmourvestZ_header = {0, &model_object_standard_object, 0, 0, 1, 241.82211, 2, 0, 0};
+struct PitemZ_header PbodyarmourvestZ_header = {0, &model_object_standard_object, 0, 0, 1, 241.82211, 0, 2, 0, 0};
 //D:80038470
-struct PitemZ_header PgastankZ_header = {0, &model_object_standard_object, 0, 0, 1, 1130.0691, 5, 0, 0};
+struct PitemZ_header PgastankZ_header = {0, &model_object_standard_object, 0, 0, 1, 1130.0691, 0, 5, 0, 0};
 //D:80038490
-struct PitemZ_header Pglassware1Z_header = {0, &model_object_standard_object, 0, 0, 1, 72.111031, 1, 0, 0};
+struct PitemZ_header Pglassware1Z_header = {0, &model_object_standard_object, 0, 0, 1, 72.111031, 0, 1, 0, 0};
 //D:800384B0
-struct PitemZ_header PhatchboltZ_header = {0, &model_object_standard_object, 0, 0, 1, 2236.0679, 1, 0, 0};
+struct PitemZ_header PhatchboltZ_header = {0, &model_object_standard_object, 0, 0, 1, 2236.0679, 0, 1, 0, 0};
 //D:800384D0
-struct PitemZ_header PbrakeunitZ_header = {0, &model_object_standard_object, 0, 0, 1, 801.95074, 4, 0, 0};
+struct PitemZ_header PbrakeunitZ_header = {0, &model_object_standard_object, 0, 0, 1, 801.95074, 0, 4, 0, 0};
 //D:800384F0
-struct PitemZ_header Pak47magZ_header = {0, &model_object_standard_object, 0, 0, 1, 107.11019, 2, 0, 0};
+struct PitemZ_header Pak47magZ_header = {0, &model_object_standard_object, 0, 0, 1, 107.11019, 0, 2, 0, 0};
 //D:80038510
-struct PitemZ_header Pm16magZ_header = {0, &model_object_standard_object, 0, 0, 1, 87.934891, 2, 0, 0};
+struct PitemZ_header Pm16magZ_header = {0, &model_object_standard_object, 0, 0, 1, 87.934891, 0, 2, 0, 0};
 //D:80038530
-struct PitemZ_header Pmp5kmagZ_header = {0, &model_object_standard_object, 0, 0, 1, 119.547295, 2, 0, 0};
+struct PitemZ_header Pmp5kmagZ_header = {0, &model_object_standard_object, 0, 0, 1, 119.547295, 0, 2, 0, 0};
 //D:80038550
-struct PitemZ_header PskorpionmagZ_header = {0, &model_object_standard_object, 0, 0, 1, 58.428444, 2, 0, 0};
+struct PitemZ_header PskorpionmagZ_header = {0, &model_object_standard_object, 0, 0, 1, 58.428444, 0, 2, 0, 0};
 //D:80038570
-struct PitemZ_header PspectremagZ_header = {0, &model_object_standard_object, 0, 0, 1, 99.01432, 2, 0, 0};
+struct PitemZ_header PspectremagZ_header = {0, &model_object_standard_object, 0, 0, 1, 99.01432, 0, 2, 0, 0};
 //D:80038590
-struct PitemZ_header PuzimagZ_header = {0, &model_object_standard_object, 0, 0, 1, 74.28373, 2, 0, 0};
+struct PitemZ_header PuzimagZ_header = {0, &model_object_standard_object, 0, 0, 1, 74.28373, 0, 2, 0, 0};
 //D:800385B0
-struct PitemZ_header PsilencerZ_header = {0, &model_object_standard_object, 0, 0, 1, 63.915436, 3, 0, 0};
+struct PitemZ_header PsilencerZ_header = {0, &model_object_standard_object, 0, 0, 1, 63.915436, 0, 3, 0, 0};
 //D:800385D0
-struct PitemZ_header PchrextinguisherZ_header = {0, &model_object_standard_object, 0, 0, 1, 425.50903, 2, 0, 0};
+struct PitemZ_header PchrextinguisherZ_header = {0, &model_object_standard_object, 0, 0, 1, 425.50903, 0, 2, 0, 0};
 //D:800385F0
-struct PitemZ_header PboxcartridgesZ_header = {0, &model_object_standard_object, 0, 0, 1, 66.81916, 3, 0, 0};
+struct PitemZ_header PboxcartridgesZ_header = {0, &model_object_standard_object, 0, 0, 1, 66.81916, 0, 3, 0, 0};
 //D:80038610
-struct PitemZ_header Pfnp90magZ_header = {0, &model_object_standard_object, 0, 0, 1, 176.28201, 2, 0, 0};
+struct PitemZ_header Pfnp90magZ_header = {0, &model_object_standard_object, 0, 0, 1, 176.28201, 0, 2, 0, 0};
 //D:80038630
-struct PitemZ_header PgoldenshellsZ_header = {0, &model_object_standard_object, 0, 0, 1, 66.81916, 3, 0, 0};
+struct PitemZ_header PgoldenshellsZ_header = {0, &model_object_standard_object, 0, 0, 1, 66.81916, 0, 3, 0, 0};
 //D:80038650
-struct PitemZ_header PmagnumshellsZ_header = {0, &model_object_standard_object, 0, 0, 1, 66.81916, 3, 0, 0};
+struct PitemZ_header PmagnumshellsZ_header = {0, &model_object_standard_object, 0, 0, 1, 66.81916, 0, 3, 0, 0};
 //D:80038670
-struct PitemZ_header PwppkmagZ_header = {0, &model_object_standard_object, 0, 0, 1, 74.28373, 2, 0, 0};
+struct PitemZ_header PwppkmagZ_header = {0, &model_object_standard_object, 0, 0, 1, 74.28373, 0, 2, 0, 0};
 //D:80038690
-struct PitemZ_header Ptt33magZ_header = {0, &model_object_standard_object, 0, 0, 1, 74.28373, 2, 0, 0};
+struct PitemZ_header Ptt33magZ_header = {0, &model_object_standard_object, 0, 0, 1, 74.28373, 0, 2, 0, 0};
 //D:800386B0
-struct PitemZ_header Psev_doorZ_header = {0, &model_object_standard_object, 0, 0, 1, 1143.7695, 3, 0, 0};
+struct PitemZ_header Psev_doorZ_header = {0, &model_object_standard_object, 0, 0, 1, 1143.7695, 0, 3, 0, 0};
 //D:800386D0
-struct PitemZ_header Psev_door3Z_header = {0, &model_object_standard_object, 0, 0, 1, 1143.5603, 6, 0, 0};
+struct PitemZ_header Psev_door3Z_header = {0, &model_object_standard_object, 0, 0, 1, 1143.5603, 0, 6, 0, 0};
 //D:800386F0
-struct PitemZ_header Psev_door3_windZ_header = {0, &model_object_standard_object, 0, 0, 1, 1143.5603, 5, 0, 0};
+struct PitemZ_header Psev_door3_windZ_header = {0, &model_object_standard_object, 0, 0, 1, 1143.5603, 0, 5, 0, 0};
 //D:80038710
-struct PitemZ_header Psev_door4_windZ_header = {0, &prop_door_related, 0, 0, 0x40001, 1143.5603, 8, 0, 0};
+struct PitemZ_header Psev_door4_windZ_header = {0, &prop_door_related, 0, 0x4, 0x1, 1143.5603, 0, 8, 0, 0};
 //D:80038730
-struct PitemZ_header Psev_trislideZ_header = {0, &prop_door_related, 0, 0, 0x40001, 950.54327, 2, 0, 0};
+struct PitemZ_header Psev_trislideZ_header = {0, &prop_door_related, 0, 0x4, 0x1, 950.54327, 0, 2, 0, 0};
 //D:80038750
-struct PitemZ_header Psev_door_v1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1137.8739, 6, 0, 0};
+struct PitemZ_header Psev_door_v1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1137.8739, 0, 6, 0, 0};
 //D:80038770
-struct PitemZ_header Psteel_door1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1137.8739, 4, 0, 0};
+struct PitemZ_header Psteel_door1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1137.8739, 0, 4, 0, 0};
 //D:80038790
-struct PitemZ_header Psteel_door2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1137.8739, 9, 0, 0};
+struct PitemZ_header Psteel_door2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1137.8739, 0, 9, 0, 0};
 //D:800387B0
-struct PitemZ_header Psteel_door3Z_header = {0, &model_object_standard_object, 0, 0, 1, 1137.8739, 9, 0, 0};
+struct PitemZ_header Psteel_door3Z_header = {0, &model_object_standard_object, 0, 0, 1, 1137.8739, 0, 9, 0, 0};
 //D:800387D0
-struct PitemZ_header Psilo_lift_doorZ_header = {0, &model_object_standard_object, 0, 0, 1, 600.71082, 4, 0, 0};
+struct PitemZ_header Psilo_lift_doorZ_header = {0, &model_object_standard_object, 0, 0, 1, 600.71082, 0, 4, 0, 0};
 //D:800387F0
-struct PitemZ_header Psteel_door2bZ_header = {0, &model_object_standard_object, 0, 0, 1, 1137.8739, 9, 0, 0};
+struct PitemZ_header Psteel_door2bZ_header = {0, &model_object_standard_object, 0, 0, 1, 1137.8739, 0, 9, 0, 0};
 //D:80038810
-struct PitemZ_header Pdoor_roller1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1032.125, 4, 0, 0};
+struct PitemZ_header Pdoor_roller1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1032.125, 0, 4, 0, 0};
 //D:80038830
-struct PitemZ_header Pdoor_roller2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1032.125, 4, 0, 0};
+struct PitemZ_header Pdoor_roller2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1032.125, 0, 4, 0, 0};
 //D:80038850
-struct PitemZ_header Pdoor_roller3Z_header = {0, &model_object_standard_object, 0, 0, 1, 1032.125, 4, 0, 0};
+struct PitemZ_header Pdoor_roller3Z_header = {0, &model_object_standard_object, 0, 0, 1, 1032.125, 0, 4, 0, 0};
 //D:80038870
-struct PitemZ_header Pdoor_roller4Z_header = {0, &model_object_standard_object, 0, 0, 1, 1032.125, 4, 0, 0};
+struct PitemZ_header Pdoor_roller4Z_header = {0, &model_object_standard_object, 0, 0, 1, 1032.125, 0, 4, 0, 0};
 //D:80038890
-struct PitemZ_header Pdoor_st_arec1Z_header = {0, &model_object_standard_object, 0, 0, 1, 763.03589, 3, 0, 0};
+struct PitemZ_header Pdoor_st_arec1Z_header = {0, &model_object_standard_object, 0, 0, 1, 763.03589, 0, 3, 0, 0};
 //D:800388B0
-struct PitemZ_header Pdoor_st_arec2Z_header = {0, &model_object_standard_object, 0, 0, 1, 763.03589, 3, 0, 0};
+struct PitemZ_header Pdoor_st_arec2Z_header = {0, &model_object_standard_object, 0, 0, 1, 763.03589, 0, 3, 0, 0};
 //D:800388D0
-struct PitemZ_header Pdoor_dest1Z_header = {0, &model_object_standard_object, 0, 0, 1, 461.3873, 3, 0, 0};
+struct PitemZ_header Pdoor_dest1Z_header = {0, &model_object_standard_object, 0, 0, 1, 461.3873, 0, 3, 0, 0};
 //D:800388F0
-struct PitemZ_header Pdoor_dest2Z_header = {0, &model_object_standard_object, 0, 0, 1, 461.3873, 5, 0, 0};
+struct PitemZ_header Pdoor_dest2Z_header = {0, &model_object_standard_object, 0, 0, 1, 461.3873, 0, 5, 0, 0};
 //D:80038910
-struct PitemZ_header Pgas_plant_sw_do1Z_header = {0, &model_object_standard_object, 0, 0, 1, 862.29706, 4, 0, 0};
+struct PitemZ_header Pgas_plant_sw_do1Z_header = {0, &model_object_standard_object, 0, 0, 1, 862.29706, 0, 4, 0, 0};
 //D:80038930
-struct PitemZ_header Pgas_plant_sw2_do1Z_header = {0, &model_object_standard_object, 0, 0, 1, 862.88489, 2, 0, 0};
+struct PitemZ_header Pgas_plant_sw2_do1Z_header = {0, &model_object_standard_object, 0, 0, 1, 862.88489, 0, 2, 0, 0};
 //D:80038950
-struct PitemZ_header Pgas_plant_sw3_do1Z_header = {0, &model_object_standard_object, 0, 0, 1, 862.88489, 2, 0, 0};
+struct PitemZ_header Pgas_plant_sw3_do1Z_header = {0, &model_object_standard_object, 0, 0, 1, 862.88489, 0, 2, 0, 0};
 //D:80038970
-struct PitemZ_header Pgas_plant_sw4_do1Z_header = {0, &model_object_standard_object, 0, 0, 1, 862.88489, 1, 0, 0};
+struct PitemZ_header Pgas_plant_sw4_do1Z_header = {0, &model_object_standard_object, 0, 0, 1, 862.88489, 0, 1, 0, 0};
 //D:80038990
-struct PitemZ_header Pgas_plant_met1_do1Z_header = {0, &model_object_standard_object, 0, 0, 1, 862.88489, 5, 0, 0};
+struct PitemZ_header Pgas_plant_met1_do1Z_header = {0, &model_object_standard_object, 0, 0, 1, 862.88489, 0, 5, 0, 0};
 //D:800389B0
-struct PitemZ_header Pgas_plant_wc_cub1Z_header = {0, &model_object_standard_object, 0, 0, 1, 783.8501, 3, 0, 0};
+struct PitemZ_header Pgas_plant_wc_cub1Z_header = {0, &model_object_standard_object, 0, 0, 1, 783.8501, 0, 3, 0, 0};
 //D:800389D0
-struct PitemZ_header Pgasplant_clear_doorZ_header = {0, &prop_door_related, 0, 0, 0x40001, 1025.0952, 2, 0, 0};
+struct PitemZ_header Pgasplant_clear_doorZ_header = {0, &prop_door_related, 0, 0x4, 0x1, 1025.0952, 0, 2, 0, 0};
 //D:800389F0
-struct PitemZ_header Ptrain_doorZ_header = {0, &model_object_standard_object, 0, 0, 1, 456.99615, 3, 0, 0};
+struct PitemZ_header Ptrain_doorZ_header = {0, &model_object_standard_object, 0, 0, 1, 456.99615, 0, 3, 0, 0};
 //D:80038A10
-struct PitemZ_header Ptrain_door2Z_header = {0, &prop_door_related, 0, 0, 0x40001, 445.98541, 3, 0, 0};
+struct PitemZ_header Ptrain_door2Z_header = {0, &prop_door_related, 0, 0x4, 0x1, 445.98541, 0, 3, 0, 0};
 //D:80038A30
-struct PitemZ_header Ptrain_door3Z_header = {0, &prop_door_related, 0, 0, 0x40001, 445.98541, 4, 0, 0};
+struct PitemZ_header Ptrain_door3Z_header = {0, &prop_door_related, 0, 0x4, 0x1, 445.98541, 0, 4, 0, 0};
 //D:80038A50
-struct PitemZ_header Pdoor_eyelidZ_header = {0, &prop_eyelid_door_related, 0, 0, 0x30003, 3165.4348, 3, 0, 0};
+struct PitemZ_header Pdoor_eyelidZ_header = {0, &prop_eyelid_door_related, 0, 0x3, 0x3, 3165.4348, 0, 3, 0, 0};
 //D:80038A70
-struct PitemZ_header Pdoor_irisZ_header = {0, &prop_iris_door_related, 0, 0, 0xD000D, 1621.3601, 5, 0, 0};
+struct PitemZ_header Pdoor_irisZ_header = {0, &prop_iris_door_related, 0, 0xD, 0xD, 1621.3601, 0, 5, 0, 0};
 //D:80038A90
-struct PitemZ_header PsevdoorwoodZ_header = {0, &prop_door_related, 0, 0, 0x40001, 851.62671, 3, 0, 0};
+struct PitemZ_header PsevdoorwoodZ_header = {0, &prop_door_related, 0, 0x4, 0x1, 851.62671, 0, 3, 0, 0};
 //D:80038AB0
-struct PitemZ_header PsevdoorwindZ_header = {0, &prop_door_related, 0, 0, 0x40001, 851.62671, 5, 0, 0};
+struct PitemZ_header PsevdoorwindZ_header = {0, &prop_door_related, 0, 0x4, 0x1, 851.62671, 0, 5, 0, 0};
 //D:80038AD0
-struct PitemZ_header PsevdoornowindZ_header = {0, &model_object_standard_object, 0, 0, 1, 863.03766, 2, 0, 0};
+struct PitemZ_header PsevdoornowindZ_header = {0, &model_object_standard_object, 0, 0, 1, 863.03766, 0, 2, 0, 0};
 //D:80038AF0
-struct PitemZ_header PsevdoormetslideZ_header = {0, &model_object_standard_object, 0, 0, 1, 863.74707, 2, 0, 0};
+struct PitemZ_header PsevdoormetslideZ_header = {0, &model_object_standard_object, 0, 0, 1, 863.74707, 0, 2, 0, 0};
 //D:80038B10
-struct PitemZ_header Pcryptdoor1aZ_header = {0, &model_object_standard_object, 0, 0, 1, 502.64923, 2, 0, 0};
+struct PitemZ_header Pcryptdoor1aZ_header = {0, &model_object_standard_object, 0, 0, 1, 502.64923, 0, 2, 0, 0};
 //D:80038B30
-struct PitemZ_header Pcryptdoor1bZ_header = {0, &model_object_standard_object, 0, 0, 1, 400.97537, 2, 0, 0};
+struct PitemZ_header Pcryptdoor1bZ_header = {0, &model_object_standard_object, 0, 0, 1, 400.97537, 0, 2, 0, 0};
 //D:80038B50
-struct PitemZ_header Pcryptdoor2aZ_header = {0, &model_object_standard_object, 0, 0, 1, 502.64923, 2, 0, 0};
+struct PitemZ_header Pcryptdoor2aZ_header = {0, &model_object_standard_object, 0, 0, 1, 502.64923, 0, 2, 0, 0};
 //D:80038B70
-struct PitemZ_header Pcryptdoor2bZ_header = {0, &model_object_standard_object, 0, 0, 1, 400.97537, 2, 0, 0};
+struct PitemZ_header Pcryptdoor2bZ_header = {0, &model_object_standard_object, 0, 0, 1, 400.97537, 0, 2, 0, 0};
 //D:80038B90
-struct PitemZ_header Pcryptdoor3Z_header = {0, &model_object_standard_object, 0, 0, 1, 801.95074, 3, 0, 0};
+struct PitemZ_header Pcryptdoor3Z_header = {0, &model_object_standard_object, 0, 0, 1, 801.95074, 0, 3, 0, 0};
 //D:80038BB0
-struct PitemZ_header Pcryptdoor4Z_header = {0, &model_object_standard_object, 0, 0, 1, 801.95074, 1, 0, 0};
+struct PitemZ_header Pcryptdoor4Z_header = {0, &model_object_standard_object, 0, 0, 1, 801.95074, 0, 1, 0, 0};
 //D:80038BD0
-struct PitemZ_header PvertdoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 1997.2246, 5, 0, 0};
+struct PitemZ_header PvertdoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 1997.2246, 0, 5, 0, 0};
 //D:80038BF0
-struct PitemZ_header PhatchdoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 192.1653, 1, 0, 0};
+struct PitemZ_header PhatchdoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 192.1653, 0, 1, 0, 0};
 //D:80038C10
-struct PitemZ_header PdamgatedoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 308.36456, 3, 0, 0};
+struct PitemZ_header PdamgatedoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 308.36456, 0, 3, 0, 0};
 //D:80038C30
-struct PitemZ_header PdamtundoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 127.89996, 4, 0, 0};
+struct PitemZ_header PdamtundoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 127.89996, 0, 4, 0, 0};
 //D:80038C50
-struct PitemZ_header PdamchaindoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 171.36655, 2, 0, 0};
+struct PitemZ_header PdamchaindoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 171.36655, 0, 2, 0, 0};
 //D:80038C70
-struct PitemZ_header PsilotopdoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 2675.3958, 5, 0, 0};
+struct PitemZ_header PsilotopdoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 2675.3958, 0, 5, 0, 0};
 //D:80038C90
-struct PitemZ_header Pdoorprison1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1062.0833, 1, 0, 0};
+struct PitemZ_header Pdoorprison1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1062.0833, 0, 1, 0, 0};
 //D:80038CB0
-struct PitemZ_header PdoorstatgateZ_header = {0, &model_object_standard_object, 0, 0, 1, 1503.9503, 3, 0, 0};
+struct PitemZ_header PdoorstatgateZ_header = {0, &model_object_standard_object, 0, 0, 1, 1503.9503, 0, 3, 0, 0};
 //D:80038CD0
-struct PitemZ_header PchrkalashZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 403.53766, 8, 0, 0};
+struct PitemZ_header PchrkalashZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 403.53766, 0, 8, 0, 0};
 //D:80038CF0
-struct PitemZ_header PchrgrenadelaunchZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 422.48355, 7, 0, 0};
+struct PitemZ_header PchrgrenadelaunchZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 422.48355, 0, 7, 0, 0};
 //D:80038D10
-struct PitemZ_header PchrknifeZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 245.14619, 2, 0, 0};
+struct PitemZ_header PchrknifeZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 245.14619, 0, 2, 0, 0};
 //D:80038D30
-struct PitemZ_header PchrlaserZ_header = {0, &prop_weapon_related, 0, 0, 0x30002, 444.66241, 8, 0, 0};
+struct PitemZ_header PchrlaserZ_header = {0, &prop_weapon_related, 0, 0x3, 0x2, 444.66241, 0, 8, 0, 0};
 //D:80038D50
-struct PitemZ_header Pchrm16Z_header = {0, &prop_weapon_related, 0, 0, 0x30002, 964.01367, 6, 0, 0};
+struct PitemZ_header Pchrm16Z_header = {0, &prop_weapon_related, 0, 0x3, 0x2, 964.01367, 0, 6, 0, 0};
 //D:80038D70
-struct PitemZ_header Pchrmp5kZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 277.32227, 9, 0, 0};
+struct PitemZ_header Pchrmp5kZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 277.32227, 0, 9, 0, 0};
 //D:80038D90
-struct PitemZ_header PchrrugerZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 246.72643, 5, 0, 0};
+struct PitemZ_header PchrrugerZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 246.72643, 0, 5, 0, 0};
 //D:80038DB0
-struct PitemZ_header PchrwppkZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 125.79879, 5, 0, 0};
+struct PitemZ_header PchrwppkZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 125.79879, 0, 5, 0, 0};
 //D:80038DD0
-struct PitemZ_header PchrshotgunZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 488.88385, 8, 0, 0};
+struct PitemZ_header PchrshotgunZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 488.88385, 0, 8, 0, 0};
 //D:80038DF0
-struct PitemZ_header PchrskorpionZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 183.37708, 7, 0, 0};
+struct PitemZ_header PchrskorpionZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 183.37708, 0, 7, 0, 0};
 //D:80038E10
-struct PitemZ_header PchrspectreZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 351.26923, 6, 0, 0};
+struct PitemZ_header PchrspectreZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 351.26923, 0, 6, 0, 0};
 //D:80038E30
-struct PitemZ_header PchruziZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 265.11813, 7, 0, 0};
+struct PitemZ_header PchruziZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 265.11813, 0, 7, 0, 0};
 //D:80038E50
-struct PitemZ_header PchrgrenadeZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 118.18749, 2, 0, 0};
+struct PitemZ_header PchrgrenadeZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 118.18749, 0, 2, 0, 0};
 //D:80038E70
-struct PitemZ_header Pchrfnp90Z_header = {0, &prop_weapon_related, 0, 0, 0x30002, 470.04633, 7, 0, 0};
+struct PitemZ_header Pchrfnp90Z_header = {0, &prop_weapon_related, 0, 0x3, 0x2, 470.04633, 0, 7, 0, 0};
 //D:80038E90
-struct PitemZ_header PchrbriefcaseZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 342.23688, 5, 0, 0};
+struct PitemZ_header PchrbriefcaseZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 342.23688, 0, 5, 0, 0};
 //D:80038EB0
-struct PitemZ_header PchrremotemineZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 87.434036, 2, 0, 0};
+struct PitemZ_header PchrremotemineZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 87.434036, 0, 2, 0, 0};
 //D:80038ED0
-struct PitemZ_header PchrproximitymineZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 87.196609, 2, 0, 0};
+struct PitemZ_header PchrproximitymineZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 87.196609, 0, 2, 0, 0};
 //D:80038EF0
-struct PitemZ_header PchrtimedmineZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 87.245888, 3, 0, 0};
+struct PitemZ_header PchrtimedmineZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 87.245888, 0, 3, 0, 0};
 //D:80038F10
-struct PitemZ_header PchrrocketZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 342.8634, 3, 0, 0};
+struct PitemZ_header PchrrocketZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 342.8634, 0, 3, 0, 0};
 //D:80038F30
-struct PitemZ_header PchrgrenaderoundZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 96.976593, 1, 0, 0};
+struct PitemZ_header PchrgrenaderoundZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 96.976593, 0, 1, 0, 0};
 //D:80038F50
-struct PitemZ_header PchrwppksilZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 219.44571, 6, 0, 0};
+struct PitemZ_header PchrwppksilZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 219.44571, 0, 6, 0, 0};
 //D:80038F70
-struct PitemZ_header Pchrtt33Z_header = {0, &prop_weapon_related, 0, 0, 0x30001, 142.11539, 5, 0, 0};
+struct PitemZ_header Pchrtt33Z_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 142.11539, 0, 5, 0, 0};
 //D:80038F90
-struct PitemZ_header Pchrmp5ksilZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 406.18033, 0xA, 0, 0};
+struct PitemZ_header Pchrmp5ksilZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 406.18033, 0, 0xA, 0, 0};
 //D:80038FB0
-struct PitemZ_header PchrautoshotZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 375.50247, 8, 0, 0};
+struct PitemZ_header PchrautoshotZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 375.50247, 0, 8, 0, 0};
 //D:80038FD0
-struct PitemZ_header PchrgoldenZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 157.98299, 2, 0, 0};
+struct PitemZ_header PchrgoldenZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 157.98299, 0, 2, 0, 0};
 //D:80038FF0
-struct PitemZ_header PchrthrowknifeZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 217.61888, 2, 0, 0};
+struct PitemZ_header PchrthrowknifeZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 217.61888, 0, 2, 0, 0};
 //D:80039010
-struct PitemZ_header PchrsniperrifleZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 616.93939, 5, 0, 0};
+struct PitemZ_header PchrsniperrifleZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 616.93939, 0, 5, 0, 0};
 //D:80039030
-struct PitemZ_header PchrrocketlaunchZ_header = {0, &prop_weapon_related, 0, 0, 0x30002, 501.55179, 6, 0, 0};
+struct PitemZ_header PchrrocketlaunchZ_header = {0, &prop_weapon_related, 0, 0x3, 0x2, 501.55179, 0, 6, 0, 0};
 //D:80039050
-struct PitemZ_header PhatfurryZ_header = {0, &item_hat_related, 0, 0, 1, 152.53136, 3, 0, 0};
+struct PitemZ_header PhatfurryZ_header = {0, &item_hat_related, 0, 0, 1, 152.53136, 0, 3, 0, 0};
 //D:80039070
-struct PitemZ_header PhatfurrybrownZ_header = {0, &item_hat_related, 0, 0, 1, 152.53136, 3, 0, 0};
+struct PitemZ_header PhatfurrybrownZ_header = {0, &item_hat_related, 0, 0, 1, 152.53136, 0, 3, 0, 0};
 //D:80039090
-struct PitemZ_header PhatfurryblackZ_header = {0, &item_hat_related, 0, 0, 1, 152.53136, 3, 0, 0};
+struct PitemZ_header PhatfurryblackZ_header = {0, &item_hat_related, 0, 0, 1, 152.53136, 0, 3, 0, 0};
 //D:800390B0
-struct PitemZ_header PhattbirdZ_header = {0, &item_hat_related, 0, 0, 1, 114.45274, 1, 0, 0};
+struct PitemZ_header PhattbirdZ_header = {0, &item_hat_related, 0, 0, 1, 114.45274, 0, 1, 0, 0};
 //D:800390D0
-struct PitemZ_header PhattbirdbrownZ_header = {0, &item_hat_related, 0, 0, 1, 122.7013, 1, 0, 0};
+struct PitemZ_header PhattbirdbrownZ_header = {0, &item_hat_related, 0, 0, 1, 122.7013, 0, 1, 0, 0};
 //D:800390F0
-struct PitemZ_header PhathelmetZ_header = {0, &item_hat_related, 0, 0, 1, 163.84476, 1, 0, 0};
+struct PitemZ_header PhathelmetZ_header = {0, &item_hat_related, 0, 0, 1, 163.84476, 0, 1, 0, 0};
 //D:80039110
-struct PitemZ_header PhathelmetgreyZ_header = {0, &item_hat_related, 0, 0, 1, 163.84476, 1, 0, 0};
+struct PitemZ_header PhathelmetgreyZ_header = {0, &item_hat_related, 0, 0, 1, 163.84476, 0, 1, 0, 0};
 //D:80039130
-struct PitemZ_header PhatmoonZ_header = {0, &item_hat_related, 0, 0, 1, 138.25751, 2, 0, 0};
+struct PitemZ_header PhatmoonZ_header = {0, &item_hat_related, 0, 0, 1, 138.25751, 0, 2, 0, 0};
 //D:80039150
-struct PitemZ_header PhatberetZ_header = {0, &item_hat_related, 0, 0, 1, 116.16043, 1, 0, 0};
+struct PitemZ_header PhatberetZ_header = {0, &item_hat_related, 0, 0, 1, 116.16043, 0, 1, 0, 0};
 //D:80039170
-struct PitemZ_header PhatberetblueZ_header = {0, &item_hat_related, 0, 0, 1, 116.16043, 2, 0, 0};
+struct PitemZ_header PhatberetblueZ_header = {0, &item_hat_related, 0, 0, 1, 116.16043, 0, 2, 0, 0};
 //D:80039190
-struct PitemZ_header PhatberetredZ_header = {0, &item_hat_related, 0, 0, 1, 115.46455, 2, 0, 0};
+struct PitemZ_header PhatberetredZ_header = {0, &item_hat_related, 0, 0, 1, 115.46455, 0, 2, 0, 0};
 //D:800391B0
-struct PitemZ_header PhatpeakedZ_header = {0, &item_hat_related, 0, 0, 1, 148.39027, 1, 0, 0};
+struct PitemZ_header PhatpeakedZ_header = {0, &item_hat_related, 0, 0, 1, 148.39027, 0, 1, 0, 0};
 //D:800391D0
-struct PitemZ_header PchrwristdartZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrwristdartZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:800391F0
-struct PitemZ_header PchrexplosivepenZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrexplosivepenZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039210
-struct PitemZ_header PchrbombcaseZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 342.23688, 5, 0, 0};
+struct PitemZ_header PchrbombcaseZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 342.23688, 0, 5, 0, 0};
 //D:80039230
-struct PitemZ_header PchrflarepistolZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrflarepistolZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039250
-struct PitemZ_header PchrpitongunZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrpitongunZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039270
-struct PitemZ_header PchrfingergunZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrfingergunZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039290
-struct PitemZ_header PchrsilverwppkZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrsilverwppkZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:800392B0
-struct PitemZ_header PchrgoldwppkZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrgoldwppkZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:800392D0
-struct PitemZ_header PchrdynamiteZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrdynamiteZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:800392F0
-struct PitemZ_header PchrbungeeZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrbungeeZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039310
-struct PitemZ_header PchrdoordecoderZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 180.27969, 0x10, 0, 0};
+struct PitemZ_header PchrdoordecoderZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 180.27969, 0, 0x10, 0, 0};
 //D:80039330
-struct PitemZ_header PchrbombdefuserZ_header = {0, &model_object_standard_object, 0, 0, 1, 84.370705, 0xC, 0, 0};
+struct PitemZ_header PchrbombdefuserZ_header = {0, &model_object_standard_object, 0, 0, 1, 84.370705, 0, 0xC, 0, 0};
 //D:80039350
-struct PitemZ_header PchrbugdetectorZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrbugdetectorZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039370
-struct PitemZ_header PchrsafecrackercaseZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 342.23688, 5, 0, 0};
+struct PitemZ_header PchrsafecrackercaseZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 342.23688, 0, 5, 0, 0};
 //D:80039390
-struct PitemZ_header PchrcameraZ_header = {0, &model_object_standard_object, 0, 0, 1, 52.775627, 0xB, 0, 0};
+struct PitemZ_header PchrcameraZ_header = {0, &model_object_standard_object, 0, 0, 1, 52.775627, 0, 0xB, 0, 0};
 //D:800393B0
-struct PitemZ_header PchrlockexploderZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrlockexploderZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:800393D0
-struct PitemZ_header PchrdoorexploderZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrdoorexploderZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:800393F0
-struct PitemZ_header PchrkeyanalysercaseZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 342.23688, 5, 0, 0};
+struct PitemZ_header PchrkeyanalysercaseZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 342.23688, 0, 5, 0, 0};
 //D:80039410
-struct PitemZ_header PchrweaponcaseZ_header = {0, &model_object_standard_object, 0, 0, 1, 274.2905, 5, 0, 0};
+struct PitemZ_header PchrweaponcaseZ_header = {0, &model_object_standard_object, 0, 0, 1, 274.2905, 0, 5, 0, 0};
 //D:80039430
-struct PitemZ_header PchrkeyyaleZ_header = {0, &model_object_standard_object, 0, 0, 1, 82.850311, 1, 0, 0};
+struct PitemZ_header PchrkeyyaleZ_header = {0, &model_object_standard_object, 0, 0, 1, 82.850311, 0, 1, 0, 0};
 //D:80039450
-struct PitemZ_header PchrkeyboltZ_header = {0, &model_object_standard_object, 0, 0, 1, 151.85315, 1, 0, 0};
+struct PitemZ_header PchrkeyboltZ_header = {0, &model_object_standard_object, 0, 0, 1, 151.85315, 0, 1, 0, 0};
 //D:80039470
-struct PitemZ_header PchrbugZ_header = {0, &model_object_standard_object, 0, 0, 1, 104.7203, 6, 0, 0};
+struct PitemZ_header PchrbugZ_header = {0, &model_object_standard_object, 0, 0, 1, 104.7203, 0, 6, 0, 0};
 //D:80039490
-struct PitemZ_header PchrmicrocameraZ_header = {0, &model_object_standard_object, 0, 0, 1, 126.49728, 7, 0, 0};
+struct PitemZ_header PchrmicrocameraZ_header = {0, &model_object_standard_object, 0, 0, 1, 126.49728, 0, 7, 0, 0};
 //D:800394B0
-struct PitemZ_header PfloppyZ_header = {0, &model_object_standard_object, 0, 0, 1, 60.902443, 5, 0, 0};
+struct PitemZ_header PfloppyZ_header = {0, &model_object_standard_object, 0, 0, 1, 60.902443, 0, 5, 0, 0};
 //D:800394D0
-struct PitemZ_header PchrgoldeneyekeyZ_header = {0, &model_object_standard_object, 0, 0, 1, 98.987083, 5, 0, 0};
+struct PitemZ_header PchrgoldeneyekeyZ_header = {0, &model_object_standard_object, 0, 0, 1, 98.987083, 0, 5, 0, 0};
 //D:800394F0
-struct PitemZ_header PchrpolarizedglassesZ_header = {0, &model_object_standard_object, 0, 0, 1, 53.776386, 2, 0, 0};
+struct PitemZ_header PchrpolarizedglassesZ_header = {0, &model_object_standard_object, 0, 0, 1, 53.776386, 0, 2, 0, 0};
 //D:80039510
-struct PitemZ_header PchrcreditcardZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrcreditcardZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039530
-struct PitemZ_header PchrdarkglassesZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrdarkglassesZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039550
-struct PitemZ_header PchrgaskeyringZ_header = {0, &model_object_standard_object, 0, 0, 1, 111.59859, 9, 0, 0};
+struct PitemZ_header PchrgaskeyringZ_header = {0, &model_object_standard_object, 0, 0, 1, 111.59859, 0, 9, 0, 0};
 //D:80039570
-struct PitemZ_header PchrdatathiefZ_header = {0, &model_object_standard_object, 0, 0, 1, 119.78231, 3, 0, 0};
+struct PitemZ_header PchrdatathiefZ_header = {0, &model_object_standard_object, 0, 0, 1, 119.78231, 0, 3, 0, 0};
 //D:80039590
-struct PitemZ_header PsafeZ_header = {0, &model_object_standard_object, 0, 0, 1, 1011.18744, 3, 0};
+struct PitemZ_header PsafeZ_header = {0, &model_object_standard_object, 0, 0, 1, 1011.18744, 0, 3, 0, 0};
 //D:800395B0
-struct PitemZ_header PbombZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0};
+struct PitemZ_header PbombZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:800395D0
-struct PitemZ_header PchrplansZ_header = {0, &model_object_standard_object, 0, 0, 1, 384.74649, 5, 0, 0};
+struct PitemZ_header PchrplansZ_header = {0, &model_object_standard_object, 0, 0, 1, 384.74649, 0, 5, 0, 0};
 //D:800395F0
-struct PitemZ_header PchrspyfileZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrspyfileZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039610
-struct PitemZ_header PchrblueprintsZ_header = {0, &model_object_standard_object, 0, 0, 1, 588.65448, 4, 0, 0};
+struct PitemZ_header PchrblueprintsZ_header = {0, &model_object_standard_object, 0, 0, 1, 588.65448, 0, 4, 0, 0};
 //D:80039630
-struct PitemZ_header PchrcircuitboardZ_header = {0, &model_object_standard_object, 0, 0, 1, 138.90285, 3, 0, 0};
+struct PitemZ_header PchrcircuitboardZ_header = {0, &model_object_standard_object, 0, 0, 1, 138.90285, 0, 3, 0, 0};
 //D:80039650
-struct PitemZ_header PchrmapZ_header = {0, &model_object_standard_object, 0, 0, 1, 588.65448, 4, 0, 0};
+struct PitemZ_header PchrmapZ_header = {0, &model_object_standard_object, 0, 0, 1, 588.65448, 0, 4, 0, 0};
 //D:80039670
-struct PitemZ_header PchrspooltapeZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrspooltapeZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039690
-struct PitemZ_header PchraudiotapeZ_header = {0, &model_object_standard_object, 0, 0, 1, 97.531075, 9, 0, 0};
+struct PitemZ_header PchraudiotapeZ_header = {0, &model_object_standard_object, 0, 0, 1, 97.531075, 0, 9, 0, 0};
 //D:800396B0
-struct PitemZ_header PchrmicrofilmZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrmicrofilmZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:800396D0
-struct PitemZ_header PchrmicrocodeZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrmicrocodeZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:800396F0
-struct PitemZ_header PchrlectreZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrlectreZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039710
-struct PitemZ_header PchrmoneyZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrmoneyZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039730
-struct PitemZ_header PchrgoldbarZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrgoldbarZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039750
-struct PitemZ_header PchrheroinZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 1, 0, 0};
+struct PitemZ_header PchrheroinZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039770
-struct PitemZ_header PchrclipboardZ_header = {0, &model_object_standard_object, 0, 0, 1, 190.41742, 3, 0, 0};
+struct PitemZ_header PchrclipboardZ_header = {0, &model_object_standard_object, 0, 0, 1, 190.41742, 0, 3, 0, 0};
 //D:80039790
-struct PitemZ_header PchrdossierredZ_header = {0, &model_object_standard_object, 0, 0, 1, 183.54231, 4, 0, 0};
+struct PitemZ_header PchrdossierredZ_header = {0, &model_object_standard_object, 0, 0, 1, 183.54231, 0, 4, 0, 0};
 //D:800397B0
-struct PitemZ_header PchrstafflistZ_header = {0, &model_object_standard_object, 0, 0, 1, 215.17534, 4, 0, 0};
+struct PitemZ_header PchrstafflistZ_header = {0, &model_object_standard_object, 0, 0, 1, 215.17534, 0, 4, 0, 0};
 //D:800397D0
-struct PitemZ_header PchrdattapeZ_header = {0, &model_object_standard_object, 0, 0, 1, 79.868584, 4, 0, 0};
+struct PitemZ_header PchrdattapeZ_header = {0, &model_object_standard_object, 0, 0, 1, 79.868584, 0, 4, 0, 0};
 //D:800397F0
-struct PitemZ_header PchrplastiqueZ_header = {0, &model_object_standard_object, 0, 0, 1, 143.86052, 3, 0, 0};
+struct PitemZ_header PchrplastiqueZ_header = {0, &model_object_standard_object, 0, 0, 1, 143.86052, 0, 3, 0, 0};
 //D:80039810
-struct PitemZ_header PchrblackboxZ_header = {0, &model_object_standard_object, 0, 0, 1, 128.31796, 5, 0, 0};
+struct PitemZ_header PchrblackboxZ_header = {0, &model_object_standard_object, 0, 0, 1, 128.31796, 0, 5, 0, 0};
 //D:80039830
-struct PitemZ_header PchrvideotapeZ_header = {0, &model_object_standard_object, 0, 0, 1, 122.69632, 9, 0, 0};
+struct PitemZ_header PchrvideotapeZ_header = {0, &model_object_standard_object, 0, 0, 1, 122.69632, 0, 9, 0, 0};
 //D:80039850
-struct PitemZ_header PnintendologoZ_header = {0, &model_object_standard_object, 0, 0, 1, 1868.335, 1, 0, 0};
+struct PitemZ_header PnintendologoZ_header = {0, &model_object_standard_object, 0, 0, 1, 1868.335, 0, 1, 0, 0};
 //D:80039870
-struct PitemZ_header PgoldeneyelogoZ_header = {0, &model_object_standard_object, 0, 0, 1, 1287.1866, 2, 0, 0};
+struct PitemZ_header PgoldeneyelogoZ_header = {0, &model_object_standard_object, 0, 0, 1, 1287.1866, 0, 2, 0, 0};
 //D:80039890
-struct PitemZ_header PwalletbondZ_header = {0, &prop_walletbond_related, 0, 0, 0x2B0001, 3504.53, 0x54, 0, 0};
+struct PitemZ_header PwalletbondZ_header = {0, &prop_walletbond_related, 0, 0x2B, 0x1, 3504.53, 0, 0x54, 0, 0};
 //D:800398B0
-struct PitemZ_header PmiltruckZ_header = {0, &prop_car_related, 0, 0, 0xB0005, 4589.7188, 0x16, 0, 0};
+struct PitemZ_header PmiltruckZ_header = {0, &prop_car_related, 0, 0xB, 0x5, 4589.7188, 0, 0x16, 0, 0};
 //D:800398D0
-struct PitemZ_header PjeepZ_header = {0, &prop_car_related, 0, 0, 0xB0005, 2107.8105, 0x10, 0};
+struct PitemZ_header PjeepZ_header = {0, &prop_car_related, 0, 0xB, 0x5, 2107.8105, 0, 0x10, 0, 0};
 //D:800398F0
-struct PitemZ_header ParticZ_header = {0, &prop_car_related, 0, 0, 0xB0005, 2678.5667, 0x11, 0, };
+struct PitemZ_header ParticZ_header = {0, &prop_car_related, 0, 0xB, 0x5, 2678.5667, 0x0, 0x11, 0, 0};
 //D:80039910
-struct PitemZ_header PhelicopterZ_header = {0, &prop_flying_related, 0, 0, 0x60004, 4955.271, 0x18, 0, 0};
+struct PitemZ_header PhelicopterZ_header = {0, &prop_flying_related, 0, 0x6, 0x4, 4955.271, 0, 0x18, 0, 0};
 //D:80039930
-struct PitemZ_header PtigerZ_header = {0, &prop_flying_related, 0, 0, 0x60004, 4072.0291, 0xE, 0, };
+struct PitemZ_header PtigerZ_header = {0, &prop_flying_related, 0, 0x6, 0x4, 4072.0291, 0, 0xE, 0, 0};
 //D:80039950
-struct PitemZ_header PmilcopterZ_header = {0, &prop_flying_related, 0, 0, 0x60004, 5316.9155, 0xF, 0, 0};
+struct PitemZ_header PmilcopterZ_header = {0, &prop_flying_related, 0, 0x6, 0x4, 5316.9155, 0, 0xF, 0, 0};
 //D:80039970
-struct PitemZ_header PhindZ_header = {0, &prop_flying_related, 0, 0, 0x60005, 5315.314, 0xB, 0};
+struct PitemZ_header PhindZ_header = {0, &prop_flying_related, 0, 0x6, 0x5, 5315.314, 0, 0xB, 0, 0};
 //D:80039990
-struct PitemZ_header PartictrailerZ_header = {0, &model_object_standard_object, 0, 0, 1, 4014.6265, 0xB, 0, 0};
+struct PitemZ_header PartictrailerZ_header = {0, &model_object_standard_object, 0, 0, 1, 4014.6265, 0, 0xB, 0, 0};
 //D:800399B0
-struct PitemZ_header PmotorbikeZ_header = {0, &model_object_standard_object, 0, 0, 1, 1610.8706, 6, 0, 0};
+struct PitemZ_header PmotorbikeZ_header = {0, &model_object_standard_object, 0, 0, 1, 1610.8706, 0, 6, 0, 0};
 //D:800399D0
-struct PitemZ_header PtankZ_header = {0, &item_tank_related, 0, 0, 0x90005, 6290.8398, 0x18, 0};
+struct PitemZ_header PtankZ_header = {0, &item_tank_related, 0, 0x9, 0x5, 6290.8398, 0, 0x18, 0, 0};
 //D:800399F0
-struct PitemZ_header PapcZ_header = {0, &model_object_standard_object, 0, 0, 1, 3611.1035, 0xE, 0};
+struct PitemZ_header PapcZ_header = {0, &model_object_standard_object, 0, 0, 1, 3611.1035, 0, 0xE, 0, 0};
 //D:80039A10
-struct PitemZ_header PspeedboatZ_header = {0, &model_object_standard_object, 0, 0, 1, 1799.4586, 0xD, 0, 0};
+struct PitemZ_header PspeedboatZ_header = {0, &model_object_standard_object, 0, 0, 1, 1799.4586, 0, 0xD, 0, 0};
 //D:80039A30
-struct PitemZ_header PplaneZ_header = {0, &prop_flying_related, 0, 0, 0x60003, 9285.4492, 0x1C, 0, };
+struct PitemZ_header PplaneZ_header = {0, &prop_flying_related, 0, 0x6, 0x3, 9285.4492, 0, 0x1C, 0, 0};
 //D:80039A50
-struct PitemZ_header Pgun_runway1Z_header = {0, &prop_rotating_stuff_related, 0, 0, 0x80005, 1927.5205, 6, 0, 0};
+struct PitemZ_header Pgun_runway1Z_header = {0, &prop_rotating_stuff_related, 0, 0x8, 0x5, 1927.5205, 0, 6, 0, 0};
 //D:80039A70
-struct PitemZ_header PsafedoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 714.14612, 4, 0, 0};
+struct PitemZ_header PsafedoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 714.14612, 0, 4, 0, 0};
 //D:80039A90
-struct PitemZ_header Pkey_holderZ_header = {0, &model_object_standard_object, 0, 0, 1, 223.87097, 7, 0, 0};
+struct PitemZ_header Pkey_holderZ_header = {0, &model_object_standard_object, 0, 0, 1, 223.87097, 0, 7, 0, 0};
 //D:80039AB0
-struct PitemZ_header PhatchsevxZ_header = {0, &model_object_standard_object, 0, 0, 1, 1224.7664, 2, 0, 0};
+struct PitemZ_header PhatchsevxZ_header = {0, &model_object_standard_object, 0, 0, 1, 1224.7664, 0, 2, 0, 0};
 //D:80039AD0
-struct PitemZ_header PsevdishZ_header = {0, &prop_rotating_stuff_related, 0, 0, 0x80003, 14350.1, 7, 0, 0};
+struct PitemZ_header PsevdishZ_header = {0, &prop_rotating_stuff_related, 0, 0x8, 0x3, 14350.1, 0, 7, 0, 0};
 //D:80039AF0
-struct PitemZ_header Parchsecdoor1Z_header = {0, &model_object_standard_object, 0, 0, 1, 455.81409, 3, 0, 0};
+struct PitemZ_header Parchsecdoor1Z_header = {0, &model_object_standard_object, 0, 0, 1, 455.81409, 0, 3, 0, 0};
 //D:80039B10
-struct PitemZ_header Parchsecdoor2Z_header = {0, &model_object_standard_object, 0, 0, 1, 496.99292, 3, 0, 0};
+struct PitemZ_header Parchsecdoor2Z_header = {0, &model_object_standard_object, 0, 0, 1, 496.99292, 0, 3, 0, 0};
 //D:80039B30
-struct PitemZ_header PgroundgunZ_header = {0, &prop_rotating_stuff_related, 0, 0, 0x80005, 2182.6472, 4, 0, 0};
+struct PitemZ_header PgroundgunZ_header = {0, &prop_rotating_stuff_related, 0, 0x8, 0x5, 2182.6472, 0, 4, 0, 0};
 //D:80039B50
-struct PitemZ_header PtrainextdoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 587.70111, 5, 0, 0};
+struct PitemZ_header PtrainextdoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 587.70111, 0, 5, 0, 0};
 //D:80039B70
-struct PitemZ_header PcarbmwZ_header = {0, &model_object_standard_object, 0, 0, 1, 553.08728, 0xB, 0, 0};
+struct PitemZ_header PcarbmwZ_header = {0, &model_object_standard_object, 0, 0, 1, 553.08728, 0, 0xB, 0, 0};
 //D:80039B90
-struct PitemZ_header PcarescortZ_header = {0, &model_object_standard_object, 0, 0, 1, 1110.5665, 9, 0, 0};
+struct PitemZ_header PcarescortZ_header = {0, &model_object_standard_object, 0, 0, 1, 1110.5665, 0, 9, 0, 0};
 //D:80039BB0
-struct PitemZ_header PcargolfZ_header = {0, &model_object_standard_object, 0, 0, 1, 1121.6409, 0xA, 0, 0};
+struct PitemZ_header PcargolfZ_header = {0, &model_object_standard_object, 0, 0, 1, 1121.6409, 0, 0xA, 0, 0};
 //D:80039BD0
-struct PitemZ_header PcarweirdZ_header = {0, &model_object_standard_object, 0, 0, 1, 984.03931, 0xD, 0, 0};
+struct PitemZ_header PcarweirdZ_header = {0, &model_object_standard_object, 0, 0, 1, 984.03931, 0, 0xD, 0, 0};
 //D:80039BF0
-struct PitemZ_header PcarzilZ_header = {0, &prop_car_related, 0, 0, 0xB0005, 1044.5764, 0xD, 0, 0};
+struct PitemZ_header PcarzilZ_header = {0, &prop_car_related, 0, 0xB, 0x5, 1044.5764, 0, 0xD, 0, 0};
 //D:80039C10
-struct PitemZ_header Pshuttle_door_lZ_header = {0, &model_object_standard_object, 0, 0, 1, 706.56641, 7, 0, 0};
+struct PitemZ_header Pshuttle_door_lZ_header = {0, &model_object_standard_object, 0, 0, 1, 706.56641, 0, 7, 0, 0};
 //D:80039C30
-struct PitemZ_header Pshuttle_door_rZ_header = {0, &model_object_standard_object, 0, 0, 1, 706.56641, 8, 0, 0};
+struct PitemZ_header Pshuttle_door_rZ_header = {0, &model_object_standard_object, 0, 0, 1, 706.56641, 0, 8, 0, 0};
 //D:80039C50
-struct PitemZ_header Pdepot_gate_entryZ_header = {0, &model_object_standard_object, 0, 0, 1, 811.28949, 3, 0, 0};
+struct PitemZ_header Pdepot_gate_entryZ_header = {0, &model_object_standard_object, 0, 0, 1, 811.28949, 0, 3, 0, 0};
 //D:80039C70
-struct PitemZ_header Pdepot_door_steelZ_header = {0, &model_object_standard_object, 0, 0, 1, 574.79651, 3, 0, 0};
+struct PitemZ_header Pdepot_door_steelZ_header = {0, &model_object_standard_object, 0, 0, 1, 574.79651, 0, 3, 0, 0};
 //D:80039C90
-struct PitemZ_header Pglassware2Z_header = {0, &model_object_standard_object, 0, 0, 1, 98.488579, 3, 0, 0};
+struct PitemZ_header Pglassware2Z_header = {0, &model_object_standard_object, 0, 0, 1, 98.488579, 0, 3, 0, 0};
 //D:80039CB0
-struct PitemZ_header Pglassware3Z_header = {0, &model_object_standard_object, 0, 0, 1, 137.92715, 1, 0, 0};
+struct PitemZ_header Pglassware3Z_header = {0, &model_object_standard_object, 0, 0, 1, 137.92715, 0, 1, 0, 0};
 //D:80039CD0
-struct PitemZ_header Pglassware4Z_header = {0, &model_object_standard_object, 0, 0, 1, 177.48241, 2, 0, 0};
+struct PitemZ_header Pglassware4Z_header = {0, &model_object_standard_object, 0, 0, 1, 177.48241, 0, 2, 0, 0};
 //D:80039CF0
-struct PitemZ_header PlandmineZ_header = {0, &model_object_standard_object, 0, 0, 1, 440.03009, 2, 0, 0};
+struct PitemZ_header PlandmineZ_header = {0, &model_object_standard_object, 0, 0, 1, 440.03009, 0, 2, 0, 0};
 //D:80039D10
-struct PitemZ_header Pplant1Z_header = {0, &model_object_standard_object, 0, 0, 1, 2704.1086, 1, 0, 0};
+struct PitemZ_header Pplant1Z_header = {0, &model_object_standard_object, 0, 0, 1, 2704.1086, 0, 1, 0, 0};
 //D:80039D30
-struct PitemZ_header Pplant11Z_header = {0, &model_object_standard_object, 0, 0, 1, 2704.1086, 1, 0, 0};
+struct PitemZ_header Pplant11Z_header = {0, &model_object_standard_object, 0, 0, 1, 2704.1086, 0, 1, 0, 0};
 //D:80039D50
-struct PitemZ_header Pplant2Z_header = {0, &model_object_standard_object, 0, 0, 1, 3416.248, 2, 0, 0};
+struct PitemZ_header Pplant2Z_header = {0, &model_object_standard_object, 0, 0, 1, 3416.248, 0, 2, 0, 0};
 //D:80039D70
-struct PitemZ_header Pplant3Z_header = {0, &model_object_standard_object, 0, 0, 1, 2986.0405, 1, 0, 0};
+struct PitemZ_header Pplant3Z_header = {0, &model_object_standard_object, 0, 0, 1, 2986.0405, 0, 1, 0, 0};
 //D:80039D90
-struct PitemZ_header Pjungle5_treeZ_header = {0, &model_object_standard_object, 0, 0, 1, 3277.6123, 4, 0, 0};
+struct PitemZ_header Pjungle5_treeZ_header = {0, &model_object_standard_object, 0, 0, 1, 3277.6123, 0, 4, 0, 0};
 //D:80039DB0
-struct PitemZ_header PlegalpageZ_header = {0, &model_object_standard_object, 0, 0, 1, 2711.7573, 5, 0, 0};
+struct PitemZ_header PlegalpageZ_header = {0, &model_object_standard_object, 0, 0, 1, 2711.7573, 0, 5, 0, 0};
 //D:80039DD0
-struct PitemZ_header Pst_pete_room_1iZ_header = {0, &model_object_standard_object, 0, 0, 1, 8437.5137, 0x17, 0, 0};
+struct PitemZ_header Pst_pete_room_1iZ_header = {0, &model_object_standard_object, 0, 0, 1, 8437.5137, 0, 0x17, 0, 0};
 //D:80039DF0
-struct PitemZ_header Pst_pete_room_2iZ_header = {0, &model_object_standard_object, 0, 0, 1, 8515.8164, 0x19, 0, 0};
+struct PitemZ_header Pst_pete_room_2iZ_header = {0, &model_object_standard_object, 0, 0, 1, 8515.8164, 0, 0x19, 0, 0};
 //D:80039E10
-struct PitemZ_header Pst_pete_room_3tZ_header = {0, &model_object_standard_object, 0, 0, 1, 4561.9766, 0x1B, 0, 0};
+struct PitemZ_header Pst_pete_room_3tZ_header = {0, &model_object_standard_object, 0, 0, 1, 4561.9766, 0, 0x1B, 0, 0};
 //D:80039E30
-struct PitemZ_header Pst_pete_room_5cZ_header = {0, &model_object_standard_object, 0, 0, 1, 4561.9766, 0x19, 0, 0};
+struct PitemZ_header Pst_pete_room_5cZ_header = {0, &model_object_standard_object, 0, 0, 1, 4561.9766, 0, 0x19, 0, 0};
 //D:80039E50
-struct PitemZ_header Pst_pete_room_6cZ_header = {0, &model_object_standard_object, 0, 0, 1, 5006.2896, 0x17, 0, 0};
+struct PitemZ_header Pst_pete_room_6cZ_header = {0, &model_object_standard_object, 0, 0, 1, 5006.2896, 0, 0x17, 0, 0};
 //D:80039E70
-struct PitemZ_header Pdoor_rollertrainZ_header = {0, &model_object_standard_object, 0, 0, 1, 1032.125, 2, 0, 0};
+struct PitemZ_header Pdoor_rollertrainZ_header = {0, &model_object_standard_object, 0, 0, 1, 1032.125, 0, 2, 0, 0};
 //D:80039E90
-struct PitemZ_header Pdoor_winZ_header = {0, &model_object_standard_object, 0, 0, 1, 211.90215, 1, 0, 0};
+struct PitemZ_header Pdoor_winZ_header = {0, &model_object_standard_object, 0, 0, 1, 211.90215, 0, 1, 0, 0};
 //D:80039EB0
-struct PitemZ_header Pdoor_aztecZ_header = {0, &model_object_standard_object, 0, 0, 1, 632.48639, 1, 0, 0};
+struct PitemZ_header Pdoor_aztecZ_header = {0, &model_object_standard_object, 0, 0, 1, 632.48639, 0, 1, 0, 0};
 //D:80039ED0
-struct PitemZ_header PshuttleZ_header = {0, &model_object_standard_object, 0, 0, 1, 4475.1494, 9, 0, 0};
+struct PitemZ_header PshuttleZ_header = {0, &model_object_standard_object, 0, 0, 1, 4475.1494, 0, 9, 0, 0};
 //D:80039EF0
-struct PitemZ_header Pdoor_azt_deskZ_header = {0, &model_object_standard_object, 0, 0, 1, 860.41669, 2, 0, 0};
+struct PitemZ_header Pdoor_azt_deskZ_header = {0, &model_object_standard_object, 0, 0, 1, 860.41669, 0, 2, 0, 0};
 //D:80039F10
-struct PitemZ_header Pdoor_azt_desk_topZ_header = {0, &model_object_standard_object, 0, 0, 1, 565.93268, 3, 0, 0};
+struct PitemZ_header Pdoor_azt_desk_topZ_header = {0, &model_object_standard_object, 0, 0, 1, 565.93268, 0, 3, 0, 0};
 //D:80039F30
-struct PitemZ_header Pdoor_azt_chairZ_header = {0, &model_object_standard_object, 0, 0, 1, 94.510803, 3, 0, 0};
+struct PitemZ_header Pdoor_azt_chairZ_header = {0, &model_object_standard_object, 0, 0, 1, 94.510803, 0, 3, 0, 0};
 //D:80039F50
-struct PitemZ_header Pdoor_mfZ_header = {0, &model_object_standard_object, 0, 0, 1, 559.70367, 7, 0, 0};
+struct PitemZ_header Pdoor_mfZ_header = {0, &model_object_standard_object, 0, 0, 1, 559.70367, 0, 7, 0, 0};
 //D:80039F70
-struct PitemZ_header PflagZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 862.30865, 2, 0};
+struct PitemZ_header PflagZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 862.30865, 0, 2, 0, 0};
 //D:80039F90
-struct PitemZ_header PbarricadeZ_header = {0, &model_object_standard_object, 0, 0, 1, 2047.3016, 2, 0, 0};
+struct PitemZ_header PbarricadeZ_header = {0, &model_object_standard_object, 0, 0, 1, 2047.3016, 0, 2, 0, 0};
 //D:80039FB0
-struct PitemZ_header PmodemboxZ_header = {0, &prop_console_one_screen_related, 0, 0, 0x10001, 338.28839, 4, 0, 0};
+struct PitemZ_header PmodemboxZ_header = {0, &prop_console_one_screen_related, 0, 0x1, 0x1, 338.28839, 0, 4, 0, 0};
 //D:80039FD0
-struct PitemZ_header PdoorpanelZ_header = {0, &prop_console_four_screen_related, 0, 0, 0x40001, 338.28839, 4, 0, 0};
+struct PitemZ_header PdoorpanelZ_header = {0, &prop_console_four_screen_related, 0, 0x4, 0x1, 338.28839, 0, 4, 0, 0};
 //D:80039FF0
-struct PitemZ_header PdoorconsoleZ_header = {0, &prop_console_one_screen_related, 0, 0, 0x10001, 994.23688, 0xD, 0, 0};
+struct PitemZ_header PdoorconsoleZ_header = {0, &prop_console_one_screen_related, 0, 0x1, 0x1, 994.23688, 0, 0xD, 0, 0};
 //D:8003A010
-struct PitemZ_header PchrtesttubeZ_header = {0, &prop_weapon_related, 0, 0, 0x30001, 136.25925, 2, 0, 0};
+struct PitemZ_header PchrtesttubeZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 136.25925, 0, 2, 0, 0};
 //D:8003A030
-struct PitemZ_header Pbollardz_header = {0, &model_object_standard_object, 0, 0, 1, 628.78754, 1, 0, 0};
+struct PitemZ_header Pbollardz_header = {0, &model_object_standard_object, 0, 0, 1, 628.78754, 0, 1, 0, 0};
 
 //D:8003A050
 struct prop_pos_data word_D_8003A050[2] = {

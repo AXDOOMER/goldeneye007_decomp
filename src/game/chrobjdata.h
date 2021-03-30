@@ -30,16 +30,17 @@ struct Gitemheader {
 };
 
 
-struct PitemZ_header {
-    s32 microcode_entry_num;
-    struct item_related * anonymous_1;
-    short anonymous_2;
-    short field_E;
-    s32 drawdistance;
-    float anonymous_4;
-    s32 anonymous_5;
-    s32 anonymous_6;
-    s32 anonymous_7;
+struct PitemZ_header { //struct ModelFileHeader {
+    void* RootNode; //ModelNode* RootNode;
+    struct item_related * Skeleton; //ModelSkeleton* Skeleton;
+    void* Switches; //ModelNode** Switches;
+    s16 numSwitches; 
+    s16 numMatrices; 
+    f32 BoundingVolumeRadius; 
+    s16 numRecords;
+    s16 numtextures;
+    void* Textures; //ModelFileTextures* Textures;
+    s32 isLoaded;
 };
 
 struct p_itementry {
