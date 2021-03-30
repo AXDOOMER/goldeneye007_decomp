@@ -4,7 +4,7 @@
 #include "game/chrobjdata.h"
 #include "bondconstants.h"
 
-struct WeaponStats
+typedef struct WeaponStats
 {
     /**
      * Distance of gun flash from the end of the barrel.
@@ -180,14 +180,14 @@ struct WeaponStats
      * 
      */
     u32 BitFlags;
-};
+} WeaponStats;
 
-struct gitem_data_struct
+typedef struct GunModelFileRecord
 {
-  struct ModelFileHeader * item_header;
+  ModelFileHeader * item_header;
   char * item_file_name;
   s32 has_no_model;
-  struct WeaponStats * item_weapon_stats;
+  WeaponStats * item_weapon_stats;
   u16 upper_watch_text;
   u16 lower_watch_text;
   f32 watch_pos_x;
@@ -200,12 +200,12 @@ struct gitem_data_struct
   f32 equip_watch_x;
   f32 equip_watch_y;
   f32 equip_watch_z;
-};
+} GunModelFileRecord;
 
-struct ejected_cart {
-    struct ModelFileHeader * header;
+typedef struct CartridgeModelFileRecord {
+    ModelFileHeader* header;
     char * text;
-};
+} CartridgeModelFileRecord;
 
 
 extern char dword_CODE_bss_80075DC8[20][160];
