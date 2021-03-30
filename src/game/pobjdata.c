@@ -3,727 +3,721 @@
 #include "game/chrobjdata.h"
 
 //D:800375D0
-struct ModelFileHeader Palarm1z_header = {0, &model_object_standard_object, 0, 0, 1, 304.6402, 0, 2, 0, 0};
+struct ModelFileHeader alarm1_header = {0, &skeleton_standard_object, 0, 0, 1, 304.6402, 0, 2, 0, 0};
 //D:800375F0
-struct ModelFileHeader Palarm2Z_header = {0, &model_object_standard_object, 0, 0, 1, 208.22205, 0, 3, 0, 0};
+struct ModelFileHeader alarm2_header = {0, &skeleton_standard_object, 0, 0, 1, 208.22205, 0, 3, 0, 0};
 //D:80037610
-struct ModelFileHeader PexplosionbitZ_header = {0, &model_object_standard_object, 0, 0, 1, 208.22205, 0, 0, 0, 0};
+struct ModelFileHeader explosionbit_header = {0, &skeleton_standard_object, 0, 0, 1, 208.22205, 0, 0, 0, 0};
 //D:80037630
-struct ModelFileHeader Pammo_crate1Z_header = {0, &model_object_standard_object, 0, 0, 1, 691.83429, 0, 3, 0, 0};
+struct ModelFileHeader ammo_crate1_header = {0, &skeleton_standard_object, 0, 0, 1, 691.83429, 0, 3, 0, 0};
 //D:80037650
-struct ModelFileHeader Pammo_crate2Z_header = {0, &model_object_standard_object, 0, 0, 1, 691.83429, 0, 4, 0, 0};
+struct ModelFileHeader ammo_crate2_header = {0, &skeleton_standard_object, 0, 0, 1, 691.83429, 0, 4, 0, 0};
 //D:80037670
-struct ModelFileHeader Pammo_crate3Z_header = {0, &model_object_standard_object, 0, 0, 1, 691.83429, 0, 4, 0, 0};
+struct ModelFileHeader ammo_crate3_header = {0, &skeleton_standard_object, 0, 0, 1, 691.83429, 0, 4, 0, 0};
 //D:80037690
-struct ModelFileHeader Pammo_crate4Z_header = {0, &model_object_standard_object, 0, 0, 1, 691.83429, 0, 5, 0, 0};
+struct ModelFileHeader ammo_crate4_header = {0, &skeleton_standard_object, 0, 0, 1, 691.83429, 0, 5, 0, 0};
 //D:800376B0
-struct ModelFileHeader Pammo_crate5Z_header = {0, &model_object_standard_object, 0, 0, 1, 691.83429, 0, 5, 0, 0};
+struct ModelFileHeader ammo_crate5_header = {0, &skeleton_standard_object, 0, 0, 1, 691.83429, 0, 5, 0, 0};
 //D:800376D0
-struct ModelFileHeader Pbin1Z_header = {0, &model_object_standard_object, 0, 0, 1, 3027.6262,0, 2, 0, 0};
+struct ModelFileHeader bin1_header = {0, &skeleton_standard_object, 0, 0, 1, 3027.6262,0, 2, 0, 0};
 //D:800376F0
-struct ModelFileHeader Pblotter1Z_header = {0, &model_object_standard_object, 0, 0, 1, 432.46707, 0, 1, 0, 0};
+struct ModelFileHeader blotter1_header = {0, &skeleton_standard_object, 0, 0, 1, 432.46707, 0, 1, 0, 0};
 //D:80037710
-struct ModelFileHeader Pbook1Z_header = {0, &model_object_standard_object, 0, 0, 1, 171.37482, 0, 2, 0, 0};
+struct ModelFileHeader book1_header = {0, &skeleton_standard_object, 0, 0, 1, 171.37482, 0, 2, 0, 0};
 //D:80037730
-struct ModelFileHeader Pbookshelf1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1166.7578, 0, 0xD, 0, 0};
+struct ModelFileHeader bookshelf1_header = {0, &skeleton_standard_object, 0, 0, 1, 1166.7578, 0, 0xD, 0, 0};
 //D:80037750
-struct ModelFileHeader Pbridge_console1aZ_header = {0, &prop_console_four_screen_related, 0, 0x4, 0x1, 788.03992, 0, 0xF, 0, 0};
+struct ModelFileHeader bridge_console1a_header = {0, &skeleton_console_four_screen, 0, 0x4, 0x1, 788.03992, 0, 0xF, 0, 0};
 //D:80037770
-struct ModelFileHeader Pbridge_console1bZ_header = {0, &prop_console_one_screen_related, 0, 0x1, 0x1, 788.03992, 0, 0x10, 0, 0};
+struct ModelFileHeader bridge_console1b_header = {0, &skeleton_console_one_screen, 0, 0x1, 0x1, 788.03992, 0, 0x10, 0, 0};
 //D:80037790
-struct ModelFileHeader Pbridge_console2aZ_header = {0, &prop_console_four_screen_related, 0, 0x4, 0x1, 788.03992, 0, 0xF, 0, 0};
+struct ModelFileHeader bridge_console2a_header = {0, &skeleton_console_four_screen, 0, 0x4, 0x1, 788.03992, 0, 0xF, 0, 0};
 //D:800377B0
-struct ModelFileHeader Pbridge_console2bZ_header = {0, &model_object_standard_object, 0, 0, 1, 788.03992, 0, 0xF, 0, 0};
+struct ModelFileHeader bridge_console2b_header = {0, &skeleton_standard_object, 0, 0, 1, 788.03992, 0, 0xF, 0, 0};
 //D:800377D0
-struct ModelFileHeader Pbridge_console3aZ_header = {0, &prop_console_four_screen_related, 0, 0x4, 0x1, 788.03992, 0, 0xF, 0, 0};
+struct ModelFileHeader bridge_console3a_header = {0, &skeleton_console_four_screen, 0, 0x4, 0x1, 788.03992, 0, 0xF, 0, 0};
 //D:800377F0
-struct ModelFileHeader Pbridge_console3bZ_header = {0, &prop_console_four_screen_related, 0, 0x4, 0x1, 788.03992, 0, 0x10, 0, 0};
+struct ModelFileHeader bridge_console3b_header = {0, &skeleton_console_four_screen, 0, 0x4, 0x1, 788.03992, 0, 0x10, 0, 0};
 //D:80037810
-struct ModelFileHeader Pcard_box1Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 0, 5, 0, 0};
+struct ModelFileHeader card_box1_header = {0, &skeleton_standard_object, 0, 0, 1, 727.4613, 0, 5, 0, 0};
 //D:80037830
-struct ModelFileHeader Pcard_box2Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 0, 6, 0, 0};
+struct ModelFileHeader card_box2_header = {0, &skeleton_standard_object, 0, 0, 1, 727.4613, 0, 6, 0, 0};
 //D:80037850
-struct ModelFileHeader Pcard_box3Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 0, 5, 0, 0};
+struct ModelFileHeader card_box3_header = {0, &skeleton_standard_object, 0, 0, 1, 727.4613, 0, 5, 0, 0};
 //D:80037870
-struct ModelFileHeader Pcard_box4_lgZ_header = {0, &model_object_standard_object, 0, 0, 1, 800.2074, 0, 4, 0, 0};
+struct ModelFileHeader card_box4_lg_header = {0, &skeleton_standard_object, 0, 0, 1, 800.2074, 0, 4, 0, 0};
 //D:80037890
-struct ModelFileHeader Pcard_box5_lgZ_header = {0, &model_object_standard_object, 0, 0, 1, 800.2074, 0, 5, 0, 0};
+struct ModelFileHeader card_box5_lg_header = {0, &skeleton_standard_object, 0, 0, 1, 800.2074, 0, 5, 0, 0};
 //D:800378B0
-struct ModelFileHeader Pcard_box6_lgZ_header = {0, &model_object_standard_object, 0, 0, 1, 800.2074, 0, 5, 0, 0};
+struct ModelFileHeader card_box6_lg_header = {0, &skeleton_standard_object, 0, 0, 1, 800.2074, 0, 5, 0, 0};
 //D:800378D0
-struct ModelFileHeader PcctvZ_header = {0, &prop_cctv_related, 0, 0x4, 0x2, 558.90094, 0, 6, 0, 0};
+struct ModelFileHeader cctv_header = {0, &skeleton_cctv, 0, 0x4, 0x2, 558.90094, 0, 6, 0, 0};
 //D:800378F0
-struct ModelFileHeader Pconsole1Z_header = {0, &prop_console_four_screen_related, 0, 0x4, 0x1, 1611.2357, 0, 0xA, 0, 0};
+struct ModelFileHeader console1_header = {0, &skeleton_console_four_screen, 0, 0x4, 0x1, 1611.2357, 0, 0xA, 0, 0};
 //D:80037910
-struct ModelFileHeader Pconsole2Z_header = {0, &prop_console_four_screen_related, 0, 0x4, 0x1, 1611.2357, 0, 0xA, 0, 0};
+struct ModelFileHeader console2_header = {0, &skeleton_console_four_screen, 0, 0x4, 0x1, 1611.2357, 0, 0xA, 0, 0};
 //D:80037930
-struct ModelFileHeader Pconsole3Z_header = {0, &prop_console_four_screen_related, 0, 0x4, 0x1, 1611.2357, 0, 0xA, 0, 0};
+struct ModelFileHeader console3_header = {0, &skeleton_console_four_screen, 0, 0x4, 0x1, 1611.2357, 0, 0xA, 0, 0};
 //D:80037950
-struct ModelFileHeader Pconsole_sevaZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0, 0xE, 0, 0};
+struct ModelFileHeader console_seva_header = {0, &skeleton_standard_object, 0, 0, 1, 994.23688, 0, 0xE, 0, 0};
 //D:80037970
-struct ModelFileHeader Pconsole_sevbZ_header = {0, &prop_console_one_screen_related, 0, 0x1, 0x1, 994.23688, 0, 0xB, 0, 0};
+struct ModelFileHeader console_sevb_header = {0, &skeleton_console_one_screen, 0, 0x1, 0x1, 994.23688, 0, 0xB, 0, 0};
 //D:80037990
-struct ModelFileHeader Pconsole_sevcZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0, 0xF, 0, 0};
+struct ModelFileHeader console_sevc_header = {0, &skeleton_standard_object, 0, 0, 1, 994.23688, 0, 0xF, 0, 0};
 //D:800379B0
-struct ModelFileHeader Pconsole_sevdZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0, 0xD, 0, 0};
+struct ModelFileHeader console_sevd_header = {0, &skeleton_standard_object, 0, 0, 1, 994.23688, 0, 0xD, 0, 0};
 //D:800379D0
-struct ModelFileHeader Pconsole_sev2aZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0, 0xD, 0, 0};
+struct ModelFileHeader console_sev2a_header = {0, &skeleton_standard_object, 0, 0, 1, 994.23688, 0, 0xD, 0, 0};
 //D:800379F0
-struct ModelFileHeader Pconsole_sev2bZ_header = {0, &prop_console_one_screen_related, 0, 0x1, 0x1, 994.23688, 0, 0xD, 0, 0};
+struct ModelFileHeader console_sev2b_header = {0, &skeleton_console_one_screen, 0, 0x1, 0x1, 994.23688, 0, 0xD, 0, 0};
 //D:80037A10
-struct ModelFileHeader Pconsole_sev2cZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0, 0xF, 0, 0};
+struct ModelFileHeader console_sev2c_header = {0, &skeleton_standard_object, 0, 0, 1, 994.23688, 0, 0xF, 0, 0};
 //D:80037A30
-struct ModelFileHeader Pconsole_sev2dZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0, 0xD, 0, 0};
+struct ModelFileHeader console_sev2d_header = {0, &skeleton_standard_object, 0, 0, 1, 994.23688, 0, 0xD, 0, 0};
 //D:80037A50
-struct ModelFileHeader Pconsole_sev_GEaZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0, 0xD, 0, 0};
+struct ModelFileHeader console_sev_GEa_header = {0, &skeleton_standard_object, 0, 0, 1, 994.23688, 0, 0xD, 0, 0};
 //D:80037A70
-struct ModelFileHeader Pconsole_sev_GEbZ_header = {0, &model_object_standard_object, 0, 0, 1, 994.23688, 0, 0xD, 0, 0};
+struct ModelFileHeader console_sev_GEb_header = {0, &skeleton_standard_object, 0, 0, 1, 994.23688, 0, 0xD, 0, 0};
 //D:80037A90
-struct ModelFileHeader Pdesk1Z_header = {0, &model_object_standard_object, 0, 0, 1, 957.18225, 0, 3, 0, 0};
+struct ModelFileHeader desk1_header = {0, &skeleton_standard_object, 0, 0, 1, 957.18225, 0, 3, 0, 0};
 //D:80037AB0
-struct ModelFileHeader Pdesk2Z_header = {0, &model_object_standard_object, 0, 0, 1, 957.18225, 0, 3, 0, 0};
+struct ModelFileHeader desk2_header = {0, &skeleton_standard_object, 0, 0, 1, 957.18225, 0, 3, 0, 0};
 //D:80037AD0
-struct ModelFileHeader Pdesk_lamp2Z_header = {0, &model_object_standard_object, 0, 0, 1, 804.59833, 0, 4, 0, 0};
+struct ModelFileHeader desk_lamp2_header = {0, &skeleton_standard_object, 0, 0, 1, 804.59833, 0, 4, 0, 0};
 //D:80037AF0
-struct ModelFileHeader Pdisc_readerZ_header = {0, &model_object_standard_object, 0, 0, 1, 214.33035, 0, 6, 0, 0};
+struct ModelFileHeader disc_reader_header = {0, &skeleton_standard_object, 0, 0, 1, 214.33035, 0, 6, 0, 0};
 //D:80037B10
-struct ModelFileHeader Pdisk_drive1Z_header = {0, &model_object_standard_object, 0, 0, 1, 191.85779, 0, 4, 0, 0};
+struct ModelFileHeader disk_drive1_header = {0, &skeleton_standard_object, 0, 0, 1, 191.85779, 0, 4, 0, 0};
 //D:80037B30
-struct ModelFileHeader Pfiling_cabinet1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1055.5693, 0, 2, 0, 0};
+struct ModelFileHeader filing_cabinet1_header = {0, &skeleton_standard_object, 0, 0, 1, 1055.5693, 0, 2, 0, 0};
 //D:80037B50
-struct ModelFileHeader Pjerry_can1Z_header = {0, &model_object_standard_object, 0, 0, 1, 366.61932, 0, 4, 0, 0};
+struct ModelFileHeader jerry_can1_header = {0, &skeleton_standard_object, 0, 0, 1, 366.61932, 0, 4, 0, 0};
 //D:80037B70
-struct ModelFileHeader Pkeyboard1Z_header = {0, &model_object_standard_object, 0, 0, 1, 278.23227, 0, 2, 0, 0};
+struct ModelFileHeader keyboard1_header = {0, &skeleton_standard_object, 0, 0, 1, 278.23227, 0, 2, 0, 0};
 //D:80037B90
-struct ModelFileHeader Pkit_units1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1661.4763, 0, 4, 0, 0};
+struct ModelFileHeader kit_units1_header = {0, &skeleton_standard_object, 0, 0, 1, 1661.4763, 0, 4, 0, 0};
 //D:80037BB0
-struct ModelFileHeader Pletter_tray1Z_header = {0, &model_object_standard_object, 0, 0, 1, 252.06836, 0, 1, 0, 0};
+struct ModelFileHeader letter_tray1_header = {0, &skeleton_standard_object, 0, 0, 1, 252.06836, 0, 1, 0, 0};
 //D:80037BD0
-struct ModelFileHeader Pmainframe1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1119.4073, 0, 7, 0, 0};
+struct ModelFileHeader mainframe1_header = {0, &skeleton_standard_object, 0, 0, 1, 1119.4073, 0, 7, 0, 0};
 //D:80037BF0
-struct ModelFileHeader Pmainframe2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1119.4073, 0, 7, 0, 0};
+struct ModelFileHeader mainframe2_header = {0, &skeleton_standard_object, 0, 0, 1, 1119.4073, 0, 7, 0, 0};
 //D:80037C10
-struct ModelFileHeader Pmetal_chair1Z_header = {0, &model_object_standard_object, 0, 0, 1, 639.18097, 0, 2, 0, 0};
+struct ModelFileHeader metal_chair1_header = {0, &skeleton_standard_object, 0, 0, 1, 639.18097, 0, 2, 0, 0};
 //D:80037C30
-struct ModelFileHeader Pmetal_crate1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 0, 3, 0, 0};
+struct ModelFileHeader metal_crate1_header = {0, &skeleton_standard_object, 0, 0, 1, 1010.363, 0, 3, 0, 0};
 //D:80037C50
-struct ModelFileHeader Pmetal_crate2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 0, 3, 0, 0};
+struct ModelFileHeader metal_crate2_header = {0, &skeleton_standard_object, 0, 0, 1, 1010.363, 0, 3, 0, 0};
 //D:80037C70
-struct ModelFileHeader Pmetal_crate3Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 0, 2, 0, 0};
+struct ModelFileHeader metal_crate3_header = {0, &skeleton_standard_object, 0, 0, 1, 1010.363, 0, 2, 0, 0};
 //D:80037C90
-struct ModelFileHeader Pmetal_crate4Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 0, 3, 0, 0};
+struct ModelFileHeader metal_crate4_header = {0, &skeleton_standard_object, 0, 0, 1, 1010.363, 0, 3, 0, 0};
 //D:80037CB0
-struct ModelFileHeader Pmissile_rackZ_header = {0, &model_object_standard_object, 0, 0, 1, 964.16296, 0, 4, 0, 0};
+struct ModelFileHeader missile_rack_header = {0, &skeleton_standard_object, 0, 0, 1, 964.16296, 0, 4, 0, 0};
 //D:80037CD0
-struct ModelFileHeader Pmissile_rack2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1148.4724, 0, 4, 0, 0};
+struct ModelFileHeader missile_rack2_header = {0, &skeleton_standard_object, 0, 0, 1, 1148.4724, 0, 4, 0, 0};
 //D:80037CF0
-struct ModelFileHeader Poil_drum1Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 0, 2, 0, 0};
+struct ModelFileHeader oil_drum1_header = {0, &skeleton_standard_object, 0, 0, 1, 745.45892, 0, 2, 0, 0};
 //D:80037D10
-struct ModelFileHeader Poil_drum2Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 0, 4, 0, 0};
+struct ModelFileHeader oil_drum2_header = {0, &skeleton_standard_object, 0, 0, 1, 745.45892, 0, 4, 0, 0};
 //D:80037D30
-struct ModelFileHeader Poil_drum3Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 0, 4, 0, 0};
+struct ModelFileHeader oil_drum3_header = {0, &skeleton_standard_object, 0, 0, 1, 745.45892, 0, 4, 0, 0};
 //D:80037D50
-struct ModelFileHeader Poil_drum5Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 0, 3, 0, 0};
+struct ModelFileHeader oil_drum5_header = {0, &skeleton_standard_object, 0, 0, 1, 745.45892, 0, 3, 0, 0};
 //D:80037D70
-struct ModelFileHeader Poil_drum6Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 0, 3, 0, 0};
+struct ModelFileHeader oil_drum6_header = {0, &skeleton_standard_object, 0, 0, 1, 745.45892, 0, 3, 0, 0};
 //D:80037D90
-struct ModelFileHeader Poil_drum7Z_header = {0, &model_object_standard_object, 0, 0, 1, 745.45892, 0, 4, 0, 0};
+struct ModelFileHeader oil_drum7_header = {0, &skeleton_standard_object, 0, 0, 1, 745.45892, 0, 4, 0, 0};
 //D:80037DB0
-struct ModelFileHeader PpadlockZ_header = {0, &model_object_standard_object, 0, 0, 1, 225.64145, 0, 4, 0, 0};
+struct ModelFileHeader padlock_header = {0, &skeleton_standard_object, 0, 0, 1, 225.64145, 0, 4, 0, 0};
 //D:80037DD0
-struct ModelFileHeader Pphone1Z_header = {0, &model_object_standard_object, 0, 0, 1, 166.03481, 0, 2, 0, 0};
+struct ModelFileHeader phone1_header = {0, &skeleton_standard_object, 0, 0, 1, 166.03481, 0, 2, 0, 0};
 //D:80037DF0
-struct ModelFileHeader Pradio_unit1Z_header = {0, &model_object_standard_object, 0, 0, 1, 354.59534, 0, 5, 0, 0};
+struct ModelFileHeader radio_unit1_header = {0, &skeleton_standard_object, 0, 0, 1, 354.59534, 0, 5, 0, 0};
 //D:80037E10
-struct ModelFileHeader Pradio_unit2Z_header = {0, &model_object_standard_object, 0, 0, 1, 354.59534, 0, 5, 0, 0};
+struct ModelFileHeader radio_unit2_header = {0, &skeleton_standard_object, 0, 0, 1, 354.59534, 0, 5, 0, 0};
 //D:80037E30
-struct ModelFileHeader Pradio_unit3Z_header = {0, &model_object_standard_object, 0, 0, 1, 354.59534, 0, 5, 0, 0};
+struct ModelFileHeader radio_unit3_header = {0, &skeleton_standard_object, 0, 0, 1, 354.59534, 0, 5, 0, 0};
 //D:80037E50
-struct ModelFileHeader Pradio_unit4Z_header = {0, &model_object_standard_object, 0, 0, 1, 354.59534, 0, 5, 0, 0};
+struct ModelFileHeader radio_unit4_header = {0, &skeleton_standard_object, 0, 0, 1, 354.59534, 0, 5, 0, 0};
 //D:80037E70
-struct ModelFileHeader Psat1_reflectZ_header = {0, &model_object_standard_object, 0, 0, 1, 5185.9409, 0, 0xD, 0, 0};
+struct ModelFileHeader sat1_reflect_header = {0, &skeleton_standard_object, 0, 0, 1, 5185.9409, 0, 0xD, 0, 0};
 //D:80037E90
-struct ModelFileHeader PsatdishZ_header = {0, &model_object_standard_object, 0, 0, 1, 2437.468, 0, 2, 0, 0};
+struct ModelFileHeader satdish_header = {0, &skeleton_standard_object, 0, 0, 1, 2437.468, 0, 2, 0, 0};
 //D:80037EB0
-struct ModelFileHeader PsatboxZ_header = {0, &model_object_standard_object, 0, 0, 1, 89.935875, 0, 1, 0, 0};
+struct ModelFileHeader satbox_header = {0, &skeleton_standard_object, 0, 0, 1, 89.935875, 0, 1, 0, 0};
 //D:80037ED0
-struct ModelFileHeader Pstool1Z_header = {0, &model_object_standard_object, 0, 0, 1, 353.11398, 0, 2, 0, 0};
+struct ModelFileHeader stool1_header = {0, &skeleton_standard_object, 0, 0, 1, 353.11398, 0, 2, 0, 0};
 //D:80037EF0
-struct ModelFileHeader Pswivel_chair1Z_header = {0, &model_object_standard_object, 0, 0, 1, 581.16394, 0, 3, 0, 0};
+struct ModelFileHeader swivel_chair1_header = {0, &skeleton_standard_object, 0, 0, 1, 581.16394, 0, 3, 0, 0};
 //D:80037F10
-struct ModelFileHeader Ptorpedo_rackZ_header = {0, &model_object_standard_object, 0, 0, 1, 765.61725, 0, 3, 0, 0};
+struct ModelFileHeader torpedo_rack_header = {0, &skeleton_standard_object, 0, 0, 1, 765.61725, 0, 3, 0, 0};
 //D:80037F30
-struct ModelFileHeader Ptv1Z_header = {0, &prop_console_one_screen_related, 0, 0x1, 0x1, 347.0235, 0, 5, 0, 0};
+struct ModelFileHeader tv1_header = {0, &skeleton_console_one_screen, 0, 0x1, 0x1, 347.0235, 0, 5, 0, 0};
 //D:80037F50
-struct ModelFileHeader Ptv_holderZ_header = {0, &prop_tv_holder_related, 0, 0x4, 0x5, 1352.4841, 0, 2, 0, 0};
+struct ModelFileHeader tv_holder_header = {0, &skeleton_tv_holder, 0, 0x4, 0x5, 1352.4841, 0, 2, 0, 0};
 //D:80037F70
-struct ModelFileHeader PtvscreenZ_header = {0, &prop_console_one_screen_related, 0, 0x1, 0x1, 211.74477, 0, 1, 0, 0};
+struct ModelFileHeader tvscreen_header = {0, &skeleton_console_one_screen, 0, 0x1, 0x1, 211.74477, 0, 1, 0, 0};
 //D:80037F90
-struct ModelFileHeader Ptv4screenZ_header = {0, &prop_console_four_screen_related, 0, 0x4, 0x1, 211.74477, 0, 1, 0, 0};
+struct ModelFileHeader tv4screen_header = {0, &skeleton_console_four_screen, 0, 0x4, 0x1, 211.74477, 0, 1, 0, 0};
 //D:80037FB0
-struct ModelFileHeader Pwood_lg_crate1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 0, 3, 0, 0};
+struct ModelFileHeader wood_lg_crate1_header = {0, &skeleton_standard_object, 0, 0, 1, 1010.363, 0, 3, 0, 0};
 //D:80037FD0
-struct ModelFileHeader Pwood_lg_crate2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 0, 2, 0, 0};
+struct ModelFileHeader wood_lg_crate2_header = {0, &skeleton_standard_object, 0, 0, 1, 1010.363, 0, 2, 0, 0};
 //D:80037FF0
-struct ModelFileHeader Pwood_md_crate3Z_header = {0, &model_object_standard_object, 0, 0, 1, 909.32666, 0, 2, 0, 0};
+struct ModelFileHeader wood_md_crate3_header = {0, &skeleton_standard_object, 0, 0, 1, 909.32666, 0, 2, 0, 0};
 //D:80038010
-struct ModelFileHeader Pwood_sm_crate4Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 0, 3, 0, 0};
+struct ModelFileHeader wood_sm_crate4_header = {0, &skeleton_standard_object, 0, 0, 1, 727.4613, 0, 3, 0, 0};
 //D:80038030
-struct ModelFileHeader Pwood_sm_crate5Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 0, 4, 0, 0};
+struct ModelFileHeader wood_sm_crate5_header = {0, &skeleton_standard_object, 0, 0, 1, 727.4613, 0, 4, 0, 0};
 //D:80038050
-struct ModelFileHeader Pwood_sm_crate6Z_header = {0, &model_object_standard_object, 0, 0, 1, 727.4613, 0, 4, 0, 0};
+struct ModelFileHeader wood_sm_crate6_header = {0, &skeleton_standard_object, 0, 0, 1, 727.4613, 0, 4, 0, 0};
 //D:80038070
-struct ModelFileHeader Pwooden_table1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1095.1365, 0, 2, 0, 0};
+struct ModelFileHeader wooden_table1_header = {0, &skeleton_standard_object, 0, 0, 1, 1095.1365, 0, 2, 0, 0};
 //D:80038090
-struct ModelFileHeader Pswipe_card2Z_header = {0, &model_object_standard_object, 0, 0, 1, 123.088844, 0, 2, 0, 0};
+struct ModelFileHeader swipe_card2_header = {0, &skeleton_standard_object, 0, 0, 1, 123.088844, 0, 2, 0, 0};
 //D:800380B0
-struct ModelFileHeader Pborg_crateZ_header = {0, &model_object_standard_object, 0, 0, 1, 1010.363, 0, 1, 0, 0};
+struct ModelFileHeader borg_crate_header = {0, &skeleton_standard_object, 0, 0, 1, 1010.363, 0, 1, 0, 0};
 //D:800380D0
-struct ModelFileHeader Pboxes4x4Z_header = {0, &model_object_standard_object, 0, 0, 1, 2424.8711, 0, 7, 0, 0};
+struct ModelFileHeader boxes4x4_header = {0, &skeleton_standard_object, 0, 0, 1, 2424.8711, 0, 7, 0, 0};
 //D:800380F0
-struct ModelFileHeader Pboxes3x4Z_header = {0, &model_object_standard_object, 0, 0, 1, 2241.0935, 0, 6, 0, 0};
+struct ModelFileHeader boxes3x4_header = {0, &skeleton_standard_object, 0, 0, 1, 2241.0935, 0, 6, 0, 0};
 //D:80038110
-struct ModelFileHeader Pboxes2x4Z_header = {0, &model_object_standard_object, 0, 0, 1, 2100.0, 0, 6, 0, 0};
+struct ModelFileHeader boxes2x4_header = {0, &skeleton_standard_object, 0, 0, 1, 2100.0, 0, 6, 0, 0};
 //D:80038130
-struct ModelFileHeader Psec_panelZ_header = {0, &model_object_standard_object, 0, 0, 1, 1567.2454, 0, 3, 0, 0};
+struct ModelFileHeader sec_panel_header = {0, &skeleton_standard_object, 0, 0, 1, 1567.2454, 0, 3, 0, 0};
 //D:80038150
-struct ModelFileHeader PICBM_noseZ_header = {0, &model_object_standard_object, 0, 0, 1, 2782.7126, 0, 8, 0, 0};
+struct ModelFileHeader ICBM_nose_header = {0, &skeleton_standard_object, 0, 0, 1, 2782.7126, 0, 8, 0, 0};
 //D:80038170
-struct ModelFileHeader PICBMZ_header = {0, &model_object_standard_object, 0, 0, 1, 14790.535, 0, 0xE, 0, 0};
+struct ModelFileHeader ICBM_header = {0, &skeleton_standard_object, 0, 0, 1, 14790.535, 0, 0xE, 0, 0};
 //D:80038190
-struct ModelFileHeader Ptuning_console1Z_header = {0, &prop_console_one_screen_related, 0, 0x1, 0x1, 1139.5872, 0, 0xE, 0, 0};
+struct ModelFileHeader tuning_console1_header = {0, &skeleton_console_one_screen, 0, 0x1, 0x1, 1139.5872, 0, 0xE, 0, 0};
 //D:800381B0
-struct ModelFileHeader Pdesk_arecibo1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1829.1477, 0, 3, 0, 0};
+struct ModelFileHeader desk_arecibo1_header = {0, &skeleton_standard_object, 0, 0, 1, 1829.1477, 0, 3, 0, 0};
 //D:800381D0
-struct ModelFileHeader Plocker3Z_header = {0, &model_object_standard_object, 0, 0, 1, 916.99805, 0, 3, 0, 0};
+struct ModelFileHeader locker3_header = {0, &skeleton_standard_object, 0, 0, 1, 916.99805, 0, 3, 0, 0};
 //D:800381F0
-struct ModelFileHeader Plocker4Z_header = {0, &model_object_standard_object, 0, 0, 1, 916.99805, 0, 3, 0, 0};
+struct ModelFileHeader locker4_header = {0, &skeleton_standard_object, 0, 0, 1, 916.99805, 0, 3, 0, 0};
 //D:80038210
-struct ModelFileHeader ProofgunZ_header = {0, &prop_rotating_stuff_related, 0, 0x8, 0x5, 1910.908, 0, 0xE, 0, 0};
+struct ModelFileHeader roofgun_header = {0, &skeleton_rotating_stuff, 0, 0x8, 0x5, 1910.908, 0, 0xE, 0, 0};
 //D:80038230
-struct ModelFileHeader Pdest_engineZ_header = {0, &model_object_standard_object, 0, 0, 1, 6459.439, 0, 0xA, 0, 0};
+struct ModelFileHeader dest_engine_header = {0, &skeleton_standard_object, 0, 0, 1, 6459.439, 0, 0xA, 0, 0};
 //D:80038250
-struct ModelFileHeader Pdest_exocetZ_header = {0, &model_object_standard_object, 0, 0, 1, 1644.8435, 0, 8, 0, 0};
+struct ModelFileHeader dest_exocet_header = {0, &skeleton_standard_object, 0, 0, 1, 1644.8435, 0, 8, 0, 0};
 //D:80038270
-struct ModelFileHeader Pdest_gunZ_header = {0, &model_object_standard_object, 0, 0, 1, 2124.0735, 0, 5, 0, 0};
+struct ModelFileHeader dest_gun_header = {0, &skeleton_standard_object, 0, 0, 1, 2124.0735, 0, 5, 0, 0};
 //D:80038290
-struct ModelFileHeader Pdest_harpoonZ_header = {0, &model_object_standard_object, 0, 0, 1, 1798.7655, 0, 5, 0, 0};
+struct ModelFileHeader dest_harpoon_header = {0, &skeleton_standard_object, 0, 0, 1, 1798.7655, 0, 5, 0, 0};
 //D:800382B0
-struct ModelFileHeader Pdest_seawolfZ_header = {0, &model_object_standard_object, 0, 0, 1, 2282.0623, 0, 0xA, 0, 0};
+struct ModelFileHeader dest_seawolf_header = {0, &skeleton_standard_object, 0, 0, 1, 2282.0623, 0, 0xA, 0, 0};
 //D:800382D0
-struct ModelFileHeader PwindowZ_header = {0, &model_object_standard_object, 0, 0, 1, 423.48956, 0, 1, 0, 0};
+struct ModelFileHeader window_header = {0, &skeleton_standard_object, 0, 0, 1, 423.48956, 0, 1, 0, 0};
 //D:800382F0
-struct ModelFileHeader Pwindow_lib_lg1Z_header = {0, &model_object_standard_object, 0, 0, 1, 835.20624, 0, 1, 0, 0};
+struct ModelFileHeader window_lib_lg1_header = {0, &skeleton_standard_object, 0, 0, 1, 835.20624, 0, 1, 0, 0};
 //D:80038310
-struct ModelFileHeader Pwindow_lib_sm1Z_header = {0, &model_object_standard_object, 0, 0, 1, 601.28625, 0, 1, 0, 0};
+struct ModelFileHeader window_lib_sm1_header = {0, &skeleton_standard_object, 0, 0, 1, 601.28625, 0, 1, 0, 0};
 //D:80038330
-struct ModelFileHeader Pwindow_cor11Z_header = {0, &model_object_standard_object, 0, 0, 1, 414.53622, 0, 1, 0, 0};
+struct ModelFileHeader window_cor11_header = {0, &skeleton_standard_object, 0, 0, 1, 414.53622, 0, 1, 0, 0};
 //D:80038350
-struct ModelFileHeader Pjungle3_treeZ_header = {0, &model_object_standard_object, 0, 0, 1, 28729.467, 0, 5, 0, 0};
+struct ModelFileHeader jungle3_tree_header = {0, &skeleton_standard_object, 0, 0, 1, 28729.467, 0, 5, 0, 0};
 //D:80038370
-struct ModelFileHeader PpalmZ_header = {0, &model_object_standard_object, 0, 0, 1, 15501.406, 0, 3, 0, 0};
+struct ModelFileHeader palm_header = {0, &skeleton_standard_object, 0, 0, 1, 15501.406, 0, 3, 0, 0};
 //D:80038390
-struct ModelFileHeader PpalmtreeZ_header = {0, &model_object_standard_object, 0, 0, 1, 1781.4542, 0, 2, 0, 0};
+struct ModelFileHeader palmtree_header = {0, &skeleton_standard_object, 0, 0, 1, 1781.4542, 0, 2, 0, 0};
 //D:800383B0
-struct ModelFileHeader Pplant2bZ_header = {0, &model_object_standard_object, 0, 0, 1, 1252.9539, 0, 2, 0, 0};
+struct ModelFileHeader plant2b_header = {0, &skeleton_standard_object, 0, 0, 1, 1252.9539, 0, 2, 0, 0};
 //D:800383D0
-struct ModelFileHeader PlabbenchZ_header = {0, &model_object_standard_object, 0, 0, 1, 844.09717, 0, 4, 0, 0};
+struct ModelFileHeader labbench_header = {0, &skeleton_standard_object, 0, 0, 1, 844.09717, 0, 4, 0, 0};
 //D:800383F0
-struct ModelFileHeader PgasbarrelZ_header = {0, &model_object_standard_object, 0, 0, 1, 725.94379, 0, 2, 0, 0};
+struct ModelFileHeader gasbarrel_header = {0, &skeleton_standard_object, 0, 0, 1, 725.94379, 0, 2, 0, 0};
 //D:80038410
-struct ModelFileHeader PgasbarrelsZ_header = {0, &model_object_standard_object, 0, 0, 1, 1174.1927, 0, 2, 0, 0};
+struct ModelFileHeader gasbarrels_header = {0, &skeleton_standard_object, 0, 0, 1, 1174.1927, 0, 2, 0, 0};
 //D:80038430
-struct ModelFileHeader PbodyarmourZ_header = {0, &model_object_standard_object, 0, 0, 1, 246.94099, 0, 7, 0, 0};
+struct ModelFileHeader bodyarmour_header = {0, &skeleton_standard_object, 0, 0, 1, 246.94099, 0, 7, 0, 0};
 //D:80038450
-struct ModelFileHeader PbodyarmourvestZ_header = {0, &model_object_standard_object, 0, 0, 1, 241.82211, 0, 2, 0, 0};
+struct ModelFileHeader bodyarmourvest_header = {0, &skeleton_standard_object, 0, 0, 1, 241.82211, 0, 2, 0, 0};
 //D:80038470
-struct ModelFileHeader PgastankZ_header = {0, &model_object_standard_object, 0, 0, 1, 1130.0691, 0, 5, 0, 0};
+struct ModelFileHeader gastank_header = {0, &skeleton_standard_object, 0, 0, 1, 1130.0691, 0, 5, 0, 0};
 //D:80038490
-struct ModelFileHeader Pglassware1Z_header = {0, &model_object_standard_object, 0, 0, 1, 72.111031, 0, 1, 0, 0};
+struct ModelFileHeader glassware1_header = {0, &skeleton_standard_object, 0, 0, 1, 72.111031, 0, 1, 0, 0};
 //D:800384B0
-struct ModelFileHeader PhatchboltZ_header = {0, &model_object_standard_object, 0, 0, 1, 2236.0679, 0, 1, 0, 0};
+struct ModelFileHeader hatchbolt_header = {0, &skeleton_standard_object, 0, 0, 1, 2236.0679, 0, 1, 0, 0};
 //D:800384D0
-struct ModelFileHeader PbrakeunitZ_header = {0, &model_object_standard_object, 0, 0, 1, 801.95074, 0, 4, 0, 0};
+struct ModelFileHeader brakeunit_header = {0, &skeleton_standard_object, 0, 0, 1, 801.95074, 0, 4, 0, 0};
 //D:800384F0
-struct ModelFileHeader Pak47magZ_header = {0, &model_object_standard_object, 0, 0, 1, 107.11019, 0, 2, 0, 0};
+struct ModelFileHeader ak47mag_header = {0, &skeleton_standard_object, 0, 0, 1, 107.11019, 0, 2, 0, 0};
 //D:80038510
-struct ModelFileHeader Pm16magZ_header = {0, &model_object_standard_object, 0, 0, 1, 87.934891, 0, 2, 0, 0};
+struct ModelFileHeader m16mag_header = {0, &skeleton_standard_object, 0, 0, 1, 87.934891, 0, 2, 0, 0};
 //D:80038530
-struct ModelFileHeader Pmp5kmagZ_header = {0, &model_object_standard_object, 0, 0, 1, 119.547295, 0, 2, 0, 0};
+struct ModelFileHeader mp5kmag_header = {0, &skeleton_standard_object, 0, 0, 1, 119.547295, 0, 2, 0, 0};
 //D:80038550
-struct ModelFileHeader PskorpionmagZ_header = {0, &model_object_standard_object, 0, 0, 1, 58.428444, 0, 2, 0, 0};
+struct ModelFileHeader skorpionmag_header = {0, &skeleton_standard_object, 0, 0, 1, 58.428444, 0, 2, 0, 0};
 //D:80038570
-struct ModelFileHeader PspectremagZ_header = {0, &model_object_standard_object, 0, 0, 1, 99.01432, 0, 2, 0, 0};
+struct ModelFileHeader spectremag_header = {0, &skeleton_standard_object, 0, 0, 1, 99.01432, 0, 2, 0, 0};
 //D:80038590
-struct ModelFileHeader PuzimagZ_header = {0, &model_object_standard_object, 0, 0, 1, 74.28373, 0, 2, 0, 0};
+struct ModelFileHeader uzimag_header = {0, &skeleton_standard_object, 0, 0, 1, 74.28373, 0, 2, 0, 0};
 //D:800385B0
-struct ModelFileHeader PsilencerZ_header = {0, &model_object_standard_object, 0, 0, 1, 63.915436, 0, 3, 0, 0};
+struct ModelFileHeader silencer_header = {0, &skeleton_standard_object, 0, 0, 1, 63.915436, 0, 3, 0, 0};
 //D:800385D0
-struct ModelFileHeader PchrextinguisherZ_header = {0, &model_object_standard_object, 0, 0, 1, 425.50903, 0, 2, 0, 0};
+struct ModelFileHeader chrextinguisher_header = {0, &skeleton_standard_object, 0, 0, 1, 425.50903, 0, 2, 0, 0};
 //D:800385F0
-struct ModelFileHeader PboxcartridgesZ_header = {0, &model_object_standard_object, 0, 0, 1, 66.81916, 0, 3, 0, 0};
+struct ModelFileHeader boxcartridges_header = {0, &skeleton_standard_object, 0, 0, 1, 66.81916, 0, 3, 0, 0};
 //D:80038610
-struct ModelFileHeader Pfnp90magZ_header = {0, &model_object_standard_object, 0, 0, 1, 176.28201, 0, 2, 0, 0};
+struct ModelFileHeader fnp90mag_header = {0, &skeleton_standard_object, 0, 0, 1, 176.28201, 0, 2, 0, 0};
 //D:80038630
-struct ModelFileHeader PgoldenshellsZ_header = {0, &model_object_standard_object, 0, 0, 1, 66.81916, 0, 3, 0, 0};
+struct ModelFileHeader goldenshells_header = {0, &skeleton_standard_object, 0, 0, 1, 66.81916, 0, 3, 0, 0};
 //D:80038650
-struct ModelFileHeader PmagnumshellsZ_header = {0, &model_object_standard_object, 0, 0, 1, 66.81916, 0, 3, 0, 0};
+struct ModelFileHeader magnumshells_header = {0, &skeleton_standard_object, 0, 0, 1, 66.81916, 0, 3, 0, 0};
 //D:80038670
-struct ModelFileHeader PwppkmagZ_header = {0, &model_object_standard_object, 0, 0, 1, 74.28373, 0, 2, 0, 0};
+struct ModelFileHeader wppkmag_header = {0, &skeleton_standard_object, 0, 0, 1, 74.28373, 0, 2, 0, 0};
 //D:80038690
-struct ModelFileHeader Ptt33magZ_header = {0, &model_object_standard_object, 0, 0, 1, 74.28373, 0, 2, 0, 0};
+struct ModelFileHeader tt33mag_header = {0, &skeleton_standard_object, 0, 0, 1, 74.28373, 0, 2, 0, 0};
 //D:800386B0
-struct ModelFileHeader Psev_doorZ_header = {0, &model_object_standard_object, 0, 0, 1, 1143.7695, 0, 3, 0, 0};
+struct ModelFileHeader sev_door_header = {0, &skeleton_standard_object, 0, 0, 1, 1143.7695, 0, 3, 0, 0};
 //D:800386D0
-struct ModelFileHeader Psev_door3Z_header = {0, &model_object_standard_object, 0, 0, 1, 1143.5603, 0, 6, 0, 0};
+struct ModelFileHeader sev_door3_header = {0, &skeleton_standard_object, 0, 0, 1, 1143.5603, 0, 6, 0, 0};
 //D:800386F0
-struct ModelFileHeader Psev_door3_windZ_header = {0, &model_object_standard_object, 0, 0, 1, 1143.5603, 0, 5, 0, 0};
+struct ModelFileHeader sev_door3_wind_header = {0, &skeleton_standard_object, 0, 0, 1, 1143.5603, 0, 5, 0, 0};
 //D:80038710
-struct ModelFileHeader Psev_door4_windZ_header = {0, &prop_door_related, 0, 0x4, 0x1, 1143.5603, 0, 8, 0, 0};
+struct ModelFileHeader sev_door4_wind_header = {0, &skeleton_door, 0, 0x4, 0x1, 1143.5603, 0, 8, 0, 0};
 //D:80038730
-struct ModelFileHeader Psev_trislideZ_header = {0, &prop_door_related, 0, 0x4, 0x1, 950.54327, 0, 2, 0, 0};
+struct ModelFileHeader sev_trislide_header = {0, &skeleton_door, 0, 0x4, 0x1, 950.54327, 0, 2, 0, 0};
 //D:80038750
-struct ModelFileHeader Psev_door_v1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1137.8739, 0, 6, 0, 0};
+struct ModelFileHeader sev_door_v1_header = {0, &skeleton_standard_object, 0, 0, 1, 1137.8739, 0, 6, 0, 0};
 //D:80038770
-struct ModelFileHeader Psteel_door1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1137.8739, 0, 4, 0, 0};
+struct ModelFileHeader steel_door1_header = {0, &skeleton_standard_object, 0, 0, 1, 1137.8739, 0, 4, 0, 0};
 //D:80038790
-struct ModelFileHeader Psteel_door2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1137.8739, 0, 9, 0, 0};
+struct ModelFileHeader steel_door2_header = {0, &skeleton_standard_object, 0, 0, 1, 1137.8739, 0, 9, 0, 0};
 //D:800387B0
-struct ModelFileHeader Psteel_door3Z_header = {0, &model_object_standard_object, 0, 0, 1, 1137.8739, 0, 9, 0, 0};
+struct ModelFileHeader steel_door3_header = {0, &skeleton_standard_object, 0, 0, 1, 1137.8739, 0, 9, 0, 0};
 //D:800387D0
-struct ModelFileHeader Psilo_lift_doorZ_header = {0, &model_object_standard_object, 0, 0, 1, 600.71082, 0, 4, 0, 0};
+struct ModelFileHeader silo_lift_door_header = {0, &skeleton_standard_object, 0, 0, 1, 600.71082, 0, 4, 0, 0};
 //D:800387F0
-struct ModelFileHeader Psteel_door2bZ_header = {0, &model_object_standard_object, 0, 0, 1, 1137.8739, 0, 9, 0, 0};
+struct ModelFileHeader steel_door2b_header = {0, &skeleton_standard_object, 0, 0, 1, 1137.8739, 0, 9, 0, 0};
 //D:80038810
-struct ModelFileHeader Pdoor_roller1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1032.125, 0, 4, 0, 0};
+struct ModelFileHeader door_roller1_header = {0, &skeleton_standard_object, 0, 0, 1, 1032.125, 0, 4, 0, 0};
 //D:80038830
-struct ModelFileHeader Pdoor_roller2Z_header = {0, &model_object_standard_object, 0, 0, 1, 1032.125, 0, 4, 0, 0};
+struct ModelFileHeader door_roller2_header = {0, &skeleton_standard_object, 0, 0, 1, 1032.125, 0, 4, 0, 0};
 //D:80038850
-struct ModelFileHeader Pdoor_roller3Z_header = {0, &model_object_standard_object, 0, 0, 1, 1032.125, 0, 4, 0, 0};
+struct ModelFileHeader door_roller3_header = {0, &skeleton_standard_object, 0, 0, 1, 1032.125, 0, 4, 0, 0};
 //D:80038870
-struct ModelFileHeader Pdoor_roller4Z_header = {0, &model_object_standard_object, 0, 0, 1, 1032.125, 0, 4, 0, 0};
+struct ModelFileHeader door_roller4_header = {0, &skeleton_standard_object, 0, 0, 1, 1032.125, 0, 4, 0, 0};
 //D:80038890
-struct ModelFileHeader Pdoor_st_arec1Z_header = {0, &model_object_standard_object, 0, 0, 1, 763.03589, 0, 3, 0, 0};
+struct ModelFileHeader door_st_arec1_header = {0, &skeleton_standard_object, 0, 0, 1, 763.03589, 0, 3, 0, 0};
 //D:800388B0
-struct ModelFileHeader Pdoor_st_arec2Z_header = {0, &model_object_standard_object, 0, 0, 1, 763.03589, 0, 3, 0, 0};
+struct ModelFileHeader door_st_arec2_header = {0, &skeleton_standard_object, 0, 0, 1, 763.03589, 0, 3, 0, 0};
 //D:800388D0
-struct ModelFileHeader Pdoor_dest1Z_header = {0, &model_object_standard_object, 0, 0, 1, 461.3873, 0, 3, 0, 0};
+struct ModelFileHeader door_dest1_header = {0, &skeleton_standard_object, 0, 0, 1, 461.3873, 0, 3, 0, 0};
 //D:800388F0
-struct ModelFileHeader Pdoor_dest2Z_header = {0, &model_object_standard_object, 0, 0, 1, 461.3873, 0, 5, 0, 0};
+struct ModelFileHeader door_dest2_header = {0, &skeleton_standard_object, 0, 0, 1, 461.3873, 0, 5, 0, 0};
 //D:80038910
-struct ModelFileHeader Pgas_plant_sw_do1Z_header = {0, &model_object_standard_object, 0, 0, 1, 862.29706, 0, 4, 0, 0};
+struct ModelFileHeader gas_plant_sw_do1_header = {0, &skeleton_standard_object, 0, 0, 1, 862.29706, 0, 4, 0, 0};
 //D:80038930
-struct ModelFileHeader Pgas_plant_sw2_do1Z_header = {0, &model_object_standard_object, 0, 0, 1, 862.88489, 0, 2, 0, 0};
+struct ModelFileHeader gas_plant_sw2_do1_header = {0, &skeleton_standard_object, 0, 0, 1, 862.88489, 0, 2, 0, 0};
 //D:80038950
-struct ModelFileHeader Pgas_plant_sw3_do1Z_header = {0, &model_object_standard_object, 0, 0, 1, 862.88489, 0, 2, 0, 0};
+struct ModelFileHeader gas_plant_sw3_do1_header = {0, &skeleton_standard_object, 0, 0, 1, 862.88489, 0, 2, 0, 0};
 //D:80038970
-struct ModelFileHeader Pgas_plant_sw4_do1Z_header = {0, &model_object_standard_object, 0, 0, 1, 862.88489, 0, 1, 0, 0};
+struct ModelFileHeader gas_plant_sw4_do1_header = {0, &skeleton_standard_object, 0, 0, 1, 862.88489, 0, 1, 0, 0};
 //D:80038990
-struct ModelFileHeader Pgas_plant_met1_do1Z_header = {0, &model_object_standard_object, 0, 0, 1, 862.88489, 0, 5, 0, 0};
+struct ModelFileHeader gas_plant_met1_do1_header = {0, &skeleton_standard_object, 0, 0, 1, 862.88489, 0, 5, 0, 0};
 //D:800389B0
-struct ModelFileHeader Pgas_plant_wc_cub1Z_header = {0, &model_object_standard_object, 0, 0, 1, 783.8501, 0, 3, 0, 0};
+struct ModelFileHeader gas_plant_wc_cub1_header = {0, &skeleton_standard_object, 0, 0, 1, 783.8501, 0, 3, 0, 0};
 //D:800389D0
-struct ModelFileHeader Pgasplant_clear_doorZ_header = {0, &prop_door_related, 0, 0x4, 0x1, 1025.0952, 0, 2, 0, 0};
+struct ModelFileHeader gasplant_clear_door_header = {0, &skeleton_door, 0, 0x4, 0x1, 1025.0952, 0, 2, 0, 0};
 //D:800389F0
-struct ModelFileHeader Ptrain_doorZ_header = {0, &model_object_standard_object, 0, 0, 1, 456.99615, 0, 3, 0, 0};
+struct ModelFileHeader train_door_header = {0, &skeleton_standard_object, 0, 0, 1, 456.99615, 0, 3, 0, 0};
 //D:80038A10
-struct ModelFileHeader Ptrain_door2Z_header = {0, &prop_door_related, 0, 0x4, 0x1, 445.98541, 0, 3, 0, 0};
+struct ModelFileHeader train_door2_header = {0, &skeleton_door, 0, 0x4, 0x1, 445.98541, 0, 3, 0, 0};
 //D:80038A30
-struct ModelFileHeader Ptrain_door3Z_header = {0, &prop_door_related, 0, 0x4, 0x1, 445.98541, 0, 4, 0, 0};
+struct ModelFileHeader train_door3_header = {0, &skeleton_door, 0, 0x4, 0x1, 445.98541, 0, 4, 0, 0};
 //D:80038A50
-struct ModelFileHeader Pdoor_eyelidZ_header = {0, &prop_eyelid_door_related, 0, 0x3, 0x3, 3165.4348, 0, 3, 0, 0};
+struct ModelFileHeader door_eyelid_header = {0, &skeleton_eyelid_door, 0, 0x3, 0x3, 3165.4348, 0, 3, 0, 0};
 //D:80038A70
-struct ModelFileHeader Pdoor_irisZ_header = {0, &prop_iris_door_related, 0, 0xD, 0xD, 1621.3601, 0, 5, 0, 0};
+struct ModelFileHeader door_iris_header = {0, &skeleton_iris_door, 0, 0xD, 0xD, 1621.3601, 0, 5, 0, 0};
 //D:80038A90
-struct ModelFileHeader PsevdoorwoodZ_header = {0, &prop_door_related, 0, 0x4, 0x1, 851.62671, 0, 3, 0, 0};
+struct ModelFileHeader sevdoorwood_header = {0, &skeleton_door, 0, 0x4, 0x1, 851.62671, 0, 3, 0, 0};
 //D:80038AB0
-struct ModelFileHeader PsevdoorwindZ_header = {0, &prop_door_related, 0, 0x4, 0x1, 851.62671, 0, 5, 0, 0};
+struct ModelFileHeader sevdoorwind_header = {0, &skeleton_door, 0, 0x4, 0x1, 851.62671, 0, 5, 0, 0};
 //D:80038AD0
-struct ModelFileHeader PsevdoornowindZ_header = {0, &model_object_standard_object, 0, 0, 1, 863.03766, 0, 2, 0, 0};
+struct ModelFileHeader sevdoornowind_header = {0, &skeleton_standard_object, 0, 0, 1, 863.03766, 0, 2, 0, 0};
 //D:80038AF0
-struct ModelFileHeader PsevdoormetslideZ_header = {0, &model_object_standard_object, 0, 0, 1, 863.74707, 0, 2, 0, 0};
+struct ModelFileHeader sevdoormetslide_header = {0, &skeleton_standard_object, 0, 0, 1, 863.74707, 0, 2, 0, 0};
 //D:80038B10
-struct ModelFileHeader Pcryptdoor1aZ_header = {0, &model_object_standard_object, 0, 0, 1, 502.64923, 0, 2, 0, 0};
+struct ModelFileHeader cryptdoor1a_header = {0, &skeleton_standard_object, 0, 0, 1, 502.64923, 0, 2, 0, 0};
 //D:80038B30
-struct ModelFileHeader Pcryptdoor1bZ_header = {0, &model_object_standard_object, 0, 0, 1, 400.97537, 0, 2, 0, 0};
+struct ModelFileHeader cryptdoor1b_header = {0, &skeleton_standard_object, 0, 0, 1, 400.97537, 0, 2, 0, 0};
 //D:80038B50
-struct ModelFileHeader Pcryptdoor2aZ_header = {0, &model_object_standard_object, 0, 0, 1, 502.64923, 0, 2, 0, 0};
+struct ModelFileHeader cryptdoor2a_header = {0, &skeleton_standard_object, 0, 0, 1, 502.64923, 0, 2, 0, 0};
 //D:80038B70
-struct ModelFileHeader Pcryptdoor2bZ_header = {0, &model_object_standard_object, 0, 0, 1, 400.97537, 0, 2, 0, 0};
+struct ModelFileHeader cryptdoor2b_header = {0, &skeleton_standard_object, 0, 0, 1, 400.97537, 0, 2, 0, 0};
 //D:80038B90
-struct ModelFileHeader Pcryptdoor3Z_header = {0, &model_object_standard_object, 0, 0, 1, 801.95074, 0, 3, 0, 0};
+struct ModelFileHeader cryptdoor3_header = {0, &skeleton_standard_object, 0, 0, 1, 801.95074, 0, 3, 0, 0};
 //D:80038BB0
-struct ModelFileHeader Pcryptdoor4Z_header = {0, &model_object_standard_object, 0, 0, 1, 801.95074, 0, 1, 0, 0};
+struct ModelFileHeader cryptdoor4_header = {0, &skeleton_standard_object, 0, 0, 1, 801.95074, 0, 1, 0, 0};
 //D:80038BD0
-struct ModelFileHeader PvertdoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 1997.2246, 0, 5, 0, 0};
+struct ModelFileHeader vertdoor_header = {0, &skeleton_standard_object, 0, 0, 1, 1997.2246, 0, 5, 0, 0};
 //D:80038BF0
-struct ModelFileHeader PhatchdoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 192.1653, 0, 1, 0, 0};
+struct ModelFileHeader hatchdoor_header = {0, &skeleton_standard_object, 0, 0, 1, 192.1653, 0, 1, 0, 0};
 //D:80038C10
-struct ModelFileHeader PdamgatedoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 308.36456, 0, 3, 0, 0};
+struct ModelFileHeader damgatedoor_header = {0, &skeleton_standard_object, 0, 0, 1, 308.36456, 0, 3, 0, 0};
 //D:80038C30
-struct ModelFileHeader PdamtundoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 127.89996, 0, 4, 0, 0};
+struct ModelFileHeader damtundoor_header = {0, &skeleton_standard_object, 0, 0, 1, 127.89996, 0, 4, 0, 0};
 //D:80038C50
-struct ModelFileHeader PdamchaindoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 171.36655, 0, 2, 0, 0};
+struct ModelFileHeader damchaindoor_header = {0, &skeleton_standard_object, 0, 0, 1, 171.36655, 0, 2, 0, 0};
 //D:80038C70
-struct ModelFileHeader PsilotopdoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 2675.3958, 0, 5, 0, 0};
+struct ModelFileHeader silotopdoor_header = {0, &skeleton_standard_object, 0, 0, 1, 2675.3958, 0, 5, 0, 0};
 //D:80038C90
-struct ModelFileHeader Pdoorprison1Z_header = {0, &model_object_standard_object, 0, 0, 1, 1062.0833, 0, 1, 0, 0};
+struct ModelFileHeader doorprison1_header = {0, &skeleton_standard_object, 0, 0, 1, 1062.0833, 0, 1, 0, 0};
 //D:80038CB0
-struct ModelFileHeader PdoorstatgateZ_header = {0, &model_object_standard_object, 0, 0, 1, 1503.9503, 0, 3, 0, 0};
+struct ModelFileHeader doorstatgate_header = {0, &skeleton_standard_object, 0, 0, 1, 1503.9503, 0, 3, 0, 0};
 //D:80038CD0
-struct ModelFileHeader PchrkalashZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 403.53766, 0, 8, 0, 0};
+struct ModelFileHeader chrkalash_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 403.53766, 0, 8, 0, 0};
 //D:80038CF0
-struct ModelFileHeader PchrgrenadelaunchZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 422.48355, 0, 7, 0, 0};
+struct ModelFileHeader chrgrenadelaunch_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 422.48355, 0, 7, 0, 0};
 //D:80038D10
-struct ModelFileHeader PchrknifeZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 245.14619, 0, 2, 0, 0};
+struct ModelFileHeader chrknife_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 245.14619, 0, 2, 0, 0};
 //D:80038D30
-struct ModelFileHeader PchrlaserZ_header = {0, &prop_weapon_related, 0, 0x3, 0x2, 444.66241, 0, 8, 0, 0};
+struct ModelFileHeader chrlaser_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x2, 444.66241, 0, 8, 0, 0};
 //D:80038D50
-struct ModelFileHeader Pchrm16Z_header = {0, &prop_weapon_related, 0, 0x3, 0x2, 964.01367, 0, 6, 0, 0};
+struct ModelFileHeader chrm16_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x2, 964.01367, 0, 6, 0, 0};
 //D:80038D70
-struct ModelFileHeader Pchrmp5kZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 277.32227, 0, 9, 0, 0};
+struct ModelFileHeader chrmp5k_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 277.32227, 0, 9, 0, 0};
 //D:80038D90
-struct ModelFileHeader PchrrugerZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 246.72643, 0, 5, 0, 0};
+struct ModelFileHeader chrruger_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 246.72643, 0, 5, 0, 0};
 //D:80038DB0
-struct ModelFileHeader PchrwppkZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 125.79879, 0, 5, 0, 0};
+struct ModelFileHeader chrwppk_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 125.79879, 0, 5, 0, 0};
 //D:80038DD0
-struct ModelFileHeader PchrshotgunZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 488.88385, 0, 8, 0, 0};
+struct ModelFileHeader chrshotgun_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 488.88385, 0, 8, 0, 0};
 //D:80038DF0
-struct ModelFileHeader PchrskorpionZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 183.37708, 0, 7, 0, 0};
+struct ModelFileHeader chrskorpion_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 183.37708, 0, 7, 0, 0};
 //D:80038E10
-struct ModelFileHeader PchrspectreZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 351.26923, 0, 6, 0, 0};
+struct ModelFileHeader chrspectre_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 351.26923, 0, 6, 0, 0};
 //D:80038E30
-struct ModelFileHeader PchruziZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 265.11813, 0, 7, 0, 0};
+struct ModelFileHeader chruzi_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 265.11813, 0, 7, 0, 0};
 //D:80038E50
-struct ModelFileHeader PchrgrenadeZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 118.18749, 0, 2, 0, 0};
+struct ModelFileHeader chrgrenade_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 118.18749, 0, 2, 0, 0};
 //D:80038E70
-struct ModelFileHeader Pchrfnp90Z_header = {0, &prop_weapon_related, 0, 0x3, 0x2, 470.04633, 0, 7, 0, 0};
+struct ModelFileHeader chrfnp90_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x2, 470.04633, 0, 7, 0, 0};
 //D:80038E90
-struct ModelFileHeader PchrbriefcaseZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 342.23688, 0, 5, 0, 0};
+struct ModelFileHeader chrbriefcase_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 342.23688, 0, 5, 0, 0};
 //D:80038EB0
-struct ModelFileHeader PchrremotemineZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 87.434036, 0, 2, 0, 0};
+struct ModelFileHeader chrremotemine_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 87.434036, 0, 2, 0, 0};
 //D:80038ED0
-struct ModelFileHeader PchrproximitymineZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 87.196609, 0, 2, 0, 0};
+struct ModelFileHeader chrproximitymine_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 87.196609, 0, 2, 0, 0};
 //D:80038EF0
-struct ModelFileHeader PchrtimedmineZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 87.245888, 0, 3, 0, 0};
+struct ModelFileHeader chrtimedmine_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 87.245888, 0, 3, 0, 0};
 //D:80038F10
-struct ModelFileHeader PchrrocketZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 342.8634, 0, 3, 0, 0};
+struct ModelFileHeader chrrocket_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 342.8634, 0, 3, 0, 0};
 //D:80038F30
-struct ModelFileHeader PchrgrenaderoundZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 96.976593, 0, 1, 0, 0};
+struct ModelFileHeader chrgrenaderound_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 96.976593, 0, 1, 0, 0};
 //D:80038F50
-struct ModelFileHeader PchrwppksilZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 219.44571, 0, 6, 0, 0};
+struct ModelFileHeader chrwppksil_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 219.44571, 0, 6, 0, 0};
 //D:80038F70
-struct ModelFileHeader Pchrtt33Z_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 142.11539, 0, 5, 0, 0};
+struct ModelFileHeader chrtt33_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 142.11539, 0, 5, 0, 0};
 //D:80038F90
-struct ModelFileHeader Pchrmp5ksilZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 406.18033, 0, 0xA, 0, 0};
+struct ModelFileHeader chrmp5ksil_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 406.18033, 0, 0xA, 0, 0};
 //D:80038FB0
-struct ModelFileHeader PchrautoshotZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 375.50247, 0, 8, 0, 0};
+struct ModelFileHeader chrautoshot_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 375.50247, 0, 8, 0, 0};
 //D:80038FD0
-struct ModelFileHeader PchrgoldenZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 157.98299, 0, 2, 0, 0};
+struct ModelFileHeader chrgolden_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 157.98299, 0, 2, 0, 0};
 //D:80038FF0
-struct ModelFileHeader PchrthrowknifeZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 217.61888, 0, 2, 0, 0};
+struct ModelFileHeader chrthrowknife_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 217.61888, 0, 2, 0, 0};
 //D:80039010
-struct ModelFileHeader PchrsniperrifleZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 616.93939, 0, 5, 0, 0};
+struct ModelFileHeader chrsniperrifle_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 616.93939, 0, 5, 0, 0};
 //D:80039030
-struct ModelFileHeader PchrrocketlaunchZ_header = {0, &prop_weapon_related, 0, 0x3, 0x2, 501.55179, 0, 6, 0, 0};
+struct ModelFileHeader chrrocketlaunch_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x2, 501.55179, 0, 6, 0, 0};
 //D:80039050
-struct ModelFileHeader PhatfurryZ_header = {0, &item_hat_related, 0, 0, 1, 152.53136, 0, 3, 0, 0};
+struct ModelFileHeader hatfurry_header = {0, &skeleton_hat, 0, 0, 1, 152.53136, 0, 3, 0, 0};
 //D:80039070
-struct ModelFileHeader PhatfurrybrownZ_header = {0, &item_hat_related, 0, 0, 1, 152.53136, 0, 3, 0, 0};
+struct ModelFileHeader hatfurrybrown_header = {0, &skeleton_hat, 0, 0, 1, 152.53136, 0, 3, 0, 0};
 //D:80039090
-struct ModelFileHeader PhatfurryblackZ_header = {0, &item_hat_related, 0, 0, 1, 152.53136, 0, 3, 0, 0};
+struct ModelFileHeader hatfurryblack_header = {0, &skeleton_hat, 0, 0, 1, 152.53136, 0, 3, 0, 0};
 //D:800390B0
-struct ModelFileHeader PhattbirdZ_header = {0, &item_hat_related, 0, 0, 1, 114.45274, 0, 1, 0, 0};
+struct ModelFileHeader hattbird_header = {0, &skeleton_hat, 0, 0, 1, 114.45274, 0, 1, 0, 0};
 //D:800390D0
-struct ModelFileHeader PhattbirdbrownZ_header = {0, &item_hat_related, 0, 0, 1, 122.7013, 0, 1, 0, 0};
+struct ModelFileHeader hattbirdbrown_header = {0, &skeleton_hat, 0, 0, 1, 122.7013, 0, 1, 0, 0};
 //D:800390F0
-struct ModelFileHeader PhathelmetZ_header = {0, &item_hat_related, 0, 0, 1, 163.84476, 0, 1, 0, 0};
+struct ModelFileHeader hathelmet_header = {0, &skeleton_hat, 0, 0, 1, 163.84476, 0, 1, 0, 0};
 //D:80039110
-struct ModelFileHeader PhathelmetgreyZ_header = {0, &item_hat_related, 0, 0, 1, 163.84476, 0, 1, 0, 0};
+struct ModelFileHeader hathelmetgrey_header = {0, &skeleton_hat, 0, 0, 1, 163.84476, 0, 1, 0, 0};
 //D:80039130
-struct ModelFileHeader PhatmoonZ_header = {0, &item_hat_related, 0, 0, 1, 138.25751, 0, 2, 0, 0};
+struct ModelFileHeader hatmoon_header = {0, &skeleton_hat, 0, 0, 1, 138.25751, 0, 2, 0, 0};
 //D:80039150
-struct ModelFileHeader PhatberetZ_header = {0, &item_hat_related, 0, 0, 1, 116.16043, 0, 1, 0, 0};
+struct ModelFileHeader hatberet_header = {0, &skeleton_hat, 0, 0, 1, 116.16043, 0, 1, 0, 0};
 //D:80039170
-struct ModelFileHeader PhatberetblueZ_header = {0, &item_hat_related, 0, 0, 1, 116.16043, 0, 2, 0, 0};
+struct ModelFileHeader hatberetblue_header = {0, &skeleton_hat, 0, 0, 1, 116.16043, 0, 2, 0, 0};
 //D:80039190
-struct ModelFileHeader PhatberetredZ_header = {0, &item_hat_related, 0, 0, 1, 115.46455, 0, 2, 0, 0};
+struct ModelFileHeader hatberetred_header = {0, &skeleton_hat, 0, 0, 1, 115.46455, 0, 2, 0, 0};
 //D:800391B0
-struct ModelFileHeader PhatpeakedZ_header = {0, &item_hat_related, 0, 0, 1, 148.39027, 0, 1, 0, 0};
+struct ModelFileHeader hatpeaked_header = {0, &skeleton_hat, 0, 0, 1, 148.39027, 0, 1, 0, 0};
 //D:800391D0
-struct ModelFileHeader PchrwristdartZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrwristdart_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:800391F0
-struct ModelFileHeader PchrexplosivepenZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrexplosivepen_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039210
-struct ModelFileHeader PchrbombcaseZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 342.23688, 0, 5, 0, 0};
+struct ModelFileHeader chrbombcase_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 342.23688, 0, 5, 0, 0};
 //D:80039230
-struct ModelFileHeader PchrflarepistolZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrflarepistol_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039250
-struct ModelFileHeader PchrpitongunZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrpitongun_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039270
-struct ModelFileHeader PchrfingergunZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrfingergun_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039290
-struct ModelFileHeader PchrsilverwppkZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrsilverwppk_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:800392B0
-struct ModelFileHeader PchrgoldwppkZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrgoldwppk_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:800392D0
-struct ModelFileHeader PchrdynamiteZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrdynamite_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:800392F0
-struct ModelFileHeader PchrbungeeZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrbungee_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039310
-struct ModelFileHeader PchrdoordecoderZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 180.27969, 0, 0x10, 0, 0};
+struct ModelFileHeader chrdoordecoder_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 180.27969, 0, 0x10, 0, 0};
 //D:80039330
-struct ModelFileHeader PchrbombdefuserZ_header = {0, &model_object_standard_object, 0, 0, 1, 84.370705, 0, 0xC, 0, 0};
+struct ModelFileHeader chrbombdefuser_header = {0, &skeleton_standard_object, 0, 0, 1, 84.370705, 0, 0xC, 0, 0};
 //D:80039350
-struct ModelFileHeader PchrbugdetectorZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrbugdetector_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039370
-struct ModelFileHeader PchrsafecrackercaseZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 342.23688, 0, 5, 0, 0};
+struct ModelFileHeader chrsafecrackercase_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 342.23688, 0, 5, 0, 0};
 //D:80039390
-struct ModelFileHeader PchrcameraZ_header = {0, &model_object_standard_object, 0, 0, 1, 52.775627, 0, 0xB, 0, 0};
+struct ModelFileHeader chrcamera_header = {0, &skeleton_standard_object, 0, 0, 1, 52.775627, 0, 0xB, 0, 0};
 //D:800393B0
-struct ModelFileHeader PchrlockexploderZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrlockexploder_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:800393D0
-struct ModelFileHeader PchrdoorexploderZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrdoorexploder_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:800393F0
-struct ModelFileHeader PchrkeyanalysercaseZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 342.23688, 0, 5, 0, 0};
+struct ModelFileHeader chrkeyanalysercase_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 342.23688, 0, 5, 0, 0};
 //D:80039410
-struct ModelFileHeader PchrweaponcaseZ_header = {0, &model_object_standard_object, 0, 0, 1, 274.2905, 0, 5, 0, 0};
+struct ModelFileHeader chrweaponcase_header = {0, &skeleton_standard_object, 0, 0, 1, 274.2905, 0, 5, 0, 0};
 //D:80039430
-struct ModelFileHeader PchrkeyyaleZ_header = {0, &model_object_standard_object, 0, 0, 1, 82.850311, 0, 1, 0, 0};
+struct ModelFileHeader chrkeyyale_header = {0, &skeleton_standard_object, 0, 0, 1, 82.850311, 0, 1, 0, 0};
 //D:80039450
-struct ModelFileHeader PchrkeyboltZ_header = {0, &model_object_standard_object, 0, 0, 1, 151.85315, 0, 1, 0, 0};
+struct ModelFileHeader chrkeybolt_header = {0, &skeleton_standard_object, 0, 0, 1, 151.85315, 0, 1, 0, 0};
 //D:80039470
-struct ModelFileHeader PchrbugZ_header = {0, &model_object_standard_object, 0, 0, 1, 104.7203, 0, 6, 0, 0};
+struct ModelFileHeader chrbug_header = {0, &skeleton_standard_object, 0, 0, 1, 104.7203, 0, 6, 0, 0};
 //D:80039490
-struct ModelFileHeader PchrmicrocameraZ_header = {0, &model_object_standard_object, 0, 0, 1, 126.49728, 0, 7, 0, 0};
+struct ModelFileHeader chrmicrocamera_header = {0, &skeleton_standard_object, 0, 0, 1, 126.49728, 0, 7, 0, 0};
 //D:800394B0
-struct ModelFileHeader PfloppyZ_header = {0, &model_object_standard_object, 0, 0, 1, 60.902443, 0, 5, 0, 0};
+struct ModelFileHeader floppy_header = {0, &skeleton_standard_object, 0, 0, 1, 60.902443, 0, 5, 0, 0};
 //D:800394D0
-struct ModelFileHeader PchrgoldeneyekeyZ_header = {0, &model_object_standard_object, 0, 0, 1, 98.987083, 0, 5, 0, 0};
+struct ModelFileHeader chrgoldeneyekey_header = {0, &skeleton_standard_object, 0, 0, 1, 98.987083, 0, 5, 0, 0};
 //D:800394F0
-struct ModelFileHeader PchrpolarizedglassesZ_header = {0, &model_object_standard_object, 0, 0, 1, 53.776386, 0, 2, 0, 0};
+struct ModelFileHeader chrpolarizedglasses_header = {0, &skeleton_standard_object, 0, 0, 1, 53.776386, 0, 2, 0, 0};
 //D:80039510
-struct ModelFileHeader PchrcreditcardZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrcreditcard_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039530
-struct ModelFileHeader PchrdarkglassesZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrdarkglasses_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039550
-struct ModelFileHeader PchrgaskeyringZ_header = {0, &model_object_standard_object, 0, 0, 1, 111.59859, 0, 9, 0, 0};
+struct ModelFileHeader chrgaskeyring_header = {0, &skeleton_standard_object, 0, 0, 1, 111.59859, 0, 9, 0, 0};
 //D:80039570
-struct ModelFileHeader PchrdatathiefZ_header = {0, &model_object_standard_object, 0, 0, 1, 119.78231, 0, 3, 0, 0};
+struct ModelFileHeader chrdatathief_header = {0, &skeleton_standard_object, 0, 0, 1, 119.78231, 0, 3, 0, 0};
 //D:80039590
-struct ModelFileHeader PsafeZ_header = {0, &model_object_standard_object, 0, 0, 1, 1011.18744, 0, 3, 0, 0};
+struct ModelFileHeader safe_header = {0, &skeleton_standard_object, 0, 0, 1, 1011.18744, 0, 3, 0, 0};
 //D:800395B0
-struct ModelFileHeader PbombZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader bomb_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:800395D0
-struct ModelFileHeader PchrplansZ_header = {0, &model_object_standard_object, 0, 0, 1, 384.74649, 0, 5, 0, 0};
+struct ModelFileHeader chrplans_header = {0, &skeleton_standard_object, 0, 0, 1, 384.74649, 0, 5, 0, 0};
 //D:800395F0
-struct ModelFileHeader PchrspyfileZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrspyfile_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039610
-struct ModelFileHeader PchrblueprintsZ_header = {0, &model_object_standard_object, 0, 0, 1, 588.65448, 0, 4, 0, 0};
+struct ModelFileHeader chrblueprints_header = {0, &skeleton_standard_object, 0, 0, 1, 588.65448, 0, 4, 0, 0};
 //D:80039630
-struct ModelFileHeader PchrcircuitboardZ_header = {0, &model_object_standard_object, 0, 0, 1, 138.90285, 0, 3, 0, 0};
+struct ModelFileHeader chrcircuitboard_header = {0, &skeleton_standard_object, 0, 0, 1, 138.90285, 0, 3, 0, 0};
 //D:80039650
-struct ModelFileHeader PchrmapZ_header = {0, &model_object_standard_object, 0, 0, 1, 588.65448, 0, 4, 0, 0};
+struct ModelFileHeader chrmap_header = {0, &skeleton_standard_object, 0, 0, 1, 588.65448, 0, 4, 0, 0};
 //D:80039670
-struct ModelFileHeader PchrspooltapeZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrspooltape_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039690
-struct ModelFileHeader PchraudiotapeZ_header = {0, &model_object_standard_object, 0, 0, 1, 97.531075, 0, 9, 0, 0};
+struct ModelFileHeader chraudiotape_header = {0, &skeleton_standard_object, 0, 0, 1, 97.531075, 0, 9, 0, 0};
 //D:800396B0
-struct ModelFileHeader PchrmicrofilmZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrmicrofilm_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:800396D0
-struct ModelFileHeader PchrmicrocodeZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrmicrocode_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:800396F0
-struct ModelFileHeader PchrlectreZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrlectre_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039710
-struct ModelFileHeader PchrmoneyZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrmoney_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039730
-struct ModelFileHeader PchrgoldbarZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrgoldbar_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039750
-struct ModelFileHeader PchrheroinZ_header = {0, &model_object_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
+struct ModelFileHeader chrheroin_header = {0, &skeleton_standard_object, 0, 0, 1, 288.67514, 0, 1, 0, 0};
 //D:80039770
-struct ModelFileHeader PchrclipboardZ_header = {0, &model_object_standard_object, 0, 0, 1, 190.41742, 0, 3, 0, 0};
+struct ModelFileHeader chrclipboard_header = {0, &skeleton_standard_object, 0, 0, 1, 190.41742, 0, 3, 0, 0};
 //D:80039790
-struct ModelFileHeader PchrdossierredZ_header = {0, &model_object_standard_object, 0, 0, 1, 183.54231, 0, 4, 0, 0};
+struct ModelFileHeader chrdossierred_header = {0, &skeleton_standard_object, 0, 0, 1, 183.54231, 0, 4, 0, 0};
 //D:800397B0
-struct ModelFileHeader PchrstafflistZ_header = {0, &model_object_standard_object, 0, 0, 1, 215.17534, 0, 4, 0, 0};
+struct ModelFileHeader chrstafflist_header = {0, &skeleton_standard_object, 0, 0, 1, 215.17534, 0, 4, 0, 0};
 //D:800397D0
-struct ModelFileHeader PchrdattapeZ_header = {0, &model_object_standard_object, 0, 0, 1, 79.868584, 0, 4, 0, 0};
+struct ModelFileHeader chrdattape_header = {0, &skeleton_standard_object, 0, 0, 1, 79.868584, 0, 4, 0, 0};
 //D:800397F0
-struct ModelFileHeader PchrplastiqueZ_header = {0, &model_object_standard_object, 0, 0, 1, 143.86052, 0, 3, 0, 0};
+struct ModelFileHeader chrplastique_header = {0, &skeleton_standard_object, 0, 0, 1, 143.86052, 0, 3, 0, 0};
 //D:80039810
-struct ModelFileHeader PchrblackboxZ_header = {0, &model_object_standard_object, 0, 0, 1, 128.31796, 0, 5, 0, 0};
+struct ModelFileHeader chrblackbox_header = {0, &skeleton_standard_object, 0, 0, 1, 128.31796, 0, 5, 0, 0};
 //D:80039830
-struct ModelFileHeader PchrvideotapeZ_header = {0, &model_object_standard_object, 0, 0, 1, 122.69632, 0, 9, 0, 0};
+struct ModelFileHeader chrvideotape_header = {0, &skeleton_standard_object, 0, 0, 1, 122.69632, 0, 9, 0, 0};
 //D:80039850
-struct ModelFileHeader PnintendologoZ_header = {0, &model_object_standard_object, 0, 0, 1, 1868.335, 0, 1, 0, 0};
+struct ModelFileHeader nintendologo_header = {0, &skeleton_standard_object, 0, 0, 1, 1868.335, 0, 1, 0, 0};
 //D:80039870
-struct ModelFileHeader PgoldeneyelogoZ_header = {0, &model_object_standard_object, 0, 0, 1, 1287.1866, 0, 2, 0, 0};
+struct ModelFileHeader goldeneyelogo_header = {0, &skeleton_standard_object, 0, 0, 1, 1287.1866, 0, 2, 0, 0};
 //D:80039890
-struct ModelFileHeader PwalletbondZ_header = {0, &prop_walletbond_related, 0, 0x2B, 0x1, 3504.53, 0, 0x54, 0, 0};
+struct ModelFileHeader walletbond_header = {0, &skeleton_walletbond, 0, 0x2B, 0x1, 3504.53, 0, 0x54, 0, 0};
 //D:800398B0
-struct ModelFileHeader PmiltruckZ_header = {0, &prop_car_related, 0, 0xB, 0x5, 4589.7188, 0, 0x16, 0, 0};
+struct ModelFileHeader miltruck_header = {0, &skeleton_car, 0, 0xB, 0x5, 4589.7188, 0, 0x16, 0, 0};
 //D:800398D0
-struct ModelFileHeader PjeepZ_header = {0, &prop_car_related, 0, 0xB, 0x5, 2107.8105, 0, 0x10, 0, 0};
+struct ModelFileHeader jeep_header = {0, &skeleton_car, 0, 0xB, 0x5, 2107.8105, 0, 0x10, 0, 0};
 //D:800398F0
-struct ModelFileHeader ParticZ_header = {0, &prop_car_related, 0, 0xB, 0x5, 2678.5667, 0x0, 0x11, 0, 0};
+struct ModelFileHeader artic_header = {0, &skeleton_car, 0, 0xB, 0x5, 2678.5667, 0x0, 0x11, 0, 0};
 //D:80039910
-struct ModelFileHeader PhelicopterZ_header = {0, &prop_flying_related, 0, 0x6, 0x4, 4955.271, 0, 0x18, 0, 0};
+struct ModelFileHeader helicopter_header = {0, &skeleton_flying, 0, 0x6, 0x4, 4955.271, 0, 0x18, 0, 0};
 //D:80039930
-struct ModelFileHeader PtigerZ_header = {0, &prop_flying_related, 0, 0x6, 0x4, 4072.0291, 0, 0xE, 0, 0};
+struct ModelFileHeader tiger_header = {0, &skeleton_flying, 0, 0x6, 0x4, 4072.0291, 0, 0xE, 0, 0};
 //D:80039950
-struct ModelFileHeader PmilcopterZ_header = {0, &prop_flying_related, 0, 0x6, 0x4, 5316.9155, 0, 0xF, 0, 0};
+struct ModelFileHeader milcopter_header = {0, &skeleton_flying, 0, 0x6, 0x4, 5316.9155, 0, 0xF, 0, 0};
 //D:80039970
-struct ModelFileHeader PhindZ_header = {0, &prop_flying_related, 0, 0x6, 0x5, 5315.314, 0, 0xB, 0, 0};
+struct ModelFileHeader hind_header = {0, &skeleton_flying, 0, 0x6, 0x5, 5315.314, 0, 0xB, 0, 0};
 //D:80039990
-struct ModelFileHeader PartictrailerZ_header = {0, &model_object_standard_object, 0, 0, 1, 4014.6265, 0, 0xB, 0, 0};
+struct ModelFileHeader artictrailer_header = {0, &skeleton_standard_object, 0, 0, 1, 4014.6265, 0, 0xB, 0, 0};
 //D:800399B0
-struct ModelFileHeader PmotorbikeZ_header = {0, &model_object_standard_object, 0, 0, 1, 1610.8706, 0, 6, 0, 0};
+struct ModelFileHeader motorbike_header = {0, &skeleton_standard_object, 0, 0, 1, 1610.8706, 0, 6, 0, 0};
 //D:800399D0
-struct ModelFileHeader PtankZ_header = {0, &item_tank_related, 0, 0x9, 0x5, 6290.8398, 0, 0x18, 0, 0};
+struct ModelFileHeader tank_header = {0, &skeleton_tank, 0, 0x9, 0x5, 6290.8398, 0, 0x18, 0, 0};
 //D:800399F0
-struct ModelFileHeader PapcZ_header = {0, &model_object_standard_object, 0, 0, 1, 3611.1035, 0, 0xE, 0, 0};
+struct ModelFileHeader apc_header = {0, &skeleton_standard_object, 0, 0, 1, 3611.1035, 0, 0xE, 0, 0};
 //D:80039A10
-struct ModelFileHeader PspeedboatZ_header = {0, &model_object_standard_object, 0, 0, 1, 1799.4586, 0, 0xD, 0, 0};
+struct ModelFileHeader speedboat_header = {0, &skeleton_standard_object, 0, 0, 1, 1799.4586, 0, 0xD, 0, 0};
 //D:80039A30
-struct ModelFileHeader PplaneZ_header = {0, &prop_flying_related, 0, 0x6, 0x3, 9285.4492, 0, 0x1C, 0, 0};
+struct ModelFileHeader plane_header = {0, &skeleton_flying, 0, 0x6, 0x3, 9285.4492, 0, 0x1C, 0, 0};
 //D:80039A50
-struct ModelFileHeader Pgun_runway1Z_header = {0, &prop_rotating_stuff_related, 0, 0x8, 0x5, 1927.5205, 0, 6, 0, 0};
+struct ModelFileHeader gun_runway1_header = {0, &skeleton_rotating_stuff, 0, 0x8, 0x5, 1927.5205, 0, 6, 0, 0};
 //D:80039A70
-struct ModelFileHeader PsafedoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 714.14612, 0, 4, 0, 0};
+struct ModelFileHeader safedoor_header = {0, &skeleton_standard_object, 0, 0, 1, 714.14612, 0, 4, 0, 0};
 //D:80039A90
-struct ModelFileHeader Pkey_holderZ_header = {0, &model_object_standard_object, 0, 0, 1, 223.87097, 0, 7, 0, 0};
+struct ModelFileHeader key_holder_header = {0, &skeleton_standard_object, 0, 0, 1, 223.87097, 0, 7, 0, 0};
 //D:80039AB0
-struct ModelFileHeader PhatchsevxZ_header = {0, &model_object_standard_object, 0, 0, 1, 1224.7664, 0, 2, 0, 0};
+struct ModelFileHeader hatchsevx_header = {0, &skeleton_standard_object, 0, 0, 1, 1224.7664, 0, 2, 0, 0};
 //D:80039AD0
-struct ModelFileHeader PsevdishZ_header = {0, &prop_rotating_stuff_related, 0, 0x8, 0x3, 14350.1, 0, 7, 0, 0};
+struct ModelFileHeader sevdish_header = {0, &skeleton_rotating_stuff, 0, 0x8, 0x3, 14350.1, 0, 7, 0, 0};
 //D:80039AF0
-struct ModelFileHeader Parchsecdoor1Z_header = {0, &model_object_standard_object, 0, 0, 1, 455.81409, 0, 3, 0, 0};
+struct ModelFileHeader archsecdoor1_header = {0, &skeleton_standard_object, 0, 0, 1, 455.81409, 0, 3, 0, 0};
 //D:80039B10
-struct ModelFileHeader Parchsecdoor2Z_header = {0, &model_object_standard_object, 0, 0, 1, 496.99292, 0, 3, 0, 0};
+struct ModelFileHeader archsecdoor2_header = {0, &skeleton_standard_object, 0, 0, 1, 496.99292, 0, 3, 0, 0};
 //D:80039B30
-struct ModelFileHeader PgroundgunZ_header = {0, &prop_rotating_stuff_related, 0, 0x8, 0x5, 2182.6472, 0, 4, 0, 0};
+struct ModelFileHeader groundgun_header = {0, &skeleton_rotating_stuff, 0, 0x8, 0x5, 2182.6472, 0, 4, 0, 0};
 //D:80039B50
-struct ModelFileHeader PtrainextdoorZ_header = {0, &model_object_standard_object, 0, 0, 1, 587.70111, 0, 5, 0, 0};
+struct ModelFileHeader trainextdoor_header = {0, &skeleton_standard_object, 0, 0, 1, 587.70111, 0, 5, 0, 0};
 //D:80039B70
-struct ModelFileHeader PcarbmwZ_header = {0, &model_object_standard_object, 0, 0, 1, 553.08728, 0, 0xB, 0, 0};
+struct ModelFileHeader carbmw_header = {0, &skeleton_standard_object, 0, 0, 1, 553.08728, 0, 0xB, 0, 0};
 //D:80039B90
-struct ModelFileHeader PcarescortZ_header = {0, &model_object_standard_object, 0, 0, 1, 1110.5665, 0, 9, 0, 0};
+struct ModelFileHeader carescort_header = {0, &skeleton_standard_object, 0, 0, 1, 1110.5665, 0, 9, 0, 0};
 //D:80039BB0
-struct ModelFileHeader PcargolfZ_header = {0, &model_object_standard_object, 0, 0, 1, 1121.6409, 0, 0xA, 0, 0};
+struct ModelFileHeader cargolf_header = {0, &skeleton_standard_object, 0, 0, 1, 1121.6409, 0, 0xA, 0, 0};
 //D:80039BD0
-struct ModelFileHeader PcarweirdZ_header = {0, &model_object_standard_object, 0, 0, 1, 984.03931, 0, 0xD, 0, 0};
+struct ModelFileHeader carweird_header = {0, &skeleton_standard_object, 0, 0, 1, 984.03931, 0, 0xD, 0, 0};
 //D:80039BF0
-struct ModelFileHeader PcarzilZ_header = {0, &prop_car_related, 0, 0xB, 0x5, 1044.5764, 0, 0xD, 0, 0};
+struct ModelFileHeader carzil_header = {0, &skeleton_car, 0, 0xB, 0x5, 1044.5764, 0, 0xD, 0, 0};
 //D:80039C10
-struct ModelFileHeader Pshuttle_door_lZ_header = {0, &model_object_standard_object, 0, 0, 1, 706.56641, 0, 7, 0, 0};
+struct ModelFileHeader shuttle_door_l_header = {0, &skeleton_standard_object, 0, 0, 1, 706.56641, 0, 7, 0, 0};
 //D:80039C30
-struct ModelFileHeader Pshuttle_door_rZ_header = {0, &model_object_standard_object, 0, 0, 1, 706.56641, 0, 8, 0, 0};
+struct ModelFileHeader shuttle_door_r_header = {0, &skeleton_standard_object, 0, 0, 1, 706.56641, 0, 8, 0, 0};
 //D:80039C50
-struct ModelFileHeader Pdepot_gate_entryZ_header = {0, &model_object_standard_object, 0, 0, 1, 811.28949, 0, 3, 0, 0};
+struct ModelFileHeader depot_gate_entry_header = {0, &skeleton_standard_object, 0, 0, 1, 811.28949, 0, 3, 0, 0};
 //D:80039C70
-struct ModelFileHeader Pdepot_door_steelZ_header = {0, &model_object_standard_object, 0, 0, 1, 574.79651, 0, 3, 0, 0};
+struct ModelFileHeader depot_door_steel_header = {0, &skeleton_standard_object, 0, 0, 1, 574.79651, 0, 3, 0, 0};
 //D:80039C90
-struct ModelFileHeader Pglassware2Z_header = {0, &model_object_standard_object, 0, 0, 1, 98.488579, 0, 3, 0, 0};
+struct ModelFileHeader glassware2_header = {0, &skeleton_standard_object, 0, 0, 1, 98.488579, 0, 3, 0, 0};
 //D:80039CB0
-struct ModelFileHeader Pglassware3Z_header = {0, &model_object_standard_object, 0, 0, 1, 137.92715, 0, 1, 0, 0};
+struct ModelFileHeader glassware3_header = {0, &skeleton_standard_object, 0, 0, 1, 137.92715, 0, 1, 0, 0};
 //D:80039CD0
-struct ModelFileHeader Pglassware4Z_header = {0, &model_object_standard_object, 0, 0, 1, 177.48241, 0, 2, 0, 0};
+struct ModelFileHeader glassware4_header = {0, &skeleton_standard_object, 0, 0, 1, 177.48241, 0, 2, 0, 0};
 //D:80039CF0
-struct ModelFileHeader PlandmineZ_header = {0, &model_object_standard_object, 0, 0, 1, 440.03009, 0, 2, 0, 0};
+struct ModelFileHeader landmine_header = {0, &skeleton_standard_object, 0, 0, 1, 440.03009, 0, 2, 0, 0};
 //D:80039D10
-struct ModelFileHeader Pplant1Z_header = {0, &model_object_standard_object, 0, 0, 1, 2704.1086, 0, 1, 0, 0};
+struct ModelFileHeader plant1_header = {0, &skeleton_standard_object, 0, 0, 1, 2704.1086, 0, 1, 0, 0};
 //D:80039D30
-struct ModelFileHeader Pplant11Z_header = {0, &model_object_standard_object, 0, 0, 1, 2704.1086, 0, 1, 0, 0};
+struct ModelFileHeader plant11_header = {0, &skeleton_standard_object, 0, 0, 1, 2704.1086, 0, 1, 0, 0};
 //D:80039D50
-struct ModelFileHeader Pplant2Z_header = {0, &model_object_standard_object, 0, 0, 1, 3416.248, 0, 2, 0, 0};
+struct ModelFileHeader plant2_header = {0, &skeleton_standard_object, 0, 0, 1, 3416.248, 0, 2, 0, 0};
 //D:80039D70
-struct ModelFileHeader Pplant3Z_header = {0, &model_object_standard_object, 0, 0, 1, 2986.0405, 0, 1, 0, 0};
+struct ModelFileHeader plant3_header = {0, &skeleton_standard_object, 0, 0, 1, 2986.0405, 0, 1, 0, 0};
 //D:80039D90
-struct ModelFileHeader Pjungle5_treeZ_header = {0, &model_object_standard_object, 0, 0, 1, 3277.6123, 0, 4, 0, 0};
+struct ModelFileHeader jungle5_tree_header = {0, &skeleton_standard_object, 0, 0, 1, 3277.6123, 0, 4, 0, 0};
 //D:80039DB0
-struct ModelFileHeader PlegalpageZ_header = {0, &model_object_standard_object, 0, 0, 1, 2711.7573, 0, 5, 0, 0};
+struct ModelFileHeader legalpage_header = {0, &skeleton_standard_object, 0, 0, 1, 2711.7573, 0, 5, 0, 0};
 //D:80039DD0
-struct ModelFileHeader Pst_pete_room_1iZ_header = {0, &model_object_standard_object, 0, 0, 1, 8437.5137, 0, 0x17, 0, 0};
+struct ModelFileHeader st_pete_room_1i_header = {0, &skeleton_standard_object, 0, 0, 1, 8437.5137, 0, 0x17, 0, 0};
 //D:80039DF0
-struct ModelFileHeader Pst_pete_room_2iZ_header = {0, &model_object_standard_object, 0, 0, 1, 8515.8164, 0, 0x19, 0, 0};
+struct ModelFileHeader st_pete_room_2i_header = {0, &skeleton_standard_object, 0, 0, 1, 8515.8164, 0, 0x19, 0, 0};
 //D:80039E10
-struct ModelFileHeader Pst_pete_room_3tZ_header = {0, &model_object_standard_object, 0, 0, 1, 4561.9766, 0, 0x1B, 0, 0};
+struct ModelFileHeader st_pete_room_3t_header = {0, &skeleton_standard_object, 0, 0, 1, 4561.9766, 0, 0x1B, 0, 0};
 //D:80039E30
-struct ModelFileHeader Pst_pete_room_5cZ_header = {0, &model_object_standard_object, 0, 0, 1, 4561.9766, 0, 0x19, 0, 0};
+struct ModelFileHeader st_pete_room_5c_header = {0, &skeleton_standard_object, 0, 0, 1, 4561.9766, 0, 0x19, 0, 0};
 //D:80039E50
-struct ModelFileHeader Pst_pete_room_6cZ_header = {0, &model_object_standard_object, 0, 0, 1, 5006.2896, 0, 0x17, 0, 0};
+struct ModelFileHeader st_pete_room_6c_header = {0, &skeleton_standard_object, 0, 0, 1, 5006.2896, 0, 0x17, 0, 0};
 //D:80039E70
-struct ModelFileHeader Pdoor_rollertrainZ_header = {0, &model_object_standard_object, 0, 0, 1, 1032.125, 0, 2, 0, 0};
+struct ModelFileHeader door_rollertrain_header = {0, &skeleton_standard_object, 0, 0, 1, 1032.125, 0, 2, 0, 0};
 //D:80039E90
-struct ModelFileHeader Pdoor_winZ_header = {0, &model_object_standard_object, 0, 0, 1, 211.90215, 0, 1, 0, 0};
+struct ModelFileHeader door_win_header = {0, &skeleton_standard_object, 0, 0, 1, 211.90215, 0, 1, 0, 0};
 //D:80039EB0
-struct ModelFileHeader Pdoor_aztecZ_header = {0, &model_object_standard_object, 0, 0, 1, 632.48639, 0, 1, 0, 0};
+struct ModelFileHeader door_aztec_header = {0, &skeleton_standard_object, 0, 0, 1, 632.48639, 0, 1, 0, 0};
 //D:80039ED0
-struct ModelFileHeader PshuttleZ_header = {0, &model_object_standard_object, 0, 0, 1, 4475.1494, 0, 9, 0, 0};
+struct ModelFileHeader shuttle_header = {0, &skeleton_standard_object, 0, 0, 1, 4475.1494, 0, 9, 0, 0};
 //D:80039EF0
-struct ModelFileHeader Pdoor_azt_deskZ_header = {0, &model_object_standard_object, 0, 0, 1, 860.41669, 0, 2, 0, 0};
+struct ModelFileHeader door_azt_desk_header = {0, &skeleton_standard_object, 0, 0, 1, 860.41669, 0, 2, 0, 0};
 //D:80039F10
-struct ModelFileHeader Pdoor_azt_desk_topZ_header = {0, &model_object_standard_object, 0, 0, 1, 565.93268, 0, 3, 0, 0};
+struct ModelFileHeader door_azt_desk_top_header = {0, &skeleton_standard_object, 0, 0, 1, 565.93268, 0, 3, 0, 0};
 //D:80039F30
-struct ModelFileHeader Pdoor_azt_chairZ_header = {0, &model_object_standard_object, 0, 0, 1, 94.510803, 0, 3, 0, 0};
+struct ModelFileHeader door_azt_chair_header = {0, &skeleton_standard_object, 0, 0, 1, 94.510803, 0, 3, 0, 0};
 //D:80039F50
-struct ModelFileHeader Pdoor_mfZ_header = {0, &model_object_standard_object, 0, 0, 1, 559.70367, 0, 7, 0, 0};
+struct ModelFileHeader door_mf_header = {0, &skeleton_standard_object, 0, 0, 1, 559.70367, 0, 7, 0, 0};
 //D:80039F70
-struct ModelFileHeader PflagZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 862.30865, 0, 2, 0, 0};
+struct ModelFileHeader flag_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 862.30865, 0, 2, 0, 0};
 //D:80039F90
-struct ModelFileHeader PbarricadeZ_header = {0, &model_object_standard_object, 0, 0, 1, 2047.3016, 0, 2, 0, 0};
+struct ModelFileHeader barricade_header = {0, &skeleton_standard_object, 0, 0, 1, 2047.3016, 0, 2, 0, 0};
 //D:80039FB0
-struct ModelFileHeader PmodemboxZ_header = {0, &prop_console_one_screen_related, 0, 0x1, 0x1, 338.28839, 0, 4, 0, 0};
+struct ModelFileHeader modembox_header = {0, &skeleton_console_one_screen, 0, 0x1, 0x1, 338.28839, 0, 4, 0, 0};
 //D:80039FD0
-struct ModelFileHeader PdoorpanelZ_header = {0, &prop_console_four_screen_related, 0, 0x4, 0x1, 338.28839, 0, 4, 0, 0};
+struct ModelFileHeader doorpanel_header = {0, &skeleton_console_four_screen, 0, 0x4, 0x1, 338.28839, 0, 4, 0, 0};
 //D:80039FF0
-struct ModelFileHeader PdoorconsoleZ_header = {0, &prop_console_one_screen_related, 0, 0x1, 0x1, 994.23688, 0, 0xD, 0, 0};
+struct ModelFileHeader doorconsole_header = {0, &skeleton_console_one_screen, 0, 0x1, 0x1, 994.23688, 0, 0xD, 0, 0};
 //D:8003A010
-struct ModelFileHeader PchrtesttubeZ_header = {0, &prop_weapon_related, 0, 0x3, 0x1, 136.25925, 0, 2, 0, 0};
+struct ModelFileHeader chrtesttube_header = {0, &skeleton_prop_weapon, 0, 0x3, 0x1, 136.25925, 0, 2, 0, 0};
 //D:8003A030
-struct ModelFileHeader Pbollardz_header = {0, &model_object_standard_object, 0, 0, 1, 628.78754, 0, 1, 0, 0};
+struct ModelFileHeader bollard_header = {0, &skeleton_standard_object, 0, 0, 1, 628.78754, 0, 1, 0, 0};
 
 //D:8003A050
-ModelJoint word_D_8003A050[2] = {
+ModelJoint jointlist_cctv[2] = {
     {0x0002, 0x0000, 0x0000},
     {0x0002, 0x0003, 0x0003}
 };
 //D:8003A05C
-ModelSkeleton prop_cctv_related = {2, 0, word_D_8003A050, 6, 0};
+ModelSkeleton skeleton_cctv = {2, 0, jointlist_cctv, 6, 0};
 
 //D:8003A068
-ModelJoint word_D_8003A068[] = {
+ModelJoint jointlist_console_one_screen[1] = {
     {0x0002, 0x0000, 0x0000}
 };
-//D:8003A06E                     .half 0
-
 //D:8003A070
-ModelSkeleton prop_console_one_screen_related = {1, 0, word_D_8003A068, 3, 0};
+ModelSkeleton skeleton_console_one_screen = {1, 0, jointlist_console_one_screen, 3, 0};
 
 //D:8003A07C
-ModelJoint word_D_8003A07C[] = {
+ModelJoint jointlist_console_four_screen[] = {
     {0x0002, 0x0000, 0x0000}
 };
-//D:8003A082                     .half 0
-
 //D:8003A084
-ModelSkeleton prop_console_four_screen_related = {1, 0, word_D_8003A07C, 3, 0};
+ModelSkeleton skeleton_console_four_screen = {1, 0, jointlist_console_four_screen, 3, 0};
 
 //D:8003A090
-ModelJoint word_D_8003A090[] = {
+ModelJoint jointlist_tv_holder[] = {
     {0x0002, 0x0000, 0x0000},
     {0x0002, 0x0003, 0x0003},
     {0x0002, 0x0006, 0x0006},
     {0x0002, 0x0009, 0x0009},
     {0x0002, 0x000C, 0x000C}
 };
-//D:8003A0AE                     .half 0
-
 //D:8003A0B0
-ModelSkeleton prop_tv_holder_related = {5, 0, word_D_8003A090, 0xF, 0};
+ModelSkeleton skeleton_tv_holder = {5, 0, jointlist_tv_holder, 0xF, 0};
 
 //D:8003A0BC
-ModelJoint word_D_8003A0BC[] = {
+ModelJoint jointlist_rotating_stuff[] = {
     {0x0002, 0x0000, 0x0000},
     {0x0002, 0x0003, 0x0003},
     {0x0002, 0x0006, 0x0006},
@@ -732,20 +726,19 @@ ModelJoint word_D_8003A0BC[] = {
     {0x0002, 0x000F, 0x000F}
 };
 //D:8003A0E0
-ModelSkeleton prop_rotating_stuff_related = {6, 0, word_D_8003A0BC, 0x12, 0};
+ModelSkeleton skeleton_rotating_stuff = {6, 0, jointlist_rotating_stuff, 0x12, 0};
 
 //D:8003A0EC
-ModelJoint word_D_8003A0EC[] = {
+ModelJoint jointlist_eyelid_door[] = {
     {0x0002, 0x0000, 0x0000},
     {0x0002, 0x0003, 0x0003},
     {0x0002, 0x0006, 0x0006}
 };
-//D:8003A0FE                     .half 0
 //D:8003A100
-ModelSkeleton prop_eyelid_door_related = {3, 0, word_D_8003A0EC, 9, 0};
+ModelSkeleton skeleton_eyelid_door = {3, 0, jointlist_eyelid_door, 9, 0};
 
 //D:8003A10C
-ModelJoint word_D_8003A10C[] = {
+ModelJoint jointlist_iris_door[] = {
     {0x0002, 0x0000, 0x0000},
     {0x0002, 0x0003, 0x0003},
     {0x0002, 0x0006, 0x0006},
@@ -761,18 +754,17 @@ ModelJoint word_D_8003A10C[] = {
     {0x0002, 0x0024, 0x0024}
 };
 //D:8003A15C
-ModelSkeleton prop_iris_door_related = {0xD, 0, word_D_8003A10C, 0x27, 0};
+ModelSkeleton skeleton_iris_door = {0xD, 0, jointlist_iris_door, 0x27, 0};
 
 //D:8003A168
-ModelJoint word_D_8003A168[] = {
+ModelJoint jointlist_walletbond[] = {
     {0x0002, 0x0000, 0x0000}
 };
-//D:8003A16E                     .half 0
 //D:8003A170
-ModelSkeleton prop_walletbond_related = {1, 0, word_D_8003A168, 3, 0};
+ModelSkeleton skeleton_walletbond = {1, 0, jointlist_walletbond, 3, 0};
 
 //D:8003A17C
-ModelJoint word_D_8003A17C[] = {
+ModelJoint jointlist_car[] = {
     {0x0002, 0x0000, 0x0000},
     {0x0002, 0x0003, 0x0003},
     {0x0002, 0x0006, 0x0006},
@@ -780,390 +772,386 @@ ModelJoint word_D_8003A17C[] = {
     {0x0002, 0x000C, 0x000C}
 };
 //D:8003A19C
-ModelSkeleton prop_car_related = {5, 0, word_D_8003A17C, 0xF, 0};
+ModelSkeleton skeleton_car = {5, 0, jointlist_car, 0xF, 0};
 
 //D:8003A1A8
-ModelJoint word_D_8003A1A8[] = {
+ModelJoint jointlist_flying[] = {
     {0x0401, 0x0000, 0x0000},
     {0x0002, 0x0000, 0x0000},
     {0x0015, 0x0003, 0x0003},
     {0x0015, 0x0004, 0x0004},
     {0x0015, 0x0005, 0x0005}
 };
-//D:8003A1C6                     .half 0
 //D:8003A1C8
-ModelSkeleton prop_flying_related = {5, 0, word_D_8003A1A8, 3, 0};
+ModelSkeleton skeleton_flying = {5, 0, jointlist_flying, 3, 0};
 
 //D:8003A1D4
-ModelJoint word_D_8003A1D4[] = {
+ModelJoint jointlist_door[] = {
     {0x0002, 0x0000, 0x0000}
 };
-//D:8003A1DA                     .half 0
 //D:8003A1DC
-ModelSkeleton prop_door_related = {1, 0, word_D_8003A1D4, 3, 0};
+ModelSkeleton skeleton_door = {1, 0, jointlist_door, 3, 0};
 
 //D:8003A1E8
-ModelJoint word_D_8003A1E8[] = {
+ModelJoint jointlist_tank[] = {
     {0x0002, 0x0000, 0x0000},
     {0x0002, 0x0003, 0x0003},
     {0x0002, 0x0006, 0x0006},
     {0x0002, 0x0009, 0x0009},
     {0x0002, 0x000C, 0x000C}
 };
-//D:8003A206                     .half 0
 //D:8003A208
-ModelSkeleton item_tank_related = {5, 0, word_D_8003A1E8, 0xF, 0};
+ModelSkeleton skeleton_tank = {5, 0, jointlist_tank, 0xF, 0};
 
 //D:8003A214
-ModelJoint word_D_8003A214[] = {
+ModelJoint jointlist_hat[] = {
     {0x0015, 0x0000, 0x0000},
 };
-//D:8003A21A                     .half 0
 //D:8003A21C
-ModelSkeleton item_hat_related = {1, 0, word_D_8003A214, 0, 0};
+ModelSkeleton skeleton_hat = {1, 0, jointlist_hat, 0, 0};
 
 //D:8003A228                     .globl PitemZ_entries
 ItemModelFileRecord PitemZ_entries[] = {
-    {&Palarm1z_header, "Palarm1Z", 0.1},
-    {&Palarm2Z_header, "Palarm2Z", 0.1},
-    {&PexplosionbitZ_header, "PexplosionbitZ", 0.1},
-    {&Pammo_crate1Z_header, "Pammo_crate1Z", 0.1},
-    {&Pammo_crate2Z_header, "Pammo_crate2Z", 0.1},
-    {&Pammo_crate3Z_header, "Pammo_crate3Z", 0.1},
-    {&Pammo_crate4Z_header, "Pammo_crate4Z", 0.1},
-    {&Pammo_crate5Z_header, "Pammo_crate5Z", 0.1},
-    {&Pbin1Z_header, "Pbin1Z", 0.1},
-    {&Pblotter1Z_header, "Pblotter1Z", 0.1},
-    {&Pbook1Z_header, "Pbook1Z", 0.1},
-    {&Pbookshelf1Z_header, "Pbookshelf1Z", 0.1},
-    {&Pbridge_console1aZ_header, "Pbridge_console1aZ", 0.1},
-    {&Pbridge_console1bZ_header, "Pbridge_console1bZ", 0.1},
-    {&Pbridge_console2aZ_header, "Pbridge_console2aZ", 0.1},
-    {&Pbridge_console2bZ_header, "Pbridge_console2bZ", 0.1},
-    {&Pbridge_console3aZ_header, "Pbridge_console3aZ", 0.1},
-    {&Pbridge_console3bZ_header, "Pbridge_console3bZ", 0.1},
-    {&Pcard_box1Z_header, "Pcard_box1Z", 0.1},
-    {&Pcard_box2Z_header, "Pcard_box2Z", 0.1},
-    {&Pcard_box3Z_header, "Pcard_box3Z", 0.1},
-    {&Pcard_box4_lgZ_header, "Pcard_box4_lgZ", 0.1},
-    {&Pcard_box5_lgZ_header, "Pcard_box5_lgZ", 0.1},
-    {&Pcard_box6_lgZ_header, "Pcard_box6_lgZ", 0.1},
-    {&PcctvZ_header, "PcctvZ", 0.1},
-    {&Pconsole1Z_header, "Pconsole1Z", 0.1},
-    {&Pconsole2Z_header, "Pconsole2Z", 0.1},
-    {&Pconsole3Z_header, "Pconsole3Z", 0.1},
-    {&Pconsole_sevaZ_header, "Pconsole_sevaZ", 0.1},
-    {&Pconsole_sevbZ_header, "Pconsole_sevbZ", 0.1},
-    {&Pconsole_sevcZ_header, "Pconsole_sevcZ", 0.1},
-    {&Pconsole_sevdZ_header, "Pconsole_sevdZ", 0.1},
-    {&Pconsole_sev2aZ_header, "Pconsole_sev2aZ", 0.1},
-    {&Pconsole_sev2bZ_header, "Pconsole_sev2bZ", 0.1},
-    {&Pconsole_sev2cZ_header, "Pconsole_sev2cZ", 0.1},
-    {&Pconsole_sev2dZ_header, "Pconsole_sev2dZ", 0.1},
-    {&Pconsole_sev_GEaZ_header, "Pconsole_sev_GEaZ", 0.1},
-    {&Pconsole_sev_GEbZ_header, "Pconsole_sev_GEbZ", 0.1},
-    {&Pdesk1Z_header, "Pdesk1Z", 0.1},
-    {&Pdesk2Z_header, "Pdesk2Z", 0.1},
-    {&Pdesk_lamp2Z_header, "Pdesk_lamp2Z", 0.1},
-    {&Pdisc_readerZ_header, "Pdisc_readerZ", 0.1},
-    {&Pdisk_drive1Z_header, "Pdisk_drive1Z", 0.1},
-    {&Pfiling_cabinet1Z_header, "Pfiling_cabinet1Z", 0.1},
-    {&Pjerry_can1Z_header, "Pjerry_can1Z", 0.1},
-    {&Pkeyboard1Z_header, "Pkeyboard1Z", 0.1},
-    {&Pkit_units1Z_header, "Pkit_units1Z", 0.1},
-    {&Pletter_tray1Z_header, "Pletter_tray1Z", 0.1},
-    {&Pmainframe1Z_header, "Pmainframe1Z", 0.1},
-    {&Pmainframe2Z_header, "Pmainframe2Z", 0.1},
-    {&Pmetal_chair1Z_header, "Pmetal_chair1Z", 0.1},
-    {&Pmetal_crate1Z_header, "Pmetal_crate1Z", 0.1},
-    {&Pmetal_crate2Z_header, "Pmetal_crate2Z", 0.1},
-    {&Pmetal_crate3Z_header, "Pmetal_crate3Z", 0.1},
-    {&Pmetal_crate4Z_header, "Pmetal_crate4Z", 0.1},
-    {&Pmissile_rackZ_header, "Pmissile_rackZ", 0.1},
-    {&Pmissile_rack2Z_header, "Pmissile_rack2Z", 0.1},
-    {&Poil_drum1Z_header, "Poil_drum1Z", 0.1},
-    {&Poil_drum2Z_header, "Poil_drum2Z", 0.1},
-    {&Poil_drum3Z_header, "Poil_drum3Z", 0.1},
-    {&Poil_drum5Z_header, "Poil_drum5Z", 0.1},
-    {&Poil_drum6Z_header, "Poil_drum6Z", 0.1},
-    {&Poil_drum7Z_header, "Poil_drum7Z", 0.1},
-    {&PpadlockZ_header, "PpadlockZ", 0.1},
-    {&Pphone1Z_header, "Pphone1Z", 0.1},
-    {&Pradio_unit1Z_header, "Pradio_unit1Z", 0.1},
-    {&Pradio_unit2Z_header, "Pradio_unit2Z", 0.1},
-    {&Pradio_unit3Z_header, "Pradio_unit3Z", 0.1},
-    {&Pradio_unit4Z_header, "Pradio_unit4Z", 0.1},
-    {&Psat1_reflectZ_header, "Psat1_reflectZ", 0.1},
-    {&PsatdishZ_header, "PsatdishZ", 0.1},
-    {&PsatboxZ_header, "PsatboxZ", 0.1},
-    {&Pstool1Z_header, "Pstool1Z", 0.1},
-    {&Pswivel_chair1Z_header, "Pswivel_chair1Z", 0.1},
-    {&Ptorpedo_rackZ_header, "Ptorpedo_rackZ", 0.1},
-    {&Ptv1Z_header, "Ptv1Z", 0.1},
-    {&Ptv_holderZ_header, "Ptv_holderZ", 0.1},
-    {&PtvscreenZ_header, "PtvscreenZ", 0.1},
-    {&Ptv4screenZ_header, "Ptv4screenZ", 0.1},
-    {&Pwood_lg_crate1Z_header, "Pwood_lg_crate1Z", 0.1},
-    {&Pwood_lg_crate2Z_header, "Pwood_lg_crate2Z", 0.1},
-    {&Pwood_md_crate3Z_header, "Pwood_md_crate3Z", 0.1},
-    {&Pwood_sm_crate4Z_header, "Pwood_sm_crate4Z", 0.1},
-    {&Pwood_sm_crate5Z_header, "Pwood_sm_crate5Z", 0.1},
-    {&Pwood_sm_crate6Z_header, "Pwood_sm_crate6Z", 0.1},
-    {&Pwooden_table1Z_header, "Pwooden_table1Z", 0.1},
-    {&Pswipe_card2Z_header, "Pswipe_card2Z", 0.1},
-    {&Pborg_crateZ_header, "Pborg_crateZ", 0.1},
-    {&Pboxes4x4Z_header, "Pboxes4x4Z", 0.1},
-    {&Pboxes3x4Z_header, "Pboxes3x4Z", 0.1},
-    {&Pboxes2x4Z_header, "Pboxes2x4Z", 0.1},
-    {&Psec_panelZ_header, "Psec_panelZ", 0.1},
-    {&PICBM_noseZ_header, "PICBM_noseZ", 0.1},
-    {&PICBMZ_header, "PICBMZ", 0.1},
-    {&Ptuning_console1Z_header, "Ptuning_console1Z", 0.1},
-    {&Pdesk_arecibo1Z_header, "Pdesk_arecibo1Z", 0.1},
-    {&Plocker3Z_header, "Plocker3Z", 0.1},
-    {&Plocker4Z_header, "Plocker4Z", 0.1},
-    {&ProofgunZ_header, "ProofgunZ", 0.1},
-    {&Pdest_engineZ_header, "Pdest_engineZ", 0.1},
-    {&Pdest_exocetZ_header, "Pdest_exocetZ", 0.1},
-    {&Pdest_gunZ_header, "Pdest_gunZ", 0.1},
-    {&Pdest_harpoonZ_header, "Pdest_harpoonZ", 0.1},
-    {&Pdest_seawolfZ_header, "Pdest_seawolfZ", 0.1},
-    {&PwindowZ_header, "PwindowZ", 0.1},
-    {&Pwindow_lib_lg1Z_header, "Pwindow_lib_lg1Z", 0.1},
-    {&Pwindow_lib_sm1Z_header, "Pwindow_lib_sm1Z", 0.1},
-    {&Pwindow_cor11Z_header, "Pwindow_cor11Z", 0.1},
-    {&Pjungle3_treeZ_header, "Pjungle3_treeZ", 0.1},
-    {&PpalmZ_header, "PpalmZ", 0.1},
-    {&PpalmtreeZ_header, "PpalmtreeZ", 0.1},
-    {&Pplant2bZ_header, "Pplant2bZ", 0.1},
-    {&PlabbenchZ_header, "PlabbenchZ", 0.1},
-    {&PgasbarrelZ_header, "PgasbarrelZ", 0.1},
-    {&PgasbarrelsZ_header, "PgasbarrelsZ", 0.1},
-    {&PbodyarmourZ_header, "PbodyarmourZ", 0.1},
-    {&PbodyarmourvestZ_header, "PbodyarmourvestZ", 0.1},
-    {&PgastankZ_header, "PgastankZ", 0.1},
-    {&Pglassware1Z_header, "Pglassware1Z", 0.1},
-    {&PhatchboltZ_header, "PhatchboltZ", 0.1},
-    {&PbrakeunitZ_header, "PbrakeunitZ", 0.1},
-    {&Pak47magZ_header, "Pak47magZ", 0.1},
-    {&Pm16magZ_header, "Pm16magZ", 0.1},
-    {&Pmp5kmagZ_header, "Pmp5kmagZ", 0.1},
-    {&PskorpionmagZ_header, "PskorpionmagZ", 0.1},
-    {&PspectremagZ_header, "PspectremagZ", 0.1},
-    {&PuzimagZ_header, "PuzimagZ", 0.1},
-    {&PsilencerZ_header, "PsilencerZ", 0.1},
-    {&PchrextinguisherZ_header, "PchrextinguisherZ", 0.1},
-    {&PboxcartridgesZ_header, "PboxcartridgesZ", 0.1},
-    {&Pfnp90magZ_header, "Pfnp90magZ", 0.1},
-    {&PgoldenshellsZ_header, "PgoldenshellsZ", 0.1},
-    {&PmagnumshellsZ_header, "PmagnumshellsZ", 0.1},
-    {&PwppkmagZ_header, "PwppkmagZ", 0.1},
-    {&Ptt33magZ_header, "Ptt33magZ", 0.1},
-    {&Psev_doorZ_header, "Psev_doorZ", 1.0},
-    {&Psev_door3Z_header, "Psev_door3Z", 1.0},
-    {&Psev_door3_windZ_header, "Psev_door3_windZ", 1.0},
-    {&Psev_door4_windZ_header, "Psev_door4_windZ", 1.0},
-    {&Psev_trislideZ_header, "Psev_trislideZ", 1.0},
-    {&Psev_door_v1Z_header, "Psev_door_v1Z", 1.0},
-    {&Psteel_door1Z_header, "Psteel_door1Z", 1.0},
-    {&Psteel_door2Z_header, "Psteel_door2Z", 1.0},
-    {&Psteel_door3Z_header, "Psteel_door3Z", 1.0},
-    {&Psilo_lift_doorZ_header, "Psilo_lift_doorZ", 1.0},
-    {&Psteel_door2bZ_header, "Psteel_door2bZ", 1.0},
-    {&Pdoor_roller1Z_header, "Pdoor_roller1Z", 1.0},
-    {&Pdoor_roller2Z_header, "Pdoor_roller2Z", 1.0},
-    {&Pdoor_roller3Z_header, "Pdoor_roller3Z", 1.0},
-    {&Pdoor_roller4Z_header, "Pdoor_roller4Z", 1.0},
-    {&Pdoor_st_arec1Z_header, "Pdoor_st_arec1Z", 1.0},
-    {&Pdoor_st_arec2Z_header, "Pdoor_st_arec2Z", 1.0},
-    {&Pdoor_dest1Z_header, "Pdoor_dest1Z", 1.0},
-    {&Pdoor_dest2Z_header, "Pdoor_dest2Z", 1.0},
-    {&Pgas_plant_sw_do1Z_header, "Pgas_plant_sw_do1Z", 1.0},
-    {&Pgas_plant_sw2_do1Z_header, "Pgas_plant_sw2_do1Z", 1.0},
-    {&Pgas_plant_sw3_do1Z_header, "Pgas_plant_sw3_do1Z", 1.0},
-    {&Pgas_plant_sw4_do1Z_header, "Pgas_plant_sw4_do1Z", 1.0},
-    {&Pgas_plant_met1_do1Z_header, "Pgas_plant_met1_do1Z", 1.0},
-    {&Pgas_plant_wc_cub1Z_header, "Pgas_plant_wc_cub1Z", 1.0},
-    {&Pgasplant_clear_doorZ_header, "Pgasplant_clear_doorZ", 1.0},
-    {&Ptrain_doorZ_header, "Ptrain_doorZ", 1.0},
-    {&Ptrain_door2Z_header, "Ptrain_door2Z", 1.0},
-    {&Ptrain_door3Z_header, "Ptrain_door3Z", 1.0},
-    {&Pdoor_eyelidZ_header, "Pdoor_eyelidZ", 1.0},
-    {&Pdoor_irisZ_header, "Pdoor_irisZ", 1.0},
-    {&PsevdoorwoodZ_header, "PsevdoorwoodZ", 1.0},
-    {&PsevdoorwindZ_header, "PsevdoorwindZ", 1.0},
-    {&PsevdoornowindZ_header, "PsevdoornowindZ", 1.0},
-    {&PsevdoormetslideZ_header, "PsevdoormetslideZ", 1.0},
-    {&Pcryptdoor1aZ_header, "Pcryptdoor1aZ", 1.0},
-    {&Pcryptdoor1bZ_header, "Pcryptdoor1bZ", 1.0},
-    {&Pcryptdoor2aZ_header, "Pcryptdoor2aZ", 1.0},
-    {&Pcryptdoor2bZ_header, "Pcryptdoor2bZ", 1.0},
-    {&Pcryptdoor3Z_header, "Pcryptdoor3Z", 1.0},
-    {&Pcryptdoor4Z_header, "Pcryptdoor4Z", 1.0},
-    {&PvertdoorZ_header, "PvertdoorZ", 1.0},
-    {&PhatchdoorZ_header, "PhatchdoorZ", 1.0},
-    {&PdamgatedoorZ_header, "PdamgatedoorZ", 1.0},
-    {&PdamtundoorZ_header, "PdamtundoorZ", 1.0},
-    {&PdamchaindoorZ_header, "PdamchaindoorZ", 1.0},
-    {&PsilotopdoorZ_header, "PsilotopdoorZ", 1.0},
-    {&Pdoorprison1Z_header, "Pdoorprison1Z", 1.0},
-    {&PdoorstatgateZ_header, "PdoorstatgateZ", 1.0},
-    {&PchrkalashZ_header, "PchrkalashZ", 0.1},
-    {&PchrgrenadelaunchZ_header, "PchrgrenadelaunchZ", 0.1},
-    {&PchrknifeZ_header, "PchrknifeZ", 0.1},
-    {&PchrlaserZ_header, "PchrlaserZ", 0.1},
-    {&Pchrm16Z_header, "Pchrm16Z", 0.1},
-    {&Pchrmp5kZ_header, "Pchrmp5kZ", 0.1},
-    {&PchrrugerZ_header, "PchrrugerZ", 0.1},
-    {&PchrwppkZ_header, "PchrwppkZ", 0.1},
-    {&PchrshotgunZ_header, "PchrshotgunZ", 0.1},
-    {&PchrskorpionZ_header, "PchrskorpionZ", 0.1},
-    {&PchrspectreZ_header, "PchrspectreZ", 0.1},
-    {&PchruziZ_header, "PchruziZ", 0.1},
-    {&PchrgrenadeZ_header, "PchrgrenadeZ", 0.1},
-    {&Pchrfnp90Z_header, "Pchrfnp90Z", 0.1},
-    {&PchrbriefcaseZ_header, "PchrbriefcaseZ", 0.1},
-    {&PchrremotemineZ_header, "PchrremotemineZ", 0.1},
-    {&PchrproximitymineZ_header, "PchrproximitymineZ", 0.1},
-    {&PchrtimedmineZ_header, "PchrtimedmineZ", 0.1},
-    {&PchrrocketZ_header, "PchrrocketZ", 0.1},
-    {&PchrgrenaderoundZ_header, "PchrgrenaderoundZ", 0.1},
-    {&PchrwppksilZ_header, "PchrwppksilZ", 0.1},
-    {&Pchrtt33Z_header, "Pchrtt33Z", 0.1},
-    {&Pchrmp5ksilZ_header, "Pchrmp5ksilZ", 0.1},
-    {&PchrautoshotZ_header, "PchrautoshotZ", 0.1},
-    {&PchrgoldenZ_header, "PchrgoldenZ", 0.1},
-    {&PchrthrowknifeZ_header, "PchrthrowknifeZ", 0.1},
-    {&PchrsniperrifleZ_header, "PchrsniperrifleZ", 0.1},
-    {&PchrrocketlaunchZ_header, "PchrrocketlaunchZ", 0.1},
-    {&PhatfurryZ_header, "PhatfurryZ", 0.1},
-    {&PhatfurrybrownZ_header, "PhatfurrybrownZ", 0.1},
-    {&PhatfurryblackZ_header, "PhatfurryblackZ", 0.1},
-    {&PhattbirdZ_header, "PhattbirdZ", 0.1},
-    {&PhattbirdbrownZ_header, "PhattbirdbrownZ", 0.1},
-    {&PhathelmetZ_header, "PhathelmetZ", 0.1},
-    {&PhathelmetgreyZ_header, "PhathelmetgreyZ", 0.1},
-    {&PhatmoonZ_header, "PhatmoonZ", 0.1},
-    {&PhatberetZ_header, "PhatberetZ", 0.1},
-    {&PhatberetblueZ_header, "PhatberetblueZ", 0.1},
-    {&PhatberetredZ_header, "PhatberetredZ", 0.1},
-    {&PhatpeakedZ_header, "PhatpeakedZ", 0.1},
-    {&PchrwristdartZ_header, "PchrwristdartZ", 0.1},
-    {&PchrexplosivepenZ_header, "PchrexplosivepenZ", 0.1},
-    {&PchrbombcaseZ_header, "PchrbombcaseZ", 0.1},
-    {&PchrflarepistolZ_header, "PchrflarepistolZ", 0.1},
-    {&PchrpitongunZ_header, "PchrpitongunZ", 0.1},
-    {&PchrfingergunZ_header, "PchrfingergunZ", 0.1},
-    {&PchrsilverwppkZ_header, "PchrsilverwppkZ", 0.1},
-    {&PchrgoldwppkZ_header, "PchrgoldwppkZ", 0.1},
-    {&PchrdynamiteZ_header, "PchrdynamiteZ", 0.1},
-    {&PchrbungeeZ_header, "PchrbungeeZ", 0.1},
-    {&PchrdoordecoderZ_header, "PchrdoordecoderZ", 0.1},
-    {&PchrbombdefuserZ_header, "PchrbombdefuserZ", 0.1},
-    {&PchrbugdetectorZ_header, "PchrbugdetectorZ", 0.1},
-    {&PchrsafecrackercaseZ_header, "PchrsafecrackercaseZ", 0.1},
-    {&PchrcameraZ_header, "PchrcameraZ", 0.1},
-    {&PchrlockexploderZ_header, "PchrlockexploderZ", 0.1},
-    {&PchrdoorexploderZ_header, "PchrdoorexploderZ", 0.1},
-    {&PchrkeyanalysercaseZ_header, "PchrkeyanalysercaseZ", 0.1},
-    {&PchrweaponcaseZ_header, "PchrweaponcaseZ", 0.1},
-    {&PchrkeyyaleZ_header, "PchrkeyyaleZ", 0.1},
-    {&PchrkeyboltZ_header, "PchrkeyboltZ", 0.1},
-    {&PchrbugZ_header, "PchrbugZ", 0.1},
-    {&PchrmicrocameraZ_header, "PchrmicrocameraZ", 0.1},
-    {&PfloppyZ_header, "PfloppyZ", 0.1},
-    {&PchrgoldeneyekeyZ_header, "PchrgoldeneyekeyZ", 0.1},
-    {&PchrpolarizedglassesZ_header, "PchrpolarizedglassesZ", 0.1},
-    {&PchrcreditcardZ_header, "PchrcreditcardZ", 0.1},
-    {&PchrdarkglassesZ_header, "PchrdarkglassesZ", 0.1},
-    {&PchrgaskeyringZ_header, "PchrgaskeyringZ", 0.1},
-    {&PchrdatathiefZ_header, "PchrdatathiefZ", 0.1},
-    {&PsafeZ_header, "PsafeZ", 0.1},
-    {&PbombZ_header, "PbombZ", 0.1},
-    {&PchrplansZ_header, "PchrplansZ", 0.1},
-    {&PchrspyfileZ_header, "PchrspyfileZ", 0.1},
-    {&PchrblueprintsZ_header, "PchrblueprintsZ", 0.1},
-    {&PchrcircuitboardZ_header, "PchrcircuitboardZ", 0.1},
-    {&PchrmapZ_header, "PchrmapZ", 0.1},
-    {&PchrspooltapeZ_header, "PchrspooltapeZ", 0.1},
-    {&PchraudiotapeZ_header, "PchraudiotapeZ", 0.1},
-    {&PchrmicrofilmZ_header, "PchrmicrofilmZ", 0.1},
-    {&PchrmicrocodeZ_header, "PchrmicrocodeZ", 0.1},
-    {&PchrlectreZ_header, "PchrlectreZ", 0.1},
-    {&PchrmoneyZ_header, "PchrmoneyZ", 0.1},
-    {&PchrgoldbarZ_header, "PchrgoldbarZ", 0.1},
-    {&PchrheroinZ_header, "PchrheroinZ", 0.1},
-    {&PchrclipboardZ_header, "PchrclipboardZ", 0.1},
-    {&PchrdossierredZ_header, "PchrdossierredZ", 0.1},
-    {&PchrstafflistZ_header, "PchrstafflistZ", 0.1},
-    {&PchrdattapeZ_header, "PchrdattapeZ", 0.1},
-    {&PchrplastiqueZ_header, "PchrplastiqueZ", 0.1},
-    {&PchrblackboxZ_header, "PchrblackboxZ", 0.1},
-    {&PchrvideotapeZ_header, "PchrvideotapeZ", 0.1},
-    {&PnintendologoZ_header, "PnintendologoZ", 0.1},
-    {&PgoldeneyelogoZ_header, "PgoldeneyelogoZ", 0.1},
-    {&PwalletbondZ_header, "PwalletbondZ", 0.1},
-    {&PmiltruckZ_header, "PmiltruckZ", 0.1},
-    {&PjeepZ_header, "PjeepZ", 0.1},
-    {&ParticZ_header, "ParticZ", 0.1},
-    {&PhelicopterZ_header, "PhelicopterZ", 0.1},
-    {&PtigerZ_header, "PtigerZ", 0.1},
-    {&PmilcopterZ_header, "PmilcopterZ", 0.1},
-    {&PhindZ_header, "PhindZ", 0.1},
-    {&PartictrailerZ_header, "PartictrailerZ", 0.1},
-    {&PmotorbikeZ_header, "PmotorbikeZ", 0.1},
-    {&PtankZ_header, "PtankZ", 0.1},
-    {&PapcZ_header, "PapcZ", 0.1},
-    {&PspeedboatZ_header, "PspeedboatZ", 0.1},
-    {&PplaneZ_header, "PplaneZ", 0.1},
-    {&Pgun_runway1Z_header, "Pgun_runway1Z", 0.1},
-    {&PsafedoorZ_header, "PsafedoorZ", 1.0},
-    {&Pkey_holderZ_header, "Pkey_holderZ", 1.0},
-    {&PhatchsevxZ_header, "PhatchsevxZ", 1.0},
-    {&PsevdishZ_header, "PsevdishZ", 1.0},
-    {&Parchsecdoor1Z_header, "Parchsecdoor1Z", 1.0},
-    {&Parchsecdoor2Z_header, "Parchsecdoor2Z", 1.0},
-    {&PgroundgunZ_header, "PgroundgunZ", 0.1},
-    {&PtrainextdoorZ_header, "PtrainextdoorZ", 1.0},
-    {&PcarbmwZ_header, "PcarbmwZ", 0.1},
-    {&PcarescortZ_header, "PcarescortZ", 0.1},
-    {&PcargolfZ_header, "PcargolfZ", 0.1},
-    {&PcarweirdZ_header, "PcarweirdZ", 0.1},
-    {&PcarzilZ_header, "PcarzilZ", 0.1},
-    {&Pshuttle_door_lZ_header, "Pshuttle_door_lZ", 1.0},
-    {&Pshuttle_door_rZ_header, "Pshuttle_door_rZ", 1.0},
-    {&Pdepot_gate_entryZ_header, "Pdepot_gate_entryZ", 0.1},
-    {&Pdepot_door_steelZ_header, "Pdepot_door_steelZ", 0.1},
-    {&Pglassware2Z_header, "Pglassware2Z", 0.1},
-    {&Pglassware3Z_header, "Pglassware3Z", 0.1},
-    {&Pglassware4Z_header, "Pglassware4Z", 0.1},
-    {&PlandmineZ_header, "PlandmineZ", 0.1},
-    {&Pplant1Z_header, "Pplant1Z", 0.1},
-    {&Pplant11Z_header, "Pplant11Z", 0.1},
-    {&Pplant2Z_header, "Pplant2Z", 0.1},
-    {&Pplant3Z_header, "Pplant3Z", 0.1},
-    {&Pjungle5_treeZ_header, "Pjungle5_treeZ", 0.1},
-    {&PlegalpageZ_header, "PlegalpageZ", 0.1},
-    {&Pst_pete_room_1iZ_header, "Pst_pete_room_1iZ", 0.1},
-    {&Pst_pete_room_2iZ_header, "Pst_pete_room_2iZ", 0.1},
-    {&Pst_pete_room_3tZ_header, "Pst_pete_room_3tZ", 0.1},
-    {&Pst_pete_room_5cZ_header, "Pst_pete_room_5cZ", 0.1},
-    {&Pst_pete_room_6cZ_header, "Pst_pete_room_6cZ", 0.1},
-    {&Pdoor_rollertrainZ_header, "Pdoor_rollertrainZ", 1.0},
-    {&Pdoor_winZ_header, "Pdoor_winZ", 1.0},
-    {&Pdoor_aztecZ_header, "Pdoor_aztecZ", 1.0},
-    {&PshuttleZ_header, "PshuttleZ", 0.1},
-    {&Pdoor_azt_deskZ_header, "Pdoor_azt_deskZ", 1.0},
-    {&Pdoor_azt_desk_topZ_header, "Pdoor_azt_desk_topZ", 1.0},
-    {&Pdoor_azt_chairZ_header, "Pdoor_azt_chairZ", 1.0},
-    {&Pdoor_mfZ_header, "Pdoor_mfZ", 1.0},
-    {&PflagZ_header, "PflagZ", 0.1},
-    {&PbarricadeZ_header, "PbarricadeZ", 0.1},
-    {&PmodemboxZ_header, "PmodemboxZ", 0.1},
-    {&PdoorpanelZ_header, "PdoorpanelZ", 0.1},
-    {&PdoorconsoleZ_header, "PdoorconsoleZ", 0.1},
-    {&PchrtesttubeZ_header, "PchrtesttubeZ", 0.1},
-    {&Pbollardz_header, "PbollardZ", 0.1},
+    {&alarm1_header, "Palarm1Z", 0.1},
+    {&alarm2_header, "Palarm2Z", 0.1},
+    {&explosionbit_header, "PexplosionbitZ", 0.1},
+    {&ammo_crate1_header, "Pammo_crate1Z", 0.1},
+    {&ammo_crate2_header, "Pammo_crate2Z", 0.1},
+    {&ammo_crate3_header, "Pammo_crate3Z", 0.1},
+    {&ammo_crate4_header, "Pammo_crate4Z", 0.1},
+    {&ammo_crate5_header, "Pammo_crate5Z", 0.1},
+    {&bin1_header, "Pbin1Z", 0.1},
+    {&blotter1_header, "Pblotter1Z", 0.1},
+    {&book1_header, "Pbook1Z", 0.1},
+    {&bookshelf1_header, "Pbookshelf1Z", 0.1},
+    {&bridge_console1a_header, "Pbridge_console1aZ", 0.1},
+    {&bridge_console1b_header, "Pbridge_console1bZ", 0.1},
+    {&bridge_console2a_header, "Pbridge_console2aZ", 0.1},
+    {&bridge_console2b_header, "Pbridge_console2bZ", 0.1},
+    {&bridge_console3a_header, "Pbridge_console3aZ", 0.1},
+    {&bridge_console3b_header, "Pbridge_console3bZ", 0.1},
+    {&card_box1_header, "Pcard_box1Z", 0.1},
+    {&card_box2_header, "Pcard_box2Z", 0.1},
+    {&card_box3_header, "Pcard_box3Z", 0.1},
+    {&card_box4_lg_header, "Pcard_box4_lgZ", 0.1},
+    {&card_box5_lg_header, "Pcard_box5_lgZ", 0.1},
+    {&card_box6_lg_header, "Pcard_box6_lgZ", 0.1},
+    {&cctv_header, "PcctvZ", 0.1},
+    {&console1_header, "Pconsole1Z", 0.1},
+    {&console2_header, "Pconsole2Z", 0.1},
+    {&console3_header, "Pconsole3Z", 0.1},
+    {&console_seva_header, "Pconsole_sevaZ", 0.1},
+    {&console_sevb_header, "Pconsole_sevbZ", 0.1},
+    {&console_sevc_header, "Pconsole_sevcZ", 0.1},
+    {&console_sevd_header, "Pconsole_sevdZ", 0.1},
+    {&console_sev2a_header, "Pconsole_sev2aZ", 0.1},
+    {&console_sev2b_header, "Pconsole_sev2bZ", 0.1},
+    {&console_sev2c_header, "Pconsole_sev2cZ", 0.1},
+    {&console_sev2d_header, "Pconsole_sev2dZ", 0.1},
+    {&console_sev_GEa_header, "Pconsole_sev_GEaZ", 0.1},
+    {&console_sev_GEb_header, "Pconsole_sev_GEbZ", 0.1},
+    {&desk1_header, "Pdesk1Z", 0.1},
+    {&desk2_header, "Pdesk2Z", 0.1},
+    {&desk_lamp2_header, "Pdesk_lamp2Z", 0.1},
+    {&disc_reader_header, "Pdisc_readerZ", 0.1},
+    {&disk_drive1_header, "Pdisk_drive1Z", 0.1},
+    {&filing_cabinet1_header, "Pfiling_cabinet1Z", 0.1},
+    {&jerry_can1_header, "Pjerry_can1Z", 0.1},
+    {&keyboard1_header, "Pkeyboard1Z", 0.1},
+    {&kit_units1_header, "Pkit_units1Z", 0.1},
+    {&letter_tray1_header, "Pletter_tray1Z", 0.1},
+    {&mainframe1_header, "Pmainframe1Z", 0.1},
+    {&mainframe2_header, "Pmainframe2Z", 0.1},
+    {&metal_chair1_header, "Pmetal_chair1Z", 0.1},
+    {&metal_crate1_header, "Pmetal_crate1Z", 0.1},
+    {&metal_crate2_header, "Pmetal_crate2Z", 0.1},
+    {&metal_crate3_header, "Pmetal_crate3Z", 0.1},
+    {&metal_crate4_header, "Pmetal_crate4Z", 0.1},
+    {&missile_rack_header, "Pmissile_rackZ", 0.1},
+    {&missile_rack2_header, "Pmissile_rack2Z", 0.1},
+    {&oil_drum1_header, "Poil_drum1Z", 0.1},
+    {&oil_drum2_header, "Poil_drum2Z", 0.1},
+    {&oil_drum3_header, "Poil_drum3Z", 0.1},
+    {&oil_drum5_header, "Poil_drum5Z", 0.1},
+    {&oil_drum6_header, "Poil_drum6Z", 0.1},
+    {&oil_drum7_header, "Poil_drum7Z", 0.1},
+    {&padlock_header, "PpadlockZ", 0.1},
+    {&phone1_header, "Pphone1Z", 0.1},
+    {&radio_unit1_header, "Pradio_unit1Z", 0.1},
+    {&radio_unit2_header, "Pradio_unit2Z", 0.1},
+    {&radio_unit3_header, "Pradio_unit3Z", 0.1},
+    {&radio_unit4_header, "Pradio_unit4Z", 0.1},
+    {&sat1_reflect_header, "Psat1_reflectZ", 0.1},
+    {&satdish_header, "PsatdishZ", 0.1},
+    {&satbox_header, "PsatboxZ", 0.1},
+    {&stool1_header, "Pstool1Z", 0.1},
+    {&swivel_chair1_header, "Pswivel_chair1Z", 0.1},
+    {&torpedo_rack_header, "Ptorpedo_rackZ", 0.1},
+    {&tv1_header, "Ptv1Z", 0.1},
+    {&tv_holder_header, "Ptv_holderZ", 0.1},
+    {&tvscreen_header, "PtvscreenZ", 0.1},
+    {&tv4screen_header, "Ptv4screenZ", 0.1},
+    {&wood_lg_crate1_header, "Pwood_lg_crate1Z", 0.1},
+    {&wood_lg_crate2_header, "Pwood_lg_crate2Z", 0.1},
+    {&wood_md_crate3_header, "Pwood_md_crate3Z", 0.1},
+    {&wood_sm_crate4_header, "Pwood_sm_crate4Z", 0.1},
+    {&wood_sm_crate5_header, "Pwood_sm_crate5Z", 0.1},
+    {&wood_sm_crate6_header, "Pwood_sm_crate6Z", 0.1},
+    {&wooden_table1_header, "Pwooden_table1Z", 0.1},
+    {&swipe_card2_header, "Pswipe_card2Z", 0.1},
+    {&borg_crate_header, "Pborg_crateZ", 0.1},
+    {&boxes4x4_header, "Pboxes4x4Z", 0.1},
+    {&boxes3x4_header, "Pboxes3x4Z", 0.1},
+    {&boxes2x4_header, "Pboxes2x4Z", 0.1},
+    {&sec_panel_header, "Psec_panelZ", 0.1},
+    {&ICBM_nose_header, "PICBM_noseZ", 0.1},
+    {&ICBM_header, "PICBMZ", 0.1},
+    {&tuning_console1_header, "Ptuning_console1Z", 0.1},
+    {&desk_arecibo1_header, "Pdesk_arecibo1Z", 0.1},
+    {&locker3_header, "Plocker3Z", 0.1},
+    {&locker4_header, "Plocker4Z", 0.1},
+    {&roofgun_header, "ProofgunZ", 0.1},
+    {&dest_engine_header, "Pdest_engineZ", 0.1},
+    {&dest_exocet_header, "Pdest_exocetZ", 0.1},
+    {&dest_gun_header, "Pdest_gunZ", 0.1},
+    {&dest_harpoon_header, "Pdest_harpoonZ", 0.1},
+    {&dest_seawolf_header, "Pdest_seawolfZ", 0.1},
+    {&window_header, "PwindowZ", 0.1},
+    {&window_lib_lg1_header, "Pwindow_lib_lg1Z", 0.1},
+    {&window_lib_sm1_header, "Pwindow_lib_sm1Z", 0.1},
+    {&window_cor11_header, "Pwindow_cor11Z", 0.1},
+    {&jungle3_tree_header, "Pjungle3_treeZ", 0.1},
+    {&palm_header, "PpalmZ", 0.1},
+    {&palmtree_header, "PpalmtreeZ", 0.1},
+    {&plant2b_header, "Pplant2bZ", 0.1},
+    {&labbench_header, "PlabbenchZ", 0.1},
+    {&gasbarrel_header, "PgasbarrelZ", 0.1},
+    {&gasbarrels_header, "PgasbarrelsZ", 0.1},
+    {&bodyarmour_header, "PbodyarmourZ", 0.1},
+    {&bodyarmourvest_header, "PbodyarmourvestZ", 0.1},
+    {&gastank_header, "PgastankZ", 0.1},
+    {&glassware1_header, "Pglassware1Z", 0.1},
+    {&hatchbolt_header, "PhatchboltZ", 0.1},
+    {&brakeunit_header, "PbrakeunitZ", 0.1},
+    {&ak47mag_header, "Pak47magZ", 0.1},
+    {&m16mag_header, "Pm16magZ", 0.1},
+    {&mp5kmag_header, "Pmp5kmagZ", 0.1},
+    {&skorpionmag_header, "PskorpionmagZ", 0.1},
+    {&spectremag_header, "PspectremagZ", 0.1},
+    {&uzimag_header, "PuzimagZ", 0.1},
+    {&silencer_header, "PsilencerZ", 0.1},
+    {&chrextinguisher_header, "PchrextinguisherZ", 0.1},
+    {&boxcartridges_header, "PboxcartridgesZ", 0.1},
+    {&fnp90mag_header, "Pfnp90magZ", 0.1},
+    {&goldenshells_header, "PgoldenshellsZ", 0.1},
+    {&magnumshells_header, "PmagnumshellsZ", 0.1},
+    {&wppkmag_header, "PwppkmagZ", 0.1},
+    {&tt33mag_header, "Ptt33magZ", 0.1},
+    {&sev_door_header, "Psev_doorZ", 1.0},
+    {&sev_door3_header, "Psev_door3Z", 1.0},
+    {&sev_door3_wind_header, "Psev_door3_windZ", 1.0},
+    {&sev_door4_wind_header, "Psev_door4_windZ", 1.0},
+    {&sev_trislide_header, "Psev_trislideZ", 1.0},
+    {&sev_door_v1_header, "Psev_door_v1Z", 1.0},
+    {&steel_door1_header, "Psteel_door1Z", 1.0},
+    {&steel_door2_header, "Psteel_door2Z", 1.0},
+    {&steel_door3_header, "Psteel_door3Z", 1.0},
+    {&silo_lift_door_header, "Psilo_lift_doorZ", 1.0},
+    {&steel_door2b_header, "Psteel_door2bZ", 1.0},
+    {&door_roller1_header, "Pdoor_roller1Z", 1.0},
+    {&door_roller2_header, "Pdoor_roller2Z", 1.0},
+    {&door_roller3_header, "Pdoor_roller3Z", 1.0},
+    {&door_roller4_header, "Pdoor_roller4Z", 1.0},
+    {&door_st_arec1_header, "Pdoor_st_arec1Z", 1.0},
+    {&door_st_arec2_header, "Pdoor_st_arec2Z", 1.0},
+    {&door_dest1_header, "Pdoor_dest1Z", 1.0},
+    {&door_dest2_header, "Pdoor_dest2Z", 1.0},
+    {&gas_plant_sw_do1_header, "Pgas_plant_sw_do1Z", 1.0},
+    {&gas_plant_sw2_do1_header, "Pgas_plant_sw2_do1Z", 1.0},
+    {&gas_plant_sw3_do1_header, "Pgas_plant_sw3_do1Z", 1.0},
+    {&gas_plant_sw4_do1_header, "Pgas_plant_sw4_do1Z", 1.0},
+    {&gas_plant_met1_do1_header, "Pgas_plant_met1_do1Z", 1.0},
+    {&gas_plant_wc_cub1_header, "Pgas_plant_wc_cub1Z", 1.0},
+    {&gasplant_clear_door_header, "Pgasplant_clear_doorZ", 1.0},
+    {&train_door_header, "Ptrain_doorZ", 1.0},
+    {&train_door2_header, "Ptrain_door2Z", 1.0},
+    {&train_door3_header, "Ptrain_door3Z", 1.0},
+    {&door_eyelid_header, "Pdoor_eyelidZ", 1.0},
+    {&door_iris_header, "Pdoor_irisZ", 1.0},
+    {&sevdoorwood_header, "PsevdoorwoodZ", 1.0},
+    {&sevdoorwind_header, "PsevdoorwindZ", 1.0},
+    {&sevdoornowind_header, "PsevdoornowindZ", 1.0},
+    {&sevdoormetslide_header, "PsevdoormetslideZ", 1.0},
+    {&cryptdoor1a_header, "Pcryptdoor1aZ", 1.0},
+    {&cryptdoor1b_header, "Pcryptdoor1bZ", 1.0},
+    {&cryptdoor2a_header, "Pcryptdoor2aZ", 1.0},
+    {&cryptdoor2b_header, "Pcryptdoor2bZ", 1.0},
+    {&cryptdoor3_header, "Pcryptdoor3Z", 1.0},
+    {&cryptdoor4_header, "Pcryptdoor4Z", 1.0},
+    {&vertdoor_header, "PvertdoorZ", 1.0},
+    {&hatchdoor_header, "PhatchdoorZ", 1.0},
+    {&damgatedoor_header, "PdamgatedoorZ", 1.0},
+    {&damtundoor_header, "PdamtundoorZ", 1.0},
+    {&damchaindoor_header, "PdamchaindoorZ", 1.0},
+    {&silotopdoor_header, "PsilotopdoorZ", 1.0},
+    {&doorprison1_header, "Pdoorprison1Z", 1.0},
+    {&doorstatgate_header, "PdoorstatgateZ", 1.0},
+    {&chrkalash_header, "PchrkalashZ", 0.1},
+    {&chrgrenadelaunch_header, "PchrgrenadelaunchZ", 0.1},
+    {&chrknife_header, "PchrknifeZ", 0.1},
+    {&chrlaser_header, "PchrlaserZ", 0.1},
+    {&chrm16_header, "Pchrm16Z", 0.1},
+    {&chrmp5k_header, "Pchrmp5kZ", 0.1},
+    {&chrruger_header, "PchrrugerZ", 0.1},
+    {&chrwppk_header, "PchrwppkZ", 0.1},
+    {&chrshotgun_header, "PchrshotgunZ", 0.1},
+    {&chrskorpion_header, "PchrskorpionZ", 0.1},
+    {&chrspectre_header, "PchrspectreZ", 0.1},
+    {&chruzi_header, "PchruziZ", 0.1},
+    {&chrgrenade_header, "PchrgrenadeZ", 0.1},
+    {&chrfnp90_header, "Pchrfnp90Z", 0.1},
+    {&chrbriefcase_header, "PchrbriefcaseZ", 0.1},
+    {&chrremotemine_header, "PchrremotemineZ", 0.1},
+    {&chrproximitymine_header, "PchrproximitymineZ", 0.1},
+    {&chrtimedmine_header, "PchrtimedmineZ", 0.1},
+    {&chrrocket_header, "PchrrocketZ", 0.1},
+    {&chrgrenaderound_header, "PchrgrenaderoundZ", 0.1},
+    {&chrwppksil_header, "PchrwppksilZ", 0.1},
+    {&chrtt33_header, "Pchrtt33Z", 0.1},
+    {&chrmp5ksil_header, "Pchrmp5ksilZ", 0.1},
+    {&chrautoshot_header, "PchrautoshotZ", 0.1},
+    {&chrgolden_header, "PchrgoldenZ", 0.1},
+    {&chrthrowknife_header, "PchrthrowknifeZ", 0.1},
+    {&chrsniperrifle_header, "PchrsniperrifleZ", 0.1},
+    {&chrrocketlaunch_header, "PchrrocketlaunchZ", 0.1},
+    {&hatfurry_header, "PhatfurryZ", 0.1},
+    {&hatfurrybrown_header, "PhatfurrybrownZ", 0.1},
+    {&hatfurryblack_header, "PhatfurryblackZ", 0.1},
+    {&hattbird_header, "PhattbirdZ", 0.1},
+    {&hattbirdbrown_header, "PhattbirdbrownZ", 0.1},
+    {&hathelmet_header, "PhathelmetZ", 0.1},
+    {&hathelmetgrey_header, "PhathelmetgreyZ", 0.1},
+    {&hatmoon_header, "PhatmoonZ", 0.1},
+    {&hatberet_header, "PhatberetZ", 0.1},
+    {&hatberetblue_header, "PhatberetblueZ", 0.1},
+    {&hatberetred_header, "PhatberetredZ", 0.1},
+    {&hatpeaked_header, "PhatpeakedZ", 0.1},
+    {&chrwristdart_header, "PchrwristdartZ", 0.1},
+    {&chrexplosivepen_header, "PchrexplosivepenZ", 0.1},
+    {&chrbombcase_header, "PchrbombcaseZ", 0.1},
+    {&chrflarepistol_header, "PchrflarepistolZ", 0.1},
+    {&chrpitongun_header, "PchrpitongunZ", 0.1},
+    {&chrfingergun_header, "PchrfingergunZ", 0.1},
+    {&chrsilverwppk_header, "PchrsilverwppkZ", 0.1},
+    {&chrgoldwppk_header, "PchrgoldwppkZ", 0.1},
+    {&chrdynamite_header, "PchrdynamiteZ", 0.1},
+    {&chrbungee_header, "PchrbungeeZ", 0.1},
+    {&chrdoordecoder_header, "PchrdoordecoderZ", 0.1},
+    {&chrbombdefuser_header, "PchrbombdefuserZ", 0.1},
+    {&chrbugdetector_header, "PchrbugdetectorZ", 0.1},
+    {&chrsafecrackercase_header, "PchrsafecrackercaseZ", 0.1},
+    {&chrcamera_header, "PchrcameraZ", 0.1},
+    {&chrlockexploder_header, "PchrlockexploderZ", 0.1},
+    {&chrdoorexploder_header, "PchrdoorexploderZ", 0.1},
+    {&chrkeyanalysercase_header, "PchrkeyanalysercaseZ", 0.1},
+    {&chrweaponcase_header, "PchrweaponcaseZ", 0.1},
+    {&chrkeyyale_header, "PchrkeyyaleZ", 0.1},
+    {&chrkeybolt_header, "PchrkeyboltZ", 0.1},
+    {&chrbug_header, "PchrbugZ", 0.1},
+    {&chrmicrocamera_header, "PchrmicrocameraZ", 0.1},
+    {&floppy_header, "PfloppyZ", 0.1},
+    {&chrgoldeneyekey_header, "PchrgoldeneyekeyZ", 0.1},
+    {&chrpolarizedglasses_header, "PchrpolarizedglassesZ", 0.1},
+    {&chrcreditcard_header, "PchrcreditcardZ", 0.1},
+    {&chrdarkglasses_header, "PchrdarkglassesZ", 0.1},
+    {&chrgaskeyring_header, "PchrgaskeyringZ", 0.1},
+    {&chrdatathief_header, "PchrdatathiefZ", 0.1},
+    {&safe_header, "PsafeZ", 0.1},
+    {&bomb_header, "PbombZ", 0.1},
+    {&chrplans_header, "PchrplansZ", 0.1},
+    {&chrspyfile_header, "PchrspyfileZ", 0.1},
+    {&chrblueprints_header, "PchrblueprintsZ", 0.1},
+    {&chrcircuitboard_header, "PchrcircuitboardZ", 0.1},
+    {&chrmap_header, "PchrmapZ", 0.1},
+    {&chrspooltape_header, "PchrspooltapeZ", 0.1},
+    {&chraudiotape_header, "PchraudiotapeZ", 0.1},
+    {&chrmicrofilm_header, "PchrmicrofilmZ", 0.1},
+    {&chrmicrocode_header, "PchrmicrocodeZ", 0.1},
+    {&chrlectre_header, "PchrlectreZ", 0.1},
+    {&chrmoney_header, "PchrmoneyZ", 0.1},
+    {&chrgoldbar_header, "PchrgoldbarZ", 0.1},
+    {&chrheroin_header, "PchrheroinZ", 0.1},
+    {&chrclipboard_header, "PchrclipboardZ", 0.1},
+    {&chrdossierred_header, "PchrdossierredZ", 0.1},
+    {&chrstafflist_header, "PchrstafflistZ", 0.1},
+    {&chrdattape_header, "PchrdattapeZ", 0.1},
+    {&chrplastique_header, "PchrplastiqueZ", 0.1},
+    {&chrblackbox_header, "PchrblackboxZ", 0.1},
+    {&chrvideotape_header, "PchrvideotapeZ", 0.1},
+    {&nintendologo_header, "PnintendologoZ", 0.1},
+    {&goldeneyelogo_header, "PgoldeneyelogoZ", 0.1},
+    {&walletbond_header, "PwalletbondZ", 0.1},
+    {&miltruck_header, "PmiltruckZ", 0.1},
+    {&jeep_header, "PjeepZ", 0.1},
+    {&artic_header, "ParticZ", 0.1},
+    {&helicopter_header, "PhelicopterZ", 0.1},
+    {&tiger_header, "PtigerZ", 0.1},
+    {&milcopter_header, "PmilcopterZ", 0.1},
+    {&hind_header, "PhindZ", 0.1},
+    {&artictrailer_header, "PartictrailerZ", 0.1},
+    {&motorbike_header, "PmotorbikeZ", 0.1},
+    {&tank_header, "PtankZ", 0.1},
+    {&apc_header, "PapcZ", 0.1},
+    {&speedboat_header, "PspeedboatZ", 0.1},
+    {&plane_header, "PplaneZ", 0.1},
+    {&gun_runway1_header, "Pgun_runway1Z", 0.1},
+    {&safedoor_header, "PsafedoorZ", 1.0},
+    {&key_holder_header, "Pkey_holderZ", 1.0},
+    {&hatchsevx_header, "PhatchsevxZ", 1.0},
+    {&sevdish_header, "PsevdishZ", 1.0},
+    {&archsecdoor1_header, "Parchsecdoor1Z", 1.0},
+    {&archsecdoor2_header, "Parchsecdoor2Z", 1.0},
+    {&groundgun_header, "PgroundgunZ", 0.1},
+    {&trainextdoor_header, "PtrainextdoorZ", 1.0},
+    {&carbmw_header, "PcarbmwZ", 0.1},
+    {&carescort_header, "PcarescortZ", 0.1},
+    {&cargolf_header, "PcargolfZ", 0.1},
+    {&carweird_header, "PcarweirdZ", 0.1},
+    {&carzil_header, "PcarzilZ", 0.1},
+    {&shuttle_door_l_header, "Pshuttle_door_lZ", 1.0},
+    {&shuttle_door_r_header, "Pshuttle_door_rZ", 1.0},
+    {&depot_gate_entry_header, "Pdepot_gate_entryZ", 0.1},
+    {&depot_door_steel_header, "Pdepot_door_steelZ", 0.1},
+    {&glassware2_header, "Pglassware2Z", 0.1},
+    {&glassware3_header, "Pglassware3Z", 0.1},
+    {&glassware4_header, "Pglassware4Z", 0.1},
+    {&landmine_header, "PlandmineZ", 0.1},
+    {&plant1_header, "Pplant1Z", 0.1},
+    {&plant11_header, "Pplant11Z", 0.1},
+    {&plant2_header, "Pplant2Z", 0.1},
+    {&plant3_header, "Pplant3Z", 0.1},
+    {&jungle5_tree_header, "Pjungle5_treeZ", 0.1},
+    {&legalpage_header, "PlegalpageZ", 0.1},
+    {&st_pete_room_1i_header, "Pst_pete_room_1iZ", 0.1},
+    {&st_pete_room_2i_header, "Pst_pete_room_2iZ", 0.1},
+    {&st_pete_room_3t_header, "Pst_pete_room_3tZ", 0.1},
+    {&st_pete_room_5c_header, "Pst_pete_room_5cZ", 0.1},
+    {&st_pete_room_6c_header, "Pst_pete_room_6cZ", 0.1},
+    {&door_rollertrain_header, "Pdoor_rollertrainZ", 1.0},
+    {&door_win_header, "Pdoor_winZ", 1.0},
+    {&door_aztec_header, "Pdoor_aztecZ", 1.0},
+    {&shuttle_header, "PshuttleZ", 0.1},
+    {&door_azt_desk_header, "Pdoor_azt_deskZ", 1.0},
+    {&door_azt_desk_top_header, "Pdoor_azt_desk_topZ", 1.0},
+    {&door_azt_chair_header, "Pdoor_azt_chairZ", 1.0},
+    {&door_mf_header, "Pdoor_mfZ", 1.0},
+    {&flag_header, "PflagZ", 0.1},
+    {&barricade_header, "PbarricadeZ", 0.1},
+    {&modembox_header, "PmodemboxZ", 0.1},
+    {&doorpanel_header, "PdoorpanelZ", 0.1},
+    {&doorconsole_header, "PdoorconsoleZ", 0.1},
+    {&chrtesttube_header, "PchrtesttubeZ", 0.1},
+    {&bollard_header, "PbollardZ", 0.1},
     {0, "", 1.0}
 };
 

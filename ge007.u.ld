@@ -287,7 +287,7 @@ SECTIONS
       build/u/src/game/initnull_0009D0.o (.text);
       build/u/src/game/initunk_0009E0.o (.text);
       build/u/src/game/initanitable.o (.text);
-      build/u/src/game/initunk_000B60.o (.text);
+      build/u/src/game/initplayergaitobject.o (.text);
       build/u/src/game/setguscale.o (.text);
       build/u/src/game/initnull_000BC0.o (.text);
       build/u/src/game/initimages.o (.text);
@@ -3583,7 +3583,7 @@ SECTIONS
       build/u/src/game/initnull_0009D0.o (.data);
       build/u/src/game/initunk_0009E0.o (.data);
       build/u/src/game/initanitable.o (.data);
-      build/u/src/game/initunk_000B60.o (.data);
+      build/u/src/game/initplayergaitobject.o (.data);
       build/u/src/game/setguscale.o (.data);
       build/u/src/game/initnull_000BC0.o (.data);
       build/u/src/game/initimages.o (.data);
@@ -3708,7 +3708,7 @@ SECTIONS
       build/u/src/game/initnull_0009D0.o (.rodata);
       build/u/src/game/initunk_0009E0.o (.rodata);
       build/u/src/game/initanitable.o (.rodata);
-      build/u/src/game/initunk_000B60.o (.rodata);
+      build/u/src/game/initplayergaitobject.o (.rodata);
       build/u/src/game/setguscale.o (.rodata);
       build/u/src/game/initnull_000BC0.o (.rodata);
       build/u/src/game/initimages.o (.rodata);
@@ -4050,7 +4050,7 @@ SECTIONS
       build/u/src/game/initnull_0009D0.o (.bss);
       build/u/src/game/initunk_0009E0.o (.bss);
       build/u/src/game/initanitable.o (.bss);
-      build/u/src/game/initunk_000B60.o (.bss);
+      build/u/src/game/initplayergaitobject.o (.bss);
       build/u/src/game/setguscale.o (.bss);
       build/u/src/game/initnull_000BC0.o (.bss);
       build/u/src/game/initimages.o (.bss);

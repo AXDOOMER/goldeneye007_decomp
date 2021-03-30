@@ -3,249 +3,249 @@
 #include "game/chrobjdata.h"
 
 //D:8003D410
-struct ModelFileHeader CcamguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xE, 0, 0};
+struct ModelFileHeader camguard_header = {0, &skeleton_guard, 0, 7, 0x14, 1260.4969, 0, 0xE, 0, 0};
 //D:8003D430
-struct ModelFileHeader CgreyguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1292.6892, 0, 0xD, 0, 0};
+struct ModelFileHeader greyguard_header = {0, &skeleton_guard, 0, 7, 0x14, 1292.6892, 0, 0xD, 0, 0};
 //D:8003D450
-struct ModelFileHeader ColiveguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0x10, 0, 0};
+struct ModelFileHeader oliveguard_header = {0, &skeleton_guard, 0, 7, 0x14, 1260.4969, 0, 0x10, 0, 0};
 //D:8003D470
-struct ModelFileHeader CrusguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xD, 0, 0};
+struct ModelFileHeader rusguard_header = {0, &skeleton_guard, 0, 7, 0x14, 1260.4969, 0, 0xD, 0, 0};
 //D:8003D490
-struct ModelFileHeader CtrevguardZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1260.4969, 0, 0x12, 0, 0};
+struct ModelFileHeader trevguard_header = {0, &skeleton_guard, 0, 7, 0x15, 1260.4969, 0, 0x12, 0, 0};
 //D:8003D4B0
-struct ModelFileHeader CborisZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1223.1553, 0, 0x15, 0, 0};
+struct ModelFileHeader boris_header = {0, &skeleton_guard, 0, 7, 0x14, 1223.1553, 0, 0x15, 0, 0};
 //D:8003D4D0
-struct ModelFileHeader CorumovZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1347.004, 0, 0x15, 0, 0};
+struct ModelFileHeader orumov_header = {0, &skeleton_guard, 0, 7, 0x14, 1347.004, 0, 0x15, 0, 0};
 //D:8003D4F0
-struct ModelFileHeader CtrevelyanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1263.2534, 0, 0x10, 0, 0};
+struct ModelFileHeader trevelyan_header = {0, &skeleton_guard, 0, 7, 0x15, 1263.2534, 0, 0x10, 0, 0};
 //D:8003D510
-struct ModelFileHeader CboilertrevZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1263.2534, 0, 0x10, 0, 0};
+struct ModelFileHeader boilertrev_header = {0, &skeleton_guard, 0, 7, 0x15, 1263.2534, 0, 0x10, 0, 0};
 //D:8003D530
-struct ModelFileHeader CvalentinZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1208.6277, 0, 0x10, 0, 0};
+struct ModelFileHeader valentin_header = {0, &skeleton_guard, 0, 7, 0x14, 1208.6277, 0, 0x10, 0, 0};
 //D:8003D550
-struct ModelFileHeader CxeniaZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1285.4487, 0, 0x13, 0, 0};
+struct ModelFileHeader xenia_header = {0, &skeleton_guard, 0, 7, 0x15, 1285.4487, 0, 0x13, 0, 0};
 //D:8003D570
-struct ModelFileHeader CbaronsamediZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1292.5995, 0, 0x19, 0, 0};
+struct ModelFileHeader baronsamedi_header = {0, &skeleton_guard, 0, 7, 0x15, 1292.5995, 0, 0x19, 0, 0};
 //D:8003D590
-struct ModelFileHeader CjawsZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1550.059, 0, 0x14, 0, 0};
+struct ModelFileHeader jaws_header = {0, &skeleton_guard, 0, 7, 0x15, 1550.059, 0, 0x14, 0, 0};
 //D:8003D5B0
-struct ModelFileHeader CmaydayZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1260.657, 0, 0x10, 0, 0};
+struct ModelFileHeader mayday_header = {0, &skeleton_guard, 0, 7, 0x15, 1260.657, 0, 0x10, 0, 0};
 //D:8003D5D0
-struct ModelFileHeader CoddjobZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1082.4603, 0, 0x12, 0, 0};
+struct ModelFileHeader oddjob_header = {0, &skeleton_guard, 0, 7, 0x14, 1082.4603, 0, 0x12, 0, 0};
 //D:8003D5F0
-struct ModelFileHeader CnatalyaZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1226.1493, 0, 0x10, 0, 0};
+struct ModelFileHeader natalya_header = {0, &skeleton_guard, 0, 7, 0x15, 1226.1493, 0, 0x10, 0, 0};
 //D:8003D610
-struct ModelFileHeader CarmourguardZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1260.4969, 0, 0x11, 0, 0};
+struct ModelFileHeader armourguard_header = {0, &skeleton_guard, 0, 7, 0x15, 1260.4969, 0, 0x11, 0, 0};
 //D:8003D630
-struct ModelFileHeader CcommguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xF, 0, 0};
+struct ModelFileHeader commguard_header = {0, &skeleton_guard, 0, 7, 0x14, 1260.4969, 0, 0xF, 0, 0};
 //D:8003D650
-struct ModelFileHeader CgreatguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1283.0787, 0, 0xB, 0, 0};
+struct ModelFileHeader greatguard_header = {0, &skeleton_guard, 0, 7, 0x14, 1283.0787, 0, 0xB, 0, 0};
 //D:8003D670
-struct ModelFileHeader CnavyguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xF, 0, 0};
+struct ModelFileHeader navyguard_header = {0, &skeleton_guard, 0, 7, 0x14, 1260.4969, 0, 0xF, 0, 0};
 //D:8003D690
-struct ModelFileHeader CsnowguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1261.1731, 0, 0x11, 0, 0};
+struct ModelFileHeader snowguard_header = {0, &skeleton_guard, 0, 7, 0x14, 1261.1731, 0, 0x11, 0, 0};
 //D:8003D6B0
-struct ModelFileHeader CbluewomanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1148.2167, 0, 0xD, 0, 0};
+struct ModelFileHeader bluewoman_header = {0, &skeleton_guard, 0, 7, 0x15, 1148.2167, 0, 0xD, 0, 0};
 //D:8003D6D0
-struct ModelFileHeader CfattechwomanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1149.4025, 0, 0xC, 0, 0};
+struct ModelFileHeader fattechwoman_header = {0, &skeleton_guard, 0, 7, 0x15, 1149.4025, 0, 0xC, 0, 0};
 //D:8003D6F0
-struct ModelFileHeader CtechwomanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1158.2109, 0, 0xC, 0, 0};
+struct ModelFileHeader techwoman_header = {0, &skeleton_guard, 0, 7, 0x15, 1158.2109, 0, 0xC, 0, 0};
 //D:8003D710
-struct ModelFileHeader CjeanwomanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1124.0725, 0, 0xF, 0, 0};
+struct ModelFileHeader jeanwoman_header = {0, &skeleton_guard, 0, 7, 0x15, 1124.0725, 0, 0xF, 0, 0};
 //D:8003D730
-struct ModelFileHeader CgreymanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1293.0195, 0, 0xF, 0, 0};
+struct ModelFileHeader greyman_header = {0, &skeleton_guard, 0, 7, 0x15, 1293.0195, 0, 0xF, 0, 0};
 //D:8003D750
-struct ModelFileHeader CbluemanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1292.6892, 0, 0xF, 0, 0};
+struct ModelFileHeader blueman_header = {0, &skeleton_guard, 0, 7, 0x15, 1292.6892, 0, 0xF, 0, 0};
 //D:8003D770
-struct ModelFileHeader CredmanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1292.6892, 0, 0xF, 0, 0};
+struct ModelFileHeader redman_header = {0, &skeleton_guard, 0, 7, 0x15, 1292.6892, 0, 0xF, 0, 0};
 //D:8003D790
-struct ModelFileHeader CcardimanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1292.6892, 0, 0xE, 0, 0};
+struct ModelFileHeader cardiman_header = {0, &skeleton_guard, 0, 7, 0x15, 1292.6892, 0, 0xE, 0, 0};
 //D:8003D7B0
-struct ModelFileHeader CcheckmanZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1292.6892, 0, 0x10, 0, 0};
+struct ModelFileHeader checkman_header = {0, &skeleton_guard, 0, 7, 0x15, 1292.6892, 0, 0x10, 0, 0};
 //D:8003D7D0
-struct ModelFileHeader CtechmanZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1292.6892, 0, 0xC, 0, 0};
+struct ModelFileHeader techman_header = {0, &skeleton_guard, 0, 7, 0x14, 1292.6892, 0, 0xC, 0, 0};
 //D:8003D7F0
-struct ModelFileHeader CpilotZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1260.4969, 0, 0x18, 0, 0};
+struct ModelFileHeader pilot_header = {0, &skeleton_guard, 0, 7, 0x15, 1260.4969, 0, 0x18, 0, 0};
 //D:8003D810
-struct ModelFileHeader Cgreatguard2Z_struct = {0, &model_guard_character, 0, 7, 0x14, 1283.0787, 0, 0x10, 0, 0};
+struct ModelFileHeader greatguard2_header = {0, &skeleton_guard, 0, 7, 0x14, 1283.0787, 0, 0x10, 0, 0};
 //D:8003D830
-struct ModelFileHeader CbluecamguardZ_struct = {0, &model_guard_character, 0, 7, 0x14, 1260.4969, 0, 0xE, 0, 0};
+struct ModelFileHeader bluecamguard_header = {0, &skeleton_guard, 0, 7, 0x14, 1260.4969, 0, 0xE, 0, 0};
 //D:8003D850
-struct ModelFileHeader CmoonguardZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1260.4969, 0, 0xD, 0, 0};
+struct ModelFileHeader moonguard_header = {0, &skeleton_guard, 0, 7, 0x15, 1260.4969, 0, 0xD, 0, 0};
 //D:8003D870
-struct ModelFileHeader CmoonfemaleZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1124.0725, 0, 0xB, 0, 0};
+struct ModelFileHeader moonfemale_header = {0, &skeleton_guard, 0, 7, 0x15, 1124.0725, 0, 0xB, 0, 0};
 //D:8003D890
-struct ModelFileHeader CboilerbondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1273.6262, 0, 0xD, 0, 0};
+struct ModelFileHeader boilerbond_header = {0, &skeleton_guard, 0, 7, 0x15, 1273.6262, 0, 0xD, 0, 0};
 //D:8003D8B0
-struct ModelFileHeader CsuitbondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1292.3391, 0, 0xE, 0, 0};
+struct ModelFileHeader suitbond_header = {0, &skeleton_guard, 0, 7, 0x15, 1292.3391, 0, 0xE, 0, 0};
 //D:8003D8D0
-struct ModelFileHeader CtimberbondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1282.7715, 0, 0x10, 0, 0};
+struct ModelFileHeader timberbond_header = {0, &skeleton_guard, 0, 7, 0x15, 1282.7715, 0, 0x10, 0, 0};
 //D:8003D8F0
-struct ModelFileHeader CsnowbondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1299.1359, 0, 0xE, 0, 0};
+struct ModelFileHeader snowbond_header = {0, &skeleton_guard, 0, 7, 0x15, 1299.1359, 0, 0xE, 0, 0};
 //D:8003D910
-struct ModelFileHeader CdjbondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1285.0543, 0, 0xD, 0, 0};
+struct ModelFileHeader djbond_header = {0, &skeleton_guard, 0, 7, 0x15, 1285.0543, 0, 0xD, 0, 0};
 //D:8003D930
-struct ModelFileHeader Csuit_lf_handz_struct = {0, &model_suit_lf_hand, 0, 0xA, 9, 12231.949, 0, 0x16, 0, 0};
+struct ModelFileHeader suit_lf_hand_header = {0, &skeleton_suit_lf_hand, 0, 0xA, 9, 12231.949, 0, 0x16, 0, 0};
 //D:8003D950
-struct ModelFileHeader CheadkarlZ_struct = {0, NULL, 0, 2, 1, 218.15375, 0, 6, 0, 0};
+struct ModelFileHeader headkarl_header = {0, NULL, 0, 2, 1, 218.15375, 0, 6, 0, 0};
 //D:8003D970
-struct ModelFileHeader CheadalanZ_struct = {0, NULL, 0, 2, 1, 215.03685, 0, 4, 0, 0};
+struct ModelFileHeader headalan_header = {0, NULL, 0, 2, 1, 215.03685, 0, 4, 0, 0};
 //D:8003D990
-struct ModelFileHeader CheadpeteZ_struct = {0, NULL, 0, 2, 1, 216.28949, 0, 4, 0, 0};
+struct ModelFileHeader headpete_header = {0, NULL, 0, 2, 1, 216.28949, 0, 4, 0, 0};
 //D:8003D9B0
-struct ModelFileHeader CheadmartinZ_struct = {0, NULL, 0, 2, 1, 222.34796, 0, 6, 0, 0};
+struct ModelFileHeader headmartin_header = {0, NULL, 0, 2, 1, 222.34796, 0, 6, 0, 0};
 //D:8003D9D0
-struct ModelFileHeader stru_D_8003D9D0 = {0, NULL, 0, 2, 1, 220.2446, 0, 5, 0, 0};
+struct ModelFileHeader headmark_header = {0, NULL, 0, 2, 1, 220.2446, 0, 5, 0, 0};
 //D:8003D9F0
-struct ModelFileHeader stru_D_8003D9F0 = {0, NULL, 0, 2, 1, 201.51955, 0, 5, 0, 0};
+struct ModelFileHeader headduncan_header = {0, NULL, 0, 2, 1, 201.51955, 0, 5, 0, 0};
 //D:8003DA10
-struct ModelFileHeader stru_D_8003DA10 = {0, NULL, 0, 2, 1, 212.62949, 0, 5, 0, 0};
+struct ModelFileHeader headb_header = {0, NULL, 0, 2, 1, 212.62949, 0, 5, 0, 0};
 //D:8003DA30
-struct ModelFileHeader stru_D_8003DA30 = {0, NULL, 0, 2, 1, 218.35564, 0, 4, 0, 0};
+struct ModelFileHeader headshaun_header = {0, NULL, 0, 2, 1, 218.35564, 0, 4, 0, 0};
 //D:8003DA50
-struct ModelFileHeader stru_D_8003DA50 = {0, NULL, 0, 2, 1, 192.53412, 0, 4, 0, 0};
+struct ModelFileHeader headdwayne_header = {0, NULL, 0, 2, 1, 192.53412, 0, 4, 0, 0};
 //D:8003DA70
-struct ModelFileHeader stru_D_8003DA70 = {0, NULL, 0, 2, 1, 218.35564, 0, 4, 0, 0};
+struct ModelFileHeader headdave_header = {0, NULL, 0, 2, 1, 218.35564, 0, 4, 0, 0};
 //D:8003DA90
-struct ModelFileHeader stru_D_8003DA90 = {0, NULL, 0, 2, 1, 227.52234, 0, 4, 0, 0};
+struct ModelFileHeader headgrant_header = {0, NULL, 0, 2, 1, 227.52234, 0, 4, 0, 0};
 //D:8003DAB0
-struct ModelFileHeader stru_D_8003DAB0 = {0, NULL, 0, 2, 1, 228.29831, 0, 4, 0, 0};
+struct ModelFileHeader headdes_header = {0, NULL, 0, 2, 1, 228.29831, 0, 4, 0, 0};
 //D:8003DAD0
-struct ModelFileHeader stru_D_8003DAD0 = {0, NULL, 0, 2, 1, 235.64778, 0, 6, 0, 0};
+struct ModelFileHeader headchris_header = {0, NULL, 0, 2, 1, 235.64778, 0, 6, 0, 0};
 //D:8003DAF0
-struct ModelFileHeader stru_D_8003DAF0 = {0, NULL, 0, 2, 1, 218.35564, 0, 5, 0, 0};
+struct ModelFileHeader headlee_header = {0, NULL, 0, 2, 1, 218.35564, 0, 5, 0, 0};
 //D:8003DB10
-struct ModelFileHeader stru_D_8003DB10 = {0, NULL, 0, 2, 1, 240.50017, 0, 4, 0, 0};
+struct ModelFileHeader headneil_header = {0, NULL, 0, 2, 1, 240.50017, 0, 4, 0, 0};
 //D:8003DB30
-struct ModelFileHeader stru_D_8003DB30 = {0, NULL, 0, 2, 1, 234.83342, 0, 4, 0, 0};
+struct ModelFileHeader headjim_header = {0, NULL, 0, 2, 1, 234.83342, 0, 4, 0, 0};
 //D:8003DB50
-struct ModelFileHeader stru_D_8003DB50 = {0, NULL, 0, 2, 1, 228.24614, 0, 4, 0, 0};
+struct ModelFileHeader headrobin_header = {0, NULL, 0, 2, 1, 228.24614, 0, 4, 0, 0};
 //D:8003DB70
-struct ModelFileHeader stru_D_8003DB70 = {0, NULL, 0, 2, 1, 228.55029, 0, 4, 0, 0};
+struct ModelFileHeader headsteveh_header = {0, NULL, 0, 2, 1, 228.55029, 0, 4, 0, 0};
 //D:8003DB90
-struct ModelFileHeader stru_D_8003DB90 = {0, NULL, 0, 2, 1, 212.62949, 0, 2, 0, 0};
+struct ModelFileHeader headbalaclava_header = {0, NULL, 0, 2, 1, 212.62949, 0, 2, 0, 0};
 //D:8003DBB0
-struct ModelFileHeader stru_D_8003DBB0 = {0, NULL, 0, 2, 1, 219.82707, 0, 6, 0, 0};
+struct ModelFileHeader headbike_header = {0, NULL, 0, 2, 1, 219.82707, 0, 6, 0, 0};
 //D:8003DBD0
-struct ModelFileHeader stru_D_8003DBD0 = {0, NULL, 0, 2, 1, 193.20615, 0, 5, 0, 0};
+struct ModelFileHeader headgraham_header = {0, NULL, 0, 2, 1, 193.20615, 0, 5, 0, 0};
 //D:8003DBF0
-struct ModelFileHeader stru_D_8003DBF0 = {0, NULL, 0, 2, 1, 235.64778, 0, 4, 0, 0};
+struct ModelFileHeader headstevee_header = {0, NULL, 0, 2, 1, 235.64778, 0, 4, 0, 0};
 //D:8003DC10
-struct ModelFileHeader stru_D_8003DC10 = {0, NULL, 0, 2, 1, 223.18559, 0, 4, 0, 0};
+struct ModelFileHeader headjoel_header = {0, NULL, 0, 2, 1, 223.18559, 0, 4, 0, 0};
 //D:8003DC30
-struct ModelFileHeader stru_D_8003DC30 = {0, NULL, 0, 2, 1, 218.35564, 0, 5, 0, 0};
+struct ModelFileHeader headscott_header = {0, NULL, 0, 2, 1, 218.35564, 0, 5, 0, 0};
 //D:8003DC50
-struct ModelFileHeader stru_D_8003DC50 = {0, NULL, 0, 2, 1, 193.20615, 0, 4, 0, 0};
+struct ModelFileHeader headjoe_header = {0, NULL, 0, 2, 1, 193.20615, 0, 4, 0, 0};
 //D:8003DC70
-struct ModelFileHeader stru_D_8003DC70 = {0, NULL, 0, 2, 1, 235.64778, 0, 5, 0, 0};
+struct ModelFileHeader headken_header = {0, NULL, 0, 2, 1, 235.64778, 0, 5, 0, 0};
 //D:8003DC90
-struct ModelFileHeader stru_D_8003DC90 = {0, NULL, 0, 2, 1, 193.20615, 0, 3, 0, 0};
+struct ModelFileHeader headjoe2_header = {0, NULL, 0, 2, 1, 193.20615, 0, 3, 0, 0};
 //D:8003DCB0
-struct ModelFileHeader stru_D_8003DCB0 = {0, NULL, 0, 2, 1, 224.83139, 0, 3, 0, 0};
+struct ModelFileHeader headmishkin_header = {0, NULL, 0, 2, 1, 224.83139, 0, 3, 0, 0};
 //D:8003DCD0
-struct ModelFileHeader stru_D_8003DCD0 = {0, NULL, 0, 2, 1, 219.97256, 0, 3, 0, 0};
+struct ModelFileHeader headsally_header = {0, NULL, 0, 2, 1, 219.97256, 0, 3, 0, 0};
 //D:8003DCF0
-struct ModelFileHeader stru_D_8003DCF0 = {0, NULL, 0, 2, 1, 203.44904, 0, 3, 0, 0};
+struct ModelFileHeader headmarion_header = {0, NULL, 0, 2, 1, 203.44904, 0, 3, 0, 0};
 //D:8003DD10
-struct ModelFileHeader stru_D_8003DD10 = {0, NULL, 0, 2, 1, 196.83067, 0, 3, 0, 0};
+struct ModelFileHeader headmandy_header = {0, NULL, 0, 2, 1, 196.83067, 0, 3, 0, 0};
 //D:8003DD30
-struct ModelFileHeader stru_D_8003DD30 = {0, NULL, 0, 2, 1, 176.67717, 0, 1, 0, 0};
+struct ModelFileHeader headvivien_header = {0, NULL, 0, 2, 1, 176.67717, 0, 1, 0, 0};
 //D:8003DD50
-struct ModelFileHeader stru_D_8003DD50 = {0, NULL, 0, 2, 1, 190.61967, 0, 4, 0, 0};
+struct ModelFileHeader headbrosnanboiler_header = {0, NULL, 0, 2, 1, 190.61967, 0, 4, 0, 0};
 //D:8003DD70
-struct ModelFileHeader CheadbrosnansuitZ_struct = {0, NULL, 0, 2, 1, 212.45657, 0, 5, 0, 0};
+struct ModelFileHeader headbrosnansuit_header = {0, NULL, 0, 2, 1, 212.45657, 0, 5, 0, 0};
 //D:8003DD90
-struct ModelFileHeader CheadbrosnantimberZ_struct = {0, NULL, 0, 2, 1, 179.28358, 0, 4, 0, 0};
+struct ModelFileHeader headbrosnantimber_header = {0, NULL, 0, 2, 1, 179.28358, 0, 4, 0, 0};
 //D:8003DDB0
-struct ModelFileHeader CheadbrosnansnowZ_struct = {0, NULL, 0, 2, 1, 225.0605, 0, 6, 0, 0};
+struct ModelFileHeader headbrosnansnow_header = {0, NULL, 0, 2, 1, 225.0605, 0, 6, 0, 0};
 //D:8003DDD0
-struct ModelFileHeader CheadbrosnanZ_struct = {0, NULL, 0, 2, 1, 189.48112, 0, 5, 0, 0};
+struct ModelFileHeader headbrosnan_header = {0, NULL, 0, 2, 1, 189.48112, 0, 5, 0, 0};
 //D:8003DDF0
-struct ModelFileHeader CspicebondZ_struct = {0, &model_guard_character, 0, 7, 0x15, 1208.6448, 0, 0x11, 0, 0};
+struct ModelFileHeader spicebond_header = {0, &skeleton_guard, 0, 7, 0x15, 1208.6448, 0, 0x11, 0, 0};
 
 
 
 struct ChrModelFileRecord c_item_entries[] = {
-    {&CcamguardZ_struct, "CcamguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},
-    {&CgreyguardZ_struct, "CgreyguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},
-    {&ColiveguardZ_struct, "ColiveguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},
-    {&CrusguardZ_struct, "CrusguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},
-    {&CtrevguardZ_struct, "CtrevguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},
-    {&CdjbondZ_struct, "CdjbondZ", 1.0, 1.0446, 0x1, 0x00, 0x00, 0x00},
-    {&CborisZ_struct, "CborisZ", 1.0, 0.9702, 0x1, 0x01, 0x00, 0x00},
-    {&CorumovZ_struct, "CorumovZ", 1.0, 1.0778, 0x1, 0x01, 0x00, 0x00},
-    {&CtrevelyanZ_struct, "CtrevelyanZ", 1.0, 1.0, 0x1, 0x01, 0x00, 0x00},
-    {&CboilertrevZ_struct, "CboilertrevZ", 1.0, 1.0, 0x1, 0x01, 0x00, 0x00},
-    {&CvalentinZ_struct, "CvalentinZ", 1.0, 0.93239999, 0x1, 0x01, 0x00, 0x00},
-    {&CxeniaZ_struct, "CxeniaZ", 1.0, 1.0, 0x00, 0x1, 0x00, 0x00},
-    {&CbaronsamediZ_struct, "CbaronsamediZ", 1.0, 1.0, 0x1, 0x01, 0x00, 0x00},
-    {&CjawsZ_struct, "CjawsZ", 1.0, 1.199, 0x1, 0x01, 0x00, 0x00},
-    {&CmaydayZ_struct, "CmaydayZ", 1.0, 1.0, 0x0, 0x1, 0x00, 0x00},
-    {&CoddjobZ_struct, "CoddjobZ", 1.0, 0.78780001, 0x1, 0x01, 0x00, 0x00},
-    {&CnatalyaZ_struct, "CnatalyaZ", 1.0, 0.96609998, 0x0, 0x1, 0x00, 0x00},
-    {&CarmourguardZ_struct, "CarmourguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},
-    {&CcommguardZ_struct, "CcommguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},
-    {&CgreatguardZ_struct, "CgreatguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},
-    {&CnavyguardZ_struct, "CnavyguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},
-    {&CsnowguardZ_struct, "CsnowguardZ", 1.0, 1.0, 0x1, 0x01, 0x00, 0x00},
-    {&CboilerbondZ_struct, "CboilerbondZ", 1.0, 1.0403, 0x1, 0x00, 0x00, 0x00},
-    {&CsuitbondZ_struct, "CsuitbondZ", 1.0, 1.058, 0x1, 0x00, 0x00, 0x00},
-    {&CtimberbondZ_struct, "CtimberbondZ", 1.0, 1.0438, 0x1, 0x00, 0x00, 0x00},
-    {&CsnowbondZ_struct, "CsnowbondZ", 1.0, 1.0438, 0x1, 0x00, 0x00, 0x00},
-    {&CbluewomanZ_struct, "CbluewomanZ", 1.0, 0.88529998, 0x00, 0x00, 0x00, 0x00},
-    {&CfattechwomanZ_struct, "CfattechwomanZ", 1.0, 0.88529998, 0x00, 0x00, 0x00, 0x00},
-    {&CtechwomanZ_struct, "CtechwomanZ", 1.0, 0.91600001, 0x00, 0x00, 0x00, 0x00},
-    {&CjeanwomanZ_struct, "CjeanwomanZ", 1.0, 0.88529998, 0x00, 0x00, 0x00, 0x00},
-    {&CgreymanZ_struct, "CgreymanZ", 1.0, 1.0, 0x01, 0x00, 0x00, 0x00},
-    {&CbluemanZ_struct, "CbluemanZ", 1.0, 1.0, 0x01, 0x00, 0x00, 0x00},
-    {&CredmanZ_struct, "CredmanZ", 1.0, 1.0, 0x01, 0x00, 0x00, 0x00},
-    {&CcardimanZ_struct, "CcardimanZ", 1.0, 1.0, 0x01, 0x00, 0x00, 0x00},
-    {&CcheckmanZ_struct, "CcheckmanZ", 1.0, 1.0, 0x01, 0x00, 0x00, 0x00},
-    {&CtechmanZ_struct, "CtechmanZ", 1.0, 1.0, 0x01, 0x00, 0x00, 0x00},
-    {&CpilotZ_struct, "CpilotZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&Cgreatguard2Z_struct, "Cgreatguard2Z", 1.0, 1.0, 0x01, 0x00, 0x00, 0x00},
-    {&CbluecamguardZ_struct, "CbluecamguardZ", 1.0, 1.0, 0x01, 0x00, 0x00, 0x00},
-    {&CmoonguardZ_struct, "CmoonguardZ", 1.0, 1.0, 0x01, 0x00, 0x00, 0x00},
-    {&CmoonfemaleZ_struct, "CmoonfemaleZ", 1.0, 0.88529998, 0x00, 0x00, 0x00, 0x00},
-    {&Csuit_lf_handz_struct, "Csuit_lf_handZ", 0.1, 1.0, 0x01, 0x00, 0x00, 0x00},
-    {&CheadkarlZ_struct, "CheadkarlZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&CheadalanZ_struct, "CheadalanZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&CheadpeteZ_struct, "CheadpeteZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&CheadmartinZ_struct, "CheadmartinZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003D9D0, "CheadmarkZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003D9F0, "CheadduncanZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DA30, "CheadshaunZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DA50, "CheaddwayneZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DA10, "CheadbZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DA70, "CheaddaveZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DA90, "CheadgrantZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DAB0, "CheaddesZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DAD0, "CheadchrisZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DAF0, "CheadleeZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DB10, "CheadneilZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DB30, "CheadjimZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DB50, "CheadrobinZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DB70, "CheadstevehZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DB90, "CheadbalaclavaZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DBB0, "CheadbikeZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DBD0, "CheadgrahamZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DBF0, "CheadsteveeZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DC10, "CheadjoelZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DC30, "CheadscottZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DC50, "CheadjoeZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DC70, "CheadkenZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DC90, "Cheadjoe2Z", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DCB0, "CheadmishkinZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&stru_D_8003DCD0, "CheadsallyZ", 1.0, 1.0, 0x00, 0x01, 0x00, 0x00},
-    {&stru_D_8003DCF0, "CheadmarionZ", 1.0, 1.0, 0x00, 0x01, 0x00, 0x00},
-    {&stru_D_8003DD10, "CheadmandyZ", 1.0, 1.0, 0x00, 0x01, 0x00, 0x00},
-    {&stru_D_8003DD30, "CheadvivienZ", 1.0, 1.0, 0x00, 0x01, 0x00, 0x00},
-    {&stru_D_8003DD50, "CheadbrosnanboilerZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&CheadbrosnansuitZ_struct, "CheadbrosnansuitZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&CheadbrosnantimberZ_struct, "CheadbrosnantimberZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&CheadbrosnansnowZ_struct, "CheadbrosnansnowZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&CheadbrosnanZ_struct, "CheadbrosnanZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
-    {&CspicebondZ_struct, "CspicebondZ", 0.94999999, 0.96609998, 0x00, 0x01, 0x00, 0x00},
+    {&camguard_header, "CcamguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},
+    {&greyguard_header, "CgreyguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},
+    {&oliveguard_header, "ColiveguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},
+    {&rusguard_header, "CrusguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},
+    {&trevguard_header, "CtrevguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},
+    {&djbond_header, "CdjbondZ", 1.0, 1.0446, 0x1, 0x00, 0x00, 0x00},
+    {&boris_header, "CborisZ", 1.0, 0.9702, 0x1, 0x01, 0x00, 0x00},
+    {&orumov_header, "CorumovZ", 1.0, 1.0778, 0x1, 0x01, 0x00, 0x00},
+    {&trevelyan_header, "CtrevelyanZ", 1.0, 1.0, 0x1, 0x01, 0x00, 0x00},
+    {&boilertrev_header, "CboilertrevZ", 1.0, 1.0, 0x1, 0x01, 0x00, 0x00},
+    {&valentin_header, "CvalentinZ", 1.0, 0.93239999, 0x1, 0x01, 0x00, 0x00},
+    {&xenia_header, "CxeniaZ", 1.0, 1.0, 0x00, 0x1, 0x00, 0x00},
+    {&baronsamedi_header, "CbaronsamediZ", 1.0, 1.0, 0x1, 0x01, 0x00, 0x00},
+    {&jaws_header, "CjawsZ", 1.0, 1.199, 0x1, 0x01, 0x00, 0x00},
+    {&mayday_header, "CmaydayZ", 1.0, 1.0, 0x0, 0x1, 0x00, 0x00},
+    {&oddjob_header, "CoddjobZ", 1.0, 0.78780001, 0x1, 0x01, 0x00, 0x00},
+    {&natalya_header, "CnatalyaZ", 1.0, 0.96609998, 0x0, 0x1, 0x00, 0x00},
+    {&armourguard_header, "CarmourguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},
+    {&commguard_header, "CcommguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},
+    {&greatguard_header, "CgreatguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},
+    {&navyguard_header, "CnavyguardZ", 1.0, 1.0, 0x1, 0x00, 0x00, 0x00},
+    {&snowguard_header, "CsnowguardZ", 1.0, 1.0, 0x1, 0x01, 0x00, 0x00},
+    {&boilerbond_header, "CboilerbondZ", 1.0, 1.0403, 0x1, 0x00, 0x00, 0x00},
+    {&suitbond_header, "CsuitbondZ", 1.0, 1.058, 0x1, 0x00, 0x00, 0x00},
+    {&timberbond_header, "CtimberbondZ", 1.0, 1.0438, 0x1, 0x00, 0x00, 0x00},
+    {&snowbond_header, "CsnowbondZ", 1.0, 1.0438, 0x1, 0x00, 0x00, 0x00},
+    {&bluewoman_header, "CbluewomanZ", 1.0, 0.88529998, 0x00, 0x00, 0x00, 0x00},
+    {&fattechwoman_header, "CfattechwomanZ", 1.0, 0.88529998, 0x00, 0x00, 0x00, 0x00},
+    {&techwoman_header, "CtechwomanZ", 1.0, 0.91600001, 0x00, 0x00, 0x00, 0x00},
+    {&jeanwoman_header, "CjeanwomanZ", 1.0, 0.88529998, 0x00, 0x00, 0x00, 0x00},
+    {&greyman_header, "CgreymanZ", 1.0, 1.0, 0x01, 0x00, 0x00, 0x00},
+    {&blueman_header, "CbluemanZ", 1.0, 1.0, 0x01, 0x00, 0x00, 0x00},
+    {&redman_header, "CredmanZ", 1.0, 1.0, 0x01, 0x00, 0x00, 0x00},
+    {&cardiman_header, "CcardimanZ", 1.0, 1.0, 0x01, 0x00, 0x00, 0x00},
+    {&checkman_header, "CcheckmanZ", 1.0, 1.0, 0x01, 0x00, 0x00, 0x00},
+    {&techman_header, "CtechmanZ", 1.0, 1.0, 0x01, 0x00, 0x00, 0x00},
+    {&pilot_header, "CpilotZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&greatguard2_header, "Cgreatguard2Z", 1.0, 1.0, 0x01, 0x00, 0x00, 0x00},
+    {&bluecamguard_header, "CbluecamguardZ", 1.0, 1.0, 0x01, 0x00, 0x00, 0x00},
+    {&moonguard_header, "CmoonguardZ", 1.0, 1.0, 0x01, 0x00, 0x00, 0x00},
+    {&moonfemale_header, "CmoonfemaleZ", 1.0, 0.88529998, 0x00, 0x00, 0x00, 0x00},
+    {&suit_lf_hand_header, "Csuit_lf_handZ", 0.1, 1.0, 0x01, 0x00, 0x00, 0x00},
+    {&headkarl_header, "CheadkarlZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headalan_header, "CheadalanZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headpete_header, "CheadpeteZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headmartin_header, "CheadmartinZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headmark_header, "CheadmarkZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headduncan_header, "CheadduncanZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headshaun_header, "CheadshaunZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headdwayne_header, "CheaddwayneZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headb_header, "CheadbZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headdave_header, "CheaddaveZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headgrant_header, "CheadgrantZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headdes_header, "CheaddesZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headchris_header, "CheadchrisZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headlee_header, "CheadleeZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headneil_header, "CheadneilZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headjim_header, "CheadjimZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headrobin_header, "CheadrobinZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headsteveh_header, "CheadstevehZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headbalaclava_header, "CheadbalaclavaZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headbike_header, "CheadbikeZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headgraham_header, "CheadgrahamZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headstevee_header, "CheadsteveeZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headjoel_header, "CheadjoelZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headscott_header, "CheadscottZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headjoe_header, "CheadjoeZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headken_header, "CheadkenZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headjoe2_header, "Cheadjoe2Z", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headmishkin_header, "CheadmishkinZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headsally_header, "CheadsallyZ", 1.0, 1.0, 0x00, 0x01, 0x00, 0x00},
+    {&headmarion_header, "CheadmarionZ", 1.0, 1.0, 0x00, 0x01, 0x00, 0x00},
+    {&headmandy_header, "CheadmandyZ", 1.0, 1.0, 0x00, 0x01, 0x00, 0x00},
+    {&headvivien_header, "CheadvivienZ", 1.0, 1.0, 0x00, 0x01, 0x00, 0x00},
+    {&headbrosnanboiler_header, "CheadbrosnanboilerZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headbrosnansuit_header, "CheadbrosnansuitZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headbrosnantimber_header, "CheadbrosnantimberZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headbrosnansnow_header, "CheadbrosnansnowZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&headbrosnan_header, "CheadbrosnanZ", 1.0, 1.0, 0x01, 0x01, 0x00, 0x00},
+    {&spicebond_header, "CspicebondZ", 0.94999999, 0.96609998, 0x00, 0x01, 0x00, 0x00},
     {0, 0, 1.0, 0.0, 0x00, 0x00, 0x00, 0x00}
 };
 

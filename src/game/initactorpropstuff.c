@@ -47,8 +47,8 @@ glabel sub_GAME_7F0001F0
 /* 034D4C 7F00021C AFB4002C */  sw    $s4, 0x2c($sp)
 /* 034D50 7F000220 10200011 */  beqz  $at, .L7F000268
 /* 034D54 7F000224 00008825 */   move  $s1, $zero
-/* 034D58 7F000228 3C148004 */  lui   $s4, %hi(model_guard_character)
-/* 034D5C 7F00022C 2694D400 */  addiu $s4, %lo(model_guard_character) # addiu $s4, $s4, -0x2c00
+/* 034D58 7F000228 3C148004 */  lui   $s4, %hi(skeleton_guard)
+/* 034D5C 7F00022C 2694D400 */  addiu $s4, %lo(skeleton_guard) # addiu $s4, $s4, -0x2c00
 /* 034D60 7F000230 27B50040 */  addiu $s5, $sp, 0x40
 .L7F000234:
 /* 034D64 7F000234 00002025 */  move  $a0, $zero
@@ -102,8 +102,8 @@ glabel sub_GAME_7F000290
 /* 034DEC 7F0002BC AFB4002C */  sw    $s4, 0x2c($sp)
 /* 034DF0 7F0002C0 10200010 */  beqz  $at, .L7F000304
 /* 034DF4 7F0002C4 00008825 */   move  $s1, $zero
-/* 034DF8 7F0002C8 3C148004 */  lui   $s4, %hi(model_guard_character)
-/* 034DFC 7F0002CC 2694D400 */  addiu $s4, %lo(model_guard_character) # addiu $s4, $s4, -0x2c00
+/* 034DF8 7F0002C8 3C148004 */  lui   $s4, %hi(skeleton_guard)
+/* 034DFC 7F0002CC 2694D400 */  addiu $s4, %lo(skeleton_guard) # addiu $s4, $s4, -0x2c00
 /* 034E00 7F0002D0 27B5003C */  addiu $s5, $sp, 0x3c
 .L7F0002D4:
 /* 034E04 7F0002D4 00002025 */  move  $a0, $zero
