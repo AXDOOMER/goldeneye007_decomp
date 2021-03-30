@@ -361,6 +361,8 @@ SECTIONS
       build/j/src/game/debugmenu_090490.o (.text);
       build/j/src/game/unk_091080.o (.text);
       build/j/src/game/chrobjdata.o (.text);
+      build/j/src/game/chrobjdata2.o (.text);
+      build/j/src/game/chrobjdata3.o (.text);
       build/j/src/game/cheat_buttons.o (.text);
       build/j/src/game/unk_092890.o (.text);
       build/j/src/game/unk_092E50.o (.text);
@@ -3654,6 +3656,8 @@ SECTIONS
       build/j/src/game/debugmenu_090490.o (.data);
       build/j/src/game/unk_091080.o (.data);
       build/j/src/game/chrobjdata.o (.data);
+      build/j/src/game/chrobjdata2.o (.data);
+      build/j/src/game/chrobjdata3.o (.data);
       build/j/src/game/cheat_buttons.o (.data);
       build/j/src/game/unk_092890.o (.data);
       build/j/src/game/unk_092E50.o (.data);
@@ -3776,6 +3780,8 @@ SECTIONS
       build/j/src/game/debugmenu_090490.o (.rodata);
       build/j/src/game/unk_091080.o (.rodata);
       build/j/src/game/chrobjdata.o (.rodata);
+      build/j/src/game/chrobjdata2.o (.rodata);
+      build/j/src/game/chrobjdata3.o (.rodata);
       build/j/src/game/cheat_buttons.o (.rodata);
       build/j/src/game/unk_092890.o (.rodata);
       build/j/src/game/unk_092E50.o (.rodata);
@@ -4115,6 +4121,8 @@ SECTIONS
       build/j/src/game/debugmenu_090490.o (.bss);
       build/j/src/game/unk_091080.o (.bss);
       build/j/src/game/chrobjdata.o (.bss);
+      build/j/src/game/chrobjdata2.o (.bss);
+      build/j/src/game/chrobjdata3.o (.bss);
       build/j/src/game/cheat_buttons.o (.bss);
       build/j/src/game/unk_092890.o (.bss);
       build/j/src/game/unk_092E50.o (.bss);
