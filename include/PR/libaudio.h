@@ -11,18 +11,34 @@ typedef u8      ALPan;
 #define AL_USEC_PER_FRAME_60FPS       16000
 #define AL_USEC_PER_FRAME_30FPS       33000
 
-typedef enum ALSndpMsgType_e {
-    AL_SNDP_PLAY_EVT,
-    AL_SNDP_STOP_EVT,
-    AL_SNDP_PAN_EVT,
-    AL_SNDP_VOL_EVT,
-    AL_SNDP_PITCH_EVT,
-    AL_SNDP_API_EVT,
-    AL_SNDP_DECAY_EVT,
-    AL_SNDP_END_EVT,
-    AL_SNDP_FX_EVT,
+#define AL_PAN_CENTER   64
+#define AL_PAN_LEFT     0
+#define AL_PAN_RIGHT    127
 
-    AL_SNDP_UNKNOWN_EVT = 32
+#define AL_VOL_FULL     127
+
+/**
+ * Based on n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndp.h
+ * enum ALSndpMsgType,
+ * except this version is bitflags.
+ */
+typedef enum ALSndpMsgType_e {
+    AL_SNDP_PLAY_EVT       = (1 << 0),
+    AL_SNDP_STOP_EVT       = (1 << 1),
+    AL_SNDP_PAN_EVT        = (1 << 2),
+    AL_SNDP_VOL_EVT        = (1 << 3),
+    AL_SNDP_PITCH_EVT      = (1 << 4),
+    AL_SNDP_API_EVT        = (1 << 5),
+    AL_SNDP_DECAY_EVT      = (1 << 6),
+    AL_SNDP_END_EVT        = (1 << 7),
+    AL_SNDP_FX_EVT         = (1 << 8),
+    AL_SNDP_UNKNOWN_09_EVT = (1 << 9),
+    AL_SNDP_UNKNOWN_10_EVT = (1 << 10),
+    AL_SNDP_UNKNOWN_11_EVT = (1 << 11),
+    AL_SNDP_UNKNOWN_12_EVT = (1 << 12),
+    AL_SNDP_UNKNOWN_13_EVT = (1 << 13),
+    AL_SNDP_UNKNOWN_14_EVT = (1 << 14),
+    AL_SNDP_UNKNOWN_15_EVT = (1 << 15)
 } ALSndpMsgType;
 
 /***********************************************************************
@@ -353,6 +369,13 @@ extern ALGlobals *alGlobals;
  * Sequence Player stuff
  ***********************************************************************/
 
+/*
+ * Play states
+ */
+#define AL_STOPPED      0
+#define AL_PLAYING      1
+#define AL_STOPPING     2
+
 typedef struct {
     u8          *curPtr;                /* ptr to the next event */
     s32         lastTicks;              /* sequence clock ticks (used by alSeqSetLoc) */
@@ -473,6 +496,7 @@ typedef struct {
     ALEventQueue        evtq;
     // 0x28
     ALEvent             nextEvent;
+    // 0x38
     ALSynth             *drvr;          /* reference to the client driver   */
     // 0x3c
     s32                 target;
@@ -493,14 +517,36 @@ typedef struct {
 
 // from n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndp.h
 typedef struct {
-    ALVoice     voice;     
+    // offset 0
+    ALVoice     voice;
+    
+    // offset 0x1c
     ALSound     *sound;         /* sound referenced here */
+    
+    // offset 0x20
     s16         priority;
+    
+    // offset 0x24
     f32         pitch;          /* current playback pitch                    */
+    
+    // offset 0x28
     s32         state;          /* play state for this sound                 */
+    
+    // offset 0x2c
     s16         vol;            /* volume - combined with volume from bank   */
+    
+    // offset 0x2e
     ALPan       pan;            /* pan - 0 = left, 127 = right               */
+    
+    // offset 0x2f
     u8          fxMix;          /* wet/dry mix - 0 = dry, 127 = wet          */
+
+    s32 unk30;
+    s32 unk34;
+    s32 unk38;
+    s16 unk3c;
+    u8 unk3e;
+    u8 unk3f;
 } ALSoundState;
 
 typedef struct {
