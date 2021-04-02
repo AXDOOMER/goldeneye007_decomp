@@ -287,7 +287,7 @@ SECTIONS
       build/u/src/game/initnull_0009D0.o (.text);
       build/u/src/game/initunk_0009E0.o (.text);
       build/u/src/game/initanitable.o (.text);
-      build/u/src/game/initunk_000B60.o (.text);
+      build/u/src/game/initplayergaitobject.o (.text);
       build/u/src/game/setguscale.o (.text);
       build/u/src/game/initnull_000BC0.o (.text);
       build/u/src/game/initimages.o (.text);
@@ -360,7 +360,10 @@ SECTIONS
       build/u/src/game/debugmenu_08FE00.o (.text);
       build/u/src/game/debugmenu_090490.o (.text);
       build/u/src/game/unk_091080.o (.text);
-      build/u/src/game/chrobjdata.o (.text);
+      build/u/src/game/chraidata.o (.text);
+      build/u/src/game/pobjdata.o (.text);
+      build/u/src/game/gobjdata.o (.text);
+      build/u/src/game/cobjdata.o (.text);
       build/u/src/game/cheat_buttons.o (.text);
       build/u/src/game/unk_092890.o (.text);
       build/u/src/game/unk_092E50.o (.text);
@@ -3580,7 +3583,7 @@ SECTIONS
       build/u/src/game/initnull_0009D0.o (.data);
       build/u/src/game/initunk_0009E0.o (.data);
       build/u/src/game/initanitable.o (.data);
-      build/u/src/game/initunk_000B60.o (.data);
+      build/u/src/game/initplayergaitobject.o (.data);
       build/u/src/game/setguscale.o (.data);
       build/u/src/game/initnull_000BC0.o (.data);
       build/u/src/game/initimages.o (.data);
@@ -3653,7 +3656,10 @@ SECTIONS
       build/u/src/game/debugmenu_08FE00.o (.data);
       build/u/src/game/debugmenu_090490.o (.data);
       build/u/src/game/unk_091080.o (.data);
-      build/u/src/game/chrobjdata.o (.data);
+      build/u/src/game/chraidata.o (.data);
+      build/u/src/game/pobjdata.o (.data);
+      build/u/src/game/gobjdata.o (.data);
+      build/u/src/game/cobjdata.o (.data);
       build/u/src/game/cheat_buttons.o (.data);
       build/u/src/game/unk_092890.o (.data);
       build/u/src/game/unk_092E50.o (.data);
@@ -3702,7 +3708,7 @@ SECTIONS
       build/u/src/game/initnull_0009D0.o (.rodata);
       build/u/src/game/initunk_0009E0.o (.rodata);
       build/u/src/game/initanitable.o (.rodata);
-      build/u/src/game/initunk_000B60.o (.rodata);
+      build/u/src/game/initplayergaitobject.o (.rodata);
       build/u/src/game/setguscale.o (.rodata);
       build/u/src/game/initnull_000BC0.o (.rodata);
       build/u/src/game/initimages.o (.rodata);
@@ -3775,7 +3781,10 @@ SECTIONS
       build/u/src/game/debugmenu_08FE00.o (.rodata);
       build/u/src/game/debugmenu_090490.o (.rodata);
       build/u/src/game/unk_091080.o (.rodata);
-      build/u/src/game/chrobjdata.o (.rodata);
+      build/u/src/game/chraidata.o (.rodata);
+      build/u/src/game/pobjdata.o (.rodata);
+      build/u/src/game/gobjdata.o (.rodata);
+      build/u/src/game/cobjdata.o (.rodata);
       build/u/src/game/cheat_buttons.o (.rodata);
       build/u/src/game/unk_092890.o (.rodata);
       build/u/src/game/unk_092E50.o (.rodata);
@@ -4041,7 +4050,7 @@ SECTIONS
       build/u/src/game/initnull_0009D0.o (.bss);
       build/u/src/game/initunk_0009E0.o (.bss);
       build/u/src/game/initanitable.o (.bss);
-      build/u/src/game/initunk_000B60.o (.bss);
+      build/u/src/game/initplayergaitobject.o (.bss);
       build/u/src/game/setguscale.o (.bss);
       build/u/src/game/initnull_000BC0.o (.bss);
       build/u/src/game/initimages.o (.bss);
@@ -4114,7 +4123,10 @@ SECTIONS
       build/u/src/game/debugmenu_08FE00.o (.bss);
       build/u/src/game/debugmenu_090490.o (.bss);
       build/u/src/game/unk_091080.o (.bss);
-      build/u/src/game/chrobjdata.o (.bss);
+      build/u/src/game/chraidata.o (.bss);
+      build/u/src/game/pobjdata.o (.bss);
+      build/u/src/game/gobjdata.o (.bss);
+      build/u/src/game/cobjdata.o (.bss);
       build/u/src/game/cheat_buttons.o (.bss);
       build/u/src/game/unk_092890.o (.bss);
       build/u/src/game/unk_092E50.o (.bss);

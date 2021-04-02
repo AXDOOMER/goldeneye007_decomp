@@ -22,6 +22,6 @@ void rspInitDebugNoticeList(void);
 void rspAllocateBuffers(void);
 void rspGfxTaskStart(Gfx *firstGdl, Gfx *gdl, s32 arg2, OSMesg rspReplyMsg);
 
-extern struct GfxInfo_s **g_gfxTaskSettingsList;
+extern struct GfxInfo_s *g_gfxTaskSettingsList;
 
 #endif

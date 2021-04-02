@@ -206,7 +206,7 @@ void bossInitMainthreadData(void)
     init_weapon_animation_groups_maybe();
     reset_counter_rand_body_head();
     null_init_main_3();
-    sub_GAME_7F000B60();
+    init_player_gait_object();
     initGameData();
     sub_GAME_7F01D6E0();
     clear_ramrom_block_buffer_heading_ptrs();

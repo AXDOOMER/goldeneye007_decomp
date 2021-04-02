@@ -11811,8 +11811,8 @@ glabel object_interaction
 .L7F04834C:
 /* 07CE7C 7F04834C 8E820008 */  lw    $v0, 8($s4)
 .L7F048350:
-/* 07CE80 7F048350 3C0A8004 */  lui   $t2, %hi(prop_door_related) 
-/* 07CE84 7F048354 254AA1DC */  addiu $t2, %lo(prop_door_related) # addiu $t2, $t2, -0x5e24
+/* 07CE80 7F048350 3C0A8004 */  lui   $t2, %hi(skeleton_door) 
+/* 07CE84 7F048354 254AA1DC */  addiu $t2, %lo(skeleton_door) # addiu $t2, $t2, -0x5e24
 /* 07CE88 7F048358 8C4E0004 */  lw    $t6, 4($v0)
 /* 07CE8C 7F04835C 154E0009 */  bne   $t2, $t6, .L7F048384
 /* 07CE90 7F048360 00000000 */   nop   
@@ -11904,13 +11904,13 @@ glabel object_interaction
 /* 07CFC8 7F048498 0FC16026 */  jal   matrix_4x4_multiply_homogeneous_in_place
 /* 07CFCC 7F04849C 02402825 */   move  $a1, $s2
 /* 07CFD0 7F0484A0 8E820008 */  lw    $v0, 8($s4)
-/* 07CFD4 7F0484A4 3C0B8004 */  lui   $t3, %hi(prop_eyelid_door_related) 
-/* 07CFD8 7F0484A8 256BA100 */  addiu $t3, %lo(prop_eyelid_door_related) # addiu $t3, $t3, -0x5f00
+/* 07CFD4 7F0484A4 3C0B8004 */  lui   $t3, %hi(skeleton_eyelid_door) 
+/* 07CFD8 7F0484A8 256BA100 */  addiu $t3, %lo(skeleton_eyelid_door) # addiu $t3, $t3, -0x5f00
 /* 07CFDC 7F0484AC 8C430004 */  lw    $v1, 4($v0)
-/* 07CFE0 7F0484B0 3C0D8004 */  lui   $t5, %hi(prop_iris_door_related) 
+/* 07CFE0 7F0484B0 3C0D8004 */  lui   $t5, %hi(skeleton_iris_door) 
 /* 07CFE4 7F0484B4 8FA6039C */  lw    $a2, 0x39c($sp)
 /* 07CFE8 7F0484B8 15630025 */  bne   $t3, $v1, .L7F048550
-/* 07CFEC 7F0484BC 25ADA15C */   addiu $t5, %lo(prop_iris_door_related) # addiu $t5, $t5, -0x5ea4
+/* 07CFEC 7F0484BC 25ADA15C */   addiu $t5, %lo(skeleton_iris_door) # addiu $t5, $t5, -0x5ea4
 /* 07CFF0 7F0484C0 C4CA00B4 */  lwc1  $f10, 0xb4($a2)
 /* 07CFF4 7F0484C4 3C0143B4 */  li    $at, 0x43B40000 # 360.000000
 /* 07CFF8 7F0484C8 44812000 */  mtc1  $at, $f4
@@ -16917,8 +16917,8 @@ glabel object_interaction
 .Ljp7F048750:
 /* 07D2C0 7F048750 8E820008 */  lw    $v0, 8($s4)
 .Ljp7F048754:
-/* 07D2C4 7F048754 3C188004 */  lui   $t8, %hi(prop_door_related) # $t8, 0x8004
-/* 07D2C8 7F048758 2718A20C */  addiu $t8, %lo(prop_door_related) # addiu $t8, $t8, -0x5df4
+/* 07D2C4 7F048754 3C188004 */  lui   $t8, %hi(skeleton_door) # $t8, 0x8004
+/* 07D2C8 7F048758 2718A20C */  addiu $t8, %lo(skeleton_door) # addiu $t8, $t8, -0x5df4
 /* 07D2CC 7F04875C 8C490004 */  lw    $t1, 4($v0)
 /* 07D2D0 7F048760 17090009 */  bne   $t8, $t1, .Ljp7F048788
 /* 07D2D4 7F048764 00000000 */   nop   
@@ -17010,13 +17010,13 @@ glabel object_interaction
 /* 07D40C 7F04889C 0FC1616E */  jal   matrix_4x4_multiply_homogeneous_in_place
 /* 07D410 7F0488A0 02402825 */   move  $a1, $s2
 /* 07D414 7F0488A4 8E820008 */  lw    $v0, 8($s4)
-/* 07D418 7F0488A8 3C0F8004 */  lui   $t7, %hi(prop_eyelid_door_related) # $t7, 0x8004
-/* 07D41C 7F0488AC 25EFA130 */  addiu $t7, %lo(prop_eyelid_door_related) # addiu $t7, $t7, -0x5ed0
+/* 07D418 7F0488A8 3C0F8004 */  lui   $t7, %hi(skeleton_eyelid_door) # $t7, 0x8004
+/* 07D41C 7F0488AC 25EFA130 */  addiu $t7, %lo(skeleton_eyelid_door) # addiu $t7, $t7, -0x5ed0
 /* 07D420 7F0488B0 8C430004 */  lw    $v1, 4($v0)
-/* 07D424 7F0488B4 3C0B8004 */  lui   $t3, %hi(prop_iris_door_related) # $t3, 0x8004
+/* 07D424 7F0488B4 3C0B8004 */  lui   $t3, %hi(skeleton_iris_door) # $t3, 0x8004
 /* 07D428 7F0488B8 8FA603A0 */  lw    $a2, 0x3a0($sp)
 /* 07D42C 7F0488BC 15E30025 */  bne   $t7, $v1, .Ljp7F048954
-/* 07D430 7F0488C0 256BA18C */   addiu $t3, %lo(prop_iris_door_related) # addiu $t3, $t3, -0x5e74
+/* 07D430 7F0488C0 256BA18C */   addiu $t3, %lo(skeleton_iris_door) # addiu $t3, $t3, -0x5e74
 /* 07D434 7F0488C4 C4CA00B4 */  lwc1  $f10, 0xb4($a2)
 /* 07D438 7F0488C8 3C0143B4 */  li    $at, 0x43B40000 # 360.000000
 /* 07D43C 7F0488CC 44812000 */  mtc1  $at, $f4
@@ -22010,8 +22010,8 @@ glabel object_interaction
 .L7F04834C:
 /* 07CE7C 7F04834C 8E820008 */  lw    $v0, 8($s4)
 .L7F048350:
-/* 07CE80 7F048350 3C0A8004 */  lui   $t2, %hi(prop_door_related) 
-/* 07CE84 7F048354 254AA1DC */  addiu $t2, %lo(prop_door_related) # addiu $t2, $t2, -0x5e24
+/* 07CE80 7F048350 3C0A8004 */  lui   $t2, %hi(skeleton_door) 
+/* 07CE84 7F048354 254AA1DC */  addiu $t2, %lo(skeleton_door) # addiu $t2, $t2, -0x5e24
 /* 07CE88 7F048358 8C4E0004 */  lw    $t6, 4($v0)
 /* 07CE8C 7F04835C 154E0009 */  bne   $t2, $t6, .L7F048384
 /* 07CE90 7F048360 00000000 */   nop   
@@ -22103,13 +22103,13 @@ glabel object_interaction
 /* 07CFC8 7F048498 0FC16026 */  jal   matrix_4x4_multiply_homogeneous_in_place
 /* 07CFCC 7F04849C 02402825 */   move  $a1, $s2
 /* 07CFD0 7F0484A0 8E820008 */  lw    $v0, 8($s4)
-/* 07CFD4 7F0484A4 3C0B8004 */  lui   $t3, %hi(prop_eyelid_door_related) 
-/* 07CFD8 7F0484A8 256BA100 */  addiu $t3, %lo(prop_eyelid_door_related) # addiu $t3, $t3, -0x5f00
+/* 07CFD4 7F0484A4 3C0B8004 */  lui   $t3, %hi(skeleton_eyelid_door) 
+/* 07CFD8 7F0484A8 256BA100 */  addiu $t3, %lo(skeleton_eyelid_door) # addiu $t3, $t3, -0x5f00
 /* 07CFDC 7F0484AC 8C430004 */  lw    $v1, 4($v0)
-/* 07CFE0 7F0484B0 3C0D8004 */  lui   $t5, %hi(prop_iris_door_related) 
+/* 07CFE0 7F0484B0 3C0D8004 */  lui   $t5, %hi(skeleton_iris_door) 
 /* 07CFE4 7F0484B4 8FA6039C */  lw    $a2, 0x39c($sp)
 /* 07CFE8 7F0484B8 15630025 */  bne   $t3, $v1, .L7F048550
-/* 07CFEC 7F0484BC 25ADA15C */   addiu $t5, %lo(prop_iris_door_related) # addiu $t5, $t5, -0x5ea4
+/* 07CFEC 7F0484BC 25ADA15C */   addiu $t5, %lo(skeleton_iris_door) # addiu $t5, $t5, -0x5ea4
 /* 07CFF0 7F0484C0 C4CA00B4 */  lwc1  $f10, 0xb4($a2)
 /* 07CFF4 7F0484C4 3C0143B4 */  li    $at, 0x43B40000 # 360.000000
 /* 07CFF8 7F0484C8 44812000 */  mtc1  $at, $f4
@@ -27564,10 +27564,10 @@ GLOBAL_ASM(
 .text
 glabel sub_GAME_7F04B590
 /* 0800C0 7F04B590 8C820004 */  lw    $v0, 4($a0)
-/* 0800C4 7F04B594 3C0E8004 */  lui   $t6, %hi(prop_console_one_screen_related) 
-/* 0800C8 7F04B598 25CEA070 */  addiu $t6, %lo(prop_console_one_screen_related) # addiu $t6, $t6, -0x5f90
+/* 0800C4 7F04B594 3C0E8004 */  lui   $t6, %hi(skeleton_console_one_screen) 
+/* 0800C8 7F04B598 25CEA070 */  addiu $t6, %lo(skeleton_console_one_screen) # addiu $t6, $t6, -0x5f90
 /* 0800CC 7F04B59C 15C20007 */  bne   $t6, $v0, .L7F04B5BC
-/* 0800D0 7F04B5A0 3C198004 */   lui   $t9, %hi(prop_console_four_screen_related)
+/* 0800D0 7F04B5A0 3C198004 */   lui   $t9, %hi(skeleton_console_four_screen)
 /* 0800D4 7F04B5A4 8C8F0008 */  lw    $t7, 8($a0)
 /* 0800D8 7F04B5A8 8DF80000 */  lw    $t8, ($t7)
 /* 0800DC 7F04B5AC 14B80003 */  bne   $a1, $t8, .L7F04B5BC
@@ -27576,7 +27576,7 @@ glabel sub_GAME_7F04B590
 /* 0800E8 7F04B5B8 00001025 */   move  $v0, $zero
 
 .L7F04B5BC:
-/* 0800EC 7F04B5BC 2739A084 */  addiu $t9, $t9, %lo(prop_console_four_screen_related)
+/* 0800EC 7F04B5BC 2739A084 */  addiu $t9, $t9, %lo(skeleton_console_four_screen)
 /* 0800F0 7F04B5C0 57220011 */  bnel  $t9, $v0, .L7F04B608
 /* 0800F4 7F04B5C4 24020001 */   li    $v0, 1
 /* 0800F8 7F04B5C8 8C820008 */  lw    $v0, 8($a0)
@@ -31633,8 +31633,8 @@ glabel sub_GAME_7F04E720
 /* 083454 7F04E924 00001825 */   move  $v1, $zero
 /* 083458 7F04E928 8EB90014 */  lw    $t9, 0x14($s5)
 .L7F04E92C:
-/* 08345C 7F04E92C 3C088004 */  lui   $t0, %hi(prop_door_related) 
-/* 083460 7F04E930 2508A1DC */  addiu $t0, %lo(prop_door_related) # addiu $t0, $t0, -0x5e24
+/* 08345C 7F04E92C 3C088004 */  lui   $t0, %hi(skeleton_door) 
+/* 083460 7F04E930 2508A1DC */  addiu $t0, %lo(skeleton_door) # addiu $t0, $t0, -0x5e24
 /* 083464 7F04E934 8F220008 */  lw    $v0, 8($t9)
 /* 083468 7F04E938 8C490004 */  lw    $t1, 4($v0)
 /* 08346C 7F04E93C 55090008 */  bnel  $t0, $t1, .L7F04E960
@@ -31862,8 +31862,8 @@ glabel sub_GAME_7F04EA68
 /* 08373C 7F04EC0C 55C00022 */  bnezl $t6, .L7F04EC98
 /* 083740 7F04EC10 8602003A */   lh    $v0, 0x3a($s0)
 /* 083744 7F04EC14 8E380014 */  lw    $t8, 0x14($s1)
-/* 083748 7F04EC18 3C0F8004 */  lui   $t7, %hi(prop_door_related) 
-/* 08374C 7F04EC1C 25EFA1DC */  addiu $t7, %lo(prop_door_related) # addiu $t7, $t7, -0x5e24
+/* 083748 7F04EC18 3C0F8004 */  lui   $t7, %hi(skeleton_door) 
+/* 08374C 7F04EC1C 25EFA1DC */  addiu $t7, %lo(skeleton_door) # addiu $t7, $t7, -0x5e24
 /* 083750 7F04EC20 8F190008 */  lw    $t9, 8($t8)
 /* 083754 7F04EC24 8E080004 */  lw    $t0, 4($s0)
 /* 083758 7F04EC28 00001825 */  move  $v1, $zero
@@ -31917,10 +31917,10 @@ glabel sub_GAME_7F04EA68
 /* 083808 7F04ECD8 A3A9004B */   sb    $t1, 0x4b($sp)
 /* 08380C 7F04ECDC 8FA80050 */  lw    $t0, 0x50($sp)
 /* 083810 7F04ECE0 8E2E0014 */  lw    $t6, 0x14($s1)
-/* 083814 7F04ECE4 3C188004 */  lui   $t8, %hi(prop_door_related) 
+/* 083814 7F04ECE4 3C188004 */  lui   $t8, %hi(skeleton_door) 
 /* 083818 7F04ECE8 850D000A */  lh    $t5, 0xa($t0)
 /* 08381C 7F04ECEC 8DC30008 */  lw    $v1, 8($t6)
-/* 083820 7F04ECF0 2718A1DC */  addiu $t8, %lo(prop_door_related) # addiu $t8, $t8, -0x5e24
+/* 083820 7F04ECF0 2718A1DC */  addiu $t8, %lo(skeleton_door) # addiu $t8, $t8, -0x5e24
 /* 083824 7F04ECF4 004D001B */  divu  $zero, $v0, $t5
 /* 083828 7F04ECF8 8C640004 */  lw    $a0, 4($v1)
 /* 08382C 7F04ECFC 00005010 */  mfhi  $t2
@@ -31937,8 +31937,8 @@ glabel sub_GAME_7F04EA68
 /* 083854 7F04ED24 8DEB000C */  lw    $t3, 0xc($t7)
 /* 083858 7F04ED28 132B0009 */  beq   $t9, $t3, .L7F04ED50
 .L7F04ED2C:
-/* 08385C 7F04ED2C 3C0C8004 */   lui   $t4, %hi(prop_cctv_related) 
-/* 083860 7F04ED30 258CA05C */  addiu $t4, %lo(prop_cctv_related) # addiu $t4, $t4, -0x5fa4
+/* 08385C 7F04ED2C 3C0C8004 */   lui   $t4, %hi(skeleton_cctv) 
+/* 083860 7F04ED30 258CA05C */  addiu $t4, %lo(skeleton_cctv) # addiu $t4, $t4, -0x5fa4
 /* 083864 7F04ED34 55840008 */  bnel  $t4, $a0, .L7F04ED58
 /* 083868 7F04ED38 8D0F0004 */   lw    $t7, 4($t0)
 /* 08386C 7F04ED3C 8C6E0008 */  lw    $t6, 8($v1)
@@ -31978,8 +31978,8 @@ glabel sub_GAME_7F04EA68
 /* 0838E4 7F04EDB4 14410018 */  bne   $v0, $at, .L7F04EE18
 /* 0838E8 7F04EDB8 00000000 */   nop   
 /* 0838EC 7F04EDBC 8E2D0014 */  lw    $t5, 0x14($s1)
-/* 0838F0 7F04EDC0 3C188004 */  lui   $t8, %hi(prop_cctv_related) 
-/* 0838F4 7F04EDC4 2718A05C */  addiu $t8, %lo(prop_cctv_related) # addiu $t8, $t8, -0x5fa4
+/* 0838F0 7F04EDC0 3C188004 */  lui   $t8, %hi(skeleton_cctv) 
+/* 0838F4 7F04EDC4 2718A05C */  addiu $t8, %lo(skeleton_cctv) # addiu $t8, $t8, -0x5fa4
 /* 0838F8 7F04EDC8 8DA30008 */  lw    $v1, 8($t5)
 /* 0838FC 7F04EDCC 8C6F0004 */  lw    $t7, 4($v1)
 /* 083900 7F04EDD0 170F000D */  bne   $t8, $t7, .L7F04EE08
@@ -32013,8 +32013,8 @@ glabel sub_GAME_7F04EA68
 /* 083968 7F04EE38 0FC13833 */  jal   sub_GAME_7F04E0CC
 /* 08396C 7F04EE3C 27A60060 */   addiu $a2, $sp, 0x60
 /* 083970 7F04EE40 8E380014 */  lw    $t8, 0x14($s1)
-/* 083974 7F04EE44 3C0D8004 */  lui   $t5, %hi(prop_door_related) 
-/* 083978 7F04EE48 25ADA1DC */  addiu $t5, %lo(prop_door_related) # addiu $t5, $t5, -0x5e24
+/* 083974 7F04EE44 3C0D8004 */  lui   $t5, %hi(skeleton_door) 
+/* 083978 7F04EE48 25ADA1DC */  addiu $t5, %lo(skeleton_door) # addiu $t5, $t5, -0x5e24
 /* 08397C 7F04EE4C 8F0F0008 */  lw    $t7, 8($t8)
 /* 083980 7F04EE50 8DEB0004 */  lw    $t3, 4($t7)
 /* 083984 7F04EE54 15AB000D */  bne   $t5, $t3, .L7F04EE8C
@@ -38885,8 +38885,8 @@ glabel sub_GAME_7F052574
 /* 0870B8 7F052588 50C0001B */  beql  $a2, $zero, .L7F0525F8
 /* 0870BC 7F05258C 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0870C0 7F052590 8CC20008 */  lw    $v0, 8($a2)
-/* 0870C4 7F052594 3C0E8004 */  lui   $t6, %hi(prop_weapon_related) 
-/* 0870C8 7F052598 25CEC4FC */  addiu $t6, %lo(prop_weapon_related) # addiu $t6, $t6, -0x3b04
+/* 0870C4 7F052594 3C0E8004 */  lui   $t6, %hi(skeleton_prop_weapon) 
+/* 0870C8 7F052598 25CEC4FC */  addiu $t6, %lo(skeleton_prop_weapon) # addiu $t6, $t6, -0x3b04
 /* 0870CC 7F05259C 8C4F0004 */  lw    $t7, 4($v0)
 /* 0870D0 7F0525A0 55CF0015 */  bnel  $t6, $t7, .L7F0525F8
 /* 0870D4 7F0525A4 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -38946,8 +38946,8 @@ glabel sub_GAME_7F052604
 /* 087144 7F052614 50C00017 */  beql  $a2, $zero, .L7F052674
 /* 087148 7F052618 00001025 */   move  $v0, $zero
 /* 08714C 7F05261C 8CC20008 */  lw    $v0, 8($a2)
-/* 087150 7F052620 3C0E8004 */  lui   $t6, %hi(prop_weapon_related) 
-/* 087154 7F052624 25CEC4FC */  addiu $t6, %lo(prop_weapon_related) # addiu $t6, $t6, -0x3b04
+/* 087150 7F052620 3C0E8004 */  lui   $t6, %hi(skeleton_prop_weapon) 
+/* 087154 7F052624 25CEC4FC */  addiu $t6, %lo(skeleton_prop_weapon) # addiu $t6, $t6, -0x3b04
 /* 087158 7F052628 8C4F0004 */  lw    $t7, 4($v0)
 /* 08715C 7F05262C 55CF0011 */  bnel  $t6, $t7, .L7F052674
 /* 087160 7F052630 00001025 */   move  $v0, $zero

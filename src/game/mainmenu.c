@@ -26191,7 +26191,7 @@ void do_extended_cast_display(s32 flag)
 #ifdef NONMATCHING
 void init_menu18_displaycast(void)
 {
-  object_header *objheader;
+  ModelFileHeader *objheader;
   u32 uVar2;
   u32 uVar3;
   int iVar4;
@@ -26215,7 +26215,7 @@ void init_menu18_displaycast(void)
   float extraout_f14_00;
   int local_8c [10];
   int rifles [6];
-  object_header *headHeader;
+  ModelFileHeader *headHeader;
   HEADS headID;
   BODIES bodyID;
   int aiStack40 [4];
@@ -26353,13 +26353,13 @@ void init_menu18_displaycast(void)
     if ((iVar6 == 0xd0) && (BVar5 = check_egypt_completed_any_folder_00(), BVar5 == FALSE)) {
       iVar6 = 0xbf;
     }
-    objheader = (object_header *)PitemZ_entries[iVar6].header;
+    objheader = (ModelFileHeader *)PitemZ_entries[iVar6].header;
     load_object_fill_header
               (objheader,(int *)PitemZ_entries[iVar6].filename,(int)local_4,(int)local_8,
                (int)aiStack40);
     proc_7F0BD188((u8 *)PitemZ_entries[iVar6].filename);
     set_objuse_flag_compute_grp_nums_set_obj_loaded(objheader);
-    ptrobjinstance = (undefined *)get_obj_instance_controller_for_header((PitemZ_header *)objheader)
+    ptrobjinstance = (undefined *)get_obj_instance_controller_for_header((ModelFileHeader *)objheader)
     ;
     set_obj_instance_controller_scale((int)ptrobjinstance,scale_00);
     iVar6 = 3;

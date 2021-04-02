@@ -78,7 +78,7 @@ void set_new_rand_head_bodies(void)
   
     for (i=0; c_item_entries[i].header; i++)
     {
-        c_item_entries[i].header->offset_obj_table = 0;
+        c_item_entries[i].header->RootNode = 0;
     }
 
     current_random_male_head = randomGetNext() % num_male_heads;

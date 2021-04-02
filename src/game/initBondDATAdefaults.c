@@ -33,8 +33,8 @@ glabel sub_GAME_7F0062C0
 /* 03AE28 7F0062F8 ACE00004 */  sw    $zero, 4($a3)
 /* 03AE2C 7F0062FC 1020001A */  beqz  $at, .L7F006368
 /* 03AE30 7F006300 ACE00008 */   sw    $zero, 8($a3)
-/* 03AE34 7F006304 3C148004 */  lui   $s4, %hi(model_guard_character)
-/* 03AE38 7F006308 2694D400 */  addiu $s4, %lo(model_guard_character) # addiu $s4, $s4, -0x2c00
+/* 03AE34 7F006304 3C148004 */  lui   $s4, %hi(skeleton_guard)
+/* 03AE38 7F006308 2694D400 */  addiu $s4, %lo(skeleton_guard) # addiu $s4, $s4, -0x2c00
 /* 03AE3C 7F00630C 27B50040 */  addiu $s5, $sp, 0x40
 .L7F006310:
 /* 03AE40 7F006310 00002025 */  move  $a0, $zero
@@ -93,8 +93,8 @@ glabel D_8004F1F8
 glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03AEBC 7F00638C 27BDFF20 */  addiu $sp, $sp, -0xe0
 /* 03AEC0 7F006390 AFB20038 */  sw    $s2, 0x38($sp)
-/* 03AEC4 7F006394 3C128004 */  lui   $s2, %hi(player_gait_object)
-/* 03AEC8 7F006398 2652C650 */  addiu $s2, %lo(player_gait_object) # addiu $s2, $s2, -0x39b0
+/* 03AEC4 7F006394 3C128004 */  lui   $s2, %hi(player_gait_object_header)
+/* 03AEC8 7F006398 2652C650 */  addiu $s2, %lo(player_gait_object_header) # addiu $s2, $s2, -0x39b0
 /* 03AECC 7F00639C 864E0014 */  lh    $t6, 0x14($s2)
 /* 03AED0 7F0063A0 AFBF0044 */  sw    $ra, 0x44($sp)
 /* 03AED4 7F0063A4 AFB40040 */  sw    $s4, 0x40($sp)
@@ -379,8 +379,8 @@ glabel D_8004F1F8
 glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03AEFC 7F00638C 27BDFF20 */  addiu $sp, $sp, -0xe0
 /* 03AF00 7F006390 AFB20038 */  sw    $s2, 0x38($sp)
-/* 03AF04 7F006394 3C128004 */  lui   $s2, %hi(player_gait_object) # $s2, 0x8004
-/* 03AF08 7F006398 2652C680 */  addiu $s2, %lo(player_gait_object) # addiu $s2, $s2, -0x3980
+/* 03AF04 7F006394 3C128004 */  lui   $s2, %hi(player_gait_object_header) # $s2, 0x8004
+/* 03AF08 7F006398 2652C680 */  addiu $s2, %lo(player_gait_object_header) # addiu $s2, $s2, -0x3980
 /* 03AF0C 7F00639C 864E0014 */  lh    $t6, 0x14($s2)
 /* 03AF10 7F0063A0 AFBF0044 */  sw    $ra, 0x44($sp)
 /* 03AF14 7F0063A4 AFB40040 */  sw    $s4, 0x40($sp)
@@ -672,8 +672,8 @@ glabel D_8004F1F8
 glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03AEBC 7F00638C 27BDFF20 */  addiu $sp, $sp, -0xe0
 /* 03AEC0 7F006390 AFB20038 */  sw    $s2, 0x38($sp)
-/* 03AEC4 7F006394 3C128004 */  lui   $s2, %hi(player_gait_object)
-/* 03AEC8 7F006398 2652C650 */  addiu $s2, %lo(player_gait_object) # addiu $s2, $s2, -0x39b0
+/* 03AEC4 7F006394 3C128004 */  lui   $s2, %hi(player_gait_object_header)
+/* 03AEC8 7F006398 2652C650 */  addiu $s2, %lo(player_gait_object_header) # addiu $s2, $s2, -0x39b0
 /* 03AECC 7F00639C 864E0014 */  lh    $t6, 0x14($s2)
 /* 03AED0 7F0063A0 AFBF0044 */  sw    $ra, 0x44($sp)
 /* 03AED4 7F0063A4 AFB40040 */  sw    $s4, 0x40($sp)
