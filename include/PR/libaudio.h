@@ -20,14 +20,14 @@ typedef u8      ALPan;
 /**
  * Based on n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndp.h
  * enum ALSndpMsgType,
- * except this version is bitflags.
+ * except this version is ...bitflags?.
  */
 typedef enum ALSndpMsgType_e {
-    AL_SNDP_PLAY_EVT       = (1 << 0),
-    AL_SNDP_STOP_EVT       = (1 << 1),
-    AL_SNDP_PAN_EVT        = (1 << 2),
-    AL_SNDP_VOL_EVT        = (1 << 3),
-    AL_SNDP_PITCH_EVT      = (1 << 4),
+    AL_SNDP_PLAY_EVT       = (1 << 0) - 1, // 0
+    AL_SNDP_STOP_EVT       = (1 << 1) - 1, // 1
+    AL_SNDP_PAN_EVT        = (1 << 2) - 1, // 3
+    AL_SNDP_VOL_EVT        = (1 << 3) - 1, // 7
+    AL_SNDP_PITCH_EVT      = (1 << 4) - 1, // 15
     AL_SNDP_API_EVT        = (1 << 5),
     AL_SNDP_DECAY_EVT      = (1 << 6),
     AL_SNDP_END_EVT        = (1 << 7),
@@ -335,6 +335,35 @@ typedef struct {
 void    alSynAddPlayer(ALSynth *s, ALPlayer *client);
 //void    alSynRemovePlayer(ALSynth *s, ALPlayer *client);
 
+/**
+ * It initializes the virtual voice using the arguments specified in the voice
+ * configuration structure, and it allocates a physical voice to the initialized
+ * virtual voice. If there are no physical voices available, it tries to steal a
+ * physical voice from another virtual voice. To do this, it searches the list of
+ * voices and steals the physical voice with the lowest priority voice that is
+ * equal to or lower than the priority specified in the configuration structure.
+ * If no physical voice is found with an equal or lower priority or if an error
+ * occurs, it returns 0 to indicate failure. If a physical voice is allocated and
+ * no errors occur, it returns 1 to indicate success. Note that voice stealing
+ * occurs only when there are more virtual voices than physical voices.
+ * 
+ * The arguments in the ALVoiceConfig structure are as follows:
+ * 
+ * - priority is the voice's playback priority.
+ * - fxBus is the auxiliary effect bus to which the voice is
+ *       assigned. Currently there is only one auxiliary bus.
+ * - unityPitch is a flag that when set specifies that this voice
+ *       is to be played at a pitch of 1.0.
+ * 
+ * Warning!
+ * Call this function from within an ALVoiceHandler only
+ * 
+ * @param drvr is the pointer to the synthesizer driver.
+ * @param voice is the pointer to a virtual voice to be initialized and allocated a physical voice.
+ * @param vc is the pointer to a voice configuration structure.
+ * 
+ * @returns 1 on success, 0 on failure.
+ */
 s32     alSynAllocVoice(ALSynth *s, ALVoice *v, ALVoiceConfig *vc);
 void    alSynFreeVoice(ALSynth *s, ALVoice *voice);
 
@@ -375,6 +404,10 @@ extern ALGlobals *alGlobals;
 #define AL_STOPPED      0
 #define AL_PLAYING      1
 #define AL_STOPPING     2
+
+#define AL_UNKOWN_3     3
+#define AL_UNKOWN_4     4
+#define AL_UNKOWN_5     5
 
 typedef struct {
     u8          *curPtr;                /* ptr to the next event */

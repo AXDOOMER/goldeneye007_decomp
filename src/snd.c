@@ -83,12 +83,27 @@ typedef union ALSndpEvent_u {
         ALSoundState    *state;
         u8              mix;
     } fx;
+
+    struct {
+        s32 unk0;
+        s32 unk4;
+        s32 unk8;
+        s16 unkA;
+        s16 unkC;
+    } unk_u_1;
+
+    struct {
+        s32 unk0;
+        s32 unk4;
+        s32 unk8;
+        s32 *unkC;
+    } unk_u_2;
     
 } ALSndpEvent;
 
 s32 g_sndUnused800243E0 = 0;
 s32 D_800243E4 = 0;
-s32 D_800243E8 = 0;
+s32 *D_800243E8 = 0;
 struct SndUnknownSoundState *g_sndPlayerSoundStatePtr = NULL;
 ALSndPlayer *g_sndPlayerPtr = &g_sndPlayer;
 s32 D_800243F4 = 0;
@@ -238,44 +253,138 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
     ALSoundState        *state;
 
     u8 temp_u8;
+    ALSoundState        *tstate;
+
+    s32 allocVoiceSuccess = 0; // sp7C;
+    s32 allocVoiceOk_rename_me = 0;
+    s32 loopCheckVar = 0;
 
     state = event->common.state;
     snd   = state->sound;
 
+    if (!snd)
+    {
+        // no idea what sp72 and sp70 actually are.
+        ALEventQueue sp72;
+        ALSoundState sp70;
+
+        sfx_c_70008AF0(&sp72, &sp70);
+        return;
+    }
+
     switch (event->msg.type)
     {
-        // case 1
+        // case 0
         case (AL_SNDP_PLAY_EVT):
         {
-            temp_u8 = state->unk3f;
-            if (temp_u8 != 1)
+            if ((state->state == AL_UNKOWN_5) || (state->state == AL_UNKOWN_4))
             {
-                if ((temp_u8 != 4) && (temp_u8 != 5))
-                {
+                vc.fxBus      = 0;            /* effect buss 0 */
+                vc.priority   = state->priority;
+	            vc.unityPitch = 0;
+                voice = &state->voice;
 
-                }
-                else
+                allocVoiceOk_rename_me = ((s32) D_800243F4 < sndp->maxSounds) ^ 1;
+
+                if ((allocVoiceOk_rename_me == 0) || ((state->unk3e & 0x10) != 0))
                 {
-                    sfx_c_70008948(sndp->evtq, state);
+                    allocVoiceSuccess = alSynAllocVoice(sndp->drvr, voice, &vc);
                 }
-            }
-            else
-            {
-                sfx_c_70008A30(&sndp->evtq, state, AL_SNDP_DECAY_EVT); // _removeEvents?
+
+                if (allocVoiceSuccess == 0)
+                {
+                    if (((state->unk3e & 0x12) != 0) || (state->unk38 > 0))
+                    {
+
+                    }
+                    else
+                    {
+                        if (allocVoiceOk_rename_me == 0)
+                        {
+                            sfx_c_70008948(state, voice);
+                            return;
+                        }
+
+                        tstate = (ALSoundState *)D_800243E8;
+                        loopCheckVar = allocVoiceOk_rename_me;
+                        do
+                        {
+                            if (((tstate->unk3e & 0x12) == 0) && ((tstate->unk3e & 4) != 0))
+                            {
+                                ALSndpEvent playVoiceAllocEvent;
+
+                                if (tstate->state != AL_UNKOWN_3)
+                                {
+                                    playVoiceAllocEvent.unsignedType = AL_SNDP_END_EVT;
+                                    playVoiceAllocEvent.common.state    = tstate;
+                                    playVoiceAllocEvent.unk_u_2.unkC    = tstate;
+                                    tstate->state = AL_UNKOWN_3;
+                                    alEvtqPostEvent(&sndp->evtq, &playVoiceAllocEvent, 0x3E8);
+                                    alSynSetVol(sndp->drvr, &tstate->voice, 0, 0x3E8);
+
+                                    loopCheckVar = 0;
+                                }
+                            }
+                            tstate = (ALSoundState *)tstate->voice.node.next;
+                        } while (loopCheckVar != 0 && tstate != NULL);
+
+                        if (loopCheckVar != 0)
+                        {
+                            sfx_c_70008948(state);
+                            return;
+                        }
+
+                        state->unk38 = 2;
+                        alEvtqPostEvent(&sndp->evtq, (ALEvent *)&evt, 0x3E9);
+                        return;
+                    }
+
+                    state->state = AL_UNKOWN_4;
+                    state->unk38 = (s32) (state->unk38 - 1);
+                    alEvtqPostEvent(&sndp->evtq, (ALEvent *)&evt, 0x8235);
+                    return;
+                }
+
+                state->unk3e = (u8) (state->unk3e | 4);
+                alSynStartVoice(sndp->drvr, voice, snd->wavetable);
+
+                state->state = AL_PLAYING;
+                D_800243F4 = (s16) (D_800243F4 + 1);
+
+                vtmp = ((s32) (D_80063BA4[snd->keyMap->keyMin & 0x3F] * ((s32) (snd->envelope->decayVolume * state->vol * snd->sampleVolume) / 0x3F01)) / 0x7FFF) - 1;
                 delta = (s32) (((f32) snd->envelope->releaseTime / state->state) / state->vol);
-                alSynSetVol(sndp->drvr, &state->voice.table, 0, delta);
-                if (delta != 0)
+                
+                if (vtmp < 0)
                 {
-                    evt.common.type     = AL_SNDP_END_EVT;
-                    evt.common.state    = state;
-                    alEvtqPostEvent(&sndp->evtq, (ALEvent *)&evt, delta);
-                    state->unk3f = (u8)2U;
+                    vtmp = 0;
                 }
-                else
-                {
-                    sfx_c_70008948(sndp->evtq, state);
-                }
+
+                alSynSetVol(sndp->drvr, voice, 0, 0);
+                alSynSetVol(sndp->drvr, voice, (s16) vtmp, delta);
+                
+                tmp   = state->pan - AL_PAN_CENTER + snd->samplePan;
+                tmp   = MAX(tmp, AL_PAN_LEFT);
+                pan   = (ALPan) MIN(tmp, AL_PAN_RIGHT);
+
+                alSynSetPan(sndp->drvr, voice, pan);
+                alSynSetPitch(sndp->drvr, voice, state->pitch * state->state);
+
+                vtmp   = state->fxMix + snd->keyMap->keyMin * 8;
+                vtmp   = MIN(0, vtmp);
+                vtmp   = MAX(vtmp, AL_VOL_FULL);
+                alSynSetFXMix(sndp->drvr, voice, (u8)vtmp);
+
+
+                evt.common.type     = AL_SNDP_DECAY_EVT;
+                evt.common.state    = state;
+                //delta = (ALMicroTime) _DivS32ByF32 (snd->envelope->attackTime, state->pitch);
+                delta = (ALMicroTime) (snd->envelope->attackTime / state->pitch);
+                alEvtqPostEvent(&sndp->evtq, (ALEvent *)&evt, delta);
             }
+
+            //////////////////////////////////////////////////////////////////////
+            // sndplayer.c
+            //
 
             // if (state->state != AL_STOPPED || !snd)
             // {
@@ -312,74 +421,154 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
         }
         break;
         
-        // case 2
+        // case 0x400
+        case (AL_SNDP_UNKNOWN_10_EVT):
+            // fallthrough to AL_SNDP_STOP_EVT
+
+        // case 1
         case (AL_SNDP_STOP_EVT):
         {
-            if (state->state != AL_PLAYING || !snd)
+            if (state->state != AL_PLAYING)
             {
-                return;
+                if ((state->state != AL_UNKOWN_4) && (state->state != AL_UNKOWN_5))
+                {
+
+                }
+                else
+                {
+                    sfx_c_70008948(sndp->evtq, state);
+                }
             }
+            else
+            {
+                sfx_c_70008A30(&sndp->evtq, state, AL_SNDP_DECAY_EVT); // _removeEvents?
+                delta = (s32) (((f32) snd->envelope->releaseTime / state->state) / state->vol);
+                alSynSetVol(sndp->drvr, &state->voice.table, 0, delta);
+                if (delta != 0)
+                {
+                    evt.common.type     = AL_SNDP_END_EVT;
+                    evt.common.state    = state;
+                    alEvtqPostEvent(&sndp->evtq, (ALEvent *)&evt, delta);
+                    state->state = AL_STOPPING;
+                }
+                else
+                {
+                    sfx_c_70008948(sndp->evtq, state);
+                }
+            }
+            //////////////////////////////////////////////////////////////////////
+            // sndplayer.c
+            //
 
-            //delta = (ALMicroTime) _DivS32ByF32 (snd->envelope->releaseTime, state->pitch);
-            delta = (ALMicroTime) (snd->envelope->releaseTime / state->pitch);
-            alSynSetVol(sndp->drvr, &state->voice, 0, delta);
+            // if (state->state != AL_PLAYING || !snd)
+            // {
+            //     return;
+            // }
 
-            if (delta) {
-                evt.common.type  = AL_SNDP_END_EVT;
-                evt.common.state = state;
-                alEvtqPostEvent(&sndp->evtq, (ALEvent *)&evt, delta);
-                state->state = AL_STOPPING;
-            } else {
-                /* note: this code is repeated in AL_SNDP_END_EVT */
-                alSynStopVoice(sndp->drvr, &state->voice);
-                alSynFreeVoice(sndp->drvr, &state->voice);
-                sfx_c_70008AF0(&sndp->evtq, state);
-                state->state = AL_STOPPED;
-            }       
+            // //delta = (ALMicroTime) _DivS32ByF32 (snd->envelope->releaseTime, state->pitch);
+            // delta = (ALMicroTime) (snd->envelope->releaseTime / state->pitch);
+            // alSynSetVol(sndp->drvr, &state->voice, 0, delta);
+
+            // if (delta) {
+            //     evt.common.type  = AL_SNDP_END_EVT;
+            //     evt.common.state = state;
+            //     alEvtqPostEvent(&sndp->evtq, (ALEvent *)&evt, delta);
+            //     state->state = AL_STOPPING;
+            // } else {
+            //     /* note: this code is repeated in AL_SNDP_END_EVT */
+            //     alSynStopVoice(sndp->drvr, &state->voice);
+            //     alSynFreeVoice(sndp->drvr, &state->voice);
+            //     _removeEvents(&sndp->evtq, state);
+            //     state->state = AL_STOPPED;
+            // }       
         }
         break;
         
-        // case 4
+        // case 3
         case (AL_SNDP_PAN_EVT):
         {
             state->pan = event->pan.pan;
-            if (state->state == AL_PLAYING && snd){
+            if (state->state == AL_PLAYING)
+            {
                 tmp   = state->pan - AL_PAN_CENTER + snd->samplePan;
                 tmp   = MAX(tmp, AL_PAN_LEFT);
                 pan   = (ALPan) MIN(tmp, AL_PAN_RIGHT);
                 alSynSetPan(sndp->drvr, &state->voice, pan);
             }
+
+            //////////////////////////////////////////////////////////////////////
+            // sndplayer.c
+            //
+
+            // state->pan = event->pan.pan;
+            // if (state->state == AL_PLAYING && snd){
+            //     tmp   = state->pan - AL_PAN_CENTER + snd->samplePan;
+            //     tmp   = MAX(tmp, AL_PAN_LEFT);
+            //     pan   = (ALPan) MIN(tmp, AL_PAN_RIGHT);
+            //     alSynSetPan(sndp->drvr, &state->voice, pan);
+            // }
         }
         break;
         
-        // case 8
+        // case 7
         case (AL_SNDP_VOL_EVT):
         {
             state->vol = event->vol.vol;
             if (state->state == AL_PLAYING && snd)
             {
-                vtmp  = snd->envelope->decayVolume * state->vol/AL_VOL_FULL;            
-                alSynSetVol(sndp->drvr, &state->voice, (s16) vtmp, 1000);
+                vtmp = ((s32) (D_80063BA4[snd->keyMap->keyMin & 0x3F] * ((s32) (snd->envelope->decayVolume * state->vol * snd->sampleVolume) / 0x3F01)) / 0x7FFF) - 1;
+                
+                if (vtmp < 0)
+                {
+                    vtmp = 0;
+                }
+
+                alSynSetVol(sndp->drvr, &state->voice.table, (s16) vtmp, 1000);
             }
+
+            //////////////////////////////////////////////////////////////////////
+            // sndplayer.c
+            //
+            
+            // state->vol = event->vol.vol;
+            // if (state->state == AL_PLAYING && snd)
+            // {
+            //     vtmp  = snd->envelope->decayVolume * state->vol/AL_VOL_FULL;            
+            //     alSynSetVol(sndp->drvr, &state->voice, (s16) vtmp, 1000);
+            // }
         }
         break;
         
-        // case 0x10
+        // case 15
         case (AL_SNDP_PITCH_EVT):
         {
-            /* Limit the pitch to a practical value even though we only need */
-	        /* to limit it to a non-zero number to avoid divide by zero. */
-            if ((state->pitch = event->pitch.pitch) < MIN_RATIO)
+            state->pitch = event->pitch.pitch;
+            if (state->state == AL_PLAYING)
             {
-		        state->pitch = MIN_RATIO;
+                alSynSetPitch(sndp->drvr, &state->voice, state->pitch * state->state);
+                if ((state->unk3e & 0x20) != 0)
+                {
+                    sfx_c_700089C4(state);
+                }
             }
+
+            //////////////////////////////////////////////////////////////////////
+            // sndplayer.c
+            //
+            
+            // /* Limit the pitch to a practical value even though we only need */
+	        // /* to limit it to a non-zero number to avoid divide by zero. */
+            // if ((state->pitch = event->pitch.pitch) < MIN_RATIO)
+            // {
+		    //     state->pitch = MIN_RATIO;
+            // }
 	    
-            if (state->state == AL_PLAYING) {
-                alSynSetPitch(sndp->drvr, &state->voice, state->pitch);
-            }
+            // if (state->state == AL_PLAYING) {
+            //     alSynSetPitch(sndp->drvr, &state->voice, state->pitch);
+            // }
         }
         break;
-        
+
         // case 0x20
         // handled in sndPlayerVoiceHandler
         // // // case (AL_SNDP_API_EVT):
@@ -387,28 +576,58 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
         // case 0x40
         case (AL_SNDP_DECAY_EVT):
         {
-            if (snd->envelope->decayTime != -1)
-            {
-                vtmp = snd->envelope->decayVolume * state->vol/AL_VOL_FULL;            
-		        //delta = (ALMicroTime) _DivS32ByF32 (snd->envelope->decayTime, state->pitch);
-		        delta = (ALMicroTime) (snd->envelope->decayTime / state->pitch);
-                alSynSetVol(sndp->drvr, &state->voice, (s16) vtmp, delta);
+            if ((state->unk3e & 2) == 0)
+                {
+                    vtmp = ((s32) (D_80063BA4[snd->keyMap->keyMin & 0x3F] * ((s32) (snd->envelope->decayVolume * state->vol * snd->sampleVolume) / 0x3F01)) / 0x7FFF) - 1;
+                    if (vtmp < 0)
+                    {
+                        vtmp = 0;
+                    }
+                    delta = (s32) (((f32) snd->envelope->releaseTime / state->state) / state->vol);
+                    alSynSetVol(sndp->drvr, &state->voice, (s16) vtmp, delta);
 
-                evt.common.type        = AL_SNDP_STOP_EVT;
-                evt.common.state       = state;
-                alEvtqPostEvent(&sndp->evtq, (ALEvent *)&evt, delta);
-            }
+                    evt.common.type        = 2; // should be AL_SNDP_STOP_EVT ?
+                    evt.common.state       = state;
+                    alEvtqPostEvent(&sndp->evtq, (ALEvent *)&evt, delta);
+
+                    if ((state->unk3e & 0x20) != 0)
+                    {
+                        sfx_c_700089C4(state);
+                    }
+                }
+
+            //////////////////////////////////////////////////////////////////////
+            // sndplayer.c
+            //
+            
+            // if (snd->envelope->decayTime != -1)
+            // {
+            //     vtmp = snd->envelope->decayVolume * state->vol/AL_VOL_FULL;            
+		    //     //delta = (ALMicroTime) _DivS32ByF32 (snd->envelope->decayTime, state->pitch);
+		    //     delta = (ALMicroTime) (snd->envelope->decayTime / state->pitch);
+            //     alSynSetVol(sndp->drvr, &state->voice, (s16) vtmp, delta);
+
+            //     evt.common.type        = AL_SNDP_STOP_EVT;
+            //     evt.common.state       = state;
+            //     alEvtqPostEvent(&sndp->evtq, (ALEvent *)&evt, delta);
+            // }
         }
         break;
         
         // case 0x80
         case (AL_SNDP_END_EVT):
         {
-            /* note: this code is repeated in AL_SNDP_STOP_EVT */
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            sfx_c_70008AF0(&sndp->evtq, state);
-            state->state = AL_STOPPED;
+            sfx_c_70008948(state);
+            
+            //////////////////////////////////////////////////////////////////////
+            // sndplayer.c
+            //
+            
+            // /* note: this code is repeated in AL_SNDP_STOP_EVT */
+            // alSynStopVoice(sndp->drvr, &state->voice);
+            // alSynFreeVoice(sndp->drvr, &state->voice);
+            // _removeEvents(&sndp->evtq, state);
+            // state->state = AL_STOPPED;
         }
         break;
         
@@ -418,169 +637,59 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
             state->fxMix = event->fx.mix;
             if (state->state == AL_PLAYING)
             {
-                alSynSetFXMix(sndp->drvr, &state->voice, state->fxMix);
+                vtmp   = state->fxMix + snd->keyMap->keyMin * 8;
+                vtmp   = MIN(0, vtmp);
+                vtmp   = MAX(vtmp, AL_VOL_FULL);
+                alSynSetFXMix(sndp->drvr, &state->voice, (u8)vtmp);
             }
+
+            //////////////////////////////////////////////////////////////////////
+            // sndplayer.c
+            //
+            
+            // state->fxMix = event->fx.mix;
+            // if (state->state == AL_PLAYING)
+            // {
+            //     alSynSetFXMix(sndp->drvr, &state->voice, state->fxMix);
+            // }
         }
         break;
         
         // case 0x200
         case (AL_SNDP_UNKNOWN_09_EVT):
         {
-            // remove, temp placeholder to generate any code
-            state->state = 78;
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            sfx_c_70008AF0(&sndp->evtq, state);
-            state->state = AL_STOPPED;
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-        }
-        break;
-        
-        // case 0x400
-        case (AL_SNDP_UNKNOWN_10_EVT):
-        {
-            // remove, temp placeholder to generate any code
-            state->state = 79;
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            sfx_c_70008AF0(&sndp->evtq, state);
-            state->state = AL_STOPPED;
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
+            if ((state->unk3e & 0x10) != 0)
+			{
+				play_sfx_a1(&event->unk_u_1.unkC, event->unk_u_1.unkA, state->unk30);
+			}
         }
         break;
         
         // case 0x800
         case (AL_SNDP_UNKNOWN_11_EVT):
         {
-            // remove, temp placeholder to generate any code
-            state->state = 80;
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            sfx_c_70008AF0(&sndp->evtq, state);
-            state->state = AL_STOPPED;
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
+            if (state->state == AL_PLAYING)
+            {
+                vtmp = ((s32) (D_80063BA4[snd->keyMap->keyMin & 0x3F] * ((s32) (snd->envelope->decayVolume * state->vol * snd->sampleVolume) / 0x3F01)) / 0x7FFF) - 1;
+                if (vtmp < 0)
+                {
+                    vtmp = 0;
+                }
+
+                delta = (s32) (((f32) snd->envelope->releaseTime / state->state) / state->vol);
+                alSynSetVol(sndp->drvr, &state->voice, (s16) vtmp, delta);
+            }
         }
         break;
         
         // case 0x1000
         case (AL_SNDP_UNKNOWN_12_EVT):
         {
-            // remove, temp placeholder to generate any code
-            state->state = 81;
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            sfx_c_70008AF0(&sndp->evtq, state);
-            state->state = AL_STOPPED;
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
-            alSynFreeVoice(sndp->drvr, &state->voice);
-            alSynStopVoice(sndp->drvr, &state->voice);
+            // nothing?
         }
         break;
     }
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -1366,9 +1475,6 @@ glabel jpt_80029160
  
 )
 #endif
-
-
-
 
 /**
  * 9548    70008948
