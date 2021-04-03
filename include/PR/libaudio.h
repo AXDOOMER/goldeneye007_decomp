@@ -365,6 +365,16 @@ void    alSynAddPlayer(ALSynth *s, ALPlayer *client);
  * @returns 1 on success, 0 on failure.
  */
 s32     alSynAllocVoice(ALSynth *s, ALVoice *v, ALVoiceConfig *vc);
+
+/**
+ * Deallocates a synthesizer voice and returns the deallocated voice to the free
+ * voice list. Before calling this function, make sure the sound has decayed to
+ * zero volume. Failure to ensure that the volume is at zero can result in
+ * clicks in the audio output.
+ * 
+ * @param drvr is the pointer to the synthesizer driver.
+ * @param voice is the pointer to the voice structure.
+ */
 void    alSynFreeVoice(ALSynth *s, ALVoice *voice);
 
 void    alSynStartVoice(ALSynth *s, ALVoice *voice, ALWaveTable *w);
@@ -547,40 +557,6 @@ typedef struct {
 /***********************************************************************
  * Audio Library (AL) stuff
  ***********************************************************************/
-
-// from n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndp.h
-typedef struct {
-    // offset 0
-    ALVoice     voice;
-    
-    // offset 0x1c
-    ALSound     *sound;         /* sound referenced here */
-    
-    // offset 0x20
-    s16         priority;
-    
-    // offset 0x24
-    f32         pitch;          /* current playback pitch                    */
-    
-    // offset 0x28
-    s32         state;          /* play state for this sound                 */
-    
-    // offset 0x2c
-    s16         vol;            /* volume - combined with volume from bank   */
-    
-    // offset 0x2e
-    ALPan       pan;            /* pan - 0 = left, 127 = right               */
-    
-    // offset 0x2f
-    u8          fxMix;          /* wet/dry mix - 0 = dry, 127 = wet          */
-
-    s32 unk30;
-    s32 unk34;
-    s32 unk38;
-    s16 unk3c;
-    u8 unk3e;
-    u8 unk3f;
-} ALSoundState;
 
 typedef struct {
     ALInstrument        *instrument;    /* instrument assigned to this chan */

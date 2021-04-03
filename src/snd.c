@@ -40,6 +40,39 @@ struct SndUnknownSoundState {
     u32 unk3C;
 };
 
+// based on n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndp.h
+typedef struct ALSoundState_s {
+    // Unmatched properties:
+    /*
+    // sound referenced here
+    ALSound     *sound;
+    //
+    s16         priority;
+    // current playback pitch
+	f32         pitch;
+	// play state for this sound
+    s32         state;
+	// volume - combined with volume from bank
+    s16         vol;
+	// pan - 0 = left, 127 = right
+    ALPan       pan;
+	// wet/dry mix - 0 = dry, 127 = wet
+    u8          fxMix;
+    */
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    ALVoice voice;
+    s32 unk28;
+    s32 unk2c;
+    s32 unk30;
+    s32 unk34;
+    s32 unk38;
+    s16 unk3c;
+    u8 unk3e; // state or flags?
+    u8 unk3f; // state or flags?
+} ALSoundState;
+
 /**
  * Based on \n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndp.h
  * ALSndpEvent
@@ -115,6 +148,7 @@ ALMicroTime sndPlayerVoiceHandler(void *node);
 void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event);
 void sfx_c_70008A30(ALEventQueue *evtq, ALSoundState *state, s32 arg2);
 void sfx_c_70008AF0(void *arg0, void *arg1);
+void sfx_c_70008D04(ALSoundState *state);
 
 // end forward declarations
 
@@ -1479,56 +1513,17 @@ glabel jpt_80029160
 /**
  * 9548    70008948
  */
-
-#ifdef NONMATCHING
-void sfx_c_70008948(ALEventQueue *evtq, ALSoundState *state)
+void sfx_c_70008948(ALSoundState *state)
 {
-    if ((arg0->unk3E & 4) != 0)
+    if (state->unk3e & 4)
     {
-        alSynStopVoice(g_sndPlayerPtr->unk38, (arg0 + 0xc));
-        alSynFreeVoice(g_sndPlayerPtr->unk38, sp1C);
+        alSynStopVoice(g_sndPlayerPtr->drvr, &state->voice);
+        alSynFreeVoice(g_sndPlayerPtr->drvr, &state->voice);
     }
-    sfx_c_70008D04(arg0);
-    sfx_c_70008A30((g_sndPlayerPtr + 0x14), arg0, 0xffff);
+
+    sfx_c_70008D04(state);
+    sfx_c_70008A30(&g_sndPlayerPtr->evtq, state, 0xffff);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sfx_c_70008948
-/* 009548 70008948 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 00954C 7000894C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 009550 70008950 AFA40020 */  sw    $a0, 0x20($sp)
-/* 009554 70008954 908F003E */  lbu   $t7, 0x3e($a0)
-/* 009558 70008958 00807025 */  move  $t6, $a0
-/* 00955C 7000895C 3C198002 */  lui   $t9, %hi(g_sndPlayerPtr) 
-/* 009560 70008960 31F80004 */  andi  $t8, $t7, 4
-/* 009564 70008964 1300000B */  beqz  $t8, .L70008994
-/* 009568 70008968 00000000 */   nop   
-/* 00956C 7000896C 8F3943F0 */  lw    $t9, %lo(g_sndPlayerPtr)($t9)
-/* 009570 70008970 25C5000C */  addiu $a1, $t6, 0xc
-/* 009574 70008974 8F240038 */  lw    $a0, 0x38($t9)
-/* 009578 70008978 0C004DA4 */  jal   alSynStopVoice
-/* 00957C 7000897C AFA5001C */   sw    $a1, 0x1c($sp)
-/* 009580 70008980 3C088002 */  lui   $t0, %hi(g_sndPlayerPtr) 
-/* 009584 70008984 8D0843F0 */  lw    $t0, %lo(g_sndPlayerPtr)($t0)
-/* 009588 70008988 8FA5001C */  lw    $a1, 0x1c($sp)
-/* 00958C 7000898C 0C004DC4 */  jal   alSynFreeVoice
-/* 009590 70008990 8D040038 */   lw    $a0, 0x38($t0)
-.L70008994:
-/* 009594 70008994 0C002341 */  jal   sfx_c_70008D04
-/* 009598 70008998 8FA40020 */   lw    $a0, 0x20($sp)
-/* 00959C 7000899C 3C048002 */  lui   $a0, %hi(g_sndPlayerPtr)
-/* 0095A0 700089A0 8C8443F0 */  lw    $a0, %lo(g_sndPlayerPtr)($a0)
-/* 0095A4 700089A4 8FA50020 */  lw    $a1, 0x20($sp)
-/* 0095A8 700089A8 3406FFFF */  li    $a2, 65535
-/* 0095AC 700089AC 0C00228C */  jal   sfx_c_70008A30
-/* 0095B0 700089B0 24840014 */   addiu $a0, $a0, 0x14
-/* 0095B4 700089B4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0095B8 700089B8 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0095BC 700089BC 03E00008 */  jr    $ra
-/* 0095C0 700089C0 00000000 */   nop   
-)
-#endif
 
 
 
