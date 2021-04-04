@@ -2501,40 +2501,19 @@ void sfx_c_70009164(void)
 /**
  * 9D84    70009184
  */
-#ifdef NONMATCHING
-void sfx_c_70009184(s32 arg0, s32 arg1, ? arg2)
+void sfx_c_70009184(ALSoundState *state, s16 eventType, s32 arg2)
 {
-    ? sp18;
+    ALSndpEvent evt;
+    
+    evt.common.type = eventType;
+    evt.common.state = state;
+    evt.unk_u_1.unk8 = arg2;
 
-    if (arg0 != 0)
+    if (state != NULL)
     {
-        alEvtqPostEvent((g_sndPlayerPtr + 0x14), &sp18, 0);
+        alEvtqPostEvent(&g_sndPlayerPtr->evtq, (ALEvent *)&evt, 0);
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sfx_c_70009184
-/* 009D84 70009184 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 009D88 70009188 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 009D8C 7000918C AFA5002C */  sw    $a1, 0x2c($sp)
-/* 009D90 70009190 A7A50018 */  sh    $a1, 0x18($sp)
-/* 009D94 70009194 AFA4001C */  sw    $a0, 0x1c($sp)
-/* 009D98 70009198 10800007 */  beqz  $a0, .L700091B8
-/* 009D9C 7000919C AFA60020 */   sw    $a2, 0x20($sp)
-/* 009DA0 700091A0 3C048002 */  lui   $a0, %hi(g_sndPlayerPtr)
-/* 009DA4 700091A4 8C8443F0 */  lw    $a0, %lo(g_sndPlayerPtr)($a0)
-/* 009DA8 700091A8 27A50018 */  addiu $a1, $sp, 0x18
-/* 009DAC 700091AC 00003025 */  move  $a2, $zero
-/* 009DB0 700091B0 0C004BBF */  jal   alEvtqPostEvent
-/* 009DB4 700091B4 24840014 */   addiu $a0, $a0, 0x14
-.L700091B8:
-/* 009DB8 700091B8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 009DBC 700091BC 27BD0028 */  addiu $sp, $sp, 0x28
-/* 009DC0 700091C0 03E00008 */  jr    $ra
-/* 009DC4 700091C4 00000000 */   nop   
-)
-#endif
 
 
 
