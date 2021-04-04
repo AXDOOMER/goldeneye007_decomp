@@ -2323,45 +2323,24 @@ glabel play_sfx_a1
  *     decativates sound effect
  *     accepts: A0=p->SE buffer
  */
-
-#ifdef NONMATCHING
-void sfxDeactivate(void *arg0)
+void sfxDeactivate(ALSoundState *state)
 {
-    s16 sp18;
+    ALSndpEvent evt;
 
-    sp18 = (u16)0x400;
-    if (arg0 != 0)
+    evt.common.type = AL_SNDP_UNKNOWN_10_EVT;
+    evt.common.state = state;
+
+    if (state != NULL)
     {
-        arg0->unk3E = (s8) (arg0->unk3E & 0xffef);
-        alEvtqPostEvent((g_sndPlayerPtr + 0x14), &sp18, 0);
+        // what is going on here.
+        // state->unk3e is `u8`, but the assignmented is signed.
+        // bitwise AND with 0xffef, 16 bitmask?
+        state->unk3e = (s8) (state->unk3e & (~(s16)(0x10)));
+        
+        alEvtqPostEvent(&g_sndPlayerPtr->evtq, (ALEvent *)&evt, 0);
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sfxDeactivate
-/* 009C20 70009020 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 009C24 70009024 240E0400 */  li    $t6, 1024
-/* 009C28 70009028 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 009C2C 7000902C A7AE0018 */  sh    $t6, 0x18($sp)
-/* 009C30 70009030 1080000A */  beqz  $a0, .L7000905C
-/* 009C34 70009034 AFA4001C */   sw    $a0, 0x1c($sp)
-/* 009C38 70009038 908F003E */  lbu   $t7, 0x3e($a0)
-/* 009C3C 7000903C 27A50018 */  addiu $a1, $sp, 0x18
-/* 009C40 70009040 00003025 */  move  $a2, $zero
-/* 009C44 70009044 31F8FFEF */  andi  $t8, $t7, 0xffef
-/* 009C48 70009048 A098003E */  sb    $t8, 0x3e($a0)
-/* 009C4C 7000904C 3C048002 */  lui   $a0, %hi(g_sndPlayerPtr)
-/* 009C50 70009050 8C8443F0 */  lw    $a0, %lo(g_sndPlayerPtr)($a0)
-/* 009C54 70009054 0C004BBF */  jal   alEvtqPostEvent
-/* 009C58 70009058 24840014 */   addiu $a0, $a0, 0x14
-.L7000905C:
-/* 009C5C 7000905C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 009C60 70009060 27BD0028 */  addiu $sp, $sp, 0x28
-/* 009C64 70009064 03E00008 */  jr    $ra
-/* 009C68 70009068 00000000 */   nop   
-)
-#endif
+
 
 
 
