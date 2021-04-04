@@ -56,6 +56,6 @@ extern ALBank *g_musicSfxBufferPtr;
 
 extern ALSndPlayer g_sndPlayer;
 extern s16 *D_80063BA4;
-extern s16 *D_80063BA8;
+extern u16 *D_80063BA8;
 
 #endif

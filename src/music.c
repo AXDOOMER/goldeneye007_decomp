@@ -583,7 +583,7 @@ s32 g_musicUnused80063B54;
 
 ALSndPlayer g_sndPlayer;
 s16 *D_80063BA4;
-s16 *D_80063BA8;
+u16 *D_80063BA8;
 
 extern u32 _sfxtblSegmentRomStart;
 extern u32 _sfxctlSegmentRomStart;

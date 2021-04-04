@@ -165,6 +165,8 @@ void sfx_c_70008A30(ALEventQueue *evtq, ALSoundState *state, u16 eventType);
 void sfx_c_70008AF0(void *arg0, void *arg1);
 void sfx_c_70008D04(ALSoundState *state);
 
+u16 sfx_c_70009264(u8 arg0);
+
 // end forward declarations
 
 /**
@@ -2540,7 +2542,7 @@ glabel sfx_c_70009184
  * 9DC8    700091C8
  *     redirect to 70009264: A0=0
  */
-u32 sfx_c_700091C8(void)
+u16 sfx_c_700091C8(void)
 {
     return sfx_c_70009264(0);
 }
@@ -2629,28 +2631,10 @@ void sfx_c_70009238(f32 arg0)
  * 9E64    70009264
  *     V0= halfword A0 in table at [80063BA8]; fries T6,T7,T8,T9
  */
-#ifdef NONMATCHING
-void sfx_c_70009264(s32 arg0)
+u16 sfx_c_70009264(u8 arg0)
 {
-    return (D_80063BA8 + ((arg0 & 0xff) * 2));
+    return D_80063BA8[arg0];
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sfx_c_70009264
-/* 009E64 70009264 3C0F8006 */  lui   $t7, %hi(D_80063BA8) 
-/* 009E68 70009268 8DEF3BA8 */  lw    $t7, %lo(D_80063BA8)($t7)
-/* 009E6C 7000926C 308E00FF */  andi  $t6, $a0, 0xff
-/* 009E70 70009270 000EC040 */  sll   $t8, $t6, 1
-/* 009E74 70009274 AFA40000 */  sw    $a0, ($sp)
-/* 009E78 70009278 01F8C821 */  addu  $t9, $t7, $t8
-/* 009E7C 7000927C 03E00008 */  jr    $ra
-/* 009E80 70009280 97220000 */   lhu   $v0, ($t9)
-)
-#endif
-
-
 
 
 
