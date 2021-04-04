@@ -165,6 +165,7 @@ void sfx_c_70008A30(ALEventQueue *evtq, ALSoundState *state, u16 eventType);
 void sfx_c_70008AF0(void *arg0, void *arg1);
 void sfx_c_70008D04(ALSoundState *state);
 
+void sfx_c_70009284(u8 arg0, u16 arg1);
 u16 sfx_c_70009264(u8 arg0);
 
 // end forward declarations
@@ -2336,7 +2337,7 @@ void sfxDeactivate(ALSoundState *state)
         // state->unk3e is `u8`, but the assignmented is signed.
         // bitwise AND with 0xffef, 16 bitmask?
         state->unk3e = (s8) (state->unk3e & (~(s16)(0x10)));
-        
+
         alEvtqPostEvent(&g_sndPlayerPtr->evtq, (ALEvent *)&evt, 0);
     }
 }
@@ -2494,8 +2495,6 @@ void sfx_c_70009184(ALSoundState *state, s16 eventType, s32 arg2)
     }
 }
 
-
-
 /**
  * 9DC8    700091C8
  *     redirect to 70009264: A0=0
@@ -2505,66 +2504,18 @@ u16 sfx_c_700091C8(void)
     return sfx_c_70009264(0);
 }
 
-
-
-
-
-
-
-
-
 /**
  * 9DE8    700091E8
  */
-#ifdef NONMATCHING
-void sfx_c_700091E8(s32 arg0)
+void sfx_c_700091E8(u16 arg0)
 {
-    s32 temp_t6;
-    s32 phi_s0;
+    u8 i;
 
-    phi_s0 = 0;
-block_1:
-    sfx_c_70009284((phi_s0 & 0xff), ((arg0 & 0xffff) & 0xffff));
-    temp_t6 = ((phi_s0 + 1) & 0xff);
-    phi_s0 = temp_t6;
-    if (temp_t6 < 7)
+    for (i = 0; i < SFX_HEAP_B_SIZE; i++)
     {
-        goto block_1;
+        sfx_c_70009284(i, arg0);
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sfx_c_700091E8
-/* 009DE8 700091E8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 009DEC 700091EC AFB10018 */  sw    $s1, 0x18($sp)
-/* 009DF0 700091F0 AFB00014 */  sw    $s0, 0x14($sp)
-/* 009DF4 700091F4 3091FFFF */  andi  $s1, $a0, 0xffff
-/* 009DF8 700091F8 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 009DFC 700091FC AFA40020 */  sw    $a0, 0x20($sp)
-/* 009E00 70009200 00008025 */  move  $s0, $zero
-.L70009204:
-/* 009E04 70009204 320400FF */  andi  $a0, $s0, 0xff
-/* 009E08 70009208 0C0024A1 */  jal   sfx_c_70009284
-/* 009E0C 7000920C 3225FFFF */   andi  $a1, $s1, 0xffff
-/* 009E10 70009210 26100001 */  addiu $s0, $s0, 1
-/* 009E14 70009214 320E00FF */  andi  $t6, $s0, 0xff
-/* 009E18 70009218 29C10007 */  slti  $at, $t6, 7
-/* 009E1C 7000921C 1420FFF9 */  bnez  $at, .L70009204
-/* 009E20 70009220 01C08025 */   move  $s0, $t6
-/* 009E24 70009224 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 009E28 70009228 8FB00014 */  lw    $s0, 0x14($sp)
-/* 009E2C 7000922C 8FB10018 */  lw    $s1, 0x18($sp)
-/* 009E30 70009230 03E00008 */  jr    $ra
-/* 009E34 70009234 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
-
-
-
-
-
-
 
 /**
  * 9E38    70009238
@@ -2573,17 +2524,8 @@ glabel sfx_c_700091E8
 void sfx_c_70009238(f32 arg0)
 {
     F32_800243FC = arg0;
-    sfx_c_700091E8((sfx_c_700091C8() & 0xffff));
+    sfx_c_700091E8(sfx_c_700091C8());
 }
-
-
-
-
-
-
-
-
-
 
 /**
  * 9E64    70009264
