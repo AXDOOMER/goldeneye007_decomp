@@ -15,31 +15,6 @@
 
 #define MIN_RATIO	0.0001
 
-/**
- * TODO:
- * This is a temporary struct for work-in-progress
- * of this file. It will either be matched to something from libaudio (and removed),
- * or it may be identified as modified struct from libaudio in
- * which case this define should be moved to snd.h.
- */
-struct SndUnknownSoundState {
-    ALLink node;
-    u32 unk8;
-    u32 unkC;
-    u32 unk10;
-    u32 unk14;
-    u32 unk18;
-    u32 unk1C;
-    u32 unk20;
-    u32 unk24;
-    u32 unk28;
-    u32 unk2C;
-    u32 unk30;
-    u32 unk34;
-    u32 unk38;
-    u32 unk3C;
-};
-
 // based on n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndp.h
 typedef struct ALSoundState_s {
     // Unmatched properties:
@@ -63,10 +38,17 @@ typedef struct ALSoundState_s {
     // wet/dry mix - 0 = dry, 127 = wet
     u8          fxMix;
     */
-    s32 unk0;
-    s32 unk4;
+
+    // offset 0
+    ALLink link;
+
+    // offset 8
     ALSound *sound;
+
+    // offset 0xc
     ALVoice voice;
+
+    // offset 0x28
     s32 unk28;
 
     // current playback pitch
@@ -77,9 +59,19 @@ typedef struct ALSoundState_s {
     s8 unk36;
     s8 unk37;
     s32 unk38;
-    s16 unk3c;
-    u8 unk3e; // state or flags?
-    u8 unk3f; // state or flags?
+
+    union {
+        struct {
+            s32 unk3c;
+        } word;
+
+        struct {
+            s16 unk3c;
+            u8 unk3e; // state or flags?
+            u8 unk3f; // state or flags?
+        } halfbytebyte;
+    } stateFlags;
+    
 } ALSoundState;
 
 /**
@@ -149,11 +141,21 @@ typedef union ALSndpEvent_u {
     
 } ALSndpEvent;
 
+// This is the typeof D_800243E4.
+// Not quite sure what this is, but things that are known:
+// 1) entry is treated as ALSoundState; using ALLink and unk3e.
+// 2) another place an entry traverses 3 linked lists of nodes,
+//    from offsets 0,4,8 which is consistent with ALEventQueue.
+union EventQueueStateThing_u {
+    struct ALSoundState_s *state;
+    ALEventQueue *event;
+};
+
 s32 g_sndUnused800243E0 = 0;
-ALEventQueue *D_800243E4 = NULL;
+union EventQueueStateThing_u *D_800243E4 = NULL;
 
 s32 *D_800243E8 = 0;
-struct SndUnknownSoundState *g_sndPlayerSoundStatePtr = NULL;
+struct ALSoundState_s *g_sndPlayerSoundStatePtr = NULL;
 ALSndPlayer *g_sndPlayerPtr = &g_sndPlayer;
 s32 D_800243F4 = 0;
 s8 bootswitch_sound = 0;
@@ -181,7 +183,7 @@ s32 sfx_c_70008AF0(s16 *allocListCount, s16 *freeListCount);
 void sndNewPlayerInit(ALSeqpSfxConfig *sfxSeqpConfig)
 {
     u8 *ptr;
-    struct SndUnknownSoundState *sState;
+    struct ALSoundState_s *sState;
     ALEvent evt;
     u32 i;
 
@@ -191,7 +193,7 @@ void sndNewPlayerInit(ALSeqpSfxConfig *sfxSeqpConfig)
     g_sndPlayerPtr->maxSounds = sfxSeqpConfig->maybeMaxSounds;
     g_sndPlayerPtr->target = 0;
     g_sndPlayerPtr->frameTime = AL_USEC_PER_FRAME_30FPS;
-    sState = alHeapAlloc(sfxSeqpConfig->heap, 1, sfxSeqpConfig->maybeSndStateCount * sizeof(struct SndUnknownSoundState));
+    sState = alHeapAlloc(sfxSeqpConfig->heap, 1, sfxSeqpConfig->maybeSndStateCount * sizeof(struct ALSoundState_s));
     g_sndPlayerPtr->sndState = sState;
 
     /*
@@ -205,7 +207,7 @@ void sndNewPlayerInit(ALSeqpSfxConfig *sfxSeqpConfig)
     for(i = 1; i < sfxSeqpConfig->maybeSndStateCount; i++)
     {
         // The compiler says this reassignment matters ...
-        sState = (struct SndUnknownSoundState*)g_sndPlayerPtr->sndState;
+        sState = (struct ALSoundState_s*)g_sndPlayerPtr->sndState;
 
         // this works because `ALLink node` is at offset zero.
         alLink((ALLink*)(&sState[i]), (ALLink*)(&sState[i]-1));
@@ -340,14 +342,14 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
 
                 allocVoiceOk_rename_me = ((s32) D_800243F4 < sndp->maxSounds) ^ 1;
 
-                if ((allocVoiceOk_rename_me == 0) || ((state->unk3e & 0x10) != 0))
+                if ((allocVoiceOk_rename_me == 0) || ((state->stateFlags.halfbytebyte.unk3e & 0x10) != 0))
                 {
                     allocVoiceSuccess = alSynAllocVoice(sndp->drvr, voice, &vc);
                 }
 
                 if (allocVoiceSuccess == 0)
                 {
-                    if (((state->unk3e & 0x12) != 0) || (state->unk38 > 0))
+                    if (((state->stateFlags.halfbytebyte.unk3e & 0x12) != 0) || (state->unk38 > 0))
                     {
 
                     }
@@ -363,7 +365,7 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
                         loopCheckVar = allocVoiceOk_rename_me;
                         do
                         {
-                            if (((tstate->unk3e & 0x12) == 0) && ((tstate->unk3e & 4) != 0))
+                            if (((tstate->stateFlags.halfbytebyte.unk3e & 0x12) == 0) && ((tstate->stateFlags.halfbytebyte.unk3e & 4) != 0))
                             {
                                 ALSndpEvent playVoiceAllocEvent;
 
@@ -399,7 +401,7 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
                     return;
                 }
 
-                state->unk3e = (u8) (state->unk3e | 4);
+                state->stateFlags.halfbytebyte.unk3e = (u8) (state->stateFlags.halfbytebyte.unk3e | 4);
                 alSynStartVoice(sndp->drvr, voice, snd->wavetable);
 
                 state->state = AL_PLAYING;
@@ -600,7 +602,7 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
             if (state->state == AL_PLAYING)
             {
                 alSynSetPitch(sndp->drvr, &state->voice, state->pitch * state->state);
-                if ((state->unk3e & 0x20) != 0)
+                if ((state->stateFlags.halfbytebyte.unk3e & 0x20) != 0)
                 {
                     sfx_c_700089C4(state);
                 }
@@ -630,7 +632,7 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
         // case 0x40
         case (AL_SNDP_DECAY_EVT):
         {
-            if ((state->unk3e & 2) == 0)
+            if ((state->stateFlags.halfbytebyte.unk3e & 2) == 0)
                 {
                     vtmp = ((s32) (D_80063BA4[snd->keyMap->keyMin & 0x3F] * ((s32) (snd->envelope->decayVolume * state->vol * snd->sampleVolume) / 0x3F01)) / 0x7FFF) - 1;
                     if (vtmp < 0)
@@ -644,7 +646,7 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
                     evt.common.state       = state;
                     alEvtqPostEvent(&sndp->evtq, (ALEvent *)&evt, delta);
 
-                    if ((state->unk3e & 0x20) != 0)
+                    if ((state->stateFlags.halfbytebyte.unk3e & 0x20) != 0)
                     {
                         sfx_c_700089C4(state);
                     }
@@ -712,7 +714,7 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
         // case 0x200
         case (AL_SNDP_UNKNOWN_09_EVT):
         {
-            if ((state->unk3e & 0x10) != 0)
+            if ((state->stateFlags.halfbytebyte.unk3e & 0x10) != 0)
 			{
 				play_sfx_a1(&event->unk_u_1.unkC, event->unk_u_1.unkA, state->unk30);
 			}
@@ -1535,7 +1537,7 @@ glabel jpt_80029160
  */
 void sfx_c_70008948(ALSoundState *state)
 {
-    if (state->unk3e & 4)
+    if (state->stateFlags.halfbytebyte.unk3e & 4)
     {
         alSynStopVoice(g_sndPlayerPtr->drvr, &state->voice);
         alSynFreeVoice(g_sndPlayerPtr->drvr, &state->voice);
@@ -1622,7 +1624,6 @@ s32 sfx_c_70008AF0(s16 *allocListCount, s16 *freeListCount)
     u16 counter2;
     u16 returnCounter;
 
-    // typo/mistake? D_800243E4 is already a `ALEventQueue *`
     ALEventQueue *evtq = (ALEventQueue *)&D_800243E4;
 
     ALLink *freeListNodeForward = evtq->freeList.next;
@@ -1972,17 +1973,11 @@ u8 sfxGetArg0Unk3F(ALSoundState *state)
 {
     if (state != NULL)
     {
-        return state->unk3f;
+        return state->stateFlags.halfbytebyte.unk3f;
     }
 
     return 0;
 }
-
-
-
-
-
-
 
 
 
@@ -2238,10 +2233,6 @@ glabel play_sfx_a1
 #endif
 
 
-
-
-
-
 /**
  * 9C20    70009020
  *     decativates sound effect
@@ -2256,120 +2247,41 @@ void sfxDeactivate(ALSoundState *state)
 
     if (state != NULL)
     {
-        // what is going on here.
-        // state->unk3e is `u8`, but the assignmented is signed.
-        // bitwise AND with 0xffef, 16 bitmask?
-        state->unk3e = (s8) (state->unk3e & (~(s16)(0x10)));
+        state->stateFlags.halfbytebyte.unk3e = (s8) (state->stateFlags.halfbytebyte.unk3e & (~(s16)(0x10)));
 
         alEvtqPostEvent(&g_sndPlayerPtr->evtq, (ALEvent *)&evt, 0);
     }
 }
 
 
-
-
-
-
-
-
-
 /**
  * 9C6C    7000906C
  */
-
-#ifdef NONMATCHING
-void sfx_c_7000906C(s32 arg0)
+void sfx_c_7000906C(u8 arg0)
 {
-    s32 sp4C;
-    s16 sp3C;
-    s32 temp_s2;
-    s8 temp_v0;
-    void *temp_s0;
-    void *phi_s0;
+    OSIntMask mask;
+    ALSndpEvent evt;
+    ALSoundState *item;
 
-    temp_s2 = (arg0 & 0xff);
-    sp4C = osSetIntMask(1);
-    if (D_800243E4 != 0)
+    mask = osSetIntMask(OS_IM_NONE);
+
+    item = (ALSoundState *)D_800243E4;
+    while (item != NULL)
     {
-        phi_s0 = D_800243E4;
-block_2:
-        sp3C = (u16)0x400;
-        temp_v0 = phi_s0->unk3E;
-        if (temp_s2 == (temp_v0 & temp_s2))
+        evt.common.type = AL_SNDP_UNKNOWN_10_EVT;
+        evt.common.state = item;
+
+        if ((item->stateFlags.halfbytebyte.unk3e & arg0) == arg0)
         {
-            phi_s0->unk3E = (s8) (temp_v0 & -0x11);
-            alEvtqPostEvent((g_sndPlayerPtr + 0x14), &sp3C, 0);
+            item->stateFlags.halfbytebyte.unk3e = (s8) (item->stateFlags.halfbytebyte.unk3e & (~(s16)(0x10)));
+            alEvtqPostEvent(&g_sndPlayerPtr->evtq, (ALEvent *)&evt, 0);
         }
-        temp_s0 = *phi_s0;
-        phi_s0 = temp_s0;
-        if (temp_s0 != 0)
-        {
-            goto block_2;
-        }
+
+        item = (ALSoundState *)item->link.next;
     }
-    osSetIntMask(sp4C);
+    
+    osSetIntMask(mask);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sfx_c_7000906C
-/* 009C6C 7000906C 27BDFFB0 */  addiu $sp, $sp, -0x50
-/* 009C70 70009070 AFB20020 */  sw    $s2, 0x20($sp)
-/* 009C74 70009074 309200FF */  andi  $s2, $a0, 0xff
-/* 009C78 70009078 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 009C7C 7000907C AFA40050 */  sw    $a0, 0x50($sp)
-/* 009C80 70009080 AFB40028 */  sw    $s4, 0x28($sp)
-/* 009C84 70009084 AFB30024 */  sw    $s3, 0x24($sp)
-/* 009C88 70009088 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 009C8C 7000908C AFB00018 */  sw    $s0, 0x18($sp)
-/* 009C90 70009090 0C00374C */  jal   osSetIntMask
-/* 009C94 70009094 24040001 */   li    $a0, 1
-/* 009C98 70009098 3C108002 */  lui   $s0, %hi(D_800243E4)
-/* 009C9C 7000909C 8E1043E4 */  lw    $s0, %lo(D_800243E4)($s0)
-/* 009CA0 700090A0 AFA2004C */  sw    $v0, 0x4c($sp)
-/* 009CA4 700090A4 02408825 */  move  $s1, $s2
-/* 009CA8 700090A8 12000014 */  beqz  $s0, .L700090FC
-/* 009CAC 700090AC 27B4003C */   addiu $s4, $sp, 0x3c
-/* 009CB0 700090B0 3C138002 */  lui   $s3, %hi(g_sndPlayerPtr)
-/* 009CB4 700090B4 267343F0 */  addiu $s3, %lo(g_sndPlayerPtr) # addiu $s3, $s3, 0x43f0
-/* 009CB8 700090B8 2412FFEF */  li    $s2, -17
-/* 009CBC 700090BC 240E0400 */  li    $t6, 1024
-.L700090C0:
-/* 009CC0 700090C0 A7AE003C */  sh    $t6, 0x3c($sp)
-/* 009CC4 700090C4 AFB00040 */  sw    $s0, 0x40($sp)
-/* 009CC8 700090C8 9202003E */  lbu   $v0, 0x3e($s0)
-/* 009CCC 700090CC 02802825 */  move  $a1, $s4
-/* 009CD0 700090D0 00517824 */  and   $t7, $v0, $s1
-/* 009CD4 700090D4 162F0006 */  bne   $s1, $t7, .L700090F0
-/* 009CD8 700090D8 0052C024 */   and   $t8, $v0, $s2
-/* 009CDC 700090DC A218003E */  sb    $t8, 0x3e($s0)
-/* 009CE0 700090E0 8E640000 */  lw    $a0, ($s3)
-/* 009CE4 700090E4 00003025 */  move  $a2, $zero
-/* 009CE8 700090E8 0C004BBF */  jal   alEvtqPostEvent
-/* 009CEC 700090EC 24840014 */   addiu $a0, $a0, 0x14
-.L700090F0:
-/* 009CF0 700090F0 8E100000 */  lw    $s0, ($s0)
-/* 009CF4 700090F4 5600FFF2 */  bnezl $s0, .L700090C0
-/* 009CF8 700090F8 240E0400 */   li    $t6, 1024
-.L700090FC:
-/* 009CFC 700090FC 0C00374C */  jal   osSetIntMask
-/* 009D00 70009100 8FA4004C */   lw    $a0, 0x4c($sp)
-/* 009D04 70009104 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 009D08 70009108 8FB00018 */  lw    $s0, 0x18($sp)
-/* 009D0C 7000910C 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 009D10 70009110 8FB20020 */  lw    $s2, 0x20($sp)
-/* 009D14 70009114 8FB30024 */  lw    $s3, 0x24($sp)
-/* 009D18 70009118 8FB40028 */  lw    $s4, 0x28($sp)
-/* 009D1C 7000911C 03E00008 */  jr    $ra
-/* 009D20 70009120 27BD0050 */   addiu $sp, $sp, 0x50
-)
-#endif
-
-
-
-
-
-
 
 /**
  * 9D24    70009124
@@ -2397,9 +2309,6 @@ void sfx_c_70009164(void)
 {
     sfx_c_7000906C(3);
 }
-
-
-
 
 /**
  * 9D84    70009184
