@@ -27,7 +27,7 @@ typedef enum ALSndpMsgType_e {
     AL_SNDP_STOP_EVT       = (1 << 1) - 1, // 1
     AL_SNDP_PAN_EVT        = (1 << 2) - 1, // 3
     AL_SNDP_VOL_EVT        = (1 << 3) - 1, // 7
-    AL_SNDP_PITCH_EVT      = (1 << 4) - 1, // 15
+    AL_SNDP_PITCH_EVT      = (1 << 4),
     AL_SNDP_API_EVT        = (1 << 5),
     AL_SNDP_DECAY_EVT      = (1 << 6),
     AL_SNDP_END_EVT        = (1 << 7),

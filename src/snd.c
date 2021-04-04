@@ -44,27 +44,34 @@ struct SndUnknownSoundState {
 typedef struct ALSoundState_s {
     // Unmatched properties:
     /*
+
     // sound referenced here
     ALSound     *sound;
+    
     //
     s16         priority;
-    // current playback pitch
-	f32         pitch;
-	// play state for this sound
+    
+    // play state for this sound
     s32         state;
-	// volume - combined with volume from bank
+	
+    // volume - combined with volume from bank
     s16         vol;
-	// pan - 0 = left, 127 = right
+	
+    // pan - 0 = left, 127 = right
     ALPan       pan;
-	// wet/dry mix - 0 = dry, 127 = wet
+	
+    // wet/dry mix - 0 = dry, 127 = wet
     u8          fxMix;
     */
     s32 unk0;
     s32 unk4;
-    s32 unk8;
+    ALSound *sound;
     ALVoice voice;
     s32 unk28;
-    s32 unk2c;
+
+    // current playback pitch
+    // offset 0x2c
+    f32 pitch;
     s32 unk30;
     s32 unk34;
     s32 unk38;
@@ -131,6 +138,12 @@ typedef union ALSndpEvent_u {
         s32 unk8;
         s32 *unkC;
     } unk_u_2;
+
+    struct {
+        s16 type;
+        ALSoundState *state;
+        s32 val;
+    } unk_u_3;
     
 } ALSndpEvent;
 
@@ -308,7 +321,7 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
 
     switch (event->msg.type)
     {
-        // case 0
+        // case 0 (or 1?)
         case (AL_SNDP_PLAY_EVT):
         {
             if ((state->state == AL_UNKOWN_5) || (state->state == AL_UNKOWN_4))
@@ -459,7 +472,7 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
         case (AL_SNDP_UNKNOWN_10_EVT):
             // fallthrough to AL_SNDP_STOP_EVT
 
-        // case 1
+        // case 1 (or 2?)
         case (AL_SNDP_STOP_EVT):
         {
             if (state->state != AL_PLAYING)
@@ -518,7 +531,7 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
         }
         break;
         
-        // case 3
+        // case 3 (or 4?)
         case (AL_SNDP_PAN_EVT):
         {
             state->pan = event->pan.pan;
@@ -544,7 +557,7 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
         }
         break;
         
-        // case 7
+        // case 7 (or 8?)
         case (AL_SNDP_VOL_EVT):
         {
             state->vol = event->vol.vol;
@@ -573,7 +586,7 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
         }
         break;
         
-        // case 15
+        // case 15 (or 16?)
         case (AL_SNDP_PITCH_EVT):
         {
             state->pitch = event->pitch.pitch;
@@ -1525,64 +1538,21 @@ void sfx_c_70008948(ALSoundState *state)
     sfx_c_70008A30(&g_sndPlayerPtr->evtq, state, 0xffff);
 }
 
-
-
-
-
-
-
-
-
-
 /**
  * 95C4    700089C4
  */
-
-#ifdef NONMATCHING
-void sfx_c_700089C4(void *arg0)
+void sfx_c_700089C4(ALSoundState *state)
 {
-    f32 sp28;
-    s16 sp20;
-    f32 sp1C;
+    ALSndpEvent evt;
+    f32 pitch;
 
-    sp20 = (u16)0x10;
-    sp1C = (f32) (alCents2Ratio(arg0->unk8->unk4->unk5, arg0) * arg0->unk2C);
-    sp28 = sp1C;
-    alEvtqPostEvent((g_sndPlayerPtr + 0x14), &sp20, 0x8235, arg0);
+    pitch = (f32) (alCents2Ratio(state->sound->keyMap->detune) * (f32)state->pitch);
+    evt.common.state = state;
+    evt.msg.type = AL_SNDP_PITCH_EVT;
+    evt.unk_u_3.val = *(s32*)&pitch;
+
+    alEvtqPostEvent(&g_sndPlayerPtr->evtq, (ALEvent *)&evt, 0x8235);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sfx_c_700089C4
-/* 0095C4 700089C4 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0095C8 700089C8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0095CC 700089CC 8C8E0008 */  lw    $t6, 8($a0)
-/* 0095D0 700089D0 00803825 */  move  $a3, $a0
-/* 0095D4 700089D4 8DCF0004 */  lw    $t7, 4($t6)
-/* 0095D8 700089D8 81E40005 */  lb    $a0, 5($t7)
-/* 0095DC 700089DC 0C004DF0 */  jal   alCents2Ratio
-/* 0095E0 700089E0 AFA70030 */   sw    $a3, 0x30($sp)
-/* 0095E4 700089E4 8FA70030 */  lw    $a3, 0x30($sp)
-/* 0095E8 700089E8 3C048002 */  lui   $a0, %hi(g_sndPlayerPtr)
-/* 0095EC 700089EC 8C8443F0 */  lw    $a0, %lo(g_sndPlayerPtr)($a0)
-/* 0095F0 700089F0 C4E4002C */  lwc1  $f4, 0x2c($a3)
-/* 0095F4 700089F4 24180010 */  li    $t8, 16
-/* 0095F8 700089F8 A7B80020 */  sh    $t8, 0x20($sp)
-/* 0095FC 700089FC 46040182 */  mul.s $f6, $f0, $f4
-/* 009600 70008A00 27A50020 */  addiu $a1, $sp, 0x20
-/* 009604 70008A04 34068235 */  li    $a2, 33333
-/* 009608 70008A08 AFA70024 */  sw    $a3, 0x24($sp)
-/* 00960C 70008A0C 24840014 */  addiu $a0, $a0, 0x14
-/* 009610 70008A10 E7A6001C */  swc1  $f6, 0x1c($sp)
-/* 009614 70008A14 8FB9001C */  lw    $t9, 0x1c($sp)
-/* 009618 70008A18 0C004BBF */  jal   alEvtqPostEvent
-/* 00961C 70008A1C AFB90028 */   sw    $t9, 0x28($sp)
-/* 009620 70008A20 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 009624 70008A24 27BD0030 */  addiu $sp, $sp, 0x30
-/* 009628 70008A28 03E00008 */  jr    $ra
-/* 00962C 70008A2C 00000000 */   nop   
-)
-#endif
 
 
 
