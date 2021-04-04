@@ -2023,7 +2023,6 @@ glabel sfx_c_70008D04
 #endif
 
 
-
 /**
  * 99D8    70008DD8
  *     A1->A0+0x36.  value is set in sound effect buffer?
@@ -2031,17 +2030,11 @@ glabel sfx_c_70008D04
  */
 void sfx_c_70008DD8(ALSoundState *state, u8 arg1)
 {
-
     if (state != NULL)
     {
         state->unk36 = arg1;
     }
 }
-
-
-
-
-
 
 /**
  * 99F0    70008DF0
@@ -2049,30 +2042,16 @@ void sfx_c_70008DD8(ALSoundState *state, u8 arg1)
  *     value is set only when sound defaults have been set
  *     accepts: A0=p->SE buffer
  */
-
-#ifdef NONMATCHING
-void sfxGetArg0Unk3F(void *arg0)
+u8 sfxGetArg0Unk3F(ALSoundState *state)
 {
-    if (arg0 != 0)
+    if (state != NULL)
     {
-        return arg0->unk3F;
+        return state->unk3f;
     }
+
     return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sfxGetArg0Unk3F
-/* 0099F0 70008DF0 10800003 */  beqz  $a0, .L70008E00
-/* 0099F4 70008DF4 00001025 */   move  $v0, $zero
-/* 0099F8 70008DF8 03E00008 */  jr    $ra
-/* 0099FC 70008DFC 9082003F */   lbu   $v0, 0x3f($a0)
 
-.L70008E00:
-/* 009A00 70008E00 03E00008 */  jr    $ra
-/* 009A04 70008E04 00000000 */   nop   
-)
-#endif
 
 
 
