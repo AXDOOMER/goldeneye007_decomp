@@ -73,7 +73,9 @@ typedef struct ALSoundState_s {
     // offset 0x2c
     f32 pitch;
     s32 unk30;
-    s32 unk34;
+    s16 unk34;
+    s8 unk36;
+    s8 unk37;
     s32 unk38;
     s16 unk3c;
     u8 unk3e; // state or flags?
@@ -1554,7 +1556,6 @@ void sfx_c_700089C4(ALSoundState *state)
     alEvtqPostEvent(&g_sndPlayerPtr->evtq, (ALEvent *)&evt, 0x8235);
 }
 
-
 /**
  * 9630     70008A30
  * Based on (almost identical) the method
@@ -2023,42 +2024,19 @@ glabel sfx_c_70008D04
 
 
 
-
-
-
-
-
-
 /**
  * 99D8    70008DD8
  *     A1->A0+0x36.  value is set in sound effect buffer?
  *     accepts: A0=p->SE buffer?, A1=value truncated to byte
  */
-
-#ifdef NONMATCHING
-void sfx_c_70008DD8(void *arg0, s32 arg1)
+void sfx_c_70008DD8(ALSoundState *state, u8 arg1)
 {
-    if (arg0 != 0)
+
+    if (state != NULL)
     {
-        arg0->unk36 = (s8) (arg1 & 0xff);
+        state->unk36 = arg1;
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sfx_c_70008DD8
-/* 0099D8 70008DD8 AFA50004 */  sw    $a1, 4($sp)
-/* 0099DC 70008DDC 10800002 */  beqz  $a0, .L70008DE8
-/* 0099E0 70008DE0 30AE00FF */   andi  $t6, $a1, 0xff
-/* 0099E4 70008DE4 A08E0036 */  sb    $t6, 0x36($a0)
-.L70008DE8:
-/* 0099E8 70008DE8 03E00008 */  jr    $ra
-/* 0099EC 70008DEC 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 
