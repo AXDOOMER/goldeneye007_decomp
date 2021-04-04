@@ -150,7 +150,8 @@ typedef union ALSndpEvent_u {
 } ALSndpEvent;
 
 s32 g_sndUnused800243E0 = 0;
-s32 D_800243E4 = 0;
+ALEventQueue *D_800243E4 = NULL;
+
 s32 *D_800243E8 = 0;
 struct SndUnknownSoundState *g_sndPlayerSoundStatePtr = NULL;
 ALSndPlayer *g_sndPlayerPtr = &g_sndPlayer;
@@ -162,11 +163,12 @@ f32 F32_800243FC = 1.0;
 ALMicroTime sndPlayerVoiceHandler(void *node);
 void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event);
 void sfx_c_70008A30(ALEventQueue *evtq, ALSoundState *state, u16 eventType);
-void sfx_c_70008AF0(void *arg0, void *arg1);
+
 void sfx_c_70008D04(ALSoundState *state);
 
 void sfx_c_70009284(u8 arg0, u16 arg1);
 u16 sfx_c_70009264(u8 arg0);
+s32 sfx_c_70008AF0(s16 *allocListCount, s16 *freeListCount);
 
 // end forward declarations
 
@@ -1604,128 +1606,49 @@ void sfx_c_70008A30(ALEventQueue *evtq, ALSoundState *state, u16 eventType)
 
 
 
-
-
-
 /**
  * 96F0     70008AF0
+ * Has similarities to
+ * void alEvtqPrintEvtQueue(ALEventQueue *evtq)
+ * from n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\event.c
+ * 
+ * @param allocListCount Out param. Will contain the number of (next) nodes in the D_800243E4 allocList.
+ * @param freeListCount Out param. Will contain the number of (next) nodes in the D_800243E4 freeList.
+ * @return Number of (prev) nodes in the D_800243E4 freeList.
  */
-
-#ifdef NONMATCHING
-s32 sfx_c_70008AF0(void *arg0, void *arg1)
+s32 sfx_c_70008AF0(s16 *allocListCount, s16 *freeListCount)
 {
-    void *temp_v0;
-    s16 temp_t6;
-    void *temp_v1;
-    s16 temp_t7;
-    void *temp_a2;
-    s32 temp_t8;
-    void *phi_v0;
-    void *phi_v1;
-    void *phi_a2;
-    s16 phi_a0;
-    s16 phi_a3;
-    s32 phi_v1_2;
-    s16 phi_a0_2;
-    s16 phi_a3_2;
-    s32 phi_v1_3;
+    u16 counter1;
+    u16 counter2;
+    u16 returnCounter;
 
-    phi_v0 = D_800243E4;
-    phi_a3 = (u16)0;
-    phi_a3_2 = (u16)0;
-    if (D_800243E4 != 0)
+    // typo/mistake? D_800243E4 is already a `ALEventQueue *`
+    ALEventQueue *evtq = (ALEventQueue *)&D_800243E4;
+
+    ALLink *freeListNodeForward = evtq->freeList.next;
+    ALLink *allocListNodeForward = evtq->allocList.next;
+    ALLink *freeListNodeBackward = evtq->freeList.prev;
+
+    for (counter1 = 0; freeListNodeForward != NULL; freeListNodeForward = freeListNodeForward->next)
     {
-block_1:
-        temp_v0 = *phi_v0;
-        temp_t6 = ((phi_a3_2 + 1) & 0xffff);
-        phi_v0 = temp_v0;
-        phi_a3 = temp_t6;
-        phi_a3_2 = temp_t6;
-        if (temp_v0 != 0)
-        {
-            goto block_1;
-        }
+         counter1++;
     }
-    phi_v1 = D_800243E4.unk8;
-    phi_a0 = (u16)0;
-    phi_a0_2 = (u16)0;
-    if (D_800243E4.unk8 != 0)
+
+    for (counter2 = 0; allocListNodeForward != NULL; allocListNodeForward = allocListNodeForward->next)
     {
-block_3:
-        temp_v1 = *phi_v1;
-        temp_t7 = ((phi_a0_2 + 1) & 0xffff);
-        phi_v1 = temp_v1;
-        phi_a0 = temp_t7;
-        phi_a0_2 = temp_t7;
-        if (temp_v1 != 0)
-        {
-            goto block_3;
-        }
+         counter2++;
     }
-    phi_a2 = D_800243E4.unk4;
-    phi_v1_2 = 0;
-    phi_v1_3 = 0;
-    if (D_800243E4.unk4 != 0)
+
+    for (returnCounter = 0; freeListNodeBackward != NULL; freeListNodeBackward = freeListNodeBackward->prev)
     {
-block_5:
-        temp_a2 = phi_a2->unk4;
-        temp_t8 = ((phi_v1_3 + 1) & 0xffff);
-        phi_a2 = temp_a2;
-        phi_v1_2 = temp_t8;
-        phi_v1_3 = temp_t8;
-        if (temp_a2 != 0)
-        {
-            goto block_5;
-        }
+         returnCounter++;
     }
-    *arg0 = (s16) phi_a0;
-    *arg1 = (s16) phi_a3;
-    return phi_v1_2;
+
+    *allocListCount = (s16) counter2;
+    *freeListCount = (s16) counter1;
+
+    return returnCounter;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sfx_c_70008AF0
-/* 0096F0 70008AF0 3C088002 */  lui   $t0, %hi(D_800243E4) 
-/* 0096F4 70008AF4 250843E4 */  addiu $t0, %lo(D_800243E4) # addiu $t0, $t0, 0x43e4
-/* 0096F8 70008AF8 8D020000 */  lw    $v0, ($t0)
-/* 0096FC 70008AFC AFA40000 */  sw    $a0, ($sp)
-/* 009700 70008B00 8D030008 */  lw    $v1, 8($t0)
-/* 009704 70008B04 8D060004 */  lw    $a2, 4($t0)
-/* 009708 70008B08 10400006 */  beqz  $v0, .L70008B24
-/* 00970C 70008B0C 00003825 */   move  $a3, $zero
-.L70008B10:
-/* 009710 70008B10 8C420000 */  lw    $v0, ($v0)
-/* 009714 70008B14 24E70001 */  addiu $a3, $a3, 1
-/* 009718 70008B18 30EEFFFF */  andi  $t6, $a3, 0xffff
-/* 00971C 70008B1C 1440FFFC */  bnez  $v0, .L70008B10
-/* 009720 70008B20 01C03825 */   move  $a3, $t6
-.L70008B24:
-/* 009724 70008B24 10600006 */  beqz  $v1, .L70008B40
-/* 009728 70008B28 00002025 */   move  $a0, $zero
-.L70008B2C:
-/* 00972C 70008B2C 8C630000 */  lw    $v1, ($v1)
-/* 009730 70008B30 24840001 */  addiu $a0, $a0, 1
-/* 009734 70008B34 308FFFFF */  andi  $t7, $a0, 0xffff
-/* 009738 70008B38 1460FFFC */  bnez  $v1, .L70008B2C
-/* 00973C 70008B3C 01E02025 */   move  $a0, $t7
-.L70008B40:
-/* 009740 70008B40 10C00006 */  beqz  $a2, .L70008B5C
-/* 009744 70008B44 00001825 */   move  $v1, $zero
-.L70008B48:
-/* 009748 70008B48 8CC60004 */  lw    $a2, 4($a2)
-/* 00974C 70008B4C 24630001 */  addiu $v1, $v1, 1
-/* 009750 70008B50 3078FFFF */  andi  $t8, $v1, 0xffff
-/* 009754 70008B54 14C0FFFC */  bnez  $a2, .L70008B48
-/* 009758 70008B58 03001825 */   move  $v1, $t8
-.L70008B5C:
-/* 00975C 70008B5C 8FB90000 */  lw    $t9, ($sp)
-/* 009760 70008B60 00601025 */  move  $v0, $v1
-/* 009764 70008B64 A7240000 */  sh    $a0, ($t9)
-/* 009768 70008B68 03E00008 */  jr    $ra
-/* 00976C 70008B6C A4A70000 */   sh    $a3, ($a1)
-)
-#endif
 
 
 
