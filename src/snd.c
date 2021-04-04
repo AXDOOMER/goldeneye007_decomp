@@ -159,7 +159,7 @@ f32 F32_800243FC = 1.0;
 // forward declarations
 ALMicroTime sndPlayerVoiceHandler(void *node);
 void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event);
-void sfx_c_70008A30(ALEventQueue *evtq, ALSoundState *state, s32 arg2);
+void sfx_c_70008A30(ALEventQueue *evtq, ALSoundState *state, u16 eventType);
 void sfx_c_70008AF0(void *arg0, void *arg1);
 void sfx_c_70008D04(ALSoundState *state);
 
@@ -1555,111 +1555,48 @@ void sfx_c_700089C4(ALSoundState *state)
 }
 
 
-
-
-
-
-
-
-
-
 /**
  * 9630     70008A30
+ * Based on (almost identical) the method
+ * static void _removeEvents(ALEventQueue *evtq, ALSoundState *state)
+ * from n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndplayer.c
  */
-
-#ifdef NONMATCHING
-void sfx_c_70008A30(void *arg0, s32 arg1, s32 arg2)
-
-//static void _removeEvents(ALEventQueue *evtq, ALSoundState *state, s32 arg2)
+void sfx_c_70008A30(ALEventQueue *evtq, ALSoundState *state, u16 eventType)
 {
-    s32 sp30;
-    void *temp_s1;
-    void *phi_s0;
+    ALLink              *thisNode;
+    ALLink              *nextNode;
+    ALEventListItem     *thisItem;
+    ALEventListItem     *nextItem;
+    ALSndpEvent         *thisEvent;
+    OSIntMask           mask;
 
-    sp30 = osSetIntMask(OS_IM_NONE);
-    phi_s0 = arg0->unk8;
-    if (arg0->unk8 != 0)
+    mask = osSetIntMask(OS_IM_NONE);
+
+    thisNode = evtq->allocList.next;
+
+    while(thisNode != NULL)
     {
-block_1:
-        temp_s1 = *phi_s0;
-        if (arg1 == phi_s0->unk10)
+	    nextNode = thisNode->next;
+        thisItem = (ALEventListItem *)thisNode;
+        nextItem = (ALEventListItem *)nextNode;
+        thisEvent = (ALSndpEvent *)&thisItem->evt;
+
+        if (thisEvent->common.state == state && (((u16)thisItem->evt.type & (u16)eventType) != 0))
         {
-            if ((phi_s0->unkC & (arg2 & 0xffff)) != 0)
+            if (nextItem != NULL)
             {
-                if (temp_s1 != 0)
-                {
-                    temp_s1->unk8 = (s32) (temp_s1->unk8 + phi_s0->unk8);
-                }
-                alUnlink(phi_s0);
-                alLink(phi_s0, arg0);
+                nextItem->delta += thisItem->delta;
             }
+
+            alUnlink(thisNode);
+            alLink(thisNode, &evtq->freeList);
         }
-        phi_s0 = temp_s1;
-        if (temp_s1 != 0)
-        {
-            goto block_1;
-        }
+
+	    thisNode = nextNode;
     }
-    osSetIntMask(sp30);
+    
+    osSetIntMask(mask);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sfx_c_70008A30
-/* 009630 70008A30 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 009634 70008A34 AFB20020 */  sw    $s2, 0x20($sp)
-/* 009638 70008A38 00809025 */  move  $s2, $a0
-/* 00963C 70008A3C AFBF002C */  sw    $ra, 0x2c($sp)
-/* 009640 70008A40 AFB40028 */  sw    $s4, 0x28($sp)
-/* 009644 70008A44 AFB30024 */  sw    $s3, 0x24($sp)
-/* 009648 70008A48 00A09825 */  move  $s3, $a1
-/* 00964C 70008A4C 30D4FFFF */  andi  $s4, $a2, 0xffff
-/* 009650 70008A50 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 009654 70008A54 AFB00018 */  sw    $s0, 0x18($sp)
-/* 009658 70008A58 AFA60050 */  sw    $a2, 0x50($sp)
-/* 00965C 70008A5C 0C00374C */  jal   osSetIntMask
-/* 009660 70008A60 24040001 */   li    $a0, 1
-/* 009664 70008A64 AFA20030 */  sw    $v0, 0x30($sp)
-/* 009668 70008A68 8E500008 */  lw    $s0, 8($s2)
-/* 00966C 70008A6C 12000016 */  beqz  $s0, .L70008AC8
-/* 009670 70008A70 00000000 */   nop   
-.L70008A74:
-/* 009674 70008A74 8E0E0010 */  lw    $t6, 0x10($s0)
-/* 009678 70008A78 8E110000 */  lw    $s1, ($s0)
-/* 00967C 70008A7C 166E0010 */  bne   $s3, $t6, .L70008AC0
-/* 009680 70008A80 00000000 */   nop   
-/* 009684 70008A84 960F000C */  lhu   $t7, 0xc($s0)
-/* 009688 70008A88 01F4C024 */  and   $t8, $t7, $s4
-/* 00968C 70008A8C 1300000C */  beqz  $t8, .L70008AC0
-/* 009690 70008A90 00000000 */   nop   
-/* 009694 70008A94 12200005 */  beqz  $s1, .L70008AAC
-/* 009698 70008A98 00000000 */   nop   
-/* 00969C 70008A9C 8E390008 */  lw    $t9, 8($s1)
-/* 0096A0 70008AA0 8E080008 */  lw    $t0, 8($s0)
-/* 0096A4 70008AA4 03284821 */  addu  $t1, $t9, $t0
-/* 0096A8 70008AA8 AE290008 */  sw    $t1, 8($s1)
-.L70008AAC:
-/* 0096AC 70008AAC 0C003AA4 */  jal   alUnlink
-/* 0096B0 70008AB0 02002025 */   move  $a0, $s0
-/* 0096B4 70008AB4 02002025 */  move  $a0, $s0
-/* 0096B8 70008AB8 0C003AB0 */  jal   alLink
-/* 0096BC 70008ABC 02402825 */   move  $a1, $s2
-.L70008AC0:
-/* 0096C0 70008AC0 1620FFEC */  bnez  $s1, .L70008A74
-/* 0096C4 70008AC4 02208025 */   move  $s0, $s1
-.L70008AC8:
-/* 0096C8 70008AC8 0C00374C */  jal   osSetIntMask
-/* 0096CC 70008ACC 8FA40030 */   lw    $a0, 0x30($sp)
-/* 0096D0 70008AD0 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0096D4 70008AD4 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0096D8 70008AD8 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 0096DC 70008ADC 8FB20020 */  lw    $s2, 0x20($sp)
-/* 0096E0 70008AE0 8FB30024 */  lw    $s3, 0x24($sp)
-/* 0096E4 70008AE4 8FB40028 */  lw    $s4, 0x28($sp)
-/* 0096E8 70008AE8 03E00008 */  jr    $ra
-/* 0096EC 70008AEC 27BD0048 */   addiu $sp, $sp, 0x48
-)
-#endif
 
 
 
