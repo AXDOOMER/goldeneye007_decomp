@@ -16,6 +16,7 @@
 #define MIN_RATIO	0.0001
 
 // based on n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndp.h
+struct ALSoundState_s;
 typedef struct ALSoundState_s {
     // Unmatched properties:
     /*
@@ -25,10 +26,7 @@ typedef struct ALSoundState_s {
     
     //
     s16         priority;
-    
-    // play state for this sound
-    s32         state;
-	
+ 
     // volume - combined with volume from bank
     s16         vol;
 	
@@ -54,7 +52,11 @@ typedef struct ALSoundState_s {
     // current playback pitch
     // offset 0x2c
     f32 pitch;
-    s32 unk30;
+
+    // play state for this sound
+    // offset 0x30
+    struct ALSoundState_s *state;
+
     s16 unk34;
     s8 unk36;
     s8 unk37;
@@ -147,17 +149,25 @@ typedef union ALSndpEvent_u {
 // 2) another place an entry traverses 3 linked lists of nodes,
 //    from offsets 0,4,8 which is consistent with ALEventQueue.
 union EventQueueStateThing_u {
+    
+
+    struct bss_s {
+        s32 *unk0;
+        s32 *D_800243E8;
+        struct ALSoundState_s *g_sndPlayerSoundStatePtr;
+    } bss;
+
     struct ALSoundState_s *state;
     ALEventQueue *event;
 };
 
 s32 g_sndUnused800243E0 = 0;
-union EventQueueStateThing_u *D_800243E4 = NULL;
+union EventQueueStateThing_u D_800243E4 = {0,0,NULL};
 
-s32 *D_800243E8 = 0;
-struct ALSoundState_s *g_sndPlayerSoundStatePtr = NULL;
+//s32 *D_800243E8 = 0;
+//struct ALSoundState_s *g_sndPlayerSoundStatePtr = NULL;
 ALSndPlayer *g_sndPlayerPtr = &g_sndPlayer;
-s32 D_800243F4 = 0;
+s16 D_800243F4 = 0;
 s8 bootswitch_sound = 0;
 f32 F32_800243FC = 1.0;
 
@@ -202,7 +212,7 @@ void sndNewPlayerInit(ALSeqpSfxConfig *sfxSeqpConfig)
     ptr = alHeapAlloc(sfxSeqpConfig->heap, 1, sfxSeqpConfig->maxEvents * sizeof(ALEventListItem));
     alEvtqNew(&g_sndPlayerPtr->evtq, (ALEventListItem *)ptr, sfxSeqpConfig->maxEvents);
 
-    g_sndPlayerSoundStatePtr = g_sndPlayerPtr->sndState;
+    D_800243E4.bss.g_sndPlayerSoundStatePtr = g_sndPlayerPtr->sndState;
 
     for(i = 1; i < sfxSeqpConfig->maybeSndStateCount; i++)
     {
@@ -361,7 +371,7 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
                             return;
                         }
 
-                        tstate = (ALSoundState *)D_800243E8;
+                        tstate = (ALSoundState *)D_800243E4.bss.D_800243E8;
                         loopCheckVar = allocVoiceOk_rename_me;
                         do
                         {
@@ -890,8 +900,8 @@ glabel .L70007FBC
 /* 008C78 70008078 8FBF003C */   lw    $ra, 0x3c($sp)
 .L7000807C:
 /* 008C7C 7000807C 1200002F */  beqz  $s0, .L7000813C
-/* 008C80 70008080 3C028002 */   lui   $v0, %hi(D_800243E8)
-/* 008C84 70008084 8C4243E8 */  lw    $v0, %lo(D_800243E8)($v0)
+/* 008C80 70008080 3C028002 */   lui   $v0, %hi(D_800243E4)
+/* 008C84 70008084 8C4243E8 */  lw    $v0, %lo(D_800243E4+4)($v0)
 /* 008C88 70008088 27B4005C */  addiu $s4, $sp, 0x5c
 /* 008C8C 7000808C 24130003 */  li    $s3, 3
 /* 008C90 70008090 24120003 */  li    $s2, 3
@@ -1840,47 +1850,61 @@ glabel sfx_c_70008B70
 
 /**
  * 9904    70008D04
+ * some kind of dispose/deallocate method.
+ * 
+ *  decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical opcode-lines: yes
+ * - identical registers: fail
  */
-
 #ifdef NONMATCHING
-void *sfx_c_70008D04(void *arg0)
+void sfx_c_70008D04(ALSoundState *state)
 {
-    if (arg0 == D_800243E4)
+    if (state == D_800243E4.state)
     {
-        D_800243E4 = (void *) *arg0;
+        D_800243E4.state = (void *)state->link.next;
     }
-    if (arg0 == D_800243E4.unk4)
+
+    if (state == (ALSoundState *)D_800243E4.state->link.prev)
     {
-        D_800243E4.unk4 = (s32) arg0->unk4;
+        D_800243E4.state->link.prev = state->link.prev;
     }
-    alUnlink();
-    if (D_800243E4.unk8 != 0)
+
+    alUnlink(&state->link);
+
+    if (D_800243E4.bss.g_sndPlayerSoundStatePtr != NULL)
     {
-        *arg0 = (void *) D_800243E4.unk8;
-        arg0->unk4 = 0;
-        D_800243E4.unk8->unk4 = arg0;
-        D_800243E4.unk8 = arg0;
+        state->link.next = (void *)D_800243E4.bss.g_sndPlayerSoundStatePtr;
+        state->link.prev = NULL;
+        D_800243E4.bss.g_sndPlayerSoundStatePtr->link.prev = (void *)state;
+        D_800243E4.bss.g_sndPlayerSoundStatePtr = state;
     }
     else
     {
-        arg0->unk4 = 0;
-        *arg0 = NULL;
-        D_800243E4.unk8 = arg0;
+        state->link.prev = NULL;
+        state->link.next = NULL;
+        D_800243E4.bss.g_sndPlayerSoundStatePtr = state;
     }
-    if ((arg0->unk3E & 4) != 0)
+
+    if ((state->stateFlags.halfbytebyte.unk3e & 4) != 0)
     {
-        D_800243F4 = (s16) (D_800243F4 + -1);
+        D_800243F4--;
     }
-    arg0->unk3F = (u8)0;
-    if (arg0->unk30 != 0)
+
+    state->stateFlags.halfbytebyte.unk3f = (u8)0;
+
+    if (state->state != NULL)
     {
-        if (arg0 == *arg0->unk30)
+        if (state == (ALSoundState *)state->state->link.next)
         {
-            *arg0->unk30 = 0;
+            state->state->link.next = NULL;
         }
-        arg0->unk30 = NULL;
+
+        state->state = NULL;
     }
-    return arg0->unk30;
+
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -1948,7 +1972,6 @@ glabel sfx_c_70008D04
 /* 0099D4 70008DD4 00000000 */   nop   
 )
 #endif
-
 
 /**
  * 99D8    70008DD8
@@ -2265,7 +2288,7 @@ void sfx_c_7000906C(u8 arg0)
 
     mask = osSetIntMask(OS_IM_NONE);
 
-    item = (ALSoundState *)D_800243E4;
+    item = (ALSoundState *)D_800243E4.state;
     while (item != NULL)
     {
         evt.common.type = AL_SNDP_UNKNOWN_10_EVT;

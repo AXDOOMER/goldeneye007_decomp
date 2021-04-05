@@ -419,6 +419,36 @@ extern ALGlobals *alGlobals;
 #define AL_UNKOWN_4     4
 #define AL_UNKOWN_5     5
 
+/*
+ * Audio Library event type definitions
+ */
+enum ALMsg {
+    AL_SEQ_REF_EVT,	/* Reference to a pending event in the sequence. */
+    AL_SEQ_MIDI_EVT,
+    AL_SEQP_MIDI_EVT,
+    AL_TEMPO_EVT,
+    AL_SEQ_END_EVT,
+    AL_NOTE_END_EVT,
+    AL_SEQP_ENV_EVT,
+    AL_SEQP_META_EVT,
+    AL_SEQP_PROG_EVT,
+    AL_SEQP_API_EVT,
+    AL_SEQP_VOL_EVT,
+    AL_SEQP_LOOP_EVT,
+    AL_SEQP_PRIORITY_EVT,
+    AL_SEQP_SEQ_EVT,
+    AL_SEQP_BANK_EVT,
+    AL_SEQP_PLAY_EVT,
+    AL_SEQP_STOP_EVT,
+    AL_SEQP_STOPPING_EVT,
+    AL_TRACK_END,
+    AL_CSP_LOOPSTART,
+    AL_CSP_LOOPEND,
+    AL_CSP_NOTEOFF_EVT,
+    AL_TREM_OSC_EVT,
+    AL_VIB_OSC_EVT
+};
+
 typedef struct {
     u8          *curPtr;                /* ptr to the next event */
     s32         lastTicks;              /* sequence clock ticks (used by alSeqSetLoc) */
