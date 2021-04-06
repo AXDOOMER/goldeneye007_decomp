@@ -21,9 +21,6 @@ typedef struct ALSoundState_s {
     // Unmatched properties:
     /*
 
-    // sound referenced here
-    ALSound     *sound;
-    
     //
     s16         priority;
  
@@ -46,12 +43,13 @@ typedef struct ALSoundState_s {
     // offset 0xc
     ALVoice voice;
 
+    // current playback pitch ... ?
     // offset 0x28
-    s32 unk28;
+    f32 pitch_28;
 
-    // current playback pitch
+    // bendRatio?
     // offset 0x2c
-    f32 pitch;
+    f32 pitch_2c;
 
     // play state for this sound
     // offset 0x30
@@ -72,6 +70,13 @@ typedef struct ALSoundState_s {
             u8 unk3e; // state or flags?
             u8 unk3f; // state or flags?
         } halfbytebyte;
+
+        struct {
+            u8 unk3c;
+            u8 unk3d;
+            u8 unk3e;
+            u8 unk3f;
+        } bbbb;
     } stateFlags;
     
 } ALSoundState;
@@ -159,7 +164,7 @@ union EventQueueStateThing_u {
     
 
     struct bss_s {
-        s32 *unk0;
+        struct ALSoundState_s *state;
         s32 *D_800243E8;
         struct ALSoundState_s *g_sndPlayerSoundStatePtr;
     } bss;
@@ -440,7 +445,7 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
                 pan   = (ALPan) MIN(tmp, AL_PAN_RIGHT);
 
                 alSynSetPan(sndp->drvr, voice, pan);
-                alSynSetPitch(sndp->drvr, voice, state->pitch * state->state);
+                alSynSetPitch(sndp->drvr, voice, state->pitch_2c * state->state);
 
                 vtmp   = state->fxMix + snd->keyMap->keyMin * 8;
                 vtmp   = MIN(0, vtmp);
@@ -450,8 +455,8 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
 
                 evt.common.type     = AL_SNDP_DECAY_EVT;
                 evt.common.state    = state;
-                //delta = (ALMicroTime) _DivS32ByF32 (snd->envelope->attackTime, state->pitch);
-                delta = (ALMicroTime) (snd->envelope->attackTime / state->pitch);
+                //delta = (ALMicroTime) _DivS32ByF32 (snd->envelope->attackTime, state->pitch_2c);
+                delta = (ALMicroTime) (snd->envelope->attackTime / state->pitch_2c);
                 alEvtqPostEvent(&sndp->evtq, (ALEvent *)&evt, delta);
             }
 
@@ -615,10 +620,10 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALSndpEvent *event)
         // case 15 (or 16?)
         case (AL_SNDP_PITCH_EVT):
         {
-            state->pitch = event->pitch.pitch;
+            state->pitch_2c = event->pitch.pitch;
             if (state->state == AL_PLAYING)
             {
-                alSynSetPitch(sndp->drvr, &state->voice, state->pitch * state->state);
+                alSynSetPitch(sndp->drvr, &state->voice, state->pitch_2c * state->state);
                 if ((state->stateFlags.halfbytebyte.unk3e & 0x20) != 0)
                 {
                     sfx_c_700089C4(state);
@@ -1572,7 +1577,7 @@ void sfx_c_700089C4(ALSoundState *state)
     ALSndpEvent evt;
     f32 pitch;
 
-    pitch = (f32) (alCents2Ratio(state->sound->keyMap->detune) * (f32)state->pitch);
+    pitch = (f32) (alCents2Ratio(state->sound->keyMap->detune) * (f32)state->pitch_2c);
     evt.common.state = state;
     evt.msg.type = AL_SNDP_PITCH_EVT;
     evt.unk_u_3.val = *(s32*)&pitch;
@@ -1671,66 +1676,83 @@ s32 sfx_c_70008AF0(s16 *allocListCount, s16 *freeListCount)
 
 
 
-
-
 /**
  * 9770    70008B70
  *     accepts: A0=sound data offset?, A1=sample address?
+ * 
+ *  decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical opcode-lines: yes
+ * - identical registers: fail
  */
-
 #ifdef NONMATCHING
-void *sfx_c_70008B70(s32 arg0, void *arg1)
+ALSoundState *sfx_c_70008B70(s32 arg0, void* a1)
 {
-    s32 sp28;
-    s8 temp_a1;
+    ALSound *arg1 = (ALSound *)a1;
+    ALKeyMap *keymap = arg1->keyMap;
+    ALSoundState *state = (ALSoundState *)D_800243E4.bss.g_sndPlayerSoundStatePtr;
+    OSIntMask mask;
+    s32 temp_a1;
     s8 temp_t5;
 
-    if (D_800243E4.unk8 != 0)
+    if (state != NULL)
     {
-        sp28 = osSetIntMask(1, arg1->unk4);
-        D_800243E4.unk8 = (void *) *D_800243E4.unk8;
-        alUnlink(D_800243E4.unk8);
-        if (D_800243E4 != 0)
+        mask = osSetIntMask(OS_IM_NONE);
+
+        D_800243E4.bss.g_sndPlayerSoundStatePtr = (void *)state->link.next;
+        alUnlink(&state->link);
+
+        if (D_800243E4.state != NULL)
         {
-            *D_800243E4.unk8 = (void *) D_800243E4;
-            D_800243E4.unk8->unk4 = 0;
-            D_800243E4->unk4 = (void *) D_800243E4.unk8;
-            D_800243E4 = (void *) D_800243E4.unk8;
+            state->link.next = state;
+            state->link.prev = NULL;
+            D_800243E4.state->link.prev = state;
+            D_800243E4.state = state; // link.next ?
         }
         else
         {
-            D_800243E4.unk8->unk4 = 0;
-            *D_800243E4.unk8 = NULL;
-            D_800243E4 = (void *) D_800243E4.unk8;
-            D_800243E4.unk4 = (void *) D_800243E4.unk8;
+            state->link.prev = NULL;
+            state->link.next = NULL;
+            D_800243E4.state = state; // link.next ?
+            D_800243E4.bss.D_800243E8 = (void *)state; // link.prev ?
         }
-        osSetIntMask(sp28, sp30);
-        D_800243E4.unk8->unk3F = (u8)5;
-        temp_a1 = (((u32) ((*arg1)->unk4 + 1) < 1U) + 0x40);
-        D_800243E4.unk8->unk36 = temp_a1;
-        D_800243E4.unk8->unk38 = 2;
-        D_800243E4.unk8->unk8 = arg1;
-        D_800243E4.unk8->unk2C = 1.0f;
-        D_800243E4.unk8->unk30 = 0;
-        temp_t5 = (sp30->unk3 & 0xf0);
-        D_800243E4.unk8->unk3E = temp_t5;
+
+        osSetIntMask(mask);
+
+        temp_a1 = ((arg1->envelope->decayTime + 1) == 0) + 0x40;
+        state->unk36 = temp_a1;
+
+        state->stateFlags.halfbytebyte.unk3f = AL_UNKOWN_5;
+        state->unk38 = 2;
+        state->sound = arg1;
+        state->pitch_2c = 1.0f;
+
+        temp_t5 = (keymap->keyMax & 0xf0);
+        state->stateFlags.halfbytebyte.unk3e = temp_t5;
+
+        state->state = NULL;
+        
         if ((temp_t5 & 0x20) != 0)
         {
-            D_800243E4.unk8->unk28 = alCents2Ratio(((sp30->unk4 * 0x64) + -0x1770), temp_a1, sp30);
+            state->pitch_28 = alCents2Ratio(((keymap->keyBase * 100) + -0x1770));
         }
         else
         {
-            D_800243E4.unk8->unk28 = alCents2Ratio((((sp30->unk4 * 0x64) + sp30->unk5) + -0x1770), temp_a1, sp30);
+            state->pitch_28 = alCents2Ratio((((keymap->keyBase * 100) + keymap->detune) + -0x1770));
         }
-        if (sp24 != 0x40)
+
+        if (temp_a1 != 0x40)
         {
-            D_800243E4.unk8->unk3E = (s8) (D_800243E4.unk8->unk3E | 2);
+            state->stateFlags.halfbytebyte.unk3e = (s8) (state->stateFlags.halfbytebyte.unk3e | 2);
         }
-        D_800243E4.unk8->unk3D = (u8)0;
-        D_800243E4.unk8->unk3C = (u8)0x40;
-        D_800243E4.unk8->unk34 = (u16)0x7fff;
+
+        state->stateFlags.bbbb.unk3d = (u8)0;
+        state->stateFlags.bbbb.unk3c = (u8)0x40;
+        state->unk34 = (u16)0x7fff;
     }
-    return D_800243E4.unk8;
+
+    return state;
 }
 #else
 GLOBAL_ASM(
@@ -1845,14 +1867,6 @@ glabel sfx_c_70008B70
 /* 009900 70008D00 27BD0038 */   addiu $sp, $sp, 0x38
 )
 #endif
-
-
-
-
-
-
-
-
 
 
 /**
