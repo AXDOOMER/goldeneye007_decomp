@@ -1,7 +1,74 @@
 #ifndef _SND_H_
 #define _SND_H_
+
 #include "ultra64.h"
 #include "PR/libaudio.h"
+
+// based on n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndp.h
+struct ALSoundState_s;
+typedef struct ALSoundState_s {
+    // Unmatched properties:
+    /*
+
+    //
+    s16         priority;
+ 
+    // volume - combined with volume from bank
+    s16         vol;
+	
+    // pan - 0 = left, 127 = right
+    ALPan       pan;
+	
+    // wet/dry mix - 0 = dry, 127 = wet
+    u8          fxMix;
+    */
+
+    // offset 0
+    ALLink link;
+
+    // offset 8
+    ALSound *sound;
+
+    // offset 0xc
+    ALVoice voice;
+
+    // current playback pitch ... ?
+    // offset 0x28
+    f32 pitch_28;
+
+    // bendRatio?
+    // offset 0x2c
+    f32 pitch_2c;
+
+    // play state for this sound
+    // offset 0x30
+    struct ALSoundState_s *state;
+
+    s16 unk34;
+    s8 unk36;
+    s8 unk37;
+    s32 unk38;
+
+    union {
+        struct {
+            s32 unk3c;
+        } word;
+
+        struct {
+            s16 unk3c;
+            u8 unk3e; // state or flags?
+            u8 unk3f; // state or flags?
+        } halfbytebyte;
+
+        struct {
+            u8 unk3c;
+            u8 unk3d;
+            u8 unk3e;
+            u8 unk3f;
+        } bbbb;
+    } stateFlags;
+    
+} ALSoundState;
 
 /**
  * This is a guess struct, used by music setup function call into snd.
@@ -38,7 +105,7 @@ typedef struct ALSeqpSfxConfig_s {
     ALHeap *heap;
 } ALSeqpSfxConfig;
 
-void play_sfx_a1 (void * buffer, short entry, void * data);
+ALSoundState *play_sfx_a1(void *arg0, s16 arg1, void **arg2);
 void sndNewPlayerInit(ALSeqpSfxConfig *arg0);
 
 extern s8 bootswitch_sound;

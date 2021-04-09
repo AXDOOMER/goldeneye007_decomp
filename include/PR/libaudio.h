@@ -20,13 +20,13 @@ typedef u8      ALPan;
 /**
  * Based on n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndp.h
  * enum ALSndpMsgType,
- * except this version is ...bitflags?.
+ * except this version is bitwise.
  */
 typedef enum ALSndpMsgType_e {
-    AL_SNDP_PLAY_EVT       = (1 << 0) - 1, // 0
-    AL_SNDP_STOP_EVT       = (1 << 1) - 1, // 1
-    AL_SNDP_PAN_EVT        = (1 << 2) - 1, // 3
-    AL_SNDP_VOL_EVT        = (1 << 3) - 1, // 7
+    AL_SNDP_PLAY_EVT       = (1 << 0),
+    AL_SNDP_STOP_EVT       = (1 << 1),
+    AL_SNDP_PAN_EVT        = (1 << 2),
+    AL_SNDP_VOL_EVT        = (1 << 3),
     AL_SNDP_PITCH_EVT      = (1 << 4),
     AL_SNDP_API_EVT        = (1 << 5),
     AL_SNDP_DECAY_EVT      = (1 << 6),
