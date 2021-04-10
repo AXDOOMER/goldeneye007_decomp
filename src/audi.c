@@ -413,7 +413,7 @@ void amStartAudioThread(void)
  * decomp status:
  * - compiles: yes
  * - stack resize: ok
- * - identical opcode-lines: fail
+ * - identical instructions: fail
  * - identical registers: fail
  *
  * notes: It looks like there are a few issues.

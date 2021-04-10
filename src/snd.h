@@ -105,7 +105,29 @@ typedef struct ALSeqpSfxConfig_s {
     ALHeap *heap;
 } ALSeqpSfxConfig;
 
-ALSoundState *play_sfx_a1(void *arg0, s16 arg1, void **arg2);
+// begin Alternate defintion for ALInstrument
+
+struct ALInstrumentAlt_s
+{
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    ALSound *soundArray[1];
+};
+
+struct ALBankAlt_s
+{
+    s16 instCount; /* number of programs in this bank */
+    u8 flags;
+    u8 pad;
+    s32 sampleRate;             /* e.g. 44100, 22050, etc...       */
+    ALInstrument *percussion;   /* default percussion for GM       */
+    struct ALInstrumentAlt_s *instArray[1]; /* ARRAY of instruments            */
+};
+
+// end Alternate defintion for ALInstrument
+
+ALSoundState *play_sfx_a1(struct ALBankAlt_s *arg0, s16 arg1, ALSoundState *arg2);
 void sndNewPlayerInit(ALSeqpSfxConfig *arg0);
 
 extern s8 bootswitch_sound;

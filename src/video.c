@@ -258,7 +258,7 @@ void viVsyncRelated(void)
  * decomp status:
  * - compiles: yes
  * - stack resize: ok
- * - identical opcode-lines: fail
+ * - identical instructions: fail
  * - identical registers: fail
  * 
  * There's a problem loading D_800232C0 the first time (+1 instruction), and again when
