@@ -94,24 +94,36 @@ typedef union ALSndpEvent_u {
 // 1) entry is treated as ALSoundState; using ALLink and unk3e.
 // 2) another place an entry traverses 3 linked lists of nodes,
 //    from offsets 0,4,8 which is consistent with ALEventQueue.
-union EventQueueStateThing_u {
+// union EventQueueStateThing_u {
     
 
-    struct bss_s {
-        struct ALSoundState_s *state;
-        s32 *D_800243E8;
-        struct ALSoundState_s *g_sndPlayerSoundStatePtr;
-    } bss;
+//     struct bss_s {
+//         struct ALSoundState_s *state;
+//         s32 *D_800243E8;
+//         struct ALSoundState_s *g_sndPlayerSoundStatePtr;
+//     } bss;
 
-    struct ALSoundState_s *state;
-    ALEventQueue *event;
+//     struct ALSoundState_s *state;
+//     ALEventQueue *event;
+// };
+
+// s32 g_sndUnused800243E0 = 0;
+// union EventQueueStateThing_u D_800243E4 = {0,0,NULL};
+
+s32 sfx_unused = 0;
+
+struct D_800243E4_s {
+    ALLink node;
+    struct ALSoundState_s *g_sndPlayerSoundStatePtr;
 };
 
-s32 g_sndUnused800243E0 = 0;
-union EventQueueStateThing_u D_800243E4 = {0,0,NULL};
+struct D_800243E4_s D_800243E4 = {{0,0},NULL};
 
+//struct ALSoundState_s *D_800243E4 = 0;
 //s32 *D_800243E8 = 0;
 //struct ALSoundState_s *g_sndPlayerSoundStatePtr = NULL;
+////
+
 ALSndPlayer *g_sndPlayerPtr = &g_sndPlayer;
 s16 D_800243F4 = 0;
 s8 bootswitch_sound = 0;
@@ -159,7 +171,7 @@ void sndNewPlayerInit(ALSeqpSfxConfig *sfxSeqpConfig)
     ptr = alHeapAlloc(sfxSeqpConfig->heap, 1, sfxSeqpConfig->maxEvents * sizeof(ALEventListItem));
     alEvtqNew(&g_sndPlayerPtr->evtq, (ALEventListItem *)ptr, sfxSeqpConfig->maxEvents);
 
-    D_800243E4.bss.g_sndPlayerSoundStatePtr = g_sndPlayerPtr->sndState;
+    D_800243E4.g_sndPlayerSoundStatePtr = g_sndPlayerPtr->sndState;
 
     for(i = 1; i < sfxSeqpConfig->maybeSndStateCount; i++)
     {
@@ -1808,40 +1820,33 @@ glabel sfx_c_70008B70
 /**
  * 9904    70008D04
  * some kind of dispose/deallocate method.
- * 
- *  decomp status:
- * - compiles: yes
- * - stack resize: ok
- * - identical instructions: yes
- * - identical registers: fail
  */
-#ifdef NONMATCHING
 void sfx_c_70008D04(ALSoundState *state)
 {
-    if (state == D_800243E4.state)
+    if (state == (ALSoundState *)D_800243E4.node.next)
     {
-        D_800243E4.state = (void *)state->link.next;
+        D_800243E4.node.next = state->link.next;
     }
 
-    if (state == (ALSoundState *)D_800243E4.state->link.prev)
+    if (state == (ALSoundState *)D_800243E4.node.prev)
     {
-        D_800243E4.state->link.prev = state->link.prev;
+        D_800243E4.node.prev = state->link.prev;
     }
 
     alUnlink(&state->link);
 
-    if (D_800243E4.bss.g_sndPlayerSoundStatePtr != NULL)
+    if (D_800243E4.g_sndPlayerSoundStatePtr != NULL)
     {
-        state->link.next = (void *)D_800243E4.bss.g_sndPlayerSoundStatePtr;
+        state->link.next = (void *)D_800243E4.g_sndPlayerSoundStatePtr;
         state->link.prev = NULL;
-        D_800243E4.bss.g_sndPlayerSoundStatePtr->link.prev = (void *)state;
-        D_800243E4.bss.g_sndPlayerSoundStatePtr = state;
+        D_800243E4.g_sndPlayerSoundStatePtr->link.prev = (void *)state;
+        D_800243E4.g_sndPlayerSoundStatePtr = state;
     }
     else
     {
         state->link.prev = NULL;
         state->link.next = NULL;
-        D_800243E4.bss.g_sndPlayerSoundStatePtr = state;
+        D_800243E4.g_sndPlayerSoundStatePtr = state;
     }
 
     if ((state->stateFlags.halfbytebyte.unk3e & 4) != 0)
@@ -1860,75 +1865,7 @@ void sfx_c_70008D04(ALSoundState *state)
 
         state->state = NULL;
     }
-
-    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sfx_c_70008D04
-/* 009904 70008D04 3C028002 */  lui   $v0, %hi(D_800243E4)
-/* 009908 70008D08 244243E4 */  addiu $v0, %lo(D_800243E4) # addiu $v0, $v0, 0x43e4
-/* 00990C 70008D0C 8C4E0000 */  lw    $t6, ($v0)
-/* 009910 70008D10 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 009914 70008D14 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 009918 70008D18 548E0004 */  bnel  $a0, $t6, .L70008D2C
-/* 00991C 70008D1C 8C580004 */   lw    $t8, 4($v0)
-/* 009920 70008D20 8C8F0000 */  lw    $t7, ($a0)
-/* 009924 70008D24 AC4F0000 */  sw    $t7, ($v0)
-/* 009928 70008D28 8C580004 */  lw    $t8, 4($v0)
-.L70008D2C:
-/* 00992C 70008D2C 14980003 */  bne   $a0, $t8, .L70008D3C
-/* 009930 70008D30 00000000 */   nop   
-/* 009934 70008D34 8C990004 */  lw    $t9, 4($a0)
-/* 009938 70008D38 AC590004 */  sw    $t9, 4($v0)
-.L70008D3C:
-/* 00993C 70008D3C 0C003AA4 */  jal   alUnlink
-/* 009940 70008D40 AFA40018 */   sw    $a0, 0x18($sp)
-/* 009944 70008D44 3C028002 */  lui   $v0, %hi(D_800243E4)
-/* 009948 70008D48 244243E4 */  addiu $v0, %lo(D_800243E4) # addiu $v0, $v0, 0x43e4
-/* 00994C 70008D4C 8C430008 */  lw    $v1, 8($v0)
-/* 009950 70008D50 8FA40018 */  lw    $a0, 0x18($sp)
-/* 009954 70008D54 50600008 */  beql  $v1, $zero, .L70008D78
-/* 009958 70008D58 AC800004 */   sw    $zero, 4($a0)
-/* 00995C 70008D5C AC830000 */  sw    $v1, ($a0)
-/* 009960 70008D60 AC800004 */  sw    $zero, 4($a0)
-/* 009964 70008D64 8C480008 */  lw    $t0, 8($v0)
-/* 009968 70008D68 AD040004 */  sw    $a0, 4($t0)
-/* 00996C 70008D6C 10000004 */  b     .L70008D80
-/* 009970 70008D70 AC440008 */   sw    $a0, 8($v0)
-/* 009974 70008D74 AC800004 */  sw    $zero, 4($a0)
-.L70008D78:
-/* 009978 70008D78 AC800000 */  sw    $zero, ($a0)
-/* 00997C 70008D7C AC440008 */  sw    $a0, 8($v0)
-.L70008D80:
-/* 009980 70008D80 9089003E */  lbu   $t1, 0x3e($a0)
-/* 009984 70008D84 3C028002 */  lui   $v0, %hi(D_800243F4)
-/* 009988 70008D88 244243F4 */  addiu $v0, %lo(D_800243F4) # addiu $v0, $v0, 0x43f4
-/* 00998C 70008D8C 312A0004 */  andi  $t2, $t1, 4
-/* 009990 70008D90 51400005 */  beql  $t2, $zero, .L70008DA8
-/* 009994 70008D94 8C820030 */   lw    $v0, 0x30($a0)
-/* 009998 70008D98 844B0000 */  lh    $t3, ($v0)
-/* 00999C 70008D9C 256CFFFF */  addiu $t4, $t3, -1
-/* 0099A0 70008DA0 A44C0000 */  sh    $t4, ($v0)
-/* 0099A4 70008DA4 8C820030 */  lw    $v0, 0x30($a0)
-.L70008DA8:
-/* 0099A8 70008DA8 A080003F */  sb    $zero, 0x3f($a0)
-/* 0099AC 70008DAC 50400007 */  beql  $v0, $zero, .L70008DCC
-/* 0099B0 70008DB0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0099B4 70008DB4 8C4D0000 */  lw    $t5, ($v0)
-/* 0099B8 70008DB8 548D0003 */  bnel  $a0, $t5, .L70008DC8
-/* 0099BC 70008DBC AC800030 */   sw    $zero, 0x30($a0)
-/* 0099C0 70008DC0 AC400000 */  sw    $zero, ($v0)
-/* 0099C4 70008DC4 AC800030 */  sw    $zero, 0x30($a0)
-.L70008DC8:
-/* 0099C8 70008DC8 8FBF0014 */  lw    $ra, 0x14($sp)
-.L70008DCC:
-/* 0099CC 70008DCC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0099D0 70008DD0 03E00008 */  jr    $ra
-/* 0099D4 70008DD4 00000000 */   nop   
-)
-#endif
 
 /**
  * 99D8    70008DD8
@@ -2258,7 +2195,7 @@ void sfx_c_7000906C(u8 arg0)
 
     mask = osSetIntMask(OS_IM_NONE);
 
-    item = (ALSoundState *)D_800243E4.state;
+    item = (ALSoundState *)D_800243E4.node.next;
     while (item != NULL)
     {
         evt.common.type = AL_SNDP_UNKNOWN_10_EVT;
@@ -2372,7 +2309,7 @@ void sfx_c_70009284(u8 arg0, u16 arg1)
     ALSndpEvent evt;
     ALSoundState *item;
 
-    item = (ALSoundState *)D_800243E4.state;
+    item = (ALSoundState *)D_800243E4.node.next;
     
     D_80063BA8[arg0] = arg1;
     D_80063BA4[arg0] = (s16) ((f32) arg1 * F32_800243FC);
