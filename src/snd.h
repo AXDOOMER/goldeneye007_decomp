@@ -45,7 +45,11 @@ typedef struct ALSoundState_s {
     struct ALSoundState_s *state;
 
     s16 unk34;
-    s8 unk36;
+
+    // priority?
+    // // vc.priority   = state->unk36;
+    u8 unk36;
+
     s8 unk37;
     s32 unk38;
 
