@@ -16,6 +16,7 @@ typedef u8      ALPan;
 #define AL_PAN_RIGHT    127
 
 #define AL_VOL_FULL     127
+#define AL_DEFAULT_FXMIX	0
 
 /**
  * Based on n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndp.h

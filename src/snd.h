@@ -7,15 +7,13 @@
 // based on n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndp.h
 struct ALSoundState_s;
 typedef struct ALSoundState_s {
+    
     // Unmatched properties:
     /*
 
     //
     s16         priority;
  
-    // volume - combined with volume from bank
-    s16         vol;
-	
     // pan - 0 = left, 127 = right
     ALPan       pan;
 	
@@ -44,7 +42,8 @@ typedef struct ALSoundState_s {
     // offset 0x30
     struct ALSoundState_s *state;
 
-    s16 unk34;
+    // offset 0x34
+    s16 vol;
 
     // priority?
     // // vc.priority   = state->unk36;
@@ -60,13 +59,13 @@ typedef struct ALSoundState_s {
 
         struct {
             s16 unk3c;
-            u8 unk3e; // state or flags?
-            u8 unk3f; // state or flags?
+            u8 unk3e;
+            u8 unk3f;
         } halfbytebyte;
 
         struct {
-            u8 unk3c;
-            u8 unk3d;
+            u8 unk3c; // pan related
+            u8 unk3d; // fxmix related
             u8 unk3e;
             u8 unk3f;
         } bbbb;
