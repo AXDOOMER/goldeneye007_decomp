@@ -10,15 +10,8 @@ typedef struct ALSoundState_s {
     
     // Unmatched properties:
     /*
-
-    //
-    s16         priority;
- 
-    // pan - 0 = left, 127 = right
-    ALPan       pan;
-	
-    // wet/dry mix - 0 = dry, 127 = wet
-    u8          fxMix;
+        //
+        s16         priority;
     */
 
     // offset 0
@@ -52,25 +45,17 @@ typedef struct ALSoundState_s {
     s8 unk37;
     s32 unk38;
 
-    union {
-        struct {
-            s32 unk3c;
-        } word;
+    // offset 0x3c = 60
+    // pan - 0 = left, 127 = right
+    ALPan pan;
 
-        struct {
-            s16 unk3c;
-            u8 unk3e;
-            u8 unk3f;
-        } halfbytebyte;
+    // offset 0x3d = 61
+    // wet/dry mix - 0 = dry, 127 = wet
+    u8 fxMix;
 
-        struct {
-            u8 unk3c; // pan related
-            u8 unk3d; // fxmix related
-            u8 unk3e;
-            u8 unk3f;
-        } bbbb;
-    } stateFlags;
-    
+    u8 unk3e; // state / flags?
+    u8 unk3f; // state / flags?
+
 } ALSoundState;
 
 /**
