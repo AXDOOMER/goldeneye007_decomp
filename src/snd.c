@@ -74,9 +74,9 @@ typedef union ALSndpEvent_u {
     struct {
         s32 unk0;
         s32 unk4;
-        s32 unk8;
+        s16 unk8;
         s16 unkA;
-        s16 unkC;
+        s32 unkC;
     } unk_u_1;
 
     struct {
@@ -257,62 +257,68 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALEvent *event)
 {
     // declarations
 
-    ALVoiceConfig vc;                   // sp 0xc8 = 200
-    u32 stack_bump_4;                   // ...............maybe 196
-    ALKeyMap *keyMap;                   // ...............maybe 192
-    ALSndpEvent *event_ptr;             // ...............maybe 188
-    ALVoice *voice = NULL;              // ...............maybe 184
-    ALSound *snd = NULL;                // ...............maybe 180
-    ALPan pan;                          // ...............maybe 176
+    u32 stack_bump_4;                   // ...............maybe 
+    ALSoundState *tstate;               // ...............maybe 
+    ALVoiceConfig vc;                   // ...............maybe 
+    ALKeyMap *keyMap;                   // ...............maybe 
+    ALSndpEvent *event_ptr;             // ...............maybe 
+    ALVoice *voice;                     // ...............maybe 
+    ALSound *snd;                       // ...............maybe 
+    ALPan pan;                          // ...............maybe 
     ALSndpEvent evt;                    // ...............maybe 156
-    ALMicroTime delta = 0;              // ...............maybe 152
-    s16 vol = 0;                        // ...............maybe 148
-    s32 tmp = 0;                        // ...............maybe 140
-    ALSoundState *state = NULL;         // ...............maybe 136
-    s32 vtmp = 0;                       // sp 0x90 = 144;
-    ALSoundState *tstate = 0;           // ...............maybe 128
-    s32 allocVoiceSuccess = 0;          // sp 0x7C = 124;
-    u16 msgtype;                        // ...............
-    s32 unk;                            // ...............
-    s32 done = 0;                       // ...............
-    s32 allocVoiceOk_rename_me = 0;     // ...............
-    ALSoundState *loopCheckVar = NULL;  // ...............
+    ALMicroTime delta;                  // ...............maybe 
+    s16 vol;                            // ...............maybe 
+    s32 tmp;                            // ...............maybe 
+    ALSoundState *state;                // ...............maybe 140
+    s32 vtmp;                           // ...............maybe 
+    s32 msgtype;
+    s32 done_state;                     // sp 0x80 = 128;
+    s32 allocVoiceSuccess;              // sp 0x7C = 124;
+    //void *unused;                       // ...............maybe
+    //void *next;                         // sp 0x74 = 116;
+    ALLink linky;
+    s16 sp72;                           // sp 0x72 = 114;
+    s16 sp70;                           // sp 0x70 = 112;
+    s32 allocVoiceOk_rename_me;         // ...............maybe 108
+    ALSoundState *loopCheckVar;         // ...............maybe 104
     ALSndpEvent playVoiceAllocEvent;    // sp 0x5c = 92
+    
+
 
     // done with declarations
 
     event_ptr = (ALSndpEvent *)event;
-    msgtype = event_ptr->unsignedType;
-    evt.unsignedType = event_ptr->unsignedType;
-    unk = event_ptr->align_size.unk8;
-    evt.common.state = event_ptr->common.state;
-    evt.unk_u_2.unk8 = event_ptr->unk_u_2.unk8;
-    snd = evt.common.state->sound;
+    done_state = 1;
+    allocVoiceSuccess = 0;
+    linky.next = NULL;
+    state = (void*)linky.prev; // ??
 
-    if (snd == NULL)
+    while (1)
     {
-        return;
-    }
-
-    while (!done)
-    {
+        if (linky.next != NULL)
+        {
+            evt.common.state = state;
+            evt.unsignedType = event_ptr->unsignedType;
+            evt.unk_u_2.unk8 = event_ptr->unk_u_2.unk8;
+            event_ptr = &evt;
+        }
+        
         state = event_ptr->common.state;
-        snd   = state->sound;
-        keyMap = snd->keyMap;
+        snd = state->sound;
 
         if (!snd)
         {
-            s16 sp72;
-            s16 sp70;
-
             sfx_c_70008AF0(&sp72, &sp70);
             return;
         }
 
-        switch (msgtype)
+        keyMap = snd->keyMap;
+        linky.next = (s32)state->link.next;
+
+        switch (event_ptr->unsignedType)
         {
             // case 0 (or 1?)
-            case (AL_SNDP_PLAY_EVT):
+            case (AL_SNDP_PLAY_EVT& 0x2d1):
             {
                 if ((state->unk3f == AL_UNKOWN_5) || (state->unk3f == AL_UNKOWN_4))
                 {
@@ -534,17 +540,6 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALEvent *event)
 
                     alSynSetVol(sndp->drvr, &state->voice.table, (s16) vtmp, 1000);
                 }
-
-                //////////////////////////////////////////////////////////////////////
-                // sndplayer.c
-                //
-                
-                // state->vol = event->vol.vol;
-                // if (state->state == AL_PLAYING && snd)
-                // {
-                //     vtmp  = snd->envelope->decayVolume * state->vol/AL_VOL_FULL;            
-                //     alSynSetVol(sndp->drvr, &state->voice, (s16) vtmp, 1000);
-                // }
             }
             break;
 
@@ -591,22 +586,6 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALEvent *event)
                         sfx_c_700089C4(state);
                     }
                 }
-
-                //////////////////////////////////////////////////////////////////////
-                // sndplayer.c
-                //
-                
-                // if (snd->envelope->decayTime != -1)
-                // {
-                //     vtmp = snd->envelope->decayVolume * state->vol/AL_VOL_FULL;            
-                //     //delta = (ALMicroTime) _DivS32ByF32 (snd->envelope->decayTime, state->pitch);
-                //     delta = (ALMicroTime) (snd->envelope->decayTime / state->pitch);
-                //     alSynSetVol(sndp->drvr, &state->voice, (s16) vtmp, delta);
-
-                //     evt.common.type        = AL_SNDP_STOP_EVT;
-                //     evt.common.state       = state;
-                //     alEvtqPostEvent(&sndp->evtq, (ALEvent *)&evt, delta);
-                // }
             }
             break;
             
@@ -614,16 +593,6 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALEvent *event)
             case (AL_SNDP_END_EVT):
             {
                 sfx_c_70008948(state);
-                
-                //////////////////////////////////////////////////////////////////////
-                // sndplayer.c
-                //
-                
-                // /* note: this code is repeated in AL_SNDP_STOP_EVT */
-                // alSynStopVoice(sndp->drvr, &state->voice);
-                // alSynFreeVoice(sndp->drvr, &state->voice);
-                // _removeEvents(&sndp->evtq, state);
-                // state->state = AL_STOPPED;
             }
             break;
             
@@ -632,31 +601,45 @@ void sfx_c_70007E80(ALSndPlayer *sndp, ALEvent *event)
             {
                 if ((state->unk3e & 0x10) != 0)
                 {
-                    play_sfx_a1(&event_ptr->unk_u_1.unkC, event_ptr->unk_u_1.unkA, &state->state);
+                    play_sfx_a1(event_ptr->unk_u_1.unkC, event_ptr->unk_u_1.unkA, state->state);
                 }
             }
             break;
             
             // case 0x1000
-            case (AL_SNDP_UNKNOWN_12_EVT):
-            {
-                // nothing?
-            }
-            break;
+            case (AL_SNDP_UNKNOWN_12_EVT): // nothing?
 
             default:
             break;
         }
 
-        event = event_ptr->common.state->link.next;
-        if (event == NULL)
+        msgtype = event_ptr->unsignedType & 0x2d1;
+
+        
+        if (linky.next && msgtype == 0)
         {
-            done = 1;
+            done_state = ((ALSoundState*)event)->unk3e & 0x1;
+        }
+
+        if (done_state || linky.next == NULL)
+        {
+            break;
+        }
+        else if (msgtype == 0)
+        {
+            continue;
         }
         else
         {
-            msgtype = event_ptr->msg.type;
+            linky.prev = state;
+            break;
         }
+        
+    }
+
+    if (linky.prev)
+    {
+        // removed
     }
 }
 
