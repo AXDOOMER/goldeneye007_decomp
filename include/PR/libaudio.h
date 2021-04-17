@@ -35,7 +35,7 @@ typedef enum ALSndpMsgType_e {
     AL_SNDP_FX_EVT         = (1 << 8),
     AL_SNDP_UNKNOWN_09_EVT = (1 << 9),
     AL_SNDP_UNKNOWN_10_EVT = (1 << 10),
-    AL_SNDP_UNKNOWN_11_EVT = (1 << 11),
+    AL_SNDP_RELEASE_EVT    = (1 << 11),
     AL_SNDP_UNKNOWN_12_EVT = (1 << 12),
     AL_SNDP_UNKNOWN_13_EVT = (1 << 13),
     AL_SNDP_UNKNOWN_14_EVT = (1 << 14),
@@ -384,6 +384,15 @@ void    alSynStartVoice(ALSynth *s, ALVoice *voice, ALWaveTable *w);
 //                              ALMicroTime t);
 void    alSynStopVoice(ALSynth *s, ALVoice *voice);
 
+/**
+ * This function ramps exponentially to the target volume in t microseconds. The
+ * volume can range from 0 to 0x7fff. Negative values are undefined.
+ * 
+ * @param s Pointer to the synthesizer driver.
+ * @param v Pointer to the voice.
+ * @param vol New target volume.
+ * @param delta Time to new target volume in microseconds.
+ */
 void    alSynSetVol(ALSynth *s, ALVoice *v, s16 vol, ALMicroTime delta);
 void    alSynSetPitch(ALSynth *s, ALVoice *voice, f32 ratio);
 void    alSynSetPan(ALSynth *s, ALVoice *voice, ALPan pan);
@@ -416,8 +425,14 @@ extern ALGlobals *alGlobals;
 #define AL_PLAYING      1
 #define AL_STOPPING     2
 
+// Used while iterating during AL_SNDP_PLAY_EVT;
+// Flags visited events.
 #define AL_UNKOWN_3     3
+
+// Maybe call to alSynAllocVoice failed
 #define AL_UNKOWN_4     4
+
+// some kind of initializing state?
 #define AL_UNKOWN_5     5
 
 /*

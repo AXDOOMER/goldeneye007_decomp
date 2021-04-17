@@ -4,16 +4,12 @@
 #include "ultra64.h"
 #include "PR/libaudio.h"
 
+#define DELTA_1_MS   1000
+#define DELTA_33_MS 33333
+
 // based on n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndp.h
 struct ALSoundState_s;
 typedef struct ALSoundState_s {
-    
-    // Unmatched properties:
-    /*
-        //
-        s16         priority;
-    */
-
     // offset 0
     ALLink link;
 
@@ -38,11 +34,13 @@ typedef struct ALSoundState_s {
     // offset 0x34
     s16 vol;
 
-    // priority?
-    // // vc.priority   = state->unk36;
-    u8 unk36;
+    /// offset 0x36
+    u8 priority;
 
+    // unused?
     s8 unk37;
+
+    // counter of some kind
     s32 unk38;
 
     // offset 0x3c = 60
@@ -53,8 +51,8 @@ typedef struct ALSoundState_s {
     // wet/dry mix - 0 = dry, 127 = wet
     u8 fxMix;
 
-    u8 unk3e; // state / flags?
-    u8 unk3f; // state / flags?
+    u8 unk3e; // flags?
+    u8 unk3f; // playing state?
 
 } ALSoundState;
 
