@@ -33,7 +33,7 @@ typedef enum ALSndpMsgType_e {
     AL_SNDP_DECAY_EVT      = (1 << 6),
     AL_SNDP_END_EVT        = (1 << 7),
     AL_SNDP_FX_EVT         = (1 << 8),
-    AL_SNDP_UNKNOWN_09_EVT = (1 << 9),
+    AL_SNDP_PLAY_SFX_EVT   = (1 << 9),
     AL_SNDP_UNKNOWN_10_EVT = (1 << 10),
     AL_SNDP_RELEASE_EVT    = (1 << 11),
     AL_SNDP_UNKNOWN_12_EVT = (1 << 12),
