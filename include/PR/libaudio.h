@@ -155,12 +155,29 @@ typedef struct {
     u8          decayVolume;
 } ALEnvelope;
 
+/**
+ * The keymap object, referenced by the sound object, specifies the range of
+ * MIDI velocity and key numbers that the sound is intended to cover. It is used
+ * by the Sequence Player to determine which sound to map to a given MIDI note
+ * number, and at what pitch ratio to play the sound.
+ * 
+ * Note: You can set the keyBase value outside the range of keyMin to keyMax.
+ * This is useful if you want to do critical re-sampling a wavetable to conserve
+ * ROM space. You could, for instance, resample a wavetable from 44.1 kHz to
+ * 22.05 kHz and adjust the keyBase up an octave to give a correction. Remember,
+ * however, that quality degrades at larger pitch shift ratios. 
+ */
 typedef struct {
     u8          velocityMin;
     u8          velocityMax;
     u8          keyMin;
     u8          keyMax;
     u8          keyBase;
+
+    /**
+     * The detune parameter indicates the number of cents that is to be
+     * added to the default tuning. A half step is equal to 100 cents. 
+     */
     s8          detune;
 } ALKeyMap;
 
@@ -193,6 +210,10 @@ typedef struct ALSound_s {
     u8          flags;
 } ALSound;
 
+/**
+ * The instrument object, referenced by the bank object, contains the overall volume and
+ * pan for the instrument as well as the list of sounds that make up the instrument. 
+ */
 typedef struct {
     u8          volume;         /* overall volume for this instrument   */
     ALPan       pan;            /* 0 = hard left, 127 = hard right      */
@@ -211,6 +232,10 @@ typedef struct {
     ALSound     *soundArray[1];
 } ALInstrument;
 
+/**
+ * A bank object, denoted by the keyword "bank", contains an array of instruments,
+ * a sample rate specification, and an optional default percussion instrument.
+ */
 typedef struct ALBank_s {
     s16                 instCount;      /* number of programs in this bank */
     u8                  flags;
