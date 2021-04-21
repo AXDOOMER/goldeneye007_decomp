@@ -1,5 +1,5 @@
 #include "ultra64.h"
-
+#include "include/PR/libaudio.h"
 
 
 
@@ -32,10 +32,10 @@ loop_3:
         if (temp_s0->unkA44 != 0)
         {
             // Node 4
-            if (sfxGetArg0Unk3F(temp_s0->unkA44) != 0)
+            if (sndGetPlayingState(temp_s0->unkA44) != AL_STOPPED)
             {
                 // Node 5
-                sfxDeactivate((temp_s0 + 0x870)->unk1D4);
+                sndDeactivate((temp_s0 + 0x870)->unk1D4);
             }
         }
         // Node 6
@@ -88,11 +88,11 @@ glabel cleanupplayersoundrelated
 /* 03C4FC 7F0079CC 26100870 */  addiu $s0, $s0, 0x870
 /* 03C500 7F0079D0 50800008 */  beql  $a0, $zero, .L7F0079F4
 /* 03C504 7F0079D4 263103A8 */   addiu $s1, $s1, 0x3a8
-/* 03C508 7F0079D8 0C00237C */  jal   sfxGetArg0Unk3F
+/* 03C508 7F0079D8 0C00237C */  jal   sndGetPlayingState
 /* 03C50C 7F0079DC 00000000 */   nop   
 /* 03C510 7F0079E0 50400004 */  beql  $v0, $zero, .L7F0079F4
 /* 03C514 7F0079E4 263103A8 */   addiu $s1, $s1, 0x3a8
-/* 03C518 7F0079E8 0C002408 */  jal   sfxDeactivate
+/* 03C518 7F0079E8 0C002408 */  jal   sndDeactivate
 /* 03C51C 7F0079EC 8E0401D4 */   lw    $a0, 0x1d4($s0)
 /* 03C520 7F0079F0 263103A8 */  addiu $s1, $s1, 0x3a8
 .L7F0079F4:

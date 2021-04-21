@@ -582,8 +582,21 @@ s32 g_musicUnused80063B58;
 s32 g_musicUnused80063B54;
 
 ALSndPlayer g_sndPlayer;
-s16 *D_80063BA4;
-u16 *D_80063BA8;
+
+/**
+ * Sfx volume array. This is the applied volume (what you hear in game).
+ * The watch menu "fx" volume slider will change all these values.
+ * min value = 0, max value = 0x7fff.
+ */
+s16 *g_sndSfxSlotVolume;
+
+/**
+ * Sfx volume array. This is the original unscaled volume set at level load.
+ * The watch menu "fx" volume slider will change all these values, but otherwise seems
+ * unused.
+ * min value = 0, max value = 0x7fff.
+ */
+u16 *g_sndSfxSlotNaturalVolume;
 
 extern u32 _sfxtblSegmentRomStart;
 extern u32 _sfxctlSegmentRomStart;
@@ -636,7 +649,7 @@ void musicSeqPlayerInit(void)
     u32 tblSegmentSize; // sp 64
     u32 size; // sp56;
     
-    if (bootswitch_sound)
+    if (g_sndBootswitchSound)
     {
         return;
     }
@@ -789,7 +802,7 @@ void musicTrack1Play(s32 track)
     u32 t3;
     struct huft hlist;
 
-    if (bootswitch_sound)
+    if (g_sndBootswitchSound)
     {
         return;
     }
@@ -839,7 +852,7 @@ void musicTrack1Play(s32 track)
  */
 void musicTrack1Stop(void)
 {
-    if (bootswitch_sound)
+    if (g_sndBootswitchSound)
     {
         return;
     }
@@ -978,7 +991,7 @@ void musicTrack2Play(s32 track)
     u32 t3;
     struct huft hlist;
 
-    if (bootswitch_sound)
+    if (g_sndBootswitchSound)
     {
         return;
     }
@@ -1028,7 +1041,7 @@ void musicTrack2Play(s32 track)
  */
 void musicTrack2Stop(void)
 {
-    if (bootswitch_sound)
+    if (g_sndBootswitchSound)
     {
         return;
     }
@@ -1167,7 +1180,7 @@ void musicTrack3Play(s32 track)
     u32 t3;
     struct huft hlist;
 
-    if (bootswitch_sound)
+    if (g_sndBootswitchSound)
     {
         return;
     }
@@ -1217,7 +1230,7 @@ void musicTrack3Play(s32 track)
  */
 void musicTrack3Stop(void)
 {
-    if (bootswitch_sound)
+    if (g_sndBootswitchSound)
     {
         return;
     }

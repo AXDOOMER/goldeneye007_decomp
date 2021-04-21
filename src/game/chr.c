@@ -2825,41 +2825,41 @@ glabel disable_sounds_attached_to_player_then_something
 /* 054F68 7F020438 8E450168 */  lw    $a1, 0x168($s2)
 /* 054F6C 7F02043C 50A00008 */  beql  $a1, $zero, .L7F020460
 /* 054F70 7F020440 8E44016C */   lw    $a0, 0x16c($s2)
-/* 054F74 7F020444 0C00237C */  jal   sfxGetArg0Unk3F
+/* 054F74 7F020444 0C00237C */  jal   sndGetPlayingState
 /* 054F78 7F020448 00A02025 */   move  $a0, $a1
 /* 054F7C 7F02044C 50400004 */  beql  $v0, $zero, .L7F020460
 /* 054F80 7F020450 8E44016C */   lw    $a0, 0x16c($s2)
-/* 054F84 7F020454 0C002408 */  jal   sfxDeactivate
+/* 054F84 7F020454 0C002408 */  jal   sndDeactivate
 /* 054F88 7F020458 8E440168 */   lw    $a0, 0x168($s2)
 /* 054F8C 7F02045C 8E44016C */  lw    $a0, 0x16c($s2)
 .L7F020460:
 /* 054F90 7F020460 50800008 */  beql  $a0, $zero, .L7F020484
 /* 054F94 7F020464 8E440170 */   lw    $a0, 0x170($s2)
-/* 054F98 7F020468 0C00237C */  jal   sfxGetArg0Unk3F
+/* 054F98 7F020468 0C00237C */  jal   sndGetPlayingState
 /* 054F9C 7F02046C 00000000 */   nop   
 /* 054FA0 7F020470 50400004 */  beql  $v0, $zero, .L7F020484
 /* 054FA4 7F020474 8E440170 */   lw    $a0, 0x170($s2)
-/* 054FA8 7F020478 0C002408 */  jal   sfxDeactivate
+/* 054FA8 7F020478 0C002408 */  jal   sndDeactivate
 /* 054FAC 7F02047C 8E44016C */   lw    $a0, 0x16c($s2)
 /* 054FB0 7F020480 8E440170 */  lw    $a0, 0x170($s2)
 .L7F020484:
 /* 054FB4 7F020484 50800008 */  beql  $a0, $zero, .L7F0204A8
 /* 054FB8 7F020488 8E440174 */   lw    $a0, 0x174($s2)
-/* 054FBC 7F02048C 0C00237C */  jal   sfxGetArg0Unk3F
+/* 054FBC 7F02048C 0C00237C */  jal   sndGetPlayingState
 /* 054FC0 7F020490 00000000 */   nop   
 /* 054FC4 7F020494 50400004 */  beql  $v0, $zero, .L7F0204A8
 /* 054FC8 7F020498 8E440174 */   lw    $a0, 0x174($s2)
-/* 054FCC 7F02049C 0C002408 */  jal   sfxDeactivate
+/* 054FCC 7F02049C 0C002408 */  jal   sndDeactivate
 /* 054FD0 7F0204A0 8E440170 */   lw    $a0, 0x170($s2)
 /* 054FD4 7F0204A4 8E440174 */  lw    $a0, 0x174($s2)
 .L7F0204A8:
 /* 054FD8 7F0204A8 10800007 */  beqz  $a0, .L7F0204C8
 /* 054FDC 7F0204AC 00000000 */   nop   
-/* 054FE0 7F0204B0 0C00237C */  jal   sfxGetArg0Unk3F
+/* 054FE0 7F0204B0 0C00237C */  jal   sndGetPlayingState
 /* 054FE4 7F0204B4 00000000 */   nop   
 /* 054FE8 7F0204B8 10400003 */  beqz  $v0, .L7F0204C8
 /* 054FEC 7F0204BC 00000000 */   nop   
-/* 054FF0 7F0204C0 0C002408 */  jal   sfxDeactivate
+/* 054FF0 7F0204C0 0C002408 */  jal   sndDeactivate
 /* 054FF4 7F0204C4 8E440174 */   lw    $a0, 0x174($s2)
 .L7F0204C8:
 /* 054FF8 7F0204C8 0FC1437A */  jal   sub_GAME_7F050DE8

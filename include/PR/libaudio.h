@@ -18,30 +18,6 @@ typedef u8      ALPan;
 #define AL_VOL_FULL     127
 #define AL_DEFAULT_FXMIX	0
 
-/**
- * Based on n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndp.h
- * enum ALSndpMsgType,
- * except this version is bitwise.
- */
-typedef enum ALSndpMsgType_e {
-    AL_SNDP_PLAY_EVT       = (1 << 0),
-    AL_SNDP_STOP_EVT       = (1 << 1),
-    AL_SNDP_PAN_EVT        = (1 << 2),
-    AL_SNDP_VOL_EVT        = (1 << 3),
-    AL_SNDP_PITCH_EVT      = (1 << 4),
-    AL_SNDP_API_EVT        = (1 << 5),
-    AL_SNDP_DECAY_EVT      = (1 << 6),
-    AL_SNDP_END_EVT        = (1 << 7),
-    AL_SNDP_FX_EVT         = (1 << 8),
-    AL_SNDP_PLAY_SFX_EVT   = (1 << 9),
-    AL_SNDP_UNKNOWN_10_EVT = (1 << 10),
-    AL_SNDP_RELEASE_EVT    = (1 << 11),
-    AL_SNDP_UNKNOWN_12_EVT = (1 << 12),
-    AL_SNDP_UNKNOWN_13_EVT = (1 << 13),
-    AL_SNDP_UNKNOWN_14_EVT = (1 << 14),
-    AL_SNDP_UNKNOWN_15_EVT = (1 << 15)
-} ALSndpMsgType;
-
 /***********************************************************************
  * Audio Library global routines
  ***********************************************************************/
@@ -451,13 +427,13 @@ extern ALGlobals *alGlobals;
 #define AL_STOPPING     2
 
 // Used while iterating during AL_SNDP_PLAY_EVT;
-// Flags visited events.
+// Seems to be used to flag visited ALEvents.
 #define AL_UNKOWN_3     3
 
-// Maybe call to alSynAllocVoice failed
+// Maybe: call to alSynAllocVoice failed
 #define AL_UNKOWN_4     4
 
-// some kind of initializing state?
+// Maybe: currently initializing state?
 #define AL_UNKOWN_5     5
 
 /*

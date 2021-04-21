@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "include/PR/libaudio.h"
 
 
 
@@ -17,10 +18,10 @@ loop_1:
     if (temp_a0 != 0)
     {
         // Node 2
-        if (sfxGetArg0Unk3F(temp_a0) != 0)
+        if (sndGetPlayingState(temp_a0) != AL_STOPPED)
         {
             // Node 3
-            sfxDeactivate(*phi_s0);
+            sndDeactivate(*phi_s0);
         }
     }
     // Node 4
@@ -49,11 +50,11 @@ glabel cleanupObjectSounds
 .L7F007484:
 /* 03BFB4 7F007484 50800008 */  beql  $a0, $zero, .L7F0074A8
 /* 03BFB8 7F007488 26100018 */   addiu $s0, $s0, 0x18
-/* 03BFBC 7F00748C 0C00237C */  jal   sfxGetArg0Unk3F
+/* 03BFBC 7F00748C 0C00237C */  jal   sndGetPlayingState
 /* 03BFC0 7F007490 00000000 */   nop   
 /* 03BFC4 7F007494 50400004 */  beql  $v0, $zero, .L7F0074A8
 /* 03BFC8 7F007498 26100018 */   addiu $s0, $s0, 0x18
-/* 03BFCC 7F00749C 0C002408 */  jal   sfxDeactivate
+/* 03BFCC 7F00749C 0C002408 */  jal   sndDeactivate
 /* 03BFD0 7F0074A0 8E040000 */   lw    $a0, ($s0)
 /* 03BFD4 7F0074A4 26100018 */  addiu $s0, $s0, 0x18
 .L7F0074A8:

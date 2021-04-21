@@ -9,6 +9,7 @@
 #include "music.h"
 #include "bondconstants.h"
 #include "boss.h"
+#include "snd.h"
 
 // bss
 char dword_CODE_bss_8007B0A0[0x40];
@@ -871,7 +872,7 @@ void sub_GAME_7F0A4EF8(void) {
         
     } else {
         watch_soundrelated_maybe = 1;
-        play_sfx_a1(g_musicSfxBufferPtr, 0x9F, 0);
+        sndPlaySfx(g_musicSfxBufferPtr, 0x9F, 0);
     }
 }
 
@@ -969,14 +970,14 @@ s32 sub_GAME_7F0A519C(void)
 void sub_GAME_7F0A51D8(void)
 {
     D_80040B04 = 0x80;
-    play_sfx_a1(g_musicSfxBufferPtr,0xec,NULL);
+    sndPlaySfx(g_musicSfxBufferPtr,0xec,NULL);
     return;
 }
 
 void sub_GAME_7F0A5210(void)
 {
     set_controlstick_lr_disabled();
-    play_sfx_a1(g_musicSfxBufferPtr,0x9f,NULL);
+    sndPlaySfx(g_musicSfxBufferPtr,0x9f,NULL);
     if ((D_80040B10 << 0x10) < randomGetNext()) {
         sub_GAME_7F0A51D8();
     }
@@ -4272,7 +4273,7 @@ void sub_GAME_7F0A8378(void)
     remove_hands_item(1, 0);
     set_BONDdata_equipcuritem(D_800409B8);
     D_800409C4 = 10;
-    play_sfx_a1(g_musicSfxBufferPtr, 0x9F, 0);
+    sndPlaySfx(g_musicSfxBufferPtr, 0x9F, 0);
 }
 
 
@@ -6142,7 +6143,7 @@ glabel sub_GAME_7F0A8FEC
 /* 0DDB28 7F0A8FF8 AFBF002C */  sw    $ra, 0x2c($sp)
 /* 0DDB2C 7F0A8FFC 0FC2F5B1 */  jal   dynAllocate7F0BD6C4
 /* 0DDB30 7F0A9000 2404000C */   li    $a0, 12
-/* 0DDB34 7F0A9004 0C002472 */  jal   sfx_c_700091C8
+/* 0DDB34 7F0A9004 0C002472 */  jal   sndGetSfxSlotFirstNaturalVolume
 /* 0DDB38 7F0A9008 AFA2003C */   sw    $v0, 0x3c($sp)
 /* 0DDB3C 7F0A900C 3C0E8004 */  lui   $t6, %hi(watch_soundrelated_maybe) 
 /* 0DDB40 7F0A9010 8DCE09A8 */  lw    $t6, %lo(watch_soundrelated_maybe)($t6)
@@ -6170,7 +6171,7 @@ glabel sub_GAME_7F0A8FEC
 /* 0DDB90 7F0A9060 C42A8538 */  lwc1  $f10, %lo(D_80058538)($at)
 /* 0DDB94 7F0A9064 03002025 */  move  $a0, $t8
 /* 0DDB98 7F0A9068 460A3403 */  div.s $f16, $f6, $f10
-/* 0DDB9C 7F0A906C 0C00247A */  jal   sfx_c_700091E8
+/* 0DDB9C 7F0A906C 0C00247A */  jal   sndApplyVolumeAllSfxSlot
 /* 0DDBA0 7F0A9070 E7B00040 */   swc1  $f16, 0x40($sp)
 /* 0DDBA4 7F0A9074 02001025 */  move  $v0, $s0
 /* 0DDBA8 7F0A9078 3C19B900 */  lui   $t9, (0xB900031D >> 16) # lui $t9, 0xb900
@@ -6243,8 +6244,8 @@ glabel sub_GAME_7F0A8FEC
 #endif
 
 
-void call_sfx_c_700091C8(void) {
-    sfx_c_700091C8();
+void call_sndGetSfxSlotFirstNaturalVolume(void) {
+    sndGetSfxSlotFirstNaturalVolume();
 }
 
 
@@ -6252,7 +6253,7 @@ void call_sfx_c_700091C8(void) {
 //TODO: Use t6 instead of a1
 void sub_GAME_7F0A91A0(u16 arg0)
 {
-    sfx_c_700091E8(arg0);
+    sndApplyVolumeAllSfxSlot(arg0);
 }
 #else
 GLOBAL_ASM(
@@ -6262,7 +6263,7 @@ glabel sub_GAME_7F0A91A0
 /* 0DDCD4 7F0A91A4 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0DDCD8 7F0A91A8 AFA40018 */  sw    $a0, 0x18($sp)
 /* 0DDCDC 7F0A91AC 308EFFFF */  andi  $t6, $a0, 0xffff
-/* 0DDCE0 7F0A91B0 0C00247A */  jal   sfx_c_700091E8
+/* 0DDCE0 7F0A91B0 0C00247A */  jal   sndApplyVolumeAllSfxSlot
 /* 0DDCE4 7F0A91B4 01C02025 */   move  $a0, $t6
 /* 0DDCE8 7F0A91B8 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0DDCEC 7F0A91BC 27BD0018 */  addiu $sp, $sp, 0x18
@@ -9631,7 +9632,7 @@ void game_option_select_value(u32 *param_1, u32 param_2)
 {
     *param_1 = param_2;
     set_controlstick_lr_disabled();
-    play_sfx_a1(g_musicSfxBufferPtr, 0x2b, NULL);
+    sndPlaySfx(g_musicSfxBufferPtr, 0x2b, NULL);
 }
 
 

@@ -42,7 +42,7 @@ s32 mission_state = 0;
 
 
 void sub_GAME_7F0C0C10(void) {
-  call_sfx_c_700091C8();
+  call_sndGetSfxSlotFirstNaturalVolume();
 }
 
 s32 get_mission_state(void) {

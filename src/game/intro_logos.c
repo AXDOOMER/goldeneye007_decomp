@@ -253,7 +253,7 @@ glabel sub_GAME_7F007F30
 /* 03CB80 7F008050 2405006F */   li    $a1, 111
 /* 03CB84 7F008054 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 03CB88 7F008058 00003025 */  move  $a2, $zero
-/* 03CB8C 7F00805C 0C002382 */  jal   play_sfx_a1
+/* 03CB8C 7F00805C 0C002382 */  jal   sndPlaySfx
 /* 03CB90 7F008060 24150001 */   li    $s5, 1
 .L7F008064:
 /* 03CB94 7F008064 8FAD0124 */  lw    $t5, 0x124($sp)

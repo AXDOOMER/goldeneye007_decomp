@@ -10,6 +10,7 @@
 #include "game/lvl.h"
 #include "game/lvl_text.h"
 #include "game/chrobjhandler.h"
+#include "include/PR/libaudio.h"
 
 s32 alarm_timer = 0;
 s32 *ptr_alarm_sfx = 0;
@@ -20,7 +21,7 @@ f32 D_80030AD4 = 0.0;
 f32 D_80030AD8 = 0.0;
 s32 D_80030ADC = 0;
 u32 D_80030AE0 = 0;
-s32 ptr_gas_sound = 0;
+ALSoundState *ptr_gas_sound = NULL;
 s32 clock_drawn_flag = 1;
 s32 clock_enable = 0;
 f32 clock_time = 0;
@@ -473,21 +474,21 @@ glabel sub_GAME_7F03FB70
 /* 0746C0 7F03FB90 8C840098 */  lw    $a0, 0x98($a0)
 /* 0746C4 7F03FB94 50800008 */  beql  $a0, $zero, .L7F03FBB8
 /* 0746C8 7F03FB98 8E04009C */   lw    $a0, 0x9c($s0)
-/* 0746CC 7F03FB9C 0C00237C */  jal   sfxGetArg0Unk3F
+/* 0746CC 7F03FB9C 0C00237C */  jal   sndGetPlayingState
 /* 0746D0 7F03FBA0 00000000 */   nop   
 /* 0746D4 7F03FBA4 50400004 */  beql  $v0, $zero, .L7F03FBB8
 /* 0746D8 7F03FBA8 8E04009C */   lw    $a0, 0x9c($s0)
-/* 0746DC 7F03FBAC 0C002408 */  jal   sfxDeactivate
+/* 0746DC 7F03FBAC 0C002408 */  jal   sndDeactivate
 /* 0746E0 7F03FBB0 8E040098 */   lw    $a0, 0x98($s0)
 /* 0746E4 7F03FBB4 8E04009C */  lw    $a0, 0x9c($s0)
 .L7F03FBB8:
 /* 0746E8 7F03FBB8 50800008 */  beql  $a0, $zero, .L7F03FBDC
 /* 0746EC 7F03FBBC 8E180000 */   lw    $t8, ($s0)
-/* 0746F0 7F03FBC0 0C00237C */  jal   sfxGetArg0Unk3F
+/* 0746F0 7F03FBC0 0C00237C */  jal   sndGetPlayingState
 /* 0746F4 7F03FBC4 00000000 */   nop   
 /* 0746F8 7F03FBC8 50400004 */  beql  $v0, $zero, .L7F03FBDC
 /* 0746FC 7F03FBCC 8E180000 */   lw    $t8, ($s0)
-/* 074700 7F03FBD0 0C002408 */  jal   sfxDeactivate
+/* 074700 7F03FBD0 0C002408 */  jal   sndDeactivate
 /* 074704 7F03FBD4 8E04009C */   lw    $a0, 0x9c($s0)
 /* 074708 7F03FBD8 8E180000 */  lw    $t8, ($s0)
 .L7F03FBDC:
@@ -2101,21 +2102,21 @@ glabel sub_GAME_7F040D98
 /* 0758F4 7F040DC4 8C8400C4 */  lw    $a0, 0xc4($a0)
 /* 0758F8 7F040DC8 50800008 */  beql  $a0, $zero, .L7F040DEC
 /* 0758FC 7F040DCC 8E4400C8 */   lw    $a0, 0xc8($s2)
-/* 075900 7F040DD0 0C00237C */  jal   sfxGetArg0Unk3F
+/* 075900 7F040DD0 0C00237C */  jal   sndGetPlayingState
 /* 075904 7F040DD4 00000000 */   nop   
 /* 075908 7F040DD8 50400004 */  beql  $v0, $zero, .L7F040DEC
 /* 07590C 7F040DDC 8E4400C8 */   lw    $a0, 0xc8($s2)
-/* 075910 7F040DE0 0C002408 */  jal   sfxDeactivate
+/* 075910 7F040DE0 0C002408 */  jal   sndDeactivate
 /* 075914 7F040DE4 8E4400C4 */   lw    $a0, 0xc4($s2)
 /* 075918 7F040DE8 8E4400C8 */  lw    $a0, 0xc8($s2)
 .L7F040DEC:
 /* 07591C 7F040DEC 5080004E */  beql  $a0, $zero, .L7F040F28
 /* 075920 7F040DF0 8E510010 */   lw    $s1, 0x10($s2)
-/* 075924 7F040DF4 0C00237C */  jal   sfxGetArg0Unk3F
+/* 075924 7F040DF4 0C00237C */  jal   sndGetPlayingState
 /* 075928 7F040DF8 00000000 */   nop   
 /* 07592C 7F040DFC 5040004A */  beql  $v0, $zero, .L7F040F28
 /* 075930 7F040E00 8E510010 */   lw    $s1, 0x10($s2)
-/* 075934 7F040E04 0C002408 */  jal   sfxDeactivate
+/* 075934 7F040E04 0C002408 */  jal   sndDeactivate
 /* 075938 7F040E08 8E4400C8 */   lw    $a0, 0xc8($s2)
 /* 07593C 7F040E0C 10000046 */  b     .L7F040F28
 /* 075940 7F040E10 8E510010 */   lw    $s1, 0x10($s2)
@@ -2136,21 +2137,21 @@ glabel sub_GAME_7F040D98
 /* 075974 7F040E44 8E4400F4 */  lw    $a0, 0xf4($s2)
 /* 075978 7F040E48 50800008 */  beql  $a0, $zero, .L7F040E6C
 /* 07597C 7F040E4C 8E4400F8 */   lw    $a0, 0xf8($s2)
-/* 075980 7F040E50 0C00237C */  jal   sfxGetArg0Unk3F
+/* 075980 7F040E50 0C00237C */  jal   sndGetPlayingState
 /* 075984 7F040E54 00000000 */   nop   
 /* 075988 7F040E58 50400004 */  beql  $v0, $zero, .L7F040E6C
 /* 07598C 7F040E5C 8E4400F8 */   lw    $a0, 0xf8($s2)
-/* 075990 7F040E60 0C002408 */  jal   sfxDeactivate
+/* 075990 7F040E60 0C002408 */  jal   sndDeactivate
 /* 075994 7F040E64 8E4400F4 */   lw    $a0, 0xf4($s2)
 /* 075998 7F040E68 8E4400F8 */  lw    $a0, 0xf8($s2)
 .L7F040E6C:
 /* 07599C 7F040E6C 5080002E */  beql  $a0, $zero, .L7F040F28
 /* 0759A0 7F040E70 8E510010 */   lw    $s1, 0x10($s2)
-/* 0759A4 7F040E74 0C00237C */  jal   sfxGetArg0Unk3F
+/* 0759A4 7F040E74 0C00237C */  jal   sndGetPlayingState
 /* 0759A8 7F040E78 00000000 */   nop   
 /* 0759AC 7F040E7C 5040002A */  beql  $v0, $zero, .L7F040F28
 /* 0759B0 7F040E80 8E510010 */   lw    $s1, 0x10($s2)
-/* 0759B4 7F040E84 0C002408 */  jal   sfxDeactivate
+/* 0759B4 7F040E84 0C002408 */  jal   sndDeactivate
 /* 0759B8 7F040E88 8E4400F8 */   lw    $a0, 0xf8($s2)
 /* 0759BC 7F040E8C 10000026 */  b     .L7F040F28
 /* 0759C0 7F040E90 8E510010 */   lw    $s1, 0x10($s2)
@@ -2172,11 +2173,11 @@ glabel sub_GAME_7F040D98
 /* 0759F8 7F040EC8 8E4400B0 */  lw    $a0, 0xb0($s2)
 /* 0759FC 7F040ECC 50800016 */  beql  $a0, $zero, .L7F040F28
 /* 075A00 7F040ED0 8E510010 */   lw    $s1, 0x10($s2)
-/* 075A04 7F040ED4 0C00237C */  jal   sfxGetArg0Unk3F
+/* 075A04 7F040ED4 0C00237C */  jal   sndGetPlayingState
 /* 075A08 7F040ED8 00000000 */   nop   
 /* 075A0C 7F040EDC 50400012 */  beql  $v0, $zero, .L7F040F28
 /* 075A10 7F040EE0 8E510010 */   lw    $s1, 0x10($s2)
-/* 075A14 7F040EE4 0C002408 */  jal   sfxDeactivate
+/* 075A14 7F040EE4 0C002408 */  jal   sndDeactivate
 /* 075A18 7F040EE8 8E4400B0 */   lw    $a0, 0xb0($s2)
 /* 075A1C 7F040EEC 1000000E */  b     .L7F040F28
 /* 075A20 7F040EF0 8E510010 */   lw    $s1, 0x10($s2)
@@ -2187,11 +2188,11 @@ glabel sub_GAME_7F040D98
 /* 075A30 7F040F00 8E4400AC */  lw    $a0, 0xac($s2)
 /* 075A34 7F040F04 50800008 */  beql  $a0, $zero, .L7F040F28
 /* 075A38 7F040F08 8E510010 */   lw    $s1, 0x10($s2)
-/* 075A3C 7F040F0C 0C00237C */  jal   sfxGetArg0Unk3F
+/* 075A3C 7F040F0C 0C00237C */  jal   sndGetPlayingState
 /* 075A40 7F040F10 00000000 */   nop   
 /* 075A44 7F040F14 50400004 */  beql  $v0, $zero, .L7F040F28
 /* 075A48 7F040F18 8E510010 */   lw    $s1, 0x10($s2)
-/* 075A4C 7F040F1C 0C002408 */  jal   sfxDeactivate
+/* 075A4C 7F040F1C 0C002408 */  jal   sndDeactivate
 /* 075A50 7F040F20 8E4400AC */   lw    $a0, 0xac($s2)
 .L7F040F24:
 /* 075A54 7F040F24 8E510010 */  lw    $s1, 0x10($s2)
@@ -5169,13 +5170,13 @@ glabel sub_GAME_7F043650
 /* 078230 7F043700 8D240098 */  lw    $a0, 0x98($t1)
 /* 078234 7F043704 5080000A */  beql  $a0, $zero, .L7F043730
 /* 078238 7F043708 8FA70034 */   lw    $a3, 0x34($sp)
-/* 07823C 7F04370C 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07823C 7F04370C 0C00237C */  jal   sndGetPlayingState
 /* 078240 7F043710 AFAB002C */   sw    $t3, 0x2c($sp)
 /* 078244 7F043714 10400005 */  beqz  $v0, .L7F04372C
 /* 078248 7F043718 8FA7002C */   lw    $a3, 0x2c($sp)
 /* 07824C 7F04371C 8E0A006C */  lw    $t2, 0x6c($s0)
 /* 078250 7F043720 01476021 */  addu  $t4, $t2, $a3
-/* 078254 7F043724 0C002408 */  jal   sfxDeactivate
+/* 078254 7F043724 0C002408 */  jal   sndDeactivate
 /* 078258 7F043728 8D840098 */   lw    $a0, 0x98($t4)
 .L7F04372C:
 /* 07825C 7F04372C 8FA70034 */  lw    $a3, 0x34($sp)
@@ -5199,7 +5200,7 @@ glabel sub_GAME_7F043650
 /* 0782A0 7F043770 01673021 */  addu  $a2, $t3, $a3
 /* 0782A4 7F043774 24C60098 */  addiu $a2, $a2, 0x98
 /* 0782A8 7F043778 AFA7002C */  sw    $a3, 0x2c($sp)
-/* 0782AC 7F04377C 0C002382 */  jal   play_sfx_a1
+/* 0782AC 7F04377C 0C002382 */  jal   sndPlaySfx
 /* 0782B0 7F043780 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0782B4 7F043784 8FA7002C */  lw    $a3, 0x2c($sp)
 /* 0782B8 7F043788 8E09006C */  lw    $t1, 0x6c($s0)
@@ -5225,24 +5226,24 @@ glabel sub_GAME_7F043650
 /* 078300 7F0437D0 8C640098 */  lw    $a0, 0x98($v1)
 /* 078304 7F0437D4 50800009 */  beql  $a0, $zero, .L7F0437FC
 /* 078308 7F0437D8 8E09006C */   lw    $t1, 0x6c($s0)
-/* 07830C 7F0437DC 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07830C 7F0437DC 0C00237C */  jal   sndGetPlayingState
 /* 078310 7F0437E0 00000000 */   nop   
 /* 078314 7F0437E4 50400005 */  beql  $v0, $zero, .L7F0437FC
 /* 078318 7F0437E8 8E09006C */   lw    $t1, 0x6c($s0)
 /* 07831C 7F0437EC 8E0B006C */  lw    $t3, 0x6c($s0)
-/* 078320 7F0437F0 0C002408 */  jal   sfxDeactivate
+/* 078320 7F0437F0 0C002408 */  jal   sndDeactivate
 /* 078324 7F0437F4 8D640098 */   lw    $a0, 0x98($t3)
 /* 078328 7F0437F8 8E09006C */  lw    $t1, 0x6c($s0)
 .L7F0437FC:
 /* 07832C 7F0437FC 8D24009C */  lw    $a0, 0x9c($t1)
 /* 078330 7F043800 50800009 */  beql  $a0, $zero, .L7F043828
 /* 078334 7F043804 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 078338 7F043808 0C00237C */  jal   sfxGetArg0Unk3F
+/* 078338 7F043808 0C00237C */  jal   sndGetPlayingState
 /* 07833C 7F04380C 00000000 */   nop   
 /* 078340 7F043810 50400005 */  beql  $v0, $zero, .L7F043828
 /* 078344 7F043814 8FBF001C */   lw    $ra, 0x1c($sp)
 /* 078348 7F043818 8E0A006C */  lw    $t2, 0x6c($s0)
-/* 07834C 7F04381C 0C002408 */  jal   sfxDeactivate
+/* 07834C 7F04381C 0C002408 */  jal   sndDeactivate
 /* 078350 7F043820 8D44009C */   lw    $a0, 0x9c($t2)
 .L7F043824:
 /* 078354 7F043824 8FBF001C */  lw    $ra, 0x1c($sp)
@@ -8918,7 +8919,7 @@ glabel object_interaction
 /* 07A45C 7F04592C 34490010 */  ori   $t1, $v0, 0x10
 /* 07A460 7F045930 A2690001 */  sb    $t1, 1($s3)
 .L7F045934:
-/* 07A464 7F045934 0C002382 */  jal   play_sfx_a1
+/* 07A464 7F045934 0C002382 */  jal   sndPlaySfx
 /* 07A468 7F045938 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07A46C 7F04593C 00402025 */  move  $a0, $v0
 /* 07A470 7F045940 0FC14E84 */  jal   sub_GAME_7F053A10
@@ -9478,14 +9479,14 @@ glabel object_interaction
 /* 07AC84 7F046154 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 07AC88 7F046158 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07AC8C 7F04615C 24050003 */  li    $a1, 3
-/* 07AC90 7F046160 0C002382 */  jal   play_sfx_a1
+/* 07AC90 7F046160 0C002382 */  jal   sndPlaySfx
 /* 07AC94 7F046164 00003025 */   move  $a2, $zero
 /* 07AC98 7F046168 10000006 */  b     .L7F046184
 /* 07AC9C 7F04616C 00402025 */   move  $a0, $v0
 .L7F046170:
 /* 07ACA0 7F046170 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07ACA4 7F046174 2405002D */  li    $a1, 45
-/* 07ACA8 7F046178 0C002382 */  jal   play_sfx_a1
+/* 07ACA8 7F046178 0C002382 */  jal   sndPlaySfx
 /* 07ACAC 7F04617C 00003025 */   move  $a2, $zero
 /* 07ACB0 7F046180 00402025 */  move  $a0, $v0
 .L7F046184:
@@ -10931,7 +10932,7 @@ glabel object_interaction
 /* 07C180 7F047650 8E2400AC */  lw    $a0, 0xac($s1)
 /* 07C184 7F047654 10800005 */  beqz  $a0, .L7F04766C
 /* 07C188 7F047658 00000000 */   nop   
-/* 07C18C 7F04765C 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07C18C 7F04765C 0C00237C */  jal   sndGetPlayingState
 /* 07C190 7F047660 00000000 */   nop   
 /* 07C194 7F047664 5440000A */  bnezl $v0, .L7F047690
 /* 07C198 7F047668 8E2400AC */   lw    $a0, 0xac($s1)
@@ -10942,7 +10943,7 @@ glabel object_interaction
 /* 07C1A8 7F047678 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 07C1AC 7F04767C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07C1B0 7F047680 24050041 */  li    $a1, 65
-/* 07C1B4 7F047684 0C002382 */  jal   play_sfx_a1
+/* 07C1B4 7F047684 0C002382 */  jal   sndPlaySfx
 /* 07C1B8 7F047688 262600AC */   addiu $a2, $s1, 0xac
 .L7F04768C:
 /* 07C1BC 7F04768C 8E2400AC */  lw    $a0, 0xac($s1)
@@ -10950,7 +10951,7 @@ glabel object_interaction
 /* 07C1C0 7F047690 24050008 */  li    $a1, 8
 /* 07C1C4 7F047694 5080000F */  beql  $a0, $zero, .L7F0476D4
 /* 07C1C8 7F047698 8E2400A4 */   lw    $a0, 0xa4($s1)
-/* 07C1CC 7F04769C 0C002461 */  jal   sfx_c_70009184
+/* 07C1CC 7F04769C 0C002461 */  jal   sndCreatePostEvent
 /* 07C1D0 7F0476A0 02003025 */   move  $a2, $s0
 /* 07C1D4 7F0476A4 1000000B */  b     .L7F0476D4
 /* 07C1D8 7F0476A8 8E2400A4 */   lw    $a0, 0xa4($s1)
@@ -10958,11 +10959,11 @@ glabel object_interaction
 .L7F0476B0:
 /* 07C1E0 7F0476B0 50800008 */  beql  $a0, $zero, .L7F0476D4
 /* 07C1E4 7F0476B4 8E2400A4 */   lw    $a0, 0xa4($s1)
-/* 07C1E8 7F0476B8 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07C1E8 7F0476B8 0C00237C */  jal   sndGetPlayingState
 /* 07C1EC 7F0476BC 00000000 */   nop   
 /* 07C1F0 7F0476C0 50400004 */  beql  $v0, $zero, .L7F0476D4
 /* 07C1F4 7F0476C4 8E2400A4 */   lw    $a0, 0xa4($s1)
-/* 07C1F8 7F0476C8 0C002408 */  jal   sfxDeactivate
+/* 07C1F8 7F0476C8 0C002408 */  jal   sndDeactivate
 /* 07C1FC 7F0476CC 8E2400AC */   lw    $a0, 0xac($s1)
 /* 07C200 7F0476D0 8E2400A4 */  lw    $a0, 0xa4($s1)
 .L7F0476D4:
@@ -11698,7 +11699,7 @@ glabel object_interaction
 /* 07CCDC 7F0481AC 8E2400B0 */  lw    $a0, 0xb0($s1)
 /* 07CCE0 7F0481B0 10800005 */  beqz  $a0, .L7F0481C8
 /* 07CCE4 7F0481B4 00000000 */   nop   
-/* 07CCE8 7F0481B8 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07CCE8 7F0481B8 0C00237C */  jal   sndGetPlayingState
 /* 07CCEC 7F0481BC 00000000 */   nop   
 /* 07CCF0 7F0481C0 5440000A */  bnezl $v0, .L7F0481EC
 /* 07CCF4 7F0481C4 8E2400B0 */   lw    $a0, 0xb0($s1)
@@ -11709,7 +11710,7 @@ glabel object_interaction
 /* 07CD04 7F0481D4 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 07CD08 7F0481D8 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07CD0C 7F0481DC 2405003A */  li    $a1, 58
-/* 07CD10 7F0481E0 0C002382 */  jal   play_sfx_a1
+/* 07CD10 7F0481E0 0C002382 */  jal   sndPlaySfx
 /* 07CD14 7F0481E4 262600B0 */   addiu $a2, $s1, 0xb0
 .L7F0481E8:
 /* 07CD18 7F0481E8 8E2400B0 */  lw    $a0, 0xb0($s1)
@@ -11717,7 +11718,7 @@ glabel object_interaction
 /* 07CD1C 7F0481EC 24050008 */  li    $a1, 8
 /* 07CD20 7F0481F0 5080000F */  beql  $a0, $zero, .L7F048230
 /* 07CD24 7F0481F4 92220003 */   lbu   $v0, 3($s1)
-/* 07CD28 7F0481F8 0C002461 */  jal   sfx_c_70009184
+/* 07CD28 7F0481F8 0C002461 */  jal   sndCreatePostEvent
 /* 07CD2C 7F0481FC 02003025 */   move  $a2, $s0
 /* 07CD30 7F048200 1000000B */  b     .L7F048230
 /* 07CD34 7F048204 92220003 */   lbu   $v0, 3($s1)
@@ -11725,11 +11726,11 @@ glabel object_interaction
 .L7F04820C:
 /* 07CD3C 7F04820C 50800008 */  beql  $a0, $zero, .L7F048230
 /* 07CD40 7F048210 92220003 */   lbu   $v0, 3($s1)
-/* 07CD44 7F048214 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07CD44 7F048214 0C00237C */  jal   sndGetPlayingState
 /* 07CD48 7F048218 00000000 */   nop   
 /* 07CD4C 7F04821C 50400004 */  beql  $v0, $zero, .L7F048230
 /* 07CD50 7F048220 92220003 */   lbu   $v0, 3($s1)
-/* 07CD54 7F048224 0C002408 */  jal   sfxDeactivate
+/* 07CD54 7F048224 0C002408 */  jal   sndDeactivate
 /* 07CD58 7F048228 8E2400B0 */   lw    $a0, 0xb0($s1)
 .L7F04822C:
 /* 07CD5C 7F04822C 92220003 */  lbu   $v0, 3($s1)
@@ -11987,7 +11988,7 @@ glabel object_interaction
 /* 07D110 7F0485E0 00000000 */   nop   
 /* 07D114 7F0485E4 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07D118 7F0485E8 AFAF0070 */  sw    $t7, 0x70($sp)
-/* 07D11C 7F0485EC 0C002382 */  jal   play_sfx_a1
+/* 07D11C 7F0485EC 0C002382 */  jal   sndPlaySfx
 /* 07D120 7F0485F0 E7AE0380 */   swc1  $f14, 0x380($sp)
 /* 07D124 7F0485F4 00402025 */  move  $a0, $v0
 /* 07D128 7F0485F8 0FC14E84 */  jal   sub_GAME_7F053A10
@@ -12011,7 +12012,7 @@ glabel object_interaction
 /* 07D168 7F048638 AFA0038C */   sw    $zero, 0x38c($sp)
 /* 07D16C 7F04863C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07D170 7F048640 AFAB0070 */  sw    $t3, 0x70($sp)
-/* 07D174 7F048644 0C002382 */  jal   play_sfx_a1
+/* 07D174 7F048644 0C002382 */  jal   sndPlaySfx
 /* 07D178 7F048648 E7AE0380 */   swc1  $f14, 0x380($sp)
 /* 07D17C 7F04864C 00402025 */  move  $a0, $v0
 /* 07D180 7F048650 0FC14E84 */  jal   sub_GAME_7F053A10
@@ -12919,21 +12920,21 @@ glabel object_interaction
 /* 07DED0 7F0493A0 8E0400C4 */  lw    $a0, 0xc4($s0)
 /* 07DED4 7F0493A4 50800008 */  beql  $a0, $zero, .L7F0493C8
 /* 07DED8 7F0493A8 8E0400C8 */   lw    $a0, 0xc8($s0)
-/* 07DEDC 7F0493AC 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07DEDC 7F0493AC 0C00237C */  jal   sndGetPlayingState
 /* 07DEE0 7F0493B0 00000000 */   nop   
 /* 07DEE4 7F0493B4 50400004 */  beql  $v0, $zero, .L7F0493C8
 /* 07DEE8 7F0493B8 8E0400C8 */   lw    $a0, 0xc8($s0)
-/* 07DEEC 7F0493BC 0C002408 */  jal   sfxDeactivate
+/* 07DEEC 7F0493BC 0C002408 */  jal   sndDeactivate
 /* 07DEF0 7F0493C0 8E0400C4 */   lw    $a0, 0xc4($s0)
 /* 07DEF4 7F0493C4 8E0400C8 */  lw    $a0, 0xc8($s0)
 .L7F0493C8:
 /* 07DEF8 7F0493C8 50800008 */  beql  $a0, $zero, .L7F0493EC
 /* 07DEFC 7F0493CC 8E0A00C4 */   lw    $t2, 0xc4($s0)
-/* 07DF00 7F0493D0 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07DF00 7F0493D0 0C00237C */  jal   sndGetPlayingState
 /* 07DF04 7F0493D4 00000000 */   nop   
 /* 07DF08 7F0493D8 50400004 */  beql  $v0, $zero, .L7F0493EC
 /* 07DF0C 7F0493DC 8E0A00C4 */   lw    $t2, 0xc4($s0)
-/* 07DF10 7F0493E0 0C002408 */  jal   sfxDeactivate
+/* 07DF10 7F0493E0 0C002408 */  jal   sndDeactivate
 /* 07DF14 7F0493E4 8E0400C8 */   lw    $a0, 0xc8($s0)
 /* 07DF18 7F0493E8 8E0A00C4 */  lw    $t2, 0xc4($s0)
 .L7F0493EC:
@@ -12943,7 +12944,7 @@ glabel object_interaction
 /* 07DF28 7F0493F8 260600C4 */   addiu $a2, $s0, 0xc4
 /* 07DF2C 7F0493FC 266E0008 */  addiu $t6, $s3, 8
 /* 07DF30 7F049400 AFAE0070 */  sw    $t6, 0x70($sp)
-/* 07DF34 7F049404 0C002382 */  jal   play_sfx_a1
+/* 07DF34 7F049404 0C002382 */  jal   sndPlaySfx
 /* 07DF38 7F049408 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07DF3C 7F04940C 8E0400C4 */  lw    $a0, 0xc4($s0)
 /* 07DF40 7F049410 0FC14E84 */  jal   sub_GAME_7F053A10
@@ -12958,7 +12959,7 @@ glabel object_interaction
 /* 07DF60 7F049430 260600C8 */   addiu $a2, $s0, 0xc8
 /* 07DF64 7F049434 26780008 */  addiu $t8, $s3, 8
 /* 07DF68 7F049438 AFB80070 */  sw    $t8, 0x70($sp)
-/* 07DF6C 7F04943C 0C002382 */  jal   play_sfx_a1
+/* 07DF6C 7F04943C 0C002382 */  jal   sndPlaySfx
 /* 07DF70 7F049440 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07DF74 7F049444 8E0400C8 */  lw    $a0, 0xc8($s0)
 /* 07DF78 7F049448 0FC14E84 */  jal   sub_GAME_7F053A10
@@ -14015,7 +14016,7 @@ glabel object_interaction
 /* 07A880 7F045D10 344E0010 */  ori   $t6, $v0, 0x10
 /* 07A884 7F045D14 A26E0001 */  sb    $t6, 1($s3)
 .Ljp7F045D18:
-/* 07A888 7F045D18 0C002386 */  jal   play_sfx_a1
+/* 07A888 7F045D18 0C002386 */  jal   sndPlaySfx
 /* 07A88C 7F045D1C 8C843760 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07A890 7F045D20 00402025 */  move  $a0, $v0
 /* 07A894 7F045D24 0FC14FC3 */  jal   sub_GAME_7F053A10
@@ -14575,14 +14576,14 @@ glabel object_interaction
 /* 07B0A8 7F046538 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
 /* 07B0AC 7F04653C 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07B0B0 7F046540 24050003 */  li    $a1, 3
-/* 07B0B4 7F046544 0C002386 */  jal   play_sfx_a1
+/* 07B0B4 7F046544 0C002386 */  jal   sndPlaySfx
 /* 07B0B8 7F046548 00003025 */   move  $a2, $zero
 /* 07B0BC 7F04654C 10000006 */  b     .Ljp7F046568
 /* 07B0C0 7F046550 00402025 */   move  $a0, $v0
 .Ljp7F046554:
 /* 07B0C4 7F046554 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07B0C8 7F046558 2405002D */  li    $a1, 45
-/* 07B0CC 7F04655C 0C002386 */  jal   play_sfx_a1
+/* 07B0CC 7F04655C 0C002386 */  jal   sndPlaySfx
 /* 07B0D0 7F046560 00003025 */   move  $a2, $zero
 /* 07B0D4 7F046564 00402025 */  move  $a0, $v0
 .Ljp7F046568:
@@ -16037,7 +16038,7 @@ glabel object_interaction
 /* 07C5C4 7F047A54 8E2400AC */  lw    $a0, 0xac($s1)
 /* 07C5C8 7F047A58 10800005 */  beqz  $a0, .Ljp7F047A70
 /* 07C5CC 7F047A5C 00000000 */   nop   
-/* 07C5D0 7F047A60 0C002380 */  jal   sfxGetArg0Unk3F
+/* 07C5D0 7F047A60 0C002380 */  jal   sndGetPlayingState
 /* 07C5D4 7F047A64 00000000 */   nop   
 /* 07C5D8 7F047A68 5440000A */  bnezl $v0, .Ljp7F047A94
 /* 07C5DC 7F047A6C 8E2400AC */   lw    $a0, 0xac($s1)
@@ -16048,7 +16049,7 @@ glabel object_interaction
 /* 07C5EC 7F047A7C 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
 /* 07C5F0 7F047A80 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07C5F4 7F047A84 24050041 */  li    $a1, 65
-/* 07C5F8 7F047A88 0C002386 */  jal   play_sfx_a1
+/* 07C5F8 7F047A88 0C002386 */  jal   sndPlaySfx
 /* 07C5FC 7F047A8C 262600AC */   addiu $a2, $s1, 0xac
 .Ljp7F047A90:
 /* 07C600 7F047A90 8E2400AC */  lw    $a0, 0xac($s1)
@@ -16056,7 +16057,7 @@ glabel object_interaction
 /* 07C604 7F047A94 24050008 */  li    $a1, 8
 /* 07C608 7F047A98 5080000F */  beql  $a0, $zero, .Ljp7F047AD8
 /* 07C60C 7F047A9C 8E2400A4 */   lw    $a0, 0xa4($s1)
-/* 07C610 7F047AA0 0C002465 */  jal   sfx_c_70009184
+/* 07C610 7F047AA0 0C002465 */  jal   sndCreatePostEvent
 /* 07C614 7F047AA4 02003025 */   move  $a2, $s0
 /* 07C618 7F047AA8 1000000B */  b     .Ljp7F047AD8
 /* 07C61C 7F047AAC 8E2400A4 */   lw    $a0, 0xa4($s1)
@@ -16064,11 +16065,11 @@ glabel object_interaction
 .Ljp7F047AB4:
 /* 07C624 7F047AB4 50800008 */  beql  $a0, $zero, .Ljp7F047AD8
 /* 07C628 7F047AB8 8E2400A4 */   lw    $a0, 0xa4($s1)
-/* 07C62C 7F047ABC 0C002380 */  jal   sfxGetArg0Unk3F
+/* 07C62C 7F047ABC 0C002380 */  jal   sndGetPlayingState
 /* 07C630 7F047AC0 00000000 */   nop   
 /* 07C634 7F047AC4 50400004 */  beql  $v0, $zero, .Ljp7F047AD8
 /* 07C638 7F047AC8 8E2400A4 */   lw    $a0, 0xa4($s1)
-/* 07C63C 7F047ACC 0C00240C */  jal   sfxDeactivate
+/* 07C63C 7F047ACC 0C00240C */  jal   sndDeactivate
 /* 07C640 7F047AD0 8E2400AC */   lw    $a0, 0xac($s1)
 /* 07C644 7F047AD4 8E2400A4 */  lw    $a0, 0xa4($s1)
 .Ljp7F047AD8:
@@ -16804,7 +16805,7 @@ glabel object_interaction
 /* 07D120 7F0485B0 8E2400B0 */  lw    $a0, 0xb0($s1)
 /* 07D124 7F0485B4 10800005 */  beqz  $a0, .Ljp7F0485CC
 /* 07D128 7F0485B8 00000000 */   nop   
-/* 07D12C 7F0485BC 0C002380 */  jal   sfxGetArg0Unk3F
+/* 07D12C 7F0485BC 0C002380 */  jal   sndGetPlayingState
 /* 07D130 7F0485C0 00000000 */   nop   
 /* 07D134 7F0485C4 5440000A */  bnezl $v0, .Ljp7F0485F0
 /* 07D138 7F0485C8 8E2400B0 */   lw    $a0, 0xb0($s1)
@@ -16815,7 +16816,7 @@ glabel object_interaction
 /* 07D148 7F0485D8 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
 /* 07D14C 7F0485DC 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07D150 7F0485E0 2405003A */  li    $a1, 58
-/* 07D154 7F0485E4 0C002386 */  jal   play_sfx_a1
+/* 07D154 7F0485E4 0C002386 */  jal   sndPlaySfx
 /* 07D158 7F0485E8 262600B0 */   addiu $a2, $s1, 0xb0
 .Ljp7F0485EC:
 /* 07D15C 7F0485EC 8E2400B0 */  lw    $a0, 0xb0($s1)
@@ -16823,7 +16824,7 @@ glabel object_interaction
 /* 07D160 7F0485F0 24050008 */  li    $a1, 8
 /* 07D164 7F0485F4 5080000F */  beql  $a0, $zero, .Ljp7F048634
 /* 07D168 7F0485F8 92220003 */   lbu   $v0, 3($s1)
-/* 07D16C 7F0485FC 0C002465 */  jal   sfx_c_70009184
+/* 07D16C 7F0485FC 0C002465 */  jal   sndCreatePostEvent
 /* 07D170 7F048600 02003025 */   move  $a2, $s0
 /* 07D174 7F048604 1000000B */  b     .Ljp7F048634
 /* 07D178 7F048608 92220003 */   lbu   $v0, 3($s1)
@@ -16831,11 +16832,11 @@ glabel object_interaction
 .Ljp7F048610:
 /* 07D180 7F048610 50800008 */  beql  $a0, $zero, .Ljp7F048634
 /* 07D184 7F048614 92220003 */   lbu   $v0, 3($s1)
-/* 07D188 7F048618 0C002380 */  jal   sfxGetArg0Unk3F
+/* 07D188 7F048618 0C002380 */  jal   sndGetPlayingState
 /* 07D18C 7F04861C 00000000 */   nop   
 /* 07D190 7F048620 50400004 */  beql  $v0, $zero, .Ljp7F048634
 /* 07D194 7F048624 92220003 */   lbu   $v0, 3($s1)
-/* 07D198 7F048628 0C00240C */  jal   sfxDeactivate
+/* 07D198 7F048628 0C00240C */  jal   sndDeactivate
 /* 07D19C 7F04862C 8E2400B0 */   lw    $a0, 0xb0($s1)
 .Ljp7F048630:
 /* 07D1A0 7F048630 92220003 */  lbu   $v0, 3($s1)
@@ -17093,7 +17094,7 @@ glabel object_interaction
 /* 07D554 7F0489E4 00000000 */   nop   
 /* 07D558 7F0489E8 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07D55C 7F0489EC AFAC0074 */  sw    $t4, 0x74($sp)
-/* 07D560 7F0489F0 0C002386 */  jal   play_sfx_a1
+/* 07D560 7F0489F0 0C002386 */  jal   sndPlaySfx
 /* 07D564 7F0489F4 E7AE0384 */   swc1  $f14, 0x384($sp)
 /* 07D568 7F0489F8 00402025 */  move  $a0, $v0
 /* 07D56C 7F0489FC 0FC14FC3 */  jal   sub_GAME_7F053A10
@@ -17117,7 +17118,7 @@ glabel object_interaction
 /* 07D5AC 7F048A3C AFA00390 */   sw    $zero, 0x390($sp)
 /* 07D5B0 7F048A40 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07D5B4 7F048A44 AFAF0074 */  sw    $t7, 0x74($sp)
-/* 07D5B8 7F048A48 0C002386 */  jal   play_sfx_a1
+/* 07D5B8 7F048A48 0C002386 */  jal   sndPlaySfx
 /* 07D5BC 7F048A4C E7AE0384 */   swc1  $f14, 0x384($sp)
 /* 07D5C0 7F048A50 00402025 */  move  $a0, $v0
 /* 07D5C4 7F048A54 0FC14FC3 */  jal   sub_GAME_7F053A10
@@ -18025,21 +18026,21 @@ glabel object_interaction
 /* 07E314 7F0497A4 8E0400C4 */  lw    $a0, 0xc4($s0)
 /* 07E318 7F0497A8 50800008 */  beql  $a0, $zero, .Ljp7F0497CC
 /* 07E31C 7F0497AC 8E0400C8 */   lw    $a0, 0xc8($s0)
-/* 07E320 7F0497B0 0C002380 */  jal   sfxGetArg0Unk3F
+/* 07E320 7F0497B0 0C002380 */  jal   sndGetPlayingState
 /* 07E324 7F0497B4 00000000 */   nop   
 /* 07E328 7F0497B8 50400004 */  beql  $v0, $zero, .Ljp7F0497CC
 /* 07E32C 7F0497BC 8E0400C8 */   lw    $a0, 0xc8($s0)
-/* 07E330 7F0497C0 0C00240C */  jal   sfxDeactivate
+/* 07E330 7F0497C0 0C00240C */  jal   sndDeactivate
 /* 07E334 7F0497C4 8E0400C4 */   lw    $a0, 0xc4($s0)
 /* 07E338 7F0497C8 8E0400C8 */  lw    $a0, 0xc8($s0)
 .Ljp7F0497CC:
 /* 07E33C 7F0497CC 50800008 */  beql  $a0, $zero, .Ljp7F0497F0
 /* 07E340 7F0497D0 8E1800C4 */   lw    $t8, 0xc4($s0)
-/* 07E344 7F0497D4 0C002380 */  jal   sfxGetArg0Unk3F
+/* 07E344 7F0497D4 0C002380 */  jal   sndGetPlayingState
 /* 07E348 7F0497D8 00000000 */   nop   
 /* 07E34C 7F0497DC 50400004 */  beql  $v0, $zero, .Ljp7F0497F0
 /* 07E350 7F0497E0 8E1800C4 */   lw    $t8, 0xc4($s0)
-/* 07E354 7F0497E4 0C00240C */  jal   sfxDeactivate
+/* 07E354 7F0497E4 0C00240C */  jal   sndDeactivate
 /* 07E358 7F0497E8 8E0400C8 */   lw    $a0, 0xc8($s0)
 /* 07E35C 7F0497EC 8E1800C4 */  lw    $t8, 0xc4($s0)
 .Ljp7F0497F0:
@@ -18049,7 +18050,7 @@ glabel object_interaction
 /* 07E36C 7F0497FC 260600C4 */   addiu $a2, $s0, 0xc4
 /* 07E370 7F049800 26690008 */  addiu $t1, $s3, 8
 /* 07E374 7F049804 AFA90074 */  sw    $t1, 0x74($sp)
-/* 07E378 7F049808 0C002386 */  jal   play_sfx_a1
+/* 07E378 7F049808 0C002386 */  jal   sndPlaySfx
 /* 07E37C 7F04980C 8C843760 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07E380 7F049810 8E0400C4 */  lw    $a0, 0xc4($s0)
 /* 07E384 7F049814 0FC14FC3 */  jal   sub_GAME_7F053A10
@@ -18064,7 +18065,7 @@ glabel object_interaction
 /* 07E3A4 7F049834 260600C8 */   addiu $a2, $s0, 0xc8
 /* 07E3A8 7F049838 266E0008 */  addiu $t6, $s3, 8
 /* 07E3AC 7F04983C AFAE0074 */  sw    $t6, 0x74($sp)
-/* 07E3B0 7F049840 0C002386 */  jal   play_sfx_a1
+/* 07E3B0 7F049840 0C002386 */  jal   sndPlaySfx
 /* 07E3B4 7F049844 8C843760 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07E3B8 7F049848 8E0400C8 */  lw    $a0, 0xc8($s0)
 /* 07E3BC 7F04984C 0FC14FC3 */  jal   sub_GAME_7F053A10
@@ -19117,7 +19118,7 @@ glabel object_interaction
 /* 07A45C 7F04592C 34490010 */  ori   $t1, $v0, 0x10
 /* 07A460 7F045930 A2690001 */  sb    $t1, 1($s3)
 .L7F045934:
-/* 07A464 7F045934 0C002382 */  jal   play_sfx_a1
+/* 07A464 7F045934 0C002382 */  jal   sndPlaySfx
 /* 07A468 7F045938 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07A46C 7F04593C 00402025 */  move  $a0, $v0
 /* 07A470 7F045940 0FC14E84 */  jal   sub_GAME_7F053A10
@@ -19677,14 +19678,14 @@ glabel object_interaction
 /* 07AC84 7F046154 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 07AC88 7F046158 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07AC8C 7F04615C 24050003 */  li    $a1, 3
-/* 07AC90 7F046160 0C002382 */  jal   play_sfx_a1
+/* 07AC90 7F046160 0C002382 */  jal   sndPlaySfx
 /* 07AC94 7F046164 00003025 */   move  $a2, $zero
 /* 07AC98 7F046168 10000006 */  b     .L7F046184
 /* 07AC9C 7F04616C 00402025 */   move  $a0, $v0
 .L7F046170:
 /* 07ACA0 7F046170 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07ACA4 7F046174 2405002D */  li    $a1, 45
-/* 07ACA8 7F046178 0C002382 */  jal   play_sfx_a1
+/* 07ACA8 7F046178 0C002382 */  jal   sndPlaySfx
 /* 07ACAC 7F04617C 00003025 */   move  $a2, $zero
 /* 07ACB0 7F046180 00402025 */  move  $a0, $v0
 .L7F046184:
@@ -21130,7 +21131,7 @@ glabel object_interaction
 /* 07C180 7F047650 8E2400AC */  lw    $a0, 0xac($s1)
 /* 07C184 7F047654 10800005 */  beqz  $a0, .L7F04766C
 /* 07C188 7F047658 00000000 */   nop   
-/* 07C18C 7F04765C 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07C18C 7F04765C 0C00237C */  jal   sndGetPlayingState
 /* 07C190 7F047660 00000000 */   nop   
 /* 07C194 7F047664 5440000A */  bnezl $v0, .L7F047690
 /* 07C198 7F047668 8E2400AC */   lw    $a0, 0xac($s1)
@@ -21141,7 +21142,7 @@ glabel object_interaction
 /* 07C1A8 7F047678 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 07C1AC 7F04767C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07C1B0 7F047680 24050041 */  li    $a1, 65
-/* 07C1B4 7F047684 0C002382 */  jal   play_sfx_a1
+/* 07C1B4 7F047684 0C002382 */  jal   sndPlaySfx
 /* 07C1B8 7F047688 262600AC */   addiu $a2, $s1, 0xac
 .L7F04768C:
 /* 07C1BC 7F04768C 8E2400AC */  lw    $a0, 0xac($s1)
@@ -21149,7 +21150,7 @@ glabel object_interaction
 /* 07C1C0 7F047690 24050008 */  li    $a1, 8
 /* 07C1C4 7F047694 5080000F */  beql  $a0, $zero, .L7F0476D4
 /* 07C1C8 7F047698 8E2400A4 */   lw    $a0, 0xa4($s1)
-/* 07C1CC 7F04769C 0C002461 */  jal   sfx_c_70009184
+/* 07C1CC 7F04769C 0C002461 */  jal   sndCreatePostEvent
 /* 07C1D0 7F0476A0 02003025 */   move  $a2, $s0
 /* 07C1D4 7F0476A4 1000000B */  b     .L7F0476D4
 /* 07C1D8 7F0476A8 8E2400A4 */   lw    $a0, 0xa4($s1)
@@ -21157,11 +21158,11 @@ glabel object_interaction
 .L7F0476B0:
 /* 07C1E0 7F0476B0 50800008 */  beql  $a0, $zero, .L7F0476D4
 /* 07C1E4 7F0476B4 8E2400A4 */   lw    $a0, 0xa4($s1)
-/* 07C1E8 7F0476B8 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07C1E8 7F0476B8 0C00237C */  jal   sndGetPlayingState
 /* 07C1EC 7F0476BC 00000000 */   nop   
 /* 07C1F0 7F0476C0 50400004 */  beql  $v0, $zero, .L7F0476D4
 /* 07C1F4 7F0476C4 8E2400A4 */   lw    $a0, 0xa4($s1)
-/* 07C1F8 7F0476C8 0C002408 */  jal   sfxDeactivate
+/* 07C1F8 7F0476C8 0C002408 */  jal   sndDeactivate
 /* 07C1FC 7F0476CC 8E2400AC */   lw    $a0, 0xac($s1)
 /* 07C200 7F0476D0 8E2400A4 */  lw    $a0, 0xa4($s1)
 .L7F0476D4:
@@ -21897,7 +21898,7 @@ glabel object_interaction
 /* 07CCDC 7F0481AC 8E2400B0 */  lw    $a0, 0xb0($s1)
 /* 07CCE0 7F0481B0 10800005 */  beqz  $a0, .L7F0481C8
 /* 07CCE4 7F0481B4 00000000 */   nop   
-/* 07CCE8 7F0481B8 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07CCE8 7F0481B8 0C00237C */  jal   sndGetPlayingState
 /* 07CCEC 7F0481BC 00000000 */   nop   
 /* 07CCF0 7F0481C0 5440000A */  bnezl $v0, .L7F0481EC
 /* 07CCF4 7F0481C4 8E2400B0 */   lw    $a0, 0xb0($s1)
@@ -21908,7 +21909,7 @@ glabel object_interaction
 /* 07CD04 7F0481D4 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 07CD08 7F0481D8 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07CD0C 7F0481DC 2405003A */  li    $a1, 58
-/* 07CD10 7F0481E0 0C002382 */  jal   play_sfx_a1
+/* 07CD10 7F0481E0 0C002382 */  jal   sndPlaySfx
 /* 07CD14 7F0481E4 262600B0 */   addiu $a2, $s1, 0xb0
 .L7F0481E8:
 /* 07CD18 7F0481E8 8E2400B0 */  lw    $a0, 0xb0($s1)
@@ -21916,7 +21917,7 @@ glabel object_interaction
 /* 07CD1C 7F0481EC 24050008 */  li    $a1, 8
 /* 07CD20 7F0481F0 5080000F */  beql  $a0, $zero, .L7F048230
 /* 07CD24 7F0481F4 92220003 */   lbu   $v0, 3($s1)
-/* 07CD28 7F0481F8 0C002461 */  jal   sfx_c_70009184
+/* 07CD28 7F0481F8 0C002461 */  jal   sndCreatePostEvent
 /* 07CD2C 7F0481FC 02003025 */   move  $a2, $s0
 /* 07CD30 7F048200 1000000B */  b     .L7F048230
 /* 07CD34 7F048204 92220003 */   lbu   $v0, 3($s1)
@@ -21924,11 +21925,11 @@ glabel object_interaction
 .L7F04820C:
 /* 07CD3C 7F04820C 50800008 */  beql  $a0, $zero, .L7F048230
 /* 07CD40 7F048210 92220003 */   lbu   $v0, 3($s1)
-/* 07CD44 7F048214 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07CD44 7F048214 0C00237C */  jal   sndGetPlayingState
 /* 07CD48 7F048218 00000000 */   nop   
 /* 07CD4C 7F04821C 50400004 */  beql  $v0, $zero, .L7F048230
 /* 07CD50 7F048220 92220003 */   lbu   $v0, 3($s1)
-/* 07CD54 7F048224 0C002408 */  jal   sfxDeactivate
+/* 07CD54 7F048224 0C002408 */  jal   sndDeactivate
 /* 07CD58 7F048228 8E2400B0 */   lw    $a0, 0xb0($s1)
 .L7F04822C:
 /* 07CD5C 7F04822C 92220003 */  lbu   $v0, 3($s1)
@@ -22186,7 +22187,7 @@ glabel object_interaction
 /* 07D110 7F0485E0 00000000 */   nop   
 /* 07D114 7F0485E4 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07D118 7F0485E8 AFAF0070 */  sw    $t7, 0x70($sp)
-/* 07D11C 7F0485EC 0C002382 */  jal   play_sfx_a1
+/* 07D11C 7F0485EC 0C002382 */  jal   sndPlaySfx
 /* 07D120 7F0485F0 E7AE0380 */   swc1  $f14, 0x380($sp)
 /* 07D124 7F0485F4 00402025 */  move  $a0, $v0
 /* 07D128 7F0485F8 0FC14E84 */  jal   sub_GAME_7F053A10
@@ -22210,7 +22211,7 @@ glabel object_interaction
 /* 07D168 7F048638 AFA0038C */   sw    $zero, 0x38c($sp)
 /* 07D16C 7F04863C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07D170 7F048640 AFAB0070 */  sw    $t3, 0x70($sp)
-/* 07D174 7F048644 0C002382 */  jal   play_sfx_a1
+/* 07D174 7F048644 0C002382 */  jal   sndPlaySfx
 /* 07D178 7F048648 E7AE0380 */   swc1  $f14, 0x380($sp)
 /* 07D17C 7F04864C 00402025 */  move  $a0, $v0
 /* 07D180 7F048650 0FC14E84 */  jal   sub_GAME_7F053A10
@@ -23118,21 +23119,21 @@ glabel object_interaction
 /* 07DED0 7F0493A0 8E0400C4 */  lw    $a0, 0xc4($s0)
 /* 07DED4 7F0493A4 50800008 */  beql  $a0, $zero, .L7F0493C8
 /* 07DED8 7F0493A8 8E0400C8 */   lw    $a0, 0xc8($s0)
-/* 07DEDC 7F0493AC 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07DEDC 7F0493AC 0C00237C */  jal   sndGetPlayingState
 /* 07DEE0 7F0493B0 00000000 */   nop   
 /* 07DEE4 7F0493B4 50400004 */  beql  $v0, $zero, .L7F0493C8
 /* 07DEE8 7F0493B8 8E0400C8 */   lw    $a0, 0xc8($s0)
-/* 07DEEC 7F0493BC 0C002408 */  jal   sfxDeactivate
+/* 07DEEC 7F0493BC 0C002408 */  jal   sndDeactivate
 /* 07DEF0 7F0493C0 8E0400C4 */   lw    $a0, 0xc4($s0)
 /* 07DEF4 7F0493C4 8E0400C8 */  lw    $a0, 0xc8($s0)
 .L7F0493C8:
 /* 07DEF8 7F0493C8 50800008 */  beql  $a0, $zero, .L7F0493EC
 /* 07DEFC 7F0493CC 8E0A00C4 */   lw    $t2, 0xc4($s0)
-/* 07DF00 7F0493D0 0C00237C */  jal   sfxGetArg0Unk3F
+/* 07DF00 7F0493D0 0C00237C */  jal   sndGetPlayingState
 /* 07DF04 7F0493D4 00000000 */   nop   
 /* 07DF08 7F0493D8 50400004 */  beql  $v0, $zero, .L7F0493EC
 /* 07DF0C 7F0493DC 8E0A00C4 */   lw    $t2, 0xc4($s0)
-/* 07DF10 7F0493E0 0C002408 */  jal   sfxDeactivate
+/* 07DF10 7F0493E0 0C002408 */  jal   sndDeactivate
 /* 07DF14 7F0493E4 8E0400C8 */   lw    $a0, 0xc8($s0)
 /* 07DF18 7F0493E8 8E0A00C4 */  lw    $t2, 0xc4($s0)
 .L7F0493EC:
@@ -23142,7 +23143,7 @@ glabel object_interaction
 /* 07DF28 7F0493F8 260600C4 */   addiu $a2, $s0, 0xc4
 /* 07DF2C 7F0493FC 266E0008 */  addiu $t6, $s3, 8
 /* 07DF30 7F049400 AFAE0070 */  sw    $t6, 0x70($sp)
-/* 07DF34 7F049404 0C002382 */  jal   play_sfx_a1
+/* 07DF34 7F049404 0C002382 */  jal   sndPlaySfx
 /* 07DF38 7F049408 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07DF3C 7F04940C 8E0400C4 */  lw    $a0, 0xc4($s0)
 /* 07DF40 7F049410 0FC14E84 */  jal   sub_GAME_7F053A10
@@ -23157,7 +23158,7 @@ glabel object_interaction
 /* 07DF60 7F049430 260600C8 */   addiu $a2, $s0, 0xc8
 /* 07DF64 7F049434 26780008 */  addiu $t8, $s3, 8
 /* 07DF68 7F049438 AFB80070 */  sw    $t8, 0x70($sp)
-/* 07DF6C 7F04943C 0C002382 */  jal   play_sfx_a1
+/* 07DF6C 7F04943C 0C002382 */  jal   sndPlaySfx
 /* 07DF70 7F049440 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 07DF74 7F049444 8E0400C8 */  lw    $a0, 0xc8($s0)
 /* 07DF78 7F049448 0FC14E84 */  jal   sub_GAME_7F053A10
@@ -32306,7 +32307,7 @@ glabel sub_GAME_7F04F170
 /* 083CC4 7F04F194 240500BA */  li    $a1, 186
 /* 083CC8 7F04F198 15E1000D */  bne   $t7, $at, .L7F04F1D0
 /* 083CCC 7F04F19C 00003025 */   move  $a2, $zero
-/* 083CD0 7F04F1A0 0C002382 */  jal   play_sfx_a1
+/* 083CD0 7F04F1A0 0C002382 */  jal   sndPlaySfx
 /* 083CD4 7F04F1A4 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 083CD8 7F04F1A8 0FC15794 */  jal   is_alarm_on
 /* 083CDC 7F04F1AC 00000000 */   nop   
@@ -32942,7 +32943,7 @@ void set_sound_effect_for_ammo_collection(AMMOTYPES ammotype)
     case AMMO_DYNAMITE:
     case AMMO_GEKEY:
     case AMMO_TOKEN:
-        play_sfx_a1(g_musicSfxBufferPtr,0xea,0);
+        sndPlaySfx(g_musicSfxBufferPtr,0xea,0);
         break;
     case AMMO_REMOTEMINE:
     case AMMO_PROXMINE:
@@ -32951,10 +32952,10 @@ void set_sound_effect_for_ammo_collection(AMMOTYPES ammotype)
     case AMMO_BUG:
     case AMMO_MICRO_CAMERA:
     case AMMO_PLASTIQUE:
-        play_sfx_a1(g_musicSfxBufferPtr,0xeb,0);
+        sndPlaySfx(g_musicSfxBufferPtr,0xeb,0);
         break;
     case AMMO_KNIFE:
-        play_sfx_a1(g_musicSfxBufferPtr,0xe9,0);
+        sndPlaySfx(g_musicSfxBufferPtr,0xe9,0);
     }
     return;
 }
@@ -32967,26 +32968,26 @@ void set_sound_effect_for_ammo_collection(AMMOTYPES ammotype)
 void set_sound_effect_for_weapontype_collection(ITEM_IDS weapontype)
 {
     if ((weapontype == ITEM_KNIFE) || (weapontype == ITEM_THROWKNIFE)) {
-        play_sfx_a1(g_musicSfxBufferPtr,0xe9,0);
+        sndPlaySfx(g_musicSfxBufferPtr,0xe9,0);
     }
     else {
         if (((((weapontype == ITEM_REMOTEMINE) || (weapontype == ITEM_PROXIMITYMINE)) ||
              (weapontype == ITEM_TIMEDMINE)) ||
             ((weapontype == ITEM_BOMBCASE || (weapontype == ITEM_BUG)))) ||
            ((weapontype == ITEM_MICROCAMERA || (weapontype == ITEM_PLASTIQUE)))) {
-            play_sfx_a1(g_musicSfxBufferPtr,0xeb,0);
+            sndPlaySfx(g_musicSfxBufferPtr,0xeb,0);
         }
         else {
             if (((weapontype == ITEM_GRENADE) || (weapontype == ITEM_57)) || (weapontype == ITEM_56)
                ) {
-                play_sfx_a1(g_musicSfxBufferPtr,0xea,0);
+                sndPlaySfx(g_musicSfxBufferPtr,0xea,0);
             }
             else {
                 if (weapontype == ITEM_LASER) {
-                    play_sfx_a1(g_musicSfxBufferPtr,0xf2,0);
+                    sndPlaySfx(g_musicSfxBufferPtr,0xf2,0);
                 }
                 else {
-                    play_sfx_a1(g_musicSfxBufferPtr,0xe8,0);
+                    sndPlaySfx(g_musicSfxBufferPtr,0xe8,0);
                 }
             }
         }
@@ -34163,7 +34164,7 @@ interact_key_object:
 /* 084DF4 7F0502C4 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 084DF8 7F0502C8 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 084DFC 7F0502CC 240500E5 */  li    $a1, 229
-/* 084E00 7F0502D0 0C002382 */  jal   play_sfx_a1
+/* 084E00 7F0502D0 0C002382 */  jal   sndPlaySfx
 /* 084E04 7F0502D4 00003025 */   move  $a2, $zero
 /* 084E08 7F0502D8 8FAB0074 */  lw    $t3, 0x74($sp)
 /* 084E0C 7F0502DC 1160000A */  beqz  $t3, .L7F050308
@@ -34233,7 +34234,7 @@ interact_ammobox_object:
 /* 084EF0 7F0503C0 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 084EF4 7F0503C4 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 084EF8 7F0503C8 240500EA */  li    $a1, 234
-/* 084EFC 7F0503CC 0C002382 */  jal   play_sfx_a1
+/* 084EFC 7F0503CC 0C002382 */  jal   sndPlaySfx
 /* 084F00 7F0503D0 00003025 */   move  $a2, $zero
 /* 084F04 7F0503D4 100000A7 */  b     .L7F050674
 /* 084F08 7F0503D8 24030001 */   li    $v1, 1
@@ -34374,7 +34375,7 @@ interact_bodyarmor_object:
 /* 0850EC 7F0505BC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0850F0 7F0505C0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0850F4 7F0505C4 24050051 */  li    $a1, 81
-/* 0850F8 7F0505C8 0C002382 */  jal   play_sfx_a1
+/* 0850F8 7F0505C8 0C002382 */  jal   sndPlaySfx
 /* 0850FC 7F0505CC 00003025 */   move  $a2, $zero
 /* 085100 7F0505D0 8FAE0074 */  lw    $t6, 0x74($sp)
 /* 085104 7F0505D4 11C00013 */  beqz  $t6, .L7F050624
@@ -34407,7 +34408,7 @@ interact_default_object:
 /* 08515C 7F05062C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 085160 7F050630 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 085164 7F050634 240500E5 */  li    $a1, 229
-/* 085168 7F050638 0C002382 */  jal   play_sfx_a1
+/* 085168 7F050638 0C002382 */  jal   sndPlaySfx
 /* 08516C 7F05063C 00003025 */   move  $a2, $zero
 /* 085170 7F050640 8FAF0074 */  lw    $t7, 0x74($sp)
 /* 085174 7F050644 51E0000B */  beql  $t7, $zero, .L7F050674
@@ -34543,7 +34544,7 @@ interact_key_object:
 /* 084DF4 7F0502C4 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 084DF8 7F0502C8 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 084DFC 7F0502CC 240500E5 */  li    $a1, 229
-/* 084E00 7F0502D0 0C002382 */  jal   play_sfx_a1
+/* 084E00 7F0502D0 0C002382 */  jal   sndPlaySfx
 /* 084E04 7F0502D4 00003025 */   move  $a2, $zero
 /* 084E08 7F0502D8 8FAB0074 */  lw    $t3, 0x74($sp)
 /* 084E0C 7F0502DC 1160000A */  beqz  $t3, .L7F050308
@@ -34613,7 +34614,7 @@ interact_ammobox_object:
 /* 084EF0 7F0503C0 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 084EF4 7F0503C4 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 084EF8 7F0503C8 240500EA */  li    $a1, 234
-/* 084EFC 7F0503CC 0C002382 */  jal   play_sfx_a1
+/* 084EFC 7F0503CC 0C002382 */  jal   sndPlaySfx
 /* 084F00 7F0503D0 00003025 */   move  $a2, $zero
 /* 084F04 7F0503D4 100000A7 */  b     .L7F050674
 /* 084F08 7F0503D8 24030001 */   li    $v1, 1
@@ -34754,7 +34755,7 @@ interact_bodyarmor_object:
 /* 0850EC 7F0505BC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0850F0 7F0505C0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0850F4 7F0505C4 24050051 */  li    $a1, 81
-/* 0850F8 7F0505C8 0C002382 */  jal   play_sfx_a1
+/* 0850F8 7F0505C8 0C002382 */  jal   sndPlaySfx
 /* 0850FC 7F0505CC 00003025 */   move  $a2, $zero
 /* 085100 7F0505D0 8FAE0074 */  lw    $t6, 0x74($sp)
 /* 085104 7F0505D4 11C00013 */  beqz  $t6, .L7F050624
@@ -34787,7 +34788,7 @@ interact_default_object:
 /* 08515C 7F05062C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 085160 7F050630 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 085164 7F050634 240500E5 */  li    $a1, 229
-/* 085168 7F050638 0C002382 */  jal   play_sfx_a1
+/* 085168 7F050638 0C002382 */  jal   sndPlaySfx
 /* 08516C 7F05063C 00003025 */   move  $a2, $zero
 /* 085170 7F050640 8FAF0074 */  lw    $t7, 0x74($sp)
 /* 085174 7F050644 51E0000B */  beql  $t7, $zero, .L7F050674
@@ -34924,7 +34925,7 @@ interact_key_object:
 /* 084DF4 7F0502C4 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 084DF8 7F0502C8 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 084DFC 7F0502CC 240500E5 */  li    $a1, 229
-/* 084E00 7F0502D0 0C002382 */  jal   play_sfx_a1
+/* 084E00 7F0502D0 0C002382 */  jal   sndPlaySfx
 /* 084E04 7F0502D4 00003025 */   move  $a2, $zero
 /* 084E08 7F0502D8 8FAB0074 */  lw    $t3, 0x74($sp)
 /* 084E0C 7F0502DC 1160000A */  beqz  $t3, .L7F050308
@@ -34994,7 +34995,7 @@ interact_ammobox_object:
 /* 084EF0 7F0503C0 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 084EF4 7F0503C4 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 084EF8 7F0503C8 240500EA */  li    $a1, 234
-/* 084EFC 7F0503CC 0C002382 */  jal   play_sfx_a1
+/* 084EFC 7F0503CC 0C002382 */  jal   sndPlaySfx
 /* 084F00 7F0503D0 00003025 */   move  $a2, $zero
 /* 084F04 7F0503D4 100000A7 */  b     .L7F050674
 /* 084F08 7F0503D8 24030001 */   li    $v1, 1
@@ -35135,7 +35136,7 @@ interact_bodyarmor_object:
 /* 0850EC 7F0505BC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0850F0 7F0505C0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0850F4 7F0505C4 24050051 */  li    $a1, 81
-/* 0850F8 7F0505C8 0C002382 */  jal   play_sfx_a1
+/* 0850F8 7F0505C8 0C002382 */  jal   sndPlaySfx
 /* 0850FC 7F0505CC 00003025 */   move  $a2, $zero
 /* 085100 7F0505D0 8FAE0074 */  lw    $t6, 0x74($sp)
 /* 085104 7F0505D4 11C00013 */  beqz  $t6, .L7F050624
@@ -35168,7 +35169,7 @@ interact_default_object:
 /* 08515C 7F05062C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 085160 7F050630 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 085164 7F050634 240500E5 */  li    $a1, 229
-/* 085168 7F050638 0C002382 */  jal   play_sfx_a1
+/* 085168 7F050638 0C002382 */  jal   sndPlaySfx
 /* 08516C 7F05063C 00003025 */   move  $a2, $zero
 /* 085170 7F050640 8FAF0074 */  lw    $t7, 0x74($sp)
 /* 085174 7F050644 51E0000B */  beql  $t7, $zero, .L7F050674
@@ -37780,7 +37781,7 @@ void trigger_remote_mine_detonation(void)
     
     uVar1 = get_cur_playernum();
     D_80030AF4 = D_80030AF4 | 1 << (uVar1 & 0x1f);
-    play_sfx_a1(g_musicSfxBufferPtr,0xf3,0x0);
+    sndPlaySfx(g_musicSfxBufferPtr,0xf3,0x0);
 }
 #else
 GLOBAL_ASM(
@@ -37800,7 +37801,7 @@ glabel trigger_remote_mine_detonation
 /* 086574 7F051A44 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 086578 7F051A48 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 08657C 7F051A4C 240500F3 */  li    $a1, 243
-/* 086580 7F051A50 0C002382 */  jal   play_sfx_a1
+/* 086580 7F051A50 0C002382 */  jal   sndPlaySfx
 /* 086584 7F051A54 00003025 */   move  $a2, $zero
 /* 086588 7F051A58 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 08658C 7F051A5C 27BD0018 */  addiu $sp, $sp, 0x18
@@ -40481,7 +40482,7 @@ glabel sub_GAME_7F05396C
 /* 0884C4 7F053994 00000000 */   nop   
 /* 0884C8 7F053998 8FA40018 */  lw    $a0, 0x18($sp)
 /* 0884CC 7F05399C 24050008 */  li    $a1, 8
-/* 0884D0 7F0539A0 0C002461 */  jal   sfx_c_70009184
+/* 0884D0 7F0539A0 0C002461 */  jal   sndCreatePostEvent
 /* 0884D4 7F0539A4 00403025 */   move  $a2, $v0
 /* 0884D8 7F0539A8 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0884DC 7F0539AC 27BD0018 */  addiu $sp, $sp, 0x18
@@ -40587,7 +40588,7 @@ glabel sub_GAME_7F053A3C
 /* 08857C 7F053A4C 0005182B */  sltu  $v1, $zero, $a1
 /* 088580 7F053A50 50600005 */  beql  $v1, $zero, .L7F053A68
 /* 088584 7F053A54 8FAF0028 */   lw    $t7, 0x28($sp)
-/* 088588 7F053A58 0C00237C */  jal   sfxGetArg0Unk3F
+/* 088588 7F053A58 0C00237C */  jal   sndGetPlayingState
 /* 08858C 7F053A5C 00A02025 */   move  $a0, $a1
 /* 088590 7F053A60 0002182B */  sltu  $v1, $zero, $v0
 /* 088594 7F053A64 8FAF0028 */  lw    $t7, 0x28($sp)
@@ -40597,7 +40598,7 @@ glabel sub_GAME_7F053A3C
 /* 0885A0 7F053A70 0004182B */  sltu  $v1, $zero, $a0
 /* 0885A4 7F053A74 50600005 */  beql  $v1, $zero, .L7F053A8C
 /* 0885A8 7F053A78 8FB80024 */   lw    $t8, 0x24($sp)
-/* 0885AC 7F053A7C 0C00237C */  jal   sfxGetArg0Unk3F
+/* 0885AC 7F053A7C 0C00237C */  jal   sndGetPlayingState
 /* 0885B0 7F053A80 00000000 */   nop   
 /* 0885B4 7F053A84 0002182B */  sltu  $v1, $zero, $v0
 /* 0885B8 7F053A88 8FB80024 */  lw    $t8, 0x24($sp)
@@ -40624,7 +40625,7 @@ glabel sub_GAME_7F053A3C
 /* 088600 7F053AD0 11000005 */  beqz  $t0, .L7F053AE8
 /* 088604 7F053AD4 8FA6001C */   lw    $a2, 0x1c($sp)
 /* 088608 7F053AD8 8D2400F4 */  lw    $a0, 0xf4($t1)
-/* 08860C 7F053ADC 0C002461 */  jal   sfx_c_70009184
+/* 08860C 7F053ADC 0C002461 */  jal   sndCreatePostEvent
 /* 088610 7F053AE0 AFA30018 */   sw    $v1, 0x18($sp)
 /* 088614 7F053AE4 8FA30018 */  lw    $v1, 0x18($sp)
 .L7F053AE8:
@@ -40632,7 +40633,7 @@ glabel sub_GAME_7F053A3C
 /* 08861C 7F053AEC 8FAA0028 */   lw    $t2, 0x28($sp)
 /* 088620 7F053AF0 8D4400F8 */  lw    $a0, 0xf8($t2)
 /* 088624 7F053AF4 24050008 */  li    $a1, 8
-/* 088628 7F053AF8 0C002461 */  jal   sfx_c_70009184
+/* 088628 7F053AF8 0C002461 */  jal   sndCreatePostEvent
 /* 08862C 7F053AFC 8FA6001C */   lw    $a2, 0x1c($sp)
 .L7F053B00:
 /* 088630 7F053B00 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -40661,11 +40662,11 @@ glabel sub_GAME_7F053B10
 /* 08864C 7F053B1C 8C8500F4 */  lw    $a1, 0xf4($a0)
 /* 088650 7F053B20 50A00008 */  beql  $a1, $zero, .L7F053B44
 /* 088654 7F053B24 8FB80018 */   lw    $t8, 0x18($sp)
-/* 088658 7F053B28 0C00237C */  jal   sfxGetArg0Unk3F
+/* 088658 7F053B28 0C00237C */  jal   sndGetPlayingState
 /* 08865C 7F053B2C 00A02025 */   move  $a0, $a1
 /* 088660 7F053B30 10400003 */  beqz  $v0, .L7F053B40
 /* 088664 7F053B34 8FAF0018 */   lw    $t7, 0x18($sp)
-/* 088668 7F053B38 0C002408 */  jal   sfxDeactivate
+/* 088668 7F053B38 0C002408 */  jal   sndDeactivate
 /* 08866C 7F053B3C 8DE400F4 */   lw    $a0, 0xf4($t7)
 .L7F053B40:
 /* 088670 7F053B40 8FB80018 */  lw    $t8, 0x18($sp)
@@ -40673,11 +40674,11 @@ glabel sub_GAME_7F053B10
 /* 088674 7F053B44 8F0400F8 */  lw    $a0, 0xf8($t8)
 /* 088678 7F053B48 50800008 */  beql  $a0, $zero, .L7F053B6C
 /* 08867C 7F053B4C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 088680 7F053B50 0C00237C */  jal   sfxGetArg0Unk3F
+/* 088680 7F053B50 0C00237C */  jal   sndGetPlayingState
 /* 088684 7F053B54 00000000 */   nop   
 /* 088688 7F053B58 10400003 */  beqz  $v0, .L7F053B68
 /* 08868C 7F053B5C 8FB90018 */   lw    $t9, 0x18($sp)
-/* 088690 7F053B60 0C002408 */  jal   sfxDeactivate
+/* 088690 7F053B60 0C002408 */  jal   sndDeactivate
 /* 088694 7F053B64 8F2400F8 */   lw    $a0, 0xf8($t9)
 .L7F053B68:
 /* 088698 7F053B68 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -40758,7 +40759,7 @@ glabel play_door_opening_soundeffect_0
 /* 088720 7F053BF0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088724 7F053BF4 240500D2 */  li    $a1, 210
 /* 088728 7F053BF8 00003025 */  move  $a2, $zero
-/* 08872C 7F053BFC 0C002382 */  jal   play_sfx_a1
+/* 08872C 7F053BFC 0C002382 */  jal   sndPlaySfx
 /* 088730 7F053C00 AFA70018 */   sw    $a3, 0x18($sp)
 /* 088734 7F053C04 8FA70018 */  lw    $a3, 0x18($sp)
 /* 088738 7F053C08 AFA2001C */  sw    $v0, 0x1c($sp)
@@ -40766,7 +40767,7 @@ glabel play_door_opening_soundeffect_0
 /* 088740 7F053C10 10E000C6 */  beqz  $a3, .L7F053F2C
 /* 088744 7F053C14 240500D3 */   li    $a1, 211
 /* 088748 7F053C18 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 08874C 7F053C1C 0C002382 */  jal   play_sfx_a1
+/* 08874C 7F053C1C 0C002382 */  jal   sndPlaySfx
 /* 088750 7F053C20 00E03025 */   move  $a2, $a3
 /* 088754 7F053C24 100000C2 */  b     .L7F053F30
 /* 088758 7F053C28 8FAC001C */   lw    $t4, 0x1c($sp)
@@ -40775,7 +40776,7 @@ glabel play_door_opening_soundeffect_0
 /* 088760 7F053C30 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088764 7F053C34 240500D2 */  li    $a1, 210
 /* 088768 7F053C38 00003025 */  move  $a2, $zero
-/* 08876C 7F053C3C 0C002382 */  jal   play_sfx_a1
+/* 08876C 7F053C3C 0C002382 */  jal   sndPlaySfx
 /* 088770 7F053C40 AFA70018 */   sw    $a3, 0x18($sp)
 /* 088774 7F053C44 8FA70018 */  lw    $a3, 0x18($sp)
 /* 088778 7F053C48 AFA2001C */  sw    $v0, 0x1c($sp)
@@ -40783,7 +40784,7 @@ glabel play_door_opening_soundeffect_0
 /* 088780 7F053C50 10E000B6 */  beqz  $a3, .L7F053F2C
 /* 088784 7F053C54 24050007 */   li    $a1, 7
 /* 088788 7F053C58 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 08878C 7F053C5C 0C002382 */  jal   play_sfx_a1
+/* 08878C 7F053C5C 0C002382 */  jal   sndPlaySfx
 /* 088790 7F053C60 00E03025 */   move  $a2, $a3
 /* 088794 7F053C64 100000B2 */  b     .L7F053F30
 /* 088798 7F053C68 8FAC001C */   lw    $t4, 0x1c($sp)
@@ -40792,7 +40793,7 @@ glabel play_door_opening_soundeffect_0
 /* 0887A0 7F053C70 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0887A4 7F053C74 240500CA */  li    $a1, 202
 /* 0887A8 7F053C78 00003025 */  move  $a2, $zero
-/* 0887AC 7F053C7C 0C002382 */  jal   play_sfx_a1
+/* 0887AC 7F053C7C 0C002382 */  jal   sndPlaySfx
 /* 0887B0 7F053C80 AFA70018 */   sw    $a3, 0x18($sp)
 /* 0887B4 7F053C84 8FA70018 */  lw    $a3, 0x18($sp)
 /* 0887B8 7F053C88 AFA2001C */  sw    $v0, 0x1c($sp)
@@ -40800,7 +40801,7 @@ glabel play_door_opening_soundeffect_0
 /* 0887C0 7F053C90 10E000A6 */  beqz  $a3, .L7F053F2C
 /* 0887C4 7F053C94 240500CC */   li    $a1, 204
 /* 0887C8 7F053C98 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0887CC 7F053C9C 0C002382 */  jal   play_sfx_a1
+/* 0887CC 7F053C9C 0C002382 */  jal   sndPlaySfx
 /* 0887D0 7F053CA0 00E03025 */   move  $a2, $a3
 /* 0887D4 7F053CA4 100000A2 */  b     .L7F053F30
 /* 0887D8 7F053CA8 8FAC001C */   lw    $t4, 0x1c($sp)
@@ -40809,7 +40810,7 @@ glabel play_door_opening_soundeffect_0
 /* 0887E0 7F053CB0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0887E4 7F053CB4 240500D6 */  li    $a1, 214
 /* 0887E8 7F053CB8 00003025 */  move  $a2, $zero
-/* 0887EC 7F053CBC 0C002382 */  jal   play_sfx_a1
+/* 0887EC 7F053CBC 0C002382 */  jal   sndPlaySfx
 /* 0887F0 7F053CC0 AFA70018 */   sw    $a3, 0x18($sp)
 /* 0887F4 7F053CC4 8FA70018 */  lw    $a3, 0x18($sp)
 /* 0887F8 7F053CC8 AFA2001C */  sw    $v0, 0x1c($sp)
@@ -40817,7 +40818,7 @@ glabel play_door_opening_soundeffect_0
 /* 088800 7F053CD0 10E00096 */  beqz  $a3, .L7F053F2C
 /* 088804 7F053CD4 240500D8 */   li    $a1, 216
 /* 088808 7F053CD8 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 08880C 7F053CDC 0C002382 */  jal   play_sfx_a1
+/* 08880C 7F053CDC 0C002382 */  jal   sndPlaySfx
 /* 088810 7F053CE0 00E03025 */   move  $a2, $a3
 /* 088814 7F053CE4 10000092 */  b     .L7F053F30
 /* 088818 7F053CE8 8FAC001C */   lw    $t4, 0x1c($sp)
@@ -40825,7 +40826,7 @@ glabel play_door_opening_soundeffect_0
 /* 08881C 7F053CEC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 088820 7F053CF0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088824 7F053CF4 240500BC */  li    $a1, 188
-/* 088828 7F053CF8 0C002382 */  jal   play_sfx_a1
+/* 088828 7F053CF8 0C002382 */  jal   sndPlaySfx
 /* 08882C 7F053CFC 00003025 */   move  $a2, $zero
 /* 088830 7F053D00 1000008A */  b     .L7F053F2C
 /* 088834 7F053D04 AFA2001C */   sw    $v0, 0x1c($sp)
@@ -40833,7 +40834,7 @@ glabel play_door_opening_soundeffect_0
 /* 088838 7F053D08 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 08883C 7F053D0C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088840 7F053D10 24050007 */  li    $a1, 7
-/* 088844 7F053D14 0C002382 */  jal   play_sfx_a1
+/* 088844 7F053D14 0C002382 */  jal   sndPlaySfx
 /* 088848 7F053D18 00003025 */   move  $a2, $zero
 /* 08884C 7F053D1C 10000083 */  b     .L7F053F2C
 /* 088850 7F053D20 AFA2001C */   sw    $v0, 0x1c($sp)
@@ -40842,7 +40843,7 @@ glabel play_door_opening_soundeffect_0
 /* 088858 7F053D28 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 08885C 7F053D2C 240500C0 */  li    $a1, 192
 /* 088860 7F053D30 00003025 */  move  $a2, $zero
-/* 088864 7F053D34 0C002382 */  jal   play_sfx_a1
+/* 088864 7F053D34 0C002382 */  jal   sndPlaySfx
 /* 088868 7F053D38 AFA70018 */   sw    $a3, 0x18($sp)
 /* 08886C 7F053D3C 8FA70018 */  lw    $a3, 0x18($sp)
 /* 088870 7F053D40 AFA2001C */  sw    $v0, 0x1c($sp)
@@ -40850,7 +40851,7 @@ glabel play_door_opening_soundeffect_0
 /* 088878 7F053D48 10E00078 */  beqz  $a3, .L7F053F2C
 /* 08887C 7F053D4C 240500BF */   li    $a1, 191
 /* 088880 7F053D50 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088884 7F053D54 0C002382 */  jal   play_sfx_a1
+/* 088884 7F053D54 0C002382 */  jal   sndPlaySfx
 /* 088888 7F053D58 00E03025 */   move  $a2, $a3
 /* 08888C 7F053D5C 10000074 */  b     .L7F053F30
 /* 088890 7F053D60 8FAC001C */   lw    $t4, 0x1c($sp)
@@ -40859,7 +40860,7 @@ glabel play_door_opening_soundeffect_0
 /* 088898 7F053D68 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 08889C 7F053D6C 240500BC */  li    $a1, 188
 /* 0888A0 7F053D70 00003025 */  move  $a2, $zero
-/* 0888A4 7F053D74 0C002382 */  jal   play_sfx_a1
+/* 0888A4 7F053D74 0C002382 */  jal   sndPlaySfx
 /* 0888A8 7F053D78 AFA70018 */   sw    $a3, 0x18($sp)
 /* 0888AC 7F053D7C 8FA70018 */  lw    $a3, 0x18($sp)
 /* 0888B0 7F053D80 AFA2001C */  sw    $v0, 0x1c($sp)
@@ -40867,7 +40868,7 @@ glabel play_door_opening_soundeffect_0
 /* 0888B8 7F053D88 10E00068 */  beqz  $a3, .L7F053F2C
 /* 0888BC 7F053D8C 24050007 */   li    $a1, 7
 /* 0888C0 7F053D90 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0888C4 7F053D94 0C002382 */  jal   play_sfx_a1
+/* 0888C4 7F053D94 0C002382 */  jal   sndPlaySfx
 /* 0888C8 7F053D98 00E03025 */   move  $a2, $a3
 /* 0888CC 7F053D9C 10000064 */  b     .L7F053F30
 /* 0888D0 7F053DA0 8FAC001C */   lw    $t4, 0x1c($sp)
@@ -40876,7 +40877,7 @@ glabel play_door_opening_soundeffect_0
 /* 0888D8 7F053DA8 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0888DC 7F053DAC 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0888E0 7F053DB0 240500C2 */  li    $a1, 194
-/* 0888E4 7F053DB4 0C002382 */  jal   play_sfx_a1
+/* 0888E4 7F053DB4 0C002382 */  jal   sndPlaySfx
 /* 0888E8 7F053DB8 00E03025 */   move  $a2, $a3
 /* 0888EC 7F053DBC 1000005C */  b     .L7F053F30
 /* 0888F0 7F053DC0 8FAC001C */   lw    $t4, 0x1c($sp)
@@ -40884,7 +40885,7 @@ glabel play_door_opening_soundeffect_0
 /* 0888F4 7F053DC4 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0888F8 7F053DC8 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0888FC 7F053DCC 240500C4 */  li    $a1, 196
-/* 088900 7F053DD0 0C002382 */  jal   play_sfx_a1
+/* 088900 7F053DD0 0C002382 */  jal   sndPlaySfx
 /* 088904 7F053DD4 00003025 */   move  $a2, $zero
 /* 088908 7F053DD8 10000054 */  b     .L7F053F2C
 /* 08890C 7F053DDC AFA2001C */   sw    $v0, 0x1c($sp)
@@ -40892,7 +40893,7 @@ glabel play_door_opening_soundeffect_0
 /* 088910 7F053DE0 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 088914 7F053DE4 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088918 7F053DE8 24050007 */  li    $a1, 7
-/* 08891C 7F053DEC 0C002382 */  jal   play_sfx_a1
+/* 08891C 7F053DEC 0C002382 */  jal   sndPlaySfx
 /* 088920 7F053DF0 00003025 */   move  $a2, $zero
 /* 088924 7F053DF4 1000004D */  b     .L7F053F2C
 /* 088928 7F053DF8 AFA2001C */   sw    $v0, 0x1c($sp)
@@ -40900,7 +40901,7 @@ glabel play_door_opening_soundeffect_0
 /* 08892C 7F053DFC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 088930 7F053E00 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088934 7F053E04 240500C8 */  li    $a1, 200
-/* 088938 7F053E08 0C002382 */  jal   play_sfx_a1
+/* 088938 7F053E08 0C002382 */  jal   sndPlaySfx
 /* 08893C 7F053E0C 00003025 */   move  $a2, $zero
 /* 088940 7F053E10 10000046 */  b     .L7F053F2C
 /* 088944 7F053E14 AFA2001C */   sw    $v0, 0x1c($sp)
@@ -40909,7 +40910,7 @@ glabel play_door_opening_soundeffect_0
 /* 08894C 7F053E1C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088950 7F053E20 24050007 */  li    $a1, 7
 /* 088954 7F053E24 00003025 */  move  $a2, $zero
-/* 088958 7F053E28 0C002382 */  jal   play_sfx_a1
+/* 088958 7F053E28 0C002382 */  jal   sndPlaySfx
 /* 08895C 7F053E2C AFA70018 */   sw    $a3, 0x18($sp)
 /* 088960 7F053E30 8FA70018 */  lw    $a3, 0x18($sp)
 /* 088964 7F053E34 AFA2001C */  sw    $v0, 0x1c($sp)
@@ -40917,7 +40918,7 @@ glabel play_door_opening_soundeffect_0
 /* 08896C 7F053E3C 10E0003B */  beqz  $a3, .L7F053F2C
 /* 088970 7F053E40 24050007 */   li    $a1, 7
 /* 088974 7F053E44 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088978 7F053E48 0C002382 */  jal   play_sfx_a1
+/* 088978 7F053E48 0C002382 */  jal   sndPlaySfx
 /* 08897C 7F053E4C 00E03025 */   move  $a2, $a3
 /* 088980 7F053E50 10000037 */  b     .L7F053F30
 /* 088984 7F053E54 8FAC001C */   lw    $t4, 0x1c($sp)
@@ -40926,7 +40927,7 @@ glabel play_door_opening_soundeffect_0
 /* 08898C 7F053E5C 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 088990 7F053E60 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088994 7F053E64 240500DA */  li    $a1, 218
-/* 088998 7F053E68 0C002382 */  jal   play_sfx_a1
+/* 088998 7F053E68 0C002382 */  jal   sndPlaySfx
 /* 08899C 7F053E6C 00E03025 */   move  $a2, $a3
 /* 0889A0 7F053E70 1000002F */  b     .L7F053F30
 /* 0889A4 7F053E74 8FAC001C */   lw    $t4, 0x1c($sp)
@@ -40935,7 +40936,7 @@ glabel play_door_opening_soundeffect_0
 /* 0889AC 7F053E7C 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0889B0 7F053E80 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0889B4 7F053E84 240500E1 */  li    $a1, 225
-/* 0889B8 7F053E88 0C002382 */  jal   play_sfx_a1
+/* 0889B8 7F053E88 0C002382 */  jal   sndPlaySfx
 /* 0889BC 7F053E8C 00E03025 */   move  $a2, $a3
 /* 0889C0 7F053E90 10000027 */  b     .L7F053F30
 /* 0889C4 7F053E94 8FAC001C */   lw    $t4, 0x1c($sp)
@@ -40943,7 +40944,7 @@ glabel play_door_opening_soundeffect_0
 /* 0889C8 7F053E98 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0889CC 7F053E9C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0889D0 7F053EA0 240500D6 */  li    $a1, 214
-/* 0889D4 7F053EA4 0C002382 */  jal   play_sfx_a1
+/* 0889D4 7F053EA4 0C002382 */  jal   sndPlaySfx
 /* 0889D8 7F053EA8 00003025 */   move  $a2, $zero
 /* 0889DC 7F053EAC 1000001F */  b     .L7F053F2C
 /* 0889E0 7F053EB0 AFA2001C */   sw    $v0, 0x1c($sp)
@@ -40952,7 +40953,7 @@ glabel play_door_opening_soundeffect_0
 /* 0889E8 7F053EB8 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0889EC 7F053EBC 24050007 */  li    $a1, 7
 /* 0889F0 7F053EC0 00003025 */  move  $a2, $zero
-/* 0889F4 7F053EC4 0C002382 */  jal   play_sfx_a1
+/* 0889F4 7F053EC4 0C002382 */  jal   sndPlaySfx
 /* 0889F8 7F053EC8 AFA70018 */   sw    $a3, 0x18($sp)
 /* 0889FC 7F053ECC 8FA70018 */  lw    $a3, 0x18($sp)
 /* 088A00 7F053ED0 10400008 */  beqz  $v0, .L7F053EF4
@@ -40969,7 +40970,7 @@ glabel play_door_opening_soundeffect_0
 /* 088A28 7F053EF8 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088A2C 7F053EFC 240500CA */  li    $a1, 202
 /* 088A30 7F053F00 00003025 */  move  $a2, $zero
-/* 088A34 7F053F04 0C002382 */  jal   play_sfx_a1
+/* 088A34 7F053F04 0C002382 */  jal   sndPlaySfx
 /* 088A38 7F053F08 AFA70018 */   sw    $a3, 0x18($sp)
 /* 088A3C 7F053F0C 8FA70018 */  lw    $a3, 0x18($sp)
 /* 088A40 7F053F10 AFA2001C */  sw    $v0, 0x1c($sp)
@@ -40977,7 +40978,7 @@ glabel play_door_opening_soundeffect_0
 /* 088A48 7F053F18 10E00004 */  beqz  $a3, .L7F053F2C
 /* 088A4C 7F053F1C 240500CC */   li    $a1, 204
 /* 088A50 7F053F20 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088A54 7F053F24 0C002382 */  jal   play_sfx_a1
+/* 088A54 7F053F24 0C002382 */  jal   sndPlaySfx
 /* 088A58 7F053F28 00E03025 */   move  $a2, $a3
 def_7F053BE4:
 .L7F053F2C:
@@ -41070,7 +41071,7 @@ glabel play_door_opening_soundeffect_1
 /* 088B0C 7F053FDC 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088B10 7F053FE0 240500D2 */  li    $a1, 210
 /* 088B14 7F053FE4 00003025 */  move  $a2, $zero
-/* 088B18 7F053FE8 0C002382 */  jal   play_sfx_a1
+/* 088B18 7F053FE8 0C002382 */  jal   sndPlaySfx
 /* 088B1C 7F053FEC AFA70018 */   sw    $a3, 0x18($sp)
 /* 088B20 7F053FF0 8FA70018 */  lw    $a3, 0x18($sp)
 /* 088B24 7F053FF4 AFA2001C */  sw    $v0, 0x1c($sp)
@@ -41078,7 +41079,7 @@ glabel play_door_opening_soundeffect_1
 /* 088B2C 7F053FFC 10E000A3 */  beqz  $a3, .L7F05428C
 /* 088B30 7F054000 240500D3 */   li    $a1, 211
 /* 088B34 7F054004 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088B38 7F054008 0C002382 */  jal   play_sfx_a1
+/* 088B38 7F054008 0C002382 */  jal   sndPlaySfx
 /* 088B3C 7F05400C 00E03025 */   move  $a2, $a3
 /* 088B40 7F054010 1000009F */  b     .L7F054290
 /* 088B44 7F054014 8FAC001C */   lw    $t4, 0x1c($sp)
@@ -41087,7 +41088,7 @@ glabel play_door_opening_soundeffect_1
 /* 088B4C 7F05401C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088B50 7F054020 240500D2 */  li    $a1, 210
 /* 088B54 7F054024 00003025 */  move  $a2, $zero
-/* 088B58 7F054028 0C002382 */  jal   play_sfx_a1
+/* 088B58 7F054028 0C002382 */  jal   sndPlaySfx
 /* 088B5C 7F05402C AFA70018 */   sw    $a3, 0x18($sp)
 /* 088B60 7F054030 8FA70018 */  lw    $a3, 0x18($sp)
 /* 088B64 7F054034 AFA2001C */  sw    $v0, 0x1c($sp)
@@ -41095,7 +41096,7 @@ glabel play_door_opening_soundeffect_1
 /* 088B6C 7F05403C 10E00093 */  beqz  $a3, .L7F05428C
 /* 088B70 7F054040 24050007 */   li    $a1, 7
 /* 088B74 7F054044 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088B78 7F054048 0C002382 */  jal   play_sfx_a1
+/* 088B78 7F054048 0C002382 */  jal   sndPlaySfx
 /* 088B7C 7F05404C 00E03025 */   move  $a2, $a3
 /* 088B80 7F054050 1000008F */  b     .L7F054290
 /* 088B84 7F054054 8FAC001C */   lw    $t4, 0x1c($sp)
@@ -41104,7 +41105,7 @@ glabel play_door_opening_soundeffect_1
 /* 088B8C 7F05405C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088B90 7F054060 240500CA */  li    $a1, 202
 /* 088B94 7F054064 00003025 */  move  $a2, $zero
-/* 088B98 7F054068 0C002382 */  jal   play_sfx_a1
+/* 088B98 7F054068 0C002382 */  jal   sndPlaySfx
 /* 088B9C 7F05406C AFA70018 */   sw    $a3, 0x18($sp)
 /* 088BA0 7F054070 8FA70018 */  lw    $a3, 0x18($sp)
 /* 088BA4 7F054074 AFA2001C */  sw    $v0, 0x1c($sp)
@@ -41112,7 +41113,7 @@ glabel play_door_opening_soundeffect_1
 /* 088BAC 7F05407C 10E00083 */  beqz  $a3, .L7F05428C
 /* 088BB0 7F054080 240500CC */   li    $a1, 204
 /* 088BB4 7F054084 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088BB8 7F054088 0C002382 */  jal   play_sfx_a1
+/* 088BB8 7F054088 0C002382 */  jal   sndPlaySfx
 /* 088BBC 7F05408C 00E03025 */   move  $a2, $a3
 /* 088BC0 7F054090 1000007F */  b     .L7F054290
 /* 088BC4 7F054094 8FAC001C */   lw    $t4, 0x1c($sp)
@@ -41121,7 +41122,7 @@ glabel play_door_opening_soundeffect_1
 /* 088BCC 7F05409C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088BD0 7F0540A0 240500D6 */  li    $a1, 214
 /* 088BD4 7F0540A4 00003025 */  move  $a2, $zero
-/* 088BD8 7F0540A8 0C002382 */  jal   play_sfx_a1
+/* 088BD8 7F0540A8 0C002382 */  jal   sndPlaySfx
 /* 088BDC 7F0540AC AFA70018 */   sw    $a3, 0x18($sp)
 /* 088BE0 7F0540B0 8FA70018 */  lw    $a3, 0x18($sp)
 /* 088BE4 7F0540B4 AFA2001C */  sw    $v0, 0x1c($sp)
@@ -41129,7 +41130,7 @@ glabel play_door_opening_soundeffect_1
 /* 088BEC 7F0540BC 10E00073 */  beqz  $a3, .L7F05428C
 /* 088BF0 7F0540C0 240500D8 */   li    $a1, 216
 /* 088BF4 7F0540C4 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088BF8 7F0540C8 0C002382 */  jal   play_sfx_a1
+/* 088BF8 7F0540C8 0C002382 */  jal   sndPlaySfx
 /* 088BFC 7F0540CC 00E03025 */   move  $a2, $a3
 /* 088C00 7F0540D0 1000006F */  b     .L7F054290
 /* 088C04 7F0540D4 8FAC001C */   lw    $t4, 0x1c($sp)
@@ -41138,7 +41139,7 @@ glabel play_door_opening_soundeffect_1
 /* 088C0C 7F0540DC 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088C10 7F0540E0 240500C0 */  li    $a1, 192
 /* 088C14 7F0540E4 00003025 */  move  $a2, $zero
-/* 088C18 7F0540E8 0C002382 */  jal   play_sfx_a1
+/* 088C18 7F0540E8 0C002382 */  jal   sndPlaySfx
 /* 088C1C 7F0540EC AFA70018 */   sw    $a3, 0x18($sp)
 /* 088C20 7F0540F0 8FA70018 */  lw    $a3, 0x18($sp)
 /* 088C24 7F0540F4 AFA2001C */  sw    $v0, 0x1c($sp)
@@ -41146,7 +41147,7 @@ glabel play_door_opening_soundeffect_1
 /* 088C2C 7F0540FC 10E00063 */  beqz  $a3, .L7F05428C
 /* 088C30 7F054100 240500BF */   li    $a1, 191
 /* 088C34 7F054104 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088C38 7F054108 0C002382 */  jal   play_sfx_a1
+/* 088C38 7F054108 0C002382 */  jal   sndPlaySfx
 /* 088C3C 7F05410C 00E03025 */   move  $a2, $a3
 /* 088C40 7F054110 1000005F */  b     .L7F054290
 /* 088C44 7F054114 8FAC001C */   lw    $t4, 0x1c($sp)
@@ -41155,7 +41156,7 @@ glabel play_door_opening_soundeffect_1
 /* 088C4C 7F05411C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088C50 7F054120 240500BC */  li    $a1, 188
 /* 088C54 7F054124 00003025 */  move  $a2, $zero
-/* 088C58 7F054128 0C002382 */  jal   play_sfx_a1
+/* 088C58 7F054128 0C002382 */  jal   sndPlaySfx
 /* 088C5C 7F05412C AFA70018 */   sw    $a3, 0x18($sp)
 /* 088C60 7F054130 8FA70018 */  lw    $a3, 0x18($sp)
 /* 088C64 7F054134 AFA2001C */  sw    $v0, 0x1c($sp)
@@ -41163,7 +41164,7 @@ glabel play_door_opening_soundeffect_1
 /* 088C6C 7F05413C 10E00053 */  beqz  $a3, .L7F05428C
 /* 088C70 7F054140 24050007 */   li    $a1, 7
 /* 088C74 7F054144 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088C78 7F054148 0C002382 */  jal   play_sfx_a1
+/* 088C78 7F054148 0C002382 */  jal   sndPlaySfx
 /* 088C7C 7F05414C 00E03025 */   move  $a2, $a3
 /* 088C80 7F054150 1000004F */  b     .L7F054290
 /* 088C84 7F054154 8FAC001C */   lw    $t4, 0x1c($sp)
@@ -41172,7 +41173,7 @@ glabel play_door_opening_soundeffect_1
 /* 088C8C 7F05415C 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 088C90 7F054160 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088C94 7F054164 240500C2 */  li    $a1, 194
-/* 088C98 7F054168 0C002382 */  jal   play_sfx_a1
+/* 088C98 7F054168 0C002382 */  jal   sndPlaySfx
 /* 088C9C 7F05416C 00E03025 */   move  $a2, $a3
 /* 088CA0 7F054170 10000047 */  b     .L7F054290
 /* 088CA4 7F054174 8FAC001C */   lw    $t4, 0x1c($sp)
@@ -41181,7 +41182,7 @@ glabel play_door_opening_soundeffect_1
 /* 088CAC 7F05417C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088CB0 7F054180 24050007 */  li    $a1, 7
 /* 088CB4 7F054184 00003025 */  move  $a2, $zero
-/* 088CB8 7F054188 0C002382 */  jal   play_sfx_a1
+/* 088CB8 7F054188 0C002382 */  jal   sndPlaySfx
 /* 088CBC 7F05418C AFA70018 */   sw    $a3, 0x18($sp)
 /* 088CC0 7F054190 8FA70018 */  lw    $a3, 0x18($sp)
 /* 088CC4 7F054194 AFA2001C */  sw    $v0, 0x1c($sp)
@@ -41189,7 +41190,7 @@ glabel play_door_opening_soundeffect_1
 /* 088CCC 7F05419C 10E0003B */  beqz  $a3, .L7F05428C
 /* 088CD0 7F0541A0 24050007 */   li    $a1, 7
 /* 088CD4 7F0541A4 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088CD8 7F0541A8 0C002382 */  jal   play_sfx_a1
+/* 088CD8 7F0541A8 0C002382 */  jal   sndPlaySfx
 /* 088CDC 7F0541AC 00E03025 */   move  $a2, $a3
 /* 088CE0 7F0541B0 10000037 */  b     .L7F054290
 /* 088CE4 7F0541B4 8FAC001C */   lw    $t4, 0x1c($sp)
@@ -41198,7 +41199,7 @@ glabel play_door_opening_soundeffect_1
 /* 088CEC 7F0541BC 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 088CF0 7F0541C0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088CF4 7F0541C4 240500DA */  li    $a1, 218
-/* 088CF8 7F0541C8 0C002382 */  jal   play_sfx_a1
+/* 088CF8 7F0541C8 0C002382 */  jal   sndPlaySfx
 /* 088CFC 7F0541CC 00E03025 */   move  $a2, $a3
 /* 088D00 7F0541D0 1000002F */  b     .L7F054290
 /* 088D04 7F0541D4 8FAC001C */   lw    $t4, 0x1c($sp)
@@ -41207,7 +41208,7 @@ glabel play_door_opening_soundeffect_1
 /* 088D0C 7F0541DC 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 088D10 7F0541E0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088D14 7F0541E4 240500E1 */  li    $a1, 225
-/* 088D18 7F0541E8 0C002382 */  jal   play_sfx_a1
+/* 088D18 7F0541E8 0C002382 */  jal   sndPlaySfx
 /* 088D1C 7F0541EC 00E03025 */   move  $a2, $a3
 /* 088D20 7F0541F0 10000027 */  b     .L7F054290
 /* 088D24 7F0541F4 8FAC001C */   lw    $t4, 0x1c($sp)
@@ -41215,7 +41216,7 @@ glabel play_door_opening_soundeffect_1
 /* 088D28 7F0541F8 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 088D2C 7F0541FC 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088D30 7F054200 240500D6 */  li    $a1, 214
-/* 088D34 7F054204 0C002382 */  jal   play_sfx_a1
+/* 088D34 7F054204 0C002382 */  jal   sndPlaySfx
 /* 088D38 7F054208 00003025 */   move  $a2, $zero
 /* 088D3C 7F05420C 1000001F */  b     .L7F05428C
 /* 088D40 7F054210 AFA2001C */   sw    $v0, 0x1c($sp)
@@ -41224,7 +41225,7 @@ glabel play_door_opening_soundeffect_1
 /* 088D48 7F054218 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088D4C 7F05421C 24050007 */  li    $a1, 7
 /* 088D50 7F054220 00003025 */  move  $a2, $zero
-/* 088D54 7F054224 0C002382 */  jal   play_sfx_a1
+/* 088D54 7F054224 0C002382 */  jal   sndPlaySfx
 /* 088D58 7F054228 AFA70018 */   sw    $a3, 0x18($sp)
 /* 088D5C 7F05422C 8FA70018 */  lw    $a3, 0x18($sp)
 /* 088D60 7F054230 10400008 */  beqz  $v0, .L7F054254
@@ -41241,7 +41242,7 @@ glabel play_door_opening_soundeffect_1
 /* 088D88 7F054258 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088D8C 7F05425C 240500CA */  li    $a1, 202
 /* 088D90 7F054260 00003025 */  move  $a2, $zero
-/* 088D94 7F054264 0C002382 */  jal   play_sfx_a1
+/* 088D94 7F054264 0C002382 */  jal   sndPlaySfx
 /* 088D98 7F054268 AFA70018 */   sw    $a3, 0x18($sp)
 /* 088D9C 7F05426C 8FA70018 */  lw    $a3, 0x18($sp)
 /* 088DA0 7F054270 AFA2001C */  sw    $v0, 0x1c($sp)
@@ -41249,7 +41250,7 @@ glabel play_door_opening_soundeffect_1
 /* 088DA8 7F054278 10E00004 */  beqz  $a3, .L7F05428C
 /* 088DAC 7F05427C 240500CC */   li    $a1, 204
 /* 088DB0 7F054280 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 088DB4 7F054284 0C002382 */  jal   play_sfx_a1
+/* 088DB4 7F054284 0C002382 */  jal   sndPlaySfx
 /* 088DB8 7F054288 00E03025 */   move  $a2, $a3
 def_7F053FD0:
 .L7F05428C:
@@ -41326,7 +41327,7 @@ glabel play_door_closing_soundeffect_0
 /* 088E38 7F054308 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 088E3C 7F05430C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088E40 7F054310 240500D2 */  li    $a1, 210
-/* 088E44 7F054314 0C002382 */  jal   play_sfx_a1
+/* 088E44 7F054314 0C002382 */  jal   sndPlaySfx
 /* 088E48 7F054318 00003025 */   move  $a2, $zero
 /* 088E4C 7F05431C 00403025 */  move  $a2, $v0
 /* 088E50 7F054320 10000058 */  b     .L7F054484
@@ -41335,7 +41336,7 @@ glabel play_door_closing_soundeffect_0
 /* 088E58 7F054328 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 088E5C 7F05432C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088E60 7F054330 240500D2 */  li    $a1, 210
-/* 088E64 7F054334 0C002382 */  jal   play_sfx_a1
+/* 088E64 7F054334 0C002382 */  jal   sndPlaySfx
 /* 088E68 7F054338 00003025 */   move  $a2, $zero
 /* 088E6C 7F05433C 00403025 */  move  $a2, $v0
 /* 088E70 7F054340 10000050 */  b     .L7F054484
@@ -41344,7 +41345,7 @@ glabel play_door_closing_soundeffect_0
 /* 088E78 7F054348 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 088E7C 7F05434C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088E80 7F054350 240500CB */  li    $a1, 203
-/* 088E84 7F054354 0C002382 */  jal   play_sfx_a1
+/* 088E84 7F054354 0C002382 */  jal   sndPlaySfx
 /* 088E88 7F054358 00003025 */   move  $a2, $zero
 /* 088E8C 7F05435C 00403025 */  move  $a2, $v0
 /* 088E90 7F054360 10000048 */  b     .L7F054484
@@ -41353,7 +41354,7 @@ glabel play_door_closing_soundeffect_0
 /* 088E98 7F054368 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 088E9C 7F05436C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088EA0 7F054370 240500D7 */  li    $a1, 215
-/* 088EA4 7F054374 0C002382 */  jal   play_sfx_a1
+/* 088EA4 7F054374 0C002382 */  jal   sndPlaySfx
 /* 088EA8 7F054378 00003025 */   move  $a2, $zero
 /* 088EAC 7F05437C 00403025 */  move  $a2, $v0
 /* 088EB0 7F054380 10000040 */  b     .L7F054484
@@ -41362,7 +41363,7 @@ glabel play_door_closing_soundeffect_0
 /* 088EB8 7F054388 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 088EBC 7F05438C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088EC0 7F054390 240500D2 */  li    $a1, 210
-/* 088EC4 7F054394 0C002382 */  jal   play_sfx_a1
+/* 088EC4 7F054394 0C002382 */  jal   sndPlaySfx
 /* 088EC8 7F054398 00003025 */   move  $a2, $zero
 /* 088ECC 7F05439C 00403025 */  move  $a2, $v0
 /* 088ED0 7F0543A0 10000038 */  b     .L7F054484
@@ -41371,7 +41372,7 @@ glabel play_door_closing_soundeffect_0
 /* 088ED8 7F0543A8 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 088EDC 7F0543AC 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088EE0 7F0543B0 240500BB */  li    $a1, 187
-/* 088EE4 7F0543B4 0C002382 */  jal   play_sfx_a1
+/* 088EE4 7F0543B4 0C002382 */  jal   sndPlaySfx
 /* 088EE8 7F0543B8 00003025 */   move  $a2, $zero
 /* 088EEC 7F0543BC 00403025 */  move  $a2, $v0
 /* 088EF0 7F0543C0 10000030 */  b     .L7F054484
@@ -41380,7 +41381,7 @@ glabel play_door_closing_soundeffect_0
 /* 088EF8 7F0543C8 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 088EFC 7F0543CC 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088F00 7F0543D0 240500C3 */  li    $a1, 195
-/* 088F04 7F0543D4 0C002382 */  jal   play_sfx_a1
+/* 088F04 7F0543D4 0C002382 */  jal   sndPlaySfx
 /* 088F08 7F0543D8 00003025 */   move  $a2, $zero
 /* 088F0C 7F0543DC 00403025 */  move  $a2, $v0
 /* 088F10 7F0543E0 10000028 */  b     .L7F054484
@@ -41389,7 +41390,7 @@ glabel play_door_closing_soundeffect_0
 /* 088F18 7F0543E8 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 088F1C 7F0543EC 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088F20 7F0543F0 24050007 */  li    $a1, 7
-/* 088F24 7F0543F4 0C002382 */  jal   play_sfx_a1
+/* 088F24 7F0543F4 0C002382 */  jal   sndPlaySfx
 /* 088F28 7F0543F8 00003025 */   move  $a2, $zero
 /* 088F2C 7F0543FC 00403025 */  move  $a2, $v0
 /* 088F30 7F054400 10000020 */  b     .L7F054484
@@ -41398,7 +41399,7 @@ glabel play_door_closing_soundeffect_0
 /* 088F38 7F054408 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 088F3C 7F05440C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088F40 7F054410 240500DB */  li    $a1, 219
-/* 088F44 7F054414 0C002382 */  jal   play_sfx_a1
+/* 088F44 7F054414 0C002382 */  jal   sndPlaySfx
 /* 088F48 7F054418 00003025 */   move  $a2, $zero
 /* 088F4C 7F05441C 00403025 */  move  $a2, $v0
 /* 088F50 7F054420 10000018 */  b     .L7F054484
@@ -41407,7 +41408,7 @@ glabel play_door_closing_soundeffect_0
 /* 088F58 7F054428 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 088F5C 7F05442C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088F60 7F054430 240500E2 */  li    $a1, 226
-/* 088F64 7F054434 0C002382 */  jal   play_sfx_a1
+/* 088F64 7F054434 0C002382 */  jal   sndPlaySfx
 /* 088F68 7F054438 00003025 */   move  $a2, $zero
 /* 088F6C 7F05443C 00403025 */  move  $a2, $v0
 /* 088F70 7F054440 10000010 */  b     .L7F054484
@@ -41416,7 +41417,7 @@ glabel play_door_closing_soundeffect_0
 /* 088F78 7F054448 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 088F7C 7F05444C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088F80 7F054450 240500D7 */  li    $a1, 215
-/* 088F84 7F054454 0C002382 */  jal   play_sfx_a1
+/* 088F84 7F054454 0C002382 */  jal   sndPlaySfx
 /* 088F88 7F054458 00003025 */   move  $a2, $zero
 /* 088F8C 7F05445C 00403025 */  move  $a2, $v0
 /* 088F90 7F054460 10000008 */  b     .L7F054484
@@ -41425,7 +41426,7 @@ glabel play_door_closing_soundeffect_0
 /* 088F98 7F054468 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 088F9C 7F05446C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 088FA0 7F054470 240500CB */  li    $a1, 203
-/* 088FA4 7F054474 0C002382 */  jal   play_sfx_a1
+/* 088FA4 7F054474 0C002382 */  jal   sndPlaySfx
 /* 088FA8 7F054478 00003025 */   move  $a2, $zero
 /* 088FAC 7F05447C 00403025 */  move  $a2, $v0
 /* 088FB0 7F054480 8FA70020 */  lw    $a3, 0x20($sp)
@@ -41502,7 +41503,7 @@ glabel play_door_closing_soundeffect_1
 /* 08902C 7F0544FC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 089030 7F054500 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 089034 7F054504 240500D2 */  li    $a1, 210
-/* 089038 7F054508 0C002382 */  jal   play_sfx_a1
+/* 089038 7F054508 0C002382 */  jal   sndPlaySfx
 /* 08903C 7F05450C 00003025 */   move  $a2, $zero
 /* 089040 7F054510 00403025 */  move  $a2, $v0
 /* 089044 7F054514 10000080 */  b     .L7F054718
@@ -41511,7 +41512,7 @@ glabel play_door_closing_soundeffect_1
 /* 08904C 7F05451C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 089050 7F054520 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 089054 7F054524 240500D2 */  li    $a1, 210
-/* 089058 7F054528 0C002382 */  jal   play_sfx_a1
+/* 089058 7F054528 0C002382 */  jal   sndPlaySfx
 /* 08905C 7F05452C 00003025 */   move  $a2, $zero
 /* 089060 7F054530 00403025 */  move  $a2, $v0
 /* 089064 7F054534 10000078 */  b     .L7F054718
@@ -41520,7 +41521,7 @@ glabel play_door_closing_soundeffect_1
 /* 08906C 7F05453C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 089070 7F054540 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 089074 7F054544 240500CB */  li    $a1, 203
-/* 089078 7F054548 0C002382 */  jal   play_sfx_a1
+/* 089078 7F054548 0C002382 */  jal   sndPlaySfx
 /* 08907C 7F05454C 00003025 */   move  $a2, $zero
 /* 089080 7F054550 00403025 */  move  $a2, $v0
 /* 089084 7F054554 10000070 */  b     .L7F054718
@@ -41529,7 +41530,7 @@ glabel play_door_closing_soundeffect_1
 /* 08908C 7F05455C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 089090 7F054560 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 089094 7F054564 240500D7 */  li    $a1, 215
-/* 089098 7F054568 0C002382 */  jal   play_sfx_a1
+/* 089098 7F054568 0C002382 */  jal   sndPlaySfx
 /* 08909C 7F05456C 00003025 */   move  $a2, $zero
 /* 0890A0 7F054570 00403025 */  move  $a2, $v0
 /* 0890A4 7F054574 10000068 */  b     .L7F054718
@@ -41538,7 +41539,7 @@ glabel play_door_closing_soundeffect_1
 /* 0890AC 7F05457C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0890B0 7F054580 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0890B4 7F054584 240500BB */  li    $a1, 187
-/* 0890B8 7F054588 0C002382 */  jal   play_sfx_a1
+/* 0890B8 7F054588 0C002382 */  jal   sndPlaySfx
 /* 0890BC 7F05458C 00003025 */   move  $a2, $zero
 /* 0890C0 7F054590 00403025 */  move  $a2, $v0
 /* 0890C4 7F054594 10000060 */  b     .L7F054718
@@ -41547,7 +41548,7 @@ glabel play_door_closing_soundeffect_1
 /* 0890CC 7F05459C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0890D0 7F0545A0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0890D4 7F0545A4 24050007 */  li    $a1, 7
-/* 0890D8 7F0545A8 0C002382 */  jal   play_sfx_a1
+/* 0890D8 7F0545A8 0C002382 */  jal   sndPlaySfx
 /* 0890DC 7F0545AC 00003025 */   move  $a2, $zero
 /* 0890E0 7F0545B0 00403025 */  move  $a2, $v0
 /* 0890E4 7F0545B4 10000058 */  b     .L7F054718
@@ -41556,7 +41557,7 @@ glabel play_door_closing_soundeffect_1
 /* 0890EC 7F0545BC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0890F0 7F0545C0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0890F4 7F0545C4 240500D2 */  li    $a1, 210
-/* 0890F8 7F0545C8 0C002382 */  jal   play_sfx_a1
+/* 0890F8 7F0545C8 0C002382 */  jal   sndPlaySfx
 /* 0890FC 7F0545CC 00003025 */   move  $a2, $zero
 /* 089100 7F0545D0 00403025 */  move  $a2, $v0
 /* 089104 7F0545D4 10000050 */  b     .L7F054718
@@ -41565,7 +41566,7 @@ glabel play_door_closing_soundeffect_1
 /* 08910C 7F0545DC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 089110 7F0545E0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 089114 7F0545E4 240500BB */  li    $a1, 187
-/* 089118 7F0545E8 0C002382 */  jal   play_sfx_a1
+/* 089118 7F0545E8 0C002382 */  jal   sndPlaySfx
 /* 08911C 7F0545EC 00003025 */   move  $a2, $zero
 /* 089120 7F0545F0 00403025 */  move  $a2, $v0
 /* 089124 7F0545F4 10000048 */  b     .L7F054718
@@ -41574,7 +41575,7 @@ glabel play_door_closing_soundeffect_1
 /* 08912C 7F0545FC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 089130 7F054600 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 089134 7F054604 240500C3 */  li    $a1, 195
-/* 089138 7F054608 0C002382 */  jal   play_sfx_a1
+/* 089138 7F054608 0C002382 */  jal   sndPlaySfx
 /* 08913C 7F05460C 00003025 */   move  $a2, $zero
 /* 089140 7F054610 00403025 */  move  $a2, $v0
 /* 089144 7F054614 10000040 */  b     .L7F054718
@@ -41583,7 +41584,7 @@ glabel play_door_closing_soundeffect_1
 /* 08914C 7F05461C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 089150 7F054620 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 089154 7F054624 240500C5 */  li    $a1, 197
-/* 089158 7F054628 0C002382 */  jal   play_sfx_a1
+/* 089158 7F054628 0C002382 */  jal   sndPlaySfx
 /* 08915C 7F05462C 00003025 */   move  $a2, $zero
 /* 089160 7F054630 00403025 */  move  $a2, $v0
 /* 089164 7F054634 10000038 */  b     .L7F054718
@@ -41592,7 +41593,7 @@ glabel play_door_closing_soundeffect_1
 /* 08916C 7F05463C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 089170 7F054640 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 089174 7F054644 240500C7 */  li    $a1, 199
-/* 089178 7F054648 0C002382 */  jal   play_sfx_a1
+/* 089178 7F054648 0C002382 */  jal   sndPlaySfx
 /* 08917C 7F05464C 00003025 */   move  $a2, $zero
 /* 089180 7F054650 00403025 */  move  $a2, $v0
 /* 089184 7F054654 10000030 */  b     .L7F054718
@@ -41601,7 +41602,7 @@ glabel play_door_closing_soundeffect_1
 /* 08918C 7F05465C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 089190 7F054660 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 089194 7F054664 240500C9 */  li    $a1, 201
-/* 089198 7F054668 0C002382 */  jal   play_sfx_a1
+/* 089198 7F054668 0C002382 */  jal   sndPlaySfx
 /* 08919C 7F05466C 00003025 */   move  $a2, $zero
 /* 0891A0 7F054670 00403025 */  move  $a2, $v0
 /* 0891A4 7F054674 10000028 */  b     .L7F054718
@@ -41610,7 +41611,7 @@ glabel play_door_closing_soundeffect_1
 /* 0891AC 7F05467C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0891B0 7F054680 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0891B4 7F054684 24050007 */  li    $a1, 7
-/* 0891B8 7F054688 0C002382 */  jal   play_sfx_a1
+/* 0891B8 7F054688 0C002382 */  jal   sndPlaySfx
 /* 0891BC 7F05468C 00003025 */   move  $a2, $zero
 /* 0891C0 7F054690 00403025 */  move  $a2, $v0
 /* 0891C4 7F054694 10000020 */  b     .L7F054718
@@ -41619,7 +41620,7 @@ glabel play_door_closing_soundeffect_1
 /* 0891CC 7F05469C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0891D0 7F0546A0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0891D4 7F0546A4 240500DB */  li    $a1, 219
-/* 0891D8 7F0546A8 0C002382 */  jal   play_sfx_a1
+/* 0891D8 7F0546A8 0C002382 */  jal   sndPlaySfx
 /* 0891DC 7F0546AC 00003025 */   move  $a2, $zero
 /* 0891E0 7F0546B0 00403025 */  move  $a2, $v0
 /* 0891E4 7F0546B4 10000018 */  b     .L7F054718
@@ -41628,7 +41629,7 @@ glabel play_door_closing_soundeffect_1
 /* 0891EC 7F0546BC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0891F0 7F0546C0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0891F4 7F0546C4 240500E2 */  li    $a1, 226
-/* 0891F8 7F0546C8 0C002382 */  jal   play_sfx_a1
+/* 0891F8 7F0546C8 0C002382 */  jal   sndPlaySfx
 /* 0891FC 7F0546CC 00003025 */   move  $a2, $zero
 /* 089200 7F0546D0 00403025 */  move  $a2, $v0
 /* 089204 7F0546D4 10000010 */  b     .L7F054718
@@ -41637,7 +41638,7 @@ glabel play_door_closing_soundeffect_1
 /* 08920C 7F0546DC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 089210 7F0546E0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 089214 7F0546E4 240500D7 */  li    $a1, 215
-/* 089218 7F0546E8 0C002382 */  jal   play_sfx_a1
+/* 089218 7F0546E8 0C002382 */  jal   sndPlaySfx
 /* 08921C 7F0546EC 00003025 */   move  $a2, $zero
 /* 089220 7F0546F0 00403025 */  move  $a2, $v0
 /* 089224 7F0546F4 10000008 */  b     .L7F054718
@@ -41646,7 +41647,7 @@ glabel play_door_closing_soundeffect_1
 /* 08922C 7F0546FC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 089230 7F054700 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 089234 7F054704 240500CB */  li    $a1, 203
-/* 089238 7F054708 0C002382 */  jal   play_sfx_a1
+/* 089238 7F054708 0C002382 */  jal   sndPlaySfx
 /* 08923C 7F05470C 00003025 */   move  $a2, $zero
 /* 089240 7F054710 00403025 */  move  $a2, $v0
 /* 089244 7F054714 8FA70020 */  lw    $a3, 0x20($sp)
@@ -43794,8 +43795,8 @@ void start_alarm(void)
 
 void deactivate_alarm_sound_effect(void)
 {
-    if ((ptr_alarm_sfx != 0) && (sfxGetArg0Unk3F(ptr_alarm_sfx) != 0)) {
-        sfxDeactivate(ptr_alarm_sfx);
+    if ((ptr_alarm_sfx != 0) && (sndGetPlayingState(ptr_alarm_sfx) != AL_STOPPED)) {
+        sndDeactivate(ptr_alarm_sfx);
     }
     return;
 }
@@ -43873,8 +43874,8 @@ glabel init_trigger_toxic_gas_effect
 
 void check_deactivate_gas_sound(void)
 {
-    if ((ptr_gas_sound != 0) && (sfxGetArg0Unk3F(ptr_gas_sound) != 0)) {
-        sfxDeactivate(ptr_gas_sound);
+    if ((ptr_gas_sound != NULL) && (sndGetPlayingState(ptr_gas_sound) != AL_STOPPED)) {
+        sndDeactivate(ptr_gas_sound);
     }
     return;
 }
@@ -43940,7 +43941,7 @@ void handle_gas_damage(void)
                     D_80030ADC = (s32) global_timer;
                     if (600.0f <= toxic_gas_sound_timer)
                     {
-                        play_sfx_a1(g_musicSfxBufferPtr, 0x62, 0);
+                        sndPlaySfx(g_musicSfxBufferPtr, 0x62, 0);
                     }
                     if (1800.0f <= toxic_gas_sound_timer)
                     {
@@ -43950,14 +43951,14 @@ void handle_gas_damage(void)
                 if (D_80030AE0 < gas_damage_flag)
                 {
                     D_80030AE0 = (f32) (D_80030AE0 + global_timer_delta);
-                    if (ptr_gas_sound == 0)
+                    if (ptr_gas_sound == NULL)
                     {
                         if (get_controls_locked_flag(&ptr_gas_sound) == 0)
                         {
-                            play_sfx_a1(g_musicSfxBufferPtr, 0x66, &ptr_gas_sound);
+                            sndPlaySfx(g_musicSfxBufferPtr, 0x66, &ptr_gas_sound);
                         }
                     }
-                    if (ptr_gas_sound != 0)
+                    if (ptr_gas_sound != NULL)
                     {
                         sub_GAME_7F053A10(ptr_gas_sound, &D_80030AD0);
                         return;
@@ -43965,11 +43966,11 @@ void handle_gas_damage(void)
                 }
                 else
                 {
-                    if (ptr_gas_sound != 0)
+                    if (ptr_gas_sound != NULL)
                     {
-                        if (sfxGetArg0Unk3F(ptr_gas_sound) != 0)
+                        if (sndGetPlayingState(ptr_gas_sound) != AL_STOPPED)
                         {
-                            sfxDeactivate(ptr_gas_sound);
+                            sndDeactivate(ptr_gas_sound);
                         }
                     }
                 }
@@ -44043,7 +44044,7 @@ glabel handle_gas_damage
 /* 08AB7C 7F05604C 00003025 */  move  $a2, $zero
 /* 08AB80 7F056050 45020006 */  bc1fl .L7F05606C
 /* 08AB84 7F056054 3C0144E1 */   lui   $at, 0x44e1
-/* 08AB88 7F056058 0C002382 */  jal   play_sfx_a1
+/* 08AB88 7F056058 0C002382 */  jal   sndPlaySfx
 /* 08AB8C 7F05605C 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 08AB90 7F056060 3C018003 */  lui   $at, %hi(toxic_gas_sound_timer)
 /* 08AB94 7F056064 C4200AC8 */  lwc1  $f0, %lo(toxic_gas_sound_timer)($at)
@@ -44087,7 +44088,7 @@ glabel handle_gas_damage
 /* 08AC24 7F0560F4 3C068003 */  lui   $a2, %hi(ptr_gas_sound)
 /* 08AC28 7F0560F8 24C60AE4 */  addiu $a2, %lo(ptr_gas_sound) # addiu $a2, $a2, 0xae4
 /* 08AC2C 7F0560FC 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 08AC30 7F056100 0C002382 */  jal   play_sfx_a1
+/* 08AC30 7F056100 0C002382 */  jal   sndPlaySfx
 /* 08AC34 7F056104 24050066 */   li    $a1, 102
 .L7F056108:
 /* 08AC38 7F056108 3C048003 */  lui   $a0, %hi(ptr_gas_sound)
@@ -44103,11 +44104,11 @@ glabel handle_gas_damage
 /* 08AC5C 7F05612C 8C840AE4 */  lw    $a0, %lo(ptr_gas_sound)($a0)
 /* 08AC60 7F056130 50800008 */  beql  $a0, $zero, .L7F056154
 /* 08AC64 7F056134 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 08AC68 7F056138 0C00237C */  jal   sfxGetArg0Unk3F
+/* 08AC68 7F056138 0C00237C */  jal   sndGetPlayingState
 /* 08AC6C 7F05613C 00000000 */   nop   
 /* 08AC70 7F056140 10400003 */  beqz  $v0, .L7F056150
 /* 08AC74 7F056144 3C048003 */   lui   $a0, %hi(ptr_gas_sound)
-/* 08AC78 7F056148 0C002408 */  jal   sfxDeactivate
+/* 08AC78 7F056148 0C002408 */  jal   sndDeactivate
 /* 08AC7C 7F05614C 8C840AE4 */   lw    $a0, %lo(ptr_gas_sound)($a0)
 .L7F056150:
 /* 08AC80 7F056150 8FBF001C */  lw    $ra, 0x1c($sp)
@@ -44432,7 +44433,7 @@ void handle_alarm_gas_timer_calldamage(void)
 {
     if (is_alarm_on() != 0) {
         if ((ptr_alarm_sfx == 0) && (get_controls_locked_flag() == 0)) {
-            play_sfx_a1(g_musicSfxBufferPtr,0xa3,&ptr_alarm_sfx);
+            sndPlaySfx(g_musicSfxBufferPtr,0xa3,&ptr_alarm_sfx);
         }
         alarm_timer = alarm_timer + clock_timer;
         if (0x708 < alarm_timer) {

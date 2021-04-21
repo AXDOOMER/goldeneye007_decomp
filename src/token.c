@@ -56,7 +56,7 @@ s32 tokenReadIo(void)
         debug = TRUE;
     }
     if (tokenFind(1, "-s") != NULL) {
-        bootswitch_sound = TRUE;
+        g_sndBootswitchSound = TRUE;
     }
     if (tokenFind(1, "-j") != NULL) {
         j_text_trigger = TRUE;

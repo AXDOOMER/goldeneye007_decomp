@@ -7,6 +7,32 @@
 #define DELTA_1_MS   1000
 #define DELTA_33_MS 33333
 
+#define SFX_SLOT_COUNT   7
+
+/**
+ * Based on n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndp.h
+ * enum ALSndpMsgType,
+ * except this version is bitwise.
+ */
+typedef enum ALSndpMsgType_e {
+    AL_SNDP_PLAY_EVT       = (1 << 0),
+    AL_SNDP_STOP_EVT       = (1 << 1),
+    AL_SNDP_PAN_EVT        = (1 << 2),
+    AL_SNDP_VOL_EVT        = (1 << 3),
+    AL_SNDP_PITCH_EVT      = (1 << 4),
+    AL_SNDP_API_EVT        = (1 << 5),
+    AL_SNDP_DECAY_EVT      = (1 << 6),
+    AL_SNDP_END_EVT        = (1 << 7),
+    AL_SNDP_FX_EVT         = (1 << 8),
+    AL_SNDP_PLAY_SFX_EVT   = (1 << 9),
+    AL_SNDP_DEACTIVATE_EVT = (1 << 10),
+    AL_SNDP_RELEASE_EVT    = (1 << 11),
+    AL_SNDP_UNKNOWN_12_EVT = (1 << 12), // used
+    AL_SNDP_UNUSED_13_EVT  = (1 << 13), // defined here for 16 bit completion
+    AL_SNDP_UNUSED_14_EVT  = (1 << 14), // defined here for 16 bit completion
+    AL_SNDP_UNUSED_15_EVT  = (1 << 15)  // defined here for 16 bit completion
+} ALSndpMsgType;
+
 // based on n64devkit\ultra\usr\src\pr\libsrc\libultra\audio\sndp.h
 struct ALSoundState_s;
 typedef struct ALSoundState_s {
@@ -51,7 +77,17 @@ typedef struct ALSoundState_s {
     // wet/dry mix - 0 = dry, 127 = wet
     u8 fxMix;
 
-    u8 unk3e; // flags?
+    // flags?
+    // 0x01 = ? used in sndPlaySfx if there is "nextState"
+    // 0x02 = decay time flag
+    // 0x04 = maybe: voice allocated/started ?
+    // 0x08 = ?
+    // 0x10 = active flag
+    // 0x20 = ?
+    // 0x40 = ?
+    // 0x80 = ?
+    u8 unk3e;
+
     u8 unk3f; // playing state?
 
 } ALSoundState;
@@ -113,10 +149,16 @@ struct ALBankAlt_s
 
 // end Alternate defintion for ALInstrument
 
-ALSoundState *play_sfx_a1(struct ALBankAlt_s *arg0, s16 arg1, ALSoundState *arg2);
 void sndNewPlayerInit(ALSeqpSfxConfig *arg0);
+u8 sndGetPlayingState(ALSoundState *state);
+void sndDeactivateAllSfxByFlag_1(void);
+void sndCreatePostEvent(ALSoundState *state, s16 eventType, s32 arg2);
+ALSoundState *sndPlaySfx(struct ALBankAlt_s *arg0, s16 arg1, ALSoundState *arg2);
+u16 sndGetSfxSlotFirstNaturalVolume(void);
+void sndApplyVolumeAllSfxSlot(u16 arg0);
+void sndSetScalerApplyVolumeAllSfxSlot(f32 arg0);
 
-extern s8 bootswitch_sound;
+extern s8 g_sndBootswitchSound;
 
 
 #endif

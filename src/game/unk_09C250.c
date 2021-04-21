@@ -251,7 +251,7 @@ glabel sub_GAME_7F09C250
 /* 0D0E50 7F09C320 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0D0E54 7F09C324 00003025 */  move  $a2, $zero
 /* 0D0E58 7F09C328 AFA20030 */  sw    $v0, 0x30($sp)
-/* 0D0E5C 7F09C32C 0C002382 */  jal   play_sfx_a1
+/* 0D0E5C 7F09C32C 0C002382 */  jal   sndPlaySfx
 /* 0D0E60 7F09C330 AFA80040 */   sw    $t0, 0x40($sp)
 /* 0D0E64 7F09C334 00402025 */  move  $a0, $v0
 /* 0D0E68 7F09C338 0FC14E84 */  jal   sub_GAME_7F053A10
@@ -625,7 +625,7 @@ glabel sub_GAME_7F09C250
 /* 0D1A24 7F09CEB4 0005C403 */  sra   $t8, $a1, 0x10
 /* 0D1A28 7F09CEB8 03002825 */  move  $a1, $t8
 /* 0D1A2C 7F09CEBC 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0D1A30 7F09CEC0 0C002386 */  jal   play_sfx_a1
+/* 0D1A30 7F09CEC0 0C002386 */  jal   sndPlaySfx
 /* 0D1A34 7F09CEC4 AFA70038 */   sw    $a3, 0x38($sp)
 /* 0D1A38 7F09CEC8 00402025 */  move  $a0, $v0
 /* 0D1A3C 7F09CECC 0FC14FC3 */  jal   sub_GAME_7F053A10
@@ -994,7 +994,7 @@ glabel sub_GAME_7F09C250
 /* 0D0E50 7F09C320 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0D0E54 7F09C324 00003025 */  move  $a2, $zero
 /* 0D0E58 7F09C328 AFA20030 */  sw    $v0, 0x30($sp)
-/* 0D0E5C 7F09C32C 0C002382 */  jal   play_sfx_a1
+/* 0D0E5C 7F09C32C 0C002382 */  jal   sndPlaySfx
 /* 0D0E60 7F09C330 AFA80040 */   sw    $t0, 0x40($sp)
 /* 0D0E64 7F09C334 00402025 */  move  $a0, $v0
 /* 0D0E68 7F09C338 0FC14E84 */  jal   sub_GAME_7F053A10

@@ -199,7 +199,7 @@ glabel sub_GAME_7F0A1DA0
 /* 0D6AE8 7F0A1FB8 C6320008 */  lwc1  $f18, 8($s1)
 /* 0D6AEC 7F0A1FBC 46109200 */  add.s $f8, $f18, $f16
 /* 0D6AF0 7F0A1FC0 46082180 */  add.s $f6, $f4, $f8
-/* 0D6AF4 7F0A1FC4 0C002382 */  jal   play_sfx_a1
+/* 0D6AF4 7F0A1FC4 0C002382 */  jal   sndPlaySfx
 /* 0D6AF8 7F0A1FC8 E7A600A4 */   swc1  $f6, 0xa4($sp)
 /* 0D6AFC 7F0A1FCC 00402025 */  move  $a0, $v0
 /* 0D6B00 7F0A1FD0 0FC14E84 */  jal   sub_GAME_7F053A10
