@@ -1115,34 +1115,14 @@ glabel sub_GAME_7F01F574
 
 
 
-#ifdef NONMATCHING
-void set_or_unset_GUARDdata_flag(GUARDdata *guard,s32 param_2){
-  if (param_2 == 0) {
-    guard->special_bitflags = guard->special_bitflags | 0x100;
+void set_or_unset_GUARDdata_flag(struct chrdata *guard,s32 param_2){
+  if (param_2 != 0) {
+    guard->hidden = guard->hidden & 0xfeff;
     return;
   }
-  guard->special_bitflags = guard->special_bitflags & 0xfeff;
+  guard->hidden = guard->hidden | 0x100;
   return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_or_unset_GUARDdata_flag
-/* 054118 7F01F5E8 50A00006 */  beql  $a1, $zero, .L7F01F604
-/* 05411C 7F01F5EC 94980012 */   lhu   $t8, 0x12($a0)
-/* 054120 7F01F5F0 948E0012 */  lhu   $t6, 0x12($a0)
-/* 054124 7F01F5F4 31CFFEFF */  andi  $t7, $t6, 0xfeff
-/* 054128 7F01F5F8 03E00008 */  jr    $ra
-/* 05412C 7F01F5FC A48F0012 */   sh    $t7, 0x12($a0)
-
-/* 054130 7F01F600 94980012 */  lhu   $t8, 0x12($a0)
-.L7F01F604:
-/* 054134 7F01F604 37190100 */  ori   $t9, $t8, 0x100
-/* 054138 7F01F608 A4990012 */  sh    $t9, 0x12($a0)
-/* 05413C 7F01F60C 03E00008 */  jr    $ra
-/* 054140 7F01F610 00000000 */   nop   
-)
-#endif
 
 
 

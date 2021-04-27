@@ -255,7 +255,7 @@ struct chrdata {
     /* 0x0010 */
     u8 grenadeprob;
     s8 flinchcnt;
-    s16 hidden;
+    u16 hidden;
     s32 chrflags;
     struct prop* posdata;
     void * model;
