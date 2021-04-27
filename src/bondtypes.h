@@ -409,50 +409,37 @@ struct chrdata {
     int * handle_positiondata_hat;
 };
 
-struct object_standard {
-    u16 extrascale:2; 
-    u8 hidden2:1;
-    u8 type:1;
-    u16 obj;
-    u16 pad;
-    u32 flags;
+typedef struct object_standard {
+    s16 scale;
+    u8 state;
+    u8 type;
+    u16 objectID;
+    u16 presetID;
+    u32 flags1;
     u32 flags2;
-    void * runtime_ptr_obj_posdata;
-    void * runtime_ptr_obj_instance_controller;
-    void * runtime_MATRIX0;
-    void * runtime_MATRIX1;
-    void * runtime_MATRIX2;
-    void * runtime_MATRIX3;
-    void * runtime_MATRIX4;
-    void * runtime_MATRIX5;
-    void * runtime_MATRIX6;
-    void * runtime_MATRIX7;
-    void * runtime_MATRIX8;
-    void * runtime_MATRIX9;
-    void * runtime_MATRIXA;
-    void * runtime_MATRIXB;
-    void * runtime_MATRIXC;
-    void * runtime_MATRIXD;
-    void * runtime_MATRIXE;
-    void * runtime_MATRIXF;
-    f32 runtime_x_pos;
-    f32 runtime_y_pos;
-    f32 runtime_z_pos;
-    int runtime_bitflags;
-    int ptr_allocated_collisiondata_block;
+    void* ptrPOSData;
+    void* ptrObjInstanceController;
+    f32 runtime_MATRIX[4][4];
+    f32 xPOS;
+    f32 yPOS;
+    f32 zPOS;
+    int bitflags;
+    int ptrCollisionblock;
     int field_6C;
     float field_70;
     short damage;
     short maxdamage;
-    char field_78;
-    char field_79;
-    char field_7A;
-    char field_7B;
-    char field_7C;
-    char field_7D;
-    char field_7E;
-    char field_7F;
-};
+    int field_78;
+    int field_7C;
+} object_standard;
+
+typedef struct object_weapon {
+    object_standard object;
+    u8 gun_pickup;
+    u8 linked_item;
+    s16 timer;
+    void* ptr_linkeditem;
+} object_weapon;
 
 struct watchMenuObjectiveText {
     u32 id;
