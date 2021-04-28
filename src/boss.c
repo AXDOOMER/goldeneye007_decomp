@@ -639,7 +639,7 @@ LEVELID bossGetStageNum() {
  * 7568    70006968
  *     return to title screen from stage
  */
-void return_to_title_from_level_end(void) {
+void bossReturnTitleStage(void) {
 #ifdef VERSION_JP
     display_objective_status_text_on_status_change();
     FUN_7f057a40();

@@ -7384,7 +7384,7 @@ actionD2_Exit_Level_1:
 /* 06E064 7F039534 1000F015 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E068 7F039538 26310001 */   addiu $s1, $s1, 1
 .L7F03953C:
-/* 06E06C 7F03953C 0C001A5A */  jal   return_to_title_from_level_end
+/* 06E06C 7F03953C 0C001A5A */  jal   bossReturnTitleStage
 /* 06E070 7F039540 00000000 */   nop   
 /* 06E074 7F039544 26520001 */  addiu $s2, $s2, 1
 .L7F039548:
@@ -13251,7 +13251,7 @@ actionD2_Exit_Level_1:
 /* 06E064 7F039534 1000F015 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E068 7F039538 26310001 */   addiu $s1, $s1, 1
 .L7F03953C:
-/* 06E06C 7F03953C 0C001A5A */  jal   return_to_title_from_level_end
+/* 06E06C 7F03953C 0C001A5A */  jal   bossReturnTitleStage
 /* 06E070 7F039540 00000000 */   nop   
 /* 06E074 7F039544 26520001 */  addiu $s2, $s2, 1
 .L7F039548:
@@ -19119,7 +19119,7 @@ actionD2_Exit_Level_1:
 /* 06E064 7F039534 1000F015 */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06E068 7F039538 26310001 */   addiu $s1, $s1, 1
 .L7F03953C:
-/* 06E06C 7F03953C 0C001A5A */  jal   return_to_title_from_level_end
+/* 06E06C 7F03953C 0C001A5A */  jal   bossReturnTitleStage
 /* 06E070 7F039540 00000000 */   nop   
 /* 06E074 7F039544 26520001 */  addiu $s2, $s2, 1
 .L7F039548:
