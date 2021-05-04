@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "game/image.h"
-#include "assets/images/image_externs.h"
+#include "assets/image_externs.h"
 
 // bss
 //8008C720
