@@ -48,7 +48,7 @@ OSMesgQueue *sched_cmdQ;
 
 void mainproc(void *args);
 
-extern u8 * _rarezipSegmentStart;
+extern u8 * _inflateSegmentStart;
 
 
 u32         osPiGetStatus(void);
@@ -65,9 +65,9 @@ void init(void)
     u32 src = get_csegmentSegmentStart();
     u32 datastart = get_cdataSegmentRomStart();
     u32 datacomplen = (get_cdataSegmentRomEnd() - datastart);
-    u32 inflatestart = get_rarezipSegmentRomStart();
-    u32 inflatelen = (get_rarezipSegmentRomEnd() - inflatestart);
-    u32 dst = &_rarezipSegmentRomStart - datacomplen;
+    u32 inflatestart = get_inflateSegmentRomStart();
+    u32 inflatelen = (get_inflateSegmentRomEnd() - inflatestart);
+    u32 dst = &_inflateSegmentRomStart - datacomplen;
     u32 j;
     s32 i;
 
@@ -79,9 +79,9 @@ void init(void)
     jump_decompressfile(dst, src, 0x80300000);
     if (1)
     {
-        if ((&_rarezipSegmentRomStart - &_codeSegmentRomStart) >= 0xfffb1)
+        if ((&_inflateSegmentRomStart - &_codeSegmentRomStart) >= 0xfffb1)
         {
-            osPiRawStartDma(0, 0x101000, 0x70100400, ((&_rarezipSegmentRomStart - &_codeSegmentRomStart) + 0xfff00050));
+            osPiRawStartDma(0, 0x101000, 0x70100400, ((&_inflateSegmentRomStart - &_codeSegmentRomStart) + 0xfff00050));
             while ((osPiGetStatus() & 1) != 0) {}
         }
 
@@ -130,9 +130,9 @@ glabel init
 /* 00112C 7000052C 0C000135 */  jal   get_cdataSegmentRomEnd
 /* 001130 70000530 AFA20034 */   sw    $v0, 0x34($sp)
 /* 001134 70000534 8FAE0034 */  lw    $t6, 0x34($sp)
-/* 001138 70000538 0C000138 */  jal   get_rarezipSegmentRomStart
+/* 001138 70000538 0C000138 */  jal   get_inflateSegmentRomStart
 /* 00113C 7000053C 004E8823 */   subu  $s1, $v0, $t6
-/* 001140 70000540 0C00013B */  jal   get_rarezipSegmentRomEnd
+/* 001140 70000540 0C00013B */  jal   get_inflateSegmentRomEnd
 /* 001144 70000544 AFA20028 */   sw    $v0, 0x28($sp)
 /* 001148 70000548 8FAF0028 */  lw    $t7, 0x28($sp)
 /* 00114C 7000054C 3C0A7020 */  lui   $t2, 0x7020
@@ -155,10 +155,10 @@ glabel init
 .L7000058C:
 /* 00118C 7000058C 0C00013E */  jal   jump_decompressfile
 /* 001190 70000590 01512023 */   subu  $a0, $t2, $s1
-/* 001194 70000594 3C0B0003 */  lui   $t3, %hi(_rarezipSegmentRomStart) # $t3, 3
+/* 001194 70000594 3C0B0003 */  lui   $t3, %hi(_inflateSegmentRomStart) # $t3, 3
 /* 001198 70000598 3C0C0000 */  lui   $t4, %hi(_codeSegmentRomStart) # $t4, 0
 /* 00119C 7000059C 258C1050 */  addiu $t4, %lo(_codeSegmentRomStart) # addiu $t4, $t4, 0x1050
-/* 0011A0 700005A0 256B3590 */  addiu $t3, %lo(_rarezipSegmentRomStart) # addiu $t3, $t3, 0x3590
+/* 0011A0 700005A0 256B3590 */  addiu $t3, %lo(_inflateSegmentRomStart) # addiu $t3, $t3, 0x3590
 /* 0011A4 700005A4 3C01000F */  lui   $at, (0x000FFFB1 >> 16) # lui $at, 0xf
 /* 0011A8 700005A8 3421FFB1 */  ori   $at, (0x000FFFB1 & 0xFFFF) # ori $at, $at, 0xffb1
 /* 0011AC 700005AC 016C1023 */  subu  $v0, $t3, $t4

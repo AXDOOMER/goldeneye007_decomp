@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "game/lightfixture.h"
-#include "assets/images/image_externs.h"
+#include "assets/image_externs.h"
 
 // bss
 //CODE.bss:80082660

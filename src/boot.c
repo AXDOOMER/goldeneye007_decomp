@@ -71,7 +71,7 @@ u32 *get_cdataSegmentRomStart(void)
 }
 
 /**
- *10D4	700004D4	V0=33590: ROM address of 70200000 RareZip ASM [33590-34B30 ROM] (USA)
+ *10D4	700004D4	V0=33590: ROM address of 70200000 inflate ASM [33590-34B30 ROM] (USA)
  */
 u32 *get_cdataSegmentRomEnd(void)
 {
@@ -79,19 +79,19 @@ u32 *get_cdataSegmentRomEnd(void)
 }
 
 /**
- *10E0	700004E0	V0=33590: ROM address of 70200000 RareZip ASM [33590-34B30 ROM] (USA)
+ *10E0	700004E0	V0=33590: ROM address of 70200000 inflate ASM [33590-34B30 ROM] (USA)
  */
-u32 *get_rarezipSegmentRomStart(void)
+u32 *get_inflateSegmentRomStart(void)
 {
-	return &_rarezipSegmentRomStart;
+	return &_inflateSegmentRomStart;
 }
 
 /**
  *10EC	700004EC	V0=34B30: ROM address of 7F- TLB routines (USA)
  */
-u32 *get_rarezipSegmentRomEnd(void)
+u32 *get_inflateSegmentRomEnd(void)
 {
-	return &_rarezipSegmentRomEnd;
+	return &_inflateSegmentRomEnd;
 }
 
 /**

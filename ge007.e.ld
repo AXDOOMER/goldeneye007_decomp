@@ -269,21 +269,21 @@ SECTIONS
 
 
    /* (0x70200000, 0x702029BC, 0x701CCA70), // 033590-035F4D [29BD] */
-   _rarezipSegmentStart = ADDR(.rarezip);
-   _rarezipSegmentRomStart = _cdataSegmentRomEnd;
-   .rarezip 0x70200000 : AT(_rarezipSegmentRomStart) {
+   _inflateSegmentStart = ADDR(.inflate);
+   _inflateSegmentRomStart = _cdataSegmentRomEnd;
+   .inflate 0x70200000 : AT(_inflateSegmentRomStart) {
       build/e/src/inflate/inflate.o (.text);
       build/e/src/inflate/inflate.o (.data);
    }
-   _rarezipSegmentEnd = ADDR(.rarezip) + SIZEOF(.rarezip);
-   _rarezipSegmentRomEnd = _rarezipSegmentRomStart + SIZEOF(.rarezip);
+   _inflateSegmentEnd = ADDR(.inflate) + SIZEOF(.inflate);
+   _inflateSegmentRomEnd = _inflateSegmentRomStart + SIZEOF(.inflate);
 
 
    
    
    /* (0x7F000000, 0x7F0E2D50, 0x7EFCB4D0), // 034B30-117881 [E2D51] */
    _gameSegmentStart = ADDR(.game);
-   _gameSegmentRomStart = _rarezipSegmentRomEnd;
+   _gameSegmentRomStart = _inflateSegmentRomEnd;
    .game 0x7F000000 : AT(_gameSegmentRomStart) {
       build/e/src/game/initgamedata.o (.text);
       build/e/src/game/initweaponanigroups.o (.text);
