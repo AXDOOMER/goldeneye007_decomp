@@ -2864,4 +2864,16 @@ void currentPlayerSetCameraScale(void);
 void currentPlayerSetScreenPosition(f32 left, f32 top);
 void currentPlayerSetPerspective(f32 near, f32 fovy, f32 aspect);
 
+f32 getPlayer_c_screenwidth(void);
+
+f32 getPlayer_c_screenheight(void);
+
+f32 getPlayer_c_screenleft(void);
+
+f32 getPlayer_c_screentop(void);
+
+f32 getPlayer_c_perspfovy(void);
+
+f32 getPlayer_c_perspaspect(void);
+
 #endif

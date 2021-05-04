@@ -224,6 +224,13 @@ typedef enum TEXTBANK_LEVEL_INDEX
     LMISC        /* Cheat options */
 } TEXTBANK_LEVEL_INDEX;
 
+typedef enum PLAYER_ID {
+    PLAYER_1 = 0,
+    PLAYER_2, 
+    PLAYER_3,
+    PLAYER_4
+} PLAYER_ID;
+
 typedef enum MP_STAGE_SELECTED {
     MP_STAGE_RANDOM = 0x0,
     MP_STAGE_TEMPLE = 0x1,
