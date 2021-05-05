@@ -13,6 +13,7 @@
 #include "joy.h"
 #include "video.h"
 #include "snd.h"
+#include "assets/GlobalImageTable.h"
 
 struct point {
     f32 x;
@@ -1441,47 +1442,33 @@ void menu_control_stick_tracking(void) {
 
 
 #ifdef NONMATCHING
-void load_draw_selected_icon_folder_select(s32 arg0, s32 arg1A) {
-    f32 sp58;
-    f32 sp5C;
-    f32 sp60;
-    f32 sp64;
+s32 load_draw_selected_icon_folder_select(s32 arg0)
+{
+    s32 option;
+    f32 xypos[2];
+    f32 halfedxy[2];
+    sImageTableEntry *image;
 
-    // Node 0
-    if (folder_selection_screen_option_icon == 0)
-    {
-        // Node 1
+    option = folder_selection_screen_option_icon;
+    switch (option) {
+        case 0 :
+            image = &s_crosshairimage[0];
+            break;
+        case 1 :
+            image = &s_mainfolderimages[0];
+            break;
+        case 2 :
+            image = &s_mainfolderimages[1];
+            break;
     }
-    else
-    {
-        // Node 2
-        if (folder_selection_screen_option_icon == 1)
-        {
-            // Node 3
-        }
-        else
-        {
-            // Node 4
-            if (folder_selection_screen_option_icon == 2)
-            {
-                // Node 5
-            }
-        }
-    }
-    // Node 6
-    likely_generate_DL_for_image_declaration(&arg1A, sp54, 4, 0, 0);
-    sp60 = truncf((cursor_h_pos + 0.5f));
-    sp64 = truncf((cursor_v_pos + 0.5f));
-    sp58 = (f32) ((f32) (u32) sp54->unk4 * 0.5f);
-    if (sp54->unk5 < 0)
-    {
-        // Node 7
-    }
-    // Node 8
-    sp5C = (f32) ((f32) sp54->unk5 * 0.5f);
-    display_image_at_on_screen_coord(&arg1A, &sp60, &sp58, sp54->unk4, (s32) sp54->unk5, 0, 0, 1, 0xff, 0xff, 0xff, 0xdc, (s32) (0 < sp54->unk6), 0);
-    return;
-    // (possible return value: arg1A)
+    
+    likely_generate_DL_for_image_declaration(&arg0, image, 4, 0, 0);
+    xypos[0] = truncf(cursor_h_pos + 0.5f);
+    xypos[1] = truncf(cursor_v_pos + 0.5f);
+    halfedxy[0] = (f32) (u32) image->width * 0.5f;
+    halfedxy[1] = (f32) (u32)image->height * 0.5f;
+    display_image_at_on_screen_coord(&arg0, &xypos, &halfedxy, image->width, image->height, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xDC, image->level > 0, 0);
+    return arg0;
 }
 #else
 GLOBAL_ASM(
