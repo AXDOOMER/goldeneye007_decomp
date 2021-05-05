@@ -414,119 +414,119 @@ Gfx globalDL_0xa50[] = {
 };
 
 sImageTableEntry s_genericimage[] = { 
-    {_image2136_ID, 0x36, 0x36, 3, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0}
+    {IMAGE_FLAREWHITEROUND, 0x36, 0x36, 3, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0}
 };
 
 sImageTableEntry s_impactimages[] = { 
-    {_image2168_ID, 0x30, 0x30, 6, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
-    {_image2169_ID, 0x40, 0x20, 7, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
-    {_image2170_ID, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
-    { _image206_ID, 0x40, 0x20, 7, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
-    {_image2168_ID, 0x30, 0x30, 6, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
-    {_image2168_ID, 0x30, 0x30, 6, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
-    {_image2168_ID, 0x30, 0x30, 6, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
-    {_image2171_ID, 0x20, 0x20, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
-    {_image2172_ID, 0x20, 0x20, 0, G_IM_FMT_RGBA, G_IM_SIZ_16b, G_TX_CLAMP, G_TX_CLAMP, 0},
-    {_image1475_ID, 0x20, 0x20, 6, G_IM_FMT_RGBA, G_IM_SIZ_16b, G_TX_CLAMP, G_TX_CLAMP, 0},
-    {_image2173_ID, 0x20, 0x20, 6, G_IM_FMT_RGBA, G_IM_SIZ_16b, G_TX_CLAMP, G_TX_CLAMP, 0},
-    {_image1476_ID, 0x20, 0x20, 6, G_IM_FMT_RGBA, G_IM_SIZ_16b, G_TX_CLAMP, G_TX_CLAMP, 0},
-    {_image2174_ID, 0x20, 0x20, 6, G_IM_FMT_RGBA, G_IM_SIZ_16b, G_TX_CLAMP, G_TX_CLAMP, 0},
-    {_image2175_ID, 0x20, 0x20, 6, G_IM_FMT_RGBA, G_IM_SIZ_16b, G_TX_CLAMP, G_TX_CLAMP, 0},
-    {_image1478_ID, 0x20, 0x20, 6, G_IM_FMT_RGBA, G_IM_SIZ_16b, G_TX_CLAMP, G_TX_CLAMP, 0},
-    {_image1479_ID, 0x20, 0x20, 6, G_IM_FMT_RGBA, G_IM_SIZ_16b, G_TX_CLAMP, G_TX_CLAMP, 0},
-    {_image2170_ID, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
-    {_image2168_ID, 0x30, 0x30, 6, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
-    {_image2168_ID, 0x30, 0x30, 6, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
-    {_image2168_ID, 0x30, 0x30, 6, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0}
+    {IMAGE_IMPACT1, 0x30, 0x30, 6, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
+    {IMAGE_IMPACT2, 0x40, 0x20, 7, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
+    {IMAGE_IMPACT3, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
+    {IMAGE_IMPACTLOTS, 0x40, 0x20, 7, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
+    {IMAGE_IMPACT1, 0x30, 0x30, 6, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
+    {IMAGE_IMPACT1, 0x30, 0x30, 6, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
+    {IMAGE_IMPACT1, 0x30, 0x30, 6, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
+    {IMAGE_IMPACT4, 0x20, 0x20, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
+    {IMAGE_IMPACTMULTI, 0x20, 0x20, 0, G_IM_FMT_RGBA, G_IM_SIZ_16b, G_TX_CLAMP, G_TX_CLAMP, 0},
+    {IMAGE_IMPACTREDBRICK1, 0x20, 0x20, 6, G_IM_FMT_RGBA, G_IM_SIZ_16b, G_TX_CLAMP, G_TX_CLAMP, 0},
+    {IMAGE_IMPACTREDBRICK2, 0x20, 0x20, 6, G_IM_FMT_RGBA, G_IM_SIZ_16b, G_TX_CLAMP, G_TX_CLAMP, 0},
+    {IMAGE_IMPACTREDBRICK3, 0x20, 0x20, 6, G_IM_FMT_RGBA, G_IM_SIZ_16b, G_TX_CLAMP, G_TX_CLAMP, 0},
+    {IMAGE_IMPACTBRICK2, 0x20, 0x20, 6, G_IM_FMT_RGBA, G_IM_SIZ_16b, G_TX_CLAMP, G_TX_CLAMP, 0},
+    {IMAGE_IMPACTBRICK3, 0x20, 0x20, 6, G_IM_FMT_RGBA, G_IM_SIZ_16b, G_TX_CLAMP, G_TX_CLAMP, 0},
+    {IMAGE_IMPACTBROWNBRICK1, 0x20, 0x20, 6, G_IM_FMT_RGBA, G_IM_SIZ_16b, G_TX_CLAMP, G_TX_CLAMP, 0},
+    {IMAGE_IMPACTBROWNBRICK2, 0x20, 0x20, 6, G_IM_FMT_RGBA, G_IM_SIZ_16b, G_TX_CLAMP, G_TX_CLAMP, 0},
+    {IMAGE_IMPACT3, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
+    {IMAGE_IMPACT1, 0x30, 0x30, 6, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
+    {IMAGE_IMPACT1, 0x30, 0x30, 6, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0},
+    {IMAGE_IMPACT1, 0x30, 0x30, 6, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0}
 };
 
 sImageTableEntry s_explosion_smokeimages[] = { 
-    {_image2176_ID, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0},
-    {_image2177_ID, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0},
-    {_image2178_ID, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0},
-    {_image2179_ID, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0},
-    {_image2180_ID, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0},
-    {_image2181_ID, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0}
+    {IMAGE_SMOKE1, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0},
+    {IMAGE_SMOKE2, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0},
+    {IMAGE_SMOKE3, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0},
+    {IMAGE_SMOKE4, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0},
+    {IMAGE_SMOKE5, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0},
+    {IMAGE_SMOKE6, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0}
 };
 
 sImageTableEntry s_scattered_explosions[] = { 
-    {_image2182_ID, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0},
-    {_image2183_ID, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0},
-    {_image2184_ID, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0},
-    {_image2185_ID, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0},
-    {_image2186_ID, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0}
+    {IMAGE_SMOKEBALLS1, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0},
+    {IMAGE_SMOKEBALLS2, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0},
+    {IMAGE_SMOKEBALLS3, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0},
+    {IMAGE_SMOKEBALLS4, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0},
+    {IMAGE_SMOKEBALLS5, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0}
 };
 
 sImageTableEntry s_flareimage1[] = { 
-    {_image2229_ID, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0}
+    {IMAGE_FLARENOVA, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0}
 };
 
 sImageTableEntry s_flareimage2[] = { 
-    {_image2230_ID, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0}
+    {IMAGE_WHITEBOX, 0x40, 0x40, 0, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0}
 };
 
 sImageTableEntry s_flareimage3[] = { 
-    {_image2128_ID, 0x10, 0x20, 6, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_WRAP, G_TX_WRAP, 0}
+    {IMAGE_FLAREORANGELINE, 0x10, 0x20, 6, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_WRAP, G_TX_WRAP, 0}
 };
 
 sImageTableEntry s_flareimage4[] = { 
-    {_image2135_ID, 0x10, 0x20, 6, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_WRAP, G_TX_WRAP, 0}
+    {IMAGE_FLAREBLUELINE, 0x10, 0x20, 6, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_WRAP, G_TX_WRAP, 0}
 };
 
 sImageTableEntry s_flareimage5[] = { 
-    {_image2134_ID, 0x20, 0x20, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_WRAP, G_TX_WRAP, 0}
+    {IMAGE_FLAREBLUEROUND, 0x20, 0x20, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_WRAP, G_TX_WRAP, 0}
 };
 
 sImageTableEntry s_ammo9mmimage[] = { 
-    {_image2231_ID, 5, 0xC, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
+    {IMAGE_9MMAMMO, 5, 0xC, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
 };
 
 sImageTableEntry s_rifleammoimage[] = { 
-    {_image2232_ID, 5, 0x1C, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
+    {IMAGE_RIFLEAMMO, 5, 0x1C, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
 };
 
 sImageTableEntry s_shotgunammoimage[] = { 
-    {_image2167_ID, 6, 0x14, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
+    {IMAGE_SHOTAMMO, 6, 0x14, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
 };
 
 sImageTableEntry s_knifeammoimage[] = { 
-    {_image2166_ID, 6, 0x18, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
+    {IMAGE_KNIFEAMMO, 6, 0x18, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
 };
 
 sImageTableEntry s_glammoimage[] = { 
-    {_image2165_ID, 8, 0x15, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_WRAP, G_TX_CLAMP, 0}
+    {IMAGE_GLAMMO, 8, 0x15, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_WRAP, G_TX_CLAMP, 0}
 };
 
 sImageTableEntry s_rocketammoimage[] = { 
-    {_image2161_ID, 7, 0x16, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
+    {IMAGE_ROCKETAMMO, 7, 0x16, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
 };
 
 sImageTableEntry s_genericmineammoimage[] = { 
-    {_image2162_ID, 0xE, 0xE, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
+    {IMAGE_PLAINMINEAMMO, 0xE, 0xE, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
 };
 
 sImageTableEntry s_grenadeammoimage[] = { 
-    {_image2163_ID, 0xE, 0x12, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
+    {IMAGE_GRENADEAMMO, 0xE, 0x12, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
 };
 
 sImageTableEntry s_magnumammoimage[] = { 
-    {_image2164_ID, 5, 0xF, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
+    {IMAGE_MAGAMMO, 5, 0xF, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
 };
 
 sImageTableEntry s_goldengunammoimage[] = { 
-    {_image2233_ID, 5, 0xC, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
+    {IMAGE_GGAMMO, 5, 0xC, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
 };
 
 sImageTableEntry s_remotemineammoimage[] = { 
-    {_image2234_ID, 0xE, 0xE, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
+    {IMAGE_MINEAMMO, 0xE, 0xE, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
 };
 
 sImageTableEntry s_timedmineammoimage[] = { 
-    {_image2238_ID, 0xE, 0xE, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
+    {IMAGE_TIMEAMMO, 0xE, 0xE, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
 };
 
 sImageTableEntry s_proxmineammoimage[] = { 
-    {_image2235_ID, 0xE, 0xE, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
+    {IMAGE_PROXAMMO, 0xE, 0xE, 0, G_IM_FMT_RGBA, G_IM_SIZ_32b, G_TX_CLAMP, G_TX_CLAMP, 0}
 };
 
 sImageTableEntry s_tankammoimage[] = { 
@@ -542,8 +542,8 @@ sImageTableEntry s_betacrosshairimage[] = {
 };
 
 sImageTableEntry s_glassoverlayimage[] = { 
-    {_image658_ID, 0x20, 1, 6, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0},
-    {_image654_ID, 0x36, 0x36, 3, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0}
+    {IMAGE_GLASS7, 0x20, 1, 6, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_WRAP, G_TX_WRAP, 0},
+    {IMAGE_GLASS3, 0x36, 0x36, 3, G_IM_FMT_IA, G_IM_SIZ_8b, G_TX_CLAMP, G_TX_CLAMP, 0}
 };
 
 sImageTableEntry s_monitorimages[] = { 
