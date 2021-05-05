@@ -492,7 +492,7 @@ extern s32 mission_kia_flag;
 extern s32 is_first_time_on_legal_screen;
 extern s32 is_first_time_on_main_menu;
 extern s32 prev_keypresses;
-extern s32 dword_D_8002A938;
+extern s32 dword_ge_logo_bool;
 extern s32 maybe_is_in_menu;
 extern s32 screen_size;
 extern s32 spectrum_related_flag;
@@ -783,5 +783,6 @@ extern u32 full_actor_intro;
 
 void set_menu_to_mode(MENU menu, s32 mode);
 s32 get_selected_num_players(void);
+void do_extended_cast_display(s32 flag);
 
 #endif

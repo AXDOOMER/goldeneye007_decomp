@@ -470,7 +470,7 @@ s32 is_first_time_on_legal_screen = TRUE;
 s32 is_first_time_on_main_menu = TRUE;
 
 s32 prev_keypresses = 0;
-s32 D_8002A938 = 0;
+s32 ge_logo_bool = 0;
 
 s32 maybe_is_in_menu = TRUE;
 s32 screen_size = SCREEN_SIZE_320x240;
@@ -544,9 +544,9 @@ u32 D_8002AAEC = 0;
 u32 D_8002AAF0 = 0;
 u32 D_8002AAF4 = 0;
 u32 D_8002AAF8 = 0;
-u32 D_8002AAFC = 0;
-u32 D_8002AB00 = 0;
-u32 D_8002AB04 = 0;
+struct coord D_8002AAFC = {0};
+//u32 D_8002AB00 = 0;
+//u32 D_8002AB04 = 0;
 u32 D_8002AB08 = 0;
 
 u32 D_8002AB0C = 1;
@@ -1581,46 +1581,38 @@ glabel load_draw_selected_icon_folder_select
 
 
 #ifdef NONMATCHING
-s32 add_tab1_start(s32 arg0) {
-    s16 sp44;
-    s32 sp48;
-    s32 sp4C;
-    s32 sp50;
+s32 add_tab1_start(s32 arg0)
+{
     s32 sp54;
+    //s32 sp50;
+    s32 sp4C;
+    s32 sp48;
+    //s16 sp44;
     s32 temp_a3;
+    s32 temp_s0;
+    s32 phi_s0;
 
-    // Node 0
-    dword_CODE_bss_80069770 = get_textptr_for_textID(TEXT(LTITLE, 0x04));
+    dword_CODE_bss_80069770 = get_textptr_for_textID(0x9C04);
     setTextSpacingInverted(1);
     sp48 = 0;
     sp4C = 0;
-    sub_GAME_7F0AE98C(&sp4C, &sp48, dword_CODE_bss_80069770, ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0);
+    sub_GAME_7F0AE98C(&sp4C, &sp48, dword_CODE_bss_80069770, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0);
     sp54 = 0x33;
-    if (sp4C < 0)
-    {
-        // Node 1
-    }
-    // Node 2
-    temp_a3 = (0x19b - (sp4C >> 1));
+    temp_a3 = 0x19B - (sp4C / 2);
+    //sp50 = temp_a3;
+    phi_s0 = arg0;
     if (tab_1_highlight != 0)
     {
-        // Node 3
-        microcode_constructor_related_to_menus(arg0, ((temp_a3 - sp4C) + 1), 0x33, temp_a3, 0x75, 0x32);
+        //sp50 = temp_a3;
+        phi_s0 = microcode_constructor_related_to_menus(arg0, (temp_a3 - sp4C) + 1, 0x33, temp_a3, 0x75, 0x32);
     }
-    // Node 4
-    setTextOrientation(1, temp_a3);
-    if (sp48 < 0)
-    {
-        // Node 5
-    }
-    // Node 6
-    sp54 = (s32) (0x54 - (sp48 >> 1));
-    sp44 = viGetY();
-    en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069770, (s32) ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0xff, sp44, viGetX(), 0, 0);
+    setTextOrientation(1);
+    sp54 = 0x54 - (sp48 / 2);
+    //sp44 = ;
+    temp_s0 = en_text_write_stuff(phi_s0, &sp54, &temp_a3, dword_CODE_bss_80069770, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF, viGetY(), viGetX(), 0, 0);
     setTextOrientation(0);
     setTextSpacingInverted(0);
-    return;
-    // (possible return value: en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069770, (s32) ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0xff, sp44, viGetX(), 0, 0))
+    return temp_s0;
 }
 #else
 GLOBAL_ASM(
@@ -2539,18 +2531,18 @@ void init_menu01_nintendo(void)
     struct coord local_c;
     
     menu_timer = 0;
-    local_c.x = xyzpoint_8002aafc.x;
-    local_c.y = xyzpoint_8002aafc.y;
-    local_c.z = xyzpoint_8002aafc.z;
+    local_c.x = D_8002AAFC.x;
+    local_c.y = D_8002AAFC.y;
+    local_c.z = D_8002AAFC.z;
     load_object_fill_header(PitemZ_entries[276].header, PitemZ_entries[276].filename, ptr_logo_and_walletbond_DL,0x3c000,0);
     set_objuse_flag_compute_grp_nums_set_obj_loaded(PitemZ_entries[276].header);
-    something_screen_constructor = get_obj_instance_controller_for_header(PitemZ_entries[276].header);
-    set_obj_instance_controller_scale(something_screen_constructor, 1.0f);
-    setsuboffset(something_screen_constructor, &local_c);
+    something_legalscreen_constructor = get_obj_instance_controller_for_header(PitemZ_entries[276].header);
+    set_obj_instance_controller_scale(something_legalscreen_constructor, 1.0f);
+    setsuboffset(something_legalscreen_constructor, &local_c);
     musicTrack1Play(M_INTROSWOOSH);
     maybe_is_in_menu = TRUE;
-    flt_CODE_bss_80069614 = D_800519F4;
-    flt_CODE_bss_80069618 = D_800519F8;
+    flt_CODE_bss_80069614 = -1.396263f;
+    flt_CODE_bss_80069618 = 0.01833333f;
 }
 #else
 GLOBAL_ASM(
@@ -3108,156 +3100,36 @@ void update_menu04_goldeneye(void) {
     set_obj_instance_scale_to_zero(something_legalscreen_constructor);
 }
 
-
-
-
-
-#ifdef NONMATCHING
 void interface_menu04_goldeneyelogo(void)
 {
-    u32 uVar1;
-    
-    viSetFovY(60.00000000);
-    viSetAspect(menu04_aspect);
-    viSetZRange(100.00000000,(f32)menu04_pageheight);
+    viSetFovY(60.0f);
+    viSetAspect(1.3333334f);
+    viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(0);
     menu_timer += clock_timer;
     if (((is_first_time_on_main_menu == FALSE) || (0xb4 < menu_timer)) ||
        ((ge_logo_bool != FALSE && (0x5a < menu_timer)))) {
-        if (menu_timer < 0xb5) {
-            uVar1 = joyGetButtonsPressedThisFrame
-                              ('\0',R_CBUTTONS|L_CBUTTONS|D_CBUTTONS|U_CBUTTONS|R_TRIG|L_TRIG|
-                                    DUMMY_2|DUMMY_1|R_JPAD|L_JPAD|D_JPAD|U_JPAD|START_BUTTON|Z_TRIG|
-                                    B_BUTTON|A_BUTTON);
-            if ((uVar1 != 0) || ((is_first_time_on_main_menu != FALSE && (ge_logo_bool != FALSE))))
-            {
+        if (menu_timer > 0xb4) {
+            if (prev_keypresses) {
                 set_menu_to_mode(MENU_FILE_SELECT,1);
             }
-        }
-        else {
-            if (prev_keypresses == 0) {
+            else {
                 do_extended_cast_display(0);
                 set_menu_to_mode(MENU_DISPLAY_CAST,1);
             }
-            else {
+        }
+        else {
+            if ((joyGetButtonsPressedThisFrame('\0',0xFFFF) != 0) || ((is_first_time_on_main_menu != FALSE && (ge_logo_bool != FALSE)))) {
                 set_menu_to_mode(MENU_FILE_SELECT,1);
             }
         }
     }
     else {
-        uVar1 = joyGetButtonsPressedThisFrame
-                          ('\0',R_CBUTTONS|L_CBUTTONS|D_CBUTTONS|U_CBUTTONS|R_TRIG|L_TRIG|DUMMY_2|
-                                DUMMY_1|R_JPAD|L_JPAD|D_JPAD|U_JPAD|START_BUTTON|Z_TRIG|B_BUTTON|
-                                A_BUTTON);
-        if (uVar1 != 0) {
+        if (joyGetButtonsPressedThisFrame('\0',0xFFFF) != 0) {
             ge_logo_bool = TRUE;
         }
     }
-    return;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80051A10
-.word 0x3FAAAAAB /* 1.3333334;*/
-glabel D_80051A14
-.word 0x461C4000 /* 10000.0;*/
-
-.text
-glabel interface_menu04_goldeneyelogo
-/* 03FE60 7F00B330 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 03FE64 7F00B334 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 03FE68 7F00B338 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 03FE6C 7F00B33C 44816000 */  mtc1  $at, $f12
-/* 03FE70 7F00B340 0C001151 */  jal   viSetFovY
-/* 03FE74 7F00B344 00000000 */   nop   
-/* 03FE78 7F00B348 3C018005 */  lui   $at, %hi(D_80051A10)
-/* 03FE7C 7F00B34C 0C001164 */  jal   viSetAspect
-/* 03FE80 7F00B350 C42C1A10 */   lwc1  $f12, %lo(D_80051A10)($at)
-/* 03FE84 7F00B354 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 03FE88 7F00B358 44816000 */  mtc1  $at, $f12
-/* 03FE8C 7F00B35C 3C018005 */  lui   $at, %hi(D_80051A14)
-/* 03FE90 7F00B360 0C001194 */  jal   viSetZRange
-/* 03FE94 7F00B364 C42E1A14 */   lwc1  $f14, %lo(D_80051A14)($at)
-/* 03FE98 7F00B368 0C00114D */  jal   viSetUseZBuf
-/* 03FE9C 7F00B36C 00002025 */   move  $a0, $zero
-/* 03FEA0 7F00B370 3C038003 */  lui   $v1, %hi(menu_timer)
-/* 03FEA4 7F00B374 2463A8CC */  addiu $v1, %lo(menu_timer) # addiu $v1, $v1, -0x5734
-/* 03FEA8 7F00B378 3C0F8005 */  lui   $t7, %hi(clock_timer) 
-/* 03FEAC 7F00B37C 8DEF8374 */  lw    $t7, %lo(clock_timer)($t7)
-/* 03FEB0 7F00B380 8C6E0000 */  lw    $t6, ($v1)
-/* 03FEB4 7F00B384 3C198003 */  lui   $t9, %hi(is_first_time_on_main_menu) 
-/* 03FEB8 7F00B388 01CFC021 */  addu  $t8, $t6, $t7
-/* 03FEBC 7F00B38C AC780000 */  sw    $t8, ($v1)
-/* 03FEC0 7F00B390 8F39A930 */  lw    $t9, %lo(is_first_time_on_main_menu)($t9)
-/* 03FEC4 7F00B394 2B0100B5 */  slti  $at, $t8, 0xb5
-/* 03FEC8 7F00B398 5320000B */  beql  $t9, $zero, .L7F00B3C8
-/* 03FECC 7F00B39C 8C690000 */   lw    $t1, ($v1)
-/* 03FED0 7F00B3A0 10200008 */  beqz  $at, .L7F00B3C4
-/* 03FED4 7F00B3A4 3C088003 */   lui   $t0, %hi(D_8002A938) 
-/* 03FED8 7F00B3A8 8D08A938 */  lw    $t0, %lo(D_8002A938)($t0)
-/* 03FEDC 7F00B3AC 2B01005B */  slti  $at, $t8, 0x5b
-/* 03FEE0 7F00B3B0 00002025 */  move  $a0, $zero
-/* 03FEE4 7F00B3B4 11000027 */  beqz  $t0, .L7F00B454
-/* 03FEE8 7F00B3B8 00000000 */   nop   
-/* 03FEEC 7F00B3BC 14200025 */  bnez  $at, .L7F00B454
-/* 03FEF0 7F00B3C0 00000000 */   nop   
-.L7F00B3C4:
-/* 03FEF4 7F00B3C4 8C690000 */  lw    $t1, ($v1)
-.L7F00B3C8:
-/* 03FEF8 7F00B3C8 3C0A8003 */  lui   $t2, %hi(prev_keypresses) 
-/* 03FEFC 7F00B3CC 00002025 */  move  $a0, $zero
-/* 03FF00 7F00B3D0 292100B5 */  slti  $at, $t1, 0xb5
-/* 03FF04 7F00B3D4 14200010 */  bnez  $at, .L7F00B418
-/* 03FF08 7F00B3D8 00000000 */   nop   
-/* 03FF0C 7F00B3DC 8D4AA934 */  lw    $t2, %lo(prev_keypresses)($t2)
-/* 03FF10 7F00B3E0 24040005 */  li    $a0, 5
-/* 03FF14 7F00B3E4 11400005 */  beqz  $t2, .L7F00B3FC
-/* 03FF18 7F00B3E8 00000000 */   nop   
-/* 03FF1C 7F00B3EC 0FC06975 */  jal   set_menu_to_mode
-/* 03FF20 7F00B3F0 24050001 */   li    $a1, 1
-/* 03FF24 7F00B3F4 1000001E */  b     .L7F00B470
-/* 03FF28 7F00B3F8 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F00B3FC:
-/* 03FF2C 7F00B3FC 0FC0619C */  jal   do_extended_cast_display
-/* 03FF30 7F00B400 00002025 */   move  $a0, $zero
-/* 03FF34 7F00B404 24040018 */  li    $a0, 24
-/* 03FF38 7F00B408 0FC06975 */  jal   set_menu_to_mode
-/* 03FF3C 7F00B40C 24050001 */   li    $a1, 1
-/* 03FF40 7F00B410 10000017 */  b     .L7F00B470
-/* 03FF44 7F00B414 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F00B418:
-/* 03FF48 7F00B418 0C0030EB */  jal   joyGetButtonsPressedThisFrame
-/* 03FF4C 7F00B41C 3405FFFF */   li    $a1, 65535
-/* 03FF50 7F00B420 14400007 */  bnez  $v0, .L7F00B440
-/* 03FF54 7F00B424 3C0B8003 */   lui   $t3, %hi(is_first_time_on_main_menu) 
-/* 03FF58 7F00B428 8D6BA930 */  lw    $t3, %lo(is_first_time_on_main_menu)($t3)
-/* 03FF5C 7F00B42C 3C0C8003 */  lui   $t4, %hi(D_8002A938) 
-/* 03FF60 7F00B430 5160000F */  beql  $t3, $zero, .L7F00B470
-/* 03FF64 7F00B434 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 03FF68 7F00B438 8D8CA938 */  lw    $t4, %lo(D_8002A938)($t4)
-/* 03FF6C 7F00B43C 1180000B */  beqz  $t4, .L7F00B46C
-.L7F00B440:
-/* 03FF70 7F00B440 24040005 */   li    $a0, 5
-/* 03FF74 7F00B444 0FC06975 */  jal   set_menu_to_mode
-/* 03FF78 7F00B448 24050001 */   li    $a1, 1
-/* 03FF7C 7F00B44C 10000008 */  b     .L7F00B470
-/* 03FF80 7F00B450 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F00B454:
-/* 03FF84 7F00B454 0C0030EB */  jal   joyGetButtonsPressedThisFrame
-/* 03FF88 7F00B458 3405FFFF */   li    $a1, 65535
-/* 03FF8C 7F00B45C 10400003 */  beqz  $v0, .L7F00B46C
-/* 03FF90 7F00B460 240D0001 */   li    $t5, 1
-/* 03FF94 7F00B464 3C018003 */  lui   $at, %hi(D_8002A938)
-/* 03FF98 7F00B468 AC2DA938 */  sw    $t5, %lo(D_8002A938)($at)
-.L7F00B46C:
-/* 03FF9C 7F00B46C 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F00B470:
-/* 03FFA0 7F00B470 27BD0018 */  addiu $sp, $sp, 0x18
-/* 03FFA4 7F00B474 03E00008 */  jr    $ra
-/* 03FFA8 7F00B478 00000000 */   nop   
-)
-#endif
 
 
 
