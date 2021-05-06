@@ -3,6 +3,7 @@
 #include "memp.h"
 #include "assets/obseg/obseg.h"
 #include "game/decompress.h"
+#include "game/indy_comms.h"
 
 
 //bss
@@ -56,29 +57,29 @@ void load_resource(u8 *ptrdata, u32 bytes, struct fileentry *srcfile, struct res
 
 
 #ifdef NONMATCHING
-//need to tinker with stack size
+//only issue left is a1/a2 load order for check_file_found_on_indy
 void resource_load_from_indy(u8 *ptrdata, u32 bytes, struct fileentry *srcfile, struct resource_lookup_data_entry *lookupdata)
 {
-    void *sp2124;
-    u8 buffer[8450];
     u8 *pPayload;
-    u32 size;
-static const u8 rz_header_1[] = {0x11, 0x72, 0x00, 0x00};
-static const u8 rz_header_2[] = {0x11, 0x72, 0x00, 0x00};
+    u8 buffer[8448];
+    s32 size;
+    static const u8 rz_header_1[] = {0x11, 0x72, 0x00, 0x00};
+    static const u8 rz_header_2[] = {0x11, 0x72, 0x00, 0x00};
+
     if (bytes == 0)
     {
         load_resource_on_indy(srcfile->filename, ptrdata);
         return;
     }
+    //a1 and a2 are loaded flipped
     check_file_found_on_indy(srcfile->filename, lookupdata->pc_size);
     pPayload = (ptrdata + bytes) - ((lookupdata->pc_size + 7) & -8);
-    if ((u32) (pPayload - ptrdata) < 8U)
+    if ((pPayload - ptrdata) < (u32)8)
     {
         lookupdata->pc_remaining = 0;
     }
     else
     {
-        sp2124 = pPayload;
         load_resource_on_indy(srcfile->filename, pPayload);
         if ((pPayload[0] == rz_header_1[0]) && (pPayload[1] == rz_header_2[1]))
         {
@@ -89,7 +90,7 @@ static const u8 rz_header_2[] = {0x11, 0x72, 0x00, 0x00};
             bcopy(pPayload, ptrdata, lookupdata->pc_size);
             size = lookupdata->pc_size;
         }
-        lookupdata->pc_remaining = (s32) size;
+        lookupdata->pc_remaining = size;
     }
 }
 #else

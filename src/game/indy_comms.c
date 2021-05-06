@@ -21,7 +21,7 @@ void init_indy_if_ready(void) {
     }
 }
 
-void load_resource_on_indy(u8 *filename, u8 *targetloc)
+void load_resource_on_indy(char *filename, u8 *targetloc)
 {
     u8 response1 [8];
     u8 response2 [4];
@@ -35,7 +35,7 @@ void load_resource_on_indy(u8 *filename, u8 *targetloc)
     return;
 }
 
-void indy_send_capture_data(u8 *filename, u8 *data, u32 size)
+void indy_send_capture_data(char *filename, u8 *data, u32 size)
 {
     u8 auStack4 [4];
   
@@ -47,7 +47,7 @@ void indy_send_capture_data(u8 *filename, u8 *data, u32 size)
     return;
 }
 
-void indy_load_ramrom_file(u8 *filename, u8 *target, s32 size)
+void indy_load_ramrom_file(char *filename, u8 *target, s32 size)
 {
     u32 uStack4;
     u32 uStack8;
@@ -61,7 +61,7 @@ void indy_load_ramrom_file(u8 *filename, u8 *target, s32 size)
     return;
 }
 
-void check_file_exported(u8 *filename, s32 size, u8 * data)
+void check_file_exported(char *filename, s32 size, u8 * data)
 {
     u8 auStack4 [4];
   
@@ -72,7 +72,7 @@ void check_file_exported(u8 *filename, s32 size, u8 * data)
     }
 }
 
-u8 * check_file_found_on_indy(u8 *name, s32 *size)
+u8 * check_file_found_on_indy(char *name, s32 *size)
 {
     u8 *response;  
     if (!indy_ready) {
