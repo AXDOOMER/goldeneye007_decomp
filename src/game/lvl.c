@@ -1885,7 +1885,7 @@ glabel sub_GAME_7F0BE30C
 
 #ifdef VERSION_JP
 GLOBAL_ASM(
-        .rdata
+    .rdata
     #const char aStanshow_[] = "-stanshow_";
     glabel aStanshow_
     .word 0x2d737461
@@ -4238,6 +4238,7 @@ glabel manage_mp_game
 #endif
 
 #ifdef VERSION_JP
+GLOBAL_ASM(
 .rdata
 #const char aSetdetailDDDDDDDDD[] = "setdetail %d %d %d %d %d %d %d %d %d";
 glabel aSetdetailDDDDDDDDD
