@@ -82,21 +82,21 @@ s32 interface_menu0B_runstage(void) {
 }
 
 #ifdef NONMATCHING
-void finalize_ramrom_on_hw(void) {
-    s32 temp_a0;
-    ? temp_ret;
-
-    // Node 0
-    temp_a0 = (((sp + 0x2f) | 0xf) ^ 0xf);
-    *temp_a0 = (u8)0;
-    temp_a0->unk1 = (u8)0;
-    romWrite(temp_a0, address_demo_loaded, 0x10);
-    address_demo_loaded = (s32) (address_demo_loaded + 4);
-    temp_ret = romCopyAligned(&ramrom_data_target, 0xf00000, 0xf0);
-    ptr_active_demofile = temp_ret;
-    temp_ret->unk7C = (s32) (global_timer - clock_timer);
-    ptr_active_demofile->unk80 = (s32) (address_demo_loaded - 0xf00000);
-    return romWrite(ptr_active_demofile, 0xf00000, 0xf0);
+void finalize_ramrom_on_hw(void)
+{
+  undefined *source;
+  undefined auStack25 [25];
+  
+  source = (auStack25 | 0xf) ^ 0xf;
+  *source = 0;
+  source[1] = 0;
+  romWrite(source,address_demo_loaded,0x10);
+  address_demo_loaded = address_demo_loaded + 4;
+  ptr_active_demofile = romCopyAligned(&ramrom_data_target,0xf00000,0xf0);
+  ptr_active_demofile->totaltime_ms = global_timer - clock_timer;
+  ptr_active_demofile->filesize = address_demo_loaded - 0xf00000;
+  romWrite(ptr_active_demofile,0xf00000,0xf0);
+  return;
 }
 #else
 GLOBAL_ASM(
@@ -156,17 +156,22 @@ glabel finalize_ramrom_on_hw
 #ifdef NONMATCHING
 void save_ramrom_to_devtool(void)
 {
-    int iVar2;
-    undefined auStack264 [4];
-    char indyFileName [260];
+    int i=0;
+    char indyFileName [256];
+    u32 size;
     
-    for (iVar2 = 1; check_file_found_on_indy(indyFileName,(u32)auStack264) != 0; iVar2++)
-    {
-        sprintf(indyFileName,"replay/demo.%d",iVar2);
-    }
-    sprintf(indyFileName,"replay/demo.%d",iVar2);
-    check_file_exported(indyFileName,0xf00000,(ptr_active_demofile + 0x80));
+  
+  
+
+  while( ++i ) {
+    sprintf(indyFileName,"replay/demo.%d",i);
+    if (!check_file_found_on_indy(&indyFileName,&size)) break;
+  }
+  sprintf(indyFileName,"replay/demo.%d",i);
+  check_file_exported(indyFileName,INDY_RAMROM_DEMO_ADDRESS,ptr_active_demofile->filesize);
 }
+
+
 #else
 
 GLOBAL_ASM(
@@ -244,8 +249,8 @@ void load_ramrom_from_devtool(void)
 
     if (check_file_found_on_indy(&strDemoFileName, &size) != 0)
     {
-        indy_load_ramrom_file(&strDemoFileName,(u8 *)0xf00000,size);
-        ptr_active_demofile = romCopyAligned(&ramrom_data_target,(u8 *)0xf00000,0xe8);
+        indy_load_ramrom_file(&strDemoFileName,(u8 *)INDY_RAMROM_DEMO_ADDRESS,size);
+        ptr_active_demofile = romCopyAligned(&ramrom_data_target,(u8 *)INDY_RAMROM_DEMO_ADDRESS,0xe8);
     }
 }
 
@@ -818,7 +823,7 @@ void test_if_recording_demos_this_stage_load(s32 levelid, s32 difficulty)
         recording_ramrom_flag = 1;
         ramrom_demo_related_6 = 1;
         joySetRecordFunc(&record_player_input_as_packet);
-        address_demo_loaded = 0xF00000;
+        address_demo_loaded = INDY_RAMROM_DEMO_ADDRESS;
         romWrite(ptr_active_demofile, address_demo_loaded, 0xF0);
         address_demo_loaded += 0xE8;
         g_ramromRecordFlag = 0;
@@ -978,7 +983,7 @@ void replay_recorded_ramrom_at_address(ramromfilestructure *demofile)
 
 void replay_recorded_ramrom_from_indy(void)
 {
-    replay_recorded_ramrom_at_address(0xf00000);
+    replay_recorded_ramrom_at_address(INDY_RAMROM_DEMO_ADDRESS);
 }
 
 void ensureCameraModeA(void)
