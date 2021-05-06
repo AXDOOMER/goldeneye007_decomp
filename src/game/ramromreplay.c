@@ -168,11 +168,23 @@ void save_ramrom_to_devtool(void)
     check_file_exported(indyFileName,0xf00000,(ptr_active_demofile + 0x80));
 }
 #else
-//D:8005B750
-const char aReplayDemo_D[] = "replay/demo.%d";
-//D:8005B760
-const char aReplayDemo_D_1[] = "replay/demo.%d";
+
 GLOBAL_ASM(
+.rdata
+#const char aReplayDemo_D[] = "replay/demo.%d";
+glabel aReplayDemo_D
+.word 0x7265706c
+.word 0x61792f64
+.word 0x656d6f2e
+.word 0x25640000
+
+#const char aReplayDemo_D_1[] = "replay/demo.%d";
+glabel aReplayDemo_D_1
+.word 0x7265706c
+.word 0x61792f64
+.word 0x656d6f2e
+.word 0x25640000
+
 .text
 glabel save_ramrom_to_devtool
 /* 0F4890 7F0BFD60 27BDFED0 */  addiu $sp, $sp, -0x130
@@ -224,49 +236,19 @@ glabel save_ramrom_to_devtool
 
 
 
-#ifdef NONMATCHING
 void load_ramrom_from_devtool(void)
 {
+    
+    static const char strDemoFileName[] = "replay/demo.load";
     s32 size;
 
-    if (check_file_found_on_indy("replay/demo.load", &size) != 0)
+    if (check_file_found_on_indy(&strDemoFileName, &size) != 0)
     {
-        indy_load_ramrom_file("replay/demo.load",(u8 *)0xf00000,size);
+        indy_load_ramrom_file(&strDemoFileName,(u8 *)0xf00000,size);
         ptr_active_demofile = romCopyAligned(&ramrom_data_target,(u8 *)0xf00000,0xe8);
     }
 }
-#else
-//D:8005B770
-const char aReplayDemo_load[] = "replay/demo.load";
-GLOBAL_ASM(
-.text
-glabel load_ramrom_from_devtool
-/* 0F4930 7F0BFE00 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0F4934 7F0BFE04 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F4938 7F0BFE08 3C048006 */  lui   $a0, %hi(aReplayDemo_load)
-/* 0F493C 7F0BFE0C 2484B770 */  addiu $a0, %lo(aReplayDemo_load) # addiu $a0, $a0, -0x4890
-/* 0F4940 7F0BFE10 0FC34026 */  jal   check_file_found_on_indy
-/* 0F4944 7F0BFE14 27A5001C */   addiu $a1, $sp, 0x1c
-/* 0F4948 7F0BFE18 1040000C */  beqz  $v0, .L7F0BFE4C
-/* 0F494C 7F0BFE1C 3C048006 */   lui   $a0, %hi(aReplayDemo_load)
-/* 0F4950 7F0BFE20 2484B770 */  addiu $a0, %lo(aReplayDemo_load) # addiu $a0, $a0, -0x4890
-/* 0F4954 7F0BFE24 3C0500F0 */  lui   $a1, 0xf0
-/* 0F4958 7F0BFE28 0FC34007 */  jal   indy_load_ramrom_file
-/* 0F495C 7F0BFE2C 8FA6001C */   lw    $a2, 0x1c($sp)
-/* 0F4960 7F0BFE30 3C048009 */  lui   $a0, %hi(ramrom_data_target)
-/* 0F4964 7F0BFE34 2484C270 */  addiu $a0, %lo(ramrom_data_target) # addiu $a0, $a0, -0x3d90
-/* 0F4968 7F0BFE38 3C0500F0 */  lui   $a1, 0xf0
-/* 0F496C 7F0BFE3C 0C001711 */  jal   romCopyAligned
-/* 0F4970 7F0BFE40 240600E8 */   li    $a2, 232
-/* 0F4974 7F0BFE44 3C018005 */  lui   $at, %hi(ptr_active_demofile)
-/* 0F4978 7F0BFE48 AC228468 */  sw    $v0, %lo(ptr_active_demofile)($at)
-.L7F0BFE4C:
-/* 0F497C 7F0BFE4C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F4980 7F0BFE50 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0F4984 7F0BFE54 03E00008 */  jr    $ra
-/* 0F4988 7F0BFE58 00000000 */   nop   
-)
-#endif
+
 
 
 

@@ -239,7 +239,7 @@ void music_append_play_endtheme(void)
     musicTrack1Play(musictrack1_playing);
 }
 
-void sub_GAME_7F0BDA84(void) {
+void music_play_stagetrack_or_random(void) {
     playmusictrack1(getmusictrack_or_randomtrack(current_stage_to_load));
 }
 
