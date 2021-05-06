@@ -2,26 +2,27 @@
 #include "stagesetup.h"
 
 s32 intro[];
-u32 props[];
-struct path paths[];
+u32 objlist[];
+struct path pathlist[];
 struct ailist ailists[];
-struct preset0x presets0x[];
-struct preset0x presets2x_0[];
-struct preset2x presets2x_2[];
+struct pad padlist1[];
+struct pad padlist2[];
+struct pad3d pad3dlist[];
 
 struct stagesetup setup = {
-	pathtbl,
-	pathlink,
-	intro,
-	props,
-	paths,
-	ailists,
-	presets0x,
-	presets2x_0,
-	NULL,
-	NULL,
+    pathtbl,
+    pathlink,
+    intro,
+    objlist,
+    pathlist,
+    ailists,
+    padlist1,
+    pad3dlist,
+    NULL,
+    NULL,
 };
-struct preset0x presets0x[] = {
+
+struct preset0x padlist1[] = {
     {  -389.0f,   95.0f,   160.0f, 0.0f, 1.0f, 0.0f, -0.999859f, 0.0f, -0.016799f, "p274a2", 0},
     { -1536.0f,   95.0f,   767.0f, 0.0f, 1.0f, 0.0f, -0.999859f, 0.0f, -0.016799f, "p330a",  0},
     {  -338.0f,   95.0f,  -523.0f, 0.0f, 1.0f, 0.0f, -0.999859f, 0.0f, -0.016799f, "p297a",  0},
@@ -84,14 +85,15 @@ struct preset0x presets0x[] = {
     { -1098.0f, -142.0f,  -715.0f, 0.0f, 1.0f, 0.0f,  0.016799f, 0.0f, -0.999859f, "p799a1", 0},
     { -1038.0f,   95.0f, -1049.0f, 0.0f, 1.0f, 0.0f,  0.016799f, 0.0f, -0.999859f, "p305a",  0},
     { -1896.0f, -142.0f, -2399.0f, 0.0f, 1.0f, 0.0f,  0.016799f, 0.0f, -0.999859f, "p938a2", 0},
-    {     0.0f,    0.0f,     0.0f, 0.0f, 0.0f, 0.0f,       0.0f, 0.0f,       0.0f, 00000000, 0},
+    {     0.0f,    0.0f,     0.0f, 0.0f, 0.0f, 0.0f,       0.0f, 0.0f,       0.0f, NULL, 0},
 };
 
 
-struct preset0x presets2x_0[] = {
+struct preset0x padlist2[] = {
     {   380.0f,   95.0f,   -127.0f,-1.0f, 0.0f, 1.0E-6f, 0.0f, 1.0f, 0.0f, "p25a2", 0},
 };
-struct preset2x presets2x_2[] = {
+
+struct preset2x pad3dlist[] = {
     {-89.0f, 90.0f, -5.7E-5f, 5.6E-5f, -94.99999f, 93.99999f, 199.0f, 95.0f, -265.0f, -1.0f, 0.0f, 1.0E-6f, 0.0f, 1.0f, 0.0f, "p25a1", 0},
     {-110.0f, 114.0f, -5.8E-5f, 5.5E-5f, -94.99999f, 93.99999f, 207.0f, 95.0f, 74.0f, -1.0f, 0.0f, 1.0E-6f, 0.0f, 1.0f, 0.0f, "p493a1", 0},
     {-72.0f, 74.0f, -5.7E-5f, 5.6E-5f, -94.99999f, 93.99999f, 207.0f, 95.0f, 307.0f, -1.0f, 0.0f, 1.0E-6f, 0.0f, 1.0f, 0.0f, "p493a1", 0},
@@ -125,7 +127,7 @@ struct preset2x presets2x_2[] = {
 00001114        00000000        ddw         0h  
 */
 
-u32 props[] = {
+u32 objlist[] = {
     weapon(0x100, 0x0, 0x14D, 0x3B, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x3E8, 0x0, 0x0, 0x0, 0x58, 0xFF, 0xFFFF, 0x0)
     bodyarmor(0x180, 0x0, 0x73, 0x30, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x3E8, 0x0, 0x0, 0x0, 0x10000, 0x0)
     bodyarmor(0x180, 0x0, 0x73, 0xF, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x3E8, 0x0, 0x0, 0x0, 0x10000, 0x0)
@@ -222,7 +224,7 @@ s32 linkedpathsets2[] = {
     0xFFFFFFFF
 };
 
-struct s_pathLink pathlink[] = {
+struct s_pathLink pathlist[] = {
     {0x00000000, 0x00000000, 0x00000000}
 };
 
@@ -251,4 +253,3 @@ s32 unknown[] = {
 s32 ailist[] = {
     0x0, 0x0, 0x0, 0x0, 0x0
 }
-

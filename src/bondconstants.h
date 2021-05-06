@@ -24,11 +24,10 @@
 
 #define OBJECTIVES_MAX 10
 
-typedef u16 PAD;
-typedef u16 PADEXTRA;
+#define PAD3D_START 10000
 
-#define PADEXTRA_START 10000
-#define PADEX(PAD) (PAD + PADEXTRA_START) /* used for setups */
+typedef u16 PAD;
+typedef u16 PAD3D;
 
 typedef enum RGBA_ENUM {
     RED = 0,

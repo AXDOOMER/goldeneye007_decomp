@@ -6,6 +6,19 @@
 
 // Staying here for the moment.
 
+struct float3
+{
+    f32 x;
+    f32 y;
+    f32 z;
+};
+
+struct float2
+{
+    f32 x;
+    f32 z;
+};
+
 enum EObjectClass { // u8
     Zero,
     NormalObj1,
@@ -14,17 +27,6 @@ enum EObjectClass { // u8
     NormalObject2,
     Unknown,
     OtherPlayer
-};
-
-struct float3 {
-    float x;
-    float y;
-    float z;
-};
-
-struct float2 {
-    float x;
-    float z;
 };
 
 struct prop {

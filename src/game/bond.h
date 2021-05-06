@@ -6,14 +6,6 @@
 #include "game/matrixmath.h"
 #include "structs.h"
 
-struct coord
-{
-    f32 x;
-    f32 y;
-    f32 z;
-};
-
-
 typedef struct invitem_weap
 {
 	s32 weapon;

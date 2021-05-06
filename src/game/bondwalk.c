@@ -25,13 +25,13 @@ s32 dword_CODE_bss_80076A48;
 
 // data
 //D:80032440
-struct rgba_val D_80032440[] = {
+struct rgba_u8 D_80032440[] = {
 	{0x96, 0x96, 0x96, 0},
 	{0x96, 0x96, 0x96, 0}
 };
 
 //D:80032448
-struct rgba_val D_80032448[] = {
+struct rgba_u8 D_80032448[] = {
 	{0xFF, 0xFF, 0xFF, 0},
 	{0xFF, 0xFF, 0xFF, 0},
 	{0xB2, 0x4D, 0x2E, 0}
