@@ -214,33 +214,12 @@ void playrandommusictrack1(void)
     musicTrack1Play(musictrack1_playing);
 }
 
-
-
-
-
-
-#ifdef NONMATCHING
 void playmusictrack1(MUSIC_TRACKS track)
 {
     musictrack1_playing = track;
-    musicTrack1Play(track);
+    musicTrack1Play(musictrack1_playing);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel playmusictrack1
-/* 0F24F4 7F0BD9C4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F24F8 7F0BD9C8 3C028005 */  lui   $v0, %hi(musictrack1_playing)
-/* 0F24FC 7F0BD9CC 2442836C */  addiu $v0, %lo(musictrack1_playing) # addiu $v0, $v0, -0x7c94
-/* 0F2500 7F0BD9D0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F2504 7F0BD9D4 0C001B9F */  jal   musicTrack1Play
-/* 0F2508 7F0BD9D8 AC440000 */   sw    $a0, ($v0)
-/* 0F250C 7F0BD9DC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F2510 7F0BD9E0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F2514 7F0BD9E4 03E00008 */  jr    $ra
-/* 0F2518 7F0BD9E8 00000000 */   nop   
-)
-#endif
+
 
 
 
