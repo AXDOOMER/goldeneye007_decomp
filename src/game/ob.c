@@ -207,62 +207,59 @@ void obLoadBGFileBytesAtOffset(u8 *bgname, u8 *target, s32 offset, s32 len)
 
 
 
-#ifdef NONMATCHING//
-u8 * load_rom_resource_index_to_membank(s32 index,s32 type,s32 size,u8 bank)
+#ifdef NONMATCHING
+u8 * load_rom_resource_index_to_membank(s32 index,s32 param_2,s32 size,u8 bank)
+
 {
-    
-    u8 *ptrdata;
-    if (((type == 0) || (type == 1)) || (type == 2))
-    {
-        if (resource_lookup_data_array[index].pc_remaining == 0)
-        {
-            resource_lookup_data_array[index].pc_remaining = mempGetBankSizeLeft(bank);
-        }
-        ptrdata = mempAllocBytesInBank(resource_lookup_data_array[index].pc_remaining, bank);
-        resource_lookup_data_array[index].rom_remaining = resource_lookup_data_array[index].pc_remaining;
-        if (file_resource_table[index].hw_address == 0)
-        {
-            resource_load_from_indy(ptrdata, resource_lookup_data_array[index].rom_remaining, &file_resource_table[index], &resource_lookup_data_array[index]);
-        }
-        else
-        {
-            load_resource(ptrdata, resource_lookup_data_array[index].rom_remaining, &file_resource_table[index], &resource_lookup_data_array[index]);
-        }
-        if (type != 0)
-        {
-            mempAddEntryOfSizeToBank(ptrdata, resource_lookup_data_array[index].pc_remaining, bank);
-        }
+    u32 unk;
+  u32 bytes;
+  u8 *ptrdata;
+ 
+  if (((param_2 == 0) || (param_2 == 1)) || (param_2 == 2)) {
+    bytes = resource_lookup_data_array[index].pc_remaining;
+    if (bytes == 0) {
+      bytes = mempGetBankSizeLeft(bank);
+      resource_lookup_data_array[index].pc_remaining = bytes;
     }
-    else
-    {
-        if (resource_lookup_data_array[index].pc_remaining == 0)
-        {
-            if (resource_lookup_data_array[index].rom_size == 0)
-            {
-                resource_lookup_data_array[index].pc_remaining = resource_lookup_data_array[index].pc_size;
-            }
-            else
-            {
-                resource_lookup_data_array[index].pc_remaining = resource_lookup_data_array[index].rom_size;
-            }
-        }
-        ptrdata = mempAllocBytesInBank(resource_lookup_data_array[index].pc_remaining,bank);
-        resource_lookup_data_array[index].rom_remaining = resource_lookup_data_array[index].pc_remaining;
-        if (file_resource_table[index].hw_address == 0)
-        {
-            resource_load_from_indy(ptrdata, 0, &file_resource_table[index], &resource_lookup_data_array[index]);
-        }
-        else
-        {
-            
-            load_resource(ptrdata , 0, &file_resource_table[index], &resource_lookup_data_array[index]);
-        }
-        if (size == 0)
-        {
-            resource_lookup_data_array[index].loaded_bank = bank;
-        }
+    ptrdata = mempAllocBytesInBank(bytes,bank);
+    bytes = resource_lookup_data_array[index].pc_remaining;
+    resource_lookup_data_array[index].rom_remaining = bytes;
+    if (file_resource_table[index].hw_address == 0) {
+      resource_load_from_indy(ptrdata, bytes, &file_resource_table[index], &resource_lookup_data_array[index]);
     }
-    return ptrdata;
+    else {
+      load_resource(ptrdata, bytes, &file_resource_table[index], &resource_lookup_data_array[index]);
+    }
+    if (param_2 != 0) {
+      mempAddEntryOfSizeToBank(ptrdata, resource_lookup_data_array[index].pc_remaining, bank);
+    }
+  }
+  else {
+    bytes = resource_lookup_data_array[index].pc_remaining;
+    if (bytes == 0) {
+      bytes = resource_lookup_data_array[index].rom_size;
+      if (bytes == 0) {
+        bytes = resource_lookup_data_array[index].pc_size;
+        resource_lookup_data_array[index].pc_remaining = bytes;
+      }
+      else {
+        resource_lookup_data_array[index].pc_remaining = bytes;
+      }
+    }
+    ptrdata = mempAllocBytesInBank(bytes,bank);
+    resource_lookup_data_array[index].rom_remaining =
+         resource_lookup_data_array[index].pc_remaining;
+    if (file_resource_table[index].hw_address == 0) {
+      resource_load_from_indy(ptrdata, 0, &file_resource_table[index], &resource_lookup_data_array[index]);
+    }
+    else {
+      load_resource(ptrdata,0, &file_resource_table[index], &resource_lookup_data_array[index]);
+    }
+    if (size == 0) {
+      resource_lookup_data_array[index].loaded_bank = bank;
+    }
+  }
+  return ptrdata;
 }
 #else
 GLOBAL_ASM(
@@ -403,13 +400,13 @@ glabel load_rom_resource_index_to_membank
 
 /*
  *this matches except:
- *baserom.u.z64                                                                   
- *000F 1BC0: AE 0C 00 0C 8F A5 00 2C  0F C2 F2 A8 8F A4 00 28  ......., .......( 
- *ge007.u.z64               this   is flipped with   this                 
- *000F 1BC0: AE 0C 00 0C 8F A4 00 28  0F C2 F2 A8 8F A5 00 2C  .......( .......,
+f1bc0:    sw      t4,0xc(s0)                        f1bc0:    sw      t4,0xc(s0)
+f1bc4:    lw      a1,0x2c(sp)                     r f1bc4:    lw      a0,0x28(sp)
+f1bc8:    jal     load_resource                     f1bc8:    jal     load_resource
+f1bcc:    lw      a0,0x28(sp)                     r f1bcc:    lw      a1,0x2c(sp)
  */
-#ifdef NONMATCHING//
-u8* load_resource_index_to_buffer(s32 index,s32 bank,u8 *ptrdata,s32 bytes)
+#ifdef NONMATCHING
+u8* load_resource_index_to_buffer(s32 index,s32 bank,u8 *ptrdata,u32 bytes)
 {
     if (resource_lookup_data_array[index].pc_remaining == 0)
     {
@@ -555,17 +552,23 @@ s32 get_rom_remaining_buffer_for_index(s32 index)
 
 
 #ifdef NONMATCHING
+//f1c74:    addiu   t7,t7,-0x7750                   | f1c74:    addiu   sp,sp,-0x18 //moved
+//                                                  > f1c78:    addiu   t7,t7,-0x7750
+//f1c78:    sll     t6,t6,0x2                         f1c7c:    sll     t6,t6,0x2
+//f1c7c:    addiu   sp,sp,-0x18                     | f1c80:    addu    v0,t6,t7
+//f1c80:    addu    v0,t6,t7                        | f1c84:    sw      ra,0x14(sp)
+//f1c84:    sw      ra,0x14(sp)                     r f1c88:    sw      a1,0x1c(sp)
+//f1c88:    sw      a1,0x1c(sp)                     r f1c8c:    sw      a2,0x20(sp) //extra reg save
 void sub_GAME_7F0BD138(int index, u8 *ptrdata, u32 size, u32 param_4)
 {
-  u32 new_var;
-  resource_lookup_data_array[index].pc_remaining = size;
-  resource_lookup_data_array[index].rom_remaining = size;
-  new_var = param_4;
-  if (new_var)
-  {
-    mempAddEntryOfSizeToBank(ptrdata, size, 4);
-  }
+    resource_lookup_data_array[index].pc_remaining = size;
+    resource_lookup_data_array[index].rom_remaining = size;
 
+
+    if (param_4 !=0 )
+    {
+        mempAddEntryOfSizeToBank(ptrdata, size, 4);
+    }
 }
 #else
 GLOBAL_ASM(
