@@ -71,9 +71,9 @@ struct stagesetup {
     struct s_pathTbl *pathtbl;
     struct s_pathLink *pathlink;
     s32 *intro;
-    u32 *objlist;
+    s32 *objlist;
     struct s_pathSet *paths;
-    u32 *ailists;
+    s32 *ailists;
     struct pad *padlist;
     struct pad3d *pad3dlist;
     char *padnames;
