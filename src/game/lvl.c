@@ -230,10 +230,6 @@ void music_append_play_solo_death_short(void)
     musicTrack1Play(musictrack1_playing);
 }
 
-
-
-
-#ifdef NONMATCHING
 void music_append_play_endtheme(void)
 {
     musictrack1_playing = (musictrack1_playing + M_END_SOMETHING) % 0x3f;
@@ -242,36 +238,6 @@ void music_append_play_endtheme(void)
     }
     musicTrack1Play(musictrack1_playing);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel music_append_play_endtheme
-/* 0F2568 7F0BDA38 3C028005 */  lui   $v0, %hi(musictrack1_playing)
-/* 0F256C 7F0BDA3C 2442836C */  addiu $v0, %lo(musictrack1_playing) # addiu $v0, $v0, -0x7c94
-/* 0F2570 7F0BDA40 8C4E0000 */  lw    $t6, ($v0)
-/* 0F2574 7F0BDA44 2401003F */  li    $at, 63
-/* 0F2578 7F0BDA48 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F257C 7F0BDA4C 25CF003E */  addiu $t7, $t6, 0x3e
-/* 0F2580 7F0BDA50 01E1001A */  div   $zero, $t7, $at
-/* 0F2584 7F0BDA54 00002010 */  mfhi  $a0
-/* 0F2588 7F0BDA58 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F258C 7F0BDA5C 14800003 */  bnez  $a0, .L7F0BDA6C
-/* 0F2590 7F0BDA60 AC440000 */   sw    $a0, ($v0)
-/* 0F2594 7F0BDA64 2404003E */  li    $a0, 62
-/* 0F2598 7F0BDA68 AC440000 */  sw    $a0, ($v0)
-.L7F0BDA6C:
-/* 0F259C 7F0BDA6C 0C001B9F */  jal   musicTrack1Play
-/* 0F25A0 7F0BDA70 00000000 */   nop   
-/* 0F25A4 7F0BDA74 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F25A8 7F0BDA78 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F25AC 7F0BDA7C 03E00008 */  jr    $ra
-/* 0F25B0 7F0BDA80 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 void sub_GAME_7F0BDA84(void) {
     playmusictrack1(getmusictrack_or_randomtrack(current_stage_to_load));
