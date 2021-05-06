@@ -95,27 +95,16 @@ void resource_load_from_indy(u8 *ptrdata, u32 bytes, struct fileentry *srcfile, 
 #ifdef NONMATCHING
 void obInitDebugNoticeList(void)
 {
-    struct resource_lookup_data_entry *lookupentry;
-    struct resource_lookup_data_entry *nextlookup;
-    int file_count;
-    struct fileentry *filetable_entry;
-    
+    s32 i;
+ 
     debTryAdd(&ob_c_debug_notice_list_entry,"ob_c_debug");
-    filetable_entry = &file_resource_table[0];
-    file_count = file_entry_max - 1;
-    if (1 < file_count) {
-        lookupentry = resource_lookup_data_array + 1;
-        while (nextlookup < resource_lookup_data_array + file_count) {
-            filetable_entry = filetable_entry + 1;
-            nextlookup = lookupentry + 1;
-            lookupentry->rom_size = filetable_entry[1].hw_address - filetable_entry->hw_address;
-            lookupentry->pc_remaining = 0;
-            lookupentry->pc_size = 0;
-            lookupentry->rom_remaining = 0;
-            lookupentry = nextlookup;
-        } ;
+    for (i = 0; i < (file_entry_max - 1); i++)
+    {
+        resource_lookup_data_array[i].rom_size = (file_resource_table[i+1].hw_address - file_resource_table[i].hw_address);
+        resource_lookup_data_array[i].pc_remaining = 0;
+        resource_lookup_data_array[i].pc_size = 0;
+        resource_lookup_data_array[i].rom_remaining = 0;
     }
-    return;
 }
 #else
 GLOBAL_ASM(
