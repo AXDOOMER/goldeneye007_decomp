@@ -220,12 +220,6 @@ void playmusictrack1(MUSIC_TRACKS track)
     musicTrack1Play(musictrack1_playing);
 }
 
-
-
-
-
-
-#ifdef NONMATCHING
 void music_append_play_solo_death_short(void)
 
 {
@@ -235,33 +229,6 @@ void music_append_play_solo_death_short(void)
     }
     musicTrack1Play(musictrack1_playing);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel music_append_play_solo_death_short
-/* 0F251C 7F0BD9EC 3C028005 */  lui   $v0, %hi(musictrack1_playing)
-/* 0F2520 7F0BD9F0 2442836C */  addiu $v0, %lo(musictrack1_playing) # addiu $v0, $v0, -0x7c94
-/* 0F2524 7F0BD9F4 8C4E0000 */  lw    $t6, ($v0)
-/* 0F2528 7F0BD9F8 2401003F */  li    $at, 63
-/* 0F252C 7F0BD9FC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F2530 7F0BDA00 25CF0001 */  addiu $t7, $t6, 1
-/* 0F2534 7F0BDA04 01E1001A */  div   $zero, $t7, $at
-/* 0F2538 7F0BDA08 00002010 */  mfhi  $a0
-/* 0F253C 7F0BDA0C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F2540 7F0BDA10 14800003 */  bnez  $a0, .L7F0BDA20
-/* 0F2544 7F0BDA14 AC440000 */   sw    $a0, ($v0)
-/* 0F2548 7F0BDA18 24040001 */  li    $a0, 1
-/* 0F254C 7F0BDA1C AC440000 */  sw    $a0, ($v0)
-.L7F0BDA20:
-/* 0F2550 7F0BDA20 0C001B9F */  jal   musicTrack1Play
-/* 0F2554 7F0BDA24 00000000 */   nop   
-/* 0F2558 7F0BDA28 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F255C 7F0BDA2C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F2560 7F0BDA30 03E00008 */  jr    $ra
-/* 0F2564 7F0BDA34 00000000 */   nop   
-)
-#endif
-
 
 
 
