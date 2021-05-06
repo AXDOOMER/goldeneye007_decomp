@@ -4,18 +4,72 @@
 #include "bondconstants.h"
 #include "structs.h"
 
-struct rgba_val{
-    u8 r;
-    u8 g;
-    u8 b;
-    u8 a;
+// This hacky structure allows coords to be accessed using
+// coord->x, coord->y and coord->z, but also as
+// coord->f[0], coord->f[1] and coord->f[2].
+// In some places code only matches when using the float array.
+struct coord {
+    union {
+        struct {
+            f32 x;
+            f32 y;
+            f32 z;
+        };
+        f32 f[3];
+    };
 };
 
-struct rgba_valf32{
-    f32 r;
-    f32 g;
-    f32 b;
-    f32 a;
+// Same hacky struct here for rgba groups
+struct rgba_u8 {
+    union {
+        struct {
+            u8 r;
+            u8 g;
+            u8 b;
+            u8 a;
+        };
+        u8 rgba[4];
+    };
+};
+
+struct rgba_f32 {
+    union {
+        struct {
+            f32 r;
+            f32 g;
+            f32 b;
+            f32 a;
+        };
+        f32 rgba[4];
+    };
+};
+
+struct bbox
+{
+    float xmin;
+    float xmax;
+    float ymin;
+    float ymax;
+    float zmin;
+    float zmax;
+};
+
+struct pad
+{
+    struct coord pos;
+    struct coord up;
+    struct coord look;
+    char *plink;
+};
+
+struct pad3d
+{
+    struct coord pos;
+    struct coord up;
+    struct coord look;
+    char *plink;
+    int unk;
+    struct bbox bbox;
 };
 
 typedef struct ChrRecord
@@ -44,14 +98,14 @@ typedef struct ObjHeaderData
     u16 extrascale; /*0x0 Fixed-Point format u8.8 eg: 0x03.80 = 3.5*/
     u8 hidden2;     // state - Destroyed, respawn, defused etc /*0x2*/
                     /*
-                    8x	destroyed
-                    4x	datathief/defuser/decoder used on obj (activated?)
+                    8x    destroyed
+                    4x    datathief/defuser/decoder used on obj (activated?)
                     2x
                     1x
-                    x8	external allocated collision block present
-                    x4	respawn enabled
+                    x8    external allocated collision block present
+                    x4    respawn enabled
                     x2
-                    x1	damaged*/
+                    x1    damaged*/
     u8 type;        /*0x3*/
 } ObjHeaderData;
 
@@ -75,97 +129,97 @@ typedef struct ObjectRecord
                     then this number matches the ID of a guard 
                     */
     u32 flags;      /*0x8
-                    8x	indicates right-handed gun assignment
-                    4x	08 weapon does not provide ammunition when collected
-                    2x	indicates object in motion or special function is activated
-                    1x	indicates left-handed normal pickup or opposite alignment
-                    0x	indicates no control features set
+                    8x    indicates right-handed gun assignment
+                    4x    08 weapon does not provide ammunition when collected
+                    2x    indicates object in motion or special function is activated
+                    1x    indicates left-handed normal pickup or opposite alignment
+                    0x    indicates no control features set
                     x8
-                    x4	(unknown) Jungle bushes
-                    x2	(unknown) pete grenade
-                    x1	indicates embedded crate or other object, creating a chain of boxes, for
-                    example      x0	indicates normal preset, or beginning/end of chain
+                    x4    (unknown) Jungle bushes
+                    x2    (unknown) pete grenade
+                    x1    indicates embedded crate or other object, creating a chain of boxes, for
+                    example      x0    indicates normal preset, or beginning/end of chain
                     Doors:
-                    8x	open by default
-                    4x	area behind door is always visible (no blackouts for gates, lab doors, etc)
-                    2x	open backwards
-                    1x	same as 0 as far as I can tell
-                    x8	always open away from the player regardless what side you're on
-                    x4	
-                    x2	player can't activate door (spawn block or 16 type activation)
+                    8x    open by default
+                    4x    area behind door is always visible (no blackouts for gates, lab doors, etc)
+                    2x    open backwards
+                    1x    same as 0 as far as I can tell
+                    x8    always open away from the player regardless what side you're on
+                    x4    
+                    x2    player can't activate door (spawn block or 16 type activation)
                     x1
                     0x9:
-                    8x	
-                    4x	immobile
-                    2x	(unknown) Silo DAT tape
-                    1x	uncollectable
-                    x8	
-                    x4	allows object pickup (chr_name objects only)
-                    x2	invincibility
-                    x1	
+                    8x    
+                    4x    immobile
+                    2x    (unknown) Silo DAT tape
+                    1x    uncollectable
+                    x8    
+                    x4    allows object pickup (chr_name objects only)
+                    x2    invincibility
+                    x1    
                     0xA:
-                    8x	indicates contained within another object (forward or back # objects = preset value)
-                    4x	indicates object does not use normal presets but is assigned to guard #preset
-                    2x	(unknown) part of forced collectable objects
-                    1x	think this sets object to absolute position.  (similar to 2xxx type)
-                    x8	something to do with free-standing glass (glass walls)
-                    x4	(unknown) streets buildings/roadblocks
-                    x2	seems to align image to preset values for glass
-                    x1	force collisions (2xxx presets, mostly)
+                    8x    indicates contained within another object (forward or back # objects = preset value)
+                    4x    indicates object does not use normal presets but is assigned to guard #preset
+                    2x    (unknown) part of forced collectable objects
+                    1x    think this sets object to absolute position.  (similar to 2xxx type)
+                    x8    something to do with free-standing glass (glass walls)
+                    x4    (unknown) streets buildings/roadblocks
+                    x2    seems to align image to preset values for glass
+                    x1    force collisions (2xxx presets, mostly)
                     0xB:
                      0xxx presets:
-                        00	default, on ground
-                        x1	forced to ground
-                        x2	room upper limit, rotated y 90 degrees.  top faces direction, front faces up
-                        x4	room upper limit, upside-down
-                        x8	room upper limit, right side up
+                        00    default, on ground
+                        x1    forced to ground
+                        x2    room upper limit, rotated y 90 degrees.  top faces direction, front faces up
+                        x4    room upper limit, upside-down
+                        x8    room upper limit, right side up
                     2xxx presets:
-                        x1	normal placement
-                        x2	rotated y 90 degrees.  top faces direction, front faces up. (use on obj 68-6B)
-                        x4	upside-down
-                        x8	in-air
-                        1x	scale object to fit completely within preset bounds
-                        2x	x set to preset bounds
-                        4x	y set to preset bounds
-                        8x	z set to preset bounds
+                        x1    normal placement
+                        x2    rotated y 90 degrees.  top faces direction, front faces up. (use on obj 68-6B)
+                        x4    upside-down
+                        x8    in-air
+                        1x    scale object to fit completely within preset bounds
+                        2x    x set to preset bounds
+                        4x    y set to preset bounds
+                        8x    z set to preset bounds
                     */
     u32 flags2;       /*0xC:
-                    8x	force maximum explosion radius/disable detecting
+                    8x    force maximum explosion radius/disable detecting
                          player
-                    4x	autoturrets: reset to default, not preset position
-                    2x	no AI interaction
-                    1x	1-way lock (back)
-                    x8	1-way lock (front)
+                    4x    autoturrets: reset to default, not preset position
+                    2x    no AI interaction
+                    1x    1-way lock (back)
+                    x8    1-way lock (front)
                     x4
-                    x2	Objects (rockets, mines, etc) do not collide with object
-                    x1	don't load 4 player
+                    x2    Objects (rockets, mines, etc) do not collide with object
+                    x1    don't load 4 player
                     0xD:
-                    8x	don't load 3 player
-                    4x	don't load 2 player
-                    2x	immune to explosions (only gunfire damages object)
-                    1x	bulletproof
-                    x8	invisible! can't shoot, but can hit with rockets, bugs, etc.  not counted as a hit
+                    8x    don't load 3 player
+                    4x    don't load 2 player
+                    2x    immune to explosions (only gunfire damages object)
+                    1x    bulletproof
+                    x8    invisible! can't shoot, but can hit with rockets, bugs, etc.  not counted as a hit
                     x4 
-                    x2	(unknown) streets buildings
+                    x2    (unknown) streets buildings
                     x1
                     0xE:
-                    8x	Can fire through object
-                    4x	immune to gunfire (Only explosives damage object)
-                    2x	Remove from game when destroyed (anything on top doesn't fall off!  Just Poof! gone)
+                    8x    Can fire through object
+                    4x    immune to gunfire (Only explosives damage object)
+                    2x    Remove from game when destroyed (anything on top doesn't fall off!  Just Poof! gone)
                     1x
-                    x8	only activate at close range
+                    x8    only activate at close range
                     x4
-                    x2	explode on contact with tank?
-                    x1	(unknown) jungle bush
+                    x2    explode on contact with tank?
+                    x1    (unknown) jungle bush
                     0xF:
-                    8x	don't load on 007
-                    4x	don't load on 00 agent
-                    2x	don't load on secret agent
-                    1x	don't load on agent
-                    x8	don't load multiplayer (difficulty = -1)
-                    x4	disable activation text
-                    x2	lightweight (previous: 2xxx drops to ground when destroyed)
-                    x1	used on stuff in egyptian, sevx
+                    8x    don't load on 007
+                    4x    don't load on 00 agent
+                    2x    don't load on secret agent
+                    1x    don't load on agent
+                    x8    don't load multiplayer (difficulty = -1)
+                    x4    disable activation text
+                    x2    lightweight (previous: 2xxx drops to ground when destroyed)
+                    x1    used on stuff in egyptian, sevx
                     */
     struct PropRecord *prop;     /*0x10*/
     struct Model *model; /*0x14*/
@@ -190,12 +244,12 @@ typedef struct ObjectRecord
     f32 runtime_y_pos;
     f32 runtime_z_pos;
     int runtime_bitflags; /*0x64* 
-                            10000000	
-                            00060000	owner (0-3); used to attribute kills to players
-                            00004000	activated
-                            00000200	only set with disabled or destroyed doors
-                            00000080	depositted (thrown)
-                            00000004	removes object when set 
+                            10000000    
+                            00060000    owner (0-3); used to attribute kills to players
+                            00004000    activated
+                            00000200    only set with disabled or destroyed doors
+                            00000080    depositted (thrown)
+                            00000004    removes object when set 
                             */
     int ptr_allocated_collisiondata_block;
     int field_6C;

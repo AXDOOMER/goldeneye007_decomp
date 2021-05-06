@@ -1,6 +1,48 @@
 #ifndef _STAGESETUP_H_
 #define _STAGESETUP_H_
 
+#define PAD3D_START 10000
+#define PADADV(PAD) (PAD + PAD3D_START)
+
+typedef u16 PAD;
+typedef u16 PAD3D;
+
+struct coord
+{
+    f32 x;
+    f32 y;
+    f32 z;
+};
+
+struct bbox
+{
+    float xmin;
+    float xmax;
+    float ymin;
+    float ymax;
+    float zmin;
+    float zmax;
+};
+
+struct pad
+{
+    struct coord pos;
+    struct coord up;
+    struct coord look;
+    char *plink;
+    int unk;
+};
+
+struct pad3d
+{
+    struct coord pos;
+    struct coord up;
+    struct coord look;
+    char *plink;
+    int unk;
+    struct bbox bbox;
+};
+
 struct s_pathTbl {
     s16 pathtbl;
     s16 field_0x2;
@@ -25,51 +67,17 @@ struct s_pathSet {
     u8 field_0x7;
 };
 
-struct preset0x {
-    float xcoord;
-    float ycoord;
-    float zcoord;
-    float vUpX;
-    float vUpY;
-    float vUpZ;
-    float vTargetX;
-    float vTargetY;
-    float vTargetZ;
-    u8 *field_0x24;
-    u32 field_0x28;
-};
-
-struct preset2x {
-    float field_0x0;
-    float field_0x4;
-    float field_0x8;
-    float field_0xc;
-    float field_0x10;
-    float field_0x14;
-    float field_0x18;
-    float field_0x1c;
-    float field_0x20;
-    float field_0x24;
-    float field_0x28;
-    float field_0x2c;
-    float field_0x30;
-    float field_0x34;
-    float field_0x38;
-    u8 *field_0x3c;
-    u32 field_0x40;
-};
-
 struct stagesetup {
-	struct s_pathTbl *pathtbl;
-	struct s_pathLink *pathlink;
-	s32 *intro;
-	u32 *props;
-	struct s_pathSet *paths;
-	u32 *ailists;
-	struct preset0x *presets0x;
-	struct preset0x *presets2x_0;
-	NULL;
-	NULL;
+    struct s_pathTbl *pathtbl;
+    struct s_pathLink *pathlink;
+    s32 *intro;
+    s32 *objlist;
+    struct s_pathSet *paths;
+    s32 *ailists;
+    struct pad *padlist;
+    struct pad3d *pad3dlist;
+    char *padnames;
+    char *pad3dnames;
 };
 
 #define _mkshort(a, b) ((a << 8) | (b & 0xff))
@@ -117,7 +125,7 @@ struct stagesetup {
 #define alarm(scale, state, objectID, presetID, flags1, flags2, ptrPOSData, ptrObjInstanceController, u18, u1c, u20, u24, u28, u2c, u30, u34, u38, u3c, u40, u44, u48, u4c, u50, u54, xPOS, yPOS, zPOS, bitflags, ptrCollisionblock, u6c, u70, health, maxhealth, u78, u7c) \
     _generic_object(scale, state, 0x5, objectID, presetID, flags1, flags2, ptrPOSData, ptrObjInstanceController, u18, u1c, u20, u24, u28, u2c, u30, u34, u38, u3c, u40, u44, u48, u4c, u50, u54, xPOS, yPOS, zPOS, bitflags, ptrCollisionblock, u6c, u70, health, maxhealth, u78, u7c),
 
-#define surveillencecam()
+#define surveillencecam() \
     _TODO(0x6)
 
 #define ammoclip(scale, state, objectID, presetID, flags1, flags2, ptrPOSData, ptrObjInstanceController, u18, u1c, u20, u24, u28, u2c, u30, u34, u38, u3c, u40, u44, u48, u4c, u50, u54, xPOS, yPOS, zPOS, bitflags, ptrCollisionblock, u6c, u70, health, maxhealth, u78, u7c, ammotype) \
@@ -216,10 +224,10 @@ struct stagesetup {
 #define failIfTrue(testval) \
     0x1B, testVal,
 
-#define	collectobject(objecttagID) \
+#define    collectobject(objecttagID) \
     0x1C, objecttagID,
 
-#define	depositobject(objecttagID) \
+#define    depositobject(objecttagID) \
     0x1D, objecttagID,
 
 #define photographobject(objecttagID) \
@@ -231,10 +239,10 @@ struct stagesetup {
 #define enterroom(presetinroom) \
     0x20, presetinroom, 0x0, 0x0,
 
-#define	depositobjectinroom(itemID,presetinroom) \
+#define    depositobjectinroom(itemID,presetinroom) \
     0x21, itemID, presetinroom, 0x0, 0x0,
 
-#define	copy_item()
+#define    copy_item() \
     0x22,
 
 #define watch_objective(menuOption, textID) \
@@ -246,7 +254,7 @@ struct stagesetup {
 #define renamefunction(numtargetobjectsaway, invValToAlter, watchMainTop, watchMainBottom, invSelName, onDefaultPickup, interactTextID, field_0x20, field_0x24) \
     0x25, numtargetobjectsaway, invValToAlter, watchMainTop, watchMainBottom, invSelName, onDefaultPickup, interactTextID, field_0x20, field_0x24,
 
-#define	lock_door(lockedptr, lockptr) \
+#define    lock_door(lockedptr, lockptr) \
     0x26, lockedptr, lockptr, 0x0,
 
 #define wheeledvehicle() \
