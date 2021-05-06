@@ -22,7 +22,7 @@ char ramrom_data_target[0x380];
 //CODE.bss:8008C5F0
 s32 record_slot_num;
 //CODE.bss:8008C5F4
-s32 *address_demo_loaded;
+s32 address_demo_loaded;
 //CODE.bss:8008C5F8
 s32 dword_CODE_bss_8008C5F8;
 
