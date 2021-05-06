@@ -126,26 +126,7 @@ s32 D_800483E4 = 0;
 
 
 // rodata
-//D:8005B6B0
-const char aLv_c_debug[] = "lv_c_debug";
-//D:8005B6BC
-const char aStanshow_[] = "-stanshow_";
-//D:8005B6C8
-const char aStanshow__5[] = "-stanshow_";
-//D:8005B6D4
-const char aStanshow__0[] = "-stanshow_";
-//D:8005B6E0
-const char aStanshow__1[] = "-stanshow_";
-//D:8005B6EC
-const char aStanshow__2[] = "-stanshow_";
-//D:8005B6F8
-const char aStanshow__3[] = "-stanshow_";
-#ifndef VERSION_JP
-//D:8005B704
-const char aOneMinuteLeft[] = "One minute left";
-#endif
-//D:8005B714
-const char aSetdetailDDDDDDDDD[] = "setdetail %d %d %d %d %d %d %d %d %d";
+
 
 
 
@@ -164,18 +145,29 @@ void sub_GAME_7F0BD8FC(s32 arg0) {
 
 
 
-
-
+extern u8* _jfontdlSegmentStart;
+extern u8* _jfontdlSegmentEnd;
+void romCopy (char * src, char * dest, int len);
 #ifdef NONMATCHING
 void lvInitDebugNoticeList(void)
 {
+    s32 temp_a2;
     debTryAdd(&lvl_c_debug_notice_list, "lv_c_debug");
+    temp_a2 = &_jfontdlSegmentEnd-&_jfontdlSegmentStart;
     lvl_c_debug_notice_list = 1;
-    ptr_jfont_DL = mempAllocBytesInBank(0xc0,'\x06');
-    romCopy(ptr_jfont_DL, _jfontdlSegmentStart, 0xc0);
+    ptr_jfont_DL = mempAllocBytesInBank(temp_a2,6);
+    romCopy(ptr_jfont_DL, &_jfontdlSegmentStart, temp_a2);
 }
 #else
 GLOBAL_ASM(
+.rdata 
+#const char aLv_c_debug[] = "lv_c_debug";
+glabel aLv_c_debug
+.word 0x6c765f63
+.word 0x5f646562
+.word 0x75670000
+
+
 .text
 glabel lvInitDebugNoticeList
 /* 0F2438 7F0BD908 27BDFFE0 */  addiu $sp, $sp, -0x20
@@ -216,34 +208,12 @@ glabel lvInitDebugNoticeList
 
 
 
-#ifdef NONMATCHING
 void playrandommusictrack1(void)
 {
-    musictrack1_playing = randomGetNext() % 0x3d + M_INTRO;
+    musictrack1_playing = randomGetNext() % 0x3dU + M_INTRO;
     musicTrack1Play(musictrack1_playing);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BD984
-/* 0F24B4 7F0BD984 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F24B8 7F0BD988 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F24BC 7F0BD98C 0C002914 */  jal   randomGetNext
-/* 0F24C0 7F0BD990 00000000 */   nop   
-/* 0F24C4 7F0BD994 2401003D */  li    $at, 61
-/* 0F24C8 7F0BD998 0041001B */  divu  $zero, $v0, $at
-/* 0F24CC 7F0BD99C 00007010 */  mfhi  $t6
-/* 0F24D0 7F0BD9A0 3C038005 */  lui   $v1, %hi(musictrack1_playing)
-/* 0F24D4 7F0BD9A4 2463836C */  addiu $v1, %lo(musictrack1_playing) # addiu $v1, $v1, -0x7c94
-/* 0F24D8 7F0BD9A8 25C40002 */  addiu $a0, $t6, 2
-/* 0F24DC 7F0BD9AC 0C001B9F */  jal   musicTrack1Play
-/* 0F24E0 7F0BD9B0 AC640000 */   sw    $a0, ($v1)
-/* 0F24E4 7F0BD9B4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F24E8 7F0BD9B8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F24EC 7F0BD9BC 03E00008 */  jr    $ra
-/* 0F24F0 7F0BD9C0 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -1579,6 +1549,37 @@ void sub_GAME_7F0BE30C(void) {
 #else
 #ifdef VERSION_US
 GLOBAL_ASM(
+    .rdata
+    #const char aStanshow_[] = "-stanshow_";
+    glabel aStanshow_
+    .word 0x2d737461
+    .word 0x6e73686f
+    .word 0x775f0000
+    #const char aStanshow__5[] = "-stanshow_";
+        glabel aStanshow__5
+    .word 0x2d737461
+    .word 0x6e73686f
+    .word 0x775f0000
+    #const char aStanshow__0[] = "-stanshow_";
+        glabel aStanshow__0
+    .word 0x2d737461
+    .word 0x6e73686f
+    .word 0x775f0000
+    #const char aStanshow__1[] = "-stanshow_";
+        glabel aStanshow__1
+    .word 0x2d737461
+    .word 0x6e73686f
+    .word 0x775f0000
+    #const char aStanshow__2[] = "-stanshow_";
+        glabel aStanshow__2
+    .word 0x2d737461
+    .word 0x6e73686f
+    .word 0x775f0000
+    #const char aStanshow__3[] = "-stanshow_";
+        glabel aStanshow__3
+    .word 0x2d737461
+    .word 0x6e73686f
+    .word 0x775f0000
 .text
 glabel sub_GAME_7F0BE30C
 /* 0F2E3C 7F0BE30C 27BDFFA0 */  addiu $sp, $sp, -0x60
@@ -1972,6 +1973,37 @@ glabel sub_GAME_7F0BE30C
 
 #ifdef VERSION_JP
 GLOBAL_ASM(
+        .rdata
+    #const char aStanshow_[] = "-stanshow_";
+    glabel aStanshow_
+    .word 0x2d737461
+    .word 0x6e73686f
+    .word 0x775f0000
+    #const char aStanshow__5[] = "-stanshow_";
+        glabel aStanshow__5
+    .word 0x2d737461
+    .word 0x6e73686f
+    .word 0x775f0000
+    #const char aStanshow__0[] = "-stanshow_";
+        glabel aStanshow__0
+    .word 0x2d737461
+    .word 0x6e73686f
+    .word 0x775f0000
+    #const char aStanshow__1[] = "-stanshow_";
+        glabel aStanshow__1
+    .word 0x2d737461
+    .word 0x6e73686f
+    .word 0x775f0000
+    #const char aStanshow__2[] = "-stanshow_";
+        glabel aStanshow__2
+    .word 0x2d737461
+    .word 0x6e73686f
+    .word 0x775f0000
+    #const char aStanshow__3[] = "-stanshow_";
+        glabel aStanshow__3
+    .word 0x2d737461
+    .word 0x6e73686f
+    .word 0x775f0000
 .text
 glabel sub_GAME_7F0BE30C
 /* 0F3A3C 7F0BEECC 27BDFFA0 */  addiu $sp, $sp, -0x60
@@ -3403,6 +3435,25 @@ void manage_mp_game(void) {
 #else
 #ifdef VERSION_US
 GLOBAL_ASM(
+.rdata
+#const char aOneMinuteLeft[] = "One minute left";
+glabel aOneMinuteLeft
+.word 0x4f6e6520
+.word 0x6d696e75
+.word 0x7465206c
+.word 0x65667400
+#const char aSetdetailDDDDDDDDD[] = "setdetail %d %d %d %d %d %d %d %d %d";
+glabel aSetdetailDDDDDDDDD
+.word 0x73657464
+.word 0x65746169
+.word 0x6c202564
+.word 0x20256420
+.word 0x25642025
+.word 0x64202564
+.word 0x20256420
+.word 0x25642025
+.word 0x64202564
+.word 0x00000000
 .text
 glabel manage_mp_game
 /* 0F36B8 7F0BEB88 27BDFE68 */  addiu $sp, $sp, -0x198
@@ -4275,7 +4326,19 @@ glabel manage_mp_game
 #endif
 
 #ifdef VERSION_JP
-GLOBAL_ASM(
+.rdata
+#const char aSetdetailDDDDDDDDD[] = "setdetail %d %d %d %d %d %d %d %d %d";
+glabel aSetdetailDDDDDDDDD
+.word 0x73657464
+.word 0x65746169
+.word 0x6c202564
+.word 0x20256420
+.word 0x25642025
+.word 0x64202564
+.word 0x20256420
+.word 0x25642025
+.word 0x64202564
+.word 0x00000000
 .text
 glabel manage_mp_game
 /* 0F431C 7F0BF7AC 27BDFE68 */  addiu $sp, $sp, -0x198

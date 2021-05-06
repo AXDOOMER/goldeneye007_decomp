@@ -634,41 +634,39 @@ void obBlankResourcesInBank5(void) {
 
 
 #ifdef NONMATCHING
-
+//needs work
 int get_index_num_of_named_resource(u8 *resname)
 {
-
     int i;
-    int buffer [3];
-    
+    int size;
+    //if file exists, return index
     for (i = 1; i < file_entry_max; i++)
     {
-        if ((file_resource_table[i].filename) && \
-        (strcmp(resname,file_resource_table[i].filename) == 0));
+        if ((file_resource_table[i].filename) && 
+            (strcmp(resname,file_resource_table[i].filename) == 0));
         {
             return i;
         }
     }
-
     i = file_entry_max;
-    if (file_entry_max < OBJ_INDEX_MAX) {
-        file_entry_max += 1;
-
-        if (check_file_found_on_indy(resname,buffer) != 0) {
-            file_resource_table[i].index = i;
-            file_resource_table[i].filename = resname;
-            resource_lookup_data_array[i].unk_11 = '\0';
-            file_resource_table[i].hw_address = 0;
-            resource_lookup_data_array[i].rom_size = 0;
-            resource_lookup_data_array[i].pc_remaining = 0;
-            resource_lookup_data_array[i].rom_remaining = 0;
-            resource_lookup_data_array[i].loaded_bank = '\0';
-            resource_lookup_data_array[i].pc_size = (buffer[0] + 0xfU | 0xf) ^ 0xf;
-        }
+    //too many files exist
+    if (file_entry_max >= OBJ_INDEX_MAX) {
+        return 0;
     }
-    else {
-        i = 0;
+    //we have room, see if on indy and make room
+    file_entry_max += 1;
+    if (check_file_found_on_indy(resname,size) == 0) {
+        return 0;
     }
+    file_resource_table[i].index = i;
+    file_resource_table[i].filename = resname;
+    resource_lookup_data_array[i].unk_11 = '\0';
+    file_resource_table[i].hw_address = 0;
+    resource_lookup_data_array[i].rom_size = 0;
+    resource_lookup_data_array[i].pc_remaining = 0;
+    resource_lookup_data_array[i].rom_remaining = 0;
+    resource_lookup_data_array[i].loaded_bank = '\0';
+    resource_lookup_data_array[i].pc_size = (size + 0xf | 0xf) ^ 0xf;
     return i;
 }
 #else
@@ -794,26 +792,17 @@ void removed_loop_filetableentries(void)
 
 
 #ifdef NONMATCHING
-void *sub_GAME_7F0BD410(void) {
-    u32 temp_v0;
-    u32 phi_v0;
-
-    // Node 0
-    if (file_entry_max >= 2)
+void sub_GAME_7F0BD410(void)
+{
+  struct resource_lookup_data_entry *entry= &resource_lookup_data_array[1];
+  
+    if (file_entry_max > 1) 
     {
-        // Node 1
-        phi_v0 = &resource_lookup_data_array+0x14;
-loop_2:
-        // Node 2
-        temp_v0 = (phi_v0 + 0x14);
-        phi_v0 = temp_v0;
-        if (temp_v0 < (u32) ((file_entry_max * 0x14) + &resource_lookup_data_array))
+        for (;&resource_lookup_data_array[file_entry_max] > entry;entry++)
         {
-            goto loop_2;
+            ;
         }
     }
-    // Node 3
-    return &resource_lookup_data_array+0x14;
 }
 
 #else
