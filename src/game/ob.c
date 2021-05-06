@@ -53,11 +53,6 @@ void load_resource(u8 *ptrdata, u32 bytes, struct fileentry *srcfile, struct res
     }
 }
 
-
-
-
-#ifdef NONMATCHING
-//only issue left is a1/a2 load order for check_file_found_on_indy
 void resource_load_from_indy(u8 *ptrdata, u32 bytes, struct fileentry *srcfile, struct resource_lookup_data_entry *lookupdata)
 {
     u8 *pPayload;
@@ -66,13 +61,12 @@ void resource_load_from_indy(u8 *ptrdata, u32 bytes, struct fileentry *srcfile, 
     static const u8 rz_header_1[] = {0x11, 0x72, 0x00, 0x00};
     static const u8 rz_header_2[] = {0x11, 0x72, 0x00, 0x00};
 
-    if (bytes == 0)
+    if (!bytes)
     {
         load_resource_on_indy(srcfile->filename, ptrdata);
         return;
     }
-    //a1 and a2 are loaded flipped
-    check_file_found_on_indy(srcfile->filename, lookupdata->pc_size);
+    check_file_found_on_indy(srcfile->filename, &lookupdata->pc_size);
     pPayload = (ptrdata + bytes) - ((lookupdata->pc_size + 7) & -8);
     if ((pPayload - ptrdata) < (u32)8)
     {
@@ -93,86 +87,6 @@ void resource_load_from_indy(u8 *ptrdata, u32 bytes, struct fileentry *srcfile, 
         lookupdata->pc_remaining = size;
     }
 }
-#else
-GLOBAL_ASM(
-.rdata
-/*8005b66c*/
-glabel rz_header_1
-.word 0x11720000
-/*8005b670*/
-glabel rz_header_2
-.word 0x11720000
-.text
-glabel resource_load_from_indy
-/* 0F1664 7F0BCB34 27BDDED8 */  addiu $sp, $sp, -0x2128
-/* 0F1668 7F0BCB38 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0F166C 7F0BCB3C AFB00014 */  sw    $s0, 0x14($sp)
-/* 0F1670 7F0BCB40 00808025 */  move  $s0, $a0
-/* 0F1674 7F0BCB44 00E08825 */  move  $s1, $a3
-/* 0F1678 7F0BCB48 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0F167C 7F0BCB4C 14A00006 */  bnez  $a1, .L7F0BCB68
-/* 0F1680 7F0BCB50 AFA5212C */   sw    $a1, 0x212c($sp)
-/* 0F1684 7F0BCB54 8CC40004 */  lw    $a0, 4($a2)
-/* 0F1688 7F0BCB58 0FC33FE7 */  jal   load_resource_on_indy
-/* 0F168C 7F0BCB5C 02002825 */   move  $a1, $s0
-/* 0F1690 7F0BCB60 1000002D */  b     .L7F0BCC18
-/* 0F1694 7F0BCB64 8FBF001C */   lw    $ra, 0x1c($sp)
-.L7F0BCB68:
-/* 0F1698 7F0BCB68 8CC40004 */  lw    $a0, 4($a2)
-/* 0F169C 7F0BCB6C AFA62130 */  sw    $a2, 0x2130($sp)
-/* 0F16A0 7F0BCB70 0FC34026 */  jal   check_file_found_on_indy
-/* 0F16A4 7F0BCB74 26250008 */   addiu $a1, $s1, 8
-/* 0F16A8 7F0BCB78 8E390008 */  lw    $t9, 8($s1)
-/* 0F16AC 7F0BCB7C 8FAF212C */  lw    $t7, 0x212c($sp)
-/* 0F16B0 7F0BCB80 2401FFF8 */  li    $at, -8
-/* 0F16B4 7F0BCB84 27280007 */  addiu $t0, $t9, 7
-/* 0F16B8 7F0BCB88 01014824 */  and   $t1, $t0, $at
-/* 0F16BC 7F0BCB8C 020FC021 */  addu  $t8, $s0, $t7
-/* 0F16C0 7F0BCB90 03093823 */  subu  $a3, $t8, $t1
-/* 0F16C4 7F0BCB94 00F05023 */  subu  $t2, $a3, $s0
-/* 0F16C8 7F0BCB98 2D410008 */  sltiu $at, $t2, 8
-/* 0F16CC 7F0BCB9C 10200003 */  beqz  $at, .L7F0BCBAC
-/* 0F16D0 7F0BCBA0 8FA62130 */   lw    $a2, 0x2130($sp)
-/* 0F16D4 7F0BCBA4 1000001B */  b     .L7F0BCC14
-/* 0F16D8 7F0BCBA8 AE200004 */   sw    $zero, 4($s1)
-.L7F0BCBAC:
-/* 0F16DC 7F0BCBAC 8CC40004 */  lw    $a0, 4($a2)
-/* 0F16E0 7F0BCBB0 AFA72124 */  sw    $a3, 0x2124($sp)
-/* 0F16E4 7F0BCBB4 0FC33FE7 */  jal   load_resource_on_indy
-/* 0F16E8 7F0BCBB8 00E02825 */   move  $a1, $a3
-/* 0F16EC 7F0BCBBC 8FA72124 */  lw    $a3, 0x2124($sp)
-/* 0F16F0 7F0BCBC0 3C0C8006 */  lui   $t4, %hi(rz_header_1) 
-/* 0F16F4 7F0BCBC4 918CB66C */  lbu   $t4, %lo(rz_header_1)($t4)
-/* 0F16F8 7F0BCBC8 90EB0000 */  lbu   $t3, ($a3)
-/* 0F16FC 7F0BCBCC 3C0E8006 */  lui   $t6, %hi(rz_header_2 + 0x1) 
-/* 0F1700 7F0BCBD0 02002825 */  move  $a1, $s0
-/* 0F1704 7F0BCBD4 156C000B */  bne   $t3, $t4, .L7F0BCC04
-/* 0F1708 7F0BCBD8 00E02025 */   move  $a0, $a3
-/* 0F170C 7F0BCBDC 90ED0001 */  lbu   $t5, 1($a3)
-/* 0F1710 7F0BCBE0 91CEB671 */  lbu   $t6, %lo(rz_header_2 + 0x1)($t6)
-/* 0F1714 7F0BCBE4 27A60024 */  addiu $a2, $sp, 0x24
-/* 0F1718 7F0BCBE8 15AE0006 */  bne   $t5, $t6, .L7F0BCC04
-/* 0F171C 7F0BCBEC 00000000 */   nop   
-/* 0F1720 7F0BCBF0 00E02025 */  move  $a0, $a3
-/* 0F1724 7F0BCBF4 0FC339FC */  jal   decompressdata
-/* 0F1728 7F0BCBF8 02002825 */   move  $a1, $s0
-/* 0F172C 7F0BCBFC 10000004 */  b     .L7F0BCC10
-/* 0F1730 7F0BCC00 00401825 */   move  $v1, $v0
-.L7F0BCC04:
-/* 0F1734 7F0BCC04 0C003E5C */  jal   bcopy
-/* 0F1738 7F0BCC08 8E260008 */   lw    $a2, 8($s1)
-/* 0F173C 7F0BCC0C 8E230008 */  lw    $v1, 8($s1)
-.L7F0BCC10:
-/* 0F1740 7F0BCC10 AE230004 */  sw    $v1, 4($s1)
-.L7F0BCC14:
-/* 0F1744 7F0BCC14 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F0BCC18:
-/* 0F1748 7F0BCC18 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0F174C 7F0BCC1C 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0F1750 7F0BCC20 03E00008 */  jr    $ra
-/* 0F1754 7F0BCC24 27BD2128 */   addiu $sp, $sp, 0x2128
-)
-#endif
 
 
 
