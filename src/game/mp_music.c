@@ -39,7 +39,9 @@ s32 mission_state = 0;
 
 
 
-
+void sub_GAME_7F0C0BF0(void) {
+    get_mTrack2Vol();
+}
 
 void sub_GAME_7F0C0C10(void) {
   call_sndGetSfxSlotFirstNaturalVolume();
