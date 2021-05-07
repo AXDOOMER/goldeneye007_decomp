@@ -1053,45 +1053,15 @@ glabel select_ramrom_to_play
 
 
 
-#ifdef NONMATCHING
-s32 check_ramrom_flags(void)
+u32 check_ramrom_flags(void)
 {
-    if ((get_is_ramrom_flag() == 0) && (get_recording_ramrom_flag() == 0))
+    if ((get_is_ramrom_flag() != 0) || (get_recording_ramrom_flag() != 0))
     {
-        return 0;
+        return ptr_active_demofile->slotnum;
+        
     }
-    else
-    {
-        return *(undefined4 *)(ptr_active_demofile + 0x88);
-    }
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_ramrom_flags
-/* 0F5550 7F0C0A20 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F5554 7F0C0A24 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F5558 7F0C0A28 0FC2FF23 */  jal   get_is_ramrom_flag
-/* 0F555C 7F0C0A2C 00000000 */   nop   
-/* 0F5560 7F0C0A30 14400004 */  bnez  $v0, .L7F0C0A44
-/* 0F5564 7F0C0A34 00000000 */   nop   
-/* 0F5568 7F0C0A38 0FC2FF26 */  jal   get_recording_ramrom_flag
-/* 0F556C 7F0C0A3C 00000000 */   nop   
-/* 0F5570 7F0C0A40 10400004 */  beqz  $v0, .L7F0C0A54
-.L7F0C0A44:
-/* 0F5574 7F0C0A44 3C0E8005 */   lui   $t6, %hi(ptr_active_demofile) 
-/* 0F5578 7F0C0A48 8DCE8468 */  lw    $t6, %lo(ptr_active_demofile)($t6)
-/* 0F557C 7F0C0A4C 10000002 */  b     .L7F0C0A58
-/* 0F5580 7F0C0A50 8DC20088 */   lw    $v0, 0x88($t6)
-.L7F0C0A54:
-/* 0F5584 7F0C0A54 00001025 */  move  $v0, $zero
-.L7F0C0A58:
-/* 0F5588 7F0C0A58 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F558C 7F0C0A5C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F5590 7F0C0A60 03E00008 */  jr    $ra
-/* 0F5594 7F0C0A64 00000000 */   nop   
-)
-#endif
 
 
 
