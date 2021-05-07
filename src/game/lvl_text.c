@@ -786,47 +786,10 @@ void load_mission_text_bank(u32 id)
 }
 
 
-
-
-
-#ifdef NONMATCHING
-void load_briefing_text_bank(int lnameID,undefined *target,int size)
+void load_briefing_text_bank(int lnameID,u8 *target,int size)
 {
-    *(u8 **)(&ptr_text + lnameID) = _load_resource_named_to_buffer((byte *)(&(&LnameX_lookuptable)[lnameID].en_file)[j_text_trigger],1,target, size);
+   ptr_text[lnameID] = _load_resource_named_to_buffer(LnameX_lookuptable[lnameID][j_text_trigger],1,target,size);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel load_briefing_text_bank
-/* 0F6894 7F0C1D64 3C188005 */  lui   $t8, %hi(j_text_trigger) 
-/* 0F6898 7F0C1D68 8F1884D0 */  lw    $t8, %lo(j_text_trigger)($t8)
-/* 0F689C 7F0C1D6C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F68A0 7F0C1D70 000478C0 */  sll   $t7, $a0, 3
-/* 0F68A4 7F0C1D74 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0F68A8 7F0C1D78 0018C880 */  sll   $t9, $t8, 2
-/* 0F68AC 7F0C1D7C 00C03825 */  move  $a3, $a2
-/* 0F68B0 7F0C1D80 01F94021 */  addu  $t0, $t7, $t9
-/* 0F68B4 7F0C1D84 3C048005 */  lui   $a0, %hi(LnameX_lookuptable)
-/* 0F68B8 7F0C1D88 00A03025 */  move  $a2, $a1
-/* 0F68BC 7F0C1D8C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F68C0 7F0C1D90 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 0F68C4 7F0C1D94 00882021 */  addu  $a0, $a0, $t0
-/* 0F68C8 7F0C1D98 8C8484D4 */  lw    $a0, %lo(LnameX_lookuptable)($a0)
-/* 0F68CC 7F0C1D9C 0FC2F350 */  jal   _load_resource_named_to_buffer
-/* 0F68D0 7F0C1DA0 24050001 */   li    $a1, 1
-/* 0F68D4 7F0C1DA4 8FA90018 */  lw    $t1, 0x18($sp)
-/* 0F68D8 7F0C1DA8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F68DC 7F0C1DAC 3C018009 */  lui   $at, %hi(ptr_text)
-/* 0F68E0 7F0C1DB0 00095080 */  sll   $t2, $t1, 2
-/* 0F68E4 7F0C1DB4 002A0821 */  addu  $at, $at, $t2
-/* 0F68E8 7F0C1DB8 AC22C640 */  sw    $v0, %lo(ptr_text)($at)
-/* 0F68EC 7F0C1DBC 03E00008 */  jr    $ra
-/* 0F68F0 7F0C1DC0 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
-
-
-
 
 
 void blank_text_bank(s32 textBank) {
