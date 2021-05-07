@@ -9,7 +9,7 @@ s32 ptr_text[45];
 //CODE.bss:8008C6F4
 s32 ptr_char_data_buf;
 //CODE.bss:8008C6F8
-s32 ptr_j_char_registry;
+s32 ptr_char_registry;
 
 
 #ifdef VERSION_JP
@@ -173,17 +173,17 @@ void init_LnameX(void)
     
     if (j_text_trigger != 0) {
         ptr_char_data_buf = mempAllocBytesInBank(0x2e80,'\x06');
-        ptr_j_char_registry = mempAllocBytesInBank(0x100,'\x06');
+        ptr_char_registry = mempAllocBytesInBank(0x100,'\x06');
         iVar3 = 0;
         do {
-            ptr_j_char_registry[iVar3] = ptr_j_char_registry[iVar3] & 0x3f;
-            *(ushort *)(ptr_j_char_registry + iVar3) = *(ushort *)(ptr_j_char_registry + iVar3) | 0x3fff;
-            (ptr_j_char_registry + iVar3)[2] = (ptr_j_char_registry + iVar3)[2] & 0x3f;
-            *(ushort *)(ptr_j_char_registry + iVar3 + 2) = *(ushort *)(ptr_j_char_registry + iVar3 + 2) | 0x3fff;
-            (ptr_j_char_registry + iVar3)[4] = (ptr_j_char_registry + iVar3)[4] & 0x3f;
-            *(ushort *)(ptr_j_char_registry + iVar3 + 4) = *(ushort *)(ptr_j_char_registry + iVar3 + 4) | 0x3fff;
-            (ptr_j_char_registry + iVar3)[6] = (ptr_j_char_registry + iVar3)[6] & 0x3f;
-            puVar1 = ptr_j_char_registry + iVar3;
+            ptr_char_registry[iVar3] = ptr_char_registry[iVar3] & 0x3f;
+            *(ushort *)(ptr_char_registry + iVar3) = *(ushort *)(ptr_char_registry + iVar3) | 0x3fff;
+            (ptr_char_registry + iVar3)[2] = (ptr_char_registry + iVar3)[2] & 0x3f;
+            *(ushort *)(ptr_char_registry + iVar3 + 2) = *(ushort *)(ptr_char_registry + iVar3 + 2) | 0x3fff;
+            (ptr_char_registry + iVar3)[4] = (ptr_char_registry + iVar3)[4] & 0x3f;
+            *(ushort *)(ptr_char_registry + iVar3 + 4) = *(ushort *)(ptr_char_registry + iVar3 + 4) | 0x3fff;
+            (ptr_char_registry + iVar3)[6] = (ptr_char_registry + iVar3)[6] & 0x3f;
+            puVar1 = ptr_char_registry + iVar3;
             iVar3 += 8;
             *(ushort *)(puVar1 + 6) = *(ushort *)(puVar1 + 6) | 0x3fff;
         } while (iVar3 != 0xf8);
@@ -229,8 +229,8 @@ glabel init_LnameX
 /* 0F6254 7F0C1724 24040100 */  li    $a0, 256
 /* 0F6258 7F0C1728 0C0025C8 */  jal   mempAllocBytesInBank
 /* 0F625C 7F0C172C 24050006 */   li    $a1, 6
-/* 0F6260 7F0C1730 3C048009 */  lui   $a0, %hi(ptr_j_char_registry)
-/* 0F6264 7F0C1734 2484C6F8 */  addiu $a0, %lo(ptr_j_char_registry) # addiu $a0, $a0, -0x3908
+/* 0F6260 7F0C1730 3C048009 */  lui   $a0, %hi(ptr_char_registry)
+/* 0F6264 7F0C1734 2484C6F8 */  addiu $a0, %lo(ptr_char_registry) # addiu $a0, $a0, -0x3908
 /* 0F6268 7F0C1738 AC820000 */  sw    $v0, ($a0)
 /* 0F626C 7F0C173C 00001825 */  move  $v1, $zero
 /* 0F6270 7F0C1740 240500F8 */  li    $a1, 248
@@ -381,13 +381,13 @@ void something_with_LnameJ(void)
     iVar3 = 0;
     if (j_text_trigger != 0) {
         do {
-            puVar2 = (ushort *)(ptr_j_char_registry + iVar3);
+            puVar2 = (ushort *)(ptr_char_registry + iVar3);
             if (*puVar2 >> 0xe == 0) {
                 uVar1 = puVar2[1];
             }
             else {
                 *(byte *)puVar2 = ((byte)(*puVar2 >> 0xe) - 1) * '@' | *(byte *)puVar2 & 0x3f;
-                puVar2 = (ushort *)(ptr_j_char_registry + iVar3);
+                puVar2 = (ushort *)(ptr_char_registry + iVar3);
                 uVar1 = puVar2[1];
             }
             if (uVar1 >> 0xe == 0) {
@@ -396,7 +396,7 @@ void something_with_LnameJ(void)
             else {
                 *(byte *)(puVar2 + 1) =
                      ((byte)(uVar1 >> 0xe) - 1) * '@' | *(byte *)(puVar2 + 1) & 0x3f;
-                puVar2 = (ushort *)(ptr_j_char_registry + iVar3);
+                puVar2 = (ushort *)(ptr_char_registry + iVar3);
                 uVar1 = puVar2[2];
             }
             if (uVar1 >> 0xe == 0) {
@@ -405,7 +405,7 @@ void something_with_LnameJ(void)
             else {
                 *(byte *)(puVar2 + 2) =
                      ((byte)(uVar1 >> 0xe) - 1) * '@' | *(byte *)(puVar2 + 2) & 0x3f;
-                puVar2 = (ushort *)(ptr_j_char_registry + iVar3);
+                puVar2 = (ushort *)(ptr_char_registry + iVar3);
                 uVar1 = puVar2[3];
             }
             iVar3 += 8;
@@ -426,8 +426,8 @@ glabel something_with_LnameJ
 /* 0F6478 7F0C1948 00001825 */  move  $v1, $zero
 /* 0F647C 7F0C194C 240600F8 */  li    $a2, 248
 /* 0F6480 7F0C1950 11C00035 */  beqz  $t6, .L7F0C1A28
-/* 0F6484 7F0C1954 3C058009 */   lui   $a1, %hi(ptr_j_char_registry)
-/* 0F6488 7F0C1958 24A5C6F8 */  addiu $a1, %lo(ptr_j_char_registry) # addiu $a1, $a1, -0x3908
+/* 0F6484 7F0C1954 3C058009 */   lui   $a1, %hi(ptr_char_registry)
+/* 0F6488 7F0C1958 24A5C6F8 */  addiu $a1, %lo(ptr_char_registry) # addiu $a1, $a1, -0x3908
 /* 0F648C 7F0C195C 8CAF0000 */  lw    $t7, ($a1)
 .L7F0C1960:
 /* 0F6490 7F0C1960 01E31021 */  addu  $v0, $t7, $v1
@@ -514,7 +514,7 @@ int something_with_LnameX(uint param_1)
     iVar7 = 0;
     iVar4 = 0;
     iVar9 = -1;
-    puVar5 = (ushort *)ptr_j_char_registry;
+    puVar5 = (ushort *)ptr_char_registry;
     do {
         indexfrom = (int)param_1 >> 1;
         if ((!bVar1) && ((longlong)indexfrom == ((ulonglong)*puVar5 & 0x3fff))) break;
@@ -538,7 +538,7 @@ int something_with_LnameX(uint param_1)
     if (iVar4 < 0x7c) {
         if (bVar1) {
             *(byte *)puVar5 = *(byte *)puVar5 & 0x3f | 0x80;
-            (ptr_j_char_registry + iVar7)[2] = (ptr_j_char_registry + iVar7)[2] & 0x3f | 0x80;
+            (ptr_char_registry + iVar7)[2] = (ptr_char_registry + iVar7)[2] & 0x3f | 0x80;
             puVar2 = ptr_char_data_buf + iVar4 * 0x60;
         }
         else {
@@ -550,13 +550,13 @@ int something_with_LnameX(uint param_1)
         if ((bVar1) || (indexto < 0)) {
             puVar2 = ptr_char_data_buf;
             if ((bVar1) && (iVar4 = iVar9 * 2, -1 < iVar9)) {
-                ptr_j_char_registry[iVar4] = ptr_j_char_registry[iVar4] & 0x3f | 0x80;
-                (ptr_j_char_registry + iVar4)[2] = (ptr_j_char_registry + iVar4)[2] & 0x3f | 0x80;
+                ptr_char_registry[iVar4] = ptr_char_registry[iVar4] & 0x3f | 0x80;
+                (ptr_char_registry + iVar4)[2] = (ptr_char_registry + iVar4)[2] & 0x3f | 0x80;
                 uVar3 = (ushort)indexfrom & 0x3fff;
-                *(ushort *)(ptr_j_char_registry + iVar4) =
-                     uVar3 | *(ushort *)(ptr_j_char_registry + iVar4) & 0xc000;
-                *(ushort *)(ptr_j_char_registry + iVar4 + 2) =
-                     uVar3 | *(ushort *)(ptr_j_char_registry + iVar4 + 2) & 0xc000;
+                *(ushort *)(ptr_char_registry + iVar4) =
+                     uVar3 | *(ushort *)(ptr_char_registry + iVar4) & 0xc000;
+                *(ushort *)(ptr_char_registry + iVar4 + 2) =
+                     uVar3 | *(ushort *)(ptr_char_registry + iVar4 + 2) & 0xc000;
                 romCopy((char *)(ptr_char_data_buf + iVar9 * 0x60),
                         (char *)(_efontcharSegmentStart + ((int)(param_1 & 0x1fff) >> 1) * 0x20),
                         0x80);
@@ -564,9 +564,9 @@ int something_with_LnameX(uint param_1)
             }
         }
         else {
-            ptr_j_char_registry[indexto * 2] = ptr_j_char_registry[indexto * 2] & 0x3f | 0x80;
-            *(ushort *)(ptr_j_char_registry + indexto * 2) =
-                 (ushort)indexfrom & 0x3fff | *(ushort *)(ptr_j_char_registry + indexto * 2) & 0xc000;
+            ptr_char_registry[indexto * 2] = ptr_char_registry[indexto * 2] & 0x3f | 0x80;
+            *(ushort *)(ptr_char_registry + indexto * 2) =
+                 (ushort)indexfrom & 0x3fff | *(ushort *)(ptr_char_registry + indexto * 2) & 0xc000;
             romCopy((char *)(ptr_char_data_buf + indexto * 0x60),
                     (char *)(_jfontcharSegmentStart + indexfrom * 0x18),0x60);
             puVar2 = ptr_char_data_buf + indexto * 0x60;
@@ -589,8 +589,8 @@ glabel something_with_LnameX
 /* 0F6580 7F0C1A50 00004025 */   move  $t0, $zero
 /* 0F6584 7F0C1A54 24080001 */  li    $t0, 1
 .L7F0C1A58:
-/* 0F6588 7F0C1A58 3C0C8009 */  lui   $t4, %hi(ptr_j_char_registry) 
-/* 0F658C 7F0C1A5C 8D8CC6F8 */  lw    $t4, %lo(ptr_j_char_registry)($t4)
+/* 0F6588 7F0C1A58 3C0C8009 */  lui   $t4, %hi(ptr_char_registry) 
+/* 0F658C 7F0C1A5C 8D8CC6F8 */  lw    $t4, %lo(ptr_char_registry)($t4)
 /* 0F6590 7F0C1A60 00002825 */  move  $a1, $zero
 /* 0F6594 7F0C1A64 00003825 */  move  $a3, $zero
 /* 0F6598 7F0C1A68 2409007C */  li    $t1, 124
@@ -658,8 +658,8 @@ glabel something_with_LnameX
 /* 0F666C 7F0C1B3C 8FBF001C */   lw    $ra, 0x1c($sp)
 .L7F0C1B40:
 /* 0F6670 7F0C1B40 90990000 */  lbu   $t9, ($a0)
-/* 0F6674 7F0C1B44 3C098009 */  lui   $t1, %hi(ptr_j_char_registry) 
-/* 0F6678 7F0C1B48 2529C6F8 */  addiu $t1, %lo(ptr_j_char_registry) # addiu $t1, $t1, -0x3908
+/* 0F6674 7F0C1B44 3C098009 */  lui   $t1, %hi(ptr_char_registry) 
+/* 0F6678 7F0C1B48 2529C6F8 */  addiu $t1, %lo(ptr_char_registry) # addiu $t1, $t1, -0x3908
 /* 0F667C 7F0C1B4C 332EFF3F */  andi  $t6, $t9, 0xff3f
 /* 0F6680 7F0C1B50 35D80080 */  ori   $t8, $t6, 0x80
 /* 0F6684 7F0C1B54 A0980000 */  sb    $t8, ($a0)
@@ -685,8 +685,8 @@ glabel something_with_LnameX
 /* 0F66D0 7F0C1BA0 000A3840 */  sll   $a3, $t2, 1
 /* 0F66D4 7F0C1BA4 01871821 */  addu  $v1, $t4, $a3
 /* 0F66D8 7F0C1BA8 906E0000 */  lbu   $t6, ($v1)
-/* 0F66DC 7F0C1BAC 3C098009 */  lui   $t1, %hi(ptr_j_char_registry) 
-/* 0F66E0 7F0C1BB0 2529C6F8 */  addiu $t1, %lo(ptr_j_char_registry) # addiu $t1, $t1, -0x3908
+/* 0F66DC 7F0C1BAC 3C098009 */  lui   $t1, %hi(ptr_char_registry) 
+/* 0F66E0 7F0C1BB0 2529C6F8 */  addiu $t1, %lo(ptr_char_registry) # addiu $t1, $t1, -0x3908
 /* 0F66E4 7F0C1BB4 31D8FF3F */  andi  $t8, $t6, 0xff3f
 /* 0F66E8 7F0C1BB8 370F0080 */  ori   $t7, $t8, 0x80
 /* 0F66EC 7F0C1BBC A06F0000 */  sb    $t7, ($v1)
@@ -722,8 +722,8 @@ glabel something_with_LnameX
 /* 0F6760 7F0C1C30 000B1840 */   sll   $v1, $t3, 1
 /* 0F6764 7F0C1C34 01831021 */  addu  $v0, $t4, $v1
 /* 0F6768 7F0C1C38 904F0000 */  lbu   $t7, ($v0)
-/* 0F676C 7F0C1C3C 3C098009 */  lui   $t1, %hi(ptr_j_char_registry) 
-/* 0F6770 7F0C1C40 2529C6F8 */  addiu $t1, %lo(ptr_j_char_registry) # addiu $t1, $t1, -0x3908
+/* 0F676C 7F0C1C3C 3C098009 */  lui   $t1, %hi(ptr_char_registry) 
+/* 0F6770 7F0C1C40 2529C6F8 */  addiu $t1, %lo(ptr_char_registry) # addiu $t1, $t1, -0x3908
 /* 0F6774 7F0C1C44 31F8FF3F */  andi  $t8, $t7, 0xff3f
 /* 0F6778 7F0C1C48 37190080 */  ori   $t9, $t8, 0x80
 /* 0F677C 7F0C1C4C A0590000 */  sb    $t9, ($v0)
