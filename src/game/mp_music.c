@@ -7,6 +7,7 @@
 s32 dword_CODE_bss_8008C600;
 //CODE.bss:8008C604
 s32 dword_CODE_bss_8008C604;
+
 //CODE.bss:8008C608
 s32 music_slot_active_0;
 //CODE.bss:8008C60C
@@ -15,6 +16,7 @@ s32 music_slot_active_1;
 s32 music_slot_active_2;
 //CODE.bss:8008C614
 s32 music_slot_active_3;
+
 //CODE.bss:8008C618
 s32 music_slot_minutes_0;
 //CODE.bss:8008C61C
@@ -23,6 +25,7 @@ s32 music_slot_minutes_1;
 s32 music_slot_minutes_2;
 //CODE.bss:8008C624
 s32 music_slot_minutes_3;
+
 //CODE.bss:8008C628
 s32 music_slot_seconds_0;
 //CODE.bss:8008C62C
@@ -39,16 +42,17 @@ s32 mission_state = 0;
 
 
 
-void sub_GAME_7F0C0BF0(void) {
+u16 sub_GAME_7F0C0BF0(void) {
     get_mTrack2Vol();
 }
 
-void sub_GAME_7F0C0C10(void) {
-  call_sndGetSfxSlotFirstNaturalVolume();
+s32 sub_GAME_7F0C0C10(void) {
+    call_sndGetSfxSlotFirstNaturalVolume();
 }
 
+
 s32 get_mission_state(void) {
-  return mission_state;
+    return mission_state;
 }
 
 
@@ -57,8 +61,225 @@ s32 get_mission_state(void) {
 
 
 #ifdef NONMATCHING
-void set_missionstate(void) {
-
+//close, minor reg at beginning, tiny chunk missing at end, i gave up on for now
+void set_missionstate(u32 arg0)
+{
+    switch (mission_state)
+    {
+    case 0:
+        mission_state = arg0;
+        switch (arg0)
+        {
+        case 0:
+            return;
+        case 1:
+            musicTrack1ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack1Fade = 0;
+            musicTrack1Play(getmusictrack_or_randomtrack(dword_CODE_bss_8008C600));
+            return;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4: // switch 2
+            musicTrack1ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack1Fade = 0;
+            musicTrack1Play(getmusictrack_or_randomtrack(dword_CODE_bss_8008C600));
+            musicTrack3ApplySeqpVol(sub_GAME_7F0C0C10());
+            g_musicXTrack3Fade = 0;
+            musicTrack3Play(musicGetBgTrackForStage(dword_CODE_bss_8008C600));
+            return;
+        case 5:
+            break;
+        case 6:
+            break;
+        }
+        break;
+    case 1: 
+        mission_state = arg0;
+        switch (arg0)
+        {
+        case 0:
+            musicTrack1Stop();
+            musicTrack2Stop();
+            musicTrack3Stop();
+            return;
+        case 1:
+            break;
+        case 2:
+            musicTrack2ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack2Fade = 0;
+            musicTrack2Play(musicGetXTrackForStage(dword_CODE_bss_8008C600));
+            musicTrack1FadeOut(0.5f);
+            return;
+        case 3:
+            musicTrack2ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack2Fade = 0;
+            musicTrack2Play(0x18);
+            musicTrack1FadeOut(0.5f);
+            return;
+        case 5:
+            return;
+        case 6:
+            musicTrack1FadeOut(0.02f);
+            musicTrack2ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack2Fade = 0;
+            musicTrack2Play(0x3A);
+            return;
+        }
+        break;
+    case 2:
+        mission_state = arg0;
+        switch (arg0)
+        {
+        case 0:
+            musicTrack1Stop();
+            musicTrack2Stop();
+            musicTrack3Stop();
+            return;
+        case 1:
+            musicTrack1FadeIn(0.5f, sub_GAME_7F0C0BF0());
+            musicTrack2FadeOut(0.5f);
+            return;
+        case 2:
+            return;
+        case 3:
+            musicTrack2ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack2Fade = 0;
+            musicTrack2Play(0x18);
+            return;
+        case 4:
+            return;
+        case 5:
+            return;
+        case 6:
+            return;
+        }
+        break;
+    case 3:
+        mission_state = arg0;
+        switch (arg0)
+        {
+        case 0:
+            musicTrack1Stop();
+            musicTrack2Stop();
+            musicTrack3Stop();
+            return;
+        case 1:
+            musicTrack1FadeIn(1.0f, sub_GAME_7F0C0BF0());
+            musicTrack2FadeOut(1.0f);
+            return;
+        case 2:
+            musicTrack2ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack2Fade = 0;
+            musicTrack2Play(musicGetXTrackForStage(dword_CODE_bss_8008C600));
+            return;
+        case 3:
+            return;
+        case 4:
+            musicTrack1FadeIn(1.0f, sub_GAME_7F0C0BF0());
+            musicTrack3FadeIn(1.0f, sub_GAME_7F0C0C10());
+            musicTrack2FadeOut(1.0f);
+            return;
+        case 5:
+            musicTrack3FadeIn(1.0f, sub_GAME_7F0C0C10());
+            musicTrack2ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack2Fade = 0;
+            musicTrack2Play(musicGetXTrackForStage(dword_CODE_bss_8008C600));
+            return;
+        case 6:
+            return;
+        }
+        break;
+    case 4:
+        mission_state = arg0;
+        switch (arg0)
+        {
+        case 0:
+            musicTrack1Stop();
+            musicTrack2Stop();
+            musicTrack3Stop();
+            return;
+        case 1:
+            return;
+        case 2:
+            return;
+        case 3:
+            musicTrack2ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack2Fade = 0;
+            musicTrack2Play(0x18);
+            musicTrack1FadeOut(0.5f);
+            musicTrack3FadeOut(0.5f);
+            return;
+        case 4:
+            return;
+        case 5:
+            musicTrack2ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack2Fade = 0;
+            musicTrack2Play(musicGetXTrackForStage(dword_CODE_bss_8008C600));
+            musicTrack1FadeOut(0.5f);
+            return;
+        case 6:
+            return;
+        }
+        break;
+    case 5:
+        mission_state = arg0;
+        switch (arg0)
+        {
+        case 0:
+            musicTrack1Stop();
+            musicTrack2Stop();
+            musicTrack3Stop();
+            return;
+        case 1:
+            return;
+        case 2:
+            return;
+        case 3:
+            musicTrack2ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack2Fade = 0;
+            musicTrack2Play(0x18);
+            musicTrack3FadeOut(0.5f);
+            return;
+        case 4:
+            musicTrack1FadeIn(0.5f, sub_GAME_7F0C0BF0());
+            musicTrack2FadeOut(0.5f);
+            return;
+        case 5:
+            return;
+        case 6:
+            return;
+        }
+        break;
+    case 6:
+        mission_state = arg0;
+        switch (arg0)
+        {
+        case 0:
+            musicTrack1Stop();
+            musicTrack2Stop();
+            musicTrack3Stop();
+            return;
+        case 1:
+            musicTrack1FadeIn(2.0f, sub_GAME_7F0C0BF0());
+            musicTrack2FadeOut(2.0f);
+            return;
+        case 2:
+            return;
+        case 3:
+            return;
+        case 4:
+            return;
+        case 5:
+            return;
+        case 6:
+            g_musicXTrack2Fade = 0;
+            musicTrack2Play(0x3A);
+            return;
+        }
+        break;
+    }
 }
 #else
 #ifdef VERSION_US
