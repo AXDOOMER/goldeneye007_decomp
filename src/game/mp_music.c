@@ -1956,111 +1956,33 @@ glabel reset_all_music_slots
 
 
 
-#ifdef NONMATCHING
-void set_musicslot_time(int slot,int min,int sec)
+
+void set_musicslot_time(s32 slot, s32 min, s32 sec)
 {
-    if (music_slot_active[slot] == 0) {
-        music_slot_active[slot] = 1;
-        music_slot_minutes[slot] = min * 0x3c;
-        music_slot_seconds[slot] = sec * 0x3c;
+    if ((&music_slot_active_0)[slot] == 0) {
+        (&music_slot_active_0)[slot] = 1;
+        (&music_slot_minutes_0)[slot] = min * 0x3c;
+        (&music_slot_seconds_0)[slot] = sec * 0x3c;
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_musicslot_time
-/* 0F602C 7F0C14FC 3C0E8009 */  lui   $t6, %hi(music_slot_active_0) 
-/* 0F6030 7F0C1500 25CEC608 */  addiu $t6, %lo(music_slot_active_0) # addiu $t6, $t6, -0x39f8
-/* 0F6034 7F0C1504 00041080 */  sll   $v0, $a0, 2
-/* 0F6038 7F0C1508 004E1821 */  addu  $v1, $v0, $t6
-/* 0F603C 7F0C150C 8C6F0000 */  lw    $t7, ($v1)
-/* 0F6040 7F0C1510 2404003C */  li    $a0, 60
-/* 0F6044 7F0C1514 15E0000E */  bnez  $t7, .L7F0C1550
-/* 0F6048 7F0C1518 00000000 */   nop   
-/* 0F604C 7F0C151C 00A40019 */  multu $a1, $a0
-/* 0F6050 7F0C1520 24180001 */  li    $t8, 1
-/* 0F6054 7F0C1524 3C018009 */  lui   $at, %hi(music_slot_minutes_0)
-/* 0F6058 7F0C1528 AC780000 */  sw    $t8, ($v1)
-/* 0F605C 7F0C152C 00220821 */  addu  $at, $at, $v0
-/* 0F6060 7F0C1530 0000C812 */  mflo  $t9
-/* 0F6064 7F0C1534 AC39C618 */  sw    $t9, %lo(music_slot_minutes_0)($at)
-/* 0F6068 7F0C1538 3C018009 */  lui   $at, %hi(music_slot_seconds_0)
-/* 0F606C 7F0C153C 00C40019 */  multu $a2, $a0
-/* 0F6070 7F0C1540 00220821 */  addu  $at, $at, $v0
-/* 0F6074 7F0C1544 00004012 */  mflo  $t0
-/* 0F6078 7F0C1548 AC28C628 */  sw    $t0, %lo(music_slot_seconds_0)($at)
-/* 0F607C 7F0C154C 00000000 */  nop   
-.L7F0C1550:
-/* 0F6080 7F0C1550 03E00008 */  jr    $ra
-/* 0F6084 7F0C1554 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void reset_music_in_slot(int lParm1) 
+void reset_music_in_slot(s32 slot) 
 {
-  if (-1 < lParm1) {
-    (&music_slot_active_0)[(int)lParm1] = 0;
+  if (-1 < slot) {
+    (&music_slot_active_0)[slot] = 0;
     return;
   }
   music_slot_active_0 = 0;
-  music_slot_active_1 = 0;
-  music_slot_active_2 = 0;
-  music_slot_active_3 = 0;
   music_slot_minutes_0 = 0;
-  music_slot_minutes_1 = 0;
-  music_slot_minutes_2 = 0;
-  music_slot_minutes_3 = 0;
   music_slot_seconds_0 = 0;
+  music_slot_active_1 = 0;
+  music_slot_minutes_1 = 0;
   music_slot_seconds_1 = 0;
+  music_slot_active_2 = 0;
+  music_slot_minutes_2 = 0;
   music_slot_seconds_2 = 0;
+  music_slot_active_3 = 0;
+  music_slot_minutes_3 = 0;
   music_slot_seconds_3 = 0;
-  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel reset_music_in_slot
-/* 0F6088 7F0C1558 04800006 */  bltz  $a0, .L7F0C1574
-/* 0F608C 7F0C155C 3C018009 */   lui   $at, %hi(music_slot_active_0)
-/* 0F6090 7F0C1560 00047080 */  sll   $t6, $a0, 2
-/* 0F6094 7F0C1564 3C018009 */  lui   $at, %hi(music_slot_active_0)
-/* 0F6098 7F0C1568 002E0821 */  addu  $at, $at, $t6
-/* 0F609C 7F0C156C 03E00008 */  jr    $ra
-/* 0F60A0 7F0C1570 AC20C608 */   sw    $zero, %lo(music_slot_active_0)($at)
-
-.L7F0C1574:
-/* 0F60A4 7F0C1574 AC20C608 */  sw    $zero, %lo(music_slot_active_0)($at)
-/* 0F60A8 7F0C1578 3C018009 */  lui   $at, %hi(music_slot_minutes_0)
-/* 0F60AC 7F0C157C AC20C618 */  sw    $zero, %lo(music_slot_minutes_0)($at)
-/* 0F60B0 7F0C1580 3C018009 */  lui   $at, %hi(music_slot_seconds_0)
-/* 0F60B4 7F0C1584 AC20C628 */  sw    $zero, %lo(music_slot_seconds_0)($at)
-/* 0F60B8 7F0C1588 3C018009 */  lui   $at, %hi(music_slot_active_1)
-/* 0F60BC 7F0C158C AC20C60C */  sw    $zero, %lo(music_slot_active_1)($at)
-/* 0F60C0 7F0C1590 3C018009 */  lui   $at, %hi(music_slot_minutes_1)
-/* 0F60C4 7F0C1594 AC20C61C */  sw    $zero, %lo(music_slot_minutes_1)($at)
-/* 0F60C8 7F0C1598 3C018009 */  lui   $at, %hi(music_slot_seconds_1)
-/* 0F60CC 7F0C159C AC20C62C */  sw    $zero, %lo(music_slot_seconds_1)($at)
-/* 0F60D0 7F0C15A0 3C018009 */  lui   $at, %hi(music_slot_active_2)
-/* 0F60D4 7F0C15A4 AC20C610 */  sw    $zero, %lo(music_slot_active_2)($at)
-/* 0F60D8 7F0C15A8 3C018009 */  lui   $at, %hi(music_slot_minutes_2)
-/* 0F60DC 7F0C15AC AC20C620 */  sw    $zero, %lo(music_slot_minutes_2)($at)
-/* 0F60E0 7F0C15B0 3C018009 */  lui   $at, %hi(music_slot_seconds_2)
-/* 0F60E4 7F0C15B4 AC20C630 */  sw    $zero, %lo(music_slot_seconds_2)($at)
-/* 0F60E8 7F0C15B8 3C018009 */  lui   $at, %hi(music_slot_active_3)
-/* 0F60EC 7F0C15BC AC20C614 */  sw    $zero, %lo(music_slot_active_3)($at)
-/* 0F60F0 7F0C15C0 3C018009 */  lui   $at, %hi(music_slot_minutes_3)
-/* 0F60F4 7F0C15C4 AC20C624 */  sw    $zero, %lo(music_slot_minutes_3)($at)
-/* 0F60F8 7F0C15C8 3C018009 */  lui   $at, %hi(music_slot_seconds_3)
-/* 0F60FC 7F0C15CC AC20C634 */  sw    $zero, %lo(music_slot_seconds_3)($at)
-/* 0F6100 7F0C15D0 03E00008 */  jr    $ra
-/* 0F6104 7F0C15D4 00000000 */   nop   
-)
-#endif
-
-
 
