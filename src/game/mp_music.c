@@ -1774,63 +1774,22 @@ glabel set_missionstate
 
 
 
-#ifdef NONMATCHING//
-void sub_GAME_7F0C11FC(s16 param_1)
+
+void sub_GAME_7F0C11FC(s32 stagenum)
 {
     musicTrack1Stop();
     musicTrack2Stop();
     musicTrack3Stop();
     mission_state = 0;
-    dword_CODE_bss_8008C600 = (int)param_1;
-
-    if (musicGetBgTrackForStage(param_1) < 0)
-    {
+    dword_CODE_bss_8008C600 = stagenum;
+    if (musicGetBgTrackForStage(dword_CODE_bss_8008C600) < 0) {
         set_missionstate(1);
     }
-    else
-    {
+    else {
         set_missionstate(4);
     }
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C11FC
-/* 0F5D2C 7F0C11FC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F5D30 7F0C1200 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F5D34 7F0C1204 0C001BF4 */  jal   musicTrack1Stop
-/* 0F5D38 7F0C1208 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0F5D3C 7F0C120C 0C001CD6 */  jal   musicTrack2Stop
-/* 0F5D40 7F0C1210 00000000 */   nop   
-/* 0F5D44 7F0C1214 0C001DB8 */  jal   musicTrack3Stop
-/* 0F5D48 7F0C1218 00000000 */   nop   
-/* 0F5D4C 7F0C121C 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0F5D50 7F0C1220 3C028009 */  lui   $v0, %hi(dword_CODE_bss_8008C600)
-/* 0F5D54 7F0C1224 3C018005 */  lui   $at, %hi(mission_state)
-/* 0F5D58 7F0C1228 2442C600 */  addiu $v0, %lo(dword_CODE_bss_8008C600) # addiu $v0, $v0, -0x3a00
-/* 0F5D5C 7F0C122C AC2084C0 */  sw    $zero, %lo(mission_state)($at)
-/* 0F5D60 7F0C1230 0FC34A12 */  jal   musicGetBgTrackForStage
-/* 0F5D64 7F0C1234 AC440000 */   sw    $a0, ($v0)
-/* 0F5D68 7F0C1238 04410005 */  bgez  $v0, .L7F0C1250
-/* 0F5D6C 7F0C123C 00000000 */   nop   
-/* 0F5D70 7F0C1240 0FC3030F */  jal   set_missionstate
-/* 0F5D74 7F0C1244 24040001 */   li    $a0, 1
-/* 0F5D78 7F0C1248 10000004 */  b     .L7F0C125C
-/* 0F5D7C 7F0C124C 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0C1250:
-/* 0F5D80 7F0C1250 0FC3030F */  jal   set_missionstate
-/* 0F5D84 7F0C1254 24040004 */   li    $a0, 4
-/* 0F5D88 7F0C1258 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0C125C:
-/* 0F5D8C 7F0C125C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F5D90 7F0C1260 03E00008 */  jr    $ra
-/* 0F5D94 7F0C1264 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 void sub_GAME_7F0C1268(void)
 {
