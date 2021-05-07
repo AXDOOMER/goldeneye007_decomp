@@ -5,7 +5,7 @@
 
 struct ramrom_struct {
     u32 *address;
-    u32 unk;
+    u32 locked;
 };
 
 extern s32 D_800483C4;

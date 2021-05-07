@@ -716,37 +716,6 @@ glabel iterate_ramrom_entries_handle_camera_out
 )
 #endif
 
-typedef struct {
-    u64 unk0;
-    u64 unk8;
-    s32 unkC[28];
-    s32 unk80;
-    s32 unk84;
-    s32 unk88;
-    s32 unk8C;
-    s32 unk90;
-    s32 unk94;
-    s32 unk98;
-    s32 unk9C;
-    s32 unkA0;
-    s32 unkA4;
-    s32 unkA8;
-    s32 unkAC;
-    s32 unkB0;
-    s32 unkB4;
-    s32 unkB8;
-    s32 unkBC;
-    s32 unkC0;
-    s32 unkC4;
-    s32 unkC8;
-    s32 unkCC;
-    s32 unkD0;
-    s32 unkD4;
-    s32 unkD8;
-    s32 unkDC;
-    s32 unkE0;
-} state;
-
 extern u64 g_randomSeed;
 extern u64 g_chrObjRandomSeed;
 void copy_current_ingame_registers_before_ramrom_playback(ramromfilestructure *state) {
@@ -994,72 +963,37 @@ void ensureCameraModeA(void)
     }
 }
 
-
-
-
-
-
-#ifdef NONMATCHING
 void stop_demo_playback(void)
 {
-    if (ramrom_demo_related_6 == 0) {
-        if (ramrom_demo_related_3 != 0) {
-            copy_recorded_ramrom_registers_to_proper_place_ingame(&ramromsettingsbackup);
-            joySetPlaybackFunc(0,0xffffffff);
-            joySetContDataIndex(0);
-            ramrom_demo_related_3 = 0;
-            is_ramrom_flag = 0;
-        }
-    }
-    else {
+    if (ramrom_demo_related_6 != 0)
+    {
         stop_recording_ramrom();
+        return;
+    }
+    if (ramrom_demo_related_3 != 0)
+    {
+        copy_recorded_ramrom_registers_to_proper_place_ingame(ramrom_data_target + 0x110);
+        joySetPlaybackFunc(0, -1);
+        joySetContDataIndex(0);
+        ramrom_demo_related_3 = 0;
+        is_ramrom_flag = 0;
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel stop_demo_playback
-/* 0F542C 7F0C08FC 3C0E8005 */  lui   $t6, %hi(ramrom_demo_related_6) 
-/* 0F5430 7F0C0900 8DCE8484 */  lw    $t6, %lo(ramrom_demo_related_6)($t6)
-/* 0F5434 7F0C0904 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F5438 7F0C0908 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F543C 7F0C090C 11C00005 */  beqz  $t6, .L7F0C0924
-/* 0F5440 7F0C0910 3C0F8005 */   lui   $t7, %hi(ramrom_demo_related_3) 
-/* 0F5444 7F0C0914 0FC301F5 */  jal   stop_recording_ramrom
-/* 0F5448 7F0C0918 00000000 */   nop   
-/* 0F544C 7F0C091C 10000011 */  b     .L7F0C0964
-/* 0F5450 7F0C0920 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0C0924:
-/* 0F5454 7F0C0924 8DEF8478 */  lw    $t7, %lo(ramrom_demo_related_3)($t7)
-/* 0F5458 7F0C0928 3C048009 */  lui   $a0, %hi(ramrom_data_target + 0x110)
-/* 0F545C 7F0C092C 51E0000D */  beql  $t7, $zero, .L7F0C0964
-/* 0F5460 7F0C0930 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F5464 7F0C0934 0FC3013D */  jal   copy_recorded_ramrom_registers_to_proper_place_ingame
-/* 0F5468 7F0C0938 2484C380 */   addiu $a0, %lo(ramrom_data_target + 0x110) # addiu $a0, $a0, -0x3c80
-/* 0F546C 7F0C093C 00002025 */  move  $a0, $zero
-/* 0F5470 7F0C0940 0C002EEA */  jal   joySetPlaybackFunc
-/* 0F5474 7F0C0944 2405FFFF */   li    $a1, -1
-/* 0F5478 7F0C0948 0C00324C */  jal   joySetContDataIndex
-/* 0F547C 7F0C094C 00002025 */   move  $a0, $zero
-/* 0F5480 7F0C0950 3C018005 */  lui   $at, %hi(ramrom_demo_related_3)
-/* 0F5484 7F0C0954 AC208478 */  sw    $zero, %lo(ramrom_demo_related_3)($at)
-/* 0F5488 7F0C0958 3C018005 */  lui   $at, %hi(is_ramrom_flag)
-/* 0F548C 7F0C095C AC208474 */  sw    $zero, %lo(is_ramrom_flag)($at)
-/* 0F5490 7F0C0960 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0C0964:
-/* 0F5494 7F0C0964 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F5498 7F0C0968 03E00008 */  jr    $ra
-/* 0F549C 7F0C096C 00000000 */   nop   
-)
-#endif
-
 
 
 
 
 #ifdef NONMATCHING
-void select_ramrom_to_play(void) {
+void select_ramrom_to_play(void)
+{
+    u32 i=0;
 
+    while((ramrom_table[i].address != 0) && (check_egypt_completed_any_folder() >= ramrom_table[i].locked ))
+    {
+        i++;
+    }
+
+    replay_recorded_ramrom_at_address(ramrom_table[randomGetNext() % i].address);
 }
 #else
 GLOBAL_ASM(
