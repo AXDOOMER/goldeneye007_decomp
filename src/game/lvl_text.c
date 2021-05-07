@@ -4,25 +4,8 @@
 
 // bss
 //CODE.bss:8008C640
-s32 ptr_text;
-//CODE.bss:8008C644
-s32 table_text_pointers;
-//8008C648
-char dword_CODE_bss_8008C648[0x90];
-//CODE.bss:8008C6D8
-s32 dword_CODE_bss_8008C6D8;
-//CODE.bss:8008C6DC
-s32 dword_CODE_bss_8008C6DC;
-//CODE.bss:8008C6E0
-s32 dword_CODE_bss_8008C6E0;
-//CODE.bss:8008C6E4
-s32 dword_CODE_bss_8008C6E4;
-//CODE.bss:8008C6E8
-s32 dword_CODE_bss_8008C6E8;
-//CODE.bss:8008C6EC
-s32 dword_CODE_bss_8008C6EC;
-//CODE.bss:8008C6F0
-s32 dword_CODE_bss_8008C6F0;
+s32 ptr_text[45];
+
 //CODE.bss:8008C6F4
 s32 ptr_j_char_data_buf;
 //CODE.bss:8008C6F8
@@ -189,25 +172,25 @@ void init_LnameX(void)
     int iVar3;
     
     if (j_text_trigger != 0) {
-        ptr_char_data_buf = mempAllocBytesInBank(0x2e80,'\x06');
-        ptr_char_registry = mempAllocBytesInBank(0x100,'\x06');
+        ptr_j_char_data_buf = mempAllocBytesInBank(0x2e80,'\x06');
+        ptr_j_char_registry = mempAllocBytesInBank(0x100,'\x06');
         iVar3 = 0;
         do {
-            ptr_char_registry[iVar3] = ptr_char_registry[iVar3] & 0x3f;
-            *(ushort *)(ptr_char_registry + iVar3) = *(ushort *)(ptr_char_registry + iVar3) | 0x3fff;
-            (ptr_char_registry + iVar3)[2] = (ptr_char_registry + iVar3)[2] & 0x3f;
-            *(ushort *)(ptr_char_registry + iVar3 + 2) = *(ushort *)(ptr_char_registry + iVar3 + 2) | 0x3fff;
-            (ptr_char_registry + iVar3)[4] = (ptr_char_registry + iVar3)[4] & 0x3f;
-            *(ushort *)(ptr_char_registry + iVar3 + 4) = *(ushort *)(ptr_char_registry + iVar3 + 4) | 0x3fff;
-            (ptr_char_registry + iVar3)[6] = (ptr_char_registry + iVar3)[6] & 0x3f;
-            puVar1 = ptr_char_registry + iVar3;
+            ptr_j_char_registry[iVar3] = ptr_j_char_registry[iVar3] & 0x3f;
+            *(ushort *)(ptr_j_char_registry + iVar3) = *(ushort *)(ptr_j_char_registry + iVar3) | 0x3fff;
+            (ptr_j_char_registry + iVar3)[2] = (ptr_j_char_registry + iVar3)[2] & 0x3f;
+            *(ushort *)(ptr_j_char_registry + iVar3 + 2) = *(ushort *)(ptr_j_char_registry + iVar3 + 2) | 0x3fff;
+            (ptr_j_char_registry + iVar3)[4] = (ptr_j_char_registry + iVar3)[4] & 0x3f;
+            *(ushort *)(ptr_j_char_registry + iVar3 + 4) = *(ushort *)(ptr_j_char_registry + iVar3 + 4) | 0x3fff;
+            (ptr_j_char_registry + iVar3)[6] = (ptr_j_char_registry + iVar3)[6] & 0x3f;
+            puVar1 = ptr_j_char_registry + iVar3;
             iVar3 += 8;
             *(ushort *)(puVar1 + 6) = *(ushort *)(puVar1 + 6) | 0x3fff;
         } while (iVar3 != 0xf8);
     }
 
     ptr_text = 0;
-    ppuVar2 = (u8 **)table_text_pointers;
+    ppuVar2 = (u8 **)ptr_text;
     do {
         ppuVar2 = ppuVar2 + 4;
         ppuVar2[1] = NULL;
@@ -216,13 +199,13 @@ void init_LnameX(void)
         *ppuVar2 = NULL;
         ppuVar2 = ppuVar2;
     } while (ppuVar2 != &ptr_char_data_buf);
-    table_text_pointers[37] = _load_resource_named_to_membank((&ptr_LgunX)[j_text_trigger],1,0x100,6);
-    table_text_pointers[38] = _load_resource_named_to_membank((&ptr_LtitleX)[j_text_trigger],1,0x100,6);
-    table_text_pointers[39] = _load_resource_named_to_membank((&ptr_LmpmenuX)[j_text_trigger],1,0x100,6);
-    table_text_pointers[40] = _load_resource_named_to_membank((&ptr_LpropobjX)[j_text_trigger],1,0x100,6);
-    table_text_pointers[41] =  _load_resource_named_to_membank((&ptr_LmpweaponsX)[j_text_trigger],1,0x100,6);
-    table_text_pointers[42] = _load_resource_named_to_membank((&ptr_LoptionsX)[j_text_trigger],1,0x100,6);
-    table_text_pointers[43] = _load_resource_named_to_membank((&ptr_LmiscX)[j_text_trigger],1,0x100,6);
+    ptr_text[37] = _load_resource_named_to_membank((&ptr_LgunX)[j_text_trigger],1,0x100,6);
+    ptr_text[38] = _load_resource_named_to_membank((&ptr_LtitleX)[j_text_trigger],1,0x100,6);
+    ptr_text[39] = _load_resource_named_to_membank((&ptr_LmpmenuX)[j_text_trigger],1,0x100,6);
+    ptr_text[40] = _load_resource_named_to_membank((&ptr_LpropobjX)[j_text_trigger],1,0x100,6);
+    ptr_text[41] =  _load_resource_named_to_membank((&ptr_LmpweaponsX)[j_text_trigger],1,0x100,6);
+    ptr_text[42] = _load_resource_named_to_membank((&ptr_LoptionsX)[j_text_trigger],1,0x100,6);
+    ptr_text[43] = _load_resource_named_to_membank((&ptr_LmiscX)[j_text_trigger],1,0x100,6);
     return;
 }
 #else
@@ -297,10 +280,10 @@ glabel init_LnameX
 /* 0F631C 7F0C17EC 8E480000 */  lw    $t0, ($s2)
 .L7F0C17F0:
 /* 0F6320 7F0C17F0 3C018009 */  lui   $at, %hi(ptr_text)
-/* 0F6324 7F0C17F4 3C028009 */  lui   $v0, %hi(table_text_pointers)
+/* 0F6324 7F0C17F4 3C028009 */  lui   $v0, %hi(ptr_text+0x4)
 /* 0F6328 7F0C17F8 3C038009 */  lui   $v1, %hi(ptr_j_char_data_buf)
 /* 0F632C 7F0C17FC 2463C6F4 */  addiu $v1, %lo(ptr_j_char_data_buf) # addiu $v1, $v1, -0x390c
-/* 0F6330 7F0C1800 2442C644 */  addiu $v0, %lo(table_text_pointers) # addiu $v0, $v0, -0x39bc
+/* 0F6330 7F0C1800 2442C644 */  addiu $v0, %lo(ptr_text+0x4) # addiu $v0, $v0, -0x39bc
 /* 0F6334 7F0C1804 AC20C640 */  sw    $zero, %lo(ptr_text)($at)
 .L7F0C1808:
 /* 0F6338 7F0C1808 24420010 */  addiu $v0, $v0, 0x10
@@ -398,13 +381,13 @@ void something_with_LnameJ(void)
     iVar3 = 0;
     if (j_text_trigger != 0) {
         do {
-            puVar2 = (ushort *)(ptr_char_registry + iVar3);
+            puVar2 = (ushort *)(ptr_j_char_registry + iVar3);
             if (*puVar2 >> 0xe == 0) {
                 uVar1 = puVar2[1];
             }
             else {
                 *(byte *)puVar2 = ((byte)(*puVar2 >> 0xe) - 1) * '@' | *(byte *)puVar2 & 0x3f;
-                puVar2 = (ushort *)(ptr_char_registry + iVar3);
+                puVar2 = (ushort *)(ptr_j_char_registry + iVar3);
                 uVar1 = puVar2[1];
             }
             if (uVar1 >> 0xe == 0) {
@@ -413,7 +396,7 @@ void something_with_LnameJ(void)
             else {
                 *(byte *)(puVar2 + 1) =
                      ((byte)(uVar1 >> 0xe) - 1) * '@' | *(byte *)(puVar2 + 1) & 0x3f;
-                puVar2 = (ushort *)(ptr_char_registry + iVar3);
+                puVar2 = (ushort *)(ptr_j_char_registry + iVar3);
                 uVar1 = puVar2[2];
             }
             if (uVar1 >> 0xe == 0) {
@@ -422,7 +405,7 @@ void something_with_LnameJ(void)
             else {
                 *(byte *)(puVar2 + 2) =
                      ((byte)(uVar1 >> 0xe) - 1) * '@' | *(byte *)(puVar2 + 2) & 0x3f;
-                puVar2 = (ushort *)(ptr_char_registry + iVar3);
+                puVar2 = (ushort *)(ptr_j_char_registry + iVar3);
                 uVar1 = puVar2[3];
             }
             iVar3 += 8;
@@ -531,7 +514,7 @@ int something_with_LnameX(uint param_1)
     iVar7 = 0;
     iVar4 = 0;
     iVar9 = -1;
-    puVar5 = (ushort *)ptr_char_registry;
+    puVar5 = (ushort *)ptr_j_char_registry;
     do {
         indexfrom = (int)param_1 >> 1;
         if ((!bVar1) && ((longlong)indexfrom == ((ulonglong)*puVar5 & 0x3fff))) break;
@@ -555,7 +538,7 @@ int something_with_LnameX(uint param_1)
     if (iVar4 < 0x7c) {
         if (bVar1) {
             *(byte *)puVar5 = *(byte *)puVar5 & 0x3f | 0x80;
-            (ptr_char_registry + iVar7)[2] = (ptr_char_registry + iVar7)[2] & 0x3f | 0x80;
+            (ptr_j_char_registry + iVar7)[2] = (ptr_j_char_registry + iVar7)[2] & 0x3f | 0x80;
             puVar2 = ptr_char_data_buf + iVar4 * 0x60;
         }
         else {
@@ -567,13 +550,13 @@ int something_with_LnameX(uint param_1)
         if ((bVar1) || (indexto < 0)) {
             puVar2 = ptr_char_data_buf;
             if ((bVar1) && (iVar4 = iVar9 * 2, -1 < iVar9)) {
-                ptr_char_registry[iVar4] = ptr_char_registry[iVar4] & 0x3f | 0x80;
-                (ptr_char_registry + iVar4)[2] = (ptr_char_registry + iVar4)[2] & 0x3f | 0x80;
+                ptr_j_char_registry[iVar4] = ptr_j_char_registry[iVar4] & 0x3f | 0x80;
+                (ptr_j_char_registry + iVar4)[2] = (ptr_j_char_registry + iVar4)[2] & 0x3f | 0x80;
                 uVar3 = (ushort)indexfrom & 0x3fff;
-                *(ushort *)(ptr_char_registry + iVar4) =
-                     uVar3 | *(ushort *)(ptr_char_registry + iVar4) & 0xc000;
-                *(ushort *)(ptr_char_registry + iVar4 + 2) =
-                     uVar3 | *(ushort *)(ptr_char_registry + iVar4 + 2) & 0xc000;
+                *(ushort *)(ptr_j_char_registry + iVar4) =
+                     uVar3 | *(ushort *)(ptr_j_char_registry + iVar4) & 0xc000;
+                *(ushort *)(ptr_j_char_registry + iVar4 + 2) =
+                     uVar3 | *(ushort *)(ptr_j_char_registry + iVar4 + 2) & 0xc000;
                 romCopy((char *)(ptr_char_data_buf + iVar9 * 0x60),
                         (char *)(_efontcharSegmentStart + ((int)(param_1 & 0x1fff) >> 1) * 0x20),
                         0x80);
@@ -581,9 +564,9 @@ int something_with_LnameX(uint param_1)
             }
         }
         else {
-            ptr_char_registry[indexto * 2] = ptr_char_registry[indexto * 2] & 0x3f | 0x80;
-            *(ushort *)(ptr_char_registry + indexto * 2) =
-                 (ushort)indexfrom & 0x3fff | *(ushort *)(ptr_char_registry + indexto * 2) & 0xc000;
+            ptr_j_char_registry[indexto * 2] = ptr_j_char_registry[indexto * 2] & 0x3f | 0x80;
+            *(ushort *)(ptr_j_char_registry + indexto * 2) =
+                 (ushort)indexfrom & 0x3fff | *(ushort *)(ptr_j_char_registry + indexto * 2) & 0xc000;
             romCopy((char *)(ptr_char_data_buf + indexto * 0x60),
                     (char *)(_jfontcharSegmentStart + indexfrom * 0x18),0x60);
             puVar2 = ptr_char_data_buf + indexto * 0x60;
@@ -880,13 +863,13 @@ glabel load_briefing_text_bank
 
 
 void blank_text_bank(s32 textBank) {
-    (&ptr_text)[textBank] = 0;
+    ptr_text[textBank] = 0;
 }
 
 
 u8 * get_textptr_for_textID(s32 slotID)
 {
-    u32 * textbank_ptr = (&ptr_text)[slotID >> 10]; /* get the text file bank ID index the text ptr table */
+    u32 * textbank_ptr = ptr_text[slotID >> 10]; /* get the text file bank ID index the text ptr table */
     u32 textslot_offset = textbank_ptr[slotID & 0x03FF]; /* load the textbank ptr table then get the slot's offset */
 
     u32 output_slot = textslot_offset; /* add the text slot offset to the base ptr to get the ptr to text file's slot */
