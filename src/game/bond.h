@@ -293,6 +293,13 @@ typedef struct textoverride {
 } textoverride;
 
 
+typedef struct gunheld {
+	s32 weapon1;
+	s32 weapon2;
+	s32 totaltime;
+} gunheld;
+
+
 struct player
 {
   s32 unknown;
@@ -949,37 +956,8 @@ struct player
   s32 equipallguns;
   s32 equipcuritem;
   textoverride *textoverrides;
+  gunheld gunheldarr[10];
   s32 index_time_spent_using_item;
-  s32 field_11FC;
-  s32 field_1200;
-  s32 field_1204;
-  s32 field_1208;
-  s32 field_120C;
-  s32 field_1210;
-  s32 field_1214;
-  s32 field_1218;
-  s32 field_121C;
-  s32 field_1220;
-  s32 field_1224;
-  s32 field_1228;
-  s32 field_122C;
-  s32 field_1230;
-  s32 field_1234;
-  s32 field_1238;
-  s32 field_123C;
-  s32 field_1240;
-  s32 field_1244;
-  s32 field_1248;
-  s32 field_124C;
-  s32 field_1250;
-  s32 field_1254;
-  s32 field_1258;
-  s32 field_125C;
-  s32 field_1260;
-  s32 field_1264;
-  s32 field_1268;
-  s32 field_126C;
-  s32 field_1270;
   f32 swaytarget;
   f32 field_1278;
   f32 field_127C;
