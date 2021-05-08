@@ -3238,7 +3238,7 @@ u8 *weapon_get_activated_text(ITEM_IDS weaponnum) {
 }
 
 
-void sub_GAME_7F08D9EC(s32 weapon1, s32 weapon2)
+void increment_held_time(s32 weapon1, s32 weapon2)
 {
 	s32 leastusedtime;
 	s32 leastusedindex;
