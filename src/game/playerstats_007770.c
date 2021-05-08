@@ -28,7 +28,7 @@ glabel sub_GAME_7F007770
 /* 03C2D8 7F0077A8 0FC26C43 */  jal   set_cur_player
 /* 03C2DC 7F0077AC 02002025 */   move  $a0, $s0
 /* 03C2E0 7F0077B0 02202025 */  move  $a0, $s1
-/* 03C2E4 7F0077B4 0FC236C2 */  jal   sub_GAME_7F08DB08
+/* 03C2E4 7F0077B4 0FC236C2 */  jal   get_weapon_of_choice
 /* 03C2E8 7F0077B8 02402825 */   move  $a1, $s2
 /* 03C2EC 7F0077BC 8FA4003C */  lw    $a0, 0x3c($sp)
 /* 03C2F0 7F0077C0 0FC075A0 */  jal   store_favorite_weapon_current_player

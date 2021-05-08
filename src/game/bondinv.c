@@ -3283,7 +3283,7 @@ void sub_GAME_7F08D9EC(s32 weapon1, s32 weapon2)
 	}
 }
 
-s32 sub_GAME_7F08DB08(s32 *weapon1, s32 *weapon2)
+s32 get_weapon_of_choice(s32 *weapon1, s32 *weapon2)
 {
 	s32 mosttime = -1;
 	s32 i;
