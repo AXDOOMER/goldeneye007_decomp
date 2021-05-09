@@ -506,7 +506,7 @@ glabel stage_load
 .L7F0BDE54:
 /* 0F2984 7F0BDE54 0FC26C43 */  jal   set_cur_player
 /* 0F2988 7F0BDE58 02002025 */   move  $a0, $s0
-/* 0F298C 7F0BDE5C 0FC0187C */  jal   sub_GAME_7F0061F0
+/* 0F298C 7F0BDE5C 0FC0187C */  jal   reinit_gunheld_totaltime
 /* 0F2990 7F0BDE60 00000000 */   nop   
 /* 0F2994 7F0BDE64 0FC01434 */  jal   init_player_BONDdata_stats
 /* 0F2998 7F0BDE68 00000000 */   nop   
@@ -811,7 +811,7 @@ glabel stage_load
 .Ljp7F0BEA14:
 /* 0F3584 7F0BEA14 0FC26F2B */  jal   set_cur_player
 /* 0F3588 7F0BEA18 02002025 */   move  $a0, $s0
-/* 0F358C 7F0BEA1C 0FC0187C */  jal   sub_GAME_7F0061F0
+/* 0F358C 7F0BEA1C 0FC0187C */  jal   reinit_gunheld_totaltime
 /* 0F3590 7F0BEA20 00000000 */   nop   
 /* 0F3594 7F0BEA24 0FC0143C */  jal   init_player_BONDdata_stats
 /* 0F3598 7F0BEA28 00000000 */   nop   
@@ -1111,7 +1111,7 @@ glabel stage_load
 .L7F0BDE54:
 /* 0F2984 7F0BDE54 0FC26C43 */  jal   set_cur_player
 /* 0F2988 7F0BDE58 02002025 */   move  $a0, $s0
-/* 0F298C 7F0BDE5C 0FC0187C */  jal   sub_GAME_7F0061F0
+/* 0F298C 7F0BDE5C 0FC0187C */  jal   reinit_gunheld_totaltime
 /* 0F2990 7F0BDE60 00000000 */   nop   
 /* 0F2994 7F0BDE64 0FC01434 */  jal   init_player_BONDdata_stats
 /* 0F2998 7F0BDE68 00000000 */   nop   

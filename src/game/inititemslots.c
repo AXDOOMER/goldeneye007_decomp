@@ -2,10 +2,10 @@
 #include "game/unk_093880.h"
 #include "game/bondinv.h"
 
-void sub_GAME_7F0061F0(void) {
+void reinit_gunheld_totaltime(void) {
     s32 i;
   
-    pPlayer->equipallguns = 0;
+    pPlayer->equipallguns = FALSE;
     
     for (i = 0; i != 10; i++) {
         pPlayer->gunheldarr[i].totaltime = -1;
