@@ -31,7 +31,7 @@ void reinit_BONDdata_inventory(void) {
  * Subject is expected to initially be at the head of the list. It works by
  * swapping the subject with the item to its right as many times as needed.
  */
-void sub_GAME_7F08C054(InvItem *subject) {
+void inv_sort_item(InvItem *subject) {
     
     InvItem *candidate;
 	s32 subjweapon1 = -1;
@@ -112,7 +112,7 @@ void add_additional_weapon_slot_to_player_inventory_guess(InvItem *item) {
     }
 
     pPlayer->ptr_inventory_first_in_cycle = item;
-    sub_GAME_7F08C054(item);
+    inv_sort_item(item);
     return;
 }
 
