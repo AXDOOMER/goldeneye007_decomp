@@ -333,8 +333,47 @@ int add_doubles_item_to_inventory(int right, int left)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F08C570(void) {
+// Requires WeaponObjRecord struct
+WeaponObjRecord *sub_GAME_7F08C570(WeaponObjRecord *arg0)
+{
+    InvItem *fist_item = pPlayer->ptr_inventory_first_in_cycle;
 
+    if (fist_item != 0)
+    {
+        InvItem *item = fist_item->next;
+
+        while (1) {
+
+            InvItem *next = item->next;
+        
+            if (item->type == INV_ITEM_PROP)
+            {
+                PropRecord *temp_v1 = item->type_inv_item.type_prop.prop;
+                
+                if (temp_v1->type == 4) // weapon?
+                {
+                    WeaponObjRecord *temp_a1 = (WeaponObjRecord *)temp_v1->Entityp.weapon;
+                    
+                    if ((temp_a1->weaponnum == 8) && (arg0 == temp_a1->dualweapon))
+                    {
+                        WeaponObjRecord *sp24 = temp_a1;
+                        inventory_remove_item(item);
+                        return sp24;
+                    }
+                }
+            }
+
+            if ((item == fist_item) || (!fist_item))
+            {   
+                break;
+            }
+
+            item = next;
+        }
+        
+    }
+
+    return NULL;
 }
 #else
 GLOBAL_ASM(
