@@ -7,6 +7,7 @@
 s32 dword_CODE_bss_8008C600;
 //CODE.bss:8008C604
 s32 dword_CODE_bss_8008C604;
+
 //CODE.bss:8008C608
 s32 music_slot_active_0;
 //CODE.bss:8008C60C
@@ -15,6 +16,7 @@ s32 music_slot_active_1;
 s32 music_slot_active_2;
 //CODE.bss:8008C614
 s32 music_slot_active_3;
+
 //CODE.bss:8008C618
 s32 music_slot_minutes_0;
 //CODE.bss:8008C61C
@@ -23,6 +25,7 @@ s32 music_slot_minutes_1;
 s32 music_slot_minutes_2;
 //CODE.bss:8008C624
 s32 music_slot_minutes_3;
+
 //CODE.bss:8008C628
 s32 music_slot_seconds_0;
 //CODE.bss:8008C62C
@@ -39,14 +42,17 @@ s32 mission_state = 0;
 
 
 
-
-
-void sub_GAME_7F0C0C10(void) {
-  call_sndGetSfxSlotFirstNaturalVolume();
+u16 sub_GAME_7F0C0BF0(void) {
+    get_mTrack2Vol();
 }
 
+s32 sub_GAME_7F0C0C10(void) {
+    call_sndGetSfxSlotFirstNaturalVolume();
+}
+
+
 s32 get_mission_state(void) {
-  return mission_state;
+    return mission_state;
 }
 
 
@@ -55,8 +61,225 @@ s32 get_mission_state(void) {
 
 
 #ifdef NONMATCHING
-void set_missionstate(void) {
-
+//close, minor reg at beginning, tiny chunk missing at end, i gave up on for now
+void set_missionstate(u32 arg0)
+{
+    switch (mission_state)
+    {
+    case 0:
+        mission_state = arg0;
+        switch (arg0)
+        {
+        case 0:
+            return;
+        case 1:
+            musicTrack1ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack1Fade = 0;
+            musicTrack1Play(getmusictrack_or_randomtrack(dword_CODE_bss_8008C600));
+            return;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4: // switch 2
+            musicTrack1ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack1Fade = 0;
+            musicTrack1Play(getmusictrack_or_randomtrack(dword_CODE_bss_8008C600));
+            musicTrack3ApplySeqpVol(sub_GAME_7F0C0C10());
+            g_musicXTrack3Fade = 0;
+            musicTrack3Play(musicGetBgTrackForStage(dword_CODE_bss_8008C600));
+            return;
+        case 5:
+            break;
+        case 6:
+            break;
+        }
+        break;
+    case 1: 
+        mission_state = arg0;
+        switch (arg0)
+        {
+        case 0:
+            musicTrack1Stop();
+            musicTrack2Stop();
+            musicTrack3Stop();
+            return;
+        case 1:
+            break;
+        case 2:
+            musicTrack2ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack2Fade = 0;
+            musicTrack2Play(musicGetXTrackForStage(dword_CODE_bss_8008C600));
+            musicTrack1FadeOut(0.5f);
+            return;
+        case 3:
+            musicTrack2ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack2Fade = 0;
+            musicTrack2Play(0x18);
+            musicTrack1FadeOut(0.5f);
+            return;
+        case 5:
+            return;
+        case 6:
+            musicTrack1FadeOut(0.02f);
+            musicTrack2ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack2Fade = 0;
+            musicTrack2Play(0x3A);
+            return;
+        }
+        break;
+    case 2:
+        mission_state = arg0;
+        switch (arg0)
+        {
+        case 0:
+            musicTrack1Stop();
+            musicTrack2Stop();
+            musicTrack3Stop();
+            return;
+        case 1:
+            musicTrack1FadeIn(0.5f, sub_GAME_7F0C0BF0());
+            musicTrack2FadeOut(0.5f);
+            return;
+        case 2:
+            return;
+        case 3:
+            musicTrack2ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack2Fade = 0;
+            musicTrack2Play(0x18);
+            return;
+        case 4:
+            return;
+        case 5:
+            return;
+        case 6:
+            return;
+        }
+        break;
+    case 3:
+        mission_state = arg0;
+        switch (arg0)
+        {
+        case 0:
+            musicTrack1Stop();
+            musicTrack2Stop();
+            musicTrack3Stop();
+            return;
+        case 1:
+            musicTrack1FadeIn(1.0f, sub_GAME_7F0C0BF0());
+            musicTrack2FadeOut(1.0f);
+            return;
+        case 2:
+            musicTrack2ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack2Fade = 0;
+            musicTrack2Play(musicGetXTrackForStage(dword_CODE_bss_8008C600));
+            return;
+        case 3:
+            return;
+        case 4:
+            musicTrack1FadeIn(1.0f, sub_GAME_7F0C0BF0());
+            musicTrack3FadeIn(1.0f, sub_GAME_7F0C0C10());
+            musicTrack2FadeOut(1.0f);
+            return;
+        case 5:
+            musicTrack3FadeIn(1.0f, sub_GAME_7F0C0C10());
+            musicTrack2ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack2Fade = 0;
+            musicTrack2Play(musicGetXTrackForStage(dword_CODE_bss_8008C600));
+            return;
+        case 6:
+            return;
+        }
+        break;
+    case 4:
+        mission_state = arg0;
+        switch (arg0)
+        {
+        case 0:
+            musicTrack1Stop();
+            musicTrack2Stop();
+            musicTrack3Stop();
+            return;
+        case 1:
+            return;
+        case 2:
+            return;
+        case 3:
+            musicTrack2ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack2Fade = 0;
+            musicTrack2Play(0x18);
+            musicTrack1FadeOut(0.5f);
+            musicTrack3FadeOut(0.5f);
+            return;
+        case 4:
+            return;
+        case 5:
+            musicTrack2ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack2Fade = 0;
+            musicTrack2Play(musicGetXTrackForStage(dword_CODE_bss_8008C600));
+            musicTrack1FadeOut(0.5f);
+            return;
+        case 6:
+            return;
+        }
+        break;
+    case 5:
+        mission_state = arg0;
+        switch (arg0)
+        {
+        case 0:
+            musicTrack1Stop();
+            musicTrack2Stop();
+            musicTrack3Stop();
+            return;
+        case 1:
+            return;
+        case 2:
+            return;
+        case 3:
+            musicTrack2ApplySeqpVol(sub_GAME_7F0C0BF0());
+            g_musicXTrack2Fade = 0;
+            musicTrack2Play(0x18);
+            musicTrack3FadeOut(0.5f);
+            return;
+        case 4:
+            musicTrack1FadeIn(0.5f, sub_GAME_7F0C0BF0());
+            musicTrack2FadeOut(0.5f);
+            return;
+        case 5:
+            return;
+        case 6:
+            return;
+        }
+        break;
+    case 6:
+        mission_state = arg0;
+        switch (arg0)
+        {
+        case 0:
+            musicTrack1Stop();
+            musicTrack2Stop();
+            musicTrack3Stop();
+            return;
+        case 1:
+            musicTrack1FadeIn(2.0f, sub_GAME_7F0C0BF0());
+            musicTrack2FadeOut(2.0f);
+            return;
+        case 2:
+            return;
+        case 3:
+            return;
+        case 4:
+            return;
+        case 5:
+            return;
+        case 6:
+            g_musicXTrack2Fade = 0;
+            musicTrack2Play(0x3A);
+            return;
+        }
+        break;
+    }
 }
 #else
 #ifdef VERSION_US
@@ -1551,63 +1774,22 @@ glabel set_missionstate
 
 
 
-#ifdef NONMATCHING//
-void sub_GAME_7F0C11FC(s16 param_1)
+
+void sub_GAME_7F0C11FC(s32 stagenum)
 {
     musicTrack1Stop();
     musicTrack2Stop();
     musicTrack3Stop();
     mission_state = 0;
-    dword_CODE_bss_8008C600 = (int)param_1;
-
-    if (musicGetBgTrackForStage(param_1) < 0)
-    {
+    dword_CODE_bss_8008C600 = stagenum;
+    if (musicGetBgTrackForStage(dword_CODE_bss_8008C600) < 0) {
         set_missionstate(1);
     }
-    else
-    {
+    else {
         set_missionstate(4);
     }
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C11FC
-/* 0F5D2C 7F0C11FC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F5D30 7F0C1200 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F5D34 7F0C1204 0C001BF4 */  jal   musicTrack1Stop
-/* 0F5D38 7F0C1208 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0F5D3C 7F0C120C 0C001CD6 */  jal   musicTrack2Stop
-/* 0F5D40 7F0C1210 00000000 */   nop   
-/* 0F5D44 7F0C1214 0C001DB8 */  jal   musicTrack3Stop
-/* 0F5D48 7F0C1218 00000000 */   nop   
-/* 0F5D4C 7F0C121C 8FA40018 */  lw    $a0, 0x18($sp)
-/* 0F5D50 7F0C1220 3C028009 */  lui   $v0, %hi(dword_CODE_bss_8008C600)
-/* 0F5D54 7F0C1224 3C018005 */  lui   $at, %hi(mission_state)
-/* 0F5D58 7F0C1228 2442C600 */  addiu $v0, %lo(dword_CODE_bss_8008C600) # addiu $v0, $v0, -0x3a00
-/* 0F5D5C 7F0C122C AC2084C0 */  sw    $zero, %lo(mission_state)($at)
-/* 0F5D60 7F0C1230 0FC34A12 */  jal   musicGetBgTrackForStage
-/* 0F5D64 7F0C1234 AC440000 */   sw    $a0, ($v0)
-/* 0F5D68 7F0C1238 04410005 */  bgez  $v0, .L7F0C1250
-/* 0F5D6C 7F0C123C 00000000 */   nop   
-/* 0F5D70 7F0C1240 0FC3030F */  jal   set_missionstate
-/* 0F5D74 7F0C1244 24040001 */   li    $a0, 1
-/* 0F5D78 7F0C1248 10000004 */  b     .L7F0C125C
-/* 0F5D7C 7F0C124C 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0C1250:
-/* 0F5D80 7F0C1250 0FC3030F */  jal   set_missionstate
-/* 0F5D84 7F0C1254 24040004 */   li    $a0, 4
-/* 0F5D88 7F0C1258 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0C125C:
-/* 0F5D8C 7F0C125C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F5D90 7F0C1260 03E00008 */  jr    $ra
-/* 0F5D94 7F0C1264 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 void sub_GAME_7F0C1268(void)
 {
@@ -1774,111 +1956,33 @@ glabel reset_all_music_slots
 
 
 
-#ifdef NONMATCHING
-void set_musicslot_time(int slot,int min,int sec)
+
+void set_musicslot_time(s32 slot, s32 min, s32 sec)
 {
-    if (music_slot_active[slot] == 0) {
-        music_slot_active[slot] = 1;
-        music_slot_minutes[slot] = min * 0x3c;
-        music_slot_seconds[slot] = sec * 0x3c;
+    if ((&music_slot_active_0)[slot] == 0) {
+        (&music_slot_active_0)[slot] = 1;
+        (&music_slot_minutes_0)[slot] = min * 0x3c;
+        (&music_slot_seconds_0)[slot] = sec * 0x3c;
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_musicslot_time
-/* 0F602C 7F0C14FC 3C0E8009 */  lui   $t6, %hi(music_slot_active_0) 
-/* 0F6030 7F0C1500 25CEC608 */  addiu $t6, %lo(music_slot_active_0) # addiu $t6, $t6, -0x39f8
-/* 0F6034 7F0C1504 00041080 */  sll   $v0, $a0, 2
-/* 0F6038 7F0C1508 004E1821 */  addu  $v1, $v0, $t6
-/* 0F603C 7F0C150C 8C6F0000 */  lw    $t7, ($v1)
-/* 0F6040 7F0C1510 2404003C */  li    $a0, 60
-/* 0F6044 7F0C1514 15E0000E */  bnez  $t7, .L7F0C1550
-/* 0F6048 7F0C1518 00000000 */   nop   
-/* 0F604C 7F0C151C 00A40019 */  multu $a1, $a0
-/* 0F6050 7F0C1520 24180001 */  li    $t8, 1
-/* 0F6054 7F0C1524 3C018009 */  lui   $at, %hi(music_slot_minutes_0)
-/* 0F6058 7F0C1528 AC780000 */  sw    $t8, ($v1)
-/* 0F605C 7F0C152C 00220821 */  addu  $at, $at, $v0
-/* 0F6060 7F0C1530 0000C812 */  mflo  $t9
-/* 0F6064 7F0C1534 AC39C618 */  sw    $t9, %lo(music_slot_minutes_0)($at)
-/* 0F6068 7F0C1538 3C018009 */  lui   $at, %hi(music_slot_seconds_0)
-/* 0F606C 7F0C153C 00C40019 */  multu $a2, $a0
-/* 0F6070 7F0C1540 00220821 */  addu  $at, $at, $v0
-/* 0F6074 7F0C1544 00004012 */  mflo  $t0
-/* 0F6078 7F0C1548 AC28C628 */  sw    $t0, %lo(music_slot_seconds_0)($at)
-/* 0F607C 7F0C154C 00000000 */  nop   
-.L7F0C1550:
-/* 0F6080 7F0C1550 03E00008 */  jr    $ra
-/* 0F6084 7F0C1554 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void reset_music_in_slot(int lParm1) 
+void reset_music_in_slot(s32 slot) 
 {
-  if (-1 < lParm1) {
-    (&music_slot_active_0)[(int)lParm1] = 0;
+  if (-1 < slot) {
+    (&music_slot_active_0)[slot] = 0;
     return;
   }
   music_slot_active_0 = 0;
-  music_slot_active_1 = 0;
-  music_slot_active_2 = 0;
-  music_slot_active_3 = 0;
   music_slot_minutes_0 = 0;
-  music_slot_minutes_1 = 0;
-  music_slot_minutes_2 = 0;
-  music_slot_minutes_3 = 0;
   music_slot_seconds_0 = 0;
+  music_slot_active_1 = 0;
+  music_slot_minutes_1 = 0;
   music_slot_seconds_1 = 0;
+  music_slot_active_2 = 0;
+  music_slot_minutes_2 = 0;
   music_slot_seconds_2 = 0;
+  music_slot_active_3 = 0;
+  music_slot_minutes_3 = 0;
   music_slot_seconds_3 = 0;
-  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel reset_music_in_slot
-/* 0F6088 7F0C1558 04800006 */  bltz  $a0, .L7F0C1574
-/* 0F608C 7F0C155C 3C018009 */   lui   $at, %hi(music_slot_active_0)
-/* 0F6090 7F0C1560 00047080 */  sll   $t6, $a0, 2
-/* 0F6094 7F0C1564 3C018009 */  lui   $at, %hi(music_slot_active_0)
-/* 0F6098 7F0C1568 002E0821 */  addu  $at, $at, $t6
-/* 0F609C 7F0C156C 03E00008 */  jr    $ra
-/* 0F60A0 7F0C1570 AC20C608 */   sw    $zero, %lo(music_slot_active_0)($at)
-
-.L7F0C1574:
-/* 0F60A4 7F0C1574 AC20C608 */  sw    $zero, %lo(music_slot_active_0)($at)
-/* 0F60A8 7F0C1578 3C018009 */  lui   $at, %hi(music_slot_minutes_0)
-/* 0F60AC 7F0C157C AC20C618 */  sw    $zero, %lo(music_slot_minutes_0)($at)
-/* 0F60B0 7F0C1580 3C018009 */  lui   $at, %hi(music_slot_seconds_0)
-/* 0F60B4 7F0C1584 AC20C628 */  sw    $zero, %lo(music_slot_seconds_0)($at)
-/* 0F60B8 7F0C1588 3C018009 */  lui   $at, %hi(music_slot_active_1)
-/* 0F60BC 7F0C158C AC20C60C */  sw    $zero, %lo(music_slot_active_1)($at)
-/* 0F60C0 7F0C1590 3C018009 */  lui   $at, %hi(music_slot_minutes_1)
-/* 0F60C4 7F0C1594 AC20C61C */  sw    $zero, %lo(music_slot_minutes_1)($at)
-/* 0F60C8 7F0C1598 3C018009 */  lui   $at, %hi(music_slot_seconds_1)
-/* 0F60CC 7F0C159C AC20C62C */  sw    $zero, %lo(music_slot_seconds_1)($at)
-/* 0F60D0 7F0C15A0 3C018009 */  lui   $at, %hi(music_slot_active_2)
-/* 0F60D4 7F0C15A4 AC20C610 */  sw    $zero, %lo(music_slot_active_2)($at)
-/* 0F60D8 7F0C15A8 3C018009 */  lui   $at, %hi(music_slot_minutes_2)
-/* 0F60DC 7F0C15AC AC20C620 */  sw    $zero, %lo(music_slot_minutes_2)($at)
-/* 0F60E0 7F0C15B0 3C018009 */  lui   $at, %hi(music_slot_seconds_2)
-/* 0F60E4 7F0C15B4 AC20C630 */  sw    $zero, %lo(music_slot_seconds_2)($at)
-/* 0F60E8 7F0C15B8 3C018009 */  lui   $at, %hi(music_slot_active_3)
-/* 0F60EC 7F0C15BC AC20C614 */  sw    $zero, %lo(music_slot_active_3)($at)
-/* 0F60F0 7F0C15C0 3C018009 */  lui   $at, %hi(music_slot_minutes_3)
-/* 0F60F4 7F0C15C4 AC20C624 */  sw    $zero, %lo(music_slot_minutes_3)($at)
-/* 0F60F8 7F0C15C8 3C018009 */  lui   $at, %hi(music_slot_seconds_3)
-/* 0F60FC 7F0C15CC AC20C634 */  sw    $zero, %lo(music_slot_seconds_3)($at)
-/* 0F6100 7F0C15D0 03E00008 */  jr    $ra
-/* 0F6104 7F0C15D4 00000000 */   nop   
-)
-#endif
-
-
 

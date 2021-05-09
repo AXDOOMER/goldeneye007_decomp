@@ -17993,12 +17993,12 @@ glabel controller_gameplay_interaction
 /* 0B6660 7F081B30 00000000 */   nop   
 /* 0B6664 7F081B34 24010001 */  li    $at, 1
 /* 0B6668 7F081B38 10410008 */  beq   $v0, $at, .L7F081B5C
-/* 0B666C 7F081B3C 3C0C8009 */   lui   $t4, %hi(stop_play_flag) 
-/* 0B6670 7F081B40 8D8CC700 */  lw    $t4, %lo(stop_play_flag)($t4)
-/* 0B6674 7F081B44 3C0B8009 */  lui   $t3, %hi(is_gameover_flag) 
+/* 0B666C 7F081B3C 3C0C8009 */   lui   $t4, %hi(g_stopPlayFlag) 
+/* 0B6670 7F081B40 8D8CC700 */  lw    $t4, %lo(g_stopPlayFlag)($t4)
+/* 0B6674 7F081B44 3C0B8009 */  lui   $t3, %hi(g_gameOverFlag) 
 /* 0B6678 7F081B48 558003A0 */  bnezl $t4, .L7F0829CC
 /* 0B667C 7F081B4C 8E0A0000 */   lw    $t2, ($s0)
-/* 0B6680 7F081B50 8D6BC704 */  lw    $t3, %lo(is_gameover_flag)($t3)
+/* 0B6680 7F081B50 8D6BC704 */  lw    $t3, %lo(g_gameOverFlag)($t3)
 /* 0B6684 7F081B54 5560039D */  bnezl $t3, .L7F0829CC
 /* 0B6688 7F081B58 8E0A0000 */   lw    $t2, ($s0)
 .L7F081B5C:
@@ -35207,12 +35207,12 @@ glabel record_damage_kills
 /* 0BE4D4 7F0899A4 00000000 */   nop   
 /* 0BE4D8 7F0899A8 28410002 */  slti  $at, $v0, 2
 /* 0BE4DC 7F0899AC 14200007 */  bnez  $at, .L7F0899CC
-/* 0BE4E0 7F0899B0 3C198009 */   lui   $t9, %hi(stop_play_flag) 
-/* 0BE4E4 7F0899B4 8F39C700 */  lw    $t9, %lo(stop_play_flag)($t9)
-/* 0BE4E8 7F0899B8 3C088009 */  lui   $t0, %hi(is_gameover_flag) 
+/* 0BE4E0 7F0899B0 3C198009 */   lui   $t9, %hi(g_stopPlayFlag) 
+/* 0BE4E4 7F0899B4 8F39C700 */  lw    $t9, %lo(g_stopPlayFlag)($t9)
+/* 0BE4E8 7F0899B8 3C088009 */  lui   $t0, %hi(g_gameOverFlag) 
 /* 0BE4EC 7F0899BC 57200120 */  bnezl $t9, .L7F089E40
 /* 0BE4F0 7F0899C0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0BE4F4 7F0899C4 8D08C704 */  lw    $t0, %lo(is_gameover_flag)($t0)
+/* 0BE4F4 7F0899C4 8D08C704 */  lw    $t0, %lo(g_gameOverFlag)($t0)
 /* 0BE4F8 7F0899C8 1500011C */  bnez  $t0, .L7F089E3C
 .L7F0899CC:
 /* 0BE4FC 7F0899CC 3C098003 */   lui   $t1, %hi(in_tank_flag) 
@@ -35571,12 +35571,12 @@ glabel record_damage_kills
 /* 0BEBE8 7F08A078 00000000 */   nop   
 /* 0BEBEC 7F08A07C 28410002 */  slti  $at, $v0, 2
 /* 0BEBF0 7F08A080 14200007 */  bnez  $at, .Ljp7F08A0A0
-/* 0BEBF4 7F08A084 3C198009 */   lui   $t9, %hi(stop_play_flag) # $t9, 0x8009
-/* 0BEBF8 7F08A088 8F39C770 */  lw    $t9, %lo(stop_play_flag)($t9)
-/* 0BEBFC 7F08A08C 3C088009 */  lui   $t0, %hi(is_gameover_flag) # $t0, 0x8009
+/* 0BEBF4 7F08A084 3C198009 */   lui   $t9, %hi(g_stopPlayFlag) # $t9, 0x8009
+/* 0BEBF8 7F08A088 8F39C770 */  lw    $t9, %lo(g_stopPlayFlag)($t9)
+/* 0BEBFC 7F08A08C 3C088009 */  lui   $t0, %hi(g_gameOverFlag) # $t0, 0x8009
 /* 0BEC00 7F08A090 5720012D */  bnezl $t9, .Ljp7F08A548
 /* 0BEC04 7F08A094 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0BEC08 7F08A098 8D08C774 */  lw    $t0, %lo(is_gameover_flag)($t0)
+/* 0BEC08 7F08A098 8D08C774 */  lw    $t0, %lo(g_gameOverFlag)($t0)
 /* 0BEC0C 7F08A09C 15000129 */  bnez  $t0, .Ljp7F08A544
 .Ljp7F08A0A0:
 /* 0BEC10 7F08A0A0 3C098003 */   lui   $t1, %hi(in_tank_flag) # $t1, 0x8003
@@ -35947,12 +35947,12 @@ glabel record_damage_kills
 /* 0BE4D4 7F0899A4 00000000 */   nop   
 /* 0BE4D8 7F0899A8 28410002 */  slti  $at, $v0, 2
 /* 0BE4DC 7F0899AC 14200007 */  bnez  $at, .L7F0899CC
-/* 0BE4E0 7F0899B0 3C198009 */   lui   $t9, %hi(stop_play_flag) 
-/* 0BE4E4 7F0899B4 8F39C700 */  lw    $t9, %lo(stop_play_flag)($t9)
-/* 0BE4E8 7F0899B8 3C088009 */  lui   $t0, %hi(is_gameover_flag) 
+/* 0BE4E0 7F0899B0 3C198009 */   lui   $t9, %hi(g_stopPlayFlag) 
+/* 0BE4E4 7F0899B4 8F39C700 */  lw    $t9, %lo(g_stopPlayFlag)($t9)
+/* 0BE4E8 7F0899B8 3C088009 */  lui   $t0, %hi(g_gameOverFlag) 
 /* 0BE4EC 7F0899BC 57200120 */  bnezl $t9, .L7F089E40
 /* 0BE4F0 7F0899C0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0BE4F4 7F0899C4 8D08C704 */  lw    $t0, %lo(is_gameover_flag)($t0)
+/* 0BE4F4 7F0899C4 8D08C704 */  lw    $t0, %lo(g_gameOverFlag)($t0)
 /* 0BE4F8 7F0899C8 1500011C */  bnez  $t0, .L7F089E3C
 .L7F0899CC:
 /* 0BE4FC 7F0899CC 3C098003 */   lui   $t1, %hi(in_tank_flag) 
