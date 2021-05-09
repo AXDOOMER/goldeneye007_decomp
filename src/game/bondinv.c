@@ -114,7 +114,7 @@ void inv_insert_item(InvItem *item) {
 }
 
 
-void reorder_inventory_ptrs_based_on_id_code(InvItem *item) {
+void inventory_remove_item(InvItem *item) {
 
     InvItem *prev;
     InvItem *next;
@@ -368,7 +368,7 @@ glabel sub_GAME_7F08C570
 /* 0C1100 7F08C5D0 80AB0080 */  lb    $t3, 0x80($a1)
 /* 0C1104 7F08C5D4 160B0005 */  bne   $s0, $t3, .L7F08C5EC
 /* 0C1108 7F08C5D8 00000000 */   nop   
-/* 0C110C 7F08C5DC 0FC2307F */  jal   reorder_inventory_ptrs_based_on_id_code
+/* 0C110C 7F08C5DC 0FC2307F */  jal   inventory_remove_item
 /* 0C1110 7F08C5E0 AFA50024 */   sw    $a1, 0x24($sp)
 /* 0C1114 7F08C5E4 10000008 */  b     .L7F08C608
 /* 0C1118 7F08C5E8 8FA20024 */   lw    $v0, 0x24($sp)
@@ -437,7 +437,7 @@ glabel sub_GAME_7F08C61C
 /* 0C11C8 7F08C698 80990080 */  lb    $t9, 0x80($a0)
 /* 0C11CC 7F08C69C 16590011 */  bne   $s2, $t9, .L7F08C6E4
 /* 0C11D0 7F08C6A0 00000000 */   nop   
-/* 0C11D4 7F08C6A4 0FC2307F */  jal   reorder_inventory_ptrs_based_on_id_code
+/* 0C11D4 7F08C6A4 0FC2307F */  jal   inventory_remove_item
 /* 0C11D8 7F08C6A8 02002025 */   move  $a0, $s0
 /* 0C11DC 7F08C6AC 3C088008 */  lui   $t0, %hi(pPlayer) 
 /* 0C11E0 7F08C6B0 8D08A0B0 */  lw    $t0, %lo(pPlayer)($t0)
@@ -449,7 +449,7 @@ glabel sub_GAME_7F08C61C
 /* 0C11F4 7F08C6C4 8E090004 */  lw    $t1, 4($s0)
 /* 0C11F8 7F08C6C8 16490006 */  bne   $s2, $t1, .L7F08C6E4
 /* 0C11FC 7F08C6CC 00000000 */   nop   
-/* 0C1200 7F08C6D0 0FC2307F */  jal   reorder_inventory_ptrs_based_on_id_code
+/* 0C1200 7F08C6D0 0FC2307F */  jal   inventory_remove_item
 /* 0C1204 7F08C6D4 02002025 */   move  $a0, $s0
 /* 0C1208 7F08C6D8 3C0A8008 */  lui   $t2, %hi(pPlayer) 
 /* 0C120C 7F08C6DC 8D4AA0B0 */  lw    $t2, %lo(pPlayer)($t2)
