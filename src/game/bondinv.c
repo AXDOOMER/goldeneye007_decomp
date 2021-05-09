@@ -95,7 +95,7 @@ void inv_sort_item(InvItem *subject) {
     }
 }
 
-void add_additional_weapon_slot_to_player_inventory_guess(InvItem *item) {
+void inv_insert_item(InvItem *item) {
   
   if (pPlayer->ptr_inventory_first_in_cycle) {
         
@@ -292,7 +292,7 @@ int add_item_to_inventory(ITEM_IDS item)
         {
             nextItem->type = INV_ITEM_WEAPON;
             nextItem->type_inv_item.type_weap.weapon = item;
-            add_additional_weapon_slot_to_player_inventory_guess(nextItem);
+            inv_insert_item(nextItem);
         }
 
         if ((pPlayer->equipallguns) && (item < ITEM_BOMBCASE))
@@ -325,7 +325,7 @@ int add_doubles_item_to_inventory(int right, int left)
             
             item->type_inv_item.type_dual.weapon_right = right;
             item->type_inv_item.type_dual.weapon_left = left;
-            add_additional_weapon_slot_to_player_inventory_guess(item);
+            inv_insert_item(item);
         }
 
         return TRUE;
@@ -490,7 +490,7 @@ int add_prop_to_inventory(PropRecord *prop) {
     if (item) {
         item->type = INV_ITEM_PROP;
         item->type_inv_item.type_prop.prop = prop;
-        add_additional_weapon_slot_to_player_inventory_guess(item);
+        inv_insert_item(item);
     }
 
     return TRUE;
