@@ -332,106 +332,41 @@ int add_doubles_item_to_inventory(int right, int left)
 }
 
 
-#ifdef NONMATCHING
-// Requires WeaponObjRecord struct
-WeaponObjRecord *sub_GAME_7F08C570(WeaponObjRecord *arg0)
+WeaponObjRecord *sub_GAME_7F08C570(s32 weaponnum)
 {
-    InvItem *fist_item = pPlayer->ptr_inventory_first_in_cycle;
+    if (pPlayer->ptr_inventory_first_in_cycle) {
+        InvItem *item = pPlayer->ptr_inventory_first_in_cycle->next;
 
-    if (fist_item != 0)
-    {
-        InvItem *item = fist_item->next;
-
-        while (1) {
-
+        while (TRUE) {
             InvItem *next = item->next;
         
-            if (item->type == INV_ITEM_PROP)
-            {
-                PropRecord *temp_v1 = item->type_inv_item.type_prop.prop;
+            if (item->type == INV_ITEM_PROP) {
+                PropRecord *prop = item->type_inv_item.type_prop.prop;
                 
-                if (temp_v1->type == 4) // weapon?
-                {
-                    WeaponObjRecord *temp_a1 = (WeaponObjRecord *)temp_v1->Entityp.weapon;
+                if (prop->type == 4) {
+                    ObjectRecord *obj = prop->Entityp.obj;
                     
-                    if ((temp_a1->weaponnum == 8) && (arg0 == temp_a1->dualweapon))
-                    {
-                        WeaponObjRecord *sp24 = temp_a1;
-                        inventory_remove_item(item);
-                        return sp24;
+                    if (obj->head.type == 8) { // objtype 8 WeaponObjRecord
+                        WeaponObjRecord *weapon = (WeaponObjRecord *)prop->Entityp.obj;
+
+                        if ((s32)weapon->weaponnum == weaponnum) {
+                            inventory_remove_item(item);
+                            return weapon;
+                        }
                     }
                 }
             }
 
-            if ((item == fist_item) || (!fist_item))
-            {   
+            if ((item == pPlayer->ptr_inventory_first_in_cycle) || (!pPlayer->ptr_inventory_first_in_cycle)) {   
                 break;
             }
 
             item = next;
         }
-        
     }
 
     return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08C570
-/* 0C10A0 7F08C570 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0C10A4 7F08C574 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0C10A8 7F08C578 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 0C10AC 7F08C57C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0C10B0 7F08C580 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0C10B4 7F08C584 8DC611E0 */  lw    $a2, 0x11e0($t6)
-/* 0C10B8 7F08C588 00808025 */  move  $s0, $a0
-/* 0C10BC 7F08C58C 240A0008 */  li    $t2, 8
-/* 0C10C0 7F08C590 10C0001C */  beqz  $a2, .L7F08C604
-/* 0C10C4 7F08C594 24090004 */   li    $t1, 4
-/* 0C10C8 7F08C598 8CC4000C */  lw    $a0, 0xc($a2)
-/* 0C10CC 7F08C59C 24080002 */  li    $t0, 2
-.L7F08C5A0:
-/* 0C10D0 7F08C5A0 8C8F0000 */  lw    $t7, ($a0)
-/* 0C10D4 7F08C5A4 8C87000C */  lw    $a3, 0xc($a0)
-/* 0C10D8 7F08C5A8 150F0010 */  bne   $t0, $t7, .L7F08C5EC
-/* 0C10DC 7F08C5AC 00000000 */   nop   
-/* 0C10E0 7F08C5B0 8C830004 */  lw    $v1, 4($a0)
-/* 0C10E4 7F08C5B4 90780000 */  lbu   $t8, ($v1)
-/* 0C10E8 7F08C5B8 1538000C */  bne   $t1, $t8, .L7F08C5EC
-/* 0C10EC 7F08C5BC 00000000 */   nop   
-/* 0C10F0 7F08C5C0 8C650004 */  lw    $a1, 4($v1)
-/* 0C10F4 7F08C5C4 90B90003 */  lbu   $t9, 3($a1)
-/* 0C10F8 7F08C5C8 15590008 */  bne   $t2, $t9, .L7F08C5EC
-/* 0C10FC 7F08C5CC 00000000 */   nop   
-/* 0C1100 7F08C5D0 80AB0080 */  lb    $t3, 0x80($a1)
-/* 0C1104 7F08C5D4 160B0005 */  bne   $s0, $t3, .L7F08C5EC
-/* 0C1108 7F08C5D8 00000000 */   nop   
-/* 0C110C 7F08C5DC 0FC2307F */  jal   inventory_remove_item
-/* 0C1110 7F08C5E0 AFA50024 */   sw    $a1, 0x24($sp)
-/* 0C1114 7F08C5E4 10000008 */  b     .L7F08C608
-/* 0C1118 7F08C5E8 8FA20024 */   lw    $v0, 0x24($sp)
-.L7F08C5EC:
-/* 0C111C 7F08C5EC 50860006 */  beql  $a0, $a2, .L7F08C608
-/* 0C1120 7F08C5F0 00001025 */   move  $v0, $zero
-/* 0C1124 7F08C5F4 50C00004 */  beql  $a2, $zero, .L7F08C608
-/* 0C1128 7F08C5F8 00001025 */   move  $v0, $zero
-/* 0C112C 7F08C5FC 1000FFE8 */  b     .L7F08C5A0
-/* 0C1130 7F08C600 00E02025 */   move  $a0, $a3
-.L7F08C604:
-/* 0C1134 7F08C604 00001025 */  move  $v0, $zero
-.L7F08C608:
-/* 0C1138 7F08C608 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0C113C 7F08C60C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0C1140 7F08C610 27BD0038 */  addiu $sp, $sp, 0x38
-/* 0C1144 7F08C614 03E00008 */  jr    $ra
-/* 0C1148 7F08C618 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F08C61C(void) {
