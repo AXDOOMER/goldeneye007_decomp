@@ -31,64 +31,64 @@ void reinit_inventory(void) {
 void inv_sort_item(InvItem *subject) {
     
     InvItem *candidate;
-	s32 subjweapon1 = -1;
-	s32 subjweapon2 = -1;
-	s32 candweapon1;
-	s32 candweapon2;
+    s32 subjweapon1 = -1;
+    s32 subjweapon2 = -1;
+    s32 candweapon1;
+    s32 candweapon2;
 
-	// Prepare subject's properties for comparisons
-	if (subject->type == INV_ITEM_WEAPON) {
-		subjweapon1 = subject->type_inv_item.type_weap.weapon;
-	} else if (subject->type == INV_ITEM_DUAL) {
-		subjweapon1 = subject->type_inv_item.type_dual.weapon_right;
-		subjweapon2 = subject->type_inv_item.type_dual.weapon_left;
-	} else if (subject->type == INV_ITEM_PROP) {
-		subjweapon1 = 2000;
-	}
+    // Prepare subject's properties for comparisons
+    if (subject->type == INV_ITEM_WEAPON) {
+        subjweapon1 = subject->type_inv_item.type_weap.weapon;
+    } else if (subject->type == INV_ITEM_DUAL) {
+        subjweapon1 = subject->type_inv_item.type_dual.weapon_right;
+        subjweapon2 = subject->type_inv_item.type_dual.weapon_left;
+    } else if (subject->type == INV_ITEM_PROP) {
+        subjweapon1 = 2000;
+    }
 
     candidate = subject->next;
 
     while (pPlayer->ptr_inventory_first_in_cycle != subject->next) {
         // Prepare candidate's properties for comparisons
         candweapon1 = -1;
-		candweapon2 = -1;
+        candweapon2 = -1;
 
         if (subject->next->type == INV_ITEM_WEAPON) {
-			candweapon1 = subject->next->type_inv_item.type_weap.weapon;
-		} else if (subject->next->type == INV_ITEM_DUAL) {
-			candweapon1 = subject->next->type_inv_item.type_dual.weapon_right;
-			candweapon2 = subject->next->type_inv_item.type_dual.weapon_left;
-		} else if (subject->next->type == INV_ITEM_PROP) {
-			candweapon1 = 1000;
-		}
+            candweapon1 = subject->next->type_inv_item.type_weap.weapon;
+        } else if (subject->next->type == INV_ITEM_DUAL) {
+            candweapon1 = subject->next->type_inv_item.type_dual.weapon_right;
+            candweapon2 = subject->next->type_inv_item.type_dual.weapon_left;
+        } else if (subject->next->type == INV_ITEM_PROP) {
+            candweapon1 = 1000;
+        }
 
         // If the candidate should sort ahead of subject
-		// then subject is in the desired position.
-		if (candweapon1 >= subjweapon1 &&
-				(subjweapon1 != candweapon1 || subjweapon2 <= candweapon2)) {
-			return;
-		}
+        // then subject is in the desired position.
+        if (candweapon1 >= subjweapon1 &&
+                (subjweapon1 != candweapon1 || subjweapon2 <= candweapon2)) {
+            return;
+        }
 
         // If there's only two items in the list then there's no point swapping
-		// them. Just set the list head to the candidate.
-		if (candidate->next == subject) {
-			pPlayer->ptr_inventory_first_in_cycle = candidate;
-		} else {
-			// Swap subject with candidate
-			subject->next = candidate->next;
-			candidate->prev = subject->prev;
-			subject->prev = candidate;
-			candidate->next = subject;
-			subject->next->prev = subject;
-			candidate->prev->next = candidate;
+        // them. Just set the list head to the candidate.
+        if (candidate->next == subject) {
+            pPlayer->ptr_inventory_first_in_cycle = candidate;
+        } else {
+            // Swap subject with candidate
+            subject->next = candidate->next;
+            candidate->prev = subject->prev;
+            subject->prev = candidate;
+            candidate->next = subject;
+            subject->next->prev = subject;
+            candidate->prev->next = candidate;
 
-			// Set new list head if subject was the head
-			if (subject == pPlayer->ptr_inventory_first_in_cycle) {
-				pPlayer->ptr_inventory_first_in_cycle = candidate;
-			}
-		}
+            // Set new list head if subject was the head
+            if (subject == pPlayer->ptr_inventory_first_in_cycle) {
+                pPlayer->ptr_inventory_first_in_cycle = candidate;
+            }
+        }
 
-		candidate = subject->next;
+        candidate = subject->next;
     }
 }
 
@@ -3105,66 +3105,66 @@ u8 *weapon_get_activated_text(ITEM_IDS weaponnum) {
 
 void increment_held_time(s32 weapon1, s32 weapon2)
 {
-	s32 leastusedtime;
-	s32 leastusedindex;
-	s32 i;
+    s32 leastusedtime;
+    s32 leastusedindex;
+    s32 i;
 
-	if (!bondwalkItemCheckBitflags(weapon1, 0x20000)) {
-		return;
-	}
+    if (!bondwalkItemCheckBitflags(weapon1, 0x20000)) {
+        return;
+    }
 
-	leastusedtime = 0x7fffffff;
-	leastusedindex = 0;
+    leastusedtime = 0x7fffffff;
+    leastusedindex = 0;
 
-	if (!bondwalkItemCheckBitflags(weapon2, 0x20000)) {
-		weapon2 = 0;
-	}
+    if (!bondwalkItemCheckBitflags(weapon2, 0x20000)) {
+        weapon2 = 0;
+    }
 
-	for (i = 0; i < 10; i++) {
-		s32 time = pPlayer->gunheldarr[i].totaltime;
+    for (i = 0; i < 10; i++) {
+        s32 time = pPlayer->gunheldarr[i].totaltime;
 
-		if (time >= 0) {
-			if (weapon1 == pPlayer->gunheldarr[i].weapon1 &&
-					weapon2 == pPlayer->gunheldarr[i].weapon2) {
-				pPlayer->gunheldarr[i].totaltime = time + clock_timer;
-				break;
-			}
+        if (time >= 0) {
+            if (weapon1 == pPlayer->gunheldarr[i].weapon1 &&
+                    weapon2 == pPlayer->gunheldarr[i].weapon2) {
+                pPlayer->gunheldarr[i].totaltime = time + clock_timer;
+                break;
+            }
 
-			if (time < leastusedtime) {
-				leastusedtime = time;
-				leastusedindex = i;
-			}
-		} else {
-			leastusedindex = i;
-			i = 10;
-			break;
-		}
-	}
+            if (time < leastusedtime) {
+                leastusedtime = time;
+                leastusedindex = i;
+            }
+        } else {
+            leastusedindex = i;
+            i = 10;
+            break;
+        }
+    }
 
-	if (i == 10) {
-		pPlayer->gunheldarr[leastusedindex].totaltime = clock_timer;
-		pPlayer->gunheldarr[leastusedindex].weapon1 = weapon1;
-		pPlayer->gunheldarr[leastusedindex].weapon2 = weapon2;
-	}
+    if (i == 10) {
+        pPlayer->gunheldarr[leastusedindex].totaltime = clock_timer;
+        pPlayer->gunheldarr[leastusedindex].weapon1 = weapon1;
+        pPlayer->gunheldarr[leastusedindex].weapon2 = weapon2;
+    }
 }
 
 s32 get_weapon_of_choice(s32 *weapon1, s32 *weapon2)
 {
-	s32 mosttime = -1;
-	s32 i;
+    s32 mosttime = -1;
+    s32 i;
 
-	*weapon1 = 0;
-	*weapon2 = 0;
+    *weapon1 = 0;
+    *weapon2 = 0;
 
-	for (i = 0; i < 10; i++) {
+    for (i = 0; i < 10; i++) {
 
-		if (pPlayer->gunheldarr[i].totaltime >= 0
-				&& pPlayer->gunheldarr[i].totaltime > mosttime) {
-			mosttime = pPlayer->gunheldarr[i].totaltime;
-			*weapon1 = pPlayer->gunheldarr[i].weapon1;
-			*weapon2 = pPlayer->gunheldarr[i].weapon2;
-		}
-	}
+        if (pPlayer->gunheldarr[i].totaltime >= 0
+                && pPlayer->gunheldarr[i].totaltime > mosttime) {
+            mosttime = pPlayer->gunheldarr[i].totaltime;
+            *weapon1 = pPlayer->gunheldarr[i].weapon1;
+            *weapon2 = pPlayer->gunheldarr[i].weapon2;
+        }
+    }
 }
 
 
