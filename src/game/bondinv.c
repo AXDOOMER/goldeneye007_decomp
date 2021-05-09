@@ -10,14 +10,11 @@
 #include "game/lvl.h"
 #include "bondtypes.h"
 
-void reinit_BONDdata_inventory(void) {
-
+void reinit_inventory(void) {
     s32 i;
 
     for (i=0; i < pPlayer->equipmaxitems; i++) {
-        
         pPlayer->p_itemcur[i].type = -1;
-
     }
     
     pPlayer->ptr_inventory_first_in_cycle = NULL;

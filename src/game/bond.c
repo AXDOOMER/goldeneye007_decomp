@@ -34042,7 +34042,7 @@ glabel mp_respawn_handler
 /* 0BD680 7F088B50 8E220000 */  lw    $v0, ($s1)
 /* 0BD684 7F088B54 C44804BC */  lwc1  $f8, 0x4bc($v0)
 /* 0BD688 7F088B58 460C4283 */  div.s $f10, $f8, $f12
-/* 0BD68C 7F088B5C 0FC22FFC */  jal   reinit_BONDdata_inventory
+/* 0BD68C 7F088B5C 0FC22FFC */  jal   reinit_inventory
 /* 0BD690 7F088B60 E44A03C0 */   swc1  $f10, 0x3c0($v0)
 /* 0BD694 7F088B64 8E290000 */  lw    $t1, ($s1)
 /* 0BD698 7F088B68 24020008 */  li    $v0, 8

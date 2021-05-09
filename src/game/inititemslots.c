@@ -50,5 +50,5 @@ void alloc_additional_item_slots(s32 additionalentries)
 {
   pPlayer->equipmaxitems = additionalentries + 0x1e;
   pPlayer->p_itemcur = mempAllocBytesInBank((pPlayer->equipmaxitems * 0x14 + 0xfU | 0xf) ^ 0xf,'\x04');
-  reinit_BONDdata_inventory();
+  reinit_inventory();
 }
