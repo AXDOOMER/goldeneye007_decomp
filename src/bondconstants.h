@@ -499,6 +499,17 @@ typedef enum MENU {
     MENU_INVALID = -1
 } MENU;
 
+typedef enum MPMENU {
+    MENU_GOWOC = 0,
+    MENU_LOSSES,
+    MENU_KILLS,
+    MENU_SCORES,
+    MENU_PAUSE,
+    MENU_EXIT,
+    MENU_6,
+    MENU_7,
+} MPMENU;
+
 typedef enum CONTROLLER_CONFIG
 {
     CONTROLLER_CONFIG_HONEY = 0x0,

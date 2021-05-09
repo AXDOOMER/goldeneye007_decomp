@@ -457,7 +457,7 @@ glabel stage_load
 .L7F0BDD98:
 /* 0F28C8 7F0BDD98 0FC013B0 */  jal   something_with_stage_objectives
 /* 0F28CC 7F0BDD9C 00000000 */   nop   
-/* 0F28D0 7F0BDDA0 0FC30802 */  jal   unpause_game
+/* 0F28D0 7F0BDDA0 0FC30802 */  jal   mpwatchUnpauseGame
 /* 0F28D4 7F0BDDA4 00000000 */   nop   
 /* 0F28D8 7F0BDDA8 0FC26E08 */  jal   sub_GAME_7F09B820
 /* 0F28DC 7F0BDDAC 00000000 */   nop   
@@ -762,7 +762,7 @@ glabel stage_load
 .Ljp7F0BE958:
 /* 0F34C8 7F0BE958 0FC013B4 */  jal   something_with_stage_objectives
 /* 0F34CC 7F0BE95C 00000000 */   nop   
-/* 0F34D0 7F0BE960 0FC30B2E */  jal   unpause_game
+/* 0F34D0 7F0BE960 0FC30B2E */  jal   mpwatchUnpauseGame
 /* 0F34D4 7F0BE964 00000000 */   nop   
 /* 0F34D8 7F0BE968 0FC270F0 */  jal   sub_GAME_7F09B820
 /* 0F34DC 7F0BE96C 00000000 */   nop   
@@ -1062,7 +1062,7 @@ glabel stage_load
 .L7F0BDD98:
 /* 0F28C8 7F0BDD98 0FC013B0 */  jal   something_with_stage_objectives
 /* 0F28CC 7F0BDD9C 00000000 */   nop   
-/* 0F28D0 7F0BDDA0 0FC30802 */  jal   unpause_game
+/* 0F28D0 7F0BDDA0 0FC30802 */  jal   mpwatchUnpauseGame
 /* 0F28D4 7F0BDDA4 00000000 */   nop   
 /* 0F28D8 7F0BDDA8 0FC26E08 */  jal   sub_GAME_7F09B820
 /* 0F28DC 7F0BDDAC 00000000 */   nop   
@@ -3656,7 +3656,7 @@ glabel manage_mp_game
 /* 0F3AD8 7F0BEFA8 10000003 */  b     .L7F0BEFB8
 /* 0F3ADC 7F0BEFAC 00000000 */   nop   
 .L7F0BEFB0:
-/* 0F3AE0 7F0BEFB0 0FC30948 */  jal   set_stopplay_flag
+/* 0F3AE0 7F0BEFB0 0FC30948 */  jal   mpwatchSetStopPlayFlag
 /* 0F3AE4 7F0BEFB4 00000000 */   nop   
 .L7F0BEFB8:
 /* 0F3AE8 7F0BEFB8 0FC051D6 */  jal   get_scenario
@@ -3810,7 +3810,7 @@ glabel manage_mp_game
 .L7F0BF1D0:
 /* 0F3D00 7F0BF1D0 14200003 */  bnez  $at, .L7F0BF1E0
 /* 0F3D04 7F0BF1D4 00000000 */   nop   
-/* 0F3D08 7F0BF1D8 0FC30948 */  jal   set_stopplay_flag
+/* 0F3D08 7F0BF1D8 0FC30948 */  jal   mpwatchSetStopPlayFlag
 /* 0F3D0C 7F0BF1DC 00000000 */   nop   
 .L7F0BF1E0:
 /* 0F3D10 7F0BF1E0 3C028005 */  lui   $v0, %hi(clock_timer)
@@ -4547,7 +4547,7 @@ glabel manage_mp_game
 /* 0F4750 7F0BFBE0 10000003 */  b     .Ljp7F0BFBF0
 /* 0F4754 7F0BFBE4 00000000 */   nop   
 .Ljp7F0BFBE8:
-/* 0F4758 7F0BFBE8 0FC30C74 */  jal   set_stopplay_flag
+/* 0F4758 7F0BFBE8 0FC30C74 */  jal   mpwatchSetStopPlayFlag
 /* 0F475C 7F0BFBEC 00000000 */   nop   
 .Ljp7F0BFBF0:
 /* 0F4760 7F0BFBF0 0FC05202 */  jal   get_scenario
@@ -4701,7 +4701,7 @@ glabel manage_mp_game
 .Ljp7F0BFE08:
 /* 0F4978 7F0BFE08 14200003 */  bnez  $at, .Ljp7F0BFE18
 /* 0F497C 7F0BFE0C 00000000 */   nop   
-/* 0F4980 7F0BFE10 0FC30C74 */  jal   set_stopplay_flag
+/* 0F4980 7F0BFE10 0FC30C74 */  jal   mpwatchSetStopPlayFlag
 /* 0F4984 7F0BFE14 00000000 */   nop   
 .Ljp7F0BFE18:
 /* 0F4988 7F0BFE18 3C028005 */  lui   $v0, %hi(clock_timer) # $v0, 0x8005
@@ -5420,7 +5420,7 @@ glabel manage_mp_game
 /* 0F3AD8 7F0BEFA8 10000003 */  b     .L7F0BEFB8
 /* 0F3ADC 7F0BEFAC 00000000 */   nop   
 .L7F0BEFB0:
-/* 0F3AE0 7F0BEFB0 0FC30948 */  jal   set_stopplay_flag
+/* 0F3AE0 7F0BEFB0 0FC30948 */  jal   mpwatchSetStopPlayFlag
 /* 0F3AE4 7F0BEFB4 00000000 */   nop   
 .L7F0BEFB8:
 /* 0F3AE8 7F0BEFB8 0FC051D6 */  jal   get_scenario
@@ -5574,7 +5574,7 @@ glabel manage_mp_game
 .L7F0BF1D0:
 /* 0F3D00 7F0BF1D0 14200003 */  bnez  $at, .L7F0BF1E0
 /* 0F3D04 7F0BF1D4 00000000 */   nop   
-/* 0F3D08 7F0BF1D8 0FC30948 */  jal   set_stopplay_flag
+/* 0F3D08 7F0BF1D8 0FC30948 */  jal   mpwatchSetStopPlayFlag
 /* 0F3D0C 7F0BF1DC 00000000 */   nop   
 .L7F0BF1E0:
 /* 0F3D10 7F0BF1E0 3C028005 */  lui   $v0, %hi(clock_timer)
