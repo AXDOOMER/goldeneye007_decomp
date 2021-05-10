@@ -370,7 +370,7 @@ WeaponObjRecord *sub_GAME_7F08C570(ITEM_IDS weaponnum)
 
 void sub_GAME_7F08C61C(ITEM_IDS weaponnum)
 {
-    if (pPlayer->ptr_inventory_first_in_cycle != 0) {
+    if (pPlayer->ptr_inventory_first_in_cycle) {
         InvItem *item = pPlayer->ptr_inventory_first_in_cycle->next;
 
         while (TRUE) {
