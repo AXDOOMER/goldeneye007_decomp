@@ -691,6 +691,17 @@ typedef enum PROPDEF_TYPE
     PROPDEF_MAX
 } PROPDEF_TYPE;
 
+typedef enum PROP_TYPE
+{
+    PROP_TYPE_NUL       = 0,
+    PROP_TYPE_OBJ       = 1,
+    PROP_TYPE_DOOR      = 2, 
+    PROP_TYPE_CHR       = 3,
+    PROP_TYPE_WEAPON    = 4,
+    PROP_TYPE_PLAYER    = 5,
+    PROP_TYPE_VIEWER    = 6
+} PROP_TYPE;
+
 typedef enum INTRO_TYPE
 {
     INTROTYPE_SPAWN = 0,
