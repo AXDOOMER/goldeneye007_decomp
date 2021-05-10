@@ -368,89 +368,43 @@ WeaponObjRecord *sub_GAME_7F08C570(ITEM_IDS weaponnum)
     return NULL;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F08C61C(void) {
+void sub_GAME_7F08C61C(ITEM_IDS weaponnum)
+{
+    if (pPlayer->ptr_inventory_first_in_cycle != 0) {
+        InvItem *item = pPlayer->ptr_inventory_first_in_cycle->next;
 
+        while (TRUE) {
+            InvItem *next = item->next;
+            
+            if (item->type == INV_ITEM_PROP) {
+                PropRecord *prop = item->type_inv_item.type_prop.prop;
+                
+                if (prop->type == PROP_TYPE_WEAPON) {
+                    ObjectRecord *obj = prop->Entityp.obj;
+
+                    if (obj->head.type == PROPDEF_COLLECTABLE) {
+                        WeaponObjRecord *weapon = (WeaponObjRecord *)prop->Entityp.obj;
+                        
+                        if (weapon->weaponnum == weaponnum) {
+                            inventory_remove_item(item);
+                        }
+                    }
+                }
+
+            } else if (item->type == INV_ITEM_WEAPON) {
+                if (item->type_inv_item.type_weap.weapon == weaponnum) {
+                    inventory_remove_item(item);
+                }
+            }
+
+            if ((item == pPlayer->ptr_inventory_first_in_cycle) || (!pPlayer->ptr_inventory_first_in_cycle)) {   
+                break;
+            }
+
+            item = next;
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08C61C
-/* 0C114C 7F08C61C 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 0C1150 7F08C620 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 0C1154 7F08C624 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 0C1158 7F08C628 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 0C115C 7F08C62C AFB60030 */  sw    $s6, 0x30($sp)
-/* 0C1160 7F08C630 AFB5002C */  sw    $s5, 0x2c($sp)
-/* 0C1164 7F08C634 AFB40028 */  sw    $s4, 0x28($sp)
-/* 0C1168 7F08C638 AFB30024 */  sw    $s3, 0x24($sp)
-/* 0C116C 7F08C63C AFB20020 */  sw    $s2, 0x20($sp)
-/* 0C1170 7F08C640 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0C1174 7F08C644 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0C1178 7F08C648 8DC511E0 */  lw    $a1, 0x11e0($t6)
-/* 0C117C 7F08C64C 00809025 */  move  $s2, $a0
-/* 0C1180 7F08C650 24150008 */  li    $s5, 8
-/* 0C1184 7F08C654 10A00029 */  beqz  $a1, .L7F08C6FC
-/* 0C1188 7F08C658 24160001 */   li    $s6, 1
-/* 0C118C 7F08C65C 8CB0000C */  lw    $s0, 0xc($a1)
-/* 0C1190 7F08C660 24140004 */  li    $s4, 4
-/* 0C1194 7F08C664 24130002 */  li    $s3, 2
-.L7F08C668:
-/* 0C1198 7F08C668 8E020000 */  lw    $v0, ($s0)
-/* 0C119C 7F08C66C 8E11000C */  lw    $s1, 0xc($s0)
-/* 0C11A0 7F08C670 16620012 */  bne   $s3, $v0, .L7F08C6BC
-/* 0C11A4 7F08C674 00000000 */   nop   
-/* 0C11A8 7F08C678 8E030004 */  lw    $v1, 4($s0)
-/* 0C11AC 7F08C67C 906F0000 */  lbu   $t7, ($v1)
-/* 0C11B0 7F08C680 168F0018 */  bne   $s4, $t7, .L7F08C6E4
-/* 0C11B4 7F08C684 00000000 */   nop   
-/* 0C11B8 7F08C688 8C640004 */  lw    $a0, 4($v1)
-/* 0C11BC 7F08C68C 90980003 */  lbu   $t8, 3($a0)
-/* 0C11C0 7F08C690 16B80014 */  bne   $s5, $t8, .L7F08C6E4
-/* 0C11C4 7F08C694 00000000 */   nop   
-/* 0C11C8 7F08C698 80990080 */  lb    $t9, 0x80($a0)
-/* 0C11CC 7F08C69C 16590011 */  bne   $s2, $t9, .L7F08C6E4
-/* 0C11D0 7F08C6A0 00000000 */   nop   
-/* 0C11D4 7F08C6A4 0FC2307F */  jal   inventory_remove_item
-/* 0C11D8 7F08C6A8 02002025 */   move  $a0, $s0
-/* 0C11DC 7F08C6AC 3C088008 */  lui   $t0, %hi(pPlayer) 
-/* 0C11E0 7F08C6B0 8D08A0B0 */  lw    $t0, %lo(pPlayer)($t0)
-/* 0C11E4 7F08C6B4 1000000B */  b     .L7F08C6E4
-/* 0C11E8 7F08C6B8 8D0511E0 */   lw    $a1, 0x11e0($t0)
-.L7F08C6BC:
-/* 0C11EC 7F08C6BC 16C20009 */  bne   $s6, $v0, .L7F08C6E4
-/* 0C11F0 7F08C6C0 00000000 */   nop   
-/* 0C11F4 7F08C6C4 8E090004 */  lw    $t1, 4($s0)
-/* 0C11F8 7F08C6C8 16490006 */  bne   $s2, $t1, .L7F08C6E4
-/* 0C11FC 7F08C6CC 00000000 */   nop   
-/* 0C1200 7F08C6D0 0FC2307F */  jal   inventory_remove_item
-/* 0C1204 7F08C6D4 02002025 */   move  $a0, $s0
-/* 0C1208 7F08C6D8 3C0A8008 */  lui   $t2, %hi(pPlayer) 
-/* 0C120C 7F08C6DC 8D4AA0B0 */  lw    $t2, %lo(pPlayer)($t2)
-/* 0C1210 7F08C6E0 8D4511E0 */  lw    $a1, 0x11e0($t2)
-.L7F08C6E4:
-/* 0C1214 7F08C6E4 52050006 */  beql  $s0, $a1, .L7F08C700
-/* 0C1218 7F08C6E8 8FBF0034 */   lw    $ra, 0x34($sp)
-/* 0C121C 7F08C6EC 50A00004 */  beql  $a1, $zero, .L7F08C700
-/* 0C1220 7F08C6F0 8FBF0034 */   lw    $ra, 0x34($sp)
-/* 0C1224 7F08C6F4 1000FFDC */  b     .L7F08C668
-/* 0C1228 7F08C6F8 02208025 */   move  $s0, $s1
-.L7F08C6FC:
-/* 0C122C 7F08C6FC 8FBF0034 */  lw    $ra, 0x34($sp)
-.L7F08C700:
-/* 0C1230 7F08C700 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0C1234 7F08C704 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 0C1238 7F08C708 8FB20020 */  lw    $s2, 0x20($sp)
-/* 0C123C 7F08C70C 8FB30024 */  lw    $s3, 0x24($sp)
-/* 0C1240 7F08C710 8FB40028 */  lw    $s4, 0x28($sp)
-/* 0C1244 7F08C714 8FB5002C */  lw    $s5, 0x2c($sp)
-/* 0C1248 7F08C718 8FB60030 */  lw    $s6, 0x30($sp)
-/* 0C124C 7F08C71C 03E00008 */  jr    $ra
-/* 0C1250 7F08C720 27BD0038 */   addiu $sp, $sp, 0x38
-)
-#endif
-
-
 
 int add_prop_to_inventory(PropRecord *prop) {
     
