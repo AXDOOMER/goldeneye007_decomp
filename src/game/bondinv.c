@@ -332,7 +332,7 @@ int add_doubles_item_to_inventory(int right, int left)
 }
 
 
-WeaponObjRecord *sub_GAME_7F08C570(s32 weaponnum)
+WeaponObjRecord *sub_GAME_7F08C570(ITEM_IDS weaponnum)
 {
     if (pPlayer->ptr_inventory_first_in_cycle) {
         InvItem *item = pPlayer->ptr_inventory_first_in_cycle->next;
@@ -343,10 +343,10 @@ WeaponObjRecord *sub_GAME_7F08C570(s32 weaponnum)
             if (item->type == INV_ITEM_PROP) {
                 PropRecord *prop = item->type_inv_item.type_prop.prop;
                 
-                if (prop->type == 4) {
+                if (prop->type == PROP_TYPE_WEAPON) {
                     ObjectRecord *obj = prop->Entityp.obj;
                     
-                    if (obj->head.type == 8) { // objtype 8 WeaponObjRecord
+                    if (obj->head.type == PROPDEF_COLLECTABLE) {
                         WeaponObjRecord *weapon = (WeaponObjRecord *)prop->Entityp.obj;
 
                         if ((s32)weapon->weaponnum == weaponnum) {
@@ -1965,10 +1965,10 @@ s32 inv_has_key_flags(u32 wantkeyflags)
         if (item->type == INV_ITEM_PROP) {
             PropRecord *prop = item->type_inv_item.type_prop.prop;
 
-            if (prop->type == 1) {
+            if (prop->type == PROP_TYPE_OBJ) {
                 ObjectRecord *obj = prop->Entityp.obj;
 
-                if (obj->head.type == 4) {
+                if (obj->head.type == PROPDEF_KEY) {
                     KeyRecord *key = (KeyRecord *)prop->Entityp.obj;
 
                     heldkeyflags |= key->keyflags;
@@ -2006,7 +2006,7 @@ s32 checkHasGEKey(void)
 
             prop = item->type_inv_item.type_prop.prop;
             
-            if (prop->type == 4) {
+            if (prop->type == PROP_TYPE_WEAPON) {
 
                 obj = prop->Entityp.obj;
                 
@@ -2092,7 +2092,7 @@ s32 count_total_items_in_inventory(void) {
             
             PropRecord *prop = item->type_inv_item.type_prop.prop;
 
-            if (prop->type == 4) {
+            if (prop->type == PROP_TYPE_WEAPON) {
 
                 ObjectRecord *obj = prop->Entityp.obj;
      
@@ -2100,7 +2100,7 @@ s32 count_total_items_in_inventory(void) {
                     numitems = numitems + 1;
                 }
 
-            } else if (prop->type == 1) {
+            } else if (prop->type == PROP_TYPE_OBJ) {
 
                 if ((prop->Entityp.obj->flags2 & 0x40000) == 0) {
                     numitems = numitems + 1;
@@ -2222,7 +2222,7 @@ InvItem *inv_get_item_by_index(s32 index)
             
             PropRecord *prop = item->type_inv_item.type_prop.prop;
 
-            if (prop->type == 4) {
+            if (prop->type == PROP_TYPE_WEAPON) {
 
                 ObjectRecord *obj = prop->Entityp.obj;
                 
@@ -2233,7 +2233,7 @@ InvItem *inv_get_item_by_index(s32 index)
                     index--;
                 }
 
-            } else if (prop->type == 1) {
+            } else if (prop->type == PROP_TYPE_OBJ) {
                 
                 if ((prop->Entityp.obj->flags2 & 0x40000) == 0) {
                     if (index == 0) {
@@ -2443,7 +2443,7 @@ s32 get_weaponnum_by_inv_index(s32 index) {
 u16 *inv_get_name_by_index(s32 index) {
     
     InvItem *item = inv_get_item_by_index(index);
-    s32 weaponnum = 0;
+    ITEM_IDS weaponnum = 0;
     textoverride *override;
 
     if (item) {
@@ -2576,7 +2576,7 @@ glabel inv_get_name_by_index
 u16 *inv_get_long_name_by_index(s32 index) {
     
     InvItem *item = inv_get_item_by_index(index);
-    s32 weaponnum = 0;
+    ITEM_IDS weaponnum = 0;
     textoverride *override;
 
     if (item) {
@@ -2739,7 +2739,7 @@ int sub_GAME_7F08D5A0(int index) {
 u16 *inv_get_first_title_name_by_index(s32 index) {
     
     InvItem *item = inv_get_item_by_index(index);
-    s32 weaponnum = 0;
+    ITEM_IDS weaponnum = 0;
     textoverride *override;
 
     if (item) {
@@ -2873,7 +2873,7 @@ glabel inv_get_first_title_name_by_index
 u16 *inv_get_second_title_name_by_index(s32 index) {
     
     InvItem *item = inv_get_item_by_index(index);
-    s32 weaponnum = 0;
+    ITEM_IDS weaponnum = 0;
     textoverride *override;
 
     if (item) {
