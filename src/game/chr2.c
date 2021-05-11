@@ -664,63 +664,10 @@ glabel select_psuedorandom_heads
 
 
 
-#ifdef NONMATCHING
-void get_random_head(void) {
-
+s32 get_random_head(s32 id)
+{
+    return (c_item_entries[id].isMale ? random_male_heads[randomGetNext() % num_male_heads] : random_female_heads[randomGetNext() % num_female_heads]);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_random_head
-/* 058190 7F023660 00047080 */  sll   $t6, $a0, 2
-/* 058194 7F023664 01C47021 */  addu  $t6, $t6, $a0
-/* 058198 7F023668 000E7080 */  sll   $t6, $t6, 2
-/* 05819C 7F02366C 3C0F8004 */  lui   $t7, %hi(c_item_entries+16)
-/* 0581A0 7F023670 01EE7821 */  addu  $t7, $t7, $t6
-/* 0581A4 7F023674 91EFDE20 */  lbu   $t7, %lo(c_item_entries+16)($t7)
-/* 0581A8 7F023678 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0581AC 7F02367C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0581B0 7F023680 11E00010 */  beqz  $t7, .L7F0236C4
-/* 0581B4 7F023684 00000000 */   nop   
-/* 0581B8 7F023688 0C002914 */  jal   randomGetNext
-/* 0581BC 7F02368C 00000000 */   nop   
-/* 0581C0 7F023690 3C188003 */  lui   $t8, %hi(num_male_heads) 
-/* 0581C4 7F023694 8F18CD04 */  lw    $t8, %lo(num_male_heads)($t8)
-/* 0581C8 7F023698 3C038003 */  lui   $v1, %hi(random_male_heads)
-/* 0581CC 7F02369C 0058001B */  divu  $zero, $v0, $t8
-/* 0581D0 7F0236A0 0000C810 */  mfhi  $t9
-/* 0581D4 7F0236A4 00194080 */  sll   $t0, $t9, 2
-/* 0581D8 7F0236A8 00681821 */  addu  $v1, $v1, $t0
-/* 0581DC 7F0236AC 17000002 */  bnez  $t8, .L7F0236B8
-/* 0581E0 7F0236B0 00000000 */   nop   
-/* 0581E4 7F0236B4 0007000D */  break 7
-.L7F0236B8:
-/* 0581E8 7F0236B8 8C63CDB8 */  lw    $v1, %lo(random_male_heads)($v1)
-/* 0581EC 7F0236BC 1000000F */  b     .L7F0236FC
-/* 0581F0 7F0236C0 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0236C4:
-/* 0581F4 7F0236C4 0C002914 */  jal   randomGetNext
-/* 0581F8 7F0236C8 00000000 */   nop   
-/* 0581FC 7F0236CC 3C098003 */  lui   $t1, %hi(num_female_heads) 
-/* 058200 7F0236D0 8D29CD08 */  lw    $t1, %lo(num_female_heads)($t1)
-/* 058204 7F0236D4 3C038003 */  lui   $v1, %hi(random_female_heads)
-/* 058208 7F0236D8 0049001B */  divu  $zero, $v0, $t1
-/* 05820C 7F0236DC 00005010 */  mfhi  $t2
-/* 058210 7F0236E0 000A5880 */  sll   $t3, $t2, 2
-/* 058214 7F0236E4 006B1821 */  addu  $v1, $v1, $t3
-/* 058218 7F0236E8 8C63CE20 */  lw    $v1, %lo(random_female_heads)($v1)
-/* 05821C 7F0236EC 15200002 */  bnez  $t1, .L7F0236F8
-/* 058220 7F0236F0 00000000 */   nop   
-/* 058224 7F0236F4 0007000D */  break 7
-.L7F0236F8:
-/* 058228 7F0236F8 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0236FC:
-/* 05822C 7F0236FC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 058230 7F023700 00601025 */  move  $v0, $v1
-/* 058234 7F023704 03E00008 */  jr    $ra
-/* 058238 7F023708 00000000 */   nop   
-)
-#endif
 
 
 
