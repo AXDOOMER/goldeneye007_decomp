@@ -741,7 +741,7 @@ glabel sub_GAME_7F008E80
 /* 03DBBC 7F00908C 2405004E */  li    $a1, 78
 /* 03DBC0 7F009090 8E060064 */  lw    $a2, 0x64($s0)
 /* 03DBC4 7F009094 8E070618 */  lw    $a3, 0x618($s0)
-/* 03DBC8 7F009098 0FC08D2A */  jal   sub_GAME_7F0234A8
+/* 03DBC8 7F009098 0FC08D2A */  jal   setup_chr_instance
 /* 03DBCC 7F00909C AFA00010 */   sw    $zero, 0x10($sp)
 /* 03DBD0 7F0090A0 3C118003 */  lui   $s1, %hi(D_8002A7F4)
 /* 03DBD4 7F0090A4 2631A7F4 */  addiu $s1, %lo(D_8002A7F4) # addiu $s1, $s1, -0x580c

@@ -5,8 +5,184 @@
 
 
 #ifdef NONMATCHING
-void display_red_blue_on_radar(void) {
+Gfx *display_red_blue_on_radar(Gfx *DL)
+{
+    s32 playerCount_2;
+    s32 curplayernum;
+    f32 temp_f20;
+    f32 temp_f20_2;
+    f32 temp_f22;
+    f32 temp_f24;
+    f32 temp_f28;
+    f32 temp_f2;
+    s16 temp_s0;
+    s32 temp_s0_2;
+    s32 temp_s3;
+    s32 scenario;
+    s32 temp_s5;
+    s32 temp_s6;
+    s32 playerCount;
+    s32 temp_v0_6;
+    struct player *temp_a0_2;
+    //struct player *pPlayer;
+    struct prop *temp_v0_4;
+    struct prop *temp_v1;
+    void *temp_a0;
+    void *temp_t3;
+    void *temp_t7;
+    void *temp_t9;
+    void *temp_v0_3;
+    void *temp_v0_5;
+    void *temp_v0_7;
+    s32 phi_s5;
+    ?32 phi_v0;
+    void *phi_v0_2;
+    s32 phi_s3;
+    f32 phi_f22;
+    ?32 phi_s1;
 
+    scenario = get_scenario();
+    curplayernum = get_cur_playernum();
+    playerCount = getPlayerCount();
+    playerCount_2 = playerCount;
+    if (playerCount == 1)
+    {
+        return DL;
+    }
+    pPlayer = pPlayer;
+    if (pPlayer->mpmenuon != 0)
+    {
+block_4:
+        return DL;
+    }
+    if (pPlayer->bonddead != 0)
+    {
+        goto block_4;
+    }
+    if (cheatCheckIfOn(CHEAT_NORADAR) != 0)
+    {
+        return DL;
+    }
+    temp_s0 = viGetViewLeft();
+    temp_s5 = (viGetViewWidth() + temp_s0) - 0x29;
+    temp_s6 = viGetViewTop() + 0x1A;
+    phi_s5 = temp_s5;
+    if (playerCount_2 >= 3)
+    {
+        phi_s5 = temp_s5;
+        if ((curplayernum & 1) == 0)
+        {
+            phi_s5 = temp_s5 + 0xF;
+        }
+    }
+    likely_generate_DL_for_image_declaration(&DL, mpradarimages, 2, 0, 2);
+    temp_v0_3 = microcode_constructor(DL);
+    DL = temp_v0_3 + 8;
+    temp_v0_3->unk0 = 0xFCFFB3FF;
+    temp_v0_3->unk4 = 0xFF65FEFF;
+    temp_t7 = DL;
+    DL = temp_t7 + 8;
+    temp_t7->unk4 = 0xA0;
+    temp_t7->unk0 = 0xFA000000;
+    temp_a0 = DL;
+    DL = temp_a0 + 8;
+    temp_a0->unk4 = (s32) (((((phi_s5 - 0x10) * 4) & 0xFFF) << 0xC) | (((temp_s6 - 0x10) * 4) & 0xFFF));
+    temp_a0->unk0 = (s32) (((((phi_s5 + 0x10) * 4) & 0xFFF) << 0xC) | 0xE4000000 | (((temp_s6 + 0x10) * 4) & 0xFFF));
+    temp_t3 = DL;
+    DL = temp_t3 + 8;
+    temp_t3->unk0 = 0xB4000000;
+    temp_t3->unk4 = 0x100010;
+    temp_t9 = DL;
+    DL = temp_t9 + 8;
+    temp_t9->unk0 = 0xB3000000;
+    temp_t9->unk4 = 0x4000400;
+    DL = microcode_constructor_related_to_menus(DL, phi_s5 - 2, temp_s6 - 2, phi_s5 + 2, temp_s6 + 2, 0x40);
+    if ((scenario == 5) || (scenario == 6) || (scenario == 7) || (scenario == 2) || (scenario == 3))
+    {
+        if (*(&player1_player_data.have_token_or_goldengun + (curplayernum * 0x70)) == 0)
+        {
+            phi_v0 = 0xFF7777FF;
+        }
+        else
+        {
+            phi_v0 = 0x8888FFFF;
+        }
+        phi_v0_2 = microcode_constructor_related_to_menus(DL, phi_s5 - 1, temp_s6 - 1, phi_s5 + 1, temp_s6 + 1, phi_v0);
+    }
+    else
+    {
+        phi_v0_2 = microcode_constructor_related_to_menus(DL, phi_s5 - 1, temp_s6 - 1, phi_s5 + 1, temp_s6 + 1, -0x60);
+    }
+    DL = phi_v0_2;
+    if (playerCount_2 > 0)
+    {
+        phi_s3 = 0;
+loop_22:
+        if (phi_s3 != curplayernum)
+        {
+            temp_a0_2 = players[phi_s3];
+            if (temp_a0_2->bonddead == 0)
+            {
+                temp_v0_4 = temp_a0_2->prop;
+                temp_v1 = pPlayer->prop;
+                temp_f20 = temp_v0_4->position.x - temp_v1->position.x;
+                temp_f22 = temp_v0_4->position.z - temp_v1->position.z;
+                temp_f24 = (f32) 0x10;
+                temp_f28 = ((atan2f(temp_f20, temp_f22, temp_a0_2) * 180.0f) / 3.1415927f) + pPlayer->vv_theta + 180.0f;
+                temp_f2 = sqrtf((temp_f20 * temp_f20) + (temp_f22 * temp_f22)) * (16.0f / 4000.0f);
+                if ((scenario == 5) || (scenario == 6) || (scenario == 7) || (scenario == 2) || (scenario == 3))
+                {
+                    temp_v0_5 = (((phi_s3 * 8) - phi_s3) * 0x10) + &player1_player_data;
+                    if (temp_f2 < temp_f24)
+                    {
+                        if (temp_v0_5->unk69 == 0)
+                        {
+                            phi_f22 = temp_f2;
+                            phi_s1 = 0xFF0000A0;
+                        }
+                        else
+                        {
+                            phi_f22 = temp_f2;
+                            phi_s1 = 0x2828FFFF;
+                        }
+                    }
+                    else if (temp_v0_5->unk69 == 0)
+                    {
+                        phi_f22 = temp_f24;
+                        phi_s1 = 0xFF000060;
+                    }
+                    else
+                    {
+                        phi_f22 = temp_f24;
+                        phi_s1 = 0x2828FFB0;
+                    }
+                }
+                else if (temp_f2 < temp_f24)
+                {
+                    phi_f22 = temp_f2;
+                    phi_s1 = 0xFFFF00A0;
+                }
+                else
+                {
+                    phi_f22 = temp_f24;
+                    phi_s1 = 0xFFFF0060;
+                }
+                temp_f20_2 = temp_f28 * 0.017453292f;
+                temp_s0_2 = (s32) (sinf(temp_f20_2) * phi_f22) + phi_s5;
+                temp_v0_6 = (s32) (cosf(temp_f20_2) * phi_f22) + temp_s6;
+                temp_v0_7 = microcode_constructor_related_to_menus(DL, temp_s0_2 - 2, temp_v0_6 - 2, temp_s0_2 + 2, temp_v0_6 + 2, 0x40);
+                DL = temp_v0_7;
+                DL = microcode_constructor_related_to_menus(temp_v0_7, temp_s0_2 - 1, temp_v0_6 - 1, temp_s0_2 + 1, temp_v0_6 + 1, phi_s1);
+            }
+        }
+        temp_s3 = phi_s3 + 1;
+        phi_s3 = temp_s3;
+        if (temp_s3 != playerCount_2)
+        {
+            goto loop_22;
+        }
+    }
+    return combiner_bayer_lod_perspective(DL);
 }
 #else
 GLOBAL_ASM(

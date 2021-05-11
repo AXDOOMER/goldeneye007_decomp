@@ -25727,7 +25727,7 @@ set_body_mp_choice_maybe:
 /* 04D54C 7F018A1C 8FA50088 */  lw    $a1, 0x88($sp)
 /* 04D550 7F018A20 8FA60080 */  lw    $a2, 0x80($sp)
 /* 04D554 7F018A24 8FA7007C */  lw    $a3, 0x7c($sp)
-/* 04D558 7F018A28 0FC08D2A */  jal   sub_GAME_7F0234A8
+/* 04D558 7F018A28 0FC08D2A */  jal   setup_chr_instance
 /* 04D55C 7F018A2C AFA00010 */   sw    $zero, 0x10($sp)
 /* 04D560 7F018A30 3C038003 */  lui   $v1, %hi(objinstance)
 /* 04D564 7F018A34 2463B5F4 */  addiu $v1, %lo(objinstance) # addiu $v1, $v1, -0x4a0c

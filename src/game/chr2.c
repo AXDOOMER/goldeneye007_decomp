@@ -20,8 +20,48 @@ s32 load_body_head_if_not_loaded(s32 model)
 
 
 #ifdef NONMATCHING
-void maybe_load_models_for_guards(void) {
-
+Model * maybe_load_models_for_guards(int body,int head,ModelFileHeader *bodyheader,ModelFileHeader *headheader, int sunglasses,Model *model)
+{
+  //uint cheatcheck;
+  undefined4 *id;
+  float pov;
+  ModelNode *node;
+  float scale;
+  
+  pov = c_item_entries[body].pov;
+  scale = c_item_entries[body].scale * 0.1;
+  node = 0x0;
+  if (cheatCheckIfOn(CHEAT_DKMODE) != 0) {
+    scale = scale * 0.8;
+  }
+  if (bodyheader->RootNode == 0x0) {
+    load_object_into_memory(bodyheader,c_item_entries[body].name);
+  }
+  set_objuse_flag_compute_grp_nums_set_obj_loaded(bodyheader);
+  if (((c_item_entries[body].HasHead == '\0') && (-1 < head)) &&
+     (node = bodyheader->Switches[4], node != 0x0)) {
+    if (headheader->RootNode == 0x0) {
+      load_object_into_memory(headheader,c_item_entries[head].name);
+    }
+    set_objuse_flag_compute_grp_nums_set_obj_loaded(headheader);
+    bodyheader->numRecords = bodyheader->numRecords + headheader->numRecords;
+  }
+  if (model == 0x0) {
+    model = get_aircraft_obj_instance_controller(bodyheader);
+  }
+  if (model != 0x0) {
+    set_obj_instance_controller_scale(model,scale);
+    proc_7F06CE84(model,pov);
+    if ((headheader != 0x0) && (c_item_entries[body].HasHead == '\0')) {
+      bodyheader->numRecords = bodyheader->numRecords - headheader->numRecords;
+      proc_7F06C3B4(model,node,headheader);
+      if ((sunglasses == 0) && ((0 < headheader->numSwitches && (*headheader->Switches != 0x0)))) {
+        id = extract_id_from_object_structure_microcode(model,*headheader->Switches);
+        *id = 0;
+      }
+    }
+  }
+  return model;
 }
 #else
 
@@ -441,28 +481,11 @@ glabel maybe_load_models_for_guards
 
 #endif
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0234A8(void) {
-
+Model * setup_chr_instance(int body,int head,ModelFileHeader *body_header, ModelFileHeader *head_header,int sunglasses)
+{
+  return maybe_load_models_for_guards(body,head,body_header,head_header,sunglasses,0x0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0234A8
-/* 057FD8 7F0234A8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 057FDC 7F0234AC 8FAE0030 */  lw    $t6, 0x30($sp)
-/* 057FE0 7F0234B0 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 057FE4 7F0234B4 AFA00014 */  sw    $zero, 0x14($sp)
-/* 057FE8 7F0234B8 0FC08CBA */  jal   maybe_load_models_for_guards
-/* 057FEC 7F0234BC AFAE0010 */   sw    $t6, 0x10($sp)
-/* 057FF0 7F0234C0 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 057FF4 7F0234C4 27BD0020 */  addiu $sp, $sp, 0x20
-/* 057FF8 7F0234C8 03E00008 */  jr    $ra
-/* 057FFC 7F0234CC 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -520,7 +543,7 @@ glabel retrieve_header_for_body_and_head
 /* 0580A0 7F023570 8FA6002C */  lw    $a2, 0x2c($sp)
 .L7F023574:
 /* 0580A4 7F023574 8FA70028 */  lw    $a3, 0x28($sp)
-/* 0580A8 7F023578 0FC08D2A */  jal   sub_GAME_7F0234A8
+/* 0580A8 7F023578 0FC08D2A */  jal   setup_chr_instance
 /* 0580AC 7F02357C AFA30010 */   sw    $v1, 0x10($sp)
 /* 0580B0 7F023580 8FBF001C */  lw    $ra, 0x1c($sp)
 /* 0580B4 7F023584 27BD0030 */  addiu $sp, $sp, 0x30
