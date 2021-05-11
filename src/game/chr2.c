@@ -4,6 +4,7 @@
 #include "game/bondwalk.h"
 #include "game/lvl.h"
 #include "bondconstants.h"
+#include "chr2.h"
 
 
 s32 load_body_head_if_not_loaded(s32 model)
@@ -490,8 +491,38 @@ Model * setup_chr_instance(int body,int head,ModelFileHeader *body_header, Model
 
 
 #ifdef NONMATCHING
-void retrieve_header_for_body_and_head(void) {
+/*
+ * 5802c:    move    v1,zero  <
+ * is moved to delay slot 
+ * 58048:    nop              | 58044:    move    v1,zero
+ */
+Model *retrieve_header_for_body_and_head(s32 body, s32 head, u32 bitflags)
+{
+    ModelFileHeader *body_header;
+    ModelFileHeader *head_header;
+    s32 sunglasses;
 
+   
+    body_header = c_item_entries[body].header;
+    head_header = NULL;
+    
+    if ((bitflags & 1))
+    {
+        sunglasses = 1;
+    }
+    else
+    {
+        sunglasses = 0;
+        if ((bitflags & 2))
+        {
+            sunglasses = (randomGetNext() & 1) == 0;
+        }
+    }
+    if ((head >= 0) && (c_item_entries[body].hasHead == 0))
+    {
+        head_header = c_item_entries[head].header;
+    }
+    return setup_chr_instance(body, head, body_header, head_header, sunglasses);
 }
 #else
 GLOBAL_ASM(
