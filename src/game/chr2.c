@@ -585,29 +585,26 @@ glabel retrieve_header_for_body_and_head
 
 
 
-#ifdef NONMATCHING
-void get_current_random_body(void) {
+s32 get_current_random_body(void)
 
+{
+  return list_of_bodies[current_random_body];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_current_random_body
-/* 0580C0 7F023590 3C0E8003 */  lui   $t6, %hi(current_random_body) 
-/* 0580C4 7F023594 8DCECE34 */  lw    $t6, %lo(current_random_body)($t6)
-/* 0580C8 7F023598 3C028003 */  lui   $v0, %hi(list_of_bodies)
-/* 0580CC 7F02359C 000E7880 */  sll   $t7, $t6, 2
-/* 0580D0 7F0235A0 004F1021 */  addu  $v0, $v0, $t7
-/* 0580D4 7F0235A4 03E00008 */  jr    $ra
-/* 0580D8 7F0235A8 8C42CD0C */   lw    $v0, %lo(list_of_bodies)($v0)
-)
-#endif
+
 
 
 
 #ifdef NONMATCHING
-void select_psuedorandom_heads(void) {
-
+s32 select_psuedorandom_heads(s32 id)
+{
+    if (c_item_entries[id].isMale)
+    {
+        return random_male_heads[(current_random_male_head + (randomGetNext() & 3)) % num_male_heads];
+    }
+    else
+    {
+        return random_female_heads[current_random_female_head];
+    }
 }
 #else
 GLOBAL_ASM(
