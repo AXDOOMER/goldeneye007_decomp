@@ -33034,7 +33034,7 @@ void set_sound_effect_for_weapontype_collection(ITEM_IDS weapontype)
             sndPlaySfx(g_musicSfxBufferPtr,0xeb,0);
         }
         else {
-            if (((weapontype == ITEM_GRENADE) || (weapontype == ITEM_57)) || (weapontype == ITEM_56)
+            if (((weapontype == ITEM_GRENADE) || (weapontype == ITEM_NULL87)) || (weapontype == ITEM_NULL86)
                ) {
                 sndPlaySfx(g_musicSfxBufferPtr,0xea,0);
             }
@@ -33572,8 +33572,8 @@ void generate_language_specific_text_for_weapon(char *finalstring,ITEM_IDS itemt
     case ITEM_BUG:
     case ITEM_MICROCAMERA:
     case ITEM_GOLDENEYEKEY:
-    case ITEM_56:
-    case ITEM_57:
+    case ITEM_NULL86:
+    case ITEM_NULL87:
     case ITEM_TOKEN:
         prepare_ammo_type_collection_text(finalstring,get_ammo_type_for_weapon(itemtype),1);
         return;
