@@ -9,7 +9,7 @@ $(BUILD_DIR)/$(OBSEG_DIR)/stan/%.bin: $(BUILD_DIR)/$(OBSEG_DIR)/stan/%.elf
 	$(OBJCOPY) $< $@ -O binary
 
 $(BUILD_DIR)/$(OBSEG_DIR)/stan/%.elf: $(BUILD_DIR)/$(OBSEG_DIR)/stan/%.o
-	$(LD) -T assets/obseg/stan/Tbg_name_all_p.ld -o $@ $<
+	$(LD) -T assets/obseg/stan/Tbg_name_all_p_stan.ld -o $@ $<
 
 $(BUILD_DIR)/$(OBSEG_DIR)/stan/%.o: $(OBSEG_DIR)/stan/%.c
 	$(CC) -c $(CFLAGS) -o $@ -O2 $<

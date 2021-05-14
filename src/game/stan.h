@@ -26,7 +26,7 @@ struct StandTile {
     /* 0x06 */
     // They appear to have performed the bit field work themselves here,
     //   but we provide the StandTileHeaderTail member for clarity - it should be unused I believe.
-    s16 hdrTail;
+    struct StandTileHeaderTail hdrTail;
 
     /* 0x08 */
     struct StandTilePoint points[1];
@@ -35,7 +35,7 @@ struct StandTile {
 // RGB? I've called them 'triple' because I don't really know what RGB is
 // No parens around params
 #define STAN_TRIPLE_TO_PNT_INDEX(tile, tripleIndex) (tile->hdrTail >> (8 - 4*tripleIndex) & 0xF)
-#define STAN_POINT_COUNT(tile) (tile->hdrTail >> 0xC & 0xF)
+#define STAN_POINT_COUNT(tile) (tile->hdrTail.pointCount & 0xF)
 
 // May be internal only, nice here.
 struct StandTileWalkCallbackRecord {
