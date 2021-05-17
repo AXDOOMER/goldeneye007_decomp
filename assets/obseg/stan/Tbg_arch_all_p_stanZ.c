@@ -1,0 +1,23202 @@
+#include "ultra64.h"
+#include "stan.h"
+
+extern StandFileTile tile_0;
+StandFileHeader Tbg_arch_all_p_stanZ = {
+    NULL,
+    &tile_0,
+    NULL
+};
+
+StandFileTile tile_0 = {
+    0x1733a, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_0[3] = {
+    {116, -45, -1034, 0x14},
+    {146, -45, -1013, 0x599},
+    {144, -45, -1036, 0x18},
+};
+
+
+StandFileTile tile_1 = {
+    0x17339, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1[3] = {
+    {116, -45, -1034, 0x00},
+    {116, -45, -1013, 0x00},
+    {146, -45, -1013, 0x10},
+};
+
+
+StandFileTile tile_2 = {
+    0x1723a, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2[4] = {
+    {144, -45, -1036, 0x1d},
+    {104, -45, -1087, 0x3a},
+    {104, -45, -1033, 0x00},
+    {116, -45, -1034, 0x10},
+};
+
+
+StandFileTile tile_3 = {
+    0x17239, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3[3] = {
+    {144, -45, -1036, 0x599},
+    {136, -45, -1132, 0x21},
+    {104, -45, -1087, 0x18},
+};
+
+
+StandFileTile tile_4 = {
+    0x17138, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4[3] = {
+    {104, -45, -1087, 0x1d},
+    {136, -45, -1132, 0x29},
+    {104, -45, -1250, 0x00},
+};
+
+
+StandFileTile tile_5 = {
+    0x1703a, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5[3] = {
+    {104, -45, -1250, 0x29},
+    {120, -45, -1331, 0x2d},
+    {104, -45, -1304, 0x42},
+};
+
+
+StandFileTile tile_6 = {
+    0x17039, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_6[3] = {
+    {104, -45, -1250, 0x21},
+    {136, -45, -1132, 0x595},
+    {120, -45, -1331, 0x25},
+};
+
+
+StandFileTile tile_7 = {
+    0x16f38, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_7[3] = {
+    {104, -45, -1304, 0x25},
+    {120, -45, -1331, 0x31},
+    {104, -45, -1413, 0x00},
+};
+
+
+StandFileTile tile_8 = {
+    0x16e38, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_8[4] = {
+    {104, -45, -1413, 0x2d},
+    {120, -45, -1331, 0x589},
+    {104, -45, -1514, 0x00},
+    {104, -45, -1467, 0x4a},
+};
+
+
+StandFileTile tile_9 = {
+    0x16d3a, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_9[3] = {
+    {104, -45, -1033, 0x3a},
+    {104, -9, -1087, 0xb67},
+    {104, -9, -1033, 0x00},
+};
+
+
+StandFileTile tile_A = {
+    0x16d39, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_A[3] = {
+    {104, -45, -1033, 0x18},
+    {104, -45, -1087, 0x00},
+    {104, -9, -1087, 0x36},
+};
+
+
+StandFileTile tile_B = {
+    0x16c3a, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_B[3] = {
+    {104, -45, -1250, 0x42},
+    {104, -9, -1304, 0xb77},
+    {104, -9, -1250, 0x00},
+};
+
+
+StandFileTile tile_C = {
+    0x16c39, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_C[3] = {
+    {104, -45, -1250, 0x25},
+    {104, -45, -1304, 0x00},
+    {104, -9, -1304, 0x3e},
+};
+
+
+StandFileTile tile_D = {
+    0x16b3a, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_D[3] = {
+    {104, -45, -1413, 0x4a},
+    {104, -9, -1467, 0xb87},
+    {104, -9, -1413, 0x00},
+};
+
+
+StandFileTile tile_E = {
+    0x16b39, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_E[3] = {
+    {104, -45, -1413, 0x31},
+    {104, -45, -1467, 0x00},
+    {104, -9, -1467, 0x46},
+};
+
+
+StandFileTile tile_F = {
+    0x17538, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_F[4] = {
+    {136, -45, -1132, 0x599},
+    {144, -45, -1036, 0x599},
+    {146, -45, -1013, 0x00},
+    {328, -45, -1001, 0x53},
+};
+
+
+StandFileTile tile_10 = {
+    0x17438, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_10[3] = {
+    {120, -45, -1331, 0x595},
+    {136, -45, -1132, 0x4e},
+    {328, -45, -1001, 0x57},
+};
+
+
+StandFileTile tile_11 = {
+    0xef38, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_11[3] = {
+    {104, -45, -1514, 0x589},
+    {120, -45, -1331, 0x53},
+    {328, -45, -1001, 0x5b},
+};
+
+
+StandFileTile tile_12 = {
+    0xee3a, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_12[3] = {
+    {328, -45, -1001, 0x5f},
+    {116, -45, -1514, 0x00},
+    {104, -45, -1514, 0x57},
+};
+
+
+StandFileTile tile_13 = {
+    0xee39, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_13[3] = {
+    {328, -45, -1001, 0x00},
+    {328, -45, -1481, 0x67},
+    {116, -45, -1514, 0x5b},
+};
+
+
+StandFileTile tile_14 = {
+    0xed3a, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_14[3] = {
+    {116, -45, -1514, 0x67},
+    {328, -45, -1517, 0x6b},
+    {122, -45, -1545, 0x00},
+};
+
+
+StandFileTile tile_15 = {
+    0xed39, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_15[3] = {
+    {116, -45, -1514, 0x5f},
+    {328, -45, -1481, 0x00},
+    {328, -45, -1517, 0x63},
+};
+
+
+StandFileTile tile_16 = {
+    0xec3a, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_16[3] = {
+    {137, -45, -1644, 0x6f},
+    {122, -45, -1545, 0x63},
+    {328, -45, -1517, 0x73},
+};
+
+
+StandFileTile tile_17 = {
+    0xec39, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_17[3] = {
+    {137, -45, -1644, 0x00},
+    {122, -45, -1644, 0x00},
+    {122, -45, -1545, 0x6b},
+};
+
+
+StandFileTile tile_18 = {
+    0xeb3a, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_18[3] = {
+    {328, -45, -1517, 0x77},
+    {334, -45, -1602, 0x7f},
+    {137, -45, -1644, 0x6b},
+};
+
+
+StandFileTile tile_19 = {
+    0xeb39, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_19[3] = {
+    {328, -45, -1517, 0x00},
+    {334, -45, -1517, 0x00},
+    {334, -45, -1602, 0x73},
+};
+
+
+StandFileTile tile_1A = {
+    0xea3a, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1A[3] = {
+    {137, -45, -1644, 0x7f},
+    {334, -45, -1699, 0x83},
+    {137, -45, -1674, 0x00},
+};
+
+
+StandFileTile tile_1B = {
+    0xea39, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1B[3] = {
+    {137, -45, -1644, 0x73},
+    {334, -45, -1602, 0x87},
+    {334, -45, -1699, 0x7b},
+};
+
+
+StandFileTile tile_1C = {
+    0xe938, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1C[3] = {
+    {137, -45, -1674, 0x7b},
+    {334, -45, -1699, 0xaf},
+    {137, -45, -1789, 0xa7},
+};
+
+
+StandFileTile tile_1D = {
+    0xe83a, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1D[3] = {
+    {334, -45, -1602, 0x8b},
+    {340, -45, -1699, 0x00},
+    {334, -45, -1699, 0x7f},
+};
+
+
+StandFileTile tile_1E = {
+    0xe839, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1E[3] = {
+    {334, -45, -1602, 0x00},
+    {340, -45, -1602, 0x00},
+    {340, -45, -1699, 0x87},
+};
+
+
+StandFileTile tile_1F = {
+    0xe73a, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1F[3] = {
+    {328, -45, -1819, 0x93},
+    {137, -45, -1929, 0x00},
+    {137, -45, -1916, 0x97},
+};
+
+
+StandFileTile tile_20 = {
+    0xe739, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_20[3] = {
+    {328, -45, -1819, 0x00},
+    {334, -45, -1929, 0x00},
+    {137, -45, -1929, 0x8f},
+};
+
+
+StandFileTile tile_21 = {
+    0xe638, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_21[3] = {
+    {328, -45, -1819, 0x8f},
+    {137, -45, -1916, 0x9f},
+    {137, -45, -1819, 0xab},
+};
+
+
+StandFileTile tile_22 = {
+    0xe53a, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_22[3] = {
+    {122, -45, -1819, 0x9f},
+    {137, -45, -1916, 0x00},
+    {123, -45, -1916, 0x00},
+};
+
+
+StandFileTile tile_23 = {
+    0xe539, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_23[3] = {
+    {122, -45, -1819, 0x00},
+    {137, -45, -1819, 0x97},
+    {137, -45, -1916, 0x9b},
+};
+
+
+StandFileTile tile_24 = {
+    0xe43a, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_24[3] = {
+    {116, -45, -1674, 0xa7},
+    {137, -45, -1789, 0x00},
+    {116, -45, -1789, 0x00},
+};
+
+
+StandFileTile tile_25 = {
+    0xe439, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_25[3] = {
+    {116, -45, -1674, 0x00},
+    {137, -45, -1674, 0x83},
+    {137, -45, -1789, 0xa3},
+};
+
+
+StandFileTile tile_26 = {
+    0xe33a, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_26[3] = {
+    {137, -45, -1789, 0xaf},
+    {328, -45, -1819, 0x97},
+    {137, -45, -1819, 0x00},
+};
+
+
+StandFileTile tile_27 = {
+    0xe339, 0x40,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_27[3] = {
+    {137, -45, -1789, 0x83},
+    {334, -45, -1699, 0x00},
+    {328, -45, -1819, 0xab},
+};
+
+
+StandFileTile tile_28 = {
+    0x9730, 0x3f,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_28[3] = {
+    {-181, 127, -707, 0x00},
+    {-263, 127, -707, 0x00},
+    {-263, 127, -697, 0xbf},
+};
+
+
+StandFileTile tile_29 = {
+    0x9830, 0x3f,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_29[3] = {
+    {-263, 127, -616, 0x00},
+    {-263, 127, -607, 0x00},
+    {-181, 127, -607, 0xbb},
+};
+
+
+StandFileTile tile_2A = {
+    0x9632, 0x3f,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2A[3] = {
+    {-181, 127, -707, 0xbf},
+    {-263, 127, -616, 0xb7},
+    {-181, 127, -607, 0x1806},
+};
+
+
+StandFileTile tile_2B = {
+    0x9631, 0x3f,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2B[3] = {
+    {-181, 127, -707, 0xb3},
+    {-263, 127, -697, 0xc7},
+    {-263, 127, -616, 0xbb},
+};
+
+
+StandFileTile tile_2C = {
+    0x9332, 0x3f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2C[3] = {
+    {-290, 127, -616, 0xc7},
+    {-263, 127, -697, 0x00},
+    {-290, 127, -697, 0xf3},
+};
+
+
+StandFileTile tile_2D = {
+    0x9331, 0x3f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2D[3] = {
+    {-290, 127, -616, 0x00},
+    {-263, 127, -616, 0xbf},
+    {-263, 127, -697, 0xc3},
+};
+
+
+StandFileTile tile_2E = {
+    0x9430, 0x3f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2E[3] = {
+    {-498, 127, -697, 0x00},
+    {-498, 127, -707, 0x00},
+    {-624, 127, -707, 0xd3},
+};
+
+
+StandFileTile tile_2F = {
+    0x9530, 0x3f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2F[3] = {
+    {-624, 127, -607, 0x00},
+    {-498, 127, -607, 0x00},
+    {-498, 127, -616, 0xd7},
+};
+
+
+StandFileTile tile_30 = {
+    0x9232, 0x3f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_30[3] = {
+    {-624, 127, -607, 0xd7},
+    {-498, 127, -697, 0xcb},
+    {-624, 127, -707, 0xdb},
+};
+
+
+StandFileTile tile_31 = {
+    0x9231, 0x3f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_31[3] = {
+    {-624, 127, -607, 0xcf},
+    {-498, 127, -616, 0xe3},
+    {-498, 127, -697, 0xd3},
+};
+
+
+StandFileTile tile_32 = {
+    0x9132, 0x3f,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_32[3] = {
+    {-679, 127, -707, 0xdf},
+    {-624, 127, -607, 0xd3},
+    {-624, 127, -707, 0x00},
+};
+
+
+StandFileTile tile_33 = {
+    0x9131, 0x3f,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_33[3] = {
+    {-679, 127, -707, 0x1830},
+    {-679, 127, -607, 0x00},
+    {-624, 127, -607, 0xdb},
+};
+
+
+StandFileTile tile_34 = {
+    0x9032, 0x3f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_34[3] = {
+    {-498, 127, -616, 0xe7},
+    {-471, 127, -697, 0x00},
+    {-498, 127, -697, 0xd7},
+};
+
+
+StandFileTile tile_35 = {
+    0x9031, 0x3f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_35[3] = {
+    {-498, 127, -616, 0x00},
+    {-471, 127, -616, 0x103},
+    {-471, 127, -697, 0xe3},
+};
+
+
+StandFileTile tile_36 = {
+    0x8a30, 0x3f,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_36[3] = {
+    {-290, 127, -707, 0x00},
+    {-471, 127, -707, 0xff},
+    {-380, 127, -657, 0xef},
+};
+
+
+StandFileTile tile_37 = {
+    0x8e30, 0x3f,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_37[3] = {
+    {-290, 127, -697, 0x00},
+    {-290, 127, -707, 0xeb},
+    {-380, 127, -657, 0xf3},
+};
+
+
+StandFileTile tile_38 = {
+    0x8c30, 0x3f,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_38[3] = {
+    {-290, 127, -616, 0xc3},
+    {-290, 127, -697, 0xef},
+    {-380, 127, -657, 0xf7},
+};
+
+
+StandFileTile tile_39 = {
+    0x8930, 0x3f,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_39[3] = {
+    {-290, 127, -607, 0x00},
+    {-290, 127, -616, 0xf3},
+    {-380, 127, -657, 0xfb},
+};
+
+
+StandFileTile tile_3A = {
+    0x8b30, 0x3f,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3A[3] = {
+    {-471, 127, -607, 0x00},
+    {-290, 127, -607, 0xf7},
+    {-380, 127, -657, 0x107},
+};
+
+
+StandFileTile tile_3B = {
+    0x8d30, 0x3f,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3B[3] = {
+    {-380, 127, -657, 0xeb},
+    {-471, 127, -707, 0x00},
+    {-471, 127, -697, 0x103},
+};
+
+
+StandFileTile tile_3C = {
+    0x8f30, 0x3f,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3C[3] = {
+    {-380, 127, -657, 0xff},
+    {-471, 127, -697, 0xe7},
+    {-471, 127, -616, 0x107},
+};
+
+
+StandFileTile tile_3D = {
+    0x8830, 0x3f,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3D[3] = {
+    {-471, 127, -607, 0xfb},
+    {-380, 127, -657, 0x103},
+    {-471, 127, -616, 0x00},
+};
+
+
+StandFileTile tile_3E = {
+    0x15a28, 0x3e,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3E[3] = {
+    {-788, 127, 734, 0x11b},
+    {-688, 127, 725, 0x113},
+    {-788, 127, 676, 0x00},
+};
+
+
+StandFileTile tile_3F = {
+    0x1592a, 0x3e,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3F[3] = {
+    {-788, 127, 676, 0x113},
+    {-688, 127, 643, 0x1758},
+    {-779, 127, 643, 0x117},
+};
+
+
+StandFileTile tile_40 = {
+    0x15929, 0x3e,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_40[3] = {
+    {-788, 127, 676, 0x10b},
+    {-688, 127, 725, 0x11f},
+    {-688, 127, 643, 0x10f},
+};
+
+
+StandFileTile tile_41 = {
+    0x15828, 0x3e,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_41[3] = {
+    {-788, 127, 643, 0x00},
+    {-788, 127, 676, 0x10f},
+    {-779, 127, 643, 0x1758},
+};
+
+
+StandFileTile tile_42 = {
+    0x15728, 0x3e,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_42[3] = {
+    {-788, 127, 734, 0x00},
+    {-688, 127, 734, 0x00},
+    {-688, 127, 725, 0x10b},
+};
+
+
+StandFileTile tile_43 = {
+    0x15628, 0x3e,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_43[3] = {
+    {-688, 127, 725, 0x00},
+    {-661, 127, 725, 0x123},
+    {-688, 127, 643, 0x113},
+};
+
+
+StandFileTile tile_44 = {
+    0x1552a, 0x3e,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_44[3] = {
+    {-661, 127, 725, 0x127},
+    {-516, 127, 734, 0x178},
+    {-688, 127, 643, 0x11f},
+};
+
+
+StandFileTile tile_45 = {
+    0x15529, 0x3e,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_45[3] = {
+    {-661, 127, 725, 0x00},
+    {-661, 127, 734, 0x00},
+    {-516, 127, 734, 0x123},
+};
+
+
+StandFileTile tile_46 = {
+    0x1532a, 0x3e,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_46[3] = {
+    {-247, 127, 725, 0x12f},
+    {-199, 127, 634, 0x137},
+    {-247, 127, 643, 0x13f},
+};
+
+
+StandFileTile tile_47 = {
+    0x15329, 0x3e,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_47[3] = {
+    {-247, 127, 725, 0x133},
+    {-199, 127, 734, 0x18ba},
+    {-199, 127, 634, 0x12b},
+};
+
+
+StandFileTile tile_48 = {
+    0x15228, 0x3e,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_48[3] = {
+    {-247, 127, 734, 0x00},
+    {-199, 127, 734, 0x12f},
+    {-247, 127, 725, 0x00},
+};
+
+
+StandFileTile tile_49 = {
+    0x15128, 0x3e,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_49[3] = {
+    {-199, 127, 634, 0x00},
+    {-247, 127, 634, 0x00},
+    {-247, 127, 643, 0x12b},
+};
+
+
+StandFileTile tile_4A = {
+    0x1502a, 0x3e,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4A[3] = {
+    {-274, 127, 725, 0x13f},
+    {-247, 127, 643, 0x00},
+    {-274, 127, 643, 0x14b},
+};
+
+
+StandFileTile tile_4B = {
+    0x15029, 0x3e,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4B[3] = {
+    {-274, 127, 725, 0x00},
+    {-247, 127, 725, 0x12b},
+    {-247, 127, 643, 0x13b},
+};
+
+
+StandFileTile tile_4C = {
+    0x14f28, 0x3e,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4C[3] = {
+    {-455, 127, 734, 0x153},
+    {-274, 127, 725, 0x14b},
+    {-455, 127, 725, 0x00},
+};
+
+
+StandFileTile tile_4D = {
+    0x14e2a, 0x3e,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4D[3] = {
+    {-455, 127, 725, 0x14b},
+    {-274, 127, 643, 0x14f},
+    {-455, 127, 643, 0x15f},
+};
+
+
+StandFileTile tile_4E = {
+    0x14e29, 0x3e,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4E[3] = {
+    {-455, 127, 725, 0x143},
+    {-274, 127, 725, 0x13b},
+    {-274, 127, 643, 0x147},
+};
+
+
+StandFileTile tile_4F = {
+    0x14d28, 0x3e,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4F[3] = {
+    {-455, 127, 643, 0x147},
+    {-274, 127, 643, 0x157},
+    {-455, 127, 634, 0x00},
+};
+
+
+StandFileTile tile_50 = {
+    0x14c28, 0x3e,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_50[3] = {
+    {-455, 127, 734, 0x00},
+    {-274, 127, 734, 0x00},
+    {-274, 127, 725, 0x143},
+};
+
+
+StandFileTile tile_51 = {
+    0x14b28, 0x3e,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_51[3] = {
+    {-455, 127, 634, 0x14f},
+    {-274, 127, 643, 0x00},
+    {-274, 127, 634, 0x00},
+};
+
+
+StandFileTile tile_52 = {
+    0x14a2a, 0x3e,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_52[3] = {
+    {-482, 127, 725, 0x15f},
+    {-455, 127, 643, 0x00},
+    {-482, 127, 643, 0x167},
+};
+
+
+StandFileTile tile_53 = {
+    0x14a29, 0x3e,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_53[3] = {
+    {-482, 127, 725, 0x00},
+    {-455, 127, 725, 0x147},
+    {-455, 127, 643, 0x15b},
+};
+
+
+StandFileTile tile_54 = {
+    0x14928, 0x3e,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_54[3] = {
+    {-482, 127, 734, 0x00},
+    {-482, 127, 725, 0x167},
+    {-661, 127, 643, 0x173},
+};
+
+
+StandFileTile tile_55 = {
+    0x14828, 0x3e,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_55[3] = {
+    {-482, 127, 725, 0x15b},
+    {-482, 127, 643, 0x16b},
+    {-661, 127, 643, 0x163},
+};
+
+
+StandFileTile tile_56 = {
+    0x1472a, 0x3e,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_56[3] = {
+    {-482, 127, 643, 0x16f},
+    {-661, 127, 634, 0x00},
+    {-661, 127, 643, 0x167},
+};
+
+
+StandFileTile tile_57 = {
+    0x14729, 0x3e,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_57[3] = {
+    {-482, 127, 643, 0x00},
+    {-482, 127, 634, 0x00},
+    {-661, 127, 634, 0x16b},
+};
+
+
+StandFileTile tile_58 = {
+    0x1462a, 0x3e,
+    0x0,
+    0x4, 0x4, 0x4,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_58[4] = {
+    {-688, 127, 643, 0x178},
+    {-482, 127, 734, 0x163},
+    {-661, 127, 643, 0x00},
+    {-679, 127, 643, 0x1758},
+};
+
+
+StandFileTile tile_59 = {
+    0x14629, 0x3e,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_59[3] = {
+    {-688, 127, 643, 0x123},
+    {-516, 127, 734, 0x00},
+    {-482, 127, 734, 0x173},
+};
+
+
+StandFileTile tile_5A = {
+    0x4cf22, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5A[3] = {
+    {-1522, 263, -960, 0x180},
+    {-1445, 263, -969, 0x21a},
+    {-1522, 263, -1250, 0x00},
+};
+
+
+StandFileTile tile_5B = {
+    0x4cf21, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5B[3] = {
+    {-1522, 263, -960, 0x1a8},
+    {-1445, 263, -888, 0x1c5},
+    {-1445, 263, -969, 0x17c},
+};
+
+
+StandFileTile tile_5C = {
+    0x4ce22, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5C[3] = {
+    {-1562, 263, -1703, 0x188},
+    {-1825, 263, -1644, 0x1a0},
+    {-1703, 263, -1522, 0x216},
+};
+
+
+StandFileTile tile_5D = {
+    0x4ce21, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5D[3] = {
+    {-1562, 263, -1703, 0x00},
+    {-1667, 263, -1703, 0x206},
+    {-1825, 263, -1644, 0x184},
+};
+
+
+StandFileTile tile_5E = {
+    0x4cd22, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5E[3] = {
+    {-1522, 263, -1250, 0x190},
+    {-1703, 263, -1522, 0x198},
+    {-1617, 263, -1250, 0x00},
+};
+
+
+StandFileTile tile_5F = {
+    0x4cd21, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5F[3] = {
+    {-1522, 263, -1250, 0x21a},
+    {-1445, 263, -1576, 0x216},
+    {-1703, 263, -1522, 0x18c},
+};
+
+
+StandFileTile tile_60 = {
+    0x4cc22, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_60[3] = {
+    {-1617, 263, -1250, 0x198},
+    {-1703, 263, -888, 0x1a4},
+    {-1617, 263, -960, 0x00},
+};
+
+
+StandFileTile tile_61 = {
+    0x4cc21, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_61[3] = {
+    {-1617, 263, -1250, 0x18c},
+    {-1703, 263, -1522, 0x19c},
+    {-1703, 263, -888, 0x194},
+};
+
+
+StandFileTile tile_62 = {
+    0x4cb22, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_62[3] = {
+    {-1703, 263, -1522, 0x1a0},
+    {-1825, 263, -888, 0x00},
+    {-1703, 263, -888, 0x198},
+};
+
+
+StandFileTile tile_63 = {
+    0x4cb21, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_63[3] = {
+    {-1703, 263, -1522, 0x184},
+    {-1825, 263, -1644, 0x00},
+    {-1825, 263, -888, 0x19c},
+};
+
+
+StandFileTile tile_64 = {
+    0x4ca22, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_64[3] = {
+    {-1445, 263, -888, 0x1a8},
+    {-1617, 263, -960, 0x194},
+    {-1703, 263, -888, 0x00},
+};
+
+
+StandFileTile tile_65 = {
+    0x4ca21, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_65[3] = {
+    {-1445, 263, -888, 0x180},
+    {-1522, 263, -960, 0x00},
+    {-1617, 263, -960, 0x1a4},
+};
+
+
+StandFileTile tile_66 = {
+    0x4c722, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_66[3] = {
+    {-1436, 263, -1735, 0x1b0},
+    {-1445, 263, -1852, 0x1f8},
+    {-1445, 263, -1735, 0x00},
+};
+
+
+StandFileTile tile_67 = {
+    0x4c721, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_67[4] = {
+    {-1436, 263, -1735, 0x24c},
+    {-1436, 263, -1830, 0x226},
+    {-1436, 263, -1852, 0x00},
+    {-1445, 263, -1852, 0x1ac},
+};
+
+
+StandFileTile tile_68 = {
+    0x4c522, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_68[3] = {
+    {-1436, 263, -1436, 0x1b9},
+    {-1445, 263, -1576, 0x21a},
+    {-1445, 263, -1436, 0x00},
+};
+
+
+StandFileTile tile_69 = {
+    0x4c521, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_69[3] = {
+    {-1436, 263, -1436, 0x25f},
+    {-1436, 263, -1576, 0x00},
+    {-1445, 263, -1576, 0x1b5},
+};
+
+
+StandFileTile tile_6A = {
+    0x4c322, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_6A[3] = {
+    {-1436, 263, -1141, 0x1c1},
+    {-1445, 263, -1286, 0x21a},
+    {-1445, 263, -1141, 0x00},
+};
+
+
+StandFileTile tile_6B = {
+    0x4c321, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_6B[3] = {
+    {-1436, 263, -1141, 0x25f},
+    {-1436, 263, -1286, 0x00},
+    {-1445, 263, -1286, 0x1bd},
+};
+
+
+StandFileTile tile_6C = {
+    0x4c122, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_6C[5] = {
+    {-1436, 263, -870, 0x1cb},
+    {-1445, 263, -978, 0x21a},
+    {-1445, 263, -969, 0x180},
+    {-1445, 263, -888, 0x00},
+    {-1445, 263, -870, 0x00},
+};
+
+
+StandFileTile tile_6D = {
+    0x4c121, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_6D[4] = {
+    {-1436, 263, -870, 0x00},
+    {-1436, 263, -888, 0x230},
+    {-1436, 263, -978, 0x00},
+    {-1445, 263, -978, 0x1c5},
+};
+
+
+StandFileTile tile_6E = {
+    0x4be22, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_6E[4] = {
+    {-1055, 263, -1735, 0x1d5},
+    {-1064, 263, -1852, 0x00},
+    {-1064, 263, -1830, 0x247},
+    {-1064, 263, -1735, 0x00},
+};
+
+
+StandFileTile tile_6F = {
+    0x4be21, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_6F[4] = {
+    {-1055, 263, -1735, 0x289},
+    {-1055, 263, -1830, 0x00},
+    {-1055, 263, -1852, 0x00},
+    {-1064, 263, -1852, 0x1d0},
+};
+
+
+StandFileTile tile_70 = {
+    0x4bc22, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_70[3] = {
+    {-1055, 263, -1436, 0x1de},
+    {-1064, 263, -1576, 0x269},
+    {-1064, 263, -1436, 0x00},
+};
+
+
+StandFileTile tile_71 = {
+    0x4bc21, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_71[3] = {
+    {-1055, 263, -1436, 0x292},
+    {-1055, 263, -1576, 0x00},
+    {-1064, 263, -1576, 0x1da},
+};
+
+
+StandFileTile tile_72 = {
+    0x4ba22, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_72[3] = {
+    {-1055, 263, -1141, 0x1e6},
+    {-1064, 263, -1286, 0x256},
+    {-1064, 263, -1141, 0x00},
+};
+
+
+StandFileTile tile_73 = {
+    0x4ba21, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_73[3] = {
+    {-1055, 263, -1141, 0x27c},
+    {-1055, 263, -1286, 0x00},
+    {-1064, 263, -1286, 0x1e2},
+};
+
+
+StandFileTile tile_74 = {
+    0x4b822, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_74[4] = {
+    {-1055, 263, -870, 0x1ef},
+    {-1064, 263, -978, 0x23a},
+    {-1064, 263, -892, 0x00},
+    {-1064, 263, -870, 0x00},
+};
+
+
+StandFileTile tile_75 = {
+    0x4b821, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_75[4] = {
+    {-1055, 263, -870, 0x00},
+    {-1055, 263, -892, 0x26e},
+    {-1055, 263, -978, 0x00},
+    {-1064, 263, -978, 0x1ea},
+};
+
+
+StandFileTile tile_76 = {
+    0x4b622, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_76[3] = {
+    {-1445, 263, -1576, 0x1f8},
+    {-1490, 263, -1957, 0x00},
+    {-1490, 263, -1830, 0x20e},
+};
+
+
+StandFileTile tile_77 = {
+    0x4b621, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    5,
+    0x0, 0x3, 0x4,
+};
+StandFilePoint points_77[5] = {
+    {-1445, 263, -1576, 0x00},
+    {-1445, 263, -1735, 0x1ac},
+    {-1445, 263, -1852, 0x00},
+    {-1445, 263, -1957, 0x2de},
+    {-1490, 263, -1957, 0x1f4},
+};
+
+
+StandFileTile tile_78 = {
+    0x4b422, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_78[3] = {
+    {-1562, 263, -1812, 0x202},
+    {-1825, 263, -1830, 0x20a},
+    {-1667, 263, -1812, 0x00},
+};
+
+
+StandFileTile tile_79 = {
+    0x4b421, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_79[3] = {
+    {-1562, 263, -1812, 0x212},
+    {-1490, 263, -1830, 0x00},
+    {-1825, 263, -1830, 0x1fe},
+};
+
+
+StandFileTile tile_7A = {
+    0x4b322, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_7A[3] = {
+    {-1667, 263, -1812, 0x20a},
+    {-1825, 263, -1644, 0x188},
+    {-1667, 263, -1703, 0x00},
+};
+
+
+StandFileTile tile_7B = {
+    0x4b321, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_7B[3] = {
+    {-1667, 263, -1812, 0x1fe},
+    {-1825, 263, -1830, 0x00},
+    {-1825, 263, -1644, 0x206},
+};
+
+
+StandFileTile tile_7C = {
+    0x4b222, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_7C[3] = {
+    {-1490, 263, -1830, 0x212},
+    {-1562, 263, -1703, 0x216},
+    {-1445, 263, -1576, 0x1f4},
+};
+
+
+StandFileTile tile_7D = {
+    0x4b221, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_7D[3] = {
+    {-1490, 263, -1830, 0x202},
+    {-1562, 263, -1812, 0x00},
+    {-1562, 263, -1703, 0x20e},
+};
+
+
+StandFileTile tile_7E = {
+    0x4b120, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_7E[3] = {
+    {-1562, 263, -1703, 0x184},
+    {-1703, 263, -1522, 0x190},
+    {-1445, 263, -1576, 0x20e},
+};
+
+
+StandFileTile tile_7F = {
+    0x4b020, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    7,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_7F[7] = {
+    {-1445, 263, -1576, 0x190},
+    {-1522, 263, -1250, 0x17c},
+    {-1445, 263, -969, 0x1c5},
+    {-1445, 263, -978, 0x00},
+    {-1445, 263, -1141, 0x1bd},
+    {-1445, 263, -1286, 0x00},
+    {-1445, 263, -1436, 0x1b5},
+};
+
+
+StandFileTile tile_80 = {
+    0x4af22, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_80[3] = {
+    {-1436, 263, -1957, 0x226},
+    {-1200, 263, -1830, 0x00},
+    {-1200, 263, -1957, 0x2de},
+};
+
+
+StandFileTile tile_81 = {
+    0x4af21, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_81[4] = {
+    {-1436, 263, -1957, 0x00},
+    {-1436, 263, -1852, 0x1b0},
+    {-1436, 263, -1830, 0x24c},
+    {-1200, 263, -1830, 0x222},
+};
+
+
+StandFileTile tile_82 = {
+    0x4ab22, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_82[4] = {
+    {-1436, 263, -1141, 0x230},
+    {-1304, 263, -888, 0x00},
+    {-1304, 263, -974, 0x3aa},
+    {-1304, 263, -987, 0x23f},
+};
+
+
+StandFileTile tile_83 = {
+    0x4ab21, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_83[4] = {
+    {-1436, 263, -1141, 0x00},
+    {-1436, 263, -978, 0x1cb},
+    {-1436, 263, -888, 0x00},
+    {-1304, 263, -888, 0x22b},
+};
+
+
+StandFileTile tile_84 = {
+    0x4a822, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_84[4] = {
+    {-1255, 263, -892, 0x23a},
+    {-1064, 263, -1141, 0x243},
+    {-1255, 263, -987, 0x3ae},
+    {-1255, 263, -974, 0x00},
+};
+
+
+StandFileTile tile_85 = {
+    0x4a821, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_85[4] = {
+    {-1255, 263, -892, 0x00},
+    {-1064, 263, -892, 0x1ea},
+    {-1064, 263, -978, 0x00},
+    {-1064, 263, -1141, 0x235},
+};
+
+
+StandFileTile tile_86 = {
+    0x4a722, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_86[3] = {
+    {-1255, 263, -987, 0x243},
+    {-1436, 263, -1141, 0x22b},
+    {-1304, 263, -987, 0x3aa},
+};
+
+
+StandFileTile tile_87 = {
+    0x4a721, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_87[3] = {
+    {-1255, 263, -987, 0x235},
+    {-1064, 263, -1141, 0x256},
+    {-1436, 263, -1141, 0x23f},
+};
+
+
+StandFileTile tile_88 = {
+    0x4a622, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_88[4] = {
+    {-1064, 263, -1830, 0x24c},
+    {-1436, 263, -1576, 0x269},
+    {-1064, 263, -1576, 0x00},
+    {-1064, 263, -1735, 0x1d0},
+};
+
+
+StandFileTile tile_89 = {
+    0x4a621, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    5,
+    0x0, 0x2, 0x4,
+};
+StandFilePoint points_89[5] = {
+    {-1064, 263, -1830, 0x00},
+    {-1200, 263, -1830, 0x226},
+    {-1436, 263, -1830, 0x1b0},
+    {-1436, 263, -1735, 0x00},
+    {-1436, 263, -1576, 0x247},
+};
+
+
+StandFileTile tile_8A = {
+    0x4a522, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_8A[3] = {
+    {-1436, 263, -1141, 0x256},
+    {-1064, 263, -1313, 0x00},
+    {-1304, 263, -1313, 0x25f},
+};
+
+
+StandFileTile tile_8B = {
+    0x4a521, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_8B[4] = {
+    {-1436, 263, -1141, 0x243},
+    {-1064, 263, -1141, 0x1e2},
+    {-1064, 263, -1286, 0x00},
+    {-1064, 263, -1313, 0x252},
+};
+
+
+StandFileTile tile_8C = {
+    0x4a422, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_8C[3] = {
+    {-1436, 263, -1576, 0x25f},
+    {-1304, 263, -1313, 0x00},
+    {-1304, 263, -1409, 0x265},
+};
+
+
+StandFileTile tile_8D = {
+    0x4a421, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    5,
+    0x0, 0x3, 0x4,
+};
+StandFilePoint points_8D[5] = {
+    {-1436, 263, -1576, 0x1b9},
+    {-1436, 263, -1436, 0x00},
+    {-1436, 263, -1286, 0x1c1},
+    {-1436, 263, -1141, 0x252},
+    {-1304, 263, -1313, 0x25b},
+};
+
+
+StandFileTile tile_8E = {
+    0x4a322, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_8E[3] = {
+    {-1064, 263, -1409, 0x269},
+    {-1436, 263, -1576, 0x25b},
+    {-1304, 263, -1409, 0x00},
+};
+
+
+StandFileTile tile_8F = {
+    0x4a321, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_8F[4] = {
+    {-1064, 263, -1409, 0x00},
+    {-1064, 263, -1436, 0x1da},
+    {-1064, 263, -1576, 0x247},
+    {-1436, 263, -1576, 0x265},
+};
+
+
+StandFileTile tile_90 = {
+    0x4a122, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_90[4] = {
+    {-1055, 263, -892, 0x273},
+    {-693, 263, -1141, 0x27c},
+    {-1055, 263, -1141, 0x00},
+    {-1055, 263, -978, 0x1ef},
+};
+
+
+StandFileTile tile_91 = {
+    0x4a121, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_91[4] = {
+    {-1055, 263, -892, 0x00},
+    {-693, 263, -892, 0x29f},
+    {-693, 263, -1033, 0x00},
+    {-693, 263, -1141, 0x26e},
+};
+
+
+StandFileTile tile_92 = {
+    0x4a022, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_92[3] = {
+    {-1055, 263, -1313, 0x27c},
+    {-693, 263, -1141, 0x285},
+    {-1005, 263, -1313, 0x00},
+};
+
+
+StandFileTile tile_93 = {
+    0x4a021, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_93[4] = {
+    {-1055, 263, -1313, 0x00},
+    {-1055, 263, -1286, 0x1e6},
+    {-1055, 263, -1141, 0x26e},
+    {-693, 263, -1141, 0x278},
+};
+
+
+StandFileTile tile_94 = {
+    0x49f22, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_94[3] = {
+    {-1005, 263, -1313, 0x285},
+    {-693, 263, -1576, 0x297},
+    {-1005, 263, -1409, 0x00},
+};
+
+
+StandFileTile tile_95 = {
+    0x49f21, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_95[3] = {
+    {-1005, 263, -1313, 0x278},
+    {-693, 263, -1141, 0x00},
+    {-693, 263, -1576, 0x281},
+};
+
+
+StandFileTile tile_96 = {
+    0x49d22, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_96[4] = {
+    {-693, 263, -1576, 0x28e},
+    {-1055, 263, -1830, 0x1d5},
+    {-1055, 263, -1735, 0x00},
+    {-1055, 263, -1576, 0x297},
+};
+
+
+StandFileTile tile_97 = {
+    0x49d21, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_97[3] = {
+    {-693, 263, -1576, 0x00},
+    {-693, 263, -1830, 0x00},
+    {-1055, 263, -1830, 0x289},
+};
+
+
+StandFileTile tile_98 = {
+    0x49c22, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_98[4] = {
+    {-1005, 263, -1409, 0x297},
+    {-1055, 263, -1576, 0x1de},
+    {-1055, 263, -1436, 0x00},
+    {-1055, 263, -1409, 0x00},
+};
+
+
+StandFileTile tile_99 = {
+    0x49c21, 0x3d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_99[3] = {
+    {-1005, 263, -1409, 0x281},
+    {-693, 263, -1576, 0x289},
+    {-1055, 263, -1576, 0x292},
+};
+
+
+StandFileTile tile_9A = {
+    0x4d622, 0x3c,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_9A[3] = {
+    {-693, 263, -1033, 0x29f},
+    {-684, 263, -978, 0x00},
+    {-684, 263, -1033, 0x00},
+};
+
+
+StandFileTile tile_9B = {
+    0x4d621, 0x3c,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_9B[3] = {
+    {-693, 263, -1033, 0x273},
+    {-693, 263, -892, 0x2a3},
+    {-684, 263, -978, 0x29b},
+};
+
+
+StandFileTile tile_9C = {
+    0x4d722, 0x3c,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_9C[3] = {
+    {-693, 263, -892, 0x2a7},
+    {-675, 263, -978, 0x00},
+    {-684, 263, -978, 0x29f},
+};
+
+
+StandFileTile tile_9D = {
+    0x4d721, 0x3c,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_9D[3] = {
+    {-693, 263, -892, 0x00},
+    {-303, 263, -892, 0x2ab},
+    {-675, 263, -978, 0x2a3},
+};
+
+
+StandFileTile tile_9E = {
+    0x4d822, 0x3c,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_9E[3] = {
+    {-303, 263, -892, 0x2af},
+    {-675, 263, -1033, 0x00},
+    {-675, 263, -978, 0x2a7},
+};
+
+
+StandFileTile tile_9F = {
+    0x4d821, 0x3c,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_9F[3] = {
+    {-303, 263, -892, 0x00},
+    {-303, 263, -1033, 0x00},
+    {-675, 263, -1033, 0x2ab},
+};
+
+
+StandFileTile tile_A0 = {
+    0x49322, 0x3b,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_A0[3] = {
+    {-1522, 263, -1975, 0x2b7},
+    {-1354, 263, -1984, 0x2ea},
+    {-1522, 263, -1984, 0x00},
+};
+
+
+StandFileTile tile_A1 = {
+    0x49321, 0x3b,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_A1[4] = {
+    {-1522, 263, -1975, 0x00},
+    {-1490, 263, -1975, 0x2e4},
+    {-1354, 263, -1975, 0x00},
+    {-1354, 263, -1984, 0x2b3},
+};
+
+
+StandFileTile tile_A2 = {
+    0x49522, 0x3b,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_A2[3] = {
+    {-1336, 263, -1975, 0x2c0},
+    {-1200, 263, -1984, 0x2ea},
+    {-1336, 263, -1984, 0x00},
+};
+
+
+StandFileTile tile_A3 = {
+    0x49521, 0x3b,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_A3[3] = {
+    {-1336, 263, -1975, 0x2e4},
+    {-1200, 263, -1975, 0x00},
+    {-1200, 263, -1984, 0x2bc},
+};
+
+
+StandFileTile tile_A4 = {
+    0x49822, 0x3b,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_A4[4] = {
+    {-1522, 263, -2246, 0x2c9},
+    {-1354, 263, -2255, 0x00},
+    {-1467, 263, -2255, 0x2d6},
+    {-1522, 263, -2255, 0x00},
+};
+
+
+StandFileTile tile_A5 = {
+    0x49821, 0x3b,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_A5[4] = {
+    {-1522, 263, -2246, 0x2f4},
+    {-1467, 263, -2246, 0x00},
+    {-1354, 263, -2246, 0x00},
+    {-1354, 263, -2255, 0x2c4},
+};
+
+
+StandFileTile tile_A6 = {
+    0x48722, 0x3b,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_A6[3] = {
+    {-1191, 263, -2292, 0x2d2},
+    {-1522, 263, -2527, 0x2da},
+    {-1467, 263, -2292, 0x00},
+};
+
+
+StandFileTile tile_A7 = {
+    0x48721, 0x3b,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_A7[3] = {
+    {-1191, 263, -2292, 0x00},
+    {-1191, 263, -2527, 0x00},
+    {-1522, 263, -2527, 0x2ce},
+};
+
+
+StandFileTile tile_A8 = {
+    0x48622, 0x3b,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_A8[3] = {
+    {-1467, 263, -2255, 0x2da},
+    {-1522, 263, -2527, 0x00},
+    {-1522, 263, -2255, 0x2c4},
+};
+
+
+StandFileTile tile_A9 = {
+    0x48621, 0x3b,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_A9[3] = {
+    {-1467, 263, -2255, 0x00},
+    {-1467, 263, -2292, 0x2ce},
+    {-1522, 263, -2527, 0x2d6},
+};
+
+
+StandFileTile tile_AA = {
+    0x48f22, 0x3b,
+    0x0,
+    0x5, 0x5, 0x5,
+    5,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_AA[5] = {
+    {-1200, 263, -1957, 0x2e4},
+    {-1490, 263, -1975, 0x00},
+    {-1490, 263, -1957, 0x1f8},
+    {-1445, 263, -1957, 0x00},
+    {-1436, 263, -1957, 0x222},
+};
+
+
+StandFileTile tile_AB = {
+    0x48f21, 0x3b,
+    0x0,
+    0x5, 0x5, 0x5,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_AB[5] = {
+    {-1200, 263, -1957, 0x00},
+    {-1200, 263, -1975, 0x2c0},
+    {-1336, 263, -1975, 0x00},
+    {-1354, 263, -1975, 0x2b7},
+    {-1490, 263, -1975, 0x2de},
+};
+
+
+StandFileTile tile_AC = {
+    0x48b22, 0x3b,
+    0x0,
+    0x5, 0x5, 0x5,
+    5,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_AC[5] = {
+    {-1200, 263, -1984, 0x2f0},
+    {-1467, 263, -2215, 0x2f8},
+    {-1522, 263, -1984, 0x2b3},
+    {-1354, 263, -1984, 0x00},
+    {-1336, 263, -1984, 0x2bc},
+};
+
+
+StandFileTile tile_AD = {
+    0x48b21, 0x3b,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_AD[3] = {
+    {-1200, 263, -1984, 0x00},
+    {-1200, 263, -2215, 0x00},
+    {-1467, 263, -2215, 0x2ea},
+};
+
+
+StandFileTile tile_AE = {
+    0x48a22, 0x3b,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_AE[3] = {
+    {-1522, 263, -1984, 0x2f8},
+    {-1467, 263, -2246, 0x2c9},
+    {-1522, 263, -2246, 0x00},
+};
+
+
+StandFileTile tile_AF = {
+    0x48a21, 0x3b,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_AF[3] = {
+    {-1522, 263, -1984, 0x2ea},
+    {-1467, 263, -2215, 0x00},
+    {-1467, 263, -2246, 0x2f4},
+};
+
+
+StandFileTile tile_B0 = {
+    0x69b18, 0x3a,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_B0[3] = {
+    {-1284, 127, -1970, 0x824},
+    {-1304, 127, -1970, 0x362},
+    {-1284, 127, -1957, 0x00},
+};
+
+
+StandFileTile tile_B1 = {
+    0x89718, 0x3a,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_B1[3] = {
+    {-1367, 127, -1477, 0x00},
+    {-1358, 127, -1485, 0x318},
+    {-1427, 127, -1562, 0x6ca},
+};
+
+
+StandFileTile tile_B2 = {
+    0x89318, 0x3a,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_B2[3] = {
+    {-1317, 127, -1426, 0x351},
+    {-1304, 127, -1676, 0x318},
+    {-1358, 127, -1485, 0x00},
+};
+
+
+StandFileTile tile_B3 = {
+    0x69a18, 0x3a,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_B3[3] = {
+    {-1304, 127, -1676, 0x366},
+    {-1304, 127, -1970, 0x828},
+    {-1427, 127, -1970, 0x30c},
+};
+
+
+StandFileTile tile_B4 = {
+    0x69918, 0x3a,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_B4[3] = {
+    {-1427, 127, -1970, 0x00},
+    {-1427, 127, -1712, 0x310},
+    {-1304, 127, -1676, 0x308},
+};
+
+
+StandFileTile tile_B5 = {
+    0x69818, 0x3a,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_B5[3] = {
+    {-1304, 127, -1676, 0x30c},
+    {-1427, 127, -1712, 0x7e4},
+    {-1427, 127, -1658, 0x314},
+};
+
+
+StandFileTile tile_B6 = {
+    0x69718, 0x3a,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_B6[3] = {
+    {-1427, 127, -1658, 0x00},
+    {-1427, 127, -1562, 0x318},
+    {-1304, 127, -1676, 0x310},
+};
+
+
+StandFileTile tile_B7 = {
+    0x69618, 0x3a,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_B7[3] = {
+    {-1358, 127, -1485, 0x304},
+    {-1304, 127, -1676, 0x314},
+    {-1427, 127, -1562, 0x300},
+};
+
+
+StandFileTile tile_B8 = {
+    0x6951a, 0x3a,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_B8[3] = {
+    {-865, 127, -1531, 0x320},
+    {-766, 127, -1409, 0x00},
+    {-766, 127, -1460, 0x32c},
+};
+
+
+StandFileTile tile_B9 = {
+    0x69519, 0x3a,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_B9[3] = {
+    {-865, 127, -1531, 0x330},
+    {-1005, 127, -1409, 0x4ae},
+    {-766, 127, -1409, 0x31c},
+};
+
+
+StandFileTile tile_BA = {
+    0x6941a, 0x3a,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_BA[3] = {
+    {-865, 127, -1531, 0x328},
+    {-766, 127, -1676, 0x340},
+    {-1046, 127, -1676, 0x330},
+};
+
+
+StandFileTile tile_BB = {
+    0x69419, 0x3a,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_BB[3] = {
+    {-865, 127, -1531, 0x32c},
+    {-766, 127, -1614, 0x00},
+    {-766, 127, -1676, 0x324},
+};
+
+
+StandFileTile tile_BC = {
+    0x69318, 0x3a,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_BC[3] = {
+    {-766, 127, -1614, 0x328},
+    {-865, 127, -1531, 0x31c},
+    {-766, 127, -1460, 0x00},
+};
+
+
+StandFileTile tile_BD = {
+    0x69218, 0x3a,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_BD[3] = {
+    {-1046, 127, -1676, 0x35a},
+    {-1005, 127, -1409, 0x320},
+    {-865, 127, -1531, 0x324},
+};
+
+
+StandFileTile tile_BE = {
+    0x6911a, 0x3a,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_BE[3] = {
+    {-865, 127, -1812, 0x338},
+    {-766, 127, -1957, 0x00},
+    {-1046, 127, -1957, 0x348},
+};
+
+
+StandFileTile tile_BF = {
+    0x69119, 0x3a,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_BF[3] = {
+    {-865, 127, -1812, 0x344},
+    {-766, 127, -1839, 0x37a},
+    {-766, 127, -1957, 0x334},
+};
+
+
+StandFileTile tile_C0 = {
+    0x6901a, 0x3a,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_C0[3] = {
+    {-865, 127, -1812, 0x340},
+    {-766, 127, -1676, 0x00},
+    {-766, 127, -1733, 0x344},
+};
+
+
+StandFileTile tile_C1 = {
+    0x69019, 0x3a,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_C1[3] = {
+    {-865, 127, -1812, 0x348},
+    {-1046, 127, -1676, 0x324},
+    {-766, 127, -1676, 0x33c},
+};
+
+
+StandFileTile tile_C2 = {
+    0x68f18, 0x3a,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_C2[3] = {
+    {-766, 127, -1839, 0x338},
+    {-865, 127, -1812, 0x33c},
+    {-766, 127, -1733, 0x00},
+};
+
+
+StandFileTile tile_C3 = {
+    0x68e18, 0x3a,
+    0x0,
+    0x8, 0x8, 0x8,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_C3[4] = {
+    {-1046, 127, -1957, 0x00},
+    {-1046, 127, -1943, 0x36e},
+    {-1046, 127, -1676, 0x340},
+    {-865, 127, -1812, 0x334},
+};
+
+
+StandFileTile tile_C4 = {
+    0x68d18, 0x3a,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_C4[3] = {
+    {-1178, 127, -1531, 0x351},
+    {-1318, 127, -1409, 0x00},
+    {-1005, 127, -1409, 0x35a},
+};
+
+
+StandFileTile tile_C5 = {
+    0x68c18, 0x3a,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_C5[4] = {
+    {-1304, 127, -1676, 0x304},
+    {-1317, 127, -1426, 0x00},
+    {-1318, 127, -1409, 0x34d},
+    {-1178, 127, -1531, 0x356},
+};
+
+
+StandFileTile tile_C6 = {
+    0x68b18, 0x3a,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_C6[3] = {
+    {-1178, 127, -1531, 0x35a},
+    {-1046, 127, -1676, 0x36a},
+    {-1304, 127, -1676, 0x351},
+};
+
+
+StandFileTile tile_C7 = {
+    0x68a18, 0x3a,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_C7[3] = {
+    {-1005, 127, -1409, 0x330},
+    {-1046, 127, -1676, 0x356},
+    {-1178, 127, -1531, 0x34d},
+};
+
+
+StandFileTile tile_C8 = {
+    0x68918, 0x3a,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_C8[3] = {
+    {-1196, 127, -1816, 0x372},
+    {-1073, 127, -1957, 0x00},
+    {-1284, 127, -1957, 0x362},
+};
+
+
+StandFileTile tile_C9 = {
+    0x68818, 0x3a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_C9[3] = {
+    {-1284, 127, -1957, 0x2fc},
+    {-1304, 127, -1970, 0x366},
+    {-1196, 127, -1816, 0x35e},
+};
+
+
+StandFileTile tile_CA = {
+    0x68718, 0x3a,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_CA[3] = {
+    {-1196, 127, -1816, 0x362},
+    {-1304, 127, -1970, 0x308},
+    {-1304, 127, -1676, 0x36a},
+};
+
+
+StandFileTile tile_CB = {
+    0x68618, 0x3a,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_CB[3] = {
+    {-1304, 127, -1676, 0x356},
+    {-1046, 127, -1676, 0x36e},
+    {-1196, 127, -1816, 0x366},
+};
+
+
+StandFileTile tile_CC = {
+    0x68518, 0x3a,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_CC[3] = {
+    {-1196, 127, -1816, 0x36a},
+    {-1046, 127, -1676, 0x348},
+    {-1046, 127, -1943, 0x376},
+};
+
+
+StandFileTile tile_CD = {
+    0x68418, 0x3a,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_CD[3] = {
+    {-1073, 127, -1957, 0x35e},
+    {-1196, 127, -1816, 0x376},
+    {-1073, 127, -1943, 0x00},
+};
+
+
+StandFileTile tile_CE = {
+    0x68318, 0x3a,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_CE[3] = {
+    {-1073, 127, -1943, 0x372},
+    {-1196, 127, -1816, 0x36e},
+    {-1046, 127, -1943, 0x00},
+};
+
+
+StandFileTile tile_CF = {
+    0x6fa1a, 0x3a,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_CF[3] = {
+    {-766, 127, -1839, 0x37e},
+    {-761, 127, -1957, 0x00},
+    {-766, 127, -1957, 0x338},
+};
+
+
+StandFileTile tile_D0 = {
+    0x6fa19, 0x3a,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_D0[3] = {
+    {-766, 127, -1839, 0x00},
+    {-761, 127, -1839, 0x54e},
+    {-761, 127, -1957, 0x37a},
+};
+
+
+StandFileTile tile_D1 = {
+    0x8111a, 0x39,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_D1[3] = {
+    {-761, 127, -1033, 0x386},
+    {-766, 127, -978, 0x00},
+    {-761, 127, -978, 0x516},
+};
+
+
+StandFileTile tile_D2 = {
+    0x81119, 0x39,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_D2[3] = {
+    {-761, 127, -1033, 0x38e},
+    {-766, 127, -1033, 0x49a},
+    {-766, 127, -978, 0x382},
+};
+
+
+StandFileTile tile_D3 = {
+    0x8091a, 0x39,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_D3[3] = {
+    {-766, 127, -1033, 0x38e},
+    {-761, 127, -1086, 0x00},
+    {-766, 127, -1090, 0x4c2},
+};
+
+
+StandFileTile tile_D4 = {
+    0x80919, 0x39,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_D4[3] = {
+    {-766, 127, -1033, 0x386},
+    {-761, 127, -1033, 0x536},
+    {-761, 127, -1086, 0x38a},
+};
+
+
+StandFileTile tile_D5 = {
+    0x7a41a, 0x39,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_D5[3] = {
+    {-1255, 145, -761, 0x396},
+    {-1304, 145, -811, 0x00},
+    {-1304, 145, -761, 0x00},
+};
+
+
+StandFileTile tile_D6 = {
+    0x7a419, 0x39,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_D6[3] = {
+    {-1255, 145, -761, 0x39a},
+    {-1255, 145, -811, 0x476},
+    {-1304, 145, -811, 0x392},
+};
+
+
+StandFileTile tile_D7 = {
+    0x7a31a, 0x39,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_D7[3] = {
+    {-1241, 145, -761, 0x39e},
+    {-1255, 145, -811, 0x396},
+    {-1255, 145, -761, 0x00},
+};
+
+
+StandFileTile tile_D8 = {
+    0x7a319, 0x39,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_D8[3] = {
+    {-1241, 145, -761, 0x3a2},
+    {-1241, 145, -811, 0x00},
+    {-1255, 145, -811, 0x39a},
+};
+
+
+StandFileTile tile_D9 = {
+    0x7a21a, 0x39,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_D9[3] = {
+    {-1241, 136, -761, 0x3a6},
+    {-1241, 145, -811, 0x39e},
+    {-1241, 145, -761, 0x00},
+};
+
+
+StandFileTile tile_DA = {
+    0x7a219, 0x39,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_DA[3] = {
+    {-1241, 136, -761, 0x47a},
+    {-1241, 136, -811, 0x00},
+    {-1241, 145, -811, 0x3a2},
+};
+
+
+StandFileTile tile_DB = {
+    0x7a11a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_DB[3] = {
+    {-1304, 263, -974, 0x3ae},
+    {-1255, 263, -987, 0x23f},
+    {-1304, 263, -987, 0x22b},
+};
+
+
+StandFileTile tile_DC = {
+    0x7a119, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_DC[3] = {
+    {-1304, 263, -974, 0x3b2},
+    {-1255, 263, -974, 0x235},
+    {-1255, 263, -987, 0x3aa},
+};
+
+
+StandFileTile tile_DD = {
+    0x7a01a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_DD[3] = {
+    {-1304, 254, -974, 0x3b6},
+    {-1255, 263, -974, 0x3ae},
+    {-1304, 263, -974, 0x00},
+};
+
+
+StandFileTile tile_DE = {
+    0x7a019, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_DE[3] = {
+    {-1304, 254, -974, 0x3ba},
+    {-1255, 254, -974, 0x00},
+    {-1255, 263, -974, 0x3b2},
+};
+
+
+StandFileTile tile_DF = {
+    0x79f1a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_DF[3] = {
+    {-1304, 254, -960, 0x3be},
+    {-1255, 254, -974, 0x3b6},
+    {-1304, 254, -974, 0x00},
+};
+
+
+StandFileTile tile_E0 = {
+    0x79f19, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_E0[3] = {
+    {-1304, 254, -960, 0x3c2},
+    {-1255, 254, -960, 0x00},
+    {-1255, 254, -974, 0x3ba},
+};
+
+
+StandFileTile tile_E1 = {
+    0x79e1a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_E1[3] = {
+    {-1304, 245, -960, 0x3c6},
+    {-1255, 254, -960, 0x3be},
+    {-1304, 254, -960, 0x00},
+};
+
+
+StandFileTile tile_E2 = {
+    0x79e19, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_E2[3] = {
+    {-1304, 245, -960, 0x3ca},
+    {-1255, 245, -960, 0x00},
+    {-1255, 254, -960, 0x3c2},
+};
+
+
+StandFileTile tile_E3 = {
+    0x79d1a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_E3[3] = {
+    {-1304, 245, -947, 0x3ce},
+    {-1255, 245, -960, 0x3c6},
+    {-1304, 245, -960, 0x00},
+};
+
+
+StandFileTile tile_E4 = {
+    0x79d19, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_E4[3] = {
+    {-1304, 245, -947, 0x3d2},
+    {-1255, 245, -947, 0x00},
+    {-1255, 245, -960, 0x3ca},
+};
+
+
+StandFileTile tile_E5 = {
+    0x79c1a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_E5[3] = {
+    {-1304, 236, -947, 0x3d6},
+    {-1255, 245, -947, 0x3ce},
+    {-1304, 245, -947, 0x00},
+};
+
+
+StandFileTile tile_E6 = {
+    0x79c19, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_E6[3] = {
+    {-1304, 236, -947, 0x3da},
+    {-1255, 236, -947, 0x00},
+    {-1255, 245, -947, 0x3d2},
+};
+
+
+StandFileTile tile_E7 = {
+    0x79b1a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_E7[3] = {
+    {-1304, 236, -933, 0x3de},
+    {-1255, 236, -947, 0x3d6},
+    {-1304, 236, -947, 0x00},
+};
+
+
+StandFileTile tile_E8 = {
+    0x79b19, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_E8[3] = {
+    {-1304, 236, -933, 0x3e2},
+    {-1255, 236, -933, 0x00},
+    {-1255, 236, -947, 0x3da},
+};
+
+
+StandFileTile tile_E9 = {
+    0x79a1a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_E9[3] = {
+    {-1304, 226, -933, 0x3e6},
+    {-1255, 236, -933, 0x3de},
+    {-1304, 236, -933, 0x00},
+};
+
+
+StandFileTile tile_EA = {
+    0x79a19, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_EA[3] = {
+    {-1304, 226, -933, 0x3ea},
+    {-1255, 226, -933, 0x00},
+    {-1255, 236, -933, 0x3e2},
+};
+
+
+StandFileTile tile_EB = {
+    0x7991a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_EB[3] = {
+    {-1304, 226, -919, 0x3ee},
+    {-1255, 226, -933, 0x3e6},
+    {-1304, 226, -933, 0x00},
+};
+
+
+StandFileTile tile_EC = {
+    0x79919, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_EC[3] = {
+    {-1304, 226, -919, 0x3f2},
+    {-1255, 226, -919, 0x00},
+    {-1255, 226, -933, 0x3ea},
+};
+
+
+StandFileTile tile_ED = {
+    0x7981a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_ED[3] = {
+    {-1304, 217, -919, 0x3f6},
+    {-1255, 226, -919, 0x3ee},
+    {-1304, 226, -919, 0x00},
+};
+
+
+StandFileTile tile_EE = {
+    0x79819, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_EE[3] = {
+    {-1304, 217, -919, 0x3fa},
+    {-1255, 217, -919, 0x00},
+    {-1255, 226, -919, 0x3f2},
+};
+
+
+StandFileTile tile_EF = {
+    0x7971a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_EF[3] = {
+    {-1304, 217, -906, 0x3fe},
+    {-1255, 217, -919, 0x3f6},
+    {-1304, 217, -919, 0x00},
+};
+
+
+StandFileTile tile_F0 = {
+    0x79719, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_F0[3] = {
+    {-1304, 217, -906, 0x402},
+    {-1255, 217, -906, 0x00},
+    {-1255, 217, -919, 0x3fa},
+};
+
+
+StandFileTile tile_F1 = {
+    0x7961a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_F1[3] = {
+    {-1304, 208, -906, 0x406},
+    {-1255, 217, -906, 0x3fe},
+    {-1304, 217, -906, 0x00},
+};
+
+
+StandFileTile tile_F2 = {
+    0x79619, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_F2[3] = {
+    {-1304, 208, -906, 0x40a},
+    {-1255, 208, -906, 0x00},
+    {-1255, 217, -906, 0x402},
+};
+
+
+StandFileTile tile_F3 = {
+    0x7951a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_F3[3] = {
+    {-1304, 208, -892, 0x40e},
+    {-1255, 208, -906, 0x406},
+    {-1304, 208, -906, 0x00},
+};
+
+
+StandFileTile tile_F4 = {
+    0x79519, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_F4[3] = {
+    {-1304, 208, -892, 0x412},
+    {-1255, 208, -892, 0x00},
+    {-1255, 208, -906, 0x40a},
+};
+
+
+StandFileTile tile_F5 = {
+    0x7941a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_F5[3] = {
+    {-1304, 199, -892, 0x416},
+    {-1255, 208, -892, 0x40e},
+    {-1304, 208, -892, 0x00},
+};
+
+
+StandFileTile tile_F6 = {
+    0x79419, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_F6[3] = {
+    {-1304, 199, -892, 0x41a},
+    {-1255, 199, -892, 0x00},
+    {-1255, 208, -892, 0x412},
+};
+
+
+StandFileTile tile_F7 = {
+    0x7931a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_F7[3] = {
+    {-1304, 199, -879, 0x41e},
+    {-1255, 199, -892, 0x416},
+    {-1304, 199, -892, 0x00},
+};
+
+
+StandFileTile tile_F8 = {
+    0x79319, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_F8[3] = {
+    {-1304, 199, -879, 0x422},
+    {-1255, 199, -879, 0x00},
+    {-1255, 199, -892, 0x41a},
+};
+
+
+StandFileTile tile_F9 = {
+    0x7921a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_F9[3] = {
+    {-1304, 190, -879, 0x426},
+    {-1255, 199, -879, 0x41e},
+    {-1304, 199, -879, 0x00},
+};
+
+
+StandFileTile tile_FA = {
+    0x79219, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_FA[3] = {
+    {-1304, 190, -879, 0x42a},
+    {-1255, 190, -879, 0x00},
+    {-1255, 199, -879, 0x422},
+};
+
+
+StandFileTile tile_FB = {
+    0x7911a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_FB[3] = {
+    {-1304, 190, -865, 0x42e},
+    {-1255, 190, -879, 0x426},
+    {-1304, 190, -879, 0x00},
+};
+
+
+StandFileTile tile_FC = {
+    0x79119, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_FC[3] = {
+    {-1304, 190, -865, 0x432},
+    {-1255, 190, -865, 0x00},
+    {-1255, 190, -879, 0x42a},
+};
+
+
+StandFileTile tile_FD = {
+    0x7901a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_FD[3] = {
+    {-1304, 181, -865, 0x436},
+    {-1255, 190, -865, 0x42e},
+    {-1304, 190, -865, 0x00},
+};
+
+
+StandFileTile tile_FE = {
+    0x79019, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_FE[3] = {
+    {-1304, 181, -865, 0x43a},
+    {-1255, 181, -865, 0x00},
+    {-1255, 190, -865, 0x432},
+};
+
+
+StandFileTile tile_FF = {
+    0x78f1a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_FF[3] = {
+    {-1304, 181, -851, 0x43e},
+    {-1255, 181, -865, 0x436},
+    {-1304, 181, -865, 0x00},
+};
+
+
+StandFileTile tile_100 = {
+    0x78f19, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_100[3] = {
+    {-1304, 181, -851, 0x442},
+    {-1255, 181, -851, 0x00},
+    {-1255, 181, -865, 0x43a},
+};
+
+
+StandFileTile tile_101 = {
+    0x78e1a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_101[3] = {
+    {-1304, 172, -851, 0x446},
+    {-1255, 181, -851, 0x43e},
+    {-1304, 181, -851, 0x00},
+};
+
+
+StandFileTile tile_102 = {
+    0x78e19, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_102[3] = {
+    {-1304, 172, -851, 0x44a},
+    {-1255, 172, -851, 0x00},
+    {-1255, 181, -851, 0x442},
+};
+
+
+StandFileTile tile_103 = {
+    0x78d1a, 0x39,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_103[3] = {
+    {-1304, 172, -838, 0x44e},
+    {-1255, 172, -851, 0x446},
+    {-1304, 172, -851, 0x00},
+};
+
+
+StandFileTile tile_104 = {
+    0x78d19, 0x39,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_104[3] = {
+    {-1304, 172, -838, 0x452},
+    {-1255, 172, -838, 0x00},
+    {-1255, 172, -851, 0x44a},
+};
+
+
+StandFileTile tile_105 = {
+    0x78c1a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_105[3] = {
+    {-1304, 163, -838, 0x456},
+    {-1255, 172, -838, 0x44e},
+    {-1304, 172, -838, 0x00},
+};
+
+
+StandFileTile tile_106 = {
+    0x78c19, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_106[3] = {
+    {-1304, 163, -838, 0x45a},
+    {-1255, 163, -838, 0x00},
+    {-1255, 172, -838, 0x452},
+};
+
+
+StandFileTile tile_107 = {
+    0x78b1a, 0x39,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_107[3] = {
+    {-1304, 163, -824, 0x45e},
+    {-1255, 163, -838, 0x456},
+    {-1304, 163, -838, 0x00},
+};
+
+
+StandFileTile tile_108 = {
+    0x78b19, 0x39,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_108[3] = {
+    {-1304, 163, -824, 0x462},
+    {-1255, 163, -824, 0x00},
+    {-1255, 163, -838, 0x45a},
+};
+
+
+StandFileTile tile_109 = {
+    0x78a1a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_109[3] = {
+    {-1304, 154, -824, 0x466},
+    {-1255, 163, -824, 0x45e},
+    {-1304, 163, -824, 0x00},
+};
+
+
+StandFileTile tile_10A = {
+    0x78a19, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_10A[3] = {
+    {-1304, 154, -824, 0x46a},
+    {-1255, 154, -824, 0x00},
+    {-1255, 163, -824, 0x462},
+};
+
+
+StandFileTile tile_10B = {
+    0x7891a, 0x39,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_10B[3] = {
+    {-1304, 154, -811, 0x46e},
+    {-1255, 154, -824, 0x466},
+    {-1304, 154, -824, 0x00},
+};
+
+
+StandFileTile tile_10C = {
+    0x78919, 0x39,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_10C[3] = {
+    {-1304, 154, -811, 0x472},
+    {-1255, 154, -811, 0x00},
+    {-1255, 154, -824, 0x46a},
+};
+
+
+StandFileTile tile_10D = {
+    0x7881a, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_10D[3] = {
+    {-1304, 145, -811, 0x476},
+    {-1255, 154, -811, 0x46e},
+    {-1304, 154, -811, 0x00},
+};
+
+
+StandFileTile tile_10E = {
+    0x78819, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_10E[3] = {
+    {-1304, 145, -811, 0x396},
+    {-1255, 145, -811, 0x00},
+    {-1255, 154, -811, 0x472},
+};
+
+
+StandFileTile tile_10F = {
+    0x7871a, 0x39,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_10F[3] = {
+    {-1227, 136, -761, 0x47e},
+    {-1241, 136, -811, 0x3a6},
+    {-1241, 136, -761, 0x00},
+};
+
+
+StandFileTile tile_110 = {
+    0x78719, 0x39,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_110[3] = {
+    {-1227, 136, -761, 0x482},
+    {-1227, 136, -811, 0x00},
+    {-1241, 136, -811, 0x47a},
+};
+
+
+StandFileTile tile_111 = {
+    0x7861a, 0x39,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_111[3] = {
+    {-1227, 127, -761, 0x486},
+    {-1227, 136, -811, 0x47e},
+    {-1227, 136, -761, 0x00},
+};
+
+
+StandFileTile tile_112 = {
+    0x78619, 0x39,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_112[3] = {
+    {-1227, 127, -761, 0x4fa},
+    {-1227, 127, -811, 0x00},
+    {-1227, 136, -811, 0x482},
+};
+
+
+StandFileTile tile_113 = {
+    0x7851a, 0x39,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_113[3] = {
+    {-1037, 127, -761, 0x48e},
+    {-766, 127, -774, 0x496},
+    {-1046, 127, -774, 0x4aa},
+};
+
+
+StandFileTile tile_114 = {
+    0x78519, 0x39,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_114[3] = {
+    {-1037, 127, -761, 0x00},
+    {-766, 127, -761, 0x00},
+    {-766, 127, -774, 0x48a},
+};
+
+
+StandFileTile tile_115 = {
+    0x7841a, 0x39,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_115[3] = {
+    {-1046, 127, -774, 0x496},
+    {-766, 127, -840, 0x4a2},
+    {-870, 127, -933, 0x4a6},
+};
+
+
+StandFileTile tile_116 = {
+    0x78419, 0x39,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_116[3] = {
+    {-1046, 127, -774, 0x48a},
+    {-766, 127, -774, 0x00},
+    {-766, 127, -840, 0x492},
+};
+
+
+StandFileTile tile_117 = {
+    0x7831a, 0x39,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_117[3] = {
+    {-766, 127, -1033, 0x49e},
+    {-870, 127, -933, 0x4a2},
+    {-766, 127, -978, 0x386},
+};
+
+
+StandFileTile tile_118 = {
+    0x78319, 0x39,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_118[3] = {
+    {-766, 127, -1033, 0x4c6},
+    {-1046, 127, -1033, 0x4a6},
+    {-870, 127, -933, 0x49a},
+};
+
+
+StandFileTile tile_119 = {
+    0x78218, 0x39,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_119[3] = {
+    {-766, 127, -978, 0x49a},
+    {-870, 127, -933, 0x492},
+    {-766, 127, -840, 0x00},
+};
+
+
+StandFileTile tile_11A = {
+    0x78118, 0x39,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_11A[3] = {
+    {-1046, 127, -1033, 0x4e6},
+    {-1046, 127, -774, 0x492},
+    {-870, 127, -933, 0x49e},
+};
+
+
+StandFileTile tile_11B = {
+    0x78018, 0x39,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_11B[3] = {
+    {-1046, 127, -761, 0x00},
+    {-1037, 127, -761, 0x48a},
+    {-1046, 127, -774, 0x00},
+};
+
+
+StandFileTile tile_11C = {
+    0x77f1a, 0x39,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_11C[3] = {
+    {-1005, 127, -1313, 0x4b2},
+    {-766, 127, -1409, 0x320},
+    {-1005, 127, -1409, 0x00},
+};
+
+
+StandFileTile tile_11D = {
+    0x77f19, 0x39,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_11D[3] = {
+    {-1005, 127, -1313, 0x4ca},
+    {-766, 127, -1313, 0x00},
+    {-766, 127, -1409, 0x4ae},
+};
+
+
+StandFileTile tile_11E = {
+    0x77e18, 0x39,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_11E[3] = {
+    {-1304, 127, -1313, 0x00},
+    {-1304, 127, -1164, 0x4ba},
+    {-1005, 127, -1313, 0x00},
+};
+
+
+StandFileTile tile_11F = {
+    0x77d18, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_11F[3] = {
+    {-1005, 127, -1313, 0x4b6},
+    {-1304, 127, -1164, 0x00},
+    {-1304, 127, -1033, 0x4be},
+};
+
+
+StandFileTile tile_120 = {
+    0x77c18, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_120[3] = {
+    {-1304, 127, -1033, 0x4da},
+    {-1046, 127, -1033, 0x4d6},
+    {-1005, 127, -1313, 0x4ba},
+};
+
+
+StandFileTile tile_121 = {
+    0x77b1a, 0x39,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_121[3] = {
+    {-865, 127, -1168, 0x4c6},
+    {-766, 127, -1033, 0x38a},
+    {-766, 127, -1090, 0x4d2},
+};
+
+
+StandFileTile tile_122 = {
+    0x77b19, 0x39,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_122[3] = {
+    {-865, 127, -1168, 0x4d6},
+    {-1046, 127, -1033, 0x49e},
+    {-766, 127, -1033, 0x4c2},
+};
+
+
+StandFileTile tile_123 = {
+    0x77a1a, 0x39,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_123[3] = {
+    {-865, 127, -1168, 0x4ce},
+    {-766, 127, -1313, 0x4b2},
+    {-1005, 127, -1313, 0x4d6},
+};
+
+
+StandFileTile tile_124 = {
+    0x77a19, 0x39,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_124[3] = {
+    {-865, 127, -1168, 0x4d2},
+    {-766, 127, -1252, 0x00},
+    {-766, 127, -1313, 0x4ca},
+};
+
+
+StandFileTile tile_125 = {
+    0x77918, 0x39,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_125[3] = {
+    {-766, 127, -1252, 0x4ce},
+    {-865, 127, -1168, 0x4c2},
+    {-766, 127, -1090, 0x00},
+};
+
+
+StandFileTile tile_126 = {
+    0x77818, 0x39,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_126[3] = {
+    {-1005, 127, -1313, 0x4be},
+    {-1046, 127, -1033, 0x4c6},
+    {-865, 127, -1168, 0x4ca},
+};
+
+
+StandFileTile tile_127 = {
+    0x77718, 0x39,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_127[3] = {
+    {-1046, 127, -1033, 0x4be},
+    {-1304, 127, -1033, 0x4e2},
+    {-1168, 127, -906, 0x4e6},
+};
+
+
+StandFileTile tile_128 = {
+    0x77618, 0x39,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_128[3] = {
+    {-1304, 127, -1033, 0x00},
+    {-1304, 127, -956, 0x00},
+    {-1277, 127, -956, 0x4e2},
+};
+
+
+StandFileTile tile_129 = {
+    0x77518, 0x39,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_129[3] = {
+    {-1304, 127, -1033, 0x4de},
+    {-1277, 127, -956, 0x4ea},
+    {-1168, 127, -906, 0x4da},
+};
+
+
+StandFileTile tile_12A = {
+    0x77418, 0x39,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_12A[3] = {
+    {-1046, 127, -774, 0x4a6},
+    {-1046, 127, -1033, 0x4da},
+    {-1168, 127, -906, 0x4f6},
+};
+
+
+StandFileTile tile_12B = {
+    0x77318, 0x39,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_12B[3] = {
+    {-1277, 127, -956, 0x00},
+    {-1259, 127, -806, 0x4ee},
+    {-1168, 127, -906, 0x4e2},
+};
+
+
+StandFileTile tile_12C = {
+    0x77218, 0x39,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_12C[3] = {
+    {-1168, 127, -906, 0x4ea},
+    {-1259, 127, -806, 0x00},
+    {-1227, 127, -811, 0x4f2},
+};
+
+
+StandFileTile tile_12D = {
+    0x77118, 0x39,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_12D[3] = {
+    {-1227, 127, -811, 0x4fa},
+    {-1073, 127, -774, 0x4f6},
+    {-1168, 127, -906, 0x4ee},
+};
+
+
+StandFileTile tile_12E = {
+    0x77018, 0x39,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_12E[3] = {
+    {-1046, 127, -774, 0x4e6},
+    {-1168, 127, -906, 0x4f2},
+    {-1073, 127, -774, 0x00},
+};
+
+
+StandFileTile tile_12F = {
+    0x76f1a, 0x39,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_12F[3] = {
+    {-1227, 127, -761, 0x4fe},
+    {-1073, 127, -774, 0x4f2},
+    {-1227, 127, -811, 0x486},
+};
+
+
+StandFileTile tile_130 = {
+    0x76f19, 0x39,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_130[3] = {
+    {-1227, 127, -761, 0x00},
+    {-1073, 127, -761, 0x00},
+    {-1073, 127, -774, 0x4fa},
+};
+
+
+StandFileTile tile_131 = {
+    0x67c1a, 0x38,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_131[3] = {
+    {-693, 127, -1313, 0x506},
+    {-761, 127, -1457, 0x00},
+    {-761, 127, -1256, 0x53e},
+};
+
+
+StandFileTile tile_132 = {
+    0x67c19, 0x38,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_132[3] = {
+    {-693, 127, -1313, 0x00},
+    {-693, 127, -1409, 0x546},
+    {-761, 127, -1457, 0x502},
+};
+
+
+StandFileTile tile_133 = {
+    0x66f1a, 0x38,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_133[3] = {
+    {-761, 127, -761, 0x50e},
+    {-693, 127, -774, 0x512},
+    {-761, 127, -774, 0x00},
+};
+
+
+StandFileTile tile_134 = {
+    0x66f19, 0x38,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_134[3] = {
+    {-761, 127, -761, 0x52e},
+    {-707, 127, -761, 0x532},
+    {-693, 127, -774, 0x50a},
+};
+
+
+StandFileTile tile_135 = {
+    0x63318, 0x38,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_135[3] = {
+    {-761, 127, -774, 0x50a},
+    {-693, 127, -774, 0x51a},
+    {-761, 127, -835, 0x00},
+};
+
+
+StandFileTile tile_136 = {
+    0x63918, 0x38,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_136[3] = {
+    {-693, 127, -1033, 0x536},
+    {-761, 127, -1033, 0x382},
+    {-761, 127, -978, 0x51e},
+};
+
+
+StandFileTile tile_137 = {
+    0x63b1a, 0x38,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_137[3] = {
+    {-693, 127, -774, 0x51e},
+    {-761, 127, -978, 0x00},
+    {-761, 127, -835, 0x512},
+};
+
+
+StandFileTile tile_138 = {
+    0x63b19, 0x38,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_138[3] = {
+    {-693, 127, -774, 0x568},
+    {-693, 127, -1033, 0x516},
+    {-761, 127, -978, 0x51a},
+};
+
+
+StandFileTile tile_139 = {
+    0x11e18, 0x38,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_139[3] = {
+    {-761, 127, -761, 0x00},
+    {-761, 127, -752, 0x1836},
+    {-752, 127, -752, 0x52e},
+};
+
+
+StandFileTile tile_13A = {
+    0x11d18, 0x38,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_13A[3] = {
+    {-707, 127, -761, 0x52a},
+    {-716, 127, -752, 0x1836},
+    {-707, 127, -752, 0x00},
+};
+
+
+StandFileTile tile_13B = {
+    0x11c1a, 0x38,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_13B[3] = {
+    {-707, 127, -761, 0x52e},
+    {-752, 127, -752, 0x1836},
+    {-716, 127, -752, 0x526},
+};
+
+
+StandFileTile tile_13C = {
+    0x11c19, 0x38,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_13C[3] = {
+    {-707, 127, -761, 0x50e},
+    {-761, 127, -761, 0x522},
+    {-752, 127, -752, 0x52a},
+};
+
+
+StandFileTile tile_13D = {
+    0x11418, 0x38,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_13D[3] = {
+    {-707, 127, -761, 0x00},
+    {-693, 127, -761, 0x00},
+    {-693, 127, -774, 0x50e},
+};
+
+
+StandFileTile tile_13E = {
+    0x63f18, 0x38,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_13E[3] = {
+    {-761, 127, -1033, 0x516},
+    {-693, 127, -1033, 0x53a},
+    {-761, 127, -1086, 0x38e},
+};
+
+
+StandFileTile tile_13F = {
+    0x6431a, 0x38,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_13F[3] = {
+    {-693, 127, -1033, 0x53e},
+    {-761, 127, -1256, 0x00},
+    {-761, 127, -1086, 0x536},
+};
+
+
+StandFileTile tile_140 = {
+    0x64319, 0x38,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_140[3] = {
+    {-693, 127, -1033, 0x00},
+    {-693, 127, -1313, 0x502},
+    {-761, 127, -1256, 0x53a},
+};
+
+
+StandFileTile tile_141 = {
+    0x65918, 0x38,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_141[3] = {
+    {-761, 127, -1619, 0x54a},
+    {-693, 127, -1676, 0x552},
+    {-761, 127, -1676, 0x00},
+};
+
+
+StandFileTile tile_142 = {
+    0x65b1a, 0x38,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_142[3] = {
+    {-693, 127, -1409, 0x54a},
+    {-761, 127, -1619, 0x00},
+    {-761, 127, -1457, 0x506},
+};
+
+
+StandFileTile tile_143 = {
+    0x65b19, 0x38,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_143[3] = {
+    {-693, 127, -1409, 0x00},
+    {-693, 127, -1676, 0x542},
+    {-761, 127, -1619, 0x546},
+};
+
+
+StandFileTile tile_144 = {
+    0x63718, 0x38,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_144[3] = {
+    {-761, 127, -1839, 0x55a},
+    {-693, 127, -1957, 0x00},
+    {-761, 127, -1957, 0x37e},
+};
+
+
+StandFileTile tile_145 = {
+    0x65d18, 0x38,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_145[3] = {
+    {-761, 127, -1676, 0x542},
+    {-693, 127, -1676, 0x556},
+    {-761, 127, -1729, 0x00},
+};
+
+
+StandFileTile tile_146 = {
+    0x65f1a, 0x38,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_146[3] = {
+    {-693, 127, -1676, 0x55a},
+    {-761, 127, -1839, 0x00},
+    {-761, 127, -1729, 0x552},
+};
+
+
+StandFileTile tile_147 = {
+    0x65f19, 0x38,
+    0x0,
+    0x4, 0x4, 0x4,
+    5,
+    0x0, 0x3, 0x4,
+};
+StandFilePoint points_147[5] = {
+    {-693, 127, -1676, 0x00},
+    {-693, 127, -1848, 0x8ca},
+    {-693, 127, -1938, 0x00},
+    {-693, 127, -1957, 0x54e},
+    {-761, 127, -1839, 0x556},
+};
+
+
+StandFileTile tile_148 = {
+    0x11318, 0x38,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_148[3] = {
+    {-489, 127, -933, 0x575},
+    {-285, 127, -870, 0x668},
+    {-285, 127, -1033, 0x564},
+};
+
+
+StandFileTile tile_149 = {
+    0x11218, 0x38,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_149[3] = {
+    {-285, 127, -1033, 0x00},
+    {-693, 127, -1033, 0x568},
+    {-489, 127, -933, 0x560},
+};
+
+
+StandFileTile tile_14A = {
+    0x11118, 0x38,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_14A[3] = {
+    {-693, 127, -1033, 0x51e},
+    {-693, 127, -774, 0x56c},
+    {-489, 127, -933, 0x564},
+};
+
+
+StandFileTile tile_14B = {
+    0x11018, 0x38,
+    0x0,
+    0x8, 0x8, 0x8,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_14B[4] = {
+    {-693, 127, -774, 0x00},
+    {-666, 127, -774, 0x579},
+    {-312, 127, -774, 0x571},
+    {-489, 127, -933, 0x568},
+};
+
+
+StandFileTile tile_14C = {
+    0x10f18, 0x38,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_14C[3] = {
+    {-312, 127, -774, 0x00},
+    {-285, 127, -774, 0x575},
+    {-489, 127, -933, 0x56c},
+};
+
+
+StandFileTile tile_14D = {
+    0x10e18, 0x38,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_14D[3] = {
+    {-285, 127, -774, 0x65c},
+    {-285, 127, -870, 0x560},
+    {-489, 127, -933, 0x571},
+};
+
+
+StandFileTile tile_14E = {
+    0x10d1a, 0x38,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_14E[3] = {
+    {-657, 127, -761, 0x57d},
+    {-312, 127, -774, 0x56c},
+    {-666, 127, -774, 0x581},
+};
+
+
+StandFileTile tile_14F = {
+    0x10d19, 0x38,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_14F[3] = {
+    {-657, 127, -761, 0x00},
+    {-380, 127, -761, 0x585},
+    {-312, 127, -774, 0x579},
+};
+
+
+StandFileTile tile_150 = {
+    0x10c18, 0x38,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_150[3] = {
+    {-666, 127, -761, 0x00},
+    {-657, 127, -761, 0x579},
+    {-666, 127, -774, 0x00},
+};
+
+
+StandFileTile tile_151 = {
+    0x10b18, 0x38,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_151[3] = {
+    {-380, 127, -761, 0x00},
+    {-312, 127, -761, 0x00},
+    {-312, 127, -774, 0x57d},
+};
+
+
+StandFileTile tile_152 = {
+    0x62e18, 0x37,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_152[3] = {
+    {120, -45, -1331, 0x57},
+    {104, -45, -1514, 0x58d},
+    {104, 136, -1413, 0x00},
+};
+
+
+StandFileTile tile_153 = {
+    0x62d18, 0x37,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_153[3] = {
+    {104, -45, -1514, 0x00},
+    {104, 136, -1467, 0x5a6},
+    {104, 136, -1413, 0x589},
+};
+
+
+StandFileTile tile_154 = {
+    0x62c18, 0x37,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_154[3] = {
+    {136, -45, -1132, 0x595},
+    {104, 136, -1304, 0x5b6},
+    {104, 136, -1250, 0x00},
+};
+
+
+StandFileTile tile_155 = {
+    0x62b18, 0x37,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_155[3] = {
+    {136, -45, -1132, 0x53},
+    {120, -45, -1331, 0x00},
+    {104, 136, -1304, 0x591},
+};
+
+
+StandFileTile tile_156 = {
+    0x62a18, 0x37,
+    0x0,
+    0xf, 0xf, 0xf,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_156[4] = {
+    {146, -45, -1013, 0x4e},
+    {144, -45, -1036, 0x4e},
+    {136, -45, -1132, 0x59e},
+    {104, 136, -1033, 0x00},
+};
+
+
+StandFileTile tile_157 = {
+    0x62918, 0x37,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_157[3] = {
+    {136, -45, -1132, 0x00},
+    {104, 136, -1087, 0x5c6},
+    {104, 136, -1033, 0x599},
+};
+
+
+StandFileTile tile_158 = {
+    0x1791a, 0x37,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_158[3] = {
+    {95, 136, -1413, 0x5a6},
+    {104, 136, -1467, 0x00},
+    {95, 136, -1467, 0x5aa},
+};
+
+
+StandFileTile tile_159 = {
+    0x17919, 0x37,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_159[3] = {
+    {95, 136, -1413, 0x00},
+    {104, 136, -1413, 0x58d},
+    {104, 136, -1467, 0x5a2},
+};
+
+
+StandFileTile tile_15A = {
+    0x1801a, 0x37,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_15A[3] = {
+    {95, 136, -1467, 0x5ae},
+    {95, 127, -1413, 0x00},
+    {95, 136, -1413, 0x5a2},
+};
+
+
+StandFileTile tile_15B = {
+    0x18019, 0x37,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_15B[3] = {
+    {95, 136, -1467, 0x00},
+    {95, 127, -1467, 0x698},
+    {95, 127, -1413, 0x5aa},
+};
+
+
+StandFileTile tile_15C = {
+    0x1701a, 0x37,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_15C[3] = {
+    {95, 136, -1250, 0x5b6},
+    {104, 136, -1304, 0x00},
+    {95, 136, -1304, 0x5ba},
+};
+
+
+StandFileTile tile_15D = {
+    0x17019, 0x37,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_15D[3] = {
+    {95, 136, -1250, 0x00},
+    {104, 136, -1250, 0x591},
+    {104, 136, -1304, 0x5b2},
+};
+
+
+StandFileTile tile_15E = {
+    0x1771a, 0x37,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_15E[3] = {
+    {95, 136, -1304, 0x5be},
+    {95, 127, -1250, 0x00},
+    {95, 136, -1250, 0x5b2},
+};
+
+
+StandFileTile tile_15F = {
+    0x17719, 0x37,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_15F[3] = {
+    {95, 136, -1304, 0x00},
+    {95, 127, -1304, 0x61c},
+    {95, 127, -1250, 0x5ba},
+};
+
+
+StandFileTile tile_160 = {
+    0x15e1a, 0x37,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_160[3] = {
+    {95, 136, -1033, 0x5c6},
+    {104, 136, -1087, 0x00},
+    {95, 136, -1087, 0x5ca},
+};
+
+
+StandFileTile tile_161 = {
+    0x15e19, 0x37,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_161[3] = {
+    {95, 136, -1033, 0x00},
+    {104, 136, -1033, 0x59e},
+    {104, 136, -1087, 0x5c2},
+};
+
+
+StandFileTile tile_162 = {
+    0x1651a, 0x37,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_162[3] = {
+    {95, 136, -1087, 0x5ce},
+    {95, 127, -1033, 0x00},
+    {95, 136, -1033, 0x5c2},
+};
+
+
+StandFileTile tile_163 = {
+    0x16519, 0x37,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_163[3] = {
+    {95, 136, -1087, 0x00},
+    {95, 127, -1087, 0x5de},
+    {95, 127, -1033, 0x5ca},
+};
+
+
+StandFileTile tile_164 = {
+    0xa61a, 0x37,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_164[3] = {
+    {68, 127, -937, 0x5d6},
+    {-199, 127, -1087, 0x5e8},
+    {-199, 127, -1005, 0x67c},
+};
+
+
+StandFileTile tile_165 = {
+    0xa619, 0x37,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_165[3] = {
+    {68, 127, -937, 0x5da},
+    {68, 127, -1019, 0x6be},
+    {-199, 127, -1087, 0x5d2},
+};
+
+
+StandFileTile tile_166 = {
+    0xa518, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_166[3] = {
+    {95, 127, -978, 0x5de},
+    {68, 127, -1019, 0x5d6},
+    {68, 127, -937, 0x678},
+};
+
+
+StandFileTile tile_167 = {
+    0xa418, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    5,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_167[5] = {
+    {95, 127, -1128, 0x5e4},
+    {68, 127, -1019, 0x5da},
+    {95, 127, -978, 0x00},
+    {95, 127, -1033, 0x5ce},
+    {95, 127, -1087, 0x00},
+};
+
+
+StandFileTile tile_168 = {
+    0xa318, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_168[3] = {
+    {95, 127, -1128, 0x5f4},
+    {68, 127, -1101, 0x6ba},
+    {68, 127, -1019, 0x5de},
+};
+
+
+StandFileTile tile_169 = {
+    0xa218, 0x37,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_169[3] = {
+    {-199, 127, -1005, 0x5d2},
+    {-199, 127, -1087, 0x5ec},
+    {-285, 127, -1033, 0x668},
+};
+
+
+StandFileTile tile_16A = {
+    0xa11a, 0x37,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_16A[3] = {
+    {-199, 127, -1087, 0x5f0},
+    {-285, 127, -1250, 0x00},
+    {-285, 127, -1033, 0x5e8},
+};
+
+
+StandFileTile tile_16B = {
+    0xa119, 0x37,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_16B[3] = {
+    {-199, 127, -1087, 0x6be},
+    {-199, 127, -1168, 0x610},
+    {-285, 127, -1250, 0x5ec},
+};
+
+
+StandFileTile tile_16C = {
+    0xa018, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_16C[3] = {
+    {82, 127, -1155, 0x600},
+    {68, 127, -1101, 0x5e4},
+    {95, 127, -1128, 0x5f8},
+};
+
+
+StandFileTile tile_16D = {
+    0x9f18, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_16D[3] = {
+    {82, 127, -1155, 0x5f4},
+    {95, 127, -1128, 0x00},
+    {95, 127, -1155, 0x00},
+};
+
+
+StandFileTile tile_16E = {
+    0x9e18, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_16E[3] = {
+    {95, 127, -1182, 0x00},
+    {95, 127, -1209, 0x614},
+    {82, 127, -1182, 0x00},
+};
+
+
+StandFileTile tile_16F = {
+    0x9d18, 0x37,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_16F[3] = {
+    {-199, 127, -1168, 0x6ba},
+    {68, 127, -1101, 0x5f4},
+    {82, 127, -1155, 0x604},
+};
+
+
+StandFileTile tile_170 = {
+    0x9c18, 0x37,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_170[3] = {
+    {82, 127, -1155, 0x00},
+    {82, 127, -1182, 0x60c},
+    {-199, 127, -1168, 0x600},
+};
+
+
+StandFileTile tile_171 = {
+    0x9b1a, 0x37,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_171[3] = {
+    {-199, 127, -1168, 0x60c},
+    {68, 127, -1236, 0x690},
+    {-199, 127, -1304, 0x610},
+};
+
+
+StandFileTile tile_172 = {
+    0x9b19, 0x37,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_172[3] = {
+    {-199, 127, -1168, 0x604},
+    {82, 127, -1182, 0x614},
+    {68, 127, -1236, 0x608},
+};
+
+
+StandFileTile tile_173 = {
+    0x9a18, 0x37,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_173[3] = {
+    {-199, 127, -1168, 0x608},
+    {-199, 127, -1304, 0x632},
+    {-285, 127, -1250, 0x5f0},
+};
+
+
+StandFileTile tile_174 = {
+    0x9918, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_174[3] = {
+    {82, 127, -1182, 0x5fc},
+    {95, 127, -1209, 0x61c},
+    {68, 127, -1236, 0x60c},
+};
+
+
+StandFileTile tile_175 = {
+    0x981a, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_175[3] = {
+    {68, 127, -1236, 0x61c},
+    {95, 127, -1359, 0x62a},
+    {68, 127, -1318, 0x68c},
+};
+
+
+StandFileTile tile_176 = {
+    0x9819, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_176[5] = {
+    {68, 127, -1236, 0x614},
+    {95, 127, -1209, 0x00},
+    {95, 127, -1250, 0x5be},
+    {95, 127, -1304, 0x00},
+    {95, 127, -1359, 0x618},
+};
+
+
+StandFileTile tile_177 = {
+    0x971a, 0x37,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_177[3] = {
+    {68, 127, -1318, 0x626},
+    {-199, 127, -1467, 0x62e},
+    {-199, 127, -1386, 0x68c},
+};
+
+
+StandFileTile tile_178 = {
+    0x9719, 0x37,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_178[3] = {
+    {68, 127, -1318, 0x62a},
+    {68, 127, -1399, 0x688},
+    {-199, 127, -1467, 0x622},
+};
+
+
+StandFileTile tile_179 = {
+    0x9618, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_179[3] = {
+    {68, 127, -1318, 0x618},
+    {95, 127, -1359, 0x698},
+    {68, 127, -1399, 0x626},
+};
+
+
+StandFileTile tile_17A = {
+    0x9518, 0x37,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_17A[3] = {
+    {-199, 127, -1386, 0x622},
+    {-199, 127, -1467, 0x6a2},
+    {-285, 127, -1440, 0x636},
+};
+
+
+StandFileTile tile_17B = {
+    0x941a, 0x37,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_17B[3] = {
+    {-199, 127, -1386, 0x636},
+    {-285, 127, -1250, 0x610},
+    {-199, 127, -1304, 0x690},
+};
+
+
+StandFileTile tile_17C = {
+    0x9419, 0x37,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_17C[3] = {
+    {-199, 127, -1386, 0x62e},
+    {-285, 127, -1440, 0x00},
+    {-285, 127, -1250, 0x632},
+};
+
+
+StandFileTile tile_17D = {
+    0x931a, 0x37,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_17D[3] = {
+    {-285, 127, -774, 0x63e},
+    {54, 127, -761, 0x654},
+    {68, 127, -774, 0x65c},
+};
+
+
+StandFileTile tile_17E = {
+    0x9319, 0x37,
+    0x0,
+    0x3, 0x3, 0x3,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_17E[5] = {
+    {-285, 127, -774, 0x00},
+    {-285, 127, -761, 0x00},
+    {-154, 127, -761, 0x644},
+    {-100, 127, -761, 0x00},
+    {54, 127, -761, 0x63a},
+};
+
+
+StandFileTile tile_17F = {
+    0x921a, 0x37,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_17F[3] = {
+    {-154, 127, -761, 0x648},
+    {-109, 127, -752, 0x650},
+    {-100, 127, -761, 0x63e},
+};
+
+
+StandFileTile tile_180 = {
+    0x9219, 0x37,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_180[3] = {
+    {-154, 127, -761, 0x64c},
+    {-145, 127, -752, 0x1818},
+    {-109, 127, -752, 0x644},
+};
+
+
+StandFileTile tile_181 = {
+    0x9118, 0x37,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_181[3] = {
+    {-154, 127, -752, 0x1818},
+    {-145, 127, -752, 0x648},
+    {-154, 127, -761, 0x00},
+};
+
+
+StandFileTile tile_182 = {
+    0x9018, 0x37,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_182[3] = {
+    {-109, 127, -752, 0x1818},
+    {-100, 127, -752, 0x00},
+    {-100, 127, -761, 0x644},
+};
+
+
+StandFileTile tile_183 = {
+    0x8f18, 0x37,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_183[3] = {
+    {54, 127, -761, 0x00},
+    {68, 127, -761, 0x00},
+    {68, 127, -774, 0x63a},
+};
+
+
+StandFileTile tile_184 = {
+    0x8e1a, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_184[3] = {
+    {-285, 127, -870, 0x65c},
+    {68, 127, -774, 0x670},
+    {95, 127, -806, 0x660},
+};
+
+
+StandFileTile tile_185 = {
+    0x8e19, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_185[3] = {
+    {-285, 127, -870, 0x575},
+    {-285, 127, -774, 0x63a},
+    {68, 127, -774, 0x658},
+};
+
+
+StandFileTile tile_186 = {
+    0x8d1a, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_186[3] = {
+    {68, 127, -856, 0x664},
+    {-285, 127, -870, 0x658},
+    {95, 127, -806, 0x674},
+};
+
+
+StandFileTile tile_187 = {
+    0x8d19, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_187[3] = {
+    {68, 127, -856, 0x680},
+    {-199, 127, -924, 0x66c},
+    {-285, 127, -870, 0x660},
+};
+
+
+StandFileTile tile_188 = {
+    0x8c1a, 0x37,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_188[3] = {
+    {-285, 127, -870, 0x66c},
+    {-199, 127, -1005, 0x5e8},
+    {-285, 127, -1033, 0x560},
+};
+
+
+StandFileTile tile_189 = {
+    0x8c19, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_189[3] = {
+    {-285, 127, -870, 0x664},
+    {-199, 127, -924, 0x680},
+    {-199, 127, -1005, 0x668},
+};
+
+
+StandFileTile tile_18A = {
+    0x8b18, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_18A[3] = {
+    {95, 127, -774, 0x00},
+    {95, 127, -806, 0x658},
+    {68, 127, -774, 0x00},
+};
+
+
+StandFileTile tile_18B = {
+    0x8a1a, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_18B[3] = {
+    {95, 127, -806, 0x678},
+    {68, 127, -937, 0x67c},
+    {68, 127, -856, 0x660},
+};
+
+
+StandFileTile tile_18C = {
+    0x8a19, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_18C[3] = {
+    {95, 127, -806, 0x00},
+    {95, 127, -978, 0x5da},
+    {68, 127, -937, 0x674},
+};
+
+
+StandFileTile tile_18D = {
+    0x891a, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_18D[3] = {
+    {-199, 127, -1005, 0x680},
+    {68, 127, -856, 0x674},
+    {68, 127, -937, 0x5d2},
+};
+
+
+StandFileTile tile_18E = {
+    0x8919, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_18E[3] = {
+    {-199, 127, -1005, 0x66c},
+    {-199, 127, -924, 0x664},
+    {68, 127, -856, 0x67c},
+};
+
+
+StandFileTile tile_18F = {
+    0x881a, 0x37,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_18F[3] = {
+    {-199, 127, -1549, 0x688},
+    {68, 127, -1399, 0x694},
+    {68, 127, -1481, 0x6a6},
+};
+
+
+StandFileTile tile_190 = {
+    0x8819, 0x37,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_190[3] = {
+    {-199, 127, -1549, 0x69e},
+    {-199, 127, -1467, 0x626},
+    {68, 127, -1399, 0x684},
+};
+
+
+StandFileTile tile_191 = {
+    0x871a, 0x37,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_191[3] = {
+    {-199, 127, -1386, 0x690},
+    {68, 127, -1236, 0x618},
+    {68, 127, -1318, 0x622},
+};
+
+
+StandFileTile tile_192 = {
+    0x8719, 0x37,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_192[3] = {
+    {-199, 127, -1386, 0x632},
+    {-199, 127, -1304, 0x608},
+    {68, 127, -1236, 0x68c},
+};
+
+
+StandFileTile tile_193 = {
+    0x861a, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_193[3] = {
+    {68, 127, -1399, 0x698},
+    {95, 127, -1562, 0x6b6},
+    {68, 127, -1481, 0x684},
+};
+
+
+StandFileTile tile_194 = {
+    0x8619, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_194[5] = {
+    {68, 127, -1399, 0x62a},
+    {95, 127, -1359, 0x00},
+    {95, 127, -1413, 0x5ae},
+    {95, 127, -1467, 0x00},
+    {95, 127, -1562, 0x694},
+};
+
+
+StandFileTile tile_195 = {
+    0x851a, 0x37,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_195[3] = {
+    {-285, 127, -1576, 0x6a2},
+    {-199, 127, -1467, 0x688},
+    {-199, 127, -1549, 0x6aa},
+};
+
+
+StandFileTile tile_196 = {
+    0x8519, 0x37,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_196[3] = {
+    {-285, 127, -1576, 0x00},
+    {-285, 127, -1440, 0x62e},
+    {-199, 127, -1467, 0x69e},
+};
+
+
+StandFileTile tile_197 = {
+    0x841a, 0x37,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_197[3] = {
+    {5, 127, -1576, 0x6aa},
+    {-199, 127, -1549, 0x684},
+    {68, 127, -1481, 0x6ae},
+};
+
+
+StandFileTile tile_198 = {
+    0x8419, 0x37,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_198[3] = {
+    {5, 127, -1576, 0x00},
+    {-285, 127, -1576, 0x69e},
+    {-199, 127, -1549, 0x6a6},
+};
+
+
+StandFileTile tile_199 = {
+    0x8318, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_199[3] = {
+    {5, 127, -1576, 0x6a6},
+    {68, 127, -1481, 0x6b6},
+    {68, 127, -1562, 0x6b2},
+};
+
+
+StandFileTile tile_19A = {
+    0x8218, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_19A[3] = {
+    {68, 127, -1576, 0x00},
+    {5, 127, -1576, 0x6ae},
+    {68, 127, -1562, 0x00},
+};
+
+
+StandFileTile tile_19B = {
+    0x8118, 0x37,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_19B[3] = {
+    {95, 127, -1562, 0x00},
+    {68, 127, -1562, 0x6ae},
+    {68, 127, -1481, 0x694},
+};
+
+
+StandFileTile tile_19C = {
+    0x801a, 0x37,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_19C[3] = {
+    {-199, 127, -1168, 0x6be},
+    {68, 127, -1019, 0x5e4},
+    {68, 127, -1101, 0x600},
+};
+
+
+StandFileTile tile_19D = {
+    0x8019, 0x37,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_19D[3] = {
+    {-199, 127, -1168, 0x5f0},
+    {-199, 127, -1087, 0x5d6},
+    {68, 127, -1019, 0x6ba},
+};
+
+
+StandFileTile tile_19E = {
+    0x1241a, 0x36,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_19E[3] = {
+    {-1617, 127, -933, 0x6c6},
+    {-1522, 127, -960, 0x00},
+    {-1617, 127, -960, 0x777},
+};
+
+
+StandFileTile tile_19F = {
+    0x12419, 0x36,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_19F[3] = {
+    {-1617, 127, -933, 0x73f},
+    {-1499, 127, -933, 0x743},
+    {-1522, 127, -960, 0x6c2},
+};
+
+
+StandFileTile tile_1A0 = {
+    0xd118, 0x36,
+    0x0,
+    0x7, 0x7, 0x7,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_1A0[4] = {
+    {-1318, 127, -1409, 0x00},
+    {-1367, 127, -1477, 0x300},
+    {-1427, 127, -1562, 0x00},
+    {-1454, 127, -1562, 0x6cf},
+};
+
+
+StandFileTile tile_1A1 = {
+    0xd018, 0x36,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1A1[3] = {
+    {-1454, 127, -1562, 0x6f3},
+    {-1454, 127, -1454, 0x6fb},
+    {-1318, 127, -1409, 0x6ca},
+};
+
+
+StandFileTile tile_1A2 = {
+    0xcf18, 0x36,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1A2[3] = {
+    {-1454, 127, -1562, 0x00},
+    {-1454, 127, -1576, 0x00},
+    {-1481, 127, -1576, 0x6ef},
+};
+
+
+StandFileTile tile_1A3 = {
+    0xce18, 0x36,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1A3[3] = {
+    {-1481, 127, -1576, 0x00},
+    {-1807, 127, -1576, 0x6db},
+    {-1617, 127, -1476, 0x6ef},
+};
+
+
+StandFileTile tile_1A4 = {
+    0xcd18, 0x36,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1A4[3] = {
+    {-1807, 127, -1576, 0x00},
+    {-1807, 127, -1562, 0x6df},
+    {-1617, 127, -1476, 0x6d7},
+};
+
+
+StandFileTile tile_1A5 = {
+    0xcc18, 0x36,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1A5[3] = {
+    {-1617, 127, -1476, 0x6db},
+    {-1807, 127, -1562, 0x00},
+    {-1834, 127, -1562, 0x6e3},
+};
+
+
+StandFileTile tile_1A6 = {
+    0xcb18, 0x36,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1A6[3] = {
+    {-1834, 127, -1562, 0x00},
+    {-1834, 127, -1363, 0x6e7},
+    {-1617, 127, -1476, 0x6df},
+};
+
+
+StandFileTile tile_1A7 = {
+    0xca18, 0x36,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1A7[3] = {
+    {-1617, 127, -1476, 0x6e3},
+    {-1834, 127, -1363, 0x6ff},
+    {-1617, 127, -1363, 0x6eb},
+};
+
+
+StandFileTile tile_1A8 = {
+    0xc918, 0x36,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1A8[3] = {
+    {-1617, 127, -1363, 0x70b},
+    {-1522, 127, -1363, 0x6f7},
+    {-1617, 127, -1476, 0x6e7},
+};
+
+
+StandFileTile tile_1A9 = {
+    0xc818, 0x36,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1A9[3] = {
+    {-1481, 127, -1576, 0x6d7},
+    {-1617, 127, -1476, 0x6f3},
+    {-1454, 127, -1562, 0x6d3},
+};
+
+
+StandFileTile tile_1AA = {
+    0xc718, 0x36,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1AA[3] = {
+    {-1454, 127, -1562, 0x6ef},
+    {-1617, 127, -1476, 0x6f7},
+    {-1454, 127, -1454, 0x6cf},
+};
+
+
+StandFileTile tile_1AB = {
+    0xc618, 0x36,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1AB[3] = {
+    {-1454, 127, -1454, 0x6f3},
+    {-1617, 127, -1476, 0x6eb},
+    {-1522, 127, -1363, 0x6fb},
+};
+
+
+StandFileTile tile_1AC = {
+    0xc518, 0x36,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1AC[3] = {
+    {-1318, 127, -1409, 0x6cf},
+    {-1454, 127, -1454, 0x6f7},
+    {-1522, 127, -1363, 0x70f},
+};
+
+
+StandFileTile tile_1AD = {
+    0xc41a, 0x36,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1AD[3] = {
+    {-1834, 127, -1363, 0x703},
+    {-1617, 127, -1250, 0x707},
+    {-1617, 127, -1363, 0x6e7},
+};
+
+
+StandFileTile tile_1AE = {
+    0xc419, 0x36,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1AE[3] = {
+    {-1834, 127, -1363, 0x00},
+    {-1834, 127, -1182, 0x75f},
+    {-1617, 127, -1250, 0x6ff},
+};
+
+
+StandFileTile tile_1AF = {
+    0xc31a, 0x36,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1AF[3] = {
+    {-1522, 127, -1250, 0x70b},
+    {-1617, 127, -1363, 0x6ff},
+    {-1617, 127, -1250, 0x00},
+};
+
+
+StandFileTile tile_1B0 = {
+    0xc319, 0x36,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1B0[3] = {
+    {-1522, 127, -1250, 0x713},
+    {-1522, 127, -1363, 0x6eb},
+    {-1617, 127, -1363, 0x707},
+};
+
+
+StandFileTile tile_1B1 = {
+    0x2f518, 0x36,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1B1[3] = {
+    {-1318, 127, -1313, 0x00},
+    {-1318, 127, -1409, 0x6fb},
+    {-1522, 127, -1363, 0x713},
+};
+
+
+StandFileTile tile_1B2 = {
+    0xc218, 0x36,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1B2[3] = {
+    {-1318, 127, -1313, 0x70f},
+    {-1522, 127, -1363, 0x70b},
+    {-1522, 127, -1250, 0x717},
+};
+
+
+StandFileTile tile_1B3 = {
+    0xc118, 0x36,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1B3[3] = {
+    {-1318, 127, -1164, 0x00},
+    {-1318, 127, -1313, 0x713},
+    {-1522, 127, -1250, 0x71b},
+};
+
+
+StandFileTile tile_1B4 = {
+    0x12618, 0x36,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1B4[3] = {
+    {-1318, 127, -1164, 0x717},
+    {-1522, 127, -1250, 0x00},
+    {-1522, 127, -960, 0x71f},
+};
+
+
+StandFileTile tile_1B5 = {
+    0x12518, 0x36,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1B5[3] = {
+    {-1522, 127, -960, 0x747},
+    {-1318, 127, -1001, 0x00},
+    {-1318, 127, -1164, 0x71b},
+};
+
+
+StandFileTile tile_1B6 = {
+    0x12318, 0x36,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1B6[3] = {
+    {-1617, 127, -933, 0x777},
+    {-1766, 127, -933, 0x753},
+    {-1712, 127, -761, 0x737},
+};
+
+
+StandFileTile tile_1B7 = {
+    0x12218, 0x36,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1B7[3] = {
+    {-1427, 127, -761, 0x00},
+    {-1390, 127, -761, 0x74b},
+    {-1427, 127, -774, 0x00},
+};
+
+
+StandFileTile tile_1B8 = {
+    0x12118, 0x36,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1B8[3] = {
+    {-1499, 127, -933, 0x72f},
+    {-1454, 127, -774, 0x00},
+    {-1427, 127, -774, 0x74b},
+};
+
+
+StandFileTile tile_1B9 = {
+    0x1201a, 0x36,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1B9[3] = {
+    {-1549, 127, -761, 0x733},
+    {-1454, 127, -774, 0x72b},
+    {-1499, 127, -933, 0x73f},
+};
+
+
+StandFileTile tile_1BA = {
+    0x12019, 0x36,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1BA[3] = {
+    {-1549, 127, -761, 0x00},
+    {-1454, 127, -761, 0x00},
+    {-1454, 127, -774, 0x72f},
+};
+
+
+StandFileTile tile_1BB = {
+    0x2f818, 0x36,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1BB[3] = {
+    {-1617, 127, -933, 0x723},
+    {-1712, 127, -761, 0x7a0},
+    {-1630, 127, -761, 0x73b},
+};
+
+
+StandFileTile tile_1BC = {
+    0x11f1a, 0x36,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1BC[3] = {
+    {-1549, 127, -761, 0x73f},
+    {-1617, 127, -933, 0x737},
+    {-1630, 127, -761, 0x798},
+};
+
+
+StandFileTile tile_1BD = {
+    0x11f19, 0x36,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1BD[3] = {
+    {-1549, 127, -761, 0x72f},
+    {-1499, 127, -933, 0x6c6},
+    {-1617, 127, -933, 0x73b},
+};
+
+
+StandFileTile tile_1BE = {
+    0x1281a, 0x36,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1BE[3] = {
+    {-1318, 127, -761, 0x747},
+    {-1522, 127, -960, 0x6c6},
+    {-1499, 127, -933, 0x74f},
+};
+
+
+StandFileTile tile_1BF = {
+    0x12819, 0x36,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1BF[3] = {
+    {-1318, 127, -761, 0x00},
+    {-1318, 127, -1001, 0x71f},
+    {-1522, 127, -960, 0x743},
+};
+
+
+StandFileTile tile_1C0 = {
+    0x1271a, 0x36,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1C0[3] = {
+    {-1390, 127, -761, 0x74f},
+    {-1499, 127, -933, 0x72b},
+    {-1427, 127, -774, 0x727},
+};
+
+
+StandFileTile tile_1C1 = {
+    0x12719, 0x36,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1C1[3] = {
+    {-1390, 127, -761, 0x00},
+    {-1318, 127, -761, 0x743},
+    {-1499, 127, -933, 0x74b},
+};
+
+
+StandFileTile tile_1C2 = {
+    0x13118, 0x36,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1C2[3] = {
+    {-1807, 127, -761, 0x00},
+    {-1712, 127, -761, 0x723},
+    {-1766, 127, -933, 0x757},
+};
+
+
+StandFileTile tile_1C3 = {
+    0x13018, 0x36,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1C3[3] = {
+    {-1834, 127, -774, 0x00},
+    {-1807, 127, -761, 0x753},
+    {-1766, 127, -933, 0x75b},
+};
+
+
+StandFileTile tile_1C4 = {
+    0x12f18, 0x36,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1C4[3] = {
+    {-1834, 127, -978, 0x00},
+    {-1834, 127, -774, 0x757},
+    {-1766, 127, -933, 0x773},
+};
+
+
+StandFileTile tile_1C5 = {
+    0x12e18, 0x36,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1C5[3] = {
+    {-1617, 127, -1250, 0x703},
+    {-1834, 127, -1182, 0x00},
+    {-1821, 127, -1182, 0x763},
+};
+
+
+StandFileTile tile_1C6 = {
+    0x12d18, 0x36,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1C6[3] = {
+    {-1821, 127, -1182, 0x00},
+    {-1821, 127, -1155, 0x767},
+    {-1617, 127, -1250, 0x75f},
+};
+
+
+StandFileTile tile_1C7 = {
+    0x12c18, 0x36,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1C7[3] = {
+    {-1617, 127, -1250, 0x763},
+    {-1821, 127, -1155, 0x76b},
+    {-1617, 127, -960, 0x00},
+};
+
+
+StandFileTile tile_1C8 = {
+    0x12b18, 0x36,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1C8[3] = {
+    {-1821, 127, -1155, 0x00},
+    {-1834, 127, -1155, 0x76f},
+    {-1617, 127, -960, 0x767},
+};
+
+
+StandFileTile tile_1C9 = {
+    0x12a1a, 0x36,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1C9[3] = {
+    {-1834, 127, -1155, 0x773},
+    {-1766, 127, -933, 0x777},
+    {-1617, 127, -960, 0x76b},
+};
+
+
+StandFileTile tile_1CA = {
+    0x12a19, 0x36,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1CA[3] = {
+    {-1834, 127, -1155, 0x00},
+    {-1834, 127, -978, 0x75b},
+    {-1766, 127, -933, 0x76f},
+};
+
+
+StandFileTile tile_1CB = {
+    0x12918, 0x36,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1CB[3] = {
+    {-1617, 127, -960, 0x76f},
+    {-1766, 127, -933, 0x723},
+    {-1617, 127, -933, 0x6c2},
+};
+
+
+StandFileTile tile_1CC = {
+    0xe518, 0x35,
+    0x0,
+    0xb, 0xb, 0xb,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_1CC[4] = {
+    {-1748, 127, -657, 0x00},
+    {-1612, 127, -657, 0xe38},
+    {-1513, 127, -657, 0x788},
+    {-1630, 127, -688, 0x784},
+};
+
+
+StandFileTile tile_1CD = {
+    0xe41a, 0x35,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1CD[3] = {
+    {-1748, 127, -675, 0x784},
+    {-1630, 127, -688, 0x790},
+    {-1712, 127, -743, 0x7a8},
+};
+
+
+StandFileTile tile_1CE = {
+    0xe419, 0x35,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1CE[3] = {
+    {-1748, 127, -675, 0x00},
+    {-1748, 127, -657, 0x77b},
+    {-1630, 127, -688, 0x780},
+};
+
+
+StandFileTile tile_1CF = {
+    0xe31a, 0x35,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1CF[3] = {
+    {-1513, 127, -657, 0x78c},
+    {-1549, 127, -743, 0x794},
+    {-1630, 127, -688, 0x77b},
+};
+
+
+StandFileTile tile_1D0 = {
+    0xe319, 0x35,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1D0[3] = {
+    {-1513, 127, -657, 0x00},
+    {-1513, 127, -675, 0x7ac},
+    {-1549, 127, -743, 0x788},
+};
+
+
+StandFileTile tile_1D1 = {
+    0x2f618, 0x35,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1D1[3] = {
+    {-1630, 127, -743, 0x7a4},
+    {-1712, 127, -743, 0x780},
+    {-1630, 127, -688, 0x794},
+};
+
+
+StandFileTile tile_1D2 = {
+    0xe218, 0x35,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1D2[3] = {
+    {-1549, 127, -743, 0x79c},
+    {-1630, 127, -743, 0x790},
+    {-1630, 127, -688, 0x788},
+};
+
+
+StandFileTile tile_1D3 = {
+    0x2f71a, 0x35,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1D3[3] = {
+    {-1630, 127, -743, 0x79c},
+    {-1549, 127, -761, 0x73b},
+    {-1630, 127, -761, 0x7a4},
+};
+
+
+StandFileTile tile_1D4 = {
+    0x2f719, 0x35,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1D4[3] = {
+    {-1630, 127, -743, 0x794},
+    {-1549, 127, -743, 0x00},
+    {-1549, 127, -761, 0x798},
+};
+
+
+StandFileTile tile_1D5 = {
+    0xe11a, 0x35,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1D5[3] = {
+    {-1712, 127, -743, 0x7a4},
+    {-1630, 127, -761, 0x737},
+    {-1712, 127, -761, 0x00},
+};
+
+
+StandFileTile tile_1D6 = {
+    0xe119, 0x35,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1D6[3] = {
+    {-1712, 127, -743, 0x790},
+    {-1630, 127, -743, 0x798},
+    {-1630, 127, -761, 0x7a0},
+};
+
+
+StandFileTile tile_1D7 = {
+    0xe018, 0x35,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1D7[3] = {
+    {-1748, 127, -675, 0x780},
+    {-1712, 127, -743, 0x00},
+    {-1748, 127, -743, 0x00},
+};
+
+
+StandFileTile tile_1D8 = {
+    0xdf18, 0x35,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1D8[3] = {
+    {-1513, 127, -675, 0x00},
+    {-1513, 127, -743, 0x00},
+    {-1549, 127, -743, 0x78c},
+};
+
+
+StandFileTile tile_1D9 = {
+    0xde1a, 0x34,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1D9[3] = {
+    {-1522, 127, -1848, 0x7b4},
+    {-1789, 127, -1943, 0x7bc},
+    {-1707, 127, -1848, 0x7d8},
+};
+
+
+StandFileTile tile_1DA = {
+    0xde19, 0x34,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1DA[3] = {
+    {-1522, 127, -1848, 0x7d0},
+    {-1436, 127, -1943, 0x00},
+    {-1789, 127, -1943, 0x7b0},
+};
+
+
+StandFileTile tile_1DB = {
+    0xdd1a, 0x34,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1DB[3] = {
+    {-1707, 127, -1848, 0x7bc},
+    {-1789, 127, -1590, 0x7c4},
+    {-1707, 127, -1662, 0x7d8},
+};
+
+
+StandFileTile tile_1DC = {
+    0xdd19, 0x34,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1DC[3] = {
+    {-1707, 127, -1848, 0x7b0},
+    {-1789, 127, -1943, 0x00},
+    {-1789, 127, -1590, 0x7b8},
+};
+
+
+StandFileTile tile_1DD = {
+    0xdc1a, 0x34,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1DD[3] = {
+    {-1707, 127, -1662, 0x7c4},
+    {-1436, 127, -1590, 0x7c8},
+    {-1522, 127, -1662, 0x7dc},
+};
+
+
+StandFileTile tile_1DE = {
+    0xdc19, 0x34,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1DE[3] = {
+    {-1707, 127, -1662, 0x7b8},
+    {-1789, 127, -1590, 0x00},
+    {-1436, 127, -1590, 0x7c0},
+};
+
+
+StandFileTile tile_1DF = {
+    0xdb18, 0x34,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1DF[3] = {
+    {-1522, 127, -1662, 0x7c0},
+    {-1436, 127, -1590, 0x00},
+    {-1436, 127, -1658, 0x7cc},
+};
+
+
+StandFileTile tile_1E0 = {
+    0xda18, 0x34,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1E0[3] = {
+    {-1436, 127, -1658, 0x7e0},
+    {-1436, 127, -1712, 0x7d4},
+    {-1522, 127, -1662, 0x7c8},
+};
+
+
+StandFileTile tile_1E1 = {
+    0xd91a, 0x34,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1E1[3] = {
+    {-1522, 127, -1662, 0x7d4},
+    {-1436, 127, -1943, 0x7b4},
+    {-1522, 127, -1848, 0x7dc},
+};
+
+
+StandFileTile tile_1E2 = {
+    0xd919, 0x34,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1E2[3] = {
+    {-1522, 127, -1662, 0x7cc},
+    {-1436, 127, -1712, 0x00},
+    {-1436, 127, -1943, 0x7d0},
+};
+
+
+StandFileTile tile_1E3 = {
+    0xd81a, 0x34,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1E3[3] = {
+    {-1707, 127, -1662, 0x7dc},
+    {-1522, 127, -1848, 0x7b0},
+    {-1707, 127, -1848, 0x7b8},
+};
+
+
+StandFileTile tile_1E4 = {
+    0xd819, 0x34,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1E4[3] = {
+    {-1707, 127, -1662, 0x7c0},
+    {-1522, 127, -1662, 0x7d0},
+    {-1522, 127, -1848, 0x7d8},
+};
+
+
+StandFileTile tile_1E5 = {
+    0xd71a, 0x34,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1E5[3] = {
+    {-1436, 127, -1658, 0x7e4},
+    {-1427, 127, -1712, 0x00},
+    {-1436, 127, -1712, 0x7cc},
+};
+
+
+StandFileTile tile_1E6 = {
+    0xd719, 0x34,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1E6[3] = {
+    {-1436, 127, -1658, 0x00},
+    {-1427, 127, -1658, 0x310},
+    {-1427, 127, -1712, 0x7e0},
+};
+
+
+StandFileTile tile_1E7 = {
+    0xf118, 0x33,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1E7[3] = {
+    {-1284, 127, -1970, 0x00},
+    {-1060, 127, -1970, 0x00},
+    {-1060, 127, -2165, 0x7ec},
+};
+
+
+StandFileTile tile_1E8 = {
+    0xf018, 0x33,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1E8[3] = {
+    {-1060, 127, -2165, 0x7fc},
+    {-1128, 127, -2165, 0x824},
+    {-1284, 127, -1970, 0x7e8},
+};
+
+
+StandFileTile tile_1E9 = {
+    0xef1a, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1E9[3] = {
+    {-1060, 127, -2323, 0x7f4},
+    {-1191, 127, -2292, 0x00},
+    {-1191, 127, -2215, 0x7f8},
+};
+
+
+StandFileTile tile_1EA = {
+    0xef19, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1EA[3] = {
+    {-1060, 127, -2323, 0x00},
+    {-1073, 127, -2323, 0x868},
+    {-1191, 127, -2292, 0x7f0},
+};
+
+
+StandFileTile tile_1EB = {
+    0xee1a, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1EB[3] = {
+    {-1128, 127, -2165, 0x7fc},
+    {-1060, 127, -2323, 0x7f0},
+    {-1191, 127, -2215, 0x814},
+};
+
+
+StandFileTile tile_1EC = {
+    0xee19, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1EC[3] = {
+    {-1128, 127, -2165, 0x7ec},
+    {-1060, 127, -2165, 0x00},
+    {-1060, 127, -2323, 0x7f8},
+};
+
+
+StandFileTile tile_1ED = {
+    0xed1a, 0x33,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1ED[3] = {
+    {-1630, 127, -2165, 0x804},
+    {-1490, 127, -1957, 0x830},
+    {-1454, 127, -1970, 0x80c},
+};
+
+
+StandFileTile tile_1EE = {
+    0xed19, 0x33,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1EE[3] = {
+    {-1630, 127, -2165, 0x00},
+    {-1630, 127, -1957, 0x00},
+    {-1490, 127, -1957, 0x800},
+};
+
+
+StandFileTile tile_1EF = {
+    0xec1a, 0x33,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1EF[3] = {
+    {-1508, 127, -2165, 0x80c},
+    {-1454, 127, -1970, 0x00},
+    {-1427, 127, -1970, 0x828},
+};
+
+
+StandFileTile tile_1F0 = {
+    0xec19, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1F0[3] = {
+    {-1508, 127, -2165, 0x880},
+    {-1630, 127, -2165, 0x800},
+    {-1454, 127, -1970, 0x808},
+};
+
+
+StandFileTile tile_1F1 = {
+    0xeb1a, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1F1[3] = {
+    {-1304, 127, -2165, 0x814},
+    {-1191, 127, -2215, 0x00},
+    {-1304, 127, -2215, 0x81c},
+};
+
+
+StandFileTile tile_1F2 = {
+    0xeb19, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1F2[3] = {
+    {-1304, 127, -2165, 0x820},
+    {-1128, 127, -2165, 0x7f8},
+    {-1191, 127, -2215, 0x810},
+};
+
+
+StandFileTile tile_1F3 = {
+    0xea1a, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1F3[3] = {
+    {-1304, 127, -2165, 0x81c},
+    {-1467, 127, -2215, 0x87c},
+    {-1508, 127, -2165, 0x82c},
+};
+
+
+StandFileTile tile_1F4 = {
+    0xea19, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1F4[3] = {
+    {-1304, 127, -2165, 0x810},
+    {-1304, 127, -2215, 0x00},
+    {-1467, 127, -2215, 0x818},
+};
+
+
+StandFileTile tile_1F5 = {
+    0xe91a, 0x33,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1F5[3] = {
+    {-1304, 127, -1970, 0x824},
+    {-1128, 127, -2165, 0x814},
+    {-1304, 127, -2165, 0x82c},
+};
+
+
+StandFileTile tile_1F6 = {
+    0xe919, 0x33,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1F6[3] = {
+    {-1304, 127, -1970, 0x2fc},
+    {-1284, 127, -1970, 0x7ec},
+    {-1128, 127, -2165, 0x820},
+};
+
+
+StandFileTile tile_1F7 = {
+    0xe81a, 0x33,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1F7[3] = {
+    {-1304, 127, -1970, 0x82c},
+    {-1508, 127, -2165, 0x808},
+    {-1427, 127, -1970, 0x308},
+};
+
+
+StandFileTile tile_1F8 = {
+    0xe819, 0x33,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1F8[3] = {
+    {-1304, 127, -1970, 0x820},
+    {-1304, 127, -2165, 0x818},
+    {-1508, 127, -2165, 0x828},
+};
+
+
+StandFileTile tile_1F9 = {
+    0xe718, 0x33,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1F9[3] = {
+    {-1454, 127, -1970, 0x800},
+    {-1490, 127, -1957, 0x00},
+    {-1454, 127, -1957, 0x00},
+};
+
+
+StandFileTile tile_1FA = {
+    0xfe18, 0x33,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1FA[3] = {
+    {-1060, 127, -2527, 0x00},
+    {-1630, 127, -2527, 0x838},
+    {-1327, 127, -2423, 0x83c},
+};
+
+
+StandFileTile tile_1FB = {
+    0xfd18, 0x33,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1FB[3] = {
+    {-1630, 127, -2527, 0x00},
+    {-1630, 127, -2414, 0x840},
+    {-1327, 127, -2423, 0x834},
+};
+
+
+StandFileTile tile_1FC = {
+    0xfc18, 0x33,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1FC[3] = {
+    {-1327, 127, -2423, 0x84c},
+    {-1060, 127, -2414, 0x00},
+    {-1060, 127, -2527, 0x834},
+};
+
+
+StandFileTile tile_1FD = {
+    0xfb1a, 0x33,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1FD[3] = {
+    {-1630, 127, -2414, 0x844},
+    {-1467, 127, -2319, 0x850},
+    {-1327, 127, -2423, 0x838},
+};
+
+
+StandFileTile tile_1FE = {
+    0xfb19, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1FE[3] = {
+    {-1630, 127, -2414, 0x870},
+    {-1617, 127, -2351, 0x854},
+    {-1467, 127, -2319, 0x840},
+};
+
+
+StandFileTile tile_1FF = {
+    0xfa1a, 0x33,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_1FF[3] = {
+    {-1073, 127, -2351, 0x84c},
+    {-1327, 127, -2423, 0x850},
+    {-1191, 127, -2319, 0x864},
+};
+
+
+StandFileTile tile_200 = {
+    0xfa19, 0x33,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_200[3] = {
+    {-1073, 127, -2351, 0x86c},
+    {-1060, 127, -2414, 0x83c},
+    {-1327, 127, -2423, 0x848},
+};
+
+
+StandFileTile tile_201 = {
+    0xf918, 0x33,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_201[3] = {
+    {-1191, 127, -2319, 0x848},
+    {-1327, 127, -2423, 0x840},
+    {-1467, 127, -2319, 0x85c},
+};
+
+
+StandFileTile tile_202 = {
+    0xf81a, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_202[3] = {
+    {-1617, 127, -2351, 0x858},
+    {-1467, 127, -2292, 0x860},
+    {-1467, 127, -2319, 0x844},
+};
+
+
+StandFileTile tile_203 = {
+    0xf819, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_203[3] = {
+    {-1617, 127, -2351, 0x00},
+    {-1617, 127, -2323, 0x878},
+    {-1467, 127, -2292, 0x854},
+};
+
+
+StandFileTile tile_204 = {
+    0xf71a, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_204[3] = {
+    {-1467, 127, -2319, 0x860},
+    {-1191, 127, -2292, 0x868},
+    {-1191, 127, -2319, 0x850},
+};
+
+
+StandFileTile tile_205 = {
+    0xf719, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_205[3] = {
+    {-1467, 127, -2319, 0x854},
+    {-1467, 127, -2292, 0x00},
+    {-1191, 127, -2292, 0x85c},
+};
+
+
+StandFileTile tile_206 = {
+    0xf61a, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_206[3] = {
+    {-1191, 127, -2319, 0x868},
+    {-1073, 127, -2323, 0x00},
+    {-1073, 127, -2351, 0x848},
+};
+
+
+StandFileTile tile_207 = {
+    0xf619, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_207[3] = {
+    {-1191, 127, -2319, 0x85c},
+    {-1191, 127, -2292, 0x7f4},
+    {-1073, 127, -2323, 0x864},
+};
+
+
+StandFileTile tile_208 = {
+    0xf518, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_208[3] = {
+    {-1060, 127, -2351, 0x00},
+    {-1060, 127, -2414, 0x84c},
+    {-1073, 127, -2351, 0x00},
+};
+
+
+StandFileTile tile_209 = {
+    0xf418, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_209[3] = {
+    {-1630, 127, -2414, 0x00},
+    {-1630, 127, -2351, 0x00},
+    {-1617, 127, -2351, 0x844},
+};
+
+
+StandFileTile tile_20A = {
+    0xf31a, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_20A[3] = {
+    {-1467, 127, -2292, 0x878},
+    {-1630, 127, -2323, 0x87c},
+    {-1467, 127, -2215, 0x00},
+};
+
+
+StandFileTile tile_20B = {
+    0xf319, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_20B[3] = {
+    {-1467, 127, -2292, 0x858},
+    {-1617, 127, -2323, 0x00},
+    {-1630, 127, -2323, 0x874},
+};
+
+
+StandFileTile tile_20C = {
+    0xf21a, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_20C[3] = {
+    {-1630, 127, -2323, 0x880},
+    {-1508, 127, -2165, 0x818},
+    {-1467, 127, -2215, 0x874},
+};
+
+
+StandFileTile tile_20D = {
+    0xf219, 0x33,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_20D[3] = {
+    {-1630, 127, -2323, 0x00},
+    {-1630, 127, -2165, 0x80c},
+    {-1508, 127, -2165, 0x87c},
+};
+
+
+StandFileTile tile_20E = {
+    0x50512, 0x32,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_20E[3] = {
+    {-199, -18, -939, 0x888},
+    {-262, -18, -957, 0x00},
+    {-262, -18, -939, 0xb24},
+};
+
+
+StandFileTile tile_20F = {
+    0x50511, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_20F[3] = {
+    {-199, -18, -939, 0x00},
+    {-199, -18, -957, 0x9d4},
+    {-262, -18, -957, 0x884},
+};
+
+
+StandFileTile tile_210 = {
+    0x8812, 0x32,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_210[3] = {
+    {-693, 0, -1730, 0x890},
+    {-693, -9, -1825, 0x894},
+    {-693, -9, -1730, 0x00},
+};
+
+
+StandFileTile tile_211 = {
+    0x8811, 0x32,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_211[3] = {
+    {-693, 0, -1730, 0x8fa},
+    {-693, 0, -1825, 0x00},
+    {-693, -9, -1825, 0x88c},
+};
+
+
+StandFileTile tile_212 = {
+    0x8012, 0x32,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_212[3] = {
+    {-707, -9, -1825, 0x898},
+    {-693, -9, -1730, 0x88c},
+    {-693, -9, -1825, 0x00},
+};
+
+
+StandFileTile tile_213 = {
+    0x8011, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_213[3] = {
+    {-707, -9, -1825, 0x8a0},
+    {-707, -9, -1730, 0x00},
+    {-693, -9, -1730, 0x894},
+};
+
+
+StandFileTile tile_214 = {
+    0x7f12, 0x32,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_214[3] = {
+    {-707, -9, -1730, 0x8a0},
+    {-707, -18, -1825, 0x8ba},
+    {-707, -18, -1730, 0x00},
+};
+
+
+StandFileTile tile_215 = {
+    0x7f11, 0x32,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_215[3] = {
+    {-707, -9, -1730, 0x898},
+    {-707, -9, -1825, 0x00},
+    {-707, -18, -1825, 0x89c},
+};
+
+
+StandFileTile tile_216 = {
+    0x40f10, 0x32,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_216[3] = {
+    {-693, -18, -1676, 0x9fd},
+    {-693, -18, -1730, 0x00},
+    {-707, -18, -1730, 0x8c2},
+};
+
+
+StandFileTile tile_217 = {
+    0x40e10, 0x32,
+    0x0,
+    0xf, 0xf, 0xf,
+    5,
+    0x0, 0x3, 0x4,
+};
+StandFilePoint points_217[5] = {
+    {-693, -18, -1825, 0x00},
+    {-693, -18, -1848, 0x9f5},
+    {-693, -18, -1938, 0x00},
+    {-693, -18, -1957, 0x8b2},
+    {-707, -18, -1825, 0x00},
+};
+
+
+StandFileTile tile_218 = {
+    0x49112, 0x32,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_218[3] = {
+    {-707, -18, -1825, 0x8b2},
+    {-761, -18, -1899, 0x00},
+    {-761, -18, -1821, 0x8b6},
+};
+
+
+StandFileTile tile_219 = {
+    0x49111, 0x32,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_219[3] = {
+    {-707, -18, -1825, 0x8a8},
+    {-693, -18, -1957, 0xa25},
+    {-761, -18, -1899, 0x8ae},
+};
+
+
+StandFileTile tile_21A = {
+    0x49312, 0x32,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_21A[3] = {
+    {-761, -18, -1758, 0x8ba},
+    {-707, -18, -1825, 0x8ae},
+    {-761, -18, -1821, 0x00},
+};
+
+
+StandFileTile tile_21B = {
+    0x49311, 0x32,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_21B[3] = {
+    {-761, -18, -1758, 0x8be},
+    {-707, -18, -1730, 0x89c},
+    {-707, -18, -1825, 0x8b6},
+};
+
+
+StandFileTile tile_21C = {
+    0x49512, 0x32,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_21C[3] = {
+    {-761, -18, -1729, 0x8c2},
+    {-707, -18, -1730, 0x8ba},
+    {-761, -18, -1758, 0x00},
+};
+
+
+StandFileTile tile_21D = {
+    0x49511, 0x32,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_21D[3] = {
+    {-761, -18, -1729, 0xa2e},
+    {-693, -18, -1676, 0x8a4},
+    {-707, -18, -1730, 0x8be},
+};
+
+
+StandFileTile tile_21E = {
+    0x41112, 0x32,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_21E[3] = {
+    {-693, 127, -1938, 0x8ca},
+    {-693, 118, -1848, 0x970},
+    {-693, 118, -1938, 0x00},
+};
+
+
+StandFileTile tile_21F = {
+    0x41111, 0x32,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_21F[3] = {
+    {-693, 127, -1938, 0x55a},
+    {-693, 127, -1848, 0x00},
+    {-693, 118, -1848, 0x8c6},
+};
+
+
+StandFileTile tile_220 = {
+    0x8e12, 0x32,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_220[3] = {
+    {-611, 54, -1730, 0x8d2},
+    {-611, 45, -1825, 0x906},
+    {-611, 45, -1730, 0x00},
+};
+
+
+StandFileTile tile_221 = {
+    0x8e11, 0x32,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_221[3] = {
+    {-611, 54, -1730, 0x902},
+    {-611, 54, -1825, 0x00},
+    {-611, 45, -1825, 0x8ce},
+};
+
+
+StandFileTile tile_222 = {
+    0x8d12, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_222[3] = {
+    {-652, 27, -1825, 0x8da},
+    {-639, 27, -1730, 0x92e},
+    {-639, 27, -1825, 0x00},
+};
+
+
+StandFileTile tile_223 = {
+    0x8d11, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_223[3] = {
+    {-652, 27, -1825, 0x8e2},
+    {-652, 27, -1730, 0x00},
+    {-639, 27, -1730, 0x8d6},
+};
+
+
+StandFileTile tile_224 = {
+    0x8c12, 0x32,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_224[3] = {
+    {-652, 27, -1730, 0x8e2},
+    {-652, 18, -1825, 0x8e6},
+    {-652, 18, -1730, 0x00},
+};
+
+
+StandFileTile tile_225 = {
+    0x8c11, 0x32,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_225[3] = {
+    {-652, 27, -1730, 0x8da},
+    {-652, 27, -1825, 0x00},
+    {-652, 18, -1825, 0x8de},
+};
+
+
+StandFileTile tile_226 = {
+    0x8b12, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_226[3] = {
+    {-666, 18, -1825, 0x8ea},
+    {-652, 18, -1730, 0x8de},
+    {-652, 18, -1825, 0x00},
+};
+
+
+StandFileTile tile_227 = {
+    0x8b11, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_227[3] = {
+    {-666, 18, -1825, 0x8f2},
+    {-666, 18, -1730, 0x00},
+    {-652, 18, -1730, 0x8e6},
+};
+
+
+StandFileTile tile_228 = {
+    0x8a12, 0x32,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_228[3] = {
+    {-666, 18, -1730, 0x8f2},
+    {-666, 9, -1825, 0x916},
+    {-666, 9, -1730, 0x00},
+};
+
+
+StandFileTile tile_229 = {
+    0x8a11, 0x32,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_229[3] = {
+    {-666, 18, -1730, 0x8ea},
+    {-666, 18, -1825, 0x00},
+    {-666, 9, -1825, 0x8ee},
+};
+
+
+StandFileTile tile_22A = {
+    0x8912, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_22A[3] = {
+    {-693, 0, -1825, 0x8fa},
+    {-679, 0, -1730, 0x91e},
+    {-679, 0, -1825, 0x00},
+};
+
+
+StandFileTile tile_22B = {
+    0x8911, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_22B[3] = {
+    {-693, 0, -1825, 0x890},
+    {-693, 0, -1730, 0x00},
+    {-679, 0, -1730, 0x8f6},
+};
+
+
+StandFileTile tile_22C = {
+    0x8712, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_22C[3] = {
+    {-611, 54, -1825, 0x902},
+    {-598, 54, -1730, 0x936},
+    {-598, 54, -1825, 0x00},
+};
+
+
+StandFileTile tile_22D = {
+    0x8711, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_22D[3] = {
+    {-611, 54, -1825, 0x8d2},
+    {-611, 54, -1730, 0x00},
+    {-598, 54, -1730, 0x8fe},
+};
+
+
+StandFileTile tile_22E = {
+    0x8612, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_22E[3] = {
+    {-625, 45, -1825, 0x90a},
+    {-611, 45, -1730, 0x8ce},
+    {-611, 45, -1825, 0x00},
+};
+
+
+StandFileTile tile_22F = {
+    0x8611, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_22F[3] = {
+    {-625, 45, -1825, 0x912},
+    {-625, 45, -1730, 0x00},
+    {-611, 45, -1730, 0x906},
+};
+
+
+StandFileTile tile_230 = {
+    0x8512, 0x32,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_230[3] = {
+    {-625, 45, -1730, 0x912},
+    {-625, 36, -1825, 0x926},
+    {-625, 36, -1730, 0x00},
+};
+
+
+StandFileTile tile_231 = {
+    0x8511, 0x32,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_231[3] = {
+    {-625, 45, -1730, 0x90a},
+    {-625, 45, -1825, 0x00},
+    {-625, 36, -1825, 0x90e},
+};
+
+
+StandFileTile tile_232 = {
+    0x8412, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_232[3] = {
+    {-679, 9, -1825, 0x91a},
+    {-666, 9, -1730, 0x8ee},
+    {-666, 9, -1825, 0x00},
+};
+
+
+StandFileTile tile_233 = {
+    0x8411, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_233[3] = {
+    {-679, 9, -1825, 0x922},
+    {-679, 9, -1730, 0x00},
+    {-666, 9, -1730, 0x916},
+};
+
+
+StandFileTile tile_234 = {
+    0x8312, 0x32,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_234[3] = {
+    {-679, 9, -1730, 0x922},
+    {-679, 0, -1825, 0x8f6},
+    {-679, 0, -1730, 0x00},
+};
+
+
+StandFileTile tile_235 = {
+    0x8311, 0x32,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_235[3] = {
+    {-679, 9, -1730, 0x91a},
+    {-679, 9, -1825, 0x00},
+    {-679, 0, -1825, 0x91e},
+};
+
+
+StandFileTile tile_236 = {
+    0x8212, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_236[3] = {
+    {-639, 36, -1825, 0x92a},
+    {-625, 36, -1730, 0x90e},
+    {-625, 36, -1825, 0x00},
+};
+
+
+StandFileTile tile_237 = {
+    0x8211, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_237[3] = {
+    {-639, 36, -1825, 0x932},
+    {-639, 36, -1730, 0x00},
+    {-625, 36, -1730, 0x926},
+};
+
+
+StandFileTile tile_238 = {
+    0x8112, 0x32,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_238[3] = {
+    {-639, 36, -1730, 0x932},
+    {-639, 27, -1825, 0x8d6},
+    {-639, 27, -1730, 0x00},
+};
+
+
+StandFileTile tile_239 = {
+    0x8111, 0x32,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_239[3] = {
+    {-639, 36, -1730, 0x92a},
+    {-639, 36, -1825, 0x00},
+    {-639, 27, -1825, 0x92e},
+};
+
+
+StandFileTile tile_23A = {
+    0x7112, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    5,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_23A[5] = {
+    {-598, 54, -1730, 0x93c},
+    {-525, 54, -1938, 0x00},
+    {-598, 54, -1938, 0x9a8},
+    {-598, 54, -1848, 0x00},
+    {-598, 54, -1825, 0x8fe},
+};
+
+
+StandFileTile tile_23B = {
+    0x7111, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_23B[3] = {
+    {-598, 54, -1730, 0x00},
+    {-525, 54, -1730, 0x00},
+    {-525, 54, -1938, 0x936},
+};
+
+
+StandFileTile tile_23C = {
+    0x6f12, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_23C[3] = {
+    {-652, 100, -1848, 0x944},
+    {-666, 100, -1938, 0x998},
+    {-666, 100, -1848, 0x00},
+};
+
+
+StandFileTile tile_23D = {
+    0x6f11, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_23D[3] = {
+    {-652, 100, -1848, 0x94c},
+    {-652, 100, -1938, 0x00},
+    {-666, 100, -1938, 0x940},
+};
+
+
+StandFileTile tile_23E = {
+    0x6e12, 0x32,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_23E[3] = {
+    {-652, 100, -1938, 0x94c},
+    {-652, 91, -1848, 0x950},
+    {-652, 91, -1938, 0x00},
+};
+
+
+StandFileTile tile_23F = {
+    0x6e11, 0x32,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_23F[3] = {
+    {-652, 100, -1938, 0x944},
+    {-652, 100, -1848, 0x00},
+    {-652, 91, -1848, 0x948},
+};
+
+
+StandFileTile tile_240 = {
+    0x6d12, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_240[3] = {
+    {-639, 91, -1848, 0x954},
+    {-652, 91, -1938, 0x948},
+    {-652, 91, -1848, 0x00},
+};
+
+
+StandFileTile tile_241 = {
+    0x6d11, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_241[3] = {
+    {-639, 91, -1848, 0x95c},
+    {-639, 91, -1938, 0x00},
+    {-652, 91, -1938, 0x950},
+};
+
+
+StandFileTile tile_242 = {
+    0x6c12, 0x32,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_242[3] = {
+    {-639, 91, -1938, 0x95c},
+    {-639, 82, -1848, 0x980},
+    {-639, 82, -1938, 0x00},
+};
+
+
+StandFileTile tile_243 = {
+    0x6c11, 0x32,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_243[3] = {
+    {-639, 91, -1938, 0x954},
+    {-639, 91, -1848, 0x00},
+    {-639, 82, -1848, 0x958},
+};
+
+
+StandFileTile tile_244 = {
+    0x6b12, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_244[3] = {
+    {-611, 72, -1848, 0x964},
+    {-625, 72, -1938, 0x988},
+    {-625, 72, -1848, 0x00},
+};
+
+
+StandFileTile tile_245 = {
+    0x6b11, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_245[3] = {
+    {-611, 72, -1848, 0x96c},
+    {-611, 72, -1938, 0x00},
+    {-625, 72, -1938, 0x960},
+};
+
+
+StandFileTile tile_246 = {
+    0x6a12, 0x32,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_246[3] = {
+    {-611, 72, -1938, 0x96c},
+    {-611, 63, -1848, 0x9a0},
+    {-611, 63, -1938, 0x00},
+};
+
+
+StandFileTile tile_247 = {
+    0x6a11, 0x32,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_247[3] = {
+    {-611, 72, -1938, 0x964},
+    {-611, 72, -1848, 0x00},
+    {-611, 63, -1848, 0x968},
+};
+
+
+StandFileTile tile_248 = {
+    0x6912, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_248[3] = {
+    {-679, 118, -1848, 0x974},
+    {-693, 118, -1938, 0x8c6},
+    {-693, 118, -1848, 0x00},
+};
+
+
+StandFileTile tile_249 = {
+    0x6911, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_249[3] = {
+    {-679, 118, -1848, 0x97c},
+    {-679, 118, -1938, 0x00},
+    {-693, 118, -1938, 0x970},
+};
+
+
+StandFileTile tile_24A = {
+    0x6812, 0x32,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_24A[3] = {
+    {-679, 118, -1938, 0x97c},
+    {-679, 109, -1848, 0x990},
+    {-679, 109, -1938, 0x00},
+};
+
+
+StandFileTile tile_24B = {
+    0x6811, 0x32,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_24B[3] = {
+    {-679, 118, -1938, 0x974},
+    {-679, 118, -1848, 0x00},
+    {-679, 109, -1848, 0x978},
+};
+
+
+StandFileTile tile_24C = {
+    0x6712, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_24C[3] = {
+    {-625, 82, -1848, 0x984},
+    {-639, 82, -1938, 0x958},
+    {-639, 82, -1848, 0x00},
+};
+
+
+StandFileTile tile_24D = {
+    0x6711, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_24D[3] = {
+    {-625, 82, -1848, 0x98c},
+    {-625, 82, -1938, 0x00},
+    {-639, 82, -1938, 0x980},
+};
+
+
+StandFileTile tile_24E = {
+    0x6612, 0x32,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_24E[3] = {
+    {-625, 82, -1938, 0x98c},
+    {-625, 72, -1848, 0x960},
+    {-625, 72, -1938, 0x00},
+};
+
+
+StandFileTile tile_24F = {
+    0x6611, 0x32,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_24F[3] = {
+    {-625, 82, -1938, 0x984},
+    {-625, 82, -1848, 0x00},
+    {-625, 72, -1848, 0x988},
+};
+
+
+StandFileTile tile_250 = {
+    0x6512, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_250[3] = {
+    {-666, 109, -1848, 0x994},
+    {-679, 109, -1938, 0x978},
+    {-679, 109, -1848, 0x00},
+};
+
+
+StandFileTile tile_251 = {
+    0x6511, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_251[3] = {
+    {-666, 109, -1848, 0x99c},
+    {-666, 109, -1938, 0x00},
+    {-679, 109, -1938, 0x990},
+};
+
+
+StandFileTile tile_252 = {
+    0x6412, 0x32,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_252[3] = {
+    {-666, 109, -1938, 0x99c},
+    {-666, 100, -1848, 0x940},
+    {-666, 100, -1938, 0x00},
+};
+
+
+StandFileTile tile_253 = {
+    0x6411, 0x32,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_253[3] = {
+    {-666, 109, -1938, 0x994},
+    {-666, 109, -1848, 0x00},
+    {-666, 100, -1848, 0x998},
+};
+
+
+StandFileTile tile_254 = {
+    0x6312, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_254[3] = {
+    {-598, 63, -1848, 0x9a4},
+    {-611, 63, -1938, 0x968},
+    {-611, 63, -1848, 0x00},
+};
+
+
+StandFileTile tile_255 = {
+    0x6311, 0x32,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_255[3] = {
+    {-598, 63, -1848, 0x9ac},
+    {-598, 63, -1938, 0x00},
+    {-611, 63, -1938, 0x9a0},
+};
+
+
+StandFileTile tile_256 = {
+    0x6212, 0x32,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_256[3] = {
+    {-598, 63, -1938, 0x9ac},
+    {-598, 54, -1848, 0x936},
+    {-598, 54, -1938, 0x00},
+};
+
+
+StandFileTile tile_257 = {
+    0x6211, 0x32,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_257[3] = {
+    {-598, 63, -1938, 0x9a4},
+    {-598, 63, -1848, 0x00},
+    {-598, 54, -1848, 0x9a8},
+};
+
+
+StandFileTile tile_258 = {
+    0x47910, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_258[3] = {
+    {-199, -18, -1576, 0x00},
+    {-285, -18, -1576, 0x9b4},
+    {-199, -18, -1549, 0x00},
+};
+
+
+StandFileTile tile_259 = {
+    0x16a12, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_259[3] = {
+    {-285, -18, -1576, 0x9b8},
+    {-199, -18, -1467, 0x00},
+    {-199, -18, -1549, 0x9b0},
+};
+
+
+StandFileTile tile_25A = {
+    0x16a11, 0x32,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_25A[3] = {
+    {-285, -18, -1576, 0xa6f},
+    {-285, -18, -1395, 0x9d0},
+    {-199, -18, -1467, 0x9b4},
+};
+
+
+StandFileTile tile_25B = {
+    0x18612, 0x32,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_25B[3] = {
+    {-199, -18, -1087, 0x9c0},
+    {-285, -18, -1313, 0xa11},
+    {-285, -18, -1033, 0x9dd},
+};
+
+
+StandFileTile tile_25C = {
+    0x18611, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_25C[3] = {
+    {-199, -18, -1087, 0x00},
+    {-199, -18, -1168, 0x9c4},
+    {-285, -18, -1313, 0x9bc},
+};
+
+
+StandFileTile tile_25D = {
+    0x17f10, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_25D[3] = {
+    {-199, -18, -1168, 0x00},
+    {-199, -18, -1304, 0x9c8},
+    {-285, -18, -1313, 0x9c0},
+};
+
+
+StandFileTile tile_25E = {
+    0x17912, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_25E[3] = {
+    {-199, -18, -1386, 0x9cc},
+    {-285, -18, -1313, 0x9c4},
+    {-199, -18, -1304, 0x00},
+};
+
+
+StandFileTile tile_25F = {
+    0x17911, 0x32,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_25F[3] = {
+    {-199, -18, -1386, 0x9d0},
+    {-285, -18, -1395, 0xa4f},
+    {-285, -18, -1313, 0x9c8},
+};
+
+
+StandFileTile tile_260 = {
+    0x17a10, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_260[3] = {
+    {-199, -18, -1386, 0x00},
+    {-199, -18, -1467, 0x9b8},
+    {-285, -18, -1395, 0x9cc},
+};
+
+
+StandFileTile tile_261 = {
+    0x47012, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_261[4] = {
+    {-199, -18, -957, 0x9d9},
+    {-285, -18, -1033, 0x9e5},
+    {-285, -18, -957, 0x00},
+    {-262, -18, -957, 0x888},
+};
+
+
+StandFileTile tile_262 = {
+    0x47011, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_262[3] = {
+    {-199, -18, -957, 0x00},
+    {-199, -18, -1005, 0x9dd},
+    {-285, -18, -1033, 0x9d4},
+};
+
+
+StandFileTile tile_263 = {
+    0x18710, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_263[3] = {
+    {-199, -18, -1005, 0x00},
+    {-199, -18, -1087, 0x9bc},
+    {-285, -18, -1033, 0x9d9},
+};
+
+
+StandFileTile tile_264 = {
+    0x1e310, 0x32,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_264[3] = {
+    {-285, -18, -1033, 0xa21},
+    {-489, -18, -1033, 0x9e9},
+    {-489, -18, -957, 0x9e5},
+};
+
+
+StandFileTile tile_265 = {
+    0x1e410, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_265[3] = {
+    {-489, -18, -957, 0x00},
+    {-285, -18, -957, 0x9d4},
+    {-285, -18, -1033, 0x9e1},
+};
+
+
+StandFileTile tile_266 = {
+    0x3a310, 0x32,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_266[3] = {
+    {-489, -18, -1033, 0xa1d},
+    {-693, -18, -1033, 0x9ed},
+    {-489, -18, -957, 0x9e1},
+};
+
+
+StandFileTile tile_267 = {
+    0x1e210, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_267[3] = {
+    {-693, -18, -1033, 0xa32},
+    {-693, -18, -957, 0x00},
+    {-489, -18, -957, 0x9e9},
+};
+
+
+StandFileTile tile_268 = {
+    0x44912, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_268[3] = {
+    {-693, -18, -1938, 0x9f5},
+    {-652, -18, -1846, 0x00},
+    {-648, -18, -1938, 0x00},
+};
+
+
+StandFileTile tile_269 = {
+    0x44911, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_269[3] = {
+    {-693, -18, -1938, 0x8a8},
+    {-693, -18, -1848, 0x00},
+    {-652, -18, -1846, 0x9f1},
+};
+
+
+StandFileTile tile_26A = {
+    0x1610, 0x32,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_26A[3] = {
+    {-693, -18, -1676, 0xa73},
+    {-285, -18, -1676, 0xa01},
+    {-525, -18, -1730, 0x9fd},
+};
+
+
+StandFileTile tile_26B = {
+    0x1510, 0x32,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_26B[3] = {
+    {-693, -18, -1676, 0x9f9},
+    {-525, -18, -1730, 0x00},
+    {-693, -18, -1730, 0x8a4},
+};
+
+
+StandFileTile tile_26C = {
+    0x1a10, 0x32,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_26C[3] = {
+    {-525, -18, -1730, 0x9f9},
+    {-285, -18, -1676, 0xa09},
+    {-399, -18, -1830, 0xa05},
+};
+
+
+StandFileTile tile_26D = {
+    0x1710, 0x32,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_26D[3] = {
+    {-399, -18, -1830, 0xa0d},
+    {-525, -18, -1938, 0x00},
+    {-525, -18, -1730, 0xa01},
+};
+
+
+StandFileTile tile_26E = {
+    0x1910, 0x32,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_26E[3] = {
+    {-399, -18, -1830, 0xa01},
+    {-285, -18, -1676, 0x00},
+    {-285, -18, -1957, 0xa0d},
+};
+
+
+StandFileTile tile_26F = {
+    0x1810, 0x32,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_26F[3] = {
+    {-285, -18, -1957, 0x00},
+    {-525, -18, -1938, 0xa05},
+    {-399, -18, -1830, 0xa09},
+};
+
+
+StandFileTile tile_270 = {
+    0xb810, 0x32,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_270[3] = {
+    {-285, -18, -1033, 0x9bc},
+    {-285, -18, -1313, 0xa8b},
+    {-489, -18, -1164, 0xa21},
+};
+
+
+StandFileTile tile_271 = {
+    0x3bc10, 0x32,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_271[3] = {
+    {-489, -18, -1164, 0xa87},
+    {-693, -18, -1313, 0xa3a},
+    {-693, -18, -1173, 0xa19},
+};
+
+
+StandFileTile tile_272 = {
+    0xba10, 0x32,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_272[3] = {
+    {-489, -18, -1164, 0xa15},
+    {-693, -18, -1173, 0xa3a},
+    {-693, -18, -1033, 0xa1d},
+};
+
+
+StandFileTile tile_273 = {
+    0xb910, 0x32,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_273[3] = {
+    {-693, -18, -1033, 0x9e9},
+    {-489, -18, -1033, 0xa21},
+    {-489, -18, -1164, 0xa19},
+};
+
+
+StandFileTile tile_274 = {
+    0x3a410, 0x32,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_274[3] = {
+    {-489, -18, -1033, 0x9e1},
+    {-285, -18, -1033, 0xa11},
+    {-489, -18, -1164, 0xa1d},
+};
+
+
+StandFileTile tile_275 = {
+    0x49d10, 0x32,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_275[3] = {
+    {-761, -18, -1899, 0x8b2},
+    {-693, -18, -1957, 0x00},
+    {-761, -18, -1957, 0x00},
+};
+
+
+StandFileTile tile_276 = {
+    0x4a512, 0x32,
+    0x0,
+    0x6, 0x6, 0x6,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_276[4] = {
+    {-693, -18, -1676, 0xa2e},
+    {-761, -18, -1409, 0xa3f},
+    {-693, -18, -1409, 0xa7b},
+    {-693, -18, -1535, 0xa77},
+};
+
+
+StandFileTile tile_277 = {
+    0x4a511, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_277[3] = {
+    {-693, -18, -1676, 0x8c2},
+    {-761, -18, -1729, 0x00},
+    {-761, -18, -1409, 0xa29},
+};
+
+
+StandFileTile tile_278 = {
+    0x50210, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_278[3] = {
+    {-761, -18, -957, 0x00},
+    {-693, -18, -957, 0x9ed},
+    {-693, -18, -1033, 0xa3a},
+};
+
+
+StandFileTile tile_279 = {
+    0x4a412, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_279[3] = {
+    {-761, -18, -957, 0xa3a},
+    {-693, -18, -1313, 0xa43},
+    {-761, -18, -1342, 0x00},
+};
+
+
+StandFileTile tile_27A = {
+    0x4a411, 0x32,
+    0x0,
+    0x6, 0x6, 0x6,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_27A[4] = {
+    {-761, -18, -957, 0xa32},
+    {-693, -18, -1033, 0xa19},
+    {-693, -18, -1173, 0xa15},
+    {-693, -18, -1313, 0xa36},
+};
+
+
+StandFileTile tile_27B = {
+    0x4a312, 0x32,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_27B[3] = {
+    {-761, -18, -1409, 0xa43},
+    {-693, -18, -1313, 0xa5b},
+    {-693, -18, -1409, 0xa29},
+};
+
+
+StandFileTile tile_27C = {
+    0x4a311, 0x32,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_27C[3] = {
+    {-761, -18, -1409, 0xaac},
+    {-761, -18, -1342, 0xa36},
+    {-693, -18, -1313, 0xa3f},
+};
+
+
+StandFileTile tile_27D = {
+    0x3a810, 0x32,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_27D[3] = {
+    {-489, -18, -1395, 0xa83},
+    {-693, -18, -1409, 0xa5b},
+    {-489, -18, -1354, 0xa4b},
+};
+
+
+StandFileTile tile_27E = {
+    0x3a610, 0x32,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_27E[3] = {
+    {-285, -18, -1395, 0xa7f},
+    {-489, -18, -1395, 0xa47},
+    {-489, -18, -1354, 0xa4f},
+};
+
+
+StandFileTile tile_27F = {
+    0x3a510, 0x32,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_27F[3] = {
+    {-285, -18, -1313, 0x9cc},
+    {-285, -18, -1395, 0xa4b},
+    {-489, -18, -1354, 0xa53},
+};
+
+
+StandFileTile tile_280 = {
+    0x3a910, 0x32,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_280[3] = {
+    {-489, -18, -1313, 0xa8b},
+    {-285, -18, -1313, 0xa4f},
+    {-489, -18, -1354, 0xa57},
+};
+
+
+StandFileTile tile_281 = {
+    0x3a710, 0x32,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_281[3] = {
+    {-693, -18, -1313, 0xa87},
+    {-489, -18, -1313, 0xa53},
+    {-489, -18, -1354, 0xa5b},
+};
+
+
+StandFileTile tile_282 = {
+    0xb410, 0x32,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_282[3] = {
+    {-693, -18, -1313, 0xa57},
+    {-489, -18, -1354, 0xa47},
+    {-693, -18, -1409, 0xa3f},
+};
+
+
+StandFileTile tile_283 = {
+    0x50d10, 0x32,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_283[3] = {
+    {-312, -18, -1590, 0x00},
+    {-285, -18, -1590, 0x00},
+    {-285, -18, -1676, 0xa63},
+};
+
+
+StandFileTile tile_284 = {
+    0x50c10, 0x32,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_284[3] = {
+    {-285, -18, -1676, 0xa73},
+    {-489, -18, -1526, 0xa67},
+    {-312, -18, -1590, 0xa5f},
+};
+
+
+StandFileTile tile_285 = {
+    0x50b10, 0x32,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_285[3] = {
+    {-489, -18, -1526, 0xa6b},
+    {-312, -18, -1562, 0x00},
+    {-312, -18, -1590, 0xa63},
+};
+
+
+StandFileTile tile_286 = {
+    0x50a10, 0x32,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_286[3] = {
+    {-489, -18, -1526, 0xa7f},
+    {-285, -18, -1395, 0xa6f},
+    {-312, -18, -1562, 0xa67},
+};
+
+
+StandFileTile tile_287 = {
+    0x50910, 0x32,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_287[3] = {
+    {-312, -18, -1562, 0xa6b},
+    {-285, -18, -1395, 0x9b8},
+    {-285, -18, -1576, 0x00},
+};
+
+
+StandFileTile tile_288 = {
+    0xb310, 0x32,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_288[3] = {
+    {-285, -18, -1676, 0x9f9},
+    {-693, -18, -1676, 0xa77},
+    {-489, -18, -1526, 0xa63},
+};
+
+
+StandFileTile tile_289 = {
+    0x3be10, 0x32,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_289[3] = {
+    {-489, -18, -1526, 0xa73},
+    {-693, -18, -1676, 0xa29},
+    {-693, -18, -1535, 0xa7b},
+};
+
+
+StandFileTile tile_28A = {
+    0xb210, 0x32,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_28A[3] = {
+    {-489, -18, -1526, 0xa77},
+    {-693, -18, -1535, 0xa29},
+    {-693, -18, -1409, 0xa83},
+};
+
+
+StandFileTile tile_28B = {
+    0x3ab10, 0x32,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_28B[3] = {
+    {-489, -18, -1395, 0xa4b},
+    {-285, -18, -1395, 0xa6b},
+    {-489, -18, -1526, 0xa83},
+};
+
+
+StandFileTile tile_28C = {
+    0xb110, 0x32,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_28C[3] = {
+    {-693, -18, -1409, 0xa47},
+    {-489, -18, -1395, 0xa7f},
+    {-489, -18, -1526, 0xa7b},
+};
+
+
+StandFileTile tile_28D = {
+    0x3aa10, 0x32,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_28D[3] = {
+    {-489, -18, -1313, 0xa57},
+    {-693, -18, -1313, 0xa15},
+    {-489, -18, -1164, 0xa8b},
+};
+
+
+StandFileTile tile_28E = {
+    0xbb10, 0x32,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_28E[3] = {
+    {-285, -18, -1313, 0xa53},
+    {-489, -18, -1313, 0xa87},
+    {-489, -18, -1164, 0xa11},
+};
+
+
+StandFileTile tile_28F = {
+    0x1d610, 0x31,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_28F[3] = {
+    {-1304, -18, -1286, 0x00},
+    {-1304, -18, -1164, 0xa93},
+    {-992, -18, -1286, 0xa9f},
+};
+
+
+StandFileTile tile_290 = {
+    0x1d510, 0x31,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_290[3] = {
+    {-992, -18, -1286, 0xa8f},
+    {-1304, -18, -1164, 0x00},
+    {-1304, -18, -1033, 0xa97},
+};
+
+
+StandFileTile tile_291 = {
+    0x1d410, 0x31,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_291[3] = {
+    {-1304, -18, -1033, 0xaee},
+    {-1046, -18, -1033, 0xab4},
+    {-992, -18, -1286, 0xa93},
+};
+
+
+StandFileTile tile_292 = {
+    0xb512, 0x31,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_292[3] = {
+    {-1304, -18, -1286, 0xa9f},
+    {-992, -18, -1409, 0xf17},
+    {-1304, -18, -1409, 0x00},
+};
+
+
+StandFileTile tile_293 = {
+    0xb511, 0x31,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_293[3] = {
+    {-1304, -18, -1286, 0xa8f},
+    {-992, -18, -1286, 0xaa3},
+    {-992, -18, -1409, 0xa9b},
+};
+
+
+StandFileTile tile_294 = {
+    0x1db12, 0x31,
+    0x0,
+    0x6, 0x6, 0x6,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_294[4] = {
+    {-992, -18, -1286, 0xaa8},
+    {-761, -18, -1409, 0x00},
+    {-772, -18, -1409, 0xf37},
+    {-992, -18, -1409, 0xa9f},
+};
+
+
+StandFileTile tile_295 = {
+    0x1db11, 0x31,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_295[3] = {
+    {-992, -18, -1286, 0xab8},
+    {-772, -18, -1342, 0xaac},
+    {-761, -18, -1409, 0xaa3},
+};
+
+
+StandFileTile tile_296 = {
+    0x50410, 0x31,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_296[3] = {
+    {-761, -18, -1409, 0xaa8},
+    {-772, -18, -1342, 0x00},
+    {-761, -18, -1342, 0xa43},
+};
+
+
+StandFileTile tile_297 = {
+    0x19a10, 0x31,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_297[3] = {
+    {-865, -18, -1168, 0xab4},
+    {-1046, -18, -1033, 0xad0},
+    {-772, -18, -1033, 0xac0},
+};
+
+
+StandFileTile tile_298 = {
+    0x19910, 0x31,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_298[3] = {
+    {-992, -18, -1286, 0xa97},
+    {-1046, -18, -1033, 0xab0},
+    {-865, -18, -1168, 0xab8},
+};
+
+
+StandFileTile tile_299 = {
+    0x19810, 0x31,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_299[3] = {
+    {-865, -18, -1168, 0xabc},
+    {-772, -18, -1342, 0xaa8},
+    {-992, -18, -1286, 0xab4},
+};
+
+
+StandFileTile tile_29A = {
+    0x3bb10, 0x31,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_29A[3] = {
+    {-772, -18, -1158, 0x00},
+    {-772, -18, -1342, 0xab8},
+    {-865, -18, -1168, 0xac0},
+};
+
+
+StandFileTile tile_29B = {
+    0x19710, 0x31,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_29B[3] = {
+    {-772, -18, -1033, 0x00},
+    {-772, -18, -1158, 0xabc},
+    {-865, -18, -1168, 0xab0},
+};
+
+
+StandFileTile tile_29C = {
+    0x4e812, 0x31,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_29C[3] = {
+    {-1037, -18, -761, 0xac8},
+    {-772, -18, -774, 0xacc},
+    {-1046, -18, -774, 0xade},
+};
+
+
+StandFileTile tile_29D = {
+    0x4e811, 0x31,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_29D[3] = {
+    {-1037, -18, -761, 0x00},
+    {-772, -18, -761, 0xb00},
+    {-772, -18, -774, 0xac4},
+};
+
+
+StandFileTile tile_29E = {
+    0x4ea10, 0x31,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_29E[3] = {
+    {-1046, -18, -774, 0xac4},
+    {-772, -18, -774, 0xad8},
+    {-870, -18, -933, 0xad4},
+};
+
+
+StandFileTile tile_29F = {
+    0x1ec10, 0x31,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_29F[3] = {
+    {-772, -18, -1033, 0xab0},
+    {-1046, -18, -1033, 0xad4},
+    {-870, -18, -933, 0xad8},
+};
+
+
+StandFileTile tile_2A0 = {
+    0x1eb10, 0x31,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2A0[3] = {
+    {-1046, -18, -1033, 0xaf2},
+    {-1046, -18, -774, 0xacc},
+    {-870, -18, -933, 0xad0},
+};
+
+
+StandFileTile tile_2A1 = {
+    0x1e810, 0x31,
+    0x0,
+    0x8, 0x8, 0x8,
+    5,
+    0x0, 0x3, 0x4,
+};
+StandFilePoint points_2A1[5] = {
+    {-772, -18, -774, 0xb18},
+    {-772, -18, -845, 0xb10},
+    {-772, -18, -939, 0x00},
+    {-772, -18, -1033, 0xad0},
+    {-870, -18, -933, 0xacc},
+};
+
+
+StandFileTile tile_2A2 = {
+    0x1e610, 0x31,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2A2[3] = {
+    {-1046, -18, -761, 0x00},
+    {-1037, -18, -761, 0xac4},
+    {-1046, -18, -774, 0x00},
+};
+
+
+StandFileTile tile_2A3 = {
+    0x3ba10, 0x31,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2A3[3] = {
+    {-1304, -18, -1033, 0x00},
+    {-1304, -18, -761, 0xae6},
+    {-1168, -18, -906, 0xaee},
+};
+
+
+StandFileTile tile_2A4 = {
+    0x3b912, 0x31,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2A4[3] = {
+    {-1304, -18, -761, 0xaea},
+    {-1073, -18, -774, 0xaf6},
+    {-1168, -18, -906, 0xae2},
+};
+
+
+StandFileTile tile_2A5 = {
+    0x3b911, 0x31,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2A5[3] = {
+    {-1304, -18, -761, 0x00},
+    {-1073, -18, -761, 0x00},
+    {-1073, -18, -774, 0xae6},
+};
+
+
+StandFileTile tile_2A6 = {
+    0x19610, 0x31,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2A6[3] = {
+    {-1046, -18, -1033, 0xa97},
+    {-1304, -18, -1033, 0xae2},
+    {-1168, -18, -906, 0xaf2},
+};
+
+
+StandFileTile tile_2A7 = {
+    0x19310, 0x31,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2A7[3] = {
+    {-1046, -18, -774, 0xad4},
+    {-1046, -18, -1033, 0xaee},
+    {-1168, -18, -906, 0xaf6},
+};
+
+
+StandFileTile tile_2A8 = {
+    0x18f10, 0x31,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2A8[3] = {
+    {-1046, -18, -774, 0xaf2},
+    {-1168, -18, -906, 0xae6},
+    {-1073, -18, -774, 0x00},
+};
+
+
+StandFileTile tile_2A9 = {
+    0x50112, 0x30,
+    0x0,
+    0x4, 0x4, 0x4,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_2A9[5] = {
+    {-693, -18, -774, 0xb00},
+    {-772, -18, -761, 0x00},
+    {-761, -18, -761, 0xb08},
+    {-707, -18, -761, 0x00},
+    {-693, -18, -761, 0x00},
+};
+
+
+StandFileTile tile_2AA = {
+    0x50111, 0x30,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2AA[3] = {
+    {-693, -18, -774, 0xb18},
+    {-772, -18, -774, 0xac8},
+    {-772, -18, -761, 0xafa},
+};
+
+
+StandFileTile tile_2AB = {
+    0x50012, 0x30,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2AB[3] = {
+    {-707, -18, -761, 0xb08},
+    {-752, -18, -752, 0x194c},
+    {-707, -18, -752, 0x00},
+};
+
+
+StandFileTile tile_2AC = {
+    0x50011, 0x30,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2AC[3] = {
+    {-707, -18, -761, 0xafa},
+    {-761, -18, -761, 0xb14},
+    {-752, -18, -752, 0xb04},
+};
+
+
+StandFileTile tile_2AD = {
+    0x4ed12, 0x30,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2AD[3] = {
+    {-772, -18, -939, 0xb10},
+    {-693, -18, -774, 0xb3a},
+    {-693, -18, -939, 0x00},
+};
+
+
+StandFileTile tile_2AE = {
+    0x4ed11, 0x30,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2AE[3] = {
+    {-772, -18, -939, 0xad8},
+    {-772, -18, -845, 0xb18},
+    {-693, -18, -774, 0xb0c},
+};
+
+
+StandFileTile tile_2AF = {
+    0x1ef10, 0x30,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2AF[3] = {
+    {-761, -18, -761, 0x00},
+    {-761, -18, -752, 0x194c},
+    {-752, -18, -752, 0xb08},
+};
+
+
+StandFileTile tile_2B0 = {
+    0x4eb10, 0x30,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2B0[3] = {
+    {-772, -18, -774, 0xb00},
+    {-693, -18, -774, 0xb10},
+    {-772, -18, -845, 0xad8},
+};
+
+
+StandFileTile tile_2B1 = {
+    0x4e412, 0x30,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2B1[3] = {
+    {-285, -18, -774, 0xb20},
+    {-199, -18, -761, 0xc22},
+    {-199, -18, -774, 0xb32},
+};
+
+
+StandFileTile tile_2B2 = {
+    0x4e411, 0x30,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2B2[3] = {
+    {-285, -18, -774, 0x00},
+    {-285, -18, -761, 0x00},
+    {-199, -18, -761, 0xb1c},
+};
+
+
+StandFileTile tile_2B3 = {
+    0x17110, 0x30,
+    0x0,
+    0x9, 0x9, 0x9,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_2B3[4] = {
+    {-285, -18, -870, 0xb29},
+    {-199, -18, -939, 0x884},
+    {-262, -18, -939, 0x00},
+    {-285, -18, -939, 0xb36},
+};
+
+
+StandFileTile tile_2B4 = {
+    0x4d310, 0x30,
+    0x0,
+    0x6, 0x6, 0x6,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2B4[4] = {
+    {-199, -18, -939, 0xb24},
+    {-285, -18, -870, 0xb2e},
+    {-199, -18, -816, 0xc22},
+    {-199, -18, -820, 0x00},
+};
+
+
+StandFileTile tile_2B5 = {
+    0x4cf12, 0x30,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2B5[3] = {
+    {-285, -18, -870, 0xb32},
+    {-199, -18, -774, 0xc22},
+    {-199, -18, -816, 0xb29},
+};
+
+
+StandFileTile tile_2B6 = {
+    0x4cf11, 0x30,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2B6[3] = {
+    {-285, -18, -870, 0xb47},
+    {-285, -18, -774, 0xb1c},
+    {-199, -18, -774, 0xb2e},
+};
+
+
+StandFileTile tile_2B7 = {
+    0x45e10, 0x30,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2B7[3] = {
+    {-489, -18, -939, 0xb47},
+    {-285, -18, -870, 0xb24},
+    {-285, -18, -939, 0x00},
+};
+
+
+StandFileTile tile_2B8 = {
+    0x45f10, 0x30,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2B8[3] = {
+    {-693, -18, -939, 0xb0c},
+    {-693, -18, -774, 0xb3e},
+    {-489, -18, -939, 0x00},
+};
+
+
+StandFileTile tile_2B9 = {
+    0x1e110, 0x30,
+    0x0,
+    0x8, 0x8, 0x8,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_2B9[4] = {
+    {-693, -18, -774, 0x00},
+    {-666, -18, -774, 0xb4b},
+    {-312, -18, -774, 0xb43},
+    {-489, -18, -939, 0xb3a},
+};
+
+
+StandFileTile tile_2BA = {
+    0x1e010, 0x30,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2BA[3] = {
+    {-312, -18, -774, 0x00},
+    {-285, -18, -774, 0xb47},
+    {-489, -18, -939, 0xb3e},
+};
+
+
+StandFileTile tile_2BB = {
+    0x1df10, 0x30,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2BB[3] = {
+    {-285, -18, -774, 0xb32},
+    {-285, -18, -870, 0xb36},
+    {-489, -18, -939, 0xb43},
+};
+
+
+StandFileTile tile_2BC = {
+    0x1de12, 0x30,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2BC[3] = {
+    {-657, -18, -761, 0xb4f},
+    {-312, -18, -774, 0xb3e},
+    {-666, -18, -774, 0xb53},
+};
+
+
+StandFileTile tile_2BD = {
+    0x1de11, 0x30,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2BD[3] = {
+    {-657, -18, -761, 0x00},
+    {-380, -18, -761, 0xb57},
+    {-312, -18, -774, 0xb4b},
+};
+
+
+StandFileTile tile_2BE = {
+    0x1dd10, 0x30,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2BE[3] = {
+    {-666, -18, -761, 0x00},
+    {-657, -18, -761, 0xb4b},
+    {-666, -18, -774, 0x00},
+};
+
+
+StandFileTile tile_2BF = {
+    0x1dc10, 0x30,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2BF[3] = {
+    {-380, -18, -761, 0x00},
+    {-312, -18, -761, 0x00},
+    {-312, -18, -774, 0xb4f},
+};
+
+
+StandFileTile tile_2C0 = {
+    0x22a12, 0x2f,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2C0[3] = {
+    {95, -9, -1467, 0xb5f},
+    {95, -18, -1413, 0x00},
+    {95, -9, -1413, 0xb83},
+};
+
+
+StandFileTile tile_2C1 = {
+    0x22a11, 0x2f,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2C1[3] = {
+    {95, -9, -1467, 0x00},
+    {95, -18, -1467, 0xbaf},
+    {95, -18, -1413, 0xb5b},
+};
+
+
+StandFileTile tile_2C2 = {
+    0x20812, 0x2f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2C2[3] = {
+    {95, -9, -1033, 0xb67},
+    {104, -9, -1087, 0x00},
+    {95, -9, -1087, 0xb6b},
+};
+
+
+StandFileTile tile_2C3 = {
+    0x20811, 0x2f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2C3[3] = {
+    {95, -9, -1033, 0x00},
+    {104, -9, -1033, 0x36},
+    {104, -9, -1087, 0xb63},
+};
+
+
+StandFileTile tile_2C4 = {
+    0x20f12, 0x2f,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2C4[3] = {
+    {95, -9, -1087, 0xb6f},
+    {95, -18, -1033, 0x00},
+    {95, -9, -1033, 0xb63},
+};
+
+
+StandFileTile tile_2C5 = {
+    0x20f11, 0x2f,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2C5[3] = {
+    {95, -9, -1087, 0x00},
+    {95, -18, -1087, 0xbd5},
+    {95, -18, -1033, 0xb6b},
+};
+
+
+StandFileTile tile_2C6 = {
+    0x21a12, 0x2f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2C6[3] = {
+    {95, -9, -1250, 0xb77},
+    {104, -9, -1304, 0x00},
+    {95, -9, -1304, 0xb7b},
+};
+
+
+StandFileTile tile_2C7 = {
+    0x21a11, 0x2f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2C7[3] = {
+    {95, -9, -1250, 0x00},
+    {104, -9, -1250, 0x3e},
+    {104, -9, -1304, 0xb73},
+};
+
+
+StandFileTile tile_2C8 = {
+    0x22112, 0x2f,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2C8[3] = {
+    {95, -9, -1304, 0xb7f},
+    {95, -18, -1250, 0x00},
+    {95, -9, -1250, 0xb73},
+};
+
+
+StandFileTile tile_2C9 = {
+    0x22111, 0x2f,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2C9[3] = {
+    {95, -9, -1304, 0x00},
+    {95, -18, -1304, 0xc03},
+    {95, -18, -1250, 0xb7b},
+};
+
+
+StandFileTile tile_2CA = {
+    0x22312, 0x2f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2CA[3] = {
+    {95, -9, -1413, 0xb87},
+    {104, -9, -1467, 0x00},
+    {95, -9, -1467, 0xb5b},
+};
+
+
+StandFileTile tile_2CB = {
+    0x22311, 0x2f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2CB[3] = {
+    {95, -9, -1413, 0x00},
+    {104, -9, -1413, 0x46},
+    {104, -9, -1467, 0xb83},
+};
+
+
+StandFileTile tile_2CC = {
+    0x16d12, 0x2f,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2CC[3] = {
+    {-188, -18, -1549, 0xb8f},
+    {68, -18, -1399, 0xbab},
+    {68, -18, -1481, 0xbb5},
+};
+
+
+StandFileTile tile_2CD = {
+    0x16d11, 0x2f,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2CD[3] = {
+    {-188, -18, -1549, 0x00},
+    {-188, -18, -1467, 0xc0d},
+    {68, -18, -1399, 0xb8b},
+};
+
+
+StandFileTile tile_2CE = {
+    0x16c12, 0x2f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2CE[3] = {
+    {-188, -18, -1386, 0xb97},
+    {68, -18, -1236, 0xbff},
+    {68, -18, -1318, 0xc09},
+};
+
+
+StandFileTile tile_2CF = {
+    0x16c11, 0x2f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2CF[3] = {
+    {-188, -18, -1386, 0x00},
+    {-188, -18, -1304, 0xbf3},
+    {68, -18, -1236, 0xb93},
+};
+
+
+StandFileTile tile_2D0 = {
+    0x16512, 0x2f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2D0[3] = {
+    {-188, -18, -1168, 0xb9f},
+    {68, -18, -1019, 0xbdb},
+    {68, -18, -1101, 0xbeb},
+};
+
+
+StandFileTile tile_2D1 = {
+    0x16511, 0x2f,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2D1[3] = {
+    {-188, -18, -1168, 0x00},
+    {-188, -18, -1087, 0xbcd},
+    {68, -18, -1019, 0xb9b},
+};
+
+
+StandFileTile tile_2D2 = {
+    0x16e12, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2D2[3] = {
+    {-188, -18, -1005, 0xba7},
+    {68, -18, -856, 0xc15},
+    {68, -18, -937, 0xbc9},
+};
+
+
+StandFileTile tile_2D3 = {
+    0x16e11, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2D3[3] = {
+    {-188, -18, -1005, 0x00},
+    {-188, -18, -924, 0xc3f},
+    {68, -18, -856, 0xba3},
+};
+
+
+StandFileTile tile_2D4 = {
+    0x16b12, 0x2f,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2D4[3] = {
+    {68, -18, -1399, 0xbaf},
+    {95, -18, -1562, 0xbc5},
+    {68, -18, -1481, 0xb8b},
+};
+
+
+StandFileTile tile_2D5 = {
+    0x16b11, 0x2f,
+    0x0,
+    0x4, 0x4, 0x4,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_2D5[5] = {
+    {68, -18, -1399, 0xc11},
+    {95, -18, -1359, 0x00},
+    {95, -18, -1413, 0xb5f},
+    {95, -18, -1467, 0x00},
+    {95, -18, -1562, 0xbab},
+};
+
+
+StandFileTile tile_2D6 = {
+    0x16912, 0x2f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2D6[3] = {
+    {5, -18, -1576, 0xbb9},
+    {-188, -18, -1549, 0xb8b},
+    {68, -18, -1481, 0xbbd},
+};
+
+
+StandFileTile tile_2D7 = {
+    0x16911, 0x2f,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2D7[3] = {
+    {5, -18, -1576, 0x00},
+    {-188, -18, -1576, 0x00},
+    {-188, -18, -1549, 0xbb5},
+};
+
+
+StandFileTile tile_2D8 = {
+    0x16810, 0x2f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2D8[3] = {
+    {5, -18, -1576, 0xbb5},
+    {68, -18, -1481, 0xbc5},
+    {68, -18, -1562, 0xbc1},
+};
+
+
+StandFileTile tile_2D9 = {
+    0x16710, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2D9[3] = {
+    {68, -18, -1576, 0x00},
+    {5, -18, -1576, 0xbbd},
+    {68, -18, -1562, 0x00},
+};
+
+
+StandFileTile tile_2DA = {
+    0x16610, 0x2f,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2DA[3] = {
+    {95, -18, -1562, 0x00},
+    {68, -18, -1562, 0xbbd},
+    {68, -18, -1481, 0xbab},
+};
+
+
+StandFileTile tile_2DB = {
+    0x18b12, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2DB[3] = {
+    {68, -18, -937, 0xbcd},
+    {-188, -18, -1087, 0x00},
+    {-188, -18, -1005, 0xba3},
+};
+
+
+StandFileTile tile_2DC = {
+    0x18b11, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2DC[3] = {
+    {68, -18, -937, 0xbd1},
+    {68, -18, -1019, 0xb9f},
+    {-188, -18, -1087, 0xbc9},
+};
+
+
+StandFileTile tile_2DD = {
+    0x18a10, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2DD[3] = {
+    {95, -18, -978, 0xbd5},
+    {68, -18, -1019, 0xbcd},
+    {68, -18, -937, 0xc19},
+};
+
+
+StandFileTile tile_2DE = {
+    0x18910, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    5,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2DE[5] = {
+    {95, -18, -1128, 0xbdb},
+    {68, -18, -1019, 0xbd1},
+    {95, -18, -978, 0x00},
+    {95, -18, -1033, 0xb6f},
+    {95, -18, -1087, 0x00},
+};
+
+
+StandFileTile tile_2DF = {
+    0x18810, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2DF[3] = {
+    {95, -18, -1128, 0xbdf},
+    {68, -18, -1101, 0xb9b},
+    {68, -18, -1019, 0xbd5},
+};
+
+
+StandFileTile tile_2E0 = {
+    0x18510, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2E0[3] = {
+    {82, -18, -1155, 0xbeb},
+    {68, -18, -1101, 0xbdb},
+    {95, -18, -1128, 0xbe3},
+};
+
+
+StandFileTile tile_2E1 = {
+    0x18410, 0x2f,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2E1[3] = {
+    {82, -18, -1155, 0xbdf},
+    {95, -18, -1128, 0x00},
+    {95, -18, -1155, 0x00},
+};
+
+
+StandFileTile tile_2E2 = {
+    0x18310, 0x2f,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2E2[3] = {
+    {95, -18, -1182, 0x00},
+    {95, -18, -1209, 0xbfb},
+    {82, -18, -1182, 0x00},
+};
+
+
+StandFileTile tile_2E3 = {
+    0x18210, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2E3[3] = {
+    {-188, -18, -1168, 0xb9b},
+    {68, -18, -1101, 0xbdf},
+    {82, -18, -1155, 0xbef},
+};
+
+
+StandFileTile tile_2E4 = {
+    0x18110, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2E4[3] = {
+    {82, -18, -1155, 0x00},
+    {82, -18, -1182, 0xbf7},
+    {-188, -18, -1168, 0xbeb},
+};
+
+
+StandFileTile tile_2E5 = {
+    0x18012, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2E5[3] = {
+    {-188, -18, -1168, 0xbf7},
+    {68, -18, -1236, 0xb97},
+    {-188, -18, -1304, 0x00},
+};
+
+
+StandFileTile tile_2E6 = {
+    0x18011, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2E6[3] = {
+    {-188, -18, -1168, 0xbef},
+    {82, -18, -1182, 0xbfb},
+    {68, -18, -1236, 0xbf3},
+};
+
+
+StandFileTile tile_2E7 = {
+    0x17e10, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2E7[3] = {
+    {82, -18, -1182, 0xbe7},
+    {95, -18, -1209, 0xc03},
+    {68, -18, -1236, 0xbf7},
+};
+
+
+StandFileTile tile_2E8 = {
+    0x17d12, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2E8[3] = {
+    {68, -18, -1236, 0xc03},
+    {95, -18, -1359, 0xc11},
+    {68, -18, -1318, 0xb93},
+};
+
+
+StandFileTile tile_2E9 = {
+    0x17d11, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_2E9[5] = {
+    {68, -18, -1236, 0xbfb},
+    {95, -18, -1209, 0x00},
+    {95, -18, -1250, 0xb7f},
+    {95, -18, -1304, 0x00},
+    {95, -18, -1359, 0xbff},
+};
+
+
+StandFileTile tile_2EA = {
+    0x17c12, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2EA[3] = {
+    {68, -18, -1318, 0xc0d},
+    {-188, -18, -1467, 0x00},
+    {-188, -18, -1386, 0xb93},
+};
+
+
+StandFileTile tile_2EB = {
+    0x17c11, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2EB[3] = {
+    {68, -18, -1318, 0xc11},
+    {68, -18, -1399, 0xb8f},
+    {-188, -18, -1467, 0xc09},
+};
+
+
+StandFileTile tile_2EC = {
+    0x17b10, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2EC[3] = {
+    {68, -18, -1318, 0xbff},
+    {95, -18, -1359, 0xbaf},
+    {68, -18, -1399, 0xc0d},
+};
+
+
+StandFileTile tile_2ED = {
+    0x16f12, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2ED[3] = {
+    {95, -18, -806, 0xc19},
+    {68, -18, -937, 0xba3},
+    {68, -18, -856, 0xc3b},
+};
+
+
+StandFileTile tile_2EE = {
+    0x16f11, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2EE[3] = {
+    {95, -18, -806, 0x00},
+    {95, -18, -978, 0xbd1},
+    {68, -18, -937, 0xc15},
+};
+
+
+StandFileTile tile_2EF = {
+    0x50312, 0x2f,
+    0x0,
+    0x5, 0x5, 0x5,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_2EF[4] = {
+    {-199, -18, -820, 0xc22},
+    {-188, -18, -761, 0xc28},
+    {-188, -18, -774, 0xc32},
+    {-188, -18, -820, 0x00},
+};
+
+
+StandFileTile tile_2F0 = {
+    0x50311, 0x2f,
+    0x0,
+    0x5, 0x5, 0x5,
+    5,
+    0x0, 0x3, 0x4,
+};
+StandFilePoint points_2F0[5] = {
+    {-199, -18, -820, 0xb29},
+    {-199, -18, -816, 0xb2e},
+    {-199, -18, -774, 0xb1c},
+    {-199, -18, -761, 0x00},
+    {-188, -18, -761, 0xc1d},
+};
+
+
+StandFileTile tile_2F1 = {
+    0x4e512, 0x2f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2F1[3] = {
+    {-188, -18, -761, 0xc2c},
+    {68, -18, -774, 0xc37},
+    {-188, -18, -774, 0xc1d},
+};
+
+
+StandFileTile tile_2F2 = {
+    0x4e511, 0x2f,
+    0x0,
+    0x5, 0x5, 0x5,
+    5,
+    0x0, 0x3, 0x4,
+};
+StandFilePoint points_2F2[5] = {
+    {-188, -18, -761, 0x00},
+    {-154, -18, -761, 0xc43},
+    {-100, -18, -761, 0x00},
+    {54, -18, -761, 0xc53},
+    {68, -18, -774, 0xc28},
+};
+
+
+StandFileTile tile_2F3 = {
+    0x4d012, 0x2f,
+    0x0,
+    0x4, 0x4, 0x4,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2F3[4] = {
+    {-188, -18, -774, 0xc37},
+    {95, -18, -806, 0xc3b},
+    {-188, -18, -855, 0x00},
+    {-188, -18, -820, 0xc1d},
+};
+
+
+StandFileTile tile_2F4 = {
+    0x4d011, 0x2f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2F4[3] = {
+    {-188, -18, -774, 0xc28},
+    {68, -18, -774, 0xc57},
+    {95, -18, -806, 0xc32},
+};
+
+
+StandFileTile tile_2F5 = {
+    0x4d412, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2F5[3] = {
+    {68, -18, -856, 0xc3f},
+    {-188, -18, -855, 0xc32},
+    {95, -18, -806, 0xc15},
+};
+
+
+StandFileTile tile_2F6 = {
+    0x4d411, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2F6[3] = {
+    {68, -18, -856, 0xba7},
+    {-188, -18, -924, 0x00},
+    {-188, -18, -855, 0xc3b},
+};
+
+
+StandFileTile tile_2F7 = {
+    0x17712, 0x2f,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2F7[3] = {
+    {-154, -18, -761, 0xc47},
+    {-109, -18, -752, 0xc4f},
+    {-100, -18, -761, 0xc2c},
+};
+
+
+StandFileTile tile_2F8 = {
+    0x17711, 0x2f,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2F8[3] = {
+    {-154, -18, -761, 0xc4b},
+    {-145, -18, -752, 0x1a89},
+    {-109, -18, -752, 0xc43},
+};
+
+
+StandFileTile tile_2F9 = {
+    0x17610, 0x2f,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2F9[3] = {
+    {-154, -18, -752, 0x1a89},
+    {-145, -18, -752, 0xc47},
+    {-154, -18, -761, 0x00},
+};
+
+
+StandFileTile tile_2FA = {
+    0x17510, 0x2f,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2FA[3] = {
+    {-109, -18, -752, 0x1a89},
+    {-100, -18, -752, 0x00},
+    {-100, -18, -761, 0xc43},
+};
+
+
+StandFileTile tile_2FB = {
+    0x17410, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2FB[3] = {
+    {54, -18, -761, 0x00},
+    {68, -18, -761, 0x00},
+    {68, -18, -774, 0xc2c},
+};
+
+
+StandFileTile tile_2FC = {
+    0x17010, 0x2f,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2FC[3] = {
+    {95, -18, -774, 0x00},
+    {95, -18, -806, 0xc37},
+    {68, -18, -774, 0x00},
+};
+
+
+StandFileTile tile_2FD = {
+    0x512, 0x2e,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2FD[3] = {
+    {-1712, -18, -743, 0xc5f},
+    {-1549, -18, -761, 0xd17},
+    {-1712, -18, -761, 0x00},
+};
+
+
+StandFileTile tile_2FE = {
+    0x511, 0x2e,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2FE[3] = {
+    {-1712, -18, -743, 0xedc},
+    {-1549, -18, -743, 0x00},
+    {-1549, -18, -761, 0xc5b},
+};
+
+
+StandFileTile tile_2FF = {
+    0xb612, 0x2e,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_2FF[3] = {
+    {-1630, -18, -947, 0xc67},
+    {-1499, -18, -1273, 0xca7},
+    {-1630, -18, -1273, 0xccf},
+};
+
+
+StandFileTile tile_300 = {
+    0xb611, 0x2e,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_300[3] = {
+    {-1630, -18, -947, 0xcfb},
+    {-1499, -18, -947, 0xcf3},
+    {-1499, -18, -1273, 0xc63},
+};
+
+
+StandFileTile tile_301 = {
+    0x1b610, 0x2e,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_301[3] = {
+    {-1318, -18, -1422, 0xf33},
+    {-1427, -18, -1562, 0x00},
+    {-1454, -18, -1562, 0xc6f},
+};
+
+
+StandFileTile tile_302 = {
+    0x1b510, 0x2e,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_302[3] = {
+    {-1454, -18, -1562, 0xc93},
+    {-1454, -18, -1454, 0xc9b},
+    {-1318, -18, -1422, 0xc6b},
+};
+
+
+StandFileTile tile_303 = {
+    0x1b410, 0x2e,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_303[3] = {
+    {-1454, -18, -1562, 0x00},
+    {-1454, -18, -1576, 0x00},
+    {-1481, -18, -1576, 0xc8f},
+};
+
+
+StandFileTile tile_304 = {
+    0x1b310, 0x2e,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_304[3] = {
+    {-1481, -18, -1576, 0x00},
+    {-1807, -18, -1576, 0xc7b},
+    {-1617, -18, -1476, 0xc8f},
+};
+
+
+StandFileTile tile_305 = {
+    0x1b210, 0x2e,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_305[3] = {
+    {-1807, -18, -1576, 0x00},
+    {-1807, -18, -1562, 0xc7f},
+    {-1617, -18, -1476, 0xc77},
+};
+
+
+StandFileTile tile_306 = {
+    0x1b110, 0x2e,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_306[3] = {
+    {-1617, -18, -1476, 0xc7b},
+    {-1807, -18, -1562, 0x00},
+    {-1834, -18, -1562, 0xc83},
+};
+
+
+StandFileTile tile_307 = {
+    0x1b010, 0x2e,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_307[3] = {
+    {-1834, -18, -1562, 0x00},
+    {-1834, -18, -1363, 0xc87},
+    {-1617, -18, -1476, 0xc7f},
+};
+
+
+StandFileTile tile_308 = {
+    0x1af10, 0x2e,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_308[3] = {
+    {-1617, -18, -1476, 0xc83},
+    {-1834, -18, -1363, 0xca3},
+    {-1617, -18, -1363, 0xc8b},
+};
+
+
+StandFileTile tile_309 = {
+    0x1ae10, 0x2e,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_309[3] = {
+    {-1617, -18, -1363, 0xcab},
+    {-1522, -18, -1363, 0xc97},
+    {-1617, -18, -1476, 0xc87},
+};
+
+
+StandFileTile tile_30A = {
+    0x1ad10, 0x2e,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_30A[3] = {
+    {-1481, -18, -1576, 0xc77},
+    {-1617, -18, -1476, 0xc93},
+    {-1454, -18, -1562, 0xc73},
+};
+
+
+StandFileTile tile_30B = {
+    0x1ac10, 0x2e,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_30B[3] = {
+    {-1454, -18, -1562, 0xc8f},
+    {-1617, -18, -1476, 0xc97},
+    {-1454, -18, -1454, 0xc6f},
+};
+
+
+StandFileTile tile_30C = {
+    0x1ab10, 0x2e,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_30C[3] = {
+    {-1454, -18, -1454, 0xc93},
+    {-1617, -18, -1476, 0xc8b},
+    {-1522, -18, -1363, 0xc9b},
+};
+
+
+StandFileTile tile_30D = {
+    0x1aa10, 0x2e,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_30D[3] = {
+    {-1318, -18, -1422, 0xc6f},
+    {-1454, -18, -1454, 0xc97},
+    {-1522, -18, -1363, 0xcb3},
+};
+
+
+StandFileTile tile_30E = {
+    0x3cd10, 0x2e,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_30E[3] = {
+    {-1834, -18, -1363, 0x00},
+    {-1834, -18, -1182, 0xcc7},
+    {-1630, -18, -1273, 0xca3},
+};
+
+
+StandFileTile tile_30F = {
+    0x1a910, 0x2e,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_30F[3] = {
+    {-1834, -18, -1363, 0xc9f},
+    {-1630, -18, -1273, 0xca7},
+    {-1617, -18, -1363, 0xc87},
+};
+
+
+StandFileTile tile_310 = {
+    0x1a812, 0x2e,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_310[3] = {
+    {-1499, -18, -1273, 0xcab},
+    {-1617, -18, -1363, 0xca3},
+    {-1630, -18, -1273, 0xc63},
+};
+
+
+StandFileTile tile_311 = {
+    0x1a811, 0x2e,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_311[3] = {
+    {-1499, -18, -1273, 0xcaf},
+    {-1522, -18, -1363, 0xc8b},
+    {-1617, -18, -1363, 0xca7},
+};
+
+
+StandFileTile tile_312 = {
+    0x1a712, 0x2e,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_312[3] = {
+    {-1318, -18, -1286, 0xcb3},
+    {-1522, -18, -1363, 0xcab},
+    {-1499, -18, -1273, 0xcb7},
+};
+
+
+StandFileTile tile_313 = {
+    0x1a711, 0x2e,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_313[3] = {
+    {-1318, -18, -1286, 0x00},
+    {-1318, -18, -1422, 0xc9b},
+    {-1522, -18, -1363, 0xcaf},
+};
+
+
+StandFileTile tile_314 = {
+    0x1a610, 0x2e,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_314[3] = {
+    {-1318, -18, -1164, 0x00},
+    {-1318, -18, -1286, 0xcaf},
+    {-1499, -18, -1273, 0xcf3},
+};
+
+
+StandFileTile tile_315 = {
+    0x20210, 0x2e,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_315[3] = {
+    {-1807, -18, -761, 0x00},
+    {-1712, -18, -761, 0xd03},
+    {-1766, -18, -933, 0xcbf},
+};
+
+
+StandFileTile tile_316 = {
+    0x20110, 0x2e,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_316[3] = {
+    {-1834, -18, -774, 0x00},
+    {-1807, -18, -761, 0xcbb},
+    {-1766, -18, -933, 0xcc3},
+};
+
+
+StandFileTile tile_317 = {
+    0x20010, 0x2e,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_317[3] = {
+    {-1834, -18, -978, 0x00},
+    {-1834, -18, -774, 0xcbf},
+    {-1766, -18, -933, 0xcdb},
+};
+
+
+StandFileTile tile_318 = {
+    0x1ff10, 0x2e,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_318[3] = {
+    {-1630, -18, -1273, 0xc9f},
+    {-1834, -18, -1182, 0x00},
+    {-1821, -18, -1182, 0xccb},
+};
+
+
+StandFileTile tile_319 = {
+    0x1fe10, 0x2e,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_319[3] = {
+    {-1821, -18, -1182, 0x00},
+    {-1821, -18, -1155, 0xccf},
+    {-1630, -18, -1273, 0xcc7},
+};
+
+
+StandFileTile tile_31A = {
+    0x1fd10, 0x2e,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_31A[3] = {
+    {-1630, -18, -1273, 0xccb},
+    {-1821, -18, -1155, 0xcd3},
+    {-1630, -18, -947, 0xc63},
+};
+
+
+StandFileTile tile_31B = {
+    0x1fc10, 0x2e,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_31B[3] = {
+    {-1821, -18, -1155, 0x00},
+    {-1834, -18, -1155, 0xcd7},
+    {-1630, -18, -947, 0xccf},
+};
+
+
+StandFileTile tile_31C = {
+    0x1fb12, 0x2e,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_31C[3] = {
+    {-1834, -18, -1155, 0xcdb},
+    {-1766, -18, -933, 0xcdf},
+    {-1630, -18, -947, 0xcd3},
+};
+
+
+StandFileTile tile_31D = {
+    0x1fb11, 0x2e,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_31D[3] = {
+    {-1834, -18, -1155, 0x00},
+    {-1834, -18, -978, 0xcc3},
+    {-1766, -18, -933, 0xcd7},
+};
+
+
+StandFileTile tile_31E = {
+    0x1fa10, 0x2e,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_31E[3] = {
+    {-1630, -18, -947, 0xcd7},
+    {-1766, -18, -933, 0xd03},
+    {-1617, -18, -933, 0xcfb},
+};
+
+
+StandFileTile tile_31F = {
+    0x1f912, 0x2e,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_31F[3] = {
+    {-1318, -18, -761, 0xce7},
+    {-1499, -18, -947, 0xcff},
+    {-1499, -18, -933, 0xcef},
+};
+
+
+StandFileTile tile_320 = {
+    0x1f911, 0x2e,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_320[3] = {
+    {-1318, -18, -761, 0x00},
+    {-1318, -18, -1001, 0xcf7},
+    {-1499, -18, -947, 0xce3},
+};
+
+
+StandFileTile tile_321 = {
+    0x1f812, 0x2e,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_321[3] = {
+    {-1390, -18, -761, 0xcef},
+    {-1499, -18, -933, 0xd0b},
+    {-1427, -18, -774, 0xd07},
+};
+
+
+StandFileTile tile_322 = {
+    0x1f811, 0x2e,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_322[3] = {
+    {-1390, -18, -761, 0x00},
+    {-1318, -18, -761, 0xce3},
+    {-1499, -18, -933, 0xceb},
+};
+
+
+StandFileTile tile_323 = {
+    0x1f710, 0x2e,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_323[3] = {
+    {-1318, -18, -1164, 0xcb7},
+    {-1499, -18, -1273, 0xc67},
+    {-1499, -18, -947, 0xcf7},
+};
+
+
+StandFileTile tile_324 = {
+    0x1f610, 0x2e,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_324[3] = {
+    {-1499, -18, -947, 0xce7},
+    {-1318, -18, -1001, 0x00},
+    {-1318, -18, -1164, 0xcf3},
+};
+
+
+StandFileTile tile_325 = {
+    0x1f512, 0x2e,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_325[3] = {
+    {-1617, -18, -933, 0xcff},
+    {-1499, -18, -947, 0xc67},
+    {-1630, -18, -947, 0xcdf},
+};
+
+
+StandFileTile tile_326 = {
+    0x1f511, 0x2e,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_326[3] = {
+    {-1617, -18, -933, 0xd1b},
+    {-1499, -18, -933, 0xce3},
+    {-1499, -18, -947, 0xcfb},
+};
+
+
+StandFileTile tile_327 = {
+    0x1f410, 0x2e,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_327[3] = {
+    {-1617, -18, -933, 0xcdf},
+    {-1766, -18, -933, 0xcbb},
+    {-1712, -18, -761, 0xd17},
+};
+
+
+StandFileTile tile_328 = {
+    0x1f310, 0x2e,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_328[3] = {
+    {-1427, -18, -761, 0x00},
+    {-1390, -18, -761, 0xceb},
+    {-1427, -18, -774, 0x00},
+};
+
+
+StandFileTile tile_329 = {
+    0x1f210, 0x2e,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_329[3] = {
+    {-1499, -18, -933, 0xd0f},
+    {-1454, -18, -774, 0x00},
+    {-1427, -18, -774, 0xceb},
+};
+
+
+StandFileTile tile_32A = {
+    0x1f112, 0x2e,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_32A[3] = {
+    {-1549, -18, -761, 0xd13},
+    {-1454, -18, -774, 0xd0b},
+    {-1499, -18, -933, 0xd1b},
+};
+
+
+StandFileTile tile_32B = {
+    0x1f111, 0x2e,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_32B[3] = {
+    {-1549, -18, -761, 0x00},
+    {-1454, -18, -761, 0x00},
+    {-1454, -18, -774, 0xd0f},
+};
+
+
+StandFileTile tile_32C = {
+    0x1f012, 0x2e,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_32C[3] = {
+    {-1549, -18, -761, 0xd1b},
+    {-1617, -18, -933, 0xd03},
+    {-1712, -18, -761, 0xc5b},
+};
+
+
+StandFileTile tile_32D = {
+    0x1f011, 0x2e,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_32D[3] = {
+    {-1549, -18, -761, 0xd0f},
+    {-1499, -18, -933, 0xcff},
+    {-1617, -18, -933, 0xd17},
+};
+
+
+StandFileTile tile_32E = {
+    0xb712, 0x2d,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_32E[3] = {
+    {-1481, -18, -2197, 0xd23},
+    {-1173, -18, -2310, 0xda0},
+    {-1481, -18, -2310, 0xdb4},
+};
+
+
+StandFileTile tile_32F = {
+    0xb711, 0x2d,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_32F[4] = {
+    {-1481, -18, -2197, 0xd5c},
+    {-1304, -18, -2197, 0xd50},
+    {-1173, -18, -2197, 0xd30},
+    {-1173, -18, -2310, 0xd1f},
+};
+
+
+StandFileTile tile_330 = {
+    0x1c610, 0x2d,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_330[3] = {
+    {-1196, -18, -1970, 0x00},
+    {-1060, -18, -1970, 0x00},
+    {-1060, -18, -2165, 0xd2c},
+};
+
+
+StandFileTile tile_331 = {
+    0x1c510, 0x2d,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_331[3] = {
+    {-1060, -18, -2165, 0xd3c},
+    {-1128, -18, -2165, 0xd64},
+    {-1196, -18, -1970, 0xd28},
+};
+
+
+StandFileTile tile_332 = {
+    0x1c412, 0x2d,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_332[3] = {
+    {-1060, -18, -2323, 0xd34},
+    {-1173, -18, -2310, 0xd23},
+    {-1173, -18, -2197, 0xd38},
+};
+
+
+StandFileTile tile_333 = {
+    0x1c411, 0x2d,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_333[3] = {
+    {-1060, -18, -2323, 0x00},
+    {-1073, -18, -2323, 0xda8},
+    {-1173, -18, -2310, 0xd30},
+};
+
+
+StandFileTile tile_334 = {
+    0x1c312, 0x2d,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_334[3] = {
+    {-1128, -18, -2165, 0xd3c},
+    {-1060, -18, -2323, 0xd30},
+    {-1173, -18, -2197, 0xd54},
+};
+
+
+StandFileTile tile_335 = {
+    0x1c311, 0x2d,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_335[3] = {
+    {-1128, -18, -2165, 0xd2c},
+    {-1060, -18, -2165, 0x00},
+    {-1060, -18, -2323, 0xd38},
+};
+
+
+StandFileTile tile_336 = {
+    0x1c212, 0x2d,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_336[3] = {
+    {-1630, -18, -2165, 0xd44},
+    {-1490, -18, -1957, 0xd70},
+    {-1454, -18, -1970, 0xd48},
+};
+
+
+StandFileTile tile_337 = {
+    0x1c211, 0x2d,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_337[3] = {
+    {-1630, -18, -2165, 0x00},
+    {-1630, -18, -1957, 0x00},
+    {-1490, -18, -1957, 0xd40},
+};
+
+
+StandFileTile tile_338 = {
+    0x39b10, 0x2d,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_338[3] = {
+    {-1630, -18, -2165, 0xd40},
+    {-1454, -18, -1970, 0x00},
+    {-1427, -18, -1970, 0xd4c},
+};
+
+
+StandFileTile tile_339 = {
+    0x1c110, 0x2d,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_339[3] = {
+    {-1508, -18, -2165, 0xdc0},
+    {-1630, -18, -2165, 0xd48},
+    {-1427, -18, -1970, 0xd68},
+};
+
+
+StandFileTile tile_33A = {
+    0x1c012, 0x2d,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_33A[3] = {
+    {-1304, -18, -2165, 0xd54},
+    {-1173, -18, -2197, 0xd23},
+    {-1304, -18, -2197, 0xd5c},
+};
+
+
+StandFileTile tile_33B = {
+    0x1c011, 0x2d,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_33B[3] = {
+    {-1304, -18, -2165, 0xd60},
+    {-1128, -18, -2165, 0xd38},
+    {-1173, -18, -2197, 0xd50},
+};
+
+
+StandFileTile tile_33C = {
+    0x1bf12, 0x2d,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_33C[3] = {
+    {-1304, -18, -2165, 0xd5c},
+    {-1481, -18, -2197, 0xdbc},
+    {-1508, -18, -2165, 0xd6c},
+};
+
+
+StandFileTile tile_33D = {
+    0x1bf11, 0x2d,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_33D[3] = {
+    {-1304, -18, -2165, 0xd50},
+    {-1304, -18, -2197, 0xd23},
+    {-1481, -18, -2197, 0xd58},
+};
+
+
+StandFileTile tile_33E = {
+    0x1be12, 0x2d,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_33E[3] = {
+    {-1304, -18, -1970, 0xd64},
+    {-1128, -18, -2165, 0xd54},
+    {-1304, -18, -2165, 0xd6c},
+};
+
+
+StandFileTile tile_33F = {
+    0x1be11, 0x2d,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_33F[3] = {
+    {-1304, -18, -1970, 0xef6},
+    {-1196, -18, -1970, 0xd2c},
+    {-1128, -18, -2165, 0xd60},
+};
+
+
+StandFileTile tile_340 = {
+    0x1bd12, 0x2d,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_340[3] = {
+    {-1304, -18, -1970, 0xd6c},
+    {-1508, -18, -2165, 0xd4c},
+    {-1427, -18, -1970, 0xf27},
+};
+
+
+StandFileTile tile_341 = {
+    0x1bd11, 0x2d,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_341[3] = {
+    {-1304, -18, -1970, 0xd60},
+    {-1304, -18, -2165, 0xd58},
+    {-1508, -18, -2165, 0xd68},
+};
+
+
+StandFileTile tile_342 = {
+    0x1bc10, 0x2d,
+    0x0,
+    0x2, 0x2, 0x2,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_342[3] = {
+    {-1454, -18, -1970, 0xd40},
+    {-1490, -18, -1957, 0x00},
+    {-1454, -18, -1957, 0x00},
+};
+
+
+StandFileTile tile_343 = {
+    0x1d310, 0x2d,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_343[3] = {
+    {-1060, -18, -2527, 0x00},
+    {-1630, -18, -2527, 0xd78},
+    {-1327, -18, -2423, 0xd7c},
+};
+
+
+StandFileTile tile_344 = {
+    0x1d210, 0x2d,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_344[3] = {
+    {-1630, -18, -2527, 0x00},
+    {-1630, -18, -2414, 0xd80},
+    {-1327, -18, -2423, 0xd74},
+};
+
+
+StandFileTile tile_345 = {
+    0x1d110, 0x2d,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_345[3] = {
+    {-1327, -18, -2423, 0xd8c},
+    {-1060, -18, -2414, 0x00},
+    {-1060, -18, -2527, 0xd74},
+};
+
+
+StandFileTile tile_346 = {
+    0x1d012, 0x2d,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_346[3] = {
+    {-1630, -18, -2414, 0xd84},
+    {-1467, -18, -2319, 0xd90},
+    {-1327, -18, -2423, 0xd78},
+};
+
+
+StandFileTile tile_347 = {
+    0x1d011, 0x2d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_347[3] = {
+    {-1630, -18, -2414, 0xdb0},
+    {-1617, -18, -2351, 0xd94},
+    {-1467, -18, -2319, 0xd80},
+};
+
+
+StandFileTile tile_348 = {
+    0x1cf12, 0x2d,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_348[3] = {
+    {-1073, -18, -2351, 0xd8c},
+    {-1327, -18, -2423, 0xd90},
+    {-1191, -18, -2319, 0xda4},
+};
+
+
+StandFileTile tile_349 = {
+    0x1cf11, 0x2d,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_349[3] = {
+    {-1073, -18, -2351, 0xdac},
+    {-1060, -18, -2414, 0xd7c},
+    {-1327, -18, -2423, 0xd88},
+};
+
+
+StandFileTile tile_34A = {
+    0x1ce10, 0x2d,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_34A[3] = {
+    {-1191, -18, -2319, 0xd88},
+    {-1327, -18, -2423, 0xd80},
+    {-1467, -18, -2319, 0xd9c},
+};
+
+
+StandFileTile tile_34B = {
+    0x1cd12, 0x2d,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_34B[3] = {
+    {-1617, -18, -2351, 0xd98},
+    {-1481, -18, -2310, 0xda0},
+    {-1467, -18, -2319, 0xd84},
+};
+
+
+StandFileTile tile_34C = {
+    0x1cd11, 0x2d,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_34C[3] = {
+    {-1617, -18, -2351, 0x00},
+    {-1617, -18, -2323, 0xdb8},
+    {-1481, -18, -2310, 0xd94},
+};
+
+
+StandFileTile tile_34D = {
+    0x1cc12, 0x2d,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_34D[3] = {
+    {-1467, -18, -2319, 0xda0},
+    {-1173, -18, -2310, 0xda8},
+    {-1191, -18, -2319, 0xd90},
+};
+
+
+StandFileTile tile_34E = {
+    0x1cc11, 0x2d,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_34E[3] = {
+    {-1467, -18, -2319, 0xd94},
+    {-1481, -18, -2310, 0xd1f},
+    {-1173, -18, -2310, 0xd9c},
+};
+
+
+StandFileTile tile_34F = {
+    0x1cb12, 0x2d,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_34F[3] = {
+    {-1191, -18, -2319, 0xda8},
+    {-1073, -18, -2323, 0x00},
+    {-1073, -18, -2351, 0xd88},
+};
+
+
+StandFileTile tile_350 = {
+    0x1cb11, 0x2d,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_350[3] = {
+    {-1191, -18, -2319, 0xd9c},
+    {-1173, -18, -2310, 0xd34},
+    {-1073, -18, -2323, 0xda4},
+};
+
+
+StandFileTile tile_351 = {
+    0x1ca10, 0x2d,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_351[3] = {
+    {-1060, -18, -2351, 0x00},
+    {-1060, -18, -2414, 0xd8c},
+    {-1073, -18, -2351, 0x00},
+};
+
+
+StandFileTile tile_352 = {
+    0x1c910, 0x2d,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_352[3] = {
+    {-1630, -18, -2414, 0x00},
+    {-1630, -18, -2351, 0x00},
+    {-1617, -18, -2351, 0xd84},
+};
+
+
+StandFileTile tile_353 = {
+    0x1c812, 0x2d,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_353[3] = {
+    {-1481, -18, -2310, 0xdb8},
+    {-1630, -18, -2323, 0xdbc},
+    {-1481, -18, -2197, 0xd1f},
+};
+
+
+StandFileTile tile_354 = {
+    0x1c811, 0x2d,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_354[3] = {
+    {-1481, -18, -2310, 0xd98},
+    {-1617, -18, -2323, 0x00},
+    {-1630, -18, -2323, 0xdb4},
+};
+
+
+StandFileTile tile_355 = {
+    0x1c712, 0x2d,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_355[3] = {
+    {-1630, -18, -2323, 0xdc0},
+    {-1508, -18, -2165, 0xd58},
+    {-1481, -18, -2197, 0xdb4},
+};
+
+
+StandFileTile tile_356 = {
+    0x1c711, 0x2d,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_356[3] = {
+    {-1630, -18, -2323, 0x00},
+    {-1630, -18, -2165, 0xd4c},
+    {-1508, -18, -2165, 0xdbc},
+};
+
+
+StandFileTile tile_357 = {
+    0x3312, 0x2c,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_357[3] = {
+    {-1513, 63, -562, 0xdc8},
+    {-1612, 54, -562, 0xef0},
+    {-1513, 54, -562, 0x00},
+};
+
+
+StandFileTile tile_358 = {
+    0x3311, 0x2c,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_358[3] = {
+    {-1513, 63, -562, 0xdd0},
+    {-1612, 63, -562, 0x00},
+    {-1612, 54, -562, 0xdc4},
+};
+
+
+StandFileTile tile_359 = {
+    0x3412, 0x2c,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_359[3] = {
+    {-1612, 63, -562, 0xdd0},
+    {-1513, 63, -575, 0xe04},
+    {-1612, 63, -575, 0x00},
+};
+
+
+StandFileTile tile_35A = {
+    0x3411, 0x2c,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_35A[3] = {
+    {-1612, 63, -562, 0xdc8},
+    {-1513, 63, -562, 0x00},
+    {-1513, 63, -575, 0xdcc},
+};
+
+
+StandFileTile tile_35B = {
+    0x3512, 0x2c,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_35B[3] = {
+    {-1513, 109, -630, 0xdd8},
+    {-1612, 100, -630, 0xe2c},
+    {-1513, 100, -630, 0x00},
+};
+
+
+StandFileTile tile_35C = {
+    0x3511, 0x2c,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_35C[3] = {
+    {-1513, 109, -630, 0xde0},
+    {-1612, 109, -630, 0x00},
+    {-1612, 100, -630, 0xdd4},
+};
+
+
+StandFileTile tile_35D = {
+    0x3612, 0x2c,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_35D[3] = {
+    {-1612, 109, -630, 0xde0},
+    {-1513, 109, -643, 0xdf4},
+    {-1612, 109, -643, 0x00},
+};
+
+
+StandFileTile tile_35E = {
+    0x3611, 0x2c,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_35E[3] = {
+    {-1612, 109, -630, 0xdd8},
+    {-1513, 109, -630, 0x00},
+    {-1513, 109, -643, 0xddc},
+};
+
+
+StandFileTile tile_35F = {
+    0x3712, 0x2c,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_35F[3] = {
+    {-1513, 82, -589, 0xde8},
+    {-1612, 72, -589, 0xe0c},
+    {-1513, 72, -589, 0x00},
+};
+
+
+StandFileTile tile_360 = {
+    0x3711, 0x2c,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_360[3] = {
+    {-1513, 82, -589, 0xdf0},
+    {-1612, 82, -589, 0x00},
+    {-1612, 72, -589, 0xde4},
+};
+
+
+StandFileTile tile_361 = {
+    0x3812, 0x2c,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_361[3] = {
+    {-1612, 82, -589, 0xdf0},
+    {-1513, 82, -602, 0xe14},
+    {-1612, 82, -602, 0x00},
+};
+
+
+StandFileTile tile_362 = {
+    0x3811, 0x2c,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_362[3] = {
+    {-1612, 82, -589, 0xde8},
+    {-1513, 82, -589, 0x00},
+    {-1513, 82, -602, 0xdec},
+};
+
+
+StandFileTile tile_363 = {
+    0x3912, 0x2c,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_363[3] = {
+    {-1513, 118, -643, 0xdf8},
+    {-1612, 109, -643, 0xddc},
+    {-1513, 109, -643, 0x00},
+};
+
+
+StandFileTile tile_364 = {
+    0x3911, 0x2c,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_364[3] = {
+    {-1513, 118, -643, 0xe00},
+    {-1612, 118, -643, 0x00},
+    {-1612, 109, -643, 0xdf4},
+};
+
+
+StandFileTile tile_365 = {
+    0x3a12, 0x2c,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_365[3] = {
+    {-1612, 118, -643, 0xe00},
+    {-1513, 118, -657, 0xe34},
+    {-1612, 118, -657, 0x00},
+};
+
+
+StandFileTile tile_366 = {
+    0x3a11, 0x2c,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_366[3] = {
+    {-1612, 118, -643, 0xdf8},
+    {-1513, 118, -643, 0x00},
+    {-1513, 118, -657, 0xdfc},
+};
+
+
+StandFileTile tile_367 = {
+    0x3b12, 0x2c,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_367[3] = {
+    {-1513, 72, -575, 0xe08},
+    {-1612, 63, -575, 0xdcc},
+    {-1513, 63, -575, 0x00},
+};
+
+
+StandFileTile tile_368 = {
+    0x3b11, 0x2c,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_368[3] = {
+    {-1513, 72, -575, 0xe10},
+    {-1612, 72, -575, 0x00},
+    {-1612, 63, -575, 0xe04},
+};
+
+
+StandFileTile tile_369 = {
+    0x3c12, 0x2c,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_369[3] = {
+    {-1612, 72, -575, 0xe10},
+    {-1513, 72, -589, 0xde4},
+    {-1612, 72, -589, 0x00},
+};
+
+
+StandFileTile tile_36A = {
+    0x3c11, 0x2c,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_36A[3] = {
+    {-1612, 72, -575, 0xe08},
+    {-1513, 72, -575, 0x00},
+    {-1513, 72, -589, 0xe0c},
+};
+
+
+StandFileTile tile_36B = {
+    0x3d12, 0x2c,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_36B[3] = {
+    {-1513, 91, -602, 0xe18},
+    {-1612, 82, -602, 0xdec},
+    {-1513, 82, -602, 0x00},
+};
+
+
+StandFileTile tile_36C = {
+    0x3d11, 0x2c,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_36C[3] = {
+    {-1513, 91, -602, 0xe20},
+    {-1612, 91, -602, 0x00},
+    {-1612, 82, -602, 0xe14},
+};
+
+
+StandFileTile tile_36D = {
+    0x3e12, 0x2c,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_36D[3] = {
+    {-1612, 91, -602, 0xe20},
+    {-1513, 91, -616, 0xe24},
+    {-1612, 91, -616, 0x00},
+};
+
+
+StandFileTile tile_36E = {
+    0x3e11, 0x2c,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_36E[3] = {
+    {-1612, 91, -602, 0xe18},
+    {-1513, 91, -602, 0x00},
+    {-1513, 91, -616, 0xe1c},
+};
+
+
+StandFileTile tile_36F = {
+    0x3f12, 0x2c,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_36F[3] = {
+    {-1513, 100, -616, 0xe28},
+    {-1612, 91, -616, 0xe1c},
+    {-1513, 91, -616, 0x00},
+};
+
+
+StandFileTile tile_370 = {
+    0x3f11, 0x2c,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_370[3] = {
+    {-1513, 100, -616, 0xe30},
+    {-1612, 100, -616, 0x00},
+    {-1612, 91, -616, 0xe24},
+};
+
+
+StandFileTile tile_371 = {
+    0x4012, 0x2c,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_371[3] = {
+    {-1612, 100, -616, 0xe30},
+    {-1513, 100, -630, 0xdd4},
+    {-1612, 100, -630, 0x00},
+};
+
+
+StandFileTile tile_372 = {
+    0x4011, 0x2c,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_372[3] = {
+    {-1612, 100, -616, 0xe28},
+    {-1513, 100, -616, 0x00},
+    {-1513, 100, -630, 0xe2c},
+};
+
+
+StandFileTile tile_373 = {
+    0x4112, 0x2c,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_373[3] = {
+    {-1513, 127, -657, 0xe38},
+    {-1612, 118, -657, 0xdfc},
+    {-1513, 118, -657, 0x00},
+};
+
+
+StandFileTile tile_374 = {
+    0x4111, 0x2c,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_374[3] = {
+    {-1513, 127, -657, 0x77b},
+    {-1612, 127, -657, 0x00},
+    {-1612, 118, -657, 0xe34},
+};
+
+
+StandFileTile tile_375 = {
+    0x4e12, 0x2c,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_375[3] = {
+    {-1748, -9, -670, 0xe40},
+    {-1649, -18, -670, 0xed8},
+    {-1748, -18, -670, 0x00},
+};
+
+
+StandFileTile tile_376 = {
+    0x4e11, 0x2c,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_376[3] = {
+    {-1748, -9, -670, 0xe48},
+    {-1649, -9, -670, 0x00},
+    {-1649, -18, -670, 0xe3c},
+};
+
+
+StandFileTile tile_377 = {
+    0x4f12, 0x2c,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_377[3] = {
+    {-1649, -9, -670, 0xe48},
+    {-1748, -9, -657, 0xe84},
+    {-1649, -9, -657, 0x00},
+};
+
+
+StandFileTile tile_378 = {
+    0x4f11, 0x2c,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_378[3] = {
+    {-1649, -9, -670, 0xe40},
+    {-1748, -9, -670, 0x00},
+    {-1748, -9, -657, 0xe44},
+};
+
+
+StandFileTile tile_379 = {
+    0x5012, 0x2c,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_379[3] = {
+    {-1748, 36, -602, 0xe50},
+    {-1649, 27, -602, 0xeac},
+    {-1748, 27, -602, 0x00},
+};
+
+
+StandFileTile tile_37A = {
+    0x5011, 0x2c,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_37A[3] = {
+    {-1748, 36, -602, 0xe58},
+    {-1649, 36, -602, 0x00},
+    {-1649, 27, -602, 0xe4c},
+};
+
+
+StandFileTile tile_37B = {
+    0x5112, 0x2c,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_37B[3] = {
+    {-1649, 36, -602, 0xe58},
+    {-1748, 36, -589, 0xe6c},
+    {-1649, 36, -589, 0x00},
+};
+
+
+StandFileTile tile_37C = {
+    0x5111, 0x2c,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_37C[3] = {
+    {-1649, 36, -602, 0xe50},
+    {-1748, 36, -602, 0x00},
+    {-1748, 36, -589, 0xe54},
+};
+
+
+StandFileTile tile_37D = {
+    0x5212, 0x2c,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_37D[3] = {
+    {-1748, 9, -643, 0xe60},
+    {-1649, 0, -643, 0xe8c},
+    {-1748, 0, -643, 0x00},
+};
+
+
+StandFileTile tile_37E = {
+    0x5211, 0x2c,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_37E[3] = {
+    {-1748, 9, -643, 0xe68},
+    {-1649, 9, -643, 0x00},
+    {-1649, 0, -643, 0xe5c},
+};
+
+
+StandFileTile tile_37F = {
+    0x5312, 0x2c,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_37F[3] = {
+    {-1649, 9, -643, 0xe68},
+    {-1748, 9, -630, 0xe94},
+    {-1649, 9, -630, 0x00},
+};
+
+
+StandFileTile tile_380 = {
+    0x5311, 0x2c,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_380[3] = {
+    {-1649, 9, -643, 0xe60},
+    {-1748, 9, -643, 0x00},
+    {-1748, 9, -630, 0xe64},
+};
+
+
+StandFileTile tile_381 = {
+    0x5412, 0x2c,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_381[3] = {
+    {-1748, 45, -589, 0xe70},
+    {-1649, 36, -589, 0xe54},
+    {-1748, 36, -589, 0x00},
+};
+
+
+StandFileTile tile_382 = {
+    0x5411, 0x2c,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_382[3] = {
+    {-1748, 45, -589, 0xe78},
+    {-1649, 45, -589, 0x00},
+    {-1649, 36, -589, 0xe6c},
+};
+
+
+StandFileTile tile_383 = {
+    0x5512, 0x2c,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_383[3] = {
+    {-1649, 45, -589, 0xe78},
+    {-1748, 45, -575, 0xeb4},
+    {-1649, 45, -575, 0x00},
+};
+
+
+StandFileTile tile_384 = {
+    0x5511, 0x2c,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_384[3] = {
+    {-1649, 45, -589, 0xe70},
+    {-1748, 45, -589, 0x00},
+    {-1748, 45, -575, 0xe74},
+};
+
+
+StandFileTile tile_385 = {
+    0x5612, 0x2c,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_385[3] = {
+    {-1649, 54, -575, 0xe80},
+    {-1748, 54, -562, 0xef0},
+    {-1649, 54, -562, 0x00},
+};
+
+
+StandFileTile tile_386 = {
+    0x5611, 0x2c,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_386[3] = {
+    {-1649, 54, -575, 0xeb8},
+    {-1748, 54, -575, 0x00},
+    {-1748, 54, -562, 0xe7c},
+};
+
+
+StandFileTile tile_387 = {
+    0x5712, 0x2c,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_387[3] = {
+    {-1748, 0, -657, 0xe88},
+    {-1649, -9, -657, 0xe44},
+    {-1748, -9, -657, 0x00},
+};
+
+
+StandFileTile tile_388 = {
+    0x5711, 0x2c,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_388[3] = {
+    {-1748, 0, -657, 0xe90},
+    {-1649, 0, -657, 0x00},
+    {-1649, -9, -657, 0xe84},
+};
+
+
+StandFileTile tile_389 = {
+    0x5812, 0x2c,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_389[3] = {
+    {-1649, 0, -657, 0xe90},
+    {-1748, 0, -643, 0xe5c},
+    {-1649, 0, -643, 0x00},
+};
+
+
+StandFileTile tile_38A = {
+    0x5811, 0x2c,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_38A[3] = {
+    {-1649, 0, -657, 0xe88},
+    {-1748, 0, -657, 0x00},
+    {-1748, 0, -643, 0xe8c},
+};
+
+
+StandFileTile tile_38B = {
+    0x5912, 0x2c,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_38B[3] = {
+    {-1748, 18, -630, 0xe98},
+    {-1649, 9, -630, 0xe64},
+    {-1748, 9, -630, 0x00},
+};
+
+
+StandFileTile tile_38C = {
+    0x5911, 0x2c,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_38C[3] = {
+    {-1748, 18, -630, 0xea0},
+    {-1649, 18, -630, 0x00},
+    {-1649, 9, -630, 0xe94},
+};
+
+
+StandFileTile tile_38D = {
+    0x5a12, 0x2c,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_38D[3] = {
+    {-1649, 18, -630, 0xea0},
+    {-1748, 18, -616, 0xea4},
+    {-1649, 18, -616, 0x00},
+};
+
+
+StandFileTile tile_38E = {
+    0x5a11, 0x2c,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_38E[3] = {
+    {-1649, 18, -630, 0xe98},
+    {-1748, 18, -630, 0x00},
+    {-1748, 18, -616, 0xe9c},
+};
+
+
+StandFileTile tile_38F = {
+    0x5b12, 0x2c,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_38F[3] = {
+    {-1748, 27, -616, 0xea8},
+    {-1649, 18, -616, 0xe9c},
+    {-1748, 18, -616, 0x00},
+};
+
+
+StandFileTile tile_390 = {
+    0x5b11, 0x2c,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_390[3] = {
+    {-1748, 27, -616, 0xeb0},
+    {-1649, 27, -616, 0x00},
+    {-1649, 18, -616, 0xea4},
+};
+
+
+StandFileTile tile_391 = {
+    0x5c12, 0x2c,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_391[3] = {
+    {-1649, 27, -616, 0xeb0},
+    {-1748, 27, -602, 0xe4c},
+    {-1649, 27, -602, 0x00},
+};
+
+
+StandFileTile tile_392 = {
+    0x5c11, 0x2c,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_392[3] = {
+    {-1649, 27, -616, 0xea8},
+    {-1748, 27, -616, 0x00},
+    {-1748, 27, -602, 0xeac},
+};
+
+
+StandFileTile tile_393 = {
+    0x5d12, 0x2c,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_393[3] = {
+    {-1748, 54, -575, 0xeb8},
+    {-1649, 45, -575, 0xe74},
+    {-1748, 45, -575, 0x00},
+};
+
+
+StandFileTile tile_394 = {
+    0x5d11, 0x2c,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_394[3] = {
+    {-1748, 54, -575, 0xe80},
+    {-1649, 54, -575, 0x00},
+    {-1649, 45, -575, 0xeb4},
+};
+
+
+StandFileTile tile_395 = {
+    0x710, 0x2c,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_395[3] = {
+    {-1513, -18, -684, 0x00},
+    {-1513, -18, -743, 0x00},
+    {-1549, -18, -743, 0xee0},
+};
+
+
+StandFileTile tile_396 = {
+    0x610, 0x2c,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_396[3] = {
+    {-1748, -18, -743, 0x00},
+    {-1748, -18, -684, 0xedc},
+    {-1712, -18, -743, 0x00},
+};
+
+
+StandFileTile tile_397 = {
+    0xc12, 0x2c,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_397[3] = {
+    {-1662, -18, -548, 0xec8},
+    {-1581, -18, -670, 0xed0},
+    {-1649, -18, -670, 0x00},
+};
+
+
+StandFileTile tile_398 = {
+    0xc11, 0x2c,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_398[3] = {
+    {-1662, -18, -548, 0x00},
+    {-1599, -18, -548, 0x00},
+    {-1581, -18, -670, 0xec4},
+};
+
+
+StandFileTile tile_399 = {
+    0xb12, 0x2c,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_399[3] = {
+    {-1649, -18, -670, 0xed0},
+    {-1513, -18, -684, 0xee0},
+    {-1748, -18, -684, 0xed8},
+};
+
+
+StandFileTile tile_39A = {
+    0xb11, 0x2c,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_39A[3] = {
+    {-1649, -18, -670, 0xec4},
+    {-1581, -18, -670, 0xed4},
+    {-1513, -18, -684, 0xecc},
+};
+
+
+StandFileTile tile_39B = {
+    0xa10, 0x2c,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_39B[3] = {
+    {-1513, -18, -670, 0x00},
+    {-1513, -18, -684, 0xed0},
+    {-1581, -18, -670, 0x00},
+};
+
+
+StandFileTile tile_39C = {
+    0x910, 0x2c,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_39C[3] = {
+    {-1748, -18, -670, 0xe3c},
+    {-1649, -18, -670, 0xecc},
+    {-1748, -18, -684, 0x00},
+};
+
+
+StandFileTile tile_39D = {
+    0x812, 0x2c,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_39D[3] = {
+    {-1748, -18, -684, 0xee0},
+    {-1549, -18, -743, 0xc5f},
+    {-1712, -18, -743, 0xec0},
+};
+
+
+StandFileTile tile_39E = {
+    0x811, 0x2c,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_39E[3] = {
+    {-1748, -18, -684, 0xecc},
+    {-1513, -18, -684, 0xebc},
+    {-1549, -18, -743, 0xedc},
+};
+
+
+StandFileTile tile_39F = {
+    0x3c010, 0x2c,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_39F[3] = {
+    {-1748, 54, -489, 0x00},
+    {-1513, 54, -489, 0xeec},
+    {-1630, 54, -525, 0xee8},
+};
+
+
+StandFileTile tile_3A0 = {
+    0x3bf10, 0x2c,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3A0[3] = {
+    {-1748, 54, -562, 0x00},
+    {-1748, 54, -489, 0xee4},
+    {-1630, 54, -525, 0xef0},
+};
+
+
+StandFileTile tile_3A1 = {
+    0x3c110, 0x2c,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3A1[3] = {
+    {-1630, 54, -525, 0xee4},
+    {-1513, 54, -489, 0x00},
+    {-1513, 54, -562, 0xef0},
+};
+
+
+StandFileTile tile_3A2 = {
+    0x4210, 0x2c,
+    0x0,
+    0xc, 0xc, 0xc,
+    5,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3A2[5] = {
+    {-1748, 54, -562, 0xee8},
+    {-1630, 54, -525, 0xeec},
+    {-1513, 54, -562, 0xdc4},
+    {-1612, 54, -562, 0x00},
+    {-1649, 54, -562, 0xe7c},
+};
+
+
+StandFileTile tile_3A3 = {
+    0x1bb10, 0x2b,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3A3[3] = {
+    {-1196, -18, -1970, 0xd64},
+    {-1304, -18, -1970, 0xf4f},
+    {-1196, -18, -1957, 0x00},
+};
+
+
+StandFileTile tile_3A4 = {
+    0x49e12, 0x2b,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3A4[3] = {
+    {-865, -18, -1812, 0xefe},
+    {-772, -18, -1957, 0x00},
+    {-1046, -18, -1957, 0xf0e},
+};
+
+
+StandFileTile tile_3A5 = {
+    0x49e11, 0x2b,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3A5[3] = {
+    {-865, -18, -1812, 0xf02},
+    {-772, -18, -1899, 0x00},
+    {-772, -18, -1957, 0xefa},
+};
+
+
+StandFileTile tile_3A6 = {
+    0x4a010, 0x2b,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3A6[3] = {
+    {-772, -18, -1899, 0xefe},
+    {-865, -18, -1812, 0xf06},
+    {-772, -18, -1729, 0x00},
+};
+
+
+StandFileTile tile_3A7 = {
+    0x4a212, 0x2b,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3A7[3] = {
+    {-865, -18, -1812, 0xf0a},
+    {-772, -18, -1676, 0x00},
+    {-772, -18, -1729, 0xf02},
+};
+
+
+StandFileTile tile_3A8 = {
+    0x4a211, 0x2b,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3A8[3] = {
+    {-865, -18, -1812, 0xf0e},
+    {-1046, -18, -1676, 0xf3f},
+    {-772, -18, -1676, 0xf06},
+};
+
+
+StandFileTile tile_3A9 = {
+    0x20510, 0x2b,
+    0x0,
+    0x7, 0x7, 0x7,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_3A9[4] = {
+    {-1046, -18, -1957, 0x00},
+    {-1046, -18, -1943, 0xf5b},
+    {-1046, -18, -1676, 0xf0a},
+    {-865, -18, -1812, 0xefa},
+};
+
+
+StandFileTile tile_3AA = {
+    0x40210, 0x2b,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3AA[3] = {
+    {-1178, -18, -1531, 0xf1b},
+    {-1318, -18, -1422, 0x00},
+    {-1304, -18, -1409, 0xf17},
+};
+
+
+StandFileTile tile_3AB = {
+    0x1da10, 0x2b,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3AB[3] = {
+    {-1178, -18, -1531, 0xf13},
+    {-1304, -18, -1409, 0xa9b},
+    {-992, -18, -1409, 0xf23},
+};
+
+
+StandFileTile tile_3AC = {
+    0x1d910, 0x2b,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3AC[3] = {
+    {-1304, -18, -1676, 0xf33},
+    {-1318, -18, -1422, 0xf13},
+    {-1178, -18, -1531, 0xf1f},
+};
+
+
+StandFileTile tile_3AD = {
+    0x1d810, 0x2b,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3AD[3] = {
+    {-1178, -18, -1531, 0xf23},
+    {-1046, -18, -1676, 0xf57},
+    {-1304, -18, -1676, 0xf1b},
+};
+
+
+StandFileTile tile_3AE = {
+    0x1d710, 0x2b,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3AE[3] = {
+    {-992, -18, -1409, 0xf3b},
+    {-1046, -18, -1676, 0xf1f},
+    {-1178, -18, -1531, 0xf17},
+};
+
+
+StandFileTile tile_3AF = {
+    0x3cc10, 0x2b,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3AF[3] = {
+    {-1304, -18, -1970, 0xd68},
+    {-1427, -18, -1970, 0x00},
+    {-1427, -18, -1712, 0xf2b},
+};
+
+
+StandFileTile tile_3B0 = {
+    0x3cb10, 0x2b,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3B0[3] = {
+    {-1304, -18, -1676, 0xf53},
+    {-1304, -18, -1970, 0xf27},
+    {-1427, -18, -1712, 0xf2f},
+};
+
+
+StandFileTile tile_3B1 = {
+    0x1b810, 0x2b,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3B1[3] = {
+    {-1427, -18, -1712, 0x00},
+    {-1427, -18, -1562, 0xf33},
+    {-1304, -18, -1676, 0xf2b},
+};
+
+
+StandFileTile tile_3B2 = {
+    0x1b710, 0x2b,
+    0x0,
+    0x5, 0x5, 0x5,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3B2[3] = {
+    {-1318, -18, -1422, 0xf1b},
+    {-1304, -18, -1676, 0xf2f},
+    {-1427, -18, -1562, 0xc6b},
+};
+
+
+StandFileTile tile_3B3 = {
+    0x1a511, 0x2b,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3B3[3] = {
+    {-865, -18, -1531, 0xf3b},
+    {-992, -18, -1409, 0xaa3},
+    {-772, -18, -1409, 0xf47},
+};
+
+
+StandFileTile tile_3B4 = {
+    0x1a410, 0x2b,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3B4[3] = {
+    {-1046, -18, -1676, 0xf23},
+    {-992, -18, -1409, 0xf37},
+    {-865, -18, -1531, 0xf3f},
+};
+
+
+StandFileTile tile_3B5 = {
+    0x1a312, 0x2b,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3B5[3] = {
+    {-865, -18, -1531, 0xf43},
+    {-772, -18, -1676, 0xf0a},
+    {-1046, -18, -1676, 0xf3b},
+};
+
+
+StandFileTile tile_3B6 = {
+    0x3bd10, 0x2b,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3B6[3] = {
+    {-772, -18, -1535, 0x00},
+    {-772, -18, -1676, 0xf3f},
+    {-865, -18, -1531, 0xf47},
+};
+
+
+StandFileTile tile_3B7 = {
+    0x1a210, 0x2b,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3B7[3] = {
+    {-772, -18, -1409, 0x00},
+    {-772, -18, -1535, 0xf43},
+    {-865, -18, -1531, 0xf37},
+};
+
+
+StandFileTile tile_3B8 = {
+    0x1a110, 0x2b,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3B8[3] = {
+    {-1196, -18, -1816, 0xf5f},
+    {-1073, -18, -1957, 0x00},
+    {-1196, -18, -1957, 0xf4f},
+};
+
+
+StandFileTile tile_3B9 = {
+    0x1a010, 0x2b,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3B9[3] = {
+    {-1196, -18, -1957, 0xef6},
+    {-1304, -18, -1970, 0xf53},
+    {-1196, -18, -1816, 0xf4b},
+};
+
+
+StandFileTile tile_3BA = {
+    0x19f10, 0x2b,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3BA[3] = {
+    {-1196, -18, -1816, 0xf4f},
+    {-1304, -18, -1970, 0xf2b},
+    {-1304, -18, -1676, 0xf57},
+};
+
+
+StandFileTile tile_3BB = {
+    0x19e10, 0x2b,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3BB[3] = {
+    {-1304, -18, -1676, 0xf1f},
+    {-1046, -18, -1676, 0xf5b},
+    {-1196, -18, -1816, 0xf53},
+};
+
+
+StandFileTile tile_3BC = {
+    0x19d10, 0x2b,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3BC[3] = {
+    {-1196, -18, -1816, 0xf57},
+    {-1046, -18, -1676, 0xf0e},
+    {-1046, -18, -1943, 0xf63},
+};
+
+
+StandFileTile tile_3BD = {
+    0x19c10, 0x2b,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3BD[3] = {
+    {-1073, -18, -1957, 0xf4b},
+    {-1196, -18, -1816, 0xf63},
+    {-1073, -18, -1943, 0x00},
+};
+
+
+StandFileTile tile_3BE = {
+    0x19b10, 0x2b,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3BE[3] = {
+    {-1073, -18, -1943, 0xf5f},
+    {-1196, -18, -1816, 0xf5b},
+    {-1046, -18, -1943, 0x00},
+};
+
+
+StandFileTile tile_3BF = {
+    0x8fc08, 0x2a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3BF[3] = {
+    {-127, 127, 190, 0x1870},
+    {-72, 127, 190, 0xf8f},
+    {-127, 127, 140, 0xf6b},
+};
+
+
+StandFileTile tile_3C0 = {
+    0x5cd08, 0x2a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3C0[3] = {
+    {-181, 127, 190, 0x186c},
+    {-127, 127, 190, 0xf67},
+    {-127, 127, 140, 0xf6f},
+};
+
+
+StandFileTile tile_3C1 = {
+    0xff508, 0x2a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3C1[3] = {
+    {-181, 127, 163, 0x00},
+    {-181, 127, 190, 0xf6b},
+    {-127, 127, 140, 0xf73},
+};
+
+
+StandFileTile tile_3C2 = {
+    0xff408, 0x2a,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3C2[3] = {
+    {-181, 127, 109, 0xfa1},
+    {-181, 127, 163, 0xf6f},
+    {-127, 127, 140, 0xf77},
+};
+
+
+StandFileTile tile_3C3 = {
+    0xf8608, 0x2a,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3C3[3] = {
+    {-181, 127, 45, 0xfaa},
+    {-181, 127, 109, 0xf73},
+    {-127, 127, 140, 0xf7b},
+};
+
+
+StandFileTile tile_3C4 = {
+    0xf8708, 0x2a,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3C4[3] = {
+    {-181, 127, 45, 0xf77},
+    {-127, 127, 140, 0xf87},
+    {-154, 127, 34, 0xf7f},
+};
+
+
+StandFileTile tile_3C5 = {
+    0x5ca08, 0x2a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3C5[3] = {
+    {-181, 127, -18, 0xfa6},
+    {-181, 127, 45, 0xf7b},
+    {-154, 127, 34, 0xf83},
+};
+
+
+StandFileTile tile_3C6 = {
+    0xf8808, 0x2a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3C6[3] = {
+    {-127, 127, -18, 0x10fd},
+    {-181, 127, -18, 0xf7f},
+    {-154, 127, 34, 0xf87},
+};
+
+
+StandFileTile tile_3C7 = {
+    0x8fd08, 0x2a,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3C7[3] = {
+    {-127, 127, -18, 0xf83},
+    {-154, 127, 34, 0xf7b},
+    {-127, 127, 140, 0xf8b},
+};
+
+
+StandFileTile tile_3C8 = {
+    0x5ce08, 0x2a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3C8[3] = {
+    {-72, 127, -18, 0x1101},
+    {-127, 127, -18, 0xf87},
+    {-127, 127, 140, 0xf98},
+};
+
+
+StandFileTile tile_3C9 = {
+    0x103708, 0x2a,
+    0x0,
+    0xd, 0xd, 0xd,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_3C9[4] = {
+    {-127, 127, 140, 0xf67},
+    {-72, 127, 190, 0x00},
+    {-72, 127, 103, 0x11ae},
+    {-72, 127, 92, 0xf94},
+};
+
+
+StandFileTile tile_3CA = {
+    0x103808, 0x2a,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3CA[3] = {
+    {-127, 127, 140, 0xf8f},
+    {-72, 127, 92, 0x11ae},
+    {-72, 127, 54, 0xf98},
+};
+
+
+StandFileTile tile_3CB = {
+    0x3f208, 0x2a,
+    0x0,
+    0xd, 0xd, 0xd,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3CB[4] = {
+    {-72, 127, -18, 0xf8b},
+    {-127, 127, 140, 0xf94},
+    {-72, 127, 54, 0x11ae},
+    {-72, 127, 45, 0x00},
+};
+
+
+StandFileTile tile_3CC = {
+    0x1c10a, 0x2a,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3CC[3] = {
+    {-308, 127, 163, 0xfa1},
+    {-181, 127, 109, 0xfae},
+    {-308, 127, 109, 0xfc9},
+};
+
+
+StandFileTile tile_3CD = {
+    0x1c109, 0x2a,
+    0x0,
+    0xf, 0xf, 0xf,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_3CD[4] = {
+    {-308, 127, 163, 0xfc1},
+    {-208, 127, 163, 0x00},
+    {-181, 127, 163, 0xf73},
+    {-181, 127, 109, 0xf9d},
+};
+
+
+StandFileTile tile_3CE = {
+    0xf8508, 0x2a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3CE[3] = {
+    {-181, 127, 45, 0xf7f},
+    {-181, 127, -18, 0xfbd},
+    {-276, 127, 45, 0xfaa},
+};
+
+
+StandFileTile tile_3CF = {
+    0x92408, 0x2a,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3CF[3] = {
+    {-181, 127, 109, 0xf77},
+    {-181, 127, 45, 0xfa6},
+    {-276, 127, 45, 0xfae},
+};
+
+
+StandFileTile tile_3D0 = {
+    0x92308, 0x2a,
+    0x0,
+    0xf, 0xf, 0xf,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_3D0[4] = {
+    {-371, 127, 109, 0x00},
+    {-308, 127, 109, 0xf9d},
+    {-181, 127, 109, 0xfaa},
+    {-276, 127, 45, 0xfb3},
+};
+
+
+StandFileTile tile_3D1 = {
+    0xf8a08, 0x2a,
+    0x0,
+    0xf, 0xf, 0xf,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_3D1[4] = {
+    {-371, 127, 45, 0x14a5},
+    {-371, 127, 82, 0x00},
+    {-371, 127, 109, 0xfae},
+    {-276, 127, 45, 0xfb8},
+};
+
+
+StandFileTile tile_3D2 = {
+    0x92508, 0x2a,
+    0x0,
+    0xf, 0xf, 0xf,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_3D2[4] = {
+    {-371, 127, -18, 0x1488},
+    {-371, 127, 41, 0x14a5},
+    {-371, 127, 45, 0xfb3},
+    {-276, 127, 45, 0xfbd},
+};
+
+
+StandFileTile tile_3D3 = {
+    0x92208, 0x2a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3D3[3] = {
+    {-371, 127, -18, 0xfb8},
+    {-276, 127, 45, 0xfa6},
+    {-181, 127, -18, 0x00},
+};
+
+
+StandFileTile tile_3D4 = {
+    0x1c40a, 0x29,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3D4[3] = {
+    {-308, 127, 163, 0xfc5},
+    {-208, 118, 163, 0x00},
+    {-208, 127, 163, 0xfa1},
+};
+
+
+StandFileTile tile_3D5 = {
+    0x1c409, 0x29,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3D5[3] = {
+    {-308, 127, 163, 0xfcd},
+    {-308, 117, 163, 0x00},
+    {-208, 118, 163, 0xfc1},
+};
+
+
+StandFileTile tile_3D6 = {
+    0x1990a, 0x29,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3D6[3] = {
+    {-308, 117, 109, 0xfcd},
+    {-308, 127, 163, 0xf9d},
+    {-308, 127, 109, 0x00},
+};
+
+
+StandFileTile tile_3D7 = {
+    0x19909, 0x29,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3D7[3] = {
+    {-308, 117, 109, 0x1097},
+    {-308, 117, 163, 0xfc5},
+    {-308, 127, 163, 0xfc9},
+};
+
+
+StandFileTile tile_3D8 = {
+    0x19a0a, 0x29,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3D8[3] = {
+    {-317, 109, 109, 0xfd5},
+    {-317, 117, 163, 0x1093},
+    {-317, 117, 109, 0x00},
+};
+
+
+StandFileTile tile_3D9 = {
+    0x19a09, 0x29,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3D9[3] = {
+    {-317, 109, 109, 0x109f},
+    {-317, 109, 163, 0xff1},
+    {-317, 117, 163, 0xfd1},
+};
+
+
+StandFileTile tile_3DA = {
+    0x1960a, 0x29,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3DA[3] = {
+    {-326, 100, 109, 0xfdd},
+    {-326, 109, 163, 0x109b},
+    {-326, 109, 109, 0x00},
+};
+
+
+StandFileTile tile_3DB = {
+    0x19609, 0x29,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3DB[3] = {
+    {-326, 100, 109, 0x10a7},
+    {-326, 100, 163, 0xffd},
+    {-326, 109, 163, 0xfd9},
+};
+
+
+StandFileTile tile_3DC = {
+    0x1970a, 0x29,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3DC[3] = {
+    {-335, 91, 109, 0xfe5},
+    {-335, 100, 163, 0x10a3},
+    {-335, 100, 109, 0x00},
+};
+
+
+StandFileTile tile_3DD = {
+    0x19709, 0x29,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3DD[3] = {
+    {-335, 91, 109, 0x10af},
+    {-335, 91, 163, 0x1011},
+    {-335, 100, 163, 0xfe1},
+};
+
+
+StandFileTile tile_3DE = {
+    0x1980a, 0x29,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3DE[3] = {
+    {-344, 82, 109, 0xfed},
+    {-344, 91, 163, 0x10ab},
+    {-344, 91, 109, 0x00},
+};
+
+
+StandFileTile tile_3DF = {
+    0x19809, 0x29,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3DF[3] = {
+    {-344, 82, 109, 0x10b7},
+    {-344, 82, 163, 0x102b},
+    {-344, 91, 163, 0xfe9},
+};
+
+
+StandFileTile tile_3E0 = {
+    0x1a308, 0x29,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3E0[3] = {
+    {-308, 117, 163, 0x1097},
+    {-317, 117, 163, 0xfd5},
+    {-317, 109, 163, 0x00},
+};
+
+
+StandFileTile tile_3E1 = {
+    0x19b0a, 0x29,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3E1[3] = {
+    {-353, 72, 109, 0xff9},
+    {-353, 82, 163, 0x10b3},
+    {-353, 82, 109, 0x00},
+};
+
+
+StandFileTile tile_3E2 = {
+    0x19b09, 0x29,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3E2[3] = {
+    {-353, 72, 109, 0x10bf},
+    {-353, 72, 163, 0x1037},
+    {-353, 82, 163, 0xff5},
+};
+
+
+StandFileTile tile_3E3 = {
+    0x1a708, 0x29,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3E3[3] = {
+    {-317, 109, 163, 0x109f},
+    {-326, 109, 163, 0xfdd},
+    {-326, 100, 163, 0x1015},
+};
+
+
+StandFileTile tile_3E4 = {
+    0x1b00a, 0x29,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3E4[3] = {
+    {-317, 0, 226, 0x1005},
+    {-317, 9, 172, 0x106b},
+    {-317, 9, 226, 0x00},
+};
+
+
+StandFileTile tile_3E5 = {
+    0x1b009, 0x29,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3E5[3] = {
+    {-317, 0, 226, 0x10ed},
+    {-317, 0, 172, 0x00},
+    {-317, 9, 172, 0x1001},
+};
+
+
+StandFileTile tile_3E6 = {
+    0x19c0a, 0x29,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3E6[3] = {
+    {-362, 63, 109, 0x100d},
+    {-362, 72, 163, 0x10bb},
+    {-362, 72, 109, 0x00},
+};
+
+
+StandFileTile tile_3E7 = {
+    0x19c09, 0x29,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3E7[3] = {
+    {-362, 63, 109, 0x10c7},
+    {-362, 63, 163, 0x1043},
+    {-362, 72, 163, 0x1009},
+};
+
+
+StandFileTile tile_3E8 = {
+    0x1a108, 0x29,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3E8[3] = {
+    {-326, 100, 163, 0x10a7},
+    {-335, 100, 163, 0xfe5},
+    {-335, 91, 163, 0x1015},
+};
+
+
+StandFileTile tile_3E9 = {
+    0x1c30a, 0x29,
+    0x0,
+    0x9, 0x9, 0x9,
+    9,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3E9[9] = {
+    {-371, 54, 163, 0x101f},
+    {-299, 118, 163, 0x00},
+    {-308, 117, 163, 0x00},
+    {-317, 109, 163, 0xffd},
+    {-326, 100, 163, 0x1011},
+    {-335, 91, 163, 0x102b},
+    {-344, 82, 163, 0x00},
+    {-353, 72, 163, 0x1043},
+    {-362, 63, 163, 0x1047},
+};
+
+
+StandFileTile tile_3EA = {
+    0x1c309, 0x29,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3EA[3] = {
+    {-371, 54, 163, 0x00},
+    {-371, 45, 163, 0x00},
+    {-299, 118, 163, 0x1015},
+};
+
+
+StandFileTile tile_3EB = {
+    0x19d0a, 0x29,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3EB[3] = {
+    {-371, 54, 109, 0x1027},
+    {-371, 63, 163, 0x10c3},
+    {-371, 63, 109, 0x00},
+};
+
+
+StandFileTile tile_3EC = {
+    0x19d09, 0x29,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3EC[3] = {
+    {-371, 54, 109, 0x10cf},
+    {-371, 54, 163, 0x1047},
+    {-371, 63, 163, 0x1023},
+};
+
+
+StandFileTile tile_3ED = {
+    0x1a508, 0x29,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3ED[3] = {
+    {-335, 91, 163, 0x10af},
+    {-344, 91, 163, 0xfed},
+    {-344, 82, 163, 0x1015},
+};
+
+
+StandFileTile tile_3EE = {
+    0x1af0a, 0x29,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3EE[3] = {
+    {-326, 9, 226, 0x1033},
+    {-326, 18, 172, 0x1063},
+    {-326, 18, 226, 0x00},
+};
+
+
+StandFileTile tile_3EF = {
+    0x1af09, 0x29,
+    0x0,
+    0xe, 0xe, 0xe,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3EF[3] = {
+    {-326, 9, 226, 0x106f},
+    {-326, 9, 172, 0x00},
+    {-326, 18, 172, 0x102f},
+};
+
+
+StandFileTile tile_3F0 = {
+    0x1a408, 0x29,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3F0[3] = {
+    {-344, 82, 163, 0x10b7},
+    {-353, 82, 163, 0xff9},
+    {-353, 72, 163, 0x00},
+};
+
+
+StandFileTile tile_3F1 = {
+    0x1ae0a, 0x29,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3F1[3] = {
+    {-335, 18, 226, 0x103f},
+    {-335, 27, 172, 0x108b},
+    {-335, 27, 226, 0x00},
+};
+
+
+StandFileTile tile_3F2 = {
+    0x1ae09, 0x29,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3F2[3] = {
+    {-335, 18, 226, 0x1067},
+    {-335, 18, 172, 0x00},
+    {-335, 27, 172, 0x103b},
+};
+
+
+StandFileTile tile_3F3 = {
+    0x1a208, 0x29,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3F3[3] = {
+    {-353, 72, 163, 0x10bf},
+    {-362, 72, 163, 0x100d},
+    {-362, 63, 163, 0x1015},
+};
+
+
+StandFileTile tile_3F4 = {
+    0x1a608, 0x29,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3F4[3] = {
+    {-362, 63, 163, 0x10c7},
+    {-371, 63, 163, 0x1027},
+    {-371, 54, 163, 0x1015},
+};
+
+
+StandFileTile tile_3F5 = {
+    0x1ad0a, 0x29,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3F5[3] = {
+    {-344, 27, 226, 0x104f},
+    {-344, 36, 172, 0x1083},
+    {-344, 36, 226, 0x00},
+};
+
+
+StandFileTile tile_3F6 = {
+    0x1ad09, 0x29,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3F6[3] = {
+    {-344, 27, 226, 0x108f},
+    {-344, 27, 172, 0x00},
+    {-344, 36, 172, 0x104b},
+};
+
+
+StandFileTile tile_3F7 = {
+    0x1ac0a, 0x29,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3F7[3] = {
+    {-353, 36, 226, 0x1057},
+    {-353, 45, 172, 0x107b},
+    {-353, 45, 226, 0x00},
+};
+
+
+StandFileTile tile_3F8 = {
+    0x1ac09, 0x29,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3F8[3] = {
+    {-353, 36, 226, 0x1087},
+    {-353, 36, 172, 0x00},
+    {-353, 45, 172, 0x1053},
+};
+
+
+StandFileTile tile_3F9 = {
+    0x1ab0a, 0x29,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3F9[3] = {
+    {-362, 45, 226, 0x105f},
+    {-362, 54, 172, 0x1073},
+    {-362, 54, 226, 0x00},
+};
+
+
+StandFileTile tile_3FA = {
+    0x1ab09, 0x29,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3FA[3] = {
+    {-362, 45, 226, 0x107f},
+    {-362, 45, 172, 0x00},
+    {-362, 54, 172, 0x105b},
+};
+
+
+StandFileTile tile_3FB = {
+    0x1bc0a, 0x29,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3FB[3] = {
+    {-326, 18, 172, 0x1067},
+    {-335, 18, 226, 0x00},
+    {-326, 18, 226, 0x102f},
+};
+
+
+StandFileTile tile_3FC = {
+    0x1bc09, 0x29,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3FC[3] = {
+    {-326, 18, 172, 0x00},
+    {-335, 18, 172, 0x103f},
+    {-335, 18, 226, 0x1063},
+};
+
+
+StandFileTile tile_3FD = {
+    0x1ba0a, 0x29,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3FD[3] = {
+    {-317, 9, 172, 0x106f},
+    {-326, 9, 226, 0x00},
+    {-317, 9, 226, 0x1001},
+};
+
+
+StandFileTile tile_3FE = {
+    0x1ba09, 0x29,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3FE[3] = {
+    {-317, 9, 172, 0x00},
+    {-326, 9, 172, 0x1033},
+    {-326, 9, 226, 0x106b},
+};
+
+
+StandFileTile tile_3FF = {
+    0x1b10a, 0x29,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_3FF[3] = {
+    {-362, 54, 172, 0x1077},
+    {-371, 54, 226, 0x00},
+    {-362, 54, 226, 0x105b},
+};
+
+
+StandFileTile tile_400 = {
+    0x1b109, 0x29,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_400[3] = {
+    {-362, 54, 172, 0x00},
+    {-371, 54, 172, 0x10cf},
+    {-371, 54, 226, 0x1073},
+};
+
+
+StandFileTile tile_401 = {
+    0x1b20a, 0x29,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_401[3] = {
+    {-353, 45, 172, 0x107f},
+    {-362, 45, 226, 0x00},
+    {-353, 45, 226, 0x1053},
+};
+
+
+StandFileTile tile_402 = {
+    0x1b209, 0x29,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_402[3] = {
+    {-353, 45, 172, 0x00},
+    {-362, 45, 172, 0x105f},
+    {-362, 45, 226, 0x107b},
+};
+
+
+StandFileTile tile_403 = {
+    0x1b30a, 0x29,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_403[3] = {
+    {-344, 36, 172, 0x1087},
+    {-353, 36, 226, 0x00},
+    {-344, 36, 226, 0x104b},
+};
+
+
+StandFileTile tile_404 = {
+    0x1b309, 0x29,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_404[3] = {
+    {-344, 36, 172, 0x00},
+    {-353, 36, 172, 0x1057},
+    {-353, 36, 226, 0x1083},
+};
+
+
+StandFileTile tile_405 = {
+    0x1bb0a, 0x29,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_405[3] = {
+    {-335, 27, 172, 0x108f},
+    {-344, 27, 226, 0x00},
+    {-335, 27, 226, 0x103b},
+};
+
+
+StandFileTile tile_406 = {
+    0x1bb09, 0x29,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_406[3] = {
+    {-335, 27, 172, 0x00},
+    {-344, 27, 172, 0x104f},
+    {-344, 27, 226, 0x108b},
+};
+
+
+StandFileTile tile_407 = {
+    0x4340a, 0x29,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_407[3] = {
+    {-317, 117, 163, 0x1097},
+    {-308, 117, 109, 0x00},
+    {-317, 117, 109, 0xfd1},
+};
+
+
+StandFileTile tile_408 = {
+    0x43409, 0x29,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_408[3] = {
+    {-317, 117, 163, 0xff1},
+    {-308, 117, 163, 0xfcd},
+    {-308, 117, 109, 0x1093},
+};
+
+
+StandFileTile tile_409 = {
+    0x19e0a, 0x29,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_409[3] = {
+    {-326, 109, 163, 0x109f},
+    {-317, 109, 109, 0x00},
+    {-326, 109, 109, 0xfd9},
+};
+
+
+StandFileTile tile_40A = {
+    0x19e09, 0x29,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_40A[3] = {
+    {-326, 109, 163, 0xffd},
+    {-317, 109, 163, 0xfd5},
+    {-317, 109, 109, 0x109b},
+};
+
+
+StandFileTile tile_40B = {
+    0x19f0a, 0x29,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_40B[3] = {
+    {-335, 100, 163, 0x10a7},
+    {-326, 100, 109, 0x00},
+    {-335, 100, 109, 0xfe1},
+};
+
+
+StandFileTile tile_40C = {
+    0x19f09, 0x29,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_40C[3] = {
+    {-335, 100, 163, 0x1011},
+    {-326, 100, 163, 0xfdd},
+    {-326, 100, 109, 0x10a3},
+};
+
+
+StandFileTile tile_40D = {
+    0x1a00a, 0x29,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_40D[3] = {
+    {-344, 91, 163, 0x10af},
+    {-335, 91, 109, 0x00},
+    {-344, 91, 109, 0xfe9},
+};
+
+
+StandFileTile tile_40E = {
+    0x1a009, 0x29,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_40E[3] = {
+    {-344, 91, 163, 0x102b},
+    {-335, 91, 163, 0xfe5},
+    {-335, 91, 109, 0x10ab},
+};
+
+
+StandFileTile tile_40F = {
+    0x1a90a, 0x29,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_40F[3] = {
+    {-353, 82, 163, 0x10b7},
+    {-344, 82, 109, 0x00},
+    {-353, 82, 109, 0xff5},
+};
+
+
+StandFileTile tile_410 = {
+    0x1a909, 0x29,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_410[3] = {
+    {-353, 82, 163, 0x1037},
+    {-344, 82, 163, 0xfed},
+    {-344, 82, 109, 0x10b3},
+};
+
+
+StandFileTile tile_411 = {
+    0x1aa0a, 0x29,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_411[3] = {
+    {-362, 72, 163, 0x10bf},
+    {-353, 72, 109, 0x00},
+    {-362, 72, 109, 0x1009},
+};
+
+
+StandFileTile tile_412 = {
+    0x1aa09, 0x29,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_412[3] = {
+    {-362, 72, 163, 0x1043},
+    {-353, 72, 163, 0xff9},
+    {-353, 72, 109, 0x10bb},
+};
+
+
+StandFileTile tile_413 = {
+    0x1a80a, 0x29,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_413[3] = {
+    {-371, 63, 163, 0x10c7},
+    {-362, 63, 109, 0x00},
+    {-371, 63, 109, 0x1023},
+};
+
+
+StandFileTile tile_414 = {
+    0x1a809, 0x29,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_414[3] = {
+    {-371, 63, 163, 0x1047},
+    {-362, 63, 163, 0x100d},
+    {-362, 63, 109, 0x10c3},
+};
+
+
+StandFileTile tile_415 = {
+    0x82608, 0x29,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_415[3] = {
+    {-371, 54, 109, 0x00},
+    {-417, 54, 109, 0x10d9},
+    {-394, 54, 167, 0x10cf},
+};
+
+
+StandFileTile tile_416 = {
+    0x82408, 0x29,
+    0x0,
+    0xd, 0xd, 0xd,
+    5,
+    0x0, 0x3, 0x4,
+};
+StandFilePoint points_416[5] = {
+    {-371, 54, 226, 0x1077},
+    {-371, 54, 172, 0x00},
+    {-371, 54, 163, 0x1027},
+    {-371, 54, 109, 0x10cb},
+    {-394, 54, 167, 0x10d5},
+};
+
+
+StandFileTile tile_417 = {
+    0x82508, 0x29,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_417[3] = {
+    {-417, 54, 226, 0x00},
+    {-371, 54, 226, 0x10cf},
+    {-394, 54, 167, 0x10d9},
+};
+
+
+StandFileTile tile_418 = {
+    0x1bd08, 0x29,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_418[3] = {
+    {-417, 54, 226, 0x10d5},
+    {-394, 54, 167, 0x10cb},
+    {-417, 54, 109, 0x00},
+};
+
+
+StandFileTile tile_419 = {
+    0x100608, 0x29,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_419[3] = {
+    {-208, 0, 226, 0x00},
+    {-208, 0, 82, 0x10e5},
+    {-254, 0, 154, 0x10e1},
+};
+
+
+StandFileTile tile_41A = {
+    0x100408, 0x29,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_41A[3] = {
+    {-317, 0, 226, 0x1525},
+    {-208, 0, 226, 0x10dd},
+    {-254, 0, 154, 0x10ed},
+};
+
+
+StandFileTile tile_41B = {
+    0x100508, 0x29,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_41B[3] = {
+    {-254, 0, 154, 0x10dd},
+    {-208, 0, 82, 0x00},
+    {-317, 0, 82, 0x10e9},
+};
+
+
+StandFileTile tile_41C = {
+    0x19ea08, 0x29,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_41C[3] = {
+    {-254, 0, 154, 0x10e5},
+    {-317, 0, 82, 0x00},
+    {-317, 0, 172, 0x10ed},
+};
+
+
+StandFileTile tile_41D = {
+    0x100108, 0x29,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_41D[3] = {
+    {-317, 0, 226, 0x10e1},
+    {-254, 0, 154, 0x10e9},
+    {-317, 0, 172, 0x1005},
+};
+
+
+StandFileTile tile_41E = {
+    0x5c808, 0x28,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_41E[3] = {
+    {-72, 127, -226, 0x1117},
+    {-127, 127, -226, 0x10f5},
+    {-127, 127, -122, 0x1105},
+};
+
+
+StandFileTile tile_41F = {
+    0x8fe08, 0x28,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_41F[3] = {
+    {-127, 127, -226, 0x1113},
+    {-181, 127, -226, 0x10f9},
+    {-127, 127, -122, 0x10f1},
+};
+
+
+StandFileTile tile_420 = {
+    0x5be08, 0x28,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_420[3] = {
+    {-181, 127, -226, 0x00},
+    {-181, 127, -18, 0x10fd},
+    {-127, 127, -122, 0x10f5},
+};
+
+
+StandFileTile tile_421 = {
+    0x5c708, 0x28,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_421[3] = {
+    {-181, 127, -18, 0xf83},
+    {-127, 127, -18, 0x1101},
+    {-127, 127, -122, 0x10f9},
+};
+
+
+StandFileTile tile_422 = {
+    0x8ff08, 0x28,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_422[3] = {
+    {-127, 127, -18, 0xf8b},
+    {-72, 127, -18, 0x1105},
+    {-127, 127, -122, 0x10fd},
+};
+
+
+StandFileTile tile_423 = {
+    0x3f908, 0x28,
+    0x0,
+    0xa, 0xa, 0xa,
+    5,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_423[5] = {
+    {-72, 127, -226, 0x10f1},
+    {-127, 127, -122, 0x1101},
+    {-72, 127, -18, 0x00},
+    {-72, 127, -106, 0x1161},
+    {-72, 127, -165, 0x00},
+};
+
+
+StandFileTile tile_424 = {
+    0x5bc08, 0x27,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_424[3] = {
+    {-181, 127, -480, 0x00},
+    {-181, 127, -226, 0x1113},
+    {-127, 127, -353, 0x110f},
+};
+
+
+StandFileTile tile_425 = {
+    0x5ba08, 0x27,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_425[3] = {
+    {-72, 127, -480, 0x17fe},
+    {-181, 127, -480, 0x110b},
+    {-127, 127, -353, 0x111b},
+};
+
+
+StandFileTile tile_426 = {
+    0x8fa08, 0x27,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_426[3] = {
+    {-127, 127, -353, 0x110b},
+    {-181, 127, -226, 0x10f5},
+    {-127, 127, -226, 0x1117},
+};
+
+
+StandFileTile tile_427 = {
+    0x5bb08, 0x27,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_427[3] = {
+    {-127, 127, -353, 0x1113},
+    {-127, 127, -226, 0x10f1},
+    {-72, 127, -226, 0x111b},
+};
+
+
+StandFileTile tile_428 = {
+    0x3f808, 0x27,
+    0x0,
+    0xa, 0xa, 0xa,
+    5,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_428[5] = {
+    {-72, 127, -480, 0x110f},
+    {-127, 127, -353, 0x1117},
+    {-72, 127, -226, 0x00},
+    {-72, 127, -315, 0x1121},
+    {-72, 127, -373, 0x00},
+};
+
+
+StandFileTile tile_429 = {
+    0x19f10a, 0x26,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_429[3] = {
+    {-55, 127, -315, 0x1125},
+    {-72, 127, -373, 0x111b},
+    {-72, 127, -315, 0x00},
+};
+
+
+StandFileTile tile_42A = {
+    0x19f109, 0x26,
+    0x0,
+    0xf, 0xf, 0xf,
+    5,
+    0x0, 0x3, 0x4,
+};
+StandFilePoint points_42A[5] = {
+    {-55, 127, -315, 0x1158},
+    {-55, 127, -322, 0x1154},
+    {-55, 127, -363, 0x114b},
+    {-55, 127, -373, 0x00},
+    {-72, 127, -373, 0x1121},
+};
+
+
+StandFileTile tile_42B = {
+    0x1a3b0a, 0x26,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_42B[3] = {
+    {135, 127, -458, 0x112f},
+    {47, 127, -462, 0x1133},
+    {45, 127, -358, 0x114f},
+};
+
+
+StandFileTile tile_42C = {
+    0x1a3b09, 0x26,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_42C[3] = {
+    {135, 127, -458, 0x00},
+    {136, 127, -462, 0x00},
+    {47, 127, -462, 0x112b},
+};
+
+
+StandFileTile tile_42D = {
+    0x1a3a0a, 0x26,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_42D[3] = {
+    {47, 127, -462, 0x1137},
+    {-36, 127, -435, 0x113f},
+    {45, 127, -358, 0x112b},
+};
+
+
+StandFileTile tile_42E = {
+    0x1a3a09, 0x26,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_42E[3] = {
+    {47, 127, -462, 0x00},
+    {-36, 127, -462, 0x00},
+    {-36, 127, -435, 0x1133},
+};
+
+
+StandFileTile tile_42F = {
+    0x1a390a, 0x26,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_42F[3] = {
+    {45, 127, -358, 0x113f},
+    {-45, 127, -435, 0x00},
+    {-45, 127, -417, 0x1143},
+};
+
+
+StandFileTile tile_430 = {
+    0x1a3909, 0x26,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_430[3] = {
+    {45, 127, -358, 0x1133},
+    {-36, 127, -435, 0x00},
+    {-45, 127, -435, 0x113b},
+};
+
+
+StandFileTile tile_431 = {
+    0x1a380a, 0x26,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_431[3] = {
+    {-45, 127, -417, 0x1147},
+    {-55, 127, -373, 0x114b},
+    {45, 127, -358, 0x113b},
+};
+
+
+StandFileTile tile_432 = {
+    0x1a3809, 0x26,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_432[3] = {
+    {-45, 127, -417, 0x00},
+    {-54, 127, -417, 0x00},
+    {-55, 127, -373, 0x1143},
+};
+
+
+StandFileTile tile_433 = {
+    0x1a3708, 0x26,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_433[3] = {
+    {-55, 127, -373, 0x1125},
+    {-55, 127, -363, 0x1154},
+    {45, 127, -358, 0x1143},
+};
+
+
+StandFileTile tile_434 = {
+    0x102e08, 0x26,
+    0x0,
+    0xb, 0xb, 0xb,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_434[4] = {
+    {145, 127, -245, 0x00},
+    {145, 127, -469, 0x00},
+    {135, 127, -458, 0x112b},
+    {45, 127, -358, 0x115d},
+};
+
+
+StandFileTile tile_435 = {
+    0x103308, 0x26,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_435[3] = {
+    {45, 127, -358, 0x114b},
+    {-55, 127, -363, 0x1125},
+    {-55, 127, -322, 0x1158},
+};
+
+
+StandFileTile tile_436 = {
+    0x102f08, 0x26,
+    0x0,
+    0xd, 0xd, 0xd,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_436[4] = {
+    {45, 127, -358, 0x1154},
+    {-55, 127, -322, 0x1125},
+    {-55, 127, -315, 0x00},
+    {-55, 127, -245, 0x115d},
+};
+
+
+StandFileTile tile_437 = {
+    0x102c08, 0x26,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_437[3] = {
+    {145, 127, -245, 0x114f},
+    {45, 127, -358, 0x1158},
+    {-55, 127, -245, 0x00},
+};
+
+
+StandFileTile tile_438 = {
+    0x19ee0a, 0x25,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_438[3] = {
+    {-49, 127, -106, 0x1165},
+    {-72, 127, -165, 0x1105},
+    {-72, 127, -106, 0x00},
+};
+
+
+StandFileTile tile_439 = {
+    0x19ee09, 0x25,
+    0x0,
+    0xf, 0xf, 0xf,
+    5,
+    0x0, 0x3, 0x4,
+};
+StandFilePoint points_439[5] = {
+    {-49, 127, -106, 0x117c},
+    {-49, 127, -117, 0x1178},
+    {-49, 127, -154, 0x1173},
+    {-49, 127, -165, 0x00},
+    {-72, 127, -165, 0x1161},
+};
+
+
+StandFileTile tile_43A = {
+    0x102208, 0x25,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_43A[3] = {
+    {145, 127, -233, 0x00},
+    {-49, 127, -233, 0x1173},
+    {48, 127, -138, 0x116f},
+};
+
+
+StandFileTile tile_43B = {
+    0x102108, 0x25,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_43B[3] = {
+    {145, 127, -36, 0x00},
+    {145, 127, -233, 0x116b},
+    {48, 127, -138, 0x1181},
+};
+
+
+StandFileTile tile_43C = {
+    0x102708, 0x25,
+    0x0,
+    0xd, 0xd, 0xd,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_43C[4] = {
+    {48, 127, -138, 0x116b},
+    {-49, 127, -233, 0x00},
+    {-49, 127, -165, 0x1165},
+    {-49, 127, -154, 0x1178},
+};
+
+
+StandFileTile tile_43D = {
+    0x102608, 0x25,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_43D[3] = {
+    {48, 127, -138, 0x1173},
+    {-49, 127, -154, 0x1165},
+    {-49, 127, -117, 0x117c},
+};
+
+
+StandFileTile tile_43E = {
+    0x102308, 0x25,
+    0x0,
+    0xd, 0xd, 0xd,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_43E[4] = {
+    {48, 127, -138, 0x1178},
+    {-49, 127, -117, 0x1165},
+    {-49, 127, -106, 0x00},
+    {-49, 127, -36, 0x1181},
+};
+
+
+StandFileTile tile_43F = {
+    0x101f08, 0x25,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_43F[3] = {
+    {145, 127, -36, 0x116f},
+    {48, 127, -138, 0x117c},
+    {-49, 127, -36, 0x00},
+};
+
+
+StandFileTile tile_440 = {
+    0x1b1108, 0x24,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_440[3] = {
+    {44, 127, 87, 0x118d},
+    {-36, 127, 163, 0x1189},
+    {145, 127, 197, 0x11a1},
+};
+
+
+StandFileTile tile_441 = {
+    0x1b1008, 0x24,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_441[3] = {
+    {-36, 127, 163, 0x00},
+    {-36, 127, 190, 0x00},
+    {145, 127, 197, 0x1185},
+};
+
+
+StandFileTile tile_442 = {
+    0x1b0f08, 0x24,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_442[3] = {
+    {44, 127, 87, 0x1199},
+    {-45, 127, 145, 0x1191},
+    {-36, 127, 163, 0x1185},
+};
+
+
+StandFileTile tile_443 = {
+    0x1b0e08, 0x24,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_443[3] = {
+    {-45, 127, 163, 0x00},
+    {-36, 127, 163, 0x118d},
+    {-45, 127, 145, 0x00},
+};
+
+
+StandFileTile tile_444 = {
+    0x1b0d08, 0x24,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_444[3] = {
+    {-56, 127, 92, 0x00},
+    {-54, 127, 145, 0x00},
+    {-45, 127, 145, 0x1199},
+};
+
+
+StandFileTile tile_445 = {
+    0x1b0c08, 0x24,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_445[3] = {
+    {-45, 127, 145, 0x118d},
+    {44, 127, 87, 0x11aa},
+    {-56, 127, 92, 0x1195},
+};
+
+
+StandFileTile tile_446 = {
+    0x101a08, 0x24,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_446[3] = {
+    {145, 127, -24, 0x00},
+    {-56, 127, -24, 0x11a5},
+    {44, 127, 87, 0x11a1},
+};
+
+
+StandFileTile tile_447 = {
+    0x101808, 0x24,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_447[3] = {
+    {145, 127, 197, 0x00},
+    {145, 127, -24, 0x119d},
+    {44, 127, 87, 0x1185},
+};
+
+
+StandFileTile tile_448 = {
+    0x103508, 0x24,
+    0x0,
+    0xd, 0xd, 0xd,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_448[4] = {
+    {44, 127, 87, 0x119d},
+    {-56, 127, -24, 0x00},
+    {-56, 127, 45, 0x11b4},
+    {-56, 127, 54, 0x11aa},
+};
+
+
+StandFileTile tile_449 = {
+    0x103608, 0x24,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_449[3] = {
+    {44, 127, 87, 0x11a5},
+    {-56, 127, 54, 0x11b4},
+    {-56, 127, 92, 0x1199},
+};
+
+
+StandFileTile tile_44A = {
+    0x19eb0a, 0x24,
+    0x0,
+    0xf, 0xf, 0xf,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_44A[5] = {
+    {-56, 127, 103, 0x11b4},
+    {-72, 127, 45, 0xf98},
+    {-72, 127, 54, 0xf94},
+    {-72, 127, 92, 0xf8f},
+    {-72, 127, 103, 0x00},
+};
+
+
+StandFileTile tile_44B = {
+    0x19eb09, 0x24,
+    0x0,
+    0xf, 0xf, 0xf,
+    5,
+    0x0, 0x3, 0x4,
+};
+StandFilePoint points_44B[5] = {
+    {-56, 127, 103, 0x00},
+    {-56, 127, 92, 0x11aa},
+    {-56, 127, 54, 0x11a5},
+    {-56, 127, 45, 0x00},
+    {-72, 127, 45, 0x11ae},
+};
+
+
+StandFileTile tile_44C = {
+    0xf7c08, 0x23,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_44C[4] = {
+    {-435, 0, 571, 0x11d3},
+    {-519, 0, 500, 0x00},
+    {-519, 0, 532, 0x1203},
+    {-519, 0, 571, 0x11bf},
+};
+
+
+StandFileTile tile_44D = {
+    0xba808, 0x23,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_44D[3] = {
+    {-519, 0, 608, 0x11c7},
+    {-435, 0, 571, 0x11ba},
+    {-519, 0, 571, 0x1203},
+};
+
+
+StandFileTile tile_44E = {
+    0xf6708, 0x23,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_44E[3] = {
+    {-439, 0, 608, 0x11f0},
+    {-353, 0, 608, 0x11cb},
+    {-435, 0, 571, 0x11c7},
+};
+
+
+StandFileTile tile_44F = {
+    0xba708, 0x23,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_44F[3] = {
+    {-519, 0, 608, 0x11f5},
+    {-439, 0, 608, 0x11c3},
+    {-435, 0, 571, 0x11bf},
+};
+
+
+StandFileTile tile_450 = {
+    0xba608, 0x23,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_450[3] = {
+    {-353, 0, 608, 0x00},
+    {-353, 0, 500, 0x11cf},
+    {-435, 0, 571, 0x11c3},
+};
+
+
+StandFileTile tile_451 = {
+    0xf6808, 0x23,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_451[3] = {
+    {-435, 0, 571, 0x11cb},
+    {-353, 0, 500, 0x13df},
+    {-439, 0, 500, 0x11d3},
+};
+
+
+StandFileTile tile_452 = {
+    0xba508, 0x23,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_452[3] = {
+    {-519, 0, 500, 0x11ba},
+    {-435, 0, 571, 0x11cf},
+    {-439, 0, 500, 0x13e3},
+};
+
+
+StandFileTile tile_453 = {
+    0x1afe0a, 0x22,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_453[3] = {
+    {-519, 0, 734, 0x11db},
+    {-362, 0, 716, 0x11e3},
+    {-435, 0, 679, 0x11f9},
+};
+
+
+StandFileTile tile_454 = {
+    0x1afe09, 0x22,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_454[3] = {
+    {-519, 0, 734, 0x00},
+    {-362, 0, 734, 0x00},
+    {-362, 0, 716, 0x11d7},
+};
+
+
+StandFileTile tile_455 = {
+    0x1afd0a, 0x22,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_455[3] = {
+    {-353, 0, 670, 0x11e3},
+    {-362, 0, 716, 0x00},
+    {-353, 0, 716, 0x00},
+};
+
+
+StandFileTile tile_456 = {
+    0x1afd09, 0x22,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_456[3] = {
+    {-353, 0, 670, 0x11ec},
+    {-435, 0, 679, 0x11d7},
+    {-362, 0, 716, 0x11df},
+};
+
+
+StandFileTile tile_457 = {
+    0x1afc08, 0x22,
+    0x0,
+    0xf, 0xf, 0xf,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_457[4] = {
+    {-344, 0, 608, 0x11ec},
+    {-353, 0, 670, 0x00},
+    {-344, 0, 670, 0x1505},
+    {-344, 0, 616, 0x00},
+};
+
+
+StandFileTile tile_458 = {
+    0x1afb08, 0x22,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_458[3] = {
+    {-344, 0, 608, 0x11f0},
+    {-435, 0, 679, 0x11e3},
+    {-353, 0, 670, 0x11e7},
+};
+
+
+StandFileTile tile_459 = {
+    0xf6608, 0x22,
+    0x0,
+    0xd, 0xd, 0xd,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_459[4] = {
+    {-435, 0, 679, 0x11ec},
+    {-344, 0, 608, 0x00},
+    {-353, 0, 608, 0x11c3},
+    {-439, 0, 608, 0x11f5},
+};
+
+
+StandFileTile tile_45A = {
+    0xb9508, 0x22,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_45A[3] = {
+    {-519, 0, 608, 0x11f9},
+    {-435, 0, 679, 0x11f0},
+    {-439, 0, 608, 0x11c7},
+};
+
+
+StandFileTile tile_45B = {
+    0xb9808, 0x22,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_45B[4] = {
+    {-519, 0, 734, 0x11d7},
+    {-435, 0, 679, 0x11f5},
+    {-519, 0, 608, 0x00},
+    {-519, 0, 641, 0x122e},
+};
+
+
+StandFileTile tile_45C = {
+    0x10590a, 0x21,
+    0x0,
+    0x3, 0x3, 0x3,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_45C[4] = {
+    {-551, 0, 608, 0x1203},
+    {-519, 0, 532, 0x00},
+    {-551, 0, 532, 0x1219},
+    {-551, 0, 571, 0x121e},
+};
+
+
+StandFileTile tile_45D = {
+    0x105909, 0x21,
+    0x0,
+    0x3, 0x3, 0x3,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_45D[4] = {
+    {-551, 0, 608, 0x00},
+    {-519, 0, 608, 0x11bf},
+    {-519, 0, 571, 0x11ba},
+    {-519, 0, 532, 0x11fe},
+};
+
+
+StandFileTile tile_45E = {
+    0xf7a08, 0x21,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_45E[4] = {
+    {-625, 0, 571, 0x1226},
+    {-709, 0, 500, 0x00},
+    {-709, 0, 532, 0x124d},
+    {-709, 0, 571, 0x120d},
+};
+
+
+StandFileTile tile_45F = {
+    0xbac08, 0x21,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_45F[3] = {
+    {-709, 0, 608, 0x1215},
+    {-625, 0, 571, 0x1208},
+    {-709, 0, 571, 0x124d},
+};
+
+
+StandFileTile tile_460 = {
+    0xf6208, 0x21,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_460[3] = {
+    {-630, 0, 608, 0x1237},
+    {-551, 0, 608, 0x121e},
+    {-625, 0, 571, 0x1215},
+};
+
+
+StandFileTile tile_461 = {
+    0xbab08, 0x21,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_461[3] = {
+    {-709, 0, 608, 0x123b},
+    {-630, 0, 608, 0x1211},
+    {-625, 0, 571, 0x120d},
+};
+
+
+StandFileTile tile_462 = {
+    0xf7b08, 0x21,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_462[4] = {
+    {-551, 0, 571, 0x11fe},
+    {-551, 0, 532, 0x00},
+    {-551, 0, 500, 0x1222},
+    {-625, 0, 571, 0x121e},
+};
+
+
+StandFileTile tile_463 = {
+    0xbaa08, 0x21,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_463[3] = {
+    {-551, 0, 608, 0x11fe},
+    {-551, 0, 571, 0x1219},
+    {-625, 0, 571, 0x1211},
+};
+
+
+StandFileTile tile_464 = {
+    0xf6308, 0x21,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_464[3] = {
+    {-625, 0, 571, 0x1219},
+    {-551, 0, 500, 0x13fc},
+    {-630, 0, 500, 0x1226},
+};
+
+
+StandFileTile tile_465 = {
+    0xba908, 0x21,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_465[3] = {
+    {-709, 0, 500, 0x1208},
+    {-625, 0, 571, 0x1222},
+    {-630, 0, 500, 0x1400},
+};
+
+
+StandFileTile tile_466 = {
+    0x105a0a, 0x20,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_466[3] = {
+    {-551, 0, 734, 0x122e},
+    {-519, 0, 641, 0x00},
+    {-551, 0, 641, 0x1232},
+};
+
+
+StandFileTile tile_467 = {
+    0x105a09, 0x20,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_467[3] = {
+    {-551, 0, 734, 0x00},
+    {-519, 0, 734, 0x11f9},
+    {-519, 0, 641, 0x122a},
+};
+
+
+StandFileTile tile_468 = {
+    0xb9a08, 0x20,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_468[4] = {
+    {-551, 0, 734, 0x122a},
+    {-551, 0, 641, 0x00},
+    {-551, 0, 608, 0x1237},
+    {-625, 0, 679, 0x123f},
+};
+
+
+StandFileTile tile_469 = {
+    0xf6108, 0x20,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_469[3] = {
+    {-625, 0, 679, 0x1232},
+    {-551, 0, 608, 0x1211},
+    {-630, 0, 608, 0x123b},
+};
+
+
+StandFileTile tile_46A = {
+    0xb9908, 0x20,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_46A[3] = {
+    {-709, 0, 608, 0x1243},
+    {-625, 0, 679, 0x1237},
+    {-630, 0, 608, 0x1215},
+};
+
+
+StandFileTile tile_46B = {
+    0xb9b08, 0x20,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_46B[3] = {
+    {-709, 0, 734, 0x00},
+    {-551, 0, 734, 0x1232},
+    {-625, 0, 679, 0x1243},
+};
+
+
+StandFileTile tile_46C = {
+    0xb9c08, 0x20,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_46C[4] = {
+    {-709, 0, 734, 0x123f},
+    {-625, 0, 679, 0x123b},
+    {-709, 0, 608, 0x00},
+    {-709, 0, 641, 0x1278},
+};
+
+
+StandFileTile tile_46D = {
+    0x105d0a, 0x1f,
+    0x0,
+    0x3, 0x3, 0x3,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_46D[4] = {
+    {-741, 0, 608, 0x124d},
+    {-709, 0, 532, 0x00},
+    {-741, 0, 532, 0x1263},
+    {-741, 0, 571, 0x1268},
+};
+
+
+StandFileTile tile_46E = {
+    0x105d09, 0x1f,
+    0x0,
+    0x3, 0x3, 0x3,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_46E[4] = {
+    {-741, 0, 608, 0x00},
+    {-709, 0, 608, 0x120d},
+    {-709, 0, 571, 0x1208},
+    {-709, 0, 532, 0x1248},
+};
+
+
+StandFileTile tile_46F = {
+    0xf7708, 0x1f,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_46F[4] = {
+    {-815, 0, 571, 0x1270},
+    {-899, 0, 500, 0x00},
+    {-899, 0, 532, 0x12b4},
+    {-899, 0, 571, 0x1257},
+};
+
+
+StandFileTile tile_470 = {
+    0xbb008, 0x1f,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_470[3] = {
+    {-899, 0, 608, 0x125f},
+    {-815, 0, 571, 0x1252},
+    {-899, 0, 571, 0x12bc},
+};
+
+
+StandFileTile tile_471 = {
+    0xf5a08, 0x1f,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_471[3] = {
+    {-820, 0, 608, 0x127c},
+    {-741, 0, 608, 0x1268},
+    {-815, 0, 571, 0x125f},
+};
+
+
+StandFileTile tile_472 = {
+    0xbaf08, 0x1f,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_472[3] = {
+    {-899, 0, 608, 0x1280},
+    {-820, 0, 608, 0x125b},
+    {-815, 0, 571, 0x1257},
+};
+
+
+StandFileTile tile_473 = {
+    0xf7908, 0x1f,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_473[4] = {
+    {-741, 0, 571, 0x1248},
+    {-741, 0, 532, 0x00},
+    {-741, 0, 500, 0x126c},
+    {-815, 0, 571, 0x1268},
+};
+
+
+StandFileTile tile_474 = {
+    0xbae08, 0x1f,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_474[3] = {
+    {-741, 0, 608, 0x1248},
+    {-741, 0, 571, 0x1263},
+    {-815, 0, 571, 0x125b},
+};
+
+
+StandFileTile tile_475 = {
+    0xf5b08, 0x1f,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_475[3] = {
+    {-815, 0, 571, 0x1263},
+    {-741, 0, 500, 0x131e},
+    {-820, 0, 500, 0x1270},
+};
+
+
+StandFileTile tile_476 = {
+    0xbad08, 0x1f,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_476[3] = {
+    {-899, 0, 500, 0x1252},
+    {-815, 0, 571, 0x126c},
+    {-820, 0, 500, 0x1322},
+};
+
+
+StandFileTile tile_477 = {
+    0x105e0a, 0x1e,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_477[3] = {
+    {-741, 0, 734, 0x1278},
+    {-709, 0, 641, 0x00},
+    {-741, 0, 641, 0x128d},
+};
+
+
+StandFileTile tile_478 = {
+    0x105e09, 0x1e,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_478[3] = {
+    {-741, 0, 734, 0x00},
+    {-709, 0, 734, 0x1243},
+    {-709, 0, 641, 0x1274},
+};
+
+
+StandFileTile tile_479 = {
+    0xf5e08, 0x1e,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_479[3] = {
+    {-815, 0, 679, 0x128d},
+    {-741, 0, 608, 0x125b},
+    {-820, 0, 608, 0x1280},
+};
+
+
+StandFileTile tile_47A = {
+    0xb9d08, 0x1e,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_47A[3] = {
+    {-899, 0, 608, 0x1284},
+    {-815, 0, 679, 0x127c},
+    {-820, 0, 608, 0x125f},
+};
+
+
+StandFileTile tile_47B = {
+    0xba008, 0x1e,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_47B[4] = {
+    {-899, 0, 734, 0x1289},
+    {-815, 0, 679, 0x1280},
+    {-899, 0, 608, 0x00},
+    {-899, 0, 640, 0x1296},
+};
+
+
+StandFileTile tile_47C = {
+    0xb9f08, 0x1e,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_47C[3] = {
+    {-899, 0, 734, 0x00},
+    {-741, 0, 734, 0x128d},
+    {-815, 0, 679, 0x1284},
+};
+
+
+StandFileTile tile_47D = {
+    0xb9e08, 0x1e,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_47D[4] = {
+    {-741, 0, 734, 0x1274},
+    {-741, 0, 641, 0x00},
+    {-741, 0, 608, 0x127c},
+    {-815, 0, 679, 0x1289},
+};
+
+
+StandFileTile tile_47E = {
+    0x10650a, 0x1d,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_47E[3] = {
+    {-899, 0, 734, 0x1296},
+    {-931, 0, 640, 0x12a2},
+    {-931, 0, 734, 0x00},
+};
+
+
+StandFileTile tile_47F = {
+    0x106509, 0x1d,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_47F[3] = {
+    {-899, 0, 734, 0x1284},
+    {-899, 0, 640, 0x00},
+    {-931, 0, 640, 0x1292},
+};
+
+
+StandFileTile tile_480 = {
+    0xf5808, 0x1d,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_480[3] = {
+    {-1010, 0, 679, 0x12a2},
+    {-931, 0, 608, 0x12ce},
+    {-1014, 0, 608, 0x129e},
+};
+
+
+StandFileTile tile_481 = {
+    0xb9108, 0x1d,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_481[3] = {
+    {-1114, 0, 608, 0x12ab},
+    {-1010, 0, 679, 0x129a},
+    {-1014, 0, 608, 0x12d2},
+};
+
+
+StandFileTile tile_482 = {
+    0xb9208, 0x1d,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_482[4] = {
+    {-931, 0, 734, 0x1292},
+    {-931, 0, 640, 0x00},
+    {-931, 0, 608, 0x129a},
+    {-1010, 0, 679, 0x12a7},
+};
+
+
+StandFileTile tile_483 = {
+    0xb9308, 0x1d,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_483[3] = {
+    {-1114, 0, 734, 0x00},
+    {-931, 0, 734, 0x12a2},
+    {-1010, 0, 679, 0x12ab},
+};
+
+
+StandFileTile tile_484 = {
+    0xb9408, 0x1d,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_484[4] = {
+    {-1114, 0, 734, 0x12a7},
+    {-1010, 0, 679, 0x129e},
+    {-1114, 0, 608, 0x12c4},
+    {-1114, 0, 616, 0x00},
+};
+
+
+StandFileTile tile_485 = {
+    0x10670a, 0x1c,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_485[3] = {
+    {-899, 0, 571, 0x12b4},
+    {-931, 0, 532, 0x12d6},
+    {-931, 0, 571, 0x12b8},
+};
+
+
+StandFileTile tile_486 = {
+    0x106709, 0x1c,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_486[3] = {
+    {-899, 0, 571, 0x1252},
+    {-899, 0, 532, 0x00},
+    {-931, 0, 532, 0x12b0},
+};
+
+
+StandFileTile tile_487 = {
+    0x10680a, 0x1c,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_487[3] = {
+    {-931, 0, 608, 0x12bc},
+    {-899, 0, 571, 0x12b0},
+    {-931, 0, 571, 0x12db},
+};
+
+
+StandFileTile tile_488 = {
+    0x106809, 0x1c,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_488[3] = {
+    {-931, 0, 608, 0x00},
+    {-899, 0, 608, 0x1257},
+    {-899, 0, 571, 0x12b8},
+};
+
+
+StandFileTile tile_489 = {
+    0xbd20a, 0x1c,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_489[3] = {
+    {-1141, 0, 616, 0x12c4},
+    {-1114, 0, 525, 0x00},
+    {-1141, 0, 525, 0x1738},
+};
+
+
+StandFileTile tile_48A = {
+    0xbd209, 0x1c,
+    0x0,
+    0x6, 0x6, 0x6,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_48A[4] = {
+    {-1141, 0, 616, 0x00},
+    {-1114, 0, 616, 0x12ab},
+    {-1114, 0, 608, 0x12c9},
+    {-1114, 0, 525, 0x12c0},
+};
+
+
+StandFileTile tile_48B = {
+    0xba408, 0x1c,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_48B[4] = {
+    {-1114, 0, 608, 0x12d2},
+    {-1010, 0, 571, 0x12e3},
+    {-1114, 0, 500, 0x00},
+    {-1114, 0, 525, 0x12c4},
+};
+
+
+StandFileTile tile_48C = {
+    0xf5608, 0x1c,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_48C[3] = {
+    {-1014, 0, 608, 0x129a},
+    {-931, 0, 608, 0x12db},
+    {-1010, 0, 571, 0x12d2},
+};
+
+
+StandFileTile tile_48D = {
+    0xba308, 0x1c,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_48D[3] = {
+    {-1114, 0, 608, 0x129e},
+    {-1014, 0, 608, 0x12ce},
+    {-1010, 0, 571, 0x12c9},
+};
+
+
+StandFileTile tile_48E = {
+    0xf7808, 0x1c,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_48E[4] = {
+    {-931, 0, 571, 0x12b0},
+    {-931, 0, 532, 0x00},
+    {-931, 0, 500, 0x12df},
+    {-1010, 0, 571, 0x12db},
+};
+
+
+StandFileTile tile_48F = {
+    0xba208, 0x1c,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_48F[3] = {
+    {-931, 0, 608, 0x12b8},
+    {-931, 0, 571, 0x12d6},
+    {-1010, 0, 571, 0x12ce},
+};
+
+
+StandFileTile tile_490 = {
+    0xf5708, 0x1c,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_490[3] = {
+    {-1010, 0, 571, 0x12d6},
+    {-931, 0, 500, 0x133b},
+    {-1014, 0, 500, 0x12e3},
+};
+
+
+StandFileTile tile_491 = {
+    0xba108, 0x1c,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_491[3] = {
+    {-1114, 0, 500, 0x12c9},
+    {-1010, 0, 571, 0x12df},
+    {-1014, 0, 500, 0x133f},
+};
+
+
+StandFileTile tile_492 = {
+    0x105c0a, 0x1b,
+    0x0,
+    0x3, 0x3, 0x3,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_492[4] = {
+    {-741, 0, 500, 0x12ec},
+    {-709, 0, 423, 0x00},
+    {-741, 0, 423, 0x1326},
+    {-741, 0, 462, 0x132b},
+};
+
+
+StandFileTile tile_493 = {
+    0x105c09, 0x1b,
+    0x0,
+    0x3, 0x3, 0x3,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_493[4] = {
+    {-741, 0, 500, 0x00},
+    {-709, 0, 500, 0x13f8},
+    {-709, 0, 462, 0x13f3},
+    {-709, 0, 423, 0x12e7},
+};
+
+
+StandFileTile tile_494 = {
+    0x105b0a, 0x1b,
+    0x0,
+    0x3, 0x3, 0x3,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_494[4] = {
+    {-741, 0, 390, 0x12f6},
+    {-709, 0, 299, 0x00},
+    {-741, 0, 299, 0x1365},
+    {-741, 0, 353, 0x1369},
+};
+
+
+StandFileTile tile_495 = {
+    0x105b09, 0x1b,
+    0x0,
+    0x3, 0x3, 0x3,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_495[4] = {
+    {-741, 0, 390, 0x00},
+    {-709, 0, 390, 0x13bc},
+    {-709, 0, 353, 0x13b8},
+    {-709, 0, 299, 0x12f1},
+};
+
+
+StandFileTile tile_496 = {
+    0x10690a, 0x1b,
+    0x0,
+    0x3, 0x3, 0x3,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_496[4] = {
+    {-899, 0, 500, 0x1300},
+    {-931, 0, 423, 0x1343},
+    {-931, 0, 462, 0x1348},
+    {-931, 0, 500, 0x00},
+};
+
+
+StandFileTile tile_497 = {
+    0x106909, 0x1b,
+    0x0,
+    0x3, 0x3, 0x3,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_497[4] = {
+    {-899, 0, 500, 0x131a},
+    {-899, 0, 462, 0x1315},
+    {-899, 0, 423, 0x00},
+    {-931, 0, 423, 0x12fb},
+};
+
+
+StandFileTile tile_498 = {
+    0x106a0a, 0x1b,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_498[3] = {
+    {-899, 0, 390, 0x1309},
+    {-931, 0, 353, 0x1382},
+    {-931, 0, 390, 0x00},
+};
+
+
+StandFileTile tile_499 = {
+    0x106a09, 0x1b,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_499[3] = {
+    {-899, 0, 390, 0x1360},
+    {-899, 0, 353, 0x130d},
+    {-931, 0, 353, 0x1305},
+};
+
+
+StandFileTile tile_49A = {
+    0x106b0a, 0x1b,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_49A[3] = {
+    {-899, 0, 353, 0x1311},
+    {-931, 0, 299, 0x137e},
+    {-931, 0, 353, 0x1309},
+};
+
+
+StandFileTile tile_49B = {
+    0x106b09, 0x1b,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_49B[3] = {
+    {-899, 0, 353, 0x135c},
+    {-899, 0, 299, 0x00},
+    {-931, 0, 299, 0x130d},
+};
+
+
+StandFileTile tile_49C = {
+    0xf7508, 0x1b,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_49C[4] = {
+    {-815, 0, 462, 0x1333},
+    {-899, 0, 408, 0x00},
+    {-899, 0, 423, 0x1300},
+    {-899, 0, 462, 0x131a},
+};
+
+
+StandFileTile tile_49D = {
+    0xbc008, 0x1b,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_49D[3] = {
+    {-899, 0, 500, 0x1322},
+    {-815, 0, 462, 0x1315},
+    {-899, 0, 462, 0x1300},
+};
+
+
+StandFileTile tile_49E = {
+    0xf5c08, 0x1b,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_49E[3] = {
+    {-820, 0, 500, 0x126c},
+    {-741, 0, 500, 0x132b},
+    {-815, 0, 462, 0x1322},
+};
+
+
+StandFileTile tile_49F = {
+    0xbbf08, 0x1b,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_49F[3] = {
+    {-899, 0, 500, 0x1270},
+    {-820, 0, 500, 0x131e},
+    {-815, 0, 462, 0x131a},
+};
+
+
+StandFileTile tile_4A0 = {
+    0xf7608, 0x1b,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_4A0[4] = {
+    {-741, 0, 462, 0x12e7},
+    {-741, 0, 423, 0x00},
+    {-741, 0, 408, 0x132f},
+    {-815, 0, 462, 0x132b},
+};
+
+
+StandFileTile tile_4A1 = {
+    0xbbe08, 0x1b,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4A1[3] = {
+    {-741, 0, 500, 0x12e7},
+    {-741, 0, 462, 0x1326},
+    {-815, 0, 462, 0x131e},
+};
+
+
+StandFileTile tile_4A2 = {
+    0xf5d08, 0x1b,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4A2[3] = {
+    {-815, 0, 462, 0x1326},
+    {-741, 0, 408, 0x1354},
+    {-820, 0, 408, 0x1333},
+};
+
+
+StandFileTile tile_4A3 = {
+    0xbbd08, 0x1b,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4A3[3] = {
+    {-899, 0, 408, 0x1315},
+    {-815, 0, 462, 0x132f},
+    {-820, 0, 408, 0x1358},
+};
+
+
+StandFileTile tile_4A4 = {
+    0xbb408, 0x1b,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4A4[3] = {
+    {-1114, 0, 500, 0x133f},
+    {-1010, 0, 462, 0x1350},
+    {-1114, 0, 408, 0x00},
+};
+
+
+StandFileTile tile_4A5 = {
+    0xf5308, 0x1b,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4A5[3] = {
+    {-1014, 0, 500, 0x12df},
+    {-931, 0, 500, 0x1348},
+    {-1010, 0, 462, 0x133f},
+};
+
+
+StandFileTile tile_4A6 = {
+    0xbb308, 0x1b,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4A6[3] = {
+    {-1114, 0, 500, 0x12e3},
+    {-1014, 0, 500, 0x133b},
+    {-1010, 0, 462, 0x1337},
+};
+
+
+StandFileTile tile_4A7 = {
+    0xf7108, 0x1b,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_4A7[4] = {
+    {-931, 0, 462, 0x12fb},
+    {-931, 0, 423, 0x00},
+    {-931, 0, 408, 0x134c},
+    {-1010, 0, 462, 0x1348},
+};
+
+
+StandFileTile tile_4A8 = {
+    0xbb208, 0x1b,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4A8[3] = {
+    {-931, 0, 500, 0x12fb},
+    {-931, 0, 462, 0x1343},
+    {-1010, 0, 462, 0x133b},
+};
+
+
+StandFileTile tile_4A9 = {
+    0xf5408, 0x1b,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4A9[3] = {
+    {-1010, 0, 462, 0x1343},
+    {-931, 0, 408, 0x1376},
+    {-1014, 0, 408, 0x1350},
+};
+
+
+StandFileTile tile_4AA = {
+    0xbb108, 0x1b,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4AA[3] = {
+    {-1114, 0, 408, 0x1337},
+    {-1010, 0, 462, 0x134c},
+    {-1014, 0, 408, 0x137a},
+};
+
+
+StandFileTile tile_4AB = {
+    0xf5908, 0x1b,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4AB[3] = {
+    {-820, 0, 408, 0x132f},
+    {-741, 0, 408, 0x1369},
+    {-815, 0, 353, 0x1358},
+};
+
+
+StandFileTile tile_4AC = {
+    0xbcf08, 0x1b,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4AC[3] = {
+    {-899, 0, 408, 0x1333},
+    {-820, 0, 408, 0x1354},
+    {-815, 0, 353, 0x1360},
+};
+
+
+StandFileTile tile_4AD = {
+    0xf6b08, 0x1b,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4AD[3] = {
+    {-815, 0, 353, 0x136e},
+    {-899, 0, 299, 0x1311},
+    {-899, 0, 353, 0x1360},
+};
+
+
+StandFileTile tile_4AE = {
+    0xbd008, 0x1b,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4AE[4] = {
+    {-899, 0, 408, 0x1358},
+    {-815, 0, 353, 0x135c},
+    {-899, 0, 353, 0x1309},
+    {-899, 0, 390, 0x00},
+};
+
+
+StandFileTile tile_4AF = {
+    0xf6c08, 0x1b,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4AF[3] = {
+    {-741, 0, 353, 0x12f1},
+    {-741, 0, 299, 0x136e},
+    {-815, 0, 353, 0x1369},
+};
+
+
+StandFileTile tile_4B0 = {
+    0xbce08, 0x1b,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_4B0[4] = {
+    {-741, 0, 408, 0x00},
+    {-741, 0, 390, 0x12f1},
+    {-741, 0, 353, 0x1365},
+    {-815, 0, 353, 0x1354},
+};
+
+
+StandFileTile tile_4B1 = {
+    0xbcd08, 0x1b,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4B1[3] = {
+    {-899, 0, 299, 0x135c},
+    {-815, 0, 353, 0x1365},
+    {-741, 0, 299, 0x00},
+};
+
+
+StandFileTile tile_4B2 = {
+    0xbc408, 0x1b,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4B2[3] = {
+    {-1114, 0, 408, 0x137a},
+    {-1010, 0, 353, 0x1387},
+    {-1114, 0, 299, 0x00},
+};
+
+
+StandFileTile tile_4B3 = {
+    0xf5508, 0x1b,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4B3[3] = {
+    {-1014, 0, 408, 0x134c},
+    {-931, 0, 408, 0x1382},
+    {-1010, 0, 353, 0x137a},
+};
+
+
+StandFileTile tile_4B4 = {
+    0xbc308, 0x1b,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4B4[3] = {
+    {-1114, 0, 408, 0x1350},
+    {-1014, 0, 408, 0x1376},
+    {-1010, 0, 353, 0x1372},
+};
+
+
+StandFileTile tile_4B5 = {
+    0xf6d08, 0x1b,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4B5[3] = {
+    {-931, 0, 353, 0x130d},
+    {-931, 0, 299, 0x1387},
+    {-1010, 0, 353, 0x1382},
+};
+
+
+StandFileTile tile_4B6 = {
+    0xbc208, 0x1b,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_4B6[4] = {
+    {-931, 0, 408, 0x00},
+    {-931, 0, 390, 0x1305},
+    {-931, 0, 353, 0x137e},
+    {-1010, 0, 353, 0x1376},
+};
+
+
+StandFileTile tile_4B7 = {
+    0xbc108, 0x1b,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4B7[3] = {
+    {-1114, 0, 299, 0x1372},
+    {-1010, 0, 353, 0x137e},
+    {-931, 0, 299, 0x00},
+};
+
+
+StandFileTile tile_4B8 = {
+    0x10580a, 0x1a,
+    0x0,
+    0x3, 0x3, 0x3,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4B8[4] = {
+    {-551, 0, 500, 0x1390},
+    {-519, 0, 423, 0x00},
+    {-551, 0, 423, 0x1404},
+    {-551, 0, 462, 0x1409},
+};
+
+
+StandFileTile tile_4B9 = {
+    0x105809, 0x1a,
+    0x0,
+    0x3, 0x3, 0x3,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_4B9[4] = {
+    {-551, 0, 500, 0x00},
+    {-519, 0, 500, 0x13db},
+    {-519, 0, 462, 0x13d6},
+    {-519, 0, 423, 0x138b},
+};
+
+
+StandFileTile tile_4BA = {
+    0x10570a, 0x1a,
+    0x0,
+    0x3, 0x3, 0x3,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4BA[4] = {
+    {-551, 0, 390, 0x139a},
+    {-519, 0, 299, 0x00},
+    {-551, 0, 299, 0x13c9},
+    {-551, 0, 353, 0x13cd},
+};
+
+
+StandFileTile tile_4BB = {
+    0x105709, 0x1a,
+    0x0,
+    0x3, 0x3, 0x3,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_4BB[4] = {
+    {-551, 0, 390, 0x00},
+    {-519, 0, 390, 0x13a3},
+    {-519, 0, 353, 0x139f},
+    {-519, 0, 299, 0x1395},
+};
+
+
+StandFileTile tile_4BC = {
+    0xf6e08, 0x1a,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4BC[3] = {
+    {-435, 0, 353, 0x13b4},
+    {-519, 0, 299, 0x139a},
+    {-519, 0, 353, 0x13a3},
+};
+
+
+StandFileTile tile_4BD = {
+    0xbc808, 0x1a,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4BD[4] = {
+    {-519, 0, 408, 0x13ac},
+    {-435, 0, 353, 0x139f},
+    {-519, 0, 353, 0x139a},
+    {-519, 0, 390, 0x00},
+};
+
+
+StandFileTile tile_4BE = {
+    0xf6508, 0x1a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4BE[3] = {
+    {-439, 0, 408, 0x13eb},
+    {-353, 0, 408, 0x13b0},
+    {-435, 0, 353, 0x13ac},
+};
+
+
+StandFileTile tile_4BF = {
+    0xbc708, 0x1a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4BF[3] = {
+    {-519, 0, 408, 0x13ef},
+    {-439, 0, 408, 0x13a8},
+    {-435, 0, 353, 0x13a3},
+};
+
+
+StandFileTile tile_4C0 = {
+    0xbc608, 0x1a,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4C0[3] = {
+    {-353, 0, 408, 0x00},
+    {-353, 0, 299, 0x13b4},
+    {-435, 0, 353, 0x13a8},
+};
+
+
+StandFileTile tile_4C1 = {
+    0xbc508, 0x1a,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4C1[3] = {
+    {-519, 0, 299, 0x139f},
+    {-435, 0, 353, 0x13b0},
+    {-353, 0, 299, 0x00},
+};
+
+
+StandFileTile tile_4C2 = {
+    0xf6f08, 0x1a,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4C2[3] = {
+    {-625, 0, 353, 0x13d2},
+    {-709, 0, 299, 0x12f6},
+    {-709, 0, 353, 0x13bc},
+};
+
+
+StandFileTile tile_4C3 = {
+    0xbcc08, 0x1a,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4C3[4] = {
+    {-709, 0, 408, 0x13c5},
+    {-625, 0, 353, 0x13b8},
+    {-709, 0, 353, 0x12f6},
+    {-709, 0, 390, 0x00},
+};
+
+
+StandFileTile tile_4C4 = {
+    0xf5f08, 0x1a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4C4[3] = {
+    {-630, 0, 408, 0x140d},
+    {-551, 0, 408, 0x13cd},
+    {-625, 0, 353, 0x13c5},
+};
+
+
+StandFileTile tile_4C5 = {
+    0xbcb08, 0x1a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4C5[3] = {
+    {-709, 0, 408, 0x1411},
+    {-630, 0, 408, 0x13c1},
+    {-625, 0, 353, 0x13bc},
+};
+
+
+StandFileTile tile_4C6 = {
+    0xf7008, 0x1a,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4C6[3] = {
+    {-551, 0, 353, 0x1395},
+    {-551, 0, 299, 0x13d2},
+    {-625, 0, 353, 0x13cd},
+};
+
+
+StandFileTile tile_4C7 = {
+    0xbca08, 0x1a,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_4C7[4] = {
+    {-551, 0, 408, 0x00},
+    {-551, 0, 390, 0x1395},
+    {-551, 0, 353, 0x13c9},
+    {-625, 0, 353, 0x13c1},
+};
+
+
+StandFileTile tile_4C8 = {
+    0xbc908, 0x1a,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4C8[3] = {
+    {-709, 0, 299, 0x13b8},
+    {-625, 0, 353, 0x13c9},
+    {-551, 0, 299, 0x00},
+};
+
+
+StandFileTile tile_4C9 = {
+    0xf7208, 0x1a,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_4C9[4] = {
+    {-435, 0, 462, 0x13ef},
+    {-519, 0, 408, 0x00},
+    {-519, 0, 423, 0x1390},
+    {-519, 0, 462, 0x13db},
+};
+
+
+StandFileTile tile_4CA = {
+    0xbb808, 0x1a,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4CA[3] = {
+    {-519, 0, 500, 0x13e3},
+    {-435, 0, 462, 0x13d6},
+    {-519, 0, 462, 0x1390},
+};
+
+
+StandFileTile tile_4CB = {
+    0xf6908, 0x1a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4CB[3] = {
+    {-439, 0, 500, 0x11cf},
+    {-353, 0, 500, 0x13e7},
+    {-435, 0, 462, 0x13e3},
+};
+
+
+StandFileTile tile_4CC = {
+    0xbb708, 0x1a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4CC[3] = {
+    {-519, 0, 500, 0x11d3},
+    {-439, 0, 500, 0x13df},
+    {-435, 0, 462, 0x13db},
+};
+
+
+StandFileTile tile_4CD = {
+    0xbb608, 0x1a,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4CD[3] = {
+    {-353, 0, 500, 0x00},
+    {-353, 0, 408, 0x13eb},
+    {-435, 0, 462, 0x13df},
+};
+
+
+StandFileTile tile_4CE = {
+    0xf6a08, 0x1a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4CE[3] = {
+    {-435, 0, 462, 0x13e7},
+    {-353, 0, 408, 0x13a8},
+    {-439, 0, 408, 0x13ef},
+};
+
+
+StandFileTile tile_4CF = {
+    0xbb508, 0x1a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4CF[3] = {
+    {-519, 0, 408, 0x13d6},
+    {-435, 0, 462, 0x13eb},
+    {-439, 0, 408, 0x13ac},
+};
+
+
+StandFileTile tile_4D0 = {
+    0xf7308, 0x1a,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_4D0[4] = {
+    {-625, 0, 462, 0x1411},
+    {-709, 0, 408, 0x00},
+    {-709, 0, 423, 0x12ec},
+    {-709, 0, 462, 0x13f8},
+};
+
+
+StandFileTile tile_4D1 = {
+    0xbbc08, 0x1a,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4D1[3] = {
+    {-709, 0, 500, 0x1400},
+    {-625, 0, 462, 0x13f3},
+    {-709, 0, 462, 0x12ec},
+};
+
+
+StandFileTile tile_4D2 = {
+    0xf6408, 0x1a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4D2[3] = {
+    {-630, 0, 500, 0x1222},
+    {-551, 0, 500, 0x1409},
+    {-625, 0, 462, 0x1400},
+};
+
+
+StandFileTile tile_4D3 = {
+    0xbbb08, 0x1a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4D3[3] = {
+    {-709, 0, 500, 0x1226},
+    {-630, 0, 500, 0x13fc},
+    {-625, 0, 462, 0x13f8},
+};
+
+
+StandFileTile tile_4D4 = {
+    0xf7408, 0x1a,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_4D4[4] = {
+    {-551, 0, 462, 0x138b},
+    {-551, 0, 423, 0x00},
+    {-551, 0, 408, 0x140d},
+    {-625, 0, 462, 0x1409},
+};
+
+
+StandFileTile tile_4D5 = {
+    0xbba08, 0x1a,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4D5[3] = {
+    {-551, 0, 500, 0x138b},
+    {-551, 0, 462, 0x1404},
+    {-625, 0, 462, 0x13fc},
+};
+
+
+StandFileTile tile_4D6 = {
+    0xf6008, 0x1a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4D6[3] = {
+    {-625, 0, 462, 0x1404},
+    {-551, 0, 408, 0x13c1},
+    {-630, 0, 408, 0x1411},
+};
+
+
+StandFileTile tile_4D7 = {
+    0xbb908, 0x1a,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4D7[3] = {
+    {-709, 0, 408, 0x13f3},
+    {-625, 0, 462, 0x140d},
+    {-630, 0, 408, 0x13c5},
+};
+
+
+StandFileTile tile_4D8 = {
+    0x90908, 0x18,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4D8[3] = {
+    {-734, 127, 199, 0x1484},
+    {-788, 127, 199, 0x1429},
+    {-734, 127, 303, 0x1419},
+};
+
+
+StandFileTile tile_4D9 = {
+    0x7d008, 0x18,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4D9[3] = {
+    {-679, 127, 199, 0x1480},
+    {-734, 127, 199, 0x1415},
+    {-734, 127, 303, 0x141d},
+};
+
+
+StandFileTile tile_4DA = {
+    0x7d108, 0x18,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4DA[3] = {
+    {-679, 127, 408, 0x00},
+    {-679, 127, 199, 0x1419},
+    {-734, 127, 303, 0x1421},
+};
+
+
+StandFileTile tile_4DB = {
+    0x90808, 0x18,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4DB[3] = {
+    {-734, 127, 408, 0x173e},
+    {-679, 127, 408, 0x141d},
+    {-734, 127, 303, 0x1425},
+};
+
+
+StandFileTile tile_4DC = {
+    0x7d208, 0x18,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4DC[3] = {
+    {-788, 127, 408, 0x1742},
+    {-734, 127, 408, 0x1421},
+    {-734, 127, 303, 0x1432},
+};
+
+
+StandFileTile tile_4DD = {
+    0x104d08, 0x18,
+    0x0,
+    0xd, 0xd, 0xd,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_4DD[4] = {
+    {-734, 127, 303, 0x1415},
+    {-788, 127, 199, 0x00},
+    {-788, 127, 290, 0x178d},
+    {-788, 127, 300, 0x142e},
+};
+
+
+StandFileTile tile_4DE = {
+    0x104e08, 0x18,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4DE[3] = {
+    {-734, 127, 303, 0x1429},
+    {-788, 127, 300, 0x178d},
+    {-788, 127, 337, 0x1432},
+};
+
+
+StandFileTile tile_4DF = {
+    0x7d308, 0x18,
+    0x0,
+    0xd, 0xd, 0xd,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4DF[4] = {
+    {-788, 127, 408, 0x1425},
+    {-734, 127, 303, 0x142e},
+    {-788, 127, 337, 0x178d},
+    {-788, 127, 348, 0x00},
+};
+
+
+StandFileTile tile_4E0 = {
+    0x90108, 0x17,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4E0[3] = {
+    {-734, 127, -226, 0x1541},
+    {-788, 127, -226, 0x14f5},
+    {-734, 127, -122, 0x143b},
+};
+
+
+StandFileTile tile_4E1 = {
+    0x5e108, 0x17,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4E1[3] = {
+    {-679, 127, -226, 0x1545},
+    {-734, 127, -226, 0x1437},
+    {-734, 127, -122, 0x14ed},
+};
+
+
+StandFileTile tile_4E2 = {
+    0x1a130a, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4E2[3] = {
+    {-788, 127, 82, 0x1443},
+    {-806, 127, -9, 0x1448},
+    {-806, 127, 82, 0x00},
+};
+
+
+StandFileTile tile_4E3 = {
+    0x1a1309, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_4E3[4] = {
+    {-788, 127, 82, 0x14cc},
+    {-788, 127, 41, 0x14c0},
+    {-788, 127, -9, 0x00},
+    {-806, 127, -9, 0x143f},
+};
+
+
+StandFileTile tile_4E4 = {
+    0x1a1208, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4E4[3] = {
+    {-806, 127, 82, 0x143f},
+    {-806, 127, -9, 0x144c},
+    {-865, 127, 36, 0x146c},
+};
+
+
+StandFileTile tile_4E5 = {
+    0x1a1108, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4E5[3] = {
+    {-806, 127, -9, 0x1450},
+    {-897, 127, -9, 0x145c},
+    {-865, 127, 36, 0x1448},
+};
+
+
+StandFileTile tile_4E6 = {
+    0x1a100a, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4E6[3] = {
+    {-806, 127, -9, 0x1454},
+    {-897, 127, -18, 0x00},
+    {-897, 127, -9, 0x144c},
+};
+
+
+StandFileTile tile_4E7 = {
+    0x1a1009, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4E7[3] = {
+    {-806, 127, -9, 0x00},
+    {-806, 127, -18, 0x00},
+    {-897, 127, -18, 0x1450},
+};
+
+
+StandFileTile tile_4E8 = {
+    0x1a0f0a, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4E8[3] = {
+    {-865, 127, 36, 0x145c},
+    {-924, 127, -9, 0x00},
+    {-924, 127, 9, 0x1460},
+};
+
+
+StandFileTile tile_4E9 = {
+    0x1a0f09, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4E9[3] = {
+    {-865, 127, 36, 0x144c},
+    {-897, 127, -9, 0x00},
+    {-924, 127, -9, 0x1458},
+};
+
+
+StandFileTile tile_4EA = {
+    0x1a0e08, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4EA[3] = {
+    {-865, 127, 36, 0x1458},
+    {-924, 127, 9, 0x1464},
+    {-924, 127, 63, 0x1474},
+};
+
+
+StandFileTile tile_4EB = {
+    0x1a0d0a, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4EB[3] = {
+    {-924, 127, 9, 0x1468},
+    {-942, 127, 63, 0x00},
+    {-924, 127, 63, 0x1460},
+};
+
+
+StandFileTile tile_4EC = {
+    0x1a0d09, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4EC[3] = {
+    {-924, 127, 9, 0x00},
+    {-942, 127, 9, 0x1649},
+    {-942, 127, 63, 0x1464},
+};
+
+
+StandFileTile tile_4ED = {
+    0x1a0c08, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4ED[3] = {
+    {-806, 127, 82, 0x1448},
+    {-865, 127, 36, 0x1470},
+    {-897, 127, 82, 0x147c},
+};
+
+
+StandFileTile tile_4EE = {
+    0x1a0b0a, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4EE[3] = {
+    {-865, 127, 36, 0x1474},
+    {-924, 127, 82, 0x00},
+    {-897, 127, 82, 0x146c},
+};
+
+
+StandFileTile tile_4EF = {
+    0x1a0b09, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4EF[3] = {
+    {-865, 127, 36, 0x1460},
+    {-924, 127, 63, 0x00},
+    {-924, 127, 82, 0x1470},
+};
+
+
+StandFileTile tile_4F0 = {
+    0x1a0a0a, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4F0[3] = {
+    {-806, 127, 82, 0x147c},
+    {-897, 127, 91, 0x00},
+    {-806, 127, 91, 0x00},
+};
+
+
+StandFileTile tile_4F1 = {
+    0x1a0a09, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4F1[3] = {
+    {-806, 127, 82, 0x146c},
+    {-897, 127, 82, 0x00},
+    {-897, 127, 91, 0x1478},
+};
+
+
+StandFileTile tile_4F2 = {
+    0x90308, 0x17,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4F2[3] = {
+    {-734, 127, 199, 0x1419},
+    {-679, 127, 199, 0x1495},
+    {-734, 127, 155, 0x1484},
+};
+
+
+StandFileTile tile_4F3 = {
+    0x5d808, 0x17,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4F3[3] = {
+    {-788, 127, 199, 0x1415},
+    {-734, 127, 199, 0x1480},
+    {-734, 127, 155, 0x1491},
+};
+
+
+StandFileTile tile_4F4 = {
+    0x90e08, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4F4[4] = {
+    {-525, 127, 36, 0x14a5},
+    {-371, 127, 41, 0xfb8},
+    {-371, 127, -18, 0x00},
+    {-399, 127, -8, 0x14b6},
+};
+
+
+StandFileTile tile_4F5 = {
+    0x1a360a, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4F5[3] = {
+    {-788, 127, 109, 0x1491},
+    {-734, 127, 155, 0x149d},
+    {-779, 127, 109, 0x00},
+};
+
+
+StandFileTile tile_4F6 = {
+    0x1a3609, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4F6[3] = {
+    {-788, 127, 109, 0x00},
+    {-788, 127, 199, 0x1484},
+    {-734, 127, 155, 0x148d},
+};
+
+
+StandFileTile tile_4F7 = {
+    0x1a350a, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4F7[3] = {
+    {-679, 127, 199, 0x1499},
+    {-688, 127, 109, 0x149d},
+    {-734, 127, 155, 0x1480},
+};
+
+
+StandFileTile tile_4F8 = {
+    0x1a3509, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4F8[3] = {
+    {-679, 127, 199, 0x00},
+    {-679, 127, 109, 0x00},
+    {-688, 127, 109, 0x1495},
+};
+
+
+StandFileTile tile_4F9 = {
+    0x1a3408, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4F9[3] = {
+    {-688, 127, 109, 0x14d5},
+    {-779, 127, 109, 0x148d},
+    {-734, 127, 155, 0x1495},
+};
+
+
+StandFileTile tile_4FA = {
+    0x1a330a, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4FA[3] = {
+    {-371, 127, 82, 0x14a5},
+    {-525, 127, 36, 0x14aa},
+    {-399, 127, 82, 0x00},
+};
+
+
+StandFileTile tile_4FB = {
+    0x1a3309, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_4FB[4] = {
+    {-371, 127, 82, 0xfb3},
+    {-371, 127, 45, 0xfb8},
+    {-371, 127, 41, 0x1488},
+    {-525, 127, 36, 0x14a1},
+};
+
+
+StandFileTile tile_4FC = {
+    0x1a3208, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4FC[3] = {
+    {-399, 127, 82, 0x14a1},
+    {-525, 127, 36, 0x14ae},
+    {-399, 127, 91, 0x00},
+};
+
+
+StandFileTile tile_4FD = {
+    0x1a3108, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4FD[3] = {
+    {-661, 127, 91, 0x00},
+    {-399, 127, 91, 0x14aa},
+    {-525, 127, 36, 0x14ba},
+};
+
+
+StandFileTile tile_4FE = {
+    0x1a300a, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4FE[3] = {
+    {-525, 127, 36, 0x14b6},
+    {-399, 127, -18, 0x00},
+    {-661, 127, -18, 0x14ba},
+};
+
+
+StandFileTile tile_4FF = {
+    0x1a3009, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_4FF[3] = {
+    {-525, 127, 36, 0x1488},
+    {-399, 127, -8, 0x00},
+    {-399, 127, -18, 0x14b2},
+};
+
+
+StandFileTile tile_500 = {
+    0x1a2d08, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_500[5] = {
+    {-525, 127, 36, 0x14b2},
+    {-661, 127, -18, 0x00},
+    {-661, 127, -9, 0x14dd},
+    {-661, 127, 82, 0x00},
+    {-661, 127, 91, 0x14ae},
+};
+
+
+StandFileTile tile_501 = {
+    0x1a2c08, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_501[3] = {
+    {-788, 127, 41, 0x14c4},
+    {-779, 127, -9, 0x00},
+    {-788, 127, -9, 0x1443},
+};
+
+
+StandFileTile tile_502 = {
+    0x1a2b0a, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_502[3] = {
+    {-788, 127, 41, 0x14c8},
+    {-688, 127, -9, 0x14e5},
+    {-779, 127, -9, 0x14c0},
+};
+
+
+StandFileTile tile_503 = {
+    0x1a2b09, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_503[3] = {
+    {-788, 127, 41, 0x14cc},
+    {-688, 127, 82, 0x14d9},
+    {-688, 127, -9, 0x14c4},
+};
+
+
+StandFileTile tile_504 = {
+    0x1a2a08, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_504[4] = {
+    {-788, 127, 82, 0x00},
+    {-779, 127, 82, 0x14d1},
+    {-688, 127, 82, 0x14c8},
+    {-788, 127, 41, 0x1443},
+};
+
+
+StandFileTile tile_505 = {
+    0x1a290a, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_505[3] = {
+    {-779, 127, 109, 0x14d5},
+    {-688, 127, 82, 0x14cc},
+    {-779, 127, 82, 0x00},
+};
+
+
+StandFileTile tile_506 = {
+    0x1a2909, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_506[3] = {
+    {-779, 127, 109, 0x149d},
+    {-688, 127, 109, 0x00},
+    {-688, 127, 82, 0x14d1},
+};
+
+
+StandFileTile tile_507 = {
+    0x1a280a, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_507[3] = {
+    {-688, 127, 82, 0x14dd},
+    {-661, 127, -9, 0x00},
+    {-688, 127, -9, 0x14c8},
+};
+
+
+StandFileTile tile_508 = {
+    0x1a2809, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_508[3] = {
+    {-688, 127, 82, 0x00},
+    {-661, 127, 82, 0x14ba},
+    {-661, 127, -9, 0x14d9},
+};
+
+
+StandFileTile tile_509 = {
+    0x1a260a, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_509[3] = {
+    {-779, 127, -9, 0x14e5},
+    {-688, 127, -36, 0x14e9},
+    {-779, 127, -36, 0x00},
+};
+
+
+StandFileTile tile_50A = {
+    0x1a2609, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_50A[3] = {
+    {-779, 127, -9, 0x14c4},
+    {-688, 127, -9, 0x00},
+    {-688, 127, -36, 0x14e1},
+};
+
+
+StandFileTile tile_50B = {
+    0x1a2508, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_50B[3] = {
+    {-779, 127, -36, 0x14e1},
+    {-688, 127, -36, 0x14ed},
+    {-734, 127, -122, 0x14f5},
+};
+
+
+StandFileTile tile_50C = {
+    0x1a240a, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_50C[3] = {
+    {-688, 127, -36, 0x14f1},
+    {-679, 127, -226, 0x143b},
+    {-734, 127, -122, 0x14e9},
+};
+
+
+StandFileTile tile_50D = {
+    0x1a2409, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_50D[3] = {
+    {-688, 127, -36, 0x00},
+    {-679, 127, -36, 0x00},
+    {-679, 127, -226, 0x14ed},
+};
+
+
+StandFileTile tile_50E = {
+    0x1a230a, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_50E[3] = {
+    {-788, 127, -226, 0x14f9},
+    {-779, 127, -36, 0x14e9},
+    {-734, 127, -122, 0x1437},
+};
+
+
+StandFileTile tile_50F = {
+    0x1a2309, 0x17,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_50F[3] = {
+    {-788, 127, -226, 0x00},
+    {-788, 127, -36, 0x00},
+    {-779, 127, -36, 0x14f5},
+};
+
+
+StandFileTile tile_510 = {
+    0x10700a, 0x16,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_510[3] = {
+    {-181, 0, 616, 0x1501},
+    {-208, 0, 670, 0x00},
+    {-181, 0, 670, 0x17e7},
+};
+
+
+StandFileTile tile_511 = {
+    0x107009, 0x16,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_511[3] = {
+    {-181, 0, 616, 0x00},
+    {-208, 0, 616, 0x151b},
+    {-208, 0, 670, 0x14fd},
+};
+
+
+StandFileTile tile_512 = {
+    0xbd10a, 0x16,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_512[3] = {
+    {-344, 0, 670, 0x1509},
+    {-317, 0, 616, 0x00},
+    {-344, 0, 616, 0x11e7},
+};
+
+
+StandFileTile tile_513 = {
+    0xbd109, 0x16,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_513[3] = {
+    {-344, 0, 670, 0x00},
+    {-317, 0, 670, 0x150d},
+    {-317, 0, 616, 0x1505},
+};
+
+
+StandFileTile tile_514 = {
+    0x5ee08, 0x16,
+    0x0,
+    0xa, 0xa, 0xa,
+    5,
+    0x0, 0x3, 0x4,
+};
+StandFilePoint points_514[5] = {
+    {-317, 0, 466, 0x00},
+    {-317, 0, 616, 0x1509},
+    {-317, 0, 670, 0x00},
+    {-317, 0, 707, 0x1521},
+    {-258, 0, 587, 0x1513},
+};
+
+
+StandFileTile tile_515 = {
+    0x90b08, 0x16,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_515[3] = {
+    {-258, 0, 466, 0x1531},
+    {-317, 0, 466, 0x150d},
+    {-258, 0, 587, 0x1517},
+};
+
+
+StandFileTile tile_516 = {
+    0x5ea08, 0x16,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_516[3] = {
+    {-208, 0, 466, 0x1535},
+    {-258, 0, 466, 0x1513},
+    {-258, 0, 587, 0x151b},
+};
+
+
+StandFileTile tile_517 = {
+    0x5ec08, 0x16,
+    0x0,
+    0xa, 0xa, 0xa,
+    5,
+    0x0, 0x3, 0x4,
+};
+StandFilePoint points_517[5] = {
+    {-208, 0, 707, 0x00},
+    {-208, 0, 670, 0x1501},
+    {-208, 0, 616, 0x00},
+    {-208, 0, 466, 0x1517},
+    {-258, 0, 587, 0x1521},
+};
+
+
+StandFileTile tile_518 = {
+    0x11608, 0x16,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_518[3] = {
+    {-208, 0, 707, 0x151b},
+    {-258, 0, 587, 0x150d},
+    {-317, 0, 707, 0x00},
+};
+
+
+StandFileTile tile_519 = {
+    0x5ef08, 0x16,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_519[3] = {
+    {-208, 0, 226, 0x10e1},
+    {-317, 0, 226, 0x152d},
+    {-258, 0, 346, 0x1529},
+};
+
+
+StandFileTile tile_51A = {
+    0x5eb08, 0x16,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_51A[3] = {
+    {-208, 0, 466, 0x00},
+    {-208, 0, 226, 0x1525},
+    {-258, 0, 346, 0x1535},
+};
+
+
+StandFileTile tile_51B = {
+    0x5ed08, 0x16,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_51B[3] = {
+    {-258, 0, 346, 0x1525},
+    {-317, 0, 226, 0x00},
+    {-317, 0, 466, 0x1531},
+};
+
+
+StandFileTile tile_51C = {
+    0x90a08, 0x16,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_51C[3] = {
+    {-258, 0, 346, 0x152d},
+    {-317, 0, 466, 0x1513},
+    {-258, 0, 466, 0x1535},
+};
+
+
+StandFileTile tile_51D = {
+    0x5e708, 0x16,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_51D[3] = {
+    {-208, 0, 466, 0x1529},
+    {-258, 0, 346, 0x1531},
+    {-258, 0, 466, 0x1517},
+};
+
+
+StandFileTile tile_51E = {
+    0x5e208, 0x15,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_51E[3] = {
+    {-788, 127, -480, 0x00},
+    {-788, 127, -226, 0x1541},
+    {-734, 127, -353, 0x153d},
+};
+
+
+StandFileTile tile_51F = {
+    0x5df08, 0x15,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_51F[3] = {
+    {-679, 127, -480, 0x1822},
+    {-788, 127, -480, 0x1539},
+    {-734, 127, -353, 0x1549},
+};
+
+
+StandFileTile tile_520 = {
+    0x90208, 0x15,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_520[3] = {
+    {-734, 127, -353, 0x1539},
+    {-788, 127, -226, 0x1437},
+    {-734, 127, -226, 0x1545},
+};
+
+
+StandFileTile tile_521 = {
+    0x5e308, 0x15,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_521[3] = {
+    {-734, 127, -353, 0x1541},
+    {-734, 127, -226, 0x143b},
+    {-679, 127, -226, 0x1549},
+};
+
+
+StandFileTile tile_522 = {
+    0x3f708, 0x15,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_522[3] = {
+    {-679, 127, -480, 0x153d},
+    {-734, 127, -353, 0x1545},
+    {-679, 127, -226, 0x00},
+};
+
+
+StandFileTile tile_523 = {
+    0x9460a, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_523[4] = {
+    {-1060, 127, 91, 0x1552},
+    {-1060, 118, -18, 0x00},
+    {-1060, 118, 82, 0x15b4},
+    {-1060, 118, 91, 0x1601},
+};
+
+
+StandFileTile tile_524 = {
+    0x94609, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_524[3] = {
+    {-1060, 127, 91, 0x1658},
+    {-1060, 127, -18, 0x00},
+    {-1060, 118, -18, 0x154d},
+};
+
+
+StandFileTile tile_525 = {
+    0x94a08, 0x14,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_525[3] = {
+    {-1132, 45, 136, 0x16b6},
+    {-1132, 45, 127, 0x1670},
+    {-1132, 36, 127, 0x1694},
+};
+
+
+StandFileTile tile_526 = {
+    0x94b08, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_526[3] = {
+    {-1069, 36, 127, 0x166c},
+    {-1069, 45, 127, 0x16b2},
+    {-1069, 45, 136, 0x15a2},
+};
+
+
+StandFileTile tile_527 = {
+    0x94c08, 0x14,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_527[3] = {
+    {-1132, 63, 154, 0x160c},
+    {-1132, 63, 145, 0x1660},
+    {-1132, 54, 145, 0x1694},
+};
+
+
+StandFileTile tile_528 = {
+    0x94d08, 0x14,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_528[3] = {
+    {-1132, 54, 145, 0x16ae},
+    {-1132, 54, 136, 0x1668},
+    {-1132, 45, 136, 0x1694},
+};
+
+
+StandFileTile tile_529 = {
+    0x94f08, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_529[3] = {
+    {-1069, 45, 136, 0x1664},
+    {-1069, 54, 136, 0x16aa},
+    {-1069, 54, 145, 0x15a2},
+};
+
+
+StandFileTile tile_52A = {
+    0x95008, 0x14,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_52A[3] = {
+    {-1132, 36, 127, 0x16be},
+    {-1132, 36, 118, 0x1678},
+    {-1132, 27, 118, 0x1694},
+};
+
+
+StandFileTile tile_52B = {
+    0x95108, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_52B[3] = {
+    {-1069, 27, 118, 0x1674},
+    {-1069, 36, 118, 0x16ba},
+    {-1069, 36, 127, 0x15a2},
+};
+
+
+StandFileTile tile_52C = {
+    0x95208, 0x14,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_52C[3] = {
+    {-1132, 27, 118, 0x16c6},
+    {-1132, 27, 109, 0x1680},
+    {-1132, 18, 109, 0x1694},
+};
+
+
+StandFileTile tile_52D = {
+    0x95308, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_52D[3] = {
+    {-1069, 18, 109, 0x167c},
+    {-1069, 27, 109, 0x16c2},
+    {-1069, 27, 118, 0x15a2},
+};
+
+
+StandFileTile tile_52E = {
+    0x95408, 0x14,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_52E[3] = {
+    {-1132, 18, 109, 0x16ce},
+    {-1132, 18, 100, 0x1688},
+    {-1132, 9, 100, 0x1694},
+};
+
+
+StandFileTile tile_52F = {
+    0x95508, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_52F[3] = {
+    {-1069, 9, 100, 0x1684},
+    {-1069, 18, 100, 0x16ca},
+    {-1069, 18, 109, 0x15a2},
+};
+
+
+StandFileTile tile_530 = {
+    0x95608, 0x14,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_530[3] = {
+    {-1132, 9, 100, 0x16d6},
+    {-1132, 9, 91, 0x1690},
+    {-1132, 0, 91, 0x1694},
+};
+
+
+StandFileTile tile_531 = {
+    0x95708, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_531[3] = {
+    {-1069, 0, 91, 0x168c},
+    {-1069, 9, 91, 0x16d2},
+    {-1069, 9, 100, 0x15a2},
+};
+
+
+StandFileTile tile_532 = {
+    0x96508, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_532[3] = {
+    {-1060, 100, 109, 0x15f5},
+    {-1060, 109, 109, 0x1619},
+    {-1060, 109, 100, 0x15b4},
+};
+
+
+StandFileTile tile_533 = {
+    0x96608, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_533[3] = {
+    {-1060, 109, 100, 0x15cd},
+    {-1060, 118, 100, 0x1611},
+    {-1060, 118, 91, 0x15b4},
+};
+
+
+StandFileTile tile_534 = {
+    0x96708, 0x14,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_534[3] = {
+    {-1060, 91, 118, 0x15ed},
+    {-1060, 100, 118, 0x1621},
+    {-1060, 100, 109, 0x15b4},
+};
+
+
+StandFileTile tile_535 = {
+    0x96808, 0x14,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_535[3] = {
+    {-1060, 82, 127, 0x15d5},
+    {-1060, 91, 127, 0x1629},
+    {-1060, 91, 118, 0x15b4},
+};
+
+
+StandFileTile tile_536 = {
+    0x96908, 0x14,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_536[3] = {
+    {-1060, 72, 136, 0x15dd},
+    {-1060, 82, 136, 0x1631},
+    {-1060, 82, 127, 0x00},
+};
+
+
+StandFileTile tile_537 = {
+    0x96a08, 0x14,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_537[3] = {
+    {-1060, 63, 145, 0x15e5},
+    {-1060, 72, 145, 0x1639},
+    {-1060, 72, 136, 0x15b4},
+};
+
+
+StandFileTile tile_538 = {
+    0x9770a, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    9,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_538[9] = {
+    {-1069, 63, 154, 0x15ac},
+    {-1069, 0, 100, 0x00},
+    {-1069, 0, 91, 0x1586},
+    {-1069, 9, 100, 0x157e},
+    {-1069, 18, 109, 0x1576},
+    {-1069, 27, 118, 0x156e},
+    {-1069, 36, 127, 0x155a},
+    {-1069, 45, 136, 0x1566},
+    {-1069, 54, 145, 0x00},
+};
+
+
+StandFileTile tile_539 = {
+    0x97709, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_539[3] = {
+    {-1069, 63, 154, 0x00},
+    {-1069, 54, 154, 0x00},
+    {-1069, 0, 100, 0x15a2},
+};
+
+
+StandFileTile tile_53A = {
+    0x97c0a, 0x14,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_53A[3] = {
+    {-1060, 63, 145, 0x15b4},
+    {-1060, 118, 82, 0x00},
+    {-1060, 54, 145, 0x15c1},
+};
+
+
+StandFileTile tile_53B = {
+    0x97c09, 0x14,
+    0x0,
+    0x9, 0x9, 0x9,
+    8,
+    0x0, 0x6, 0x7,
+};
+StandFilePoint points_53B[8] = {
+    {-1060, 63, 145, 0x159e},
+    {-1060, 72, 136, 0x00},
+    {-1060, 82, 127, 0x1596},
+    {-1060, 91, 118, 0x1592},
+    {-1060, 100, 109, 0x158a},
+    {-1060, 109, 100, 0x158e},
+    {-1060, 118, 91, 0x154d},
+    {-1060, 118, 82, 0x15b0},
+};
+
+
+StandFileTile tile_53C = {
+    0x97d0a, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_53C[3] = {
+    {-1069, 63, 145, 0x15c1},
+    {-1060, 54, 145, 0x00},
+    {-1069, 54, 145, 0x165c},
+};
+
+
+StandFileTile tile_53D = {
+    0x97d09, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_53D[3] = {
+    {-1069, 63, 145, 0x1606},
+    {-1060, 63, 145, 0x15b0},
+    {-1060, 54, 145, 0x15bd},
+};
+
+
+StandFileTile tile_53E = {
+    0x9950a, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_53E[3] = {
+    {-1014, 0, 91, 0x15c9},
+    {-996, 0, -18, 0x00},
+    {-1051, 0, -18, 0x16f6},
+};
+
+
+StandFileTile tile_53F = {
+    0x99509, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_53F[3] = {
+    {-1014, 0, 91, 0x00},
+    {-996, 0, 91, 0x00},
+    {-996, 0, -18, 0x15c5},
+};
+
+
+StandFileTile tile_540 = {
+    0x96c0a, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_540[3] = {
+    {-1060, 109, 100, 0x15d1},
+    {-996, 118, 100, 0x1615},
+    {-1060, 118, 100, 0x158e},
+};
+
+
+StandFileTile tile_541 = {
+    0x96c09, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_541[3] = {
+    {-1060, 109, 100, 0x1619},
+    {-996, 109, 100, 0x00},
+    {-996, 118, 100, 0x15cd},
+};
+
+
+StandFileTile tile_542 = {
+    0x96d0a, 0x14,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_542[3] = {
+    {-1060, 82, 127, 0x15d9},
+    {-996, 91, 127, 0x162d},
+    {-1060, 91, 127, 0x1596},
+};
+
+
+StandFileTile tile_543 = {
+    0x96d09, 0x14,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_543[3] = {
+    {-1060, 82, 127, 0x1631},
+    {-996, 82, 127, 0x00},
+    {-996, 91, 127, 0x15d5},
+};
+
+
+StandFileTile tile_544 = {
+    0x9700a, 0x14,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_544[3] = {
+    {-1060, 72, 136, 0x15e1},
+    {-996, 82, 136, 0x1635},
+    {-1060, 82, 136, 0x159a},
+};
+
+
+StandFileTile tile_545 = {
+    0x97009, 0x14,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_545[3] = {
+    {-1060, 72, 136, 0x1639},
+    {-996, 72, 136, 0x00},
+    {-996, 82, 136, 0x15dd},
+};
+
+
+StandFileTile tile_546 = {
+    0x9710a, 0x14,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_546[3] = {
+    {-1060, 63, 145, 0x15e9},
+    {-996, 72, 145, 0x163d},
+    {-1060, 72, 145, 0x159e},
+};
+
+
+StandFileTile tile_547 = {
+    0x97109, 0x14,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_547[3] = {
+    {-1060, 63, 145, 0x1606},
+    {-996, 63, 145, 0x00},
+    {-996, 72, 145, 0x15e5},
+};
+
+
+StandFileTile tile_548 = {
+    0x9740a, 0x14,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_548[3] = {
+    {-1060, 91, 118, 0x15f1},
+    {-996, 100, 118, 0x1625},
+    {-1060, 100, 118, 0x1592},
+};
+
+
+StandFileTile tile_549 = {
+    0x97409, 0x14,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_549[3] = {
+    {-1060, 91, 118, 0x1629},
+    {-996, 91, 118, 0x00},
+    {-996, 100, 118, 0x15ed},
+};
+
+
+StandFileTile tile_54A = {
+    0x9760a, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_54A[3] = {
+    {-1060, 100, 109, 0x15f9},
+    {-996, 109, 109, 0x161d},
+    {-1060, 109, 109, 0x158a},
+};
+
+
+StandFileTile tile_54B = {
+    0x97609, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_54B[3] = {
+    {-1060, 100, 109, 0x1621},
+    {-996, 100, 109, 0x00},
+    {-996, 109, 109, 0x15f5},
+};
+
+
+StandFileTile tile_54C = {
+    0x9450a, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_54C[3] = {
+    {-996, 127, 91, 0x1601},
+    {-1060, 118, 91, 0x1611},
+    {-996, 118, 91, 0x00},
+};
+
+
+StandFileTile tile_54D = {
+    0x94509, 0x14,
+    0x0,
+    0x6, 0x6, 0x6,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_54D[4] = {
+    {-996, 127, 91, 0x164f},
+    {-1001, 127, 91, 0x1654},
+    {-1060, 127, 91, 0x154d},
+    {-1060, 118, 91, 0x15fd},
+};
+
+
+StandFileTile tile_54E = {
+    0x9490a, 0x14,
+    0x0,
+    0x7, 0x7, 0x7,
+    5,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_54E[5] = {
+    {-1132, 63, 145, 0x160c},
+    {-996, 63, 208, 0x00},
+    {-996, 63, 145, 0x15e9},
+    {-1060, 63, 145, 0x15c1},
+    {-1069, 63, 145, 0x165c},
+};
+
+
+StandFileTile tile_54F = {
+    0x94909, 0x14,
+    0x0,
+    0x7, 0x7, 0x7,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_54F[4] = {
+    {-1132, 63, 145, 0x155e},
+    {-1132, 63, 154, 0x16a6},
+    {-1132, 63, 208, 0x00},
+    {-996, 63, 208, 0x1606},
+};
+
+
+StandFileTile tile_550 = {
+    0x96b0a, 0x14,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_550[3] = {
+    {-1060, 118, 100, 0x1615},
+    {-996, 118, 91, 0x15fd},
+    {-1060, 118, 91, 0x158e},
+};
+
+
+StandFileTile tile_551 = {
+    0x96b09, 0x14,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_551[3] = {
+    {-1060, 118, 100, 0x15cd},
+    {-996, 118, 100, 0x00},
+    {-996, 118, 91, 0x1611},
+};
+
+
+StandFileTile tile_552 = {
+    0x9750a, 0x14,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_552[3] = {
+    {-1060, 109, 109, 0x161d},
+    {-996, 109, 100, 0x15d1},
+    {-1060, 109, 100, 0x158a},
+};
+
+
+StandFileTile tile_553 = {
+    0x97509, 0x14,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_553[3] = {
+    {-1060, 109, 109, 0x15f5},
+    {-996, 109, 109, 0x00},
+    {-996, 109, 100, 0x1619},
+};
+
+
+StandFileTile tile_554 = {
+    0x9730a, 0x14,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_554[3] = {
+    {-1060, 100, 118, 0x1625},
+    {-996, 100, 109, 0x15f9},
+    {-1060, 100, 109, 0x1592},
+};
+
+
+StandFileTile tile_555 = {
+    0x97309, 0x14,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_555[3] = {
+    {-1060, 100, 118, 0x15ed},
+    {-996, 100, 118, 0x00},
+    {-996, 100, 109, 0x1621},
+};
+
+
+StandFileTile tile_556 = {
+    0x96e0a, 0x14,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_556[3] = {
+    {-1060, 91, 127, 0x162d},
+    {-996, 91, 118, 0x15f1},
+    {-1060, 91, 118, 0x1596},
+};
+
+
+StandFileTile tile_557 = {
+    0x96e09, 0x14,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_557[3] = {
+    {-1060, 91, 127, 0x15d5},
+    {-996, 91, 127, 0x00},
+    {-996, 91, 118, 0x1629},
+};
+
+
+StandFileTile tile_558 = {
+    0x96f0a, 0x14,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_558[3] = {
+    {-1060, 82, 136, 0x1635},
+    {-996, 82, 127, 0x15d9},
+    {-1060, 82, 127, 0x159a},
+};
+
+
+StandFileTile tile_559 = {
+    0x96f09, 0x14,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_559[3] = {
+    {-1060, 82, 136, 0x15dd},
+    {-996, 82, 136, 0x00},
+    {-996, 82, 127, 0x1631},
+};
+
+
+StandFileTile tile_55A = {
+    0x9720a, 0x14,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_55A[3] = {
+    {-1060, 72, 145, 0x163d},
+    {-996, 72, 136, 0x15e1},
+    {-1060, 72, 136, 0x159e},
+};
+
+
+StandFileTile tile_55B = {
+    0x97209, 0x14,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_55B[3] = {
+    {-1060, 72, 145, 0x15e5},
+    {-996, 72, 145, 0x00},
+    {-996, 72, 136, 0x1639},
+};
+
+
+StandFileTile tile_55C = {
+    0xbef08, 0x14,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_55C[3] = {
+    {-1001, 127, -18, 0x00},
+    {-1060, 127, -18, 0x1658},
+    {-1001, 127, 36, 0x1645},
+};
+
+
+StandFileTile tile_55D = {
+    0xbed08, 0x14,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_55D[3] = {
+    {-942, 127, -18, 0x00},
+    {-1001, 127, -18, 0x1641},
+    {-1001, 127, 36, 0x1649},
+};
+
+
+StandFileTile tile_55E = {
+    0xbeb08, 0x14,
+    0x0,
+    0xa, 0xa, 0xa,
+    5,
+    0x0, 0x3, 0x4,
+};
+StandFilePoint points_55E[5] = {
+    {-942, 127, 91, 0x00},
+    {-942, 127, 63, 0x1468},
+    {-942, 127, 9, 0x00},
+    {-942, 127, -18, 0x1645},
+    {-1001, 127, 36, 0x164f},
+};
+
+
+StandFileTile tile_55F = {
+    0xbf008, 0x14,
+    0x0,
+    0xd, 0xd, 0xd,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_55F[4] = {
+    {-1001, 127, 91, 0x1601},
+    {-996, 127, 91, 0x00},
+    {-942, 127, 91, 0x1649},
+    {-1001, 127, 36, 0x1654},
+};
+
+
+StandFileTile tile_560 = {
+    0xbec08, 0x14,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_560[3] = {
+    {-1060, 127, 91, 0x1601},
+    {-1001, 127, 91, 0x164f},
+    {-1001, 127, 36, 0x1658},
+};
+
+
+StandFileTile tile_561 = {
+    0x93808, 0x14,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_561[3] = {
+    {-1060, 127, 91, 0x1654},
+    {-1001, 127, 36, 0x1641},
+    {-1060, 127, -18, 0x1552},
+};
+
+
+StandFileTile tile_562 = {
+    0x9590a, 0x14,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_562[3] = {
+    {-1069, 54, 145, 0x1660},
+    {-1132, 63, 145, 0x1606},
+    {-1069, 63, 145, 0x15bd},
+};
+
+
+StandFileTile tile_563 = {
+    0x95909, 0x14,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_563[3] = {
+    {-1069, 54, 145, 0x16aa},
+    {-1132, 54, 145, 0x155e},
+    {-1132, 63, 145, 0x165c},
+};
+
+
+StandFileTile tile_564 = {
+    0x95a0a, 0x14,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_564[3] = {
+    {-1069, 45, 136, 0x1668},
+    {-1132, 54, 136, 0x16ae},
+    {-1069, 54, 136, 0x1566},
+};
+
+
+StandFileTile tile_565 = {
+    0x95a09, 0x14,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_565[3] = {
+    {-1069, 45, 136, 0x16b2},
+    {-1132, 45, 136, 0x1562},
+    {-1132, 54, 136, 0x1664},
+};
+
+
+StandFileTile tile_566 = {
+    0x9640a, 0x14,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_566[3] = {
+    {-1069, 36, 127, 0x1670},
+    {-1132, 45, 127, 0x16b6},
+    {-1069, 45, 127, 0x155a},
+};
+
+
+StandFileTile tile_567 = {
+    0x96409, 0x14,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_567[3] = {
+    {-1069, 36, 127, 0x16ba},
+    {-1132, 36, 127, 0x1556},
+    {-1132, 45, 127, 0x166c},
+};
+
+
+StandFileTile tile_568 = {
+    0x9620a, 0x14,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_568[3] = {
+    {-1069, 27, 118, 0x1678},
+    {-1132, 36, 118, 0x16be},
+    {-1069, 36, 118, 0x156e},
+};
+
+
+StandFileTile tile_569 = {
+    0x96209, 0x14,
+    0x0,
+    0xb, 0xb, 0xb,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_569[3] = {
+    {-1069, 27, 118, 0x16c2},
+    {-1132, 27, 118, 0x156a},
+    {-1132, 36, 118, 0x1674},
+};
+
+
+StandFileTile tile_56A = {
+    0x95b0a, 0x14,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_56A[3] = {
+    {-1069, 18, 109, 0x1680},
+    {-1132, 27, 109, 0x16c6},
+    {-1069, 27, 109, 0x1576},
+};
+
+
+StandFileTile tile_56B = {
+    0x95b09, 0x14,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_56B[3] = {
+    {-1069, 18, 109, 0x16ca},
+    {-1132, 18, 109, 0x1572},
+    {-1132, 27, 109, 0x167c},
+};
+
+
+StandFileTile tile_56C = {
+    0x95e0a, 0x14,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_56C[3] = {
+    {-1069, 9, 100, 0x1688},
+    {-1132, 18, 100, 0x16ce},
+    {-1069, 18, 100, 0x157e},
+};
+
+
+StandFileTile tile_56D = {
+    0x95e09, 0x14,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_56D[3] = {
+    {-1069, 9, 100, 0x16d2},
+    {-1132, 9, 100, 0x157a},
+    {-1132, 18, 100, 0x1684},
+};
+
+
+StandFileTile tile_56E = {
+    0x95f0a, 0x14,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_56E[3] = {
+    {-1069, 0, 91, 0x1690},
+    {-1132, 9, 91, 0x16d6},
+    {-1069, 9, 91, 0x1586},
+};
+
+
+StandFileTile tile_56F = {
+    0x95f09, 0x14,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_56F[3] = {
+    {-1069, 0, 91, 0x16f6},
+    {-1132, 0, 91, 0x1582},
+    {-1132, 9, 91, 0x168c},
+};
+
+
+StandFileTile tile_570 = {
+    0x9780a, 0x14,
+    0x0,
+    0x7, 0x7, 0x7,
+    9,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_570[9] = {
+    {-1132, 0, 91, 0x169e},
+    {-1132, 54, 154, 0x16a2},
+    {-1132, 63, 154, 0x155e},
+    {-1132, 54, 145, 0x1562},
+    {-1132, 45, 136, 0x1556},
+    {-1132, 36, 127, 0x156a},
+    {-1132, 27, 118, 0x1572},
+    {-1132, 18, 109, 0x157a},
+    {-1132, 9, 100, 0x1582},
+};
+
+
+StandFileTile tile_571 = {
+    0x97809, 0x14,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_571[3] = {
+    {-1132, 0, 91, 0x00},
+    {-1132, 0, 100, 0x00},
+    {-1132, 54, 154, 0x1694},
+};
+
+
+StandFileTile tile_572 = {
+    0x9790a, 0x14,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_572[3] = {
+    {-1132, 54, 208, 0x16a6},
+    {-1132, 63, 154, 0x1694},
+    {-1132, 54, 154, 0x00},
+};
+
+
+StandFileTile tile_573 = {
+    0x97909, 0x14,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_573[3] = {
+    {-1132, 54, 208, 0x00},
+    {-1132, 63, 208, 0x160c},
+    {-1132, 63, 154, 0x16a2},
+};
+
+
+StandFileTile tile_574 = {
+    0x9580a, 0x14,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_574[3] = {
+    {-1069, 54, 136, 0x16ae},
+    {-1132, 54, 145, 0x1660},
+    {-1069, 54, 145, 0x1566},
+};
+
+
+StandFileTile tile_575 = {
+    0x95809, 0x14,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_575[3] = {
+    {-1069, 54, 136, 0x1664},
+    {-1132, 54, 136, 0x1562},
+    {-1132, 54, 145, 0x16aa},
+};
+
+
+StandFileTile tile_576 = {
+    0x9630a, 0x14,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_576[3] = {
+    {-1069, 45, 127, 0x16b6},
+    {-1132, 45, 136, 0x1668},
+    {-1069, 45, 136, 0x155a},
+};
+
+
+StandFileTile tile_577 = {
+    0x96309, 0x14,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_577[3] = {
+    {-1069, 45, 127, 0x166c},
+    {-1132, 45, 127, 0x1556},
+    {-1132, 45, 136, 0x16b2},
+};
+
+
+StandFileTile tile_578 = {
+    0x9610a, 0x14,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_578[3] = {
+    {-1069, 36, 118, 0x16be},
+    {-1132, 36, 127, 0x1670},
+    {-1069, 36, 127, 0x156e},
+};
+
+
+StandFileTile tile_579 = {
+    0x96109, 0x14,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_579[3] = {
+    {-1069, 36, 118, 0x1674},
+    {-1132, 36, 118, 0x156a},
+    {-1132, 36, 127, 0x16ba},
+};
+
+
+StandFileTile tile_57A = {
+    0x95c0a, 0x14,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_57A[3] = {
+    {-1069, 27, 109, 0x16c6},
+    {-1132, 27, 118, 0x1678},
+    {-1069, 27, 118, 0x1576},
+};
+
+
+StandFileTile tile_57B = {
+    0x95c09, 0x14,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_57B[3] = {
+    {-1069, 27, 109, 0x167c},
+    {-1132, 27, 109, 0x1572},
+    {-1132, 27, 118, 0x16c2},
+};
+
+
+StandFileTile tile_57C = {
+    0x95d0a, 0x14,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_57C[3] = {
+    {-1069, 18, 100, 0x16ce},
+    {-1132, 18, 109, 0x1680},
+    {-1069, 18, 109, 0x157e},
+};
+
+
+StandFileTile tile_57D = {
+    0x95d09, 0x14,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_57D[3] = {
+    {-1069, 18, 100, 0x1684},
+    {-1132, 18, 100, 0x157a},
+    {-1132, 18, 109, 0x16ca},
+};
+
+
+StandFileTile tile_57E = {
+    0x9600a, 0x14,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_57E[3] = {
+    {-1069, 9, 91, 0x16d6},
+    {-1132, 9, 100, 0x1688},
+    {-1069, 9, 100, 0x1586},
+};
+
+
+StandFileTile tile_57F = {
+    0x96009, 0x14,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_57F[3] = {
+    {-1069, 9, 91, 0x168c},
+    {-1132, 9, 91, 0x1582},
+    {-1132, 9, 100, 0x16d2},
+};
+
+
+StandFileTile tile_580 = {
+    0xf8208, 0x14,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_580[3] = {
+    {-1191, 0, 36, 0x16e6},
+    {-1132, 0, 91, 0x16de},
+    {-1132, 0, -18, 0x16fb},
+};
+
+
+StandFileTile tile_581 = {
+    0xf8108, 0x14,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_581[3] = {
+    {-1051, 0, -18, 0x00},
+    {-1132, 0, -18, 0x16da},
+    {-1132, 0, 91, 0x16f6},
+};
+
+
+StandFileTile tile_582 = {
+    0xf7d08, 0x14,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_582[3] = {
+    {-1191, 0, 36, 0x16ff},
+    {-1250, 0, 91, 0x16ea},
+    {-1191, 0, 91, 0x16e6},
+};
+
+
+StandFileTile tile_583 = {
+    0x98f08, 0x14,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_583[3] = {
+    {-1132, 0, 91, 0x16da},
+    {-1191, 0, 36, 0x16e2},
+    {-1191, 0, 91, 0x16ee},
+};
+
+
+StandFileTile tile_584 = {
+    0xf7e08, 0x14,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_584[3] = {
+    {-1191, 0, 91, 0x16e2},
+    {-1250, 0, 91, 0x170c},
+    {-1193, 0, 125, 0x16ee},
+};
+
+
+StandFileTile tile_585 = {
+    0xbf508, 0x14,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_585[3] = {
+    {-1132, 0, 91, 0x16e6},
+    {-1191, 0, 91, 0x16ea},
+    {-1193, 0, 125, 0x16f2},
+};
+
+
+StandFileTile tile_586 = {
+    0x99008, 0x14,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_586[3] = {
+    {-1132, 0, 91, 0x16ee},
+    {-1193, 0, 125, 0x1703},
+    {-1114, 0, 208, 0x00},
+};
+
+
+StandFileTile tile_587 = {
+    0x99108, 0x14,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_587[4] = {
+    {-1132, 0, 91, 0x1690},
+    {-1069, 0, 91, 0x00},
+    {-1014, 0, 91, 0x15c5},
+    {-1051, 0, -18, 0x16de},
+};
+
+
+StandFileTile tile_588 = {
+    0xbf308, 0x14,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_588[3] = {
+    {-1191, 0, 36, 0x16da},
+    {-1132, 0, -18, 0x00},
+    {-1250, 0, -18, 0x16ff},
+};
+
+
+StandFileTile tile_589 = {
+    0x99308, 0x14,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_589[3] = {
+    {-1250, 0, 91, 0x16e2},
+    {-1191, 0, 36, 0x16fb},
+    {-1250, 0, -18, 0x00},
+};
+
+
+StandFileTile tile_58A = {
+    0xf8408, 0x14,
+    0x0,
+    0xf, 0xf, 0xf,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_58A[4] = {
+    {-1196, 0, 208, 0x1720},
+    {-1141, 0, 208, 0x00},
+    {-1114, 0, 208, 0x16f2},
+    {-1193, 0, 125, 0x1708},
+};
+
+
+StandFileTile tile_58B = {
+    0xbf608, 0x14,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_58B[3] = {
+    {-1250, 0, 208, 0x171c},
+    {-1196, 0, 208, 0x1703},
+    {-1193, 0, 125, 0x170c},
+};
+
+
+StandFileTile tile_58C = {
+    0x99408, 0x14,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_58C[3] = {
+    {-1250, 0, 208, 0x1708},
+    {-1193, 0, 125, 0x16ea},
+    {-1250, 0, 91, 0x00},
+};
+
+
+StandFileTile tile_58D = {
+    0xbf108, 0x13,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_58D[3] = {
+    {-1196, 0, 444, 0x1734},
+    {-1141, 0, 444, 0x1724},
+    {-1196, 0, 326, 0x1714},
+};
+
+
+StandFileTile tile_58E = {
+    0xbea08, 0x13,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_58E[3] = {
+    {-1250, 0, 444, 0x1730},
+    {-1196, 0, 444, 0x1710},
+    {-1196, 0, 326, 0x1718},
+};
+
+
+StandFileTile tile_58F = {
+    0xbe808, 0x13,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_58F[3] = {
+    {-1250, 0, 208, 0x00},
+    {-1250, 0, 444, 0x1714},
+    {-1196, 0, 326, 0x171c},
+};
+
+
+StandFileTile tile_590 = {
+    0xf8308, 0x13,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_590[3] = {
+    {-1196, 0, 208, 0x1708},
+    {-1250, 0, 208, 0x1718},
+    {-1196, 0, 326, 0x1720},
+};
+
+
+StandFileTile tile_591 = {
+    0xbe908, 0x13,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_591[3] = {
+    {-1141, 0, 208, 0x1703},
+    {-1196, 0, 208, 0x171c},
+    {-1196, 0, 326, 0x1724},
+};
+
+
+StandFileTile tile_592 = {
+    0x99d08, 0x13,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_592[3] = {
+    {-1141, 0, 208, 0x1720},
+    {-1196, 0, 326, 0x1710},
+    {-1141, 0, 444, 0x00},
+};
+
+
+StandFileTile tile_593 = {
+    0xbe608, 0x12,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_593[3] = {
+    {-1250, 0, 652, 0x00},
+    {-1141, 0, 652, 0x1738},
+    {-1196, 0, 548, 0x172c},
+};
+
+
+StandFileTile tile_594 = {
+    0xbe508, 0x12,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_594[3] = {
+    {-1250, 0, 444, 0x00},
+    {-1250, 0, 652, 0x1728},
+    {-1196, 0, 548, 0x1730},
+};
+
+
+StandFileTile tile_595 = {
+    0xbf208, 0x12,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_595[3] = {
+    {-1196, 0, 444, 0x1714},
+    {-1250, 0, 444, 0x172c},
+    {-1196, 0, 548, 0x1734},
+};
+
+
+StandFileTile tile_596 = {
+    0xbe708, 0x12,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_596[3] = {
+    {-1141, 0, 444, 0x1710},
+    {-1196, 0, 444, 0x1730},
+    {-1196, 0, 548, 0x1738},
+};
+
+
+StandFileTile tile_597 = {
+    0x99c08, 0x12,
+    0x0,
+    0xa, 0xa, 0xa,
+    5,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_597[5] = {
+    {-1141, 0, 444, 0x1734},
+    {-1196, 0, 548, 0x1728},
+    {-1141, 0, 652, 0x00},
+    {-1141, 0, 616, 0x12c0},
+    {-1141, 0, 525, 0x00},
+};
+
+
+StandFileTile tile_598 = {
+    0x90708, 0x11,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_598[3] = {
+    {-734, 127, 534, 0x1754},
+    {-679, 127, 408, 0x1421},
+    {-734, 127, 408, 0x1742},
+};
+
+
+StandFileTile tile_599 = {
+    0x7d608, 0x11,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_599[3] = {
+    {-734, 127, 534, 0x173e},
+    {-734, 127, 408, 0x1425},
+    {-788, 127, 408, 0x1746},
+};
+
+
+StandFileTile tile_59A = {
+    0x104608, 0x11,
+    0x0,
+    0xd, 0xd, 0xd,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_59A[4] = {
+    {-734, 127, 534, 0x1742},
+    {-788, 127, 408, 0x00},
+    {-788, 127, 496, 0x1770},
+    {-788, 127, 506, 0x174b},
+};
+
+
+StandFileTile tile_59B = {
+    0x104708, 0x11,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_59B[3] = {
+    {-734, 127, 534, 0x1746},
+    {-788, 127, 506, 0x1770},
+    {-788, 127, 544, 0x174f},
+};
+
+
+StandFileTile tile_59C = {
+    0x7d708, 0x11,
+    0x0,
+    0xd, 0xd, 0xd,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_59C[4] = {
+    {-788, 127, 643, 0x1758},
+    {-734, 127, 534, 0x174b},
+    {-788, 127, 544, 0x1770},
+    {-788, 127, 554, 0x00},
+};
+
+
+StandFileTile tile_59D = {
+    0x7d408, 0x11,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_59D[3] = {
+    {-679, 127, 643, 0x00},
+    {-679, 127, 408, 0x173e},
+    {-734, 127, 534, 0x1758},
+};
+
+
+StandFileTile tile_59E = {
+    0x7d508, 0x11,
+    0x0,
+    0xa, 0xa, 0xa,
+    5,
+    0x0, 0x3, 0x4,
+};
+StandFilePoint points_59E[5] = {
+    {-788, 127, 643, 0x117},
+    {-779, 127, 643, 0x10f},
+    {-688, 127, 643, 0x173},
+    {-679, 127, 643, 0x1754},
+    {-734, 127, 534, 0x174f},
+};
+
+
+StandFileTile tile_59F = {
+    0x1b1408, 0x10,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_59F[3] = {
+    {-824, 127, 643, 0x1762},
+    {-906, 127, 540, 0x1783},
+    {-1005, 127, 650, 0x00},
+};
+
+
+StandFileTile tile_5A0 = {
+    0x1b1308, 0x10,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5A0[3] = {
+    {-815, 127, 616, 0x1766},
+    {-906, 127, 540, 0x175e},
+    {-824, 127, 643, 0x00},
+};
+
+
+StandFileTile tile_5A1 = {
+    0x1b1208, 0x10,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5A1[3] = {
+    {-815, 127, 616, 0x00},
+    {-806, 127, 544, 0x177f},
+    {-906, 127, 540, 0x1762},
+};
+
+
+StandFileTile tile_5A2 = {
+    0x19f70a, 0x10,
+    0x0,
+    0xf, 0xf, 0xf,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_5A2[5] = {
+    {-788, 127, 554, 0x1770},
+    {-806, 127, 496, 0x177a},
+    {-806, 127, 506, 0x177f},
+    {-806, 127, 544, 0x00},
+    {-806, 127, 554, 0x00},
+};
+
+
+StandFileTile tile_5A3 = {
+    0x19f709, 0x10,
+    0x0,
+    0xf, 0xf, 0xf,
+    5,
+    0x0, 0x3, 0x4,
+};
+StandFilePoint points_5A3[5] = {
+    {-788, 127, 554, 0x174f},
+    {-788, 127, 544, 0x174b},
+    {-788, 127, 506, 0x1746},
+    {-788, 127, 496, 0x00},
+    {-806, 127, 496, 0x176a},
+};
+
+
+StandFileTile tile_5A4 = {
+    0x104308, 0x10,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5A4[3] = {
+    {-806, 127, 426, 0x00},
+    {-1005, 127, 426, 0x1783},
+    {-906, 127, 540, 0x177a},
+};
+
+
+StandFileTile tile_5A5 = {
+    0x105508, 0x10,
+    0x0,
+    0xd, 0xd, 0xd,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_5A5[4] = {
+    {-806, 127, 506, 0x176a},
+    {-806, 127, 496, 0x00},
+    {-806, 127, 426, 0x1776},
+    {-906, 127, 540, 0x177f},
+};
+
+
+StandFileTile tile_5A6 = {
+    0x105608, 0x10,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5A6[3] = {
+    {-806, 127, 544, 0x176a},
+    {-806, 127, 506, 0x177a},
+    {-906, 127, 540, 0x1766},
+};
+
+
+StandFileTile tile_5A7 = {
+    0x103d08, 0x10,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5A7[3] = {
+    {-1005, 127, 650, 0x175e},
+    {-906, 127, 540, 0x1776},
+    {-1005, 127, 426, 0x00},
+};
+
+
+StandFileTile tile_5A8 = {
+    0x19f40a, 0xf,
+    0x0,
+    0xf, 0xf, 0xf,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_5A8[5] = {
+    {-788, 127, 348, 0x178d},
+    {-805, 127, 290, 0x17a8},
+    {-805, 127, 300, 0x17a4},
+    {-805, 127, 337, 0x179f},
+    {-805, 127, 348, 0x00},
+};
+
+
+StandFileTile tile_5A9 = {
+    0x19f409, 0xf,
+    0x0,
+    0xf, 0xf, 0xf,
+    5,
+    0x0, 0x3, 0x4,
+};
+StandFilePoint points_5A9[5] = {
+    {-788, 127, 348, 0x1432},
+    {-788, 127, 337, 0x142e},
+    {-788, 127, 300, 0x1429},
+    {-788, 127, 290, 0x00},
+    {-805, 127, 290, 0x1787},
+};
+
+
+StandFileTile tile_5AA = {
+    0x105108, 0xf,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5AA[3] = {
+    {-1005, 127, 411, 0x00},
+    {-805, 127, 411, 0x179f},
+    {-905, 127, 312, 0x1797},
+};
+
+
+StandFileTile tile_5AB = {
+    0x105008, 0xf,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5AB[3] = {
+    {-1005, 127, 213, 0x00},
+    {-1005, 127, 411, 0x1793},
+    {-905, 127, 312, 0x179b},
+};
+
+
+StandFileTile tile_5AC = {
+    0x105208, 0xf,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5AC[3] = {
+    {-805, 127, 213, 0x00},
+    {-1005, 127, 213, 0x1797},
+    {-905, 127, 312, 0x17a8},
+};
+
+
+StandFileTile tile_5AD = {
+    0x105408, 0xf,
+    0x0,
+    0xd, 0xd, 0xd,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_5AD[4] = {
+    {-905, 127, 312, 0x1793},
+    {-805, 127, 411, 0x00},
+    {-805, 127, 348, 0x1787},
+    {-805, 127, 337, 0x17a4},
+};
+
+
+StandFileTile tile_5AE = {
+    0x105308, 0xf,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5AE[3] = {
+    {-905, 127, 312, 0x179f},
+    {-805, 127, 337, 0x1787},
+    {-805, 127, 300, 0x17a8},
+};
+
+
+StandFileTile tile_5AF = {
+    0x104b08, 0xf,
+    0x0,
+    0xd, 0xd, 0xd,
+    4,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5AF[4] = {
+    {-805, 127, 213, 0x179b},
+    {-905, 127, 312, 0x17a4},
+    {-805, 127, 300, 0x1787},
+    {-805, 127, 290, 0x00},
+};
+
+
+StandFileTile tile_5B0 = {
+    0x1b040a, 0xe,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5B0[3] = {
+    {-162, 0, 572, 0x17b1},
+    {-14, 0, 580, 0x17db},
+    {-14, 0, 510, 0x17b5},
+};
+
+
+StandFileTile tile_5B1 = {
+    0x1b0409, 0xe,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5B1[3] = {
+    {-162, 0, 572, 0x00},
+    {-163, 0, 580, 0x17f9},
+    {-14, 0, 580, 0x17ad},
+};
+
+
+StandFileTile tile_5B2 = {
+    0x1b0508, 0xe,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5B2[3] = {
+    {-162, 0, 572, 0x17ad},
+    {-14, 0, 510, 0x17c5},
+    {-127, 0, 498, 0x17b9},
+};
+
+
+StandFileTile tile_5B3 = {
+    0x1b0308, 0xe,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5B3[3] = {
+    {-162, 0, 572, 0x17b5},
+    {-127, 0, 498, 0x00},
+    {-163, 0, 498, 0x00},
+};
+
+
+StandFileTile tile_5B4 = {
+    0x106f0a, 0xe,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5B4[3] = {
+    {145, 0, 462, 0x17c1},
+    {163, 0, 562, 0x00},
+    {163, 0, 462, 0x00},
+};
+
+
+StandFileTile tile_5B5 = {
+    0x106f09, 0xe,
+    0x0,
+    0x6, 0x6, 0x6,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5B5[3] = {
+    {145, 0, 462, 0x17d1},
+    {145, 0, 562, 0x00},
+    {163, 0, 562, 0x17bd},
+};
+
+
+StandFileTile tile_5B6 = {
+    0x107108, 0xe,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5B6[3] = {
+    {-127, 0, 471, 0x00},
+    {-127, 0, 498, 0x17b5},
+    {-14, 0, 510, 0x17c9},
+};
+
+
+StandFileTile tile_5B7 = {
+    0x106d08, 0xe,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5B7[3] = {
+    {-91, 0, 471, 0x00},
+    {-127, 0, 471, 0x17c5},
+    {-14, 0, 510, 0x17d7},
+};
+
+
+StandFileTile tile_5B8 = {
+    0x5f608, 0xe,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5B8[3] = {
+    {145, 0, 444, 0x00},
+    {-91, 0, 444, 0x17d7},
+    {-14, 0, 510, 0x17d1},
+};
+
+
+StandFileTile tile_5B9 = {
+    0x5f208, 0xe,
+    0x0,
+    0x9, 0x9, 0x9,
+    5,
+    0x0, 0x3, 0x4,
+};
+StandFilePoint points_5B9[5] = {
+    {145, 0, 580, 0x00},
+    {145, 0, 562, 0x17c1},
+    {145, 0, 462, 0x00},
+    {145, 0, 444, 0x17cd},
+    {-14, 0, 510, 0x17db},
+};
+
+
+StandFileTile tile_5BA = {
+    0x5f508, 0xe,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5BA[3] = {
+    {-14, 0, 510, 0x17cd},
+    {-91, 0, 444, 0x00},
+    {-91, 0, 471, 0x17c9},
+};
+
+
+StandFileTile tile_5BB = {
+    0x5f008, 0xe,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5BB[3] = {
+    {145, 0, 580, 0x17d1},
+    {-14, 0, 510, 0x17ad},
+    {-14, 0, 580, 0x17f5},
+};
+
+
+StandFileTile tile_5BC = {
+    0x1a220a, 0xe,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5BC[3] = {
+    {-145, 0, 688, 0x17e3},
+    {145, 0, 707, 0x17f1},
+    {-14, 0, 641, 0x17ed},
+};
+
+
+StandFileTile tile_5BD = {
+    0x1a2209, 0xe,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5BD[3] = {
+    {-145, 0, 688, 0x00},
+    {-145, 0, 707, 0x00},
+    {145, 0, 707, 0x17df},
+};
+
+
+StandFileTile tile_5BE = {
+    0x1a210a, 0xe,
+    0x0,
+    0xf, 0xf, 0xf,
+    5,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5BE[5] = {
+    {-181, 0, 688, 0x17ed},
+    {-14, 0, 641, 0x17f9},
+    {-181, 0, 580, 0x00},
+    {-181, 0, 616, 0x14fd},
+    {-181, 0, 670, 0x00},
+};
+
+
+StandFileTile tile_5BF = {
+    0x1a2109, 0xe,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5BF[3] = {
+    {-181, 0, 688, 0x00},
+    {-145, 0, 688, 0x17df},
+    {-14, 0, 641, 0x17e7},
+};
+
+
+StandFileTile tile_5C0 = {
+    0x5f308, 0xe,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5C0[3] = {
+    {145, 0, 707, 0x00},
+    {145, 0, 580, 0x17f5},
+    {-14, 0, 641, 0x17df},
+};
+
+
+StandFileTile tile_5C1 = {
+    0x8f908, 0xe,
+    0x0,
+    0xc, 0xc, 0xc,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5C1[3] = {
+    {-14, 0, 641, 0x17f1},
+    {145, 0, 580, 0x17db},
+    {-14, 0, 580, 0x17f9},
+};
+
+
+StandFileTile tile_5C2 = {
+    0x5f408, 0xe,
+    0x0,
+    0xc, 0xc, 0xc,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_5C2[4] = {
+    {-14, 0, 641, 0x17f5},
+    {-14, 0, 580, 0x17b1},
+    {-163, 0, 580, 0x00},
+    {-181, 0, 580, 0x17e7},
+};
+
+
+StandFileTile tile_5C3 = {
+    0x111108, 0xd,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5C3[3] = {
+    {-181, 127, -480, 0x110f},
+    {-72, 127, -480, 0x1814},
+    {-127, 127, -607, 0x180a},
+};
+
+
+StandFileTile tile_5C4 = {
+    0x1af408, 0xd,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5C4[3] = {
+    {-127, 127, -607, 0x180e},
+    {-181, 127, -734, 0x00},
+    {-181, 127, -707, 0x1806},
+};
+
+
+StandFileTile tile_5C5 = {
+    0x1af308, 0xd,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5C5[3] = {
+    {-127, 127, -607, 0x1802},
+    {-181, 127, -707, 0xbb},
+    {-181, 127, -607, 0x180a},
+};
+
+
+StandFileTile tile_5C6 = {
+    0x111008, 0xd,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5C6[3] = {
+    {-181, 127, -480, 0x17fe},
+    {-127, 127, -607, 0x1806},
+    {-181, 127, -607, 0x00},
+};
+
+
+StandFileTile tile_5C7 = {
+    0x110f08, 0xd,
+    0x0,
+    0xa, 0xa, 0xa,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_5C7[5] = {
+    {-127, 127, -607, 0x1814},
+    {-72, 127, -734, 0x00},
+    {-100, 127, -734, 0x181e},
+    {-154, 127, -734, 0x00},
+    {-181, 127, -734, 0x1802},
+};
+
+
+StandFileTile tile_5C8 = {
+    0x110e08, 0xd,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5C8[3] = {
+    {-72, 127, -480, 0x00},
+    {-72, 127, -734, 0x180e},
+    {-127, 127, -607, 0x17fe},
+};
+
+
+StandFileTile tile_5C9 = {
+    0x110d0a, 0xd,
+    0x0,
+    0x7, 0x7, 0x7,
+    5,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5C9[5] = {
+    {-154, 127, -752, 0x181e},
+    {-100, 127, -734, 0x00},
+    {-100, 127, -752, 0x650},
+    {-109, 127, -752, 0x648},
+    {-145, 127, -752, 0x64c},
+};
+
+
+StandFileTile tile_5CA = {
+    0x110d09, 0xd,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5CA[3] = {
+    {-154, 127, -752, 0x00},
+    {-154, 127, -734, 0x180e},
+    {-100, 127, -734, 0x1818},
+};
+
+
+StandFileTile tile_5CB = {
+    0x10de08, 0xc,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5CB[3] = {
+    {-788, 127, -480, 0x153d},
+    {-679, 127, -480, 0x1830},
+    {-734, 127, -607, 0x1826},
+};
+
+
+StandFileTile tile_5CC = {
+    0x108008, 0xc,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5CC[3] = {
+    {-788, 127, -480, 0x1822},
+    {-734, 127, -607, 0x182a},
+    {-788, 127, -734, 0x00},
+};
+
+
+StandFileTile tile_5CD = {
+    0x10df08, 0xc,
+    0x0,
+    0xa, 0xa, 0xa,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_5CD[5] = {
+    {-734, 127, -607, 0x1830},
+    {-679, 127, -734, 0x00},
+    {-707, 127, -734, 0x183c},
+    {-761, 127, -734, 0x00},
+    {-788, 127, -734, 0x1826},
+};
+
+
+StandFileTile tile_5CE = {
+    0x10e008, 0xc,
+    0x0,
+    0xa, 0xa, 0xa,
+    5,
+    0x0, 0x3, 0x4,
+};
+StandFilePoint points_5CE[5] = {
+    {-679, 127, -480, 0x00},
+    {-679, 127, -607, 0xdf},
+    {-679, 127, -707, 0x00},
+    {-679, 127, -734, 0x182a},
+    {-734, 127, -607, 0x1822},
+};
+
+
+StandFileTile tile_5CF = {
+    0x10a40a, 0xc,
+    0x0,
+    0x7, 0x7, 0x7,
+    5,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5CF[5] = {
+    {-761, 127, -752, 0x183c},
+    {-707, 127, -734, 0x00},
+    {-707, 127, -752, 0x526},
+    {-716, 127, -752, 0x52a},
+    {-752, 127, -752, 0x522},
+};
+
+
+StandFileTile tile_5D0 = {
+    0x10a409, 0xc,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5D0[3] = {
+    {-761, 127, -752, 0x00},
+    {-761, 127, -734, 0x182a},
+    {-707, 127, -734, 0x1836},
+};
+
+
+StandFileTile tile_5D1 = {
+    0x1a200a, 0xb,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5D1[3] = {
+    {-181, 127, 190, 0x1844},
+    {-172, 127, 389, 0x1848},
+    {-127, 127, 312, 0x186c},
+};
+
+
+StandFileTile tile_5D2 = {
+    0x1a2009, 0xb,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5D2[3] = {
+    {-181, 127, 190, 0x00},
+    {-181, 127, 389, 0x00},
+    {-172, 127, 389, 0x1840},
+};
+
+
+StandFileTile tile_5D3 = {
+    0x1a1f0a, 0xb,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5D3[3] = {
+    {-172, 127, 389, 0x184c},
+    {-154, 127, 417, 0x1858},
+    {-127, 127, 312, 0x1840},
+};
+
+
+StandFileTile tile_5D4 = {
+    0x1a1f09, 0xb,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5D4[3] = {
+    {-172, 127, 389, 0x00},
+    {-172, 127, 417, 0x00},
+    {-154, 127, 417, 0x1848},
+};
+
+
+StandFileTile tile_5D5 = {
+    0x1a1e0a, 0xb,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5D5[3] = {
+    {-154, 127, 417, 0x1854},
+    {-100, 127, 435, 0x00},
+    {-100, 127, 417, 0x1858},
+};
+
+
+StandFileTile tile_5D6 = {
+    0x1a1e09, 0xb,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5D6[3] = {
+    {-154, 127, 417, 0x00},
+    {-154, 127, 435, 0x18ac},
+    {-100, 127, 435, 0x1850},
+};
+
+
+StandFileTile tile_5D7 = {
+    0x1a1d08, 0xb,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5D7[3] = {
+    {-154, 127, 417, 0x1850},
+    {-100, 127, 417, 0x185c},
+    {-127, 127, 312, 0x1848},
+};
+
+
+StandFileTile tile_5D8 = {
+    0x1a1c0a, 0xb,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5D8[3] = {
+    {-100, 127, 417, 0x1860},
+    {-82, 127, 389, 0x1868},
+    {-127, 127, 312, 0x1858},
+};
+
+
+StandFileTile tile_5D9 = {
+    0x1a1c09, 0xb,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5D9[3] = {
+    {-100, 127, 417, 0x00},
+    {-82, 127, 417, 0x00},
+    {-82, 127, 389, 0x185c},
+};
+
+
+StandFileTile tile_5DA = {
+    0x1a1b0a, 0xb,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5DA[3] = {
+    {-127, 127, 312, 0x1868},
+    {-72, 127, 389, 0x00},
+    {-72, 127, 190, 0x1870},
+};
+
+
+StandFileTile tile_5DB = {
+    0x1a1b09, 0xb,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5DB[3] = {
+    {-127, 127, 312, 0x185c},
+    {-82, 127, 389, 0x00},
+    {-72, 127, 389, 0x1864},
+};
+
+
+StandFileTile tile_5DC = {
+    0x8fb08, 0xb,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5DC[3] = {
+    {-127, 127, 190, 0xf6b},
+    {-181, 127, 190, 0x1840},
+    {-127, 127, 312, 0x1870},
+};
+
+
+StandFileTile tile_5DD = {
+    0x7ce08, 0xb,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5DD[3] = {
+    {-72, 127, 190, 0xf67},
+    {-127, 127, 190, 0x186c},
+    {-127, 127, 312, 0x1864},
+};
+
+
+StandFileTile tile_5DE = {
+    0x1aad08, 0xa,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5DE[3] = {
+    {-190, 127, 734, 0x00},
+    {-190, 127, 761, 0x00},
+    {-45, 127, 761, 0x1878},
+};
+
+
+StandFileTile tile_5DF = {
+    0x1aac08, 0xa,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5DF[3] = {
+    {-190, 127, 634, 0x18b6},
+    {-190, 127, 734, 0x1874},
+    {-45, 127, 761, 0x187c},
+};
+
+
+StandFileTile tile_5E0 = {
+    0x1aab0a, 0xa,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5E0[3] = {
+    {-172, 127, 471, 0x1880},
+    {-190, 127, 634, 0x1878},
+    {-45, 127, 761, 0x1884},
+};
+
+
+StandFileTile tile_5E1 = {
+    0x1aab09, 0xa,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5E1[3] = {
+    {-172, 127, 471, 0x00},
+    {-190, 127, 471, 0x00},
+    {-190, 127, 634, 0x187c},
+};
+
+
+StandFileTile tile_5E2 = {
+    0x1aaa08, 0xa,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5E2[3] = {
+    {-172, 127, 471, 0x187c},
+    {-45, 127, 761, 0x18a4},
+    {-63, 127, 444, 0x18b2},
+};
+
+
+StandFileTile tile_5E3 = {
+    0x1a070a, 0xa,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5E3[3] = {
+    {-45, 127, 779, 0x188c},
+    {54, 127, 761, 0x1890},
+    {-45, 127, 761, 0x00},
+};
+
+
+StandFileTile tile_5E4 = {
+    0x1a0709, 0xa,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5E4[3] = {
+    {-45, 127, 779, 0x00},
+    {54, 127, 779, 0x00},
+    {54, 127, 761, 0x1888},
+};
+
+
+StandFileTile tile_5E5 = {
+    0x1a0608, 0xa,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5E5[3] = {
+    {-45, 127, 761, 0x1888},
+    {54, 127, 761, 0x1894},
+    {45, 127, 525, 0x18a0},
+};
+
+
+StandFileTile tile_5E6 = {
+    0x1a050a, 0xa,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5E6[3] = {
+    {54, 127, 761, 0x1898},
+    {73, 127, 525, 0x00},
+    {45, 127, 525, 0x1890},
+};
+
+
+StandFileTile tile_5E7 = {
+    0x1a0509, 0xa,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5E7[3] = {
+    {54, 127, 761, 0x00},
+    {73, 127, 761, 0x00},
+    {73, 127, 525, 0x1894},
+};
+
+
+StandFileTile tile_5E8 = {
+    0x1a040a, 0xa,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5E8[3] = {
+    {-45, 127, 761, 0x18a0},
+    {45, 127, 489, 0x00},
+    {18, 127, 489, 0x18a8},
+};
+
+
+StandFileTile tile_5E9 = {
+    0x1a0409, 0xa,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5E9[3] = {
+    {-45, 127, 761, 0x1890},
+    {45, 127, 525, 0x00},
+    {45, 127, 489, 0x189c},
+};
+
+
+StandFileTile tile_5EA = {
+    0x1a030a, 0xa,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5EA[3] = {
+    {-45, 127, 761, 0x18a8},
+    {18, 127, 444, 0x00},
+    {-63, 127, 444, 0x1884},
+};
+
+
+StandFileTile tile_5EB = {
+    0x1a0309, 0xa,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5EB[3] = {
+    {-45, 127, 761, 0x189c},
+    {18, 127, 489, 0x00},
+    {18, 127, 444, 0x18a4},
+};
+
+
+StandFileTile tile_5EC = {
+    0x1a000a, 0xa,
+    0x0,
+    0xf, 0xf, 0xf,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_5EC[5] = {
+    {-172, 127, 471, 0x18b2},
+    {-63, 127, 435, 0x00},
+    {-100, 127, 435, 0x1854},
+    {-154, 127, 435, 0x00},
+    {-172, 127, 435, 0x00},
+};
+
+
+StandFileTile tile_5ED = {
+    0x1a0009, 0xa,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5ED[3] = {
+    {-172, 127, 471, 0x1884},
+    {-63, 127, 444, 0x00},
+    {-63, 127, 435, 0x18ac},
+};
+
+
+StandFileTile tile_5EE = {
+    0x1aa40a, 0xa,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5EE[3] = {
+    {-190, 127, 634, 0x18ba},
+    {-199, 127, 734, 0x00},
+    {-190, 127, 734, 0x1878},
+};
+
+
+StandFileTile tile_5EF = {
+    0x1aa409, 0xa,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5EF[3] = {
+    {-190, 127, 634, 0x00},
+    {-199, 127, 634, 0x12f},
+    {-199, 127, 734, 0x18b6},
+};
+
+
+StandFileTile tile_5F0 = {
+    0x23d02, 0x9,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5F0[3] = {
+    {-824, -18, -177, 0x18c2},
+    {-833, -18, -231, 0x18ca},
+    {-833, -18, -177, 0x00},
+};
+
+
+StandFileTile tile_5F1 = {
+    0x23d01, 0x9,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5F1[3] = {
+    {-824, -18, -177, 0x18ee},
+    {-824, -18, -231, 0x00},
+    {-833, -18, -231, 0x18be},
+};
+
+
+StandFileTile tile_5F2 = {
+    0x23c02, 0x9,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5F2[3] = {
+    {-833, -18, -177, 0x18ca},
+    {-842, -18, -240, 0x18df},
+    {-842, -18, -168, 0x00},
+};
+
+
+StandFileTile tile_5F3 = {
+    0x23c01, 0x9,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5F3[3] = {
+    {-833, -18, -177, 0x18be},
+    {-833, -18, -231, 0x00},
+    {-842, -18, -240, 0x18c6},
+};
+
+
+StandFileTile tile_5F4 = {
+    0x302, 0x9,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5F4[3] = {
+    {-1205, -18, -466, 0x18d2},
+    {-1608, -18, -131, 0x00},
+    {-1205, -18, -131, 0x18e5},
+};
+
+
+StandFileTile tile_5F5 = {
+    0x301, 0x9,
+    0x0,
+    0xd, 0xd, 0xd,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_5F5[4] = {
+    {-1205, -18, -466, 0x18d7},
+    {-1490, -18, -466, 0x00},
+    {-1608, -18, -466, 0x00},
+    {-1608, -18, -131, 0x18ce},
+};
+
+
+StandFileTile tile_5F6 = {
+    0x200, 0x9,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5F6[3] = {
+    {-1490, -18, -743, 0x00},
+    {-1490, -18, -466, 0x18d2},
+    {-1205, -18, -466, 0x18db},
+};
+
+
+StandFileTile tile_5F7 = {
+    0x100, 0x9,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5F7[3] = {
+    {-1490, -18, -743, 0x18d7},
+    {-1205, -18, -466, 0x18e5},
+    {-1205, -18, -743, 0x00},
+};
+
+
+StandFileTile tile_5F8 = {
+    0x2, 0x9,
+    0x0,
+    0x7, 0x7, 0x7,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_5F8[5] = {
+    {-1205, -18, -743, 0x18e5},
+    {-842, -18, -131, 0x00},
+    {-842, -18, -168, 0x18c6},
+    {-842, -18, -240, 0x00},
+    {-842, -18, -743, 0x00},
+};
+
+
+StandFileTile tile_5F9 = {
+    0x1, 0x9,
+    0x0,
+    0x7, 0x7, 0x7,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_5F9[4] = {
+    {-1205, -18, -743, 0x18db},
+    {-1205, -18, -466, 0x18ce},
+    {-1205, -18, -131, 0x00},
+    {-842, -18, -131, 0x18df},
+};
+
+
+StandFileTile tile_5FA = {
+    0x23e02, 0x8,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5FA[3] = {
+    {-824, -18, -231, 0x18ee},
+    {-815, -18, -177, 0x18f2},
+    {-815, -18, -231, 0x00},
+};
+
+
+StandFileTile tile_5FB = {
+    0x23e01, 0x8,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5FB[3] = {
+    {-824, -18, -231, 0x18c2},
+    {-824, -18, -177, 0x00},
+    {-815, -18, -177, 0x18ea},
+};
+
+
+StandFileTile tile_5FC = {
+    0x8802, 0x8,
+    0x0,
+    0x7, 0x7, 0x7,
+    7,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_5FC[7] = {
+    {-815, -18, -136, 0x18fa},
+    {-652, -18, -272, 0x00},
+    {-666, -18, -272, 0x18fe},
+    {-802, -18, -272, 0x00},
+    {-815, -18, -272, 0x00},
+    {-815, -18, -231, 0x18ea},
+    {-815, -18, -177, 0x00},
+};
+
+
+StandFileTile tile_5FD = {
+    0x8801, 0x8,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5FD[3] = {
+    {-815, -18, -136, 0x00},
+    {-652, -18, -136, 0x00},
+    {-652, -18, -272, 0x18f2},
+};
+
+
+StandFileTile tile_5FE = {
+    0xfa02, 0x8,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5FE[3] = {
+    {-666, -18, -299, 0x1902},
+    {-802, -18, -272, 0x18f2},
+    {-666, -18, -272, 0x00},
+};
+
+
+StandFileTile tile_5FF = {
+    0xfa01, 0x8,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_5FF[3] = {
+    {-666, -18, -299, 0x1924},
+    {-802, -18, -299, 0x00},
+    {-802, -18, -272, 0x18fe},
+};
+
+
+StandFileTile tile_600 = {
+    0xcf02, 0x7,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_600[3] = {
+    {-666, -18, -521, 0x190a},
+    {-802, -18, -494, 0x1912},
+    {-666, -18, -494, 0x00},
+};
+
+
+StandFileTile tile_601 = {
+    0xcf01, 0x7,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_601[3] = {
+    {-666, -18, -521, 0x1967},
+    {-802, -18, -521, 0x00},
+    {-802, -18, -494, 0x1906},
+};
+
+
+StandFileTile tile_602 = {
+    0xd302, 0x7,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_602[3] = {
+    {-652, -18, -448, 0x1912},
+    {-815, -18, -494, 0x191c},
+    {-747, -18, -448, 0x192e},
+};
+
+
+StandFileTile tile_603 = {
+    0xd301, 0x7,
+    0x0,
+    0x7, 0x7, 0x7,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_603[5] = {
+    {-652, -18, -448, 0x00},
+    {-652, -18, -494, 0x00},
+    {-666, -18, -494, 0x1906},
+    {-802, -18, -494, 0x00},
+    {-815, -18, -494, 0x190e},
+};
+
+
+StandFileTile tile_604 = {
+    0xd202, 0x7,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_604[3] = {
+    {-747, -18, -448, 0x191c},
+    {-815, -18, -299, 0x1924},
+    {-747, -18, -344, 0x192e},
+};
+
+
+StandFileTile tile_605 = {
+    0xd201, 0x7,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_605[3] = {
+    {-747, -18, -448, 0x190e},
+    {-815, -18, -494, 0x00},
+    {-815, -18, -299, 0x1918},
+};
+
+
+StandFileTile tile_606 = {
+    0xd102, 0x7,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_606[3] = {
+    {-747, -18, -344, 0x1924},
+    {-652, -18, -299, 0x00},
+    {-652, -18, -344, 0x192a},
+};
+
+
+StandFileTile tile_607 = {
+    0xd101, 0x7,
+    0x0,
+    0x7, 0x7, 0x7,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_607[5] = {
+    {-747, -18, -344, 0x1918},
+    {-815, -18, -299, 0x00},
+    {-802, -18, -299, 0x1902},
+    {-666, -18, -299, 0x00},
+    {-652, -18, -299, 0x1920},
+};
+
+
+StandFileTile tile_608 = {
+    0xd002, 0x7,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_608[3] = {
+    {-652, -18, -448, 0x192e},
+    {-747, -18, -344, 0x1920},
+    {-652, -18, -344, 0x00},
+};
+
+
+StandFileTile tile_609 = {
+    0xd001, 0x7,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_609[3] = {
+    {-652, -18, -448, 0x190e},
+    {-747, -18, -448, 0x1918},
+    {-747, -18, -344, 0x192a},
+};
+
+
+StandFileTile tile_60A = {
+    0x8202, 0x6,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_60A[3] = {
+    {-652, -18, -589, 0x1936},
+    {-634, -18, -643, 0x00},
+    {-652, -18, -643, 0x196d},
+};
+
+
+StandFileTile tile_60B = {
+    0x8201, 0x6,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_60B[3] = {
+    {-652, -18, -589, 0x00},
+    {-634, -18, -589, 0x1992},
+    {-634, -18, -643, 0x1932},
+};
+
+
+StandFileTile tile_60C = {
+    0x18a02, 0x6,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_60C[3] = {
+    {-666, -18, -743, 0x193e},
+    {-802, -18, -716, 0x1955},
+    {-666, -18, -716, 0x00},
+};
+
+
+StandFileTile tile_60D = {
+    0x18a01, 0x6,
+    0x0,
+    0x7, 0x7, 0x7,
+    5,
+    0x0, 0x3, 0x4,
+};
+StandFilePoint points_60D[5] = {
+    {-666, -18, -743, 0x00},
+    {-707, -18, -743, 0x1948},
+    {-761, -18, -743, 0x00},
+    {-779, -18, -743, 0x1944},
+    {-802, -18, -716, 0x193a},
+};
+
+
+StandFileTile tile_60E = {
+    0x18900, 0x6,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_60E[3] = {
+    {-779, -18, -743, 0x00},
+    {-802, -18, -743, 0x00},
+    {-802, -18, -716, 0x193e},
+};
+
+
+StandFileTile tile_60F = {
+    0x18802, 0x6,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_60F[3] = {
+    {-707, -18, -752, 0x194c},
+    {-761, -18, -743, 0x193e},
+    {-707, -18, -743, 0x00},
+};
+
+
+StandFileTile tile_610 = {
+    0x18801, 0x6,
+    0x0,
+    0x7, 0x7, 0x7,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_610[4] = {
+    {-707, -18, -752, 0xb04},
+    {-752, -18, -752, 0xb14},
+    {-761, -18, -752, 0x00},
+    {-761, -18, -743, 0x1948},
+};
+
+
+StandFileTile tile_611 = {
+    0x11502, 0x6,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_611[3] = {
+    {-652, -18, -670, 0x1955},
+    {-815, -18, -716, 0x195f},
+    {-747, -18, -670, 0x1973},
+};
+
+
+StandFileTile tile_612 = {
+    0x11501, 0x6,
+    0x0,
+    0x7, 0x7, 0x7,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_612[5] = {
+    {-652, -18, -670, 0x00},
+    {-652, -18, -716, 0x00},
+    {-666, -18, -716, 0x193a},
+    {-802, -18, -716, 0x00},
+    {-815, -18, -716, 0x1951},
+};
+
+
+StandFileTile tile_613 = {
+    0x11402, 0x6,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_613[3] = {
+    {-747, -18, -670, 0x195f},
+    {-815, -18, -521, 0x1967},
+    {-747, -18, -566, 0x1973},
+};
+
+
+StandFileTile tile_614 = {
+    0x11401, 0x6,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_614[3] = {
+    {-747, -18, -670, 0x1951},
+    {-815, -18, -716, 0x00},
+    {-815, -18, -521, 0x195b},
+};
+
+
+StandFileTile tile_615 = {
+    0x11302, 0x6,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_615[3] = {
+    {-747, -18, -566, 0x1967},
+    {-652, -18, -521, 0x00},
+    {-652, -18, -566, 0x196d},
+};
+
+
+StandFileTile tile_616 = {
+    0x11301, 0x6,
+    0x0,
+    0x7, 0x7, 0x7,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_616[5] = {
+    {-747, -18, -566, 0x195b},
+    {-815, -18, -521, 0x00},
+    {-802, -18, -521, 0x190a},
+    {-666, -18, -521, 0x00},
+    {-652, -18, -521, 0x1963},
+};
+
+
+StandFileTile tile_617 = {
+    0x11202, 0x6,
+    0x0,
+    0xd, 0xd, 0xd,
+    5,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_617[5] = {
+    {-652, -18, -670, 0x1973},
+    {-747, -18, -566, 0x1963},
+    {-652, -18, -566, 0x00},
+    {-652, -18, -589, 0x1932},
+    {-652, -18, -643, 0x00},
+};
+
+
+StandFileTile tile_618 = {
+    0x11201, 0x6,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_618[3] = {
+    {-652, -18, -670, 0x1951},
+    {-747, -18, -670, 0x195b},
+    {-747, -18, -566, 0x196d},
+};
+
+
+StandFileTile tile_619 = {
+    0x8702, 0x5,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_619[3] = {
+    {-634, -18, -462, 0x197b},
+    {-349, -18, -562, 0x198e},
+    {-634, -18, -589, 0x00},
+};
+
+
+StandFileTile tile_61A = {
+    0x8701, 0x5,
+    0x0,
+    0x7, 0x7, 0x7,
+    6,
+    0x0, 0x4, 0x5,
+};
+StandFilePoint points_61A[6] = {
+    {-634, -18, -462, 0x19a2},
+    {-543, -18, -462, 0x19ae},
+    {-421, -18, -462, 0x19b6},
+    {-294, -18, -462, 0x199a},
+    {-236, -18, -462, 0x1986},
+    {-349, -18, -562, 0x1977},
+};
+
+
+StandFileTile tile_61B = {
+    0x8602, 0x5,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_61B[3] = {
+    {-349, -18, -562, 0x1986},
+    {-236, -18, -716, 0x00},
+    {-326, -18, -716, 0x198e},
+};
+
+
+StandFileTile tile_61C = {
+    0x8601, 0x5,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_61C[3] = {
+    {-349, -18, -562, 0x197b},
+    {-236, -18, -462, 0x00},
+    {-236, -18, -716, 0x1982},
+};
+
+
+StandFileTile tile_61D = {
+    0x8500, 0x5,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_61D[3] = {
+    {-466, -18, -716, 0x00},
+    {-634, -18, -716, 0x00},
+    {-634, -18, -643, 0x1992},
+};
+
+
+StandFileTile tile_61E = {
+    0x8400, 0x5,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_61E[3] = {
+    {-349, -18, -562, 0x1982},
+    {-326, -18, -716, 0x1996},
+    {-634, -18, -589, 0x1977},
+};
+
+
+StandFileTile tile_61F = {
+    0x8302, 0x5,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_61F[3] = {
+    {-634, -18, -589, 0x1996},
+    {-466, -18, -716, 0x198a},
+    {-634, -18, -643, 0x1936},
+};
+
+
+StandFileTile tile_620 = {
+    0x8301, 0x5,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_620[3] = {
+    {-634, -18, -589, 0x198e},
+    {-326, -18, -716, 0x00},
+    {-466, -18, -716, 0x1992},
+};
+
+
+StandFileTile tile_621 = {
+    0x8102, 0x5,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_621[3] = {
+    {-294, -18, -290, 0x199e},
+    {-236, -18, -462, 0x197b},
+    {-294, -18, -462, 0x19b6},
+};
+
+
+StandFileTile tile_622 = {
+    0x8101, 0x5,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_622[3] = {
+    {-294, -18, -290, 0x00},
+    {-236, -18, -290, 0x00},
+    {-236, -18, -462, 0x199a},
+};
+
+
+StandFileTile tile_623 = {
+    0x8002, 0x5,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_623[3] = {
+    {-634, -18, -462, 0x19a6},
+    {-349, -18, -290, 0x19ae},
+    {-543, -18, -462, 0x197b},
+};
+
+
+StandFileTile tile_624 = {
+    0x8001, 0x5,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_624[3] = {
+    {-634, -18, -462, 0x00},
+    {-634, -18, -290, 0x00},
+    {-349, -18, -290, 0x19a2},
+};
+
+
+StandFileTile tile_625 = {
+    0x7f02, 0x5,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_625[3] = {
+    {-421, -18, -462, 0x19ae},
+    {-349, -18, -290, 0x19be},
+    {-312, -18, -290, 0x19b2},
+};
+
+
+StandFileTile tile_626 = {
+    0x7f01, 0x5,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_626[3] = {
+    {-421, -18, -462, 0x197b},
+    {-543, -18, -462, 0x19a2},
+    {-349, -18, -290, 0x19aa},
+};
+
+
+StandFileTile tile_627 = {
+    0x7e02, 0x5,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_627[3] = {
+    {-294, -18, -290, 0x19b6},
+    {-421, -18, -462, 0x19aa},
+    {-312, -18, -290, 0x19c6},
+};
+
+
+StandFileTile tile_628 = {
+    0x7e01, 0x5,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_628[3] = {
+    {-294, -18, -290, 0x199a},
+    {-294, -18, -462, 0x197b},
+    {-421, -18, -462, 0x19b2},
+};
+
+
+StandFileTile tile_629 = {
+    0x7d02, 0x5,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_629[3] = {
+    {-312, -18, -290, 0x19be},
+    {-349, -18, -281, 0x19ca},
+    {-303, -18, -281, 0x19c2},
+};
+
+
+StandFileTile tile_62A = {
+    0x7d01, 0x5,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_62A[3] = {
+    {-312, -18, -290, 0x19aa},
+    {-349, -18, -290, 0x00},
+    {-349, -18, -281, 0x19ba},
+};
+
+
+StandFileTile tile_62B = {
+    0x7c02, 0x5,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_62B[3] = {
+    {-294, -18, -281, 0x19c6},
+    {-312, -18, -290, 0x19ba},
+    {-303, -18, -281, 0x19d2},
+};
+
+
+StandFileTile tile_62C = {
+    0x7c01, 0x5,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_62C[3] = {
+    {-294, -18, -281, 0x00},
+    {-294, -18, -290, 0x19b2},
+    {-312, -18, -290, 0x19c2},
+};
+
+
+StandFileTile tile_62D = {
+    0xa102, 0x4,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_62D[3] = {
+    {-349, -18, -281, 0x19ce},
+    {-294, -18, -272, 0x19d2},
+    {-303, -18, -281, 0x19ba},
+};
+
+
+StandFileTile tile_62E = {
+    0xa101, 0x4,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_62E[3] = {
+    {-349, -18, -281, 0x00},
+    {-349, -18, -272, 0x19d6},
+    {-294, -18, -272, 0x19ca},
+};
+
+
+StandFileTile tile_62F = {
+    0xa000, 0x4,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_62F[3] = {
+    {-294, -18, -281, 0x19c2},
+    {-303, -18, -281, 0x19ca},
+    {-294, -18, -272, 0x00},
+};
+
+
+StandFileTile tile_630 = {
+    0x9f00, 0x4,
+    0x0,
+    0xc, 0xc, 0xc,
+    4,
+    0x0, 0x2, 0x3,
+};
+StandFilePoint points_630[4] = {
+    {-294, -18, -272, 0x19ce},
+    {-349, -18, -272, 0x00},
+    {-489, -18, -272, 0x19db},
+    {-403, -18, -190, 0x19e7},
+};
+
+
+StandFileTile tile_631 = {
+    0x25600, 0x4,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_631[3] = {
+    {-403, -18, -190, 0x19d6},
+    {-489, -18, -272, 0x00},
+    {-489, -18, -190, 0x19df},
+};
+
+
+StandFileTile tile_632 = {
+    0x9e00, 0x4,
+    0x0,
+    0xd, 0xd, 0xd,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_632[3] = {
+    {-403, -18, -190, 0x19db},
+    {-489, -18, -190, 0x00},
+    {-489, -18, -109, 0x19e3},
+};
+
+
+StandFileTile tile_633 = {
+    0x9d00, 0x4,
+    0x0,
+    0xa, 0xa, 0xa,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_633[3] = {
+    {-489, -18, -109, 0x00},
+    {-294, -18, -109, 0x19e7},
+    {-403, -18, -190, 0x19df},
+};
+
+
+StandFileTile tile_634 = {
+    0x9c00, 0x4,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_634[3] = {
+    {-403, -18, -190, 0x19e3},
+    {-294, -18, -109, 0x19eb},
+    {-294, -18, -272, 0x19d6},
+};
+
+
+StandFileTile tile_635 = {
+    0x9b02, 0x4,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_635[3] = {
+    {-245, -18, -145, 0x19ef},
+    {-294, -18, -272, 0x19e7},
+    {-294, -18, -109, 0x19f3},
+};
+
+
+StandFileTile tile_636 = {
+    0x9b01, 0x4,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_636[3] = {
+    {-245, -18, -145, 0x1a1b},
+    {-245, -18, -222, 0x19ff},
+    {-294, -18, -272, 0x19eb},
+};
+
+
+StandFileTile tile_637 = {
+    0x9a02, 0x4,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_637[3] = {
+    {-294, -18, -109, 0x19f7},
+    {-236, -18, -122, 0x1a13},
+    {-245, -18, -145, 0x19eb},
+};
+
+
+StandFileTile tile_638 = {
+    0x9a01, 0x4,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_638[3] = {
+    {-294, -18, -109, 0x00},
+    {-258, -18, -109, 0x1a03},
+    {-236, -18, -122, 0x19f3},
+};
+
+
+StandFileTile tile_639 = {
+    0x9902, 0x4,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_639[3] = {
+    {-294, -18, -272, 0x19ff},
+    {-236, -18, -258, 0x1a07},
+    {-272, -18, -272, 0x00},
+};
+
+
+StandFileTile tile_63A = {
+    0x9901, 0x4,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_63A[3] = {
+    {-294, -18, -272, 0x19ef},
+    {-245, -18, -222, 0x1a0b},
+    {-236, -18, -258, 0x19fb},
+};
+
+
+StandFileTile tile_63B = {
+    0x9800, 0x4,
+    0x0,
+    0x4, 0x4, 0x4,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_63B[3] = {
+    {-258, -18, -109, 0x00},
+    {-236, -18, -109, 0x00},
+    {-236, -18, -122, 0x19f7},
+};
+
+
+StandFileTile tile_63C = {
+    0x9700, 0x4,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_63C[3] = {
+    {-236, -18, -272, 0x00},
+    {-272, -18, -272, 0x19fb},
+    {-236, -18, -258, 0x00},
+};
+
+
+StandFileTile tile_63D = {
+    0x9602, 0x4,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_63D[3] = {
+    {-208, -18, -222, 0x1a0f},
+    {-236, -18, -258, 0x19ff},
+    {-245, -18, -222, 0x1a1b},
+};
+
+
+StandFileTile tile_63E = {
+    0x9601, 0x4,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_63E[3] = {
+    {-208, -18, -222, 0x1a2b},
+    {-208, -18, -258, 0x00},
+    {-236, -18, -258, 0x1a0b},
+};
+
+
+StandFileTile tile_63F = {
+    0x9502, 0x4,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_63F[3] = {
+    {-236, -18, -122, 0x1a17},
+    {-208, -18, -145, 0x1a1f},
+    {-245, -18, -145, 0x19f3},
+};
+
+
+StandFileTile tile_640 = {
+    0x9501, 0x4,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_640[3] = {
+    {-236, -18, -122, 0x00},
+    {-208, -18, -122, 0x1a30},
+    {-208, -18, -145, 0x1a13},
+};
+
+
+StandFileTile tile_641 = {
+    0x17802, 0x4,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_641[3] = {
+    {-245, -18, -145, 0x1a1f},
+    {-208, -18, -222, 0x1a0b},
+    {-245, -18, -222, 0x19ef},
+};
+
+
+StandFileTile tile_642 = {
+    0x17801, 0x4,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_642[3] = {
+    {-245, -18, -145, 0x1a13},
+    {-208, -18, -145, 0x1a47},
+    {-208, -18, -222, 0x1a1b},
+};
+
+
+StandFileTile tile_643 = {
+    0x17e02, 0x3,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_643[3] = {
+    {-195, -18, -272, 0x1a27},
+    {-59, -18, -299, 0x1a5b},
+    {-195, -18, -299, 0x00},
+};
+
+
+StandFileTile tile_644 = {
+    0x17e01, 0x3,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_644[3] = {
+    {-195, -18, -272, 0x1a41},
+    {-59, -18, -272, 0x00},
+    {-59, -18, -299, 0x1a23},
+};
+
+
+StandFileTile tile_645 = {
+    0x17d00, 0x3,
+    0x0,
+    0x9, 0x9, 0x9,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_645[4] = {
+    {-113, -18, -222, 0x1a41},
+    {-208, -18, -272, 0x00},
+    {-208, -18, -258, 0x1a0f},
+    {-208, -18, -222, 0x1a47},
+};
+
+
+StandFileTile tile_646 = {
+    0x17c00, 0x3,
+    0x0,
+    0xa, 0xa, 0xa,
+    4,
+    0x0, 0x1, 0x3,
+};
+StandFilePoint points_646[4] = {
+    {-113, -18, -145, 0x1a4b},
+    {-208, -18, -145, 0x1a17},
+    {-208, -18, -122, 0x00},
+    {-208, -18, -109, 0x1a35},
+};
+
+
+StandFileTile tile_647 = {
+    0x17b00, 0x3,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_647[3] = {
+    {-208, -18, -109, 0x00},
+    {-45, -18, -109, 0x1a3d},
+    {-113, -18, -145, 0x1a30},
+};
+
+
+StandFileTile tile_648 = {
+    0x17a02, 0x3,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_648[3] = {
+    {-113, -18, -145, 0x1a3d},
+    {-45, -18, -272, 0x1a41},
+    {-113, -18, -222, 0x1a4b},
+};
+
+
+StandFileTile tile_649 = {
+    0x17a01, 0x3,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_649[3] = {
+    {-113, -18, -145, 0x1a35},
+    {-45, -18, -109, 0x00},
+    {-45, -18, -272, 0x1a39},
+};
+
+
+StandFileTile tile_64A = {
+    0x17900, 0x3,
+    0x0,
+    0x8, 0x8, 0x8,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_64A[5] = {
+    {-113, -18, -222, 0x1a39},
+    {-45, -18, -272, 0x00},
+    {-59, -18, -272, 0x1a27},
+    {-195, -18, -272, 0x00},
+    {-208, -18, -272, 0x1a2b},
+};
+
+
+StandFileTile tile_64B = {
+    0x3b202, 0x3,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_64B[3] = {
+    {-208, -18, -145, 0x1a4b},
+    {-113, -18, -222, 0x1a2b},
+    {-208, -18, -222, 0x1a1f},
+};
+
+
+StandFileTile tile_64C = {
+    0x3b201, 0x3,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_64C[3] = {
+    {-208, -18, -145, 0x1a30},
+    {-113, -18, -145, 0x1a39},
+    {-113, -18, -222, 0x1a47},
+};
+
+
+StandFileTile tile_64D = {
+    0xa302, 0x2,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_64D[3] = {
+    {-195, -18, -494, 0x1a53},
+    {-59, -18, -521, 0x1a97},
+    {-195, -18, -521, 0x00},
+};
+
+
+StandFileTile tile_64E = {
+    0xa301, 0x2,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_64E[3] = {
+    {-195, -18, -494, 0x1a6d},
+    {-59, -18, -494, 0x00},
+    {-59, -18, -521, 0x1a4f},
+};
+
+
+StandFileTile tile_64F = {
+    0x18202, 0x2,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_64F[3] = {
+    {-208, -18, -344, 0x1a5b},
+    {-45, -18, -299, 0x1a65},
+    {-113, -18, -344, 0x1a77},
+};
+
+
+StandFileTile tile_650 = {
+    0x18201, 0x2,
+    0x0,
+    0x8, 0x8, 0x8,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_650[5] = {
+    {-208, -18, -344, 0x00},
+    {-208, -18, -299, 0x00},
+    {-195, -18, -299, 0x1a23},
+    {-59, -18, -299, 0x00},
+    {-45, -18, -299, 0x1a57},
+};
+
+
+StandFileTile tile_651 = {
+    0x18102, 0x2,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_651[3] = {
+    {-113, -18, -344, 0x1a65},
+    {-45, -18, -494, 0x1a6d},
+    {-113, -18, -448, 0x1a77},
+};
+
+
+StandFileTile tile_652 = {
+    0x18101, 0x2,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_652[3] = {
+    {-113, -18, -344, 0x1a57},
+    {-45, -18, -299, 0x00},
+    {-45, -18, -494, 0x1a61},
+};
+
+
+StandFileTile tile_653 = {
+    0x18002, 0x2,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_653[3] = {
+    {-113, -18, -448, 0x1a6d},
+    {-208, -18, -494, 0x00},
+    {-208, -18, -448, 0x1a73},
+};
+
+
+StandFileTile tile_654 = {
+    0x18001, 0x2,
+    0x0,
+    0x8, 0x8, 0x8,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_654[5] = {
+    {-113, -18, -448, 0x1a61},
+    {-45, -18, -494, 0x00},
+    {-59, -18, -494, 0x1a53},
+    {-195, -18, -494, 0x00},
+    {-208, -18, -494, 0x1a69},
+};
+
+
+StandFileTile tile_655 = {
+    0x17f02, 0x2,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_655[3] = {
+    {-208, -18, -344, 0x1a77},
+    {-113, -18, -448, 0x1a69},
+    {-208, -18, -448, 0x00},
+};
+
+
+StandFileTile tile_656 = {
+    0x17f01, 0x2,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_656[3] = {
+    {-208, -18, -344, 0x1a57},
+    {-113, -18, -344, 0x1a61},
+    {-113, -18, -448, 0x1a73},
+};
+
+
+StandFileTile tile_657 = {
+    0x18702, 0x1,
+    0x0,
+    0x7, 0x7, 0x7,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_657[5] = {
+    {-195, -18, -716, 0x1a81},
+    {-82, -18, -743, 0x00},
+    {-100, -18, -743, 0x1a8f},
+    {-154, -18, -743, 0x00},
+    {-195, -18, -743, 0x00},
+};
+
+
+StandFileTile tile_658 = {
+    0x18701, 0x1,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_658[3] = {
+    {-195, -18, -716, 0x1aa9},
+    {-59, -18, -716, 0x1a85},
+    {-82, -18, -743, 0x1a7b},
+};
+
+
+StandFileTile tile_659 = {
+    0x18600, 0x1,
+    0x0,
+    0x3, 0x3, 0x3,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_659[3] = {
+    {-59, -18, -716, 0x00},
+    {-59, -18, -743, 0x00},
+    {-82, -18, -743, 0x1a81},
+};
+
+
+StandFileTile tile_65A = {
+    0x18502, 0x1,
+    0x0,
+    0x7, 0x7, 0x7,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_65A[5] = {
+    {-154, -18, -743, 0x1a8f},
+    {-100, -18, -752, 0xc4f},
+    {-109, -18, -752, 0xc47},
+    {-145, -18, -752, 0xc4b},
+    {-154, -18, -752, 0x00},
+};
+
+
+StandFileTile tile_65B = {
+    0x18501, 0x1,
+    0x0,
+    0x7, 0x7, 0x7,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_65B[3] = {
+    {-154, -18, -743, 0x1a7b},
+    {-100, -18, -743, 0x00},
+    {-100, -18, -752, 0x1a89},
+};
+
+
+StandFileTile tile_65C = {
+    0xa702, 0x1,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_65C[3] = {
+    {-208, -18, -566, 0x1a97},
+    {-45, -18, -521, 0x1aa1},
+    {-113, -18, -566, 0x1ab3},
+};
+
+
+StandFileTile tile_65D = {
+    0xa701, 0x1,
+    0x0,
+    0x7, 0x7, 0x7,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_65D[5] = {
+    {-208, -18, -566, 0x00},
+    {-208, -18, -521, 0x00},
+    {-195, -18, -521, 0x1a4f},
+    {-59, -18, -521, 0x00},
+    {-45, -18, -521, 0x1a93},
+};
+
+
+StandFileTile tile_65E = {
+    0xa602, 0x1,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_65E[3] = {
+    {-113, -18, -566, 0x1aa1},
+    {-45, -18, -716, 0x1aa9},
+    {-113, -18, -670, 0x1ab3},
+};
+
+
+StandFileTile tile_65F = {
+    0xa601, 0x1,
+    0x0,
+    0x8, 0x8, 0x8,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_65F[3] = {
+    {-113, -18, -566, 0x1a93},
+    {-45, -18, -521, 0x00},
+    {-45, -18, -716, 0x1a9d},
+};
+
+
+StandFileTile tile_660 = {
+    0xa502, 0x1,
+    0x0,
+    0x9, 0x9, 0x9,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_660[3] = {
+    {-113, -18, -670, 0x1aa9},
+    {-208, -18, -716, 0x00},
+    {-208, -18, -670, 0x1aaf},
+};
+
+
+StandFileTile tile_661 = {
+    0xa501, 0x1,
+    0x0,
+    0x8, 0x8, 0x8,
+    5,
+    0x0, 0x1, 0x4,
+};
+StandFilePoint points_661[5] = {
+    {-113, -18, -670, 0x1a9d},
+    {-45, -18, -716, 0x00},
+    {-59, -18, -716, 0x1a81},
+    {-195, -18, -716, 0x00},
+    {-208, -18, -716, 0x1aa5},
+};
+
+
+StandFileTile tile_662 = {
+    0xa402, 0x1,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_662[3] = {
+    {-208, -18, -566, 0x1ab3},
+    {-113, -18, -670, 0x1aa5},
+    {-208, -18, -670, 0x00},
+};
+
+
+StandFileTile tile_663 = {
+    0xa401, 0x1,
+    0x0,
+    0xf, 0xf, 0xf,
+    3,
+    0x0, 0x1, 0x2,
+};
+StandFilePoint points_663[3] = {
+    {-208, -18, -566, 0x1a93},
+    {-113, -18, -566, 0x1a9d},
+    {-113, -18, -670, 0x1aaf},
+};
+
+
+StandFileFooter footer = {
+    NULL,
+    NULL,
+    "unstric",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+};

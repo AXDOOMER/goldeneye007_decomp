@@ -3,34 +3,71 @@
 #include "ultra64.h"
 
 
-struct StandTilePoint {
+
+typedef struct StandTilePoint {
     s16 x;
     s16 y;
     s16 z;
     u16 link;
-};
+} StandTilePoint;
 
-struct StandTileHeaderTail {
+typedef struct StandTileHeaderMid {
+    u16 special : 4; 
+    u16 r : 4;
+    u16 g : 4;
+    u16 b : 4;
+} StandTileHeaderMid;
+
+typedef struct StandTileHeaderTail {
     s16 pointCount : 4; // seen lh, not lhu. Also seen with an explicit unnecessary '& 0xF' 
     s16 headerC : 4;
     s16 headerD : 4;
     s16 headerE : 4;
-};
+} StandTileHeaderTail;
 
-struct StandTile {
-    u16 name1;
-    u8 name2;
+typedef struct StandTile {
+    u32 name1:24;
+    //u8 name2;
     u8 room;    // compared to 0xFF, not -1 in a function. Seen LBUs.
-    s16 headerMid;
+    StandTileHeaderMid headerMid;
 
     /* 0x06 */
     // They appear to have performed the bit field work themselves here,
     //   but we provide the StandTileHeaderTail member for clarity - it should be unused I believe.
-    struct StandTileHeaderTail hdrTail;
+    StandTileHeaderTail hdrTail;
 
     /* 0x08 */
     struct StandTilePoint points[1];
-};
+} StandTile;
+
+typedef struct StandFilePoint {
+    u16 x;
+    u16 y;
+    u16 z;
+    u16 link;
+} StandFilePoint;
+
+typedef struct StandFileTile {
+    u32 name1:24;
+    //u8 name2;
+    u8 room;    // compared to 0xFF, not -1 in a function. Seen LBUs.
+    StandTileHeaderMid headerMid;
+
+    /* 0x06 */
+    // They appear to have performed the bit field work themselves here,
+    //   but we provide the StandTileHeaderTail member for clarity - it should be unused I believe.
+    StandTileHeaderTail hdrTail;
+
+    /* 0x08 */
+    //hack remove for compiling stan files
+    //struct StandTilePoint points[1];
+} StandFileTile;
+
+typedef struct StandFileHeader {
+    void* unk1;
+    StandTile* pFirstTile;
+    void* unk2;
+} StandFileHeader;
 
 // RGB? I've called them 'triple' because I don't really know what RGB is
 // No parens around params
@@ -55,6 +92,17 @@ struct StandTileLocusCallbackRecord {
     s32 bufMax;
     s32 nearEdgeCount;
 };
+
+typedef struct StandFileFooter {
+    void* unk1;
+    void* unk2;
+    char strictstring[8];
+    void* unk3;
+    void* unk4;
+    void* unk5;
+    void* unk6;
+} StandFileFooter;
+
 typedef s32 (*standTileLocusCallback_A_t)(struct StandTile*, struct StandTileLocusCallbackRecord*);
 typedef s32 (*standTileLocusCallback_B_t)(struct StandTile*, s32, float, float, void, float*);  // 5th parameter uncertain
 typedef s32 (*standTileLocusCallback_C_t)(struct StandTile**, s32, struct StandTileLocusCallbackRecord*);
