@@ -366,11 +366,11 @@ s32 dword_CODE_bss_80069768;
 //CODE.bss:8006976C
 s32 dword_CODE_bss_8006976C;
 //CODE.bss:80069770
-s32 dword_CODE_bss_80069770;
+s32 g_textPtrTAB1;
 //CODE.bss:80069774
-s32 dword_CODE_bss_80069774;
+s32 g_textPtrTAB2;
 //CODE.bss:80069778
-s32 dword_CODE_bss_80069778;
+s32 g_textPtrTAB3;
 //CODE.bss:8006977C
 s32 current_mp_stage_highlighted;
 //CODE.bss:80069780
@@ -1578,144 +1578,36 @@ glabel load_draw_selected_icon_folder_select
 
 
 
-
-
-#ifdef NONMATCHING
-s32 add_tab1_start(s32 arg0)
+Gfx* add_tab1_start(Gfx* DL)
 {
-    s32 sp54;
-    //s32 sp50;
+    s32 x;
+    s32 y;
+
     s32 sp4C;
     s32 sp48;
-    //s16 sp44;
-    s32 temp_a3;
-    s32 temp_s0;
-    s32 phi_s0;
 
-    dword_CODE_bss_80069770 = get_textptr_for_textID(0x9C04);
+
+    g_textPtrTAB1 = get_textptr_for_textID(0x9C04);
     setTextSpacingInverted(1);
     sp48 = 0;
     sp4C = 0;
-    sub_GAME_7F0AE98C(&sp4C, &sp48, dword_CODE_bss_80069770, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0);
-    sp54 = 0x33;
-    temp_a3 = 0x19B - (sp4C / 2);
-    //sp50 = temp_a3;
-    phi_s0 = arg0;
+    sub_GAME_7F0AE98C(&sp4C, &sp48, g_textPtrTAB1, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0);
+    x = 0x33;
+    y = 0x19B - (sp4C / 2);
+
     if (tab_1_highlight != 0)
     {
-        //sp50 = temp_a3;
-        phi_s0 = microcode_constructor_related_to_menus(arg0, (temp_a3 - sp4C) + 1, 0x33, temp_a3, 0x75, 0x32);
+        DL = microcode_constructor_related_to_menus(DL, (y - sp4C) + 1, 0x33, y, 0x75, 0x32);
     }
+
     setTextOrientation(1);
-    sp54 = 0x54 - (sp48 / 2);
-    //sp44 = ;
-    temp_s0 = en_text_write_stuff(phi_s0, &sp54, &temp_a3, dword_CODE_bss_80069770, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF, viGetY(), viGetX(), 0, 0);
+
+    x = 0x54 - (sp48 / 2);
+    DL = en_text_write_stuff(DL, &x, &y, g_textPtrTAB1, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF, viGetY(), viGetX(), 0, 0);
     setTextOrientation(0);
     setTextSpacingInverted(0);
-    return temp_s0;
+    return DL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel add_tab1_start
-/* 03EBB0 7F00A080 27BDFFA8 */  addiu $sp, $sp, -0x58
-/* 03EBB4 7F00A084 AFB00038 */  sw    $s0, 0x38($sp)
-/* 03EBB8 7F00A088 00808025 */  move  $s0, $a0
-/* 03EBBC 7F00A08C AFBF003C */  sw    $ra, 0x3c($sp)
-/* 03EBC0 7F00A090 0FC30776 */  jal   get_textptr_for_textID
-/* 03EBC4 7F00A094 34049C04 */   li    $a0, 39940
-/* 03EBC8 7F00A098 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069770)
-/* 03EBCC 7F00A09C AC229770 */  sw    $v0, %lo(dword_CODE_bss_80069770)($at)
-/* 03EBD0 7F00A0A0 0FC2B2DE */  jal   setTextSpacingInverted
-/* 03EBD4 7F00A0A4 24040001 */   li    $a0, 1
-/* 03EBD8 7F00A0A8 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall) 
-/* 03EBDC 7F00A0AC 8DCE0EAC */  lw    $t6, %lo(ptrFirstFontTableSmall)($t6)
-/* 03EBE0 7F00A0B0 3C068007 */  lui   $a2, %hi(dword_CODE_bss_80069770)
-/* 03EBE4 7F00A0B4 3C078004 */  lui   $a3, %hi(ptrSecondFontTableSmall)
-/* 03EBE8 7F00A0B8 AFA00048 */  sw    $zero, 0x48($sp)
-/* 03EBEC 7F00A0BC AFA0004C */  sw    $zero, 0x4c($sp)
-/* 03EBF0 7F00A0C0 8CE70EB0 */  lw    $a3, %lo(ptrSecondFontTableSmall)($a3)
-/* 03EBF4 7F00A0C4 8CC69770 */  lw    $a2, %lo(dword_CODE_bss_80069770)($a2)
-/* 03EBF8 7F00A0C8 27A4004C */  addiu $a0, $sp, 0x4c
-/* 03EBFC 7F00A0CC 27A50048 */  addiu $a1, $sp, 0x48
-/* 03EC00 7F00A0D0 AFA00014 */  sw    $zero, 0x14($sp)
-/* 03EC04 7F00A0D4 0FC2BA63 */  jal   sub_GAME_7F0AE98C
-/* 03EC08 7F00A0D8 AFAE0010 */   sw    $t6, 0x10($sp)
-/* 03EC0C 7F00A0DC 8FB8004C */  lw    $t8, 0x4c($sp)
-/* 03EC10 7F00A0E0 3C098003 */  lui   $t1, %hi(tab_1_highlight) 
-/* 03EC14 7F00A0E4 8D29A8DC */  lw    $t1, %lo(tab_1_highlight)($t1)
-/* 03EC18 7F00A0E8 2408019B */  li    $t0, 411
-/* 03EC1C 7F00A0EC 240F0033 */  li    $t7, 51
-/* 03EC20 7F00A0F0 AFAF0054 */  sw    $t7, 0x54($sp)
-/* 03EC24 7F00A0F4 07010003 */  bgez  $t8, .L7F00A104
-/* 03EC28 7F00A0F8 0018C843 */   sra   $t9, $t8, 1
-/* 03EC2C 7F00A0FC 27010001 */  addiu $at, $t8, 1
-/* 03EC30 7F00A100 0001C843 */  sra   $t9, $at, 1
-.L7F00A104:
-/* 03EC34 7F00A104 01193823 */  subu  $a3, $t0, $t9
-/* 03EC38 7F00A108 1120000C */  beqz  $t1, .L7F00A13C
-/* 03EC3C 7F00A10C AFA70050 */   sw    $a3, 0x50($sp)
-/* 03EC40 7F00A110 00F82823 */  subu  $a1, $a3, $t8
-/* 03EC44 7F00A114 240A0075 */  li    $t2, 117
-/* 03EC48 7F00A118 240B0032 */  li    $t3, 50
-/* 03EC4C 7F00A11C AFAB0014 */  sw    $t3, 0x14($sp)
-/* 03EC50 7F00A120 AFAA0010 */  sw    $t2, 0x10($sp)
-/* 03EC54 7F00A124 24A50001 */  addiu $a1, $a1, 1
-/* 03EC58 7F00A128 02002025 */  move  $a0, $s0
-/* 03EC5C 7F00A12C 24060033 */  li    $a2, 51
-/* 03EC60 7F00A130 0FC2B405 */  jal   microcode_constructor_related_to_menus
-/* 03EC64 7F00A134 AFA70050 */   sw    $a3, 0x50($sp)
-/* 03EC68 7F00A138 00408025 */  move  $s0, $v0
-.L7F00A13C:
-/* 03EC6C 7F00A13C 0FC2B2E2 */  jal   setTextOrientation
-/* 03EC70 7F00A140 24040001 */   li    $a0, 1
-/* 03EC74 7F00A144 8FAC0048 */  lw    $t4, 0x48($sp)
-/* 03EC78 7F00A148 240E0054 */  li    $t6, 84
-/* 03EC7C 7F00A14C 05810003 */  bgez  $t4, .L7F00A15C
-/* 03EC80 7F00A150 000C6843 */   sra   $t5, $t4, 1
-/* 03EC84 7F00A154 25810001 */  addiu $at, $t4, 1
-/* 03EC88 7F00A158 00016843 */  sra   $t5, $at, 1
-.L7F00A15C:
-/* 03EC8C 7F00A15C 01CD7823 */  subu  $t7, $t6, $t5
-/* 03EC90 7F00A160 0C00110B */  jal   viGetY
-/* 03EC94 7F00A164 AFAF0054 */   sw    $t7, 0x54($sp)
-/* 03EC98 7F00A168 0C001107 */  jal   viGetX
-/* 03EC9C 7F00A16C A7A20044 */   sh    $v0, 0x44($sp)
-/* 03ECA0 7F00A170 3C088004 */  lui   $t0, %hi(ptrSecondFontTableSmall) 
-/* 03ECA4 7F00A174 3C198004 */  lui   $t9, %hi(ptrFirstFontTableSmall) 
-/* 03ECA8 7F00A178 8F390EAC */  lw    $t9, %lo(ptrFirstFontTableSmall)($t9)
-/* 03ECAC 7F00A17C 8D080EB0 */  lw    $t0, %lo(ptrSecondFontTableSmall)($t0)
-/* 03ECB0 7F00A180 87B80044 */  lh    $t8, 0x44($sp)
-/* 03ECB4 7F00A184 3C078007 */  lui   $a3, %hi(dword_CODE_bss_80069770)
-/* 03ECB8 7F00A188 240900FF */  li    $t1, 255
-/* 03ECBC 7F00A18C AFA90018 */  sw    $t1, 0x18($sp)
-/* 03ECC0 7F00A190 8CE79770 */  lw    $a3, %lo(dword_CODE_bss_80069770)($a3)
-/* 03ECC4 7F00A194 02002025 */  move  $a0, $s0
-/* 03ECC8 7F00A198 27A50054 */  addiu $a1, $sp, 0x54
-/* 03ECCC 7F00A19C 27A60050 */  addiu $a2, $sp, 0x50
-/* 03ECD0 7F00A1A0 AFA20020 */  sw    $v0, 0x20($sp)
-/* 03ECD4 7F00A1A4 AFA00024 */  sw    $zero, 0x24($sp)
-/* 03ECD8 7F00A1A8 AFA00028 */  sw    $zero, 0x28($sp)
-/* 03ECDC 7F00A1AC AFB90014 */  sw    $t9, 0x14($sp)
-/* 03ECE0 7F00A1B0 AFA80010 */  sw    $t0, 0x10($sp)
-/* 03ECE4 7F00A1B4 0FC2B6AF */  jal   en_text_write_stuff
-/* 03ECE8 7F00A1B8 AFB8001C */   sw    $t8, 0x1c($sp)
-/* 03ECEC 7F00A1BC 00408025 */  move  $s0, $v0
-/* 03ECF0 7F00A1C0 0FC2B2E2 */  jal   setTextOrientation
-/* 03ECF4 7F00A1C4 00002025 */   move  $a0, $zero
-/* 03ECF8 7F00A1C8 0FC2B2DE */  jal   setTextSpacingInverted
-/* 03ECFC 7F00A1CC 00002025 */   move  $a0, $zero
-/* 03ED00 7F00A1D0 8FBF003C */  lw    $ra, 0x3c($sp)
-/* 03ED04 7F00A1D4 02001025 */  move  $v0, $s0
-/* 03ED08 7F00A1D8 8FB00038 */  lw    $s0, 0x38($sp)
-/* 03ED0C 7F00A1DC 03E00008 */  jr    $ra
-/* 03ED10 7F00A1E0 27BD0058 */   addiu $sp, $sp, 0x58
-)
-#endif
-
-
-
-
 
 
 s32 isontab1(void) {
@@ -1726,149 +1618,36 @@ s32 isontab1(void) {
 }
 
 
-#ifdef NONMATCHING
-s32 add_tab3_previous(s32 arg0) {
-    s16 sp44;
-    s32 sp48;
-    s32 sp4C;
-    s32 sp50;
-    s32 sp54;
-    s32 temp_a3;
+Gfx* add_tab3_previous(Gfx* DL)
+{
+    s32 x;
+    s32 y;
 
-    // Node 0
-    dword_CODE_bss_80069778 = get_textptr_for_textID(TEXT(LTITLE, 0x06));
+    s32 sp4C;
+    s32 sp48;
+
+
+    g_textPtrTAB3 = get_textptr_for_textID(0x9C06);
     setTextSpacingInverted(1);
     sp48 = 0;
     sp4C = 0;
-    sub_GAME_7F0AE98C(&sp4C, &sp48, dword_CODE_bss_80069778, ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0);
-    sp54 = 0xec;
-    if (sp4C < 0)
-    {
-        // Node 1
-    }
-    // Node 2
-    temp_a3 = (0x19b - (sp4C >> 1));
+    sub_GAME_7F0AE98C(&sp4C, &sp48, g_textPtrTAB3, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0);
+    x = 0xEC;
+    y = 0x19B - (sp4C / 2);
+
     if (tab_3_highlight != 0)
     {
-        // Node 3
-        microcode_constructor_related_to_menus(arg0, ((temp_a3 - sp4C) + 1), 0xec, temp_a3, 0x12e, 0x32);
+        DL = microcode_constructor_related_to_menus(DL, (y - sp4C) + 1, 0xEC, y, 0x12E, 0x32);
     }
-    // Node 4
-    setTextOrientation(1, temp_a3);
-    if (sp48 < 0)
-    {
-        // Node 5
-    }
-    // Node 6
-    sp54 = (s32) (0x10d - (sp48 >> 1));
-    sp44 = viGetY();
-    en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069778, (s32) ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0xff, sp44, viGetX(), 0, 0);
+
+    setTextOrientation(1);
+
+    x = 0x10D - (sp48 / 2);
+    DL = en_text_write_stuff(DL, &x, &y, g_textPtrTAB3, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF, viGetY(), viGetX(), 0, 0);
     setTextOrientation(0);
     setTextSpacingInverted(0);
-    return;
-    // (possible return value: en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069778, (s32) ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0xff, sp44, viGetX(), 0, 0))
+    return DL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel add_tab3_previous
-/* 03ED68 7F00A238 27BDFFA8 */  addiu $sp, $sp, -0x58
-/* 03ED6C 7F00A23C AFB00038 */  sw    $s0, 0x38($sp)
-/* 03ED70 7F00A240 00808025 */  move  $s0, $a0
-/* 03ED74 7F00A244 AFBF003C */  sw    $ra, 0x3c($sp)
-/* 03ED78 7F00A248 0FC30776 */  jal   get_textptr_for_textID
-/* 03ED7C 7F00A24C 34049C06 */   li    $a0, 39942
-/* 03ED80 7F00A250 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069778)
-/* 03ED84 7F00A254 AC229778 */  sw    $v0, %lo(dword_CODE_bss_80069778)($at)
-/* 03ED88 7F00A258 0FC2B2DE */  jal   setTextSpacingInverted
-/* 03ED8C 7F00A25C 24040001 */   li    $a0, 1
-/* 03ED90 7F00A260 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall) 
-/* 03ED94 7F00A264 8DCE0EAC */  lw    $t6, %lo(ptrFirstFontTableSmall)($t6)
-/* 03ED98 7F00A268 3C068007 */  lui   $a2, %hi(dword_CODE_bss_80069778)
-/* 03ED9C 7F00A26C 3C078004 */  lui   $a3, %hi(ptrSecondFontTableSmall)
-/* 03EDA0 7F00A270 AFA00048 */  sw    $zero, 0x48($sp)
-/* 03EDA4 7F00A274 AFA0004C */  sw    $zero, 0x4c($sp)
-/* 03EDA8 7F00A278 8CE70EB0 */  lw    $a3, %lo(ptrSecondFontTableSmall)($a3)
-/* 03EDAC 7F00A27C 8CC69778 */  lw    $a2, %lo(dword_CODE_bss_80069778)($a2)
-/* 03EDB0 7F00A280 27A4004C */  addiu $a0, $sp, 0x4c
-/* 03EDB4 7F00A284 27A50048 */  addiu $a1, $sp, 0x48
-/* 03EDB8 7F00A288 AFA00014 */  sw    $zero, 0x14($sp)
-/* 03EDBC 7F00A28C 0FC2BA63 */  jal   sub_GAME_7F0AE98C
-/* 03EDC0 7F00A290 AFAE0010 */   sw    $t6, 0x10($sp)
-/* 03EDC4 7F00A294 8FB8004C */  lw    $t8, 0x4c($sp)
-/* 03EDC8 7F00A298 3C098003 */  lui   $t1, %hi(tab_3_highlight) 
-/* 03EDCC 7F00A29C 8D29A8E4 */  lw    $t1, %lo(tab_3_highlight)($t1)
-/* 03EDD0 7F00A2A0 2408019B */  li    $t0, 411
-/* 03EDD4 7F00A2A4 240F00EC */  li    $t7, 236
-/* 03EDD8 7F00A2A8 AFAF0054 */  sw    $t7, 0x54($sp)
-/* 03EDDC 7F00A2AC 07010003 */  bgez  $t8, .L7F00A2BC
-/* 03EDE0 7F00A2B0 0018C843 */   sra   $t9, $t8, 1
-/* 03EDE4 7F00A2B4 27010001 */  addiu $at, $t8, 1
-/* 03EDE8 7F00A2B8 0001C843 */  sra   $t9, $at, 1
-.L7F00A2BC:
-/* 03EDEC 7F00A2BC 01193823 */  subu  $a3, $t0, $t9
-/* 03EDF0 7F00A2C0 1120000C */  beqz  $t1, .L7F00A2F4
-/* 03EDF4 7F00A2C4 AFA70050 */   sw    $a3, 0x50($sp)
-/* 03EDF8 7F00A2C8 00F82823 */  subu  $a1, $a3, $t8
-/* 03EDFC 7F00A2CC 240A012E */  li    $t2, 302
-/* 03EE00 7F00A2D0 240B0032 */  li    $t3, 50
-/* 03EE04 7F00A2D4 AFAB0014 */  sw    $t3, 0x14($sp)
-/* 03EE08 7F00A2D8 AFAA0010 */  sw    $t2, 0x10($sp)
-/* 03EE0C 7F00A2DC 24A50001 */  addiu $a1, $a1, 1
-/* 03EE10 7F00A2E0 02002025 */  move  $a0, $s0
-/* 03EE14 7F00A2E4 240600EC */  li    $a2, 236
-/* 03EE18 7F00A2E8 0FC2B405 */  jal   microcode_constructor_related_to_menus
-/* 03EE1C 7F00A2EC AFA70050 */   sw    $a3, 0x50($sp)
-/* 03EE20 7F00A2F0 00408025 */  move  $s0, $v0
-.L7F00A2F4:
-/* 03EE24 7F00A2F4 0FC2B2E2 */  jal   setTextOrientation
-/* 03EE28 7F00A2F8 24040001 */   li    $a0, 1
-/* 03EE2C 7F00A2FC 8FAC0048 */  lw    $t4, 0x48($sp)
-/* 03EE30 7F00A300 240E010D */  li    $t6, 269
-/* 03EE34 7F00A304 05810003 */  bgez  $t4, .L7F00A314
-/* 03EE38 7F00A308 000C6843 */   sra   $t5, $t4, 1
-/* 03EE3C 7F00A30C 25810001 */  addiu $at, $t4, 1
-/* 03EE40 7F00A310 00016843 */  sra   $t5, $at, 1
-.L7F00A314:
-/* 03EE44 7F00A314 01CD7823 */  subu  $t7, $t6, $t5
-/* 03EE48 7F00A318 0C00110B */  jal   viGetY
-/* 03EE4C 7F00A31C AFAF0054 */   sw    $t7, 0x54($sp)
-/* 03EE50 7F00A320 0C001107 */  jal   viGetX
-/* 03EE54 7F00A324 A7A20044 */   sh    $v0, 0x44($sp)
-/* 03EE58 7F00A328 3C088004 */  lui   $t0, %hi(ptrSecondFontTableSmall) 
-/* 03EE5C 7F00A32C 3C198004 */  lui   $t9, %hi(ptrFirstFontTableSmall) 
-/* 03EE60 7F00A330 8F390EAC */  lw    $t9, %lo(ptrFirstFontTableSmall)($t9)
-/* 03EE64 7F00A334 8D080EB0 */  lw    $t0, %lo(ptrSecondFontTableSmall)($t0)
-/* 03EE68 7F00A338 87B80044 */  lh    $t8, 0x44($sp)
-/* 03EE6C 7F00A33C 3C078007 */  lui   $a3, %hi(dword_CODE_bss_80069778)
-/* 03EE70 7F00A340 240900FF */  li    $t1, 255
-/* 03EE74 7F00A344 AFA90018 */  sw    $t1, 0x18($sp)
-/* 03EE78 7F00A348 8CE79778 */  lw    $a3, %lo(dword_CODE_bss_80069778)($a3)
-/* 03EE7C 7F00A34C 02002025 */  move  $a0, $s0
-/* 03EE80 7F00A350 27A50054 */  addiu $a1, $sp, 0x54
-/* 03EE84 7F00A354 27A60050 */  addiu $a2, $sp, 0x50
-/* 03EE88 7F00A358 AFA20020 */  sw    $v0, 0x20($sp)
-/* 03EE8C 7F00A35C AFA00024 */  sw    $zero, 0x24($sp)
-/* 03EE90 7F00A360 AFA00028 */  sw    $zero, 0x28($sp)
-/* 03EE94 7F00A364 AFB90014 */  sw    $t9, 0x14($sp)
-/* 03EE98 7F00A368 AFA80010 */  sw    $t0, 0x10($sp)
-/* 03EE9C 7F00A36C 0FC2B6AF */  jal   en_text_write_stuff
-/* 03EEA0 7F00A370 AFB8001C */   sw    $t8, 0x1c($sp)
-/* 03EEA4 7F00A374 00408025 */  move  $s0, $v0
-/* 03EEA8 7F00A378 0FC2B2E2 */  jal   setTextOrientation
-/* 03EEAC 7F00A37C 00002025 */   move  $a0, $zero
-/* 03EEB0 7F00A380 0FC2B2DE */  jal   setTextSpacingInverted
-/* 03EEB4 7F00A384 00002025 */   move  $a0, $zero
-/* 03EEB8 7F00A388 8FBF003C */  lw    $ra, 0x3c($sp)
-/* 03EEBC 7F00A38C 02001025 */  move  $v0, $s0
-/* 03EEC0 7F00A390 8FB00038 */  lw    $s0, 0x38($sp)
-/* 03EEC4 7F00A394 03E00008 */  jr    $ra
-/* 03EEC8 7F00A398 27BD0058 */   addiu $sp, $sp, 0x58
-)
-#endif
-
-
-
 
 
 u32 isontab3(void) 
@@ -1888,146 +1667,36 @@ void set_cursor_pos_tab2(void)
 }
 
 
-#ifdef NONMATCHING
-s32 add_tab2_next(s32 arg0) {
-    s16 sp44;
-    s32 sp48;
-    s32 sp4C;
-    s32 sp50;
-    s32 sp54;
-    s32 temp_a3;
+Gfx* add_tab2_next(Gfx* DL)
+{
+    s32 x;
+    s32 y;
 
-    // Node 0
-    dword_CODE_bss_80069774 = get_textptr_for_textID(TEXT(LTITLE, 0x05));
+    s32 sp4C;
+    s32 sp48;
+
+
+    g_textPtrTAB2 = get_textptr_for_textID(0x9C05);
     setTextSpacingInverted(1);
     sp48 = 0;
     sp4C = 0;
-    sub_GAME_7F0AE98C(&sp4C, &sp48, dword_CODE_bss_80069774, ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0);
-    sp54 = 0x90;
-    if (sp4C < 0)
-    {
-        // Node 1
-    }
-    // Node 2
-    temp_a3 = (0x19b - (sp4C >> 1));
+    sub_GAME_7F0AE98C(&sp4C, &sp48, g_textPtrTAB2, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0);
+    x = 0x90;
+    y = 0x19B - (sp4C / 2);
+
     if (tab_2_highlight != 0)
     {
-        // Node 3
-        microcode_constructor_related_to_menus(arg0, ((temp_a3 - sp4C) + 1), 0x90, temp_a3, 0xd2, 0x32);
+        DL = microcode_constructor_related_to_menus(DL, (y - sp4C) + 1, 0x90, y, 0xD2, 0x32);
     }
-    // Node 4
-    setTextOrientation(1, temp_a3);
-    if (sp48 < 0)
-    {
-        // Node 5
-    }
-    // Node 6
-    sp54 = (s32) (0xb1 - (sp48 >> 1));
-    sp44 = viGetY();
-    en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069774, (s32) ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0xff, sp44, viGetX(), 0, 0);
+
+    setTextOrientation(1);
+
+    x = 0xB1 - (sp48 / 2);
+    DL = en_text_write_stuff(DL, &x, &y, g_textPtrTAB2, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF, viGetY(), viGetX(), 0, 0);
     setTextOrientation(0);
     setTextSpacingInverted(0);
-    return;
-    // (possible return value: en_text_write_stuff(arg0, &sp54, &sp50, dword_CODE_bss_80069774, (s32) ptrSecondFontTableSmall, (s32) ptrFirstFontTableSmall, 0xff, sp44, viGetX(), 0, 0))
+    return DL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel add_tab2_next
-/* 03EF44 7F00A414 27BDFFA8 */  addiu $sp, $sp, -0x58
-/* 03EF48 7F00A418 AFB00038 */  sw    $s0, 0x38($sp)
-/* 03EF4C 7F00A41C 00808025 */  move  $s0, $a0
-/* 03EF50 7F00A420 AFBF003C */  sw    $ra, 0x3c($sp)
-/* 03EF54 7F00A424 0FC30776 */  jal   get_textptr_for_textID
-/* 03EF58 7F00A428 34049C05 */   li    $a0, 39941
-/* 03EF5C 7F00A42C 3C018007 */  lui   $at, %hi(dword_CODE_bss_80069774)
-/* 03EF60 7F00A430 AC229774 */  sw    $v0, %lo(dword_CODE_bss_80069774)($at)
-/* 03EF64 7F00A434 0FC2B2DE */  jal   setTextSpacingInverted
-/* 03EF68 7F00A438 24040001 */   li    $a0, 1
-/* 03EF6C 7F00A43C 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall) 
-/* 03EF70 7F00A440 8DCE0EAC */  lw    $t6, %lo(ptrFirstFontTableSmall)($t6)
-/* 03EF74 7F00A444 3C068007 */  lui   $a2, %hi(dword_CODE_bss_80069774)
-/* 03EF78 7F00A448 3C078004 */  lui   $a3, %hi(ptrSecondFontTableSmall)
-/* 03EF7C 7F00A44C AFA00048 */  sw    $zero, 0x48($sp)
-/* 03EF80 7F00A450 AFA0004C */  sw    $zero, 0x4c($sp)
-/* 03EF84 7F00A454 8CE70EB0 */  lw    $a3, %lo(ptrSecondFontTableSmall)($a3)
-/* 03EF88 7F00A458 8CC69774 */  lw    $a2, %lo(dword_CODE_bss_80069774)($a2)
-/* 03EF8C 7F00A45C 27A4004C */  addiu $a0, $sp, 0x4c
-/* 03EF90 7F00A460 27A50048 */  addiu $a1, $sp, 0x48
-/* 03EF94 7F00A464 AFA00014 */  sw    $zero, 0x14($sp)
-/* 03EF98 7F00A468 0FC2BA63 */  jal   sub_GAME_7F0AE98C
-/* 03EF9C 7F00A46C AFAE0010 */   sw    $t6, 0x10($sp)
-/* 03EFA0 7F00A470 8FB8004C */  lw    $t8, 0x4c($sp)
-/* 03EFA4 7F00A474 3C098003 */  lui   $t1, %hi(tab_2_highlight) 
-/* 03EFA8 7F00A478 8D29A8E0 */  lw    $t1, %lo(tab_2_highlight)($t1)
-/* 03EFAC 7F00A47C 2408019B */  li    $t0, 411
-/* 03EFB0 7F00A480 240F0090 */  li    $t7, 144
-/* 03EFB4 7F00A484 AFAF0054 */  sw    $t7, 0x54($sp)
-/* 03EFB8 7F00A488 07010003 */  bgez  $t8, .L7F00A498
-/* 03EFBC 7F00A48C 0018C843 */   sra   $t9, $t8, 1
-/* 03EFC0 7F00A490 27010001 */  addiu $at, $t8, 1
-/* 03EFC4 7F00A494 0001C843 */  sra   $t9, $at, 1
-.L7F00A498:
-/* 03EFC8 7F00A498 01193823 */  subu  $a3, $t0, $t9
-/* 03EFCC 7F00A49C 1120000C */  beqz  $t1, .L7F00A4D0
-/* 03EFD0 7F00A4A0 AFA70050 */   sw    $a3, 0x50($sp)
-/* 03EFD4 7F00A4A4 00F82823 */  subu  $a1, $a3, $t8
-/* 03EFD8 7F00A4A8 240A00D2 */  li    $t2, 210
-/* 03EFDC 7F00A4AC 240B0032 */  li    $t3, 50
-/* 03EFE0 7F00A4B0 AFAB0014 */  sw    $t3, 0x14($sp)
-/* 03EFE4 7F00A4B4 AFAA0010 */  sw    $t2, 0x10($sp)
-/* 03EFE8 7F00A4B8 24A50001 */  addiu $a1, $a1, 1
-/* 03EFEC 7F00A4BC 02002025 */  move  $a0, $s0
-/* 03EFF0 7F00A4C0 24060090 */  li    $a2, 144
-/* 03EFF4 7F00A4C4 0FC2B405 */  jal   microcode_constructor_related_to_menus
-/* 03EFF8 7F00A4C8 AFA70050 */   sw    $a3, 0x50($sp)
-/* 03EFFC 7F00A4CC 00408025 */  move  $s0, $v0
-.L7F00A4D0:
-/* 03F000 7F00A4D0 0FC2B2E2 */  jal   setTextOrientation
-/* 03F004 7F00A4D4 24040001 */   li    $a0, 1
-/* 03F008 7F00A4D8 8FAC0048 */  lw    $t4, 0x48($sp)
-/* 03F00C 7F00A4DC 240E00B1 */  li    $t6, 177
-/* 03F010 7F00A4E0 05810003 */  bgez  $t4, .L7F00A4F0
-/* 03F014 7F00A4E4 000C6843 */   sra   $t5, $t4, 1
-/* 03F018 7F00A4E8 25810001 */  addiu $at, $t4, 1
-/* 03F01C 7F00A4EC 00016843 */  sra   $t5, $at, 1
-.L7F00A4F0:
-/* 03F020 7F00A4F0 01CD7823 */  subu  $t7, $t6, $t5
-/* 03F024 7F00A4F4 0C00110B */  jal   viGetY
-/* 03F028 7F00A4F8 AFAF0054 */   sw    $t7, 0x54($sp)
-/* 03F02C 7F00A4FC 0C001107 */  jal   viGetX
-/* 03F030 7F00A500 A7A20044 */   sh    $v0, 0x44($sp)
-/* 03F034 7F00A504 3C088004 */  lui   $t0, %hi(ptrSecondFontTableSmall) 
-/* 03F038 7F00A508 3C198004 */  lui   $t9, %hi(ptrFirstFontTableSmall) 
-/* 03F03C 7F00A50C 8F390EAC */  lw    $t9, %lo(ptrFirstFontTableSmall)($t9)
-/* 03F040 7F00A510 8D080EB0 */  lw    $t0, %lo(ptrSecondFontTableSmall)($t0)
-/* 03F044 7F00A514 87B80044 */  lh    $t8, 0x44($sp)
-/* 03F048 7F00A518 3C078007 */  lui   $a3, %hi(dword_CODE_bss_80069774)
-/* 03F04C 7F00A51C 240900FF */  li    $t1, 255
-/* 03F050 7F00A520 AFA90018 */  sw    $t1, 0x18($sp)
-/* 03F054 7F00A524 8CE79774 */  lw    $a3, %lo(dword_CODE_bss_80069774)($a3)
-/* 03F058 7F00A528 02002025 */  move  $a0, $s0
-/* 03F05C 7F00A52C 27A50054 */  addiu $a1, $sp, 0x54
-/* 03F060 7F00A530 27A60050 */  addiu $a2, $sp, 0x50
-/* 03F064 7F00A534 AFA20020 */  sw    $v0, 0x20($sp)
-/* 03F068 7F00A538 AFA00024 */  sw    $zero, 0x24($sp)
-/* 03F06C 7F00A53C AFA00028 */  sw    $zero, 0x28($sp)
-/* 03F070 7F00A540 AFB90014 */  sw    $t9, 0x14($sp)
-/* 03F074 7F00A544 AFA80010 */  sw    $t0, 0x10($sp)
-/* 03F078 7F00A548 0FC2B6AF */  jal   en_text_write_stuff
-/* 03F07C 7F00A54C AFB8001C */   sw    $t8, 0x1c($sp)
-/* 03F080 7F00A550 00408025 */  move  $s0, $v0
-/* 03F084 7F00A554 0FC2B2E2 */  jal   setTextOrientation
-/* 03F088 7F00A558 00002025 */   move  $a0, $zero
-/* 03F08C 7F00A55C 0FC2B2DE */  jal   setTextSpacingInverted
-/* 03F090 7F00A560 00002025 */   move  $a0, $zero
-/* 03F094 7F00A564 8FBF003C */  lw    $ra, 0x3c($sp)
-/* 03F098 7F00A568 02001025 */  move  $v0, $s0
-/* 03F09C 7F00A56C 8FB00038 */  lw    $s0, 0x38($sp)
-/* 03F0A0 7F00A570 03E00008 */  jr    $ra
-/* 03F0A4 7F00A574 27BD0058 */   addiu $sp, $sp, 0x58
-)
-#endif
 
 
 u32 isontab2(void)
