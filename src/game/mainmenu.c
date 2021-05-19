@@ -366,11 +366,11 @@ s32 dword_CODE_bss_80069768;
 //CODE.bss:8006976C
 s32 dword_CODE_bss_8006976C;
 //CODE.bss:80069770
-s32 g_textPtrTAB1;
+char* g_textPtrTAB1;
 //CODE.bss:80069774
-s32 g_textPtrTAB2;
+char* g_textPtrTAB2;
 //CODE.bss:80069778
-s32 g_textPtrTAB3;
+char* g_textPtrTAB3;
 //CODE.bss:8006977C
 s32 current_mp_stage_highlighted;
 //CODE.bss:80069780

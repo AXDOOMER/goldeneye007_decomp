@@ -394,11 +394,11 @@ extern s32 handicap_player3;
 //CODE.bss:8006976C
 extern s32 handicap_player4;
 //CODE.bss:80069770
-extern s32 g_textPtrTAB1;
+extern char* g_textPtrTAB1;
 //CODE.bss:80069774
-extern s32 g_textPtrTAB2;
+extern char* g_textPtrTAB2;
 //CODE.bss:80069778
-extern s32 g_textPtrTAB3;
+extern char* g_textPtrTAB3;
 //CODE.bss:8006977C
 extern s32 current_mp_stage_highlighted;
 //CODE.bss:80069780
