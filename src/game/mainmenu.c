@@ -4112,77 +4112,27 @@ glabel interface_menu05_fileselect
 
 
 
-#ifdef NONMATCHING
-int get_ptr_difficulty_name(s32 difficulty)
+
+char* get_ptr_difficulty_name(s32 difficulty)
 {
-  u8 *return;
-  
-  return = NULL;
-  if (difficulty == 0) {
-    return = get_textptr_for_textID(TEXT(LTITLE, 0x13));
-  }
-  else {
-    if (difficulty == 1) {
-      return = get_textptr_for_textID(TEXT(LTITLE, 0x14));
+    char* text = NULL;
+    switch (difficulty)
+    {
+    case 0:
+        text = get_textptr_for_textID(TEXT(LTITLE, 0x13));
+        break;
+    case 1:
+        text = get_textptr_for_textID(TEXT(LTITLE, 0x14));
+        break;
+    case 2:
+        text = get_textptr_for_textID(TEXT(LTITLE, 0x15));
+        break;
+    case 3:
+        text = get_textptr_for_textID(TEXT(LTITLE, 0x16));
+        break;
     }
-    else {
-      if (difficulty == 2) {
-        return = get_textptr_for_textID(TEXT(LTITLE, 0x15));
-      }
-      else {
-        if (difficulty == 3) {
-          return = get_textptr_for_textID(TEXT(LTITLE, 0x16));
-        }
-      }
-    }
-  }
-  return (int)return;
+    return text;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_ptr_difficulty_name
-/* 040EB4 7F00C384 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 040EB8 7F00C388 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 040EBC 7F00C38C 1080000A */  beqz  $a0, .L7F00C3B8
-/* 040EC0 7F00C390 00001825 */   move  $v1, $zero
-/* 040EC4 7F00C394 24010001 */  li    $at, 1
-/* 040EC8 7F00C398 1081000B */  beq   $a0, $at, .L7F00C3C8
-/* 040ECC 7F00C39C 24010002 */   li    $at, 2
-/* 040ED0 7F00C3A0 1081000D */  beq   $a0, $at, .L7F00C3D8
-/* 040ED4 7F00C3A4 24010003 */   li    $at, 3
-/* 040ED8 7F00C3A8 1081000F */  beq   $a0, $at, .L7F00C3E8
-/* 040EDC 7F00C3AC 00000000 */   nop   
-/* 040EE0 7F00C3B0 10000011 */  b     .L7F00C3F8
-/* 040EE4 7F00C3B4 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F00C3B8:
-/* 040EE8 7F00C3B8 0FC30776 */  jal   get_textptr_for_textID
-/* 040EEC 7F00C3BC 34049C13 */   li    $a0, 39955
-/* 040EF0 7F00C3C0 1000000C */  b     .L7F00C3F4
-/* 040EF4 7F00C3C4 00401825 */   move  $v1, $v0
-.L7F00C3C8:
-/* 040EF8 7F00C3C8 0FC30776 */  jal   get_textptr_for_textID
-/* 040EFC 7F00C3CC 34049C14 */   li    $a0, 39956
-/* 040F00 7F00C3D0 10000008 */  b     .L7F00C3F4
-/* 040F04 7F00C3D4 00401825 */   move  $v1, $v0
-.L7F00C3D8:
-/* 040F08 7F00C3D8 0FC30776 */  jal   get_textptr_for_textID
-/* 040F0C 7F00C3DC 34049C15 */   li    $a0, 39957
-/* 040F10 7F00C3E0 10000004 */  b     .L7F00C3F4
-/* 040F14 7F00C3E4 00401825 */   move  $v1, $v0
-.L7F00C3E8:
-/* 040F18 7F00C3E8 0FC30776 */  jal   get_textptr_for_textID
-/* 040F1C 7F00C3EC 34049C16 */   li    $a0, 39958
-/* 040F20 7F00C3F0 00401825 */  move  $v1, $v0
-.L7F00C3F4:
-/* 040F24 7F00C3F4 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F00C3F8:
-/* 040F28 7F00C3F8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 040F2C 7F00C3FC 00601025 */  move  $v0, $v1
-/* 040F30 7F00C400 03E00008 */  jr    $ra
-/* 040F34 7F00C404 00000000 */   nop   
-)
-#endif
 
 
 
