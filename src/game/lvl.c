@@ -346,8 +346,8 @@ glabel stage_load
 /* 0F2730 7F0BDC00 1B200015 */  blez  $t9, .L7F0BDC58
 /* 0F2734 7F0BDC04 00000000 */   nop   
 /* 0F2738 7F0BDC08 8D08A900 */  lw    $t0, %lo(append_cheat_sp)($t0)
-/* 0F273C 7F0BDC0C 3C118007 */  lui   $s1, %hi(CHEAT_AVAILABLE_EXTRA_CHARS)
-/* 0F2740 7F0BDC10 263196A1 */  addiu $s1, %lo(CHEAT_AVAILABLE_EXTRA_CHARS) # addiu $s1, $s1, -0x695f
+/* 0F273C 7F0BDC0C 3C118007 */  lui   $s1, %hi(cheat_activated + 1)
+/* 0F2740 7F0BDC10 263196A1 */  addiu $s1, %lo(cheat_activated + 1) # addiu $s1, $s1, -0x695f
 /* 0F2744 7F0BDC14 11000010 */  beqz  $t0, .L7F0BDC58
 /* 0F2748 7F0BDC18 24100001 */   li    $s0, 1
 /* 0F274C 7F0BDC1C 2412004B */  li    $s2, 75
@@ -651,8 +651,8 @@ glabel stage_load
 /* 0F3330 7F0BE7C0 1B200015 */  blez  $t9, .Ljp7F0BE818
 /* 0F3334 7F0BE7C4 00000000 */   nop   
 /* 0F3338 7F0BE7C8 8D08A940 */  lw    $t0, %lo(append_cheat_sp)($t0)
-/* 0F333C 7F0BE7CC 3C118007 */  lui   $s1, %hi(CHEAT_AVAILABLE_EXTRA_CHARS) # $s1, 0x8007
-/* 0F3340 7F0BE7D0 263196E1 */  addiu $s1, %lo(CHEAT_AVAILABLE_EXTRA_CHARS) # addiu $s1, $s1, -0x691f
+/* 0F333C 7F0BE7CC 3C118007 */  lui   $s1, %hi(cheat_activated + 1) # $s1, 0x8007
+/* 0F3340 7F0BE7D0 263196E1 */  addiu $s1, %lo(cheat_activated + 1) # addiu $s1, $s1, -0x691f
 /* 0F3344 7F0BE7D4 11000010 */  beqz  $t0, .Ljp7F0BE818
 /* 0F3348 7F0BE7D8 24100001 */   li    $s0, 1
 /* 0F334C 7F0BE7DC 2412004B */  li    $s2, 75
@@ -951,8 +951,8 @@ glabel stage_load
 /* 0F2730 7F0BDC00 1B200015 */  blez  $t9, .L7F0BDC58
 /* 0F2734 7F0BDC04 00000000 */   nop   
 /* 0F2738 7F0BDC08 8D08A900 */  lw    $t0, %lo(append_cheat_sp)($t0)
-/* 0F273C 7F0BDC0C 3C118007 */  lui   $s1, %hi(CHEAT_AVAILABLE_EXTRA_CHARS)
-/* 0F2740 7F0BDC10 263196A1 */  addiu $s1, %lo(CHEAT_AVAILABLE_EXTRA_CHARS) # addiu $s1, $s1, -0x695f
+/* 0F273C 7F0BDC0C 3C118007 */  lui   $s1, %hi(cheat_activated + 1)
+/* 0F2740 7F0BDC10 263196A1 */  addiu $s1, %lo(cheat_activated + 1) # addiu $s1, $s1, -0x695f
 /* 0F2744 7F0BDC14 11000010 */  beqz  $t0, .L7F0BDC58
 /* 0F2748 7F0BDC18 24100001 */   li    $s0, 1
 /* 0F274C 7F0BDC1C 2412004B */  li    $s2, 75
@@ -3420,8 +3420,8 @@ glabel manage_mp_game
 /* 0F3770 7F0BEC40 18400018 */  blez  $v0, .L7F0BECA4
 /* 0F3774 7F0BEC44 3C0E8003 */   lui   $t6, %hi(append_cheat_sp) 
 /* 0F3778 7F0BEC48 8DCEA900 */  lw    $t6, %lo(append_cheat_sp)($t6)
-/* 0F377C 7F0BEC4C 3C038007 */  lui   $v1, %hi(CHEAT_AVAILABLE_EXTRA_CHARS)
-/* 0F3780 7F0BEC50 246396A1 */  addiu $v1, %lo(CHEAT_AVAILABLE_EXTRA_CHARS) # addiu $v1, $v1, -0x695f
+/* 0F377C 7F0BEC4C 3C038007 */  lui   $v1, %hi(cheat_activated + 1)
+/* 0F3780 7F0BEC50 246396A1 */  addiu $v1, %lo(cheat_activated + 1) # addiu $v1, $v1, -0x695f
 /* 0F3784 7F0BEC54 11C00013 */  beqz  $t6, .L7F0BECA4
 /* 0F3788 7F0BEC58 24040001 */   li    $a0, 1
 .L7F0BEC5C:
@@ -4310,8 +4310,8 @@ glabel manage_mp_game
 /* 0F43E4 7F0BF874 18400018 */  blez  $v0, .Ljp7F0BF8D8
 /* 0F43E8 7F0BF878 3C0E8003 */   lui   $t6, %hi(append_cheat_sp) # $t6, 0x8003
 /* 0F43EC 7F0BF87C 8DCEA940 */  lw    $t6, %lo(append_cheat_sp)($t6)
-/* 0F43F0 7F0BF880 3C038007 */  lui   $v1, %hi(CHEAT_AVAILABLE_EXTRA_CHARS) # $v1, 0x8007
-/* 0F43F4 7F0BF884 246396E1 */  addiu $v1, %lo(CHEAT_AVAILABLE_EXTRA_CHARS) # addiu $v1, $v1, -0x691f
+/* 0F43F0 7F0BF880 3C038007 */  lui   $v1, %hi(cheat_activated + 1) # $v1, 0x8007
+/* 0F43F4 7F0BF884 246396E1 */  addiu $v1, %lo(cheat_activated + 1) # addiu $v1, $v1, -0x691f
 /* 0F43F8 7F0BF888 11C00013 */  beqz  $t6, .Ljp7F0BF8D8
 /* 0F43FC 7F0BF88C 24040001 */   li    $a0, 1
 .Ljp7F0BF890:
@@ -5184,8 +5184,8 @@ glabel manage_mp_game
 /* 0F3770 7F0BEC40 18400018 */  blez  $v0, .L7F0BECA4
 /* 0F3774 7F0BEC44 3C0E8003 */   lui   $t6, %hi(append_cheat_sp) 
 /* 0F3778 7F0BEC48 8DCEA900 */  lw    $t6, %lo(append_cheat_sp)($t6)
-/* 0F377C 7F0BEC4C 3C038007 */  lui   $v1, %hi(CHEAT_AVAILABLE_EXTRA_CHARS)
-/* 0F3780 7F0BEC50 246396A1 */  addiu $v1, %lo(CHEAT_AVAILABLE_EXTRA_CHARS) # addiu $v1, $v1, -0x695f
+/* 0F377C 7F0BEC4C 3C038007 */  lui   $v1, %hi(cheat_activated + 1)
+/* 0F3780 7F0BEC50 246396A1 */  addiu $v1, %lo(cheat_activated + 1) # addiu $v1, $v1, -0x695f
 /* 0F3784 7F0BEC54 11C00013 */  beqz  $t6, .L7F0BECA4
 /* 0F3788 7F0BEC58 24040001 */   li    $a0, 1
 .L7F0BEC5C:

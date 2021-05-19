@@ -168,157 +168,8 @@ u8 CHEAT_80069677;
 u8 CHEAT_80069678[0x28];
 
 //CODE.bss:800696A0
-u8 cheat_activated;
-//CODE.bss:800696A1
-u8 CHEAT_AVAILABLE_EXTRA_CHARS;
-//CODE.bss:800696A2
-u8 cheat_activated_1;
-//CODE.bss:800696A3
-u8 cheat_activated_2;
-//CODE.bss:800696A4
-u8 CHEAT_AVAILABLE_MAX_AMMO;
-//CODE.bss:800696A5
-u8 cheat_activated_4;
-//CODE.bss:800696A6
-u8 cheat_activated_5;
-//CODE.bss:800696A7
-u8 cheat_activated_6;
-//CODE.bss:800696A8
-u8 cheat_activated_7;
-//CODE.bss:800696A9
-u8 cheat_activated_8;
-//CODE.bss:800696AA
-u8 cheat_activated_9;
-//CODE.bss:800696AB
-u8 cheat_activated_10;
-//CODE.bss:800696AC
-u8 cheat_activated_11;
-//CODE.bss:800696AD
-u8 cheat_activated_12;
-//CODE.bss:800696AE
-u8 cheat_activated_13;
-//CODE.bss:800696AF
-u8 cheat_activated_14;
-//CODE.bss:800696B0
-u8 cheat_activated_15;
-//CODE.bss:800696B1
-u8 cheat_activated_16;
-//CODE.bss:800696B2
-u8 cheat_activated_17;
-//CODE.bss:800696B3
-u8 cheat_activated_18;
-//CODE.bss:800696B4
-u8 cheat_activated_19;
-//CODE.bss:800696B5
-u8 cheat_activated_20;
-//CODE.bss:800696B6
-u8 cheat_activated_21;
-//CODE.bss:800696B7
-u8 cheat_activated_22;
-//CODE.bss:800696B8
-u8 cheat_activated_23;
-//CODE.bss:800696B9
-u8 cheat_activated_24;
-//CODE.bss:800696BA
-u8 cheat_activated_25;
-//CODE.bss:800696BB
-u8 cheat_activated_26;
-//CODE.bss:800696BC
-u8 cheat_activated_27;
-//CODE.bss:800696BD
-u8 cheat_activated_28;
-//CODE.bss:800696BE
-u8 cheat_activated_29;
-//CODE.bss:800696BF
-u8 cheat_activated_30;
-//CODE.bss:800696C0
-u8 cheat_activated_31;
-//CODE.bss:800696C1
-u8 cheat_activated_32;
-//CODE.bss:800696C2
-u8 cheat_activated_33;
-//CODE.bss:800696C3
-u8 cheat_activated_34;
-//CODE.bss:800696C4
-u8 cheat_activated_35;
-//CODE.bss:800696C5
-u8 cheat_activated_36;
-//CODE.bss:800696C6
-u8 cheat_activated_37;
-//CODE.bss:800696C7
-u8 cheat_activated_38;
-//CODE.bss:800696C8
-u8 cheat_activated_39;
-//CODE.bss:800696C9
-u8 cheat_activated_40;
-//CODE.bss:800696CA
-u8 cheat_activated_41;
-//CODE.bss:800696CB
-u8 cheat_activated_42;
-//CODE.bss:800696CC
-u8 cheat_activated_43;
-//CODE.bss:800696CD
-u8 cheat_activated_44;
-//CODE.bss:800696CE
-u8 cheat_activated_45;
-//CODE.bss:800696CF
-u8 cheat_activated_46;
-//CODE.bss:800696D0
-u8 cheat_activated_47;
-//CODE.bss:800696D1
-u8 cheat_activated_48;
-//CODE.bss:800696D2
-u8 cheat_activated_49;
-//CODE.bss:800696D3
-u8 cheat_activated_50;
-//CODE.bss:800696D4
-u8 cheat_activated_51;
-//CODE.bss:800696D5
-u8 cheat_activated_52;
-//CODE.bss:800696D6
-u8 cheat_activated_53;
-//CODE.bss:800696D7
-u8 cheat_activated_54;
-//CODE.bss:800696D8
-u8 cheat_activated_55;
-//CODE.bss:800696D9
-u8 cheat_activated_56;
-//CODE.bss:800696DA
-u8 cheat_activated_57;
-//CODE.bss:800696DB
-u8 cheat_activated_58;
-//CODE.bss:800696DC
-u8 cheat_activated_59;
-//CODE.bss:800696DD
-u8 cheat_activated_60;
-//CODE.bss:800696DE
-u8 cheat_activated_61;
-//CODE.bss:800696DF
-u8 cheat_activated_62;
-//CODE.bss:800696E0
-u8 cheat_activated_63;
-//CODE.bss:800696E1
-u8 cheat_activated_64;
-//CODE.bss:800696E2
-u8 cheat_activated_65;
-//CODE.bss:800696E3
-u8 cheat_activated_66;
-//CODE.bss:800696E4
-u8 cheat_activated_67;
-//CODE.bss:800696E5
-u8 cheat_activated_68;
-//CODE.bss:800696E6
-u8 cheat_activated_69;
-//CODE.bss:800696E7
-u8 cheat_activated_70;
-//CODE.bss:800696E8
-u8 cheat_activated_71;
-//CODE.bss:800696E9
-u8 cheat_activated_72;
-//CODE.bss:800696EA
-u8 cheat_activated_73;
-//CODE.bss:800696EB
-u8 cheat_activated_74;
+u8 cheat_activated[76];
+
 //CODE.bss:800696EC
 u8 cheat_activated_75;
 //CODE.bss:800696ED
@@ -3077,15 +2928,14 @@ glabel disable_all_switches
 
 
 #ifdef NONMATCHING
-void set_item_visibility_in_objinstance(void *arg0, s32 arg1, s32 arg2)
+void set_item_visibility_in_objinstance(Model *objinstance,int item,s32 mode)
 {
-    void *temp_t9;
-
-    temp_t9 = arg0->unk8->unk8 + (arg1 * 4);
-    if (*temp_t9 != 0)
-    {
-        *extract_id_from_object_structure_microcode(*temp_t9, *temp_t9) = arg2;
-    }
+  ModelNode *partdesc;
+  
+  partdesc = objinstance->obj->Switches[item];
+  if (partdesc != 0x0) {
+    extract_id_from_object_structure_microcode(objinstance,partdesc) = mode;
+  }
 }
 #else
 GLOBAL_ASM(
@@ -3117,15 +2967,16 @@ glabel set_item_visibility_in_objinstance
 
 
 
-void select_load_bond_picture(s32 *objinstance,u32 bondID) {
-  set_item_visibility_in_objinstance(objinstance,8,1);
-  set_item_visibility_in_objinstance(objinstance,9,0);
-  set_item_visibility_in_objinstance(objinstance,10,0);
-  set_item_visibility_in_objinstance(objinstance,0xb,0);
-  set_item_visibility_in_objinstance(objinstance,0xf,1);
-  set_item_visibility_in_objinstance(objinstance,0x10,0);
-  set_item_visibility_in_objinstance(objinstance,0x11,0);
-  set_item_visibility_in_objinstance(objinstance,0x12,0);
+void select_load_bond_picture(s32 *objinstance,u32 bondID) 
+{
+    set_item_visibility_in_objinstance(objinstance,8,1);
+    set_item_visibility_in_objinstance(objinstance,9,0);
+    set_item_visibility_in_objinstance(objinstance,10,0);
+    set_item_visibility_in_objinstance(objinstance,0xb,0);
+    set_item_visibility_in_objinstance(objinstance,0xf,1);
+    set_item_visibility_in_objinstance(objinstance,0x10,0);
+    set_item_visibility_in_objinstance(objinstance,0x11,0);
+    set_item_visibility_in_objinstance(objinstance,0x12,0);
 }
 
 
@@ -3312,9 +3163,9 @@ void *init_menu05_fileselect(void)
         maybe_is_in_menu = 0;
     }
     menu_timer = 0;
-    cheat_activated_1 = (u8)0;
-    cheat_activated_1 = (u8)0;
-    phi_v0 = &cheat_activated_2;
+    cheat_activated[1] = (u8)0;
+    cheat_activated[1] = (u8)0;
+    phi_v0 = &cheat_activated[2];
 loop_5:
     temp_v0 = phi_v0 + 4;
     temp_v0->unk-3 = (u8)0;
@@ -3322,7 +3173,7 @@ loop_5:
     temp_v0->unk-1 = (u8)0;
     temp_v0->unk-4 = (u8)0;
     phi_v0 = temp_v0;
-    if (temp_v0 != &cheat_activated_74)
+    if (temp_v0 != &cheat_activated[74])
     {
         goto loop_5;
     }
@@ -3378,13 +3229,13 @@ glabel init_menu05_fileselect
 .L7F00BA88:
 /* 0405B8 7F00BA88 3C018003 */  lui   $at, %hi(menu_timer)
 /* 0405BC 7F00BA8C AC20A8CC */  sw    $zero, %lo(menu_timer)($at)
-/* 0405C0 7F00BA90 3C018007 */  lui   $at, %hi(cheat_activated_1)
-/* 0405C4 7F00BA94 3C028007 */  lui   $v0, %hi(cheat_activated_2)
-/* 0405C8 7F00BA98 3C038007 */  lui   $v1, %hi(cheat_activated_74)
-/* 0405CC 7F00BA9C 246396EB */  addiu $v1, %lo(cheat_activated_74) # addiu $v1, $v1, -0x6915
-/* 0405D0 7F00BAA0 244296A3 */  addiu $v0, %lo(cheat_activated_2) # addiu $v0, $v0, -0x695d
-/* 0405D4 7F00BAA4 A02096A1 */  sb    $zero, %lo(CHEAT_AVAILABLE_EXTRA_CHARS)($at)
-/* 0405D8 7F00BAA8 A02096A2 */  sb    $zero, %lo(cheat_activated_1)($at)
+/* 0405C0 7F00BA90 3C018007 */  lui   $at, %hi(cheat_activated + 1)
+/* 0405C4 7F00BA94 3C028007 */  lui   $v0, %hi(cheat_activated + 3)
+/* 0405C8 7F00BA98 3C038007 */  lui   $v1, %hi(cheat_activated + 75)
+/* 0405CC 7F00BA9C 246396EB */  addiu $v1, %lo(cheat_activated + 75) # addiu $v1, $v1, -0x6915
+/* 0405D0 7F00BAA0 244296A3 */  addiu $v0, %lo(cheat_activated + 3) # addiu $v0, $v0, -0x695d
+/* 0405D4 7F00BAA4 A02096A1 */  sb    $zero, %lo(cheat_activated + 1)($at)
+/* 0405D8 7F00BAA8 A02096A2 */  sb    $zero, %lo(cheat_activated + 2)($at)
 .L7F00BAAC:
 /* 0405DC 7F00BAAC 24420004 */  addiu $v0, $v0, 4
 /* 0405E0 7F00BAB0 A040FFFD */  sb    $zero, -3($v0)
@@ -3416,30 +3267,17 @@ void update_menu05_filesel(void) {
 
 
 #ifdef NONMATCHING
-s32 get_chapter_briefing_entry(s32 arg0)
+//a0 used in place of v1 as the move never occurs
+s32 get_chapter_briefing_entry(s32 briefing)
 {
-    s32 temp_v1;
-    void *phi_v0;
-    s32 phi_v1;
-
-    if (arg0 >= 0)
+    while (briefing > -1) 
     {
-        phi_v0 = (arg0 * 0x1c) + &mission_folder_setup_entries;
-        phi_v1 = arg0;
-loop_2:
-        if (phi_v0->unk10 != 0)
-        {
-            return phi_v1;
+        if (mission_folder_setup_entries[briefing].type != MISSION_PART) {
+            return briefing;
         }
-        temp_v1 = phi_v1 + -1;
-        phi_v0 = phi_v0 + -0x1c;
-        phi_v1 = temp_v1;
-        if (temp_v1 >= 0)
-        {
-            goto loop_2;
-        }
-    }
-    return -1;
+        briefing--;
+    };
+  return -1;
 }
 #else
 GLOBAL_ASM(
@@ -23518,7 +23356,7 @@ void update_menu15_cheat(void)
   
   appendsp = FALSE;
   appendmp = FALSE;
-  puVar2 = CHEAT_AVAILABLE_EXTRA_CHARS;
+  puVar2 = cheat_activated[1];
   i = 1;
   do {
     if (*puVar2 != 0) {
@@ -23544,11 +23382,11 @@ glabel update_menu15_cheat
 /* 04C730 7F017C00 AFB30024 */  sw    $s3, 0x24($sp)
 /* 04C734 7F017C04 AFB20020 */  sw    $s2, 0x20($sp)
 /* 04C738 7F017C08 AFB00018 */  sw    $s0, 0x18($sp)
-/* 04C73C 7F017C0C 3C118007 */  lui   $s1, %hi(CHEAT_AVAILABLE_EXTRA_CHARS)
+/* 04C73C 7F017C0C 3C118007 */  lui   $s1, %hi(cheat_activated + 1)
 /* 04C740 7F017C10 AFBF002C */  sw    $ra, 0x2c($sp)
 /* 04C744 7F017C14 00009825 */  move  $s3, $zero
 /* 04C748 7F017C18 0000A025 */  move  $s4, $zero
-/* 04C74C 7F017C1C 263196A1 */  addiu $s1, %lo(CHEAT_AVAILABLE_EXTRA_CHARS) # addiu $s1, $s1, -0x695f
+/* 04C74C 7F017C1C 263196A1 */  addiu $s1, %lo(cheat_activated + 1) # addiu $s1, $s1, -0x695f
 /* 04C750 7F017C20 24100001 */  li    $s0, 1
 /* 04C754 7F017C24 2412004B */  li    $s2, 75
 .L7F017C28:
