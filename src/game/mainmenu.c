@@ -86,7 +86,7 @@ f32 flt_CODE_bss_80069618;
 //CODE.bss:8006961C
 f32 flt_CODE_bss_8006961C;
 //CODE.bss:80069620
-char dword_CODE_bss_80069620[0x30];
+struct coord dword_CODE_bss_80069620[0x4];
 
 //CODE.bss:80069650
 u8 CHEAT_80069650;
@@ -3310,47 +3310,15 @@ glabel get_chapter_briefing_entry
 #endif
 
 
-
-#ifdef NONMATCHING
-void toggle_deletion_menu_for_folder(s32 arg0)
+void toggle_deletion_menu_for_folder(int index)
 {
-    f32 sp18;
-
-    sub_GAME_7F077FF4((arg0 * 0xc) + &dword_CODE_bss_80069620, &sp18);
-    cursor_h_pos = (f32) (sp18 + -1.0f);
-    cursor_v_pos = (f32) (sp1C + 20.0f);
+  struct coord2d local_8;
+  
+  sub_GAME_7F077FF4(&dword_CODE_bss_80069620[index],&local_8);
+  cursor_h_pos = local_8.x + -1.0f;
+  cursor_v_pos = local_8.y + 20.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel toggle_deletion_menu_for_folder
-/* 040698 7F00BB68 00047080 */  sll   $t6, $a0, 2
-/* 04069C 7F00BB6C 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0406A0 7F00BB70 01C47023 */  subu  $t6, $t6, $a0
-/* 0406A4 7F00BB74 3C0F8007 */  lui   $t7, %hi(dword_CODE_bss_80069620) 
-/* 0406A8 7F00BB78 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0406AC 7F00BB7C 25EF9620 */  addiu $t7, %lo(dword_CODE_bss_80069620) # addiu $t7, $t7, -0x69e0
-/* 0406B0 7F00BB80 000E7080 */  sll   $t6, $t6, 2
-/* 0406B4 7F00BB84 01CF2021 */  addu  $a0, $t6, $t7
-/* 0406B8 7F00BB88 0FC1DFFD */  jal   sub_GAME_7F077FF4
-/* 0406BC 7F00BB8C 27A50018 */   addiu $a1, $sp, 0x18
-/* 0406C0 7F00BB90 3C01BF80 */  li    $at, 0xBF800000 # -1.000000
-/* 0406C4 7F00BB94 44813000 */  mtc1  $at, $f6
-/* 0406C8 7F00BB98 C7A40018 */  lwc1  $f4, 0x18($sp)
-/* 0406CC 7F00BB9C 3C018003 */  lui   $at, %hi(cursor_h_pos)
-/* 0406D0 7F00BBA0 C7AA001C */  lwc1  $f10, 0x1c($sp)
-/* 0406D4 7F00BBA4 46062200 */  add.s $f8, $f4, $f6
-/* 0406D8 7F00BBA8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0406DC 7F00BBAC 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0406E0 7F00BBB0 E428A908 */  swc1  $f8, %lo(cursor_h_pos)($at)
-/* 0406E4 7F00BBB4 3C0141A0 */  li    $at, 0x41A00000 # 20.000000
-/* 0406E8 7F00BBB8 44818000 */  mtc1  $at, $f16
-/* 0406EC 7F00BBBC 3C018003 */  lui   $at, %hi(cursor_v_pos)
-/* 0406F0 7F00BBC0 46105480 */  add.s $f18, $f10, $f16
-/* 0406F4 7F00BBC4 03E00008 */  jr    $ra
-/* 0406F8 7F00BBC8 E432A90C */   swc1  $f18, %lo(cursor_v_pos)($at)
-)
-#endif
+
 
 
 

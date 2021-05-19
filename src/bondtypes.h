@@ -19,6 +19,16 @@ struct coord {
     };
 };
 
+struct coord2d {
+    union {
+        struct {
+            f32 x;
+            f32 y;
+        };
+        f32 f[2];
+    };
+};
+
 // Same hacky struct here for rgba groups
 struct rgba_u8 {
     union {
