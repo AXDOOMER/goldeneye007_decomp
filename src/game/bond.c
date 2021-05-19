@@ -12,13 +12,13 @@
 #include "snd.h"
 
 // bss
-struct coord flt_CODE_bss_80079940;
+struct coord3d flt_CODE_bss_80079940;
 f32 flt_CODE_bss_8007994C;
-struct coord flt_CODE_bss_80079950;
+struct coord3d flt_CODE_bss_80079950;
 f32 flt_CODE_bss_8007995C;
-struct coord flt_CODE_bss_80079960;
+struct coord3d flt_CODE_bss_80079960;
 f32 flt_CODE_bss_8007996C;
-struct coord flt_CODE_bss_80079970;
+struct coord3d flt_CODE_bss_80079970;
 f32 flt_CODE_bss_8007997C;
 //CODE.bss:80079980
 f32 flt_CODE_bss_80079980;
@@ -552,7 +552,7 @@ void currentPlayerSetCameraScale(void)
 	pPlayer->c_cameraleftnorm.z = -fVar5 * fVar4;
 }
 
-void sub_GAME_7F077EEC(struct coord *in, struct coord *out, f32 value) {
+void sub_GAME_7F077EEC(struct coord3d *in, struct coord3d *out, f32 value) {
     f32 norm;
     f32 x;
     f32 y;
@@ -566,18 +566,18 @@ void sub_GAME_7F077EEC(struct coord *in, struct coord *out, f32 value) {
     out->z = (-1.0f * norm);
 }
 
-void sub_GAME_7F077FB4(struct coord *in, f32 value, struct coord *out) {
+void sub_GAME_7F077FB4(struct coord3d *in, f32 value, struct coord3d *out) {
     out->y = ((in->y * value) * pPlayer->c_scaley);
     out->x = ((in->x * value) * pPlayer->c_scalex);
 }
 
-void sub_GAME_7F077FF4(struct coord *in, struct coord *out) {
+void sub_GAME_7F077FF4(struct coord3d *in, struct coord3d *out) {
     f32 inv_z = (1.0f / in->z);
     out->y = (in->y * inv_z * pPlayer->c_recipscaley) + (pPlayer->c_screentop + pPlayer->c_halfheight);
     out->x = (pPlayer->c_screenleft + pPlayer->c_halfwidth) - (in->x * inv_z * pPlayer->c_recipscalex);
 }
 
-void sub_GAME_7F078060(struct coord *in, struct coord *out)
+void sub_GAME_7F078060(struct coord3d *in, struct coord3d *out)
 {
 	f32 inv_z;
 
@@ -591,13 +591,13 @@ void sub_GAME_7F078060(struct coord *in, struct coord *out)
 	out->x = (pPlayer->c_screenleft + pPlayer->c_halfwidth) - in->x * inv_z * pPlayer->c_recipscalex;
 }
 
-void sub_GAME_7F0780F0(struct coord *in, f32 divisor, struct coord *out)
+void sub_GAME_7F0780F0(struct coord3d *in, f32 divisor, struct coord3d *out)
 {
 	out->y = in->y * (1.0f / divisor) * pPlayer->c_recipscaley;
 	out->x = in->x * (1.0f / divisor) * pPlayer->c_recipscalex;
 }
 
-void sub_GAME_7F078140(struct coord *in, struct coord *out, f32 value1, f32 angle, f32 value2) {
+void sub_GAME_7F078140(struct coord3d *in, struct coord3d *out, f32 value1, f32 angle, f32 value2) {
     f32 var1;
     f32 x;
     f32 y;
@@ -615,7 +615,7 @@ void sub_GAME_7F078140(struct coord *in, struct coord *out, f32 value1, f32 angl
 
 #ifdef NONMATCHING
 // acdf8:    mul.s   $f4,$f18,$f0                    r acdf8:    mul.s   $f4,$f0,$f18
-void sub_GAME_7F078258(struct coord *in, struct coord *out, f32 angle, f32 value) {
+void sub_GAME_7F078258(struct coord3d *in, struct coord3d *out, f32 angle, f32 value) {
     f32 var0 = DEG2RAD(angle);
     f32 var1 = (cosf(var0) * pPlayer->c_halfheight) / (sinf(var0) * in->z);
     f32 var2 = (var1 * pPlayer->c_halfwidth) / (value * pPlayer->c_halfheight);
@@ -805,28 +805,28 @@ f32 getPlayer_c_perspaspect(void)
     return pPlayer->c_perspaspect;
 }
 
-void getPlayer_c_cameratopnorm(struct coord *out)
+void getPlayer_c_cameratopnorm(struct coord3d *out)
 {
     out->x = (pPlayer->c_cameratopnorm).x;
     out->y = (pPlayer->c_cameratopnorm).y;
     out->z = (pPlayer->c_cameratopnorm).z;
 }
 
-void getPlayer_c_cameratopnorm_inverted_y(struct coord *out)
+void getPlayer_c_cameratopnorm_inverted_y(struct coord3d *out)
 {
     out->x = (pPlayer->c_cameratopnorm).x;
     out->y = -(pPlayer->c_cameratopnorm).y;
     out->z = (pPlayer->c_cameratopnorm).z;
 }
 
-void getPlayer_c_cameraleftnorm(struct coord *out)
+void getPlayer_c_cameraleftnorm(struct coord3d *out)
 {
     out->x = (pPlayer->c_cameraleftnorm).x;
     out->y = (pPlayer->c_cameraleftnorm).y;
     out->z = (pPlayer->c_cameraleftnorm).z;
 }
 
-void getPlayer_c_cameraleftnorm_inverted_x(struct coord *out)
+void getPlayer_c_cameraleftnorm_inverted_x(struct coord3d *out)
 {
     out->x = -(pPlayer->c_cameraleftnorm).x;
     out->y = (pPlayer->c_cameraleftnorm).y;
@@ -1100,35 +1100,35 @@ glabel sub_GAME_7F0785DC
 )
 #endif
 
-void sub_GAME_7F078950(struct coord *arg0, f32 *arg1) {
+void sub_GAME_7F078950(struct coord3d *arg0, f32 *arg1) {
     arg0->x = flt_CODE_bss_80079940.x;
     arg0->y = flt_CODE_bss_80079940.y;
     arg0->z = flt_CODE_bss_80079940.z;
     *arg1 = flt_CODE_bss_8007994C;
 }
 
-void sub_GAME_7F078980(struct coord *arg0, f32 *arg1) {
+void sub_GAME_7F078980(struct coord3d *arg0, f32 *arg1) {
     arg0->x = flt_CODE_bss_80079950.x;
     arg0->y = flt_CODE_bss_80079950.y;
     arg0->z = flt_CODE_bss_80079950.z;
     *arg1 = flt_CODE_bss_8007995C;
 }
 
-void sub_GAME_7F0789B0(struct coord *arg0, f32 *arg1) {
+void sub_GAME_7F0789B0(struct coord3d *arg0, f32 *arg1) {
     arg0->x = flt_CODE_bss_80079960.x;
     arg0->y = flt_CODE_bss_80079960.y;
     arg0->z = flt_CODE_bss_80079960.z;
     *arg1 = flt_CODE_bss_8007996C;
 }
 
-void sub_GAME_7F0789E0(struct coord *arg0, f32 *arg1) {
+void sub_GAME_7F0789E0(struct coord3d *arg0, f32 *arg1) {
     arg0->x = flt_CODE_bss_80079970.x;
     arg0->y = flt_CODE_bss_80079970.y;
     arg0->z = flt_CODE_bss_80079970.z;
     *arg1 = flt_CODE_bss_8007997C;
 }
 
-void sub_GAME_7F078A10(struct coord *arg0, f32 *arg1) {
+void sub_GAME_7F078A10(struct coord3d *arg0, f32 *arg1) {
     arg0->x = pPlayer->field_10D4->m[2][0];
     arg0->y = pPlayer->field_10D4->m[2][1];
     arg0->z = pPlayer->field_10D4->m[2][2];
@@ -1137,7 +1137,7 @@ void sub_GAME_7F078A10(struct coord *arg0, f32 *arg1) {
 
 #ifdef NONMATCHING
 // Regalloc
-s32 sub_GAME_7F078A58(struct coord *arg0, f32 arg1) {
+s32 sub_GAME_7F078A58(struct coord3d *arg0, f32 arg1) {
     if ((flt_CODE_bss_80079980 + arg1) < ((pPlayer->field_10D4->m[2][0] * arg0->x) + (pPlayer->field_10D4->m[2][1] * arg0->y) + (pPlayer->field_10D4->m[2][2] * arg0->z)))
     {
         return 0;
@@ -1281,7 +1281,7 @@ glabel sub_GAME_7F078A58
 #endif
 
 #ifdef NONMATCHING
-s32 sub_GAME_7F078BF4(struct coord *arg0, f32 arg1, f32 *arg2)
+s32 sub_GAME_7F078BF4(struct coord3d *arg0, f32 arg1, f32 *arg2)
 {
     f32 temp_f2;
     f32 temp_f12;

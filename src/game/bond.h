@@ -892,8 +892,8 @@ struct player
   f32 c_scalelod;
   f32 c_lodscalez;
   u32 c_lodscalezu32;
-  struct coord c_cameratopnorm;
-  struct coord c_cameraleftnorm;
+  struct coord3d c_cameratopnorm;
+  struct coord3d c_cameraleftnorm;
   f32 screenxminf;
   f32 screenyminf;
   f32 screenxmaxf;

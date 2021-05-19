@@ -610,7 +610,7 @@ glabel sub_GAME_7F09166C
 #ifdef NONMATCHING
 void sub_GAME_7F0916F4(void)
 {
-    struct coord *pos;
+    struct coord3d *pos;
     
     pos = get_BONDdata_position();
     stanbondx.x = pos->x;

@@ -8,7 +8,7 @@
 // coord->x, coord->y and coord->z, but also as
 // coord->f[0], coord->f[1] and coord->f[2].
 // In some places code only matches when using the float array.
-struct coord {
+struct coord3d {
     union {
         struct {
             f32 x;
@@ -66,17 +66,17 @@ struct bbox
 
 struct pad
 {
-    struct coord pos;
-    struct coord up;
-    struct coord look;
+    struct coord3d pos;
+    struct coord3d up;
+    struct coord3d look;
     char *plink;
 };
 
 struct pad3d
 {
-    struct coord pos;
-    struct coord up;
-    struct coord look;
+    struct coord3d pos;
+    struct coord3d up;
+    struct coord3d look;
     char *plink;
     int unk;
     struct bbox bbox;

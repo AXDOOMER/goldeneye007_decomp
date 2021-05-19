@@ -86,7 +86,7 @@ f32 flt_CODE_bss_80069618;
 //CODE.bss:8006961C
 f32 flt_CODE_bss_8006961C;
 //CODE.bss:80069620
-struct coord dword_CODE_bss_80069620[0x4];
+struct coord3d dword_CODE_bss_80069620[0x4];
 
 //CODE.bss:80069650
 u8 CHEAT_80069650;
@@ -395,7 +395,7 @@ u32 D_8002AAEC = 0;
 u32 D_8002AAF0 = 0;
 u32 D_8002AAF4 = 0;
 u32 D_8002AAF8 = 0;
-struct coord D_8002AAFC = {0};
+struct coord3d D_8002AAFC = {0};
 //u32 D_8002AB00 = 0;
 //u32 D_8002AB04 = 0;
 u32 D_8002AB08 = 0;
@@ -1958,7 +1958,7 @@ void constructor_menu17_switchscreens(Gfx * DL)
 #ifdef NONMATCHING
 void init_menu01_nintendo(void)
 {
-    struct coord local_c;
+    struct coord3d local_c;
     
     menu_timer = 0;
     local_c.x = D_8002AAFC.x;

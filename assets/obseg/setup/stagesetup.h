@@ -1,18 +1,14 @@
 #ifndef _STAGESETUP_H_
 #define _STAGESETUP_H_
 
+#include "bondtypes.h"
+
 #define PAD3D_START 10000
 #define PADADV(PAD) (PAD + PAD3D_START)
 
 typedef u16 PAD;
 typedef u16 PAD3D;
 
-struct coord
-{
-    f32 x;
-    f32 y;
-    f32 z;
-};
 
 struct bbox
 {
@@ -26,18 +22,18 @@ struct bbox
 
 struct pad
 {
-    struct coord pos;
-    struct coord up;
-    struct coord look;
+    struct coord3d pos;
+    struct coord3d up;
+    struct coord3d look;
     char *plink;
     int unk;
 };
 
 struct pad3d
 {
-    struct coord pos;
-    struct coord up;
-    struct coord look;
+    struct coord3d pos;
+    struct coord3d up;
+    struct coord3d look;
     char *plink;
     int unk;
     struct bbox bbox;
