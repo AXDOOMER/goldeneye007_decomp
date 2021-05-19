@@ -1583,7 +1583,7 @@ void interface_menu00_legalscreen(void)
         set_menu_to_mode(MENU_NINTENDO_LOGO,1);
         return;
     }
-    if (joyGetButtonsPressedThisFrame(0, ANY_BUTTON) && (is_first_time_on_legal_screen == 0)) 
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, ANY_BUTTON) && (is_first_time_on_legal_screen == 0)) 
     {
         if (is_first_time_on_main_menu == 0)
         {
@@ -1980,7 +1980,7 @@ void interface_menu01_nintendo(void)
         set_menu_to_mode(MENU_RAREWARE_LOGO, 1);
         return;
     }
-    if (joyGetButtonsPressedThisFrame(0, ANY_BUTTON))
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, ANY_BUTTON))
     {
         if (is_first_time_on_main_menu == 0)
         {
@@ -2316,7 +2316,7 @@ void interface_menu02_rareware(void)
         set_menu_to_mode(MENU_EYE_INTRO, 1);
         return;
     }
-    if (joyGetButtonsPressedThisFrame(0, ANY_BUTTON) != 0)
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, ANY_BUTTON) != 0)
     {
         if (is_first_time_on_main_menu == 0)
         {
@@ -2350,7 +2350,7 @@ void interface_menu03_eye(void) {
         set_menu_to_mode(MENU_GOLDENEYE_LOGO, 1);
         return;
     }
-    if (joyGetButtonsPressedThisFrame(0, ANY_BUTTON) != 0) {
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, ANY_BUTTON) != 0) {
         if (is_first_time_on_main_menu == 0) {
             set_menu_to_mode(MENU_FILE_SELECT, 1);
             return;
@@ -3266,7 +3266,7 @@ s32 interface_menu05_fileselect(void)
     s32 phi_s2_2;
     s32 phi_return;
 
-    if (((((joyGetButtonsPressedThisFrame(0, ANY_BUTTON) != 0) || (joyGetStickX(0) < -5)) || (joyGetStickX(0) >= 6)) || (joyGetStickY(0) < -5)) || (joyGetStickY(0) >= 6))
+    if (((((joyGetButtonsPressedThisFrame(PLAYER_1, ANY_BUTTON) != 0) || (joyGetStickX(0) < -5)) || (joyGetStickX(0) >= 6)) || (joyGetStickY(0) < -5)) || (joyGetStickY(0) >= 6))
     {
         menu_timer = 0;
     }
@@ -3328,14 +3328,14 @@ loop_8:
     }
     if (folder_selected_for_deletion >= 0)
     {
-        if ((joyGetButtonsPressedThisFrame(0, 0x222) != 0) && (folder_selected_for_deletion_choice == 0))
+        if ((joyGetButtonsPressedThisFrame(PLAYER_1, 0x222) != 0) && (folder_selected_for_deletion_choice == 0))
         {
             folder_selected_for_deletion_choice = 1;
             sndPlaySfx(g_musicSfxBufferPtr, 0x12, 0);
         }
         else
         {
-            if (joyGetButtonsPressedThisFrame(0, 0x111) != 0)
+            if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x111) != 0)
             {
                 if (folder_selected_for_deletion_choice != 0)
                 {
@@ -3360,7 +3360,7 @@ loop_8:
                 }
             }
         }
-        if (joyGetButtonsPressedThisFrame(0, 0xb000) != 0)
+        if (joyGetButtonsPressedThisFrame(PLAYER_1, 0xb000) != 0)
         {
             if (*&folder_selected_for_deletion_choice == 0)
             {
@@ -3376,7 +3376,7 @@ loop_8:
         }
         else
         {
-            temp_ret = joyGetButtonsPressedThisFrame(0, 0x4000);
+            temp_ret = joyGetButtonsPressedThisFrame(PLAYER_1, 0x4000);
             phi_return = temp_ret;
             if (temp_ret != 0)
             {
@@ -3394,7 +3394,7 @@ loop_8:
 loop_38:
         sub_GAME_7F03F90C(*phi_s0_2, &sp80, &sp7C, &sp78, &sp74);
         sub_GAME_7F03F948(phi_s1_2, &sp7C, &sp74, &sp6C, &sp64);
-        if (((((sp6C <= cursor_h_pos) && (cursor_h_pos <= sp64)) && (sp70 <= cursor_v_pos)) && (cursor_v_pos <= sp68)) && (joyGetButtonsPressedThisFrame(0, 0xb000) != 0))
+        if (((((sp6C <= cursor_h_pos) && (cursor_h_pos <= sp64)) && (sp70 <= cursor_v_pos)) && (cursor_v_pos <= sp68)) && (joyGetButtonsPressedThisFrame(PLAYER_1, 0xb000) != 0))
         {
             if (folder_selection_screen_option_icon == 0)
             {
@@ -3438,7 +3438,7 @@ loop_38:
                 goto loop_38;
             }
         }
-        if (joyGetButtonsPressedThisFrame(0, 0xb000) != 0)
+        if (joyGetButtonsPressedThisFrame(PLAYER_1, 0xb000) != 0)
         {
             if ((((folder_option_COPY_left_bound.unk0 <= cursor_h_pos) && (cursor_h_pos <= folder_option_COPY_left_bound.unk8)) && (folder_option_COPY_left_bound.unk4 <= cursor_v_pos)) && (cursor_v_pos <= folder_option_COPY_left_bound.unkC))
             {
@@ -3464,7 +3464,7 @@ loop_38:
         }
         else
         {
-            if (joyGetButtonsPressedThisFrame(0, 0x4000) != 0)
+            if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x4000) != 0)
             {
                 if (*&folder_selection_screen_option_icon != 0)
                 {
@@ -5379,9 +5379,9 @@ glabel constructor_menu05_fileselect
 
 void init_menu06_modeselect(void)
 {
-    gamemode = -1;
-    tab_2_selected = 0;
-    tab_3_selected = 0;
+    gamemode = GAMEMODE_INTRO;
+    tab_2_selected = FALSE;
+    tab_3_selected = FALSE;
     load_walletbond();
     copyCurrentEEPROMtoStack();
 }
@@ -5411,58 +5411,58 @@ void interface_menu06_modesel(void)
     viSetFovY(60.f);
     viSetAspect(1.3333334f);
     viSetZRange(100.0f, 10000.0f);
-    viSetUseZBuf(0);
+    viSetUseZBuf(FALSE);
 
     disable_all_switches(ptr_folder_object_instance);
     select_load_bond_picture(ptr_folder_object_instance, removed_would_have_returned_bond_for_folder_num(selected_folder_num));
-    set_item_visibility_in_objinstance(ptr_folder_object_instance, 0, 1);
-    set_item_visibility_in_objinstance(ptr_folder_object_instance, 1, 1);
-    set_item_visibility_in_objinstance(ptr_folder_object_instance, 3, 1);
-    set_item_visibility_in_objinstance(ptr_folder_object_instance, 7, 1);
-    set_item_visibility_in_objinstance(ptr_folder_object_instance, 2, 1);
-    tab_3_highlight = 0;
-    mission_difficulty_highlighted = -1;
-    if (isontab3() != 0)
+    set_item_visibility_in_objinstance(ptr_folder_object_instance, 0, TRUE);
+    set_item_visibility_in_objinstance(ptr_folder_object_instance, 1, TRUE);
+    set_item_visibility_in_objinstance(ptr_folder_object_instance, 3, TRUE);
+    set_item_visibility_in_objinstance(ptr_folder_object_instance, 7, TRUE);
+    set_item_visibility_in_objinstance(ptr_folder_object_instance, 2, TRUE);
+    tab_3_highlight = FALSE;
+    mission_difficulty_highlighted = DIFFICULTY_MULTI;
+    if (isontab3())
     {
-        tab_3_highlight = 1;
-        if (joyGetButtonsPressedThisFrame(0, START_BUTTON|Z_TRIG|A_BUTTON) != 0)
+        tab_3_highlight = TRUE;
+        if (joyGetButtonsPressedThisFrame(PLAYER_1, START_BUTTON|Z_TRIG|A_BUTTON))
         {
-            tab_3_selected = 1;
-            sndPlaySfx(g_musicSfxBufferPtr, 0xC7, 0);
+            tab_3_selected = TRUE;
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
         }
     }
-    else if ((is_cheat_menu_available != 0) && (275.0f <= cursor_v_pos))
+    else if ((is_cheat_menu_available) && (275.0f <= cursor_v_pos))
     {
-        mission_difficulty_highlighted = 2;
-        if (joyGetButtonsPressedThisFrame(0, START_BUTTON|Z_TRIG|A_BUTTON) != 0)
+        mission_difficulty_highlighted = DIFFICULTY_00;
+        if (joyGetButtonsPressedThisFrame(PLAYER_1, START_BUTTON|Z_TRIG|A_BUTTON))
         {
-            gamemode = 2;
-            sndPlaySfx(g_musicSfxBufferPtr, 0xC5, 0);
+            gamemode = GAMEMODE_CHEATS;
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE_SFX, 0);
         }
     }
     else if ((243.0f <= cursor_v_pos) && (joyGetControllerCount() >= 2))
     {
-        mission_difficulty_highlighted = 1;
-        if (joyGetButtonsPressedThisFrame(0, START_BUTTON|Z_TRIG|A_BUTTON) != 0)
+        mission_difficulty_highlighted = DIFFICULTY_SECRET;
+        if (joyGetButtonsPressedThisFrame(PLAYER_1, START_BUTTON|Z_TRIG|A_BUTTON))
         {
-            gamemode = 1;
-            sndPlaySfx(g_musicSfxBufferPtr, 0xC5, 0);
+            gamemode = GAMEMODE_MULTI;
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE_SFX, 0);
         }
     }
     else
     {
-        mission_difficulty_highlighted = 0;
-        if (joyGetButtonsPressedThisFrame(0, START_BUTTON|Z_TRIG|A_BUTTON) != 0)
+        mission_difficulty_highlighted = DIFFICULTY_AGENT;
+        if (joyGetButtonsPressedThisFrame(PLAYER_1, START_BUTTON|Z_TRIG|A_BUTTON))
         {
-            gamemode = 0;
-            sndPlaySfx(g_musicSfxBufferPtr, 0xC5, 0);
+            gamemode = GAMEMODE_SOLO;
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE_SFX, 0);
         }
     }
 
-    if (joyGetButtonsPressedThisFrame(0, B_BUTTON) != 0)
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, B_BUTTON))
     {
-        tab_3_selected = 1;
-        sndPlaySfx(g_musicSfxBufferPtr, 0xC7, 0);
+        tab_3_selected = TRUE;
+        sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
     }
     menu_control_stick_tracking();
     if (gamemode == GAMEMODE_SOLO)
@@ -5481,7 +5481,7 @@ void interface_menu06_modesel(void)
         set_menu_to_mode(MENU_CHEAT, 0);
         return;
     }
-    if (tab_3_selected != 0)
+    if (tab_3_selected)
     {
         set_menu_to_mode(MENU_FILE_SELECT, 0);
     }
@@ -6594,7 +6594,7 @@ loop_29:
             }
         }
     }
-    if (joyGetButtonsPressedThisFrame(0, 0xb000) != 0)
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, 0xb000) != 0)
     {
         if (tab_3_highlight != 0)
         {
@@ -6614,7 +6614,7 @@ loop_29:
     }
     else
     {
-        if (joyGetButtonsPressedThisFrame(0, 0x4000) != 0)
+        if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x4000) != 0)
         {
             tab_3_selected = 1;
             sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
@@ -8193,7 +8193,7 @@ void interface_menu08_difficulty(void)
             }
         }
     }
-    if (joyGetButtonsPressedThisFrame(0, 0xb000) != 0)
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, 0xb000) != 0)
     {
         if (tab_3_highlight != 0)
         {
@@ -8212,7 +8212,7 @@ void interface_menu08_difficulty(void)
     }
     else
     {
-        if (joyGetButtonsPressedThisFrame(0, 0x4000, 1) != 0)
+        if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x4000, 1) != 0)
         {
             tab_3_selected = 1;
             sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0, 1);
@@ -9429,14 +9429,14 @@ void interface_menu09_007options(void)
             }
         }
     }
-    if (joyGetButtonsPressedThisFrame(0, 0x1000) != 0)
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x1000) != 0)
     {
         tab_1_selected = 1;
         sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
     }
     else
     {
-        if (joyGetButtonsPressedThisFrame(0, 0xa000) != 0)
+        if (joyGetButtonsPressedThisFrame(PLAYER_1, 0xa000) != 0)
         {
             if (tab_2_highlight != 0)
             {
@@ -9460,7 +9460,7 @@ void interface_menu09_007options(void)
         }
         else
         {
-            if (joyGetButtonsPressedThisFrame(0, 0x4000) != 0)
+            if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x4000) != 0)
             {
                 tab_3_selected = 1;
                 sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
@@ -11207,14 +11207,14 @@ void interface_menu0E_mpoptions(void)
         }
     }
 
-    if (joyGetButtonsPressedThisFrame(0, START_BUTTON) != 0)
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, START_BUTTON) != 0)
     {
         tab_1_selected = 1;
         sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
     }
     else
     {
-        if (joyGetButtonsPressedThisFrame(0, Z_TRIG|A_BUTTON) != 0)
+        if (joyGetButtonsPressedThisFrame(PLAYER_1, Z_TRIG|A_BUTTON) != 0)
         {
             if (tab_3_highlight != 0)
             {
@@ -11264,7 +11264,7 @@ void interface_menu0E_mpoptions(void)
         }
         else
         {
-            if (joyGetButtonsPressedThisFrame(0, B_BUTTON) != 0)
+            if (joyGetButtonsPressedThisFrame(PLAYER_1, B_BUTTON) != 0)
             {
                 tab_3_selected = 1;
                 sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
@@ -17236,7 +17236,7 @@ loop_14:
             }
         }
     }
-    if (joyGetButtonsPressedThisFrame(0, 0xb000) != 0)
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, 0xb000) != 0)
     {
         if (tab_3_highlight != 0)
         {
@@ -17254,7 +17254,7 @@ loop_14:
     }
     else
     {
-        if (joyGetButtonsPressedThisFrame(0, 0x4000) != 0)
+        if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x4000) != 0)
         {
             tab_3_selected = 1;
             sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
@@ -18227,7 +18227,7 @@ loop_4:
             }
         }
     }
-    if (joyGetButtonsPressedThisFrame(0, 0xb000) != 0)
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, 0xb000) != 0)
     {
         if (tab_3_highlight != 0)
         {
@@ -18251,7 +18251,7 @@ loop_4:
     }
     else
     {
-        if (joyGetButtonsPressedThisFrame(0, 0x4000) != 0)
+        if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x4000) != 0)
         {
             tab_3_selected = 1;
             sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
@@ -18775,7 +18775,7 @@ void interface_menu14_mpteams(void)
     viSetZRange(0x42c80000, D_80051AB4);
     viSetUseZBuf(0);
     D_8002B560 = (s32) ((s32) (D_8002B560 + 1) % 0x14);
-    if ((joyGetButtonsPressedThisFrame(0, 0x101) != 0) || (joyGetStickXInRange(0, -2, 1) > 0))
+    if ((joyGetButtonsPressedThisFrame(PLAYER_1, 0x101) != 0) || (joyGetStickXInRange(0, -2, 1) > 0))
     {
         if (scenario == 7)
         {
@@ -18796,7 +18796,7 @@ void interface_menu14_mpteams(void)
     }
     else
     {
-        if ((joyGetButtonsPressedThisFrame(0, 0x808) != 0) || (joyGetStickYInRange(0, -2, 1) > 0))
+        if ((joyGetButtonsPressedThisFrame(PLAYER_1, 0x808) != 0) || (joyGetStickYInRange(0, -2, 1) > 0))
         {
             if (scenario == 5)
             {
@@ -18817,7 +18817,7 @@ void interface_menu14_mpteams(void)
         }
         else
         {
-            if ((joyGetButtonsPressedThisFrame(0, 0x202) != 0) || (joyGetStickXInRange(0, -2, 1) < -1))
+            if ((joyGetButtonsPressedThisFrame(PLAYER_1, 0x202) != 0) || (joyGetStickXInRange(0, -2, 1) < -1))
             {
                 if (scenario == 5)
                 {
@@ -18838,7 +18838,7 @@ void interface_menu14_mpteams(void)
             }
             else
             {
-                if ((joyGetButtonsPressedThisFrame(0, 0x404) != 0) || (joyGetStickYInRange(0, -2, 1) < -1))
+                if ((joyGetButtonsPressedThisFrame(PLAYER_1, 0x404) != 0) || (joyGetStickYInRange(0, -2, 1) < -1))
                 {
                     if (scenario == 7)
                     {
@@ -18869,7 +18869,7 @@ void interface_menu14_mpteams(void)
     set_item_visibility_in_objinstance(ptr_folder_object_instance, 0x2a, 1);
     menu_control_stick_tracking();
     phi_s0 = 0;
-    if (joyGetButtonsPressedThisFrame(0, 0xb000) != 0)
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, 0xb000) != 0)
     {
 loop_29:
         if (scenario == 5)
@@ -19771,14 +19771,14 @@ void interface_menu0A_briefing(void)
             }
         }
     }
-    if (joyGetButtonsPressedThisFrame(0, 0x1000) != 0)
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x1000) != 0)
     {
         tab_2_selected = 1;
         sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
     }
     else
     {
-        if (joyGetButtonsPressedThisFrame(0, 0xa000) != 0)
+        if (joyGetButtonsPressedThisFrame(PLAYER_1, 0xa000) != 0)
         {
             if (tab_2_highlight != 0)
             {
@@ -19809,7 +19809,7 @@ void interface_menu0A_briefing(void)
         }
         else
         {
-            if (joyGetButtonsPressedThisFrame(0, 0x4000) != 0)
+            if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x4000) != 0)
             {
                 if (current_menu_briefing_page > 0)
                 {
@@ -20800,7 +20800,7 @@ void interface_menu0C_missionfailed(void)
             tab_2_highlight = 1;
         }
     }
-    if (joyGetButtonsPressedThisFrame(0, 0xb000) != 0)
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, 0xb000) != 0)
     {
         if (tab_3_highlight != 0)
         {
@@ -20818,7 +20818,7 @@ void interface_menu0C_missionfailed(void)
     }
     else
     {
-        if (joyGetButtonsPressedThisFrame(0, 0x4000) != 0)
+        if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x4000) != 0)
         {
             tab_3_selected = 1;
             sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
@@ -21391,8 +21391,8 @@ void interface_menu0D_missioncomplete(u32 param_1,u32 param_2)
   else {
     tab_3_highlight = TRUE;
   }
-  if (joyGetButtonsPressedThisFrame(0,START_BUTTON|Z_TRIG|A_BUTTON) == 0) {
-    if (joyGetButtonsPressedThisFrame(0,B_BUTTON) != 0) {
+  if (joyGetButtonsPressedThisFrame(PLAYER_1,START_BUTTON|Z_TRIG|A_BUTTON) == 0) {
+    if (joyGetButtonsPressedThisFrame(PLAYER_1,B_BUTTON) != 0) {
       tab_3_selected = TRUE;
       sndPlaySfx((s32)(int)g_musicSfxBufferPtr,199,NULL);
     }
@@ -23068,9 +23068,9 @@ void interface_menu15_cheat(u32 param_1,u32 param_2)
     }
   }
   dword_8002B5E0 = iVar1;
-  uVar2 = joyGetButtonsPressedThisFrame(0,Z_TRIG|A_BUTTON);
+  uVar2 = joyGetButtonsPressedThisFrame(PLAYER_1,Z_TRIG|A_BUTTON);
   if (uVar2 == 0) {
-    uVar2 = joyGetButtonsPressedThisFrame(0,B_BUTTON);
+    uVar2 = joyGetButtonsPressedThisFrame(PLAYER_1,B_BUTTON);
     if (uVar2 != 0) {
       tab_3_selected = TRUE;
       sndPlaySfx((s32)(int)g_musicSfxBufferPtr,199,NULL);
