@@ -276,6 +276,8 @@ typedef struct ObjectRecord
     char field_7F;
 } ObjectRecord;
 
+
+
 /******
 
  The following struct PropRecord was copied from AIListLogic branch
@@ -292,6 +294,33 @@ typedef struct PropRecord
     ObjectRecord *obj;
   } Entityp;
 } PropRecord;
+
+/******
+
+ The following struct PropRecord was copied from AIListLogic branch
+ and should be removed when merged
+
+******/
+typedef struct WeaponObjRecord
+{
+    ObjectRecord base;
+    s8 weaponnum;        /*0x80*/
+    s8 LinkedWeaponType; /*0x81*/
+    s16 timer;           /*0x82*/
+    //u8 thrown;        // Dragon and Laptop Gun /*0x83*/
+    // s8 unk60;         /*0x60*/
+    //s8 dualweaponnum; /*0x61*/
+
+    /**
+     * Appears to have multiple uses:
+     * Grenades = timer?
+     * Proxy mines = timer? Or isarmed
+     * CTC briefcase = team index
+     */
+    //s16 unk62; /*0x62*/
+
+    struct WeaponObjRecord *dualweapon; // other weapon when dual wielding /*0x84*/
+} WeaponObjRecord;
 
 typedef struct KeyRecord
 {

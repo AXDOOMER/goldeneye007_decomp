@@ -24604,7 +24604,7 @@ glabel sub_GAME_7F067420
 /* 09C500 7F0679D0 0FC17674 */  jal   get_item_in_hand
 /* 09C504 7F0679D4 24040001 */   li    $a0, 1
 /* 09C508 7F0679D8 8FA4002C */  lw    $a0, 0x2c($sp)
-/* 09C50C 7F0679DC 0FC2367B */  jal   sub_GAME_7F08D9EC
+/* 09C50C 7F0679DC 0FC2367B */  jal   increment_held_time
 /* 09C510 7F0679E0 00402825 */   move  $a1, $v0
 /* 09C514 7F0679E4 8E030000 */  lw    $v1, ($s0)
 /* 09C518 7F0679E8 3C0F8005 */  lui   $t7, %hi(clock_timer) 

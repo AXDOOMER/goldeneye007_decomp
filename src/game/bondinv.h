@@ -3,7 +3,7 @@
 #include "ultra64.h"
 #include "game/bond.h"
 
-void reinit_BONDdata_inventory(void);
+void reinit_inventory(void);
 s32 bondinvIsAliveWithFlag(void);
 s32 count_total_items_in_inventory(void);
 
