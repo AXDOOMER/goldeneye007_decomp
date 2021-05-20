@@ -1642,7 +1642,7 @@ typedef enum SFX_IDS {
     RARELOGO_SFX,
     SFX_259,
     SFX_260,
-    BIG_CLANK_SFX,
+    BIG_CLANK_SFX
 } SFX_IDS;
 
 // character flags
