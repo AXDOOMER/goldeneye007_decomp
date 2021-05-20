@@ -10192,37 +10192,41 @@ void update_menu0E_mpoptions(void)
 
 
 #ifdef NONMATCHING
+//getting there, needs some love still
 void interface_menu0E_mpoptions(void)
 {
+    s32 temp_y;
+    s32 numplayers;
+    
     s32 players_selected;
     s32 scenario_selected;
-    s32 gameselect_selected;
+    s32 stageselect_selected;
     s32 gamelength_selected;
     s32 character_selected;
     s32 weaponselect_selected;
-    s32 health_selected;
+    s32 handicap_selected;
     s32 controlstyle_selected;
     s32 aimadjustment_selected;
-
-    s32 cursor_v;
-    s32 temp_v1;
-    u32 temp_hi;
-    void *temp_v0;
-    s32 phi_a0;
+    //s32 temp_a0;
+    s32 curstageid;
+    s32 randID;;
+    //s32 temp_v1;
+    //u32 temp_hi;
+    
 
     players_selected = 0;
     scenario_selected = 0;
-    gameselect_selected = 0;
+    stageselect_selected = 0;
     gamelength_selected = 0;
     character_selected = 0;
     weaponselect_selected = 0;
-    health_selected = 0;
+    handicap_selected = 0;
     controlstyle_selected = 0;
     aimadjustment_selected = 0;
     viSetFovY(60.0f);
-    viSetAspect(menu0E_aspect);
-    viSetZRange(100.0f, menu0E_pageheight);
-    viSetUseZBuf(0);
+    viSetAspect(1.3333334f);
+    viSetZRange(100.0f, 10000.0f);
+    viSetUseZBuf(FALSE);
     if (joyGetControllerCount() < 2)
     {
         set_menu_to_mode(MENU_MODE_SELECT, 0);
@@ -10232,217 +10236,229 @@ void interface_menu0E_mpoptions(void)
     {
         init_mp_options_for_scenario(joyGetControllerCount());
     }
-    if (joyGetButtons(0, Z_TRIG|A_BUTTON) == 0)
+    if (joyGetButtons(PLAYER_1, Z_TRIG|A_BUTTON) == 0)
     {
-        tab_3_highlight = 0;
-        tab_2_highlight = 0;
-        tab_1_highlight = 0;
-        highlight_players = 0;
-        highlight_scenario = 0;
-        highlight_gameselect = 0;
-        highlight_gamelength = 0;
-        highlight_character = 0;
-        highlight_weaponselect = 0;
-        highlight_health = 0;
-        highlight_controlstyle = 0;
-        highlight_aimadjustment = 0;
+        tab_3_highlight = FALSE;
+        tab_2_highlight = FALSE;
+        tab_1_highlight = FALSE;
+        highlight_players = FALSE;
+        highlight_scenario = FALSE;
+        highlight_gameselect = FALSE;
+        highlight_gamelength = FALSE;
+        highlight_character = FALSE;
+        highlight_weaponselect = FALSE;
+        highlight_health = FALSE;
+        highlight_controlstyle = FALSE;
+        highlight_aimadjustment = FALSE;
         if (isontab3())
         {
-            tab_3_highlight = 1;
+            tab_3_highlight = TRUE;
         }
-        
-        if (isontab1())
+        else if (isontab1())
         {
-            cursor_v_pos = 1;
-        }
-        
-        cursor_v = (s32)cursor_v_pos;
-        if ((cursor_v >= 0x119) && (unlock_aim_sight != 0))
-        {
-            highlight_aimadjustment = 1;
-        }
-        
-        if ((cursor_v >= 0x105) && (unlock_control_style != 0))
-        {
-            highlight_controlstyle = 1;
-        }
-        
-        if ((cursor_v >= 0xf1) && (unlock_handicap != 0))
-        {
-            highlight_health = 1;
-        }
-        
-        if ((cursor_v >= 0xdd) && (unlock_chars != 0))
-        {
-            highlight_character = 1;
-        }
-        
-        if ((cursor_v >= 0xc9) && (unlock_weapon_select != 0))
-        {
-            highlight_weaponselect = 1;
-        }
-        
-        if ((cursor_v >= 0xb5) && (unlock_game_length != 0))
-        {
-            highlight_gamelength = 1;
-        }
-        
-        if ((cursor_v >= 0xa1) && (unlock_stage_select != 0))
-        {
-            highlight_gameselect = 1;
-        }
-        
-        if (cursor_v >= 0x8d)
-        {
-            highlight_scenario = 1;
+            tab_1_highlight = TRUE;
         }
         else
         {
-            highlight_players = 1;
+            temp_y = (s32) cursor_v_pos;
+            if ((temp_y >= 0x119) && (unlock_aim_sight))
+            {
+                highlight_aimadjustment = TRUE;
+            }
+            else if ((temp_y >= 0x105) && (unlock_control_style))
+            {
+                highlight_controlstyle = TRUE;
+            }
+            else if ((temp_y >= 0xF1) && (unlock_handicap))
+            {
+                highlight_health = TRUE;
+            }
+            else if ((temp_y >= 0xDD) && (unlock_chars))
+            {
+                highlight_character = TRUE;
+            }
+            else if ((temp_y >= 0xC9) && (unlock_weapon_select))
+            {
+                highlight_weaponselect = TRUE;
+            }
+            else if ((temp_y >= 0xB5) && (unlock_game_length))
+            {
+                highlight_gamelength = TRUE;
+            }
+            else if ((temp_y >= 0xA1) && (unlock_stage_select))
+            {
+                highlight_gameselect = TRUE;
+            }
+            else if (temp_y >= 0x8D)
+            {
+                highlight_scenario = TRUE;
+            }
+            else
+            {
+                highlight_players = TRUE;
+            }
         }
     }
-
-    if (joyGetButtonsPressedThisFrame(PLAYER_1, START_BUTTON) != 0)
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, START_BUTTON))
     {
-        tab_1_selected = 1;
-        sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
+        tab_1_selected = TRUE;
+        sndPlaySfx(g_musicSfxBufferPtr, 0xC7, 0);
     }
-    else
+    else if (joyGetButtonsPressedThisFrame(PLAYER_1, Z_TRIG|A_BUTTON))
     {
-        if (joyGetButtonsPressedThisFrame(PLAYER_1, Z_TRIG|A_BUTTON) != 0)
+        if (tab_3_highlight)
         {
-            if (tab_3_highlight != 0)
-            {
-                tab_3_selected = 1;
-            }
-            if (tab_1_highlight != 0)
-            {
-                tab_1_selected = 1;
-            }
-            if (highlight_players != 0)
-            {
-                players_selected = 1;
-            }
-            if (highlight_scenario != 0)
-            {
-                scenario_selected = 1;
-            }
-            if (highlight_gameselect != 0)
-            {
-                gameselect_selected = 1;
-            }
-            if (highlight_gamelength != 0)
-            {
-                gamelength_selected = 1;
-            }
-            if (highlight_character != 0)
-            {
-                character_selected = 1;
-            }
-            if (highlight_weaponselect != 0)
-            {
-                weaponselect_selected = 1;
-            }
-            if (highlight_health != 0)
-            {
-                health_selected = 1;
-            }
-            if (highlight_controlstyle != 0)
-            {
-                controlstyle_selected = 1;
-            }
-            if (highlight_aimadjustment != 0)
-            {
-                aimadjustment_selected = 1;
-            }
-            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
+            tab_3_selected = TRUE;
         }
-        else
+        if (tab_1_highlight)
         {
-            if (joyGetButtonsPressedThisFrame(PLAYER_1, B_BUTTON) != 0)
-            {
-                tab_3_selected = 1;
-                sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
-            }
+            tab_1_selected = TRUE;
         }
+        else if (highlight_players)
+        {
+            players_selected = TRUE;
+        }
+        else if (highlight_scenario)
+        {
+            scenario_selected = TRUE;
+        }
+        else if (highlight_gameselect)
+        {
+            stageselect_selected = TRUE;
+        }
+        else if (highlight_gamelength)
+        {
+            gamelength_selected = TRUE;
+        }
+        else if (highlight_character)
+        {
+            character_selected = TRUE;
+        }
+        else if (highlight_weaponselect)
+        {
+            weaponselect_selected = TRUE;
+        }
+        else if (highlight_health)
+        {
+            handicap_selected = TRUE;
+        }
+        else if (highlight_controlstyle)
+        {
+            controlstyle_selected = TRUE;
+        }
+        else if (highlight_aimadjustment)
+        {
+            aimadjustment_selected = TRUE;
+        }
+        sndPlaySfx(g_musicSfxBufferPtr, 0xC7, 0);
+    }
+    else if (joyGetButtonsPressedThisFrame(PLAYER_1, B_BUTTON) != 0)
+    {
+        tab_3_selected = TRUE;
+        sndPlaySfx(g_musicSfxBufferPtr, 0xC7, 0);
     }
     disable_all_switches(ptr_folder_object_instance);
-    set_item_visibility_in_objinstance(ptr_folder_object_instance, 0, 1);
-    set_item_visibility_in_objinstance(ptr_folder_object_instance, 1, 1);
-    set_item_visibility_in_objinstance(ptr_folder_object_instance, 3, 1);
-    set_item_visibility_in_objinstance(ptr_folder_object_instance, 5, 1);
+    set_item_visibility_in_objinstance(ptr_folder_object_instance, 0, TRUE);
+    set_item_visibility_in_objinstance(ptr_folder_object_instance, 1, TRUE);
+    set_item_visibility_in_objinstance(ptr_folder_object_instance, 3, TRUE);
+    set_item_visibility_in_objinstance(ptr_folder_object_instance, 5, TRUE);
     menu_control_stick_tracking();
-    if (tab_3_selected != 0)
+    if (tab_3_selected)
     {
         set_menu_to_mode(MENU_MODE_SELECT, 0);
         setCursorPOSforMode(gamemode);
         return;
     }
-    if (tab_1_selected != 0)
+    if (tab_1_selected)
     {
+
+/*
+        curstageid = *(&multi_stage_setups + 8 + (MP_stage_selected * 0x18));
+        if (curstageid < 0)
+        {
+loop_65:
+            temp_hi = randomGetNext() % 0xBU;
+            temp_a0 = temp_hi + 1;
+            selected_stage = (s32) *(&multi_stage_setups + 0x20 + (temp_hi * 0x18));
+            if (check_if_mp_stage_unlocked(temp_a0) == 0)
+            {
+                goto loop_65;
+            }
+        }
+        else
+        {
+            selected_stage = curstageid;
+        }
+//*/
+
         curstageid = multi_stage_setups[MP_stage_selected].stage_id;
-        if (multi_stage_setups[MP_stage_selected].stage_id < 0) {
+        if (curstageid < 0) {
             do {
-                numplayers = randomGetNext();
-                selected_stage = multi_stage_setups[numplayers % 0xb + 1].stage_id;
+                randID = randomGetNext() % 0xb;
+                selected_stage = multi_stage_setups[randID].stage_id;
+                //BVar3 = ;
                 curstageid = selected_stage;
-            } while (check_if_mp_stage_unlocked(numplayers % 0xb + 1) == FALSE);
+            } while (check_if_mp_stage_unlocked(randID+1) == FALSE);
         }
         selected_stage = curstageid;
-        briefingpage = 0xffffffff;
-        set_menu_to_mode(MENU_RUN_STAGE,1);
-    }
-    if (players_selected != 0)
-    {
-        temp_v1 = selected_num_players + 1;
-        phi_a0 = temp_v1;
-        if (joyGetControllerCount() < temp_v1)
-        {
-            phi_a0 = 2;
-        }
-        init_mp_options_for_scenario(phi_a0);
+///////////////////////////
+
+        briefingpage = -1;
+        set_menu_to_mode(MENU_RUN_STAGE, 1);
         return;
     }
-    if (scenario_selected != 0)
+    if (players_selected)
+    {
+        //temp_v1 = selected_num_players + 1;
+        numplayers =  selected_num_players + 1;
+        if (joyGetControllerCount() < numplayers)
+        {
+            numplayers = 2U;
+        }
+        init_mp_options_for_scenario(numplayers);
+        return;
+    }
+    if (scenario_selected)
     {
         set_menu_to_mode(MENU_MP_SCENARIO_SELECT, 0);
         return;
     }
-    if (gameselect_selected != 0)
+    if (stageselect_selected)
     {
         set_menu_to_mode(MENU_MP_STAGE_SELECT, 0);
         return;
     }
-    if (gamelength_selected != 0)
+    if (gamelength_selected)
     {
         select_game_length();
         return;
     }
-    if (character_selected != 0)
+    if (character_selected)
     {
         set_menu_to_mode(MENU_MP_CHAR_SELECT, 0);
         return;
     }
-    if (weaponselect_selected != 0)
+    if (weaponselect_selected)
     {
         incrementMPWeaponSet();
         return;
     }
-    if (health_selected != 0)
+    if (handicap_selected)
     {
         set_menu_to_mode(MENU_MP_HANDICAP, 0);
         return;
     }
-    if (controlstyle_selected != 0)
+    if (controlstyle_selected)
     {
         set_menu_to_mode(MENU_MP_CONTROL_STYLE, 0);
         return;
     }
-    if (aimadjustment_selected != 0)
+    if (aimadjustment_selected)
     {
         advance_aim_settings_selection();
     }
 }
+
 #else
 GLOBAL_ASM(
 .late_rodata
