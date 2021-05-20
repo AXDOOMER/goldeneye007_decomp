@@ -15,8 +15,8 @@ struct legal_screen_text {
 
 struct mission_folder_setup {
     void * string_ptr;
-    short folder_text_preset;
-    short icon_text_preset;
+    u16 folder_text_preset;
+    u16 icon_text_preset;
     int stage_id;
     int unknown;
     int type;

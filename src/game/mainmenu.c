@@ -8223,235 +8223,45 @@ void interface_menu08_difficulty(void)
 }
 
 
-
-#ifdef NONMATCHING
-void print_current_solo_briefing_stage_name(s32 arg0, s32 arg1)
+Gfx * print_current_solo_briefing_stage_name(Gfx *DL,char *text)
 {
-    s32 sp54;
-    s32 sp50;
-    s32 sp4C;
-    s16 sp44;
-    void *sp40;
-    s32 temp_ret;
-    void *temp_v1;
-
+    s32 x;
+    s32 y;
+    
+    int chapter;
+  
     if (selected_difficulty >= DIFFICULTY_AGENT)
     {
-        strcpy(arg1, get_ptr_difficulty_name(selected_difficulty, selected_difficulty));
-        strcat(arg1, get_textptr_for_textID(TEXT(LTITLE, 0x20)));
-        sp54 = 0x37;
-        sp50 = 0x57;
-        sp44 = viGetX();
-        arg0 = write_text_at_abs_coord(arg0, &sp54, &sp50, arg1, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, viGetY(), 0, 0);
+        strcpy(text, get_ptr_difficulty_name(selected_difficulty));
+        strcat(text, get_textptr_for_textID(TEXT(LTITLE, 0x20)));
+        x = 0x37;
+        y = 0x57;
+        DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xff, viGetX(), viGetY(), 0, 0);
     }
-    temp_ret = get_chapter_briefing_entry(briefingpage);
-    sp4C = temp_ret;
-    if (temp_ret >= 0)
+    
+    chapter = get_chapter_briefing_entry(briefingpage);
+    if (chapter >=0 )
     {
-        strcpy(arg1, get_textptr_for_textID(TEXT(LTITLE, 0x21)));
-        temp_v1 = (sp4C * 0x1c) + &mission_folder_setup_entries;
-        sp40 = temp_v1;
-        strcat(arg1, *temp_v1);
-        strcat(arg1, &asc_D_8004F4A4);
-        strcat(arg1, get_textptr_for_textID(sp40->unk4));
-        strcat(arg1, &asc_D_8004F4A8);
-        sp54 = 0x37;
-        sp50 = 0x67;
-        sp44 = viGetX();
-        arg0 = write_text_at_abs_coord(arg0, &sp54, &sp50, arg1, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, viGetY(), 0, 0);
+        strcpy(text,get_textptr_for_textID(TEXT(LTITLE, 0x21)));
+        strcat(text,mission_folder_setup_entries[chapter].string_ptr);
+        strcat(text,": ");
+        strcat(text,get_textptr_for_textID(mission_folder_setup_entries[chapter].folder_text_preset));
+        strcat(text,"\n");
+        x = 0x37;
+        y = 0x67;
+        DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xff, viGetX(), viGetY(), 0, 0);
     }
-    strcpy(arg1, get_textptr_for_textID(TEXT(LTITLE, 0x22)));
-    strcat(arg1, *(&mission_folder_setup_entries + (briefingpage * 0x1c)));
-    strcat(arg1, &asc_D_8004F4AC);
-    strcat(arg1, get_textptr_for_textID(*(&mission_folder_setup_entries + (briefingpage * 0x1c))));
-    strcat(arg1, &asc_D_8004F4B0);
-    sp54 = 0x37;
-    sp50 = 0x77;
-    sp44 = viGetX();
-    write_text_at_abs_coord(arg0, &sp54, &sp50, arg1, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, viGetY(), 0, 0);
+
+    strcpy(text, get_textptr_for_textID(TEXT(LTITLE, 0x22)));
+    strcat(text, mission_folder_setup_entries[briefingpage].string_ptr);
+    strcat(text,": ");
+    strcat(text, get_textptr_for_textID(mission_folder_setup_entries[briefingpage].folder_text_preset));
+    strcat(text,"\n");
+    x = 0x37;
+    y = 0x77;
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xff, viGetX(), viGetY(), 0, 0);
+    return DL;
 }
-#else
-const char asc_D_8004F4A4[] = ": ";
-const char asc_D_8004F4A8[] = "\n";
-const char asc_D_8004F4AC[] = ": ";
-const char asc_D_8004F4B0[] = "\n";
-GLOBAL_ASM(
-.text
-glabel print_current_solo_briefing_stage_name
-/* 0435EC 7F00EABC 3C068003 */  lui   $a2, %hi(selected_difficulty)
-/* 0435F0 7F00EAC0 8CC6A8FC */  lw    $a2, %lo(selected_difficulty)($a2)
-/* 0435F4 7F00EAC4 27BDFFA8 */  addiu $sp, $sp, -0x58
-/* 0435F8 7F00EAC8 AFB00038 */  sw    $s0, 0x38($sp)
-/* 0435FC 7F00EACC 00A08025 */  move  $s0, $a1
-/* 043600 7F00EAD0 AFBF003C */  sw    $ra, 0x3c($sp)
-/* 043604 7F00EAD4 04C00025 */  bltz  $a2, .L7F00EB6C
-/* 043608 7F00EAD8 AFA40058 */   sw    $a0, 0x58($sp)
-/* 04360C 7F00EADC 0FC030E1 */  jal   get_ptr_difficulty_name
-/* 043610 7F00EAE0 00C02025 */   move  $a0, $a2
-/* 043614 7F00EAE4 02002025 */  move  $a0, $s0
-/* 043618 7F00EAE8 0C0029DC */  jal   strcpy
-/* 04361C 7F00EAEC 00402825 */   move  $a1, $v0
-/* 043620 7F00EAF0 0FC30776 */  jal   get_textptr_for_textID
-/* 043624 7F00EAF4 34049C20 */   li    $a0, 39968
-/* 043628 7F00EAF8 02002025 */  move  $a0, $s0
-/* 04362C 7F00EAFC 0C0029FF */  jal   strcat
-/* 043630 7F00EB00 00402825 */   move  $a1, $v0
-/* 043634 7F00EB04 240E0037 */  li    $t6, 55
-/* 043638 7F00EB08 240F0057 */  li    $t7, 87
-/* 04363C 7F00EB0C AFAE0054 */  sw    $t6, 0x54($sp)
-/* 043640 7F00EB10 0C001107 */  jal   viGetX
-/* 043644 7F00EB14 AFAF0050 */   sw    $t7, 0x50($sp)
-/* 043648 7F00EB18 0C00110B */  jal   viGetY
-/* 04364C 7F00EB1C A7A20044 */   sh    $v0, 0x44($sp)
-/* 043650 7F00EB20 3C188004 */  lui   $t8, %hi(ptrSecondFontTableLarge) 
-/* 043654 7F00EB24 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
-/* 043658 7F00EB28 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
-/* 04365C 7F00EB2C 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTableLarge)($t8)
-/* 043660 7F00EB30 87A90044 */  lh    $t1, 0x44($sp)
-/* 043664 7F00EB34 240800FF */  li    $t0, 255
-/* 043668 7F00EB38 AFA80018 */  sw    $t0, 0x18($sp)
-/* 04366C 7F00EB3C 8FA40058 */  lw    $a0, 0x58($sp)
-/* 043670 7F00EB40 27A50054 */  addiu $a1, $sp, 0x54
-/* 043674 7F00EB44 27A60050 */  addiu $a2, $sp, 0x50
-/* 043678 7F00EB48 02003825 */  move  $a3, $s0
-/* 04367C 7F00EB4C AFA20020 */  sw    $v0, 0x20($sp)
-/* 043680 7F00EB50 AFA00024 */  sw    $zero, 0x24($sp)
-/* 043684 7F00EB54 AFA00028 */  sw    $zero, 0x28($sp)
-/* 043688 7F00EB58 AFB90014 */  sw    $t9, 0x14($sp)
-/* 04368C 7F00EB5C AFB80010 */  sw    $t8, 0x10($sp)
-/* 043690 7F00EB60 0FC025D8 */  jal   write_text_at_abs_coord
-/* 043694 7F00EB64 AFA9001C */   sw    $t1, 0x1c($sp)
-/* 043698 7F00EB68 AFA20058 */  sw    $v0, 0x58($sp)
-.L7F00EB6C:
-/* 04369C 7F00EB6C 3C048003 */  lui   $a0, %hi(briefingpage)
-/* 0436A0 7F00EB70 0FC02EC7 */  jal   get_chapter_briefing_entry
-/* 0436A4 7F00EB74 8C84A8F8 */   lw    $a0, %lo(briefingpage)($a0)
-/* 0436A8 7F00EB78 04400039 */  bltz  $v0, .L7F00EC60
-/* 0436AC 7F00EB7C AFA2004C */   sw    $v0, 0x4c($sp)
-/* 0436B0 7F00EB80 0FC30776 */  jal   get_textptr_for_textID
-/* 0436B4 7F00EB84 34049C21 */   li    $a0, 39969
-/* 0436B8 7F00EB88 02002025 */  move  $a0, $s0
-/* 0436BC 7F00EB8C 0C0029DC */  jal   strcpy
-/* 0436C0 7F00EB90 00402825 */   move  $a1, $v0
-/* 0436C4 7F00EB94 8FAA004C */  lw    $t2, 0x4c($sp)
-/* 0436C8 7F00EB98 3C0C8003 */  lui   $t4, %hi(mission_folder_setup_entries) 
-/* 0436CC 7F00EB9C 258CABE4 */  addiu $t4, %lo(mission_folder_setup_entries) # addiu $t4, $t4, -0x541c
-/* 0436D0 7F00EBA0 000A58C0 */  sll   $t3, $t2, 3
-/* 0436D4 7F00EBA4 016A5823 */  subu  $t3, $t3, $t2
-/* 0436D8 7F00EBA8 000B5880 */  sll   $t3, $t3, 2
-/* 0436DC 7F00EBAC 016C1821 */  addu  $v1, $t3, $t4
-/* 0436E0 7F00EBB0 8C650000 */  lw    $a1, ($v1)
-/* 0436E4 7F00EBB4 AFA30040 */  sw    $v1, 0x40($sp)
-/* 0436E8 7F00EBB8 0C0029FF */  jal   strcat
-/* 0436EC 7F00EBBC 02002025 */   move  $a0, $s0
-/* 0436F0 7F00EBC0 3C058005 */  lui   $a1, %hi(asc_D_8004F4A4)
-/* 0436F4 7F00EBC4 24A5F4A4 */  addiu $a1, %lo(asc_D_8004F4A4) # addiu $a1, $a1, -0xb5c
-/* 0436F8 7F00EBC8 0C0029FF */  jal   strcat
-/* 0436FC 7F00EBCC 02002025 */   move  $a0, $s0
-/* 043700 7F00EBD0 8FAD0040 */  lw    $t5, 0x40($sp)
-/* 043704 7F00EBD4 0FC30776 */  jal   get_textptr_for_textID
-/* 043708 7F00EBD8 95A40004 */   lhu   $a0, 4($t5)
-/* 04370C 7F00EBDC 02002025 */  move  $a0, $s0
-/* 043710 7F00EBE0 0C0029FF */  jal   strcat
-/* 043714 7F00EBE4 00402825 */   move  $a1, $v0
-/* 043718 7F00EBE8 3C058005 */  lui   $a1, %hi(asc_D_8004F4A8)
-/* 04371C 7F00EBEC 24A5F4A8 */  addiu $a1, %lo(asc_D_8004F4A8) # addiu $a1, $a1, -0xb58
-/* 043720 7F00EBF0 0C0029FF */  jal   strcat
-/* 043724 7F00EBF4 02002025 */   move  $a0, $s0
-/* 043728 7F00EBF8 240E0037 */  li    $t6, 55
-/* 04372C 7F00EBFC 240F0067 */  li    $t7, 103
-/* 043730 7F00EC00 AFAE0054 */  sw    $t6, 0x54($sp)
-/* 043734 7F00EC04 0C001107 */  jal   viGetX
-/* 043738 7F00EC08 AFAF0050 */   sw    $t7, 0x50($sp)
-/* 04373C 7F00EC0C 0C00110B */  jal   viGetY
-/* 043740 7F00EC10 A7A20044 */   sh    $v0, 0x44($sp)
-/* 043744 7F00EC14 3C188004 */  lui   $t8, %hi(ptrSecondFontTableLarge) 
-/* 043748 7F00EC18 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
-/* 04374C 7F00EC1C 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
-/* 043750 7F00EC20 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTableLarge)($t8)
-/* 043754 7F00EC24 87A90044 */  lh    $t1, 0x44($sp)
-/* 043758 7F00EC28 240800FF */  li    $t0, 255
-/* 04375C 7F00EC2C AFA80018 */  sw    $t0, 0x18($sp)
-/* 043760 7F00EC30 8FA40058 */  lw    $a0, 0x58($sp)
-/* 043764 7F00EC34 27A50054 */  addiu $a1, $sp, 0x54
-/* 043768 7F00EC38 27A60050 */  addiu $a2, $sp, 0x50
-/* 04376C 7F00EC3C 02003825 */  move  $a3, $s0
-/* 043770 7F00EC40 AFA20020 */  sw    $v0, 0x20($sp)
-/* 043774 7F00EC44 AFA00024 */  sw    $zero, 0x24($sp)
-/* 043778 7F00EC48 AFA00028 */  sw    $zero, 0x28($sp)
-/* 04377C 7F00EC4C AFB90014 */  sw    $t9, 0x14($sp)
-/* 043780 7F00EC50 AFB80010 */  sw    $t8, 0x10($sp)
-/* 043784 7F00EC54 0FC025D8 */  jal   write_text_at_abs_coord
-/* 043788 7F00EC58 AFA9001C */   sw    $t1, 0x1c($sp)
-/* 04378C 7F00EC5C AFA20058 */  sw    $v0, 0x58($sp)
-.L7F00EC60:
-/* 043790 7F00EC60 0FC30776 */  jal   get_textptr_for_textID
-/* 043794 7F00EC64 34049C22 */   li    $a0, 39970
-/* 043798 7F00EC68 02002025 */  move  $a0, $s0
-/* 04379C 7F00EC6C 0C0029DC */  jal   strcpy
-/* 0437A0 7F00EC70 00402825 */   move  $a1, $v0
-/* 0437A4 7F00EC74 3C0A8003 */  lui   $t2, %hi(briefingpage) 
-/* 0437A8 7F00EC78 8D4AA8F8 */  lw    $t2, %lo(briefingpage)($t2)
-/* 0437AC 7F00EC7C 3C058003 */  lui   $a1, %hi(mission_folder_setup_entries)
-/* 0437B0 7F00EC80 02002025 */  move  $a0, $s0
-/* 0437B4 7F00EC84 000A58C0 */  sll   $t3, $t2, 3
-/* 0437B8 7F00EC88 016A5823 */  subu  $t3, $t3, $t2
-/* 0437BC 7F00EC8C 000B5880 */  sll   $t3, $t3, 2
-/* 0437C0 7F00EC90 00AB2821 */  addu  $a1, $a1, $t3
-/* 0437C4 7F00EC94 0C0029FF */  jal   strcat
-/* 0437C8 7F00EC98 8CA5ABE4 */   lw    $a1, %lo(mission_folder_setup_entries)($a1)
-/* 0437CC 7F00EC9C 3C058005 */  lui   $a1, %hi(asc_D_8004F4AC)
-/* 0437D0 7F00ECA0 24A5F4AC */  addiu $a1, %lo(asc_D_8004F4AC) # addiu $a1, $a1, -0xb54
-/* 0437D4 7F00ECA4 0C0029FF */  jal   strcat
-/* 0437D8 7F00ECA8 02002025 */   move  $a0, $s0
-/* 0437DC 7F00ECAC 3C0C8003 */  lui   $t4, %hi(briefingpage) 
-/* 0437E0 7F00ECB0 8D8CA8F8 */  lw    $t4, %lo(briefingpage)($t4)
-/* 0437E4 7F00ECB4 3C048003 */  lui   $a0, %hi(mission_folder_setup_entries+0x4)
-/* 0437E8 7F00ECB8 000C68C0 */  sll   $t5, $t4, 3
-/* 0437EC 7F00ECBC 01AC6823 */  subu  $t5, $t5, $t4
-/* 0437F0 7F00ECC0 000D6880 */  sll   $t5, $t5, 2
-/* 0437F4 7F00ECC4 008D2021 */  addu  $a0, $a0, $t5
-/* 0437F8 7F00ECC8 0FC30776 */  jal   get_textptr_for_textID
-/* 0437FC 7F00ECCC 9484ABE8 */   lhu   $a0, %lo(mission_folder_setup_entries+0x4)($a0)
-/* 043800 7F00ECD0 02002025 */  move  $a0, $s0
-/* 043804 7F00ECD4 0C0029FF */  jal   strcat
-/* 043808 7F00ECD8 00402825 */   move  $a1, $v0
-/* 04380C 7F00ECDC 3C058005 */  lui   $a1, %hi(asc_D_8004F4B0)
-/* 043810 7F00ECE0 24A5F4B0 */  addiu $a1, %lo(asc_D_8004F4B0) # addiu $a1, $a1, -0xb50
-/* 043814 7F00ECE4 0C0029FF */  jal   strcat
-/* 043818 7F00ECE8 02002025 */   move  $a0, $s0
-/* 04381C 7F00ECEC 240E0037 */  li    $t6, 55
-/* 043820 7F00ECF0 240F0077 */  li    $t7, 119
-/* 043824 7F00ECF4 AFAE0054 */  sw    $t6, 0x54($sp)
-/* 043828 7F00ECF8 0C001107 */  jal   viGetX
-/* 04382C 7F00ECFC AFAF0050 */   sw    $t7, 0x50($sp)
-/* 043830 7F00ED00 0C00110B */  jal   viGetY
-/* 043834 7F00ED04 A7A20044 */   sh    $v0, 0x44($sp)
-/* 043838 7F00ED08 3C188004 */  lui   $t8, %hi(ptrSecondFontTableLarge) 
-/* 04383C 7F00ED0C 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
-/* 043840 7F00ED10 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
-/* 043844 7F00ED14 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTableLarge)($t8)
-/* 043848 7F00ED18 87A90044 */  lh    $t1, 0x44($sp)
-/* 04384C 7F00ED1C 240800FF */  li    $t0, 255
-/* 043850 7F00ED20 AFA80018 */  sw    $t0, 0x18($sp)
-/* 043854 7F00ED24 8FA40058 */  lw    $a0, 0x58($sp)
-/* 043858 7F00ED28 27A50054 */  addiu $a1, $sp, 0x54
-/* 04385C 7F00ED2C 27A60050 */  addiu $a2, $sp, 0x50
-/* 043860 7F00ED30 02003825 */  move  $a3, $s0
-/* 043864 7F00ED34 AFA20020 */  sw    $v0, 0x20($sp)
-/* 043868 7F00ED38 AFA00024 */  sw    $zero, 0x24($sp)
-/* 04386C 7F00ED3C AFA00028 */  sw    $zero, 0x28($sp)
-/* 043870 7F00ED40 AFB90014 */  sw    $t9, 0x14($sp)
-/* 043874 7F00ED44 AFB80010 */  sw    $t8, 0x10($sp)
-/* 043878 7F00ED48 0FC025D8 */  jal   write_text_at_abs_coord
-/* 04387C 7F00ED4C AFA9001C */   sw    $t1, 0x1c($sp)
-/* 043880 7F00ED50 8FBF003C */  lw    $ra, 0x3c($sp)
-/* 043884 7F00ED54 8FB00038 */  lw    $s0, 0x38($sp)
-/* 043888 7F00ED58 27BD0058 */  addiu $sp, $sp, 0x58
-/* 04388C 7F00ED5C 03E00008 */  jr    $ra
-/* 043890 7F00ED60 00000000 */   nop   
-)
-#endif
 
 
 
