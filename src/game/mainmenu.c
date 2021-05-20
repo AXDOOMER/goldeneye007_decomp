@@ -10008,42 +10008,38 @@ void reset_mp_options_for_scenario(MPSCENARIOS scenarioid)
 
 
 #ifdef NONMATCHING
-void init_mp_options_for_scenario(s32 numplayers)
+//come back once i fix player_#_char to be array
+void init_mp_options_for_scenario(u32 numplayers)
 {
-  s32 lVar1;
-  int iVar2;
-  int *piVar3;
-  
-  if (numplayers < 2) {
-    numplayers = 2;
-  }
-  selected_num_players = (u32)numplayers;
-  lVar1 = 0;
-  if (0 < numplayers) {
-    piVar3 = &player_1_char;
-    iVar2 = 0;
-    do {
-      if (*piVar3 == -1) {
-        *piVar3 = (int)lVar1;
-        *(s32 *)((int)&handicap_player1 + iVar2) = 5;
-      }
-      lVar1 = (s32)((int)lVar1 + 1);
-      if ((2 < numplayers) && (3 < *(int *)((int)&controlstyle_player + iVar2))) {
-        *(int *)((int)&controlstyle_player + iVar2) = 0;
-      }
-      iVar2 += 4;
-      piVar3 = piVar3 + 1;
-    } while (lVar1 < numplayers);
-  }
-  if (((s32)(s32)(u8)mp_stage_playercounts[scenario].max < numplayers) ||
-     (numplayers < (s32)(s32)(u8)mp_stage_playercounts[scenario].min)) {
-    reset_mp_options_for_scenario(0);
-    numplayers = (s32)(int)selected_num_players;
-  }
-  if ((s32)multi_stage_setups[MP_stage_selected].max_player < numplayers) {
-    MP_stage_selected = MP_STAGE_TEMPLE;
-  }
-  return;
+    s32 i;
+
+    if (numplayers < 2)
+    {
+        numplayers = 2;
+    }
+    selected_num_players = numplayers;
+
+    for (i=0; i < numplayers; i++)
+    {
+        if (&player_1_char[i] == -1)
+        {
+            &player_1_char[i] = i;
+            &handicap_player1[i] = 5;
+        }
+        if ((numplayers >= 3) && (&controlstyle_player[i] >= CONTROLLER_CONFIG_PLENTY))
+        {
+            &controlstyle_player[i] = CONTROLLER_CONFIG_HONEY;
+        }
+    }
+    if ((mp_stage_playercounts[scenario].max < numplayers) || (numplayers < mp_stage_playercounts[scenario].min))
+    {
+        reset_mp_options_for_scenario(SCENARIO_NORMAL);
+        numplayers = selected_num_players;
+    }
+    if (multi_stage_setups[MP_stage_selected].max_player < numplayers)
+    {
+        MP_stage_selected = MP_STAGE_TEMPLE;
+    }
 }
 #else
 GLOBAL_ASM(
