@@ -8264,34 +8264,11 @@ Gfx * print_current_solo_briefing_stage_name(Gfx *DL,char *text)
 }
 
 
-
-
-
-#ifdef NONMATCHING
-void set_cursor_pos_difficulty(s32 arg0)
+void set_cursor_pos_difficulty(int difficulty)
 {
-    cursor_h_pos = 106.0f;
-    cursor_v_pos = (f32) ((arg0 * 0x1e) + 0xba);
+    cursor_h_pos = 106.0;
+    cursor_v_pos = difficulty * 0x1e + 0xba;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_cursor_pos_difficulty
-/* 043894 7F00ED64 00047100 */  sll   $t6, $a0, 4
-/* 043898 7F00ED68 01C47023 */  subu  $t6, $t6, $a0
-/* 04389C 7F00ED6C 000E7040 */  sll   $t6, $t6, 1
-/* 0438A0 7F00ED70 25CF00BA */  addiu $t7, $t6, 0xba
-/* 0438A4 7F00ED74 448F3000 */  mtc1  $t7, $f6
-/* 0438A8 7F00ED78 3C0142D4 */  li    $at, 0x42D40000 # 106.000000
-/* 0438AC 7F00ED7C 44812000 */  mtc1  $at, $f4
-/* 0438B0 7F00ED80 46803220 */  cvt.s.w $f8, $f6
-/* 0438B4 7F00ED84 3C018003 */  lui   $at, %hi(cursor_h_pos)
-/* 0438B8 7F00ED88 E424A908 */  swc1  $f4, %lo(cursor_h_pos)($at)
-/* 0438BC 7F00ED8C 3C018003 */  lui   $at, %hi(cursor_v_pos)
-/* 0438C0 7F00ED90 03E00008 */  jr    $ra
-/* 0438C4 7F00ED94 E428A90C */   swc1  $f8, %lo(cursor_v_pos)($at)
-)
-#endif
 
 
 
