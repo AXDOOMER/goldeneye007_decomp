@@ -9801,7 +9801,7 @@ s32 check_if_mp_stage_unlocked(s32 stage)
     {
         return TRUE;
     }
-    return FALSE;
+    return ;
 }
 
 
@@ -9809,30 +9809,21 @@ s32 check_if_mp_stage_unlocked(s32 stage)
 
 
 #ifdef NONMATCHING
-void *select_game_length(void)
+//register swapping
+void select_game_length(void)
 {
-    s32 temp_t1;
-    s32 temp_t2;
-    s32 phi_t2;
-
-    if (scenario != 2)
-    {
-        game_length = (s32) ((s32) (game_length + 1) % 7);
-        return &game_length;
-    }
-    temp_t1 = game_length + 1;
-    temp_t2 = temp_t1 & 3;
-    phi_t2 = temp_t2;
-    if (temp_t1 < 0)
-    {
-        phi_t2 = temp_t2;
-        if (temp_t2 != 0)
-        {
-            phi_t2 = temp_t2 + -4;
-        }
-    }
-    game_length = (s32) phi_t2;
-    return &game_length;
+  uint uVar1;
+  
+  if (scenario != SCENARIO_TLD) {
+    game_length = (game_length + 1) % 7;
+    return;
+  }
+  uVar1 = game_length + 1 & 3;
+  if ((game_length + 1 < 0) && (uVar1 != 0)) {
+    uVar1 -= 4;
+  }
+  game_length = uVar1;
+  return;
 }
 #else
 GLOBAL_ASM(
