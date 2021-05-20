@@ -9867,54 +9867,11 @@ glabel copy_aim_settings_to_playerdata
 
 
 
-#ifdef NONMATCHING
 void advance_aim_settings_selection(void)
 {
-    s32 temp_t7;
-    s32 temp_t8;
-    s32 phi_t8;
-
-    temp_t7 = aim_sight_adjustment + 1;
-    temp_t8 = temp_t7 & 3;
-    phi_t8 = temp_t8;
-    if (temp_t7 < 0)
-    {
-        phi_t8 = temp_t8;
-        if (temp_t8 != 0)
-        {
-            phi_t8 = temp_t8 + -4;
-        }
-    }
-    aim_sight_adjustment = (s32) phi_t8;
+    aim_sight_adjustment = (s32) ((s32) (aim_sight_adjustment + 1) % 4);
     copy_aim_settings_to_playerdata();
 }
-#else
-GLOBAL_ASM(
-.text
-glabel advance_aim_settings_selection
-/* 044D6C 7F01023C 3C028003 */  lui   $v0, %hi(aim_sight_adjustment)
-/* 044D70 7F010240 2442B53C */  addiu $v0, %lo(aim_sight_adjustment) # addiu $v0, $v0, -0x4ac4
-/* 044D74 7F010244 8C4E0000 */  lw    $t6, ($v0)
-/* 044D78 7F010248 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 044D7C 7F01024C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 044D80 7F010250 25CF0001 */  addiu $t7, $t6, 1
-/* 044D84 7F010254 05E10004 */  bgez  $t7, .L7F010268
-/* 044D88 7F010258 31F80003 */   andi  $t8, $t7, 3
-/* 044D8C 7F01025C 13000002 */  beqz  $t8, .L7F010268
-/* 044D90 7F010260 00000000 */   nop   
-/* 044D94 7F010264 2718FFFC */  addiu $t8, $t8, -4
-.L7F010268:
-/* 044D98 7F010268 0FC04076 */  jal   copy_aim_settings_to_playerdata
-/* 044D9C 7F01026C AC580000 */   sw    $t8, ($v0)
-/* 044DA0 7F010270 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 044DA4 7F010274 27BD0018 */  addiu $sp, $sp, 0x18
-/* 044DA8 7F010278 03E00008 */  jr    $ra
-/* 044DAC 7F01027C 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 void unlock_all_mp_chars(void) {
