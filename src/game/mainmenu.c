@@ -9775,25 +9775,10 @@ glabel constructor_menu09_007options
 
 
 
-#ifdef NONMATCHING
-s32 get_player_control_style(int playernum) {
-  return (&controlstyle_player)[playernum];
+u32 get_player_control_style(s32 playernum)
+{
+  return controlstyle_player[playernum];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_player_control_style
-/* 044BEC 7F0100BC 00047080 */  sll   $t6, $a0, 2
-/* 044BF0 7F0100C0 3C028007 */  lui   $v0, %hi(controlstyle_player)
-/* 044BF4 7F0100C4 004E1021 */  addu  $v0, $v0, $t6
-/* 044BF8 7F0100C8 03E00008 */  jr    $ra
-/* 044BFC 7F0100CC 8C4297B8 */   lw    $v0, %lo(controlstyle_player)($v0)
-)
-#endif
-
-
-
-
 
 
 s32 check_if_mp_stage_unlocked(s32 stage)
@@ -9801,22 +9786,22 @@ s32 check_if_mp_stage_unlocked(s32 stage)
     s32 players;
     if (!multi_stage_setups[stage].min_player)
     {
-        return 0;
+        return FALSE;
     }
     players=get_selected_num_players();
     if (multi_stage_setups[stage].max_player < players)
     {
-        return 0;
+        return FALSE;
     }
     if (multi_stage_setups[stage].unlock_after == -1)
     {
-        return 1;
+        return TRUE;
     }
     if (isStageUnlockedAtDifficulty(selected_folder_num, multi_stage_setups[stage].unlock_after, DIFFICULTY_AGENT))
     {
-        return 1;
+        return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
 
