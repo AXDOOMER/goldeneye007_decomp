@@ -8242,11 +8242,11 @@ Gfx * print_current_solo_briefing_stage_name(Gfx *DL,char *text)
     chapter = get_chapter_briefing_entry(briefingpage);
     if (chapter >=0 )
     {
-        strcpy(text,get_textptr_for_textID(TEXT(LTITLE, 0x21)));
-        strcat(text,mission_folder_setup_entries[chapter].string_ptr);
-        strcat(text,": ");
-        strcat(text,get_textptr_for_textID(mission_folder_setup_entries[chapter].folder_text_preset));
-        strcat(text,"\n");
+        strcpy(text, get_textptr_for_textID(TEXT(LTITLE, 0x21)));
+        strcat(text, mission_folder_setup_entries[chapter].string_ptr);
+        strcat(text, ": ");
+        strcat(text, get_textptr_for_textID(mission_folder_setup_entries[chapter].folder_text_preset));
+        strcat(text, "\n");
         x = 0x37;
         y = 0x67;
         DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xff, viGetX(), viGetY(), 0, 0);
@@ -8254,9 +8254,9 @@ Gfx * print_current_solo_briefing_stage_name(Gfx *DL,char *text)
 
     strcpy(text, get_textptr_for_textID(TEXT(LTITLE, 0x22)));
     strcat(text, mission_folder_setup_entries[briefingpage].string_ptr);
-    strcat(text,": ");
+    strcat(text, ": ");
     strcat(text, get_textptr_for_textID(mission_folder_setup_entries[briefingpage].folder_text_preset));
-    strcat(text,"\n");
+    strcat(text, "\n");
     x = 0x37;
     y = 0x77;
     DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xff, viGetX(), viGetY(), 0, 0);
