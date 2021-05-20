@@ -2301,7 +2301,7 @@ glabel constructor_menu01_nintendo
 void init_menu02_rarelogo(void)
 {
     sub_GAME_7F008B58(ptr_logo_and_walletbond_DL, 0x78000);
-    sndPlaySfx(g_musicSfxBufferPtr, 0x102, 0);
+    sndPlaySfx(g_musicSfxBufferPtr, RARELOGO_SFX, 0);
 }
 
 void update_menu02_rareware(void) {
@@ -3331,7 +3331,7 @@ loop_8:
         if ((joyGetButtonsPressedThisFrame(PLAYER_1, 0x222) != 0) && (folder_selected_for_deletion_choice == 0))
         {
             folder_selected_for_deletion_choice = 1;
-            sndPlaySfx(g_musicSfxBufferPtr, 0x12, 0);
+            sndPlaySfx(g_musicSfxBufferPtr, OPTION_CLICK2_SFX, 0);
         }
         else
         {
@@ -3340,14 +3340,14 @@ loop_8:
                 if (folder_selected_for_deletion_choice != 0)
                 {
                     folder_selected_for_deletion_choice = 0;
-                    sndPlaySfx(g_musicSfxBufferPtr, 0x12, 0);
+                    sndPlaySfx(g_musicSfxBufferPtr, OPTION_CLICK2_SFX, 0);
                 }
             }
         }
         if ((joyGetStickX(0) < -0x2d) && (*&folder_selected_for_deletion_choice == 0))
         {
             *&folder_selected_for_deletion_choice = 1;
-            sndPlaySfx(g_musicSfxBufferPtr, 0x12, 0);
+            sndPlaySfx(g_musicSfxBufferPtr, OPTION_CLICK2_SFX, 0);
         }
         else
         {
@@ -3356,7 +3356,7 @@ loop_8:
                 if (*&folder_selected_for_deletion_choice != 0)
                 {
                     *&folder_selected_for_deletion_choice = 0;
-                    sndPlaySfx(g_musicSfxBufferPtr, 0x12, 0);
+                    sndPlaySfx(g_musicSfxBufferPtr, OPTION_CLICK2_SFX, 0);
                 }
             }
         }
@@ -3365,11 +3365,11 @@ loop_8:
             if (*&folder_selected_for_deletion_choice == 0)
             {
                 delete_eeprom_folder(folder_selected_for_deletion, 0x76, 0);
-                sndPlaySfx(g_musicSfxBufferPtr, 0x76, 0);
+                sndPlaySfx(g_musicSfxBufferPtr, GUN_M60AMMGUN_3_SFX, 0);
             }
             else
             {
-                sndPlaySfx(g_musicSfxBufferPtr, 0x76, 0);
+                sndPlaySfx(g_musicSfxBufferPtr, GUN_M60AMMGUN_3_SFX, 0);
             }
             folder_selected_for_deletion = -1;
             phi_return = toggle_deletion_menu_for_folder(folder_selected_for_deletion);
@@ -3382,7 +3382,7 @@ loop_8:
             {
                 toggle_deletion_menu_for_folder(folder_selected_for_deletion);
                 folder_selected_for_deletion = -1;
-                phi_return = sndPlaySfx(g_musicSfxBufferPtr, 0x76, 0);
+                phi_return = sndPlaySfx(g_musicSfxBufferPtr, GUN_M60AMMGUN_3_SFX, 0);
             }
         }
     }
@@ -3399,7 +3399,7 @@ loop_38:
             if (folder_selection_screen_option_icon == 0)
             {
                 selected_folder_num = (s32) phi_s2_2;
-                sndPlaySfx(g_musicSfxBufferPtr, 0x4d, 0);
+                sndPlaySfx(g_musicSfxBufferPtr, PAPER_TURN_SFX, 0);
             }
             else
             {
@@ -3407,7 +3407,7 @@ loop_38:
                 {
                     sub_GAME_7F01EDA0(phi_s2_2);
                     folder_selection_screen_option_icon = 0;
-                    sndPlaySfx(g_musicSfxBufferPtr, 0x4f, 0);
+                    sndPlaySfx(g_musicSfxBufferPtr, COPY_FILE_SFX, 0);
                 }
                 else
                 {
@@ -3422,7 +3422,7 @@ loop_38:
                             }
                         }
                         folder_selection_screen_option_icon = 0;
-                        sndPlaySfx(g_musicSfxBufferPtr, 0x12, 0);
+                        sndPlaySfx(g_musicSfxBufferPtr, OPTION_CLICK2_SFX, 0);
                     }
                 }
             }
@@ -3443,21 +3443,21 @@ loop_38:
             if ((((folder_option_COPY_left_bound.unk0 <= cursor_h_pos) && (cursor_h_pos <= folder_option_COPY_left_bound.unk8)) && (folder_option_COPY_left_bound.unk4 <= cursor_v_pos)) && (cursor_v_pos <= folder_option_COPY_left_bound.unkC))
             {
                 *&folder_selection_screen_option_icon = 1;
-                sndPlaySfx(*&g_musicSfxBufferPtr, 0xde, 0);
+                sndPlaySfx(*&g_musicSfxBufferPtr, DOOR_LOCK_SFX, 0);
             }
             else
             {
                 if ((((folder_option_ERASE_left_bound.unk0 <= cursor_h_pos) && (cursor_h_pos <= folder_option_ERASE_left_bound.unk8)) && (folder_option_ERASE_left_bound.unk4 <= cursor_v_pos)) && (cursor_v_pos <= folder_option_ERASE_left_bound.unkC))
                 {
                     *&folder_selection_screen_option_icon = 2;
-                    sndPlaySfx(*&g_musicSfxBufferPtr, 0xde, 0);
+                    sndPlaySfx(*&g_musicSfxBufferPtr, DOOR_LOCK_SFX, 0);
                 }
                 else
                 {
                     if (*&folder_selection_screen_option_icon != 0)
                     {
                         *&folder_selection_screen_option_icon = 0;
-                        sndPlaySfx(*&g_musicSfxBufferPtr, 0x76, 0);
+                        sndPlaySfx(*&g_musicSfxBufferPtr, GUN_M60AMMGUN_3_SFX, 0);
                     }
                 }
             }
@@ -3469,7 +3469,7 @@ loop_38:
                 if (*&folder_selection_screen_option_icon != 0)
                 {
                     *&folder_selection_screen_option_icon = 0;
-                    sndPlaySfx(*&g_musicSfxBufferPtr, 0x76, 0);
+                    sndPlaySfx(*&g_musicSfxBufferPtr, GUN_M60AMMGUN_3_SFX, 0);
                 }
             }
         }
@@ -6599,7 +6599,7 @@ loop_29:
         if (tab_3_highlight != 0)
         {
             tab_3_selected = 1;
-            sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
         }
         else
         {
@@ -6608,7 +6608,7 @@ loop_29:
                 briefingpage = pull_and_display_text_for_folder_a0((void *)0x80070000->unk-687C);
                 selected_stage = (s32) (0x80030000 + (briefingpage * 0x1c))->unk-5414;
                 tab_2_selected = 1;
-                sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+                sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
             }
         }
     }
@@ -6617,7 +6617,7 @@ loop_29:
         if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x4000) != 0)
         {
             tab_3_selected = 1;
-            sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
         }
     }
     menu_control_stick_tracking();
@@ -8198,7 +8198,7 @@ void interface_menu08_difficulty(void)
         if (tab_3_highlight != 0)
         {
             tab_3_selected = 1;
-            sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0, 1);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0, 1);
         }
         else
         {
@@ -8206,7 +8206,7 @@ void interface_menu08_difficulty(void)
             {
                 selected_difficulty = (s32) mission_difficulty_highlighted;
                 tab_2_selected = 1;
-                sndPlaySfx(g_musicSfxBufferPtr, 0x4d, 0, 1);
+                sndPlaySfx(g_musicSfxBufferPtr, PAPER_TURN_SFX, 0, 1);
             }
         }
     }
@@ -8215,7 +8215,7 @@ void interface_menu08_difficulty(void)
         if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x4000, 1) != 0)
         {
             tab_3_selected = 1;
-            sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0, 1);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0, 1);
         }
     }
     menu_control_stick_tracking();
@@ -9432,7 +9432,7 @@ void interface_menu09_007options(void)
     if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x1000) != 0)
     {
         tab_1_selected = 1;
-        sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+        sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
     }
     else
     {
@@ -9456,14 +9456,14 @@ void interface_menu09_007options(void)
                     }
                 }
             }
-            sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
         }
         else
         {
             if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x4000) != 0)
             {
                 tab_3_selected = 1;
-                sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+                sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
             }
         }
     }
@@ -11210,7 +11210,7 @@ void interface_menu0E_mpoptions(void)
     if (joyGetButtonsPressedThisFrame(PLAYER_1, START_BUTTON) != 0)
     {
         tab_1_selected = 1;
-        sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+        sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
     }
     else
     {
@@ -11260,14 +11260,14 @@ void interface_menu0E_mpoptions(void)
             {
                 aimadjustment_selected = 1;
             }
-            sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
         }
         else
         {
             if (joyGetButtonsPressedThisFrame(PLAYER_1, B_BUTTON) != 0)
             {
                 tab_3_selected = 1;
-                sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+                sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
             }
         }
     }
@@ -13430,7 +13430,7 @@ void interface_menu0F_mpcharsel(void)
         uVar3 = joyGetButtonsPressedThisFrame(controller,B_BUTTON);
         if (uVar3 != 0) {
           *pBVar11 = FALSE;
-          sndPlaySfx((s32)(int)g_musicSfxBufferPtr,199,NULL);
+          sndPlaySfx((s32)(int)g_musicSfxBufferPtr,DOOR_METAL_CLOSE2_SFX,NULL);
         }
       }
       if ((*pBVar11 == FALSE) &&
@@ -13489,7 +13489,7 @@ LAB_7f012164:
           *(int *)((int)&player_1_char + iVar10) = *piVar8;
           *(s32 *)((int)&size_mp_select_image_player1 + iVar10) = 1;
           *pBVar11 = TRUE;
-          sndPlaySfx((s32)(int)g_musicSfxBufferPtr,199,NULL);
+          sndPlaySfx((s32)(int)g_musicSfxBufferPtr,DOOR_METAL_CLOSE2_SFX,NULL);
           iVar6 = *piVar12;
         }
       }
@@ -15076,7 +15076,7 @@ loop_2:
             if (joyGetButtonsPressedThisFrame((s32) (phi_s3 << 0x18) >> 0x18, 0x4000) != 0)
             {
                 *phi_s1 = 0;
-                sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+                sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
             }
         }
         temp_t9 = (s32) (phi_s3 << 0x18) >> 0x18;
@@ -15104,7 +15104,7 @@ block_15:
                             if (joyGetButtonsPressedThisFrame((s32) (temp_t9 << 0x18) >> 0x18, 0xb000) != 0)
                             {
                                 *phi_s1 = 1;
-                                sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+                                sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
                             }
                         }
                     }
@@ -15813,7 +15813,7 @@ loop_2:
             if (joyGetButtonsPressedThisFrame((s32) (phi_s1 << 0x18) >> 0x18, 0x4000) != 0)
             {
                 *phi_s2 = 0;
-                sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+                sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
             }
         }
         temp_t8 = (s32) (phi_s1 << 0x18) >> 0x18;
@@ -15885,7 +15885,7 @@ block_31:
                             if (joyGetButtonsPressedThisFrame((s32) (temp_t8 << 0x18) >> 0x18, 0xb000) != 0)
                             {
                                 *phi_s2 = 1;
-                                sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+                                sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
                             }
                         }
                     }
@@ -17250,14 +17250,14 @@ loop_14:
                 MP_stage_selected = (s32) current_mp_stage_highlighted;
             }
         }
-        sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+        sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
     }
     else
     {
         if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x4000) != 0)
         {
             tab_3_selected = 1;
-            sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
         }
     }
     disable_all_switches(ptr_folder_object_instance);
@@ -18247,14 +18247,14 @@ loop_4:
                 tab_3_selected = 1;
             }
         }
-        sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+        sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
     }
     else
     {
         if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x4000) != 0)
         {
             tab_3_selected = 1;
-            sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
         }
     }
     disable_all_switches(ptr_folder_object_instance);
@@ -18782,7 +18782,7 @@ void interface_menu14_mpteams(void)
             if ((teamsize & 1) == 0)
             {
                 teamsize = 1;
-                sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+                sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
             }
         }
         else
@@ -18790,7 +18790,7 @@ void interface_menu14_mpteams(void)
             if ((teamsize & 1) == 0)
             {
                 teamsize = (s32) (teamsize + 1);
-                sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+                sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
             }
         }
     }
@@ -18803,7 +18803,7 @@ void interface_menu14_mpteams(void)
                 if ((teamsize & 2) != 0)
                 {
                     teamsize = 1;
-                    sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+                    sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
                 }
             }
             else
@@ -18811,7 +18811,7 @@ void interface_menu14_mpteams(void)
                 if ((teamsize & 2) != 0)
                 {
                     teamsize = (s32) (teamsize + -2);
-                    sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+                    sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
                 }
             }
         }
@@ -18824,7 +18824,7 @@ void interface_menu14_mpteams(void)
                     if ((teamsize & 1) != 0)
                     {
                         teamsize = 2;
-                        sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+                        sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
                     }
                 }
                 else
@@ -18832,7 +18832,7 @@ void interface_menu14_mpteams(void)
                     if ((teamsize & 1) != 0)
                     {
                         teamsize = (s32) (teamsize + -1);
-                        sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+                        sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
                     }
                 }
             }
@@ -18845,7 +18845,7 @@ void interface_menu14_mpteams(void)
                         if ((teamsize & 2) == 0)
                         {
                             teamsize = 2;
-                            sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+                            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
                         }
                     }
                     else
@@ -18853,7 +18853,7 @@ void interface_menu14_mpteams(void)
                         if ((teamsize & 2) == 0)
                         {
                             teamsize = (s32) (teamsize + 2);
-                            sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+                            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
                         }
                     }
                 }
@@ -18901,7 +18901,7 @@ loop_29:
             goto loop_29;
         }
         set_menu_to_mode(MENU_MP_OPTIONS, 0);
-        sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+        sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
     }
 }
 #else
@@ -19774,7 +19774,7 @@ void interface_menu0A_briefing(void)
     if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x1000) != 0)
     {
         tab_2_selected = 1;
-        sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+        sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
     }
     else
     {
@@ -19805,7 +19805,7 @@ void interface_menu0A_briefing(void)
                     }
                 }
             }
-            sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
         }
         else
         {
@@ -19819,7 +19819,7 @@ void interface_menu0A_briefing(void)
                 {
                     tab_3_selected = 1;
                 }
-                sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+                sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
             }
         }
     }
@@ -20805,14 +20805,14 @@ void interface_menu0C_missionfailed(void)
         if (tab_3_highlight != 0)
         {
             tab_3_selected = 1;
-            sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
         }
         else
         {
             if (tab_2_highlight != 0)
             {
                 tab_2_selected = 1;
-                sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+                sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
             }
         }
     }
@@ -20821,7 +20821,7 @@ void interface_menu0C_missionfailed(void)
         if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x4000) != 0)
         {
             tab_3_selected = 1;
-            sndPlaySfx(g_musicSfxBufferPtr, 0xc7, 0);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
         }
     }
     disable_all_switches(ptr_folder_object_instance);
@@ -21348,7 +21348,7 @@ void init_menu0D_missioncomplete(void)
     load_briefing_text_for_stage();
     if (newcheatunlocked != 0)
     {
-        sndPlaySfx(g_musicSfxBufferPtr, 0x102, 0);
+        sndPlaySfx(g_musicSfxBufferPtr, RARELOGO_SFX, 0);
     }
 }
 
@@ -21394,19 +21394,19 @@ void interface_menu0D_missioncomplete(u32 param_1,u32 param_2)
   if (joyGetButtonsPressedThisFrame(PLAYER_1,START_BUTTON|Z_TRIG|A_BUTTON) == 0) {
     if (joyGetButtonsPressedThisFrame(PLAYER_1,B_BUTTON) != 0) {
       tab_3_selected = TRUE;
-      sndPlaySfx((s32)(int)g_musicSfxBufferPtr,199,NULL);
+      sndPlaySfx((s32)(int)g_musicSfxBufferPtr,DOOR_METAL_CLOSE2_SFX,NULL);
     }
   }
   else {
     if (tab_2_highlight == FALSE) {
       if (tab_3_highlight != FALSE) {
         tab_3_selected = TRUE;
-        sndPlaySfx((s32)(int)g_musicSfxBufferPtr,199,NULL);
+        sndPlaySfx((s32)(int)g_musicSfxBufferPtr,DOOR_METAL_CLOSE2_SFX,NULL);
       }
     }
     else {
       tab_2_selected = TRUE;
-      sndPlaySfx((s32)(int)g_musicSfxBufferPtr,199,NULL);
+      sndPlaySfx((s32)(int)g_musicSfxBufferPtr,DOOR_METAL_CLOSE2_SFX,NULL);
     }
   }
   disable_all_switches((int)ptr_folder_object_instance);
@@ -23073,7 +23073,7 @@ void interface_menu15_cheat(u32 param_1,u32 param_2)
     uVar2 = joyGetButtonsPressedThisFrame(PLAYER_1,B_BUTTON);
     if (uVar2 != 0) {
       tab_3_selected = TRUE;
-      sndPlaySfx((s32)(int)g_musicSfxBufferPtr,199,NULL);
+      sndPlaySfx((s32)(int)g_musicSfxBufferPtr,DOOR_METAL_CLOSE2_SFX,NULL);
     }
   }
   else {
@@ -23083,7 +23083,7 @@ void interface_menu15_cheat(u32 param_1,u32 param_2)
     else {
       tab_3_selected = TRUE;
     }
-    sndPlaySfx((s32)(int)g_musicSfxBufferPtr,199,NULL);
+    sndPlaySfx((s32)(int)g_musicSfxBufferPtr,DOOR_METAL_CLOSE2_SFX,NULL);
   }
   disable_all_switches((int)ptr_folder_object_instance);
   set_item_visibility_in_objinstance((int)ptr_folder_object_instance,0,1);

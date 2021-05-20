@@ -32999,7 +32999,7 @@ void set_sound_effect_for_ammo_collection(AMMOTYPES ammotype)
     case AMMO_DYNAMITE:
     case AMMO_GEKEY:
     case AMMO_TOKEN:
-        sndPlaySfx(g_musicSfxBufferPtr,0xea,0);
+        sndPlaySfx(g_musicSfxBufferPtr,PICKUP_AMMO_SFX,0);
         break;
     case AMMO_REMOTEMINE:
     case AMMO_PROXMINE:
@@ -33008,10 +33008,10 @@ void set_sound_effect_for_ammo_collection(AMMOTYPES ammotype)
     case AMMO_BUG:
     case AMMO_MICRO_CAMERA:
     case AMMO_PLASTIQUE:
-        sndPlaySfx(g_musicSfxBufferPtr,0xeb,0);
+        sndPlaySfx(g_musicSfxBufferPtr,PICKUP_MINE_SFX,0);
         break;
     case AMMO_KNIFE:
-        sndPlaySfx(g_musicSfxBufferPtr,0xe9,0);
+        sndPlaySfx(g_musicSfxBufferPtr,PICKUP_KNIFE_SFX,0);
     }
     return;
 }
@@ -33024,26 +33024,26 @@ void set_sound_effect_for_ammo_collection(AMMOTYPES ammotype)
 void set_sound_effect_for_weapontype_collection(ITEM_IDS weapontype)
 {
     if ((weapontype == ITEM_KNIFE) || (weapontype == ITEM_THROWKNIFE)) {
-        sndPlaySfx(g_musicSfxBufferPtr,0xe9,0);
+        sndPlaySfx(g_musicSfxBufferPtr,PICKUP_KNIFE_SFX,0);
     }
     else {
         if (((((weapontype == ITEM_REMOTEMINE) || (weapontype == ITEM_PROXIMITYMINE)) ||
              (weapontype == ITEM_TIMEDMINE)) ||
             ((weapontype == ITEM_BOMBCASE || (weapontype == ITEM_BUG)))) ||
            ((weapontype == ITEM_MICROCAMERA || (weapontype == ITEM_PLASTIQUE)))) {
-            sndPlaySfx(g_musicSfxBufferPtr,0xeb,0);
+            sndPlaySfx(g_musicSfxBufferPtr,PICKUP_MINE_SFX,0);
         }
         else {
             if (((weapontype == ITEM_GRENADE) || (weapontype == ITEM_NULL87)) || (weapontype == ITEM_NULL86)
                ) {
-                sndPlaySfx(g_musicSfxBufferPtr,0xea,0);
+                sndPlaySfx(g_musicSfxBufferPtr,PICKUP_AMMO_SFX,0);
             }
             else {
                 if (weapontype == ITEM_LASER) {
-                    sndPlaySfx(g_musicSfxBufferPtr,0xf2,0);
+                    sndPlaySfx(g_musicSfxBufferPtr,PICKUP_LASER_SFX,0);
                 }
                 else {
-                    sndPlaySfx(g_musicSfxBufferPtr,0xe8,0);
+                    sndPlaySfx(g_musicSfxBufferPtr,PICKUP_GUN_SFX,0);
                 }
             }
         }
@@ -37837,7 +37837,7 @@ void trigger_remote_mine_detonation(void)
     
     uVar1 = get_cur_playernum();
     D_80030AF4 = D_80030AF4 | 1 << (uVar1 & 0x1f);
-    sndPlaySfx(g_musicSfxBufferPtr,0xf3,0x0);
+    sndPlaySfx(g_musicSfxBufferPtr,TRIGGER_MINE,0x0);
 }
 #else
 GLOBAL_ASM(
@@ -43997,7 +43997,7 @@ void handle_gas_damage(void)
                     D_80030ADC = (s32) global_timer;
                     if (600.0f <= toxic_gas_sound_timer)
                     {
-                        sndPlaySfx(g_musicSfxBufferPtr, 0x62, 0);
+                        sndPlaySfx(g_musicSfxBufferPtr, COUGH_SFX, 0);
                     }
                     if (1800.0f <= toxic_gas_sound_timer)
                     {
@@ -44011,7 +44011,7 @@ void handle_gas_damage(void)
                     {
                         if (get_controls_locked_flag(&ptr_gas_sound) == 0)
                         {
-                            sndPlaySfx(g_musicSfxBufferPtr, 0x66, &ptr_gas_sound);
+                            sndPlaySfx(g_musicSfxBufferPtr, GAS_HISS_SFX, &ptr_gas_sound);
                         }
                     }
                     if (ptr_gas_sound != NULL)
@@ -44489,7 +44489,7 @@ void handle_alarm_gas_timer_calldamage(void)
 {
     if (is_alarm_on() != 0) {
         if ((ptr_alarm_sfx == 0) && (get_controls_locked_flag() == 0)) {
-            sndPlaySfx(g_musicSfxBufferPtr,0xa3,&ptr_alarm_sfx);
+            sndPlaySfx(g_musicSfxBufferPtr, ALARM3_SFX, &ptr_alarm_sfx);
         }
         alarm_timer = alarm_timer + clock_timer;
         if (0x708 < alarm_timer) {

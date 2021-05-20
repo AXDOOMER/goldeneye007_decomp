@@ -872,7 +872,7 @@ void sub_GAME_7F0A4EF8(void) {
         
     } else {
         watch_soundrelated_maybe = 1;
-        sndPlaySfx(g_musicSfxBufferPtr, 0x9F, 0);
+        sndPlaySfx(g_musicSfxBufferPtr, CAMERA_BEEP1_SFX, 0);
     }
 }
 
@@ -970,14 +970,14 @@ s32 sub_GAME_7F0A519C(void)
 void sub_GAME_7F0A51D8(void)
 {
     D_80040B04 = 0x80;
-    sndPlaySfx(g_musicSfxBufferPtr,0xec,NULL);
+    sndPlaySfx(g_musicSfxBufferPtr, WATCH_STATIC_SFX, NULL);
     return;
 }
 
 void sub_GAME_7F0A5210(void)
 {
     set_controlstick_lr_disabled();
-    sndPlaySfx(g_musicSfxBufferPtr,0x9f,NULL);
+    sndPlaySfx(g_musicSfxBufferPtr, CAMERA_BEEP1_SFX, NULL);
     if ((D_80040B10 << 0x10) < randomGetNext()) {
         sub_GAME_7F0A51D8();
     }
@@ -4273,7 +4273,7 @@ void sub_GAME_7F0A8378(void)
     remove_hands_item(1, 0);
     set_BONDdata_equipcuritem(D_800409B8);
     D_800409C4 = 10;
-    sndPlaySfx(g_musicSfxBufferPtr, 0x9F, 0);
+    sndPlaySfx(g_musicSfxBufferPtr, CAMERA_BEEP1_SFX, 0);
 }
 
 
@@ -9632,7 +9632,7 @@ void game_option_select_value(u32 *param_1, u32 param_2)
 {
     *param_1 = param_2;
     set_controlstick_lr_disabled();
-    sndPlaySfx(g_musicSfxBufferPtr, 0x2b, NULL);
+    sndPlaySfx(g_musicSfxBufferPtr, OPTION_CHOOSE_SFX, NULL);
 }
 
 

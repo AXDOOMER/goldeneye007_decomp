@@ -687,7 +687,7 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
         } while (local_10 != numplayers);
       }
       if (bVar2) {
-        sndPlaySfx(g_musicSfxBufferPtr,0x9f,(ALSndPlayer *)0x0);
+        sndPlaySfx(g_musicSfxBufferPtr,CAMERA_BEEP1_SFX,(ALSndPlayer *)0x0);
       }
     }
     break;
@@ -883,7 +883,7 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
   case UNLOCK_CHEATS:
     if ((-1 < selected_folder_num) && (selected_folder_num < 4)) {
       proc_7F01E760(selected_folder_num,cheat + ~cheats_debug_2x_laser);
-      sndPlaySfx(g_musicSfxBufferPtr,0x9f,(ALSndPlayer *)0x0);
+      sndPlaySfx(g_musicSfxBufferPtr,CAMERA_BEEP1_SFX,(ALSndPlayer *)0x0);
     }
     break;
   case UNUSED_37:
@@ -921,7 +921,7 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
       if (SVar11 == amount + SP_STAGE_FACILITY) {
         unlock_stage_in_folder_on_difficulty
                   (selected_folder_num,(longlong)(int)(cheat + ~UNUSED_37),0,99999999);
-        sndPlaySfx(g_musicSfxBufferPtr,0x9f,(ALSndPlayer *)0x0);
+        sndPlaySfx(g_musicSfxBufferPtr,CAMERA_BEEP1_SFX,(ALSndPlayer *)0x0);
       }
     }
   }
