@@ -9801,64 +9801,19 @@ s32 check_if_mp_stage_unlocked(s32 stage)
     {
         return TRUE;
     }
-    return ;
+    return FALSE;
 }
 
 
-
-
-
-#ifdef NONMATCHING
-//register swapping
 void select_game_length(void)
 {
-  uint uVar1;
-  
-  if (scenario != SCENARIO_TLD) {
-    game_length = (game_length + 1) % 7;
-    return;
-  }
-  uVar1 = game_length + 1 & 3;
-  if ((game_length + 1 < 0) && (uVar1 != 0)) {
-    uVar1 -= 4;
-  }
-  game_length = uVar1;
-  return;
+    if (scenario != SCENARIO_TLD)
+    {
+        game_length = (s32) ((s32) (game_length + 1) % 7);
+        return;
+    }
+    game_length = (s32) ((s32) (game_length + 1) % 4);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel select_game_length
-/* 044CA0 7F010170 3C0E8003 */  lui   $t6, %hi(scenario) 
-/* 044CA4 7F010174 8DCEB540 */  lw    $t6, %lo(scenario)($t6)
-/* 044CA8 7F010178 24010002 */  li    $at, 2
-/* 044CAC 7F01017C 3C028003 */  lui   $v0, %hi(game_length)
-/* 044CB0 7F010180 11C1000B */  beq   $t6, $at, .L7F0101B0
-/* 044CB4 7F010184 2442B538 */   addiu $v0, %lo(game_length) # addiu $v0, $v0, -0x4ac8
-/* 044CB8 7F010188 3C028003 */  lui   $v0, %hi(game_length)
-/* 044CBC 7F01018C 2442B538 */  addiu $v0, %lo(game_length) # addiu $v0, $v0, -0x4ac8
-/* 044CC0 7F010190 8C4F0000 */  lw    $t7, ($v0)
-/* 044CC4 7F010194 24010007 */  li    $at, 7
-/* 044CC8 7F010198 25F80001 */  addiu $t8, $t7, 1
-/* 044CCC 7F01019C 0301001A */  div   $zero, $t8, $at
-/* 044CD0 7F0101A0 0000C810 */  mfhi  $t9
-/* 044CD4 7F0101A4 AC590000 */  sw    $t9, ($v0)
-/* 044CD8 7F0101A8 03E00008 */  jr    $ra
-/* 044CDC 7F0101AC 00000000 */   nop   
-.L7F0101B0:
-/* 044CE0 7F0101B0 8C480000 */  lw    $t0, ($v0)
-/* 044CE4 7F0101B4 25090001 */  addiu $t1, $t0, 1
-/* 044CE8 7F0101B8 05210004 */  bgez  $t1, .L7F0101CC
-/* 044CEC 7F0101BC 312A0003 */   andi  $t2, $t1, 3
-/* 044CF0 7F0101C0 11400002 */  beqz  $t2, .L7F0101CC
-/* 044CF4 7F0101C4 00000000 */   nop   
-/* 044CF8 7F0101C8 254AFFFC */  addiu $t2, $t2, -4
-.L7F0101CC:
-/* 044CFC 7F0101CC AC4A0000 */  sw    $t2, ($v0)
-/* 044D00 7F0101D0 03E00008 */  jr    $ra
-/* 044D04 7F0101D4 00000000 */   nop   
-)
-#endif
 
 
 
