@@ -32,13 +32,13 @@ struct MP_game_length_settings {
 };
 
 struct mp_stage_playercount {
-    short stage;
+    u16 stage;
     char min;
     char max;
 };
 
 struct mp_stage_setup {
-    s16 folder_text_preset;
+    u16 folder_text_preset;
     s16 select_screen_text_preset;
     s32 photo;
     s32 stage_id;
@@ -63,15 +63,14 @@ struct MP_handicap_menu {
 };
 
 struct MP_controller_configuration_menu {
-    char anonymous_0;
-    char field_1;
+    u16 anonymous_0;
+    //char field_1;
     char field_2;
     char field_3;
 };
 
 struct MP_sight_aim_settings {
-    char anonymous_0;
-    char field_1;
+    u16 anonymous_0;
     u8 sight;
     u8 autoaim;
 };
