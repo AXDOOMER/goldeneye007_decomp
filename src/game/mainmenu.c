@@ -10032,7 +10032,7 @@ void init_mp_options_for_scenario(u32 numplayers)
             &controlstyle_player[i] = CONTROLLER_CONFIG_HONEY;
         }
     }
-    if ((mp_stage_playercounts[scenario].max < numplayers) || (numplayers < mp_stage_playercounts[scenario].min))
+    if ((mp_player_counts[scenario].max < numplayers) || (numplayers < mp_player_counts[scenario].min))
     {
         reset_mp_options_for_scenario(SCENARIO_NORMAL);
         numplayers = selected_num_players;
@@ -16420,69 +16420,52 @@ glabel interface_menu13_mpscenario
 
 
 #ifdef NONMATCHING
-void constructor_menu13_mpscenario(void)
+//getting close 
+void constructor_menu13_mpscenario(Gfx *DL)
 {
-    s32 sp88;
-    s32 sp84;
+    s32 x;
+    s32 y;
     s32 sp7C;
     s32 sp78;
-    s32 sp28;
-    s32 sp24;
-    s32 sp20;
-    s32 temp_ret;
-    s32 temp_ret_2;
-    s32 temp_s2;
-    s32 temp_v1;
-    void *phi_s1;
-    s32 phi_s2;
-    s32 phi_s5;
-    s32 phi_s4;
-    s32 phi_s4_2;
 
-    sp88 = 0x37;
-    sp84 = 0x66;
-    viGetX();
-    sp20 = viGetY();
-    sp24 = 0;
-    sp28 = 0;
-    phi_s1 = &mp_player_counts;
-    phi_s2 = 0;
-    phi_s5 = 0x83;
-    phi_s4 = write_text_at_abs_coord(microcode_constructor(sub_GAME_7F00D5E8(viFillScreen(viSetFillColor(0, 0, 0)))), &sp88, &sp84, get_textptr_for_textID(TEXT(LTITLE, 0x57)), (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0, 0xff);
-loop_1:
-    if ((phi_s1->unk3 < get_selected_num_players()) || (get_selected_num_players() < phi_s1->unk2))
-    {
+    s32 i;
+    u8 *text;
+    //s32 newy;
 
-    }
-    else
-    {
+    u32 tBL1entry;
 
-    }
-    temp_ret = get_textptr_for_textID(phi_s1->unk0);
-    sub_GAME_7F0AE98C(&sp7C, &sp78, temp_ret, ptrSecondFontTableLarge, (s32) subroutine_arg0, 0);
-    sp88 = 0x39;
-    temp_v1 = phi_s5;
-    phi_s4_2 = phi_s4;
-    if ((phi_s2 + 1) == dword_CODE_bss_80069780)
+    DL = viSetFillColor(DL,0,0,0);
+    DL = viFillScreen(DL);
+    DL = sub_GAME_7F00D5E8(DL);
+    DL = microcode_constructor(DL);
+
+    text = get_textptr_for_textID(0x9C57);
+    x = 0x37;
+    y = 0x66;
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+
+    
+    for (i = 0, y = 0x83; i != 8; i++, y+=0x16)
     {
-        sp84 = temp_v1;
-        phi_s4_2 = microcode_constructor_related_to_menus(phi_s4, 0x37, temp_v1 + -1, sp78 + 0x3c, (s32) (temp_v1 + 0xe), 0x32);
+        if ((mp_player_counts[i].min < get_selected_num_players()) || (tBL1entry = 0xFF, ((get_selected_num_players() < (s32) mp_player_counts[i].max) != 0)))
+        {
+            tBL1entry = 0x70;
+        }
+        text = get_textptr_for_textID(mp_player_counts[i].stage);
+
+        sub_GAME_7F0AE98C(&sp7C, &sp78, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+
+        x = 0x39;
+        if ((i + 1) == dword_CODE_bss_80069780)
+        {
+            DL = microcode_constructor_related_to_menus(DL, 0x37, y - 1, sp78 + 0x3C, y + 0xE, 0x32);
+        }
+
+        DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, tBL1entry, viGetX(), viGetY(), 0, 0);
     }
-    viGetX();
-    sp20 = viGetY();
-    sp24 = 0;
-    sp28 = 0;
-    temp_ret_2 = write_text_at_abs_coord(phi_s4_2, &sp88, &sp84, temp_ret, (s32) ptrSecondFontTableLarge, (s32) subroutine_arg0);
-    temp_s2 = phi_s2 + 1;
-    phi_s1 = phi_s1 + 4;
-    phi_s2 = temp_s2;
-    phi_s5 = phi_s5 + 0x16;
-    phi_s4 = temp_ret_2;
-    if (temp_s2 != 8)
-    {
-        goto loop_1;
-    }
-    load_draw_selected_icon_folder_select(add_tab3_previous(temp_ret_2));
+
+    DL = add_tab3_previous(DL);
+    load_draw_selected_icon_folder_select(DL);
 }
 #else
 GLOBAL_ASM(
