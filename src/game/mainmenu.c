@@ -17655,6 +17655,7 @@ void init_menu0A_briefing(void)
     load_briefing_text_for_stage();
 }
 
+
 void update_menu0A_briefing(void)
 {
   blank_text_bank(get_textbank_number_for_stagenum(mission_folder_setup_entries[briefingpage].stage_id));
@@ -17664,368 +17665,94 @@ void update_menu0A_briefing(void)
 }
 
 
-
-
-
-
-
-#ifdef NONMATCHING
 void interface_menu0A_briefing(void)
 {
-    viSetFovY(0x42700000);
-    viSetAspect(D_80051AB8);
-    viSetZRange(0x42c80000, D_80051ABC);
-    viSetUseZBuf(0);
-    tab_3_highlight = 0;
-    tab_2_highlight = 0;
-    tab_1_highlight = 0;
-    if (isontab3() != 0)
+    viSetFovY(60.0f);
+    viSetAspect(1.3333334f);
+    viSetZRange(100.0f, 10000.0f);
+    viSetUseZBuf(FALSE);
+    tab_3_highlight = FALSE;
+    tab_2_highlight = FALSE;
+    tab_1_highlight = FALSE;
+    if (isontab3())
     {
-        tab_3_highlight = 1;
+        tab_3_highlight = TRUE;
+    }
+    else if ((isontab2()) && (current_menu_briefing_page < (final_menu_briefing_page - 1)))
+    {
+        tab_2_highlight = TRUE;
+    }
+    else if (isontab1())
+    {
+        tab_1_highlight = TRUE;
+    }
+    else if (current_menu_briefing_page < (final_menu_briefing_page - 1))
+    {
+        tab_2_highlight = TRUE;
     }
     else
     {
-        if ((isontab2() != 0) && (current_menu_briefing_page < (final_menu_briefing_page + -1)))
+        tab_1_highlight = TRUE;
+    }
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, START_BUTTON))
+    {
+        tab_2_selected = TRUE;
+        sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
+    }
+    else if (joyGetButtonsPressedThisFrame(PLAYER_1, Z_TRIG|A_BUTTON))
+    {
+        if (tab_2_highlight)
         {
-            tab_2_highlight = 1;
+            set_briefing_page(current_menu_briefing_page + 1);
         }
-        else
+        else if (tab_3_highlight)
         {
-            if (isontab1() != 0)
+            if (current_menu_briefing_page > BRIEFING_TITLE)
             {
-                tab_1_highlight = 1;
+                set_briefing_page(current_menu_briefing_page - 1);
             }
             else
             {
-                if (current_menu_briefing_page < (final_menu_briefing_page + -1))
-                {
-                    tab_2_highlight = 1;
-                }
-                else
-                {
-                    tab_1_highlight = 1;
-                }
+                tab_3_selected = TRUE;
             }
         }
-    }
-    if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x1000) != 0)
-    {
-        tab_2_selected = 1;
-        sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
-    }
-    else
-    {
-        if (joyGetButtonsPressedThisFrame(PLAYER_1, 0xa000) != 0)
+        else if (tab_1_highlight)
         {
-            if (tab_2_highlight != 0)
-            {
-                set_briefing_page(current_menu_briefing_page + 1);
-            }
-            else
-            {
-                if (tab_3_highlight != 0)
-                {
-                    if (current_menu_briefing_page > 0)
-                    {
-                        set_briefing_page(current_menu_briefing_page + -1);
-                    }
-                    else
-                    {
-                        tab_3_selected = 1;
-                    }
-                }
-                else
-                {
-                    if (tab_1_highlight != 0)
-                    {
-                        tab_2_selected = 1;
-                    }
-                }
-            }
-            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
+            tab_2_selected = TRUE;
+        }
+        sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
+    }
+    else if (joyGetButtonsPressedThisFrame(PLAYER_1, B_BUTTON) != 0)
+    {
+        if (current_menu_briefing_page > BRIEFING_TITLE)
+        {
+            set_briefing_page(current_menu_briefing_page - 1);
         }
         else
         {
-            if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x4000) != 0)
-            {
-                if (current_menu_briefing_page > 0)
-                {
-                    set_briefing_page(current_menu_briefing_page + -1);
-                }
-                else
-                {
-                    tab_3_selected = 1;
-                }
-                sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
-            }
+            tab_3_selected = TRUE;
         }
+        sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
     }
     disable_all_switches(ptr_folder_object_instance);
-    set_item_visibility_in_objinstance(ptr_folder_object_instance, 0xc, (u32) current_menu_briefing_page < 1U);
-    set_item_visibility_in_objinstance(ptr_folder_object_instance, (0x80030000 + (briefingpage * 0x1c))->unk-5408 + 0x16, (u32) current_menu_briefing_page < 1U);
-    set_item_visibility_in_objinstance(ptr_folder_object_instance, 0, 1);
-    set_item_visibility_in_objinstance(ptr_folder_object_instance, 1, 1);
-    set_item_visibility_in_objinstance(ptr_folder_object_instance, 3, 1);
-    set_item_visibility_in_objinstance(ptr_folder_object_instance, 6, 1);
+    set_item_visibility_in_objinstance(ptr_folder_object_instance, 0xC, current_menu_briefing_page == BRIEFING_TITLE);
+    set_item_visibility_in_objinstance(ptr_folder_object_instance, mission_folder_setup_entries[briefingpage].mission_num + 0x16, current_menu_briefing_page == 0);
+    set_item_visibility_in_objinstance(ptr_folder_object_instance, 0, TRUE);
+    set_item_visibility_in_objinstance(ptr_folder_object_instance, 1, TRUE);
+    set_item_visibility_in_objinstance(ptr_folder_object_instance, 3, TRUE);
+    set_item_visibility_in_objinstance(ptr_folder_object_instance, 6, TRUE);
     menu_control_stick_tracking();
-    if (tab_2_selected != 0)
+    if (tab_2_selected)
     {
         set_menu_to_mode(MENU_RUN_STAGE, 1);
         return;
     }
-    if (tab_3_selected != 0)
+    if (tab_3_selected)
     {
         set_menu_to_mode(MENU_MISSION_SELECT, 0);
-        set_cursor_to_stage_solo((0x80030000 + (briefingpage * 0x1c))->unk-5408);
+        set_cursor_to_stage_solo(mission_folder_setup_entries[briefingpage].mission_num);
     }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80051AB8
-.word 0x3FAAAAAB /*1.3333334;*/
-glabel D_80051ABC
-.word 0x461C4000 /*10000.0;*/
-.text
-glabel interface_menu0A_briefing
-/* 04A1CC 7F01569C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 04A1D0 7F0156A0 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 04A1D4 7F0156A4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 04A1D8 7F0156A8 44816000 */  mtc1  $at, $f12
-/* 04A1DC 7F0156AC 0C001151 */  jal   viSetFovY
-/* 04A1E0 7F0156B0 00000000 */   nop   
-/* 04A1E4 7F0156B4 3C018005 */  lui   $at, %hi(D_80051AB8)
-/* 04A1E8 7F0156B8 0C001164 */  jal   viSetAspect
-/* 04A1EC 7F0156BC C42C1AB8 */   lwc1  $f12, %lo(D_80051AB8)($at)
-/* 04A1F0 7F0156C0 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 04A1F4 7F0156C4 44816000 */  mtc1  $at, $f12
-/* 04A1F8 7F0156C8 3C018005 */  lui   $at, %hi(D_80051ABC)
-/* 04A1FC 7F0156CC 0C001194 */  jal   viSetZRange
-/* 04A200 7F0156D0 C42E1ABC */   lwc1  $f14, %lo(D_80051ABC)($at)
-/* 04A204 7F0156D4 0C00114D */  jal   viSetUseZBuf
-/* 04A208 7F0156D8 00002025 */   move  $a0, $zero
-/* 04A20C 7F0156DC 3C018003 */  lui   $at, %hi(tab_3_highlight)
-/* 04A210 7F0156E0 AC20A8E4 */  sw    $zero, %lo(tab_3_highlight)($at)
-/* 04A214 7F0156E4 3C018003 */  lui   $at, %hi(tab_2_highlight)
-/* 04A218 7F0156E8 AC20A8E0 */  sw    $zero, %lo(tab_2_highlight)($at)
-/* 04A21C 7F0156EC 3C018003 */  lui   $at, %hi(tab_1_highlight)
-/* 04A220 7F0156F0 0FC028E7 */  jal   isontab3
-/* 04A224 7F0156F4 AC20A8DC */   sw    $zero, %lo(tab_1_highlight)($at)
-/* 04A228 7F0156F8 10400004 */  beqz  $v0, .L7F01570C
-/* 04A22C 7F0156FC 24030001 */   li    $v1, 1
-/* 04A230 7F015700 3C018003 */  lui   $at, %hi(tab_3_highlight)
-/* 04A234 7F015704 10000025 */  b     .L7F01579C
-/* 04A238 7F015708 AC23A8E4 */   sw    $v1, %lo(tab_3_highlight)($at)
-.L7F01570C:
-/* 04A23C 7F01570C 0FC0295E */  jal   isontab2
-/* 04A240 7F015710 00000000 */   nop   
-/* 04A244 7F015714 1040000B */  beqz  $v0, .L7F015744
-/* 04A248 7F015718 3C0E8003 */   lui   $t6, %hi(current_menu_briefing_page) 
-/* 04A24C 7F01571C 3C0F8003 */  lui   $t7, %hi(final_menu_briefing_page) 
-/* 04A250 7F015720 8DEFA910 */  lw    $t7, %lo(final_menu_briefing_page)($t7)
-/* 04A254 7F015724 8DCEA914 */  lw    $t6, %lo(current_menu_briefing_page)($t6)
-/* 04A258 7F015728 24030001 */  li    $v1, 1
-/* 04A25C 7F01572C 25F8FFFF */  addiu $t8, $t7, -1
-/* 04A260 7F015730 01D8082A */  slt   $at, $t6, $t8
-/* 04A264 7F015734 10200003 */  beqz  $at, .L7F015744
-/* 04A268 7F015738 3C018003 */   lui   $at, %hi(tab_2_highlight)
-/* 04A26C 7F01573C 10000017 */  b     .L7F01579C
-/* 04A270 7F015740 AC23A8E0 */   sw    $v1, %lo(tab_2_highlight)($at)
-.L7F015744:
-/* 04A274 7F015744 0FC02879 */  jal   isontab1
-/* 04A278 7F015748 00000000 */   nop   
-/* 04A27C 7F01574C 10400005 */  beqz  $v0, .L7F015764
-/* 04A280 7F015750 3C198003 */   lui   $t9, %hi(current_menu_briefing_page) 
-/* 04A284 7F015754 24030001 */  li    $v1, 1
-/* 04A288 7F015758 3C018003 */  lui   $at, %hi(tab_1_highlight)
-/* 04A28C 7F01575C 1000000F */  b     .L7F01579C
-/* 04A290 7F015760 AC23A8DC */   sw    $v1, %lo(tab_1_highlight)($at)
-.L7F015764:
-/* 04A294 7F015764 3C088003 */  lui   $t0, %hi(final_menu_briefing_page) 
-/* 04A298 7F015768 8D08A910 */  lw    $t0, %lo(final_menu_briefing_page)($t0)
-/* 04A29C 7F01576C 8F39A914 */  lw    $t9, %lo(current_menu_briefing_page)($t9)
-/* 04A2A0 7F015770 24030001 */  li    $v1, 1
-/* 04A2A4 7F015774 2509FFFF */  addiu $t1, $t0, -1
-/* 04A2A8 7F015778 0329082A */  slt   $at, $t9, $t1
-/* 04A2AC 7F01577C 10200005 */  beqz  $at, .L7F015794
-/* 04A2B0 7F015780 00000000 */   nop   
-/* 04A2B4 7F015784 24030001 */  li    $v1, 1
-/* 04A2B8 7F015788 3C018003 */  lui   $at, %hi(tab_2_highlight)
-/* 04A2BC 7F01578C 10000003 */  b     .L7F01579C
-/* 04A2C0 7F015790 AC23A8E0 */   sw    $v1, %lo(tab_2_highlight)($at)
-.L7F015794:
-/* 04A2C4 7F015794 3C018003 */  lui   $at, %hi(tab_1_highlight)
-/* 04A2C8 7F015798 AC23A8DC */  sw    $v1, %lo(tab_1_highlight)($at)
-.L7F01579C:
-/* 04A2CC 7F01579C 00002025 */  move  $a0, $zero
-/* 04A2D0 7F0157A0 0C0030EB */  jal   joyGetButtonsPressedThisFrame
-/* 04A2D4 7F0157A4 24051000 */   li    $a1, 4096
-/* 04A2D8 7F0157A8 1040000A */  beqz  $v0, .L7F0157D4
-/* 04A2DC 7F0157AC 24030001 */   li    $v1, 1
-/* 04A2E0 7F0157B0 3C018003 */  lui   $at, %hi(tab_2_selected)
-/* 04A2E4 7F0157B4 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 04A2E8 7F0157B8 AC23A8D4 */  sw    $v1, %lo(tab_2_selected)($at)
-/* 04A2EC 7F0157BC 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 04A2F0 7F0157C0 240500C7 */  li    $a1, 199
-/* 04A2F4 7F0157C4 0C002382 */  jal   sndPlaySfx
-/* 04A2F8 7F0157C8 00003025 */   move  $a2, $zero
-/* 04A2FC 7F0157CC 10000040 */  b     .L7F0158D0
-/* 04A300 7F0157D0 00000000 */   nop   
-.L7F0157D4:
-/* 04A304 7F0157D4 00002025 */  move  $a0, $zero
-/* 04A308 7F0157D8 0C0030EB */  jal   joyGetButtonsPressedThisFrame
-/* 04A30C 7F0157DC 3405A000 */   li    $a1, 40960
-/* 04A310 7F0157E0 10400027 */  beqz  $v0, .L7F015880
-/* 04A314 7F0157E4 24030001 */   li    $v1, 1
-/* 04A318 7F0157E8 3C0A8003 */  lui   $t2, %hi(tab_2_highlight) 
-/* 04A31C 7F0157EC 8D4AA8E0 */  lw    $t2, %lo(tab_2_highlight)($t2)
-/* 04A320 7F0157F0 3C048003 */  lui   $a0, %hi(current_menu_briefing_page)
-/* 04A324 7F0157F4 3C0B8003 */  lui   $t3, %hi(tab_3_highlight) 
-/* 04A328 7F0157F8 11400006 */  beqz  $t2, .L7F015814
-/* 04A32C 7F0157FC 00000000 */   nop   
-/* 04A330 7F015800 8C84A914 */  lw    $a0, %lo(current_menu_briefing_page)($a0)
-/* 04A334 7F015804 0FC05544 */  jal   set_briefing_page
-/* 04A338 7F015808 24840001 */   addiu $a0, $a0, 1
-/* 04A33C 7F01580C 10000015 */  b     .L7F015864
-/* 04A340 7F015810 00000000 */   nop   
-.L7F015814:
-/* 04A344 7F015814 8D6BA8E4 */  lw    $t3, %lo(tab_3_highlight)($t3)
-/* 04A348 7F015818 3C028003 */  lui   $v0, %hi(current_menu_briefing_page)
-/* 04A34C 7F01581C 3C0C8003 */  lui   $t4, %hi(tab_1_highlight) 
-/* 04A350 7F015820 1160000B */  beqz  $t3, .L7F015850
-/* 04A354 7F015824 00000000 */   nop   
-/* 04A358 7F015828 8C42A914 */  lw    $v0, %lo(current_menu_briefing_page)($v0)
-/* 04A35C 7F01582C 3C018003 */  lui   $at, %hi(tab_3_selected)
-/* 04A360 7F015830 18400005 */  blez  $v0, .L7F015848
-/* 04A364 7F015834 00000000 */   nop   
-/* 04A368 7F015838 0FC05544 */  jal   set_briefing_page
-/* 04A36C 7F01583C 2444FFFF */   addiu $a0, $v0, -1
-/* 04A370 7F015840 10000008 */  b     .L7F015864
-/* 04A374 7F015844 00000000 */   nop   
-.L7F015848:
-/* 04A378 7F015848 10000006 */  b     .L7F015864
-/* 04A37C 7F01584C AC23A8D8 */   sw    $v1, %lo(tab_3_selected)($at)
-.L7F015850:
-/* 04A380 7F015850 8D8CA8DC */  lw    $t4, %lo(tab_1_highlight)($t4)
-/* 04A384 7F015854 3C018003 */  lui   $at, %hi(tab_2_selected)
-/* 04A388 7F015858 11800002 */  beqz  $t4, .L7F015864
-/* 04A38C 7F01585C 00000000 */   nop   
-/* 04A390 7F015860 AC23A8D4 */  sw    $v1, %lo(tab_2_selected)($at)
-.L7F015864:
-/* 04A394 7F015864 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 04A398 7F015868 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 04A39C 7F01586C 240500C7 */  li    $a1, 199
-/* 04A3A0 7F015870 0C002382 */  jal   sndPlaySfx
-/* 04A3A4 7F015874 00003025 */   move  $a2, $zero
-/* 04A3A8 7F015878 10000015 */  b     .L7F0158D0
-/* 04A3AC 7F01587C 00000000 */   nop   
-.L7F015880:
-/* 04A3B0 7F015880 00002025 */  move  $a0, $zero
-/* 04A3B4 7F015884 0C0030EB */  jal   joyGetButtonsPressedThisFrame
-/* 04A3B8 7F015888 24054000 */   li    $a1, 16384
-/* 04A3BC 7F01588C 10400010 */  beqz  $v0, .L7F0158D0
-/* 04A3C0 7F015890 24030001 */   li    $v1, 1
-/* 04A3C4 7F015894 3C028003 */  lui   $v0, %hi(current_menu_briefing_page)
-/* 04A3C8 7F015898 8C42A914 */  lw    $v0, %lo(current_menu_briefing_page)($v0)
-/* 04A3CC 7F01589C 3C018003 */  lui   $at, %hi(tab_3_selected)
-/* 04A3D0 7F0158A0 18400005 */  blez  $v0, .L7F0158B8
-/* 04A3D4 7F0158A4 00000000 */   nop   
-/* 04A3D8 7F0158A8 0FC05544 */  jal   set_briefing_page
-/* 04A3DC 7F0158AC 2444FFFF */   addiu $a0, $v0, -1
-/* 04A3E0 7F0158B0 10000002 */  b     .L7F0158BC
-/* 04A3E4 7F0158B4 00000000 */   nop   
-.L7F0158B8:
-/* 04A3E8 7F0158B8 AC23A8D8 */  sw    $v1, %lo(tab_3_selected)($at)
-.L7F0158BC:
-/* 04A3EC 7F0158BC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 04A3F0 7F0158C0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 04A3F4 7F0158C4 240500C7 */  li    $a1, 199
-/* 04A3F8 7F0158C8 0C002382 */  jal   sndPlaySfx
-/* 04A3FC 7F0158CC 00003025 */   move  $a2, $zero
-.L7F0158D0:
-/* 04A400 7F0158D0 3C048003 */  lui   $a0, %hi(ptr_folder_object_instance)
-/* 04A404 7F0158D4 0FC02DC9 */  jal   disable_all_switches
-/* 04A408 7F0158D8 8C84A95C */   lw    $a0, %lo(ptr_folder_object_instance)($a0)
-/* 04A40C 7F0158DC 3C068003 */  lui   $a2, %hi(current_menu_briefing_page)
-/* 04A410 7F0158E0 8CC6A914 */  lw    $a2, %lo(current_menu_briefing_page)($a2)
-/* 04A414 7F0158E4 3C048003 */  lui   $a0, %hi(ptr_folder_object_instance)
-/* 04A418 7F0158E8 8C84A95C */  lw    $a0, %lo(ptr_folder_object_instance)($a0)
-/* 04A41C 7F0158EC 2CCD0001 */  sltiu $t5, $a2, 1
-/* 04A420 7F0158F0 01A03025 */  move  $a2, $t5
-/* 04A424 7F0158F4 0FC02DF0 */  jal   set_item_visibility_in_objinstance
-/* 04A428 7F0158F8 2405000C */   li    $a1, 12
-/* 04A42C 7F0158FC 3C0F8003 */  lui   $t7, %hi(briefingpage) 
-/* 04A430 7F015900 8DEFA8F8 */  lw    $t7, %lo(briefingpage)($t7)
-/* 04A434 7F015904 3C068003 */  lui   $a2, %hi(current_menu_briefing_page)
-/* 04A438 7F015908 8CC6A914 */  lw    $a2, %lo(current_menu_briefing_page)($a2)
-/* 04A43C 7F01590C 000F70C0 */  sll   $t6, $t7, 3
-/* 04A440 7F015910 01CF7023 */  subu  $t6, $t6, $t7
-/* 04A444 7F015914 000E7080 */  sll   $t6, $t6, 2
-/* 04A448 7F015918 3C058003 */  lui   $a1, %hi(mission_folder_setup_entries+20)
-/* 04A44C 7F01591C 00AE2821 */  addu  $a1, $a1, $t6
-/* 04A450 7F015920 8CA5ABF8 */  lw    $a1, %lo(mission_folder_setup_entries+20)($a1)
-/* 04A454 7F015924 3C048003 */  lui   $a0, %hi(ptr_folder_object_instance)
-/* 04A458 7F015928 2CD80001 */  sltiu $t8, $a2, 1
-/* 04A45C 7F01592C 03003025 */  move  $a2, $t8
-/* 04A460 7F015930 8C84A95C */  lw    $a0, %lo(ptr_folder_object_instance)($a0)
-/* 04A464 7F015934 0FC02DF0 */  jal   set_item_visibility_in_objinstance
-/* 04A468 7F015938 24A50016 */   addiu $a1, $a1, 0x16
-/* 04A46C 7F01593C 3C048003 */  lui   $a0, %hi(ptr_folder_object_instance)
-/* 04A470 7F015940 8C84A95C */  lw    $a0, %lo(ptr_folder_object_instance)($a0)
-/* 04A474 7F015944 00002825 */  move  $a1, $zero
-/* 04A478 7F015948 0FC02DF0 */  jal   set_item_visibility_in_objinstance
-/* 04A47C 7F01594C 24060001 */   li    $a2, 1
-/* 04A480 7F015950 3C048003 */  lui   $a0, %hi(ptr_folder_object_instance)
-/* 04A484 7F015954 8C84A95C */  lw    $a0, %lo(ptr_folder_object_instance)($a0)
-/* 04A488 7F015958 24050001 */  li    $a1, 1
-/* 04A48C 7F01595C 0FC02DF0 */  jal   set_item_visibility_in_objinstance
-/* 04A490 7F015960 24060001 */   li    $a2, 1
-/* 04A494 7F015964 3C048003 */  lui   $a0, %hi(ptr_folder_object_instance)
-/* 04A498 7F015968 8C84A95C */  lw    $a0, %lo(ptr_folder_object_instance)($a0)
-/* 04A49C 7F01596C 24050003 */  li    $a1, 3
-/* 04A4A0 7F015970 0FC02DF0 */  jal   set_item_visibility_in_objinstance
-/* 04A4A4 7F015974 24060001 */   li    $a2, 1
-/* 04A4A8 7F015978 3C048003 */  lui   $a0, %hi(ptr_folder_object_instance)
-/* 04A4AC 7F01597C 8C84A95C */  lw    $a0, %lo(ptr_folder_object_instance)($a0)
-/* 04A4B0 7F015980 24050006 */  li    $a1, 6
-/* 04A4B4 7F015984 0FC02DF0 */  jal   set_item_visibility_in_objinstance
-/* 04A4B8 7F015988 24060001 */   li    $a2, 1
-/* 04A4BC 7F01598C 0FC026E1 */  jal   menu_control_stick_tracking
-/* 04A4C0 7F015990 00000000 */   nop   
-/* 04A4C4 7F015994 3C088003 */  lui   $t0, %hi(tab_2_selected) 
-/* 04A4C8 7F015998 8D08A8D4 */  lw    $t0, %lo(tab_2_selected)($t0)
-/* 04A4CC 7F01599C 2404000B */  li    $a0, 11
-/* 04A4D0 7F0159A0 3C198003 */  lui   $t9, %hi(tab_3_selected) 
-/* 04A4D4 7F0159A4 11000005 */  beqz  $t0, .L7F0159BC
-/* 04A4D8 7F0159A8 00000000 */   nop   
-/* 04A4DC 7F0159AC 0FC06975 */  jal   set_menu_to_mode
-/* 04A4E0 7F0159B0 24050001 */   li    $a1, 1
-/* 04A4E4 7F0159B4 10000011 */  b     .L7F0159FC
-/* 04A4E8 7F0159B8 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0159BC:
-/* 04A4EC 7F0159BC 8F39A8D8 */  lw    $t9, %lo(tab_3_selected)($t9)
-/* 04A4F0 7F0159C0 24040007 */  li    $a0, 7
-/* 04A4F4 7F0159C4 5320000D */  beql  $t9, $zero, .L7F0159FC
-/* 04A4F8 7F0159C8 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 04A4FC 7F0159CC 0FC06975 */  jal   set_menu_to_mode
-/* 04A500 7F0159D0 00002825 */   move  $a1, $zero
-/* 04A504 7F0159D4 3C098003 */  lui   $t1, %hi(briefingpage) 
-/* 04A508 7F0159D8 8D29A8F8 */  lw    $t1, %lo(briefingpage)($t1)
-/* 04A50C 7F0159DC 3C048003 */  lui   $a0, %hi(mission_folder_setup_entries+20)
-/* 04A510 7F0159E0 000950C0 */  sll   $t2, $t1, 3
-/* 04A514 7F0159E4 01495023 */  subu  $t2, $t2, $t1
-/* 04A518 7F0159E8 000A5080 */  sll   $t2, $t2, 2
-/* 04A51C 7F0159EC 008A2021 */  addu  $a0, $a0, $t2
-/* 04A520 7F0159F0 0FC038F8 */  jal   set_cursor_to_stage_solo
-/* 04A524 7F0159F4 8C84ABF8 */   lw    $a0, %lo(mission_folder_setup_entries+20)($a0)
-/* 04A528 7F0159F8 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0159FC:
-/* 04A52C 7F0159FC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 04A530 7F015A00 03E00008 */  jr    $ra
-/* 04A534 7F015A04 00000000 */   nop   
-)
-#endif
-
 
 
 
