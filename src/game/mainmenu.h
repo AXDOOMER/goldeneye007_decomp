@@ -33,8 +33,8 @@ struct MP_game_length_settings {
 
 struct mp_stage_playercount {
     u16 stage;
-    char min;
-    char max;
+    u8 min;
+    u8 max;
 };
 
 struct mp_stage_setup {

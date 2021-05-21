@@ -16142,94 +16142,87 @@ void update_menu13_mpscenario(void) {
 
 
 #ifdef NONMATCHING
+//for loop needs tweaking
 void interface_menu13_mpscenario(void)
 {
-    s32 sp2C;
-    s32 temp_a0;
-    s32 temp_s1;
-    void *temp_s0;
-    s32 phi_s2;
-    s32 phi_s1;
+    s32 scenarioid;
+    s32 i;
+    s32 isTeam;
+    s32 vpos;
+    
+    
+    isTeam = FALSE;
+    viSetFovY(60.0f);
+    viSetAspect(1.3333334f);
+    viSetZRange(100.0f, 10000.0f);
+    viSetUseZBuf(FALSE);
+    
+    
+    if (joyGetButtons(PLAYER_1, Z_TRIG|A_BUTTON) == 0) {
+        tab_3_highlight = FALSE;
+        tab_2_highlight = FALSE;
+        tab_1_highlight = FALSE;
+        
+        if (isontab3())
+        {
+            tab_3_highlight = TRUE;
+            dword_CODE_bss_80069780 = SCENARIO_NORMAL;
+        }
+        else
+        {
+            dword_CODE_bss_80069780 = SCENARIO_YOLT;
 
-    sp2C = 0;
-    viSetFovY(0x42700000);
-    viSetAspect(D_80051AA8);
-    viSetZRange(0x42c80000, D_80051AAC);
-    viSetUseZBuf(0);
-    if (joyGetButtons(0, 0xa000) == 0)
-    {
-        tab_3_highlight = 0;
-        tab_2_highlight = 0;
-        tab_1_highlight = 0;
-        if (isontab3() != 0)
-        {
-            tab_3_highlight = 1;
-            dword_CODE_bss_80069780 = 0;
-        }
-        else
-        {
-            dword_CODE_bss_80069780 = 1;
-            phi_s2 = 0x11d;
-            phi_s1 = 7;
-loop_4:
-            if ((((s32) cursor_v_pos >= phi_s2) && (get_selected_num_players() >= temp_s0->unk2)) && (temp_s0->unk3 >= get_selected_num_players()))
+           
+            for (i = 7, vpos = 0x11d; i != 0; i--, vpos -= 0x16)
             {
-                dword_CODE_bss_80069780 = (s32) (phi_s1 + 1);
-            }
-            else
-            {
-                temp_s1 = phi_s1 + -1;
-                phi_s2 = phi_s2 + -0x16;
-                phi_s1 = temp_s1;
-                if (temp_s1 != 0)
+                if ((vpos <= (s32)cursor_v_pos) && (mp_player_counts[i].min <= get_selected_num_players()) && (get_selected_num_players() <= mp_player_counts[i].max))
                 {
-                    goto loop_4;
+                    dword_CODE_bss_80069780 = i + 1;
                 }
-            }
+            } 
         }
     }
-    if (joyGetButtonsPressedThisFrame(PLAYER_1, 0xb000) != 0)
+    
+  
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, START_BUTTON|Z_TRIG|A_BUTTON))
     {
-        if (tab_3_highlight != 0)
+        if (tab_3_highlight)
         {
-            tab_3_selected = 1;
+            tab_3_selected = TRUE;
         }
         else
         {
-            temp_a0 = dword_CODE_bss_80069780 + -1;
-            if (((temp_a0 == 5) || (temp_a0 == 6)) || (temp_a0 == 7))
+            scenarioid = dword_CODE_bss_80069780 - 1;
+            if ((scenarioid == SCENARIO_2v2) || (scenarioid == SCENARIO_3v1) || (scenarioid == SCENARIO_2v1))
             {
-                reset_mp_options_for_scenario(temp_a0);
-                sp2C = 1;
+                reset_mp_options_for_scenario(scenarioid);
+                isTeam = TRUE;
             }
             else
             {
-                reset_mp_options_for_scenario(temp_a0);
-                tab_3_selected = 1;
+                reset_mp_options_for_scenario(scenarioid);
+                tab_3_selected = TRUE;
             }
         }
-        sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
+        sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
     }
-    else
+    else if (joyGetButtonsPressedThisFrame(PLAYER_1, B_BUTTON))
     {
-        if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x4000) != 0)
-        {
-            tab_3_selected = 1;
-            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
-        }
+        tab_3_selected = TRUE;
+        sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
     }
     disable_all_switches(ptr_folder_object_instance);
-    set_item_visibility_in_objinstance(ptr_folder_object_instance, 0, 1);
-    set_item_visibility_in_objinstance(ptr_folder_object_instance, 1, 1);
-    set_item_visibility_in_objinstance(ptr_folder_object_instance, 3, 1);
-    set_item_visibility_in_objinstance(ptr_folder_object_instance, 6, 1);
+    set_item_visibility_in_objinstance(ptr_folder_object_instance, 0, TRUE);
+    set_item_visibility_in_objinstance(ptr_folder_object_instance, 1, TRUE);
+    set_item_visibility_in_objinstance(ptr_folder_object_instance, 3, TRUE);
+    set_item_visibility_in_objinstance(ptr_folder_object_instance, 6, TRUE);
     menu_control_stick_tracking();
-    if (sp2C != 0)
+    if (isTeam)
     {
         set_menu_to_mode(MENU_MP_TEAMS, 0);
         return;
     }
-    if (tab_3_selected != 0)
+    if (tab_3_selected)
     {
         set_menu_to_mode(MENU_MP_OPTIONS, 0);
     }
