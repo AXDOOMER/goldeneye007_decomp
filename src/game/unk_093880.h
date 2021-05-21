@@ -30,10 +30,10 @@ struct player_data {
     float handicap;
     int flag_counter;
     float player_perspective_height;
-    char order_out_in_yolt;
-    char have_token_or_goldengun;
-    char autoaim;
-    char sight;
+    u8 order_out_in_yolt;
+    u8 have_token_or_goldengun;
+    u8 autoaim;
+    u8 sight;
     int killed_civilians;
 };
 
