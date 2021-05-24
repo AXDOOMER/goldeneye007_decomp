@@ -4257,8 +4257,8 @@ Gfx *draw_watch_mission_status_page(Gfx *gdl, s32 param_2)
 
 void sub_GAME_7F0A8378(void)
 {
-    if (joyGetButtonsPressedThisFrame('\0', 0xa000) == 0) {
-        if (joyGetButtonsPressedThisFrame('\0', START_BUTTON) == 0)
+    if (joyGetButtonsPressedThisFrame(0, Z_TRIG|A_BUTTON) == 0) {
+        if (joyGetButtonsPressedThisFrame(0, START_BUTTON) == 0)
         {
             return;
         }
