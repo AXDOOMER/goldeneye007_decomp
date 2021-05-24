@@ -18606,243 +18606,70 @@ glabel sub_GAME_7F01631C
 
 
 
-#ifdef NONMATCHING
-void constructor_menu0C_missionfailed(s32 arg0)
+Gfx * constructor_menu0C_missionfailed(Gfx *DL)
 {
-    s32 spC14;
-    s32 spC10;
-    s32 sp58;
-    s32 sp50;
-    s32 sp4C;
-    s32 sp48;
-    s16 sp44;
-    s32 temp_ret;
+    s32 x;
+    s32 y;
+    
+    char stagename[0xbb8];
+    char *text;
     s32 phi_v1;
-    s32 phi_s0;
 
-    arg0 = print_current_solo_briefing_stage_name(microcode_constructor(sub_GAME_7F00D5E8(viFillScreen(viSetFillColor(0, 0, 0)))), &sp58);
-    spC14 = 0x37;
-    spC10 = 0x8f;
-    sp44 = viGetX();
-    arg0 = write_text_at_abs_coord(arg0, &spC14, &spC10, get_textptr_for_textID(TEXT(LTITLE, 0x62)), (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, viGetY(), 0, 0);
-    temp_ret = get_textptr_for_textID(TEXT(LTITLE, 0x63));
-    sp48 = 0;
-    sp4C = 0;
-    sub_GAME_7F0AE98C(&sp4C, &sp48, temp_ret, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
-    spC14 = 0x37;
-    spC10 = 0xa7;
-    sp44 = viGetX();
-    arg0 = write_text_at_abs_coord(arg0, &spC14, &spC10, temp_ret, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0xff, sp44, viGetY(), 0, 0);
-    if (mission_kia_flag != 0)
+    s32 y2;
+    s32 x2;
+    
+
+    DL = viSetFillColor(DL, 0, 0, 0);
+    DL = viFillScreen(DL);
+    DL = sub_GAME_7F00D5E8(DL);
+    DL = microcode_constructor(DL);
+    DL = print_current_solo_briefing_stage_name(DL, &stagename);
+
+    text = get_textptr_for_textID(TEXT(LTITLE, 0x62)); //REPORT:*
+    x = 0x37;
+    y = 0x8F;
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+
+    text = get_textptr_for_textID(TEXT(LTITLE, 0x63)); //Mission status:*
+    x2 = 0;
+    y2 = 0;
+    sub_GAME_7F0AE98C(&y2, &x2, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+    x = 0x37;
+    y = 0xA7;
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    
+    if (mission_kia_flag)
     {
-        phi_v1 = 0x780000ff;
-        phi_s0 = get_textptr_for_textID(TEXT(LTITLE, 0x64));
+        text = get_textptr_for_textID(TEXT(LTITLE, 0x64)); // KILLED IN ACTION*
+        phi_v1 = 0x78000000 | 0xFF;
+    }
+    else if (mission_failed_or_aborted)
+    {
+        text = get_textptr_for_textID(TEXT(LTITLE, 0x65)); // ABORTED*
+        phi_v1 = 0x78000000 | 0xFF;
+    }
+    else if (sub_GAME_7F01631C())
+    {
+        
+        text = get_textptr_for_textID(TEXT(LTITLE, 0x66)); // Completed*
+        phi_v1 = 0xFF;
     }
     else
     {
-        if (mission_failed_or_aborted != 0)
-        {
-            phi_v1 = 0x780000ff;
-            phi_s0 = get_textptr_for_textID(TEXT(LTITLE, 0x65));
-        }
-        else
-        {
-            if (sub_GAME_7F01631C() != 0)
-            {
-                phi_v1 = 0xff;
-                phi_s0 = get_textptr_for_textID(TEXT(LTITLE, 0x66));
-            }
-            else
-            {
-                phi_v1 = 0x780000ff;
-                phi_s0 = get_textptr_for_textID(TEXT(LTITLE, 0x67));
-            }
-        }
+        text = get_textptr_for_textID(TEXT(LTITLE, 0x67)); // FAILED*
+        phi_v1 = 0x78000000 | 0xFF;
     }
-    spC10 = 0xa7;
-    spC14 = (s32) (sp48 + 0x37);
-    sp50 = (s32) phi_v1;
-    sp44 = viGetX();
-    load_draw_selected_icon_folder_select(add_tab3_previous(add_tab2_next(print_objectives_and_status_to_menu(write_text_at_abs_coord(arg0, &spC14, &spC10, phi_s0, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, (s32) phi_v1, sp44, viGetY(), 0, 0), 0xbf, &sp58, 1))));
+
+    x = x2 + 0x37;
+    y = 0xA7;
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, phi_v1, viGetX(), viGetY(), 0, 0);
+
+    DL = print_objectives_and_status_to_menu(DL, 0xBF, &stagename, 1);
+    DL = add_tab2_next(DL);
+    DL = add_tab3_previous(DL);
+    DL = load_draw_selected_icon_folder_select(DL);
+    return DL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel constructor_menu0C_missionfailed
-/* 04AF1C 7F0163EC 27BDF3E8 */  addiu $sp, $sp, -0xc18
-/* 04AF20 7F0163F0 AFBF003C */  sw    $ra, 0x3c($sp)
-/* 04AF24 7F0163F4 AFB00038 */  sw    $s0, 0x38($sp)
-/* 04AF28 7F0163F8 00002825 */  move  $a1, $zero
-/* 04AF2C 7F0163FC 00003025 */  move  $a2, $zero
-/* 04AF30 7F016400 0C0011B4 */  jal   viSetFillColor
-/* 04AF34 7F016404 00003825 */   move  $a3, $zero
-/* 04AF38 7F016408 0C000FBE */  jal   viFillScreen
-/* 04AF3C 7F01640C 00402025 */   move  $a0, $v0
-/* 04AF40 7F016410 0FC0357A */  jal   sub_GAME_7F00D5E8
-/* 04AF44 7F016414 00402025 */   move  $a0, $v0
-/* 04AF48 7F016418 0FC2B366 */  jal   microcode_constructor
-/* 04AF4C 7F01641C 00402025 */   move  $a0, $v0
-/* 04AF50 7F016420 00402025 */  move  $a0, $v0
-/* 04AF54 7F016424 0FC03AAF */  jal   print_current_solo_briefing_stage_name
-/* 04AF58 7F016428 27A50058 */   addiu $a1, $sp, 0x58
-/* 04AF5C 7F01642C AFA20C18 */  sw    $v0, 0xc18($sp)
-/* 04AF60 7F016430 0FC30776 */  jal   get_textptr_for_textID
-/* 04AF64 7F016434 34049C62 */   li    $a0, 40034
-/* 04AF68 7F016438 240E0037 */  li    $t6, 55
-/* 04AF6C 7F01643C 240F008F */  li    $t7, 143
-/* 04AF70 7F016440 00408025 */  move  $s0, $v0
-/* 04AF74 7F016444 AFAE0C14 */  sw    $t6, 0xc14($sp)
-/* 04AF78 7F016448 0C001107 */  jal   viGetX
-/* 04AF7C 7F01644C AFAF0C10 */   sw    $t7, 0xc10($sp)
-/* 04AF80 7F016450 0C00110B */  jal   viGetY
-/* 04AF84 7F016454 A7A20044 */   sh    $v0, 0x44($sp)
-/* 04AF88 7F016458 3C188004 */  lui   $t8, %hi(ptrSecondFontTableLarge) 
-/* 04AF8C 7F01645C 3C198004 */  lui   $t9, %hi(ptrFirstFontTableLarge) 
-/* 04AF90 7F016460 8F390EB4 */  lw    $t9, %lo(ptrFirstFontTableLarge)($t9)
-/* 04AF94 7F016464 8F180EB8 */  lw    $t8, %lo(ptrSecondFontTableLarge)($t8)
-/* 04AF98 7F016468 87A90044 */  lh    $t1, 0x44($sp)
-/* 04AF9C 7F01646C 240800FF */  li    $t0, 255
-/* 04AFA0 7F016470 AFA80018 */  sw    $t0, 0x18($sp)
-/* 04AFA4 7F016474 8FA40C18 */  lw    $a0, 0xc18($sp)
-/* 04AFA8 7F016478 27A50C14 */  addiu $a1, $sp, 0xc14
-/* 04AFAC 7F01647C 27A60C10 */  addiu $a2, $sp, 0xc10
-/* 04AFB0 7F016480 02003825 */  move  $a3, $s0
-/* 04AFB4 7F016484 AFA20020 */  sw    $v0, 0x20($sp)
-/* 04AFB8 7F016488 AFA00024 */  sw    $zero, 0x24($sp)
-/* 04AFBC 7F01648C AFA00028 */  sw    $zero, 0x28($sp)
-/* 04AFC0 7F016490 AFB90014 */  sw    $t9, 0x14($sp)
-/* 04AFC4 7F016494 AFB80010 */  sw    $t8, 0x10($sp)
-/* 04AFC8 7F016498 0FC025D8 */  jal   write_text_at_abs_coord
-/* 04AFCC 7F01649C AFA9001C */   sw    $t1, 0x1c($sp)
-/* 04AFD0 7F0164A0 AFA20C18 */  sw    $v0, 0xc18($sp)
-/* 04AFD4 7F0164A4 0FC30776 */  jal   get_textptr_for_textID
-/* 04AFD8 7F0164A8 34049C63 */   li    $a0, 40035
-/* 04AFDC 7F0164AC 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableLarge) 
-/* 04AFE0 7F0164B0 8D4A0EB4 */  lw    $t2, %lo(ptrFirstFontTableLarge)($t2)
-/* 04AFE4 7F0164B4 3C078004 */  lui   $a3, %hi(ptrSecondFontTableLarge)
-/* 04AFE8 7F0164B8 00408025 */  move  $s0, $v0
-/* 04AFEC 7F0164BC AFA00048 */  sw    $zero, 0x48($sp)
-/* 04AFF0 7F0164C0 AFA0004C */  sw    $zero, 0x4c($sp)
-/* 04AFF4 7F0164C4 8CE70EB8 */  lw    $a3, %lo(ptrSecondFontTableLarge)($a3)
-/* 04AFF8 7F0164C8 27A4004C */  addiu $a0, $sp, 0x4c
-/* 04AFFC 7F0164CC 27A50048 */  addiu $a1, $sp, 0x48
-/* 04B000 7F0164D0 00403025 */  move  $a2, $v0
-/* 04B004 7F0164D4 AFA00014 */  sw    $zero, 0x14($sp)
-/* 04B008 7F0164D8 0FC2BA63 */  jal   sub_GAME_7F0AE98C
-/* 04B00C 7F0164DC AFAA0010 */   sw    $t2, 0x10($sp)
-/* 04B010 7F0164E0 240B0037 */  li    $t3, 55
-/* 04B014 7F0164E4 240C00A7 */  li    $t4, 167
-/* 04B018 7F0164E8 AFAB0C14 */  sw    $t3, 0xc14($sp)
-/* 04B01C 7F0164EC 0C001107 */  jal   viGetX
-/* 04B020 7F0164F0 AFAC0C10 */   sw    $t4, 0xc10($sp)
-/* 04B024 7F0164F4 0C00110B */  jal   viGetY
-/* 04B028 7F0164F8 A7A20044 */   sh    $v0, 0x44($sp)
-/* 04B02C 7F0164FC 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTableLarge) 
-/* 04B030 7F016500 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableLarge) 
-/* 04B034 7F016504 8DCE0EB4 */  lw    $t6, %lo(ptrFirstFontTableLarge)($t6)
-/* 04B038 7F016508 8DAD0EB8 */  lw    $t5, %lo(ptrSecondFontTableLarge)($t5)
-/* 04B03C 7F01650C 87B80044 */  lh    $t8, 0x44($sp)
-/* 04B040 7F016510 240F00FF */  li    $t7, 255
-/* 04B044 7F016514 AFAF0018 */  sw    $t7, 0x18($sp)
-/* 04B048 7F016518 8FA40C18 */  lw    $a0, 0xc18($sp)
-/* 04B04C 7F01651C 27A50C14 */  addiu $a1, $sp, 0xc14
-/* 04B050 7F016520 27A60C10 */  addiu $a2, $sp, 0xc10
-/* 04B054 7F016524 02003825 */  move  $a3, $s0
-/* 04B058 7F016528 AFA20020 */  sw    $v0, 0x20($sp)
-/* 04B05C 7F01652C AFA00024 */  sw    $zero, 0x24($sp)
-/* 04B060 7F016530 AFA00028 */  sw    $zero, 0x28($sp)
-/* 04B064 7F016534 AFAE0014 */  sw    $t6, 0x14($sp)
-/* 04B068 7F016538 AFAD0010 */  sw    $t5, 0x10($sp)
-/* 04B06C 7F01653C 0FC025D8 */  jal   write_text_at_abs_coord
-/* 04B070 7F016540 AFB8001C */   sw    $t8, 0x1c($sp)
-/* 04B074 7F016544 3C198003 */  lui   $t9, %hi(mission_kia_flag) 
-/* 04B078 7F016548 8F39A928 */  lw    $t9, %lo(mission_kia_flag)($t9)
-/* 04B07C 7F01654C AFA20C18 */  sw    $v0, 0xc18($sp)
-/* 04B080 7F016550 3C088003 */  lui   $t0, %hi(mission_failed_or_aborted) 
-/* 04B084 7F016554 13200007 */  beqz  $t9, .L7F016574
-/* 04B088 7F016558 00000000 */   nop   
-/* 04B08C 7F01655C 0FC30776 */  jal   get_textptr_for_textID
-/* 04B090 7F016560 34049C64 */   li    $a0, 40036
-/* 04B094 7F016564 3C037800 */  lui   $v1, (0x780000FF >> 16) # lui $v1, 0x7800
-/* 04B098 7F016568 00408025 */  move  $s0, $v0
-/* 04B09C 7F01656C 10000018 */  b     .L7F0165D0
-/* 04B0A0 7F016570 346300FF */   ori   $v1, (0x780000FF & 0xFFFF) # ori $v1, $v1, 0xff
-.L7F016574:
-/* 04B0A4 7F016574 8D08A924 */  lw    $t0, %lo(mission_failed_or_aborted)($t0)
-/* 04B0A8 7F016578 11000007 */  beqz  $t0, .L7F016598
-/* 04B0AC 7F01657C 00000000 */   nop   
-/* 04B0B0 7F016580 0FC30776 */  jal   get_textptr_for_textID
-/* 04B0B4 7F016584 34049C65 */   li    $a0, 40037
-/* 04B0B8 7F016588 3C037800 */  lui   $v1, (0x780000FF >> 16) # lui $v1, 0x7800
-/* 04B0BC 7F01658C 00408025 */  move  $s0, $v0
-/* 04B0C0 7F016590 1000000F */  b     .L7F0165D0
-/* 04B0C4 7F016594 346300FF */   ori   $v1, (0x780000FF & 0xFFFF) # ori $v1, $v1, 0xff
-.L7F016598:
-/* 04B0C8 7F016598 0FC058C7 */  jal   sub_GAME_7F01631C
-/* 04B0CC 7F01659C 00000000 */   nop   
-/* 04B0D0 7F0165A0 10400006 */  beqz  $v0, .L7F0165BC
-/* 04B0D4 7F0165A4 00000000 */   nop   
-/* 04B0D8 7F0165A8 0FC30776 */  jal   get_textptr_for_textID
-/* 04B0DC 7F0165AC 34049C66 */   li    $a0, 40038
-/* 04B0E0 7F0165B0 00408025 */  move  $s0, $v0
-/* 04B0E4 7F0165B4 10000006 */  b     .L7F0165D0
-/* 04B0E8 7F0165B8 240300FF */   li    $v1, 255
-.L7F0165BC:
-/* 04B0EC 7F0165BC 0FC30776 */  jal   get_textptr_for_textID
-/* 04B0F0 7F0165C0 34049C67 */   li    $a0, 40039
-/* 04B0F4 7F0165C4 3C037800 */  lui   $v1, (0x780000FF >> 16) # lui $v1, 0x7800
-/* 04B0F8 7F0165C8 00408025 */  move  $s0, $v0
-/* 04B0FC 7F0165CC 346300FF */  ori   $v1, (0x780000FF & 0xFFFF) # ori $v1, $v1, 0xff
-.L7F0165D0:
-/* 04B100 7F0165D0 8FA90048 */  lw    $t1, 0x48($sp)
-/* 04B104 7F0165D4 240B00A7 */  li    $t3, 167
-/* 04B108 7F0165D8 AFAB0C10 */  sw    $t3, 0xc10($sp)
-/* 04B10C 7F0165DC 252A0037 */  addiu $t2, $t1, 0x37
-/* 04B110 7F0165E0 AFAA0C14 */  sw    $t2, 0xc14($sp)
-/* 04B114 7F0165E4 0C001107 */  jal   viGetX
-/* 04B118 7F0165E8 AFA30050 */   sw    $v1, 0x50($sp)
-/* 04B11C 7F0165EC 0C00110B */  jal   viGetY
-/* 04B120 7F0165F0 A7A20044 */   sh    $v0, 0x44($sp)
-/* 04B124 7F0165F4 3C0C8004 */  lui   $t4, %hi(ptrSecondFontTableLarge) 
-/* 04B128 7F0165F8 3C0D8004 */  lui   $t5, %hi(ptrFirstFontTableLarge) 
-/* 04B12C 7F0165FC 8DAD0EB4 */  lw    $t5, %lo(ptrFirstFontTableLarge)($t5)
-/* 04B130 7F016600 8D8C0EB8 */  lw    $t4, %lo(ptrSecondFontTableLarge)($t4)
-/* 04B134 7F016604 8FA30050 */  lw    $v1, 0x50($sp)
-/* 04B138 7F016608 87AE0044 */  lh    $t6, 0x44($sp)
-/* 04B13C 7F01660C 8FA40C18 */  lw    $a0, 0xc18($sp)
-/* 04B140 7F016610 27A50C14 */  addiu $a1, $sp, 0xc14
-/* 04B144 7F016614 27A60C10 */  addiu $a2, $sp, 0xc10
-/* 04B148 7F016618 02003825 */  move  $a3, $s0
-/* 04B14C 7F01661C AFA20020 */  sw    $v0, 0x20($sp)
-/* 04B150 7F016620 AFA00024 */  sw    $zero, 0x24($sp)
-/* 04B154 7F016624 AFA00028 */  sw    $zero, 0x28($sp)
-/* 04B158 7F016628 AFAD0014 */  sw    $t5, 0x14($sp)
-/* 04B15C 7F01662C AFAC0010 */  sw    $t4, 0x10($sp)
-/* 04B160 7F016630 AFA30018 */  sw    $v1, 0x18($sp)
-/* 04B164 7F016634 0FC025D8 */  jal   write_text_at_abs_coord
-/* 04B168 7F016638 AFAE001C */   sw    $t6, 0x1c($sp)
-/* 04B16C 7F01663C 00402025 */  move  $a0, $v0
-/* 04B170 7F016640 240500BF */  li    $a1, 191
-/* 04B174 7F016644 27A60058 */  addiu $a2, $sp, 0x58
-/* 04B178 7F016648 0FC05682 */  jal   print_objectives_and_status_to_menu
-/* 04B17C 7F01664C 24070001 */   li    $a3, 1
-/* 04B180 7F016650 0FC02905 */  jal   add_tab2_next
-/* 04B184 7F016654 00402025 */   move  $a0, $v0
-/* 04B188 7F016658 0FC0288E */  jal   add_tab3_previous
-/* 04B18C 7F01665C 00402025 */   move  $a0, $v0
-/* 04B190 7F016660 0FC027C2 */  jal   load_draw_selected_icon_folder_select
-/* 04B194 7F016664 00402025 */   move  $a0, $v0
-/* 04B198 7F016668 8FBF003C */  lw    $ra, 0x3c($sp)
-/* 04B19C 7F01666C 8FB00038 */  lw    $s0, 0x38($sp)
-/* 04B1A0 7F016670 27BD0C18 */  addiu $sp, $sp, 0xc18
-/* 04B1A4 7F016674 03E00008 */  jr    $ra
-/* 04B1A8 7F016678 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 
 void init_menu0D_missioncomplete(void)
