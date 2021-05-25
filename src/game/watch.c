@@ -5748,9 +5748,77 @@ glabel debug_gun_watch_move_related2
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A8B10(void) {
+// Nonmatching: wrong addressess
+s32 sub_GAME_7F0A8B10(Gfx *gdl, s32 arg1)
+{
+    s32 temp_1;
+    s32 temp_2;
 
+    s32 sp70;
+    s32 sp6C;
+    
+    u16 *long_name;
+    
+    s32 sp58;
+    s32 sp54;
+
+    s32 ptr_first_font; 
+    s32 ptr_second_font;
+    
+    // ?
+    s32 sp60;
+    s32 sp5C;
+
+    sp58 = 0;
+    sp54 = 0;
+    
+    ptr_first_font = ptrFirstFontTableSmall;
+    ptr_second_font = ptrSecondFontTableSmall;
+
+    long_name = inv_get_long_name_by_index(D_800409B8);
+    gdl = draw_background_health_and_armor(gdl, arg1, 0);
+    
+    if (check_watch_page_transistion_running() != 1)
+    {
+        temp_1 = D_800409C4;
+        if (temp_1 > 0)
+        {
+            D_800409C4 = temp_1 - 1;
+        }
+        
+        sub_GAME_7F0A5B80();
+        gdl = microcode_constructor(gdl);
+        
+        sub_GAME_7F0AE98C(&sp58, &sp54, long_name, ptr_second_font, ptr_first_font, 0);
+
+        sp70 = ((s32) (0xAA - sp54) / 2) + 0x4B;
+        temp_2 = sp70;
+
+        sp6C = 0x1E;
+        gdl = microcode_constructor_related_to_menus(gdl, temp_2, 0x1E, sp60, sp5C, 0x800050);
+        
+        if (D_800409C0 != 0)
+        {
+            sub_GAME_7F0A8378();
+            if (D_800409C4 == 0)
+            {
+                gdl = en_text_write_stuff(gdl, &sp70, &sp6C, long_name, ptr_second_font, ptr_first_font, 0xA0FFA0F0, sp54, 0x64, 0, 0);
+            }
+            else
+            {
+                gdl = jp_text_write_stuff(gdl, &sp70, &sp6C, long_name, ptr_second_font, ptr_first_font, -1, 0x7000A0, sp54 + 1, 0x64, 0, 0);
+            }
+        }
+        else
+        {
+            gdl = en_text_write_stuff(gdl, &sp70, &sp6C, long_name, ptr_second_font, ptr_first_font, 0xAA00B0, sp54, 0x64, 0, 0);
+        }
+        
+    }
+    
+    return gdl;
 }
+
 #else
 GLOBAL_ASM(
 .text
