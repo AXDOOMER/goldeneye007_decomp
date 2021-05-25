@@ -10145,7 +10145,7 @@ Gfx *draw_toggle_options(Gfx *gdl)
 
 
 #ifdef NONMATCHING
-Gfx *draw_game_options_page(Gfx *gdl, s32 param_2)
+Gfx *draw_watch_game_options_page(Gfx *gdl, s32 param_2)
 {
     s32 textptr;
     s32 sp5C;
@@ -10225,7 +10225,7 @@ Gfx *draw_game_options_page(Gfx *gdl, s32 param_2)
 #else
 GLOBAL_ASM(
 .text
-glabel draw_game_options_page
+glabel draw_watch_game_options_page
 /* 0E092C 7F0ABDFC 27BDFFA0 */  addiu $sp, $sp, -0x60
 /* 0E0930 7F0ABE00 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0E0934 7F0ABE04 AFB00038 */  sw    $s0, 0x38($sp)
@@ -11168,7 +11168,7 @@ Gfx *sub_GAME_7F0ACA28(Gfx *gdl, s32 arg1, s32 watch_transitioning)
                 gdl = draw_watch_control_options_page(gdl, arg1);
                 break;
             case WATCH_INDEX_GAME_OPTIONS:
-                gdl = draw_game_options_page(gdl, arg1);
+                gdl = draw_watch_game_options_page(gdl, arg1);
                 break;
             case WATCH_INDEX_MISSION_BRIEFING:
                 gdl = draw_watch_mission_briefing_page(gdl, arg1);
