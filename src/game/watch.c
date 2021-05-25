@@ -9494,7 +9494,7 @@ void proc_7F0AB4B8(u32 param_1,u32 param_2)
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0AB4B8
+glabel draw_watch_control_options_page
 /* 0DFFE8 7F0AB4B8 27BDFF98 */  addiu $sp, $sp, -0x68
 /* 0DFFEC 7F0AB4BC AFBF0044 */  sw    $ra, 0x44($sp)
 /* 0DFFF0 7F0AB4C0 AFB20040 */  sw    $s2, 0x40($sp)
@@ -11165,7 +11165,7 @@ Gfx *sub_GAME_7F0ACA28(Gfx *gdl, s32 arg1, s32 watch_transitioning)
                 gdl = draw_watch_inventory_page(gdl, arg1);
                 break;
             case WATCH_INDEX_CONTROL_OPTIONS:
-                gdl = sub_GAME_7F0AB4B8(gdl, arg1);
+                gdl = draw_watch_control_options_page(gdl, arg1);
                 break;
             case WATCH_INDEX_GAME_OPTIONS:
                 gdl = draw_game_options_page(gdl, arg1);
