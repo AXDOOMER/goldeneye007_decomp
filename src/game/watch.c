@@ -10498,7 +10498,7 @@ glabel sub_GAME_7F0AC120
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0AC168(void) {
+void draw_watch_mission_briefing_page(void) {
 
 }
 #else
@@ -10539,7 +10539,7 @@ glabel jpt_80058570
 .word .L7F0AC4D8
 
 .text
-glabel sub_GAME_7F0AC168
+glabel draw_watch_mission_briefing_page
 /* 0E0C98 7F0AC168 27BDF218 */  addiu $sp, $sp, -0xde8
 /* 0E0C9C 7F0AC16C AFBF005C */  sw    $ra, 0x5c($sp)
 /* 0E0CA0 7F0AC170 AFBE0058 */  sw    $fp, 0x58($sp)
@@ -11171,7 +11171,7 @@ Gfx *sub_GAME_7F0ACA28(Gfx *gdl, s32 arg1, s32 watch_transitioning)
                 gdl = draw_game_options_page(gdl, arg1);
                 break;
             case WATCH_INDEX_MISSION_BRIEFING:
-                gdl = sub_GAME_7F0AC168(gdl, arg1);
+                gdl = draw_watch_mission_briefing_page(gdl, arg1);
         }
     }
     else if (watch_transitioning == 0)
