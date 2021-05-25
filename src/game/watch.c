@@ -4278,14 +4278,14 @@ void sub_GAME_7F0A8378(void)
 
 
 #ifdef NONMATCHING
-void debug_gun_watch_move_related2(void) {
+void draw_watch_inventory_page(void) {
 
 }
 #else
 #ifdef VERSION_US
 GLOBAL_ASM(
 .text
-glabel debug_gun_watch_move_related2
+glabel draw_watch_inventory_page
 /* 0DCF54 7F0A8424 27BDF6D8 */  addiu $sp, $sp, -0x928
 /* 0DCF58 7F0A8428 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0DCF5C 7F0A842C AFB00038 */  sw    $s0, 0x38($sp)
@@ -4768,7 +4768,7 @@ glabel debug_gun_watch_move_related2
 #ifdef VERSION_JP
 GLOBAL_ASM(
 .text
-glabel debug_gun_watch_move_related2
+glabel draw_watch_inventory_page
 /* 0DDB2C 7F0A8FBC 27BDF6D0 */  addiu $sp, $sp, -0x930
 /* 0DDB30 7F0A8FC0 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0DDB34 7F0A8FC4 AFB00038 */  sw    $s0, 0x38($sp)
@@ -5263,7 +5263,7 @@ glabel debug_gun_watch_move_related2
 #ifdef VERSION_EU
 GLOBAL_ASM(
 .text
-glabel debug_gun_watch_move_related2
+glabel draw_watch_inventory_page
 /* 0DCF54 7F0A8424 27BDF6D8 */  addiu $sp, $sp, -0x928
 /* 0DCF58 7F0A8428 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0DCF5C 7F0A842C AFB00038 */  sw    $s0, 0x38($sp)
@@ -11162,7 +11162,7 @@ Gfx *sub_GAME_7F0ACA28(Gfx *gdl, s32 arg1, s32 watch_transitioning)
                 gdl = draw_watch_mission_status_page(gdl, arg1);
                 break;
             case WATCH_INDEX_INVENTORY:
-                gdl = debug_gun_watch_move_related2(gdl, arg1);
+                gdl = draw_watch_inventory_page(gdl, arg1);
                 break;
             case WATCH_INDEX_CONTROL_OPTIONS:
                 gdl = sub_GAME_7F0AB4B8(gdl, arg1);
