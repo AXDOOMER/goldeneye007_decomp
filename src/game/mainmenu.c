@@ -193,8 +193,8 @@ s32 highlight_aimadjustment;
 //CODE.bss:800697EC                     .align 4
 
 //CODE.bss:800697F0
-char dword_CODE_bss_800697F0[0x130];
-
+u32 dword_CODE_bss_800697F0[0x4b];
+//char dword_CODE_bss_8006983c[0xe5];
 
 MENU current_menu = MENU_INVALID;
 MENU menu_update = MENU_INVALID;
@@ -20410,82 +20410,27 @@ glabel constructor_menu0D_missioncomplete
 
 
 
-#ifdef NONMATCHING
-void init_menu15_cheat(void)
 
+void init_menu15_cheat(void)
 {
-    int iVar1;
-    undefined1 *puVar2;
-    
+    int i;
+
     tab_1_selected = FALSE;
     tab_2_selected = FALSE;
     tab_3_selected = FALSE;
     tab_3_highlight = FALSE;
     tab_2_highlight = FALSE;
     tab_1_highlight = FALSE;
-    dword_8002B5DC = NULL;
-    puVar2 = cheat_available;
-    iVar1 = 1;
-    do {
-        if (*puVar2 != '\0') {
-            (&DAT_800697f0)[(int)dword_8002B5DC] = iVar1;
-            dword_8002B5DC = dword_8002B5DC + 1;
+    D_8002B5DC = 0x0;
+
+    for (i = 1; i!= 0x4b; i++) {
+        if (cheat_available[i]) {
+          dword_CODE_bss_800697F0[D_8002B5DC] = i;
+          D_8002B5DC++;
         }
-        iVar1 += 1;
-        puVar2 = puVar2 + 1;
-    } while (iVar1 != 0x4b);
+    };
     load_walletbond();
-    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel init_menu15_cheat
-/* 04C680 7F017B50 3C018003 */  lui   $at, %hi(tab_1_selected)
-/* 04C684 7F017B54 AC20A8D0 */  sw    $zero, %lo(tab_1_selected)($at)
-/* 04C688 7F017B58 3C018003 */  lui   $at, %hi(tab_2_selected)
-/* 04C68C 7F017B5C AC20A8D4 */  sw    $zero, %lo(tab_2_selected)($at)
-/* 04C690 7F017B60 3C018003 */  lui   $at, %hi(tab_3_selected)
-/* 04C694 7F017B64 AC20A8D8 */  sw    $zero, %lo(tab_3_selected)($at)
-/* 04C698 7F017B68 3C018003 */  lui   $at, %hi(tab_3_highlight)
-/* 04C69C 7F017B6C AC20A8E4 */  sw    $zero, %lo(tab_3_highlight)($at)
-/* 04C6A0 7F017B70 3C018003 */  lui   $at, %hi(tab_2_highlight)
-/* 04C6A4 7F017B74 AC20A8E0 */  sw    $zero, %lo(tab_2_highlight)($at)
-/* 04C6A8 7F017B78 3C058003 */  lui   $a1, %hi(D_8002B5DC)
-/* 04C6AC 7F017B7C 3C018003 */  lui   $at, %hi(tab_1_highlight)
-/* 04C6B0 7F017B80 24A5B5DC */  addiu $a1, %lo(D_8002B5DC) # addiu $a1, $a1, -0x4a24
-/* 04C6B4 7F017B84 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 04C6B8 7F017B88 AC20A8DC */  sw    $zero, %lo(tab_1_highlight)($at)
-/* 04C6BC 7F017B8C 3C048007 */  lui   $a0, %hi(cheat_available)
-/* 04C6C0 7F017B90 3C068007 */  lui   $a2, %hi(dword_CODE_bss_800697F0)
-/* 04C6C4 7F017B94 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 04C6C8 7F017B98 ACA00000 */  sw    $zero, ($a1)
-/* 04C6CC 7F017B9C 24C697F0 */  addiu $a2, %lo(dword_CODE_bss_800697F0) # addiu $a2, $a2, -0x6810
-/* 04C6D0 7F017BA0 24849651 */  addiu $a0, %lo(cheat_available+1) # addiu $a0, $a0, -0x69af
-/* 04C6D4 7F017BA4 24030001 */  li    $v1, 1
-/* 04C6D8 7F017BA8 2407004B */  li    $a3, 75
-.L7F017BAC:
-/* 04C6DC 7F017BAC 908E0000 */  lbu   $t6, ($a0)
-/* 04C6E0 7F017BB0 51C00008 */  beql  $t6, $zero, .L7F017BD4
-/* 04C6E4 7F017BB4 24630001 */   addiu $v1, $v1, 1
-/* 04C6E8 7F017BB8 8CA20000 */  lw    $v0, ($a1)
-/* 04C6EC 7F017BBC 00027880 */  sll   $t7, $v0, 2
-/* 04C6F0 7F017BC0 00CFC021 */  addu  $t8, $a2, $t7
-/* 04C6F4 7F017BC4 AF030000 */  sw    $v1, ($t8)
-/* 04C6F8 7F017BC8 24590001 */  addiu $t9, $v0, 1
-/* 04C6FC 7F017BCC ACB90000 */  sw    $t9, ($a1)
-/* 04C700 7F017BD0 24630001 */  addiu $v1, $v1, 1
-.L7F017BD4:
-/* 04C704 7F017BD4 1467FFF5 */  bne   $v1, $a3, .L7F017BAC
-/* 04C708 7F017BD8 24840001 */   addiu $a0, $a0, 1
-/* 04C70C 7F017BDC 0FC02E2B */  jal   load_walletbond
-/* 04C710 7F017BE0 00000000 */   nop   
-/* 04C714 7F017BE4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 04C718 7F017BE8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 04C71C 7F017BEC 03E00008 */  jr    $ra
-/* 04C720 7F017BF0 00000000 */   nop   
-)
-#endif
 
 
 
