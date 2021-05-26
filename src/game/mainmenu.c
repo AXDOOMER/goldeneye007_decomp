@@ -20423,7 +20423,7 @@ void init_menu15_cheat(void)
     tab_1_highlight = FALSE;
     D_8002B5DC = 0x0;
 
-    for (i = 1; i!= 0x4b; i++) {
+    for (i = 1; i != 0x4b; i++) {
         if (cheat_available[i]) {
           dword_CODE_bss_800697F0[D_8002B5DC] = i;
           D_8002B5DC++;
@@ -20433,79 +20433,27 @@ void init_menu15_cheat(void)
 }
 
 
-
-#ifdef NONMATCHING
 void update_menu15_cheat(void)
 {
-  s32 lVar1;
   int i;
-  undefined1 *puVar2;
   u32 appendsp;
   u32 appendmp;
   
   appendsp = FALSE;
   appendmp = FALSE;
-  puVar2 = cheat_activated[1];
-  i = 1;
-  do {
-    if (*puVar2 != 0) {
-      appendsp = TRUE;
-      lVar1 = proc_7F091A78(i);
-      if (lVar1 != 0) {
-        appendmp = TRUE;
-      }
+
+  for (i = 1; i != 0x4b; i++) {
+    if (cheat_activated[i]) {
+        appendsp = TRUE;
+        if (cheatCheckIfMPCheat(i)) {
+            appendmp = TRUE;
+        }
     }
-    i += 1;
-    puVar2 = puVar2 + 1;
-  } while (i != 0x4b);
+  };
+
   append_cheat_sp = appendsp;
   append_cheat_mp = appendmp;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel update_menu15_cheat
-/* 04C724 7F017BF4 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 04C728 7F017BF8 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 04C72C 7F017BFC AFB40028 */  sw    $s4, 0x28($sp)
-/* 04C730 7F017C00 AFB30024 */  sw    $s3, 0x24($sp)
-/* 04C734 7F017C04 AFB20020 */  sw    $s2, 0x20($sp)
-/* 04C738 7F017C08 AFB00018 */  sw    $s0, 0x18($sp)
-/* 04C73C 7F017C0C 3C118007 */  lui   $s1, %hi(cheat_activated + 1)
-/* 04C740 7F017C10 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 04C744 7F017C14 00009825 */  move  $s3, $zero
-/* 04C748 7F017C18 0000A025 */  move  $s4, $zero
-/* 04C74C 7F017C1C 263196A1 */  addiu $s1, %lo(cheat_activated + 1) # addiu $s1, $s1, -0x695f
-/* 04C750 7F017C20 24100001 */  li    $s0, 1
-/* 04C754 7F017C24 2412004B */  li    $s2, 75
-.L7F017C28:
-/* 04C758 7F017C28 922E0000 */  lbu   $t6, ($s1)
-/* 04C75C 7F017C2C 02002025 */  move  $a0, $s0
-/* 04C760 7F017C30 51C00007 */  beql  $t6, $zero, .L7F017C50
-/* 04C764 7F017C34 26100001 */   addiu $s0, $s0, 1
-/* 04C768 7F017C38 0FC2469E */  jal   cheatCheckIfMPCheat
-/* 04C76C 7F017C3C 24130001 */   li    $s3, 1
-/* 04C770 7F017C40 50400003 */  beql  $v0, $zero, .L7F017C50
-/* 04C774 7F017C44 26100001 */   addiu $s0, $s0, 1
-/* 04C778 7F017C48 24140001 */  li    $s4, 1
-/* 04C77C 7F017C4C 26100001 */  addiu $s0, $s0, 1
-.L7F017C50:
-/* 04C780 7F017C50 1612FFF5 */  bne   $s0, $s2, .L7F017C28
-/* 04C784 7F017C54 26310001 */   addiu $s1, $s1, 1
-/* 04C788 7F017C58 3C018003 */  lui   $at, %hi(append_cheat_sp)
-/* 04C78C 7F017C5C AC33A900 */  sw    $s3, %lo(append_cheat_sp)($at)
-/* 04C790 7F017C60 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 04C794 7F017C64 3C018003 */  lui   $at, %hi(append_cheat_mp)
-/* 04C798 7F017C68 AC34A904 */  sw    $s4, %lo(append_cheat_mp)($at)
-/* 04C79C 7F017C6C 8FB40028 */  lw    $s4, 0x28($sp)
-/* 04C7A0 7F017C70 8FB30024 */  lw    $s3, 0x24($sp)
-/* 04C7A4 7F017C74 8FB00018 */  lw    $s0, 0x18($sp)
-/* 04C7A8 7F017C78 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 04C7AC 7F017C7C 8FB20020 */  lw    $s2, 0x20($sp)
-/* 04C7B0 7F017C80 03E00008 */  jr    $ra
-/* 04C7B4 7F017C84 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
 
 
 
