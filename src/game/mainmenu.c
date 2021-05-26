@@ -194,7 +194,7 @@ s32 highlight_aimadjustment;
 
 //CODE.bss:800697F0
 u32 dword_CODE_bss_800697F0[0x4b];
-//char dword_CODE_bss_8006983c[0xe5];
+
 
 MENU current_menu = MENU_INVALID;
 MENU menu_update = MENU_INVALID;
