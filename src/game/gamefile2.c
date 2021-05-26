@@ -578,13 +578,13 @@ glabel sub_GAME_7F01DD74
 
 
 #ifdef NONMATCHING
-void get_save_folder_ptr(void) {
+void getEEPROMforFoldernum(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel get_save_folder_ptr
+glabel getEEPROMforFoldernum
 /* 0528F4 7F01DDC4 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0528F8 7F01DDC8 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 0528FC 7F01DDCC AFB00018 */  sw    $s0, 0x18($sp)
@@ -930,7 +930,7 @@ glabel sub_GAME_7F01DF90
 /* 052D50 7F01E220 0000B025 */  move  $s6, $zero
 /* 052D54 7F01E224 24110004 */  li    $s1, 4
 .L7F01E228:
-/* 052D58 7F01E228 0FC07771 */  jal   get_save_folder_ptr
+/* 052D58 7F01E228 0FC07771 */  jal   getEEPROMforFoldernum
 /* 052D5C 7F01E22C 02C02025 */   move  $a0, $s6
 /* 052D60 7F01E230 10400007 */  beqz  $v0, .L7F01E250
 /* 052D64 7F01E234 00402025 */   move  $a0, $v0
@@ -1007,7 +1007,7 @@ glabel isStageUnlockedAtDifficulty
 /* 052E3C 7F01E30C 2AA10004 */   slti  $at, $s5, 4
 /* 052E40 7F01E310 50200073 */  beql  $at, $zero, .L7F01E4E0
 /* 052E44 7F01E314 00001025 */   move  $v0, $zero
-/* 052E48 7F01E318 0FC07771 */  jal   get_save_folder_ptr
+/* 052E48 7F01E318 0FC07771 */  jal   getEEPROMforFoldernum
 /* 052E4C 7F01E31C 02002025 */   move  $a0, $s0
 /* 052E50 7F01E320 1040005C */  beqz  $v0, .L7F01E494
 /* 052E54 7F01E324 00409025 */   move  $s2, $v0
@@ -1284,7 +1284,7 @@ glabel unlock_stage_in_folder_on_difficulty
 /* 0531B0 7F01E680 8DC1FFFC */  lw    $at, -4($t6)
 /* 0531B4 7F01E684 15D8FFF8 */  bne   $t6, $t8, .L7F01E668
 /* 0531B8 7F01E688 AF21FFFC */   sw    $at, -4($t9)
-/* 0531BC 7F01E68C 0FC07771 */  jal   get_save_folder_ptr
+/* 0531BC 7F01E68C 0FC07771 */  jal   getEEPROMforFoldernum
 /* 0531C0 7F01E690 02002025 */   move  $a0, $s0
 /* 0531C4 7F01E694 1040000F */  beqz  $v0, .L7F01E6D4
 /* 0531C8 7F01E698 AFA20034 */   sw    $v0, 0x34($sp)
@@ -1371,7 +1371,7 @@ glabel sub_GAME_7F01E760
 /* 0532B4 7F01E784 50200038 */  beql  $at, $zero, .L7F01E868
 /* 0532B8 7F01E788 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0532BC 7F01E78C AFA50084 */  sw    $a1, 0x84($sp)
-/* 0532C0 7F01E790 0FC07771 */  jal   get_save_folder_ptr
+/* 0532C0 7F01E790 0FC07771 */  jal   getEEPROMforFoldernum
 /* 0532C4 7F01E794 AFA70080 */   sw    $a3, 0x80($sp)
 /* 0532C8 7F01E798 8FA70080 */  lw    $a3, 0x80($sp)
 /* 0532CC 7F01E79C 10400009 */  beqz  $v0, .L7F01E7C4
@@ -1454,7 +1454,7 @@ glabel get_highest_stage_difficulty_completed_in_folder
 /* 0533B0 7F01E880 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 0533B4 7F01E884 AFB00018 */  sw    $s0, 0x18($sp)
 /* 0533B8 7F01E888 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 0533BC 7F01E88C 0FC07771 */  jal   get_save_folder_ptr
+/* 0533BC 7F01E88C 0FC07771 */  jal   getEEPROMforFoldernum
 /* 0533C0 7F01E890 AFA60030 */   sw    $a2, 0x30($sp)
 /* 0533C4 7F01E894 10400014 */  beqz  $v0, .L7F01E8E8
 /* 0533C8 7F01E898 00409025 */   move  $s2, $v0
@@ -1512,7 +1512,7 @@ glabel check_egypt_completed_in_folder
 /* 053450 7F01E920 00809025 */  move  $s2, $a0
 /* 053454 7F01E924 AFB30020 */  sw    $s3, 0x20($sp)
 /* 053458 7F01E928 AFB10018 */  sw    $s1, 0x18($sp)
-/* 05345C 7F01E92C 0FC07771 */  jal   get_save_folder_ptr
+/* 05345C 7F01E92C 0FC07771 */  jal   getEEPROMforFoldernum
 /* 053460 7F01E930 AFB00014 */   sw    $s0, 0x14($sp)
 /* 053464 7F01E934 10400010 */  beqz  $v0, .L7F01E978
 /* 053468 7F01E938 24110013 */   li    $s1, 19
@@ -1765,7 +1765,7 @@ glabel delete_eeprom_folder
 /* 05374C 7F01EC1C 28810004 */  slti  $at, $a0, 4
 /* 053750 7F01EC20 50200037 */  beql  $at, $zero, .L7F01ED00
 /* 053754 7F01EC24 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 053758 7F01EC28 0FC07771 */  jal   get_save_folder_ptr
+/* 053758 7F01EC28 0FC07771 */  jal   getEEPROMforFoldernum
 /* 05375C 7F01EC2C 00000000 */   nop   
 /* 053760 7F01EC30 10400032 */  beqz  $v0, .L7F01ECFC
 /* 053764 7F01EC34 00408825 */   move  $s1, $v0
@@ -1847,7 +1847,7 @@ glabel sub_GAME_7F01ED10
 /* 053850 7F01ED20 AFB30020 */  sw    $s3, 0x20($sp)
 /* 053854 7F01ED24 AFB2001C */  sw    $s2, 0x1c($sp)
 /* 053858 7F01ED28 AFB10018 */  sw    $s1, 0x18($sp)
-/* 05385C 7F01ED2C 0FC07771 */  jal   get_save_folder_ptr
+/* 05385C 7F01ED2C 0FC07771 */  jal   getEEPROMforFoldernum
 /* 053860 7F01ED30 AFB00014 */   sw    $s0, 0x14($sp)
 /* 053864 7F01ED34 3C1105F5 */  lui   $s1, (0x05F5E0FF >> 16) # lui $s1, 0x5f5
 /* 053868 7F01ED38 0040A025 */  move  $s4, $v0
@@ -1901,7 +1901,7 @@ glabel sub_GAME_7F01EDA0
 /* 0538EC 7F01EDBC 28810004 */  slti  $at, $a0, 4
 /* 0538F0 7F01EDC0 5020004D */  beql  $at, $zero, .L7F01EEF8
 /* 0538F4 7F01EDC4 8FBF0024 */   lw    $ra, 0x24($sp)
-/* 0538F8 7F01EDC8 0FC07771 */  jal   get_save_folder_ptr
+/* 0538F8 7F01EDC8 0FC07771 */  jal   getEEPROMforFoldernum
 /* 0538FC 7F01EDCC AFA400A0 */   sw    $a0, 0xa0($sp)
 /* 053900 7F01EDD0 10400048 */  beqz  $v0, .L7F01EEF4
 /* 053904 7F01EDD4 AFA2009C */   sw    $v0, 0x9c($sp)
@@ -1919,7 +1919,7 @@ glabel sub_GAME_7F01EDA0
 /* 053934 7F01EE04 00008025 */   move  $s0, $zero
 /* 053938 7F01EE08 24110004 */  li    $s1, 4
 .L7F01EE0C:
-/* 05393C 7F01EE0C 0FC07771 */  jal   get_save_folder_ptr
+/* 05393C 7F01EE0C 0FC07771 */  jal   getEEPROMforFoldernum
 /* 053940 7F01EE10 02002025 */   move  $a0, $s0
 /* 053944 7F01EE14 1040000D */  beqz  $v0, .L7F01EE4C
 /* 053948 7F01EE18 02002025 */   move  $a0, $s0
@@ -1955,7 +1955,7 @@ glabel sub_GAME_7F01EDA0
 /* 0539B0 7F01EE80 8D01FFFC */  lw    $at, -4($t0)
 /* 0539B4 7F01EE84 150AFFF8 */  bne   $t0, $t2, .L7F01EE68
 /* 0539B8 7F01EE88 AD61FFFC */   sw    $at, -4($t3)
-/* 0539BC 7F01EE8C 0FC07771 */  jal   get_save_folder_ptr
+/* 0539BC 7F01EE8C 0FC07771 */  jal   getEEPROMforFoldernum
 /* 0539C0 7F01EE90 02002025 */   move  $a0, $s0
 /* 0539C4 7F01EE94 8FAC009C */  lw    $t4, 0x9c($sp)
 /* 0539C8 7F01EE98 00409025 */  move  $s2, $v0
@@ -2100,7 +2100,7 @@ GLOBAL_ASM(
 glabel get_screen_ratio_settings_for_mpgame_from_folder
 /* 053B60 7F01F030 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 053B64 7F01F034 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 053B68 7F01F038 0FC07771 */  jal   get_save_folder_ptr
+/* 053B68 7F01F038 0FC07771 */  jal   getEEPROMforFoldernum
 /* 053B6C 7F01F03C AFB00018 */   sw    $s0, 0x18($sp)
 /* 053B70 7F01F040 1040004B */  beqz  $v0, .L7F01F170
 /* 053B74 7F01F044 00401825 */   move  $v1, $v0
@@ -2209,7 +2209,7 @@ glabel delete_update_eeprom_file
 /* 053CC4 7F01F194 28810004 */  slti  $at, $a0, 4
 /* 053CC8 7F01F198 5020003D */  beql  $at, $zero, .L7F01F290
 /* 053CCC 7F01F19C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 053CD0 7F01F1A0 0FC07771 */  jal   get_save_folder_ptr
+/* 053CD0 7F01F1A0 0FC07771 */  jal   getEEPROMforFoldernum
 /* 053CD4 7F01F1A4 AFA500E0 */   sw    $a1, 0xe0($sp)
 /* 053CD8 7F01F1A8 3C0E8003 */  lui   $t6, %hi(D_8002C7E0) 
 /* 053CDC 7F01F1AC 27A6007C */  addiu $a2, $sp, 0x7c
@@ -2301,7 +2301,7 @@ glabel copy_eeprom_to_stack_set_folder_num
 /* 053DE4 7F01F2B4 28810004 */  slti  $at, $a0, 4
 /* 053DE8 7F01F2B8 50200032 */  beql  $at, $zero, .L7F01F384
 /* 053DEC 7F01F2BC 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 053DF0 7F01F2C0 0FC07771 */  jal   get_save_folder_ptr
+/* 053DF0 7F01F2C0 0FC07771 */  jal   getEEPROMforFoldernum
 /* 053DF4 7F01F2C4 00000000 */   nop   
 /* 053DF8 7F01F2C8 3C0E8003 */  lui   $t6, %hi(D_8002C840) 
 /* 053DFC 7F01F2CC 27B10024 */  addiu $s1, $sp, 0x24
@@ -2375,7 +2375,7 @@ GLOBAL_ASM(
 glabel copy_eeprom_from_to
 /* 053EC4 7F01F394 27BDFF80 */  addiu $sp, $sp, -0x80
 /* 053EC8 7F01F398 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 053ECC 7F01F39C 0FC07771 */  jal   get_save_folder_ptr
+/* 053ECC 7F01F39C 0FC07771 */  jal   getEEPROMforFoldernum
 /* 053ED0 7F01F3A0 AFA50084 */   sw    $a1, 0x84($sp)
 /* 053ED4 7F01F3A4 1040000F */  beqz  $v0, .L7F01F3E4
 /* 053ED8 7F01F3A8 8FA30084 */   lw    $v1, 0x84($sp)
@@ -2508,7 +2508,7 @@ glabel check_for_007_mode_unlocked
 /* 053FD4 7F01F4A4 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 053FD8 7F01F4A8 AFB20020 */  sw    $s2, 0x20($sp)
 /* 053FDC 7F01F4AC AFB1001C */  sw    $s1, 0x1c($sp)
-/* 053FE0 7F01F4B0 0FC07771 */  jal   get_save_folder_ptr
+/* 053FE0 7F01F4B0 0FC07771 */  jal   getEEPROMforFoldernum
 /* 053FE4 7F01F4B4 AFB00018 */   sw    $s0, 0x18($sp)
 /* 053FE8 7F01F4B8 10400016 */  beqz  $v0, .L7F01F514
 /* 053FEC 7F01F4BC 00408825 */   move  $s1, $v0

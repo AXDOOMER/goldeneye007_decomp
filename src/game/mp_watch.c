@@ -318,7 +318,7 @@ glabel sub_GAME_7F0C2530
 /* 0F7088 7F0C2558 AFB20028 */  sw    $s2, 0x28($sp)
 /* 0F708C 7F0C255C 0FC26919 */  jal   getPlayerCount
 /* 0F7090 7F0C2560 AFB00020 */   sw    $s0, 0x20($sp)
-/* 0F7094 7F0C2564 0FC22FEE */  jal   get_mission_timer
+/* 0F7094 7F0C2564 0FC22FEE */  jal   getMissiontimer
 /* 0F7098 7F0C2568 0040F025 */   move  $fp, $v0
 /* 0F709C 7F0C256C 0C002449 */  jal   sndDeactivateAllSfxByFlag_1
 /* 0F70A0 7F0C2570 00408025 */   move  $s0, $v0
@@ -1064,7 +1064,7 @@ glabel sub_GAME_7F0C2E80
 /* 0F7B2C 7F0C2FFC 00000000 */   nop   
 /* 0F7B30 7F0C3000 AC430054 */  sw    $v1, 0x54($v0)
 .L7F0C3004:
-/* 0F7B34 7F0C3004 0FC22FEE */  jal   get_mission_timer
+/* 0F7B34 7F0C3004 0FC22FEE */  jal   getMissiontimer
 /* 0F7B38 7F0C3008 AFA80030 */   sw    $t0, 0x30($sp)
 /* 0F7B3C 7F0C300C 3C078008 */  lui   $a3, %hi(pPlayer)
 /* 0F7B40 7F0C3010 24E7A0B0 */  addiu $a3, %lo(pPlayer) # addiu $a3, $a3, -0x5f50
@@ -1078,7 +1078,7 @@ glabel sub_GAME_7F0C2E80
 /* 0F7B60 7F0C3030 01AF082A */  slt   $at, $t5, $t7
 /* 0F7B64 7F0C3034 5020000E */  beql  $at, $zero, .L7F0C3070
 /* 0F7B68 7F0C3038 8C6B29C4 */   lw    $t3, 0x29c4($v1)
-/* 0F7B6C 7F0C303C 0FC22FEE */  jal   get_mission_timer
+/* 0F7B6C 7F0C303C 0FC22FEE */  jal   getMissiontimer
 /* 0F7B70 7F0C3040 AFA80030 */   sw    $t0, 0x30($sp)
 /* 0F7B74 7F0C3044 3C078008 */  lui   $a3, %hi(pPlayer)
 /* 0F7B78 7F0C3048 24E7A0B0 */  addiu $a3, %lo(pPlayer) # addiu $a3, $a3, -0x5f50

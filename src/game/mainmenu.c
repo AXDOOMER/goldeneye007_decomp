@@ -729,7 +729,7 @@ s32 unlock_aim_sight = 1;
 
 u32 D_8002B560 = 0;
 
-struct solo_target_times solo_target_time_array[] = {
+s16 solo_target_time_array[20][3] = {
     {0, 160, 0},
     {0, 0, 125},
     {300, 0, 0},
@@ -1043,64 +1043,64 @@ s32 check_if_cheat_available(s32 cheat)
     return 0;
 
   case 2:
-    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),1);
+    return check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),1);
 
   case 3:
-    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),0x13);
+    return check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0x13);
 
   case 0x17:
-    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),6);
+    return check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),6);
 
   case 0x1a:
-    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),9);
+    return check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),9);
 
   case 10:
-    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),10);
+    return check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),10);
 
   case 0xb:
-    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),0xf);
+    return check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0xf);
 
   case 0xc:
-    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),2);
+    return check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),2);
 
   case 0xe:
-    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),7);
+    return check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),7);
 
   case 0x1b:
-    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),0xc);
+    return check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0xc);
 
   case 0xf:
-    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),0);
+    return check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0);
 
   case 0x14:
-    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),0xd);
+    return check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0xd);
 
   case 0x15:
-    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),0x11);
+    return check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0x11);
 
   case 0x1c:
-    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),0xb);
+    return check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0xb);
 
   case 0x1d:
-    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),4);
+    return check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),4);
 
   case 0x1e:
-    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),3);
+    return check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),3);
 
   case 0x1f:
-    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),0x10);
+    return check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0x10);
 
   case 0x20:
-    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),8);
+    return check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),8);
 
   case 0x21:
-    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),0xe);
+    return check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0xe);
 
   case 0x22:
-    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),0x12);
+    return check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),0x12);
 
   case 0x18:
-    return check_if_cheat_unlocked(get_save_folder_ptr(selected_folder_num),5);
+    return check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num),5);
 
   case 0x11:
     return check_cradle_completed_in_folder(selected_folder_num);
@@ -18105,7 +18105,7 @@ s32 constructor_menu0A_briefing(s32 *param_1)
   
   puVar1 = viSetFillColor(param_1,0,0,0);
   puVar1 = viFillScreen(puVar1);
-  DL = (s32 *)proc_7F00D5E8(puVar1);
+  DL = (s32 *)sub_GAME_7F00D5E8(puVar1);
   puVar1 = (s32 *)array_80050C54;
   puVar6 = auStack3012;
   do {
@@ -19032,8 +19032,232 @@ glabel interface_menu0D_missioncomplete
 
 
 #ifdef NONMATCHING
-void constructor_menu0D_missioncomplete(void) {
+//almost there, truncf() calls arent using right float regs causing minor regalloc issues
+Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
+{
+    s32 x;
+    s32 y;
+    u8 stagename[3000];
+    char *text;
+    s32 y2;
+    s32 x2;
+    s32 missiontimer;
+    s32 killcount;
+    s32 shotsfired;
+    s32 headshots;
+    s32 bodyshots;
+    s32 limbshots;
+    s32 reg4;
+    s32 reg5;
+    s32 reg6;
+    s32 hitshots;
+    s32 allhits;
 
+    s32 missiontime; 
+    s32 othershots; 
+    s32 besttime; 
+    s32 targettime; 
+
+    s32 namelen;
+    s32 difficulty;
+    f32 hitPct;
+
+
+    DL = viSetFillColor(DL, 0,0,0);
+    DL = viFillScreen(DL);
+    DL = sub_GAME_7F00D5E8(DL);
+    DL = microcode_constructor(DL);
+
+    missiontimer = getMissiontimer();
+    killcount = get_curplay_killcount();
+    shotsfired = get_curplayer_shot_register(0);
+    headshots = get_curplayer_shot_register(1);
+    bodyshots = get_curplayer_shot_register(2);
+    limbshots = get_curplayer_shot_register(3);
+    reg4 = get_curplayer_shot_register(4);
+    reg5 = get_curplayer_shot_register(5);
+    reg6 = get_curplayer_shot_register(6);
+    allhits = headshots + bodyshots + limbshots + reg4 + reg5;
+    hitshots = allhits + reg6;
+    if (allhits <= 0) {
+        allhits = 1;
+    }
+    DL = print_current_solo_briefing_stage_name(DL, stagename);
+    
+    text = get_textptr_for_textID(TEXT(LTITLE, 0x68)); //STATISTICS:*
+    x = 0x37;
+    y = 0x8F;
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+
+    x2 = 0;
+    y2 = 0;
+    sub_GAME_7F0AE98C(&y2, &x2, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0);
+    
+    text = get_textptr_for_textID(TEXT(LTITLE, 0x69)); //Time:*
+    x = 0x37;
+    y = 0xA7;
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    
+    besttime = get_eeprom_stage_complete_time_for_difficulty(getEEPROMforFoldernum(selected_folder_num), mission_folder_setup_entries[briefingpage].mission_num, selected_difficulty);
+    if ((besttime == 0) || (!(besttime < 0x3FF))) {
+        besttime = -1;
+    }
+    if (selected_difficulty >= DIFFICULTY_007) {
+        difficulty = DIFFICULTY_00;
+    }
+    else {
+        difficulty = selected_difficulty;
+    }
+    missiontime = missiontimer / 60;
+    stagename[0] = '\0';
+    targettime = solo_target_time_array[mission_folder_setup_entries[briefingpage].mission_num][difficulty];
+    sprintf(&stagename, "%02d:%02d", missiontime / 60, missiontime % 60);
+    x = 0x82;
+    y = 0xA7;
+    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    
+    if (newcheatunlocked) {
+        stagename[0] = '\0';
+        sprintf(&stagename, "     [%s]", get_textptr_for_textID(TEXT(LTITLE, 0x113))); //New Cheat Available
+        DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xA00000FF, viGetX(), viGetY(), 0, 0);
+    }
+
+
+    if ((targettime > 0) && (selected_difficulty != DIFFICULTY_007)) {
+        text = get_textptr_for_textID(TEXT(LTITLE, 0x112)); //Target:
+        x = 0x37;
+        y = y2 + 0xA9;
+        DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+        stagename[0] = '\0';
+        sprintf(&stagename, "%02d:%02d", targettime / 60, targettime % 60);
+        x = 0x82;
+        y = y2 + 0xA9;
+        DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+        if (besttime >= 0) {
+            if (besttime < 0x3FF) {
+                stagename[0] = '\0';
+                if (besttime >= 0) {
+                    sprintf(&stagename, "     (%s  %02d:%02d)", get_textptr_for_textID(TEXT(LTITLE, 0x111)), besttime / 60, besttime % 60); //Best Time:
+                }
+                else {
+                    sprintf(&stagename, "");
+                }
+                DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+            }
+        }
+    }
+    else {
+        if (besttime >= 0) {
+            if (besttime < 0x3FF) {
+                text = get_textptr_for_textID(TEXT(LTITLE, 0x111)); //Best Time:
+                x = 0x37;
+                y = y2 + 0xA9;
+                DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+                stagename[0] = '\0';
+                sprintf(&stagename, "%02d:%02d", besttime / 60, besttime % 60);
+                x = 0x82;
+                y = y2 + 0xA9;
+                DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+            }
+        }
+    }
+    
+
+    text = get_textptr_for_textID(TEXT(LTITLE, 0x6A)); //Accuracy:*
+    x = 0x37;
+    y = 0xCC;
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    if (shotsfired > 0) {
+        hitPct = (hitshots * 100.0f) / shotsfired;
+    }
+    else {
+        hitPct = 0.0f;
+    }
+    sprintf(&stagename, "%.1f%%",  hitPct);
+    x = 0x82;
+    y = 0xCC;
+    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    
+
+    text = get_textptr_for_textID(TEXT(LTITLE, 0x6B)); //Weapon of choice:*
+    x = 0x37;
+    y = 0xDC;
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    strcpy(&stagename, getplayerfavoredweapon(0, 0));
+    if ((array_favweapon[0][0] > 0) && (array_favweapon[0][1] == array_favweapon[0][0]))
+    {
+        namelen = strlen(&stagename)-1;
+        sprintf(&stagename[namelen], " x 2\n");
+    }
+    x = 0xBE;
+    y = 0xDC;
+    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    
+
+    text = get_textptr_for_textID(TEXT(LTITLE, 0x6C)); //Shot total:*
+    x = 0x37;
+    y = 0xF4;
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    sprintf(&stagename, "%d", shotsfired);
+    x = 0x82;
+    y = 0xF4;
+    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    
+
+    text = get_textptr_for_textID(TEXT(LTITLE, 0x6D)); //Head hits:*
+    x = 0xB4;
+    y = 0xF4;
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    sprintf(&stagename, "%d (%d%%)", headshots, truncf(((headshots * 100.0f) / allhits) + 0.5f));
+    x = 0x12C;
+    y = 0xF4;
+    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    
+
+    text = get_textptr_for_textID(TEXT(LTITLE, 0x6E)); //Body hits:*
+    x = 0xB4;
+    y = y2 + 0xF4;
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    sprintf(&stagename, "%d (%d%%)", bodyshots, truncf(((bodyshots * 100.0f) / allhits) + 0.5f));
+    x = 0x12C;
+    y = y2 + 0xF4;
+    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    
+
+    text = get_textptr_for_textID(TEXT(LTITLE, 0x6F)); //Limb hits:*
+    x = 0xB4;
+    y = (y2 * 2) + 0xF4;
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    sprintf(&stagename, "%d (%d%%)", limbshots, truncf(((limbshots * 100.0f) / allhits) + 0.5f));
+    x = 0x12C;
+    y = (y2 * 2) + 0xF4;
+    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    
+    
+    text = get_textptr_for_textID(TEXT(LTITLE, 0x70)); //Others:*
+    x = 0xB4;
+    y = (y2 * 3) + 0xF4;
+    othershots = reg5 + reg4;
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    sprintf(&stagename, "%d (%d%%)", othershots, truncf(((othershots * 100.0f) / allhits) + 0.5f));
+    x = 0x12C;
+    y = (y2 * 3) + 0xF4;
+    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    
+
+    text = get_textptr_for_textID(TEXT(LTITLE, 0x71)); //Kill total:*
+    x = 0x37;
+    y = y2 + 0xF4;
+    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    sprintf(&stagename, "%d", killcount);
+    x = 0x82;
+    y = y2 + 0xF4;
+    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
+    
+
+    DL = add_tab2_next(DL);
+    DL = add_tab3_previous(DL);
+    DL = load_draw_selected_icon_folder_select(DL);
 }
 #else
 const char a02d02d[] = "%02d:%02d";
@@ -19067,7 +19291,7 @@ glabel constructor_menu0D_missioncomplete
 /* 04B564 7F016A34 00402025 */   move  $a0, $v0
 /* 04B568 7F016A38 0FC2B366 */  jal   microcode_constructor
 /* 04B56C 7F016A3C 00402025 */   move  $a0, $v0
-/* 04B570 7F016A40 0FC22FEE */  jal   get_mission_timer
+/* 04B570 7F016A40 0FC22FEE */  jal   getMissiontimer
 /* 04B574 7F016A44 00408825 */   move  $s1, $v0
 /* 04B578 7F016A48 0FC1AA49 */  jal   get_curplay_killcount
 /* 04B57C 7F016A4C AFA20098 */   sw    $v0, 0x98($sp)
@@ -19184,7 +19408,7 @@ glabel constructor_menu0D_missioncomplete
 /* 04B734 7F016C04 AFB90010 */   sw    $t9, 0x10($sp)
 /* 04B738 7F016C08 3C048003 */  lui   $a0, %hi(selected_folder_num)
 /* 04B73C 7F016C0C 00408825 */  move  $s1, $v0
-/* 04B740 7F016C10 0FC07771 */  jal   get_save_folder_ptr
+/* 04B740 7F016C10 0FC07771 */  jal   getEEPROMforFoldernum
 /* 04B744 7F016C14 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
 /* 04B748 7F016C18 3C0C8003 */  lui   $t4, %hi(briefingpage) 
 /* 04B74C 7F016C1C 8D8CA8F8 */  lw    $t4, %lo(briefingpage)($t4)

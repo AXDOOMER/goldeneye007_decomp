@@ -556,7 +556,7 @@ extern s32 unlock_weapon_select;
 extern s32 unlock_handicap;
 extern s32 unlock_control_style;
 extern s32 unlock_aim_sight;
-extern struct solo_target_times solo_target_time_array[];
+extern s16 solo_target_time_array[20][3];
 /*
 dword_D_8002B560:.word 0
                 solo_target_times <0, 160, 0>
