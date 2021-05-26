@@ -4257,8 +4257,8 @@ Gfx *draw_watch_mission_status_page(Gfx *gdl, s32 param_2)
 
 void sub_GAME_7F0A8378(void)
 {
-    if (joyGetButtonsPressedThisFrame('\0', 0xa000) == 0) {
-        if (joyGetButtonsPressedThisFrame('\0', START_BUTTON) == 0)
+    if (joyGetButtonsPressedThisFrame(0, Z_TRIG|A_BUTTON) == 0) {
+        if (joyGetButtonsPressedThisFrame(0, START_BUTTON) == 0)
         {
             return;
         }
@@ -4278,14 +4278,14 @@ void sub_GAME_7F0A8378(void)
 
 
 #ifdef NONMATCHING
-void debug_gun_watch_move_related2(void) {
+void draw_watch_inventory_page(void) {
 
 }
 #else
 #ifdef VERSION_US
 GLOBAL_ASM(
 .text
-glabel debug_gun_watch_move_related2
+glabel draw_watch_inventory_page
 /* 0DCF54 7F0A8424 27BDF6D8 */  addiu $sp, $sp, -0x928
 /* 0DCF58 7F0A8428 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0DCF5C 7F0A842C AFB00038 */  sw    $s0, 0x38($sp)
@@ -4768,7 +4768,7 @@ glabel debug_gun_watch_move_related2
 #ifdef VERSION_JP
 GLOBAL_ASM(
 .text
-glabel debug_gun_watch_move_related2
+glabel draw_watch_inventory_page
 /* 0DDB2C 7F0A8FBC 27BDF6D0 */  addiu $sp, $sp, -0x930
 /* 0DDB30 7F0A8FC0 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0DDB34 7F0A8FC4 AFB00038 */  sw    $s0, 0x38($sp)
@@ -5263,7 +5263,7 @@ glabel debug_gun_watch_move_related2
 #ifdef VERSION_EU
 GLOBAL_ASM(
 .text
-glabel debug_gun_watch_move_related2
+glabel draw_watch_inventory_page
 /* 0DCF54 7F0A8424 27BDF6D8 */  addiu $sp, $sp, -0x928
 /* 0DCF58 7F0A8428 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0DCF5C 7F0A842C AFB00038 */  sw    $s0, 0x38($sp)
@@ -5748,9 +5748,77 @@ glabel debug_gun_watch_move_related2
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A8B10(void) {
+// Nonmatching: wrong addressess
+s32 sub_GAME_7F0A8B10(Gfx *gdl, s32 arg1)
+{
+    s32 temp_1;
+    s32 temp_2;
 
+    s32 sp70;
+    s32 sp6C;
+    
+    u16 *long_name;
+    
+    s32 sp58;
+    s32 sp54;
+
+    s32 ptr_first_font; 
+    s32 ptr_second_font;
+    
+    // ?
+    s32 sp60;
+    s32 sp5C;
+
+    sp58 = 0;
+    sp54 = 0;
+    
+    ptr_first_font = ptrFirstFontTableSmall;
+    ptr_second_font = ptrSecondFontTableSmall;
+
+    long_name = inv_get_long_name_by_index(D_800409B8);
+    gdl = draw_background_health_and_armor(gdl, arg1, 0);
+    
+    if (check_watch_page_transistion_running() != 1)
+    {
+        temp_1 = D_800409C4;
+        if (temp_1 > 0)
+        {
+            D_800409C4 = temp_1 - 1;
+        }
+        
+        sub_GAME_7F0A5B80();
+        gdl = microcode_constructor(gdl);
+        
+        sub_GAME_7F0AE98C(&sp58, &sp54, long_name, ptr_second_font, ptr_first_font, 0);
+
+        sp70 = ((s32) (0xAA - sp54) / 2) + 0x4B;
+        temp_2 = sp70;
+
+        sp6C = 0x1E;
+        gdl = microcode_constructor_related_to_menus(gdl, temp_2, 0x1E, sp60, sp5C, 0x800050);
+        
+        if (D_800409C0 != 0)
+        {
+            sub_GAME_7F0A8378();
+            if (D_800409C4 == 0)
+            {
+                gdl = en_text_write_stuff(gdl, &sp70, &sp6C, long_name, ptr_second_font, ptr_first_font, 0xA0FFA0F0, sp54, 0x64, 0, 0);
+            }
+            else
+            {
+                gdl = jp_text_write_stuff(gdl, &sp70, &sp6C, long_name, ptr_second_font, ptr_first_font, -1, 0x7000A0, sp54 + 1, 0x64, 0, 0);
+            }
+        }
+        else
+        {
+            gdl = en_text_write_stuff(gdl, &sp70, &sp6C, long_name, ptr_second_font, ptr_first_font, 0xAA00B0, sp54, 0x64, 0, 0);
+        }
+        
+    }
+    
+    return gdl;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -9426,7 +9494,7 @@ void proc_7F0AB4B8(u32 param_1,u32 param_2)
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0AB4B8
+glabel draw_watch_control_options_page
 /* 0DFFE8 7F0AB4B8 27BDFF98 */  addiu $sp, $sp, -0x68
 /* 0DFFEC 7F0AB4BC AFBF0044 */  sw    $ra, 0x44($sp)
 /* 0DFFF0 7F0AB4C0 AFB20040 */  sw    $s2, 0x40($sp)
@@ -10077,7 +10145,7 @@ Gfx *draw_toggle_options(Gfx *gdl)
 
 
 #ifdef NONMATCHING
-Gfx *draw_game_options_page(Gfx *gdl, s32 param_2)
+Gfx *draw_watch_game_options_page(Gfx *gdl, s32 param_2)
 {
     s32 textptr;
     s32 sp5C;
@@ -10157,7 +10225,7 @@ Gfx *draw_game_options_page(Gfx *gdl, s32 param_2)
 #else
 GLOBAL_ASM(
 .text
-glabel draw_game_options_page
+glabel draw_watch_game_options_page
 /* 0E092C 7F0ABDFC 27BDFFA0 */  addiu $sp, $sp, -0x60
 /* 0E0930 7F0ABE00 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0E0934 7F0ABE04 AFB00038 */  sw    $s0, 0x38($sp)
@@ -10430,7 +10498,7 @@ glabel sub_GAME_7F0AC120
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0AC168(void) {
+void draw_watch_mission_briefing_page(void) {
 
 }
 #else
@@ -10471,7 +10539,7 @@ glabel jpt_80058570
 .word .L7F0AC4D8
 
 .text
-glabel sub_GAME_7F0AC168
+glabel draw_watch_mission_briefing_page
 /* 0E0C98 7F0AC168 27BDF218 */  addiu $sp, $sp, -0xde8
 /* 0E0C9C 7F0AC16C AFBF005C */  sw    $ra, 0x5c($sp)
 /* 0E0CA0 7F0AC170 AFBE0058 */  sw    $fp, 0x58($sp)
@@ -11094,16 +11162,16 @@ Gfx *sub_GAME_7F0ACA28(Gfx *gdl, s32 arg1, s32 watch_transitioning)
                 gdl = draw_watch_mission_status_page(gdl, arg1);
                 break;
             case WATCH_INDEX_INVENTORY:
-                gdl = debug_gun_watch_move_related2(gdl, arg1);
+                gdl = draw_watch_inventory_page(gdl, arg1);
                 break;
             case WATCH_INDEX_CONTROL_OPTIONS:
-                gdl = sub_GAME_7F0AB4B8(gdl, arg1);
+                gdl = draw_watch_control_options_page(gdl, arg1);
                 break;
             case WATCH_INDEX_GAME_OPTIONS:
-                gdl = draw_game_options_page(gdl, arg1);
+                gdl = draw_watch_game_options_page(gdl, arg1);
                 break;
             case WATCH_INDEX_MISSION_BRIEFING:
-                gdl = sub_GAME_7F0AC168(gdl, arg1);
+                gdl = draw_watch_mission_briefing_page(gdl, arg1);
         }
     }
     else if (watch_transitioning == 0)
