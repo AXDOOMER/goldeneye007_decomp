@@ -30,9 +30,11 @@ SECTIONS
    /* 0x80000400, 0x80000450 */
    _startSegmentStart = ADDR(.start);
    _startSegmentRomStart = _bootSegmentRomEnd;
+   _alt_startSegmentRomStart = _startSegmentRomStart + 0x100000;
    .start 0x80000400 : AT(_startSegmentRomStart) {
       build/j/src/_start.o (.text);
    }
+   _alt_startSegmentStart = _startSegmentStart - 0x10000000 + 0x100000;
    _startSegmentEnd = ADDR(.start) + SIZEOF(.start);
    _startSegmentRomEnd = _startSegmentRomStart + SIZEOF(.start);
 

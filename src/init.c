@@ -60,48 +60,48 @@ u32 __osGetFpcCsr(void);
  *	copies compressed 21990 to virtual address 701EE400, using 70200000 to decompress
  */
 #ifdef NONMATCHING
+
+// left to fix:
+// minor reg swapping
+//
+
+extern u32* _alt_startSegmentRomStart;
+extern u32* _alt_startSegmentStart;
 void init(void)
 {
-    u32 src = get_csegmentSegmentStart();
-    u32 datastart = get_cdataSegmentRomStart();
-    u32 datacomplen = (get_cdataSegmentRomEnd() - datastart);
-    u32 inflatestart = get_inflateSegmentRomStart();
-    u32 inflatelen = (get_inflateSegmentRomEnd() - inflatestart);
-    u32 dst = &_inflateSegmentRomStart - datacomplen;
-    u32 j;
     s32 i;
+    u32 temp_csegmentSegmentVaddrStart = get_csegmentSegmentStart();
+    u32 stack_cdataSegmentRomStart = get_cdataSegmentRomStart();
+    s32 j;
+    u32 temp_cdataSegmentRomSize = get_cdataSegmentRomEnd() - stack_cdataSegmentRomStart;
+    u32 stack_inflateSegmentRomStart = get_inflateSegmentRomStart();
+    u32 temp_inflateromSize = get_inflateSegmentRomEnd() - stack_inflateSegmentRomStart;
+    s32 temp_codeAndDataSegRomSize;
 
-	for (i = datacomplen + inflatelen - 1; (i >= 0); i--)
+    for (j = (temp_cdataSegmentRomSize + (temp_inflateromSize)) - 1; j >= 0; j--)
     {
-		((u8 *)dst)[i] = ((u8 *)src)[i];
-	}
-
-    jump_decompressfile(dst, src, 0x80300000);
-    if (1)
-    {
-        if ((&_inflateSegmentRomStart - &_codeSegmentRomStart) >= 0xfffb1)
-        {
-            osPiRawStartDma(0, 0x101000, 0x70100400, ((&_inflateSegmentRomStart - &_codeSegmentRomStart) + 0xfff00050));
-            while ((osPiGetStatus() & 1) != 0) {}
-        }
-
-        osInitialize();
-        set_hardwire_TLB_to_2();
+        ((u8 *)(0x70200000 - temp_cdataSegmentRomSize))[j] = ((u8*)temp_csegmentSegmentVaddrStart)[j];
     }
 
+    jump_decompressfile(0x70200000 - temp_cdataSegmentRomSize, temp_csegmentSegmentVaddrStart, 0x80300000);
 
-	//IM BROKEN FIX ME!!!!!!!
-	//src = (u32 *)resolve_TLBaddress_for_InvalidHit;
-	//UT_VEC
-	//dst = (u32 *)0x80000000;
-	//XUT_VEC
-    //while ( (u32)dst != (u32)dst + 0x80 ) { *dst = *src; dst++; src++;}
-	//TO HERE
-    while( i < 0x80)
+    temp_codeAndDataSegRomSize = (u32)&_inflateSegmentRomStart - (u32)&_codeSegmentRomStart;
+    if ((temp_codeAndDataSegRomSize > 0xFFFB0))
     {
-		((u32 *)0x80000000)[i++] = ((u32 *)&resolve_TLBaddress_for_InvalidHit)[i++];
-	}
+        osPiRawStartDma(0, &_alt_startSegmentRomStart, &_alt_startSegmentStart, temp_codeAndDataSegRomSize + 0xFFF00050);
+        while ((osPiGetStatus() & 1)) {}
+    }
+    osInitialize();
+    set_hardwire_TLB_to_2();
 
+    // 121c:    lui     a0,0x8000                        | 121c:    ori     v0,v0,0x80
+    // 1220:    addiu   v0,v0,0x1b60                     r 1220:    addiu   v1,v1,0x1b60
+    // 1224:    move    v1,s0                            < 
+    // 1228:    ori     a0,a0,0x80                       | 1224:    lui     s0,0x8000
+    for (j=&resolve_TLBaddress_for_InvalidHit, i=0x80000000 ; i!=0x80000080; i+=0x10, j+=0x10)
+    {
+	    *(__exceptionVector *)i = *(__exceptionVector *)j;
+    }
 
     osWritebackDCacheAll();
     osInvalICache(0x80000000, 0x4000);
@@ -111,11 +111,13 @@ void init(void)
 		osUnmapTLB(i);
 	}
 
-    __osSetFpcCsr((__osGetFpcCsr() | 0xe80));
-    osCreateThread(&mainThread, MAIN_THREAD_ID, &mainproc, 0, set_stack_entry(&sp_main, 0x8000), MAIN_THREAD_PRIORITY);
+    __osSetFpcCsr(__osGetFpcCsr() | 0xE80);
+    osCreateThread(&mainThread, MAIN_THREAD_ID, &mainproc, NULL, set_stack_entry(sp_main, 0x8000), MAIN_THREAD_PRIORITY);
     osStartThread(&mainThread);
 }
 
+
+//#ifdef NONMATCHING
 #else
 GLOBAL_ASM(
 .section .text

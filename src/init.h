@@ -13,6 +13,13 @@ extern OSMesgQueue *sched_cmdQ;
 extern u32 unknown_init_val;
 extern u32 cart_hw_address;
 
+typedef struct {
+	unsigned int inst1;
+	unsigned int inst2;
+	unsigned int inst3;
+	unsigned int inst4;
+} __exceptionVector;
+
 struct debug_handler_entry
 {
   void *address;
