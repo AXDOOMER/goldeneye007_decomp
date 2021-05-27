@@ -70,25 +70,25 @@ extern u32* _alt_startSegmentStart;
 void init(void)
 {
     s32 i;
-    u32 temp_csegmentSegmentVaddrStart = get_csegmentSegmentStart();
-    u32 stack_cdataSegmentRomStart = get_cdataSegmentRomStart();
+    u32 csegmentSegmentVaddrStart = get_csegmentSegmentStart();
+    u32 cdataSegmentRomStart = get_cdataSegmentRomStart();
     s32 j;
-    u32 temp_cdataSegmentRomSize = get_cdataSegmentRomEnd() - stack_cdataSegmentRomStart;
-    u32 stack_inflateSegmentRomStart = get_inflateSegmentRomStart();
-    u32 temp_inflateromSize = get_inflateSegmentRomEnd() - stack_inflateSegmentRomStart;
-    s32 temp_codeAndDataSegRomSize;
+    u32 cdataSegmentRomSize = get_cdataSegmentRomEnd() - cdataSegmentRomStart;
+    u32 inflateSegmentRomStart = get_inflateSegmentRomStart();
+    u32 inflateromSize = get_inflateSegmentRomEnd() - inflateSegmentRomStart;
+    s32 codeAndDataSegRomSize;
 
-    for (j = (temp_cdataSegmentRomSize + (temp_inflateromSize)) - 1; j >= 0; j--)
+    for (j = (cdataSegmentRomSize + (inflateromSize)) - 1; j >= 0; j--)
     {
-        ((u8 *)(0x70200000 - temp_cdataSegmentRomSize))[j] = ((u8*)temp_csegmentSegmentVaddrStart)[j];
+        ((u8 *)(0x70200000 - cdataSegmentRomSize))[j] = ((u8*)csegmentSegmentVaddrStart)[j];
     }
 
-    jump_decompressfile(0x70200000 - temp_cdataSegmentRomSize, temp_csegmentSegmentVaddrStart, 0x80300000);
+    jump_decompressfile(0x70200000 - cdataSegmentRomSize, csegmentSegmentVaddrStart, 0x80300000);
 
-    temp_codeAndDataSegRomSize = (u32)&_inflateSegmentRomStart - (u32)&_codeSegmentRomStart;
-    if ((temp_codeAndDataSegRomSize > 0xFFFB0))
+    codeAndDataSegRomSize = (u32)&_inflateSegmentRomStart - (u32)&_codeSegmentRomStart;
+    if ((codeAndDataSegRomSize > 0xFFFB0))
     {
-        osPiRawStartDma(0, &_alt_startSegmentRomStart, &_alt_startSegmentStart, temp_codeAndDataSegRomSize + 0xFFF00050);
+        osPiRawStartDma(0, &_alt_startSegmentRomStart, &_alt_startSegmentStart, codeAndDataSegRomSize + 0xFFF00050);
         while ((osPiGetStatus() & 1)) {}
     }
     osInitialize();
