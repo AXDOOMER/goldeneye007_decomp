@@ -84,7 +84,7 @@ void init(void)
     }
 
     jump_decompressfile(0x70200000 - cdataSegmentRomSize, csegmentSegmentVaddrStart, 0x80300000);
-
+    if (0) {}
     codeAndDataSegRomSize = (u32)&_inflateSegmentRomStart - (u32)&_codeSegmentRomStart;
     if ((codeAndDataSegRomSize > 0xFFFB0))
     {
@@ -94,17 +94,19 @@ void init(void)
     osInitialize();
     set_hardwire_TLB_to_2();
 
-    // 121c:    lui     a0,0x8000                        | 121c:    ori     v0,v0,0x80
-    // 1220:    addiu   v0,v0,0x1b60                     r 1220:    addiu   v1,v1,0x1b60
-    // 1224:    move    v1,s0                            < 
-    // 1228:    ori     a0,a0,0x80                       | 1224:    lui     s0,0x8000
-    for (j=&resolve_TLBaddress_for_InvalidHit, i=0x80000000 ; i!=0x80000080; i+=0x10, j+=0x10)
+    codeAndDataSegRomSize = 0x80000000;
+    
+    j=&resolve_TLBaddress_for_InvalidHit;
+    i=codeAndDataSegRomSize;
+    
+    while (i!=0x80000080)
     {
 	    *(__exceptionVector *)i = *(__exceptionVector *)j;
+         i+=0x10; j+=0x10;
     }
 
     osWritebackDCacheAll();
-    osInvalICache(0x80000000, 0x4000);
+    osInvalICache(codeAndDataSegRomSize, 0x4000);
 
 	for (i=2; i<32; i++)
     {
