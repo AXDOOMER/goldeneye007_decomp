@@ -340,52 +340,16 @@ glabel sub_GAME_7F056BA8
 
 
 
-
-#ifdef NONMATCHING
-u32 load_model(u32 modelid)
+s32 load_model(u32 modelid)
 {
-    ItemModelFileRecord fileentry = PitemZ_entries[modelid];
-    if (fileentry.header == 0)
+    if (PitemZ_entries[modelid].header->RootNode == NULL) 
     {
-        load_object_into_memory(PitemZ_entries[modelid].header, PitemZ_entries[modelid].filename);
+        load_object_into_memory(PitemZ_entries[modelid].header,PitemZ_entries[modelid].filename);
         set_objuse_flag_compute_grp_nums_set_obj_loaded(PitemZ_entries[modelid].header);
-        return 1;
+        return TRUE;
     }
-    return 0;
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel load_model
-/* 08B768 7F056C38 00047080 */  sll   $t6, $a0, 2
-/* 08B76C 7F056C3C 01C47023 */  subu  $t6, $t6, $a0
-/* 08B770 7F056C40 3C0F8004 */  lui   $t7, %hi(PitemZ_entries) 
-/* 08B774 7F056C44 25EFA228 */  addiu $t7, %lo(PitemZ_entries) # addiu $t7, $t7, -0x5dd8
-/* 08B778 7F056C48 000E7080 */  sll   $t6, $t6, 2
-/* 08B77C 7F056C4C 01CF1021 */  addu  $v0, $t6, $t7
-/* 08B780 7F056C50 8C460000 */  lw    $a2, ($v0)
-/* 08B784 7F056C54 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 08B788 7F056C58 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 08B78C 7F056C5C 8CD80000 */  lw    $t8, ($a2)
-/* 08B790 7F056C60 00C02025 */  move  $a0, $a2
-/* 08B794 7F056C64 5700000A */  bnezl $t8, .L7F056C90
-/* 08B798 7F056C68 00001025 */   move  $v0, $zero
-/* 08B79C 7F056C6C 8C450004 */  lw    $a1, 4($v0)
-/* 08B7A0 7F056C70 0FC1D953 */  jal   load_object_into_memory
-/* 08B7A4 7F056C74 AFA2001C */   sw    $v0, 0x1c($sp)
-/* 08B7A8 7F056C78 8FA2001C */  lw    $v0, 0x1c($sp)
-/* 08B7AC 7F056C7C 0FC1D73D */  jal   set_objuse_flag_compute_grp_nums_set_obj_loaded
-/* 08B7B0 7F056C80 8C440000 */   lw    $a0, ($v0)
-/* 08B7B4 7F056C84 10000002 */  b     .L7F056C90
-/* 08B7B8 7F056C88 24020001 */   li    $v0, 1
-/* 08B7BC 7F056C8C 00001025 */  move  $v0, $zero
-.L7F056C90:
-/* 08B7C0 7F056C90 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 08B7C4 7F056C94 27BD0020 */  addiu $sp, $sp, 0x20
-/* 08B7C8 7F056C98 03E00008 */  jr    $ra
-/* 08B7CC 7F056C9C 00000000 */   nop   
-)
-#endif
 
 
 
