@@ -35,7 +35,6 @@ struct debug_handler_entry debug_handler_table[] =
     {sp_main, "main"},
     {sp_audi, "audi"},
     {0, 0},
-    {0, 0},
 };
 
 OSThread rmonThread;
@@ -353,41 +352,46 @@ void mainproc(void *args)
  */
 #ifdef NONMATCHING
 void setuplastentryofdebughandler(void)
-{
-    ? sp8;
-    void *temp_t6;
-    void *temp_t0;
-    void *temp_v0;
-    void *phi_t6;
-    void *phi_t0;
-    void *phi_v0;
 
-    phi_t6 = &debug_handler_table;
-    phi_t0 = &sp8;
-loop_1:
-    temp_t6 = (phi_t6 + 0xc);
-    temp_t0 = (phi_t0 + 0xc);
-    temp_t0->unk-C = (?32) *phi_t6;
-    temp_t0->unk-8 = (?32) temp_t6->unk-8;
-    temp_t0->unk-4 = (?32) temp_t6->unk-4;
-    phi_t6 = temp_t6;
-    phi_t0 = temp_t0;
-    if (temp_t6 != (&debug_handler_table + 0x30))
-    {
-        goto loop_1;
-    }
-    *temp_t0 = (?32) *temp_t6;
-    temp_t0->unk4 = (?32) temp_t6->unk4;
-    phi_v0 = &sp8;
-loop_3:
-    temp_v0 = (phi_v0 + 8);
-    phi_v0 = temp_v0;
-    if (phi_v0->unk8 != 0)
-    {
-        goto loop_3;
-    }
-    return temp_v0;
+{
+  //debug_handler_entry *new;
+  //debug_handler_entry *old;
+  debug_handler_entry local_38 [7];
+  s32 i;
+  
+  //debug_handler_entry *nextnewname;
+  //debug_handler_entry *nextoldname;
+  /*
+  nextoldname = debug_handler_table;
+  nextnewname = local_38;
+  do {
+    new = nextnewname;
+    old = nextoldname;
+    new->address = old->address;
+    new->ptr_name = old->ptr_name;
+    new[1].address = old[1].address;
+    nextoldname = &old[1].ptr_name;
+    nextnewname = &new[1].ptr_name;
+  } while (&old[1].ptr_name != debug_handler_table + 6);
+  (&new[1].ptr_name)->address = debug_handler_table[6].address;
+  new[2].address = old[2].address;
+  nextnewname = local_38;
+  while (local_38[1].address != 0x0) {
+    local_38[1].address = nextnewname[2].address;
+    nextnewname = nextnewname + 1;
+  }
+  return;
+  */
+ for (i=0;i<8;i++)
+ {
+     *(debug_handler_entry*)&local_38[i]=*(debug_handler_entry*)&debug_handler_table[i];
+ }
+ for (i=1;local_38[i].address; i++)
+ {
+     local_38[i].address = local_38[i+1].address;
+ }
 }
+//#ifdef NONMATCHING
 #else
 GLOBAL_ASM(
 .section .text

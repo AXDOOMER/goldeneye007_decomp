@@ -1,5 +1,14 @@
 #include "ultra64.h"
 #include "zlib.h"
+
+#define GETBYTE()   (rz_inbuf[rz_inptr++])
+#define NEXTBYTE()  (u8)GETBYTE()
+#define NEEDBITS(n) {while(k<(n)){b|=((u32)NEXTBYTE())<<k;k+=8;}}
+#define DUMPBITS(n) {b>>=(n);k-=(n);}
+
+#define BMAX 16
+#define N_MAX 288
+
 //.bss
 
 //bss:8008D350
@@ -13,55 +22,250 @@ u32 rz_wp;
 //bss:8008D360
 struct huft *rz_hlist;
 //bss:8008D364
-s32 dword_CODE_bss_8008D364;
+u32 rz_bb;
 //bss:8008D368
-s32 dword_CODE_bss_8008D368;
+u32 rz_bk;
 //bss:8008D36C
-s32 dword_CODE_bss_8008D36C;
+u32 rz_hufts;
 
 
 //.data
-u8 D_8004E8E0[] = {
+u8 rz_border[] = {
     0x10,0x11,0x12,   0,   8,   7,   9,   6, 0xA,   5, 0xB,   4, 0xC,   3,
     0xD,   2, 0xE,   1, 0xF,   0
 };
 
-s16 D_8004E8F4[] = {
+s16 rz_cplens[] = {
     3,     4,     5,     6,     7,     8,     9,   0xA,   0xB,   0xD,
     0xF,  0x11,  0x13,  0x17,  0x1B,  0x1F,  0x23,  0x2B,  0x33,  0x3B,
     0x43,  0x53,  0x63,  0x73,  0x83,  0xA3,  0xC3,  0xE3, 0x102,     0,
    0,     0
 };
 
-u32 D_8004E934[] = {
+u32 rz_cplext[] = {
     0, 0, 0x1010101, 0x2020202, 0x3030303, 0x4040404, 0x5050505, 0x636300
 };
 
-s16 D_8004E954[] = {
+s16 rz_cpdist[] = {
     1 , 2, 3, 4, 5, 7, 9, 0xD, 0x11, 0x19, 0x21, 0x31, 0x41, 0x61,
     0x81, 0xC1, 0x101, 0x181, 0x201, 0x301, 0x401, 0x601, 0x801, 
     0xC01, 0x1001, 0x1801, 0x2001, 0x3001, 0x4001, 0x6001
 };
 
-u16 D_8004E990[] = {
+u16 rz_cpdext[] = {
     0, 0, 0x101, 0x202, 0x303, 0x404, 0x505, 0x606,
     0x707, 0x808, 0x909, 0xA0A, 0xB0B, 0xC0C, 0xD0D, 0
 };
 
-u16 D_8004E9B0[] = {
+u16 rz_mask_bits[] = {
     0, 1, 3, 7, 0xF, 0x1F, 0x3F, 0x7F, 0xFF, 0x1FF, 0x3FF, 0x7FF, 0xFFF, 0x1FFF, 0x3FFF, 0x7FFF, 0xFFFF, 0
 };
 
-s32 D_8004E9D4 = 9;
-s32 D_8004E9D8 = 6;
+s32 rz_lbits = 9;
+s32 rz_dbits = 6;
 
 //.rodata
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0CE8B0(void) {
 
+s32 sub_GAME_7F0CE8B0(u32 *b, u32 n, u32 s, u16 *d, u8 *e, struct huft **t, s32 *m)
+{
+	u32 a;                   /* counter for codes of length k */
+	u32 c[BMAX+1];           /* bit length count table */
+	u32 f;                   /* i repeats in table every f entries */
+	s32 g;                   /* maximum code length */
+	s32 h;                   /* table level */
+	register u32 i;          /* counter, current code */
+	register u32 j;          /* counter */
+	register s32 k;          /* number of bits in current code */
+	s32 l;                   /* bits per table (returned in m) */
+	register u32 *p;         /* pointer into c[], b[], or v[] */
+	register struct huft *q; /* points to current table */
+	struct huft r;           /* table entry for structure assignment */
+	struct huft *u[BMAX];    /* table stack */
+	u32 v[N_MAX];            /* values in order of bit length */
+	register s32 w;          /* bits before this table == (l * h) */
+	u32 x[BMAX+1];           /* bit offsets, then code stack */
+	u32 *xp;                 /* pointer into x */
+	s32 y;                   /* number of dummy codes added */
+	u32 z;                   /* number of entries in current table */
+	u32 i2;
+
+	/* Generate counts for each bit length */
+	for (i2 = 0; i2 != BMAX + 1; i2++) {
+		c[i2] = 0;
+	}
+
+	p = b;
+	i = n;
+
+	do {
+		c[*p]++;                  /* assume all entries <= BMAX */
+		p++;                      /* Can't combine with above line (Solaris bug) */
+	} while (--i);
+
+	if (c[0] == n) {              /* null input--all zero length codes */
+		*t = NULL;
+		*m = 0;
+		return 0;
+	}
+
+	/* Find minimum and maximum length, bound *m by those */
+	l = *m;
+
+	for (j = 1; j <= BMAX; j++) {
+		if (c[j]) {
+			break;
+		}
+	}
+
+	k = j;                        /* minimum code length */
+
+	if (l < j) {
+		l = j;
+	}
+
+	for (i = BMAX; i; i--) {
+		if (c[i]) {
+			break;
+		}
+	}
+
+	g = i;                        /* maximum code length */
+
+	if (l > i) {
+		l = i;
+	}
+
+	*m = l;
+
+	/* Adjust last length count to fill out codes, if needed */
+	for (y = 1 << j; j < i; j++, y <<= 1) {
+		y -= c[j];
+	}
+
+	y -= c[i];
+	c[i] += y;
+
+	/* Generate starting offsets into the value table for each length */
+	x[1] = j = 0;
+	p = c + 1;
+	xp = x + 2;
+
+	while (--i) {                 /* note that i == g from above */
+		*xp++ = (j += *p++);
+	}
+
+	/* Make a table of values in order of bit lengths */
+	p = b;
+	i = 0;
+
+	do {
+		if ((j = *p++) != 0) {
+			v[x[j]++] = i;
+		}
+	} while (++i < n);
+
+	/* Generate the Huffman codes and for each, make the table entries */
+	x[0] = i = 0;                 /* first Huffman code is zero */
+	p = v;                        /* grab values in bit order */
+	h = -1;                       /* no tables yet--level -1 */
+	w = -l;                       /* bits decoded == (l * h) */
+	u[0] = (struct huft *)NULL;   /* just to keep compilers happy */
+	q = (struct huft *)NULL;      /* ditto */
+	z = 0;                        /* ditto */
+
+	/* go through the bit lengths (k already is bits in shortest code) */
+	for (; k <= g; k++) {
+		a = c[k];
+
+		while (a--) {
+			/* here i is the Huffman code of length k bits for value *p */
+			/* make tables up to required level */
+			while (k > w + l) {
+				h++;
+				w += l;                 /* previous table always l bits */
+
+				/* compute minimum size table less than or equal to l bits */
+				z = (z = g - w) > l ? l : z;  /* upper limit on table size */
+
+				if ((f = 1 << (j = k - w)) > a + 1) {   /* try a k-w bit table */
+				                          /* too few codes for k-w bit table */
+					f -= a + 1;           /* deduct codes from patterns left */
+					xp = c + k;
+
+					while (++j < z) {     /* try smaller tables up to z bits */
+						if ((f <<= 1) <= *++xp) {
+							break;            /* enough codes to use up j bits */
+						}
+
+						f -= *xp;           /* else deduct codes from patterns */
+					}
+				}
+
+				z = 1 << j;             /* table entries for j-bit table */
+
+				/* allocate and link in new table */
+				q = &rz_hlist[rz_hufts];
+
+				rz_hufts += z + 1;         /* track memory usage */
+				*t = q + 1;             /* link to list for huft_free() */
+				*(t = &(q->v.t)) = (struct huft *)NULL;
+				u[h] = ++q;             /* table starts after link */
+
+				/* connect to last table, if there is one */
+				if (h) {
+					x[h] = i;             /* save pattern for backing up */
+					r.b = l;              /* bits to dump before this table */
+					r.e = 16 + j;         /* bits in this table */
+					r.v.t = q;            /* pointer to this table */
+					j = i >> (w - l);     /* (get around Turbo C bug) */
+					u[h-1][j] = r;        /* connect to last table */
+				}
+			}
+
+			/* set up table entry in r */
+			r.b = (k - w);
+
+			if (p >= v + n) {
+				r.e = 99;               /* out of values--invalid code */
+			} else if (*p < s) {
+				r.e = (*p < 256 ? 16 : 15);    /* 256 is end-of-block code */
+				r.v.n = *p;             /* simple code is just the value */
+				p++;                    /* one compiler does not like *p++ */
+			} else {
+				r.e = e[*p - s];   /* non-simple--look up in lists */
+				r.v.n = d[*p++ - s];
+			}
+
+			/* fill code-like entries with r */
+			f = 1 << (k - w);
+
+			for (j = i >> w; j < z; j += f) {
+				q[j] = r;
+			}
+
+			/* backwards increment the k-bit code i */
+			for (j = 1 << (k - 1); i & j; j >>= 1) {
+				i ^= j;
+			}
+
+			i ^= j;
+
+			/* backup over finished tables */
+			while ((i & ((1 << w) - 1)) != x[h]) {
+				h--;                    /* don't need to update q */
+				w -= l;
+			}
+		}
+	}
+
+	/* Return true (1) if we were given an incomplete table */
+	return y != 0 && g != 1;
 }
+
+
 #else
 GLOBAL_ASM(
 .text
@@ -279,8 +483,8 @@ glabel sub_GAME_7F0CE8B0
 /* 1036E0 7F0CEBB0 27B805B0 */  addiu $t8, $sp, 0x5b0
 /* 1036E4 7F0CEBB4 01F8C821 */  addu  $t9, $t7, $t8
 /* 1036E8 7F0CEBB8 3C178009 */  lui   $s7, %hi(rz_hlist) 
-/* 1036EC 7F0CEBBC 3C128009 */  lui   $s2, %hi(dword_CODE_bss_8008D36C)
-/* 1036F0 7F0CEBC0 2652D36C */  addiu $s2, %lo(dword_CODE_bss_8008D36C) # addiu $s2, $s2, -0x2c94
+/* 1036EC 7F0CEBBC 3C128009 */  lui   $s2, %hi(rz_hufts)
+/* 1036F0 7F0CEBC0 2652D36C */  addiu $s2, %lo(rz_hufts) # addiu $s2, $s2, -0x2c94
 /* 1036F4 7F0CEBC4 26F7D360 */  addiu $s7, %lo(rz_hlist) # addiu $s7, $s7, -0x2ca0
 /* 1036F8 7F0CEBC8 AFB9005C */  sw    $t9, 0x5c($sp)
 /* 1036FC 7F0CEBCC 8FB5060C */  lw    $s5, 0x60c($sp)
@@ -523,8 +727,8 @@ GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0CEEF0
 /* 103A20 7F0CEEF0 27BDFF90 */  addiu $sp, $sp, -0x70
-/* 103A24 7F0CEEF4 3C098005 */  lui   $t1, %hi(D_8004E9B0) 
-/* 103A28 7F0CEEF8 2529E9B0 */  addiu $t1, %lo(D_8004E9B0) # addiu $t1, $t1, -0x1650
+/* 103A24 7F0CEEF4 3C098005 */  lui   $t1, %hi(rz_mask_bits) 
+/* 103A28 7F0CEEF8 2529E9B0 */  addiu $t1, %lo(rz_mask_bits) # addiu $t1, $t1, -0x1650
 /* 103A2C 7F0CEEFC AFBE0038 */  sw    $fp, 0x38($sp)
 /* 103A30 7F0CEF00 AFB70034 */  sw    $s7, 0x34($sp)
 /* 103A34 7F0CEF04 AFB5002C */  sw    $s5, 0x2c($sp)
@@ -535,8 +739,8 @@ glabel sub_GAME_7F0CEEF0
 /* 103A48 7F0CEF18 0007C840 */  sll   $t9, $a3, 1
 /* 103A4C 7F0CEF1C AFBF003C */  sw    $ra, 0x3c($sp)
 /* 103A50 7F0CEF20 AFA7007C */  sw    $a3, 0x7c($sp)
-/* 103A54 7F0CEF24 3C148009 */  lui   $s4, %hi(dword_CODE_bss_8008D364)
-/* 103A58 7F0CEF28 3C118009 */  lui   $s1, %hi(dword_CODE_bss_8008D368)
+/* 103A54 7F0CEF24 3C148009 */  lui   $s4, %hi(rz_bb)
+/* 103A58 7F0CEF28 3C118009 */  lui   $s1, %hi(rz_bk)
 /* 103A5C 7F0CEF2C 3C158009 */  lui   $s5, %hi(rz_wp)
 /* 103A60 7F0CEF30 012F6021 */  addu  $t4, $t1, $t7
 /* 103A64 7F0CEF34 01396821 */  addu  $t5, $t1, $t9
@@ -549,8 +753,8 @@ glabel sub_GAME_7F0CEEF0
 /* 103A80 7F0CEF50 AFA40070 */  sw    $a0, 0x70($sp)
 /* 103A84 7F0CEF54 AFA50074 */  sw    $a1, 0x74($sp)
 /* 103A88 7F0CEF58 AFA60078 */  sw    $a2, 0x78($sp)
-/* 103A8C 7F0CEF5C 8E94D364 */  lw    $s4, %lo(dword_CODE_bss_8008D364)($s4)
-/* 103A90 7F0CEF60 8E31D368 */  lw    $s1, %lo(dword_CODE_bss_8008D368)($s1)
+/* 103A8C 7F0CEF5C 8E94D364 */  lw    $s4, %lo(rz_bb)($s4)
+/* 103A90 7F0CEF60 8E31D368 */  lw    $s1, %lo(rz_bk)($s1)
 /* 103A94 7F0CEF64 8EB5D35C */  lw    $s5, %lo(rz_wp)($s5)
 /* 103A98 7F0CEF68 958A0000 */  lhu   $t2, ($t4)
 /* 103A9C 7F0CEF6C 95AB0000 */  lhu   $t3, ($t5)
@@ -630,10 +834,10 @@ glabel sub_GAME_7F0CEEF0
 /* 103BA4 7F0CF074 032E2021 */  addu  $a0, $t9, $t6
 /* 103BA8 7F0CF078 00A4082B */  sltu  $at, $a1, $a0
 /* 103BAC 7F0CF07C 14200006 */  bnez  $at, .L7F0CF098
-/* 103BB0 7F0CF080 00447823 */   subu  $t7, $v0, $a0
-/* 103BB4 7F0CF084 01E7082B */  sltu  $at, $t7, $a3
-/* 103BB8 7F0CF088 50200004 */  beql  $at, $zero, .L7F0CF09C
-/* 103BBC 7F0CF08C 94D80004 */   lhu   $t8, 4($a2)
+/* 103rz_bb0 7F0CF080 00447823 */   subu  $t7, $v0, $a0
+/* 103rz_bb4 7F0CF084 01E7082B */  sltu  $at, $t7, $a3
+/* 103rz_bb8 7F0CF088 50200004 */  beql  $at, $zero, .L7F0CF09C
+/* 103rz_bbC 7F0CF08C 94D80004 */   lhu   $t8, 4($a2)
 .L7F0CF090:
 /* 103BC0 7F0CF090 1000FFFF */  b     .L7F0CF090
 /* 103BC4 7F0CF094 00000000 */   nop   
@@ -787,8 +991,8 @@ glabel sub_GAME_7F0CEEF0
 /* 103DD0 7F0CF2A0 AFAC0044 */  sw    $t4, 0x44($sp)
 /* 103DD4 7F0CF2A4 0C004E14 */  jal   memcpy
 /* 103DD8 7F0CF2A8 AFAD0040 */   sw    $t5, 0x40($sp)
-/* 103DDC 7F0CF2AC 3C098005 */  lui   $t1, %hi(D_8004E9B0) 
-/* 103DE0 7F0CF2B0 2529E9B0 */  addiu $t1, %lo(D_8004E9B0) # addiu $t1, $t1, -0x1650
+/* 103DDC 7F0CF2AC 3C098005 */  lui   $t1, %hi(rz_mask_bits) 
+/* 103DE0 7F0CF2B0 2529E9B0 */  addiu $t1, %lo(rz_mask_bits) # addiu $t1, $t1, -0x1650
 /* 103DE4 7F0CF2B4 34078000 */  li    $a3, 32768
 /* 103DE8 7F0CF2B8 8FA80068 */  lw    $t0, 0x68($sp)
 /* 103DEC 7F0CF2BC 8FAA0058 */  lw    $t2, 0x58($sp)
@@ -832,11 +1036,11 @@ glabel sub_GAME_7F0CEEF0
 .L7F0CF340:
 /* 103E70 7F0CF340 3C018009 */  lui   $at, %hi(rz_wp)
 /* 103E74 7F0CF344 AC35D35C */  sw    $s5, %lo(rz_wp)($at)
-/* 103E78 7F0CF348 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008D364)
-/* 103E7C 7F0CF34C AC34D364 */  sw    $s4, %lo(dword_CODE_bss_8008D364)($at)
+/* 103E78 7F0CF348 3C018009 */  lui   $at, %hi(rz_bb)
+/* 103E7C 7F0CF34C AC34D364 */  sw    $s4, %lo(rz_bb)($at)
 /* 103E80 7F0CF350 8FBF003C */  lw    $ra, 0x3c($sp)
-/* 103E84 7F0CF354 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008D368)
-/* 103E88 7F0CF358 AC31D368 */  sw    $s1, %lo(dword_CODE_bss_8008D368)($at)
+/* 103E84 7F0CF354 3C018009 */  lui   $at, %hi(rz_bk)
+/* 103E88 7F0CF358 AC31D368 */  sw    $s1, %lo(rz_bk)($at)
 /* 103E8C 7F0CF35C 8FB1001C */  lw    $s1, 0x1c($sp)
 /* 103E90 7F0CF360 8FB40028 */  lw    $s4, 0x28($sp)
 /* 103E94 7F0CF364 8FB5002C */  lw    $s5, 0x2c($sp)
@@ -856,19 +1060,56 @@ glabel sub_GAME_7F0CEEF0
 
 
 
-#ifdef NONMATCHING
-void zlib_decompressor_type0(void) {
 
+#ifdef NONMATCHING
+s32 zlib_decompressor_type0(void)
+{
+	s32 n;           /* number of bytes in block */
+	s32 w;           /* current window position */
+	register u32 b; /* bit buffer */
+	register u32 k;  /* number of bits in bit buffer */
+
+	/* make local copies of globals */
+	b = rz_bb;                       /* initialize bit buffer */
+	k = rz_bk;
+	w = rz_wp;                       /* initialize window position */
+
+	/* go to byte boundary */
+	n = k & 7;
+	DUMPBITS(n);
+
+	/* get the length and its complement */
+	NEEDBITS(16)
+	n = (b & 0xffff);
+	DUMPBITS(16)
+
+	NEEDBITS(16)
+	DUMPBITS(16)
+
+	/* read and output the compressed data */
+	while (n--) {
+		NEEDBITS(8)
+		rz_outbuf[w++] = (u8)b;
+
+		DUMPBITS(8)
+	}
+
+	/* restore the globals from the locals */
+	rz_wp = w;                       /* restore global window pointer */
+	rz_bb = b;                       /* restore global bit buffer */
+	rz_bk = k;
+	return 0;
 }
+//#ifdef NONMATCHING
 #else
 GLOBAL_ASM(
 .text
 glabel zlib_decompressor_type0
-/* 103EBC 7F0CF38C 3C0B8009 */  lui   $t3, %hi(dword_CODE_bss_8008D368) 
-/* 103EC0 7F0CF390 256BD368 */  addiu $t3, %lo(dword_CODE_bss_8008D368) # addiu $t3, $t3, -0x2c98
+/* 103EBC 7F0CF38C 3C0B8009 */  lui   $t3, %hi(rz_bk) 
+/* 103EC0 7F0CF390 256BD368 */  addiu $t3, %lo(rz_bk) # addiu $t3, $t3, -0x2c98
 /* 103EC4 7F0CF394 8D640000 */  lw    $a0, ($t3)
-/* 103EC8 7F0CF398 3C0A8009 */  lui   $t2, %hi(dword_CODE_bss_8008D364) 
-/* 103ECC 7F0CF39C 254AD364 */  addiu $t2, %lo(dword_CODE_bss_8008D364) # addiu $t2, $t2, -0x2c9c
+/* 103EC8 7F0CF398 3C0A8009 */  lui   $t2, %hi(rz_bb) 
+/* 103ECC 7F0CF39C 254AD364 */  addiu $t2, %lo(rz_bb) # addiu $t2, $t2, -0x2c9c
 /* 103ED0 7F0CF3A0 30820007 */  andi  $v0, $a0, 7
 /* 103ED4 7F0CF3A4 8D430000 */  lw    $v1, ($t2)
 /* 103ED8 7F0CF3A8 3C0C8009 */  lui   $t4, %hi(rz_wp) 
@@ -985,870 +1226,231 @@ glabel zlib_decompressor_type0
 
 
 
-#ifdef NONMATCHING
-void zlib_decompressor_type1(void)
+
+s32 zlib_decompressor_type1(void)
 {
-    ? sp4B8;
-    ? sp4B4;
-    ?32 sp4B0;
-    ?32 sp4AC;
-    ? sp48C;
-    ? sp42C;
-    ? sp26C;
-    ? spA4;
-    ? sp34;
-    ?32 sp30;
-    ?32 sp2C;
-    void *temp_v0;
-    u32 temp_v0_2;
-    u32 temp_v0_3;
-    u32 temp_v0_4;
-    void *temp_v0_5;
-    void *phi_v0;
-    u32 phi_v0_2;
-    u32 phi_v0_3;
-    u32 phi_v0_4;
-    u32 phi_v0_5;
-    u32 phi_v0_6;
-    void *phi_v0_7;
+	s32 i;                /* temporary variable */
+	struct huft *tl;      /* literal/length code table */
+	struct huft *td;      /* distance code table */
+	s32 bl;               /* lookup bits for tl */
+	s32 bd;               /* lookup bits for td */
+	u32 l[288];           /* length list for sub_GAME_7F0CE8B0 */
 
-    phi_v0 = &sp2C;
-block_1:
-    temp_v0 = (phi_v0 + 0x10);
-    temp_v0->unk-C = 8;
-    temp_v0->unk-8 = 8;
-    temp_v0->unk-4 = 8;
-    temp_v0->unk-10 = 8;
-    phi_v0 = temp_v0;
-    if (temp_v0 != &sp26C)
-    {
-        goto block_1;
-    }
-    phi_v0_3 = temp_v0;
-    if (temp_v0 < &sp42C)
-    {
-        phi_v0_2 = temp_v0;
-block_4:
-        temp_v0_2 = (phi_v0_2 + 4);
-        temp_v0_2->unk-4 = 9;
-        phi_v0_2 = temp_v0_2;
-        phi_v0_3 = temp_v0_2;
-        if (temp_v0_2 < &sp42C)
-        {
-            goto block_4;
-        }
-    }
-    phi_v0_5 = phi_v0_3;
-    if ((u32) phi_v0_3 < &sp48C)
-    {
-        phi_v0_4 = phi_v0_3;
-block_7:
-        temp_v0_3 = (phi_v0_4 + 4);
-        temp_v0_3->unk-4 = 7;
-        phi_v0_4 = temp_v0_3;
-        phi_v0_5 = temp_v0_3;
-        if (temp_v0_3 < &sp48C)
-        {
-            goto block_7;
-        }
-    }
-    if ((u32) phi_v0_5 < &sp4AC)
-    {
-        phi_v0_6 = phi_v0_5;
-block_10:
-        temp_v0_4 = (phi_v0_6 + 4);
-        temp_v0_4->unk-4 = 8;
-        phi_v0_6 = temp_v0_4;
-        if (temp_v0_4 < &sp4AC)
-        {
-            goto block_10;
-        }
-    }
-    sp4B0 = 7;
-    sub_GAME_7F0CE8B0(&sp2C, 0x120, 0x101, &D_8004E8F4, &D_8004E934, &sp4B8, &sp4B0);
-    sp30 = 5;
-    sp2C = 5;
-    phi_v0_7 = &sp34;
-block_12:
-    temp_v0_5 = (phi_v0_7 + 0x10);
-    temp_v0_5->unk-C = 5;
-    temp_v0_5->unk-8 = 5;
-    temp_v0_5->unk-4 = 5;
-    temp_v0_5->unk-10 = 5;
-    phi_v0_7 = temp_v0_5;
-    if (temp_v0_5 != &spA4)
-    {
-        goto block_12;
-    }
-    sp4AC = 5;
-    sub_GAME_7F0CE8B0(&sp2C, 0x1e, 0, &D_8004E954, &D_8004E990, &sp4B4, &sp4AC);
-    sub_GAME_7F0CEEF0(sp4B8, sp4B4, sp4B0, sp4AC);
-    return 0;
+	/* set up literal table */
+	for (i = 0; i < 144; i++) {
+		l[i] = 8;
+	}
+	for (; i < 256; i++) {
+		l[i] = 9;
+	}
+	for (; i < 280; i++) {
+		l[i] = 7;
+	}
+	for (; i < 288; i++) {
+		l[i] = 8;
+	}
+
+	bl = 7;
+
+	sub_GAME_7F0CE8B0(l, 288, 257, rz_cplens, rz_cplext, &tl, &bl);
+
+	/* set up distance table */
+	for (i = 0; i < 30; i++) {
+		l[i] = 5;
+	}
+
+	bd = 5;
+
+	/* decompress until an end-of-block code */
+	sub_GAME_7F0CE8B0(l, 30, 0, rz_cpdist, rz_cpdext, &td, &bd);
+
+	sub_GAME_7F0CEEF0(tl, td, bl, bd);
+
+	return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel zlib_decompressor_type1
-/* 104058 7F0CF528 27BDFB40 */  addiu $sp, $sp, -0x4c0
-/* 10405C 7F0CF52C AFBF0024 */  sw    $ra, 0x24($sp)
-/* 104060 7F0CF530 27A2002C */  addiu $v0, $sp, 0x2c
-/* 104064 7F0CF534 27A4026C */  addiu $a0, $sp, 0x26c
-/* 104068 7F0CF538 24030008 */  li    $v1, 8
-.L7F0CF53C:
-/* 10406C 7F0CF53C 24420010 */  addiu $v0, $v0, 0x10
-/* 104070 7F0CF540 AC43FFF4 */  sw    $v1, -0xc($v0)
-/* 104074 7F0CF544 AC43FFF8 */  sw    $v1, -8($v0)
-/* 104078 7F0CF548 AC43FFFC */  sw    $v1, -4($v0)
-/* 10407C 7F0CF54C 1444FFFB */  bne   $v0, $a0, .L7F0CF53C
-/* 104080 7F0CF550 AC43FFF0 */   sw    $v1, -0x10($v0)
-/* 104084 7F0CF554 27AE042C */  addiu $t6, $sp, 0x42c
-/* 104088 7F0CF558 004E082B */  sltu  $at, $v0, $t6
-/* 10408C 7F0CF55C 10200007 */  beqz  $at, .L7F0CF57C
-/* 104090 7F0CF560 27AF048C */   addiu $t7, $sp, 0x48c
-/* 104094 7F0CF564 27A5042C */  addiu $a1, $sp, 0x42c
-/* 104098 7F0CF568 24040009 */  li    $a0, 9
-.L7F0CF56C:
-/* 10409C 7F0CF56C 24420004 */  addiu $v0, $v0, 4
-/* 1040A0 7F0CF570 0045082B */  sltu  $at, $v0, $a1
-/* 1040A4 7F0CF574 1420FFFD */  bnez  $at, .L7F0CF56C
-/* 1040A8 7F0CF578 AC44FFFC */   sw    $a0, -4($v0)
-.L7F0CF57C:
-/* 1040AC 7F0CF57C 004F082B */  sltu  $at, $v0, $t7
-/* 1040B0 7F0CF580 10200007 */  beqz  $at, .L7F0CF5A0
-/* 1040B4 7F0CF584 27B804AC */   addiu $t8, $sp, 0x4ac
-/* 1040B8 7F0CF588 27A5048C */  addiu $a1, $sp, 0x48c
-/* 1040BC 7F0CF58C 24040007 */  li    $a0, 7
-.L7F0CF590:
-/* 1040C0 7F0CF590 24420004 */  addiu $v0, $v0, 4
-/* 1040C4 7F0CF594 0045082B */  sltu  $at, $v0, $a1
-/* 1040C8 7F0CF598 1420FFFD */  bnez  $at, .L7F0CF590
-/* 1040CC 7F0CF59C AC44FFFC */   sw    $a0, -4($v0)
-.L7F0CF5A0:
-/* 1040D0 7F0CF5A0 0058082B */  sltu  $at, $v0, $t8
-/* 1040D4 7F0CF5A4 10200006 */  beqz  $at, .L7F0CF5C0
-/* 1040D8 7F0CF5A8 24190007 */   li    $t9, 7
-/* 1040DC 7F0CF5AC 27A404AC */  addiu $a0, $sp, 0x4ac
-.L7F0CF5B0:
-/* 1040E0 7F0CF5B0 24420004 */  addiu $v0, $v0, 4
-/* 1040E4 7F0CF5B4 0044082B */  sltu  $at, $v0, $a0
-/* 1040E8 7F0CF5B8 1420FFFD */  bnez  $at, .L7F0CF5B0
-/* 1040EC 7F0CF5BC AC43FFFC */   sw    $v1, -4($v0)
-.L7F0CF5C0:
-/* 1040F0 7F0CF5C0 3C088005 */  lui   $t0, %hi(D_8004E934) 
-/* 1040F4 7F0CF5C4 2508E934 */  addiu $t0, %lo(D_8004E934) # addiu $t0, $t0, -0x16cc
-/* 1040F8 7F0CF5C8 3C078005 */  lui   $a3, %hi(D_8004E8F4)
-/* 1040FC 7F0CF5CC 27A904B8 */  addiu $t1, $sp, 0x4b8
-/* 104100 7F0CF5D0 27AA04B0 */  addiu $t2, $sp, 0x4b0
-/* 104104 7F0CF5D4 AFB904B0 */  sw    $t9, 0x4b0($sp)
-/* 104108 7F0CF5D8 AFAA0018 */  sw    $t2, 0x18($sp)
-/* 10410C 7F0CF5DC AFA90014 */  sw    $t1, 0x14($sp)
-/* 104110 7F0CF5E0 24E7E8F4 */  addiu $a3, %lo(D_8004E8F4) # addiu $a3, $a3, -0x170c
-/* 104114 7F0CF5E4 AFA80010 */  sw    $t0, 0x10($sp)
-/* 104118 7F0CF5E8 27A4002C */  addiu $a0, $sp, 0x2c
-/* 10411C 7F0CF5EC 24050120 */  li    $a1, 288
-/* 104120 7F0CF5F0 0FC33A2C */  jal   sub_GAME_7F0CE8B0
-/* 104124 7F0CF5F4 24060101 */   li    $a2, 257
-/* 104128 7F0CF5F8 240B0005 */  li    $t3, 5
-/* 10412C 7F0CF5FC 240C0005 */  li    $t4, 5
-/* 104130 7F0CF600 AFAC0030 */  sw    $t4, 0x30($sp)
-/* 104134 7F0CF604 AFAB002C */  sw    $t3, 0x2c($sp)
-/* 104138 7F0CF608 27A20034 */  addiu $v0, $sp, 0x34
-/* 10413C 7F0CF60C 27A400A4 */  addiu $a0, $sp, 0xa4
-/* 104140 7F0CF610 24030005 */  li    $v1, 5
-.L7F0CF614:
-/* 104144 7F0CF614 24420010 */  addiu $v0, $v0, 0x10
-/* 104148 7F0CF618 AC43FFF4 */  sw    $v1, -0xc($v0)
-/* 10414C 7F0CF61C AC43FFF8 */  sw    $v1, -8($v0)
-/* 104150 7F0CF620 AC43FFFC */  sw    $v1, -4($v0)
-/* 104154 7F0CF624 1444FFFB */  bne   $v0, $a0, .L7F0CF614
-/* 104158 7F0CF628 AC43FFF0 */   sw    $v1, -0x10($v0)
-/* 10415C 7F0CF62C 3C0E8005 */  lui   $t6, %hi(D_8004E990) 
-/* 104160 7F0CF630 240D0005 */  li    $t5, 5
-/* 104164 7F0CF634 25CEE990 */  addiu $t6, %lo(D_8004E990) # addiu $t6, $t6, -0x1670
-/* 104168 7F0CF638 3C078005 */  lui   $a3, %hi(D_8004E954)
-/* 10416C 7F0CF63C 27AF04B4 */  addiu $t7, $sp, 0x4b4
-/* 104170 7F0CF640 27B804AC */  addiu $t8, $sp, 0x4ac
-/* 104174 7F0CF644 AFAD04AC */  sw    $t5, 0x4ac($sp)
-/* 104178 7F0CF648 AFB80018 */  sw    $t8, 0x18($sp)
-/* 10417C 7F0CF64C AFAF0014 */  sw    $t7, 0x14($sp)
-/* 104180 7F0CF650 24E7E954 */  addiu $a3, %lo(D_8004E954) # addiu $a3, $a3, -0x16ac
-/* 104184 7F0CF654 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 104188 7F0CF658 27A4002C */  addiu $a0, $sp, 0x2c
-/* 10418C 7F0CF65C 2405001E */  li    $a1, 30
-/* 104190 7F0CF660 0FC33A2C */  jal   sub_GAME_7F0CE8B0
-/* 104194 7F0CF664 00003025 */   move  $a2, $zero
-/* 104198 7F0CF668 8FA404B8 */  lw    $a0, 0x4b8($sp)
-/* 10419C 7F0CF66C 8FA504B4 */  lw    $a1, 0x4b4($sp)
-/* 1041A0 7F0CF670 8FA604B0 */  lw    $a2, 0x4b0($sp)
-/* 1041A4 7F0CF674 0FC33BBC */  jal   sub_GAME_7F0CEEF0
-/* 1041A8 7F0CF678 8FA704AC */   lw    $a3, 0x4ac($sp)
-/* 1041AC 7F0CF67C 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 1041B0 7F0CF680 27BD04C0 */  addiu $sp, $sp, 0x4c0
-/* 1041B4 7F0CF684 00001025 */  move  $v0, $zero
-/* 1041B8 7F0CF688 03E00008 */  jr    $ra
-/* 1041BC 7F0CF68C 00000000 */   nop   
-)
-#endif
 
 
-
-
-
-#ifdef NONMATCHING
-void zlib_decompressor_type2(void) {
-
-}
-#else
-GLOBAL_ASM(
-.text
-glabel zlib_decompressor_type2
-/* 1041C0 7F0CF690 3C088009 */  lui   $t0, %hi(dword_CODE_bss_8008D368) 
-/* 1041C4 7F0CF694 8D08D368 */  lw    $t0, %lo(dword_CODE_bss_8008D368)($t0)
-/* 1041C8 7F0CF698 27BDFA98 */  addiu $sp, $sp, -0x568
-/* 1041CC 7F0CF69C 3C098009 */  lui   $t1, %hi(dword_CODE_bss_8008D364) 
-/* 1041D0 7F0CF6A0 2D010005 */  sltiu $at, $t0, 5
-/* 1041D4 7F0CF6A4 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 1041D8 7F0CF6A8 AFB00028 */  sw    $s0, 0x28($sp)
-/* 1041DC 7F0CF6AC 1020000F */  beqz  $at, .L7F0CF6EC
-/* 1041E0 7F0CF6B0 8D29D364 */   lw    $t1, %lo(dword_CODE_bss_8008D364)($t1)
-/* 1041E4 7F0CF6B4 3C038009 */  lui   $v1, %hi(rz_inbuf)
-/* 1041E8 7F0CF6B8 3C0A8009 */  lui   $t2, %hi(rz_inptr) 
-/* 1041EC 7F0CF6BC 254AD358 */  addiu $t2, %lo(rz_inptr) # addiu $t2, $t2, -0x2ca8
-/* 1041F0 7F0CF6C0 8C63D350 */  lw    $v1, %lo(rz_inbuf)($v1)
-.L7F0CF6C4:
-/* 1041F4 7F0CF6C4 8D420000 */  lw    $v0, ($t2)
-/* 1041F8 7F0CF6C8 00627021 */  addu  $t6, $v1, $v0
-/* 1041FC 7F0CF6CC 91CF0000 */  lbu   $t7, ($t6)
-/* 104200 7F0CF6D0 24590001 */  addiu $t9, $v0, 1
-/* 104204 7F0CF6D4 AD590000 */  sw    $t9, ($t2)
-/* 104208 7F0CF6D8 010FC004 */  sllv  $t8, $t7, $t0
-/* 10420C 7F0CF6DC 25080008 */  addiu $t0, $t0, 8
-/* 104210 7F0CF6E0 2D010005 */  sltiu $at, $t0, 5
-/* 104214 7F0CF6E4 1420FFF7 */  bnez  $at, .L7F0CF6C4
-/* 104218 7F0CF6E8 01384825 */   or    $t1, $t1, $t8
-.L7F0CF6EC:
-/* 10421C 7F0CF6EC 312E001F */  andi  $t6, $t1, 0x1f
-/* 104220 7F0CF6F0 2508FFFB */  addiu $t0, $t0, -5
-/* 104224 7F0CF6F4 3C0A8009 */  lui   $t2, %hi(rz_inptr) 
-/* 104228 7F0CF6F8 25CF0101 */  addiu $t7, $t6, 0x101
-/* 10422C 7F0CF6FC 0009C142 */  srl   $t8, $t1, 5
-/* 104230 7F0CF700 2D010005 */  sltiu $at, $t0, 5
-/* 104234 7F0CF704 254AD358 */  addiu $t2, %lo(rz_inptr) # addiu $t2, $t2, -0x2ca8
-/* 104238 7F0CF708 AFAF053C */  sw    $t7, 0x53c($sp)
-/* 10423C 7F0CF70C 1020000D */  beqz  $at, .L7F0CF744
-/* 104240 7F0CF710 03004825 */   move  $t1, $t8
-/* 104244 7F0CF714 3C038009 */  lui   $v1, %hi(rz_inbuf)
-/* 104248 7F0CF718 8C63D350 */  lw    $v1, %lo(rz_inbuf)($v1)
-.L7F0CF71C:
-/* 10424C 7F0CF71C 8D420000 */  lw    $v0, ($t2)
-/* 104250 7F0CF720 0062C821 */  addu  $t9, $v1, $v0
-/* 104254 7F0CF724 932E0000 */  lbu   $t6, ($t9)
-/* 104258 7F0CF728 24580001 */  addiu $t8, $v0, 1
-/* 10425C 7F0CF72C AD580000 */  sw    $t8, ($t2)
-/* 104260 7F0CF730 010E7804 */  sllv  $t7, $t6, $t0
-/* 104264 7F0CF734 25080008 */  addiu $t0, $t0, 8
-/* 104268 7F0CF738 2D010005 */  sltiu $at, $t0, 5
-/* 10426C 7F0CF73C 1420FFF7 */  bnez  $at, .L7F0CF71C
-/* 104270 7F0CF740 012F4825 */   or    $t1, $t1, $t7
-.L7F0CF744:
-/* 104274 7F0CF744 3139001F */  andi  $t9, $t1, 0x1f
-/* 104278 7F0CF748 2508FFFB */  addiu $t0, $t0, -5
-/* 10427C 7F0CF74C 272E0001 */  addiu $t6, $t9, 1
-/* 104280 7F0CF750 00097942 */  srl   $t7, $t1, 5
-/* 104284 7F0CF754 2D010004 */  sltiu $at, $t0, 4
-/* 104288 7F0CF758 AFAE0538 */  sw    $t6, 0x538($sp)
-/* 10428C 7F0CF75C 1020000D */  beqz  $at, .L7F0CF794
-/* 104290 7F0CF760 01E04825 */   move  $t1, $t7
-/* 104294 7F0CF764 3C038009 */  lui   $v1, %hi(rz_inbuf)
-/* 104298 7F0CF768 8C63D350 */  lw    $v1, %lo(rz_inbuf)($v1)
-.L7F0CF76C:
-/* 10429C 7F0CF76C 8D420000 */  lw    $v0, ($t2)
-/* 1042A0 7F0CF770 0062C021 */  addu  $t8, $v1, $v0
-/* 1042A4 7F0CF774 93190000 */  lbu   $t9, ($t8)
-/* 1042A8 7F0CF778 244F0001 */  addiu $t7, $v0, 1
-/* 1042AC 7F0CF77C AD4F0000 */  sw    $t7, ($t2)
-/* 1042B0 7F0CF780 01197004 */  sllv  $t6, $t9, $t0
-/* 1042B4 7F0CF784 25080008 */  addiu $t0, $t0, 8
-/* 1042B8 7F0CF788 2D010004 */  sltiu $at, $t0, 4
-/* 1042BC 7F0CF78C 1420FFF7 */  bnez  $at, .L7F0CF76C
-/* 1042C0 7F0CF790 012E4825 */   or    $t1, $t1, $t6
-.L7F0CF794:
-/* 1042C4 7F0CF794 3126000F */  andi  $a2, $t1, 0xf
-/* 1042C8 7F0CF798 24C60004 */  addiu $a2, $a2, 4
-/* 1042CC 7F0CF79C 0009C102 */  srl   $t8, $t1, 4
-/* 1042D0 7F0CF7A0 03004825 */  move  $t1, $t8
-/* 1042D4 7F0CF7A4 2508FFFC */  addiu $t0, $t0, -4
-/* 1042D8 7F0CF7A8 10C0001D */  beqz  $a2, .L7F0CF820
-/* 1042DC 7F0CF7AC 00002025 */   move  $a0, $zero
-/* 1042E0 7F0CF7B0 3C058005 */  lui   $a1, %hi(D_8004E8E0)
-/* 1042E4 7F0CF7B4 24A5E8E0 */  addiu $a1, %lo(D_8004E8E0) # addiu $a1, $a1, -0x1720
-/* 1042E8 7F0CF7B8 27B00040 */  addiu $s0, $sp, 0x40
-.L7F0CF7BC:
-/* 1042EC 7F0CF7BC 2D010003 */  sltiu $at, $t0, 3
-/* 1042F0 7F0CF7C0 1020000D */  beqz  $at, .L7F0CF7F8
-/* 1042F4 7F0CF7C4 24840001 */   addiu $a0, $a0, 1
-/* 1042F8 7F0CF7C8 3C038009 */  lui   $v1, %hi(rz_inbuf)
-/* 1042FC 7F0CF7CC 8C63D350 */  lw    $v1, %lo(rz_inbuf)($v1)
-.L7F0CF7D0:
-/* 104300 7F0CF7D0 8D420000 */  lw    $v0, ($t2)
-/* 104304 7F0CF7D4 0062C821 */  addu  $t9, $v1, $v0
-/* 104308 7F0CF7D8 932E0000 */  lbu   $t6, ($t9)
-/* 10430C 7F0CF7DC 24580001 */  addiu $t8, $v0, 1
-/* 104310 7F0CF7E0 AD580000 */  sw    $t8, ($t2)
-/* 104314 7F0CF7E4 010E7804 */  sllv  $t7, $t6, $t0
-/* 104318 7F0CF7E8 25080008 */  addiu $t0, $t0, 8
-/* 10431C 7F0CF7EC 2D010003 */  sltiu $at, $t0, 3
-/* 104320 7F0CF7F0 1420FFF7 */  bnez  $at, .L7F0CF7D0
-/* 104324 7F0CF7F4 012F4825 */   or    $t1, $t1, $t7
-.L7F0CF7F8:
-/* 104328 7F0CF7F8 90AE0000 */  lbu   $t6, ($a1)
-/* 10432C 7F0CF7FC 31390007 */  andi  $t9, $t1, 7
-/* 104330 7F0CF800 24A50001 */  addiu $a1, $a1, 1
-/* 104334 7F0CF804 000E7880 */  sll   $t7, $t6, 2
-/* 104338 7F0CF808 020FC021 */  addu  $t8, $s0, $t7
-/* 10433C 7F0CF80C 000970C2 */  srl   $t6, $t1, 3
-/* 104340 7F0CF810 AF190000 */  sw    $t9, ($t8)
-/* 104344 7F0CF814 01C04825 */  move  $t1, $t6
-/* 104348 7F0CF818 1486FFE8 */  bne   $a0, $a2, .L7F0CF7BC
-/* 10434C 7F0CF81C 2508FFFD */   addiu $t0, $t0, -3
-.L7F0CF820:
-/* 104350 7F0CF820 2C810013 */  sltiu $at, $a0, 0x13
-/* 104354 7F0CF824 1020000D */  beqz  $at, .L7F0CF85C
-/* 104358 7F0CF828 27B00040 */   addiu $s0, $sp, 0x40
-/* 10435C 7F0CF82C 3C0F8005 */  lui   $t7, %hi(D_8004E8E0) 
-/* 104360 7F0CF830 25EFE8E0 */  addiu $t7, %lo(D_8004E8E0) # addiu $t7, $t7, -0x1720
-/* 104364 7F0CF834 3C028005 */  lui   $v0, %hi(D_8004E8E0+0x13)
-/* 104368 7F0CF838 2442E8F3 */  addiu $v0, %lo(D_8004E8E0+0x13) # addiu $v0, $v0, -0x170d
-/* 10436C 7F0CF83C 008F2821 */  addu  $a1, $a0, $t7
-.L7F0CF840:
-/* 104370 7F0CF840 90B90000 */  lbu   $t9, ($a1)
-/* 104374 7F0CF844 24A50001 */  addiu $a1, $a1, 1
-/* 104378 7F0CF848 00A2082B */  sltu  $at, $a1, $v0
-/* 10437C 7F0CF84C 0019C080 */  sll   $t8, $t9, 2
-/* 104380 7F0CF850 02187021 */  addu  $t6, $s0, $t8
-/* 104384 7F0CF854 1420FFFA */  bnez  $at, .L7F0CF840
-/* 104388 7F0CF858 ADC00000 */   sw    $zero, ($t6)
-.L7F0CF85C:
-/* 10438C 7F0CF85C 240F0007 */  li    $t7, 7
-/* 104390 7F0CF860 27B90550 */  addiu $t9, $sp, 0x550
-/* 104394 7F0CF864 27B80548 */  addiu $t8, $sp, 0x548
-/* 104398 7F0CF868 AFAF0548 */  sw    $t7, 0x548($sp)
-/* 10439C 7F0CF86C AFB80018 */  sw    $t8, 0x18($sp)
-/* 1043A0 7F0CF870 AFB90014 */  sw    $t9, 0x14($sp)
-/* 1043A4 7F0CF874 02002025 */  move  $a0, $s0
-/* 1043A8 7F0CF878 24050013 */  li    $a1, 19
-/* 1043AC 7F0CF87C 24060013 */  li    $a2, 19
-/* 1043B0 7F0CF880 00003825 */  move  $a3, $zero
-/* 1043B4 7F0CF884 AFA00010 */  sw    $zero, 0x10($sp)
-/* 1043B8 7F0CF888 AFA80534 */  sw    $t0, 0x534($sp)
-/* 1043BC 7F0CF88C 0FC33A2C */  jal   sub_GAME_7F0CE8B0
-/* 1043C0 7F0CF890 AFA90530 */   sw    $t1, 0x530($sp)
-/* 1043C4 7F0CF894 8FB90548 */  lw    $t9, 0x548($sp)
-/* 1043C8 7F0CF898 8FAE053C */  lw    $t6, 0x53c($sp)
-/* 1043CC 7F0CF89C 8FAF0538 */  lw    $t7, 0x538($sp)
-/* 1043D0 7F0CF8A0 3C0B8005 */  lui   $t3, %hi(D_8004E9B0)
-/* 1043D4 7F0CF8A4 0019C040 */  sll   $t8, $t9, 1
-/* 1043D8 7F0CF8A8 3C0A8009 */  lui   $t2, %hi(rz_inptr) 
-/* 1043DC 7F0CF8AC 01785821 */  addu  $t3, $t3, $t8
-/* 1043E0 7F0CF8B0 01CF3821 */  addu  $a3, $t6, $t7
-/* 1043E4 7F0CF8B4 254AD358 */  addiu $t2, %lo(rz_inptr) # addiu $t2, $t2, -0x2ca8
-/* 1043E8 7F0CF8B8 8FA80534 */  lw    $t0, 0x534($sp)
-/* 1043EC 7F0CF8BC 8FA90530 */  lw    $t1, 0x530($sp)
-/* 1043F0 7F0CF8C0 956BE9B0 */  lhu   $t3, %lo(D_8004E9B0)($t3)
-/* 1043F4 7F0CF8C4 00003025 */  move  $a2, $zero
-/* 1043F8 7F0CF8C8 10E0008A */  beqz  $a3, .L7F0CFAF4
-/* 1043FC 7F0CF8CC 00002825 */   move  $a1, $zero
-/* 104400 7F0CF8D0 240D0011 */  li    $t5, 17
-/* 104404 7F0CF8D4 240C0010 */  li    $t4, 16
-/* 104408 7F0CF8D8 8FAE0548 */  lw    $t6, 0x548($sp)
-.L7F0CF8DC:
-/* 10440C 7F0CF8DC 3C038009 */  lui   $v1, %hi(rz_inbuf)
-/* 104410 7F0CF8E0 010E082B */  sltu  $at, $t0, $t6
-/* 104414 7F0CF8E4 5020000E */  beql  $at, $zero, .L7F0CF920
-/* 104418 7F0CF8E8 8FAE0550 */   lw    $t6, 0x550($sp)
-/* 10441C 7F0CF8EC 8C63D350 */  lw    $v1, %lo(rz_inbuf)($v1)
-.L7F0CF8F0:
-/* 104420 7F0CF8F0 8D420000 */  lw    $v0, ($t2)
-/* 104424 7F0CF8F4 00627821 */  addu  $t7, $v1, $v0
-/* 104428 7F0CF8F8 91F90000 */  lbu   $t9, ($t7)
-/* 10442C 7F0CF8FC 8FAF0548 */  lw    $t7, 0x548($sp)
-/* 104430 7F0CF900 244E0001 */  addiu $t6, $v0, 1
-/* 104434 7F0CF904 0119C004 */  sllv  $t8, $t9, $t0
-/* 104438 7F0CF908 25080008 */  addiu $t0, $t0, 8
-/* 10443C 7F0CF90C 010F082B */  sltu  $at, $t0, $t7
-/* 104440 7F0CF910 01384825 */  or    $t1, $t1, $t8
-/* 104444 7F0CF914 1420FFF6 */  bnez  $at, .L7F0CF8F0
-/* 104448 7F0CF918 AD4E0000 */   sw    $t6, ($t2)
-/* 10444C 7F0CF91C 8FAE0550 */  lw    $t6, 0x550($sp)
-.L7F0CF920:
-/* 104450 7F0CF920 012BC824 */  and   $t9, $t1, $t3
-/* 104454 7F0CF924 0019C0C0 */  sll   $t8, $t9, 3
-/* 104458 7F0CF928 030E7821 */  addu  $t7, $t8, $t6
-/* 10445C 7F0CF92C AFAF054C */  sw    $t7, 0x54c($sp)
-/* 104460 7F0CF930 91E40001 */  lbu   $a0, 1($t7)
-/* 104464 7F0CF934 0005C880 */  sll   $t9, $a1, 2
-/* 104468 7F0CF938 0219C021 */  addu  $t8, $s0, $t9
-/* 10446C 7F0CF93C 00894806 */  srlv  $t1, $t1, $a0
-/* 104470 7F0CF940 01044023 */  subu  $t0, $t0, $a0
-/* 104474 7F0CF944 95E40004 */  lhu   $a0, 4($t7)
-/* 104478 7F0CF948 2C810010 */  sltiu $at, $a0, 0x10
-/* 10447C 7F0CF94C 10200005 */  beqz  $at, .L7F0CF964
-/* 104480 7F0CF950 00000000 */   nop   
-/* 104484 7F0CF954 00803025 */  move  $a2, $a0
-/* 104488 7F0CF958 AF040000 */  sw    $a0, ($t8)
-/* 10448C 7F0CF95C 10000062 */  b     .L7F0CFAE8
-/* 104490 7F0CF960 24A50001 */   addiu $a1, $a1, 1
-.L7F0CF964:
-/* 104494 7F0CF964 148C0020 */  bne   $a0, $t4, .L7F0CF9E8
-/* 104498 7F0CF968 2D010002 */   sltiu $at, $t0, 2
-/* 10449C 7F0CF96C 1020000C */  beqz  $at, .L7F0CF9A0
-/* 1044A0 7F0CF970 3C038009 */   lui   $v1, %hi(rz_inbuf)
-/* 1044A4 7F0CF974 8C63D350 */  lw    $v1, %lo(rz_inbuf)($v1)
-.L7F0CF978:
-/* 1044A8 7F0CF978 8D420000 */  lw    $v0, ($t2)
-/* 1044AC 7F0CF97C 00627021 */  addu  $t6, $v1, $v0
-/* 1044B0 7F0CF980 91CF0000 */  lbu   $t7, ($t6)
-/* 1044B4 7F0CF984 24580001 */  addiu $t8, $v0, 1
-/* 1044B8 7F0CF988 AD580000 */  sw    $t8, ($t2)
-/* 1044BC 7F0CF98C 010FC804 */  sllv  $t9, $t7, $t0
-/* 1044C0 7F0CF990 25080008 */  addiu $t0, $t0, 8
-/* 1044C4 7F0CF994 2D010002 */  sltiu $at, $t0, 2
-/* 1044C8 7F0CF998 1420FFF7 */  bnez  $at, .L7F0CF978
-/* 1044CC 7F0CF99C 01394825 */   or    $t1, $t1, $t9
-.L7F0CF9A0:
-/* 1044D0 7F0CF9A0 31240003 */  andi  $a0, $t1, 3
-/* 1044D4 7F0CF9A4 24840003 */  addiu $a0, $a0, 3
-/* 1044D8 7F0CF9A8 00801825 */  move  $v1, $a0
-/* 1044DC 7F0CF9AC 00097082 */  srl   $t6, $t1, 2
-/* 1044E0 7F0CF9B0 01C04825 */  move  $t1, $t6
-/* 1044E4 7F0CF9B4 2508FFFE */  addiu $t0, $t0, -2
-/* 1044E8 7F0CF9B8 1080004B */  beqz  $a0, .L7F0CFAE8
-/* 1044EC 7F0CF9BC 2484FFFF */   addiu $a0, $a0, -1
-/* 1044F0 7F0CF9C0 00057880 */  sll   $t7, $a1, 2
-/* 1044F4 7F0CF9C4 020F1021 */  addu  $v0, $s0, $t7
-.L7F0CF9C8:
-/* 1044F8 7F0CF9C8 00801825 */  move  $v1, $a0
-/* 1044FC 7F0CF9CC AC460000 */  sw    $a2, ($v0)
-/* 104500 7F0CF9D0 24A50001 */  addiu $a1, $a1, 1
-/* 104504 7F0CF9D4 24420004 */  addiu $v0, $v0, 4
-/* 104508 7F0CF9D8 1480FFFB */  bnez  $a0, .L7F0CF9C8
-/* 10450C 7F0CF9DC 2484FFFF */   addiu $a0, $a0, -1
-/* 104510 7F0CF9E0 10000042 */  b     .L7F0CFAEC
-/* 104514 7F0CF9E4 00A7082B */   sltu  $at, $a1, $a3
-.L7F0CF9E8:
-/* 104518 7F0CF9E8 148D0021 */  bne   $a0, $t5, .L7F0CFA70
-/* 10451C 7F0CF9EC 00003025 */   move  $a2, $zero
-/* 104520 7F0CF9F0 2D010003 */  sltiu $at, $t0, 3
-/* 104524 7F0CF9F4 1020000C */  beqz  $at, .L7F0CFA28
-/* 104528 7F0CF9F8 3C038009 */   lui   $v1, %hi(rz_inbuf)
-/* 10452C 7F0CF9FC 8C63D350 */  lw    $v1, %lo(rz_inbuf)($v1)
-.L7F0CFA00:
-/* 104530 7F0CFA00 8D420000 */  lw    $v0, ($t2)
-/* 104534 7F0CFA04 0062C821 */  addu  $t9, $v1, $v0
-/* 104538 7F0CFA08 93380000 */  lbu   $t8, ($t9)
-/* 10453C 7F0CFA0C 244F0001 */  addiu $t7, $v0, 1
-/* 104540 7F0CFA10 AD4F0000 */  sw    $t7, ($t2)
-/* 104544 7F0CFA14 01187004 */  sllv  $t6, $t8, $t0
-/* 104548 7F0CFA18 25080008 */  addiu $t0, $t0, 8
-/* 10454C 7F0CFA1C 2D010003 */  sltiu $at, $t0, 3
-/* 104550 7F0CFA20 1420FFF7 */  bnez  $at, .L7F0CFA00
-/* 104554 7F0CFA24 012E4825 */   or    $t1, $t1, $t6
-.L7F0CFA28:
-/* 104558 7F0CFA28 31240007 */  andi  $a0, $t1, 7
-/* 10455C 7F0CFA2C 24840003 */  addiu $a0, $a0, 3
-/* 104560 7F0CFA30 00801825 */  move  $v1, $a0
-/* 104564 7F0CFA34 0009C8C2 */  srl   $t9, $t1, 3
-/* 104568 7F0CFA38 03204825 */  move  $t1, $t9
-/* 10456C 7F0CFA3C 2508FFFD */  addiu $t0, $t0, -3
-/* 104570 7F0CFA40 10800029 */  beqz  $a0, .L7F0CFAE8
-/* 104574 7F0CFA44 2484FFFF */   addiu $a0, $a0, -1
-/* 104578 7F0CFA48 0005C080 */  sll   $t8, $a1, 2
-/* 10457C 7F0CFA4C 02181021 */  addu  $v0, $s0, $t8
-.L7F0CFA50:
-/* 104580 7F0CFA50 00801825 */  move  $v1, $a0
-/* 104584 7F0CFA54 AC400000 */  sw    $zero, ($v0)
-/* 104588 7F0CFA58 24A50001 */  addiu $a1, $a1, 1
-/* 10458C 7F0CFA5C 24420004 */  addiu $v0, $v0, 4
-/* 104590 7F0CFA60 1480FFFB */  bnez  $a0, .L7F0CFA50
-/* 104594 7F0CFA64 2484FFFF */   addiu $a0, $a0, -1
-/* 104598 7F0CFA68 10000020 */  b     .L7F0CFAEC
-/* 10459C 7F0CFA6C 00A7082B */   sltu  $at, $a1, $a3
-.L7F0CFA70:
-/* 1045A0 7F0CFA70 2D010007 */  sltiu $at, $t0, 7
-/* 1045A4 7F0CFA74 1020000C */  beqz  $at, .L7F0CFAA8
-/* 1045A8 7F0CFA78 3C038009 */   lui   $v1, %hi(rz_inbuf)
-/* 1045AC 7F0CFA7C 8C63D350 */  lw    $v1, %lo(rz_inbuf)($v1)
-.L7F0CFA80:
-/* 1045B0 7F0CFA80 8D420000 */  lw    $v0, ($t2)
-/* 1045B4 7F0CFA84 00627021 */  addu  $t6, $v1, $v0
-/* 1045B8 7F0CFA88 91CF0000 */  lbu   $t7, ($t6)
-/* 1045BC 7F0CFA8C 24580001 */  addiu $t8, $v0, 1
-/* 1045C0 7F0CFA90 AD580000 */  sw    $t8, ($t2)
-/* 1045C4 7F0CFA94 010FC804 */  sllv  $t9, $t7, $t0
-/* 1045C8 7F0CFA98 25080008 */  addiu $t0, $t0, 8
-/* 1045CC 7F0CFA9C 2D010007 */  sltiu $at, $t0, 7
-/* 1045D0 7F0CFAA0 1420FFF7 */  bnez  $at, .L7F0CFA80
-/* 1045D4 7F0CFAA4 01394825 */   or    $t1, $t1, $t9
-.L7F0CFAA8:
-/* 1045D8 7F0CFAA8 3124007F */  andi  $a0, $t1, 0x7f
-/* 1045DC 7F0CFAAC 2484000B */  addiu $a0, $a0, 0xb
-/* 1045E0 7F0CFAB0 00801825 */  move  $v1, $a0
-/* 1045E4 7F0CFAB4 000971C2 */  srl   $t6, $t1, 7
-/* 1045E8 7F0CFAB8 01C04825 */  move  $t1, $t6
-/* 1045EC 7F0CFABC 2508FFF9 */  addiu $t0, $t0, -7
-/* 1045F0 7F0CFAC0 10800009 */  beqz  $a0, .L7F0CFAE8
-/* 1045F4 7F0CFAC4 2484FFFF */   addiu $a0, $a0, -1
-/* 1045F8 7F0CFAC8 00057880 */  sll   $t7, $a1, 2
-/* 1045FC 7F0CFACC 020F1021 */  addu  $v0, $s0, $t7
-.L7F0CFAD0:
-/* 104600 7F0CFAD0 00801825 */  move  $v1, $a0
-/* 104604 7F0CFAD4 AC400000 */  sw    $zero, ($v0)
-/* 104608 7F0CFAD8 24A50001 */  addiu $a1, $a1, 1
-/* 10460C 7F0CFADC 24420004 */  addiu $v0, $v0, 4
-/* 104610 7F0CFAE0 1480FFFB */  bnez  $a0, .L7F0CFAD0
-/* 104614 7F0CFAE4 2484FFFF */   addiu $a0, $a0, -1
-.L7F0CFAE8:
-/* 104618 7F0CFAE8 00A7082B */  sltu  $at, $a1, $a3
-.L7F0CFAEC:
-/* 10461C 7F0CFAEC 5420FF7B */  bnezl $at, .L7F0CF8DC
-/* 104620 7F0CFAF0 8FAE0548 */   lw    $t6, 0x548($sp)
-.L7F0CFAF4:
-/* 104624 7F0CFAF4 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008D364)
-/* 104628 7F0CFAF8 3C198005 */  lui   $t9, %hi(D_8004E9D4) 
-/* 10462C 7F0CFAFC 8F39E9D4 */  lw    $t9, %lo(D_8004E9D4)($t9)
-/* 104630 7F0CFB00 AC29D364 */  sw    $t1, %lo(dword_CODE_bss_8008D364)($at)
-/* 104634 7F0CFB04 3C188005 */  lui   $t8, %hi(D_8004E934) 
-/* 104638 7F0CFB08 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008D368)
-/* 10463C 7F0CFB0C 2718E934 */  addiu $t8, %lo(D_8004E934) # addiu $t8, $t8, -0x16cc
-/* 104640 7F0CFB10 3C078005 */  lui   $a3, %hi(D_8004E8F4)
-/* 104644 7F0CFB14 27AE0550 */  addiu $t6, $sp, 0x550
-/* 104648 7F0CFB18 27AF0548 */  addiu $t7, $sp, 0x548
-/* 10464C 7F0CFB1C AC28D368 */  sw    $t0, %lo(dword_CODE_bss_8008D368)($at)
-/* 104650 7F0CFB20 AFAF0018 */  sw    $t7, 0x18($sp)
-/* 104654 7F0CFB24 AFAE0014 */  sw    $t6, 0x14($sp)
-/* 104658 7F0CFB28 24E7E8F4 */  addiu $a3, %lo(D_8004E8F4) # addiu $a3, $a3, -0x170c
-/* 10465C 7F0CFB2C AFB80010 */  sw    $t8, 0x10($sp)
-/* 104660 7F0CFB30 02002025 */  move  $a0, $s0
-/* 104664 7F0CFB34 8FA5053C */  lw    $a1, 0x53c($sp)
-/* 104668 7F0CFB38 24060101 */  li    $a2, 257
-/* 10466C 7F0CFB3C 0FC33A2C */  jal   sub_GAME_7F0CE8B0
-/* 104670 7F0CFB40 AFB90548 */   sw    $t9, 0x548($sp)
-/* 104674 7F0CFB44 3C198005 */  lui   $t9, %hi(D_8004E9D8) 
-/* 104678 7F0CFB48 8F39E9D8 */  lw    $t9, %lo(D_8004E9D8)($t9)
-/* 10467C 7F0CFB4C 8FB8053C */  lw    $t8, 0x53c($sp)
-/* 104680 7F0CFB50 3C0F8005 */  lui   $t7, %hi(D_8004E990) 
-/* 104684 7F0CFB54 AFB90544 */  sw    $t9, 0x544($sp)
-/* 104688 7F0CFB58 00187080 */  sll   $t6, $t8, 2
-/* 10468C 7F0CFB5C 27B80544 */  addiu $t8, $sp, 0x544
-/* 104690 7F0CFB60 27B9054C */  addiu $t9, $sp, 0x54c
-/* 104694 7F0CFB64 25EFE990 */  addiu $t7, %lo(D_8004E990) # addiu $t7, $t7, -0x1670
-/* 104698 7F0CFB68 3C078005 */  lui   $a3, %hi(D_8004E954)
-/* 10469C 7F0CFB6C 24E7E954 */  addiu $a3, %lo(D_8004E954) # addiu $a3, $a3, -0x16ac
-/* 1046A0 7F0CFB70 AFAF0010 */  sw    $t7, 0x10($sp)
-/* 1046A4 7F0CFB74 AFB90014 */  sw    $t9, 0x14($sp)
-/* 1046A8 7F0CFB78 AFB80018 */  sw    $t8, 0x18($sp)
-/* 1046AC 7F0CFB7C 020E2021 */  addu  $a0, $s0, $t6
-/* 1046B0 7F0CFB80 8FA50538 */  lw    $a1, 0x538($sp)
-/* 1046B4 7F0CFB84 0FC33A2C */  jal   sub_GAME_7F0CE8B0
-/* 1046B8 7F0CFB88 00003025 */   move  $a2, $zero
-/* 1046BC 7F0CFB8C 8FA40550 */  lw    $a0, 0x550($sp)
-/* 1046C0 7F0CFB90 8FA5054C */  lw    $a1, 0x54c($sp)
-/* 1046C4 7F0CFB94 8FA60548 */  lw    $a2, 0x548($sp)
-/* 1046C8 7F0CFB98 0FC33BBC */  jal   sub_GAME_7F0CEEF0
-/* 1046CC 7F0CFB9C 8FA70544 */   lw    $a3, 0x544($sp)
-/* 1046D0 7F0CFBA0 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 1046D4 7F0CFBA4 8FB00028 */  lw    $s0, 0x28($sp)
-/* 1046D8 7F0CFBA8 27BD0568 */  addiu $sp, $sp, 0x568
-/* 1046DC 7F0CFBAC 03E00008 */  jr    $ra
-/* 1046E0 7F0CFBB0 00001025 */   move  $v0, $zero
-)
-#endif
-
-
-
-
-
-#ifdef NONMATCHING
-void select_zlib_decompression_routine(void *arg0, s32 arg2)
+s32 zlib_decompressor_type2(void)
 {
-    s32 temp_v1;
-    u32 temp_a1;
-    u32 temp_v1_2;
-    u32 temp_t3;
-    u32 temp_v1_3;
-    u32 temp_a1_2;
-    s32 temp_v0;
-    s32 phi_v1;
-    u32 phi_a1;
-    s32 phi_v1_2;
-    u32 phi_v1_3;
-    u32 phi_a1_2;
-    u32 phi_v1_4;
-    s32 phi_a2;
-    u32 phi_a1_3;
-    u32 phi_a1_4;
+	s32 i;                /* temporary variables */
+	u32 j;
+	u32 l;           /* last length */
+	u32 m;           /* mask for bit lengths table */
+	u32 n;           /* number of lengths to get */
+	struct huft *tl;      /* literal/length code table */
+	struct huft *td;      /* distance code table */
+	s32 bl;               /* lookup bits for tl */
+	s32 bd;               /* lookup bits for td */
+	u32 nb;          /* number of bit length codes */
+	u32 nl;          /* number of literal/length codes */
+	u32 nd;          /* number of distance codes */
+	register u32 k;  /* number of bits in bit buffer */
+	register u32 b;  /* bit buffer */
+	u32 ll[286+30];  /* literal/length and distance code lengths */
 
-    phi_a1 = dword_CODE_bss_8008D364;
-    phi_v1_2 = dword_CODE_bss_8008D368;
-    phi_a2 = arg2;
-    if (dword_CODE_bss_8008D368 == 0)
-    {
-        phi_v1 = dword_CODE_bss_8008D368;
-        phi_a1_3 = dword_CODE_bss_8008D364;
-block_2:
-        rz_inptr = (s32) (rz_inptr + 1);
-        temp_v1 = (phi_v1 + 8);
-        temp_a1 = (phi_a1_3 | (*(rz_inbuf + rz_inptr) << phi_v1));
-        phi_v1 = temp_v1;
-        phi_a1 = temp_a1;
-        phi_v1_2 = temp_v1;
-        phi_a1_3 = temp_a1;
-        phi_a2 = rz_inbuf;
-        if (temp_v1 == 0)
-        {
-            goto block_2;
-        }
-    }
-    temp_v1_2 = (phi_v1_2 + -1);
-    temp_t3 = ((u32) phi_a1 >> 1);
-    *arg0 = (s32) (phi_a1 & 1);
-    phi_a1_2 = temp_t3;
-    phi_v1_4 = temp_v1_2;
-    if (temp_v1_2 < 2U)
-    {
-        phi_v1_3 = temp_v1_2;
-        phi_a1_4 = temp_t3;
-block_5:
-        rz_inptr = (s32) (rz_inptr + 1);
-        temp_v1_3 = (phi_v1_3 + 8);
-        temp_a1_2 = (phi_a1_4 | (*(rz_inbuf + rz_inptr) << phi_v1_3));
-        phi_v1_3 = temp_v1_3;
-        phi_a1_2 = temp_a1_2;
-        phi_v1_4 = temp_v1_3;
-        phi_a2 = rz_inbuf;
-        phi_a1_4 = temp_a1_2;
-        if (temp_v1_3 < 2U)
-        {
-            goto block_5;
-        }
-    }
-    temp_v0 = (phi_a1_2 & 3);
-    dword_CODE_bss_8008D364 = (u32) ((u32) phi_a1_2 >> 2);
-    dword_CODE_bss_8008D368 = (s32) (phi_v1_4 + -2);
-    if (temp_v0 == 2)
-    {
-        return zlib_decompressor_type2(&rz_inptr, phi_a1_2, phi_a2, arg0);
-    }
-    if (temp_v0 == 0)
-    {
-        return zlib_decompressor_type0(&rz_inptr, phi_a1_2, phi_a2, arg0);
-    }
-    if (temp_v0 == 1)
-    {
-        return zlib_decompressor_type1(&rz_inptr, phi_a1_2, phi_a2, arg0);
-    }
-    return 2;
+	/* make local bit buffer */
+	b = rz_bb;
+	k = rz_bk;
+
+	/* read in table lengths */
+	NEEDBITS(5)
+	nl = 257 + (b & 0x1f);      /* number of literal/length codes */
+	DUMPBITS(5)
+	NEEDBITS(5)
+	nd = 1 + (b & 0x1f);        /* number of distance codes */
+	DUMPBITS(5)
+	NEEDBITS(4)
+	nb = 4 + (b & 0xf);         /* number of bit length codes */
+	DUMPBITS(4)
+
+	/* read in bit-length-code lengths */
+	for (j = 0; j < nb; j++) {
+		NEEDBITS(3)
+		ll[rz_border[j]] = b & 7;
+		DUMPBITS(3)
+	}
+
+	for (; j < 19; j++) {
+		ll[rz_border[j]] = 0;
+	}
+
+	/* build decoding table for trees--single level, 7 bit lookup */
+	bl = 7;
+
+	sub_GAME_7F0CE8B0(ll, 19, 19, NULL, NULL, &tl, &bl);
+
+	/* read in literal and distance code lengths */
+	n = nl + nd;
+	m = rz_mask_bits[bl];
+	i = l = 0;
+
+	while (i < n) {
+		NEEDBITS(bl)
+		j = (td = tl + (b & m))->b;
+		DUMPBITS(j)
+
+		j = td->v.n;
+
+		if (j < 16) {                 /* length of code in bits (0..15) */
+			ll[i++] = l = j;          /* save last length in l */
+		} else if (j == 16) {         /* repeat last length 3 to 6 times */
+			NEEDBITS(2)
+			j = 3 + (b & 3);
+			DUMPBITS(2)
+
+			while (j--) {
+				ll[i++] = l;
+			}
+		} else if (j == 17) {         /* 3 to 10 zero length codes */
+			NEEDBITS(3)
+			j = 3 + (b & 7);
+			DUMPBITS(3)
+
+			while (j--) {
+				ll[i++] = 0;
+			}
+
+			l = 0;
+		} else {                      /* j == 18: 11 to 138 zero length codes */
+			NEEDBITS(7)
+			j = 11 + (b & 0x7f);
+			DUMPBITS(7)
+
+			while (j--) {
+				ll[i++] = 0;
+			}
+
+			l = 0;
+		}
+	}
+
+	/* restore the global bit buffer */
+	rz_bb = b;
+	rz_bk = k;
+
+	/* build the decoding tables for literal/length and distance codes */
+	bl = rz_lbits;
+
+	sub_GAME_7F0CE8B0(ll, nl, 257, rz_cplens, rz_cplext, &tl, &bl);
+
+	bd = rz_dbits;
+
+	sub_GAME_7F0CE8B0(ll + nl, nd, 0, rz_cpdist, rz_cpdext, &td, &bd);
+
+	/* decompress until an end-of-block code */
+	sub_GAME_7F0CEEF0(tl, td, bl, bd);
+
+	return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel select_zlib_decompression_routine
-/* 1046E4 7F0CFBB4 3C098009 */  lui   $t1, %hi(dword_CODE_bss_8008D368) 
-/* 1046E8 7F0CFBB8 2529D368 */  addiu $t1, %lo(dword_CODE_bss_8008D368) # addiu $t1, $t1, -0x2c98
-/* 1046EC 7F0CFBBC 8D230000 */  lw    $v1, ($t1)
-/* 1046F0 7F0CFBC0 3C088009 */  lui   $t0, %hi(dword_CODE_bss_8008D364) 
-/* 1046F4 7F0CFBC4 2508D364 */  addiu $t0, %lo(dword_CODE_bss_8008D364) # addiu $t0, $t0, -0x2c9c
-/* 1046F8 7F0CFBC8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 1046FC 7F0CFBCC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 104700 7F0CFBD0 00803825 */  move  $a3, $a0
-/* 104704 7F0CFBD4 1460000E */  bnez  $v1, .L7F0CFC10
-/* 104708 7F0CFBD8 8D050000 */   lw    $a1, ($t0)
-/* 10470C 7F0CFBDC 3C068009 */  lui   $a2, %hi(rz_inbuf)
-/* 104710 7F0CFBE0 3C048009 */  lui   $a0, %hi(rz_inptr)
-/* 104714 7F0CFBE4 2484D358 */  addiu $a0, %lo(rz_inptr) # addiu $a0, $a0, -0x2ca8
-/* 104718 7F0CFBE8 8CC6D350 */  lw    $a2, %lo(rz_inbuf)($a2)
-.L7F0CFBEC:
-/* 10471C 7F0CFBEC 8C820000 */  lw    $v0, ($a0)
-/* 104720 7F0CFBF0 00C27021 */  addu  $t6, $a2, $v0
-/* 104724 7F0CFBF4 91CF0000 */  lbu   $t7, ($t6)
-/* 104728 7F0CFBF8 24590001 */  addiu $t9, $v0, 1
-/* 10472C 7F0CFBFC AC990000 */  sw    $t9, ($a0)
-/* 104730 7F0CFC00 006FC004 */  sllv  $t8, $t7, $v1
-/* 104734 7F0CFC04 24630008 */  addiu $v1, $v1, 8
-/* 104738 7F0CFC08 1060FFF8 */  beqz  $v1, .L7F0CFBEC
-/* 10473C 7F0CFC0C 00B82825 */   or    $a1, $a1, $t8
-.L7F0CFC10:
-/* 104740 7F0CFC10 2463FFFF */  addiu $v1, $v1, -1
-/* 104744 7F0CFC14 3C048009 */  lui   $a0, %hi(rz_inptr)
-/* 104748 7F0CFC18 30AA0001 */  andi  $t2, $a1, 1
-/* 10474C 7F0CFC1C 00055842 */  srl   $t3, $a1, 1
-/* 104750 7F0CFC20 2C610002 */  sltiu $at, $v1, 2
-/* 104754 7F0CFC24 2484D358 */  addiu $a0, %lo(rz_inptr) # addiu $a0, $a0, -0x2ca8
-/* 104758 7F0CFC28 ACEA0000 */  sw    $t2, ($a3)
-/* 10475C 7F0CFC2C 1020000D */  beqz  $at, .L7F0CFC64
-/* 104760 7F0CFC30 01602825 */   move  $a1, $t3
-/* 104764 7F0CFC34 3C068009 */  lui   $a2, %hi(rz_inbuf)
-/* 104768 7F0CFC38 8CC6D350 */  lw    $a2, %lo(rz_inbuf)($a2)
-.L7F0CFC3C:
-/* 10476C 7F0CFC3C 8C820000 */  lw    $v0, ($a0)
-/* 104770 7F0CFC40 00C26021 */  addu  $t4, $a2, $v0
-/* 104774 7F0CFC44 918D0000 */  lbu   $t5, ($t4)
-/* 104778 7F0CFC48 244F0001 */  addiu $t7, $v0, 1
-/* 10477C 7F0CFC4C AC8F0000 */  sw    $t7, ($a0)
-/* 104780 7F0CFC50 006D7004 */  sllv  $t6, $t5, $v1
-/* 104784 7F0CFC54 24630008 */  addiu $v1, $v1, 8
-/* 104788 7F0CFC58 2C610002 */  sltiu $at, $v1, 2
-/* 10478C 7F0CFC5C 1420FFF7 */  bnez  $at, .L7F0CFC3C
-/* 104790 7F0CFC60 00AE2825 */   or    $a1, $a1, $t6
-.L7F0CFC64:
-/* 104794 7F0CFC64 30A20003 */  andi  $v0, $a1, 3
-/* 104798 7F0CFC68 0005C082 */  srl   $t8, $a1, 2
-/* 10479C 7F0CFC6C 2463FFFE */  addiu $v1, $v1, -2
-/* 1047A0 7F0CFC70 24010002 */  li    $at, 2
-/* 1047A4 7F0CFC74 AD180000 */  sw    $t8, ($t0)
-/* 1047A8 7F0CFC78 14410005 */  bne   $v0, $at, .L7F0CFC90
-/* 1047AC 7F0CFC7C AD230000 */   sw    $v1, ($t1)
-/* 1047B0 7F0CFC80 0FC33DA4 */  jal   zlib_decompressor_type2
-/* 1047B4 7F0CFC84 00000000 */   nop   
-/* 1047B8 7F0CFC88 1000000F */  b     .L7F0CFCC8
-/* 1047BC 7F0CFC8C 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0CFC90:
-/* 1047C0 7F0CFC90 14400005 */  bnez  $v0, .L7F0CFCA8
-/* 1047C4 7F0CFC94 24010001 */   li    $at, 1
-/* 1047C8 7F0CFC98 0FC33CE3 */  jal   zlib_decompressor_type0
-/* 1047CC 7F0CFC9C 00000000 */   nop   
-/* 1047D0 7F0CFCA0 10000009 */  b     .L7F0CFCC8
-/* 1047D4 7F0CFCA4 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0CFCA8:
-/* 1047D8 7F0CFCA8 54410006 */  bnel  $v0, $at, .L7F0CFCC4
-/* 1047DC 7F0CFCAC 24020002 */   li    $v0, 2
-/* 1047E0 7F0CFCB0 0FC33D4A */  jal   zlib_decompressor_type1
-/* 1047E4 7F0CFCB4 00000000 */   nop   
-/* 1047E8 7F0CFCB8 10000003 */  b     .L7F0CFCC8
-/* 1047EC 7F0CFCBC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 1047F0 7F0CFCC0 24020002 */  li    $v0, 2
-.L7F0CFCC4:
-/* 1047F4 7F0CFCC4 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0CFCC8:
-/* 1047F8 7F0CFCC8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 1047FC 7F0CFCCC 03E00008 */  jr    $ra
-/* 104800 7F0CFCD0 00000000 */   nop   
-)
-#endif
 
 
-
-
-
-#ifdef NONMATCHING
-void loop_to_decompress_entire_file(void)
+s32 select_zlib_decompression_routine(s32 *e)
 {
-    s32 sp34;
-    ? temp_ret;
-    u32 temp_t7;
-    u32 phi_s1;
-    u32 phi_v1;
+	u32 t;                /* block type */
+	register u32 b = rz_bb;  /* bit buffer */
+	register u32 k = rz_bk;  /* number of bits in bit buffer */
 
-    rz_wp = 0;
-    dword_CODE_bss_8008D368 = 0U;
-    dword_CODE_bss_8008D364 = 0;
-    phi_s1 = 0U;
-block_1:
-    dword_CODE_bss_8008D36C = 0U;
-    temp_ret = select_zlib_decompression_routine(&sp34);
-    if (temp_ret != 0)
-    {
-        return temp_ret;
-    }
-    phi_s1 = phi_s1;
-    if ((u32) phi_s1 < (u32) dword_CODE_bss_8008D36C)
-    {
-        phi_s1 = dword_CODE_bss_8008D36C;
-    }
-    if (sp34 == 0)
-    {
-        goto block_1;
-    }
-    phi_v1 = dword_CODE_bss_8008D368;
-    if ((u32) dword_CODE_bss_8008D368 >= 8U)
-    {
-block_7:
-        temp_t7 = (phi_v1 + -8);
-        dword_CODE_bss_8008D368 = temp_t7;
-        rz_inptr = (s32) (rz_inptr + -1);
-        phi_v1 = temp_t7;
-        if (temp_t7 >= 8U)
-        {
-            goto block_7;
-        }
-    }
-    return 0;
+	/* make local bit buffer */
+	b = rz_bb;
+	k = rz_bk;
+
+	/* read in last block bit */
+	NEEDBITS(1)
+	*e = b & 1;
+	DUMPBITS(1)
+
+	/* read in last block type */
+	NEEDBITS(2)
+	t = b & 3;
+	DUMPBITS(2)
+
+	/* restore the global bit buffer */
+	rz_bb = b;
+	rz_bk = k;
+
+	/* inflate that block type */
+	if (t == 2) {
+		return zlib_decompressor_type2();
+	}
+
+	if (t == 0) {
+		return zlib_decompressor_type0();
+	}
+
+	if (t == 1) {
+		return zlib_decompressor_type1();
+	}
+
+	/* bad block type */
+	return 2;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel loop_to_decompress_entire_file
-/* 104804 7F0CFCD4 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 104808 7F0CFCD8 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 10480C 7F0CFCDC 3C018009 */  lui   $at, %hi(rz_wp)
-/* 104810 7F0CFCE0 3C128009 */  lui   $s2, %hi(dword_CODE_bss_8008D368)
-/* 104814 7F0CFCE4 AC20D35C */  sw    $zero, %lo(rz_wp)($at)
-/* 104818 7F0CFCE8 2652D368 */  addiu $s2, %lo(dword_CODE_bss_8008D368) # addiu $s2, $s2, -0x2c98
-/* 10481C 7F0CFCEC AFB00014 */  sw    $s0, 0x14($sp)
-/* 104820 7F0CFCF0 AFB30020 */  sw    $s3, 0x20($sp)
-/* 104824 7F0CFCF4 AFB10018 */  sw    $s1, 0x18($sp)
-/* 104828 7F0CFCF8 AE400000 */  sw    $zero, ($s2)
-/* 10482C 7F0CFCFC 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008D364)
-/* 104830 7F0CFD00 3C108009 */  lui   $s0, %hi(dword_CODE_bss_8008D36C)
-/* 104834 7F0CFD04 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 104838 7F0CFD08 AC20D364 */  sw    $zero, %lo(dword_CODE_bss_8008D364)($at)
-/* 10483C 7F0CFD0C 00008825 */  move  $s1, $zero
-/* 104840 7F0CFD10 2610D36C */  addiu $s0, %lo(dword_CODE_bss_8008D36C) # addiu $s0, $s0, -0x2c94
-/* 104844 7F0CFD14 27B30034 */  addiu $s3, $sp, 0x34
-/* 104848 7F0CFD18 AE000000 */  sw    $zero, ($s0)
-.L7F0CFD1C:
-/* 10484C 7F0CFD1C 0FC33EED */  jal   select_zlib_decompression_routine
-/* 104850 7F0CFD20 02602025 */   move  $a0, $s3
-/* 104854 7F0CFD24 10400003 */  beqz  $v0, .L7F0CFD34
-/* 104858 7F0CFD28 8FAE0034 */   lw    $t6, 0x34($sp)
-/* 10485C 7F0CFD2C 10000018 */  b     .L7F0CFD90
-/* 104860 7F0CFD30 8FBF0024 */   lw    $ra, 0x24($sp)
-.L7F0CFD34:
-/* 104864 7F0CFD34 8E020000 */  lw    $v0, ($s0)
-/* 104868 7F0CFD38 0222082B */  sltu  $at, $s1, $v0
-/* 10486C 7F0CFD3C 10200002 */  beqz  $at, .L7F0CFD48
-/* 104870 7F0CFD40 00000000 */   nop   
-/* 104874 7F0CFD44 00408825 */  move  $s1, $v0
-.L7F0CFD48:
-/* 104878 7F0CFD48 51C0FFF4 */  beql  $t6, $zero, .L7F0CFD1C
-/* 10487C 7F0CFD4C AE000000 */   sw    $zero, ($s0)
-/* 104880 7F0CFD50 8E430000 */  lw    $v1, ($s2)
-/* 104884 7F0CFD54 3C028009 */  lui   $v0, %hi(rz_inptr)
-/* 104888 7F0CFD58 2442D358 */  addiu $v0, %lo(rz_inptr) # addiu $v0, $v0, -0x2ca8
-/* 10488C 7F0CFD5C 2C610008 */  sltiu $at, $v1, 8
-/* 104890 7F0CFD60 5420000A */  bnezl $at, .L7F0CFD8C
-/* 104894 7F0CFD64 00001025 */   move  $v0, $zero
-.L7F0CFD68:
-/* 104898 7F0CFD68 8C580000 */  lw    $t8, ($v0)
-/* 10489C 7F0CFD6C 246FFFF8 */  addiu $t7, $v1, -8
-/* 1048A0 7F0CFD70 2DE10008 */  sltiu $at, $t7, 8
-/* 1048A4 7F0CFD74 2719FFFF */  addiu $t9, $t8, -1
-/* 1048A8 7F0CFD78 AE4F0000 */  sw    $t7, ($s2)
-/* 1048AC 7F0CFD7C AC590000 */  sw    $t9, ($v0)
-/* 1048B0 7F0CFD80 1020FFF9 */  beqz  $at, .L7F0CFD68
-/* 1048B4 7F0CFD84 01E01825 */   move  $v1, $t7
-/* 1048B8 7F0CFD88 00001025 */  move  $v0, $zero
-.L7F0CFD8C:
-/* 1048BC 7F0CFD8C 8FBF0024 */  lw    $ra, 0x24($sp)
-.L7F0CFD90:
-/* 1048C0 7F0CFD90 8FB00014 */  lw    $s0, 0x14($sp)
-/* 1048C4 7F0CFD94 8FB10018 */  lw    $s1, 0x18($sp)
-/* 1048C8 7F0CFD98 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 1048CC 7F0CFD9C 8FB30020 */  lw    $s3, 0x20($sp)
-/* 1048D0 7F0CFDA0 03E00008 */  jr    $ra
-/* 1048D4 7F0CFDA4 27BD0038 */   addiu $sp, $sp, 0x38
-)
-#endif
 
 
 
+int loop_to_decompress_entire_file(void) {
+  int e;
+  int r;
+  unsigned h;
+  
+  rz_wp = 0;
+  rz_bk = 0;
+  rz_bb = 0;
+
+  h = 0;
+
+  do {
+    rz_hufts = 0;
+    
+    if ((r = select_zlib_decompression_routine(&e)) != 0) 
+      return r;
+    if (rz_hufts > h) 
+      h = rz_hufts;
+  } while (!e);
+
+  while (rz_bk >= 8) {
+    rz_bk -= 8;
+    rz_inptr--;
+  }
+
+  return 0;
+}
