@@ -20,11 +20,11 @@ typedef struct {
 	unsigned int inst4;
 } __exceptionVector;
 
-struct debug_handler_entry
+typedef struct debug_handler_entry
 {
   void *address;
   char *ptr_name;
-};
+} debug_handler_entry;
 
 void init(void);
 void *set_stack_entry(u8 *stack, u32 size);

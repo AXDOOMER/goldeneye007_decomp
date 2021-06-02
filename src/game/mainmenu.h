@@ -583,7 +583,7 @@ dword_D_8002B5DC:.word 0
 dword_D_8002B5E0:.word 0
 MP_menu_selected_option:.word 0
 */
-extern u32 do_not_play_intro_movie;
+extern u32 intro_character_index;
 extern u32 randomly_selected_intro_animation;
 extern u32 intro_animation_count;
 extern u32 objinstance;
