@@ -10427,39 +10427,25 @@ glabel draw_watch_game_options_page
 
 
 
+int sub_GAME_7F0AC0E8(u8 *arg) {
+    u8 cVar1;
+    int count;
 
+    cVar1 = *arg;
+    count = 0;
 
-#ifdef NONMATCHING
-void sub_GAME_7F0AC0E8(void) {
+    while (cVar1) {
+    
+        if (cVar1 == 0xA) {
+            count = count + 1;
+        }
 
+        cVar1 = arg[1];
+        arg += 1;
+    }
+
+    return count;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0AC0E8
-/* 0E0C18 7F0AC0E8 90820000 */  lbu   $v0, ($a0)
-/* 0E0C1C 7F0AC0EC 00001825 */  move  $v1, $zero
-/* 0E0C20 7F0AC0F0 2405000A */  li    $a1, 10
-/* 0E0C24 7F0AC0F4 10400008 */  beqz  $v0, .L7F0AC118
-/* 0E0C28 7F0AC0F8 00000000 */   nop   
-.L7F0AC0FC:
-/* 0E0C2C 7F0AC0FC 54A20003 */  bnel  $a1, $v0, .L7F0AC10C
-/* 0E0C30 7F0AC100 90820001 */   lbu   $v0, 1($a0)
-/* 0E0C34 7F0AC104 24630001 */  addiu $v1, $v1, 1
-/* 0E0C38 7F0AC108 90820001 */  lbu   $v0, 1($a0)
-.L7F0AC10C:
-/* 0E0C3C 7F0AC10C 24840001 */  addiu $a0, $a0, 1
-/* 0E0C40 7F0AC110 1440FFFA */  bnez  $v0, .L7F0AC0FC
-/* 0E0C44 7F0AC114 00000000 */   nop   
-.L7F0AC118:
-/* 0E0C48 7F0AC118 03E00008 */  jr    $ra
-/* 0E0C4C 7F0AC11C 00601025 */   move  $v0, $v1
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F0AC120(void) {
