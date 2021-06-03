@@ -19044,7 +19044,7 @@ glabel controller_gameplay_interaction
 /* 0B753C 7F082A0C 00002825 */  move  $a1, $zero
 /* 0B7540 7F082A10 0FC1A521 */  jal   add_ammo_to_weapon
 /* 0B7544 7F082A14 ADC200D8 */   sw    $v0, 0xd8($t6)
-/* 0B7548 7F082A18 0FC23187 */  jal   sub_GAME_7F08C61C
+/* 0B7548 7F082A18 0FC23187 */  jal   inventory_remove_item_by_id
 /* 0B754C 7F082A1C 24040020 */   li    $a0, 32
 /* 0B7550 7F082A20 0FC17674 */  jal   get_item_in_hand
 /* 0B7554 7F082A24 00002025 */   move  $a0, $zero

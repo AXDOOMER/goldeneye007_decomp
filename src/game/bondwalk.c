@@ -4403,7 +4403,7 @@ glabel generate_player_thrown_object
 /* 094038 7F05F508 0FC2315C */  jal   sub_GAME_7F08C570
 /* 09403C 7F05F50C 00A02025 */   move  $a0, $a1
 /* 094040 7F05F510 00408025 */  move  $s0, $v0
-/* 094044 7F05F514 0FC23187 */  jal   sub_GAME_7F08C61C
+/* 094044 7F05F514 0FC23187 */  jal   inventory_remove_item_by_id
 /* 094048 7F05F518 8FA40038 */   lw    $a0, 0x38($sp)
 /* 09404C 7F05F51C 12000003 */  beqz  $s0, .L7F05F52C
 /* 094050 7F05F520 00000000 */   nop   
@@ -23838,7 +23838,7 @@ void give_weapon_case_items(void)
   set_sound_effect_for_weapontype_collection(ITEM_SNIPERRIFLE);
   display_text_for_weapon_in_lower_left_corner(ITEM_SNIPERRIFLE);
   give_cur_player_ammo(sniperrifle_stats.AmmoType, check_cur_player_ammo_amount_in_inventory(sniperrifle_stats.AmmoType) + sniperrifle_stats.MagSize);
-  sub_GAME_7F08C61C(ITEM_WEAPONCASE);
+  inventory_remove_item_by_id(ITEM_WEAPONCASE);
   draw_item_in_hand_has_more_ammo(RIGHT_HAND,ITEM_SNIPERRIFLE);
   draw_item_in_hand_has_more_ammo(LEFT_HAND,ITEM_UNARMED);
 }

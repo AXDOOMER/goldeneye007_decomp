@@ -368,7 +368,7 @@ WeaponObjRecord *sub_GAME_7F08C570(ITEM_IDS weaponnum)
     return NULL;
 }
 
-void sub_GAME_7F08C61C(ITEM_IDS weaponnum)
+void inventory_remove_item_by_id(ITEM_IDS weaponnum)
 {
     if (pPlayer->ptr_inventory_first_in_cycle) {
         InvItem *item = pPlayer->ptr_inventory_first_in_cycle->next;
