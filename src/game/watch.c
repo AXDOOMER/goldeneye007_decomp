@@ -10447,40 +10447,30 @@ int sub_GAME_7F0AC0E8(u8 *arg) {
     return count;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F0AC120(void) {
+u8 *sub_GAME_7F0AC120(u8 *arg)
+{
+    u8 cVar1;
+    u8 *pcVar2;
 
+    cVar1 = *arg;
+    pcVar2 = arg;
+
+    while (cVar1) {
+    
+        if (cVar1 == 0xA) {
+            arg += 1;
+      
+            if (arg[0]) {
+                pcVar2 = arg;
+            }
+        }
+
+        cVar1 = arg[1];
+        arg += 1;
+    }
+
+    return pcVar2;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0AC120
-/* 0E0C50 7F0AC120 90820000 */  lbu   $v0, ($a0)
-/* 0E0C54 7F0AC124 00801825 */  move  $v1, $a0
-/* 0E0C58 7F0AC128 2405000A */  li    $a1, 10
-/* 0E0C5C 7F0AC12C 1040000C */  beqz  $v0, .L7F0AC160
-/* 0E0C60 7F0AC130 00000000 */   nop   
-.L7F0AC134:
-/* 0E0C64 7F0AC134 54A20007 */  bnel  $a1, $v0, .L7F0AC154
-/* 0E0C68 7F0AC138 90820001 */   lbu   $v0, 1($a0)
-/* 0E0C6C 7F0AC13C 908E0001 */  lbu   $t6, 1($a0)
-/* 0E0C70 7F0AC140 24840001 */  addiu $a0, $a0, 1
-/* 0E0C74 7F0AC144 51C00003 */  beql  $t6, $zero, .L7F0AC154
-/* 0E0C78 7F0AC148 90820001 */   lbu   $v0, 1($a0)
-/* 0E0C7C 7F0AC14C 00801825 */  move  $v1, $a0
-/* 0E0C80 7F0AC150 90820001 */  lbu   $v0, 1($a0)
-.L7F0AC154:
-/* 0E0C84 7F0AC154 24840001 */  addiu $a0, $a0, 1
-/* 0E0C88 7F0AC158 1440FFF6 */  bnez  $v0, .L7F0AC134
-/* 0E0C8C 7F0AC15C 00000000 */   nop   
-.L7F0AC160:
-/* 0E0C90 7F0AC160 03E00008 */  jr    $ra
-/* 0E0C94 7F0AC164 00601025 */   move  $v0, $v1
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
