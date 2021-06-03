@@ -6317,31 +6317,9 @@ void call_sndGetSfxSlotFirstNaturalVolume(void) {
 }
 
 
-#ifdef NONMATCHING
-//TODO: Use t6 instead of a1
-void sub_GAME_7F0A91A0(u16 arg0)
-{
+void sub_GAME_7F0A91A0(u16 arg0) {
     sndApplyVolumeAllSfxSlot(arg0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A91A0
-/* 0DDCD0 7F0A91A0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0DDCD4 7F0A91A4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0DDCD8 7F0A91A8 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0DDCDC 7F0A91AC 308EFFFF */  andi  $t6, $a0, 0xffff
-/* 0DDCE0 7F0A91B0 0C00247A */  jal   sndApplyVolumeAllSfxSlot
-/* 0DDCE4 7F0A91B4 01C02025 */   move  $a0, $t6
-/* 0DDCE8 7F0A91B8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0DDCEC 7F0A91BC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0DDCF0 7F0A91C0 03E00008 */  jr    $ra
-/* 0DDCF4 7F0A91C4 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
