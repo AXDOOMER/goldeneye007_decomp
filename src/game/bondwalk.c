@@ -18024,7 +18024,7 @@ weapon_reload_none_sfx:
 /* 09B880 7F066D50 8E18001C */  lw    $t8, 0x1c($s0)
 /* 09B884 7F066D54 17000003 */  bnez  $t8, .L7F066D64
 /* 09B888 7F066D58 00000000 */   nop   
-/* 09B88C 7F066D5C 0FC19BC2 */  jal   sub_GAME_7F066F08
+/* 09B88C 7F066D5C 0FC19BC2 */  jal   give_weapon_case_items
 /* 09B890 7F066D60 00000000 */   nop   
 .L7F066D64:
 /* 09B894 7F066D64 10000035 */  b     .L7F066E3C
@@ -20882,7 +20882,7 @@ weapon_reload_none_sfx:
 /* 09BE98 7F067328 8E18001C */  lw    $t8, 0x1c($s0)
 /* 09BE9C 7F06732C 17000003 */  bnez  $t8, .Ljp7F06733C
 /* 09BEA0 7F067330 00000000 */   nop   
-/* 09BEA4 7F067334 0FC19D38 */  jal   sub_GAME_7F066F08
+/* 09BEA4 7F067334 0FC19D38 */  jal   give_weapon_case_items
 /* 09BEA8 7F067338 00000000 */   nop   
 .Ljp7F06733C:
 /* 09BEAC 7F06733C 10000035 */  b     .Ljp7F067414
@@ -23715,7 +23715,7 @@ weapon_reload_none_sfx:
 /* 09B880 7F066D50 8E18001C */  lw    $t8, 0x1c($s0)
 /* 09B884 7F066D54 17000003 */  bnez  $t8, .L7F066D64
 /* 09B888 7F066D58 00000000 */   nop   
-/* 09B88C 7F066D5C 0FC19BC2 */  jal   sub_GAME_7F066F08
+/* 09B88C 7F066D5C 0FC19BC2 */  jal   give_weapon_case_items
 /* 09B890 7F066D60 00000000 */   nop   
 .L7F066D64:
 /* 09B894 7F066D64 10000035 */  b     .L7F066E3C
@@ -23830,7 +23830,7 @@ int get_keyanalyzer_flag(void)
 }
 
 
-void sub_GAME_7F066F08(void)
+void give_weapon_case_items(void)
 {
   add_ammo_to_inventory(AMMO_KNIFE, 2, 0, 1);
   add_ammo_to_inventory(AMMO_GRENADE, 2, 0, 1);
@@ -23838,7 +23838,7 @@ void sub_GAME_7F066F08(void)
   set_sound_effect_for_weapontype_collection(ITEM_SNIPERRIFLE);
   display_text_for_weapon_in_lower_left_corner(ITEM_SNIPERRIFLE);
   give_cur_player_ammo(sniperrifle_stats.AmmoType, check_cur_player_ammo_amount_in_inventory(sniperrifle_stats.AmmoType) + sniperrifle_stats.MagSize);
-  sub_GAME_7F08C61C(0x2c);
+  sub_GAME_7F08C61C(ITEM_WEAPONCASE);
   draw_item_in_hand_has_more_ammo(RIGHT_HAND,ITEM_SNIPERRIFLE);
   draw_item_in_hand_has_more_ammo(LEFT_HAND,ITEM_UNARMED);
 }
