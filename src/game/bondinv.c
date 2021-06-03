@@ -2003,7 +2003,7 @@ int checkforgoldengun(void)
     return is_weapon_in_inv(ITEM_GOLDENGUN);
 }
 
-int sub_GAME_7F08CFE0(PropRecord *prop) {
+int is_prop_in_inventory(PropRecord *prop) {
 
     InvItem *item = pPlayer->ptr_inventory_first_in_cycle;
 
