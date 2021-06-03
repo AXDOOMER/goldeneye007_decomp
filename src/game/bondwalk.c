@@ -4400,7 +4400,7 @@ glabel generate_player_thrown_object
 /* 09402C 7F05F4FC 2401003D */  li    $at, 61
 /* 094030 7F05F500 14A1000D */  bne   $a1, $at, .L7F05F538
 /* 094034 7F05F504 00000000 */   nop   
-/* 094038 7F05F508 0FC2315C */  jal   sub_GAME_7F08C570
+/* 094038 7F05F508 0FC2315C */  jal   inventory_remove_prop_weapon_by_id
 /* 09403C 7F05F50C 00A02025 */   move  $a0, $a1
 /* 094040 7F05F510 00408025 */  move  $s0, $v0
 /* 094044 7F05F514 0FC23187 */  jal   inventory_remove_item_by_id

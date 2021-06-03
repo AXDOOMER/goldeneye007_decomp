@@ -332,7 +332,7 @@ int add_doubles_item_to_inventory(int right, int left)
 }
 
 
-WeaponObjRecord *sub_GAME_7F08C570(ITEM_IDS weaponnum)
+WeaponObjRecord *inventory_remove_prop_weapon_by_id(ITEM_IDS weaponnum)
 {
     if (pPlayer->ptr_inventory_first_in_cycle) {
         InvItem *item = pPlayer->ptr_inventory_first_in_cycle->next;
@@ -349,7 +349,7 @@ WeaponObjRecord *sub_GAME_7F08C570(ITEM_IDS weaponnum)
                     if (obj->head.type == PROPDEF_COLLECTABLE) {
                         WeaponObjRecord *weapon = (WeaponObjRecord *)prop->Entityp.obj;
 
-                        if ((s32)weapon->weaponnum == weaponnum) {
+                        if (weapon->weaponnum == weaponnum) {
                             inventory_remove_item(item);
                             return weapon;
                         }
