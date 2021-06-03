@@ -2,6 +2,7 @@
 #include "bondconstants.h"
 #include "bondtypes.h"
 #include "game/bond.h"
+#include "game/bondinv.h"
 #include "game/bondwalk.h"
 #include "game/chrobjdata.h"
 
@@ -2328,123 +2329,44 @@ void backstep_through_inventory(void)
     likely_change_weapon_in_hand(LEFT_HAND, nextleft, -1);
 }
 
-
-#ifdef NONMATCHING
 void autoadvance_on_deplete_all_ammo(void)
 {
-  ITEM_IDS nextleft;
-  ITEM_IDS nextright;
-  ITEM_IDS dupeleft;
-  ITEM_IDS duperight;
-  
-  nextright = get_next_weapon_in_cycle_for_hand(RIGHT_HAND,1);
-  duperight = nextright;
-  nextleft = get_next_weapon_in_cycle_for_hand(LEFT_HAND,1);
-  if (((int)nextright < ITEM_BOMBCASE) && ((int)nextleft < ITEM_BOMBCASE)) {
+	s32 nextright;
+	s32 nextleft;
+	s32 duperight;
+	s32 dupeleft;
+
+    nextright = get_next_weapon_in_cycle_for_hand(RIGHT_HAND, 1);
+    duperight = nextright;
+
+    nextleft = get_next_weapon_in_cycle_for_hand(LEFT_HAND, 1);
     dupeleft = nextleft;
-    if ((nextright == ITEM_REMOTEMINE) &&
-       (check_if_item_available(ITEM_TRIGGER) != 0)) {
-      nextright = ITEM_TRIGGER;
-      nextleft = ITEM_UNARMED;
+
+    if ((duperight >= ITEM_BOMBCASE) || (dupeleft >= ITEM_BOMBCASE))
+    {
+        duperight = pPlayer->hands[RIGHT_HAND].previous_weapon;
+        dupeleft = pPlayer->hands[LEFT_HAND].previous_weapon;
     }
-    else {
-      sub_GAME_7F08C86C((int *)&nextright,(int *)&nextleft,1);
-      if (((int)nextright < (int)duperight) ||
-         ((nextright == duperight && ((int)nextleft <= (int)dupeleft)))) {
-        nextright = duperight;
-        nextleft = dupeleft;
-        sub_GAME_7F08CB10((int *)&nextright,(int *)&nextleft,1);
-      }
+    else if ((duperight == ITEM_REMOTEMINE) && ((check_if_item_available(ITEM_TRIGGER))))
+    {
+        duperight = ITEM_TRIGGER;
+        dupeleft = ITEM_UNARMED;
     }
-  }
-  else {
-    nextright = pPlayer->previous_right_weapon;
-    nextleft = pPlayer->left_weapon_previous;
-  }
-  likely_change_weapon_in_hand(RIGHT_HAND,nextright,1);
-  likely_change_weapon_in_hand(LEFT_HAND,nextleft,1);
+    else
+    {
+        sub_GAME_7F08C86C(&duperight, &dupeleft, 1);
+        
+        if ((duperight < nextright) || ((duperight == nextright) && (nextleft >= dupeleft)))
+        {
+			duperight = nextright;
+			dupeleft = nextleft;
+			sub_GAME_7F08CB10(&duperight, &dupeleft, 1);
+        }
+    }
+
+    likely_change_weapon_in_hand(RIGHT_HAND, duperight, 1);
+    likely_change_weapon_in_hand(LEFT_HAND, dupeleft, 1);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel autoadvance_on_deplete_all_ammo
-/* 092330 7F05D800 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 092334 7F05D804 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 092338 7F05D808 00002025 */  move  $a0, $zero
-/* 09233C 7F05D80C 0FC1750D */  jal   get_next_weapon_in_cycle_for_hand
-/* 092340 7F05D810 24050001 */   li    $a1, 1
-/* 092344 7F05D814 AFA2002C */  sw    $v0, 0x2c($sp)
-/* 092348 7F05D818 AFA20024 */  sw    $v0, 0x24($sp)
-/* 09234C 7F05D81C 24040001 */  li    $a0, 1
-/* 092350 7F05D820 0FC1750D */  jal   get_next_weapon_in_cycle_for_hand
-/* 092354 7F05D824 24050001 */   li    $a1, 1
-/* 092358 7F05D828 8FAE0024 */  lw    $t6, 0x24($sp)
-/* 09235C 7F05D82C 00401825 */  move  $v1, $v0
-/* 092360 7F05D830 AFA20020 */  sw    $v0, 0x20($sp)
-/* 092364 7F05D834 29C10021 */  slti  $at, $t6, 0x21
-/* 092368 7F05D838 10200003 */  beqz  $at, .L7F05D848
-/* 09236C 7F05D83C 28410021 */   slti  $at, $v0, 0x21
-/* 092370 7F05D840 14200008 */  bnez  $at, .L7F05D864
-/* 092374 7F05D844 8FB90024 */   lw    $t9, 0x24($sp)
-.L7F05D848:
-/* 092378 7F05D848 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 09237C 7F05D84C 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
-/* 092380 7F05D850 8C4F0878 */  lw    $t7, 0x878($v0)
-/* 092384 7F05D854 AFAF0024 */  sw    $t7, 0x24($sp)
-/* 092388 7F05D858 8C580C20 */  lw    $t8, 0xc20($v0)
-/* 09238C 7F05D85C 10000021 */  b     .L7F05D8E4
-/* 092390 7F05D860 AFB80020 */   sw    $t8, 0x20($sp)
-.L7F05D864:
-/* 092394 7F05D864 2401001D */  li    $at, 29
-/* 092398 7F05D868 17210009 */  bne   $t9, $at, .L7F05D890
-/* 09239C 7F05D86C 2404001E */   li    $a0, 30
-/* 0923A0 7F05D870 0FC230F0 */  jal   check_if_item_available
-/* 0923A4 7F05D874 AFA30028 */   sw    $v1, 0x28($sp)
-/* 0923A8 7F05D878 10400005 */  beqz  $v0, .L7F05D890
-/* 0923AC 7F05D87C 8FA30028 */   lw    $v1, 0x28($sp)
-/* 0923B0 7F05D880 2408001E */  li    $t0, 30
-/* 0923B4 7F05D884 AFA80024 */  sw    $t0, 0x24($sp)
-/* 0923B8 7F05D888 10000016 */  b     .L7F05D8E4
-/* 0923BC 7F05D88C AFA00020 */   sw    $zero, 0x20($sp)
-.L7F05D890:
-/* 0923C0 7F05D890 27A40024 */  addiu $a0, $sp, 0x24
-/* 0923C4 7F05D894 27A50020 */  addiu $a1, $sp, 0x20
-/* 0923C8 7F05D898 24060001 */  li    $a2, 1
-/* 0923CC 7F05D89C 0FC2321B */  jal   sub_GAME_7F08C86C
-/* 0923D0 7F05D8A0 AFA30028 */   sw    $v1, 0x28($sp)
-/* 0923D4 7F05D8A4 8FA2002C */  lw    $v0, 0x2c($sp)
-/* 0923D8 7F05D8A8 8FA90024 */  lw    $t1, 0x24($sp)
-/* 0923DC 7F05D8AC 8FA30028 */  lw    $v1, 0x28($sp)
-/* 0923E0 7F05D8B0 27A40024 */  addiu $a0, $sp, 0x24
-/* 0923E4 7F05D8B4 0122082A */  slt   $at, $t1, $v0
-/* 0923E8 7F05D8B8 14200006 */  bnez  $at, .L7F05D8D4
-/* 0923EC 7F05D8BC 27A50020 */   addiu $a1, $sp, 0x20
-/* 0923F0 7F05D8C0 15220008 */  bne   $t1, $v0, .L7F05D8E4
-/* 0923F4 7F05D8C4 8FAA0020 */   lw    $t2, 0x20($sp)
-/* 0923F8 7F05D8C8 006A082A */  slt   $at, $v1, $t2
-/* 0923FC 7F05D8CC 54200006 */  bnezl $at, .L7F05D8E8
-/* 092400 7F05D8D0 00002025 */   move  $a0, $zero
-.L7F05D8D4:
-/* 092404 7F05D8D4 AFA20024 */  sw    $v0, 0x24($sp)
-/* 092408 7F05D8D8 AFA30020 */  sw    $v1, 0x20($sp)
-/* 09240C 7F05D8DC 0FC232C4 */  jal   sub_GAME_7F08CB10
-/* 092410 7F05D8E0 24060001 */   li    $a2, 1
-.L7F05D8E4:
-/* 092414 7F05D8E4 00002025 */  move  $a0, $zero
-.L7F05D8E8:
-/* 092418 7F05D8E8 8FA50024 */  lw    $a1, 0x24($sp)
-/* 09241C 7F05D8EC 0FC17538 */  jal   likely_change_weapon_in_hand
-/* 092420 7F05D8F0 24060001 */   li    $a2, 1
-/* 092424 7F05D8F4 24040001 */  li    $a0, 1
-/* 092428 7F05D8F8 8FA50020 */  lw    $a1, 0x20($sp)
-/* 09242C 7F05D8FC 0FC17538 */  jal   likely_change_weapon_in_hand
-/* 092430 7F05D900 24060001 */   li    $a2, 1
-/* 092434 7F05D904 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 092438 7F05D908 27BD0030 */  addiu $sp, $sp, 0x30
-/* 09243C 7F05D90C 03E00008 */  jr    $ra
-/* 092440 7F05D910 00000000 */   nop   
-)
-#endif
 
 s32 draw_item_in_hand_has_more_ammo(HANDEDNESS hand, s32 next_weapon) {
     pPlayer->hands[hand].weapon_current_animation = 5;
