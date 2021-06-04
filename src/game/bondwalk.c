@@ -2099,73 +2099,24 @@ glabel sub_GAME_7F05D334
 )
 #endif
 
+s32 get_next_weapon_in_cycle_for_hand(HANDEDNESS hand, s32 direction)
+{
+	if (pPlayer->hands[hand].when_detonating_mines_is_0 == 5) {
+		if (
+			(direction < 0 && (pPlayer->hands[hand].field_8B8 > 0)) ||
+			(direction > 0 && (pPlayer->hands[hand].field_8B8 < 0)) ) {
+			return get_item_in_hand(hand);
+		}
+		else {
+			return pPlayer->hands[hand].weapon_next_weapon;
+		}
 
-
-
-
-#ifdef NONMATCHING
-void get_next_weapon_in_cycle_for_hand(void) {
-
+    }
+    if (pPlayer->hands[hand].when_detonating_mines_is_0 == 6) {
+        return pPlayer->hands[hand].weapon_next_weapon;
+    }
+    return get_item_in_hand(hand);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_next_weapon_in_cycle_for_hand
-/* 091F64 7F05D434 000478C0 */  sll   $t7, $a0, 3
-/* 091F68 7F05D438 01E47823 */  subu  $t7, $t7, $a0
-/* 091F6C 7F05D43C 000F7880 */  sll   $t7, $t7, 2
-/* 091F70 7F05D440 01E47821 */  addu  $t7, $t7, $a0
-/* 091F74 7F05D444 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 091F78 7F05D448 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 091F7C 7F05D44C 000F7880 */  sll   $t7, $t7, 2
-/* 091F80 7F05D450 01E47821 */  addu  $t7, $t7, $a0
-/* 091F84 7F05D454 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 091F88 7F05D458 000F78C0 */  sll   $t7, $t7, 3
-/* 091F8C 7F05D45C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 091F90 7F05D460 01CF1821 */  addu  $v1, $t6, $t7
-/* 091F94 7F05D464 8C620894 */  lw    $v0, 0x894($v1)
-/* 091F98 7F05D468 24010005 */  li    $at, 5
-/* 091F9C 7F05D46C 54410012 */  bnel  $v0, $at, .L7F05D4B8
-/* 091FA0 7F05D470 24010006 */   li    $at, 6
-/* 091FA4 7F05D474 04A10004 */  bgez  $a1, .L7F05D488
-/* 091FA8 7F05D478 00000000 */   nop   
-/* 091FAC 7F05D47C 8C7808B8 */  lw    $t8, 0x8b8($v1)
-/* 091FB0 7F05D480 1F000006 */  bgtz  $t8, .L7F05D49C
-/* 091FB4 7F05D484 00000000 */   nop   
-.L7F05D488:
-/* 091FB8 7F05D488 18A00008 */  blez  $a1, .L7F05D4AC
-/* 091FBC 7F05D48C 00000000 */   nop   
-/* 091FC0 7F05D490 8C7908B8 */  lw    $t9, 0x8b8($v1)
-/* 091FC4 7F05D494 07210005 */  bgez  $t9, .L7F05D4AC
-/* 091FC8 7F05D498 00000000 */   nop   
-.L7F05D49C:
-/* 091FCC 7F05D49C 0FC17674 */  jal   get_item_in_hand
-/* 091FD0 7F05D4A0 00000000 */   nop   
-/* 091FD4 7F05D4A4 1000000B */  b     .L7F05D4D4
-/* 091FD8 7F05D4A8 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F05D4AC:
-/* 091FDC 7F05D4AC 10000008 */  b     .L7F05D4D0
-/* 091FE0 7F05D4B0 8C6208AC */   lw    $v0, 0x8ac($v1)
-/* 091FE4 7F05D4B4 24010006 */  li    $at, 6
-.L7F05D4B8:
-/* 091FE8 7F05D4B8 14410003 */  bne   $v0, $at, .L7F05D4C8
-/* 091FEC 7F05D4BC 00000000 */   nop   
-/* 091FF0 7F05D4C0 10000003 */  b     .L7F05D4D0
-/* 091FF4 7F05D4C4 8C6208AC */   lw    $v0, 0x8ac($v1)
-.L7F05D4C8:
-/* 091FF8 7F05D4C8 0FC17674 */  jal   get_item_in_hand
-/* 091FFC 7F05D4CC 00000000 */   nop   
-.L7F05D4D0:
-/* 092000 7F05D4D0 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F05D4D4:
-/* 092004 7F05D4D4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 092008 7F05D4D8 03E00008 */  jr    $ra
-/* 09200C 7F05D4DC 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
