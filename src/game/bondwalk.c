@@ -2331,10 +2331,10 @@ void backstep_through_inventory(void)
 
 void autoadvance_on_deplete_all_ammo(void)
 {
-	s32 nextright;
-	s32 nextleft;
-	s32 duperight;
-	s32 dupeleft;
+	ITEM_IDS nextright;
+	ITEM_IDS nextleft;
+	ITEM_IDS duperight;
+	ITEM_IDS dupeleft;
 
     nextright = get_next_weapon_in_cycle_for_hand(RIGHT_HAND, 1);
     duperight = nextright;
