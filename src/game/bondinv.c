@@ -247,36 +247,39 @@ int check_if_item_available(ITEM_IDS weaponid)
 }
 
 
-//Please make me pretty during cleanup phase
-s32 check_if_item_for_hand_available(ITEM_IDS item,int hand)
+int check_if_item_for_hand_available(ITEM_IDS right, ITEM_IDS left)
 {
 #ifdef VERSION_US
-    if (((pPlayer->equipallguns && (item < ITEM_BOMBCASE)) && 
-     (item == hand)) && ((getPlayerCount() == 1 && 
-     (bondwalkItemCheckBitflags(item,0x100000) != 0)))) 
+    if (pPlayer->equipallguns &&
+        right < ITEM_BOMBCASE &&
+        right == left &&
+        getPlayerCount() == 1 &&
+        bondwalkItemCheckBitflags(right, 0x100000))
     {
         return 1;
     }
-    return is_dual_weapon_in_inventory(item,hand);
 #endif
 
 #ifdef VERSION_JP
-    if (hand == 0) 
+    if (left == 0)
     {
         return 1;
     }
     else
     {
-        if ((((pPlayer->equipallguns != 0) && (item < ITEM_BOMBCASE)) &&
-         (item == hand)) && (((getPlayerCount() == 1 &&
-         (bondwalkItemCheckBitflags(item,0x100000) != 0)) &&
-         ((j_text_trigger == 0 || (item != ITEM_KNIFE))))))
+        if (pPlayer->equipallguns &&
+            right < ITEM_BOMBCASE &&
+            right == left &&
+            getPlayerCount() == 1 &&
+            bondwalkItemCheckBitflags(right, 0x100000) &&
+            (j_text_trigger == 0 || (right != ITEM_KNIFE)))
         {
             return 1;
         }
     }
-    return is_dual_weapon_in_inventory(item,hand);
 #endif
+
+    return is_dual_weapon_in_inventory(right, left);
 }
 
 
