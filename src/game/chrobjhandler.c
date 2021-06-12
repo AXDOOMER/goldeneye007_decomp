@@ -35462,7 +35462,7 @@ glabel object_collectability_routines
 /* 085444 7F050914 80650080 */   lb    $a1, 0x80($v1)
 /* 085448 7F050918 80640080 */  lb    $a0, 0x80($v1)
 .L7F05091C:
-/* 08544C 7F05091C 0FC230E7 */  jal   is_item_for_hand_in_inventory
+/* 08544C 7F05091C 0FC230E7 */  jal   is_dual_weapon_in_inventory
 /* 085450 7F050920 00000000 */   nop   
 /* 085454 7F050924 10400072 */  beqz  $v0, .L7F050AF0
 /* 085458 7F050928 00000000 */   nop   
@@ -35926,7 +35926,7 @@ glabel object_collectability_routines
 /* 08587C 7F050D0C 82050080 */   lb    $a1, 0x80($s0)
 /* 085880 7F050D10 82040080 */  lb    $a0, 0x80($s0)
 .Ljp7F050D14:
-/* 085884 7F050D14 0FC2330B */  jal   is_item_for_hand_in_inventory
+/* 085884 7F050D14 0FC2330B */  jal   is_dual_weapon_in_inventory
 /* 085888 7F050D18 00000000 */   nop   
 /* 08588C 7F050D1C 104000B4 */  beqz  $v0, .Ljp7F050FF0
 /* 085890 7F050D20 00000000 */   nop   
@@ -36468,7 +36468,7 @@ glabel object_collectability_routines
 /* 085444 7F050914 80650080 */   lb    $a1, 0x80($v1)
 /* 085448 7F050918 80640080 */  lb    $a0, 0x80($v1)
 .L7F05091C:
-/* 08544C 7F05091C 0FC230E7 */  jal   is_item_for_hand_in_inventory
+/* 08544C 7F05091C 0FC230E7 */  jal   is_dual_weapon_in_inventory
 /* 085450 7F050920 00000000 */   nop   
 /* 085454 7F050924 10400072 */  beqz  $v0, .L7F050AF0
 /* 085458 7F050928 00000000 */   nop   

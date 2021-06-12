@@ -218,13 +218,13 @@ InvItem *get_dual_weapon(ITEM_IDS right, ITEM_IDS left) {
 }
 
 
-/**
- * Is item for hand in inventory
- * @param item: enum Item ID eg: ITEM_KNIFE
- * @param hand: enum Hand ID eg: HAND_LEFT
+ /**
+ * Is dual weapon in inventory
+ * @param right: enum Item ID eg: ITEM_KNIFE
+ * @param left: enum Item ID eg: ITEM_KNIFE
  * @return TRUE/FALSE
  */
-int is_item_for_hand_in_inventory(ITEM_IDS right, ITEM_IDS left) 
+int is_dual_weapon_in_inventory(ITEM_IDS right, ITEM_IDS left) 
 {
     return get_dual_weapon(right, left) != 0;
 }
@@ -257,8 +257,9 @@ s32 check_if_item_for_hand_available(ITEM_IDS item,int hand)
     {
         return 1;
     }
-    return is_item_for_hand_in_inventory(item,hand);
+    return is_dual_weapon_in_inventory(item,hand);
 #endif
+
 #ifdef VERSION_JP
     if (hand == 0) 
     {
@@ -274,7 +275,7 @@ s32 check_if_item_for_hand_available(ITEM_IDS item,int hand)
             return 1;
         }
     }
-    return is_item_for_hand_in_inventory(item,hand);
+    return is_dual_weapon_in_inventory(item,hand);
 #endif
 }
 
@@ -315,7 +316,7 @@ int add_doubles_item_to_inventory(int right, int left)
 {
     InvItem *item;
   
-    if (is_item_for_hand_in_inventory(right, left) == 0) {
+    if (is_dual_weapon_in_inventory(right, left) == 0) {
     
         item = get_ptr_next_available_weapon();
     
@@ -461,14 +462,14 @@ glabel sub_GAME_7F08C764
 /* 0C12FC 7F08C7CC 07230008 */  bgezl $t9, .L7F08C7F0
 /* 0C1300 7F08C7D0 80C50080 */   lb    $a1, 0x80($a2)
 /* 0C1304 7F08C7D4 80C40080 */  lb    $a0, 0x80($a2)
-/* 0C1308 7F08C7D8 0FC230E7 */  jal   is_item_for_hand_in_inventory
+/* 0C1308 7F08C7D8 0FC230E7 */  jal   is_dual_weapon_in_inventory
 /* 0C130C 7F08C7DC AFA30024 */   sw    $v1, 0x24($sp)
 /* 0C1310 7F08C7E0 8FA30024 */  lw    $v1, 0x24($sp)
 /* 0C1314 7F08C7E4 10000006 */  b     .L7F08C800
 /* 0C1318 7F08C7E8 2C450001 */   sltiu $a1, $v0, 1
 /* 0C131C 7F08C7EC 80C50080 */  lb    $a1, 0x80($a2)
 .L7F08C7F0:
-/* 0C1320 7F08C7F0 0FC230E7 */  jal   is_item_for_hand_in_inventory
+/* 0C1320 7F08C7F0 0FC230E7 */  jal   is_dual_weapon_in_inventory
 /* 0C1324 7F08C7F4 AFA30024 */   sw    $v1, 0x24($sp)
 /* 0C1328 7F08C7F8 8FA30024 */  lw    $v1, 0x24($sp)
 /* 0C132C 7F08C7FC 2C450001 */  sltiu $a1, $v0, 1
