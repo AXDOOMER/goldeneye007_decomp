@@ -426,88 +426,56 @@ int add_prop_to_inventory(PropRecord *prop) {
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08C764(void) {
+int sub_GAME_7F08C764(PropRecord *prop)
+{
+    int added;
+    added = FALSE;
+    
+    if (prop->type == PROP_TYPE_WEAPON)
+    {
+        ObjectRecord *obj = prop->Entityp.obj;
 
+        if (obj->head.type == PROPDEF_COLLECTABLE)
+        {
+            WeaponObjRecord *weapon = (WeaponObjRecord *)prop->Entityp.obj;
+            WeaponObjRecord *otherweapon;
+
+            s8 weaponnum = weapon->weaponnum;
+            added = add_item_to_inventory(weaponnum);
+            
+            otherweapon = weapon->dualweapon;
+            if (otherweapon != 0)
+            {
+                if (weapon->base.flags & PROPFLAG_10000000)
+                {
+                    added = is_dual_weapon_in_inventory(otherweapon->weaponnum, weaponnum) == 0;
+                }
+                else
+                {
+                    added = is_dual_weapon_in_inventory(weaponnum, otherweapon->weaponnum) == 0;
+                }
+                weapon->dualweapon->LinkedWeaponType = weaponnum;
+                weapon->dualweapon->dualweapon = 0;
+                weapon->dualweapon = NULL;
+            }
+            else
+            {
+                if (weapon->LinkedWeaponType >= 0)
+                {
+                    if (weapon->base.flags & PROPFLAG_10000000)
+                    {
+                        added = add_doubles_item_to_inventory(weapon->LinkedWeaponType, weaponnum);
+                    }
+                    else
+                    {
+                        added = add_doubles_item_to_inventory(weaponnum, weapon->LinkedWeaponType);
+                    }
+                }
+            }
+        }
+    }
+    return added;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08C764
-/* 0C1294 7F08C764 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0C1298 7F08C768 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0C129C 7F08C76C AFB00018 */  sw    $s0, 0x18($sp)
-/* 0C12A0 7F08C770 908E0000 */  lbu   $t6, ($a0)
-/* 0C12A4 7F08C774 24010004 */  li    $at, 4
-/* 0C12A8 7F08C778 00002825 */  move  $a1, $zero
-/* 0C12AC 7F08C77C 55C10037 */  bnel  $t6, $at, .L7F08C85C
-/* 0C12B0 7F08C780 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0C12B4 7F08C784 8C860004 */  lw    $a2, 4($a0)
-/* 0C12B8 7F08C788 24010008 */  li    $at, 8
-/* 0C12BC 7F08C78C 90CF0003 */  lbu   $t7, 3($a2)
-/* 0C12C0 7F08C790 55E10032 */  bnel  $t7, $at, .L7F08C85C
-/* 0C12C4 7F08C794 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0C12C8 7F08C798 80D00080 */  lb    $s0, 0x80($a2)
-/* 0C12CC 7F08C79C AFA60024 */  sw    $a2, 0x24($sp)
-/* 0C12D0 7F08C7A0 0FC23122 */  jal   add_item_to_inventory
-/* 0C12D4 7F08C7A4 02002025 */   move  $a0, $s0
-/* 0C12D8 7F08C7A8 8FA30024 */  lw    $v1, 0x24($sp)
-/* 0C12DC 7F08C7AC 00402825 */  move  $a1, $v0
-/* 0C12E0 7F08C7B0 8C660084 */  lw    $a2, 0x84($v1)
-/* 0C12E4 7F08C7B4 50C00019 */  beql  $a2, $zero, .L7F08C81C
-/* 0C12E8 7F08C7B8 80660081 */   lb    $a2, 0x81($v1)
-/* 0C12EC 7F08C7BC 8C780008 */  lw    $t8, 8($v1)
-/* 0C12F0 7F08C7C0 02002825 */  move  $a1, $s0
-/* 0C12F4 7F08C7C4 02002025 */  move  $a0, $s0
-/* 0C12F8 7F08C7C8 0018C8C0 */  sll   $t9, $t8, 3
-/* 0C12FC 7F08C7CC 07230008 */  bgezl $t9, .L7F08C7F0
-/* 0C1300 7F08C7D0 80C50080 */   lb    $a1, 0x80($a2)
-/* 0C1304 7F08C7D4 80C40080 */  lb    $a0, 0x80($a2)
-/* 0C1308 7F08C7D8 0FC230E7 */  jal   is_dual_weapon_in_inventory
-/* 0C130C 7F08C7DC AFA30024 */   sw    $v1, 0x24($sp)
-/* 0C1310 7F08C7E0 8FA30024 */  lw    $v1, 0x24($sp)
-/* 0C1314 7F08C7E4 10000006 */  b     .L7F08C800
-/* 0C1318 7F08C7E8 2C450001 */   sltiu $a1, $v0, 1
-/* 0C131C 7F08C7EC 80C50080 */  lb    $a1, 0x80($a2)
-.L7F08C7F0:
-/* 0C1320 7F08C7F0 0FC230E7 */  jal   is_dual_weapon_in_inventory
-/* 0C1324 7F08C7F4 AFA30024 */   sw    $v1, 0x24($sp)
-/* 0C1328 7F08C7F8 8FA30024 */  lw    $v1, 0x24($sp)
-/* 0C132C 7F08C7FC 2C450001 */  sltiu $a1, $v0, 1
-.L7F08C800:
-/* 0C1330 7F08C800 8C680084 */  lw    $t0, 0x84($v1)
-/* 0C1334 7F08C804 A1100081 */  sb    $s0, 0x81($t0)
-/* 0C1338 7F08C808 8C690084 */  lw    $t1, 0x84($v1)
-/* 0C133C 7F08C80C AD200084 */  sw    $zero, 0x84($t1)
-/* 0C1340 7F08C810 10000011 */  b     .L7F08C858
-/* 0C1344 7F08C814 AC600084 */   sw    $zero, 0x84($v1)
-/* 0C1348 7F08C818 80660081 */  lb    $a2, 0x81($v1)
-.L7F08C81C:
-/* 0C134C 7F08C81C 04C2000F */  bltzl $a2, .L7F08C85C
-/* 0C1350 7F08C820 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0C1354 7F08C824 8C6A0008 */  lw    $t2, 8($v1)
-/* 0C1358 7F08C828 02002825 */  move  $a1, $s0
-/* 0C135C 7F08C82C 02002025 */  move  $a0, $s0
-/* 0C1360 7F08C830 000A58C0 */  sll   $t3, $t2, 3
-/* 0C1364 7F08C834 05610005 */  bgez  $t3, .L7F08C84C
-/* 0C1368 7F08C838 00000000 */   nop   
-/* 0C136C 7F08C83C 0FC23143 */  jal   add_doubles_item_to_inventory
-/* 0C1370 7F08C840 00C02025 */   move  $a0, $a2
-/* 0C1374 7F08C844 10000004 */  b     .L7F08C858
-/* 0C1378 7F08C848 00402825 */   move  $a1, $v0
-.L7F08C84C:
-/* 0C137C 7F08C84C 0FC23143 */  jal   add_doubles_item_to_inventory
-/* 0C1380 7F08C850 00C02825 */   move  $a1, $a2
-/* 0C1384 7F08C854 00402825 */  move  $a1, $v0
-.L7F08C858:
-/* 0C1388 7F08C858 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F08C85C:
-/* 0C138C 7F08C85C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0C1390 7F08C860 27BD0030 */  addiu $sp, $sp, 0x30
-/* 0C1394 7F08C864 03E00008 */  jr    $ra
-/* 0C1398 7F08C868 00A01025 */   move  $v0, $a1
-)
-#endif
 
 
 
