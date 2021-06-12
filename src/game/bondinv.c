@@ -188,9 +188,9 @@ InvItem *get_ptr_inventory_item(ITEM_IDS weapon) {
  * @param item: enum Item ID eg: ITEM_KNIFE
  * @return TRUE/FALSE
  */
-int is_weapon_in_inv(ITEM_IDS item) 
+int is_item_in_inventory(ITEM_IDS item) 
 {
-    return (get_ptr_inventory_item(item) != 0);
+    return get_ptr_inventory_item(item) != NULL;
 }
 
 
@@ -226,7 +226,7 @@ InvItem *get_dual_weapon(ITEM_IDS right, ITEM_IDS left) {
  */
 int is_dual_weapon_in_inventory(ITEM_IDS right, ITEM_IDS left) 
 {
-    return get_dual_weapon(right, left) != 0;
+    return get_dual_weapon(right, left) != NULL;
 }
 
 int check_if_item_available(ITEM_IDS weaponid)
@@ -243,7 +243,7 @@ int check_if_item_available(ITEM_IDS weaponid)
         return 1;
 #endif
     }
-    return is_weapon_in_inv(weaponid);
+    return is_item_in_inventory(weaponid);
 }
 
 
@@ -288,7 +288,7 @@ int add_item_to_inventory(ITEM_IDS item)
 {
     InvItem *nextItem;
   
-    if (is_weapon_in_inv(item) == 0)
+    if (is_item_in_inventory(item) == 0)
     {
         nextItem = get_ptr_next_available_weapon();
         if (nextItem)
@@ -1990,10 +1990,10 @@ s32 checkHasGEKey(void)
  * Is the player alive with flag tag token in inventory
  * @return TRUE/FALSE
  */
-s32 bondinvIsAliveWithFlag(void)
+int bondinvIsAliveWithFlag(void)
 {
     if (!pPlayer->bonddead) {
-        return is_weapon_in_inv(ITEM_TOKEN);
+        return is_item_in_inventory(ITEM_TOKEN);
     }
 
     return FALSE;
@@ -2006,7 +2006,7 @@ s32 bondinvIsAliveWithFlag(void)
  */
 int checkforgoldengun(void) 
 {
-    return is_weapon_in_inv(ITEM_GOLDENGUN);
+    return is_item_in_inventory(ITEM_GOLDENGUN);
 }
 
 int is_prop_in_inventory(PropRecord *prop) {

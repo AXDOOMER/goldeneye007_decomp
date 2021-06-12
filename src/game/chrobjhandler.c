@@ -35417,7 +35417,7 @@ glabel object_collectability_routines
 /* 0853A0 7F050870 1000012B */  b     .L7F050D20
 /* 0853A4 7F050874 00001025 */   move  $v0, $zero
 .L7F050878:
-/* 0853A8 7F050878 0FC230C5 */  jal   is_weapon_in_inv
+/* 0853A8 7F050878 0FC230C5 */  jal   is_item_in_inventory
 /* 0853AC 7F05087C AFA30080 */   sw    $v1, 0x80($sp)
 /* 0853B0 7F050880 1040009B */  beqz  $v0, .L7F050AF0
 /* 0853B4 7F050884 8FA30080 */   lw    $v1, 0x80($sp)
@@ -35885,7 +35885,7 @@ glabel object_collectability_routines
 /* 0857E8 7F050C78 10000167 */  b     .Ljp7F051218
 /* 0857EC 7F050C7C 00001025 */   move  $v0, $zero
 .Ljp7F050C80:
-/* 0857F0 7F050C80 0FC232E9 */  jal   is_weapon_in_inv
+/* 0857F0 7F050C80 0FC232E9 */  jal   is_item_in_inventory
 /* 0857F4 7F050C84 00000000 */   nop   
 /* 0857F8 7F050C88 104000D9 */  beqz  $v0, .Ljp7F050FF0
 /* 0857FC 7F050C8C 00000000 */   nop   
@@ -35953,7 +35953,7 @@ glabel object_collectability_routines
 /* 0858DC 7F050D6C 24010005 */  li    $at, 5
 /* 0858E0 7F050D70 54410007 */  bnel  $v0, $at, .Ljp7F050D90
 /* 0858E4 7F050D74 24010007 */   li    $at, 7
-/* 0858E8 7F050D78 0FC232E9 */  jal   is_weapon_in_inv
+/* 0858E8 7F050D78 0FC232E9 */  jal   is_item_in_inventory
 /* 0858EC 7F050D7C 2404001A */   li    $a0, 26
 /* 0858F0 7F050D80 1040009B */  beqz  $v0, .Ljp7F050FF0
 /* 0858F4 7F050D84 00000000 */   nop   
@@ -35962,7 +35962,7 @@ glabel object_collectability_routines
 .Ljp7F050D90:
 /* 085900 7F050D90 54410007 */  bnel  $v0, $at, .Ljp7F050DB0
 /* 085904 7F050D94 24010008 */   li    $at, 8
-/* 085908 7F050D98 0FC232E9 */  jal   is_weapon_in_inv
+/* 085908 7F050D98 0FC232E9 */  jal   is_item_in_inventory
 /* 08590C 7F050D9C 2404001D */   li    $a0, 29
 /* 085910 7F050DA0 10400093 */  beqz  $v0, .Ljp7F050FF0
 /* 085914 7F050DA4 00000000 */   nop   
@@ -35971,7 +35971,7 @@ glabel object_collectability_routines
 .Ljp7F050DB0:
 /* 085920 7F050DB0 54410007 */  bnel  $v0, $at, .Ljp7F050DD0
 /* 085924 7F050DB4 24010009 */   li    $at, 9
-/* 085928 7F050DB8 0FC232E9 */  jal   is_weapon_in_inv
+/* 085928 7F050DB8 0FC232E9 */  jal   is_item_in_inventory
 /* 08592C 7F050DBC 2404001C */   li    $a0, 28
 /* 085930 7F050DC0 1040008B */  beqz  $v0, .Ljp7F050FF0
 /* 085934 7F050DC4 00000000 */   nop   
@@ -35980,7 +35980,7 @@ glabel object_collectability_routines
 .Ljp7F050DD0:
 /* 085940 7F050DD0 54410007 */  bnel  $v0, $at, .Ljp7F050DF0
 /* 085944 7F050DD4 2401000A */   li    $at, 10
-/* 085948 7F050DD8 0FC232E9 */  jal   is_weapon_in_inv
+/* 085948 7F050DD8 0FC232E9 */  jal   is_item_in_inventory
 /* 08594C 7F050DDC 2404001B */   li    $a0, 27
 /* 085950 7F050DE0 10400083 */  beqz  $v0, .Ljp7F050FF0
 /* 085954 7F050DE4 00000000 */   nop   
@@ -35989,7 +35989,7 @@ glabel object_collectability_routines
 .Ljp7F050DF0:
 /* 085960 7F050DF0 14410005 */  bne   $v0, $at, .Ljp7F050E08
 /* 085964 7F050DF4 00000000 */   nop   
-/* 085968 7F050DF8 0FC232E9 */  jal   is_weapon_in_inv
+/* 085968 7F050DF8 0FC232E9 */  jal   is_item_in_inventory
 /* 08596C 7F050DFC 24040003 */   li    $a0, 3
 /* 085970 7F050E00 1040007B */  beqz  $v0, .Ljp7F050FF0
 /* 085974 7F050E04 00000000 */   nop   
@@ -36038,35 +36038,35 @@ glabel object_collectability_routines
 .Ljp7F050E9C:
 /* 085A0C 7F050E9C 56010005 */  bnel  $s0, $at, .Ljp7F050EB4
 /* 085A10 7F050EA0 24010007 */   li    $at, 7
-/* 085A14 7F050EA4 0FC232E9 */  jal   is_weapon_in_inv
+/* 085A14 7F050EA4 0FC232E9 */  jal   is_item_in_inventory
 /* 085A18 7F050EA8 2404001A */   li    $a0, 26
 /* 085A1C 7F050EAC 10400019 */  beqz  $v0, .Ljp7F050F14
 /* 085A20 7F050EB0 24010007 */   li    $at, 7
 .Ljp7F050EB4:
 /* 085A24 7F050EB4 56010005 */  bnel  $s0, $at, .Ljp7F050ECC
 /* 085A28 7F050EB8 24010008 */   li    $at, 8
-/* 085A2C 7F050EBC 0FC232E9 */  jal   is_weapon_in_inv
+/* 085A2C 7F050EBC 0FC232E9 */  jal   is_item_in_inventory
 /* 085A30 7F050EC0 2404001D */   li    $a0, 29
 /* 085A34 7F050EC4 10400013 */  beqz  $v0, .Ljp7F050F14
 /* 085A38 7F050EC8 24010008 */   li    $at, 8
 .Ljp7F050ECC:
 /* 085A3C 7F050ECC 56010005 */  bnel  $s0, $at, .Ljp7F050EE4
 /* 085A40 7F050ED0 24010009 */   li    $at, 9
-/* 085A44 7F050ED4 0FC232E9 */  jal   is_weapon_in_inv
+/* 085A44 7F050ED4 0FC232E9 */  jal   is_item_in_inventory
 /* 085A48 7F050ED8 2404001C */   li    $a0, 28
 /* 085A4C 7F050EDC 1040000D */  beqz  $v0, .Ljp7F050F14
 /* 085A50 7F050EE0 24010009 */   li    $at, 9
 .Ljp7F050EE4:
 /* 085A54 7F050EE4 56010005 */  bnel  $s0, $at, .Ljp7F050EFC
 /* 085A58 7F050EE8 2401000A */   li    $at, 10
-/* 085A5C 7F050EEC 0FC232E9 */  jal   is_weapon_in_inv
+/* 085A5C 7F050EEC 0FC232E9 */  jal   is_item_in_inventory
 /* 085A60 7F050EF0 2404001B */   li    $a0, 27
 /* 085A64 7F050EF4 10400007 */  beqz  $v0, .Ljp7F050F14
 /* 085A68 7F050EF8 2401000A */   li    $at, 10
 .Ljp7F050EFC:
 /* 085A6C 7F050EFC 56010008 */  bnel  $s0, $at, .Ljp7F050F20
 /* 085A70 7F050F00 8FA2003C */   lw    $v0, 0x3c($sp)
-/* 085A74 7F050F04 0FC232E9 */  jal   is_weapon_in_inv
+/* 085A74 7F050F04 0FC232E9 */  jal   is_item_in_inventory
 /* 085A78 7F050F08 24040003 */   li    $a0, 3
 /* 085A7C 7F050F0C 54400004 */  bnezl $v0, .Ljp7F050F20
 /* 085A80 7F050F10 8FA2003C */   lw    $v0, 0x3c($sp)
@@ -36423,7 +36423,7 @@ glabel object_collectability_routines
 /* 0853A0 7F050870 1000012B */  b     .L7F050D20
 /* 0853A4 7F050874 00001025 */   move  $v0, $zero
 .L7F050878:
-/* 0853A8 7F050878 0FC230C5 */  jal   is_weapon_in_inv
+/* 0853A8 7F050878 0FC230C5 */  jal   is_item_in_inventory
 /* 0853AC 7F05087C AFA30080 */   sw    $v1, 0x80($sp)
 /* 0853B0 7F050880 1040009B */  beqz  $v0, .L7F050AF0
 /* 0853B4 7F050884 8FA30080 */   lw    $v1, 0x80($sp)
@@ -44619,7 +44619,7 @@ glabel drop_inventory
 /* 08B300 7F0567D0 02002025 */   move  $a0, $s0
 /* 08B304 7F0567D4 04400012 */  bltz  $v0, .L7F056820
 /* 08B308 7F0567D8 00408825 */   move  $s1, $v0
-/* 08B30C 7F0567DC 0FC230C5 */  jal   is_weapon_in_inv
+/* 08B30C 7F0567DC 0FC230C5 */  jal   is_item_in_inventory
 /* 08B310 7F0567E0 02002025 */   move  $a0, $s0
 /* 08B314 7F0567E4 1040000E */  beqz  $v0, .L7F056820
 /* 08B318 7F0567E8 02402025 */   move  $a0, $s2
