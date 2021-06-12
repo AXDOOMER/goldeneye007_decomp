@@ -426,11 +426,11 @@ int add_prop_to_inventory(PropRecord *prop) {
 }
 
 
-int sub_GAME_7F08C764(PropRecord *prop)
+int add_weapon_by_prop(PropRecord *prop)
 {
     int added;
     added = FALSE;
-    
+
     if (prop->type == PROP_TYPE_WEAPON)
     {
         ObjectRecord *obj = prop->Entityp.obj;

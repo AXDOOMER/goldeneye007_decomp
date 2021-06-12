@@ -34326,7 +34326,7 @@ interact_weapon_object:
 /* 084F70 7F050440 29010021 */  slti  $at, $t0, 0x21
 /* 084F74 7F050444 50200004 */  beql  $at, $zero, .L7F050458
 /* 084F78 7F050448 8FA90074 */   lw    $t1, 0x74($sp)
-/* 084F7C 7F05044C 0FC231D9 */  jal   sub_GAME_7F08C764
+/* 084F7C 7F05044C 0FC231D9 */  jal   add_weapon_by_prop
 /* 084F80 7F050450 8FA40070 */   lw    $a0, 0x70($sp)
 /* 084F84 7F050454 8FA90074 */  lw    $t1, 0x74($sp)
 .L7F050458:
@@ -34353,7 +34353,7 @@ interact_weapon_object:
 /* 084FCC 7F05049C 1000001C */  b     .L7F050510
 /* 084FD0 7F0504A0 81840080 */   lb    $a0, 0x80($t4)
 .L7F0504A4:
-/* 084FD4 7F0504A4 0FC231D9 */  jal   sub_GAME_7F08C764
+/* 084FD4 7F0504A4 0FC231D9 */  jal   add_weapon_by_prop
 /* 084FD8 7F0504A8 8FA40070 */   lw    $a0, 0x70($sp)
 /* 084FDC 7F0504AC 10400002 */  beqz  $v0, .L7F0504B8
 /* 084FE0 7F0504B0 240D0001 */   li    $t5, 1
@@ -34706,7 +34706,7 @@ interact_weapon_object:
 /* 084F70 7F050440 29010021 */  slti  $at, $t0, 0x21
 /* 084F74 7F050444 50200004 */  beql  $at, $zero, .L7F050458
 /* 084F78 7F050448 8FA90074 */   lw    $t1, 0x74($sp)
-/* 084F7C 7F05044C 0FC231D9 */  jal   sub_GAME_7F08C764
+/* 084F7C 7F05044C 0FC231D9 */  jal   add_weapon_by_prop
 /* 084F80 7F050450 8FA40070 */   lw    $a0, 0x70($sp)
 /* 084F84 7F050454 8FA90074 */  lw    $t1, 0x74($sp)
 .L7F050458:
@@ -34733,7 +34733,7 @@ interact_weapon_object:
 /* 084FCC 7F05049C 1000001C */  b     .L7F050510
 /* 084FD0 7F0504A0 81840080 */   lb    $a0, 0x80($t4)
 .L7F0504A4:
-/* 084FD4 7F0504A4 0FC231D9 */  jal   sub_GAME_7F08C764
+/* 084FD4 7F0504A4 0FC231D9 */  jal   add_weapon_by_prop
 /* 084FD8 7F0504A8 8FA40070 */   lw    $a0, 0x70($sp)
 /* 084FDC 7F0504AC 10400002 */  beqz  $v0, .L7F0504B8
 /* 084FE0 7F0504B0 240D0001 */   li    $t5, 1
@@ -35087,7 +35087,7 @@ interact_weapon_object:
 /* 084F70 7F050440 29010021 */  slti  $at, $t0, 0x21
 /* 084F74 7F050444 50200004 */  beql  $at, $zero, .L7F050458
 /* 084F78 7F050448 8FA90074 */   lw    $t1, 0x74($sp)
-/* 084F7C 7F05044C 0FC231D9 */  jal   sub_GAME_7F08C764
+/* 084F7C 7F05044C 0FC231D9 */  jal   add_weapon_by_prop
 /* 084F80 7F050450 8FA40070 */   lw    $a0, 0x70($sp)
 /* 084F84 7F050454 8FA90074 */  lw    $t1, 0x74($sp)
 .L7F050458:
@@ -35114,7 +35114,7 @@ interact_weapon_object:
 /* 084FCC 7F05049C 1000001C */  b     .L7F050510
 /* 084FD0 7F0504A0 81840080 */   lb    $a0, 0x80($t4)
 .L7F0504A4:
-/* 084FD4 7F0504A4 0FC231D9 */  jal   sub_GAME_7F08C764
+/* 084FD4 7F0504A4 0FC231D9 */  jal   add_weapon_by_prop
 /* 084FD8 7F0504A8 8FA40070 */   lw    $a0, 0x70($sp)
 /* 084FDC 7F0504AC 10400002 */  beqz  $v0, .L7F0504B8
 /* 084FE0 7F0504B0 240D0001 */   li    $t5, 1
