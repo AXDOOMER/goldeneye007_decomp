@@ -194,14 +194,16 @@ int is_weapon_in_inv(ITEM_IDS item)
 }
 
 
-InvItem *get_ptr_inventory_for_item_in_hand(ITEM_IDS right, ITEM_IDS left) {
+InvItem *get_dual_weapon(ITEM_IDS right, ITEM_IDS left) {
 
     InvItem *first = pPlayer->ptr_inventory_first_in_cycle;
     InvItem *item = first;
 
     while (item) {
 
-        if (item->type == INV_ITEM_DUAL && item->type_inv_item.type_dual.weapon_right == right && item->type_inv_item.type_dual.weapon_left == left) {
+        if (item->type == INV_ITEM_DUAL &&
+            item->type_inv_item.type_dual.weapon_right == right &&
+            item->type_inv_item.type_dual.weapon_left == left) {
             return item;
         }
 
@@ -222,9 +224,9 @@ InvItem *get_ptr_inventory_for_item_in_hand(ITEM_IDS right, ITEM_IDS left) {
  * @param hand: enum Hand ID eg: HAND_LEFT
  * @return TRUE/FALSE
  */
-int is_item_for_hand_in_inventory(ITEM_IDS item, int hand) 
+int is_item_for_hand_in_inventory(ITEM_IDS right, ITEM_IDS left) 
 {
-    return (get_ptr_inventory_for_item_in_hand(item, hand) != 0);
+    return get_dual_weapon(right, left) != 0;
 }
 
 int check_if_item_available(ITEM_IDS weaponid)
