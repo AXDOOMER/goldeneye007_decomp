@@ -315,7 +315,7 @@ int add_item_to_inventory(ITEM_IDS item)
 }
 
 
-int add_doubles_item_to_inventory(int right, int left)
+int add_doubles_item_to_inventory(ITEM_IDS right, ITEM_IDS left)
 {
     InvItem *item;
   
@@ -325,12 +325,10 @@ int add_doubles_item_to_inventory(int right, int left)
     
         if (item) {
             item->type = INV_ITEM_DUAL;
-            
             item->type_inv_item.type_dual.weapon_right = right;
             item->type_inv_item.type_dual.weapon_left = left;
             inv_insert_item(item);
         }
-
         return TRUE;
     } else {
         return FALSE;
@@ -413,7 +411,7 @@ void inventory_remove_item_by_id(ITEM_IDS weaponnum)
 }
 
 int add_prop_to_inventory(PropRecord *prop) {
-    
+
     InvItem *item;
 
     item = get_ptr_next_available_weapon();
