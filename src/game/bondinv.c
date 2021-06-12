@@ -161,7 +161,7 @@ s32 get_BONDdata_allguns_flag(void) {
 }
 
 
-InvItem *get_ptr_inventory_item(ITEM_IDS weapon) {
+InvItem *get_inventory_item(ITEM_IDS weapon) {
 
     InvItem *first = pPlayer->ptr_inventory_first_in_cycle;
     InvItem *item = first;
@@ -190,7 +190,7 @@ InvItem *get_ptr_inventory_item(ITEM_IDS weapon) {
  */
 int is_item_in_inventory(ITEM_IDS item) 
 {
-    return get_ptr_inventory_item(item) != NULL;
+    return get_inventory_item(item) != NULL;
 }
 
 
