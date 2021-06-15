@@ -865,7 +865,7 @@ void set_screen_ratio(u32 param_1)
 
 
 
-void sub_GAME_7F0A4EF8(void) {
+void watch_play_beep_sound(void) {
     
     if (watch_soundrelated_maybe == 1) {
         watch_soundrelated_maybe = 0;
@@ -11145,15 +11145,15 @@ Gfx *sub_GAME_7F0ACA28(Gfx *gdl, s32 arg1, s32 watch_transitioning)
 {
     draw_selected_page_rectangle(watch_screen_index, &pPlayer->buffer_for_watch_greenbackdrop_vertices);
 
-    if (watch_transitioning == 1)
+    if (watch_transitioning == TRUE)
     {
         set_BONDdata_paused_flag(0);
         sub_GAME_7F0BD8FC(0);
 
         // Handle A or Z button click when in any page but inventory page
-        if ((watch_screen_index != 1) && (joyGetButtonsPressedThisFrame(0, Z_TRIG|A_BUTTON)))
+        if ((watch_screen_index != WATCH_INDEX_INVENTORY) && (joyGetButtonsPressedThisFrame(0, Z_TRIG|A_BUTTON)))
         {
-            sub_GAME_7F0A4EF8();
+            watch_play_beep_sound();
         }
        
         switch (watch_screen_index)
@@ -11174,7 +11174,7 @@ Gfx *sub_GAME_7F0ACA28(Gfx *gdl, s32 arg1, s32 watch_transitioning)
                 gdl = draw_watch_mission_briefing_page(gdl, arg1);
         }
     }
-    else if (watch_transitioning == 0)
+    else if (watch_transitioning == FALSE)
     {
         sub_GAME_7F0BD8FC(1);
         set_BONDdata_paused_flag(1);

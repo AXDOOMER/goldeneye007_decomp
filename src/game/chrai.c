@@ -4548,7 +4548,7 @@ action56_GoIntoRVLIf_16_Object_num_Collected_3:
 /* 06B85C 7F036D2C 8C490010 */  lw    $t1, 0x10($v0)
 /* 06B860 7F036D30 5120000C */  beql  $t1, $zero, .L7F036D64
 /* 06B864 7F036D34 26520003 */   addiu $s2, $s2, 3
-/* 06B868 7F036D38 0FC233F8 */  jal   sub_GAME_7F08CFE0
+/* 06B868 7F036D38 0FC233F8 */  jal   is_prop_in_inventory
 /* 06B86C 7F036D3C 8C440010 */   lw    $a0, 0x10($v0)
 /* 06B870 7F036D40 10400007 */  beqz  $v0, .L7F036D60
 /* 06B874 7F036D44 02C02025 */   move  $a0, $s6
@@ -10415,7 +10415,7 @@ action56_GoIntoRVLIf_16_Object_num_Collected_3:
 /* 06B85C 7F036D2C 8C490010 */  lw    $t1, 0x10($v0)
 /* 06B860 7F036D30 5120000C */  beql  $t1, $zero, .L7F036D64
 /* 06B864 7F036D34 26520003 */   addiu $s2, $s2, 3
-/* 06B868 7F036D38 0FC233F8 */  jal   sub_GAME_7F08CFE0
+/* 06B868 7F036D38 0FC233F8 */  jal   is_prop_in_inventory
 /* 06B86C 7F036D3C 8C440010 */   lw    $a0, 0x10($v0)
 /* 06B870 7F036D40 10400007 */  beqz  $v0, .L7F036D60
 /* 06B874 7F036D44 02C02025 */   move  $a0, $s6
@@ -16283,7 +16283,7 @@ action56_GoIntoRVLIf_16_Object_num_Collected_3:
 /* 06B85C 7F036D2C 8C490010 */  lw    $t1, 0x10($v0)
 /* 06B860 7F036D30 5120000C */  beql  $t1, $zero, .L7F036D64
 /* 06B864 7F036D34 26520003 */   addiu $s2, $s2, 3
-/* 06B868 7F036D38 0FC233F8 */  jal   sub_GAME_7F08CFE0
+/* 06B868 7F036D38 0FC233F8 */  jal   is_prop_in_inventory
 /* 06B86C 7F036D3C 8C440010 */   lw    $a0, 0x10($v0)
 /* 06B870 7F036D40 10400007 */  beqz  $v0, .L7F036D60
 /* 06B874 7F036D44 02C02025 */   move  $a0, $s6

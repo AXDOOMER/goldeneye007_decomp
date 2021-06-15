@@ -4400,10 +4400,10 @@ glabel generate_player_thrown_object
 /* 09402C 7F05F4FC 2401003D */  li    $at, 61
 /* 094030 7F05F500 14A1000D */  bne   $a1, $at, .L7F05F538
 /* 094034 7F05F504 00000000 */   nop   
-/* 094038 7F05F508 0FC2315C */  jal   sub_GAME_7F08C570
+/* 094038 7F05F508 0FC2315C */  jal   inventory_remove_prop_weapon_by_id
 /* 09403C 7F05F50C 00A02025 */   move  $a0, $a1
 /* 094040 7F05F510 00408025 */  move  $s0, $v0
-/* 094044 7F05F514 0FC23187 */  jal   sub_GAME_7F08C61C
+/* 094044 7F05F514 0FC23187 */  jal   inventory_remove_item_by_id
 /* 094048 7F05F518 8FA40038 */   lw    $a0, 0x38($sp)
 /* 09404C 7F05F51C 12000003 */  beqz  $s0, .L7F05F52C
 /* 094050 7F05F520 00000000 */   nop   
@@ -18024,7 +18024,7 @@ weapon_reload_none_sfx:
 /* 09B880 7F066D50 8E18001C */  lw    $t8, 0x1c($s0)
 /* 09B884 7F066D54 17000003 */  bnez  $t8, .L7F066D64
 /* 09B888 7F066D58 00000000 */   nop   
-/* 09B88C 7F066D5C 0FC19BC2 */  jal   sub_GAME_7F066F08
+/* 09B88C 7F066D5C 0FC19BC2 */  jal   give_weapon_case_items
 /* 09B890 7F066D60 00000000 */   nop   
 .L7F066D64:
 /* 09B894 7F066D64 10000035 */  b     .L7F066E3C
@@ -20882,7 +20882,7 @@ weapon_reload_none_sfx:
 /* 09BE98 7F067328 8E18001C */  lw    $t8, 0x1c($s0)
 /* 09BE9C 7F06732C 17000003 */  bnez  $t8, .Ljp7F06733C
 /* 09BEA0 7F067330 00000000 */   nop   
-/* 09BEA4 7F067334 0FC19D38 */  jal   sub_GAME_7F066F08
+/* 09BEA4 7F067334 0FC19D38 */  jal   give_weapon_case_items
 /* 09BEA8 7F067338 00000000 */   nop   
 .Ljp7F06733C:
 /* 09BEAC 7F06733C 10000035 */  b     .Ljp7F067414
@@ -23715,7 +23715,7 @@ weapon_reload_none_sfx:
 /* 09B880 7F066D50 8E18001C */  lw    $t8, 0x1c($s0)
 /* 09B884 7F066D54 17000003 */  bnez  $t8, .L7F066D64
 /* 09B888 7F066D58 00000000 */   nop   
-/* 09B88C 7F066D5C 0FC19BC2 */  jal   sub_GAME_7F066F08
+/* 09B88C 7F066D5C 0FC19BC2 */  jal   give_weapon_case_items
 /* 09B890 7F066D60 00000000 */   nop   
 .L7F066D64:
 /* 09B894 7F066D64 10000035 */  b     .L7F066E3C
@@ -23830,7 +23830,7 @@ int get_keyanalyzer_flag(void)
 }
 
 
-void sub_GAME_7F066F08(void)
+void give_weapon_case_items(void)
 {
   add_ammo_to_inventory(AMMO_KNIFE, 2, 0, 1);
   add_ammo_to_inventory(AMMO_GRENADE, 2, 0, 1);
@@ -23838,7 +23838,7 @@ void sub_GAME_7F066F08(void)
   set_sound_effect_for_weapontype_collection(ITEM_SNIPERRIFLE);
   display_text_for_weapon_in_lower_left_corner(ITEM_SNIPERRIFLE);
   give_cur_player_ammo(sniperrifle_stats.AmmoType, check_cur_player_ammo_amount_in_inventory(sniperrifle_stats.AmmoType) + sniperrifle_stats.MagSize);
-  sub_GAME_7F08C61C(0x2c);
+  inventory_remove_item_by_id(ITEM_WEAPONCASE);
   draw_item_in_hand_has_more_ammo(RIGHT_HAND,ITEM_SNIPERRIFLE);
   draw_item_in_hand_has_more_ammo(LEFT_HAND,ITEM_UNARMED);
 }

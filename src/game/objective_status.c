@@ -359,7 +359,7 @@ objective_microcode_type_1C_collect_object:
 /* 08BE8C 7F05735C 10000036 */  b     .L7F057438
 /* 08BE90 7F057360 24110002 */   li    $s1, 2
 .L7F057364:
-/* 08BE94 7F057364 0FC233F8 */  jal   sub_GAME_7F08CFE0
+/* 08BE94 7F057364 0FC233F8 */  jal   is_prop_in_inventory
 /* 08BE98 7F057368 8E040010 */   lw    $a0, 0x10($s0)
 /* 08BE9C 7F05736C 14400032 */  bnez  $v0, .L7F057438
 /* 08BEA0 7F057370 00000000 */   nop   
@@ -373,7 +373,7 @@ objective_microcode_type_1D_deposit_object:
 /* 08BEBC 7F05738C 8C590010 */  lw    $t9, 0x10($v0)
 /* 08BEC0 7F057390 13200029 */  beqz  $t9, .L7F057438
 /* 08BEC4 7F057394 00000000 */   nop   
-/* 08BEC8 7F057398 0FC233F8 */  jal   sub_GAME_7F08CFE0
+/* 08BEC8 7F057398 0FC233F8 */  jal   is_prop_in_inventory
 /* 08BECC 7F05739C 03202025 */   move  $a0, $t9
 /* 08BED0 7F0573A0 10400025 */  beqz  $v0, .L7F057438
 /* 08BED4 7F0573A4 00000000 */   nop   
