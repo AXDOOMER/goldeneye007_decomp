@@ -11,4 +11,8 @@ InvItem *inv_get_item_by_index(s32 index);
 textoverride *get_textoverride_by_obj(ObjectRecord *obj);
 textoverride *get_textoverride_by_weaponum(ITEM_IDS weaponnum);
 
+void sub_GAME_7F08CB10(int *nextright, int *nextleft, int param_3);
+
+void sub_GAME_7F08C86C(int *nextright, int *nextleft, int param_3);
+
 #endif

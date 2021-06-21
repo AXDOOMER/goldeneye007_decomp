@@ -507,7 +507,7 @@ typedef enum MPMENU {
     MENU_PAUSE,
     MENU_EXIT,
     MENU_6,
-    MENU_7,
+    MENU_7
 } MPMENU;
 
 typedef enum CONTROLLER_CONFIG
