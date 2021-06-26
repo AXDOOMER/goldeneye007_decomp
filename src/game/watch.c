@@ -6317,31 +6317,9 @@ void call_sndGetSfxSlotFirstNaturalVolume(void) {
 }
 
 
-#ifdef NONMATCHING
-//TODO: Use t6 instead of a1
-void sub_GAME_7F0A91A0(u16 arg0)
-{
+void sub_GAME_7F0A91A0(u16 arg0) {
     sndApplyVolumeAllSfxSlot(arg0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A91A0
-/* 0DDCD0 7F0A91A0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0DDCD4 7F0A91A4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0DDCD8 7F0A91A8 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0DDCDC 7F0A91AC 308EFFFF */  andi  $t6, $a0, 0xffff
-/* 0DDCE0 7F0A91B0 0C00247A */  jal   sndApplyVolumeAllSfxSlot
-/* 0DDCE4 7F0A91B4 01C02025 */   move  $a0, $t6
-/* 0DDCE8 7F0A91B8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0DDCEC 7F0A91BC 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0DDCF0 7F0A91C0 03E00008 */  jr    $ra
-/* 0DDCF4 7F0A91C4 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -10427,74 +10405,50 @@ glabel draw_watch_game_options_page
 
 
 
+int sub_GAME_7F0AC0E8(u8 *arg) {
+    u8 cVar1;
+    int count;
 
+    cVar1 = *arg;
+    count = 0;
 
-#ifdef NONMATCHING
-void sub_GAME_7F0AC0E8(void) {
+    while (cVar1) {
+    
+        if (cVar1 == 0xA) {
+            count = count + 1;
+        }
 
+        cVar1 = arg[1];
+        arg += 1;
+    }
+
+    return count;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0AC0E8
-/* 0E0C18 7F0AC0E8 90820000 */  lbu   $v0, ($a0)
-/* 0E0C1C 7F0AC0EC 00001825 */  move  $v1, $zero
-/* 0E0C20 7F0AC0F0 2405000A */  li    $a1, 10
-/* 0E0C24 7F0AC0F4 10400008 */  beqz  $v0, .L7F0AC118
-/* 0E0C28 7F0AC0F8 00000000 */   nop   
-.L7F0AC0FC:
-/* 0E0C2C 7F0AC0FC 54A20003 */  bnel  $a1, $v0, .L7F0AC10C
-/* 0E0C30 7F0AC100 90820001 */   lbu   $v0, 1($a0)
-/* 0E0C34 7F0AC104 24630001 */  addiu $v1, $v1, 1
-/* 0E0C38 7F0AC108 90820001 */  lbu   $v0, 1($a0)
-.L7F0AC10C:
-/* 0E0C3C 7F0AC10C 24840001 */  addiu $a0, $a0, 1
-/* 0E0C40 7F0AC110 1440FFFA */  bnez  $v0, .L7F0AC0FC
-/* 0E0C44 7F0AC114 00000000 */   nop   
-.L7F0AC118:
-/* 0E0C48 7F0AC118 03E00008 */  jr    $ra
-/* 0E0C4C 7F0AC11C 00601025 */   move  $v0, $v1
-)
-#endif
 
+u8 *sub_GAME_7F0AC120(u8 *arg)
+{
+    u8 cVar1;
+    u8 *pcVar2;
 
+    cVar1 = *arg;
+    pcVar2 = arg;
 
+    while (cVar1) {
+    
+        if (cVar1 == 0xA) {
+            arg += 1;
+      
+            if (arg[0]) {
+                pcVar2 = arg;
+            }
+        }
 
+        cVar1 = arg[1];
+        arg += 1;
+    }
 
-#ifdef NONMATCHING
-void sub_GAME_7F0AC120(void) {
-
+    return pcVar2;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0AC120
-/* 0E0C50 7F0AC120 90820000 */  lbu   $v0, ($a0)
-/* 0E0C54 7F0AC124 00801825 */  move  $v1, $a0
-/* 0E0C58 7F0AC128 2405000A */  li    $a1, 10
-/* 0E0C5C 7F0AC12C 1040000C */  beqz  $v0, .L7F0AC160
-/* 0E0C60 7F0AC130 00000000 */   nop   
-.L7F0AC134:
-/* 0E0C64 7F0AC134 54A20007 */  bnel  $a1, $v0, .L7F0AC154
-/* 0E0C68 7F0AC138 90820001 */   lbu   $v0, 1($a0)
-/* 0E0C6C 7F0AC13C 908E0001 */  lbu   $t6, 1($a0)
-/* 0E0C70 7F0AC140 24840001 */  addiu $a0, $a0, 1
-/* 0E0C74 7F0AC144 51C00003 */  beql  $t6, $zero, .L7F0AC154
-/* 0E0C78 7F0AC148 90820001 */   lbu   $v0, 1($a0)
-/* 0E0C7C 7F0AC14C 00801825 */  move  $v1, $a0
-/* 0E0C80 7F0AC150 90820001 */  lbu   $v0, 1($a0)
-.L7F0AC154:
-/* 0E0C84 7F0AC154 24840001 */  addiu $a0, $a0, 1
-/* 0E0C88 7F0AC158 1440FFF6 */  bnez  $v0, .L7F0AC134
-/* 0E0C8C 7F0AC15C 00000000 */   nop   
-.L7F0AC160:
-/* 0E0C90 7F0AC160 03E00008 */  jr    $ra
-/* 0E0C94 7F0AC164 00601025 */   move  $v0, $v1
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
