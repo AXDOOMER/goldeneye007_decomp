@@ -2319,6 +2319,37 @@ glabel sub_GAME_7F0BE30C
 
 #ifdef VERSION_EU
 GLOBAL_ASM(
+    .rdata
+#const char aStanshow_[] = "-stanshow_";
+glabel aStanshow_
+.word 0x2d737461
+.word 0x6e73686f
+.word 0x775f0000
+#const char aStanshow__5[] = "-stanshow_";
+    glabel aStanshow__5
+.word 0x2d737461
+.word 0x6e73686f
+.word 0x775f0000
+#const char aStanshow__0[] = "-stanshow_";
+    glabel aStanshow__0
+.word 0x2d737461
+.word 0x6e73686f
+.word 0x775f0000
+#const char aStanshow__1[] = "-stanshow_";
+    glabel aStanshow__1
+.word 0x2d737461
+.word 0x6e73686f
+.word 0x775f0000
+#const char aStanshow__2[] = "-stanshow_";
+    glabel aStanshow__2
+.word 0x2d737461
+.word 0x6e73686f
+.word 0x775f0000
+#const char aStanshow__3[] = "-stanshow_";
+    glabel aStanshow__3
+.word 0x2d737461
+.word 0x6e73686f
+.word 0x775f0000
 .text
 glabel sub_GAME_7F0BE30C
 /* 0F2E3C 7F0BE30C 27BDFFA0 */  addiu $sp, $sp, -0x60
@@ -5130,6 +5161,13 @@ glabel manage_mp_game
 
 #ifdef VERSION_EU
 GLOBAL_ASM(
+    .rdata
+#const char aOneMinuteLeft[] = "One minute left";
+glabel aOneMinuteLeft
+.word 0x4f6e6520
+.word 0x6d696e75
+.word 0x7465206c
+.word 0x65667400
 .text
 glabel manage_mp_game
 /* 0F36B8 7F0BEB88 27BDFE68 */  addiu $sp, $sp, -0x198

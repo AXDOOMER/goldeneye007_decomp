@@ -175,7 +175,11 @@ void viInitVideoSettings(void)
     ptr_video_settings2->framebuf = cfb_16[g_viVideoSettings2FrameBufferIndex];
     
     g_viHorizontalOffset = 0;
+    #ifndef VERSION_EU
     D_800232A0 = 0;
+    #else
+    D_800232A0 = 0xffffffe0;
+    #endif
 }
 
 void viInitBuffers(void)

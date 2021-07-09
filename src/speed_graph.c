@@ -86,6 +86,7 @@ u32 *get_counters(void);
 
 void speedGraphDisplayListRelated(void)
 {
+    #ifndef VERSION_EU
     s32 i;
 
     gSPEndDisplayList(g_speedGraphDisplayList[0]);
@@ -99,9 +100,11 @@ void speedGraphDisplayListRelated(void)
     }
 
     speedGraphVideoRelated_2();
+    #endif
 }
 
 void speedGraphVideoRelated_1(void) {
+    #ifndef VERSION_EU
     s32 i;
 
     g_speedGraphCurrentOsCount = osGetCount();
@@ -110,9 +113,11 @@ void speedGraphVideoRelated_1(void) {
     {        
         dword_CODE_bss_800607C0[i] = ((dword_CODE_bss_800607D0[i] + 31) % 32);
     }
+    #endif
 }
 
 void speedGraphVideoRelated_2(void) {
+    #ifndef VERSION_EU
     s32 i;
 
     g_speedGraphLastOsCount = g_speedGraphCurrentOsCount;
@@ -121,9 +126,11 @@ void speedGraphVideoRelated_2(void) {
     {
         dword_CODE_bss_800607B0[i] = dword_CODE_bss_800607C0[i];
     }
+    #endif
 }
 
 void speedGraphVideoRelated_3(s32 arg0) {
+    #ifndef VERSION_EU
     s32 index;
     s32 var2;
     OSIntMask mask;
@@ -161,10 +168,12 @@ void speedGraphVideoRelated_3(s32 arg0) {
     dword_CODE_bss_800607D0[index] = index2;
 
     osSetIntMask(mask);
+    #endif
 }
 
 Gfx *speedGraphDisplay(Gfx *gdl)
 {
+    #ifndef VERSION_EU
     u32 *counters;
     u32 localCountAccumulator = g_speedGraphCountAccumulator;
     s32 *pmaxSeenCount = &g_speedGraphMaxSeenCount;
@@ -244,6 +253,7 @@ Gfx *speedGraphDisplay(Gfx *gdl)
     gSPDisplayList(gdl++, g_speedGraphDisplayList[g_speedGraphDisplayListBank ^ 1]);
 
     return gdl;
+    #endif
 }
 
 #ifdef NONMATCHING
@@ -311,6 +321,7 @@ void video_DL_related_4(void) {
     }
 }
 #else
+#ifndef VERSION_EU
 GLOBAL_ASM(
 .late_rodata
 glabel aIL0
@@ -562,4 +573,10 @@ glabel video_DL_related_4
 /* 003C54 70003054 03E00008 */  jr    $ra
 /* 003C58 70003058 27BD00D0 */   addiu $sp, $sp, 0xd0
 )
+#else
+Gfx* video_DL_related_4(Gfx* param_1)
+{
+  return param_1;
+}
+#endif
 #endif
