@@ -194,7 +194,7 @@ s32 highlight_aimadjustment;
 //CODE.bss:800697EC                     .align 4
 
 //CODE.bss:800697F0
-u32 dword_CODE_bss_800697F0[0x4b];
+u32 arrayUnlockedCheats[0x4b];
 
 
 MENU current_menu = MENU_INVALID;
@@ -753,7 +753,7 @@ s16 solo_target_time_array[20][3] = {
     {0, 0, 360}
 };
 
-u32 D_8002B5DC = 0;
+u32 totalunlockedcheats = 0;
 u32 D_8002B5E0 = 0;
 
 
@@ -20431,12 +20431,12 @@ void init_menu15_cheat(void)
     tab_3_highlight = FALSE;
     tab_2_highlight = FALSE;
     tab_1_highlight = FALSE;
-    D_8002B5DC = 0x0;
+    totalunlockedcheats = 0x0;
 
     for (i = 1; i != 0x4b; i++) {
         if (cheat_available[i]) {
-          dword_CODE_bss_800697F0[D_8002B5DC] = i;
-          D_8002B5DC++;
+          arrayUnlockedCheats[totalunlockedcheats] = i;
+          totalunlockedcheats++;
         }
     };
     load_walletbond();
@@ -20489,8 +20489,8 @@ void interface_menu15_cheat(u32 param_1,u32 param_2)
     BVar3 = isontab3();
     if (BVar3 == FALSE) {
       iVar1 = dword_8002B5E0;
-      if (((0xc < dword_8002B5DC) &&
-          (iVar5 = dword_8002B5DC + -0xd, iVar1 = dword_8002B5E0, 0xdb < (int)(float)cursor_h_pos))
+      if (((0xc < totalunlockedcheats) &&
+          (iVar5 = totalunlockedcheats + -0xd, iVar1 = dword_8002B5E0, 0xdb < (int)(float)cursor_h_pos))
          && (iVar1 = dword_8002B5E0, -1 < iVar5)) {
         iVar4 = iVar5 * 0x14 + 0x35;
         do {
@@ -20504,8 +20504,8 @@ void interface_menu15_cheat(u32 param_1,u32 param_2)
       dword_8002B5E0 = iVar1;
       iVar1 = dword_8002B5E0;
       if (dword_8002B5E0 == 0) {
-        iVar5 = dword_8002B5DC + -1;
-        if (0xc < dword_8002B5DC) {
+        iVar5 = totalunlockedcheats + -1;
+        if (0xc < totalunlockedcheats) {
           iVar5 = 0xb;
         }
         iVar1 = dword_8002B5E0;
@@ -20601,13 +20601,13 @@ glabel interface_menu15_cheat
 /* 04C82C 7F017CFC 0FC028E7 */  jal   isontab3
 /* 04C830 7F017D00 AC20B5E0 */   sw    $zero, %lo(D_8002B5E0)($at)
 /* 04C834 7F017D04 10400005 */  beqz  $v0, .L7F017D1C
-/* 04C838 7F017D08 3C058003 */   lui   $a1, %hi(D_8002B5DC)
+/* 04C838 7F017D08 3C058003 */   lui   $a1, %hi(totalunlockedcheats)
 /* 04C83C 7F017D0C 240E0001 */  li    $t6, 1
 /* 04C840 7F017D10 3C018003 */  lui   $at, %hi(tab_3_highlight)
 /* 04C844 7F017D14 1000003B */  b     .L7F017E04
 /* 04C848 7F017D18 AC2EA8E4 */   sw    $t6, %lo(tab_3_highlight)($at)
 .L7F017D1C:
-/* 04C84C 7F017D1C 8CA5B5DC */  lw    $a1, %lo(D_8002B5DC)($a1)
+/* 04C84C 7F017D1C 8CA5B5DC */  lw    $a1, %lo(totalunlockedcheats)($a1)
 /* 04C850 7F017D20 3C098003 */  lui   $t1, %hi(D_8002B5E0) 
 /* 04C854 7F017D24 28A1000D */  slti  $at, $a1, 0xd
 /* 04C858 7F017D28 1420001C */  bnez  $at, .L7F017D9C
@@ -20749,11 +20749,11 @@ glabel interface_menu15_cheat
 /* 04CA44 7F017F14 5300000E */  beql  $t8, $zero, .L7F017F50
 /* 04CA48 7F017F18 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 04CA4C 7F017F1C 8F39B5E0 */  lw    $t9, %lo(D_8002B5E0)($t9)
-/* 04CA50 7F017F20 3C038007 */  lui   $v1, %hi(dword_CODE_bss_800697F0)
+/* 04CA50 7F017F20 3C038007 */  lui   $v1, %hi(arrayUnlockedCheats)
 /* 04CA54 7F017F24 3C098007 */  lui   $t1, %hi(cheat_activated) 
 /* 04CA58 7F017F28 00194080 */  sll   $t0, $t9, 2
 /* 04CA5C 7F017F2C 00681821 */  addu  $v1, $v1, $t0
-/* 04CA60 7F017F30 8C6397F0 */  lw    $v1, %lo(dword_CODE_bss_800697F0)($v1)
+/* 04CA60 7F017F30 8C6397F0 */  lw    $v1, %lo(arrayUnlockedCheats)($v1)
 /* 04CA64 7F017F34 252996A0 */  addiu $t1, %lo(cheat_activated) # addiu $t1, $t1, -0x6960
 /* 04CA68 7F017F38 240B0001 */  li    $t3, 1
 /* 04CA6C 7F017F3C 00691021 */  addu  $v0, $v1, $t1
@@ -20799,8 +20799,8 @@ glabel constructor_menu15_cheat
 /* 04CAD4 7F017FA4 00402025 */   move  $a0, $v0
 /* 04CAD8 7F017FA8 0FC2B366 */  jal   microcode_constructor
 /* 04CADC 7F017FAC 00402025 */   move  $a0, $v0
-/* 04CAE0 7F017FB0 3C038003 */  lui   $v1, %hi(D_8002B5DC)
-/* 04CAE4 7F017FB4 8C63B5DC */  lw    $v1, %lo(D_8002B5DC)($v1)
+/* 04CAE0 7F017FB0 3C038003 */  lui   $v1, %hi(totalunlockedcheats)
+/* 04CAE4 7F017FB4 8C63B5DC */  lw    $v1, %lo(totalunlockedcheats)($v1)
 /* 04CAE8 7F017FB8 0040A025 */  move  $s4, $v0
 /* 04CAEC 7F017FBC 0000F025 */  move  $fp, $zero
 /* 04CAF0 7F017FC0 2861000D */  slti  $at, $v1, 0xd
@@ -20813,8 +20813,8 @@ glabel constructor_menu15_cheat
 /* 04CB08 7F017FD8 001E7080 */   sll   $t6, $fp, 2
 /* 04CB0C 7F017FDC 001EA880 */  sll   $s5, $fp, 2
 /* 04CB10 7F017FE0 02BEA821 */  addu  $s5, $s5, $fp
-/* 04CB14 7F017FE4 3C0F8007 */  lui   $t7, %hi(dword_CODE_bss_800697F0) 
-/* 04CB18 7F017FE8 25EF97F0 */  addiu $t7, %lo(dword_CODE_bss_800697F0) # addiu $t7, $t7, -0x6810
+/* 04CB14 7F017FE4 3C0F8007 */  lui   $t7, %hi(arrayUnlockedCheats) 
+/* 04CB18 7F017FE8 25EF97F0 */  addiu $t7, %lo(arrayUnlockedCheats) # addiu $t7, $t7, -0x6810
 /* 04CB1C 7F017FEC 0015A880 */  sll   $s5, $s5, 2
 /* 04CB20 7F017FF0 3C178004 */  lui   $s7, %hi(ptrFirstFontTableLarge) 
 /* 04CB24 7F017FF4 3C168004 */  lui   $s6, %hi(ptrSecondFontTableLarge)
@@ -20934,8 +20934,8 @@ glabel constructor_menu15_cheat
 /* 04CCDC 7F0181AC AFAB0010 */  sw    $t3, 0x10($sp)
 /* 04CCE0 7F0181B0 0FC025D8 */  jal   write_text_at_abs_coord
 /* 04CCE4 7F0181B4 AFAC0014 */   sw    $t4, 0x14($sp)
-/* 04CCE8 7F0181B8 3C038003 */  lui   $v1, %hi(D_8002B5DC)
-/* 04CCEC 7F0181BC 8C63B5DC */  lw    $v1, %lo(D_8002B5DC)($v1)
+/* 04CCE8 7F0181B8 3C038003 */  lui   $v1, %hi(totalunlockedcheats)
+/* 04CCEC 7F0181BC 8C63B5DC */  lw    $v1, %lo(totalunlockedcheats)($v1)
 /* 04CCF0 7F0181C0 27DE0001 */  addiu $fp, $fp, 1
 /* 04CCF4 7F0181C4 26730004 */  addiu $s3, $s3, 4
 /* 04CCF8 7F0181C8 2861000D */  slti  $at, $v1, 0xd
@@ -20960,8 +20960,8 @@ glabel constructor_menu15_cheat
 /* 04CD38 7F018208 246DFFF4 */  addiu $t5, $v1, -0xc
 /* 04CD3C 7F01820C 19A0007A */  blez  $t5, .L7F0183F8
 /* 04CD40 7F018210 0000F025 */   move  $fp, $zero
-/* 04CD44 7F018214 3C138007 */  lui   $s3, %hi(dword_CODE_bss_800697F0)
-/* 04CD48 7F018218 267397F0 */  addiu $s3, %lo(dword_CODE_bss_800697F0) # addiu $s3, $s3, -0x6810
+/* 04CD44 7F018214 3C138007 */  lui   $s3, %hi(arrayUnlockedCheats)
+/* 04CD48 7F018218 267397F0 */  addiu $s3, %lo(arrayUnlockedCheats) # addiu $s3, $s3, -0x6810
 /* 04CD4C 7F01821C 24150035 */  li    $s5, 53
 .L7F018220:
 /* 04CD50 7F018220 0FC249DD */  jal   cheatGetMenuTextPointer
@@ -21076,8 +21076,8 @@ glabel constructor_menu15_cheat
 /* 04CEF8 7F0183C8 AFAA0010 */  sw    $t2, 0x10($sp)
 /* 04CEFC 7F0183CC 0FC025D8 */  jal   write_text_at_abs_coord
 /* 04CF00 7F0183D0 AFAB0014 */   sw    $t3, 0x14($sp)
-/* 04CF04 7F0183D4 3C0C8003 */  lui   $t4, %hi(D_8002B5DC) 
-/* 04CF08 7F0183D8 8D8CB5DC */  lw    $t4, %lo(D_8002B5DC)($t4)
+/* 04CF04 7F0183D4 3C0C8003 */  lui   $t4, %hi(totalunlockedcheats) 
+/* 04CF08 7F0183D8 8D8CB5DC */  lw    $t4, %lo(totalunlockedcheats)($t4)
 /* 04CF0C 7F0183DC 27DE0001 */  addiu $fp, $fp, 1
 /* 04CF10 7F0183E0 26730004 */  addiu $s3, $s3, 4
 /* 04CF14 7F0183E4 258DFFF4 */  addiu $t5, $t4, -0xc

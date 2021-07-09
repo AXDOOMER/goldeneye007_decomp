@@ -49,7 +49,7 @@ s32 dword_CODE_bss_80069594;
 
 // data
 u32 D_8002A7D0 = 0;
-u8 D_8002A7D4 = 0x3;
+u8 gunbarrel_mode = 0x3;
 u32 D_8002A7D8 = 0;
 s32 D_8002A7DC[3] = {0x00, 0x00, 0x00};
 s32 D_8002A7E8[3] = {0xFF, 0xFF, 0xFF};
@@ -490,7 +490,7 @@ extern void *_GlobalimagetablecmdblkSegmentRomStart;
 extern void *D_02000000;
 extern void *D_020067F0;
 void sub_GAME_7F008B58(s32 address, s32 size) {
-    D_8002A7D4 = 0;
+    gunbarrel_mode = 0;
     x = 880.0f;
     D_8002A89C = -40.0f;
     intro_eye_counter = 0;
@@ -501,7 +501,7 @@ void sub_GAME_7F008B58(s32 address, s32 size) {
 Gfx *retrieve_display_rareware_logo(Gfx *gdl) {
     D_8002A7D0 = (1 - D_8002A7D0);
     gSPSegment(gdl++, 2, osVirtualToPhysical(virtualaddress));
-    if ((D_8002A7D4 == 0) || (D_8002A7D4 == 1)) {
+    if ((gunbarrel_mode == 0) || (gunbarrel_mode == 1)) {
         s32 var1;
         s32 var2;
         var1 = (intro_eye_counter * 255) / 70;
@@ -522,8 +522,8 @@ Gfx *retrieve_display_rareware_logo(Gfx *gdl) {
         if (intro_eye_counter++ >= 260) {
             if (intro_eye_counter >= 290) {
                 intro_eye_counter = 0;
-                D_8002A7D4++;
-                D_8002A7D4++;
+                gunbarrel_mode++;
+                gunbarrel_mode++;
             }
         }
     }
@@ -532,7 +532,7 @@ Gfx *retrieve_display_rareware_logo(Gfx *gdl) {
 }
 
 s32 sub_GAME_7F008DD0(void) {
-    return (D_8002A7D4 == 2);
+    return (gunbarrel_mode == 2);
 }
 
 #ifdef NONMATCHING
@@ -608,8 +608,8 @@ glabel D_8004F2DC
 .text
 glabel sub_GAME_7F008E80
 /* 03D9B0 7F008E80 240E0002 */  li    $t6, 2
-/* 03D9B4 7F008E84 3C018003 */  lui   $at, %hi(D_8002A7D4)
-/* 03D9B8 7F008E88 A02EA7D4 */  sb    $t6, %lo(D_8002A7D4)($at)
+/* 03D9B4 7F008E84 3C018003 */  lui   $at, %hi(gunbarrel_mode)
+/* 03D9B8 7F008E88 A02EA7D4 */  sb    $t6, %lo(gunbarrel_mode)($at)
 /* 03D9BC 7F008E8C 3C014470 */  li    $at, 0x44700000 # 960.000000
 /* 03D9C0 7F008E90 44812000 */  mtc1  $at, $f4
 /* 03D9C4 7F008E94 27BDFFA0 */  addiu $sp, $sp, -0x60
@@ -855,7 +855,7 @@ void sub_GAME_7F00920C(void)
 signed short sins(unsigned short x);
 Gfx *sub_GAME_7F009254(Gfx *gdl) {
     D_8002A7D0 = (1 - D_8002A7D0);
-    switch (D_8002A7D4 - 2)
+    switch (gunbarrel_mode - 2)
     {
     case 0:
         gdl = something_with_gunbarrel_and_rareware_logo_matrix_manip(gdl);
@@ -867,7 +867,7 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
             word_CODE_bss_80069584 -= 6;
         }
         if (x > 1390.0f) {
-            D_8002A7D4++;
+            gunbarrel_mode++;
             x = 1276.0f;
         }
         break;
@@ -880,7 +880,7 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
         }
         x -= 5.8183274f;
         if (x <= -80.0f) {
-            D_8002A7D4++;
+            gunbarrel_mode++;
             intro_eye_counter = 20;
         }
         break;
@@ -889,7 +889,7 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
         gdl = insert_bond_eye_intro(insert_sight_backdrop_eye_intro(insert_sniper_sight_eye_intro(gdl)));
         intro_eye_counter--;
         if (intro_eye_counter < 0) {
-            D_8002A7D4++;
+            gunbarrel_mode++;
             die_blood_image_routine(0);
             intro_state_blood_animation = 0;
             intro_eye_counter = 1;
@@ -904,7 +904,7 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
         }
         gdl = sub_GAME_7F01C400(insert_bond_eye_intro(insert_sight_backdrop_eye_intro(insert_sniper_sight_eye_intro(gdl))));
         if (intro_state_blood_animation != 0) {
-            D_8002A7D4++;
+            gunbarrel_mode++;
             word_CODE_bss_80069584 = 0;
             dword_CODE_bss_8006957C = x;
             intro_eye_counter = 0;
@@ -918,7 +918,7 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
         gdl = sub_GAME_7F01CA18(insert_bond_eye_intro(insert_sight_backdrop_eye_intro(insert_sniper_sight_eye_intro(gdl))));
         if (intro_eye_counter >= 0x6C) {
             intro_eye_counter = 0;
-            D_8002A7D4++;
+            gunbarrel_mode++;
         }
         break;
 
@@ -930,7 +930,7 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
         gdl = sub_GAME_7F007E70(gdl, intro_eye_counter);
         if (intro_eye_counter >= 0xF7) {
             intro_eye_counter = 0;
-            D_8002A7D4++;                
+            gunbarrel_mode++;                
         }
         break;
 
@@ -939,7 +939,7 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
         gdl = insert_imageDL(gdl);
         if (intro_eye_counter++ >= 0x1E) {
             intro_eye_counter = 0;
-            D_8002A7D4++;
+            gunbarrel_mode++;
         }
         break;
     };
@@ -948,5 +948,5 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
 }
 
 s32 sub_GAME_7F009744(void) {
-    return (D_8002A7D4 == 9);
+    return (gunbarrel_mode == 9);
 }
