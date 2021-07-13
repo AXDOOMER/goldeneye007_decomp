@@ -7,6 +7,7 @@
 #include "include/PR/gbi.h"
 #include "matrixmath.h"
 #include "ramrom.h"
+#include "game/floor.h"
 
 // bss
 //CODE.bss:80069550
@@ -135,7 +136,6 @@ Gfx *sub_GAME_7F007CC8(Gfx *gdl, s32 arg1, s32 arg2[3], s32 arg3[3]) {
     return sub_GAME_7F01B240(gdl, OS_K0_TO_PHYSICAL(dword_CODE_bss_8006958C), arg1, arg2, arg3);
 }
 
-f32 truncf(f32);
 Gfx *insert_sniper_sight_eye_intro(Gfx *gdl) {
     s32 sp3C[3] = D_8002A7DC;
     s32 sp30[3] = D_8002A7E8;
@@ -146,7 +146,7 @@ Gfx *insert_sniper_sight_eye_intro(Gfx *gdl) {
 
     gDPSetCombineMode(gdl++, G_CC_MODULATEI_PRIM, G_CC_MODULATEI_PRIM);
 
-    return sub_GAME_7F007CC8(gdl, truncf((viGetX() * x) / 1280.0f), sp3C, sp30);
+    return sub_GAME_7F007CC8(gdl, floorFloat((viGetX() * x) / 1280.0f), sp3C, sp30);
 }
 
 Gfx *sub_GAME_7F01C1A4(Gfx *gdl);

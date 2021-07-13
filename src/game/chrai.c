@@ -7,6 +7,7 @@
 #include "music.h"
 #include "game/lvl_text.h"
 #include "structs.h"
+#include "game/floor.h"
 
 // bss
 //CODE.bss:80069B70
@@ -24023,7 +24024,7 @@ glabel sub_GAME_7F03D188
 /* 071E58 7F03D328 8FBF002C */   lw    $ra, 0x2c($sp)
 /* 071E5C 7F03D32C 0FC1A002 */  jal   get_bullet_angle
 /* 071E60 7F03D330 AFA0005C */   sw    $zero, 0x5c($sp)
-/* 071E64 7F03D334 0FC170D8 */  jal   truncf
+/* 071E64 7F03D334 0FC170D8 */  jal   floorFloat
 /* 071E68 7F03D338 C7AC0094 */   lwc1  $f12, 0x94($sp)
 /* 071E6C 7F03D33C E7A00094 */  swc1  $f0, 0x94($sp)
 /* 071E70 7F03D340 0FC17110 */  jal   sub_GAME_7F05C440

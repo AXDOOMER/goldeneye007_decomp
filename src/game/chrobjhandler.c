@@ -11,6 +11,7 @@
 #include "game/lvl_text.h"
 #include "game/chrobjhandler.h"
 #include "include/PR/libaudio.h"
+#include "game/floor.h"
 
 s32 alarm_timer = 0;
 s32 *ptr_alarm_sfx = 0;
@@ -44248,7 +44249,7 @@ glabel sub_GAME_7F056210
 /* 08AD84 7F056254 46001087 */  neg.s $f2, $f2
 /* 08AD88 7F056258 46061303 */  div.s $f12, $f2, $f6
 .L7F05625C:
-/* 08AD8C 7F05625C 0FC170D8 */  jal   truncf
+/* 08AD8C 7F05625C 0FC170D8 */  jal   floorFloat
 /* 08AD90 7F056260 E7A20030 */   swc1  $f2, 0x30($sp)
 /* 08AD94 7F056264 4600020D */  trunc.w.s $f8, $f0
 /* 08AD98 7F056268 3C014270 */  li    $at, 0x42700000 # 60.000000
@@ -44256,7 +44257,7 @@ glabel sub_GAME_7F056210
 /* 08ADA0 7F056270 44815000 */  mtc1  $at, $f10
 /* 08ADA4 7F056274 44184000 */  mfc1  $t8, $f8
 /* 08ADA8 7F056278 460A1303 */  div.s $f12, $f2, $f10
-/* 08ADAC 7F05627C 0FC170D8 */  jal   truncf
+/* 08ADAC 7F05627C 0FC170D8 */  jal   floorFloat
 /* 08ADB0 7F056280 AFB80044 */   sw    $t8, 0x44($sp)
 /* 08ADB4 7F056284 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
 /* 08ADB8 7F056288 C7A20030 */  lwc1  $f2, 0x30($sp)
@@ -44272,7 +44273,7 @@ glabel sub_GAME_7F056210
 /* 08ADE0 7F0562B0 000A5080 */  sll   $t2, $t2, 2
 /* 08ADE4 7F0562B4 010A5823 */  subu  $t3, $t0, $t2
 /* 08ADE8 7F0562B8 AFAB0040 */  sw    $t3, 0x40($sp)
-/* 08ADEC 7F0562BC 0FC170D8 */  jal   truncf
+/* 08ADEC 7F0562BC 0FC170D8 */  jal   floorFloat
 /* 08ADF0 7F0562C0 46062303 */   div.s $f12, $f4, $f6
 /* 08ADF4 7F0562C4 8FAE0044 */  lw    $t6, 0x44($sp)
 /* 08ADF8 7F0562C8 4600020D */  trunc.w.s $f8, $f0
