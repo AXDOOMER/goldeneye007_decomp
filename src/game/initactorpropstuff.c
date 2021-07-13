@@ -2,6 +2,7 @@
 #include "game/initactorpropstuff.h"
 #include "game/chr.h"
 #include "game/bondwalk.h"
+#include "game/floor.h"
 
 
 void reset_counter_rand_body_head(void) {
@@ -173,7 +174,7 @@ glabel sub_GAME_7F00032C
 .L7F000388:
 /* 034EB8 7F000388 C60C0004 */  lwc1  $f12, 4($s0)
 /* 034EBC 7F00038C 004FC021 */  addu  $t8, $v0, $t7
-/* 034EC0 7F000390 0FC170F6 */  jal   sub_GAME_7F05C3D8
+/* 034EC0 7F000390 0FC170F6 */  jal   floorFloatToInt
 /* 034EC4 7F000394 AE180000 */   sw    $t8, ($s0)
 /* 034EC8 7F000398 8E040000 */  lw    $a0, ($s0)
 /* 034ECC 7F00039C 00002825 */  move  $a1, $zero

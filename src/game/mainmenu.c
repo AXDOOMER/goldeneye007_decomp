@@ -16,6 +16,7 @@
 #include "assets/GlobalImageTable.h"
 #include "game/mp_weapon.h"
 #include "lvl_text.h"
+#include "game/floor.h"
 
 struct point {
     f32 x;
@@ -1230,8 +1231,8 @@ s32 load_draw_selected_icon_folder_select(s32 arg0)
     }
     
     likely_generate_DL_for_image_declaration(&arg0, image, 4, 0, 0);
-    xypos[0] = truncf(cursor_h_pos + 0.5f);
-    xypos[1] = truncf(cursor_v_pos + 0.5f);
+    xypos[0] = floorFloat(cursor_h_pos + 0.5f);
+    xypos[1] = floorFloat(cursor_v_pos + 0.5f);
     halfedxy[0] = (f32) (u32) image->width * 0.5f;
     halfedxy[1] = (f32) (u32)image->height * 0.5f;
     display_image_at_on_screen_coord(&arg0, &xypos, &halfedxy, image->width, image->height, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xDC, image->level > 0, 0);
@@ -1278,14 +1279,14 @@ glabel load_draw_selected_icon_folder_select
 /* 03EAB4 7F009F84 C424A908 */  lwc1  $f4, %lo(cursor_h_pos)($at)
 /* 03EAB8 7F009F88 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 03EABC 7F009F8C 44813000 */  mtc1  $at, $f6
-/* 03EAC0 7F009F90 0FC170D8 */  jal   truncf
+/* 03EAC0 7F009F90 0FC170D8 */  jal   floorFloat
 /* 03EAC4 7F009F94 46062300 */   add.s $f12, $f4, $f6
 /* 03EAC8 7F009F98 3C018003 */  lui   $at, %hi(cursor_v_pos)
 /* 03EACC 7F009F9C C428A90C */  lwc1  $f8, %lo(cursor_v_pos)($at)
 /* 03EAD0 7F009FA0 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 03EAD4 7F009FA4 44815000 */  mtc1  $at, $f10
 /* 03EAD8 7F009FA8 E7A00060 */  swc1  $f0, 0x60($sp)
-/* 03EADC 7F009FAC 0FC170D8 */  jal   truncf
+/* 03EADC 7F009FAC 0FC170D8 */  jal   floorFloat
 /* 03EAE0 7F009FB0 460A4300 */   add.s $f12, $f8, $f10
 /* 03EAE4 7F009FB4 E7A00064 */  swc1  $f0, 0x64($sp)
 /* 03EAE8 7F009FB8 920E0004 */  lbu   $t6, 4($s0)
@@ -4144,7 +4145,7 @@ void *constructor_menu05_fileselect(void *arg0)
     arg0 = (void *) (temp_t7 + 8);
     temp_t7->unk4 = -0xec;
     temp_t7->unk0 = &0xFB00000C;
-    temp_ret_2 = sub_GAME_7F007CC8(arg0, (s32) truncf(((f32) viGetX() * -80.0f) / 1280.0f), &sp1A8, &sp19C);
+    temp_ret_2 = sub_GAME_7F007CC8(arg0, (s32) floorFloat(((f32) viGetX() * -80.0f) / 1280.0f), &sp1A8, &sp19C);
     arg0 = (void *) (temp_ret_2 + 8);
     temp_v0_2 = temp_ret_2;
     temp_v0_2->unk4 = 0x1000000;
@@ -4205,16 +4206,16 @@ loop_7:
     sub_GAME_7F077FF4(sp74, &spE4);
     if (sp1B4 == folder_selected_for_deletion)
     {
-        truncf(spE4, sp1B4, &spF0);
-        temp_a2 = (s32) truncf(spE8) + 0x19;
+        floorFloat(spE4, sp1B4, &spF0);
+        temp_a2 = (s32) floorFloat(spE8) + 0x19;
         arg0 = microcode_constructor_related_to_menus(arg0, sp100, temp_a2, sp100 + 0x63, (s32) (temp_a2 + 0x2a), 0x32);
-        truncf(spE4);
-        truncf(spE8);
+        floorFloat(spE4);
+        floorFloat(spE8);
         viGetX();
         arg0 = en_text_write_stuff(arg0, &sp100, &spFC, get_textptr_for_textID(TEXT(LTITLE, 0x17)), (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, viGetY(), 0, 0);
         temp_s1_2 = get_textptr_for_textID(TEXT(LTITLE, 0x18));
-        truncf(spE4);
-        truncf(spE8);
+        floorFloat(spE4);
+        floorFloat(spE8);
         temp_a0 = &spF8;
         temp_a1 = &spF4;
         if (folder_selected_for_deletion_choice != 0)
@@ -4232,12 +4233,12 @@ loop_7:
             arg0 = en_text_write_stuff(arg0, &sp100, &spFC, temp_s1_2, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, viGetY(), 0, 0);
         }
         temp_s1_3 = get_textptr_for_textID(TEXT(LTITLE, 0x19));
-        truncf(spE4);
+        floorFloat(spE4);
         if (j_text_trigger != 0)
         {
 
         }
-        truncf(spE8);
+        floorFloat(spE8);
         temp_a0_2 = &spF8;
         temp_a1_2 = &spF4;
         if (folder_selected_for_deletion_choice != 0)
@@ -4270,12 +4271,12 @@ loop_7:
                     spF4 = 0;
                     spF8 = 0;
                     sub_GAME_7F0AE98C(&spF8, &spF4, &spD0, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
-                    truncf(spE4);
+                    floorFloat(spE4);
                     if (spF4 < 0)
                     {
 
                     }
-                    truncf(spE8);
+                    floorFloat(spE8);
                     viGetX();
                     arg0 = en_text_write_stuff(arg0, &sp100, &spFC, &spD0, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, viGetY(), 0, 0);
                 }
@@ -4317,12 +4318,12 @@ loop_24:
                     spF4 = 0;
                     spF8 = 0;
                     sub_GAME_7F0AE98C(&spF8, &spF4, &spBC, ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, 0);
-                    truncf(spE4);
+                    floorFloat(spE4);
                     if (spF4 < 0)
                     {
 
                     }
-                    truncf(spE8);
+                    floorFloat(spE8);
                     viGetX();
                     arg0 = en_text_write_stuff(arg0, &sp100, &spFC, &spBC, (s32) ptrSecondFontTableLarge, (s32) ptrFirstFontTableLarge, viGetY(), 0, 0);
                 }
@@ -4487,7 +4488,7 @@ glabel constructor_menu05_fileselect
 /* 041008 7F00C4D8 3C0144A0 */  li    $at, 0x44A00000 # 1280.000000
 /* 04100C 7F00C4DC 44818000 */  mtc1  $at, $f16
 /* 041010 7F00C4E0 46083282 */  mul.s $f10, $f6, $f8
-/* 041014 7F00C4E4 0FC170D8 */  jal   truncf
+/* 041014 7F00C4E4 0FC170D8 */  jal   floorFloat
 /* 041018 7F00C4E8 46105303 */   div.s $f12, $f10, $f16
 /* 04101C 7F00C4EC 4600048D */  trunc.w.s $f18, $f0
 /* 041020 7F00C4F0 8FA401B8 */  lw    $a0, 0x1b8($sp)
@@ -4602,14 +4603,14 @@ glabel constructor_menu05_fileselect
 /* 0411C0 7F00C690 27A500F0 */  addiu $a1, $sp, 0xf0
 /* 0411C4 7F00C694 148C00F2 */  bne   $a0, $t4, .L7F00CA60
 /* 0411C8 7F00C698 00000000 */   nop   
-/* 0411CC 7F00C69C 0FC170D8 */  jal   truncf
+/* 0411CC 7F00C69C 0FC170D8 */  jal   floorFloat
 /* 0411D0 7F00C6A0 C7AC00E4 */   lwc1  $f12, 0xe4($sp)
 /* 0411D4 7F00C6A4 4600010D */  trunc.w.s $f4, $f0
 /* 0411D8 7F00C6A8 C7AC00E8 */  lwc1  $f12, 0xe8($sp)
 /* 0411DC 7F00C6AC 44122000 */  mfc1  $s2, $f4
 /* 0411E0 7F00C6B0 00000000 */  nop   
 /* 0411E4 7F00C6B4 2652FFCF */  addiu $s2, $s2, -0x31
-/* 0411E8 7F00C6B8 0FC170D8 */  jal   truncf
+/* 0411E8 7F00C6B8 0FC170D8 */  jal   floorFloat
 /* 0411EC 7F00C6BC AFB20100 */   sw    $s2, 0x100($sp)
 /* 0411F0 7F00C6C0 4600018D */  trunc.w.s $f6, $f0
 /* 0411F4 7F00C6C4 8FA50100 */  lw    $a1, 0x100($sp)
@@ -4627,14 +4628,14 @@ glabel constructor_menu05_fileselect
 /* 041224 7F00C6F4 0FC30776 */  jal   get_textptr_for_textID
 /* 041228 7F00C6F8 34049C17 */   li    $a0, 39959
 /* 04122C 7F00C6FC 00408825 */  move  $s1, $v0
-/* 041230 7F00C700 0FC170D8 */  jal   truncf
+/* 041230 7F00C700 0FC170D8 */  jal   floorFloat
 /* 041234 7F00C704 C7AC00E4 */   lwc1  $f12, 0xe4($sp)
 /* 041238 7F00C708 4600020D */  trunc.w.s $f8, $f0
 /* 04123C 7F00C70C C7AC00E8 */  lwc1  $f12, 0xe8($sp)
 /* 041240 7F00C710 44124000 */  mfc1  $s2, $f8
 /* 041244 7F00C714 00000000 */  nop   
 /* 041248 7F00C718 2652FFD1 */  addiu $s2, $s2, -0x2f
-/* 04124C 7F00C71C 0FC170D8 */  jal   truncf
+/* 04124C 7F00C71C 0FC170D8 */  jal   floorFloat
 /* 041250 7F00C720 AFB20100 */   sw    $s2, 0x100($sp)
 /* 041254 7F00C724 4600028D */  trunc.w.s $f10, $f0
 /* 041258 7F00C728 44105000 */  mfc1  $s0, $f10
@@ -4664,14 +4665,14 @@ glabel constructor_menu05_fileselect
 /* 0412B8 7F00C788 0FC30776 */  jal   get_textptr_for_textID
 /* 0412BC 7F00C78C 34049C18 */   li    $a0, 39960
 /* 0412C0 7F00C790 00408825 */  move  $s1, $v0
-/* 0412C4 7F00C794 0FC170D8 */  jal   truncf
+/* 0412C4 7F00C794 0FC170D8 */  jal   floorFloat
 /* 0412C8 7F00C798 C7AC00E4 */   lwc1  $f12, 0xe4($sp)
 /* 0412CC 7F00C79C 4600040D */  trunc.w.s $f16, $f0
 /* 0412D0 7F00C7A0 C7AC00E8 */  lwc1  $f12, 0xe8($sp)
 /* 0412D4 7F00C7A4 44128000 */  mfc1  $s2, $f16
 /* 0412D8 7F00C7A8 00000000 */  nop   
 /* 0412DC 7F00C7AC 2652FFD1 */  addiu $s2, $s2, -0x2f
-/* 0412E0 7F00C7B0 0FC170D8 */  jal   truncf
+/* 0412E0 7F00C7B0 0FC170D8 */  jal   floorFloat
 /* 0412E4 7F00C7B4 AFB20100 */   sw    $s2, 0x100($sp)
 /* 0412E8 7F00C7B8 4600048D */  trunc.w.s $f18, $f0
 /* 0412EC 7F00C7BC 3C188003 */  lui   $t8, %hi(folder_selected_for_deletion_choice) 
@@ -4753,7 +4754,7 @@ glabel constructor_menu05_fileselect
 /* 041414 7F00C8E4 0FC30776 */  jal   get_textptr_for_textID
 /* 041418 7F00C8E8 34049C19 */   li    $a0, 39961
 /* 04141C 7F00C8EC 00408825 */  move  $s1, $v0
-/* 041420 7F00C8F0 0FC170D8 */  jal   truncf
+/* 041420 7F00C8F0 0FC170D8 */  jal   floorFloat
 /* 041424 7F00C8F4 C7AC00E4 */   lwc1  $f12, 0xe4($sp)
 /* 041428 7F00C8F8 3C198005 */  lui   $t9, %hi(j_text_trigger) 
 /* 04142C 7F00C8FC 8F3984D0 */  lw    $t9, %lo(j_text_trigger)($t9)
@@ -4768,7 +4769,7 @@ glabel constructor_menu05_fileselect
 /* 04144C 7F00C91C C7AC00E8 */  lwc1  $f12, 0xe8($sp)
 /* 041450 7F00C920 00499021 */  addu  $s2, $v0, $t1
 /* 041454 7F00C924 2652FFFF */  addiu $s2, $s2, -1
-/* 041458 7F00C928 0FC170D8 */  jal   truncf
+/* 041458 7F00C928 0FC170D8 */  jal   floorFloat
 /* 04145C 7F00C92C AFB20100 */   sw    $s2, 0x100($sp)
 /* 041460 7F00C930 4600018D */  trunc.w.s $f6, $f0
 /* 041464 7F00C934 3C0B8003 */  lui   $t3, %hi(folder_selected_for_deletion_choice) 
@@ -4876,7 +4877,7 @@ glabel constructor_menu05_fileselect
 /* 0415F4 7F00CAC4 AFA00014 */  sw    $zero, 0x14($sp)
 /* 0415F8 7F00CAC8 0FC2BA63 */  jal   sub_GAME_7F0AE98C
 /* 0415FC 7F00CACC AFB80010 */   sw    $t8, 0x10($sp)
-/* 041600 7F00CAD0 0FC170D8 */  jal   truncf
+/* 041600 7F00CAD0 0FC170D8 */  jal   floorFloat
 /* 041604 7F00CAD4 C7AC00E4 */   lwc1  $f12, 0xe4($sp)
 /* 041608 7F00CAD8 4600020D */  trunc.w.s $f8, $f0
 /* 04160C 7F00CADC 8FB900F4 */  lw    $t9, 0xf4($sp)
@@ -4889,7 +4890,7 @@ glabel constructor_menu05_fileselect
 .L7F00CAF8:
 /* 041628 7F00CAF8 01CA9023 */  subu  $s2, $t6, $t2
 /* 04162C 7F00CAFC 2652FFFF */  addiu $s2, $s2, -1
-/* 041630 7F00CB00 0FC170D8 */  jal   truncf
+/* 041630 7F00CB00 0FC170D8 */  jal   floorFloat
 /* 041634 7F00CB04 AFB20100 */   sw    $s2, 0x100($sp)
 /* 041638 7F00CB08 4600028D */  trunc.w.s $f10, $f0
 /* 04163C 7F00CB0C 44105000 */  mfc1  $s0, $f10
@@ -4984,7 +4985,7 @@ glabel constructor_menu05_fileselect
 /* 04178C 7F00CC5C AFA00014 */  sw    $zero, 0x14($sp)
 /* 041790 7F00CC60 0FC2BA63 */  jal   sub_GAME_7F0AE98C
 /* 041794 7F00CC64 AFA80010 */   sw    $t0, 0x10($sp)
-/* 041798 7F00CC68 0FC170D8 */  jal   truncf
+/* 041798 7F00CC68 0FC170D8 */  jal   floorFloat
 /* 04179C 7F00CC6C C7AC00E4 */   lwc1  $f12, 0xe4($sp)
 /* 0417A0 7F00CC70 4600040D */  trunc.w.s $f16, $f0
 /* 0417A4 7F00CC74 8FAD00F4 */  lw    $t5, 0xf4($sp)
@@ -4997,7 +4998,7 @@ glabel constructor_menu05_fileselect
 .L7F00CC90:
 /* 0417C0 7F00CC90 01989023 */  subu  $s2, $t4, $t8
 /* 0417C4 7F00CC94 2652FFFF */  addiu $s2, $s2, -1
-/* 0417C8 7F00CC98 0FC170D8 */  jal   truncf
+/* 0417C8 7F00CC98 0FC170D8 */  jal   floorFloat
 /* 0417CC 7F00CC9C AFB20100 */   sw    $s2, 0x100($sp)
 /* 0417D0 7F00CCA0 4600048D */  trunc.w.s $f18, $f0
 /* 0417D4 7F00CCA4 44109000 */  mfc1  $s0, $f18
@@ -19033,7 +19034,7 @@ glabel interface_menu0D_missioncomplete
 
 
 #ifdef NONMATCHING
-//almost there, truncf() calls arent using right float regs causing minor regalloc issues
+//almost there, floorFloat() calls arent using right float regs causing minor regalloc issues
 Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
 {
     s32 x;
@@ -19209,7 +19210,7 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
     x = 0xB4;
     y = 0xF4;
     DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
-    sprintf(&stagename, "%d (%d%%)", headshots, truncf(((headshots * 100.0f) / allhits) + 0.5f));
+    sprintf(&stagename, "%d (%d%%)", headshots, floorFloat(((headshots * 100.0f) / allhits) + 0.5f));
     x = 0x12C;
     y = 0xF4;
     DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
@@ -19219,7 +19220,7 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
     x = 0xB4;
     y = y2 + 0xF4;
     DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
-    sprintf(&stagename, "%d (%d%%)", bodyshots, truncf(((bodyshots * 100.0f) / allhits) + 0.5f));
+    sprintf(&stagename, "%d (%d%%)", bodyshots, floorFloat(((bodyshots * 100.0f) / allhits) + 0.5f));
     x = 0x12C;
     y = y2 + 0xF4;
     DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
@@ -19229,7 +19230,7 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
     x = 0xB4;
     y = (y2 * 2) + 0xF4;
     DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
-    sprintf(&stagename, "%d (%d%%)", limbshots, truncf(((limbshots * 100.0f) / allhits) + 0.5f));
+    sprintf(&stagename, "%d (%d%%)", limbshots, floorFloat(((limbshots * 100.0f) / allhits) + 0.5f));
     x = 0x12C;
     y = (y2 * 2) + 0xF4;
     DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
@@ -19240,7 +19241,7 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
     y = (y2 * 3) + 0xF4;
     othershots = reg5 + reg4;
     DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
-    sprintf(&stagename, "%d (%d%%)", othershots, truncf(((othershots * 100.0f) / allhits) + 0.5f));
+    sprintf(&stagename, "%d (%d%%)", othershots, floorFloat(((othershots * 100.0f) / allhits) + 0.5f));
     x = 0x12C;
     y = (y2 * 3) + 0xF4;
     DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
@@ -20054,7 +20055,7 @@ glabel constructor_menu0D_missioncomplete
 /* 04C0F4 7F0175C4 44813000 */  mtc1  $at, $f6
 /* 04C0F8 7F0175C8 E7A00048 */  swc1  $f0, 0x48($sp)
 /* 04C0FC 7F0175CC 46009103 */  div.s $f4, $f18, $f0
-/* 04C100 7F0175D0 0FC170D8 */  jal   truncf
+/* 04C100 7F0175D0 0FC170D8 */  jal   floorFloat
 /* 04C104 7F0175D4 46062300 */   add.s $f12, $f4, $f6
 /* 04C108 7F0175D8 4600020D */  trunc.w.s $f8, $f0
 /* 04C10C 7F0175DC 3C058005 */  lui   $a1, %hi(aDD_0)
@@ -20131,7 +20132,7 @@ glabel constructor_menu0D_missioncomplete
 /* 04C228 7F0176F8 00408825 */  move  $s1, $v0
 /* 04C22C 7F0176FC 46125102 */  mul.s $f4, $f10, $f18
 /* 04C230 7F017700 46062203 */  div.s $f8, $f4, $f6
-/* 04C234 7F017704 0FC170D8 */  jal   truncf
+/* 04C234 7F017704 0FC170D8 */  jal   floorFloat
 /* 04C238 7F017708 46104300 */   add.s $f12, $f8, $f16
 /* 04C23C 7F01770C 4600028D */  trunc.w.s $f10, $f0
 /* 04C240 7F017710 3C058005 */  lui   $a1, %hi(aDD_1)
@@ -20210,7 +20211,7 @@ glabel constructor_menu0D_missioncomplete
 /* 04C364 7F017834 00408825 */  move  $s1, $v0
 /* 04C368 7F017838 46062202 */  mul.s $f8, $f4, $f6
 /* 04C36C 7F01783C 46104283 */  div.s $f10, $f8, $f16
-/* 04C370 7F017840 0FC170D8 */  jal   truncf
+/* 04C370 7F017840 0FC170D8 */  jal   floorFloat
 /* 04C374 7F017844 46125300 */   add.s $f12, $f10, $f18
 /* 04C378 7F017848 4600010D */  trunc.w.s $f4, $f0
 /* 04C37C 7F01784C 3C058005 */  lui   $a1, %hi(aDD_2)
@@ -20293,7 +20294,7 @@ glabel constructor_menu0D_missioncomplete
 /* 04C4B0 7F017980 00408825 */  move  $s1, $v0
 /* 04C4B4 7F017984 46104282 */  mul.s $f10, $f8, $f16
 /* 04C4B8 7F017988 46125103 */  div.s $f4, $f10, $f18
-/* 04C4BC 7F01798C 0FC170D8 */  jal   truncf
+/* 04C4BC 7F01798C 0FC170D8 */  jal   floorFloat
 /* 04C4C0 7F017990 46062300 */   add.s $f12, $f4, $f6
 /* 04C4C4 7F017994 4600020D */  trunc.w.s $f8, $f0
 /* 04C4C8 7F017998 3C058005 */  lui   $a1, %hi(aDD_3)

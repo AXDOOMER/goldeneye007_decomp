@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "structs.h"
+#include "game/floor.h"
 
 //D:80054600
 const char aGetsubmatrixNoObjinst[] = "getsubmatrix: no objinst!\n";
@@ -5243,7 +5244,7 @@ glabel sub_GAME_7F06FF64
 /* 0A4A9C 7F06FF6C AFB00018 */  sw    $s0, 0x18($sp)
 /* 0A4AA0 7F06FF70 AFA50034 */  sw    $a1, 0x34($sp)
 /* 0A4AA4 7F06FF74 00808025 */  move  $s0, $a0
-/* 0A4AA8 7F06FF78 0FC170F6 */  jal   sub_GAME_7F05C3D8
+/* 0A4AA8 7F06FF78 0FC170F6 */  jal   floorFloatToInt
 /* 0A4AAC 7F06FF7C C7AC0034 */   lwc1  $f12, 0x34($sp)
 /* 0A4AB0 7F06FF80 C6040040 */  lwc1  $f4, 0x40($s0)
 /* 0A4AB4 7F06FF84 44803000 */  mtc1  $zero, $f6
@@ -5344,7 +5345,7 @@ glabel sub_GAME_7F070090
 /* 0A4BE0 7F0700B0 8E0E0054 */  lw    $t6, 0x54($s0)
 /* 0A4BE4 7F0700B4 51C00043 */  beql  $t6, $zero, .L7F0701C4
 /* 0A4BE8 7F0700B8 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0A4BEC 7F0700BC 0FC170F6 */  jal   sub_GAME_7F05C3D8
+/* 0A4BEC 7F0700BC 0FC170F6 */  jal   floorFloatToInt
 /* 0A4BF0 7F0700C0 C7AC0038 */   lwc1  $f12, 0x38($sp)
 /* 0A4BF4 7F0700C4 C6040070 */  lwc1  $f4, 0x70($s0)
 /* 0A4BF8 7F0700C8 44803000 */  mtc1  $zero, $f6
@@ -5563,10 +5564,10 @@ glabel sub_GAME_7F0701EC
 /* 0A4E68 7F070338 5260000A */  beql  $s3, $zero, .L7F070364
 /* 0A4E6C 7F07033C 4600A306 */   mov.s $f12, $f20
 /* 0A4E70 7F070340 4600A306 */  mov.s $f12, $f20
-/* 0A4E74 7F070344 0FC170F6 */  jal   sub_GAME_7F05C3D8
+/* 0A4E74 7F070344 0FC170F6 */  jal   floorFloatToInt
 /* 0A4E78 7F070348 E7A00088 */   swc1  $f0, 0x88($sp)
 /* 0A4E7C 7F07034C 24520001 */  addiu $s2, $v0, 1
-/* 0A4E80 7F070350 0FC170F6 */  jal   sub_GAME_7F05C3D8
+/* 0A4E80 7F070350 0FC170F6 */  jal   floorFloatToInt
 /* 0A4E84 7F070354 C7AC0100 */   lwc1  $f12, 0x100($sp)
 /* 0A4E88 7F070358 10000008 */  b     .L7F07037C
 /* 0A4E8C 7F07035C AFA200B8 */   sw    $v0, 0xb8($sp)
@@ -5967,11 +5968,11 @@ glabel sub_GAME_7F0701EC
 /* 0A544C 7F07091C 8E2E0054 */  lw    $t6, 0x54($s1)
 /* 0A5450 7F070920 11C00055 */  beqz  $t6, .L7F070A78
 /* 0A5454 7F070924 00000000 */   nop   
-/* 0A5458 7F070928 0FC170F6 */  jal   sub_GAME_7F05C3D8
+/* 0A5458 7F070928 0FC170F6 */  jal   floorFloatToInt
 /* 0A545C 7F07092C C7AC0104 */   lwc1  $f12, 0x104($sp)
 /* 0A5460 7F070930 C7B40108 */  lwc1  $f20, 0x108($sp)
 /* 0A5464 7F070934 00409025 */  move  $s2, $v0
-/* 0A5468 7F070938 0FC170F6 */  jal   sub_GAME_7F05C3D8
+/* 0A5468 7F070938 0FC170F6 */  jal   floorFloatToInt
 /* 0A546C 7F07093C 4600A306 */   mov.s $f12, $f20
 /* 0A5470 7F070940 12600004 */  beqz  $s3, .L7F070954
 /* 0A5474 7F070944 AFA2006C */   sw    $v0, 0x6c($sp)

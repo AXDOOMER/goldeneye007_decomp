@@ -349,7 +349,7 @@ SECTIONS
       build/u/src/game/unk_05ACB0.o (.text);
       build/u/src/game/unk_05AE00.o (.text);
       build/u/src/game/unk_05B1E0.o (.text);
-      build/u/src/game/truncf.o (.text);
+      build/u/src/game/floor.o (.text);
       build/u/src/game/unk_05C440.o (.text);
       build/u/src/game/bondwalk.o (.text);
       build/u/src/game/bondwalk2.o (.text);
@@ -3645,7 +3645,7 @@ SECTIONS
       build/u/src/game/unk_05ACB0.o (.data);
       build/u/src/game/unk_05AE00.o (.data);
       build/u/src/game/unk_05B1E0.o (.data);
-      build/u/src/game/truncf.o (.data);
+      build/u/src/game/floor.o (.data);
       build/u/src/game/unk_05C440.o (.data);
       build/u/src/game/bondwalk.o (.data);
       build/u/src/game/bondwalk2.o (.data);
@@ -3770,7 +3770,7 @@ SECTIONS
       build/u/src/game/unk_05ACB0.o (.rodata);
       build/u/src/game/unk_05AE00.o (.rodata);
       build/u/src/game/unk_05B1E0.o (.rodata);
-      build/u/src/game/truncf.o (.rodata);
+      build/u/src/game/floor.o (.rodata);
       build/u/src/game/unk_05C440.o (.rodata);
       build/u/src/game/bondwalk.o (.rodata);
       build/u/src/game/bondwalk2.o (.rodata);
@@ -4112,7 +4112,7 @@ SECTIONS
       build/u/src/game/unk_05ACB0.o (.bss);
       build/u/src/game/unk_05AE00.o (.bss);
       build/u/src/game/unk_05B1E0.o (.bss);
-      build/u/src/game/truncf.o (.bss);
+      build/u/src/game/floor.o (.bss);
       build/u/src/game/unk_05C440.o (.bss);
       build/u/src/game/bondwalk.o (.bss);
       build/u/src/game/bondwalk2.o (.bss);
