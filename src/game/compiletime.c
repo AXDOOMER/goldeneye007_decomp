@@ -7,6 +7,12 @@ char *get_compile_time(void) {
 }
 #endif
 
+#ifdef VERSION_EU
+char *get_compile_time(void) {
+    return "Jul 31 1997 14:53:03";
+}
+#endif
+
 #ifdef VERSION_JP
 char *get_compile_time(void) {
     return "Jul 10 1997 14:53:37";
