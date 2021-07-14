@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "structs.h"
 #include "game/floor.h"
+#include "game/ceil.h"
 
 //D:80054600
 const char aGetsubmatrixNoObjinst[] = "getsubmatrix: no objinst!\n";
@@ -4461,7 +4462,7 @@ glabel sub_GAME_7F06F66C
 /* 0A4228 7F06F6F8 0124082A */  slt   $at, $t1, $a0
 /* 0A422C 7F06F6FC 50200006 */  beql  $at, $zero, .L7F06F718
 /* 0A4230 7F06F700 94A20004 */   lhu   $v0, 4($a1)
-/* 0A4234 7F06F704 0FC1712E */  jal   sub_GAME_7F05C4B8
+/* 0A4234 7F06F704 0FC1712E */  jal   ceilFloatToInt
 /* 0A4238 7F06F708 00000000 */   nop   
 /* 0A423C 7F06F70C 10000017 */  b     .L7F06F76C
 /* 0A4240 7F06F710 00402025 */   move  $a0, $v0
@@ -5573,10 +5574,10 @@ glabel sub_GAME_7F0701EC
 /* 0A4E8C 7F07035C AFA200B8 */   sw    $v0, 0xb8($sp)
 /* 0A4E90 7F070360 4600A306 */  mov.s $f12, $f20
 .L7F070364:
-/* 0A4E94 7F070364 0FC1712E */  jal   sub_GAME_7F05C4B8
+/* 0A4E94 7F070364 0FC1712E */  jal   ceilFloatToInt
 /* 0A4E98 7F070368 E7A00088 */   swc1  $f0, 0x88($sp)
 /* 0A4E9C 7F07036C 2452FFFF */  addiu $s2, $v0, -1
-/* 0A4EA0 7F070370 0FC1712E */  jal   sub_GAME_7F05C4B8
+/* 0A4EA0 7F070370 0FC1712E */  jal   ceilFloatToInt
 /* 0A4EA4 7F070374 C7AC0100 */   lwc1  $f12, 0x100($sp)
 /* 0A4EA8 7F070378 AFA200B8 */  sw    $v0, 0xb8($sp)
 .L7F07037C:
