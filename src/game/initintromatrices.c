@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "memp.h"
 #include "game/intro_logos.h"
 
 void alloc_intro_matrices(void) {

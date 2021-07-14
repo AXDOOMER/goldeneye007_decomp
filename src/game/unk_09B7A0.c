@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "memp.h"
 
 // bss
 //CODE.bss:8007A0D0

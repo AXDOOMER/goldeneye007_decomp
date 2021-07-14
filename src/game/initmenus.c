@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "memp.h"
 #include "game/mainmenu.h"
 
 #ifdef NONMATCHING

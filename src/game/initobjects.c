@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "memp.h"
 #include "game/initobjects.h"
 #include "game/chrai.h"
 #include "game/chrobjhandler.h"

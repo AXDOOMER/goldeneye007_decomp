@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "memp.h"
 #include "game/initBondDATA.h"
 
 struct  BONDdata_item_control_blocks BONDdata_item_control_blocks_initdata = {        

@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "memp.h"
 #include "game/bond.h"
 #include "libultra/os.h"
 #include "include/PR/gbi.h"

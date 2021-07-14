@@ -12,6 +12,7 @@
 #include "game/chrobjhandler.h"
 #include "include/PR/libaudio.h"
 #include "game/floor.h"
+#include "memp.h"
 
 s32 alarm_timer = 0;
 s32 *ptr_alarm_sfx = 0;

@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "memp.h"
 #include "game/image.h"
 
 void set_mt_tex_alloc(void)

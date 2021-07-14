@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "bondgame.h"
+#include "memp.h"
 #include "game/lvl_text.h"
 
 // bss
