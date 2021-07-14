@@ -350,7 +350,7 @@ SECTIONS
       build/u/src/game/unk_05AE00.o (.text);
       build/u/src/game/unk_05B1E0.o (.text);
       build/u/src/game/floor.o (.text);
-      build/u/src/game/ceil.o (.text);
+      build/u/src/game/math_ceil.o (.text);
       build/u/src/game/bondwalk.o (.text);
       build/u/src/game/bondwalk2.o (.text);
       build/u/src/game/objecthandler.o (.text);
@@ -3646,7 +3646,7 @@ SECTIONS
       build/u/src/game/unk_05AE00.o (.data);
       build/u/src/game/unk_05B1E0.o (.data);
       build/u/src/game/floor.o (.data);
-      build/u/src/game/ceil.o (.data);
+      build/u/src/game/math_ceil.o (.data);
       build/u/src/game/bondwalk.o (.data);
       build/u/src/game/bondwalk2.o (.data);
       build/u/src/game/objecthandler.o (.data);
@@ -3771,7 +3771,7 @@ SECTIONS
       build/u/src/game/unk_05AE00.o (.rodata);
       build/u/src/game/unk_05B1E0.o (.rodata);
       build/u/src/game/floor.o (.rodata);
-      build/u/src/game/ceil.o (.rodata);
+      build/u/src/game/math_ceil.o (.rodata);
       build/u/src/game/bondwalk.o (.rodata);
       build/u/src/game/bondwalk2.o (.rodata);
       build/u/src/game/objecthandler.o (.rodata);
@@ -4113,7 +4113,7 @@ SECTIONS
       build/u/src/game/unk_05AE00.o (.bss);
       build/u/src/game/unk_05B1E0.o (.bss);
       build/u/src/game/floor.o (.bss);
-      build/u/src/game/ceil.o (.bss);
+      build/u/src/game/math_ceil.o (.bss);
       build/u/src/game/bondwalk.o (.bss);
       build/u/src/game/bondwalk2.o (.bss);
       build/u/src/game/objecthandler.o (.bss);

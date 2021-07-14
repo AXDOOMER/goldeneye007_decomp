@@ -1,5 +1,5 @@
-#ifndef _CEIL_H_
-#define _CEIL_H_
+#ifndef _MATH_CEIL_H_
+#define _MATH_CEIL_H_
 
 #include "ultra64.h"
 

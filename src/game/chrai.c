@@ -8,7 +8,7 @@
 #include "game/lvl_text.h"
 #include "structs.h"
 #include "game/floor.h"
-#include "game/ceil.h"
+#include "game/math_ceil.h"
 
 // bss
 //CODE.bss:80069B70

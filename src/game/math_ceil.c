@@ -1,5 +1,5 @@
 #include "ultra64.h"
-#include "game/ceil.h"
+#include "game/math_ceil.h"
 
 /**
  * Math.Ceiling function for floating point value; rounds towards

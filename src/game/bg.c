@@ -1,7 +1,7 @@
 #include "ultra64.h"
 #include "memp.h"
 #include "game/bg.h"
-#include "game/ceil.h"
+#include "game/math_ceil.h"
 
 // bss
 //CODE.bss:8007BF90
