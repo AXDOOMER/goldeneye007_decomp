@@ -1,8 +1,19 @@
 #include "ultra64.h"
 
 #ifdef NONMATCHING
-void sub_GAME_7F05AE00(void) {
+f32 sub_GAME_7F05AE00(void *arg0, void *arg1, f32 arg2, void *arg3)
+{
+    f32 temp_f0;
+    f32 temp_f14;
+    f32 temp_f2;
 
+    temp_f0 = arg0->unk0;
+    arg3->unk0 = (f32) (((arg1->unk0 - temp_f0) * arg2) + temp_f0);
+    temp_f2 = arg0->unk4;
+    arg3->unk4 = (f32) (((arg1->unk4 - temp_f2) * arg2) + temp_f2);
+    temp_f14 = arg0->unk8;
+    arg3->unk8 = (f32) (((arg1->unk8 - temp_f14) * arg2) + temp_f14);
+    return temp_f0;
 }
 #else
 GLOBAL_ASM(
@@ -34,68 +45,60 @@ glabel sub_GAME_7F05AE00
 
 
 
+/**
+ * Unused.
+ */ 
+f32 sub_GAME_7F05AE50(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
+{
+    f32 cube;
+    f32 square;
+    f32 total;
+    f32 t2;
 
-#ifdef NONMATCHING
-void sub_GAME_7F05AE50(void) {
+    square = arg4 * arg4;
+    cube = square * arg4;
 
+    t2 = square - ((arg4 + cube) * 0.5f);
+    total = arg0 * t2;
+
+    t2 = ((1.5f * cube) - (2.5f * square)) + 1.0f;
+    total += arg1 * t2;
+
+    t2 = (-1.5f * cube) + (2.0f * square) + (0.5f * arg4);
+    total += arg2 * t2;
+
+    t2 = (cube - square) * 0.5f;
+    total += arg3 * t2;
+
+    return total;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05AE50
-/* 08F980 7F05AE50 C7A40010 */  lwc1  $f4, 0x10($sp)
-/* 08F984 7F05AE54 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 08F988 7F05AE58 44819000 */  mtc1  $at, $f18
-/* 08F98C 7F05AE5C 46042082 */  mul.s $f2, $f4, $f4
-/* 08F990 7F05AE60 3C013FC0 */  li    $at, 0x3FC00000 # 1.500000
-/* 08F994 7F05AE64 44813000 */  mtc1  $at, $f6
-/* 08F998 7F05AE68 3C014020 */  li    $at, 0x40200000 # 2.500000
-/* 08F99C 7F05AE6C 44815000 */  mtc1  $at, $f10
-/* 08F9A0 7F05AE70 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 08F9A4 7F05AE74 AFA60008 */  sw    $a2, 8($sp)
-/* 08F9A8 7F05AE78 46041402 */  mul.s $f16, $f2, $f4
-/* 08F9AC 7F05AE7C AFA7000C */  sw    $a3, 0xc($sp)
-/* 08F9B0 7F05AE80 46103202 */  mul.s $f8, $f6, $f16
-/* 08F9B4 7F05AE84 00000000 */  nop   
-/* 08F9B8 7F05AE88 46025182 */  mul.s $f6, $f10, $f2
-/* 08F9BC 7F05AE8C 46064281 */  sub.s $f10, $f8, $f6
-/* 08F9C0 7F05AE90 44814000 */  mtc1  $at, $f8
-/* 08F9C4 7F05AE94 3C01BFC0 */  li    $at, 0xBFC00000 # -1.500000
-/* 08F9C8 7F05AE98 46085180 */  add.s $f6, $f10, $f8
-/* 08F9CC 7F05AE9C 46102200 */  add.s $f8, $f4, $f16
-/* 08F9D0 7F05AEA0 46067282 */  mul.s $f10, $f14, $f6
-/* 08F9D4 7F05AEA4 00000000 */  nop   
-/* 08F9D8 7F05AEA8 46124182 */  mul.s $f6, $f8, $f18
-/* 08F9DC 7F05AEAC 46061201 */  sub.s $f8, $f2, $f6
-/* 08F9E0 7F05AEB0 46086182 */  mul.s $f6, $f12, $f8
-/* 08F9E4 7F05AEB4 460A3200 */  add.s $f8, $f6, $f10
-/* 08F9E8 7F05AEB8 44813000 */  mtc1  $at, $f6
-/* 08F9EC 7F05AEBC 00000000 */  nop   
-/* 08F9F0 7F05AEC0 46103282 */  mul.s $f10, $f6, $f16
-/* 08F9F4 7F05AEC4 46021180 */  add.s $f6, $f2, $f2
-/* 08F9F8 7F05AEC8 46065280 */  add.s $f10, $f10, $f6
-/* 08F9FC 7F05AECC 46049182 */  mul.s $f6, $f18, $f4
-/* 08FA00 7F05AED0 46065100 */  add.s $f4, $f10, $f6
-/* 08FA04 7F05AED4 C7AA0008 */  lwc1  $f10, 8($sp)
-/* 08FA08 7F05AED8 46045182 */  mul.s $f6, $f10, $f4
-/* 08FA0C 7F05AEDC C7A4000C */  lwc1  $f4, 0xc($sp)
-/* 08FA10 7F05AEE0 46064280 */  add.s $f10, $f8, $f6
-/* 08FA14 7F05AEE4 46028201 */  sub.s $f8, $f16, $f2
-/* 08FA18 7F05AEE8 46124182 */  mul.s $f6, $f8, $f18
-/* 08FA1C 7F05AEEC 00000000 */  nop   
-/* 08FA20 7F05AEF0 46062202 */  mul.s $f8, $f4, $f6
-/* 08FA24 7F05AEF4 03E00008 */  jr    $ra
-/* 08FA28 7F05AEF8 46085000 */   add.s $f0, $f10, $f8
-)
-#endif
 
 
 
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05AEFC(void) {
+f32 sub_GAME_7F05AEFC(void *arg0, void *arg1, void *arg2, void *arg3, f32 arg4, void *arg5)
+{
+    f32 sp0;
+    f32 temp_f0;
+    f32 temp_f14;
+    f32 temp_f16;
+    f32 temp_f18;
+    f32 temp_f2;
+    f32 temp_f8;
 
+    temp_f0 = arg4 * arg4;
+    temp_f2 = temp_f0 * arg4;
+    temp_f8 = (temp_f2 - temp_f0) * 0.5f;
+    sp0 = temp_f8;
+    temp_f14 = temp_f0 - ((arg4 + temp_f2) * 0.5f);
+    temp_f16 = ((1.5f * temp_f2) - (2.5f * temp_f0)) + 1.0f;
+    temp_f18 = (-1.5f * temp_f2) + (2.0f * temp_f0) + (0.5f * arg4);
+    arg5->unk0 = (f32) ((arg3->unk0 * temp_f8) + ((temp_f14 * arg0->unk0) + (temp_f16 * arg1->unk0) + (temp_f18 * arg2->unk0)));
+    arg5->unk4 = (f32) ((arg3->unk4 * temp_f8) + ((temp_f14 * arg0->unk4) + (temp_f16 * arg1->unk4) + (temp_f18 * arg2->unk4)));
+    arg5->unk8 = (f32) ((arg3->unk8 * temp_f8) + ((temp_f14 * arg0->unk8) + (temp_f16 * arg1->unk8) + (temp_f18 * arg2->unk8)));
+    return temp_f0;
 }
 #else
 GLOBAL_ASM(
@@ -183,9 +186,31 @@ glabel sub_GAME_7F05AEFC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F05B024(void) {
+f32 sub_GAME_7F05B024(void *arg0, void *arg1, void *arg2, void *arg3, f32 arg4, f32 arg5, void *arg6)
+{
+    f32 sp8;
+    f32 sp0;
+    f32 temp_f0;
+    f32 temp_f16;
+    f32 temp_f18;
+    f32 temp_f2;
+    f32 temp_f6;
+    f32 temp_f8;
 
+    temp_f0 = arg4 * arg4;
+    temp_f2 = temp_f0 * arg4;
+    temp_f6 = (temp_f2 - temp_f0) * arg5;
+    sp0 = temp_f6;
+    temp_f16 = ((2.0f * temp_f0) - (arg4 + temp_f2)) * arg5;
+    temp_f18 = ((2.0f - arg5) * temp_f2) + (temp_f0 * (arg5 - 3.0f)) + 1.0f;
+    temp_f8 = ((arg5 - 2.0f) * temp_f2) + (temp_f0 * (3.0f - (2.0f * arg5))) + (arg4 * arg5);
+    sp8 = temp_f8;
+    arg6->unk0 = (f32) ((arg3->unk0 * temp_f6) + ((temp_f16 * arg0->unk0) + (temp_f18 * arg1->unk0) + (temp_f8 * arg2->unk0)));
+    arg6->unk4 = (f32) ((arg3->unk4 * temp_f6) + ((temp_f16 * arg0->unk4) + (temp_f18 * arg1->unk4) + (temp_f8 * arg2->unk4)));
+    arg6->unk8 = (f32) ((arg3->unk8 * temp_f6) + ((temp_f16 * arg0->unk8) + (temp_f18 * arg1->unk8) + (temp_f8 * arg2->unk8)));
+    return temp_f0;
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -272,49 +297,25 @@ glabel sub_GAME_7F05B024
 
 
 
+/**
+ * Unused.
+ */ 
+f32 sub_GAME_7F05B154(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
+{
+    /*
+    Quick substition (so this may be wrong), but let x=arg4. Then
+    return
+    x^3 * (arg3 + arg2 - 2*arg1 + 2*arg0) + x^2 * (-arg3 - 2*arg2 + 3*arg1 - 3*arg0) + x^1 * (arg2) + x^0 * (arg0)
+    */
+    f32 cube;
+    f32 temp_f18;
+    f32 square;
 
-#ifdef NONMATCHING
-void sub_GAME_7F05B154(void) {
-
+    square = arg4 * arg4;
+    cube = square * arg4;
+    temp_f18 = ((2.0f * cube) - (3.0f * square)) + 1.0f;
+    return (arg0 * temp_f18) + (arg1 * (1.0f - temp_f18)) + (arg2 * ((cube - (2.0f * square)) + arg4)) + (arg3 * (cube - square));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05B154
-/* 08FC84 7F05B154 C7A40010 */  lwc1  $f4, 0x10($sp)
-/* 08FC88 7F05B158 3C014040 */  li    $at, 0x40400000 # 3.000000
-/* 08FC8C 7F05B15C 44814000 */  mtc1  $at, $f8
-/* 08FC90 7F05B160 46042082 */  mul.s $f2, $f4, $f4
-/* 08FC94 7F05B164 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 08FC98 7F05B168 AFA60008 */  sw    $a2, 8($sp)
-/* 08FC9C 7F05B16C AFA7000C */  sw    $a3, 0xc($sp)
-/* 08FCA0 7F05B170 46041402 */  mul.s $f16, $f2, $f4
-/* 08FCA4 7F05B174 46108180 */  add.s $f6, $f16, $f16
-/* 08FCA8 7F05B178 46024282 */  mul.s $f10, $f8, $f2
-/* 08FCAC 7F05B17C 460A3201 */  sub.s $f8, $f6, $f10
-/* 08FCB0 7F05B180 44813000 */  mtc1  $at, $f6
-/* 08FCB4 7F05B184 00000000 */  nop   
-/* 08FCB8 7F05B188 46064480 */  add.s $f18, $f8, $f6
-/* 08FCBC 7F05B18C 44814000 */  mtc1  $at, $f8
-/* 08FCC0 7F05B190 00000000 */  nop   
-/* 08FCC4 7F05B194 46124181 */  sub.s $f6, $f8, $f18
-/* 08FCC8 7F05B198 46126282 */  mul.s $f10, $f12, $f18
-/* 08FCCC 7F05B19C 00000000 */  nop   
-/* 08FCD0 7F05B1A0 46067202 */  mul.s $f8, $f14, $f6
-/* 08FCD4 7F05B1A4 46085180 */  add.s $f6, $f10, $f8
-/* 08FCD8 7F05B1A8 46021280 */  add.s $f10, $f2, $f2
-/* 08FCDC 7F05B1AC 460A8201 */  sub.s $f8, $f16, $f10
-/* 08FCE0 7F05B1B0 46044280 */  add.s $f10, $f8, $f4
-/* 08FCE4 7F05B1B4 C7A80008 */  lwc1  $f8, 8($sp)
-/* 08FCE8 7F05B1B8 460A4102 */  mul.s $f4, $f8, $f10
-/* 08FCEC 7F05B1BC C7AA000C */  lwc1  $f10, 0xc($sp)
-/* 08FCF0 7F05B1C0 46043200 */  add.s $f8, $f6, $f4
-/* 08FCF4 7F05B1C4 46028181 */  sub.s $f6, $f16, $f2
-/* 08FCF8 7F05B1C8 46065102 */  mul.s $f4, $f10, $f6
-/* 08FCFC 7F05B1CC 03E00008 */  jr    $ra
-/* 08FD00 7F05B1D0 46044000 */   add.s $f0, $f8, $f4
-)
-#endif
 
 
 
