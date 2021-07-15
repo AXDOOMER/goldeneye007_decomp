@@ -1,7 +1,8 @@
 #include "ultra64.h"
 #include "structs.h"
-#include "game/floor.h"
+#include "game/math_floor.h"
 #include "game/math_ceil.h"
+#include "game/quaternion.h"
 
 //D:80054600
 const char aGetsubmatrixNoObjinst[] = "getsubmatrix: no objinst!\n";

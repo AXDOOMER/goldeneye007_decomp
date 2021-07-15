@@ -2,7 +2,7 @@
 #include "game/initactorpropstuff.h"
 #include "game/chr.h"
 #include "game/bondwalk.h"
-#include "game/floor.h"
+#include "game/math_floor.h"
 
 
 void reset_counter_rand_body_head(void) {

@@ -5,6 +5,7 @@
 #include "game/bondinv.h"
 #include "game/bondwalk.h"
 #include "game/chrobjdata.h"
+#include "game/quaternion.h"
 
 #include "bondgame.h"
 

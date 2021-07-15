@@ -7,7 +7,7 @@
 #include "music.h"
 #include "game/lvl_text.h"
 #include "structs.h"
-#include "game/floor.h"
+#include "game/math_floor.h"
 #include "game/math_ceil.h"
 
 // bss
