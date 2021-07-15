@@ -189,9 +189,6 @@ $(BUILD_DIR)/%.o: src/%.s
 $(BUILD_DIR)/src/%.o: src/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
-$(BUILD_DIR)/src/game/%.o: src/game/%.s
-	$(AS) $(ASFLAGS) -o $@ $<
-
 $(BUILD_DIR)/assets/%.o: assets/%.c
 	$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
 	$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s
