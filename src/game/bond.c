@@ -11,6 +11,7 @@
 #include "music.h"
 #include "video.h"
 #include "snd.h"
+#include "game/math_atan2f.h"
 
 // bss
 struct coord3d flt_CODE_bss_80079940;

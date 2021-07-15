@@ -1,11 +1,11 @@
 #include "ultra64.h"
+#include "game/math_asinacos.h"
+#include "game/math_asinfacosf.h"
 
-u16 acos(s16);
-s16 asin(s16);
-
-f32 acosf(f32 cosinef) {
+f32 acosf(f32 cosinef)
+{
     s16 cosines;
-    
+
     if (1.0f <= cosinef) {
         cosines = 0x7FFF;
     } else if (cosinef <= -1.0f) {
@@ -17,7 +17,8 @@ f32 acosf(f32 cosinef) {
     return (acos(cosines) * 3.1415927f) / 65535.0f;
 }
 
-f32 asinf(f32 sinef) {
+f32 asinf(f32 sinef)
+{
     s16 sines;
 
     if (1.0f <= sinef) {

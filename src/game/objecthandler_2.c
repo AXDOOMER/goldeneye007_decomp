@@ -3,6 +3,8 @@
 #include "game/math_floor.h"
 #include "game/math_ceil.h"
 #include "game/quaternion.h"
+#include "game/math_asinfacosf.h"
+#include "game/math_unk_05A9E0.h"
 
 //D:80054600
 const char aGetsubmatrixNoObjinst[] = "getsubmatrix: no objinst!\n";

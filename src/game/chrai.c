@@ -9,6 +9,7 @@
 #include "structs.h"
 #include "game/math_floor.h"
 #include "game/math_ceil.h"
+#include "game/math_atan2f.h"
 
 // bss
 //CODE.bss:80069B70

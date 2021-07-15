@@ -13,6 +13,7 @@
 #include "music.h"
 #include "game/lvl.h"
 #include "snd.h"
+#include "game/math_asinfacosf.h"
 
 // bss
 s32 dword_CODE_bss_80075DB0;

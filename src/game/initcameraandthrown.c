@@ -2,6 +2,7 @@
 #include "memp.h"
 #include "bondconstants.h"
 #include "boss.h"
+#include "game/math_atan2f.h"
 
 
 // data

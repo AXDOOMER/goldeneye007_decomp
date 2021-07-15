@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "game/math_atan2f.h"
 
 // bss
 //CODE.bss:8007A160

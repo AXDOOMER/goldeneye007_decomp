@@ -14,6 +14,8 @@
 #include "game/math_floor.h"
 #include "memp.h"
 #include "game/quaternion.h"
+#include "game/math_asinfacosf.h"
+#include "game/math_atan2f.h"
 
 s32 alarm_timer = 0;
 s32 *ptr_alarm_sfx = 0;

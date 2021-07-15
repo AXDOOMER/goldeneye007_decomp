@@ -1,6 +1,5 @@
 #include "ultra64.h"
 
-
 //data 
 //D:80032320
 u16 table_1[] = {
@@ -29,19 +28,15 @@ u16 table_3[] = {
     0x39A, 0x31E, 0x28C, 0x1CD,     0,     0
 };
 
-s32 sub_GAME_7F05AB70(s32 arg0)
+static s32 sub_GAME_7F05AB70(s32 arg0)
 {
-    //u16 temp_a3;
     s32 mask;
     u16 *table;
-    //u16 *table_entry;
     s32 shift;
 
-    s32 aa;
-    s32 bb;
-    s32 cc;
+    s32 first;
+    s32 second;
     s32 dd;
-    s32 ee;
 
     if (arg0 >= 0x7FE0)
     {
@@ -64,27 +59,11 @@ s32 sub_GAME_7F05AB70(s32 arg0)
         table = &table_1;
     }
 
-    //table_entry = &table[arg0 >> shift];
-    //temp_a3 = table_entry[0];
-
-    //return table_entry[0] - ( ((table_entry[0] - table_entry[1]) * (arg0 & mask)) >> shift);
-
-    // aa = table_entry[0] - table_entry[1];
-    // aa *= arg0 & mask;
-    // aa = aa >> shift;
-
-    // return table_entry[0] - aa;
-
-    aa = arg0 >> shift;
-    cc = table[aa];
-    ee = table[aa + 1];
-    bb = arg0 & mask;
-    dd = ((cc - ee) * bb) >> shift;
-    return cc - dd;
+    first = table[arg0 >> shift];
+    second = table[(arg0 >> shift) + 1];
+    dd = ((first - second) * (arg0 & mask)) >> shift;
+    return first - dd;
 }
-
-
-
 
 u16 acos(s16 arg0)
 {
@@ -108,7 +87,6 @@ u16 acos(s16 arg0)
 
     return (u16)phi_a0;
 }
-
 
 s16 asin(s16 arg0)
 {
@@ -137,6 +115,3 @@ s16 asin(s16 arg0)
 
     return (s16)phi_a0;
 }
-
-   
-
