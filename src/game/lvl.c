@@ -4,6 +4,7 @@
 #include "game/initunk_0072B0.h"
 #include "game/mainmenu.h"
 #include "game/bondinv.h"
+#include "memp.h"
 #include "music.h"
 #include "tlb_manage.h"
 #include "video.h"

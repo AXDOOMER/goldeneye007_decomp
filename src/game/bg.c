@@ -1,5 +1,7 @@
 #include "ultra64.h"
+#include "memp.h"
 #include "game/bg.h"
+#include "game/math_ceil.h"
 
 // bss
 //CODE.bss:8007BF90
@@ -2593,8 +2595,8 @@ glabel sub_GAME_7F0B4FB4
 void sub_GAME_7F0B4FF4(s32 arg0, s32 arg1, f32 arg2, ? arg3, ? arg4) {
     s32 sp20;
 
-    sp20 = sub_GAME_7F05C4B8(arg3);
-    return sub_GAME_7F0B5058(arg0, (s32) arg1, (s32) arg2, sp20, sub_GAME_7F05C4B8(arg4));
+    sp20 = ceilFloatToInt(arg3);
+    return sub_GAME_7F0B5058(arg0, (s32) arg1, (s32) arg2, sp20, ceilFloatToInt(arg4));
 }
 #else
 GLOBAL_ASM(
@@ -2605,10 +2607,10 @@ glabel sub_GAME_7F0B4FF4
 /* 0E9B2C 7F0B4FFC 44876000 */  mtc1  $a3, $f12
 /* 0E9B30 7F0B5000 AFA40028 */  sw    $a0, 0x28($sp)
 /* 0E9B34 7F0B5004 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 0E9B38 7F0B5008 0FC1712E */  jal   sub_GAME_7F05C4B8
+/* 0E9B38 7F0B5008 0FC1712E */  jal   ceilFloatToInt
 /* 0E9B3C 7F0B500C AFA60030 */   sw    $a2, 0x30($sp)
 /* 0E9B40 7F0B5010 AFA20020 */  sw    $v0, 0x20($sp)
-/* 0E9B44 7F0B5014 0FC1712E */  jal   sub_GAME_7F05C4B8
+/* 0E9B44 7F0B5014 0FC1712E */  jal   ceilFloatToInt
 /* 0E9B48 7F0B5018 C7AC0038 */   lwc1  $f12, 0x38($sp)
 /* 0E9B4C 7F0B501C C7A4002C */  lwc1  $f4, 0x2c($sp)
 /* 0E9B50 7F0B5020 C7A80030 */  lwc1  $f8, 0x30($sp)

@@ -7,7 +7,9 @@
 #include "music.h"
 #include "game/lvl_text.h"
 #include "structs.h"
-#include "game/floor.h"
+#include "game/math_floor.h"
+#include "game/math_ceil.h"
+#include "game/math_atan2f.h"
 
 // bss
 //CODE.bss:80069B70
@@ -24027,7 +24029,7 @@ glabel sub_GAME_7F03D188
 /* 071E64 7F03D334 0FC170D8 */  jal   floorFloat
 /* 071E68 7F03D338 C7AC0094 */   lwc1  $f12, 0x94($sp)
 /* 071E6C 7F03D33C E7A00094 */  swc1  $f0, 0x94($sp)
-/* 071E70 7F03D340 0FC17110 */  jal   sub_GAME_7F05C440
+/* 071E70 7F03D340 0FC17110 */  jal   ceilFloat
 /* 071E74 7F03D344 C7AC008C */   lwc1  $f12, 0x8c($sp)
 /* 071E78 7F03D348 0FC1F1AA */  jal   redirect_get_BONDdata_autoaim_x
 /* 071E7C 7F03D34C E7A0008C */   swc1  $f0, 0x8c($sp)

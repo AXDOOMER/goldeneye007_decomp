@@ -5,6 +5,8 @@
 #include "game/lvl.h"
 #include "bondconstants.h"
 #include "chr2.h"
+#include "game/math_asinfacosf.h"
+#include "game/math_atan2f.h"
 
 
 s32 load_body_head_if_not_loaded(s32 model)

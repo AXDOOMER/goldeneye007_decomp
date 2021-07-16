@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "memp.h"
 
 // bss
 s32 ptr_sectrum_monitor_data_temp_buf;

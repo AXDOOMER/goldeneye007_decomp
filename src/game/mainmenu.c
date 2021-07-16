@@ -16,7 +16,7 @@
 #include "assets/GlobalImageTable.h"
 #include "game/mp_weapon.h"
 #include "lvl_text.h"
-#include "game/floor.h"
+#include "game/math_floor.h"
 
 struct point {
     f32 x;

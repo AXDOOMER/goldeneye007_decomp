@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "ramrom.h"
+#include "memp.h"
 
 // bss
 //8008D0A0

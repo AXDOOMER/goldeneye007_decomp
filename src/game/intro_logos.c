@@ -7,7 +7,7 @@
 #include "include/PR/gbi.h"
 #include "matrixmath.h"
 #include "ramrom.h"
-#include "game/floor.h"
+#include "game/math_floor.h"
 
 // bss
 //CODE.bss:80069550

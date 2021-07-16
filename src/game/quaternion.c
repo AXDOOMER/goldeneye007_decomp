@@ -1,16 +1,12 @@
 #include "ultra64.h"
-
-typedef u16 vec3u[3];
-typedef f32 vec3f[3];
-typedef f32 mat44f[4][4];
-typedef f32 quatf[4]; // w, x, y, z
-
-float acosf(float);
+#include "game/quaternion.h"
+#include "game/math_asinfacosf.h"
 
 #define M_PI 3.1415927f
 #define HALF2RAD(x) (x * (M_PI / 32768.0f))
 
-void quaternion_set_rotation_around_xyz(vec3u angles, quatf q) {
+void quaternion_set_rotation_around_xyz(vec3u angles, quatf q)
+{
     f32 cos_x = cosf(HALF2RAD(angles[0]) * 0.5f);
     f32 sin_x = sinf(HALF2RAD(angles[0]) * 0.5f);
     f32 cos_y = cosf(HALF2RAD(angles[1]) * 0.5f);
@@ -27,7 +23,8 @@ void quaternion_set_rotation_around_xyz(vec3u angles, quatf q) {
     q[3] = ((cos_x_cos_y * sin_z) - (sin_x_sin_y * cos_z));
 }
 
-void quaternion_set_rotation_around_xyzf(vec3f angles, quatf q) {
+void quaternion_set_rotation_around_xyzf(vec3f angles, quatf q)
+{
     f32 cos_x = cosf(angles[0] * 0.5f);
     f32 sin_x = sinf(angles[0] * 0.5f);
     f32 cos_y = cosf(angles[1] * 0.5f);
@@ -44,28 +41,32 @@ void quaternion_set_rotation_around_xyzf(vec3f angles, quatf q) {
     q[3] = (cos_x_cos_y * sin_z) - (sin_x_sin_y * cos_z);
 }
 
-void quaternion_set_rotation_around_x(f32 angle, quatf q) {
+void quaternion_set_rotation_around_x(f32 angle, quatf q)
+{
     q[0] = cosf(angle * 0.5f);
     q[1] = sinf(angle * 0.5f);
     q[2] = 0.0f;
     q[3] = 0.0f;
 }
 
-void quaternion_set_rotation_around_y(f32 angle, quatf q) {
+void quaternion_set_rotation_around_y(f32 angle, quatf q)
+{
     q[0] = cosf(angle * 0.5f);
     q[1] = 0.0f;
     q[2] = sinf(angle * 0.5f);
     q[3] = 0.0f;
 }
 
-void quaternion_set_rotation_around_z(f32 angle, quatf q) {
+void quaternion_set_rotation_around_z(f32 angle, quatf q)
+{
     q[0] = cosf(angle * 0.5f);
     q[1] = 0.0f;
     q[2] = 0.0f;
     q[3] = sinf(angle * 0.5f);
 }
 
-void quaternion_to_matrix(quatf q, mat44f matrix) {
+void quaternion_to_matrix(quatf q, mat44f matrix)
+{
     f32 temp_f6 = 2.0f / ((q[0] * q[0]) + (q[1] * q[1]) + (q[2] * q[2]) +  (q[3] * q[3]));
     f32 temp_f18 = q[1] * temp_f6;
     f32 temp_f16 = q[2] * temp_f6;
@@ -97,7 +98,8 @@ void quaternion_to_matrix(quatf q, mat44f matrix) {
     matrix[3][3] = 1.0f;
 }
 
-void quaternion_from_matrix(mat44f arg0, quatf arg1) {
+void quaternion_from_matrix(mat44f arg0, quatf arg1)
+{
     f32 var1;
     f32 var2;
     f32 trace = arg0[0][0] + arg0[1][1] + arg0[2][2] + 1.0f;
@@ -131,7 +133,8 @@ void quaternion_from_matrix(mat44f arg0, quatf arg1) {
     }
 }
 
-void quaternion_to_transform_matrix(vec3f position, quatf rotation, mat44f matrix) {
+void quaternion_to_transform_matrix(vec3f position, quatf rotation, mat44f matrix)
+{
     quaternion_to_matrix(rotation, matrix);
     matrix[3][0] = position[0];
     matrix[3][1] = position[1];
@@ -140,7 +143,8 @@ void quaternion_to_transform_matrix(vec3f position, quatf rotation, mat44f matri
 
 #define EPSILON 0.00001001f
 
-void quaternion_slerp(quatf q1, quatf q2, f32 t, quatf result) {
+void quaternion_slerp(quatf q1, quatf q2, f32 t, quatf result)
+{
     f32 dot = (q1[0] * q2[0]) + (q1[1] * q2[1]) + (q1[2] * q2[2]) + (q1[3] * q2[3]);
     f32 theta;
     f32 theta_q1;
@@ -173,7 +177,8 @@ void quaternion_slerp(quatf q1, quatf q2, f32 t, quatf result) {
     }
 }
 
-void quaternion_7F05BC68(quatf q, f32 t, quatf result) {
+void quaternion_7F05BC68(quatf q, f32 t, quatf result)
+{
     f32 phi_f12 = q[0];
     f32 phi_f16 = 1.0f;
     f32 temp_f0_2;
@@ -210,7 +215,8 @@ void quaternion_7F05BC68(quatf q, f32 t, quatf result) {
     }
 }
 
-void quaternion_ensure_shortest_path(quatf q1, quatf q2) {
+void quaternion_ensure_shortest_path(quatf q1, quatf q2)
+{
     f32 dot = (q1[0] * q2[0]) + (q1[1] * q2[1]) + (q1[2] * q2[2]) + (q1[3] * q2[3]);
     if (dot < 0.0f) {
         q2[0] = -q2[0];
@@ -220,14 +226,16 @@ void quaternion_ensure_shortest_path(quatf q1, quatf q2) {
     }
 }
 
-void quaternion_multiply(quatf lhs, quatf rhs, quatf result) {
+void quaternion_multiply(quatf lhs, quatf rhs, quatf result)
+{
     result[0] = (lhs[0] * rhs[0]) - (lhs[1] * rhs[1]) - (lhs[2] * rhs[2]) - (lhs[3] * rhs[3]);
     result[1] = (lhs[0] * rhs[1]) + (rhs[0] * lhs[1]) + (lhs[2] * rhs[3]) - (lhs[3] * rhs[2]);
     result[2] = (lhs[0] * rhs[2]) + (rhs[0] * lhs[2]) + (lhs[3] * rhs[1]) - (lhs[1] * rhs[3]);
     result[3] = (lhs[0] * rhs[3]) + (rhs[0] * lhs[3]) + (lhs[1] * rhs[2]) - (lhs[2] * rhs[1]);
 }
 
-void quaternion_multiply_in_place(quatf lhs, quatf rhs) {
+void quaternion_multiply_in_place(quatf lhs, quatf rhs)
+{
     quatf result;
     quaternion_multiply(lhs, rhs, result);
     rhs[0] = result[0];
@@ -236,7 +244,8 @@ void quaternion_multiply_in_place(quatf lhs, quatf rhs) {
     rhs[3] = result[3];
 }
 
-void quaternion_7F05BFD4(quatf q1, quatf q2) {
+void quaternion_7F05BFD4(quatf q1, quatf q2)
+{
     f32 angle = acosf(q1[0]);
     f32 sine = sinf(angle);
     if (sine == 0.0f) {
@@ -252,7 +261,8 @@ void quaternion_7F05BFD4(quatf q1, quatf q2) {
     }
 }
 
-void quaternion_7F05C068(quatf q1, quatf q2) {
+void quaternion_7F05C068(quatf q1, quatf q2)
+{
     f32 sine;
     f32 angle = sqrtf((q1[1] * q1[1]) + (q1[2] * q1[2]) + (q1[3] * q1[3]));
     f32 unknown;
@@ -271,7 +281,8 @@ void quaternion_7F05C068(quatf q1, quatf q2) {
     }
 }
 
-void quaternion_7F05C138(quatf arg0, quatf arg1, quatf arg2, quatf result) {
+void quaternion_7F05C138(quatf arg0, quatf arg1, quatf arg2, quatf result)
+{
     quatf conjugate;
     quatf sp50;
     quatf sp40;
@@ -293,7 +304,8 @@ void quaternion_7F05C138(quatf arg0, quatf arg1, quatf arg2, quatf result) {
     quaternion_multiply(arg1, sp50, result);
 }
 
-void quaternion_7F05C250(quatf q1, quatf q2, quatf q3, quatf q4, f32 t, quatf result) {
+void quaternion_7F05C250(quatf q1, quatf q2, quatf q3, quatf q4, f32 t, quatf result)
+{
     quatf q5;
     quatf q6;
     f32 t2 = (t + t) * (1.0f - t);
@@ -305,7 +317,8 @@ void quaternion_7F05C250(quatf q1, quatf q2, quatf q3, quatf q4, f32 t, quatf re
     quaternion_slerp(q5, q6, t2, result);
 }
 
-void quaternion_7F05C2F0(quatf q1, quatf q2, quatf q3, quatf q4, f32 t, quatf result) {
+void quaternion_7F05C2F0(quatf q1, quatf q2, quatf q3, quatf q4, f32 t, quatf result)
+{
     quatf q5;
     quatf q6;
     quaternion_7F05C138(q1, q2, q3, q5);

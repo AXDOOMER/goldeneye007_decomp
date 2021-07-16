@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "memp.h"
 #include "game/unk_093880.h"
 #include "game/bondinv.h"
 

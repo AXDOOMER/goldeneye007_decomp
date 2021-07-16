@@ -1,64 +1,54 @@
-#include "ultra64.h"
+# assembler directives
+.set noat      # allow manual use of $at
+.set noreorder # don't insert nops after branches
+.set gp=64
+
+.include "macros.inc"
+
+.section .text, "ax" 
+
+# ################################################################
+.section .rodata
+# ################################################################
+
+glabel D_800536C0
+.word 0x3fc90fda # /*1.5707963*/
+glabel D_800536C4
+.word 0x362edef8 # /*0.0000026057805*/
+glabel D_800536C8
+.word 0xb94fb7ff # /*-0.00019809602*/
+glabel D_800536CC
+.word 0x3c08876a # /*0.0083330665*/
+glabel D_800536D0
+.word 0xbe2aaaa6 # /*-0.1666666*/
+glabel D_800536D4
+.word 0x3ea2f983 # /*0.31830987*/
+glabel D_800536D8
+.word 0x40490fdb # /*3.1415927*/
+glabel D_800536DC
+.word 0x330885a3 # /*3.178650856*/
+glabel D_800536E0
+.word 0x362edef8 # /*0.0000026057805*/
+glabel D_800536E4
+.word 0xb94fb7ff # /*-0.00019809602*/
+glabel D_800536E8
+.word 0x3c08876a # /*0.0083330665*/
+glabel D_800536EC
+.word 0xbe2aaaa6 # /*-0.1666666*/
+
+# ################################################################
+.section .text
+# ################################################################
 
 
-//these are actaully clever shared asm
-//!FIXME move to asm file
-
-
-
-
-#ifdef NONMATCHING
-void cosf(void) {
-
-}
-#else
-GLOBAL_ASM(
-.late_rodata
-
-.text
+# ################################################################
 glabel cosf
 /* 08C9D0 7F057EA0 3C018005 */  lui   $at, %hi(D_800536C0)
 /* 08C9D4 7F057EA4 C42A36C0 */  lwc1  $f10, %lo(D_800536C0)($at)
 /* 08C9D8 7F057EA8 460A6300 */  add.s $f12, $f12, $f10
-)
-#endif
 
 
-
-
-
-#ifdef NONMATCHING
-void sinf(void) {
-
-}
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_800536C0
-.word 0x3fc90fda /*1.5707963*/
-glabel D_800536C4
-.word 0x362edef8 /*0.0000026057805*/
-glabel D_800536C8
-.word 0xb94fb7ff /*-0.00019809602*/
-glabel D_800536CC
-.word 0x3c08876a /*0.0083330665*/
-glabel D_800536D0
-.word 0xbe2aaaa6 /*-0.1666666*/
-glabel D_800536D4
-.word 0x3ea2f983 /*0.31830987*/
-glabel D_800536D8
-.word 0x40490fdb /*3.1415927*/
-glabel D_800536DC
-.word 0x330885a3 /*3.178650856*/
-glabel D_800536E0
-.word 0x362edef8 /*0.0000026057805*/
-glabel D_800536E4
-.word 0xb94fb7ff /*-0.00019809602*/
-glabel D_800536E8
-.word 0x3c08876a /*0.0083330665*/
-glabel D_800536EC
-.word 0xbe2aaaa6 /*-0.1666666*/
-.text
+# ################################################################
 glabel sinf
 /* 08C9DC 7F057EAC 44086000 */  mfc1  $t0, $f12
 /* 08C9E0 7F057EB0 00000000 */  nop   
@@ -135,5 +125,4 @@ glabel sinf
 .L7F057FC4:
 /* 08CAF4 7F057FC4 03E00008 */  jr    $ra
 /* 08CAF8 7F057FC8 00000000 */   nop   
-)
-#endif
+

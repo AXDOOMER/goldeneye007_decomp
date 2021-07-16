@@ -6,10 +6,12 @@
 #include "game/lvl.h"
 #include "game/bondinv.h"
 #include "game/bondwalk.h"
+#include "game/quaternion.h"
 #include "boss.h"
 #include "music.h"
 #include "video.h"
 #include "snd.h"
+#include "game/math_atan2f.h"
 
 // bss
 struct coord3d flt_CODE_bss_80079940;
