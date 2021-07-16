@@ -11,9 +11,6 @@ void sub_GAME_7F05AE00(vec3 x, vec3 y, f32 scaler, vec3 result)
     result[2] = x[2] + ((y[2] - x[2]) * scaler);
 }
 
-
-
-
 /**
  * Unused.
  */ 
@@ -43,31 +40,9 @@ f32 sub_GAME_7F05AE50(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
 }
 
 
-
-
-
 #ifdef NONMATCHING
-f32 sub_GAME_7F05AEFC(void *arg0, void *arg1, void *arg2, void *arg3, f32 arg4, void *arg5)
+void sub_GAME_7F05AEFC(vec3 arg0, vec3 arg1, vec3 arg2, vec3 arg3, f32 arg4, vec3 result)
 {
-    f32 sp0;
-    f32 temp_f0;
-    f32 temp_f14;
-    f32 temp_f16;
-    f32 temp_f18;
-    f32 temp_f2;
-    f32 temp_f8;
-
-    temp_f0 = arg4 * arg4;
-    temp_f2 = temp_f0 * arg4;
-    temp_f8 = (temp_f2 - temp_f0) * 0.5f;
-    sp0 = temp_f8;
-    temp_f14 = temp_f0 - ((arg4 + temp_f2) * 0.5f);
-    temp_f16 = ((1.5f * temp_f2) - (2.5f * temp_f0)) + 1.0f;
-    temp_f18 = (-1.5f * temp_f2) + (2.0f * temp_f0) + (0.5f * arg4);
-    arg5->unk0 = (f32) ((arg3->unk0 * temp_f8) + ((temp_f14 * arg0->unk0) + (temp_f16 * arg1->unk0) + (temp_f18 * arg2->unk0)));
-    arg5->unk4 = (f32) ((arg3->unk4 * temp_f8) + ((temp_f14 * arg0->unk4) + (temp_f16 * arg1->unk4) + (temp_f18 * arg2->unk4)));
-    arg5->unk8 = (f32) ((arg3->unk8 * temp_f8) + ((temp_f14 * arg0->unk8) + (temp_f16 * arg1->unk8) + (temp_f18 * arg2->unk8)));
-    return temp_f0;
 }
 #else
 GLOBAL_ASM(
@@ -149,8 +124,6 @@ glabel sub_GAME_7F05AEFC
 /* 08FB50 7F05B020 E5C80008 */   swc1  $f8, 8($t6)
 )
 #endif
-
-
 
 
 
@@ -285,7 +258,4 @@ f32 sub_GAME_7F05B154(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
     temp_f18 = ((2.0f * cube) - (3.0f * square)) + 1.0f;
     return (arg0 * temp_f18) + (arg1 * (1.0f - temp_f18)) + (arg2 * ((cube - (2.0f * square)) + arg4)) + (arg3 * (cube - square));
 }
-
-
-
 
