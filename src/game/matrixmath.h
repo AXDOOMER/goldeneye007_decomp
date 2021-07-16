@@ -17,5 +17,8 @@ typedef union {
 void matrix_4x4_rotate_vector_in_place(Mtxf *matrix, vec3 vector);
 void matrix_4x4_7F059694(Mtxf *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9);
 
+/* matrixmath_misc.h */
+
+void sub_GAME_7F05AE00(vec3 x, vec3 y, f32 scaler, vec3 result);
 
 #endif

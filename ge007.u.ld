@@ -347,7 +347,7 @@ SECTIONS
       build/u/src/game/math_atan2f.o (.text);
       build/u/src/game/math_asinacos.o (.text);
       build/u/src/game/math_asinfacosf.o (.text);
-      build/u/src/game/unk_05AE00.o (.text);
+      build/u/src/game/matrixmath_misc.o (.text);
       build/u/src/game/quaternion.o (.text);
       build/u/src/game/math_floor.o (.text);
       build/u/src/game/math_ceil.o (.text);
@@ -3643,7 +3643,7 @@ SECTIONS
       build/u/src/game/math_atan2f.o (.data);
       build/u/src/game/math_asinacos.o (.data);
       build/u/src/game/math_asinfacosf.o (.data);
-      build/u/src/game/unk_05AE00.o (.data);
+      build/u/src/game/matrixmath_misc.o (.data);
       build/u/src/game/quaternion.o (.data);
       build/u/src/game/math_floor.o (.data);
       build/u/src/game/math_ceil.o (.data);
@@ -3768,7 +3768,7 @@ SECTIONS
       build/u/src/game/math_atan2f.o (.rodata);
       build/u/src/game/math_asinacos.o (.rodata);
       build/u/src/game/math_asinfacosf.o (.rodata);
-      build/u/src/game/unk_05AE00.o (.rodata);
+      build/u/src/game/matrixmath_misc.o (.rodata);
       build/u/src/game/quaternion.o (.rodata);
       build/u/src/game/math_floor.o (.rodata);
       build/u/src/game/math_ceil.o (.rodata);
@@ -4110,7 +4110,7 @@ SECTIONS
       build/u/src/game/math_atan2f.o (.bss);
       build/u/src/game/math_asinacos.o (.bss);
       build/u/src/game/math_asinfacosf.o (.bss);
-      build/u/src/game/unk_05AE00.o (.bss);
+      build/u/src/game/matrixmath_misc.o (.bss);
       build/u/src/game/quaternion.o (.bss);
       build/u/src/game/math_floor.o (.bss);
       build/u/src/game/math_ceil.o (.bss);

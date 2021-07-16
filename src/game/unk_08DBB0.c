@@ -2,6 +2,7 @@
 #include "game/lvl.h"
 #include "game/unk_093880.h"
 #include "game/chrai.h"
+#include "game/matrixmath.h"
 
 // data
 //D:80036AD0

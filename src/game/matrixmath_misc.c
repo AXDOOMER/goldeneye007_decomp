@@ -1,46 +1,15 @@
 #include "ultra64.h"
+#include "matrixmath.h"
 
-#ifdef NONMATCHING
-f32 sub_GAME_7F05AE00(void *arg0, void *arg1, f32 arg2, void *arg3)
+/**
+ * x vector plus ((difference to y vector) * scaler).
+ */
+void sub_GAME_7F05AE00(vec3 x, vec3 y, f32 scaler, vec3 result)
 {
-    f32 temp_f0;
-    f32 temp_f14;
-    f32 temp_f2;
-
-    temp_f0 = arg0->unk0;
-    arg3->unk0 = (f32) (((arg1->unk0 - temp_f0) * arg2) + temp_f0);
-    temp_f2 = arg0->unk4;
-    arg3->unk4 = (f32) (((arg1->unk4 - temp_f2) * arg2) + temp_f2);
-    temp_f14 = arg0->unk8;
-    arg3->unk8 = (f32) (((arg1->unk8 - temp_f14) * arg2) + temp_f14);
-    return temp_f0;
+    result[0] = x[0] + ((y[0] - x[0]) * scaler);
+    result[1] = x[1] + ((y[1] - x[1]) * scaler);
+    result[2] = x[2] + ((y[2] - x[2]) * scaler);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05AE00
-/* 08F930 7F05AE00 C4800000 */  lwc1  $f0, ($a0)
-/* 08F934 7F05AE04 C4A40000 */  lwc1  $f4, ($a1)
-/* 08F938 7F05AE08 44866000 */  mtc1  $a2, $f12
-/* 08F93C 7F05AE0C 46002181 */  sub.s $f6, $f4, $f0
-/* 08F940 7F05AE10 460C3202 */  mul.s $f8, $f6, $f12
-/* 08F944 7F05AE14 46004280 */  add.s $f10, $f8, $f0
-/* 08F948 7F05AE18 E4EA0000 */  swc1  $f10, ($a3)
-/* 08F94C 7F05AE1C C4B00004 */  lwc1  $f16, 4($a1)
-/* 08F950 7F05AE20 C4820004 */  lwc1  $f2, 4($a0)
-/* 08F954 7F05AE24 46028481 */  sub.s $f18, $f16, $f2
-/* 08F958 7F05AE28 460C9102 */  mul.s $f4, $f18, $f12
-/* 08F95C 7F05AE2C 46022180 */  add.s $f6, $f4, $f2
-/* 08F960 7F05AE30 E4E60004 */  swc1  $f6, 4($a3)
-/* 08F964 7F05AE34 C4A80008 */  lwc1  $f8, 8($a1)
-/* 08F968 7F05AE38 C48E0008 */  lwc1  $f14, 8($a0)
-/* 08F96C 7F05AE3C 460E4281 */  sub.s $f10, $f8, $f14
-/* 08F970 7F05AE40 460C5402 */  mul.s $f16, $f10, $f12
-/* 08F974 7F05AE44 460E8480 */  add.s $f18, $f16, $f14
-/* 08F978 7F05AE48 03E00008 */  jr    $ra
-/* 08F97C 7F05AE4C E4F20008 */   swc1  $f18, 8($a3)
-)
-#endif
 
 
 
