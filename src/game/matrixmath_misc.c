@@ -39,10 +39,36 @@ f32 sub_GAME_7F05AE50(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
     return total;
 }
 
-
+/**
+ * Following is cleaned up mips_to_c output.
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: fail
+ * - identical instructions: fail
+ * - identical registers: fail
+ */
 #ifdef NONMATCHING
 void sub_GAME_7F05AEFC(vec3 arg0, vec3 arg1, vec3 arg2, vec3 arg3, f32 arg4, vec3 result)
 {
+    f32 square;
+    f32 cube;
+    f32 temp_f8;
+    f32 temp_f14;
+    f32 temp_f16;
+    f32 temp_f18;
+
+    square = arg4 * arg4;
+    cube = square * arg4;
+    
+    temp_f8 = 0.5f * (cube - square);
+    temp_f14 = square - ((arg4 + cube) * 0.5f);
+    temp_f16 = 1.0f + (1.5f * cube) - (2.5f * square);
+    temp_f18 = (-1.5f * cube) + (0.5f * arg4) + (2.0f * square);
+
+    result[0] = (temp_f8 * arg3[0]) + ((temp_f14 * arg0[0]) + (temp_f16 * arg1[0]) + (temp_f18 * arg2[0]));
+    result[1] = (temp_f8 * arg3[1]) + ((temp_f14 * arg0[1]) + (temp_f16 * arg1[1]) + (temp_f18 * arg2[1]));
+    result[2] = (temp_f8 * arg3[2]) + ((temp_f14 * arg0[2]) + (temp_f16 * arg1[2]) + (temp_f18 * arg2[2]));
 }
 #else
 GLOBAL_ASM(
@@ -125,34 +151,36 @@ glabel sub_GAME_7F05AEFC
 )
 #endif
 
-
-
+/**
+ * Following is cleaned up mips_to_c output.
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: fail
+ * - identical instructions: fail
+ * - identical registers: fail
+ */
 #ifdef NONMATCHING
-f32 sub_GAME_7F05B024(void *arg0, void *arg1, void *arg2, void *arg3, f32 arg4, f32 arg5, void *arg6)
+void sub_GAME_7F05B024(f32 *arg0, f32 *arg1, f32 *arg2, f32 *arg3, f32 arg4, f32 arg5, f32 *result)
 {
-    f32 sp8;
-    f32 sp0;
-    f32 temp_f0;
+    f32 square;
+    f32 cube;
     f32 temp_f16;
     f32 temp_f18;
-    f32 temp_f2;
     f32 temp_f6;
     f32 temp_f8;
 
-    temp_f0 = arg4 * arg4;
-    temp_f2 = temp_f0 * arg4;
-    temp_f6 = (temp_f2 - temp_f0) * arg5;
-    sp0 = temp_f6;
-    temp_f16 = ((2.0f * temp_f0) - (arg4 + temp_f2)) * arg5;
-    temp_f18 = ((2.0f - arg5) * temp_f2) + (temp_f0 * (arg5 - 3.0f)) + 1.0f;
-    temp_f8 = ((arg5 - 2.0f) * temp_f2) + (temp_f0 * (3.0f - (2.0f * arg5))) + (arg4 * arg5);
-    sp8 = temp_f8;
-    arg6->unk0 = (f32) ((arg3->unk0 * temp_f6) + ((temp_f16 * arg0->unk0) + (temp_f18 * arg1->unk0) + (temp_f8 * arg2->unk0)));
-    arg6->unk4 = (f32) ((arg3->unk4 * temp_f6) + ((temp_f16 * arg0->unk4) + (temp_f18 * arg1->unk4) + (temp_f8 * arg2->unk4)));
-    arg6->unk8 = (f32) ((arg3->unk8 * temp_f6) + ((temp_f16 * arg0->unk8) + (temp_f18 * arg1->unk8) + (temp_f8 * arg2->unk8)));
-    return temp_f0;
-}
+    square = arg4 * arg4;
+    cube = square * arg4;
+    temp_f6 = (cube - square) * arg5;
+    temp_f16 = ((2.0f * square) - (arg4 + cube)) * arg5;
+    temp_f18 = ((2.0f - arg5) * cube) + (square * (arg5 - 3.0f)) + 1.0f;
+    temp_f8 = ((arg5 - 2.0f) * cube) + (square * (3.0f - (2.0f * arg5))) + (arg4 * arg5);
 
+    result[0] = (arg3[0] * temp_f6) + ((temp_f16 * arg0[0]) + (temp_f18 * arg1[0]) + (temp_f8 * arg2[0]));
+    result[1] = (arg3[1] * temp_f6) + ((temp_f16 * arg0[1]) + (temp_f18 * arg1[1]) + (temp_f8 * arg2[1]));
+    result[2] = (arg3[2] * temp_f6) + ((temp_f16 * arg0[2]) + (temp_f18 * arg1[2]) + (temp_f8 * arg2[2]));
+}
 #else
 GLOBAL_ASM(
 .text
@@ -235,9 +263,6 @@ glabel sub_GAME_7F05B024
 /* 08FC80 7F05B150 E5CA0008 */   swc1  $f10, 8($t6)
 )
 #endif
-
-
-
 
 /**
  * Unused.
