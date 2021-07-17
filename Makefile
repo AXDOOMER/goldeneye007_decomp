@@ -92,8 +92,10 @@ ULTRAFILES_C := $(foreach dir,src/libultra,$(wildcard $(dir)/*.c))
 ULTRAOBJECTS := $(foreach file,$(ULTRAFILES_S),$(BUILD_DIR)/$(file:.s=.o)) \
 				$(foreach file,$(ULTRAFILES_C),$(BUILD_DIR)/$(file:.c=.o))
 
-GAMEFILES := $(foreach dir,src/game,$(wildcard $(dir)/*.c))
-GAMEOBJECTS := $(foreach file,$(GAMEFILES),$(BUILD_DIR)/$(file:.c=.o))
+GAMEFILES_C := $(foreach dir,src/game,$(wildcard $(dir)/*.c))
+GAMEFILES_S := $(foreach dir,src/game,$(wildcard $(dir)/*.s))
+GAMEOBJECTS := $(foreach file,$(GAMEFILES_S),$(BUILD_DIR)/$(file:.s=.o)) \
+				$(foreach file,$(GAMEFILES_C),$(BUILD_DIR)/$(file:.c=.o))
 
 ROMFILES := assets/romfiles.s
 ROMOBJECTS := $(BUILD_DIR)/assets/romfiles.o
