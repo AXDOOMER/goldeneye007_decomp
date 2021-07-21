@@ -211,6 +211,7 @@ typedef struct CartridgeModelFileRecord {
 extern char dword_CODE_bss_80075DC8[20][160];
 
 f32 bondwalkItemGetForceOfImpact(ITEM_IDS item);
+
 u32 bondwalkItemCheckBitflags(ITEM_IDS item, u32 mask);
 
 void bondwalkFireBothHands(void);
@@ -220,4 +221,7 @@ f32 sub_GAME_7F0649AC(s32 param_1);
 f32 sub_GAME_7F05DCB8(HANDEDNESS hand);
 
 u16 *get_ptr_short_watch_text_for_item(ITEM_IDS item);
+
+s32 bondwalkItemHasAmmo(ITEM_IDS item);
+
 #endif
