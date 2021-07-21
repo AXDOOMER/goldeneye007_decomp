@@ -483,7 +483,7 @@ int add_weapon_by_prop(PropRecord *prop)
 
 
 #ifndef VERSION_EU
-void sub_GAME_7F08C86C(s32 *nextright, s32 *nextleft, s32 direction)
+void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 direction)
 {
 	s32 weapon1 = *nextright;
 	s32 weapon2 = *nextleft;
@@ -584,7 +584,7 @@ void sub_GAME_7F08C86C(s32 *nextright, s32 *nextleft, s32 direction)
 #ifdef VERSION_EU
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F08C86C
+glabel choose_cycle_forward_weapon
 /* 0C139C 7F08C86C 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0C13A0 7F08C870 3C038008 */  lui   $v1, %hi(pPlayer)
 /* 0C13A4 7F08C874 8C63A0B0 */  lw    $v1, %lo(pPlayer)($v1)
