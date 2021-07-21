@@ -2252,7 +2252,7 @@ void advance_through_inventory(void)
     }
     else
     {
-        sub_GAME_7F08C86C(&nextright, &nextleft, 0);
+        choose_cycle_forward_weapon(&nextright, &nextleft, 0);
     }
 
     likely_change_weapon_in_hand(RIGHT_HAND, nextright, 1);
@@ -2307,7 +2307,7 @@ void autoadvance_on_deplete_all_ammo(void)
     }
     else
     {
-        sub_GAME_7F08C86C(&duperight, &dupeleft, 1);
+        choose_cycle_forward_weapon(&duperight, &dupeleft, 1);
         
         if ((duperight < nextright) || ((duperight == nextright) && (nextleft >= dupeleft)))
         {
