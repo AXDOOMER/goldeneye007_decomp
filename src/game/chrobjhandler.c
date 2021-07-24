@@ -4610,156 +4610,101 @@ glabel sub_GAME_7F042EB4
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F042F18(void) {
+/**
+ * Update a speed and distance travelled, factoring in acceleration,
+ * deceleration and the global update multiplier.
+ *
+ * The new speed and distance done are written back to those pointers.
+ * 
+ * offsets: 077A48, 7F042F18
+ * (copied from Perfect Dark)
+ */
+void chrobjApplySpeed(f32 *distDone, f32 maxDist, f32 *speedPtr, f32 accel, f32 decel, f32 maxSpeed)
+{
+    f32 speed = *speedPtr;
+    s32 i;
+        
+    for (i = 0; i < clock_timer; i++)
+    {
+        f32 limit = speed * speed * 0.5f / decel;
+        f32 distRemaining = maxDist - *distDone;
+        if (distRemaining > 0.0f)
+        {
+            if (speed > 0.0f && distRemaining <= limit)
+            {
+                // Slow down for end
+                speed -= decel;
 
+                if (speed < decel)
+                {
+                    speed = decel;
+                }
+            }
+            else if (speed < maxSpeed)
+            {
+                // Accelerate
+                if (speed < 0.0f)
+                {
+                    speed += decel;
+                }
+                else
+                {
+                    speed += accel;
+                }
+
+                if (speed > maxSpeed)
+                {
+                    speed = maxSpeed;
+                }
+            }
+
+            if (speed >= distRemaining)
+            {
+                *distDone = maxDist;
+                break;
+            }
+
+            *distDone += speed;
+        }
+        else
+        {
+            if (speed < 0.0f && -distRemaining <= limit)
+            {
+                speed += decel;
+
+                if (speed > -decel)
+                {
+                    speed = -decel;
+                }
+            }
+            else if (speed > -maxSpeed)
+            {
+                if (speed > 0.0f)
+                {
+                    speed -= decel;
+                }
+                else
+                {
+                    speed -= accel;
+                }
+
+                if (speed < -maxSpeed)
+                {
+                    speed = -maxSpeed;
+                }
+            }
+
+            if (speed <= distRemaining)
+            {
+                *distDone = maxDist;
+                break;
+            }
+
+            *distDone += speed;
+        }
+    }
+    *speedPtr = speed;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F042F18
-/* 077A48 7F042F18 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 077A4C 7F042F1C 3C038005 */  lui   $v1, %hi(clock_timer)
-/* 077A50 7F042F20 24638374 */  addiu $v1, %lo(clock_timer) # addiu $v1, $v1, -0x7c8c
-/* 077A54 7F042F24 8C6E0000 */  lw    $t6, ($v1)
-/* 077A58 7F042F28 F7B40008 */  sdc1  $f20, 8($sp)
-/* 077A5C 7F042F2C 4487A000 */  mtc1  $a3, $f20
-/* 077A60 7F042F30 F7BA0020 */  sdc1  $f26, 0x20($sp)
-/* 077A64 7F042F34 F7B80018 */  sdc1  $f24, 0x18($sp)
-/* 077A68 7F042F38 F7B60010 */  sdc1  $f22, 0x10($sp)
-/* 077A6C 7F042F3C 44857000 */  mtc1  $a1, $f14
-/* 077A70 7F042F40 C4C00000 */  lwc1  $f0, ($a2)
-/* 077A74 7F042F44 19C0006A */  blez  $t6, .L7F0430F0
-/* 077A78 7F042F48 00001025 */   move  $v0, $zero
-/* 077A7C 7F042F4C 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 077A80 7F042F50 4481D000 */  mtc1  $at, $f26
-/* 077A84 7F042F54 4480C000 */  mtc1  $zero, $f24
-/* 077A88 7F042F58 C7B2003C */  lwc1  $f18, 0x3c($sp)
-/* 077A8C 7F042F5C C7A20038 */  lwc1  $f2, 0x38($sp)
-/* 077A90 7F042F60 C4900000 */  lwc1  $f16, ($a0)
-.L7F042F64:
-/* 077A94 7F042F64 46107301 */  sub.s $f12, $f14, $f16
-/* 077A98 7F042F68 460CC03C */  c.lt.s $f24, $f12
-/* 077A9C 7F042F6C 00000000 */  nop   
-/* 077AA0 7F042F70 4502002E */  bc1fl .L7F04302C
-/* 077AA4 7F042F74 4618003C */   c.lt.s $f0, $f24
-/* 077AA8 7F042F78 4600C03C */  c.lt.s $f24, $f0
-/* 077AAC 7F042F7C 00000000 */  nop   
-/* 077AB0 7F042F80 45020011 */  bc1fl .L7F042FC8
-/* 077AB4 7F042F84 4612003C */   c.lt.s $f0, $f18
-/* 077AB8 7F042F88 46000102 */  mul.s $f4, $f0, $f0
-/* 077ABC 7F042F8C 00000000 */  nop   
-/* 077AC0 7F042F90 461A2182 */  mul.s $f6, $f4, $f26
-/* 077AC4 7F042F94 46023203 */  div.s $f8, $f6, $f2
-/* 077AC8 7F042F98 4608603E */  c.le.s $f12, $f8
-/* 077ACC 7F042F9C 00000000 */  nop   
-/* 077AD0 7F042FA0 45000008 */  bc1f  .L7F042FC4
-/* 077AD4 7F042FA4 00000000 */   nop   
-/* 077AD8 7F042FA8 46020001 */  sub.s $f0, $f0, $f2
-/* 077ADC 7F042FAC 4602003C */  c.lt.s $f0, $f2
-/* 077AE0 7F042FB0 00000000 */  nop   
-/* 077AE4 7F042FB4 45020014 */  bc1fl .L7F043008
-/* 077AE8 7F042FB8 4600603E */   c.le.s $f12, $f0
-/* 077AEC 7F042FBC 10000011 */  b     .L7F043004
-/* 077AF0 7F042FC0 46001006 */   mov.s $f0, $f2
-.L7F042FC4:
-/* 077AF4 7F042FC4 4612003C */  c.lt.s $f0, $f18
-.L7F042FC8:
-/* 077AF8 7F042FC8 00000000 */  nop   
-/* 077AFC 7F042FCC 4502000E */  bc1fl .L7F043008
-/* 077B00 7F042FD0 4600603E */   c.le.s $f12, $f0
-/* 077B04 7F042FD4 4618003C */  c.lt.s $f0, $f24
-/* 077B08 7F042FD8 00000000 */  nop   
-/* 077B0C 7F042FDC 45020004 */  bc1fl .L7F042FF0
-/* 077B10 7F042FE0 46140000 */   add.s $f0, $f0, $f20
-/* 077B14 7F042FE4 10000002 */  b     .L7F042FF0
-/* 077B18 7F042FE8 46020000 */   add.s $f0, $f0, $f2
-/* 077B1C 7F042FEC 46140000 */  add.s $f0, $f0, $f20
-.L7F042FF0:
-/* 077B20 7F042FF0 4600903C */  c.lt.s $f18, $f0
-/* 077B24 7F042FF4 00000000 */  nop   
-/* 077B28 7F042FF8 45020003 */  bc1fl .L7F043008
-/* 077B2C 7F042FFC 4600603E */   c.le.s $f12, $f0
-/* 077B30 7F043000 46009006 */  mov.s $f0, $f18
-.L7F043004:
-/* 077B34 7F043004 4600603E */  c.le.s $f12, $f0
-.L7F043008:
-/* 077B38 7F043008 00000000 */  nop   
-/* 077B3C 7F04300C 45020004 */  bc1fl .L7F043020
-/* 077B40 7F043010 46008280 */   add.s $f10, $f16, $f0
-/* 077B44 7F043014 10000036 */  b     .L7F0430F0
-/* 077B48 7F043018 E48E0000 */   swc1  $f14, ($a0)
-/* 077B4C 7F04301C 46008280 */  add.s $f10, $f16, $f0
-.L7F043020:
-/* 077B50 7F043020 1000002E */  b     .L7F0430DC
-/* 077B54 7F043024 E48A0000 */   swc1  $f10, ($a0)
-/* 077B58 7F043028 4618003C */  c.lt.s $f0, $f24
-.L7F04302C:
-/* 077B5C 7F04302C 00000000 */  nop   
-/* 077B60 7F043030 45020012 */  bc1fl .L7F04307C
-/* 077B64 7F043034 46009587 */   neg.s $f22, $f18
-/* 077B68 7F043038 46000102 */  mul.s $f4, $f0, $f0
-/* 077B6C 7F04303C 46006287 */  neg.s $f10, $f12
-/* 077B70 7F043040 461A2182 */  mul.s $f6, $f4, $f26
-/* 077B74 7F043044 46023203 */  div.s $f8, $f6, $f2
-/* 077B78 7F043048 4608503E */  c.le.s $f10, $f8
-/* 077B7C 7F04304C 00000000 */  nop   
-/* 077B80 7F043050 4502000A */  bc1fl .L7F04307C
-/* 077B84 7F043054 46009587 */   neg.s $f22, $f18
-/* 077B88 7F043058 46020000 */  add.s $f0, $f0, $f2
-/* 077B8C 7F04305C 46001587 */  neg.s $f22, $f2
-/* 077B90 7F043060 4600B03C */  c.lt.s $f22, $f0
-/* 077B94 7F043064 00000000 */  nop   
-/* 077B98 7F043068 45020015 */  bc1fl .L7F0430C0
-/* 077B9C 7F04306C 460C003E */   c.le.s $f0, $f12
-/* 077BA0 7F043070 10000012 */  b     .L7F0430BC
-/* 077BA4 7F043074 4600B006 */   mov.s $f0, $f22
-/* 077BA8 7F043078 46009587 */  neg.s $f22, $f18
-.L7F04307C:
-/* 077BAC 7F04307C 4600B03C */  c.lt.s $f22, $f0
-/* 077BB0 7F043080 00000000 */  nop   
-/* 077BB4 7F043084 4502000E */  bc1fl .L7F0430C0
-/* 077BB8 7F043088 460C003E */   c.le.s $f0, $f12
-/* 077BBC 7F04308C 4600C03C */  c.lt.s $f24, $f0
-/* 077BC0 7F043090 00000000 */  nop   
-/* 077BC4 7F043094 45020004 */  bc1fl .L7F0430A8
-/* 077BC8 7F043098 46140001 */   sub.s $f0, $f0, $f20
-/* 077BCC 7F04309C 10000002 */  b     .L7F0430A8
-/* 077BD0 7F0430A0 46020001 */   sub.s $f0, $f0, $f2
-/* 077BD4 7F0430A4 46140001 */  sub.s $f0, $f0, $f20
-.L7F0430A8:
-/* 077BD8 7F0430A8 4616003C */  c.lt.s $f0, $f22
-/* 077BDC 7F0430AC 00000000 */  nop   
-/* 077BE0 7F0430B0 45020003 */  bc1fl .L7F0430C0
-/* 077BE4 7F0430B4 460C003E */   c.le.s $f0, $f12
-/* 077BE8 7F0430B8 4600B006 */  mov.s $f0, $f22
-.L7F0430BC:
-/* 077BEC 7F0430BC 460C003E */  c.le.s $f0, $f12
-.L7F0430C0:
-/* 077BF0 7F0430C0 00000000 */  nop   
-/* 077BF4 7F0430C4 45020004 */  bc1fl .L7F0430D8
-/* 077BF8 7F0430C8 46008100 */   add.s $f4, $f16, $f0
-/* 077BFC 7F0430CC 10000008 */  b     .L7F0430F0
-/* 077C00 7F0430D0 E48E0000 */   swc1  $f14, ($a0)
-/* 077C04 7F0430D4 46008100 */  add.s $f4, $f16, $f0
-.L7F0430D8:
-/* 077C08 7F0430D8 E4840000 */  swc1  $f4, ($a0)
-.L7F0430DC:
-/* 077C0C 7F0430DC 8C6F0000 */  lw    $t7, ($v1)
-/* 077C10 7F0430E0 24420001 */  addiu $v0, $v0, 1
-/* 077C14 7F0430E4 004F082A */  slt   $at, $v0, $t7
-/* 077C18 7F0430E8 5420FF9E */  bnezl $at, .L7F042F64
-/* 077C1C 7F0430EC C4900000 */   lwc1  $f16, ($a0)
-.L7F0430F0:
-/* 077C20 7F0430F0 E4C00000 */  swc1  $f0, ($a2)
-/* 077C24 7F0430F4 D7BA0020 */  ldc1  $f26, 0x20($sp)
-/* 077C28 7F0430F8 D7B80018 */  ldc1  $f24, 0x18($sp)
-/* 077C2C 7F0430FC D7B60010 */  ldc1  $f22, 0x10($sp)
-/* 077C30 7F043100 D7B40008 */  ldc1  $f20, 8($sp)
-/* 077C34 7F043104 03E00008 */  jr    $ra
-/* 077C38 7F043108 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
 
 
 
@@ -4817,7 +4762,7 @@ glabel sub_GAME_7F04310C
 /* 077CA8 7F043178 44056000 */  mfc1  $a1, $f12
 /* 077CAC 7F04317C E7B00010 */  swc1  $f16, 0x10($sp)
 /* 077CB0 7F043180 AFA40020 */  sw    $a0, 0x20($sp)
-/* 077CB4 7F043184 0FC10BC6 */  jal   sub_GAME_7F042F18
+/* 077CB4 7F043184 0FC10BC6 */  jal   chrobjApplySpeed
 /* 077CB8 7F043188 E7B20014 */   swc1  $f18, 0x14($sp)
 /* 077CBC 7F04318C 8FA40020 */  lw    $a0, 0x20($sp)
 /* 077CC0 7F043190 44802000 */  mtc1  $zero, $f4
@@ -42458,7 +42403,7 @@ glabel sub_GAME_7F054EA8
 /* 089A08 7F054ED8 C6060094 */  lwc1  $f6, 0x94($s0)
 /* 089A0C 7F054EDC 248400B4 */  addiu $a0, $a0, 0xb4
 /* 089A10 7F054EE0 260600B8 */  addiu $a2, $s0, 0xb8
-/* 089A14 7F054EE4 0FC10BC6 */  jal   sub_GAME_7F042F18
+/* 089A14 7F054EE4 0FC10BC6 */  jal   chrobjApplySpeed
 /* 089A18 7F054EE8 E7A60014 */   swc1  $f6, 0x14($sp)
 /* 089A1C 7F054EEC C60200B4 */  lwc1  $f2, 0xb4($s0)
 /* 089A20 7F054EF0 C6000084 */  lwc1  $f0, 0x84($s0)
@@ -42491,7 +42436,7 @@ glabel sub_GAME_7F054EA8
 /* 089A80 7F054F50 C60A0094 */  lwc1  $f10, 0x94($s0)
 /* 089A84 7F054F54 44056000 */  mfc1  $a1, $f12
 /* 089A88 7F054F58 260600B8 */  addiu $a2, $s0, 0xb8
-/* 089A8C 7F054F5C 0FC10BC6 */  jal   sub_GAME_7F042F18
+/* 089A8C 7F054F5C 0FC10BC6 */  jal   chrobjApplySpeed
 /* 089A90 7F054F60 E7AA0014 */   swc1  $f10, 0x14($sp)
 /* 089A94 7F054F64 C60200B4 */  lwc1  $f2, 0xb4($s0)
 /* 089A98 7F054F68 C6000084 */  lwc1  $f0, 0x84($s0)

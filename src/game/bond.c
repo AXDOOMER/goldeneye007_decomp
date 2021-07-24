@@ -12,6 +12,7 @@
 #include "video.h"
 #include "snd.h"
 #include "game/math_atan2f.h"
+#include "game/chrobjhandler.h"
 
 // bss
 struct coord3d flt_CODE_bss_80079940;
@@ -22593,7 +22594,7 @@ glabel MoveBond
 /* 0B9E0C 7F0852DC 44055000 */  mfc1  $a1, $f10
 /* 0B9E10 7F0852E0 44070000 */  mfc1  $a3, $f0
 /* 0B9E14 7F0852E4 E7A00010 */  swc1  $f0, 0x10($sp)
-/* 0B9E18 7F0852E8 0FC10BC6 */  jal   sub_GAME_7F042F18
+/* 0B9E18 7F0852E8 0FC10BC6 */  jal   chrobjApplySpeed
 /* 0B9E1C 7F0852EC E7A80014 */   swc1  $f8, 0x14($sp)
 /* 0B9E20 7F0852F0 8E280000 */  lw    $t0, ($s1)
 /* 0B9E24 7F0852F4 C50000A0 */  lwc1  $f0, 0xa0($t0)
@@ -25133,7 +25134,7 @@ glabel MoveBond
 /* 0BA4FC 7F08598C 44055000 */  mfc1  $a1, $f10
 /* 0BA500 7F085990 44070000 */  mfc1  $a3, $f0
 /* 0BA504 7F085994 E7A00010 */  swc1  $f0, 0x10($sp)
-/* 0BA508 7F085998 0FC10C86 */  jal   sub_GAME_7F042F18
+/* 0BA508 7F085998 0FC10C86 */  jal   chrobjApplySpeed
 /* 0BA50C 7F08599C E7A80014 */   swc1  $f8, 0x14($sp)
 /* 0BA510 7F0859A0 8E280000 */  lw    $t0, ($s1)
 /* 0BA514 7F0859A4 C50000A0 */  lwc1  $f0, 0xa0($t0)
@@ -27681,7 +27682,7 @@ glabel MoveBond
 /* 0B9E0C 7F0852DC 44055000 */  mfc1  $a1, $f10
 /* 0B9E10 7F0852E0 44070000 */  mfc1  $a3, $f0
 /* 0B9E14 7F0852E4 E7A00010 */  swc1  $f0, 0x10($sp)
-/* 0B9E18 7F0852E8 0FC10BC6 */  jal   sub_GAME_7F042F18
+/* 0B9E18 7F0852E8 0FC10BC6 */  jal   chrobjApplySpeed
 /* 0B9E1C 7F0852EC E7A80014 */   swc1  $f8, 0x14($sp)
 /* 0B9E20 7F0852F0 8E280000 */  lw    $t0, ($s1)
 /* 0B9E24 7F0852F4 C50000A0 */  lwc1  $f0, 0xa0($t0)
