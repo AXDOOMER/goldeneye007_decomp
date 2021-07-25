@@ -800,7 +800,7 @@ void sub_GAME_7F08CB10(s32 *nextright, s32 *nextleft, s32 requireammo)
             if (item->type == INV_ITEM_WEAPON) {
                 if (item->type_inv_item.type_weap.weapon < 0x21 && (item->type_inv_item.type_weap.weapon < weapon1 || (weapon1 == item->type_inv_item.type_weap.weapon && weapon2 > 0)))
                 {
-                    if (!requireammo || bondwalkItemHasAmmo(item->type_inv_item.type_weap.weapon)) {
+                    if (requireammo == FALSE || bondwalkItemHasAmmo(item->type_inv_item.type_weap.weapon)) {
                         weapon1 = item->type_inv_item.type_weap.weapon;
                         weapon2 = 0;
                         break;
@@ -809,7 +809,7 @@ void sub_GAME_7F08CB10(s32 *nextright, s32 *nextleft, s32 requireammo)
             } else if (item->type == INV_ITEM_DUAL) {
                 if (item->type_inv_item.type_dual.weapon_right < weapon1
                         || (weapon1 == item->type_inv_item.type_dual.weapon_right && item->type_inv_item.type_dual.weapon_left < weapon2)) {
-                    if (!requireammo || bondwalkItemHasAmmo(item->type_inv_item.type_dual.weapon_right) || bondwalkItemHasAmmo(item->type_inv_item.type_dual.weapon_left)) {
+                    if (requireammo == FALSE || bondwalkItemHasAmmo(item->type_inv_item.type_dual.weapon_right) || bondwalkItemHasAmmo(item->type_inv_item.type_dual.weapon_left)) {
                         weapon1 = item->type_inv_item.type_dual.weapon_right;
                         weapon2 = item->type_inv_item.type_dual.weapon_left;
                         break;
@@ -845,29 +845,32 @@ void sub_GAME_7F08CB10(s32 *nextright, s32 *nextleft, s32 requireammo)
     
             if (candidate == weapon1) {
                 
+                if (getPlayerCount() == 1
+                    && bondwalkItemCheckBitflags(candidate, 0x100000)
+                    && (requireammo == FALSE || bondwalkItemHasAmmo(candidate))
+                    && (candidate != *nextright || candidate < *nextleft)
+                    && (weapon2 < candidate)
                 #ifdef VERSION_JP
-                    if ((getPlayerCount() == 1) && (bondwalkItemCheckBitflags(candidate, 0x100000) != 0) && ((requireammo == 0) || (bondwalkItemHasAmmo(candidate) != 0)) && ((candidate != *nextright) || (candidate < *nextleft)) && (weapon2 < candidate) && ((j_text_trigger == 0) || (candidate != 2)))
-                #else
-                    if ((getPlayerCount() == 1) && (bondwalkItemCheckBitflags(candidate, 0x100000) != 0) && ((requireammo == 0) || (bondwalkItemHasAmmo(candidate) != 0)) && ((candidate != *nextright) || (candidate < *nextleft)) && (weapon2 < candidate))
+                    && (j_text_trigger == 0 || candidate != 2)
                 #endif
-                
-                {
+                ) {
                     weapon1 = candidate;
                     weapon2 = candidate;
                 }
                 
                 break;
             }
-            
-            #ifdef VERSION_JP
-                else if ((requireammo == FALSE || bondwalkItemHasAmmo(candidate)) && ((j_text_trigger == 0) || (candidate != 2)))
-            #else
-                else if ( requireammo == FALSE || bondwalkItemHasAmmo(candidate))
-            #endif
-            
-            {
+            else if (
+                (requireammo == FALSE || bondwalkItemHasAmmo(candidate))
+                #ifdef VERSION_JP
+                    && (j_text_trigger == 0 || candidate != 2)
+                #endif
+            ) {
                 
-                if ((getPlayerCount() == 1) && (bondwalkItemCheckBitflags(candidate, 0x100000) != 0) && (((candidate != *nextright)) || (candidate < *nextleft))) {
+                if (getPlayerCount() == 1
+                    && bondwalkItemCheckBitflags(candidate, 0x100000)
+                    && (candidate != *nextright || candidate < *nextleft))
+                {
                     weapon1 = candidate;
                     weapon2 = candidate;
                 } else {
