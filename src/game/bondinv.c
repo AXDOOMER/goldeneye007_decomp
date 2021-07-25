@@ -840,30 +840,35 @@ void sub_GAME_7F08CB10(s32 *nextright, s32 *nextleft, s32 requireammo)
             }
         }
 
-
-    loop_1:
-        if (candidate == weapon1) {
-            if ((getPlayerCount() == 1) && (bondwalkItemCheckBitflags(candidate, 0x100000) != 0) && ((requireammo == 0) || (bondwalkItemHasAmmo(candidate) != 0)) && ((candidate != *nextright) || (candidate < *nextleft)) && (weapon2 < candidate)) {
-                weapon1 = candidate;
-                weapon2 = candidate;
-            }
-        } else if ((requireammo == 0) || (bondwalkItemHasAmmo(candidate) != 0)) {
+        while (TRUE) {
+    
+            if (candidate == weapon1) {
+                if ((getPlayerCount() == 1) && (bondwalkItemCheckBitflags(candidate, 0x100000) != 0) && ((requireammo == 0) || (bondwalkItemHasAmmo(candidate) != 0)) && ((candidate != *nextright) || (candidate < *nextleft)) && (weapon2 < candidate)) {
+                    weapon1 = candidate;
+                    weapon2 = candidate;
+                }
+                
+                break;
             
-            if ((getPlayerCount() == 1) && (bondwalkItemCheckBitflags(candidate, 0x100000) != 0) && (((candidate != *nextright)) || (candidate < *nextleft))) {
-                weapon1 = candidate;
-                weapon2 = candidate;
+            } else if ((requireammo == 0) || (bondwalkItemHasAmmo(candidate) != 0)) {
+                
+                if ((getPlayerCount() == 1) && (bondwalkItemCheckBitflags(candidate, 0x100000) != 0) && (((candidate != *nextright)) || (candidate < *nextleft))) {
+                    weapon1 = candidate;
+                    weapon2 = candidate;
+                } else {
+                    weapon1 = candidate;
+                    weapon2 = 0;
+                }
+                
+                break;
+            
             } else {
-                weapon1 = candidate;
-                weapon2 = 0;
-            }
-        } else {
-            candidate = (candidate + 0x20) % 0x21;
-            if (candidate == 0) {
                 candidate = (candidate + 0x20) % 0x21;
+                if (candidate == 0) {
+                    candidate = (candidate + 0x20) % 0x21;
+                }
             }
-            goto loop_1;
         }
-
     } 
 
 	*nextright = weapon1;
