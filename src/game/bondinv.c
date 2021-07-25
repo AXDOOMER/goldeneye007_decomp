@@ -784,260 +784,91 @@ glabel choose_cycle_forward_weapon
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08CB10(void) {
 
-}
-#else
 #ifdef VERSION_US
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08CB10
-/* 0C1640 7F08CB10 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0C1644 7F08CB14 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 0C1648 7F08CB18 8C63A0B0 */  lw    $v1, %lo(pPlayer)($v1)
-/* 0C164C 7F08CB1C AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0C1650 7F08CB20 AFB30020 */  sw    $s3, 0x20($sp)
-/* 0C1654 7F08CB24 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 0C1658 7F08CB28 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0C165C 7F08CB2C AFB00014 */  sw    $s0, 0x14($sp)
-/* 0C1660 7F08CB30 AFA40028 */  sw    $a0, 0x28($sp)
-/* 0C1664 7F08CB34 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 0C1668 7F08CB38 8C6211E0 */  lw    $v0, 0x11e0($v1)
-/* 0C166C 7F08CB3C 00C09025 */  move  $s2, $a2
-/* 0C1670 7F08CB40 8C910000 */  lw    $s1, ($a0)
-/* 0C1674 7F08CB44 00807025 */  move  $t6, $a0
-/* 0C1678 7F08CB48 8CB30000 */  lw    $s3, ($a1)
-/* 0C167C 7F08CB4C 10400042 */  beqz  $v0, .L7F08CC58
-/* 0C1680 7F08CB50 00A07825 */   move  $t7, $a1
-/* 0C1684 7F08CB54 8C500010 */  lw    $s0, 0x10($v0)
-.L7F08CB58:
-/* 0C1688 7F08CB58 8E020000 */  lw    $v0, ($s0)
-/* 0C168C 7F08CB5C 24010001 */  li    $at, 1
-/* 0C1690 7F08CB60 54410018 */  bnel  $v0, $at, .L7F08CBC4
-/* 0C1694 7F08CB64 24010003 */   li    $at, 3
-/* 0C1698 7F08CB68 8E040004 */  lw    $a0, 4($s0)
-/* 0C169C 7F08CB6C 28810021 */  slti  $at, $a0, 0x21
-/* 0C16A0 7F08CB70 1020002E */  beqz  $at, .L7F08CC2C
-/* 0C16A4 7F08CB74 00000000 */   nop   
-/* 0C16A8 7F08CB78 0091082A */  slt   $at, $a0, $s1
-/* 0C16AC 7F08CB7C 14200005 */  bnez  $at, .L7F08CB94
-/* 0C16B0 7F08CB80 00000000 */   nop   
-/* 0C16B4 7F08CB84 16240029 */  bne   $s1, $a0, .L7F08CC2C
-/* 0C16B8 7F08CB88 00000000 */   nop   
-/* 0C16BC 7F08CB8C 1A600027 */  blez  $s3, .L7F08CC2C
-/* 0C16C0 7F08CB90 00000000 */   nop   
-.L7F08CB94:
-/* 0C16C4 7F08CB94 52400008 */  beql  $s2, $zero, .L7F08CBB8
-/* 0C16C8 7F08CB98 00808825 */   move  $s1, $a0
-/* 0C16CC 7F08CB9C 0FC17817 */  jal   bondwalkItemHasAmmo
-/* 0C16D0 7F08CBA0 00000000 */   nop   
-/* 0C16D4 7F08CBA4 10400021 */  beqz  $v0, .L7F08CC2C
-/* 0C16D8 7F08CBA8 3C038008 */   lui   $v1, %hi(pPlayer)
-/* 0C16DC 7F08CBAC 8C63A0B0 */  lw    $v1, %lo(pPlayer)($v1)
-/* 0C16E0 7F08CBB0 8E040004 */  lw    $a0, 4($s0)
-/* 0C16E4 7F08CBB4 00808825 */  move  $s1, $a0
-.L7F08CBB8:
-/* 0C16E8 7F08CBB8 10000027 */  b     .L7F08CC58
-/* 0C16EC 7F08CBBC 00009825 */   move  $s3, $zero
-/* 0C16F0 7F08CBC0 24010003 */  li    $at, 3
-.L7F08CBC4:
-/* 0C16F4 7F08CBC4 14410019 */  bne   $v0, $at, .L7F08CC2C
-/* 0C16F8 7F08CBC8 00000000 */   nop   
-/* 0C16FC 7F08CBCC 8E040004 */  lw    $a0, 4($s0)
-/* 0C1700 7F08CBD0 0091082A */  slt   $at, $a0, $s1
-/* 0C1704 7F08CBD4 14200007 */  bnez  $at, .L7F08CBF4
-/* 0C1708 7F08CBD8 00000000 */   nop   
-/* 0C170C 7F08CBDC 16240013 */  bne   $s1, $a0, .L7F08CC2C
-/* 0C1710 7F08CBE0 00000000 */   nop   
-/* 0C1714 7F08CBE4 8E180008 */  lw    $t8, 8($s0)
-/* 0C1718 7F08CBE8 0313082A */  slt   $at, $t8, $s3
-/* 0C171C 7F08CBEC 1020000F */  beqz  $at, .L7F08CC2C
-/* 0C1720 7F08CBF0 00000000 */   nop   
-.L7F08CBF4:
-/* 0C1724 7F08CBF4 12400008 */  beqz  $s2, .L7F08CC18
-/* 0C1728 7F08CBF8 00000000 */   nop   
-/* 0C172C 7F08CBFC 0FC17817 */  jal   bondwalkItemHasAmmo
-/* 0C1730 7F08CC00 00000000 */   nop   
-/* 0C1734 7F08CC04 14400004 */  bnez  $v0, .L7F08CC18
-/* 0C1738 7F08CC08 00000000 */   nop   
-/* 0C173C 7F08CC0C 0FC17817 */  jal   bondwalkItemHasAmmo
-/* 0C1740 7F08CC10 8E040008 */   lw    $a0, 8($s0)
-/* 0C1744 7F08CC14 10400005 */  beqz  $v0, .L7F08CC2C
-.L7F08CC18:
-/* 0C1748 7F08CC18 3C038008 */   lui   $v1, %hi(pPlayer)
-/* 0C174C 7F08CC1C 8E110004 */  lw    $s1, 4($s0)
-/* 0C1750 7F08CC20 8E130008 */  lw    $s3, 8($s0)
-/* 0C1754 7F08CC24 1000000C */  b     .L7F08CC58
-/* 0C1758 7F08CC28 8C63A0B0 */   lw    $v1, %lo(pPlayer)($v1)
-.L7F08CC2C:
-/* 0C175C 7F08CC2C 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 0C1760 7F08CC30 8C63A0B0 */  lw    $v1, %lo(pPlayer)($v1)
-/* 0C1764 7F08CC34 8C7911E0 */  lw    $t9, 0x11e0($v1)
-/* 0C1768 7F08CC38 16190005 */  bne   $s0, $t9, .L7F08CC50
-/* 0C176C 7F08CC3C 00000000 */   nop   
-/* 0C1770 7F08CC40 56400006 */  bnezl $s2, .L7F08CC5C
-/* 0C1774 7F08CC44 8C6811EC */   lw    $t0, 0x11ec($v1)
-/* 0C1778 7F08CC48 241103E8 */  li    $s1, 1000
-/* 0C177C 7F08CC4C 241303E8 */  li    $s3, 1000
-.L7F08CC50:
-/* 0C1780 7F08CC50 1000FFC1 */  b     .L7F08CB58
-/* 0C1784 7F08CC54 8E100010 */   lw    $s0, 0x10($s0)
-.L7F08CC58:
-/* 0C1788 7F08CC58 8C6811EC */  lw    $t0, 0x11ec($v1)
-.L7F08CC5C:
-/* 0C178C 7F08CC5C 8FAA002C */  lw    $t2, 0x2c($sp)
-/* 0C1790 7F08CC60 51000079 */  beql  $t0, $zero, .L7F08CE48
-/* 0C1794 7F08CC64 8FAE0028 */   lw    $t6, 0x28($sp)
-/* 0C1798 7F08CC68 8D4B0000 */  lw    $t3, ($t2)
-/* 0C179C 7F08CC6C 8FA90028 */  lw    $t1, 0x28($sp)
-/* 0C17A0 7F08CC70 24030021 */  li    $v1, 33
-/* 0C17A4 7F08CC74 1560001B */  bnez  $t3, .L7F08CCE4
-/* 0C17A8 7F08CC78 8D300000 */   lw    $s0, ($t1)
-/* 0C17AC 7F08CC7C 260C0020 */  addiu $t4, $s0, 0x20
-/* 0C17B0 7F08CC80 0183001A */  div   $zero, $t4, $v1
-/* 0C17B4 7F08CC84 00008010 */  mfhi  $s0
-/* 0C17B8 7F08CC88 260D0020 */  addiu $t5, $s0, 0x20
-/* 0C17BC 7F08CC8C 14600002 */  bnez  $v1, .L7F08CC98
-/* 0C17C0 7F08CC90 00000000 */   nop   
-/* 0C17C4 7F08CC94 0007000D */  break 7
-.L7F08CC98:
-/* 0C17C8 7F08CC98 2401FFFF */  li    $at, -1
-/* 0C17CC 7F08CC9C 14610004 */  bne   $v1, $at, .L7F08CCB0
-/* 0C17D0 7F08CCA0 3C018000 */   lui   $at, 0x8000
-/* 0C17D4 7F08CCA4 15810002 */  bne   $t4, $at, .L7F08CCB0
-/* 0C17D8 7F08CCA8 00000000 */   nop   
-/* 0C17DC 7F08CCAC 0006000D */  break 6
-.L7F08CCB0:
-/* 0C17E0 7F08CCB0 1600000C */  bnez  $s0, .L7F08CCE4
-/* 0C17E4 7F08CCB4 00000000 */   nop   
-/* 0C17E8 7F08CCB8 01A3001A */  div   $zero, $t5, $v1
-/* 0C17EC 7F08CCBC 00008010 */  mfhi  $s0
-/* 0C17F0 7F08CCC0 14600002 */  bnez  $v1, .L7F08CCCC
-/* 0C17F4 7F08CCC4 00000000 */   nop   
-/* 0C17F8 7F08CCC8 0007000D */  break 7
-.L7F08CCCC:
-/* 0C17FC 7F08CCCC 2401FFFF */  li    $at, -1
-/* 0C1800 7F08CCD0 14610004 */  bne   $v1, $at, .L7F08CCE4
-/* 0C1804 7F08CCD4 3C018000 */   lui   $at, 0x8000
-/* 0C1808 7F08CCD8 15A10002 */  bne   $t5, $at, .L7F08CCE4
-/* 0C180C 7F08CCDC 00000000 */   nop   
-/* 0C1810 7F08CCE0 0006000D */  break 6
-.L7F08CCE4:
-/* 0C1814 7F08CCE4 1611001E */  bne   $s0, $s1, .L7F08CD60
-/* 0C1818 7F08CCE8 00000000 */   nop   
-/* 0C181C 7F08CCEC 0FC26919 */  jal   getPlayerCount
-/* 0C1820 7F08CCF0 00000000 */   nop   
-/* 0C1824 7F08CCF4 24010001 */  li    $at, 1
-/* 0C1828 7F08CCF8 14410052 */  bne   $v0, $at, .L7F08CE44
-/* 0C182C 7F08CCFC 02002025 */   move  $a0, $s0
-/* 0C1830 7F08CD00 0FC1782D */  jal   bondwalkItemCheckBitflags
-/* 0C1834 7F08CD04 3C050010 */   lui   $a1, 0x10
-/* 0C1838 7F08CD08 5040004F */  beql  $v0, $zero, .L7F08CE48
-/* 0C183C 7F08CD0C 8FAE0028 */   lw    $t6, 0x28($sp)
-/* 0C1840 7F08CD10 52400006 */  beql  $s2, $zero, .L7F08CD2C
-/* 0C1844 7F08CD14 8FAE0028 */   lw    $t6, 0x28($sp)
-/* 0C1848 7F08CD18 0FC17817 */  jal   bondwalkItemHasAmmo
-/* 0C184C 7F08CD1C 02002025 */   move  $a0, $s0
-/* 0C1850 7F08CD20 50400049 */  beql  $v0, $zero, .L7F08CE48
-/* 0C1854 7F08CD24 8FAE0028 */   lw    $t6, 0x28($sp)
-/* 0C1858 7F08CD28 8FAE0028 */  lw    $t6, 0x28($sp)
-.L7F08CD2C:
-/* 0C185C 7F08CD2C 8FB8002C */  lw    $t8, 0x2c($sp)
-/* 0C1860 7F08CD30 8DCF0000 */  lw    $t7, ($t6)
-/* 0C1864 7F08CD34 560F0005 */  bnel  $s0, $t7, .L7F08CD4C
-/* 0C1868 7F08CD38 0270082A */   slt   $at, $s3, $s0
-/* 0C186C 7F08CD3C 8F190000 */  lw    $t9, ($t8)
-/* 0C1870 7F08CD40 0219082A */  slt   $at, $s0, $t9
-/* 0C1874 7F08CD44 1020003F */  beqz  $at, .L7F08CE44
-/* 0C1878 7F08CD48 0270082A */   slt   $at, $s3, $s0
-.L7F08CD4C:
-/* 0C187C 7F08CD4C 5020003E */  beql  $at, $zero, .L7F08CE48
-/* 0C1880 7F08CD50 8FAE0028 */   lw    $t6, 0x28($sp)
-/* 0C1884 7F08CD54 02008825 */  move  $s1, $s0
-/* 0C1888 7F08CD58 1000003A */  b     .L7F08CE44
-/* 0C188C 7F08CD5C 02009825 */   move  $s3, $s0
-.L7F08CD60:
-/* 0C1890 7F08CD60 12400005 */  beqz  $s2, .L7F08CD78
-/* 0C1894 7F08CD64 00000000 */   nop   
-/* 0C1898 7F08CD68 0FC17817 */  jal   bondwalkItemHasAmmo
-/* 0C189C 7F08CD6C 02002025 */   move  $a0, $s0
-/* 0C18A0 7F08CD70 10400018 */  beqz  $v0, .L7F08CDD4
-/* 0C18A4 7F08CD74 24030021 */   li    $v1, 33
-.L7F08CD78:
-/* 0C18A8 7F08CD78 0FC26919 */  jal   getPlayerCount
-/* 0C18AC 7F08CD7C 00000000 */   nop   
-/* 0C18B0 7F08CD80 24010001 */  li    $at, 1
-/* 0C18B4 7F08CD84 14410010 */  bne   $v0, $at, .L7F08CDC8
-/* 0C18B8 7F08CD88 02002025 */   move  $a0, $s0
-/* 0C18BC 7F08CD8C 0FC1782D */  jal   bondwalkItemCheckBitflags
-/* 0C18C0 7F08CD90 3C050010 */   lui   $a1, 0x10
-/* 0C18C4 7F08CD94 1040000C */  beqz  $v0, .L7F08CDC8
-/* 0C18C8 7F08CD98 8FA80028 */   lw    $t0, 0x28($sp)
-/* 0C18CC 7F08CD9C 8D090000 */  lw    $t1, ($t0)
-/* 0C18D0 7F08CDA0 8FAA002C */  lw    $t2, 0x2c($sp)
-/* 0C18D4 7F08CDA4 02008825 */  move  $s1, $s0
-/* 0C18D8 7F08CDA8 16090005 */  bne   $s0, $t1, .L7F08CDC0
-/* 0C18DC 7F08CDAC 00000000 */   nop   
-/* 0C18E0 7F08CDB0 8D4B0000 */  lw    $t3, ($t2)
-/* 0C18E4 7F08CDB4 020B082A */  slt   $at, $s0, $t3
-/* 0C18E8 7F08CDB8 50200004 */  beql  $at, $zero, .L7F08CDCC
-/* 0C18EC 7F08CDBC 02008825 */   move  $s1, $s0
-.L7F08CDC0:
-/* 0C18F0 7F08CDC0 10000020 */  b     .L7F08CE44
-/* 0C18F4 7F08CDC4 02009825 */   move  $s3, $s0
-.L7F08CDC8:
-/* 0C18F8 7F08CDC8 02008825 */  move  $s1, $s0
-.L7F08CDCC:
-/* 0C18FC 7F08CDCC 1000001D */  b     .L7F08CE44
-/* 0C1900 7F08CDD0 00009825 */   move  $s3, $zero
-.L7F08CDD4:
-/* 0C1904 7F08CDD4 260C0020 */  addiu $t4, $s0, 0x20
-/* 0C1908 7F08CDD8 0183001A */  div   $zero, $t4, $v1
-/* 0C190C 7F08CDDC 00008010 */  mfhi  $s0
-/* 0C1910 7F08CDE0 14600002 */  bnez  $v1, .L7F08CDEC
-/* 0C1914 7F08CDE4 00000000 */   nop   
-/* 0C1918 7F08CDE8 0007000D */  break 7
-.L7F08CDEC:
-/* 0C191C 7F08CDEC 2401FFFF */  li    $at, -1
-/* 0C1920 7F08CDF0 14610004 */  bne   $v1, $at, .L7F08CE04
-/* 0C1924 7F08CDF4 3C018000 */   lui   $at, 0x8000
-/* 0C1928 7F08CDF8 15810002 */  bne   $t4, $at, .L7F08CE04
-/* 0C192C 7F08CDFC 00000000 */   nop   
-/* 0C1930 7F08CE00 0006000D */  break 6
-.L7F08CE04:
-/* 0C1934 7F08CE04 1600FFB7 */  bnez  $s0, .L7F08CCE4
-/* 0C1938 7F08CE08 00000000 */   nop   
-/* 0C193C 7F08CE0C 260D0020 */  addiu $t5, $s0, 0x20
-/* 0C1940 7F08CE10 01A3001A */  div   $zero, $t5, $v1
-/* 0C1944 7F08CE14 00008010 */  mfhi  $s0
-/* 0C1948 7F08CE18 14600002 */  bnez  $v1, .L7F08CE24
-/* 0C194C 7F08CE1C 00000000 */   nop   
-/* 0C1950 7F08CE20 0007000D */  break 7
-.L7F08CE24:
-/* 0C1954 7F08CE24 2401FFFF */  li    $at, -1
-/* 0C1958 7F08CE28 14610004 */  bne   $v1, $at, .L7F08CE3C
-/* 0C195C 7F08CE2C 3C018000 */   lui   $at, 0x8000
-/* 0C1960 7F08CE30 15A10002 */  bne   $t5, $at, .L7F08CE3C
-/* 0C1964 7F08CE34 00000000 */   nop   
-/* 0C1968 7F08CE38 0006000D */  break 6
-.L7F08CE3C:
-/* 0C196C 7F08CE3C 1000FFA9 */  b     .L7F08CCE4
-/* 0C1970 7F08CE40 00000000 */   nop   
-.L7F08CE44:
-/* 0C1974 7F08CE44 8FAE0028 */  lw    $t6, 0x28($sp)
-.L7F08CE48:
-/* 0C1978 7F08CE48 ADD10000 */  sw    $s1, ($t6)
-/* 0C197C 7F08CE4C 8FAF002C */  lw    $t7, 0x2c($sp)
-/* 0C1980 7F08CE50 ADF30000 */  sw    $s3, ($t7)
-/* 0C1984 7F08CE54 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 0C1988 7F08CE58 8FB30020 */  lw    $s3, 0x20($sp)
-/* 0C198C 7F08CE5C 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 0C1990 7F08CE60 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0C1994 7F08CE64 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0C1998 7F08CE68 03E00008 */  jr    $ra
-/* 0C199C 7F08CE6C 27BD0028 */   addiu $sp, $sp, 0x28
-)
+void sub_GAME_7F08CB10(s32 *nextright, s32 *nextleft, s32 requireammo)
+{
+	s32 weapon1 = *nextright;
+	s32 weapon2 = *nextleft;
+
+    if (pPlayer->ptr_inventory_first_in_cycle != NULL) {
+
+        InvItem *item = pPlayer->ptr_inventory_first_in_cycle->prev;
+            
+        while (TRUE) {
+            if (item->type == INV_ITEM_WEAPON) {
+                if (item->type_inv_item.type_weap.weapon < 0x21 && (item->type_inv_item.type_weap.weapon < weapon1 || (weapon1 == item->type_inv_item.type_weap.weapon && weapon2 > 0)))
+                {
+                    if (!requireammo || bondwalkItemHasAmmo(item->type_inv_item.type_weap.weapon)) {
+                        weapon1 = item->type_inv_item.type_weap.weapon;
+                        weapon2 = 0;
+                        break;
+                    }
+                }
+            } else if (item->type == INV_ITEM_DUAL) {
+                if (item->type_inv_item.type_dual.weapon_right < weapon1
+                        || (weapon1 == item->type_inv_item.type_dual.weapon_right && item->type_inv_item.type_dual.weapon_left < weapon2)) {
+                    if (!requireammo || bondwalkItemHasAmmo(item->type_inv_item.type_dual.weapon_right) || bondwalkItemHasAmmo(item->type_inv_item.type_dual.weapon_left)) {
+                        weapon1 = item->type_inv_item.type_dual.weapon_right;
+                        weapon2 = item->type_inv_item.type_dual.weapon_left;
+                        break;
+                    }
+                }
+            }
+
+            if (item == pPlayer->ptr_inventory_first_in_cycle) {
+                if (requireammo) {
+                    break;
+                }
+
+                weapon1 = 1000;
+                weapon2 = 1000;
+            }
+
+            item = item->prev;
+        }
+    }
+    
+	if (pPlayer->equipallguns) {
+        
+        s32 candidate = *nextright;
+
+        if (*nextleft == 0) {
+            candidate = (candidate + 0x20) % 0x21;
+            if (candidate == 0) {
+                candidate = (candidate + 0x20) % 0x21;
+            }
+        }
+
+
+    loop_1:
+        if (candidate == weapon1) {
+            if ((getPlayerCount() == 1) && (bondwalkItemCheckBitflags(candidate, 0x100000) != 0) && ((requireammo == 0) || (bondwalkItemHasAmmo(candidate) != 0)) && ((candidate != *nextright) || (candidate < *nextleft)) && (weapon2 < candidate)) {
+                weapon1 = candidate;
+                weapon2 = candidate;
+            }
+        } else if ((requireammo == 0) || (bondwalkItemHasAmmo(candidate) != 0)) {
+            
+            if ((getPlayerCount() == 1) && (bondwalkItemCheckBitflags(candidate, 0x100000) != 0) && (((candidate != *nextright)) || (candidate < *nextleft))) {
+                weapon1 = candidate;
+                weapon2 = candidate;
+            } else {
+                weapon1 = candidate;
+                weapon2 = 0;
+            }
+        } else {
+            candidate = (candidate + 0x20) % 0x21;
+            if (candidate == 0) {
+                candidate = (candidate + 0x20) % 0x21;
+            }
+            goto loop_1;
+        }
+
+    } 
+
+	*nextright = weapon1;
+	*nextleft = weapon2;
+}
 #endif
 
 #ifdef VERSION_JP
@@ -1559,11 +1390,6 @@ glabel sub_GAME_7F08CB10
 /* 0C199C 7F08CE6C 27BD0028 */   addiu $sp, $sp, 0x28
 )
 #endif
-
-
-#endif
-
-
 
 s32 inv_has_key_flags(u32 wantkeyflags)
 {
