@@ -780,14 +780,8 @@ glabel choose_cycle_forward_weapon
 #endif
 
 
-
-
-
-
-
-
 #ifndef VERSION_EU
-void sub_GAME_7F08CB10(s32 *nextright, s32 *nextleft, s32 requireammo)
+void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
 {
 	s32 weapon1 = *nextright;
 	s32 weapon2 = *nextleft;
@@ -897,7 +891,7 @@ void sub_GAME_7F08CB10(s32 *nextright, s32 *nextleft, s32 requireammo)
 #ifdef VERSION_EU
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F08CB10
+glabel choose_cycle_back_weapon
 /* 0C1640 7F08CB10 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0C1644 7F08CB14 3C038008 */  lui   $v1, %hi(pPlayer)
 /* 0C1648 7F08CB18 8C63A0B0 */  lw    $v1, %lo(pPlayer)($v1)

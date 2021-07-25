@@ -2252,7 +2252,7 @@ void advance_through_inventory(void)
     }
     else
     {
-        choose_cycle_forward_weapon(&nextright, &nextleft, 0);
+        choose_cycle_forward_weapon(&nextright, &nextleft, FALSE);
     }
 
     likely_change_weapon_in_hand(RIGHT_HAND, nextright, 1);
@@ -2275,7 +2275,7 @@ void backstep_through_inventory(void)
     }
     else
     {
-        sub_GAME_7F08CB10(&nextright, &nextleft, 0);
+        choose_cycle_back_weapon(&nextright, &nextleft, FALSE);
     }
 
     likely_change_weapon_in_hand(RIGHT_HAND, nextright, -1);
@@ -2307,13 +2307,13 @@ void autoadvance_on_deplete_all_ammo(void)
     }
     else
     {
-        choose_cycle_forward_weapon(&duperight, &dupeleft, 1);
+        choose_cycle_forward_weapon(&duperight, &dupeleft, TRUE);
         
         if ((duperight < nextright) || ((duperight == nextright) && (nextleft >= dupeleft)))
         {
 			duperight = nextright;
 			dupeleft = nextleft;
-			sub_GAME_7F08CB10(&duperight, &dupeleft, 1);
+			choose_cycle_back_weapon(&duperight, &dupeleft, TRUE);
         }
     }
 
