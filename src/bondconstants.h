@@ -1113,8 +1113,10 @@ typedef enum AMMOTYPES {
 
 typedef enum DOORSTATE
 {
-  OPEN = 0x1,
-  CLOSED = 0x2
+    DOORSTATE_STATIONARY,
+    DOORSTATE_OPENING,// also OPEN but NOT AIlist compatible (02)
+    DOORSTATE_CLOSING, // also CLOSE but NOT AIlist compatible (01)
+    DOORSTATE_WAITING
 } DOORSTATE;
 
 typedef enum SCREEN_SIZE

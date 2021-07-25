@@ -276,6 +276,213 @@ typedef struct ObjectRecord
     char field_7F;
 } ObjectRecord;
 
+/******
+
+ The following struct PropRecord was copied from AIListLogic branch
+ and should be removed when merged
+
+ note: only the necessary fields were copied in order to compile (not the full struct)
+
+******/
+// objtype 1
+typedef struct DoorRecord
+{ 
+    ObjectRecord base;
+   /* GE Door maybe different to PD?
+    80:	linked with other doors (4 bytes)
+        if used, uses # objects up/down to other door.
+        when this object activates, targetted object also activates
+        you usually want both doors to point at each other, obviously
+    84:	distance door travels when opening/closing (total%)
+    88:	distance before door loses collisions (total%)
+    00150000 -> 41a80000
+    8C:	open/close accelleration rate
+    90:	rate used when someone activates a door as it opens/closes
+    0100 -> 3B800000
+    94:	open/close max speed
+    1999 -> 3DCCC800
+    note:	*speed sets the speed the door opens at.
+        the two rate features affect how long it takes to reach this max speed.
+    98:	open technique (2+2 bytes)
+        0000 0000	slider (left/right) clears the door away as it slides, stopping visual problems when opening into a wall
+        0004 0000	slider (left/right)
+        0000 0004	shutter (up/down) clears the door as it slides
+        0004 0004	shutter (up/down)
+        0000 0005	special (swinging) defined here
+        0000 0006	special (eye) defined here in block
+        0000 0007	special (iris) defined here
+    9F:	nonzero to lock
+    A0:	amount of ms door remains open
+    A7:	opening sound effect
+    A8:	runtime - (float)
+    AC:	runtime - (float)
+    B0:	runtime - (float)
+    B4:	runtime - (float) current distance travelled
+    B8:	runtime - (float)
+    BC:	runtime - 
+    BD:	runtime - 
+    C8:	runtime - 
+    CC:	runtime - p->vertex buffer when door does not clear
+    F0:	runtime - 
+    F4:	runtime - 
+    F8:	runtime - */
+
+    s32 linkedDoorOffset;    /*0x80*/
+
+    /**
+     * Distance door travels when opening/closing (total%).
+     * Offset 0x84.
+     */
+    f32 maxFrac;
+
+    /**
+     * Distance before door loses collisions (total%) (vertical height % until Bond can walk through).
+     * Offset 0x88.
+     */
+    f32 perimFrac;
+
+    /**
+     * Start moving acceleration rate (when a door is first opened/closed).
+     * Offset 0x8c.
+     */
+    f32 accel;
+
+    /**
+     * Start slowing down acceleration rate (when a door is almost entirely opened/closed).
+     * Offset 0x90.
+     */
+    f32 decel;
+
+    /**
+     * Maximum speed door can move on each update.
+     * Offset 0x94.
+     */
+    f32 maxSpeed;
+
+    /**
+     * open technique (2+2 bytes).
+     * 
+     *  0000 0000	slider (left/right) clears the door away as it slides, stopping visual problems when opening into a wall
+     *  0004 0000	slider (left/right)
+     *  0000 0004	shutter (up/down) clears the door as it slides
+     *  0004 0004	shutter (up/down)
+     *  0000 0005	special (swinging) defined here
+     *  0000 0006	special (eye) defined here in block
+     *  0000 0007	special (iris) defined here
+     * 
+     * Offset 0x98.
+     */
+    u16 doorFlags;
+
+    /**
+     * See doorFlags.
+     * Offset 0x9a.
+     */
+    u16 doorType;
+
+    /**
+     * nonzero to lock.
+     * Offset 0x9c.
+     */
+    u32 keyflags;
+
+    /**
+     * Number of frames the door remains open before closing.
+     * Offset 0xa0.
+     */
+    u32 autoCloseFrames;
+
+    /**
+     * Sound effect played when the door is opened.
+     * (Actually sets the initial open, continued opening, and final open sounds).
+     * Offset 0xa4.
+     */
+    u32 doorOpenSound;
+
+    /**
+     * Max fraction open, aka max displacement.
+     * Offset 0xa8.
+     */
+    u32 frac;
+
+    u32 unkac;               /*0xac*/
+    u32 unkb0;               /*0xb0*/
+
+    /**
+     * Current distance travelled, aka displacement percent.
+     * Offset 0xb4.
+     */
+    f32 openPosition;
+
+    /**
+     * Current speed of the door as it is opening or closing.
+     * Offset 0xb8.
+     */
+    f32 speed;
+
+    /**
+     * Current open/close/other state of the door.
+     * States are defined in enum DOORSTATE, but asm expects a single byte.
+     * Offset 0xbc.
+     */
+    s8 state;
+
+    u8 unkbd;                       /*0xbd*/
+    s16 unkbe;                      /*0xbe*/
+    s32 unkc0;                      /*0xc0*/
+    s16 unkc4;                      /*0xc4*/
+    s8 soundType;                   /*0xc6*/
+    s8 fadeTime60;                  /*0xc7*/
+
+    /**
+    * Connected door. Opening/closing this door will also open the linkedDoor.
+    * Offset 0xc8.
+    */
+    struct DoorRecord *linkedDoor;
+
+    u8 laserFade;                   /*0xcc*/
+    u8 unkcd;
+    s16 unkce;
+    u32 unkd0;
+    u32 unkd4;
+    u32 unkd8;
+    u32 unkdc;
+    u32 unke0;
+    u32 unke4;
+    u32 unke8;
+
+    /**
+     * When the door completely opens, the current global timer value is
+     * copied into this property. Once autoCloseFrames have elapsed
+     * (once the difference between the timer and this value has exceeded autoCloseFrames)
+     * the door will start closing.
+     * Offset 0xec.
+     */
+    u32 openedTime;
+
+    /**
+     * Portal number.
+     * Offset 0xf0.
+     */
+    u32 portalNumber;
+
+    /**
+     * Unknown. Changes at runtime. Appears to be set to a pointer
+     * while the door is moving, then cleared when the door is stationary.
+     * If you reset this to 0 (NULL pointer), then the door opening
+     * sound never stops playing.
+     */
+    u32* unkf4;
+
+    u32 unkf8;
+
+    /**
+     * Copy of global timer value.
+     * Offset 0xfc.
+     */
+    u32 timer;
+} DoorRecord;
+
 
 
 /******
