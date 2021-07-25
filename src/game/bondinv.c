@@ -483,7 +483,7 @@ int add_weapon_by_prop(PropRecord *prop)
 
 
 #ifndef VERSION_EU
-void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 direction)
+void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
 {
 	s32 weapon1 = *nextright;
 	s32 weapon2 = *nextleft;
@@ -493,7 +493,7 @@ void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 direction)
     while (item) {
         if (item->type == INV_ITEM_WEAPON) {
             if (item->type_inv_item.type_weap.weapon < 0x21 && item->type_inv_item.type_weap.weapon > weapon1) {
-                if (!direction || bondwalkItemHasAmmo(item->type_inv_item.type_weap.weapon)) {
+                if (requireammo == FALSE || bondwalkItemHasAmmo(item->type_inv_item.type_weap.weapon)) {
                     weapon1 = item->type_inv_item.type_weap.weapon;
                     weapon2 = 0;
                     break;
@@ -502,7 +502,7 @@ void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 direction)
         } else if (item->type == INV_ITEM_DUAL) {
             if (item->type_inv_item.type_dual.weapon_right > weapon1
                     || (weapon1 == item->type_inv_item.type_dual.weapon_right && item->type_inv_item.type_dual.weapon_left > weapon2)) {
-                if (!direction || bondwalkItemHasAmmo(item->type_inv_item.type_dual.weapon_right) || bondwalkItemHasAmmo(item->type_inv_item.type_dual.weapon_left)) {
+                if (requireammo == FALSE || bondwalkItemHasAmmo(item->type_inv_item.type_dual.weapon_right) || bondwalkItemHasAmmo(item->type_inv_item.type_dual.weapon_left)) {
                     weapon1 = item->type_inv_item.type_dual.weapon_right;
                     weapon2 = item->type_inv_item.type_dual.weapon_left;
                     break;
@@ -513,7 +513,7 @@ void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 direction)
         item = item->next;
 
         if (item == pPlayer->ptr_inventory_first_in_cycle) {
-            if (direction) {
+            if (requireammo) {
                 break;
             }
 
@@ -526,20 +526,15 @@ void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 direction)
         
         s32 candidate = *nextright;
 
+        if (getPlayerCount() == 1
+            && bondwalkItemCheckBitflags(*nextright, 0x100000)
+            && (*nextleft < *nextright)
+            && (requireammo == FALSE || bondwalkItemHasAmmo(*nextright))
+            && (weapon1 != *nextright || *nextright < weapon2)
         #ifdef VERSION_JP
-        
-        if (((getPlayerCount() == 1) && (bondwalkItemCheckBitflags(*nextright, 0x100000)) && (*nextleft < *nextright))
-            && (!direction || bondwalkItemHasAmmo(*nextright))
-            && (((weapon1 != *nextright) || (*nextright < weapon2)) && ((j_text_trigger == 0) || (*nextright != 2))))
-        
-        #else
-
-        if (((getPlayerCount() == 1) && (bondwalkItemCheckBitflags(*nextright, 0x100000)) && (*nextleft < *nextright))
-            && (!direction || bondwalkItemHasAmmo(*nextright))
-            && ((weapon1 != *nextright) || (*nextright < weapon2)))
-        
+            && (j_text_trigger == 0 || *nextright != 2)
         #endif
-        {
+        ) {
             
             weapon1 = *nextright;
             weapon2 = *nextright;
@@ -555,16 +550,11 @@ void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 direction)
                         candidate = (candidate + 1) % 0x21;
                     }
 
+                    if ((requireammo == FALSE || bondwalkItemHasAmmo(candidate))
                     #ifdef VERSION_JP
-                    
-                    if ((!direction || bondwalkItemHasAmmo(candidate)) && ((j_text_trigger == 0) || (candidate != 2)))
-                    
-                    #else
-                    
-                    if (!direction || bondwalkItemHasAmmo(candidate))
-                   
+                        && (j_text_trigger == 0 || candidate != 2)
                     #endif
-                    {
+                    ) {
                         weapon1 = candidate;
                         weapon2 = 0;
                         break;

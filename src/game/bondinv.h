@@ -12,7 +12,6 @@ textoverride *get_textoverride_by_obj(ObjectRecord *obj);
 textoverride *get_textoverride_by_weaponum(ITEM_IDS weaponnum);
 
 void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo);
-
-void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 direction);
+void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 requireammo);
 
 #endif
