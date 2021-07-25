@@ -492,7 +492,7 @@ void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
         
     while (item) {
         if (item->type == INV_ITEM_WEAPON) {
-            if (item->type_inv_item.type_weap.weapon < 0x21 && item->type_inv_item.type_weap.weapon > weapon1) {
+            if (item->type_inv_item.type_weap.weapon < ITEM_BOMBCASE && item->type_inv_item.type_weap.weapon > weapon1) {
                 if (requireammo == FALSE || bondwalkItemHasAmmo(item->type_inv_item.type_weap.weapon)) {
                     weapon1 = item->type_inv_item.type_weap.weapon;
                     weapon2 = 0;
@@ -544,10 +544,10 @@ void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
             if ((weapon1 != *nextright) || (weapon2 == *nextleft)) {
                 // Find next weapon
                 do {
-                    candidate = (candidate + 1) % 0x21;
+                    candidate = (candidate + 1) % ITEM_BOMBCASE;
 
                     if (candidate == 0) {
-                        candidate = (candidate + 1) % 0x21;
+                        candidate = (candidate + 1) % ITEM_BOMBCASE;
                     }
 
                     if ((requireammo == FALSE || bondwalkItemHasAmmo(candidate))
@@ -782,7 +782,7 @@ void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
             
         while (TRUE) {
             if (item->type == INV_ITEM_WEAPON) {
-                if (item->type_inv_item.type_weap.weapon < 0x21 && (item->type_inv_item.type_weap.weapon < weapon1 || (weapon1 == item->type_inv_item.type_weap.weapon && weapon2 > 0)))
+                if (item->type_inv_item.type_weap.weapon < ITEM_BOMBCASE && (item->type_inv_item.type_weap.weapon < weapon1 || (weapon1 == item->type_inv_item.type_weap.weapon && weapon2 > 0)))
                 {
                     if (requireammo == FALSE || bondwalkItemHasAmmo(item->type_inv_item.type_weap.weapon)) {
                         weapon1 = item->type_inv_item.type_weap.weapon;
@@ -819,9 +819,9 @@ void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
         s32 candidate = *nextright;
 
         if (*nextleft == 0) {
-            candidate = (candidate + 0x20) % 0x21;
+            candidate = (candidate + ITEM_BOMBCASE - 1) % ITEM_BOMBCASE;
             if (candidate == 0) {
-                candidate = (candidate + 0x20) % 0x21;
+                candidate = (candidate + ITEM_BOMBCASE - 1) % ITEM_BOMBCASE;
             }
         }
 
@@ -865,9 +865,9 @@ void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
                 break;
             
             } else {
-                candidate = (candidate + 0x20) % 0x21;
+                candidate = (candidate + ITEM_BOMBCASE - 1) % ITEM_BOMBCASE;
                 if (candidate == 0) {
-                    candidate = (candidate + 0x20) % 0x21;
+                    candidate = (candidate + ITEM_BOMBCASE - 1) % ITEM_BOMBCASE;
                 }
             }
         }
