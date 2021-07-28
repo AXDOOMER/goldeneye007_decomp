@@ -65,9 +65,18 @@ typedef struct bg_portal_data_entry
     u16 controlbytes;
 } bg_portal_data_entry;
 
+typedef struct bg_room_data
+{
+    struct coord3d pos;
+    void* pPointTableBin;
+    void* pPriMappingBin;
+    void* pSecMappingBin;
+} bg_room_data;
+
 void bgInitDebugNoticeList(void);
 
 s32 sub_GAME_7F0B8FD0(u8 roomA, u8 roomB);
 s32 sub_GAME_7F0B4F9C(u8 room); // u8 not s32 for sub_GAME_7F0B2FE0
+u32 bgDecompress(u8* source, u8 *target);
 
 #endif
