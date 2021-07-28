@@ -1875,7 +1875,7 @@ glabel load_bg_file
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B47E0(void) {
-    sub_GAME_7F0B667C();
+    unload_rooms();
     matrix_4x4_7F058C4C(1.0);
 }
 #else
@@ -1884,7 +1884,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0B47E0
 /* 0E9310 7F0B47E0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0E9314 7F0B47E4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E9318 7F0B47E8 0FC2D99F */  jal   sub_GAME_7F0B667C
+/* 0E9318 7F0B47E8 0FC2D99F */  jal   unload_rooms
 /* 0E931C 7F0B47EC 00000000 */   nop   
 /* 0E9320 7F0B47F0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0E9324 7F0B47F4 44816000 */  mtc1  $at, $f12
@@ -5027,86 +5027,19 @@ glabel sub_GAME_7F0B65C4
 
 
 
-#ifdef NONMATCHING
-s32 sub_GAME_7F0B667C(void) {
-    s32 temp_s1;
-    void *phi_s0;
-    s32 phi_s1;
-    s32 phi_v0;
-    s32 phi_return;
-    s32 phi_return_2;
 
-    // Node 0
-    phi_return = MaxNumRooms;
-    if (MaxNumRooms >= 2)
+void unload_rooms(void)
+{
+    s32 i;
+
+    for(i = 1; i < MaxNumRooms; i++)
     {
-        // Node 1
-        phi_s0 = &array_room_info + 0x10 +0x40;
-        phi_s1 = 1;
-        phi_v0 = MaxNumRooms;
-        phi_return_2 = MaxNumRooms;
-loop_2:
-        // Node 2
-        if (phi_s0->unk2 != 0)
+        if (array_room_info[i].model_bin_loaded)
         {
-            // Node 3
-            sub_GAME_7F0B65C4(phi_s1);
-            phi_v0 = MaxNumRooms;
-            phi_return_2 = MaxNumRooms;
-        }
-        // Node 4
-        temp_s1 = (phi_s1 + 1);
-        phi_s0 = (phi_s0 + 0x50);
-        phi_s1 = temp_s1;
-        phi_return = phi_return_2;
-        phi_v0 = phi_v0;
-        phi_return_2 = phi_return_2;
-        if (temp_s1 < phi_v0)
-        {
-            goto loop_2;
+            sub_GAME_7F0B65C4(i);
         }
     }
-    // Node 5
-    return phi_return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B667C
-/* 0EB1AC 7F0B667C 3C028004 */  lui   $v0, %hi(MaxNumRooms)
-/* 0EB1B0 7F0B6680 8C4242F4 */  lw    $v0, %lo(MaxNumRooms)($v0)
-/* 0EB1B4 7F0B6684 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0EB1B8 7F0B6688 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0EB1BC 7F0B668C 28410002 */  slti  $at, $v0, 2
-/* 0EB1C0 7F0B6690 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0EB1C4 7F0B6694 AFB00014 */  sw    $s0, 0x14($sp)
-/* 0EB1C8 7F0B6698 1420000E */  bnez  $at, .L7F0B66D4
-/* 0EB1CC 7F0B669C 24110001 */   li    $s1, 1
-/* 0EB1D0 7F0B66A0 3C108004 */  lui   $s0, %hi(array_room_info + 0x10 +0x40)
-/* 0EB1D4 7F0B66A4 26101464 */  addiu $s0, %lo(array_room_info + 0x10 +0x40) # addiu $s0, $s0, 0x1464
-.L7F0B66A8:
-/* 0EB1D8 7F0B66A8 920E0002 */  lbu   $t6, 2($s0)
-/* 0EB1DC 7F0B66AC 51C00006 */  beql  $t6, $zero, .L7F0B66C8
-/* 0EB1E0 7F0B66B0 26310001 */   addiu $s1, $s1, 1
-/* 0EB1E4 7F0B66B4 0FC2D971 */  jal   sub_GAME_7F0B65C4
-/* 0EB1E8 7F0B66B8 02202025 */   move  $a0, $s1
-/* 0EB1EC 7F0B66BC 3C028004 */  lui   $v0, %hi(MaxNumRooms)
-/* 0EB1F0 7F0B66C0 8C4242F4 */  lw    $v0, %lo(MaxNumRooms)($v0)
-/* 0EB1F4 7F0B66C4 26310001 */  addiu $s1, $s1, 1
-.L7F0B66C8:
-/* 0EB1F8 7F0B66C8 0222082A */  slt   $at, $s1, $v0
-/* 0EB1FC 7F0B66CC 1420FFF6 */  bnez  $at, .L7F0B66A8
-/* 0EB200 7F0B66D0 26100050 */   addiu $s0, $s0, 0x50
-.L7F0B66D4:
-/* 0EB204 7F0B66D4 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0EB208 7F0B66D8 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0EB20C 7F0B66DC 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0EB210 7F0B66E0 03E00008 */  jr    $ra
-/* 0EB214 7F0B66E4 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
-
-
 
 
 
