@@ -3961,101 +3961,14 @@ glabel vis_is_inline_of_sight
 
 
 
-#ifdef NONMATCHING
-f32 sub_GAME_7F0B5CC0(void *arg0, void *arg1) {
-    // Node 0
-    if (*arg0 < *arg1)
-    {
-        // Node 1
-        *arg0 = (f32) *arg0;
-    }
-    else
-    {
-        // Node 2
-        *arg0 = (f32) *arg1;
-    }
-    // Node 3
-    if (arg0->unk4 < arg1->unk4)
-    {
-        // Node 4
-        arg0->unk4 = (f32) arg0->unk4;
-    }
-    else
-    {
-        // Node 5
-        arg0->unk4 = (f32) arg1->unk4;
-    }
-    // Node 6
-    if (arg1->unk8 < arg0->unk8)
-    {
-        // Node 7
-        arg0->unk8 = (f32) arg0->unk8;
-    }
-    else
-    {
-        // Node 8
-        arg0->unk8 = (f32) arg1->unk8;
-    }
-    // Node 9
-    if (arg1->unkC < arg0->unkC)
-    {
-        // Node 10
-        arg0->unkC = (f32) arg0->unkC;
-        return arg1->unkC;
-    }
-    // Node 11
-    arg0->unkC = (f32) arg1->unkC;
-    return arg1->unkC;
-}
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B5CC0
-/* 0EA7F0 7F0B5CC0 C4800000 */  lwc1  $f0, ($a0)
-/* 0EA7F4 7F0B5CC4 C4A20000 */  lwc1  $f2, ($a1)
-/* 0EA7F8 7F0B5CC8 4602003C */  c.lt.s $f0, $f2
-/* 0EA7FC 7F0B5CCC 00000000 */  nop   
-/* 0EA800 7F0B5CD0 45020004 */  bc1fl .L7F0B5CE4
-/* 0EA804 7F0B5CD4 E4820000 */   swc1  $f2, ($a0)
-/* 0EA808 7F0B5CD8 10000002 */  b     .L7F0B5CE4
-/* 0EA80C 7F0B5CDC E4800000 */   swc1  $f0, ($a0)
-/* 0EA810 7F0B5CE0 E4820000 */  swc1  $f2, ($a0)
-.L7F0B5CE4:
-/* 0EA814 7F0B5CE4 C4800004 */  lwc1  $f0, 4($a0)
-/* 0EA818 7F0B5CE8 C4A20004 */  lwc1  $f2, 4($a1)
-/* 0EA81C 7F0B5CEC 4602003C */  c.lt.s $f0, $f2
-/* 0EA820 7F0B5CF0 00000000 */  nop   
-/* 0EA824 7F0B5CF4 45020004 */  bc1fl .L7F0B5D08
-/* 0EA828 7F0B5CF8 E4820004 */   swc1  $f2, 4($a0)
-/* 0EA82C 7F0B5CFC 10000002 */  b     .L7F0B5D08
-/* 0EA830 7F0B5D00 E4800004 */   swc1  $f0, 4($a0)
-/* 0EA834 7F0B5D04 E4820004 */  swc1  $f2, 4($a0)
-.L7F0B5D08:
-/* 0EA838 7F0B5D08 C4A00008 */  lwc1  $f0, 8($a1)
-/* 0EA83C 7F0B5D0C C4820008 */  lwc1  $f2, 8($a0)
-/* 0EA840 7F0B5D10 4602003C */  c.lt.s $f0, $f2
-/* 0EA844 7F0B5D14 00000000 */  nop   
-/* 0EA848 7F0B5D18 45020004 */  bc1fl .L7F0B5D2C
-/* 0EA84C 7F0B5D1C E4800008 */   swc1  $f0, 8($a0)
-/* 0EA850 7F0B5D20 10000002 */  b     .L7F0B5D2C
-/* 0EA854 7F0B5D24 E4820008 */   swc1  $f2, 8($a0)
-/* 0EA858 7F0B5D28 E4800008 */  swc1  $f0, 8($a0)
-.L7F0B5D2C:
-/* 0EA85C 7F0B5D2C C4A0000C */  lwc1  $f0, 0xc($a1)
-/* 0EA860 7F0B5D30 C482000C */  lwc1  $f2, 0xc($a0)
-/* 0EA864 7F0B5D34 4602003C */  c.lt.s $f0, $f2
-/* 0EA868 7F0B5D38 00000000 */  nop   
-/* 0EA86C 7F0B5D3C 45020004 */  bc1fl .L7F0B5D50
-/* 0EA870 7F0B5D40 E480000C */   swc1  $f0, 0xc($a0)
-/* 0EA874 7F0B5D44 03E00008 */  jr    $ra
-/* 0EA878 7F0B5D48 E482000C */   swc1  $f2, 0xc($a0)
 
-/* 0EA87C 7F0B5D4C E480000C */  swc1  $f0, 0xc($a0)
-.L7F0B5D50:
-/* 0EA880 7F0B5D50 03E00008 */  jr    $ra
-/* 0EA884 7F0B5D54 00000000 */   nop   
-)
-#endif
+void sub_GAME_7F0B5CC0(struct bbox2d *a, struct bbox2d *b)
+{
+    (a->min).x = ((a->min).x < (b->min).x) ? (a->min).x : (b->min).x;
+    (a->min).y = ((a->min).y < (b->min).y) ? (a->min).y : (b->min).y;
+    (a->max).x = ((a->max).x > (b->max).x) ? (a->max).x : (b->max).x;
+    (a->max).y = ((a->max).y > (b->max).y) ? (a->max).y : (b->max).y;
+}
 
 
 
