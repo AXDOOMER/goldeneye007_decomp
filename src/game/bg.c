@@ -5047,7 +5047,7 @@ void sub_GAME_7F0B66E8(void)
 {
     s32 i;
 
-    for(i = 1;i < MaxNumRooms; i++)
+    for(i = 1; i < MaxNumRooms; i++)
     {
         if (array_room_info[i].field_35 == 0)
         {
