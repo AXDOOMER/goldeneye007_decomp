@@ -2,6 +2,7 @@
 #define _BG_H_
 #include "ultra64.h"
 #include "bondgame.h"
+#include "bondtypes.h"
 
 struct levelentry
 {
@@ -40,6 +41,13 @@ typedef struct s_room_info {
     f32 maxzbounds;
 } s_room_info;
 
+typedef struct s_bound_info 
+{
+    s32 index;
+    s32 unk1;
+    struct bbox2d bbox;
+    void* next;
+} s_bound_info;
 void bgInitDebugNoticeList(void);
 
 s32 sub_GAME_7F0B8FD0(u8 roomA, u8 roomB);
