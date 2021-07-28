@@ -21,9 +21,9 @@ s32 num_visible_rooms_in_cur_global_vis_packet;
 CODE.bss:8007C03C                     .align 4
 */
 //CODE.bss:8007C040
-char dword_CODE_bss_8007C040[0x60];
+char bgDebPortalOutBuffer[10][9];
 //CODE.bss:8007C0A0
-char dword_CODE_bss_8007C0A0[0x60];
+char bgDebRoomOutBuffer[10][9];
 //CODE.bss:8007C100
 char dword_CODE_bss_8007C100[0x3E80];
 //CODE.bss:8007FF80
@@ -166,9 +166,9 @@ s32 D_80044858 = 0;
 //D:8004485C
 s32 D_8004485C = 1;
 //D:80044860
-s32 D_80044860 = 0;
+s32 bgDebPortalOutLineNum = 0;
 //D:80044864
-s32 D_80044864 = 0;
+s32 bgDebRoomOutLineNum = 0;
 //D:80044868
 s32 D_80044868 = 0x7FFF;
 //D:8004486C
@@ -3983,14 +3983,13 @@ void bbox2dCopy(struct bbox2d *a, struct bbox2d *b)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B5D7C(s32 arg0) {
-    s32 temp_hi;
+char *bgDebPrintPORTALID(s32 portID)
+{
+    s32 temp_hi = (bgDebPortalOutLineNum + 1) % 0xA;
 
-    // Node 0
-    temp_hi = ((s32) (D_80044860 + 1) % 0xa);
-    D_80044860 = temp_hi;
-    sprintf(((temp_hi * 9) + &dword_CODE_bss_8007C040), "PORT%d", arg0);
-    return sp1C;
+    bgDebPortalOutLineNum = temp_hi;
+    sprintf(&bgDebPortalOutBuffer[temp_hi], "PORT%d", portID);
+    return &bgDebPortalOutBuffer[temp_hi];
 }
 #else
 GLOBAL_ASM(
@@ -4003,11 +4002,11 @@ glabel aPortD
 
 
 .text
-glabel sub_GAME_7F0B5D7C
-/* 0EA8AC 7F0B5D7C 3C028004 */  lui   $v0, %hi(D_80044860)
-/* 0EA8B0 7F0B5D80 8C424860 */  lw    $v0, %lo(D_80044860)($v0)
+glabel bgDebPrintPORTALID
+/* 0EA8AC 7F0B5D7C 3C028004 */  lui   $v0, %hi(bgDebPortalOutLineNum)
+/* 0EA8B0 7F0B5D80 8C424860 */  lw    $v0, %lo(bgDebPortalOutLineNum)($v0)
 /* 0EA8B4 7F0B5D84 2401000A */  li    $at, 10
-/* 0EA8B8 7F0B5D88 3C188008 */  lui   $t8, %hi(dword_CODE_bss_8007C040) 
+/* 0EA8B8 7F0B5D88 3C188008 */  lui   $t8, %hi(bgDebPortalOutBuffer) 
 /* 0EA8BC 7F0B5D8C 24420001 */  addiu $v0, $v0, 1
 /* 0EA8C0 7F0B5D90 0041001A */  div   $zero, $v0, $at
 /* 0EA8C4 7F0B5D94 00007010 */  mfhi  $t6
@@ -4015,15 +4014,15 @@ glabel sub_GAME_7F0B5D7C
 /* 0EA8CC 7F0B5D9C 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0EA8D0 7F0B5DA0 00803025 */  move  $a2, $a0
 /* 0EA8D4 7F0B5DA4 01EE7821 */  addu  $t7, $t7, $t6
-/* 0EA8D8 7F0B5DA8 2718C040 */  addiu $t8, %lo(dword_CODE_bss_8007C040) # addiu $t8, $t8, -0x3fc0
+/* 0EA8D8 7F0B5DA8 2718C040 */  addiu $t8, %lo(bgDebPortalOutBuffer) # addiu $t8, $t8, -0x3fc0
 /* 0EA8DC 7F0B5DAC AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0EA8E0 7F0B5DB0 01F82021 */  addu  $a0, $t7, $t8
-/* 0EA8E4 7F0B5DB4 3C018004 */  lui   $at, %hi(D_80044860)
+/* 0EA8E4 7F0B5DB4 3C018004 */  lui   $at, %hi(bgDebPortalOutLineNum)
 /* 0EA8E8 7F0B5DB8 3C058006 */  lui   $a1, %hi(aPortD)
 /* 0EA8EC 7F0B5DBC AFA4001C */  sw    $a0, 0x1c($sp)
 /* 0EA8F0 7F0B5DC0 24A58C48 */  addiu $a1, %lo(aPortD) # addiu $a1, $a1, -0x73b8
 /* 0EA8F4 7F0B5DC4 0C002B25 */  jal   sprintf
-/* 0EA8F8 7F0B5DC8 AC2E4860 */   sw    $t6, %lo(D_80044860)($at)
+/* 0EA8F8 7F0B5DC8 AC2E4860 */   sw    $t6, %lo(bgDebPortalOutLineNum)($at)
 /* 0EA8FC 7F0B5DCC 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0EA900 7F0B5DD0 8FA2001C */  lw    $v0, 0x1c($sp)
 /* 0EA904 7F0B5DD4 27BD0020 */  addiu $sp, $sp, 0x20
@@ -4037,14 +4036,13 @@ glabel sub_GAME_7F0B5D7C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B5DE0(s32 arg0) {
-    s32 temp_hi;
+char *bgDebPrintROOMID(s32 roomID)
+{
+    s32 temp_hi = (bgDebRoomOutLineNum + 1) % 0xA;
 
-    // Node 0
-    temp_hi = ((s32) (D_80044864 + 1) % 0xa);
-    D_80044864 = temp_hi;
-    sprintf(((temp_hi * 9) + &dword_CODE_bss_8007C0A0), "ROOM%d", arg0);
-    return sp1C;
+    bgDebRoomOutLineNum = temp_hi;
+    sprintf(&bgDebRoomOutBuffer[temp_hi], "ROOM%d", roomID);
+    return &bgDebRoomOutBuffer[temp_hi];
 }
 #else
 GLOBAL_ASM(
@@ -4055,11 +4053,11 @@ glabel aRoomD
 .word 0x524F4F4D, 0x25640000
 
 .text
-glabel sub_GAME_7F0B5DE0
-/* 0EA910 7F0B5DE0 3C028004 */  lui   $v0, %hi(D_80044864)
-/* 0EA914 7F0B5DE4 8C424864 */  lw    $v0, %lo(D_80044864)($v0)
+glabel bgDebPrintROOMID
+/* 0EA910 7F0B5DE0 3C028004 */  lui   $v0, %hi(bgDebRoomOutLineNum)
+/* 0EA914 7F0B5DE4 8C424864 */  lw    $v0, %lo(bgDebRoomOutLineNum)($v0)
 /* 0EA918 7F0B5DE8 2401000A */  li    $at, 10
-/* 0EA91C 7F0B5DEC 3C188008 */  lui   $t8, %hi(dword_CODE_bss_8007C0A0) 
+/* 0EA91C 7F0B5DEC 3C188008 */  lui   $t8, %hi(bgDebRoomOutBuffer) 
 /* 0EA920 7F0B5DF0 24420001 */  addiu $v0, $v0, 1
 /* 0EA924 7F0B5DF4 0041001A */  div   $zero, $v0, $at
 /* 0EA928 7F0B5DF8 00007010 */  mfhi  $t6
@@ -4067,15 +4065,15 @@ glabel sub_GAME_7F0B5DE0
 /* 0EA930 7F0B5E00 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0EA934 7F0B5E04 00803025 */  move  $a2, $a0
 /* 0EA938 7F0B5E08 01EE7821 */  addu  $t7, $t7, $t6
-/* 0EA93C 7F0B5E0C 2718C0A0 */  addiu $t8, %lo(dword_CODE_bss_8007C0A0) # addiu $t8, $t8, -0x3f60
+/* 0EA93C 7F0B5E0C 2718C0A0 */  addiu $t8, %lo(bgDebRoomOutBuffer) # addiu $t8, $t8, -0x3f60
 /* 0EA940 7F0B5E10 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0EA944 7F0B5E14 01F82021 */  addu  $a0, $t7, $t8
-/* 0EA948 7F0B5E18 3C018004 */  lui   $at, %hi(D_80044864)
+/* 0EA948 7F0B5E18 3C018004 */  lui   $at, %hi(bgDebRoomOutLineNum)
 /* 0EA94C 7F0B5E1C 3C058006 */  lui   $a1, %hi(aRoomD)
 /* 0EA950 7F0B5E20 AFA4001C */  sw    $a0, 0x1c($sp)
 /* 0EA954 7F0B5E24 24A58C50 */  addiu $a1, %lo(aRoomD) # addiu $a1, $a1, -0x73b0
 /* 0EA958 7F0B5E28 0C002B25 */  jal   sprintf
-/* 0EA95C 7F0B5E2C AC2E4864 */   sw    $t6, %lo(D_80044864)($at)
+/* 0EA95C 7F0B5E2C AC2E4864 */   sw    $t6, %lo(bgDebRoomOutLineNum)($at)
 /* 0EA960 7F0B5E30 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0EA964 7F0B5E34 8FA2001C */  lw    $v0, 0x1c($sp)
 /* 0EA968 7F0B5E38 27BD0020 */  addiu $sp, $sp, 0x20

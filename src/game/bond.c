@@ -38354,7 +38354,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BF8DC 7F08ADAC B961001A */  swr   $at, 0x1a($t3)
 /* 0BF8E0 7F08ADB0 8F18A0B0 */  lw    $t8, %lo(pPlayer)($t8)
 /* 0BF8E4 7F08ADB4 8F190488 */  lw    $t9, 0x488($t8)
-/* 0BF8E8 7F08ADB8 0FC2D778 */  jal   sub_GAME_7F0B5DE0
+/* 0BF8E8 7F08ADB8 0FC2D778 */  jal   bgDebPrintROOMID
 /* 0BF8EC 7F08ADBC 93240003 */   lbu   $a0, 3($t9)
 /* 0BF8F0 7F08ADC0 3C058005 */  lui   $a1, %hi(a8s)
 /* 0BF8F4 7F08ADC4 24A54FC0 */  addiu $a1, %lo(a8s) # addiu $a1, $a1, 0x4fc0
@@ -38801,7 +38801,7 @@ glabel sub_GAME_7F08AAE8
 /* 0C01A4 7F08B634 B941001A */  swr   $at, 0x1a($t2)
 /* 0C01A8 7F08B638 8DEFA120 */  lw    $t7, %lo(pPlayer)($t7)
 /* 0C01AC 7F08B63C 8DF80488 */  lw    $t8, 0x488($t7)
-/* 0C01B0 7F08B640 0FC2DA64 */  jal   sub_GAME_7F0B5DE0
+/* 0C01B0 7F08B640 0FC2DA64 */  jal   bgDebPrintROOMID
 /* 0C01B4 7F08B644 93040003 */   lbu   $a0, 3($t8)
 /* 0C01B8 7F08B648 3C058005 */  lui   $a1, %hi(a8s) # $a1, 0x8005
 /* 0C01BC 7F08B64C 24A54FF0 */  addiu $a1, %lo(a8s) # addiu $a1, $a1, 0x4ff0
@@ -39203,7 +39203,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BF8DC 7F08ADAC B961001A */  swr   $at, 0x1a($t3)
 /* 0BF8E0 7F08ADB0 8F18A0B0 */  lw    $t8, %lo(pPlayer)($t8)
 /* 0BF8E4 7F08ADB4 8F190488 */  lw    $t9, 0x488($t8)
-/* 0BF8E8 7F08ADB8 0FC2D778 */  jal   sub_GAME_7F0B5DE0
+/* 0BF8E8 7F08ADB8 0FC2D778 */  jal   bgDebPrintROOMID
 /* 0BF8EC 7F08ADBC 93240003 */   lbu   $a0, 3($t9)
 /* 0BF8F0 7F08ADC0 3C058005 */  lui   $a1, %hi(a8s)
 /* 0BF8F4 7F08ADC4 24A54FC0 */  addiu $a1, %lo(a8s) # addiu $a1, $a1, 0x4fc0
