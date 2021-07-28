@@ -4939,44 +4939,32 @@ glabel sub_GAME_7F0B6368
 #endif
 
 
-
-
-
 #ifdef NONMATCHING
-void sub_GAME_7F0B65C4(s32 arg0) {
-    void *temp_s0;
+void sub_GAME_7F0B65C4(s32 roomID)
+{
 
-    // Node 0
-    temp_s0 = ((arg0 * 0x50) + &array_room_info);
-    if (temp_s0->unk2C != 0)
+    if (array_room_info[roomID].ptr_unique_collision_points)
     {
-        // Node 1
-        memaRegister(temp_s0->unk2C, (((temp_s0->unk30 * 0x1c) + 0xf) & -0x10), temp_s0->unk2C);
-        temp_s0->unk2C = 0;
+        memaRegister(array_room_info[roomID].ptr_unique_collision_points, (((s16)array_room_info[roomID].bitflags3 * 0x1C) + 0xF) & ~0xF);
+        array_room_info[roomID].ptr_unique_collision_points = 0;
     }
-    // Node 2
-    if (temp_s0->unk28 > 0)
+
+    if ( 0 < array_room_info[roomID].cur_room_totalsize)
     {
-        // Node 3
-        if (temp_s0->unk4 != 0)
+        if (array_room_info[roomID].ptr_point_index)
         {
-            // Node 4
-            memaRegister(temp_s0->unk4, temp_s0->unk28);
-            temp_s0->unk4 = 0;
+            memaRegister(array_room_info[roomID].ptr_point_index, array_room_info[roomID].cur_room_totalsize);
         }
         else
         {
-            // Node 5
-            memaRegister(temp_s0->unk8, temp_s0->unk28);
-            temp_s0->unk4 = 0;
+            memaRegister(array_room_info[roomID].ptr_expanded_mapping_info, array_room_info[roomID].cur_room_totalsize);
         }
-        // Node 6
-        temp_s0->unk8 = 0;
-        temp_s0->unkC = 0;
+        array_room_info[roomID].ptr_point_index = 0;
+        array_room_info[roomID].ptr_expanded_mapping_info = 0;
+        array_room_info[roomID].ptr_secondary_expanded_mapping_info = 0;
     }
-    // Node 7
-    temp_s0->unk2 = (u8)0;
-    return generate_room_load_string();
+    array_room_info[roomID].model_bin_loaded = 0;
+    generate_room_load_string();
 }
 #else
 GLOBAL_ASM(
