@@ -4585,52 +4585,17 @@ glabel sub_GAME_7F0B61DC
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B6314(s32 arg0) {
-    void *temp_v0;
 
-    // Node 0
-    temp_v0 = ((arg0 * 0x50) + &array_room_info);
-    temp_v0->unk35 = (u8)1;
-    if (temp_v0->unk2 != 0)
+s32 bgCheckIfRoomModelNeedsLoad(s32 roomID)
+{
+    array_room_info[roomID].field_35 = 1;
+    if (array_room_info[roomID].model_bin_loaded == FALSE)
     {
-        // Node 2
-        // Node 3
-        return 0;
+        sub_GAME_7F0B6368(roomID);
+        return 1;
     }
-    // Node 1
-    sub_GAME_7F0B6368();
     return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B6314
-/* 0EAE44 7F0B6314 00047080 */  sll   $t6, $a0, 2
-/* 0EAE48 7F0B6318 01C47021 */  addu  $t6, $t6, $a0
-/* 0EAE4C 7F0B631C 3C0F8004 */  lui   $t7, %hi(array_room_info) 
-/* 0EAE50 7F0B6320 25EF1414 */  addiu $t7, %lo(array_room_info) # addiu $t7, $t7, 0x1414
-/* 0EAE54 7F0B6324 000E7100 */  sll   $t6, $t6, 4
-/* 0EAE58 7F0B6328 01CF1021 */  addu  $v0, $t6, $t7
-/* 0EAE5C 7F0B632C 90590002 */  lbu   $t9, 2($v0)
-/* 0EAE60 7F0B6330 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0EAE64 7F0B6334 24180001 */  li    $t8, 1
-/* 0EAE68 7F0B6338 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0EAE6C 7F0B633C 17200005 */  bnez  $t9, .L7F0B6354
-/* 0EAE70 7F0B6340 A0580035 */   sb    $t8, 0x35($v0)
-/* 0EAE74 7F0B6344 0FC2D8DA */  jal   sub_GAME_7F0B6368
-/* 0EAE78 7F0B6348 00000000 */   nop   
-/* 0EAE7C 7F0B634C 10000002 */  b     .L7F0B6358
-/* 0EAE80 7F0B6350 24020001 */   li    $v0, 1
-.L7F0B6354:
-/* 0EAE84 7F0B6354 00001025 */  move  $v0, $zero
-.L7F0B6358:
-/* 0EAE88 7F0B6358 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0EAE8C 7F0B635C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0EAE90 7F0B6360 03E00008 */  jr    $ra
-/* 0EAE94 7F0B6364 00000000 */   nop   
-)
-#endif
 
 
 
@@ -8727,7 +8692,7 @@ preload_room:
 /* 0ED3B8 7F0B8888 92280001 */   lbu   $t0, 1($s1)
 /* 0ED3BC 7F0B888C 52600007 */  beql  $s3, $zero, .L7F0B88AC
 /* 0ED3C0 7F0B8890 92280001 */   lbu   $t0, 1($s1)
-/* 0ED3C4 7F0B8894 0FC2D8C5 */  jal   sub_GAME_7F0B6314
+/* 0ED3C4 7F0B8894 0FC2D8C5 */  jal   bgCheckIfRoomModelNeedsLoad
 /* 0ED3C8 7F0B8898 8E24000C */   lw    $a0, 0xc($s1)
 /* 0ED3CC 7F0B889C 2C530001 */  sltiu $s3, $v0, 1
 /* 0ED3D0 7F0B88A0 327900FF */  andi  $t9, $s3, 0xff
@@ -8748,7 +8713,7 @@ preload_room_range:
 .L7F0B88D4:
 /* 0ED404 7F0B88D4 52600008 */  beql  $s3, $zero, .L7F0B88F8
 /* 0ED408 7F0B88D8 26100001 */   addiu $s0, $s0, 1
-/* 0ED40C 7F0B88DC 0FC2D8C5 */  jal   sub_GAME_7F0B6314
+/* 0ED40C 7F0B88DC 0FC2D8C5 */  jal   bgCheckIfRoomModelNeedsLoad
 /* 0ED410 7F0B88E0 02002025 */   move  $a0, $s0
 /* 0ED414 7F0B88E4 2C530001 */  sltiu $s3, $v0, 1
 /* 0ED418 7F0B88E8 326A00FF */  andi  $t2, $s3, 0xff
