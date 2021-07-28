@@ -27,7 +27,7 @@ char bgDebRoomOutBuffer[10][9];
 //CODE.bss:8007C100
 char dword_CODE_bss_8007C100[0x3E80];
 //CODE.bss:8007FF80
-s32 ptr_bgdata_portals;
+bg_portal_data_entry* ptr_bgdata_portals;
 //CODE.bss:8007FF84
 s32 ptr_bgdata_offsets;
 //CODE.bss:8007FF88
@@ -1634,7 +1634,7 @@ glabel load_bg_file
 /* 0E8FC0 7F0B4490 8C6B0004 */  lw    $t3, 4($v1)
 /* 0E8FC4 7F0B4494 8EEC0000 */  lw    $t4, ($s7)
 /* 0E8FC8 7F0B4498 016C6821 */  addu  $t5, $t3, $t4
-/* 0E8FCC 7F0B449C 0FC2D7A2 */  jal   sub_GAME_7F0B5E88
+/* 0E8FCC 7F0B449C 0FC2D7A2 */  jal   getIndexOfPORTALID
 /* 0E8FD0 7F0B44A0 01B32021 */   addu  $a0, $t5, $s3
 /* 0E8FD4 7F0B44A4 8E4E0000 */  lw    $t6, ($s2)
 /* 0E8FD8 7F0B44A8 01D07821 */  addu  $t7, $t6, $s0
@@ -4104,74 +4104,19 @@ u8* getROOMID_Bitflags1(s32 roomID)
 }
 
 
-
-
-
-#ifdef NONMATCHING
-s32 sub_GAME_7F0B5E88(s32 arg0) {
-    s32 temp_a2;
-    s32 phi_a2;
-    s32 phi_v1;
-    void *phi_a1;
-
-    // Node 0
-    if (*ptr_bgdata_portals != 0)
+s32 getIndexOfPORTALID(s32 portalID)
+{
+    s32 i;
+  
+    for(i = 0; ptr_bgdata_portals[i].offset_portal != NULL; i++)
     {
-        // Node 1
-        phi_a2 = *ptr_bgdata_portals;
-        phi_v1 = 0;
-        phi_a1 = ptr_bgdata_portals;
-loop_2:
-        // Node 2
-        if (arg0 == phi_a2)
+        if (portalID == (s32)ptr_bgdata_portals[i].offset_portal) 
         {
-            // Node 3
-            return phi_v1;
-        }
-        // Node 4
-        temp_a2 = phi_a1->unk8;
-        phi_a2 = temp_a2;
-        phi_v1 = (phi_v1 + 1);
-        phi_a1 = (phi_a1 + 8);
-        if (temp_a2 != 0)
-        {
-            goto loop_2;
+            return i;
         }
     }
-    // Node 5
     return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B5E88
-/* 0EA9B8 7F0B5E88 3C028008 */  lui   $v0, %hi(ptr_bgdata_portals)
-/* 0EA9BC 7F0B5E8C 8C42FF80 */  lw    $v0, %lo(ptr_bgdata_portals)($v0)
-/* 0EA9C0 7F0B5E90 00001825 */  move  $v1, $zero
-/* 0EA9C4 7F0B5E94 8C4E0000 */  lw    $t6, ($v0)
-/* 0EA9C8 7F0B5E98 00402825 */  move  $a1, $v0
-/* 0EA9CC 7F0B5E9C 51C0000C */  beql  $t6, $zero, .L7F0B5ED0
-/* 0EA9D0 7F0B5EA0 00001025 */   move  $v0, $zero
-/* 0EA9D4 7F0B5EA4 8C460000 */  lw    $a2, ($v0)
-.L7F0B5EA8:
-/* 0EA9D8 7F0B5EA8 54860004 */  bnel  $a0, $a2, .L7F0B5EBC
-/* 0EA9DC 7F0B5EAC 8CA60008 */   lw    $a2, 8($a1)
-/* 0EA9E0 7F0B5EB0 03E00008 */  jr    $ra
-/* 0EA9E4 7F0B5EB4 00601025 */   move  $v0, $v1
-
-/* 0EA9E8 7F0B5EB8 8CA60008 */  lw    $a2, 8($a1)
-.L7F0B5EBC:
-/* 0EA9EC 7F0B5EBC 24630001 */  addiu $v1, $v1, 1
-/* 0EA9F0 7F0B5EC0 24A50008 */  addiu $a1, $a1, 8
-/* 0EA9F4 7F0B5EC4 14C0FFF8 */  bnez  $a2, .L7F0B5EA8
-/* 0EA9F8 7F0B5EC8 00000000 */   nop   
-/* 0EA9FC 7F0B5ECC 00001025 */  move  $v0, $zero
-.L7F0B5ED0:
-/* 0EAA00 7F0B5ED0 03E00008 */  jr    $ra
-/* 0EAA04 7F0B5ED4 00000000 */   nop   
-)
-#endif
-
 
 
 

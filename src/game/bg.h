@@ -49,6 +49,22 @@ typedef struct s_bound_info
     struct bbox2d bbox;
     void* next;
 } s_bound_info;
+
+typedef struct bg_portal_entry
+{
+    u8 numPoints;
+    u8 padding[3];
+    struct coord3d point;
+} bg_portal_entry;
+
+typedef struct bg_portal_data_entry
+{
+    bg_portal_entry *offset_portal;
+    u8 connectedRoom1;
+    u8 connectedRoom2;
+    u16 controlbytes;
+} bg_portal_data_entry;
+
 void bgInitDebugNoticeList(void);
 
 s32 sub_GAME_7F0B8FD0(u8 roomA, u8 roomB);
