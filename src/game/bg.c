@@ -4092,32 +4092,16 @@ s32 getMaxNumRooms(void) {
 }
 
 
-u8 * getBitflagsROOMID(int roomID)
+u8 * getROOMID_Bitflags(int roomID)
 {
-  return *&array_room_info[roomID].bitflags;
+    return *&array_room_info[roomID].bitflags;
 }
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0B5E6C(s32 arg0) {
-    return *(&array_room_info+0x1 + (arg0 * 0x50));
+u8* getROOMID_Bitflags1(s32 roomID)
+{
+    return *&array_room_info[roomID].bitflags1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B5E6C
-/* 0EA99C 7F0B5E6C 00047080 */  sll   $t6, $a0, 2
-/* 0EA9A0 7F0B5E70 01C47021 */  addu  $t6, $t6, $a0
-/* 0EA9A4 7F0B5E74 000E7100 */  sll   $t6, $t6, 4
-/* 0EA9A8 7F0B5E78 3C028004 */  lui   $v0, %hi(array_room_info+0x1)
-/* 0EA9AC 7F0B5E7C 004E1021 */  addu  $v0, $v0, $t6
-/* 0EA9B0 7F0B5E80 03E00008 */  jr    $ra
-/* 0EA9B4 7F0B5E84 90421415 */   lbu   $v0, %lo(array_room_info+0x1)($v0)
-)
-#endif
 
 
 
