@@ -3970,34 +3970,13 @@ void sub_GAME_7F0B5CC0(struct bbox2d *a, struct bbox2d *b)
     (a->max).y = ((a->max).y > (b->max).y) ? (a->max).y : (b->max).y;
 }
 
-
-
-
-
-#ifdef NONMATCHING
-void copy_4_floats_a1_to_a0(void *arg0, void *arg1) {
-    // Node 0
-    *arg0 = (f32) *arg1;
-    arg0->unk4 = (f32) arg1->unk4;
-    arg0->unk8 = (f32) arg1->unk8;
-    arg0->unkC = (f32) arg1->unkC;
-    return;
+void bbox2dCopy(struct bbox2d *a, struct bbox2d *b)
+{
+    (a->min).x = (b->min).x;
+    (a->min).y = (b->min).y;
+    (a->max).x = (b->max).x;
+    (a->max).y = (b->max).y;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel copy_4_floats_a1_to_a0
-/* 0EA888 7F0B5D58 C4A40000 */  lwc1  $f4, ($a1)
-/* 0EA88C 7F0B5D5C E4840000 */  swc1  $f4, ($a0)
-/* 0EA890 7F0B5D60 C4A60004 */  lwc1  $f6, 4($a1)
-/* 0EA894 7F0B5D64 E4860004 */  swc1  $f6, 4($a0)
-/* 0EA898 7F0B5D68 C4A80008 */  lwc1  $f8, 8($a1)
-/* 0EA89C 7F0B5D6C E4880008 */  swc1  $f8, 8($a0)
-/* 0EA8A0 7F0B5D70 C4AA000C */  lwc1  $f10, 0xc($a1)
-/* 0EA8A4 7F0B5D74 03E00008 */  jr    $ra
-/* 0EA8A8 7F0B5D78 E48A000C */   swc1  $f10, 0xc($a0)
-)
-#endif
 
 
 
@@ -8682,7 +8661,7 @@ visible_if_seen_through_portal:
 /* 0ED210 7F0B86E0 02C02025 */  move  $a0, $s6
 /* 0ED214 7F0B86E4 13000005 */  beqz  $t8, .L7F0B86FC
 /* 0ED218 7F0B86E8 00000000 */   nop   
-/* 0ED21C 7F0B86EC 0FC2D756 */  jal   copy_4_floats_a1_to_a0
+/* 0ED21C 7F0B86EC 0FC2D756 */  jal   bbox2dCopy
 /* 0ED220 7F0B86F0 02C02025 */   move  $a0, $s6
 /* 0ED224 7F0B86F4 10000003 */  b     .L7F0B8704
 /* 0ED228 7F0B86F8 AE800000 */   sw    $zero, ($s4)
