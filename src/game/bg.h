@@ -15,7 +15,8 @@ struct levelentry
 };
 
 typedef struct s_room_info {
-    s16 bitflags;
+    u8 bitflags;
+    u8 bitflags1;
     u8 model_bin_loaded;
     u8 bitflags2;
     void * ptr_point_index;
