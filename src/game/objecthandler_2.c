@@ -12806,19 +12806,16 @@ def_7F075D80:
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F075F68(void *arg0, void *arg1, ?32 arg2) {
-    // Node 0
-    arg0->unk8 = arg1;
-    arg0->unk10 = arg2;
-    arg0->unk2 = (u16)-1;
-    arg0->unk18 = 0;
-    arg0->unk1C = 0;
-    arg0->unk14 = 1.0f;
-    unknown_object_microcode_handler(*arg1);
-    return;
-    // (possible return value: unknown_object_microcode_handler(*arg1))
+void sub_GAME_7F075F68(struct Model *objinst,struct ModelFileHeader *header,u32 *data)
+{
+  objinst->obj = header;
+  objinst->data = data;
+  *&objinst->field_0x2 = 0xffff;
+  objinst->attachedto = NULL;
+  objinst->field_0x1c = NULL;
+  objinst->scale = 1.0;
+  unknown_object_microcode_handler(objinst,header->RootNode);
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -12919,9 +12916,35 @@ glabel sub_GAME_7F075FAC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F076030(void) {
+void sub_GAME_7F076030(Model *model, ModelFileHeader *header1, ModelNode *node, ModelFileHeader *header2)
+{
+    ModelNode *temp_v1;
+    ModelNode *temp_v1_2;
+    void *temp_v0;
+    ModelNode *phi_v1;
+    ModelNode *phi_a0;
 
+    temp_v0 = extract_id_from_object_structure_microcode(model, node);
+    temp_v0->unk0 = header2;
+    temp_v0->unk4 = (s32) (model->unk10 + (header1->numRecords * 4));
+    temp_v1 = header2->RootNode;
+    node->Child = temp_v1;
+    phi_v1 = temp_v1;
+    phi_a0 = temp_v1;
+    if (temp_v1 != 0)
+    {
+        do
+        {
+            phi_v1->Parent = node;
+            temp_v1_2 = phi_v1->Next;
+            phi_v1 = temp_v1_2;
+        } while (temp_v1_2 != 0);
+        phi_a0 = node->Child;
+    }
+    header1->numRecords += set_microcode_entry_numbers(phi_a0);
 }
+
+
 #else
 GLOBAL_ASM(
 .text
