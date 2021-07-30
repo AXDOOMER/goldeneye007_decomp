@@ -10469,24 +10469,11 @@ glabel doshadow
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F074514(void) {
 
+void sub_GAME_7F074514(s32 param_1,struct Model *param_2,struct ModelNode *param_3)
+{
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F074514
-/* 0A9044 7F074514 AFA40000 */  sw    $a0, ($sp)
-/* 0A9048 7F074518 AFA50004 */  sw    $a1, 4($sp)
-/* 0A904C 7F07451C 03E00008 */  jr    $ra
-/* 0A9050 7F074520 AFA60008 */   sw    $a2, 8($sp)
-)
-#endif
-
-
-
-
 
 
 void sub_GAME_7F074524(Gfx *param_1,struct Model *param_2, struct ModelNode *param_3)
