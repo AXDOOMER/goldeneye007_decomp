@@ -11734,8 +11734,11 @@ def_7F0753C4:
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F07549C(void) {
-
+void sub_GAME_7F07549C(s32 arg0, f32 *arg1, f32 *arg2, ModelNode *arg3)
+{
+    //uses sh vs sw
+    arg3->Opcode = 0;
+    sub_GAME_7F0752FC(arg0, arg1, arg2, arg3);
 }
 #else
 GLOBAL_ASM(
