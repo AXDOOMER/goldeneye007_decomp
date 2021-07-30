@@ -13382,30 +13382,11 @@ glabel load_object_fill_header
 
 
 
-#ifdef NONMATCHING
-void load_object_into_memory(void) {
-    // Node 0
-    load_object_fill_header(0, 0, 0);
-    return;
-    // (possible return value: load_object_fill_header(0, 0, 0))
+void load_object_into_memory(struct ModelFileHeader *header,char *name)
+{
+  load_object_fill_header(header,name,0,0,0);
+  return;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel load_object_into_memory
-/* 0AB07C 7F07654C 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0AB080 7F076550 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0AB084 7F076554 AFA00010 */  sw    $zero, 0x10($sp)
-/* 0AB088 7F076558 00003025 */  move  $a2, $zero
-/* 0AB08C 7F07655C 0FC1D929 */  jal   load_object_fill_header
-/* 0AB090 7F076560 00003825 */   move  $a3, $zero
-/* 0AB094 7F076564 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0AB098 7F076568 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0AB09C 7F07656C 03E00008 */  jr    $ra
-/* 0AB0A0 7F076570 00000000 */   nop   
-)
-#endif
 
 
 
