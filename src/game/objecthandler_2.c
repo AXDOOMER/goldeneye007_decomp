@@ -12364,21 +12364,13 @@ glabel sub_GAME_7F075A90
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F075B08(void) {
 
+void REMOVED_sub_GAME_7F075B08(s32 param_1,s32 param_2,s32 param_3,s32 param_4)
+{
+  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F075B08
-/* 0AA638 7F075B08 AFA40000 */  sw    $a0, ($sp)
-/* 0AA63C 7F075B0C AFA50004 */  sw    $a1, 4($sp)
-/* 0AA640 7F075B10 AFA60008 */  sw    $a2, 8($sp)
-/* 0AA644 7F075B14 03E00008 */  jr    $ra
-/* 0AA648 7F075B18 AFA7000C */   sw    $a3, 0xc($sp)
-)
-#endif
+
+
 
 
 
@@ -12565,33 +12557,11 @@ def_7F075B60:
 
 
 
-//#ifdef NONMATCHING
 void set_objuse_flag_compute_grp_nums_set_obj_loaded(struct ModelFileHeader *objheader)
 {
     objheader->isLoaded = 1;
     objheader->numRecords = set_microcode_entry_numbers(objheader->RootNode);
 }
-#ifdef NONMATCHIN
-//#else
-GLOBAL_ASM(
-.text
-glabel set_objuse_flag_compute_grp_nums_set_obj_loaded
-/* 0AA824 7F075CF4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0AA828 7F075CF8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0AA82C 7F075CFC 240E0001 */  li    $t6, 1
-/* 0AA830 7F075D00 00802825 */  move  $a1, $a0
-/* 0AA834 7F075D04 AC8E001C */  sw    $t6, 0x1c($a0)
-/* 0AA838 7F075D08 8C840000 */  lw    $a0, ($a0)
-/* 0AA83C 7F075D0C 0FC1D6C7 */  jal   set_microcode_entry_numbers
-/* 0AA840 7F075D10 AFA50018 */   sw    $a1, 0x18($sp)
-/* 0AA844 7F075D14 8FA50018 */  lw    $a1, 0x18($sp)
-/* 0AA848 7F075D18 A4A20014 */  sh    $v0, 0x14($a1)
-/* 0AA84C 7F075D1C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0AA850 7F075D20 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0AA854 7F075D24 03E00008 */  jr    $ra
-/* 0AA858 7F075D28 00000000 */   nop   
-)
-#endif
 
 
 
