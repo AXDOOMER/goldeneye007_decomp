@@ -9529,25 +9529,12 @@ glabel dotube
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0737EC(void) {
 
+
+void sub_GAME_7F0737EC(s32 param_1,struct Model *param_2, struct ModelNode *param_3)
+{
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0737EC
-/* 0A831C 7F0737EC AFA40000 */  sw    $a0, ($sp)
-/* 0A8320 7F0737F0 AFA50004 */  sw    $a1, 4($sp)
-/* 0A8324 7F0737F4 03E00008 */  jr    $ra
-/* 0A8328 7F0737F8 AFA60008 */   sw    $a2, 8($sp)
-)
-#endif
-
-
-
-
-
 
 
 void sub_GAME_7F0737FC(s32 param_1,struct Model *param_2,struct ModelNode *param_3)
