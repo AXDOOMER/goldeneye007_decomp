@@ -10488,20 +10488,13 @@ glabel sub_GAME_7F074514
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F074524(void) {
 
+void sub_GAME_7F074524(Gfx *param_1,struct Model *param_2, struct ModelNode *param_3)
+{
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F074524
-/* 0A9054 7F074524 AFA40000 */  sw    $a0, ($sp)
-/* 0A9058 7F074528 AFA50004 */  sw    $a1, 4($sp)
-/* 0A905C 7F07452C 03E00008 */  jr    $ra
-/* 0A9060 7F074530 AFA60008 */   sw    $a2, 8($sp)
-)
-#endif
+
+
 
 
 
