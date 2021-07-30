@@ -7562,30 +7562,28 @@ glabel reset_play_data_ptrs
 
 
 #ifdef NONMATCHING
-void init_player_data_ptrs_construct_viewports(int playercount)
+void init_player_data_ptrs_construct_viewports(s32 playercount)
 {
-    int player;
-    
+    s32 i;
+
     players[0] = NULL;
     players[1] = NULL;
     players[2] = NULL;
     players[3] = NULL;
-
-    random_byte = randomGetNext() & 0xff;
-    if (playercount < 1) {
-        initBONDdataforPlayer(0);
-        set_cur_player(0);
-        set_cur_player_screen_size( viGetViewWidth(), viGetViewHeight() );
-        set_cur_player_viewport_size( viGetViewLeft(), viGetViewTop() );
-    }
-    else {
-        for (player = 0; player != playercount; player++)
+    random_byte = (s32) (randomGetNext() & 0xFF);
+    if (playercount > 0)
+    {
+        for (i = 0; i < playercount; i++)
         {
-            initBONDdataforPlayer(player);
+            initBONDdataforPlayer(i);
         }
         set_cur_player(0);
+        return;
     }
-    return;
+    initBONDdataforPlayer(0);
+    set_cur_player(0);
+    set_cur_player_screen_size(viGetViewWidth(), viGetViewHeight());
+    set_cur_player_viewport_size(viGetViewLeft(), viGetViewTop());
 }
 #else
 GLOBAL_ASM(
