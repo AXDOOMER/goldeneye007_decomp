@@ -13411,28 +13411,12 @@ glabel load_object_into_memory
 
 
 
-#ifdef NONMATCHING
-void load_object_into_memory_unused_maybe(void) {
-    // Node 0
-    load_object_fill_header(0);
-    return;
-    // (possible return value: load_object_fill_header(0))
+void load_object_into_memory_unused_maybe(struct ModelFileHeader *header,int *recallstring,int *targetloc,int sizeleft)
+{
+  load_object_fill_header(header,recallstring,targetloc,sizeleft,0);
+  return;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel load_object_into_memory_unused_maybe
-/* 0AB0A4 7F076574 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0AB0A8 7F076578 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0AB0AC 7F07657C 0FC1D929 */  jal   load_object_fill_header
-/* 0AB0B0 7F076580 AFA00010 */   sw    $zero, 0x10($sp)
-/* 0AB0B4 7F076584 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0AB0B8 7F076588 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0AB0BC 7F07658C 03E00008 */  jr    $ra
-/* 0AB0C0 7F076590 00000000 */   nop   
-)
-#endif
 
 
 
