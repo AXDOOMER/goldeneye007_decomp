@@ -5,6 +5,7 @@
 #include "game/quaternion.h"
 #include "game/math_asinfacosf.h"
 #include "game/math_unk_05A9E0.h"
+#include "game/chrobjdata.h"
 
 //D:80054600
 const char aGetsubmatrixNoObjinst[] = "getsubmatrix: no objinst!\n";
@@ -13324,9 +13325,26 @@ glabel sub_GAME_7F0762E0
 
 
 #ifdef NONMATCHING
-void load_object_fill_header(void) {
+void load_object_fill_header(struct ModelFileHeader *objheader, s8 *name, s32 targetloc, s32 sizeleft, s32 buffer)
+{
 
+    struct ModelNode **phi_v0;
+
+    if (targetloc != 0)
+    {
+        phi_v0 = _load_resource_named_to_buffer(name, 0, (s32 *) targetloc, sizeleft);
+    }
+    else
+    {
+        phi_v0 = _load_resource_named_to_membank(name, 0, 0x100, 4U);
+    }
+    objheader->Switches = phi_v0;
+    objheader->Textures = &phi_v0[objheader->numSwitches];
+    objheader->RootNode = objheader->Textures + (objheader->numtextures * 0xC);
+    sub_GAME_7F075A90(objheader, 0x5000000, phi_v0);
+    sub_GAME_7F0762E0(objheader, (u8 *) name, targetloc, (u32 *) buffer);
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -13384,18 +13402,15 @@ glabel load_object_fill_header
 
 void load_object_into_memory(struct ModelFileHeader *header,char *name)
 {
-  load_object_fill_header(header,name,0,0,0);
-  return;
+   load_object_fill_header(header,name,0,0,0);
+   return;
 }
-
-
-
 
 
 void load_object_into_memory_unused_maybe(struct ModelFileHeader *header,int *recallstring,int *targetloc,int sizeleft)
 {
-  load_object_fill_header(header,recallstring,targetloc,sizeleft,0);
-  return;
+   load_object_fill_header(header,recallstring,targetloc,sizeleft,0);
+   return;
 }
 
 
