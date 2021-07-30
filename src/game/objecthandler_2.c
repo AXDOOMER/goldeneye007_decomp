@@ -12565,16 +12565,14 @@ def_7F075B60:
 
 
 
-#ifdef NONMATCHING
-void set_objuse_flag_compute_grp_nums_set_obj_loaded(void *arg0, void *arg6) {
-    // Node 0
-    arg0->unk1C = 1;
-    arg6->unk14 = set_microcode_entry_numbers(*arg0, arg0);
-    return;
-    // (possible return value: set_microcode_entry_numbers(*arg0, arg0))
+//#ifdef NONMATCHING
+void set_objuse_flag_compute_grp_nums_set_obj_loaded(struct ModelFileHeader *objheader)
+{
+    objheader->isLoaded = 1;
+    objheader->numRecords = set_microcode_entry_numbers(objheader->RootNode);
 }
-
-#else
+#ifdef NONMATCHIN
+//#else
 GLOBAL_ASM(
 .text
 glabel set_objuse_flag_compute_grp_nums_set_obj_loaded
