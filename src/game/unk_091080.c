@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "bondtypes.h"
 
 // bss
 //CODE.bss:80079E20
@@ -9,11 +10,11 @@ s32 dword_CODE_bss_80079E20;
 //D:80037010
 s32 D_80037010 = 0;
 //D:80037014
-f32 stanbondx = 0.0f;
+struct coord3d stanbondx = {0.0f,0.0f,0.0f};
 //D:80037018
-s32 stanbondy = 0;
+//s32 stanbondy = 0;
 //D:8003701C
-s32 stanbondz = 0;
+//s32 stanbondz = 0;
 //D:80037020
 s32 D_80037020 = 0;
 //D:80037024
@@ -432,55 +433,17 @@ s32 sub_GAME_7F091580(s32 arg0) {
 }
 
 
-
-
-
-
-#ifdef NONMATCHING
-f32 sub_GAME_7F0915BC(f32 arg0) {
-    f32 temp_f0;
-
-    // Node 0
-    temp_f0 = (D_80037058 / arg0);
-    D_80037058 = arg0;
-    stanbondx = (f32) (stanbondx * temp_f0);
-    stanbondx.unk4 = (f32) (stanbondx.unk4 * temp_f0);
-    stanbondx.unk8 = (f32) (stanbondx.unk8 * temp_f0);
-    D_8003705C = (f32) (1.0f / arg0);
-    return;
-    // (possible return value: temp_f0)
+void sub_GAME_7F0915BC(float scale)
+{
+  float fVar1;
+  
+  fVar1 = D_80037058 / scale;
+  D_80037058 = scale;
+  stanbondx.x = stanbondx.x * fVar1;
+  stanbondx.y = stanbondx.y * fVar1;
+  stanbondx.z = stanbondx.z * fVar1;
+  D_8003705C = 1.0f / scale;
 }
-
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0915BC
-/* 0C60EC 7F0915BC 3C028003 */  lui   $v0, %hi(D_80037058)
-/* 0C60F0 7F0915C0 24427058 */  addiu $v0, %lo(D_80037058) # addiu $v0, $v0, 0x7058
-/* 0C60F4 7F0915C4 C4440000 */  lwc1  $f4, ($v0)
-/* 0C60F8 7F0915C8 3C038003 */  lui   $v1, %hi(stanbondx)
-/* 0C60FC 7F0915CC 24637014 */  addiu $v1, %lo(stanbondx) # addiu $v1, $v1, 0x7014
-/* 0C6100 7F0915D0 460C2003 */  div.s $f0, $f4, $f12
-/* 0C6104 7F0915D4 C4660000 */  lwc1  $f6, ($v1)
-/* 0C6108 7F0915D8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0C610C 7F0915DC C46A0004 */  lwc1  $f10, 4($v1)
-/* 0C6110 7F0915E0 C4720008 */  lwc1  $f18, 8($v1)
-/* 0C6114 7F0915E4 E44C0000 */  swc1  $f12, ($v0)
-/* 0C6118 7F0915E8 46003202 */  mul.s $f8, $f6, $f0
-/* 0C611C 7F0915EC 44813000 */  mtc1  $at, $f6
-/* 0C6120 7F0915F0 3C018003 */  lui   $at, %hi(D_8003705C)
-/* 0C6124 7F0915F4 46005402 */  mul.s $f16, $f10, $f0
-/* 0C6128 7F0915F8 00000000 */  nop   
-/* 0C612C 7F0915FC 46009102 */  mul.s $f4, $f18, $f0
-/* 0C6130 7F091600 E4680000 */  swc1  $f8, ($v1)
-/* 0C6134 7F091604 E4700004 */  swc1  $f16, 4($v1)
-/* 0C6138 7F091608 460C3203 */  div.s $f8, $f6, $f12
-/* 0C613C 7F09160C E4640008 */  swc1  $f4, 8($v1)
-/* 0C6140 7F091610 03E00008 */  jr    $ra
-/* 0C6144 7F091614 E428705C */   swc1  $f8, %lo(D_8003705C)($at)
-)
-#endif
 
 
 
