@@ -426,34 +426,11 @@ glabel sub_GAME_7F091080
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F091580(s32 arg0) {
-    // Node 0
+s32 sub_GAME_7F091580(s32 arg0) {
     sub_GAME_7F0876C4(&stanbondx, &D_80037020, &D_8003702C);
     return arg0;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F091580
-/* 0C60B0 7F091580 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C60B4 7F091584 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0C60B8 7F091588 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C60BC 7F09158C 3C048003 */  lui   $a0, %hi(stanbondx)
-/* 0C60C0 7F091590 3C058003 */  lui   $a1, %hi(D_80037020)
-/* 0C60C4 7F091594 3C068003 */  lui   $a2, %hi(D_8003702C)
-/* 0C60C8 7F091598 24C6702C */  addiu $a2, %lo(D_8003702C) # addiu $a2, $a2, 0x702c
-/* 0C60CC 7F09159C 24A57020 */  addiu $a1, %lo(D_80037020) # addiu $a1, $a1, 0x7020
-/* 0C60D0 7F0915A0 0FC21DB1 */  jal   sub_GAME_7F0876C4
-/* 0C60D4 7F0915A4 24847014 */   addiu $a0, %lo(stanbondx) # addiu $a0, $a0, 0x7014
-/* 0C60D8 7F0915A8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C60DC 7F0915AC 8FA20018 */  lw    $v0, 0x18($sp)
-/* 0C60E0 7F0915B0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C60E4 7F0915B4 03E00008 */  jr    $ra
-/* 0C60E8 7F0915B8 00000000 */   nop   
-)
-#endif
 
 
 
