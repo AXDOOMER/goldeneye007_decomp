@@ -455,8 +455,7 @@ void sub_GAME_7F091618(void)
     float __x;
     
     get_BONDdata_position();
-    __x = get_curplay_horizontal_rotation_in_degrees();
-    __x = 6.28318548f - __x;
+    __x = 6.2831855f -  get_curplay_horizontal_rotation_in_degrees();
     cosf(__x);
     sinf(__x);
     cosf(__x);
