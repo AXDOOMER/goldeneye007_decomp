@@ -48,11 +48,11 @@ f32 D_80037058 = 1.0;
 //D:8003705C
 f32 D_8003705C = 1.0;
 //D:80037060
-s32 D_80037060 = 0;
+struct coord3d D_80037060 = {0.0f,0.0f,0.0f};
 //D:80037064
-s32 D_80037064 = 0;
+//s32 D_80037064 = 0;
 //D:80037068
-s32 D_80037068 = 0;
+//s32 D_80037068 = 0;
 
 
 // rodata
@@ -450,7 +450,7 @@ void sub_GAME_7F0915BC(float scale)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F091618(void)
+void handle_debug_intropos(void)
 {
     float __x;
     
@@ -497,50 +497,16 @@ glabel sub_GAME_7F091618
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F09166C(void) {
+void sub_GAME_7F09166C(void)
+{
+    sqrtf((stanbondx.x - D_80037060.x) * (stanbondx.x - D_80037060.x) +
+          (stanbondx.y - D_80037060.y) * (stanbondx.y - D_80037060.y) +
+          (stanbondx.z - D_80037060.z) * (stanbondx.z - D_80037060.z));
 
+    D_80037060.x = stanbondx.x;
+    D_80037060.y = stanbondx.y;
+    D_80037060.z = stanbondx.z;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F09166C
-/* 0C619C 7F09166C 3C028003 */  lui   $v0, %hi(stanbondx)
-/* 0C61A0 7F091670 3C038003 */  lui   $v1, %hi(D_80037060)
-/* 0C61A4 7F091674 24637060 */  addiu $v1, %lo(D_80037060) # addiu $v1, $v1, 0x7060
-/* 0C61A8 7F091678 24427014 */  addiu $v0, %lo(stanbondx) # addiu $v0, $v0, 0x7014
-/* 0C61AC 7F09167C C4440000 */  lwc1  $f4, ($v0)
-/* 0C61B0 7F091680 C4660000 */  lwc1  $f6, ($v1)
-/* 0C61B4 7F091684 C4480004 */  lwc1  $f8, 4($v0)
-/* 0C61B8 7F091688 C46A0004 */  lwc1  $f10, 4($v1)
-/* 0C61BC 7F09168C 46062001 */  sub.s $f0, $f4, $f6
-/* 0C61C0 7F091690 C4500008 */  lwc1  $f16, 8($v0)
-/* 0C61C4 7F091694 C4720008 */  lwc1  $f18, 8($v1)
-/* 0C61C8 7F091698 460A4081 */  sub.s $f2, $f8, $f10
-/* 0C61CC 7F09169C 46000102 */  mul.s $f4, $f0, $f0
-/* 0C61D0 7F0916A0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C61D4 7F0916A4 46128381 */  sub.s $f14, $f16, $f18
-/* 0C61D8 7F0916A8 46021182 */  mul.s $f6, $f2, $f2
-/* 0C61DC 7F0916AC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C61E0 7F0916B0 460E7282 */  mul.s $f10, $f14, $f14
-/* 0C61E4 7F0916B4 46062200 */  add.s $f8, $f4, $f6
-/* 0C61E8 7F0916B8 0C007DF8 */  jal   sqrtf
-/* 0C61EC 7F0916BC 460A4300 */   add.s $f12, $f8, $f10
-/* 0C61F0 7F0916C0 3C028003 */  lui   $v0, %hi(stanbondx)
-/* 0C61F4 7F0916C4 24427014 */  addiu $v0, %lo(stanbondx) # addiu $v0, $v0, 0x7014
-/* 0C61F8 7F0916C8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C61FC 7F0916CC 3C038003 */  lui   $v1, %hi(D_80037060)
-/* 0C6200 7F0916D0 C4500000 */  lwc1  $f16, ($v0)
-/* 0C6204 7F0916D4 C4520004 */  lwc1  $f18, 4($v0)
-/* 0C6208 7F0916D8 C4440008 */  lwc1  $f4, 8($v0)
-/* 0C620C 7F0916DC 24637060 */  addiu $v1, %lo(D_80037060) # addiu $v1, $v1, 0x7060
-/* 0C6210 7F0916E0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C6214 7F0916E4 E4700000 */  swc1  $f16, ($v1)
-/* 0C6218 7F0916E8 E4720004 */  swc1  $f18, 4($v1)
-/* 0C621C 7F0916EC 03E00008 */  jr    $ra
-/* 0C6220 7F0916F0 E4640008 */   swc1  $f4, 8($v1)
-)
-#endif
 
 
 
