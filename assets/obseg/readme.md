@@ -19,7 +19,7 @@ obseg asset categories are:
 Level background geometry display lists and portal info.
 
 ## `brief` Assets
-Contains mission briefing text.
+Maps text strings into mission briefings.
 
 ## `chr` Assets
 Character models display lists.
@@ -37,10 +37,10 @@ Setups contain the mission scripting logic, AI Scripting, object information, Pa
 Stand Tiles. Refereed to by Rare Staff as "stans" in GE or simply "Tiles" in PD. (see below for descriptions)
 
 ## `text` Assets
-All other game text.
+All game text.
 
 ## Misc Assets
-In the root of this folder is a file listing all of the assets included in the build, with path and filename info. This is used as runtime to resolve the list of available assets.
+In the root of this folder is a file listing all of the assets included in the build, with path and filename info. This is used at runtime to resolve the list of available assets.
 
 -----
 
@@ -50,7 +50,7 @@ In the root of this folder is a file listing all of the assets included in the b
 A level is divided into rooms.
 
 # Portal
-A portal defines navigation from one room to another. Bond must travel through a portal for the objects in the room to be loaded (this isn't entirely correct, but travelling out of bonds is generally not useful for this reason).
+Portals allow Bond to see through them to connected rooms that are otherwise culled to save unnecessary processing.
 
 # Pad
 A room contains one or more pads.
@@ -59,10 +59,7 @@ A room contains one or more pads.
 Guard pathing information between pads.
 
 # Nav mesh
-Colleciton of paths.
-
-# Set
-Collection of pads, to aid in the algorithm to find the shortest path to Bond.
+Also known as "sets". Colleciton of pads, to aid in the AI algorithm to find the shortest path to Bond.
 
 # Stan or Tiles
-Defines floor clipping information.
+Defines floor information.
