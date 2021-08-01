@@ -65,7 +65,7 @@ typedef struct StandFileTile {
 
 typedef struct StandFileHeader {
     void* unk1;
-    StandTile* pFirstTile;
+    StandFileTile* pFirstTile;
     void* unk2;
 } StandFileHeader;
 
