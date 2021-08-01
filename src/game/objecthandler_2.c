@@ -5,6 +5,7 @@
 #include "game/quaternion.h"
 #include "game/math_asinfacosf.h"
 #include "game/math_unk_05A9E0.h"
+#include "game/chrobjdata.h"
 
 //D:80054600
 const char aGetsubmatrixNoObjinst[] = "getsubmatrix: no objinst!\n";
@@ -8638,20 +8639,14 @@ glabel sub_GAME_7F072984
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F072C10(void) {
 
+
+void sub_GAME_7F072C10(Gfx *param_1, struct Model *param_2, struct ModelNode *param_3)
+{
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F072C10
-/* 0A7740 7F072C10 AFA40000 */  sw    $a0, ($sp)
-/* 0A7744 7F072C14 AFA50004 */  sw    $a1, 4($sp)
-/* 0A7748 7F072C18 03E00008 */  jr    $ra
-/* 0A774C 7F072C1C AFA60008 */   sw    $a2, 8($sp)
-)
-#endif
+
+
 
 
 
@@ -8970,20 +8965,13 @@ glabel sub_GAME_7F073038
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F07306C(void) {
 
+void sub_GAME_7F07306C(s32 param_1,struct Model *param_2,struct ModelNode *param_3)
+{
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F07306C
-/* 0A7B9C 7F07306C AFA40000 */  sw    $a0, ($sp)
-/* 0A7BA0 7F073070 AFA50004 */  sw    $a1, 4($sp)
-/* 0A7BA4 7F073074 03E00008 */  jr    $ra
-/* 0A7BA8 7F073078 AFA60008 */   sw    $a2, 8($sp)
-)
-#endif
+
+
 
 
 
@@ -9528,39 +9516,20 @@ glabel dotube
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0737EC(void) {
 
+
+void sub_GAME_7F0737EC(s32 param_1,struct Model *param_2, struct ModelNode *param_3)
+{
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0737EC
-/* 0A831C 7F0737EC AFA40000 */  sw    $a0, ($sp)
-/* 0A8320 7F0737F0 AFA50004 */  sw    $a1, 4($sp)
-/* 0A8324 7F0737F4 03E00008 */  jr    $ra
-/* 0A8328 7F0737F8 AFA60008 */   sw    $a2, 8($sp)
-)
-#endif
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0737FC(void) {
-
+void sub_GAME_7F0737FC(s32 param_1,struct Model *param_2,struct ModelNode *param_3)
+{
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0737FC
-/* 0A832C 7F0737FC AFA40000 */  sw    $a0, ($sp)
-/* 0A8330 7F073800 AFA50004 */  sw    $a1, 4($sp)
-/* 0A8334 7F073804 03E00008 */  jr    $ra
-/* 0A8338 7F073808 AFA60008 */   sw    $a2, 8($sp)
-)
-#endif
+
+
 
 
 
@@ -10468,39 +10437,19 @@ glabel doshadow
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F074514(void) {
 
+void sub_GAME_7F074514(s32 param_1,struct Model *param_2,struct ModelNode *param_3)
+{
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F074514
-/* 0A9044 7F074514 AFA40000 */  sw    $a0, ($sp)
-/* 0A9048 7F074518 AFA50004 */  sw    $a1, 4($sp)
-/* 0A904C 7F07451C 03E00008 */  jr    $ra
-/* 0A9050 7F074520 AFA60008 */   sw    $a2, 8($sp)
-)
-#endif
 
 
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F074524(void) {
-
+void sub_GAME_7F074524(Gfx *param_1,struct Model *param_2, struct ModelNode *param_3)
+{
+    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F074524
-/* 0A9054 7F074524 AFA40000 */  sw    $a0, ($sp)
-/* 0A9058 7F074528 AFA50004 */  sw    $a1, 4($sp)
-/* 0A905C 7F07452C 03E00008 */  jr    $ra
-/* 0A9060 7F074530 AFA60008 */   sw    $a2, 8($sp)
-)
-#endif
+
+
 
 
 
@@ -11733,8 +11682,11 @@ def_7F0753C4:
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F07549C(void) {
-
+void sub_GAME_7F07549C(s32 arg0, f32 *arg1, f32 *arg2, ModelNode *arg3)
+{
+    //uses sh vs sw
+    arg3->Opcode = 0;
+    sub_GAME_7F0752FC(arg0, arg1, arg2, arg3);
 }
 #else
 GLOBAL_ASM(
@@ -12363,21 +12315,13 @@ glabel sub_GAME_7F075A90
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F075B08(void) {
 
+void REMOVED_sub_GAME_7F075B08(s32 param_1,s32 param_2,s32 param_3,s32 param_4)
+{
+  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F075B08
-/* 0AA638 7F075B08 AFA40000 */  sw    $a0, ($sp)
-/* 0AA63C 7F075B0C AFA50004 */  sw    $a1, 4($sp)
-/* 0AA640 7F075B10 AFA60008 */  sw    $a2, 8($sp)
-/* 0AA644 7F075B14 03E00008 */  jr    $ra
-/* 0AA648 7F075B18 AFA7000C */   sw    $a3, 0xc($sp)
-)
-#endif
+
+
 
 
 
@@ -12564,35 +12508,11 @@ def_7F075B60:
 
 
 
-#ifdef NONMATCHING
-void set_objuse_flag_compute_grp_nums_set_obj_loaded(void *arg0, void *arg6) {
-    // Node 0
-    arg0->unk1C = 1;
-    arg6->unk14 = set_microcode_entry_numbers(*arg0, arg0);
-    return;
-    // (possible return value: set_microcode_entry_numbers(*arg0, arg0))
+void set_objuse_flag_compute_grp_nums_set_obj_loaded(struct ModelFileHeader *objheader)
+{
+    objheader->isLoaded = 1;
+    objheader->numRecords = set_microcode_entry_numbers(objheader->RootNode);
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel set_objuse_flag_compute_grp_nums_set_obj_loaded
-/* 0AA824 7F075CF4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0AA828 7F075CF8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0AA82C 7F075CFC 240E0001 */  li    $t6, 1
-/* 0AA830 7F075D00 00802825 */  move  $a1, $a0
-/* 0AA834 7F075D04 AC8E001C */  sw    $t6, 0x1c($a0)
-/* 0AA838 7F075D08 8C840000 */  lw    $a0, ($a0)
-/* 0AA83C 7F075D0C 0FC1D6C7 */  jal   set_microcode_entry_numbers
-/* 0AA840 7F075D10 AFA50018 */   sw    $a1, 0x18($sp)
-/* 0AA844 7F075D14 8FA50018 */  lw    $a1, 0x18($sp)
-/* 0AA848 7F075D18 A4A20014 */  sh    $v0, 0x14($a1)
-/* 0AA84C 7F075D1C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0AA850 7F075D20 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0AA854 7F075D24 03E00008 */  jr    $ra
-/* 0AA858 7F075D28 00000000 */   nop   
-)
-#endif
 
 
 
@@ -12805,19 +12725,16 @@ def_7F075D80:
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F075F68(void *arg0, void *arg1, ?32 arg2) {
-    // Node 0
-    arg0->unk8 = arg1;
-    arg0->unk10 = arg2;
-    arg0->unk2 = (u16)-1;
-    arg0->unk18 = 0;
-    arg0->unk1C = 0;
-    arg0->unk14 = 1.0f;
-    unknown_object_microcode_handler(*arg1);
-    return;
-    // (possible return value: unknown_object_microcode_handler(*arg1))
+void sub_GAME_7F075F68(struct Model *objinst,struct ModelFileHeader *header,u32 *data)
+{
+  objinst->obj = header;
+  objinst->data = data;
+  *&objinst->field_0x2 = 0xffff;
+  objinst->attachedto = NULL;
+  objinst->field_0x1c = NULL;
+  objinst->scale = 1.0;
+  unknown_object_microcode_handler(objinst,header->RootNode);
 }
-
 #else
 GLOBAL_ASM(
 .text
@@ -12918,9 +12835,35 @@ glabel sub_GAME_7F075FAC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F076030(void) {
+void sub_GAME_7F076030(Model *model, ModelFileHeader *header1, ModelNode *node, ModelFileHeader *header2)
+{
+    ModelNode *temp_v1;
+    ModelNode *temp_v1_2;
+    void *temp_v0;
+    ModelNode *phi_v1;
+    ModelNode *phi_a0;
 
+    temp_v0 = extract_id_from_object_structure_microcode(model, node);
+    temp_v0->unk0 = header2;
+    temp_v0->unk4 = (s32) (model->unk10 + (header1->numRecords * 4));
+    temp_v1 = header2->RootNode;
+    node->Child = temp_v1;
+    phi_v1 = temp_v1;
+    phi_a0 = temp_v1;
+    if (temp_v1 != 0)
+    {
+        do
+        {
+            phi_v1->Parent = node;
+            temp_v1_2 = phi_v1->Next;
+            phi_v1 = temp_v1_2;
+        } while (temp_v1_2 != 0);
+        phi_a0 = node->Child;
+    }
+    header1->numRecords += set_microcode_entry_numbers(phi_a0);
 }
+
+
 #else
 GLOBAL_ASM(
 .text
@@ -13324,9 +13267,26 @@ glabel sub_GAME_7F0762E0
 
 
 #ifdef NONMATCHING
-void load_object_fill_header(void) {
+void load_object_fill_header(struct ModelFileHeader *objheader, s8 *name, s32 targetloc, s32 sizeleft, s32 buffer)
+{
 
+    struct ModelNode **phi_v0;
+
+    if (targetloc != 0)
+    {
+        phi_v0 = _load_resource_named_to_buffer(name, 0, (s32 *) targetloc, sizeleft);
+    }
+    else
+    {
+        phi_v0 = _load_resource_named_to_membank(name, 0, 0x100, 4U);
+    }
+    objheader->Switches = phi_v0;
+    objheader->Textures = &phi_v0[objheader->numSwitches];
+    objheader->RootNode = objheader->Textures + (objheader->numtextures * 0xC);
+    sub_GAME_7F075A90(objheader, 0x5000000, phi_v0);
+    sub_GAME_7F0762E0(objheader, (u8 *) name, targetloc, (u32 *) buffer);
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -13382,57 +13342,19 @@ glabel load_object_fill_header
 
 
 
-#ifdef NONMATCHING
-void load_object_into_memory(void) {
-    // Node 0
-    load_object_fill_header(0, 0, 0);
-    return;
-    // (possible return value: load_object_fill_header(0, 0, 0))
+void load_object_into_memory(struct ModelFileHeader *header,char *name)
+{
+   load_object_fill_header(header,name,0,0,0);
+   return;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel load_object_into_memory
-/* 0AB07C 7F07654C 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0AB080 7F076550 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0AB084 7F076554 AFA00010 */  sw    $zero, 0x10($sp)
-/* 0AB088 7F076558 00003025 */  move  $a2, $zero
-/* 0AB08C 7F07655C 0FC1D929 */  jal   load_object_fill_header
-/* 0AB090 7F076560 00003825 */   move  $a3, $zero
-/* 0AB094 7F076564 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0AB098 7F076568 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0AB09C 7F07656C 03E00008 */  jr    $ra
-/* 0AB0A0 7F076570 00000000 */   nop   
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void load_object_into_memory_unused_maybe(void) {
-    // Node 0
-    load_object_fill_header(0);
-    return;
-    // (possible return value: load_object_fill_header(0))
+void load_object_into_memory_unused_maybe(struct ModelFileHeader *header,int *recallstring,int *targetloc,int sizeleft)
+{
+   load_object_fill_header(header,recallstring,targetloc,sizeleft,0);
+   return;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel load_object_into_memory_unused_maybe
-/* 0AB0A4 7F076574 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0AB0A8 7F076578 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0AB0AC 7F07657C 0FC1D929 */  jal   load_object_fill_header
-/* 0AB0B0 7F076580 AFA00010 */   sw    $zero, 0x10($sp)
-/* 0AB0B4 7F076584 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0AB0B8 7F076588 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0AB0BC 7F07658C 03E00008 */  jr    $ra
-/* 0AB0C0 7F076590 00000000 */   nop   
-)
-#endif
 
 
 

@@ -6296,7 +6296,7 @@ glabel sub_GAME_7F027DB0
 /* 05C94C 7F027E1C 00008025 */   move  $s0, $zero
 /* 05C950 7F027E20 27B10048 */  addiu $s1, $sp, 0x48
 .L7F027E24:
-/* 05C954 7F027E24 0FC2D794 */  jal   sub_GAME_7F0B5E50
+/* 05C954 7F027E24 0FC2D794 */  jal   getROOMID_Bitflags
 /* 05C958 7F027E28 8E240000 */   lw    $a0, ($s1)
 /* 05C95C 7F027E2C 10400003 */  beqz  $v0, .L7F027E3C
 /* 05C960 7F027E30 26100001 */   addiu $s0, $s0, 1
@@ -21427,7 +21427,7 @@ glabel check_if_room_for_preset_loaded
 /* 067A98 7F032F68 00000000 */   nop   
 /* 067A9C 7F032F6C 0FC2CBF6 */  jal   getTileRoom
 /* 067AA0 7F032F70 00000000 */   nop   
-/* 067AA4 7F032F74 0FC2D794 */  jal   sub_GAME_7F0B5E50
+/* 067AA4 7F032F74 0FC2D794 */  jal   getROOMID_Bitflags
 /* 067AA8 7F032F78 00402025 */   move  $a0, $v0
 /* 067AAC 7F032F7C 10000002 */  b     .L7F032F88
 /* 067AB0 7F032F80 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -23075,7 +23075,7 @@ glabel sub_GAME_7F033EAC
 /* 0689F0 7F033EC0 AFAE002C */  sw    $t6, 0x2c($sp)
 /* 0689F4 7F033EC4 0FC2CBF6 */  jal   getTileRoom
 /* 0689F8 7F033EC8 00A02025 */   move  $a0, $a1
-/* 0689FC 7F033ECC 0FC2D794 */  jal   sub_GAME_7F0B5E50
+/* 0689FC 7F033ECC 0FC2D794 */  jal   getROOMID_Bitflags
 /* 068A00 7F033ED0 00402025 */   move  $a0, $v0
 /* 068A04 7F033ED4 10400017 */  beqz  $v0, .L7F033F34
 /* 068A08 7F033ED8 8FA40030 */   lw    $a0, 0x30($sp)

@@ -29,6 +29,17 @@ struct coord2d {
     };
 };
 
+struct bbox2d
+{
+    union {
+        struct {
+            struct coord2d min;
+            struct coord2d max;
+        };
+        f32 f[2][2];
+    };
+};
+
 // Same hacky struct here for rgba groups
 struct rgba_u8 {
     union {
