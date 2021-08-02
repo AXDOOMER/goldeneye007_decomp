@@ -1,13 +1,13 @@
 #include "ultra64.h"
 #include "game/unk_093880.h"
-
+#include "game/bg.h"
 // bss
 char dword_CODE_bss_80083320[0x130];
 char dword_CODE_bss_80083450[0x4B0];
 char dword_CODE_bss_80083900[0x4B0];
 char dword_CODE_bss_80083DB0[0x4B00];
 
-
+extern bg_room_data * ptr_bgdata_room_fileposition_list;
 
 #ifdef NONMATCHING
 void sub_GAME_7F0BC530(void) {
@@ -477,24 +477,14 @@ glabel sub_GAME_7F0BC9C4
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0BCA14(void) {
 
+int getRoomPPointTableBinForIndex(int index)
+
+{
+    return &ptr_bgdata_room_fileposition_list[index].pPointTableBin;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BCA14
-/* 0F1544 7F0BCA14 3C0F8008 */  lui   $t7, %hi(ptr_bgdata_room_fileposition_list) 
-/* 0F1548 7F0BCA18 8DEFFF8C */  lw    $t7, %lo(ptr_bgdata_room_fileposition_list)($t7)
-/* 0F154C 7F0BCA1C 00047080 */  sll   $t6, $a0, 2
-/* 0F1550 7F0BCA20 01C47023 */  subu  $t6, $t6, $a0
-/* 0F1554 7F0BCA24 000E70C0 */  sll   $t6, $t6, 3
-/* 0F1558 7F0BCA28 01CF1021 */  addu  $v0, $t6, $t7
-/* 0F155C 7F0BCA2C 03E00008 */  jr    $ra
-/* 0F1560 7F0BCA30 2442000C */   addiu $v0, $v0, 0xc
-)
-#endif
+
+
 
 
 

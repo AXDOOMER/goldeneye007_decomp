@@ -2672,7 +2672,7 @@ glabel sub_GAME_7F09D5A0
 /* 0D2100 7F09D5D0 8C950004 */  lw    $s5, 4($a0)
 /* 0D2104 7F09D5D4 00C09025 */  move  $s2, $a2
 /* 0D2108 7F09D5D8 00A0A025 */  move  $s4, $a1
-/* 0D210C 7F09D5DC 0FC2F285 */  jal   sub_GAME_7F0BCA14
+/* 0D210C 7F09D5DC 0FC2F285 */  jal   getRoomPPointTableBinForIndex
 /* 0D2110 7F09D5E0 02202025 */   move  $a0, $s1
 /* 0D2114 7F09D5E4 16400003 */  bnez  $s2, .L7F09D5F4
 /* 0D2118 7F09D5E8 0040B025 */   move  $s6, $v0
@@ -4561,7 +4561,7 @@ glabel sub_GAME_7F09F03C
 /* 0D3B98 7F09F068 8C940004 */  lw    $s4, 4($a0)
 /* 0D3B9C 7F09F06C 00A09025 */  move  $s2, $a1
 /* 0D3BA0 7F09F070 00C09825 */  move  $s3, $a2
-/* 0D3BA4 7F09F074 0FC2F285 */  jal   sub_GAME_7F0BCA14
+/* 0D3BA4 7F09F074 0FC2F285 */  jal   getRoomPPointTableBinForIndex
 /* 0D3BA8 7F09F078 02202025 */   move  $a0, $s1
 /* 0D3BAC 7F09F07C 16600003 */  bnez  $s3, .L7F09F08C
 /* 0D3BB0 7F09F080 0040A825 */   move  $s5, $v0
@@ -5892,7 +5892,7 @@ glabel sub_GAME_7F0A027C
 /* 0D4E54 7F0A0324 240900FF */  li    $t1, 255
 /* 0D4E58 7F0A0328 01285023 */  subu  $t2, $t1, $t0
 /* 0D4E5C 7F0A032C A3AA004B */  sb    $t2, 0x4b($sp)
-/* 0D4E60 7F0A0330 0FC2F285 */  jal   sub_GAME_7F0BCA14
+/* 0D4E60 7F0A0330 0FC2F285 */  jal   getRoomPPointTableBinForIndex
 /* 0D4E64 7F0A0334 87A40072 */   lh    $a0, 0x72($sp)
 /* 0D4E68 7F0A0338 0FC26919 */  jal   getPlayerCount
 /* 0D4E6C 7F0A033C 00408025 */   move  $s0, $v0
@@ -7043,7 +7043,7 @@ glabel sub_GAME_7F0A108C
 /* 0D5E64 7F0A1334 1000001E */  b     .L7F0A13B0
 /* 0D5E68 7F0A1338 A20D0002 */   sb    $t5, 2($s0)
 .L7F0A133C:
-/* 0D5E6C 7F0A133C 0FC2F285 */  jal   sub_GAME_7F0BCA14
+/* 0D5E6C 7F0A133C 0FC2F285 */  jal   getRoomPPointTableBinForIndex
 /* 0D5E70 7F0A1340 87A400FE */   lh    $a0, 0xfe($sp)
 /* 0D5E74 7F0A1344 0FC2D20F */  jal   get_room_data_float1
 /* 0D5E78 7F0A1348 00408025 */   move  $s0, $v0

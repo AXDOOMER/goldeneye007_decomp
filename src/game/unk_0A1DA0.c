@@ -2606,7 +2606,7 @@ glabel sub_GAME_7F0A3F04
 /* 0D8AC0 7F0A3F90 AFAB00A0 */   sw    $t3, 0xa0($sp)
 /* 0D8AC4 7F0A3F94 86040006 */  lh    $a0, 6($s0)
 /* 0D8AC8 7F0A3F98 00408825 */  move  $s1, $v0
-/* 0D8ACC 7F0A3F9C 0FC2F285 */  jal   sub_GAME_7F0BCA14
+/* 0D8ACC 7F0A3F9C 0FC2F285 */  jal   getRoomPPointTableBinForIndex
 /* 0D8AD0 7F0A3FA0 AFA40058 */   sw    $a0, 0x58($sp)
 /* 0D8AD4 7F0A3FA4 920C0028 */  lbu   $t4, 0x28($s0)
 /* 0D8AD8 7F0A3FA8 8FA300A4 */  lw    $v1, 0xa4($sp)
