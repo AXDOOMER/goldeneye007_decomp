@@ -77,7 +77,7 @@ SECTIONS
       build/j/src/motor.o (.text);
       build/j/src/rmon.o (.text);
 
-      /*build/u/src/libultra/osPiRawStartDma.o (.text);*/
+      /*build/j/src/libultra/osPiRawStartDma.o (.text);*/
       build/j/src/libultra/pirawdma.o (.text);
       build/j/src/libultra/pigetstat.o (.text);
       build/j/src/libultra/initialize.o (.text);
@@ -249,7 +249,7 @@ SECTIONS
       build/j/src/libultra/vimodentsclan1.o (.text);
       build/j/src/libultra/vimodepallan1.o (.text);
       build/j/src/libultra/ultra80069080.o (.text); /*edited*/
-      /*build/u/src/libultra/libultra.a:libultra.o (.text);*/
+      /*build/j/src/libultra/libultra.a:libultra.o (.text);*/
    }
    _codeSegmentEnd = ADDR(.code) + SIZEOF(.code);
    _codeSegmentRomEnd = _codeSegmentRomStart + SIZEOF(.code);
@@ -418,21 +418,38 @@ SECTIONS
    _romfiles_117880SegmentRomStart = _gameSegmentRomEnd;
    .romfiles_117880 _romfiles_117880SegmentRomStart : AT(_romfiles_117880SegmentRomStart) {
       build/j/assets/romfiles.o (.romfiles);
-      build/j/assets/GlobalImageTable.o (.data);
-      build/j/assets/romfiles2.o (.romfiles);
-      build/j/assets/ramrom/ramrom.o (.ramrom);
-      build/j/assets/font/font.o (.font);
-      build/j/assets/music/music.o (.music);
-      build/j/assets/music/music.o (.musiccompressed);
    }
    _romfiles_117880SegmentEnd = ADDR(.romfiles_117880) + SIZEOF(.romfiles_117880);
    _romfiles_117880SegmentRomEnd = _romfiles_117880SegmentRomStart + SIZEOF(.romfiles_117880);
 
 
 
+   _romfiles_29d160SegmentStart = ADDR(.romfiles_29d160);
+   _romfiles_29d160SegmentRomStart = _romfiles_117880SegmentRomEnd;
+   .romfiles_29d160 _romfiles_29d160SegmentRomStart : AT(_romfiles_29d160SegmentRomStart) {
+      build/j/assets/GlobalImageTable.o (.data);
+   }
+   _romfiles_29d160SegmentEnd = ADDR(.romfiles_29d160) + SIZEOF(.romfiles_29d160);
+   _romfiles_29d160SegmentRomEnd = _romfiles_29d160SegmentRomStart + SIZEOF(.romfiles_29d160);
 
+
+
+   _romfiles_29e560SegmentStart = ADDR(.romfiles_29e560);
+   _romfiles_29e560SegmentRomStart = _romfiles_29d160SegmentRomEnd;
+   .romfiles_29e560 _romfiles_29e560SegmentRomStart : AT(_romfiles_29e560SegmentRomStart) {
+      build/j/assets/romfiles2.o (.romfiles);
+      build/j/assets/ramrom/ramrom.o (.ramrom);
+      build/j/assets/font/font.o (.font);
+      build/j/assets/music/music.o (.music);
+      build/j/assets/music/music.o (.musiccompressed);
+   }
+   _romfiles_29e560SegmentEnd = ADDR(.romfiles_29e560) + SIZEOF(.romfiles_29e560);
+   _romfiles_29e560SegmentRomEnd = _romfiles_29e560SegmentRomStart + SIZEOF(.romfiles_29e560);
+
+
+   
    _obsegSegmentStart = ADDR(.obseg);
-   _obsegSegmentRomStart = _romfiles_117880SegmentRomEnd;
+   _obsegSegmentRomStart = _romfiles_29e560SegmentRomEnd;
    .obseg _obsegSegmentRomStart : AT(_obsegSegmentRomStart) {
       build/j/assets/obseg/ob_seg.o (.ob_seg);
    }
@@ -3195,7 +3212,7 @@ SECTIONS
       build/j/src/motor.o (.data);
       build/j/src/rmon.o (.data);
 
-      /*build/u/src/libultra/osPiRawStartDma.o (.data);*/
+      /*build/j/src/libultra/osPiRawStartDma.o (.data);*/
       build/j/src/libultra/pirawdma.o (.data);
       build/j/src/libultra/pigetstat.o (.data);
       build/j/src/libultra/initialize.o (.data);
@@ -3367,7 +3384,7 @@ SECTIONS
       build/j/src/libultra/vimodentsclan1.o (.data);
       build/j/src/libultra/vimodepallan1.o (.data);
       build/j/src/libultra/ultra80069080.o (.data); /*edited*/
-      /*build/u/src/libultra/libultra.a:libultra.o (.data);*/
+      /*build/j/src/libultra/libultra.a:libultra.o (.data);*/
 
 
       build/j/src/aspboot.o (.rodata);
@@ -3405,7 +3422,7 @@ SECTIONS
       build/j/src/rmon.o (.rodata);
 
 
-      /*build/u/src/libultra/osPiRawStartDma.o (.rodata);*/
+      /*build/j/src/libultra/osPiRawStartDma.o (.rodata);*/
       build/j/src/libultra/pirawdma.o (.rodata);
       build/j/src/libultra/pigetstat.o (.rodata);
       build/j/src/libultra/initialize.o (.rodata);
@@ -3577,7 +3594,7 @@ SECTIONS
       build/j/src/libultra/vimodentsclan1.o (.rodata);
       build/j/src/libultra/vimodepallan1.o (.rodata);
       build/j/src/libultra/ultra80069080.o (.rodata); /*edited*/
-      /*build/u/src/libultra/libultra.a:libultra.o (.rodata);*/
+      /*build/j/src/libultra/libultra.a:libultra.o (.rodata);*/
 
       build/j/src/game/initgamedata.o (.data);
       build/j/src/game/initweaponanigroups.o (.data);
@@ -3872,7 +3889,7 @@ SECTIONS
       build/j/src/motor.o (.bss);
       build/j/src/rmon.o (.bss);
 
-      /*build/u/src/libultra/osPiRawStartDma.o (.bss);*/
+      /*build/j/src/libultra/osPiRawStartDma.o (.bss);*/
       build/j/src/libultra/pirawdma.o (.bss);
       build/j/src/libultra/pigetstat.o (.bss);
       build/j/src/libultra/initialize.o (.bss);
@@ -4044,7 +4061,7 @@ SECTIONS
       build/j/src/libultra/vimodentsclan1.o (.bss);
       build/j/src/libultra/vimodepallan1.o (.bss);
       build/j/src/libultra/ultra80069080.o (.bss); /*edited*/
-      /*build/u/src/libultra/libultra.a:libultra.o (.bss);*/
+      /*build/j/src/libultra/libultra.a:libultra.o (.bss);*/
 
       build/j/src/game/initgamedata.o (.bss);
       build/j/src/game/initweaponanigroups.o (.bss);

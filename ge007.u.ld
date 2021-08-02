@@ -412,26 +412,42 @@ SECTIONS
    _gameSegmentRomEnd = _gameSegmentRomStart + SIZEOF(.game);
 
 
-
-
    _romfiles_117880SegmentStart = ADDR(.romfiles_117880);
    _romfiles_117880SegmentRomStart = _gameSegmentRomEnd;
    .romfiles_117880 _romfiles_117880SegmentRomStart : AT(_romfiles_117880SegmentRomStart) {
       build/u/assets/romfiles.o (.romfiles);
-      build/u/assets/GlobalImageTable.o (.data);
-      build/u/assets/romfiles2.o (.romfiles);
-      build/u/assets/ramrom/ramrom.o (.ramrom);
-      build/u/assets/font/font.o (.font);
-      build/u/assets/music/music.o (.music);
-      build/u/assets/music/music.o (.musiccompressed);
    }
    _romfiles_117880SegmentEnd = ADDR(.romfiles_117880) + SIZEOF(.romfiles_117880);
    _romfiles_117880SegmentRomEnd = _romfiles_117880SegmentRomStart + SIZEOF(.romfiles_117880);
 
 
 
+   _romfiles_29d160SegmentStart = ADDR(.romfiles_29d160);
+   _romfiles_29d160SegmentRomStart = _romfiles_117880SegmentRomEnd;
+   .romfiles_29d160 _romfiles_29d160SegmentRomStart : AT(_romfiles_29d160SegmentRomStart) {
+      build/u/assets/GlobalImageTable.o (.data);
+   }
+   _romfiles_29d160SegmentEnd = ADDR(.romfiles_29d160) + SIZEOF(.romfiles_29d160);
+   _romfiles_29d160SegmentRomEnd = _romfiles_29d160SegmentRomStart + SIZEOF(.romfiles_29d160);
+
+
+
+   _romfiles_29e560SegmentStart = ADDR(.romfiles_29e560);
+   _romfiles_29e560SegmentRomStart = _romfiles_29d160SegmentRomEnd;
+   .romfiles_29e560 _romfiles_29e560SegmentRomStart : AT(_romfiles_29e560SegmentRomStart) {
+      build/u/assets/romfiles2.o (.romfiles);
+      build/u/assets/ramrom/ramrom.o (.ramrom);
+      build/u/assets/font/font.o (.font);
+      build/u/assets/music/music.o (.music);
+      build/u/assets/music/music.o (.musiccompressed);
+   }
+   _romfiles_29e560SegmentEnd = ADDR(.romfiles_29e560) + SIZEOF(.romfiles_29e560);
+   _romfiles_29e560SegmentRomEnd = _romfiles_29e560SegmentRomStart + SIZEOF(.romfiles_29e560);
+
+
+   
    _obsegSegmentStart = ADDR(.obseg);
-   _obsegSegmentRomStart = _romfiles_117880SegmentRomEnd;
+   _obsegSegmentRomStart = _romfiles_29e560SegmentRomEnd;
    .obseg _obsegSegmentRomStart : AT(_obsegSegmentRomStart) {
       build/u/assets/obseg/ob_seg.o (.ob_seg);
    }

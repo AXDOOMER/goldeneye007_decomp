@@ -422,26 +422,43 @@ SECTIONS
    _romfiles_117880SegmentRomStart = _gameSegmentRomEnd;
    .romfiles_117880 _romfiles_117880SegmentRomStart : AT(_romfiles_117880SegmentRomStart) {
       build/e/assets/romfiles.o (.romfiles);
-      build/e/assets/GlobalImageTable.o (.data);
-      build/e/assets/romfiles2.o (.romfiles);
-      build/e/assets/ramrom/ramrom.o (.ramrom);
-      build/e/assets/font/font.o (.font);
-      build/e/assets/music/music.o (.music);
-      build/e/assets/music/music.o (.musiccompressed);
    }
    _romfiles_117880SegmentEnd = ADDR(.romfiles_117880) + SIZEOF(.romfiles_117880);
    _romfiles_117880SegmentRomEnd = _romfiles_117880SegmentRomStart + SIZEOF(.romfiles_117880);
 
 
 
+   _romfiles_29d160SegmentStart = ADDR(.romfiles_29d160);
+   _romfiles_29d160SegmentRomStart = _romfiles_117880SegmentRomEnd;
+   .romfiles_29d160 _romfiles_29d160SegmentRomStart : AT(_romfiles_29d160SegmentRomStart) {
+      build/e/assets/GlobalImageTable.o (.data);
+   }
+   _romfiles_29d160SegmentEnd = ADDR(.romfiles_29d160) + SIZEOF(.romfiles_29d160);
+   _romfiles_29d160SegmentRomEnd = _romfiles_29d160SegmentRomStart + SIZEOF(.romfiles_29d160);
+
+
+
+   _romfiles_29e560SegmentStart = ADDR(.romfiles_29e560);
+   _romfiles_29e560SegmentRomStart = _romfiles_29d160SegmentRomEnd;
+   .romfiles_29e560 _romfiles_29e560SegmentRomStart : AT(_romfiles_29e560SegmentRomStart) {
+      build/e/assets/romfiles2.o (.romfiles);
+      build/e/assets/ramrom/ramrom.o (.ramrom);
+      build/e/assets/font/font.o (.font);
+      build/e/assets/music/music.o (.music);
+      build/e/assets/music/music.o (.musiccompressed);
+   }
+   _romfiles_29e560SegmentEnd = ADDR(.romfiles_29e560) + SIZEOF(.romfiles_29e560);
+   _romfiles_29e560SegmentRomEnd = _romfiles_29e560SegmentRomStart + SIZEOF(.romfiles_29e560);
+
+
+   
    _obsegSegmentStart = ADDR(.obseg);
-   _obsegSegmentRomStart = _romfiles_117880SegmentRomEnd;
+   _obsegSegmentRomStart = _romfiles_29e560SegmentRomEnd;
    .obseg _obsegSegmentRomStart : AT(_obsegSegmentRomStart) {
       build/e/assets/obseg/ob_seg.o (.ob_seg);
    }
    _obsegSegmentEnd = ADDR(.obseg) + SIZEOF(.obseg);
    _obsegSegmentRomEnd = _obsegSegmentRomStart + SIZEOF(.obseg);
-
 
 
 
