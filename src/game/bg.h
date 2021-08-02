@@ -67,11 +67,15 @@ typedef struct bg_portal_data_entry
 
 typedef struct bg_room_data
 {
-    struct coord3d pos;
     void* pPointTableBin;
     void* pPriMappingBin;
     void* pSecMappingBin;
+    struct coord3d pos;
 } bg_room_data;
+
+extern f32 room_data_float2;
+extern bg_room_data * ptr_bgdata_room_fileposition_list;
+
 
 void bgInitDebugNoticeList(void);
 

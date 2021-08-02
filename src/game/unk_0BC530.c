@@ -7,7 +7,7 @@ char dword_CODE_bss_80083450[0x4B0];
 char dword_CODE_bss_80083900[0x4B0];
 char dword_CODE_bss_80083DB0[0x4B00];
 
-extern bg_room_data * ptr_bgdata_room_fileposition_list;
+
 
 #ifdef NONMATCHING
 void sub_GAME_7F0BC530(void) {
@@ -478,53 +478,16 @@ glabel sub_GAME_7F0BC9C4
 
 
 
-int getRoomPPointTableBinForIndex(int index)
-
+s32 getRoomIndexPOS(s32 index)
 {
-    return &ptr_bgdata_room_fileposition_list[index].pPointTableBin;
+    return &ptr_bgdata_room_fileposition_list[index].pos;
 }
 
 
-
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0BCA34(void) {
-
+void sub_GAME_7F0BCA34(s32 index, struct coord3d *param_2)
+{
+    param_2->x = ptr_bgdata_room_fileposition_list[index].pos.x * room_data_float2;
+    param_2->y = ptr_bgdata_room_fileposition_list[index].pos.y * room_data_float2;
+    param_2->z = ptr_bgdata_room_fileposition_list[index].pos.z * room_data_float2;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BCA34
-/* 0F1564 7F0BCA34 3C038008 */  lui   $v1, %hi(ptr_bgdata_room_fileposition_list)
-/* 0F1568 7F0BCA38 2463FF8C */  addiu $v1, %lo(ptr_bgdata_room_fileposition_list) # addiu $v1, $v1, -0x74
-/* 0F156C 7F0BCA3C 8C6E0000 */  lw    $t6, ($v1)
-/* 0F1570 7F0BCA40 00041080 */  sll   $v0, $a0, 2
-/* 0F1574 7F0BCA44 00441023 */  subu  $v0, $v0, $a0
-/* 0F1578 7F0BCA48 3C068004 */  lui   $a2, %hi(room_data_float2)
-/* 0F157C 7F0BCA4C 000210C0 */  sll   $v0, $v0, 3
-/* 0F1580 7F0BCA50 24C613F8 */  addiu $a2, %lo(room_data_float2) # addiu $a2, $a2, 0x13f8
-/* 0F1584 7F0BCA54 01C27821 */  addu  $t7, $t6, $v0
-/* 0F1588 7F0BCA58 C5E4000C */  lwc1  $f4, 0xc($t7)
-/* 0F158C 7F0BCA5C C4C60000 */  lwc1  $f6, ($a2)
-/* 0F1590 7F0BCA60 46062202 */  mul.s $f8, $f4, $f6
-/* 0F1594 7F0BCA64 E4A80000 */  swc1  $f8, ($a1)
-/* 0F1598 7F0BCA68 8C780000 */  lw    $t8, ($v1)
-/* 0F159C 7F0BCA6C C4D00000 */  lwc1  $f16, ($a2)
-/* 0F15A0 7F0BCA70 0302C821 */  addu  $t9, $t8, $v0
-/* 0F15A4 7F0BCA74 C72A0010 */  lwc1  $f10, 0x10($t9)
-/* 0F15A8 7F0BCA78 46105482 */  mul.s $f18, $f10, $f16
-/* 0F15AC 7F0BCA7C E4B20004 */  swc1  $f18, 4($a1)
-/* 0F15B0 7F0BCA80 8C680000 */  lw    $t0, ($v1)
-/* 0F15B4 7F0BCA84 C4C60000 */  lwc1  $f6, ($a2)
-/* 0F15B8 7F0BCA88 01024821 */  addu  $t1, $t0, $v0
-/* 0F15BC 7F0BCA8C C5240014 */  lwc1  $f4, 0x14($t1)
-/* 0F15C0 7F0BCA90 46062202 */  mul.s $f8, $f4, $f6
-/* 0F15C4 7F0BCA94 03E00008 */  jr    $ra
-/* 0F15C8 7F0BCA98 E4A80008 */   swc1  $f8, 8($a1)
-)
-#endif
-
 
