@@ -4,7 +4,7 @@
 // bss
 char dword_CODE_bss_80083320[0x130];
 char dword_CODE_bss_80083450[0x4B0];
-char dword_CODE_bss_80083900[0x4B0];
+u32 dword_CODE_bss_80083900[300];
 char dword_CODE_bss_80083DB0[0x4B00];
 
 
@@ -333,8 +333,36 @@ glabel sub_GAME_7F0BC7D4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BC85C(void) {
+s32 sub_GAME_7F0BC85C(s32 index)
 
+{
+  s32 iVar2;
+  bg_room_data *room;
+  float mtx [4] [4];
+  
+  iVar2 = array_room_info[index].field_36;
+  if ((iVar2 == -1) || (pPlayer->field_108C != dword_CODE_bss_80083900[iVar2])) {
+    if (iVar2 != -1) {
+      sub_GAME_7F0BC660(iVar2,index);
+    }
+    iVar2 = sub_GAME_7F0BC6F0();
+    sub_GAME_7F0BC634(iVar2,index);
+    dword_CODE_bss_80083320[iVar2] = 0;
+    dword_CODE_bss_80083900[iVar2] = pPlayer->field_108C;
+    matrix_4x4_set_identity(mtx);
+    mtx[0][0] = room_data_float2;
+    mtx[1][1] = room_data_float2;
+    mtx[2][2] = room_data_float2;
+    room = &ptr_bgdata_room_fileposition_list[index];
+    mtx[3][0] = (room->pos).x * room_data_float2 - pPlayer->current_model_pos.x;
+    mtx[3][1] = (room->pos).y * room_data_float2 - pPlayer->current_model_pos.y;
+    mtx[3][2] = (room->pos).z * room_data_float2 - pPlayer->current_model_pos.z;
+    sub_GAME_7F058C9C(mtx,dword_CODE_bss_80083DB0[iVar2]);
+  }
+  else {
+    dword_CODE_bss_80083320[iVar2] = 0;
+  }
+  return iVar2;
 }
 #else
 GLOBAL_ASM(

@@ -316,7 +316,7 @@ struct player
   f32 ypos3;
   f32 zpos3;
   s32 room_pointer;
-  vec3 current_model_pos;
+  struct coord3d current_model_pos;
   vec3 previous_model_pos;
   f32 current_room_xpos;
   f32 current_room_ypos;

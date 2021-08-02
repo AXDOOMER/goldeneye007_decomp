@@ -2070,9 +2070,9 @@ void init_player_BONDdata(void)
         pPlayer->field_430 = get_player_control_style(get_cur_playernum());
         cur_player_set_control_type(get_player_control_style(get_cur_playernum()));
     }
-    pPlayer->current_model_pos[0] = 0.0f;
-    pPlayer->current_model_pos[1] = 0.0f;
-    pPlayer->current_model_pos[2] = 0.0f;
+    pPlayer->current_model_pos.x = 0.0f;
+    pPlayer->current_model_pos.y = 0.0f;
+    pPlayer->current_model_pos.z = 0.0f;
     pPlayer->previous_model_pos[0] = 0.0f;
     pPlayer->previous_model_pos[1] = 0.0f;
     pPlayer->previous_model_pos[2] = 0.0f;
@@ -31114,9 +31114,9 @@ glabel sub_GAME_7F0875E4
 #endif
 
 void store_BONDdata_curpos_to_previous(void) {
-    pPlayer->previous_model_pos[0] = pPlayer->current_model_pos[0];
-    pPlayer->previous_model_pos[1] = pPlayer->current_model_pos[1];
-    pPlayer->previous_model_pos[2] = pPlayer->current_model_pos[2];
+    pPlayer->previous_model_pos[0] = pPlayer->current_model_pos.x;
+    pPlayer->previous_model_pos[1] = pPlayer->current_model_pos.y;
+    pPlayer->previous_model_pos[2] = pPlayer->current_model_pos.z;
     matrix_4x4_rotate_vector_in_place(currentPlayerGetMatrix10CC(), pPlayer->previous_model_pos);
 }
 
