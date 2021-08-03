@@ -1647,6 +1647,11 @@ typedef enum SFX_IDS {
     BIG_CLANK_SFX
 } SFX_IDS;
 
+//macros for FILERECORDS
+#define STR(n) #n
+#define FILERECORD(NAME, SCALE) {& ## NAME ## _header, STR(P ## NAME ##Z), SCALE},
+
+
 // character flags
 #define CHRHIDDEN_DROP_HELD_ITEMS       0x0001 // drop held items/weapons
 #define CHRHIDDEN_0002                  0x0002 // unknown

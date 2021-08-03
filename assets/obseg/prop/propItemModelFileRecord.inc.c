@@ -1,344 +1,343 @@
 ItemModelFileRecord PitemZ_entries[] = {
     #include "assets/obseg/prop/alarm1/ItemFileRecord.inc.c"
-    //{&alarm1_header, "Palarm1Z", 0.1},
-    {&alarm2_header, "Palarm2Z", 0.1},
-    {&explosionbit_header, "PexplosionbitZ", 0.1},
-    {&ammo_crate1_header, "Pammo_crate1Z", 0.1},
-    {&ammo_crate2_header, "Pammo_crate2Z", 0.1},
-    {&ammo_crate3_header, "Pammo_crate3Z", 0.1},
-    {&ammo_crate4_header, "Pammo_crate4Z", 0.1},
-    {&ammo_crate5_header, "Pammo_crate5Z", 0.1},
-    {&bin1_header, "Pbin1Z", 0.1},
-    {&blotter1_header, "Pblotter1Z", 0.1},
-    {&book1_header, "Pbook1Z", 0.1},
-    {&bookshelf1_header, "Pbookshelf1Z", 0.1},
-    {&bridge_console1a_header, "Pbridge_console1aZ", 0.1},
-    {&bridge_console1b_header, "Pbridge_console1bZ", 0.1},
-    {&bridge_console2a_header, "Pbridge_console2aZ", 0.1},
-    {&bridge_console2b_header, "Pbridge_console2bZ", 0.1},
-    {&bridge_console3a_header, "Pbridge_console3aZ", 0.1},
-    {&bridge_console3b_header, "Pbridge_console3bZ", 0.1},
-    {&card_box1_header, "Pcard_box1Z", 0.1},
-    {&card_box2_header, "Pcard_box2Z", 0.1},
-    {&card_box3_header, "Pcard_box3Z", 0.1},
-    {&card_box4_lg_header, "Pcard_box4_lgZ", 0.1},
-    {&card_box5_lg_header, "Pcard_box5_lgZ", 0.1},
-    {&card_box6_lg_header, "Pcard_box6_lgZ", 0.1},
-    {&cctv_header, "PcctvZ", 0.1},
-    {&console1_header, "Pconsole1Z", 0.1},
-    {&console2_header, "Pconsole2Z", 0.1},
-    {&console3_header, "Pconsole3Z", 0.1},
-    {&console_seva_header, "Pconsole_sevaZ", 0.1},
-    {&console_sevb_header, "Pconsole_sevbZ", 0.1},
-    {&console_sevc_header, "Pconsole_sevcZ", 0.1},
-    {&console_sevd_header, "Pconsole_sevdZ", 0.1},
-    {&console_sev2a_header, "Pconsole_sev2aZ", 0.1},
-    {&console_sev2b_header, "Pconsole_sev2bZ", 0.1},
-    {&console_sev2c_header, "Pconsole_sev2cZ", 0.1},
-    {&console_sev2d_header, "Pconsole_sev2dZ", 0.1},
-    {&console_sev_GEa_header, "Pconsole_sev_GEaZ", 0.1},
-    {&console_sev_GEb_header, "Pconsole_sev_GEbZ", 0.1},
-    {&desk1_header, "Pdesk1Z", 0.1},
-    {&desk2_header, "Pdesk2Z", 0.1},
-    {&desk_lamp2_header, "Pdesk_lamp2Z", 0.1},
-    {&disc_reader_header, "Pdisc_readerZ", 0.1},
-    {&disk_drive1_header, "Pdisk_drive1Z", 0.1},
-    {&filing_cabinet1_header, "Pfiling_cabinet1Z", 0.1},
-    {&jerry_can1_header, "Pjerry_can1Z", 0.1},
-    {&keyboard1_header, "Pkeyboard1Z", 0.1},
-    {&kit_units1_header, "Pkit_units1Z", 0.1},
-    {&letter_tray1_header, "Pletter_tray1Z", 0.1},
-    {&mainframe1_header, "Pmainframe1Z", 0.1},
-    {&mainframe2_header, "Pmainframe2Z", 0.1},
-    {&metal_chair1_header, "Pmetal_chair1Z", 0.1},
-    {&metal_crate1_header, "Pmetal_crate1Z", 0.1},
-    {&metal_crate2_header, "Pmetal_crate2Z", 0.1},
-    {&metal_crate3_header, "Pmetal_crate3Z", 0.1},
-    {&metal_crate4_header, "Pmetal_crate4Z", 0.1},
-    {&missile_rack_header, "Pmissile_rackZ", 0.1},
-    {&missile_rack2_header, "Pmissile_rack2Z", 0.1},
-    {&oil_drum1_header, "Poil_drum1Z", 0.1},
-    {&oil_drum2_header, "Poil_drum2Z", 0.1},
-    {&oil_drum3_header, "Poil_drum3Z", 0.1},
-    {&oil_drum5_header, "Poil_drum5Z", 0.1},
-    {&oil_drum6_header, "Poil_drum6Z", 0.1},
-    {&oil_drum7_header, "Poil_drum7Z", 0.1},
-    {&padlock_header, "PpadlockZ", 0.1},
-    {&phone1_header, "Pphone1Z", 0.1},
-    {&radio_unit1_header, "Pradio_unit1Z", 0.1},
-    {&radio_unit2_header, "Pradio_unit2Z", 0.1},
-    {&radio_unit3_header, "Pradio_unit3Z", 0.1},
-    {&radio_unit4_header, "Pradio_unit4Z", 0.1},
-    {&sat1_reflect_header, "Psat1_reflectZ", 0.1},
-    {&satdish_header, "PsatdishZ", 0.1},
-    {&satbox_header, "PsatboxZ", 0.1},
-    {&stool1_header, "Pstool1Z", 0.1},
-    {&swivel_chair1_header, "Pswivel_chair1Z", 0.1},
-    {&torpedo_rack_header, "Ptorpedo_rackZ", 0.1},
-    {&tv1_header, "Ptv1Z", 0.1},
-    {&tv_holder_header, "Ptv_holderZ", 0.1},
-    {&tvscreen_header, "PtvscreenZ", 0.1},
-    {&tv4screen_header, "Ptv4screenZ", 0.1},
-    {&wood_lg_crate1_header, "Pwood_lg_crate1Z", 0.1},
-    {&wood_lg_crate2_header, "Pwood_lg_crate2Z", 0.1},
-    {&wood_md_crate3_header, "Pwood_md_crate3Z", 0.1},
-    {&wood_sm_crate4_header, "Pwood_sm_crate4Z", 0.1},
-    {&wood_sm_crate5_header, "Pwood_sm_crate5Z", 0.1},
-    {&wood_sm_crate6_header, "Pwood_sm_crate6Z", 0.1},
-    {&wooden_table1_header, "Pwooden_table1Z", 0.1},
-    {&swipe_card2_header, "Pswipe_card2Z", 0.1},
-    {&borg_crate_header, "Pborg_crateZ", 0.1},
-    {&boxes4x4_header, "Pboxes4x4Z", 0.1},
-    {&boxes3x4_header, "Pboxes3x4Z", 0.1},
-    {&boxes2x4_header, "Pboxes2x4Z", 0.1},
-    {&sec_panel_header, "Psec_panelZ", 0.1},
-    {&ICBM_nose_header, "PICBM_noseZ", 0.1},
-    {&ICBM_header, "PICBMZ", 0.1},
-    {&tuning_console1_header, "Ptuning_console1Z", 0.1},
-    {&desk_arecibo1_header, "Pdesk_arecibo1Z", 0.1},
-    {&locker3_header, "Plocker3Z", 0.1},
-    {&locker4_header, "Plocker4Z", 0.1},
-    {&roofgun_header, "ProofgunZ", 0.1},
-    {&dest_engine_header, "Pdest_engineZ", 0.1},
-    {&dest_exocet_header, "Pdest_exocetZ", 0.1},
-    {&dest_gun_header, "Pdest_gunZ", 0.1},
-    {&dest_harpoon_header, "Pdest_harpoonZ", 0.1},
-    {&dest_seawolf_header, "Pdest_seawolfZ", 0.1},
-    {&window_header, "PwindowZ", 0.1},
-    {&window_lib_lg1_header, "Pwindow_lib_lg1Z", 0.1},
-    {&window_lib_sm1_header, "Pwindow_lib_sm1Z", 0.1},
-    {&window_cor11_header, "Pwindow_cor11Z", 0.1},
-    {&jungle3_tree_header, "Pjungle3_treeZ", 0.1},
-    {&palm_header, "PpalmZ", 0.1},
-    {&palmtree_header, "PpalmtreeZ", 0.1},
-    {&plant2b_header, "Pplant2bZ", 0.1},
-    {&labbench_header, "PlabbenchZ", 0.1},
-    {&gasbarrel_header, "PgasbarrelZ", 0.1},
-    {&gasbarrels_header, "PgasbarrelsZ", 0.1},
-    {&bodyarmour_header, "PbodyarmourZ", 0.1},
-    {&bodyarmourvest_header, "PbodyarmourvestZ", 0.1},
-    {&gastank_header, "PgastankZ", 0.1},
-    {&glassware1_header, "Pglassware1Z", 0.1},
-    {&hatchbolt_header, "PhatchboltZ", 0.1},
-    {&brakeunit_header, "PbrakeunitZ", 0.1},
-    {&ak47mag_header, "Pak47magZ", 0.1},
-    {&m16mag_header, "Pm16magZ", 0.1},
-    {&mp5kmag_header, "Pmp5kmagZ", 0.1},
-    {&skorpionmag_header, "PskorpionmagZ", 0.1},
-    {&spectremag_header, "PspectremagZ", 0.1},
-    {&uzimag_header, "PuzimagZ", 0.1},
-    {&silencer_header, "PsilencerZ", 0.1},
-    {&chrextinguisher_header, "PchrextinguisherZ", 0.1},
-    {&boxcartridges_header, "PboxcartridgesZ", 0.1},
-    {&fnp90mag_header, "Pfnp90magZ", 0.1},
-    {&goldenshells_header, "PgoldenshellsZ", 0.1},
-    {&magnumshells_header, "PmagnumshellsZ", 0.1},
-    {&wppkmag_header, "PwppkmagZ", 0.1},
-    {&tt33mag_header, "Ptt33magZ", 0.1},
-    {&sev_door_header, "Psev_doorZ", 1.0},
-    {&sev_door3_header, "Psev_door3Z", 1.0},
-    {&sev_door3_wind_header, "Psev_door3_windZ", 1.0},
-    {&sev_door4_wind_header, "Psev_door4_windZ", 1.0},
-    {&sev_trislide_header, "Psev_trislideZ", 1.0},
-    {&sev_door_v1_header, "Psev_door_v1Z", 1.0},
-    {&steel_door1_header, "Psteel_door1Z", 1.0},
-    {&steel_door2_header, "Psteel_door2Z", 1.0},
-    {&steel_door3_header, "Psteel_door3Z", 1.0},
-    {&silo_lift_door_header, "Psilo_lift_doorZ", 1.0},
-    {&steel_door2b_header, "Psteel_door2bZ", 1.0},
-    {&door_roller1_header, "Pdoor_roller1Z", 1.0},
-    {&door_roller2_header, "Pdoor_roller2Z", 1.0},
-    {&door_roller3_header, "Pdoor_roller3Z", 1.0},
-    {&door_roller4_header, "Pdoor_roller4Z", 1.0},
-    {&door_st_arec1_header, "Pdoor_st_arec1Z", 1.0},
-    {&door_st_arec2_header, "Pdoor_st_arec2Z", 1.0},
-    {&door_dest1_header, "Pdoor_dest1Z", 1.0},
-    {&door_dest2_header, "Pdoor_dest2Z", 1.0},
-    {&gas_plant_sw_do1_header, "Pgas_plant_sw_do1Z", 1.0},
-    {&gas_plant_sw2_do1_header, "Pgas_plant_sw2_do1Z", 1.0},
-    {&gas_plant_sw3_do1_header, "Pgas_plant_sw3_do1Z", 1.0},
-    {&gas_plant_sw4_do1_header, "Pgas_plant_sw4_do1Z", 1.0},
-    {&gas_plant_met1_do1_header, "Pgas_plant_met1_do1Z", 1.0},
-    {&gas_plant_wc_cub1_header, "Pgas_plant_wc_cub1Z", 1.0},
-    {&gasplant_clear_door_header, "Pgasplant_clear_doorZ", 1.0},
-    {&train_door_header, "Ptrain_doorZ", 1.0},
-    {&train_door2_header, "Ptrain_door2Z", 1.0},
-    {&train_door3_header, "Ptrain_door3Z", 1.0},
-    {&door_eyelid_header, "Pdoor_eyelidZ", 1.0},
-    {&door_iris_header, "Pdoor_irisZ", 1.0},
-    {&sevdoorwood_header, "PsevdoorwoodZ", 1.0},
-    {&sevdoorwind_header, "PsevdoorwindZ", 1.0},
-    {&sevdoornowind_header, "PsevdoornowindZ", 1.0},
-    {&sevdoormetslide_header, "PsevdoormetslideZ", 1.0},
-    {&cryptdoor1a_header, "Pcryptdoor1aZ", 1.0},
-    {&cryptdoor1b_header, "Pcryptdoor1bZ", 1.0},
-    {&cryptdoor2a_header, "Pcryptdoor2aZ", 1.0},
-    {&cryptdoor2b_header, "Pcryptdoor2bZ", 1.0},
-    {&cryptdoor3_header, "Pcryptdoor3Z", 1.0},
-    {&cryptdoor4_header, "Pcryptdoor4Z", 1.0},
-    {&vertdoor_header, "PvertdoorZ", 1.0},
-    {&hatchdoor_header, "PhatchdoorZ", 1.0},
-    {&damgatedoor_header, "PdamgatedoorZ", 1.0},
-    {&damtundoor_header, "PdamtundoorZ", 1.0},
-    {&damchaindoor_header, "PdamchaindoorZ", 1.0},
-    {&silotopdoor_header, "PsilotopdoorZ", 1.0},
-    {&doorprison1_header, "Pdoorprison1Z", 1.0},
-    {&doorstatgate_header, "PdoorstatgateZ", 1.0},
-    {&chrkalash_header, "PchrkalashZ", 0.1},
-    {&chrgrenadelaunch_header, "PchrgrenadelaunchZ", 0.1},
-    {&chrknife_header, "PchrknifeZ", 0.1},
-    {&chrlaser_header, "PchrlaserZ", 0.1},
-    {&chrm16_header, "Pchrm16Z", 0.1},
-    {&chrmp5k_header, "Pchrmp5kZ", 0.1},
-    {&chrruger_header, "PchrrugerZ", 0.1},
-    {&chrwppk_header, "PchrwppkZ", 0.1},
-    {&chrshotgun_header, "PchrshotgunZ", 0.1},
-    {&chrskorpion_header, "PchrskorpionZ", 0.1},
-    {&chrspectre_header, "PchrspectreZ", 0.1},
-    {&chruzi_header, "PchruziZ", 0.1},
-    {&chrgrenade_header, "PchrgrenadeZ", 0.1},
-    {&chrfnp90_header, "Pchrfnp90Z", 0.1},
-    {&chrbriefcase_header, "PchrbriefcaseZ", 0.1},
-    {&chrremotemine_header, "PchrremotemineZ", 0.1},
-    {&chrproximitymine_header, "PchrproximitymineZ", 0.1},
-    {&chrtimedmine_header, "PchrtimedmineZ", 0.1},
-    {&chrrocket_header, "PchrrocketZ", 0.1},
-    {&chrgrenaderound_header, "PchrgrenaderoundZ", 0.1},
-    {&chrwppksil_header, "PchrwppksilZ", 0.1},
-    {&chrtt33_header, "Pchrtt33Z", 0.1},
-    {&chrmp5ksil_header, "Pchrmp5ksilZ", 0.1},
-    {&chrautoshot_header, "PchrautoshotZ", 0.1},
-    {&chrgolden_header, "PchrgoldenZ", 0.1},
-    {&chrthrowknife_header, "PchrthrowknifeZ", 0.1},
-    {&chrsniperrifle_header, "PchrsniperrifleZ", 0.1},
-    {&chrrocketlaunch_header, "PchrrocketlaunchZ", 0.1},
-    {&hatfurry_header, "PhatfurryZ", 0.1},
-    {&hatfurrybrown_header, "PhatfurrybrownZ", 0.1},
-    {&hatfurryblack_header, "PhatfurryblackZ", 0.1},
-    {&hattbird_header, "PhattbirdZ", 0.1},
-    {&hattbirdbrown_header, "PhattbirdbrownZ", 0.1},
-    {&hathelmet_header, "PhathelmetZ", 0.1},
-    {&hathelmetgrey_header, "PhathelmetgreyZ", 0.1},
-    {&hatmoon_header, "PhatmoonZ", 0.1},
-    {&hatberet_header, "PhatberetZ", 0.1},
-    {&hatberetblue_header, "PhatberetblueZ", 0.1},
-    {&hatberetred_header, "PhatberetredZ", 0.1},
-    {&hatpeaked_header, "PhatpeakedZ", 0.1},
-    {&chrwristdart_header, "PchrwristdartZ", 0.1},
-    {&chrexplosivepen_header, "PchrexplosivepenZ", 0.1},
-    {&chrbombcase_header, "PchrbombcaseZ", 0.1},
-    {&chrflarepistol_header, "PchrflarepistolZ", 0.1},
-    {&chrpitongun_header, "PchrpitongunZ", 0.1},
-    {&chrfingergun_header, "PchrfingergunZ", 0.1},
-    {&chrsilverwppk_header, "PchrsilverwppkZ", 0.1},
-    {&chrgoldwppk_header, "PchrgoldwppkZ", 0.1},
-    {&chrdynamite_header, "PchrdynamiteZ", 0.1},
-    {&chrbungee_header, "PchrbungeeZ", 0.1},
-    {&chrdoordecoder_header, "PchrdoordecoderZ", 0.1},
-    {&chrbombdefuser_header, "PchrbombdefuserZ", 0.1},
-    {&chrbugdetector_header, "PchrbugdetectorZ", 0.1},
-    {&chrsafecrackercase_header, "PchrsafecrackercaseZ", 0.1},
-    {&chrcamera_header, "PchrcameraZ", 0.1},
-    {&chrlockexploder_header, "PchrlockexploderZ", 0.1},
-    {&chrdoorexploder_header, "PchrdoorexploderZ", 0.1},
-    {&chrkeyanalysercase_header, "PchrkeyanalysercaseZ", 0.1},
-    {&chrweaponcase_header, "PchrweaponcaseZ", 0.1},
-    {&chrkeyyale_header, "PchrkeyyaleZ", 0.1},
-    {&chrkeybolt_header, "PchrkeyboltZ", 0.1},
-    {&chrbug_header, "PchrbugZ", 0.1},
-    {&chrmicrocamera_header, "PchrmicrocameraZ", 0.1},
-    {&floppy_header, "PfloppyZ", 0.1},
-    {&chrgoldeneyekey_header, "PchrgoldeneyekeyZ", 0.1},
-    {&chrpolarizedglasses_header, "PchrpolarizedglassesZ", 0.1},
-    {&chrcreditcard_header, "PchrcreditcardZ", 0.1},
-    {&chrdarkglasses_header, "PchrdarkglassesZ", 0.1},
-    {&chrgaskeyring_header, "PchrgaskeyringZ", 0.1},
-    {&chrdatathief_header, "PchrdatathiefZ", 0.1},
-    {&safe_header, "PsafeZ", 0.1},
-    {&bomb_header, "PbombZ", 0.1},
-    {&chrplans_header, "PchrplansZ", 0.1},
-    {&chrspyfile_header, "PchrspyfileZ", 0.1},
-    {&chrblueprints_header, "PchrblueprintsZ", 0.1},
-    {&chrcircuitboard_header, "PchrcircuitboardZ", 0.1},
-    {&chrmap_header, "PchrmapZ", 0.1},
-    {&chrspooltape_header, "PchrspooltapeZ", 0.1},
-    {&chraudiotape_header, "PchraudiotapeZ", 0.1},
-    {&chrmicrofilm_header, "PchrmicrofilmZ", 0.1},
-    {&chrmicrocode_header, "PchrmicrocodeZ", 0.1},
-    {&chrlectre_header, "PchrlectreZ", 0.1},
-    {&chrmoney_header, "PchrmoneyZ", 0.1},
-    {&chrgoldbar_header, "PchrgoldbarZ", 0.1},
-    {&chrheroin_header, "PchrheroinZ", 0.1},
-    {&chrclipboard_header, "PchrclipboardZ", 0.1},
-    {&chrdossierred_header, "PchrdossierredZ", 0.1},
-    {&chrstafflist_header, "PchrstafflistZ", 0.1},
-    {&chrdattape_header, "PchrdattapeZ", 0.1},
-    {&chrplastique_header, "PchrplastiqueZ", 0.1},
-    {&chrblackbox_header, "PchrblackboxZ", 0.1},
-    {&chrvideotape_header, "PchrvideotapeZ", 0.1},
-    {&nintendologo_header, "PnintendologoZ", 0.1},
-    {&goldeneyelogo_header, "PgoldeneyelogoZ", 0.1},
-    {&walletbond_header, "PwalletbondZ", 0.1},
-    {&miltruck_header, "PmiltruckZ", 0.1},
-    {&jeep_header, "PjeepZ", 0.1},
-    {&artic_header, "ParticZ", 0.1},
-    {&helicopter_header, "PhelicopterZ", 0.1},
-    {&tiger_header, "PtigerZ", 0.1},
-    {&milcopter_header, "PmilcopterZ", 0.1},
-    {&hind_header, "PhindZ", 0.1},
-    {&artictrailer_header, "PartictrailerZ", 0.1},
-    {&motorbike_header, "PmotorbikeZ", 0.1},
-    {&tank_header, "PtankZ", 0.1},
-    {&apc_header, "PapcZ", 0.1},
-    {&speedboat_header, "PspeedboatZ", 0.1},
-    {&plane_header, "PplaneZ", 0.1},
-    {&gun_runway1_header, "Pgun_runway1Z", 0.1},
-    {&safedoor_header, "PsafedoorZ", 1.0},
-    {&key_holder_header, "Pkey_holderZ", 1.0},
-    {&hatchsevx_header, "PhatchsevxZ", 1.0},
-    {&sevdish_header, "PsevdishZ", 1.0},
-    {&archsecdoor1_header, "Parchsecdoor1Z", 1.0},
-    {&archsecdoor2_header, "Parchsecdoor2Z", 1.0},
-    {&groundgun_header, "PgroundgunZ", 0.1},
-    {&trainextdoor_header, "PtrainextdoorZ", 1.0},
-    {&carbmw_header, "PcarbmwZ", 0.1},
-    {&carescort_header, "PcarescortZ", 0.1},
-    {&cargolf_header, "PcargolfZ", 0.1},
-    {&carweird_header, "PcarweirdZ", 0.1},
-    {&carzil_header, "PcarzilZ", 0.1},
-    {&shuttle_door_l_header, "Pshuttle_door_lZ", 1.0},
-    {&shuttle_door_r_header, "Pshuttle_door_rZ", 1.0},
-    {&depot_gate_entry_header, "Pdepot_gate_entryZ", 0.1},
-    {&depot_door_steel_header, "Pdepot_door_steelZ", 0.1},
-    {&glassware2_header, "Pglassware2Z", 0.1},
-    {&glassware3_header, "Pglassware3Z", 0.1},
-    {&glassware4_header, "Pglassware4Z", 0.1},
-    {&landmine_header, "PlandmineZ", 0.1},
-    {&plant1_header, "Pplant1Z", 0.1},
-    {&plant11_header, "Pplant11Z", 0.1},
-    {&plant2_header, "Pplant2Z", 0.1},
-    {&plant3_header, "Pplant3Z", 0.1},
-    {&jungle5_tree_header, "Pjungle5_treeZ", 0.1},
-    {&legalpage_header, "PlegalpageZ", 0.1},
-    {&st_pete_room_1i_header, "Pst_pete_room_1iZ", 0.1},
-    {&st_pete_room_2i_header, "Pst_pete_room_2iZ", 0.1},
-    {&st_pete_room_3t_header, "Pst_pete_room_3tZ", 0.1},
-    {&st_pete_room_5c_header, "Pst_pete_room_5cZ", 0.1},
-    {&st_pete_room_6c_header, "Pst_pete_room_6cZ", 0.1},
-    {&door_rollertrain_header, "Pdoor_rollertrainZ", 1.0},
-    {&door_win_header, "Pdoor_winZ", 1.0},
-    {&door_aztec_header, "Pdoor_aztecZ", 1.0},
-    {&shuttle_header, "PshuttleZ", 0.1},
-    {&door_azt_desk_header, "Pdoor_azt_deskZ", 1.0},
-    {&door_azt_desk_top_header, "Pdoor_azt_desk_topZ", 1.0},
-    {&door_azt_chair_header, "Pdoor_azt_chairZ", 1.0},
-    {&door_mf_header, "Pdoor_mfZ", 1.0},
-    {&flag_header, "PflagZ", 0.1},
-    {&barricade_header, "PbarricadeZ", 0.1},
-    {&modembox_header, "PmodemboxZ", 0.1},
-    {&doorpanel_header, "PdoorpanelZ", 0.1},
-    {&doorconsole_header, "PdoorconsoleZ", 0.1},
-    {&chrtesttube_header, "PchrtesttubeZ", 0.1},
-    {&bollard_header, "PbollardZ", 0.1},
+    FILERECORD(alarm2, 0.1)
+    FILERECORD(explosionbit, 0.1)
+    FILERECORD(ammo_crate1, 0.1)
+    FILERECORD(ammo_crate2, 0.1)
+    FILERECORD(ammo_crate3, 0.1)
+    FILERECORD(ammo_crate4, 0.1)
+    FILERECORD(ammo_crate5, 0.1)
+    FILERECORD(bin1, 0.1)
+    FILERECORD(blotter1, 0.1)
+    FILERECORD(book1, 0.1)
+    FILERECORD(bookshelf1, 0.1)
+    FILERECORD(bridge_console1a, 0.1)
+    FILERECORD(bridge_console1b, 0.1)
+    FILERECORD(bridge_console2a, 0.1)
+    FILERECORD(bridge_console2b, 0.1)
+    FILERECORD(bridge_console3a, 0.1)
+    FILERECORD(bridge_console3b, 0.1)
+    FILERECORD(card_box1, 0.1)
+    FILERECORD(card_box2, 0.1)
+    FILERECORD(card_box3, 0.1)
+    FILERECORD(card_box4_lg, 0.1)
+    FILERECORD(card_box5_lg, 0.1)
+    FILERECORD(card_box6_lg, 0.1)
+    FILERECORD(cctv, 0.1)
+    FILERECORD(console1, 0.1)
+    FILERECORD(console2, 0.1)
+    FILERECORD(console3, 0.1)
+    FILERECORD(console_seva, 0.1)
+    FILERECORD(console_sevb, 0.1)
+    FILERECORD(console_sevc, 0.1)
+    FILERECORD(console_sevd, 0.1)
+    FILERECORD(console_sev2a, 0.1)
+    FILERECORD(console_sev2b, 0.1)
+    FILERECORD(console_sev2c, 0.1)
+    FILERECORD(console_sev2d, 0.1)
+    FILERECORD(console_sev_GEa, 0.1)
+    FILERECORD(console_sev_GEb, 0.1)
+    FILERECORD(desk1, 0.1)
+    FILERECORD(desk2, 0.1)
+    FILERECORD(desk_lamp2, 0.1)
+    FILERECORD(disc_reader, 0.1)
+    FILERECORD(disk_drive1, 0.1)
+    FILERECORD(filing_cabinet1, 0.1)
+    FILERECORD(jerry_can1, 0.1)
+    FILERECORD(keyboard1, 0.1)
+    FILERECORD(kit_units1, 0.1)
+    FILERECORD(letter_tray1, 0.1)
+    FILERECORD(mainframe1, 0.1)
+    FILERECORD(mainframe2, 0.1)
+    FILERECORD(metal_chair1, 0.1)
+    FILERECORD(metal_crate1, 0.1)
+    FILERECORD(metal_crate2, 0.1)
+    FILERECORD(metal_crate3, 0.1)
+    FILERECORD(metal_crate4, 0.1)
+    FILERECORD(missile_rack, 0.1)
+    FILERECORD(missile_rack2, 0.1)
+    FILERECORD(oil_drum1, 0.1)
+    FILERECORD(oil_drum2, 0.1)
+    FILERECORD(oil_drum3, 0.1)
+    FILERECORD(oil_drum5, 0.1)
+    FILERECORD(oil_drum6, 0.1)
+    FILERECORD(oil_drum7, 0.1)
+    FILERECORD(padlock, 0.1)
+    FILERECORD(phone1, 0.1)
+    FILERECORD(radio_unit1, 0.1)
+    FILERECORD(radio_unit2, 0.1)
+    FILERECORD(radio_unit3, 0.1)
+    FILERECORD(radio_unit4, 0.1)
+    FILERECORD(sat1_reflect, 0.1)
+    FILERECORD(satdish, 0.1)
+    FILERECORD(satbox, 0.1)
+    FILERECORD(stool1, 0.1)
+    FILERECORD(swivel_chair1, 0.1)
+    FILERECORD(torpedo_rack, 0.1)
+    FILERECORD(tv1, 0.1)
+    FILERECORD(tv_holder, 0.1)
+    FILERECORD(tvscreen, 0.1)
+    FILERECORD(tv4screen, 0.1)
+    FILERECORD(wood_lg_crate1, 0.1)
+    FILERECORD(wood_lg_crate2, 0.1)
+    FILERECORD(wood_md_crate3, 0.1)
+    FILERECORD(wood_sm_crate4, 0.1)
+    FILERECORD(wood_sm_crate5, 0.1)
+    FILERECORD(wood_sm_crate6, 0.1)
+    FILERECORD(wooden_table1, 0.1)
+    FILERECORD(swipe_card2, 0.1)
+    FILERECORD(borg_crate, 0.1)
+    FILERECORD(boxes4x4, 0.1)
+    FILERECORD(boxes3x4, 0.1)
+    FILERECORD(boxes2x4, 0.1)
+    FILERECORD(sec_panel, 0.1)
+    FILERECORD(ICBM_nose, 0.1)
+    FILERECORD(ICBM, 0.1)
+    FILERECORD(tuning_console1, 0.1)
+    FILERECORD(desk_arecibo1, 0.1)
+    FILERECORD(locker3, 0.1)
+    FILERECORD(locker4, 0.1)
+    FILERECORD(roofgun, 0.1)
+    FILERECORD(dest_engine, 0.1)
+    FILERECORD(dest_exocet, 0.1)
+    FILERECORD(dest_gun, 0.1)
+    FILERECORD(dest_harpoon, 0.1)
+    FILERECORD(dest_seawolf, 0.1)
+    FILERECORD(window, 0.1)
+    FILERECORD(window_lib_lg1, 0.1)
+    FILERECORD(window_lib_sm1, 0.1)
+    FILERECORD(window_cor11, 0.1)
+    FILERECORD(jungle3_tree, 0.1)
+    FILERECORD(palm, 0.1)
+    FILERECORD(palmtree, 0.1)
+    FILERECORD(plant2b, 0.1)
+    FILERECORD(labbench, 0.1)
+    FILERECORD(gasbarrel, 0.1)
+    FILERECORD(gasbarrels, 0.1)
+    FILERECORD(bodyarmour, 0.1)
+    FILERECORD(bodyarmourvest, 0.1)
+    FILERECORD(gastank, 0.1)
+    FILERECORD(glassware1, 0.1)
+    FILERECORD(hatchbolt, 0.1)
+    FILERECORD(brakeunit, 0.1)
+    FILERECORD(ak47mag, 0.1)
+    FILERECORD(m16mag, 0.1)
+    FILERECORD(mp5kmag, 0.1)
+    FILERECORD(skorpionmag, 0.1)
+    FILERECORD(spectremag, 0.1)
+    FILERECORD(uzimag, 0.1)
+    FILERECORD(silencer, 0.1)
+    FILERECORD(chrextinguisher, 0.1)
+    FILERECORD(boxcartridges, 0.1)
+    FILERECORD(fnp90mag, 0.1)
+    FILERECORD(goldenshells, 0.1)
+    FILERECORD(magnumshells, 0.1)
+    FILERECORD(wppkmag, 0.1)
+    FILERECORD(tt33mag, 0.1)
+    FILERECORD(sev_door, 1.0)
+    FILERECORD(sev_door3, 1.0)
+    FILERECORD(sev_door3_wind, 1.0)
+    FILERECORD(sev_door4_wind, 1.0)
+    FILERECORD(sev_trislide, 1.0)
+    FILERECORD(sev_door_v1, 1.0)
+    FILERECORD(steel_door1, 1.0)
+    FILERECORD(steel_door2, 1.0)
+    FILERECORD(steel_door3, 1.0)
+    FILERECORD(silo_lift_door, 1.0)
+    FILERECORD(steel_door2b, 1.0)
+    FILERECORD(door_roller1, 1.0)
+    FILERECORD(door_roller2, 1.0)
+    FILERECORD(door_roller3, 1.0)
+    FILERECORD(door_roller4, 1.0)
+    FILERECORD(door_st_arec1, 1.0)
+    FILERECORD(door_st_arec2, 1.0)
+    FILERECORD(door_dest1, 1.0)
+    FILERECORD(door_dest2, 1.0)
+    FILERECORD(gas_plant_sw_do1, 1.0)
+    FILERECORD(gas_plant_sw2_do1, 1.0)
+    FILERECORD(gas_plant_sw3_do1, 1.0)
+    FILERECORD(gas_plant_sw4_do1, 1.0)
+    FILERECORD(gas_plant_met1_do1, 1.0)
+    FILERECORD(gas_plant_wc_cub1, 1.0)
+    FILERECORD(gasplant_clear_door, 1.0)
+    FILERECORD(train_door, 1.0)
+    FILERECORD(train_door2, 1.0)
+    FILERECORD(train_door3, 1.0)
+    FILERECORD(door_eyelid, 1.0)
+    FILERECORD(door_iris, 1.0)
+    FILERECORD(sevdoorwood, 1.0)
+    FILERECORD(sevdoorwind, 1.0)
+    FILERECORD(sevdoornowind, 1.0)
+    FILERECORD(sevdoormetslide, 1.0)
+    FILERECORD(cryptdoor1a, 1.0)
+    FILERECORD(cryptdoor1b, 1.0)
+    FILERECORD(cryptdoor2a, 1.0)
+    FILERECORD(cryptdoor2b, 1.0)
+    FILERECORD(cryptdoor3, 1.0)
+    FILERECORD(cryptdoor4, 1.0)
+    FILERECORD(vertdoor, 1.0)
+    FILERECORD(hatchdoor, 1.0)
+    FILERECORD(damgatedoor, 1.0)
+    FILERECORD(damtundoor, 1.0)
+    FILERECORD(damchaindoor, 1.0)
+    FILERECORD(silotopdoor, 1.0)
+    FILERECORD(doorprison1, 1.0)
+    FILERECORD(doorstatgate, 1.0)
+    FILERECORD(chrkalash, 0.1)
+    FILERECORD(chrgrenadelaunch, 0.1)
+    FILERECORD(chrknife, 0.1)
+    FILERECORD(chrlaser, 0.1)
+    FILERECORD(chrm16, 0.1)
+    FILERECORD(chrmp5k, 0.1)
+    FILERECORD(chrruger, 0.1)
+    FILERECORD(chrwppk, 0.1)
+    FILERECORD(chrshotgun, 0.1)
+    FILERECORD(chrskorpion, 0.1)
+    FILERECORD(chrspectre, 0.1)
+    FILERECORD(chruzi, 0.1)
+    FILERECORD(chrgrenade, 0.1)
+    FILERECORD(chrfnp90, 0.1)
+    FILERECORD(chrbriefcase, 0.1)
+    FILERECORD(chrremotemine, 0.1)
+    FILERECORD(chrproximitymine, 0.1)
+    FILERECORD(chrtimedmine, 0.1)
+    FILERECORD(chrrocket, 0.1)
+    FILERECORD(chrgrenaderound, 0.1)
+    FILERECORD(chrwppksil, 0.1)
+    FILERECORD(chrtt33, 0.1)
+    FILERECORD(chrmp5ksil, 0.1)
+    FILERECORD(chrautoshot, 0.1)
+    FILERECORD(chrgolden, 0.1)
+    FILERECORD(chrthrowknife, 0.1)
+    FILERECORD(chrsniperrifle, 0.1)
+    FILERECORD(chrrocketlaunch, 0.1)
+    FILERECORD(hatfurry, 0.1)
+    FILERECORD(hatfurrybrown, 0.1)
+    FILERECORD(hatfurryblack, 0.1)
+    FILERECORD(hattbird, 0.1)
+    FILERECORD(hattbirdbrown, 0.1)
+    FILERECORD(hathelmet, 0.1)
+    FILERECORD(hathelmetgrey, 0.1)
+    FILERECORD(hatmoon, 0.1)
+    FILERECORD(hatberet, 0.1)
+    FILERECORD(hatberetblue, 0.1)
+    FILERECORD(hatberetred, 0.1)
+    FILERECORD(hatpeaked, 0.1)
+    FILERECORD(chrwristdart, 0.1)
+    FILERECORD(chrexplosivepen, 0.1)
+    FILERECORD(chrbombcase, 0.1)
+    FILERECORD(chrflarepistol, 0.1)
+    FILERECORD(chrpitongun, 0.1)
+    FILERECORD(chrfingergun, 0.1)
+    FILERECORD(chrsilverwppk, 0.1)
+    FILERECORD(chrgoldwppk, 0.1)
+    FILERECORD(chrdynamite, 0.1)
+    FILERECORD(chrbungee, 0.1)
+    FILERECORD(chrdoordecoder, 0.1)
+    FILERECORD(chrbombdefuser, 0.1)
+    FILERECORD(chrbugdetector, 0.1)
+    FILERECORD(chrsafecrackercase, 0.1)
+    FILERECORD(chrcamera, 0.1)
+    FILERECORD(chrlockexploder, 0.1)
+    FILERECORD(chrdoorexploder, 0.1)
+    FILERECORD(chrkeyanalysercase, 0.1)
+    FILERECORD(chrweaponcase, 0.1)
+    FILERECORD(chrkeyyale, 0.1)
+    FILERECORD(chrkeybolt, 0.1)
+    FILERECORD(chrbug, 0.1)
+    FILERECORD(chrmicrocamera, 0.1)
+    FILERECORD(floppy, 0.1)
+    FILERECORD(chrgoldeneyekey, 0.1)
+    FILERECORD(chrpolarizedglasses, 0.1)
+    FILERECORD(chrcreditcard, 0.1)
+    FILERECORD(chrdarkglasses, 0.1)
+    FILERECORD(chrgaskeyring, 0.1)
+    FILERECORD(chrdatathief, 0.1)
+    FILERECORD(safe, 0.1)
+    FILERECORD(bomb, 0.1)
+    FILERECORD(chrplans, 0.1)
+    FILERECORD(chrspyfile, 0.1)
+    FILERECORD(chrblueprints, 0.1)
+    FILERECORD(chrcircuitboard, 0.1)
+    FILERECORD(chrmap, 0.1)
+    FILERECORD(chrspooltape, 0.1)
+    FILERECORD(chraudiotape, 0.1)
+    FILERECORD(chrmicrofilm, 0.1)
+    FILERECORD(chrmicrocode, 0.1)
+    FILERECORD(chrlectre, 0.1)
+    FILERECORD(chrmoney, 0.1)
+    FILERECORD(chrgoldbar, 0.1)
+    FILERECORD(chrheroin, 0.1)
+    FILERECORD(chrclipboard, 0.1)
+    FILERECORD(chrdossierred, 0.1)
+    FILERECORD(chrstafflist, 0.1)
+    FILERECORD(chrdattape, 0.1)
+    FILERECORD(chrplastique, 0.1)
+    FILERECORD(chrblackbox, 0.1)
+    FILERECORD(chrvideotape, 0.1)
+    FILERECORD(nintendologo, 0.1)
+    FILERECORD(goldeneyelogo, 0.1)
+    FILERECORD(walletbond, 0.1)
+    FILERECORD(miltruck, 0.1)
+    FILERECORD(jeep, 0.1)
+    FILERECORD(artic, 0.1)
+    FILERECORD(helicopter, 0.1)
+    FILERECORD(tiger, 0.1)
+    FILERECORD(milcopter, 0.1)
+    FILERECORD(hind, 0.1)
+    FILERECORD(artictrailer, 0.1)
+    FILERECORD(motorbike, 0.1)
+    FILERECORD(tank, 0.1)
+    FILERECORD(apc, 0.1)
+    FILERECORD(speedboat, 0.1)
+    FILERECORD(plane, 0.1)
+    FILERECORD(gun_runway1, 0.1)
+    FILERECORD(safedoor, 1.0)
+    FILERECORD(key_holder, 1.0)
+    FILERECORD(hatchsevx, 1.0)
+    FILERECORD(sevdish, 1.0)
+    FILERECORD(archsecdoor1, 1.0)
+    FILERECORD(archsecdoor2, 1.0)
+    FILERECORD(groundgun, 0.1)
+    FILERECORD(trainextdoor, 1.0)
+    FILERECORD(carbmw, 0.1)
+    FILERECORD(carescort, 0.1)
+    FILERECORD(cargolf, 0.1)
+    FILERECORD(carweird, 0.1)
+    FILERECORD(carzil, 0.1)
+    FILERECORD(shuttle_door_l, 1.0)
+    FILERECORD(shuttle_door_r, 1.0)
+    FILERECORD(depot_gate_entry, 0.1)
+    FILERECORD(depot_door_steel, 0.1)
+    FILERECORD(glassware2, 0.1)
+    FILERECORD(glassware3, 0.1)
+    FILERECORD(glassware4, 0.1)
+    FILERECORD(landmine, 0.1)
+    FILERECORD(plant1, 0.1)
+    FILERECORD(plant11, 0.1)
+    FILERECORD(plant2, 0.1)
+    FILERECORD(plant3, 0.1)
+    FILERECORD(jungle5_tree, 0.1)
+    FILERECORD(legalpage, 0.1)
+    FILERECORD(st_pete_room_1i, 0.1)
+    FILERECORD(st_pete_room_2i, 0.1)
+    FILERECORD(st_pete_room_3t, 0.1)
+    FILERECORD(st_pete_room_5c, 0.1)
+    FILERECORD(st_pete_room_6c, 0.1)
+    FILERECORD(door_rollertrain, 1.0)
+    FILERECORD(door_win, 1.0)
+    FILERECORD(door_aztec, 1.0)
+    FILERECORD(shuttle, 0.1)
+    FILERECORD(door_azt_desk, 1.0)
+    FILERECORD(door_azt_desk_top, 1.0)
+    FILERECORD(door_azt_chair, 1.0)
+    FILERECORD(door_mf, 1.0)
+    FILERECORD(flag, 0.1)
+    FILERECORD(barricade, 0.1)
+    FILERECORD(modembox, 0.1)
+    FILERECORD(doorpanel, 0.1)
+    FILERECORD(doorconsole, 0.1)
+    FILERECORD(chrtesttube, 0.1)
+    FILERECORD(bollard, 0.1)
     {0, "", 1.0}
 };

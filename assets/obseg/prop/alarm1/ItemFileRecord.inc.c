@@ -1,1 +1,2 @@
-    {&alarm1_header, "Palarm1Z", 0.1},
+    FILERECORD(alarm1, 0.1)
+
