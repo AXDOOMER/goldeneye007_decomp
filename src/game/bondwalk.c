@@ -65,7 +65,7 @@ CartridgeModelFileRecord ejected_cartridge[] = {
 #ifdef VERSION_US
 #define SCALEVAL1 0.80000001
 #define SCALEVAL_KNIFE 0.80000001
-#define SCALEVAL_SKORPIAN 0.80000001
+#define SCALEVAL_SKORPION 0.80000001
 #define SCALEVAL_AK47 0.80000001
 #define SCALEVAL_UZI 0.80000001
 #define SCALEVAL_P90 0.80000001
@@ -76,7 +76,7 @@ CartridgeModelFileRecord ejected_cartridge[] = {
 //!FIXME temp copy of us data
 #define SCALEVAL1 0.80000001
 #define SCALEVAL_KNIFE 0.80000001
-#define SCALEVAL_SKORPIAN 0.80000001
+#define SCALEVAL_SKORPION 0.80000001
 #define SCALEVAL_AK47 0.80000001
 #define SCALEVAL_UZI 0.80000001
 #define SCALEVAL_P90 0.80000001
@@ -86,7 +86,7 @@ CartridgeModelFileRecord ejected_cartridge[] = {
 #ifdef VERSION_JP
 #define SCALEVAL1 0.8812
 #define SCALEVAL_KNIFE 0.8228
-#define SCALEVAL_SKORPIAN 0.8695
+#define SCALEVAL_SKORPION 0.8695
 #define SCALEVAL_AK47 0.893
 #define SCALEVAL_UZI 0.8578
 #define SCALEVAL_P90 0.8461
@@ -123,8 +123,8 @@ WeaponStats tt33_stats = {
 	1.0, 11.0, -20.799999, -33.5, 3.0, 3.0, 8.5, 1, 8, 0xFF, 0x10, 1, 0, 0x70, &cartridge_header, 1.0, 6.0, 0.0, SCALEVAL_KNIFE, 0.85000002, 1.0, 0x4080300, 5.0, 10.0, 59.999996, 2.0, 16.0, 3.0, 2.0, 4.0, 0.0, 0x170FB9
 };
 //D:800327A4
-WeaponStats skorpian_stats = {
-	2.0, 11.5, -25.0, -27.5, 3.0, 5.0, 10.0, 1, 0x14, 0x03, 0x00, 1, 0xB, 0x6A, &cartridge_header, 0.60000002, 15.0, 0.0, SCALEVAL_SKORPIAN, 0.88999999, 1.0, 6, 0.0, 0.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x170B79
+WeaponStats skorpion_stats = {
+	2.0, 11.5, -25.0, -27.5, 3.0, 5.0, 10.0, 1, 0x14, 0x03, 0x00, 1, 0xB, 0x6A, &cartridge_header, 0.60000002, 15.0, 0.0, SCALEVAL_SKORPION, 0.88999999, 1.0, 6, 0.0, 0.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x170B79
 };
 //D:80032814
 WeaponStats ak47_stats = {
@@ -136,15 +136,15 @@ WeaponStats uzi_stats = {
 };
 //D:800328F4
 WeaponStats mp5k_stats = {
-	2.0, 11.0, -26.4, -35.0, 3.0, 8.0, 15.0, 1, 0x1E, 0x03, 0x00, 1, 4, 0x75, &cartridge_header, 1.0, 7.0, 0.0, SCALEVAL_SKORPIAN, 0.88999999, 1.0, 0x6120006, 4.0, 3.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x171A79
+	2.0, 11.0, -26.4, -35.0, 3.0, 8.0, 15.0, 1, 0x1E, 0x03, 0x00, 1, 4, 0x75, &cartridge_header, 1.0, 7.0, 0.0, SCALEVAL_SKORPION, 0.88999999, 1.0, 0x6120006, 4.0, 3.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x171A79
 };
 //D:80032964
 WeaponStats mp5ksil_stats = {
-	2.0, 11.0, -26.4, -35.0, 3.0, 8.0, 15.0, 1, 0x1E, 0x03, 0x00, 1, 4, 0x2E, &cartridge_header, 1.0, 9.0, 0.0, SCALEVAL_SKORPIAN, 0.88999999, 1.0, 0x6120006, 3.5, 2.0, 0.0, 0.0, 7.0, 1.2, 2.0, 4.0, 0.0, 0x171A79
+	2.0, 11.0, -26.4, -35.0, 3.0, 8.0, 15.0, 1, 0x1E, 0x03, 0x00, 1, 4, 0x2E, &cartridge_header, 1.0, 9.0, 0.0, SCALEVAL_SKORPION, 0.88999999, 1.0, 0x6120006, 3.5, 2.0, 0.0, 0.0, 7.0, 1.2, 2.0, 4.0, 0.0, 0x171A79
 };
 //D:800329D4
 WeaponStats spectre_stats = {
-	2.0, 11.0, -21.9, -35.0, 3.0, 8.0, 15.0, 1, 0x32, 0x03, 0x00, 1, 4, 0x6D, &cartridge_header, 1.4, 12.0, 0.0, SCALEVAL_SKORPIAN, 0.88999999, 1.0, 0x40C0006, 4.5, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x171A79
+	2.0, 11.0, -21.9, -35.0, 3.0, 8.0, 15.0, 1, 0x32, 0x03, 0x00, 1, 4, 0x6D, &cartridge_header, 1.4, 12.0, 0.0, SCALEVAL_SKORPION, 0.88999999, 1.0, 0x40C0006, 4.5, 2.0, 0.0, 2.0, 20.0, 2.0, 2.0, 4.0, 0.0, 0x171A79
 };
 //D:80032A44
 WeaponStats m16_stats = {
@@ -189,11 +189,11 @@ WeaponStats goldwppk_stats = {
 
 //D:80032E34
 WeaponStats laser_stats = {
-	1.0, 11.0, -19.5, -28.0, 3.0, 3.0, 8.5, 0, 0, 0xFF, 0x06, 2, 0, 0xE4, NULL, 2.0, 0.0, 0.0, SCALEVAL_SKORPIAN, 0.88999999, 1.0, 0x6000606, 0.0, 0.0, 0.0, 2.0, 16.0, 2.0, 2.0, 4.0, 2.0, 0x170B99
+	1.0, 11.0, -19.5, -28.0, 3.0, 3.0, 8.5, 0, 0, 0xFF, 0x06, 2, 0, 0xE4, NULL, 2.0, 0.0, 0.0, SCALEVAL_SKORPION, 0.88999999, 1.0, 0x6000606, 0.0, 0.0, 0.0, 2.0, 16.0, 2.0, 2.0, 4.0, 2.0, 0x170B99
 };
 //D:80032EA4
 WeaponStats watchlaser_stats = {
-	1.0, -2.0, -21.5, -19.0, 3.0, 3.0, 8.5, 0x18, 0x3E8, 0xFF, 0x00, 1, 0, 0, NULL, 2.0, 0.0, 0.0, SCALEVAL_SKORPIAN, 0.88999999, 1.0, 0xFF, 0.0, 0.0, 0.0, 1.0, 4.0, 0.2, 1.0, 4.0, 0.0, 0x600F91
+	1.0, -2.0, -21.5, -19.0, 3.0, 3.0, 8.5, 0x18, 0x3E8, 0xFF, 0x00, 1, 0, 0, NULL, 2.0, 0.0, 0.0, SCALEVAL_SKORPION, 0.88999999, 1.0, 0xFF, 0.0, 0.0, 0.0, 1.0, 4.0, 0.2, 1.0, 4.0, 0.0, 0x600F91
 };
 //D:80032F14
 WeaponStats grenadelaunch_stats = {
@@ -290,97 +290,7 @@ WeaponStats unused_800338B4_stats = {
 
 
 //D:80033924
-GunModelFileRecord gitem_structs[] = {
-	{                       NULL,                   NULL, 1,                      NULL, 0x9883, 0x9811,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x9811, 0x9811, 10.0, 10.0, 1000.0},
-	{               &fist_header,               "GfistZ", 0,               &fist_stats, 0x9883, 0x9876,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x9876, 0x98CD, 10.0, 10.0, 1000.0},
-	{              &knife_header,              "GknifeZ", 0,              &knife_stats, 0x9883, 0x9846, 200.0,  39.0, 1327.0,   0.0, 0.0, 0x9840, 0x98A8, 38.0, 118.0, 800.0},
-	{         &throwknife_header,         "GthrowknifeZ", 0,         &throwknife_stats, 0x9871, 0x9806, 200.0,  51.0, 1327.0,   0.0, 0.0, 0x9870, 0x98CA, 38.0, 118.0, 800.0},
-	{               &wppk_header,               "GwppkZ", 0,               &wppk_stats, 0x9857, 0x9801,  20.0,  97.0,  579.0,   0.0, 0.0, 0x9856, 0x98BA, 94.0, 2.0, 356.0},
-	{            &wppksil_header,            "GwppksilZ", 0,            &wppksil_stats, 0x9803, 0x9810,  26.0, 162.0,  668.0,   0.0, 0.0, 0x9855, 0x98B9, 169.0, 5.0, 535.0},
-	{               &tt33_header,               "Gtt33Z", 0,               &tt33_stats, 0x9804, 0x9832,  22.0, 128.0,  709.0,   0.0, 0.0, 0x982A, 0x989A, 124.0, 14.0, 455.0},
-	{           &skorpian_header,           "GskorpionZ", 0,           &skorpian_stats, 0x9883, 0x986B,  46.0, 124.0,  785.0,   0.0, 0.0, 0x986B, 0x98C6, 124.0, 32.0, 545.0},
-	{               &ak47_header,               "Gak47Z", 0,               &ak47_stats, 0x9808, 0x9868, -29.0, 307.0, 1410.0,   0.0, 0.0, 0x9842, 0x98AB, 304.0, -31.0, 1020.0},
-	{                &uzi_header,                "GuziZ", 0,                &uzi_stats, 0x9883, 0x9882, -18.0,  57.0, 1198.0,   0.0, 0.0, 0x9882, 0x98D7, 68.0, -49.0, 667.0},
-	{               &mp5k_header,               "Gmp5kZ", 0,               &mp5k_stats, 0x9800, 0x982F,  12.0, 112.0, 1300.0,   0.0, 0.0, 0x9829, 0x9896, 123.0, -2.0, 628.0},
-	{            &mp5ksil_header,            "Gmp5ksilZ", 0,            &mp5ksil_stats, 0x9800, 0x9810,  14.0, 227.0, 1300.0,   0.0, 0.0, 0x9828, 0x9895, 226.0, -10.0, 834.0},
-	{            &spectre_header,            "GspectreZ", 0,            &spectre_stats, 0x9883, 0x9858,  -4.0, 144.0, 1128.0,   0.0, 0.0, 0x9858, 0x98B4, 146.0, -18.0, 801.0},
-	{                &m16_header,                "Gm16Z", 0,                &m16_stats, 0x9875, 0x9812,  25.0, 251.0, 1796.0,   0.0, 0.0, 0x9874, 0x9884, 246.0, -45.0, 1497.0},
-	{              &fnp90_header,              "Gfnp90Z", 0,              &fnp90_stats, 0x9883, 0x985E,  88.0, -44.0, 1107.0,   0.0, 0.0, 0x985E, 0x98BC, -44.0, 31.0, 867.0},
-	{            &shotgun_header,            "GshotgunZ", 0,            &shotgun_stats, 0x9883, 0x9864,  39.0, 283.0, 1224.0,   0.0, 0.0, 0x9864, 0x98C1, 284.0, -22.0, 999.0},
-	{           &autoshot_header,           "GautoshotZ", 0,           &autoshot_stats, 0x9816, 0x980C,  73.0, 285.0, 1224.0,   0.0, 0.0, 0x9815, 0x9886, 284.0, 4.0, 980.0},
-	{        &sniperrifle_header,        "GsniperrifleZ", 0,        &sniperrifle_stats, 0x9867, 0x980A,  49.0, 265.0, 1760.0,   0.0, 0.0, 0x9866, 0x98C3, 268.0, 14.0, 1497.0},
-	{              &ruger_header,              "GrugerZ", 0,              &ruger_stats, 0x9826, 0x984C,  47.0, 184.0,  769.0,   0.0, 0.0, 0x9825, 0x9893, 182.0, 36.0, 604.0},
-	{          &goldengun_header,          "GgoldengunZ", 0,          &goldengun_stats, 0x983B, 0x9805,  29.0, 146.0,  629.0,   0.0, 0.0, 0x9839, 0x98A3, 144.0, 18.0, 464.0},
-	{         &silverwppk_header,         "GsilverwppkZ", 0,         &silverwppk_stats, 0x9883, 0x9865,  20.0,  97.0,  579.0,   0.0, 0.0, 0x9865, 0x98C2, 94.0, 2.0, 356.0},
-	{           &goldwppk_header,           "GgoldwppkZ", 0,           &goldwppk_stats, 0x9883, 0x9838,  20.0,  97.0,  579.0,   0.0, 0.0, 0x9838, 0x98A2, 94.0, 2.0, 356.0},
-	{              &laser_header,              "GlaserZ", 0,              &laser_stats, 0x9852, 0x9847,  67.0, 106.0,  738.0,   0.0, 0.0, 0x9851, 0x98AC, 103.0, 21.0, 545.0},
-	{         &watchlaser_header,         "GwatchlaserZ", 0,         &watchlaser_stats, 0x987F, 0x9847,  82.0,   0.0, 2857.0,   0.0, 90.0, 0x987B, 0x98D2, 0.0, -40.0, 1383.0},
-	{      &grenadelaunch_header,      "GgrenadelaunchZ", 0,      &grenadelaunch_stats, 0x983D, 0x9848,  27.0, 279.0, 1152.0,   0.0, 0.0, 0x983C, 0x98A5, 284.0, -22.0, 960.0},
-	{       &rocketlaunch_header,       "GrocketlaunchZ", 0,       &rocketlaunch_stats, 0x980B, 0x9848, 111.0, -50.0, 1624.0,   0.0, 0.0, 0x9861, 0x98BF, -42.0, 16.0, 1381.0},
-	{            &grenade_header,            "GgrenadeZ", 0,            &grenade_stats, 0x9883, 0x983D, 180.0,   0.0, 2745.0,   0.0, 90.0, 0x983E, 0x98A6, 0.0, 48.0, 1468.0},
-	{          &timedmine_header,          "GtimedmineZ", 0,          &timedmine_stats, 0x9809, 0x980F,   8.0,   0.0,  364.0,  90.0, 0.0, 0x9872, 0x98CB, 0.0, -3.0, 179.0},
-	{      &proximitymine_header,      "GproximitymineZ", 0,      &proximitymine_stats, 0x9802, 0x980D,   8.0,   0.0,  364.0,  90.0, 0.0, 0x985D, 0x98BB, 0.0, -3.0, 179.0},
-	{         &remotemine_header,         "GremotemineZ", 0,         &remotemine_stats, 0x9807, 0x980E,   8.0,   0.0,  364.0,  90.0, 0.0, 0x9860, 0x98BE, 0.0, -3.0, 179.0},
-	{            &trigger_header,            "GtriggerZ", 0,            &trigger_stats, 0x9883, 0x982E,  82.0,   0.0, 2857.0,   0.0, 90.0, 0x982E, 0x989B, 0.0, -40.0, 1383.0},
-	{              &taser_header,              "GtaserZ", 0,              &taser_stats, 0x9883, 0x986F, 107.0,  49.0,  568.0,   0.0, 0.0, 0x986F, 0x98C9, 64.0, 80.0, 333.0},
-	{                       NULL,                   NULL, 0,               &tank_stats, 0x9883, 0x986E,  20.0,  97.0,  579.0,   0.0, 0.0, 0x986E, 0x98C8, 94.0, 2.0, 356.0},
-	{           &bombcase_header,           "GbombcaseZ", 0,           &bombcase_stats, 0x9883, 0x981A,  16.0,   0.0,  568.0,   0.0, 90.0, 0x981A, 0x988A, 0.0, -8.0, 323.0},
-	{          &plastique_header,          "GplastiqueZ", 0,          &plastique_stats, 0x9883, 0x985B,  28.0,   0.0, 1062.0,  80.0, 90.0, 0x985B, 0x98B7, 0.0, -16.0, 739.0},
-	{        &flarepistol_header,        "GflarepistolZ", 0,        &flarepistol_stats, 0x9883, 0x9834,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x9834, 0x989F, 0.0, 0.0, 1000.0},
-	{           &pitongun_header,           "GpitongunZ", 0,           &pitongun_stats, 0x9883, 0x9859,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x9859, 0x98B5, 0.0, 0.0, 1000.0},
-	{             &bungee_header,             "GbungeeZ", 1,                      NULL, 0x9883, 0x981F,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x981F, 0x988F, 0.0, 0.0, 1000.0},
-	{        &doordecoder_header,        "GdoordecoderZ", 1,                      NULL, 0x9883, 0x9830,  12.0,   0.0,  364.0,  90.0, 90.0, 0x9830, 0x989C, 0.0, -6.0, 199.0},
-	{        &bombdefuser_header,        "GbombdefuserZ", 1,                      NULL, 0x9883, 0x981B,  14.0,   0.0,  379.0,  90.0, 90.0, 0x981B, 0x988B, 0.0, 0.0, 279.0},
-	{             &camera_header,             "GcameraZ", 0,             &camera_stats, 0x9883, 0x9820,   4.0,   0.0,  195.0,  20.0, 90.0, 0x9820, 0x9890, 0.0, -2.0, 144.0},
-	{       &lockexploder_header,       "GlockexploderZ", 1,                      NULL, 0x9883, 0x984A,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x984A, 0x98AE, 0.0, 0.0, 1000.0},
-	{       &doorexploder_header,       "GdoorexploderZ", 1,                      NULL, 0x9883, 0x9831,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x9831, 0x989D, 0.0, 0.0, 1000.0},
-	{          &briefcase_header,          "GbriefcaseZ", 1,                      NULL, 0x9883, 0x981C,  16.0,   0.0,  568.0,   0.0, 90.0, 0x981C, 0x988C, 0.0, -8.0, 323.0},
-	{         &weaponcase_header,         "GweaponcaseZ", 1,                      NULL, 0x9883, 0x9880,  16.0,   0.0,  568.0,   0.0, 90.0, 0x9880, 0x98D5, 0.0, -8.0, 323.0},
-	{    &safecrackercase_header,    "GsafecrackercaseZ", 1,                      NULL, 0x9883, 0x9863,  16.0,   0.0,  568.0,   0.0, 90.0, 0x9862, 0x98C0, 0.0, -8.0, 323.0},
-	{    &keyanalysercase_header,    "GkeyanalysercaseZ", 1,                      NULL, 0x9883, 0x9844,  16.0,   0.0,  568.0,   0.0, 90.0, 0x9843, 0x98A9, 0.0, -8.0, 323.0},
-	{                &bug_header,                "GbugZ", 0,                &bug_stats, 0x9883, 0x981E,  16.0,   0.0,  513.0,   0.0, 90.0, 0x981E, 0x988E, 0.0, -6.0, 387.0},
-	{        &microcamera_header,        "GmicrocameraZ", 0,        &microcamera_stats, 0x9883, 0x984E,   8.0,   0.0,  310.0,   0.0, 270.0, 0x984E, 0x98B0, 0.0, -8.0, 229.0},
-	{        &bugdetector_header,        "GbugdetectorZ", 1,                      NULL, 0x9883, 0x981D,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x981D, 0x988D, 0.0, 0.0, 1000.0},
-	{    &explosivefloppy_header,    "GexplosivefloppyZ", 1,                      NULL, 0x9883, 0x9833,  12.0,   0.0,  336.0,   0.0, 90.0, 0x9833, 0x989E, 0.0, -4.0, 176.0},
-	{   &polarizedglasses_header,   "GpolarizedglassesZ", 1,                      NULL, 0x9883, 0x985C,   2.0,   0.0,  183.0,  15.0, 90.0, 0x985C, 0x98B8, 0.0, 0.0, 147.0},
-	{        &darkglasses_header,        "GdarkglassesZ", 1,                      NULL, 0x9883, 0x982B,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x982B, 0x9897, 0.0, 0.0, 1000.0},
-	{         &creditcard_header,         "GcreditcardZ", 1,                      NULL, 0x9883, 0x9827,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x9827, 0x9894, 0.0, 0.0, 1000.0},
-	{         &gaskeyring_header,         "GgaskeyringZ", 1,                      NULL, 0x9883, 0x9835,  26.0,   0.0,  769.0,  90.0, 90.0, 0x9835, 0x98A0, 0.0, -8.0, 387.0},
-	{          &datathief_header,          "GdatathiefZ", 1,                      NULL, 0x9883, 0x982D,  16.0,   0.0,  474.0,  80.0, 0.0, 0x982D, 0x9899, 0.0, -6.0, 350.0},
-	{    &watchidentifier_header,    "GwatchidentifierZ", 1,                      NULL, 0x987F, 0x9841,  82.0,   0.0, 2857.0,   0.0, 90.0, 0x987A, 0x98D1, 0.0, -40.0, 1383.0},
-	{  &watchcommunicator_header,  "GwatchcommunicatorZ", 1,                      NULL, 0x987F, 0x9823,  82.0,   0.0, 2857.0,   0.0, 90.0, 0x9878, 0x98CF, 0.0, -40.0, 1383.0},
-	{ &watchgeigercounter_header, "GwatchgeigercounterZ", 1,                      NULL, 0x987F, 0x9836,  82.0,   0.0, 2857.0,   0.0, 90.0, 0x9879, 0x98D0, 0.0, -40.0, 1383.0},
-	{   &watchmagnetrepel_header,   "GwatchmagnetrepelZ", 1,                      NULL, 0x987F, 0x984B,  82.0,   0.0, 2857.0,   0.0, 90.0, 0x987D, 0x98D4, 0.0, -40.0, 1383.0},
-	{ &watchmagnetattract_header, "GwatchmagnetattractZ", 0, &watchmagnetattract_stats, 0x987E, 0x9813,  80.0,   0.0, 3036.0,   0.0, 90.0, 0x987C, 0x98D3, 0.0, -40.0, 1383.0},
-	{       &goldeneyekey_header,       "GgoldeneyekeyZ", 0,       &goldeneyekey_stats, 0x9883, 0x983A,  18.0,   0.0,  560.0,  80.0, 0.0, 0x983A, 0x98A4, 0.0, -4.0, 310.0},
-	{           &blackbox_header,           "GblackboxZ", 1,                      NULL, 0x9883, 0x9817,  18.0,   0.0,  545.0,   0.0, 90.0, 0x9817, 0x9887, 0.0, -8.0, 380.0},
-	{       &circuitboard_header,       "GcircuitboardZ", 1,                      NULL, 0x9883, 0x9821,  20.0,   0.0,  568.0,  80.0, 0.0, 0x9821, 0x9891, 0.0, 0.0, 394.0},
-	{          &clipboard_header,          "GclipboardZ", 1,                      NULL, 0x9883, 0x9822,  40.0,   0.0, 1151.0,  80.0, 90.0, 0x9822, 0x9892, 0.0, -20.0, 580.0},
-	{          &stafflist_header,          "GstafflistZ", 1,                      NULL, 0x9883, 0x986C,  44.0,   0.0, 1274.0,  80.0, 90.0, 0x986C, 0x98C7, 0.0, -16.0, 681.0},
-	{         &dossierred_header,         "GdossierredZ", 1,                      NULL, 0x9883, 0x985F,  38.0,   0.0, 1084.0, 350.0, 90.0, 0x985F, 0x98BD, 0.0, -12.0, 580.0},
-	{              &plans_header,              "GplansZ", 1,                      NULL, 0x9883, 0x985A,  18.0,   0.0,  464.0, 350.0, 90.0, 0x985A, 0x98B6, 0.0, -2.0, 253.0},
-	{            &spyfile_header,            "GspyfileZ", 1,                      NULL, 0x9883, 0x986A,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x986A, 0x98C5, 0.0, 0.0, 1000.0},
-	{         &blueprints_header,         "GblueprintsZ", 1,                      NULL, 0x9883, 0x9818,  18.0,   0.0,  579.0, 350.0, 90.0, 0x9818, 0x9888, 0.0, -8.0, 364.0},
-	{                &map_header,                "GmapZ", 1,                      NULL, 0x9883, 0x984D,  18.0,   0.0,  579.0, 350.0, 90.0, 0x984D, 0x98AF, 0.0, -6.0, 364.0},
-	{          &audiotape_header,          "GaudiotapeZ", 1,                      NULL, 0x9883, 0x9814,  16.0,   0.0,  428.0,  90.0, 90.0, 0x9814, 0x9885, 0.0, -2.0, 292.0},
-	{          &videotape_header,          "GvideotapeZ", 1,                      NULL, 0x9883, 0x9877,  26.0,   0.0,  753.0,  90.0, 0.0, 0x9877, 0x98CE, 0.0, -8.0, 395.0},
-	{            &dattape_header,            "GdattapeZ", 1,                      NULL, 0x9883, 0x982C,  14.0,   0.0,  387.0,  90.0, 90.0, 0x982C, 0x9898, 0.0, 0.0, 238.0},
-	{          &spooltape_header,          "GspooltapeZ", 1,                      NULL, 0x9883, 0x9869,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x9869, 0x98C4, 0.0, 0.0, 1000.0},
-	{          &microfilm_header,          "GmicrofilmZ", 1,                      NULL, 0x9883, 0x9850,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x9850, 0x98B2, 0.0, 0.0, 1000.0},
-	{          &microcode_header,          "GmicrocodeZ", 1,                      NULL, 0x9883, 0x984F,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x984F, 0x98B1, 0.0, 0.0, 1000.0},
-	{             &lectre_header,             "GlectreZ", 1,                      NULL, 0x9883, 0x9849,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x9849, 0x98AD, 0.0, 0.0, 1000.0},
-	{              &money_header,              "GmoneyZ", 1,                      NULL, 0x9883, 0x9853,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x9853, 0x98B3, 0.0, 0.0, 1000.0},
-	{            &goldbar_header,            "GgoldbarZ", 1,                      NULL, 0x9883, 0x9837,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x9837, 0x98A1, 0.0, 0.0, 1000.0},
-	{             &heroin_header,             "GheroinZ", 1,                      NULL, 0x9883, 0x983F,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x983F, 0x98A7, 0.0, 0.0, 1000.0},
-	{            &keycard_header,            "GkeycardZ", 1,                      NULL, 0x9883, 0x9845,  24.0,   0.0,  556.0,  80.0, 90.0, 0x9845, 0x98AA, 0.0, -6.0, 411.0},
-	{            &keyyale_header,            "GkeyyaleZ", 1,                      NULL, 0x9883, 0x9881,  64.0,   0.0, 1912.0, 260.0, 90.0, 0x9881, 0x98D6, 0.0, -18.0, 1568.0},
-	{            &keybolt_header,            "GkeyboltZ", 1,                      NULL, 0x9883, 0x9819,  78.0,   0.0, 3518.0,  80.0, 90.0, 0x9819, 0x9889, 0.0, -12.0, 2582.0},
-	{       &suit_lf_hand_header,       "Csuit_lf_handZ", 0,     &Csuit_lf_handz_stats, 0x9883, 0x986D,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
-	{             &joypad_header,             "GjoypadZ", 0,             &joypad_stats, 0x9883, 0x9824,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
-	{         NULL              ,                   NULL, 0,    &unused_800337D4_stats, 0x9883, 0x9854,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
-	{         NULL              ,                   NULL, 0,    &unused_80033844_stats, 0x9883, 0x9854,   0.0,   0.0, 1000.0,   0.0, 0.0, 0x9883, 0x9883, 10.0, 10.0, 1000.0},
-	{         NULL              ,                   NULL, 0,    &unused_800338B4_stats, 0x9883, 0x9873,  12.0,   0.0,  528.0,  80.0, 0.0, 0x9873, 0x98CC, 0.0, -4.0, 310.0}
-};
+#include "assets/obseg/gun/gunModelFileRecord.inc.c"
 
 //D:80034C9C
 u32 cartridges_eject = 0;

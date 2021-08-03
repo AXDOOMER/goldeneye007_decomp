@@ -139,7 +139,7 @@ extern struct ModelFileHeader player_gait_object_header;
 extern struct ModelFileHeader wppk_header;
 extern struct ModelFileHeader wppksil_header;
 extern struct ModelFileHeader tt33_header;
-extern struct ModelFileHeader skorpian_header;
+extern struct ModelFileHeader skorpion_header;
 extern struct ModelFileHeader ak47_header;
 extern struct ModelFileHeader uzi_header;
 extern struct ModelFileHeader mp5k_header;
