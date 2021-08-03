@@ -37,7 +37,7 @@ FILEHEADER(laser, 0, skeleton_standard_gun, 0, 0x24, 3, 442.81848, 0, 0xD, 0)
 //D:8003CA00
 FILEHEADER(rocketlaunch, 0, skeleton_standard_gun, 0, 0x24, 3, 566.51208, 0, 0xA, 0)
 //D:8003CA20
-FILEHEADER(knife, 0, skeleton_standard_gun, 0, 0x24, 3, 376.97263, 0, 9, 0)
+#include "assets/obseg/gun/knife/modelFileHeader.inc.c"
 //D:8003CA40
 FILEHEADER(throwknife, 0, skeleton_standard_gun, 0, 0x24, 3, 373.31387, 0, 9, 0)
 //D:8003CA60
@@ -53,7 +53,7 @@ FILEHEADER(trigger, 0, skeleton_standard_gun, 0, 0x24, 4, 283.9006, 0, 0x16, 0)
 //D:8003CB00
 FILEHEADER(grenade, 0, skeleton_standard_gun, 0, 0x24, 3, 427.27081, 0, 5, 0)
 //D:8003CB20
-FILEHEADER(fist, 0, skeleton_standard_gun, 0, 0x24, 3, 243.84764, 0, 0xE, 0)
+#include "assets/obseg/gun/fist/modelFileHeader.inc.c"
 //D:8003CB40
 FILEHEADER(sniperrifle, 0, skeleton_standard_gun, 0, 0x24, 4, 808.03253, 0, 7, 0)
 //D:8003CB60
