@@ -430,7 +430,7 @@ SECTIONS
 
    _romfiles_29d160SegmentStart = ADDR(.romfiles_29d160);
    _romfiles_29d160SegmentRomStart = _romfiles_117880SegmentRomEnd;
-   .romfiles_29d160 _romfiles_29d160SegmentRomStart : AT(_romfiles_29d160SegmentRomStart) {
+   .romfiles_29d160 0x02000000 : AT(_romfiles_29d160SegmentRomStart) {
       build/e/assets/GlobalImageTable.o (.data);
    }
    _romfiles_29d160SegmentEnd = ADDR(.romfiles_29d160) + SIZEOF(.romfiles_29d160);

@@ -44132,9 +44132,46 @@ void if_enabled_reset_clock(void)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F056210(void) {
 
+/* DISPLAY WARNING: Type casts are NOT being printed */
+
+Gfx * sub_GAME_7F056210(Gfx *DL)
+{
+  Gfx *DL;
+  short viGetViewTop();
+  short viGetViewHeight();
+  int iVar3;
+  int iVar4;
+  //float timedivtemp;
+  int hours;
+  float time;
+  
+  if (clock_drawn_flag == 0) {
+    time = clock_time;
+    if (clock_time < 0.0) {
+      time = -clock_time;
+    }
+    //timedivtemp = floorFloat(time / 3600.0);
+    hours = floorFloat(time / 3600.0);
+    //timedivtemp = floorFloat(time / 60.0);
+    iVar4 = floorFloat(time / 60.0) + hours * -0x3c;
+    time = floorFloat((time * 100.0) / 60.0);
+    iVar3 = time + hours * -6000 + iVar4 * -100;
+    DL = microcode_constructor(DL);
+    DL =     display_ammo_total_in_a1(DL, (hours % 100) / 10, 0x82, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
+    DL =     display_ammo_total_in_a1(DL, hours % 10, 0x8a, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
+    DL = some_kind_of_display_routine(DL, ":\n", 0x93, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
+    DL =     display_ammo_total_in_a1(DL, (iVar4 % 0x3c) / 10, 0x9c, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
+    DL =     display_ammo_total_in_a1(DL, iVar4 % 10, 0xa4, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
+    DL = some_kind_of_display_routine(DL, ":\n", 0xad, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
+    DL =     display_ammo_total_in_a1(DL, (iVar3 % 100) / 10, 0xb6, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
+    DL =     display_ammo_total_in_a1(DL, iVar3 % 10, 0xbe, 2, (viGetViewHeight() + viGetViewTop()) - 0x12, 2, 1);
+    DL = combiner_bayer_lod_perspective(DL);
+  }
+  return DL;
 }
+
+
 #else
 GLOBAL_ASM(
 .late_rodata
