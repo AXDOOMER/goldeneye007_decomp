@@ -780,6 +780,11 @@ typedef struct sImageTableEntry {
     u8 pad;
 } sImageTableEntry;
 
+typedef struct ExplosionDetailsRecord {
+    s16 TypeID;
+    s16 Seed[6];
+} ExplosionDetailsRecord;
+
 typedef struct sGlobalImageTable {
     u32 globalDL_0x000[30];
     u32 globalDL_0x078[42];
