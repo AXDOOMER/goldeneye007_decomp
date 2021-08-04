@@ -11,21 +11,21 @@ ModelJoint jointlist_cctv[2] = {
     {0x0002, 0x0003, 0x0003}
 };
 //D:8003A05C
-ModelSkeleton skeleton_cctv = {2, 0, jointlist_cctv, 6, 0};
+ModelSkeleton SKELETON(cctv) = {2, 0, jointlist_cctv, 6, 0};
 
 //D:8003A068
 ModelJoint jointlist_console_one_screen[1] = {
     {0x0002, 0x0000, 0x0000}
 };
 //D:8003A070
-ModelSkeleton skeleton_console_one_screen = {1, 0, jointlist_console_one_screen, 3, 0};
+ModelSkeleton SKELETON(console_one_screen) = {1, 0, jointlist_console_one_screen, 3, 0};
 
 //D:8003A07C
 ModelJoint jointlist_console_four_screen[] = {
     {0x0002, 0x0000, 0x0000}
 };
 //D:8003A084
-ModelSkeleton skeleton_console_four_screen = {1, 0, jointlist_console_four_screen, 3, 0};
+ModelSkeleton SKELETON(console_four_screen) = {1, 0, jointlist_console_four_screen, 3, 0};
 
 //D:8003A090
 ModelJoint jointlist_tv_holder[] = {
@@ -36,7 +36,7 @@ ModelJoint jointlist_tv_holder[] = {
     {0x0002, 0x000C, 0x000C}
 };
 //D:8003A0B0
-ModelSkeleton skeleton_tv_holder = {5, 0, jointlist_tv_holder, 0xF, 0};
+ModelSkeleton SKELETON(tv_holder) = {5, 0, jointlist_tv_holder, 0xF, 0};
 
 //D:8003A0BC
 ModelJoint jointlist_rotating_stuff[] = {
@@ -48,7 +48,7 @@ ModelJoint jointlist_rotating_stuff[] = {
     {0x0002, 0x000F, 0x000F}
 };
 //D:8003A0E0
-ModelSkeleton skeleton_rotating_stuff = {6, 0, jointlist_rotating_stuff, 0x12, 0};
+ModelSkeleton SKELETON(rotating_stuff) = {6, 0, jointlist_rotating_stuff, 0x12, 0};
 
 //D:8003A0EC
 ModelJoint jointlist_eyelid_door[] = {
@@ -57,7 +57,7 @@ ModelJoint jointlist_eyelid_door[] = {
     {0x0002, 0x0006, 0x0006}
 };
 //D:8003A100
-ModelSkeleton skeleton_eyelid_door = {3, 0, jointlist_eyelid_door, 9, 0};
+ModelSkeleton SKELETON(eyelid_door) = {3, 0, jointlist_eyelid_door, 9, 0};
 
 //D:8003A10C
 ModelJoint jointlist_iris_door[] = {
@@ -76,14 +76,14 @@ ModelJoint jointlist_iris_door[] = {
     {0x0002, 0x0024, 0x0024}
 };
 //D:8003A15C
-ModelSkeleton skeleton_iris_door = {0xD, 0, jointlist_iris_door, 0x27, 0};
+ModelSkeleton SKELETON(iris_door) = {0xD, 0, jointlist_iris_door, 0x27, 0};
 
 //D:8003A168
 ModelJoint jointlist_walletbond[] = {
     {0x0002, 0x0000, 0x0000}
 };
 //D:8003A170
-ModelSkeleton skeleton_walletbond = {1, 0, jointlist_walletbond, 3, 0};
+ModelSkeleton SKELETON(walletbond) = {1, 0, jointlist_walletbond, 3, 0};
 
 //D:8003A17C
 ModelJoint jointlist_car[] = {
@@ -94,7 +94,7 @@ ModelJoint jointlist_car[] = {
     {0x0002, 0x000C, 0x000C}
 };
 //D:8003A19C
-ModelSkeleton skeleton_car = {5, 0, jointlist_car, 0xF, 0};
+ModelSkeleton SKELETON(car) = {5, 0, jointlist_car, 0xF, 0};
 
 //D:8003A1A8
 ModelJoint jointlist_flying[] = {
@@ -105,14 +105,14 @@ ModelJoint jointlist_flying[] = {
     {0x0015, 0x0005, 0x0005}
 };
 //D:8003A1C8
-ModelSkeleton skeleton_flying = {5, 0, jointlist_flying, 3, 0};
+ModelSkeleton SKELETON(flying) = {5, 0, jointlist_flying, 3, 0};
 
 //D:8003A1D4
 ModelJoint jointlist_door[] = {
     {0x0002, 0x0000, 0x0000}
 };
 //D:8003A1DC
-ModelSkeleton skeleton_door = {1, 0, jointlist_door, 3, 0};
+ModelSkeleton SKELETON(door) = {1, 0, jointlist_door, 3, 0};
 
 //D:8003A1E8
 ModelJoint jointlist_tank[] = {
@@ -123,14 +123,14 @@ ModelJoint jointlist_tank[] = {
     {0x0002, 0x000C, 0x000C}
 };
 //D:8003A208
-ModelSkeleton skeleton_tank = {5, 0, jointlist_tank, 0xF, 0};
+ModelSkeleton SKELETON(tank) = {5, 0, jointlist_tank, 0xF, 0};
 
 //D:8003A214
 ModelJoint jointlist_hat[] = {
     {0x0015, 0x0000, 0x0000},
 };
 //D:8003A21C
-ModelSkeleton skeleton_hat = {1, 0, jointlist_hat, 0, 0};
+ModelSkeleton SKELETON(hat) = {1, 0, jointlist_hat, 0, 0};
 
 //D:8003A228                     .globl PitemZ_entries
 #include "assets/obseg/prop/propItemModelFileRecord.inc.c"

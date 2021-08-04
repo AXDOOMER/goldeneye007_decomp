@@ -7,7 +7,7 @@ ModelJoint jointlist_standard_object[] = {
     {0x0002, 0x0000, 0x0000}
 };
 //D:8003C4D8
-ModelSkeleton skeleton_standard_object = {1, 0, jointlist_standard_object, 3, 0};
+ModelSkeleton SKELETON(standard_object) = {1, 0, jointlist_standard_object, 3, 0};
 
 //FIXME for rest of this skelton/joint section, the extra s32 between are file split padding most likely, and should be located in source model folder
 //FIXME File split likely
@@ -24,7 +24,7 @@ ModelJoint jointlist_prop_weapon[] = {
     {0x0015, 0x0001, 0x0001}
 };
 //D:8003C4FC
-ModelSkeleton skeleton_prop_weapon = {2, 0, jointlist_prop_weapon, 0, 0};
+ModelSkeleton SKELETON(prop_weapon) = {2, 0, jointlist_prop_weapon, 0, 0};
 
 //FIXME File split likely
 //D:8003C508
@@ -112,7 +112,7 @@ ModelJoint jointlist_suit_lf_hand[] = {
     {0x0015, 0x002F, 0x002F},
 };
 //D:8003C6E4
-ModelSkeleton skeleton_suit_lf_hand = {0x13, 0x0000, jointlist_suit_lf_hand, 0x2D, 0x0000};
+ModelSkeleton SKELETON(suit_lf_hand) = {0x13, 0x0000, jointlist_suit_lf_hand, 0x2D, 0x0000};
 
 //FIXME File split likely
 //D:8003C6F0
@@ -125,7 +125,7 @@ ModelJoint jointlist_standard_gun[] = {
     {0x0002, 0x000C, 0x000C}
 };
 //D:8003C714
-ModelSkeleton skeleton_standard_gun = {0x6, 0x0000, jointlist_standard_gun, 0xF, 0x0000};
+ModelSkeleton SKELETON(standard_gun) = {0x6, 0x0000, jointlist_standard_gun, 0xF, 0x0000};
 
 //FIXME File split likely
 //D:8003C720
@@ -133,7 +133,7 @@ ModelJoint jointlist_gun_unassigned[] = {
     {0x0002, 0x0000, 0x0000}
 };
 //D:8003C728
-ModelSkeleton skeleton_gun_unassigned = {0x1, 0x0000, jointlist_gun_unassigned, 0x3, 0x0000};
+ModelSkeleton SKELETON(gun_unassigned) = {0x1, 0x0000, jointlist_gun_unassigned, 0x3, 0x0000};
 
 //FIXME File split likely
 //D:8003C734
@@ -153,7 +153,7 @@ ModelJoint jointlist_gun_revolver[] = {
     {0x0002, 0x0012, 0x0012}
 };
 //D:8003C76C
-ModelSkeleton skeleton_gun_revolver = {0x7, 0x0000, jointlist_gun_revolver, 0x15, 0x0000};
+ModelSkeleton SKELETON(gun_revolver) = {0x7, 0x0000, jointlist_gun_revolver, 0x15, 0x0000};
 
 //FIXME File split likely
 //D:8003C778
@@ -171,7 +171,7 @@ ModelJoint jointlist_gun_kf7[] = {
     {0x0002, 0x000F, 0x000F}
 };
 //D:8003C7AC
-ModelSkeleton skeleton_gun_kf7 = {0x7, 0x0000, jointlist_gun_kf7, 0x12, 0x0000};
+ModelSkeleton SKELETON(gun_kf7) = {0x7, 0x0000, jointlist_gun_kf7, 0x12, 0x0000};
 
 //FIXME File split likely
 //D:8003C7B8
@@ -203,7 +203,7 @@ ModelJoint jointlist_g_weapon[] = {
 
 
 //D:8003D390
-ModelSkeleton skeleton_g_weapon = {0xD, 0x0, jointlist_g_weapon, 0x27, 0x0};
+ModelSkeleton SKELETON(g_weapon) = {0xD, 0x0, jointlist_g_weapon, 0x27, 0x0};
 
 //FIXME File split likely
 //D:8003D39C
@@ -230,7 +230,7 @@ ModelJoint jointlist_guard[] = {
 
 
 //D:8003D400
-ModelSkeleton skeleton_guard = {0x10, 0x0000, jointlist_guard, 0x2D, 0x0000};
+ModelSkeleton SKELETON(guard) = {0x10, 0x0000, jointlist_guard, 0x2D, 0x0000};
 //D:8003D40C
 
 

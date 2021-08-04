@@ -109,22 +109,22 @@ struct headHat
 
 extern struct ItemModelFileRecord PitemZ_entries[];
 
-extern ModelSkeleton skeleton_cctv;
-extern ModelSkeleton skeleton_console_one_screen;
-extern ModelSkeleton skeleton_console_four_screen;
-extern ModelSkeleton skeleton_tv_holder;
-extern ModelSkeleton skeleton_rotating_stuff;
-extern ModelSkeleton skeleton_eyelid_door;
-extern ModelSkeleton skeleton_iris_door;
-extern ModelSkeleton skeleton_walletbond;
-extern ModelSkeleton skeleton_car;
-extern ModelSkeleton skeleton_flying;
-extern ModelSkeleton skeleton_door;
-extern ModelSkeleton skeleton_tank;
-extern ModelSkeleton skeleton_hat;
-extern ModelSkeleton skeleton_standard_object;
-extern ModelSkeleton skeleton_prop_weapon;
-extern ModelSkeleton skeleton_guard;
+extern ModelSkeleton SKELETON(cctv);
+extern ModelSkeleton SKELETON(console_one_screen);
+extern ModelSkeleton SKELETON(console_four_screen);
+extern ModelSkeleton SKELETON(tv_holder);
+extern ModelSkeleton SKELETON(rotating_stuff);
+extern ModelSkeleton SKELETON(eyelid_door);
+extern ModelSkeleton SKELETON(iris_door);
+extern ModelSkeleton SKELETON(walletbond);
+extern ModelSkeleton SKELETON(car);
+extern ModelSkeleton SKELETON(flying);
+extern ModelSkeleton SKELETON(door);
+extern ModelSkeleton SKELETON(tank);
+extern ModelSkeleton SKELETON(hat);
+extern ModelSkeleton SKELETON(standard_object);
+extern ModelSkeleton SKELETON(prop_weapon);
+extern ModelSkeleton SKELETON(guard);
 extern ModelNode player_gait_hdr;
 extern ModelNode player_gait_pos_hdr_1;
 extern ModelNode player_gait_pos_hdr_2;
@@ -228,7 +228,7 @@ extern struct ModelFileHeader lectre_header;
 extern struct ModelFileHeader money_header;
 extern struct ModelFileHeader goldbar_header;
 extern struct ModelFileHeader heroin_header;
-extern ModelSkeleton skeleton_g_weapon;
+extern ModelSkeleton SKELETON(g_weapon);
 
 extern struct ModelFileHeader camguard_header;
 extern struct ModelFileHeader greyguard_header;
@@ -653,6 +653,6 @@ extern struct ModelFileHeader chrtesttube_header;
 extern struct ModelFileHeader bollard_header;
 
 extern struct ChrModelFileRecord c_item_entries[];
-extern ModelSkeleton skeleton_guard;
-extern ModelSkeleton skeleton_suit_lf_hand;
+extern ModelSkeleton SKELETON(guard);
+extern ModelSkeleton SKELETON(suit_lf_hand);
 #endif
