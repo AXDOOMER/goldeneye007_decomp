@@ -27,7 +27,7 @@ typedef struct StandTileHeaderTail {
 
 typedef struct StandTile {
     u32 name1:24;
-    //u8 name2;
+
     u8 room;    // compared to 0xFF, not -1 in a function. Seen LBUs.
     StandTileHeaderMid headerMid;
 
@@ -37,7 +37,7 @@ typedef struct StandTile {
     StandTileHeaderTail hdrTail;
 
     /* 0x08 */
-    struct StandTilePoint points[1];
+    struct StandTilePoint points[];
 } StandTile;
 
 typedef struct StandFilePoint {
@@ -65,8 +65,8 @@ typedef struct StandFileTile {
 
 typedef struct StandFileHeader {
     void* unk1;
-    StandFileTile* pFirstTile;
-    void* unk2;
+    u32 firstTileOffset;
+    u8 unk2[];
 } StandFileHeader;
 
 // RGB? I've called them 'triple' because I don't really know what RGB is
@@ -110,5 +110,30 @@ typedef s32 (*standTileLocusCallback_C_t)(struct StandTile**, s32, struct StandT
 typedef s32 (*tilePredicate_t)(struct StandTile*);
 
 void stanInitDebugNoticeList(void);
+
+/* Beta definitions, to allow citadel stan in .c file to build into .bin */
+
+typedef struct BetaStandFilePoint {
+    float x;
+    float y;
+    float z;
+    u32 link;
+} BetaStandFilePoint;
+
+typedef struct BetaStandTileHeaderTail {
+    u8 pointCount;
+    u8 headerC;
+    u8 headerD;
+    u8 headerE;
+} BetaStandTileHeaderTail;
+
+typedef struct BetaStandTile {
+    u32 name1:24;
+    u8 room;
+    StandTileHeaderMid headerMid;
+    u16 betaUnknown;
+    BetaStandTileHeaderTail hdrTail;
+    struct BetaStandFilePoint points[];
+} BetaStandTile;
 
 #endif
