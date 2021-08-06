@@ -695,21 +695,21 @@ struct MP_handicap_menu MP_handicap_table[] = {
 };
 
 struct MP_controller_configuration_menu MP_controller_configuration_table[] = {
-    {0x9D15, 0, 1},
-    {0x9D16, 1, 1},
-    {0x9D17, 2, 1},
-    {0x9D18, 3, 1},
-    {0x9D19, 4, 2},
-    {0x9D1A, 5, 2},
-    {0x9D1B, 6, 2},
-    {0x9D1C, 7, 2}
+    {TEXT(LTITLE, 0x115), 0, 1}, //1.1 Honey*
+    {TEXT(LTITLE, 0x116), 1, 1}, //1.2 Solitaire*
+    {TEXT(LTITLE, 0x117), 2, 1}, //1.3 Kissy*
+    {TEXT(LTITLE, 0x118), 3, 1}, //1.4 Goodnight*
+    {TEXT(LTITLE, 0x119), 4, 2}, //2.1 Plenty*
+    {TEXT(LTITLE, 0x11A), 5, 2}, //2.2 Galore*
+    {TEXT(LTITLE, 0x11B), 6, 2}, //2.3 Domino*
+    {TEXT(LTITLE, 0x11C), 7, 2}  //2.4 Goodhead*
 };
 
 struct MP_sight_aim_settings mp_sight_adjust_table[] = {
-    {0x9C48, 0, 0},
-    {0x9C49, 1, 0},
-    {0x9C4A, 0, 1},
-    {0x9C4B, 1, 1}
+    {TEXT(LTITLE, 0x48), 0, 0},
+    {TEXT(LTITLE, 0x49), 1, 0},
+    {TEXT(LTITLE, 0x4A), 0, 1},
+    {TEXT(LTITLE, 0x4B), 1, 1}
 };
 
 s32 selected_num_players = 0;
