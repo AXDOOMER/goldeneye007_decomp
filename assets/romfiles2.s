@@ -1,4 +1,4 @@
-.section .romfiles, "a"
+.section .data, "a"
 .global _GlobalimagetableSegmentRomEnd
 _GlobalimagetableSegmentRomEnd:
 

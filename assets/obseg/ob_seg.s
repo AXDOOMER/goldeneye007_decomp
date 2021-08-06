@@ -1,4 +1,4 @@
-.section .ob_seg, "a"
+.section .data, "a"
 
 
 .macro obseg_file_rz path name
