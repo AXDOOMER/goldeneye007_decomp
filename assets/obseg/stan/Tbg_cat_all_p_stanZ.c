@@ -1,8 +1,8 @@
 /*
 * This file was automatically generated
 * 
-* Thursday, August 5, 2021 7:24:26 AM
-* Getools.Lib: 21.8.5.1
+* Friday, August 6, 2021 4:41:18 PM
+* Getools.Lib: 21.8.6.1
 */
 
 #include "ultra64.h"
