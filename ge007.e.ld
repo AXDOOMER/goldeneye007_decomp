@@ -443,17 +443,37 @@ SECTIONS
    .romfiles_29e560 _romfiles_29e560SegmentRomStart : AT(_romfiles_29e560SegmentRomStart) {
       build/e/assets/romfiles2.o (.romfiles);
       build/e/assets/ramrom/ramrom.o (.ramrom);
-      build/e/assets/font/font.o (.font);
-      build/e/assets/music/music.o (.music);
-      build/e/assets/music/music.o (.musiccompressed);
    }
    _romfiles_29e560SegmentEnd = ADDR(.romfiles_29e560) + SIZEOF(.romfiles_29e560);
    _romfiles_29e560SegmentRomEnd = _romfiles_29e560SegmentRomStart + SIZEOF(.romfiles_29e560);
 
+   _fonttablectlsmall1SegmentStart = ADDR(.fonttablectlsmall1);
+   _fonttablectlsmall1SegmentRomStart = _romfiles_29e560SegmentRomEnd;
+   .fonttablectlsmall1 _fonttablectlsmall1SegmentRomStart : AT(_fonttablectlsmall1SegmentRomStart) {
+      build/e/assets/font/font_first_font_table_controller_small.o (.data);
+   }
+   _fonttablectlsmall1SegmentEnd = ADDR(.fonttablectlsmall1) + SIZEOF(.fonttablectlsmall1);
+   _fonttablectlsmall1SegmentRomEnd = _fonttablectlsmall1SegmentRomStart + SIZEOF(.fonttablectlsmall1);
+
+
+   _fonttablectllarge1SegmentStart = ADDR(.fonttablectllarge1);
+   _fonttablectllarge1SegmentRomStart = _fonttablectlsmall1SegmentRomEnd;
+   .fonttablectllarge1 _fonttablectllarge1SegmentRomStart : AT(_fonttablectllarge1SegmentRomStart) {
+      build/e/assets/font/font_first_font_table_controller_large.o (.data);
+      build/e/assets/music/music.o (.music);
+      build/e/assets/music/music.o (.musiccompressed);
+   }
+   _fonttablectllarge1SegmentEnd = ADDR(.fonttablectllarge1) + SIZEOF(.fonttablectllarge1);
+   _fonttablectllarge1SegmentRomEnd = _fonttablectllarge1SegmentRomStart + SIZEOF(.fonttablectllarge1);
+
+
+
+
+
 
    
    _obsegSegmentStart = ADDR(.obseg);
-   _obsegSegmentRomStart = _romfiles_29e560SegmentRomEnd;
+   _obsegSegmentRomStart = _fonttablectllarge1SegmentRomEnd;
    .obseg _obsegSegmentRomStart : AT(_obsegSegmentRomStart) {
       build/e/assets/obseg/ob_seg.o (.ob_seg);
    }

@@ -437,17 +437,41 @@ SECTIONS
    .romfiles_29e560 _romfiles_29e560SegmentRomStart : AT(_romfiles_29e560SegmentRomStart) {
       build/u/assets/romfiles2.o (.romfiles);
       build/u/assets/ramrom/ramrom.o (.ramrom);
-      build/u/assets/font/font.o (.font);
-      build/u/assets/music/music.o (.music);
-      build/u/assets/music/music.o (.musiccompressed);
    }
    _romfiles_29e560SegmentEnd = ADDR(.romfiles_29e560) + SIZEOF(.romfiles_29e560);
    _romfiles_29e560SegmentRomEnd = _romfiles_29e560SegmentRomStart + SIZEOF(.romfiles_29e560);
 
+   _fonttablectlsmall1SegmentStart = ADDR(.fonttablectlsmall1);
+   _fonttablectlsmall1SegmentRomStart = _romfiles_29e560SegmentRomEnd;
+   .fonttablectlsmall1 _fonttablectlsmall1SegmentRomStart : AT(_fonttablectlsmall1SegmentRomStart) {
+      build/u/assets/font/font_first_font_table_controller_small.o (.data);
+   }
+   _fonttablectlsmall1SegmentEnd = ADDR(.fonttablectlsmall1) + SIZEOF(.fonttablectlsmall1);
+   _fonttablectlsmall1SegmentRomEnd = _fonttablectlsmall1SegmentRomStart + SIZEOF(.fonttablectlsmall1);
+
+
+   _fonttablectllarge1SegmentStart = ADDR(.fonttablectllarge1);
+   _fonttablectllarge1SegmentRomStart = _fonttablectlsmall1SegmentRomEnd;
+   .fonttablectllarge1 _fonttablectllarge1SegmentRomStart : AT(_fonttablectllarge1SegmentRomStart) {
+      build/u/assets/font/font_first_font_table_controller_large.o (.data);
+      build/u/assets/music/music.o (.music);
+      build/u/assets/music/music.o (.musiccompressed);
+   }
+   _fonttablectllarge1SegmentEnd = ADDR(.fonttablectllarge1) + SIZEOF(.fonttablectllarge1);
+   _fonttablectllarge1SegmentRomEnd = _fonttablectllarge1SegmentRomStart + SIZEOF(.fonttablectllarge1);
+
+
+
+
+
+
+
+
+
 
    
    _obsegSegmentStart = ADDR(.obseg);
-   _obsegSegmentRomStart = _romfiles_29e560SegmentRomEnd;
+   _obsegSegmentRomStart = _fonttablectllarge1SegmentRomEnd;
    .obseg _obsegSegmentRomStart : AT(_obsegSegmentRomStart) {
       build/u/assets/obseg/ob_seg.o (.ob_seg);
    }
@@ -4250,8 +4274,8 @@ SECTIONS
       build/u/assets/romfiles2.o (.data);
       build/u/assets/ramrom/ramrom.o (.text);
       build/u/assets/ramrom/ramrom.o (.data);
-      build/u/assets/font/font.o (.text);
-      build/u/assets/font/font.o (.data);
+      
+      
       build/u/assets/music/music.o (.text);
       build/u/assets/music/music.o (.data);
       build/u/assets/obseg/ob_seg.o (.text);
@@ -4269,7 +4293,7 @@ SECTIONS
       build/u/assets/romfiles.o (.bss);
       build/u/assets/romfiles2.o (.bss);
       build/u/assets/ramrom/ramrom.o (.bss);
-      build/u/assets/font/font.o (.bss);
+      
       build/u/assets/music/music.o (.bss);
       build/u/assets/obseg/ob_seg.o (.bss);
       build/u/src/rspboot.o (.bss);
