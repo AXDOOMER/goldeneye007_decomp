@@ -68,7 +68,8 @@ BUILD_SUB_DIRS := \
 	rsp src src/game src/inflate src/libultra assets assets/obseg \
 	assets/obseg/brief assets/obseg/chr assets/obseg/gun assets/obseg/prop \
 	assets/obseg/text assets/obseg/bg assets/obseg/setup assets/obseg/stan \
-	assets/music assets/ramrom assets/images assets/images/split assets/font
+	assets/music assets/ramrom assets/images assets/images/split assets/font \
+	assets/embedded assets/embedded/skeletons assets/embedded/player_gait_object
 # create build directories
 $(shell mkdir -p $(BUILD_DIR))
 $(foreach subdir,$(BUILD_SUB_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(subdir)))
@@ -109,11 +110,13 @@ ROMOBJECTS2 := $(BUILD_DIR)/assets/romfiles2.o
 RAMROM_FILES := assets/ramrom/ramrom.s
 RAMROM_OBJECTS := $(BUILD_DIR)/assets/ramrom/ramrom.o
 
-FONT_FILES := assets/font/font.s
-FONT_OBJECTS := $(BUILD_DIR)/assets/font/font.o
 
-MUSIC_FILES := assets/music/music.s
-MUSIC_OBJECTS := $(BUILD_DIR)/assets/music/music.o
+FONTFILES_C := $(foreach dir,assets/font,$(wildcard $(dir)/*.c))
+FONTOBJECTS := $(foreach file,$(FONTFILES_C),$(BUILD_DIR)/$(file:.c=.o))
+
+
+MUSIC_FILES := $(foreach dir,assets/music,$(wildcard $(dir)/*.s))
+MUSIC_OBJECTS := $(foreach file,$(MUSIC_FILES),$(BUILD_DIR)/$(file:.s=.o))
 
 OBSEG_FILES := assets/obseg/ob_seg.s
 OBSEG_OBJECTS := $(BUILD_DIR)/assets/obseg/ob_seg.o
@@ -125,7 +128,7 @@ IMAGE_OBJS := $(foreach file,$(IMAGE_BINS),$(BUILD_DIR)/$(file:.bin=.o))
 RZFILES := inflate/inflate.c
 RZOBJECTS := $(foreach file,$(RZFILES),$(BUILD_DIR)/src/$(file:.c=.o))
 
-OBJECTS := $(RSPOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(OBSEGMENT) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS)
+OBJECTS := $(RSPOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(OBSEGMENT) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS)
 
 
 
@@ -153,7 +156,7 @@ endif
 .SECONDARY:
 	$(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
-	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) 
+	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) 
 ifeq ($(filter clean dataclean codeclean stanclean print-%,$(MAKECMDGOALS)),)
 
   # Make tools if out of date
@@ -176,13 +179,13 @@ codeclean:
 
 dataclean: 
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
-	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) \
+	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) \
 	$(STAN_BUILD_FILES)
 
 clean:
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
-	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) $(RSPOBJECTS) \
+	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) $(RSPOBJECTS) \
 	$(STAN_BUILD_FILES)
 
 $(BUILD_DIR)/src/libultra/%.o: src/libultra/%.c
@@ -209,8 +212,8 @@ $(BUILD_DIR)/src/rspboot.o: $(BUILD_DIR)/rsp/rspboot.bin
 $(BUILD_DIR)/assets/ramrom/%.o: assets/ramrom/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
-$(BUILD_DIR)/assets/font/%.o: assets/font/%.s
-	$(AS) $(ASFLAGS) -o $@ $<
+$(BUILD_DIR)/assets/font/%.o: assets/font/%.c
+	$(CC) -c $(CFLAGS) -o $@ $(OPTIMIZATION) $<
 
 $(BUILD_DIR)/assets/obseg/%.o: assets/obseg/%.s $(OBSEG_RZ)
 	$(AS) $(ASFLAGS) -o $@ $<
@@ -229,7 +232,7 @@ $(BUILD_DIR)/src/%.o: src/%.c
 $(BUILD_DIR)/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS)
 	
 
-$(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(GLOBALIMAGETABLEOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONT_OBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS)
+$(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(GLOBALIMAGETABLEOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS)
 	$(LD) $(LDFLAGS) -o $@ 
 
 $(APPBIN): $(APPELF)

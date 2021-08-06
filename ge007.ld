@@ -1,49 +1,51 @@
+#define BEGIN_SEG(name, rompos, rampos) \
+	_##name##SegmentStart = ADDR(.name); \
+	_##name##SegmentRomStart = rompos; \
+	.name rampos : AT(rompos)
+
+#define END_SEG(name) \
+	_##name##SegmentEnd = ADDR(.name) + SIZEOF(.name); \
+	_##name##SegmentRomEnd = _##name##SegmentRomStart + SIZEOF(.name);
+
 /*OUTPUT_FORMAT ("elf32-bigmips")*/
 OUTPUT_ARCH (mips)
 
 SECTIONS
 {
 	_romSegmentStart = 0;
+
    /* header */
-   _headerSegmentStart = ADDR(.header);
-   _headerSegmentRomStart = _romSegmentStart;
-   .header 0x04000000 : AT(_romSegmentStart) {
+   BEGIN_SEG(header, _romSegmentStart, 0x04000000)
+   {
       build/u/src/rom_header.o(.data);
    }
-   _headerSegmentEnd =  ADDR(.header) + SIZEOF(.header);
-   _headerSegmentRomEnd = _headerSegmentRomStart + SIZEOF(.header);
+   END_SEG(header)
 
 
 
    /* boot */
-   _bootSegmentStart = ADDR(.boot);
-   _bootSegmentRomStart = _headerSegmentRomEnd;
-   .boot 0x04000040 : AT(_bootSegmentRomStart) {
+   BEGIN_SEG(boot, _headerSegmentRomEnd, 0x04000040)
+   {
       build/u/src/bootcode.o(.text);
    }
-   _bootSegmentEnd = ADDR(.boot) + SIZEOF(.boot);
-   _bootSegmentRomEnd = _bootSegmentRomStart + SIZEOF(.boot);
+   END_SEG(boot)
 
 
 
 
    /* 0x80000400, 0x80000450 */
-   _startSegmentStart = ADDR(.start);
-   _startSegmentRomStart = _bootSegmentRomEnd;
-   _alt_startSegmentRomStart = _startSegmentRomStart + 0x100000;
-   .start 0x80000400 : AT(_startSegmentRomStart) {
+   BEGIN_SEG(start, _bootSegmentRomEnd, 0x80000400)
+   {
       build/u/src/_start.o (.text);
    }
+   END_SEG(start)
+
+
+   _alt_startSegmentRomStart = _startSegmentRomStart + 0x100000;
    _alt_startSegmentStart = _startSegmentStart - 0x10000000 + 0x100000;
-   _startSegmentEnd = ADDR(.start) + SIZEOF(.start);
-   _startSegmentRomEnd = _startSegmentRomStart + SIZEOF(.start);
-
-
 
    /* 0x70000450, 0x70020D90 001050-021990 */
-   _codeSegmentStart = ADDR(.code);
-   _codeSegmentRomStart = _startSegmentRomEnd;
-   .code 0x70000450 : AT(_codeSegmentRomStart) SUBALIGN(16) {
+   BEGIN_SEG(code, _stacksSegmentRomEnd, 0x70000450) SUBALIGN(16) {
       build/u/src/boot.o (.text);
       build/u/src/init.o (.text);
       build/u/src/sched.o (.text);
@@ -251,38 +253,32 @@ SECTIONS
       build/u/src/libultra/ultra80069080.o (.text); /*edited*/
       /*build/u/src/libultra/libultra.a:libultra.o (.text);*/
    }
-   _codeSegmentEnd = ADDR(.code) + SIZEOF(.code);
-   _codeSegmentRomEnd = _codeSegmentRomStart + SIZEOF(.code);
+   END_SEG(code)
 
 
-
-   _cdataSegmentStart = ADDR(.cdata);
-   _cdataSegmentRomStart = _codeSegmentRomEnd;
-   .cdata _cdataSegmentRomStart : AT(_cdataSegmentRomStart) {
+   BEGIN_SEG(cdata, _codeSegmentRomEnd, _codeSegmentRomEnd)
+   {
       build/u/src/c_data_filler.o (.data);
    }
-   _cdataSegmentEnd = ADDR(.cdata) + SIZEOF(.cdata);
-   _cdataSegmentRomEnd = _cdataSegmentRomStart + SIZEOF(.cdata);
-   
+   END_SEG(cdata)
+  
 
 
    /* (0x70200000, 0x702029BC, 0x701CCA70), // 033590-035F4D [29BD] */
-   _inflateSegmentStart = ADDR(.inflate);
-   _inflateSegmentRomStart = _cdataSegmentRomEnd;
-   .inflate 0x70200000 : AT(_inflateSegmentRomStart) {
+   BEGIN_SEG(inflate, _cdataSegmentRomEnd, 0x70200000)
+   {
       build/u/src/inflate/inflate.o (.text);
       build/u/src/inflate/inflate.o (.data);
    }
-   _inflateSegmentEnd = ADDR(.inflate) + SIZEOF(.inflate);
-   _inflateSegmentRomEnd = _inflateSegmentRomStart + SIZEOF(.inflate);
+   END_SEG(inflate)
+
 
 
    
    
    /* (0x7F000000, 0x7F0E2D50, 0x7EFCB4D0), // 034B30-117881 [E2D51] */
-   _gameSegmentStart = ADDR(.game);
-   _gameSegmentRomStart = _inflateSegmentRomEnd;
-   .game 0x7F000000 : AT(_gameSegmentRomStart) {
+   BEGIN_SEG(game, _inflateSegmentRomEnd, 0x7F000000)
+   {
       build/u/src/game/initgamedata.o (.text);
       build/u/src/game/initweaponanigroups.o (.text);
       build/u/src/game/initactorpropstuff.o (.text);
@@ -362,10 +358,10 @@ SECTIONS
       build/u/src/game/debugmenu_08FE00.o (.text);
       build/u/src/game/debugmenu_090490.o (.text);
       build/u/src/game/unk_091080.o (.text);
-      /*build/u/src/game/chraidata.o (.text);*/
-      /*build/u/src/game/pobjdata.o (.text);*/
-      /*build/u/src/game/gobjdata.o (.text);*/
-      /*build/u/src/game/cobjdata.o (.text);*/
+      build/u/src/game/chraidata.o (.text);
+      build/u/src/game/pobjdata.o (.text);
+      build/u/src/game/gobjdata.o (.text);
+      build/u/src/game/cobjdata.o (.text);
       build/u/src/game/cheat_buttons.o (.text);
       build/u/src/game/unk_092890.o (.text);
       build/u/src/game/unk_092E50.o (.text);
@@ -408,60 +404,48 @@ SECTIONS
       build/u/src/game/music_0D2720.o (.text);
       build/u/src/game/spectrum.o (.text);
    }
-   _gameSegmentEnd = ADDR(.game) + SIZEOF(.game);
-   _gameSegmentRomEnd = _gameSegmentRomStart + SIZEOF(.game);
+   END_SEG(game)
 
 
-   _romfiles_117880SegmentStart = ADDR(.romfiles_117880);
-   _romfiles_117880SegmentRomStart = _gameSegmentRomEnd;
-   .romfiles_117880 _romfiles_117880SegmentRomStart : AT(_romfiles_117880SegmentRomStart) {
+   BEGIN_SEG(romfiles_117880, _gameSegmentRomEnd, _romfiles_117880SegmentRomStart)
+   {
       build/u/assets/romfiles.o (.data);
    }
-   _romfiles_117880SegmentEnd = ADDR(.romfiles_117880) + SIZEOF(.romfiles_117880);
-   _romfiles_117880SegmentRomEnd = _romfiles_117880SegmentRomStart + SIZEOF(.romfiles_117880);
+   END_SEG(romfiles_117880)
 
 
-
-   _romfiles_29d160SegmentStart = ADDR(.romfiles_29d160);
-   _romfiles_29d160SegmentRomStart = _romfiles_117880SegmentRomEnd;
-   .romfiles_29d160 0x02000000 : AT(_romfiles_29d160SegmentRomStart) {
+   BEGIN_SEG(romfiles_29d160, _romfiles_117880SegmentRomEnd, 0x02000000)
+   {
       build/u/assets/GlobalImageTable.o (.data);
    }
-   _romfiles_29d160SegmentEnd = ADDR(.romfiles_29d160) + SIZEOF(.romfiles_29d160);
-   _romfiles_29d160SegmentRomEnd = _romfiles_29d160SegmentRomStart + SIZEOF(.romfiles_29d160);
+   END_SEG(romfiles_29d160)
 
 
-
-   _romfiles_29e560SegmentStart = ADDR(.romfiles_29e560);
-   _romfiles_29e560SegmentRomStart = _romfiles_29d160SegmentRomEnd;
-   .romfiles_29e560 _romfiles_29e560SegmentRomStart : AT(_romfiles_29e560SegmentRomStart) {
+   BEGIN_SEG(romfiles_29e560, _romfiles_29d160SegmentRomEnd, _romfiles_29e560SegmentRomStart)
+   {
       build/u/assets/romfiles2.o (.data);
       build/u/assets/ramrom/ramrom.o (.data);
    }
-   _romfiles_29e560SegmentEnd = ADDR(.romfiles_29e560) + SIZEOF(.romfiles_29e560);
-   _romfiles_29e560SegmentRomEnd = _romfiles_29e560SegmentRomStart + SIZEOF(.romfiles_29e560);
+   END_SEG(romfiles_29e560)
 
-   _fonttablectlsmall1SegmentStart = ADDR(.fonttablectlsmall1);
-   _fonttablectlsmall1SegmentRomStart = _romfiles_29e560SegmentRomEnd;
-   .fonttablectlsmall1 _fonttablectlsmall1SegmentRomStart : AT(_fonttablectlsmall1SegmentRomStart) {
+
+
+   BEGIN_SEG(fonttablectlsmall1, _romfiles_29e560SegmentRomEnd, _fonttablectlsmall1SegmentRomStart)
+   {
       build/u/assets/font/font_first_font_table_controller_small.o (.data);
    }
-   _fonttablectlsmall1SegmentEnd = ADDR(.fonttablectlsmall1) + SIZEOF(.fonttablectlsmall1);
-   _fonttablectlsmall1SegmentRomEnd = _fonttablectlsmall1SegmentRomStart + SIZEOF(.fonttablectlsmall1);
+   END_SEG(fonttablectlsmall1)
 
-
-   _fonttablectllarge1SegmentStart = ADDR(.fonttablectllarge1);
-   _fonttablectllarge1SegmentRomStart = _fonttablectlsmall1SegmentRomEnd;
-   .fonttablectllarge1 _fonttablectllarge1SegmentRomStart : AT(_fonttablectllarge1SegmentRomStart) {
+   BEGIN_SEG(fonttablectllarge1, _fonttablectlsmall1SegmentRomEnd, _fonttablectllarge1SegmentRomStart)
+   {
       build/u/assets/font/font_first_font_table_controller_large.o (.data);
    }
-   _fonttablectllarge1SegmentEnd = ADDR(.fonttablectllarge1) + SIZEOF(.fonttablectllarge1);
-   _fonttablectllarge1SegmentRomEnd = _fonttablectllarge1SegmentRomStart + SIZEOF(.fonttablectllarge1);
+   END_SEG(fonttablectllarge1)
 
 
-   _musicfilesSegmentStart = ADDR(.musicfiles);
-   _musicfilesSegmentRomStart = _fonttablectllarge1SegmentRomEnd;
-   .musicfiles _musicfilesSegmentRomStart : AT(_musicfilesSegmentRomStart) {
+
+   BEGIN_SEG(musicfiles, _fonttablectllarge1SegmentRomEnd, _musicfilesSegmentRomStart)
+   {
       build/u/assets/music/sfx.ctl.o (.data);
       build/u/assets/music/sfx.tbl.o (.data);
       build/u/assets/music/instruments.ctl.o (.data);
@@ -469,26 +453,20 @@ SECTIONS
       build/u/assets/music/music.o (.music);
       build/u/assets/music/music.o (.musiccompressed);
    }
-   _musicfilesSegmentEnd = ADDR(.musicfiles) + SIZEOF(.musicfiles);
-   _musicfilesSegmentRomEnd = _musicfilesSegmentRomStart + SIZEOF(.musicfiles);
+   END_SEG(musicfiles)
 
 
 
-   
-   _obsegSegmentStart = ADDR(.obseg);
-   _obsegSegmentRomStart = _musicfilesSegmentRomEnd;
-   .obseg _obsegSegmentRomStart : AT(_obsegSegmentRomStart) {
+   BEGIN_SEG(obseg, _musicfilesSegmentRomEnd, _obsegSegmentRomStart)
+   {
       build/u/assets/obseg/ob_seg.o (.data);
    }
-   _obsegSegmentEnd = ADDR(.obseg) + SIZEOF(.obseg);
-   _obsegSegmentRomEnd = _obsegSegmentRomStart + SIZEOF(.obseg);
+   END_SEG(obseg)
 
 
 
-
-   _imagesSegmentStart = ADDR(.images);
-   _imagesSegmentRomStart = _obsegSegmentRomEnd;
-   .images _imagesSegmentRomStart : AT(_imagesSegmentRomStart) {
+   BEGIN_SEG(images, _obsegSegmentRomEnd, _imagesSegmentRomStart)
+   {
     _image1_start = .;
 	  build/u/assets/images/split/image1.o (.data);
 	_image1_end = .;
@@ -3192,8 +3170,7 @@ SECTIONS
       build/u/assets/images/split/image2698.o (.data);
       build/u/assets/images/split/image2699.o (.data);
    }
-   _imagesSegmentEnd = ADDR(.images) + SIZEOF(.images);
-   _imagesSegmentRomEnd = _imagesSegmentRomStart + SIZEOF(.images);
+   END_SEG(images)
 
 
 
@@ -3203,29 +3180,29 @@ SECTIONS
 
    __csegtempPos = 0xC00000;
    __dataSegmentVaddrStart = _codeSegmentEnd + 0x10000000;
-   _csegmentSegmentStart = ADDR(.csegment);
-   _csegmentSegmentRomStart = __csegtempPos;
-   .csegment __dataSegmentVaddrStart : AT(_csegmentSegmentRomStart) {
+
+   BEGIN_SEG(csegment, __csegtempPos, __dataSegmentVaddrStart)
+   {
       build/u/src/rspboot.o (.text);
       build/u/src/gspboot.o (.text);
       build/u/src/aspboot.o (.text);
       build/u/src/boot.o (.data);
       build/u/src/init.o (.data);
       build/u/src/sched.o (.data);
-      /*build/u/src/osMapTLB.o (.data);*/
+      build/u/src/osMapTLB.o (.data);
       build/u/src/tlb_manage.o (.data);
       build/u/src/tlb_random.o (.data);
-      /*build/u/src/tlb_resolve.o (.data);*/
-      /*build/u/src/tlb_hardwire.o (.data);*/
+      build/u/src/tlb_resolve.o (.data);
+      build/u/src/tlb_hardwire.o (.data);
       build/u/src/audi.o (.data);
       build/u/src/speed_graph.o (.data);
       build/u/src/video.o (.data);
       build/u/src/deb.o (.data);
-      /*build/u/src/tlb_paging.o (.data);*/
-      /*build/u/src/unused_fp.o (.data);*/
+      build/u/src/tlb_paging.o (.data);
+      build/u/src/unused_fp.o (.data);
       build/u/src/deb_print.o (.data);
-      /*build/u/src/debug_getlastRA.o (.data);*/
-      /*build/u/src/ramrom.o (.data);*/
+      build/u/src/debug_getlastRA.o (.data);
+      build/u/src/ramrom.o (.data);
       build/u/src/boss.o (.data);
       build/u/src/music.o (.data);
       build/u/src/snd.o (.data);
@@ -3233,17 +3210,17 @@ SECTIONS
       build/u/src/mema.o (.data);
       build/u/src/random.o (.data);
       build/u/src/token.o (.data);
-      /*build/u/src/str.o (.data);*/
-      /*build/u/src/sprintf.o (.data);*/
-      /*build/u/src/pi.o (.data);*/
+      build/u/src/str.o (.data);
+      build/u/src/sprintf.o (.data);
+      build/u/src/pi.o (.data);
       build/u/src/vi.o (.data);
       build/u/src/debugmenu.o (.data);
       build/u/src/joy.o (.data);
-      /*build/u/src/motor.o (.data);*/
-      /*build/u/src/rmon.o (.data);*/
+      build/u/src/motor.o (.data);
+      build/u/src/rmon.o (.data);
 
- 
-      /*build/u/src/libultra/pirawdma.o (.data);*/
+      /*build/u/src/libultra/osPiRawStartDma.o (.data);*/
+      build/u/src/libultra/pirawdma.o (.data);
       build/u/src/libultra/pigetstat.o (.data);
       build/u/src/libultra/initialize.o (.data);
       build/u/src/libultra/writebackdcacheall.o (.data);
@@ -3251,30 +3228,30 @@ SECTIONS
       build/u/src/libultra/unmaptlb.o (.data);
       build/u/src/libultra/getfpccsr.o (.data);
       build/u/src/libultra/setfpccsr.o (.data);
-      /*build/u/src/libultra/createthread.o (.data);*/
-      /*build/u/src/libultra/startthread.o (.data);*/
-      /*build/u/src/libultra/createmesgqueue.o (.data);*/
+      build/u/src/libultra/createthread.o (.data);
+      build/u/src/libultra/startthread.o (.data);
+      build/u/src/libultra/createmesgqueue.o (.data);
       build/u/src/libultra/parameters.o (.data);
       build/u/src/libultra/stopthread.o (.data);
-      /*build/u/src/libultra/setthreadpri.o (.data);*/
+      build/u/src/libultra/setthreadpri.o (.data);
       build/u/src/libultra/getcount.o (.data);
       build/u/src/libultra/vimgr.o (.data);
       build/u/src/libultra/vitbl.o (.data); /*edited*/
-      /*build/u/src/libultra/seteventmesg.o (.data);*/
-      /*build/u/src/libultra/visetevent.o (.data);*/
+      build/u/src/libultra/seteventmesg.o (.data);
+      build/u/src/libultra/visetevent.o (.data);
       build/u/src/libultra/setintmask.o (.data);
-      /*build/u/src/libultra/recvmesg.o (.data);*/
-      /*build/u/src/libultra/sendmesg.o (.data);*/
-      /*build/u/src/libultra/visetmode.o (.data);*/
+      build/u/src/libultra/recvmesg.o (.data);
+      build/u/src/libultra/sendmesg.o (.data);
+      build/u/src/libultra/visetmode.o (.data);
       build/u/src/libultra/visetxscale.o (.data);
       build/u/src/libultra/visetyscale.o (.data);
       build/u/src/libultra/virepeatline.o (.data);
-      /*build/u/src/libultra/viblack.o (.data);*/
-      /*build/u/src/libultra/sptaskyielded.o (.data);*/
+      build/u/src/libultra/viblack.o (.data);
+      build/u/src/libultra/sptaskyielded.o (.data);
       build/u/src/libultra/dpctr.o (.data);
       build/u/src/libultra/vigetcurrframebuf.o (.data);
       build/u/src/libultra/vigetnextframebuf.o (.data);
-      /*build/u/src/libultra/viswapbuf.o (.data);*/
+      build/u/src/libultra/viswapbuf.o (.data);
       build/u/src/libultra/dpsetstat.o (.data);
       build/u/src/libultra/sptask.o (.data);
       build/u/src/libultra/dpsetnextbuf.o (.data);
@@ -3483,7 +3460,7 @@ SECTIONS
       build/u/src/libultra/vigetcurrframebuf.o (.rodata);
       build/u/src/libultra/vigetnextframebuf.o (.rodata);
       build/u/src/libultra/viswapbuf.o (.rodata);
-	   build/u/src/libultra/dpsetstat.o (.rodata);
+	  build/u/src/libultra/dpsetstat.o (.rodata);
       build/u/src/libultra/sptask.o (.rodata);
       build/u/src/libultra/dpsetnextbuf.o (.rodata);
       build/u/src/libultra/sptaskyield.o (.rodata);
@@ -3877,14 +3854,14 @@ SECTIONS
       build/u/src/gspboot.o (.data);
       build/u/src/aspboot.o (.data);
    }
-   _csegmentSegmentEnd = ADDR(.csegment) + SIZEOF(.csegment);
-   _csegmentSegmentRomEnd = _csegmentSegmentRomStart + SIZEOF(.csegment);
+   END_SEG(csegment)
 
-   __dataSegmentVaddrEnd = _csegmentSegmentRomEnd;
+   _dataSegmentVaddrEnd = _csegmentSegmentRomEnd;
 
-   _bssSegmentStart = ADDR(.bss);
-   _bssSegmentRomStart = _csegmentSegmentRomEnd;
-   .bss _csegmentSegmentEnd : AT(_bssSegmentRomStart){
+
+
+   BEGIN_SEG(bss, _csegmentSegmentRomEnd, _csegmentSegmentEnd)
+   {
       build/u/src/boot.o (.bss);
       build/u/src/init.o (.bss);
       build/u/src/sched.o (.bss);
@@ -4216,34 +4193,30 @@ SECTIONS
       build/u/src/game/music_0D2720.o (.bss);
       build/u/src/game/spectrum.o (.bss);
    }
-   _bssSegmentEnd = ADDR(.bss) + SIZEOF(.bss);
+   END_SEG(bss)
    _bssSegmentSize = SIZEOF(.bss);
-   _bssSegmentRomEnd = _bssSegmentRomStart + SIZEOF(.bss);
 
-   _roombufSegmentStart = ADDR(.roombuf);
-   _roombufSegmentRomStart = _bssSegmentRomEnd;
-   .roombuf _bssSegmentEnd : AT(_roombufSegmentRomStart){
+   BEGIN_SEG(roombuf, _bssSegmentRomEnd, _bssSegmentEnd)
+   {
       build/u/src/game/room_model_buffer.o (.bss);
    }
-   _roombufSegmentEnd = ADDR(.roombuf) + SIZEOF(.roombuf);
-   _roombufSegmentRomEnd = _roombufSegmentRomStart + SIZEOF(.roombuf);
+   END_SEG(roombuf)
 
-   _tlbbufSegmentStart = ADDR(.tlbbuf);
-   _tlbbufSegmentRomStart = _roombufSegmentRomEnd;
-   .tlbbuf _roombufSegmentEnd : AT(_tlbbufSegmentRomStart){
+
+   BEGIN_SEG(tlbbuf, _roombufSegmentRomEnd, _roombufSegmentEnd)
+   {
       build/u/src/tlb_buffer.o (.bss);
    }
-   _tlbbufSegmentEnd = ADDR(.tlbbuf) + SIZEOF(.tlbbuf);
-   _tlbbufSegmentRomEnd = _tlbbufSegmentRomStart + SIZEOF(.tlbbuf);
+   END_SEG(tlbbuf)
 
 
-   _decompbufSegmentStart = ADDR(.decompbuf);
-   _decompbufSegmentRomStart = _tlbbufSegmentRomEnd;
-   .decompbuf 0x80300000 : AT(_decompbufSegmentRomStart){
+   BEGIN_SEG(decompbuf, _tlbbufSegmentRomEnd, 0x80300000)
+   {
       build/u/src/decompressbuffer.o (.bss);
    }
-   _decompbufSegmentEnd = ADDR(.decompbuf) + SIZEOF(.decompbuf);
-   _decompbufSegmentRomEnd = _decompbufSegmentRomStart + SIZEOF(.decompbuf);
+   END_SEG(decompbuf)
+
+
 
    _stacksSegmentStart = ADDR(.stacks);
    _stacksSegmentRomStart = _decompbufSegmentRomEnd;
@@ -4273,6 +4246,36 @@ SECTIONS
       * (.gptab.data);
       * (.reginfo);
       
-
+      build/u/assets/romfiles.o (.text);
+      build/u/assets/romfiles.o (.data);
+      build/u/assets/romfiles2.o (.text);
+      build/u/assets/romfiles2.o (.data);
+      build/u/assets/ramrom/ramrom.o (.text);
+      build/u/assets/ramrom/ramrom.o (.data);
+      
+      
+      build/u/assets/music/music.o (.text);
+      build/u/assets/music/music.o (.data);
+      build/u/assets/obseg/ob_seg.o (.text);
+      build/u/assets/obseg/ob_seg.o (.data);
+      build/u/assets/images/split/*.o (.text);
+      build/u/assets/images/split/*.o (.data);
+      build/u/src/rom_header.o (.text);
+      build/u/src/bootcode.o (.data);
+      build/u/src/_start.o (.data);
+      build/u/src/rspboot.o (.data);
+      build/u/src/_start.o (.rodata);
+      build/u/src/rspboot.o (.rodata);
+      build/u/src/gspboot.o (.rodata);
+      build/u/src/_start.o (.bss);
+      build/u/assets/romfiles.o (.bss);
+      build/u/assets/romfiles2.o (.bss);
+      build/u/assets/ramrom/ramrom.o (.bss);
+      
+      build/u/assets/music/music.o (.bss);
+      build/u/assets/obseg/ob_seg.o (.bss);
+      build/u/src/rspboot.o (.bss);
+      build/u/src/gspboot.o (.bss);
+      build/u/src/aspboot.o (.bss);
 }
 }

@@ -1,4 +1,4 @@
-.section .ramrom
+.section .data
 
 .global _ramromDam1SegmentRomStart
 _ramromDam1SegmentRomStart:

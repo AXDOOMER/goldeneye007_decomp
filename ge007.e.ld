@@ -421,7 +421,7 @@ SECTIONS
    _romfiles_117880SegmentStart = ADDR(.romfiles_117880);
    _romfiles_117880SegmentRomStart = _gameSegmentRomEnd;
    .romfiles_117880 _romfiles_117880SegmentRomStart : AT(_romfiles_117880SegmentRomStart) {
-      build/e/assets/romfiles.o (.romfiles);
+      build/e/assets/romfiles.o (.data);
    }
    _romfiles_117880SegmentEnd = ADDR(.romfiles_117880) + SIZEOF(.romfiles_117880);
    _romfiles_117880SegmentRomEnd = _romfiles_117880SegmentRomStart + SIZEOF(.romfiles_117880);
@@ -441,21 +441,50 @@ SECTIONS
    _romfiles_29e560SegmentStart = ADDR(.romfiles_29e560);
    _romfiles_29e560SegmentRomStart = _romfiles_29d160SegmentRomEnd;
    .romfiles_29e560 _romfiles_29e560SegmentRomStart : AT(_romfiles_29e560SegmentRomStart) {
-      build/e/assets/romfiles2.o (.romfiles);
-      build/e/assets/ramrom/ramrom.o (.ramrom);
-      build/e/assets/font/font.o (.font);
-      build/e/assets/music/music.o (.music);
-      build/e/assets/music/music.o (.musiccompressed);
+      build/e/assets/romfiles2.o (.data);
+      build/e/assets/ramrom/ramrom.o (.data);
    }
    _romfiles_29e560SegmentEnd = ADDR(.romfiles_29e560) + SIZEOF(.romfiles_29e560);
    _romfiles_29e560SegmentRomEnd = _romfiles_29e560SegmentRomStart + SIZEOF(.romfiles_29e560);
 
+   _fonttablectlsmall1SegmentStart = ADDR(.fonttablectlsmall1);
+   _fonttablectlsmall1SegmentRomStart = _romfiles_29e560SegmentRomEnd;
+   .fonttablectlsmall1 _fonttablectlsmall1SegmentRomStart : AT(_fonttablectlsmall1SegmentRomStart) {
+      build/e/assets/font/font_first_font_table_controller_small.o (.data);
+   }
+   _fonttablectlsmall1SegmentEnd = ADDR(.fonttablectlsmall1) + SIZEOF(.fonttablectlsmall1);
+   _fonttablectlsmall1SegmentRomEnd = _fonttablectlsmall1SegmentRomStart + SIZEOF(.fonttablectlsmall1);
+
+
+   _fonttablectllarge1SegmentStart = ADDR(.fonttablectllarge1);
+   _fonttablectllarge1SegmentRomStart = _fonttablectlsmall1SegmentRomEnd;
+   .fonttablectllarge1 _fonttablectllarge1SegmentRomStart : AT(_fonttablectllarge1SegmentRomStart) {
+      build/e/assets/font/font_first_font_table_controller_large.o (.data);
+   }
+   _fonttablectllarge1SegmentEnd = ADDR(.fonttablectllarge1) + SIZEOF(.fonttablectllarge1);
+   _fonttablectllarge1SegmentRomEnd = _fonttablectllarge1SegmentRomStart + SIZEOF(.fonttablectllarge1);
+
+
+   _musicfilesSegmentStart = ADDR(.musicfiles);
+   _musicfilesSegmentRomStart = _fonttablectllarge1SegmentRomEnd;
+   .musicfiles _musicfilesSegmentRomStart : AT(_musicfilesSegmentRomStart) {
+      build/e/assets/music/sfx.ctl.o (.data);
+      build/e/assets/music/sfx.tbl.o (.data);
+      build/e/assets/music/instruments.ctl.o (.data);
+      build/e/assets/music/instruments.tbl.o (.data);
+      build/e/assets/music/music.o (.music);
+      build/e/assets/music/music.o (.musiccompressed);
+   }
+   _musicfilesSegmentEnd = ADDR(.musicfiles) + SIZEOF(.musicfiles);
+   _musicfilesSegmentRomEnd = _musicfilesSegmentRomStart + SIZEOF(.musicfiles);
+
+
 
    
    _obsegSegmentStart = ADDR(.obseg);
-   _obsegSegmentRomStart = _romfiles_29e560SegmentRomEnd;
+   _obsegSegmentRomStart = _musicfilesSegmentRomEnd;
    .obseg _obsegSegmentRomStart : AT(_obsegSegmentRomStart) {
-      build/e/assets/obseg/ob_seg.o (.ob_seg);
+      build/e/assets/obseg/ob_seg.o (.data);
    }
    _obsegSegmentEnd = ADDR(.obseg) + SIZEOF(.obseg);
    _obsegSegmentRomEnd = _obsegSegmentRomStart + SIZEOF(.obseg);
