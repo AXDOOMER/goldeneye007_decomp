@@ -5,30 +5,7 @@
 
 .section .music
 
-.global _sfxctlSegmentRomStart
-_sfxctlSegmentRomStart:
- .incbin "assets/music/sfx.ctl"
-.global _sfxctlSegmentRomEnd
-_sfxctlSegmentRomEnd:
-
-.global _sfxtblSegmentRomStart
-_sfxtblSegmentRomStart:
- .incbin "assets/music/sfx.tbl"
-.global _sfxtblSegmentRomEnd
-_sfxtblSegmentRomEnd:
-
-.global _instrumentsctlSegmentRomStart
-_instrumentsctlSegmentRomStart:
- .incbin "assets/music/instruments.ctl"
-.global _instrumentsctlSegmentRomEnd
-_instrumentsctlSegmentRomEnd:
-
-.global _instrumentstblSegmentRomStart
-_instrumentstblSegmentRomStart:
- .incbin "assets/music/instruments.tbl"
-.global _instrumentstblSegmentRomEnd
-_instrumentstblSegmentRomEnd:
-
+#calculates and stores the total number of music samples
 .global _musicsampletblSegmentRomStart
 _musicsampletblSegmentRomStart:
 .global number_music_samples
@@ -36,6 +13,7 @@ number_music_samples:
  .half (table_music_data_end - number_music_samples)/8
  .half 0x0000
 number_music_samples_end:
+
 
 
 .macro music_table_entry name sized

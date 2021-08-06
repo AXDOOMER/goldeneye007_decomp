@@ -454,24 +454,29 @@ SECTIONS
    _fonttablectllarge1SegmentRomStart = _fonttablectlsmall1SegmentRomEnd;
    .fonttablectllarge1 _fonttablectllarge1SegmentRomStart : AT(_fonttablectllarge1SegmentRomStart) {
       build/u/assets/font/font_first_font_table_controller_large.o (.data);
-      build/u/assets/music/music.o (.music);
-      build/u/assets/music/music.o (.musiccompressed);
    }
    _fonttablectllarge1SegmentEnd = ADDR(.fonttablectllarge1) + SIZEOF(.fonttablectllarge1);
    _fonttablectllarge1SegmentRomEnd = _fonttablectllarge1SegmentRomStart + SIZEOF(.fonttablectllarge1);
 
 
-
-
-
-
-
+   _musicfilesSegmentStart = ADDR(.musicfiles);
+   _musicfilesSegmentRomStart = _fonttablectllarge1SegmentRomEnd;
+   .musicfiles _musicfilesSegmentRomStart : AT(_musicfilesSegmentRomStart) {
+      build/u/assets/music/sfx.ctl.o (.data);
+      build/u/assets/music/sfx.tbl.o (.data);
+      build/u/assets/music/instruments.ctl.o (.data);
+      build/u/assets/music/instruments.tbl.o (.data);
+      build/u/assets/music/music.o (.music);
+      build/u/assets/music/music.o (.musiccompressed);
+   }
+   _musicfilesSegmentEnd = ADDR(.musicfiles) + SIZEOF(.musicfiles);
+   _musicfilesSegmentRomEnd = _musicfilesSegmentRomStart + SIZEOF(.musicfiles);
 
 
 
    
    _obsegSegmentStart = ADDR(.obseg);
-   _obsegSegmentRomStart = _fonttablectllarge1SegmentRomEnd;
+   _obsegSegmentRomStart = _musicfilesSegmentRomEnd;
    .obseg _obsegSegmentRomStart : AT(_obsegSegmentRomStart) {
       build/u/assets/obseg/ob_seg.o (.ob_seg);
    }

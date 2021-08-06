@@ -115,8 +115,8 @@ FONTFILES_C := $(foreach dir,assets/font,$(wildcard $(dir)/*.c))
 FONTOBJECTS := $(foreach file,$(FONTFILES_C),$(BUILD_DIR)/$(file:.c=.o))
 
 
-MUSIC_FILES := assets/music/music.s
-MUSIC_OBJECTS := $(BUILD_DIR)/assets/music/music.o
+MUSIC_FILES := $(foreach dir,assets/music,$(wildcard $(dir)/*.s))
+MUSIC_OBJECTS := $(foreach file,$(MUSIC_FILES),$(BUILD_DIR)/$(file:.s=.o))
 
 OBSEG_FILES := assets/obseg/ob_seg.s
 OBSEG_OBJECTS := $(BUILD_DIR)/assets/obseg/ob_seg.o
