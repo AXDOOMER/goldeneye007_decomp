@@ -10,7 +10,7 @@ Values are stored most significant byte first.
 
 ## Header
 
-The header consists of 4 empty bytes, followed by a 32 bit integer giving the offset to tiles from the start of the file. There are optional bytes between the tile offset number and the start of the tiles, usually an empty 4 bytes.
+The header consists of 4 empty bytes, followed by a 32 bit integer giving the offset to tiles from the start of the file (pointer to first tile). There are optional bytes between the tile offset number and the start of the tiles, usually an empty 4 bytes.
 
 The header is the same for both release and debug.
 
@@ -42,13 +42,12 @@ The remaining field is the "link"
 
 Beta tiles consist of a 96 bit tile description, followed by an array of points.
 
-byte 0-3: (same as regular tile)  
-byte 4: room number (same as regular tile)  
+byte 0-4: pointer to string giving the tile name   
 byte 5 (upper 4 bits): flags or attributes. (same as regular tile)  
 byte 5 (lower 4 bits): Red (same as regular tile)  
 byte 6 (upper 4 bits): Green (same as regular tile)  
 byte 6 (lower 4 bits): Blue (same as regular tile)  
-byte 7-8: unknown 16-bit field.  
+byte 7-8: unknown 16-bit field. This may be the room.  
 byte 9: number of points within the tile  
 
 The remaining 3 fields generally define the most extreme points within the tile (same as regular tile, except one full byte)
@@ -75,8 +74,3 @@ Possible values for tile "flags" or "attributes":
 
 ## Footer
 After the tile list is a standard footer. This consists of 2 null pointers (8 bytes of zero), followed by an 8 character zero terminated string "unstric", followed by 4 more null points (16 bytes of zero).
-
-### Beta Footer
-Beta stan file contains a list of ASCII strings after the footer. Each string is exactly 8 bytes long. The strings give debug names to the tiles defined above.
-
-These strings are not included with regular stan files.

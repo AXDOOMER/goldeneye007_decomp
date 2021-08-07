@@ -65,7 +65,7 @@ typedef struct StandFileTile {
 
 typedef struct StandFileHeader {
     void* unk1;
-    u32 firstTileOffset;
+    StandTile *firstTile;
     u8 unk2[];
 } StandFileHeader;
 
@@ -128,8 +128,7 @@ typedef struct BetaStandTileHeaderTail {
 } BetaStandTileHeaderTail;
 
 typedef struct BetaStandTile {
-    u32 name1:24;
-    u8 room;
+    const char *debugName;
     StandTileHeaderMid headerMid;
     u16 betaUnknown;
     BetaStandTileHeaderTail hdrTail;

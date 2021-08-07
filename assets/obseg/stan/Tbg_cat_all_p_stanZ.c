@@ -1,24 +1,27 @@
 /*
 * This file was automatically generated
 * 
-* Friday, August 6, 2021 4:41:18 PM
-* Getools.Lib: 21.8.6.1
+* Saturday, August 7, 2021 2:39:19 PM
+* Getools.Lib: 21.8.7.1
 */
 
 #include "ultra64.h"
 #include "stan.h"
 
+// forward declarations
+BetaStandTile tile_0;
+
 StandFileHeader Tbg_cat_all_p_stanZ = {
     NULL,
-    0x0000000c,
+    &tile_0,
     {0x00, 0x00, 0x00, 0x00}
 };
 
 BetaStandTile tile_0 = {
-    0x000079, 0x70,
+    "p502a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x2e,
+    0x002e,
     3,
     0x00, 0x01, 0x02,
     {
@@ -29,10 +32,10 @@ BetaStandTile tile_0 = {
 };
 
 BetaStandTile tile_1 = {
-    0x000079, 0x78,
+    "p502a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x2e,
+    0x002e,
     7,
     0x00, 0x05, 0x06,
     {
@@ -47,10 +50,10 @@ BetaStandTile tile_1 = {
 };
 
 BetaStandTile tile_2 = {
-    0x000079, 0x80,
+    "p486a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x2d,
+    0x002d,
     3,
     0x00, 0x01, 0x02,
     {
@@ -61,10 +64,10 @@ BetaStandTile tile_2 = {
 };
 
 BetaStandTile tile_3 = {
-    0x000079, 0x88,
+    "p486a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x2d,
+    0x002d,
     7,
     0x00, 0x05, 0x06,
     {
@@ -79,10 +82,10 @@ BetaStandTile tile_3 = {
 };
 
 BetaStandTile tile_4 = {
-    0x000079, 0x90,
+    "p470a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x2c,
+    0x002c,
     3,
     0x00, 0x01, 0x02,
     {
@@ -93,10 +96,10 @@ BetaStandTile tile_4 = {
 };
 
 BetaStandTile tile_5 = {
-    0x000079, 0x98,
+    "p470a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x2c,
+    0x002c,
     7,
     0x00, 0x05, 0x06,
     {
@@ -111,10 +114,10 @@ BetaStandTile tile_5 = {
 };
 
 BetaStandTile tile_6 = {
-    0x000079, 0xa0,
+    "p323a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x2b,
+    0x002b,
     3,
     0x00, 0x01, 0x02,
     {
@@ -125,10 +128,10 @@ BetaStandTile tile_6 = {
 };
 
 BetaStandTile tile_7 = {
-    0x000079, 0xa8,
+    "p323a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x2b,
+    0x002b,
     7,
     0x00, 0x05, 0x06,
     {
@@ -143,10 +146,10 @@ BetaStandTile tile_7 = {
 };
 
 BetaStandTile tile_8 = {
-    0x000079, 0xb0,
+    "p457a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x2a,
+    0x002a,
     3,
     0x00, 0x01, 0x02,
     {
@@ -157,10 +160,10 @@ BetaStandTile tile_8 = {
 };
 
 BetaStandTile tile_9 = {
-    0x000079, 0xb8,
+    "p457a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x2a,
+    0x002a,
     3,
     0x00, 0x01, 0x02,
     {
@@ -171,10 +174,10 @@ BetaStandTile tile_9 = {
 };
 
 BetaStandTile tile_10 = {
-    0x000079, 0xc0,
+    "p456a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x29,
+    0x0029,
     3,
     0x00, 0x01, 0x02,
     {
@@ -185,10 +188,10 @@ BetaStandTile tile_10 = {
 };
 
 BetaStandTile tile_11 = {
-    0x000079, 0xc8,
+    "p456a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x29,
+    0x0029,
     3,
     0x00, 0x01, 0x02,
     {
@@ -199,10 +202,10 @@ BetaStandTile tile_11 = {
 };
 
 BetaStandTile tile_12 = {
-    0x000079, 0xd0,
+    "p506a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x28,
+    0x0028,
     3,
     0x00, 0x01, 0x02,
     {
@@ -213,10 +216,10 @@ BetaStandTile tile_12 = {
 };
 
 BetaStandTile tile_13 = {
-    0x000079, 0xd8,
+    "p506a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x28,
+    0x0028,
     3,
     0x00, 0x01, 0x02,
     {
@@ -227,10 +230,10 @@ BetaStandTile tile_13 = {
 };
 
 BetaStandTile tile_14 = {
-    0x000079, 0xe0,
+    "p505a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x27,
+    0x0027,
     3,
     0x00, 0x01, 0x02,
     {
@@ -241,10 +244,10 @@ BetaStandTile tile_14 = {
 };
 
 BetaStandTile tile_15 = {
-    0x000079, 0xe8,
+    "p505a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x27,
+    0x0027,
     3,
     0x00, 0x01, 0x02,
     {
@@ -255,10 +258,10 @@ BetaStandTile tile_15 = {
 };
 
 BetaStandTile tile_16 = {
-    0x000079, 0xf0,
+    "p490a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x26,
+    0x0026,
     3,
     0x00, 0x01, 0x02,
     {
@@ -269,10 +272,10 @@ BetaStandTile tile_16 = {
 };
 
 BetaStandTile tile_17 = {
-    0x000079, 0xf8,
+    "p490a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x26,
+    0x0026,
     3,
     0x00, 0x01, 0x02,
     {
@@ -283,10 +286,10 @@ BetaStandTile tile_17 = {
 };
 
 BetaStandTile tile_18 = {
-    0x00007a, 0x00,
+    "p489a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x25,
+    0x0025,
     3,
     0x00, 0x01, 0x02,
     {
@@ -297,10 +300,10 @@ BetaStandTile tile_18 = {
 };
 
 BetaStandTile tile_19 = {
-    0x00007a, 0x08,
+    "p489a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x25,
+    0x0025,
     3,
     0x00, 0x01, 0x02,
     {
@@ -311,10 +314,10 @@ BetaStandTile tile_19 = {
 };
 
 BetaStandTile tile_20 = {
-    0x00007a, 0x10,
+    "p474a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x24,
+    0x0024,
     3,
     0x00, 0x01, 0x02,
     {
@@ -325,10 +328,10 @@ BetaStandTile tile_20 = {
 };
 
 BetaStandTile tile_21 = {
-    0x00007a, 0x18,
+    "p474a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x24,
+    0x0024,
     3,
     0x00, 0x01, 0x02,
     {
@@ -339,10 +342,10 @@ BetaStandTile tile_21 = {
 };
 
 BetaStandTile tile_22 = {
-    0x00007a, 0x20,
+    "p473a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x23,
+    0x0023,
     3,
     0x00, 0x01, 0x02,
     {
@@ -353,10 +356,10 @@ BetaStandTile tile_22 = {
 };
 
 BetaStandTile tile_23 = {
-    0x00007a, 0x28,
+    "p473a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x23,
+    0x0023,
     3,
     0x00, 0x01, 0x02,
     {
@@ -367,10 +370,10 @@ BetaStandTile tile_23 = {
 };
 
 BetaStandTile tile_24 = {
-    0x00007a, 0x30,
+    "p397a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x22,
+    0x0022,
     3,
     0x00, 0x01, 0x02,
     {
@@ -381,10 +384,10 @@ BetaStandTile tile_24 = {
 };
 
 BetaStandTile tile_25 = {
-    0x00007a, 0x38,
+    "p397a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x22,
+    0x0022,
     3,
     0x00, 0x01, 0x02,
     {
@@ -395,10 +398,10 @@ BetaStandTile tile_25 = {
 };
 
 BetaStandTile tile_26 = {
-    0x00007a, 0x40,
+    "p398a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x21,
+    0x0021,
     3,
     0x00, 0x01, 0x02,
     {
@@ -409,10 +412,10 @@ BetaStandTile tile_26 = {
 };
 
 BetaStandTile tile_27 = {
-    0x00007a, 0x48,
+    "p398a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x21,
+    0x0021,
     4,
     0x00, 0x02, 0x03,
     {
@@ -424,10 +427,10 @@ BetaStandTile tile_27 = {
 };
 
 BetaStandTile tile_28 = {
-    0x00007a, 0x50,
+    "p75a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x20,
+    0x0020,
     3,
     0x00, 0x01, 0x02,
     {
@@ -438,10 +441,10 @@ BetaStandTile tile_28 = {
 };
 
 BetaStandTile tile_29 = {
-    0x00007a, 0x58,
+    "p75a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x20,
+    0x0020,
     4,
     0x00, 0x02, 0x03,
     {
@@ -453,10 +456,10 @@ BetaStandTile tile_29 = {
 };
 
 BetaStandTile tile_30 = {
-    0x00007a, 0x60,
+    "p417a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x1f,
+    0x001f,
     4,
     0x00, 0x01, 0x02,
     {
@@ -468,10 +471,10 @@ BetaStandTile tile_30 = {
 };
 
 BetaStandTile tile_31 = {
-    0x00007a, 0x68,
+    "p417a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x1f,
+    0x001f,
     3,
     0x00, 0x01, 0x02,
     {
@@ -482,10 +485,10 @@ BetaStandTile tile_31 = {
 };
 
 BetaStandTile tile_32 = {
-    0x00007a, 0x70,
+    "p441a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x1e,
+    0x001e,
     3,
     0x00, 0x01, 0x02,
     {
@@ -496,10 +499,10 @@ BetaStandTile tile_32 = {
 };
 
 BetaStandTile tile_33 = {
-    0x00007a, 0x78,
+    "p441a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x1e,
+    0x001e,
     4,
     0x00, 0x01, 0x03,
     {
@@ -511,10 +514,10 @@ BetaStandTile tile_33 = {
 };
 
 BetaStandTile tile_34 = {
-    0x00007a, 0x80,
+    "p433a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x1d,
+    0x001d,
     3,
     0x00, 0x01, 0x02,
     {
@@ -525,10 +528,10 @@ BetaStandTile tile_34 = {
 };
 
 BetaStandTile tile_35 = {
-    0x00007a, 0x88,
+    "p433a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x1d,
+    0x001d,
     3,
     0x00, 0x01, 0x02,
     {
@@ -539,10 +542,10 @@ BetaStandTile tile_35 = {
 };
 
 BetaStandTile tile_36 = {
-    0x00007a, 0x90,
+    "p428a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x1c,
+    0x001c,
     5,
     0x00, 0x01, 0x02,
     {
@@ -555,10 +558,10 @@ BetaStandTile tile_36 = {
 };
 
 BetaStandTile tile_37 = {
-    0x00007a, 0x98,
+    "p428a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x1c,
+    0x001c,
     3,
     0x00, 0x01, 0x02,
     {
@@ -569,10 +572,10 @@ BetaStandTile tile_37 = {
 };
 
 BetaStandTile tile_38 = {
-    0x00007a, 0xa0,
+    "p393a2",
     0x0,
     0xd, 0xd, 0xd,
-    0x1b,
+    0x001b,
     3,
     0x00, 0x01, 0x02,
     {
@@ -583,10 +586,10 @@ BetaStandTile tile_38 = {
 };
 
 BetaStandTile tile_39 = {
-    0x00007a, 0xa8,
+    "p393a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x1b,
+    0x001b,
     3,
     0x00, 0x01, 0x02,
     {
@@ -597,10 +600,10 @@ BetaStandTile tile_39 = {
 };
 
 BetaStandTile tile_40 = {
-    0x00007a, 0xb0,
+    "p370a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x1a,
+    0x001a,
     3,
     0x00, 0x01, 0x02,
     {
@@ -611,10 +614,10 @@ BetaStandTile tile_40 = {
 };
 
 BetaStandTile tile_41 = {
-    0x00007a, 0xb8,
+    "p370a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x1a,
+    0x001a,
     4,
     0x00, 0x02, 0x03,
     {
@@ -626,10 +629,10 @@ BetaStandTile tile_41 = {
 };
 
 BetaStandTile tile_42 = {
-    0x00007a, 0xc0,
+    "p423a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x19,
+    0x0019,
     3,
     0x00, 0x01, 0x02,
     {
@@ -640,10 +643,10 @@ BetaStandTile tile_42 = {
 };
 
 BetaStandTile tile_43 = {
-    0x00007a, 0xc8,
+    "p423a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x19,
+    0x0019,
     4,
     0x00, 0x02, 0x03,
     {
@@ -655,10 +658,10 @@ BetaStandTile tile_43 = {
 };
 
 BetaStandTile tile_44 = {
-    0x00007a, 0xd0,
+    "p365a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x18,
+    0x0018,
     4,
     0x00, 0x01, 0x02,
     {
@@ -670,10 +673,10 @@ BetaStandTile tile_44 = {
 };
 
 BetaStandTile tile_45 = {
-    0x00007a, 0xd8,
+    "p365a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x18,
+    0x0018,
     3,
     0x00, 0x01, 0x02,
     {
@@ -684,10 +687,10 @@ BetaStandTile tile_45 = {
 };
 
 BetaStandTile tile_46 = {
-    0x00007a, 0xe0,
+    "p389a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x17,
+    0x0017,
     3,
     0x00, 0x01, 0x02,
     {
@@ -698,10 +701,10 @@ BetaStandTile tile_46 = {
 };
 
 BetaStandTile tile_47 = {
-    0x00007a, 0xe8,
+    "p389a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x17,
+    0x0017,
     4,
     0x00, 0x01, 0x03,
     {
@@ -713,10 +716,10 @@ BetaStandTile tile_47 = {
 };
 
 BetaStandTile tile_48 = {
-    0x00007a, 0xf0,
+    "p346a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x16,
+    0x0016,
     3,
     0x00, 0x01, 0x02,
     {
@@ -727,10 +730,10 @@ BetaStandTile tile_48 = {
 };
 
 BetaStandTile tile_49 = {
-    0x00007a, 0xf8,
+    "p346a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x16,
+    0x0016,
     3,
     0x00, 0x01, 0x02,
     {
@@ -741,10 +744,10 @@ BetaStandTile tile_49 = {
 };
 
 BetaStandTile tile_50 = {
-    0x00007b, 0x00,
+    "p355a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x15,
+    0x0015,
     5,
     0x00, 0x01, 0x02,
     {
@@ -757,10 +760,10 @@ BetaStandTile tile_50 = {
 };
 
 BetaStandTile tile_51 = {
-    0x00007b, 0x08,
+    "p355a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x15,
+    0x0015,
     3,
     0x00, 0x01, 0x02,
     {
@@ -771,10 +774,10 @@ BetaStandTile tile_51 = {
 };
 
 BetaStandTile tile_52 = {
-    0x00007b, 0x10,
+    "p345a2",
     0x0,
     0xd, 0xd, 0xd,
-    0x14,
+    0x0014,
     3,
     0x00, 0x01, 0x02,
     {
@@ -785,10 +788,10 @@ BetaStandTile tile_52 = {
 };
 
 BetaStandTile tile_53 = {
-    0x00007b, 0x18,
+    "p345a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x14,
+    0x0014,
     3,
     0x00, 0x01, 0x02,
     {
@@ -799,10 +802,10 @@ BetaStandTile tile_53 = {
 };
 
 BetaStandTile tile_54 = {
-    0x00007b, 0x20,
+    "p337a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x13,
+    0x0013,
     3,
     0x00, 0x01, 0x02,
     {
@@ -813,10 +816,10 @@ BetaStandTile tile_54 = {
 };
 
 BetaStandTile tile_55 = {
-    0x00007b, 0x28,
+    "p337a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x13,
+    0x0013,
     4,
     0x00, 0x02, 0x03,
     {
@@ -828,10 +831,10 @@ BetaStandTile tile_55 = {
 };
 
 BetaStandTile tile_56 = {
-    0x00007b, 0x30,
+    "p361a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x12,
+    0x0012,
     3,
     0x00, 0x01, 0x02,
     {
@@ -842,10 +845,10 @@ BetaStandTile tile_56 = {
 };
 
 BetaStandTile tile_57 = {
-    0x00007b, 0x38,
+    "p361a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x12,
+    0x0012,
     4,
     0x00, 0x02, 0x03,
     {
@@ -857,10 +860,10 @@ BetaStandTile tile_57 = {
 };
 
 BetaStandTile tile_58 = {
-    0x00007b, 0x40,
+    "p318a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x11,
+    0x0011,
     4,
     0x00, 0x01, 0x02,
     {
@@ -872,10 +875,10 @@ BetaStandTile tile_58 = {
 };
 
 BetaStandTile tile_59 = {
-    0x00007b, 0x48,
+    "p318a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x11,
+    0x0011,
     3,
     0x00, 0x01, 0x02,
     {
@@ -886,10 +889,10 @@ BetaStandTile tile_59 = {
 };
 
 BetaStandTile tile_60 = {
-    0x00007b, 0x50,
+    "p302a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x10,
+    0x0010,
     3,
     0x00, 0x01, 0x02,
     {
@@ -900,10 +903,10 @@ BetaStandTile tile_60 = {
 };
 
 BetaStandTile tile_61 = {
-    0x00007b, 0x58,
+    "p302a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x10,
+    0x0010,
     4,
     0x00, 0x01, 0x03,
     {
@@ -915,10 +918,10 @@ BetaStandTile tile_61 = {
 };
 
 BetaStandTile tile_62 = {
-    0x00007b, 0x60,
+    "p303a2",
     0x0,
     0xa, 0xa, 0xa,
-    0x0f,
+    0x000f,
     3,
     0x00, 0x01, 0x02,
     {
@@ -929,10 +932,10 @@ BetaStandTile tile_62 = {
 };
 
 BetaStandTile tile_63 = {
-    0x00007b, 0x68,
+    "p303a1",
     0x0,
     0xb, 0xb, 0xb,
-    0x0f,
+    0x000f,
     3,
     0x00, 0x01, 0x02,
     {
@@ -943,10 +946,10 @@ BetaStandTile tile_63 = {
 };
 
 BetaStandTile tile_64 = {
-    0x00007b, 0x70,
+    "p308a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x0e,
+    0x000e,
     5,
     0x00, 0x01, 0x02,
     {
@@ -959,10 +962,10 @@ BetaStandTile tile_64 = {
 };
 
 BetaStandTile tile_65 = {
-    0x00007b, 0x78,
+    "p308a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x0e,
+    0x000e,
     3,
     0x00, 0x01, 0x02,
     {
@@ -973,10 +976,10 @@ BetaStandTile tile_65 = {
 };
 
 BetaStandTile tile_66 = {
-    0x00007b, 0x80,
+    "p261a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x0d,
+    0x000d,
     3,
     0x00, 0x01, 0x02,
     {
@@ -987,10 +990,10 @@ BetaStandTile tile_66 = {
 };
 
 BetaStandTile tile_67 = {
-    0x00007b, 0x88,
+    "p261a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x0d,
+    0x000d,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1001,10 +1004,10 @@ BetaStandTile tile_67 = {
 };
 
 BetaStandTile tile_68 = {
-    0x00007b, 0x90,
+    "p85a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x0c,
+    0x000c,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1015,10 +1018,10 @@ BetaStandTile tile_68 = {
 };
 
 BetaStandTile tile_69 = {
-    0x00007b, 0x98,
+    "p85a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x0c,
+    0x000c,
     4,
     0x00, 0x02, 0x03,
     {
@@ -1030,10 +1033,10 @@ BetaStandTile tile_69 = {
 };
 
 BetaStandTile tile_70 = {
-    0x00007b, 0xa0,
+    "p314a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x0b,
+    0x000b,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1044,10 +1047,10 @@ BetaStandTile tile_70 = {
 };
 
 BetaStandTile tile_71 = {
-    0x00007b, 0xa8,
+    "p314a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x0b,
+    0x000b,
     4,
     0x00, 0x02, 0x03,
     {
@@ -1059,10 +1062,10 @@ BetaStandTile tile_71 = {
 };
 
 BetaStandTile tile_72 = {
-    0x00007b, 0xb0,
+    "p76a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x0a,
+    0x000a,
     4,
     0x00, 0x01, 0x02,
     {
@@ -1074,10 +1077,10 @@ BetaStandTile tile_72 = {
 };
 
 BetaStandTile tile_73 = {
-    0x00007b, 0xb8,
+    "p76a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x0a,
+    0x000a,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1088,10 +1091,10 @@ BetaStandTile tile_73 = {
 };
 
 BetaStandTile tile_74 = {
-    0x00007b, 0xc0,
+    "p94a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x09,
+    0x0009,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1102,10 +1105,10 @@ BetaStandTile tile_74 = {
 };
 
 BetaStandTile tile_75 = {
-    0x00007b, 0xc8,
+    "p94a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x09,
+    0x0009,
     4,
     0x00, 0x01, 0x03,
     {
@@ -1117,10 +1120,10 @@ BetaStandTile tile_75 = {
 };
 
 BetaStandTile tile_76 = {
-    0x00007b, 0xd0,
+    "p95a2",
     0x0,
     0xb, 0xb, 0xb,
-    0x08,
+    0x0008,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1131,10 +1134,10 @@ BetaStandTile tile_76 = {
 };
 
 BetaStandTile tile_77 = {
-    0x00007b, 0xd8,
+    "p95a1",
     0x0,
     0xb, 0xb, 0xb,
-    0x08,
+    0x0008,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1145,10 +1148,10 @@ BetaStandTile tile_77 = {
 };
 
 BetaStandTile tile_78 = {
-    0x00007b, 0xe0,
+    "p93a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x07,
+    0x0007,
     5,
     0x00, 0x01, 0x02,
     {
@@ -1161,10 +1164,10 @@ BetaStandTile tile_78 = {
 };
 
 BetaStandTile tile_79 = {
-    0x00007b, 0xe8,
+    "p93a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x07,
+    0x0007,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1175,10 +1178,10 @@ BetaStandTile tile_79 = {
 };
 
 BetaStandTile tile_80 = {
-    0x00007b, 0xf0,
+    "p1119a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1189,10 +1192,10 @@ BetaStandTile tile_80 = {
 };
 
 BetaStandTile tile_81 = {
-    0x00007b, 0xf8,
+    "p1119a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1203,10 +1206,10 @@ BetaStandTile tile_81 = {
 };
 
 BetaStandTile tile_82 = {
-    0x00007c, 0x00,
+    "p1118a",
     0x0,
     0xf, 0xf, 0xf,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1217,10 +1220,10 @@ BetaStandTile tile_82 = {
 };
 
 BetaStandTile tile_83 = {
-    0x00007c, 0x08,
+    "p1117a",
     0x0,
     0xf, 0xf, 0xf,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1231,10 +1234,10 @@ BetaStandTile tile_83 = {
 };
 
 BetaStandTile tile_84 = {
-    0x00007c, 0x10,
+    "p1116a",
     0x0,
     0xf, 0xf, 0xf,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1245,10 +1248,10 @@ BetaStandTile tile_84 = {
 };
 
 BetaStandTile tile_85 = {
-    0x00007c, 0x18,
+    "p1115a",
     0x0,
     0xf, 0xf, 0xf,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1259,10 +1262,10 @@ BetaStandTile tile_85 = {
 };
 
 BetaStandTile tile_86 = {
-    0x00007c, 0x20,
+    "p1104a2",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     4,
     0x00, 0x01, 0x03,
     {
@@ -1274,10 +1277,10 @@ BetaStandTile tile_86 = {
 };
 
 BetaStandTile tile_87 = {
-    0x00007c, 0x28,
+    "p1104a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1288,10 +1291,10 @@ BetaStandTile tile_87 = {
 };
 
 BetaStandTile tile_88 = {
-    0x00007c, 0x30,
+    "p1103a2",
     0x0,
     0xb, 0xb, 0xb,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1302,10 +1305,10 @@ BetaStandTile tile_88 = {
 };
 
 BetaStandTile tile_89 = {
-    0x00007c, 0x38,
+    "p1103a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1316,10 +1319,10 @@ BetaStandTile tile_89 = {
 };
 
 BetaStandTile tile_90 = {
-    0x00007c, 0x40,
+    "p1106a2",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     4,
     0x00, 0x01, 0x03,
     {
@@ -1331,10 +1334,10 @@ BetaStandTile tile_90 = {
 };
 
 BetaStandTile tile_91 = {
-    0x00007c, 0x48,
+    "p1106a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1345,10 +1348,10 @@ BetaStandTile tile_91 = {
 };
 
 BetaStandTile tile_92 = {
-    0x00007c, 0x50,
+    "p1105a2",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1359,10 +1362,10 @@ BetaStandTile tile_92 = {
 };
 
 BetaStandTile tile_93 = {
-    0x00007c, 0x58,
+    "p1105a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1373,10 +1376,10 @@ BetaStandTile tile_93 = {
 };
 
 BetaStandTile tile_94 = {
-    0x00007c, 0x60,
+    "p1099a2",
     0x0,
     0xb, 0xb, 0xb,
-    0x06,
+    0x0006,
     4,
     0x00, 0x01, 0x02,
     {
@@ -1388,10 +1391,10 @@ BetaStandTile tile_94 = {
 };
 
 BetaStandTile tile_95 = {
-    0x00007c, 0x68,
+    "p1099a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1402,10 +1405,10 @@ BetaStandTile tile_95 = {
 };
 
 BetaStandTile tile_96 = {
-    0x00007c, 0x70,
+    "p1101a2",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     4,
     0x00, 0x01, 0x02,
     {
@@ -1417,10 +1420,10 @@ BetaStandTile tile_96 = {
 };
 
 BetaStandTile tile_97 = {
-    0x00007c, 0x78,
+    "p1101a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1431,10 +1434,10 @@ BetaStandTile tile_97 = {
 };
 
 BetaStandTile tile_98 = {
-    0x00007c, 0x80,
+    "p1096a2",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1445,10 +1448,10 @@ BetaStandTile tile_98 = {
 };
 
 BetaStandTile tile_99 = {
-    0x00007c, 0x88,
+    "p1096a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1459,10 +1462,10 @@ BetaStandTile tile_99 = {
 };
 
 BetaStandTile tile_100 = {
-    0x00007c, 0x90,
+    "p1095a2",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     4,
     0x00, 0x01, 0x02,
     {
@@ -1474,10 +1477,10 @@ BetaStandTile tile_100 = {
 };
 
 BetaStandTile tile_101 = {
-    0x00007c, 0x98,
+    "p1095a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1488,10 +1491,10 @@ BetaStandTile tile_101 = {
 };
 
 BetaStandTile tile_102 = {
-    0x00007c, 0xa0,
+    "p1098a2",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1502,10 +1505,10 @@ BetaStandTile tile_102 = {
 };
 
 BetaStandTile tile_103 = {
-    0x00007c, 0xa8,
+    "p1098a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1516,10 +1519,10 @@ BetaStandTile tile_103 = {
 };
 
 BetaStandTile tile_104 = {
-    0x00007c, 0xb0,
+    "p1097a2",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     4,
     0x00, 0x01, 0x02,
     {
@@ -1531,10 +1534,10 @@ BetaStandTile tile_104 = {
 };
 
 BetaStandTile tile_105 = {
-    0x00007c, 0xb8,
+    "p1097a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1545,10 +1548,10 @@ BetaStandTile tile_105 = {
 };
 
 BetaStandTile tile_106 = {
-    0x00007c, 0xc0,
+    "p1092a2",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     6,
     0x00, 0x01, 0x03,
     {
@@ -1562,10 +1565,10 @@ BetaStandTile tile_106 = {
 };
 
 BetaStandTile tile_107 = {
-    0x00007c, 0xc8,
+    "p1092a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     6,
     0x00, 0x01, 0x05,
     {
@@ -1579,10 +1582,10 @@ BetaStandTile tile_107 = {
 };
 
 BetaStandTile tile_108 = {
-    0x00007c, 0xd0,
+    "p1094a2",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     7,
     0x00, 0x01, 0x03,
     {
@@ -1597,10 +1600,10 @@ BetaStandTile tile_108 = {
 };
 
 BetaStandTile tile_109 = {
-    0x00007c, 0xd8,
+    "p1094a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     5,
     0x00, 0x01, 0x04,
     {
@@ -1613,10 +1616,10 @@ BetaStandTile tile_109 = {
 };
 
 BetaStandTile tile_110 = {
-    0x00007c, 0xe0,
+    "p887a2",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1627,10 +1630,10 @@ BetaStandTile tile_110 = {
 };
 
 BetaStandTile tile_111 = {
-    0x00007c, 0xe8,
+    "p887a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1641,10 +1644,10 @@ BetaStandTile tile_111 = {
 };
 
 BetaStandTile tile_112 = {
-    0x00007c, 0xf0,
+    "p885a2",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1655,10 +1658,10 @@ BetaStandTile tile_112 = {
 };
 
 BetaStandTile tile_113 = {
-    0x00007c, 0xf8,
+    "p885a1",
     0x0,
     0x8, 0x8, 0x8,
-    0x06,
+    0x0006,
     5,
     0x00, 0x03, 0x04,
     {
@@ -1671,10 +1674,10 @@ BetaStandTile tile_113 = {
 };
 
 BetaStandTile tile_114 = {
-    0x00007d, 0x00,
+    "p879a2",
     0x0,
     0xd, 0xd, 0xd,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1685,10 +1688,10 @@ BetaStandTile tile_114 = {
 };
 
 BetaStandTile tile_115 = {
-    0x00007d, 0x08,
+    "p879a1",
     0x0,
     0xb, 0xb, 0xb,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1699,10 +1702,10 @@ BetaStandTile tile_115 = {
 };
 
 BetaStandTile tile_116 = {
-    0x00007d, 0x10,
+    "p878a2",
     0x0,
     0x3, 0x3, 0x3,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1713,10 +1716,10 @@ BetaStandTile tile_116 = {
 };
 
 BetaStandTile tile_117 = {
-    0x00007d, 0x18,
+    "p878a1",
     0x0,
     0x3, 0x3, 0x3,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1727,10 +1730,10 @@ BetaStandTile tile_117 = {
 };
 
 BetaStandTile tile_118 = {
-    0x00007d, 0x20,
+    "p877a2",
     0x0,
     0x3, 0x3, 0x3,
-    0x06,
+    0x0006,
     5,
     0x00, 0x01, 0x02,
     {
@@ -1743,10 +1746,10 @@ BetaStandTile tile_118 = {
 };
 
 BetaStandTile tile_119 = {
-    0x00007d, 0x28,
+    "p877a1",
     0x0,
     0x3, 0x3, 0x3,
-    0x06,
+    0x0006,
     5,
     0x00, 0x01, 0x04,
     {
@@ -1759,10 +1762,10 @@ BetaStandTile tile_119 = {
 };
 
 BetaStandTile tile_120 = {
-    0x00007d, 0x30,
+    "p876a2",
     0x0,
     0x5, 0x5, 0x5,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1773,10 +1776,10 @@ BetaStandTile tile_120 = {
 };
 
 BetaStandTile tile_121 = {
-    0x00007d, 0x38,
+    "p876a1",
     0x0,
     0x7, 0x7, 0x7,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1787,10 +1790,10 @@ BetaStandTile tile_121 = {
 };
 
 BetaStandTile tile_122 = {
-    0x00007d, 0x40,
+    "p875a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1801,10 +1804,10 @@ BetaStandTile tile_122 = {
 };
 
 BetaStandTile tile_123 = {
-    0x00007d, 0x48,
+    "p875a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1815,10 +1818,10 @@ BetaStandTile tile_123 = {
 };
 
 BetaStandTile tile_124 = {
-    0x00007d, 0x50,
+    "p874a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x06,
+    0x0006,
     5,
     0x00, 0x01, 0x02,
     {
@@ -1831,10 +1834,10 @@ BetaStandTile tile_124 = {
 };
 
 BetaStandTile tile_125 = {
-    0x00007d, 0x58,
+    "p874a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x06,
+    0x0006,
     5,
     0x00, 0x01, 0x04,
     {
@@ -1847,10 +1850,10 @@ BetaStandTile tile_125 = {
 };
 
 BetaStandTile tile_126 = {
-    0x00007d, 0x60,
+    "p873a2",
     0x0,
     0x6, 0x6, 0x6,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1861,10 +1864,10 @@ BetaStandTile tile_126 = {
 };
 
 BetaStandTile tile_127 = {
-    0x00007d, 0x68,
+    "p873a1",
     0x0,
     0x9, 0x9, 0x9,
-    0x06,
+    0x0006,
     5,
     0x00, 0x03, 0x04,
     {
@@ -1877,10 +1880,10 @@ BetaStandTile tile_127 = {
 };
 
 BetaStandTile tile_128 = {
-    0x00007d, 0x70,
+    "p872a2",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1891,10 +1894,10 @@ BetaStandTile tile_128 = {
 };
 
 BetaStandTile tile_129 = {
-    0x00007d, 0x78,
+    "p872a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1905,10 +1908,10 @@ BetaStandTile tile_129 = {
 };
 
 BetaStandTile tile_130 = {
-    0x00007d, 0x80,
+    "p871a2",
     0x0,
     0xb, 0xb, 0xb,
-    0x06,
+    0x0006,
     5,
     0x00, 0x01, 0x04,
     {
@@ -1921,10 +1924,10 @@ BetaStandTile tile_130 = {
 };
 
 BetaStandTile tile_131 = {
-    0x00007d, 0x88,
+    "p871a1",
     0x0,
     0xb, 0xb, 0xb,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1935,10 +1938,10 @@ BetaStandTile tile_131 = {
 };
 
 BetaStandTile tile_132 = {
-    0x00007d, 0x90,
+    "p870a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1949,10 +1952,10 @@ BetaStandTile tile_132 = {
 };
 
 BetaStandTile tile_133 = {
-    0x00007d, 0x98,
+    "p870a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1963,10 +1966,10 @@ BetaStandTile tile_133 = {
 };
 
 BetaStandTile tile_134 = {
-    0x00007d, 0xa0,
+    "p869a2",
     0x0,
     0x8, 0x8, 0x8,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1977,10 +1980,10 @@ BetaStandTile tile_134 = {
 };
 
 BetaStandTile tile_135 = {
-    0x00007d, 0xa8,
+    "p869a1",
     0x0,
     0x8, 0x8, 0x8,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -1991,10 +1994,10 @@ BetaStandTile tile_135 = {
 };
 
 BetaStandTile tile_136 = {
-    0x00007d, 0xb0,
+    "p868a2",
     0x0,
     0x3, 0x3, 0x3,
-    0x06,
+    0x0006,
     5,
     0x00, 0x01, 0x04,
     {
@@ -2007,10 +2010,10 @@ BetaStandTile tile_136 = {
 };
 
 BetaStandTile tile_137 = {
-    0x00007d, 0xb8,
+    "p868a1",
     0x0,
     0x3, 0x3, 0x3,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2021,10 +2024,10 @@ BetaStandTile tile_137 = {
 };
 
 BetaStandTile tile_138 = {
-    0x00007d, 0xc0,
+    "p881a2",
     0x0,
     0x7, 0x7, 0x7,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2035,10 +2038,10 @@ BetaStandTile tile_138 = {
 };
 
 BetaStandTile tile_139 = {
-    0x00007d, 0xc8,
+    "p881a1",
     0x0,
     0x8, 0x8, 0x8,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2049,10 +2052,10 @@ BetaStandTile tile_139 = {
 };
 
 BetaStandTile tile_140 = {
-    0x00007d, 0xd0,
+    "p860a2",
     0x0,
     0x9, 0x9, 0x9,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2063,10 +2066,10 @@ BetaStandTile tile_140 = {
 };
 
 BetaStandTile tile_141 = {
-    0x00007d, 0xd8,
+    "p860a1",
     0x0,
     0xb, 0xb, 0xb,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2077,10 +2080,10 @@ BetaStandTile tile_141 = {
 };
 
 BetaStandTile tile_142 = {
-    0x00007d, 0xe0,
+    "p857a2",
     0x0,
     0x8, 0x8, 0x8,
-    0x06,
+    0x0006,
     4,
     0x00, 0x01, 0x02,
     {
@@ -2092,10 +2095,10 @@ BetaStandTile tile_142 = {
 };
 
 BetaStandTile tile_143 = {
-    0x00007d, 0xe8,
+    "p857a1",
     0x0,
     0x9, 0x9, 0x9,
-    0x06,
+    0x0006,
     4,
     0x00, 0x01, 0x03,
     {
@@ -2107,10 +2110,10 @@ BetaStandTile tile_143 = {
 };
 
 BetaStandTile tile_144 = {
-    0x00007d, 0xf0,
+    "p850a2",
     0x0,
     0xb, 0xb, 0xb,
-    0x06,
+    0x0006,
     4,
     0x00, 0x01, 0x03,
     {
@@ -2122,10 +2125,10 @@ BetaStandTile tile_144 = {
 };
 
 BetaStandTile tile_145 = {
-    0x00007d, 0xf8,
+    "p850a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     6,
     0x00, 0x02, 0x05,
     {
@@ -2139,10 +2142,10 @@ BetaStandTile tile_145 = {
 };
 
 BetaStandTile tile_146 = {
-    0x00007e, 0x00,
+    "p849a2",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2153,10 +2156,10 @@ BetaStandTile tile_146 = {
 };
 
 BetaStandTile tile_147 = {
-    0x00007e, 0x08,
+    "p849a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     5,
     0x00, 0x03, 0x04,
     {
@@ -2169,10 +2172,10 @@ BetaStandTile tile_147 = {
 };
 
 BetaStandTile tile_148 = {
-    0x00007e, 0x10,
+    "p843a2",
     0x0,
     0x9, 0x9, 0x9,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2183,10 +2186,10 @@ BetaStandTile tile_148 = {
 };
 
 BetaStandTile tile_149 = {
-    0x00007e, 0x18,
+    "p843a1",
     0x0,
     0x8, 0x8, 0x8,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2197,10 +2200,10 @@ BetaStandTile tile_149 = {
 };
 
 BetaStandTile tile_150 = {
-    0x00007e, 0x20,
+    "p888a2",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2211,10 +2214,10 @@ BetaStandTile tile_150 = {
 };
 
 BetaStandTile tile_151 = {
-    0x00007e, 0x28,
+    "p888a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x06,
+    0x0006,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2225,10 +2228,10 @@ BetaStandTile tile_151 = {
 };
 
 BetaStandTile tile_152 = {
-    0x00007e, 0x30,
+    "p1213a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x05,
+    0x0005,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2239,10 +2242,10 @@ BetaStandTile tile_152 = {
 };
 
 BetaStandTile tile_153 = {
-    0x00007e, 0x38,
+    "p1213a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x05,
+    0x0005,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2253,10 +2256,10 @@ BetaStandTile tile_153 = {
 };
 
 BetaStandTile tile_154 = {
-    0x00007e, 0x40,
+    "p1212a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x05,
+    0x0005,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2267,10 +2270,10 @@ BetaStandTile tile_154 = {
 };
 
 BetaStandTile tile_155 = {
-    0x00007e, 0x48,
+    "p1212a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x05,
+    0x0005,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2281,10 +2284,10 @@ BetaStandTile tile_155 = {
 };
 
 BetaStandTile tile_156 = {
-    0x00007e, 0x50,
+    "p1211a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x05,
+    0x0005,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2295,10 +2298,10 @@ BetaStandTile tile_156 = {
 };
 
 BetaStandTile tile_157 = {
-    0x00007e, 0x58,
+    "p1211a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x05,
+    0x0005,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2309,10 +2312,10 @@ BetaStandTile tile_157 = {
 };
 
 BetaStandTile tile_158 = {
-    0x00007e, 0x60,
+    "p1210a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x05,
+    0x0005,
     7,
     0x00, 0x01, 0x04,
     {
@@ -2327,10 +2330,10 @@ BetaStandTile tile_158 = {
 };
 
 BetaStandTile tile_159 = {
-    0x00007e, 0x68,
+    "p1210a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x05,
+    0x0005,
     7,
     0x00, 0x03, 0x06,
     {
@@ -2345,10 +2348,10 @@ BetaStandTile tile_159 = {
 };
 
 BetaStandTile tile_160 = {
-    0x00007e, 0x70,
+    "p83a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x05,
+    0x0005,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2359,10 +2362,10 @@ BetaStandTile tile_160 = {
 };
 
 BetaStandTile tile_161 = {
-    0x00007e, 0x78,
+    "p83a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x05,
+    0x0005,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2373,10 +2376,10 @@ BetaStandTile tile_161 = {
 };
 
 BetaStandTile tile_162 = {
-    0x00007e, 0x80,
+    "p1294a",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2387,10 +2390,10 @@ BetaStandTile tile_162 = {
 };
 
 BetaStandTile tile_163 = {
-    0x00007e, 0x88,
+    "p1293a",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2401,10 +2404,10 @@ BetaStandTile tile_163 = {
 };
 
 BetaStandTile tile_164 = {
-    0x00007e, 0x90,
+    "p1292a",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2415,10 +2418,10 @@ BetaStandTile tile_164 = {
 };
 
 BetaStandTile tile_165 = {
-    0x00007e, 0x98,
+    "p1291a",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2429,10 +2432,10 @@ BetaStandTile tile_165 = {
 };
 
 BetaStandTile tile_166 = {
-    0x00007e, 0xa0,
+    "p1290a",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2443,10 +2446,10 @@ BetaStandTile tile_166 = {
 };
 
 BetaStandTile tile_167 = {
-    0x00007e, 0xa8,
+    "p1289a",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2457,10 +2460,10 @@ BetaStandTile tile_167 = {
 };
 
 BetaStandTile tile_168 = {
-    0x00007e, 0xb0,
+    "p1288a",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2471,10 +2474,10 @@ BetaStandTile tile_168 = {
 };
 
 BetaStandTile tile_169 = {
-    0x00007e, 0xb8,
+    "p1287a",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     4,
     0x00, 0x01, 0x02,
     {
@@ -2486,10 +2489,10 @@ BetaStandTile tile_169 = {
 };
 
 BetaStandTile tile_170 = {
-    0x00007e, 0xc0,
+    "p1286a",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2500,10 +2503,10 @@ BetaStandTile tile_170 = {
 };
 
 BetaStandTile tile_171 = {
-    0x00007e, 0xc8,
+    "p1285a",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2514,10 +2517,10 @@ BetaStandTile tile_171 = {
 };
 
 BetaStandTile tile_172 = {
-    0x00007e, 0xd0,
+    "p1284a",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2528,10 +2531,10 @@ BetaStandTile tile_172 = {
 };
 
 BetaStandTile tile_173 = {
-    0x00007e, 0xd8,
+    "p1283a",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2542,10 +2545,10 @@ BetaStandTile tile_173 = {
 };
 
 BetaStandTile tile_174 = {
-    0x00007e, 0xe0,
+    "p538a",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2556,10 +2559,10 @@ BetaStandTile tile_174 = {
 };
 
 BetaStandTile tile_175 = {
-    0x00007e, 0xe8,
+    "p537a",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     5,
     0x00, 0x01, 0x02,
     {
@@ -2572,10 +2575,10 @@ BetaStandTile tile_175 = {
 };
 
 BetaStandTile tile_176 = {
-    0x00007e, 0xf0,
+    "p536a",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2586,10 +2589,10 @@ BetaStandTile tile_176 = {
 };
 
 BetaStandTile tile_177 = {
-    0x00007e, 0xf8,
+    "p535a",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2600,10 +2603,10 @@ BetaStandTile tile_177 = {
 };
 
 BetaStandTile tile_178 = {
-    0x00007f, 0x00,
+    "p534a",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2614,10 +2617,10 @@ BetaStandTile tile_178 = {
 };
 
 BetaStandTile tile_179 = {
-    0x00007f, 0x08,
+    "p533a",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2628,10 +2631,10 @@ BetaStandTile tile_179 = {
 };
 
 BetaStandTile tile_180 = {
-    0x00007f, 0x10,
+    "p532a",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2642,10 +2645,10 @@ BetaStandTile tile_180 = {
 };
 
 BetaStandTile tile_181 = {
-    0x00007f, 0x18,
+    "p531a",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     6,
     0x00, 0x01, 0x05,
     {
@@ -2659,10 +2662,10 @@ BetaStandTile tile_181 = {
 };
 
 BetaStandTile tile_182 = {
-    0x00007f, 0x20,
+    "p530a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2673,10 +2676,10 @@ BetaStandTile tile_182 = {
 };
 
 BetaStandTile tile_183 = {
-    0x00007f, 0x28,
+    "p530a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     5,
     0x00, 0x01, 0x04,
     {
@@ -2689,10 +2692,10 @@ BetaStandTile tile_183 = {
 };
 
 BetaStandTile tile_184 = {
-    0x00007f, 0x30,
+    "p529a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2703,10 +2706,10 @@ BetaStandTile tile_184 = {
 };
 
 BetaStandTile tile_185 = {
-    0x00007f, 0x38,
+    "p529a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2717,10 +2720,10 @@ BetaStandTile tile_185 = {
 };
 
 BetaStandTile tile_186 = {
-    0x00007f, 0x40,
+    "p528a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2731,10 +2734,10 @@ BetaStandTile tile_186 = {
 };
 
 BetaStandTile tile_187 = {
-    0x00007f, 0x48,
+    "p528a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2745,10 +2748,10 @@ BetaStandTile tile_187 = {
 };
 
 BetaStandTile tile_188 = {
-    0x00007f, 0x50,
+    "p527a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2759,10 +2762,10 @@ BetaStandTile tile_188 = {
 };
 
 BetaStandTile tile_189 = {
-    0x00007f, 0x58,
+    "p527a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2773,10 +2776,10 @@ BetaStandTile tile_189 = {
 };
 
 BetaStandTile tile_190 = {
-    0x00007f, 0x60,
+    "p526a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2787,10 +2790,10 @@ BetaStandTile tile_190 = {
 };
 
 BetaStandTile tile_191 = {
-    0x00007f, 0x68,
+    "p526a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2801,10 +2804,10 @@ BetaStandTile tile_191 = {
 };
 
 BetaStandTile tile_192 = {
-    0x00007f, 0x70,
+    "p525a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2815,10 +2818,10 @@ BetaStandTile tile_192 = {
 };
 
 BetaStandTile tile_193 = {
-    0x00007f, 0x78,
+    "p525a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2829,10 +2832,10 @@ BetaStandTile tile_193 = {
 };
 
 BetaStandTile tile_194 = {
-    0x00007f, 0x80,
+    "p524a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     4,
     0x00, 0x01, 0x03,
     {
@@ -2844,10 +2847,10 @@ BetaStandTile tile_194 = {
 };
 
 BetaStandTile tile_195 = {
-    0x00007f, 0x88,
+    "p524a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     4,
     0x00, 0x01, 0x03,
     {
@@ -2859,10 +2862,10 @@ BetaStandTile tile_195 = {
 };
 
 BetaStandTile tile_196 = {
-    0x00007f, 0x90,
+    "p523a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2873,10 +2876,10 @@ BetaStandTile tile_196 = {
 };
 
 BetaStandTile tile_197 = {
-    0x00007f, 0x98,
+    "p523a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2887,10 +2890,10 @@ BetaStandTile tile_197 = {
 };
 
 BetaStandTile tile_198 = {
-    0x00007f, 0xa0,
+    "p522a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2901,10 +2904,10 @@ BetaStandTile tile_198 = {
 };
 
 BetaStandTile tile_199 = {
-    0x00007f, 0xa8,
+    "p522a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2915,10 +2918,10 @@ BetaStandTile tile_199 = {
 };
 
 BetaStandTile tile_200 = {
-    0x00007f, 0xb0,
+    "p521a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2929,10 +2932,10 @@ BetaStandTile tile_200 = {
 };
 
 BetaStandTile tile_201 = {
-    0x00007f, 0xb8,
+    "p521a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2943,10 +2946,10 @@ BetaStandTile tile_201 = {
 };
 
 BetaStandTile tile_202 = {
-    0x00007f, 0xc0,
+    "p520a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2957,10 +2960,10 @@ BetaStandTile tile_202 = {
 };
 
 BetaStandTile tile_203 = {
-    0x00007f, 0xc8,
+    "p520a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2971,10 +2974,10 @@ BetaStandTile tile_203 = {
 };
 
 BetaStandTile tile_204 = {
-    0x00007f, 0xd0,
+    "p519a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -2985,10 +2988,10 @@ BetaStandTile tile_204 = {
 };
 
 BetaStandTile tile_205 = {
-    0x00007f, 0xd8,
+    "p519a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     5,
     0x00, 0x01, 0x04,
     {
@@ -3001,10 +3004,10 @@ BetaStandTile tile_205 = {
 };
 
 BetaStandTile tile_206 = {
-    0x00007f, 0xe0,
+    "p518a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3015,10 +3018,10 @@ BetaStandTile tile_206 = {
 };
 
 BetaStandTile tile_207 = {
-    0x00007f, 0xe8,
+    "p518a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x04,
+    0x0004,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3029,10 +3032,10 @@ BetaStandTile tile_207 = {
 };
 
 BetaStandTile tile_208 = {
-    0x00007f, 0xf0,
+    "p1282a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3043,10 +3046,10 @@ BetaStandTile tile_208 = {
 };
 
 BetaStandTile tile_209 = {
-    0x00007f, 0xf8,
+    "p1281a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3057,10 +3060,10 @@ BetaStandTile tile_209 = {
 };
 
 BetaStandTile tile_210 = {
-    0x000080, 0x00,
+    "p1280a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3071,10 +3074,10 @@ BetaStandTile tile_210 = {
 };
 
 BetaStandTile tile_211 = {
-    0x000080, 0x08,
+    "p1279a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3085,10 +3088,10 @@ BetaStandTile tile_211 = {
 };
 
 BetaStandTile tile_212 = {
-    0x000080, 0x10,
+    "p1278a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3099,10 +3102,10 @@ BetaStandTile tile_212 = {
 };
 
 BetaStandTile tile_213 = {
-    0x000080, 0x18,
+    "p1277a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3113,10 +3116,10 @@ BetaStandTile tile_213 = {
 };
 
 BetaStandTile tile_214 = {
-    0x000080, 0x20,
+    "p1276a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3127,10 +3130,10 @@ BetaStandTile tile_214 = {
 };
 
 BetaStandTile tile_215 = {
-    0x000080, 0x28,
+    "p1275a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3141,10 +3144,10 @@ BetaStandTile tile_215 = {
 };
 
 BetaStandTile tile_216 = {
-    0x000080, 0x30,
+    "p1274a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3155,10 +3158,10 @@ BetaStandTile tile_216 = {
 };
 
 BetaStandTile tile_217 = {
-    0x000080, 0x38,
+    "p1273a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3169,10 +3172,10 @@ BetaStandTile tile_217 = {
 };
 
 BetaStandTile tile_218 = {
-    0x000080, 0x40,
+    "p1272a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3183,10 +3186,10 @@ BetaStandTile tile_218 = {
 };
 
 BetaStandTile tile_219 = {
-    0x000080, 0x48,
+    "p1271a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3197,10 +3200,10 @@ BetaStandTile tile_219 = {
 };
 
 BetaStandTile tile_220 = {
-    0x000080, 0x50,
+    "p1270a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3211,10 +3214,10 @@ BetaStandTile tile_220 = {
 };
 
 BetaStandTile tile_221 = {
-    0x000080, 0x58,
+    "p1269a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3225,10 +3228,10 @@ BetaStandTile tile_221 = {
 };
 
 BetaStandTile tile_222 = {
-    0x000080, 0x60,
+    "p1268a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     4,
     0x00, 0x01, 0x03,
     {
@@ -3240,10 +3243,10 @@ BetaStandTile tile_222 = {
 };
 
 BetaStandTile tile_223 = {
-    0x000080, 0x68,
+    "p1267a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3254,10 +3257,10 @@ BetaStandTile tile_223 = {
 };
 
 BetaStandTile tile_224 = {
-    0x000080, 0x70,
+    "p1266a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3268,10 +3271,10 @@ BetaStandTile tile_224 = {
 };
 
 BetaStandTile tile_225 = {
-    0x000080, 0x78,
+    "p1265a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3282,10 +3285,10 @@ BetaStandTile tile_225 = {
 };
 
 BetaStandTile tile_226 = {
-    0x000080, 0x80,
+    "p1264a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     4,
     0x00, 0x01, 0x03,
     {
@@ -3297,10 +3300,10 @@ BetaStandTile tile_226 = {
 };
 
 BetaStandTile tile_227 = {
-    0x000080, 0x88,
+    "p1263a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3311,10 +3314,10 @@ BetaStandTile tile_227 = {
 };
 
 BetaStandTile tile_228 = {
-    0x000080, 0x90,
+    "p1262a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3325,10 +3328,10 @@ BetaStandTile tile_228 = {
 };
 
 BetaStandTile tile_229 = {
-    0x000080, 0x98,
+    "p1261a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     4,
     0x00, 0x01, 0x02,
     {
@@ -3340,10 +3343,10 @@ BetaStandTile tile_229 = {
 };
 
 BetaStandTile tile_230 = {
-    0x000080, 0xa0,
+    "p1260a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3354,10 +3357,10 @@ BetaStandTile tile_230 = {
 };
 
 BetaStandTile tile_231 = {
-    0x000080, 0xa8,
+    "p1259a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     4,
     0x00, 0x02, 0x03,
     {
@@ -3369,10 +3372,10 @@ BetaStandTile tile_231 = {
 };
 
 BetaStandTile tile_232 = {
-    0x000080, 0xb0,
+    "p1258a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     5,
     0x00, 0x03, 0x04,
     {
@@ -3385,10 +3388,10 @@ BetaStandTile tile_232 = {
 };
 
 BetaStandTile tile_233 = {
-    0x000080, 0xb8,
+    "p1257a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3399,10 +3402,10 @@ BetaStandTile tile_233 = {
 };
 
 BetaStandTile tile_234 = {
-    0x000080, 0xc0,
+    "p1255a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3413,10 +3416,10 @@ BetaStandTile tile_234 = {
 };
 
 BetaStandTile tile_235 = {
-    0x000080, 0xc8,
+    "p1254a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     6,
     0x00, 0x01, 0x02,
     {
@@ -3430,10 +3433,10 @@ BetaStandTile tile_235 = {
 };
 
 BetaStandTile tile_236 = {
-    0x000080, 0xd0,
+    "p1253a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3444,10 +3447,10 @@ BetaStandTile tile_236 = {
 };
 
 BetaStandTile tile_237 = {
-    0x000080, 0xd8,
+    "p1252a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3458,10 +3461,10 @@ BetaStandTile tile_237 = {
 };
 
 BetaStandTile tile_238 = {
-    0x000080, 0xe0,
+    "p1251a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3472,10 +3475,10 @@ BetaStandTile tile_238 = {
 };
 
 BetaStandTile tile_239 = {
-    0x000080, 0xe8,
+    "p1250a",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3486,10 +3489,10 @@ BetaStandTile tile_239 = {
 };
 
 BetaStandTile tile_240 = {
-    0x000080, 0xf0,
+    "p1295a",
     0x0,
     0xc, 0xc, 0xc,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3500,10 +3503,10 @@ BetaStandTile tile_240 = {
 };
 
 BetaStandTile tile_241 = {
-    0x000080, 0xf8,
+    "p1240a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3514,10 +3517,10 @@ BetaStandTile tile_241 = {
 };
 
 BetaStandTile tile_242 = {
-    0x000081, 0x00,
+    "p1240a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3528,10 +3531,10 @@ BetaStandTile tile_242 = {
 };
 
 BetaStandTile tile_243 = {
-    0x000081, 0x08,
+    "p1233a2",
     0x0,
     0xe, 0xe, 0xe,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3542,10 +3545,10 @@ BetaStandTile tile_243 = {
 };
 
 BetaStandTile tile_244 = {
-    0x000081, 0x10,
+    "p1233a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3556,10 +3559,10 @@ BetaStandTile tile_244 = {
 };
 
 BetaStandTile tile_245 = {
-    0x000081, 0x18,
+    "p1232a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3570,10 +3573,10 @@ BetaStandTile tile_245 = {
 };
 
 BetaStandTile tile_246 = {
-    0x000081, 0x20,
+    "p1232a1",
     0x0,
     0xd, 0xd, 0xd,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3584,10 +3587,10 @@ BetaStandTile tile_246 = {
 };
 
 BetaStandTile tile_247 = {
-    0x000081, 0x28,
+    "p1231a2",
     0x0,
     0xb, 0xb, 0xb,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3598,10 +3601,10 @@ BetaStandTile tile_247 = {
 };
 
 BetaStandTile tile_248 = {
-    0x000081, 0x30,
+    "p1231a1",
     0x0,
     0xb, 0xb, 0xb,
-    0x03,
+    0x0003,
     4,
     0x00, 0x01, 0x03,
     {
@@ -3613,10 +3616,10 @@ BetaStandTile tile_248 = {
 };
 
 BetaStandTile tile_249 = {
-    0x000081, 0x38,
+    "p1224a2",
     0x0,
     0x9, 0x9, 0x9,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3627,10 +3630,10 @@ BetaStandTile tile_249 = {
 };
 
 BetaStandTile tile_250 = {
-    0x000081, 0x40,
+    "p1224a1",
     0x0,
     0x8, 0x8, 0x8,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3641,10 +3644,10 @@ BetaStandTile tile_250 = {
 };
 
 BetaStandTile tile_251 = {
-    0x000081, 0x48,
+    "p1223a2",
     0x0,
     0xa, 0xa, 0xa,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3655,10 +3658,10 @@ BetaStandTile tile_251 = {
 };
 
 BetaStandTile tile_252 = {
-    0x000081, 0x50,
+    "p1223a1",
     0x0,
     0xa, 0xa, 0xa,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3669,10 +3672,10 @@ BetaStandTile tile_252 = {
 };
 
 BetaStandTile tile_253 = {
-    0x000081, 0x58,
+    "p1222a2",
     0x0,
     0xb, 0xb, 0xb,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3683,10 +3686,10 @@ BetaStandTile tile_253 = {
 };
 
 BetaStandTile tile_254 = {
-    0x000081, 0x60,
+    "p1222a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3697,10 +3700,10 @@ BetaStandTile tile_254 = {
 };
 
 BetaStandTile tile_255 = {
-    0x000081, 0x68,
+    "p1221a2",
     0x0,
     0xe, 0xe, 0xe,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3711,10 +3714,10 @@ BetaStandTile tile_255 = {
 };
 
 BetaStandTile tile_256 = {
-    0x000081, 0x70,
+    "p1221a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3725,10 +3728,10 @@ BetaStandTile tile_256 = {
 };
 
 BetaStandTile tile_257 = {
-    0x000081, 0x78,
+    "p1214a2",
     0x0,
     0xb, 0xb, 0xb,
-    0x03,
+    0x0003,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3739,10 +3742,10 @@ BetaStandTile tile_257 = {
 };
 
 BetaStandTile tile_258 = {
-    0x000081, 0x80,
+    "p1214a1",
     0x0,
     0xb, 0xb, 0xb,
-    0x03,
+    0x0003,
     4,
     0x00, 0x01, 0x03,
     {
@@ -3754,10 +3757,10 @@ BetaStandTile tile_258 = {
 };
 
 BetaStandTile tile_259 = {
-    0x000081, 0x88,
+    "p983a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3768,10 +3771,10 @@ BetaStandTile tile_259 = {
 };
 
 BetaStandTile tile_260 = {
-    0x000081, 0x90,
+    "p983a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3782,10 +3785,10 @@ BetaStandTile tile_260 = {
 };
 
 BetaStandTile tile_261 = {
-    0x000081, 0x98,
+    "p982a2",
     0x0,
     0xe, 0xe, 0xe,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3796,10 +3799,10 @@ BetaStandTile tile_261 = {
 };
 
 BetaStandTile tile_262 = {
-    0x000081, 0xa0,
+    "p982a1",
     0x0,
     0xe, 0xe, 0xe,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3810,10 +3813,10 @@ BetaStandTile tile_262 = {
 };
 
 BetaStandTile tile_263 = {
-    0x000081, 0xa8,
+    "p981a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3824,10 +3827,10 @@ BetaStandTile tile_263 = {
 };
 
 BetaStandTile tile_264 = {
-    0x000081, 0xb0,
+    "p981a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3838,10 +3841,10 @@ BetaStandTile tile_264 = {
 };
 
 BetaStandTile tile_265 = {
-    0x000081, 0xb8,
+    "p980a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3852,10 +3855,10 @@ BetaStandTile tile_265 = {
 };
 
 BetaStandTile tile_266 = {
-    0x000081, 0xc0,
+    "p980a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3866,10 +3869,10 @@ BetaStandTile tile_266 = {
 };
 
 BetaStandTile tile_267 = {
-    0x000081, 0xc8,
+    "p979a",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3880,10 +3883,10 @@ BetaStandTile tile_267 = {
 };
 
 BetaStandTile tile_268 = {
-    0x000081, 0xd0,
+    "p978a",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3894,10 +3897,10 @@ BetaStandTile tile_268 = {
 };
 
 BetaStandTile tile_269 = {
-    0x000081, 0xd8,
+    "p977a",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3908,10 +3911,10 @@ BetaStandTile tile_269 = {
 };
 
 BetaStandTile tile_270 = {
-    0x000081, 0xe0,
+    "p976a",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3922,10 +3925,10 @@ BetaStandTile tile_270 = {
 };
 
 BetaStandTile tile_271 = {
-    0x000081, 0xe8,
+    "p975a",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3936,10 +3939,10 @@ BetaStandTile tile_271 = {
 };
 
 BetaStandTile tile_272 = {
-    0x000081, 0xf0,
+    "p974a",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3950,10 +3953,10 @@ BetaStandTile tile_272 = {
 };
 
 BetaStandTile tile_273 = {
-    0x000081, 0xf8,
+    "p973a",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3964,10 +3967,10 @@ BetaStandTile tile_273 = {
 };
 
 BetaStandTile tile_274 = {
-    0x000082, 0x00,
+    "p972a",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -3978,10 +3981,10 @@ BetaStandTile tile_274 = {
 };
 
 BetaStandTile tile_275 = {
-    0x000082, 0x08,
+    "p971a",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     6,
     0x00, 0x01, 0x05,
     {
@@ -3995,10 +3998,10 @@ BetaStandTile tile_275 = {
 };
 
 BetaStandTile tile_276 = {
-    0x000082, 0x10,
+    "p970a",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4009,10 +4012,10 @@ BetaStandTile tile_276 = {
 };
 
 BetaStandTile tile_277 = {
-    0x000082, 0x18,
+    "p969a",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     4,
     0x00, 0x01, 0x03,
     {
@@ -4024,10 +4027,10 @@ BetaStandTile tile_277 = {
 };
 
 BetaStandTile tile_278 = {
-    0x000082, 0x20,
+    "p968a",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     5,
     0x00, 0x03, 0x04,
     {
@@ -4040,10 +4043,10 @@ BetaStandTile tile_278 = {
 };
 
 BetaStandTile tile_279 = {
-    0x000082, 0x28,
+    "p943a",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4054,10 +4057,10 @@ BetaStandTile tile_279 = {
 };
 
 BetaStandTile tile_280 = {
-    0x000082, 0x30,
+    "p942a",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4068,10 +4071,10 @@ BetaStandTile tile_280 = {
 };
 
 BetaStandTile tile_281 = {
-    0x000082, 0x38,
+    "p941a2",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4082,10 +4085,10 @@ BetaStandTile tile_281 = {
 };
 
 BetaStandTile tile_282 = {
-    0x000082, 0x40,
+    "p941a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4096,10 +4099,10 @@ BetaStandTile tile_282 = {
 };
 
 BetaStandTile tile_283 = {
-    0x000082, 0x48,
+    "p1120a",
     0x0,
     0xe, 0xe, 0xe,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4110,10 +4113,10 @@ BetaStandTile tile_283 = {
 };
 
 BetaStandTile tile_284 = {
-    0x000082, 0x50,
+    "p940a",
     0x0,
     0xe, 0xe, 0xe,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4124,10 +4127,10 @@ BetaStandTile tile_284 = {
 };
 
 BetaStandTile tile_285 = {
-    0x000082, 0x58,
+    "p939a2",
     0x0,
     0x9, 0x9, 0x9,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4138,10 +4141,10 @@ BetaStandTile tile_285 = {
 };
 
 BetaStandTile tile_286 = {
-    0x000082, 0x60,
+    "p939a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4152,10 +4155,10 @@ BetaStandTile tile_286 = {
 };
 
 BetaStandTile tile_287 = {
-    0x000082, 0x68,
+    "p938a",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4166,10 +4169,10 @@ BetaStandTile tile_287 = {
 };
 
 BetaStandTile tile_288 = {
-    0x000082, 0x70,
+    "p937a",
     0x0,
     0xc, 0xc, 0xc,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4180,10 +4183,10 @@ BetaStandTile tile_288 = {
 };
 
 BetaStandTile tile_289 = {
-    0x000082, 0x78,
+    "p936a2",
     0x0,
     0xd, 0xd, 0xd,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4194,10 +4197,10 @@ BetaStandTile tile_289 = {
 };
 
 BetaStandTile tile_290 = {
-    0x000082, 0x80,
+    "p936a1",
     0x0,
     0xe, 0xe, 0xe,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4208,10 +4211,10 @@ BetaStandTile tile_290 = {
 };
 
 BetaStandTile tile_291 = {
-    0x000082, 0x88,
+    "p935a2",
     0x0,
     0xb, 0xb, 0xb,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4222,10 +4225,10 @@ BetaStandTile tile_291 = {
 };
 
 BetaStandTile tile_292 = {
-    0x000082, 0x90,
+    "p935a1",
     0x0,
     0xf, 0xf, 0xf,
-    0x02,
+    0x0002,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4236,10 +4239,10 @@ BetaStandTile tile_292 = {
 };
 
 BetaStandTile tile_293 = {
-    0x000082, 0x98,
+    "p1090a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4250,10 +4253,10 @@ BetaStandTile tile_293 = {
 };
 
 BetaStandTile tile_294 = {
-    0x000082, 0xa0,
+    "p1089a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4264,10 +4267,10 @@ BetaStandTile tile_294 = {
 };
 
 BetaStandTile tile_295 = {
-    0x000082, 0xa8,
+    "p1088a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4278,10 +4281,10 @@ BetaStandTile tile_295 = {
 };
 
 BetaStandTile tile_296 = {
-    0x000082, 0xb0,
+    "p1087a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4292,10 +4295,10 @@ BetaStandTile tile_296 = {
 };
 
 BetaStandTile tile_297 = {
-    0x000082, 0xb8,
+    "p1086a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4306,10 +4309,10 @@ BetaStandTile tile_297 = {
 };
 
 BetaStandTile tile_298 = {
-    0x000082, 0xc0,
+    "p1085a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4320,10 +4323,10 @@ BetaStandTile tile_298 = {
 };
 
 BetaStandTile tile_299 = {
-    0x000082, 0xc8,
+    "p1084a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4334,10 +4337,10 @@ BetaStandTile tile_299 = {
 };
 
 BetaStandTile tile_300 = {
-    0x000082, 0xd0,
+    "p1083a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4348,10 +4351,10 @@ BetaStandTile tile_300 = {
 };
 
 BetaStandTile tile_301 = {
-    0x000082, 0xd8,
+    "p1082a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4362,10 +4365,10 @@ BetaStandTile tile_301 = {
 };
 
 BetaStandTile tile_302 = {
-    0x000082, 0xe0,
+    "p1081a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4376,10 +4379,10 @@ BetaStandTile tile_302 = {
 };
 
 BetaStandTile tile_303 = {
-    0x000082, 0xe8,
+    "p1080a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4390,10 +4393,10 @@ BetaStandTile tile_303 = {
 };
 
 BetaStandTile tile_304 = {
-    0x000082, 0xf0,
+    "p1079a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4404,10 +4407,10 @@ BetaStandTile tile_304 = {
 };
 
 BetaStandTile tile_305 = {
-    0x000082, 0xf8,
+    "p1078a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4418,10 +4421,10 @@ BetaStandTile tile_305 = {
 };
 
 BetaStandTile tile_306 = {
-    0x000083, 0x00,
+    "p1077a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4432,10 +4435,10 @@ BetaStandTile tile_306 = {
 };
 
 BetaStandTile tile_307 = {
-    0x000083, 0x08,
+    "p1076a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4446,10 +4449,10 @@ BetaStandTile tile_307 = {
 };
 
 BetaStandTile tile_308 = {
-    0x000083, 0x10,
+    "p1075a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4460,10 +4463,10 @@ BetaStandTile tile_308 = {
 };
 
 BetaStandTile tile_309 = {
-    0x000083, 0x18,
+    "p1074a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4474,10 +4477,10 @@ BetaStandTile tile_309 = {
 };
 
 BetaStandTile tile_310 = {
-    0x000083, 0x20,
+    "p1073a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4488,10 +4491,10 @@ BetaStandTile tile_310 = {
 };
 
 BetaStandTile tile_311 = {
-    0x000083, 0x28,
+    "p1072a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4502,10 +4505,10 @@ BetaStandTile tile_311 = {
 };
 
 BetaStandTile tile_312 = {
-    0x000083, 0x30,
+    "p1071a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4516,10 +4519,10 @@ BetaStandTile tile_312 = {
 };
 
 BetaStandTile tile_313 = {
-    0x000083, 0x38,
+    "p1070a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4530,10 +4533,10 @@ BetaStandTile tile_313 = {
 };
 
 BetaStandTile tile_314 = {
-    0x000083, 0x40,
+    "p1069a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4544,10 +4547,10 @@ BetaStandTile tile_314 = {
 };
 
 BetaStandTile tile_315 = {
-    0x000083, 0x48,
+    "p1068a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4558,10 +4561,10 @@ BetaStandTile tile_315 = {
 };
 
 BetaStandTile tile_316 = {
-    0x000083, 0x50,
+    "p1067a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4572,10 +4575,10 @@ BetaStandTile tile_316 = {
 };
 
 BetaStandTile tile_317 = {
-    0x000083, 0x58,
+    "p1066a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4586,10 +4589,10 @@ BetaStandTile tile_317 = {
 };
 
 BetaStandTile tile_318 = {
-    0x000083, 0x60,
+    "p1065a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4600,10 +4603,10 @@ BetaStandTile tile_318 = {
 };
 
 BetaStandTile tile_319 = {
-    0x000083, 0x68,
+    "p1064a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4614,10 +4617,10 @@ BetaStandTile tile_319 = {
 };
 
 BetaStandTile tile_320 = {
-    0x000083, 0x70,
+    "p1063a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4628,10 +4631,10 @@ BetaStandTile tile_320 = {
 };
 
 BetaStandTile tile_321 = {
-    0x000083, 0x78,
+    "p1062a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4642,10 +4645,10 @@ BetaStandTile tile_321 = {
 };
 
 BetaStandTile tile_322 = {
-    0x000083, 0x80,
+    "p1061a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4656,10 +4659,10 @@ BetaStandTile tile_322 = {
 };
 
 BetaStandTile tile_323 = {
-    0x000083, 0x88,
+    "p1060a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4670,10 +4673,10 @@ BetaStandTile tile_323 = {
 };
 
 BetaStandTile tile_324 = {
-    0x000083, 0x90,
+    "p1059a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4684,10 +4687,10 @@ BetaStandTile tile_324 = {
 };
 
 BetaStandTile tile_325 = {
-    0x000083, 0x98,
+    "p1058a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4698,10 +4701,10 @@ BetaStandTile tile_325 = {
 };
 
 BetaStandTile tile_326 = {
-    0x000083, 0xa0,
+    "p1057a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4712,10 +4715,10 @@ BetaStandTile tile_326 = {
 };
 
 BetaStandTile tile_327 = {
-    0x000083, 0xa8,
+    "p1056a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4726,10 +4729,10 @@ BetaStandTile tile_327 = {
 };
 
 BetaStandTile tile_328 = {
-    0x000083, 0xb0,
+    "p1055a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4740,10 +4743,10 @@ BetaStandTile tile_328 = {
 };
 
 BetaStandTile tile_329 = {
-    0x000083, 0xb8,
+    "p1054a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4754,10 +4757,10 @@ BetaStandTile tile_329 = {
 };
 
 BetaStandTile tile_330 = {
-    0x000083, 0xc0,
+    "p1053a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4768,10 +4771,10 @@ BetaStandTile tile_330 = {
 };
 
 BetaStandTile tile_331 = {
-    0x000083, 0xc8,
+    "p1052a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4782,10 +4785,10 @@ BetaStandTile tile_331 = {
 };
 
 BetaStandTile tile_332 = {
-    0x000083, 0xd0,
+    "p1051a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4796,10 +4799,10 @@ BetaStandTile tile_332 = {
 };
 
 BetaStandTile tile_333 = {
-    0x000083, 0xd8,
+    "p1050a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     4,
     0x00, 0x01, 0x02,
     {
@@ -4811,10 +4814,10 @@ BetaStandTile tile_333 = {
 };
 
 BetaStandTile tile_334 = {
-    0x000083, 0xe0,
+    "p1049a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4825,10 +4828,10 @@ BetaStandTile tile_334 = {
 };
 
 BetaStandTile tile_335 = {
-    0x000083, 0xe8,
+    "p1048a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4839,10 +4842,10 @@ BetaStandTile tile_335 = {
 };
 
 BetaStandTile tile_336 = {
-    0x000083, 0xf0,
+    "p1047a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4853,10 +4856,10 @@ BetaStandTile tile_336 = {
 };
 
 BetaStandTile tile_337 = {
-    0x000083, 0xf8,
+    "p1046a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4867,10 +4870,10 @@ BetaStandTile tile_337 = {
 };
 
 BetaStandTile tile_338 = {
-    0x000084, 0x00,
+    "p1045a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4881,10 +4884,10 @@ BetaStandTile tile_338 = {
 };
 
 BetaStandTile tile_339 = {
-    0x000084, 0x08,
+    "p1044a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4895,10 +4898,10 @@ BetaStandTile tile_339 = {
 };
 
 BetaStandTile tile_340 = {
-    0x000084, 0x10,
+    "p1043a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4909,10 +4912,10 @@ BetaStandTile tile_340 = {
 };
 
 BetaStandTile tile_341 = {
-    0x000084, 0x18,
+    "p1042a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4923,10 +4926,10 @@ BetaStandTile tile_341 = {
 };
 
 BetaStandTile tile_342 = {
-    0x000084, 0x20,
+    "p1041a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4937,10 +4940,10 @@ BetaStandTile tile_342 = {
 };
 
 BetaStandTile tile_343 = {
-    0x000084, 0x28,
+    "p1040a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4951,10 +4954,10 @@ BetaStandTile tile_343 = {
 };
 
 BetaStandTile tile_344 = {
-    0x000084, 0x30,
+    "p1039a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4965,10 +4968,10 @@ BetaStandTile tile_344 = {
 };
 
 BetaStandTile tile_345 = {
-    0x000084, 0x38,
+    "p1038a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -4979,10 +4982,10 @@ BetaStandTile tile_345 = {
 };
 
 BetaStandTile tile_346 = {
-    0x000084, 0x40,
+    "p1037a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     4,
     0x00, 0x01, 0x02,
     {
@@ -4994,10 +4997,10 @@ BetaStandTile tile_346 = {
 };
 
 BetaStandTile tile_347 = {
-    0x000084, 0x48,
+    "p1035a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5008,10 +5011,10 @@ BetaStandTile tile_347 = {
 };
 
 BetaStandTile tile_348 = {
-    0x000084, 0x50,
+    "p1034a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5022,10 +5025,10 @@ BetaStandTile tile_348 = {
 };
 
 BetaStandTile tile_349 = {
-    0x000084, 0x58,
+    "p1033a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5036,10 +5039,10 @@ BetaStandTile tile_349 = {
 };
 
 BetaStandTile tile_350 = {
-    0x000084, 0x60,
+    "p1032a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5050,10 +5053,10 @@ BetaStandTile tile_350 = {
 };
 
 BetaStandTile tile_351 = {
-    0x000084, 0x68,
+    "p1031a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5064,10 +5067,10 @@ BetaStandTile tile_351 = {
 };
 
 BetaStandTile tile_352 = {
-    0x000084, 0x70,
+    "p1030a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5078,10 +5081,10 @@ BetaStandTile tile_352 = {
 };
 
 BetaStandTile tile_353 = {
-    0x000084, 0x78,
+    "p1029a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5092,10 +5095,10 @@ BetaStandTile tile_353 = {
 };
 
 BetaStandTile tile_354 = {
-    0x000084, 0x80,
+    "p1028a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5106,10 +5109,10 @@ BetaStandTile tile_354 = {
 };
 
 BetaStandTile tile_355 = {
-    0x000084, 0x88,
+    "p1027a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5120,10 +5123,10 @@ BetaStandTile tile_355 = {
 };
 
 BetaStandTile tile_356 = {
-    0x000084, 0x90,
+    "p1026a",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5134,10 +5137,10 @@ BetaStandTile tile_356 = {
 };
 
 BetaStandTile tile_357 = {
-    0x000084, 0x98,
+    "p734a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5148,10 +5151,10 @@ BetaStandTile tile_357 = {
 };
 
 BetaStandTile tile_358 = {
-    0x000084, 0xa0,
+    "p734a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5162,10 +5165,10 @@ BetaStandTile tile_358 = {
 };
 
 BetaStandTile tile_359 = {
-    0x000084, 0xa8,
+    "p733a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5176,10 +5179,10 @@ BetaStandTile tile_359 = {
 };
 
 BetaStandTile tile_360 = {
-    0x000084, 0xb0,
+    "p733a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5190,10 +5193,10 @@ BetaStandTile tile_360 = {
 };
 
 BetaStandTile tile_361 = {
-    0x000084, 0xb8,
+    "p736a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5204,10 +5207,10 @@ BetaStandTile tile_361 = {
 };
 
 BetaStandTile tile_362 = {
-    0x000084, 0xc0,
+    "p736a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5218,10 +5221,10 @@ BetaStandTile tile_362 = {
 };
 
 BetaStandTile tile_363 = {
-    0x000084, 0xc8,
+    "p735a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5232,10 +5235,10 @@ BetaStandTile tile_363 = {
 };
 
 BetaStandTile tile_364 = {
-    0x000084, 0xd0,
+    "p735a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5246,10 +5249,10 @@ BetaStandTile tile_364 = {
 };
 
 BetaStandTile tile_365 = {
-    0x000084, 0xd8,
+    "p738a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5260,10 +5263,10 @@ BetaStandTile tile_365 = {
 };
 
 BetaStandTile tile_366 = {
-    0x000084, 0xe0,
+    "p738a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5274,10 +5277,10 @@ BetaStandTile tile_366 = {
 };
 
 BetaStandTile tile_367 = {
-    0x000084, 0xe8,
+    "p737a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5288,10 +5291,10 @@ BetaStandTile tile_367 = {
 };
 
 BetaStandTile tile_368 = {
-    0x000084, 0xf0,
+    "p737a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5302,10 +5305,10 @@ BetaStandTile tile_368 = {
 };
 
 BetaStandTile tile_369 = {
-    0x000084, 0xf8,
+    "p740a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5316,10 +5319,10 @@ BetaStandTile tile_369 = {
 };
 
 BetaStandTile tile_370 = {
-    0x000085, 0x00,
+    "p740a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5330,10 +5333,10 @@ BetaStandTile tile_370 = {
 };
 
 BetaStandTile tile_371 = {
-    0x000085, 0x08,
+    "p739a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5344,10 +5347,10 @@ BetaStandTile tile_371 = {
 };
 
 BetaStandTile tile_372 = {
-    0x000085, 0x10,
+    "p739a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5358,10 +5361,10 @@ BetaStandTile tile_372 = {
 };
 
 BetaStandTile tile_373 = {
-    0x000085, 0x18,
+    "p742a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5372,10 +5375,10 @@ BetaStandTile tile_373 = {
 };
 
 BetaStandTile tile_374 = {
-    0x000085, 0x20,
+    "p742a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5386,10 +5389,10 @@ BetaStandTile tile_374 = {
 };
 
 BetaStandTile tile_375 = {
-    0x000085, 0x28,
+    "p741a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5400,10 +5403,10 @@ BetaStandTile tile_375 = {
 };
 
 BetaStandTile tile_376 = {
-    0x000085, 0x30,
+    "p741a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5414,10 +5417,10 @@ BetaStandTile tile_376 = {
 };
 
 BetaStandTile tile_377 = {
-    0x000085, 0x38,
+    "p744a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5428,10 +5431,10 @@ BetaStandTile tile_377 = {
 };
 
 BetaStandTile tile_378 = {
-    0x000085, 0x40,
+    "p744a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5442,10 +5445,10 @@ BetaStandTile tile_378 = {
 };
 
 BetaStandTile tile_379 = {
-    0x000085, 0x48,
+    "p743a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5456,10 +5459,10 @@ BetaStandTile tile_379 = {
 };
 
 BetaStandTile tile_380 = {
-    0x000085, 0x50,
+    "p743a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5470,10 +5473,10 @@ BetaStandTile tile_380 = {
 };
 
 BetaStandTile tile_381 = {
-    0x000085, 0x58,
+    "p746a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5484,10 +5487,10 @@ BetaStandTile tile_381 = {
 };
 
 BetaStandTile tile_382 = {
-    0x000085, 0x60,
+    "p746a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5498,10 +5501,10 @@ BetaStandTile tile_382 = {
 };
 
 BetaStandTile tile_383 = {
-    0x000085, 0x68,
+    "p745a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5512,10 +5515,10 @@ BetaStandTile tile_383 = {
 };
 
 BetaStandTile tile_384 = {
-    0x000085, 0x70,
+    "p745a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5526,10 +5529,10 @@ BetaStandTile tile_384 = {
 };
 
 BetaStandTile tile_385 = {
-    0x000085, 0x78,
+    "p748a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5540,10 +5543,10 @@ BetaStandTile tile_385 = {
 };
 
 BetaStandTile tile_386 = {
-    0x000085, 0x80,
+    "p748a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5554,10 +5557,10 @@ BetaStandTile tile_386 = {
 };
 
 BetaStandTile tile_387 = {
-    0x000085, 0x88,
+    "p747a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5568,10 +5571,10 @@ BetaStandTile tile_387 = {
 };
 
 BetaStandTile tile_388 = {
-    0x000085, 0x90,
+    "p747a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5582,10 +5585,10 @@ BetaStandTile tile_388 = {
 };
 
 BetaStandTile tile_389 = {
-    0x000085, 0x98,
+    "p718a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5596,10 +5599,10 @@ BetaStandTile tile_389 = {
 };
 
 BetaStandTile tile_390 = {
-    0x000085, 0xa0,
+    "p718a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5610,10 +5613,10 @@ BetaStandTile tile_390 = {
 };
 
 BetaStandTile tile_391 = {
-    0x000085, 0xa8,
+    "p717a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5624,10 +5627,10 @@ BetaStandTile tile_391 = {
 };
 
 BetaStandTile tile_392 = {
-    0x000085, 0xb0,
+    "p717a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5638,10 +5641,10 @@ BetaStandTile tile_392 = {
 };
 
 BetaStandTile tile_393 = {
-    0x000085, 0xb8,
+    "p720a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5652,10 +5655,10 @@ BetaStandTile tile_393 = {
 };
 
 BetaStandTile tile_394 = {
-    0x000085, 0xc0,
+    "p720a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5666,10 +5669,10 @@ BetaStandTile tile_394 = {
 };
 
 BetaStandTile tile_395 = {
-    0x000085, 0xc8,
+    "p719a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5680,10 +5683,10 @@ BetaStandTile tile_395 = {
 };
 
 BetaStandTile tile_396 = {
-    0x000085, 0xd0,
+    "p719a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5694,10 +5697,10 @@ BetaStandTile tile_396 = {
 };
 
 BetaStandTile tile_397 = {
-    0x000085, 0xd8,
+    "p722a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5708,10 +5711,10 @@ BetaStandTile tile_397 = {
 };
 
 BetaStandTile tile_398 = {
-    0x000085, 0xe0,
+    "p722a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5722,10 +5725,10 @@ BetaStandTile tile_398 = {
 };
 
 BetaStandTile tile_399 = {
-    0x000085, 0xe8,
+    "p721a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5736,10 +5739,10 @@ BetaStandTile tile_399 = {
 };
 
 BetaStandTile tile_400 = {
-    0x000085, 0xf0,
+    "p721a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5750,10 +5753,10 @@ BetaStandTile tile_400 = {
 };
 
 BetaStandTile tile_401 = {
-    0x000085, 0xf8,
+    "p724a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5764,10 +5767,10 @@ BetaStandTile tile_401 = {
 };
 
 BetaStandTile tile_402 = {
-    0x000086, 0x00,
+    "p724a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5778,10 +5781,10 @@ BetaStandTile tile_402 = {
 };
 
 BetaStandTile tile_403 = {
-    0x000086, 0x08,
+    "p723a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5792,10 +5795,10 @@ BetaStandTile tile_403 = {
 };
 
 BetaStandTile tile_404 = {
-    0x000086, 0x10,
+    "p723a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5806,10 +5809,10 @@ BetaStandTile tile_404 = {
 };
 
 BetaStandTile tile_405 = {
-    0x000086, 0x18,
+    "p726a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5820,10 +5823,10 @@ BetaStandTile tile_405 = {
 };
 
 BetaStandTile tile_406 = {
-    0x000086, 0x20,
+    "p726a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5834,10 +5837,10 @@ BetaStandTile tile_406 = {
 };
 
 BetaStandTile tile_407 = {
-    0x000086, 0x28,
+    "p725a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5848,10 +5851,10 @@ BetaStandTile tile_407 = {
 };
 
 BetaStandTile tile_408 = {
-    0x000086, 0x30,
+    "p725a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5862,10 +5865,10 @@ BetaStandTile tile_408 = {
 };
 
 BetaStandTile tile_409 = {
-    0x000086, 0x38,
+    "p728a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5876,10 +5879,10 @@ BetaStandTile tile_409 = {
 };
 
 BetaStandTile tile_410 = {
-    0x000086, 0x40,
+    "p728a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5890,10 +5893,10 @@ BetaStandTile tile_410 = {
 };
 
 BetaStandTile tile_411 = {
-    0x000086, 0x48,
+    "p727a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5904,10 +5907,10 @@ BetaStandTile tile_411 = {
 };
 
 BetaStandTile tile_412 = {
-    0x000086, 0x50,
+    "p727a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5918,10 +5921,10 @@ BetaStandTile tile_412 = {
 };
 
 BetaStandTile tile_413 = {
-    0x000086, 0x58,
+    "p730a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5932,10 +5935,10 @@ BetaStandTile tile_413 = {
 };
 
 BetaStandTile tile_414 = {
-    0x000086, 0x60,
+    "p730a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5946,10 +5949,10 @@ BetaStandTile tile_414 = {
 };
 
 BetaStandTile tile_415 = {
-    0x000086, 0x68,
+    "p729a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5960,10 +5963,10 @@ BetaStandTile tile_415 = {
 };
 
 BetaStandTile tile_416 = {
-    0x000086, 0x70,
+    "p729a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5974,10 +5977,10 @@ BetaStandTile tile_416 = {
 };
 
 BetaStandTile tile_417 = {
-    0x000086, 0x78,
+    "p732a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -5988,10 +5991,10 @@ BetaStandTile tile_417 = {
 };
 
 BetaStandTile tile_418 = {
-    0x000086, 0x80,
+    "p732a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6002,10 +6005,10 @@ BetaStandTile tile_418 = {
 };
 
 BetaStandTile tile_419 = {
-    0x000086, 0x88,
+    "p731a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6016,10 +6019,10 @@ BetaStandTile tile_419 = {
 };
 
 BetaStandTile tile_420 = {
-    0x000086, 0x90,
+    "p731a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6030,10 +6033,10 @@ BetaStandTile tile_420 = {
 };
 
 BetaStandTile tile_421 = {
-    0x000086, 0x98,
+    "p702a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6044,10 +6047,10 @@ BetaStandTile tile_421 = {
 };
 
 BetaStandTile tile_422 = {
-    0x000086, 0xa0,
+    "p702a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6058,10 +6061,10 @@ BetaStandTile tile_422 = {
 };
 
 BetaStandTile tile_423 = {
-    0x000086, 0xa8,
+    "p701a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6072,10 +6075,10 @@ BetaStandTile tile_423 = {
 };
 
 BetaStandTile tile_424 = {
-    0x000086, 0xb0,
+    "p701a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6086,10 +6089,10 @@ BetaStandTile tile_424 = {
 };
 
 BetaStandTile tile_425 = {
-    0x000086, 0xb8,
+    "p704a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6100,10 +6103,10 @@ BetaStandTile tile_425 = {
 };
 
 BetaStandTile tile_426 = {
-    0x000086, 0xc0,
+    "p704a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6114,10 +6117,10 @@ BetaStandTile tile_426 = {
 };
 
 BetaStandTile tile_427 = {
-    0x000086, 0xc8,
+    "p703a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6128,10 +6131,10 @@ BetaStandTile tile_427 = {
 };
 
 BetaStandTile tile_428 = {
-    0x000086, 0xd0,
+    "p703a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6142,10 +6145,10 @@ BetaStandTile tile_428 = {
 };
 
 BetaStandTile tile_429 = {
-    0x000086, 0xd8,
+    "p706a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6156,10 +6159,10 @@ BetaStandTile tile_429 = {
 };
 
 BetaStandTile tile_430 = {
-    0x000086, 0xe0,
+    "p706a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6170,10 +6173,10 @@ BetaStandTile tile_430 = {
 };
 
 BetaStandTile tile_431 = {
-    0x000086, 0xe8,
+    "p705a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6184,10 +6187,10 @@ BetaStandTile tile_431 = {
 };
 
 BetaStandTile tile_432 = {
-    0x000086, 0xf0,
+    "p705a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6198,10 +6201,10 @@ BetaStandTile tile_432 = {
 };
 
 BetaStandTile tile_433 = {
-    0x000086, 0xf8,
+    "p708a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6212,10 +6215,10 @@ BetaStandTile tile_433 = {
 };
 
 BetaStandTile tile_434 = {
-    0x000087, 0x00,
+    "p708a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6226,10 +6229,10 @@ BetaStandTile tile_434 = {
 };
 
 BetaStandTile tile_435 = {
-    0x000087, 0x08,
+    "p707a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6240,10 +6243,10 @@ BetaStandTile tile_435 = {
 };
 
 BetaStandTile tile_436 = {
-    0x000087, 0x10,
+    "p707a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6254,10 +6257,10 @@ BetaStandTile tile_436 = {
 };
 
 BetaStandTile tile_437 = {
-    0x000087, 0x18,
+    "p710a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6268,10 +6271,10 @@ BetaStandTile tile_437 = {
 };
 
 BetaStandTile tile_438 = {
-    0x000087, 0x20,
+    "p710a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6282,10 +6285,10 @@ BetaStandTile tile_438 = {
 };
 
 BetaStandTile tile_439 = {
-    0x000087, 0x28,
+    "p709a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6296,10 +6299,10 @@ BetaStandTile tile_439 = {
 };
 
 BetaStandTile tile_440 = {
-    0x000087, 0x30,
+    "p709a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6310,10 +6313,10 @@ BetaStandTile tile_440 = {
 };
 
 BetaStandTile tile_441 = {
-    0x000087, 0x38,
+    "p712a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6324,10 +6327,10 @@ BetaStandTile tile_441 = {
 };
 
 BetaStandTile tile_442 = {
-    0x000087, 0x40,
+    "p712a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6338,10 +6341,10 @@ BetaStandTile tile_442 = {
 };
 
 BetaStandTile tile_443 = {
-    0x000087, 0x48,
+    "p711a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6352,10 +6355,10 @@ BetaStandTile tile_443 = {
 };
 
 BetaStandTile tile_444 = {
-    0x000087, 0x50,
+    "p711a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6366,10 +6369,10 @@ BetaStandTile tile_444 = {
 };
 
 BetaStandTile tile_445 = {
-    0x000087, 0x58,
+    "p714a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6380,10 +6383,10 @@ BetaStandTile tile_445 = {
 };
 
 BetaStandTile tile_446 = {
-    0x000087, 0x60,
+    "p714a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6394,10 +6397,10 @@ BetaStandTile tile_446 = {
 };
 
 BetaStandTile tile_447 = {
-    0x000087, 0x68,
+    "p713a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6408,10 +6411,10 @@ BetaStandTile tile_447 = {
 };
 
 BetaStandTile tile_448 = {
-    0x000087, 0x70,
+    "p713a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6422,10 +6425,10 @@ BetaStandTile tile_448 = {
 };
 
 BetaStandTile tile_449 = {
-    0x000087, 0x78,
+    "p716a2",
     0x0,
     0xd, 0xd, 0xd,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6436,10 +6439,10 @@ BetaStandTile tile_449 = {
 };
 
 BetaStandTile tile_450 = {
-    0x000087, 0x80,
+    "p716a1",
     0x0,
     0xd, 0xd, 0xd,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6450,10 +6453,10 @@ BetaStandTile tile_450 = {
 };
 
 BetaStandTile tile_451 = {
-    0x000087, 0x88,
+    "p715a2",
     0x0,
     0xd, 0xd, 0xd,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6464,10 +6467,10 @@ BetaStandTile tile_451 = {
 };
 
 BetaStandTile tile_452 = {
-    0x000087, 0x90,
+    "p715a1",
     0x0,
     0xd, 0xd, 0xd,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6478,10 +6481,10 @@ BetaStandTile tile_452 = {
 };
 
 BetaStandTile tile_453 = {
-    0x000087, 0x98,
+    "p686a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6492,10 +6495,10 @@ BetaStandTile tile_453 = {
 };
 
 BetaStandTile tile_454 = {
-    0x000087, 0xa0,
+    "p686a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6506,10 +6509,10 @@ BetaStandTile tile_454 = {
 };
 
 BetaStandTile tile_455 = {
-    0x000087, 0xa8,
+    "p685a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6520,10 +6523,10 @@ BetaStandTile tile_455 = {
 };
 
 BetaStandTile tile_456 = {
-    0x000087, 0xb0,
+    "p685a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6534,10 +6537,10 @@ BetaStandTile tile_456 = {
 };
 
 BetaStandTile tile_457 = {
-    0x000087, 0xb8,
+    "p688a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6548,10 +6551,10 @@ BetaStandTile tile_457 = {
 };
 
 BetaStandTile tile_458 = {
-    0x000087, 0xc0,
+    "p688a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6562,10 +6565,10 @@ BetaStandTile tile_458 = {
 };
 
 BetaStandTile tile_459 = {
-    0x000087, 0xc8,
+    "p687a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6576,10 +6579,10 @@ BetaStandTile tile_459 = {
 };
 
 BetaStandTile tile_460 = {
-    0x000087, 0xd0,
+    "p687a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6590,10 +6593,10 @@ BetaStandTile tile_460 = {
 };
 
 BetaStandTile tile_461 = {
-    0x000087, 0xd8,
+    "p690a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6604,10 +6607,10 @@ BetaStandTile tile_461 = {
 };
 
 BetaStandTile tile_462 = {
-    0x000087, 0xe0,
+    "p690a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6618,10 +6621,10 @@ BetaStandTile tile_462 = {
 };
 
 BetaStandTile tile_463 = {
-    0x000087, 0xe8,
+    "p689a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6632,10 +6635,10 @@ BetaStandTile tile_463 = {
 };
 
 BetaStandTile tile_464 = {
-    0x000087, 0xf0,
+    "p689a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6646,10 +6649,10 @@ BetaStandTile tile_464 = {
 };
 
 BetaStandTile tile_465 = {
-    0x000087, 0xf8,
+    "p692a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6660,10 +6663,10 @@ BetaStandTile tile_465 = {
 };
 
 BetaStandTile tile_466 = {
-    0x000088, 0x00,
+    "p692a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6674,10 +6677,10 @@ BetaStandTile tile_466 = {
 };
 
 BetaStandTile tile_467 = {
-    0x000088, 0x08,
+    "p691a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6688,10 +6691,10 @@ BetaStandTile tile_467 = {
 };
 
 BetaStandTile tile_468 = {
-    0x000088, 0x10,
+    "p691a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6702,10 +6705,10 @@ BetaStandTile tile_468 = {
 };
 
 BetaStandTile tile_469 = {
-    0x000088, 0x18,
+    "p694a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6716,10 +6719,10 @@ BetaStandTile tile_469 = {
 };
 
 BetaStandTile tile_470 = {
-    0x000088, 0x20,
+    "p694a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6730,10 +6733,10 @@ BetaStandTile tile_470 = {
 };
 
 BetaStandTile tile_471 = {
-    0x000088, 0x28,
+    "p693a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6744,10 +6747,10 @@ BetaStandTile tile_471 = {
 };
 
 BetaStandTile tile_472 = {
-    0x000088, 0x30,
+    "p693a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6758,10 +6761,10 @@ BetaStandTile tile_472 = {
 };
 
 BetaStandTile tile_473 = {
-    0x000088, 0x38,
+    "p696a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6772,10 +6775,10 @@ BetaStandTile tile_473 = {
 };
 
 BetaStandTile tile_474 = {
-    0x000088, 0x40,
+    "p696a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6786,10 +6789,10 @@ BetaStandTile tile_474 = {
 };
 
 BetaStandTile tile_475 = {
-    0x000088, 0x48,
+    "p695a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6800,10 +6803,10 @@ BetaStandTile tile_475 = {
 };
 
 BetaStandTile tile_476 = {
-    0x000088, 0x50,
+    "p695a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6814,10 +6817,10 @@ BetaStandTile tile_476 = {
 };
 
 BetaStandTile tile_477 = {
-    0x000088, 0x58,
+    "p698a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6828,10 +6831,10 @@ BetaStandTile tile_477 = {
 };
 
 BetaStandTile tile_478 = {
-    0x000088, 0x60,
+    "p698a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6842,10 +6845,10 @@ BetaStandTile tile_478 = {
 };
 
 BetaStandTile tile_479 = {
-    0x000088, 0x68,
+    "p697a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6856,10 +6859,10 @@ BetaStandTile tile_479 = {
 };
 
 BetaStandTile tile_480 = {
-    0x000088, 0x70,
+    "p697a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6870,10 +6873,10 @@ BetaStandTile tile_480 = {
 };
 
 BetaStandTile tile_481 = {
-    0x000088, 0x78,
+    "p700a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6884,10 +6887,10 @@ BetaStandTile tile_481 = {
 };
 
 BetaStandTile tile_482 = {
-    0x000088, 0x80,
+    "p700a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6898,10 +6901,10 @@ BetaStandTile tile_482 = {
 };
 
 BetaStandTile tile_483 = {
-    0x000088, 0x88,
+    "p699a2",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6912,10 +6915,10 @@ BetaStandTile tile_483 = {
 };
 
 BetaStandTile tile_484 = {
-    0x000088, 0x90,
+    "p699a1",
     0x0,
     0xc, 0xc, 0xc,
-    0x01,
+    0x0001,
     3,
     0x00, 0x01, 0x02,
     {
@@ -6934,495 +6937,6 @@ StandFileFooter footer = {
     NULL,
     NULL,
     NULL
-};
-
-char beta_footer[486][8] = {
-    "",
-    "p502a2",
-    "p502a1",
-    "p486a2",
-    "p486a1",
-    "p470a2",
-    "p470a1",
-    "p323a2",
-    "p323a1",
-    "p457a2",
-    "p457a1",
-    "p456a2",
-    "p456a1",
-    "p506a2",
-    "p506a1",
-    "p505a2",
-    "p505a1",
-    "p490a2",
-    "p490a1",
-    "p489a2",
-    "p489a1",
-    "p474a2",
-    "p474a1",
-    "p473a2",
-    "p473a1",
-    "p397a2",
-    "p397a1",
-    "p398a2",
-    "p398a1",
-    "p75a2",
-    "p75a1",
-    "p417a2",
-    "p417a1",
-    "p441a2",
-    "p441a1",
-    "p433a2",
-    "p433a1",
-    "p428a2",
-    "p428a1",
-    "p393a2",
-    "p393a1",
-    "p370a2",
-    "p370a1",
-    "p423a2",
-    "p423a1",
-    "p365a2",
-    "p365a1",
-    "p389a2",
-    "p389a1",
-    "p346a2",
-    "p346a1",
-    "p355a2",
-    "p355a1",
-    "p345a2",
-    "p345a1",
-    "p337a2",
-    "p337a1",
-    "p361a2",
-    "p361a1",
-    "p318a2",
-    "p318a1",
-    "p302a2",
-    "p302a1",
-    "p303a2",
-    "p303a1",
-    "p308a2",
-    "p308a1",
-    "p261a2",
-    "p261a1",
-    "p85a2",
-    "p85a1",
-    "p314a2",
-    "p314a1",
-    "p76a2",
-    "p76a1",
-    "p94a2",
-    "p94a1",
-    "p95a2",
-    "p95a1",
-    "p93a2",
-    "p93a1",
-    "p1119a2",
-    "p1119a1",
-    "p1118a",
-    "p1117a",
-    "p1116a",
-    "p1115a",
-    "p1104a2",
-    "p1104a1",
-    "p1103a2",
-    "p1103a1",
-    "p1106a2",
-    "p1106a1",
-    "p1105a2",
-    "p1105a1",
-    "p1099a2",
-    "p1099a1",
-    "p1101a2",
-    "p1101a1",
-    "p1096a2",
-    "p1096a1",
-    "p1095a2",
-    "p1095a1",
-    "p1098a2",
-    "p1098a1",
-    "p1097a2",
-    "p1097a1",
-    "p1092a2",
-    "p1092a1",
-    "p1094a2",
-    "p1094a1",
-    "p887a2",
-    "p887a1",
-    "p885a2",
-    "p885a1",
-    "p879a2",
-    "p879a1",
-    "p878a2",
-    "p878a1",
-    "p877a2",
-    "p877a1",
-    "p876a2",
-    "p876a1",
-    "p875a2",
-    "p875a1",
-    "p874a2",
-    "p874a1",
-    "p873a2",
-    "p873a1",
-    "p872a2",
-    "p872a1",
-    "p871a2",
-    "p871a1",
-    "p870a2",
-    "p870a1",
-    "p869a2",
-    "p869a1",
-    "p868a2",
-    "p868a1",
-    "p881a2",
-    "p881a1",
-    "p860a2",
-    "p860a1",
-    "p857a2",
-    "p857a1",
-    "p850a2",
-    "p850a1",
-    "p849a2",
-    "p849a1",
-    "p843a2",
-    "p843a1",
-    "p888a2",
-    "p888a1",
-    "p1213a2",
-    "p1213a1",
-    "p1212a2",
-    "p1212a1",
-    "p1211a2",
-    "p1211a1",
-    "p1210a2",
-    "p1210a1",
-    "p83a2",
-    "p83a1",
-    "p1294a",
-    "p1293a",
-    "p1292a",
-    "p1291a",
-    "p1290a",
-    "p1289a",
-    "p1288a",
-    "p1287a",
-    "p1286a",
-    "p1285a",
-    "p1284a",
-    "p1283a",
-    "p538a",
-    "p537a",
-    "p536a",
-    "p535a",
-    "p534a",
-    "p533a",
-    "p532a",
-    "p531a",
-    "p530a2",
-    "p530a1",
-    "p529a2",
-    "p529a1",
-    "p528a2",
-    "p528a1",
-    "p527a2",
-    "p527a1",
-    "p526a2",
-    "p526a1",
-    "p525a2",
-    "p525a1",
-    "p524a2",
-    "p524a1",
-    "p523a2",
-    "p523a1",
-    "p522a2",
-    "p522a1",
-    "p521a2",
-    "p521a1",
-    "p520a2",
-    "p520a1",
-    "p519a2",
-    "p519a1",
-    "p518a2",
-    "p518a1",
-    "p1282a",
-    "p1281a",
-    "p1280a",
-    "p1279a",
-    "p1278a",
-    "p1277a",
-    "p1276a",
-    "p1275a",
-    "p1274a",
-    "p1273a",
-    "p1272a",
-    "p1271a",
-    "p1270a",
-    "p1269a",
-    "p1268a",
-    "p1267a",
-    "p1266a",
-    "p1265a",
-    "p1264a",
-    "p1263a",
-    "p1262a",
-    "p1261a",
-    "p1260a",
-    "p1259a",
-    "p1258a",
-    "p1257a",
-    "p1255a",
-    "p1254a",
-    "p1253a",
-    "p1252a",
-    "p1251a",
-    "p1250a",
-    "p1295a",
-    "p1240a2",
-    "p1240a1",
-    "p1233a2",
-    "p1233a1",
-    "p1232a2",
-    "p1232a1",
-    "p1231a2",
-    "p1231a1",
-    "p1224a2",
-    "p1224a1",
-    "p1223a2",
-    "p1223a1",
-    "p1222a2",
-    "p1222a1",
-    "p1221a2",
-    "p1221a1",
-    "p1214a2",
-    "p1214a1",
-    "p983a2",
-    "p983a1",
-    "p982a2",
-    "p982a1",
-    "p981a2",
-    "p981a1",
-    "p980a2",
-    "p980a1",
-    "p979a",
-    "p978a",
-    "p977a",
-    "p976a",
-    "p975a",
-    "p974a",
-    "p973a",
-    "p972a",
-    "p971a",
-    "p970a",
-    "p969a",
-    "p968a",
-    "p943a",
-    "p942a",
-    "p941a2",
-    "p941a1",
-    "p1120a",
-    "p940a",
-    "p939a2",
-    "p939a1",
-    "p938a",
-    "p937a",
-    "p936a2",
-    "p936a1",
-    "p935a2",
-    "p935a1",
-    "p1090a",
-    "p1089a",
-    "p1088a",
-    "p1087a",
-    "p1086a",
-    "p1085a",
-    "p1084a",
-    "p1083a",
-    "p1082a",
-    "p1081a",
-    "p1080a",
-    "p1079a",
-    "p1078a",
-    "p1077a",
-    "p1076a",
-    "p1075a",
-    "p1074a",
-    "p1073a",
-    "p1072a",
-    "p1071a",
-    "p1070a",
-    "p1069a",
-    "p1068a",
-    "p1067a",
-    "p1066a",
-    "p1065a",
-    "p1064a",
-    "p1063a",
-    "p1062a",
-    "p1061a",
-    "p1060a",
-    "p1059a",
-    "p1058a",
-    "p1057a",
-    "p1056a",
-    "p1055a",
-    "p1054a",
-    "p1053a",
-    "p1052a",
-    "p1051a",
-    "p1050a",
-    "p1049a",
-    "p1048a",
-    "p1047a",
-    "p1046a",
-    "p1045a",
-    "p1044a",
-    "p1043a",
-    "p1042a",
-    "p1041a",
-    "p1040a",
-    "p1039a",
-    "p1038a",
-    "p1037a",
-    "p1035a",
-    "p1034a",
-    "p1033a",
-    "p1032a",
-    "p1031a",
-    "p1030a",
-    "p1029a",
-    "p1028a",
-    "p1027a",
-    "p1026a",
-    "p734a2",
-    "p734a1",
-    "p733a2",
-    "p733a1",
-    "p736a2",
-    "p736a1",
-    "p735a2",
-    "p735a1",
-    "p738a2",
-    "p738a1",
-    "p737a2",
-    "p737a1",
-    "p740a2",
-    "p740a1",
-    "p739a2",
-    "p739a1",
-    "p742a2",
-    "p742a1",
-    "p741a2",
-    "p741a1",
-    "p744a2",
-    "p744a1",
-    "p743a2",
-    "p743a1",
-    "p746a2",
-    "p746a1",
-    "p745a2",
-    "p745a1",
-    "p748a2",
-    "p748a1",
-    "p747a2",
-    "p747a1",
-    "p718a2",
-    "p718a1",
-    "p717a2",
-    "p717a1",
-    "p720a2",
-    "p720a1",
-    "p719a2",
-    "p719a1",
-    "p722a2",
-    "p722a1",
-    "p721a2",
-    "p721a1",
-    "p724a2",
-    "p724a1",
-    "p723a2",
-    "p723a1",
-    "p726a2",
-    "p726a1",
-    "p725a2",
-    "p725a1",
-    "p728a2",
-    "p728a1",
-    "p727a2",
-    "p727a1",
-    "p730a2",
-    "p730a1",
-    "p729a2",
-    "p729a1",
-    "p732a2",
-    "p732a1",
-    "p731a2",
-    "p731a1",
-    "p702a2",
-    "p702a1",
-    "p701a2",
-    "p701a1",
-    "p704a2",
-    "p704a1",
-    "p703a2",
-    "p703a1",
-    "p706a2",
-    "p706a1",
-    "p705a2",
-    "p705a1",
-    "p708a2",
-    "p708a1",
-    "p707a2",
-    "p707a1",
-    "p710a2",
-    "p710a1",
-    "p709a2",
-    "p709a1",
-    "p712a2",
-    "p712a1",
-    "p711a2",
-    "p711a1",
-    "p714a2",
-    "p714a1",
-    "p713a2",
-    "p713a1",
-    "p716a2",
-    "p716a1",
-    "p715a2",
-    "p715a1",
-    "p686a2",
-    "p686a1",
-    "p685a2",
-    "p685a1",
-    "p688a2",
-    "p688a1",
-    "p687a2",
-    "p687a1",
-    "p690a2",
-    "p690a1",
-    "p689a2",
-    "p689a1",
-    "p692a2",
-    "p692a1",
-    "p691a2",
-    "p691a1",
-    "p694a2",
-    "p694a1",
-    "p693a2",
-    "p693a1",
-    "p696a2",
-    "p696a1",
-    "p695a2",
-    "p695a1",
-    "p698a2",
-    "p698a1",
-    "p697a2",
-    "p697a1",
-    "p700a2",
-    "p700a1",
-    "p699a2",
-    "p699a1"
 };
 
 

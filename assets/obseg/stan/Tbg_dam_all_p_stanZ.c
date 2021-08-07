@@ -1,16 +1,19 @@
 /*
 * This file was automatically generated
 * 
-* Friday, August 6, 2021 4:40:14 PM
-* Getools.Lib: 21.8.6.1
+* Saturday, August 7, 2021 2:39:13 PM
+* Getools.Lib: 21.8.7.1
 */
 
 #include "ultra64.h"
 #include "stan.h"
 
+// forward declarations
+StandTile tile_0;
+
 StandFileHeader Tbg_dam_all_p_stanZ = {
     NULL,
-    0x00000020,
+    &tile_0,
     {0x00, 0x01, 0x1e, 0x38, 0x00, 0x01, 0x1e, 0x78, 0x00, 0x01, 0x1e, 0xb8, 0x00, 0x01, 0x1e, 0xf8, 0x00, 0x01, 0x1f, 0x38, 0x00, 0x00, 0x00, 0x00}
 };
 
