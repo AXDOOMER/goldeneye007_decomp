@@ -4290,36 +4290,5 @@ SECTIONS
       * (.gptab.data);
       * (.reginfo);
       
-      build/e/assets/romfiles.o (.text);
-      build/e/assets/romfiles.o (.data);
-      build/e/assets/romfiles2.o (.text);
-      build/e/assets/romfiles2.o (.data);
-      build/e/assets/ramrom/ramrom.o (.text);
-      build/e/assets/ramrom/ramrom.o (.data);
-      build/e/assets/font/font.o (.text);
-      build/e/assets/font/font.o (.data);
-      build/e/assets/music/music.o (.text);
-      build/e/assets/music/music.o (.data);
-      build/e/assets/obseg/ob_seg.o (.text);
-      build/e/assets/obseg/ob_seg.o (.data);
-      build/e/assets/images/split/*.o (.text);
-      build/e/assets/images/split/*.o (.data);
-      build/e/src/rom_header.o (.text);
-      build/e/src/bootcode.o (.data);
-      build/e/src/_start.o (.data);
-      build/e/src/rspboot.o (.data);
-      build/e/src/_start.o (.rodata);
-      build/e/src/rspboot.o (.rodata);
-      build/e/src/gspboot.o (.rodata);
-      build/e/src/_start.o (.bss);
-      build/e/assets/romfiles.o (.bss);
-      build/e/assets/romfiles2.o (.bss);
-      build/e/assets/ramrom/ramrom.o (.bss);
-      build/e/assets/font/font.o (.bss);
-      build/e/assets/music/music.o (.bss);
-      build/e/assets/obseg/ob_seg.o (.bss);
-      build/e/src/rspboot.o (.bss);
-      build/e/src/gspboot.o (.bss);
-      build/e/src/aspboot.o (.bss);
 }
 }
