@@ -154,8 +154,8 @@ glabel sub_GAME_7F0CBF2C
 
 
 
-extern u32* _romfiles_29d160SegmentStart;
-extern u32* _romfiles_29d160SegmentEnd;
+extern u32* _G_I_TSegmentStart;
+extern u32* _G_I_TSegmentEnd;
 extern void* s_genericimage;
 extern void* s_impactimages;
 extern void* s_explosion_smokeimages;
@@ -214,7 +214,7 @@ void load_prepare_global_image_bank(void)
     s32 size;
     s32 i;
 
-    size = &_romfiles_29d160SegmentEnd - &_romfiles_29d160SegmentStart;
+    size = &_G_I_TSegmentEnd - &_G_I_TSegmentStart;
     pGlobalimagetable = ((mempAllocBytesInBank((size + 0x1000), 4) + 0xfff) & -0x1000);
     romCopy(pGlobalimagetable, &_GlobalimagetableSegmentRomStart, size);
     globalbank_rdram_offset = pGlobalimagetable + 0xFE000000;;
@@ -283,11 +283,11 @@ GLOBAL_ASM(
 .text
 glabel load_prepare_global_image_bank
 /* 100AE0 7F0CBFB0 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 100AE4 7F0CBFB4 3C0E0200 */  lui   $t6, %hi(_romfiles_29d160SegmentEnd) # $t6, 0x200
-/* 100AE8 7F0CBFB8 3C0F0200 */  lui   $t7, %hi(_romfiles_29d160SegmentStart) # $t7, 0x200
+/* 100AE4 7F0CBFB4 3C0E0200 */  lui   $t6, %hi(_G_I_TSegmentEnd) # $t6, 0x200
+/* 100AE8 7F0CBFB8 3C0F0200 */  lui   $t7, %hi(_G_I_TSegmentStart) # $t7, 0x200
 /* 100AEC 7F0CBFBC AFB00014 */  sw    $s0, 0x14($sp)
-/* 100AF0 7F0CBFC0 25EF0000 */  addiu $t7, %lo(_romfiles_29d160SegmentStart) # addiu $t7, $t7, 0
-/* 100AF4 7F0CBFC4 25CE1400 */  addiu $t6, %lo(_romfiles_29d160SegmentEnd) # addiu $t6, $t6, 0x1400
+/* 100AF0 7F0CBFC0 25EF0000 */  addiu $t7, %lo(_G_I_TSegmentStart) # addiu $t7, $t7, 0
+/* 100AF4 7F0CBFC4 25CE1400 */  addiu $t6, %lo(_G_I_TSegmentEnd) # addiu $t6, $t6, 0x1400
 /* 100AF8 7F0CBFC8 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 100AFC 7F0CBFCC 01CF8023 */  subu  $s0, $t6, $t7
 /* 100B00 7F0CBFD0 AFB30020 */  sw    $s3, 0x20($sp)

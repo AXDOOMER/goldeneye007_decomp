@@ -424,27 +424,34 @@ SECTIONS
 
 
 
-   _romfiles_29d160SegmentStart = ADDR(.romfiles_29d160);
-   _romfiles_29d160SegmentRomStart = _romfiles_117880SegmentRomEnd;
-   .romfiles_29d160 0x02000000 : AT(_romfiles_29d160SegmentRomStart) {
+   _G_I_TSegmentStart = ADDR(.romfiles_29d160);
+   _G_I_TSegmentRomStart = _romfiles_117880SegmentRomEnd;
+   .romfiles_29d160 0x02000000 : AT(_G_I_TSegmentRomStart) {
       build/j/assets/GlobalImageTable.o (.data);
    }
-   _romfiles_29d160SegmentEnd = ADDR(.romfiles_29d160) + SIZEOF(.romfiles_29d160);
-   _romfiles_29d160SegmentRomEnd = _romfiles_29d160SegmentRomStart + SIZEOF(.romfiles_29d160);
+   _G_I_TSegmentEnd = ADDR(.romfiles_29d160) + SIZEOF(.romfiles_29d160);
+   _G_I_TSegmentRomEnd = _G_I_TSegmentRomStart + SIZEOF(.romfiles_29d160);
 
 
 
-   _romfiles_29e560SegmentStart = ADDR(.romfiles_29e560);
-   _romfiles_29e560SegmentRomStart = _romfiles_29d160SegmentRomEnd;
-   .romfiles_29e560 _romfiles_29e560SegmentRomStart : AT(_romfiles_29e560SegmentRomStart) {
+   _romfiles2SegmentStart = ADDR(.romfiles2);
+   _romfiles2SegmentRomStart = _G_I_TSegmentRomEnd;
+   .romfiles2 _romfiles2SegmentRomStart : AT(_romfiles2SegmentRomStart) {
       build/j/assets/romfiles2.o (.data);
+   }
+   _romfiles2SegmentEnd = ADDR(.romfiles2) + SIZEOF(.romfiles2);
+   _romfiles2SegmentRomEnd = _romfiles2SegmentRomStart + SIZEOF(.romfiles2);
+
+   _ramromfilesSegmentStart = ADDR(.ramromfiles);
+   _ramromfilesSegmentRomStart = _romfiles2SegmentRomEnd;
+   .ramromfiles _ramromfilesSegmentRomStart : AT(_ramromfilesSegmentRomStart) {
       build/j/assets/ramrom/ramrom.o (.data);
    }
-   _romfiles_29e560SegmentEnd = ADDR(.romfiles_29e560) + SIZEOF(.romfiles_29e560);
-   _romfiles_29e560SegmentRomEnd = _romfiles_29e560SegmentRomStart + SIZEOF(.romfiles_29e560);
+   _ramromfilesSegmentEnd = ADDR(.ramromfiles) + SIZEOF(.ramromfiles);
+   _ramromfilesSegmentRomEnd = _ramromfilesSegmentRomStart + SIZEOF(.ramromfiles);
 
    _fonttablectlsmall1SegmentStart = ADDR(.fonttablectlsmall1);
-   _fonttablectlsmall1SegmentRomStart = _romfiles_29e560SegmentRomEnd;
+   _fonttablectlsmall1SegmentRomStart = _ramromfilesSegmentRomEnd;
    .fonttablectlsmall1 _fonttablectlsmall1SegmentRomStart : AT(_fonttablectlsmall1SegmentRomStart) {
       build/j/assets/font/font_first_font_table_controller_small.o (.data);
    }

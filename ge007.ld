@@ -421,16 +421,20 @@ SECTIONS
    END_SEG(romfiles_29d160)
 
 
-   BEGIN_SEG(romfiles_29e560, _romfiles_29d160SegmentRomEnd, _romfiles_29e560SegmentRomStart)
+   BEGIN_SEG(romfiles_29e560, _G_I_TSegmentRomEnd, _romfiles2SegmentRomStart)
    {
       build/u/assets/romfiles2.o (.data);
-      build/u/assets/ramrom/ramrom.o (.data);
    }
    END_SEG(romfiles_29e560)
 
+   BEGIN_SEG(ramromfiles, romfiles_29e560SegmentRomEnd, _romfiles2SegmentRomStart)
+   {
+      build/u/assets/ramrom/ramrom.o (.data);
+   }
+   END_SEG(ramromfiles)
 
 
-   BEGIN_SEG(fonttablectlsmall1, _romfiles_29e560SegmentRomEnd, _fonttablectlsmall1SegmentRomStart)
+   BEGIN_SEG(fonttablectlsmall1, _romfiles2SegmentRomEnd, _fonttablectlsmall1SegmentRomStart)
    {
       build/u/assets/font/font_first_font_table_controller_small.o (.data);
    }
@@ -4217,22 +4221,18 @@ SECTIONS
    END_SEG(decompbuf)
 
 
-
-   _stacksSegmentStart = ADDR(.stacks);
-   _stacksSegmentRomStart = _decompbufSegmentRomEnd;
-   .stacks 0x803ab400 : AT(_stacksSegmentRomStart){
+   BEGIN_SEG(stacks, _decompbufSegmentRomEnd, 0x803ab400)
+   {
       build/u/src/stacks.o (.bss);
    }
-   _stacksSegmentEnd = ADDR(.stacks) + SIZEOF(.stacks);
-   _stacksSegmentRomEnd = _stacksSegmentRomStart + SIZEOF(.stacks);
+   END_SEG(stacks)
 
-   _cfbSegmentStart = ADDR(.cfb);
-   _cfbSegmentRomStart = _stacksSegmentRomEnd;
-   .cfb 0x803b5000 : AT(_cfbSegmentRomStart){
+
+   BEGIN_SEG(cfb, _stacksSegmentRomEnd, 0x803b5000)
+   {
       build/u/src/cfb.o (.bss);
    }
-   _cfbSegmentEnd = ADDR(.cfb) + SIZEOF(.cfb);
-   _cfbSegmentRomEnd = _cfbSegmentRomStart + SIZEOF(.cfb);
+   END_SEG(cfb)
 
    /*move em to end, out of the way*/
    /DISCARD/ : {
@@ -4245,37 +4245,5 @@ SECTIONS
       * (.gptab.bss);
       * (.gptab.data);
       * (.reginfo);
-      
-      build/u/assets/romfiles.o (.text);
-      build/u/assets/romfiles.o (.data);
-      build/u/assets/romfiles2.o (.text);
-      build/u/assets/romfiles2.o (.data);
-      build/u/assets/ramrom/ramrom.o (.text);
-      build/u/assets/ramrom/ramrom.o (.data);
-      
-      
-      build/u/assets/music/music.o (.text);
-      build/u/assets/music/music.o (.data);
-      build/u/assets/obseg/ob_seg.o (.text);
-      build/u/assets/obseg/ob_seg.o (.data);
-      build/u/assets/images/split/*.o (.text);
-      build/u/assets/images/split/*.o (.data);
-      build/u/src/rom_header.o (.text);
-      build/u/src/bootcode.o (.data);
-      build/u/src/_start.o (.data);
-      build/u/src/rspboot.o (.data);
-      build/u/src/_start.o (.rodata);
-      build/u/src/rspboot.o (.rodata);
-      build/u/src/gspboot.o (.rodata);
-      build/u/src/_start.o (.bss);
-      build/u/assets/romfiles.o (.bss);
-      build/u/assets/romfiles2.o (.bss);
-      build/u/assets/ramrom/ramrom.o (.bss);
-      
-      build/u/assets/music/music.o (.bss);
-      build/u/assets/obseg/ob_seg.o (.bss);
-      build/u/src/rspboot.o (.bss);
-      build/u/src/gspboot.o (.bss);
-      build/u/src/aspboot.o (.bss);
-}
+   }
 }
