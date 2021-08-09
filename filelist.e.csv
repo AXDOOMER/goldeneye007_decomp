@@ -551,14 +551,14 @@
 8528432,33616,assets/obseg/stan/Tbg_arec_all_p_stanZ,1,0
 8562048,36800,assets/obseg/stan/Tbg_ark_all_p_stanZ,1,0
 8598848,6448,assets/obseg/stan/Tbg_ash_all_p_stanZ,1,0
-8605296,21888,assets/obseg/stan/Tbg_azt_all_p_stanZ,1,1
-8627184,10032,assets/obseg/stan/Tbg_cat_all_p_stanZ,1,1
+8605296,21888,assets/obseg/stan/Tbg_azt_all_p_stanZ,1,0
+8627184,10032,assets/obseg/stan/Tbg_cat_all_p_stanZ,1,0
 8637216,20208,assets/obseg/stan/Tbg_cave_all_p_stanZ,1,0
-8657424,10512,assets/obseg/stan/Tbg_crad_all_p_stanZ,1,1
+8657424,10512,assets/obseg/stan/Tbg_crad_all_p_stanZ,1,0
 8667936,12400,assets/obseg/stan/Tbg_cryp_all_p_stanZ,1,0
-8680336,41952,assets/obseg/stan/Tbg_dam_all_p_stanZ,1,1
+8680336,41952,assets/obseg/stan/Tbg_dam_all_p_stanZ,1,0
 8722288,28480,assets/obseg/stan/Tbg_depo_all_p_stanZ,1,0
-8750768,26864,assets/obseg/stan/Tbg_dest_all_p_stanZ,1,1
+8750768,26864,assets/obseg/stan/Tbg_dest_all_p_stanZ,1,0
 8777632,2832,assets/obseg/stan/Tbg_dish_all_p_stanZ,1,0
 
 8780464,0,assets/obseg/stan/Tbg_ear_all_p_stanZ,1,0
@@ -574,22 +574,22 @@
 8818672,0,assets/obseg/stan/Tbg_lip_all_p_stanZ,1,0
 8818672,0,assets/obseg/stan/Tbg_lue_all_p_stanZ,1,0
 
-8818672,6400,assets/obseg/stan/Tbg_oat_all_p_stanZ,1,1
+8818672,6400,assets/obseg/stan/Tbg_oat_all_p_stanZ,1,0
 
 8825072,0,assets/obseg/stan/Tbg_pam_all_p_stanZ,1,0
 
-8825072,18064,assets/obseg/stan/Tbg_pete_all_p_stanZ,1,1
+8825072,18064,assets/obseg/stan/Tbg_pete_all_p_stanZ,1,0
 8843136,7632,assets/obseg/stan/Tbg_ref_all_p_stanZ,1,0
 
 8850768,0,assets/obseg/stan/Tbg_rit_all_p_stanZ,1,0
 
-8850768,6784,assets/obseg/stan/Tbg_run_all_p_stanZ,1,1
+8850768,6784,assets/obseg/stan/Tbg_run_all_p_stanZ,1,0
 8857552,15824,assets/obseg/stan/Tbg_sev_all_p_stanZ,1,0
 8873376,20288,assets/obseg/stan/Tbg_sevb_all_p_stanZ,1,0
 8893664,37680,assets/obseg/stan/Tbg_sevx_all_p_stanZ,1,0
-8931344,37024,assets/obseg/stan/Tbg_silo_all_p_stanZ,1,1
-8968368,20160,assets/obseg/stan/Tbg_stat_all_p_stanZ,1,1
-8988528,9168,assets/obseg/stan/Tbg_tra_all_p_stanZ,1,1
+8931344,37024,assets/obseg/stan/Tbg_silo_all_p_stanZ,1,0
+8968368,20160,assets/obseg/stan/Tbg_stat_all_p_stanZ,1,0
+8988528,9168,assets/obseg/stan/Tbg_tra_all_p_stanZ,1,0
 
 8997696,0,assets/obseg/stan/Tbg_wax_all_p_stanZ,1,0
 
