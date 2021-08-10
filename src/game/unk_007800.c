@@ -10,7 +10,7 @@ void cleanupExplosions(void)
 {
     s32 i;
   
-    D_80040170 = 0;
+    numExplosionEntries = 0;
     viSet800232B4(0.0);
     if (ptr_explosion_buf) {
         for (i = 0; i<0x1fe0; i++)
@@ -43,13 +43,13 @@ GLOBAL_ASM(
 glabel cleanupExplosions
 /* 03C330 7F007800 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 03C334 7F007804 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 03C338 7F007808 3C018004 */  lui   $at, %hi(D_80040170)
+/* 03C338 7F007808 3C018004 */  lui   $at, %hi(numExplosionEntries)
 /* 03C33C 7F00780C 44806000 */  mtc1  $zero, $f12
 /* 03C340 7F007810 AFB20020 */  sw    $s2, 0x20($sp)
 /* 03C344 7F007814 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 03C348 7F007818 AFB00018 */  sw    $s0, 0x18($sp)
 /* 03C34C 7F00781C 0C000EC1 */  jal   viSet800232B4
-/* 03C350 7F007820 AC200170 */   sw    $zero, %lo(D_80040170)($at)
+/* 03C350 7F007820 AC200170 */   sw    $zero, %lo(numExplosionEntries)($at)
 /* 03C354 7F007824 3C118008 */  lui   $s1, %hi(ptr_explosion_buf)
 /* 03C358 7F007828 2631A144 */  addiu $s1, %lo(ptr_explosion_buf) # addiu $s1, $s1, -0x5ebc
 /* 03C35C 7F00782C 8E2E0000 */  lw    $t6, ($s1)
