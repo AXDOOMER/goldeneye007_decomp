@@ -17,13 +17,16 @@ void init_guards(void) {
     init_obj_register_difficulty_vals();
 }
 
+//consolidate with other align_addr_zero macro when cleaning up
+#define align_addr_zero(X) ((((X) + 0xF) | 0xF) ^ 0xF)
 
 void alloc_init_GUARDdata_entries(s32 count)
 {
     s32 i;
     
     num_guards = count + 0xA;
-    ptr_guard_data = mempAllocBytesInBank((num_guards * sizeof(ChrRecord) + 0xF | 0xF) ^ 0xF, 4);
+
+    ptr_guard_data = mempAllocBytesInBank(align_addr_zero(num_guards*sizeof(ChrRecord)), 4);
     for(i = 0; num_guards > i; i++)
     {
         ptr_guard_data[i].model = 0;
