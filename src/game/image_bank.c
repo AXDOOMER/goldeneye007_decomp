@@ -4,9 +4,9 @@
 
 // bss
 //8008D0A0
-s32 img_curpos;
+u8* img_curpos;
 //8008D0A4
-s32 img_curdatatable;
+u32 img_curdatatable;
 //8008D0A8
 s32 img_bitcount;
 //8008D0AC
@@ -92,65 +92,21 @@ void makeemptyimageatpos(s32 pos) {
 
 
 
-
-
-#ifdef NONMATCHING
-u32 sub_GAME_7F0CBF2C(s32 bits)
+u32 extractImageBitCount(s32 bitCount)
 {
-  byte bVar1;
-  
-  if (img_bitcount < bits) {
-    do {
-      img_bitcount = img_bitcount + 8;
-      bVar1 = *img_curpos;
-      img_curpos = img_curpos + 1;
-      img_curdatatable = bVar1 | img_curdatatable << 8;
-    } while (img_bitcount < bits);
-  }
-  img_bitcount = img_bitcount - bits;
-  return img_curdatatable >> (img_bitcount & 0x1f) & (1 << (bits & 0x1f)) - 1U;
+    if (img_bitcount < bitCount)
+    {
+        do
+        {
+            img_curdatatable = (*img_curpos | (img_curdatatable << 8));
+            img_curpos++;
+            img_bitcount = img_bitcount + 8;
+        } while (img_bitcount < bitCount);
+    }
+    
+    img_bitcount -= bitCount;
+    return (img_curdatatable >> img_bitcount) & ((1 << bitCount) - 1);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0CBF2C
-/* 100A5C 7F0CBF2C 3C058009 */  lui   $a1, %hi(img_bitcount)
-/* 100A60 7F0CBF30 24A5D0A8 */  addiu $a1, %lo(img_bitcount) # addiu $a1, $a1, -0x2f58
-/* 100A64 7F0CBF34 8CA30000 */  lw    $v1, ($a1)
-/* 100A68 7F0CBF38 3C078009 */  lui   $a3, %hi(img_curpos)
-/* 100A6C 7F0CBF3C 24E7D0A0 */  addiu $a3, %lo(img_curpos) # addiu $a3, $a3, -0x2f60
-/* 100A70 7F0CBF40 0064082A */  slt   $at, $v1, $a0
-/* 100A74 7F0CBF44 1020000F */  beqz  $at, .L7F0CBF84
-/* 100A78 7F0CBF48 3C068009 */   lui   $a2, %hi(img_curdatatable)
-/* 100A7C 7F0CBF4C 24C6D0A4 */  addiu $a2, %lo(img_curdatatable) # addiu $a2, $a2, -0x2f5c
-.L7F0CBF50:
-/* 100A80 7F0CBF50 8CE20000 */  lw    $v0, ($a3)
-/* 100A84 7F0CBF54 8CCF0000 */  lw    $t7, ($a2)
-/* 100A88 7F0CBF58 24690008 */  addiu $t1, $v1, 8
-/* 100A8C 7F0CBF5C 904E0000 */  lbu   $t6, ($v0)
-/* 100A90 7F0CBF60 000FC200 */  sll   $t8, $t7, 8
-/* 100A94 7F0CBF64 0124082A */  slt   $at, $t1, $a0
-/* 100A98 7F0CBF68 24480001 */  addiu $t0, $v0, 1
-/* 100A9C 7F0CBF6C 01D8C825 */  or    $t9, $t6, $t8
-/* 100AA0 7F0CBF70 ACD90000 */  sw    $t9, ($a2)
-/* 100AA4 7F0CBF74 ACE80000 */  sw    $t0, ($a3)
-/* 100AA8 7F0CBF78 ACA90000 */  sw    $t1, ($a1)
-/* 100AAC 7F0CBF7C 1420FFF4 */  bnez  $at, .L7F0CBF50
-/* 100AB0 7F0CBF80 01201825 */   move  $v1, $t1
-.L7F0CBF84:
-/* 100AB4 7F0CBF84 3C068009 */  lui   $a2, %hi(img_curdatatable)
-/* 100AB8 7F0CBF88 24C6D0A4 */  addiu $a2, %lo(img_curdatatable) # addiu $a2, $a2, -0x2f5c
-/* 100ABC 7F0CBF8C 8CCB0000 */  lw    $t3, ($a2)
-/* 100AC0 7F0CBF90 240F0001 */  li    $t7, 1
-/* 100AC4 7F0CBF94 00645023 */  subu  $t2, $v1, $a0
-/* 100AC8 7F0CBF98 008F7004 */  sllv  $t6, $t7, $a0
-/* 100ACC 7F0CBF9C 25D8FFFF */  addiu $t8, $t6, -1
-/* 100AD0 7F0CBFA0 014B6806 */  srlv  $t5, $t3, $t2
-/* 100AD4 7F0CBFA4 ACAA0000 */  sw    $t2, ($a1)
-/* 100AD8 7F0CBFA8 03E00008 */  jr    $ra
-/* 100ADC 7F0CBFAC 01B81024 */   and   $v0, $t5, $t8
-)
-#endif
 
 
 

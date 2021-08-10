@@ -2859,10 +2859,10 @@ glabel image_related_calls_decompressdata_function
 /* 0FB284 7F0C6754 5420FFFA */  bnezl $at, .L7F0C6740
 /* 0FB288 7F0C6758 844D0000 */   lh    $t5, ($v0)
 .L7F0C675C:
-/* 0FB28C 7F0C675C 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FB28C 7F0C675C 0FC32FCB */  jal   extractImageBitCount
 /* 0FB290 7F0C6760 24040008 */   li    $a0, 8
 /* 0FB294 7F0C6764 AFA22B94 */  sw    $v0, 0x2b94($sp)
-/* 0FB298 7F0C6768 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FB298 7F0C6768 0FC32FCB */  jal   extractImageBitCount
 /* 0FB29C 7F0C676C 24040008 */   li    $a0, 8
 /* 0FB2A0 7F0C6770 24430001 */  addiu $v1, $v0, 1
 /* 0FB2A4 7F0C6774 1860000D */  blez  $v1, .L7F0C67AC
@@ -2873,7 +2873,7 @@ glabel image_related_calls_decompressdata_function
 /* 0FB2B8 7F0C6788 03038021 */  addu  $s0, $t8, $v1
 .L7F0C678C:
 /* 0FB2BC 7F0C678C 24040010 */  li    $a0, 16
-/* 0FB2C0 7F0C6790 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FB2C0 7F0C6790 0FC32FCB */  jal   extractImageBitCount
 /* 0FB2C4 7F0C6794 AFA3005C */   sw    $v1, 0x5c($sp)
 /* 0FB2C8 7F0C6798 8FA3005C */  lw    $v1, 0x5c($sp)
 /* 0FB2CC 7F0C679C 24630002 */  addiu $v1, $v1, 2
@@ -2888,10 +2888,10 @@ glabel image_related_calls_decompressdata_function
 /* 0FB2EC 7F0C67BC 00009825 */   move  $s3, $zero
 /* 0FB2F0 7F0C67C0 27B42370 */  addiu $s4, $sp, 0x2370
 .L7F0C67C4:
-/* 0FB2F4 7F0C67C4 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FB2F4 7F0C67C4 0FC32FCB */  jal   extractImageBitCount
 /* 0FB2F8 7F0C67C8 24040008 */   li    $a0, 8
 /* 0FB2FC 7F0C67CC 0040B025 */  move  $s6, $v0
-/* 0FB300 7F0C67D0 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FB300 7F0C67D0 0FC32FCB */  jal   extractImageBitCount
 /* 0FB304 7F0C67D4 24040008 */   li    $a0, 8
 /* 0FB308 7F0C67D8 16600029 */  bnez  $s3, .L7F0C6880
 /* 0FB30C 7F0C67DC AFA22B84 */   sw    $v0, 0x2b84($sp)
@@ -4607,16 +4607,16 @@ glabel process_huffman_compressed_images
 /* 0FCA4C 7F0C7F1C AFA60070 */  sw    $a2, 0x70($sp)
 /* 0FCA50 7F0C7F20 27BE10A8 */  addiu $fp, $sp, 0x10a8
 .L7F0C7F24:
-/* 0FCA54 7F0C7F24 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FCA54 7F0C7F24 0FC32FCB */  jal   extractImageBitCount
 /* 0FCA58 7F0C7F28 24040004 */   li    $a0, 4
 /* 0FCA5C 7F0C7F2C AFA20080 */  sw    $v0, 0x80($sp)
-/* 0FCA60 7F0C7F30 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FCA60 7F0C7F30 0FC32FCB */  jal   extractImageBitCount
 /* 0FCA64 7F0C7F34 24040008 */   li    $a0, 8
 /* 0FCA68 7F0C7F38 0040B025 */  move  $s6, $v0
-/* 0FCA6C 7F0C7F3C 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FCA6C 7F0C7F3C 0FC32FCB */  jal   extractImageBitCount
 /* 0FCA70 7F0C7F40 24040008 */   li    $a0, 8
 /* 0FCA74 7F0C7F44 0040B825 */  move  $s7, $v0
-/* 0FCA78 7F0C7F48 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FCA78 7F0C7F48 0FC32FCB */  jal   extractImageBitCount
 /* 0FCA7C 7F0C7F4C 24040004 */   li    $a0, 4
 /* 0FCA80 7F0C7F50 8FA500A0 */  lw    $a1, 0xa0($sp)
 /* 0FCA84 7F0C7F54 8FA430B8 */  lw    $a0, 0x30b8($sp)
@@ -4908,7 +4908,7 @@ huffman_type8:
 /* 0FCEBC 7F0C838C 8FB40080 */  lw    $s4, 0x80($sp)
 /* 0FCEC0 7F0C8390 24040003 */  li    $a0, 3
 /* 0FCEC4 7F0C8394 0014C880 */  sll   $t9, $s4, 2
-/* 0FCEC8 7F0C8398 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FCEC8 7F0C8398 0FC32FCB */  jal   extractImageBitCount
 /* 0FCECC 7F0C839C 0320A025 */   move  $s4, $t9
 /* 0FCED0 7F0C83A0 3C188005 */  lui   $t8, %hi(pixelbytecounts) 
 /* 0FCED4 7F0C83A4 27189178 */  addiu $t8, %lo(pixelbytecounts) # addiu $t8, $t8, -0x6e88
@@ -4964,7 +4964,7 @@ huffman_type9:
 /* 0FCF94 7F0C8464 8FB40080 */  lw    $s4, 0x80($sp)
 /* 0FCF98 7F0C8468 24040003 */  li    $a0, 3
 /* 0FCF9C 7F0C846C 00147880 */  sll   $t7, $s4, 2
-/* 0FCFA0 7F0C8470 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FCFA0 7F0C8470 0FC32FCB */  jal   extractImageBitCount
 /* 0FCFA4 7F0C8474 01E0A025 */   move  $s4, $t7
 /* 0FCFA8 7F0C8478 3C0C8005 */  lui   $t4, %hi(pixelbytecounts) 
 /* 0FCFAC 7F0C847C 258C9178 */  addiu $t4, %lo(pixelbytecounts) # addiu $t4, $t4, -0x6e88
@@ -5973,7 +5973,7 @@ glabel generate_sample_table
 /* 0FDD34 7F0C9204 27B02078 */  addiu $s0, $sp, 0x2078
 .L7F0C9208:
 /* 0FDD38 7F0C9208 AFBF005C */  sw    $ra, 0x5c($sp)
-/* 0FDD3C 7F0C920C 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FDD3C 7F0C920C 0FC32FCB */  jal   extractImageBitCount
 /* 0FDD40 7F0C9210 24040008 */   li    $a0, 8
 /* 0FDD44 7F0C9214 26310001 */  addiu $s1, $s1, 1
 /* 0FDD48 7F0C9218 8FBF005C */  lw    $ra, 0x5c($sp)
@@ -6284,7 +6284,7 @@ glabel generate_sample_table
 /* 0FE160 7F0C9630 1020000C */  beqz  $at, .L7F0C9664
 /* 0FE164 7F0C9634 02408025 */   move  $s0, $s2
 .L7F0C9638:
-/* 0FE168 7F0C9638 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE168 7F0C9638 0FC32FCB */  jal   extractImageBitCount
 /* 0FE16C 7F0C963C 24040001 */   li    $a0, 1
 /* 0FE170 7F0C9640 0010C080 */  sll   $t8, $s0, 2
 /* 0FE174 7F0C9644 0278C821 */  addu  $t9, $s3, $t8
@@ -6346,13 +6346,13 @@ glabel type4_7_9_getsamples
 /* 0FE208 7F0C96D8 AFB10018 */  sw    $s1, 0x18($sp)
 /* 0FE20C 7F0C96DC AFB00014 */  sw    $s0, 0x14($sp)
 /* 0FE210 7F0C96E0 AFA5003C */  sw    $a1, 0x3c($sp)
-/* 0FE214 7F0C96E4 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE214 7F0C96E4 0FC32FCB */  jal   extractImageBitCount
 /* 0FE218 7F0C96E8 24040003 */   li    $a0, 3
 /* 0FE21C 7F0C96EC AFA20034 */  sw    $v0, 0x34($sp)
-/* 0FE220 7F0C96F0 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE220 7F0C96F0 0FC32FCB */  jal   extractImageBitCount
 /* 0FE224 7F0C96F4 24040003 */   li    $a0, 3
 /* 0FE228 7F0C96F8 AFA20030 */  sw    $v0, 0x30($sp)
-/* 0FE22C 7F0C96FC 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE22C 7F0C96FC 0FC32FCB */  jal   extractImageBitCount
 /* 0FE230 7F0C9700 24040004 */   li    $a0, 4
 /* 0FE234 7F0C9704 8FAE0034 */  lw    $t6, 0x34($sp)
 /* 0FE238 7F0C9708 8FAF0030 */  lw    $t7, 0x30($sp)
@@ -6372,31 +6372,31 @@ glabel type4_7_9_getsamples
 /* 0FE268 7F0C9738 1B200070 */  blez  $t9, .L7F0C98FC
 /* 0FE26C 7F0C973C 00008825 */   move  $s1, $zero
 .L7F0C9740:
-/* 0FE270 7F0C9740 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE270 7F0C9740 0FC32FCB */  jal   extractImageBitCount
 /* 0FE274 7F0C9744 24040001 */   li    $a0, 1
 /* 0FE278 7F0C9748 1440000F */  bnez  $v0, .L7F0C9788
 /* 0FE27C 7F0C974C 2A810009 */   slti  $at, $s4, 9
 /* 0FE280 7F0C9750 10200007 */  beqz  $at, .L7F0C9770
 /* 0FE284 7F0C9754 02802025 */   move  $a0, $s4
 /* 0FE288 7F0C9758 02802025 */  move  $a0, $s4
-/* 0FE28C 7F0C975C 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE28C 7F0C975C 0FC32FCB */  jal   extractImageBitCount
 /* 0FE290 7F0C9760 02518021 */   addu  $s0, $s2, $s1
 /* 0FE294 7F0C9764 A2020000 */  sb    $v0, ($s0)
 /* 0FE298 7F0C9768 10000060 */  b     .L7F0C98EC
 /* 0FE29C 7F0C976C 26310001 */   addiu $s1, $s1, 1
 .L7F0C9770:
 /* 0FE2A0 7F0C9770 00114040 */  sll   $t0, $s1, 1
-/* 0FE2A4 7F0C9774 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE2A4 7F0C9774 0FC32FCB */  jal   extractImageBitCount
 /* 0FE2A8 7F0C9778 02488021 */   addu  $s0, $s2, $t0
 /* 0FE2AC 7F0C977C A6020000 */  sh    $v0, ($s0)
 /* 0FE2B0 7F0C9780 1000005A */  b     .L7F0C98EC
 /* 0FE2B4 7F0C9784 26310001 */   addiu $s1, $s1, 1
 .L7F0C9788:
-/* 0FE2B8 7F0C9788 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE2B8 7F0C9788 0FC32FCB */  jal   extractImageBitCount
 /* 0FE2BC 7F0C978C 8FA40034 */   lw    $a0, 0x34($sp)
 /* 0FE2C0 7F0C9790 02229823 */  subu  $s3, $s1, $v0
 /* 0FE2C4 7F0C9794 2673FFFF */  addiu $s3, $s3, -1
-/* 0FE2C8 7F0C9798 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE2C8 7F0C9798 0FC32FCB */  jal   extractImageBitCount
 /* 0FE2CC 7F0C979C 8FA40030 */   lw    $a0, 0x30($sp)
 /* 0FE2D0 7F0C97A0 00552021 */  addu  $a0, $v0, $s5
 /* 0FE2D4 7F0C97A4 2A810009 */  slti  $at, $s4, 9
@@ -6439,7 +6439,7 @@ glabel type4_7_9_getsamples
 /* 0FE35C 7F0C982C 1464FFF4 */  bne   $v1, $a0, .L7F0C9800
 /* 0FE360 7F0C9830 A20EFFFF */   sb    $t6, -1($s0)
 .L7F0C9834:
-/* 0FE364 7F0C9834 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE364 7F0C9834 0FC32FCB */  jal   extractImageBitCount
 /* 0FE368 7F0C9838 02802025 */   move  $a0, $s4
 /* 0FE36C 7F0C983C A2020000 */  sb    $v0, ($s0)
 /* 0FE370 7F0C9840 1000002A */  b     .L7F0C98EC
@@ -6486,7 +6486,7 @@ glabel type4_7_9_getsamples
 /* 0FE404 7F0C98D4 1445FFF5 */  bne   $v0, $a1, .L7F0C98AC
 /* 0FE408 7F0C98D8 A60EFFFE */   sh    $t6, -2($s0)
 .L7F0C98DC:
-/* 0FE40C 7F0C98DC 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE40C 7F0C98DC 0FC32FCB */  jal   extractImageBitCount
 /* 0FE410 7F0C98E0 02802025 */   move  $a0, $s4
 /* 0FE414 7F0C98E4 A6020000 */  sh    $v0, ($s0)
 /* 0FE418 7F0C98E8 26310001 */  addiu $s1, $s1, 1
@@ -6530,7 +6530,7 @@ glabel type5_6_7_getsamples
 /* 0FE46C 7F0C993C AFB40024 */  sw    $s4, 0x24($sp)
 /* 0FE470 7F0C9940 AFB10018 */  sw    $s1, 0x18($sp)
 /* 0FE474 7F0C9944 AFB00014 */  sw    $s0, 0x14($sp)
-/* 0FE478 7F0C9948 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE478 7F0C9948 0FC32FCB */  jal   extractImageBitCount
 /* 0FE47C 7F0C994C 2404000B */   li    $a0, 11
 /* 0FE480 7F0C9950 2A410011 */  slti  $at, $s2, 0x11
 /* 0FE484 7F0C9954 1020000C */  beqz  $at, .L7F0C9988
@@ -6539,7 +6539,7 @@ glabel type5_6_7_getsamples
 /* 0FE490 7F0C9960 00008025 */   move  $s0, $zero
 /* 0FE494 7F0C9964 02608825 */  move  $s1, $s3
 .L7F0C9968:
-/* 0FE498 7F0C9968 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE498 7F0C9968 0FC32FCB */  jal   extractImageBitCount
 /* 0FE49C 7F0C996C 02402025 */   move  $a0, $s2
 /* 0FE4A0 7F0C9970 26100001 */  addiu $s0, $s0, 1
 /* 0FE4A4 7F0C9974 26310002 */  addiu $s1, $s1, 2
@@ -6555,7 +6555,7 @@ glabel type5_6_7_getsamples
 /* 0FE4C8 7F0C9998 00008025 */   move  $s0, $zero
 /* 0FE4CC 7F0C999C 02608825 */  move  $s1, $s3
 .L7F0C99A0:
-/* 0FE4D0 7F0C99A0 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE4D0 7F0C99A0 0FC32FCB */  jal   extractImageBitCount
 /* 0FE4D4 7F0C99A4 02402025 */   move  $a0, $s2
 /* 0FE4D8 7F0C99A8 26100001 */  addiu $s0, $s0, 1
 /* 0FE4DC 7F0C99AC 26310004 */  addiu $s1, $s1, 4
@@ -6569,10 +6569,10 @@ glabel type5_6_7_getsamples
 /* 0FE4F8 7F0C99C8 2654FFE8 */  addiu $s4, $s2, -0x18
 /* 0FE4FC 7F0C99CC 02608825 */  move  $s1, $s3
 .L7F0C99D0:
-/* 0FE500 7F0C99D0 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE500 7F0C99D0 0FC32FCB */  jal   extractImageBitCount
 /* 0FE504 7F0C99D4 24040018 */   li    $a0, 24
 /* 0FE508 7F0C99D8 00409025 */  move  $s2, $v0
-/* 0FE50C 7F0C99DC 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE50C 7F0C99DC 0FC32FCB */  jal   extractImageBitCount
 /* 0FE510 7F0C99E0 02802025 */   move  $a0, $s4
 /* 0FE514 7F0C99E4 00127200 */  sll   $t6, $s2, 8
 /* 0FE518 7F0C99E8 26100001 */  addiu $s0, $s0, 1
@@ -6643,7 +6643,7 @@ glabel image_get_alpha_values
 /* 0FE594 7F0C9A64 00008025 */   move  $s0, $zero
 /* 0FE598 7F0C9A68 00808825 */  move  $s1, $a0
 .L7F0C9A6C:
-/* 0FE59C 7F0C9A6C 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE59C 7F0C9A6C 0FC32FCB */  jal   extractImageBitCount
 /* 0FE5A0 7F0C9A70 24040001 */   li    $a0, 1
 /* 0FE5A4 7F0C9A74 26100001 */  addiu $s0, $s0, 1
 /* 0FE5A8 7F0C9A78 26310001 */  addiu $s1, $s1, 1
@@ -6722,11 +6722,11 @@ glabel image_compression0_expand
 /* 0FE654 7F0C9B24 00008025 */   move  $s0, $zero
 /* 0FE658 7F0C9B28 02A08825 */  move  $s1, $s5
 .L7F0C9B2C:
-/* 0FE65C 7F0C9B2C 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE65C 7F0C9B2C 0FC32FCB */  jal   extractImageBitCount
 /* 0FE660 7F0C9B30 24040010 */   li    $a0, 16
 /* 0FE664 7F0C9B34 00024C00 */  sll   $t1, $v0, 0x10
 /* 0FE668 7F0C9B38 AE290000 */  sw    $t1, ($s1)
-/* 0FE66C 7F0C9B3C 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE66C 7F0C9B3C 0FC32FCB */  jal   extractImageBitCount
 /* 0FE670 7F0C9B40 24040010 */   li    $a0, 16
 /* 0FE674 7F0C9B44 8E2A0000 */  lw    $t2, ($s1)
 /* 0FE678 7F0C9B48 26100001 */  addiu $s0, $s0, 1
@@ -6757,7 +6757,7 @@ glabel image_compression0_expand
 /* 0FE6CC 7F0C9B9C 00008025 */   move  $s0, $zero
 /* 0FE6D0 7F0C9BA0 02A08825 */  move  $s1, $s5
 .L7F0C9BA4:
-/* 0FE6D4 7F0C9BA4 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE6D4 7F0C9BA4 0FC32FCB */  jal   extractImageBitCount
 /* 0FE6D8 7F0C9BA8 24040018 */   li    $a0, 24
 /* 0FE6DC 7F0C9BAC 0002CA00 */  sll   $t9, $v0, 8
 /* 0FE6E0 7F0C9BB0 26100001 */  addiu $s0, $s0, 1
@@ -6788,7 +6788,7 @@ glabel image_compression0_expand
 /* 0FE734 7F0C9C04 00008025 */   move  $s0, $zero
 /* 0FE738 7F0C9C08 02C08825 */  move  $s1, $s6
 .L7F0C9C0C:
-/* 0FE73C 7F0C9C0C 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE73C 7F0C9C0C 0FC32FCB */  jal   extractImageBitCount
 /* 0FE740 7F0C9C10 24040010 */   li    $a0, 16
 /* 0FE744 7F0C9C14 26100001 */  addiu $s0, $s0, 1
 /* 0FE748 7F0C9C18 26310002 */  addiu $s1, $s1, 2
@@ -6817,7 +6817,7 @@ glabel image_compression0_expand
 /* 0FE794 7F0C9C64 00008025 */   move  $s0, $zero
 /* 0FE798 7F0C9C68 02C08825 */  move  $s1, $s6
 .L7F0C9C6C:
-/* 0FE79C 7F0C9C6C 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE79C 7F0C9C6C 0FC32FCB */  jal   extractImageBitCount
 /* 0FE7A0 7F0C9C70 2404000F */   li    $a0, 15
 /* 0FE7A4 7F0C9C74 00024840 */  sll   $t1, $v0, 1
 /* 0FE7A8 7F0C9C78 26100001 */  addiu $s0, $s0, 1
@@ -6848,7 +6848,7 @@ glabel image_compression0_expand
 /* 0FE7FC 7F0C9CCC 00008025 */   move  $s0, $zero
 /* 0FE800 7F0C9CD0 02608825 */  move  $s1, $s3
 .L7F0C9CD4:
-/* 0FE804 7F0C9CD4 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE804 7F0C9CD4 0FC32FCB */  jal   extractImageBitCount
 /* 0FE808 7F0C9CD8 24040008 */   li    $a0, 8
 /* 0FE80C 7F0C9CDC 26100001 */  addiu $s0, $s0, 1
 /* 0FE810 7F0C9CE0 26310001 */  addiu $s1, $s1, 1
@@ -6875,7 +6875,7 @@ glabel image_compression0_expand
 /* 0FE854 7F0C9D24 1A400009 */  blez  $s2, .L7F0C9D4C
 /* 0FE858 7F0C9D28 00008025 */   move  $s0, $zero
 .L7F0C9D2C:
-/* 0FE85C 7F0C9D2C 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FE85C 7F0C9D2C 0FC32FCB */  jal   extractImageBitCount
 /* 0FE860 7F0C9D30 24040008 */   li    $a0, 8
 /* 0FE864 7F0C9D34 00104843 */  sra   $t1, $s0, 1
 /* 0FE868 7F0C9D38 26100002 */  addiu $s0, $s0, 2
@@ -7771,7 +7771,7 @@ glabel type5_generate_link_final_image
 /* 0FF454 7F0CA924 00008025 */   move  $s0, $zero
 /* 0FF458 7F0CA928 02E08825 */  move  $s1, $s7
 .L7F0CA92C:
-/* 0FF45C 7F0CA92C 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FF45C 7F0CA92C 0FC32FCB */  jal   extractImageBitCount
 /* 0FF460 7F0CA930 02402025 */   move  $a0, $s2
 /* 0FF464 7F0CA934 0002C880 */  sll   $t9, $v0, 2
 /* 0FF468 7F0CA938 02794021 */  addu  $t0, $s3, $t9
@@ -7805,7 +7805,7 @@ glabel type5_generate_link_final_image
 /* 0FF4C8 7F0CA998 00008025 */   move  $s0, $zero
 /* 0FF4CC 7F0CA99C 02E08825 */  move  $s1, $s7
 .L7F0CA9A0:
-/* 0FF4D0 7F0CA9A0 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FF4D0 7F0CA9A0 0FC32FCB */  jal   extractImageBitCount
 /* 0FF4D4 7F0CA9A4 02402025 */   move  $a0, $s2
 /* 0FF4D8 7F0CA9A8 0002C080 */  sll   $t8, $v0, 2
 /* 0FF4DC 7F0CA9AC 0278C821 */  addu  $t9, $s3, $t8
@@ -7842,7 +7842,7 @@ glabel type5_generate_link_final_image
 /* 0FF548 7F0CAA18 00008025 */   move  $s0, $zero
 /* 0FF54C 7F0CAA1C 03C08825 */  move  $s1, $fp
 .L7F0CAA20:
-/* 0FF550 7F0CAA20 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FF550 7F0CAA20 0FC32FCB */  jal   extractImageBitCount
 /* 0FF554 7F0CAA24 02402025 */   move  $a0, $s2
 /* 0FF558 7F0CAA28 00024040 */  sll   $t0, $v0, 1
 /* 0FF55C 7F0CAA2C 02684821 */  addu  $t1, $s3, $t0
@@ -7878,7 +7878,7 @@ glabel type5_generate_link_final_image
 /* 0FF5C4 7F0CAA94 00008025 */   move  $s0, $zero
 /* 0FF5C8 7F0CAA98 03C08825 */  move  $s1, $fp
 .L7F0CAA9C:
-/* 0FF5CC 7F0CAA9C 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FF5CC 7F0CAA9C 0FC32FCB */  jal   extractImageBitCount
 /* 0FF5D0 7F0CAAA0 02402025 */   move  $a0, $s2
 /* 0FF5D4 7F0CAAA4 00024840 */  sll   $t1, $v0, 1
 /* 0FF5D8 7F0CAAA8 02695021 */  addu  $t2, $s3, $t1
@@ -7916,7 +7916,7 @@ glabel type5_generate_link_final_image
 /* 0FF648 7F0CAB18 00008025 */   move  $s0, $zero
 /* 0FF64C 7F0CAB1C 02A08825 */  move  $s1, $s5
 .L7F0CAB20:
-/* 0FF650 7F0CAB20 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FF650 7F0CAB20 0FC32FCB */  jal   extractImageBitCount
 /* 0FF654 7F0CAB24 02402025 */   move  $a0, $s2
 /* 0FF658 7F0CAB28 00025840 */  sll   $t3, $v0, 1
 /* 0FF65C 7F0CAB2C 026B6021 */  addu  $t4, $s3, $t3
@@ -7950,7 +7950,7 @@ glabel type5_generate_link_final_image
 /* 0FF6BC 7F0CAB8C 1A800019 */  blez  $s4, .L7F0CABF4
 /* 0FF6C0 7F0CAB90 00008025 */   move  $s0, $zero
 .L7F0CAB94:
-/* 0FF6C4 7F0CAB94 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FF6C4 7F0CAB94 0FC32FCB */  jal   extractImageBitCount
 /* 0FF6C8 7F0CAB98 02402025 */   move  $a0, $s2
 /* 0FF6CC 7F0CAB9C 00026040 */  sll   $t4, $v0, 1
 /* 0FF6D0 7F0CABA0 026C6821 */  addu  $t5, $s3, $t4
@@ -7962,7 +7962,7 @@ glabel type5_generate_link_final_image
 /* 0FF6E8 7F0CABB8 000E7900 */  sll   $t7, $t6, 4
 /* 0FF6EC 7F0CABBC 10200009 */  beqz  $at, .L7F0CABE4
 /* 0FF6F0 7F0CABC0 A22F0000 */   sb    $t7, ($s1)
-/* 0FF6F4 7F0CABC4 0FC32FCB */  jal   sub_GAME_7F0CBF2C
+/* 0FF6F4 7F0CABC4 0FC32FCB */  jal   extractImageBitCount
 /* 0FF6F8 7F0CABC8 02402025 */   move  $a0, $s2
 /* 0FF6FC 7F0CABCC 00024040 */  sll   $t0, $v0, 1
 /* 0FF700 7F0CABD0 02684821 */  addu  $t1, $s3, $t0
