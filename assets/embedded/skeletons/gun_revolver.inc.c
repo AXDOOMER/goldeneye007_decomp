@@ -12,6 +12,6 @@ ModelJoint JOINTLIST(gun_revolver)[] = {
 MODELSKELETON(gun_revolver, 7, 21)
 
 //D:8003C778
-s32 D_8003C778 = 0;
+s32 PAD_8003C778 = 0;
 //D:8003C77C
-s32 D_8003C77C = 0;
+s32 PAD_8003C77C = 0;

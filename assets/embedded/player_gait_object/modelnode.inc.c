@@ -17,8 +17,8 @@ ModelNode_GroupRecord player_gait_pos_3 = {{-2.576027, 480.42902, 0.0}, 0x0003, 
 
 //FIXME File split likely
 //D:8003C644
-s32 D_8003C644 = 0;
+s32 PAD_8003C644 = 0;
 //D:8003C648
-s32 D_8003C648 = 0;
+s32 PAD_8003C648 = 0;
 //D:8003C64C
-s32 D_8003C64C = 0;
+s32 PAD_8003C64C = 0;

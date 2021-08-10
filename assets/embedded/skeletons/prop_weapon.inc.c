@@ -8,6 +8,6 @@ MODELSKELETON(prop_weapon, 2, 0)
 
 //FIXME File split likely
 //D:8003C508
-s32 D_8003C508 = 0;
+s32 PAD_8003C508 = 0;
 //D:8003C50C
-s32 D_8003C50C = 0;
+s32 PAD_8003C50C = 0;

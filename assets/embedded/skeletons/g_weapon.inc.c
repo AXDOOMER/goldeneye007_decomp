@@ -20,4 +20,4 @@ ModelJoint JOINTLIST(g_weapon)[] = {
 MODELSKELETON(g_weapon, 0xD, 0x27)
 
 //D:8003D39C
-s32 D_8003D39C = 0;
+s32 PAD_8003D39C = 0;

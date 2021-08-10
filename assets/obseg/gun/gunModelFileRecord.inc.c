@@ -83,9 +83,9 @@ GunModelFileRecord gitem_structs[] = {
 	GUNFILERECORD( keycard, 1,                      NULL, TEXT(LGUN, 0x83), TEXT(LGUN, 0x45),  24.0,   0.0,  556.0,  80.0, 90.0, TEXT(LGUN, 0x45), TEXT(LGUN, 0xAA), 0.0, -6.0, 411.0)
 	GUNFILERECORD( keyyale, 1,                      NULL, TEXT(LGUN, 0x83), TEXT(LGUN, 0x81),  64.0,   0.0, 1912.0, 260.0, 90.0, TEXT(LGUN, 0x81), TEXT(LGUN, 0xD6), 0.0, -18.0, 1568.0)
 	GUNFILERECORD( keybolt, 1,                      NULL, TEXT(LGUN, 0x83), TEXT(LGUN, 0x19),  78.0,   0.0, 3518.0,  80.0, 90.0, TEXT(LGUN, 0x19), TEXT(LGUN, 0x89), 0.0, -12.0, 2582.0)
-	{       &suit_lf_hand_header,       "Csuit_lf_handZ", 0,  GUNSTATS(Csuit_lf_handz), TEXT(LGUN, 0x83), TEXT(LGUN, 0x6D),   0.0,   0.0, 1000.0,   0.0, 0.0, TEXT(LGUN, 0x83), TEXT(LGUN, 0x83), 10.0, 10.0, 1000.0},
+	SUIT_LFRECORD(suit_lf_hand, 0, GUNSTATS(Csuit_lf_handz), TEXT(LGUN, 0x83), TEXT(LGUN, 0x6D),   0.0,   0.0, 1000.0,   0.0, 0.0, TEXT(LGUN, 0x83), TEXT(LGUN, 0x83), 10.0, 10.0, 1000.0)
 	GUNFILERECORD(        joypad,                         0,          GUNSTATS(joypad), TEXT(LGUN, 0x83), TEXT(LGUN, 0x24),   0.0,   0.0, 1000.0,   0.0, 0.0, TEXT(LGUN, 0x83), TEXT(LGUN, 0x83), 10.0, 10.0, 1000.0)
-	{         NULL              ,                   NULL, 0, GUNSTATS(unused_800337D4), TEXT(LGUN, 0x83), TEXT(LGUN, 0x54),   0.0,   0.0, 1000.0,   0.0, 0.0, TEXT(LGUN, 0x83), TEXT(LGUN, 0x83), 10.0, 10.0, 1000.0},
-	{         NULL              ,                   NULL, 0, GUNSTATS(unused_80033844), TEXT(LGUN, 0x83), TEXT(LGUN, 0x54),   0.0,   0.0, 1000.0,   0.0, 0.0, TEXT(LGUN, 0x83), TEXT(LGUN, 0x83), 10.0, 10.0, 1000.0},
-	{         NULL              ,                   NULL, 0, GUNSTATS(unused_800338B4), TEXT(LGUN, 0x83), TEXT(LGUN, 0x73),  12.0,   0.0,  528.0,  80.0, 0.0, TEXT(LGUN, 0x73), TEXT(LGUN, 0xCC), 0.0, -4.0, 310.0}
+	{         NULL              ,                   NULL, 0, GUNSTATS(null1), TEXT(LGUN, 0x83), TEXT(LGUN, 0x54),   0.0,   0.0, 1000.0,   0.0, 0.0, TEXT(LGUN, 0x83), TEXT(LGUN, 0x83), 10.0, 10.0, 1000.0},
+	{         NULL              ,                   NULL, 0, GUNSTATS(null2), TEXT(LGUN, 0x83), TEXT(LGUN, 0x54),   0.0,   0.0, 1000.0,   0.0, 0.0, TEXT(LGUN, 0x83), TEXT(LGUN, 0x83), 10.0, 10.0, 1000.0},
+	{         NULL              ,                   NULL, 0, GUNSTATS(token), TEXT(LGUN, 0x83), TEXT(LGUN, 0x73),  12.0,   0.0,  528.0,  80.0, 0.0, TEXT(LGUN, 0x73), TEXT(LGUN, 0xCC), 0.0, -4.0, 310.0}
 };
