@@ -70,6 +70,18 @@ struct weapon_firing_animation_table
   f32 anonymous_17;
 };
 
+extern s32 objectiveregisters1;
+extern s32 objectiveregisters2;
+extern s32 objectiveregisters3;
+
+extern u32 current_random_body;
+extern u32 current_random_male_head;
+extern u32 current_random_female_head;
+extern f32 ai_accuracy_modifier;
+extern f32 ai_damage_modifier;
+extern f32 ai_health_modifier;
+extern f32 ai_reaction_speed;
+extern s32 setting_007_5;
 
 extern struct animation_something D_8002C914;
 

@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "bondconstants.h"
 #include "memp.h"
+#include "chr.h"
 //i belong in a header, probably to another file
 
 
@@ -11,42 +12,24 @@
 u32 global_action_block_temp_buffer[119] = {0};
 
 s32 weapon_models_for_weapon_load[] = {
-PROJECTILES_TYPE_KNIFE, PROJECTILES_TYPE_GRENADE, PROJECTILES_TYPE_REMOTE_MINE,
-PROJECTILES_TYPE_PROX_MINE, PROJECTILES_TYPE_TIMED_MINE, PROJECTILES_TYPE_ROCKET_ROUND,
-PROJECTILES_TYPE_GLAUNCH_ROUND, 0xFFFFFFFF};
+    PROJECTILES_TYPE_KNIFE, PROJECTILES_TYPE_GRENADE, 
+    PROJECTILES_TYPE_REMOTE_MINE, PROJECTILES_TYPE_PROX_MINE,
+    PROJECTILES_TYPE_TIMED_MINE, PROJECTILES_TYPE_ROCKET_ROUND,
+    PROJECTILES_TYPE_GLAUNCH_ROUND, 0xFFFFFFFF
+};
 
 
 
-#ifdef NONMATCHING
+
 void init_obj_register_difficulty_vals(void) {
     objectiveregisters1 = 0;
     ai_accuracy_modifier = 1.0f;
     ai_damage_modifier = 1.0f;
     ai_health_modifier = 1.0f;
     ai_reaction_speed = 1.0f;
-    setting_007_5 = 0.0f;
+    setting_007_5 = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel init_obj_register_difficulty_vals
-/* 035B50 7F001020 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 035B54 7F001024 44810000 */  mtc1  $at, $f0
-/* 035B58 7F001028 3C018003 */  lui   $at, %hi(objectiveregisters1)
-/* 035B5C 7F00102C AC200978 */  sw    $zero, %lo(objectiveregisters1)($at)
-/* 035B60 7F001030 3C018003 */  lui   $at, %hi(ai_accuracy_modifier)
-/* 035B64 7F001034 E420CE40 */  swc1  $f0, %lo(ai_accuracy_modifier)($at)
-/* 035B68 7F001038 3C018003 */  lui   $at, %hi(ai_damage_modifier)
-/* 035B6C 7F00103C E420CE44 */  swc1  $f0, %lo(ai_damage_modifier)($at)
-/* 035B70 7F001040 3C018003 */  lui   $at, %hi(ai_health_modifier)
-/* 035B74 7F001044 E420CE48 */  swc1  $f0, %lo(ai_health_modifier)($at)
-/* 035B78 7F001048 3C018003 */  lui   $at, %hi(ai_reaction_speed)
-/* 035B7C 7F00104C E420CE4C */  swc1  $f0, %lo(ai_reaction_speed)($at)
-/* 035B80 7F001050 3C018003 */  lui   $at, %hi(setting_007_5)
-/* 035B84 7F001054 03E00008 */  jr    $ra
-/* 035B88 7F001058 AC20CE50 */   sw    $zero, %lo(setting_007_5)($at)
-)
-#endif
+
 
 
 #ifdef NONMATCHING

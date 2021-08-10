@@ -88,7 +88,7 @@ f32 ai_accuracy_modifier = 1.0f;
 f32 ai_damage_modifier = 1.0f;
 f32 ai_health_modifier = 1.0f;
 f32 ai_reaction_speed = 1.0f;
-f32 setting_007_5 = 0.0f;
+s32 setting_007_5 = 0;
 
 struct struck_animation_table D_8002CE54[] = {
     {0x35C8, 0, -1.0, 0.5, 0, 27.0, -1.0},
