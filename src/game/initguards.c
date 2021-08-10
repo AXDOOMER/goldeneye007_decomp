@@ -23,7 +23,7 @@ void alloc_init_GUARDdata_entries(s32 count)
     s32 i;
     
     num_guards = count + 0xA;
-    ptr_guard_data = mempAllocBytesInBank((((num_guards * 0x1DC) + 0xF) | 0xF) ^ 0xF, 4);
+    ptr_guard_data = mempAllocBytesInBank((num_guards * sizeof(ChrRecord) + 0xF | 0xF) ^ 0xF, 4);
     for(i = 0; num_guards > i; i++)
     {
         ptr_guard_data[i].model = 0;
