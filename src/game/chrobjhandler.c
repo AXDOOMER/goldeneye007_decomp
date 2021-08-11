@@ -504,85 +504,85 @@ u32 monAnim16RandomFour[] = {
 
 //[80031950	17	Base Function for random screens + random effects]
 u32 monAnim17RandImageEffect[] = {
-    MONJUMPCHANCE(monRandEFFECTImage11, TEN_PERCENT_CHANCE),
-    MONJUMPCHANCE(monRandEFFECTImage12, TEN_PERCENT_CHANCE),
-    MONJUMPCHANCE(monRandEFFECTImage13, TEN_PERCENT_CHANCE),
-    MONJUMPCHANCE(monRandEFFECTImage14, TEN_PERCENT_CHANCE),
-    MONJUMPCHANCE(monRandEFFECTImage15, TEN_PERCENT_CHANCE),
-    MONJUMPCHANCE(monRandEFFECTImage16, TEN_PERCENT_CHANCE),
-    MONJUMPCHANCE(monRandEFFECTImage17, TEN_PERCENT_CHANCE),
-    MONJUMPCHANCE(monRandEFFECTImage18, TEN_PERCENT_CHANCE),
-    MONJUMPCHANCE(monRandEFFECTImage19, TEN_PERCENT_CHANCE),
-    MONJUMPCHANCE(monRandEFFECTImage1A, TEN_PERCENT_CHANCE),
+    MONJUMPCHANCE(monRandEffectChanceSHUTTLE1, TEN_PERCENT_CHANCE),
+    MONJUMPCHANCE(monRandEffectChanceSHUTTLE2, TEN_PERCENT_CHANCE),
+    MONJUMPCHANCE(monRandEffectChanceEARTHFULL1, TEN_PERCENT_CHANCE),
+    MONJUMPCHANCE(monRandEffectChanceEARTHFULL2, TEN_PERCENT_CHANCE),
+    MONJUMPCHANCE(monRandEffectChanceBLUESTARS, TEN_PERCENT_CHANCE),
+    MONJUMPCHANCE(monRandEffectChanceGALAXY1, TEN_PERCENT_CHANCE),
+    MONJUMPCHANCE(monRandEffectChanceGALAXY2, TEN_PERCENT_CHANCE),
+    MONJUMPCHANCE(monRandEffectChanceEARTHTEXT, TEN_PERCENT_CHANCE),
+    MONJUMPCHANCE(monRandEffectChanceTARGETEARTH, TEN_PERCENT_CHANCE),
+    MONJUMPCHANCE(monRandEffectChanceGALAXY3, TEN_PERCENT_CHANCE),
     MONHOLDTIME(100),
     MONLOOP()
 };
 
 //[800319D4	18	random screens + random effects - set image]
-u32 monRandEFFECTImage11[] = {
+u32 monRandEffectChanceSHUTTLE1[] = {
     MONUSEIMAGE(IMGSHUTTLE1),
     MONHOLDTIME(20),
     MONJUMPCHANCE(monRandChanceScrollOrZoomRandRGBN, HUNDRED_PERCENT_CHANCE)
 };
 
 //[800319F0	19	random screens + random effects - set image]
-u32 monRandEFFECTImage12[] = {
+u32 monRandEffectChanceSHUTTLE2[] = {
     MONUSEIMAGE(IMGSHUTTLE2),
     MONHOLDTIME(20),
     MONJUMPCHANCE(monRandChanceScrollOrZoomRandRGBN, HUNDRED_PERCENT_CHANCE)
 };
 
 //[80031A0C	1A	random screens + random effects - set image]
-u32 monRandEFFECTImage13[] = {
+u32 monRandEffectChanceEARTHFULL1[] = {
     MONUSEIMAGE(IMGEARTHFULL1),
     MONHOLDTIME(20),
     MONJUMPCHANCE(monRandChanceScrollOrZoomRandRGBN, HUNDRED_PERCENT_CHANCE)
 };
 
 //[80031A28	1B	random screens + random effects - set image]
-u32 monRandEFFECTImage14[] = {
+u32 monRandEffectChanceEARTHFULL2[] = {
     MONUSEIMAGE(IMGEARTHFULL2),
     MONHOLDTIME(20),
     MONJUMPCHANCE(monRandChanceScrollOrZoomRandRGBN, HUNDRED_PERCENT_CHANCE)
 };
 
 //[80031A44	1C	random screens + random effects - set image]
-u32 monRandEFFECTImage15[] = {
+u32 monRandEffectChanceBLUESTARS[] = {
     MONUSEIMAGE(IMGBLUESTARS),
     MONHOLDTIME(20),
     MONJUMPCHANCE(monRandChanceScrollOrZoomRandRGBN, HUNDRED_PERCENT_CHANCE)
 };
 
 //[80031A60	1D	random screens + random effects - set image]
-u32 monRandEFFECTImage16[] = {
+u32 monRandEffectChanceGALAXY1[] = {
     MONUSEIMAGE(IMGGALAXY1),
     MONHOLDTIME(20),
     MONJUMPCHANCE(monRandChanceScrollOrZoomRandRGBN, HUNDRED_PERCENT_CHANCE)
 };
 
 //[80031A7C	1E	random screens + random effects - set image]
-u32 monRandEFFECTImage17[] = {
+u32 monRandEffectChanceGALAXY2[] = {
     MONUSEIMAGE(IMGGALAXY2), 
     MONHOLDTIME(20), 
     MONJUMPCHANCE(monRandChanceScrollOrZoomRandRGBN, HUNDRED_PERCENT_CHANCE)
 };
 
 //[80031A98	1F	random screens + random effects - set image]
-u32 monRandEFFECTImage18[] = {
+u32 monRandEffectChanceEARTHTEXT[] = {
     MONUSEIMAGE(IMGEARTHTEXT), 
     MONHOLDTIME(20), 
     MONJUMPCHANCE(monRandChanceScrollOrZoomRandRGBN, HUNDRED_PERCENT_CHANCE)
 };
 
 //[80031AB4	20	random screens + random effects - set image]
-u32 monRandEFFECTImage19[] = {
+u32 monRandEffectChanceTARGETEARTH[] = {
     MONUSEIMAGE(IMGTARGETEARTH),
     MONHOLDTIME(20),
     MONJUMPCHANCE(monRandChanceScrollOrZoomRandRGBN, HUNDRED_PERCENT_CHANCE)
 };
 
 //[80031AD0	21	random screens + random effects - set image]
-u32 monRandEFFECTImage1A[] = {
+u32 monRandEffectChanceGALAXY3[] = {
     MONUSEIMAGE(IMGGALAXY3), 
     MONHOLDTIME(20), 
     MONJUMPCHANCE(monRandChanceScrollOrZoomRandRGBN, HUNDRED_PERCENT_CHANCE)
@@ -24171,295 +24171,170 @@ glabel save_ptr_monitor_ani_code_to_obj_ani_slot
 
 
 
-#ifdef NONMATCHING
-void set_ptr_monitor_img_to_obj_ani_slot(void) {
 
+void set_ptr_monitor_img_to_obj_ani_slot(s32 slot, s32 monAnimID)
+{
+    s32 *image = &monAnim00Bond;
+    switch (monAnimID) {
+     default:
+     case 0:
+        break;
+     case 1:
+        image = &monAnim01DesktopsSatellite;
+        break;
+    case 2:
+        image = &monAnim02Astrological;
+        break;
+    case 3:
+        image = &monAnim03ThreeWavePattern;
+        break;
+    case 4:
+        image = &monAnim04WavePattern;
+        break;
+    case 5:
+        image = &monAnim05GreenTextUp;
+        break;
+    case 6:
+        image = &monAnim06RedTextDown;
+        break;
+    case 7:
+        image = &monAnim07GreenTextDown;
+        break;
+    case 8:
+        image = &monAnim08RedBarGraph;
+        break;
+    case 9:
+        image = &monAnim09BlueBarGraph;
+        break;
+    case 10:
+        image = &monAnim0AGreenBarGraph;
+        break;
+    case 11:
+        image = &monAnim0BRadar;
+        break;
+    case 12:
+        image = &monAnim0CSpinningCube;
+        break;
+    case 13:
+        image = &monAnim0DLocWeapArmed;
+        break;
+    case 14:
+        image = &monAnim0ERedTarget;
+        break;
+    case 15:
+        image = &monAnim0FSatelliteTargeting;
+        break;
+    case 16:
+        image = &monAnim10GlobalMap;
+        break;
+    case 17:
+        image = &monAnim11KarlYelling;
+        break;
+    case 18:
+        image = &monAnim12Skateboard;
+        break;
+    case 19:
+        image = &monAnim13PoliceGuy;
+        break;
+    case 20:
+        image = &monAnim14Off;
+        break;
+    case 21:
+        image = &monAnim15RandomSeven;
+        break;
+    case 22:
+        image = &monAnim16RandomFour;
+        break;
+    case 23:
+        image = &monAnim17RandImageEffect;
+        break;
+    case 24:
+        image = &monRandEffectChanceSHUTTLE1;
+        break;
+    case 25:
+        image = &monRandEffectChanceSHUTTLE2;
+        break;
+    case 26:
+        image = &monRandEffectChanceEARTHFULL1;
+        break;
+    case 27:
+        image = &monRandEffectChanceEARTHFULL2;
+        break;
+    case 28:
+        image = &monRandEffectChanceBLUESTARS;
+        break;
+    case 29:
+        image = &monRandEffectChanceGALAXY1;
+        break;
+    case 30:
+        image = &monRandEffectChanceGALAXY2;
+        break;
+    case 31:
+        image = &monRandEffectChanceEARTHTEXT;
+        break;
+    case 32:
+        image = &monRandEffectChanceTARGETEARTH;
+        break;
+    case 33:
+        image = &monRandEffectChanceGALAXY3;
+        break;
+    case 34:
+        image = &monRandChanceScrollOrZoomRandRGBN;
+        break;
+    case 35:
+        image = &monRandChanceScrollOrZoomRed;
+        break;
+    case 36:
+        image = &monRandChanceScrollOrZoomGreen;
+        break;
+    case 37:
+        image = &monRandChanceScrollOrZoomBlue;
+        break;
+    case 38:
+        image = &monRandChanceScrollOrZoom;
+        break;
+    case 39:
+        image = &monAnim27RandomEffectScrollRight;
+        break;
+    case 40:
+        image = &monAnim28RandomEffectScrollUpFast;
+        break;
+    case 41:
+        image = &monAnim29RandomEffectScrollUp;
+        break;
+    case 42:
+        image = &monAnim2ARandEffectScrollZoom1;
+        break;
+    case 43:
+        image = &monAnim2ARandEffectScrollZoom2;
+        break;
+    case 44:
+        image = &monAnim2CRandEffectWaitRoute;
+        break;
+    case 45:
+        image = &monAnim2DRandEffectFlash;
+        break;
+    case 46:
+        image = &monAnim2ERedBrightening;
+        break;
+    case 47:
+        image = &monAnim2FGreenBrightening;
+        break;
+    case 48:
+        image = &monAnim30GreySolid;
+        break;
+    case 49:
+        image = &monAnim31RedSolid;
+        break;
+    case 50:
+        image = &monAnim32GreenSolid;
+        break;
+    case 51:
+        image = &monAnim33BlackSolid;
+        break;
+    }
+    save_ptr_monitor_ani_code_to_obj_ani_slot(slot,  image);
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:80052B98*/
-glabel jpt_80052B98
-.word def_7F049CC0
-.word .L7F049CC8
-.word .L7F049CD4
-.word .L7F049CE0
-.word .L7F049CEC
-.word .L7F049CF8
-.word .L7F049D04
-.word .L7F049D10
-.word .L7F049D1C
-.word .L7F049D28
-.word .L7F049D34
-.word .L7F049D40
-.word .L7F049D4C
-.word .L7F049D58
-.word .L7F049D64
-.word .L7F049D70
-.word .L7F049D7C
-.word .L7F049D88
-.word .L7F049D94
-.word .L7F049DA0
-.word .L7F049DAC
-.word .L7F049DB8
-.word .L7F049DC4
-.word .L7F049DD0
-.word .L7F049DDC
-.word .L7F049DE8
-.word .L7F049DF4
-.word .L7F049E00
-.word .L7F049E0C
-.word .L7F049E18
-.word .L7F049E24
-.word .L7F049E30
-.word .L7F049E3C
-.word .L7F049E48
-.word .L7F049E54
-.word .L7F049E60
-.word .L7F049E6C
-.word .L7F049E78
-.word .L7F049E84
-.word .L7F049E90
-.word .L7F049E9C
-.word .L7F049EA8
-.word .L7F049EB4
-.word .L7F049EC0
-.word .L7F049ECC
-.word .L7F049ED8
-.word .L7F049EE4
-.word .L7F049EF0
-.word .L7F049EFC
-.word .L7F049F08
-.word .L7F049F14
-.word .L7F049F20
-
-.text
-glabel set_ptr_monitor_img_to_obj_ani_slot
-/* 07E7C8 7F049C98 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 07E7CC 7F049C9C 3C068003 */  lui   $a2, %hi(monAnim00Bond)
-/* 07E7D0 7F049CA0 2CA10034 */  sltiu $at, $a1, 0x34
-/* 07E7D4 7F049CA4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 07E7D8 7F049CA8 1020009F */  beqz  $at, .L7F049F28
-/* 07E7DC 7F049CAC 24C60B74 */   addiu $a2, %lo(monAnim00Bond) # addiu $a2, $a2, 0xb74
-/* 07E7E0 7F049CB0 00057080 */  sll   $t6, $a1, 2
-/* 07E7E4 7F049CB4 3C018005 */  lui   $at, %hi(jpt_80052B98)
-/* 07E7E8 7F049CB8 002E0821 */  addu  $at, $at, $t6
-/* 07E7EC 7F049CBC 8C2E2B98 */  lw    $t6, %lo(jpt_80052B98)($at)
-/* 07E7F0 7F049CC0 01C00008 */  jr    $t6
-/* 07E7F4 7F049CC4 00000000 */   nop   
-.L7F049CC8:
-/* 07E7F8 7F049CC8 3C068003 */  lui   $a2, %hi(monAnim01DesktopsSatellite)
-/* 07E7FC 7F049CCC 10000096 */  b     .L7F049F28
-/* 07E800 7F049CD0 24C60C00 */   addiu $a2, %lo(monAnim01DesktopsSatellite) # addiu $a2, $a2, 0xc00
-.L7F049CD4:
-/* 07E804 7F049CD4 3C068003 */  lui   $a2, %hi(monAnim02Astrological)
-/* 07E808 7F049CD8 10000093 */  b     .L7F049F28
-/* 07E80C 7F049CDC 24C60E24 */   addiu $a2, %lo(monAnim02Astrological) # addiu $a2, $a2, 0xe24
-.L7F049CE0:
-/* 07E810 7F049CE0 3C068003 */  lui   $a2, %hi(monAnim03ThreeWavePattern)
-/* 07E814 7F049CE4 10000090 */  b     .L7F049F28
-/* 07E818 7F049CE8 24C60F44 */   addiu $a2, %lo(monAnim03ThreeWavePattern) # addiu $a2, $a2, 0xf44
-.L7F049CEC:
-/* 07E81C 7F049CEC 3C068003 */  lui   $a2, %hi(monAnim04WavePattern)
-/* 07E820 7F049CF0 1000008D */  b     .L7F049F28
-/* 07E824 7F049CF4 24C61018 */   addiu $a2, %lo(monAnim04WavePattern) # addiu $a2, $a2, 0x1018
-.L7F049CF8:
-/* 07E828 7F049CF8 3C068003 */  lui   $a2, %hi(monAnim05GreenTextUp)
-/* 07E82C 7F049CFC 1000008A */  b     .L7F049F28
-/* 07E830 7F049D00 24C61074 */   addiu $a2, %lo(monAnim05GreenTextUp) # addiu $a2, $a2, 0x1074
-.L7F049D04:
-/* 07E834 7F049D04 3C068003 */  lui   $a2, %hi(monAnim06RedTextDown)
-/* 07E838 7F049D08 10000087 */  b     .L7F049F28
-/* 07E83C 7F049D0C 24C610F0 */   addiu $a2, %lo(monAnim06RedTextDown) # addiu $a2, $a2, 0x10f0
-.L7F049D10:
-/* 07E840 7F049D10 3C068003 */  lui   $a2, %hi(monAnim07GreenTextDown)
-/* 07E844 7F049D14 10000084 */  b     .L7F049F28
-/* 07E848 7F049D18 24C6118C */   addiu $a2, %lo(monAnim07GreenTextDown) # addiu $a2, $a2, 0x118c
-.L7F049D1C:
-/* 07E84C 7F049D1C 3C068003 */  lui   $a2, %hi(monAnim08RedBarGraph)
-/* 07E850 7F049D20 10000081 */  b     .L7F049F28
-/* 07E854 7F049D24 24C6121C */   addiu $a2, %lo(monAnim08RedBarGraph) # addiu $a2, $a2, 0x121c
-.L7F049D28:
-/* 07E858 7F049D28 3C068003 */  lui   $a2, %hi(monAnim09BlueBarGraph)
-/* 07E85C 7F049D2C 1000007E */  b     .L7F049F28
-/* 07E860 7F049D30 24C61248 */   addiu $a2, %lo(monAnim09BlueBarGraph) # addiu $a2, $a2, 0x1248
-.L7F049D34:
-/* 07E864 7F049D34 3C068003 */  lui   $a2, %hi(monAnim0AGreenBarGraph)
-/* 07E868 7F049D38 1000007B */  b     .L7F049F28
-/* 07E86C 7F049D3C 24C61274 */   addiu $a2, %lo(monAnim0AGreenBarGraph) # addiu $a2, $a2, 0x1274
-.L7F049D40:
-/* 07E870 7F049D40 3C068003 */  lui   $a2, %hi(monAnim0BRadar)
-/* 07E874 7F049D44 10000078 */  b     .L7F049F28
-/* 07E878 7F049D48 24C612F4 */   addiu $a2, %lo(monAnim0BRadar) # addiu $a2, $a2, 0x12f4
-.L7F049D4C:
-/* 07E87C 7F049D4C 3C068003 */  lui   $a2, %hi(monAnim0CSpinningCube)
-/* 07E880 7F049D50 10000075 */  b     .L7F049F28
-/* 07E884 7F049D54 24C61310 */   addiu $a2, %lo(monAnim0CSpinningCube) # addiu $a2, $a2, 0x1310
-.L7F049D58:
-/* 07E888 7F049D58 3C068003 */  lui   $a2, %hi(monAnim0DLocWeapArmed)
-/* 07E88C 7F049D5C 10000072 */  b     .L7F049F28
-/* 07E890 7F049D60 24C61490 */   addiu $a2, %lo(monAnim0DLocWeapArmed) # addiu $a2, $a2, 0x1490
-.L7F049D64:
-/* 07E894 7F049D64 3C068003 */  lui   $a2, %hi(monAnim0ERedTarget)
-/* 07E898 7F049D68 1000006F */  b     .L7F049F28
-/* 07E89C 7F049D6C 24C614F8 */   addiu $a2, %lo(monAnim0ERedTarget) # addiu $a2, $a2, 0x14f8
-.L7F049D70:
-/* 07E8A0 7F049D70 3C068003 */  lui   $a2, %hi(monAnim0FSatelliteTargeting)
-/* 07E8A4 7F049D74 1000006C */  b     .L7F049F28
-/* 07E8A8 7F049D78 24C60EC8 */   addiu $a2, %lo(monAnim0FSatelliteTargeting) # addiu $a2, $a2, 0xec8
-.L7F049D7C:
-/* 07E8AC 7F049D7C 3C068003 */  lui   $a2, %hi(monAnim10GlobalMap)
-/* 07E8B0 7F049D80 10000069 */  b     .L7F049F28
-/* 07E8B4 7F049D84 24C61360 */   addiu $a2, %lo(monAnim10GlobalMap) # addiu $a2, $a2, 0x1360
-.L7F049D88:
-/* 07E8B8 7F049D88 3C068003 */  lui   $a2, %hi(monAnim11KarlYelling)
-/* 07E8BC 7F049D8C 10000066 */  b     .L7F049F28
-/* 07E8C0 7F049D90 24C6156C */   addiu $a2, %lo(monAnim11KarlYelling) # addiu $a2, $a2, 0x156c
-.L7F049D94:
-/* 07E8C4 7F049D94 3C068003 */  lui   $a2, %hi(monAnim12Skateboard)
-/* 07E8C8 7F049D98 10000063 */  b     .L7F049F28
-/* 07E8CC 7F049D9C 24C615CC */   addiu $a2, %lo(monAnim12Skateboard) # addiu $a2, $a2, 0x15cc
-.L7F049DA0:
-/* 07E8D0 7F049DA0 3C068003 */  lui   $a2, %hi(monAnim13PoliceGuy)
-/* 07E8D4 7F049DA4 10000060 */  b     .L7F049F28
-/* 07E8D8 7F049DA8 24C61848 */   addiu $a2, %lo(monAnim13PoliceGuy) # addiu $a2, $a2, 0x1848
-.L7F049DAC:
-/* 07E8DC 7F049DAC 3C068003 */  lui   $a2, %hi(monAnim14Off)
-/* 07E8E0 7F049DB0 1000005D */  b     .L7F049F28
-/* 07E8E4 7F049DB4 24C61898 */   addiu $a2, %lo(monAnim14Off) # addiu $a2, $a2, 0x1898
-.L7F049DB8:
-/* 07E8E8 7F049DB8 3C068003 */  lui   $a2, %hi(monAnim15RandomSeven)
-/* 07E8EC 7F049DBC 1000005A */  b     .L7F049F28
-/* 07E8F0 7F049DC0 24C618B8 */   addiu $a2, %lo(monAnim15RandomSeven) # addiu $a2, $a2, 0x18b8
-.L7F049DC4:
-/* 07E8F4 7F049DC4 3C068003 */  lui   $a2, %hi(monAnim16RandomFour)
-/* 07E8F8 7F049DC8 10000057 */  b     .L7F049F28
-/* 07E8FC 7F049DCC 24C6191C */   addiu $a2, %lo(monAnim16RandomFour) # addiu $a2, $a2, 0x191c
-.L7F049DD0:
-/* 07E900 7F049DD0 3C068003 */  lui   $a2, %hi(monAnim17RandImageEffect)
-/* 07E904 7F049DD4 10000054 */  b     .L7F049F28
-/* 07E908 7F049DD8 24C61950 */   addiu $a2, %lo(monAnim17RandImageEffect) # addiu $a2, $a2, 0x1950
-.L7F049DDC:
-/* 07E90C 7F049DDC 3C068003 */  lui   $a2, %hi(monRandEFFECTImage11)
-/* 07E910 7F049DE0 10000051 */  b     .L7F049F28
-/* 07E914 7F049DE4 24C619D4 */   addiu $a2, %lo(monRandEFFECTImage11) # addiu $a2, $a2, 0x19d4
-.L7F049DE8:
-/* 07E918 7F049DE8 3C068003 */  lui   $a2, %hi(monRandEFFECTImage12)
-/* 07E91C 7F049DEC 1000004E */  b     .L7F049F28
-/* 07E920 7F049DF0 24C619F0 */   addiu $a2, %lo(monRandEFFECTImage12) # addiu $a2, $a2, 0x19f0
-.L7F049DF4:
-/* 07E924 7F049DF4 3C068003 */  lui   $a2, %hi(monRandEFFECTImage13)
-/* 07E928 7F049DF8 1000004B */  b     .L7F049F28
-/* 07E92C 7F049DFC 24C61A0C */   addiu $a2, %lo(monRandEFFECTImage13) # addiu $a2, $a2, 0x1a0c
-.L7F049E00:
-/* 07E930 7F049E00 3C068003 */  lui   $a2, %hi(monRandEFFECTImage14)
-/* 07E934 7F049E04 10000048 */  b     .L7F049F28
-/* 07E938 7F049E08 24C61A28 */   addiu $a2, %lo(monRandEFFECTImage14) # addiu $a2, $a2, 0x1a28
-.L7F049E0C:
-/* 07E93C 7F049E0C 3C068003 */  lui   $a2, %hi(monRandEFFECTImage15)
-/* 07E940 7F049E10 10000045 */  b     .L7F049F28
-/* 07E944 7F049E14 24C61A44 */   addiu $a2, %lo(monRandEFFECTImage15) # addiu $a2, $a2, 0x1a44
-.L7F049E18:
-/* 07E948 7F049E18 3C068003 */  lui   $a2, %hi(monRandEFFECTImage16)
-/* 07E94C 7F049E1C 10000042 */  b     .L7F049F28
-/* 07E950 7F049E20 24C61A60 */   addiu $a2, %lo(monRandEFFECTImage16) # addiu $a2, $a2, 0x1a60
-.L7F049E24:
-/* 07E954 7F049E24 3C068003 */  lui   $a2, %hi(monRandEFFECTImage17)
-/* 07E958 7F049E28 1000003F */  b     .L7F049F28
-/* 07E95C 7F049E2C 24C61A7C */   addiu $a2, %lo(monRandEFFECTImage17) # addiu $a2, $a2, 0x1a7c
-.L7F049E30:
-/* 07E960 7F049E30 3C068003 */  lui   $a2, %hi(monRandEFFECTImage18)
-/* 07E964 7F049E34 1000003C */  b     .L7F049F28
-/* 07E968 7F049E38 24C61A98 */   addiu $a2, %lo(monRandEFFECTImage18) # addiu $a2, $a2, 0x1a98
-.L7F049E3C:
-/* 07E96C 7F049E3C 3C068003 */  lui   $a2, %hi(monRandEFFECTImage19)
-/* 07E970 7F049E40 10000039 */  b     .L7F049F28
-/* 07E974 7F049E44 24C61AB4 */   addiu $a2, %lo(monRandEFFECTImage19) # addiu $a2, $a2, 0x1ab4
-.L7F049E48:
-/* 07E978 7F049E48 3C068003 */  lui   $a2, %hi(monRandEFFECTImage1A)
-/* 07E97C 7F049E4C 10000036 */  b     .L7F049F28
-/* 07E980 7F049E50 24C61AD0 */   addiu $a2, %lo(monRandEFFECTImage1A) # addiu $a2, $a2, 0x1ad0
-.L7F049E54:
-/* 07E984 7F049E54 3C068003 */  lui   $a2, %hi(monRandChanceScrollOrZoomRandRGBN)
-/* 07E988 7F049E58 10000033 */  b     .L7F049F28
-/* 07E98C 7F049E5C 24C61AEC */   addiu $a2, %lo(monRandChanceScrollOrZoomRandRGBN) # addiu $a2, $a2, 0x1aec
-.L7F049E60:
-/* 07E990 7F049E60 3C068003 */  lui   $a2, %hi(monRandChanceScrollOrZoomRed)
-/* 07E994 7F049E64 10000030 */  b     .L7F049F28
-/* 07E998 7F049E68 24C61B24 */   addiu $a2, %lo(monRandChanceScrollOrZoomRed) # addiu $a2, $a2, 0x1b24
-.L7F049E6C:
-/* 07E99C 7F049E6C 3C068003 */  lui   $a2, %hi(monRandChanceScrollOrZoomGreen)
-/* 07E9A0 7F049E70 1000002D */  b     .L7F049F28
-/* 07E9A4 7F049E74 24C61B38 */   addiu $a2, %lo(monRandChanceScrollOrZoomGreen) # addiu $a2, $a2, 0x1b38
-.L7F049E78:
-/* 07E9A8 7F049E78 3C068003 */  lui   $a2, %hi(monRandChanceScrollOrZoomBlue)
-/* 07E9AC 7F049E7C 1000002A */  b     .L7F049F28
-/* 07E9B0 7F049E80 24C61B4C */   addiu $a2, %lo(monRandChanceScrollOrZoomBlue) # addiu $a2, $a2, 0x1b4c
-.L7F049E84:
-/* 07E9B4 7F049E84 3C068003 */  lui   $a2, %hi(monRandChanceScrollOrZoom)
-/* 07E9B8 7F049E88 10000027 */  b     .L7F049F28
-/* 07E9BC 7F049E8C 24C61B60 */   addiu $a2, %lo(monRandChanceScrollOrZoom) # addiu $a2, $a2, 0x1b60
-.L7F049E90:
-/* 07E9C0 7F049E90 3C068003 */  lui   $a2, %hi(monAnim27RandomEffectScrollRight)
-/* 07E9C4 7F049E94 10000024 */  b     .L7F049F28
-/* 07E9C8 7F049E98 24C61BB4 */   addiu $a2, %lo(monAnim27RandomEffectScrollRight) # addiu $a2, $a2, 0x1bb4
-.L7F049E9C:
-/* 07E9CC 7F049E9C 3C068003 */  lui   $a2, %hi(monAnim28RandomEffectScrollUpFast)
-/* 07E9D0 7F049EA0 10000021 */  b     .L7F049F28
-/* 07E9D4 7F049EA4 24C61BD0 */   addiu $a2, %lo(monAnim28RandomEffectScrollUpFast) # addiu $a2, $a2, 0x1bd0
-.L7F049EA8:
-/* 07E9D8 7F049EA8 3C068003 */  lui   $a2, %hi(monAnim29RandomEffectScrollUp)
-/* 07E9DC 7F049EAC 1000001E */  b     .L7F049F28
-/* 07E9E0 7F049EB0 24C61BEC */   addiu $a2, %lo(monAnim29RandomEffectScrollUp) # addiu $a2, $a2, 0x1bec
-.L7F049EB4:
-/* 07E9E4 7F049EB4 3C068003 */  lui   $a2, %hi(monAnim2ARandEffectScrollZoom1)
-/* 07E9E8 7F049EB8 1000001B */  b     .L7F049F28
-/* 07E9EC 7F049EBC 24C61C08 */   addiu $a2, %lo(monAnim2ARandEffectScrollZoom1) # addiu $a2, $a2, 0x1c08
-.L7F049EC0:
-/* 07E9F0 7F049EC0 3C068003 */  lui   $a2, %hi(monAnim2ARandEffectScrollZoom2)
-/* 07E9F4 7F049EC4 10000018 */  b     .L7F049F28
-/* 07E9F8 7F049EC8 24C61C80 */   addiu $a2, %lo(monAnim2ARandEffectScrollZoom2) # addiu $a2, $a2, 0x1c80
-.L7F049ECC:
-/* 07E9FC 7F049ECC 3C068003 */  lui   $a2, %hi(monAnim2CRandEffectWaitRoute)
-/* 07EA00 7F049ED0 10000015 */  b     .L7F049F28
-/* 07EA04 7F049ED4 24C61D30 */   addiu $a2, %lo(monAnim2CRandEffectWaitRoute) # addiu $a2, $a2, 0x1d30
-.L7F049ED8:
-/* 07EA08 7F049ED8 3C068003 */  lui   $a2, %hi(monAnim2DRandEffectFlash)
-/* 07EA0C 7F049EDC 10000012 */  b     .L7F049F28
-/* 07EA10 7F049EE0 24C61D58 */   addiu $a2, %lo(monAnim2DRandEffectFlash) # addiu $a2, $a2, 0x1d58
-.L7F049EE4:
-/* 07EA14 7F049EE4 3C068003 */  lui   $a2, %hi(monAnim2ERedBrightening)
-/* 07EA18 7F049EE8 1000000F */  b     .L7F049F28
-/* 07EA1C 7F049EEC 24C61DA8 */   addiu $a2, %lo(monAnim2ERedBrightening) # addiu $a2, $a2, 0x1da8
-.L7F049EF0:
-/* 07EA20 7F049EF0 3C068003 */  lui   $a2, %hi(monAnim2FGreenBrightening)
-/* 07EA24 7F049EF4 1000000C */  b     .L7F049F28
-/* 07EA28 7F049EF8 24C61DF4 */   addiu $a2, %lo(monAnim2FGreenBrightening) # addiu $a2, $a2, 0x1df4
-.L7F049EFC:
-/* 07EA2C 7F049EFC 3C068003 */  lui   $a2, %hi(monAnim30GreySolid)
-/* 07EA30 7F049F00 10000009 */  b     .L7F049F28
-/* 07EA34 7F049F04 24C61E40 */   addiu $a2, %lo(monAnim30GreySolid) # addiu $a2, $a2, 0x1e40
-.L7F049F08:
-/* 07EA38 7F049F08 3C068003 */  lui   $a2, %hi(monAnim31RedSolid)
-/* 07EA3C 7F049F0C 10000006 */  b     .L7F049F28
-/* 07EA40 7F049F10 24C61E78 */   addiu $a2, %lo(monAnim31RedSolid) # addiu $a2, $a2, 0x1e78
-.L7F049F14:
-/* 07EA44 7F049F14 3C068003 */  lui   $a2, %hi(monAnim32GreenSolid)
-/* 07EA48 7F049F18 10000003 */  b     .L7F049F28
-/* 07EA4C 7F049F1C 24C61EB0 */   addiu $a2, %lo(monAnim32GreenSolid) # addiu $a2, $a2, 0x1eb0
-.L7F049F20:
-/* 07EA50 7F049F20 3C068003 */  lui   $a2, %hi(monAnim33BlackSolid)
-/* 07EA54 7F049F24 24C61EE8 */  addiu $a2, %lo(monAnim33BlackSolid) # addiu $a2, $a2, 0x1ee8
-def_7F049CC0:
-.L7F049F28:
-/* 07EA58 7F049F28 0FC12723 */  jal   save_ptr_monitor_ani_code_to_obj_ani_slot
-/* 07EA5C 7F049F2C 00C02825 */   move  $a1, $a2
-/* 07EA60 7F049F30 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 07EA64 7F049F34 27BD0018 */  addiu $sp, $sp, 0x18
-/* 07EA68 7F049F38 03E00008 */  jr    $ra
-/* 07EA6C 7F049F3C 00000000 */   nop   
-)
-#endif
 
 
 
