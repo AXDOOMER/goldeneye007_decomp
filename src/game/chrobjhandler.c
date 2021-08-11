@@ -1291,8 +1291,13 @@ glabel sub_GAME_7F03FE98
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F03FF60(void) {
-
+s32 sub_GAME_7F03FF60(ObjectRecord *arg0)
+{
+    if ((arg0->head.hidden2 & 0x80) == 0)
+    {
+        return (s32) ((arg0->field_70 * 3.0f) / (f32)(arg0->damage));
+    }
+    return (s32) (arg0->field_70 + 4.0f);
 }
 #else
 GLOBAL_ASM(
@@ -1331,32 +1336,14 @@ glabel sub_GAME_7F03FF60
 
 
 
-#ifdef NONMATCHING
-void do_something_if_object_destroyed(void) {
-
+s32 do_something_if_object_destroyed(ObjectRecord *arg0)
+{
+    if ((arg0->head.hidden2 & 0x80) == 0)
+    {
+        return 0;
+    }
+    return ((s32) arg0->field_70 >> 2) + 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel do_something_if_object_destroyed
-/* 074AF0 7F03FFC0 908E0002 */  lbu   $t6, 2($a0)
-/* 074AF4 7F03FFC4 31CF0080 */  andi  $t7, $t6, 0x80
-/* 074AF8 7F03FFC8 55E00004 */  bnezl $t7, .L7F03FFDC
-/* 074AFC 7F03FFCC C4840070 */   lwc1  $f4, 0x70($a0)
-/* 074B00 7F03FFD0 03E00008 */  jr    $ra
-/* 074B04 7F03FFD4 00001025 */   move  $v0, $zero
-
-/* 074B08 7F03FFD8 C4840070 */  lwc1  $f4, 0x70($a0)
-.L7F03FFDC:
-/* 074B0C 7F03FFDC 4600218D */  trunc.w.s $f6, $f4
-/* 074B10 7F03FFE0 44023000 */  mfc1  $v0, $f6
-/* 074B14 7F03FFE4 00000000 */  nop   
-/* 074B18 7F03FFE8 0002C883 */  sra   $t9, $v0, 2
-/* 074B1C 7F03FFEC 27220001 */  addiu $v0, $t9, 1
-/* 074B20 7F03FFF0 03E00008 */  jr    $ra
-/* 074B24 7F03FFF4 00000000 */   nop   
-)
-#endif
 
 
 
