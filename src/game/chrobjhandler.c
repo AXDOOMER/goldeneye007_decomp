@@ -50,327 +50,773 @@ u32 D_80030B34[] = {
      0,     1,     3,     0,      0,    0,     0,     0,
      0,     0,     0,     0,     0,     0,     0,     0    
 };
-//80030b74
+
+
+
+
+//[80030B74	00	Bond]
 u32 monitor_animation_microcode[] = {
-         7,         0,         1,     0x400,      0x14,         8,      0x14,         2,
-     0x400,      0x14,       0xD,      0xFF,      0x14,         8,      0x14,         5,
-     0x200,      0x14,         6,     0x200,      0x14,       0xD,0xFFFFFFFF,      0x14,
-         8,      0x14,         5,     0x400,      0x14,         6,     0x400,      0x14,
-         8,      0x14,       0xB
+    MONUSEIMAGE(0x0), 
+    MONHORZSCROLL(0x400, 0x14),
+    MONHOLDTIME(0x14), 
+    MONVERTSCROLL(0x400, 0x14),
+    MONRGBA(0x000000FF, 0x14),
+    MONHOLDTIME(0x14), 
+    MONZOOMSQUARE(0x200, 0x14),
+    MONRGBA(0XFFFFFFFF, 0x14),
+    MONHOLDTIME(0x14), 
+    MONZOOMSQUARE(0x400, 0x14),
+    MONHOLDTIME(0x14), 
+    MONLOOP() 
 };
 
+//[80030C00	01	Desktops, Satellite]
 u32 D_80030C00[] = {
-         7,       0xC,         1,     0x400,      0x14,
-         8,      0x14,         2,     0x400,      0x14,       0xD,      0xFF,      0x14,
-         8,      0x14,         5,     0x200,      0x14,         6,     0x200,      0x14,
-       0xD,0xFFFFFFFF,      0x14,         8,      0x14,         5,     0x400,      0x14,
-         6,     0x400,      0x14,         8,      0x14,         7,       0xD,         1,
-     0x400,      0x14,         8,      0x14,         2,     0x400,      0x14,       0xD,
-      0xFF,      0x14,         8,      0x14,         5,     0x200,      0x14,         6,
-     0x200,      0x14,       0xD,0xFFFFFFFF,      0x14,         8,      0x14,         5,
-     0x400,      0x14,         6,     0x400,      0x14,         8,      0x14,         7,
-       0xE,         1,     0x400,      0x14,         8,      0x14,         2,     0x400,
-      0x14,       0xD,      0xFF,      0x14,         8,      0x14,         5,     0x200,
-      0x14,         6,     0x200,      0x14,       0xD,0xFFFFFFFF,      0x14,         8,
-      0x14,         5,     0x400,      0x14,         6,     0x400,      0x14,         8,
-      0x14,         7,       0xF,         1,     0x400,      0x14,         8,      0x14,
-         2,     0x400,      0x14,       0xD,      0xFF,      0x14,         8,      0x14,
-         5,     0x200,      0x14,         6,     0x200,      0x14,       0xD,0xFFFFFFFF,
-      0x14,         8,      0x14,         5,     0x400,      0x14,         6,     0x400,
-      0x14,         8,      0x14,       0xB,
+     MONUSEIMAGE(0xC),
+     MONHORZSCROLL(0x400, 0x14),
+     MONHOLDTIME(0x14),
+     MONVERTSCROLL(0x400, 0x14),
+     MONRGBA(0x000000FF, 0x14),
+     MONHOLDTIME(0x14),
+     MONZOOMSQUARE(0x200, 0x14),
+     MONRGBA(0xFFFFFFFF, 0x14),
+     MONHOLDTIME(0x14),
+     MONZOOMSQUARE(0x400, 0x14),
+     MONHOLDTIME(0x14),
+     MONUSEIMAGE(0xD),
+     MONHORZSCROLL(0x400, 0x14),
+     MONHOLDTIME(0x14),
+     MONVERTSCROLL(0x400, 0x14),
+     MONRGBA(0x000000FF, 0x14),
+     MONHOLDTIME(0x14),
+     MONZOOMWIDTH(0x200, 0x14),
+     MONZOOMHEIGHT(0x200, 0x14),
+     MONRGBA(0xFFFFFFFF, 0x14),
+     MONHOLDTIME(0x14),
+     MONZOOMWIDTH(0x400, 0x14),
+     MONZOOMHEIGHT(0x400, 0x14),
+     MONHOLDTIME(0x14),
+     MONUSEIMAGE(0xE),
+     MONHORZSCROLL(0x400, 0x14),
+     MONHOLDTIME(0x14),
+     MONVERTSCROLL(0x400, 0x14),
+     MONRGBA(0x000000FF, 0x14),
+     MONHOLDTIME(0x14),
+     MONZOOMWIDTH(0x200, 0x14),
+     MONZOOMHEIGHT(0x200, 0x14),
+     MONRGBA(0xFFFFFFFF, 0x14),
+     MONHOLDTIME(0x14),
+     MONZOOMWIDTH(0x400, 0x14),
+     MONZOOMHEIGHT(0x400, 0x14),
+     MONHOLDTIME(0x14),
+     MONUSEIMAGE(0xF),
+     MONHORZSCROLL(0x400, 0x14),
+     MONHOLDTIME(0x14),
+     MONVERTSCROLL(0x400, 0x14),
+     MONRGBA(0x000000FF, 0x14),
+     MONHOLDTIME(0x14),
+     MONZOOMWIDTH(0x200, 0x14),
+     MONZOOMHEIGHT(0x200, 0x14),
+     MONRGBA(0xFFFFFFFF, 0x14),
+     MONHOLDTIME(0x14),
+     MONZOOMWIDTH(0x400, 0x14),
+     MONZOOMHEIGHT(0x400, 0x14),
+     MONHOLDTIME(0x14),
+     MONLOOP(),
 };
 
+//[80030E24	02	10 screens: astrological]
 u32 D_80030E24[] = {
-         7,      0x11,         8,      0x50,
-         7,      0x12,         8,      0x50,         7,      0x13,         8,      0x50,
-         7,      0x14,         8,      0x50,         7,      0x15,         8,      0x50,
-         7,      0x16,         8,      0x50,         7,      0x17,         8,      0x50,
-         7,      0x18,         8,      0x50,         7,      0x19,         8,      0x50,
-         7,      0x1A,         8,      0x50,       0xB,
+     MONUSEIMAGE(0x11), MONHOLDTIME(0x50),
+     MONUSEIMAGE(0x12), MONHOLDTIME(0x50),
+     MONUSEIMAGE(0x13), MONHOLDTIME(0x50),
+     MONUSEIMAGE(0x14), MONHOLDTIME(0x50),
+     MONUSEIMAGE(0x15), MONHOLDTIME(0x50),
+     MONUSEIMAGE(0x16), MONHOLDTIME(0x50),
+     MONUSEIMAGE(0x17), MONHOLDTIME(0x50),
+     MONUSEIMAGE(0x18), MONHOLDTIME(0x50),
+     MONUSEIMAGE(0x19), MONHOLDTIME(0x50),
+     MONUSEIMAGE(0x1A), MONHOLDTIME(0x50),
+     MONLOOP(),
 };
 
+//[80030EC8	0F	7 screens: satellite, targetting, ]
 u32 D_80030EC8[] = {
-         7,         7,         8,
-      0x50,         7,         8,         8,      0x50,         7,         9,         8,
-      0x50,         7,       0xC,         8,      0x50,         7,       0xD,         8,
-      0x50,         8,      0x50,         7,      0x19,         8,      0x50,         7,
-      0x14,         8,      0x50,       0xB
+     MONUSEIMAGE(0x07),MONHOLDTIME(0x50),
+     MONUSEIMAGE(0x08),MONHOLDTIME(0x50),
+     MONUSEIMAGE(0x09),MONHOLDTIME(0x50),
+     MONUSEIMAGE(0x0C),MONHOLDTIME(0x50),
+     MONUSEIMAGE(0x0D),MONHOLDTIME(0x50),
+                       MONHOLDTIME(0x50),
+     MONUSEIMAGE(0x19),MONHOLDTIME(0x50),
+     MONUSEIMAGE(0x14),MONHOLDTIME(0x50),
+     MONLOOP()
 };
 
+//[80030F44	03	3 wave patterns]
 u32 D_80030F44[] = {
-     0xD,0x202020FF,         1,         7,      0x1C,         1,     0x800,      0x78,
-     8,      0x78,         5,     0x100,         1,         6,     0x200,      0x3C,
-     1,0xFFFFE000,      0x78,         8,      0x78,         5,     0x400,         1,
-     6,     0x400,      0x3C,         6,     0x400,      0x3C,         1,     0x800,
-     0x78,         8,      0x78,         5,      0x80,         1,         6,     0x800,
-     0x3C,         6,     0x400,      0x78,         2,     0x400,      0x3C,         1,
-     0x200,      0x78,         8,      0x78,       0xB
+     MONRGBA(0x202020FF, 1),
+     MONUSEIMAGE(0x1C),
+     MONHORZSCROLL(0x800, 0x78),
+     MONHOLDTIME(0x78),
+     MONZOOMWIDTH(0x100, 1),
+     MONZOOMHEIGHT(0x200, 0x3C),
+     MONHORZSCROLL(0xFFFFE000, 0x78),
+     MONHOLDTIME(0x78),
+     MONZOOMWIDTH(0x400, 1),
+     MONZOOMHEIGHT(0x400, 0x3C),
+     MONZOOMHEIGHT(0x400, 0x3C),
+     MONHORZSCROLL(0x800, 0x78),
+     MONHOLDTIME(0x78),
+     MONZOOMWIDTH(0x80, 1),
+     MONZOOMHEIGHT(0x800, 0x3C),
+     MONZOOMHEIGHT(0x400, 0x78),
+     MONVERTSCROLL(0x400, 0x3C),
+     MONHORZSCROLL(0x200, 0x78),
+     MONHOLDTIME(0x78),
+     MONLOOP()
 };
 
+//[80031018	04	wave pattern]
 u32 D_80031018[] = {
-     0xD, 0x202020FF, 1, 7, 0x1C, 5, 0x80, 1, 6, 0x800, 0x3C, 6, 0x400, 0x78,
-     2, 0x400, 0xA, 1, 0x200, 0x28, 8, 0x78, 0xB
+     MONRGBA(0x202020FF, 1),
+     MONUSEIMAGE(0x1C),
+     MONZOOMWIDTH(0x80,1),
+     MONZOOMHEIGHT(0x800, 0x3C),
+     MONZOOMHEIGHT(0x400, 0x78),
+     MONVERTSCROLL(0x400, 0xA),
+     MONHORZSCROLL(0x200, 0x28),
+     MONHOLDTIME(0x78),
+     MONLOOP()
 };
 
+//[80031074	05	green text up]
 u32 D_80031074[] = {
-     7, 0x1D, 0xD, 0x8000FF, 1, 2, 0xFFFFFE00, 0x50, 8, 0x78, 2, 0xFFFFFF00,
-     0x14, 8, 0x78, 2, 0xFFFFFF80, 0xA, 8, 0x28, 2, 0xFFFFFE00, 0x28, 8, 0x3C,
-     2, 0xFFFFFFC0, 0x1E, 8, 0x78, 0xB
+     MONUSEIMAGE(0x1D),
+     MONRGBA(0x008000FF, 1),
+     MONVERTSCROLL(0xFFFFFE00, 0x50),
+     MONHOLDTIME(0x78),
+     MONVERTSCROLL(0xFFFFFF00, 0x14),
+     MONHOLDTIME(0x78),
+     MONVERTSCROLL(0xFFFFFF80, 0xA),
+     MONHOLDTIME(0x28),
+     MONVERTSCROLL(0xFFFFFE00, 0x28),
+     MONHOLDTIME(0x3C),
+     MONVERTSCROLL(0xFFFFFFC0, 0x1E),
+     MONHOLDTIME(0x78),
+     MONLOOP()
 };
 
+//[800310F0	06	red text down]
 u32 D_800310F0[] = {
-     7, 0x1D, 0xD, 0x280000FF, 1, 2, 0x200, 0x50, 8, 0x78, 2, 0x100, 0x14,
-     8, 0x78, 2, 0x80, 0xA, 8, 0x28, 2, 0x200, 0x28, 8, 0x3C, 2, 0x40, 0x1E,
-     8, 0x78, 2, 0x100, 0x14, 8, 0x78, 2, 0x80, 0xA, 0xB
+     MONUSEIMAGE(0x1D), 
+     MONRGBA(0x280000FF, 1),
+     MONVERTSCROLL(0x200, 0x50),
+     MONHOLDTIME(0x78),
+     MONVERTSCROLL(0x100, 0x14),
+     MONHOLDTIME(0x78),
+     MONVERTSCROLL(0x80, 0xA),
+     MONHOLDTIME(0x28),
+     MONVERTSCROLL(0x200, 0x28),
+     MONHOLDTIME(0x3C),
+     MONVERTSCROLL(0x40, 0x1E),
+     MONHOLDTIME(0x78),
+     MONVERTSCROLL(0x100, 0x14),
+     MONHOLDTIME(0x78),
+     MONVERTSCROLL(0x80, 0xA),
+     MONLOOP()
 };
 
+//[8003118C	07	d. green text down]
 u32 D_8003118C[] = {
-     7, 0x1D, 0xD, 0x3C00FF, 1, 2, 0x200, 0x50, 8, 0x78, 2, 0x80, 0xA, 8,
-     0x28, 2, 0x100, 0x14, 8, 0x78, 2, 0x80, 0xA, 8, 0x28, 2, 0x200, 0x28,
-     8, 0x3C, 2, 0x40, 0x1E, 8, 0x78, 0xB
+     MONUSEIMAGE(0x1D),
+     MONRGBA(0x003C00FF, 1),
+     MONVERTSCROLL(0x200, 0x50),
+     MONHOLDTIME(0x78),
+     MONVERTSCROLL(0x80, 0xA),
+     MONHOLDTIME(0x28),
+     MONVERTSCROLL(0x100, 0x14),
+     MONHOLDTIME(0x78),
+     MONVERTSCROLL(0x80, 0xA),
+     MONHOLDTIME(0x28),
+     MONVERTSCROLL(0x200, 0x28),
+     MONHOLDTIME(0x3C),
+     MONVERTSCROLL(0x40, 0x1E),
+     MONHOLDTIME(0x78),
+     MONLOOP()
 };
 
+//[8003121C	08	red bar graph +]
 u32 D_8003121C[] = {
-     7, 0x1E, 0xD, 0x404000FF, 1, 1, 0x280, 1, 8, 0xA, 0xB
+     MONUSEIMAGE(0x1E),
+     MONRGBA(0x404000FF, 1),
+     MONHORZSCROLL(0x280, 1),
+     MONHOLDTIME(10),
+     MONLOOP()
 };
 
+//[80031248	09	blue bar graph +]
 u32 D_80031248[] = {
-     7, 0x1E, 0xD, 0x4040FF, 1, 1, 0x280, 1, 8, 0xA, 0xB
+     MONUSEIMAGE(0x1E),
+     MONRGBA(0x004040FF, 1),
+     MONHORZSCROLL(0x280, 1),
+     MONHOLDTIME(10),
+     MONLOOP()
 };
 
+//[80031274	0A	green bar graph -]
 u32 D_80031274[] = {
-     7,      0x1E,       0xD,0x406440FF,         1,         1,0xFFFFFD80,
-     1,         8,       0xA,       0xB
+     MONUSEIMAGE(0x1E),
+     MONRGBA(0x406440FF, 1),
+     MONHORZSCROLL(0xFFFFFD80, 1),
+     MONHOLDTIME(0xA),
+     MONLOOP()
 };
 
+//[800312A0	subroutine	used by radar]
 u32 D_800312A0[] = {
-     0xD, 0xAFF0AFE, 0x14, 9, &D_800312C8
+     MONRGBA(0x0AFF0AFE, 0x14),
+     MONJUMPTO(D_800312C8)
 };
 
+//[800312B4	subroutine	used by radar]
 u32 D_800312B4[] = {
-     0xD, 0xA640AFE, 0x14, 9, (u32)&D_800312C8
+     MONRGBA(0x0A640AFE, 0x14),
+     MONJUMPTO(D_800312C8)
 };
 
+//[800312C8	subroutine	used by radar]
 u32 D_800312C8[] = {
-     0xF, 0xB6, 8, 1, 0xA, &D_800312A0, 0x51E, 0xA, &D_800312B4, 0x147A, 0xB
+     MONROTATEIMAGE(0xB6),
+     MONHOLDTIME(1),
+     MONJUMPCHANCE(D_800312A0, 0x51E),
+     MONJUMPCHANCE(D_800312B4, 0x147A),
+     MONLOOP()
 };
 
+//[800312F4	0B	radar]
 u32 D_800312F4[] = {
-     7, 0x30, 0xD, 0xA960AFE, 1, 9, &D_800312B4
+     MONUSEIMAGE(0x30),
+     MONRGBA(0x0A960AFE, 1),
+     MONJUMPTO(D_800312B4)
 };
 
+//[80031310	0C	spinning cube]
 u32 D_80031310[] = {
-     7, 0x10, 0xD, 0x303080FF, 0x1E, 8, 5, 7, 0x2D, 8, 5, 7, 0x2E, 8, 5, 7, 0x2F, 8, 5, 0xB
+     MONUSEIMAGE(0x10),
+     MONRGBA(0x303080FF, 0x1E),
+     MONHOLDTIME(5),
+     MONUSEIMAGE(0x2D),
+     MONHOLDTIME(5),
+     MONUSEIMAGE(0x2E),
+     MONHOLDTIME(5),
+     MONUSEIMAGE(0x2F),
+     MONHOLDTIME(5),
+     MONLOOP()
 };
 
+//[80031360	10	global map]
 u32 D_80031360[] = {
-     7,      0x2C,       0xD,0x308030FF,      0x1E,         1,0xFFFFFC00,     0x400,
-     8,     0x5A0,         3,     0x288,     0x168,         4,     0x3AA,     0x168,
-     5,      0x80,     0x12C,         6,      0x80,     0x12C,       0xD,      0xFF,
-     0x3C,         8,      0x3C,       0xD,0x808080FF,       0xA,         8,      0x5A,
-     0xD,0x38C838FF,      0x1E,         8,      0x1E,       0xD,0x803838FF,      0x3C,
-     8,      0x3C,       0xD,0x808080FF,      0x3C,         8,      0x3C,         3,
-     0x200,     0x168,         4,     0x200,     0x168,         5,     0x400,     0x2D0,
-     6,     0x400,     0x2D0,         8,     0x12C,         7,      0x2C,         8,
-     0x1A4,       0xD,  0xC800FF,      0x1E,         8,      0x1E,       0xD,0x1E381EFF,
-     0x3C,         8,      0x3C,       0xB
+     MONUSEIMAGE(0x2C),
+     MONRGBA(0x308030FF, 0x1E),
+     MONHORZSCROLL(0xFFFFFC00, 0x400),
+     MONHOLDTIME(0x5A0),
+     MONHORZSCROLLNA(0x288, 0x168),
+     MONVERTSCROLLNA(0x3AA, 0x168),
+     MONZOOMWIDTH(0x80, 0x12C),
+     MONZOOMHEIGHT(0x80, 0x12C),
+     MONRGBA(0x000000FF, 0x3C),
+     MONHOLDTIME(0x3C),
+     MONRGBA(0x808080FF, 0xA),
+     MONHOLDTIME(0x5A),
+     MONRGBA(0x38C838FF, 0x1E),
+     MONHOLDTIME(0x1E),
+     MONRGBA(0x803838FF, 0x3C),
+     MONHOLDTIME(0x3C),
+     MONRGBA(0x808080FF, 0x3C),
+     MONHOLDTIME(0x3C),
+     MONHORZSCROLLNA(0x200, 0x168),
+     MONVERTSCROLLNA(0x200, 0x168),
+     MONZOOMWIDTH(0x400, 0x2D0),
+     MONZOOMHEIGHT(0x400, 0x2D0),
+     MONHOLDTIME(0x12C),
+     MONUSEIMAGE(0x2C), 
+     MONHOLDTIME(0x1A4),
+     MONRGBA(0x00C800FF, 0x1E),
+     MONHOLDTIME(0x1E),
+     MONRGBA(0x1E381EFF, 0x3C),
+     MONHOLDTIME(0x3C),
+     MONLOOP()
 };
 
+//[80031490	0D	3 screens: location, weapon armed, ]
 u32 D_80031490[] = {
-     0xD,      0xFF,         1,       0xD,0xC8C8C8FF,     0x190,         7,         1,
-     8,     0x2A8,         7,         2,         8,     0x2A8,         7,         4,
-     8,      0xB4,       0xD,0x808032FF,         1,         7,         4,         8,
-     0xC8,       0xB
+     MONRGBA(0x000000FF, 1),
+     MONRGBA(0xC8C8C8FF, 0x190),
+     MONUSEIMAGE(1),
+     MONHOLDTIME(0x2A8),
+     MONUSEIMAGE(2),
+     MONHOLDTIME(0x2A8),
+     MONUSEIMAGE(4),
+     MONHOLDTIME(0xB4),
+     MONRGBA(0x808032FF, 1),
+     MONUSEIMAGE(4),
+     MONHOLDTIME(0xC8),
+     MONLOOP()
 };
 
+//[800314F8	0E	red target]
 u32 D_800314F8[] = {
-     5,     0x400,         1,         6,     0x400,         1,       0xD,0xC81414FF,
-     1,         7,         6,         8,     0x258,       0xD,0xC8C8C8FF,         5,
-     8,         5,       0xD,0x383838FF,      0x3C,         7,      0x1B,       0xD,
-     0xA0A0AFF,      0x64,         8,     0x190,       0xB
+     MONZOOMWIDTH(0x400, 1),
+     MONZOOMHEIGHT(0x400, 1),
+     MONRGBA(0xC81414FF, 1),
+     MONUSEIMAGE(6),
+     MONHOLDTIME(0x258),
+     MONRGBA(0xC8C8C8FF, 5),
+     MONHOLDTIME(5),
+     MONRGBA(0x383838FF, 0x3C),
+     MONUSEIMAGE(0x1B),
+     MONRGBA(0x0A0A0AFF, 0x64),
+     MONHOLDTIME(0x190),
+     MONLOOP()
 };
 
+//[8003156C	11	Karl yelling]
 u32 D_8003156C[] = {
-     0xD, 0xA960AFF,         0,         7,      0x28,         8,         5,         7,
-     0x29,         8,         5,         7,      0x2A,         8,         5,         7,
-     0x2B,         8,       0xA,         7,      0x29,         8,         5,       0xB
+     MONRGBA(0xA960AFF, 0),
+     MONUSEIMAGE(0x28),
+     MONHOLDTIME(5),
+     MONUSEIMAGE(0x29),
+     MONHOLDTIME(5),
+     MONUSEIMAGE(0x2A),
+     MONHOLDTIME(5),
+     MONUSEIMAGE(0x2B),
+     MONHOLDTIME(0xA),
+     MONUSEIMAGE(0x29),
+     MONHOLDTIME(5),
+     MONLOOP()
 };
 
+//[800315CC	12	skateboard]
 u32 D_800315CC[] = {
-     7,      0x24,       0xD, 0xA960AFF,         0,         8,         3,       0xD,
-     0x87808FF,         0,         8,         2,       0xD, 0xA960AFF,         0,         8,
-     3,       0xD, 0x87808FF,         0,         8,         2,         1,     0x264,
-     0x1E,         7,      0x25,       0xD, 0xA960AFF,         0,         8,         3,
-     0xD, 0x87808FF,         0,         8,         2,         7,      0x26,       0xD,
-     0xA960AFF,         0,         8,         3,       0xD, 0x87808FF,         0,         8,
-     2,         7,      0x27,       0xD, 0xA960AFF,         0,         8,         3,
-     0xD, 0x87808FF,         0,         8,         2,       0xD, 0xA960AFF,         0,
-     8,         3,       0xD, 0x87808FF,         0,         8,         2,       0xD,
-     0xA960AFF,         0,         8,         3,       0xD, 0x87808FF,         0,         8,
-     2,       0xD, 0xA960AFF,         0,         8,         3,       0xD, 0x87808FF,
-     0,         8,         2,         1,     0x19C,      0x28,         7,      0x26,
-     0xD, 0xA960AFF,         0,         8,         3,       0xD, 0x87808FF,         0,
-     8,         2,       0xD, 0xA960AFF,         0,         8,         3,       0xD,
-     0x87808FF,         0,         8,         2,         7,      0x25,       0xD, 0xA960AFF,
-     0,         8,         3,       0xD, 0x87808FF,         0,         8,         2,
-     0xD, 0xA960AFF,         0,         8,         3,       0xD, 0x87808FF,         0,
-     8,         2,       0xD, 0xA960AFF,         0,         8,         3,       0xD,
-     0x87808FF,         0,         8,         2,       0xD, 0xA960AFF,         0,         8,
-     3,       0xD, 0x87808FF,         0,         8,         2,       0xB
+     MONUSEIMAGE(0x24),
+     MONRGBA(0x0A960AFF, 0),
+     MONHOLDTIME(3),
+     MONRGBA(0x087808FF, 0),
+     MONHOLDTIME(2),
+     MONRGBA(0x0A960AFF, 0),
+     MONHOLDTIME(3),
+     MONRGBA(0x087808FF, 0),
+     MONHOLDTIME(2),
+     MONHORZSCROLL(0x264, 0x1E),
+     MONUSEIMAGE(0x25),
+     MONRGBA(0x0A960AFF, 0),
+     MONHOLDTIME(3),
+     MONRGBA(0x087808FF, 0),
+     MONHOLDTIME(2),
+     MONUSEIMAGE(0x26),
+     MONRGBA(0x0A960AFF, 0),
+     MONHOLDTIME(3),
+     MONRGBA(0x087808FF, 0),
+     MONHOLDTIME(2),
+     MONUSEIMAGE(0x27),
+     MONRGBA(0x0A960AFF, 0),
+     MONHOLDTIME(3),
+     MONRGBA(0x087808FF, 0),
+     MONHOLDTIME(2),
+     MONRGBA(0x0A960AFF, 0),
+     MONHOLDTIME(3),
+     MONRGBA(0x087808FF, 0),
+     MONHOLDTIME(2),
+     MONRGBA(0x0A960AFF, 0),
+     MONHOLDTIME(3),
+     MONRGBA(0x087808FF, 0),
+     MONHOLDTIME(2),
+     MONRGBA(0x0A960AFF, 0),
+     MONHOLDTIME(3),
+     MONRGBA(0x087808FF, 0),
+     MONHOLDTIME(2),
+     MONHORZSCROLL(0x19C, 0x28),
+     MONUSEIMAGE(0x26),
+     MONRGBA(0x0A960AFF, 0),
+     MONHOLDTIME(3),
+     MONRGBA(0x087808FF, 0),
+     MONHOLDTIME(2),
+     MONRGBA(0x0A960AFF, 0),
+     MONHOLDTIME(3),
+     MONRGBA(0x087808FF, 0),
+     MONHOLDTIME(2),
+     MONUSEIMAGE(0x25),
+     MONRGBA(0x0A960AFF, 0),
+     MONHOLDTIME(3),
+     MONRGBA(0x087808FF, 0),
+     MONHOLDTIME(2),
+     MONRGBA(0x0A960AFF, 0),
+     MONHOLDTIME(3),
+     MONRGBA(0x087808FF, 0),
+     MONHOLDTIME(2),
+     MONRGBA(0xA960AFF, 0),
+     MONHOLDTIME(3),
+     MONRGBA(0x87808FF, 0),
+     MONHOLDTIME(2),
+     MONRGBA(0xA960AFF, 0),
+     MONHOLDTIME(3),
+     MONRGBA(0x87808FF, 0),
+     MONHOLDTIME(2),
+     MONLOOP()
 };
 
+//[80031848	13	police guy]
 u32 D_80031848[] = {
-     0x0000000D, 0x0A780AFF,
-     0x00000000, 0x00000007,
-     0x00000020, 0x00000008,
-     0x00000005, 0x00000007,
-     0x00000021, 0x00000008,
-     0x00000005, 0x00000007,
-     0x00000022, 0x00000008,
-     0x00000005, 0x00000007,
-     0x00000023, 0x00000008,
-     0x00000005, 0x0000000B
+    MONRGBA(0x0A780AFF,0x0),
+    MONUSEIMAGE(0x20),
+    MONHOLDTIME(0x05),
+    MONUSEIMAGE(0x21),
+    MONHOLDTIME(0x05),
+    MONUSEIMAGE(0x22),
+    MONHOLDTIME(0x05),
+    MONUSEIMAGE(0x23),
+    MONHOLDTIME(0x05),
+    MONLOOP()
 };
 
-u32 D_80031898[] = {7, 0x1C, 0xD, 0x800000, 1, 8, 5, 0xB};
-
-struct struct_5 D_800318B8[] = {
-     {0xA, D_80031018, 0x1999},
-     {0xA, D_8003156C, 0x1999},
-     {0xA, D_8003121C, 0x1999},
-     {0xA, D_80031248, 0x1999},
-     {0xA, D_80031274, 0x1999},
-     {0xA, D_800310F0, 0x3333},
-     {0xA, D_8003118C, 0x6666},
-     {0xA, D_80031074, 0xFFFF}
+//[80031898	14	'off']
+u32 D_80031898[] = {
+    MONUSEIMAGE(0x1C),
+    MONRGBA(0x00800000, 1),
+    MONHOLDTIME(5),
+    MONLOOP()
 };
 
-u32 D_80031918 = 0xB;
-
-struct struct_5 D_8003191C[] = {
-     {0xA, D_80030F44, 0x51E},
-     {0xA, D_8003121C, 0x51E},
-     {0xA, D_80031074, 0x51E},
-     {0xA, &D_80031950, 0x9999}
+//[800318B8	15	randomly select one of seven animations]
+u32 D_800318B8[] = {
+    MONJUMPCHANCE(D_80031018, 0x1999),
+    MONJUMPCHANCE(D_8003156C, 0x1999),
+    MONJUMPCHANCE(D_8003121C, 0x1999),
+    MONJUMPCHANCE(D_80031248, 0x1999),
+    MONJUMPCHANCE(D_80031274, 0x1999),
+    MONJUMPCHANCE(D_800310F0, 0x3333),
+    MONJUMPCHANCE(D_8003118C, 0x6666),
+    MONJUMPCHANCE(D_80031074, 0xFFFF),
+    MONLOOP()
 };
 
-u32 D_8003194C = 0xB;
-
-struct struct_5 D_80031950[] = {
-     {0xA, &D_800319D4, 0x1999},
-     {0xA, &D_800319F0, 0x1999},
-     {0xA, &D_80031A0C, 0x1999},
-     {0xA, &D_80031A28, 0x1999},
-     {0xA, &D_80031A44, 0x1999},
-     {0xA, &D_80031A60, 0x1999},
-     {0xA, &D_80031A7C, 0x1999},
-     {0xA, &D_80031A98, 0x1999},
-     {0xA, &D_80031AB4, 0x1999},
-     {0xA, &D_80031AD0, 0x1999}
-};
-u32 D_800319C8[] = {8, 0x64, 0xB};
-
-struct struct_0 D_800319D4 = {7, 0x11, 8, 0x14, 0xA, &D_80031AEC, 0xFFFF};
-struct struct_0 D_800319F0 = {7, 0x12, 8, 0x14, 0xA, &D_80031AEC, 0xFFFF};
-struct struct_0 D_80031A0C = {7, 0x13, 8, 0x14, 0xA, &D_80031AEC, 0xFFFF};
-struct struct_0 D_80031A28 = {7, 0x14, 8, 0x14, 0xA, &D_80031AEC, 0xFFFF};
-struct struct_0 D_80031A44 = {7, 0x15, 8, 0x14, 0xA, &D_80031AEC, 0xFFFF};
-struct struct_0 D_80031A60 = {7, 0x16, 8, 0x14, 0xA, &D_80031AEC, 0xFFFF};
-struct struct_0 D_80031A7C = {7, 0x17, 8, 0x14, 0xA, &D_80031AEC, 0xFFFF};
-struct struct_0 D_80031A98 = {7, 0x18, 8, 0x14, 0xA, &D_80031AEC, 0xFFFF};
-struct struct_0 D_80031AB4 = {7, 0x19, 8, 0x14, 0xA, &D_80031AEC, 0xFFFF};
-struct struct_0 D_80031AD0 = {7, 0x1A, 8, 0x14, 0xA, &D_80031AEC, 0xFFFF};
-
-struct struct_5 D_80031AEC[] = {
-     {0xA, &D_80031B24, 0x1999},
-     {0xA, &D_80031B38, 0x1999},
-     {0xA, &D_80031B4C, 0x1999}
+//[8003191C	16	randomly select random screens + random effects or boring]
+u32 D_8003191C[] = {
+    MONJUMPCHANCE(D_80030F44, 0x51E),
+    MONJUMPCHANCE(D_8003121C, 0x51E),
+    MONJUMPCHANCE(D_80031074, 0x51E),
+    MONJUMPCHANCE(D_80031950, 0x9999),
+    MONLOOP()
 };
 
-struct struct_12 D_80031B10[] = {0xD, 0xC8, 0xC8, 0xC8, 0xFF, 0x3C, 9, D_80031B60};
-struct struct_12 D_80031B24[] = {0xD, 0xC8, 0x32, 0x32, 0xFF, 0x3C, 9, D_80031B60};
-struct struct_12 D_80031B38[] = {0xD, 0x32, 0xC8, 0x32, 0xFF, 0x3C, 9, D_80031B60};
-struct struct_12 D_80031B4C[] = {0xD, 0x32, 0x32, 0xC8, 0xFF, 0x3C, 9, D_80031B60};
-u32 D_80031B60[] = {8, 0x32};
+//[80031950	17	Base Function for random screens + random effects]
+u32 D_80031950[] = {
+    MONJUMPCHANCE(D_800319D4, 0x1999),
+    MONJUMPCHANCE(D_800319F0, 0x1999),
+    MONJUMPCHANCE(D_80031A0C, 0x1999),
+    MONJUMPCHANCE(D_80031A28, 0x1999),
+    MONJUMPCHANCE(D_80031A44, 0x1999),
+    MONJUMPCHANCE(D_80031A60, 0x1999),
+    MONJUMPCHANCE(D_80031A7C, 0x1999),
+    MONJUMPCHANCE(D_80031A98, 0x1999),
+    MONJUMPCHANCE(D_80031AB4, 0x1999),
+    MONJUMPCHANCE(D_80031AD0, 0x1999),
+    MONHOLDTIME(0x64),
+    MONLOOP()
+};
+
+//[800319D4	18	random screens + random effects - set image]
+u32 D_800319D4[] = {
+    MONUSEIMAGE(0x11),
+    MONHOLDTIME(0x14),
+    MONJUMPCHANCE(D_80031AEC, 0xFFFF)
+};
+
+//[800319F0	19	random screens + random effects - set image]
+u32 D_800319F0[] = {
+    MONUSEIMAGE(0x12),
+    MONHOLDTIME(0x14),
+    MONJUMPCHANCE(D_80031AEC, 0xFFFF)
+};
+
+//[80031A0C	1A	random screens + random effects - set image]
+u32 D_80031A0C[] = {
+    MONUSEIMAGE(0x13),
+    MONHOLDTIME(0x14),
+    MONJUMPCHANCE(D_80031AEC, 0xFFFF)
+};
+
+//[80031A28	1B	random screens + random effects - set image]
+u32 D_80031A28[] = {
+    MONUSEIMAGE(0x14),
+    MONHOLDTIME(0x14),
+    MONJUMPCHANCE(D_80031AEC, 0xFFFF)
+};
+
+//[80031A44	1C	random screens + random effects - set image]
+u32 D_80031A44[] = {
+    MONUSEIMAGE(0x15),
+    MONHOLDTIME(0x14),
+    MONJUMPCHANCE(D_80031AEC, 0xFFFF)
+};
+
+//[80031A60	1D	random screens + random effects - set image]
+u32 D_80031A60[] = {
+    MONUSEIMAGE(0x16),
+    MONHOLDTIME(0x14),
+    MONJUMPCHANCE(D_80031AEC, 0xFFFF)
+};
+
+//[80031A7C	1E	random screens + random effects - set image]
+u32 D_80031A7C[] = {
+    MONUSEIMAGE(0x17), 
+    MONHOLDTIME(0x14), 
+    MONJUMPCHANCE(D_80031AEC, 0xFFFF)
+};
+
+//[80031A98	1F	random screens + random effects - set image]
+u32 D_80031A98[] = {
+    MONUSEIMAGE(0x18), 
+    MONHOLDTIME(0x14), 
+    MONJUMPCHANCE(D_80031AEC, 0xFFFF)
+};
+
+//[80031AB4	20	random screens + random effects - set image]
+u32 D_80031AB4[] = {
+    MONUSEIMAGE(0x19),
+    MONHOLDTIME(0x14),
+    MONJUMPCHANCE(D_80031AEC, 0xFFFF)
+};
+
+//[80031AD0	21	random screens + random effects - set image]
+u32 D_80031AD0[] = {
+    MONUSEIMAGE(0x1A), 
+    MONHOLDTIME(0x14), 
+    MONJUMPCHANCE(D_80031AEC, 0xFFFF)
+};
+
+//[80031AEC	22	random screens + random effects - colourizer]
+u32 D_80031AEC[] = {
+    MONJUMPCHANCE(D_80031B24, 0x1999),
+    MONJUMPCHANCE(D_80031B38, 0x1999),
+    MONJUMPCHANCE(D_80031B4C, 0x1999)
+};
+
+u32 D_80031B10[] = {
+    MONRGBA(0xC8C8C8FF, 0x3C),
+    MONJUMPTO(D_80031B60)
+};
+
+//[80031B24	23	random screens + random effects - colourizer]
+u32 D_80031B24[] = {
+    MONRGBA(0xC83232FF, 0x3C),
+    MONJUMPTO(D_80031B60)
+};
+
+u32 D_80031B38[] = {
+    MONRGBA(0x32C832FF, 0x3C),
+    MONJUMPTO(D_80031B60)
+};
+
+u32 D_80031B4C[] = {
+    MONRGBA(0x3232C8FF, 0x3C), 
+    MONJUMPTO(D_80031B60)
+};
+
+u32 D_80031B60[] = {
+    MONHOLDTIME(0x32)
+};
 
 //80031B68
-struct struct_5 D_80031B68 = {0xA, &D_80031BB4, 0x1999};
+u32 D_80031B68[] = {
+    MONJUMPCHANCE(D_80031BB4, 0x1999)
+};
 //80031B74
-struct struct_5 D_80031B74 = {0xA, &D_80031BD0, 0x1999};
+u32 D_80031B74[] = {
+    MONJUMPCHANCE(D_80031BD0, 0x1999)
+};
 //80031B80
-struct struct_5 D_80031B80 = {0xA, &D_80031BEC, 0x1999};
+u32 D_80031B80[] = {
+    MONJUMPCHANCE(D_80031BEC, 0x1999)
+};
+
 //80031B8C
-struct struct_5 D_80031B8C = {0xA, &D_80031C08, 0x1999};
+u32 D_80031B8C[] = {
+    MONJUMPCHANCE(D_80031C08, 0x1999)
+};
+
 //80031B98
-struct struct_5 D_80031B98 = {0xA, &D_80031C80, 0x1999};
+u32 D_80031B98[] = {
+    MONJUMPCHANCE(D_80031C80, 0x1999)
+};
+
 //80031BA4
-u32 D_80031BA4[] = {8, 0x12C, 9, &D_80031D30};
+u32 D_80031BA4[] = {
+    MONHOLDTIME(0x12C),
+    MONJUMPTO(D_80031D30)
+};
 
-struct struct_16 D_80031BB4 = {1, 0x800, 0x78, 8, 0x78, 9, D_80031D30};
-struct struct_16 D_80031BD0 = {2, 0x2000, 0x32, 8, 0xC8, 9, D_80031D30};
-struct struct_16 D_80031BEC = {2, 0x2000, 0xC8, 8, 0xC8, 9, D_80031D30};
 
+//[80031BB4	27	random screens + random effects - scroll right]
+u32 D_80031BB4[] = {
+    MONHORZSCROLL(0x800, 0x78),
+    MONHOLDTIME(0x78),
+    MONJUMPTO(D_80031D30)
+};
+
+//[80031BD0	28	random screens + random effects - scroll up fast]
+u32 D_80031BD0[] = {
+    MONVERTSCROLL(0x2000, 0x32),
+    MONHOLDTIME(0xC8),
+    MONJUMPTO(D_80031D30)
+};
+
+//[80031BEC	29	random screens + random effects - scroll up]
+u32 D_80031BEC[] = {
+    MONVERTSCROLL(0x2000, 0xC8),
+    MONHOLDTIME(0xC8),
+    MONJUMPTO(D_80031D30)
+};
+
+//[80031C08	2A	random screens + random effects - scroll and zoom]
 u32 D_80031C08[] = {
-     3, 0x288, 0x12C, 4, 0x3AA, 0x12C,
-     5, 0x80, 0xC8, 6, 0x80, 0xC8,
-     8, 0x12C, 3, 0x200, 0x32,
-     4, 0x200, 0xC8, 5, 0x400, 0x2D0,
-     6, 0x400, 0x2D0, 8, 0x258, 9, D_80031D30
+    MONHORZSCROLLNA(0x288, 0x12C),
+    MONVERTSCROLLNA(0x3AA, 0x12C),
+    MONZOOMWIDTH(0x80, 0xC8),
+    MONZOOMHEIGHT(0x80, 0xC8),
+    MONHOLDTIME(0x12C),
+    MONHORZSCROLLNA(0x200, 0x32),
+    MONVERTSCROLLNA(0x200, 0xC8),
+    MONZOOMWIDTH(0x400, 0x2D0),
+    MONZOOMHEIGHT(0x400, 0x2D0),
+    MONHOLDTIME(0x258),
+    MONJUMPTO(D_80031D30)
 };
 
+//[80031C80	2B	random screens + random effects - scroll and zoom]
 u32 D_80031C80[] = {
-     3,     0x320,     0x190,         4,     0x190,     0x190,         5,      0x80,
-     0xC8,         6,      0x80,      0xC8,         8,     0x12C,         3,      0xC8,
-     0xC8,         4,     0x190,     0x320,         5,     0x200,     0x2D0,         6,
-     0x200,     0x2D0,         8,     0x320,         5,     0x400,     0x2D0,         6,
-     0x400,     0x2D0,         3,     0x200,      0x64,         4,     0x200,      0x3C,
-     8,     0x1F4,         9, D_80031D30
+    MONHORZSCROLLNA(0x320, 0x190),
+    MONVERTSCROLLNA(0x190, 0x190),
+    MONZOOMWIDTH(0x80, 0xC8),
+    MONZOOMHEIGHT(0x80, 0xC8),
+    MONHOLDTIME(0x12C),
+    MONHORZSCROLLNA(0xC8, 0xC8),
+    MONVERTSCROLLNA(0x190, 0x320),
+    MONZOOMWIDTH(0x200, 0x2D0),
+    MONZOOMHEIGHT(0x200, 0x2D0),
+    MONHOLDTIME(0x320),
+    MONZOOMWIDTH(0x400, 0x2D0),
+    MONZOOMHEIGHT(0x400, 0x2D0),
+    MONHORZSCROLLNA(0x200, 0x64),
+    MONVERTSCROLLNA(0x200, 0x3C),
+    MONHOLDTIME(0x1F4),
+    MONJUMPTO(D_80031D30)
 };
 
+//[80031D30	2C	random screens + random effects - wait and route]
 u32 D_80031D30[] = {
-     8,      0x32,       0xA, &D_80031AEC,    0x1999,       0xA, &D_80031D58,    0x3333,
-     9, &D_80031950
+    MONHOLDTIME(0x32),
+    MONJUMPCHANCE(D_80031AEC,    0x1999),
+    MONJUMPCHANCE(D_80031D58,    0x3333),
+    MONJUMPTO(D_80031950)
 };
 
-struct struct_20 D_80031D58 = {8, 0x32, 0xD, 0xFFFFFFFF, 0xA, 0xD, 0xFF, 5, 0xD, 0xFFFFFFFF, 0xA, 8, 0x19, 0xD, 0xFF, 0xC8, 8, 0x1F4, 9, D_80031950};
+//[80031D58	2D	random screens + random effects - flash]
+u32 D_80031D58[] = {
+    MONHOLDTIME(0x32), 
+    MONRGBA(0xFFFFFFFF, 0xA), 
+    MONRGBA(0xFF, 5), 
+    MONRGBA(0xFFFFFFFF, 0xA), 
+    MONHOLDTIME(0x19), 
+    MONRGBA(0x000000FF, 0xC8), 
+    MONHOLDTIME(0x1F4), 
+    MONJUMPTO(D_80031950)
+};
 
+//[80031DA8	2E	red brightening screen]
 u32 D_80031DA8[] = {
-     7,      0x31,         5,     0x200,         0,         6,     0x200,         0,
-     0xD,0xDC2828FF,      0x3C,         8,      0x3C,       0xD,0x323232FF,       0xA,
-     8,       0xA,       0xB
+     MONUSEIMAGE(0x31),
+     MONZOOMSQUARE(0x200, 0),
+     MONRGBA(0xDC2828FF, 0x3C),
+     MONHOLDTIME(0x3C),
+     MONRGBA(0x323232FF, 0xA),
+     MONHOLDTIME(0xA),
+     MONLOOP()
 };
 
-u32 D_80031DF4[] = {7, 0x31, 5, 0x200, 0, 6, 0x200, 0, 
-                    0xD, 0x32C832FF, 0x3C, 8, 0x3C,
-                    0xD, 0x323232FF, 0xA, 8, 0xA, 0xB
+//[80031DF4	2F	green brightening screen]
+u32 D_80031DF4[] = {
+     MONUSEIMAGE(0x31),
+     MONZOOMSQUARE(0x200, 0), 
+     MONRGBA(0x32C832FF, 0x3C),
+     MONHOLDTIME(0x3C),
+     MONRGBA(0x323232FF, 0xA),
+     MONHOLDTIME(10),
+     MONLOOP()
 };
 
-u32 D_80031E40[] = {7, 0x31, 5, 0x200, 0, 6, 0x200, 0,
-                    0xD, 0x323232FF, 0xA, 8, 0xA, 0xB
+//[80031E40	30	grey solid]
+u32 D_80031E40[] = {
+     MONUSEIMAGE(0x31),
+     MONZOOMSQUARE(0x200, 0),
+     MONRGBA(0x323232FF, 0xA),
+     MONHOLDTIME(10),
+     MONLOOP()
 };
 
-u32 D_80031E78[] = {7, 0x31, 5, 0x200, 0, 6, 0x200, 0,
-                    0xD, 0xDC2828FF, 0xA, 8, 0xA, 0xB
+//[80031E78	31	red solid]
+u32 D_80031E78[] = {
+     MONUSEIMAGE(0x31),
+     MONZOOMSQUARE(0x200, 0),
+     MONRGBA(0xDC2828FF, 0xA),
+     MONHOLDTIME(10),
+     MONLOOP()
 };
 
-u32 D_80031EB0[] = {7, 0x31, 5, 0x200, 0, 6, 0x200, 0,
-                    0xD, 0x32C832FF, 0xA, 8, 0xA, 0xB
+//[80031EB0	32	green solid]
+u32 D_80031EB0[] = {
+     MONUSEIMAGE(0x31),
+     MONZOOMSQUARE(0x200, 0),
+     MONRGBA(0x32C832FF, 0xA), 
+     MONHOLDTIME(10),
+     MONLOOP()
 };
 
-u32 D_80031EE8[] = {7, 0, 0xD, 0xFF, 0, 0xC};
+//[80031EE8	33	black solid]
+u32 D_80031EE8[] = {
+     MONUSEIMAGE(0),
+     MONRGBA(0x000000FF, 0),
+     MONSTOPANIM()
+};
 
+//[80031F00	34	???	Not Included in Normal List - linked @ 0x9544]
 u32 dword_D_80031F00[] = {
-     5,     0x400,         0,         6,     0x400,         0,         8,         1,
-     5,    0x1000,      0x14,         6,    0x1000,      0x14,         8,      0x14,
-     0xB
+     MONZOOMSQUARE(0x400, 0),
+     MONHOLDTIME(1),
+     MONZOOMSQUARE(0x1000, 0x14),
+     MONHOLDTIME(0x14),
+     MONLOOP()
 };
 
+//[80031F44	35	Taser	Not Included in Normal List!]
 u32 dword_D_80031F44[] = {
-         7,         0,         1,     0x400,      0x14,         8,      0x14,         2,
-     0x400,      0x14,       0xD,      0xFF,      0x14,         8,      0x14,         5,
-     0x200,      0x14,         6,     0x200,      0x14,       0xD,0xFFFFFFFF,      0x14,
-         8,      0x14,         5,     0x400,      0x14,         6,     0x400,      0x14,
-         8,      0x14,       0xB
+
+     MONUSEIMAGE(0x00),
+     MONHORZSCROLL(0x400, 0x14),
+     MONHOLDTIME(0x14),
+
+     MONVERTSCROLL(0x400, 0x14),
+     MONRGBA(0x000000FF, 0x14),
+     MONHOLDTIME(0x14),
+
+     MONZOOMSQUARE(0x200, 0x14),
+     MONRGBA(0xFFFFFFFF, 0x14),
+     MONHOLDTIME(0x14),
+
+     MONZOOMSQUARE(0x400, 0x14),
+     MONHOLDTIME(0x14),
+     MONLOOP()
 };
 
 u32 D_80031FD0[] = {
@@ -415,8 +861,8 @@ u32 D_8003208C = 0;
 u32 D_80032090 = 0;
 
 object_standard blank_07_object[] = {
-     0x0100, 00, 07,
-     0x0000,0xFFFF,
+    0x0100, 00, 07,
+    0x0000,0xFFFF,
      1,
      0,
      0,
@@ -426,19 +872,19 @@ object_standard blank_07_object[] = {
      0.0f, 0.0f, 1.0f, 0.0f,
      0.0f, 0.0f, 0.0f, 1.0f,
      0.0, 0.0, 0.0,
-     0x00000000,
+    0x00000000,
      0,
      0,
      0,
-     0x447A, 0x0000,
+     0x447A,0x0000,
      0xFFFFFF00, 
      0xFFFFFF00
 };
 
 object_standard blank_11_object[] = {
-     0x0100, 0x0, 0x11,
+    0x0100,0x0, 0x11,
      0,   0,
-     0x00004000,
+    0x00004000,
      0,
      0,
      0,
@@ -447,19 +893,19 @@ object_standard blank_11_object[] = {
      0.0f, 0.0f, 1.0f, 0.0f,
      0.0f, 0.0f, 0.0f, 1.0f,
      0.0, 0.0, 0.0,
-     0x00000000,
+    0x00000000,
      0,
      0,
      0.0,
-     0x447A, 0x0000,
+     0x447A,0x0000,
      0xFFFFFF00,
      0xFFFFFF00
 };
 
 object_weapon blank_08_object_preset_1[] = {
-     0x0100, 0x0, 0x08,
+    0x0100,0x0,0x08,
      0,  1,
-     0x00000000,
+    0x00000000,
      0,
      0,
      0,
@@ -468,23 +914,23 @@ object_weapon blank_08_object_preset_1[] = {
      0.0f, 0.0f, 1.0f, 0.0f,
      0.0f, 0.0f, 0.0f, 1.0f,
      0.0, 0.0, 0.0,
-     0x00000000,
+    0x00000000,
      0,
      0,
      0.0,
-     0x447A, 0x0000,
+     0x447A,0x0000,
      0xFFFFFF00,
      0xFFFFFF00,
-     0x0,
+    0x0,
      0xFF,
      0xFFFF,
      00000000
 };
 
 object_weapon blank_08_object_preset_4001[] = {
-     0x0100, 0x0, 0x08,
+    0x0100,0x0,0x08,
      0,  0x4001,
-     0x00000000,
+    0x00000000,
      0,
      0,
      0,
@@ -493,14 +939,14 @@ object_weapon blank_08_object_preset_4001[] = {
      0.0f, 0.0f, 1.0f, 0.0f,
      0.0f, 0.0f, 0.0f, 1.0f,
      0.0, 0.0, 0.0,
-     0x00000000,
+    0x00000000,
      0,
      0,
      0.0,
-     0x447A, 0x0000,
+     0x447A,0x0000,
      0xFFFFFF00,
      0xFFFFFF00,
-     0x0,
+    0x0,
      0xFF,
      0xFFFF,
      00000000
@@ -27638,7 +28084,7 @@ glabel sub_GAME_7F04B610
 /* 080164 7F04B634 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 080168 7F04B638 AFB00018 */  sw    $s0, 0x18($sp)
 /* 08016C 7F04B63C 3C14FFFE */  lui   $s4, (0xFFFE7961 >> 16) # lui $s4, 0xfffe
-/* 080170 7F04B640 3C160001 */  li    $s6, 0x00010000 # 0.000000
+/* 080170 7F04B640 3C160001 */  li    $s6,0x00010000 # 0.000000
 /* 080174 7F04B644 00A08025 */  move  $s0, $a1
 /* 080178 7F04B648 0080F025 */  move  $fp, $a0
 /* 08017C 7F04B64C 8C910014 */  lw    $s1, 0x14($a0)
@@ -32436,7 +32882,7 @@ void append_text_picked_up(u8 *buffer,u8 * param2,u8 * param3)
 {
   u8 *puVar1;
   
-  puVar1 = get_textptr_for_textID(TEXT(LPROPOBJ, 0x00)); //Picked up
+  puVar1 = get_textptr_for_textID(TEXT(LPROPOBJ,0x00)); //Picked up
   strcat(buffer,puVar1);
   return;
 }
@@ -32455,7 +32901,7 @@ void append_text_ammo_amount_word(u8 *buffer,AMMOTYPES ammotype,u32 amount)
     case AMMO_9MM_2:
     case AMMO_RIFLE:
     case AMMO_PLASTIQUE:
-        textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x01)); //some
+        textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x01)); //some
         strcat(buffer,textfiletext);
         break;
     case AMMO_SHOTGUN:
@@ -32475,33 +32921,33 @@ void append_text_ammo_amount_word(u8 *buffer,AMMOTYPES ammotype,u32 amount)
     case AMMO_BUG:
     case AMMO_MICRO_CAMERA:
         if (amount == 1) {
-            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x02)); //a
+            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x02)); //a
             strcat(buffer,textfiletext);
         }
         else {
-            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x01)); //some
+            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x01)); //some
             strcat(buffer,textfiletext);
         }
         break;
     case AMMO_EXPLOSIVEPEN:
     case AMMO_BOMBCASE:
         if (amount == 1) {
-            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x03)); //an
+            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x03)); //an
             strcat(buffer,textfiletext);
         }
         else {
-            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x01)); //some
+            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x01)); //some
             strcat(buffer,textfiletext);
         }
         break;
     case AMMO_GEKEY:
     case AMMO_TOKEN:
         if (amount == 1) {
-            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x04)); //the
+            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x04)); //the
             strcat(buffer,textfiletext);
         }
         else {
-            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x01)); //some
+            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x01)); //some
             strcat(buffer,textfiletext);
         }
     }
@@ -32520,12 +32966,12 @@ void apped_text_ammotype(u8 *buffer,AMMOTYPES ammotype,u32 amount)
     u8 *textfiletext;
     
     if (((ammotype == AMMO_9MM) || (ammotype == AMMO_9MM_2)) || (ammotype == AMMO_RIFLE)) {
-        textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x05)); //ammo
+        textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x05)); //ammo
         strcat(buffer,textfiletext);
     }
     else {
         if (ammotype == AMMO_KNIFE) {
-            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x0F)); //throwing
+            textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x0F)); //throwing
             strcat(buffer,textfiletext);
             if (amount == 1) {
                 textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x10)); //knife
@@ -32552,39 +32998,39 @@ void apped_text_ammotype(u8 *buffer,AMMOTYPES ammotype,u32 amount)
             else {
                 switch(ammotype) {
                 case AMMO_SHOTGUN:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x06)); //shotgun cartridge
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x06)); //shotgun cartridge
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_GRENADE:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x09)); //hand grenade
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x09)); //hand grenade
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_ROCKETS:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x0B)); //rocket
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x0B)); //rocket
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_REMOTEMINE:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x0C)); //remote mine
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x0C)); //remote mine
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_PROXMINE:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x0D)); //proximity mine
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x0D)); //proximity mine
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_TIMEDMINE:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x0E)); //timed mine
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x0E)); //timed mine
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_GRENADEROUND:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x0A)); //grenade round
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x0A)); //grenade round
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_MAGNUM:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x07)); //magnum bullet
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x07)); //magnum bullet
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_GGUN:
-                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ, 0x08)); //golden bullet
+                    textfiletext = get_textptr_for_textID(TEXT(LPROPOBJ,0x08)); //golden bullet
                     strcat(buffer,textfiletext);
                     break;
                 case AMMO_DARTS:
@@ -33508,7 +33954,7 @@ void generate_language_specific_text_for_weapon(char *finalstring,ITEM_IDS itemt
     else {
           if (getPlayerCount() < 3) {
              //Picked up
-            strcpy(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x00))); 
+            strcpy(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ,0x00))); 
           }
     }
     switch(itemtype) {
@@ -33646,7 +34092,7 @@ void generate_language_specific_text_for_weapon(char *finalstring,ITEM_IDS itemt
             finalstring[strlen(finalstring) - 1] = '\0';
         }
         //Picked up 
-        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ, 0x00)));
+        strcat(finalstring, get_textptr_for_textID(TEXT(LPROPOBJ,0x00)));
         strcat(finalstring,"\n");
     }
     return;
