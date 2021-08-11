@@ -1206,21 +1206,11 @@ glabel sub_GAME_7F03FE14
 
 
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F03FE88(void) {
-
+void sub_GAME_7F03FE88(u32 *param_1)
+{
+  *param_1 = *param_1 | 1;
+  return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03FE88
-/* 0749B8 7F03FE88 8C8E0000 */  lw    $t6, ($a0)
-/* 0749BC 7F03FE8C 35CF0001 */  ori   $t7, $t6, 1
-/* 0749C0 7F03FE90 03E00008 */  jr    $ra
-/* 0749C4 7F03FE94 AC8F0000 */   sw    $t7, ($a0)
-)
-#endif
 
 
 
