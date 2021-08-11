@@ -17,6 +17,7 @@
 #include "game/math_asinfacosf.h"
 #include "game/math_atan2f.h"
 #include "assets/GlobalImageTable.h"
+#include "game/chrobjdata.h"
 
 s32 alarm_timer = 0;
 s32 *ptr_alarm_sfx = 0;
@@ -1405,25 +1406,11 @@ glabel sub_GAME_7F03FFF8
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F040078(void) {
 
+void sub_GAME_7F040078(ObjectRecord *arg0)
+{
+    sub_GAME_7F03FFF8(arg0->model->obj);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F040078
-/* 074BA8 7F040078 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 074BAC 7F04007C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 074BB0 7F040080 8C8E0014 */  lw    $t6, 0x14($a0)
-/* 074BB4 7F040084 0FC0FFFE */  jal   sub_GAME_7F03FFF8
-/* 074BB8 7F040088 8DC40008 */   lw    $a0, 8($t6)
-/* 074BBC 7F04008C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 074BC0 7F040090 27BD0018 */  addiu $sp, $sp, 0x18
-/* 074BC4 7F040094 03E00008 */  jr    $ra
-/* 074BC8 7F040098 00000000 */   nop   
-)
-#endif
 
 
 

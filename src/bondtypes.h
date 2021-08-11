@@ -3,6 +3,7 @@
 #include "ultra64.h"
 #include "bondconstants.h"
 #include "structs.h"
+#include "game/chrobjdata.h"
 
 // This hacky structure allows coords to be accessed using
 // coord->x, coord->y and coord->z, but also as
@@ -243,6 +244,7 @@ typedef struct Model
     u8 unk00;       /*0x00*/
     u8 unk01;       /*0x01*/
     ChrRecord *chr;   /*0x04*/
+    ModelFileHeader *obj;
 } Model;
 
 
