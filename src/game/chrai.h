@@ -114,7 +114,49 @@ Rotate Image:
 */
 #define MONROTATEIMAGE(r) 0xF, r
 
+#define COLOR_WHITE 0xFFFFFFFF
 
+#define COLOR_SILVER 0xC8C8C8FF
+#define COLOR_MINESHAFT 0x383838FF
+#define COLOR_MINESHAFT2 0x323232FF
+#define COLOR_MINESHAFT3 0x202020FF
+#define COLOR_CODGRAY 0x0A0A0AFF
+#define COLOR_GRAY 0x808080FF
+#define COLOR_BLACK 0x000000FF
+
+#define COLOR_PERSIANRED 0xC83232FF
+#define COLOR_THUNDERBIRD 0xC81414FF
+#define COLOR_ALIZARINCRIMSON 0xDC2828FF
+#define COLOR_DIESEL 0x280000FF
+#define COLOR_LOTUS 0x803838FF
+#define COLOR_GOVERNORBAY 0x3232C8FF
+#define COLOR_CYPRUS 0x004040FF
+#define COLOR_MINSK 0x303080FF
+
+#define COLOR_PESTO 0x808032FF
+#define COLOR_VERDUNGREEN 0x404000FF
+#define COLOR_APPLE 0x32C832FF
+#define COLOR_APPLE2 0x38C838FF
+#define COLOR_STRONGGREEN 0x00C800FF
+#define COLOR_GREEN 0x0AFF0AFE
+#define COLOR_TOMTHUMB 0x406440FF
+#define COLOR_SANFELIX 0x0A640AFE
+#define COLOR_SEAGREEN 0x308030FF
+#define COLOR_GREENKELP 0x1E381EFF
+#define COLOR_DARKGREEN 0x0A960AFF
+#define COLOR_ALMOSTDARKGREEN 0x0A960AFE
+#define COLOR_DARKGREEN2 0x0A780AFF
+#define COLOR_DARKERGREEN 0x087808FF
+#define COLOR_DEEPFIR 0x003C00FF
+#define COLOR_BARELYGREEN 0x00800000
+#define COLOR_BARELYGREENOPAQUE 0x008000FF
+
+#define TWO_PERCENT_CHANCE 0x051E
+#define TEN_PERCENT_CHANCE 0x1999
+#define TWENTY_PERCENT_CHANCE 0x3333
+#define FOURTY_PERCENT_CHANCE 0x6666
+#define SIXTY_PERCENT_CHANCE 0x9999
+#define HUNDRED_PERCENT_CHANCE 0xFFFF
 
 struct sfx_register_struct {
     u32 field_0x0;
@@ -134,38 +176,38 @@ struct Pad {
 };
 
 extern struct Pad * ptr_setup_path_tbl;
-extern u32 D_800312A0[];
-extern u32 D_800312B4[];
-extern u32 D_800312C8[];
-extern u32 D_800312F4[];
-extern u32 D_80031310[];
-extern u32 D_80031950[];
-extern u32 D_800319D4[];
-extern u32 D_800319F0[];
-extern u32 D_80031A0C[];
-extern u32 D_80031A28[];
-extern u32 D_80031A44[];
-extern u32 D_80031A60[];
-extern u32 D_80031A7C[];
-extern u32 D_80031A98[];
-extern u32 D_80031AB4[];
-extern u32 D_80031AD0[];
-extern u32 D_80031AEC[];
+extern u32 monAnimRadarSub1[];
+extern u32 monAnimRadarSub2[];
+extern u32 monAnimRadarSub3[];
+extern u32 monAnim0BRadar[];
+extern u32 monAnim0CSpinningCube[];
+extern u32 monAnim17RandImageEffect[];
+extern u32 monRandEFFECTImage11[];
+extern u32 monRandEFFECTImage12[];
+extern u32 monRandEFFECTImage13[];
+extern u32 monRandEFFECTImage14[];
+extern u32 monRandEFFECTImage15[];
+extern u32 monRandEFFECTImage16[];
+extern u32 monRandEFFECTImage17[];
+extern u32 monRandEFFECTImage18[];
+extern u32 monRandEFFECTImage19[];
+extern u32 monRandEFFECTImage1A[];
+extern u32 monRandChanceScrollOrZoomRandRGBN[];
 extern u32 D_80031B10[];
-extern u32 D_80031B24[];
-extern u32 D_80031B38[];
-extern u32 D_80031B4C[];
-extern u32 D_80031B60[];
-extern u32 D_80031BB4[];
-extern u32 D_80031BD0[];
-extern u32 D_80031BEC[];
-extern u32 D_80031C08[];
-extern u32 D_80031C80[];
-extern u32 D_80031D30[];
-extern u32 D_80031D58[];
-extern u32 monitor_animation_microcode[];
-extern u32 dword_D_80031F00[];
-extern u32 dword_D_80031F44[];
+extern u32 monRandChanceScrollOrZoomRed[];
+extern u32 monRandChanceScrollOrZoomGreen[];
+extern u32 monRandChanceScrollOrZoomBlue[];
+extern u32 monRandChanceScrollOrZoom[];
+extern u32 monAnim27RandomEffectScrollRight[];
+extern u32 monAnim28RandomEffectScrollUpFast[];
+extern u32 monAnim29RandomEffectScrollUp[];
+extern u32 monAnim2ARandEffectScrollZoom1[];
+extern u32 monAnim2ARandEffectScrollZoom2[];
+extern u32 monAnim2CRandEffectWaitRoute[];
+extern u32 monAnim2DRandEffectFlash[];
+extern u32 monAnim00Bond[];
+extern u32 monAnim34[];
+extern u32 monAnim35Taser[];
 extern u32 temp_mine_table[30];
 extern f32 gas_damage_flag;
 extern u32 gas_cutoff_flag;
