@@ -196,7 +196,6 @@ void post_type0_indyrescmd_init(s32 readsize,s32 writesize)
     postindyresourcecommand(&cmd,0x14);
 }
 
-#ifdef NONMATCHING
 void post_type3_indyrescmd(s32 rsize,s32 wsize,char *strptr)
 {
     struct indy_resource_entry_type3 cmd;
@@ -206,45 +205,10 @@ void post_type3_indyrescmd(s32 rsize,s32 wsize,char *strptr)
     cmd.entry.size = 0x114;
     cmd.entry.readsize = rsize;
     cmd.entry.writesize = wsize;
-    strncpy(cmd.strbuffer,strptr,0x100);
-    cmd.data = 0;
+    strncpy(cmd.strbuffer,strptr, 256);
+    cmd.strbuffer[255] = 0;
     postindyresourcecommand(&cmd.entry,0x114);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel post_type3_indyrescmd
-/* 104F90 7F0D0460 27BDFED0 */  addiu $sp, $sp, -0x130
-/* 104F94 7F0D0464 AFA50134 */  sw    $a1, 0x134($sp)
-/* 104F98 7F0D0468 3C0E9ABF */  lui   $t6, (0x9ABF1623 >> 16) # lui $t6, 0x9abf
-/* 104F9C 7F0D046C AFA5002C */  sw    $a1, 0x2c($sp)
-/* 104FA0 7F0D0470 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 104FA4 7F0D0474 AFA60138 */  sw    $a2, 0x138($sp)
-/* 104FA8 7F0D0478 35CE1623 */  ori   $t6, (0x9ABF1623 & 0xFFFF) # ori $t6, $t6, 0x1623
-/* 104FAC 7F0D047C 240F0003 */  li    $t7, 3
-/* 104FB0 7F0D0480 24180114 */  li    $t8, 276
-/* 104FB4 7F0D0484 AFA40028 */  sw    $a0, 0x28($sp)
-/* 104FB8 7F0D0488 00C02825 */  move  $a1, $a2
-/* 104FBC 7F0D048C AFAE001C */  sw    $t6, 0x1c($sp)
-/* 104FC0 7F0D0490 AFAF0020 */  sw    $t7, 0x20($sp)
-/* 104FC4 7F0D0494 AFB80024 */  sw    $t8, 0x24($sp)
-/* 104FC8 7F0D0498 24060100 */  li    $a2, 256
-/* 104FCC 7F0D049C 0C0029E8 */  jal   strncpy
-/* 104FD0 7F0D04A0 27A40030 */   addiu $a0, $sp, 0x30
-/* 104FD4 7F0D04A4 A3A0012F */  sb    $zero, 0x12f($sp)
-/* 104FD8 7F0D04A8 27A4001C */  addiu $a0, $sp, 0x1c
-/* 104FDC 7F0D04AC 0FC34088 */  jal   postindyresourcecommand
-/* 104FE0 7F0D04B0 24050114 */   li    $a1, 276
-/* 104FE4 7F0D04B4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 104FE8 7F0D04B8 27BD0130 */  addiu $sp, $sp, 0x130
-/* 104FEC 7F0D04BC 03E00008 */  jr    $ra
-/* 104FF0 7F0D04C0 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 
 void post_type4_indyrescmd_data_recieved(s32 readsize,s32 writesize,s32 data)
@@ -261,61 +225,19 @@ void post_type4_indyrescmd_data_recieved(s32 readsize,s32 writesize,s32 data)
 }
 
 
-
-
-
-
-#ifdef NONMATCHING
-void post_type5_indyrescmd_printfsend(s32 param_1,s32 param_2,char *param_3)
+void post_type5_indyrescmd_printfsend(s32 rsize,s32 wsize,char *name)
 {
-    struct indy_resource_entry cmd;
-    char acStack256 [255];
-    undefined uStack1;
-    
-    cmd.resourceID = 0x9abf1623;
-    cmd.type = 5;
-    cmd.size = 0x114;
-    cmd.readsize = param_1;
-    cmd.writesize = param_2;
-    strncpy(acStack256,param_3,0x100);
-    uStack1 = 0;
-    postindyresourcecommand(&cmd,0x114);
+  struct indy_resource_entry_type3 cmd;
+  
+  cmd.entry.resourceID = 0x9abf1623;
+  cmd.entry.type = 5;
+  cmd.entry.size = 0x114;
+  cmd.entry.readsize = rsize;
+  cmd.entry.writesize = wsize;
+  strncpy(cmd.strbuffer,name,0x100);
+  cmd.strbuffer[255] = '\0';
+  postindyresourcecommand(&cmd,0x114);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel post_type5_indyrescmd_printfsend
-/* 105044 7F0D0514 27BDFED0 */  addiu $sp, $sp, -0x130
-/* 105048 7F0D0518 AFA50134 */  sw    $a1, 0x134($sp)
-/* 10504C 7F0D051C 3C0E9ABF */  lui   $t6, (0x9ABF1623 >> 16) # lui $t6, 0x9abf
-/* 105050 7F0D0520 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 105054 7F0D0524 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 105058 7F0D0528 AFA60138 */  sw    $a2, 0x138($sp)
-/* 10505C 7F0D052C 35CE1623 */  ori   $t6, (0x9ABF1623 & 0xFFFF) # ori $t6, $t6, 0x1623
-/* 105060 7F0D0530 240F0005 */  li    $t7, 5
-/* 105064 7F0D0534 24180114 */  li    $t8, 276
-/* 105068 7F0D0538 AFA40028 */  sw    $a0, 0x28($sp)
-/* 10506C 7F0D053C 00C02825 */  move  $a1, $a2
-/* 105070 7F0D0540 AFAE001C */  sw    $t6, 0x1c($sp)
-/* 105074 7F0D0544 AFAF0020 */  sw    $t7, 0x20($sp)
-/* 105078 7F0D0548 AFB80024 */  sw    $t8, 0x24($sp)
-/* 10507C 7F0D054C 24060100 */  li    $a2, 256
-/* 105080 7F0D0550 0C0029E8 */  jal   strncpy
-/* 105084 7F0D0554 27A40030 */   addiu $a0, $sp, 0x30
-/* 105088 7F0D0558 A3A0012F */  sb    $zero, 0x12f($sp)
-/* 10508C 7F0D055C 27A4001C */  addiu $a0, $sp, 0x1c
-/* 105090 7F0D0560 0FC34088 */  jal   postindyresourcecommand
-/* 105094 7F0D0564 24050114 */   li    $a1, 276
-/* 105098 7F0D0568 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 10509C 7F0D056C 27BD0130 */  addiu $sp, $sp, 0x130
-/* 1050A0 7F0D0570 03E00008 */  jr    $ra
-/* 1050A4 7F0D0574 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 
 void post_type6_indyrescmd_printfrecieved(s32 readsize,s32 writesize,u32 data1,u32 data2)
@@ -333,141 +255,56 @@ void post_type6_indyrescmd_printfrecieved(s32 readsize,s32 writesize,u32 data1,u
 }
 
 
+void post_type7_indyrescmd_log_send(u32 rsize,u32 wsize,u8 *filename,u32 size)
+{
+    struct indy_resource_entry_type7 res;
 
-#ifdef NONMATCHING
-void post_type7_indyrescmd_log_send(void) {
-
+    res.entry.resourceID = 0x9abf1623;
+    res.entry.type = 7;
+    res.entry.size = 0x118;
+    res.entry.readsize = rsize;
+    res.entry.writesize = wsize;
+    strncpy(res.strbuffer,filename,0x100);
+    res.strbuffer[255] = '\0';
+    res.size = size;
+    postindyresourcecommand(&res,0x118);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel post_type7_indyrescmd_log_send
-/* 105100 7F0D05D0 27BDFED0 */  addiu $sp, $sp, -0x130
-/* 105104 7F0D05D4 AFA50134 */  sw    $a1, 0x134($sp)
-/* 105108 7F0D05D8 3C0E9ABF */  lui   $t6, (0x9ABF1623 >> 16) # lui $t6, 0x9abf
-/* 10510C 7F0D05DC AFA50028 */  sw    $a1, 0x28($sp)
-/* 105110 7F0D05E0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 105114 7F0D05E4 AFA40130 */  sw    $a0, 0x130($sp)
-/* 105118 7F0D05E8 AFA60138 */  sw    $a2, 0x138($sp)
-/* 10511C 7F0D05EC 35CE1623 */  ori   $t6, (0x9ABF1623 & 0xFFFF) # ori $t6, $t6, 0x1623
-/* 105120 7F0D05F0 240F0007 */  li    $t7, 7
-/* 105124 7F0D05F4 24180118 */  li    $t8, 280
-/* 105128 7F0D05F8 AFA40024 */  sw    $a0, 0x24($sp)
-/* 10512C 7F0D05FC 00C02825 */  move  $a1, $a2
-/* 105130 7F0D0600 AFA7013C */  sw    $a3, 0x13c($sp)
-/* 105134 7F0D0604 AFAE0018 */  sw    $t6, 0x18($sp)
-/* 105138 7F0D0608 AFAF001C */  sw    $t7, 0x1c($sp)
-/* 10513C 7F0D060C AFB80020 */  sw    $t8, 0x20($sp)
-/* 105140 7F0D0610 24060100 */  li    $a2, 256
-/* 105144 7F0D0614 0C0029E8 */  jal   strncpy
-/* 105148 7F0D0618 27A4002C */   addiu $a0, $sp, 0x2c
-/* 10514C 7F0D061C 8FA9013C */  lw    $t1, 0x13c($sp)
-/* 105150 7F0D0620 A3A0012B */  sb    $zero, 0x12b($sp)
-/* 105154 7F0D0624 27A40018 */  addiu $a0, $sp, 0x18
-/* 105158 7F0D0628 24050118 */  li    $a1, 280
-/* 10515C 7F0D062C 0FC34088 */  jal   postindyresourcecommand
-/* 105160 7F0D0630 AFA9012C */   sw    $t1, 0x12c($sp)
-/* 105164 7F0D0634 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 105168 7F0D0638 27BD0130 */  addiu $sp, $sp, 0x130
-/* 10516C 7F0D063C 03E00008 */  jr    $ra
-/* 105170 7F0D0640 00000000 */   nop   
-)
-#endif
 
 
-
-
-
-#ifdef NONMATCHING
-void post_type8_indyrescmd_log_recieved(void) {
-
+void post_type8_indyrescmd_log_recieved(s32 rsize,s32 wsize,u32 data1,u32 data2,u32 cmd2size,struct indy_resource_entry_type8 *cmd2)
+{
+   struct indy_resource_entry_type8 cmd;
+  
+   cmd.entry.resourceID = 0x9abf1623;
+   cmd.entry.type = 8;
+  
+   cmd.entry.size = (cmd2size +3 & ~3)+ 0x20;
+   cmd.entry.readsize = rsize;
+   cmd.entry.writesize = wsize;
+  
+   cmd.data1 = data1;
+   cmd.size = cmd2size;
+   cmd.data2 = data2;
+   send2indyresourcecommands(&cmd,0x20,cmd2,cmd2size);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel post_type8_indyrescmd_log_recieved
-/* 105174 7F0D0644 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 105178 7F0D0648 AFA70044 */  sw    $a3, 0x44($sp)
-/* 10517C 7F0D064C 8FA70048 */  lw    $a3, 0x48($sp)
-/* 105180 7F0D0650 2401FFFC */  li    $at, -4
-/* 105184 7F0D0654 8FAC0044 */  lw    $t4, 0x44($sp)
-/* 105188 7F0D0658 24F80003 */  addiu $t8, $a3, 3
-/* 10518C 7F0D065C 3C0E9ABF */  lui   $t6, (0x9ABF1623 >> 16) # lui $t6, 0x9abf
-/* 105190 7F0D0660 0301C824 */  and   $t9, $t8, $at
-/* 105194 7F0D0664 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 105198 7F0D0668 AFA40038 */  sw    $a0, 0x38($sp)
-/* 10519C 7F0D066C AFA5003C */  sw    $a1, 0x3c($sp)
-/* 1051A0 7F0D0670 AFA60040 */  sw    $a2, 0x40($sp)
-/* 1051A4 7F0D0674 35CE1623 */  ori   $t6, (0x9ABF1623 & 0xFFFF) # ori $t6, $t6, 0x1623
-/* 1051A8 7F0D0678 240F0008 */  li    $t7, 8
-/* 1051AC 7F0D067C 27280020 */  addiu $t0, $t9, 0x20
-/* 1051B0 7F0D0680 AFA40024 */  sw    $a0, 0x24($sp)
-/* 1051B4 7F0D0684 AFA50028 */  sw    $a1, 0x28($sp)
-/* 1051B8 7F0D0688 AFA6002C */  sw    $a2, 0x2c($sp)
-/* 1051BC 7F0D068C AFAE0018 */  sw    $t6, 0x18($sp)
-/* 1051C0 7F0D0690 AFAF001C */  sw    $t7, 0x1c($sp)
-/* 1051C4 7F0D0694 AFA80020 */  sw    $t0, 0x20($sp)
-/* 1051C8 7F0D0698 8FA6004C */  lw    $a2, 0x4c($sp)
-/* 1051CC 7F0D069C 24050020 */  li    $a1, 32
-/* 1051D0 7F0D06A0 27A40018 */  addiu $a0, $sp, 0x18
-/* 1051D4 7F0D06A4 AFA70034 */  sw    $a3, 0x34($sp)
-/* 1051D8 7F0D06A8 0FC340D6 */  jal   send2indyresourcecommands
-/* 1051DC 7F0D06AC AFAC0030 */   sw    $t4, 0x30($sp)
-/* 1051E0 7F0D06B0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 1051E4 7F0D06B4 27BD0038 */  addiu $sp, $sp, 0x38
-/* 1051E8 7F0D06B8 03E00008 */  jr    $ra
-/* 1051EC 7F0D06BC 00000000 */   nop   
-)
-#endif
 
 
+void post_type9_indyrescmd_app_command_ready(s32 rsize,s32 wsize,char *strptr,u32 size2,struct indy_resource_entry3 *cmd2)
+{
+  struct indy_resource_entry_type3 cmd;
 
+  cmd.entry.resourceID = 0x9abf1623;
+  cmd.entry.type = 9;
 
+  cmd.entry.size = (size2 + 3 & 0xfffffffc) + 0x114;
+  cmd.entry.readsize = rsize;
+  cmd.entry.writesize = wsize;
 
-#ifdef NONMATCHING
-void post_type9_indyrescmd_app_command_ready(void) {
-
+  strncpy(cmd.strbuffer,strptr,0x100);
+  cmd.strbuffer[255] = '\0';
+  send2indyresourcecommands(&cmd,0x114,cmd2,size2);
+  
 }
-#else
-GLOBAL_ASM(
-.text
-glabel post_type9_indyrescmd_app_command_ready
-/* 1051F0 7F0D06C0 27BDFED0 */  addiu $sp, $sp, -0x130
-/* 1051F4 7F0D06C4 24F90003 */  addiu $t9, $a3, 3
-/* 1051F8 7F0D06C8 2401FFFC */  li    $at, -4
-/* 1051FC 7F0D06CC AFA50134 */  sw    $a1, 0x134($sp)
-/* 105200 7F0D06D0 3C0E9ABF */  lui   $t6, (0x9ABF1623 >> 16) # lui $t6, 0x9abf
-/* 105204 7F0D06D4 03214024 */  and   $t0, $t9, $at
-/* 105208 7F0D06D8 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 10520C 7F0D06DC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 105210 7F0D06E0 AFA40130 */  sw    $a0, 0x130($sp)
-/* 105214 7F0D06E4 AFA60138 */  sw    $a2, 0x138($sp)
-/* 105218 7F0D06E8 35CE1623 */  ori   $t6, (0x9ABF1623 & 0xFFFF) # ori $t6, $t6, 0x1623
-/* 10521C 7F0D06EC 240F0009 */  li    $t7, 9
-/* 105220 7F0D06F0 25090114 */  addiu $t1, $t0, 0x114
-/* 105224 7F0D06F4 AFA40028 */  sw    $a0, 0x28($sp)
-/* 105228 7F0D06F8 00C02825 */  move  $a1, $a2
-/* 10522C 7F0D06FC AFA7013C */  sw    $a3, 0x13c($sp)
-/* 105230 7F0D0700 AFAE001C */  sw    $t6, 0x1c($sp)
-/* 105234 7F0D0704 AFAF0020 */  sw    $t7, 0x20($sp)
-/* 105238 7F0D0708 AFA90024 */  sw    $t1, 0x24($sp)
-/* 10523C 7F0D070C 24060100 */  li    $a2, 256
-/* 105240 7F0D0710 0C0029E8 */  jal   strncpy
-/* 105244 7F0D0714 27A40030 */   addiu $a0, $sp, 0x30
-/* 105248 7F0D0718 A3A0012F */  sb    $zero, 0x12f($sp)
-/* 10524C 7F0D071C 27A4001C */  addiu $a0, $sp, 0x1c
-/* 105250 7F0D0720 24050114 */  li    $a1, 276
-/* 105254 7F0D0724 8FA60140 */  lw    $a2, 0x140($sp)
-/* 105258 7F0D0728 0FC340D6 */  jal   send2indyresourcecommands
-/* 10525C 7F0D072C 8FA7013C */   lw    $a3, 0x13c($sp)
-/* 105260 7F0D0730 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 105264 7F0D0734 27BD0130 */  addiu $sp, $sp, 0x130
-/* 105268 7F0D0738 03E00008 */  jr    $ra
-/* 10526C 7F0D073C 00000000 */   nop   
-)
-#endif
-
-
 
 
 void post_typeA_indyrescmd_app_command_recieved(s32 readsize,s32 writesize,u32 data)
@@ -484,50 +321,23 @@ void post_typeA_indyrescmd_app_command_recieved(s32 readsize,s32 writesize,u32 d
 }
 
 
-
-
-
-#ifdef NONMATCHING
-void post_typeF_indyrescmd_fault_send(void) {
+void post_typeF_indyrescmd_fault_send(u32 rsize,u32 wsize,char *name,u32 filesize,u32 ptarget)
+{
+  struct indy_resource_entry_typeF cmd;
+  
+  cmd.entry.resourceID = 0x9abf1623;
+  cmd.entry.type = 0xf;
+  cmd.entry.size = 0x11c;
+  cmd.entry.readsize = rsize;
+  cmd.entry.writesize = wsize;
+  strncpy(cmd.strbuffer,name,0x100);
+  cmd.strbuffer[255] = '\0';
+  cmd.size = filesize;
+  cmd.hwaddress = ptarget;
+  
+  postindyresourcecommand(&cmd,0x11c);
 
 }
-#else
-GLOBAL_ASM(
-.text
-glabel post_typeF_indyrescmd_fault_send
-/* 1052C0 7F0D0790 27BDFEC8 */  addiu $sp, $sp, -0x138
-/* 1052C4 7F0D0794 AFA5013C */  sw    $a1, 0x13c($sp)
-/* 1052C8 7F0D0798 3C0E9ABF */  lui   $t6, (0x9ABF1623 >> 16) # lui $t6, 0x9abf
-/* 1052CC 7F0D079C AFA5002C */  sw    $a1, 0x2c($sp)
-/* 1052D0 7F0D07A0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 1052D4 7F0D07A4 AFA40138 */  sw    $a0, 0x138($sp)
-/* 1052D8 7F0D07A8 AFA60140 */  sw    $a2, 0x140($sp)
-/* 1052DC 7F0D07AC 35CE1623 */  ori   $t6, (0x9ABF1623 & 0xFFFF) # ori $t6, $t6, 0x1623
-/* 1052E0 7F0D07B0 240F000F */  li    $t7, 15
-/* 1052E4 7F0D07B4 2418011C */  li    $t8, 284
-/* 1052E8 7F0D07B8 AFA40028 */  sw    $a0, 0x28($sp)
-/* 1052EC 7F0D07BC 00C02825 */  move  $a1, $a2
-/* 1052F0 7F0D07C0 AFA70144 */  sw    $a3, 0x144($sp)
-/* 1052F4 7F0D07C4 AFAE001C */  sw    $t6, 0x1c($sp)
-/* 1052F8 7F0D07C8 AFAF0020 */  sw    $t7, 0x20($sp)
-/* 1052FC 7F0D07CC AFB80024 */  sw    $t8, 0x24($sp)
-/* 105300 7F0D07D0 24060100 */  li    $a2, 256
-/* 105304 7F0D07D4 0C0029E8 */  jal   strncpy
-/* 105308 7F0D07D8 27A40030 */   addiu $a0, $sp, 0x30
-/* 10530C 7F0D07DC 8FA90144 */  lw    $t1, 0x144($sp)
-/* 105310 7F0D07E0 8FAA0148 */  lw    $t2, 0x148($sp)
-/* 105314 7F0D07E4 A3A0012F */  sb    $zero, 0x12f($sp)
-/* 105318 7F0D07E8 27A4001C */  addiu $a0, $sp, 0x1c
-/* 10531C 7F0D07EC 2405011C */  li    $a1, 284
-/* 105320 7F0D07F0 AFA90130 */  sw    $t1, 0x130($sp)
-/* 105324 7F0D07F4 0FC34088 */  jal   postindyresourcecommand
-/* 105328 7F0D07F8 AFAA0134 */   sw    $t2, 0x134($sp)
-/* 10532C 7F0D07FC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 105330 7F0D0800 27BD0138 */  addiu $sp, $sp, 0x138
-/* 105334 7F0D0804 03E00008 */  jr    $ra
-/* 105338 7F0D0808 00000000 */   nop   
-)
-#endif
 
 
 

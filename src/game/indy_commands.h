@@ -12,8 +12,7 @@ struct indy_resource_entry {
 
 struct indy_resource_entry_type3 {
     struct indy_resource_entry entry;
-    u8 strbuffer[255];
-    u32 data;
+    u8 strbuffer[256];
 };
 
 struct indy_resource_entry_type4 {
@@ -25,6 +24,26 @@ struct indy_resource_entry_type6 {
     struct indy_resource_entry entry;
     u32 data1;
     u32 data2;
+};
+
+struct indy_resource_entry_type7 {
+    struct indy_resource_entry entry;
+    u8 strbuffer[256];
+    u32 size;
+};
+
+struct indy_resource_entry_type8 {
+    struct indy_resource_entry entry;
+    u32 data1;
+    u32 data2;
+    u32 size;
+};
+
+struct indy_resource_entry_typeF {
+    struct indy_resource_entry entry;
+    u8 strbuffer[256];
+    u32 size;
+    u8* hwaddress;
 };
 
 extern s32 indy_ready;
