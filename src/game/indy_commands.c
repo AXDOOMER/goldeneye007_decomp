@@ -14,43 +14,17 @@ s32 D_8004EACC = 0x0;
 s32 D_8004EAD0 = 0x0;
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0D0180(u8 *buffer,u32 size)
+
+void indy_buffer_copy_related(u8 *buffer,u32 size)
 {
-  int i;
-  
-  for (i = 4; i != 100000; i + 4){;}
-  rmon7000CEC0();
-  for (i = 4; i != 100000; i + 4){;}
+    int i;
+
+    for (i = 0; i != 100000; i += 4) { }
+
+    rmon7000CEC0(buffer, size);
+
+    for (i = 0; i != 100000; i += 1) { }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0D0180
-/* 104CB0 7F0D0180 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 104CB4 7F0D0184 3C030001 */  lui   $v1, (0x000186A0 >> 16) # lui $v1, 1
-/* 104CB8 7F0D0188 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 104CBC 7F0D018C 346386A0 */  ori   $v1, (0x000186A0 & 0xFFFF) # ori $v1, $v1, 0x86a0
-/* 104CC0 7F0D0190 00001025 */  move  $v0, $zero
-/* 104CC4 7F0D0194 24420004 */  addiu $v0, $v0, 4
-.L7F0D0198:
-/* 104CC8 7F0D0198 5443FFFF */  bnel  $v0, $v1, .L7F0D0198
-/* 104CCC 7F0D019C 24420004 */   addiu $v0, $v0, 4
-/* 104CD0 7F0D01A0 0C0033B0 */  jal   rmon7000CEC0
-/* 104CD4 7F0D01A4 00000000 */   nop   
-/* 104CD8 7F0D01A8 3C030001 */  lui   $v1, (0x000186A0 >> 16) # lui $v1, 1
-/* 104CDC 7F0D01AC 346386A0 */  ori   $v1, (0x000186A0 & 0xFFFF) # ori $v1, $v1, 0x86a0
-/* 104CE0 7F0D01B0 00001025 */  move  $v0, $zero
-/* 104CE4 7F0D01B4 24420004 */  addiu $v0, $v0, 4
-.L7F0D01B8:
-/* 104CE8 7F0D01B8 5443FFFF */  bnel  $v0, $v1, .L7F0D01B8
-/* 104CEC 7F0D01BC 24420004 */   addiu $v0, $v0, 4
-/* 104CF0 7F0D01C0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 104CF4 7F0D01C4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 104CF8 7F0D01C8 03E00008 */  jr    $ra
-/* 104CFC 7F0D01CC 00000000 */   nop   
-)
-#endif
 
 
 
@@ -942,7 +916,7 @@ glabel post_indyrescmd_read_command
 /* 105ACC 7F0D0F9C 03202825 */  move  $a1, $t9
 /* 105AD0 7F0D0FA0 00E02025 */  move  $a0, $a3
 /* 105AD4 7F0D0FA4 AFA3003C */  sw    $v1, 0x3c($sp)
-/* 105AD8 7F0D0FA8 0FC34060 */  jal   sub_GAME_7F0D0180
+/* 105AD8 7F0D0FA8 0FC34060 */  jal   indy_buffer_copy_related
 /* 105ADC 7F0D0FAC AFA60444 */   sw    $a2, 0x444($sp)
 /* 105AE0 7F0D0FB0 8FA3003C */  lw    $v1, 0x3c($sp)
 /* 105AE4 7F0D0FB4 8FA60444 */  lw    $a2, 0x444($sp)
@@ -988,7 +962,7 @@ glabel post_indyrescmd_read_command
 /* 105B68 7F0D1038 00A15824 */  and   $t3, $a1, $at
 /* 105B6C 7F0D103C 01602825 */  move  $a1, $t3
 /* 105B70 7F0D1040 8FA40440 */  lw    $a0, 0x440($sp)
-/* 105B74 7F0D1044 0FC34060 */  jal   sub_GAME_7F0D0180
+/* 105B74 7F0D1044 0FC34060 */  jal   indy_buffer_copy_related
 /* 105B78 7F0D1048 AFA60444 */   sw    $a2, 0x444($sp)
 /* 105B7C 7F0D104C 3C0C8005 */  lui   $t4, %hi(indy_status) 
 /* 105B80 7F0D1050 8D8CEAC4 */  lw    $t4, %lo(indy_status)($t4)
@@ -1028,8 +1002,8 @@ glabel post_indyrescmd_read_command
 
 u32 post_indyrescmd_read_2commands(u8 *buffer1,u32 size1,u8 *buffer2,u32 size2)
 {
-    sub_GAME_7F0D0180(buffer1,size1 + 3 & 0xfffffffc);
-    sub_GAME_7F0D0180(buffer2,size2 + 3 & 0xfffffffc);
+    indy_buffer_copy_related(buffer1,size1 + 3 & 0xfffffffc);
+    indy_buffer_copy_related(buffer2,size2 + 3 & 0xfffffffc);
     return 1;
 }
 
