@@ -27,46 +27,16 @@ void indy_buffer_copy_related(u8 *buffer,u32 size)
 }
 
 
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0D01D0(u8 *buffer,u32 size)
 {
   int i;
   
-  for (i = 4; i != 100000; i + 4){;}
-  rmon7000CEB8();
-  for (i = 4; i != 100000; i + 4){;}
+    for (i = 0; i != 100000; i += 4){}
+
+    rmon7000CEB8(buffer, size);
+
+    for (i = 0; i != 100000; i += 1){}
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0D01D0
-/* 104D00 7F0D01D0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 104D04 7F0D01D4 3C030001 */  lui   $v1, (0x000186A0 >> 16) # lui $v1, 1
-/* 104D08 7F0D01D8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 104D0C 7F0D01DC 346386A0 */  ori   $v1, (0x000186A0 & 0xFFFF) # ori $v1, $v1, 0x86a0
-/* 104D10 7F0D01E0 00001025 */  move  $v0, $zero
-/* 104D14 7F0D01E4 24420004 */  addiu $v0, $v0, 4
-.L7F0D01E8:
-/* 104D18 7F0D01E8 5443FFFF */  bnel  $v0, $v1, .L7F0D01E8
-/* 104D1C 7F0D01EC 24420004 */   addiu $v0, $v0, 4
-/* 104D20 7F0D01F0 0C0033AE */  jal   rmon7000CEB8
-/* 104D24 7F0D01F4 00000000 */   nop   
-/* 104D28 7F0D01F8 3C030001 */  lui   $v1, (0x000186A0 >> 16) # lui $v1, 1
-/* 104D2C 7F0D01FC 346386A0 */  ori   $v1, (0x000186A0 & 0xFFFF) # ori $v1, $v1, 0x86a0
-/* 104D30 7F0D0200 00001025 */  move  $v0, $zero
-/* 104D34 7F0D0204 24420004 */  addiu $v0, $v0, 4
-.L7F0D0208:
-/* 104D38 7F0D0208 5443FFFF */  bnel  $v0, $v1, .L7F0D0208
-/* 104D3C 7F0D020C 24420004 */   addiu $v0, $v0, 4
-/* 104D40 7F0D0210 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 104D44 7F0D0214 27BD0018 */  addiu $sp, $sp, 0x18
-/* 104D48 7F0D0218 03E00008 */  jr    $ra
-/* 104D4C 7F0D021C 00000000 */   nop   
-)
-#endif
 
 
 
