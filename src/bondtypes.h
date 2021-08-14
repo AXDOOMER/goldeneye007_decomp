@@ -5,6 +5,9 @@
 #include "structs.h"
 #include "game/chrobjdata.h"
 
+#define _mkshort(a, b) ((a << 8) | (b & 0xff))
+#define _mkword(a, b) ((a << 16) | (b & 0xffff))
+
 // This hacky structure allows coords to be accessed using
 // coord->x, coord->y and coord->z, but also as
 // coord->f[0], coord->f[1] and coord->f[2].
@@ -82,6 +85,7 @@ struct pad
     struct coord3d up;
     struct coord3d look;
     char *plink;
+    int unknown;
 };
 
 struct pad3d
@@ -92,6 +96,43 @@ struct pad3d
     char *plink;
     int unk;
     struct bbox bbox;
+};
+
+struct s_pathTbl {
+    s16 pathtbl;
+    s16 field_0x2;
+    s32 (*field_0x4)[];
+    s32 field_0x8;
+    s32 field_0xc;
+};
+
+struct s_pathLink {
+    void *pathlink;
+    void *field_0x4;
+    void *field_0x8;
+};
+
+struct s_pathSet {
+    void *field_0x0;
+    s32 field_0x4;
+};
+
+struct ailist {
+    u32 (*script)[];
+    s32 id;
+};
+
+struct stagesetup {
+    struct s_pathTbl (*pathtbl)[];
+    struct s_pathLink (*pathlink)[];
+    s32 (*intro)[];
+    s32 (*objlist)[];
+    struct s_pathSet (*paths)[];
+    struct ailist (*ailists)[];
+    struct pad (*padlist)[];
+    struct pad3d (*pad3dlist)[];
+    char *(*padnames)[];
+    char *(*pad3dnames)[];
 };
 
 typedef struct ChrRecord {

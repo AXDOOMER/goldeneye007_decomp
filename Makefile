@@ -67,7 +67,7 @@ include assets/Makefile.music
 BUILD_SUB_DIRS := \
 	rsp src src/game src/inflate src/libultra assets assets/obseg \
 	assets/obseg/brief assets/obseg/chr assets/obseg/gun assets/obseg/prop \
-	assets/obseg/text assets/obseg/bg assets/obseg/setup assets/obseg/stan \
+	assets/obseg/text assets/obseg/bg assets/obseg/setup assets/obseg/setup/$(COUNTRYCODE) assets/obseg/stan \
 	assets/music assets/ramrom assets/images assets/images/split assets/font \
 	assets/embedded assets/embedded/skeletons assets/embedded/player_gait_object
 # create build directories
@@ -157,7 +157,7 @@ endif
 	$(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) 
-ifeq ($(filter clean dataclean codeclean stanclean print-%,$(MAKECMDGOALS)),)
+ifeq ($(filter clean dataclean codeclean stanclean setupclean print-%,$(MAKECMDGOALS)),)
 
   # Make tools if out of date
   $(info Building tools...)
@@ -168,6 +168,10 @@ ifeq ($(filter clean dataclean codeclean stanclean print-%,$(MAKECMDGOALS)),)
   $(info Building ROM...)
 
 endif
+
+setupclean:
+	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
+	$(SETUP_BUILD_FILES)
 
 stanclean:
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
@@ -180,13 +184,13 @@ codeclean:
 dataclean: 
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) \
-	$(STAN_BUILD_FILES)
+	$(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
 
 clean:
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(COUNTRYCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) $(RSPOBJECTS) \
-	$(STAN_BUILD_FILES)
+	$(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
 
 $(BUILD_DIR)/src/libultra/%.o: src/libultra/%.c
 	$(CC) -c $(CFLAGS_LIBULTRA) -o $@ $<
