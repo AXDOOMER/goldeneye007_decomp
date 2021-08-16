@@ -6599,29 +6599,17 @@ glabel type5_6_7_getsamples
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0C9A24(void) {
 
+s32 sub_GAME_7F0C9A24(s32 param_1)
+{
+  s32 i;
+  
+  i = 0;
+  for (param_1 += -1; 0 < param_1; param_1 >>= 1) {
+    i += 1;
+  }
+  return i;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0C9A24
-/* 0FE554 7F0C9A24 2484FFFF */  addiu $a0, $a0, -1
-/* 0FE558 7F0C9A28 18800005 */  blez  $a0, .L7F0C9A40
-/* 0FE55C 7F0C9A2C 00001825 */   move  $v1, $zero
-.L7F0C9A30:
-/* 0FE560 7F0C9A30 00047043 */  sra   $t6, $a0, 1
-/* 0FE564 7F0C9A34 01C02025 */  move  $a0, $t6
-/* 0FE568 7F0C9A38 1DC0FFFD */  bgtz  $t6, .L7F0C9A30
-/* 0FE56C 7F0C9A3C 24630001 */   addiu $v1, $v1, 1
-.L7F0C9A40:
-/* 0FE570 7F0C9A40 03E00008 */  jr    $ra
-/* 0FE574 7F0C9A44 00601025 */   move  $v0, $v1
-)
-#endif
-
-
 
 
 
