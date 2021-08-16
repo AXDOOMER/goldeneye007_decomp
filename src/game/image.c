@@ -6513,8 +6513,32 @@ glabel type4_7_9_getsamples
 
 
 #ifdef NONMATCHING
-void type5_6_7_getsamples(void) {
-
+s32 type5_6_7_getsamples(u16 *image,s32 count)
+{
+    s32 i;
+    
+    if (count < 0x11)
+    {
+        for(i = 0; i<extractImageBitCount(0xb); i++) 
+        {
+            image[i] = extractImageBitCount(count);
+        }
+    }
+    else if (count < 0x19)
+    {
+        for(i = 0; i<extractImageBitCount(0xb); i++)
+        {
+            image[i] = extractImageBitCount(count);
+        }
+    }
+    else
+    {
+        for(i = 0; i<extractImageBitCount(0xb); i++)
+        {
+            image[i] = extractImageBitCount(count + -0x18) | extractImageBitCount(0x18) << 8;
+        }
+    }
+    return i;
 }
 #else
 GLOBAL_ASM(
