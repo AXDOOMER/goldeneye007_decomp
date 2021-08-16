@@ -6625,48 +6625,129 @@ glabel sub_GAME_7F0C9A24
 
 
 
-#ifdef NONMATCHING
-void image_get_alpha_values(void) {
-
+void image_get_alpha_values(u8 *image,s32 count)
+{
+  int i;
+  
+    for(i = 0; i < count; i++)
+    {
+          image[i] = extractImageBitCount(1);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel image_get_alpha_values
-/* 0FE578 7F0C9A48 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0FE57C 7F0C9A4C AFB20020 */  sw    $s2, 0x20($sp)
-/* 0FE580 7F0C9A50 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0FE584 7F0C9A54 00A09025 */  move  $s2, $a1
-/* 0FE588 7F0C9A58 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0FE58C 7F0C9A5C AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0FE590 7F0C9A60 18A00008 */  blez  $a1, .L7F0C9A84
-/* 0FE594 7F0C9A64 00008025 */   move  $s0, $zero
-/* 0FE598 7F0C9A68 00808825 */  move  $s1, $a0
-.L7F0C9A6C:
-/* 0FE59C 7F0C9A6C 0FC32FCB */  jal   extractImageBitCount
-/* 0FE5A0 7F0C9A70 24040001 */   li    $a0, 1
-/* 0FE5A4 7F0C9A74 26100001 */  addiu $s0, $s0, 1
-/* 0FE5A8 7F0C9A78 26310001 */  addiu $s1, $s1, 1
-/* 0FE5AC 7F0C9A7C 1612FFFB */  bne   $s0, $s2, .L7F0C9A6C
-/* 0FE5B0 7F0C9A80 A222FFFF */   sb    $v0, -1($s1)
-.L7F0C9A84:
-/* 0FE5B4 7F0C9A84 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 0FE5B8 7F0C9A88 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0FE5BC 7F0C9A8C 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 0FE5C0 7F0C9A90 8FB20020 */  lw    $s2, 0x20($sp)
-/* 0FE5C4 7F0C9A94 03E00008 */  jr    $ra
-/* 0FE5C8 7F0C9A98 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
-
 
 
 
 
 #ifdef NONMATCHING
-void image_compression0_expand(void) {
+s32 image_compression0_expand(u8 *target, s32 width, s32 height, s32 tablenum)
+{
+    s32 targetplusF;
+    s32 *temp_s1;
 
+    s32 *poutbits;
+    s32 w;
+    s32 h;
+    s32 _targetplus7;
+    s32 w;
+    s32 h;
+    s32 *ptargetplusF;
+    void *ptargetplus7;
+
+
+    targetplusF = (s32) (target + 0xF) & ~0xF;
+    targetplus7 = (s32) (target + 7) & ~7;
+    _targetplus7 = targetplus7;
+    ptargetplusF = (s32 *) targetplusF;
+    ptargetplus7 = (void *) targetplus7;
+    
+    switch (tablenum) {
+    case 0:
+        for(h = 0; h != height; h++)
+        {
+                poutbits = ptargetplusF;
+            for(w = 0; w != width; w++)
+            {
+                        *poutbits = (s32) (extractImageBitCount(0x10) << 0x10);
+
+                        temp_s1 = poutbits + 4;
+                        temp_s1->unk-4 = (s32) (*poutbits | extractImageBitCount(0x10));
+                        poutbits = temp_s1;
+
+            }
+                ptargetplusF += ((width + 3) & 0xFFC) * 4;
+        }
+        return ((width + 3) & 0xFFC) * height * 4;
+    case 2:
+        for(h = 0; h != height; h++)
+        {
+                poutbits = ptargetplusF;
+            for(w = 0; w != width; w++)
+            {
+                        temp_s1 = poutbits + 4;
+                        temp_s1->unk-4 = (s32) ((extractImageBitCount(0x18) << 8) | 0xFF);
+                        poutbits = temp_s1;
+            }
+                ptargetplusF += ((width + 3) & 0xFFC) * 4;
+        }
+        return ((width + 3) & 0xFFC) * height * 4;
+    case 1:
+    case 4:
+        for(h = 0; h!= height; h++)
+        {
+            poutbits = ptargetplus7;
+            for(w = 0; w != width; w++)
+            {
+                        temp_s1 = poutbits + 2;
+                        temp_s1->unk-2 = extractImageBitCount(0x10);
+                        poutbits = temp_s1;
+            }
+                ptargetplus7 += ((width + 3) & 0xFFC) * 2;
+        }
+        return ((width + 3) & 0xFFC) * height * 2;
+    case 3:
+        for(h = 0; h!= height; h++)
+        {
+            poutbits = ptargetplus7;
+            for(w = 0; w != width; w++)
+            {
+                        temp_s1 = poutbits + 2;
+                        temp_s1->unk-2 = (s16) ((extractImageBitCount(0xF) * 2) | 1);
+                        poutbits = temp_s1;
+            }
+
+                ptargetplus7 += ((width + 3) & 0xFFC) * 2;
+        }
+        return ((width + 3) & 0xFFC) * height * 2;
+    case 5:
+    case 7:
+        for(h = 0; h!= height; h++)
+        {
+            poutbits = ptargetplus7;
+            for(w = 0; w != width; w++)
+            {
+                        temp_s1 = poutbits + 1;
+                        temp_s1->unk-1 = extractImageBitCount(8);
+                        poutbits = temp_s1;
+            }
+                ptargetplus7 += (width + 7) & 0xFF8;
+        }
+        return ((width + 7) & 0xFF8) * height;
+    case 6:
+    case 8:
+        for(h = 0; h!= height; h++)
+        {
+            for(w = 0; w != width; w++)
+            {
+                        *(_targetplus7 + (w >> 1)) = extractImageBitCount(8);
+            }
+                _targetplus7 += (s32) ((width + 0xF) & 0xFF0) >> 1;
+        }
+        return ((s32) ((width + 0xF) & 0xFF0) >> 1) * height;
+    default:
+        return 0;
+    }
 }
+
 #else
 GLOBAL_ASM(
 .late_rodata
