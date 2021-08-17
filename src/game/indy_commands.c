@@ -1348,80 +1348,23 @@ u32 response_indyrescmd_1_C_2(u8 *response)
 }
 
 
-
-
-#ifdef NONMATCHING
-u32 response_indyrescmd_curr_matches_expected(int readsize,int writesize)
+u32 response_indyrescmd_curr_matches_expected(s32 readsize, s32 writesize)
 {
-    u32 ret;
     struct indy_resource_entry cmd;
-    
-    post_indyrescmd_read_command(&cmd,0x14);
-    if (cmd.resourceID == 0x9abf1623) {
-        if ((readsize == 0) || (cmd.readsize == readsize)) {
-            if (writesize == 0) {
-                ret = 1;
-            }
-            else {
-                if (cmd.writesize == writesize) {
-                    ret = 1;
-                }
-                else {
-                    ret = 0;
-                }
-            }
-        }
-        else {
-            ret = 0;
-        }
+
+    post_indyrescmd_read_command(&cmd, 0x14);
+    if (cmd.resourceID != 0x9ABF1623)
+    {
+        return 0U;
     }
-    else {
-        ret = 0;
+    if ((readsize != 0) && (cmd.readsize != readsize))
+    {
+        return 0U;
     }
-    return ret;
+    if ((writesize != 0) && (cmd.writesize != writesize))
+    {
+        return 0U;
+    }
+    return 1U;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel response_indyrescmd_curr_matches_expected
-/* 1064C8 7F0D1998 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 1064CC 7F0D199C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 1064D0 7F0D19A0 AFA40030 */  sw    $a0, 0x30($sp)
-/* 1064D4 7F0D19A4 AFA50034 */  sw    $a1, 0x34($sp)
-/* 1064D8 7F0D19A8 24050014 */  li    $a1, 20
-/* 1064DC 7F0D19AC 0FC343D3 */  jal   post_indyrescmd_read_command
-/* 1064E0 7F0D19B0 27A4001C */   addiu $a0, $sp, 0x1c
-/* 1064E4 7F0D19B4 8FAE001C */  lw    $t6, 0x1c($sp)
-/* 1064E8 7F0D19B8 3C019ABF */  lui   $at, (0x9ABF1623 >> 16) # lui $at, 0x9abf
-/* 1064EC 7F0D19BC 34211623 */  ori   $at, (0x9ABF1623 & 0xFFFF) # ori $at, $at, 0x1623
-/* 1064F0 7F0D19C0 8FA20030 */  lw    $v0, 0x30($sp)
-/* 1064F4 7F0D19C4 11C10003 */  beq   $t6, $at, .L7F0D19D4
-/* 1064F8 7F0D19C8 8FA30034 */   lw    $v1, 0x34($sp)
-/* 1064FC 7F0D19CC 1000000E */  b     .L7F0D1A08
-/* 106500 7F0D19D0 00001025 */   move  $v0, $zero
-.L7F0D19D4:
-/* 106504 7F0D19D4 10400005 */  beqz  $v0, .L7F0D19EC
-/* 106508 7F0D19D8 8FAF0028 */   lw    $t7, 0x28($sp)
-/* 10650C 7F0D19DC 11E20003 */  beq   $t7, $v0, .L7F0D19EC
-/* 106510 7F0D19E0 00000000 */   nop   
-/* 106514 7F0D19E4 10000008 */  b     .L7F0D1A08
-/* 106518 7F0D19E8 00001025 */   move  $v0, $zero
-.L7F0D19EC:
-/* 10651C 7F0D19EC 10600005 */  beqz  $v1, .L7F0D1A04
-/* 106520 7F0D19F0 8FB8002C */   lw    $t8, 0x2c($sp)
-/* 106524 7F0D19F4 53030004 */  beql  $t8, $v1, .L7F0D1A08
-/* 106528 7F0D19F8 24020001 */   li    $v0, 1
-/* 10652C 7F0D19FC 10000002 */  b     .L7F0D1A08
-/* 106530 7F0D1A00 00001025 */   move  $v0, $zero
-.L7F0D1A04:
-/* 106534 7F0D1A04 24020001 */  li    $v0, 1
-.L7F0D1A08:
-/* 106538 7F0D1A08 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 10653C 7F0D1A0C 27BD0030 */  addiu $sp, $sp, 0x30
-/* 106540 7F0D1A10 03E00008 */  jr    $ra
-/* 106544 7F0D1A14 00000000 */   nop   
-)
-#endif
-
-
 
