@@ -1,9 +1,11 @@
 #include <stdarg.h>
 #include "ultra64.h"
 #include "deb_print.h"
-
+#include "rmon.h"
 /**
  * Removed
+ * rmonMain
+ * rmon main function
  */
 void rmonMain(void) {
     #ifdef DEBUG
@@ -11,16 +13,18 @@ void rmonMain(void) {
     #endif
 }
 
+/**
+ * rmonIsFinalBuild
+ * returns true if this is the final build
+ */
 s32 rmonIsFinalBuild(void) {
-    #ifdef DEBUG
-        return FALSE; //removed
-    #else
-        return TRUE;
-    #endif
+    return ISFINALBUILD;
 }
 
 /**
- * Removed
+ * REMOVED
+ * rmonStatus
+ * returns the status of rmon
  */
 s32 rmonStatus(void) {
     #ifdef DEBUG
@@ -33,6 +37,8 @@ s32 rmonStatus(void) {
 
 /**
  * Removed
+ * rmonHostWriteData
+ * writes data to the host
  */
 void rmonHostWriteData(void) {
     #ifdef DEBUG
@@ -42,6 +48,8 @@ void rmonHostWriteData(void) {
 
 /**
  * Removed
+ * rmonHostReadData
+ * reads data from the host
  */
 void rmonHostReadData(void) {
     #ifdef DEBUG
@@ -51,6 +59,8 @@ void rmonHostReadData(void) {
 
 /**
  * Removed
+ * rmon7000CEC8
+ * unknown function
  */
 void rmon7000CEC8(void) {
     #ifdef DEBUG
@@ -60,13 +70,19 @@ void rmon7000CEC8(void) {
 
 /**
  * Removed
+ * rmon7000CED0
+ * unknown function
  */
 void rmon7000CED0(void) {
-    // Removed
+    #ifdef DEBUG
+        //removed
+    #endif
 }
 
 /**
  * Removed
+ * rmon7000CED8
+ * unknown function
  */
 void rmon7000CED8(void) {
     #ifdef DEBUG
@@ -76,6 +92,8 @@ void rmon7000CED8(void) {
 
 /**
  * Removed
+ * rmon7000CEE0
+ * unknown function
  */
 void rmon7000CEE0(void) {
     #ifdef DEBUG
@@ -83,6 +101,9 @@ void rmon7000CEE0(void) {
     #endif
 }
 
+/**
+ * rmonprout
+ */
 char *rmonprout(char *dst, const char *src, size_t count) {
     s32 i = 0;
     while (i != count) {
@@ -91,6 +112,9 @@ char *rmonprout(char *dst, const char *src, size_t count) {
     return 1;
 }
 
+/**
+ * osSyncPrintf
+ */
 s32 osSyncPrintf(const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);
