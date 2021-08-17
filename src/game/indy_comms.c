@@ -100,7 +100,7 @@ u8 *indycommHostSendCmd(u8 *cmdstr)
 void indycommHost7F0D0124(void) {
     if (indy_ready)
     {
-        rmon7000CEB0();
+        rmonStatus();
     }
 }
 

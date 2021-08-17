@@ -21,7 +21,7 @@ void indy_buffer_read_command(u8 *buffer,u32 size)
 
     for (i = 0; i != 100000; i += 4) { }
 
-    rmon7000CEC0(buffer, size);
+    rmonHostReadData(buffer, size);
 
     for (i = 0; i != 100000; i += 1) { }
 }
@@ -33,7 +33,7 @@ void indy_buffer_write_command(u8 *buffer,u32 size)
   
     for (i = 0; i != 100000; i += 4){}
 
-    rmon7000CEB8(buffer, size);
+    rmonHostWriteData(buffer, size);
 
     for (i = 0; i != 100000; i += 1){}
 }

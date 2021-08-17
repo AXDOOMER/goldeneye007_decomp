@@ -16,7 +16,7 @@ s32 rmonIsFinalBuild(void) {
 /**
  * Removed
  */
-s32 rmon7000CEB0(void) {
+s32 rmonStatus(void) {
     // Removed
     return -1;
 }
@@ -24,14 +24,14 @@ s32 rmon7000CEB0(void) {
 /**
  * Removed
  */
-void rmon7000CEB8(void) {
+void rmonHostWriteData(void) {
     // Removed
 }
 
 /**
  * Removed
  */
-void rmon7000CEC0(void) {
+void rmonHostReadData(void) {
     // Removed
 }
 
