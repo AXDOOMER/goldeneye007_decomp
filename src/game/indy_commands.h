@@ -60,6 +60,8 @@ struct indy_resource_entry_typeB {
 
 extern s32 indy_ready;
 
-u32 postindyresourcecommand(struct indy_resource_entry *param_1,u32 param_2);
+s32 indycmdSendCommand(struct indy_resource_entry *cmd,u32 size);
+s32 indycmdSendHostExportFile(char *strptr,u8 *phwaddr,u32 size);
+void indyrescmdSendCmdDone(s32 readsize,s32 writesize);
 
 #endif

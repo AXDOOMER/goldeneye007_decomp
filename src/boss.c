@@ -147,7 +147,7 @@ void bossInitMainthreadData(void)
     bgInitDebugNoticeList();
     viInitDebugNoticeList();
     viInitVideoSettings();
-    init_indy_if_not_ready();
+    indycommInit();
     g_DebugAndUpdateStageFlag = rmonIsFinalBuild();
     obInitDebugNoticeList();
     rspInitDebugNoticeList();
@@ -556,7 +556,7 @@ void bossMainloop(void)
                                 {
                                     s32 unusedSprintf = sprintf(taskGrabBuffer, "u64.taskgrab.%d.core", taskgrab_ramdump_num);
 
-                                    if (check_file_found_on_indy(taskGrabBuffer, &taskGrabFileSize) != NULL)
+                                    if (indycommHostCheckFileExists(taskGrabBuffer, &taskGrabFileSize) != NULL)
                                     {
                                         taskgrab_ramdump_num++;
                                         continue;
@@ -565,7 +565,7 @@ void bossMainloop(void)
                                     break;
                                 }
 
-                                indy_send_capture_data(taskGrabBuffer, (u8*)0x80000000, 0x400000);
+                                indycommHostSendDump(taskGrabBuffer, (u8*)0x80000000, 0x400000);
                             }
 
                             rspReplyMsg = (s32)(&localGfxDoneMsg);

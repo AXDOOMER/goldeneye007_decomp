@@ -1394,7 +1394,7 @@ void indyGrabJpg16bit(void)
     while (1)
     {
         sprintf(buffer, "grab.%d.jpeg", *pgrabnum);
-        if (check_file_found_on_indy((u8*)&buffer, &filesize) == 0)
+        if (indycommHostCheckFileExists((u8*)&buffer, &filesize) == 0)
         {
             break;
         }
@@ -1403,22 +1403,22 @@ void indyGrabJpg16bit(void)
     }
     
     sprintf(buffer, "grab.%d.temp.uix", *pgrabnum);
-    indy_send_capture_data((u8*)&buffer, (u8*)ptr_video_settings2->framebuf, (viGetX() * viGetY() * 2));
+    indycommHostSendDump((u8*)&buffer, (u8*)ptr_video_settings2->framebuf, (viGetX() * viGetY() * 2));
 
     sprintf(buffer, "uix2pix grab.%d.temp.uix", *pgrabnum);
-    send_command_string((u8*)&buffer);
+    indycommHostSendCmd((u8*)&buffer);
 
     sprintf(buffer, "fromalias grab.%d.temp.pix grab.%d.temp.rgb", *pgrabnum, *pgrabnum);
-    send_command_string((u8*)&buffer);
+    indycommHostSendCmd((u8*)&buffer);
 
     sprintf(buffer, "imgcopy -fjfif grab.%d.temp.rgb grab.%d.jpeg", *pgrabnum, *pgrabnum);
-    send_command_string((u8*)&buffer);
+    indycommHostSendCmd((u8*)&buffer);
 
     sprintf(buffer, "rm grab.%d.temp.uix grab.%d.temp.pix grab.%d.temp.rgb", *pgrabnum, *pgrabnum, *pgrabnum);
-    send_command_string((u8*)&buffer);
+    indycommHostSendCmd((u8*)&buffer);
 
     sprintf(buffer, "imgview grab.%d.jpeg", *pgrabnum);
-    send_command_string((u8*)&buffer);
+    indycommHostSendCmd((u8*)&buffer);
 }
 
 /**
@@ -1434,7 +1434,7 @@ void indyGrabJpg32bit(void)
     while (1)
     {
         sprintf(buffer, "grab.%d.jpeg", *pgrabnum);
-        if (check_file_found_on_indy((u8*)&buffer, &filesize) == 0)
+        if (indycommHostCheckFileExists((u8*)&buffer, &filesize) == 0)
         {
             break;
         }
@@ -1443,22 +1443,22 @@ void indyGrabJpg32bit(void)
     }
     
     sprintf(buffer, "grab.%d.temp.Uix", *pgrabnum);
-    indy_send_capture_data((u8*)&buffer, (u8*)&cfb_16, (viGetX() * viGetY() * 4));
+    indycommHostSendDump((u8*)&buffer, (u8*)&cfb_16, (viGetX() * viGetY() * 4));
 
     sprintf(buffer, "Uix2pix -xs%d grab.%d.temp.Uix", viGetX(), *pgrabnum);
-    send_command_string((u8*)&buffer);
+    indycommHostSendCmd((u8*)&buffer);
 
     sprintf(buffer, "fromalias grab.%d.temp.pix grab.%d.temp.rgb", *pgrabnum, *pgrabnum);
-    send_command_string((u8*)&buffer);
+    indycommHostSendCmd((u8*)&buffer);
 
     sprintf(buffer, "imgcopy -fjfif grab.%d.temp.rgb grab.%d.jpeg", *pgrabnum, *pgrabnum);
-    send_command_string((u8*)&buffer);
+    indycommHostSendCmd((u8*)&buffer);
 
     sprintf(buffer, "rm grab.%d.temp.Uix grab.%d.temp.pix grab.%d.temp.rgb", *pgrabnum, *pgrabnum, *pgrabnum);
-    send_command_string((u8*)&buffer);
+    indycommHostSendCmd((u8*)&buffer);
 
     sprintf(buffer, "imgview grab.%d.jpeg", *pgrabnum);
-    send_command_string((u8*)&buffer);
+    indycommHostSendCmd((u8*)&buffer);
 }
 
 /**
@@ -1474,7 +1474,7 @@ void indyGrabRgb16bit(void)
     while (1)
     {
         sprintf(buffer, "grab.%d.rgb", *pgrabnum);
-        if (check_file_found_on_indy((u8*)&buffer, &filesize) == 0)
+        if (indycommHostCheckFileExists((u8*)&buffer, &filesize) == 0)
         {
             break;
         }
@@ -1483,19 +1483,19 @@ void indyGrabRgb16bit(void)
     }
     
     sprintf(buffer, "grab.%d.temp.uix", *pgrabnum);
-    indy_send_capture_data((u8*)&buffer, (u8*)ptr_video_settings2->framebuf, (viGetX() * viGetY() * 2));
+    indycommHostSendDump((u8*)&buffer, (u8*)ptr_video_settings2->framebuf, (viGetX() * viGetY() * 2));
 
     sprintf(buffer, "uix2pix grab.%d.temp.uix", *pgrabnum);
-    send_command_string((u8*)&buffer);
+    indycommHostSendCmd((u8*)&buffer);
 
     sprintf(buffer, "fromalias grab.%d.temp.pix grab.%d.rgb", *pgrabnum, *pgrabnum);
-    send_command_string((u8*)&buffer);
+    indycommHostSendCmd((u8*)&buffer);
 
     sprintf(buffer, "rm grab.%d.temp.uix grab.%d.temp.pix", *pgrabnum, *pgrabnum);
-    send_command_string((u8*)&buffer);
+    indycommHostSendCmd((u8*)&buffer);
 
     sprintf(buffer, "imgview grab.%d.rgb", *pgrabnum);
-    send_command_string((u8*)&buffer);
+    indycommHostSendCmd((u8*)&buffer);
 }
 
 /**
@@ -1511,7 +1511,7 @@ void indyGrabRgb32bit(void)
     while (1)
     {
         sprintf(buffer, "grab.%d.rgb", *pgrabnum);
-        if (check_file_found_on_indy((u8*)&buffer, &filesize) == 0)
+        if (indycommHostCheckFileExists((u8*)&buffer, &filesize) == 0)
         {
             break;
         }
@@ -1520,17 +1520,17 @@ void indyGrabRgb32bit(void)
     }
     
     sprintf(buffer, "grab.%d.temp.Uix", *pgrabnum);
-    indy_send_capture_data((u8*)&buffer, (u8*)&cfb_16, (viGetX() * viGetY() * 4));
+    indycommHostSendDump((u8*)&buffer, (u8*)&cfb_16, (viGetX() * viGetY() * 4));
 
     sprintf(buffer, "Uix2pix -xs%d grab.%d.temp.Uix", viGetX(), *pgrabnum);
-    send_command_string((u8*)&buffer);
+    indycommHostSendCmd((u8*)&buffer);
 
     sprintf(buffer, "fromalias grab.%d.temp.pix grab.%d.rgb", *pgrabnum, *pgrabnum);
-    send_command_string((u8*)&buffer);
+    indycommHostSendCmd((u8*)&buffer);
 
     sprintf(buffer, "rm grab.%d.temp.Uix grab.%d.temp.pix", *pgrabnum, *pgrabnum);
-    send_command_string((u8*)&buffer);
+    indycommHostSendCmd((u8*)&buffer);
 
     sprintf(buffer, "imgview grab.%d.rgb", *pgrabnum);
-    send_command_string((u8*)&buffer);
+    indycommHostSendCmd((u8*)&buffer);
 }

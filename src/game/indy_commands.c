@@ -43,14 +43,49 @@ void indy_buffer_write_command(u8 *buffer,u32 size)
 
 
 #ifdef NONMATCHING
-void postindyresourcecommand(indy_resource_entry *param_1,u32 param_2)
+s32 indycmdSendCommand(struct indy_resource_entry *cmd,u32 size)
 {
+    s32 i;
+    u32 uVar1;
+    u8 *address;
+    u8 *pbuffer;
+    u8 buffer [1280];
+    u32 *id;
+    
+    pbuffer = buffer;
+    if ((cmd->resourceID & 7) != 0) {
+        if (0x500 < size) {
+            return 0;
+        }
+        if ((*buffer & 7) != 0) {
+            pbuffer = buffer + 4;
+        }
+        for (address = pbuffer; address < pbuffer + size; address = address + 1) {
+            id = &cmd->resourceID;
+            cmd = &cmd->resourceID + 1;
+            *address = *id;
+        }
+        if (((indy_status & 0x20) != 0) && (size != 0)) {
+            for (i = 1; (size & 3) != i; i += 1) {}
+        }
 
+        indy_buffer_write_command(pbuffer,size + 3 & 0xfffffffc);
+        return 1;
+    }
+    if (((indy_status & 0x20) != 0) && (size != 0)) {
+
+        for (i = 1; (size & 3) != i; i += 1) {}
+
+    }
+
+    indy_buffer_write_command(cmd,size + 3 & 0xfffffffc);
+    return 1;
 }
+//#ifdef NONMATCHING
 #else
 GLOBAL_ASM(
 .text
-glabel postindyresourcecommand
+glabel indycmdSendCommand
 /* 104D50 7F0D0220 27BDFAC0 */  addiu $sp, $sp, -0x540
 /* 104D54 7F0D0224 27A20040 */  addiu $v0, $sp, 0x40
 /* 104D58 7F0D0228 308F0007 */  andi  $t7, $a0, 7
@@ -153,13 +188,13 @@ glabel postindyresourcecommand
 
 u32 send2indyresourcecommands(struct indy_resource_entry * entry1, u32 size1, struct indy_resource_entry * entry2, u32 size2)
 {
-    postindyresourcecommand(entry1,size1);
-    postindyresourcecommand(entry2,size2);
-    return 1;
+    indycmdSendCommand(entry1,size1);
+    indycmdSendCommand(entry2,size2);
+    return TRUE;
 }
 
 
-void post_type1_indyrescmd_sizenextcmd(s32 readsize,s32 writesize)
+void indyrescmdSizeNextCmd(s32 readsize,s32 writesize)
 {
     struct indy_resource_entry cmd;
 
@@ -168,11 +203,11 @@ void post_type1_indyrescmd_sizenextcmd(s32 readsize,s32 writesize)
     cmd.size = 0x14;
     cmd.readsize = readsize;
     cmd.writesize = writesize;
-    postindyresourcecommand(&cmd,0x14);
+    indycmdSendCommand(&cmd,0x14);
 }
 
 
-void post_type2_indyrescmd_cmds_rdy_to_proc(s32 readsize,s32 writesize)
+void indyrescmdSendCmdEnd(s32 readsize,s32 writesize)
 {
     struct indy_resource_entry cmd;
 
@@ -181,11 +216,11 @@ void post_type2_indyrescmd_cmds_rdy_to_proc(s32 readsize,s32 writesize)
     cmd.size = 0x14;
     cmd.readsize = readsize;
     cmd.writesize = writesize;
-    postindyresourcecommand(&cmd,0x14);
+    indycmdSendCommand(&cmd,0x14);
 }
 
 
-void post_type0_indyrescmd_init(s32 readsize,s32 writesize)
+void indyrescmdInit(s32 readsize,s32 writesize)
 {
     struct indy_resource_entry cmd;
     cmd.resourceID = 0x9abf1623;
@@ -193,7 +228,7 @@ void post_type0_indyrescmd_init(s32 readsize,s32 writesize)
     cmd.size = 0x14;
     cmd.readsize = readsize;
     cmd.writesize = writesize;
-    postindyresourcecommand(&cmd,0x14);
+    indycmdSendCommand(&cmd,0x14);
 }
 
 void post_type3_indyrescmd(s32 rsize,s32 wsize,char *strptr)
@@ -207,7 +242,7 @@ void post_type3_indyrescmd(s32 rsize,s32 wsize,char *strptr)
     cmd.entry.writesize = wsize;
     strncpy(cmd.strbuffer,strptr, 256);
     cmd.strbuffer[255] = 0;
-    postindyresourcecommand(&cmd.entry,0x114);
+    indycmdSendCommand(&cmd.entry,0x114);
 }
 
 
@@ -221,11 +256,11 @@ void post_type4_indyrescmd_data_recieved(s32 readsize,s32 writesize,s32 data)
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
     cmd.data = data;
-    postindyresourcecommand(&cmd.entry,0x18);
+    indycmdSendCommand(&cmd.entry,0x18);
 }
 
 
-void post_type5_indyrescmd_printfsend(s32 rsize,s32 wsize,char *name)
+void indyrescmdCheckFileExists(s32 rsize,s32 wsize,char *name)
 {
   struct indy_resource_entry_type3 cmd;
   
@@ -236,7 +271,7 @@ void post_type5_indyrescmd_printfsend(s32 rsize,s32 wsize,char *name)
   cmd.entry.writesize = wsize;
   strncpy(cmd.strbuffer,name,0x100);
   cmd.strbuffer[255] = '\0';
-  postindyresourcecommand(&cmd,0x114);
+  indycmdSendCommand(&cmd,0x114);
 }
 
 
@@ -251,11 +286,11 @@ void post_type6_indyrescmd_printfrecieved(s32 readsize,s32 writesize,u32 data1,u
     cmd.entry.writesize = writesize;
     cmd.data1 = data1;
     cmd.data2 = data2;
-    postindyresourcecommand(&cmd.entry,0x1c);
+    indycmdSendCommand(&cmd.entry,0x1c);
 }
 
 
-void post_type7_indyrescmd_log_send(u32 rsize,u32 wsize,u8 *filename,u32 size)
+void indyrescmdSendFileLoad(u32 rsize,u32 wsize,u8 *filename,u32 size)
 {
     struct indy_resource_entry_type7 cmd;
 
@@ -267,7 +302,7 @@ void post_type7_indyrescmd_log_send(u32 rsize,u32 wsize,u8 *filename,u32 size)
     strncpy(cmd.strbuffer,filename,0x100);
     cmd.strbuffer[255] = '\0';
     cmd.size = size;
-    postindyresourcecommand(&cmd,0x118);
+    indycmdSendCommand(&cmd,0x118);
 }
 
 
@@ -289,7 +324,7 @@ void post_type8_indyrescmd_log_recieved(s32 rsize,s32 wsize,u32 data1,u32 data2,
 }
 
 
-void post_type9_indyrescmd_app_command_ready(s32 rsize,s32 wsize,char *strptr,u32 size2,struct indy_resource_entry3 *cmd2)
+void indyrescmdSendDump(s32 rsize,s32 wsize,char *strptr,u32 size2,struct indy_resource_entry3 *cmd2)
 {
   struct indy_resource_entry_type3 cmd;
 
@@ -317,11 +352,11 @@ void post_typeA_indyrescmd_app_command_recieved(s32 readsize,s32 writesize,u32 d
   cmd.entry.readsize = readsize;
   cmd.entry.writesize = writesize;
   cmd.data = data;
-  postindyresourcecommand(&cmd.entry,0x18);
+  indycmdSendCommand(&cmd.entry,0x18);
 }
 
 
-void post_typeF_indyrescmd_fault_send(u32 rsize,u32 wsize,char *name,u32 filesize,u32 ptarget)
+void indyrescmdRamRomLoad(u32 rsize,u32 wsize,char *name,u32 filesize,u32 ptarget)
 {
   struct indy_resource_entry_typeF cmd;
   
@@ -335,7 +370,7 @@ void post_typeF_indyrescmd_fault_send(u32 rsize,u32 wsize,char *name,u32 filesiz
   cmd.size = filesize;
   cmd.hwaddress = ptarget;
   
-  postindyresourcecommand(&cmd,0x11c);
+  indycmdSendCommand(&cmd,0x11c);
 
 }
 
@@ -352,11 +387,11 @@ void post_type10_indyrescmd_fault_ack_by_host(s32 rsize,s32 wsize,u32 data1,u32 
     cmd.data1 = data1;
     cmd.data2 = data2;
     cmd.data3 = data3;
-    postindyresourcecommand(&cmd,0x20);
+    indycmdSendCommand(&cmd,0x20);
 }
 
 
-void post_typeD_indyrescmd_prof_send_filename(u32 rsize,u32 wsize,u8 *ptrstr,u32 size,u8 *hwaddress)
+void indyrescmdSendExportFile(u32 rsize,u32 wsize,u8 *ptrstr,u32 size,u8 *hwaddress)
 {
     struct indy_resource_entry_typeF cmd;
     
@@ -369,7 +404,7 @@ void post_typeD_indyrescmd_prof_send_filename(u32 rsize,u32 wsize,u8 *ptrstr,u32
     cmd.strbuffer[255] = '\0';
     cmd.size = size;
     cmd.hwaddress = hwaddress;
-    postindyresourcecommand(&cmd,0x11c);
+    indycmdSendCommand(&cmd,0x11c);
 }
 
 
@@ -383,11 +418,11 @@ void post_typeE_indyrescmd_prof_recv(s32 readsize,s32 writesize,u32 data)
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
     cmd.data = data;
-    postindyresourcecommand(&cmd.entry,0x18);
+    indycmdSendCommand(&cmd.entry,0x18);
 }
 
 
-void post_typeB_indyrescmd_host_prof_req(s32 rsize,s32 wsize,char *strptr)
+void indyrescmdSendHostCmd(s32 rsize,s32 wsize,char *strptr)
 {
     struct indy_resource_entry_typeB res;
     
@@ -398,7 +433,7 @@ void post_typeB_indyrescmd_host_prof_req(s32 rsize,s32 wsize,char *strptr)
     res.entry.writesize = wsize;
     strncpy(res.strbuffer,strptr,0x400);
     res.strbuffer[1023] = '\0';
-    postindyresourcecommand(&res,0x414);
+    indycmdSendCommand(&res,0x414);
 }
 
 
@@ -412,7 +447,7 @@ void post_typeC_indyrescmd_prof_send(s32 readsize,s32 writesize,u32 data)
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
     cmd.data = data;
-    postindyresourcecommand(&cmd.entry,0x18);
+    indycmdSendCommand(&cmd.entry,0x18);
 }
 
 
@@ -426,151 +461,151 @@ void post_typeA_indyrescmd_app_data_recieved(s32 readsize,s32 writesize,u32 data
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
     cmd.data = data;
-    postindyresourcecommand(&cmd.entry,0x18);
+    indycmdSendCommand(&cmd.entry,0x18);
 }
 
 
-u32 post_indy__res_cmd_initialize_seq(void)
+s32 indycmdSendInitPacket(void)
 {
-    post_type1_indyrescmd_sizenextcmd(0x14,0x14);
-    post_type0_indyrescmd_init(0x14,0x14);
-    post_type2_indyrescmd_cmds_rdy_to_proc(0,0);
-    return 1;
+    indyrescmdSizeNextCmd(0x14,0x14);
+    indyrescmdInit(0x14,0x14);
+    indyrescmdSendCmdEnd(0,0);
+    return TRUE;
 }
 
 
-u32 post_indyrescmd_game_data_send(char *strptr)
+s32 post_indyrescmd_game_data_send(char *strptr)
 {
-    post_type1_indyrescmd_sizenextcmd(0x114,0x114);
+    indyrescmdSizeNextCmd(0x114,0x114);
     post_type3_indyrescmd(0x14,0x14,strptr);
-    post_type2_indyrescmd_cmds_rdy_to_proc(0,0);
-    return 1;
+    indyrescmdSendCmdEnd(0,0);
+    return TRUE;
 }
 
 
-u32 post_indyrescmd_debug_data_recv(u32 data)
+s32 post_indyrescmd_debug_data_recv(u32 data)
 {
-    post_type1_indyrescmd_sizenextcmd(0x18,0x18);
+    indyrescmdSizeNextCmd(0x18,0x18);
     post_type4_indyrescmd_data_recieved(0x14,0x14,data);
-    post_type2_indyrescmd_cmds_rdy_to_proc(0,0);
-    return 1;
+    indyrescmdSendCmdEnd(0,0);
+    return TRUE;
 }
 
 
-u32 post_indyrescmd_game_printf_send(char *strptr)
+s32 indycmdSendHostCheckFileExists(char *strptr)
 {
-    post_type1_indyrescmd_sizenextcmd(0x114,0x114);
-    post_type5_indyrescmd_printfsend(0x14,0x14,strptr);
-    post_type2_indyrescmd_cmds_rdy_to_proc(0,0);
-    return 1;
+    indyrescmdSizeNextCmd(0x114,0x114);
+    indyrescmdCheckFileExists(0x14,0x14,strptr);
+    indyrescmdSendCmdEnd(0,0);
+    return TRUE;
 }
 
 
-u32 post_indyrescmd_debug_printf_recv(u32 data1,u32 data2)
+s32 post_indyrescmd_debug_printf_recv(u32 data1,u32 data2)
 {
-    post_type1_indyrescmd_sizenextcmd(0x1c,0x1c);
+    indyrescmdSizeNextCmd(0x1c,0x1c);
     post_type6_indyrescmd_printfrecieved(0x14,0x14,data1,data2);
-    post_type2_indyrescmd_cmds_rdy_to_proc(0,0);
-    return 1;
+    indyrescmdSendCmdEnd(0,0);
+    return TRUE;
 }
 
 
-u32 post_indyrescmd_req_filename_size(u8 *filename,u32 size)
+s32 indycmdSendFileLoadRequest(u8 *filename,u32 size)
 {
-    post_type1_indyrescmd_sizenextcmd(0x118,0x118);
-    post_type7_indyrescmd_log_send(0x14,0x14,filename,size);
-    post_type2_indyrescmd_cmds_rdy_to_proc(0,0);
-    return 1;
+    indyrescmdSizeNextCmd(0x118,0x118);
+    indyrescmdSendFileLoad(0x14,0x14,filename,size);
+    indyrescmdSendCmdEnd(0,0);
+    return TRUE;
 }
 
 
-u32 post_indyrescmd_1_8_2(u32 data1,u32 data2,u32 size2,struct indy_resource_entry *cmd2)
+s32 post_indyrescmd_1_8_2(u32 data1,u32 data2,u32 size2,struct indy_resource_entry *cmd2)
 {
-    post_type1_indyrescmd_sizenextcmd((size2 + 3 & 0xfffffffc) + 0x20,0x20);
+    indyrescmdSizeNextCmd((size2 + 3 & 0xfffffffc) + 0x20,0x20);
     post_type8_indyrescmd_log_recieved(0x14,0x14,data1,data2,size2,cmd2);
-    post_type2_indyrescmd_cmds_rdy_to_proc(0,0);
-    return 1;
+    indyrescmdSendCmdEnd(0,0);
+    return TRUE;
 }
 
 
-u32 post_indyrescmd_send_capture_data(char *string, u32 size, struct indy_resource_entry *data)
+s32 indycmdSendDump(char *string, u32 size, struct indy_resource_entry *data)
 {
-    post_type1_indyrescmd_sizenextcmd((size + 3 & 0xfffffffc) + 0x114,0x114);
-    post_type9_indyrescmd_app_command_ready(0x14,0x14,string,size,data);
-    post_type2_indyrescmd_cmds_rdy_to_proc(0,0);
-    return 1;
+    indyrescmdSizeNextCmd((size + 3 & 0xfffffffc) + 0x114,0x114);
+    indyrescmdSendDump(0x14,0x14,string,size,data);
+    indyrescmdSendCmdEnd(0,0);
+    return TRUE;
 }
 
 
-u32 post_indyrescmd_recv_capture_data_success(u32 data)
+s32 post_indyrescmd_recv_capture_data_success(u32 data)
 {
-    post_type1_indyrescmd_sizenextcmd(0x18,0x18);
+    indyrescmdSizeNextCmd(0x18,0x18);
     post_typeA_indyrescmd_app_command_recieved(0x14,0x14,data);
-    post_type2_indyrescmd_cmds_rdy_to_proc(0,0);
-    return 1;
+    indyrescmdSendCmdEnd(0,0);
+    return TRUE;
 }
 
 
-u32 post_indyrescmd_request_ramrom_file(char *strptr,u32 ptarget,u32 filesize)
+s32 indycmdSendRamRomLoad(char *strptr,u32 ptarget,u32 filesize)
 {
-    post_type1_indyrescmd_sizenextcmd(0x11c,0x11c);
-    post_typeF_indyrescmd_fault_send(0x14,0x14,strptr,filesize,ptarget);
-    post_type2_indyrescmd_cmds_rdy_to_proc(0,0);
-    return 1;
+    indyrescmdSizeNextCmd(0x11c,0x11c);
+    indyrescmdRamRomLoad(0x14,0x14,strptr,filesize,ptarget);
+    indyrescmdSendCmdEnd(0,0);
+    return TRUE;
 }
 
 
-u32 post_indyrescmd_1_10_2(u32 param_1,u32 param_2,u32 param_3)
+s32 post_indyrescmd_1_10_2(u32 param_1,u32 param_2,u32 param_3)
 {
-    post_type1_indyrescmd_sizenextcmd(0x20,0x20);
+    indyrescmdSizeNextCmd(0x20,0x20);
     post_type10_indyrescmd_fault_ack_by_host(0x14,0x14,param_1,param_2,param_3);
-    post_type2_indyrescmd_cmds_rdy_to_proc(0,0);
-    return 1;
+    indyrescmdSendCmdEnd(0,0);
+    return TRUE;
 }
 
 
-u32 post_indyrescmd_game_prof_sendfile(char *strptr,u8 *phwaddr,u32 size)
+s32 indycmdSendHostExportFile(char *strptr,u8 *phwaddr,u32 size)
 {
-    post_type1_indyrescmd_sizenextcmd(0x11c,0x11c);
-    post_typeD_indyrescmd_prof_send_filename(0x14,0x14,strptr,size,phwaddr);
-    post_type2_indyrescmd_cmds_rdy_to_proc(0,0);
-    return 1;
+    indyrescmdSizeNextCmd(0x11c,0x11c);
+    indyrescmdSendExportFile(0x14,0x14,strptr,size,phwaddr);
+    indyrescmdSendCmdEnd(0,0);
+    return TRUE;
 }
 
 
-u32 post_indyrescmd_host_prof_recv(u32 data)
+s32 post_indyrescmd_host_prof_recv(u32 data)
 {
-    post_type1_indyrescmd_sizenextcmd(0x18,0x18);
+    indyrescmdSizeNextCmd(0x18,0x18);
     post_typeE_indyrescmd_prof_recv(0x14,0x14,data);
-    post_type2_indyrescmd_cmds_rdy_to_proc(0,0);
-    return 1;
+    indyrescmdSendCmdEnd(0,0);
+    return TRUE;
 }
 
 
-u32 post_indyrescmd_1_B_2(char *strptr)
+s32 indycmdSendHostCmdPacket(char *strptr)
 {
-    post_type1_indyrescmd_sizenextcmd(0x414,0x414);
-    post_typeB_indyrescmd_host_prof_req(0x14,0x14,strptr);
-    post_type2_indyrescmd_cmds_rdy_to_proc(0,0);
-    return 1;
+    indyrescmdSizeNextCmd(0x414,0x414);
+    indyrescmdSendHostCmd(0x14,0x14,strptr);
+    indyrescmdSendCmdEnd(0,0);
+    return TRUE;
 }
 
 
-u32 post_indyrescmd_1_C_2(u32 data)
+s32 post_indyrescmd_1_C_2(u32 data)
 {
-    post_type1_indyrescmd_sizenextcmd(0x18,0x18);
+    indyrescmdSizeNextCmd(0x18,0x18);
     post_typeC_indyrescmd_prof_send(0x14,0x14,data);
-    post_type2_indyrescmd_cmds_rdy_to_proc(0,0);
-    return 1;
+    indyrescmdSendCmdEnd(0,0);
+    return TRUE;
 }
 
 
-u32 post_indyrescmd_1_A_2(u32 data)
+s32 post_indyrescmd_1_A_2(u32 data)
 {
-    post_type1_indyrescmd_sizenextcmd(0x18,0x18);
+    indyrescmdSizeNextCmd(0x18,0x18);
     post_typeA_indyrescmd_app_data_recieved(0x14,0x14,data);
-    post_type2_indyrescmd_cmds_rdy_to_proc(0,0);
-    return 1;
+    indyrescmdSendCmdEnd(0,0);
+    return TRUE;
 }
 
 
@@ -579,13 +614,72 @@ u32 post_indyrescmd_1_A_2(u32 data)
 
 
 #ifdef NONMATCHING
-void post_indyrescmd_read_command(void) {
+u32 indycmdRecieveCommand(indy_resource_entry *resource,u32 size)
 
+{
+    uint uVar1;
+    u32 uVar2;
+    u8 *buffer;
+    u8 *puVar3;
+    u8 auStack1024 [1024];
+    
+    
+    buffer = auStack1024;
+    if ((resource & 7) == 0) {
+        indy_buffer_read_command(resource,size + 3 & 0xfffffffc);
+        if ((indy_status & 0x10) == 0) {
+            return 1;
+        }
+        if (size != 0) {
+            if ((size & 3) == 0) {
+                uVar2 = 4;
+            }
+            else {
+                for (uVar1 = 1; (size & 3) != uVar1; uVar1 += 1) {
+                }
+                uVar2 = uVar1 + 4;
+                if (uVar1 == size) {
+                    return 1;
+                }
+            }
+            for (; uVar2 != size; uVar2 += 4) {
+            }
+        }
+        return 1;
+    }
+    if (0x400 < size) {
+        return 0;
+    }
+    if (false) {
+        buffer = auStack1020;
+    }
+    indy_buffer_read_command(buffer,size + 3 & 0xfffffffc);
+    puVar3 = buffer + size;
+    for (; buffer < puVar3; buffer = buffer + 1) {
+        *&resource->resourceID = *buffer;
+        resource = &resource->resourceID + 1;
+    }
+    if (((indy_status & 0x10) != 0) && (size != 0)) {
+        if ((size & 3) == 0) {
+            uVar2 = 4;
+        }
+        else {
+            for (uVar1 = 1; (size & 3) != uVar1; uVar1 += 1) {
+            }
+            uVar2 = uVar1 + 4;
+            if (uVar1 == size) {
+                return 1;
+            }
+        }
+        for (; uVar2 != size; uVar2 += 4) {
+        }
+    }
+    return 1;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel post_indyrescmd_read_command
+glabel indycmdRecieveCommand
 /* 105A7C 7F0D0F4C 27BDFBC0 */  addiu $sp, $sp, -0x440
 /* 105A80 7F0D0F50 27A20040 */  addiu $v0, $sp, 0x40
 /* 105A84 7F0D0F54 308F0007 */  andi  $t7, $a0, 7
@@ -695,70 +789,70 @@ glabel post_indyrescmd_read_command
 
 
 
-u32 post_indyrescmd_read_2commands(u8 *buffer1,u32 size1,u8 *buffer2,u32 size2)
+s32 post_indyrescmd_read_2commands(u8 *buffer1,u32 size1,u8 *buffer2,u32 size2)
 {
     indy_buffer_read_command(buffer1,size1 + 3 & 0xfffffffc);
     indy_buffer_read_command(buffer2,size2 + 3 & 0xfffffffc);
-    return 1;
+    return TRUE;
 }
 
 
-u32 post_indyrescmd_istype1_correctsize(s32 readsize, s32 writesize)
+s32 indyrescmdResponseSize(s32 readsize, s32 writesize)
 {
     struct indy_resource_entry cmd;
     u32 ret;
 
-    post_indyrescmd_read_command(&cmd, 0x14);
+    indycmdRecieveCommand(&cmd, 0x14);
     if (cmd.resourceID != 0x9ABF1623)
     {
-        return 0U;
+        return FALSE;
     }
     if (cmd.type != 1)
     {
-        return 0U;
+        return FALSE;
     }
     if (cmd.size != 0x14)
     {
-        return 0U;
+        return FALSE;
     }
     if ((readsize != 0) && (cmd.readsize != readsize))
     {
-        return 0U;
+        return FALSE;
     }
     if (cmd.writesize != writesize)
     {
-        return 0U;
+        return FALSE;
     }
-    return 1;
+    return TRUE;
 }
 
 
-s32 post_indyrescmd_istype2_correctvalue(s32 readsize, s32 writesize)
+s32 indyrescmdResponseEnd(s32 readsize, s32 writesize)
 {
     struct indy_resource_entry cmd;
 
-    post_indyrescmd_read_command(&cmd, 0x14);
+    indycmdRecieveCommand(&cmd, 0x14);
     if (cmd.resourceID != 0x9ABF1623)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.type != 2)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.size != 0x14)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.readsize != readsize)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.writesize != writesize)
     {
-        return 0;
+        return FALSE;
     }
-    return 1;
+    return TRUE;
 }
 
 
@@ -767,29 +861,29 @@ s32 post_indyrescmd_istype4_correctvalue(s32 readsize, s32 writesize, u32 *respo
 {
     struct indy_resource_entry_type4 cmd;
 
-    post_indyrescmd_read_command(&cmd, 0x18);
+    indycmdRecieveCommand(&cmd, 0x18);
     if (cmd.entry.resourceID != 0x9ABF1623)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.entry.type != 4)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.entry.size != 0x18)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.entry.readsize != readsize)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.entry.writesize != writesize)
     {
-        return 0;
+        return FALSE;
     }
     *response = cmd.data;
-    return 1;
+    return TRUE;
 }
 
 
@@ -797,30 +891,30 @@ s32 post_indyrescmd_istype6_correctvalue(s32 readsize, s32 writesize, u32 *respo
 {
     struct indy_resource_entry_type6 cmd;
 
-    post_indyrescmd_read_command(&cmd, 0x1C);
+    indycmdRecieveCommand(&cmd, 0x1C);
     if (cmd.entry.resourceID != 0x9ABF1623)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.entry.type != 6)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.entry.size != 0x1C)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.entry.readsize != readsize)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.entry.writesize != writesize)
     {
-        return 0;
+        return FALSE;
     }
     *response1 = cmd.data1;
     *response2 = cmd.data2;
-    return 1;
+    return TRUE;
 }
 
 
@@ -828,32 +922,32 @@ s32 post_indyrescmd_istype8_correctvalue(s32 readsize, s32 writesize, u32 *respo
 {
     struct indy_resource_entry_type8 cmd;
 
-    post_indyrescmd_read_command(&cmd, 0x20);
+    indycmdRecieveCommand(&cmd, 0x20);
     if (cmd.entry.resourceID != 0x9ABF1623)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.entry.type != 8)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.entry.size != (((cmd.size + 3) & ~3) + 0x20))
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.entry.readsize != readsize)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.entry.writesize != writesize)
     {
-        return 0;
+        return FALSE;
     }
     *response1 = cmd.data1;
     *response2 = cmd.data2;
     *childsize = cmd.size;
-    post_indyrescmd_read_command(child, (cmd.size + 3) & ~3);
-    return 1;
+    indycmdRecieveCommand(child, (cmd.size + 3) & ~3);
+    return TRUE;
 }
 
 
@@ -861,29 +955,29 @@ s32 post_indyrescmd_istypeA_correctvalue(s32 readsize, s32 writesize, u32 *respo
 {
     struct indy_resource_entry_type4 cmd;
 
-    post_indyrescmd_read_command(&cmd, 0x18);
+    indycmdRecieveCommand(&cmd, 0x18);
     if (cmd.entry.resourceID != 0x9ABF1623)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.entry.type != 0xA)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.entry.size != 0x18)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.entry.readsize != readsize)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.entry.writesize != writesize)
     {
-        return 0;
+        return FALSE;
     }
     *response = cmd.data;
-    return 1;
+    return TRUE;
 }
 
 
@@ -891,31 +985,31 @@ s32 post_indyrescmd_istype10_correctvalue(s32 readsize, s32 writesize, u32 *data
 {
     struct indy_resource_entry_type10 cmd;
 
-    post_indyrescmd_read_command(&cmd, 0x20);
+    indycmdRecieveCommand(&cmd, 0x20);
     if (cmd.entry.resourceID != 0x9ABF1623)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.entry.type != 0x10)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.entry.size != 0x20)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.entry.readsize != readsize)
     {
-        return 0;
+        return FALSE;
     }
     if (cmd.entry.writesize != writesize)
     {
-        return 0;
+        return FALSE;
     }
     *data1 = cmd.data1;
     *data2 = cmd.data2;
     *data3 = cmd.data3;
-    return 1;
+    return TRUE;
 }
 
 
@@ -923,7 +1017,7 @@ s32 post_indyrescmd_istypeE_correctvalue(s32 readsize, s32 writesize, u32 *respo
 {
     struct indy_resource_entry_type4 cmd;
 
-    post_indyrescmd_read_command(&cmd, 0x18);
+    indycmdRecieveCommand(&cmd, 0x18);
     if (cmd.entry.resourceID != 0x9ABF1623)
     {
         return FALSE;
@@ -953,7 +1047,7 @@ s32 post_indyrescmd_istypeC_correctvalue(s32 readsize, s32 writesize, u32 *respo
 {
     struct indy_resource_entry_type4 cmd;
 
-    post_indyrescmd_read_command(&cmd, 0x18);
+    indycmdRecieveCommand(&cmd, 0x18);
     if (cmd.entry.resourceID != 0x9ABF1623)
     {
         return FALSE;
@@ -981,64 +1075,64 @@ s32 post_indyrescmd_istypeC_correctvalue(s32 readsize, s32 writesize, u32 *respo
 
 s32 response_indyrescmd_1_4_2(u8 *response)
 {
-    post_indyrescmd_istype1_correctsize(0x18,0x18);
+    indyrescmdResponseSize(0x18,0x18);
     post_indyrescmd_istype4_correctvalue(0x14,0x14,response);
-    post_indyrescmd_istype2_correctvalue(0,0);
-    return 1;
+    indyrescmdResponseEnd(0,0);
+    return TRUE;
 }
 
 
-s32 response_indyrescmd_1_6_2(u8 *response1,u8 *response2)
+s32 indycmdAckHostCheckFileExists(u8 *response1,u8 *response2)
 {
-    post_indyrescmd_istype1_correctsize(0x1c,0x1c);
+    indyrescmdResponseSize(0x1c,0x1c);
     post_indyrescmd_istype6_correctvalue(0x14,0x14,response1,response2);
-    post_indyrescmd_istype2_correctvalue(0,0);
-    return 1;
+    indyrescmdResponseEnd(0,0);
+    return TRUE;
 }
 
 
-s32 response_indyrescmd_1_8_2(u8 *response1,u8 *response2,u32 childsize,u8 *child)
+s32 indycmdRecieveFile(u8 *response1,u8 *response2,u32 childsize,u8 *child)
 {
-    post_indyrescmd_istype1_correctsize(0,0x20);
+    indyrescmdResponseSize(0,0x20);
     post_indyrescmd_istype8_correctvalue(0x14,0x14,response1,response2,childsize,child);
-    post_indyrescmd_istype2_correctvalue(0,0);
-    return 1;
+    indyrescmdResponseEnd(0,0);
+    return TRUE;
 }
 
 
-s32 response_indyrescmd_1_A_2(u8 *param_1)
+s32 indycmdAckSendDump(u8 *param_1)
 {
-    post_indyrescmd_istype1_correctsize(0x18,0x18);
+    indyrescmdResponseSize(0x18,0x18);
     post_indyrescmd_istypeA_correctvalue(0x14,0x14,param_1);
-    post_indyrescmd_istype2_correctvalue(0,0);
-    return 1;
+    indyrescmdResponseEnd(0,0);
+    return TRUE;
 }
 
 
-s32 response_indyrescmd_1_10_2(u32 *param_1,u32 *param_2,u32 *param_3)
+s32 indycmdReceiveRamRom(u32 *param_1,u32 *param_2,u32 *param_3)
 {
-    post_indyrescmd_istype1_correctsize(0x20,0x20);
+    indyrescmdResponseSize(0x20,0x20);
     post_indyrescmd_istype10_correctvalue(0x14,0x14,param_1,param_2,param_3);
-    post_indyrescmd_istype2_correctvalue(0,0);
-    return 1;
+    indyrescmdResponseEnd(0,0);
+    return TRUE;
 }
 
 
-s32 response_indyrescmd_1_E_2(u8 *response)
+s32 indycmdAckHostExportFile(u8 *response)
 {
-    post_indyrescmd_istype1_correctsize(0x18,0x18);
+    indyrescmdResponseSize(0x18,0x18);
     post_indyrescmd_istypeE_correctvalue(0x14,0x14,response);
-    post_indyrescmd_istype2_correctvalue(0,0);
-    return 1;
+    indyrescmdResponseEnd(0,0);
+    return TRUE;
 }
 
 
-s32 response_indyrescmd_1_C_2(u8 *response)
+s32 indycmdAckHostCmdPacket(u8 *response)
 {
-    post_indyrescmd_istype1_correctsize(0x18,0x18);
+    indyrescmdResponseSize(0x18,0x18);
     post_indyrescmd_istypeC_correctvalue(0x14,0x14,response);
-    post_indyrescmd_istype2_correctvalue(0,0);
-    return 1;
+    indyrescmdResponseEnd(0,0);
+    return TRUE;
 }
 
 
@@ -1046,19 +1140,19 @@ s32 response_indyrescmd_curr_matches_expected(s32 readsize, s32 writesize)
 {
     struct indy_resource_entry cmd;
 
-    post_indyrescmd_read_command(&cmd, 0x14);
+    indycmdRecieveCommand(&cmd, 0x14);
     if (cmd.resourceID != 0x9ABF1623)
     {
-        return 0U;
+        return FALSE;
     }
     if ((readsize != 0) && (cmd.readsize != readsize))
     {
-        return 0U;
+        return FALSE;
     }
     if ((writesize != 0) && (cmd.writesize != writesize))
     {
-        return 0U;
+        return FALSE;
     }
-    return 1U;
+    return TRUE;
 }
 

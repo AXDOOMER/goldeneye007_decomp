@@ -63,10 +63,10 @@ void resource_load_from_indy(u8 *ptrdata, u32 bytes, struct fileentry *srcfile, 
 
     if (!bytes)
     {
-        load_resource_on_indy(srcfile->filename, ptrdata);
+        indycommHostLoadFile(srcfile->filename, ptrdata);
         return;
     }
-    check_file_found_on_indy(srcfile->filename, &lookupdata->pc_size);
+    indycommHostCheckFileExists(srcfile->filename, &lookupdata->pc_size);
     pPayload = (ptrdata + bytes) - ((lookupdata->pc_size + 7) & -8);
     if ((pPayload - ptrdata) < (u32)8)
     {
@@ -74,7 +74,7 @@ void resource_load_from_indy(u8 *ptrdata, u32 bytes, struct fileentry *srcfile, 
     }
     else
     {
-        load_resource_on_indy(srcfile->filename, pPayload);
+        indycommHostLoadFile(srcfile->filename, pPayload);
         if ((pPayload[0] == rz_header_1[0]) && (pPayload[1] == rz_header_2[1]))
         {
             size = decompressdata(pPayload, ptrdata, &buffer);
@@ -655,7 +655,7 @@ int get_index_num_of_named_resource(u8 *resname)
     }
     //we have room, see if on indy and make room
     file_entry_max += 1;
-    if (check_file_found_on_indy(resname,size) == 0) {
+    if (indycommHostCheckFileExists(resname,size) == 0) {
         return 0;
     }
     file_resource_table[i].index = i;
@@ -715,7 +715,7 @@ glabel get_index_num_of_named_resource
 /* 0F1E10 7F0BD2E0 244E0001 */  addiu $t6, $v0, 1
 /* 0F1E14 7F0BD2E4 AE4E0000 */  sw    $t6, ($s2)
 /* 0F1E18 7F0BD2E8 02602025 */  move  $a0, $s3
-/* 0F1E1C 7F0BD2EC 0FC34026 */  jal   check_file_found_on_indy
+/* 0F1E1C 7F0BD2EC 0FC34026 */  jal   indycommHostCheckFileExists
 /* 0F1E20 7F0BD2F0 27A50034 */   addiu $a1, $sp, 0x34
 /* 0F1E24 7F0BD2F4 14400003 */  bnez  $v0, .L7F0BD304
 /* 0F1E28 7F0BD2F8 00117880 */   sll   $t7, $s1, 2

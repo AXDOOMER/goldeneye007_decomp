@@ -165,10 +165,10 @@ void save_ramrom_to_devtool(void)
 
   while( ++i ) {
     sprintf(indyFileName,"replay/demo.%d",i);
-    if (!check_file_found_on_indy(&indyFileName,&size)) break;
+    if (!indycommHostCheckFileExists(&indyFileName,&size)) break;
   }
   sprintf(indyFileName,"replay/demo.%d",i);
-  check_file_exported(indyFileName,INDY_RAMROM_DEMO_ADDRESS,ptr_active_demofile->filesize);
+  indycommHostSaveFile(indyFileName,INDY_RAMROM_DEMO_ADDRESS,ptr_active_demofile->filesize);
 }
 
 
@@ -209,7 +209,7 @@ glabel save_ramrom_to_devtool
 /* 0F48C4 7F0BFD94 0C002B25 */  jal   sprintf
 /* 0F48C8 7F0BFD98 02003025 */   move  $a2, $s0
 /* 0F48CC 7F0BFD9C 02202025 */  move  $a0, $s1
-/* 0F48D0 7F0BFDA0 0FC34026 */  jal   check_file_found_on_indy
+/* 0F48D0 7F0BFDA0 0FC34026 */  jal   indycommHostCheckFileExists
 /* 0F48D4 7F0BFDA4 02602825 */   move  $a1, $s3
 /* 0F48D8 7F0BFDA8 10400003 */  beqz  $v0, .L7F0BFDB8
 /* 0F48DC 7F0BFDAC 00000000 */   nop   
@@ -225,7 +225,7 @@ glabel save_ramrom_to_devtool
 /* 0F4900 7F0BFDD0 8DCE8468 */  lw    $t6, %lo(ptr_active_demofile)($t6)
 /* 0F4904 7F0BFDD4 02202025 */  move  $a0, $s1
 /* 0F4908 7F0BFDD8 3C0500F0 */  lui   $a1, 0xf0
-/* 0F490C 7F0BFDDC 0FC34017 */  jal   check_file_exported
+/* 0F490C 7F0BFDDC 0FC34017 */  jal   indycommHostSaveFile
 /* 0F4910 7F0BFDE0 8DC60080 */   lw    $a2, 0x80($t6)
 /* 0F4914 7F0BFDE4 8FBF0024 */  lw    $ra, 0x24($sp)
 /* 0F4918 7F0BFDE8 8FB00014 */  lw    $s0, 0x14($sp)
@@ -247,9 +247,9 @@ void load_ramrom_from_devtool(void)
     static const char strDemoFileName[] = "replay/demo.load";
     s32 size;
 
-    if (check_file_found_on_indy(&strDemoFileName, &size) != 0)
+    if (indycommHostCheckFileExists(&strDemoFileName, &size) != 0)
     {
-        indy_load_ramrom_file(&strDemoFileName,(u8 *)INDY_RAMROM_DEMO_ADDRESS,size);
+        indycommHostRamRomLoad(&strDemoFileName,(u8 *)INDY_RAMROM_DEMO_ADDRESS,size);
         ptr_active_demofile = romCopyAligned(&ramrom_data_target,(u8 *)INDY_RAMROM_DEMO_ADDRESS,0xe8);
     }
 }
