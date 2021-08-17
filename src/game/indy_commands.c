@@ -15,7 +15,7 @@ s32 D_8004EAD0 = 0x0;
 
 
 
-void indy_buffer_copy_related(u8 *buffer,u32 size)
+void indy_buffer_read_command(u8 *buffer,u32 size)
 {
     int i;
 
@@ -27,7 +27,7 @@ void indy_buffer_copy_related(u8 *buffer,u32 size)
 }
 
 
-void sub_GAME_7F0D01D0(u8 *buffer,u32 size)
+void indy_buffer_write_command(u8 *buffer,u32 size)
 {
   int i;
   
@@ -106,7 +106,7 @@ glabel postindyresourcecommand
 /* 104E04 7F0D02D4 24420004 */   addiu $v0, $v0, 4
 .L7F0D02D8:
 /* 104E08 7F0D02D8 00E02025 */  move  $a0, $a3
-/* 104E0C 7F0D02DC 0FC34074 */  jal   sub_GAME_7F0D01D0
+/* 104E0C 7F0D02DC 0FC34074 */  jal   indy_buffer_write_command
 /* 104E10 7F0D02E0 01402825 */   move  $a1, $t2
 /* 104E14 7F0D02E4 10000018 */  b     .L7F0D0348
 /* 104E18 7F0D02E8 24020001 */   li    $v0, 1
@@ -135,7 +135,7 @@ glabel postindyresourcecommand
 /* 104E64 7F0D0334 24420004 */   addiu $v0, $v0, 4
 .L7F0D0338:
 /* 104E68 7F0D0338 8FA40540 */  lw    $a0, 0x540($sp)
-/* 104E6C 7F0D033C 0FC34074 */  jal   sub_GAME_7F0D01D0
+/* 104E6C 7F0D033C 0FC34074 */  jal   indy_buffer_write_command
 /* 104E70 7F0D0340 01A02825 */   move  $a1, $t5
 /* 104E74 7F0D0344 24020001 */  li    $v0, 1
 .L7F0D0348:
@@ -611,7 +611,7 @@ glabel post_indyrescmd_read_command
 /* 105ACC 7F0D0F9C 03202825 */  move  $a1, $t9
 /* 105AD0 7F0D0FA0 00E02025 */  move  $a0, $a3
 /* 105AD4 7F0D0FA4 AFA3003C */  sw    $v1, 0x3c($sp)
-/* 105AD8 7F0D0FA8 0FC34060 */  jal   indy_buffer_copy_related
+/* 105AD8 7F0D0FA8 0FC34060 */  jal   indy_buffer_read_command
 /* 105ADC 7F0D0FAC AFA60444 */   sw    $a2, 0x444($sp)
 /* 105AE0 7F0D0FB0 8FA3003C */  lw    $v1, 0x3c($sp)
 /* 105AE4 7F0D0FB4 8FA60444 */  lw    $a2, 0x444($sp)
@@ -657,7 +657,7 @@ glabel post_indyrescmd_read_command
 /* 105B68 7F0D1038 00A15824 */  and   $t3, $a1, $at
 /* 105B6C 7F0D103C 01602825 */  move  $a1, $t3
 /* 105B70 7F0D1040 8FA40440 */  lw    $a0, 0x440($sp)
-/* 105B74 7F0D1044 0FC34060 */  jal   indy_buffer_copy_related
+/* 105B74 7F0D1044 0FC34060 */  jal   indy_buffer_read_command
 /* 105B78 7F0D1048 AFA60444 */   sw    $a2, 0x444($sp)
 /* 105B7C 7F0D104C 3C0C8005 */  lui   $t4, %hi(indy_status) 
 /* 105B80 7F0D1050 8D8CEAC4 */  lw    $t4, %lo(indy_status)($t4)
@@ -697,8 +697,8 @@ glabel post_indyrescmd_read_command
 
 u32 post_indyrescmd_read_2commands(u8 *buffer1,u32 size1,u8 *buffer2,u32 size2)
 {
-    indy_buffer_copy_related(buffer1,size1 + 3 & 0xfffffffc);
-    indy_buffer_copy_related(buffer2,size2 + 3 & 0xfffffffc);
+    indy_buffer_read_command(buffer1,size1 + 3 & 0xfffffffc);
+    indy_buffer_read_command(buffer2,size2 + 3 & 0xfffffffc);
     return 1;
 }
 
