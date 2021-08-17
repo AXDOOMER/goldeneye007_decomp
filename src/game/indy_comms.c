@@ -31,8 +31,8 @@ void indycommHostLoadFile(char *filename, u8 *targetloc)
   
     if (indy_ready)
     {
-        indycmdSendFileLoadRequest(filename,0x400000);
-        indycmdRecieveFile(response1,response2,(u32)&size,targetloc);
+        indycmdSendLoadFile(filename,0x400000);
+        indycmdReceiveFile(response1,response2,(u32)&size,targetloc);
     }
     return;
 }

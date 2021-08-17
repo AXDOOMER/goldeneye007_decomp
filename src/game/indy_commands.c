@@ -510,7 +510,7 @@ s32 post_indyrescmd_debug_printf_recv(u32 data1,u32 data2)
 }
 
 
-s32 indycmdSendFileLoadRequest(u8 *filename,u32 size)
+s32 indycmdSendLoadFile(u8 *filename,u32 size)
 {
     indyrescmdSizeNextCmd(0x118,0x118);
     indyrescmdSendFileLoad(0x14,0x14,filename,size);
@@ -1091,7 +1091,7 @@ s32 indycmdAckHostCheckFileExists(u8 *response1,u8 *response2)
 }
 
 
-s32 indycmdRecieveFile(u8 *response1,u8 *response2,u32 childsize,u8 *child)
+s32 indycmdReceiveFile(u8 *response1,u8 *response2,u32 childsize,u8 *child)
 {
     indyrescmdResponseSize(0,0x20);
     post_indyrescmd_istype8_correctvalue(0x14,0x14,response1,response2,childsize,child);
