@@ -6,40 +6,56 @@
  * Removed
  */
 void rmonMain(void) {
-    // Removed
+    #ifdef DEBUG
+        //removed
+    #endif
 }
 
 s32 rmonIsFinalBuild(void) {
-    return TRUE;
+    #ifdef DEBUG
+        return FALSE; //removed
+    #else
+        return TRUE;
+    #endif
 }
 
 /**
  * Removed
  */
 s32 rmonStatus(void) {
-    // Removed
-    return -1;
+    #ifdef DEBUG
+        //removed
+    #else
+        return -1;
+    #endif
+
 }
 
 /**
  * Removed
  */
 void rmonHostWriteData(void) {
-    // Removed
+    #ifdef DEBUG
+        //removed
+    #endif
 }
 
 /**
  * Removed
  */
 void rmonHostReadData(void) {
-    // Removed
+    #ifdef DEBUG
+        //removed
+    #endif
 }
 
 /**
  * Removed
  */
 void rmon7000CEC8(void) {
-    // Removed
+    #ifdef DEBUG
+        //removed
+    #endif
 }
 
 /**
@@ -53,14 +69,18 @@ void rmon7000CED0(void) {
  * Removed
  */
 void rmon7000CED8(void) {
-    // Removed
+    #ifdef DEBUG
+        //removed
+    #endif
 }
 
 /**
  * Removed
  */
 void rmon7000CEE0(void) {
-    // Removed
+    #ifdef DEBUG
+        //removed
+    #endif
 }
 
 char *rmonprout(char *dst, const char *src, size_t count) {
