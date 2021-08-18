@@ -26232,41 +26232,15 @@ glabel sub_GAME_7F06908C
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
-void set_unset_ammo_on_screen_setting(void) {
-
+void set_unset_ammo_on_screen_setting(s32 flags, s32 isset) {
+  
+	if (isset) {
+		pPlayer->somekinda_flags = (pPlayer->somekinda_flags & ~flags);
+		return;
+	}
+  
+	pPlayer->somekinda_flags = (pPlayer->somekinda_flags | flags);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_unset_ammo_on_screen_setting
-/* 09DC24 7F0690F4 10A00008 */  beqz  $a1, .L7F069118
-/* 09DC28 7F0690F8 3C028008 */   lui   $v0, %hi(pPlayer)
-/* 09DC2C 7F0690FC 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 09DC30 7F069100 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
-/* 09DC34 7F069104 00807827 */  not   $t7, $a0
-/* 09DC38 7F069108 8C4E1064 */  lw    $t6, 0x1064($v0)
-/* 09DC3C 7F06910C 01CFC024 */  and   $t8, $t6, $t7
-/* 09DC40 7F069110 03E00008 */  jr    $ra
-/* 09DC44 7F069114 AC581064 */   sw    $t8, 0x1064($v0)
-
-.L7F069118:
-/* 09DC48 7F069118 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
-/* 09DC4C 7F06911C 8C591064 */  lw    $t9, 0x1064($v0)
-/* 09DC50 7F069120 03244025 */  or    $t0, $t9, $a0
-/* 09DC54 7F069124 AC481064 */  sw    $t0, 0x1064($v0)
-/* 09DC58 7F069128 03E00008 */  jr    $ra
-/* 09DC5C 7F06912C 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void give_cur_player_ammo(void) {
