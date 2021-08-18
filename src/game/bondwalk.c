@@ -26571,40 +26571,14 @@ glabel get_ammo_in_hands_weapon
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
-void get_ammo_type_for_weapon(void) {
-
+s32 get_ammo_type_for_weapon(ITEM_IDS weapon) {
+    return get_ptr_item_statistics(weapon)->AmmoType;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_ammo_type_for_weapon
-/* 09DF5C 7F06942C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09DF60 7F069430 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09DF64 7F069434 0FC1722D */  jal   get_ptr_item_statistics
-/* 09DF68 7F069438 00000000 */   nop   
-/* 09DF6C 7F06943C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09DF70 7F069440 8C42001C */  lw    $v0, 0x1c($v0)
-/* 09DF74 7F069444 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09DF78 7F069448 03E00008 */  jr    $ra
-/* 09DF7C 7F06944C 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 s32 get_ammo_count_for_weapon(ITEM_IDS weapon) {
   WeaponStats *weaponstats = get_ptr_item_statistics(weapon);
   return pPlayer->ammoheldarr[weaponstats->AmmoType];
 }
-
-
 
 void add_ammo_to_weapon(ITEM_IDS weapon, s32 ammo) {
     give_cur_player_ammo(get_ptr_item_statistics(weapon)->AmmoType, ammo);
