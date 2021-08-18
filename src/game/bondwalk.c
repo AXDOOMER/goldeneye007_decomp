@@ -28720,54 +28720,12 @@ glabel sub_GAME_7F06A5E4
 #endif
 
 
+void inc_curplayer_hitcount_with_weapon(ITEM_IDS item, SHOT_REGISTER shot_register) {
 
-
-
-#ifdef NONMATCHING
-void inc_curplayer_hitcount_with_weapon(s32 arg1) {
-    ? temp_ret;
-    void *temp_v0;
-
-    // Node 0
-    temp_ret = bondwalkItemCheckBitflags(0x10000);
-    if (temp_ret != 0)
-    {
-        // Node 1
-        temp_v0 = (pPlayersPerm + (arg1 * 4));
-        *temp_v0 = (s32) (*temp_v0 + 1);
+    if (bondwalkItemCheckBitflags(item, 0x10000)) {
+        pPlayersPerm->shot_count[shot_register] = pPlayersPerm->shot_count[shot_register]+1;
     }
-    // Node 2
-    return temp_ret;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel inc_curplayer_hitcount_with_weapon
-/* 09F228 7F06A6F8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09F22C 7F06A6FC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09F230 7F06A700 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 09F234 7F06A704 0FC1782D */  jal   bondwalkItemCheckBitflags
-/* 09F238 7F06A708 3C050001 */   lui   $a1, 1
-/* 09F23C 7F06A70C 10400008 */  beqz  $v0, .L7F06A730
-/* 09F240 7F06A710 3C0E8008 */   lui   $t6, %hi(pPlayersPerm) 
-/* 09F244 7F06A714 8FAF001C */  lw    $t7, 0x1c($sp)
-/* 09F248 7F06A718 8DCEA0B4 */  lw    $t6, %lo(pPlayersPerm)($t6)
-/* 09F24C 7F06A71C 000FC080 */  sll   $t8, $t7, 2
-/* 09F250 7F06A720 01D81021 */  addu  $v0, $t6, $t8
-/* 09F254 7F06A724 8C590000 */  lw    $t9, ($v0)
-/* 09F258 7F06A728 27280001 */  addiu $t0, $t9, 1
-/* 09F25C 7F06A72C AC480000 */  sw    $t0, ($v0)
-.L7F06A730:
-/* 09F260 7F06A730 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09F264 7F06A734 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09F268 7F06A738 03E00008 */  jr    $ra
-/* 09F26C 7F06A73C 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 s32 get_curplayer_shot_register(SHOT_REGISTER shot_register)
 {
