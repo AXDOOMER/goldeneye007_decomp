@@ -901,7 +901,7 @@ glabel sub_GAME_7F05C6FC
 
 
 
-WeaponStats *get_ptr_item_statistics(int item) {
+WeaponStats *get_ptr_item_statistics(ITEM_IDS item) {
     if (gitem_structs[item].has_no_model == 0) { /* weapon has model, return stats struct */
         return gitem_structs[item].item_weapon_stats;
     }
@@ -26625,33 +26625,9 @@ glabel get_ammo_count_for_weapon
 
 
 
-
-
-#ifdef NONMATCHING
-void add_ammo_to_weapon(void) {
-
+void add_ammo_to_weapon(ITEM_IDS weapon, s32 ammo) {
+    give_cur_player_ammo(get_ptr_item_statistics(weapon)->AmmoType, ammo);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel add_ammo_to_weapon
-/* 09DFB4 7F069484 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09DFB8 7F069488 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09DFBC 7F06948C 0FC1722D */  jal   get_ptr_item_statistics
-/* 09DFC0 7F069490 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 09DFC4 7F069494 8C44001C */  lw    $a0, 0x1c($v0)
-/* 09DFC8 7F069498 0FC1A44C */  jal   give_cur_player_ammo
-/* 09DFCC 7F06949C 8FA5001C */   lw    $a1, 0x1c($sp)
-/* 09DFD0 7F0694A0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09DFD4 7F0694A4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 09DFD8 7F0694A8 03E00008 */  jr    $ra
-/* 09DFDC 7F0694AC 00000000 */   nop   
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void get_max_ammo_for_weapon(void) {
