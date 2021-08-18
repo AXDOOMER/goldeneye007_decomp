@@ -26372,56 +26372,20 @@ glabel check_cur_player_ammo_amount_in_inventory
 )
 #endif
 
+s32 check_cur_player_ammo_amount_total(AMMOTYPES ammotype) {
+ 
+    s32 total_ammo = check_cur_player_ammo_amount_in_inventory(ammotype);
 
+    if (get_ammo_type_for_weapon(get_item_in_hand(RIGHT_HAND)) == ammotype) {
+        total_ammo += get_ammo_in_hands_magazine(RIGHT_HAND);
+    }
 
+    if (get_ammo_type_for_weapon(get_item_in_hand(LEFT_HAND)) == ammotype) {
+        total_ammo += get_ammo_in_hands_magazine(LEFT_HAND);
+    }
 
-
-#ifdef NONMATCHING
-void check_cur_player_ammo_amount_total(void) {
-
+    return total_ammo;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_cur_player_ammo_amount_total
-/* 09DD88 7F069258 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 09DD8C 7F06925C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 09DD90 7F069260 AFB00018 */  sw    $s0, 0x18($sp)
-/* 09DD94 7F069264 0FC1A490 */  jal   check_cur_player_ammo_amount_in_inventory
-/* 09DD98 7F069268 AFA40020 */   sw    $a0, 0x20($sp)
-/* 09DD9C 7F06926C 00408025 */  move  $s0, $v0
-/* 09DDA0 7F069270 0FC17674 */  jal   get_item_in_hand
-/* 09DDA4 7F069274 00002025 */   move  $a0, $zero
-/* 09DDA8 7F069278 0FC1A50B */  jal   get_ammo_type_for_weapon
-/* 09DDAC 7F06927C 00402025 */   move  $a0, $v0
-/* 09DDB0 7F069280 8FAE0020 */  lw    $t6, 0x20($sp)
-/* 09DDB4 7F069284 144E0004 */  bne   $v0, $t6, .L7F069298
-/* 09DDB8 7F069288 00000000 */   nop   
-/* 09DDBC 7F06928C 0FC1A4D1 */  jal   get_ammo_in_hands_magazine
-/* 09DDC0 7F069290 00002025 */   move  $a0, $zero
-/* 09DDC4 7F069294 02028021 */  addu  $s0, $s0, $v0
-.L7F069298:
-/* 09DDC8 7F069298 0FC17674 */  jal   get_item_in_hand
-/* 09DDCC 7F06929C 24040001 */   li    $a0, 1
-/* 09DDD0 7F0692A0 0FC1A50B */  jal   get_ammo_type_for_weapon
-/* 09DDD4 7F0692A4 00402025 */   move  $a0, $v0
-/* 09DDD8 7F0692A8 8FAF0020 */  lw    $t7, 0x20($sp)
-/* 09DDDC 7F0692AC 544F0005 */  bnel  $v0, $t7, .L7F0692C4
-/* 09DDE0 7F0692B0 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 09DDE4 7F0692B4 0FC1A4D1 */  jal   get_ammo_in_hands_magazine
-/* 09DDE8 7F0692B8 24040001 */   li    $a0, 1
-/* 09DDEC 7F0692BC 02028021 */  addu  $s0, $s0, $v0
-/* 09DDF0 7F0692C0 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F0692C4:
-/* 09DDF4 7F0692C4 02001025 */  move  $v0, $s0
-/* 09DDF8 7F0692C8 8FB00018 */  lw    $s0, 0x18($sp)
-/* 09DDFC 7F0692CC 03E00008 */  jr    $ra
-/* 09DE00 7F0692D0 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
