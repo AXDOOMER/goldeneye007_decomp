@@ -28603,7 +28603,7 @@ glabel set_unset_bitflags
 #endif
 
 
-void sub_GAME_7F06A5E4(s32 *gdl) { 
+void display_in_game_crosshair(s32 *gdl) { 
 	
     s32 sp54;
     f32 xypos[2];
