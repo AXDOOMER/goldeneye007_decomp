@@ -26353,24 +26353,9 @@ glabel give_cur_player_ammo
 
 
 
-
-
-#ifdef NONMATCHING
-void check_cur_player_ammo_amount_in_inventory(void) {
-
+s32 check_cur_player_ammo_amount_in_inventory(AMMOTYPES ammotype) {
+    return pPlayer->ammoheldarr[ammotype];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_cur_player_ammo_amount_in_inventory
-/* 09DD70 7F069240 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 09DD74 7F069244 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 09DD78 7F069248 00047880 */  sll   $t7, $a0, 2
-/* 09DD7C 7F06924C 01CFC021 */  addu  $t8, $t6, $t7
-/* 09DD80 7F069250 03E00008 */  jr    $ra
-/* 09DD84 7F069254 8F021130 */   lw    $v0, 0x1130($t8)
-)
-#endif
 
 s32 check_cur_player_ammo_amount_total(AMMOTYPES ammotype) {
  
