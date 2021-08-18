@@ -17,6 +17,7 @@
 #include "game/mp_weapon.h"
 #include "lvl_text.h"
 #include "game/math_floor.h"
+#include "game/image_bank.h"
 
 struct point {
     f32 x;
@@ -1209,140 +1210,37 @@ void menu_control_stick_tracking(void) {
 
 
 
-#ifdef NONMATCHING
-s32 load_draw_selected_icon_folder_select(s32 arg0)
+Gfx *load_draw_selected_icon_folder_select(Gfx *DL)
 {
-    s32 option;
     f32 xypos[2];
     f32 halfedxy[2];
     sImageTableEntry *image;
-
+    s32 unused;
+    s32 option;
+    
     option = folder_selection_screen_option_icon;
-    switch (option) {
-        case 0 :
-            image = &s_crosshairimage[0];
-            break;
-        case 1 :
-            image = &s_mainfolderimages[0];
-            break;
-        case 2 :
-            image = &s_mainfolderimages[1];
-            break;
+    if (option == 0) {
+        image = crosshairimage;
+    }
+    else if (option == 1) {
+        image = mainfolderimages;
+    }
+    else if (option == 2) {
+        image = mainfolderimages + 1;
     }
     
-    likely_generate_DL_for_image_declaration(&arg0, image, 4, 0, 0);
+    likely_generate_DL_for_image_declaration(&DL, image, 4, 0, 0);
+    
     xypos[0] = floorFloat(cursor_h_pos + 0.5f);
     xypos[1] = floorFloat(cursor_v_pos + 0.5f);
-    halfedxy[0] = (f32) (u32) image->width * 0.5f;
-    halfedxy[1] = (f32) (u32)image->height * 0.5f;
-    display_image_at_on_screen_coord(&arg0, &xypos, &halfedxy, image->width, image->height, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xDC, image->level > 0, 0);
-    return arg0;
+    
+    halfedxy[0] = image->width * 0.5f;
+    halfedxy[1] = image->height * 0.5f;
+    
+    display_image_at_on_screen_coord(&DL, &xypos, &halfedxy, image->width, image->height, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xDC, (image->level > 0), 0);
+    
+    return DL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel load_draw_selected_icon_folder_select
-/* 03EA38 7F009F08 3C028003 */  lui   $v0, %hi(folder_selection_screen_option_icon)
-/* 03EA3C 7F009F0C 8C42A918 */  lw    $v0, %lo(folder_selection_screen_option_icon)($v0)
-/* 03EA40 7F009F10 27BDFF98 */  addiu $sp, $sp, -0x68
-/* 03EA44 7F009F14 AFBF0044 */  sw    $ra, 0x44($sp)
-/* 03EA48 7F009F18 AFB00040 */  sw    $s0, 0x40($sp)
-/* 03EA4C 7F009F1C 14400005 */  bnez  $v0, .L7F009F34
-/* 03EA50 7F009F20 AFA40068 */   sw    $a0, 0x68($sp)
-/* 03EA54 7F009F24 3C108009 */  lui   $s0, %hi(crosshairimage)
-/* 03EA58 7F009F28 8E10D114 */  lw    $s0, %lo(crosshairimage)($s0)
-/* 03EA5C 7F009F2C 1000000D */  b     .L7F009F64
-/* 03EA60 7F009F30 AFB00054 */   sw    $s0, 0x54($sp)
-.L7F009F34:
-/* 03EA64 7F009F34 24010001 */  li    $at, 1
-/* 03EA68 7F009F38 14410004 */  bne   $v0, $at, .L7F009F4C
-/* 03EA6C 7F009F3C 3C108009 */   lui   $s0, %hi(mainfolderimages)
-/* 03EA70 7F009F40 8E10D128 */  lw    $s0, %lo(mainfolderimages)($s0)
-/* 03EA74 7F009F44 10000007 */  b     .L7F009F64
-/* 03EA78 7F009F48 AFB00054 */   sw    $s0, 0x54($sp)
-.L7F009F4C:
-/* 03EA7C 7F009F4C 24010002 */  li    $at, 2
-/* 03EA80 7F009F50 14410004 */  bne   $v0, $at, .L7F009F64
-/* 03EA84 7F009F54 3C108009 */   lui   $s0, %hi(mainfolderimages)
-/* 03EA88 7F009F58 8E10D128 */  lw    $s0, %lo(mainfolderimages)($s0)
-/* 03EA8C 7F009F5C 2610000C */  addiu $s0, $s0, 0xc
-/* 03EA90 7F009F60 AFB00054 */  sw    $s0, 0x54($sp)
-.L7F009F64:
-/* 03EA94 7F009F64 8FB00054 */  lw    $s0, 0x54($sp)
-/* 03EA98 7F009F68 27A40068 */  addiu $a0, $sp, 0x68
-/* 03EA9C 7F009F6C 24060004 */  li    $a2, 4
-/* 03EAA0 7F009F70 00003825 */  move  $a3, $zero
-/* 03EAA4 7F009F74 AFA00010 */  sw    $zero, 0x10($sp)
-/* 03EAA8 7F009F78 0FC1DB5A */  jal   likely_generate_DL_for_image_declaration
-/* 03EAAC 7F009F7C 02002825 */   move  $a1, $s0
-/* 03EAB0 7F009F80 3C018003 */  lui   $at, %hi(cursor_h_pos)
-/* 03EAB4 7F009F84 C424A908 */  lwc1  $f4, %lo(cursor_h_pos)($at)
-/* 03EAB8 7F009F88 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 03EABC 7F009F8C 44813000 */  mtc1  $at, $f6
-/* 03EAC0 7F009F90 0FC170D8 */  jal   floorFloat
-/* 03EAC4 7F009F94 46062300 */   add.s $f12, $f4, $f6
-/* 03EAC8 7F009F98 3C018003 */  lui   $at, %hi(cursor_v_pos)
-/* 03EACC 7F009F9C C428A90C */  lwc1  $f8, %lo(cursor_v_pos)($at)
-/* 03EAD0 7F009FA0 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 03EAD4 7F009FA4 44815000 */  mtc1  $at, $f10
-/* 03EAD8 7F009FA8 E7A00060 */  swc1  $f0, 0x60($sp)
-/* 03EADC 7F009FAC 0FC170D8 */  jal   floorFloat
-/* 03EAE0 7F009FB0 460A4300 */   add.s $f12, $f8, $f10
-/* 03EAE4 7F009FB4 E7A00064 */  swc1  $f0, 0x64($sp)
-/* 03EAE8 7F009FB8 920E0004 */  lbu   $t6, 4($s0)
-/* 03EAEC 7F009FBC 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 03EAF0 7F009FC0 44811000 */  mtc1  $at, $f2
-/* 03EAF4 7F009FC4 448E8000 */  mtc1  $t6, $f16
-/* 03EAF8 7F009FC8 27A40068 */  addiu $a0, $sp, 0x68
-/* 03EAFC 7F009FCC 05C10005 */  bgez  $t6, .L7F009FE4
-/* 03EB00 7F009FD0 468084A0 */   cvt.s.w $f18, $f16
-/* 03EB04 7F009FD4 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 03EB08 7F009FD8 44812000 */  mtc1  $at, $f4
-/* 03EB0C 7F009FDC 00000000 */  nop   
-/* 03EB10 7F009FE0 46049480 */  add.s $f18, $f18, $f4
-.L7F009FE4:
-/* 03EB14 7F009FE4 46029182 */  mul.s $f6, $f18, $f2
-/* 03EB18 7F009FE8 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 03EB1C 7F009FEC E7A60058 */  swc1  $f6, 0x58($sp)
-/* 03EB20 7F009FF0 920F0005 */  lbu   $t7, 5($s0)
-/* 03EB24 7F009FF4 448F4000 */  mtc1  $t7, $f8
-/* 03EB28 7F009FF8 05E10004 */  bgez  $t7, .L7F00A00C
-/* 03EB2C 7F009FFC 468042A0 */   cvt.s.w $f10, $f8
-/* 03EB30 7F00A000 44818000 */  mtc1  $at, $f16
-/* 03EB34 7F00A004 00000000 */  nop   
-/* 03EB38 7F00A008 46105280 */  add.s $f10, $f10, $f16
-.L7F00A00C:
-/* 03EB3C 7F00A00C 46025102 */  mul.s $f4, $f10, $f2
-/* 03EB40 7F00A010 24190001 */  li    $t9, 1
-/* 03EB44 7F00A014 240800FF */  li    $t0, 255
-/* 03EB48 7F00A018 240900FF */  li    $t1, 255
-/* 03EB4C 7F00A01C 240A00FF */  li    $t2, 255
-/* 03EB50 7F00A020 240B00DC */  li    $t3, 220
-/* 03EB54 7F00A024 27A50060 */  addiu $a1, $sp, 0x60
-/* 03EB58 7F00A028 E7A4005C */  swc1  $f4, 0x5c($sp)
-/* 03EB5C 7F00A02C 92180005 */  lbu   $t8, 5($s0)
-/* 03EB60 7F00A030 92070004 */  lbu   $a3, 4($s0)
-/* 03EB64 7F00A034 AFAB002C */  sw    $t3, 0x2c($sp)
-/* 03EB68 7F00A038 AFAA0028 */  sw    $t2, 0x28($sp)
-/* 03EB6C 7F00A03C AFA90024 */  sw    $t1, 0x24($sp)
-/* 03EB70 7F00A040 AFA80020 */  sw    $t0, 0x20($sp)
-/* 03EB74 7F00A044 AFB9001C */  sw    $t9, 0x1c($sp)
-/* 03EB78 7F00A048 AFA00018 */  sw    $zero, 0x18($sp)
-/* 03EB7C 7F00A04C AFA00014 */  sw    $zero, 0x14($sp)
-/* 03EB80 7F00A050 AFB80010 */  sw    $t8, 0x10($sp)
-/* 03EB84 7F00A054 920C0006 */  lbu   $t4, 6($s0)
-/* 03EB88 7F00A058 AFA00034 */  sw    $zero, 0x34($sp)
-/* 03EB8C 7F00A05C 27A60058 */  addiu $a2, $sp, 0x58
-/* 03EB90 7F00A060 000C682A */  slt   $t5, $zero, $t4
-/* 03EB94 7F00A064 0FC1ABFA */  jal   display_image_at_on_screen_coord
-/* 03EB98 7F00A068 AFAD0030 */   sw    $t5, 0x30($sp)
-/* 03EB9C 7F00A06C 8FBF0044 */  lw    $ra, 0x44($sp)
-/* 03EBA0 7F00A070 8FA20068 */  lw    $v0, 0x68($sp)
-/* 03EBA4 7F00A074 8FB00040 */  lw    $s0, 0x40($sp)
-/* 03EBA8 7F00A078 03E00008 */  jr    $ra
-/* 03EBAC 7F00A07C 27BD0068 */   addiu $sp, $sp, 0x68
-)
-#endif
 
 
 

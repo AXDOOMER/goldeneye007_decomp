@@ -795,6 +795,7 @@ u32 get_cur_player_look_vertical_inverted(void)
 {
     return game_options_entries[PLAYER_OPTION_LOOK].current_value;
 }
+
 void set_cur_player_look_vertical_inverted(u32 param_1)
 {
     game_options_entries[PLAYER_OPTION_LOOK].current_value = param_1;
@@ -804,6 +805,7 @@ u32 cur_player_get_autoaim(void)
 {
     return game_options_entries[PLAYER_OPTION_AUTOAIM].current_value;
 }
+
 void cur_player_set_autoaim(u32 param_1)
 {
     game_options_entries[PLAYER_OPTION_AUTOAIM].current_value = param_1;
@@ -813,6 +815,7 @@ u32 cur_player_get_lookahead(void)
 {
     return game_options_entries[PLAYER_OPTION_LOOKAHEAD].current_value;
 }
+
 void cur_player_set_lookahead(u32 param_1)
 {
     game_options_entries[PLAYER_OPTION_LOOKAHEAD].current_value = param_1;
@@ -822,6 +825,7 @@ u32 cur_player_get_aim_control(void)
 {
     return game_options_entries[PLAYER_OPTION_AIM].current_value;
 }
+
 void cur_player_set_aim_control(u32 param_1)
 {
     game_options_entries[PLAYER_OPTION_AIM].current_value = param_1;
@@ -854,13 +858,14 @@ void cur_player_set_screen_setting(u32 param_1)
     game_options_entries[PLAYER_OPTION_SCREEN].current_value = param_1;
 }
 
-u32 get_screen_ratio(void)
+SCREEN_RATIO_OPTION get_screen_ratio(void)
 {
     return game_options_entries[PLAYER_OPTION_RATIO].current_value;
 }
-void set_screen_ratio(u32 param_1)
+
+void set_screen_ratio(SCREEN_RATIO_OPTION ratio_option)
 {
-    game_options_entries[PLAYER_OPTION_RATIO].current_value = param_1;
+    game_options_entries[PLAYER_OPTION_RATIO].current_value = ratio_option;
 }
 
 

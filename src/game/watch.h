@@ -1,6 +1,7 @@
 #ifndef _WATCH_H_
 #define _WATCH_H_
 #include "ultra64.h"
+#include "bondconstants.h"
 
 typedef enum WATCH_INDEX {
     WATCH_INDEX_MISSION_STATUS = 0,
@@ -54,6 +55,10 @@ void draw_selected_page_rectangle(s32 watch_screen_index, s32 arg2);
 f32 sub_GAME_7F0A6A2C(f32 arg0);
 
 f32 sub_GAME_7F0A95C4(f32 param_1, f32 param_2, f32 param_3);
+
+SCREEN_RATIO_OPTION get_screen_ratio();
+
+void set_screen_ratio(SCREEN_RATIO_OPTION ratio_option);
 
 #endif
 
