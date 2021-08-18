@@ -28787,40 +28787,15 @@ glabel get_curplayer_shot_register
 )
 #endif
 
-
-
-
-
-
 void inc_cur_civilian_casualties(void)
 {
     pPlayersPerm->killed_civilians++;
-
 }
 
-
-
-
-
-#ifdef NONMATCHING
-int get_civilian_casualties(void)
+s32 get_civilian_casualties(void)
 {
     return pPlayersPerm->killed_civilians;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_civilian_casualties
-/* 09F2A0 7F06A770 3C0E8008 */  lui   $t6, %hi(pPlayersPerm) 
-/* 09F2A4 7F06A774 8DCEA0B4 */  lw    $t6, %lo(pPlayersPerm)($t6)
-/* 09F2A8 7F06A778 03E00008 */  jr    $ra
-/* 09F2AC 7F06A77C 8DC2006C */   lw    $v0, 0x6c($t6)
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void *increment_num_kills_display_text_in_MP(void) {
