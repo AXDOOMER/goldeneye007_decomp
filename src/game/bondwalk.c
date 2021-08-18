@@ -28618,7 +28618,7 @@ void display_in_game_crosshair(s32 *gdl) {
         halfedxy[0] = 16.0f;
         halfedxy[1] = 16.0f;
         
-        if (get_screen_ratio() == 1) {
+        if (get_screen_ratio() == SCREEN_RATIO_16_9) {
             halfedxy[0] = halfedxy[0] * 0.75f;
         }
 
