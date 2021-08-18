@@ -26599,29 +26599,10 @@ glabel get_ammo_type_for_weapon
 
 
 
-#ifdef NONMATCHING
-void get_ammo_count_for_weapon(void) {
-
+s32 get_ammo_count_for_weapon(ITEM_IDS weapon) {
+  WeaponStats *weaponstats = get_ptr_item_statistics(weapon);
+  return pPlayer->ammoheldarr[weaponstats->AmmoType];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_ammo_count_for_weapon
-/* 09DF80 7F069450 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09DF84 7F069454 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 09DF88 7F069458 0FC1722D */  jal   get_ptr_item_statistics
-/* 09DF8C 7F06945C 00000000 */   nop   
-/* 09DF90 7F069460 8C4F001C */  lw    $t7, 0x1c($v0)
-/* 09DF94 7F069464 3C0E8008 */  lui   $t6, %hi(pPlayer) 
-/* 09DF98 7F069468 8DCEA0B0 */  lw    $t6, %lo(pPlayer)($t6)
-/* 09DF9C 7F06946C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 09DFA0 7F069470 000FC080 */  sll   $t8, $t7, 2
-/* 09DFA4 7F069474 01D8C821 */  addu  $t9, $t6, $t8
-/* 09DFA8 7F069478 8F221130 */  lw    $v0, 0x1130($t9)
-/* 09DFAC 7F06947C 03E00008 */  jr    $ra
-/* 09DFB0 7F069480 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
 
 
 
