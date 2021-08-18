@@ -28769,23 +28769,10 @@ glabel inc_curplayer_hitcount_with_weapon
 
 
 
-#ifdef NONMATCHING
-void get_curplayer_shot_register(s32 arg0) {
-    // Node 0
-    return *(pPlayersPerm + (arg0 * 4));
+s32 get_curplayer_shot_register(SHOT_REGISTER shot_register)
+{
+  return pPlayersPerm->shot_count[shot_register];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_curplayer_shot_register
-/* 09F270 7F06A740 3C0E8008 */  lui   $t6, %hi(pPlayersPerm) 
-/* 09F274 7F06A744 8DCEA0B4 */  lw    $t6, %lo(pPlayersPerm)($t6)
-/* 09F278 7F06A748 00047880 */  sll   $t7, $a0, 2
-/* 09F27C 7F06A74C 01CFC021 */  addu  $t8, $t6, $t7
-/* 09F280 7F06A750 03E00008 */  jr    $ra
-/* 09F284 7F06A754 8F020000 */   lw    $v0, ($t8)
-)
-#endif
 
 void inc_cur_civilian_casualties(void)
 {
