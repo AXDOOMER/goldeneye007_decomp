@@ -28791,24 +28791,12 @@ glabel get_curplayer_shot_register
 
 
 
-#ifdef NONMATCHING
+
 void inc_cur_civilian_casualties(void)
 {
-    pPlayersPerm->killed_civilians++
+    pPlayersPerm->killed_civilians++;
 
 }
-#else
-GLOBAL_ASM(
-.text
-glabel inc_cur_civilian_casualties
-/* 09F288 7F06A758 3C028008 */  lui   $v0, %hi(pPlayersPerm)
-/* 09F28C 7F06A75C 8C42A0B4 */  lw    $v0, %lo(pPlayersPerm)($v0)
-/* 09F290 7F06A760 8C4E006C */  lw    $t6, 0x6c($v0)
-/* 09F294 7F06A764 25CF0001 */  addiu $t7, $t6, 1
-/* 09F298 7F06A768 03E00008 */  jr    $ra
-/* 09F29C 7F06A76C AC4F006C */   sw    $t7, 0x6c($v0)
-)
-#endif
 
 
 
