@@ -224,4 +224,6 @@ u16 *get_ptr_short_watch_text_for_item(ITEM_IDS item);
 
 s32 bondwalkItemHasAmmo(ITEM_IDS item);
 
+void sub_GAME_7F06A5E4(s32 *gdl);
+
 #endif

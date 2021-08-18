@@ -6,6 +6,9 @@
 #include "game/bondwalk.h"
 #include "game/chrobjdata.h"
 #include "game/quaternion.h"
+#include "game/image_bank.h"
+#include "game/bondwalk2.h"
+#include "game/othermodemicrodode.h"
 
 #include "bondgame.h"
 
@@ -28600,125 +28603,29 @@ glabel set_unset_bitflags
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-void *sub_GAME_7F06A5E4(void *arg0) {
-    f32 sp44;
-    f32 sp48;
-    f32 sp4C;
-    f32 sp50;
-    ?32 sp54;
-    void *phi_return_reg;
-
-    // Node 0
-    phi_return_reg = pPlayer;
-    if (pPlayer->unk1128 == 0)
-    {
-        // Node 1
-        phi_return_reg = pPlayer;
-        if (pPlayer->unk29C4 == 0)
-        {
-            // Node 2
-            sp54 = (?32) *arg0;
-            likely_generate_DL_for_image_declaration(&sp54, crosshairimage, 4, 0, 0);
-            sp4C = (f32) pPlayer->unkFE8;
-            sp44 = 16.0f;
-            sp48 = 16.0f;
-            sp50 = (f32) pPlayer->unkFEC;
-            if (get_screen_ratio() == 1)
-            {
-                // Node 3
-                sp44 = (f32) (sp44 * 0.75f);
-            }
-            // Node 4
-            *arg0 = sp54;
-            phi_return_reg = display_image_at_on_screen_coord(&sp54, &sp4C, &sp44, 0x20, 0x20, 0, 0, 1, 0xff, 0xff, 0xff, 0x6e, (s32) (0 < crosshairimage->unk6), 0);
+void sub_GAME_7F06A5E4(s32 *gdl) { 
+	
+    s32 sp54;
+    f32 xypos[2];
+    f32 halfedxy[2];
+    
+    if ((pPlayer->somekinda_bitflags == 0) && (pPlayer->mpmenuon == 0)) {
+        sp54 = *gdl;
+        likely_generate_DL_for_image_declaration(&sp54, crosshairimage, 4, 0, 0);
+        
+        xypos[0] = pPlayer->field_FE8;
+        xypos[1] = pPlayer->field_FEC;
+        halfedxy[0] = 16.0f;
+        halfedxy[1] = 16.0f;
+        
+        if (get_screen_ratio() == 1) {
+            halfedxy[0] = halfedxy[0] * 0.75f;
         }
-    }
-    // Node 5
-    return phi_return_reg;
-}
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06A5E4
-/* 09F114 7F06A5E4 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 09F118 7F06A5E8 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
-/* 09F11C 7F06A5EC 27BDFFA8 */  addiu $sp, $sp, -0x58
-/* 09F120 7F06A5F0 AFBF003C */  sw    $ra, 0x3c($sp)
-/* 09F124 7F06A5F4 AFA40058 */  sw    $a0, 0x58($sp)
-/* 09F128 7F06A5F8 8C4E1128 */  lw    $t6, 0x1128($v0)
-/* 09F12C 7F06A5FC 55C0003B */  bnezl $t6, .L7F06A6EC
-/* 09F130 7F06A600 8FBF003C */   lw    $ra, 0x3c($sp)
-/* 09F134 7F06A604 8C4F29C4 */  lw    $t7, 0x29c4($v0)
-/* 09F138 7F06A608 3C058009 */  lui   $a1, %hi(crosshairimage)
-/* 09F13C 7F06A60C 24060004 */  li    $a2, 4
-/* 09F140 7F06A610 15E00035 */  bnez  $t7, .L7F06A6E8
-/* 09F144 7F06A614 00003825 */   move  $a3, $zero
-/* 09F148 7F06A618 8C990000 */  lw    $t9, ($a0)
-/* 09F14C 7F06A61C AFA00010 */  sw    $zero, 0x10($sp)
-/* 09F150 7F06A620 27A40054 */  addiu $a0, $sp, 0x54
-/* 09F154 7F06A624 8CA5D114 */  lw    $a1, %lo(crosshairimage)($a1)
-/* 09F158 7F06A628 0FC1DB5A */  jal   likely_generate_DL_for_image_declaration
-/* 09F15C 7F06A62C AFB90054 */   sw    $t9, 0x54($sp)
-/* 09F160 7F06A630 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 09F164 7F06A634 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
-/* 09F168 7F06A638 3C014180 */  li    $at, 0x41800000 # 16.000000
-/* 09F16C 7F06A63C 44810000 */  mtc1  $at, $f0
-/* 09F170 7F06A640 C4440FE8 */  lwc1  $f4, 0xfe8($v0)
-/* 09F174 7F06A644 E7A4004C */  swc1  $f4, 0x4c($sp)
-/* 09F178 7F06A648 C4460FEC */  lwc1  $f6, 0xfec($v0)
-/* 09F17C 7F06A64C E7A00044 */  swc1  $f0, 0x44($sp)
-/* 09F180 7F06A650 E7A00048 */  swc1  $f0, 0x48($sp)
-/* 09F184 7F06A654 0FC293B8 */  jal   get_screen_ratio
-/* 09F188 7F06A658 E7A60050 */   swc1  $f6, 0x50($sp)
-/* 09F18C 7F06A65C 24010001 */  li    $at, 1
-/* 09F190 7F06A660 14410006 */  bne   $v0, $at, .L7F06A67C
-/* 09F194 7F06A664 27A40054 */   addiu $a0, $sp, 0x54
-/* 09F198 7F06A668 3C013F40 */  li    $at, 0x3F400000 # 0.750000
-/* 09F19C 7F06A66C 44815000 */  mtc1  $at, $f10
-/* 09F1A0 7F06A670 C7A80044 */  lwc1  $f8, 0x44($sp)
-/* 09F1A4 7F06A674 460A4402 */  mul.s $f16, $f8, $f10
-/* 09F1A8 7F06A678 E7B00044 */  swc1  $f16, 0x44($sp)
-.L7F06A67C:
-/* 09F1AC 7F06A67C 3C0E8009 */  lui   $t6, %hi(crosshairimage) 
-/* 09F1B0 7F06A680 8DCED114 */  lw    $t6, %lo(crosshairimage)($t6)
-/* 09F1B4 7F06A684 24080020 */  li    $t0, 32
-/* 09F1B8 7F06A688 24090001 */  li    $t1, 1
-/* 09F1BC 7F06A68C 240A00FF */  li    $t2, 255
-/* 09F1C0 7F06A690 240B00FF */  li    $t3, 255
-/* 09F1C4 7F06A694 240C00FF */  li    $t4, 255
-/* 09F1C8 7F06A698 240D006E */  li    $t5, 110
-/* 09F1CC 7F06A69C AFAD002C */  sw    $t5, 0x2c($sp)
-/* 09F1D0 7F06A6A0 AFAC0028 */  sw    $t4, 0x28($sp)
-/* 09F1D4 7F06A6A4 AFAB0024 */  sw    $t3, 0x24($sp)
-/* 09F1D8 7F06A6A8 AFAA0020 */  sw    $t2, 0x20($sp)
-/* 09F1DC 7F06A6AC AFA9001C */  sw    $t1, 0x1c($sp)
-/* 09F1E0 7F06A6B0 AFA80010 */  sw    $t0, 0x10($sp)
-/* 09F1E4 7F06A6B4 AFA00014 */  sw    $zero, 0x14($sp)
-/* 09F1E8 7F06A6B8 AFA00018 */  sw    $zero, 0x18($sp)
-/* 09F1EC 7F06A6BC 91CF0006 */  lbu   $t7, 6($t6)
-/* 09F1F0 7F06A6C0 AFA00034 */  sw    $zero, 0x34($sp)
-/* 09F1F4 7F06A6C4 27A5004C */  addiu $a1, $sp, 0x4c
-/* 09F1F8 7F06A6C8 000FC02A */  slt   $t8, $zero, $t7
-/* 09F1FC 7F06A6CC AFB80030 */  sw    $t8, 0x30($sp)
-/* 09F200 7F06A6D0 27A60044 */  addiu $a2, $sp, 0x44
-/* 09F204 7F06A6D4 0FC1ABFA */  jal   display_image_at_on_screen_coord
-/* 09F208 7F06A6D8 24070020 */   li    $a3, 32
-/* 09F20C 7F06A6DC 8FB90054 */  lw    $t9, 0x54($sp)
-/* 09F210 7F06A6E0 8FA80058 */  lw    $t0, 0x58($sp)
-/* 09F214 7F06A6E4 AD190000 */  sw    $t9, ($t0)
-.L7F06A6E8:
-/* 09F218 7F06A6E8 8FBF003C */  lw    $ra, 0x3c($sp)
-.L7F06A6EC:
-/* 09F21C 7F06A6EC 27BD0058 */  addiu $sp, $sp, 0x58
-/* 09F220 7F06A6F0 03E00008 */  jr    $ra
-/* 09F224 7F06A6F4 00000000 */   nop   
-)
-#endif
 
+        display_image_at_on_screen_coord(&sp54, &xypos, &halfedxy, 0x20, 0x20, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0x6E, (crosshairimage->level > 0), 0);
+        *gdl = sp54;
+    }
+}
 
 void inc_curplayer_hitcount_with_weapon(ITEM_IDS item, SHOT_REGISTER shot_register) {
 
