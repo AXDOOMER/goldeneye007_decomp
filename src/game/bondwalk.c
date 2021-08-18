@@ -28564,43 +28564,15 @@ glabel sub_GAME_7F06A334
 
 
 
-#ifdef NONMATCHING
-void *set_unset_bitflags(s32 arg0, s32 arg1) {
-    // Node 0
-    if (arg1 != 0)
-    {
-        // Node 1
-        // Error: I don't know how to handle not!
+void set_unset_bitflags(s32 bitflags, s32 flag) {
+
+    if (flag != 0) {
+        pPlayer->somekinda_bitflags = (pPlayer->somekinda_bitflags & ~bitflags);
         return;
     }
-    // Node 2
-    (void *)0x80080000->unk-5F50->unk1128 = (s32) ((void *)0x80080000->unk-5F50->unk1128 | arg0);
-    return (void *)0x80080000->unk-5F50;
+	
+    pPlayer->somekinda_bitflags = (pPlayer->somekinda_bitflags | bitflags);
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel set_unset_bitflags
-/* 09F0D8 7F06A5A8 10A00008 */  beqz  $a1, .L7F06A5CC
-/* 09F0DC 7F06A5AC 3C028008 */   lui   $v0, %hi(pPlayer)
-/* 09F0E0 7F06A5B0 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 09F0E4 7F06A5B4 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
-/* 09F0E8 7F06A5B8 00807827 */  not   $t7, $a0
-/* 09F0EC 7F06A5BC 8C4E1128 */  lw    $t6, 0x1128($v0)
-/* 09F0F0 7F06A5C0 01CFC024 */  and   $t8, $t6, $t7
-/* 09F0F4 7F06A5C4 03E00008 */  jr    $ra
-/* 09F0F8 7F06A5C8 AC581128 */   sw    $t8, 0x1128($v0)
-
-.L7F06A5CC:
-/* 09F0FC 7F06A5CC 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
-/* 09F100 7F06A5D0 8C591128 */  lw    $t9, 0x1128($v0)
-/* 09F104 7F06A5D4 03244025 */  or    $t0, $t9, $a0
-/* 09F108 7F06A5D8 AC481128 */  sw    $t0, 0x1128($v0)
-/* 09F10C 7F06A5DC 03E00008 */  jr    $ra
-/* 09F110 7F06A5E0 00000000 */   nop   
-)
-#endif
 
 
 void display_in_game_crosshair(s32 *gdl) { 
