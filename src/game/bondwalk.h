@@ -224,4 +224,8 @@ u16 *get_ptr_short_watch_text_for_item(ITEM_IDS item);
 
 s32 bondwalkItemHasAmmo(ITEM_IDS item);
 
+void display_in_game_crosshair(s32 *gdl);
+
+WeaponStats *get_ptr_item_statistics(ITEM_IDS item);
+
 #endif

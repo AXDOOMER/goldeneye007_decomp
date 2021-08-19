@@ -3,14 +3,18 @@
 #include "ultra64.h"
 #include "game/bond.h"
 
+typedef enum SHOT_REGISTER {
+    SHOTS_FIRED = 0,
+    HEAD_HITS,
+    BODY_HITS,
+    LEG_HITS,
+    OTHER_HIT_WEAPON,
+    OTHER_HIT_HAT,
+    OTHER_HIT_OBJECTS
+} SHOT_REGISTER;
+
 struct player_data {
-    int shots_fired;
-    int head_hits;
-    int body_hits;
-    int leg_hits;
-    int other_hit_weapon;
-    int other_hit_hat;
-    int other_hit_objects;
+    s32 shot_count[7];
     int kill_count;
     int killed_gg_owner_count;
     int killed_p1;

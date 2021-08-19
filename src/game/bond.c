@@ -34851,7 +34851,7 @@ glabel maybe_mp_interface
 /* 0BE1A0 7F089670 0FC22ABA */  jal   sub_GAME_7F08AAE8
 /* 0BE1A4 7F089674 8FA40058 */   lw    $a0, 0x58($sp)
 /* 0BE1A8 7F089678 AFA20058 */  sw    $v0, 0x58($sp)
-/* 0BE1AC 7F08967C 0FC1A979 */  jal   sub_GAME_7F06A5E4
+/* 0BE1AC 7F08967C 0FC1A979 */  jal   display_in_game_crosshair
 /* 0BE1B0 7F089680 27A40058 */   addiu $a0, $sp, 0x58
 /* 0BE1B4 7F089684 0FC1A73D */  jal   generate_ammo_total_microcode
 /* 0BE1B8 7F089688 8FA40058 */   lw    $a0, 0x58($sp)
