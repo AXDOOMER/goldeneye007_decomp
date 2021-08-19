@@ -64,6 +64,12 @@ The X,Y,Z coordinates are now 32-bit floats.
 
 The "link" is now a 32-bit int.
 
+## Tile list
+
+The tile section in the stand tile file ends with an empty entry. This is a regular stand tile of all zeroes (8 bytes of zero). The beta tile list ends with 8 bytes of zero as well (even though the struct size is 12 bytes).
+
+"Tile beginning with room 0 is the true way the file format ends, engine does not check for unstric string". For beta tiles, this is a check against the first 4 bytes of the struct.
+
 ## Tile Attributes
 
 Possible values for tile "flags" or "attributes":
@@ -73,4 +79,4 @@ Possible values for tile "flags" or "attributes":
 3 = Ladder  
 
 ## Footer
-After the tile list is a standard footer. This consists of 2 null pointers (8 bytes of zero), followed by an 8 character zero terminated string "unstric", followed by 4 more null points (16 bytes of zero).
+After the tile list is a standard footer. This consists of an 8 character zero terminated string "unstric", followed by 4 null points (16 bytes of zero).
