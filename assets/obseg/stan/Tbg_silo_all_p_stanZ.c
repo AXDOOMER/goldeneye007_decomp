@@ -1,8 +1,8 @@
 /*
 * This file was automatically generated
 * 
-* Saturday, August 7, 2021 2:39:16 PM
-* Getools.Lib: 21.8.7.1
+* Wednesday, August 18, 2021 10:27:16 PM
+* Getools.Lib: 21.8.18.1
 */
 
 #include "ultra64.h"
@@ -33575,10 +33575,16 @@ StandTile tile_2569 = {
     }
 };
 
+StandTile tile_2570 = {
+    0x000000, 0x00,
+    0x0,
+    0x0, 0x0, 0x0,
+    0,
+    0x0, 0x0, 0x0
+};
+
 
 StandFileFooter footer = {
-    NULL,
-    NULL,
     "unstric",
     NULL,
     NULL,

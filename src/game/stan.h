@@ -94,8 +94,6 @@ struct StandTileLocusCallbackRecord {
 };
 
 typedef struct StandFileFooter {
-    void* unk1;
-    void* unk2;
     char strictstring[8];
     void* unk3;
     void* unk4;
