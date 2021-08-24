@@ -43,7 +43,7 @@ void indycommHostSendDump(char *filename, u8 *data, u32 size)
   
     if (indy_ready) 
     {
-        indycmdSendDump(filename, size, (struct indy_resource_entry *)data);
+        indycmdSendDump(filename, size, data);
         indycmdAckSendDump(auStack4);
     }
     return;

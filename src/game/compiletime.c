@@ -5,17 +5,17 @@
 char *get_compile_time(void) {
     return "Jun 29 1997 20:46:05";
 }
-#endif
-
-#ifdef VERSION_EU
+#elif VERSION_EU
 char *get_compile_time(void) {
     return "Jul 31 1997 14:53:03";
 }
-#endif
-
-#ifdef VERSION_JP
+#elif VERSION_JP
 char *get_compile_time(void) {
     return "Jul 10 1997 14:53:37";
+}
+#else
+char *get_compile_time(void) {
+    return __DATE__" " __TIME__;
 }
 #endif
 

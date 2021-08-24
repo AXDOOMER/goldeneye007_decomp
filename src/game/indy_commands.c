@@ -43,7 +43,7 @@ void indy_buffer_write_command(u8 *buffer,u32 size)
 
 
 #ifdef NONMATCHING
-s32 indycmdSendCommand(struct indy_resource_entry *cmd,u32 size)
+s32 indycmdSendCommand(indy_resource_entry_header *cmd,u32 size)
 {
     s32 i;
     u32 uVar1;
@@ -186,7 +186,7 @@ glabel indycmdSendCommand
 
 
 
-u32 send2indyresourcecommands(struct indy_resource_entry * entry1, u32 size1, struct indy_resource_entry * entry2, u32 size2)
+s32 send2indyresourcecommands(indy_resource_entry_header * entry1, u32 size1, indy_resource_entry_header * entry2, u32 size2)
 {
     indycmdSendCommand(entry1,size1);
     indycmdSendCommand(entry2,size2);
@@ -196,38 +196,38 @@ u32 send2indyresourcecommands(struct indy_resource_entry * entry1, u32 size1, st
 
 void indyrescmdSizeNextCmd(s32 readsize,s32 writesize)
 {
-    struct indy_resource_entry cmd;
+    indy_resource_entry_type1 cmd;
 
-    cmd.resourceID = 0x9abf1623;
-    cmd.type = 1;
-    cmd.size = 0x14;
-    cmd.readsize = readsize;
-    cmd.writesize = writesize;
+    cmd.entry.resourceID = 0x9abf1623;
+    cmd.entry.type = 1;
+    cmd.entry.size = 0x14;
+    cmd.entry.readsize = readsize;
+    cmd.entry.writesize = writesize;
     indycmdSendCommand(&cmd,0x14);
 }
 
 
 void indyrescmdSendCmdEnd(s32 readsize,s32 writesize)
 {
-    struct indy_resource_entry cmd;
+    indy_resource_entry_type2 cmd;
 
-    cmd.resourceID = 0x9abf1623;
-    cmd.type = 2;
-    cmd.size = 0x14;
-    cmd.readsize = readsize;
-    cmd.writesize = writesize;
+    cmd.entry.resourceID = 0x9abf1623;
+    cmd.entry.type = 2;
+    cmd.entry.size = 0x14;
+    cmd.entry.readsize = readsize;
+    cmd.entry.writesize = writesize;
     indycmdSendCommand(&cmd,0x14);
 }
 
 
 void indyrescmdInit(s32 readsize,s32 writesize)
 {
-    struct indy_resource_entry cmd;
-    cmd.resourceID = 0x9abf1623;
-    cmd.type = 0;
-    cmd.size = 0x14;
-    cmd.readsize = readsize;
-    cmd.writesize = writesize;
+    indy_resource_entry_type0 cmd;
+    cmd.entry.resourceID = 0x9abf1623;
+    cmd.entry.type = 0;
+    cmd.entry.size = 0x14;
+    cmd.entry.readsize = readsize;
+    cmd.entry.writesize = writesize;
     indycmdSendCommand(&cmd,0x14);
 }
 
@@ -248,7 +248,7 @@ void post_type3_indyrescmd(s32 rsize,s32 wsize,char *strptr)
 
 void post_type4_indyrescmd_data_recieved(s32 readsize,s32 writesize,s32 data)
 {
-    struct indy_resource_entry_type4 cmd;
+    indy_resource_entry_type4 cmd;
     
     cmd.entry.resourceID = 0x9abf1623;
     cmd.entry.type = 4;
@@ -262,7 +262,7 @@ void post_type4_indyrescmd_data_recieved(s32 readsize,s32 writesize,s32 data)
 
 void indyrescmdCheckFileExists(s32 rsize,s32 wsize,char *name)
 {
-  struct indy_resource_entry_type3 cmd;
+  indy_resource_entry_type5 cmd;
   
   cmd.entry.resourceID = 0x9abf1623;
   cmd.entry.type = 5;
@@ -326,7 +326,7 @@ void post_type8_indyrescmd_log_recieved(s32 rsize,s32 wsize,u32 data1,u32 data2,
 
 void indyrescmdSendDump(s32 rsize,s32 wsize,char *strptr,u32 size2,struct indy_resource_entry3 *cmd2)
 {
-  struct indy_resource_entry_type3 cmd;
+  indy_resource_entry_type9 cmd;
 
   cmd.entry.resourceID = 0x9abf1623;
   cmd.entry.type = 9;
@@ -344,10 +344,10 @@ void indyrescmdSendDump(s32 rsize,s32 wsize,char *strptr,u32 size2,struct indy_r
 
 void post_typeA_indyrescmd_app_command_recieved(s32 readsize,s32 writesize,u32 data)
 {
-  struct indy_resource_entry_type4 cmd;
+  indy_resource_entry_typeA cmd;
   
   cmd.entry.resourceID = 0x9abf1623;
-  cmd.entry.type = 10;
+  cmd.entry.type = 0xa;
   cmd.entry.size = 0x18;
   cmd.entry.readsize = readsize;
   cmd.entry.writesize = writesize;
@@ -358,7 +358,7 @@ void post_typeA_indyrescmd_app_command_recieved(s32 readsize,s32 writesize,u32 d
 
 void indyrescmdRamRomLoad(u32 rsize,u32 wsize,char *name,u32 filesize,u32 ptarget)
 {
-  struct indy_resource_entry_typeF cmd;
+  indy_resource_entry_typeF cmd;
   
   cmd.entry.resourceID = 0x9abf1623;
   cmd.entry.type = 0xf;
@@ -393,7 +393,7 @@ void post_type10_indyrescmd_fault_ack_by_host(s32 rsize,s32 wsize,u32 data1,u32 
 
 void indyrescmdSendExportFile(u32 rsize,u32 wsize,u8 *ptrstr,u32 size,u8 *hwaddress)
 {
-    struct indy_resource_entry_typeF cmd;
+    indy_resource_entry_typeD cmd;
     
     cmd.entry.resourceID = 0x9abf1623;
     cmd.entry.type = 0xd;
@@ -410,7 +410,7 @@ void indyrescmdSendExportFile(u32 rsize,u32 wsize,u8 *ptrstr,u32 size,u8 *hwaddr
 
 void post_typeE_indyrescmd_prof_recv(s32 readsize,s32 writesize,u32 data)
 {
-    struct indy_resource_entry_type4 cmd;
+    indy_resource_entry_typeE cmd;
 
     cmd.entry.resourceID = 0x9abf1623;
     cmd.entry.type = 0xe;
@@ -424,7 +424,7 @@ void post_typeE_indyrescmd_prof_recv(s32 readsize,s32 writesize,u32 data)
 
 void indyrescmdSendHostCmd(s32 rsize,s32 wsize,char *strptr)
 {
-    struct indy_resource_entry_typeB res;
+    indy_resource_entry_typeB res;
     
     res.entry.resourceID = 0x9abf1623;
     res.entry.type = 0xb;
@@ -439,7 +439,7 @@ void indyrescmdSendHostCmd(s32 rsize,s32 wsize,char *strptr)
 
 void post_typeC_indyrescmd_prof_send(s32 readsize,s32 writesize,u32 data)
 {
-    struct indy_resource_entry_type4 cmd;
+    indy_resource_entry_typeC cmd;
 
     cmd.entry.resourceID = 0x9abf1623;
     cmd.entry.type = 0xc;
@@ -453,10 +453,10 @@ void post_typeC_indyrescmd_prof_send(s32 readsize,s32 writesize,u32 data)
 
 void post_typeA_indyrescmd_app_data_recieved(s32 readsize,s32 writesize,u32 data)
 {
-    struct indy_resource_entry_type4 cmd;
+    indy_resource_entry_typeA cmd;
 
     cmd.entry.resourceID = 0x9abf1623;
-    cmd.entry.type = 10;
+    cmd.entry.type = 0xA;
     cmd.entry.size = 0x18;
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
@@ -519,7 +519,7 @@ s32 indycmdSendLoadFile(u8 *filename,u32 size)
 }
 
 
-s32 post_indyrescmd_1_8_2(u32 data1,u32 data2,u32 size2,struct indy_resource_entry *cmd2)
+s32 post_indyrescmd_1_8_2(u32 data1,u32 data2,u32 size2,struct indy_resource_entry_header *cmd2)
 {
     indyrescmdSizeNextCmd((size2 + 3 & 0xfffffffc) + 0x20,0x20);
     post_type8_indyrescmd_log_recieved(0x14,0x14,data1,data2,size2,cmd2);
@@ -528,7 +528,7 @@ s32 post_indyrescmd_1_8_2(u32 data1,u32 data2,u32 size2,struct indy_resource_ent
 }
 
 
-s32 indycmdSendDump(char *string, u32 size, struct indy_resource_entry *data)
+s32 indycmdSendDump(char *string, u32 size, struct indy_resource_entry_header *data)
 {
     indyrescmdSizeNextCmd((size + 3 & 0xfffffffc) + 0x114,0x114);
     indyrescmdSendDump(0x14,0x14,string,size,data);
@@ -614,7 +614,7 @@ s32 post_indyrescmd_1_A_2(u32 data)
 
 
 #ifdef NONMATCHING
-u32 indycmdRecieveCommand(indy_resource_entry *resource,u32 size)
+s32 indycmdRecieveCommand(struct indy_resource_entry_header *resource,u32 size)
 
 {
     uint uVar1;
@@ -799,7 +799,7 @@ s32 post_indyrescmd_read_2commands(u8 *buffer1,u32 size1,u8 *buffer2,u32 size2)
 
 s32 indyrescmdResponseSize(s32 readsize, s32 writesize)
 {
-    struct indy_resource_entry cmd;
+    struct indy_resource_entry_header cmd;
     u32 ret;
 
     indycmdRecieveCommand(&cmd, 0x14);
@@ -829,7 +829,7 @@ s32 indyrescmdResponseSize(s32 readsize, s32 writesize)
 
 s32 indyrescmdResponseEnd(s32 readsize, s32 writesize)
 {
-    struct indy_resource_entry cmd;
+    struct indy_resource_entry_header cmd;
 
     indycmdRecieveCommand(&cmd, 0x14);
     if (cmd.resourceID != 0x9ABF1623)
@@ -887,7 +887,7 @@ s32 post_indyrescmd_istype4_correctvalue(s32 readsize, s32 writesize, u32 *respo
 }
 
 
-s32 post_indyrescmd_istype6_correctvalue(s32 readsize, s32 writesize, u32 *response1, u32 *response2)
+s32 indyrescmdResponseFileExists(s32 readsize, s32 writesize, u32 *response1, u32 *response2)
 {
     struct indy_resource_entry_type6 cmd;
 
@@ -918,7 +918,7 @@ s32 post_indyrescmd_istype6_correctvalue(s32 readsize, s32 writesize, u32 *respo
 }
 
 
-s32 post_indyrescmd_istype8_correctvalue(s32 readsize, s32 writesize, u32 *response1, u32 *response2, u32 *childsize, u32 *child)
+s32 indyrescmdResponseRecieveFile(s32 readsize, s32 writesize, u32 *response1, u32 *response2, u32 *childsize, u32 *child)
 {
     struct indy_resource_entry_type8 cmd;
 
@@ -951,9 +951,9 @@ s32 post_indyrescmd_istype8_correctvalue(s32 readsize, s32 writesize, u32 *respo
 }
 
 
-s32 post_indyrescmd_istypeA_correctvalue(s32 readsize, s32 writesize, u32 *response)
+s32 indyrescmdResponseSendDump(s32 readsize, s32 writesize, u32 *response)
 {
-    struct indy_resource_entry_type4 cmd;
+    struct indy_resource_entry_typeA cmd;
 
     indycmdRecieveCommand(&cmd, 0x18);
     if (cmd.entry.resourceID != 0x9ABF1623)
@@ -981,7 +981,7 @@ s32 post_indyrescmd_istypeA_correctvalue(s32 readsize, s32 writesize, u32 *respo
 }
 
 
-s32 post_indyrescmd_istype10_correctvalue(s32 readsize, s32 writesize, u32 *data1, u32 *data2, u32 *data3)
+s32 indyrescmdResponseRecieveRamRom(s32 readsize, s32 writesize, u32 *data1, u32 *data2, u32 *data3)
 {
     struct indy_resource_entry_type10 cmd;
 
@@ -1013,9 +1013,9 @@ s32 post_indyrescmd_istype10_correctvalue(s32 readsize, s32 writesize, u32 *data
 }
 
 
-s32 post_indyrescmd_istypeE_correctvalue(s32 readsize, s32 writesize, u32 *response)
+s32 indyrescmdResponseHostExportFile(s32 readsize, s32 writesize, u32 *response)
 {
-    struct indy_resource_entry_type4 cmd;
+    indy_resource_entry_typeE cmd;
 
     indycmdRecieveCommand(&cmd, 0x18);
     if (cmd.entry.resourceID != 0x9ABF1623)
@@ -1043,9 +1043,9 @@ s32 post_indyrescmd_istypeE_correctvalue(s32 readsize, s32 writesize, u32 *respo
 }
 
 
-s32 post_indyrescmd_istypeC_correctvalue(s32 readsize, s32 writesize, u32 *response)
+s32 indyrescmdResponseHostCmdPacket(s32 readsize, s32 writesize, u32 *response)
 {
-    struct indy_resource_entry_type4 cmd;
+    indy_resource_entry_typeC cmd;
 
     indycmdRecieveCommand(&cmd, 0x18);
     if (cmd.entry.resourceID != 0x9ABF1623)
@@ -1085,7 +1085,7 @@ s32 response_indyrescmd_1_4_2(u8 *response)
 s32 indycmdAckHostCheckFileExists(u8 *response1,u8 *response2)
 {
     indyrescmdResponseSize(0x1c,0x1c);
-    post_indyrescmd_istype6_correctvalue(0x14,0x14,response1,response2);
+    indyrescmdResponseFileExists(0x14,0x14,response1,response2);
     indyrescmdResponseEnd(0,0);
     return TRUE;
 }
@@ -1094,7 +1094,7 @@ s32 indycmdAckHostCheckFileExists(u8 *response1,u8 *response2)
 s32 indycmdReceiveFile(u8 *response1,u8 *response2,u32 childsize,u8 *child)
 {
     indyrescmdResponseSize(0,0x20);
-    post_indyrescmd_istype8_correctvalue(0x14,0x14,response1,response2,childsize,child);
+    indyrescmdResponseRecieveFile(0x14,0x14,response1,response2,childsize,child);
     indyrescmdResponseEnd(0,0);
     return TRUE;
 }
@@ -1103,7 +1103,7 @@ s32 indycmdReceiveFile(u8 *response1,u8 *response2,u32 childsize,u8 *child)
 s32 indycmdAckSendDump(u8 *param_1)
 {
     indyrescmdResponseSize(0x18,0x18);
-    post_indyrescmd_istypeA_correctvalue(0x14,0x14,param_1);
+    indyrescmdResponseSendDump(0x14,0x14,param_1);
     indyrescmdResponseEnd(0,0);
     return TRUE;
 }
@@ -1112,7 +1112,7 @@ s32 indycmdAckSendDump(u8 *param_1)
 s32 indycmdReceiveRamRom(u32 *param_1,u32 *param_2,u32 *param_3)
 {
     indyrescmdResponseSize(0x20,0x20);
-    post_indyrescmd_istype10_correctvalue(0x14,0x14,param_1,param_2,param_3);
+    indyrescmdResponseRecieveRamRom(0x14,0x14,param_1,param_2,param_3);
     indyrescmdResponseEnd(0,0);
     return TRUE;
 }
@@ -1121,7 +1121,7 @@ s32 indycmdReceiveRamRom(u32 *param_1,u32 *param_2,u32 *param_3)
 s32 indycmdAckHostExportFile(u8 *response)
 {
     indyrescmdResponseSize(0x18,0x18);
-    post_indyrescmd_istypeE_correctvalue(0x14,0x14,response);
+    indyrescmdResponseHostExportFile(0x14,0x14,response);
     indyrescmdResponseEnd(0,0);
     return TRUE;
 }
@@ -1130,7 +1130,7 @@ s32 indycmdAckHostExportFile(u8 *response)
 s32 indycmdAckHostCmdPacket(u8 *response)
 {
     indyrescmdResponseSize(0x18,0x18);
-    post_indyrescmd_istypeC_correctvalue(0x14,0x14,response);
+    indyrescmdResponseHostCmdPacket(0x14,0x14,response);
     indyrescmdResponseEnd(0,0);
     return TRUE;
 }
@@ -1138,7 +1138,7 @@ s32 indycmdAckHostCmdPacket(u8 *response)
 
 s32 response_indyrescmd_curr_matches_expected(s32 readsize, s32 writesize)
 {
-    struct indy_resource_entry cmd;
+    struct indy_resource_entry_header cmd;
 
     indycmdRecieveCommand(&cmd, 0x14);
     if (cmd.resourceID != 0x9ABF1623)
