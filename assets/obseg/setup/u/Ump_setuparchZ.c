@@ -1,8 +1,8 @@
 /*
 * This file was automatically generated
 * 
-* Wednesday, August 25, 2021 11:21:08 AM
-* Getools.Lib: 21.8.24.1
+* Thursday, August 26, 2021 9:53:29 PM
+* Getools.Lib: 21.8.26.1
 */
 
 #include "ultra64.h"
@@ -740,9 +740,8 @@ s32 intro[] = {
 };
 
 
-s32 path_neighbors_not_used_0[] = { -1 };
+s32 unknown_setup_block_0[] = { -1, -1 };
 
-s32 path_indeces_not_used_0[] = { -1 };
 
 struct s_pathLink pathlist[] = {
     { NULL, NULL, 0 }
@@ -754,7 +753,8 @@ char *pad3dnames[] = {
 };
 
 
-s32 path_table_not_used_0[] = { -1 };
+s32 unknown_setup_block_1[] = { -1 };
+
 
 struct s_pathTbl pathtbl[] = {
     { 0xffff, 0xffff, NULL, 0x00000000, 0x00000000 }
@@ -771,10 +771,15 @@ struct s_pathSet paths[] = {
 };
 
 
-
 struct ailist ailists[] = {
     /* index = 0 */
     { NULL, 0x00000000 }
 };
+
+
+
+
+
+
 
 

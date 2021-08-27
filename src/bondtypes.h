@@ -1018,6 +1018,23 @@ typedef struct sGlobalImageTable {
     struct sImageTableEntry s_mpstageselimages[17];
 } sGlobalImageTable;
 
+typedef struct CreditsEntry_s {
+    u16 TextId1;
+    u16 TextId2;
+    s16 Position1;
 
+    /**
+     * See CREDITS_ALIGNMENT.
+    */
+    u16 Alignment1;
+
+    s16 Position2;
+    
+    /**
+     * See CREDITS_ALIGNMENT.
+    */
+    u16 Alignment2;
+
+} CreditsEntry;
 
 #endif

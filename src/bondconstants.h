@@ -1652,6 +1652,13 @@ typedef enum SFX_IDS {
     BIG_CLANK_SFX
 } SFX_IDS;
 
+typedef enum CREDITS_ALIGNMENT {
+    CREDITS_ALIGN_RIGHT = 0,
+    CREDITS_ALIGN_LEFT = 1,
+    CREDITS_ALIGN_CENTER = 2,
+    CREDITS_ALIGN_PREVIOUS = 0xffff
+} CREDITS_ALIGNMENT;
+
 //macros for FILERECORDS
 #define STR(n) #n
 #define PROPFILERECORD(NAME, SCALE) {& ## NAME ## _header, STR(P ## NAME ##Z), SCALE},

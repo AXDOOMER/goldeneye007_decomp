@@ -1,8 +1,8 @@
 /*
 * This file was automatically generated
 * 
-* Tuesday, August 24, 2021 8:55:57 PM
-* Getools.Lib: 21.8.23.1
+* Thursday, August 26, 2021 9:53:23 PM
+* Getools.Lib: 21.8.26.1
 */
 
 #include "ultra64.h"
@@ -14,9 +14,7 @@ struct pad3d pad3dlist[];
 s32 objlist[];
 s32 intro[];
 struct s_pathLink pathlist[];
-/* no pad3dnames */
 struct s_pathTbl pathtbl[];
-char *padnames[];
 struct s_pathSet paths[];
 struct ailist ailists[];
 
@@ -30,7 +28,7 @@ struct stagesetup setup = {
     &padlist,
     &pad3dlist,
     NULL,
-    NULL,
+    NULL
 };
 
 struct pad padlist[] = {
@@ -373,17 +371,12 @@ struct s_pathLink pathlist[] = {
 };
 
 
-/* no pad3dnames */
-
-
 struct s_pathTbl pathtbl[] = {
     { 0xffff, 0xffff, NULL, 0x00000000, 0x00000000 }
 };
 
 
-char *padnames[] = {
-    NULL
-};
+s32 unknown_setup_block_0[] = { 0 };
 
 
 struct s_pathSet paths[] = {
@@ -391,10 +384,15 @@ struct s_pathSet paths[] = {
 };
 
 
-
 struct ailist ailists[] = {
     /* index = 0 */
     { NULL, 0x00000000 }
 };
+
+
+
+
+
+
 
 

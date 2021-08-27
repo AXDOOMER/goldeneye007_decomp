@@ -1,8 +1,8 @@
 /*
 * This file was automatically generated
 * 
-* Tuesday, August 24, 2021 9:10:03 PM
-* Getools.Lib: 21.8.24.1
+* Thursday, August 26, 2021 9:53:22 PM
+* Getools.Lib: 21.8.26.1
 */
 
 #include "ultra64.h"
@@ -14,9 +14,7 @@ struct pad3d pad3dlist[];
 s32 objlist[];
 s32 intro[];
 struct s_pathLink pathlist[];
-char *pad3dnames[];
 struct s_pathTbl pathtbl[];
-char *padnames[];
 struct s_pathSet paths[];
 struct ailist ailists[];
 
@@ -30,7 +28,7 @@ struct stagesetup setup = {
     &padlist,
     &pad3dlist,
     NULL,
-    NULL,
+    NULL
 };
 
 struct pad padlist[] = {
@@ -385,30 +383,23 @@ s32 intro[] = {
 };
 
 
-s32 path_neighbors_not_used_0[] = { -1 };
+s32 unknown_setup_block_0[] = { -1, -1 };
 
-s32 path_indeces_not_used_0[] = { -1 };
 
 struct s_pathLink pathlist[] = {
     { NULL, NULL, 0 }
 };
 
 
-char *pad3dnames[] = {
-    NULL
-};
+s32 unknown_setup_block_1[] = { 0, -1 };
 
-
-s32 path_table_not_used_0[] = { -1 };
 
 struct s_pathTbl pathtbl[] = {
     { 0xffff, 0xffff, NULL, 0x00000000, 0x00000000 }
 };
 
 
-char *padnames[] = {
-    NULL
-};
+s32 unknown_setup_block_2[] = { 0 };
 
 
 struct s_pathSet paths[] = {
@@ -416,10 +407,15 @@ struct s_pathSet paths[] = {
 };
 
 
-
 struct ailist ailists[] = {
     /* index = 0 */
     { NULL, 0x00000000 }
 };
+
+
+
+
+
+
 
 
