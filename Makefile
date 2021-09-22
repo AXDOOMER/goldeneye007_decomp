@@ -7,6 +7,7 @@ default: all
 # Version of the game to build
 FINAL := YES
 VERSION := US
+IDO_RECOMP := NO
 # If COMPARE is 1, check the output sha1sum when building 'all'
 COMPARE := 1
 
@@ -18,11 +19,15 @@ else
   TOOLCHAIN := mips64-elf-
 endif
 
-QEMU_IRIX := $(shell which qemu-irix 2>/dev/null)
-ifeq (, $(QEMU_IRIX))
-  $(error Using the IDO compiler requires qemu-irix. Please install qemu-irix package or set the QEMU_IRIX environment variable to the full qemu-irix binary path)
+ifeq ($(IDO_RECOMP), NO)
+  QEMU_IRIX := $(shell which qemu-irix 2>/dev/null)
+  ifeq (, $(QEMU_IRIX))
+    $(error Using the IDO compiler requires qemu-irix. Please install qemu-irix package or set the QEMU_IRIX environment variable to the full qemu-irix binary path)
+  endif
+  IRIX_ROOT := tools/irix/root
+else
+  IRIX_ROOT := tools/ido5.3_recomp
 endif
-IRIX_ROOT := tools/irix/root
 # other tools
 TOOLS_DIR := tools
 DATASEG_COMP := $(TOOLS_DIR)/data_compress.sh
@@ -134,7 +139,11 @@ OBJECTS := $(RSPOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(OBSEGMENT)
 
 INCLUDE := -I . -I include -I include/ultra64 -I src -I src/game -I src/inflate
 
-CC := $(QEMU_IRIX) -silent -L $(IRIX_ROOT) $(IRIX_ROOT)/usr/bin/cc
+ifeq ($(IDO_RECOMP), NO)
+  CC := $(QEMU_IRIX) -silent -L $(IRIX_ROOT) $(IRIX_ROOT)/usr/bin/cc
+else
+  CC := $(IRIX_ROOT)/cc
+endif
 CFLAGS := 0 -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838 -signed $(INCLUDE) -mips2 $(LCDEFS) -DTARGET_N64
 CFLAGS_LIBULTRA := 0 -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838 -signed $(INCLUDE) -mips2 $(LCDEFS) -DTARGET_N64
 
