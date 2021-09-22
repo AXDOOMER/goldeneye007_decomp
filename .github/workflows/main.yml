@@ -36,7 +36,7 @@ jobs:
           IDO_RECOMP: ${{ secrets.FILE_RECOMP  }}
         run: |
           wget -O recomp.zip $IDO_RECOMP
-          unzip -X recomp.zip -d tools/ido5.3_recomp
+          unzip -u recomp.zip -d tools/ido5.3_recomp
 
       - name: Get US File
         env:
