@@ -66,7 +66,7 @@ void debTryAdd(void* data, const char *name) {
     }
 }
 
-void deb70004E98(void) {
+void debLoopEntries(void) {
     struct deblistentry *entry = g_DebList;
     while (entry != NULL) {
         // Removed
