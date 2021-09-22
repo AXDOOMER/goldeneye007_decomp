@@ -1,24 +1,12 @@
-#include "ultra64.h"
+# assembler directives
+.set noat      # allow manual use of $at
+.set noreorder # don't insert nops after branches
+.set gp=64
 
-/**
- * @file osMapTLB.c
- * This file contains code thatsets TLB indexed entry 0 to mirror 1KB of rdram from 80000000 to C0000000. 
- * 
- * In particular, it:
- *   - should be made into an assembly file
- */
+.include "macros.inc"
 
-/**
- * 	 2380	70001780
- * sets TLB indexed entry 0 to mirror 1KB of rdram from 80000000 to C0000000
- *	uncached, dirty, valid, global
- */
-#ifdef NONMATCHING
-void osMapTLBRdb(void) {
-    //i should probably remain as assembly, maybe even moved to a .s
-}
-#else
-GLOBAL_ASM(
+.section .text, "ax"
+
 .text
 glabel osMapTLBRdb
 /* 002380 70001780 40085000 */  mfc0  $t0, $10
@@ -43,5 +31,3 @@ glabel osMapTLBRdb
 /* 0023CC 700017CC 40885000 */  mtc0  $t0, $10
 /* 0023D0 700017D0 03E00008 */  jr    $ra
 /* 0023D4 700017D4 00000000 */   nop   
-)
-#endif
