@@ -37,10 +37,10 @@ s32 rmonStatus(void) {
 
 /**
  * Removed
- * rmonHostWriteData
+ * osWriteHost
  * writes data to the host
  */
-void rmonHostWriteData(void) {
+void osWriteHost(void) {
     #ifdef DEBUG
         //removed
     #endif
@@ -48,10 +48,10 @@ void rmonHostWriteData(void) {
 
 /**
  * Removed
- * rmonHostReadData
+ * osReadHost
  * reads data from the host
  */
-void rmonHostReadData(void) {
+void osReadHost(void) {
     #ifdef DEBUG
         //removed
     #endif

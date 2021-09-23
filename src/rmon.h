@@ -9,8 +9,8 @@
 void rmonMain(void);
 s32 rmonIsFinalBuild(void);
 s32 rmonStatus(void);
-void rmonHostWriteData(void);
-void rmonHostReadData(void);
+void osWriteHost(void);
+void osReadHost(void);
 s32 osSyncPrintf(const char *fmt, ...);
 
 #endif

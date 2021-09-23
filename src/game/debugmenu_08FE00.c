@@ -46,9 +46,41 @@ void sub_GAME_7F08FE08(s32 param_1) {
 
 
 #ifdef NONMATCHING
-void init_debug_menu_values(void) {
+/*
+extern s32 number_groups;
+extern s32 *ptr_groupings;
+extern s32 ptr_last_debuggrp_cutoff;
+extern s32 ptr_positions;
+extern s32 ptr_textptrs;
 
+void init_debug_menu_values(char *strings,mcm_layout *positions,u32 *columns)
+{
+    s32 temp_v0;
+    s32 *phi_v1;
+    s32 phi_v0;
+    s32 phi_v0_2;
+
+    ptr_textptrs = strings;
+    ptr_positions = positions;
+    ptr_groupings = columns;
+    phi_v1 = columns;
+    phi_v0 = 0;
+    phi_v0_2 = 0;
+    if (*columns >= 0)
+    {
+        do
+        {
+            temp_v0 = phi_v0_2 + 1;
+            phi_v1 += 4;
+            phi_v0 = temp_v0;
+            phi_v0_2 = temp_v0;
+        } while (phi_v1->unk4 >= 0);
+    }
+    ptr_last_debuggrp_cutoff = (s32) (columns + (phi_v0 * 4))->unk-4;
+    number_groups = phi_v0;
 }
+
+//*/
 #else
 GLOBAL_ASM(
 .text
@@ -87,9 +119,62 @@ glabel init_debug_menu_values
 
 
 #ifdef NONMATCHING
-void print_debug_mcm_to_stdout(void) {
+/*
+? debmenuSetPosition(s32, s32); // extern
+? debmenuSetPrimColor(?, ?, ?, ?); // extern
+? debmenuWriteString(s32); // extern
+? nullsub_32(); // extern
+extern s32 highlighted_debug_option;
+extern ? mcm_xoffset_multiplier;
+extern ? mcm_yoffset_multiplier;
+extern s32 num_mcm_something;
+extern s32 ptr_last_debuggrp_cutoff;
+extern s32 ptr_positions;
+extern s32 ptr_textptrs;
 
+s32 print_debug_mcm_to_stdout(s32 arg0)
+{
+    s32 temp_s0;
+    s32 temp_v0;
+    u8 temp_fp;
+    u8 temp_s7;
+    void *temp_v0_2;
+    s32 phi_s0;
+    s32 phi_s1;
+    s32 phi_s2;
+
+    temp_v0 = num_mcm_something;
+    temp_s7 = *(&mcm_xoffset_multiplier + temp_v0);
+    temp_fp = *(&mcm_yoffset_multiplier + temp_v0);
+    phi_s0 = 0;
+    if (ptr_last_debuggrp_cutoff > 0)
+    {
+        phi_s1 = 0;
+        phi_s2 = 0;
+        do
+        {
+            nullsub_32();
+            if (phi_s0 == highlighted_debug_option)
+            {
+                debmenuSetPrimColor(0xC0, 0, 0, 0xC0);
+            }
+            else
+            {
+                debmenuSetPrimColor(0xC0, 0xC0, 0xC0, 0xC0);
+            }
+            temp_v0_2 = ptr_positions + phi_s1;
+            debmenuSetPosition((s32) ((temp_v0_2->unk0 * temp_s7) - 0x14) / 4, (s32) ((temp_v0_2->unk4 * temp_fp) - 8) / 7);
+            debmenuWriteString(*(ptr_textptrs + phi_s2));
+            temp_s0 = phi_s0 + 1;
+            phi_s0 = temp_s0;
+            phi_s1 += 8;
+            phi_s2 += 4;
+        } while (temp_s0 < ptr_last_debuggrp_cutoff);
+    }
+    return arg0;
 }
+
+//*/
 #else
 GLOBAL_ASM(
 .text
@@ -211,9 +296,63 @@ glabel print_debug_mcm_to_stdout
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09000C(void) {
+/*
+? debmenuSetPosition(s32, s32); // extern
+? debmenuSetPrimColor(?, ?, ?, ?); // extern
+? debmenuWriteString(s32); // extern
+? nullsub_32(); // extern
+extern s8 aMenu_cErrorTriedToCallFont_makegt;
+extern s32 highlighted_debug_option;
+extern ? mcm_xoffset_multiplier;
+extern ? mcm_yoffset_multiplier;
+extern s32 num_mcm_something;
+extern s32 ptr_last_debuggrp_cutoff;
+extern s32 ptr_positions;
+extern s32 ptr_textptrs;
 
+void sub_GAME_7F09000C(s32 arg0, ? arg1, ? arg2)
+{
+    s32 temp_s0;
+    s32 temp_v0;
+    u8 temp_s3;
+    u8 temp_s4;
+    void *temp_v0_2;
+    s32 phi_s0;
+    s32 phi_s1;
+    s32 phi_s2;
+
+    temp_v0 = num_mcm_something;
+    temp_s3 = *(&mcm_xoffset_multiplier + temp_v0);
+    temp_s4 = *(&mcm_yoffset_multiplier + temp_v0);
+    phi_s0 = 0;
+    if (ptr_last_debuggrp_cutoff > 0)
+    {
+        phi_s1 = 0;
+        phi_s2 = 0;
+        do
+        {
+            nullsub_32();
+            if (phi_s0 == highlighted_debug_option)
+            {
+                debmenuSetPrimColor(0xC0, 0, 0, 0xC0);
+            }
+            else
+            {
+                debmenuSetPrimColor(0xC0, 0xC0, 0xC0, 0xC0);
+            }
+            temp_v0_2 = ptr_positions + phi_s1;
+            debmenuSetPosition((s32) ((temp_v0_2->unk0 * temp_s3) - 0x14) / 4, (s32) ((temp_v0_2->unk4 * temp_s4) - 8) / 7);
+            debmenuWriteString(*(ptr_textptrs + phi_s2));
+            osSyncPrintf(&aMenu_cErrorTriedToCallFont_makegt);
+            temp_s0 = phi_s0 + 1;
+            phi_s0 = temp_s0;
+            phi_s1 += 8;
+            phi_s2 += 4;
+        } while (temp_s0 < ptr_last_debuggrp_cutoff);
+    }
 }
+
+//*/
 #else
 GLOBAL_ASM(
 .text
@@ -340,7 +479,7 @@ s32 get_highlighted_debug_option(void) {
     return highlighted_debug_option;
 }
 
-void sub_GAME_7F0901BC(s32 value) {
+void set_highlighted_debug_option(s32 value) {
     highlighted_debug_option = value;
 }
 
