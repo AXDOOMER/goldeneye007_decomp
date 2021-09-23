@@ -1700,7 +1700,7 @@ glabel sub_GAME_7F0BE30C
 /* 0F314C 7F0BE61C 8FA40060 */   lw    $a0, 0x60($sp)
 /* 0F3150 7F0BE620 AFA20060 */  sw    $v0, 0x60($sp)
 .L7F0BE624:
-/* 0F3154 7F0BE624 0FC243DC */  jal   get_turbo_mode_flag
+/* 0F3154 7F0BE624 0FC243DC */  jal   get_debug_stan_problems_flag
 /* 0F3158 7F0BE628 00000000 */   nop   
 /* 0F315C 7F0BE62C 10400004 */  beqz  $v0, .L7F0BE640
 /* 0F3160 7F0BE630 00000000 */   nop   
@@ -2124,7 +2124,7 @@ glabel sub_GAME_7F0BE30C
 /* 0F3D4C 7F0BF1DC 8FA40060 */   lw    $a0, 0x60($sp)
 /* 0F3D50 7F0BF1E0 AFA20060 */  sw    $v0, 0x60($sp)
 .Ljp7F0BF1E4:
-/* 0F3D54 7F0BF1E4 0FC24694 */  jal   get_turbo_mode_flag
+/* 0F3D54 7F0BF1E4 0FC24694 */  jal   get_debug_stan_problems_flag
 /* 0F3D58 7F0BF1E8 00000000 */   nop   
 /* 0F3D5C 7F0BF1EC 10400004 */  beqz  $v0, .Ljp7F0BF200
 /* 0F3D60 7F0BF1F0 00000000 */   nop   
@@ -2558,7 +2558,7 @@ glabel sub_GAME_7F0BE30C
 /* 0F314C 7F0BE61C 8FA40060 */   lw    $a0, 0x60($sp)
 /* 0F3150 7F0BE620 AFA20060 */  sw    $v0, 0x60($sp)
 .L7F0BE624:
-/* 0F3154 7F0BE624 0FC243DC */  jal   get_turbo_mode_flag
+/* 0F3154 7F0BE624 0FC243DC */  jal   get_debug_stan_problems_flag
 /* 0F3158 7F0BE628 00000000 */   nop   
 /* 0F315C 7F0BE62C 10400004 */  beqz  $v0, .L7F0BE640
 /* 0F3160 7F0BE630 00000000 */   nop   

@@ -193,7 +193,7 @@ s32 debug_stanhit_flag = FALSE;
 //D:80036F88
 s32 debug_stanregion_flag = FALSE;
 //D:80036F8C
-s32 turbo_mode_flag = FALSE;
+s32 debug_stan_problems_flag = FALSE;
 //D:80036F90
 s32 debug_man_pos_flag = 0;
 //D:80036F94
@@ -295,7 +295,7 @@ glabel display_debug_menu_text_onscreen
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0904C4(void) {
+void debmenuHandleMoveView(void) {
     ? temp_ret;
 
     // Node 0
@@ -310,7 +310,7 @@ void sub_GAME_7F0904C4(void) {
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0904C4
+glabel debmenuHandleMoveView
 /* 0C4FF4 7F0904C4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0C4FF8 7F0904C8 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0C4FFC 7F0904CC 0FC245BD */  jal   sub_GAME_7F0916F4
@@ -336,7 +336,7 @@ glabel sub_GAME_7F0904C4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F090508(void) {
+void debmenuHandleStanView(void) {
     ? temp_ret;
 
     // Node 0
@@ -351,7 +351,7 @@ void sub_GAME_7F090508(void) {
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F090508
+glabel debmenuHandleStanView
 /* 0C5038 7F090508 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0C503C 7F09050C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0C5040 7F090510 0FC1E928 */  jal   maybe_solo_intro_camera_handler
@@ -377,7 +377,7 @@ glabel sub_GAME_7F090508
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09054C(void) {
+void debmenuHandleBondView(void) {
     ? temp_ret;
 
     // Node 0
@@ -391,7 +391,7 @@ void sub_GAME_7F09054C(void) {
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F09054C
+glabel debmenuHandleBondView
 /* 0C507C 7F09054C 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0C5080 7F090550 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0C5084 7F090554 0FC1E928 */  jal   maybe_solo_intro_camera_handler
@@ -428,8 +428,373 @@ void removed_do_debug_profile_flag_true(void) {
 
 
 #ifdef NONMATCHING
-s32 debug_menu_processor(s8 arg0, s8 arg1, u16 arg2, u16 arg3) {
+s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pressed)
+{
+    s32 i;
+    f32 tempx;
+    f32 tempz;
+    f32 tempy;
+    s32 debug_profile_flag;
+    struct coord3d *position;
 
+
+    if (grab_rgb_screenshot_flag != 0)
+    {
+        grab_rgb_screenshot_flag++;
+        if ((grab_rgb_screenshot_flag ^ 3) == 0)
+        {
+            indyGrabRgb32bit();
+            grab_rgb_screenshot_flag = 0;
+            viSetColorMode16Bit();
+            osViBlack(0U);
+        }
+    }
+
+    if (grab_jpeg_screenshot_flag != 0)
+    {
+        grab_jpeg_screenshot_flag++;
+        if ((grab_jpeg_screenshot_flag ^ 3) == 0)
+        {
+            indyGrabJpg32bit();
+            grab_jpeg_screenshot_flag = 0;
+            viSetColorMode16Bit();
+            osViBlack(0U);
+        }
+    }
+    if (show_debug_menu_flag == 0)
+    {
+        show_debug_menu_flag = (button_held & U_CBUTTONS) != 0;
+
+        if (show_debug_menu_flag != 0)
+        {
+            show_debug_menu_flag = (button_held & D_CBUTTONS) != 0;
+        }
+
+        if (show_debug_menu_flag != 0)
+        {
+            stop_recording_ramrom(button_held);
+        }
+    }
+    else
+    {
+
+        if (debug_limit_controller_input != -2U)
+        {
+            debug_unknown = debug_limit_controller_input;
+            debug_limit_controller_input = -2U;
+        }
+        button_pressed = (s32) button_pressed;
+        if ((button_pressed & L_JPAD) != 0)
+        {
+            sub_GAME_7F09039C(&debug_limit_controller_input);
+            debug_limit_controller_input = -2U;
+        }
+
+        if ((button_pressed & R_JPAD) != 0)
+        {
+            sub_GAME_7F0902C0(&debug_limit_controller_input);
+            debug_limit_controller_input = -2U;
+        }
+
+        if ((button_pressed & U_JPAD) != 0)
+        {
+            sub_GAME_7F0901C8(debug_limit_controller_input);
+            debug_limit_controller_input = -2U;
+        }
+
+        if ((button_pressed & D_JPAD) != 0)
+        {
+            sub_GAME_7F090248(debug_limit_controller_input);
+            debug_limit_controller_input = -2U;
+        }
+        if ((button_pressed & START_BUTTON|A_BUTTON) != 0)
+        {
+            switch (get_highlighted_debug_option(debug_limit_controller_input)) {
+            case 0: // move view
+                debmenuHandleMoveView();
+                break;
+            case 1: // stan view
+                debmenuHandleStanView();
+                break;
+            case 2: // bond view
+                debmenuHandleBondView();
+                break;
+            case 3: // level
+                debug_unknown = get_highlighted_debug_option();
+                break;
+            case 4: // region
+                debug_unknown = get_highlighted_debug_option();
+                break;
+            case 5: // scale
+                debug_unknown = get_highlighted_debug_option();
+                break;
+            case 8: // select anim
+                debug_unknown = get_highlighted_debug_option();
+                break;
+            case 9: // gun pos
+                debug_unknown = get_highlighted_debug_option();
+                break;
+            case 10: // flash colour
+                debug_unknown = get_highlighted_debug_option();
+                break;
+            case 11: // hit colour
+                debug_unknown = get_highlighted_debug_option();
+                break;
+
+            //case 50: //marg top
+            //case 51: //marg bot
+            //case 52: //marg left
+            //case 53: //marg right
+            //case 54: //marg reset
+            case 55: // screen size
+                debug_unknown = get_highlighted_debug_option();
+                break;
+            case 56: // screen pos
+                debug_unknown = get_highlighted_debug_option();
+                break;
+            case 12: // music
+                debug_unknown = get_highlighted_debug_option();
+                break;
+            case 26: // port close
+            case 27: // port inf
+            case 28: // port approx
+                debug_portal_flag ^= 1;
+                break;
+            case 13: // sfx
+                debug_unknown = get_highlighted_debug_option();
+                break;
+            case 14: // invincible
+                set_bondata_invincible_flag(get_bondata_invincible_flag() == 0);
+                break;
+            case 15: // visible
+                set_invisible_to_guards_flag(get_invisible_to_guards_flag() == 0);
+                break;
+            case 16: // collisions
+                set_obj_collision_flag(get_obj_collision_flag() == 0);
+                break;
+            case 17: // all guns
+                for (i = 0; i < getPlayerCount(); i++)
+                {
+                    set_cur_player(i);
+                    set_BONDdata_allguns_flag(get_BONDdata_allguns_flag() == 0);
+                }
+                break;
+            case 18: // max ammo
+                for (i = 0; i < getPlayerCount(); i++)
+                {
+                    set_cur_player(i);
+                    set_max_ammo_for_cur_player();
+                }
+                set_cur_player(get_cur_playernum());
+                break;
+            case 19: // display speed
+                memusage_display_flag ^= 1;
+                if (memusage_display_flag == 0)
+                {
+                    debmenuReset();
+                }
+                break;
+            case 20: // background
+                debug_do_draw_bg ^= 1;
+                break;
+            case 21: // props
+                debug_do_draw_obj ^= 1;
+                break;
+            case 22: // stan hit
+                debug_stanhit_flag ^= 1;
+                break;
+            case 23: // stan region
+                debug_stanregion_flag ^= 1;
+                break;
+            case 24: // stan problems
+                debug_stan_problems_flag ^= 1;
+                break;
+            case 25: // print man pos
+                debug_man_pos_flag ^= 1;
+                break;
+            case 75: // testing man pos
+                debug_testingmanpos_flag ^= 1;
+                break;
+            case 6: // play title
+                bossSetLoadedStage(0x5A);
+                break;
+            case 7: // bond die
+                kill_current_player();
+                break;
+            case 29: // pr room loads
+                debug_prroomloads_flag ^= 1;
+                break;
+            case 30: // show mem use
+                bossEnableShowMemUseFlag();
+                break;
+            case 31: // show mem bars
+                bossMemBarsFlagToggle();
+                break;
+            case 32: // grab rgb
+                grab_rgb_screenshot_flag = 1;
+                osViBlack(1U);
+                viSetColorMode32Bit();
+                break;
+            case 33: // grab jpeg
+                grab_jpeg_screenshot_flag = 1;
+                osViBlack(1U);
+                viSetColorMode32Bit();
+                break;
+            case 34: // grab task
+                debug_enable_taskgrab_flag ^= 1;
+                break;
+            //case 35: //rnd walk
+            //  break;
+            case 36: // record ramrom
+                setRamRomRecordSlot(0);
+                break;
+            case 37: // record 1
+                setRamRomRecordSlot(1);
+                break;
+            case 38: // record 2
+                setRamRomRecordSlot(2);
+                break;
+            case 39: // record 3
+                setRamRomRecordSlot(3);
+                break;
+            case 40: // replay ramrom
+                replay_recorded_ramrom_from_indy();
+                break;
+            case 41: // save ramrom
+                save_ramrom_to_devtool();
+                break;
+            case 42: // load ramrom
+                load_ramrom_from_devtool();
+                break;
+            case 43: // auto y aim
+                set_BONDdata_autoaim_y(get_BONDdata_autoaim_y() == 0);
+                break;
+            case 44: // auto x aim
+                set_BONDdata_autoaim_x(get_BONDdata_autoaim_x() == 0);
+                break;
+            case 45: // 007
+                debug_007_unlock_flag ^= 1;
+                break;
+            case 46: // agent
+                debug_enable_agent_levels_flag ^= 1;
+                break;
+            case 47: // all
+                debug_enable_all_levels_flag ^= 1;
+                break;
+            case 48: // fast
+                debug_fast_bond_flag ^= 1;
+                break;
+            case 49: // objectives
+                debug_all_obj_complete_flag ^= 1;
+                break;
+            
+
+
+            case 57: // show patrols
+                set_show_patrols_flag(get_show_patrols_flag() == 0);
+                break;
+            case 58: // intro
+                set_camera_mode(3);
+                break;
+            case 60: // intro pos
+                if (debug_render_raster == 0)
+                {
+                    sub_GAME_7F091618();
+                }
+                break;
+            case 61: // world pos
+                if (debug_render_raster == 0)
+                {
+                    debugSetWorldPos();
+                }
+                else
+                {
+                    position = get_curplayer_positiondata();
+                    if (position != 0)
+                    {
+                        tempx = position->x - player_pos_x.x;
+                        tempy = position->y - player_pos_x.y;
+                        tempz = position->z - player_pos_x.z;
+                        sqrtf((tempx * tempx) + (tempy * tempy) + (tempz * tempz));
+                        player_pos_x.x = (f32) position->x;
+                        player_pos_x.y = (f32) position->y;
+                        player_pos_x.z = (f32) position->z;
+                    }
+                }
+                break;
+            case 62: // gun key pos
+                debug_unknown = get_highlighted_debug_option();
+
+                break;
+            case 64: // chr num
+                debug_chrnum_flag ^= 1;
+                break;
+            case 63: // vis cvg
+                debug_VisCVG_flag ^= 1;
+                break;
+            case 69: // joy2 sky edit
+                debug_joy2skyedit_flag ^= 1;
+                break;
+            case 70: // joy2 hits edit
+                debug_joy2hitsedit_flag ^= 1;
+                break;
+            case 71: // joy2 detail edit
+                debug_joy2detailedit_flag ^= 1;
+                break;
+            case 72: // explosion info
+                debug_explosioninfo_flag ^= 1;
+                break;
+            case 73: // magic fog
+                debug_unknown = get_highlighted_debug_option();
+
+                break;
+            case 76: // fog
+                debug_unknown = get_highlighted_debug_option();
+
+                break;
+            case 74: // gun watch pos
+                debug_gunwatchpos_flags ^= 1;
+                break;
+            case 65: // room blocks
+                removed_debug_roomblocks_feature();
+                break;
+            case 66: // profile
+                debug_profile_flag ^= 1;
+                if (debug_profile_flag != 0)
+                {
+                    removed_do_debug_profile_flag_false();
+                }
+                else
+                {
+                    removed_do_debug_profile_flag_true();
+                }
+                break;
+            case 67: // obj load
+                debug_object_load_all_models();
+                break;
+            case 68: // weapon load
+                debug_weapon_load_table();
+                break;
+            case 59: // intro edit
+                debug_unknown = get_highlighted_debug_option();
+
+                break;
+            }
+        }
+        if ((button_pressed & (R_CBUTTONS|L_CBUTTONS)) != 0)
+        {
+            switch (get_highlighted_debug_option()); // switch 2; jump table: jpt_80055830
+        }
+        if ((button_pressed & START_BUTTON) != 0)
+        {
+            if (show_debug_menu_flag == 1)
+            {
+                debmenuReset();
+            }
+            show_debug_menu_flag = 0;
+        }
+    }
+    return show_debug_menu_flag;
 }
 #else
 GLOBAL_ASM(
@@ -653,17 +1018,17 @@ glabel debug_menu_processor
 /* 0C52A0 7F090770 03200008 */  jr    $t9
 /* 0C52A4 7F090774 00000000 */   nop   
 debug_stanview:
-/* 0C52A8 7F090778 0FC24131 */  jal   sub_GAME_7F0904C4
+/* 0C52A8 7F090778 0FC24131 */  jal   debmenuHandleMoveView
 /* 0C52AC 7F09077C 00000000 */   nop   
 /* 0C52B0 7F090780 100001BD */  b     .L7F090E78
 /* 0C52B4 7F090784 8FB80018 */   lw    $t8, 0x18($sp)
 debug_bondview:
-/* 0C52B8 7F090788 0FC24142 */  jal   sub_GAME_7F090508
+/* 0C52B8 7F090788 0FC24142 */  jal   debmenuHandleStanView
 /* 0C52BC 7F09078C 00000000 */   nop   
 /* 0C52C0 7F090790 100001B9 */  b     .L7F090E78
 /* 0C52C4 7F090794 8FB80018 */   lw    $t8, 0x18($sp)
 .L7F090798:
-/* 0C52C8 7F090798 0FC24153 */  jal   sub_GAME_7F09054C
+/* 0C52C8 7F090798 0FC24153 */  jal   debmenuHandleBondView
 /* 0C52CC 7F09079C 00000000 */   nop   
 /* 0C52D0 7F0907A0 100001B5 */  b     .L7F090E78
 /* 0C52D4 7F0907A4 8FB80018 */   lw    $t8, 0x18($sp)
@@ -849,8 +1214,8 @@ debug_stanregion:
 /* 0C5540 7F090A10 10000118 */  b     .L7F090E74
 /* 0C5544 7F090A14 AC580000 */   sw    $t8, ($v0)
 debug_turbo:
-/* 0C5548 7F090A18 3C028003 */  lui   $v0, %hi(turbo_mode_flag)
-/* 0C554C 7F090A1C 24426F8C */  addiu $v0, %lo(turbo_mode_flag) # addiu $v0, $v0, 0x6f8c
+/* 0C5548 7F090A18 3C028003 */  lui   $v0, %hi(debug_stan_problems_flag)
+/* 0C554C 7F090A1C 24426F8C */  addiu $v0, %lo(debug_stan_problems_flag) # addiu $v0, $v0, 0x6f8c
 /* 0C5550 7F090A20 8C590000 */  lw    $t9, ($v0)
 /* 0C5554 7F090A24 3B280001 */  xori  $t0, $t9, 1
 /* 0C5558 7F090A28 10000112 */  b     .L7F090E74
@@ -1033,7 +1398,7 @@ debug_worldpos:
 /* 0C57AC 7F090C7C 8D086F64 */  lw    $t0, %lo(debug_render_raster)($t0)
 /* 0C57B0 7F090C80 15000005 */  bnez  $t0, .L7F090C98
 /* 0C57B4 7F090C84 00000000 */   nop   
-/* 0C57B8 7F090C88 0FC2459B */  jal   sub_GAME_7F09166C
+/* 0C57B8 7F090C88 0FC2459B */  jal   debugSetWorldPos
 /* 0C57BC 7F090C8C 00000000 */   nop   
 /* 0C57C0 7F090C90 10000079 */  b     .L7F090E78
 /* 0C57C4 7F090C94 8FB80018 */   lw    $t8, 0x18($sp)
@@ -1255,8 +1620,8 @@ s32 get_debug_stanregion_flag(void) {
     return debug_stanregion_flag;
 }
 
-s32 get_turbo_mode_flag(void) {
-    return turbo_mode_flag;
+s32 get_debug_stan_problems_flag(void) {
+    return debug_stan_problems_flag;
 }
 
 s32 get_debug_man_pos_flag(void) {

@@ -16,7 +16,7 @@ s32 get_debug_do_draw_bg(void);
 s32 get_debug_do_draw_obj(void);
 s32 get_debug_stanhit_flag(void);
 s32 get_debug_stanregion_flag(void);
-s32 get_turbo_mode_flag(void);
+s32 get_debug_stan_problems_flag(void);
 s32 get_debug_man_pos_flag(void);
 s32 get_debug_testingmanpos_flag(void);
 void set_debug_testingmanpos_flag(s32 flag);
@@ -39,6 +39,6 @@ s32 get_debug_gunwatchpos_flag(void);
 s32  get_debug_profile_flag(void);
 s32 get_debug_taskgrab_val(void);
 Gfx * print_debug_mcm_to_stdout(Gfx *);
-s32 debug_menu_processor(s8 arg0, s8 arg1, u16 arg2, u16 arg3);
+s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pressed);
 void display_debug_menu_text_onscreen(void);
 #endif

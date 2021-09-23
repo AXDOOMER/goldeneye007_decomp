@@ -497,7 +497,7 @@ glabel sub_GAME_7F091618
 
 
 
-void sub_GAME_7F09166C(void)
+void debugSetWorldPos(void)
 {
     sqrtf((stanbondx.x - D_80037060.x) * (stanbondx.x - D_80037060.x) +
           (stanbondx.y - D_80037060.y) * (stanbondx.y - D_80037060.y) +
