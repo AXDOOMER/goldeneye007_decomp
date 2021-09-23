@@ -467,6 +467,12 @@ void bossMainloop(void)
                             permit_stderr(0);
 
                             gdl = firstGdl = dynGetMasterDisplayList();
+                            
+                            //leaving commented till final build defines are picked as its not required for matching
+                            //
+                            //#ifdef ENABLE_DEBUG_MENU
+                            //    g_DebugFeatureFlag = (joyGetButtons(0, U_CBUTTONS & D_CBUTTONS)!=0xC);
+                            //#endif
 
                             if (g_DebugFeatureFlag)
                             {
