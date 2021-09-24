@@ -2292,7 +2292,7 @@ glabel sub_GAME_7F04088C
 /* 075634 7F040B04 C7B00094 */  lwc1  $f16, 0x94($sp)
 /* 075638 7F040B08 8C450000 */  lw    $a1, ($v0)
 /* 07563C 7F040B0C 8C460008 */  lw    $a2, 8($v0)
-/* 075640 7F040B10 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 075640 7F040B10 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 075644 7F040B14 E7B00010 */   swc1  $f16, 0x10($sp)
 /* 075648 7F040B18 10400007 */  beqz  $v0, .L7F040B38
 /* 07564C 7F040B1C 02002025 */   move  $a0, $s0
@@ -2407,7 +2407,7 @@ glabel sub_GAME_7F040BA0
 /* 0757A4 7F040C74 02002025 */   move  $a0, $s0
 /* 0757A8 7F040C78 8C450000 */  lw    $a1, ($v0)
 /* 0757AC 7F040C7C 8C460008 */  lw    $a2, 8($v0)
-/* 0757B0 7F040C80 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 0757B0 7F040C80 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 0757B4 7F040C84 E7A60010 */   swc1  $f6, 0x10($sp)
 /* 0757B8 7F040C88 10400007 */  beqz  $v0, .L7F040CA8
 /* 0757BC 7F040C8C 02002025 */   move  $a0, $s0
@@ -4506,7 +4506,7 @@ glabel handles_projectile_motion
 /* 0773E4 7F0428B4 8C460010 */  lw    $a2, 0x10($v0)
 /* 0773E8 7F0428B8 8C450008 */  lw    $a1, 8($v0)
 /* 0773EC 7F0428BC AFA00264 */  sw    $zero, 0x264($sp)
-/* 0773F0 7F0428C0 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 0773F0 7F0428C0 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 0773F4 7F0428C4 E7A60010 */   swc1  $f6, 0x10($sp)
 /* 0773F8 7F0428C8 1450000F */  bne   $v0, $s0, .L7F042908
 /* 0773FC 7F0428CC 8FA80264 */   lw    $t0, 0x264($sp)
@@ -5973,7 +5973,7 @@ glabel generate_explosion_at_position
 /* 0787A4 7F043C74 8C660010 */  lw    $a2, 0x10($v1)
 /* 0787A8 7F043C78 AFA8005C */  sw    $t0, 0x5c($sp)
 /* 0787AC 7F043C7C AFA30054 */  sw    $v1, 0x54($sp)
-/* 0787B0 7F043C80 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 0787B0 7F043C80 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 0787B4 7F043C84 E7A40010 */   swc1  $f4, 0x10($sp)
 /* 0787B8 7F043C88 8FA30054 */  lw    $v1, 0x54($sp)
 /* 0787BC 7F043C8C 10400011 */  beqz  $v0, .L7F043CD4
@@ -6113,7 +6113,7 @@ glabel generate_explosion_at_position
 /* 078AE4 7F043F74 8C660010 */  lw    $a2, 0x10($v1)
 /* 078AE8 7F043F78 AFA8005C */  sw    $t0, 0x5c($sp)
 /* 078AEC 7F043F7C AFA30050 */  sw    $v1, 0x50($sp)
-/* 078AF0 7F043F80 0FC2C5E5 */  jal   sub_GAME_7F0B0BE4
+/* 078AF0 7F043F80 0FC2C5E5 */  jal   walkTilesBetweenPoints_NoCallback
 /* 078AF4 7F043F84 E7A40010 */   swc1  $f4, 0x10($sp)
 /* 078AF8 7F043F88 8FA30050 */  lw    $v1, 0x50($sp)
 /* 078AFC 7F043F8C 10400011 */  beqz  $v0, .L7F043FD4
@@ -6255,7 +6255,7 @@ glabel generate_explosion_at_position
 /* 0787A4 7F043C74 8C660010 */  lw    $a2, 0x10($v1)
 /* 0787A8 7F043C78 AFA8005C */  sw    $t0, 0x5c($sp)
 /* 0787AC 7F043C7C AFA30054 */  sw    $v1, 0x54($sp)
-/* 0787B0 7F043C80 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 0787B0 7F043C80 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 0787B4 7F043C84 E7A40010 */   swc1  $f4, 0x10($sp)
 /* 0787B8 7F043C88 8FA30054 */  lw    $v1, 0x54($sp)
 /* 0787BC 7F043C8C 10400011 */  beqz  $v0, .L7F043CD4
@@ -8249,7 +8249,7 @@ glabel sub_GAME_7F044B38
 /* 07974C 7F044C1C 8E260010 */  lw    $a2, 0x10($s1)
 /* 079750 7F044C20 8E250008 */  lw    $a1, 8($s1)
 /* 079754 7F044C24 8FA70130 */  lw    $a3, 0x130($sp)
-/* 079758 7F044C28 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 079758 7F044C28 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 07975C 7F044C2C E7A80010 */   swc1  $f8, 0x10($sp)
 /* 079760 7F044C30 10400006 */  beqz  $v0, .L7F044C4C
 /* 079764 7F044C34 8FA400C4 */   lw    $a0, 0xc4($sp)
@@ -8268,7 +8268,7 @@ glabel sub_GAME_7F044B38
 /* 079790 7F044C60 8E260010 */  lw    $a2, 0x10($s1)
 /* 079794 7F044C64 8E250008 */  lw    $a1, 8($s1)
 /* 079798 7F044C68 8FA70124 */  lw    $a3, 0x124($sp)
-/* 07979C 7F044C6C 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 07979C 7F044C6C 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 0797A0 7F044C70 E7A60010 */   swc1  $f6, 0x10($sp)
 /* 0797A4 7F044C74 10400006 */  beqz  $v0, .L7F044C90
 /* 0797A8 7F044C78 8FA400C4 */   lw    $a0, 0xc4($sp)
@@ -8287,7 +8287,7 @@ glabel sub_GAME_7F044B38
 /* 0797D4 7F044CA4 8E260010 */  lw    $a2, 0x10($s1)
 /* 0797D8 7F044CA8 8E250008 */  lw    $a1, 8($s1)
 /* 0797DC 7F044CAC 8FA70118 */  lw    $a3, 0x118($sp)
-/* 0797E0 7F044CB0 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 0797E0 7F044CB0 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 0797E4 7F044CB4 E7A40010 */   swc1  $f4, 0x10($sp)
 /* 0797E8 7F044CB8 10400006 */  beqz  $v0, .L7F044CD4
 /* 0797EC 7F044CBC 8FA400C4 */   lw    $a0, 0xc4($sp)
@@ -8306,7 +8306,7 @@ glabel sub_GAME_7F044B38
 /* 079818 7F044CE8 8E260010 */  lw    $a2, 0x10($s1)
 /* 07981C 7F044CEC 8E250008 */  lw    $a1, 8($s1)
 /* 079820 7F044CF0 8FA7010C */  lw    $a3, 0x10c($sp)
-/* 079824 7F044CF4 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 079824 7F044CF4 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 079828 7F044CF8 E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 07982C 7F044CFC 10400006 */  beqz  $v0, .L7F044D18
 /* 079830 7F044D00 8FA400C4 */   lw    $a0, 0xc4($sp)
@@ -11662,7 +11662,7 @@ glabel object_interaction
 /* 07C6D8 7F047BA8 46081180 */  add.s $f6, $f2, $f8
 /* 07C6DC 7F047BAC 44075000 */  mfc1  $a3, $f10
 /* 07C6E0 7F047BB0 46062280 */  add.s $f10, $f4, $f6
-/* 07C6E4 7F047BB4 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 07C6E4 7F047BB4 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 07C6E8 7F047BB8 E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 07C6EC 7F047BBC 10400059 */  beqz  $v0, .L7F047D24
 /* 07C6F0 7F047BC0 C7A40424 */   lwc1  $f4, 0x424($sp)
@@ -11685,7 +11685,7 @@ glabel object_interaction
 /* 07C734 7F047C04 46081180 */  add.s $f6, $f2, $f8
 /* 07C738 7F047C08 44075000 */  mfc1  $a3, $f10
 /* 07C73C 7F047C0C 46062280 */  add.s $f10, $f4, $f6
-/* 07C740 7F047C10 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 07C740 7F047C10 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 07C744 7F047C14 E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 07C748 7F047C18 10400042 */  beqz  $v0, .L7F047D24
 /* 07C74C 7F047C1C C7A40418 */   lwc1  $f4, 0x418($sp)
@@ -11706,7 +11706,7 @@ glabel object_interaction
 /* 07C788 7F047C58 44065000 */  mfc1  $a2, $f10
 /* 07C78C 7F047C5C 46023280 */  add.s $f10, $f6, $f2
 /* 07C790 7F047C60 44072000 */  mfc1  $a3, $f4
-/* 07C794 7F047C64 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 07C794 7F047C64 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 07C798 7F047C68 E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 07C79C 7F047C6C 1040002D */  beqz  $v0, .L7F047D24
 /* 07C7A0 7F047C70 C7A40418 */   lwc1  $f4, 0x418($sp)
@@ -11729,7 +11729,7 @@ glabel object_interaction
 /* 07C7E4 7F047CB4 46081180 */  add.s $f6, $f2, $f8
 /* 07C7E8 7F047CB8 44075000 */  mfc1  $a3, $f10
 /* 07C7EC 7F047CBC 46062280 */  add.s $f10, $f4, $f6
-/* 07C7F0 7F047CC0 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 07C7F0 7F047CC0 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 07C7F4 7F047CC4 E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 07C7F8 7F047CC8 10400016 */  beqz  $v0, .L7F047D24
 /* 07C7FC 7F047CCC C7A40424 */   lwc1  $f4, 0x424($sp)
@@ -11750,7 +11750,7 @@ glabel object_interaction
 /* 07C838 7F047D08 44065000 */  mfc1  $a2, $f10
 /* 07C83C 7F047D0C 46023280 */  add.s $f10, $f6, $f2
 /* 07C840 7F047D10 44072000 */  mfc1  $a3, $f4
-/* 07C844 7F047D14 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 07C844 7F047D14 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 07C848 7F047D18 E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 07C84C 7F047D1C 14400002 */  bnez  $v0, .L7F047D28
 /* 07C850 7F047D20 00000000 */   nop   
@@ -13409,7 +13409,7 @@ glabel object_interaction
 /* 07E088 7F049558 8E660010 */  lw    $a2, 0x10($s3)
 /* 07E08C 7F04955C 27A40108 */  addiu $a0, $sp, 0x108
 /* 07E090 7F049560 8FA7012C */  lw    $a3, 0x12c($sp)
-/* 07E094 7F049564 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 07E094 7F049564 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 07E098 7F049568 E7A40010 */   swc1  $f4, 0x10($sp)
 /* 07E09C 7F04956C 1440000E */  bnez  $v0, .L7F0495A8
 /* 07E0A0 7F049570 00000000 */   nop   
@@ -16768,7 +16768,7 @@ glabel object_interaction
 /* 07CB1C 7F047FAC 46081180 */  add.s $f6, $f2, $f8
 /* 07CB20 7F047FB0 44075000 */  mfc1  $a3, $f10
 /* 07CB24 7F047FB4 46062280 */  add.s $f10, $f4, $f6
-/* 07CB28 7F047FB8 0FC2C5E5 */  jal   sub_GAME_7F0B0BE4
+/* 07CB28 7F047FB8 0FC2C5E5 */  jal   walkTilesBetweenPoints_NoCallback
 /* 07CB2C 7F047FBC E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 07CB30 7F047FC0 10400059 */  beqz  $v0, .Ljp7F048128
 /* 07CB34 7F047FC4 C7A40428 */   lwc1  $f4, 0x428($sp)
@@ -16791,7 +16791,7 @@ glabel object_interaction
 /* 07CB78 7F048008 46081180 */  add.s $f6, $f2, $f8
 /* 07CB7C 7F04800C 44075000 */  mfc1  $a3, $f10
 /* 07CB80 7F048010 46062280 */  add.s $f10, $f4, $f6
-/* 07CB84 7F048014 0FC2C5E5 */  jal   sub_GAME_7F0B0BE4
+/* 07CB84 7F048014 0FC2C5E5 */  jal   walkTilesBetweenPoints_NoCallback
 /* 07CB88 7F048018 E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 07CB8C 7F04801C 10400042 */  beqz  $v0, .Ljp7F048128
 /* 07CB90 7F048020 C7A4041C */   lwc1  $f4, 0x41c($sp)
@@ -16812,7 +16812,7 @@ glabel object_interaction
 /* 07CBCC 7F04805C 44065000 */  mfc1  $a2, $f10
 /* 07CBD0 7F048060 46023280 */  add.s $f10, $f6, $f2
 /* 07CBD4 7F048064 44072000 */  mfc1  $a3, $f4
-/* 07CBD8 7F048068 0FC2C5E5 */  jal   sub_GAME_7F0B0BE4
+/* 07CBD8 7F048068 0FC2C5E5 */  jal   walkTilesBetweenPoints_NoCallback
 /* 07CBDC 7F04806C E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 07CBE0 7F048070 1040002D */  beqz  $v0, .Ljp7F048128
 /* 07CBE4 7F048074 C7A4041C */   lwc1  $f4, 0x41c($sp)
@@ -16835,7 +16835,7 @@ glabel object_interaction
 /* 07CC28 7F0480B8 46081180 */  add.s $f6, $f2, $f8
 /* 07CC2C 7F0480BC 44075000 */  mfc1  $a3, $f10
 /* 07CC30 7F0480C0 46062280 */  add.s $f10, $f4, $f6
-/* 07CC34 7F0480C4 0FC2C5E5 */  jal   sub_GAME_7F0B0BE4
+/* 07CC34 7F0480C4 0FC2C5E5 */  jal   walkTilesBetweenPoints_NoCallback
 /* 07CC38 7F0480C8 E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 07CC3C 7F0480CC 10400016 */  beqz  $v0, .Ljp7F048128
 /* 07CC40 7F0480D0 C7A40428 */   lwc1  $f4, 0x428($sp)
@@ -16856,7 +16856,7 @@ glabel object_interaction
 /* 07CC7C 7F04810C 44065000 */  mfc1  $a2, $f10
 /* 07CC80 7F048110 46023280 */  add.s $f10, $f6, $f2
 /* 07CC84 7F048114 44072000 */  mfc1  $a3, $f4
-/* 07CC88 7F048118 0FC2C5E5 */  jal   sub_GAME_7F0B0BE4
+/* 07CC88 7F048118 0FC2C5E5 */  jal   walkTilesBetweenPoints_NoCallback
 /* 07CC8C 7F04811C E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 07CC90 7F048120 14400002 */  bnez  $v0, .Ljp7F04812C
 /* 07CC94 7F048124 00000000 */   nop   
@@ -18515,7 +18515,7 @@ glabel object_interaction
 /* 07E4CC 7F04995C 8E660010 */  lw    $a2, 0x10($s3)
 /* 07E4D0 7F049960 27A4010C */  addiu $a0, $sp, 0x10c
 /* 07E4D4 7F049964 8FA70130 */  lw    $a3, 0x130($sp)
-/* 07E4D8 7F049968 0FC2C5E5 */  jal   sub_GAME_7F0B0BE4
+/* 07E4D8 7F049968 0FC2C5E5 */  jal   walkTilesBetweenPoints_NoCallback
 /* 07E4DC 7F04996C E7A40010 */   swc1  $f4, 0x10($sp)
 /* 07E4E0 7F049970 1440000E */  bnez  $v0, .Ljp7F0499AC
 /* 07E4E4 7F049974 00000000 */   nop   
@@ -21861,7 +21861,7 @@ glabel object_interaction
 /* 07C6D8 7F047BA8 46081180 */  add.s $f6, $f2, $f8
 /* 07C6DC 7F047BAC 44075000 */  mfc1  $a3, $f10
 /* 07C6E0 7F047BB0 46062280 */  add.s $f10, $f4, $f6
-/* 07C6E4 7F047BB4 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 07C6E4 7F047BB4 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 07C6E8 7F047BB8 E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 07C6EC 7F047BBC 10400059 */  beqz  $v0, .L7F047D24
 /* 07C6F0 7F047BC0 C7A40424 */   lwc1  $f4, 0x424($sp)
@@ -21884,7 +21884,7 @@ glabel object_interaction
 /* 07C734 7F047C04 46081180 */  add.s $f6, $f2, $f8
 /* 07C738 7F047C08 44075000 */  mfc1  $a3, $f10
 /* 07C73C 7F047C0C 46062280 */  add.s $f10, $f4, $f6
-/* 07C740 7F047C10 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 07C740 7F047C10 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 07C744 7F047C14 E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 07C748 7F047C18 10400042 */  beqz  $v0, .L7F047D24
 /* 07C74C 7F047C1C C7A40418 */   lwc1  $f4, 0x418($sp)
@@ -21905,7 +21905,7 @@ glabel object_interaction
 /* 07C788 7F047C58 44065000 */  mfc1  $a2, $f10
 /* 07C78C 7F047C5C 46023280 */  add.s $f10, $f6, $f2
 /* 07C790 7F047C60 44072000 */  mfc1  $a3, $f4
-/* 07C794 7F047C64 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 07C794 7F047C64 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 07C798 7F047C68 E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 07C79C 7F047C6C 1040002D */  beqz  $v0, .L7F047D24
 /* 07C7A0 7F047C70 C7A40418 */   lwc1  $f4, 0x418($sp)
@@ -21928,7 +21928,7 @@ glabel object_interaction
 /* 07C7E4 7F047CB4 46081180 */  add.s $f6, $f2, $f8
 /* 07C7E8 7F047CB8 44075000 */  mfc1  $a3, $f10
 /* 07C7EC 7F047CBC 46062280 */  add.s $f10, $f4, $f6
-/* 07C7F0 7F047CC0 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 07C7F0 7F047CC0 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 07C7F4 7F047CC4 E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 07C7F8 7F047CC8 10400016 */  beqz  $v0, .L7F047D24
 /* 07C7FC 7F047CCC C7A40424 */   lwc1  $f4, 0x424($sp)
@@ -21949,7 +21949,7 @@ glabel object_interaction
 /* 07C838 7F047D08 44065000 */  mfc1  $a2, $f10
 /* 07C83C 7F047D0C 46023280 */  add.s $f10, $f6, $f2
 /* 07C840 7F047D10 44072000 */  mfc1  $a3, $f4
-/* 07C844 7F047D14 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 07C844 7F047D14 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 07C848 7F047D18 E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 07C84C 7F047D1C 14400002 */  bnez  $v0, .L7F047D28
 /* 07C850 7F047D20 00000000 */   nop   
@@ -23608,7 +23608,7 @@ glabel object_interaction
 /* 07E088 7F049558 8E660010 */  lw    $a2, 0x10($s3)
 /* 07E08C 7F04955C 27A40108 */  addiu $a0, $sp, 0x108
 /* 07E090 7F049560 8FA7012C */  lw    $a3, 0x12c($sp)
-/* 07E094 7F049564 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 07E094 7F049564 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 07E098 7F049568 E7A40010 */   swc1  $f4, 0x10($sp)
 /* 07E09C 7F04956C 1440000E */  bnez  $v0, .L7F0495A8
 /* 07E0A0 7F049570 00000000 */   nop   
@@ -29779,7 +29779,7 @@ glabel object_explosion_related
 /* 081A20 7F04CEF0 8E050008 */  lw    $a1, 8($s0)
 /* 081A24 7F04CEF4 8E060010 */  lw    $a2, 0x10($s0)
 /* 081A28 7F04CEF8 8C470000 */  lw    $a3, ($v0)
-/* 081A2C 7F04CEFC 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 081A2C 7F04CEFC 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 081A30 7F04CF00 E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 081A34 7F04CF04 10400010 */  beqz  $v0, .L7F04CF48
 /* 081A38 7F04CF08 8FA40044 */   lw    $a0, 0x44($sp)
@@ -29874,7 +29874,7 @@ glabel object_explosion_related
 /* 081B84 7F04D054 8E050008 */  lw    $a1, 8($s0)
 /* 081B88 7F04D058 8E060010 */  lw    $a2, 0x10($s0)
 /* 081B8C 7F04D05C 8C470000 */  lw    $a3, ($v0)
-/* 081B90 7F04D060 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 081B90 7F04D060 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 081B94 7F04D064 E7B00010 */   swc1  $f16, 0x10($sp)
 /* 081B98 7F04D068 10400010 */  beqz  $v0, .L7F04D0AC
 /* 081B9C 7F04D06C 8FA40044 */   lw    $a0, 0x44($sp)
@@ -32509,7 +32509,7 @@ glabel sub_GAME_7F04EF58
 /* 083C64 7F04F134 8C650008 */  lw    $a1, 8($v1)
 /* 083C68 7F04F138 8C660010 */  lw    $a2, 0x10($v1)
 /* 083C6C 7F04F13C 8C470008 */  lw    $a3, 8($v0)
-/* 083C70 7F04F140 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 083C70 7F04F140 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 083C74 7F04F144 E7A60010 */   swc1  $f6, 0x10($sp)
 /* 083C78 7F04F148 50400005 */  beql  $v0, $zero, .L7F04F160
 /* 083C7C 7F04F14C 8FBF001C */   lw    $ra, 0x1c($sp)

@@ -10139,7 +10139,7 @@ glabel actor_moves_to_preset_at_speed
 /* 05F818 7F02ACE8 E7B00034 */  swc1  $f16, 0x34($sp)
 /* 05F81C 7F02ACEC 8E060008 */  lw    $a2, 8($s0)
 /* 05F820 7F02ACF0 8E050000 */  lw    $a1, ($s0)
-/* 05F824 7F02ACF4 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 05F824 7F02ACF4 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 05F828 7F02ACF8 E7B00010 */   swc1  $f16, 0x10($sp)
 /* 05F82C 7F02ACFC 1040000F */  beqz  $v0, .L7F02AD3C
 /* 05F830 7F02AD00 02202025 */   move  $a0, $s1
@@ -23010,7 +23010,7 @@ glabel sub_GAME_7F033DC4
 /* 06892C 7F033DFC 8E060010 */  lw    $a2, 0x10($s0)
 /* 068930 7F033E00 8E270008 */  lw    $a3, 8($s1)
 /* 068934 7F033E04 27A40054 */  addiu $a0, $sp, 0x54
-/* 068938 7F033E08 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 068938 7F033E08 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 06893C 7F033E0C E7A40010 */   swc1  $f4, 0x10($sp)
 /* 068940 7F033E10 10400003 */  beqz  $v0, .L7F033E20
 /* 068944 7F033E14 27A40048 */   addiu $a0, $sp, 0x48
