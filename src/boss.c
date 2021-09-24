@@ -1,4 +1,4 @@
-#include "game/debugmenu_090490.h"
+#include "game/debugmenu_handler.h"
 #include "game/mainmenu.h"
 #include "game/ramromreplay.h"
 #include "game/room_model_buffer.h"
