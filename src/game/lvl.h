@@ -22,7 +22,7 @@ extern s32 address_demo_loaded;
 extern s32 dword_CODE_bss_8008C5F8;
 
 void lvInitDebugNoticeList(void);
-Gfx * sub_GAME_7F0BE30C(Gfx *);
+Gfx * lvRender(Gfx *);
 void set_difficulty(s32 arg0);
 void manage_mp_game(void);
 void sub_GAME_7F0BF800(void);

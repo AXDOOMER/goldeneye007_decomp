@@ -133,4 +133,6 @@ typedef struct BetaStandTile {
     struct BetaStandFilePoint points[];
 } BetaStandTile;
 
+StandTilePoint *stanMatchTileName(char*);
+
 #endif

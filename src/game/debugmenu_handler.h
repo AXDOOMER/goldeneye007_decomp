@@ -7,6 +7,13 @@ struct mcm_layout {
     int ypos;
 };
 
+
+
+extern s32 debug_limit_controller_input;
+extern s32 debHighlightedOption;
+
+extern s32 show_debug_menu_flag;
+
 s32 get_debug_render_raster(void);
 s32 get_debug_freeze_processing(void);
 s32 get_debug_limit_controller_input(void);
