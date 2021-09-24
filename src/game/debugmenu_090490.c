@@ -434,11 +434,11 @@ void removed_do_debug_profile_flag_true(void) {
 s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pressed)
 {
     s32 i;
-    f32 tempx;
-    f32 tempz;
-    f32 tempy;
+//    f32 tempx;
+//    f32 tempz;
+//    f32 tempy;
     s32 debug_profile_flag;
-    struct coord3d *position;
+    struct prop *playerprop;
 
 
     if (grab_rgb_screenshot_flag != 0)
@@ -489,13 +489,13 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
         button_pressed = (s32) button_pressed;
         if ((button_pressed & L_JPAD) != 0)
         {
-            sub_GAME_7F09039C(&debug_limit_controller_input);
+            sub_GAME_7F09039C(debug_limit_controller_input);
             debug_limit_controller_input = -2U;
         }
 
         if ((button_pressed & R_JPAD) != 0)
         {
-            sub_GAME_7F0902C0(&debug_limit_controller_input);
+            sub_GAME_7F0902C0(debug_limit_controller_input);
             debug_limit_controller_input = -2U;
         }
 
@@ -712,16 +712,18 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                 }
                 else
                 {
-                    position = get_curplayer_positiondata();
-                    if (position != 0)
+                    playerprop = get_curplayer_positiondata();
+                    if (playerprop)
                     {
-                        tempx = position->x - player_pos_x.x;
-                        tempy = position->y - player_pos_x.y;
-                        tempz = position->z - player_pos_x.z;
-                        sqrtf((tempx * tempx) + (tempy * tempy) + (tempz * tempz));
-                        player_pos_x.x = (f32) position->x;
-                        player_pos_x.y = (f32) position->y;
-                        player_pos_x.z = (f32) position->z;
+                        //tempx = playerprop->position.x - player_pos_x.x;
+                        //tempy = playerprop->position.y - player_pos_x.y;
+                        //tempz = playerprop->position.z - player_pos_x.z;
+                        sqrtf(((playerprop->position.x - player_pos_x.x) * (playerprop->position.x - player_pos_x.x)) + 
+                              ((playerprop->position.y - player_pos_x.y) * (playerprop->position.y - player_pos_x.y)) + 
+                              ((playerprop->position.z - player_pos_x.z) * (playerprop->position.z - player_pos_x.z)));
+                        player_pos_x.x = (f32) playerprop->position.x;
+                        player_pos_x.y = (f32) playerprop->position.y;
+                        player_pos_x.z = (f32) playerprop->position.z;
                     }
                 }
                 break;
@@ -784,11 +786,20 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                 break;
             }
         }
-        if ((button_pressed & (R_CBUTTONS|L_CBUTTONS)) != 0)
+        if ((button_pressed & (R_CBUTTONS|L_CBUTTONS)))
         {
-            switch (get_highlighted_debug_option()); // switch 2; jump table: jpt_80055830
+            switch (get_highlighted_debug_option()) // switch 2; jump table: jpt_80055830
+            {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+                break;
+            }
+
         }
-        if ((button_pressed & START_BUTTON) != 0)
+        if ((button_pressed & START_BUTTON))
         {
             if (show_debug_menu_flag == 1)
             {
