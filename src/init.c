@@ -59,6 +59,9 @@ u32 __osGetFpcCsr(void);
  *	copies compressed 21990 to virtual address 701EE400, using 70200000 to decompress
  */
 #ifdef NONMATCHING
+//
+// https://decomp.me/scratch/vhVzi
+//
 
 // left to fix:
 // minor reg swapping

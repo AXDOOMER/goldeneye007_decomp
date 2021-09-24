@@ -428,6 +428,9 @@ void removed_do_debug_profile_flag_true(void) {
 
 
 #ifdef NONMATCHING
+//
+// https://decomp.me/scratch/KyqfX
+//
 s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pressed)
 {
     s32 i;
