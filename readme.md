@@ -29,7 +29,7 @@ sudo dpkg -i qemu-irix-2.11.0-2169-g32ab296eef_amd64.deb
 Optionally for increased compile speed you may recompile ido for your platform:
 ```bash
 sudo apt install libcapstone-dev
-cd tools/ido5.3_recomp
+cd tools/ido5.3_recomp pkg-config
 make
 ```
 
