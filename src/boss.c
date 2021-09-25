@@ -1,4 +1,4 @@
-#include "game/debugmenu_090490.h"
+#include "game/debugmenu_handler.h"
 #include "game/mainmenu.h"
 #include "game/ramromreplay.h"
 #include "game/room_model_buffer.h"
@@ -473,13 +473,13 @@ void bossMainloop(void)
                             //#ifdef ENABLE_DEBUG_MENU
                             //    g_DebugFeatureFlag = (joyGetButtons(0, U_CBUTTONS & D_CBUTTONS)!=0xC);
                             //#endif
-
+                            
                             if (g_DebugFeatureFlag)
                             {
-                                joyStickXPos = joyGetStickX(0);
-                                joyStickYPos = joyGetStickY(0);
-                                joyButtons = joyGetButtons(0, ANY_BUTTON);
-                                g_DebugFeatureFlag = debug_menu_processor(joyStickXPos, joyStickYPos, joyButtons, joyGetButtonsPressedThisFrame(0, ANY_BUTTON));
+                                    joyStickXPos = joyGetStickX(0);
+                                    joyStickYPos = joyGetStickY(0);
+                                    joyButtons = joyGetButtons(0, ANY_BUTTON);
+                                    g_DebugFeatureFlag = debug_menu_processor(joyStickXPos, joyStickYPos, joyButtons, joyGetButtonsPressedThisFrame(0, ANY_BUTTON));
                             }
 
                             manage_mp_game();
@@ -501,7 +501,7 @@ void bossMainloop(void)
                                 }
                             }
 
-                            gdl = sub_GAME_7F0BE30C(gdl);
+                            gdl = lvRender(gdl);
 
                             // Lets Visualise the Coverage Value used for Scilohete Anti-Ailising (edges)
                             // (done on the VI), also produces a cool looking linemode - providing AA is working.

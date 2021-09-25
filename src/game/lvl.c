@@ -1,5 +1,5 @@
 #include "ultra64.h"
-#include "game/debugmenu_090490.h"
+#include "game/debugmenu_handler.h"
 #include "game/lvl.h"
 #include "game/initunk_0072B0.h"
 #include "game/mainmenu.h"
@@ -10,6 +10,7 @@
 #include "video.h"
 #include "include/PR/libaudio.h"
 #include "snd.h"
+#include "game/unk_093880.h"
 
 // bss
 //CODE.bss:8008C260
@@ -1456,8 +1457,147 @@ glabel sub_GAME_7F0BDF10
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BE30C(void) {
+Gfx* lvRender(Gfx* DL)
+{
+    s32 i;
+    s32 pcount;
 
+    StandTilePoint* tile1;
+    StandTilePoint* tile2;
+    StandTilePoint* tile3;
+    
+
+    
+    gMoveWd(DL++, 0x6, 0, 0);
+    gMoveWd(DL++, 0x6, 0x4, osVirtualToPhysical(ptr_jfont_DL));
+
+    gSPDisplayList(DL++, 0x01000040);
+    //DL->unk0 = 0x6000000; //rsp_uc05_displaylist push
+    //DL->unk4 = 0x1000040; //segment 1, offset 0x40
+
+    gSPDisplayList(DL++, 0x01000020);
+    //DL->unk0 = 0x6000000; //rsp_uc05_displaylist push
+    //DL->unk4 = 0x1000020; //segment 1, offset 0x20
+
+    if (current_stage_to_load == 0x5A)
+    {
+        DL = viClearZBufCurrentPlayer(DL);
+        DL = video_related_F(DL);
+        gDPSetScissor(DL++, 0, 0, 0, (s16)viGetX(), (s16)viGetY());
+        DL = menu_jump_constructor_handler(DL);
+    }
+    else
+    {
+        pcount = getPlayerCount();
+                
+        gMoveWd(DL++, 0x4, 0x4, 0x2);
+        gMoveWd(DL++, 0x4, 0xC, 0x2);
+        gMoveWd(DL++, 0x4, 0x14, 0xFFFE);
+        gMoveWd(DL++, 0x4, 0x1C, 0xFFFE);
+
+        for(i = 0;i < pcount;i++)
+        {
+                set_cur_player(sub_GAME_7F09B528(i));
+                viSetViewSize(pPlayer->viewx, pPlayer->viewy);
+                viSetViewPosition(pPlayer->viewleft, pPlayer->viewtop);
+                viSetFovY(pPlayer->fovy);
+                viSetAspect(pPlayer->aspect);
+                DL = viClearZBufCurrentPlayer(DL);
+                DL = video_related_F(DL);
+                if (get_debug_render_raster() == 0)
+                {
+                    DL = sub_GAME_7F091580(DL);
+                }
+                if (get_debug_render_raster() == 1)
+                {
+                    DL = sub_GAME_7F0B2D48(DL);
+                }
+                if (get_debug_render_raster() == 2)
+                {
+                    DL = sub_GAME_7F087A08(DL);
+                }
+                DL = viSetupScreensForNumPlayers(DL);
+                DL = sub_GAME_7F094488(DL);
+                sub_GAME_7F0B4884();
+                determing_type_of_object_and_detection();
+                sub_GAME_7F03A240();
+                sub_GAME_7F03D78C();
+                sub_GAME_7F03C294();
+                if (sub_GAME_7F089F38() && sub_GAME_7F03C4F0())
+                {
+                    attempt_reload_item_in_hand(0);
+                    attempt_reload_item_in_hand(1);
+                }
+                sub_GAME_7F03D0D4();
+                DL = sub_GAME_7F0B4E40(DL);
+                if (get_debug_portal_flag())
+                {
+                    DL = sub_GAME_7F0BDF10(DL);
+                }
+                if (get_debug_stan_problems_flag())
+                {
+                    DL = sub_GAME_7F0B303C(DL);
+                }
+                if (get_debug_stanhit_flag())
+                {
+                    DL = sub_GAME_7F0B3034(DL);
+                    DL = write_stan_tiles_in_yellow(DL);
+                }
+                if (get_debug_stanregion_flag())
+                {
+                    DL = sub_GAME_7F0B3034(DL);
+                    DL = sub_GAME_7F0B312C(DL, -0x7FC0);
+                }
+                if (tokenFind(1, "-stanshow_"))
+                {
+                    tile1 = stanMatchTileName(tokenFind(1, "-stanshow_"));
+                    if (tile1)
+                    {
+                        DL = sub_GAME_7F0B3034(DL);
+                        DL = sub_GAME_7F0B3024(DL, tile1, 0xFF0000FF);
+                    }
+                }
+                if (tokenFind(2, "-stanshow_"))
+                {
+                    tile2 = stanMatchTileName(tokenFind(2, "-stanshow_"));
+                    if (tile2)
+                    {
+                        DL = sub_GAME_7F0B3034(DL);
+                        DL = sub_GAME_7F0B3024(DL, tile2, 0xFF00FF);
+                    }
+                }
+                if (tokenFind(3, "-stanshow_"))
+                {
+                    tile3 = stanMatchTileName(tokenFind(3, "-stanshow_"));
+                    if (tile3)
+                    {
+                        DL = sub_GAME_7F0B3034(DL);
+                        DL = sub_GAME_7F0B3024(DL, tile3, 0xFFFF);
+                    }
+                }
+                sub_GAME_7F022E24(get_debug_limit_controller_input() == 8);
+                DL = sub_GAME_7F049B58(DL);
+                sub_GAME_7F0A4824(&DL, 1);
+                DL = sub_GAME_7F0A2C44(DL);
+                DL = sub_GAME_7F0A0034(DL);
+                if (cheatCheckIfOn(0xB) != 0)
+                {
+                    set_max_ammo_for_cur_player();
+                }
+                if (get_debug_render_raster() == 2)
+                {
+                    DL = maybe_mp_interface(DL);
+                }
+                else
+                {
+                    DL = sub_GAME_7F08BCB8(DL);
+                }
+
+                DL = mp_watch_menu_display(DL);
+        }
+    }
+    gDPSetScissor(DL++, 0, 0, 0, viGetX(), viGetY());
+    return DL;
 }
 #else
 #ifdef VERSION_US
@@ -1494,7 +1634,7 @@ GLOBAL_ASM(
     .word 0x6e73686f
     .word 0x775f0000
 .text
-glabel sub_GAME_7F0BE30C
+glabel lvRender
 /* 0F2E3C 7F0BE30C 27BDFFA0 */  addiu $sp, $sp, -0x60
 /* 0F2E40 7F0BE310 AFA40060 */  sw    $a0, 0x60($sp)
 /* 0F2E44 7F0BE314 248F0008 */  addiu $t7, $a0, 8
@@ -1918,7 +2058,7 @@ GLOBAL_ASM(
     .word 0x6e73686f
     .word 0x775f0000
 .text
-glabel sub_GAME_7F0BE30C
+glabel lvRender
 /* 0F3A3C 7F0BEECC 27BDFFA0 */  addiu $sp, $sp, -0x60
 /* 0F3A40 7F0BEED0 AFA40060 */  sw    $a0, 0x60($sp)
 /* 0F3A44 7F0BEED4 248F0008 */  addiu $t7, $a0, 8
@@ -2352,7 +2492,7 @@ glabel aStanshow_
 .word 0x6e73686f
 .word 0x775f0000
 .text
-glabel sub_GAME_7F0BE30C
+glabel lvRender
 /* 0F2E3C 7F0BE30C 27BDFFA0 */  addiu $sp, $sp, -0x60
 /* 0F2E40 7F0BE310 AFA40060 */  sw    $a0, 0x60($sp)
 /* 0F2E44 7F0BE314 248F0008 */  addiu $t7, $a0, 8

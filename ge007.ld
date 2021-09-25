@@ -356,7 +356,7 @@ SECTIONS
       build/u/src/game/bondinv.o (.text);
       build/u/src/game/unk_08DBB0.o (.text);
       build/u/src/game/debugmenu_08FE00.o (.text);
-      build/u/src/game/debugmenu_090490.o (.text);
+      build/u/src/game/debugmenu_handler.o (.text);
       build/u/src/game/unk_091080.o (.text);
       build/u/src/game/chraidata.o (.text);
       build/u/src/game/pobjdata.o (.text);
@@ -3682,7 +3682,7 @@ SECTIONS
       build/u/src/game/bondinv.o (.data);
       build/u/src/game/unk_08DBB0.o (.data);
       build/u/src/game/debugmenu_08FE00.o (.data);
-      build/u/src/game/debugmenu_090490.o (.data);
+      build/u/src/game/debugmenu_handler.o (.data);
       build/u/src/game/unk_091080.o (.data);
       build/u/src/game/chraidata.o (.data);
       build/u/src/game/pobjdata.o (.data);
@@ -3807,7 +3807,7 @@ SECTIONS
       build/u/src/game/bondinv.o (.rodata);
       build/u/src/game/unk_08DBB0.o (.rodata);
       build/u/src/game/debugmenu_08FE00.o (.rodata);
-      build/u/src/game/debugmenu_090490.o (.rodata);
+      build/u/src/game/debugmenu_handler.o (.rodata);
       build/u/src/game/unk_091080.o (.rodata);
       build/u/src/game/chraidata.o (.rodata);
       build/u/src/game/pobjdata.o (.rodata);
@@ -4149,7 +4149,7 @@ SECTIONS
       build/u/src/game/bondinv.o (.bss);
       build/u/src/game/unk_08DBB0.o (.bss);
       build/u/src/game/debugmenu_08FE00.o (.bss);
-      build/u/src/game/debugmenu_090490.o (.bss);
+      build/u/src/game/debugmenu_handler.o (.bss);
       build/u/src/game/unk_091080.o (.bss);
       build/u/src/game/chraidata.o (.bss);
       build/u/src/game/pobjdata.o (.bss);

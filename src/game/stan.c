@@ -711,7 +711,7 @@ glabel sub_GAME_7F0AF20C
 /* 0E3FD8 7F0AF4A8 27A400A0 */  addiu $a0, $sp, 0xa0
 /* 0E3FDC 7F0AF4AC 8FA5007C */  lw    $a1, 0x7c($sp)
 /* 0E3FE0 7F0AF4B0 8FA60084 */  lw    $a2, 0x84($sp)
-/* 0E3FE4 7F0AF4B4 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 0E3FE4 7F0AF4B4 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 0E3FE8 7F0AF4B8 E7B00010 */   swc1  $f16, 0x10($sp)
 /* 0E3FEC 7F0AF4BC 10400011 */  beqz  $v0, .L7F0AF504
 /* 0E3FF0 7F0AF4C0 8FA800A0 */   lw    $t0, 0xa0($sp)
@@ -2884,7 +2884,7 @@ glabel sub_GAME_7F0B0914
 
 
 // 'walkTilesBetweenPoints_NoCallback'
-s32 sub_GAME_7F0B0BE4(struct StandTile **tileStack, float start_x, float start_z, float dest_x, float dest_z)
+s32 walkTilesBetweenPoints_NoCallback(struct StandTile **tileStack, float start_x, float start_z, float dest_x, float dest_z)
 {
     return sub_GAME_7F0B0914(tileStack, start_x, start_z, dest_x, dest_z, 0, 0);
 }
@@ -3473,7 +3473,7 @@ glabel sub_GAME_7F0B0E24
 /* 0E5ECC 7F0B139C 46180600 */  add.s $f24, $f0, $f24
 /* 0E5ED0 7F0B13A0 461A1680 */  add.s $f26, $f2, $f26
 /* 0E5ED4 7F0B13A4 4407C000 */  mfc1  $a3, $f24
-/* 0E5ED8 7F0B13A8 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 0E5ED8 7F0B13A8 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 0E5EDC 7F0B13AC E7BA0010 */   swc1  $f26, 0x10($sp)
 /* 0E5EE0 7F0B13B0 8FAB0154 */  lw    $t3, 0x154($sp)
 .L7F0B13B4:

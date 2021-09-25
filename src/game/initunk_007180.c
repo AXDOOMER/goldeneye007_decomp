@@ -4,8 +4,32 @@
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F007180(void) {
+//s32 getPlayerCount(); // extern
+//s32 sub_GAME_7F0BDF04(); // extern
+extern u32 D_80040940[];
+extern s32 bufferentrycount_8007A160;
+extern u32 dword_CODE_bss_8007A164;
 
+void sub_GAME_7F007180(void)
+{
+    s32 sp18;
+    s32 i;
+    s32 j;
+
+
+    sp18 = sub_GAME_7F0BDF04();
+    bufferentrycount_8007A160 = (s32) (0xC8 / getPlayerCount());
+    if ((sp18 == 0x1D) || (sp18 == 0x1E))
+    {
+        bufferentrycount_8007A160 = (s32) ((s32) bufferentrycount_8007A160 >> 1);
+    }
+    dword_CODE_bss_8007A164 = mempAllocBytesInBank(((bufferentrycount_8007A160 * 0x68) + 0xF) & ~0xF, 4U);
+    for(i=0, j=0; i<bufferentrycount_8007A160; i++, j+=0x68)
+    {
+        dword_CODE_bss_8007A164[j] = 0;
+    }
+    
+    D_80040940[0] = 0;
 }
 #else
 GLOBAL_ASM(
@@ -20,8 +44,8 @@ glabel sub_GAME_7F007180
 /* 03BCC8 7F007198 240E00C8 */  li    $t6, 200
 /* 03BCCC 7F00719C 01C2001A */  div   $zero, $t6, $v0
 /* 03BCD0 7F0071A0 8FA30018 */  lw    $v1, 0x18($sp)
-/* 03BCD4 7F0071A4 3C068008 */  lui   $a2, %hi(dword_CODE_bss_8007A160)
-/* 03BCD8 7F0071A8 24C6A160 */  addiu $a2, %lo(dword_CODE_bss_8007A160) # addiu $a2, $a2, -0x5ea0
+/* 03BCD4 7F0071A4 3C068008 */  lui   $a2, %hi(bufferentrycount_8007A160)
+/* 03BCD8 7F0071A8 24C6A160 */  addiu $a2, %lo(bufferentrycount_8007A160) # addiu $a2, $a2, -0x5ea0
 /* 03BCDC 7F0071AC 14400002 */  bnez  $v0, .L7F0071B8
 /* 03BCE0 7F0071B0 00000000 */   nop   
 /* 03BCE4 7F0071B4 0007000D */  break 7
@@ -57,8 +81,8 @@ glabel sub_GAME_7F007180
 /* 03BD4C 7F00721C 00814824 */  and   $t1, $a0, $at
 /* 03BD50 7F007220 0C0025C8 */  jal   mempAllocBytesInBank
 /* 03BD54 7F007224 01202025 */   move  $a0, $t1
-/* 03BD58 7F007228 3C068008 */  lui   $a2, %hi(dword_CODE_bss_8007A160)
-/* 03BD5C 7F00722C 24C6A160 */  addiu $a2, %lo(dword_CODE_bss_8007A160) # addiu $a2, $a2, -0x5ea0
+/* 03BD58 7F007228 3C068008 */  lui   $a2, %hi(bufferentrycount_8007A160)
+/* 03BD5C 7F00722C 24C6A160 */  addiu $a2, %lo(bufferentrycount_8007A160) # addiu $a2, $a2, -0x5ea0
 /* 03BD60 7F007230 8CCA0000 */  lw    $t2, ($a2)
 /* 03BD64 7F007234 3C048008 */  lui   $a0, %hi(dword_CODE_bss_8007A164)
 /* 03BD68 7F007238 2484A164 */  addiu $a0, %lo(dword_CODE_bss_8007A164) # addiu $a0, $a0, -0x5e9c

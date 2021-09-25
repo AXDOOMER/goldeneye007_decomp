@@ -2682,7 +2682,7 @@ void *sub_GAME_7F079A60(void *arg0, void *arg1, void *arg2, s32 arg3, void *arg4
     {
         // Node 10
         sp34 = arg3;
-        if (sub_GAME_7F0B0BE4(&sp34, *arg4, arg4->unk8, *arg0, (f32) arg0->unk8) != 0)
+        if (walkTilesBetweenPoints_NoCallback(&sp34, *arg4, arg4->unk8, *arg0, (f32) arg0->unk8) != 0)
         {
             // Node 11
             sub_GAME_7F0B0518(sp34, *arg0, arg0->unk8);
@@ -2695,7 +2695,7 @@ void *sub_GAME_7F079A60(void *arg0, void *arg1, void *arg2, s32 arg3, void *arg4
             {
                 // Node 13
                 sp30 = (s32) pPlayer->room_pointer;
-                if (sub_GAME_7F0B0BE4(&sp30, pPlayer->xpos, pPlayer->zpos, *arg0, (f32) arg0->unk8) != 0)
+                if (walkTilesBetweenPoints_NoCallback(&sp30, pPlayer->xpos, pPlayer->zpos, *arg0, (f32) arg0->unk8) != 0)
                 {
                     // Node 14
                     pPlayer->room_pointer = sp30;
@@ -2818,7 +2818,7 @@ glabel sub_GAME_7F079A60
 /* 0AE6B0 7F079B80 8C460008 */  lw    $a2, 8($v0)
 /* 0AE6B4 7F079B84 8C450000 */  lw    $a1, ($v0)
 /* 0AE6B8 7F079B88 27A40034 */  addiu $a0, $sp, 0x34
-/* 0AE6BC 7F079B8C 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 0AE6BC 7F079B8C 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 0AE6C0 7F079B90 E7A40010 */   swc1  $f4, 0x10($sp)
 /* 0AE6C4 7F079B94 3C038008 */  lui   $v1, %hi(pPlayer)
 /* 0AE6C8 7F079B98 1040000B */  beqz  $v0, .L7F079BC8
@@ -2845,7 +2845,7 @@ glabel sub_GAME_7F079A60
 /* 0AE718 7F079BE8 8E070000 */  lw    $a3, ($s0)
 /* 0AE71C 7F079BEC 8C46000C */  lw    $a2, 0xc($v0)
 /* 0AE720 7F079BF0 8C450004 */  lw    $a1, 4($v0)
-/* 0AE724 7F079BF4 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 0AE724 7F079BF4 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 0AE728 7F079BF8 E7A60010 */   swc1  $f6, 0x10($sp)
 /* 0AE72C 7F079BFC 3C038008 */  lui   $v1, %hi(pPlayer)
 /* 0AE730 7F079C00 10400005 */  beqz  $v0, .L7F079C18
@@ -17351,7 +17351,7 @@ void *sub_GAME_7F081478(void) {
     stanlinelog_flag = 0;
     sp2C = (?32) phi_v0_2->unk488;
     sp28 = (?32) stanlinelog_flag;
-    sub_GAME_7F0B0BE4(&sp2C, phi_v0_2->unk48C, phi_v0_2->unk494, phi_v0_2->unk4B4, (f32) phi_v0_2->unk4BC);
+    walkTilesBetweenPoints_NoCallback(&sp2C, phi_v0_2->unk48C, phi_v0_2->unk494, phi_v0_2->unk4B4, (f32) phi_v0_2->unk4BC);
     stanlinelog_flag = sp28;
     pPlayer->field_4D8 = sp2C;
     pPlayer->field_4A4 = (f32) pPlayer->field_4B4;
@@ -17506,7 +17506,7 @@ glabel sub_GAME_7F081478
 /* 0B614C 7F08161C 8C4704B4 */  lw    $a3, 0x4b4($v0)
 /* 0B6150 7F081620 8C460494 */  lw    $a2, 0x494($v0)
 /* 0B6154 7F081624 8C45048C */  lw    $a1, 0x48c($v0)
-/* 0B6158 7F081628 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 0B6158 7F081628 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 0B615C 7F08162C E7AA0010 */   swc1  $f10, 0x10($sp)
 /* 0B6160 7F081630 8FAB0028 */  lw    $t3, 0x28($sp)
 /* 0B6164 7F081634 3C088008 */  lui   $t0, %hi(pPlayer) 
@@ -23884,7 +23884,7 @@ glabel MoveBond
 /* 0BB0F0 7F0865C0 8D060494 */  lw    $a2, 0x494($t0)
 /* 0BB0F4 7F0865C4 8FA700E4 */  lw    $a3, 0xe4($sp)
 /* 0BB0F8 7F0865C8 E7AA0010 */  swc1  $f10, 0x10($sp)
-/* 0BB0FC 7F0865CC 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 0BB0FC 7F0865CC 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 0BB100 7F0865D0 24840014 */   addiu $a0, $a0, 0x14
 /* 0BB104 7F0865D4 8FAF0138 */  lw    $t7, 0x138($sp)
 /* 0BB108 7F0865D8 8FA500E4 */  lw    $a1, 0xe4($sp)
@@ -26425,7 +26425,7 @@ glabel MoveBond
 /* 0BB7E4 7F086C74 8D060494 */  lw    $a2, 0x494($t0)
 /* 0BB7E8 7F086C78 8FA700E4 */  lw    $a3, 0xe4($sp)
 /* 0BB7EC 7F086C7C E7AA0010 */  swc1  $f10, 0x10($sp)
-/* 0BB7F0 7F086C80 0FC2C5E5 */  jal   sub_GAME_7F0B0BE4
+/* 0BB7F0 7F086C80 0FC2C5E5 */  jal   walkTilesBetweenPoints_NoCallback
 /* 0BB7F4 7F086C84 24840014 */   addiu $a0, $a0, 0x14
 /* 0BB7F8 7F086C88 8FB90138 */  lw    $t9, 0x138($sp)
 /* 0BB7FC 7F086C8C 8FA500E4 */  lw    $a1, 0xe4($sp)
@@ -28972,7 +28972,7 @@ glabel MoveBond
 /* 0BB0F0 7F0865C0 8D060494 */  lw    $a2, 0x494($t0)
 /* 0BB0F4 7F0865C4 8FA700E4 */  lw    $a3, 0xe4($sp)
 /* 0BB0F8 7F0865C8 E7AA0010 */  swc1  $f10, 0x10($sp)
-/* 0BB0FC 7F0865CC 0FC2C2F9 */  jal   sub_GAME_7F0B0BE4
+/* 0BB0FC 7F0865CC 0FC2C2F9 */  jal   walkTilesBetweenPoints_NoCallback
 /* 0BB100 7F0865D0 24840014 */   addiu $a0, $a0, 0x14
 /* 0BB104 7F0865D4 8FAF0138 */  lw    $t7, 0x138($sp)
 /* 0BB108 7F0865D8 8FA500E4 */  lw    $a1, 0xe4($sp)

@@ -9,7 +9,7 @@ s32 sub_GAME_7F007920(void) {
     s32 phi_v0;
 
     // Node 0
-    if (dword_CODE_bss_8007A160 > 0)
+    if (bufferentrycount_8007A160 > 0)
     {
         // Node 1
         phi_v1 = 0;
@@ -20,7 +20,7 @@ loop_2:
         *(dword_CODE_bss_8007A164 + phi_v1) = 0;
         phi_v1 = (phi_v1 + 0x68);
         phi_v0 = temp_v0;
-        if (temp_v0 < dword_CODE_bss_8007A160)
+        if (temp_v0 < bufferentrycount_8007A160)
         {
             goto loop_2;
         }
@@ -32,8 +32,8 @@ loop_2:
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F007920
-/* 03C450 7F007920 3C048008 */  lui   $a0, %hi(dword_CODE_bss_8007A160)
-/* 03C454 7F007924 2484A160 */  addiu $a0, %lo(dword_CODE_bss_8007A160) # addiu $a0, $a0, -0x5ea0
+/* 03C450 7F007920 3C048008 */  lui   $a0, %hi(bufferentrycount_8007A160)
+/* 03C454 7F007924 2484A160 */  addiu $a0, %lo(bufferentrycount_8007A160) # addiu $a0, $a0, -0x5ea0
 /* 03C458 7F007928 8C8E0000 */  lw    $t6, ($a0)
 /* 03C45C 7F00792C 00001025 */  move  $v0, $zero
 /* 03C460 7F007930 00001825 */  move  $v1, $zero

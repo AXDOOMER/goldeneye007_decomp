@@ -1,11 +1,18 @@
-#ifndef _DEBUGMENU_090490_H_
-#define _DEBUGMENU_090490_H_
+#ifndef _debugmenu_handler_H_
+#define _debugmenu_handler_H_
 #include "ultra64.h"
 
 struct mcm_layout {
     int xpos;
     int ypos;
 };
+
+
+
+extern s32 debug_limit_controller_input;
+extern s32 debHighlightedOption;
+
+extern s32 show_debug_menu_flag;
 
 s32 get_debug_render_raster(void);
 s32 get_debug_freeze_processing(void);
