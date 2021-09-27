@@ -5,7 +5,8 @@
 extern struct prop *ptr_smoke_buf;
 extern struct prop *ptr_explosion_buf;
 extern s32 numExplosionEntries;
-
+extern f32 D_80040178;
 extern char dword_CODE_bss_8007A100[];
+
 
 #endif

@@ -211,6 +211,7 @@ extern u32 monAnim35Taser[];
 extern u32 temp_mine_table[30];
 extern f32 gas_damage_flag;
 extern u32 gas_cutoff_flag;
+extern f32 difficulty ;
 extern struct object_standard * ptr_setup_objects;
 void stop_alarm(void);
 
