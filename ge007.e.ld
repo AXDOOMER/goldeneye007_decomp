@@ -3903,8 +3903,8 @@ SECTIONS
    __dataSegmentVaddrEnd = _csegmentSegmentRomEnd;
 
    _bssSegmentStart = ADDR(.bss);
-   _bssSegmentRomStart = _csegmentSegmentRomEnd;
-   .bss _csegmentSegmentEnd : AT(_bssSegmentRomStart){
+   .bss (NOLOAD) :
+   {
       build/e/src/boot.o (.bss);
       build/e/src/init.o (.bss);
       build/e/src/sched.o (.bss);
@@ -4242,48 +4242,34 @@ SECTIONS
    }
    _bssSegmentEnd = ADDR(.bss) + SIZEOF(.bss);
    _bssSegmentSize = SIZEOF(.bss);
-   _bssSegmentRomEnd = _bssSegmentRomStart + SIZEOF(.bss);
 
    _roombufSegmentStart = ADDR(.roombuf);
-   _roombufSegmentRomStart = _bssSegmentRomEnd;
-   .roombuf _bssSegmentEnd : AT(_roombufSegmentRomStart){
+   .roombuf (NOLOAD) :
+   {
       build/e/src/game/room_model_buffer.o (.bss);
    }
    _roombufSegmentEnd = ADDR(.roombuf) + SIZEOF(.roombuf);
-   _roombufSegmentRomEnd = _roombufSegmentRomStart + SIZEOF(.roombuf);
-
-   _tlbbufSegmentStart = ADDR(.tlbbuf);
-   _tlbbufSegmentRomStart = _roombufSegmentRomEnd;
-   .tlbbuf _roombufSegmentEnd : AT(_tlbbufSegmentRomStart){
-      build/e/src/tlb_buffer.o (.bss);
-   }
-   _tlbbufSegmentEnd = ADDR(.tlbbuf) + SIZEOF(.tlbbuf);
-   _tlbbufSegmentRomEnd = _tlbbufSegmentRomStart + SIZEOF(.tlbbuf);
-
 
    _decompbufSegmentStart = ADDR(.decompbuf);
-   _decompbufSegmentRomStart = _tlbbufSegmentRomEnd;
-   .decompbuf 0x80300000 : AT(_decompbufSegmentRomStart){
+   .decompbuf 0x80300000 :
+   {
       build/e/src/decompressbuffer.o (.bss);
    }
    _decompbufSegmentEnd = ADDR(.decompbuf) + SIZEOF(.decompbuf);
-   _decompbufSegmentRomEnd = _decompbufSegmentRomStart + SIZEOF(.decompbuf);
 
    _stacksSegmentStart = ADDR(.stacks);
-   _stacksSegmentRomStart = _decompbufSegmentRomEnd;
-   .stacks 0x803ab400 : AT(_stacksSegmentRomStart){
+   .stacks (NOLOAD) : 
+   {
       build/e/src/stacks.o (.bss);
    }
    _stacksSegmentEnd = ADDR(.stacks) + SIZEOF(.stacks);
-   _stacksSegmentRomEnd = _stacksSegmentRomStart + SIZEOF(.stacks);
 
    _cfbSegmentStart = ADDR(.cfb);
-   _cfbSegmentRomStart = _stacksSegmentRomEnd;
-   .cfb 0x803b5000 : AT(_cfbSegmentRomStart){
+   .cfb (NOLOAD) : 
+   {
       build/e/src/cfb.o (.bss);
    }
    _cfbSegmentEnd = ADDR(.cfb) + SIZEOF(.cfb);
-   _cfbSegmentRomEnd = _cfbSegmentRomStart + SIZEOF(.cfb);
 
    /*move em to end, out of the way*/
    /DISCARD/ : {
