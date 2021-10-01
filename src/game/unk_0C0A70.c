@@ -55,7 +55,11 @@ void sub_GAME_7F0C0B4C(void)
   u32 uVar1;
   
   do {
+    #ifndef VERSION_EU
     uVar1 = ((osGetCount() - copy_of_osgetcount_value_1) + 0x5eb61) / 0xbd6c3;
+    #else
+    uVar1 = ((osGetCount() - copy_of_osgetcount_value_1) + 0x71a75) / 0xe34ea;
+    #endif
   } while (uVar1 < D_800484B4);
 
   D_800484B4 = 1;
@@ -64,10 +68,17 @@ void sub_GAME_7F0C0B4C(void)
 
 
 void sub_GAME_7F0C0BE4(s32 arg0) {
+  #ifndef VERSION_EU
     D_800484B4 = arg0;
+    #endif
 }
 
-
+#ifdef VERSION_EU
+void eu_sub_7f0c00a4(void)
+{
+  
+}
+#endif
 
 
 

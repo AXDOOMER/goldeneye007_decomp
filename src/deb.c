@@ -33,6 +33,7 @@ struct deblistentry *debFind(const char *name)
 }
 
 u8 *debAllocate(s32 size) {
+    #ifndef VERSION_EU
     u8 **pos = &g_DebMemPos;
     u8 *curr = *pos;
     u8 *prev = curr;
@@ -45,14 +46,20 @@ u8 *debAllocate(s32 size) {
         *pos = curr;
     }
     return prev;
+    #else
+
+    return &g_DebMemPos;
+    #endif
 }
 
 void debAdd(const char *name, u32 data) {
+    #ifndef VERSION_EU
     struct deblistentry *entry = debAllocate(sizeof(struct deblistentry));
     entry->next = g_DebList;
     entry->data = data;
     entry->name = name;
     g_DebList = entry;
+    #endif
 }
 
 void debInit(void) {
@@ -65,6 +72,7 @@ void debTryAdd(void* data, const char *name) {
         debAdd(name, data);
     }
 }
+
 
 void debLoopEntries(void) {
     struct deblistentry *entry = g_DebList;

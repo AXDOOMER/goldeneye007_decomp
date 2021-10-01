@@ -480,7 +480,7 @@ u32 check_objectives_complete(void)
 }
 
 
-#ifdef VERSION_JP
+#ifndef VERSION_US
 void FUN_7f057a40(void)
 {
   num_objective_ptrs[1] = 1;

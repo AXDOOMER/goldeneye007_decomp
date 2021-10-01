@@ -40,9 +40,11 @@
  * @file boss.c
  * This file contains the main game loop code. 
  */
-
+#ifndef VERSION_EU
 #define MAIN_LOOP_TICK_INTERVAL 0x5eb61U
-
+#else
+#define MAIN_LOOP_TICK_INTERVAL D_800484B4 * 0xe34ea - 0x71a75U
+#endif
 /**
  * Copied from n64devkit\ultra\usr\src\pr\demos_old\simple\gfx.h
  */
@@ -579,6 +581,9 @@ void bossMainloop(void)
 
                             pendingGfx++;
                             memaIterateAndMerge();
+                            #ifdef VERSION_EU
+                            eu_sub_7f0c00a4();
+                            #endif
                             toggleFlag ^= 1;
                             speedGraphVideoRelated_3(0x10000);
                         }
@@ -646,7 +651,7 @@ LEVELID bossGetStageNum() {
  *     return to title screen from stage
  */
 void bossReturnTitleStage(void) {
-#ifdef VERSION_JP
+#ifndef VERSION_US
     display_objective_status_text_on_status_change();
     FUN_7f057a40();
 #endif

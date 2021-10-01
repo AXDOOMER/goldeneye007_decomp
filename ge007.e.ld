@@ -79,6 +79,7 @@ SECTIONS
       build/e/src/debugmenu.o (.text);
       build/e/src/joy.o (.text);
       build/e/src/motor.o (.text);
+      build/e/src/libultra/leointerrupt.o (.text);
       build/e/src/rmon.o (.text);
 
       /*build/e/src/libultra/osPiRawStartDma.o (.text);*/
@@ -118,6 +119,21 @@ SECTIONS
       build/e/src/libultra/sptask.o (.text);
       build/e/src/libultra/dpsetnextbuf.o (.text);
       build/e/src/libultra/sptaskyield.o (.text);
+      build/e/src/libultra/timerintr.o (.text);
+      build/e/src/libultra/getthreadpri.o (.text);
+      build/e/src/libultra/interrupt.o (.text);
+      build/e/src/libultra/vi.o (.text);
+      build/e/src/libultra/vigetcurrcontext.o (.text);
+      build/e/src/libultra/viswapcontext.o (.text);
+      build/e/src/libultra/piacs.o (.text);
+      build/e/src/libultra/epirawdma.o (.text);
+      build/e/src/libultra/devmgr.o (.text);
+
+
+
+
+
+
       build/e/src/libultra/gettlbhi.o (.text);
       build/e/src/libultra/virtualtophysical.o (.text);
       build/e/src/libultra/aisetfreq.o (.text);
@@ -198,20 +214,24 @@ SECTIONS
       build/e/src/libultra/pirawread.o (.text);
       build/e/src/libultra/bzero.o (.text);
       build/e/src/libultra/sethwinterrupt.o (.text);
-      build/e/src/libultra/leointerrupt.o (.text);
-      build/e/src/libultra/interrupt.o (.text);
-      build/e/src/libultra/timerintr.o (.text);
+      /*build/e/src/libultra/leointerrupt.o (.text);*/
+      /*build/e/src/libultra/interrupt.o (.text);*/
+      /*build/e/src/libultra/timerintr.o (.text);*/
       build/e/src/libultra/kdebugserver.o (.text);
-      build/e/src/libultra/getthreadpri.o (.text);
-      build/e/src/libultra/vi.o (.text); /*edited*/
-      build/e/src/libultra/vigetcurrcontext.o (.text);
-      build/e/src/libultra/viswapcontext.o (.text);
+      /*build/e/src/libultra/getthreadpri.o (.text);*/
+      /*build/e/src/libultra/vi.o (.text);*/ /*edited*/
+      /*build/e/src/libultra/vigetcurrcontext.o (.text);*/
+      /*build/e/src/libultra/viswapcontext.o (.text);*/
       build/e/src/libultra/spgetstat.o (.text);
       build/e/src/libultra/spsetstat.o (.text);
       build/e/src/libultra/spsetpc.o (.text);
       build/e/src/libultra/sprawdma.o (.text);
       build/e/src/libultra/sp.o (.text);
       build/e/src/libultra/dp.o (.text);
+      build/e/src/libultra/setcompare.o (.text);
+      build/e/src/libultra/resetglobalintmask.o (.text);
+      build/e/src/libultra/epirawwrite.o (.text);
+
       build/e/src/libultra/probetlb.o (.text);
       build/e/src/libultra/syndelete.o (.text);
       build/e/src/libultra/ai.o (.text);
@@ -231,25 +251,25 @@ SECTIONS
       build/e/src/libultra/seqplayer.o (.text);
       build/e/src/libultra/synstartvoiceparam.o (.text);
       build/e/src/libultra/copy.o (.text);
-      build/e/src/libultra/piacs.o (.text);
+      /*build/e/src/libultra/piacs.o (.text);*/
       build/e/src/libultra/xlitob.o (.text);
       build/e/src/libultra/xldtob.o (.text);
-      build/e/src/libultra/epirawdma.o (.text);
-      build/e/src/libultra/devmgr.o (.text);
+      /*build/e/src/libultra/epirawdma.o (.text);*/
+      /*build/e/src/libultra/devmgr.o (.text);*/
       build/e/src/libultra/contpfs.o (.text);
       build/e/src/libultra/si.o (.text);
       build/e/src/libultra/normalize.o (.text);
       build/e/src/libultra/sqrtf.o (.text);
-      build/e/src/libultra/leodiskinit.o (.text);
-      build/e/src/libultra/setcompare.o (.text);
+      /*build/e/src/libultra/leodiskinit.o (.text);*/
+      /*build/e/src/libultra/setcompare.o (.text);*/
       build/e/src/libultra/filter.o (.text);
       build/e/src/libultra/reverb.o (.text); /*edited*/
       build/e/src/libultra/libm_vals.o (.text); /*edited*/
       build/e/src/libultra/seq.o (.text);
       build/e/src/libultra/synsetpriority.o (.text);
       build/e/src/libultra/ldiv.o (.text);
-      build/e/src/libultra/resetglobalintmask.o (.text);
-      build/e/src/libultra/epirawwrite.o (.text);
+      /*build/e/src/libultra/resetglobalintmask.o (.text);*/
+      /*build/e/src/libultra/epirawwrite.o (.text);*/
       build/e/src/libultra/vimodentsclan1.o (.text);
       build/e/src/libultra/vimodepallan1.o (.text);
       build/e/src/libultra/ultra80069080.o (.text); /*edited*/
@@ -3256,6 +3276,7 @@ SECTIONS
       build/e/src/debugmenu.o (.data);
       build/e/src/joy.o (.data);
       build/e/src/motor.o (.data);
+      build/e/src/libultra/leointerrupt.o (.data);
       build/e/src/rmon.o (.data);
 
       /*build/e/src/libultra/osPiRawStartDma.o (.data);*/
@@ -3295,6 +3316,20 @@ SECTIONS
       build/e/src/libultra/sptask.o (.data);
       build/e/src/libultra/dpsetnextbuf.o (.data);
       build/e/src/libultra/sptaskyield.o (.data);
+      build/e/src/libultra/timerintr.o (.data);
+      build/e/src/libultra/getthreadpri.o (.data);
+      build/e/src/libultra/interrupt.o (.data);
+      build/e/src/libultra/vi.o (.data);
+      build/e/src/libultra/vigetcurrcontext.o (.data);
+      build/e/src/libultra/viswapcontext.o (.data);
+      build/e/src/libultra/piacs.o (.data);
+      build/e/src/libultra/epirawdma.o (.data);
+      build/e/src/libultra/devmgr.o (.data);
+
+
+
+
+
       build/e/src/libultra/gettlbhi.o (.data);
       build/e/src/libultra/virtualtophysical.o (.data);
       build/e/src/libultra/aisetfreq.o (.data);
@@ -3375,20 +3410,24 @@ SECTIONS
       build/e/src/libultra/pirawread.o (.data);
       build/e/src/libultra/bzero.o (.data);
       build/e/src/libultra/sethwinterrupt.o (.data);
-      build/e/src/libultra/leointerrupt.o (.data);
-      build/e/src/libultra/interrupt.o (.data);
-      build/e/src/libultra/timerintr.o (.data);
+      /*build/e/src/libultra/leointerrupt.o (.data);*/
+      /*build/e/src/libultra/interrupt.o (.data);*/
+      /*build/e/src/libultra/timerintr.o (.data);*/
       build/e/src/libultra/kdebugserver.o (.data);
-      build/e/src/libultra/getthreadpri.o (.data);
-      build/e/src/libultra/vi.o (.data); /*edited*/
-      build/e/src/libultra/vigetcurrcontext.o (.data);
-      build/e/src/libultra/viswapcontext.o (.data);
+      /*build/e/src/libultra/getthreadpri.o (.data);*/
+      /*build/e/src/libultra/vi.o (.data);*/ /*edited*/
+      /*build/e/src/libultra/vigetcurrcontext.o (.data);*/
+      /*build/e/src/libultra/viswapcontext.o (.data);*/
       build/e/src/libultra/spgetstat.o (.data);
       build/e/src/libultra/spsetstat.o (.data);
       build/e/src/libultra/spsetpc.o (.data);
       build/e/src/libultra/sprawdma.o (.data);
       build/e/src/libultra/sp.o (.data);
       build/e/src/libultra/dp.o (.data);
+      build/e/src/libultra/setcompare.o (.data);
+      build/e/src/libultra/resetglobalintmask.o (.data);
+      build/e/src/libultra/epirawwrite.o (.data);
+
       build/e/src/libultra/probetlb.o (.data);
       build/e/src/libultra/syndelete.o (.data);
       build/e/src/libultra/ai.o (.data);
@@ -3408,25 +3447,25 @@ SECTIONS
       build/e/src/libultra/seqplayer.o (.data);
       build/e/src/libultra/synstartvoiceparam.o (.data);
       build/e/src/libultra/copy.o (.data);
-      build/e/src/libultra/piacs.o (.data);
+      /*build/e/src/libultra/piacs.o (.data);*/
       build/e/src/libultra/xlitob.o (.data);
       build/e/src/libultra/xldtob.o (.data);
-      build/e/src/libultra/epirawdma.o (.data);
-      build/e/src/libultra/devmgr.o (.data);
+      /*build/e/src/libultra/epirawdma.o (.data);*/
+      /*build/e/src/libultra/devmgr.o (.data);*/
       build/e/src/libultra/contpfs.o (.data);
       build/e/src/libultra/si.o (.data);
       build/e/src/libultra/normalize.o (.data);
       build/e/src/libultra/sqrtf.o (.data);
-      build/e/src/libultra/leodiskinit.o (.data);
-      build/e/src/libultra/setcompare.o (.data);
+      /*build/e/src/libultra/leodiskinit.o (.data);*/
+      /*build/e/src/libultra/setcompare.o (.data);*/
       build/e/src/libultra/filter.o (.data);
       build/e/src/libultra/reverb.o (.data); /*edited*/
       build/e/src/libultra/libm_vals.o (.data); /*edited*/
       build/e/src/libultra/seq.o (.data);
       build/e/src/libultra/synsetpriority.o (.data);
       build/e/src/libultra/ldiv.o (.data);
-      build/e/src/libultra/resetglobalintmask.o (.data);
-      build/e/src/libultra/epirawwrite.o (.data);
+      /*build/e/src/libultra/resetglobalintmask.o (.data);*/
+      /*build/e/src/libultra/epirawwrite.o (.data);*/
       build/e/src/libultra/vimodentsclan1.o (.data);
       build/e/src/libultra/vimodepallan1.o (.data);
       build/e/src/libultra/ultra80069080.o (.data); /*edited*/
@@ -3468,6 +3507,7 @@ SECTIONS
       build/e/src/debugmenu.o (.rodata);
       build/e/src/joy.o (.rodata);
       build/e/src/motor.o (.rodata);
+      build/e/src/libultra/leointerrupt.o (.rodata);
       build/e/src/rmon.o (.rodata);
 
       /*build/e/src/libultra/osPiRawStartDma.o (.rodata);*/
@@ -3507,6 +3547,20 @@ SECTIONS
       build/e/src/libultra/sptask.o (.rodata);
       build/e/src/libultra/dpsetnextbuf.o (.rodata);
       build/e/src/libultra/sptaskyield.o (.rodata);
+      build/e/src/libultra/timerintr.o (.rodata);
+      build/e/src/libultra/getthreadpri.o (.rodata);
+      build/e/src/libultra/interrupt.o (.rodata);
+      build/e/src/libultra/vi.o (.rodata);
+      build/e/src/libultra/vigetcurrcontext.o (.rodata);
+      build/e/src/libultra/viswapcontext.o (.rodata);
+      build/e/src/libultra/piacs.o (.rodata);
+      build/e/src/libultra/epirawdma.o (.rodata);
+      build/e/src/libultra/devmgr.o (.rodata);
+
+
+
+
+
       build/e/src/libultra/gettlbhi.o (.rodata);
       build/e/src/libultra/virtualtophysical.o (.rodata);
       build/e/src/libultra/aisetfreq.o (.rodata);
@@ -3587,20 +3641,24 @@ SECTIONS
       build/e/src/libultra/pirawread.o (.rodata);
       build/e/src/libultra/bzero.o (.rodata);
       build/e/src/libultra/sethwinterrupt.o (.rodata);
-      build/e/src/libultra/leointerrupt.o (.rodata);
-      build/e/src/libultra/interrupt.o (.rodata);
-      build/e/src/libultra/timerintr.o (.rodata);
+      /*build/e/src/libultra/leointerrupt.o (.rodata);*/
+      /*build/e/src/libultra/interrupt.o (.rodata);*/
+      /*build/e/src/libultra/timerintr.o (.rodata);*/
       build/e/src/libultra/kdebugserver.o (.rodata);
-      build/e/src/libultra/getthreadpri.o (.rodata);
-      build/e/src/libultra/vi.o (.rodata); /*edited*/
-      build/e/src/libultra/vigetcurrcontext.o (.rodata);
-      build/e/src/libultra/viswapcontext.o (.rodata);
+      /*build/e/src/libultra/getthreadpri.o (.rodata);*/
+      /*build/e/src/libultra/vi.o (.rodata);*/ /*edited*/
+/*      build/e/src/libultra/vigetcurrcontext.o (.rodata);*/
+      /*build/e/src/libultra/viswapcontext.o (.rodata);*/
       build/e/src/libultra/spgetstat.o (.rodata);
       build/e/src/libultra/spsetstat.o (.rodata);
       build/e/src/libultra/spsetpc.o (.rodata);
       build/e/src/libultra/sprawdma.o (.rodata);
       build/e/src/libultra/sp.o (.rodata);
       build/e/src/libultra/dp.o (.rodata);
+      build/e/src/libultra/setcompare.o (.rodata);
+      build/e/src/libultra/resetglobalintmask.o (.rodata);
+      build/e/src/libultra/epirawwrite.o (.rodata);
+
       build/e/src/libultra/probetlb.o (.rodata);
       build/e/src/libultra/syndelete.o (.rodata);
       build/e/src/libultra/ai.o (.rodata);
@@ -3620,25 +3678,25 @@ SECTIONS
       build/e/src/libultra/seqplayer.o (.rodata);
       build/e/src/libultra/synstartvoiceparam.o (.rodata);
       build/e/src/libultra/copy.o (.rodata);
-      build/e/src/libultra/piacs.o (.rodata);
+      /*build/e/src/libultra/piacs.o (.rodata);*/
       build/e/src/libultra/xlitob.o (.rodata);
       build/e/src/libultra/xldtob.o (.rodata);
-      build/e/src/libultra/epirawdma.o (.rodata);
-      build/e/src/libultra/devmgr.o (.rodata);
+      /*build/e/src/libultra/epirawdma.o (.rodata);*/
+      /*build/e/src/libultra/devmgr.o (.rodata);*/
       build/e/src/libultra/contpfs.o (.rodata);
       build/e/src/libultra/si.o (.rodata);
       build/e/src/libultra/normalize.o (.rodata);
       build/e/src/libultra/sqrtf.o (.rodata);
-      build/e/src/libultra/leodiskinit.o (.rodata);
-      build/e/src/libultra/setcompare.o (.rodata);
+      /*build/e/src/libultra/leodiskinit.o (.rodata);*/
+      /*build/e/src/libultra/setcompare.o (.rodata);*/
       build/e/src/libultra/filter.o (.rodata);
       build/e/src/libultra/reverb.o (.rodata); /*edited*/
       build/e/src/libultra/libm_vals.o (.rodata); /*edited*/
       build/e/src/libultra/seq.o (.rodata);
       build/e/src/libultra/synsetpriority.o (.rodata);
       build/e/src/libultra/ldiv.o (.rodata);
-      build/e/src/libultra/resetglobalintmask.o (.rodata);
-      build/e/src/libultra/epirawwrite.o (.rodata);
+      /*build/e/src/libultra/resetglobalintmask.o (.rodata);*/
+      /*build/e/src/libultra/epirawwrite.o (.rodata);*/
       build/e/src/libultra/vimodentsclan1.o (.rodata);
       build/e/src/libultra/vimodepallan1.o (.rodata);
       build/e/src/libultra/ultra80069080.o (.rodata); /*edited*/
@@ -3939,6 +3997,7 @@ SECTIONS
       build/e/src/debugmenu.o (.bss);
       build/e/src/joy.o (.bss);
       build/e/src/motor.o (.bss);
+      build/e/src/libultra/leointerrupt.o (.bss);
       build/e/src/rmon.o (.bss);
 
       /*build/e/src/libultra/osPiRawStartDma.o (.bss);*/
@@ -3978,6 +4037,19 @@ SECTIONS
       build/e/src/libultra/sptask.o (.bss);
       build/e/src/libultra/dpsetnextbuf.o (.bss);
       build/e/src/libultra/sptaskyield.o (.bss);
+      build/e/src/libultra/timerintr.o (.bss);
+      build/e/src/libultra/getthreadpri.o (.bss);
+      build/e/src/libultra/interrupt.o (.bss);
+      build/e/src/libultra/vi.o (.bss); /*edited*/
+      build/e/src/libultra/vigetcurrcontext.o (.bss);
+      build/e/src/libultra/viswapcontext.o (.bss);
+      build/e/src/libultra/piacs.o (.bss);
+      build/e/src/libultra/epirawdma.o (.bss);
+      build/e/src/libultra/devmgr.o (.bss);
+
+
+
+
       build/e/src/libultra/gettlbhi.o (.bss);
       build/e/src/libultra/virtualtophysical.o (.bss);
       build/e/src/libultra/aisetfreq.o (.bss);
@@ -4058,20 +4130,24 @@ SECTIONS
       build/e/src/libultra/pirawread.o (.bss);
       build/e/src/libultra/bzero.o (.bss);
       build/e/src/libultra/sethwinterrupt.o (.bss);
-      build/e/src/libultra/leointerrupt.o (.bss);
-      build/e/src/libultra/interrupt.o (.bss);
-      build/e/src/libultra/timerintr.o (.bss);
+      /*build/e/src/libultra/leointerrupt.o (.bss);*/
+      /*build/e/src/libultra/interrupt.o (.bss);*/
+      /*build/e/src/libultra/timerintr.o (.bss);*/
       build/e/src/libultra/kdebugserver.o (.bss);
-      build/e/src/libultra/getthreadpri.o (.bss);
-      build/e/src/libultra/vi.o (.bss); /*edited*/
-      build/e/src/libultra/vigetcurrcontext.o (.bss);
-      build/e/src/libultra/viswapcontext.o (.bss);
+      /*build/e/src/libultra/getthreadpri.o (.bss);*/
+      /*build/e/src/libultra/vi.o (.bss);*/ /*edited*/
+      /*build/e/src/libultra/vigetcurrcontext.o (.bss);*/
+      /*build/e/src/libultra/viswapcontext.o (.bss);*/
       build/e/src/libultra/spgetstat.o (.bss);
       build/e/src/libultra/spsetstat.o (.bss);
       build/e/src/libultra/spsetpc.o (.bss);
       build/e/src/libultra/sprawdma.o (.bss);
       build/e/src/libultra/sp.o (.bss);
       build/e/src/libultra/dp.o (.bss);
+      build/e/src/libultra/setcompare.o (.bss);
+      build/e/src/libultra/resetglobalintmask.o (.bss);
+      build/e/src/libultra/epirawwrite.o (.bss);
+
       build/e/src/libultra/probetlb.o (.bss);
       build/e/src/libultra/syndelete.o (.bss);
       build/e/src/libultra/ai.o (.bss);
@@ -4091,25 +4167,26 @@ SECTIONS
       build/e/src/libultra/seqplayer.o (.bss);
       build/e/src/libultra/synstartvoiceparam.o (.bss);
       build/e/src/libultra/copy.o (.bss);
-      build/e/src/libultra/piacs.o (.bss);
+      /*build/e/src/libultra/piacs.o (.bss);*/
       build/e/src/libultra/xlitob.o (.bss);
       build/e/src/libultra/xldtob.o (.bss);
-      build/e/src/libultra/epirawdma.o (.bss);
-      build/e/src/libultra/devmgr.o (.bss);
+      /*build/e/src/libultra/epirawdma.o (.bss);*/
+
+      /*build/e/src/libultra/devmgr.o (.bss);*/
       build/e/src/libultra/contpfs.o (.bss);
       build/e/src/libultra/si.o (.bss);
       build/e/src/libultra/normalize.o (.bss);
       build/e/src/libultra/sqrtf.o (.bss);
-      build/e/src/libultra/leodiskinit.o (.bss);
-      build/e/src/libultra/setcompare.o (.bss);
+      /*build/e/src/libultra/leodiskinit.o (.bss);*/
+      /*build/e/src/libultra/setcompare.o (.bss);*/
       build/e/src/libultra/filter.o (.bss);
       build/e/src/libultra/reverb.o (.bss); /*edited*/
       build/e/src/libultra/libm_vals.o (.bss); /*edited*/
       build/e/src/libultra/seq.o (.bss);
       build/e/src/libultra/synsetpriority.o (.bss);
       build/e/src/libultra/ldiv.o (.bss);
-      build/e/src/libultra/resetglobalintmask.o (.bss);
-      build/e/src/libultra/epirawwrite.o (.bss);
+      /*build/e/src/libultra/resetglobalintmask.o (.bss);*/
+      /*build/e/src/libultra/epirawwrite.o (.bss);*/
       build/e/src/libultra/vimodentsclan1.o (.bss);
       build/e/src/libultra/vimodepallan1.o (.bss);
       build/e/src/libultra/ultra80069080.o (.bss); /*edited*/
