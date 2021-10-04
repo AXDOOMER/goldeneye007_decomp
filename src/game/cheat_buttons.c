@@ -4180,7 +4180,7 @@ glabel set_DKMode
 /* 0C7F38 7F0933C8 51C0000D */  beql  $t6, $zero, .L7F093400
 /* 0C7F3C 7F0933CC 26310001 */   addiu $s1, $s1, 1
 /* 0C7F40 7F0933D0 8204000F */  lb    $a0, 0xf($s0)
-/* 0C7F44 7F0933D4 0FC0827B */  jal   jp_only_7F0209EC
+/* 0C7F44 7F0933D4 0FC0827B */  jal   not_in_us_7F0209EC
 /* 0C7F48 7F0933D8 82050006 */   lb    $a1, 6($s0)
 /* 0C7F4C 7F0933DC 50400008 */  beql  $v0, $zero, .L7F093400
 /* 0C7F50 7F0933E0 26310001 */   addiu $s1, $s1, 1
