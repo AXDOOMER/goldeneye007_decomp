@@ -84,7 +84,7 @@ glabel cleanupObjects
 /* 03C084 7F007554 0FC10409 */  jal   sub_GAME_7F041024
 /* 03C088 7F007558 24050001 */   li    $a1, 1
 .L7F00755C:
-/* 03C08C 7F00755C 0FC15A3D */  jal   get_size_of_setup_object_type
+/* 03C08C 7F00755C 0FC15A3D */  jal   sizepropdef
 /* 03C090 7F007560 02002025 */   move  $a0, $s0
 /* 03C094 7F007564 00027880 */  sll   $t7, $v0, 2
 /* 03C098 7F007568 01F08021 */  addu  $s0, $t7, $s0

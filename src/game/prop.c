@@ -53,7 +53,7 @@ glabel load_proptype
 /* 0366C0 7F001B90 00000000 */   nop   
 /* 0366C4 7F001B94 26310001 */  addiu $s1, $s1, 1
 .L7F001B98:
-/* 0366C8 7F001B98 0FC15A3D */  jal   get_size_of_setup_object_type
+/* 0366C8 7F001B98 0FC15A3D */  jal   sizepropdef
 /* 0366CC 7F001B9C 02002025 */   move  $a0, $s0
 /* 0366D0 7F001BA0 00027080 */  sll   $t6, $v0, 2
 /* 0366D4 7F001BA4 01D08021 */  addu  $s0, $t6, $s0
@@ -4539,7 +4539,7 @@ type1E_subobjective_expand:
 /* 039624 7F004AF4 0FC01409 */  jal   set_parent_cur_obj_photograph
 /* 039628 7F004AF8 02402025 */   move  $a0, $s2
 other_obj_expand:
-/* 03962C 7F004AFC 0FC15A3D */  jal   get_size_of_setup_object_type
+/* 03962C 7F004AFC 0FC15A3D */  jal   sizepropdef
 /* 039630 7F004B00 02402025 */   move  $a0, $s2
 /* 039634 7F004B04 0002C080 */  sll   $t8, $v0, 2
 /* 039638 7F004B08 03129021 */  addu  $s2, $t8, $s2
@@ -4733,7 +4733,7 @@ other_obj_expand:
 /* 03990C 7F004DDC 35092000 */  ori   $t1, $t0, 0x2000
 /* 039910 7F004DE0 AE090064 */  sw    $t1, 0x64($s0)
 .L7F004DE4:
-/* 039914 7F004DE4 0FC15A3D */  jal   get_size_of_setup_object_type
+/* 039914 7F004DE4 0FC15A3D */  jal   sizepropdef
 /* 039918 7F004DE8 02402025 */   move  $a0, $s2
 /* 03991C 7F004DEC 0002C880 */  sll   $t9, $v0, 2
 /* 039920 7F004DF0 03329021 */  addu  $s2, $t9, $s2
@@ -5937,7 +5937,7 @@ type1E_subobjective_expand:
 /* 039674 7F004B04 0FC0140F */  jal   set_parent_cur_obj_photograph
 /* 039678 7F004B08 02402025 */   move  $a0, $s2
 other_obj_expand:
-/* 03967C 7F004B0C 0FC15B7D */  jal   get_size_of_setup_object_type
+/* 03967C 7F004B0C 0FC15B7D */  jal   sizepropdef
 /* 039680 7F004B10 02402025 */   move  $a0, $s2
 /* 039684 7F004B14 00024080 */  sll   $t0, $v0, 2
 /* 039688 7F004B18 01129021 */  addu  $s2, $t0, $s2
@@ -6131,7 +6131,7 @@ other_obj_expand:
 /* 03995C 7F004DEC 35392000 */  ori   $t9, $t1, 0x2000
 /* 039960 7F004DF0 AE190064 */  sw    $t9, 0x64($s0)
 .L7F004DF4:
-/* 039964 7F004DF4 0FC15B7D */  jal   get_size_of_setup_object_type
+/* 039964 7F004DF4 0FC15B7D */  jal   sizepropdef
 /* 039968 7F004DF8 02402025 */   move  $a0, $s2
 /* 03996C 7F004DFC 00025080 */  sll   $t2, $v0, 2
 /* 039970 7F004E00 01529021 */  addu  $s2, $t2, $s2
@@ -7333,7 +7333,7 @@ type1E_subobjective_expand:
 /* 037478 7F004A88 0FC013EF */  jal   set_parent_cur_obj_photograph
 /* 03747C 7F004A8C 02402025 */   move  $a0, $s2
 other_obj_expand:
-/* 037480 7F004A90 0FC15AF5 */  jal   get_size_of_setup_object_type
+/* 037480 7F004A90 0FC15AF5 */  jal   sizepropdef
 /* 037484 7F004A94 02402025 */   move  $a0, $s2
 /* 037488 7F004A98 00024080 */  sll   $t0, $v0, 2
 /* 03748C 7F004A9C 01129021 */  addu  $s2, $t0, $s2
@@ -7527,7 +7527,7 @@ other_obj_expand:
 /* 037760 7F004D70 35392000 */  ori   $t9, $t1, 0x2000
 /* 037764 7F004D74 AE190064 */  sw    $t9, 0x64($s0)
 .L7F004DF4:
-/* 037768 7F004D78 0FC15AF5 */  jal   get_size_of_setup_object_type
+/* 037768 7F004D78 0FC15AF5 */  jal   sizepropdef
 /* 03776C 7F004D7C 02402025 */   move  $a0, $s2
 /* 037770 7F004D80 00025080 */  sll   $t2, $v0, 2
 /* 037774 7F004D84 01529021 */  addu  $s2, $t2, $s2

@@ -61,7 +61,7 @@ glabel sub_GAME_7F056850
 
 //
 
-u32 get_size_of_setup_object_type(u8 * object)
+u32 sizepropdef(u8 * object)
 {
     switch(object[3]) {
     case 9:
@@ -191,7 +191,7 @@ glabel sub_GAME_7F056A88
 /* 08B604 7F056AD4 1000000A */  b     .L7F056B00
 /* 08B608 7F056AD8 02201025 */   move  $v0, $s1
 .L7F056ADC:
-/* 08B60C 7F056ADC 0FC15A3D */  jal   get_size_of_setup_object_type
+/* 08B60C 7F056ADC 0FC15A3D */  jal   sizepropdef
 /* 08B610 7F056AE0 02202025 */   move  $a0, $s1
 /* 08B614 7F056AE4 00027880 */  sll   $t7, $v0, 2
 /* 08B618 7F056AE8 01F18821 */  addu  $s1, $t7, $s1
@@ -230,7 +230,7 @@ s32 check_if_object_type_has_been_loaded(struct object_standard * arg0)
             {
                 return i;
             }
-            object = (get_size_of_setup_object_type((u8 *)object) * 4) + object;
+            object = (sizepropdef((u8 *)object) * 4) + object;
         }
     }
     return -1;
@@ -261,7 +261,7 @@ glabel check_if_object_type_has_been_loaded
 /* 08B690 7F056B60 1000000A */  b     .L7F056B8C
 /* 08B694 7F056B64 02201025 */   move  $v0, $s1
 .L7F056B68:
-/* 08B698 7F056B68 0FC15A3D */  jal   get_size_of_setup_object_type
+/* 08B698 7F056B68 0FC15A3D */  jal   sizepropdef
 /* 08B69C 7F056B6C 02002025 */   move  $a0, $s0
 /* 08B6A0 7F056B70 00027880 */  sll   $t7, $v0, 2
 /* 08B6A4 7F056B74 01F08021 */  addu  $s0, $t7, $s0
@@ -316,7 +316,7 @@ glabel sub_GAME_7F056BA8
 /* 08B720 7F056BF0 1000000A */  b     .L7F056C1C
 /* 08B724 7F056BF4 02201025 */   move  $v0, $s1
 .L7F056BF8:
-/* 08B728 7F056BF8 0FC15A3D */  jal   get_size_of_setup_object_type
+/* 08B728 7F056BF8 0FC15A3D */  jal   sizepropdef
 /* 08B72C 7F056BFC 02002025 */   move  $a0, $s0
 /* 08B730 7F056C00 0002C080 */  sll   $t8, $v0, 2
 /* 08B734 7F056C04 03108021 */  addu  $s0, $t8, $s0
@@ -728,7 +728,7 @@ glabel sub_GAME_7F056F08
 /* 08BB40 7F057010 00000000 */   nop   
 /* 08BB44 7F057014 02009825 */  move  $s3, $s0
 .L7F057018:
-/* 08BB48 7F057018 0FC15A3D */  jal   get_size_of_setup_object_type
+/* 08BB48 7F057018 0FC15A3D */  jal   sizepropdef
 /* 08BB4C 7F05701C 02002025 */   move  $a0, $s0
 /* 08BB50 7F057020 00026080 */  sll   $t4, $v0, 2
 /* 08BB54 7F057024 01908021 */  addu  $s0, $t4, $s0

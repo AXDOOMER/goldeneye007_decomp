@@ -255,6 +255,11 @@ glabel get_difficulty_for_objective
 void get_status_of_objective(void) {
 
 }
+/*from xbla for switch
+                default:
+                    sprintf("unknown goal propdef %d\n",*(local_4c + 3));
+                }
+*/
 #else
 GLOBAL_ASM(
 .late_rodata
@@ -434,7 +439,7 @@ objective_microcode_type_17_18_1F_default:
 /* 08BF8C 7F05745C 00000000 */   nop   
 /* 08BF90 7F057460 02209825 */  move  $s3, $s1
 .L7F057464:
-/* 08BF94 7F057464 0FC15A3D */  jal   get_size_of_setup_object_type
+/* 08BF94 7F057464 0FC15A3D */  jal   sizepropdef
 /* 08BF98 7F057468 02402025 */   move  $a0, $s2
 /* 08BF9C 7F05746C 00026080 */  sll   $t4, $v0, 2
 /* 08BFA0 7F057470 01929021 */  addu  $s2, $t4, $s2
