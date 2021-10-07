@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "initunk_0072B0.h"
-#include "game/unk_093880.h"
+#include "game/player.h"
 
 #ifdef NONMATCHING
 void sub_GAME_7F0072B0(void) {

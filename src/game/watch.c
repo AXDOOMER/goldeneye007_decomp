@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "game/watch.h"
-#include "game/unk_093880.h"
+#include "game/player.h"
 #include "game/unk_0A1DA0.h"
 #include "game/unk_0C0A70.h"
 #include "game/mainmenu.h"

@@ -3,7 +3,7 @@
 #include "video.h"
 #include "bondgame.h"
 #include "bondconstants.h"
-#include "unk_093880.h" // currentplayer
+#include "player.h" // currentplayer
 #include "sched.h"
 #include "rsp.h"
 #include "libultra/os.h"

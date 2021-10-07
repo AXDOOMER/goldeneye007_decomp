@@ -10,7 +10,7 @@
 #include "video.h"
 #include "include/PR/libaudio.h"
 #include "snd.h"
-#include "game/unk_093880.h"
+#include "game/player.h"
 #include "game/chrobjhandler.h"
 #include "game/unk_09C250.h"
 #include "game/chrai.h"

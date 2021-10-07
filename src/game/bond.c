@@ -1,7 +1,7 @@
 #include "ultra64.h"
 #include "game/bond.h"
 #include "game/chr.h"
-#include "game/unk_093880.h"
+#include "game/player.h"
 #include "game/textrelated.h"
 #include "game/lvl.h"
 #include "game/bondinv.h"

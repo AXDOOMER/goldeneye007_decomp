@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "memp.h"
-#include "game/unk_093880.h"
+#include "game/player.h"
 #include "game/bondinv.h"
 
 void reinit_gunheld_totaltime(void) {

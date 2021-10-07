@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "memp.h"
-#include "game/unk_093880.h"
+#include "game/player.h"
 #include "game/unk_092E50.h"
 #include "game/bond.h"
 #include "game/lvl.h"

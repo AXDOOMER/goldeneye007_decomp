@@ -3,7 +3,7 @@
 #include "dyn.h"
 #include "intro_logos.h"
 #include "blood_decrypt.h"
-#include "unk_093880.h"
+#include "player.h"
 #include "libultra/os.h"
 
 

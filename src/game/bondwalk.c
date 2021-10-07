@@ -12,7 +12,7 @@
 
 #include "bondgame.h"
 
-#include "game/unk_093880.h"
+#include "game/player.h"
 #include "music.h"
 #include "game/lvl.h"
 #include "snd.h"

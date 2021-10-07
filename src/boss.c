@@ -4,7 +4,7 @@
 #include "game/room_model_buffer.h"
 #include "game/rsp.h"
 #include "game/stan.h"
-#include "game/unk_093880.h"
+#include "game/player.h"
 #include "game/unk_0C0A70.h"
 #include "game/unk_0C0A70.h"
 #include "bond.h"

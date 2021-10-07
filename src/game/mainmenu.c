@@ -4,7 +4,7 @@
 #include "boss.h"
 #include "game/spectrum.h"
 #include "game/mainmenu.h"
-#include "game/unk_093880.h"
+#include "game/player.h"
 #include "music.h"
 #include "game/textrelated.h"
 #include "game/lvl.h"

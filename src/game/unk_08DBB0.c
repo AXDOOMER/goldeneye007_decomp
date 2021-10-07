@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "game/lvl.h"
-#include "game/unk_093880.h"
+#include "game/player.h"
 #include "game/chrai.h"
 #include "game/matrixmath.h"
 

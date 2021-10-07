@@ -1,5 +1,5 @@
-#ifndef _UNK_093880_H_
-#define _UNK_093880_H_
+#ifndef _PLAYER_H_
+#define _PLAYER_H_
 #include "ultra64.h"
 #include "game/bond.h"
 
