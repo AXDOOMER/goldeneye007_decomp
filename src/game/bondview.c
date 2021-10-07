@@ -1,5 +1,5 @@
 #include "ultra64.h"
-#include "game/bond.h"
+#include "game/bondview.h"
 #include "game/chr.h"
 #include "game/player.h"
 #include "game/textrelated.h"
@@ -2919,6 +2919,20 @@ glabel sub_GAME_7F079A60
 
 
 #ifdef NONMATCHING
+/*
+            if ((currentplayer->gunmemused[0] != 0) && (currentplayer->gunmemtype[0] != 0)) {
+                assertPrint_8291E690
+                          (".\\ported\\bondview.cpp",0x342,
+                           "Assertion failed: currentplayer->gunmemused[GUNRIGHT]==0 || currentplayer->gunmemtype[GUNRIGHT]==0"
+                          );
+            }
+            if ((currentplayer->gunmemused[1] != 0) && (currentplayer->gunmemtype[1] != 0)) {
+                assertPrint_8291E690
+                          (".\\ported\\bondview.cpp",0x343,
+                           "Assertion failed: currentplayer->gunmemused[GUNLEFT]==0 || currentplayer->gunmemtype[GUNLEFT]==0"
+                          );
+            }
+//*/
 void solo_char_load(void) {
 
 }

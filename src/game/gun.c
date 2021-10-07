@@ -1,7 +1,7 @@
 #include "ultra64.h"
 #include "bondconstants.h"
 #include "bondtypes.h"
-#include "game/bond.h"
+#include "game/bondview.h"
 #include "game/bondinv.h"
 #include "game/gun.h"
 #include "game/chrobjdata.h"
@@ -3664,6 +3664,11 @@ glabel sub_GAME_7F05F09C
 
 
 #ifdef NONMATCHING
+/*
+    else {
+        assertPrint_8291E690(".\\ported\\gun.cpp",0x8df,"throwmineremote - Not a mine!");
+    }
+//*/
 void generate_player_thrown_object(void) {
 
 }

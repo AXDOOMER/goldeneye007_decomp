@@ -57,7 +57,7 @@ jobs:
         #git diff HEAD^ HEAD --name-only
             
         # expected args
-        # 1481 15854 12774 232276 564 1312 652 20330 15471 269772 49 336 tools/report/index.html "src/game/bond.c"
+        # 1481 15854 12774 232276 564 1312 652 20330 15471 269772 49 336 tools/report/index.html "src/game/bondview.c"
       
       # Replace this with Git push to repo
       # but somehow avoid loop

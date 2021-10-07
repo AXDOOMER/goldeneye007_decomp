@@ -1,7 +1,7 @@
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
 #include "ultra64.h"
-#include "game/bond.h"
+#include "game/bondview.h"
 
 typedef enum SHOT_REGISTER {
     SHOTS_FIRED = 0,

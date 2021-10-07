@@ -1,5 +1,5 @@
 #include "ultra64.h"
-#include "game/bond.h"
+#include "game/bondview.h"
 #include "include/PR/libaudio.h"
 
 void cleanupSFXRelated(void) {

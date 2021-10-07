@@ -9,7 +9,7 @@
 #include "libultra/os.h"
 #include "include/PR/os_vi.h"
 #include "indy_comms.h"
-#include "game/bond.h"
+#include "game/bondview.h"
 #include "game/viewport.h"
 #include "game/dyn.h"
 

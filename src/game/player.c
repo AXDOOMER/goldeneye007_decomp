@@ -2,7 +2,7 @@
 #include "memp.h"
 #include "game/player.h"
 #include "game/unk_092E50.h"
-#include "game/bond.h"
+#include "game/bondview.h"
 #include "game/lvl.h"
 
 // bss

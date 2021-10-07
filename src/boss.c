@@ -7,7 +7,7 @@
 #include "game/player.h"
 #include "game/unk_0C0A70.h"
 #include "game/unk_0C0A70.h"
-#include "bond.h"
+#include "bondview.h"
 #include "bondconstants.h"
 #include "bondgame.h"
 #include "boss.h"

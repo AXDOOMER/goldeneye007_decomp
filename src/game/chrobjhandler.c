@@ -1,7 +1,7 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "boss.h"
-#include "game/bond.h"
+#include "game/bondview.h"
 #include "game/bondinv.h"
 #include "game/chr.h"
 #include "game/chrai.h"

@@ -1,5 +1,5 @@
 #include "ultra64.h"
-#include "game/bond.h"
+#include "game/bondview.h"
 #include "game/chr.h"
 #include "game/player.h"
 #include "game/textrelated.h"

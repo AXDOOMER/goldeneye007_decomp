@@ -8,7 +8,7 @@
 #include "music.h"
 #include "game/textrelated.h"
 #include "game/lvl.h"
-#include "game/bond.h"
+#include "game/bondview.h"
 #include "game/chrobjdata.h"
 #include "joy.h"
 #include "video.h"
