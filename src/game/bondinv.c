@@ -13,13 +13,13 @@
 void reinit_inventory(void) {
     s32 i;
 
-    for (i=0; i < pPlayer->equipmaxitems; i++) {
-        pPlayer->p_itemcur[i].type = -1;
+    for (i=0; i < currentplayer->equipmaxitems; i++) {
+        currentplayer->p_itemcur[i].type = -1;
     }
     
-    pPlayer->ptr_inventory_first_in_cycle = NULL;
-    pPlayer->textoverrides = NULL;
-    pPlayer->equipcuritem = 0;
+    currentplayer->ptr_inventory_first_in_cycle = NULL;
+    currentplayer->textoverrides = NULL;
+    currentplayer->equipcuritem = 0;
 }
 
 /**
@@ -48,7 +48,7 @@ void inv_sort_item(InvItem *subject) {
 
     candidate = subject->next;
 
-    while (pPlayer->ptr_inventory_first_in_cycle != subject->next) {
+    while (currentplayer->ptr_inventory_first_in_cycle != subject->next) {
         // Prepare candidate's properties for comparisons
         candweapon1 = -1;
         candweapon2 = -1;
@@ -72,7 +72,7 @@ void inv_sort_item(InvItem *subject) {
         // If there's only two items in the list then there's no point swapping
         // them. Just set the list head to the candidate.
         if (candidate->next == subject) {
-            pPlayer->ptr_inventory_first_in_cycle = candidate;
+            currentplayer->ptr_inventory_first_in_cycle = candidate;
         } else {
             // Swap subject with candidate
             subject->next = candidate->next;
@@ -83,8 +83,8 @@ void inv_sort_item(InvItem *subject) {
             candidate->prev->next = candidate;
 
             // Set new list head if subject was the head
-            if (subject == pPlayer->ptr_inventory_first_in_cycle) {
-                pPlayer->ptr_inventory_first_in_cycle = candidate;
+            if (subject == currentplayer->ptr_inventory_first_in_cycle) {
+                currentplayer->ptr_inventory_first_in_cycle = candidate;
             }
         }
 
@@ -94,10 +94,10 @@ void inv_sort_item(InvItem *subject) {
 
 void inv_insert_item(InvItem *item) {
   
-  if (pPlayer->ptr_inventory_first_in_cycle) {
+  if (currentplayer->ptr_inventory_first_in_cycle) {
         
-        item->next = pPlayer->ptr_inventory_first_in_cycle;
-        item->prev = pPlayer->ptr_inventory_first_in_cycle->prev;
+        item->next = currentplayer->ptr_inventory_first_in_cycle;
+        item->prev = currentplayer->ptr_inventory_first_in_cycle->prev;
 
         item->next->prev = item;
         item->prev->next = item;
@@ -108,7 +108,7 @@ void inv_insert_item(InvItem *item) {
         item->prev = item;
     }
 
-    pPlayer->ptr_inventory_first_in_cycle = item;
+    currentplayer->ptr_inventory_first_in_cycle = item;
     inv_sort_item(item);
     return;
 }
@@ -122,13 +122,13 @@ void inventory_remove_item(InvItem *item) {
     next = item->next;
     prev = item->prev;
 
-    if (item == pPlayer->ptr_inventory_first_in_cycle) {
+    if (item == currentplayer->ptr_inventory_first_in_cycle) {
     
         if (item == item->next) {
-            pPlayer->ptr_inventory_first_in_cycle = NULL;
+            currentplayer->ptr_inventory_first_in_cycle = NULL;
         }
         else {
-            pPlayer->ptr_inventory_first_in_cycle = item->next;
+            currentplayer->ptr_inventory_first_in_cycle = item->next;
         }
     }
   
@@ -142,9 +142,9 @@ InvItem *get_ptr_next_available_weapon(void)
 {
     int i;
 
-    for (i = 0; i < pPlayer->equipmaxitems; i++) {
-        if (pPlayer->p_itemcur[i].type == -1) {
-            return &pPlayer->p_itemcur[i];
+    for (i = 0; i < currentplayer->equipmaxitems; i++) {
+        if (currentplayer->p_itemcur[i].type == -1) {
+            return &currentplayer->p_itemcur[i];
         }
     }
 
@@ -153,17 +153,17 @@ InvItem *get_ptr_next_available_weapon(void)
 
 
 void set_BONDdata_allguns_flag(s32 all_guns) {
-    pPlayer->equipallguns = all_guns;
+    currentplayer->equipallguns = all_guns;
 }
 
 s32 get_BONDdata_allguns_flag(void) {
-    return pPlayer->equipallguns;
+    return currentplayer->equipallguns;
 }
 
 
 InvItem *get_inventory_item(ITEM_IDS weapon) {
 
-    InvItem *first = pPlayer->ptr_inventory_first_in_cycle;
+    InvItem *first = currentplayer->ptr_inventory_first_in_cycle;
     InvItem *item = first;
 
     while (item) {
@@ -196,7 +196,7 @@ int is_item_in_inventory(ITEM_IDS item)
 
 InvItem *get_dual_weapon(ITEM_IDS right, ITEM_IDS left) {
 
-    InvItem *first = pPlayer->ptr_inventory_first_in_cycle;
+    InvItem *first = currentplayer->ptr_inventory_first_in_cycle;
     InvItem *item = first;
 
     while (item) {
@@ -232,7 +232,7 @@ int is_dual_weapon_in_inventory(ITEM_IDS right, ITEM_IDS left)
 int check_if_item_available(ITEM_IDS weaponid)
 {    
 
-    if (((pPlayer->equipallguns) && (weaponid != ITEM_UNARMED) && (weaponid < ITEM_BOMBCASE)))
+    if (((currentplayer->equipallguns) && (weaponid != ITEM_UNARMED) && (weaponid < ITEM_BOMBCASE)))
     {
 #ifdef VERSION_JP
     if  ((!j_text_trigger || (weaponid != ITEM_KNIFE)))
@@ -250,7 +250,7 @@ int check_if_item_available(ITEM_IDS weaponid)
 int check_if_item_for_hand_available(ITEM_IDS right, ITEM_IDS left)
 {
 #ifdef VERSION_US
-    if (pPlayer->equipallguns &&
+    if (currentplayer->equipallguns &&
         right < ITEM_BOMBCASE &&
         right == left &&
         getPlayerCount() == 1 &&
@@ -267,7 +267,7 @@ int check_if_item_for_hand_available(ITEM_IDS right, ITEM_IDS left)
     }
     else
     {
-        if (pPlayer->equipallguns &&
+        if (currentplayer->equipallguns &&
             right < ITEM_BOMBCASE &&
             right == left &&
             getPlayerCount() == 1 &&
@@ -298,7 +298,7 @@ int add_item_to_inventory(ITEM_IDS item)
             inv_insert_item(nextItem);
         }
 
-        if ((pPlayer->equipallguns) && (item < ITEM_BOMBCASE))
+        if ((currentplayer->equipallguns) && (item < ITEM_BOMBCASE))
         {
 #ifdef VERSION_JP
         if  ((!j_text_trigger || (item != ITEM_KNIFE)))
@@ -338,8 +338,8 @@ int add_doubles_item_to_inventory(ITEM_IDS right, ITEM_IDS left)
 
 WeaponObjRecord *inventory_remove_prop_weapon_by_id(ITEM_IDS weaponnum)
 {
-    if (pPlayer->ptr_inventory_first_in_cycle) {
-        InvItem *item = pPlayer->ptr_inventory_first_in_cycle->next;
+    if (currentplayer->ptr_inventory_first_in_cycle) {
+        InvItem *item = currentplayer->ptr_inventory_first_in_cycle->next;
 
         while (TRUE) {
             InvItem *next = item->next;
@@ -361,7 +361,7 @@ WeaponObjRecord *inventory_remove_prop_weapon_by_id(ITEM_IDS weaponnum)
                 }
             }
 
-            if ((item == pPlayer->ptr_inventory_first_in_cycle) || (!pPlayer->ptr_inventory_first_in_cycle)) {   
+            if ((item == currentplayer->ptr_inventory_first_in_cycle) || (!currentplayer->ptr_inventory_first_in_cycle)) {   
                 break;
             }
 
@@ -374,8 +374,8 @@ WeaponObjRecord *inventory_remove_prop_weapon_by_id(ITEM_IDS weaponnum)
 
 void inventory_remove_item_by_id(ITEM_IDS weaponnum)
 {
-    if (pPlayer->ptr_inventory_first_in_cycle) {
-        InvItem *item = pPlayer->ptr_inventory_first_in_cycle->next;
+    if (currentplayer->ptr_inventory_first_in_cycle) {
+        InvItem *item = currentplayer->ptr_inventory_first_in_cycle->next;
 
         while (TRUE) {
             InvItem *next = item->next;
@@ -401,7 +401,7 @@ void inventory_remove_item_by_id(ITEM_IDS weaponnum)
                 }
             }
 
-            if ((item == pPlayer->ptr_inventory_first_in_cycle) || (!pPlayer->ptr_inventory_first_in_cycle)) {   
+            if ((item == currentplayer->ptr_inventory_first_in_cycle) || (!currentplayer->ptr_inventory_first_in_cycle)) {   
                 break;
             }
 
@@ -488,7 +488,7 @@ void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
 	s32 weapon1 = *nextright;
 	s32 weapon2 = *nextleft;
 
-    InvItem *item = pPlayer->ptr_inventory_first_in_cycle;
+    InvItem *item = currentplayer->ptr_inventory_first_in_cycle;
         
     while (item) {
         if (item->type == INV_ITEM_WEAPON) {
@@ -512,7 +512,7 @@ void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
 
         item = item->next;
 
-        if (item == pPlayer->ptr_inventory_first_in_cycle) {
+        if (item == currentplayer->ptr_inventory_first_in_cycle) {
             if (requireammo) {
                 break;
             }
@@ -522,7 +522,7 @@ void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
         }
     }
     
-	if (pPlayer->equipallguns) {
+	if (currentplayer->equipallguns) {
         
         s32 candidate = *nextright;
 
@@ -576,8 +576,8 @@ GLOBAL_ASM(
 .text
 glabel choose_cycle_forward_weapon
 /* 0C139C 7F08C86C 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0C13A0 7F08C870 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 0C13A4 7F08C874 8C63A0B0 */  lw    $v1, %lo(pPlayer)($v1)
+/* 0C13A0 7F08C870 3C038008 */  lui   $v1, %hi(currentplayer)
+/* 0C13A4 7F08C874 8C63A0B0 */  lw    $v1, %lo(currentplayer)($v1)
 /* 0C13A8 7F08C878 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 0C13AC 7F08C87C AFB30020 */  sw    $s3, 0x20($sp)
 /* 0C13B0 7F08C880 AFB2001C */  sw    $s2, 0x1c($sp)
@@ -606,8 +606,8 @@ glabel choose_cycle_forward_weapon
 /* 0C1408 7F08C8D8 0FC17817 */  jal   bondwalkItemHasAmmo
 /* 0C140C 7F08C8DC 00000000 */   nop   
 /* 0C1410 7F08C8E0 10400021 */  beqz  $v0, .L7F08C968
-/* 0C1414 7F08C8E4 3C038008 */   lui   $v1, %hi(pPlayer)
-/* 0C1418 7F08C8E8 8C63A0B0 */  lw    $v1, %lo(pPlayer)($v1)
+/* 0C1414 7F08C8E4 3C038008 */   lui   $v1, %hi(currentplayer)
+/* 0C1418 7F08C8E8 8C63A0B0 */  lw    $v1, %lo(currentplayer)($v1)
 /* 0C141C 7F08C8EC 8E040004 */  lw    $a0, 4($s0)
 /* 0C1420 7F08C8F0 00808825 */  move  $s1, $a0
 .L7F08C8F4:
@@ -638,14 +638,14 @@ glabel choose_cycle_forward_weapon
 /* 0C147C 7F08C94C 8E040008 */   lw    $a0, 8($s0)
 /* 0C1480 7F08C950 10400005 */  beqz  $v0, .L7F08C968
 .L7F08C954:
-/* 0C1484 7F08C954 3C038008 */   lui   $v1, %hi(pPlayer)
+/* 0C1484 7F08C954 3C038008 */   lui   $v1, %hi(currentplayer)
 /* 0C1488 7F08C958 8E110004 */  lw    $s1, 4($s0)
 /* 0C148C 7F08C95C 8E130008 */  lw    $s3, 8($s0)
 /* 0C1490 7F08C960 1000000D */  b     .L7F08C998
-/* 0C1494 7F08C964 8C63A0B0 */   lw    $v1, %lo(pPlayer)($v1)
+/* 0C1494 7F08C964 8C63A0B0 */   lw    $v1, %lo(currentplayer)($v1)
 .L7F08C968:
-/* 0C1498 7F08C968 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 0C149C 7F08C96C 8C63A0B0 */  lw    $v1, %lo(pPlayer)($v1)
+/* 0C1498 7F08C968 3C038008 */  lui   $v1, %hi(currentplayer)
+/* 0C149C 7F08C96C 8C63A0B0 */  lw    $v1, %lo(currentplayer)($v1)
 /* 0C14A0 7F08C970 8E10000C */  lw    $s0, 0xc($s0)
 /* 0C14A4 7F08C974 8C7911E0 */  lw    $t9, 0x11e0($v1)
 /* 0C14A8 7F08C978 16190005 */  bne   $s0, $t9, .L7F08C990
@@ -776,9 +776,9 @@ void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
 	s32 weapon1 = *nextright;
 	s32 weapon2 = *nextleft;
 
-    if (pPlayer->ptr_inventory_first_in_cycle != NULL) {
+    if (currentplayer->ptr_inventory_first_in_cycle != NULL) {
 
-        InvItem *item = pPlayer->ptr_inventory_first_in_cycle->prev;
+        InvItem *item = currentplayer->ptr_inventory_first_in_cycle->prev;
             
         while (TRUE) {
             if (item->type == INV_ITEM_WEAPON) {
@@ -801,7 +801,7 @@ void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
                 }
             }
 
-            if (item == pPlayer->ptr_inventory_first_in_cycle) {
+            if (item == currentplayer->ptr_inventory_first_in_cycle) {
                 if (requireammo) {
                     break;
                 }
@@ -814,7 +814,7 @@ void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
         }
     }
     
-	if (pPlayer->equipallguns) {
+	if (currentplayer->equipallguns) {
         
         s32 candidate = *nextright;
 
@@ -883,8 +883,8 @@ GLOBAL_ASM(
 .text
 glabel choose_cycle_back_weapon
 /* 0C1640 7F08CB10 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0C1644 7F08CB14 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 0C1648 7F08CB18 8C63A0B0 */  lw    $v1, %lo(pPlayer)($v1)
+/* 0C1644 7F08CB14 3C038008 */  lui   $v1, %hi(currentplayer)
+/* 0C1648 7F08CB18 8C63A0B0 */  lw    $v1, %lo(currentplayer)($v1)
 /* 0C164C 7F08CB1C AFBF0024 */  sw    $ra, 0x24($sp)
 /* 0C1650 7F08CB20 AFB30020 */  sw    $s3, 0x20($sp)
 /* 0C1654 7F08CB24 AFB2001C */  sw    $s2, 0x1c($sp)
@@ -922,8 +922,8 @@ glabel choose_cycle_back_weapon
 /* 0C16CC 7F08CB9C 0FC17817 */  jal   bondwalkItemHasAmmo
 /* 0C16D0 7F08CBA0 00000000 */   nop   
 /* 0C16D4 7F08CBA4 10400021 */  beqz  $v0, .L7F08CC2C
-/* 0C16D8 7F08CBA8 3C038008 */   lui   $v1, %hi(pPlayer)
-/* 0C16DC 7F08CBAC 8C63A0B0 */  lw    $v1, %lo(pPlayer)($v1)
+/* 0C16D8 7F08CBA8 3C038008 */   lui   $v1, %hi(currentplayer)
+/* 0C16DC 7F08CBAC 8C63A0B0 */  lw    $v1, %lo(currentplayer)($v1)
 /* 0C16E0 7F08CBB0 8E040004 */  lw    $a0, 4($s0)
 /* 0C16E4 7F08CBB4 00808825 */  move  $s1, $a0
 .L7F08CBB8:
@@ -954,14 +954,14 @@ glabel choose_cycle_back_weapon
 /* 0C1740 7F08CC10 8E040008 */   lw    $a0, 8($s0)
 /* 0C1744 7F08CC14 10400005 */  beqz  $v0, .L7F08CC2C
 .L7F08CC18:
-/* 0C1748 7F08CC18 3C038008 */   lui   $v1, %hi(pPlayer)
+/* 0C1748 7F08CC18 3C038008 */   lui   $v1, %hi(currentplayer)
 /* 0C174C 7F08CC1C 8E110004 */  lw    $s1, 4($s0)
 /* 0C1750 7F08CC20 8E130008 */  lw    $s3, 8($s0)
 /* 0C1754 7F08CC24 1000000C */  b     .L7F08CC58
-/* 0C1758 7F08CC28 8C63A0B0 */   lw    $v1, %lo(pPlayer)($v1)
+/* 0C1758 7F08CC28 8C63A0B0 */   lw    $v1, %lo(currentplayer)($v1)
 .L7F08CC2C:
-/* 0C175C 7F08CC2C 3C038008 */  lui   $v1, %hi(pPlayer)
-/* 0C1760 7F08CC30 8C63A0B0 */  lw    $v1, %lo(pPlayer)($v1)
+/* 0C175C 7F08CC2C 3C038008 */  lui   $v1, %hi(currentplayer)
+/* 0C1760 7F08CC30 8C63A0B0 */  lw    $v1, %lo(currentplayer)($v1)
 /* 0C1764 7F08CC34 8C7911E0 */  lw    $t9, 0x11e0($v1)
 /* 0C1768 7F08CC38 16190005 */  bne   $s0, $t9, .L7F08CC50
 /* 0C176C 7F08CC3C 00000000 */   nop   
@@ -1132,7 +1132,7 @@ glabel choose_cycle_back_weapon
 s32 inv_has_key_flags(u32 wantkeyflags)
 {
     u32 heldkeyflags = 0;
-    InvItem *item = pPlayer->ptr_inventory_first_in_cycle;
+    InvItem *item = currentplayer->ptr_inventory_first_in_cycle;
 
     while (item) {
         if (item->type == INV_ITEM_PROP) {
@@ -1155,7 +1155,7 @@ s32 inv_has_key_flags(u32 wantkeyflags)
 
         item = item->next;
 
-        if (item == pPlayer->ptr_inventory_first_in_cycle) {
+        if (item == currentplayer->ptr_inventory_first_in_cycle) {
             break;
         }
     }
@@ -1171,7 +1171,7 @@ s32 checkHasGEKey(void)
     PropRecord *prop;
     ObjectRecord *obj;
     
-    item = pPlayer->ptr_inventory_first_in_cycle;
+    item = currentplayer->ptr_inventory_first_in_cycle;
 
     while (item) {
 
@@ -1191,7 +1191,7 @@ s32 checkHasGEKey(void)
 
         item = item->next;
 
-        if (item == pPlayer->ptr_inventory_first_in_cycle) {
+        if (item == currentplayer->ptr_inventory_first_in_cycle) {
             break;
         }
     }
@@ -1205,7 +1205,7 @@ s32 checkHasGEKey(void)
  */
 int bondinvIsAliveWithFlag(void)
 {
-    if (!pPlayer->bonddead) {
+    if (!currentplayer->bonddead) {
         return is_item_in_inventory(ITEM_TOKEN);
     }
 
@@ -1224,7 +1224,7 @@ int checkforgoldengun(void)
 
 int is_prop_in_inventory(PropRecord *prop) {
 
-    InvItem *item = pPlayer->ptr_inventory_first_in_cycle;
+    InvItem *item = currentplayer->ptr_inventory_first_in_cycle;
 
     while (item) {
 
@@ -1234,7 +1234,7 @@ int is_prop_in_inventory(PropRecord *prop) {
 
         item = item->next;
 
-        if (item == pPlayer->ptr_inventory_first_in_cycle) {
+        if (item == currentplayer->ptr_inventory_first_in_cycle) {
             break;
         }
     }
@@ -1249,7 +1249,7 @@ s32 count_total_items_in_inventory(void) {
     InvItem *item;
     s32 numitems = 0;
 
-    if (pPlayer->equipallguns) {
+    if (currentplayer->equipallguns) {
         #ifdef VERSION_JP
             numitems = (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS);
         #else
@@ -1257,7 +1257,7 @@ s32 count_total_items_in_inventory(void) {
         #endif
     }
 
-    item = pPlayer->ptr_inventory_first_in_cycle;
+    item = currentplayer->ptr_inventory_first_in_cycle;
 
     while (item) {
       
@@ -1282,14 +1282,14 @@ s32 count_total_items_in_inventory(void) {
 
         } else if (item->type == INV_ITEM_WEAPON) { 
             
-            if ((pPlayer->equipallguns == FALSE) || (item->type_inv_item.type_weap.weapon > ITEM_TANKSHELLS)) {
+            if ((currentplayer->equipallguns == FALSE) || (item->type_inv_item.type_weap.weapon > ITEM_TANKSHELLS)) {
                 numitems = numitems + 1;
             }
         }
 
         item = item->next;
 
-        if (item == pPlayer->ptr_inventory_first_in_cycle) {
+        if (item == currentplayer->ptr_inventory_first_in_cycle) {
             break;
         }
     }
@@ -1302,8 +1302,8 @@ s32 count_total_items_in_inventory(void) {
 GLOBAL_ASM(
 .text
 glabel count_total_items_in_inventory
-/* 0C1B68 7F08D038 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 0C1B6C 7F08D03C 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
+/* 0C1B68 7F08D038 3C028008 */  lui   $v0, %hi(currentplayer)
+/* 0C1B6C 7F08D03C 8C42A0B0 */  lw    $v0, %lo(currentplayer)($v0)
 /* 0C1B70 7F08D040 00001825 */  move  $v1, $zero
 /* 0C1B74 7F08D044 3C0B0004 */  lui   $t3, 4
 /* 0C1B78 7F08D048 8C4411EC */  lw    $a0, 0x11ec($v0)
@@ -1370,7 +1370,7 @@ InvItem *inv_get_item_by_index(s32 index)
 {
     InvItem *item;
 
-    if (pPlayer->equipallguns) {
+    if (currentplayer->equipallguns) {
 
 #ifdef VERSION_JP
         if (index < (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS)) {
@@ -1387,7 +1387,7 @@ InvItem *inv_get_item_by_index(s32 index)
 #endif
     }
 
-    item = pPlayer->ptr_inventory_first_in_cycle;
+    item = currentplayer->ptr_inventory_first_in_cycle;
 
     while (item) {
         
@@ -1418,7 +1418,7 @@ InvItem *inv_get_item_by_index(s32 index)
             
         } else if (item->type == INV_ITEM_WEAPON) {
 
-            if ((pPlayer->equipallguns == FALSE) || ( item->type_inv_item.type_weap.weapon > ITEM_TANKSHELLS)) {
+            if ((currentplayer->equipallguns == FALSE) || ( item->type_inv_item.type_weap.weapon > ITEM_TANKSHELLS)) {
                 if (index == 0) {
                     return item;
                 }
@@ -1428,7 +1428,7 @@ InvItem *inv_get_item_by_index(s32 index)
 
         item = item->next;
 
-        if (item == pPlayer->ptr_inventory_first_in_cycle) {
+        if (item == currentplayer->ptr_inventory_first_in_cycle) {
             break;
         }
     }
@@ -1441,8 +1441,8 @@ InvItem *inv_get_item_by_index(s32 index)
 GLOBAL_ASM(
 .text
 glabel inv_get_item_by_index
-/* 0C1C38 7F08D108 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 0C1C3C 7F08D10C 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
+/* 0C1C38 7F08D108 3C028008 */  lui   $v0, %hi(currentplayer)
+/* 0C1C3C 7F08D10C 8C42A0B0 */  lw    $v0, %lo(currentplayer)($v0)
 /* 0C1C40 7F08D110 28810020 */  slti  $at, $a0, 0x20
 /* 0C1C44 7F08D114 8C4311EC */  lw    $v1, 0x11ec($v0)
 /* 0C1C48 7F08D118 50600006 */  beql  $v1, $zero, .L7F08D134
@@ -1534,7 +1534,7 @@ glabel inv_get_item_by_index
 
 textoverride *get_textoverride_by_obj(ObjectRecord *obj) {
     
-    textoverride *override = pPlayer->textoverrides;
+    textoverride *override = currentplayer->textoverrides;
 
     while (override) {
       
@@ -1550,7 +1550,7 @@ textoverride *get_textoverride_by_obj(ObjectRecord *obj) {
 
 textoverride *get_textoverride_by_weaponum(ITEM_IDS weaponnum) {
     
-    textoverride *override = pPlayer->textoverrides;
+    textoverride *override = currentplayer->textoverrides;
 
     while (override) {
       
@@ -1590,7 +1590,7 @@ s32 get_weaponnum_by_inv_index(s32 index) {
 
     } else { 
     
-        if (pPlayer->equipallguns) {
+        if (currentplayer->equipallguns) {
 #ifdef VERSION_JP
             if (index < (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS))
             {
@@ -1647,7 +1647,7 @@ u16 *inv_get_name_by_index(s32 index) {
 
     } else { 
     
-        if (pPlayer->equipallguns) {
+        if (currentplayer->equipallguns) {
 #ifdef VERSION_JP
             if (index < (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS))
             {
@@ -1720,8 +1720,8 @@ glabel inv_get_name_by_index
 /* 0C1F14 7F08D3E4 10000010 */  b     .L7F08D428
 /* 0C1F18 7F08D3E8 8FBF0014 */   lw    $ra, 0x14($sp)
 .L7F08D3EC:
-/* 0C1F1C 7F08D3EC 3C188008 */  lui   $t8, %hi(pPlayer) 
-/* 0C1F20 7F08D3F0 8F18A0B0 */  lw    $t8, %lo(pPlayer)($t8)
+/* 0C1F1C 7F08D3EC 3C188008 */  lui   $t8, %hi(currentplayer) 
+/* 0C1F20 7F08D3F0 8F18A0B0 */  lw    $t8, %lo(currentplayer)($t8)
 /* 0C1F24 7F08D3F4 28A10020 */  slti  $at, $a1, 0x20
 /* 0C1F28 7F08D3F8 8F1911EC */  lw    $t9, 0x11ec($t8)
 /* 0C1F2C 7F08D3FC 13200007 */  beqz  $t9, .L7F08D41C
@@ -1780,7 +1780,7 @@ u16 *inv_get_long_name_by_index(s32 index) {
 
     } else { 
     
-        if (pPlayer->equipallguns) {
+        if (currentplayer->equipallguns) {
 #ifdef VERSION_JP
             if (index < (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS))
             {
@@ -1853,8 +1853,8 @@ glabel inv_get_long_name_by_index
 /* 0C2008 7F08D4D8 10000010 */  b     .L7F08D51C
 /* 0C200C 7F08D4DC 8FBF0014 */   lw    $ra, 0x14($sp)
 .L7F08D4E0:
-/* 0C2010 7F08D4E0 3C188008 */  lui   $t8, %hi(pPlayer) 
-/* 0C2014 7F08D4E4 8F18A0B0 */  lw    $t8, %lo(pPlayer)($t8)
+/* 0C2010 7F08D4E0 3C188008 */  lui   $t8, %hi(currentplayer) 
+/* 0C2014 7F08D4E4 8F18A0B0 */  lw    $t8, %lo(currentplayer)($t8)
 /* 0C2018 7F08D4E8 28A10020 */  slti  $at, $a1, 0x20
 /* 0C201C 7F08D4EC 8F1911EC */  lw    $t9, 0x11ec($t8)
 /* 0C2020 7F08D4F0 13200007 */  beqz  $t9, .L7F08D510
@@ -1943,7 +1943,7 @@ u16 *inv_get_first_title_name_by_index(s32 index) {
 
     } else { 
     
-        if (pPlayer->equipallguns) {
+        if (currentplayer->equipallguns) {
 #ifdef VERSION_JP
             if (index < (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS))
             {
@@ -2016,8 +2016,8 @@ glabel inv_get_first_title_name_by_index
 /* 0C219C 7F08D66C 10000010 */  b     .L7F08D6B0
 /* 0C21A0 7F08D670 8FBF0014 */   lw    $ra, 0x14($sp)
 .L7F08D674:
-/* 0C21A4 7F08D674 3C188008 */  lui   $t8, %hi(pPlayer) 
-/* 0C21A8 7F08D678 8F18A0B0 */  lw    $t8, %lo(pPlayer)($t8)
+/* 0C21A4 7F08D674 3C188008 */  lui   $t8, %hi(currentplayer) 
+/* 0C21A8 7F08D678 8F18A0B0 */  lw    $t8, %lo(currentplayer)($t8)
 /* 0C21AC 7F08D67C 28A10020 */  slti  $at, $a1, 0x20
 /* 0C21B0 7F08D680 8F1911EC */  lw    $t9, 0x11ec($t8)
 /* 0C21B4 7F08D684 13200007 */  beqz  $t9, .L7F08D6A4
@@ -2077,7 +2077,7 @@ u16 *inv_get_second_title_name_by_index(s32 index) {
 
     } else { 
     
-        if (pPlayer->equipallguns) {
+        if (currentplayer->equipallguns) {
 #ifdef VERSION_JP
             if (index < (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS))
             {
@@ -2150,8 +2150,8 @@ glabel inv_get_second_title_name_by_index
 /* 0C2290 7F08D760 10000010 */  b     .L7F08D7A4
 /* 0C2294 7F08D764 8FBF0014 */   lw    $ra, 0x14($sp)
 .L7F08D768:
-/* 0C2298 7F08D768 3C188008 */  lui   $t8, %hi(pPlayer) 
-/* 0C229C 7F08D76C 8F18A0B0 */  lw    $t8, %lo(pPlayer)($t8)
+/* 0C2298 7F08D768 3C188008 */  lui   $t8, %hi(currentplayer) 
+/* 0C229C 7F08D76C 8F18A0B0 */  lw    $t8, %lo(currentplayer)($t8)
 /* 0C22A0 7F08D770 28A10020 */  slti  $at, $a1, 0x20
 /* 0C22A4 7F08D774 8F1911EC */  lw    $t9, 0x11ec($t8)
 /* 0C22A8 7F08D778 13200007 */  beqz  $t9, .L7F08D798
@@ -2221,17 +2221,17 @@ int sub_GAME_7F08D878(int index) {
 
 
 void sub_GAME_7F08D8A0(textoverride *override) {
-  override->next = pPlayer->textoverrides;
-  pPlayer->textoverrides = override;
+  override->next = currentplayer->textoverrides;
+  currentplayer->textoverrides = override;
 }
 
 int get_BONDdata_equipcuritem(void) {
-  return pPlayer->equipcuritem;
+  return currentplayer->equipcuritem;
 }
 
 
 void set_BONDdata_equipcuritem(int current_item) {
-    pPlayer->equipcuritem = current_item;
+    currentplayer->equipcuritem = current_item;
 }
 
 void calculate_equip_cur_item(void) {
@@ -2240,12 +2240,12 @@ void calculate_equip_cur_item(void) {
 
     current_weapon = get_item_in_hand(RIGHT_HAND);
     
-    pPlayer->equipcuritem = 0;
+    currentplayer->equipcuritem = 0;
 
     for (i=0; i < count_total_items_in_inventory(); i++) {
         
         if (get_weaponnum_by_inv_index(i) == current_weapon) {
-            pPlayer->equipcuritem = i;
+            currentplayer->equipcuritem = i;
             return;
         }
 
@@ -2294,12 +2294,12 @@ void increment_held_time(s32 weapon1, s32 weapon2)
     }
 
     for (i = 0; i < 10; i++) {
-        s32 time = pPlayer->gunheldarr[i].totaltime;
+        s32 time = currentplayer->gunheldarr[i].totaltime;
 
         if (time >= 0) {
-            if (weapon1 == pPlayer->gunheldarr[i].weapon1 &&
-                    weapon2 == pPlayer->gunheldarr[i].weapon2) {
-                pPlayer->gunheldarr[i].totaltime = time + clock_timer;
+            if (weapon1 == currentplayer->gunheldarr[i].weapon1 &&
+                    weapon2 == currentplayer->gunheldarr[i].weapon2) {
+                currentplayer->gunheldarr[i].totaltime = time + clock_timer;
                 break;
             }
 
@@ -2315,9 +2315,9 @@ void increment_held_time(s32 weapon1, s32 weapon2)
     }
 
     if (i == 10) {
-        pPlayer->gunheldarr[leastusedindex].totaltime = clock_timer;
-        pPlayer->gunheldarr[leastusedindex].weapon1 = weapon1;
-        pPlayer->gunheldarr[leastusedindex].weapon2 = weapon2;
+        currentplayer->gunheldarr[leastusedindex].totaltime = clock_timer;
+        currentplayer->gunheldarr[leastusedindex].weapon1 = weapon1;
+        currentplayer->gunheldarr[leastusedindex].weapon2 = weapon2;
     }
 }
 
@@ -2331,11 +2331,11 @@ s32 get_weapon_of_choice(s32 *weapon1, s32 *weapon2)
 
     for (i = 0; i < 10; i++) {
 
-        if (pPlayer->gunheldarr[i].totaltime >= 0
-                && pPlayer->gunheldarr[i].totaltime > mosttime) {
-            mosttime = pPlayer->gunheldarr[i].totaltime;
-            *weapon1 = pPlayer->gunheldarr[i].weapon1;
-            *weapon2 = pPlayer->gunheldarr[i].weapon2;
+        if (currentplayer->gunheldarr[i].totaltime >= 0
+                && currentplayer->gunheldarr[i].totaltime > mosttime) {
+            mosttime = currentplayer->gunheldarr[i].totaltime;
+            *weapon1 = currentplayer->gunheldarr[i].weapon1;
+            *weapon2 = currentplayer->gunheldarr[i].weapon2;
         }
     }
 }

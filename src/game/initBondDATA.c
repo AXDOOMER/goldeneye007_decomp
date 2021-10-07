@@ -56,8 +56,8 @@ glabel init_player_BONDdata_stats
 /* 039C44 7F005114 8C84245C */  lw    $a0, %lo(size_item_buffer)($a0)
 /* 039C48 7F005118 0C0025C8 */  jal   mempAllocBytesInBank
 /* 039C4C 7F00511C 24050004 */   li    $a1, 4
-/* 039C50 7F005120 3C108008 */  lui   $s0, %hi(pPlayer)
-/* 039C54 7F005124 2610A0B0 */  addiu $s0, %lo(pPlayer) # addiu $s0, $s0, -0x5f50
+/* 039C50 7F005120 3C108008 */  lui   $s0, %hi(currentplayer)
+/* 039C54 7F005124 2610A0B0 */  addiu $s0, %lo(currentplayer) # addiu $s0, $s0, -0x5f50
 /* 039C58 7F005128 8E090000 */  lw    $t1, ($s0)
 /* 039C5C 7F00512C 0FC26919 */  jal   getPlayerCount
 /* 039C60 7F005130 AD220808 */   sw    $v0, 0x808($t1)

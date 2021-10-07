@@ -25,7 +25,7 @@ Gfx *display_red_blue_on_radar(Gfx *DL)
     s32 playerCount;
     s32 temp_v0_6;
     struct player *temp_a0_2;
-    //struct player *pPlayer;
+    //struct player *currentplayer;
     struct prop *temp_v0_4;
     struct prop *temp_v1;
     void *temp_a0;
@@ -50,13 +50,13 @@ Gfx *display_red_blue_on_radar(Gfx *DL)
     {
         return DL;
     }
-    pPlayer = pPlayer;
-    if (pPlayer->mpmenuon != 0)
+    currentplayer = currentplayer;
+    if (currentplayer->mpmenuon != 0)
     {
 block_4:
         return DL;
     }
-    if (pPlayer->bonddead != 0)
+    if (currentplayer->bonddead != 0)
     {
         goto block_4;
     }
@@ -125,11 +125,11 @@ loop_22:
             if (temp_a0_2->bonddead == 0)
             {
                 temp_v0_4 = temp_a0_2->prop;
-                temp_v1 = pPlayer->prop;
+                temp_v1 = currentplayer->prop;
                 temp_f20 = temp_v0_4->position.x - temp_v1->position.x;
                 temp_f22 = temp_v0_4->position.z - temp_v1->position.z;
                 temp_f24 = (f32) 0x10;
-                temp_f28 = ((atan2f(temp_f20, temp_f22, temp_a0_2) * 180.0f) / 3.1415927f) + pPlayer->vv_theta + 180.0f;
+                temp_f28 = ((atan2f(temp_f20, temp_f22, temp_a0_2) * 180.0f) / 3.1415927f) + currentplayer->vv_theta + 180.0f;
                 temp_f2 = sqrtf((temp_f20 * temp_f20) + (temp_f22 * temp_f22)) * (16.0f / 4000.0f);
                 if ((scenario == 5) || (scenario == 6) || (scenario == 7) || (scenario == 2) || (scenario == 3))
                 {
@@ -222,8 +222,8 @@ glabel display_red_blue_on_radar
 /* 0FAC24 7F0C60F4 10000124 */  b     .L7F0C6588
 /* 0FAC28 7F0C60F8 8FA20088 */   lw    $v0, 0x88($sp)
 .L7F0C60FC:
-/* 0FAC2C 7F0C60FC 3C178008 */  lui   $s7, %hi(pPlayer) 
-/* 0FAC30 7F0C6100 26F7A0B0 */  addiu $s7, %lo(pPlayer) # addiu $s7, $s7, -0x5f50
+/* 0FAC2C 7F0C60FC 3C178008 */  lui   $s7, %hi(currentplayer) 
+/* 0FAC30 7F0C6100 26F7A0B0 */  addiu $s7, %lo(currentplayer) # addiu $s7, $s7, -0x5f50
 /* 0FAC34 7F0C6104 8EE20000 */  lw    $v0, ($s7)
 /* 0FAC38 7F0C6108 8C4E29C4 */  lw    $t6, 0x29c4($v0)
 /* 0FAC3C 7F0C610C 15C00004 */  bnez  $t6, .L7F0C6120

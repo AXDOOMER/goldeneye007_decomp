@@ -48,7 +48,7 @@ extern struct player_data player2_player_data;
 extern struct player_data player3_player_data;
 extern struct player_data player4_player_data;
 
-extern struct player *pPlayer;
+extern struct player *currentplayer;
 extern struct player_data *pPlayersPerm;
 
 void reset_play_data_ptrs(void);

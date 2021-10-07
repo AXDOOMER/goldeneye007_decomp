@@ -3,7 +3,7 @@
 #include "video.h"
 #include "bondgame.h"
 #include "bondconstants.h"
-#include "unk_093880.h" // pPlayer
+#include "unk_093880.h" // currentplayer
 #include "sched.h"
 #include "rsp.h"
 #include "libultra/os.h"
@@ -119,7 +119,7 @@ u8 g_viVideoSettings1FrameBufferIndex;
 
 /**
  * Address 80060879.
- * cfb_16 index for ptr_video_settings2 and pPlayer->viewports.
+ * cfb_16 index for ptr_video_settings2 and currentplayer->viewports.
  */
 u8 g_viVideoSettings2FrameBufferIndex;
 
@@ -1651,15 +1651,15 @@ u16 viGetPerspNorm(void)
 
 Gfx *video_related_F(Gfx *gdl)
 {
-    if (pPlayer != NULL)
+    if (currentplayer != NULL)
     {
-        pPlayer->viewports[g_viVideoSettings2FrameBufferIndex].vp.vscale[0] = (ptr_video_settings2->viewx * 2);
-        pPlayer->viewports[g_viVideoSettings2FrameBufferIndex].vp.vtrans[0] = (ptr_video_settings2->viewx * 2) + (ptr_video_settings2->viewleft * 4);
-        pPlayer->viewports[g_viVideoSettings2FrameBufferIndex].vp.vscale[1] = (ptr_video_settings2->viewy * 2);
-        pPlayer->viewports[g_viVideoSettings2FrameBufferIndex].vp.vtrans[1] = (ptr_video_settings2->viewy * 2) + (ptr_video_settings2->viewtop * 4);
+        currentplayer->viewports[g_viVideoSettings2FrameBufferIndex].vp.vscale[0] = (ptr_video_settings2->viewx * 2);
+        currentplayer->viewports[g_viVideoSettings2FrameBufferIndex].vp.vtrans[0] = (ptr_video_settings2->viewx * 2) + (ptr_video_settings2->viewleft * 4);
+        currentplayer->viewports[g_viVideoSettings2FrameBufferIndex].vp.vscale[1] = (ptr_video_settings2->viewy * 2);
+        currentplayer->viewports[g_viVideoSettings2FrameBufferIndex].vp.vtrans[1] = (ptr_video_settings2->viewy * 2) + (ptr_video_settings2->viewtop * 4);
     }
 
-    gSPViewport(gdl++, OS_K0_TO_PHYSICAL(&pPlayer->viewports[g_viVideoSettings2FrameBufferIndex]));
+    gSPViewport(gdl++, OS_K0_TO_PHYSICAL(&currentplayer->viewports[g_viVideoSettings2FrameBufferIndex]));
     g_viProjectionMatrix = dynAllocateMatrix();    
     guPerspectiveF(g_viProjectionMatrixF, &g_viPerspNorm, ptr_video_settings2->fovy, ptr_video_settings2->aspect, ptr_video_settings2->znear, ptr_video_settings2->zfar, 1.0f);
     guMtxF2L(g_viProjectionMatrixF, g_viProjectionMatrix);

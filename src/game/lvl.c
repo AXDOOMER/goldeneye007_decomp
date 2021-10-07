@@ -450,8 +450,8 @@ glabel stage_load
 /* 0F2898 7F0BDD68 AE800060 */  sw    $zero, 0x60($s4)
 /* 0F289C 7F0BDD6C E6880038 */  swc1  $f8, 0x38($s4)
 /* 0F28A0 7F0BDD70 E68A0040 */  swc1  $f10, 0x40($s4)
-/* 0F28A4 7F0BDD74 3C0B8008 */  lui   $t3, %hi(pPlayer) 
-/* 0F28A8 7F0BDD78 256BA0B0 */  addiu $t3, %lo(pPlayer) # addiu $t3, $t3, -0x5f50
+/* 0F28A4 7F0BDD74 3C0B8008 */  lui   $t3, %hi(currentplayer) 
+/* 0F28A8 7F0BDD78 256BA0B0 */  addiu $t3, %lo(currentplayer) # addiu $t3, $t3, -0x5f50
 /* 0F28AC 7F0BDD7C 26520070 */  addiu $s2, $s2, 0x70
 /* 0F28B0 7F0BDD80 26940070 */  addiu $s4, $s4, 0x70
 /* 0F28B4 7F0BDD84 AE40FFC0 */  sw    $zero, -0x40($s2)
@@ -755,8 +755,8 @@ glabel stage_load
 /* 0F3498 7F0BE928 AE800060 */  sw    $zero, 0x60($s4)
 /* 0F349C 7F0BE92C E68A0038 */  swc1  $f10, 0x38($s4)
 /* 0F34A0 7F0BE930 E6900040 */  swc1  $f16, 0x40($s4)
-/* 0F34A4 7F0BE934 3C0B8008 */  lui   $t3, %hi(pPlayer) # $t3, 0x8008
-/* 0F34A8 7F0BE938 256BA120 */  addiu $t3, %lo(pPlayer) # addiu $t3, $t3, -0x5ee0
+/* 0F34A4 7F0BE934 3C0B8008 */  lui   $t3, %hi(currentplayer) # $t3, 0x8008
+/* 0F34A8 7F0BE938 256BA120 */  addiu $t3, %lo(currentplayer) # addiu $t3, $t3, -0x5ee0
 /* 0F34AC 7F0BE93C 26520070 */  addiu $s2, $s2, 0x70
 /* 0F34B0 7F0BE940 26940070 */  addiu $s4, $s4, 0x70
 /* 0F34B4 7F0BE944 AE40FFC0 */  sw    $zero, -0x40($s2)
@@ -1055,8 +1055,8 @@ glabel stage_load
 /* 0F2898 7F0BDD68 AE800060 */  sw    $zero, 0x60($s4)
 /* 0F289C 7F0BDD6C E6880038 */  swc1  $f8, 0x38($s4)
 /* 0F28A0 7F0BDD70 E68A0040 */  swc1  $f10, 0x40($s4)
-/* 0F28A4 7F0BDD74 3C0B8008 */  lui   $t3, %hi(pPlayer) 
-/* 0F28A8 7F0BDD78 256BA0B0 */  addiu $t3, %lo(pPlayer) # addiu $t3, $t3, -0x5f50
+/* 0F28A4 7F0BDD74 3C0B8008 */  lui   $t3, %hi(currentplayer) 
+/* 0F28A8 7F0BDD78 256BA0B0 */  addiu $t3, %lo(currentplayer) # addiu $t3, $t3, -0x5f50
 /* 0F28AC 7F0BDD7C 26520070 */  addiu $s2, $s2, 0x70
 /* 0F28B0 7F0BDD80 26940070 */  addiu $s4, $s4, 0x70
 /* 0F28B4 7F0BDD84 AE40FFC0 */  sw    $zero, -0x40($s2)
@@ -1501,10 +1501,10 @@ Gfx* lvRender(Gfx* DL)
         for(i = 0;i < pcount;i++)
         {
                 set_cur_player(sub_GAME_7F09B528(i));
-                viSetViewSize(pPlayer->viewx, pPlayer->viewy);
-                viSetViewPosition(pPlayer->viewleft, pPlayer->viewtop);
-                viSetFovY(pPlayer->fovy);
-                viSetAspect(pPlayer->aspect);
+                viSetViewSize(currentplayer->viewx, currentplayer->viewy);
+                viSetViewPosition(currentplayer->viewleft, currentplayer->viewtop);
+                viSetFovY(currentplayer->fovy);
+                viSetAspect(currentplayer->aspect);
                 DL = viClearZBufCurrentPlayer(DL);
                 DL = video_related_F(DL);
                 if (get_debug_render_raster() == 0)
@@ -1751,8 +1751,8 @@ glabel lvRender
 /* 0F2FF0 7F0BE4C0 AD480004 */  sw    $t0, 4($t2)
 /* 0F2FF4 7F0BE4C4 184000DF */  blez  $v0, .L7F0BE844
 /* 0F2FF8 7F0BE4C8 AD4C0000 */   sw    $t4, ($t2)
-/* 0F2FFC 7F0BE4CC 3C108008 */  lui   $s0, %hi(pPlayer)
-/* 0F3000 7F0BE4D0 2610A0B0 */  addiu $s0, %lo(pPlayer) # addiu $s0, $s0, -0x5f50
+/* 0F2FFC 7F0BE4CC 3C108008 */  lui   $s0, %hi(currentplayer)
+/* 0F3000 7F0BE4D0 2610A0B0 */  addiu $s0, %lo(currentplayer) # addiu $s0, $s0, -0x5f50
 .L7F0BE4D4:
 /* 0F3004 7F0BE4D4 0FC26D4A */  jal   sub_GAME_7F09B528
 /* 0F3008 7F0BE4D8 02202025 */   move  $a0, $s1
@@ -2175,8 +2175,8 @@ glabel lvRender
 /* 0F3BF0 7F0BF080 AD480004 */  sw    $t0, 4($t2)
 /* 0F3BF4 7F0BF084 184000E8 */  blez  $v0, .Ljp7F0BF428
 /* 0F3BF8 7F0BF088 AD4C0000 */   sw    $t4, ($t2)
-/* 0F3BFC 7F0BF08C 3C108008 */  lui   $s0, %hi(pPlayer) # $s0, 0x8008
-/* 0F3C00 7F0BF090 2610A120 */  addiu $s0, %lo(pPlayer) # addiu $s0, $s0, -0x5ee0
+/* 0F3BFC 7F0BF08C 3C108008 */  lui   $s0, %hi(currentplayer) # $s0, 0x8008
+/* 0F3C00 7F0BF090 2610A120 */  addiu $s0, %lo(currentplayer) # addiu $s0, $s0, -0x5ee0
 .Ljp7F0BF094:
 /* 0F3C04 7F0BF094 0FC27032 */  jal   sub_GAME_7F09B528
 /* 0F3C08 7F0BF098 02202025 */   move  $a0, $s1
@@ -2609,8 +2609,8 @@ glabel lvRender
 /* 0F2FF0 7F0BE4C0 AD480004 */  sw    $t0, 4($t2)
 /* 0F2FF4 7F0BE4C4 184000DF */  blez  $v0, .L7F0BE844
 /* 0F2FF8 7F0BE4C8 AD4C0000 */   sw    $t4, ($t2)
-/* 0F2FFC 7F0BE4CC 3C108008 */  lui   $s0, %hi(pPlayer)
-/* 0F3000 7F0BE4D0 2610A0B0 */  addiu $s0, %lo(pPlayer) # addiu $s0, $s0, -0x5f50
+/* 0F2FFC 7F0BE4CC 3C108008 */  lui   $s0, %hi(currentplayer)
+/* 0F3000 7F0BE4D0 2610A0B0 */  addiu $s0, %lo(currentplayer) # addiu $s0, $s0, -0x5f50
 .L7F0BE4D4:
 /* 0F3004 7F0BE4D4 0FC26D4A */  jal   sub_GAME_7F09B528
 /* 0F3008 7F0BE4D8 02202025 */   move  $a0, $s1
@@ -6410,8 +6410,8 @@ glabel sub_GAME_7F0BF800
 /* 0F4510 7F0BF9E0 0FC30BA0 */  jal   sub_GAME_7F0C2E80
 /* 0F4514 7F0BF9E4 00000000 */   nop   
 .L7F0BF9E8:
-/* 0F4518 7F0BF9E8 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 0F451C 7F0BF9EC 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
+/* 0F4518 7F0BF9E8 3C028008 */  lui   $v0, %hi(currentplayer)
+/* 0F451C 7F0BF9EC 8C42A0B0 */  lw    $v0, %lo(currentplayer)($v0)
 /* 0F4520 7F0BF9F0 8C4300A8 */  lw    $v1, 0xa8($v0)
 /* 0F4524 7F0BF9F4 C4460408 */  lwc1  $f6, 0x408($v0)
 /* 0F4528 7F0BF9F8 C44A0410 */  lwc1  $f10, 0x410($v0)
@@ -6444,8 +6444,8 @@ glabel sub_GAME_7F0BF800
 /* 0F4594 7F0BFA64 00002025 */   move  $a0, $zero
 /* 0F4598 7F0BFA68 0FC17645 */  jal   draw_item_in_hand_has_more_ammo
 /* 0F459C 7F0BFA6C 24050058 */   li    $a1, 88
-/* 0F45A0 7F0BFA70 3C028008 */  lui   $v0, %hi(pPlayer)
-/* 0F45A4 7F0BFA74 8C42A0B0 */  lw    $v0, %lo(pPlayer)($v0)
+/* 0F45A0 7F0BFA70 3C028008 */  lui   $v0, %hi(currentplayer)
+/* 0F45A4 7F0BFA74 8C42A0B0 */  lw    $v0, %lo(currentplayer)($v0)
 /* 0F45A8 7F0BFA78 24010002 */  li    $at, 2
 /* 0F45AC 7F0BFA7C 24090005 */  li    $t1, 5
 /* 0F45B0 7F0BFA80 8C480894 */  lw    $t0, 0x894($v0)
