@@ -6,7 +6,7 @@
 #include "bondconstants.h"
 #include "game/lvl_text.h"
 #include "game/bondinv.h"
-#include "game/bondwalk.h"
+#include "game/gun.h"
 #include "game/lvl.h"
 #include "bondtypes.h"
 

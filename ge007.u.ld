@@ -351,7 +351,7 @@ SECTIONS
       build/u/src/game/quaternion.o (.text);
       build/u/src/game/math_floor.o (.text);
       build/u/src/game/math_ceil.o (.text);
-      build/u/src/game/bondwalk.o (.text);
+      build/u/src/game/gun.o (.text);
       build/u/src/game/bondwalk2.o (.text);
       build/u/src/game/objecthandler.o (.text);
       build/u/src/game/objecthandler_2.o (.text);
@@ -3699,7 +3699,7 @@ SECTIONS
       build/u/src/game/quaternion.o (.data);
       build/u/src/game/math_floor.o (.data);
       build/u/src/game/math_ceil.o (.data);
-      build/u/src/game/bondwalk.o (.data);
+      build/u/src/game/gun.o (.data);
       build/u/src/game/bondwalk2.o (.data);
       build/u/src/game/objecthandler.o (.data);
       build/u/src/game/objecthandler_2.o (.data);
@@ -3824,7 +3824,7 @@ SECTIONS
       build/u/src/game/quaternion.o (.rodata);
       build/u/src/game/math_floor.o (.rodata);
       build/u/src/game/math_ceil.o (.rodata);
-      build/u/src/game/bondwalk.o (.rodata);
+      build/u/src/game/gun.o (.rodata);
       build/u/src/game/bondwalk2.o (.rodata);
       build/u/src/game/objecthandler.o (.rodata);
       build/u/src/game/objecthandler_2.o (.rodata);
@@ -4166,7 +4166,7 @@ SECTIONS
       build/u/src/game/quaternion.o (.bss);
       build/u/src/game/math_floor.o (.bss);
       build/u/src/game/math_ceil.o (.bss);
-      build/u/src/game/bondwalk.o (.bss);
+      build/u/src/game/gun.o (.bss);
       build/u/src/game/bondwalk2.o (.bss);
       build/u/src/game/objecthandler.o (.bss);
       build/u/src/game/objecthandler_2.o (.bss);

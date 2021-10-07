@@ -1,7 +1,7 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "game/chr.h"
-#include "game/bondwalk.h"
+#include "game/gun.h"
 #include "game/lvl.h"
 #include "bondconstants.h"
 #include "chr2.h"

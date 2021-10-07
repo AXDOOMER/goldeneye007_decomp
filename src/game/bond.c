@@ -5,7 +5,7 @@
 #include "game/textrelated.h"
 #include "game/lvl.h"
 #include "game/bondinv.h"
-#include "game/bondwalk.h"
+#include "game/gun.h"
 #include "game/quaternion.h"
 #include "boss.h"
 #include "music.h"

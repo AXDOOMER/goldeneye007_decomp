@@ -3,7 +3,7 @@
 #include "bondtypes.h"
 #include "game/bond.h"
 #include "game/bondinv.h"
-#include "game/bondwalk.h"
+#include "game/gun.h"
 #include "game/chrobjdata.h"
 #include "game/quaternion.h"
 #include "game/image_bank.h"

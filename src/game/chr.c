@@ -1,7 +1,7 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "game/chr.h"
-#include "game/bondwalk.h"
+#include "game/gun.h"
 #include "game/lvl_text.h"
 // data
 f32 animation_rate = 0;
