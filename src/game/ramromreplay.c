@@ -3,7 +3,7 @@
 #include "game/debugmenu_handler.h"
 #include "game/lvl.h"
 #include "game/initunk_0072B0.h"
-#include "game/mainmenu.h"
+#include "game/front.h"
 #include "game/ramromreplay.h"
 #include "ramrom.h"
 //D:800483F0

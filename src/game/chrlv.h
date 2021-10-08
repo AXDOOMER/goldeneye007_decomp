@@ -10,7 +10,7 @@
 
 s32 load_body_head_if_not_loaded(s32 model);
 
-Model * maybe_load_models_for_guards(int body,int head, ModelFileHeader *bodyheader,ModelFileHeader *headheader, int sunglasses,Model *model);
+Model * makeonebody(int body,int head, ModelFileHeader *bodyheader,ModelFileHeader *headheader, int sunglasses,Model *model);
 
 Model * setup_chr_instance(int body,int head, ModelFileHeader *body_header, ModelFileHeader *head_header,int sunglasses);
 

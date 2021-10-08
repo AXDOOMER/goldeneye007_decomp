@@ -3,7 +3,7 @@
 #include "game/player.h"
 #include "game/unk_0A1DA0.h"
 #include "game/unk_0C0A70.h"
-#include "game/mainmenu.h"
+#include "game/front.h"
 #include "game/lvl_text.h"
 #include "game/textrelated.h"
 #include "music.h"

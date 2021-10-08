@@ -9,7 +9,7 @@
 #include "game/quaternion.h"
 #include "boss.h"
 #include "music.h"
-#include "video.h"
+#include "fr.h"
 #include "snd.h"
 #include "game/math_atan2f.h"
 #include "game/chrobjhandler.h"
@@ -3343,7 +3343,7 @@ variable_body_head:
 /* 0AED6C 7F07A23C 8FA50040 */  lw    $a1, 0x40($sp)
 /* 0AED70 7F07A240 8FA600FC */  lw    $a2, 0xfc($sp)
 /* 0AED74 7F07A244 AFA00010 */  sw    $zero, 0x10($sp)
-/* 0AED78 7F07A248 0FC08CBA */  jal   maybe_load_models_for_guards
+/* 0AED78 7F07A248 0FC08CBA */  jal   makeonebody
 /* 0AED7C 7F07A24C AFAC0014 */   sw    $t4, 0x14($sp)
 /* 0AED80 7F07A250 3C038008 */  lui   $v1, %hi(currentplayer)
 /* 0AED84 7F07A254 2463A0B0 */  addiu $v1, %lo(currentplayer) # addiu $v1, $v1, -0x5f50
@@ -3914,7 +3914,7 @@ variable_body_head:
 /* 0AF3B8 7F07A848 8FA600FC */  lw    $a2, 0xfc($sp)
 /* 0AF3BC 7F07A84C 8FA700F8 */  lw    $a3, 0xf8($sp)
 /* 0AF3C0 7F07A850 AFA00010 */  sw    $zero, 0x10($sp)
-/* 0AF3C4 7F07A854 0FC08D76 */  jal   maybe_load_models_for_guards
+/* 0AF3C4 7F07A854 0FC08D76 */  jal   makeonebody
 /* 0AF3C8 7F07A858 AFB90014 */   sw    $t9, 0x14($sp)
 /* 0AF3CC 7F07A85C 3C038008 */  lui   $v1, %hi(currentplayer) # $v1, 0x8008
 /* 0AF3D0 7F07A860 2463A120 */  addiu $v1, %lo(currentplayer) # addiu $v1, $v1, -0x5ee0
@@ -4482,7 +4482,7 @@ variable_body_head:
 /* 0AED6C 7F07A23C 8FA50040 */  lw    $a1, 0x40($sp)
 /* 0AED70 7F07A240 8FA600FC */  lw    $a2, 0xfc($sp)
 /* 0AED74 7F07A244 AFA00010 */  sw    $zero, 0x10($sp)
-/* 0AED78 7F07A248 0FC08CBA */  jal   maybe_load_models_for_guards
+/* 0AED78 7F07A248 0FC08CBA */  jal   makeonebody
 /* 0AED7C 7F07A24C AFAC0014 */   sw    $t4, 0x14($sp)
 /* 0AED80 7F07A250 3C038008 */  lui   $v1, %hi(currentplayer)
 /* 0AED84 7F07A254 2463A0B0 */  addiu $v1, %lo(currentplayer) # addiu $v1, $v1, -0x5f50

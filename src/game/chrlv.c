@@ -4,7 +4,7 @@
 #include "game/gun.h"
 #include "game/lvl.h"
 #include "bondconstants.h"
-#include "chr2.h"
+#include "chrlv.h"
 #include "game/math_asinfacosf.h"
 #include "game/math_atan2f.h"
 
@@ -23,7 +23,7 @@ s32 load_body_head_if_not_loaded(s32 model)
 
 
 #ifdef NONMATCHING
-Model * maybe_load_models_for_guards(int body,int head,ModelFileHeader *bodyheader,ModelFileHeader *headheader, int sunglasses,Model *model)
+Model * makeonebody(int body,int head,ModelFileHeader *bodyheader,ModelFileHeader *headheader, int sunglasses,Model *model)
 {
   //uint cheatcheck;
   undefined4 *id;
@@ -45,6 +45,7 @@ Model * maybe_load_models_for_guards(int body,int head,ModelFileHeader *bodyhead
      (node = bodyheader->Switches[4], node != 0x0)) {
     if (headheader->RootNode == 0x0) {
       load_object_into_memory(headheader,c_item_entries[head].name);
+      //sprintf("makeonebody: no head attachment for body number %d!\n",lVar3);
     }
     set_objuse_flag_compute_grp_nums_set_obj_loaded(headheader);
     bodyheader->numRecords = bodyheader->numRecords + headheader->numRecords;
@@ -52,6 +53,14 @@ Model * maybe_load_models_for_guards(int body,int head,ModelFileHeader *bodyhead
   if (model == 0x0) {
     model = get_aircraft_obj_instance_controller(bodyheader);
   }
+  //
+  //        if (*&pMStack0000003c->field_0x2 < pMStack00000024->numRecords) {
+  //        assertPrint_8291E690
+  //                  (".\\ported\\chrlv.cpp",0xc4,
+  //                   "Assertion failed: chrsub->inst.savesize>=bodyobj->savesize");
+  //        }
+  //
+  //
   if (model != 0x0) {
     set_obj_instance_controller_scale(model,scale);
     proc_7F06CE84(model,pov);
@@ -80,7 +89,7 @@ glabel D_80051D98
 glabel D_80051D9C
 .word 0x0
 .text
-glabel maybe_load_models_for_guards
+glabel makeonebody
 /* 057E18 7F0232E8 00047880 */  sll   $t7, $a0, 2
 /* 057E1C 7F0232EC 01E47821 */  addu  $t7, $t7, $a0
 /* 057E20 7F0232F0 3C188004 */  lui   $t8, %hi(c_item_entries) 
@@ -216,7 +225,7 @@ glabel D_80051D98
 glabel D_80051D9C
 .word 0x0
 .text
-glabel maybe_load_models_for_guards
+glabel makeonebody
 /* 058148 7F0235D8 00047880 */  sll   $t7, $a0, 2
 /* 05814C 7F0235DC 01E47821 */  addu  $t7, $t7, $a0
 /* 058150 7F0235E0 3C188004 */  lui   $t8, %hi(c_item_entries) # $t8, 0x8004
@@ -351,7 +360,7 @@ glabel maybe_load_models_for_guards
 
 Model * setup_chr_instance(int body,int head,ModelFileHeader *body_header, ModelFileHeader *head_header,int sunglasses)
 {
-  return maybe_load_models_for_guards(body,head,body_header,head_header,sunglasses,0x0);
+  return makeonebody(body,head,body_header,head_header,sunglasses,0x0);
 }
 
 

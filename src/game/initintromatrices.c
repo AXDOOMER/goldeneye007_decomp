@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "memp.h"
-#include "game/intro_logos.h"
+#include "game/title.h"
 
 void alloc_intro_matrices(void) {
     D_8002A7D0 = 0;

@@ -1,5 +1,5 @@
 #include "game/debugmenu_handler.h"
-#include "game/mainmenu.h"
+#include "game/front.h"
 #include "game/ramromreplay.h"
 #include "game/room_model_buffer.h"
 #include "game/rsp.h"
@@ -21,7 +21,7 @@
 #include "init.h"
 #include "joy.h"
 #include "lvl.h"
-#include "mainmenu.h"
+#include "front.h"
 #include "mema.h"
 #include "memp.h"
 #include "music.h"
@@ -33,7 +33,7 @@
 #include "token.h"
 #include "tlb_manage.h"
 #include "ultra64.h"
-#include "video.h"
+#include "fr.h"
 #include "image.h"
 
 /**

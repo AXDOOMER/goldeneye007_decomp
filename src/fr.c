@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "vi.h"
-#include "video.h"
+#include "fr.h"
 #include "bondgame.h"
 #include "bondconstants.h"
 #include "player.h" // currentplayer
@@ -1612,11 +1612,17 @@ void viRecvMesg(int count)
     while (count > 0);
 }
 
-void viSetVideoMode(s32 videomode)
+void viSetVideoMode(s32 m)
 {
-    ptr_video_settings2->mode = videomode;
-    ptr_video_settings2->x = ptr_video_settings2->bufx = g_viRuntimeScreenWidths[videomode];
-    ptr_video_settings2->y = ptr_video_settings2->bufy = g_viRuntimeScreenHeights[videomode];
+    //if (m < 0) {
+    //    assertPrint_8291E690(".\\ported\\fr.cpp",0x22a,"Assertion failed: m>=MD_BLACK");
+    //}
+    //if (2 < iStack00000014) {
+    //    assertPrint_8291E690(".\\ported\\fr.cpp",0x22b,"Assertion failed: m<MD_MAXIMUM");
+    //}
+    ptr_video_settings2->mode = m;
+    ptr_video_settings2->x = ptr_video_settings2->bufx = g_viRuntimeScreenWidths[m];
+    ptr_video_settings2->y = ptr_video_settings2->bufy = g_viRuntimeScreenHeights[m];
 }
 
 void viSetColorMode16Bit(void)

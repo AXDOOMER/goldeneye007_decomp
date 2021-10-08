@@ -1,6 +1,6 @@
 #include "ultra64.h"
 #include "memp.h"
-#include "game/mainmenu.h"
+#include "game/front.h"
 
 #ifdef NONMATCHING
 u32 mempAllocBytesInBank(u32 bytes,u8 bank);

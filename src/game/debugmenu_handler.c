@@ -2,7 +2,7 @@
 #include "game/debugmenu_handler.h"
 #include "game/initgamedata.h"
 #include "boss.h"
-#include "video.h"
+#include "fr.h"
 
 // data
 //D:80036BA0

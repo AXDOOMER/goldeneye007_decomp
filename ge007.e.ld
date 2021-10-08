@@ -58,7 +58,7 @@ SECTIONS
       build/e/src/tlb_hardwire.o (.text);
       build/e/src/audi.o (.text);
       build/e/src/speed_graph.o (.text);
-      build/e/src/video.o (.text);
+      build/e/src/fr.o (.text);
       build/e/src/deb.o (.text);
       build/e/src/tlb_paging.o (.text);
       build/e/src/unused_fp.o (.text);
@@ -349,8 +349,8 @@ SECTIONS
       build/e/src/game/unk_007920.o (.text);
       build/e/src/game/null_007970.o (.text);
       build/e/src/game/unk_007980.o (.text);
-      build/e/src/game/intro_logos.o (.text);
-      build/e/src/game/mainmenu.o (.text);
+      build/e/src/game/title.o (.text);
+      build/e/src/game/front.o (.text);
       build/e/src/game/unk_01B0E0.o (.text);
       build/e/src/game/unk_01B240.o (.text);
       build/e/src/game/unk_01BAE0.o (.text);
@@ -359,7 +359,7 @@ SECTIONS
       build/e/src/game/gamefile.o (.text);
       build/e/src/game/gamefile2.o (.text);
       build/e/src/game/chr.o (.text);
-      build/e/src/game/chr2.o (.text);
+      build/e/src/game/chrlv.o (.text);
       build/e/src/game/chrai.o (.text);
       build/e/src/game/chrobjhandler.o (.text);
       build/e/src/game/loadobjectmodel.o (.text);
@@ -3255,7 +3255,7 @@ SECTIONS
       build/e/src/tlb_hardwire.o (.data);
       build/e/src/audi.o (.data);
       build/e/src/speed_graph.o (.data);
-      build/e/src/video.o (.data);
+      build/e/src/fr.o (.data);
       build/e/src/deb.o (.data);
       build/e/src/tlb_paging.o (.data);
       build/e/src/unused_fp.o (.data);
@@ -3486,7 +3486,7 @@ SECTIONS
       build/e/src/tlb_hardwire.o (.rodata);
       build/e/src/audi.o (.rodata);
       build/e/src/speed_graph.o (.rodata);
-      build/e/src/video.o (.rodata);
+      build/e/src/fr.o (.rodata);
       build/e/src/deb.o (.rodata);
       build/e/src/tlb_paging.o (.rodata);
       build/e/src/unused_fp.o (.rodata);
@@ -3744,8 +3744,8 @@ SECTIONS
       build/e/src/game/unk_007920.o (.data);
       build/e/src/game/null_007970.o (.data);
       build/e/src/game/unk_007980.o (.data);
-      build/e/src/game/intro_logos.o (.data);
-      build/e/src/game/mainmenu.o (.data);
+      build/e/src/game/title.o (.data);
+      build/e/src/game/front.o (.data);
       build/e/src/game/unk_01B0E0.o (.data);
       build/e/src/game/unk_01B240.o (.data);
       build/e/src/game/unk_01BAE0.o (.data);
@@ -3754,7 +3754,7 @@ SECTIONS
       build/e/src/game/gamefile.o (.data);
       build/e/src/game/gamefile2.o (.data);
       build/e/src/game/chr.o (.data);
-      build/e/src/game/chr2.o (.data);
+      build/e/src/game/chrlv.o (.data);
       build/e/src/game/chrai.o (.data);
       build/e/src/game/chrobjhandler.o (.data);
       build/e/src/game/loadobjectmodel.o (.data);
@@ -3869,8 +3869,8 @@ SECTIONS
       build/e/src/game/unk_007920.o (.rodata);
       build/e/src/game/null_007970.o (.rodata);
       build/e/src/game/unk_007980.o (.rodata);
-      build/e/src/game/intro_logos.o (.rodata);
-      build/e/src/game/mainmenu.o (.rodata);
+      build/e/src/game/title.o (.rodata);
+      build/e/src/game/front.o (.rodata);
       build/e/src/game/unk_01B0E0.o (.rodata);
       build/e/src/game/unk_01B240.o (.rodata);
       build/e/src/game/unk_01BAE0.o (.rodata);
@@ -3879,7 +3879,7 @@ SECTIONS
       build/e/src/game/gamefile.o (.rodata);
       build/e/src/game/gamefile2.o (.rodata);
       build/e/src/game/chr.o (.rodata);
-      build/e/src/game/chr2.o (.rodata);
+      build/e/src/game/chrlv.o (.rodata);
       build/e/src/game/chrai.o (.rodata);
       build/e/src/game/chrobjhandler.o (.rodata);
       build/e/src/game/loadobjectmodel.o (.rodata);
@@ -3976,7 +3976,7 @@ SECTIONS
       build/e/src/tlb_resolve.o (.bss);
       build/e/src/audi.o (.bss);
       build/e/src/speed_graph.o (.bss);
-      build/e/src/video.o (.bss);
+      build/e/src/fr.o (.bss);
       build/e/src/deb.o (.bss);
       build/e/src/tlb_paging.o (.bss);
       build/e/src/unused_fp.o (.bss);
@@ -4234,8 +4234,8 @@ SECTIONS
       build/e/src/game/unk_007920.o (.bss);
       build/e/src/game/null_007970.o (.bss);
       build/e/src/game/unk_007980.o (.bss);
-      build/e/src/game/intro_logos.o (.bss);
-      build/e/src/game/mainmenu.o (.bss);
+      build/e/src/game/title.o (.bss);
+      build/e/src/game/front.o (.bss);
       build/e/src/game/unk_01B0E0.o (.bss);
       build/e/src/game/unk_01B240.o (.bss);
       build/e/src/game/unk_01BAE0.o (.bss);
@@ -4244,7 +4244,7 @@ SECTIONS
       build/e/src/game/gamefile.o (.bss);
       build/e/src/game/gamefile2.o (.bss);
       build/e/src/game/chr.o (.bss);
-      build/e/src/game/chr2.o (.bss);
+      build/e/src/game/chrlv.o (.bss);
       build/e/src/game/chrai.o (.bss);
       build/e/src/game/chrobjhandler.o (.bss);
       build/e/src/game/loadobjectmodel.o (.bss);
