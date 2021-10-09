@@ -56,10 +56,10 @@ SECTIONS
       build/u/src/speed_graph.o (.text);
       build/u/src/fr.o (.text);
       build/u/src/deb.o (.text);
-      build/u/src/tlb_paging.o (.text);
-      build/u/src/unused_fp.o (.text);
+      build/u/src/fault.o (.text);
+      /*deb_print may be part of fault per pd beta (.text);*/
       build/u/src/deb_print.o (.text);
-      build/u/src/debug_getlastRA.o (.text);
+      build/u/src/getra.o (.text);
       build/u/src/ramrom.o (.text);
       build/u/src/boss.o (.text);
       build/u/src/music.o (.text);
@@ -3228,10 +3228,10 @@ SECTIONS
       build/u/src/speed_graph.o (.data);
       build/u/src/fr.o (.data);
       build/u/src/deb.o (.data);
-      /*build/u/src/tlb_paging.o (.data);*/
-      /*build/u/src/unused_fp.o (.data);*/
+      /*build/u/src/fault.o (.data);*/
+      /*deb_print may be part of fault per pd beta (.data);*/
       build/u/src/deb_print.o (.data);
-      /*build/u/src/debug_getlastRA.o (.data);*/
+      /*build/u/src/getra.o (.data);*/
       /*build/u/src/ramrom.o (.data);*/
       build/u/src/boss.o (.data);
       build/u/src/music.o (.data);
@@ -3436,10 +3436,10 @@ SECTIONS
       build/u/src/speed_graph.o (.rodata);
       build/u/src/fr.o (.rodata);
       build/u/src/deb.o (.rodata);
-      build/u/src/tlb_paging.o (.rodata);
-      build/u/src/unused_fp.o (.rodata);
+      build/u/src/fault.o (.rodata);
+      /*deb_print may be part of fault per pd beta (.rodata);*/
       build/u/src/deb_print.o (.rodata);
-      build/u/src/debug_getlastRA.o (.rodata);
+      build/u/src/getra.o (.rodata);
       build/u/src/ramrom.o (.rodata);
       build/u/src/boss.o (.rodata);
       build/u/src/music.o (.rodata);
@@ -3903,10 +3903,10 @@ SECTIONS
       build/u/src/speed_graph.o (.bss);
       build/u/src/fr.o (.bss);
       build/u/src/deb.o (.bss);
-      build/u/src/tlb_paging.o (.bss);
-      build/u/src/unused_fp.o (.bss);
+      build/u/src/fault.o (.bss);
+      /*deb_print may be part of fault per pd beta (.bss);*/
       build/u/src/deb_print.o (.bss);
-      build/u/src/debug_getlastRA.o (.bss);
+      build/u/src/getra.o (.bss);
       build/u/src/ramrom.o (.bss);
       build/u/src/boss.o (.bss);
       build/u/src/music.o (.bss);

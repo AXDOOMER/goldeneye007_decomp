@@ -142,9 +142,9 @@
 OSThread g_tlbThread;
 u8 g_tlbUnused[0x500];
 char g_tlbStack[0x2300];
-OSMesgQueue g_tlbMesgQ;
-OSMesg *g_tlbMesgBuf;
-OSThread *g_tlbFaultedThreadPtr;
+OSMesgQueue g_faultMesgQ;
+OSMesg *g_faultMesgBuf;
+OSThread *g_faultedThreadPtr;
 u32 dword_CODE_bss_80063660;
 
 // bss - indy/debug section
@@ -156,18 +156,18 @@ char g_indyReadBuffer[g_indyReadBuffer_LEN];
 
 // forward declarations
 
-void tlbMain(void* arg0);
+void faultMain(void* arg0);
 
 // end forward declarations
 
 /**
  * 5AE0    70004EE0
  */
-void tlbInit(void)
+void faultInit(void)
 {
     deboutInitBuffers();
-    osCreateMesgQueue(&g_tlbMesgQ, (OSMesg *)&g_tlbMesgBuf, TLB_MESSAGE_QUEUE_SIZE);
-    osCreateThread(&g_tlbThread, TLB_THREAD_ID, &tlbMain, NULL, &g_tlbStack, TLB_THREAD_PRIORITY);
+    osCreateMesgQueue(&g_faultMesgQ, (OSMesg *)&g_faultMesgBuf, TLB_MESSAGE_QUEUE_SIZE);
+    osCreateThread(&g_tlbThread, TLB_THREAD_ID, &faultMain, NULL, &g_tlbStack, TLB_THREAD_PRIORITY);
     osStartThread(&g_tlbThread);
 }
 
@@ -193,24 +193,24 @@ void tlbInit(void)
  * addiu	sp,sp,72                      addiu	sp,sp,64
  */
 #ifdef NONMATCHING
-void tlbMain(void* arg0)
+void faultMain(void* arg0)
 {
     OSMesg msg = 0;
     OSIntMask startingInterruptMask;
     OSThread *faultedThread;
 
     /**
-     * Target generates 5 separate dereferences of g_tlbFaultedThreadPtr,
+     * Target generates 5 separate dereferences of g_faultedThreadPtr,
      * only way I can get that to happen is with a pointer to a pointer.
      */
-    OSThread **ppfaultedThread = &g_tlbFaultedThreadPtr;
+    OSThread **ppfaultedThread = &g_faultedThreadPtr;
 
-    osSetEventMesg(OS_EVENT_FAULT, &g_tlbMesgQ, (OSMesg)MSG_FAULT);
+    osSetEventMesg(OS_EVENT_FAULT, &g_faultMesgQ, (OSMesg)MSG_FAULT);
     dword_CODE_bss_80063660 = 0;
 
     while (1)
     {
-        osRecvMesg(&g_tlbMesgQ, &msg, OS_MESG_BLOCK);
+        osRecvMesg(&g_faultMesgQ, &msg, OS_MESG_BLOCK);
         startingInterruptMask = osSetIntMask(OS_IM_NONE);
         faultedThread = __osGetCurrFaultedThread();
         *ppfaultedThread = faultedThread;
@@ -243,11 +243,11 @@ void tlbMain(void* arg0)
 #else
 GLOBAL_ASM(
 .text
-glabel tlbMain
+glabel faultMain
 /* 005B54 70004F54 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 005B58 70004F58 AFB70030 */  sw    $s7, 0x30($sp)
-/* 005B5C 70004F5C 3C178006 */  lui   $s7, %hi(g_tlbMesgQ) 
-/* 005B60 70004F60 26F73640 */  addiu $s7, %lo(g_tlbMesgQ) # addiu $s7, $s7, 0x3640
+/* 005B5C 70004F5C 3C178006 */  lui   $s7, %hi(g_faultMesgQ) 
+/* 005B60 70004F60 26F73640 */  addiu $s7, %lo(g_faultMesgQ) # addiu $s7, $s7, 0x3640
 /* 005B64 70004F64 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 005B68 70004F68 AFA40040 */  sw    $a0, 0x40($sp)
 /* 005B6C 70004F6C AFB6002C */  sw    $s6, 0x2c($sp)
@@ -281,11 +281,11 @@ glabel tlbMain
 /* 005BD4 70004FD4 24040001 */   li    $a0, 1
 /* 005BD8 70004FD8 0C004060 */  jal   __osGetCurrFaultedThread
 /* 005BDC 70004FDC 00408025 */   move  $s0, $v0
-/* 005BE0 70004FE0 3C018006 */  lui   $at, %hi(g_tlbFaultedThreadPtr)
+/* 005BE0 70004FE0 3C018006 */  lui   $at, %hi(g_faultedThreadPtr)
 /* 005BE4 70004FE4 1040FFF6 */  beqz  $v0, .L70004FC0
-/* 005BE8 70004FE8 AC22365C */   sw    $v0, %lo(g_tlbFaultedThreadPtr)($at)
+/* 005BE8 70004FE8 AC22365C */   sw    $v0, %lo(g_faultedThreadPtr)($at)
 /* 005BEC 70004FEC 8C4E0120 */  lw    $t6, 0x120($v0)
-/* 005BF0 70004FF0 3C088006 */  lui   $t0, %hi(g_tlbFaultedThreadPtr) 
+/* 005BF0 70004FF0 3C088006 */  lui   $t0, %hi(g_faultedThreadPtr) 
 /* 005BF4 70004FF4 31CF007C */  andi  $t7, $t6, 0x7c
 /* 005BF8 70004FF8 164F0018 */  bne   $s2, $t7, .L7000505C
 /* 005BFC 70004FFC 00000000 */   nop   
@@ -293,19 +293,19 @@ glabel tlbMain
 /* 005C04 70005004 0314C824 */  and   $t9, $t8, $s4
 /* 005C08 70005008 16790014 */  bne   $s3, $t9, .L7000505C
 /* 005C0C 7000500C 00000000 */   nop   
-/* 005C10 70005010 8D08365C */  lw    $t0, %lo(g_tlbFaultedThreadPtr)($t0)
+/* 005C10 70005010 8D08365C */  lw    $t0, %lo(g_faultedThreadPtr)($t0)
 /* 005C14 70005014 0C000676 */  jal   tlbmanageTranslateLoadRomFromTlbAddress
 /* 005C18 70005018 8D040124 */   lw    $a0, 0x124($t0)
-/* 005C1C 7000501C 3C098006 */  lui   $t1, %hi(g_tlbFaultedThreadPtr) 
-/* 005C20 70005020 8D29365C */  lw    $t1, %lo(g_tlbFaultedThreadPtr)($t1)
-/* 005C24 70005024 3C0A8006 */  lui   $t2, %hi(g_tlbFaultedThreadPtr) 
-/* 005C28 70005028 3C058006 */  lui   $a1, %hi(g_tlbFaultedThreadPtr)
+/* 005C1C 7000501C 3C098006 */  lui   $t1, %hi(g_faultedThreadPtr) 
+/* 005C20 70005020 8D29365C */  lw    $t1, %lo(g_faultedThreadPtr)($t1)
+/* 005C24 70005024 3C0A8006 */  lui   $t2, %hi(g_faultedThreadPtr) 
+/* 005C28 70005028 3C058006 */  lui   $a1, %hi(g_faultedThreadPtr)
 /* 005C2C 7000502C A5350010 */  sh    $s5, 0x10($t1)
-/* 005C30 70005030 8D4A365C */  lw    $t2, %lo(g_tlbFaultedThreadPtr)($t2)
+/* 005C30 70005030 8D4A365C */  lw    $t2, %lo(g_faultedThreadPtr)($t2)
 /* 005C34 70005034 02C02025 */  move  $a0, $s6
 /* 005C38 70005038 A5400012 */  sh    $zero, 0x12($t2)
 /* 005C3C 7000503C 0C00422B */  jal   __osEnqueueThread
-/* 005C40 70005040 8CA5365C */   lw    $a1, %lo(g_tlbFaultedThreadPtr)($a1)
+/* 005C40 70005040 8CA5365C */   lw    $a1, %lo(g_faultedThreadPtr)($a1)
 /* 005C44 70005044 0C00374C */  jal   osSetIntMask
 /* 005C48 70005048 02002025 */   move  $a0, $s0
 /* 005C4C 7000504C 0C0042B4 */  jal   osYieldThread
@@ -708,4 +708,58 @@ void * crashGetStackStart(u32 sp, u32 tid)
     return p;
 }
 
+
+#define IEEE_FLOAT_FRACTION_BITMASK   0x7FFFFF
+#define IEEE_FLOAT_FRACTION_BIT_COUNT       23
+#define IEEE_FLOAT_EXPONENT_BITMASK 0x7F800000
+#define IEEE_FLOAT_EXPONENT_BIT_COUNT        8
+#define IEEE_FLOAT_SIGN_BITMASK     0x80000000
+#define IEEE_FLOAT_SIGN_BIT_COUNT            1
+
+
+/**
+ * 6160	70005560
+ *     V0= TRUE if F12 a normal single precision float
+ *     accepts: F12= single-precision float
+ */
+s32 crashIsDouble(f32 value)
+{
+    u32 bits = *(u32*)&value;
+    u32 fraction = bits & IEEE_FLOAT_FRACTION_BITMASK;
+    u8 exponent = (u8)(bits >> IEEE_FLOAT_FRACTION_BIT_COUNT);
+    
+    return (fraction == 0) || (exponent != 0 && (exponent != 0xff));
+}
+
+/**
+ * 61A4	700055A4
+ *     V0= TRUE if A1 a normal single precision float; would have set result as short at A0
+ *     accepts: A0=(unused) p->target, A1=single-precision float
+ */
+s32 crashPrintFloat(s32 index, f32 value)
+{
+    return crashIsDouble(value);
+}
+
+/**
+ * 61C8	700055C8
+ *     removed: set normality of single-precision floats A1, A2, A3, SP+10 in table at A0
+ */
+void crashPrint4Floats(s32 index, f32 value1, f32 value2, f32 value3, f32 value4)
+{
+    crashPrintFloat(index, value1);
+    crashPrintFloat((index + 2), value2);
+    crashPrintFloat((index + 4), value3);
+    crashPrintFloat((index + 6), value4);
+
+    return;
+}
+
+/**
+ * 6228	70005628
+ *     unconditional return
+ */
+void crashRender(void) {
+    return;
+}
 

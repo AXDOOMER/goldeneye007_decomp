@@ -4,7 +4,7 @@
 #include "deb.h"
 #include "str.h"
 #include "memp.h"
-#include "tlb_paging.h"
+#include "fault.h"
 
 struct deblistentry
 {
@@ -64,7 +64,7 @@ void debAdd(const char *name, u32 data) {
 
 void debInit(void) {
     debTryAdd(&g_DebDebugData, "deb_c_debug");
-    tlbInit();
+    faultInit();
 }
 
 void debTryAdd(void* data, const char *name) {

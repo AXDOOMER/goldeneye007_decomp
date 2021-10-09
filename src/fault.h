@@ -3,7 +3,7 @@
 
 #include "ultra64.h"
 
-void tlbInit(void);
-void tlbMain(void* arg0);
+void faultInit(void);
+void faultMain(void* arg0);
 
 #endif
