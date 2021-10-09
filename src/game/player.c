@@ -10460,49 +10460,17 @@ glabel initBONDdataforPlayer
 #endif
 
 
-
-#ifdef NONMATCHING
 void set_cur_player(s32 playernum)
 {
-    currentplayer = players[playernum];
-    pPlayersPerm = player1_playerdata[playernum];
     player_num = playernum;
-    return;
+    currentplayer = players[playernum];
+    pPlayersPerm = &player1_player_data + playernum;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_cur_player
-/* 0CFC3C 7F09B10C 00047080 */  sll   $t6, $a0, 2
-/* 0CFC40 7F09B110 3C0F8008 */  lui   $t7, %hi(players)
-/* 0CFC44 7F09B114 01EE7821 */  addu  $t7, $t7, $t6
-/* 0CFC48 7F09B118 8DEF9EE0 */  lw    $t7, %lo(players)($t7)
-/* 0CFC4C 7F09B11C 3C018008 */  lui   $at, %hi(player_num)
-/* 0CFC50 7F09B120 AC24A0B8 */  sw    $a0, %lo(player_num)($at)
-/* 0CFC54 7F09B124 0004C0C0 */  sll   $t8, $a0, 3
-/* 0CFC58 7F09B128 3C018008 */  lui   $at, %hi(currentplayer)
-/* 0CFC5C 7F09B12C 0304C023 */  subu  $t8, $t8, $a0
-/* 0CFC60 7F09B130 3C198008 */  lui   $t9, %hi(player1_player_data) 
-/* 0CFC64 7F09B134 27399EF0 */  addiu $t9, %lo(player1_player_data) # addiu $t9, $t9, -0x6110
-/* 0CFC68 7F09B138 0018C100 */  sll   $t8, $t8, 4
-/* 0CFC6C 7F09B13C AC2FA0B0 */  sw    $t7, %lo(currentplayer)($at)
-/* 0CFC70 7F09B140 3C018008 */  lui   $at, %hi(pPlayersPerm)
-/* 0CFC74 7F09B144 03194021 */  addu  $t0, $t8, $t9
-/* 0CFC78 7F09B148 03E00008 */  jr    $ra
-/* 0CFC7C 7F09B14C AC28A0B4 */   sw    $t0, %lo(pPlayersPerm)($at)
-)
-#endif
-
-
 
 
 s32 get_cur_playernum(void) {
     return player_num;
 }
-
-
-
-
 
 
 #ifdef NONMATCHING
