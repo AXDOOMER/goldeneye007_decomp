@@ -471,13 +471,13 @@ const u32 *crashGetParentStackFrame(const u32 *origptr, const u32 *minaddr, cons
  *     V0=TRUE if opcode that set RA A0 was a JAL or JALR type within bounds (70000450,70020D90)
  *     accepts: A0=p->70-mapped TLB function, presumably from RA
  */
-s32 tlbIsJumpOpInCodeSeg(u32 *currop)
+s32 crashIsReturnAddress(u32 *instruction)
 {
     u32 prevop;
 
-    if ((((s32) currop & 3) == 0) && ((u32) currop >= (u32) &_codeSegmentStart) && ((u32) &_codeSegmentEnd >= (u32) currop))
+    if ((((s32) instruction & 3) == 0) && ((u32) instruction >= (u32) &_codeSegmentStart) && ((u32) &_codeSegmentEnd >= (u32) instruction))
     {
-        prevop = currop[-2];
+        prevop = instruction[-2];
         if ((prevop & 0xFC00003C) == 9)
         {
             return 1;
@@ -618,8 +618,11 @@ void indyRemoved02(void)
  * 600C    7000540C
  *     unconditional return
  */
-void indyRemoved03(void)
+void indyPrintReadBufferResourceId(void)
 {
+    #ifdef DEBUG
+    osSyncPrintf("%08x",_g_indyCurrentReadBufferResourceId); //from pd beta
+    #endif
     return;
 }
 
@@ -637,37 +640,37 @@ u32 * indyGetReadBufferResourceId(void)
  *     V0=hardcoded SP for debug thread A1, corrected for address range A0
  *     accepts: A0=p->address space, A1=entry#
  * 
- * If arg0 is above 0x80000000U and arg1 is valid, returns g_StackPtrs2 entry.
- * Otherwise, if arg1 is valid, returns arg0 & 0xF0000000, bitwise OR'd
+ * If sp is above 0x80000000U and tid is valid, returns g_StackPtrs2 entry.
+ * Otherwise, if tid is valid, returns sp & 0xF0000000, bitwise OR'd
  * with the difference from g_StackPtrs2 entry (pointer value) to 
  * g_StackPtrs1 entry (pointer value).
  * Otherwise, returns null.
  * 
- * @param arg0: address / address space
- * @param arg1: index into g_StackPtrs2/3. Must be (1 <= arg1 <= STACK_POINTER_COUNT).
+ * @param sp: address / address space
+ * @param tid: index into g_StackPtrs2/3. Must be (1 <= tid <= STACK_POINTER_COUNT).
  */
-void * debug_sp_related_11(u32 arg0, u32 arg1)
+void * crashGetStackEnd(u32 sp, u32 tid)
 {
     void *localStackPointers1[STACK_POINTER_COUNT] = g_StackPtrs1;
     void *localStackPointers2[STACK_POINTER_COUNT] = g_StackPtrs2;
     void *p2;
     void *p1;
 
-    if ((s32)arg1 <= (s32)0 || (u32)arg1 > (u32)STACK_POINTER_COUNT)
+    if ((s32)tid <= (s32)0 || (u32)tid > (u32)STACK_POINTER_COUNT)
     {
         return NULL;
     }
 
-    p1 = localStackPointers1[arg1];
-    p2 = localStackPointers2[arg1];
+    p1 = localStackPointers1[tid];
+    p2 = localStackPointers2[tid];
     
-    if (arg0 >= 0x80000000U)
+    if (sp >= 0x80000000U)
     {
         return p2;
     }
     
     p2 = (void*)(
-        (arg0 & 0xF0000000) | ((u32)p2 - (u32)p1)
+        (sp & 0xF0000000) | ((u32)p2 - (u32)p1)
         );
     return p2;
 }
@@ -677,31 +680,31 @@ void * debug_sp_related_11(u32 arg0, u32 arg1)
  *     V0=hardcoded SP for debug thread A1, corrected for address range A0
  *     accepts: A0=p->address space, A1=entry#
  * 
- * If arg0 is above 0x80000000U and arg1 is valid, returns g_StackPtrs3 entry.
- * Otherwise, if arg1 is valid, returns arg0 & 0xF0000000.
+ * If sp is above 0x80000000U and tid is valid, returns g_StackPtrs3 entry.
+ * Otherwise, if tid is valid, returns sp & 0xF0000000.
  * Otherwise, returns null.
  * 
- * @param arg0: address / address space
- * @param arg1: index into g_StackPtrs3. Must be (1 <= arg1 <= STACK_POINTER_COUNT).
+ * @param sp: address / address space
+ * @param tid: index into g_StackPtrs3. Must be (1 <= tid <= STACK_POINTER_COUNT).
  */
-void * debug_sp_related_12(u32 arg0, u32 arg1)
+void * crashGetStackStart(u32 sp, u32 tid)
 {
     void *localStackPointers3[STACK_POINTER_COUNT] = g_StackPtrs3;
     void *p;
 
-    if ((s32)arg1 <= (s32)0 || (u32)arg1 > (u32)STACK_POINTER_COUNT)
+    if ((s32)tid <= (s32)0 || (u32)tid > (u32)STACK_POINTER_COUNT)
     {
         return NULL;
     }
 
-    p = localStackPointers3[arg1];
+    p = localStackPointers3[tid];
 
-    if (arg0 >= 0x80000000U)
+    if (sp >= 0x80000000U)
     {
         return p;
     }
 
-    p = (void*)(arg0 & 0xF0000000);
+    p = (void*)(sp & 0xF0000000);
     return p;
 }
 

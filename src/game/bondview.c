@@ -1732,6 +1732,7 @@ u32 sub_GAME_7F0790F0(void)
     temp_s2 = getPlayerCount();
     phi_s1_2 = 1;
     phi_s7_2 = 0;
+    //sprintf("choosing a start pad for player %d\n",__format);
     if (startpadcount > 0)
     {
         phi_s7 = 0;
@@ -1741,6 +1742,7 @@ block_2:
         phi_s0 = 0;
         phi_s1 = 0;
         phi_s1_7 = 0;
+        //sprintf("testing pad %d\n",local_28);
         if (temp_s2 > 0)
         {
 block_3:
@@ -1755,8 +1757,13 @@ block_3:
                     temp_f0 = ((*temp_t3)->unkA8->unk8 - **temp_t6);
                     temp_f2 = ((*temp_t3)->unkA8->unk10 - (*temp_t6)->unk8);
                     phi_s1_5 = phi_s1_7;
+                    //sprintf("Distance from player %d (%f, %f)->(%f, %f)= %f\n",local_2c,
+                    //    *(&startpad)[local_28],*((&startpad)[local_28] + 8),
+                    //    *(players[local_2c]->position_data_pointer + 0xc),
+                    //    *(players[local_2c]->position_data_pointer + 0x14),dVar7);
                     if (sqrtf(((temp_f0 * temp_f0) + (temp_f2 * temp_f2))) < 1000.0f)
                     {
+                        //sprintf("Too close to player %d (closer than 10m)\n",local_2c);
                         phi_s1_5 = 1;
                     }
                 }
@@ -1796,6 +1803,7 @@ block_14:
             temp_s7_2 = (phi_s7_3 + 1);
             subroutine_arg0->unk29E0 = (s32) (subroutine_arg0->unk29E0 + 1);
             temp_hi = ((s32) subroutine_arg0->unk29E0 % (s32) startpadcount);
+            //sprintf("testing pad %d (second try)\n",local_28);
             phi_s0_2 = 0;
             phi_s1_3 = 0;
             phi_s1_8 = 0;
@@ -1813,8 +1821,10 @@ block_15:
                         temp_f0_2 = ((*temp_t5)->unkA8->unk8 - **temp_t8);
                         temp_f2_2 = ((*temp_t5)->unkA8->unk10 - (*temp_t8)->unk8);
                         phi_s1_6 = phi_s1_8;
+                        //sprintf("Distance from player %d (%f, %f)->(%f, %f)= %f\n",local_2c,*(&startpad)[local_28],*((&startpad)[local_28] + 8),*(players[local_2c]->position_data_pointer + 0xc),*(players[local_2c]->position_data_pointer + 0x14),dVar7);
                         if (sqrtf(((temp_f0_2 * temp_f0_2) + (temp_f2_2 * temp_f2_2))) < 100.0f)
                         {
+                            //sprintf("Too close to player %d (closer than 1m)\n",local_2c);
                             phi_s1_6 = 1;
                         }
                     }
@@ -1844,6 +1854,7 @@ block_15:
     }
     if (phi_s1_4 != 0)
     {
+        //        sprintf("**** No decent start pad found for player %d - picking a random one ****\n", __format + 1);
         phi_s3 = (randomGetNext() % (u32) startpadcount);
     }
     return phi_s3;

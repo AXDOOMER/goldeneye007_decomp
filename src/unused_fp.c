@@ -24,9 +24,9 @@
  *     V0= TRUE if F12 a normal single precision float
  *     accepts: F12= single-precision float
  */
-s32 _is_normal_single_precision_float(f32 arg0)
+s32 crashIsDouble(f32 value)
 {
-    u32 bits = *(u32*)&arg0;
+    u32 bits = *(u32*)&value;
     u32 fraction = bits & IEEE_FLOAT_FRACTION_BITMASK;
     u8 exponent = (u8)(bits >> IEEE_FLOAT_FRACTION_BIT_COUNT);
     
@@ -38,21 +38,21 @@ s32 _is_normal_single_precision_float(f32 arg0)
  *     V0= TRUE if A1 a normal single precision float; would have set result as short at A0
  *     accepts: A0=(unused) p->target, A1=single-precision float
  */
-s32 is_normal_single_precision_float(s32 arg0, f32 arg1)
+s32 crashPrintFloat(s32 index, f32 value)
 {
-    return _is_normal_single_precision_float(arg1);
+    return crashIsDouble(value);
 }
 
 /**
  * 61C8	700055C8
  *     removed: set normality of single-precision floats A1, A2, A3, SP+10 in table at A0
  */
-void set_normality_of_single_precision_floats(s32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7)
+void crashPrint4Floats(s32 index, f32 value1, f32 value2, f32 value3, f32 value4)
 {
-    is_normal_single_precision_float(arg0, arg1);
-    is_normal_single_precision_float((arg0 + 2), arg2);
-    is_normal_single_precision_float((arg0 + 4), arg3);
-    is_normal_single_precision_float((arg0 + 6), arg4);
+    crashPrintFloat(index, value1);
+    crashPrintFloat((index + 2), value2);
+    crashPrintFloat((index + 4), value3);
+    crashPrintFloat((index + 6), value4);
 
     return;
 }
