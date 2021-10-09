@@ -304,7 +304,7 @@ SECTIONS
       build/j/src/game/initBondDATA.o (.text);
       build/j/src/game/initunk_005450.o (.text);
       build/j/src/game/initunk_005520.o (.text);
-      build/j/src/game/initcameraandthrown.o (.text);
+      build/j/src/game/bondview_r.o (.text);
       build/j/src/game/inititemslots.o (.text);
       build/j/src/game/initBondDATAdefaults.o (.text);
       build/j/src/game/initpathtablesomething.o (.text);
@@ -3653,7 +3653,7 @@ SECTIONS
       build/j/src/game/initBondDATA.o (.data);
       build/j/src/game/initunk_005450.o (.data);
       build/j/src/game/initunk_005520.o (.data);
-      build/j/src/game/initcameraandthrown.o (.data);
+      build/j/src/game/bondview_r.o (.data);
       build/j/src/game/inititemslots.o (.data);
       build/j/src/game/initBondDATAdefaults.o (.data);
       build/j/src/game/initpathtablesomething.o (.data);
@@ -3778,7 +3778,7 @@ SECTIONS
       build/j/src/game/initBondDATA.o (.rodata);
       build/j/src/game/initunk_005450.o (.rodata);
       build/j/src/game/initunk_005520.o (.rodata);
-      build/j/src/game/initcameraandthrown.o (.rodata);
+      build/j/src/game/bondview_r.o (.rodata);
       build/j/src/game/inititemslots.o (.rodata);
       build/j/src/game/initBondDATAdefaults.o (.rodata);
       build/j/src/game/initpathtablesomething.o (.rodata);
@@ -4120,7 +4120,7 @@ SECTIONS
       build/j/src/game/initBondDATA.o (.bss);
       build/j/src/game/initunk_005450.o (.bss);
       build/j/src/game/initunk_005520.o (.bss);
-      build/j/src/game/initcameraandthrown.o (.bss);
+      build/j/src/game/bondview_r.o (.bss);
       build/j/src/game/inititemslots.o (.bss);
       build/j/src/game/initBondDATAdefaults.o (.bss);
       build/j/src/game/initpathtablesomething.o (.bss);
