@@ -114,9 +114,9 @@ char dword_CODE_bss_80079A28[0x200];
 char dword_CODE_bss_jp80079Cd8[0x30];
 #endif
 //CODE.bss:80079C28
-char dword_CODE_bss_80079C28[0x40];
+char startpad[0x40];
 //CODE.bss:80079C68
-s32 dword_CODE_bss_80079C68;
+s32 startpadcount;
 //CODE.bss:80079C6C
 s32 dword_CODE_bss_80079C6C;
 //CODE.bss:80079C70
@@ -1732,7 +1732,8 @@ u32 sub_GAME_7F0790F0(void)
     temp_s2 = getPlayerCount();
     phi_s1_2 = 1;
     phi_s7_2 = 0;
-    if (dword_CODE_bss_80079C68 > 0)
+    //sprintf("choosing a start pad for player %d\n",__format);
+    if (startpadcount > 0)
     {
         phi_s7 = 0;
 block_2:
@@ -1741,6 +1742,7 @@ block_2:
         phi_s0 = 0;
         phi_s1 = 0;
         phi_s1_7 = 0;
+        //sprintf("testing pad %d\n",local_28);
         if (temp_s2 > 0)
         {
 block_3:
@@ -1751,12 +1753,17 @@ block_3:
                 phi_s1_5 = phi_s1_7;
                 if ((*temp_t3)->unkA8 != 0)
                 {
-                    temp_t6 = (&dword_CODE_bss_80079C28 + (((s32) subroutine_arg0->unk29E0 % (s32) dword_CODE_bss_80079C68) * 4));
+                    temp_t6 = (&startpad + (((s32) subroutine_arg0->unk29E0 % (s32) startpadcount) * 4));
                     temp_f0 = ((*temp_t3)->unkA8->unk8 - **temp_t6);
                     temp_f2 = ((*temp_t3)->unkA8->unk10 - (*temp_t6)->unk8);
                     phi_s1_5 = phi_s1_7;
+                    //sprintf("Distance from player %d (%f, %f)->(%f, %f)= %f\n",local_2c,
+                    //    *(&startpad)[local_28],*((&startpad)[local_28] + 8),
+                    //    *(players[local_2c]->position_data_pointer + 0xc),
+                    //    *(players[local_2c]->position_data_pointer + 0x14),dVar7);
                     if (sqrtf(((temp_f0 * temp_f0) + (temp_f2 * temp_f2))) < 1000.0f)
                     {
+                        //sprintf("Too close to player %d (closer than 10m)\n",local_2c);
                         phi_s1_5 = 1;
                     }
                 }
@@ -1775,7 +1782,7 @@ block_3:
         if (phi_s1 != 0)
         {
             phi_s7 = temp_s7;
-            if (temp_s7 < dword_CODE_bss_80079C68)
+            if (temp_s7 < startpadcount)
             {
                 goto block_2;
             }
@@ -1789,13 +1796,14 @@ block_3:
     {
         phi_s1_4 = phi_s1_2;
         phi_s3 = sp4C;
-        if (phi_s7_2 < dword_CODE_bss_80079C68)
+        if (phi_s7_2 < startpadcount)
         {
             phi_s7_3 = phi_s7_2;
 block_14:
             temp_s7_2 = (phi_s7_3 + 1);
             subroutine_arg0->unk29E0 = (s32) (subroutine_arg0->unk29E0 + 1);
-            temp_hi = ((s32) subroutine_arg0->unk29E0 % (s32) dword_CODE_bss_80079C68);
+            temp_hi = ((s32) subroutine_arg0->unk29E0 % (s32) startpadcount);
+            //sprintf("testing pad %d (second try)\n",local_28);
             phi_s0_2 = 0;
             phi_s1_3 = 0;
             phi_s1_8 = 0;
@@ -1809,12 +1817,14 @@ block_15:
                     phi_s1_6 = phi_s1_8;
                     if ((*temp_t5)->unkA8 != 0)
                     {
-                        temp_t8 = (&dword_CODE_bss_80079C28 + (temp_hi * 4));
+                        temp_t8 = (&startpad + (temp_hi * 4));
                         temp_f0_2 = ((*temp_t5)->unkA8->unk8 - **temp_t8);
                         temp_f2_2 = ((*temp_t5)->unkA8->unk10 - (*temp_t8)->unk8);
                         phi_s1_6 = phi_s1_8;
+                        //sprintf("Distance from player %d (%f, %f)->(%f, %f)= %f\n",local_2c,*(&startpad)[local_28],*((&startpad)[local_28] + 8),*(players[local_2c]->position_data_pointer + 0xc),*(players[local_2c]->position_data_pointer + 0x14),dVar7);
                         if (sqrtf(((temp_f0_2 * temp_f0_2) + (temp_f2_2 * temp_f2_2))) < 100.0f)
                         {
+                            //sprintf("Too close to player %d (closer than 1m)\n",local_2c);
                             phi_s1_6 = 1;
                         }
                     }
@@ -1835,7 +1845,7 @@ block_15:
                 phi_s7_3 = temp_s7_2;
                 phi_s1_4 = phi_s1_3;
                 phi_s3 = temp_hi;
-                if (temp_s7_2 < dword_CODE_bss_80079C68)
+                if (temp_s7_2 < startpadcount)
                 {
                     goto block_14;
                 }
@@ -1844,7 +1854,8 @@ block_15:
     }
     if (phi_s1_4 != 0)
     {
-        phi_s3 = (randomGetNext() % (u32) dword_CODE_bss_80079C68);
+        //        sprintf("**** No decent start pad found for player %d - picking a random one ****\n", __format + 1);
+        phi_s3 = (randomGetNext() % (u32) startpadcount);
     }
     return phi_s3;
 }
@@ -1867,23 +1878,23 @@ glabel sub_GAME_7F0790F0
 /* 0ADC50 7F079120 F7B40018 */   sdc1  $f20, 0x18($sp)
 /* 0ADC54 7F079124 0FC26919 */  jal   getPlayerCount
 /* 0ADC58 7F079128 0040B025 */   move  $s6, $v0
-/* 0ADC5C 7F07912C 3C0E8008 */  lui   $t6, %hi(dword_CODE_bss_80079C68) 
-/* 0ADC60 7F079130 8DCE9C68 */  lw    $t6, %lo(dword_CODE_bss_80079C68)($t6)
+/* 0ADC5C 7F07912C 3C0E8008 */  lui   $t6, %hi(startpadcount) 
+/* 0ADC60 7F079130 8DCE9C68 */  lw    $t6, %lo(startpadcount)($t6)
 /* 0ADC64 7F079134 00409025 */  move  $s2, $v0
 /* 0ADC68 7F079138 24110001 */  li    $s1, 1
 /* 0ADC6C 7F07913C 19C00047 */  blez  $t6, .L7F07925C
 /* 0ADC70 7F079140 0000B825 */   move  $s7, $zero
 /* 0ADC74 7F079144 3C01447A */  li    $at, 0x447A0000 # 1000.000000
 /* 0ADC78 7F079148 3C1E8008 */  lui   $fp, %hi(currentplayer) 
-/* 0ADC7C 7F07914C 3C158008 */  lui   $s5, %hi(dword_CODE_bss_80079C28)
+/* 0ADC7C 7F07914C 3C158008 */  lui   $s5, %hi(startpad)
 /* 0ADC80 7F079150 3C148008 */  lui   $s4, %hi(players)
 /* 0ADC84 7F079154 4481A000 */  mtc1  $at, $f20
 /* 0ADC88 7F079158 26949EE0 */  addiu $s4, %lo(players) # addiu $s4, $s4, -0x6120
-/* 0ADC8C 7F07915C 26B59C28 */  addiu $s5, %lo(dword_CODE_bss_80079C28) # addiu $s5, $s5, -0x63d8
+/* 0ADC8C 7F07915C 26B59C28 */  addiu $s5, %lo(startpad) # addiu $s5, $s5, -0x63d8
 /* 0ADC90 7F079160 27DEA0B0 */  addiu $fp, %lo(currentplayer) # addiu $fp, $fp, -0x5f50
 /* 0ADC94 7F079164 8FC20000 */  lw    $v0, ($fp)
 .L7F079168:
-/* 0ADC98 7F079168 3C098008 */  lui   $t1, %hi(dword_CODE_bss_80079C68) 
+/* 0ADC98 7F079168 3C098008 */  lui   $t1, %hi(startpadcount) 
 /* 0ADC9C 7F07916C 26F70001 */  addiu $s7, $s7, 1
 /* 0ADCA0 7F079170 8C4F29E0 */  lw    $t7, 0x29e0($v0)
 /* 0ADCA4 7F079174 00008825 */  move  $s1, $zero
@@ -1891,7 +1902,7 @@ glabel sub_GAME_7F0790F0
 /* 0ADCAC 7F07917C 25F80001 */  addiu $t8, $t7, 1
 /* 0ADCB0 7F079180 AC5829E0 */  sw    $t8, 0x29e0($v0)
 /* 0ADCB4 7F079184 8FD90000 */  lw    $t9, ($fp)
-/* 0ADCB8 7F079188 8D299C68 */  lw    $t1, %lo(dword_CODE_bss_80079C68)($t1)
+/* 0ADCB8 7F079188 8D299C68 */  lw    $t1, %lo(startpadcount)($t1)
 /* 0ADCBC 7F07918C 8F2829E0 */  lw    $t0, 0x29e0($t9)
 /* 0ADCC0 7F079190 0109001A */  div   $zero, $t0, $t1
 /* 0ADCC4 7F079194 00009810 */  mfhi  $s3
@@ -1943,23 +1954,23 @@ glabel sub_GAME_7F0790F0
 .L7F07923C:
 /* 0ADD6C 7F07923C 12200007 */  beqz  $s1, .L7F07925C
 /* 0ADD70 7F079240 AFB3004C */   sw    $s3, 0x4c($sp)
-/* 0ADD74 7F079244 3C0F8008 */  lui   $t7, %hi(dword_CODE_bss_80079C68) 
-/* 0ADD78 7F079248 8DEF9C68 */  lw    $t7, %lo(dword_CODE_bss_80079C68)($t7)
+/* 0ADD74 7F079244 3C0F8008 */  lui   $t7, %hi(startpadcount) 
+/* 0ADD78 7F079248 8DEF9C68 */  lw    $t7, %lo(startpadcount)($t7)
 /* 0ADD7C 7F07924C 02EF082A */  slt   $at, $s7, $t7
 /* 0ADD80 7F079250 5420FFC5 */  bnezl $at, .L7F079168
 /* 0ADD84 7F079254 8FC20000 */   lw    $v0, ($fp)
 /* 0ADD88 7F079258 AFB3004C */  sw    $s3, 0x4c($sp)
 .L7F07925C:
 /* 0ADD8C 7F07925C 3C148008 */  lui   $s4, %hi(players)
-/* 0ADD90 7F079260 3C158008 */  lui   $s5, %hi(dword_CODE_bss_80079C28)
+/* 0ADD90 7F079260 3C158008 */  lui   $s5, %hi(startpad)
 /* 0ADD94 7F079264 3C1E8008 */  lui   $fp, %hi(currentplayer) 
 /* 0ADD98 7F079268 27DEA0B0 */  addiu $fp, %lo(currentplayer) # addiu $fp, $fp, -0x5f50
-/* 0ADD9C 7F07926C 26B59C28 */  addiu $s5, %lo(dword_CODE_bss_80079C28) # addiu $s5, $s5, -0x63d8
+/* 0ADD9C 7F07926C 26B59C28 */  addiu $s5, %lo(startpad) # addiu $s5, $s5, -0x63d8
 /* 0ADDA0 7F079270 26949EE0 */  addiu $s4, %lo(players) # addiu $s4, $s4, -0x6120
 /* 0ADDA4 7F079274 12200044 */  beqz  $s1, .L7F079388
 /* 0ADDA8 7F079278 8FB3004C */   lw    $s3, 0x4c($sp)
-/* 0ADDAC 7F07927C 3C188008 */  lui   $t8, %hi(dword_CODE_bss_80079C68) 
-/* 0ADDB0 7F079280 8F189C68 */  lw    $t8, %lo(dword_CODE_bss_80079C68)($t8)
+/* 0ADDAC 7F07927C 3C188008 */  lui   $t8, %hi(startpadcount) 
+/* 0ADDB0 7F079280 8F189C68 */  lw    $t8, %lo(startpadcount)($t8)
 /* 0ADDB4 7F079284 02F8082A */  slt   $at, $s7, $t8
 /* 0ADDB8 7F079288 1020003F */  beqz  $at, .L7F079388
 /* 0ADDBC 7F07928C 3C0142C8 */   li    $at, 0x42C80000 # 100.000000
@@ -1967,7 +1978,7 @@ glabel sub_GAME_7F0790F0
 /* 0ADDC4 7F079294 00000000 */  nop   
 /* 0ADDC8 7F079298 8FC20000 */  lw    $v0, ($fp)
 .L7F07929C:
-/* 0ADDCC 7F07929C 3C0B8008 */  lui   $t3, %hi(dword_CODE_bss_80079C68) 
+/* 0ADDCC 7F07929C 3C0B8008 */  lui   $t3, %hi(startpadcount) 
 /* 0ADDD0 7F0792A0 26F70001 */  addiu $s7, $s7, 1
 /* 0ADDD4 7F0792A4 8C5929E0 */  lw    $t9, 0x29e0($v0)
 /* 0ADDD8 7F0792A8 00008825 */  move  $s1, $zero
@@ -1975,7 +1986,7 @@ glabel sub_GAME_7F0790F0
 /* 0ADDE0 7F0792B0 27280001 */  addiu $t0, $t9, 1
 /* 0ADDE4 7F0792B4 AC4829E0 */  sw    $t0, 0x29e0($v0)
 /* 0ADDE8 7F0792B8 8FC90000 */  lw    $t1, ($fp)
-/* 0ADDEC 7F0792BC 8D6B9C68 */  lw    $t3, %lo(dword_CODE_bss_80079C68)($t3)
+/* 0ADDEC 7F0792BC 8D6B9C68 */  lw    $t3, %lo(startpadcount)($t3)
 /* 0ADDF0 7F0792C0 8D2A29E0 */  lw    $t2, 0x29e0($t1)
 /* 0ADDF4 7F0792C4 014B001A */  div   $zero, $t2, $t3
 /* 0ADDF8 7F0792C8 00009810 */  mfhi  $s3
@@ -2026,8 +2037,8 @@ glabel sub_GAME_7F0790F0
 /* 0ADE9C 7F07936C 00000000 */   nop   
 .L7F079370:
 /* 0ADEA0 7F079370 12200005 */  beqz  $s1, .L7F079388
-/* 0ADEA4 7F079374 3C198008 */   lui   $t9, %hi(dword_CODE_bss_80079C68) 
-/* 0ADEA8 7F079378 8F399C68 */  lw    $t9, %lo(dword_CODE_bss_80079C68)($t9)
+/* 0ADEA4 7F079374 3C198008 */   lui   $t9, %hi(startpadcount) 
+/* 0ADEA8 7F079378 8F399C68 */  lw    $t9, %lo(startpadcount)($t9)
 /* 0ADEAC 7F07937C 02F9082A */  slt   $at, $s7, $t9
 /* 0ADEB0 7F079380 5420FFC6 */  bnezl $at, .L7F07929C
 /* 0ADEB4 7F079384 8FC20000 */   lw    $v0, ($fp)
@@ -2036,8 +2047,8 @@ glabel sub_GAME_7F0790F0
 /* 0ADEBC 7F07938C 8FBF0044 */   lw    $ra, 0x44($sp)
 /* 0ADEC0 7F079390 0C002914 */  jal   randomGetNext
 /* 0ADEC4 7F079394 00000000 */   nop   
-/* 0ADEC8 7F079398 3C088008 */  lui   $t0, %hi(dword_CODE_bss_80079C68) 
-/* 0ADECC 7F07939C 8D089C68 */  lw    $t0, %lo(dword_CODE_bss_80079C68)($t0)
+/* 0ADEC8 7F079398 3C088008 */  lui   $t0, %hi(startpadcount) 
+/* 0ADECC 7F07939C 8D089C68 */  lw    $t0, %lo(startpadcount)($t0)
 /* 0ADED0 7F0793A0 0048001B */  divu  $zero, $v0, $t0
 /* 0ADED4 7F0793A4 00009810 */  mfhi  $s3
 /* 0ADED8 7F0793A8 15000002 */  bnez  $t0, .L7F0793B4
@@ -33946,8 +33957,8 @@ glabel mp_respawn_handler
 /* 0BD4C8 7F088998 00000000 */   nop   
 /* 0BD4CC 7F08899C 28410002 */  slti  $at, $v0, 2
 /* 0BD4D0 7F0889A0 14200008 */  bnez  $at, .L7F0889C4
-/* 0BD4D4 7F0889A4 3C098008 */   lui   $t1, %hi(dword_CODE_bss_80079C68) 
-/* 0BD4D8 7F0889A8 8D299C68 */  lw    $t1, %lo(dword_CODE_bss_80079C68)($t1)
+/* 0BD4D4 7F0889A4 3C098008 */   lui   $t1, %hi(startpadcount) 
+/* 0BD4D8 7F0889A8 8D299C68 */  lw    $t1, %lo(startpadcount)($t1)
 /* 0BD4DC 7F0889AC 59200006 */  blezl $t1, .L7F0889C8
 /* 0BD4E0 7F0889B0 00001825 */   move  $v1, $zero
 /* 0BD4E4 7F0889B4 0FC1E43C */  jal   sub_GAME_7F0790F0
@@ -33958,9 +33969,9 @@ glabel mp_respawn_handler
 /* 0BD4F4 7F0889C4 00001825 */  move  $v1, $zero
 .L7F0889C8:
 /* 0BD4F8 7F0889C8 00035080 */  sll   $t2, $v1, 2
-/* 0BD4FC 7F0889CC 3C028008 */  lui   $v0, %hi(dword_CODE_bss_80079C28)
+/* 0BD4FC 7F0889CC 3C028008 */  lui   $v0, %hi(startpad)
 /* 0BD500 7F0889D0 004A1021 */  addu  $v0, $v0, $t2
-/* 0BD504 7F0889D4 8C429C28 */  lw    $v0, %lo(dword_CODE_bss_80079C28)($v0)
+/* 0BD504 7F0889D4 8C429C28 */  lw    $v0, %lo(startpad)($v0)
 /* 0BD508 7F0889D8 C4440000 */  lwc1  $f4, ($v0)
 /* 0BD50C 7F0889DC E7A4004C */  swc1  $f4, 0x4c($sp)
 /* 0BD510 7F0889E0 C4460008 */  lwc1  $f6, 8($v0)

@@ -60,10 +60,10 @@ SECTIONS
       build/e/src/speed_graph.o (.text);
       build/e/src/fr.o (.text);
       build/e/src/deb.o (.text);
-      build/e/src/tlb_paging.o (.text);
-      build/e/src/unused_fp.o (.text);
+      build/e/src/fault.o (.text);
+      /*deb_print may be part of fault per pd beta (.text);*/
       build/e/src/deb_print.o (.text);
-      build/e/src/debug_getlastRA.o (.text);
+      build/e/src/getra.o (.text);
       build/e/src/ramrom.o (.text);
       build/e/src/boss.o (.text);
       build/e/src/music.o (.text);
@@ -328,7 +328,7 @@ SECTIONS
       build/e/src/game/initBondDATA.o (.text);
       build/e/src/game/initunk_005450.o (.text);
       build/e/src/game/initunk_005520.o (.text);
-      build/e/src/game/initcameraandthrown.o (.text);
+      build/e/src/game/bondview_r.o (.text);
       build/e/src/game/inititemslots.o (.text);
       build/e/src/game/initBondDATAdefaults.o (.text);
       build/e/src/game/initpathtablesomething.o (.text);
@@ -3257,10 +3257,10 @@ SECTIONS
       build/e/src/speed_graph.o (.data);
       build/e/src/fr.o (.data);
       build/e/src/deb.o (.data);
-      build/e/src/tlb_paging.o (.data);
-      build/e/src/unused_fp.o (.data);
+      build/e/src/fault.o (.data);
+      /*deb_print may be part of fault per pd beta (.data);*/
       build/e/src/deb_print.o (.data);
-      build/e/src/debug_getlastRA.o (.data);
+      build/e/src/getra.o (.data);
       build/e/src/ramrom.o (.data);
       build/e/src/boss.o (.data);
       build/e/src/music.o (.data);
@@ -3488,10 +3488,10 @@ SECTIONS
       build/e/src/speed_graph.o (.rodata);
       build/e/src/fr.o (.rodata);
       build/e/src/deb.o (.rodata);
-      build/e/src/tlb_paging.o (.rodata);
-      build/e/src/unused_fp.o (.rodata);
+      build/e/src/fault.o (.rodata);
+      /*deb_print may be part of fault per pd beta (.rodata);*/
       build/e/src/deb_print.o (.rodata);
-      build/e/src/debug_getlastRA.o (.rodata);
+      build/e/src/getra.o (.rodata);
       build/e/src/ramrom.o (.rodata);
       build/e/src/boss.o (.rodata);
       build/e/src/music.o (.rodata);
@@ -3723,7 +3723,7 @@ SECTIONS
       build/e/src/game/initBondDATA.o (.data);
       build/e/src/game/initunk_005450.o (.data);
       build/e/src/game/initunk_005520.o (.data);
-      build/e/src/game/initcameraandthrown.o (.data);
+      build/e/src/game/bondview_r.o (.data);
       build/e/src/game/inititemslots.o (.data);
       build/e/src/game/initBondDATAdefaults.o (.data);
       build/e/src/game/initpathtablesomething.o (.data);
@@ -3848,7 +3848,7 @@ SECTIONS
       build/e/src/game/initBondDATA.o (.rodata);
       build/e/src/game/initunk_005450.o (.rodata);
       build/e/src/game/initunk_005520.o (.rodata);
-      build/e/src/game/initcameraandthrown.o (.rodata);
+      build/e/src/game/bondview_r.o (.rodata);
       build/e/src/game/inititemslots.o (.rodata);
       build/e/src/game/initBondDATAdefaults.o (.rodata);
       build/e/src/game/initpathtablesomething.o (.rodata);
@@ -3978,10 +3978,10 @@ SECTIONS
       build/e/src/speed_graph.o (.bss);
       build/e/src/fr.o (.bss);
       build/e/src/deb.o (.bss);
-      build/e/src/tlb_paging.o (.bss);
-      build/e/src/unused_fp.o (.bss);
+      build/e/src/fault.o (.bss);
+      /*deb_print may be part of fault per pd beta (.bss);*/
       build/e/src/deb_print.o (.bss);
-      build/e/src/debug_getlastRA.o (.bss);
+      build/e/src/getra.o (.bss);
       build/e/src/ramrom.o (.bss);
       build/e/src/boss.o (.bss);
       build/e/src/music.o (.bss);
@@ -4213,7 +4213,7 @@ SECTIONS
       build/e/src/game/initBondDATA.o (.bss);
       build/e/src/game/initunk_005450.o (.bss);
       build/e/src/game/initunk_005520.o (.bss);
-      build/e/src/game/initcameraandthrown.o (.bss);
+      build/e/src/game/bondview_r.o (.bss);
       build/e/src/game/inititemslots.o (.bss);
       build/e/src/game/initBondDATAdefaults.o (.bss);
       build/e/src/game/initpathtablesomething.o (.bss);
