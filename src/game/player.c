@@ -16,6 +16,7 @@ struct player_data player2_player_data;
 struct player_data player3_player_data;
 struct player_data player4_player_data;
 
+// 0x8007a0b0
 struct player *currentplayer;
 struct player_data *pPlayersPerm;
 s32 player_num;
