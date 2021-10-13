@@ -350,6 +350,7 @@ SECTIONS
       build/u/src/game/gun.o (.text);
       build/u/src/game/bondwalk2.o (.text);
       build/u/src/game/objecthandler.o (.text);
+      build/u/src/game/objecthandler_1.o (.text);
       build/u/src/game/objecthandler_2.o (.text);
       build/u/src/game/othermodemicrocode.o (.text);
       build/u/src/game/bondview.o (.text);
@@ -3676,6 +3677,7 @@ SECTIONS
       build/u/src/game/gun.o (.data);
       build/u/src/game/bondwalk2.o (.data);
       build/u/src/game/objecthandler.o (.data);
+      build/u/src/game/objecthandler_1.o (.data);
       build/u/src/game/objecthandler_2.o (.data);
       build/u/src/game/othermodemicrocode.o (.data);
       build/u/src/game/bondview.o (.data);
@@ -3801,6 +3803,7 @@ SECTIONS
       build/u/src/game/gun.o (.rodata);
       build/u/src/game/bondwalk2.o (.rodata);
       build/u/src/game/objecthandler.o (.rodata);
+      build/u/src/game/objecthandler_1.o (.rodata);
       build/u/src/game/objecthandler_2.o (.rodata);
       build/u/src/game/othermodemicrocode.o (.rodata);
       build/u/src/game/bondview.o (.rodata);
@@ -4143,6 +4146,7 @@ SECTIONS
       build/u/src/game/gun.o (.bss);
       build/u/src/game/bondwalk2.o (.bss);
       build/u/src/game/objecthandler.o (.bss);
+      build/u/src/game/objecthandler_1.o (.bsst);
       build/u/src/game/objecthandler_2.o (.bss);
       build/u/src/game/othermodemicrocode.o (.bss);
       build/u/src/game/bondview.o (.bss);
