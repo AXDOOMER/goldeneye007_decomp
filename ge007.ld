@@ -367,6 +367,7 @@ SECTIONS
       build/u/src/game/unk_092890.o (.text);
       build/u/src/game/unk_092E50.o (.text);
       build/u/src/game/player.o (.text);
+      build/u/src/game/player_2.o (.text);
       build/u/src/game/unk_09B600.o (.text);
       build/u/src/game/chrObjRandom.o (.text);
       build/u/src/game/unk_09B7A0.o (.text);
@@ -3694,6 +3695,7 @@ SECTIONS
       build/u/src/game/unk_092890.o (.data);
       build/u/src/game/unk_092E50.o (.data);
       build/u/src/game/player.o (.data);
+      build/u/src/game/player_2.o (.data);
       build/u/src/game/unk_09B600.o (.data);
       build/u/src/game/chrObjRandom.o (.data);
       build/u/src/game/unk_09B7A0.o (.data);
@@ -3820,6 +3822,7 @@ SECTIONS
       build/u/src/game/unk_092890.o (.rodata);
       build/u/src/game/unk_092E50.o (.rodata);
       build/u/src/game/player.o (.rodata);
+      build/u/src/game/player_2.o (.rodata);
       build/u/src/game/unk_09B600.o (.rodata);
       build/u/src/game/chrObjRandom.o (.rodata);
       build/u/src/game/unk_09B7A0.o (.rodata);
@@ -4163,6 +4166,7 @@ SECTIONS
       build/u/src/game/unk_092890.o (.bss);
       build/u/src/game/unk_092E50.o (.bss);
       build/u/src/game/player.o (.bss);
+      build/u/src/game/player_2.o (.bss);
       build/u/src/game/unk_09B600.o (.bss);
       build/u/src/game/chrObjRandom.o (.bss);
       build/u/src/game/unk_09B7A0.o (.bss);

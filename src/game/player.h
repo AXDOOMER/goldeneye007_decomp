@@ -50,6 +50,10 @@ extern struct player_data player4_player_data;
 
 extern struct player *currentplayer;
 extern struct player_data *pPlayersPerm;
+extern s32 player_num;
+extern s32 random_byte;
+extern PLAYER_ID array_PLAYER_IDs[4];
+
 
 void reset_play_data_ptrs(void);
 void init_player_data_ptrs_construct_viewports(int playercount);
