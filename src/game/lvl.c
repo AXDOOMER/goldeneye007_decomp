@@ -3643,12 +3643,12 @@ glabel manage_mp_game
 /* 0F36E4 7F0BEBB4 0FC31820 */  jal   checkGamePaused
 /* 0F36E8 7F0BEBB8 00000000 */   nop   
 /* 0F36EC 7F0BEBBC 10400004 */  beqz  $v0, .L7F0BEBD0
-/* 0F36F0 7F0BEBC0 3C0F8005 */   lui   $t7, %hi(D_80048498) 
+/* 0F36F0 7F0BEBC0 3C0F8005 */   lui   $t7, %hi(speedgraphframes) 
 /* 0F36F4 7F0BEBC4 3C018005 */  lui   $at, %hi(clock_timer)
 /* 0F36F8 7F0BEBC8 10000009 */  b     .L7F0BEBF0
 /* 0F36FC 7F0BEBCC AC208374 */   sw    $zero, %lo(clock_timer)($at)
 .L7F0BEBD0:
-/* 0F3700 7F0BEBD0 8DEF8498 */  lw    $t7, %lo(D_80048498)($t7)
+/* 0F3700 7F0BEBD0 8DEF8498 */  lw    $t7, %lo(speedgraphframes)($t7)
 /* 0F3704 7F0BEBD4 3C028005 */  lui   $v0, %hi(D_80048380)
 /* 0F3708 7F0BEBD8 3C018005 */  lui   $at, %hi(clock_timer)
 /* 0F370C 7F0BEBDC 24428380 */  addiu $v0, %lo(D_80048380) # addiu $v0, $v0, -0x7c80
@@ -4529,12 +4529,12 @@ glabel manage_mp_game
 /* 0F4348 7F0BF7D8 0FC31B59 */  jal   checkGamePaused
 /* 0F434C 7F0BF7DC 00000000 */   nop   
 /* 0F4350 7F0BF7E0 10400004 */  beqz  $v0, .Ljp7F0BF7F4
-/* 0F4354 7F0BF7E4 3C0F8005 */   lui   $t7, %hi(D_80048498) # $t7, 0x8005
+/* 0F4354 7F0BF7E4 3C0F8005 */   lui   $t7, %hi(speedgraphframes) # $t7, 0x8005
 /* 0F4358 7F0BF7E8 3C018005 */  lui   $at, %hi(clock_timer) # $at, 0x8005
 /* 0F435C 7F0BF7EC 10000009 */  b     .Ljp7F0BF814
 /* 0F4360 7F0BF7F0 AC2083A4 */   sw    $zero, %lo(clock_timer)($at)
 .Ljp7F0BF7F4:
-/* 0F4364 7F0BF7F4 8DEF84C8 */  lw    $t7, %lo(D_80048498)($t7)
+/* 0F4364 7F0BF7F4 8DEF84C8 */  lw    $t7, %lo(speedgraphframes)($t7)
 /* 0F4368 7F0BF7F8 3C028005 */  lui   $v0, %hi(D_80048380) # $v0, 0x8005
 /* 0F436C 7F0BF7FC 3C018005 */  lui   $at, %hi(clock_timer) # $at, 0x8005
 /* 0F4370 7F0BF800 244283B0 */  addiu $v0, %lo(D_80048380) # addiu $v0, $v0, -0x7c50
@@ -5414,12 +5414,12 @@ glabel manage_mp_game
 /* 0F36E4 7F0BEBB4 0FC31820 */  jal   checkGamePaused
 /* 0F36E8 7F0BEBB8 00000000 */   nop   
 /* 0F36EC 7F0BEBBC 10400004 */  beqz  $v0, .L7F0BEBD0
-/* 0F36F0 7F0BEBC0 3C0F8005 */   lui   $t7, %hi(D_80048498) 
+/* 0F36F0 7F0BEBC0 3C0F8005 */   lui   $t7, %hi(speedgraphframes) 
 /* 0F36F4 7F0BEBC4 3C018005 */  lui   $at, %hi(clock_timer)
 /* 0F36F8 7F0BEBC8 10000009 */  b     .L7F0BEBF0
 /* 0F36FC 7F0BEBCC AC208374 */   sw    $zero, %lo(clock_timer)($at)
 .L7F0BEBD0:
-/* 0F3700 7F0BEBD0 8DEF8498 */  lw    $t7, %lo(D_80048498)($t7)
+/* 0F3700 7F0BEBD0 8DEF8498 */  lw    $t7, %lo(speedgraphframes)($t7)
 /* 0F3704 7F0BEBD4 3C028005 */  lui   $v0, %hi(D_80048380)
 /* 0F3708 7F0BEBD8 3C018005 */  lui   $at, %hi(clock_timer)
 /* 0F370C 7F0BEBDC 24428380 */  addiu $v0, %lo(D_80048380) # addiu $v0, $v0, -0x7c80

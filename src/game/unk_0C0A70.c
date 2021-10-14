@@ -8,7 +8,7 @@ s32 D_80048494 = 0;
 /**
  * Appears to be rendered framerate, or some kind of counter since the last frame update.
  */
-s32 D_80048498 = 1;
+s32 speedgraphframes = 1;
 #ifdef VERSION_JP
 f32 jpD_800484CC = 1.0f;
 f32 jpD_800484D0 = 1.0f;
@@ -38,7 +38,7 @@ void sub_GAME_7F0C0AA0(s32 arg0)
 
     D_80048490 = D_80048494;
     D_80048494 = (s32) (D_80048494 + arg0);
-    D_80048498 = arg0;
+    speedgraphframes = arg0;
     #ifdef VERSION_JP
     jpD_800484CC = (f32) arg0;
     jpD_800484D0 = (f32) jpD_800484CC;

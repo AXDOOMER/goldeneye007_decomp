@@ -8,6 +8,6 @@ extern s32 D_80036418;
 extern s32 D_8003641C;
 extern s32 D_80036084;
 extern f32 D_80036088;
-extern s32 D_8003608C;
+extern s32 vtxallocator;
 
 #endif

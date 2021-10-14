@@ -2354,7 +2354,7 @@ void sub_GAME_7F0A6A80(void)
         D_80040B00 = 0xF;
     }
 
-    D_80040B14 += ((D_80040B1C * D_80048498 * 6.2831855f) / 360.0f);
+    D_80040B14 += ((D_80040B1C * speedgraphframes * 6.2831855f) / 360.0f);
     
     D_80040B14 = sub_GAME_7F0A6A2C(D_80040B14);
     
@@ -8059,8 +8059,8 @@ glabel sub_GAME_7F0AADC0
 /* 0DFA08 7F0AAED8 ADA10000 */   sw    $at, ($t5)
 /* 0DFA0C 7F0AAEDC 0FC15FF4 */  jal   matrix_4x4_set_identity
 /* 0DFA10 7F0AAEE0 27A404FC */   addiu $a0, $sp, 0x4fc
-/* 0DFA14 7F0AAEE4 3C088005 */  lui   $t0, %hi(D_80048498) 
-/* 0DFA18 7F0AAEE8 8D088498 */  lw    $t0, %lo(D_80048498)($t0)
+/* 0DFA14 7F0AAEE4 3C088005 */  lui   $t0, %hi(speedgraphframes) 
+/* 0DFA18 7F0AAEE8 8D088498 */  lw    $t0, %lo(speedgraphframes)($t0)
 /* 0DFA1C 7F0AAEEC 3C018004 */  lui   $at, %hi(D_80040B28)
 /* 0DFA20 7F0AAEF0 C4240B28 */  lwc1  $f4, %lo(D_80040B28)($at)
 /* 0DFA24 7F0AAEF4 44883000 */  mtc1  $t0, $f6
@@ -8259,8 +8259,8 @@ glabel sub_GAME_7F0AADC0
 /* 0DFD10 7F0AB1E0 24A50B3C */   addiu $a1, %lo(D_80040B3C) # addiu $a1, $a1, 0xb3c
 /* 0DFD14 7F0AB1E4 0FC15FF4 */  jal   matrix_4x4_set_identity
 /* 0DFD18 7F0AB1E8 27A404FC */   addiu $a0, $sp, 0x4fc
-/* 0DFD1C 7F0AB1EC 3C0D8005 */  lui   $t5, %hi(D_80048498) 
-/* 0DFD20 7F0AB1F0 8DAD8498 */  lw    $t5, %lo(D_80048498)($t5)
+/* 0DFD1C 7F0AB1EC 3C0D8005 */  lui   $t5, %hi(speedgraphframes) 
+/* 0DFD20 7F0AB1F0 8DAD8498 */  lw    $t5, %lo(speedgraphframes)($t5)
 /* 0DFD24 7F0AB1F4 3C018004 */  lui   $at, %hi(D_80040B38)
 /* 0DFD28 7F0AB1F8 C4320B38 */  lwc1  $f18, %lo(D_80040B38)($at)
 /* 0DFD2C 7F0AB1FC 448D2000 */  mtc1  $t5, $f4
@@ -9001,8 +9001,8 @@ glabel sub_GAME_7F0AADC0
 /* 0DFA08 7F0AAED8 ADA10000 */   sw    $at, ($t5)
 /* 0DFA0C 7F0AAEDC 0FC15FF4 */  jal   matrix_4x4_set_identity
 /* 0DFA10 7F0AAEE0 27A404FC */   addiu $a0, $sp, 0x4fc
-/* 0DFA14 7F0AAEE4 3C088005 */  lui   $t0, %hi(D_80048498) 
-/* 0DFA18 7F0AAEE8 8D088498 */  lw    $t0, %lo(D_80048498)($t0)
+/* 0DFA14 7F0AAEE4 3C088005 */  lui   $t0, %hi(speedgraphframes) 
+/* 0DFA18 7F0AAEE8 8D088498 */  lw    $t0, %lo(speedgraphframes)($t0)
 /* 0DFA1C 7F0AAEEC 3C018004 */  lui   $at, %hi(D_80040B28)
 /* 0DFA20 7F0AAEF0 C4240B28 */  lwc1  $f4, %lo(D_80040B28)($at)
 /* 0DFA24 7F0AAEF4 44883000 */  mtc1  $t0, $f6
@@ -9201,8 +9201,8 @@ glabel sub_GAME_7F0AADC0
 /* 0DFD10 7F0AB1E0 24A50B3C */   addiu $a1, %lo(D_80040B3C) # addiu $a1, $a1, 0xb3c
 /* 0DFD14 7F0AB1E4 0FC15FF4 */  jal   matrix_4x4_set_identity
 /* 0DFD18 7F0AB1E8 27A404FC */   addiu $a0, $sp, 0x4fc
-/* 0DFD1C 7F0AB1EC 3C0D8005 */  lui   $t5, %hi(D_80048498) 
-/* 0DFD20 7F0AB1F0 8DAD8498 */  lw    $t5, %lo(D_80048498)($t5)
+/* 0DFD1C 7F0AB1EC 3C0D8005 */  lui   $t5, %hi(speedgraphframes) 
+/* 0DFD20 7F0AB1F0 8DAD8498 */  lw    $t5, %lo(speedgraphframes)($t5)
 /* 0DFD24 7F0AB1F4 3C018004 */  lui   $at, %hi(D_80040B38)
 /* 0DFD28 7F0AB1F8 C4320B38 */  lwc1  $f18, %lo(D_80040B38)($at)
 /* 0DFD2C 7F0AB1FC 448D2000 */  mtc1  $t5, $f4

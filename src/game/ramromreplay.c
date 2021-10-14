@@ -373,8 +373,8 @@ glabel record_player_input_as_packet
 /* 0F4B08 7F0BFFD8 00000000 */   nop   
 .L7F0BFFDC:
 /* 0F4B0C 7F0BFFDC A04A0001 */  sb    $t2, 1($v0)
-/* 0F4B10 7F0BFFE0 3C0D8005 */  lui   $t5, %hi(D_80048498) 
-/* 0F4B14 7F0BFFE4 8DAD8498 */  lw    $t5, %lo(D_80048498)($t5)
+/* 0F4B10 7F0BFFE0 3C0D8005 */  lui   $t5, %hi(speedgraphframes) 
+/* 0F4B14 7F0BFFE4 8DAD8498 */  lw    $t5, %lo(speedgraphframes)($t5)
 /* 0F4B18 7F0BFFE8 8D8E0000 */  lw    $t6, ($t4)
 /* 0F4B1C 7F0BFFEC 3C198002 */  lui   $t9, %hi(g_randomSeed + 0x4) 
 /* 0F4B20 7F0BFFF0 3C118009 */  lui   $s1, %hi(address_demo_loaded)

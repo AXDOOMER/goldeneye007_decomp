@@ -4,7 +4,7 @@
 
 extern s32 D_80048490;
 extern s32 D_80048494;
-extern s32 D_80048498;
+extern s32 speedgraphframes;
 extern s32 D_8004849C;
 extern s32 D_800484A0;
 extern s32 D_800484A4;

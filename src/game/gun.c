@@ -1387,8 +1387,6 @@ s32 get_itemtype_in_hand(s32 hand)
 }
 
 
-
-
 #ifdef NONMATCHING
 void get_ptr_itemheader_in_hand(void) {
 
@@ -1407,16 +1405,12 @@ glabel get_ptr_itemheader_in_hand
 #endif
 
 
-
-
-
 #ifndef VERSION_EU
 u8 * getPlayerWeaponBufferForHand(HANDEDNESS hand)
 {
   return currentplayer->ptr_hand_weapon_buffer[hand];
 }
 #endif
-
 #ifdef VERSION_EU
 GLOBAL_ASM(
 .text
@@ -1431,6 +1425,7 @@ glabel getPlayerWeaponBufferForHand
 /* 08FDD4 7F05D3E4 24420810 */   addiu $v0, $v0, 0x810
 )
 #endif
+
 
 
 
