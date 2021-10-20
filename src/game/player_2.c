@@ -2135,75 +2135,18 @@ s32 get_cur_playernum(void) {
 }
 
 
-#ifdef NONMATCHING
-void proc_7F09B15C(int prop)
+s32 sub_GAME_7F09B15C(struct prop* prop)
 {
-    player *pPVar1;
-    s32 numplayers;
-    player **ppPVar2;
-    int i;
+    s32 i;
 
-    i = 0;
-    numplayers = getPlayerCount();
-    if (0 < numplayers) {
-        ppPVar2 = players;
-        pPVar1 = players[0];
-        while (ppPVar2 = ppPVar2 + 1, prop != pPVar1->prop) {
-            i = i + 1;
-            numplayers = getPlayerCount();
-            if (numplayers <= i) {
-                return;
-            }
-            pPVar1 = *ppPVar2;
+    for(i = 0; i < getPlayerCount(); i++) {
+        if (players[i]->prop == prop) {
+           return i;
         }
     }
-    return;
+
+    return -1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F09B15C
-/* 0CFC8C 7F09B15C 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0CFC90 7F09B160 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0CFC94 7F09B164 AFB20020 */  sw    $s2, 0x20($sp)
-/* 0CFC98 7F09B168 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0CFC9C 7F09B16C 00809025 */  move  $s2, $a0
-/* 0CFCA0 7F09B170 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0CFCA4 7F09B174 0FC26919 */  jal   getPlayerCount
-/* 0CFCA8 7F09B178 00008825 */   move  $s1, $zero
-/* 0CFCAC 7F09B17C 18400010 */  blez  $v0, .L7F09B1C0
-/* 0CFCB0 7F09B180 00117080 */   sll   $t6, $s1, 2
-/* 0CFCB4 7F09B184 3C0F8008 */  lui   $t7, %hi(players)
-/* 0CFCB8 7F09B188 25EF9EE0 */  addiu $t7, %lo(players) # addiu $t7, $t7, -0x6120
-/* 0CFCBC 7F09B18C 01CF8021 */  addu  $s0, $t6, $t7
-/* 0CFCC0 7F09B190 8E180000 */  lw    $t8, ($s0)
-.L7F09B194:
-/* 0CFCC4 7F09B194 26100004 */  addiu $s0, $s0, 4
-/* 0CFCC8 7F09B198 8F1900A8 */  lw    $t9, 0xa8($t8)
-/* 0CFCCC 7F09B19C 16590003 */  bne   $s2, $t9, .L7F09B1AC
-/* 0CFCD0 7F09B1A0 00000000 */   nop
-/* 0CFCD4 7F09B1A4 10000007 */  b     .L7F09B1C4
-/* 0CFCD8 7F09B1A8 02201025 */   move  $v0, $s1
-.L7F09B1AC:
-/* 0CFCDC 7F09B1AC 0FC26919 */  jal   getPlayerCount
-/* 0CFCE0 7F09B1B0 26310001 */   addiu $s1, $s1, 1
-/* 0CFCE4 7F09B1B4 0222082A */  slt   $at, $s1, $v0
-/* 0CFCE8 7F09B1B8 5420FFF6 */  bnezl $at, .L7F09B194
-/* 0CFCEC 7F09B1BC 8E180000 */   lw    $t8, ($s0)
-.L7F09B1C0:
-/* 0CFCF0 7F09B1C0 2402FFFF */  li    $v0, -1
-.L7F09B1C4:
-/* 0CFCF4 7F09B1C4 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 0CFCF8 7F09B1C8 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0CFCFC 7F09B1CC 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 0CFD00 7F09B1D0 8FB20020 */  lw    $s2, 0x20($sp)
-/* 0CFD04 7F09B1D4 03E00008 */  jr    $ra
-/* 0CFD08 7F09B1D8 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
-
-
-
 
 
 void set_cur_player_screen_size(u32 width, u32 height) {
