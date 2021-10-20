@@ -2481,47 +2481,19 @@ glabel sub_GAME_7F09B368
 
 
 #ifdef NONMATCHING
-s32 sub_GAME_7F09B398(s32 arg0) {
-    s32 sp24;
-    s32 sp30;
-    s32 sp34;
-    s32 temp_v1;
-    ? temp_ret;
-    s32 temp_ret_2;
-    ? phi_a3;
-    s32 phi_return;
+void sub_GAME_7F09B398(HANDEDNESS hand) {
+    struct chrdata* temp_v0;
+    ITEM_IDS weaponNum;
+    s32 weaponIdMaybe;
 
-    // Node 0
-    temp_v1 = (arg0 * 4);
-    phi_return = currentplayer->unkA8->unk4;
-    if ((currentplayer->unkA8->unk4 + temp_v1)->unk160 == 0)
-    {
-        // Node 1
-        sp34 = (s32) currentplayer->unkA8->unk4;
-        sp24 = temp_v1;
-        temp_ret = get_item_in_hand();
-        sp30 = temp_ret;
-        temp_ret_2 = sub_GAME_7F09B244(temp_ret);
-        phi_return = temp_ret_2;
-        if (temp_ret_2 >= 0)
-        {
-            // Node 2
-            if (temp_v1 == 0)
-            {
-                // Node 3
-                phi_a3 = 0;
-            }
-            else
-            {
-                // Node 4
-                phi_a3 = 0x10000000;
-            }
-            // Node 5
-            phi_return = something_with_generating_object(sp34, temp_ret_2, sp30, phi_a3, 0, 0);
+    temp_v0 = currentplayer->prop->chr;
+    if (!temp_v0->handle_positiondata[hand]) {
+        weaponNum = get_item_in_hand(hand);
+        weaponIdMaybe = sub_GAME_7F09B244(weaponNum);
+        if (weaponIdMaybe >= 0) {
+            something_with_generating_object(temp_v0, weaponIdMaybe, weaponNum, hand == RIGHT_HAND ? 0 : 0x10000000, 0, 0);
         }
     }
-    // Node 6
-    return phi_return;
 }
 #else
 GLOBAL_ASM(
