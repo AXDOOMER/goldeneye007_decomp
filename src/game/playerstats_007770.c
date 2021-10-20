@@ -9,15 +9,11 @@ void sub_GAME_7F007770(void) {
 
     player_count = getPlayerCount();
     current_player = get_cur_playernum();
-    player = 0;
-    
-    if (player_count > 0) {
-        do {
-            set_cur_player(player);
-            get_weapon_of_choice(&right_hand, &left_hand);
-            store_favorite_weapon_current_player(right_hand, left_hand);
-            player += 1;
-        } while (player != player_count);
+
+    for (player = 0; player < player_count; player++) {
+        set_cur_player(player);
+        get_weapon_of_choice(&right_hand, &left_hand);
+        store_favorite_weapon_current_player(right_hand, left_hand);
     }
 
     set_cur_player(current_player);
