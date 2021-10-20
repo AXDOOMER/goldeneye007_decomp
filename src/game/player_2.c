@@ -2424,6 +2424,7 @@ glabel sub_GAME_7F09B368
 
 
 #ifdef NONMATCHING
+// Marxy: this is probably wrong...
 void sub_GAME_7F09B398(HANDEDNESS hand) {
     struct chrdata* temp_v0;
     ITEM_IDS weaponNum;
