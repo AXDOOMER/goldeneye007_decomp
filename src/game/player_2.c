@@ -2401,7 +2401,9 @@ glabel sub_GAME_7F09B368
 
 
 #ifdef NONMATCHING
-// Marxy: this is probably wrong...
+// NOTE: i think the return value from
+// something_with_generating_object is supposed
+// to be returned here?
 void sub_GAME_7F09B398(HANDEDNESS hand) {
     struct chrdata* temp_v0;
     ITEM_IDS weaponNum;
