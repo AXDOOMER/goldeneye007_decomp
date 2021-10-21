@@ -4526,42 +4526,14 @@ glabel sub_GAME_7F097388
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0977B4(void) {
+s32 sub_GAME_7F0977B4(f32 *arg0, f32 *arg1) {
+    f32 f0;
+    f32 f1;
 
+    f0 = arg0[10] - arg1[10];
+    f1 = arg0[11] - arg1[11];
+    return sqrtf((f0 * f0) + (f1 * f1)) < 1.0f ? 1 : 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0977B4
-/* 0CC2E4 7F0977B4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0CC2E8 7F0977B8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0CC2EC 7F0977BC C4A60028 */  lwc1  $f6, 0x28($a1)
-/* 0CC2F0 7F0977C0 C4840028 */  lwc1  $f4, 0x28($a0)
-/* 0CC2F4 7F0977C4 C4AA002C */  lwc1  $f10, 0x2c($a1)
-/* 0CC2F8 7F0977C8 C488002C */  lwc1  $f8, 0x2c($a0)
-/* 0CC2FC 7F0977CC 46062001 */  sub.s $f0, $f4, $f6
-/* 0CC300 7F0977D0 460A4081 */  sub.s $f2, $f8, $f10
-/* 0CC304 7F0977D4 46000402 */  mul.s $f16, $f0, $f0
-/* 0CC308 7F0977D8 00000000 */  nop
-/* 0CC30C 7F0977DC 46021482 */  mul.s $f18, $f2, $f2
-/* 0CC310 7F0977E0 0C007DF8 */  jal   sqrtf
-/* 0CC314 7F0977E4 46128300 */   add.s $f12, $f16, $f18
-/* 0CC318 7F0977E8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0CC31C 7F0977EC 44812000 */  mtc1  $at, $f4
-/* 0CC320 7F0977F0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0CC324 7F0977F4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0CC328 7F0977F8 4604003C */  c.lt.s $f0, $f4
-/* 0CC32C 7F0977FC 00001825 */  move  $v1, $zero
-/* 0CC330 7F097800 45000003 */  bc1f  .L7F097810
-/* 0CC334 7F097804 00000000 */   nop
-/* 0CC338 7F097808 10000001 */  b     .L7F097810
-/* 0CC33C 7F09780C 24030001 */   li    $v1, 1
-.L7F097810:
-/* 0CC340 7F097810 03E00008 */  jr    $ra
-/* 0CC344 7F097814 00601025 */   move  $v0, $v1
-)
-#endif
 
 
 
