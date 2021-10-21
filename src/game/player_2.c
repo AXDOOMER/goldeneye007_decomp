@@ -9,44 +9,21 @@
 
 //newfile per EU
 
-#ifdef NONMATCHING
 void default_player_perspective_and_height(void)
 {
-    player1_playerdata[0].handicap = 1.00000000;
-    player1_playerdata[0].player_perspective_height = 1.00000000;
-    player1_playerdata[1].handicap = 1.00000000;
-    player1_playerdata[1].player_perspective_height = 1.00000000;
-    player1_playerdata[2].handicap = 1.00000000;
-    player1_playerdata[2].player_perspective_height = 1.00000000;
-    player1_playerdata[3].handicap = 1.00000000;
-    player1_playerdata[3].player_perspective_height = 1.00000000;
-}
-#else
-GLOBAL_ASM(
-.text
-glabel default_player_perspective_and_height
-/* 0CEE10 7F09A2E0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0CEE14 7F09A2E4 44810000 */  mtc1  $at, $f0
-/* 0CEE18 7F09A2E8 3C018008 */  lui   $at, %hi(player1_player_data+0x64)
-/* 0CEE1C 7F09A2EC E4209F54 */  swc1  $f0, %lo(player1_player_data+0x64)($at)
-/* 0CEE20 7F09A2F0 3C018008 */  lui   $at, %hi(player1_player_data+0x5c)
-/* 0CEE24 7F09A2F4 E4209F4C */  swc1  $f0, %lo(player1_player_data+0x5c)($at)
-/* 0CEE28 7F09A2F8 3C018008 */  lui   $at, %hi(player2_player_data+0x64)
-/* 0CEE2C 7F09A2FC E4209FC4 */  swc1  $f0, %lo(player2_player_data+0x64)($at)
-/* 0CEE30 7F09A300 3C018008 */  lui   $at, %hi(player2_player_data+0x5C)
-/* 0CEE34 7F09A304 E4209FBC */  swc1  $f0, %lo(player2_player_data+0x5C)($at)
-/* 0CEE38 7F09A308 3C018008 */  lui   $at, %hi(player3_player_data+0x64)
-/* 0CEE3C 7F09A30C E420A034 */  swc1  $f0, %lo(player3_player_data+0x64)($at)
-/* 0CEE40 7F09A310 3C018008 */  lui   $at, %hi(player3_player_data+0x5C)
-/* 0CEE44 7F09A314 E420A02C */  swc1  $f0, %lo(player3_player_data+0x5C)($at)
-/* 0CEE48 7F09A318 3C018008 */  lui   $at, %hi(player4_player_data+0x64)
-/* 0CEE4C 7F09A31C E420A0A4 */  swc1  $f0, %lo(player4_player_data+0x64)($at)
-/* 0CEE50 7F09A320 3C018008 */  lui   $at, %hi(player4_player_data+92)
-/* 0CEE54 7F09A324 03E00008 */  jr    $ra
-/* 0CEE58 7F09A328 E420A09C */   swc1  $f0, %lo(player4_player_data+92)($at)
-)
-#endif
+  float value  = 1.0f;
 
+  if (0) { }
+
+  player1_player_data.player_perspective_height = value;
+  player1_player_data.handicap = value;
+  player2_player_data.player_perspective_height = value;
+  player2_player_data.handicap = value;
+  player3_player_data.player_perspective_height = value;
+  player3_player_data.handicap = value;
+  player4_player_data.player_perspective_height = value;
+  player4_player_data.handicap = value;
+}
 
 void reset_play_data_ptrs(void) {
     players[0] = 0;
