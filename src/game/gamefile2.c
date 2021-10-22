@@ -1483,46 +1483,12 @@ u32 get_highest_stage_unlocked_any_folder(void) {
     return isunlocked;
 }
 
-
-
-
-#ifdef NONMATCHING
-void check_cradle_completed_in_folder(void) {
-
+s32 check_cradle_completed_in_folder(s32 foldernum)
+{
+    return (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_CRADLE, 0) == 3) ||
+        (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_CRADLE, 1) == 3) ||
+        (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_CRADLE, 2) == 3);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_cradle_completed_in_folder
-/* 053524 7F01E9F4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 053528 7F01E9F8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05352C 7F01E9FC AFA40018 */  sw    $a0, 0x18($sp)
-/* 053530 7F01EA00 24050011 */  li    $a1, 17
-/* 053534 7F01EA04 0FC078B0 */  jal   isStageUnlockedAtDifficulty
-/* 053538 7F01EA08 00003025 */   move  $a2, $zero
-/* 05353C 7F01EA0C 384E0003 */  xori  $t6, $v0, 3
-/* 053540 7F01EA10 2DC20001 */  sltiu $v0, $t6, 1
-/* 053544 7F01EA14 1440000D */  bnez  $v0, .L7F01EA4C
-/* 053548 7F01EA18 8FA40018 */   lw    $a0, 0x18($sp)
-/* 05354C 7F01EA1C 24050011 */  li    $a1, 17
-/* 053550 7F01EA20 0FC078B0 */  jal   isStageUnlockedAtDifficulty
-/* 053554 7F01EA24 24060001 */   li    $a2, 1
-/* 053558 7F01EA28 384F0003 */  xori  $t7, $v0, 3
-/* 05355C 7F01EA2C 2DE20001 */  sltiu $v0, $t7, 1
-/* 053560 7F01EA30 14400006 */  bnez  $v0, .L7F01EA4C
-/* 053564 7F01EA34 8FA40018 */   lw    $a0, 0x18($sp)
-/* 053568 7F01EA38 24050011 */  li    $a1, 17
-/* 05356C 7F01EA3C 0FC078B0 */  jal   isStageUnlockedAtDifficulty
-/* 053570 7F01EA40 24060002 */   li    $a2, 2
-/* 053574 7F01EA44 38580003 */  xori  $t8, $v0, 3
-/* 053578 7F01EA48 2F020001 */  sltiu $v0, $t8, 1
-.L7F01EA4C:
-/* 05357C 7F01EA4C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 053580 7F01EA50 27BD0018 */  addiu $sp, $sp, 0x18
-/* 053584 7F01EA54 03E00008 */  jr    $ra
-/* 053588 7F01EA58 00000000 */   nop
-)
-#endif
 
 
 
