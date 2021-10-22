@@ -54,38 +54,12 @@ glabel sub_GAME_7F01D6E0
 
 
 
-#ifdef NONMATCHING
 void sub_GAME_7F01D758(s32 *arg0) {
     if (sub_GAME_7F01D6C0() != 0) {
         sub_GAME_7F09B600(arg0 + 2, arg0 + 8, arg0);
         joyGamePakLongWrite(0, arg0, 0x20);
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01D758
-/* 052288 7F01D758 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 05228C 7F01D75C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 052290 7F01D760 0FC075B0 */  jal   sub_GAME_7F01D6C0
-/* 052294 7F01D764 AFA40018 */   sw    $a0, 0x18($sp)
-/* 052298 7F01D768 10400009 */  beqz  $v0, .L7F01D790
-/* 05229C 7F01D76C 8FA70018 */   lw    $a3, 0x18($sp)
-/* 0522A0 7F01D770 24E40008 */  addiu $a0, $a3, 8
-/* 0522A4 7F01D774 24E50020 */  addiu $a1, $a3, 0x20
-/* 0522A8 7F01D778 0FC26D80 */  jal   sub_GAME_7F09B600
-/* 0522AC 7F01D77C 00E03025 */   move  $a2, $a3
-/* 0522B0 7F01D780 8FA50018 */  lw    $a1, 0x18($sp)
-/* 0522B4 7F01D784 00002025 */  move  $a0, $zero
-/* 0522B8 7F01D788 0C003202 */  jal   joyGamePakLongWrite
-/* 0522BC 7F01D78C 24060020 */   li    $a2, 32
-.L7F01D790:
-/* 0522C0 7F01D790 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0522C4 7F01D794 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0522C8 7F01D798 03E00008 */  jr    $ra
-/* 0522CC 7F01D79C 00000000 */   nop
-)
-#endif
 
 
 
