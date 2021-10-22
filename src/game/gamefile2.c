@@ -1454,7 +1454,7 @@ void get_highest_stage_difficulty_completed_in_folder(s32 foldernum, LEVEL_SOLO_
     {
         for (difficultyid = DIFFICULTY_007; difficultyid >= 0; difficultyid--)
         {
-            for (stageid = SP_LEVEL_EGYPT-1; stageid >= 0; stageid--)
+            for (stageid = SP_LEVEL_EGYPT; stageid >= 0; stageid--)
             {
                 if (get_eeprom_stage_completed_for_difficulty(folder, stageid, difficultyid))
                 {
@@ -1465,7 +1465,7 @@ void get_highest_stage_difficulty_completed_in_folder(s32 foldernum, LEVEL_SOLO_
             }
         }
     }
-    *stage = SP_LEVEL_DAM - 2;
+    *stage = SP_LEVEL_DAM - 1;
     *difficulty = DIFFICULTY_MULTI;
 }
 
@@ -1615,7 +1615,7 @@ glabel check_aztec_completed_in_folder_secret_00
 
 s32 check_egypt_completed_in_folder_00(int foldernum)
 {
-    return isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_AZTEC, DIFFICULTY_00) == 3;
+    return isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_EGYPT, DIFFICULTY_00) == 3;
 }
 
 u32 check_cradle_completed_any_folder(void) {
