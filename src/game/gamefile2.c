@@ -1446,7 +1446,7 @@ void get_highest_stage_difficulty_completed_in_folder(s32 foldernum, LEVEL_SOLO_
 
 
 
-s32 get_highest_stage_unlocked(s32 foldernum) {
+s32 get_highest_stage_unlocked_in_folder(s32 foldernum) {
     LEVEL_SOLO_SEQUENCE stageid;
     DIFFICULTY difficulty;
 
@@ -1474,7 +1474,7 @@ u32 get_highest_stage_unlocked_any_folder(void) {
     isunlocked = 0;
     folder = 0;
     while (folder != 4) {
-        isfound = get_highest_stage_unlocked(folder);
+        isfound = get_highest_stage_unlocked_in_folder(folder);
         folder += 1;
         if ((int)isunlocked < (int)isfound) {
             isunlocked = isfound;
