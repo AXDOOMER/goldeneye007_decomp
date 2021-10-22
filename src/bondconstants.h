@@ -112,7 +112,7 @@ typedef enum LEVELID {
 
 typedef enum LEVEL_SOLO_SEQUENCE
 {
-    SP_LEVEL_DAM,
+    SP_LEVEL_DAM = 0,
     SP_LEVEL_FACILITY,
     SP_LEVEL_RUNWAY,
     SP_LEVEL_SURFACE1,
