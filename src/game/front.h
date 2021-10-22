@@ -219,7 +219,7 @@ extern s32 teamsize;
 //CODE.bss:8006978C
 extern s32 ptrbriefingdata;
 //CODE.bss:80069790
-extern s32 newcheatunlocked;
+extern s32 g_newcheatunlocked;
 //CODE.bss:80069794
 extern s32 highlight_enemy_reaction;
 //CODE.bss:80069798
