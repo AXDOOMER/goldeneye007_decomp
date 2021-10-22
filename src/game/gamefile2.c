@@ -1415,6 +1415,7 @@ glabel sub_GAME_7F01E760
 )
 #endif
 
+struct save_data *getEEPROMforFoldernum(s32);
 
 void get_highest_stage_difficulty_completed_in_folder(s32 foldernum, LEVEL_SOLO_SEQUENCE *stage, DIFFICULTY *difficulty)
 {
@@ -1445,58 +1446,27 @@ void get_highest_stage_difficulty_completed_in_folder(s32 foldernum, LEVEL_SOLO_
 
 
 
-#ifdef NONMATCHING
-void check_egypt_completed_in_folder(void) {
+s32 get_highest_stage_unlocked(s32 foldernum) {
+    LEVEL_SOLO_SEQUENCE stageid;
+    DIFFICULTY difficulty;
 
+    if (getEEPROMforFoldernum(foldernum) != NULL)
+    {
+        for (stageid = SP_LEVEL_EGYPT; stageid >= 0; stageid--)
+        {
+            for (difficulty = DIFFICULTY_AGENT; difficulty < 4; difficulty++)
+            {
+                if (isStageUnlockedAtDifficulty(foldernum, stageid, difficulty))
+                {
+                    return stageid;
+                }
+            }
+        }
+    }
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_egypt_completed_in_folder
-/* 053444 7F01E914 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 053448 7F01E918 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 05344C 7F01E91C AFB2001C */  sw    $s2, 0x1c($sp)
-/* 053450 7F01E920 00809025 */  move  $s2, $a0
-/* 053454 7F01E924 AFB30020 */  sw    $s3, 0x20($sp)
-/* 053458 7F01E928 AFB10018 */  sw    $s1, 0x18($sp)
-/* 05345C 7F01E92C 0FC07771 */  jal   getEEPROMforFoldernum
-/* 053460 7F01E930 AFB00014 */   sw    $s0, 0x14($sp)
-/* 053464 7F01E934 10400010 */  beqz  $v0, .L7F01E978
-/* 053468 7F01E938 24110013 */   li    $s1, 19
-/* 05346C 7F01E93C 24130004 */  li    $s3, 4
-/* 053470 7F01E940 00008025 */  move  $s0, $zero
-.L7F01E944:
-/* 053474 7F01E944 02402025 */  move  $a0, $s2
-.L7F01E948:
-/* 053478 7F01E948 02202825 */  move  $a1, $s1
-/* 05347C 7F01E94C 0FC078B0 */  jal   isStageUnlockedAtDifficulty
-/* 053480 7F01E950 02003025 */   move  $a2, $s0
-/* 053484 7F01E954 10400003 */  beqz  $v0, .L7F01E964
-/* 053488 7F01E958 26100001 */   addiu $s0, $s0, 1
-/* 05348C 7F01E95C 10000007 */  b     .L7F01E97C
-/* 053490 7F01E960 02201025 */   move  $v0, $s1
-.L7F01E964:
-/* 053494 7F01E964 5613FFF8 */  bnel  $s0, $s3, .L7F01E948
-/* 053498 7F01E968 02402025 */   move  $a0, $s2
-/* 05349C 7F01E96C 2631FFFF */  addiu $s1, $s1, -1
-/* 0534A0 7F01E970 0623FFF4 */  bgezl $s1, .L7F01E944
-/* 0534A4 7F01E974 00008025 */   move  $s0, $zero
-.L7F01E978:
-/* 0534A8 7F01E978 00001025 */  move  $v0, $zero
-.L7F01E97C:
-/* 0534AC 7F01E97C 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 0534B0 7F01E980 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0534B4 7F01E984 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0534B8 7F01E988 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 0534BC 7F01E98C 8FB30020 */  lw    $s3, 0x20($sp)
-/* 0534C0 7F01E990 03E00008 */  jr    $ra
-/* 0534C4 7F01E994 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
 
-
-
-u32 check_egypt_completed_any_folder(void) {
+u32 get_highest_stage_unlocked_any_folder(void) {
     u32 isfound;
     int folder;
     u32 isunlocked;
@@ -1504,7 +1474,7 @@ u32 check_egypt_completed_any_folder(void) {
     isunlocked = 0;
     folder = 0;
     while (folder != 4) {
-        isfound = check_egypt_completed_in_folder(folder);
+        isfound = get_highest_stage_unlocked(folder);
         folder += 1;
         if ((int)isunlocked < (int)isfound) {
             isunlocked = isfound;
