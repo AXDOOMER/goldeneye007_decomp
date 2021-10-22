@@ -208,8 +208,10 @@ s32 cheatButton_7F091740(u16 param_1)
 {
   s32 count;
 
-  for (count = 0; (u32)param_1 != 0; param_1 >>= 1) {
-      if (param_1 & 1) {
+  for (count = 0; (u32)param_1 != 0; param_1 >>= 1) 
+  {
+      if (param_1 & 1) 
+      {
           count++;
       }
   }

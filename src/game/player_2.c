@@ -25,7 +25,8 @@ void default_player_perspective_and_height(void)
   player4_player_data.handicap = value;
 }
 
-void reset_play_data_ptrs(void) {
+void reset_play_data_ptrs(void) 
+{
     players[0] = 0;
     players[1] = 0;
     players[2] = 0;
