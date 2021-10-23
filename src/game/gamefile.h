@@ -10,7 +10,7 @@ struct save_data
   int chksum1;
   int chksum2;
   u8 completion_bitflags;
-  char flag_007;
+  u8 flag_007;
   char music_vol;
   char sfx_vol;
   short options;

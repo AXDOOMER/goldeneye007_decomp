@@ -2300,90 +2300,31 @@ glabel copy_eepromfile_a0_from_a1_to_buffer
 
 
 
-#ifdef NONMATCHING
-
-BOOL is007ModeUnlockedinFolder(u32 foldernum)
-
+s32 check_for_007_mode_unlocked(u32 foldernum)
 {
-    save_file *folder;
-    BOOL BVar1;
-    BOOL found;
-    int stagenum;
+    LEVEL_SOLO_SEQUENCE stage;
+    struct save_data* folder;
 
     folder = getEEPROMforFoldernum(foldernum);
-    if (folder == NULL) {
-        BVar1 = FALSE;
-    }
-    else {
-        stagenum = SP_STAGE_DAM;
-        if ((folder->bitflags & 1) == 0) {
-            do {
-                found = doesSaveHaveStageCompletedOnDifficulty(folder,stagenum,DIFFICULTY_00);
-                if (found == FALSE) break;
-                stagenum += SP_STAGE_FACILITY;
-            } while (stagenum != 0x14);
-            if (stagenum == SP_STAGE_MAX) {
-                BVar1 = TRUE;
-            }
-            else {
-                BVar1 = FALSE;
+    if (folder != NULL)
+    {
+        if ((folder->flag_007 & 1) != 0)
+        {
+            return TRUE;
+        }
+        for (stage = SP_LEVEL_DAM; stage < SP_LEVEL_MAX; stage++)
+        {
+            if (get_eeprom_stage_completed_for_difficulty(folder, stage, DIFFICULTY_00) == 0)
+            {
+                break;
             }
         }
-        else {
-            BVar1 = TRUE;
+        if (stage == SP_LEVEL_MAX)
+        {
+            return TRUE;
         }
     }
-    return BVar1;
+
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_for_007_mode_unlocked
-/* 053FD0 7F01F4A0 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 053FD4 7F01F4A4 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 053FD8 7F01F4A8 AFB20020 */  sw    $s2, 0x20($sp)
-/* 053FDC 7F01F4AC AFB1001C */  sw    $s1, 0x1c($sp)
-/* 053FE0 7F01F4B0 0FC07771 */  jal   getEEPROMforFoldernum
-/* 053FE4 7F01F4B4 AFB00018 */   sw    $s0, 0x18($sp)
-/* 053FE8 7F01F4B8 10400016 */  beqz  $v0, .L7F01F514
-/* 053FEC 7F01F4BC 00408825 */   move  $s1, $v0
-/* 053FF0 7F01F4C0 904E0009 */  lbu   $t6, 9($v0)
-/* 053FF4 7F01F4C4 00008025 */  move  $s0, $zero
-/* 053FF8 7F01F4C8 24120014 */  li    $s2, 20
-/* 053FFC 7F01F4CC 31CF0001 */  andi  $t7, $t6, 1
-/* 054000 7F01F4D0 11E00003 */  beqz  $t7, .L7F01F4E0
-/* 054004 7F01F4D4 00000000 */   nop
-/* 054008 7F01F4D8 1000000F */  b     .L7F01F518
-/* 05400C 7F01F4DC 24020001 */   li    $v0, 1
-.L7F01F4E0:
-/* 054010 7F01F4E0 02202025 */  move  $a0, $s1
-.L7F01F4E4:
-/* 054014 7F01F4E4 02002825 */  move  $a1, $s0
-/* 054018 7F01F4E8 0FC07718 */  jal   get_eeprom_stage_completed_for_difficulty
-/* 05401C 7F01F4EC 24060002 */   li    $a2, 2
-/* 054020 7F01F4F0 10400004 */  beqz  $v0, .L7F01F504
-/* 054024 7F01F4F4 00000000 */   nop
-/* 054028 7F01F4F8 26100001 */  addiu $s0, $s0, 1
-/* 05402C 7F01F4FC 5612FFF9 */  bnel  $s0, $s2, .L7F01F4E4
-/* 054030 7F01F500 02202025 */   move  $a0, $s1
-.L7F01F504:
-/* 054034 7F01F504 56120004 */  bnel  $s0, $s2, .L7F01F518
-/* 054038 7F01F508 00001025 */   move  $v0, $zero
-/* 05403C 7F01F50C 10000002 */  b     .L7F01F518
-/* 054040 7F01F510 24020001 */   li    $v0, 1
-.L7F01F514:
-/* 054044 7F01F514 00001025 */  move  $v0, $zero
-.L7F01F518:
-/* 054048 7F01F518 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 05404C 7F01F51C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 054050 7F01F520 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 054054 7F01F524 8FB20020 */  lw    $s2, 0x20($sp)
-/* 054058 7F01F528 03E00008 */  jr    $ra
-/* 05405C 7F01F52C 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
-
-
-
-
-
