@@ -45,13 +45,13 @@ typedef enum MISSION_BRIEFING {
 
 typedef enum OPTIONS {
     PLAYER_OPTION_LOOK = 0,
-    PLAYER_OPTION_AUTOAIM, 
-    PLAYER_OPTION_AIM, 
-    PLAYER_OPTION_SIGHT, 
-    PLAYER_OPTION_LOOKAHEAD, 
-    PLAYER_OPTION_AMMODISPLAY, 
-    PLAYER_OPTION_SCREEN, 
-    PLAYER_OPTION_RATIO 
+    PLAYER_OPTION_AUTOAIM,
+    PLAYER_OPTION_AIM,
+    PLAYER_OPTION_SIGHT,
+    PLAYER_OPTION_LOOKAHEAD,
+    PLAYER_OPTION_AMMODISPLAY,
+    PLAYER_OPTION_SCREEN,
+    PLAYER_OPTION_RATIO
 } OPTIONS;
 
 typedef enum SCREEN_RATIO_OPTION {
@@ -112,7 +112,7 @@ typedef enum LEVELID {
 
 typedef enum LEVEL_SOLO_SEQUENCE
 {
-    SP_LEVEL_DAM = 0x1,
+    SP_LEVEL_DAM = 0,
     SP_LEVEL_FACILITY,
     SP_LEVEL_RUNWAY,
     SP_LEVEL_SURFACE1,
@@ -230,7 +230,7 @@ typedef enum TEXTBANK_LEVEL_INDEX
 
 typedef enum PLAYER_ID {
     PLAYER_1 = 0,
-    PLAYER_2, 
+    PLAYER_2,
     PLAYER_3,
     PLAYER_4
 } PLAYER_ID;
@@ -700,7 +700,7 @@ typedef enum PROP_TYPE
 {
     PROP_TYPE_NUL       = 0,
     PROP_TYPE_OBJ       = 1,
-    PROP_TYPE_DOOR      = 2, 
+    PROP_TYPE_DOOR      = 2,
     PROP_TYPE_CHR       = 3,
     PROP_TYPE_WEAPON    = 4,
     PROP_TYPE_PLAYER    = 5,
@@ -1221,7 +1221,7 @@ typedef enum ANIMATIONS {
     ANIM_death_left_leg = 57,
     ANIM_slide_right = 58,
     ANIM_slide_left = 59,
-    ANIM_jump_backwards = 60, 
+    ANIM_jump_backwards = 60,
     ANIM_extending_left_hand = 61,
     ANIM_fire_throw_grenade = 62,
     ANIM_spotting_bond = 63, /* used by chr ai command guard_points_at_bond */
@@ -1331,7 +1331,7 @@ typedef enum ANIMATIONS {
     ANIM_coughing_kneel2 = 167,
     ANIM_standing_up = 168,
     ANIM_null169 = 169, /* invalid slot */
-    ANIM_dancing = 170, 
+    ANIM_dancing = 170,
     ANIM_dancing_one_handed_weapon = 171,
     ANIM_keyboard_right_hand1 = 172,
     ANIM_keyboard_right_hand2 = 173,
