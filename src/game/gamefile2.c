@@ -481,67 +481,22 @@ glabel sub_GAME_7F01DD74
 
 
 
-#ifdef NONMATCHING
 struct save_data *getEEPROMforFoldernum(u32 foldernum)
 {
     int i;
-    for (i = 0; i < 4; i++) {
-        if (check_if_eeprom_flag_set_0x80(&saveProfile[i]) == 0 &&
-                get_foldernum_of_eeprom(&saveProfile[i]) == foldernum) {
-            return &saveProfile[i];
+    for (i = 0; i < 5; i++) {
+        if (check_if_eeprom_flag_set_0x80(&saves[i]) == 0 &&
+                get_foldernum_of_eeprom(&saves[i]) == foldernum) {
+            return &saves[i];
         }
     }
 
     if (foldernum == 0x64) {
-        return &saveProfile[5];
+        return &saves[5];
     }
 
     return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel getEEPROMforFoldernum
-/* 0528F4 7F01DDC4 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0528F8 7F01DDC8 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0528FC 7F01DDCC AFB00018 */  sw    $s0, 0x18($sp)
-/* 052900 7F01DDD0 AFB20020 */  sw    $s2, 0x20($sp)
-/* 052904 7F01DDD4 3C108007 */  lui   $s0, %hi(saves)
-/* 052908 7F01DDD8 3C118007 */  lui   $s1, %hi(saves)
-/* 05290C 7F01DDDC 00809025 */  move  $s2, $a0
-/* 052910 7F01DDE0 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 052914 7F01DDE4 26319B00 */  addiu $s1, $s1, -0x6500
-/* 052918 7F01DDE8 26109920 */  addiu $s0, $s0, -0x66e0
-.L7F01DDEC:
-/* 05291C 7F01DDEC 0FC07655 */  jal   check_if_eeprom_flag_set_0x80
-/* 052920 7F01DDF0 02002025 */   move  $a0, $s0
-/* 052924 7F01DDF4 54400008 */  bnezl $v0, .L7F01DE18
-/* 052928 7F01DDF8 26100060 */   addiu $s0, $s0, 0x60
-/* 05292C 7F01DDFC 0FC07632 */  jal   get_foldernum_of_eeprom
-/* 052930 7F01DE00 02002025 */   move  $a0, $s0
-/* 052934 7F01DE04 54520004 */  bnel  $v0, $s2, .L7F01DE18
-/* 052938 7F01DE08 26100060 */   addiu $s0, $s0, 0x60
-/* 05293C 7F01DE0C 1000000A */  b     .L7F01DE38
-/* 052940 7F01DE10 02001025 */   move  $v0, $s0
-/* 052944 7F01DE14 26100060 */  addiu $s0, $s0, 0x60
-.L7F01DE18:
-/* 052948 7F01DE18 1611FFF4 */  bne   $s0, $s1, .L7F01DDEC
-/* 05294C 7F01DE1C 00000000 */   nop
-/* 052950 7F01DE20 24010064 */  li    $at, 100
-/* 052954 7F01DE24 16410004 */  bne   $s2, $at, .L7F01DE38
-/* 052958 7F01DE28 00001025 */   move  $v0, $zero
-/* 05295C 7F01DE2C 3C028007 */  lui   $v0, %hi(saves)
-/* 052960 7F01DE30 10000001 */  b     .L7F01DE38
-/* 052964 7F01DE34 24429B00 */   addiu $v0, $v0, %lo(saves+0x1e0)
-.L7F01DE38:
-/* 052968 7F01DE38 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 05296C 7F01DE3C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 052970 7F01DE40 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 052974 7F01DE44 8FB20020 */  lw    $s2, 0x20($sp)
-/* 052978 7F01DE48 03E00008 */  jr    $ra
-/* 05297C 7F01DE4C 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
 
 
 
@@ -1355,7 +1310,7 @@ glabel sub_GAME_7F01E760
 )
 #endif
 
-struct save_data *getEEPROMforFoldernum(s32);
+
 
 void get_highest_stage_difficulty_completed_in_folder(s32 foldernum, LEVEL_SOLO_SEQUENCE *stage, DIFFICULTY *difficulty)
 {
