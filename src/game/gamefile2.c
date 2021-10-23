@@ -445,39 +445,23 @@ s32 check_if_cheat_unlocked(struct save_data *save, s32 cheat)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F01DD74(void) {
+void sub_GAME_7F01DD74(struct save_data *save, s32 cheat)
+{
+    u32 i;
+    u32 temp;
 
+    if (cheat >= 0 && cheat < 0x14)
+    {
+        temp = 1 << (cheat);
+
+        for(i = 0; temp > 0xff; i++)
+        {
+            temp = temp >> 8;
+        }
+
+        *(((u8 *)save + i + 0xe)) |= temp & 0xFFu;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01DD74
-/* 0528A4 7F01DD74 04A00011 */  bltz  $a1, .L7F01DDBC
-/* 0528A8 7F01DD78 00803025 */   move  $a2, $a0
-/* 0528AC 7F01DD7C 28A10014 */  slti  $at, $a1, 0x14
-/* 0528B0 7F01DD80 1020000E */  beqz  $at, .L7F01DDBC
-/* 0528B4 7F01DD84 240E0001 */   li    $t6, 1
-/* 0528B8 7F01DD88 00AE1004 */  sllv  $v0, $t6, $a1
-/* 0528BC 7F01DD8C 2C410100 */  sltiu $at, $v0, 0x100
-/* 0528C0 7F01DD90 14200006 */  bnez  $at, .L7F01DDAC
-/* 0528C4 7F01DD94 00002025 */   move  $a0, $zero
-.L7F01DD98:
-/* 0528C8 7F01DD98 00027A02 */  srl   $t7, $v0, 8
-/* 0528CC 7F01DD9C 2DE10100 */  sltiu $at, $t7, 0x100
-/* 0528D0 7F01DDA0 24840001 */  addiu $a0, $a0, 1
-/* 0528D4 7F01DDA4 1020FFFC */  beqz  $at, .L7F01DD98
-/* 0528D8 7F01DDA8 01E01025 */   move  $v0, $t7
-.L7F01DDAC:
-/* 0528DC 7F01DDAC 00C41821 */  addu  $v1, $a2, $a0
-/* 0528E0 7F01DDB0 9078000E */  lbu   $t8, 0xe($v1)
-/* 0528E4 7F01DDB4 03024025 */  or    $t0, $t8, $v0
-/* 0528E8 7F01DDB8 A068000E */  sb    $t0, 0xe($v1)
-.L7F01DDBC:
-/* 0528EC 7F01DDBC 03E00008 */  jr    $ra
-/* 0528F0 7F01DDC0 00000000 */   nop
-)
-#endif
 
 
 
