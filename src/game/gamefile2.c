@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "game/gamefile.h"
 #include "bondconstants.h"
+#include "joy.h"
 
 s32 sub_GAME_7F01D6C0(void) {
   return joyGamePakProbe();
@@ -54,67 +55,21 @@ glabel sub_GAME_7F01D6E0
 
 
 
-void sub_GAME_7F01D758(s32 *arg0) {
+void sub_GAME_7F01D758(struct save_data *save) {
     if (sub_GAME_7F01D6C0() != 0) {
-        sub_GAME_7F09B600(arg0 + 2, arg0 + 8, arg0);
-        joyGamePakLongWrite(0, arg0, 0x20);
+        sub_GAME_7F09B600(&save->completion_bitflags, &save->field_0x1c[4], save);
+        joyGamePakLongWrite(0, save, 0x20);
     }
 }
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F01D7A0(void) {
-
+void sub_GAME_7F01D7A0(struct save_data *save) {
+    if (save >= &save1 && save < &save6) {
+        if (sub_GAME_7F01D6C0() != 0) {
+            sub_GAME_7F09B600(&save->completion_bitflags, &save->field_0x5d[3], save);
+            joyGamePakLongWrite((((u32)((save - &save1) * 0x60) >> 3) + 4), save, 0x60);
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01D7A0
-/* 0522D0 7F01D7A0 3C0E8007 */  lui   $t6, %hi(save1)
-/* 0522D4 7F01D7A4 25CE9920 */  addiu $t6, %lo(save1) # addiu $t6, $t6, -0x66e0
-/* 0522D8 7F01D7A8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0522DC 7F01D7AC 008E082B */  sltu  $at, $a0, $t6
-/* 0522E0 7F01D7B0 1420001F */  bnez  $at, .L7F01D830
-/* 0522E4 7F01D7B4 AFBF0014 */   sw    $ra, 0x14($sp)
-/* 0522E8 7F01D7B8 3C0F8007 */  lui   $t7, %hi(save6)
-/* 0522EC 7F01D7BC 25EF9B00 */  addiu $t7, %lo(save6) # addiu $t7, $t7, -0x6500
-/* 0522F0 7F01D7C0 008F082B */  sltu  $at, $a0, $t7
-/* 0522F4 7F01D7C4 5020001B */  beql  $at, $zero, .L7F01D834
-/* 0522F8 7F01D7C8 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0522FC 7F01D7CC 0FC075B0 */  jal   sub_GAME_7F01D6C0
-/* 052300 7F01D7D0 AFA40018 */   sw    $a0, 0x18($sp)
-/* 052304 7F01D7D4 10400016 */  beqz  $v0, .L7F01D830
-/* 052308 7F01D7D8 8FA70018 */   lw    $a3, 0x18($sp)
-/* 05230C 7F01D7DC 24E40008 */  addiu $a0, $a3, 8
-/* 052310 7F01D7E0 24E50060 */  addiu $a1, $a3, 0x60
-/* 052314 7F01D7E4 00E03025 */  move  $a2, $a3
-/* 052318 7F01D7E8 0FC26D80 */  jal   sub_GAME_7F09B600
-/* 05231C 7F01D7EC AFA70018 */   sw    $a3, 0x18($sp)
-/* 052320 7F01D7F0 8FA50018 */  lw    $a1, 0x18($sp)
-/* 052324 7F01D7F4 3C188007 */  lui   $t8, %hi(save1)
-/* 052328 7F01D7F8 27189920 */  addiu $t8, %lo(save1) # addiu $t8, $t8, -0x66e0
-/* 05232C 7F01D7FC 24010060 */  li    $at, 96
-/* 052330 7F01D800 00B82023 */  subu  $a0, $a1, $t8
-/* 052334 7F01D804 0081001A */  div   $zero, $a0, $at
-/* 052338 7F01D808 0000C812 */  mflo  $t9
-/* 05233C 7F01D80C 00194080 */  sll   $t0, $t9, 2
-/* 052340 7F01D810 01194023 */  subu  $t0, $t0, $t9
-/* 052344 7F01D814 00084140 */  sll   $t0, $t0, 5
-/* 052348 7F01D818 000848C2 */  srl   $t1, $t0, 3
-/* 05234C 7F01D81C 25240004 */  addiu $a0, $t1, 4
-/* 052350 7F01D820 308A00FF */  andi  $t2, $a0, 0xff
-/* 052354 7F01D824 01402025 */  move  $a0, $t2
-/* 052358 7F01D828 0C003202 */  jal   joyGamePakLongWrite
-/* 05235C 7F01D82C 24060060 */   li    $a2, 96
-.L7F01D830:
-/* 052360 7F01D830 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F01D834:
-/* 052364 7F01D834 27BD0018 */  addiu $sp, $sp, 0x18
-/* 052368 7F01D838 03E00008 */  jr    $ra
-/* 05236C 7F01D83C 00000000 */   nop
-)
-#endif
 
 
 
