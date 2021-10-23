@@ -430,46 +430,18 @@ void sub_GAME_7F01DCB0(struct save_data *folder, s32 levelid, DIFFICULTY difficu
     }
 }
 
+s32 check_if_cheat_unlocked(struct save_data *save, s32 cheat)
+{
+    s32 bits;
 
-
-#ifdef NONMATCHING
-s32 check_if_cheat_unlocked(struct save_data *arg0, s32 arg1) {
-
-    if ((arg1 >= 0) && (arg1 < 0x14)) {
-
-        return ((1 << arg1) & (arg0->unlocked_cheats_1 | (arg0->unlocked_cheats_3 << 0x18) | (arg0->unlocked_cheats_3 << 0x10) | (arg0->unlocked_cheats_2 << 8))) != 0;
+    if (cheat >= 0 && cheat < 0x14)
+    {
+        bits = save->unlocked_cheats_1 | save->unlocked_cheats_3 << 0x18 | save->unlocked_cheats_3 << 0x10 | save->unlocked_cheats_2 << 8;
+        return ((1 << cheat) & bits) != 0;
     }
-    return 0;
-}
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_cheat_unlocked
-/* 052850 7F01DD20 04A00011 */  bltz  $a1, .L7F01DD68
-/* 052854 7F01DD24 28A10014 */   slti  $at, $a1, 0x14
-/* 052858 7F01DD28 1020000F */  beqz  $at, .L7F01DD68
-/* 05285C 7F01DD2C 240B0001 */   li    $t3, 1
-/* 052860 7F01DD30 90860010 */  lbu   $a2, 0x10($a0)
-/* 052864 7F01DD34 908E000E */  lbu   $t6, 0xe($a0)
-/* 052868 7F01DD38 9089000F */  lbu   $t1, 0xf($a0)
-/* 05286C 7F01DD3C 00067E00 */  sll   $t7, $a2, 0x18
-/* 052870 7F01DD40 0006CC00 */  sll   $t9, $a2, 0x10
-/* 052874 7F01DD44 01CFC025 */  or    $t8, $t6, $t7
-/* 052878 7F01DD48 03194025 */  or    $t0, $t8, $t9
-/* 05287C 7F01DD4C 00095200 */  sll   $t2, $t1, 8
-/* 052880 7F01DD50 010A1825 */  or    $v1, $t0, $t2
-/* 052884 7F01DD54 00AB6004 */  sllv  $t4, $t3, $a1
-/* 052888 7F01DD58 01831024 */  and   $v0, $t4, $v1
-/* 05288C 7F01DD5C 0002682B */  sltu  $t5, $zero, $v0
-/* 052890 7F01DD60 03E00008 */  jr    $ra
-/* 052894 7F01DD64 01A01025 */   move  $v0, $t5
 
-.L7F01DD68:
-/* 052898 7F01DD68 00001025 */  move  $v0, $zero
-/* 05289C 7F01DD6C 03E00008 */  jr    $ra
-/* 0528A0 7F01DD70 00000000 */   nop
-)
-#endif
+    return FALSE;
+}
 
 
 
