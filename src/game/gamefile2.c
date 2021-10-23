@@ -2,6 +2,7 @@
 #include "game/gamefile.h"
 #include "bondconstants.h"
 #include "joy.h"
+#include "watch.h"
 
 s32 sub_GAME_7F01D6C0(void) {
   return joyGamePakProbe();
@@ -1648,97 +1649,62 @@ glabel sub_GAME_7F01EDA0
 
 
 
-#ifdef NONMATCHING
-void update_eeprom_to_current_solo_watch_settings(void) {
+void update_eeprom_to_current_solo_watch_settings(struct save_data *save)
+{
+    u32 temp;
+    u16 bits;
 
+    bits = 0;
+    save->music_vol = get_mTrack2Vol() >> 7;
+    save->sfx_vol = (call_sndGetSfxSlotFirstNaturalVolume() >> 7);
+
+    if (get_cur_player_look_vertical_inverted() != 0)
+    {
+        bits = 1;
+    }
+
+    if (cur_player_get_autoaim() != 0)
+    {
+        bits |= 2;
+    }
+
+    if (cur_player_get_aim_control() != 0)
+    {
+        bits |= 4;
+    }
+
+    if (cur_player_get_sight_onscreen_control() != 0)
+    {
+        bits |= 8;
+    }
+
+    if (cur_player_get_lookahead() != 0)
+    {
+        bits |= 0x10;
+    }
+
+    if (cur_player_get_ammo_onscreen_setting() != 0)
+    {
+        bits |= 0x20;
+    }
+
+    if (cur_player_get_screen_setting() == 1)
+    {
+        bits |= 0x40;
+    }
+    else if (cur_player_get_screen_setting() == 2)
+    {
+        bits |= 0x800;
+    }
+
+    if (get_screen_ratio() != SCREEN_RATIO_NORMAL)
+    {
+        bits |= 0x80;
+    }
+
+    temp = ((u16) (cur_player_get_control_type() << 8)) & 0x700;
+    save->options = bits | temp;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel update_eeprom_to_current_solo_watch_settings
-/* 053A40 7F01EF10 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 053A44 7F01EF14 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 053A48 7F01EF18 AFB00018 */  sw    $s0, 0x18($sp)
-/* 053A4C 7F01EF1C AFA40020 */  sw    $a0, 0x20($sp)
-/* 053A50 7F01EF20 0FC2A4D6 */  jal   get_mTrack2Vol
-/* 053A54 7F01EF24 00008025 */   move  $s0, $zero
-/* 053A58 7F01EF28 8FAF0020 */  lw    $t7, 0x20($sp)
-/* 053A5C 7F01EF2C 000271C3 */  sra   $t6, $v0, 7
-/* 053A60 7F01EF30 0FC2A460 */  jal   call_sndGetSfxSlotFirstNaturalVolume
-/* 053A64 7F01EF34 A1EE000A */   sb    $t6, 0xa($t7)
-/* 053A68 7F01EF38 8FB90020 */  lw    $t9, 0x20($sp)
-/* 053A6C 7F01EF3C 0002C1C3 */  sra   $t8, $v0, 7
-/* 053A70 7F01EF40 0FC2938E */  jal   get_cur_player_look_vertical_inverted
-/* 053A74 7F01EF44 A338000B */   sb    $t8, 0xb($t9)
-/* 053A78 7F01EF48 10400002 */  beqz  $v0, .L7F01EF54
-/* 053A7C 7F01EF4C 00000000 */   nop
-/* 053A80 7F01EF50 24100001 */  li    $s0, 1
-.L7F01EF54:
-/* 053A84 7F01EF54 0FC29394 */  jal   cur_player_get_autoaim
-/* 053A88 7F01EF58 00000000 */   nop
-/* 053A8C 7F01EF5C 10400002 */  beqz  $v0, .L7F01EF68
-/* 053A90 7F01EF60 36080002 */   ori   $t0, $s0, 2
-/* 053A94 7F01EF64 3110FFFF */  andi  $s0, $t0, 0xffff
-.L7F01EF68:
-/* 053A98 7F01EF68 0FC293A0 */  jal   cur_player_get_aim_control
-/* 053A9C 7F01EF6C 00000000 */   nop
-/* 053AA0 7F01EF70 10400002 */  beqz  $v0, .L7F01EF7C
-/* 053AA4 7F01EF74 360A0004 */   ori   $t2, $s0, 4
-/* 053AA8 7F01EF78 3150FFFF */  andi  $s0, $t2, 0xffff
-.L7F01EF7C:
-/* 053AAC 7F01EF7C 0FC293A6 */  jal   cur_player_get_sight_onscreen_control
-/* 053AB0 7F01EF80 00000000 */   nop
-/* 053AB4 7F01EF84 10400002 */  beqz  $v0, .L7F01EF90
-/* 053AB8 7F01EF88 360C0008 */   ori   $t4, $s0, 8
-/* 053ABC 7F01EF8C 3190FFFF */  andi  $s0, $t4, 0xffff
-.L7F01EF90:
-/* 053AC0 7F01EF90 0FC2939A */  jal   cur_player_get_lookahead
-/* 053AC4 7F01EF94 00000000 */   nop
-/* 053AC8 7F01EF98 10400002 */  beqz  $v0, .L7F01EFA4
-/* 053ACC 7F01EF9C 360E0010 */   ori   $t6, $s0, 0x10
-/* 053AD0 7F01EFA0 31D0FFFF */  andi  $s0, $t6, 0xffff
-.L7F01EFA4:
-/* 053AD4 7F01EFA4 0FC293AC */  jal   cur_player_get_ammo_onscreen_setting
-/* 053AD8 7F01EFA8 00000000 */   nop
-/* 053ADC 7F01EFAC 10400002 */  beqz  $v0, .L7F01EFB8
-/* 053AE0 7F01EFB0 36180020 */   ori   $t8, $s0, 0x20
-/* 053AE4 7F01EFB4 3310FFFF */  andi  $s0, $t8, 0xffff
-.L7F01EFB8:
-/* 053AE8 7F01EFB8 0FC293B2 */  jal   cur_player_get_screen_setting
-/* 053AEC 7F01EFBC 00000000 */   nop
-/* 053AF0 7F01EFC0 24010001 */  li    $at, 1
-/* 053AF4 7F01EFC4 14410003 */  bne   $v0, $at, .L7F01EFD4
-/* 053AF8 7F01EFC8 36080040 */   ori   $t0, $s0, 0x40
-/* 053AFC 7F01EFCC 10000007 */  b     .L7F01EFEC
-/* 053B00 7F01EFD0 3110FFFF */   andi  $s0, $t0, 0xffff
-.L7F01EFD4:
-/* 053B04 7F01EFD4 0FC293B2 */  jal   cur_player_get_screen_setting
-/* 053B08 7F01EFD8 00000000 */   nop
-/* 053B0C 7F01EFDC 24010002 */  li    $at, 2
-/* 053B10 7F01EFE0 14410002 */  bne   $v0, $at, .L7F01EFEC
-/* 053B14 7F01EFE4 360A0800 */   ori   $t2, $s0, 0x800
-/* 053B18 7F01EFE8 3150FFFF */  andi  $s0, $t2, 0xffff
-.L7F01EFEC:
-/* 053B1C 7F01EFEC 0FC293B8 */  jal   get_screen_ratio
-/* 053B20 7F01EFF0 00000000 */   nop
-/* 053B24 7F01EFF4 10400002 */  beqz  $v0, .L7F01F000
-/* 053B28 7F01EFF8 360C0080 */   ori   $t4, $s0, 0x80
-/* 053B2C 7F01EFFC 3190FFFF */  andi  $s0, $t4, 0xffff
-.L7F01F000:
-/* 053B30 7F01F000 0FC29370 */  jal   cur_player_get_control_type
-/* 053B34 7F01F004 00000000 */   nop
-/* 053B38 7F01F008 8FA80020 */  lw    $t0, 0x20($sp)
-/* 053B3C 7F01F00C 00027A00 */  sll   $t7, $v0, 8
-/* 053B40 7F01F010 31F80700 */  andi  $t8, $t7, 0x700
-/* 053B44 7F01F014 0218C825 */  or    $t9, $s0, $t8
-/* 053B48 7F01F018 A519000C */  sh    $t9, 0xc($t0)
-/* 053B4C 7F01F01C 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 053B50 7F01F020 8FB00018 */  lw    $s0, 0x18($sp)
-/* 053B54 7F01F024 27BD0020 */  addiu $sp, $sp, 0x20
-/* 053B58 7F01F028 03E00008 */  jr    $ra
-/* 053B5C 7F01F02C 00000000 */   nop
-)
-#endif
 
 
 
