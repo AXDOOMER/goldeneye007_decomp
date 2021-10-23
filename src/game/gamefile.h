@@ -37,12 +37,7 @@ struct save_data
 
 };
 
-extern struct save_data save1;
-extern struct save_data save2;
-extern struct save_data save3;
-extern struct save_data save4;
-extern struct save_data save5;
-extern struct save_data save6;
+extern struct save_data saves[6];
 
 extern u32 save_selected_bond[];
 

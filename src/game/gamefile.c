@@ -19,17 +19,12 @@
 
 // bss
 //CODE.bss:80069920
-struct save_data save1;
 //CODE.bss:80069980
-struct save_data save2;
 //CODE.bss:800699E0
-struct save_data save3;
 //CODE.bss:80069A40
-struct save_data save4;
 //CODE.bss:80069AA0
-struct save_data save5;
 //CODE.bss:80069B00
-struct save_data save6;
+struct save_data saves[6];
 
 //CODE.bss:80069B60
 u32 dword_CODE_bss_80069B60;

@@ -34,8 +34,8 @@ glabel sub_GAME_7F01D6E0
 /* 052240 7F01D710 8DC1FFFC */  lw    $at, -4($t6)
 /* 052244 7F01D714 15D9FFF8 */  bne   $t6, $t9, .L7F01D6F8
 /* 052248 7F01D718 AD01FFFC */   sw    $at, -4($t0)
-/* 05224C 7F01D71C 3C098007 */  lui   $t1, %hi(save6)
-/* 052250 7F01D720 25299B00 */  addiu $t1, %lo(save6) # addiu $t1, $t1, -0x6500
+/* 05224C 7F01D71C 3C098007 */  lui   $t1, %hi(saves)
+/* 052250 7F01D720 25299B00 */  addiu $t1, %lo(saves+0x1e0) # addiu $t1, $t1, -0x6500
 /* 052254 7F01D724 00406825 */  move  $t5, $v0
 /* 052258 7F01D728 244C0060 */  addiu $t4, $v0, 0x60
 .L7F01D72C:
@@ -63,10 +63,10 @@ void sub_GAME_7F01D758(struct save_data *save) {
 }
 
 void sub_GAME_7F01D7A0(struct save_data *save) {
-    if (save >= &save1 && save < &save6) {
+    if (save >= &saves[0] && save < &saves[5]) {
         if (sub_GAME_7F01D6C0() != 0) {
             sub_GAME_7F09B600(&save->completion_bitflags, &save->field_0x5d[3], save);
-            joyGamePakLongWrite((((u32)((save - &save1) * 0x60) >> 3) + 4), save, 0x60);
+            joyGamePakLongWrite((((u32)((save - &saves[0]) * 0x60) >> 3) + 4), save, 0x60);
         }
     }
 }
@@ -482,8 +482,21 @@ glabel sub_GAME_7F01DD74
 
 
 #ifdef NONMATCHING
-void getEEPROMforFoldernum(void) {
+struct save_data *getEEPROMforFoldernum(u32 foldernum)
+{
+    int i;
+    for (i = 0; i < 4; i++) {
+        if (check_if_eeprom_flag_set_0x80(&saveProfile[i]) == 0 &&
+                get_foldernum_of_eeprom(&saveProfile[i]) == foldernum) {
+            return &saveProfile[i];
+        }
+    }
 
+    if (foldernum == 0x64) {
+        return &saveProfile[5];
+    }
+
+    return NULL;
 }
 #else
 GLOBAL_ASM(
@@ -493,12 +506,12 @@ glabel getEEPROMforFoldernum
 /* 0528F8 7F01DDC8 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 0528FC 7F01DDCC AFB00018 */  sw    $s0, 0x18($sp)
 /* 052900 7F01DDD0 AFB20020 */  sw    $s2, 0x20($sp)
-/* 052904 7F01DDD4 3C108007 */  lui   $s0, %hi(save1)
-/* 052908 7F01DDD8 3C118007 */  lui   $s1, %hi(save6)
+/* 052904 7F01DDD4 3C108007 */  lui   $s0, %hi(saves)
+/* 052908 7F01DDD8 3C118007 */  lui   $s1, %hi(saves)
 /* 05290C 7F01DDDC 00809025 */  move  $s2, $a0
 /* 052910 7F01DDE0 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 052914 7F01DDE4 26319B00 */  addiu $s1, %lo(save6) # addiu $s1, $s1, -0x6500
-/* 052918 7F01DDE8 26109920 */  addiu $s0, %lo(save1) # addiu $s0, $s0, -0x66e0
+/* 052914 7F01DDE4 26319B00 */  addiu $s1, $s1, -0x6500
+/* 052918 7F01DDE8 26109920 */  addiu $s0, $s0, -0x66e0
 .L7F01DDEC:
 /* 05291C 7F01DDEC 0FC07655 */  jal   check_if_eeprom_flag_set_0x80
 /* 052920 7F01DDF0 02002025 */   move  $a0, $s0
@@ -517,9 +530,9 @@ glabel getEEPROMforFoldernum
 /* 052950 7F01DE20 24010064 */  li    $at, 100
 /* 052954 7F01DE24 16410004 */  bne   $s2, $at, .L7F01DE38
 /* 052958 7F01DE28 00001025 */   move  $v0, $zero
-/* 05295C 7F01DE2C 3C028007 */  lui   $v0, %hi(save6)
+/* 05295C 7F01DE2C 3C028007 */  lui   $v0, %hi(saves)
 /* 052960 7F01DE30 10000001 */  b     .L7F01DE38
-/* 052964 7F01DE34 24429B00 */   addiu $v0, %lo(save6) # addiu $v0, $v0, -0x6500
+/* 052964 7F01DE34 24429B00 */   addiu $v0, $v0, %lo(saves+0x1e0)
 .L7F01DE38:
 /* 052968 7F01DE38 8FBF0024 */  lw    $ra, 0x24($sp)
 /* 05296C 7F01DE3C 8FB00018 */  lw    $s0, 0x18($sp)
@@ -544,9 +557,9 @@ glabel sub_GAME_7F01DE50
 /* 052984 7F01DE54 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 052988 7F01DE58 AFB20020 */  sw    $s2, 0x20($sp)
 /* 05298C 7F01DE5C AFB00018 */  sw    $s0, 0x18($sp)
-/* 052990 7F01DE60 3C118007 */  lui   $s1, %hi(save1)
+/* 052990 7F01DE60 3C118007 */  lui   $s1, %hi(saves)
 /* 052994 7F01DE64 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 052998 7F01DE68 26319920 */  addiu $s1, %lo(save1) # addiu $s1, $s1, -0x66e0
+/* 052998 7F01DE68 26319920 */  addiu $s1, %lo(saves) # addiu $s1, $s1, -0x66e0
 /* 05299C 7F01DE6C 00008025 */  move  $s0, $zero
 /* 0529A0 7F01DE70 24120005 */  li    $s2, 5
 .L7F01DE74:
@@ -605,8 +618,8 @@ glabel sub_GAME_7F01DEB4
 /* 052A34 7F01DF04 AF21FFFC */   sw    $at, -4($t9)
 /* 052A38 7F01DF08 00034080 */  sll   $t0, $v1, 2
 /* 052A3C 7F01DF0C 01034023 */  subu  $t0, $t0, $v1
-/* 052A40 7F01DF10 3C098007 */  lui   $t1, %hi(save1)
-/* 052A44 7F01DF14 25299920 */  addiu $t1, %lo(save1) # addiu $t1, $t1, -0x66e0
+/* 052A40 7F01DF10 3C098007 */  lui   $t1, %hi(saves)
+/* 052A44 7F01DF14 25299920 */  addiu $t1, %lo(saves) # addiu $t1, $t1, -0x66e0
 /* 052A48 7F01DF18 00084140 */  sll   $t0, $t0, 5
 /* 052A4C 7F01DF1C 01098021 */  addu  $s0, $t0, $t1
 /* 052A50 7F01DF20 02006825 */  move  $t5, $s0
@@ -729,19 +742,19 @@ glabel sub_GAME_7F01DF90
 /* 052BDC 7F01E0AC 0FC075D6 */  jal   sub_GAME_7F01D758
 /* 052BE0 7F01E0B0 AE210018 */   sw    $at, 0x18($s1)
 .L7F01E0B4:
-/* 052BE4 7F01E0B4 3C058007 */  lui   $a1, %hi(save1)
-/* 052BE8 7F01E0B8 24A59920 */  addiu $a1, %lo(save1) # addiu $a1, $a1, -0x66e0
+/* 052BE4 7F01E0B4 3C058007 */  lui   $a1, %hi(saves)
+/* 052BE8 7F01E0B8 24A59920 */  addiu $a1, %lo(saves) # addiu $a1, $a1, -0x66e0
 /* 052BEC 7F01E0BC 24040004 */  li    $a0, 4
 /* 052BF0 7F01E0C0 0C0031EF */  jal   joyGamePakLongRead
 /* 052BF4 7F01E0C4 240601E0 */   li    $a2, 480
-/* 052BF8 7F01E0C8 3C108007 */  lui   $s0, %hi(save1)
-/* 052BFC 7F01E0CC 3C138007 */  lui   $s3, %hi(save1+8)
-/* 052C00 7F01E0D0 3C128007 */  lui   $s2, %hi(save2)
+/* 052BF8 7F01E0C8 3C108007 */  lui   $s0, %hi(saves)
+/* 052BFC 7F01E0CC 3C138007 */  lui   $s3, %hi(saves)
+/* 052C00 7F01E0D0 3C128007 */  lui   $s2, %hi(saves)
 /* 052C04 7F01E0D4 3C148007 */  lui   $s4, %hi(dword_CODE_bss_80069B60)
 /* 052C08 7F01E0D8 26949B60 */  addiu $s4, %lo(dword_CODE_bss_80069B60) # addiu $s4, $s4, -0x64a0
-/* 052C0C 7F01E0DC 26529980 */  addiu $s2, %lo(save2) # addiu $s2, $s2, -0x6680
-/* 052C10 7F01E0E0 26739928 */  addiu $s3, %lo(save1+8) # addiu $s3, $s3, -0x66d8
-/* 052C14 7F01E0E4 26109920 */  addiu $s0, %lo(save1) # addiu $s0, $s0, -0x66e0
+/* 052C0C 7F01E0DC 26529980 */  addiu $s2, %lo(saves+0x60) # addiu $s2, $s2, -0x6680
+/* 052C10 7F01E0E0 26739928 */  addiu $s3, %lo(saves+8) # addiu $s3, $s3, -0x66d8
+/* 052C14 7F01E0E4 26109920 */  addiu $s0, %lo(saves) # addiu $s0, $s0, -0x66e0
 .L7F01E0E8:
 /* 052C18 7F01E0E8 24110001 */  li    $s1, 1
 /* 052C1C 7F01E0EC 02602025 */  move  $a0, $s3
@@ -771,10 +784,10 @@ glabel sub_GAME_7F01DF90
 /* 052C74 7F01E144 241E0060 */  li    $fp, 96
 /* 052C78 7F01E148 24170005 */  li    $s7, 5
 .L7F01E14C:
-/* 052C7C 7F01E14C 3C108007 */  lui   $s0, %hi(save1)
+/* 052C7C 7F01E14C 3C108007 */  lui   $s0, %hi(saves)
 /* 052C80 7F01E150 2414FFFF */  li    $s4, -1
 /* 052C84 7F01E154 2415FFFF */  li    $s5, -1
-/* 052C88 7F01E158 26109920 */  addiu $s0, %lo(save1) # addiu $s0, $s0, -0x66e0
+/* 052C88 7F01E158 26109920 */  addiu $s0, %lo(saves) # addiu $s0, $s0, -0x66e0
 /* 052C8C 7F01E15C 00008825 */  move  $s1, $zero
 .L7F01E160:
 /* 052C90 7F01E160 0FC07655 */  jal   check_if_eeprom_flag_set_0x80
@@ -805,8 +818,8 @@ glabel sub_GAME_7F01DF90
 /* 052CEC 7F01E1BC 1453000B */  bne   $v0, $s3, .L7F01E1EC
 /* 052CF0 7F01E1C0 00409025 */   move  $s2, $v0
 /* 052CF4 7F01E1C4 029E0019 */  multu $s4, $fp
-/* 052CF8 7F01E1C8 3C098007 */  lui   $t1, %hi(save1)
-/* 052CFC 7F01E1CC 25299920 */  addiu $t1, %lo(save1) # addiu $t1, $t1, -0x66e0
+/* 052CF8 7F01E1C8 3C098007 */  lui   $t1, %hi(saves)
+/* 052CFC 7F01E1CC 25299920 */  addiu $t1, %lo(saves) # addiu $t1, $t1, -0x66e0
 /* 052D00 7F01E1D0 00005012 */  mflo  $t2
 /* 052D04 7F01E1D4 01492021 */  addu  $a0, $t2, $t1
 /* 052D08 7F01E1D8 0FC07610 */  jal   sub_GAME_7F01D840
@@ -1082,8 +1095,8 @@ glabel sub_GAME_7F01E504
 /* 053054 7F01E524 8FB9002C */  lw    $t9, 0x2c($sp)
 /* 053058 7F01E528 00027080 */  sll   $t6, $v0, 2
 /* 05305C 7F01E52C 01C27023 */  subu  $t6, $t6, $v0
-/* 053060 7F01E530 3C0F8007 */  lui   $t7, %hi(save1)
-/* 053064 7F01E534 25EF9920 */  addiu $t7, %lo(save1) # addiu $t7, $t7, -0x66e0
+/* 053060 7F01E530 3C0F8007 */  lui   $t7, %hi(saves)
+/* 053064 7F01E534 25EF9920 */  addiu $t7, %lo(saves) # addiu $t7, $t7, -0x66e0
 /* 053068 7F01E538 000E7140 */  sll   $t6, $t6, 5
 /* 05306C 7F01E53C 01CFC021 */  addu  $t8, $t6, $t7
 /* 053070 7F01E540 27290060 */  addiu $t1, $t9, 0x60
@@ -1114,8 +1127,8 @@ glabel sub_GAME_7F01E504
 .L7F01E59C:
 /* 0530CC 7F01E59C 00036880 */  sll   $t5, $v1, 2
 /* 0530D0 7F01E5A0 01A36823 */  subu  $t5, $t5, $v1
-/* 0530D4 7F01E5A4 3C0E8007 */  lui   $t6, %hi(save1)
-/* 0530D8 7F01E5A8 25CE9920 */  addiu $t6, %lo(save1) # addiu $t6, $t6, -0x66e0
+/* 0530D4 7F01E5A4 3C0E8007 */  lui   $t6, %hi(saves)
+/* 0530D8 7F01E5A8 25CE9920 */  addiu $t6, %lo(saves) # addiu $t6, $t6, -0x66e0
 /* 0530DC 7F01E5AC 000D6940 */  sll   $t5, $t5, 5
 /* 0530E0 7F01E5B0 01AE2021 */  addu  $a0, $t5, $t6
 /* 0530E4 7F01E5B4 AFA4001C */  sw    $a0, 0x1c($sp)
@@ -2205,8 +2218,8 @@ GLOBAL_ASM(
 glabel copy_eepromfile_a0_from_a1_to_buffer
 /* 053F8C 7F01F45C 24010064 */  li    $at, 100
 /* 053F90 7F01F460 1481000D */  bne   $a0, $at, .L7F01F498
-/* 053F94 7F01F464 3C0E8007 */   lui   $t6, %hi(save6)
-/* 053F98 7F01F468 25CE9B00 */  addiu $t6, %lo(save6) # addiu $t6, $t6, -0x6500
+/* 053F94 7F01F464 3C0E8007 */   lui   $t6, %hi(saves)
+/* 053F98 7F01F468 25CE9B00 */  addiu $t6, %lo(saves+0x1e0) # addiu $t6, $t6, -0x6500
 /* 053F9C 7F01F46C 00A0C825 */  move  $t9, $a1
 /* 053FA0 7F01F470 24B80060 */  addiu $t8, $a1, 0x60
 .L7F01F474:
