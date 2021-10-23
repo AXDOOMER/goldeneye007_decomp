@@ -443,8 +443,6 @@ s32 check_if_cheat_unlocked(struct save_data *save, s32 cheat)
     return FALSE;
 }
 
-
-
 void sub_GAME_7F01DD74(struct save_data *save, s32 cheat)
 {
     u32 i;
@@ -463,8 +461,6 @@ void sub_GAME_7F01DD74(struct save_data *save, s32 cheat)
     }
 }
 
-
-
 struct save_data *getEEPROMforFoldernum(u32 foldernum)
 {
     int i;
@@ -482,46 +478,20 @@ struct save_data *getEEPROMforFoldernum(u32 foldernum)
     return NULL;
 }
 
+s32 check_if_eeprom_flag_set_0x80_any_folder(void)
+{
+    s32 i;
 
+    for(i = 0; i < 5; i++)
+    {
+        if (check_if_eeprom_flag_set_0x80(&saves[i]))
+        {
+            return i;
+        }
+    }
 
-#ifdef NONMATCHING
-void sub_GAME_7F01DE50(void) {
-
+    return -1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01DE50
-/* 052980 7F01DE50 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 052984 7F01DE54 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 052988 7F01DE58 AFB20020 */  sw    $s2, 0x20($sp)
-/* 05298C 7F01DE5C AFB00018 */  sw    $s0, 0x18($sp)
-/* 052990 7F01DE60 3C118007 */  lui   $s1, %hi(saves)
-/* 052994 7F01DE64 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 052998 7F01DE68 26319920 */  addiu $s1, %lo(saves) # addiu $s1, $s1, -0x66e0
-/* 05299C 7F01DE6C 00008025 */  move  $s0, $zero
-/* 0529A0 7F01DE70 24120005 */  li    $s2, 5
-.L7F01DE74:
-/* 0529A4 7F01DE74 0FC07655 */  jal   check_if_eeprom_flag_set_0x80
-/* 0529A8 7F01DE78 02202025 */   move  $a0, $s1
-/* 0529AC 7F01DE7C 50400004 */  beql  $v0, $zero, .L7F01DE90
-/* 0529B0 7F01DE80 26100001 */   addiu $s0, $s0, 1
-/* 0529B4 7F01DE84 10000005 */  b     .L7F01DE9C
-/* 0529B8 7F01DE88 02001025 */   move  $v0, $s0
-/* 0529BC 7F01DE8C 26100001 */  addiu $s0, $s0, 1
-.L7F01DE90:
-/* 0529C0 7F01DE90 1612FFF8 */  bne   $s0, $s2, .L7F01DE74
-/* 0529C4 7F01DE94 26310060 */   addiu $s1, $s1, 0x60
-/* 0529C8 7F01DE98 2402FFFF */  li    $v0, -1
-.L7F01DE9C:
-/* 0529CC 7F01DE9C 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 0529D0 7F01DEA0 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0529D4 7F01DEA4 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 0529D8 7F01DEA8 8FB20020 */  lw    $s2, 0x20($sp)
-/* 0529DC 7F01DEAC 03E00008 */  jr    $ra
-/* 0529E0 7F01DEB0 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
 
 
 
@@ -536,7 +506,7 @@ glabel sub_GAME_7F01DEB4
 /* 0529E4 7F01DEB4 27BDFF78 */  addiu $sp, $sp, -0x88
 /* 0529E8 7F01DEB8 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 0529EC 7F01DEBC AFB00018 */  sw    $s0, 0x18($sp)
-/* 0529F0 7F01DEC0 0FC07794 */  jal   sub_GAME_7F01DE50
+/* 0529F0 7F01DEC0 0FC07794 */  jal   check_if_eeprom_flag_set_0x80_any_folder
 /* 0529F4 7F01DEC4 AFA40088 */   sw    $a0, 0x88($sp)
 /* 0529F8 7F01DEC8 0440002C */  bltz  $v0, .L7F01DF7C
 /* 0529FC 7F01DECC 00401825 */   move  $v1, $v0
@@ -1027,7 +997,7 @@ glabel sub_GAME_7F01E504
 /* 053038 7F01E508 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 05303C 7F01E50C AFA40028 */  sw    $a0, 0x28($sp)
 /* 053040 7F01E510 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 053044 7F01E514 0FC07794 */  jal   sub_GAME_7F01DE50
+/* 053044 7F01E514 0FC07794 */  jal   check_if_eeprom_flag_set_0x80_any_folder
 /* 053048 7F01E518 AFA00020 */   sw    $zero, 0x20($sp)
 /* 05304C 7F01E51C 04400032 */  bltz  $v0, .L7F01E5E8
 /* 053050 7F01E520 00401825 */   move  $v1, $v0
