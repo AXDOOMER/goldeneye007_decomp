@@ -1516,54 +1516,22 @@ glabel delete_eeprom_folder
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F01ED10(void) {
+void sub_GAME_7F01ED10(u32 foldernum)
+{
+    struct save_data *save;
+    LEVEL_SOLO_SEQUENCE stagenum;
+    DIFFICULTY difficulty;
 
+    save = getEEPROMforFoldernum(foldernum);
+
+    for (stagenum = SP_LEVEL_DAM; stagenum < SP_LEVEL_MAX; stagenum++)
+    {
+        for(difficulty = DIFFICULTY_AGENT; difficulty < DIFFICULTY_007; difficulty++)
+        {
+            sub_GAME_7F01DCB0(save, stagenum, difficulty, 99999999);
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01ED10
-/* 053840 7F01ED10 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 053844 7F01ED14 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 053848 7F01ED18 AFB50028 */  sw    $s5, 0x28($sp)
-/* 05384C 7F01ED1C AFB40024 */  sw    $s4, 0x24($sp)
-/* 053850 7F01ED20 AFB30020 */  sw    $s3, 0x20($sp)
-/* 053854 7F01ED24 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 053858 7F01ED28 AFB10018 */  sw    $s1, 0x18($sp)
-/* 05385C 7F01ED2C 0FC07771 */  jal   getEEPROMforFoldernum
-/* 053860 7F01ED30 AFB00014 */   sw    $s0, 0x14($sp)
-/* 053864 7F01ED34 3C1105F5 */  lui   $s1, (0x05F5E0FF >> 16) # lui $s1, 0x5f5
-/* 053868 7F01ED38 0040A025 */  move  $s4, $v0
-/* 05386C 7F01ED3C 3631E0FF */  ori   $s1, (0x05F5E0FF & 0xFFFF) # ori $s1, $s1, 0xe0ff
-/* 053870 7F01ED40 00009825 */  move  $s3, $zero
-/* 053874 7F01ED44 24150014 */  li    $s5, 20
-/* 053878 7F01ED48 24120003 */  li    $s2, 3
-/* 05387C 7F01ED4C 00008025 */  move  $s0, $zero
-.L7F01ED50:
-/* 053880 7F01ED50 02802025 */  move  $a0, $s4
-.L7F01ED54:
-/* 053884 7F01ED54 02602825 */  move  $a1, $s3
-/* 053888 7F01ED58 02003025 */  move  $a2, $s0
-/* 05388C 7F01ED5C 0FC0772C */  jal   sub_GAME_7F01DCB0
-/* 053890 7F01ED60 02203825 */   move  $a3, $s1
-/* 053894 7F01ED64 26100001 */  addiu $s0, $s0, 1
-/* 053898 7F01ED68 5612FFFA */  bnel  $s0, $s2, .L7F01ED54
-/* 05389C 7F01ED6C 02802025 */   move  $a0, $s4
-/* 0538A0 7F01ED70 26730001 */  addiu $s3, $s3, 1
-/* 0538A4 7F01ED74 5675FFF6 */  bnel  $s3, $s5, .L7F01ED50
-/* 0538A8 7F01ED78 00008025 */   move  $s0, $zero
-/* 0538AC 7F01ED7C 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0538B0 7F01ED80 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0538B4 7F01ED84 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0538B8 7F01ED88 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 0538BC 7F01ED8C 8FB30020 */  lw    $s3, 0x20($sp)
-/* 0538C0 7F01ED90 8FB40024 */  lw    $s4, 0x24($sp)
-/* 0538C4 7F01ED94 8FB50028 */  lw    $s5, 0x28($sp)
-/* 0538C8 7F01ED98 03E00008 */  jr    $ra
-/* 0538CC 7F01ED9C 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
 
 
 
