@@ -1563,34 +1563,14 @@ u8 removed_would_have_returned_bond_for_folder_num(u32 folder)
     #endif
 }
 
-
-
-#ifdef NONMATCHING
-void set_selected_bond_to_folder(u32 folder,u32 bond) {
-    if ((folder >= 0) && (folder < 4))
+void set_selected_bond_to_folder(s32 folder, s32 bond) {
+    if (folder < 0 || folder > 3)
     {
-        save_selected_bond[folder] = 0;
+        return;
     }
+
+    save_selected_bond[folder] = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_selected_bond_to_folder
-/* 0536FC 7F01EBCC 04800007 */  bltz  $a0, .L7F01EBEC
-/* 053700 7F01EBD0 AFA50004 */   sw    $a1, 4($sp)
-/* 053704 7F01EBD4 28810004 */  slti  $at, $a0, 4
-/* 053708 7F01EBD8 10200004 */  beqz  $at, .L7F01EBEC
-/* 05370C 7F01EBDC 00047080 */   sll   $t6, $a0, 2
-/* 053710 7F01EBE0 3C018003 */  lui   $at, %hi(save_selected_bond)
-/* 053714 7F01EBE4 002E0821 */  addu  $at, $at, $t6
-/* 053718 7F01EBE8 AC20C510 */  sw    $zero, %lo(save_selected_bond)($at)
-.L7F01EBEC:
-/* 05371C 7F01EBEC 03E00008 */  jr    $ra
-/* 053720 7F01EBF0 00000000 */   nop
-)
-#endif
-
-
 
 void sub_GAME_7F01EBF4(u32 unused) {
     return;
