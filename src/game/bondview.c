@@ -13,6 +13,7 @@
 #include "snd.h"
 #include "game/math_atan2f.h"
 #include "game/chrobjhandler.h"
+#include "watch.h"
 
 // bss
 struct coord3d flt_CODE_bss_80079940;

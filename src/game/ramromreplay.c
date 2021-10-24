@@ -803,7 +803,7 @@ void test_if_recording_demos_this_stage_load(s32 levelid, s32 difficulty)
         dword_CODE_bss_8008C5F8 = 0;
         set_selected_difficulty(ptr_active_demofile->difficulty);
         set_solo_and_ptr_briefing(ptr_active_demofile->stagenum);
-        sub_GAME_7F01D644(&ptr_active_demofile->savefile);
+        set_selected_foldernum_and_copy_demo_eeprom(&ptr_active_demofile->savefile);
         copy_current_ingame_registers_before_ramrom_playback(ramrom_data_target + 0x110);
         copy_recorded_ramrom_registers_to_proper_place_ingame(ptr_active_demofile);
         is_ramrom_flag = 1;
@@ -887,7 +887,7 @@ glabel test_if_recording_demos_this_stage_load
 /* 0F5278 7F0C0748 0FC0757B */  jal   set_solo_and_ptr_briefing
 /* 0F527C 7F0C074C 8D240010 */   lw    $a0, 0x10($t1)
 /* 0F5280 7F0C0750 8E040000 */  lw    $a0, ($s0)
-/* 0F5284 7F0C0754 0FC07591 */  jal   sub_GAME_7F01D644
+/* 0F5284 7F0C0754 0FC07591 */  jal   set_selected_foldernum_and_copy_demo_eeprom
 /* 0F5288 7F0C0758 2484001C */   addiu $a0, $a0, 0x1c
 /* 0F528C 7F0C075C 3C048009 */  lui   $a0, %hi(ramrom_data_target + 0x110)
 /* 0F5290 7F0C0760 0FC300EA */  jal   copy_current_ingame_registers_before_ramrom_playback
