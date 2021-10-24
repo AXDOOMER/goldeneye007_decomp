@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/gamefile.h"
+#include "gamefile2.h"
 #include "bondconstants.h"
 #include "joy.h"
 #include "player.h"
@@ -1756,93 +1757,33 @@ void get_screen_ratio_settings_for_mpgame_from_folder(u32 foldernum)
 
 
 
-#ifdef NONMATCHING
-void delete_update_eeprom_file(void) {
+void delete_update_eeprom_file(s32 foldernum)
+{
+    struct save_data *save;
+    struct save_data stack100;
+    struct save_data stack196;
 
+    if (foldernum >= 0 && foldernum < 4)
+    {
+        save = getEEPROMforFoldernum(foldernum);
+
+        *(&stack100) = *(&D_8002C7E0);
+
+        if (save != 0) {
+            *(&stack100) = *save;
+        } else {
+            set_eeprom_to_folder_num(&stack100, foldernum);
+        }
+
+        *(&stack196) = *(&stack100);
+
+        update_eeprom_to_current_solo_watch_settings(&stack196);
+
+        if (_bcmp(&stack196, &stack100, 0x60) != 0) {
+            sub_GAME_7F01E504(save, &stack196);
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel delete_update_eeprom_file
-/* 053CB4 7F01F184 27BDFF20 */  addiu $sp, $sp, -0xe0
-/* 053CB8 7F01F188 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 053CBC 7F01F18C 0480003F */  bltz  $a0, .L7F01F28C
-/* 053CC0 7F01F190 00802825 */   move  $a1, $a0
-/* 053CC4 7F01F194 28810004 */  slti  $at, $a0, 4
-/* 053CC8 7F01F198 5020003D */  beql  $at, $zero, .L7F01F290
-/* 053CCC 7F01F19C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 053CD0 7F01F1A0 0FC07771 */  jal   getEEPROMforFoldernum
-/* 053CD4 7F01F1A4 AFA500E0 */   sw    $a1, 0xe0($sp)
-/* 053CD8 7F01F1A8 3C0E8003 */  lui   $t6, %hi(D_8002C7E0)
-/* 053CDC 7F01F1AC 27A6007C */  addiu $a2, $sp, 0x7c
-/* 053CE0 7F01F1B0 25CEC7E0 */  addiu $t6, %lo(D_8002C7E0) # addiu $t6, $t6, -0x3820
-/* 053CE4 7F01F1B4 8FA500E0 */  lw    $a1, 0xe0($sp)
-/* 053CE8 7F01F1B8 AFA200DC */  sw    $v0, 0xdc($sp)
-/* 053CEC 7F01F1BC 25D90060 */  addiu $t9, $t6, 0x60
-/* 053CF0 7F01F1C0 00C04025 */  move  $t0, $a2
-.L7F01F1C4:
-/* 053CF4 7F01F1C4 8DC10000 */  lw    $at, ($t6)
-/* 053CF8 7F01F1C8 25CE000C */  addiu $t6, $t6, 0xc
-/* 053CFC 7F01F1CC 2508000C */  addiu $t0, $t0, 0xc
-/* 053D00 7F01F1D0 AD01FFF4 */  sw    $at, -0xc($t0)
-/* 053D04 7F01F1D4 8DC1FFF8 */  lw    $at, -8($t6)
-/* 053D08 7F01F1D8 AD01FFF8 */  sw    $at, -8($t0)
-/* 053D0C 7F01F1DC 8DC1FFFC */  lw    $at, -4($t6)
-/* 053D10 7F01F1E0 15D9FFF8 */  bne   $t6, $t9, .L7F01F1C4
-/* 053D14 7F01F1E4 AD01FFFC */   sw    $at, -4($t0)
-/* 053D18 7F01F1E8 1040000E */  beqz  $v0, .L7F01F224
-/* 053D1C 7F01F1EC 00405825 */   move  $t3, $v0
-/* 053D20 7F01F1F0 00C06025 */  move  $t4, $a2
-/* 053D24 7F01F1F4 244A0060 */  addiu $t2, $v0, 0x60
-.L7F01F1F8:
-/* 053D28 7F01F1F8 8D610000 */  lw    $at, ($t3)
-/* 053D2C 7F01F1FC 256B000C */  addiu $t3, $t3, 0xc
-/* 053D30 7F01F200 258C000C */  addiu $t4, $t4, 0xc
-/* 053D34 7F01F204 AD81FFF4 */  sw    $at, -0xc($t4)
-/* 053D38 7F01F208 8D61FFF8 */  lw    $at, -8($t3)
-/* 053D3C 7F01F20C AD81FFF8 */  sw    $at, -8($t4)
-/* 053D40 7F01F210 8D61FFFC */  lw    $at, -4($t3)
-/* 053D44 7F01F214 156AFFF8 */  bne   $t3, $t2, .L7F01F1F8
-/* 053D48 7F01F218 AD81FFFC */   sw    $at, -4($t4)
-/* 053D4C 7F01F21C 10000005 */  b     .L7F01F234
-/* 053D50 7F01F220 27A4001C */   addiu $a0, $sp, 0x1c
-.L7F01F224:
-/* 053D54 7F01F224 0FC07636 */  jal   set_eeprom_to_folder_num
-/* 053D58 7F01F228 00C02025 */   move  $a0, $a2
-/* 053D5C 7F01F22C 27A6007C */  addiu $a2, $sp, 0x7c
-/* 053D60 7F01F230 27A4001C */  addiu $a0, $sp, 0x1c
-.L7F01F234:
-/* 053D64 7F01F234 0080C825 */  move  $t9, $a0
-/* 053D68 7F01F238 00C07825 */  move  $t7, $a2
-/* 053D6C 7F01F23C 24D80060 */  addiu $t8, $a2, 0x60
-.L7F01F240:
-/* 053D70 7F01F240 8DE10000 */  lw    $at, ($t7)
-/* 053D74 7F01F244 25EF000C */  addiu $t7, $t7, 0xc
-/* 053D78 7F01F248 2739000C */  addiu $t9, $t9, 0xc
-/* 053D7C 7F01F24C AF21FFF4 */  sw    $at, -0xc($t9)
-/* 053D80 7F01F250 8DE1FFF8 */  lw    $at, -8($t7)
-/* 053D84 7F01F254 AF21FFF8 */  sw    $at, -8($t9)
-/* 053D88 7F01F258 8DE1FFFC */  lw    $at, -4($t7)
-/* 053D8C 7F01F25C 15F8FFF8 */  bne   $t7, $t8, .L7F01F240
-/* 053D90 7F01F260 AF21FFFC */   sw    $at, -4($t9)
-/* 053D94 7F01F264 0FC07BC4 */  jal   update_eeprom_to_current_solo_watch_settings
-/* 053D98 7F01F268 00000000 */   nop
-/* 053D9C 7F01F26C 27A4001C */  addiu $a0, $sp, 0x1c
-/* 053DA0 7F01F270 27A5007C */  addiu $a1, $sp, 0x7c
-/* 053DA4 7F01F274 0C005B5C */  jal   _bcmp
-/* 053DA8 7F01F278 24060060 */   li    $a2, 96
-/* 053DAC 7F01F27C 10400003 */  beqz  $v0, .L7F01F28C
-/* 053DB0 7F01F280 8FA400DC */   lw    $a0, 0xdc($sp)
-/* 053DB4 7F01F284 0FC07941 */  jal   sub_GAME_7F01E504
-/* 053DB8 7F01F288 27A5001C */   addiu $a1, $sp, 0x1c
-.L7F01F28C:
-/* 053DBC 7F01F28C 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F01F290:
-/* 053DC0 7F01F290 27BD00E0 */  addiu $sp, $sp, 0xe0
-/* 053DC4 7F01F294 03E00008 */  jr    $ra
-/* 053DC8 7F01F298 00000000 */   nop
-)
-#endif
 
 
 
@@ -1994,7 +1935,7 @@ glabel copy_eeprom_from_to
 #endif
 
 
-void copy_demo_eeprom_to_ramrom_slot(u32 foldernum, struct save_data *save)
+void copy_demo_eeprom_to_ramrom_folder(u32 foldernum, struct save_data *save)
 {
     if (foldernum == RAMROM_FOLDERNUM)
     {

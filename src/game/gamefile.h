@@ -39,6 +39,13 @@ struct save_data
 };
 
 extern struct save_data saves[6];
+extern struct save_data D_8002C660;
+extern struct save_data D_8002C6C0;
+extern struct save_data D_8002C720;
+extern struct save_data D_8002C780;
+extern struct save_data D_8002C7E0;
+extern struct save_data D_8002C840;
+extern struct save_data blank_eeprom;
 
 extern u32 save_selected_bond[];
 
