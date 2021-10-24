@@ -185,7 +185,7 @@ void sub_GAME_7F01D61C(struct save_file *savefile)
 
 
 //this feels fake, generated with a permuter session i forgot was running
-void sub_GAME_7F01D644(struct save_file *eeprom)
+void set_selected_foldernum_and_copy_demo_eeprom(struct save_file *eeprom)
 {
   int new_var;
   long long new_var2;
@@ -193,7 +193,7 @@ void sub_GAME_7F01D644(struct save_file *eeprom)
   new_var = new_var2;
   selected_folder_num_copy = (s32) selected_folder_num;
   selected_folder_num = new_var;
-  copy_eepromfile_a0_from_a1_to_buffer(new_var, eeprom);
+  copy_demo_eeprom_to_ramrom_slot(new_var, eeprom);
 }
 
 
