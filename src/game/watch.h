@@ -60,17 +60,20 @@ SCREEN_RATIO_OPTION get_screen_ratio();
 
 void set_screen_ratio(SCREEN_RATIO_OPTION ratio_option);
 
-extern s32 cur_player_get_autoaim();
-extern u32 cur_player_get_lookahead(void);
-extern void cur_player_set_autoaim(u32 param_1);
-extern int cur_player_get_control_type(void);
-extern u32 cur_player_get_sight_onscreen_control();
-extern u32 cur_player_get_ammo_onscreen_setting(void);
-extern u32 cur_player_get_aim_control(void);
-extern u32 cur_player_get_screen_setting(void);
-extern u16 call_sndGetSfxSlotFirstNaturalVolume(void);
-extern u32 get_cur_player_look_vertical_inverted(void);
-extern u16 get_mTrack2Vol(void);
+s32 cur_player_get_autoaim(void);
+u32 cur_player_get_lookahead(void);
+void cur_player_set_autoaim(u32 param_1);
+int cur_player_get_control_type(void);
+u32 cur_player_get_sight_onscreen_control();
+u32 cur_player_get_ammo_onscreen_setting(void);
+u32 cur_player_get_aim_control(void);
+u32 cur_player_get_screen_setting(void);
+u16 call_sndGetSfxSlotFirstNaturalVolume(void);
+u32 get_cur_player_look_vertical_inverted(void);
+u16 get_mTrack2Vol(void);
+void set_mTrack2Vol(u16 param_1);
+void sub_GAME_7F0A91A0(u16 arg0);
+void cur_player_set_control_type(int type);
 
 #endif
 

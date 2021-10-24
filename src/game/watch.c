@@ -298,7 +298,7 @@ const u32 D_800577C4[] = {
 };
 
 
-
+struct game_options game_options_entries[];
 
 
 

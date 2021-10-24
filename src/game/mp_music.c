@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "music.h"
 #include "music_0D2720.h"
+#include "watch.h"
 
 // bss
 //CODE.bss:8008C600

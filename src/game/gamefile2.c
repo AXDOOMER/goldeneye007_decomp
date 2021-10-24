@@ -2,6 +2,7 @@
 #include "game/gamefile.h"
 #include "bondconstants.h"
 #include "joy.h"
+#include "player.h"
 #include "watch.h"
 
 s32 sub_GAME_7F01D6C0(void) {
@@ -1706,109 +1707,52 @@ void update_eeprom_to_current_solo_watch_settings(struct save_data *save)
     save->options = bits | temp;
 }
 
+void get_screen_ratio_settings_for_mpgame_from_folder(u32 foldernum)
+{
+    struct save_data *save;
+    u16 padding;
+    u16 options;
 
+    save = getEEPROMforFoldernum(foldernum);
+    if (save)
+    {
+        set_mTrack2Vol((save->music_vol << 7) | (save->music_vol >> 1));
+        sub_GAME_7F0A91A0((save->sfx_vol << 7) | (save->sfx_vol >> 1));
 
-#ifdef NONMATCHING
-void get_screen_ratio_settings_for_mpgame_from_folder(void) {
+        options = save->options;
 
+        if (getPlayerCount() == 1)
+        {
+            cur_player_set_control_type(((s32) (options & 0x700) >> 8) & 0xFFFF);
+        }
+        else
+        {
+            cur_player_set_control_type(0);
+        }
+
+        set_cur_player_look_vertical_inverted((options & 1) != 0);
+        cur_player_set_autoaim((options & 2) != 0);
+        cur_player_set_aim_control((options & 4) != 0);
+        cur_player_set_sight_onscreen_control((options & 8) != 0);
+        cur_player_set_lookahead((options & 0x10) != 0);
+        cur_player_set_ammo_onscreen_setting((options & 0x20) != 0);
+
+        if (options & 0x800)
+        {
+            cur_player_set_screen_setting(2);
+        }
+        else if (options & 0x40)
+        {
+            cur_player_set_screen_setting(1);
+        }
+        else
+        {
+            cur_player_set_screen_setting(0);
+        }
+
+        set_screen_ratio((options & 0x80) != 0);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_screen_ratio_settings_for_mpgame_from_folder
-/* 053B60 7F01F030 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 053B64 7F01F034 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 053B68 7F01F038 0FC07771 */  jal   getEEPROMforFoldernum
-/* 053B6C 7F01F03C AFB00018 */   sw    $s0, 0x18($sp)
-/* 053B70 7F01F040 1040004B */  beqz  $v0, .L7F01F170
-/* 053B74 7F01F044 00401825 */   move  $v1, $v0
-/* 053B78 7F01F048 9042000A */  lbu   $v0, 0xa($v0)
-/* 053B7C 7F01F04C AFA30024 */  sw    $v1, 0x24($sp)
-/* 053B80 7F01F050 000271C0 */  sll   $t6, $v0, 7
-/* 053B84 7F01F054 00027843 */  sra   $t7, $v0, 1
-/* 053B88 7F01F058 01CF2025 */  or    $a0, $t6, $t7
-/* 053B8C 7F01F05C 3098FFFF */  andi  $t8, $a0, 0xffff
-/* 053B90 7F01F060 0FC2A4D9 */  jal   set_mTrack2Vol
-/* 053B94 7F01F064 03002025 */   move  $a0, $t8
-/* 053B98 7F01F068 8FB00024 */  lw    $s0, 0x24($sp)
-/* 053B9C 7F01F06C 9202000B */  lbu   $v0, 0xb($s0)
-/* 053BA0 7F01F070 0002C9C0 */  sll   $t9, $v0, 7
-/* 053BA4 7F01F074 00024043 */  sra   $t0, $v0, 1
-/* 053BA8 7F01F078 03282025 */  or    $a0, $t9, $t0
-/* 053BAC 7F01F07C 3089FFFF */  andi  $t1, $a0, 0xffff
-/* 053BB0 7F01F080 0FC2A468 */  jal   sub_GAME_7F0A91A0
-/* 053BB4 7F01F084 01202025 */   move  $a0, $t1
-/* 053BB8 7F01F088 960A000C */  lhu   $t2, 0xc($s0)
-/* 053BBC 7F01F08C 0FC26919 */  jal   getPlayerCount
-/* 053BC0 7F01F090 A7AA0020 */   sh    $t2, 0x20($sp)
-/* 053BC4 7F01F094 24010001 */  li    $at, 1
-/* 053BC8 7F01F098 14410007 */  bne   $v0, $at, .L7F01F0B8
-/* 053BCC 7F01F09C 97B00020 */   lhu   $s0, 0x20($sp)
-/* 053BD0 7F01F0A0 32040700 */  andi  $a0, $s0, 0x700
-/* 053BD4 7F01F0A4 00045A03 */  sra   $t3, $a0, 8
-/* 053BD8 7F01F0A8 0FC29374 */  jal   cur_player_set_control_type
-/* 053BDC 7F01F0AC 3164FFFF */   andi  $a0, $t3, 0xffff
-/* 053BE0 7F01F0B0 10000005 */  b     .L7F01F0C8
-/* 053BE4 7F01F0B4 32040001 */   andi  $a0, $s0, 1
-.L7F01F0B8:
-/* 053BE8 7F01F0B8 0FC29374 */  jal   cur_player_set_control_type
-/* 053BEC 7F01F0BC 00002025 */   move  $a0, $zero
-/* 053BF0 7F01F0C0 97B00020 */  lhu   $s0, 0x20($sp)
-/* 053BF4 7F01F0C4 32040001 */  andi  $a0, $s0, 1
-.L7F01F0C8:
-/* 053BF8 7F01F0C8 0004682B */  sltu  $t5, $zero, $a0
-/* 053BFC 7F01F0CC 0FC29391 */  jal   set_cur_player_look_vertical_inverted
-/* 053C00 7F01F0D0 01A02025 */   move  $a0, $t5
-/* 053C04 7F01F0D4 32040002 */  andi  $a0, $s0, 2
-/* 053C08 7F01F0D8 0004702B */  sltu  $t6, $zero, $a0
-/* 053C0C 7F01F0DC 0FC29397 */  jal   cur_player_set_autoaim
-/* 053C10 7F01F0E0 01C02025 */   move  $a0, $t6
-/* 053C14 7F01F0E4 32040004 */  andi  $a0, $s0, 4
-/* 053C18 7F01F0E8 0004782B */  sltu  $t7, $zero, $a0
-/* 053C1C 7F01F0EC 0FC293A3 */  jal   cur_player_set_aim_control
-/* 053C20 7F01F0F0 01E02025 */   move  $a0, $t7
-/* 053C24 7F01F0F4 32040008 */  andi  $a0, $s0, 8
-/* 053C28 7F01F0F8 0004C02B */  sltu  $t8, $zero, $a0
-/* 053C2C 7F01F0FC 0FC293A9 */  jal   cur_player_set_sight_onscreen_control
-/* 053C30 7F01F100 03002025 */   move  $a0, $t8
-/* 053C34 7F01F104 32040010 */  andi  $a0, $s0, 0x10
-/* 053C38 7F01F108 0004C82B */  sltu  $t9, $zero, $a0
-/* 053C3C 7F01F10C 0FC2939D */  jal   cur_player_set_lookahead
-/* 053C40 7F01F110 03202025 */   move  $a0, $t9
-/* 053C44 7F01F114 32040020 */  andi  $a0, $s0, 0x20
-/* 053C48 7F01F118 0004402B */  sltu  $t0, $zero, $a0
-/* 053C4C 7F01F11C 0FC293AF */  jal   cur_player_set_ammo_onscreen_setting
-/* 053C50 7F01F120 01002025 */   move  $a0, $t0
-/* 053C54 7F01F124 32090800 */  andi  $t1, $s0, 0x800
-/* 053C58 7F01F128 11200005 */  beqz  $t1, .L7F01F140
-/* 053C5C 7F01F12C 320A0040 */   andi  $t2, $s0, 0x40
-/* 053C60 7F01F130 0FC293B5 */  jal   cur_player_set_screen_setting
-/* 053C64 7F01F134 24040002 */   li    $a0, 2
-/* 053C68 7F01F138 1000000A */  b     .L7F01F164
-/* 053C6C 7F01F13C 32040080 */   andi  $a0, $s0, 0x80
-.L7F01F140:
-/* 053C70 7F01F140 11400005 */  beqz  $t2, .L7F01F158
-/* 053C74 7F01F144 00000000 */   nop
-/* 053C78 7F01F148 0FC293B5 */  jal   cur_player_set_screen_setting
-/* 053C7C 7F01F14C 24040001 */   li    $a0, 1
-/* 053C80 7F01F150 10000004 */  b     .L7F01F164
-/* 053C84 7F01F154 32040080 */   andi  $a0, $s0, 0x80
-.L7F01F158:
-/* 053C88 7F01F158 0FC293B5 */  jal   cur_player_set_screen_setting
-/* 053C8C 7F01F15C 00002025 */   move  $a0, $zero
-/* 053C90 7F01F160 32040080 */  andi  $a0, $s0, 0x80
-.L7F01F164:
-/* 053C94 7F01F164 0004582B */  sltu  $t3, $zero, $a0
-/* 053C98 7F01F168 0FC293BB */  jal   set_screen_ratio
-/* 053C9C 7F01F16C 01602025 */   move  $a0, $t3
-.L7F01F170:
-/* 053CA0 7F01F170 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 053CA4 7F01F174 8FB00018 */  lw    $s0, 0x18($sp)
-/* 053CA8 7F01F178 27BD0028 */  addiu $sp, $sp, 0x28
-/* 053CAC 7F01F17C 03E00008 */  jr    $ra
-/* 053CB0 7F01F180 00000000 */   nop
-)
-#endif
 
 
 

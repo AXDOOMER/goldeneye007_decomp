@@ -4,16 +4,17 @@
 
 #include "bondconstants.h"
 
+
 //i am not "correct", i need proper fields for times again
 struct save_data
 {
-  int chksum1;
-  int chksum2;
+  s32 chksum1;
+  s32 chksum2;
   u8 completion_bitflags;
   u8 flag_007;
-  char music_vol;
-  char sfx_vol;
-  short options;
+  u8 music_vol;
+  u8 sfx_vol;
+  u16 options;
   u8 unlocked_cheats_1;
   u8 unlocked_cheats_2;
   u8 unlocked_cheats_3;
