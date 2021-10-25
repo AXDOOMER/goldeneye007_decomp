@@ -190,16 +190,16 @@ void toggle_eeprom_flag_set_0x80(struct save_data *folder,u32 mode)
 
 
 
-s32 get_eeprom_stage_complete_time_for_difficulty(struct save_data* save, s32 stagenum, s32 difficulty)
+s32 get_eeprom_stage_complete_time_for_difficulty(struct save_data* save, LEVEL_SOLO_SEQUENCE stagenum, DIFFICULTY difficulty)
 {
     s32 offset;
-    u32 max_level;
+    LEVEL_SOLO_SEQUENCE max_level;
     u32 return_value;
 
     max_level = SP_LEVEL_MAX;
-    if ((stagenum >= 0) && (stagenum < SP_LEVEL_MAX ) && (difficulty >= 0) && (difficulty < 4))
+    if ((stagenum >= SP_LEVEL_DAM) && (stagenum < SP_LEVEL_MAX ) && (difficulty >= DIFFICULTY_AGENT) && (difficulty < DIFFICULTY_MAX))
     {
-        if (difficulty == 3)
+        if (difficulty == DIFFICULTY_007)
         {
             if (check_for_007_mode_unlocked(get_foldernum_of_eeprom(save)))
             {
@@ -212,17 +212,21 @@ s32 get_eeprom_stage_complete_time_for_difficulty(struct save_data* save, s32 st
 
         switch(7 - (offset & 7)) //bitmask
         {
-            case 7: //no offset 4 8 12 etc
-                return_value = ((save->times[(offset >> 3)] & 0xFFu) << 2) | ((save->times[(offset >> 3) + 1] & 0xc0) >> 6);
+            case 7: //no offset
+                // first 10 bits 8 + 2                    1111 1111                                      1100 0000
+                return_value = ((save->times[(offset >> 3)] & 0xFF) << 2) | ((save->times[(offset >> 3) + 1] & 0xc0) >> 6);
                 break;
-            case 5: //first offset 5 9 13 etc
+            case 5: //offset 2
+                // next 10 bits 6 + 4                     0011 1111                                      1111 0000
                 return_value =  ((save->times[(offset >> 3)] & 0x3f) << 4) | ((save->times[(offset >> 3) + 1] & 0xf0) >> 4);
                 break;
-            case 3: //second offset 6 10 14 etc
+            case 3: //offset 4
+                // next 10 bits 4 + 6                     0000 1111                                      1111 1100
                 return_value =  ((save->times[(offset >> 3)] & 0xf) << 6) | ((save->times[(offset >> 3) + 1] & 0xfc) >> 2);
                 break;
-            case 1: //third offset 7 11 15 etc
-                return_value = ((save->times[(offset >> 3)] & 0x3)  << 8) | ((save->times[(offset >> 3) + 1] & 0xFFFu));
+            case 1: //offset 6
+                // next 10 bits 2 + 8                     0000 0011                                      1111 1111
+                return_value = ((save->times[(offset >> 3)] & 0x3)  << 8) | ((save->times[(offset >> 3) + 1] & 0xFFF));
                 break;
             default:
                 return_value = 0; // shouldnt reach
@@ -1251,7 +1255,7 @@ s32 get_highest_stage_unlocked_in_folder(s32 foldernum) {
     {
         for (stageid = SP_LEVEL_EGYPT; stageid >= 0; stageid--)
         {
-            for (difficulty = DIFFICULTY_AGENT; difficulty < 4; difficulty++)
+            for (difficulty = DIFFICULTY_AGENT; difficulty < DIFFICULTY_MAX; difficulty++)
             {
                 if (isStageUnlockedAtDifficulty(foldernum, stageid, difficulty))
                 {
