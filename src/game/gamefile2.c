@@ -58,17 +58,22 @@ glabel sub_GAME_7F01D6E0
 
 
 
-void sub_GAME_7F01D758(struct save_data *save) {
-    if (sub_GAME_7F01D6C0() != 0) {
-        sub_GAME_7F09B600(&save->completion_bitflags, &save->field_0x1c[4], save);
+void sub_GAME_7F01D758(struct save_data *save)
+{
+    if (sub_GAME_7F01D6C0() != 0)
+    {
+        sub_GAME_7F09B600(&save->completion_bitflags, &save->times[14], save);
         joyGamePakLongWrite(0, save, 0x20);
     }
 }
 
-void sub_GAME_7F01D7A0(struct save_data *save) {
-    if (save >= &saves[0] && save < &saves[5]) {
-        if (sub_GAME_7F01D6C0() != 0) {
-            sub_GAME_7F09B600(&save->completion_bitflags, &save->field_0x5d[3], save);
+void sub_GAME_7F01D7A0(struct save_data *save)
+{
+    if (save >= &saves[0] && save < &saves[5])
+    {
+        if (sub_GAME_7F01D6C0() != 0)
+        {
+            sub_GAME_7F09B600(&save->completion_bitflags, save + 1, save);
             joyGamePakLongWrite((((u32)((save - &saves[0]) * 0x60) >> 3) + 4), save, 0x60);
         }
     }
@@ -185,109 +190,49 @@ void toggle_eeprom_flag_set_0x80(struct save_data *folder,u32 mode)
 
 
 
-#ifdef NONMATCHING
-void get_eeprom_stage_complete_time_for_difficulty(void) {
+s32 get_eeprom_stage_complete_time_for_difficulty(struct save_data* save, s32 stagenum, s32 difficulty)
+{
+    s32 offset;
+    u32 max_level;
+    u32 return_value;
 
+    max_level = SP_LEVEL_MAX;
+    if ((stagenum >= 0) && (stagenum < SP_LEVEL_MAX ) && (difficulty >= 0) && (difficulty < 4))
+    {
+        if (difficulty == 3)
+        {
+            if (check_for_007_mode_unlocked(get_foldernum_of_eeprom(save)))
+            {
+                return 0x3FF; //max time
+            }
+            return 0;
+        }
+
+        offset = ((difficulty * max_level) + stagenum) * 10; //startbit
+
+        switch(7 - (offset & 7)) //bitmask
+        {
+            case 7: //no offset 4 8 12 etc
+                return_value = ((save->times[(offset >> 3)] & 0xFFu) << 2) | ((save->times[(offset >> 3) + 1] & 0xc0) >> 6);
+                break;
+            case 5: //first offset 5 9 13 etc
+                return_value =  ((save->times[(offset >> 3)] & 0x3f) << 4) | ((save->times[(offset >> 3) + 1] & 0xf0) >> 4);
+                break;
+            case 3: //second offset 6 10 14 etc
+                return_value =  ((save->times[(offset >> 3)] & 0xf) << 6) | ((save->times[(offset >> 3) + 1] & 0xfc) >> 2);
+                break;
+            case 1: //third offset 7 11 15 etc
+                return_value = ((save->times[(offset >> 3)] & 0x3)  << 8) | ((save->times[(offset >> 3) + 1] & 0xFFFu));
+                break;
+            default:
+                return_value = 0; // shouldnt reach
+        }
+
+        return return_value;
+    }
+
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_eeprom_stage_complete_time_for_difficulty
-/* 0524C0 7F01D990 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0524C4 7F01D994 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0524C8 7F01D998 04A0004D */  bltz  $a1, .L7F01DAD0
-/* 0524CC 7F01D99C 00803825 */   move  $a3, $a0
-/* 0524D0 7F01D9A0 28A10014 */  slti  $at, $a1, 0x14
-/* 0524D4 7F01D9A4 5020004B */  beql  $at, $zero, .L7F01DAD4
-/* 0524D8 7F01D9A8 00001025 */   move  $v0, $zero
-/* 0524DC 7F01D9AC 04C00048 */  bltz  $a2, .L7F01DAD0
-/* 0524E0 7F01D9B0 28C10004 */   slti  $at, $a2, 4
-/* 0524E4 7F01D9B4 10200046 */  beqz  $at, .L7F01DAD0
-/* 0524E8 7F01D9B8 24030003 */   li    $v1, 3
-/* 0524EC 7F01D9BC 14C3000B */  bne   $a2, $v1, .L7F01D9EC
-/* 0524F0 7F01D9C0 24080007 */   li    $t0, 7
-/* 0524F4 7F01D9C4 0FC07632 */  jal   get_foldernum_of_eeprom
-/* 0524F8 7F01D9C8 00000000 */   nop
-/* 0524FC 7F01D9CC 0FC07D28 */  jal   check_for_007_mode_unlocked
-/* 052500 7F01D9D0 00402025 */   move  $a0, $v0
-/* 052504 7F01D9D4 10400003 */  beqz  $v0, .L7F01D9E4
-/* 052508 7F01D9D8 00000000 */   nop
-/* 05250C 7F01D9DC 1000003D */  b     .L7F01DAD4
-/* 052510 7F01D9E0 240203FF */   li    $v0, 1023
-.L7F01D9E4:
-/* 052514 7F01D9E4 1000003B */  b     .L7F01DAD4
-/* 052518 7F01D9E8 00001025 */   move  $v0, $zero
-.L7F01D9EC:
-/* 05251C 7F01D9EC 00067080 */  sll   $t6, $a2, 2
-/* 052520 7F01D9F0 01C67021 */  addu  $t6, $t6, $a2
-/* 052524 7F01D9F4 000E7080 */  sll   $t6, $t6, 2
-/* 052528 7F01D9F8 01C52021 */  addu  $a0, $t6, $a1
-/* 05252C 7F01D9FC 00047880 */  sll   $t7, $a0, 2
-/* 052530 7F01DA00 01E47821 */  addu  $t7, $t7, $a0
-/* 052534 7F01DA04 000F7840 */  sll   $t7, $t7, 1
-/* 052538 7F01DA08 31F80007 */  andi  $t8, $t7, 7
-/* 05253C 7F01DA0C 01181023 */  subu  $v0, $t0, $t8
-/* 052540 7F01DA10 24010001 */  li    $at, 1
-/* 052544 7F01DA14 10410024 */  beq   $v0, $at, .L7F01DAA8
-/* 052548 7F01DA18 01E02025 */   move  $a0, $t7
-/* 05254C 7F01DA1C 10430019 */  beq   $v0, $v1, .L7F01DA84
-/* 052550 7F01DA20 000458C3 */   sra   $t3, $a0, 3
-/* 052554 7F01DA24 24010005 */  li    $at, 5
-/* 052558 7F01DA28 5041000D */  beql  $v0, $at, .L7F01DA60
-/* 05255C 7F01DA2C 000478C3 */   sra   $t7, $a0, 3
-/* 052560 7F01DA30 14480025 */  bne   $v0, $t0, .L7F01DAC8
-/* 052564 7F01DA34 00001825 */   move  $v1, $zero
-/* 052568 7F01DA38 000FC8C3 */  sra   $t9, $t7, 3
-/* 05256C 7F01DA3C 00F91021 */  addu  $v0, $a3, $t9
-/* 052570 7F01DA40 90490013 */  lbu   $t1, 0x13($v0)
-/* 052574 7F01DA44 904D0012 */  lbu   $t5, 0x12($v0)
-/* 052578 7F01DA48 312A00C0 */  andi  $t2, $t1, 0xc0
-/* 05257C 7F01DA4C 000A5983 */  sra   $t3, $t2, 6
-/* 052580 7F01DA50 000D7080 */  sll   $t6, $t5, 2
-/* 052584 7F01DA54 1000001F */  b     .L7F01DAD4
-/* 052588 7F01DA58 016E1025 */   or    $v0, $t3, $t6
-/* 05258C 7F01DA5C 000478C3 */  sra   $t7, $a0, 3
-.L7F01DA60:
-/* 052590 7F01DA60 00EF1021 */  addu  $v0, $a3, $t7
-/* 052594 7F01DA64 90580013 */  lbu   $t8, 0x13($v0)
-/* 052598 7F01DA68 904A0012 */  lbu   $t2, 0x12($v0)
-/* 05259C 7F01DA6C 331900F0 */  andi  $t9, $t8, 0xf0
-/* 0525A0 7F01DA70 314C003F */  andi  $t4, $t2, 0x3f
-/* 0525A4 7F01DA74 000C6900 */  sll   $t5, $t4, 4
-/* 0525A8 7F01DA78 00194903 */  sra   $t1, $t9, 4
-/* 0525AC 7F01DA7C 10000015 */  b     .L7F01DAD4
-/* 0525B0 7F01DA80 012D1025 */   or    $v0, $t1, $t5
-.L7F01DA84:
-/* 0525B4 7F01DA84 00EB1021 */  addu  $v0, $a3, $t3
-/* 0525B8 7F01DA88 904E0013 */  lbu   $t6, 0x13($v0)
-/* 0525BC 7F01DA8C 90590012 */  lbu   $t9, 0x12($v0)
-/* 0525C0 7F01DA90 31CF00FC */  andi  $t7, $t6, 0xfc
-/* 0525C4 7F01DA94 332A000F */  andi  $t2, $t9, 0xf
-/* 0525C8 7F01DA98 000A6180 */  sll   $t4, $t2, 6
-/* 0525CC 7F01DA9C 000FC083 */  sra   $t8, $t7, 2
-/* 0525D0 7F01DAA0 1000000C */  b     .L7F01DAD4
-/* 0525D4 7F01DAA4 030C1025 */   or    $v0, $t8, $t4
-.L7F01DAA8:
-/* 0525D8 7F01DAA8 000448C3 */  sra   $t1, $a0, 3
-/* 0525DC 7F01DAAC 00E91021 */  addu  $v0, $a3, $t1
-/* 0525E0 7F01DAB0 904E0012 */  lbu   $t6, 0x12($v0)
-/* 0525E4 7F01DAB4 904B0013 */  lbu   $t3, 0x13($v0)
-/* 0525E8 7F01DAB8 31CF0003 */  andi  $t7, $t6, 3
-/* 0525EC 7F01DABC 000FCA00 */  sll   $t9, $t7, 8
-/* 0525F0 7F01DAC0 10000004 */  b     .L7F01DAD4
-/* 0525F4 7F01DAC4 01791025 */   or    $v0, $t3, $t9
-.L7F01DAC8:
-/* 0525F8 7F01DAC8 10000002 */  b     .L7F01DAD4
-/* 0525FC 7F01DACC 00601025 */   move  $v0, $v1
-.L7F01DAD0:
-/* 052600 7F01DAD0 00001025 */  move  $v0, $zero
-.L7F01DAD4:
-/* 052604 7F01DAD4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 052608 7F01DAD8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 05260C 7F01DADC 03E00008 */  jr    $ra
-/* 052610 7F01DAE0 00000000 */   nop
-)
-#endif
 
 
 
