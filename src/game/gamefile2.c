@@ -107,10 +107,10 @@ u32 check_if_eeprom_flag_set_0x80(struct save_data *folder)
 void toggle_eeprom_flag_set_0x80(struct save_data *folder,u32 mode)
 {
   if (mode != 0) {
-    folder->completion_bitflags = folder->completion_bitflags | 0x80;
+    folder->completion_bitflags |= 0x80;
     return;
   }
-  folder->completion_bitflags = folder->completion_bitflags & 0xff7f;
+  folder->completion_bitflags &= ~0x80;
   return;
 }
 
