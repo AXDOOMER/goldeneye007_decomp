@@ -373,75 +373,26 @@ s32 check_if_eeprom_flag_set_0x80_any_folder(void)
 }
 
 
+// delete file marked with flag 0x80?
+// perhaps used to mark a save for deletion
+void sub_GAME_7F01DEB4(u32 foldernum)
+{
+    s32 folder_with_flag;
+    struct save_data new_save;
 
-#ifdef NONMATCHING
-void sub_GAME_7F01DEB4(void) {
+    folder_with_flag = check_if_eeprom_flag_set_0x80_any_folder();
 
+    if (folder_with_flag >= 0)
+    {
+        new_save = D_8002C5E0;
+        saves[folder_with_flag] = new_save;
+
+        set_eeprom_to_folder_num(&saves[folder_with_flag], foldernum);
+        toggle_eeprom_flag_set_0x80(&saves[folder_with_flag], 0);
+        set_selected_bond(&saves[folder_with_flag], foldernum);
+        sub_GAME_7F01D7A0(&saves[folder_with_flag]);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01DEB4
-/* 0529E4 7F01DEB4 27BDFF78 */  addiu $sp, $sp, -0x88
-/* 0529E8 7F01DEB8 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0529EC 7F01DEBC AFB00018 */  sw    $s0, 0x18($sp)
-/* 0529F0 7F01DEC0 0FC07794 */  jal   check_if_eeprom_flag_set_0x80_any_folder
-/* 0529F4 7F01DEC4 AFA40088 */   sw    $a0, 0x88($sp)
-/* 0529F8 7F01DEC8 0440002C */  bltz  $v0, .L7F01DF7C
-/* 0529FC 7F01DECC 00401825 */   move  $v1, $v0
-/* 052A00 7F01DED0 3C0E8003 */  lui   $t6, %hi(D_8002C5E0)
-/* 052A04 7F01DED4 27A20024 */  addiu $v0, $sp, 0x24
-/* 052A08 7F01DED8 25CEC5E0 */  addiu $t6, %lo(D_8002C5E0) # addiu $t6, $t6, -0x3a20
-/* 052A0C 7F01DEDC 25D80060 */  addiu $t8, $t6, 0x60
-/* 052A10 7F01DEE0 0040C825 */  move  $t9, $v0
-.L7F01DEE4:
-/* 052A14 7F01DEE4 8DC10000 */  lw    $at, ($t6)
-/* 052A18 7F01DEE8 25CE000C */  addiu $t6, $t6, 0xc
-/* 052A1C 7F01DEEC 2739000C */  addiu $t9, $t9, 0xc
-/* 052A20 7F01DEF0 AF21FFF4 */  sw    $at, -0xc($t9)
-/* 052A24 7F01DEF4 8DC1FFF8 */  lw    $at, -8($t6)
-/* 052A28 7F01DEF8 AF21FFF8 */  sw    $at, -8($t9)
-/* 052A2C 7F01DEFC 8DC1FFFC */  lw    $at, -4($t6)
-/* 052A30 7F01DF00 15D8FFF8 */  bne   $t6, $t8, .L7F01DEE4
-/* 052A34 7F01DF04 AF21FFFC */   sw    $at, -4($t9)
-/* 052A38 7F01DF08 00034080 */  sll   $t0, $v1, 2
-/* 052A3C 7F01DF0C 01034023 */  subu  $t0, $t0, $v1
-/* 052A40 7F01DF10 3C098007 */  lui   $t1, %hi(saves)
-/* 052A44 7F01DF14 25299920 */  addiu $t1, %lo(saves) # addiu $t1, $t1, -0x66e0
-/* 052A48 7F01DF18 00084140 */  sll   $t0, $t0, 5
-/* 052A4C 7F01DF1C 01098021 */  addu  $s0, $t0, $t1
-/* 052A50 7F01DF20 02006825 */  move  $t5, $s0
-/* 052A54 7F01DF24 00406025 */  move  $t4, $v0
-/* 052A58 7F01DF28 244B0060 */  addiu $t3, $v0, 0x60
-.L7F01DF2C:
-/* 052A5C 7F01DF2C 8D810000 */  lw    $at, ($t4)
-/* 052A60 7F01DF30 258C000C */  addiu $t4, $t4, 0xc
-/* 052A64 7F01DF34 25AD000C */  addiu $t5, $t5, 0xc
-/* 052A68 7F01DF38 ADA1FFF4 */  sw    $at, -0xc($t5)
-/* 052A6C 7F01DF3C 8D81FFF8 */  lw    $at, -8($t4)
-/* 052A70 7F01DF40 ADA1FFF8 */  sw    $at, -8($t5)
-/* 052A74 7F01DF44 8D81FFFC */  lw    $at, -4($t4)
-/* 052A78 7F01DF48 158BFFF8 */  bne   $t4, $t3, .L7F01DF2C
-/* 052A7C 7F01DF4C ADA1FFFC */   sw    $at, -4($t5)
-/* 052A80 7F01DF50 02002025 */  move  $a0, $s0
-/* 052A84 7F01DF54 0FC07636 */  jal   set_eeprom_to_folder_num
-/* 052A88 7F01DF58 8FA50088 */   lw    $a1, 0x88($sp)
-/* 052A8C 7F01DF5C 02002025 */  move  $a0, $s0
-/* 052A90 7F01DF60 0FC07659 */  jal   toggle_eeprom_flag_set_0x80
-/* 052A94 7F01DF64 00002825 */   move  $a1, $zero
-/* 052A98 7F01DF68 02002025 */  move  $a0, $s0
-/* 052A9C 7F01DF6C 0FC0764D */  jal   set_selected_bond
-/* 052AA0 7F01DF70 8FA50088 */   lw    $a1, 0x88($sp)
-/* 052AA4 7F01DF74 0FC075E8 */  jal   sub_GAME_7F01D7A0
-/* 052AA8 7F01DF78 02002025 */   move  $a0, $s0
-.L7F01DF7C:
-/* 052AAC 7F01DF7C 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 052AB0 7F01DF80 8FB00018 */  lw    $s0, 0x18($sp)
-/* 052AB4 7F01DF84 27BD0088 */  addiu $sp, $sp, 0x88
-/* 052AB8 7F01DF88 03E00008 */  jr    $ra
-/* 052ABC 7F01DF8C 00000000 */   nop
-)
-#endif
 
 
 

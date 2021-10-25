@@ -25,6 +25,7 @@ struct save_data
 extern struct save_data saves[6];
 extern struct save_data D_8002C520;
 extern struct save_data D_8002C580;
+extern struct save_data D_8002C5E0;
 extern struct save_data D_8002C660;
 extern struct save_data D_8002C6C0;
 extern struct save_data D_8002C720;
