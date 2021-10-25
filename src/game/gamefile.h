@@ -19,7 +19,7 @@ struct save_data
   u8 unlocked_cheats_2;
   u8 unlocked_cheats_3;
   char padding;
-    u8 times[(SP_LEVEL_MAX-1) * 4];
+  u8 times[(SP_LEVEL_MAX-1) * 4];
 };
 
 extern struct save_data saves[6];
