@@ -32,7 +32,7 @@ u32 dword_CODE_bss_80069B60;
 
 //data
 //D:8002C510
-u32 save_selected_bond[] = {0,0,0,0};
+s32 save_selected_bond[] = {0,0,0,0};
 
 //D:8002C520
 struct save_data D_8002C520 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0};
