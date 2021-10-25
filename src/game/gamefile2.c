@@ -22,7 +22,7 @@ s32 sub_GAME_7F01D6C0(void)
  */
 void reset_ramrom_folder_to_default(void)
 {
-    struct save_data new_save = D_8002C520;
+    save_data new_save = D_8002C520;
 
     saves[5] = new_save;
 }
@@ -32,7 +32,7 @@ void reset_ramrom_folder_to_default(void)
  *
  * @param save
  */
-void sub_GAME_7F01D758(struct save_data *save)
+void sub_GAME_7F01D758(save_data *save)
 {
     if (sub_GAME_7F01D6C0() != 0)
     {
@@ -46,7 +46,7 @@ void sub_GAME_7F01D758(struct save_data *save)
  *
  * @param save
  */
-void sub_GAME_7F01D7A0(struct save_data *save)
+void sub_GAME_7F01D7A0(save_data *save)
 {
     if (save >= &saves[0] && save < &saves[5])
     {
@@ -63,9 +63,9 @@ void sub_GAME_7F01D7A0(struct save_data *save)
  *
  * @param save
  */
-void reset_folder_to_default(struct save_data *save)
+void reset_folder_to_default(save_data *save)
 {
-    struct save_data new_save  = D_8002C580;
+    save_data new_save  = D_8002C580;
 
     *save = new_save;
     sub_GAME_7F01D7A0(save);
@@ -77,7 +77,7 @@ void reset_folder_to_default(struct save_data *save)
  * @param eeprom
  * @return u32
  */
-u32 get_foldernum_of_eeprom(struct save_data *eeprom)
+u32 get_foldernum_of_eeprom(save_data *eeprom)
 {
   return eeprom->completion_bitflags & 7;
 }
@@ -88,7 +88,7 @@ u32 get_foldernum_of_eeprom(struct save_data *eeprom)
  * @param eeprom
  * @param folder
  */
-void set_eeprom_to_folder_num(struct save_data *eeprom, u32 folder)
+void set_eeprom_to_folder_num(save_data *eeprom, u32 folder)
 {
     eeprom->completion_bitflags &= 0xFFF8;
     eeprom->completion_bitflags |= folder & 7;
@@ -100,7 +100,7 @@ void set_eeprom_to_folder_num(struct save_data *eeprom, u32 folder)
  * @param folder
  * @return u32
  */
-u32 set_eeprom_flag_0x18(struct save_data *folder)
+u32 set_eeprom_flag_0x18(save_data *folder)
 {
   return (folder->completion_bitflags & 0x18) >> 3;
 }
@@ -111,7 +111,7 @@ u32 set_eeprom_flag_0x18(struct save_data *folder)
  * @param folder
  * @param arg1
  */
-void reset_eeprom_flag_0x18(struct save_data *folder, s32 arg1)
+void reset_eeprom_flag_0x18(save_data *folder, s32 arg1)
 {
     folder->completion_bitflags &= 0xFFE7;
     folder->completion_bitflags |= ((arg1 * 8) & 0x18);
@@ -123,7 +123,7 @@ void reset_eeprom_flag_0x18(struct save_data *folder, s32 arg1)
  * @param folder
  * @return u32
  */
-u32 get_selected_bond(struct save_data *folder)
+u32 get_selected_bond(save_data *folder)
 {
   return (folder->completion_bitflags & 0x60) >> 5;
 }
@@ -134,7 +134,7 @@ u32 get_selected_bond(struct save_data *folder)
  * @param folder
  * @param arg1
  */
-void set_selected_bond(struct save_data *folder, s32 arg1)
+void set_selected_bond(save_data *folder, s32 arg1)
 {
     folder->completion_bitflags &= 0xFF9F;
     folder->completion_bitflags |= ((arg1 << 5) & 0x60);
@@ -146,7 +146,7 @@ void set_selected_bond(struct save_data *folder, s32 arg1)
  * @param folder
  * @return u32
  */
-u32 check_if_eeprom_flag_set_0x80(struct save_data *folder)
+u32 check_if_eeprom_flag_set_0x80(save_data *folder)
 {
   return ((folder->completion_bitflags & 0x80) != 0);
 }
@@ -158,7 +158,7 @@ u32 check_if_eeprom_flag_set_0x80(struct save_data *folder)
  * @param folder: folder to enable or disable flag
  * @param set: Enable flag if TRUE, Disable flag if FALSE
  */
-void toggle_eeprom_flag_set_0x80(struct save_data *folder, s32 enable)
+void toggle_eeprom_flag_set_0x80(save_data *folder, s32 enable)
 {
     if (enable)
     {
@@ -178,7 +178,7 @@ void toggle_eeprom_flag_set_0x80(struct save_data *folder, s32 enable)
  * @param difficulty
  * @return best time for stage at difficulty
  */
-s32 gamefileGetStageDifficultyTime(struct save_data* save, LEVEL_SOLO_SEQUENCE stagenum, DIFFICULTY difficulty)
+s32 gamefileGetStageDifficultyTime(save_data* save, LEVEL_SOLO_SEQUENCE stagenum, DIFFICULTY difficulty)
 {
     s32 offset;
     LEVEL_SOLO_SEQUENCE max_level;
@@ -236,7 +236,7 @@ s32 gamefileGetStageDifficultyTime(struct save_data* save, LEVEL_SOLO_SEQUENCE s
  * @param difficulty
  * @param newtime
  */
-void gamefileSetDifficultyStageTime(struct save_data *save, LEVEL_SOLO_SEQUENCE stage, DIFFICULTY difficulty, s32 newtime)
+void gamefileSetDifficultyStageTime(save_data *save, LEVEL_SOLO_SEQUENCE stage, DIFFICULTY difficulty, s32 newtime)
 {
     s32 offset;
     s32 index;
@@ -293,7 +293,7 @@ void gamefileSetDifficultyStageTime(struct save_data *save, LEVEL_SOLO_SEQUENCE 
  * @param difficulty
  * @return is stage at diffiuclty completed
  */
-s32 get_eeprom_stage_completed_for_difficulty(struct save_data *folder, s32 levelid, DIFFICULTY difficulty) {
+s32 get_eeprom_stage_completed_for_difficulty(save_data *folder, s32 levelid, DIFFICULTY difficulty) {
 
     if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007)) {
         return gamefileGetStageDifficultyTime(folder, levelid, difficulty) != 0;
@@ -310,7 +310,7 @@ s32 get_eeprom_stage_completed_for_difficulty(struct save_data *folder, s32 leve
  * @param difficulty
  * @param arg4
  */
-void sub_GAME_7F01DCB0(struct save_data *folder, s32 levelid, DIFFICULTY difficulty, s32 arg4) {
+void sub_GAME_7F01DCB0(save_data *folder, s32 levelid, DIFFICULTY difficulty, s32 arg4) {
     s32 temp_v0;
 
     if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007)) {
@@ -330,7 +330,7 @@ void sub_GAME_7F01DCB0(struct save_data *folder, s32 levelid, DIFFICULTY difficu
  * @param cheat
  * @return bool
  */
-s32 check_if_cheat_unlocked(struct save_data *save, s32 cheat)
+s32 check_if_cheat_unlocked(save_data *save, s32 cheat)
 {
     s32 bits;
 
@@ -349,7 +349,7 @@ s32 check_if_cheat_unlocked(struct save_data *save, s32 cheat)
  * @param save
  * @param cheat
  */
-void sub_GAME_7F01DD74(struct save_data *save, s32 cheat)
+void sub_GAME_7F01DD74(save_data *save, s32 cheat)
 {
     u32 i;
     u32 temp;
@@ -371,9 +371,9 @@ void sub_GAME_7F01DD74(struct save_data *save, s32 cheat)
  * Get save in foldernum slot
  *
  * @param foldernum
- * @return struct save_data*
+ * @return save_data*
  */
-struct save_data *getEEPROMforFoldernum(u32 foldernum)
+save_data *getEEPROMforFoldernum(u32 foldernum)
 {
     int i;
 
@@ -423,7 +423,7 @@ s32 check_if_eeprom_flag_set_0x80_any_folder(void)
 void sub_GAME_7F01DEB4(u32 foldernum)
 {
     s32 folder_with_flag;
-    struct save_data new_save;
+    save_data new_save;
 
     folder_with_flag = check_if_eeprom_flag_set_0x80_any_folder();
 
@@ -869,7 +869,7 @@ glabel isStageUnlockedAtDifficulty
  * @param save1
  * @param save2
  */
-void sub_GAME_7F01E504(struct save_data *save1, struct save_data *save2)
+void sub_GAME_7F01E504(save_data *save1, save_data *save2)
 {
     s32 folder_with_flag;
     s32 otherfolder;
@@ -1109,7 +1109,7 @@ glabel sub_GAME_7F01E760
  */
 void get_highest_stage_difficulty_completed_in_folder(s32 foldernum, LEVEL_SOLO_SEQUENCE *stage, DIFFICULTY *difficulty)
 {
-    struct save_data *folder;
+    save_data *folder;
     LEVEL_SOLO_SEQUENCE stageid;
     DIFFICULTY difficultyid;
 
@@ -1354,10 +1354,10 @@ void sub_GAME_7F01EBFC(u32 unused)
  */
 void delete_eeprom_folder(s32 foldernum)
 {
-    struct save_data *save;
+    save_data *save;
     LEVEL_SOLO_SEQUENCE stage;
     DIFFICULTY difficulty;
-    struct save_data new_save;
+    save_data new_save;
 
     if (foldernum >= 0 && foldernum < 4)
     {
@@ -1387,7 +1387,7 @@ void delete_eeprom_folder(s32 foldernum)
  */
 void sub_GAME_7F01ED10(u32 foldernum)
 {
-    struct save_data *save;
+    save_data *save;
     LEVEL_SOLO_SEQUENCE stagenum;
     DIFFICULTY difficulty;
 
@@ -1411,12 +1411,12 @@ void sub_GAME_7F01ED10(u32 foldernum)
  */
 void sub_GAME_7F01EDA0(s32 foldernum)
 {
-    struct save_data* save;
+    save_data* save;
     LEVEL_SOLO_SEQUENCE stage;
     DIFFICULTY difficulty;
     s32 other;
-    struct save_data new_save;
-    struct save_data* temp_s2;
+    save_data new_save;
+    save_data* temp_s2;
 
     if ((foldernum >= 0) && (foldernum < 4))
     {
@@ -1457,7 +1457,7 @@ void sub_GAME_7F01EDA0(s32 foldernum)
  *
  * @param save
  */
-void update_eeprom_to_current_solo_watch_settings(struct save_data *save)
+void update_eeprom_to_current_solo_watch_settings(save_data *save)
 {
     u32 temp;
     u16 bits;
@@ -1521,7 +1521,7 @@ void update_eeprom_to_current_solo_watch_settings(struct save_data *save)
  */
 void get_screen_ratio_settings_for_mpgame_from_folder(u32 foldernum)
 {
-    struct save_data *save;
+    save_data *save;
     u16 padding;
     u16 options;
 
@@ -1573,9 +1573,9 @@ void get_screen_ratio_settings_for_mpgame_from_folder(u32 foldernum)
  */
 void delete_update_eeprom_file(s32 foldernum)
 {
-    struct save_data *save;
-    struct save_data save_to_copy;
-    struct save_data new_save;
+    save_data *save;
+    save_data save_to_copy;
+    save_data new_save;
 
     if (foldernum >= 0 && foldernum < 4)
     {
@@ -1610,8 +1610,8 @@ void delete_update_eeprom_file(s32 foldernum)
  */
 void copy_eeprom_to_stack_set_folder_num(s32 foldernum)
 {
-    struct save_data *save;
-    struct save_data new_save;
+    save_data *save;
+    save_data new_save;
 
     if (foldernum >= 0 && foldernum < 4)
     {
@@ -1641,10 +1641,10 @@ void copy_eeprom_to_stack_set_folder_num(s32 foldernum)
  * @param foldernum
  * @param out_save
  */
-void copy_eeprom_from_to(s32 foldernum, struct save_data *out_save)
+void copy_eeprom_from_to(s32 foldernum, save_data *out_save)
 {
-    struct save_data *in_save;
-    struct save_data new_save;
+    save_data *in_save;
+    save_data new_save;
 
     in_save = getEEPROMforFoldernum(foldernum);
 
@@ -1665,7 +1665,7 @@ void copy_eeprom_from_to(s32 foldernum, struct save_data *out_save)
  * @param foldernum
  * @param save
  */
-void copy_demo_eeprom_to_ramrom_folder(u32 foldernum, struct save_data *save)
+void copy_demo_eeprom_to_ramrom_folder(u32 foldernum, save_data *save)
 {
     if (foldernum == RAMROM_FOLDERNUM)
     {
@@ -1682,7 +1682,7 @@ void copy_demo_eeprom_to_ramrom_folder(u32 foldernum, struct save_data *save)
 s32 check_for_007_mode_unlocked(u32 foldernum)
 {
     LEVEL_SOLO_SEQUENCE stage;
-    struct save_data* folder;
+    save_data* folder;
 
     folder = getEEPROMforFoldernum(foldernum);
 
