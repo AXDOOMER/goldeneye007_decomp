@@ -15,10 +15,10 @@ s32 sub_GAME_7F01D6C0(void) {
 
 void reset_ramrom_folder_to_default(void)
 {
-    struct save_data stack96;
+    struct save_data new_save;
 
-    *(&stack96) = *(&D_8002C520);
-    *(&saves[5]) = *(&stack96);
+    new_save = D_8002C520;
+    saves[5] = new_save;
 }
 
 
@@ -46,52 +46,14 @@ void sub_GAME_7F01D7A0(struct save_data *save)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F01D840(void) {
+void reset_folder_to_default(struct save_data *save)
+{
+    struct save_data new_save;
 
+    new_save = D_8002C580;
+    *save = new_save;
+    sub_GAME_7F01D7A0(save);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01D840
-/* 052370 7F01D840 27BDFF88 */  addiu $sp, $sp, -0x78
-/* 052374 7F01D844 3C0E8003 */  lui   $t6, %hi(D_8002C580)
-/* 052378 7F01D848 27A20018 */  addiu $v0, $sp, 0x18
-/* 05237C 7F01D84C 25CEC580 */  addiu $t6, %lo(D_8002C580) # addiu $t6, $t6, -0x3a80
-/* 052380 7F01D850 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 052384 7F01D854 25D90060 */  addiu $t9, $t6, 0x60
-/* 052388 7F01D858 00404025 */  move  $t0, $v0
-.L7F01D85C:
-/* 05238C 7F01D85C 8DC10000 */  lw    $at, ($t6)
-/* 052390 7F01D860 25CE000C */  addiu $t6, $t6, 0xc
-/* 052394 7F01D864 2508000C */  addiu $t0, $t0, 0xc
-/* 052398 7F01D868 AD01FFF4 */  sw    $at, -0xc($t0)
-/* 05239C 7F01D86C 8DC1FFF8 */  lw    $at, -8($t6)
-/* 0523A0 7F01D870 AD01FFF8 */  sw    $at, -8($t0)
-/* 0523A4 7F01D874 8DC1FFFC */  lw    $at, -4($t6)
-/* 0523A8 7F01D878 15D9FFF8 */  bne   $t6, $t9, .L7F01D85C
-/* 0523AC 7F01D87C AD01FFFC */   sw    $at, -4($t0)
-/* 0523B0 7F01D880 00406025 */  move  $t4, $v0
-/* 0523B4 7F01D884 00806825 */  move  $t5, $a0
-/* 0523B8 7F01D888 244B0060 */  addiu $t3, $v0, 0x60
-.L7F01D88C:
-/* 0523BC 7F01D88C 8D810000 */  lw    $at, ($t4)
-/* 0523C0 7F01D890 258C000C */  addiu $t4, $t4, 0xc
-/* 0523C4 7F01D894 25AD000C */  addiu $t5, $t5, 0xc
-/* 0523C8 7F01D898 ADA1FFF4 */  sw    $at, -0xc($t5)
-/* 0523CC 7F01D89C 8D81FFF8 */  lw    $at, -8($t4)
-/* 0523D0 7F01D8A0 ADA1FFF8 */  sw    $at, -8($t5)
-/* 0523D4 7F01D8A4 8D81FFFC */  lw    $at, -4($t4)
-/* 0523D8 7F01D8A8 158BFFF8 */  bne   $t4, $t3, .L7F01D88C
-/* 0523DC 7F01D8AC ADA1FFFC */   sw    $at, -4($t5)
-/* 0523E0 7F01D8B0 0FC075E8 */  jal   sub_GAME_7F01D7A0
-/* 0523E4 7F01D8B4 00000000 */   nop
-/* 0523E8 7F01D8B8 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0523EC 7F01D8BC 27BD0078 */  addiu $sp, $sp, 0x78
-/* 0523F0 7F01D8C0 03E00008 */  jr    $ra
-/* 0523F4 7F01D8C4 00000000 */   nop
-)
-#endif
 
 
 u32 get_foldernum_of_eeprom(struct save_data *eeprom)
@@ -599,7 +561,7 @@ glabel sub_GAME_7F01DF90
 .L7F01E120:
 /* 052C50 7F01E120 56200004 */  bnezl $s1, .L7F01E134
 /* 052C54 7F01E124 26520060 */   addiu $s2, $s2, 0x60
-/* 052C58 7F01E128 0FC07610 */  jal   sub_GAME_7F01D840
+/* 052C58 7F01E128 0FC07610 */  jal   reset_folder_to_default
 /* 052C5C 7F01E12C 02002025 */   move  $a0, $s0
 /* 052C60 7F01E130 26520060 */  addiu $s2, $s2, 0x60
 .L7F01E134:
@@ -648,13 +610,13 @@ glabel sub_GAME_7F01DF90
 /* 052CFC 7F01E1CC 25299920 */  addiu $t1, %lo(saves) # addiu $t1, $t1, -0x66e0
 /* 052D00 7F01E1D0 00005012 */  mflo  $t2
 /* 052D04 7F01E1D4 01492021 */  addu  $a0, $t2, $t1
-/* 052D08 7F01E1D8 0FC07610 */  jal   sub_GAME_7F01D840
+/* 052D08 7F01E1D8 0FC07610 */  jal   reset_folder_to_default
 /* 052D0C 7F01E1DC 00000000 */   nop
 /* 052D10 7F01E1E0 0220A025 */  move  $s4, $s1
 /* 052D14 7F01E1E4 10000003 */  b     .L7F01E1F4
 /* 052D18 7F01E1E8 0240A825 */   move  $s5, $s2
 .L7F01E1EC:
-/* 052D1C 7F01E1EC 0FC07610 */  jal   sub_GAME_7F01D840
+/* 052D1C 7F01E1EC 0FC07610 */  jal   reset_folder_to_default
 /* 052D20 7F01E1F0 02002025 */   move  $a0, $s0
 .L7F01E1F4:
 /* 052D24 7F01E1F4 26310001 */  addiu $s1, $s1, 1
@@ -968,7 +930,7 @@ glabel sub_GAME_7F01E504
 /* 053104 7F01E5D4 8FAF0028 */  lw    $t7, 0x28($sp)
 /* 053108 7F01E5D8 51E00004 */  beql  $t7, $zero, .L7F01E5EC
 /* 05310C 7F01E5DC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 053110 7F01E5E0 0FC07610 */  jal   sub_GAME_7F01D840
+/* 053110 7F01E5E0 0FC07610 */  jal   reset_folder_to_default
 /* 053114 7F01E5E4 01E02025 */   move  $a0, $t7
 .L7F01E5E8:
 /* 053118 7F01E5E8 8FBF0014 */  lw    $ra, 0x14($sp)
