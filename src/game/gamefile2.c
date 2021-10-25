@@ -153,17 +153,21 @@ u32 check_if_eeprom_flag_set_0x80(struct save_data *folder)
 
 /**
  * Toggle save flag 0x80
+ * possibly wear levelling
  *
- * @param folder
- * @param mode
+ * @param folder: folder to enable or disable flag
+ * @param set: Enable flag if TRUE, Disable flag if FALSE
  */
-void toggle_eeprom_flag_set_0x80(struct save_data *folder,u32 mode)
+void toggle_eeprom_flag_set_0x80(struct save_data *folder, s32 enable)
 {
-  if (mode != 0) {
-    folder->completion_bitflags |= 0x80;
-    return;
-  }
-  folder->completion_bitflags &= ~0x80;
+    if (enable)
+    {
+        folder->completion_bitflags |= 0x80;
+    }
+    else
+    {
+        folder->completion_bitflags &= ~0x80;
+    }
 }
 
 /**
@@ -174,11 +178,12 @@ void toggle_eeprom_flag_set_0x80(struct save_data *folder,u32 mode)
  * @param difficulty
  * @return best time for stage at difficulty
  */
-s32 get_eeprom_stage_complete_time_for_difficulty(struct save_data* save, LEVEL_SOLO_SEQUENCE stagenum, DIFFICULTY difficulty)
+s32 gamefileGetStageDifficultyTime(struct save_data* save, LEVEL_SOLO_SEQUENCE stagenum, DIFFICULTY difficulty)
 {
     s32 offset;
     LEVEL_SOLO_SEQUENCE max_level;
-    u32 return_value;
+    u32 time;
+    s32 index;
 
     max_level = SP_LEVEL_MAX;
     if ((stagenum >= SP_LEVEL_DAM) && (stagenum < SP_LEVEL_MAX ) && (difficulty >= DIFFICULTY_AGENT) && (difficulty < DIFFICULTY_MAX))
@@ -193,152 +198,91 @@ s32 get_eeprom_stage_complete_time_for_difficulty(struct save_data* save, LEVEL_
         }
 
         offset = ((difficulty * max_level) + stagenum) * 10; //startbit
+        index = (offset >> 3);
 
         switch(7 - (offset & 7)) //bitmask
         {
             case 7: //no offset
                 // first 10 bits 8 + 2                    1111 1111                                      1100 0000
-                return_value = ((save->times[(offset >> 3)] & 0xFF) << 2) | ((save->times[(offset >> 3) + 1] & 0xc0) >> 6);
+                time = ((save->times[index] & 0xFF) << 2) | ((save->times[index + 1] & 0xc0) >> 6);
                 break;
             case 5: //offset 2
                 // next 10 bits 6 + 4                     0011 1111                                      1111 0000
-                return_value =  ((save->times[(offset >> 3)] & 0x3f) << 4) | ((save->times[(offset >> 3) + 1] & 0xf0) >> 4);
+                time =  ((save->times[index] & 0x3f) << 4) | ((save->times[index + 1] & 0xf0) >> 4);
                 break;
             case 3: //offset 4
                 // next 10 bits 4 + 6                     0000 1111                                      1111 1100
-                return_value =  ((save->times[(offset >> 3)] & 0xf) << 6) | ((save->times[(offset >> 3) + 1] & 0xfc) >> 2);
+                time =  ((save->times[index] & 0xf) << 6) | ((save->times[index + 1] & 0xfc) >> 2);
                 break;
             case 1: //offset 6
                 // next 10 bits 2 + 8                     0000 0011                                      1111 1111
-                return_value = ((save->times[(offset >> 3)] & 0x3)  << 8) | ((save->times[(offset >> 3) + 1] & 0xFFF));
+                time = ((save->times[index] & 0x3)  << 8) | ((save->times[index + 1] & 0xFFF));
                 break;
             default:
-                return_value = 0; // shouldnt reach
+                time = 0; // shouldnt reach
         }
 
-        return return_value;
+        return time;
     }
 
     return 0;
 }
 
+/**
+ * Set completion time for stage at difficulty
+ *
+ * @param save
+ * @param stage
+ * @param difficulty
+ * @param newtime
+ */
+void gamefileSetDifficultyStageTime(struct save_data *save, LEVEL_SOLO_SEQUENCE stage, DIFFICULTY difficulty, s32 newtime)
+{
+    s32 offset;
+    s32 index;
+    u32 max_level;
 
+    max_level = SP_LEVEL_MAX;
+    if ((stage >= 0) && (stage < SP_LEVEL_MAX ) && (difficulty >= DIFFICULTY_AGENT) && (difficulty < DIFFICULTY_007))
+    {
+        if (newtime == 0) {
+            newtime = 0x4f;
+        } else if (newtime > 0x3ff) {
+            newtime = 0x3ff;
+        }
 
-#ifdef NONMATCHING
-void sub_GAME_7F01DAE4(void) {
+        offset = ((difficulty * max_level) + stage) * 10; //startbit
+        index = (offset >> 3);
 
+        switch(7 - (offset & 7)) //bitmask
+        {
+            case 7: //no offset 4 8 12 etc
+                save->times[index] &= 0xff00;
+                save->times[index + 1] &= 0xff3f;
+                save->times[index] |= (newtime >> 2) & 0xff;
+                save->times[index + 1] |= (newtime << 6) & 0xc0;
+                break;
+            case 5: //first offset 5 9 13 etc
+                save->times[index] &= 0xffc0;
+                save->times[index + 1] &= 0xff0f;
+                save->times[index] |= ((newtime >> 4) & 0x3f);
+                save->times[index + 1] |= (newtime << 4) & 0xf0;
+                break;
+            case 3: //second offset 6 10 14 etc
+                save->times[index] &= 0xfff0;
+                save->times[index + 1] &= 0xff03;
+                save->times[index] |= ((newtime >> 6) & 0xf);
+                save->times[index + 1] |= (newtime << 2) & 0xfC;
+                break;
+            case 1: //third offset 7 11 15 etc
+                save->times[index] &= 0xfffc;
+                save->times[index + 1] &= 0xff00;
+                save->times[index] |= ((newtime >> 8) & 3);
+                save->times[index + 1] |= newtime & 0xfff;
+                break;
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01DAE4
-/* 052614 7F01DAE4 04A0005C */  bltz  $a1, .L7F01DC58
-/* 052618 7F01DAE8 28A10014 */   slti  $at, $a1, 0x14
-/* 05261C 7F01DAEC 1020005A */  beqz  $at, .L7F01DC58
-/* 052620 7F01DAF0 00000000 */   nop
-/* 052624 7F01DAF4 04C00058 */  bltz  $a2, .L7F01DC58
-/* 052628 7F01DAF8 28C10003 */   slti  $at, $a2, 3
-/* 05262C 7F01DAFC 10200056 */  beqz  $at, .L7F01DC58
-/* 052630 7F01DB00 24080007 */   li    $t0, 7
-/* 052634 7F01DB04 14E00003 */  bnez  $a3, .L7F01DB14
-/* 052638 7F01DB08 00067080 */   sll   $t6, $a2, 2
-/* 05263C 7F01DB0C 10000005 */  b     .L7F01DB24
-/* 052640 7F01DB10 2407004F */   li    $a3, 79
-.L7F01DB14:
-/* 052644 7F01DB14 28E10400 */  slti  $at, $a3, 0x400
-/* 052648 7F01DB18 54200003 */  bnezl $at, .L7F01DB28
-/* 05264C 7F01DB1C 01C67021 */   addu  $t6, $t6, $a2
-/* 052650 7F01DB20 240703FF */  li    $a3, 1023
-.L7F01DB24:
-/* 052654 7F01DB24 01C67021 */  addu  $t6, $t6, $a2
-.L7F01DB28:
-/* 052658 7F01DB28 000E7080 */  sll   $t6, $t6, 2
-/* 05265C 7F01DB2C 01C51021 */  addu  $v0, $t6, $a1
-/* 052660 7F01DB30 00027880 */  sll   $t7, $v0, 2
-/* 052664 7F01DB34 01E27821 */  addu  $t7, $t7, $v0
-/* 052668 7F01DB38 000F7840 */  sll   $t7, $t7, 1
-/* 05266C 7F01DB3C 31F80007 */  andi  $t8, $t7, 7
-/* 052670 7F01DB40 01181823 */  subu  $v1, $t0, $t8
-/* 052674 7F01DB44 24010001 */  li    $at, 1
-/* 052678 7F01DB48 10610035 */  beq   $v1, $at, .L7F01DC20
-/* 05267C 7F01DB4C 01E01025 */   move  $v0, $t7
-/* 052680 7F01DB50 24010003 */  li    $at, 3
-/* 052684 7F01DB54 10610023 */  beq   $v1, $at, .L7F01DBE4
-/* 052688 7F01DB58 0002C0C3 */   sra   $t8, $v0, 3
-/* 05268C 7F01DB5C 24010005 */  li    $at, 5
-/* 052690 7F01DB60 10610011 */  beq   $v1, $at, .L7F01DBA8
-/* 052694 7F01DB64 000260C3 */   sra   $t4, $v0, 3
-/* 052698 7F01DB68 1468003B */  bne   $v1, $t0, .L7F01DC58
-/* 05269C 7F01DB6C 000FC8C3 */   sra   $t9, $t7, 3
-/* 0526A0 7F01DB70 00991821 */  addu  $v1, $a0, $t9
-/* 0526A4 7F01DB74 90690012 */  lbu   $t1, 0x12($v1)
-/* 0526A8 7F01DB78 906B0013 */  lbu   $t3, 0x13($v1)
-/* 0526AC 7F01DB7C 00077883 */  sra   $t7, $a3, 2
-/* 0526B0 7F01DB80 312DFF00 */  andi  $t5, $t1, 0xff00
-/* 0526B4 7F01DB84 3179FF3F */  andi  $t9, $t3, 0xff3f
-/* 0526B8 7F01DB88 00075180 */  sll   $t2, $a3, 6
-/* 0526BC 7F01DB8C A06D0012 */  sb    $t5, 0x12($v1)
-/* 0526C0 7F01DB90 A0790013 */  sb    $t9, 0x13($v1)
-/* 0526C4 7F01DB94 01AFC025 */  or    $t8, $t5, $t7
-/* 0526C8 7F01DB98 032A5825 */  or    $t3, $t9, $t2
-/* 0526CC 7F01DB9C A0780012 */  sb    $t8, 0x12($v1)
-/* 0526D0 7F01DBA0 03E00008 */  jr    $ra
-/* 0526D4 7F01DBA4 A06B0013 */   sb    $t3, 0x13($v1)
-
-.L7F01DBA8:
-/* 0526D8 7F01DBA8 008C1821 */  addu  $v1, $a0, $t4
-/* 0526DC 7F01DBAC 906E0012 */  lbu   $t6, 0x12($v1)
-/* 0526E0 7F01DBB0 906F0013 */  lbu   $t7, 0x13($v1)
-/* 0526E4 7F01DBB4 0007C903 */  sra   $t9, $a3, 4
-/* 0526E8 7F01DBB8 31C9FFC0 */  andi  $t1, $t6, 0xffc0
-/* 0526EC 7F01DBBC 31ECFF0F */  andi  $t4, $t7, 0xff0f
-/* 0526F0 7F01DBC0 332A003F */  andi  $t2, $t9, 0x3f
-/* 0526F4 7F01DBC4 00076900 */  sll   $t5, $a3, 4
-/* 0526F8 7F01DBC8 A0690012 */  sb    $t1, 0x12($v1)
-/* 0526FC 7F01DBCC A06C0013 */  sb    $t4, 0x13($v1)
-/* 052700 7F01DBD0 012A5825 */  or    $t3, $t1, $t2
-/* 052704 7F01DBD4 018D7825 */  or    $t7, $t4, $t5
-/* 052708 7F01DBD8 A06B0012 */  sb    $t3, 0x12($v1)
-/* 05270C 7F01DBDC 03E00008 */  jr    $ra
-/* 052710 7F01DBE0 A06F0013 */   sb    $t7, 0x13($v1)
-
-.L7F01DBE4:
-/* 052714 7F01DBE4 00981821 */  addu  $v1, $a0, $t8
-/* 052718 7F01DBE8 90790012 */  lbu   $t9, 0x12($v1)
-/* 05271C 7F01DBEC 906A0013 */  lbu   $t2, 0x13($v1)
-/* 052720 7F01DBF0 00076183 */  sra   $t4, $a3, 6
-/* 052724 7F01DBF4 332EFFF0 */  andi  $t6, $t9, 0xfff0
-/* 052728 7F01DBF8 3158FF03 */  andi  $t8, $t2, 0xff03
-/* 05272C 7F01DBFC 318D000F */  andi  $t5, $t4, 0xf
-/* 052730 7F01DC00 00074880 */  sll   $t1, $a3, 2
-/* 052734 7F01DC04 A06E0012 */  sb    $t6, 0x12($v1)
-/* 052738 7F01DC08 A0780013 */  sb    $t8, 0x13($v1)
-/* 05273C 7F01DC0C 01CD7825 */  or    $t7, $t6, $t5
-/* 052740 7F01DC10 03095025 */  or    $t2, $t8, $t1
-/* 052744 7F01DC14 A06F0012 */  sb    $t7, 0x12($v1)
-/* 052748 7F01DC18 03E00008 */  jr    $ra
-/* 05274C 7F01DC1C A06A0013 */   sb    $t2, 0x13($v1)
-
-.L7F01DC20:
-/* 052750 7F01DC20 000258C3 */  sra   $t3, $v0, 3
-/* 052754 7F01DC24 008B1821 */  addu  $v1, $a0, $t3
-/* 052758 7F01DC28 906C0012 */  lbu   $t4, 0x12($v1)
-/* 05275C 7F01DC2C 906D0013 */  lbu   $t5, 0x13($v1)
-/* 052760 7F01DC30 0007C203 */  sra   $t8, $a3, 8
-/* 052764 7F01DC34 3199FFFC */  andi  $t9, $t4, 0xfffc
-/* 052768 7F01DC38 31ABFF00 */  andi  $t3, $t5, 0xff00
-/* 05276C 7F01DC3C 33090003 */  andi  $t1, $t8, 3
-/* 052770 7F01DC40 A0790012 */  sb    $t9, 0x12($v1)
-/* 052774 7F01DC44 A06B0013 */  sb    $t3, 0x13($v1)
-/* 052778 7F01DC48 03295025 */  or    $t2, $t9, $t1
-/* 05277C 7F01DC4C 01677025 */  or    $t6, $t3, $a3
-/* 052780 7F01DC50 A06A0012 */  sb    $t2, 0x12($v1)
-/* 052784 7F01DC54 A06E0013 */  sb    $t6, 0x13($v1)
-.L7F01DC58:
-/* 052788 7F01DC58 03E00008 */  jr    $ra
-/* 05278C 7F01DC5C 00000000 */   nop
-)
-#endif
 
 
 /**
@@ -352,7 +296,7 @@ glabel sub_GAME_7F01DAE4
 s32 get_eeprom_stage_completed_for_difficulty(struct save_data *folder, s32 levelid, DIFFICULTY difficulty) {
 
     if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007)) {
-        return get_eeprom_stage_complete_time_for_difficulty(folder, levelid, difficulty) != 0;
+        return gamefileGetStageDifficultyTime(folder, levelid, difficulty) != 0;
     }
 
     return 0;
@@ -371,10 +315,10 @@ void sub_GAME_7F01DCB0(struct save_data *folder, s32 levelid, DIFFICULTY difficu
 
     if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007)) {
 
-        temp_v0 = get_eeprom_stage_complete_time_for_difficulty(folder, levelid, difficulty);
+        temp_v0 = gamefileGetStageDifficultyTime(folder, levelid, difficulty);
 
         if ((temp_v0 == 0) || (arg4 < temp_v0)) {
-            sub_GAME_7F01DAE4(folder, levelid, difficulty, arg4);
+            gamefileSetDifficultyStageTime(folder, levelid, difficulty, arg4);
         }
     }
 }
@@ -432,14 +376,18 @@ void sub_GAME_7F01DD74(struct save_data *save, s32 cheat)
 struct save_data *getEEPROMforFoldernum(u32 foldernum)
 {
     int i;
-    for (i = 0; i < 5; i++) {
+
+    for (i = 0; i < 5; i++)
+    {
         if (check_if_eeprom_flag_set_0x80(&saves[i]) == 0 &&
-                get_foldernum_of_eeprom(&saves[i]) == foldernum) {
+                get_foldernum_of_eeprom(&saves[i]) == foldernum)
+        {
             return &saves[i];
         }
     }
 
-    if (foldernum == RAMROM_FOLDERNUM) {
+    if (foldernum == RAMROM_FOLDERNUM)
+    {
         return &saves[5];
     }
 
