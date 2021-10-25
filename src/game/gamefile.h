@@ -33,7 +33,7 @@ extern struct save_data D_8002C7E0;
 extern struct save_data D_8002C840;
 extern struct save_data blank_eeprom;
 
-extern u32 save_selected_bond[];
+extern s32 save_selected_bond[];
 
 void set_selected_folder_num(u32 foldernum);
 void set_selected_difficulty(DIFFICULTY difficulty);

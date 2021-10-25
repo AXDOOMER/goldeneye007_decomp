@@ -1556,7 +1556,7 @@ void copy_eeprom_to_stack_set_folder_num(s32 foldernum)
             set_eeprom_to_folder_num(&new_save, foldernum);
         }
 
-        if ((s32)save_selected_bond[foldernum] != get_selected_bond(&new_save))
+        if (save_selected_bond[foldernum] != get_selected_bond(&new_save))
         {
             set_selected_bond(&new_save, save_selected_bond[foldernum]);
             sub_GAME_7F01E504(save, &new_save);
