@@ -1566,71 +1566,23 @@ void copy_eeprom_to_stack_set_folder_num(s32 foldernum)
 
 
 
-#ifdef NONMATCHING
-void copy_eeprom_from_to(void) {
+void copy_eeprom_from_to(s32 foldernum, struct save_data *out_save)
+{
+    struct save_data *in_save;
+    struct save_data new_save;
 
+    in_save = getEEPROMforFoldernum(foldernum);
+
+    if (in_save != 0)
+    {
+        *out_save = *in_save;
+    }
+    else
+    {
+        new_save = blank_eeprom;
+        *out_save = new_save;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel copy_eeprom_from_to
-/* 053EC4 7F01F394 27BDFF80 */  addiu $sp, $sp, -0x80
-/* 053EC8 7F01F398 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 053ECC 7F01F39C 0FC07771 */  jal   getEEPROMforFoldernum
-/* 053ED0 7F01F3A0 AFA50084 */   sw    $a1, 0x84($sp)
-/* 053ED4 7F01F3A4 1040000F */  beqz  $v0, .L7F01F3E4
-/* 053ED8 7F01F3A8 8FA30084 */   lw    $v1, 0x84($sp)
-/* 053EDC 7F01F3AC 0040C025 */  move  $t8, $v0
-/* 053EE0 7F01F3B0 0060C825 */  move  $t9, $v1
-/* 053EE4 7F01F3B4 244F0060 */  addiu $t7, $v0, 0x60
-.L7F01F3B8:
-/* 053EE8 7F01F3B8 8F010000 */  lw    $at, ($t8)
-/* 053EEC 7F01F3BC 2718000C */  addiu $t8, $t8, 0xc
-/* 053EF0 7F01F3C0 2739000C */  addiu $t9, $t9, 0xc
-/* 053EF4 7F01F3C4 AF21FFF4 */  sw    $at, -0xc($t9)
-/* 053EF8 7F01F3C8 8F01FFF8 */  lw    $at, -8($t8)
-/* 053EFC 7F01F3CC AF21FFF8 */  sw    $at, -8($t9)
-/* 053F00 7F01F3D0 8F01FFFC */  lw    $at, -4($t8)
-/* 053F04 7F01F3D4 170FFFF8 */  bne   $t8, $t7, .L7F01F3B8
-/* 053F08 7F01F3D8 AF21FFFC */   sw    $at, -4($t9)
-/* 053F0C 7F01F3DC 1000001C */  b     .L7F01F450
-/* 053F10 7F01F3E0 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F01F3E4:
-/* 053F14 7F01F3E4 3C088003 */  lui   $t0, %hi(blank_eeprom)
-/* 053F18 7F01F3E8 27A2001C */  addiu $v0, $sp, 0x1c
-/* 053F1C 7F01F3EC 2508C8A0 */  addiu $t0, %lo(blank_eeprom) # addiu $t0, $t0, -0x3760
-/* 053F20 7F01F3F0 250A0060 */  addiu $t2, $t0, 0x60
-/* 053F24 7F01F3F4 00405825 */  move  $t3, $v0
-.L7F01F3F8:
-/* 053F28 7F01F3F8 8D010000 */  lw    $at, ($t0)
-/* 053F2C 7F01F3FC 2508000C */  addiu $t0, $t0, 0xc
-/* 053F30 7F01F400 256B000C */  addiu $t3, $t3, 0xc
-/* 053F34 7F01F404 AD61FFF4 */  sw    $at, -0xc($t3)
-/* 053F38 7F01F408 8D01FFF8 */  lw    $at, -8($t0)
-/* 053F3C 7F01F40C AD61FFF8 */  sw    $at, -8($t3)
-/* 053F40 7F01F410 8D01FFFC */  lw    $at, -4($t0)
-/* 053F44 7F01F414 150AFFF8 */  bne   $t0, $t2, .L7F01F3F8
-/* 053F48 7F01F418 AD61FFFC */   sw    $at, -4($t3)
-/* 053F4C 7F01F41C 00407025 */  move  $t6, $v0
-/* 053F50 7F01F420 00607825 */  move  $t7, $v1
-/* 053F54 7F01F424 244D0060 */  addiu $t5, $v0, 0x60
-.L7F01F428:
-/* 053F58 7F01F428 8DC10000 */  lw    $at, ($t6)
-/* 053F5C 7F01F42C 25CE000C */  addiu $t6, $t6, 0xc
-/* 053F60 7F01F430 25EF000C */  addiu $t7, $t7, 0xc
-/* 053F64 7F01F434 ADE1FFF4 */  sw    $at, -0xc($t7)
-/* 053F68 7F01F438 8DC1FFF8 */  lw    $at, -8($t6)
-/* 053F6C 7F01F43C ADE1FFF8 */  sw    $at, -8($t7)
-/* 053F70 7F01F440 8DC1FFFC */  lw    $at, -4($t6)
-/* 053F74 7F01F444 15CDFFF8 */  bne   $t6, $t5, .L7F01F428
-/* 053F78 7F01F448 ADE1FFFC */   sw    $at, -4($t7)
-/* 053F7C 7F01F44C 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F01F450:
-/* 053F80 7F01F450 27BD0080 */  addiu $sp, $sp, 0x80
-/* 053F84 7F01F454 03E00008 */  jr    $ra
-/* 053F88 7F01F458 00000000 */   nop
-)
-#endif
 
 
 void copy_demo_eeprom_to_ramrom_folder(u32 foldernum, struct save_data *save)
