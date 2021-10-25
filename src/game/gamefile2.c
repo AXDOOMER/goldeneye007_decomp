@@ -1537,84 +1537,32 @@ void delete_update_eeprom_file(s32 foldernum)
 
 
 
-#ifdef NONMATCHING
-void copy_eeprom_to_stack_set_folder_num(void) {
+void copy_eeprom_to_stack_set_folder_num(s32 foldernum)
+{
+    struct save_data *save;
+    struct save_data new_save;
 
+    if (foldernum >= 0 && foldernum < 4)
+    {
+        save = getEEPROMforFoldernum(foldernum);
+        new_save = D_8002C840;
+
+        if (save != 0)
+        {
+            new_save = *save;
+        }
+        else
+        {
+            set_eeprom_to_folder_num(&new_save, foldernum);
+        }
+
+        if ((s32)save_selected_bond[foldernum] != get_selected_bond(&new_save))
+        {
+            set_selected_bond(&new_save, save_selected_bond[foldernum]);
+            sub_GAME_7F01E504(save, &new_save);
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel copy_eeprom_to_stack_set_folder_num
-/* 053DCC 7F01F29C 27BDFF78 */  addiu $sp, $sp, -0x88
-/* 053DD0 7F01F2A0 AFB00014 */  sw    $s0, 0x14($sp)
-/* 053DD4 7F01F2A4 00808025 */  move  $s0, $a0
-/* 053DD8 7F01F2A8 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 053DDC 7F01F2AC 04800034 */  bltz  $a0, .L7F01F380
-/* 053DE0 7F01F2B0 AFB10018 */   sw    $s1, 0x18($sp)
-/* 053DE4 7F01F2B4 28810004 */  slti  $at, $a0, 4
-/* 053DE8 7F01F2B8 50200032 */  beql  $at, $zero, .L7F01F384
-/* 053DEC 7F01F2BC 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 053DF0 7F01F2C0 0FC07771 */  jal   getEEPROMforFoldernum
-/* 053DF4 7F01F2C4 00000000 */   nop
-/* 053DF8 7F01F2C8 3C0E8003 */  lui   $t6, %hi(D_8002C840)
-/* 053DFC 7F01F2CC 27B10024 */  addiu $s1, $sp, 0x24
-/* 053E00 7F01F2D0 25CEC840 */  addiu $t6, %lo(D_8002C840) # addiu $t6, $t6, -0x37c0
-/* 053E04 7F01F2D4 AFA20084 */  sw    $v0, 0x84($sp)
-/* 053E08 7F01F2D8 25D90060 */  addiu $t9, $t6, 0x60
-/* 053E0C 7F01F2DC 02204025 */  move  $t0, $s1
-.L7F01F2E0:
-/* 053E10 7F01F2E0 8DC10000 */  lw    $at, ($t6)
-/* 053E14 7F01F2E4 25CE000C */  addiu $t6, $t6, 0xc
-/* 053E18 7F01F2E8 2508000C */  addiu $t0, $t0, 0xc
-/* 053E1C 7F01F2EC AD01FFF4 */  sw    $at, -0xc($t0)
-/* 053E20 7F01F2F0 8DC1FFF8 */  lw    $at, -8($t6)
-/* 053E24 7F01F2F4 AD01FFF8 */  sw    $at, -8($t0)
-/* 053E28 7F01F2F8 8DC1FFFC */  lw    $at, -4($t6)
-/* 053E2C 7F01F2FC 15D9FFF8 */  bne   $t6, $t9, .L7F01F2E0
-/* 053E30 7F01F300 AD01FFFC */   sw    $at, -4($t0)
-/* 053E34 7F01F304 1040000F */  beqz  $v0, .L7F01F344
-/* 053E38 7F01F308 02202025 */   move  $a0, $s1
-/* 053E3C 7F01F30C 00405825 */  move  $t3, $v0
-/* 053E40 7F01F310 02206025 */  move  $t4, $s1
-/* 053E44 7F01F314 244A0060 */  addiu $t2, $v0, 0x60
-.L7F01F318:
-/* 053E48 7F01F318 8D610000 */  lw    $at, ($t3)
-/* 053E4C 7F01F31C 256B000C */  addiu $t3, $t3, 0xc
-/* 053E50 7F01F320 258C000C */  addiu $t4, $t4, 0xc
-/* 053E54 7F01F324 AD81FFF4 */  sw    $at, -0xc($t4)
-/* 053E58 7F01F328 8D61FFF8 */  lw    $at, -8($t3)
-/* 053E5C 7F01F32C AD81FFF8 */  sw    $at, -8($t4)
-/* 053E60 7F01F330 8D61FFFC */  lw    $at, -4($t3)
-/* 053E64 7F01F334 156AFFF8 */  bne   $t3, $t2, .L7F01F318
-/* 053E68 7F01F338 AD81FFFC */   sw    $at, -4($t4)
-/* 053E6C 7F01F33C 10000003 */  b     .L7F01F34C
-/* 053E70 7F01F340 00000000 */   nop
-.L7F01F344:
-/* 053E74 7F01F344 0FC07636 */  jal   set_eeprom_to_folder_num
-/* 053E78 7F01F348 02002825 */   move  $a1, $s0
-.L7F01F34C:
-/* 053E7C 7F01F34C 0FC07649 */  jal   get_selected_bond
-/* 053E80 7F01F350 02202025 */   move  $a0, $s1
-/* 053E84 7F01F354 00106880 */  sll   $t5, $s0, 2
-/* 053E88 7F01F358 3C058003 */  lui   $a1, %hi(save_selected_bond)
-/* 053E8C 7F01F35C 00AD2821 */  addu  $a1, $a1, $t5
-/* 053E90 7F01F360 8CA5C510 */  lw    $a1, %lo(save_selected_bond)($a1)
-/* 053E94 7F01F364 50450007 */  beql  $v0, $a1, .L7F01F384
-/* 053E98 7F01F368 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 053E9C 7F01F36C 0FC0764D */  jal   set_selected_bond
-/* 053EA0 7F01F370 02202025 */   move  $a0, $s1
-/* 053EA4 7F01F374 8FA40084 */  lw    $a0, 0x84($sp)
-/* 053EA8 7F01F378 0FC07941 */  jal   sub_GAME_7F01E504
-/* 053EAC 7F01F37C 02202825 */   move  $a1, $s1
-.L7F01F380:
-/* 053EB0 7F01F380 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F01F384:
-/* 053EB4 7F01F384 8FB00014 */  lw    $s0, 0x14($sp)
-/* 053EB8 7F01F388 8FB10018 */  lw    $s1, 0x18($sp)
-/* 053EBC 7F01F38C 03E00008 */  jr    $ra
-/* 053EC0 7F01F390 27BD0088 */   addiu $sp, $sp, 0x88
-)
-#endif
 
 
 
