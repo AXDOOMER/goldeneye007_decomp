@@ -13,48 +13,13 @@ s32 sub_GAME_7F01D6C0(void) {
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F01D6E0(void) {
+void reset_ramrom_folder_to_default(void)
+{
+    struct save_data stack96;
 
+    *(&stack96) = *(&D_8002C520);
+    *(&saves[5]) = *(&stack96);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01D6E0
-/* 052210 7F01D6E0 27BDFFA0 */  addiu $sp, $sp, -0x60
-/* 052214 7F01D6E4 3C0E8003 */  lui   $t6, %hi(D_8002C520)
-/* 052218 7F01D6E8 27A20000 */  addiu $v0, $sp, 0
-/* 05221C 7F01D6EC 25CEC520 */  addiu $t6, %lo(D_8002C520) # addiu $t6, $t6, -0x3ae0
-/* 052220 7F01D6F0 25D90060 */  addiu $t9, $t6, 0x60
-/* 052224 7F01D6F4 00404025 */  move  $t0, $v0
-.L7F01D6F8:
-/* 052228 7F01D6F8 8DC10000 */  lw    $at, ($t6)
-/* 05222C 7F01D6FC 25CE000C */  addiu $t6, $t6, 0xc
-/* 052230 7F01D700 2508000C */  addiu $t0, $t0, 0xc
-/* 052234 7F01D704 AD01FFF4 */  sw    $at, -0xc($t0)
-/* 052238 7F01D708 8DC1FFF8 */  lw    $at, -8($t6)
-/* 05223C 7F01D70C AD01FFF8 */  sw    $at, -8($t0)
-/* 052240 7F01D710 8DC1FFFC */  lw    $at, -4($t6)
-/* 052244 7F01D714 15D9FFF8 */  bne   $t6, $t9, .L7F01D6F8
-/* 052248 7F01D718 AD01FFFC */   sw    $at, -4($t0)
-/* 05224C 7F01D71C 3C098007 */  lui   $t1, %hi(saves)
-/* 052250 7F01D720 25299B00 */  addiu $t1, %lo(saves+0x1e0) # addiu $t1, $t1, -0x6500
-/* 052254 7F01D724 00406825 */  move  $t5, $v0
-/* 052258 7F01D728 244C0060 */  addiu $t4, $v0, 0x60
-.L7F01D72C:
-/* 05225C 7F01D72C 8DA10000 */  lw    $at, ($t5)
-/* 052260 7F01D730 25AD000C */  addiu $t5, $t5, 0xc
-/* 052264 7F01D734 2529000C */  addiu $t1, $t1, 0xc
-/* 052268 7F01D738 AD21FFF4 */  sw    $at, -0xc($t1)
-/* 05226C 7F01D73C 8DA1FFF8 */  lw    $at, -8($t5)
-/* 052270 7F01D740 AD21FFF8 */  sw    $at, -8($t1)
-/* 052274 7F01D744 8DA1FFFC */  lw    $at, -4($t5)
-/* 052278 7F01D748 15ACFFF8 */  bne   $t5, $t4, .L7F01D72C
-/* 05227C 7F01D74C AD21FFFC */   sw    $at, -4($t1)
-/* 052280 7F01D750 03E00008 */  jr    $ra
-/* 052284 7F01D754 27BD0060 */   addiu $sp, $sp, 0x60
-)
-#endif
 
 
 
