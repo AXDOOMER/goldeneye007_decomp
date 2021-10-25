@@ -7,18 +7,18 @@
 #include "watch.h"
 
 /**
- * @brief 
- * 
- * @return s32 
+ *
+ *
+ * @return s32
  */
-s32 sub_GAME_7F01D6C0(void) 
+s32 sub_GAME_7F01D6C0(void)
 {
   return joyGamePakProbe();
 }
 
 /**
- * @brief Resets the RamRom replay folder save
- * 
+ * Resets the RamRom replay folder save
+ *
  */
 void reset_ramrom_folder_to_default(void)
 {
@@ -28,9 +28,9 @@ void reset_ramrom_folder_to_default(void)
 }
 
 /**
- * @brief 
- * 
- * @param save 
+ *
+ *
+ * @param save
  */
 void sub_GAME_7F01D758(struct save_data *save)
 {
@@ -42,9 +42,9 @@ void sub_GAME_7F01D758(struct save_data *save)
 }
 
 /**
- * @brief  
- * 
- * @param save 
+ *
+ *
+ * @param save
  */
 void sub_GAME_7F01D7A0(struct save_data *save)
 {
@@ -59,9 +59,9 @@ void sub_GAME_7F01D7A0(struct save_data *save)
 }
 
 /**
- * @brief reset save to default
- * 
- * @param save 
+ * reset save to default
+ *
+ * @param save
  */
 void reset_folder_to_default(struct save_data *save)
 {
@@ -72,10 +72,10 @@ void reset_folder_to_default(struct save_data *save)
 }
 
 /**
- * @brief Get the foldernum of eeprom save
- * 
- * @param eeprom 
- * @return u32 
+ * Get the foldernum of eeprom save
+ *
+ * @param eeprom
+ * @return u32
  */
 u32 get_foldernum_of_eeprom(struct save_data *eeprom)
 {
@@ -83,22 +83,22 @@ u32 get_foldernum_of_eeprom(struct save_data *eeprom)
 }
 
 /**
- * @brief Clear then set save foldernumber flag
- * 
- * @param eeprom 
- * @param folder 
+ * Clear then set save foldernumber flag
+ *
+ * @param eeprom
+ * @param folder
  */
-void set_eeprom_to_folder_num(struct save_data *eeprom, u32 folder) 
+void set_eeprom_to_folder_num(struct save_data *eeprom, u32 folder)
 {
     eeprom->completion_bitflags &= 0xFFF8;
     eeprom->completion_bitflags |= folder & 7;
 }
 
 /**
- * @brief Set save flag 0x18
- * 
- * @param folder 
- * @return u32 
+ * Set save flag 0x18
+ *
+ * @param folder
+ * @return u32
  */
 u32 set_eeprom_flag_0x18(struct save_data *folder)
 {
@@ -106,22 +106,22 @@ u32 set_eeprom_flag_0x18(struct save_data *folder)
 }
 
 /**
- * @brief Resets save flag 0x18
- * 
- * @param folder 
- * @param arg1 
+ * Resets save flag 0x18
+ *
+ * @param folder
+ * @param arg1
  */
-void reset_eeprom_flag_0x18(struct save_data *folder, s32 arg1) 
+void reset_eeprom_flag_0x18(struct save_data *folder, s32 arg1)
 {
     folder->completion_bitflags &= 0xFFE7;
     folder->completion_bitflags |= ((arg1 * 8) & 0x18);
 }
 
 /**
- * @brief Get the selected bond save flag
- * 
- * @param folder 
- * @return u32 
+ * Get the selected bond save flag
+ *
+ * @param folder
+ * @return u32
  */
 u32 get_selected_bond(struct save_data *folder)
 {
@@ -129,22 +129,22 @@ u32 get_selected_bond(struct save_data *folder)
 }
 
 /**
- * @brief Set the selected bond save flag
- * 
- * @param folder 
- * @param arg1 
+ * Set the selected bond save flag
+ *
+ * @param folder
+ * @param arg1
  */
-void set_selected_bond(struct save_data *folder, s32 arg1) 
+void set_selected_bond(struct save_data *folder, s32 arg1)
 {
     folder->completion_bitflags &= 0xFF9F;
     folder->completion_bitflags |= ((arg1 << 5) & 0x60);
 }
 
 /**
- * @brief Check if save has flag 0x80
- * 
- * @param folder 
- * @return u32 
+ * Check if save has flag 0x80
+ *
+ * @param folder
+ * @return u32
  */
 u32 check_if_eeprom_flag_set_0x80(struct save_data *folder)
 {
@@ -152,10 +152,10 @@ u32 check_if_eeprom_flag_set_0x80(struct save_data *folder)
 }
 
 /**
- * @brief Toggle save flag 0x80
- * 
- * @param folder 
- * @param mode 
+ * Toggle save flag 0x80
+ *
+ * @param folder
+ * @param mode
  */
 void toggle_eeprom_flag_set_0x80(struct save_data *folder,u32 mode)
 {
@@ -167,11 +167,11 @@ void toggle_eeprom_flag_set_0x80(struct save_data *folder,u32 mode)
 }
 
 /**
- * @brief Get completion time for stage at difficulty
- * 
- * @param save 
- * @param stagenum 
- * @param difficulty 
+ * Get completion time for stage at difficulty
+ *
+ * @param save
+ * @param stagenum
+ * @param difficulty
  * @return best time for stage at difficulty
  */
 s32 get_eeprom_stage_complete_time_for_difficulty(struct save_data* save, LEVEL_SOLO_SEQUENCE stagenum, DIFFICULTY difficulty)
@@ -342,11 +342,11 @@ glabel sub_GAME_7F01DAE4
 
 
 /**
- * @brief Check if stage is completed at difficulty for save
- * 
- * @param folder 
- * @param levelid 
- * @param difficulty 
+ * Check if stage is completed at difficulty for save
+ *
+ * @param folder
+ * @param levelid
+ * @param difficulty
  * @return is stage at diffiuclty completed
  */
 s32 get_eeprom_stage_completed_for_difficulty(struct save_data *folder, s32 levelid, DIFFICULTY difficulty) {
@@ -359,12 +359,12 @@ s32 get_eeprom_stage_completed_for_difficulty(struct save_data *folder, s32 leve
 }
 
 /**
- * @brief 
- * 
- * @param folder 
- * @param levelid 
- * @param difficulty 
- * @param arg4 
+ *
+ *
+ * @param folder
+ * @param levelid
+ * @param difficulty
+ * @param arg4
  */
 void sub_GAME_7F01DCB0(struct save_data *folder, s32 levelid, DIFFICULTY difficulty, s32 arg4) {
     s32 temp_v0;
@@ -380,10 +380,10 @@ void sub_GAME_7F01DCB0(struct save_data *folder, s32 levelid, DIFFICULTY difficu
 }
 
 /**
- * @brief Check if cheat is unlocked
- * 
- * @param save 
- * @param cheat 
+ * Check if cheat is unlocked
+ *
+ * @param save
+ * @param cheat
  * @return bool
  */
 s32 check_if_cheat_unlocked(struct save_data *save, s32 cheat)
@@ -400,10 +400,10 @@ s32 check_if_cheat_unlocked(struct save_data *save, s32 cheat)
 }
 
 /**
- * @brief 
- * 
- * @param save 
- * @param cheat 
+ *
+ *
+ * @param save
+ * @param cheat
  */
 void sub_GAME_7F01DD74(struct save_data *save, s32 cheat)
 {
@@ -424,10 +424,10 @@ void sub_GAME_7F01DD74(struct save_data *save, s32 cheat)
 }
 
 /**
- * @brief Get save in foldernum slot
- * 
- * @param foldernum 
- * @return struct save_data* 
+ * Get save in foldernum slot
+ *
+ * @param foldernum
+ * @return struct save_data*
  */
 struct save_data *getEEPROMforFoldernum(u32 foldernum)
 {
@@ -447,9 +447,9 @@ struct save_data *getEEPROMforFoldernum(u32 foldernum)
 }
 
 /**
- * @brief See if any save has 0x80 flag
- * 
- * @return s32 
+ * See if any save has 0x80 flag
+ *
+ * @return s32
  */
 s32 check_if_eeprom_flag_set_0x80_any_folder(void)
 {
@@ -467,11 +467,10 @@ s32 check_if_eeprom_flag_set_0x80_any_folder(void)
 }
 
 /**
- * @brief 
- * 
  * Resets save with 0x80 flag
  * Maybe clearing for copy or wear level
- * @param foldernum 
+ *
+ * @param foldernum
  */
 void sub_GAME_7F01DEB4(u32 foldernum)
 {
@@ -715,9 +714,9 @@ glabel sub_GAME_7F01DF90
 #endif
 
 /**
- * @brief Validate foldernum
- * 
- * @param folder 
+ * Validate foldernum
+ *
+ * @param folder
  * @return bool
  */
 s32 check_if_valid_folder_num(s32 folder)
@@ -917,10 +916,10 @@ glabel isStageUnlockedAtDifficulty
 
 
 /**
- * @brief 
- * 
- * @param save1 
- * @param save2 
+ *
+ *
+ * @param save1
+ * @param save2
  */
 void sub_GAME_7F01E504(struct save_data *save1, struct save_data *save2)
 {
@@ -1154,11 +1153,11 @@ glabel sub_GAME_7F01E760
 
 
 /**
- * @brief Get the highest stage and difficulty completed in folder
- * 
- * @param foldernum 
- * @param stage 
- * @param difficulty 
+ * Get the highest stage and difficulty completed in folder
+ *
+ * @param foldernum
+ * @param stage
+ * @param difficulty
  */
 void get_highest_stage_difficulty_completed_in_folder(s32 foldernum, LEVEL_SOLO_SEQUENCE *stage, DIFFICULTY *difficulty)
 {
@@ -1188,12 +1187,12 @@ void get_highest_stage_difficulty_completed_in_folder(s32 foldernum, LEVEL_SOLO_
 }
 
 /**
- * @brief Get the highest stage unlocked in folder
- * 
- * @param foldernum 
- * @return s32 
+ * Get the highest stage unlocked in folder
+ *
+ * @param foldernum
+ * @return s32
  */
-s32 get_highest_stage_unlocked_in_folder(s32 foldernum) 
+s32 get_highest_stage_unlocked_in_folder(s32 foldernum)
 {
     LEVEL_SOLO_SEQUENCE stageid;
     DIFFICULTY difficulty;
@@ -1215,11 +1214,11 @@ s32 get_highest_stage_unlocked_in_folder(s32 foldernum)
 }
 
 /**
- * @brief Get the highest stage unlocked in any folder
- * 
- * @return stageid 
+ * Get the highest stage unlocked in any folder
+ *
+ * @return stageid
  */
-u32 get_highest_stage_unlocked_any_folder(void) 
+u32 get_highest_stage_unlocked_any_folder(void)
 {
     u32 isfound;
     int folder;
@@ -1230,7 +1229,7 @@ u32 get_highest_stage_unlocked_any_folder(void)
     while (folder != 4) {
         isfound = get_highest_stage_unlocked_in_folder(folder);
         folder += 1;
-        if ((int)isunlocked < (int)isfound) 
+        if ((int)isunlocked < (int)isfound)
         {
             isunlocked = isfound;
         }
@@ -1239,9 +1238,9 @@ u32 get_highest_stage_unlocked_any_folder(void)
 }
 
 /**
- * @brief Check if cradle has been completed at any difficulty
- * 
- * @param foldernum 
+ * Check if cradle has been completed at any difficulty
+ *
+ * @param foldernum
  * @return bool
  */
 s32 check_cradle_completed_in_folder(s32 foldernum)
@@ -1252,21 +1251,21 @@ s32 check_cradle_completed_in_folder(s32 foldernum)
 }
 
 /**
- * @brief Check if aztec has been completed at secret or 00 difficulty
- * 
- * @param foldernum 
+ * Check if aztec has been completed at secret or 00 difficulty
+ *
+ * @param foldernum
  * @return bool
  */
-s32 check_aztec_completed_in_folder_secret_00(s32 foldernum) 
+s32 check_aztec_completed_in_folder_secret_00(s32 foldernum)
 {
     return (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_AZTEC, DIFFICULTY_SECRET) == 3) ||
             (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_AZTEC, DIFFICULTY_00) == 3);
 }
 
 /**
- * @brief Check if egypt is completed at 00 difficulty
- * 
- * @param foldernum 
+ * Check if egypt is completed at 00 difficulty
+ *
+ * @param foldernum
  * @return bool
  */
 s32 check_egypt_completed_in_folder_00(int foldernum)
@@ -1275,21 +1274,21 @@ s32 check_egypt_completed_in_folder_00(int foldernum)
 }
 
 /**
- * @brief Check if cradle has been completed in any folder
- * 
+ * Check if cradle has been completed in any folder
+ *
  * @return bool
  */
-u32 check_cradle_completed_any_folder(void) 
+u32 check_cradle_completed_any_folder(void)
 {
     u32 completed;
     int folder;
 
     folder = 0;
-    while (folder != 4) 
+    while (folder != 4)
     {
         completed = check_cradle_completed_in_folder(folder);
         folder += 1;
-        if (completed != FALSE) 
+        if (completed != FALSE)
         {
             return TRUE;
         }
@@ -1298,21 +1297,21 @@ u32 check_cradle_completed_any_folder(void)
 }
 
 /**
- * @brief Check if aztec has been completed in any folder at secret or 00 difficulty
- * 
+ * Check if aztec has been completed in any folder at secret or 00 difficulty
+ *
  * @return bool
  */
-u32 check_aztec_completed_any_folder_secret_00(void) 
+u32 check_aztec_completed_any_folder_secret_00(void)
 {
     u32 completed;
     int folder;
 
     folder = 0;
-    while (folder != 4) 
+    while (folder != 4)
     {
         completed = check_aztec_completed_in_folder_secret_00(folder);
         folder += 1;
-        if (completed != FALSE) 
+        if (completed != FALSE)
         {
             return TRUE;
         }
@@ -1321,21 +1320,21 @@ u32 check_aztec_completed_any_folder_secret_00(void)
 }
 
 /**
- * @brief Check if Egypt has been completed in any folder at secret or 00 difficulty
- * 
+ * Check if Egypt has been completed in any folder at secret or 00 difficulty
+ *
  * @return bool
  */
-u32 check_egypt_completed_any_folder_00(void) 
+u32 check_egypt_completed_any_folder_00(void)
 {
     u32 completed;
     int folder;
 
     folder = 0;
-    while (folder != 4) 
+    while (folder != 4)
     {
         completed = check_egypt_completed_in_folder_00(folder);
         folder += 1;
-        if (completed != FALSE) 
+        if (completed != FALSE)
         {
             return TRUE;
         }
@@ -1344,10 +1343,10 @@ u32 check_egypt_completed_any_folder_00(void)
 }
 
 /**
- * @brief Unused
- * 
- * @param folder 
- * @return u8 
+ * Unused
+ *
+ * @param folder
+ * @return u8
  */
 u8 removed_would_have_returned_bond_for_folder_num(u32 folder)
 {
@@ -1365,12 +1364,12 @@ u8 removed_would_have_returned_bond_for_folder_num(u32 folder)
 }
 
 /**
- * @brief Set the selected bond to folder object
- * 
- * @param folder 
- * @param bond 
+ * Set the selected bond to folder object
+ *
+ * @param folder
+ * @param bond
  */
-void set_selected_bond_to_folder(s32 folder, s32 bond) 
+void set_selected_bond_to_folder(s32 folder, s32 bond)
 {
     if (folder < 0 || folder > 3)
     {
@@ -1381,29 +1380,29 @@ void set_selected_bond_to_folder(s32 folder, s32 bond)
 }
 
 /**
- * @brief 
- * 
- * @param unused 
+ *
+ *
+ * @param unused
  */
-void sub_GAME_7F01EBF4(u32 unused) 
+void sub_GAME_7F01EBF4(u32 unused)
 {
     return;
 }
 
 /**
- * @brief 
- * 
- * @param unused 
+ *
+ *
+ * @param unused
  */
-void sub_GAME_7F01EBFC(u32 unused) 
+void sub_GAME_7F01EBFC(u32 unused)
 {
     return;
 }
 
 /**
- * @brief Delete save at foldernum
- * 
- * @param foldernum 
+ * Delete save at foldernum
+ *
+ * @param foldernum
  */
 void delete_eeprom_folder(s32 foldernum)
 {
@@ -1433,10 +1432,10 @@ void delete_eeprom_folder(s32 foldernum)
 }
 
 /**
- * @brief 
- * 
+ *
+ *
  * Resetting times??
- * @param foldernum 
+ * @param foldernum
  */
 void sub_GAME_7F01ED10(u32 foldernum)
 {
@@ -1456,8 +1455,8 @@ void sub_GAME_7F01ED10(u32 foldernum)
 }
 
 /**
- * @brief Copy save
- * 
+ * Copy save
+ *
  * Copies selected save to the first free slot
  * if no free slot, do nothing
  * @param foldernum Current folder number
@@ -1507,8 +1506,8 @@ void sub_GAME_7F01EDA0(s32 foldernum)
 
 /**
  * @brief
- * 
- * @param save 
+ *
+ * @param save
  */
 void update_eeprom_to_current_solo_watch_settings(struct save_data *save)
 {
@@ -1568,9 +1567,9 @@ void update_eeprom_to_current_solo_watch_settings(struct save_data *save)
 }
 
 /**
- * @brief Get the screen ratio settings for mpgame from folder
- * 
- * @param foldernum 
+ * Get the screen ratio settings for mpgame from folder
+ *
+ * @param foldernum
  */
 void get_screen_ratio_settings_for_mpgame_from_folder(u32 foldernum)
 {
@@ -1620,9 +1619,9 @@ void get_screen_ratio_settings_for_mpgame_from_folder(u32 foldernum)
 }
 
 /**
- * @brief Delete 
- * 
- * @param foldernum 
+ * Delete
+ *
+ * @param foldernum
  */
 void delete_update_eeprom_file(s32 foldernum)
 {
@@ -1636,11 +1635,11 @@ void delete_update_eeprom_file(s32 foldernum)
 
         save_to_copy = D_8002C7E0;
 
-        if (save != 0) 
+        if (save != 0)
         {
             save_to_copy = *save;
-        } 
-        else 
+        }
+        else
         {
             set_eeprom_to_folder_num(&save_to_copy, foldernum);
         }
@@ -1649,7 +1648,7 @@ void delete_update_eeprom_file(s32 foldernum)
 
         update_eeprom_to_current_solo_watch_settings(&new_save);
 
-        if (_bcmp(&new_save, &save_to_copy, 0x60) != 0) 
+        if (_bcmp(&new_save, &save_to_copy, 0x60) != 0)
         {
             sub_GAME_7F01E504(save, &new_save);
         }
@@ -1657,9 +1656,9 @@ void delete_update_eeprom_file(s32 foldernum)
 }
 
 /**
- * @brief 
- * 
- * @param foldernum 
+ *
+ *
+ * @param foldernum
  */
 void copy_eeprom_to_stack_set_folder_num(s32 foldernum)
 {
@@ -1689,10 +1688,10 @@ void copy_eeprom_to_stack_set_folder_num(s32 foldernum)
 }
 
 /**
- * @brief Copy save for foldernum to out_save
- * 
- * @param foldernum 
- * @param out_save 
+ * Copy save for foldernum to out_save
+ *
+ * @param foldernum
+ * @param out_save
  */
 void copy_eeprom_from_to(s32 foldernum, struct save_data *out_save)
 {
@@ -1713,10 +1712,10 @@ void copy_eeprom_from_to(s32 foldernum, struct save_data *out_save)
 }
 
 /**
- * @brief Copy save to RarRom replay save
- * 
- * @param foldernum 
- * @param save 
+ * Copy save to RarRom replay save
+ *
+ * @param foldernum
+ * @param save
  */
 void copy_demo_eeprom_to_ramrom_folder(u32 foldernum, struct save_data *save)
 {
@@ -1727,9 +1726,9 @@ void copy_demo_eeprom_to_ramrom_folder(u32 foldernum, struct save_data *save)
 }
 
 /**
- * @brief Check is 007 mode is unlocked
- * 
- * @param foldernum 
+ * Check is 007 mode is unlocked
+ *
+ * @param foldernum
  * @return bool
  */
 s32 check_for_007_mode_unlocked(u32 foldernum)
@@ -1738,7 +1737,7 @@ s32 check_for_007_mode_unlocked(u32 foldernum)
     struct save_data* folder;
 
     folder = getEEPROMforFoldernum(foldernum);
-    
+
     if (folder != NULL)
     {
         if ((folder->flag_007 & 1))
