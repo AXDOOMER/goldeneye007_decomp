@@ -832,116 +832,41 @@ void sub_GAME_7F01E504(save_data *save1, save_data *save2)
 
 
 
-#ifdef NONMATCHING
-void unlock_stage_in_folder_on_difficulty(void) {
+void unlock_stage_in_folder_on_difficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE stage, DIFFICULTY difficulty, s32 maxtime)
+{
+    save_data new_save;
+    save_data *save;
+    s32 i;
 
+    if ((foldernum >= 0) && (foldernum < 4) &&
+        (stage >= SP_LEVEL_DAM) && (stage < SP_LEVEL_MAX) &&
+        (difficulty >= DIFFICULTY_AGENT) && (difficulty < DIFFICULTY_MAX))
+    {
+        new_save = D_8002C660;
+
+        save = getEEPROMforFoldernum(foldernum);
+
+        if (save != 0) {
+            new_save = *save;
+        } else {
+            set_eeprom_to_folder_num(&new_save, foldernum);
+        }
+
+        for (i = difficulty; i >= DIFFICULTY_AGENT; i--)
+        {
+            if (i == difficulty)
+            {
+                sub_GAME_7F01DCB0(&new_save, stage, i, maxtime);
+            }
+            else
+            {
+                sub_GAME_7F01DCB0(&new_save, stage, i, 99999999);
+            }
+        }
+
+        sub_GAME_7F01E504(&save->chksum1, &new_save);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel unlock_stage_in_folder_on_difficulty
-/* 053128 7F01E5F8 27BDFF68 */  addiu $sp, $sp, -0x98
-/* 05312C 7F01E5FC AFB50028 */  sw    $s5, 0x28($sp)
-/* 053130 7F01E600 AFB40024 */  sw    $s4, 0x24($sp)
-/* 053134 7F01E604 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 053138 7F01E608 AFB00014 */  sw    $s0, 0x14($sp)
-/* 05313C 7F01E60C 00808025 */  move  $s0, $a0
-/* 053140 7F01E610 00A09025 */  move  $s2, $a1
-/* 053144 7F01E614 00C0A025 */  move  $s4, $a2
-/* 053148 7F01E618 00E0A825 */  move  $s5, $a3
-/* 05314C 7F01E61C AFBF002C */  sw    $ra, 0x2c($sp)
-/* 053150 7F01E620 AFB30020 */  sw    $s3, 0x20($sp)
-/* 053154 7F01E624 04800045 */  bltz  $a0, .L7F01E73C
-/* 053158 7F01E628 AFB10018 */   sw    $s1, 0x18($sp)
-/* 05315C 7F01E62C 28810004 */  slti  $at, $a0, 4
-/* 053160 7F01E630 50200043 */  beql  $at, $zero, .L7F01E740
-/* 053164 7F01E634 8FBF002C */   lw    $ra, 0x2c($sp)
-/* 053168 7F01E638 04A00040 */  bltz  $a1, .L7F01E73C
-/* 05316C 7F01E63C 28A10014 */   slti  $at, $a1, 0x14
-/* 053170 7F01E640 5020003F */  beql  $at, $zero, .L7F01E740
-/* 053174 7F01E644 8FBF002C */   lw    $ra, 0x2c($sp)
-/* 053178 7F01E648 04C0003C */  bltz  $a2, .L7F01E73C
-/* 05317C 7F01E64C 28C10004 */   slti  $at, $a2, 4
-/* 053180 7F01E650 1020003A */  beqz  $at, .L7F01E73C
-/* 053184 7F01E654 27B10038 */   addiu $s1, $sp, 0x38
-/* 053188 7F01E658 3C0E8003 */  lui   $t6, %hi(D_8002C640+0x20)
-/* 05318C 7F01E65C 25CEC660 */  addiu $t6, %lo(D_8002C640+0x20) # addiu $t6, $t6, -0x39a0
-/* 053190 7F01E660 25D80060 */  addiu $t8, $t6, 0x60
-/* 053194 7F01E664 0220C825 */  move  $t9, $s1
-.L7F01E668:
-/* 053198 7F01E668 8DC10000 */  lw    $at, ($t6)
-/* 05319C 7F01E66C 25CE000C */  addiu $t6, $t6, 0xc
-/* 0531A0 7F01E670 2739000C */  addiu $t9, $t9, 0xc
-/* 0531A4 7F01E674 AF21FFF4 */  sw    $at, -0xc($t9)
-/* 0531A8 7F01E678 8DC1FFF8 */  lw    $at, -8($t6)
-/* 0531AC 7F01E67C AF21FFF8 */  sw    $at, -8($t9)
-/* 0531B0 7F01E680 8DC1FFFC */  lw    $at, -4($t6)
-/* 0531B4 7F01E684 15D8FFF8 */  bne   $t6, $t8, .L7F01E668
-/* 0531B8 7F01E688 AF21FFFC */   sw    $at, -4($t9)
-/* 0531BC 7F01E68C 0FC07771 */  jal   getEEPROMforFoldernum
-/* 0531C0 7F01E690 02002025 */   move  $a0, $s0
-/* 0531C4 7F01E694 1040000F */  beqz  $v0, .L7F01E6D4
-/* 0531C8 7F01E698 AFA20034 */   sw    $v0, 0x34($sp)
-/* 0531CC 7F01E69C 00405025 */  move  $t2, $v0
-/* 0531D0 7F01E6A0 02205825 */  move  $t3, $s1
-/* 0531D4 7F01E6A4 24490060 */  addiu $t1, $v0, 0x60
-.L7F01E6A8:
-/* 0531D8 7F01E6A8 8D410000 */  lw    $at, ($t2)
-/* 0531DC 7F01E6AC 254A000C */  addiu $t2, $t2, 0xc
-/* 0531E0 7F01E6B0 256B000C */  addiu $t3, $t3, 0xc
-/* 0531E4 7F01E6B4 AD61FFF4 */  sw    $at, -0xc($t3)
-/* 0531E8 7F01E6B8 8D41FFF8 */  lw    $at, -8($t2)
-/* 0531EC 7F01E6BC AD61FFF8 */  sw    $at, -8($t3)
-/* 0531F0 7F01E6C0 8D41FFFC */  lw    $at, -4($t2)
-/* 0531F4 7F01E6C4 1549FFF8 */  bne   $t2, $t1, .L7F01E6A8
-/* 0531F8 7F01E6C8 AD61FFFC */   sw    $at, -4($t3)
-/* 0531FC 7F01E6CC 10000004 */  b     .L7F01E6E0
-/* 053200 7F01E6D0 00000000 */   nop
-.L7F01E6D4:
-/* 053204 7F01E6D4 02202025 */  move  $a0, $s1
-/* 053208 7F01E6D8 0FC07636 */  jal   set_eeprom_to_folder_num
-/* 05320C 7F01E6DC 02002825 */   move  $a1, $s0
-.L7F01E6E0:
-/* 053210 7F01E6E0 06800013 */  bltz  $s4, .L7F01E730
-/* 053214 7F01E6E4 02808025 */   move  $s0, $s4
-/* 053218 7F01E6E8 3C1305F5 */  lui   $s3, (0x05F5E0FF >> 16) # lui $s3, 0x5f5
-/* 05321C 7F01E6EC 3673E0FF */  ori   $s3, (0x05F5E0FF & 0xFFFF) # ori $s3, $s3, 0xe0ff
-.L7F01E6F0:
-/* 053220 7F01E6F0 16140008 */  bne   $s0, $s4, .L7F01E714
-/* 053224 7F01E6F4 02202025 */   move  $a0, $s1
-/* 053228 7F01E6F8 02202025 */  move  $a0, $s1
-/* 05322C 7F01E6FC 02402825 */  move  $a1, $s2
-/* 053230 7F01E700 02003025 */  move  $a2, $s0
-/* 053234 7F01E704 0FC0772C */  jal   sub_GAME_7F01DCB0
-/* 053238 7F01E708 02A03825 */   move  $a3, $s5
-/* 05323C 7F01E70C 10000006 */  b     .L7F01E728
-/* 053240 7F01E710 2610FFFF */   addiu $s0, $s0, -1
-.L7F01E714:
-/* 053244 7F01E714 02402825 */  move  $a1, $s2
-/* 053248 7F01E718 02003025 */  move  $a2, $s0
-/* 05324C 7F01E71C 0FC0772C */  jal   sub_GAME_7F01DCB0
-/* 053250 7F01E720 02603825 */   move  $a3, $s3
-/* 053254 7F01E724 2610FFFF */  addiu $s0, $s0, -1
-.L7F01E728:
-/* 053258 7F01E728 0601FFF1 */  bgez  $s0, .L7F01E6F0
-/* 05325C 7F01E72C 00000000 */   nop
-.L7F01E730:
-/* 053260 7F01E730 8FA40034 */  lw    $a0, 0x34($sp)
-/* 053264 7F01E734 0FC07941 */  jal   sub_GAME_7F01E504
-/* 053268 7F01E738 02202825 */   move  $a1, $s1
-.L7F01E73C:
-/* 05326C 7F01E73C 8FBF002C */  lw    $ra, 0x2c($sp)
-.L7F01E740:
-/* 053270 7F01E740 8FB00014 */  lw    $s0, 0x14($sp)
-/* 053274 7F01E744 8FB10018 */  lw    $s1, 0x18($sp)
-/* 053278 7F01E748 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 05327C 7F01E74C 8FB30020 */  lw    $s3, 0x20($sp)
-/* 053280 7F01E750 8FB40024 */  lw    $s4, 0x24($sp)
-/* 053284 7F01E754 8FB50028 */  lw    $s5, 0x28($sp)
-/* 053288 7F01E758 03E00008 */  jr    $ra
-/* 05328C 7F01E75C 27BD0098 */   addiu $sp, $sp, 0x98
-)
-#endif
 
 
 
