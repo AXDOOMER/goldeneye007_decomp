@@ -210,7 +210,7 @@ void bossInitMainthreadData(void)
     null_init_main_3();
     init_player_gait_object();
     initGameData();
-    reset_ramrom_folder_to_default();
+    gamefileResetRamRomSave();
     clear_ramrom_block_buffer_heading_ptrs();
 }
 

@@ -12,7 +12,7 @@
  *
  * @return s32
  */
-s32 sub_GAME_7F01D6C0(void)
+s32 gamefileGamePakProbe(void)
 {
   return joyGamePakProbe();
 }
@@ -21,7 +21,7 @@ s32 sub_GAME_7F01D6C0(void)
  * Resets the RamRom replay folder save
  *
  */
-void reset_ramrom_folder_to_default(void)
+void gamefileResetRamRomSave(void)
 {
     save_data new_save = D_8002C520;
 
@@ -35,7 +35,7 @@ void reset_ramrom_folder_to_default(void)
  */
 void sub_GAME_7F01D758(save_data *save)
 {
-    if (sub_GAME_7F01D6C0() != 0)
+    if (gamefileGamePakProbe() != 0)
     {
         sub_GAME_7F09B600(&save->completion_bitflags, &save->times[14], save);
         joyGamePakLongWrite(0, save, 0x20);
@@ -51,7 +51,7 @@ void sub_GAME_7F01D7A0(save_data *save)
 {
     if (save >= &saves[0] && save < &saves[5])
     {
-        if (sub_GAME_7F01D6C0() != 0)
+        if (gamefileGamePakProbe() != 0)
         {
             sub_GAME_7F09B600(&save->completion_bitflags, save + 1, save);
             joyGamePakLongWrite((((u32)((save - &saves[0]) * 0x60) >> 3) + 4), save, 0x60);
@@ -64,7 +64,7 @@ void sub_GAME_7F01D7A0(save_data *save)
  *
  * @param save
  */
-void reset_folder_to_default(save_data *save)
+void gamefileResetSave(save_data *save)
 {
     save_data new_save  = D_8002C580;
 
@@ -73,26 +73,26 @@ void reset_folder_to_default(save_data *save)
 }
 
 /**
- * Get the foldernum of eeprom save
+ * Get the foldernum of save
  *
- * @param eeprom
+ * @param save
  * @return u32
  */
-u32 get_foldernum_of_eeprom(save_data *eeprom)
+u32 gamefileGetSaveFoldernum(save_data *save)
 {
-  return eeprom->completion_bitflags & 7;
+  return save->completion_bitflags & 7;
 }
 
 /**
  * Clear then set save foldernumber flag
  *
- * @param eeprom
+ * @param save
  * @param folder
  */
-void set_eeprom_to_folder_num(save_data *eeprom, u32 folder)
+void gamefileSetSaveFoldernum(save_data *save, u32 folder)
 {
-    eeprom->completion_bitflags &= 0xFFF8;
-    eeprom->completion_bitflags |= folder & 7;
+    save->completion_bitflags &= 0xFFF8;
+    save->completion_bitflags |= folder & 7;
 }
 
 /**
@@ -101,7 +101,7 @@ void set_eeprom_to_folder_num(save_data *eeprom, u32 folder)
  * @param folder
  * @return u32
  */
-u32 set_eeprom_flag_0x18(save_data *folder)
+u32 gamefileSetSaveFlag_0x18(save_data *folder)
 {
   return (folder->completion_bitflags & 0x18) >> 3;
 }
@@ -112,7 +112,7 @@ u32 set_eeprom_flag_0x18(save_data *folder)
  * @param folder
  * @param arg1
  */
-void reset_eeprom_flag_0x18(save_data *folder, s32 arg1)
+void gamefileResetSaveFlag_0x18(save_data *folder, s32 arg1)
 {
     folder->completion_bitflags &= 0xFFE7;
     folder->completion_bitflags |= ((arg1 * 8) & 0x18);
@@ -124,7 +124,7 @@ void reset_eeprom_flag_0x18(save_data *folder, s32 arg1)
  * @param folder
  * @return u32
  */
-u32 get_selected_bond(save_data *folder)
+u32 gamefileGetSelectedBond(save_data *folder)
 {
   return (folder->completion_bitflags & 0x60) >> 5;
 }
@@ -135,7 +135,7 @@ u32 get_selected_bond(save_data *folder)
  * @param folder
  * @param arg1
  */
-void set_selected_bond(save_data *folder, s32 arg1)
+void gamefileSetSelectedBond(save_data *folder, s32 arg1)
 {
     folder->completion_bitflags &= 0xFF9F;
     folder->completion_bitflags |= ((arg1 << 5) & 0x60);
@@ -147,7 +147,7 @@ void set_selected_bond(save_data *folder, s32 arg1)
  * @param folder
  * @return u32
  */
-u32 check_if_eeprom_flag_set_0x80(save_data *folder)
+bool gamefileGetSaveFlag_0x80(save_data *folder)
 {
   return ((folder->completion_bitflags & 0x80) != 0);
 }
@@ -159,7 +159,7 @@ u32 check_if_eeprom_flag_set_0x80(save_data *folder)
  * @param folder: folder to enable or disable flag
  * @param set: Enable flag if TRUE, Disable flag if FALSE
  */
-void toggle_eeprom_flag_set_0x80(save_data *folder, s32 enable)
+void gamefileSetSaveFlag_0x80(save_data *folder, s32 enable)
 {
     if (enable)
     {
@@ -179,7 +179,7 @@ void toggle_eeprom_flag_set_0x80(save_data *folder, s32 enable)
  * @param difficulty
  * @return best time for stage at difficulty
  */
-s32 gamefileGetStageDifficultyTime(save_data* save, LEVEL_SOLO_SEQUENCE stagenum, DIFFICULTY difficulty)
+s32 gamefileGetSaveStageDifficultyTime(save_data* save, LEVEL_SOLO_SEQUENCE stagenum, DIFFICULTY difficulty)
 {
     s32 offset;
     LEVEL_SOLO_SEQUENCE max_level;
@@ -191,7 +191,7 @@ s32 gamefileGetStageDifficultyTime(save_data* save, LEVEL_SOLO_SEQUENCE stagenum
     {
         if (difficulty == DIFFICULTY_007)
         {
-            if (check_for_007_mode_unlocked(get_foldernum_of_eeprom(save)))
+            if (gamefileIs007ModeUnlocked(gamefileGetSaveFoldernum(save)))
             {
                 return 0x3FF; //max time
             }
@@ -294,32 +294,31 @@ void gamefileSetDifficultyStageTime(save_data *save, LEVEL_SOLO_SEQUENCE stage, 
  * @param difficulty
  * @return is stage at diffiuclty completed
  */
-s32 get_eeprom_stage_completed_for_difficulty(save_data *folder, s32 levelid, DIFFICULTY difficulty) {
+bool gamefileGetSaveStageCompletedForDifficulty(save_data *folder, s32 levelid, DIFFICULTY difficulty) {
 
     if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007)) {
-        return gamefileGetStageDifficultyTime(folder, levelid, difficulty) != 0;
+        return gamefileGetSaveStageDifficultyTime(folder, levelid, difficulty) != 0;
     }
 
-    return 0;
+    return FALSE;
 }
 
 /**
- *
+ * Updates time for stage at difficulty if better
  *
  * @param folder
  * @param levelid
  * @param difficulty
  * @param arg4
  */
-void sub_GAME_7F01DCB0(save_data *folder, s32 levelid, DIFFICULTY difficulty, s32 arg4) {
-    s32 temp_v0;
+void gamefileCheckSaveStageDifficultyTime(save_data *folder, s32 levelid, DIFFICULTY difficulty, s32 newtime)
+{
+    if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007))
+    {
+        s32 time = gamefileGetSaveStageDifficultyTime(folder, levelid, difficulty);
 
-    if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007)) {
-
-        temp_v0 = gamefileGetStageDifficultyTime(folder, levelid, difficulty);
-
-        if ((temp_v0 == 0) || (arg4 < temp_v0)) {
-            gamefileSetDifficultyStageTime(folder, levelid, difficulty, arg4);
+        if ((time == 0) || (newtime < time)) {
+            gamefileSetDifficultyStageTime(folder, levelid, difficulty, newtime);
         }
     }
 }
@@ -331,7 +330,7 @@ void sub_GAME_7F01DCB0(save_data *folder, s32 levelid, DIFFICULTY difficulty, s3
  * @param cheat
  * @return bool
  */
-s32 check_if_cheat_unlocked(save_data *save, s32 cheat)
+bool gamefileGetIsCheatUnlocked(save_data *save, s32 cheat)
 {
     s32 bits;
 
@@ -374,14 +373,14 @@ void sub_GAME_7F01DD74(save_data *save, s32 cheat)
  * @param foldernum
  * @return save_data*
  */
-save_data *getEEPROMforFoldernum(u32 foldernum)
+save_data *gamefileGetSaveForFoldernum(u32 foldernum)
 {
     int i;
 
     for (i = 0; i < 5; i++)
     {
-        if (check_if_eeprom_flag_set_0x80(&saves[i]) == 0 &&
-                get_foldernum_of_eeprom(&saves[i]) == foldernum)
+        if (gamefileGetSaveFlag_0x80(&saves[i]) == 0 &&
+                gamefileGetSaveFoldernum(&saves[i]) == foldernum)
         {
             return &saves[i];
         }
@@ -400,13 +399,13 @@ save_data *getEEPROMforFoldernum(u32 foldernum)
  *
  * @return s32
  */
-s32 check_if_eeprom_flag_set_0x80_any_folder(void)
+s32 gamefileGetSaveFlag_0x80_any_folder(void)
 {
     s32 i;
 
     for(i = 0; i < 5; i++)
     {
-        if (check_if_eeprom_flag_set_0x80(&saves[i]))
+        if (gamefileGetSaveFlag_0x80(&saves[i]))
         {
             return i;
         }
@@ -426,16 +425,16 @@ void sub_GAME_7F01DEB4(u32 foldernum)
     s32 folder_with_flag;
     save_data new_save;
 
-    folder_with_flag = check_if_eeprom_flag_set_0x80_any_folder();
+    folder_with_flag = gamefileGetSaveFlag_0x80_any_folder();
 
     if (folder_with_flag >= 0)
     {
         new_save = D_8002C5E0;
         saves[folder_with_flag] = new_save;
 
-        set_eeprom_to_folder_num(&saves[folder_with_flag], foldernum);
-        toggle_eeprom_flag_set_0x80(&saves[folder_with_flag], 0);
-        set_selected_bond(&saves[folder_with_flag], foldernum);
+        gamefileSetSaveFoldernum(&saves[folder_with_flag], foldernum);
+        gamefileSetSaveFlag_0x80(&saves[folder_with_flag], 0);
+        gamefileSetSelectedBond(&saves[folder_with_flag], foldernum);
         sub_GAME_7F01D7A0(&saves[folder_with_flag]);
     }
 }
@@ -460,7 +459,7 @@ glabel sub_GAME_7F01DF90
 /* 052ADC 7F01DFAC AFB30024 */  sw    $s3, 0x24($sp)
 /* 052AE0 7F01DFB0 AFB20020 */  sw    $s2, 0x20($sp)
 /* 052AE4 7F01DFB4 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 052AE8 7F01DFB8 0FC075B0 */  jal   sub_GAME_7F01D6C0
+/* 052AE8 7F01DFB8 0FC075B0 */  jal   gamefileGamePakProbe
 /* 052AEC 7F01DFBC AFB00018 */   sw    $s0, 0x18($sp)
 /* 052AF0 7F01DFC0 104000A6 */  beqz  $v0, .L7F01E25C
 /* 052AF4 7F01DFC4 27B10094 */   addiu $s1, $sp, 0x94
@@ -558,7 +557,7 @@ glabel sub_GAME_7F01DF90
 .L7F01E120:
 /* 052C50 7F01E120 56200004 */  bnezl $s1, .L7F01E134
 /* 052C54 7F01E124 26520060 */   addiu $s2, $s2, 0x60
-/* 052C58 7F01E128 0FC07610 */  jal   reset_folder_to_default
+/* 052C58 7F01E128 0FC07610 */  jal   gamefileResetSave
 /* 052C5C 7F01E12C 02002025 */   move  $a0, $s0
 /* 052C60 7F01E130 26520060 */  addiu $s2, $s2, 0x60
 .L7F01E134:
@@ -575,18 +574,18 @@ glabel sub_GAME_7F01DF90
 /* 052C88 7F01E158 26109920 */  addiu $s0, %lo(saves) # addiu $s0, $s0, -0x66e0
 /* 052C8C 7F01E15C 00008825 */  move  $s1, $zero
 .L7F01E160:
-/* 052C90 7F01E160 0FC07655 */  jal   check_if_eeprom_flag_set_0x80
+/* 052C90 7F01E160 0FC07655 */  jal   gamefileGetSaveFlag_0x80
 /* 052C94 7F01E164 02002025 */   move  $a0, $s0
 /* 052C98 7F01E168 54400023 */  bnezl $v0, .L7F01E1F8
 /* 052C9C 7F01E16C 26310001 */   addiu $s1, $s1, 1
-/* 052CA0 7F01E170 0FC07632 */  jal   get_foldernum_of_eeprom
+/* 052CA0 7F01E170 0FC07632 */  jal   gamefileGetSaveFoldernum
 /* 052CA4 7F01E174 02002025 */   move  $a0, $s0
 /* 052CA8 7F01E178 5456001F */  bnel  $v0, $s6, .L7F01E1F8
 /* 052CAC 7F01E17C 26310001 */   addiu $s1, $s1, 1
 /* 052CB0 7F01E180 06810006 */  bgez  $s4, .L7F01E19C
 /* 052CB4 7F01E184 02002025 */   move  $a0, $s0
 /* 052CB8 7F01E188 0220A025 */  move  $s4, $s1
-/* 052CBC 7F01E18C 0FC0763D */  jal   set_eeprom_flag_0x18
+/* 052CBC 7F01E18C 0FC0763D */  jal   gamefileSetSaveFlag_0x18
 /* 052CC0 7F01E190 02002025 */   move  $a0, $s0
 /* 052CC4 7F01E194 10000017 */  b     .L7F01E1F4
 /* 052CC8 7F01E198 0040A825 */   move  $s5, $v0
@@ -598,7 +597,7 @@ glabel sub_GAME_7F01DF90
 /* 052CDC 7F01E1AC 00000000 */   nop
 /* 052CE0 7F01E1B0 2508FFFC */  addiu $t0, $t0, -4
 .L7F01E1B4:
-/* 052CE4 7F01E1B4 0FC0763D */  jal   set_eeprom_flag_0x18
+/* 052CE4 7F01E1B4 0FC0763D */  jal   gamefileSetSaveFlag_0x18
 /* 052CE8 7F01E1B8 01009825 */   move  $s3, $t0
 /* 052CEC 7F01E1BC 1453000B */  bne   $v0, $s3, .L7F01E1EC
 /* 052CF0 7F01E1C0 00409025 */   move  $s2, $v0
@@ -607,13 +606,13 @@ glabel sub_GAME_7F01DF90
 /* 052CFC 7F01E1CC 25299920 */  addiu $t1, %lo(saves) # addiu $t1, $t1, -0x66e0
 /* 052D00 7F01E1D0 00005012 */  mflo  $t2
 /* 052D04 7F01E1D4 01492021 */  addu  $a0, $t2, $t1
-/* 052D08 7F01E1D8 0FC07610 */  jal   reset_folder_to_default
+/* 052D08 7F01E1D8 0FC07610 */  jal   gamefileResetSave
 /* 052D0C 7F01E1DC 00000000 */   nop
 /* 052D10 7F01E1E0 0220A025 */  move  $s4, $s1
 /* 052D14 7F01E1E4 10000003 */  b     .L7F01E1F4
 /* 052D18 7F01E1E8 0240A825 */   move  $s5, $s2
 .L7F01E1EC:
-/* 052D1C 7F01E1EC 0FC07610 */  jal   reset_folder_to_default
+/* 052D1C 7F01E1EC 0FC07610 */  jal   gamefileResetSave
 /* 052D20 7F01E1F0 02002025 */   move  $a0, $s0
 .L7F01E1F4:
 /* 052D24 7F01E1F4 26310001 */  addiu $s1, $s1, 1
@@ -632,14 +631,14 @@ glabel sub_GAME_7F01DF90
 /* 052D50 7F01E220 0000B025 */  move  $s6, $zero
 /* 052D54 7F01E224 24110004 */  li    $s1, 4
 .L7F01E228:
-/* 052D58 7F01E228 0FC07771 */  jal   getEEPROMforFoldernum
+/* 052D58 7F01E228 0FC07771 */  jal   gamefileGetSaveForFoldernum
 /* 052D5C 7F01E22C 02C02025 */   move  $a0, $s6
 /* 052D60 7F01E230 10400007 */  beqz  $v0, .L7F01E250
 /* 052D64 7F01E234 00402025 */   move  $a0, $v0
 /* 052D68 7F01E238 3C0C8003 */  lui   $t4, %hi(save_selected_bond)
 /* 052D6C 7F01E23C 258CC510 */  addiu $t4, %lo(save_selected_bond) # addiu $t4, $t4, -0x3af0
 /* 052D70 7F01E240 00165880 */  sll   $t3, $s6, 2
-/* 052D74 7F01E244 0FC07649 */  jal   get_selected_bond
+/* 052D74 7F01E244 0FC07649 */  jal   gamefileGetSelectedBond
 /* 052D78 7F01E248 016C8021 */   addu  $s0, $t3, $t4
 /* 052D7C 7F01E24C AE020000 */  sw    $v0, ($s0)
 .L7F01E250:
@@ -663,49 +662,49 @@ glabel sub_GAME_7F01DF90
 #endif
 
 /**
- * Validate foldernum
+ * Check if folder is valid
  *
  * @param folder
  * @return bool
  */
-s32 check_if_valid_folder_num(s32 folder)
+bool gamefileIsFolderValid(s32 folder)
 {
     if ((folder >= 0) && (folder < 4))
     {
         return TRUE;
     }
+
     if (folder == 100)
     {
         return TRUE;
     }
+
     return FALSE;
 }
 
-// wrapper func - uses save if found
-// gamefileIsStageUnlockedAtDifficulty calls gamefileIsSavedStageUnlockedAtDifficulty
 /**
  * wrapper func - uses save if found
- * gamefileIsStageUnlockedAtDifficulty calls gamefileIsSavedStageUnlockedAtDifficulty
+ * gamefilegamefileIsStageUnlockedAtDifficulty calls gamefileIsSavedStageUnlockedAtDifficulty
  *
  * @param foldernum
  * @param stage
  * @param difficulty
- * @return s32
+ * @return 0, 1, or 3
  */
-s32 isStageUnlockedAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE stage, DIFFICULTY difficulty)
+s32 gamefileIsStageUnlockedAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE stage, DIFFICULTY difficulty)
 {
     save_data* save;
     s32 i;
 
-    if ((check_if_valid_folder_num(foldernum)) &&
+    if ((gamefileIsFolderValid(foldernum)) &&
         (stage >= SP_LEVEL_DAM && stage < SP_LEVEL_MAX) &&
         (difficulty >= DIFFICULTY_AGENT && difficulty < DIFFICULTY_MAX))
     {
-        save = getEEPROMforFoldernum(foldernum);
+        save = gamefileGetSaveForFoldernum(foldernum);
 
         if (save)
         {
-            if (get_eeprom_stage_completed_for_difficulty(save, stage, difficulty))
+            if (gamefileGetSaveStageCompletedForDifficulty(save, stage, difficulty))
             {
                 return 3; //found on first try, we are last completed stage
             }
@@ -722,7 +721,7 @@ s32 isStageUnlockedAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE stage, DIFFIC
                 LEVEL_SOLO_SEQUENCE istage;
                 for (istage = SP_LEVEL_DAM; istage < stage; istage++)
                 {
-                    if (!get_eeprom_stage_completed_for_difficulty(save, istage, i))
+                    if (!gamefileGetSaveStageCompletedForDifficulty(save, istage, i))
                     {
                         break;
                     }
@@ -739,7 +738,7 @@ s32 isStageUnlockedAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE stage, DIFFIC
             {
                 for (i = difficulty; i < DIFFICULTY_MAX; i++)
                 {
-                    if (get_eeprom_stage_completed_for_difficulty(save, stage - 1, i))
+                    if (gamefileGetSaveStageCompletedForDifficulty(save, stage - 1, i))
                     {
                         return 1;
                     }
@@ -750,7 +749,7 @@ s32 isStageUnlockedAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE stage, DIFFIC
             {
                 for (i = SP_LEVEL_DAM; i < SP_LEVEL_AZTEC; i++)
                 {
-                    if (!get_eeprom_stage_completed_for_difficulty(save, i, DIFFICULTY_AGENT))
+                    if (!gamefileGetSaveStageCompletedForDifficulty(save, i, DIFFICULTY_AGENT))
                     {
                         break;
                     }
@@ -760,7 +759,7 @@ s32 isStageUnlockedAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE stage, DIFFIC
                 {
                     for (i = DIFFICULTY_AGENT; i < difficulty; i++)
                     {
-                        if (!get_eeprom_stage_completed_for_difficulty(save, stage, i))
+                        if (!gamefileGetSaveStageCompletedForDifficulty(save, stage, i))
                         {
                             break;
                         }
@@ -808,24 +807,24 @@ void sub_GAME_7F01E504(save_data *save1, save_data *save2)
     s32 otherfolder;
 
     otherfolder = 0;
-    folder_with_flag = check_if_eeprom_flag_set_0x80_any_folder();
+    folder_with_flag = gamefileGetSaveFlag_0x80_any_folder();
 
     if (folder_with_flag >= 0)
     {
         saves[folder_with_flag] = *save2;
 
-        if (save1 != 0)
+        if (save1)
         {
-            otherfolder = (s32)(set_eeprom_flag_0x18(save1) + 1) % 4;
+            otherfolder = (s32)(gamefileSetSaveFlag_0x18(save1) + 1) % 4;
         }
 
-        toggle_eeprom_flag_set_0x80(&saves[folder_with_flag], 0);
-        reset_eeprom_flag_0x18(&saves[folder_with_flag], otherfolder);
+        gamefileSetSaveFlag_0x80(&saves[folder_with_flag], 0);
+        gamefileResetSaveFlag_0x18(&saves[folder_with_flag], otherfolder);
         sub_GAME_7F01D7A0(&saves[folder_with_flag]);
 
-        if (save1 != 0)
+        if (save1)
         {
-            reset_folder_to_default(save1);
+            gamefileResetSave(save1);
         }
     }
 }
@@ -838,7 +837,7 @@ void sub_GAME_7F01E504(save_data *save1, save_data *save2)
  * @param difficulty
  * @param maxtime
  */
-void unlock_stage_in_folder_on_difficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE stage, DIFFICULTY difficulty, s32 maxtime)
+void gamefileUnlockStageInFolderAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE stage, DIFFICULTY difficulty, s32 newtime)
 {
     save_data new_save;
     save_data *save;
@@ -850,23 +849,23 @@ void unlock_stage_in_folder_on_difficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE sta
     {
         new_save = D_8002C660;
 
-        save = getEEPROMforFoldernum(foldernum);
+        save = gamefileGetSaveForFoldernum(foldernum);
 
         if (save != 0) {
             new_save = *save;
         } else {
-            set_eeprom_to_folder_num(&new_save, foldernum);
+            gamefileSetSaveFoldernum(&new_save, foldernum);
         }
 
         for (i = difficulty; i >= DIFFICULTY_AGENT; i--)
         {
             if (i == difficulty)
             {
-                sub_GAME_7F01DCB0(&new_save, stage, i, maxtime);
+                gamefileCheckSaveStageDifficultyTime(&new_save, stage, i, newtime);
             }
             else
             {
-                sub_GAME_7F01DCB0(&new_save, stage, i, 99999999);
+                gamefileCheckSaveStageDifficultyTime(&new_save, stage, i, 99999999);
             }
         }
 
@@ -887,9 +886,9 @@ void sub_GAME_7F01E760(s32 foldernum, s32 cheat)
 
     if ((foldernum >= 0) && (foldernum < 4) && (cheat >= 0) && (cheat < 0x14))
     {
-        save = getEEPROMforFoldernum(foldernum);
+        save = gamefileGetSaveForFoldernum(foldernum);
 
-        if (save != 0 && check_if_cheat_unlocked(save, cheat) != 0)
+        if (save != 0 && gamefileGetIsCheatUnlocked(save, cheat) != 0)
         {
            return;
         }
@@ -902,7 +901,7 @@ void sub_GAME_7F01E760(s32 foldernum, s32 cheat)
         }
         else
         {
-            set_eeprom_to_folder_num(&new_save, foldernum);
+            gamefileSetSaveFoldernum(&new_save, foldernum);
         }
 
         sub_GAME_7F01DD74(&new_save, cheat);
@@ -918,13 +917,13 @@ void sub_GAME_7F01E760(s32 foldernum, s32 cheat)
  * @param stage
  * @param difficulty
  */
-void get_highest_stage_difficulty_completed_in_folder(s32 foldernum, LEVEL_SOLO_SEQUENCE *stage, DIFFICULTY *difficulty)
+void gamefileGetHighestStageDifficultyCompletedForFolder(s32 foldernum, LEVEL_SOLO_SEQUENCE *stage, DIFFICULTY *difficulty)
 {
     save_data *folder;
     LEVEL_SOLO_SEQUENCE stageid;
     DIFFICULTY difficultyid;
 
-    folder = getEEPROMforFoldernum(foldernum);
+    folder = gamefileGetSaveForFoldernum(foldernum);
 
     if (folder != NULL)
     {
@@ -932,7 +931,7 @@ void get_highest_stage_difficulty_completed_in_folder(s32 foldernum, LEVEL_SOLO_
         {
             for (stageid = SP_LEVEL_EGYPT; stageid >= 0; stageid--)
             {
-                if (get_eeprom_stage_completed_for_difficulty(folder, stageid, difficultyid))
+                if (gamefileGetSaveStageCompletedForDifficulty(folder, stageid, difficultyid))
                 {
                     *stage = stageid;
                     *difficulty = difficultyid;
@@ -949,20 +948,20 @@ void get_highest_stage_difficulty_completed_in_folder(s32 foldernum, LEVEL_SOLO_
  * Get the highest stage unlocked in folder
  *
  * @param foldernum
- * @return s32
+ * @return LEVEL_SOLO_SEQUENCE
  */
-s32 get_highest_stage_unlocked_in_folder(s32 foldernum)
+LEVEL_SOLO_SEQUENCE gamefileGetHighestStageUnlockedForFolder(s32 foldernum)
 {
     LEVEL_SOLO_SEQUENCE stageid;
     DIFFICULTY difficulty;
 
-    if (getEEPROMforFoldernum(foldernum) != NULL)
+    if (gamefileGetSaveForFoldernum(foldernum) != NULL)
     {
         for (stageid = SP_LEVEL_EGYPT; stageid >= 0; stageid--)
         {
             for (difficulty = DIFFICULTY_AGENT; difficulty < DIFFICULTY_MAX; difficulty++)
             {
-                if (isStageUnlockedAtDifficulty(foldernum, stageid, difficulty))
+                if (gamefileIsStageUnlockedAtDifficulty(foldernum, stageid, difficulty))
                 {
                     return stageid;
                 }
@@ -977,23 +976,22 @@ s32 get_highest_stage_unlocked_in_folder(s32 foldernum)
  *
  * @return stageid
  */
-u32 get_highest_stage_unlocked_any_folder(void)
+LEVEL_SOLO_SEQUENCE gamefileGetHighestStageUnlockedAnyFolder(void)
 {
-    u32 isfound;
     int folder;
-    u32 isunlocked;
+    LEVEL_SOLO_SEQUENCE isfound;
+    LEVEL_SOLO_SEQUENCE highest = 0;
 
-    isunlocked = 0;
-    folder = 0;
-    while (folder != 4) {
-        isfound = get_highest_stage_unlocked_in_folder(folder);
-        folder += 1;
-        if ((int)isunlocked < (int)isfound)
+    for (folder = 0; folder < 4; folder++)
+    {
+        isfound = gamefileGetHighestStageUnlockedForFolder(folder);
+        if (highest < isfound)
         {
-            isunlocked = isfound;
+            highest = isfound;
         }
-    };
-    return isunlocked;
+    }
+
+    return highest;
 }
 
 /**
@@ -1002,23 +1000,23 @@ u32 get_highest_stage_unlocked_any_folder(void)
  * @param foldernum
  * @return bool
  */
-s32 check_cradle_completed_in_folder(s32 foldernum)
+bool gamefileIsCradleCompletedForFolder(s32 folder)
 {
-    return (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_CRADLE, DIFFICULTY_AGENT) == 3) ||
-            (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_CRADLE, DIFFICULTY_SECRET) == 3) ||
-            (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_CRADLE, DIFFICULTY_00) == 3);
+    return (gamefileIsStageUnlockedAtDifficulty(folder, SP_LEVEL_CRADLE, DIFFICULTY_AGENT) == 3) ||
+            (gamefileIsStageUnlockedAtDifficulty(folder, SP_LEVEL_CRADLE, DIFFICULTY_SECRET) == 3) ||
+            (gamefileIsStageUnlockedAtDifficulty(folder, SP_LEVEL_CRADLE, DIFFICULTY_00) == 3);
 }
 
 /**
  * Check if aztec has been completed at secret or 00 difficulty
  *
- * @param foldernum
+ * @param folder
  * @return bool
  */
-s32 check_aztec_completed_in_folder_secret_00(s32 foldernum)
+bool gamefileIsAztecCompletedOnSecretOr00ForFolder(s32 folder)
 {
-    return (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_AZTEC, DIFFICULTY_SECRET) == 3) ||
-            (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_AZTEC, DIFFICULTY_00) == 3);
+    return (gamefileIsStageUnlockedAtDifficulty(folder, SP_LEVEL_AZTEC, DIFFICULTY_SECRET) == 3) ||
+            (gamefileIsStageUnlockedAtDifficulty(folder, SP_LEVEL_AZTEC, DIFFICULTY_00) == 3);
 }
 
 /**
@@ -1027,9 +1025,9 @@ s32 check_aztec_completed_in_folder_secret_00(s32 foldernum)
  * @param foldernum
  * @return bool
  */
-s32 check_egypt_completed_in_folder_00(int foldernum)
+bool gamefileIsEgyptCompletedOn00ForFolder(int foldernum)
 {
-    return isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_EGYPT, DIFFICULTY_00) == 3;
+    return gamefileIsStageUnlockedAtDifficulty(foldernum, SP_LEVEL_EGYPT, DIFFICULTY_00) == 3;
 }
 
 /**
@@ -1037,21 +1035,18 @@ s32 check_egypt_completed_in_folder_00(int foldernum)
  *
  * @return bool
  */
-u32 check_cradle_completed_any_folder(void)
+bool gamefileIsCradleCompletedAnyFolder(void)
 {
-    u32 completed;
     int folder;
 
-    folder = 0;
-    while (folder != 4)
+    for (folder = 0; folder < 4; folder++)
     {
-        completed = check_cradle_completed_in_folder(folder);
-        folder += 1;
-        if (completed != FALSE)
+        if (gamefileIsCradleCompletedForFolder(folder))
         {
             return TRUE;
         }
-    };
+    }
+
     return FALSE;
 }
 
@@ -1060,21 +1055,18 @@ u32 check_cradle_completed_any_folder(void)
  *
  * @return bool
  */
-u32 check_aztec_completed_any_folder_secret_00(void)
+bool check_aztec_completed_any_folder_secret_00(void)
 {
-    u32 completed;
     int folder;
 
-    folder = 0;
-    while (folder != 4)
+    for (folder = 0; folder < 4; folder++)
     {
-        completed = check_aztec_completed_in_folder_secret_00(folder);
-        folder += 1;
-        if (completed != FALSE)
+        if (gamefileIsAztecCompletedOnSecretOr00ForFolder(folder))
         {
             return TRUE;
         }
-    };
+    }
+
     return FALSE;
 }
 
@@ -1083,43 +1075,38 @@ u32 check_aztec_completed_any_folder_secret_00(void)
  *
  * @return bool
  */
-u32 check_egypt_completed_any_folder_00(void)
+bool gamefileIsEgyptCompletedOn00AnyFolder(void)
 {
-    u32 completed;
     int folder;
 
-    folder = 0;
-    while (folder != 4)
+    for (folder = 0; folder < 4; folder++)
     {
-        completed = check_egypt_completed_in_folder_00(folder);
-        folder += 1;
-        if (completed != FALSE)
+        if (gamefileIsEgyptCompletedOn00ForFolder(folder))
         {
             return TRUE;
         }
-    };
+    }
+
     return FALSE;
 }
 
 /**
- * Unused
+ * Get bond for folder
  *
  * @param folder
  * @return u8
  */
-u8 removed_would_have_returned_bond_for_folder_num(u32 folder)
+u8 gamefileGetBondForFolder(u32 folder)
 {
-    #ifdef ALL_BONDS
+#ifdef ALL_BONDS
     //likely code based on behavior
     if ((folder >= 0) && (folder < 4))
     {
         return save_selected_bond[folder];
     }
-    #endif
+#endif
 
-    #ifndef ALL_BONDS
     return 0;
-    #endif
 }
 
 /**
@@ -1128,7 +1115,7 @@ u8 removed_would_have_returned_bond_for_folder_num(u32 folder)
  * @param folder
  * @param bond
  */
-void set_selected_bond_to_folder(s32 folder, s32 bond)
+void gamefileSetSelectedBondTofolder(s32 folder, s32 bond)
 {
     if (folder < 0 || folder > 3)
     {
@@ -1163,7 +1150,7 @@ void sub_GAME_7F01EBFC(u32 unused)
  *
  * @param foldernum
  */
-void delete_eeprom_folder(s32 foldernum)
+void gamefileDeleteSaveForFolder(s32 foldernum)
 {
     save_data *save;
     LEVEL_SOLO_SEQUENCE stage;
@@ -1172,18 +1159,18 @@ void delete_eeprom_folder(s32 foldernum)
 
     if (foldernum >= 0 && foldernum < 4)
     {
-        save = getEEPROMforFoldernum(foldernum);
+        save = gamefileGetSaveForFoldernum(foldernum);
         if (save != 0)
         {
-            get_highest_stage_difficulty_completed_in_folder(foldernum, &stage, &difficulty);
+            gamefileGetHighestStageDifficultyCompletedForFolder(foldernum, &stage, &difficulty);
             if ((stage >= 0) && (difficulty >= 0))
             {
                 new_save = D_8002C720;
                 *save = new_save;
-                set_eeprom_to_folder_num(save, foldernum);
-                toggle_eeprom_flag_set_0x80(save, 0);
-                set_selected_bond(save, foldernum);
-                set_selected_bond_to_folder(foldernum, foldernum);
+                gamefileSetSaveFoldernum(save, foldernum);
+                gamefileSetSaveFlag_0x80(save, 0);
+                gamefileSetSelectedBond(save, foldernum);
+                gamefileSetSelectedBondTofolder(foldernum, foldernum);
                 sub_GAME_7F01D7A0(save);
             }
         }
@@ -1194,21 +1181,21 @@ void delete_eeprom_folder(s32 foldernum)
  *
  *
  * Resetting times??
- * @param foldernum
+ * @param folder
  */
-void sub_GAME_7F01ED10(u32 foldernum)
+void gamefileInitializeAllTimes(u32 folder)
 {
     save_data *save;
     LEVEL_SOLO_SEQUENCE stagenum;
     DIFFICULTY difficulty;
 
-    save = getEEPROMforFoldernum(foldernum);
+    save = gamefileGetSaveForFoldernum(folder);
 
     for (stagenum = SP_LEVEL_DAM; stagenum < SP_LEVEL_MAX; stagenum++)
     {
         for(difficulty = DIFFICULTY_AGENT; difficulty < DIFFICULTY_007; difficulty++)
         {
-            sub_GAME_7F01DCB0(save, stagenum, difficulty, 99999999);
+            gamefileCheckSaveStageDifficultyTime(save, stagenum, difficulty, 99999999);
         }
     }
 }
@@ -1231,17 +1218,17 @@ void sub_GAME_7F01EDA0(s32 foldernum)
 
     if ((foldernum >= 0) && (foldernum < 4))
     {
-        save = getEEPROMforFoldernum(foldernum);
+        save = gamefileGetSaveForFoldernum(foldernum);
         if (save != 0)
         {
-            get_highest_stage_difficulty_completed_in_folder(foldernum, &stage, &difficulty);
+            gamefileGetHighestStageDifficultyCompletedForFolder(foldernum, &stage, &difficulty);
             if (stage >= 0)
             {
                 if (difficulty >= 0) {
                     for(other = 0;other != 4; other++)
                     {
-                            if ((getEEPROMforFoldernum(other) == 0) ||
-                                (get_highest_stage_difficulty_completed_in_folder(other, &stage, &difficulty),
+                            if ((gamefileGetSaveForFoldernum(other) == 0) ||
+                                (gamefileGetHighestStageDifficultyCompletedForFolder(other, &stage, &difficulty),
                                 (stage < 0) && (difficulty < 0)))
                             {
                                 break;
@@ -1251,10 +1238,10 @@ void sub_GAME_7F01EDA0(s32 foldernum)
                     if ((s32)other < 4)
                     {
                         new_save = D_8002C780;
-                        temp_s2 = getEEPROMforFoldernum(other);
+                        temp_s2 = gamefileGetSaveForFoldernum(other);
                         new_save = *save;
-                        set_eeprom_to_folder_num(&new_save, other);
-                        set_selected_bond_to_folder(other, removed_would_have_returned_bond_for_folder_num(foldernum));
+                        gamefileSetSaveFoldernum(&new_save, other);
+                        gamefileSetSelectedBondTofolder(other, gamefileGetBondForFolder(foldernum));
                         sub_GAME_7F01E504(temp_s2, &new_save);
                     }
                 }
@@ -1264,11 +1251,11 @@ void sub_GAME_7F01EDA0(s32 foldernum)
 }
 
 /**
- * @brief
+ *
  *
  * @param save
  */
-void update_eeprom_to_current_solo_watch_settings(save_data *save)
+void gamefileSaveSettingsForFolder(save_data *save)
 {
     u32 temp;
     u16 bits;
@@ -1326,17 +1313,17 @@ void update_eeprom_to_current_solo_watch_settings(save_data *save)
 }
 
 /**
- * Get the screen ratio settings for mpgame from folder
+ * Loads settings from save file
  *
- * @param foldernum
+ * @param folder
  */
-void get_screen_ratio_settings_for_mpgame_from_folder(u32 foldernum)
+void gamefileLoadSettingsForFolder(u32 folder)
 {
     save_data *save;
     u16 padding;
     u16 options;
 
-    save = getEEPROMforFoldernum(foldernum);
+    save = gamefileGetSaveForFoldernum(folder);
     if (save)
     {
         set_mTrack2Vol((save->music_vol << 7) | (save->music_vol >> 1));
@@ -1378,19 +1365,19 @@ void get_screen_ratio_settings_for_mpgame_from_folder(u32 foldernum)
 }
 
 /**
- * Delete
+ * Resets the folder save to default
  *
- * @param foldernum
+ * @param folder
  */
-void delete_update_eeprom_file(s32 foldernum)
+void gamefileClearSavefileForFolder(s32 folder)
 {
     save_data *save;
     save_data save_to_copy;
     save_data new_save;
 
-    if (foldernum >= 0 && foldernum < 4)
+    if (folder >= 0 && folder < 4)
     {
-        save = getEEPROMforFoldernum(foldernum);
+        save = gamefileGetSaveForFoldernum(folder);
 
         save_to_copy = D_8002C7E0;
 
@@ -1400,12 +1387,12 @@ void delete_update_eeprom_file(s32 foldernum)
         }
         else
         {
-            set_eeprom_to_folder_num(&save_to_copy, foldernum);
+            gamefileSetSaveFoldernum(&save_to_copy, folder);
         }
 
         new_save = save_to_copy;
 
-        update_eeprom_to_current_solo_watch_settings(&new_save);
+        gamefileSaveSettingsForFolder(&new_save);
 
         if (_bcmp(&new_save, &save_to_copy, 0x60) != 0)
         {
@@ -1415,18 +1402,18 @@ void delete_update_eeprom_file(s32 foldernum)
 }
 
 /**
+ * Not confident in the naming of this one...
  *
- *
- * @param foldernum
+ * @param folder
  */
-void copy_eeprom_to_stack_set_folder_num(s32 foldernum)
+void gamefileCopySaveIfSelectedBondDifferent(s32 folder)
 {
     save_data *save;
     save_data new_save;
 
-    if (foldernum >= 0 && foldernum < 4)
+    if (folder >= 0 && folder < 4)
     {
-        save = getEEPROMforFoldernum(foldernum);
+        save = gamefileGetSaveForFoldernum(folder);
         new_save = D_8002C840;
 
         if (save != 0)
@@ -1435,29 +1422,29 @@ void copy_eeprom_to_stack_set_folder_num(s32 foldernum)
         }
         else
         {
-            set_eeprom_to_folder_num(&new_save, foldernum);
+            gamefileSetSaveFoldernum(&new_save, folder);
         }
 
-        if (save_selected_bond[foldernum] != get_selected_bond(&new_save))
+        if (save_selected_bond[folder] != gamefileGetSelectedBond(&new_save))
         {
-            set_selected_bond(&new_save, save_selected_bond[foldernum]);
+            gamefileSetSelectedBond(&new_save, save_selected_bond[folder]);
             sub_GAME_7F01E504(save, &new_save);
         }
     }
 }
 
 /**
- * Copy save for foldernum to out_save
+ * Copy folder save
  *
  * @param foldernum
  * @param out_save
  */
-void copy_eeprom_from_to(s32 foldernum, save_data *out_save)
+void gamefileCopySave(s32 folder, save_data *out_save)
 {
     save_data *in_save;
     save_data new_save;
 
-    in_save = getEEPROMforFoldernum(foldernum);
+    in_save = gamefileGetSaveForFoldernum(folder);
 
     if (in_save != 0)
     {
@@ -1473,40 +1460,40 @@ void copy_eeprom_from_to(s32 foldernum, save_data *out_save)
 /**
  * Copy save to RarRom replay save
  *
- * @param foldernum
+ * @param folder
  * @param save
  */
-void copy_demo_eeprom_to_ramrom_folder(u32 foldernum, save_data *save)
+void gamefileCopyDemoSaveToRamRomSave(u32 folder, save_data *save)
 {
-    if (foldernum == RAMROM_FOLDERNUM)
+    if (folder == RAMROM_FOLDERNUM)
     {
         saves[5] = *save;
     }
 }
 
 /**
- * Check is 007 mode is unlocked
+ * Check if 007 mode is unlocked
  *
- * @param foldernum
+ * @param folder
  * @return bool
  */
-s32 check_for_007_mode_unlocked(u32 foldernum)
+s32 gamefileIs007ModeUnlocked(u32 folder)
 {
     LEVEL_SOLO_SEQUENCE stage;
-    save_data* folder;
+    save_data* save;
 
-    folder = getEEPROMforFoldernum(foldernum);
+    save = gamefileGetSaveForFoldernum(folder);
 
-    if (folder != NULL)
+    if (save != NULL)
     {
-        if ((folder->flag_007 & 1))
+        if ((save->flag_007 & 1))
         {
             return TRUE;
         }
 
         for (stage = SP_LEVEL_DAM; stage < SP_LEVEL_MAX; stage++)
         {
-            if (!get_eeprom_stage_completed_for_difficulty(folder, stage, DIFFICULTY_00))
+            if (!gamefileGetSaveStageCompletedForDifficulty(save, stage, DIFFICULTY_00))
             {
                 break;
             }

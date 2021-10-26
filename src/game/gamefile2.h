@@ -4,7 +4,7 @@
 
 #define RAMROM_FOLDERNUM 0x64
 
-u8 removed_would_have_returned_bond_for_folder_num(u32 folder);
+u8 gamefileGetBondForFolder(u32 folder);
 void sub_GAME_7F01DF90();
 
 #endif
