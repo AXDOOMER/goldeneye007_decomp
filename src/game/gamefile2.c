@@ -6,24 +6,33 @@
 #include "player.h"
 #include "watch.h"
 
-s32 sub_GAME_7F01D6C0(void) {
+/**
+ *
+ *
+ * @return s32
+ */
+s32 sub_GAME_7F01D6C0(void)
+{
   return joyGamePakProbe();
 }
 
-
-
-
+/**
+ * Resets the RamRom replay folder save
+ *
+ */
 void reset_ramrom_folder_to_default(void)
 {
-    struct save_data new_save;
+    save_data new_save = D_8002C520;
 
-    new_save = D_8002C520;
     saves[5] = new_save;
 }
 
-
-
-void sub_GAME_7F01D758(struct save_data *save)
+/**
+ *
+ *
+ * @param save
+ */
+void sub_GAME_7F01D758(save_data *save)
 {
     if (sub_GAME_7F01D6C0() != 0)
     {
@@ -32,7 +41,12 @@ void sub_GAME_7F01D758(struct save_data *save)
     }
 }
 
-void sub_GAME_7F01D7A0(struct save_data *save)
+/**
+ *
+ *
+ * @param save
+ */
+void sub_GAME_7F01D7A0(save_data *save)
 {
     if (save >= &saves[0] && save < &saves[5])
     {
@@ -44,84 +58,132 @@ void sub_GAME_7F01D7A0(struct save_data *save)
     }
 }
 
-
-
-void reset_folder_to_default(struct save_data *save)
+/**
+ * reset save to default
+ *
+ * @param save
+ */
+void reset_folder_to_default(save_data *save)
 {
-    struct save_data new_save;
+    save_data new_save  = D_8002C580;
 
-    new_save = D_8002C580;
     *save = new_save;
     sub_GAME_7F01D7A0(save);
 }
 
-
-u32 get_foldernum_of_eeprom(struct save_data *eeprom)
+/**
+ * Get the foldernum of eeprom save
+ *
+ * @param eeprom
+ * @return u32
+ */
+u32 get_foldernum_of_eeprom(save_data *eeprom)
 {
   return eeprom->completion_bitflags & 7;
 }
 
-void set_eeprom_to_folder_num(struct save_data *eeprom, u32 folder) {
-    eeprom->completion_bitflags = eeprom->completion_bitflags & 0xFFF8;
-
-    eeprom->completion_bitflags = eeprom->completion_bitflags | folder & 7;
+/**
+ * Clear then set save foldernumber flag
+ *
+ * @param eeprom
+ * @param folder
+ */
+void set_eeprom_to_folder_num(save_data *eeprom, u32 folder)
+{
+    eeprom->completion_bitflags &= 0xFFF8;
+    eeprom->completion_bitflags |= folder & 7;
 }
 
-
-u32 set_eeprom_flag_0x18(struct save_data *folder)
+/**
+ * Set save flag 0x18
+ *
+ * @param folder
+ * @return u32
+ */
+u32 set_eeprom_flag_0x18(save_data *folder)
 {
   return (folder->completion_bitflags & 0x18) >> 3;
 }
 
-void reset_eeprom_flag_0x18(struct save_data *folder, s32 arg1) {
-    folder->completion_bitflags = folder->completion_bitflags & 0xFFE7;
-
-    folder->completion_bitflags = (folder->completion_bitflags | ((arg1 * 8) & 0x18));
+/**
+ * Resets save flag 0x18
+ *
+ * @param folder
+ * @param arg1
+ */
+void reset_eeprom_flag_0x18(save_data *folder, s32 arg1)
+{
+    folder->completion_bitflags &= 0xFFE7;
+    folder->completion_bitflags |= ((arg1 * 8) & 0x18);
 }
 
-
-u32 get_selected_bond(struct save_data *folder)
+/**
+ * Get the selected bond save flag
+ *
+ * @param folder
+ * @return u32
+ */
+u32 get_selected_bond(save_data *folder)
 {
   return (folder->completion_bitflags & 0x60) >> 5;
 }
 
-
-
-
-void set_selected_bond(struct save_data *folder, s32 arg1) {
-    folder->completion_bitflags = folder->completion_bitflags & 0xFF9F;
-
-    folder->completion_bitflags = (folder->completion_bitflags | ((arg1 << 5) & 0x60));
+/**
+ * Set the selected bond save flag
+ *
+ * @param folder
+ * @param arg1
+ */
+void set_selected_bond(save_data *folder, s32 arg1)
+{
+    folder->completion_bitflags &= 0xFF9F;
+    folder->completion_bitflags |= ((arg1 << 5) & 0x60);
 }
 
-
-
-
-
-u32 check_if_eeprom_flag_set_0x80(struct save_data *folder)
+/**
+ * Check if save has flag 0x80
+ *
+ * @param folder
+ * @return u32
+ */
+u32 check_if_eeprom_flag_set_0x80(save_data *folder)
 {
   return ((folder->completion_bitflags & 0x80) != 0);
 }
 
-
-void toggle_eeprom_flag_set_0x80(struct save_data *folder,u32 mode)
+/**
+ * Toggle save flag 0x80
+ * possibly wear levelling
+ *
+ * @param folder: folder to enable or disable flag
+ * @param set: Enable flag if TRUE, Disable flag if FALSE
+ */
+void toggle_eeprom_flag_set_0x80(save_data *folder, s32 enable)
 {
-  if (mode != 0) {
-    folder->completion_bitflags = folder->completion_bitflags | 0x80;
-    return;
-  }
-  folder->completion_bitflags = folder->completion_bitflags & 0xff7f;
-  return;
+    if (enable)
+    {
+        folder->completion_bitflags |= 0x80;
+    }
+    else
+    {
+        folder->completion_bitflags &= ~0x80;
+    }
 }
 
-
-
-
-s32 get_eeprom_stage_complete_time_for_difficulty(struct save_data* save, LEVEL_SOLO_SEQUENCE stagenum, DIFFICULTY difficulty)
+/**
+ * Get completion time for stage at difficulty
+ *
+ * @param save
+ * @param stagenum
+ * @param difficulty
+ * @return best time for stage at difficulty
+ */
+s32 gamefileGetStageDifficultyTime(save_data* save, LEVEL_SOLO_SEQUENCE stagenum, DIFFICULTY difficulty)
 {
     s32 offset;
     LEVEL_SOLO_SEQUENCE max_level;
-    u32 return_value;
+    u32 time;
+    s32 index;
 
     max_level = SP_LEVEL_MAX;
     if ((stagenum >= SP_LEVEL_DAM) && (stagenum < SP_LEVEL_MAX ) && (difficulty >= DIFFICULTY_AGENT) && (difficulty < DIFFICULTY_MAX))
@@ -136,180 +198,139 @@ s32 get_eeprom_stage_complete_time_for_difficulty(struct save_data* save, LEVEL_
         }
 
         offset = ((difficulty * max_level) + stagenum) * 10; //startbit
+        index = (offset >> 3);
 
         switch(7 - (offset & 7)) //bitmask
         {
             case 7: //no offset
                 // first 10 bits 8 + 2                    1111 1111                                      1100 0000
-                return_value = ((save->times[(offset >> 3)] & 0xFF) << 2) | ((save->times[(offset >> 3) + 1] & 0xc0) >> 6);
+                time = ((save->times[index] & 0xFF) << 2) | ((save->times[index + 1] & 0xc0) >> 6);
                 break;
             case 5: //offset 2
                 // next 10 bits 6 + 4                     0011 1111                                      1111 0000
-                return_value =  ((save->times[(offset >> 3)] & 0x3f) << 4) | ((save->times[(offset >> 3) + 1] & 0xf0) >> 4);
+                time =  ((save->times[index] & 0x3f) << 4) | ((save->times[index + 1] & 0xf0) >> 4);
                 break;
             case 3: //offset 4
                 // next 10 bits 4 + 6                     0000 1111                                      1111 1100
-                return_value =  ((save->times[(offset >> 3)] & 0xf) << 6) | ((save->times[(offset >> 3) + 1] & 0xfc) >> 2);
+                time =  ((save->times[index] & 0xf) << 6) | ((save->times[index + 1] & 0xfc) >> 2);
                 break;
             case 1: //offset 6
                 // next 10 bits 2 + 8                     0000 0011                                      1111 1111
-                return_value = ((save->times[(offset >> 3)] & 0x3)  << 8) | ((save->times[(offset >> 3) + 1] & 0xFFF));
+                time = ((save->times[index] & 0x3)  << 8) | ((save->times[index + 1] & 0xFFF));
                 break;
             default:
-                return_value = 0; // shouldnt reach
+                time = 0; // shouldnt reach
         }
 
-        return return_value;
+        return time;
     }
 
     return 0;
 }
 
+/**
+ * Set completion time for stage at difficulty
+ *
+ * @param save
+ * @param stage
+ * @param difficulty
+ * @param newtime
+ */
+void gamefileSetDifficultyStageTime(save_data *save, LEVEL_SOLO_SEQUENCE stage, DIFFICULTY difficulty, s32 newtime)
+{
+    s32 offset;
+    s32 index;
+    u32 max_level;
 
+    max_level = SP_LEVEL_MAX;
+    if ((stage >= 0) && (stage < SP_LEVEL_MAX ) && (difficulty >= DIFFICULTY_AGENT) && (difficulty < DIFFICULTY_007))
+    {
+        if (newtime == 0) {
+            newtime = 0x4f;
+        } else if (newtime > 0x3ff) {
+            newtime = 0x3ff;
+        }
 
-#ifdef NONMATCHING
-void sub_GAME_7F01DAE4(void) {
+        offset = ((difficulty * max_level) + stage) * 10; //startbit
+        index = (offset >> 3);
 
+        switch(7 - (offset & 7)) //bitmask
+        {
+            case 7: //no offset 4 8 12 etc
+                save->times[index] &= 0xff00;
+                save->times[index + 1] &= 0xff3f;
+                save->times[index] |= (newtime >> 2) & 0xff;
+                save->times[index + 1] |= (newtime << 6) & 0xc0;
+                break;
+            case 5: //first offset 5 9 13 etc
+                save->times[index] &= 0xffc0;
+                save->times[index + 1] &= 0xff0f;
+                save->times[index] |= ((newtime >> 4) & 0x3f);
+                save->times[index + 1] |= (newtime << 4) & 0xf0;
+                break;
+            case 3: //second offset 6 10 14 etc
+                save->times[index] &= 0xfff0;
+                save->times[index + 1] &= 0xff03;
+                save->times[index] |= ((newtime >> 6) & 0xf);
+                save->times[index + 1] |= (newtime << 2) & 0xfC;
+                break;
+            case 1: //third offset 7 11 15 etc
+                save->times[index] &= 0xfffc;
+                save->times[index + 1] &= 0xff00;
+                save->times[index] |= ((newtime >> 8) & 3);
+                save->times[index + 1] |= newtime & 0xfff;
+                break;
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01DAE4
-/* 052614 7F01DAE4 04A0005C */  bltz  $a1, .L7F01DC58
-/* 052618 7F01DAE8 28A10014 */   slti  $at, $a1, 0x14
-/* 05261C 7F01DAEC 1020005A */  beqz  $at, .L7F01DC58
-/* 052620 7F01DAF0 00000000 */   nop
-/* 052624 7F01DAF4 04C00058 */  bltz  $a2, .L7F01DC58
-/* 052628 7F01DAF8 28C10003 */   slti  $at, $a2, 3
-/* 05262C 7F01DAFC 10200056 */  beqz  $at, .L7F01DC58
-/* 052630 7F01DB00 24080007 */   li    $t0, 7
-/* 052634 7F01DB04 14E00003 */  bnez  $a3, .L7F01DB14
-/* 052638 7F01DB08 00067080 */   sll   $t6, $a2, 2
-/* 05263C 7F01DB0C 10000005 */  b     .L7F01DB24
-/* 052640 7F01DB10 2407004F */   li    $a3, 79
-.L7F01DB14:
-/* 052644 7F01DB14 28E10400 */  slti  $at, $a3, 0x400
-/* 052648 7F01DB18 54200003 */  bnezl $at, .L7F01DB28
-/* 05264C 7F01DB1C 01C67021 */   addu  $t6, $t6, $a2
-/* 052650 7F01DB20 240703FF */  li    $a3, 1023
-.L7F01DB24:
-/* 052654 7F01DB24 01C67021 */  addu  $t6, $t6, $a2
-.L7F01DB28:
-/* 052658 7F01DB28 000E7080 */  sll   $t6, $t6, 2
-/* 05265C 7F01DB2C 01C51021 */  addu  $v0, $t6, $a1
-/* 052660 7F01DB30 00027880 */  sll   $t7, $v0, 2
-/* 052664 7F01DB34 01E27821 */  addu  $t7, $t7, $v0
-/* 052668 7F01DB38 000F7840 */  sll   $t7, $t7, 1
-/* 05266C 7F01DB3C 31F80007 */  andi  $t8, $t7, 7
-/* 052670 7F01DB40 01181823 */  subu  $v1, $t0, $t8
-/* 052674 7F01DB44 24010001 */  li    $at, 1
-/* 052678 7F01DB48 10610035 */  beq   $v1, $at, .L7F01DC20
-/* 05267C 7F01DB4C 01E01025 */   move  $v0, $t7
-/* 052680 7F01DB50 24010003 */  li    $at, 3
-/* 052684 7F01DB54 10610023 */  beq   $v1, $at, .L7F01DBE4
-/* 052688 7F01DB58 0002C0C3 */   sra   $t8, $v0, 3
-/* 05268C 7F01DB5C 24010005 */  li    $at, 5
-/* 052690 7F01DB60 10610011 */  beq   $v1, $at, .L7F01DBA8
-/* 052694 7F01DB64 000260C3 */   sra   $t4, $v0, 3
-/* 052698 7F01DB68 1468003B */  bne   $v1, $t0, .L7F01DC58
-/* 05269C 7F01DB6C 000FC8C3 */   sra   $t9, $t7, 3
-/* 0526A0 7F01DB70 00991821 */  addu  $v1, $a0, $t9
-/* 0526A4 7F01DB74 90690012 */  lbu   $t1, 0x12($v1)
-/* 0526A8 7F01DB78 906B0013 */  lbu   $t3, 0x13($v1)
-/* 0526AC 7F01DB7C 00077883 */  sra   $t7, $a3, 2
-/* 0526B0 7F01DB80 312DFF00 */  andi  $t5, $t1, 0xff00
-/* 0526B4 7F01DB84 3179FF3F */  andi  $t9, $t3, 0xff3f
-/* 0526B8 7F01DB88 00075180 */  sll   $t2, $a3, 6
-/* 0526BC 7F01DB8C A06D0012 */  sb    $t5, 0x12($v1)
-/* 0526C0 7F01DB90 A0790013 */  sb    $t9, 0x13($v1)
-/* 0526C4 7F01DB94 01AFC025 */  or    $t8, $t5, $t7
-/* 0526C8 7F01DB98 032A5825 */  or    $t3, $t9, $t2
-/* 0526CC 7F01DB9C A0780012 */  sb    $t8, 0x12($v1)
-/* 0526D0 7F01DBA0 03E00008 */  jr    $ra
-/* 0526D4 7F01DBA4 A06B0013 */   sb    $t3, 0x13($v1)
-
-.L7F01DBA8:
-/* 0526D8 7F01DBA8 008C1821 */  addu  $v1, $a0, $t4
-/* 0526DC 7F01DBAC 906E0012 */  lbu   $t6, 0x12($v1)
-/* 0526E0 7F01DBB0 906F0013 */  lbu   $t7, 0x13($v1)
-/* 0526E4 7F01DBB4 0007C903 */  sra   $t9, $a3, 4
-/* 0526E8 7F01DBB8 31C9FFC0 */  andi  $t1, $t6, 0xffc0
-/* 0526EC 7F01DBBC 31ECFF0F */  andi  $t4, $t7, 0xff0f
-/* 0526F0 7F01DBC0 332A003F */  andi  $t2, $t9, 0x3f
-/* 0526F4 7F01DBC4 00076900 */  sll   $t5, $a3, 4
-/* 0526F8 7F01DBC8 A0690012 */  sb    $t1, 0x12($v1)
-/* 0526FC 7F01DBCC A06C0013 */  sb    $t4, 0x13($v1)
-/* 052700 7F01DBD0 012A5825 */  or    $t3, $t1, $t2
-/* 052704 7F01DBD4 018D7825 */  or    $t7, $t4, $t5
-/* 052708 7F01DBD8 A06B0012 */  sb    $t3, 0x12($v1)
-/* 05270C 7F01DBDC 03E00008 */  jr    $ra
-/* 052710 7F01DBE0 A06F0013 */   sb    $t7, 0x13($v1)
-
-.L7F01DBE4:
-/* 052714 7F01DBE4 00981821 */  addu  $v1, $a0, $t8
-/* 052718 7F01DBE8 90790012 */  lbu   $t9, 0x12($v1)
-/* 05271C 7F01DBEC 906A0013 */  lbu   $t2, 0x13($v1)
-/* 052720 7F01DBF0 00076183 */  sra   $t4, $a3, 6
-/* 052724 7F01DBF4 332EFFF0 */  andi  $t6, $t9, 0xfff0
-/* 052728 7F01DBF8 3158FF03 */  andi  $t8, $t2, 0xff03
-/* 05272C 7F01DBFC 318D000F */  andi  $t5, $t4, 0xf
-/* 052730 7F01DC00 00074880 */  sll   $t1, $a3, 2
-/* 052734 7F01DC04 A06E0012 */  sb    $t6, 0x12($v1)
-/* 052738 7F01DC08 A0780013 */  sb    $t8, 0x13($v1)
-/* 05273C 7F01DC0C 01CD7825 */  or    $t7, $t6, $t5
-/* 052740 7F01DC10 03095025 */  or    $t2, $t8, $t1
-/* 052744 7F01DC14 A06F0012 */  sb    $t7, 0x12($v1)
-/* 052748 7F01DC18 03E00008 */  jr    $ra
-/* 05274C 7F01DC1C A06A0013 */   sb    $t2, 0x13($v1)
-
-.L7F01DC20:
-/* 052750 7F01DC20 000258C3 */  sra   $t3, $v0, 3
-/* 052754 7F01DC24 008B1821 */  addu  $v1, $a0, $t3
-/* 052758 7F01DC28 906C0012 */  lbu   $t4, 0x12($v1)
-/* 05275C 7F01DC2C 906D0013 */  lbu   $t5, 0x13($v1)
-/* 052760 7F01DC30 0007C203 */  sra   $t8, $a3, 8
-/* 052764 7F01DC34 3199FFFC */  andi  $t9, $t4, 0xfffc
-/* 052768 7F01DC38 31ABFF00 */  andi  $t3, $t5, 0xff00
-/* 05276C 7F01DC3C 33090003 */  andi  $t1, $t8, 3
-/* 052770 7F01DC40 A0790012 */  sb    $t9, 0x12($v1)
-/* 052774 7F01DC44 A06B0013 */  sb    $t3, 0x13($v1)
-/* 052778 7F01DC48 03295025 */  or    $t2, $t9, $t1
-/* 05277C 7F01DC4C 01677025 */  or    $t6, $t3, $a3
-/* 052780 7F01DC50 A06A0012 */  sb    $t2, 0x12($v1)
-/* 052784 7F01DC54 A06E0013 */  sb    $t6, 0x13($v1)
-.L7F01DC58:
-/* 052788 7F01DC58 03E00008 */  jr    $ra
-/* 05278C 7F01DC5C 00000000 */   nop
-)
-#endif
 
 
-
-s32 get_eeprom_stage_completed_for_difficulty(struct save_data *folder, s32 levelid, DIFFICULTY difficulty) {
+/**
+ * Check if stage is completed at difficulty for save
+ *
+ * @param folder
+ * @param levelid
+ * @param difficulty
+ * @return is stage at diffiuclty completed
+ */
+s32 get_eeprom_stage_completed_for_difficulty(save_data *folder, s32 levelid, DIFFICULTY difficulty) {
 
     if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007)) {
-        return get_eeprom_stage_complete_time_for_difficulty(folder, levelid, difficulty) != 0;
+        return gamefileGetStageDifficultyTime(folder, levelid, difficulty) != 0;
     }
 
     return 0;
 }
 
-
-
-void sub_GAME_7F01DCB0(struct save_data *folder, s32 levelid, DIFFICULTY difficulty, s32 arg4) {
+/**
+ *
+ *
+ * @param folder
+ * @param levelid
+ * @param difficulty
+ * @param arg4
+ */
+void sub_GAME_7F01DCB0(save_data *folder, s32 levelid, DIFFICULTY difficulty, s32 arg4) {
     s32 temp_v0;
 
     if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007)) {
 
-        temp_v0 = get_eeprom_stage_complete_time_for_difficulty(folder, levelid, difficulty);
+        temp_v0 = gamefileGetStageDifficultyTime(folder, levelid, difficulty);
 
         if ((temp_v0 == 0) || (arg4 < temp_v0)) {
-            sub_GAME_7F01DAE4(folder, levelid, difficulty, arg4);
+            gamefileSetDifficultyStageTime(folder, levelid, difficulty, arg4);
         }
     }
 }
 
-s32 check_if_cheat_unlocked(struct save_data *save, s32 cheat)
+/**
+ * Check if cheat is unlocked
+ *
+ * @param save
+ * @param cheat
+ * @return bool
+ */
+s32 check_if_cheat_unlocked(save_data *save, s32 cheat)
 {
     s32 bits;
 
@@ -322,7 +343,13 @@ s32 check_if_cheat_unlocked(struct save_data *save, s32 cheat)
     return FALSE;
 }
 
-void sub_GAME_7F01DD74(struct save_data *save, s32 cheat)
+/**
+ *
+ *
+ * @param save
+ * @param cheat
+ */
+void sub_GAME_7F01DD74(save_data *save, s32 cheat)
 {
     u32 i;
     u32 temp;
@@ -340,23 +367,38 @@ void sub_GAME_7F01DD74(struct save_data *save, s32 cheat)
     }
 }
 
-struct save_data *getEEPROMforFoldernum(u32 foldernum)
+/**
+ * Get save in foldernum slot
+ *
+ * @param foldernum
+ * @return save_data*
+ */
+save_data *getEEPROMforFoldernum(u32 foldernum)
 {
     int i;
-    for (i = 0; i < 5; i++) {
+
+    for (i = 0; i < 5; i++)
+    {
         if (check_if_eeprom_flag_set_0x80(&saves[i]) == 0 &&
-                get_foldernum_of_eeprom(&saves[i]) == foldernum) {
+                get_foldernum_of_eeprom(&saves[i]) == foldernum)
+        {
             return &saves[i];
         }
     }
 
-    if (foldernum == RAMROM_FOLDERNUM) {
+    if (foldernum == RAMROM_FOLDERNUM)
+    {
         return &saves[5];
     }
 
     return NULL;
 }
 
+/**
+ * See if any save has 0x80 flag
+ *
+ * @return s32
+ */
 s32 check_if_eeprom_flag_set_0x80_any_folder(void)
 {
     s32 i;
@@ -372,13 +414,16 @@ s32 check_if_eeprom_flag_set_0x80_any_folder(void)
     return -1;
 }
 
-
-// delete file marked with flag 0x80?
-// perhaps used to mark a save for deletion
+/**
+ * Resets save with 0x80 flag
+ * Maybe clearing for copy or wear level
+ *
+ * @param foldernum
+ */
 void sub_GAME_7F01DEB4(u32 foldernum)
 {
     s32 folder_with_flag;
-    struct save_data new_save;
+    save_data new_save;
 
     folder_with_flag = check_if_eeprom_flag_set_0x80_any_folder();
 
@@ -616,19 +661,23 @@ glabel sub_GAME_7F01DF90
 )
 #endif
 
-
-
+/**
+ * Validate foldernum
+ *
+ * @param folder
+ * @return bool
+ */
 s32 check_if_valid_folder_num(s32 folder)
 {
     if ((folder >= 0) && (folder < 4))
     {
-        return 1;
+        return TRUE;
     }
     if (folder == 100)
     {
-        return 1;
+        return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
 
@@ -814,8 +863,13 @@ glabel isStageUnlockedAtDifficulty
 #endif
 
 
-
-void sub_GAME_7F01E504(struct save_data *save1, struct save_data *save2)
+/**
+ *
+ *
+ * @param save1
+ * @param save2
+ */
+void sub_GAME_7F01E504(save_data *save1, save_data *save2)
 {
     s32 folder_with_flag;
     s32 otherfolder;
@@ -1046,10 +1100,16 @@ glabel sub_GAME_7F01E760
 #endif
 
 
-
+/**
+ * Get the highest stage and difficulty completed in folder
+ *
+ * @param foldernum
+ * @param stage
+ * @param difficulty
+ */
 void get_highest_stage_difficulty_completed_in_folder(s32 foldernum, LEVEL_SOLO_SEQUENCE *stage, DIFFICULTY *difficulty)
 {
-    struct save_data *folder;
+    save_data *folder;
     LEVEL_SOLO_SEQUENCE stageid;
     DIFFICULTY difficultyid;
 
@@ -1074,9 +1134,14 @@ void get_highest_stage_difficulty_completed_in_folder(s32 foldernum, LEVEL_SOLO_
     *difficulty = DIFFICULTY_MULTI;
 }
 
-
-
-s32 get_highest_stage_unlocked_in_folder(s32 foldernum) {
+/**
+ * Get the highest stage unlocked in folder
+ *
+ * @param foldernum
+ * @return s32
+ */
+s32 get_highest_stage_unlocked_in_folder(s32 foldernum)
+{
     LEVEL_SOLO_SEQUENCE stageid;
     DIFFICULTY difficulty;
 
@@ -1096,7 +1161,13 @@ s32 get_highest_stage_unlocked_in_folder(s32 foldernum) {
     return 0;
 }
 
-u32 get_highest_stage_unlocked_any_folder(void) {
+/**
+ * Get the highest stage unlocked in any folder
+ *
+ * @return stageid
+ */
+u32 get_highest_stage_unlocked_any_folder(void)
+{
     u32 isfound;
     int folder;
     u32 isunlocked;
@@ -1106,78 +1177,125 @@ u32 get_highest_stage_unlocked_any_folder(void) {
     while (folder != 4) {
         isfound = get_highest_stage_unlocked_in_folder(folder);
         folder += 1;
-        if ((int)isunlocked < (int)isfound) {
+        if ((int)isunlocked < (int)isfound)
+        {
             isunlocked = isfound;
         }
     };
     return isunlocked;
 }
 
+/**
+ * Check if cradle has been completed at any difficulty
+ *
+ * @param foldernum
+ * @return bool
+ */
 s32 check_cradle_completed_in_folder(s32 foldernum)
 {
-    return (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_CRADLE, 0) == 3) ||
-            (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_CRADLE, 1) == 3) ||
-            (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_CRADLE, 2) == 3);
+    return (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_CRADLE, DIFFICULTY_AGENT) == 3) ||
+            (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_CRADLE, DIFFICULTY_SECRET) == 3) ||
+            (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_CRADLE, DIFFICULTY_00) == 3);
 }
 
-s32 check_aztec_completed_in_folder_secret_00(s32 foldernum) {
-    return (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_AZTEC, 1) == 3) ||
-            (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_AZTEC, 2) == 3);
+/**
+ * Check if aztec has been completed at secret or 00 difficulty
+ *
+ * @param foldernum
+ * @return bool
+ */
+s32 check_aztec_completed_in_folder_secret_00(s32 foldernum)
+{
+    return (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_AZTEC, DIFFICULTY_SECRET) == 3) ||
+            (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_AZTEC, DIFFICULTY_00) == 3);
 }
 
+/**
+ * Check if egypt is completed at 00 difficulty
+ *
+ * @param foldernum
+ * @return bool
+ */
 s32 check_egypt_completed_in_folder_00(int foldernum)
 {
     return isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_EGYPT, DIFFICULTY_00) == 3;
 }
 
-u32 check_cradle_completed_any_folder(void) {
+/**
+ * Check if cradle has been completed in any folder
+ *
+ * @return bool
+ */
+u32 check_cradle_completed_any_folder(void)
+{
     u32 completed;
     int folder;
 
     folder = 0;
-    while (folder != 4) {
+    while (folder != 4)
+    {
         completed = check_cradle_completed_in_folder(folder);
         folder += 1;
-        if (completed != FALSE) {
+        if (completed != FALSE)
+        {
             return TRUE;
         }
     };
     return FALSE;
 }
 
-
-u32 check_aztec_completed_any_folder_secret_00(void) {
+/**
+ * Check if aztec has been completed in any folder at secret or 00 difficulty
+ *
+ * @return bool
+ */
+u32 check_aztec_completed_any_folder_secret_00(void)
+{
     u32 completed;
     int folder;
 
     folder = 0;
-    while (folder != 4) {
+    while (folder != 4)
+    {
         completed = check_aztec_completed_in_folder_secret_00(folder);
         folder += 1;
-        if (completed != FALSE) {
+        if (completed != FALSE)
+        {
             return TRUE;
         }
     };
     return FALSE;
 }
 
-
-u32 check_egypt_completed_any_folder_00(void) {
+/**
+ * Check if Egypt has been completed in any folder at secret or 00 difficulty
+ *
+ * @return bool
+ */
+u32 check_egypt_completed_any_folder_00(void)
+{
     u32 completed;
     int folder;
 
     folder = 0;
-    while (folder != 4) {
+    while (folder != 4)
+    {
         completed = check_egypt_completed_in_folder_00(folder);
         folder += 1;
-        if (completed != FALSE) {
+        if (completed != FALSE)
+        {
             return TRUE;
         }
     };
     return FALSE;
 }
 
-
+/**
+ * Unused
+ *
+ * @param folder
+ * @return u8
+ */
 u8 removed_would_have_returned_bond_for_folder_num(u32 folder)
 {
     #ifdef ALL_BONDS
@@ -1193,7 +1311,14 @@ u8 removed_would_have_returned_bond_for_folder_num(u32 folder)
     #endif
 }
 
-void set_selected_bond_to_folder(s32 folder, s32 bond) {
+/**
+ * Set the selected bond to folder object
+ *
+ * @param folder
+ * @param bond
+ */
+void set_selected_bond_to_folder(s32 folder, s32 bond)
+{
     if (folder < 0 || folder > 3)
     {
         return;
@@ -1202,23 +1327,37 @@ void set_selected_bond_to_folder(s32 folder, s32 bond) {
     save_selected_bond[folder] = 0;
 }
 
-void sub_GAME_7F01EBF4(u32 unused) {
+/**
+ *
+ *
+ * @param unused
+ */
+void sub_GAME_7F01EBF4(u32 unused)
+{
     return;
 }
 
-void sub_GAME_7F01EBFC(u32 unused) {
+/**
+ *
+ *
+ * @param unused
+ */
+void sub_GAME_7F01EBFC(u32 unused)
+{
     return;
 }
 
-
-
-
+/**
+ * Delete save at foldernum
+ *
+ * @param foldernum
+ */
 void delete_eeprom_folder(s32 foldernum)
 {
-    struct save_data *save;
+    save_data *save;
     LEVEL_SOLO_SEQUENCE stage;
     DIFFICULTY difficulty;
-    struct save_data new_save;
+    save_data new_save;
 
     if (foldernum >= 0 && foldernum < 4)
     {
@@ -1240,10 +1379,15 @@ void delete_eeprom_folder(s32 foldernum)
     }
 }
 
-
+/**
+ *
+ *
+ * Resetting times??
+ * @param foldernum
+ */
 void sub_GAME_7F01ED10(u32 foldernum)
 {
-    struct save_data *save;
+    save_data *save;
     LEVEL_SOLO_SEQUENCE stagenum;
     DIFFICULTY difficulty;
 
@@ -1258,14 +1402,21 @@ void sub_GAME_7F01ED10(u32 foldernum)
     }
 }
 
+/**
+ * Copy save
+ *
+ * Copies selected save to the first free slot
+ * if no free slot, do nothing
+ * @param foldernum Current folder number
+ */
 void sub_GAME_7F01EDA0(s32 foldernum)
 {
-    struct save_data* save;
+    save_data* save;
     LEVEL_SOLO_SEQUENCE stage;
     DIFFICULTY difficulty;
     s32 other;
-    struct save_data new_save;
-    struct save_data* temp_s2;
+    save_data new_save;
+    save_data* temp_s2;
 
     if ((foldernum >= 0) && (foldernum < 4))
     {
@@ -1301,9 +1452,12 @@ void sub_GAME_7F01EDA0(s32 foldernum)
     }
 }
 
-
-
-void update_eeprom_to_current_solo_watch_settings(struct save_data *save)
+/**
+ * @brief
+ *
+ * @param save
+ */
+void update_eeprom_to_current_solo_watch_settings(save_data *save)
 {
     u32 temp;
     u16 bits;
@@ -1360,9 +1514,14 @@ void update_eeprom_to_current_solo_watch_settings(struct save_data *save)
     save->options = bits | temp;
 }
 
+/**
+ * Get the screen ratio settings for mpgame from folder
+ *
+ * @param foldernum
+ */
 void get_screen_ratio_settings_for_mpgame_from_folder(u32 foldernum)
 {
-    struct save_data *save;
+    save_data *save;
     u16 padding;
     u16 options;
 
@@ -1407,42 +1566,52 @@ void get_screen_ratio_settings_for_mpgame_from_folder(u32 foldernum)
     }
 }
 
-
-
+/**
+ * Delete
+ *
+ * @param foldernum
+ */
 void delete_update_eeprom_file(s32 foldernum)
 {
-    struct save_data *save;
-    struct save_data stack100;
-    struct save_data stack196;
+    save_data *save;
+    save_data save_to_copy;
+    save_data new_save;
 
     if (foldernum >= 0 && foldernum < 4)
     {
         save = getEEPROMforFoldernum(foldernum);
 
-        *(&stack100) = *(&D_8002C7E0);
+        save_to_copy = D_8002C7E0;
 
-        if (save != 0) {
-            *(&stack100) = *save;
-        } else {
-            set_eeprom_to_folder_num(&stack100, foldernum);
+        if (save != 0)
+        {
+            save_to_copy = *save;
+        }
+        else
+        {
+            set_eeprom_to_folder_num(&save_to_copy, foldernum);
         }
 
-        *(&stack196) = *(&stack100);
+        new_save = save_to_copy;
 
-        update_eeprom_to_current_solo_watch_settings(&stack196);
+        update_eeprom_to_current_solo_watch_settings(&new_save);
 
-        if (_bcmp(&stack196, &stack100, 0x60) != 0) {
-            sub_GAME_7F01E504(save, &stack196);
+        if (_bcmp(&new_save, &save_to_copy, 0x60) != 0)
+        {
+            sub_GAME_7F01E504(save, &new_save);
         }
     }
 }
 
-
-
+/**
+ *
+ *
+ * @param foldernum
+ */
 void copy_eeprom_to_stack_set_folder_num(s32 foldernum)
 {
-    struct save_data *save;
-    struct save_data new_save;
+    save_data *save;
+    save_data new_save;
 
     if (foldernum >= 0 && foldernum < 4)
     {
@@ -1466,12 +1635,16 @@ void copy_eeprom_to_stack_set_folder_num(s32 foldernum)
     }
 }
 
-
-
-void copy_eeprom_from_to(s32 foldernum, struct save_data *out_save)
+/**
+ * Copy save for foldernum to out_save
+ *
+ * @param foldernum
+ * @param out_save
+ */
+void copy_eeprom_from_to(s32 foldernum, save_data *out_save)
 {
-    struct save_data *in_save;
-    struct save_data new_save;
+    save_data *in_save;
+    save_data new_save;
 
     in_save = getEEPROMforFoldernum(foldernum);
 
@@ -1486,8 +1659,13 @@ void copy_eeprom_from_to(s32 foldernum, struct save_data *out_save)
     }
 }
 
-
-void copy_demo_eeprom_to_ramrom_folder(u32 foldernum, struct save_data *save)
+/**
+ * Copy save to RarRom replay save
+ *
+ * @param foldernum
+ * @param save
+ */
+void copy_demo_eeprom_to_ramrom_folder(u32 foldernum, save_data *save)
 {
     if (foldernum == RAMROM_FOLDERNUM)
     {
@@ -1495,31 +1673,39 @@ void copy_demo_eeprom_to_ramrom_folder(u32 foldernum, struct save_data *save)
     }
 }
 
+/**
+ * Check is 007 mode is unlocked
+ *
+ * @param foldernum
+ * @return bool
+ */
 s32 check_for_007_mode_unlocked(u32 foldernum)
 {
     LEVEL_SOLO_SEQUENCE stage;
-    struct save_data* folder;
+    save_data* folder;
 
     folder = getEEPROMforFoldernum(foldernum);
+
     if (folder != NULL)
     {
-        if ((folder->flag_007 & 1) != 0)
+        if ((folder->flag_007 & 1))
         {
             return TRUE;
         }
+
         for (stage = SP_LEVEL_DAM; stage < SP_LEVEL_MAX; stage++)
         {
-            if (get_eeprom_stage_completed_for_difficulty(folder, stage, DIFFICULTY_00) == 0)
+            if (!get_eeprom_stage_completed_for_difficulty(folder, stage, DIFFICULTY_00))
             {
                 break;
             }
         }
+
         if (stage == SP_LEVEL_MAX)
         {
             return TRUE;
         }
     }
-
 
     return FALSE;
 }
