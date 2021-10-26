@@ -11,7 +11,7 @@ typedef struct ramromfilestructure {
     enum LEVELID stagenum;
     enum DIFFICULTY difficulty;
     u32 size_cmds;
-    struct save_data savefile;
+    save_data savefile;
     f32 totaltime_ms;
     u32 filesize;
     enum GAMEMODE mode;
@@ -26,7 +26,7 @@ typedef struct ramromfilestructure {
     u32 mp_contstyle[4];
     u32 aim_option;
     u32 mp_flags[4];
-    
+
 } ramromfilestructure;
 void test_if_recording_demos_this_stage_load(s32 arg0, s32 arg1);
 s32 iterate_ramrom_entries_handle_camera_out(void);

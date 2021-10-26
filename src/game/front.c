@@ -20691,7 +20691,7 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
     y = 0xA7;
     DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
 
-    besttime = get_eeprom_stage_complete_time_for_difficulty(getEEPROMforFoldernum(selected_folder_num), mission_folder_setup_entries[briefingpage].mission_num, selected_difficulty);
+    besttime = gamefileGetStageDifficultyTime(getEEPROMforFoldernum(selected_folder_num), mission_folder_setup_entries[briefingpage].mission_num, selected_difficulty);
     if ((besttime == 0) || (!(besttime < 0x3FF))) {
         besttime = -1;
     }
@@ -21014,7 +21014,7 @@ glabel constructor_menu0D_missioncomplete
 /* 04B768 7F016C38 3C068003 */  lui   $a2, %hi(selected_difficulty)
 /* 04B76C 7F016C3C 8CC6A8FC */  lw    $a2, %lo(selected_difficulty)($a2)
 /* 04B770 7F016C40 8DC50014 */  lw    $a1, 0x14($t6)
-/* 04B774 7F016C44 0FC07664 */  jal   get_eeprom_stage_complete_time_for_difficulty
+/* 04B774 7F016C44 0FC07664 */  jal   gamefileGetStageDifficultyTime
 /* 04B778 7F016C48 00402025 */   move  $a0, $v0
 /* 04B77C 7F016C4C 10400004 */  beqz  $v0, .L7F016C60
 /* 04B780 7F016C50 00404825 */   move  $t1, $v0

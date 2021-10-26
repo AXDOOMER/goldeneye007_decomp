@@ -38,7 +38,7 @@
 
 /**
  * @file boss.c
- * This file contains the main game loop code. 
+ * This file contains the main game loop code.
  */
 #ifndef VERSION_EU
 #define MAIN_LOOP_TICK_INTERVAL 0x5eb61U
@@ -48,18 +48,18 @@
 /**
  * Copied from n64devkit\ultra\usr\src\pr\demos_old\simple\gfx.h
  */
-typedef union {    
+typedef union {
 
     struct {
         short   type;
     } gen;
-    
+
     struct {
         short   type;
     } done;
-    
+
     OSScMsg      app;
-    
+
 } GFXMsg;
 
 // forward declarations
@@ -210,7 +210,7 @@ void bossInitMainthreadData(void)
     null_init_main_3();
     init_player_gait_object();
     initGameData();
-    sub_GAME_7F01D6E0();
+    reset_ramrom_folder_to_default();
     clear_ramrom_block_buffer_heading_ptrs();
 }
 
@@ -241,17 +241,17 @@ void bossEntry(void) {
     musicSeqPlayerInit();
     while(1){
        bossMainloop();
-    }    
+    }
 }
 
 /**
  * Main program loop.
- * 
+ *
  * 6C60    70006060
- * 
+ *
  * Seems to have been based on devkit example at one point,
  * n64devkit\ultra\usr\src\pr\demos_old\simple\simple.c
- * 
+ *
  * loop:
  *         70006090 tests memstring for "-level_##"
  *         700060DC if not title, tests memstring for "-hard#"
@@ -334,11 +334,11 @@ void bossMainloop(void)
     // 'done' value never changes, and control never breaks -- infinite loop
     while (!done)
     {
-        localGfxFrameMsg = NULL; 
+        localGfxFrameMsg = NULL;
         localGfxDoneMsg = g_bossGfxDoneMsg;
         toggleFlag = 0;
         pendingGfx = 0;
-        
+
         test_if_recording_demos_this_stage_load(g_StageNum, get_current_difficulty());
         if (g_DebugAndUpdateStageFlag)
         {
@@ -357,7 +357,7 @@ void bossMainloop(void)
 
                     stringIndex++;
                 }
-                
+
                 if (memallocstringtable[stringIndex].id == 0)
                 {
                     stringIndex = -1;
@@ -406,7 +406,7 @@ void bossMainloop(void)
                 localSelectedNumPlayers = get_selected_num_players();
             }
         }
-        
+
         init_player_data_ptrs_construct_viewports(localSelectedNumPlayers);
         dynInitMemory();
         joyCheckStatusThreadSafe();
@@ -469,13 +469,13 @@ void bossMainloop(void)
                             permit_stderr(0);
 
                             gdl = firstGdl = dynGetMasterDisplayList();
-                            
+
                             //leaving commented till final build defines are picked as its not required for matching
                             //
                             //#ifdef ENABLE_DEBUG_MENU
                             //    g_DebugFeatureFlag = (joyGetButtons(0, U_CBUTTONS & D_CBUTTONS)!=0xC);
                             //#endif
-                            
+
                             if (g_DebugFeatureFlag)
                             {
                                     joyStickXPos = joyGetStickX(0);
@@ -631,8 +631,8 @@ void bossRunTitleStage(void) {
  * 7550    70006950
  *     A0->loaded stage# [800242FC]; fry AT
  *     0x5A jumps to folder select
- *     0x5B 
- *     0x63 
+ *     0x5B
+ *     0x63
  */
 void bossSetLoadedStage(LEVELID stage){
     g_MainStageNum = stage;

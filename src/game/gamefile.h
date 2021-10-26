@@ -6,7 +6,7 @@
 
 
 //i am not "correct", i need proper fields for times again
-struct save_data
+typedef struct save_data
 {
   s32 chksum1;
   s32 chksum2;
@@ -19,35 +19,22 @@ struct save_data
   u8 unlocked_cheats_2;
   u8 unlocked_cheats_3;
   char padding;
-    u8 time_dam_agent[5];
-    u8 field_0x17[5];
-    u8 field_0x1c[5];
-    u8 field_0x21[5];
-    u8 field_0x26[5];
-    u8 field_0x2b[5];
-    u8 field_0x30[5];
-    u8 field_0x35[5];
-    u8 field_0x3a[5];
-    u8 field_0x3f[5];
-    u8 field_0x44[5];
-    u8 field_0x49[5];
-    u8 field_0x4e[5];
-    u8 field_0x53[5];
-    u8 field_0x58[5];
-    u8 field_0x5d[3];
+  u8 times[(SP_LEVEL_MAX-1) * 4];
+} save_data;
 
-};
+extern save_data saves[6];
+extern save_data D_8002C520;
+extern save_data D_8002C580;
+extern save_data D_8002C5E0;
+extern save_data D_8002C660;
+extern save_data D_8002C6C0;
+extern save_data D_8002C720;
+extern save_data D_8002C780;
+extern save_data D_8002C7E0;
+extern save_data D_8002C840;
+extern save_data blank_eeprom;
 
-extern struct save_data saves[6];
-extern struct save_data D_8002C660;
-extern struct save_data D_8002C6C0;
-extern struct save_data D_8002C720;
-extern struct save_data D_8002C780;
-extern struct save_data D_8002C7E0;
-extern struct save_data D_8002C840;
-extern struct save_data blank_eeprom;
-
-extern u32 save_selected_bond[];
+extern s32 save_selected_bond[];
 
 void set_selected_folder_num(u32 foldernum);
 void set_selected_difficulty(DIFFICULTY difficulty);
