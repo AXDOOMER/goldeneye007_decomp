@@ -1,10 +1,11 @@
 #include "ultra64.h"
-#include "game/gamefile.h"
-#include "gamefile2.h"
 #include "bondconstants.h"
+#include "debugmenu_handler.h"
 #include "joy.h"
 #include "player.h"
 #include "watch.h"
+#include "gamefile.h"
+#include "gamefile2.h"
 
 /**
  *
@@ -680,188 +681,120 @@ s32 check_if_valid_folder_num(s32 folder)
     return FALSE;
 }
 
+// wrapper func - uses save if found
+// gamefileIsStageUnlockedAtDifficulty calls gamefileIsSavedStageUnlockedAtDifficulty
+/**
+ * wrapper func - uses save if found
+ * gamefileIsStageUnlockedAtDifficulty calls gamefileIsSavedStageUnlockedAtDifficulty
+ *
+ * @param foldernum
+ * @param stage
+ * @param difficulty
+ * @return s32
+ */
+s32 isStageUnlockedAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE stage, DIFFICULTY difficulty)
+{
+    save_data* save;
+    s32 i;
 
+    if ((check_if_valid_folder_num(foldernum)) &&
+        (stage >= SP_LEVEL_DAM && stage < SP_LEVEL_MAX) &&
+        (difficulty >= DIFFICULTY_AGENT && difficulty < DIFFICULTY_MAX))
+    {
+        save = getEEPROMforFoldernum(foldernum);
 
-#ifdef NONMATCHING
-s32 isStageUnlockedAtDifficulty(int foldernum,STAGENUM stageid,DIFFICULTY difficulty) {
+        if (save)
+        {
+            if (get_eeprom_stage_completed_for_difficulty(save, stage, difficulty))
+            {
+                return 3; //found on first try, we are last completed stage
+            }
 
+            if ((stage == SP_LEVEL_AZTEC && difficulty < DIFFICULTY_SECRET) ||
+                (stage == SP_LEVEL_EGYPT && difficulty < DIFFICULTY_00))
+            {
+                return 0; //we cant possibly have a completed bonus stage below each set dificulty
+            }
+
+            //still cant find it, do a search (this is probably how a cheat can unlock stages without having to actualy do them all)
+            for (i = difficulty; i < DIFFICULTY_MAX ; i++)
+            {
+                LEVEL_SOLO_SEQUENCE istage;
+                for (istage = SP_LEVEL_DAM; istage < stage; istage++)
+                {
+                    if (!get_eeprom_stage_completed_for_difficulty(save, istage, i))
+                    {
+                        break;
+                    }
+                }
+                //if the first uncomplete stage is not less than current
+                if (stage <= istage)
+                {
+                    return 1;
+                }
+            }
+
+            // if we still cant find it
+            if ((difficulty < DIFFICULTY_007) && (stage < SP_LEVEL_AZTEC))
+            {
+                for (i = difficulty; i < DIFFICULTY_MAX; i++)
+                {
+                    if (get_eeprom_stage_completed_for_difficulty(save, stage - 1, i))
+                    {
+                        return 1;
+                    }
+                }
+            }
+
+            if (difficulty < DIFFICULTY_007)
+            {
+                for (i = SP_LEVEL_DAM; i < SP_LEVEL_AZTEC; i++)
+                {
+                    if (!get_eeprom_stage_completed_for_difficulty(save, i, DIFFICULTY_AGENT))
+                    {
+                        break;
+                    }
+                }
+                //this cant actually fire an it?
+                if (i >= SP_LEVEL_AZTEC)
+                {
+                    for (i = DIFFICULTY_AGENT; i < difficulty; i++)
+                    {
+                        if (!get_eeprom_stage_completed_for_difficulty(save, stage, i))
+                        {
+                            break;
+                        }
+                    }
+
+                    if (difficulty <= i)
+                    {
+                        return 1;
+                    }
+                }
+            }// difficulty < DIFFICULTY_007
+        }// save
+
+        // no save, current level is dam, its unlocked.
+        if (stage == SP_LEVEL_DAM)
+        {
+            return 1;
+        }
+
+        // no save, cheat anabled, its unlocked.
+        if (get_debug_enable_agent_levels_flag() && difficulty == DIFFICULTY_AGENT)
+        {
+            return 1;
+        }
+
+        // no save, cheat anabled, its unlocked. (basically a repeat of above)
+        if (get_debug_enable_all_levels_flag())
+        {
+            return 1;
+        }
+    }
+    // After all that the stage is not unlocked
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel isStageUnlockedAtDifficulty
-/* 052DF0 7F01E2C0 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 052DF4 7F01E2C4 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 052DF8 7F01E2C8 AFB50028 */  sw    $s5, 0x28($sp)
-/* 052DFC 7F01E2CC AFB30020 */  sw    $s3, 0x20($sp)
-/* 052E00 7F01E2D0 AFB00014 */  sw    $s0, 0x14($sp)
-/* 052E04 7F01E2D4 00808025 */  move  $s0, $a0
-/* 052E08 7F01E2D8 00A09825 */  move  $s3, $a1
-/* 052E0C 7F01E2DC 00C0A825 */  move  $s5, $a2
-/* 052E10 7F01E2E0 AFB40024 */  sw    $s4, 0x24($sp)
-/* 052E14 7F01E2E4 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 052E18 7F01E2E8 0FC078A3 */  jal   check_if_valid_folder_num
-/* 052E1C 7F01E2EC AFB10018 */   sw    $s1, 0x18($sp)
-/* 052E20 7F01E2F0 5040007B */  beql  $v0, $zero, .L7F01E4E0
-/* 052E24 7F01E2F4 00001025 */   move  $v0, $zero
-/* 052E28 7F01E2F8 06600078 */  bltz  $s3, .L7F01E4DC
-/* 052E2C 7F01E2FC 2A610014 */   slti  $at, $s3, 0x14
-/* 052E30 7F01E300 50200077 */  beql  $at, $zero, .L7F01E4E0
-/* 052E34 7F01E304 00001025 */   move  $v0, $zero
-/* 052E38 7F01E308 06A00074 */  bltz  $s5, .L7F01E4DC
-/* 052E3C 7F01E30C 2AA10004 */   slti  $at, $s5, 4
-/* 052E40 7F01E310 50200073 */  beql  $at, $zero, .L7F01E4E0
-/* 052E44 7F01E314 00001025 */   move  $v0, $zero
-/* 052E48 7F01E318 0FC07771 */  jal   getEEPROMforFoldernum
-/* 052E4C 7F01E31C 02002025 */   move  $a0, $s0
-/* 052E50 7F01E320 1040005C */  beqz  $v0, .L7F01E494
-/* 052E54 7F01E324 00409025 */   move  $s2, $v0
-/* 052E58 7F01E328 00402025 */  move  $a0, $v0
-/* 052E5C 7F01E32C 02602825 */  move  $a1, $s3
-/* 052E60 7F01E330 0FC07718 */  jal   get_eeprom_stage_completed_for_difficulty
-/* 052E64 7F01E334 02A03025 */   move  $a2, $s5
-/* 052E68 7F01E338 10400003 */  beqz  $v0, .L7F01E348
-/* 052E6C 7F01E33C 24010012 */   li    $at, 18
-/* 052E70 7F01E340 10000067 */  b     .L7F01E4E0
-/* 052E74 7F01E344 24020003 */   li    $v0, 3
-.L7F01E348:
-/* 052E78 7F01E348 56610003 */  bnel  $s3, $at, .L7F01E358
-/* 052E7C 7F01E34C 24010013 */   li    $at, 19
-/* 052E80 7F01E350 1AA00005 */  blez  $s5, .L7F01E368
-/* 052E84 7F01E354 24010013 */   li    $at, 19
-.L7F01E358:
-/* 052E88 7F01E358 16610005 */  bne   $s3, $at, .L7F01E370
-/* 052E8C 7F01E35C 2AA10002 */   slti  $at, $s5, 2
-/* 052E90 7F01E360 50200004 */  beql  $at, $zero, .L7F01E374
-/* 052E94 7F01E364 2AA10004 */   slti  $at, $s5, 4
-.L7F01E368:
-/* 052E98 7F01E368 1000005D */  b     .L7F01E4E0
-/* 052E9C 7F01E36C 00001025 */   move  $v0, $zero
-.L7F01E370:
-/* 052EA0 7F01E370 2AA10004 */  slti  $at, $s5, 4
-.L7F01E374:
-/* 052EA4 7F01E374 10200014 */  beqz  $at, .L7F01E3C8
-/* 052EA8 7F01E378 02A08825 */   move  $s1, $s5
-/* 052EAC 7F01E37C 24140004 */  li    $s4, 4
-.L7F01E380:
-/* 052EB0 7F01E380 1A60000A */  blez  $s3, .L7F01E3AC
-/* 052EB4 7F01E384 00008025 */   move  $s0, $zero
-/* 052EB8 7F01E388 02402025 */  move  $a0, $s2
-.L7F01E38C:
-/* 052EBC 7F01E38C 02002825 */  move  $a1, $s0
-/* 052EC0 7F01E390 0FC07718 */  jal   get_eeprom_stage_completed_for_difficulty
-/* 052EC4 7F01E394 02203025 */   move  $a2, $s1
-/* 052EC8 7F01E398 50400005 */  beql  $v0, $zero, .L7F01E3B0
-/* 052ECC 7F01E39C 0213082A */   slt   $at, $s0, $s3
-/* 052ED0 7F01E3A0 26100001 */  addiu $s0, $s0, 1
-/* 052ED4 7F01E3A4 5613FFF9 */  bnel  $s0, $s3, .L7F01E38C
-/* 052ED8 7F01E3A8 02402025 */   move  $a0, $s2
-.L7F01E3AC:
-/* 052EDC 7F01E3AC 0213082A */  slt   $at, $s0, $s3
-.L7F01E3B0:
-/* 052EE0 7F01E3B0 14200003 */  bnez  $at, .L7F01E3C0
-/* 052EE4 7F01E3B4 26310001 */   addiu $s1, $s1, 1
-/* 052EE8 7F01E3B8 10000049 */  b     .L7F01E4E0
-/* 052EEC 7F01E3BC 24020001 */   li    $v0, 1
-.L7F01E3C0:
-/* 052EF0 7F01E3C0 1634FFEF */  bne   $s1, $s4, .L7F01E380
-/* 052EF4 7F01E3C4 00000000 */   nop
-.L7F01E3C8:
-/* 052EF8 7F01E3C8 2AA10003 */  slti  $at, $s5, 3
-/* 052EFC 7F01E3CC 10200011 */  beqz  $at, .L7F01E414
-/* 052F00 7F01E3D0 24140004 */   li    $s4, 4
-/* 052F04 7F01E3D4 2A610012 */  slti  $at, $s3, 0x12
-/* 052F08 7F01E3D8 1020000E */  beqz  $at, .L7F01E414
-/* 052F0C 7F01E3DC 2AA10004 */   slti  $at, $s5, 4
-/* 052F10 7F01E3E0 1020000C */  beqz  $at, .L7F01E414
-/* 052F14 7F01E3E4 02A08825 */   move  $s1, $s5
-/* 052F18 7F01E3E8 2670FFFF */  addiu $s0, $s3, -1
-/* 052F1C 7F01E3EC 02402025 */  move  $a0, $s2
-.L7F01E3F0:
-/* 052F20 7F01E3F0 02002825 */  move  $a1, $s0
-/* 052F24 7F01E3F4 0FC07718 */  jal   get_eeprom_stage_completed_for_difficulty
-/* 052F28 7F01E3F8 02203025 */   move  $a2, $s1
-/* 052F2C 7F01E3FC 10400003 */  beqz  $v0, .L7F01E40C
-/* 052F30 7F01E400 26310001 */   addiu $s1, $s1, 1
-/* 052F34 7F01E404 10000036 */  b     .L7F01E4E0
-/* 052F38 7F01E408 24020001 */   li    $v0, 1
-.L7F01E40C:
-/* 052F3C 7F01E40C 5634FFF8 */  bnel  $s1, $s4, .L7F01E3F0
-/* 052F40 7F01E410 02402025 */   move  $a0, $s2
-.L7F01E414:
-/* 052F44 7F01E414 2AA10003 */  slti  $at, $s5, 3
-/* 052F48 7F01E418 1020001E */  beqz  $at, .L7F01E494
-/* 052F4C 7F01E41C 00008825 */   move  $s1, $zero
-/* 052F50 7F01E420 02402025 */  move  $a0, $s2
-.L7F01E424:
-/* 052F54 7F01E424 02202825 */  move  $a1, $s1
-/* 052F58 7F01E428 0FC07718 */  jal   get_eeprom_stage_completed_for_difficulty
-/* 052F5C 7F01E42C 00003025 */   move  $a2, $zero
-/* 052F60 7F01E430 50400006 */  beql  $v0, $zero, .L7F01E44C
-/* 052F64 7F01E434 2A210012 */   slti  $at, $s1, 0x12
-/* 052F68 7F01E438 26310001 */  addiu $s1, $s1, 1
-/* 052F6C 7F01E43C 2A210012 */  slti  $at, $s1, 0x12
-/* 052F70 7F01E440 5420FFF8 */  bnezl $at, .L7F01E424
-/* 052F74 7F01E444 02402025 */   move  $a0, $s2
-/* 052F78 7F01E448 2A210012 */  slti  $at, $s1, 0x12
-.L7F01E44C:
-/* 052F7C 7F01E44C 14200011 */  bnez  $at, .L7F01E494
-/* 052F80 7F01E450 00000000 */   nop
-/* 052F84 7F01E454 1AA0000A */  blez  $s5, .L7F01E480
-/* 052F88 7F01E458 00008825 */   move  $s1, $zero
-/* 052F8C 7F01E45C 02402025 */  move  $a0, $s2
-.L7F01E460:
-/* 052F90 7F01E460 02602825 */  move  $a1, $s3
-/* 052F94 7F01E464 0FC07718 */  jal   get_eeprom_stage_completed_for_difficulty
-/* 052F98 7F01E468 02203025 */   move  $a2, $s1
-/* 052F9C 7F01E46C 50400005 */  beql  $v0, $zero, .L7F01E484
-/* 052FA0 7F01E470 0235082A */   slt   $at, $s1, $s5
-/* 052FA4 7F01E474 26310001 */  addiu $s1, $s1, 1
-/* 052FA8 7F01E478 5635FFF9 */  bnel  $s1, $s5, .L7F01E460
-/* 052FAC 7F01E47C 02402025 */   move  $a0, $s2
-.L7F01E480:
-/* 052FB0 7F01E480 0235082A */  slt   $at, $s1, $s5
-.L7F01E484:
-/* 052FB4 7F01E484 14200003 */  bnez  $at, .L7F01E494
-/* 052FB8 7F01E488 00000000 */   nop
-/* 052FBC 7F01E48C 10000014 */  b     .L7F01E4E0
-/* 052FC0 7F01E490 24020001 */   li    $v0, 1
-.L7F01E494:
-/* 052FC4 7F01E494 16600003 */  bnez  $s3, .L7F01E4A4
-/* 052FC8 7F01E498 00000000 */   nop
-/* 052FCC 7F01E49C 10000010 */  b     .L7F01E4E0
-/* 052FD0 7F01E4A0 24020001 */   li    $v0, 1
-.L7F01E4A4:
-/* 052FD4 7F01E4A4 0FC24400 */  jal   get_debug_enable_agent_levels_flag
-/* 052FD8 7F01E4A8 00000000 */   nop
-/* 052FDC 7F01E4AC 10400005 */  beqz  $v0, .L7F01E4C4
-/* 052FE0 7F01E4B0 00000000 */   nop
-/* 052FE4 7F01E4B4 16A00003 */  bnez  $s5, .L7F01E4C4
-/* 052FE8 7F01E4B8 00000000 */   nop
-/* 052FEC 7F01E4BC 10000008 */  b     .L7F01E4E0
-/* 052FF0 7F01E4C0 24020001 */   li    $v0, 1
-.L7F01E4C4:
-/* 052FF4 7F01E4C4 0FC24403 */  jal   get_debug_enable_all_levels_flag
-/* 052FF8 7F01E4C8 00000000 */   nop
-/* 052FFC 7F01E4CC 50400004 */  beql  $v0, $zero, .L7F01E4E0
-/* 053000 7F01E4D0 00001025 */   move  $v0, $zero
-/* 053004 7F01E4D4 10000002 */  b     .L7F01E4E0
-/* 053008 7F01E4D8 24020001 */   li    $v0, 1
-.L7F01E4DC:
-/* 05300C 7F01E4DC 00001025 */  move  $v0, $zero
-.L7F01E4E0:
-/* 053010 7F01E4E0 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 053014 7F01E4E4 8FB00014 */  lw    $s0, 0x14($sp)
-/* 053018 7F01E4E8 8FB10018 */  lw    $s1, 0x18($sp)
-/* 05301C 7F01E4EC 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 053020 7F01E4F0 8FB30020 */  lw    $s3, 0x20($sp)
-/* 053024 7F01E4F4 8FB40024 */  lw    $s4, 0x24($sp)
-/* 053028 7F01E4F8 8FB50028 */  lw    $s5, 0x28($sp)
-/* 05302C 7F01E4FC 03E00008 */  jr    $ra
-/* 053030 7F01E500 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
-
 
 /**
  *
