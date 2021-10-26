@@ -436,13 +436,14 @@ glabel sub_GAME_7F093A78
 
 
 
-void sub_GAME_7F093BFC(f32* arg0, f32* arg1, f32* arg2) {
+void sub_GAME_7F093BFC(struct coord3d *arg0, struct coord3d* arg1, struct coord3d* out) 
+{
     f32 temp_f0;
 
-    temp_f0 = arg0[1] / (arg0[1] - arg1[1]);
-    arg2[0] = arg0[0] + ((arg1[0] - arg0[0]) * temp_f0);
-    arg2[1] = 0.0f;
-    arg2[2] = arg0[2] + ((arg1[2] - arg0[2]) * temp_f0);
+    temp_f0 = arg0->y / (arg0->y - arg1->y);
+    out->x = ((arg1->x - arg0->x) * temp_f0) + arg0->x;
+    out->y = 0.0f;
+    out->z = ((arg1->z - arg0->z) * temp_f0) + arg0->z;
 }
 
 f32 sub_GAME_7F093C48(f32 a, f32 b, f32 c)
@@ -4526,7 +4527,8 @@ glabel sub_GAME_7F097388
 
 
 
-s32 sub_GAME_7F0977B4(f32 *arg0, f32 *arg1) {
+s32 sub_GAME_7F0977B4(f32 *arg0, f32 *arg1) 
+{
     f32 f0;
     f32 f1;
 

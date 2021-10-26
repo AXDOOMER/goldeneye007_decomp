@@ -4,16 +4,17 @@
 
 #include "bondconstants.h"
 
+
 //i am not "correct", i need proper fields for times again
 struct save_data
 {
-  int chksum1;
-  int chksum2;
+  s32 chksum1;
+  s32 chksum2;
   u8 completion_bitflags;
-  char flag_007;
-  char music_vol;
-  char sfx_vol;
-  short options;
+  u8 flag_007;
+  u8 music_vol;
+  u8 sfx_vol;
+  u16 options;
   u8 unlocked_cheats_1;
   u8 unlocked_cheats_2;
   u8 unlocked_cheats_3;
@@ -36,6 +37,15 @@ struct save_data
     u8 field_0x5d[3];
 
 };
+
+extern struct save_data saves[6];
+extern struct save_data D_8002C660;
+extern struct save_data D_8002C6C0;
+extern struct save_data D_8002C720;
+extern struct save_data D_8002C780;
+extern struct save_data D_8002C7E0;
+extern struct save_data D_8002C840;
+extern struct save_data blank_eeprom;
 
 extern u32 save_selected_bond[];
 
