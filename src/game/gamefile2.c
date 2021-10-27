@@ -37,7 +37,7 @@ void sub_GAME_7F01D758(save_data *save)
 {
     if (gamefileGamePakProbe() != 0)
     {
-        sub_GAME_7F09B600(&save->completion_bitflags, &save->times[14], save);
+        gamefileGenerateCRC(&save->completion_bitflags, &save->times[14], save);
         joyGamePakLongWrite(0, save, 0x20);
     }
 }
@@ -53,8 +53,8 @@ void sub_GAME_7F01D7A0(save_data *save)
     {
         if (gamefileGamePakProbe() != 0)
         {
-            sub_GAME_7F09B600(&save->completion_bitflags, save + 1, save);
-            joyGamePakLongWrite((((u32)((save - &saves[0]) * 0x60) >> 3) + 4), save, 0x60);
+            gamefileGenerateCRC(&save->completion_bitflags, save + 1, save);
+            joyGamePakLongWrite((((u32)((save - &saves[0]) * 0x60) >> 3) + 4), save, sizeof(save_data));
         }
     }
 }
@@ -73,18 +73,18 @@ void gamefileResetSave(save_data *save)
 }
 
 /**
- * Get the foldernum of save
+ * Get the folder of save
  *
  * @param save
  * @return u32
  */
-u32 gamefileGetSaveFoldernum(save_data *save)
+u32 gamefileGetSaveFolder(save_data *save)
 {
   return save->completion_bitflags & 7;
 }
 
 /**
- * Clear then set save foldernumber flag
+ * Clear then set save folder flag
  *
  * @param save
  * @param folder
@@ -191,7 +191,7 @@ s32 gamefileGetSaveStageDifficultyTime(save_data* save, LEVEL_SOLO_SEQUENCE stag
     {
         if (difficulty == DIFFICULTY_007)
         {
-            if (gamefileIs007ModeUnlocked(gamefileGetSaveFoldernum(save)))
+            if (gamefileIs007ModeUnlocked(gamefileGetSaveFolder(save)))
             {
                 return 0x3FF; //max time
             }
@@ -294,9 +294,10 @@ void gamefileSetDifficultyStageTime(save_data *save, LEVEL_SOLO_SEQUENCE stage, 
  * @param difficulty
  * @return is stage at diffiuclty completed
  */
-bool gamefileGetSaveStageCompletedForDifficulty(save_data *folder, s32 levelid, DIFFICULTY difficulty) {
-
-    if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007)) {
+bool gamefileGetSaveStageCompletedForDifficulty(save_data *folder, s32 levelid, DIFFICULTY difficulty)
+{
+    if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007))
+    {
         return gamefileGetSaveStageDifficultyTime(folder, levelid, difficulty) != 0;
     }
 
@@ -311,14 +312,15 @@ bool gamefileGetSaveStageCompletedForDifficulty(save_data *folder, s32 levelid, 
  * @param difficulty
  * @param arg4
  */
-void gamefileCheckSaveStageDifficultyTime(save_data *folder, s32 levelid, DIFFICULTY difficulty, s32 newtime)
+void gamefileCheckSaveStageDifficultyTime(save_data *folder, LEVEL_SOLO_SEQUENCE stage, DIFFICULTY difficulty, s32 newtime)
 {
-    if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007))
+    if ((stage >= 0) && (stage < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007))
     {
-        s32 time = gamefileGetSaveStageDifficultyTime(folder, levelid, difficulty);
+        s32 time = gamefileGetSaveStageDifficultyTime(folder, stage, difficulty);
 
-        if ((time == 0) || (newtime < time)) {
-            gamefileSetDifficultyStageTime(folder, levelid, difficulty, newtime);
+        if ((time == 0) || (newtime < time))
+        {
+            gamefileSetDifficultyStageTime(folder, stage, difficulty, newtime);
         }
     }
 }
@@ -373,20 +375,20 @@ void sub_GAME_7F01DD74(save_data *save, s32 cheat)
  * @param foldernum
  * @return save_data*
  */
-save_data *gamefileGetSaveForFoldernum(u32 foldernum)
+save_data *gamefileGetSaveForFoldernum(u32 folder)
 {
     int i;
 
     for (i = 0; i < 5; i++)
     {
         if (gamefileGetSaveFlag_0x80(&saves[i]) == 0 &&
-                gamefileGetSaveFoldernum(&saves[i]) == foldernum)
+                gamefileGetSaveFolder(&saves[i]) == folder)
         {
             return &saves[i];
         }
     }
 
-    if (foldernum == RAMROM_FOLDERNUM)
+    if (folder == RAMROM_FOLDERNUM)
     {
         return &saves[5];
     }
@@ -418,9 +420,9 @@ s32 gamefileGetSaveFlag_0x80_any_folder(void)
  * Resets save with 0x80 flag
  * Maybe clearing for copy or wear level
  *
- * @param foldernum
+ * @param folder
  */
-void sub_GAME_7F01DEB4(u32 foldernum)
+void sub_GAME_7F01DEB4(u32 folder)
 {
     s32 folder_with_flag;
     save_data new_save;
@@ -432,9 +434,9 @@ void sub_GAME_7F01DEB4(u32 foldernum)
         new_save = D_8002C5E0;
         saves[folder_with_flag] = new_save;
 
-        gamefileSetSaveFoldernum(&saves[folder_with_flag], foldernum);
+        gamefileSetSaveFoldernum(&saves[folder_with_flag], folder);
         gamefileSetSaveFlag_0x80(&saves[folder_with_flag], 0);
-        gamefileSetSelectedBond(&saves[folder_with_flag], foldernum);
+        gamefileSetSelectedBond(&saves[folder_with_flag], folder);
         sub_GAME_7F01D7A0(&saves[folder_with_flag]);
     }
 }
@@ -476,7 +478,7 @@ glabel sub_GAME_7F01DF90
 /* 052B20 7F01DFF0 00008025 */  move  $s0, $zero
 .L7F01DFF4:
 /* 052B24 7F01DFF4 27A500B4 */  addiu $a1, $sp, 0xb4
-/* 052B28 7F01DFF8 0FC26D80 */  jal   sub_GAME_7F09B600
+/* 052B28 7F01DFF8 0FC26D80 */  jal   gamefileGenerateCRC
 /* 052B2C 7F01DFFC 02A03025 */   move  $a2, $s5
 /* 052B30 7F01E000 8FAF008C */  lw    $t7, 0x8c($sp)
 /* 052B34 7F01E004 8FB80094 */  lw    $t8, 0x94($sp)
@@ -543,7 +545,7 @@ glabel sub_GAME_7F01DF90
 /* 052C18 7F01E0E8 24110001 */  li    $s1, 1
 /* 052C1C 7F01E0EC 02602025 */  move  $a0, $s3
 /* 052C20 7F01E0F0 02402825 */  move  $a1, $s2
-/* 052C24 7F01E0F4 0FC26D80 */  jal   sub_GAME_7F09B600
+/* 052C24 7F01E0F4 0FC26D80 */  jal   gamefileGenerateCRC
 /* 052C28 7F01E0F8 02A03025 */   move  $a2, $s5
 /* 052C2C 7F01E0FC 8FAE008C */  lw    $t6, 0x8c($sp)
 /* 052C30 7F01E100 8E0F0000 */  lw    $t7, ($s0)
@@ -578,7 +580,7 @@ glabel sub_GAME_7F01DF90
 /* 052C94 7F01E164 02002025 */   move  $a0, $s0
 /* 052C98 7F01E168 54400023 */  bnezl $v0, .L7F01E1F8
 /* 052C9C 7F01E16C 26310001 */   addiu $s1, $s1, 1
-/* 052CA0 7F01E170 0FC07632 */  jal   gamefileGetSaveFoldernum
+/* 052CA0 7F01E170 0FC07632 */  jal   gamefileGetSaveFolder
 /* 052CA4 7F01E174 02002025 */   move  $a0, $s0
 /* 052CA8 7F01E178 5456001F */  bnel  $v0, $s6, .L7F01E1F8
 /* 052CAC 7F01E17C 26310001 */   addiu $s1, $s1, 1
@@ -1394,7 +1396,7 @@ void gamefileClearSavefileForFolder(s32 folder)
 
         gamefileSaveSettingsForFolder(&new_save);
 
-        if (_bcmp(&new_save, &save_to_copy, 0x60) != 0)
+        if (_bcmp(&new_save, &save_to_copy, sizeof(save_data)) != 0)
         {
             sub_GAME_7F01E504(save, &new_save);
         }
