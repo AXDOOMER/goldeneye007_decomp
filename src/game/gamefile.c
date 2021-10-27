@@ -109,10 +109,10 @@ void end_of_mission_briefing(void)
     if ((-1 < briefingpage) && selected_difficulty != DIFFICULTY_007 && append_cheat_sp == FALSE)
     {
         var1 = solo_target_time_array[mission_folder_setup_entries[briefingpage].mission_num][selected_difficulty];
-        unlock_stage_in_folder_on_difficulty(selected_folder_num, mission_folder_setup_entries[briefingpage].mission_num, selected_difficulty, getMissiontimer() / 0x3c);
+        gamefileUnlockStageInFolderAtDifficulty(selected_folder_num, mission_folder_setup_entries[briefingpage].mission_num, selected_difficulty, getMissiontimer() / 0x3c);
         if ((getMissiontimer() / GAME_TICKRATE) <= var1)
         {
-            if (!check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num), mission_folder_setup_entries[briefingpage].mission_num))
+            if (!gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num), mission_folder_setup_entries[briefingpage].mission_num))
             {
                 sub_GAME_7F01E760(selected_folder_num, mission_folder_setup_entries[briefingpage].mission_num);
                 g_newcheatunlocked = TRUE;
@@ -125,24 +125,24 @@ void end_of_mission_briefing(void)
     }
 }
 
-void sub_GAME_7F01D500(void)
+void gamefileLoadSaveSettingsForSelectedFolder(void)
 {
-  get_screen_ratio_settings_for_mpgame_from_folder(selected_folder_num);
+  gamefileLoadSettingsForFolder(selected_folder_num);
 }
 
 void deleteCurrentSelectedFolder(void)
 {
-  delete_update_eeprom_file(selected_folder_num);
+  gamefileClearSavefileForFolder(selected_folder_num);
 }
 
 void copyCurrentEEPROMtoStack(void)
 {
-  copy_eeprom_to_stack_set_folder_num(selected_folder_num);
+  gamefileCopySaveIfSelectedBondDifferent(selected_folder_num);
 }
 
 u8 getSelectedFolderBond(void)
 {
-  return removed_would_have_returned_bond_for_folder_num(selected_folder_num);
+  return gamefileGetBondForFolder(selected_folder_num);
 }
 
 void set_selected_folder_num(u32 foldernum)
@@ -179,7 +179,7 @@ void set_solo_and_ptr_briefing(LEVELID stage)
 
 void sub_GAME_7F01D61C(struct save_file *savefile)
 {
-    copy_eeprom_from_to(selected_folder_num,savefile);
+    gamefileCopySave(selected_folder_num,savefile);
 }
 
 
@@ -193,7 +193,7 @@ void set_selected_foldernum_and_copy_demo_eeprom(struct save_file *eeprom)
   new_var = new_var2;
   selected_folder_num_copy = (s32) selected_folder_num;
   selected_folder_num = new_var;
-  copy_demo_eeprom_to_ramrom_folder(new_var, eeprom);
+  gamefileCopyDemoSaveToRamRomSave(new_var, eeprom);
 }
 
 

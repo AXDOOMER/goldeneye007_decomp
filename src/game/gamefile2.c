@@ -1,17 +1,18 @@
 #include "ultra64.h"
-#include "game/gamefile.h"
-#include "gamefile2.h"
 #include "bondconstants.h"
+#include "debugmenu_handler.h"
 #include "joy.h"
 #include "player.h"
 #include "watch.h"
+#include "gamefile.h"
+#include "gamefile2.h"
 
 /**
  *
  *
  * @return s32
  */
-s32 sub_GAME_7F01D6C0(void)
+s32 gamefileGamePakProbe(void)
 {
   return joyGamePakProbe();
 }
@@ -20,7 +21,7 @@ s32 sub_GAME_7F01D6C0(void)
  * Resets the RamRom replay folder save
  *
  */
-void reset_ramrom_folder_to_default(void)
+void gamefileResetRamRomSave(void)
 {
     save_data new_save = D_8002C520;
 
@@ -34,9 +35,9 @@ void reset_ramrom_folder_to_default(void)
  */
 void sub_GAME_7F01D758(save_data *save)
 {
-    if (sub_GAME_7F01D6C0() != 0)
+    if (gamefileGamePakProbe() != 0)
     {
-        sub_GAME_7F09B600(&save->completion_bitflags, &save->times[14], save);
+        gamefileGenerateCRC(&save->completion_bitflags, &save->times[14], save);
         joyGamePakLongWrite(0, save, 0x20);
     }
 }
@@ -50,10 +51,10 @@ void sub_GAME_7F01D7A0(save_data *save)
 {
     if (save >= &saves[0] && save < &saves[5])
     {
-        if (sub_GAME_7F01D6C0() != 0)
+        if (gamefileGamePakProbe() != 0)
         {
-            sub_GAME_7F09B600(&save->completion_bitflags, save + 1, save);
-            joyGamePakLongWrite((((u32)((save - &saves[0]) * 0x60) >> 3) + 4), save, 0x60);
+            gamefileGenerateCRC(&save->completion_bitflags, save + 1, save);
+            joyGamePakLongWrite((((u32)((save - &saves[0]) * 0x60) >> 3) + 4), save, sizeof(save_data));
         }
     }
 }
@@ -63,7 +64,7 @@ void sub_GAME_7F01D7A0(save_data *save)
  *
  * @param save
  */
-void reset_folder_to_default(save_data *save)
+void gamefileResetSave(save_data *save)
 {
     save_data new_save  = D_8002C580;
 
@@ -72,26 +73,26 @@ void reset_folder_to_default(save_data *save)
 }
 
 /**
- * Get the foldernum of eeprom save
+ * Get the folder of save
  *
- * @param eeprom
+ * @param save
  * @return u32
  */
-u32 get_foldernum_of_eeprom(save_data *eeprom)
+u32 gamefileGetSaveFolder(save_data *save)
 {
-  return eeprom->completion_bitflags & 7;
+  return save->completion_bitflags & 7;
 }
 
 /**
- * Clear then set save foldernumber flag
+ * Clear then set save folder flag
  *
- * @param eeprom
+ * @param save
  * @param folder
  */
-void set_eeprom_to_folder_num(save_data *eeprom, u32 folder)
+void gamefileSetSaveFoldernum(save_data *save, u32 folder)
 {
-    eeprom->completion_bitflags &= 0xFFF8;
-    eeprom->completion_bitflags |= folder & 7;
+    save->completion_bitflags &= 0xFFF8;
+    save->completion_bitflags |= folder & 7;
 }
 
 /**
@@ -100,7 +101,7 @@ void set_eeprom_to_folder_num(save_data *eeprom, u32 folder)
  * @param folder
  * @return u32
  */
-u32 set_eeprom_flag_0x18(save_data *folder)
+u32 gamefileSetSaveFlag_0x18(save_data *folder)
 {
   return (folder->completion_bitflags & 0x18) >> 3;
 }
@@ -111,7 +112,7 @@ u32 set_eeprom_flag_0x18(save_data *folder)
  * @param folder
  * @param arg1
  */
-void reset_eeprom_flag_0x18(save_data *folder, s32 arg1)
+void gamefileResetSaveFlag_0x18(save_data *folder, s32 arg1)
 {
     folder->completion_bitflags &= 0xFFE7;
     folder->completion_bitflags |= ((arg1 * 8) & 0x18);
@@ -123,7 +124,7 @@ void reset_eeprom_flag_0x18(save_data *folder, s32 arg1)
  * @param folder
  * @return u32
  */
-u32 get_selected_bond(save_data *folder)
+u32 gamefileGetSelectedBond(save_data *folder)
 {
   return (folder->completion_bitflags & 0x60) >> 5;
 }
@@ -134,7 +135,7 @@ u32 get_selected_bond(save_data *folder)
  * @param folder
  * @param arg1
  */
-void set_selected_bond(save_data *folder, s32 arg1)
+void gamefileSetSelectedBond(save_data *folder, s32 arg1)
 {
     folder->completion_bitflags &= 0xFF9F;
     folder->completion_bitflags |= ((arg1 << 5) & 0x60);
@@ -146,7 +147,7 @@ void set_selected_bond(save_data *folder, s32 arg1)
  * @param folder
  * @return u32
  */
-u32 check_if_eeprom_flag_set_0x80(save_data *folder)
+bool gamefileGetSaveFlag_0x80(save_data *folder)
 {
   return ((folder->completion_bitflags & 0x80) != 0);
 }
@@ -158,7 +159,7 @@ u32 check_if_eeprom_flag_set_0x80(save_data *folder)
  * @param folder: folder to enable or disable flag
  * @param set: Enable flag if TRUE, Disable flag if FALSE
  */
-void toggle_eeprom_flag_set_0x80(save_data *folder, s32 enable)
+void gamefileSetSaveFlag_0x80(save_data *folder, s32 enable)
 {
     if (enable)
     {
@@ -178,7 +179,7 @@ void toggle_eeprom_flag_set_0x80(save_data *folder, s32 enable)
  * @param difficulty
  * @return best time for stage at difficulty
  */
-s32 gamefileGetStageDifficultyTime(save_data* save, LEVEL_SOLO_SEQUENCE stagenum, DIFFICULTY difficulty)
+s32 gamefileGetSaveStageDifficultyTime(save_data* save, LEVEL_SOLO_SEQUENCE stagenum, DIFFICULTY difficulty)
 {
     s32 offset;
     LEVEL_SOLO_SEQUENCE max_level;
@@ -190,7 +191,7 @@ s32 gamefileGetStageDifficultyTime(save_data* save, LEVEL_SOLO_SEQUENCE stagenum
     {
         if (difficulty == DIFFICULTY_007)
         {
-            if (check_for_007_mode_unlocked(get_foldernum_of_eeprom(save)))
+            if (gamefileIs007ModeUnlocked(gamefileGetSaveFolder(save)))
             {
                 return 0x3FF; //max time
             }
@@ -293,32 +294,33 @@ void gamefileSetDifficultyStageTime(save_data *save, LEVEL_SOLO_SEQUENCE stage, 
  * @param difficulty
  * @return is stage at diffiuclty completed
  */
-s32 get_eeprom_stage_completed_for_difficulty(save_data *folder, s32 levelid, DIFFICULTY difficulty) {
-
-    if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007)) {
-        return gamefileGetStageDifficultyTime(folder, levelid, difficulty) != 0;
+bool gamefileGetSaveStageCompletedForDifficulty(save_data *folder, s32 levelid, DIFFICULTY difficulty)
+{
+    if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007))
+    {
+        return gamefileGetSaveStageDifficultyTime(folder, levelid, difficulty) != 0;
     }
 
-    return 0;
+    return FALSE;
 }
 
 /**
- *
+ * Updates time for stage at difficulty if better
  *
  * @param folder
  * @param levelid
  * @param difficulty
  * @param arg4
  */
-void sub_GAME_7F01DCB0(save_data *folder, s32 levelid, DIFFICULTY difficulty, s32 arg4) {
-    s32 temp_v0;
+void gamefileCheckSaveStageDifficultyTime(save_data *folder, LEVEL_SOLO_SEQUENCE stage, DIFFICULTY difficulty, s32 newtime)
+{
+    if ((stage >= 0) && (stage < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007))
+    {
+        s32 time = gamefileGetSaveStageDifficultyTime(folder, stage, difficulty);
 
-    if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007)) {
-
-        temp_v0 = gamefileGetStageDifficultyTime(folder, levelid, difficulty);
-
-        if ((temp_v0 == 0) || (arg4 < temp_v0)) {
-            gamefileSetDifficultyStageTime(folder, levelid, difficulty, arg4);
+        if ((time == 0) || (newtime < time))
+        {
+            gamefileSetDifficultyStageTime(folder, stage, difficulty, newtime);
         }
     }
 }
@@ -330,7 +332,7 @@ void sub_GAME_7F01DCB0(save_data *folder, s32 levelid, DIFFICULTY difficulty, s3
  * @param cheat
  * @return bool
  */
-s32 check_if_cheat_unlocked(save_data *save, s32 cheat)
+bool gamefileGetIsCheatUnlocked(save_data *save, s32 cheat)
 {
     s32 bits;
 
@@ -373,20 +375,20 @@ void sub_GAME_7F01DD74(save_data *save, s32 cheat)
  * @param foldernum
  * @return save_data*
  */
-save_data *getEEPROMforFoldernum(u32 foldernum)
+save_data *gamefileGetSaveForFoldernum(u32 folder)
 {
     int i;
 
     for (i = 0; i < 5; i++)
     {
-        if (check_if_eeprom_flag_set_0x80(&saves[i]) == 0 &&
-                get_foldernum_of_eeprom(&saves[i]) == foldernum)
+        if (gamefileGetSaveFlag_0x80(&saves[i]) == 0 &&
+                gamefileGetSaveFolder(&saves[i]) == folder)
         {
             return &saves[i];
         }
     }
 
-    if (foldernum == RAMROM_FOLDERNUM)
+    if (folder == RAMROM_FOLDERNUM)
     {
         return &saves[5];
     }
@@ -399,13 +401,13 @@ save_data *getEEPROMforFoldernum(u32 foldernum)
  *
  * @return s32
  */
-s32 check_if_eeprom_flag_set_0x80_any_folder(void)
+s32 gamefileGetSaveFlag_0x80_any_folder(void)
 {
     s32 i;
 
     for(i = 0; i < 5; i++)
     {
-        if (check_if_eeprom_flag_set_0x80(&saves[i]))
+        if (gamefileGetSaveFlag_0x80(&saves[i]))
         {
             return i;
         }
@@ -418,23 +420,23 @@ s32 check_if_eeprom_flag_set_0x80_any_folder(void)
  * Resets save with 0x80 flag
  * Maybe clearing for copy or wear level
  *
- * @param foldernum
+ * @param folder
  */
-void sub_GAME_7F01DEB4(u32 foldernum)
+void sub_GAME_7F01DEB4(u32 folder)
 {
     s32 folder_with_flag;
     save_data new_save;
 
-    folder_with_flag = check_if_eeprom_flag_set_0x80_any_folder();
+    folder_with_flag = gamefileGetSaveFlag_0x80_any_folder();
 
     if (folder_with_flag >= 0)
     {
         new_save = D_8002C5E0;
         saves[folder_with_flag] = new_save;
 
-        set_eeprom_to_folder_num(&saves[folder_with_flag], foldernum);
-        toggle_eeprom_flag_set_0x80(&saves[folder_with_flag], 0);
-        set_selected_bond(&saves[folder_with_flag], foldernum);
+        gamefileSetSaveFoldernum(&saves[folder_with_flag], folder);
+        gamefileSetSaveFlag_0x80(&saves[folder_with_flag], 0);
+        gamefileSetSelectedBond(&saves[folder_with_flag], folder);
         sub_GAME_7F01D7A0(&saves[folder_with_flag]);
     }
 }
@@ -459,7 +461,7 @@ glabel sub_GAME_7F01DF90
 /* 052ADC 7F01DFAC AFB30024 */  sw    $s3, 0x24($sp)
 /* 052AE0 7F01DFB0 AFB20020 */  sw    $s2, 0x20($sp)
 /* 052AE4 7F01DFB4 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 052AE8 7F01DFB8 0FC075B0 */  jal   sub_GAME_7F01D6C0
+/* 052AE8 7F01DFB8 0FC075B0 */  jal   gamefileGamePakProbe
 /* 052AEC 7F01DFBC AFB00018 */   sw    $s0, 0x18($sp)
 /* 052AF0 7F01DFC0 104000A6 */  beqz  $v0, .L7F01E25C
 /* 052AF4 7F01DFC4 27B10094 */   addiu $s1, $sp, 0x94
@@ -476,7 +478,7 @@ glabel sub_GAME_7F01DF90
 /* 052B20 7F01DFF0 00008025 */  move  $s0, $zero
 .L7F01DFF4:
 /* 052B24 7F01DFF4 27A500B4 */  addiu $a1, $sp, 0xb4
-/* 052B28 7F01DFF8 0FC26D80 */  jal   sub_GAME_7F09B600
+/* 052B28 7F01DFF8 0FC26D80 */  jal   gamefileGenerateCRC
 /* 052B2C 7F01DFFC 02A03025 */   move  $a2, $s5
 /* 052B30 7F01E000 8FAF008C */  lw    $t7, 0x8c($sp)
 /* 052B34 7F01E004 8FB80094 */  lw    $t8, 0x94($sp)
@@ -543,7 +545,7 @@ glabel sub_GAME_7F01DF90
 /* 052C18 7F01E0E8 24110001 */  li    $s1, 1
 /* 052C1C 7F01E0EC 02602025 */  move  $a0, $s3
 /* 052C20 7F01E0F0 02402825 */  move  $a1, $s2
-/* 052C24 7F01E0F4 0FC26D80 */  jal   sub_GAME_7F09B600
+/* 052C24 7F01E0F4 0FC26D80 */  jal   gamefileGenerateCRC
 /* 052C28 7F01E0F8 02A03025 */   move  $a2, $s5
 /* 052C2C 7F01E0FC 8FAE008C */  lw    $t6, 0x8c($sp)
 /* 052C30 7F01E100 8E0F0000 */  lw    $t7, ($s0)
@@ -557,7 +559,7 @@ glabel sub_GAME_7F01DF90
 .L7F01E120:
 /* 052C50 7F01E120 56200004 */  bnezl $s1, .L7F01E134
 /* 052C54 7F01E124 26520060 */   addiu $s2, $s2, 0x60
-/* 052C58 7F01E128 0FC07610 */  jal   reset_folder_to_default
+/* 052C58 7F01E128 0FC07610 */  jal   gamefileResetSave
 /* 052C5C 7F01E12C 02002025 */   move  $a0, $s0
 /* 052C60 7F01E130 26520060 */  addiu $s2, $s2, 0x60
 .L7F01E134:
@@ -574,18 +576,18 @@ glabel sub_GAME_7F01DF90
 /* 052C88 7F01E158 26109920 */  addiu $s0, %lo(saves) # addiu $s0, $s0, -0x66e0
 /* 052C8C 7F01E15C 00008825 */  move  $s1, $zero
 .L7F01E160:
-/* 052C90 7F01E160 0FC07655 */  jal   check_if_eeprom_flag_set_0x80
+/* 052C90 7F01E160 0FC07655 */  jal   gamefileGetSaveFlag_0x80
 /* 052C94 7F01E164 02002025 */   move  $a0, $s0
 /* 052C98 7F01E168 54400023 */  bnezl $v0, .L7F01E1F8
 /* 052C9C 7F01E16C 26310001 */   addiu $s1, $s1, 1
-/* 052CA0 7F01E170 0FC07632 */  jal   get_foldernum_of_eeprom
+/* 052CA0 7F01E170 0FC07632 */  jal   gamefileGetSaveFolder
 /* 052CA4 7F01E174 02002025 */   move  $a0, $s0
 /* 052CA8 7F01E178 5456001F */  bnel  $v0, $s6, .L7F01E1F8
 /* 052CAC 7F01E17C 26310001 */   addiu $s1, $s1, 1
 /* 052CB0 7F01E180 06810006 */  bgez  $s4, .L7F01E19C
 /* 052CB4 7F01E184 02002025 */   move  $a0, $s0
 /* 052CB8 7F01E188 0220A025 */  move  $s4, $s1
-/* 052CBC 7F01E18C 0FC0763D */  jal   set_eeprom_flag_0x18
+/* 052CBC 7F01E18C 0FC0763D */  jal   gamefileSetSaveFlag_0x18
 /* 052CC0 7F01E190 02002025 */   move  $a0, $s0
 /* 052CC4 7F01E194 10000017 */  b     .L7F01E1F4
 /* 052CC8 7F01E198 0040A825 */   move  $s5, $v0
@@ -597,7 +599,7 @@ glabel sub_GAME_7F01DF90
 /* 052CDC 7F01E1AC 00000000 */   nop
 /* 052CE0 7F01E1B0 2508FFFC */  addiu $t0, $t0, -4
 .L7F01E1B4:
-/* 052CE4 7F01E1B4 0FC0763D */  jal   set_eeprom_flag_0x18
+/* 052CE4 7F01E1B4 0FC0763D */  jal   gamefileSetSaveFlag_0x18
 /* 052CE8 7F01E1B8 01009825 */   move  $s3, $t0
 /* 052CEC 7F01E1BC 1453000B */  bne   $v0, $s3, .L7F01E1EC
 /* 052CF0 7F01E1C0 00409025 */   move  $s2, $v0
@@ -606,13 +608,13 @@ glabel sub_GAME_7F01DF90
 /* 052CFC 7F01E1CC 25299920 */  addiu $t1, %lo(saves) # addiu $t1, $t1, -0x66e0
 /* 052D00 7F01E1D0 00005012 */  mflo  $t2
 /* 052D04 7F01E1D4 01492021 */  addu  $a0, $t2, $t1
-/* 052D08 7F01E1D8 0FC07610 */  jal   reset_folder_to_default
+/* 052D08 7F01E1D8 0FC07610 */  jal   gamefileResetSave
 /* 052D0C 7F01E1DC 00000000 */   nop
 /* 052D10 7F01E1E0 0220A025 */  move  $s4, $s1
 /* 052D14 7F01E1E4 10000003 */  b     .L7F01E1F4
 /* 052D18 7F01E1E8 0240A825 */   move  $s5, $s2
 .L7F01E1EC:
-/* 052D1C 7F01E1EC 0FC07610 */  jal   reset_folder_to_default
+/* 052D1C 7F01E1EC 0FC07610 */  jal   gamefileResetSave
 /* 052D20 7F01E1F0 02002025 */   move  $a0, $s0
 .L7F01E1F4:
 /* 052D24 7F01E1F4 26310001 */  addiu $s1, $s1, 1
@@ -631,14 +633,14 @@ glabel sub_GAME_7F01DF90
 /* 052D50 7F01E220 0000B025 */  move  $s6, $zero
 /* 052D54 7F01E224 24110004 */  li    $s1, 4
 .L7F01E228:
-/* 052D58 7F01E228 0FC07771 */  jal   getEEPROMforFoldernum
+/* 052D58 7F01E228 0FC07771 */  jal   gamefileGetSaveForFoldernum
 /* 052D5C 7F01E22C 02C02025 */   move  $a0, $s6
 /* 052D60 7F01E230 10400007 */  beqz  $v0, .L7F01E250
 /* 052D64 7F01E234 00402025 */   move  $a0, $v0
 /* 052D68 7F01E238 3C0C8003 */  lui   $t4, %hi(save_selected_bond)
 /* 052D6C 7F01E23C 258CC510 */  addiu $t4, %lo(save_selected_bond) # addiu $t4, $t4, -0x3af0
 /* 052D70 7F01E240 00165880 */  sll   $t3, $s6, 2
-/* 052D74 7F01E244 0FC07649 */  jal   get_selected_bond
+/* 052D74 7F01E244 0FC07649 */  jal   gamefileGetSelectedBond
 /* 052D78 7F01E248 016C8021 */   addu  $s0, $t3, $t4
 /* 052D7C 7F01E24C AE020000 */  sw    $v0, ($s0)
 .L7F01E250:
@@ -662,206 +664,138 @@ glabel sub_GAME_7F01DF90
 #endif
 
 /**
- * Validate foldernum
+ * Check if folder is valid
  *
  * @param folder
  * @return bool
  */
-s32 check_if_valid_folder_num(s32 folder)
+bool gamefileIsFolderValid(s32 folder)
 {
     if ((folder >= 0) && (folder < 4))
     {
         return TRUE;
     }
+
     if (folder == 100)
     {
         return TRUE;
     }
+
     return FALSE;
 }
 
+/**
+ * wrapper func - uses save if found
+ * gamefilegamefileIsStageUnlockedAtDifficulty calls gamefileIsSavedStageUnlockedAtDifficulty
+ *
+ * @param foldernum
+ * @param stage
+ * @param difficulty
+ * @return 0, 1, or 3
+ */
+s32 gamefileIsStageUnlockedAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE stage, DIFFICULTY difficulty)
+{
+    save_data* save;
+    s32 i;
 
+    if ((gamefileIsFolderValid(foldernum)) &&
+        (stage >= SP_LEVEL_DAM && stage < SP_LEVEL_MAX) &&
+        (difficulty >= DIFFICULTY_AGENT && difficulty < DIFFICULTY_MAX))
+    {
+        save = gamefileGetSaveForFoldernum(foldernum);
 
-#ifdef NONMATCHING
-s32 isStageUnlockedAtDifficulty(int foldernum,STAGENUM stageid,DIFFICULTY difficulty) {
+        if (save)
+        {
+            if (gamefileGetSaveStageCompletedForDifficulty(save, stage, difficulty))
+            {
+                return 3; //found on first try, we are last completed stage
+            }
 
+            if ((stage == SP_LEVEL_AZTEC && difficulty < DIFFICULTY_SECRET) ||
+                (stage == SP_LEVEL_EGYPT && difficulty < DIFFICULTY_00))
+            {
+                return 0; //we cant possibly have a completed bonus stage below each set dificulty
+            }
+
+            //still cant find it, do a search (this is probably how a cheat can unlock stages without having to actualy do them all)
+            for (i = difficulty; i < DIFFICULTY_MAX ; i++)
+            {
+                LEVEL_SOLO_SEQUENCE istage;
+                for (istage = SP_LEVEL_DAM; istage < stage; istage++)
+                {
+                    if (!gamefileGetSaveStageCompletedForDifficulty(save, istage, i))
+                    {
+                        break;
+                    }
+                }
+                //if the first uncomplete stage is not less than current
+                if (stage <= istage)
+                {
+                    return 1;
+                }
+            }
+
+            // if we still cant find it
+            if ((difficulty < DIFFICULTY_007) && (stage < SP_LEVEL_AZTEC))
+            {
+                for (i = difficulty; i < DIFFICULTY_MAX; i++)
+                {
+                    if (gamefileGetSaveStageCompletedForDifficulty(save, stage - 1, i))
+                    {
+                        return 1;
+                    }
+                }
+            }
+
+            if (difficulty < DIFFICULTY_007)
+            {
+                for (i = SP_LEVEL_DAM; i < SP_LEVEL_AZTEC; i++)
+                {
+                    if (!gamefileGetSaveStageCompletedForDifficulty(save, i, DIFFICULTY_AGENT))
+                    {
+                        break;
+                    }
+                }
+                //this cant actually fire an it?
+                if (i >= SP_LEVEL_AZTEC)
+                {
+                    for (i = DIFFICULTY_AGENT; i < difficulty; i++)
+                    {
+                        if (!gamefileGetSaveStageCompletedForDifficulty(save, stage, i))
+                        {
+                            break;
+                        }
+                    }
+
+                    if (difficulty <= i)
+                    {
+                        return 1;
+                    }
+                }
+            }// difficulty < DIFFICULTY_007
+        }// save
+
+        // no save, current level is dam, its unlocked.
+        if (stage == SP_LEVEL_DAM)
+        {
+            return 1;
+        }
+
+        // no save, cheat anabled, its unlocked.
+        if (get_debug_enable_agent_levels_flag() && difficulty == DIFFICULTY_AGENT)
+        {
+            return 1;
+        }
+
+        // no save, cheat anabled, its unlocked. (basically a repeat of above)
+        if (get_debug_enable_all_levels_flag())
+        {
+            return 1;
+        }
+    }
+    // After all that the stage is not unlocked
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel isStageUnlockedAtDifficulty
-/* 052DF0 7F01E2C0 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 052DF4 7F01E2C4 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 052DF8 7F01E2C8 AFB50028 */  sw    $s5, 0x28($sp)
-/* 052DFC 7F01E2CC AFB30020 */  sw    $s3, 0x20($sp)
-/* 052E00 7F01E2D0 AFB00014 */  sw    $s0, 0x14($sp)
-/* 052E04 7F01E2D4 00808025 */  move  $s0, $a0
-/* 052E08 7F01E2D8 00A09825 */  move  $s3, $a1
-/* 052E0C 7F01E2DC 00C0A825 */  move  $s5, $a2
-/* 052E10 7F01E2E0 AFB40024 */  sw    $s4, 0x24($sp)
-/* 052E14 7F01E2E4 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 052E18 7F01E2E8 0FC078A3 */  jal   check_if_valid_folder_num
-/* 052E1C 7F01E2EC AFB10018 */   sw    $s1, 0x18($sp)
-/* 052E20 7F01E2F0 5040007B */  beql  $v0, $zero, .L7F01E4E0
-/* 052E24 7F01E2F4 00001025 */   move  $v0, $zero
-/* 052E28 7F01E2F8 06600078 */  bltz  $s3, .L7F01E4DC
-/* 052E2C 7F01E2FC 2A610014 */   slti  $at, $s3, 0x14
-/* 052E30 7F01E300 50200077 */  beql  $at, $zero, .L7F01E4E0
-/* 052E34 7F01E304 00001025 */   move  $v0, $zero
-/* 052E38 7F01E308 06A00074 */  bltz  $s5, .L7F01E4DC
-/* 052E3C 7F01E30C 2AA10004 */   slti  $at, $s5, 4
-/* 052E40 7F01E310 50200073 */  beql  $at, $zero, .L7F01E4E0
-/* 052E44 7F01E314 00001025 */   move  $v0, $zero
-/* 052E48 7F01E318 0FC07771 */  jal   getEEPROMforFoldernum
-/* 052E4C 7F01E31C 02002025 */   move  $a0, $s0
-/* 052E50 7F01E320 1040005C */  beqz  $v0, .L7F01E494
-/* 052E54 7F01E324 00409025 */   move  $s2, $v0
-/* 052E58 7F01E328 00402025 */  move  $a0, $v0
-/* 052E5C 7F01E32C 02602825 */  move  $a1, $s3
-/* 052E60 7F01E330 0FC07718 */  jal   get_eeprom_stage_completed_for_difficulty
-/* 052E64 7F01E334 02A03025 */   move  $a2, $s5
-/* 052E68 7F01E338 10400003 */  beqz  $v0, .L7F01E348
-/* 052E6C 7F01E33C 24010012 */   li    $at, 18
-/* 052E70 7F01E340 10000067 */  b     .L7F01E4E0
-/* 052E74 7F01E344 24020003 */   li    $v0, 3
-.L7F01E348:
-/* 052E78 7F01E348 56610003 */  bnel  $s3, $at, .L7F01E358
-/* 052E7C 7F01E34C 24010013 */   li    $at, 19
-/* 052E80 7F01E350 1AA00005 */  blez  $s5, .L7F01E368
-/* 052E84 7F01E354 24010013 */   li    $at, 19
-.L7F01E358:
-/* 052E88 7F01E358 16610005 */  bne   $s3, $at, .L7F01E370
-/* 052E8C 7F01E35C 2AA10002 */   slti  $at, $s5, 2
-/* 052E90 7F01E360 50200004 */  beql  $at, $zero, .L7F01E374
-/* 052E94 7F01E364 2AA10004 */   slti  $at, $s5, 4
-.L7F01E368:
-/* 052E98 7F01E368 1000005D */  b     .L7F01E4E0
-/* 052E9C 7F01E36C 00001025 */   move  $v0, $zero
-.L7F01E370:
-/* 052EA0 7F01E370 2AA10004 */  slti  $at, $s5, 4
-.L7F01E374:
-/* 052EA4 7F01E374 10200014 */  beqz  $at, .L7F01E3C8
-/* 052EA8 7F01E378 02A08825 */   move  $s1, $s5
-/* 052EAC 7F01E37C 24140004 */  li    $s4, 4
-.L7F01E380:
-/* 052EB0 7F01E380 1A60000A */  blez  $s3, .L7F01E3AC
-/* 052EB4 7F01E384 00008025 */   move  $s0, $zero
-/* 052EB8 7F01E388 02402025 */  move  $a0, $s2
-.L7F01E38C:
-/* 052EBC 7F01E38C 02002825 */  move  $a1, $s0
-/* 052EC0 7F01E390 0FC07718 */  jal   get_eeprom_stage_completed_for_difficulty
-/* 052EC4 7F01E394 02203025 */   move  $a2, $s1
-/* 052EC8 7F01E398 50400005 */  beql  $v0, $zero, .L7F01E3B0
-/* 052ECC 7F01E39C 0213082A */   slt   $at, $s0, $s3
-/* 052ED0 7F01E3A0 26100001 */  addiu $s0, $s0, 1
-/* 052ED4 7F01E3A4 5613FFF9 */  bnel  $s0, $s3, .L7F01E38C
-/* 052ED8 7F01E3A8 02402025 */   move  $a0, $s2
-.L7F01E3AC:
-/* 052EDC 7F01E3AC 0213082A */  slt   $at, $s0, $s3
-.L7F01E3B0:
-/* 052EE0 7F01E3B0 14200003 */  bnez  $at, .L7F01E3C0
-/* 052EE4 7F01E3B4 26310001 */   addiu $s1, $s1, 1
-/* 052EE8 7F01E3B8 10000049 */  b     .L7F01E4E0
-/* 052EEC 7F01E3BC 24020001 */   li    $v0, 1
-.L7F01E3C0:
-/* 052EF0 7F01E3C0 1634FFEF */  bne   $s1, $s4, .L7F01E380
-/* 052EF4 7F01E3C4 00000000 */   nop
-.L7F01E3C8:
-/* 052EF8 7F01E3C8 2AA10003 */  slti  $at, $s5, 3
-/* 052EFC 7F01E3CC 10200011 */  beqz  $at, .L7F01E414
-/* 052F00 7F01E3D0 24140004 */   li    $s4, 4
-/* 052F04 7F01E3D4 2A610012 */  slti  $at, $s3, 0x12
-/* 052F08 7F01E3D8 1020000E */  beqz  $at, .L7F01E414
-/* 052F0C 7F01E3DC 2AA10004 */   slti  $at, $s5, 4
-/* 052F10 7F01E3E0 1020000C */  beqz  $at, .L7F01E414
-/* 052F14 7F01E3E4 02A08825 */   move  $s1, $s5
-/* 052F18 7F01E3E8 2670FFFF */  addiu $s0, $s3, -1
-/* 052F1C 7F01E3EC 02402025 */  move  $a0, $s2
-.L7F01E3F0:
-/* 052F20 7F01E3F0 02002825 */  move  $a1, $s0
-/* 052F24 7F01E3F4 0FC07718 */  jal   get_eeprom_stage_completed_for_difficulty
-/* 052F28 7F01E3F8 02203025 */   move  $a2, $s1
-/* 052F2C 7F01E3FC 10400003 */  beqz  $v0, .L7F01E40C
-/* 052F30 7F01E400 26310001 */   addiu $s1, $s1, 1
-/* 052F34 7F01E404 10000036 */  b     .L7F01E4E0
-/* 052F38 7F01E408 24020001 */   li    $v0, 1
-.L7F01E40C:
-/* 052F3C 7F01E40C 5634FFF8 */  bnel  $s1, $s4, .L7F01E3F0
-/* 052F40 7F01E410 02402025 */   move  $a0, $s2
-.L7F01E414:
-/* 052F44 7F01E414 2AA10003 */  slti  $at, $s5, 3
-/* 052F48 7F01E418 1020001E */  beqz  $at, .L7F01E494
-/* 052F4C 7F01E41C 00008825 */   move  $s1, $zero
-/* 052F50 7F01E420 02402025 */  move  $a0, $s2
-.L7F01E424:
-/* 052F54 7F01E424 02202825 */  move  $a1, $s1
-/* 052F58 7F01E428 0FC07718 */  jal   get_eeprom_stage_completed_for_difficulty
-/* 052F5C 7F01E42C 00003025 */   move  $a2, $zero
-/* 052F60 7F01E430 50400006 */  beql  $v0, $zero, .L7F01E44C
-/* 052F64 7F01E434 2A210012 */   slti  $at, $s1, 0x12
-/* 052F68 7F01E438 26310001 */  addiu $s1, $s1, 1
-/* 052F6C 7F01E43C 2A210012 */  slti  $at, $s1, 0x12
-/* 052F70 7F01E440 5420FFF8 */  bnezl $at, .L7F01E424
-/* 052F74 7F01E444 02402025 */   move  $a0, $s2
-/* 052F78 7F01E448 2A210012 */  slti  $at, $s1, 0x12
-.L7F01E44C:
-/* 052F7C 7F01E44C 14200011 */  bnez  $at, .L7F01E494
-/* 052F80 7F01E450 00000000 */   nop
-/* 052F84 7F01E454 1AA0000A */  blez  $s5, .L7F01E480
-/* 052F88 7F01E458 00008825 */   move  $s1, $zero
-/* 052F8C 7F01E45C 02402025 */  move  $a0, $s2
-.L7F01E460:
-/* 052F90 7F01E460 02602825 */  move  $a1, $s3
-/* 052F94 7F01E464 0FC07718 */  jal   get_eeprom_stage_completed_for_difficulty
-/* 052F98 7F01E468 02203025 */   move  $a2, $s1
-/* 052F9C 7F01E46C 50400005 */  beql  $v0, $zero, .L7F01E484
-/* 052FA0 7F01E470 0235082A */   slt   $at, $s1, $s5
-/* 052FA4 7F01E474 26310001 */  addiu $s1, $s1, 1
-/* 052FA8 7F01E478 5635FFF9 */  bnel  $s1, $s5, .L7F01E460
-/* 052FAC 7F01E47C 02402025 */   move  $a0, $s2
-.L7F01E480:
-/* 052FB0 7F01E480 0235082A */  slt   $at, $s1, $s5
-.L7F01E484:
-/* 052FB4 7F01E484 14200003 */  bnez  $at, .L7F01E494
-/* 052FB8 7F01E488 00000000 */   nop
-/* 052FBC 7F01E48C 10000014 */  b     .L7F01E4E0
-/* 052FC0 7F01E490 24020001 */   li    $v0, 1
-.L7F01E494:
-/* 052FC4 7F01E494 16600003 */  bnez  $s3, .L7F01E4A4
-/* 052FC8 7F01E498 00000000 */   nop
-/* 052FCC 7F01E49C 10000010 */  b     .L7F01E4E0
-/* 052FD0 7F01E4A0 24020001 */   li    $v0, 1
-.L7F01E4A4:
-/* 052FD4 7F01E4A4 0FC24400 */  jal   get_debug_enable_agent_levels_flag
-/* 052FD8 7F01E4A8 00000000 */   nop
-/* 052FDC 7F01E4AC 10400005 */  beqz  $v0, .L7F01E4C4
-/* 052FE0 7F01E4B0 00000000 */   nop
-/* 052FE4 7F01E4B4 16A00003 */  bnez  $s5, .L7F01E4C4
-/* 052FE8 7F01E4B8 00000000 */   nop
-/* 052FEC 7F01E4BC 10000008 */  b     .L7F01E4E0
-/* 052FF0 7F01E4C0 24020001 */   li    $v0, 1
-.L7F01E4C4:
-/* 052FF4 7F01E4C4 0FC24403 */  jal   get_debug_enable_all_levels_flag
-/* 052FF8 7F01E4C8 00000000 */   nop
-/* 052FFC 7F01E4CC 50400004 */  beql  $v0, $zero, .L7F01E4E0
-/* 053000 7F01E4D0 00001025 */   move  $v0, $zero
-/* 053004 7F01E4D4 10000002 */  b     .L7F01E4E0
-/* 053008 7F01E4D8 24020001 */   li    $v0, 1
-.L7F01E4DC:
-/* 05300C 7F01E4DC 00001025 */  move  $v0, $zero
-.L7F01E4E0:
-/* 053010 7F01E4E0 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 053014 7F01E4E4 8FB00014 */  lw    $s0, 0x14($sp)
-/* 053018 7F01E4E8 8FB10018 */  lw    $s1, 0x18($sp)
-/* 05301C 7F01E4EC 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 053020 7F01E4F0 8FB30020 */  lw    $s3, 0x20($sp)
-/* 053024 7F01E4F4 8FB40024 */  lw    $s4, 0x24($sp)
-/* 053028 7F01E4F8 8FB50028 */  lw    $s5, 0x28($sp)
-/* 05302C 7F01E4FC 03E00008 */  jr    $ra
-/* 053030 7F01E500 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
-
 
 /**
  *
@@ -875,229 +809,107 @@ void sub_GAME_7F01E504(save_data *save1, save_data *save2)
     s32 otherfolder;
 
     otherfolder = 0;
-    folder_with_flag = check_if_eeprom_flag_set_0x80_any_folder();
+    folder_with_flag = gamefileGetSaveFlag_0x80_any_folder();
 
     if (folder_with_flag >= 0)
     {
         saves[folder_with_flag] = *save2;
 
-        if (save1 != 0)
+        if (save1)
         {
-            otherfolder = (s32)(set_eeprom_flag_0x18(save1) + 1) % 4;
+            otherfolder = (s32)(gamefileSetSaveFlag_0x18(save1) + 1) % 4;
         }
 
-        toggle_eeprom_flag_set_0x80(&saves[folder_with_flag], 0);
-        reset_eeprom_flag_0x18(&saves[folder_with_flag], otherfolder);
+        gamefileSetSaveFlag_0x80(&saves[folder_with_flag], 0);
+        gamefileResetSaveFlag_0x18(&saves[folder_with_flag], otherfolder);
         sub_GAME_7F01D7A0(&saves[folder_with_flag]);
 
-        if (save1 != 0)
+        if (save1)
         {
-            reset_folder_to_default(save1);
+            gamefileResetSave(save1);
         }
     }
 }
 
+/**
+ *
+ *
+ * @param foldernum
+ * @param stage
+ * @param difficulty
+ * @param maxtime
+ */
+void gamefileUnlockStageInFolderAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE stage, DIFFICULTY difficulty, s32 newtime)
+{
+    save_data new_save;
+    save_data *save;
+    s32 i;
 
+    if ((foldernum >= 0) && (foldernum < 4) &&
+        (stage >= SP_LEVEL_DAM) && (stage < SP_LEVEL_MAX) &&
+        (difficulty >= DIFFICULTY_AGENT) && (difficulty < DIFFICULTY_MAX))
+    {
+        new_save = D_8002C660;
 
-#ifdef NONMATCHING
-void unlock_stage_in_folder_on_difficulty(void) {
+        save = gamefileGetSaveForFoldernum(foldernum);
 
+        if (save != 0) {
+            new_save = *save;
+        } else {
+            gamefileSetSaveFoldernum(&new_save, foldernum);
+        }
+
+        for (i = difficulty; i >= DIFFICULTY_AGENT; i--)
+        {
+            if (i == difficulty)
+            {
+                gamefileCheckSaveStageDifficultyTime(&new_save, stage, i, newtime);
+            }
+            else
+            {
+                gamefileCheckSaveStageDifficultyTime(&new_save, stage, i, 99999999);
+            }
+        }
+
+        sub_GAME_7F01E504(&save->chksum1, &new_save);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel unlock_stage_in_folder_on_difficulty
-/* 053128 7F01E5F8 27BDFF68 */  addiu $sp, $sp, -0x98
-/* 05312C 7F01E5FC AFB50028 */  sw    $s5, 0x28($sp)
-/* 053130 7F01E600 AFB40024 */  sw    $s4, 0x24($sp)
-/* 053134 7F01E604 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 053138 7F01E608 AFB00014 */  sw    $s0, 0x14($sp)
-/* 05313C 7F01E60C 00808025 */  move  $s0, $a0
-/* 053140 7F01E610 00A09025 */  move  $s2, $a1
-/* 053144 7F01E614 00C0A025 */  move  $s4, $a2
-/* 053148 7F01E618 00E0A825 */  move  $s5, $a3
-/* 05314C 7F01E61C AFBF002C */  sw    $ra, 0x2c($sp)
-/* 053150 7F01E620 AFB30020 */  sw    $s3, 0x20($sp)
-/* 053154 7F01E624 04800045 */  bltz  $a0, .L7F01E73C
-/* 053158 7F01E628 AFB10018 */   sw    $s1, 0x18($sp)
-/* 05315C 7F01E62C 28810004 */  slti  $at, $a0, 4
-/* 053160 7F01E630 50200043 */  beql  $at, $zero, .L7F01E740
-/* 053164 7F01E634 8FBF002C */   lw    $ra, 0x2c($sp)
-/* 053168 7F01E638 04A00040 */  bltz  $a1, .L7F01E73C
-/* 05316C 7F01E63C 28A10014 */   slti  $at, $a1, 0x14
-/* 053170 7F01E640 5020003F */  beql  $at, $zero, .L7F01E740
-/* 053174 7F01E644 8FBF002C */   lw    $ra, 0x2c($sp)
-/* 053178 7F01E648 04C0003C */  bltz  $a2, .L7F01E73C
-/* 05317C 7F01E64C 28C10004 */   slti  $at, $a2, 4
-/* 053180 7F01E650 1020003A */  beqz  $at, .L7F01E73C
-/* 053184 7F01E654 27B10038 */   addiu $s1, $sp, 0x38
-/* 053188 7F01E658 3C0E8003 */  lui   $t6, %hi(D_8002C640+0x20)
-/* 05318C 7F01E65C 25CEC660 */  addiu $t6, %lo(D_8002C640+0x20) # addiu $t6, $t6, -0x39a0
-/* 053190 7F01E660 25D80060 */  addiu $t8, $t6, 0x60
-/* 053194 7F01E664 0220C825 */  move  $t9, $s1
-.L7F01E668:
-/* 053198 7F01E668 8DC10000 */  lw    $at, ($t6)
-/* 05319C 7F01E66C 25CE000C */  addiu $t6, $t6, 0xc
-/* 0531A0 7F01E670 2739000C */  addiu $t9, $t9, 0xc
-/* 0531A4 7F01E674 AF21FFF4 */  sw    $at, -0xc($t9)
-/* 0531A8 7F01E678 8DC1FFF8 */  lw    $at, -8($t6)
-/* 0531AC 7F01E67C AF21FFF8 */  sw    $at, -8($t9)
-/* 0531B0 7F01E680 8DC1FFFC */  lw    $at, -4($t6)
-/* 0531B4 7F01E684 15D8FFF8 */  bne   $t6, $t8, .L7F01E668
-/* 0531B8 7F01E688 AF21FFFC */   sw    $at, -4($t9)
-/* 0531BC 7F01E68C 0FC07771 */  jal   getEEPROMforFoldernum
-/* 0531C0 7F01E690 02002025 */   move  $a0, $s0
-/* 0531C4 7F01E694 1040000F */  beqz  $v0, .L7F01E6D4
-/* 0531C8 7F01E698 AFA20034 */   sw    $v0, 0x34($sp)
-/* 0531CC 7F01E69C 00405025 */  move  $t2, $v0
-/* 0531D0 7F01E6A0 02205825 */  move  $t3, $s1
-/* 0531D4 7F01E6A4 24490060 */  addiu $t1, $v0, 0x60
-.L7F01E6A8:
-/* 0531D8 7F01E6A8 8D410000 */  lw    $at, ($t2)
-/* 0531DC 7F01E6AC 254A000C */  addiu $t2, $t2, 0xc
-/* 0531E0 7F01E6B0 256B000C */  addiu $t3, $t3, 0xc
-/* 0531E4 7F01E6B4 AD61FFF4 */  sw    $at, -0xc($t3)
-/* 0531E8 7F01E6B8 8D41FFF8 */  lw    $at, -8($t2)
-/* 0531EC 7F01E6BC AD61FFF8 */  sw    $at, -8($t3)
-/* 0531F0 7F01E6C0 8D41FFFC */  lw    $at, -4($t2)
-/* 0531F4 7F01E6C4 1549FFF8 */  bne   $t2, $t1, .L7F01E6A8
-/* 0531F8 7F01E6C8 AD61FFFC */   sw    $at, -4($t3)
-/* 0531FC 7F01E6CC 10000004 */  b     .L7F01E6E0
-/* 053200 7F01E6D0 00000000 */   nop
-.L7F01E6D4:
-/* 053204 7F01E6D4 02202025 */  move  $a0, $s1
-/* 053208 7F01E6D8 0FC07636 */  jal   set_eeprom_to_folder_num
-/* 05320C 7F01E6DC 02002825 */   move  $a1, $s0
-.L7F01E6E0:
-/* 053210 7F01E6E0 06800013 */  bltz  $s4, .L7F01E730
-/* 053214 7F01E6E4 02808025 */   move  $s0, $s4
-/* 053218 7F01E6E8 3C1305F5 */  lui   $s3, (0x05F5E0FF >> 16) # lui $s3, 0x5f5
-/* 05321C 7F01E6EC 3673E0FF */  ori   $s3, (0x05F5E0FF & 0xFFFF) # ori $s3, $s3, 0xe0ff
-.L7F01E6F0:
-/* 053220 7F01E6F0 16140008 */  bne   $s0, $s4, .L7F01E714
-/* 053224 7F01E6F4 02202025 */   move  $a0, $s1
-/* 053228 7F01E6F8 02202025 */  move  $a0, $s1
-/* 05322C 7F01E6FC 02402825 */  move  $a1, $s2
-/* 053230 7F01E700 02003025 */  move  $a2, $s0
-/* 053234 7F01E704 0FC0772C */  jal   sub_GAME_7F01DCB0
-/* 053238 7F01E708 02A03825 */   move  $a3, $s5
-/* 05323C 7F01E70C 10000006 */  b     .L7F01E728
-/* 053240 7F01E710 2610FFFF */   addiu $s0, $s0, -1
-.L7F01E714:
-/* 053244 7F01E714 02402825 */  move  $a1, $s2
-/* 053248 7F01E718 02003025 */  move  $a2, $s0
-/* 05324C 7F01E71C 0FC0772C */  jal   sub_GAME_7F01DCB0
-/* 053250 7F01E720 02603825 */   move  $a3, $s3
-/* 053254 7F01E724 2610FFFF */  addiu $s0, $s0, -1
-.L7F01E728:
-/* 053258 7F01E728 0601FFF1 */  bgez  $s0, .L7F01E6F0
-/* 05325C 7F01E72C 00000000 */   nop
-.L7F01E730:
-/* 053260 7F01E730 8FA40034 */  lw    $a0, 0x34($sp)
-/* 053264 7F01E734 0FC07941 */  jal   sub_GAME_7F01E504
-/* 053268 7F01E738 02202825 */   move  $a1, $s1
-.L7F01E73C:
-/* 05326C 7F01E73C 8FBF002C */  lw    $ra, 0x2c($sp)
-.L7F01E740:
-/* 053270 7F01E740 8FB00014 */  lw    $s0, 0x14($sp)
-/* 053274 7F01E744 8FB10018 */  lw    $s1, 0x18($sp)
-/* 053278 7F01E748 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 05327C 7F01E74C 8FB30020 */  lw    $s3, 0x20($sp)
-/* 053280 7F01E750 8FB40024 */  lw    $s4, 0x24($sp)
-/* 053284 7F01E754 8FB50028 */  lw    $s5, 0x28($sp)
-/* 053288 7F01E758 03E00008 */  jr    $ra
-/* 05328C 7F01E75C 27BD0098 */   addiu $sp, $sp, 0x98
-)
-#endif
 
+/**
+ *
+ *
+ * @param foldernum
+ * @param cheat
+ */
+void sub_GAME_7F01E760(s32 foldernum, s32 cheat)
+{
+    save_data *save;
+    save_data new_save;
 
+    if ((foldernum >= 0) && (foldernum < 4) && (cheat >= 0) && (cheat < 0x14))
+    {
+        save = gamefileGetSaveForFoldernum(foldernum);
 
-#ifdef NONMATCHING
-void sub_GAME_7F01E760(void) {
+        if (save != 0 && gamefileGetIsCheatUnlocked(save, cheat) != 0)
+        {
+           return;
+        }
 
+        new_save = D_8002C6C0;
+
+        if (save != 0)
+        {
+            new_save = *save;
+        }
+        else
+        {
+            gamefileSetSaveFoldernum(&new_save, foldernum);
+        }
+
+        sub_GAME_7F01DD74(&new_save, cheat);
+        sub_GAME_7F01E504(save, &new_save);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01E760
-/* 053290 7F01E760 27BDFF80 */  addiu $sp, $sp, -0x80
-/* 053294 7F01E764 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 053298 7F01E768 0480003E */  bltz  $a0, .L7F01E864
-/* 05329C 7F01E76C 00803825 */   move  $a3, $a0
-/* 0532A0 7F01E770 28810004 */  slti  $at, $a0, 4
-/* 0532A4 7F01E774 5020003C */  beql  $at, $zero, .L7F01E868
-/* 0532A8 7F01E778 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0532AC 7F01E77C 04A00039 */  bltz  $a1, .L7F01E864
-/* 0532B0 7F01E780 28A10014 */   slti  $at, $a1, 0x14
-/* 0532B4 7F01E784 50200038 */  beql  $at, $zero, .L7F01E868
-/* 0532B8 7F01E788 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0532BC 7F01E78C AFA50084 */  sw    $a1, 0x84($sp)
-/* 0532C0 7F01E790 0FC07771 */  jal   getEEPROMforFoldernum
-/* 0532C4 7F01E794 AFA70080 */   sw    $a3, 0x80($sp)
-/* 0532C8 7F01E798 8FA70080 */  lw    $a3, 0x80($sp)
-/* 0532CC 7F01E79C 10400009 */  beqz  $v0, .L7F01E7C4
-/* 0532D0 7F01E7A0 00403025 */   move  $a2, $v0
-/* 0532D4 7F01E7A4 00402025 */  move  $a0, $v0
-/* 0532D8 7F01E7A8 8FA50084 */  lw    $a1, 0x84($sp)
-/* 0532DC 7F01E7AC AFA2007C */  sw    $v0, 0x7c($sp)
-/* 0532E0 7F01E7B0 0FC07748 */  jal   check_if_cheat_unlocked
-/* 0532E4 7F01E7B4 AFA70080 */   sw    $a3, 0x80($sp)
-/* 0532E8 7F01E7B8 8FA6007C */  lw    $a2, 0x7c($sp)
-/* 0532EC 7F01E7BC 14400029 */  bnez  $v0, .L7F01E864
-/* 0532F0 7F01E7C0 8FA70080 */   lw    $a3, 0x80($sp)
-.L7F01E7C4:
-/* 0532F4 7F01E7C4 3C0E8003 */  lui   $t6, %hi(D_8002C6C0)
-/* 0532F8 7F01E7C8 27A4001C */  addiu $a0, $sp, 0x1c
-/* 0532FC 7F01E7CC 25CEC6C0 */  addiu $t6, %lo(D_8002C6C0) # addiu $t6, $t6, -0x3940
-/* 053300 7F01E7D0 25D80060 */  addiu $t8, $t6, 0x60
-/* 053304 7F01E7D4 0080C825 */  move  $t9, $a0
-.L7F01E7D8:
-/* 053308 7F01E7D8 8DC10000 */  lw    $at, ($t6)
-/* 05330C 7F01E7DC 25CE000C */  addiu $t6, $t6, 0xc
-/* 053310 7F01E7E0 2739000C */  addiu $t9, $t9, 0xc
-/* 053314 7F01E7E4 AF21FFF4 */  sw    $at, -0xc($t9)
-/* 053318 7F01E7E8 8DC1FFF8 */  lw    $at, -8($t6)
-/* 05331C 7F01E7EC AF21FFF8 */  sw    $at, -8($t9)
-/* 053320 7F01E7F0 8DC1FFFC */  lw    $at, -4($t6)
-/* 053324 7F01E7F4 15D8FFF8 */  bne   $t6, $t8, .L7F01E7D8
-/* 053328 7F01E7F8 AF21FFFC */   sw    $at, -4($t9)
-/* 05332C 7F01E7FC 10C0000F */  beqz  $a2, .L7F01E83C
-/* 053330 7F01E800 00E02825 */   move  $a1, $a3
-/* 053334 7F01E804 00C05025 */  move  $t2, $a2
-/* 053338 7F01E808 00805825 */  move  $t3, $a0
-/* 05333C 7F01E80C 24C90060 */  addiu $t1, $a2, 0x60
-.L7F01E810:
-/* 053340 7F01E810 8D410000 */  lw    $at, ($t2)
-/* 053344 7F01E814 254A000C */  addiu $t2, $t2, 0xc
-/* 053348 7F01E818 256B000C */  addiu $t3, $t3, 0xc
-/* 05334C 7F01E81C AD61FFF4 */  sw    $at, -0xc($t3)
-/* 053350 7F01E820 8D41FFF8 */  lw    $at, -8($t2)
-/* 053354 7F01E824 AD61FFF8 */  sw    $at, -8($t3)
-/* 053358 7F01E828 8D41FFFC */  lw    $at, -4($t2)
-/* 05335C 7F01E82C 1549FFF8 */  bne   $t2, $t1, .L7F01E810
-/* 053360 7F01E830 AD61FFFC */   sw    $at, -4($t3)
-/* 053364 7F01E834 10000006 */  b     .L7F01E850
-/* 053368 7F01E838 8FA50084 */   lw    $a1, 0x84($sp)
-.L7F01E83C:
-/* 05336C 7F01E83C 0FC07636 */  jal   set_eeprom_to_folder_num
-/* 053370 7F01E840 AFA6007C */   sw    $a2, 0x7c($sp)
-/* 053374 7F01E844 8FA6007C */  lw    $a2, 0x7c($sp)
-/* 053378 7F01E848 27A4001C */  addiu $a0, $sp, 0x1c
-/* 05337C 7F01E84C 8FA50084 */  lw    $a1, 0x84($sp)
-.L7F01E850:
-/* 053380 7F01E850 0FC0775D */  jal   sub_GAME_7F01DD74
-/* 053384 7F01E854 AFA6007C */   sw    $a2, 0x7c($sp)
-/* 053388 7F01E858 8FA4007C */  lw    $a0, 0x7c($sp)
-/* 05338C 7F01E85C 0FC07941 */  jal   sub_GAME_7F01E504
-/* 053390 7F01E860 27A5001C */   addiu $a1, $sp, 0x1c
-.L7F01E864:
-/* 053394 7F01E864 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F01E868:
-/* 053398 7F01E868 27BD0080 */  addiu $sp, $sp, 0x80
-/* 05339C 7F01E86C 03E00008 */  jr    $ra
-/* 0533A0 7F01E870 00000000 */   nop
-)
-#endif
 
 
 /**
@@ -1107,13 +919,13 @@ glabel sub_GAME_7F01E760
  * @param stage
  * @param difficulty
  */
-void get_highest_stage_difficulty_completed_in_folder(s32 foldernum, LEVEL_SOLO_SEQUENCE *stage, DIFFICULTY *difficulty)
+void gamefileGetHighestStageDifficultyCompletedForFolder(s32 foldernum, LEVEL_SOLO_SEQUENCE *stage, DIFFICULTY *difficulty)
 {
     save_data *folder;
     LEVEL_SOLO_SEQUENCE stageid;
     DIFFICULTY difficultyid;
 
-    folder = getEEPROMforFoldernum(foldernum);
+    folder = gamefileGetSaveForFoldernum(foldernum);
 
     if (folder != NULL)
     {
@@ -1121,7 +933,7 @@ void get_highest_stage_difficulty_completed_in_folder(s32 foldernum, LEVEL_SOLO_
         {
             for (stageid = SP_LEVEL_EGYPT; stageid >= 0; stageid--)
             {
-                if (get_eeprom_stage_completed_for_difficulty(folder, stageid, difficultyid))
+                if (gamefileGetSaveStageCompletedForDifficulty(folder, stageid, difficultyid))
                 {
                     *stage = stageid;
                     *difficulty = difficultyid;
@@ -1138,20 +950,20 @@ void get_highest_stage_difficulty_completed_in_folder(s32 foldernum, LEVEL_SOLO_
  * Get the highest stage unlocked in folder
  *
  * @param foldernum
- * @return s32
+ * @return LEVEL_SOLO_SEQUENCE
  */
-s32 get_highest_stage_unlocked_in_folder(s32 foldernum)
+LEVEL_SOLO_SEQUENCE gamefileGetHighestStageUnlockedForFolder(s32 foldernum)
 {
     LEVEL_SOLO_SEQUENCE stageid;
     DIFFICULTY difficulty;
 
-    if (getEEPROMforFoldernum(foldernum) != NULL)
+    if (gamefileGetSaveForFoldernum(foldernum) != NULL)
     {
         for (stageid = SP_LEVEL_EGYPT; stageid >= 0; stageid--)
         {
             for (difficulty = DIFFICULTY_AGENT; difficulty < DIFFICULTY_MAX; difficulty++)
             {
-                if (isStageUnlockedAtDifficulty(foldernum, stageid, difficulty))
+                if (gamefileIsStageUnlockedAtDifficulty(foldernum, stageid, difficulty))
                 {
                     return stageid;
                 }
@@ -1166,23 +978,22 @@ s32 get_highest_stage_unlocked_in_folder(s32 foldernum)
  *
  * @return stageid
  */
-u32 get_highest_stage_unlocked_any_folder(void)
+LEVEL_SOLO_SEQUENCE gamefileGetHighestStageUnlockedAnyFolder(void)
 {
-    u32 isfound;
     int folder;
-    u32 isunlocked;
+    LEVEL_SOLO_SEQUENCE isfound;
+    LEVEL_SOLO_SEQUENCE highest = 0;
 
-    isunlocked = 0;
-    folder = 0;
-    while (folder != 4) {
-        isfound = get_highest_stage_unlocked_in_folder(folder);
-        folder += 1;
-        if ((int)isunlocked < (int)isfound)
+    for (folder = 0; folder < 4; folder++)
+    {
+        isfound = gamefileGetHighestStageUnlockedForFolder(folder);
+        if (highest < isfound)
         {
-            isunlocked = isfound;
+            highest = isfound;
         }
-    };
-    return isunlocked;
+    }
+
+    return highest;
 }
 
 /**
@@ -1191,23 +1002,23 @@ u32 get_highest_stage_unlocked_any_folder(void)
  * @param foldernum
  * @return bool
  */
-s32 check_cradle_completed_in_folder(s32 foldernum)
+bool gamefileIsCradleCompletedForFolder(s32 folder)
 {
-    return (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_CRADLE, DIFFICULTY_AGENT) == 3) ||
-            (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_CRADLE, DIFFICULTY_SECRET) == 3) ||
-            (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_CRADLE, DIFFICULTY_00) == 3);
+    return (gamefileIsStageUnlockedAtDifficulty(folder, SP_LEVEL_CRADLE, DIFFICULTY_AGENT) == 3) ||
+            (gamefileIsStageUnlockedAtDifficulty(folder, SP_LEVEL_CRADLE, DIFFICULTY_SECRET) == 3) ||
+            (gamefileIsStageUnlockedAtDifficulty(folder, SP_LEVEL_CRADLE, DIFFICULTY_00) == 3);
 }
 
 /**
  * Check if aztec has been completed at secret or 00 difficulty
  *
- * @param foldernum
+ * @param folder
  * @return bool
  */
-s32 check_aztec_completed_in_folder_secret_00(s32 foldernum)
+bool gamefileIsAztecCompletedOnSecretOr00ForFolder(s32 folder)
 {
-    return (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_AZTEC, DIFFICULTY_SECRET) == 3) ||
-            (isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_AZTEC, DIFFICULTY_00) == 3);
+    return (gamefileIsStageUnlockedAtDifficulty(folder, SP_LEVEL_AZTEC, DIFFICULTY_SECRET) == 3) ||
+            (gamefileIsStageUnlockedAtDifficulty(folder, SP_LEVEL_AZTEC, DIFFICULTY_00) == 3);
 }
 
 /**
@@ -1216,9 +1027,9 @@ s32 check_aztec_completed_in_folder_secret_00(s32 foldernum)
  * @param foldernum
  * @return bool
  */
-s32 check_egypt_completed_in_folder_00(int foldernum)
+bool gamefileIsEgyptCompletedOn00ForFolder(int foldernum)
 {
-    return isStageUnlockedAtDifficulty(foldernum, SP_LEVEL_EGYPT, DIFFICULTY_00) == 3;
+    return gamefileIsStageUnlockedAtDifficulty(foldernum, SP_LEVEL_EGYPT, DIFFICULTY_00) == 3;
 }
 
 /**
@@ -1226,21 +1037,18 @@ s32 check_egypt_completed_in_folder_00(int foldernum)
  *
  * @return bool
  */
-u32 check_cradle_completed_any_folder(void)
+bool gamefileIsCradleCompletedAnyFolder(void)
 {
-    u32 completed;
     int folder;
 
-    folder = 0;
-    while (folder != 4)
+    for (folder = 0; folder < 4; folder++)
     {
-        completed = check_cradle_completed_in_folder(folder);
-        folder += 1;
-        if (completed != FALSE)
+        if (gamefileIsCradleCompletedForFolder(folder))
         {
             return TRUE;
         }
-    };
+    }
+
     return FALSE;
 }
 
@@ -1249,21 +1057,18 @@ u32 check_cradle_completed_any_folder(void)
  *
  * @return bool
  */
-u32 check_aztec_completed_any_folder_secret_00(void)
+bool check_aztec_completed_any_folder_secret_00(void)
 {
-    u32 completed;
     int folder;
 
-    folder = 0;
-    while (folder != 4)
+    for (folder = 0; folder < 4; folder++)
     {
-        completed = check_aztec_completed_in_folder_secret_00(folder);
-        folder += 1;
-        if (completed != FALSE)
+        if (gamefileIsAztecCompletedOnSecretOr00ForFolder(folder))
         {
             return TRUE;
         }
-    };
+    }
+
     return FALSE;
 }
 
@@ -1272,43 +1077,38 @@ u32 check_aztec_completed_any_folder_secret_00(void)
  *
  * @return bool
  */
-u32 check_egypt_completed_any_folder_00(void)
+bool gamefileIsEgyptCompletedOn00AnyFolder(void)
 {
-    u32 completed;
     int folder;
 
-    folder = 0;
-    while (folder != 4)
+    for (folder = 0; folder < 4; folder++)
     {
-        completed = check_egypt_completed_in_folder_00(folder);
-        folder += 1;
-        if (completed != FALSE)
+        if (gamefileIsEgyptCompletedOn00ForFolder(folder))
         {
             return TRUE;
         }
-    };
+    }
+
     return FALSE;
 }
 
 /**
- * Unused
+ * Get bond for folder
  *
  * @param folder
  * @return u8
  */
-u8 removed_would_have_returned_bond_for_folder_num(u32 folder)
+u8 gamefileGetBondForFolder(u32 folder)
 {
-    #ifdef ALL_BONDS
+#ifdef ALL_BONDS
     //likely code based on behavior
     if ((folder >= 0) && (folder < 4))
     {
         return save_selected_bond[folder];
     }
-    #endif
+#endif
 
-    #ifndef ALL_BONDS
     return 0;
-    #endif
 }
 
 /**
@@ -1317,7 +1117,7 @@ u8 removed_would_have_returned_bond_for_folder_num(u32 folder)
  * @param folder
  * @param bond
  */
-void set_selected_bond_to_folder(s32 folder, s32 bond)
+void gamefileSetSelectedBondTofolder(s32 folder, s32 bond)
 {
     if (folder < 0 || folder > 3)
     {
@@ -1352,7 +1152,7 @@ void sub_GAME_7F01EBFC(u32 unused)
  *
  * @param foldernum
  */
-void delete_eeprom_folder(s32 foldernum)
+void gamefileDeleteSaveForFolder(s32 foldernum)
 {
     save_data *save;
     LEVEL_SOLO_SEQUENCE stage;
@@ -1361,18 +1161,18 @@ void delete_eeprom_folder(s32 foldernum)
 
     if (foldernum >= 0 && foldernum < 4)
     {
-        save = getEEPROMforFoldernum(foldernum);
+        save = gamefileGetSaveForFoldernum(foldernum);
         if (save != 0)
         {
-            get_highest_stage_difficulty_completed_in_folder(foldernum, &stage, &difficulty);
+            gamefileGetHighestStageDifficultyCompletedForFolder(foldernum, &stage, &difficulty);
             if ((stage >= 0) && (difficulty >= 0))
             {
                 new_save = D_8002C720;
                 *save = new_save;
-                set_eeprom_to_folder_num(save, foldernum);
-                toggle_eeprom_flag_set_0x80(save, 0);
-                set_selected_bond(save, foldernum);
-                set_selected_bond_to_folder(foldernum, foldernum);
+                gamefileSetSaveFoldernum(save, foldernum);
+                gamefileSetSaveFlag_0x80(save, 0);
+                gamefileSetSelectedBond(save, foldernum);
+                gamefileSetSelectedBondTofolder(foldernum, foldernum);
                 sub_GAME_7F01D7A0(save);
             }
         }
@@ -1383,21 +1183,21 @@ void delete_eeprom_folder(s32 foldernum)
  *
  *
  * Resetting times??
- * @param foldernum
+ * @param folder
  */
-void sub_GAME_7F01ED10(u32 foldernum)
+void gamefileInitializeAllTimes(u32 folder)
 {
     save_data *save;
     LEVEL_SOLO_SEQUENCE stagenum;
     DIFFICULTY difficulty;
 
-    save = getEEPROMforFoldernum(foldernum);
+    save = gamefileGetSaveForFoldernum(folder);
 
     for (stagenum = SP_LEVEL_DAM; stagenum < SP_LEVEL_MAX; stagenum++)
     {
         for(difficulty = DIFFICULTY_AGENT; difficulty < DIFFICULTY_007; difficulty++)
         {
-            sub_GAME_7F01DCB0(save, stagenum, difficulty, 99999999);
+            gamefileCheckSaveStageDifficultyTime(save, stagenum, difficulty, 99999999);
         }
     }
 }
@@ -1420,17 +1220,17 @@ void sub_GAME_7F01EDA0(s32 foldernum)
 
     if ((foldernum >= 0) && (foldernum < 4))
     {
-        save = getEEPROMforFoldernum(foldernum);
+        save = gamefileGetSaveForFoldernum(foldernum);
         if (save != 0)
         {
-            get_highest_stage_difficulty_completed_in_folder(foldernum, &stage, &difficulty);
+            gamefileGetHighestStageDifficultyCompletedForFolder(foldernum, &stage, &difficulty);
             if (stage >= 0)
             {
                 if (difficulty >= 0) {
                     for(other = 0;other != 4; other++)
                     {
-                            if ((getEEPROMforFoldernum(other) == 0) ||
-                                (get_highest_stage_difficulty_completed_in_folder(other, &stage, &difficulty),
+                            if ((gamefileGetSaveForFoldernum(other) == 0) ||
+                                (gamefileGetHighestStageDifficultyCompletedForFolder(other, &stage, &difficulty),
                                 (stage < 0) && (difficulty < 0)))
                             {
                                 break;
@@ -1440,10 +1240,10 @@ void sub_GAME_7F01EDA0(s32 foldernum)
                     if ((s32)other < 4)
                     {
                         new_save = D_8002C780;
-                        temp_s2 = getEEPROMforFoldernum(other);
+                        temp_s2 = gamefileGetSaveForFoldernum(other);
                         new_save = *save;
-                        set_eeprom_to_folder_num(&new_save, other);
-                        set_selected_bond_to_folder(other, removed_would_have_returned_bond_for_folder_num(foldernum));
+                        gamefileSetSaveFoldernum(&new_save, other);
+                        gamefileSetSelectedBondTofolder(other, gamefileGetBondForFolder(foldernum));
                         sub_GAME_7F01E504(temp_s2, &new_save);
                     }
                 }
@@ -1453,11 +1253,11 @@ void sub_GAME_7F01EDA0(s32 foldernum)
 }
 
 /**
- * @brief
+ *
  *
  * @param save
  */
-void update_eeprom_to_current_solo_watch_settings(save_data *save)
+void gamefileSaveSettingsForFolder(save_data *save)
 {
     u32 temp;
     u16 bits;
@@ -1515,17 +1315,17 @@ void update_eeprom_to_current_solo_watch_settings(save_data *save)
 }
 
 /**
- * Get the screen ratio settings for mpgame from folder
+ * Loads settings from save file
  *
- * @param foldernum
+ * @param folder
  */
-void get_screen_ratio_settings_for_mpgame_from_folder(u32 foldernum)
+void gamefileLoadSettingsForFolder(u32 folder)
 {
     save_data *save;
     u16 padding;
     u16 options;
 
-    save = getEEPROMforFoldernum(foldernum);
+    save = gamefileGetSaveForFoldernum(folder);
     if (save)
     {
         set_mTrack2Vol((save->music_vol << 7) | (save->music_vol >> 1));
@@ -1567,19 +1367,19 @@ void get_screen_ratio_settings_for_mpgame_from_folder(u32 foldernum)
 }
 
 /**
- * Delete
+ * Resets the folder save to default
  *
- * @param foldernum
+ * @param folder
  */
-void delete_update_eeprom_file(s32 foldernum)
+void gamefileClearSavefileForFolder(s32 folder)
 {
     save_data *save;
     save_data save_to_copy;
     save_data new_save;
 
-    if (foldernum >= 0 && foldernum < 4)
+    if (folder >= 0 && folder < 4)
     {
-        save = getEEPROMforFoldernum(foldernum);
+        save = gamefileGetSaveForFoldernum(folder);
 
         save_to_copy = D_8002C7E0;
 
@@ -1589,14 +1389,14 @@ void delete_update_eeprom_file(s32 foldernum)
         }
         else
         {
-            set_eeprom_to_folder_num(&save_to_copy, foldernum);
+            gamefileSetSaveFoldernum(&save_to_copy, folder);
         }
 
         new_save = save_to_copy;
 
-        update_eeprom_to_current_solo_watch_settings(&new_save);
+        gamefileSaveSettingsForFolder(&new_save);
 
-        if (_bcmp(&new_save, &save_to_copy, 0x60) != 0)
+        if (_bcmp(&new_save, &save_to_copy, sizeof(save_data)) != 0)
         {
             sub_GAME_7F01E504(save, &new_save);
         }
@@ -1604,18 +1404,18 @@ void delete_update_eeprom_file(s32 foldernum)
 }
 
 /**
+ * Not confident in the naming of this one...
  *
- *
- * @param foldernum
+ * @param folder
  */
-void copy_eeprom_to_stack_set_folder_num(s32 foldernum)
+void gamefileCopySaveIfSelectedBondDifferent(s32 folder)
 {
     save_data *save;
     save_data new_save;
 
-    if (foldernum >= 0 && foldernum < 4)
+    if (folder >= 0 && folder < 4)
     {
-        save = getEEPROMforFoldernum(foldernum);
+        save = gamefileGetSaveForFoldernum(folder);
         new_save = D_8002C840;
 
         if (save != 0)
@@ -1624,29 +1424,29 @@ void copy_eeprom_to_stack_set_folder_num(s32 foldernum)
         }
         else
         {
-            set_eeprom_to_folder_num(&new_save, foldernum);
+            gamefileSetSaveFoldernum(&new_save, folder);
         }
 
-        if (save_selected_bond[foldernum] != get_selected_bond(&new_save))
+        if (save_selected_bond[folder] != gamefileGetSelectedBond(&new_save))
         {
-            set_selected_bond(&new_save, save_selected_bond[foldernum]);
+            gamefileSetSelectedBond(&new_save, save_selected_bond[folder]);
             sub_GAME_7F01E504(save, &new_save);
         }
     }
 }
 
 /**
- * Copy save for foldernum to out_save
+ * Copy folder save
  *
  * @param foldernum
  * @param out_save
  */
-void copy_eeprom_from_to(s32 foldernum, save_data *out_save)
+void gamefileCopySave(s32 folder, save_data *out_save)
 {
     save_data *in_save;
     save_data new_save;
 
-    in_save = getEEPROMforFoldernum(foldernum);
+    in_save = gamefileGetSaveForFoldernum(folder);
 
     if (in_save != 0)
     {
@@ -1662,40 +1462,40 @@ void copy_eeprom_from_to(s32 foldernum, save_data *out_save)
 /**
  * Copy save to RarRom replay save
  *
- * @param foldernum
+ * @param folder
  * @param save
  */
-void copy_demo_eeprom_to_ramrom_folder(u32 foldernum, save_data *save)
+void gamefileCopyDemoSaveToRamRomSave(u32 folder, save_data *save)
 {
-    if (foldernum == RAMROM_FOLDERNUM)
+    if (folder == RAMROM_FOLDERNUM)
     {
         saves[5] = *save;
     }
 }
 
 /**
- * Check is 007 mode is unlocked
+ * Check if 007 mode is unlocked
  *
- * @param foldernum
+ * @param folder
  * @return bool
  */
-s32 check_for_007_mode_unlocked(u32 foldernum)
+s32 gamefileIs007ModeUnlocked(u32 folder)
 {
     LEVEL_SOLO_SEQUENCE stage;
-    save_data* folder;
+    save_data* save;
 
-    folder = getEEPROMforFoldernum(foldernum);
+    save = gamefileGetSaveForFoldernum(folder);
 
-    if (folder != NULL)
+    if (save != NULL)
     {
-        if ((folder->flag_007 & 1))
+        if ((save->flag_007 & 1))
         {
             return TRUE;
         }
 
         for (stage = SP_LEVEL_DAM; stage < SP_LEVEL_MAX; stage++)
         {
-            if (!get_eeprom_stage_completed_for_difficulty(folder, stage, DIFFICULTY_00))
+            if (!gamefileGetSaveStageCompletedForDifficulty(save, stage, DIFFICULTY_00))
             {
                 break;
             }

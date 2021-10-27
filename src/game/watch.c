@@ -298,9 +298,6 @@ const u32 D_800577C4[] = {
 };
 
 
-struct game_options game_options_entries[];
-
-
 
 
 void nullsub_7F0A4860(void) {
@@ -376,7 +373,7 @@ void init_watch_at_start_of_stage(void)
     D_80040B4C = 0x32;
     D_80040B50 = 0x32;
     D_80040B54 = 0x32;
-    sub_GAME_7F01D500(1,0xa);
+    gamefileLoadSaveSettingsForSelectedFolder(1,0xa);
     mission_failed_or_aborted = FALSE;
 }
 #else
@@ -517,7 +514,7 @@ glabel init_watch_at_start_of_stage
 /* 0D95A0 7F0A4A70 3C018004 */  lui   $at, %hi(D_80040B50)
 /* 0D95A4 7F0A4A74 AC230B50 */  sw    $v1, %lo(D_80040B50)($at)
 /* 0D95A8 7F0A4A78 3C018004 */  lui   $at, %hi(D_80040B54)
-/* 0D95AC 7F0A4A7C 0FC07540 */  jal   sub_GAME_7F01D500
+/* 0D95AC 7F0A4A7C 0FC07540 */  jal   gamefileLoadSaveSettingsForSelectedFolder
 /* 0D95B0 7F0A4A80 AC230B54 */   sw    $v1, %lo(D_80040B54)($at)
 /* 0D95B4 7F0A4A84 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0D95B8 7F0A4A88 3C018003 */  lui   $at, %hi(mission_failed_or_aborted)

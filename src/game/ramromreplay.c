@@ -988,7 +988,7 @@ void select_ramrom_to_play(void)
 {
     u32 i=0;
 
-    while((ramrom_table[i].address != 0) && (get_highest_stage_unlocked_any_folder() >= ramrom_table[i].locked ))
+    while((ramrom_table[i].address != 0) && (gamefileGetHighestStageUnlockedAnyFolder() >= ramrom_table[i].locked ))
     {
         i++;
     }
@@ -1001,7 +1001,7 @@ GLOBAL_ASM(
 glabel select_ramrom_to_play
 /* 0F54A0 7F0C0970 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0F54A4 7F0C0974 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F54A8 7F0C0978 0FC07A66 */  jal   get_highest_stage_unlocked_any_folder
+/* 0F54A8 7F0C0978 0FC07A66 */  jal   gamefileGetHighestStageUnlockedAnyFolder
 /* 0F54AC 7F0C097C 00000000 */   nop
 /* 0F54B0 7F0C0980 3C0E8005 */  lui   $t6, %hi(ramrom_table)
 /* 0F54B4 7F0C0984 8DCE83F0 */  lw    $t6, %lo(ramrom_table)($t6)
