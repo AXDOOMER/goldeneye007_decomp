@@ -5,6 +5,6 @@
 #define RAMROM_FOLDERNUM 0x64
 
 u8 fileGetBondForFolder(u32 folder);
-void sub_GAME_7F01DF90();
+void fileValidateSaves();
 
 #endif

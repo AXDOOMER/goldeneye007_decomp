@@ -315,7 +315,7 @@ void bossMainloop(void)
 
     if (g_StageNum != LEVELID_TITLE)
     {
-        sub_GAME_7F01DF90();
+        fileValidateSaves();
         set_selected_folder_num(0);
         set_selected_difficulty(DIFFICULTY_AGENT);
         set_solo_and_ptr_briefing(g_StageNum);

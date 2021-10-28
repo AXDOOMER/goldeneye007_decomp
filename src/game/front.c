@@ -1396,7 +1396,7 @@ void init_menu00_legalscreen(void)
     something_legalscreen_constructor = get_obj_instance_controller_for_header(&PitemZ_entries[319].header);
     set_obj_instance_controller_scale(something_legalscreen_constructor, 1.0f);
     setsuboffset(something_legalscreen_constructor, &sp20);
-    sub_GAME_7F01DF90();
+    fileValidateSaves();
 }
 #else
 GLOBAL_ASM(
@@ -1446,7 +1446,7 @@ glabel init_menu00_legalscreen
 /* 03F1BC 7F00A68C 8C84A958 */  lw    $a0, %lo(something_legalscreen_constructor)($a0)
 /* 03F1C0 7F00A690 0FC1B303 */  jal   setsuboffset
 /* 03F1C4 7F00A694 27A50020 */   addiu $a1, $sp, 0x20
-/* 03F1C8 7F00A698 0FC077E4 */  jal   sub_GAME_7F01DF90
+/* 03F1C8 7F00A698 0FC077E4 */  jal   fileValidateSaves
 /* 03F1CC 7F00A69C 00000000 */   nop
 /* 03F1D0 7F00A6A0 8FBF001C */  lw    $ra, 0x1c($sp)
 /* 03F1D4 7F00A6A4 27BD0030 */  addiu $sp, $sp, 0x30
