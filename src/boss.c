@@ -15,8 +15,8 @@
 #include "debugmenu.h"
 #include "dyn.h"
 #include "game_debug.h"
-#include "gamefile.h"
-#include "gamefile2.h"
+#include "file.h"
+#include "file2.h"
 #include "indy_comms.h"
 #include "init.h"
 #include "joy.h"
@@ -210,7 +210,7 @@ void bossInitMainthreadData(void)
     null_init_main_3();
     init_player_gait_object();
     initGameData();
-    gamefileResetRamRomSave();
+    fileResetRamRomSave();
     clear_ramrom_block_buffer_heading_ptrs();
 }
 
