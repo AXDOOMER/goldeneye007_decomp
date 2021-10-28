@@ -482,7 +482,7 @@ void fileValidateSaves(void)
         // bad checksum, create a new save and replace damaged one.
         if (!checksumOK)
         {
-            smallSave NewSave = D_8002C640;
+            smallSave NewSave = blankSmallSave;
             joyChecksum = NewSave;
             fileWriteSmallSave(&joyChecksum);
         }

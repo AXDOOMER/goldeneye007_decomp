@@ -32,7 +32,7 @@ extern save_data saves[6];
 extern save_data D_8002C520;
 extern save_data D_8002C580;
 extern save_data D_8002C5E0;
-extern smallSave D_8002C640;
+extern smallSave blankSmallSave;
 extern save_data D_8002C660;
 extern save_data D_8002C6C0;
 extern save_data D_8002C720;

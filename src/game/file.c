@@ -41,7 +41,7 @@ save_data D_8002C580 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x0
 //D:8002C5E0
 save_data D_8002C5E0 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0};
 //D:8002C640
-smallSave D_8002C640 = {0, 0, 0x42};
+smallSave blankSmallSave = {0, 0, 0x42};
 
 //D:8002C660
 save_data D_8002C660 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0};
