@@ -57,7 +57,7 @@ extern PLAYER_ID array_PLAYER_IDs[4];
 
 void reset_play_data_ptrs(void);
 void init_player_data_ptrs_construct_viewports(int playercount);
-void sub_GAME_7F09B41C(void);
+void shuffle_player_ids(void);
 s32 sub_GAME_7F09B528(PLAYER_ID id);
 void set_cur_player(s32 playernum);
 s32 getPlayerCount(void);
