@@ -1,11 +1,9 @@
-#ifndef _GAMEFILE_H_
-#define _GAMEFILE_H_
+#ifndef _FILE_H_
+#define _FILE_H_
 #include "ultra64.h"
 
 #include "bondconstants.h"
 
-
-//i am not "correct", i need proper fields for times again
 typedef struct save_data
 {
   s32 chksum1;
@@ -22,10 +20,19 @@ typedef struct save_data
   u8 times[(SP_LEVEL_MAX-1) * 4];
 } save_data;
 
+// Used by fileValidateSaves
+typedef struct smallSave
+{
+    int chksum1;
+    int chksum2;
+    u8 unk[24];
+} smallSave;
+
 extern save_data saves[6];
 extern save_data D_8002C520;
 extern save_data D_8002C580;
 extern save_data D_8002C5E0;
+extern smallSave blankSmallSave;
 extern save_data D_8002C660;
 extern save_data D_8002C6C0;
 extern save_data D_8002C720;

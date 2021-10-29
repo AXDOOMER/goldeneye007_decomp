@@ -1046,73 +1046,73 @@ s32 check_if_cheat_available(s32 cheat)
     return 0;
 
   case 2:
-    return gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num),1);
+    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),1);
 
   case 3:
-    return gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num),0x13);
+    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),0x13);
 
   case 0x17:
-    return gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num),6);
+    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),6);
 
   case 0x1a:
-    return gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num),9);
+    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),9);
 
   case 10:
-    return gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num),10);
+    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),10);
 
   case 0xb:
-    return gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num),0xf);
+    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),0xf);
 
   case 0xc:
-    return gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num),2);
+    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),2);
 
   case 0xe:
-    return gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num),7);
+    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),7);
 
   case 0x1b:
-    return gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num),0xc);
+    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),0xc);
 
   case 0xf:
-    return gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num),0);
+    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),0);
 
   case 0x14:
-    return gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num),0xd);
+    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),0xd);
 
   case 0x15:
-    return gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num),0x11);
+    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),0x11);
 
   case 0x1c:
-    return gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num),0xb);
+    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),0xb);
 
   case 0x1d:
-    return gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num),4);
+    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),4);
 
   case 0x1e:
-    return gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num),3);
+    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),3);
 
   case 0x1f:
-    return gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num),0x10);
+    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),0x10);
 
   case 0x20:
-    return gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num),8);
+    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),8);
 
   case 0x21:
-    return gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num),0xe);
+    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),0xe);
 
   case 0x22:
-    return gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num),0x12);
+    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),0x12);
 
   case 0x18:
-    return gamefileGetIsCheatUnlocked(gamefileGetSaveForFoldernum(selected_folder_num),5);
+    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),5);
 
   case 0x11:
-    return gamefileIsCradleCompletedForFolder(selected_folder_num);
+    return fileIsCradleCompletedForFolder(selected_folder_num);
 
   case 0x12:
-    return gamefileIsAztecCompletedOnSecretOr00ForFolder(selected_folder_num);
+    return fileIsAztecCompletedOnSecretOr00ForFolder(selected_folder_num);
 
   case 0x13:
-    return gamefileIsEgyptCompletedOn00ForFolder(selected_folder_num);
+    return fileIsEgyptCompletedOn00ForFolder(selected_folder_num);
 
   default:
     do {
@@ -1396,7 +1396,7 @@ void init_menu00_legalscreen(void)
     something_legalscreen_constructor = get_obj_instance_controller_for_header(&PitemZ_entries[319].header);
     set_obj_instance_controller_scale(something_legalscreen_constructor, 1.0f);
     setsuboffset(something_legalscreen_constructor, &sp20);
-    sub_GAME_7F01DF90();
+    fileValidateSaves();
 }
 #else
 GLOBAL_ASM(
@@ -1446,7 +1446,7 @@ glabel init_menu00_legalscreen
 /* 03F1BC 7F00A68C 8C84A958 */  lw    $a0, %lo(something_legalscreen_constructor)($a0)
 /* 03F1C0 7F00A690 0FC1B303 */  jal   setsuboffset
 /* 03F1C4 7F00A694 27A50020 */   addiu $a1, $sp, 0x20
-/* 03F1C8 7F00A698 0FC077E4 */  jal   sub_GAME_7F01DF90
+/* 03F1C8 7F00A698 0FC077E4 */  jal   fileValidateSaves
 /* 03F1CC 7F00A69C 00000000 */   nop
 /* 03F1D0 7F00A6A0 8FBF001C */  lw    $ra, 0x1c($sp)
 /* 03F1D4 7F00A6A4 27BD0030 */  addiu $sp, $sp, 0x30
@@ -3195,7 +3195,7 @@ loop_8:
     phi_s1->unk4 = (f32) temp_a0->unkC->unk34;
     phi_s1->unk8 = (f32) temp_a0->unkC->unk38;
     disable_all_switches(temp_a0);
-    select_load_bond_picture(*phi_s0, gamefileGetBondForFolder(phi_s2));
+    select_load_bond_picture(*phi_s0, fileGetBondForFolder(phi_s2));
     set_item_visibility_in_objinstance(*phi_s0, 0xe, 1);
     set_item_visibility_in_objinstance(*phi_s0, 0xd, 1);
     temp_s2 = phi_s2 + 1;
@@ -3265,7 +3265,7 @@ loop_8:
         {
             if (*&folder_selected_for_deletion_choice == 0)
             {
-                gamefileDeleteSaveForFolder(folder_selected_for_deletion, 0x76, 0);
+                fileDeleteSaveForFolder(folder_selected_for_deletion, 0x76, 0);
                 sndPlaySfx(g_musicSfxBufferPtr, GUN_M60AMMGUN_3_SFX, 0);
             }
             else
@@ -3513,7 +3513,7 @@ glabel interface_menu05_fileselect
 /* 0408AC 7F00BD7C C5EA0038 */  lwc1  $f10, 0x38($t7)
 /* 0408B0 7F00BD80 0FC02DC9 */  jal   disable_all_switches
 /* 0408B4 7F00BD84 E62A0008 */   swc1  $f10, 8($s1)
-/* 0408B8 7F00BD88 0FC07AF0 */  jal   gamefileGetBondForFolder
+/* 0408B8 7F00BD88 0FC07AF0 */  jal   fileGetBondForFolder
 /* 0408BC 7F00BD8C 02402025 */   move  $a0, $s2
 /* 0408C0 7F00BD90 8E040000 */  lw    $a0, ($s0)
 /* 0408C4 7F00BD94 0FC02E02 */  jal   select_load_bond_picture
@@ -3643,7 +3643,7 @@ glabel interface_menu05_fileselect
 /* 040A94 7F00BF64 24050076 */  li    $a1, 118
 /* 040A98 7F00BF68 17000009 */  bnez  $t8, .L7F00BF90
 /* 040A9C 7F00BF6C 00003025 */   move  $a2, $zero
-/* 040AA0 7F00BF70 0FC07B01 */  jal   gamefileDeleteSaveForFolder
+/* 040AA0 7F00BF70 0FC07B01 */  jal   fileDeleteSaveForFolder
 /* 040AA4 7F00BF74 8C84A91C */   lw    $a0, %lo(folder_selected_for_deletion)($a0)
 /* 040AA8 7F00BF78 8E640000 */  lw    $a0, ($s3)
 /* 040AAC 7F00BF7C 24050076 */  li    $a1, 118
@@ -3721,7 +3721,7 @@ glabel interface_menu05_fileselect
 /* 040BB8 7F00C088 27A50060 */  addiu $a1, $sp, 0x60
 /* 040BBC 7F00C08C 4502003E */  bc1fl .L7F00C188
 /* 040BC0 7F00C090 26520001 */   addiu $s2, $s2, 1
-/* 040BC4 7F00C094 0FC07A1D */  jal   gamefileGetHighestStageDifficultyCompletedForFolder
+/* 040BC4 7F00C094 0FC07A1D */  jal   fileGetHighestStageDifficultyCompletedForFolder
 /* 040BC8 7F00C098 27A6005C */   addiu $a2, $sp, 0x5c
 /* 040BCC 7F00C09C 00002025 */  move  $a0, $zero
 /* 040BD0 7F00C0A0 0C0030EB */  jal   joyGetButtonsPressedThisFrame
@@ -4156,7 +4156,7 @@ loop_7:
     }
     else
     {
-        gamefileGetHighestStageDifficultyCompletedForFolder(sp1B4, &spF0, &spEC);
+        fileGetHighestStageDifficultyCompletedForFolder(sp1B4, &spF0, &spEC);
         if (spF0 >= 0)
         {
             if (spEC >= 0)
@@ -4747,7 +4747,7 @@ glabel constructor_menu05_fileselect
 /* 041588 7F00CA58 100000AA */  b     .L7F00CD04
 /* 04158C 7F00CA5C AFA201B8 */   sw    $v0, 0x1b8($sp)
 .L7F00CA60:
-/* 041590 7F00CA60 0FC07A1D */  jal   gamefileGetHighestStageDifficultyCompletedForFolder
+/* 041590 7F00CA60 0FC07A1D */  jal   fileGetHighestStageDifficultyCompletedForFolder
 /* 041594 7F00CA64 27A600EC */   addiu $a2, $sp, 0xec
 /* 041598 7F00CA68 8FA200F0 */  lw    $v0, 0xf0($sp)
 /* 04159C 7F00CA6C 8FA400EC */  lw    $a0, 0xec($sp)
@@ -5315,7 +5315,7 @@ void interface_menu06_modesel(void)
     viSetUseZBuf(FALSE);
 
     disable_all_switches(ptr_folder_object_instance);
-    select_load_bond_picture(ptr_folder_object_instance, gamefileGetBondForFolder(selected_folder_num));
+    select_load_bond_picture(ptr_folder_object_instance, fileGetBondForFolder(selected_folder_num));
     set_item_visibility_in_objinstance(ptr_folder_object_instance, 0, TRUE);
     set_item_visibility_in_objinstance(ptr_folder_object_instance, 1, TRUE);
     set_item_visibility_in_objinstance(ptr_folder_object_instance, 3, TRUE);
@@ -6400,7 +6400,7 @@ u32 check_if_stage_completed_on_difficulty(int stage, DIFFICULTY difficulty) {
     completed = FALSE;
   }
   else {
-    completed = gamefileIsStageUnlockedAtDifficulty(selected_folder_num,mission_folder_setup_entries[stage].mission_num,difficulty);
+    completed = fileIsStageUnlockedAtDifficulty(selected_folder_num,mission_folder_setup_entries[stage].mission_num,difficulty);
   }
   return completed;
 }
@@ -6420,7 +6420,7 @@ glabel check_if_stage_completed_on_difficulty
 /* 042860 7F00DD30 00A03025 */   move  $a2, $a1
 /* 042864 7F00DD34 3C048003 */  lui   $a0, %hi(selected_folder_num)
 /* 042868 7F00DD38 8C84A8E8 */  lw    $a0, %lo(selected_folder_num)($a0)
-/* 04286C 7F00DD3C 0FC078B0 */  jal   gamefileIsStageUnlockedAtDifficulty
+/* 04286C 7F00DD3C 0FC078B0 */  jal   fileIsStageUnlockedAtDifficulty
 /* 042870 7F00DD40 00E02825 */   move  $a1, $a3
 /* 042874 7F00DD44 10000003 */  b     .L7F00DD54
 /* 042878 7F00DD48 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -6450,7 +6450,7 @@ s32 get_highest_unlocked_difficulty_for_level(s32 arg0)
     temp_ret = pull_and_display_text_for_folder_a0();
     if ((0x80030000 + (((temp_ret * 8) - temp_ret) * 4))->unk-5414 >= 0)
     {
-        if ((gamefileIs007ModeUnlocked(selected_folder_num) != 0) || (get_debug_007_unlock_flag() != 0))
+        if (( fileIs007ModeUnlocked(selected_folder_num) != 0) || (get_debug_007_unlock_flag() != 0))
         {
             phi_s1 = 3;
         }
@@ -6462,7 +6462,7 @@ s32 get_highest_unlocked_difficulty_for_level(s32 arg0)
         {
             phi_s0 = phi_s1;
 loop_6:
-            temp_ret_2 = gamefileIsStageUnlockedAtDifficulty(selected_folder_num, arg0, phi_s0);
+            temp_ret_2 = fileIsStageUnlockedAtDifficulty(selected_folder_num, arg0, phi_s0);
             if (append_cheat_sp == 0)
             {
                 if (temp_ret_2 != 0)
@@ -6510,7 +6510,7 @@ glabel get_highest_unlocked_difficulty_for_level
 /* 0428D0 7F00DDA0 2694A8E8 */  addiu $s4, %lo(selected_folder_num) # addiu $s4, $s4, -0x5718
 /* 0428D4 7F00DDA4 05E00021 */  bltz  $t7, .L7F00DE2C
 /* 0428D8 7F00DDA8 24110002 */   li    $s1, 2
-/* 0428DC 7F00DDAC 0FC07D28 */  jal   gamefileIs007ModeUnlocked
+/* 0428DC 7F00DDAC 0FC07D28 */  jal   fileIs007ModeUnlocked
 /* 0428E0 7F00DDB0 8E840000 */   lw    $a0, ($s4)
 /* 0428E4 7F00DDB4 54400006 */  bnezl $v0, .L7F00DDD0
 /* 0428E8 7F00DDB8 24110003 */   li    $s1, 3
@@ -6528,7 +6528,7 @@ glabel get_highest_unlocked_difficulty_for_level
 /* 042914 7F00DDE4 8E840000 */  lw    $a0, ($s4)
 .L7F00DDE8:
 /* 042918 7F00DDE8 02602825 */  move  $a1, $s3
-/* 04291C 7F00DDEC 0FC078B0 */  jal   gamefileIsStageUnlockedAtDifficulty
+/* 04291C 7F00DDEC 0FC078B0 */  jal   fileIsStageUnlockedAtDifficulty
 /* 042920 7F00DDF0 02003025 */   move  $a2, $s0
 /* 042924 7F00DDF4 8E380000 */  lw    $t8, ($s1)
 /* 042928 7F00DDF8 17000005 */  bnez  $t8, .L7F00DE10
@@ -10980,7 +10980,7 @@ s32 check_if_mp_stage_unlocked(s32 stage)
     {
         return TRUE;
     }
-    if (gamefileIsStageUnlockedAtDifficulty(selected_folder_num, multi_stage_setups[stage].unlock_after, DIFFICULTY_AGENT))
+    if ( fileIsStageUnlockedAtDifficulty(selected_folder_num, multi_stage_setups[stage].unlock_after, DIFFICULTY_AGENT))
     {
         return TRUE;
     }
@@ -12490,7 +12490,7 @@ loop_1:
     }
     if (num_chars_selectable_mp != 0x40)
     {
-        if (gamefileIsStageUnlockedAtDifficulty(selected_folder_num, 0x11, 0) == 3)
+        if ( fileIsStageUnlockedAtDifficulty(selected_folder_num, 0x11, 0) == 3)
         {
             num_chars_selectable_mp = 0x21;
         }
@@ -12633,7 +12633,7 @@ glabel init_menu0f_mpcharsel
 /* 046888 7F011D58 11210023 */  beq   $t1, $at, .L7F011DE8
 /* 04688C 7F011D5C 24050011 */   li    $a1, 17
 /* 046890 7F011D60 8C84A8E8 */  lw    $a0, %lo(selected_folder_num)($a0)
-/* 046894 7F011D64 0FC078B0 */  jal   gamefileIsStageUnlockedAtDifficulty
+/* 046894 7F011D64 0FC078B0 */  jal   fileIsStageUnlockedAtDifficulty
 /* 046898 7F011D68 00003025 */   move  $a2, $zero
 /* 04689C 7F011D6C 24010003 */  li    $at, 3
 /* 0468A0 7F011D70 14410004 */  bne   $v0, $at, .L7F011D84
@@ -20691,7 +20691,7 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
     y = 0xA7;
     DL = write_text_at_abs_coord(DL, &x, &y, text, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
 
-    besttime = gamefileGetSaveStageDifficultyTime(gamefileGetSaveForFoldernum(selected_folder_num), mission_folder_setup_entries[briefingpage].mission_num, selected_difficulty);
+    besttime = fileGetSaveStageDifficultyTime( fileGetSaveForFoldernum(selected_folder_num), mission_folder_setup_entries[briefingpage].mission_num, selected_difficulty);
     if ((besttime == 0) || (!(besttime < 0x3FF))) {
         besttime = -1;
     }
@@ -21001,7 +21001,7 @@ glabel constructor_menu0D_missioncomplete
 /* 04B734 7F016C04 AFB90010 */   sw    $t9, 0x10($sp)
 /* 04B738 7F016C08 3C048003 */  lui   $a0, %hi(selected_folder_num)
 /* 04B73C 7F016C0C 00408825 */  move  $s1, $v0
-/* 04B740 7F016C10 0FC07771 */  jal   gamefileGetSaveForFoldernum
+/* 04B740 7F016C10 0FC07771 */  jal   fileGetSaveForFoldernum
 /* 04B744 7F016C14 8C84A8E8 */   lw    $a0, %lo(selected_folder_num)($a0)
 /* 04B748 7F016C18 3C0C8003 */  lui   $t4, %hi(briefingpage)
 /* 04B74C 7F016C1C 8D8CA8F8 */  lw    $t4, %lo(briefingpage)($t4)
@@ -21014,7 +21014,7 @@ glabel constructor_menu0D_missioncomplete
 /* 04B768 7F016C38 3C068003 */  lui   $a2, %hi(selected_difficulty)
 /* 04B76C 7F016C3C 8CC6A8FC */  lw    $a2, %lo(selected_difficulty)($a2)
 /* 04B770 7F016C40 8DC50014 */  lw    $a1, 0x14($t6)
-/* 04B774 7F016C44 0FC07664 */  jal   gamefileGetSaveStageDifficultyTime
+/* 04B774 7F016C44 0FC07664 */  jal   fileGetSaveStageDifficultyTime
 /* 04B778 7F016C48 00402025 */   move  $a0, $v0
 /* 04B77C 7F016C4C 10400004 */  beqz  $v0, .L7F016C60
 /* 04B780 7F016C50 00404825 */   move  $t1, $v0
@@ -23291,13 +23291,13 @@ void init_menu18_displaycast(void)
       uVar3 = randomGetNext();
       iVar6 = local_8c[uVar3 % 10];
     }
-    if ((iVar6 == 0xbe) && (lVar1 = gamefileIsCradleCompletedAnyFolder(), lVar1 == 0)) {
+    if ((iVar6 == 0xbe) && (lVar1 = fileIsCradleCompletedAnyFolder(), lVar1 == 0)) {
       iVar6 = 0xbf;
     }
     if ((iVar6 == 0xbb) && (BVar5 = check_aztec_completed_any_folder_secret_00(), BVar5 == FALSE)) {
       iVar6 = 0xbf;
     }
-    if ((iVar6 == 0xd0) && (BVar5 = gamefileIsEgyptCompletedOn00AnyFolder(), BVar5 == FALSE)) {
+    if ((iVar6 == 0xd0) && (BVar5 = fileIsEgyptCompletedOn00AnyFolder(), BVar5 == FALSE)) {
       iVar6 = 0xbf;
     }
     objheader = (ModelFileHeader *)PitemZ_entries[iVar6].header;
@@ -23697,7 +23697,7 @@ glabel init_menu18_displaycast
 /* 04D644 7F018B14 240100BE */  li    $at, 190
 /* 04D648 7F018B18 54610007 */  bnel  $v1, $at, .L7F018B38
 /* 04D64C 7F018B1C 240100BB */   li    $at, 187
-/* 04D650 7F018B20 0FC07AB4 */  jal   gamefileIsCradleCompletedAnyFolder
+/* 04D650 7F018B20 0FC07AB4 */  jal   fileIsCradleCompletedAnyFolder
 /* 04D654 7F018B24 AFA30084 */   sw    $v1, 0x84($sp)
 /* 04D658 7F018B28 14400002 */  bnez  $v0, .L7F018B34
 /* 04D65C 7F018B2C 8FA30084 */   lw    $v1, 0x84($sp)
@@ -23717,7 +23717,7 @@ glabel init_menu18_displaycast
 .L7F018B58:
 /* 04D688 7F018B58 54610007 */  bnel  $v1, $at, .L7F018B78
 /* 04D68C 7F018B5C 00037880 */   sll   $t7, $v1, 2
-/* 04D690 7F018B60 0FC07ADC */  jal   gamefileIsEgyptCompletedOn00AnyFolder
+/* 04D690 7F018B60 0FC07ADC */  jal   fileIsEgyptCompletedOn00AnyFolder
 /* 04D694 7F018B64 AFA30084 */   sw    $v1, 0x84($sp)
 /* 04D698 7F018B68 14400002 */  bnez  $v0, .L7F018B74
 /* 04D69C 7F018B6C 8FA30084 */   lw    $v1, 0x84($sp)
@@ -24293,7 +24293,7 @@ glabel init_menu18_displaycast
 /* 04B57C 7F018B8C 240100BE */  li    $at, 190
 /* 04B580 7F018B90 54610007 */  bnel  $v1, $at, .L7F018BB0
 /* 04B584 7F018B94 240100BB */   li    $at, 187
-/* 04B588 7F018B98 0FC07A4C */  jal   gamefileIsCradleCompletedAnyFolder
+/* 04B588 7F018B98 0FC07A4C */  jal   fileIsCradleCompletedAnyFolder
 /* 04B58C 7F018B9C AFA30084 */   sw    $v1, 0x84($sp)
 /* 04B590 7F018BA0 14400002 */  bnez  $v0, .L7F018BAC
 /* 04B594 7F018BA4 8FA30084 */   lw    $v1, 0x84($sp)
@@ -24313,7 +24313,7 @@ glabel init_menu18_displaycast
 .L7F018BD0:
 /* 04B5C0 7F018BD0 54610007 */  bnel  $v1, $at, .L7F018BF0
 /* 04B5C4 7F018BD4 00037880 */   sll   $t7, $v1, 2
-/* 04B5C8 7F018BD8 0FC07A74 */  jal   gamefileIsEgyptCompletedOn00AnyFolder
+/* 04B5C8 7F018BD8 0FC07A74 */  jal   fileIsEgyptCompletedOn00AnyFolder
 /* 04B5CC 7F018BDC AFA30084 */   sw    $v1, 0x84($sp)
 /* 04B5D0 7F018BE0 14400002 */  bnez  $v0, .L7F018BEC
 /* 04B5D4 7F018BE4 8FA30084 */   lw    $v1, 0x84($sp)
@@ -24609,8 +24609,8 @@ void interface_menu18_displaycast(void)
             ((body == BODY_Moonraker_Elite_2_Female) && (!check_aztec_completed_any_folder_secret_00())) ||
             ((body == BODY_Mayday) && (!check_aztec_completed_any_folder_secret_00()) && (randomGetNext() % 0x2710U)) ||
             ((body == BODY_Jaws) && (!check_aztec_completed_any_folder_secret_00()) && (randomGetNext() % 0x2710U)) ||
-            ((body == BODY_Oddjob) && (!gamefileIsEgyptCompletedOn00AnyFolder()) && (randomGetNext() % 0x2710U)) ||
-            ((body == BODY_Baron_Samedi) && (!gamefileIsEgyptCompletedOn00AnyFolder()) && (randomGetNext() % 0x2710U)))
+            ((body == BODY_Oddjob) && (! fileIsEgyptCompletedOn00AnyFolder()) && (randomGetNext() % 0x2710U)) ||
+            ((body == BODY_Baron_Samedi) && (! fileIsEgyptCompletedOn00AnyFolder()) && (randomGetNext() % 0x2710U)))
         {
             intro_character_index++;
             //goto loop_2;
@@ -24807,7 +24807,7 @@ glabel interface_menu18_displaycast
 /* 04DCE0 7F0191B0 8D2A0000 */  lw    $t2, ($t1)
 /* 04DCE4 7F0191B4 55410013 */  bnel  $t2, $at, .L7F019204
 /* 04DCE8 7F0191B8 8E0E0000 */   lw    $t6, ($s0)
-/* 04DCEC 7F0191BC 0FC07ADC */  jal   gamefileIsEgyptCompletedOn00AnyFolder
+/* 04DCEC 7F0191BC 0FC07ADC */  jal   fileIsEgyptCompletedOn00AnyFolder
 /* 04DCF0 7F0191C0 00000000 */   nop
 /* 04DCF4 7F0191C4 5440000F */  bnezl $v0, .L7F019204
 /* 04DCF8 7F0191C8 8E0E0000 */   lw    $t6, ($s0)
@@ -24834,7 +24834,7 @@ glabel interface_menu18_displaycast
 /* 04DD44 7F019214 8F190000 */  lw    $t9, ($t8)
 /* 04DD48 7F019218 57210013 */  bnel  $t9, $at, .L7F019268
 /* 04DD4C 7F01921C 8E030000 */   lw    $v1, ($s0)
-/* 04DD50 7F019220 0FC07ADC */  jal   gamefileIsEgyptCompletedOn00AnyFolder
+/* 04DD50 7F019220 0FC07ADC */  jal   fileIsEgyptCompletedOn00AnyFolder
 /* 04DD54 7F019224 00000000 */   nop
 /* 04DD58 7F019228 5440000F */  bnezl $v0, .L7F019268
 /* 04DD5C 7F01922C 8E030000 */   lw    $v1, ($s0)

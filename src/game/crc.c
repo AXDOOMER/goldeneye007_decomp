@@ -1,5 +1,5 @@
 #include "ultra64.h"
-#include "gamefile.h"
+#include "file.h"
 
 /**
  * Get CRC of bytes from addressA to addressB and save to retval.chksum1 and retval.chksum2
@@ -9,7 +9,7 @@
  * @param retval
  * @return * void
  */
-void gamefileGenerateCRC(u8 *addressA, u8 *addressB, save_data *retval)
+void fileGenerateCRC(u8 *addressA, u8 *addressB, save_data *retval)
 {
     u8 *byte;
     s32 shift      = 0; // Shift value
