@@ -2476,7 +2476,7 @@ glabel sub_GAME_7F09B398
 
 
 
-void sub_GAME_7F09B41C(void) {
+void shuffle_player_ids(void) {
     s32 i;
     u32 random;
     PLAYER_ID temp;

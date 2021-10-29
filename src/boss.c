@@ -485,7 +485,7 @@ void bossMainloop(void)
                             }
 
                             manage_mp_game();
-                            sub_GAME_7F09B41C();
+                            shuffle_player_ids();
 
                             if (g_StageNum != LEVELID_TITLE)
                             {
