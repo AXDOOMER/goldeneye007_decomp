@@ -491,7 +491,7 @@ void bossMainloop(void)
                             {
                                 for (i = 0; i < getPlayerCount(); i++)
                                 {
-                                    set_cur_player(sub_GAME_7F09B528(i));
+                                    set_cur_player(get_nth_player_from_shuffled(i));
 
                                     localPlayer = currentplayer;
                                     viSetViewSize(localPlayer->viewx, localPlayer->viewy);

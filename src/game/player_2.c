@@ -2569,7 +2569,7 @@ glabel sub_GAME_7F09B4D8
 
 
 
-s32 sub_GAME_7F09B528(PLAYER_ID id)
+s32 get_nth_player_from_shuffled(PLAYER_ID id)
 {
     s32 i;
 

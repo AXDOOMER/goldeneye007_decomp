@@ -1500,7 +1500,7 @@ Gfx* lvRender(Gfx* DL)
 
         for(i = 0;i < pcount;i++)
         {
-                set_cur_player(sub_GAME_7F09B528(i));
+                set_cur_player(get_nth_player_from_shuffled(i));
                 viSetViewSize(currentplayer->viewx, currentplayer->viewy);
                 viSetViewPosition(currentplayer->viewleft, currentplayer->viewtop);
                 viSetFovY(currentplayer->fovy);
@@ -1754,7 +1754,7 @@ glabel lvRender
 /* 0F2FFC 7F0BE4CC 3C108008 */  lui   $s0, %hi(currentplayer)
 /* 0F3000 7F0BE4D0 2610A0B0 */  addiu $s0, %lo(currentplayer) # addiu $s0, $s0, -0x5f50
 .L7F0BE4D4:
-/* 0F3004 7F0BE4D4 0FC26D4A */  jal   sub_GAME_7F09B528
+/* 0F3004 7F0BE4D4 0FC26D4A */  jal   get_nth_player_from_shuffled
 /* 0F3008 7F0BE4D8 02202025 */   move  $a0, $s1
 /* 0F300C 7F0BE4DC 0FC26C43 */  jal   set_cur_player
 /* 0F3010 7F0BE4E0 00402025 */   move  $a0, $v0
@@ -2178,7 +2178,7 @@ glabel lvRender
 /* 0F3BFC 7F0BF08C 3C108008 */  lui   $s0, %hi(currentplayer) # $s0, 0x8008
 /* 0F3C00 7F0BF090 2610A120 */  addiu $s0, %lo(currentplayer) # addiu $s0, $s0, -0x5ee0
 .Ljp7F0BF094:
-/* 0F3C04 7F0BF094 0FC27032 */  jal   sub_GAME_7F09B528
+/* 0F3C04 7F0BF094 0FC27032 */  jal   get_nth_player_from_shuffled
 /* 0F3C08 7F0BF098 02202025 */   move  $a0, $s1
 /* 0F3C0C 7F0BF09C 0FC26F2B */  jal   set_cur_player
 /* 0F3C10 7F0BF0A0 00402025 */   move  $a0, $v0
@@ -2612,7 +2612,7 @@ glabel lvRender
 /* 0F2FFC 7F0BE4CC 3C108008 */  lui   $s0, %hi(currentplayer)
 /* 0F3000 7F0BE4D0 2610A0B0 */  addiu $s0, %lo(currentplayer) # addiu $s0, $s0, -0x5f50
 .L7F0BE4D4:
-/* 0F3004 7F0BE4D4 0FC26D4A */  jal   sub_GAME_7F09B528
+/* 0F3004 7F0BE4D4 0FC26D4A */  jal   get_nth_player_from_shuffled
 /* 0F3008 7F0BE4D8 02202025 */   move  $a0, $s1
 /* 0F300C 7F0BE4DC 0FC26C43 */  jal   set_cur_player
 /* 0F3010 7F0BE4E0 00402025 */   move  $a0, $v0
