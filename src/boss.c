@@ -15,8 +15,8 @@
 #include "debugmenu.h"
 #include "dyn.h"
 #include "game_debug.h"
-#include "gamefile.h"
-#include "gamefile2.h"
+#include "file.h"
+#include "file2.h"
 #include "indy_comms.h"
 #include "init.h"
 #include "joy.h"
@@ -210,7 +210,7 @@ void bossInitMainthreadData(void)
     null_init_main_3();
     init_player_gait_object();
     initGameData();
-    reset_ramrom_folder_to_default();
+    fileResetRamRomSave();
     clear_ramrom_block_buffer_heading_ptrs();
 }
 
@@ -315,7 +315,7 @@ void bossMainloop(void)
 
     if (g_StageNum != LEVELID_TITLE)
     {
-        sub_GAME_7F01DF90();
+        fileValidateSaves();
         set_selected_folder_num(0);
         set_selected_difficulty(DIFFICULTY_AGENT);
         set_solo_and_ptr_briefing(g_StageNum);
@@ -485,13 +485,13 @@ void bossMainloop(void)
                             }
 
                             manage_mp_game();
-                            sub_GAME_7F09B41C();
+                            shuffle_player_ids();
 
                             if (g_StageNum != LEVELID_TITLE)
                             {
                                 for (i = 0; i < getPlayerCount(); i++)
                                 {
-                                    set_cur_player(sub_GAME_7F09B528(i));
+                                    set_cur_player(get_nth_player_from_shuffled(i));
 
                                     localPlayer = currentplayer;
                                     viSetViewSize(localPlayer->viewx, localPlayer->viewy);

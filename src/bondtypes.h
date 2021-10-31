@@ -8,6 +8,8 @@
 #define _mkshort(a, b) ((a << 8) | (b & 0xff))
 #define _mkword(a, b) ((a << 16) | (b & 0xffff))
 
+typedef s32 bool;
+
 // This hacky structure allows coords to be accessed using
 // coord->x, coord->y and coord->z, but also as
 // coord->f[0], coord->f[1] and coord->f[2].
@@ -323,12 +325,12 @@ typedef struct ObjectRecord
 {
     ObjHeaderData head;
     s16 obj;
-    s16 pad;        /* ID 0x6 
+    s16 pad;        /* ID 0x6
                     0000+ or 2710+ (10,000+) to use standard presets.
                     -1 to -256 to set this object
                         inside the previous object.(solo only)
                     if control nibble 4x is set at 0xB,
-                    then this number matches the ID of a guard 
+                    then this number matches the ID of a guard
                     */
     u32 flags;      /*0x8
                     8x    indicates right-handed gun assignment
@@ -347,18 +349,18 @@ typedef struct ObjectRecord
                     2x    open backwards
                     1x    same as 0 as far as I can tell
                     x8    always open away from the player regardless what side you're on
-                    x4    
+                    x4
                     x2    player can't activate door (spawn block or 16 type activation)
                     x1
                     0x9:
-                    8x    
+                    8x
                     4x    immobile
                     2x    (unknown) Silo DAT tape
                     1x    uncollectable
-                    x8    
+                    x8
                     x4    allows object pickup (chr_name objects only)
                     x2    invincibility
-                    x1    
+                    x1
                     0xA:
                     8x    indicates contained within another object (forward or back # objects = preset value)
                     4x    indicates object does not use normal presets but is assigned to guard #preset
@@ -401,7 +403,7 @@ typedef struct ObjectRecord
                     2x    immune to explosions (only gunfire damages object)
                     1x    bulletproof
                     x8    invisible! can't shoot, but can hit with rockets, bugs, etc.  not counted as a hit
-                    x4 
+                    x4
                     x2    (unknown) streets buildings
                     x1
                     0xE:
@@ -445,13 +447,13 @@ typedef struct ObjectRecord
     f32 runtime_x_pos;
     f32 runtime_y_pos;
     f32 runtime_z_pos;
-    int runtime_bitflags; /*0x64* 
-                            10000000    
+    int runtime_bitflags; /*0x64*
+                            10000000
                             00060000    owner (0-3); used to attribute kills to players
                             00004000    activated
                             00000200    only set with disabled or destroyed doors
                             00000080    depositted (thrown)
-                            00000004    removes object when set 
+                            00000004    removes object when set
                             */
     int ptr_allocated_collisiondata_block;
     int field_6C;
@@ -478,7 +480,7 @@ typedef struct ObjectRecord
 ******/
 // objtype 1
 typedef struct DoorRecord
-{ 
+{
     ObjectRecord base;
    /* GE Door maybe different to PD?
     80:	linked with other doors (4 bytes)
@@ -511,12 +513,12 @@ typedef struct DoorRecord
     B0:	runtime - (float)
     B4:	runtime - (float) current distance travelled
     B8:	runtime - (float)
-    BC:	runtime - 
-    BD:	runtime - 
-    C8:	runtime - 
+    BC:	runtime -
+    BD:	runtime -
+    C8:	runtime -
     CC:	runtime - p->vertex buffer when door does not clear
-    F0:	runtime - 
-    F4:	runtime - 
+    F0:	runtime -
+    F4:	runtime -
     F8:	runtime - */
 
     s32 linkedDoorOffset;    /*0x80*/
@@ -553,7 +555,7 @@ typedef struct DoorRecord
 
     /**
      * open technique (2+2 bytes).
-     * 
+     *
      *  0000 0000	slider (left/right) clears the door away as it slides, stopping visual problems when opening into a wall
      *  0004 0000	slider (left/right)
      *  0000 0004	shutter (up/down) clears the door as it slides
@@ -561,7 +563,7 @@ typedef struct DoorRecord
      *  0000 0005	special (swinging) defined here
      *  0000 0006	special (eye) defined here in block
      *  0000 0007	special (iris) defined here
-     * 
+     *
      * Offset 0x98.
      */
     u16 doorFlags;
@@ -1029,7 +1031,7 @@ typedef struct CreditsEntry_s {
     u16 Alignment1;
 
     s16 Position2;
-    
+
     /**
      * See CREDITS_ALIGNMENT.
     */

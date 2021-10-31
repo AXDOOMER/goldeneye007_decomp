@@ -1,6 +1,6 @@
 #include "ultra64.h"
-#include "game/gamefile.h"
-#include "game/gamefile2.h"
+#include "game/file.h"
+#include "game/file2.h"
 #include "game/front.h"
 
 /* EEPROM masks for in-game settings */
@@ -41,17 +41,7 @@ save_data D_8002C580 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x0
 //D:8002C5E0
 save_data D_8002C5E0 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0};
 //D:8002C640
-u32 D_8002C640 = 0x00000000;
-u32 D_8002C644 = 0x00000000;
-u32 flt_8002C648 = 0x42000000;
-u32 dword_8002C64C = 0x00000000;
-u32 dword_8002C650 = 0x00000000;
-u32 dword_8002C654 = 0x00000000;
-u32 dword_8002C658 = 0x00000000;
-u32 dword_8002C65C = 0x00000000;
-
-
-
+smallSave blankSmallSave = {0, 0, 0x42};
 
 //D:8002C660
 save_data D_8002C660 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0};
@@ -68,6 +58,7 @@ save_data D_8002C7E0 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x0
 save_data D_8002C840 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 //D:8002C8A0
 save_data blank_eeprom = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
 
 
 f32 get_007_reaction_speed(void)
@@ -109,10 +100,10 @@ void end_of_mission_briefing(void)
     if ((-1 < briefingpage) && selected_difficulty != DIFFICULTY_007 && append_cheat_sp == FALSE)
     {
         var1 = solo_target_time_array[mission_folder_setup_entries[briefingpage].mission_num][selected_difficulty];
-        unlock_stage_in_folder_on_difficulty(selected_folder_num, mission_folder_setup_entries[briefingpage].mission_num, selected_difficulty, getMissiontimer() / 0x3c);
+        fileUnlockStageInFolderAtDifficulty(selected_folder_num, mission_folder_setup_entries[briefingpage].mission_num, selected_difficulty, getMissiontimer() / 0x3c);
         if ((getMissiontimer() / GAME_TICKRATE) <= var1)
         {
-            if (!check_if_cheat_unlocked(getEEPROMforFoldernum(selected_folder_num), mission_folder_setup_entries[briefingpage].mission_num))
+            if (!fileGetIsCheatUnlocked(fileGetSaveForFoldernum(selected_folder_num), mission_folder_setup_entries[briefingpage].mission_num))
             {
                 sub_GAME_7F01E760(selected_folder_num, mission_folder_setup_entries[briefingpage].mission_num);
                 g_newcheatunlocked = TRUE;
@@ -125,24 +116,24 @@ void end_of_mission_briefing(void)
     }
 }
 
-void sub_GAME_7F01D500(void)
+void fileLoadSaveSettingsForSelectedFolder(void)
 {
-  get_screen_ratio_settings_for_mpgame_from_folder(selected_folder_num);
+  fileLoadSettingsForFolder(selected_folder_num);
 }
 
 void deleteCurrentSelectedFolder(void)
 {
-  delete_update_eeprom_file(selected_folder_num);
+  fileClearSavefileForFolder(selected_folder_num);
 }
 
 void copyCurrentEEPROMtoStack(void)
 {
-  copy_eeprom_to_stack_set_folder_num(selected_folder_num);
+  fileCopySaveIfSelectedBondDifferent(selected_folder_num);
 }
 
 u8 getSelectedFolderBond(void)
 {
-  return removed_would_have_returned_bond_for_folder_num(selected_folder_num);
+  return fileGetBondForFolder(selected_folder_num);
 }
 
 void set_selected_folder_num(u32 foldernum)
@@ -179,7 +170,7 @@ void set_solo_and_ptr_briefing(LEVELID stage)
 
 void sub_GAME_7F01D61C(struct save_file *savefile)
 {
-    copy_eeprom_from_to(selected_folder_num,savefile);
+    fileCopySave(selected_folder_num,savefile);
 }
 
 
@@ -193,7 +184,7 @@ void set_selected_foldernum_and_copy_demo_eeprom(struct save_file *eeprom)
   new_var = new_var2;
   selected_folder_num_copy = (s32) selected_folder_num;
   selected_folder_num = new_var;
-  copy_demo_eeprom_to_ramrom_folder(new_var, eeprom);
+  fileCopyDemoSaveToRamRomSave(new_var, eeprom);
 }
 
 
@@ -205,3 +196,4 @@ void store_favorite_weapon_current_player(u32 right,u32 left)
   array_favweapon[playerNum][RIGHT_HAND] = right;
   array_favweapon[playerNum][LEFT_HAND] = left;
 }
+
