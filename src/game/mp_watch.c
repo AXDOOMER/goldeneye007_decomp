@@ -1462,14 +1462,12 @@ glabel sub_GAME_7F0C2E80
 #endif
 
 
-Gfx *display_text_for_playerdata_on_MP_menu(Gfx *gdl, s32 x, s32 y, u16* arg3, u32 arg4) {
+Gfx *display_text_for_playerdata_on_MP_menu(Gfx *gdl, s32 x, s32 y, u16* arg3, TEXTCOLORS text_color) {
     
     s32 sp5C;
     s32 sp58;
     s32 sp54;
     s32 sp50;
-    
-
     s32 unused;
     u16 *sp48;
     s16 viX;
@@ -1482,37 +1480,43 @@ Gfx *display_text_for_playerdata_on_MP_menu(Gfx *gdl, s32 x, s32 y, u16* arg3, u
     sp5C = x - (sp54 >> 1);
     sp58 = y;
 
-    switch (arg4) {
-    case 0:
-        viX = viGetX();
-        viY = viGetY();
-        gdl = en_text_write_stuff(gdl, &sp5C, &sp58, &sp48, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF00B0, viX, viY, 0, 0);
-        break;
-    case 1:
-        viX = viGetX();
-        viY = viGetY();
-        gdl = jp_text_write_stuff(gdl, &sp5C, &sp58, &sp48, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xA0FFA0F0, 0x7000A0, viX, viY, 0, 0);
-        break;
-    case 2:
-        viX = viGetX();
-        viY = viGetY();
-        gdl = en_text_write_stuff(gdl, &sp5C, &sp58, &sp48, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF4040B0, viX, viY, 0, 0);
-        break;
-    case 3:
-        viX = viGetX();
-        viY = viGetY();
-        gdl = jp_text_write_stuff(gdl, &sp5C, &sp58, &sp48, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFFA0A0F0, 0x700000A0, viX, viY, 0, 0);
-        break;
-    case 4:
-        viX = viGetX();
-        viY = viGetY();
-        gdl = en_text_write_stuff(gdl, &sp5C, &sp58, &sp48, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0x4040FFB0, viX, viY, 0, 0);
-        break;
-    case 5:
-        viX = viGetX();
-        viY = viGetY();
-        gdl = jp_text_write_stuff(gdl, &sp5C, &sp58, &sp48, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xA0A0FFF0, 0x70A0, viX, viY, 0, 0);
-        break;
+    switch (text_color) {
+        
+        case GREEN_NORMAL:
+            viX = viGetX();
+            viY = viGetY();
+            gdl = en_text_write_stuff(gdl, &sp5C, &sp58, &sp48, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF00B0, viX, viY, 0, 0);
+            break;
+        
+        case GREEN_HIGHLIGHT:
+            viX = viGetX();
+            viY = viGetY();
+            gdl = jp_text_write_stuff(gdl, &sp5C, &sp58, &sp48, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xA0FFA0F0, 0x7000A0, viX, viY, 0, 0);
+            break;
+        
+        case RED_NORMAL:
+            viX = viGetX();
+            viY = viGetY();
+            gdl = en_text_write_stuff(gdl, &sp5C, &sp58, &sp48, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF4040B0, viX, viY, 0, 0);
+            break;
+        
+        case RED_HIGHLIGHT:
+            viX = viGetX();
+            viY = viGetY();
+            gdl = jp_text_write_stuff(gdl, &sp5C, &sp58, &sp48, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFFA0A0F0, 0x700000A0, viX, viY, 0, 0);
+            break;
+        
+        case BLUE_NORMAL:
+            viX = viGetX();
+            viY = viGetY();
+            gdl = en_text_write_stuff(gdl, &sp5C, &sp58, &sp48, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0x4040FFB0, viX, viY, 0, 0);
+            break;
+        
+        case BLUE_HIGHLIGHT:
+            viX = viGetX();
+            viY = viGetY();
+            gdl = jp_text_write_stuff(gdl, &sp5C, &sp58, &sp48, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xA0A0FFF0, 0x70A0, viX, viY, 0, 0);
+            break;
     }
 
     return gdl;
