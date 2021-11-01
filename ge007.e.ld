@@ -48,10 +48,10 @@ SECTIONS
       build/e/src/init.o (.text);
       build/e/src/sched.o (.text);
       build/e/src/osMapTLB.o (.text);
-      
+
       build/e/src/libultra/vimgr.o (.text);
       build/e/src/libultra/pimgr.o (.text);
-      
+
       build/e/src/tlb_manage.o (.text);
       build/e/src/tlb_random.o (.text);
       build/e/src/tlb_resolve.o (.text);
@@ -287,7 +287,7 @@ SECTIONS
    }
    _cdataSegmentEnd = ADDR(.cdata) + SIZEOF(.cdata);
    _cdataSegmentRomEnd = _cdataSegmentRomStart + SIZEOF(.cdata);
-   
+
 
 
    /* (0x70200000, 0x702029BC, 0x701CCA70), // 033590-035F4D [29BD] */
@@ -301,8 +301,8 @@ SECTIONS
    _inflateSegmentRomEnd = _inflateSegmentRomStart + SIZEOF(.inflate);
 
 
-   
-   
+
+
    /* (0x7F000000, 0x7F0E2D50, 0x7EFCB4D0), // 034B30-117881 [E2D51] */
    _gameSegmentStart = ADDR(.game);
    _gameSegmentRomStart = _inflateSegmentRomEnd;
@@ -356,8 +356,8 @@ SECTIONS
       build/e/src/game/unk_01BAE0.o (.text);
       build/e/src/game/blood_animation.o (.text);
       build/e/src/game/blood_decrypt.o (.text);
-      build/e/src/game/gamefile.o (.text);
-      build/e/src/game/gamefile2.o (.text);
+      build/e/src/game/file.o (.text);
+      build/e/src/game/file2.o (.text);
       build/e/src/game/chr.o (.text);
       build/e/src/game/chrlv.o (.text);
       build/e/src/game/chrai.o (.text);
@@ -378,6 +378,7 @@ SECTIONS
       build/e/src/game/gun.o (.text);
       build/e/src/game/bondwalk2.o (.text);
       build/e/src/game/objecthandler.o (.text);
+      build/e/src/game/objecthandler_1.o (.text);
       build/e/src/game/objecthandler_2.o (.text);
       build/e/src/game/othermodemicrocode.o (.text);
       build/e/src/game/bondview.o (.text);
@@ -394,7 +395,8 @@ SECTIONS
       build/e/src/game/unk_092890.o (.text);
       build/e/src/game/unk_092E50.o (.text);
       build/e/src/game/player.o (.text);
-      build/e/src/game/unk_09B600.o (.text);
+      build/e/src/game/player_2.o (.text);
+      build/e/src/game/crc.o (.text);
       build/e/src/game/chrObjRandom.o (.text);
       build/e/src/game/unk_09B7A0.o (.text);
       build/e/src/game/unk_09C250.o (.text);
@@ -507,7 +509,7 @@ SECTIONS
 
 
 
-   
+
    _obsegSegmentStart = ADDR(.obseg);
    _obsegSegmentRomStart = _musicfilesSegmentRomEnd;
    .obseg _obsegSegmentRomStart : AT(_obsegSegmentRomStart) {
@@ -3245,10 +3247,10 @@ SECTIONS
       build/e/src/init.o (.data);
       build/e/src/sched.o (.data);
       build/e/src/osMapTLB.o (.data);
-      
+
       build/e/src/libultra/vimgr.o (.data);
       build/e/src/libultra/pimgr.o (.data);
-      
+
       build/e/src/tlb_manage.o (.data);
       build/e/src/tlb_random.o (.data);
       build/e/src/tlb_resolve.o (.data);
@@ -3476,10 +3478,10 @@ SECTIONS
       build/e/src/init.o (.rodata);
       build/e/src/sched.o (.rodata);
       build/e/src/osMapTLB.o (.rodata);
-      
+
       build/e/src/libultra/vimgr.o (.rodata);
       build/e/src/libultra/pimgr.o (.rodata);
-      
+
       build/e/src/tlb_manage.o (.rodata);
       build/e/src/tlb_random.o (.rodata);
       build/e/src/tlb_resolve.o (.rodata);
@@ -3751,8 +3753,8 @@ SECTIONS
       build/e/src/game/unk_01BAE0.o (.data);
       build/e/src/game/blood_animation.o (.data);
       build/e/src/game/blood_decrypt.o (.data);
-      build/e/src/game/gamefile.o (.data);
-      build/e/src/game/gamefile2.o (.data);
+      build/e/src/game/file.o (.data);
+      build/e/src/game/file2.o (.data);
       build/e/src/game/chr.o (.data);
       build/e/src/game/chrlv.o (.data);
       build/e/src/game/chrai.o (.data);
@@ -3773,6 +3775,7 @@ SECTIONS
       build/e/src/game/gun.o (.data);
       build/e/src/game/bondwalk2.o (.data);
       build/e/src/game/objecthandler.o (.data);
+      build/e/src/game/objecthandler_1.o (.data);
       build/e/src/game/objecthandler_2.o (.data);
       build/e/src/game/othermodemicrocode.o (.data);
       build/e/src/game/bondview.o (.data);
@@ -3789,7 +3792,8 @@ SECTIONS
       build/e/src/game/unk_092890.o (.data);
       build/e/src/game/unk_092E50.o (.data);
       build/e/src/game/player.o (.data);
-      build/e/src/game/unk_09B600.o (.data);
+      build/e/src/game/player_2.o (.data);
+      build/e/src/game/crc.o (.data);
       build/e/src/game/chrObjRandom.o (.data);
       build/e/src/game/unk_09B7A0.o (.data);
       build/e/src/game/unk_09C250.o (.data);
@@ -3876,8 +3880,8 @@ SECTIONS
       build/e/src/game/unk_01BAE0.o (.rodata);
       build/e/src/game/blood_animation.o (.rodata);
       build/e/src/game/blood_decrypt.o (.rodata);
-      build/e/src/game/gamefile.o (.rodata);
-      build/e/src/game/gamefile2.o (.rodata);
+      build/e/src/game/file.o (.rodata);
+      build/e/src/game/file2.o (.rodata);
       build/e/src/game/chr.o (.rodata);
       build/e/src/game/chrlv.o (.rodata);
       build/e/src/game/chrai.o (.rodata);
@@ -3898,6 +3902,7 @@ SECTIONS
       build/e/src/game/gun.o (.rodata);
       build/e/src/game/bondwalk2.o (.rodata);
       build/e/src/game/objecthandler.o (.rodata);
+      build/e/src/game/objecthandler_1.o (.rodata);
       build/e/src/game/objecthandler_2.o (.rodata);
       build/e/src/game/othermodemicrocode.o (.rodata);
       build/e/src/game/bondview.o (.rodata);
@@ -3914,7 +3919,8 @@ SECTIONS
       build/e/src/game/unk_092890.o (.rodata);
       build/e/src/game/unk_092E50.o (.rodata);
       build/e/src/game/player.o (.rodata);
-      build/e/src/game/unk_09B600.o (.rodata);
+      build/e/src/game/player_2.o (.rodata);
+      build/e/src/game/crc.o (.rodata);
       build/e/src/game/chrObjRandom.o (.rodata);
       build/e/src/game/unk_09B7A0.o (.rodata);
       build/e/src/game/unk_09C250.o (.rodata);
@@ -3967,10 +3973,10 @@ SECTIONS
       build/e/src/init.o (.bss);
       build/e/src/sched.o (.bss);
       build/e/src/osMapTLB.o (.bss);
-      
+
       build/e/src/libultra/vimgr.o (.bss);
       build/e/src/libultra/pimgr.o (.bss);
-      
+
       build/e/src/tlb_manage.o (.bss);
       build/e/src/tlb_random.o (.bss);
       build/e/src/tlb_resolve.o (.bss);
@@ -4241,8 +4247,8 @@ SECTIONS
       build/e/src/game/unk_01BAE0.o (.bss);
       build/e/src/game/blood_animation.o (.bss);
       build/e/src/game/blood_decrypt.o (.bss);
-      build/e/src/game/gamefile.o (.bss);
-      build/e/src/game/gamefile2.o (.bss);
+      build/e/src/game/file.o (.bss);
+      build/e/src/game/file2.o (.bss);
       build/e/src/game/chr.o (.bss);
       build/e/src/game/chrlv.o (.bss);
       build/e/src/game/chrai.o (.bss);
@@ -4263,6 +4269,7 @@ SECTIONS
       build/e/src/game/gun.o (.bss);
       build/e/src/game/bondwalk2.o (.bss);
       build/e/src/game/objecthandler.o (.bss);
+      build/e/src/game/objecthandler_1.o (.bss);
       build/e/src/game/objecthandler_2.o (.bss);
       build/e/src/game/othermodemicrocode.o (.bss);
       build/e/src/game/bondview.o (.bss);
@@ -4279,7 +4286,8 @@ SECTIONS
       build/e/src/game/unk_092890.o (.bss);
       build/e/src/game/unk_092E50.o (.bss);
       build/e/src/game/player.o (.bss);
-      build/e/src/game/unk_09B600.o (.bss);
+      build/e/src/game/player_2.o (.bss);
+      build/e/src/game/crc.o (.bss);
       build/e/src/game/chrObjRandom.o (.bss);
       build/e/src/game/unk_09B7A0.o (.bss);
       build/e/src/game/unk_09C250.o (.bss);
@@ -4335,14 +4343,14 @@ SECTIONS
    _decompbufSegmentEnd = ADDR(.decompbuf) + SIZEOF(.decompbuf);
 
    _stacksSegmentStart = ADDR(.stacks);
-   .stacks (NOLOAD) : 
+   .stacks (NOLOAD) :
    {
       build/e/src/stacks.o (.bss);
    }
    _stacksSegmentEnd = ADDR(.stacks) + SIZEOF(.stacks);
 
    _cfbSegmentStart = ADDR(.cfb);
-   .cfb (NOLOAD) : 
+   .cfb (NOLOAD) :
    {
       build/e/src/cfb.o (.bss);
    }
@@ -4359,6 +4367,6 @@ SECTIONS
       * (.gptab.bss);
       * (.gptab.data);
       * (.reginfo);
-      
+
 }
 }

@@ -50,11 +50,15 @@ extern struct player_data player4_player_data;
 
 extern struct player *currentplayer;
 extern struct player_data *pPlayersPerm;
+extern s32 player_num;
+extern s32 random_byte;
+extern PLAYER_ID array_PLAYER_IDs[4];
+
 
 void reset_play_data_ptrs(void);
 void init_player_data_ptrs_construct_viewports(int playercount);
-void sub_GAME_7F09B41C(void);
-s32 sub_GAME_7F09B528(PLAYER_ID id);
+void shuffle_player_ids(void);
+s32 get_nth_player_from_shuffled(PLAYER_ID id);
 void set_cur_player(s32 playernum);
 s32 getPlayerCount(void);
 void set_cur_player_screen_size(u32 width, u32 height);

@@ -263,7 +263,7 @@ SECTIONS
    }
    _cdataSegmentEnd = ADDR(.cdata) + SIZEOF(.cdata);
    _cdataSegmentRomEnd = _cdataSegmentRomStart + SIZEOF(.cdata);
-   
+
 
 
    /* (0x70200000, 0x702029BC, 0x701CCA70), // 033590-035F4D [29BD] */
@@ -277,8 +277,8 @@ SECTIONS
    _inflateSegmentRomEnd = _inflateSegmentRomStart + SIZEOF(.inflate);
 
 
-   
-   
+
+
    /* (0x7F000000, 0x7F0E2D50, 0x7EFCB4D0), // 034B30-117881 [E2D51] */
    _gameSegmentStart = ADDR(.game);
    _gameSegmentRomStart = _inflateSegmentRomEnd;
@@ -332,8 +332,8 @@ SECTIONS
       build/u/src/game/unk_01BAE0.o (.text);
       build/u/src/game/blood_animation.o (.text);
       build/u/src/game/blood_decrypt.o (.text);
-      build/u/src/game/gamefile.o (.text);
-      build/u/src/game/gamefile2.o (.text);
+      build/u/src/game/file.o (.text);
+      build/u/src/game/file2.o (.text);
       build/u/src/game/chr.o (.text);
       build/u/src/game/chrlv.o (.text);
       build/u/src/game/chrai.o (.text);
@@ -354,6 +354,7 @@ SECTIONS
       build/u/src/game/gun.o (.text);
       build/u/src/game/bondwalk2.o (.text);
       build/u/src/game/objecthandler.o (.text);
+      build/u/src/game/objecthandler_1.o (.text);
       build/u/src/game/objecthandler_2.o (.text);
       build/u/src/game/othermodemicrocode.o (.text);
       build/u/src/game/bondview.o (.text);
@@ -370,7 +371,8 @@ SECTIONS
       build/u/src/game/unk_092890.o (.text);
       build/u/src/game/unk_092E50.o (.text);
       build/u/src/game/player.o (.text);
-      build/u/src/game/unk_09B600.o (.text);
+      build/u/src/game/player_2.o (.text);
+      build/u/src/game/crc.o (.text);
       build/u/src/game/chrObjRandom.o (.text);
       build/u/src/game/unk_09B7A0.o (.text);
       build/u/src/game/unk_09C250.o (.text);
@@ -481,7 +483,7 @@ SECTIONS
 
 
 
-   
+
    _obsegSegmentStart = ADDR(.obseg);
    _obsegSegmentRomStart = _musicfilesSegmentRomEnd;
    .obseg _obsegSegmentRomStart : AT(_obsegSegmentRomStart) {
@@ -3249,7 +3251,7 @@ SECTIONS
       /*build/u/src/motor.o (.data);*/
       /*build/u/src/rmon.o (.data);*/
 
- 
+
       /*build/u/src/libultra/pirawdma.o (.data);*/
       build/u/src/libultra/pigetstat.o (.data);
       build/u/src/libultra/initialize.o (.data);
@@ -3680,8 +3682,8 @@ SECTIONS
       build/u/src/game/unk_01BAE0.o (.data);
       build/u/src/game/blood_animation.o (.data);
       build/u/src/game/blood_decrypt.o (.data);
-      build/u/src/game/gamefile.o (.data);
-      build/u/src/game/gamefile2.o (.data);
+      build/u/src/game/file.o (.data);
+      build/u/src/game/file2.o (.data);
       build/u/src/game/chr.o (.data);
       build/u/src/game/chrlv.o (.data);
       build/u/src/game/chrai.o (.data);
@@ -3702,6 +3704,7 @@ SECTIONS
       build/u/src/game/gun.o (.data);
       build/u/src/game/bondwalk2.o (.data);
       build/u/src/game/objecthandler.o (.data);
+      build/u/src/game/objecthandler_1.o (.data);
       build/u/src/game/objecthandler_2.o (.data);
       build/u/src/game/othermodemicrocode.o (.data);
       build/u/src/game/bondview.o (.data);
@@ -3718,7 +3721,8 @@ SECTIONS
       build/u/src/game/unk_092890.o (.data);
       build/u/src/game/unk_092E50.o (.data);
       build/u/src/game/player.o (.data);
-      build/u/src/game/unk_09B600.o (.data);
+      build/u/src/game/player_2.o (.data);
+      build/u/src/game/crc.o (.data);
       build/u/src/game/chrObjRandom.o (.data);
       build/u/src/game/unk_09B7A0.o (.data);
       build/u/src/game/unk_09C250.o (.data);
@@ -3805,8 +3809,8 @@ SECTIONS
       build/u/src/game/unk_01BAE0.o (.rodata);
       build/u/src/game/blood_animation.o (.rodata);
       build/u/src/game/blood_decrypt.o (.rodata);
-      build/u/src/game/gamefile.o (.rodata);
-      build/u/src/game/gamefile2.o (.rodata);
+      build/u/src/game/file.o (.rodata);
+      build/u/src/game/file2.o (.rodata);
       build/u/src/game/chr.o (.rodata);
       build/u/src/game/chrlv.o (.rodata);
       build/u/src/game/chrai.o (.rodata);
@@ -3827,6 +3831,7 @@ SECTIONS
       build/u/src/game/gun.o (.rodata);
       build/u/src/game/bondwalk2.o (.rodata);
       build/u/src/game/objecthandler.o (.rodata);
+      build/u/src/game/objecthandler_1.o (.rodata);
       build/u/src/game/objecthandler_2.o (.rodata);
       build/u/src/game/othermodemicrocode.o (.rodata);
       build/u/src/game/bondview.o (.rodata);
@@ -3843,7 +3848,8 @@ SECTIONS
       build/u/src/game/unk_092890.o (.rodata);
       build/u/src/game/unk_092E50.o (.rodata);
       build/u/src/game/player.o (.rodata);
-      build/u/src/game/unk_09B600.o (.rodata);
+      build/u/src/game/player_2.o (.rodata);
+      build/u/src/game/crc.o (.rodata);
       build/u/src/game/chrObjRandom.o (.rodata);
       build/u/src/game/unk_09B7A0.o (.rodata);
       build/u/src/game/unk_09C250.o (.rodata);
@@ -4147,8 +4153,8 @@ SECTIONS
       build/u/src/game/unk_01BAE0.o (.bss);
       build/u/src/game/blood_animation.o (.bss);
       build/u/src/game/blood_decrypt.o (.bss);
-      build/u/src/game/gamefile.o (.bss);
-      build/u/src/game/gamefile2.o (.bss);
+      build/u/src/game/file.o (.bss);
+      build/u/src/game/file2.o (.bss);
       build/u/src/game/chr.o (.bss);
       build/u/src/game/chrlv.o (.bss);
       build/u/src/game/chrai.o (.bss);
@@ -4169,6 +4175,7 @@ SECTIONS
       build/u/src/game/gun.o (.bss);
       build/u/src/game/bondwalk2.o (.bss);
       build/u/src/game/objecthandler.o (.bss);
+      build/u/src/game/objecthandler_1.o (.bss);
       build/u/src/game/objecthandler_2.o (.bss);
       build/u/src/game/othermodemicrocode.o (.bss);
       build/u/src/game/bondview.o (.bss);
@@ -4185,7 +4192,8 @@ SECTIONS
       build/u/src/game/unk_092890.o (.bss);
       build/u/src/game/unk_092E50.o (.bss);
       build/u/src/game/player.o (.bss);
-      build/u/src/game/unk_09B600.o (.bss);
+      build/u/src/game/player_2.o (.bss);
+      build/u/src/game/crc.o (.bss);
       build/u/src/game/chrObjRandom.o (.bss);
       build/u/src/game/unk_09B7A0.o (.bss);
       build/u/src/game/unk_09C250.o (.bss);
@@ -4241,14 +4249,14 @@ SECTIONS
    _decompbufSegmentEnd = ADDR(.decompbuf) + SIZEOF(.decompbuf);
 
    _stacksSegmentStart = ADDR(.stacks);
-   .stacks (NOLOAD) : 
+   .stacks (NOLOAD) :
    {
       build/u/src/stacks.o (.bss);
    }
    _stacksSegmentEnd = ADDR(.stacks) + SIZEOF(.stacks);
 
    _cfbSegmentStart = ADDR(.cfb);
-   .cfb (NOLOAD) : 
+   .cfb (NOLOAD) :
    {
       build/u/src/cfb.o (.bss);
    }
@@ -4265,7 +4273,7 @@ SECTIONS
       * (.gptab.bss);
       * (.gptab.data);
       * (.reginfo);
-      
+
 
 }
 }
