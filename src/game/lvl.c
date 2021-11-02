@@ -4,6 +4,7 @@
 #include "game/initunk_0072B0.h"
 #include "game/front.h"
 #include "game/bondinv.h"
+#include "deb.h"
 #include "memp.h"
 #include "music.h"
 #include "tlb_manage.h"
@@ -45,6 +46,7 @@ s32 musictrack1_playing = 0;
 s32 controls_locked_flag = 0;
 //D:80048374
 s32 clock_timer = 0;
+
 #ifdef VERSION_US
 //D:80048378
 f32 global_timer_delta = 0;
@@ -70,6 +72,7 @@ s32 global_timer = 0;
 s32 D_80048380 = 0;
 f32 global_timer_delta = 0;
 #endif
+
 //D:80048384
 s32 difficulty_0 = 0;
 //D:80048388
@@ -121,23 +124,13 @@ s32 D_800483E0 = 0;
 //D:800483E4
 s32 D_800483E4 = 0;
 
-//D:800483E8
-//maybe alignment
-//s32 D_800483E8 = 0;
-//D:800483EC
-//maybe alignment
-//s32 D_800483EC = 0;
 
+extern u8* _jfontdlSegmentStart;
+extern u8* _jfontdlSegmentEnd;
 
+// forward declarations
 
-// rodata
-
-
-
-
-
-
-
+void romCopy (char * src, char * dest, int len);
 
 s32 sub_GAME_7F0BD8F0(void) {
     return D_800483C0;
@@ -147,68 +140,16 @@ void sub_GAME_7F0BD8FC(s32 arg0) {
     D_800483C0 = arg0;
 }
 
-
-
-
-extern u8* _jfontdlSegmentStart;
-extern u8* _jfontdlSegmentEnd;
-void romCopy (char * src, char * dest, int len);
-#ifdef NONMATCHING
 void lvInitDebugNoticeList(void)
 {
     s32 temp_a2;
+
     debTryAdd(&lvl_c_debug_notice_list, "lv_c_debug");
-    temp_a2 = &_jfontdlSegmentEnd-&_jfontdlSegmentStart;
+    temp_a2 = (s32)&_jfontdlSegmentEnd - (s32)&_jfontdlSegmentStart;
     lvl_c_debug_notice_list = 1;
-    ptr_jfont_DL = mempAllocBytesInBank(temp_a2,6);
+    ptr_jfont_DL = mempAllocBytesInBank(temp_a2, 6);
     romCopy(ptr_jfont_DL, &_jfontdlSegmentStart, temp_a2);
 }
-#else
-GLOBAL_ASM(
-.rdata
-#const char aLv_c_debug[] = "lv_c_debug";
-glabel aLv_c_debug
-.word 0x6c765f63
-.word 0x5f646562
-.word 0x75670000
-
-
-.text
-glabel lvInitDebugNoticeList
-/* 0F2438 7F0BD908 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0F243C 7F0BD90C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F2440 7F0BD910 3C048005 */  lui   $a0, %hi(lvl_c_debug_notice_list)
-/* 0F2444 7F0BD914 3C058006 */  lui   $a1, %hi(aLv_c_debug)
-/* 0F2448 7F0BD918 24A5B6B0 */  addiu $a1, %lo(aLv_c_debug) # addiu $a1, $a1, -0x4950
-/* 0F244C 7F0BD91C 0C001398 */  jal   debTryAdd
-/* 0F2450 7F0BD920 24848360 */   addiu $a0, %lo(lvl_c_debug_notice_list) # addiu $a0, $a0, -0x7ca0
-/* 0F2454 7F0BD924 3C0F0011 */  lui   $t7, %hi(_jfontdlSegmentEnd) # $t7, 0x11
-/* 0F2458 7F0BD928 3C180011 */  lui   $t8, %hi(_jfontdlSegmentStart) # $t8, 0x11
-/* 0F245C 7F0BD92C 27187880 */  addiu $t8, %lo(_jfontdlSegmentStart) # addiu $t8, $t8, 0x7880
-/* 0F2460 7F0BD930 25EF7940 */  addiu $t7, %lo(_jfontdlSegmentEnd) # addiu $t7, $t7, 0x7940
-/* 0F2464 7F0BD934 240E0001 */  li    $t6, 1
-/* 0F2468 7F0BD938 3C018005 */  lui   $at, %hi(lvl_c_debug_notice_list)
-/* 0F246C 7F0BD93C 01F83023 */  subu  $a2, $t7, $t8
-/* 0F2470 7F0BD940 AC2E8360 */  sw    $t6, %lo(lvl_c_debug_notice_list)($at)
-/* 0F2474 7F0BD944 00C02025 */  move  $a0, $a2
-/* 0F2478 7F0BD948 AFA60018 */  sw    $a2, 0x18($sp)
-/* 0F247C 7F0BD94C 0C0025C8 */  jal   mempAllocBytesInBank
-/* 0F2480 7F0BD950 24050006 */   li    $a1, 6
-/* 0F2484 7F0BD954 3C038009 */  lui   $v1, %hi(ptr_jfont_DL)
-/* 0F2488 7F0BD958 2463C260 */  addiu $v1, %lo(ptr_jfont_DL) # addiu $v1, $v1, -0x3da0
-/* 0F248C 7F0BD95C 3C050011 */  lui   $a1, %hi(_jfontdlSegmentStart) # $a1, 0x11
-/* 0F2490 7F0BD960 AC620000 */  sw    $v0, ($v1)
-/* 0F2494 7F0BD964 8FA60018 */  lw    $a2, 0x18($sp)
-/* 0F2498 7F0BD968 24A57880 */  addiu $a1, %lo(_jfontdlSegmentStart) # addiu $a1, $a1, 0x7880
-/* 0F249C 7F0BD96C 0C001707 */  jal   romCopy
-/* 0F24A0 7F0BD970 00402025 */   move  $a0, $v0
-/* 0F24A4 7F0BD974 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F24A8 7F0BD978 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0F24AC 7F0BD97C 03E00008 */  jr    $ra
-/* 0F24B0 7F0BD980 00000000 */   nop
-)
-#endif
-
 
 
 
@@ -226,25 +167,29 @@ void playmusictrack1(MUSIC_TRACKS track)
 }
 
 void music_append_play_solo_death_short(void)
-
 {
     musictrack1_playing = (musictrack1_playing + M_SHORT_SOLO_DEATH) % 0x3f;
+
     if (musictrack1_playing == M_NONE) {
         musictrack1_playing = M_SHORT_SOLO_DEATH;
     }
+
     musicTrack1Play(musictrack1_playing);
 }
 
 void music_append_play_endtheme(void)
 {
     musictrack1_playing = (musictrack1_playing + M_END_SOMETHING) % 0x3f;
+
     if (musictrack1_playing == M_NONE) {
         musictrack1_playing = M_END_SOMETHING;
     }
+
     musicTrack1Play(musictrack1_playing);
 }
 
-void music_play_stagetrack_or_random(void) {
+void music_play_stagetrack_or_random(void)
+{
     playmusictrack1(getmusictrack_or_randomtrack(current_stage_to_load));
 }
 
