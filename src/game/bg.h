@@ -3,6 +3,7 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "bondtypes.h"
+#include "bondconstants.h"
 
 struct levelentry
 {
@@ -85,5 +86,6 @@ s32 sub_GAME_7F0B8FD0(u8 roomA, u8 roomB);
 s32 sub_GAME_7F0B4F9C(u8 room); // u8 not s32 for sub_GAME_7F0B2FE0
 u32 bgDecompress(u8* source, u8 *target);
 void sub_GAME_7F0B65C4(s32 roomID);
+void load_bg_file(LEVEL_INDEX stagenum);
 
 #endif

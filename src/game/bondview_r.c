@@ -3,6 +3,7 @@
 #include "bondconstants.h"
 #include "boss.h"
 #include "game/math_atan2f.h"
+#include "game/bondview_r.h"
 
 
 // data

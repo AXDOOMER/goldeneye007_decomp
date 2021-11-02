@@ -5,6 +5,7 @@
 #include "game/bondview.h"
 #include "game/lvl.h"
 #include "fr.h"
+#include "game/player_2.h"
 
 
 //newfile per EU

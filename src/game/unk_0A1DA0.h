@@ -13,4 +13,6 @@ extern u32 watch_screen_index;
 extern u32 controller_options_index;
 extern u32 game_options_index;
 
+void sub_GAME_7F0A47D4(void);
+
 #endif

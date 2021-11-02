@@ -2,6 +2,7 @@
 #include "memp.h"
 #include "game/player.h"
 #include "game/bondinv.h"
+#include "game/inititemslots.h"
 
 void reinit_gunheld_totaltime(void) {
     s32 i;

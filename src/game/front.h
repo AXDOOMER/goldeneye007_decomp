@@ -164,7 +164,7 @@ extern struct coord3d dword_CODE_bss_80069620[0x4];
 extern u8 cheat_available[];
 
 //CODE.bss:800696A0
-extern u8 cheat_activated[];
+extern u8 g_CheatActivated[];
 
 
 //CODE.bss:800696F0
@@ -219,7 +219,7 @@ extern s32 teamsize;
 //CODE.bss:8006978C
 extern s32 ptrbriefingdata;
 //CODE.bss:80069790
-extern s32 g_newcheatunlocked;
+extern s32 g_NewCheatUnlocked;
 //CODE.bss:80069794
 extern s32 highlight_enemy_reaction;
 //CODE.bss:80069798
@@ -287,7 +287,7 @@ extern GAMEMODE gamemode;
 extern s32 selected_stage;
 extern s32 briefingpage;
 extern DIFFICULTY selected_difficulty;
-extern s32 append_cheat_sp;
+extern s32 g_AppendCheatSinglePlayer;
 extern s32 append_cheat_mp;
 extern f32 cursor_h_pos;
 extern f32 cursor_v_pos;
@@ -593,5 +593,12 @@ extern u32 full_actor_intro;
 void set_menu_to_mode(MENU menu, s32 mode);
 s32 get_selected_num_players(void);
 void do_extended_cast_display(s32 flag);
+MPSCENARIOS get_scenario(void);
+f32 get_player_mp_handicap(int player);
+f32 get_player_mp_char_height(int player);
+int get_mp_timelimit(void);
+int get_mp_pointlimit(void);
+void reset_mp_options_for_scenario(MPSCENARIOS scenarioid);
+void copy_aim_settings_to_playerdata(void);
 
 #endif

@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "ramrom.h"
 #include "memp.h"
+#include "game/image_bank.h"
 
 // bss
 //8008D0A0

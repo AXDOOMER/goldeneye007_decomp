@@ -1394,7 +1394,7 @@ glabel sub_GAME_7F0B40D4
 
 
 #ifdef NONMATCHING
-void load_bg_file(STAGENUM stagenum)
+void load_bg_file(LEVEL_INDEX stagenum)
 {
 
 }

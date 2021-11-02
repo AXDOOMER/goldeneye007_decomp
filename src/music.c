@@ -22,8 +22,6 @@
 #define FADE_FRAMERATE 60.0f
 #endif
 
-#define VOLUME_MAX 0x7fff
-
 /**
  * Counting definitions for music in this file, there
  * are 63 distinct entries. This exlcudes the "NONE" music

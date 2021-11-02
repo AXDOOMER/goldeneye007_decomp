@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "game/math_atan2f.h"
+#include "game/unk_0A1DA0.h"
 
 // bss
 //CODE.bss:8007A160
@@ -1362,8 +1363,8 @@ glabel D_8005773C
 .word 0x00000000 /*0.0*/
 .text
 glabel sub_GAME_7F0A28D4
-/* 0D7404 7F0A28D4 3C028005 */  lui   $v0, %hi(clock_timer)
-/* 0D7408 7F0A28D8 8C428374 */  lw    $v0, %lo(clock_timer)($v0)
+/* 0D7404 7F0A28D4 3C028005 */  lui   $v0, %hi(g_ClockTimer)
+/* 0D7408 7F0A28D8 8C428374 */  lw    $v0, %lo(g_ClockTimer)($v0)
 /* 0D740C 7F0A28DC 3C088008 */  lui   $t0, %hi(bufferentrycount_8007A160) 
 /* 0D7410 7F0A28E0 2508A160 */  addiu $t0, %lo(bufferentrycount_8007A160) # addiu $t0, $t0, -0x5ea0
 /* 0D7414 7F0A28E4 2841000F */  slti  $at, $v0, 0xf
@@ -3038,10 +3039,10 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0A3EA0
 /* 0D89D0 7F0A3EA0 3C028008 */  lui   $v0, %hi(dword_CODE_bss_8007A170)
 /* 0D89D4 7F0A3EA4 3C038008 */  lui   $v1, %hi(dword_CODE_bss_8007A4E0)
-/* 0D89D8 7F0A3EA8 3C058005 */  lui   $a1, %hi(clock_timer)
+/* 0D89D8 7F0A3EA8 3C058005 */  lui   $a1, %hi(g_ClockTimer)
 /* 0D89DC 7F0A3EAC 2463A4E0 */  addiu $v1, %lo(dword_CODE_bss_8007A4E0) # addiu $v1, $v1, -0x5b20
 /* 0D89E0 7F0A3EB0 2442A170 */  addiu $v0, %lo(dword_CODE_bss_8007A170) # addiu $v0, $v0, -0x5e90
-/* 0D89E4 7F0A3EB4 24A58374 */  addiu $a1, %lo(clock_timer) # addiu $a1, $a1, -0x7c8c
+/* 0D89E4 7F0A3EB4 24A58374 */  addiu $a1, %lo(g_ClockTimer) # addiu $a1, $a1, -0x7c8c
 /* 0D89E8 7F0A3EB8 844E0004 */  lh    $t6, 4($v0)
 .L7F0A3EBC:
 /* 0D89EC 7F0A3EBC 59C0000C */  blezl $t6, .L7F0A3EF0
@@ -3670,13 +3671,13 @@ glabel sub_GAME_7F0A46A0
 /* 0D91E0 7F0A46B0 AFB00014 */  sw    $s0, 0x14($sp)
 /* 0D91E4 7F0A46B4 3C108008 */  lui   $s0, %hi(dword_CODE_bss_8007A4E0)
 /* 0D91E8 7F0A46B8 3C138008 */  lui   $s3, %hi(dword_CODE_bss_8007B098)
-/* 0D91EC 7F0A46BC 3C118005 */  lui   $s1, %hi(clock_timer)
-/* 0D91F0 7F0A46C0 3C128005 */  lui   $s2, %hi(global_timer_delta)
+/* 0D91EC 7F0A46BC 3C118005 */  lui   $s1, %hi(g_ClockTimer)
+/* 0D91F0 7F0A46C0 3C128005 */  lui   $s2, %hi(g_GlobalTimerDelta)
 /* 0D91F4 7F0A46C4 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 0D91F8 7F0A46C8 2673B098 */  addiu $s3, %lo(dword_CODE_bss_8007B098) # addiu $s3, $s3, -0x4f68
 /* 0D91FC 7F0A46CC 2610A4E0 */  addiu $s0, %lo(dword_CODE_bss_8007A4E0) # addiu $s0, $s0, -0x5b20
-/* 0D9200 7F0A46D0 26528378 */  addiu $s2, %lo(global_timer_delta) # addiu $s2, $s2, -0x7c88
-/* 0D9204 7F0A46D4 26318374 */  addiu $s1, %lo(clock_timer) # addiu $s1, $s1, -0x7c8c
+/* 0D9200 7F0A46D0 26528378 */  addiu $s2, %lo(g_GlobalTimerDelta) # addiu $s2, $s2, -0x7c88
+/* 0D9204 7F0A46D4 26318374 */  addiu $s1, %lo(g_ClockTimer) # addiu $s1, $s1, -0x7c8c
 /* 0D9208 7F0A46D8 860E0004 */  lh    $t6, 4($s0)
 .L7F0A46DC:
 /* 0D920C 7F0A46DC 59C00018 */  blezl $t6, .L7F0A4740

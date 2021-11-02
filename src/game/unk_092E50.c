@@ -106,8 +106,8 @@ glabel D_80057518
 .word 0x3d23d70a /*0.039999999*/
 .text
 glabel sub_GAME_7F092E50
-/* 0C7980 7F092E50 3C0E8005 */  lui   $t6, %hi(clock_timer) 
-/* 0C7984 7F092E54 8DCE8374 */  lw    $t6, %lo(clock_timer)($t6)
+/* 0C7980 7F092E50 3C0E8005 */  lui   $t6, %hi(g_ClockTimer) 
+/* 0C7984 7F092E54 8DCE8374 */  lw    $t6, %lo(g_ClockTimer)($t6)
 /* 0C7988 7F092E58 3C014380 */  li    $at, 0x43800000 # 256.000000
 /* 0C798C 7F092E5C 44810000 */  mtc1  $at, $f0
 /* 0C7990 7F092E60 448E2000 */  mtc1  $t6, $f4
@@ -524,8 +524,8 @@ glabel D_80057518
 glabel sub_GAME_7F092E50
 /* 0C4D80 7F092390 3C014380 */  li    $at, 0x43800000 # 256.000000
 /* 0C4D84 7F092394 44810000 */  mtc1  $at, $f0
-/* 0C4D88 7F092398 3C018004 */  lui   $at, %hi(global_timer_delta) # $at, 0x8004
-/* 0C4D8C 7F09239C C4301004 */  lwc1  $f16, %lo(global_timer_delta)($at)
+/* 0C4D88 7F092398 3C018004 */  lui   $at, %hi(g_GlobalTimerDelta) # $at, 0x8004
+/* 0C4D8C 7F09239C C4301004 */  lwc1  $f16, %lo(g_GlobalTimerDelta)($at)
 /* 0C4D90 7F0923A0 3C013E80 */  li    $at, 0x3E800000 # 0.250000
 /* 0C4D94 7F0923A4 44813000 */  mtc1  $at, $f6
 /* 0C4D98 7F0923A8 3C088007 */  lui   $t0, %hi(flt_CODE_bss_80079E80) # $t0, 0x8007

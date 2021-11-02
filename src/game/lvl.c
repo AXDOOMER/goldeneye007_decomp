@@ -11,10 +11,41 @@
 #include "fr.h"
 #include "include/PR/libaudio.h"
 #include "snd.h"
+#include "ramrom.h"
 #include "game/player.h"
+#include "game/player_2.h"
 #include "game/chrobjhandler.h"
 #include "game/unk_09C250.h"
 #include "game/chrai.h"
+#include "game/mp_music.h"
+#include "game/initunk_005520.h"
+#include "game/initmttex.h"
+#include "game/unk_0A1DA0.h"
+#include "game/image_bank.h"
+#include "game/textrelated.h"
+#include "game/initmenus.h"
+#include "game/cheat_buttons.h"
+#include "game/bg.h"
+#include "game/watch.h"
+#include "game/objective.h"
+#include "game/mp_watch.h"
+#include "game/unk_09B7A0.h"
+#include "game/initunk_005450.h"
+#include "game/initobjects.h"
+#include "game/initguards.h"
+#include "game/prop.h"
+#include "game/initexplosioncasing.h"
+#include "game/initunk_007180.h"
+#include "game/initunk_007290.h"
+#include "game/initunk_0072B0.h"
+#include "game/initpathtablelinks.h"
+#include "game/ejectedcartridges.h"
+#include "game/inititemslots.h"
+#include "game/initBondDATA.h"
+#include "game/bondview.h"
+#include "game/bondview_r.h"
+#include "game/initBondDATAdefaults.h"
+#include "game/viewport.h"
 
 // bss
 //CODE.bss:8008C260
@@ -37,21 +68,21 @@ s32 dword_CODE_bss_8008C5F8;
 //D:80048360
 s32 lvl_c_debug_notice_list = 0;
 //D:80048364
-s32 current_stage_to_load = 0;
+s32 g_CurrentStageToLoad = 0;
 //D:80048368
 f32 D_80048368 = 1.0;
 //D:8004836C
 s32 musictrack1_playing = 0;
 //D:80048370
-s32 controls_locked_flag = 0;
+s32 g_ControlsLockedFlag = 0;
 //D:80048374
-s32 clock_timer = 0;
+s32 g_ClockTimer = 0;
 
 #ifdef VERSION_US
 //D:80048378
-f32 global_timer_delta = 0;
+f32 g_GlobalTimerDelta = 0;
 //D:8004837C
-s32 global_timer = 0;
+s32 g_GlobalTimer = 0;
 //D:80048380
 s32 D_80048380 = 0;
 //D:80048384
@@ -59,18 +90,18 @@ s32 D_80048380 = 0;
 #ifdef VERSION_JP
 u32 jp_global_timer_delta = 0;
 //D:8004837C
-s32 global_timer = 0;
+s32 g_GlobalTimer = 0;
 //D:80048380
 s32 D_80048380 = 0;
-f32 global_timer_delta = 0;
+f32 g_GlobalTimerDelta = 0;
 #endif
 #ifdef VERSION_EU
 u32 jp_global_timer_delta = 0;
 //D:8004837C
-s32 global_timer = 0;
+s32 g_GlobalTimer = 0;
 //D:80048380
 s32 D_80048380 = 0;
-f32 global_timer_delta = 0;
+f32 g_GlobalTimerDelta = 0;
 #endif
 
 //D:80048384
@@ -90,7 +121,7 @@ s32 mp_point = 0xA;
 //D:800483A0
 ALSoundState * D_800483A0 = NULL;
 //D:800483A4
-f32 cur_mp_sec = 0.0;
+f32 g_CurrentMultiPlayerSec = 0.0;
 //D:800483A8
 s32 D_800483A8 = 0;
 //D:800483AC
@@ -98,7 +129,7 @@ f32 cur_mp_min = 0.0;
 //D:800483B0
 s32 D_800483B0 = 0;
 //D:800483B4
-f32 stage_time_sec = 0;
+f32 g_StageTimeSec = 0;
 //D:800483B8
 s32 D_800483B8 = 0;
 //D:800483BC
@@ -128,9 +159,6 @@ s32 D_800483E4 = 0;
 extern u8* _jfontdlSegmentStart;
 extern u8* _jfontdlSegmentEnd;
 
-// forward declarations
-
-void romCopy (char * src, char * dest, int len);
 
 s32 sub_GAME_7F0BD8F0(void) {
     return D_800483C0;
@@ -190,24 +218,216 @@ void music_append_play_endtheme(void)
 
 void music_play_stagetrack_or_random(void)
 {
-    playmusictrack1(getmusictrack_or_randomtrack(current_stage_to_load));
+    playmusictrack1(getmusictrack_or_randomtrack(g_CurrentStageToLoad));
 }
 
 
 
+#if 0
+void stage_load(s32 stage)
+{
+    ? *temp_s1;
+    ? *temp_s2;
+    s32 temp_a0;
+    s32 temp_s0;
+    s32 temp_s0_2;
+    s32 temp_s0_3;
+    u8 *phi_s1;
+    s32 phi_s0;
+    s32 phi_a0;
+    ? *phi_s4;
+    ? *phi_s1_2;
+    s32 phi_s0_2;
+    ? *phi_s2;
+    s32 phi_s0_3;
 
+    g_CurrentStageToLoad = stage;
+    D_800483C0 = 1;
+    g_ControlsLockedFlag = 0;
+    g_ClockTimer = 1;
+    g_GlobalTimerDelta = 1.0f;
+    D_80048380 = 0;
+    g_GlobalTimer = 0;
+    D_80048388 = 0;
+    D_8004838C = 0;
+    D_80048390 = 0;
+    D_80048394 = 0;
+    g_CurrentMultiPlayerSec = 0.0f;
+    D_800483B0 = 0;
+    g_StageTimeSec = 0.0f;
+    D_800483A0 = 0;
 
-#ifdef NONMATCHING
-void stage_load(void) {
+    sndSetScalerApplyVolumeAllSfxSlot(1.0f);
+    musicTrack1ApplySeqpVol(VOLUME_MAX);
+    musicTrack2ApplySeqpVol(VOLUME_MAX);
+    musicTrack3ApplySeqpVol(VOLUME_MAX);
+    sub_GAME_7F0C1364();
+    set_contents_of_80036078(1);
+    set_mt_tex_alloc();
+    sub_GAME_7F0A47D4();
+    load_prepare_global_image_bank();
+    load_font_tables();
 
+    if (stage == LEVELID_TITLE)
+    {
+        init_menus_or_reset();
+    }
+    else
+    {
+        temp_a0 = g_CurrentStageToLoad;
+        g_NewCheatUnlocked = 0;
+        phi_a0 = temp_a0;
+
+        if ((temp_a0 != LEVELID_TITLE) && (D_80048394 == 0) && (g_ClockTimer > 0))
+        {
+            phi_s1 = &g_CheatActivated + 1;
+            phi_s0 = 1;
+
+            if (g_AppendCheatSinglePlayer != 0)
+            {
+                do
+                {
+                    if ((*phi_s1 != 0) && (is_cheat_index_equal_to_1C(phi_s0) != 0))
+                    {
+                        turn_on_cheat_for_players(phi_s0);
+                    }
+
+                    temp_s0 = phi_s0 + 1;
+                    phi_s1 += 1;
+                    phi_s0 = temp_s0;
+                } while (temp_s0 != 0x4B);
+
+                phi_a0 = g_CurrentStageToLoad;
+            }
+        }
+
+        load_bg_file(phi_a0);
+        store_stagenum_to_copyof_stagenum(g_CurrentStageToLoad);
+        init_watch_at_start_of_stage();
+        sub_GAME_7F0C11FC(stage);
+
+        phi_s4 = &player1_player_data;
+        phi_s2 = &player1_player_data;
+
+        do
+        {
+            phi_s0_2 = 0;
+            
+            if (getPlayerCount() == 1)
+            {
+                phi_s4->unk6A = 0;
+                phi_s4->unk6B = 0;
+                phi_s4->unk5C = 1.0f;
+                phi_s4->unk64 = 1.0f;
+            }
+            else
+            {
+                phi_s1_2 = &player1_player_data;
+
+                do
+                {
+                    if (get_scenario() == 4)
+                    {
+                        phi_s1_2->unk5C = 200.0f;
+                    }
+                    else
+                    {
+                        phi_s1_2->unk5C = get_player_mp_handicap(phi_s0_2);
+                    }
+
+                    temp_s0_2 = phi_s0_2 + 1;
+                    temp_s1 = phi_s1_2 + 0x70;
+                    temp_s1->unk-C = get_player_mp_char_height(phi_s0_2);
+                    phi_s1_2 = temp_s1;
+                    phi_s0_2 = temp_s0_2;
+                } while (temp_s0_2 != 4);
+
+                set_mp_time(get_mp_timelimit());
+                set_mp_point(get_mp_pointlimit());
+                copy_aim_settings_to_playerdata();
+            }
+
+            phi_s4->unk34 = 0;
+            phi_s4->unk3C = 0;
+            phi_s4->unk44 = 0x7FFFFFFF;
+            phi_s4->unk48 = 0;
+            phi_s4->unk54 = 0;
+            phi_s4->unk58 = 0;
+            phi_s4->unk4C = 0;
+            phi_s4->unk50 = 0x7FFFFFFF;
+            phi_s4->unk68 = 0;
+            phi_s4->unk60 = 0;
+            phi_s4->unk38 = 0.0f;
+            phi_s4->unk40 = 0.0f;
+            temp_s2 = phi_s2 + 0x70;
+            temp_s2->unk-40 = 0;
+            temp_s2->unk-44 = 0;
+            temp_s2->unk-48 = 0;
+            temp_s2->unk-4C = 0;
+            phi_s4 += 0x70;
+            phi_s2 = temp_s2;
+        } while (temp_s2 != &currentplayer);
+    }
+
+    something_with_stage_objectives();
+    mpwatchUnpauseGame();
+    sub_GAME_7F09B820();
+    sub_GAME_7F005450();
+    zero_contents_of_80036070_74();
+    init_load_objpos_table();
+    reinit_between_menus();
+    init_sound_effects_registers();
+    init_guards();
+    set_new_rand_head_bodies(stage);
+    proplvreset2(stage);
+    alloc_explosion_smoke_casing_scorch_impact_buffers();
+    sub_GAME_7F007180();
+    sub_GAME_7F007290();
+    sub_GAME_7F0072B0();
+
+    if (g_CurrentStageToLoad == LEVELID_TITLE)
+    {
+        disable_onscreen_cheat_text();
+    }
+    else
+    {
+        init_path_table_links();
+        something_with_ejected_cartridges();
+        phi_s0_3 = 0;
+
+        if (getPlayerCount() > 0)
+        {
+            do
+            {
+                set_cur_player(phi_s0_3);
+                reinit_gunheld_totaltime();
+                init_player_BONDdata_stats();
+                init_player_BONDdata();
+                load_camera_intro_type_values();
+                sub_GAME_7F0798B8();
+                sets_a_bunch_of_BONDdata_values_to_default();
+                disable_onscreen_cheat_text();
+                temp_s0_3 = phi_s0_3 + 1;
+                phi_s0_3 = temp_s0_3;
+            } while (temp_s0_3 < getPlayerCount());
+        }
+
+        set_cur_player(0);
+    }
+
+    set_contents_of_80036078(0);
+    zbufDeallocate();
+    viSetVideoMode(1);
+    D_80048368 = 1.0f;
+    set_controls_locked_flag(0);
 }
-#else
-#ifdef VERSION_US
+#endif
+#if 1
 GLOBAL_ASM(
 .text
 glabel stage_load
-/* 0F25E0 7F0BDAB0 3C018005 */  lui   $at, %hi(current_stage_to_load)
-/* 0F25E4 7F0BDAB4 AC248364 */  sw    $a0, %lo(current_stage_to_load)($at)
+/* 0F25E0 7F0BDAB0 3C018005 */  lui   $at, %hi(g_CurrentStageToLoad)
+/* 0F25E4 7F0BDAB4 AC248364 */  sw    $a0, %lo(g_CurrentStageToLoad)($at)
 /* 0F25E8 7F0BDAB8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0F25EC 7F0BDABC 44816000 */  mtc1  $at, $f12
 /* 0F25F0 7F0BDAC0 24020001 */  li    $v0, 1
@@ -215,17 +435,17 @@ glabel stage_load
 /* 0F25F8 7F0BDAC8 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 0F25FC 7F0BDACC AC2283C0 */  sw    $v0, %lo(D_800483C0)($at)
 /* 0F2600 7F0BDAD0 AFB10024 */  sw    $s1, 0x24($sp)
-/* 0F2604 7F0BDAD4 3C018005 */  lui   $at, %hi(controls_locked_flag)
-/* 0F2608 7F0BDAD8 3C118005 */  lui   $s1, %hi(clock_timer)
-/* 0F260C 7F0BDADC AC208370 */  sw    $zero, %lo(controls_locked_flag)($at)
-/* 0F2610 7F0BDAE0 26318374 */  addiu $s1, %lo(clock_timer) # addiu $s1, $s1, -0x7c8c
+/* 0F2604 7F0BDAD4 3C018005 */  lui   $at, %hi(g_ControlsLockedFlag)
+/* 0F2608 7F0BDAD8 3C118005 */  lui   $s1, %hi(g_ClockTimer)
+/* 0F260C 7F0BDADC AC208370 */  sw    $zero, %lo(g_ControlsLockedFlag)($at)
+/* 0F2610 7F0BDAE0 26318374 */  addiu $s1, %lo(g_ClockTimer) # addiu $s1, $s1, -0x7c8c
 /* 0F2614 7F0BDAE4 AE220000 */  sw    $v0, ($s1)
-/* 0F2618 7F0BDAE8 3C018005 */  lui   $at, %hi(global_timer_delta)
-/* 0F261C 7F0BDAEC E42C8378 */  swc1  $f12, %lo(global_timer_delta)($at)
+/* 0F2618 7F0BDAE8 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta)
+/* 0F261C 7F0BDAEC E42C8378 */  swc1  $f12, %lo(g_GlobalTimerDelta)($at)
 /* 0F2620 7F0BDAF0 3C018005 */  lui   $at, %hi(D_80048380)
 /* 0F2624 7F0BDAF4 AC208380 */  sw    $zero, %lo(D_80048380)($at)
-/* 0F2628 7F0BDAF8 3C018005 */  lui   $at, %hi(global_timer)
-/* 0F262C 7F0BDAFC AC20837C */  sw    $zero, %lo(global_timer)($at)
+/* 0F2628 7F0BDAF8 3C018005 */  lui   $at, %hi(g_GlobalTimer)
+/* 0F262C 7F0BDAFC AC20837C */  sw    $zero, %lo(g_GlobalTimer)($at)
 
 /* 0F2630 7F0BDB00 3C018005 */  lui   $at, %hi(D_80048388)
 /* 0F2634 7F0BDB04 AC208388 */  sw    $zero, %lo(D_80048388)($at)
@@ -239,12 +459,12 @@ glabel stage_load
 /* 0F2654 7F0BDB24 26108394 */  addiu $s0, %lo(D_80048394) # addiu $s0, $s0, -0x7c6c
 
 /* 0F2658 7F0BDB28 AE000000 */  sw    $zero, ($s0)
-/* 0F265C 7F0BDB2C 3C018005 */  lui   $at, %hi(cur_mp_sec)
-/* 0F2660 7F0BDB30 E42083A4 */  swc1  $f0, %lo(cur_mp_sec)($at)
+/* 0F265C 7F0BDB2C 3C018005 */  lui   $at, %hi(g_CurrentMultiPlayerSec)
+/* 0F2660 7F0BDB30 E42083A4 */  swc1  $f0, %lo(g_CurrentMultiPlayerSec)($at)
 /* 0F2664 7F0BDB34 3C018005 */  lui   $at, %hi(D_800483B0)
 /* 0F2668 7F0BDB38 AC2083B0 */  sw    $zero, %lo(D_800483B0)($at)
-/* 0F266C 7F0BDB3C 3C018005 */  lui   $at, %hi(stage_time_sec)
-/* 0F2670 7F0BDB40 E42083B4 */  swc1  $f0, %lo(stage_time_sec)($at)
+/* 0F266C 7F0BDB3C 3C018005 */  lui   $at, %hi(g_StageTimeSec)
+/* 0F2670 7F0BDB40 E42083B4 */  swc1  $f0, %lo(g_StageTimeSec)($at)
 /* 0F2674 7F0BDB44 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 0F2678 7F0BDB48 3C018005 */  lui   $at, %hi(D_800483A0)
 /* 0F267C 7F0BDB4C AFB40030 */  sw    $s4, 0x30($sp)
@@ -281,10 +501,10 @@ glabel stage_load
 /* 0F26F8 7F0BDBC8 10000073 */  b     .L7F0BDD98
 /* 0F26FC 7F0BDBCC 00000000 */   nop
 .L7F0BDBD0:
-/* 0F2700 7F0BDBD0 3C048005 */  lui   $a0, %hi(current_stage_to_load)
-/* 0F2704 7F0BDBD4 8C848364 */  lw    $a0, %lo(current_stage_to_load)($a0)
-/* 0F2708 7F0BDBD8 3C018007 */  lui    $at, %hi(g_newcheatunlocked) # -0.000000
-/* 0F270C 7F0BDBDC AC209790 */  sw    $zero, %lo(g_newcheatunlocked)($at)
+/* 0F2700 7F0BDBD0 3C048005 */  lui   $a0, %hi(g_CurrentStageToLoad)
+/* 0F2704 7F0BDBD4 8C848364 */  lw    $a0, %lo(g_CurrentStageToLoad)($a0)
+/* 0F2708 7F0BDBD8 3C018007 */  lui    $at, %hi(g_NewCheatUnlocked) # -0.000000
+/* 0F270C 7F0BDBDC AC209790 */  sw    $zero, %lo(g_NewCheatUnlocked)($at)
 /* 0F2710 7F0BDBE0 2401005A */  li    $at, 90
 /* 0F2714 7F0BDBE4 1081001C */  beq   $a0, $at, .L7F0BDC58
 /* 0F2718 7F0BDBE8 00000000 */   nop
@@ -292,12 +512,12 @@ glabel stage_load
 /* 0F2720 7F0BDBF0 17000019 */  bnez  $t8, .L7F0BDC58
 /* 0F2724 7F0BDBF4 00000000 */   nop
 /* 0F2728 7F0BDBF8 8E390000 */  lw    $t9, ($s1)
-/* 0F272C 7F0BDBFC 3C088003 */  lui   $t0, %hi(append_cheat_sp)
+/* 0F272C 7F0BDBFC 3C088003 */  lui   $t0, %hi(g_AppendCheatSinglePlayer)
 /* 0F2730 7F0BDC00 1B200015 */  blez  $t9, .L7F0BDC58
 /* 0F2734 7F0BDC04 00000000 */   nop
-/* 0F2738 7F0BDC08 8D08A900 */  lw    $t0, %lo(append_cheat_sp)($t0)
-/* 0F273C 7F0BDC0C 3C118007 */  lui   $s1, %hi(cheat_activated + 1)
-/* 0F2740 7F0BDC10 263196A1 */  addiu $s1, %lo(cheat_activated + 1) # addiu $s1, $s1, -0x695f
+/* 0F2738 7F0BDC08 8D08A900 */  lw    $t0, %lo(g_AppendCheatSinglePlayer)($t0)
+/* 0F273C 7F0BDC0C 3C118007 */  lui   $s1, %hi(g_CheatActivated + 1)
+/* 0F2740 7F0BDC10 263196A1 */  addiu $s1, %lo(g_CheatActivated + 1) # addiu $s1, $s1, -0x695f
 /* 0F2744 7F0BDC14 11000010 */  beqz  $t0, .L7F0BDC58
 /* 0F2748 7F0BDC18 24100001 */   li    $s0, 1
 /* 0F274C 7F0BDC1C 2412004B */  li    $s2, 75
@@ -315,14 +535,14 @@ glabel stage_load
 .L7F0BDC48:
 /* 0F2778 7F0BDC48 1612FFF5 */  bne   $s0, $s2, .L7F0BDC20
 /* 0F277C 7F0BDC4C 26310001 */   addiu $s1, $s1, 1
-/* 0F2780 7F0BDC50 3C048005 */  lui   $a0, %hi(current_stage_to_load)
-/* 0F2784 7F0BDC54 8C848364 */  lw    $a0, %lo(current_stage_to_load)($a0)
+/* 0F2780 7F0BDC50 3C048005 */  lui   $a0, %hi(g_CurrentStageToLoad)
+/* 0F2784 7F0BDC54 8C848364 */  lw    $a0, %lo(g_CurrentStageToLoad)($a0)
 .L7F0BDC58:
 /* 0F2788 7F0BDC58 0FC2D049 */  jal   load_bg_file
 /* 0F278C 7F0BDC5C 00000000 */   nop
-/* 0F2790 7F0BDC60 3C048005 */  lui   $a0, %hi(current_stage_to_load)
+/* 0F2790 7F0BDC60 3C048005 */  lui   $a0, %hi(g_CurrentStageToLoad)
 /* 0F2794 7F0BDC64 0FC2510B */  jal   store_stagenum_to_copyof_stagenum
-/* 0F2798 7F0BDC68 8C848364 */   lw    $a0, %lo(current_stage_to_load)($a0)
+/* 0F2798 7F0BDC68 8C848364 */   lw    $a0, %lo(g_CurrentStageToLoad)($a0)
 /* 0F279C 7F0BDC6C 0FC2921A */  jal   init_watch_at_start_of_stage
 /* 0F27A0 7F0BDC70 00000000 */   nop
 /* 0F27A4 7F0BDC74 0FC3047F */  jal   sub_GAME_7F0C11FC
@@ -435,8 +655,8 @@ glabel stage_load
 /* 0F2934 7F0BDE04 00000000 */   nop
 /* 0F2938 7F0BDE08 0FC01CAC */  jal   sub_GAME_7F0072B0
 /* 0F293C 7F0BDE0C 00000000 */   nop
-/* 0F2940 7F0BDE10 3C0C8005 */  lui   $t4, %hi(current_stage_to_load)
-/* 0F2944 7F0BDE14 8D8C8364 */  lw    $t4, %lo(current_stage_to_load)($t4)
+/* 0F2940 7F0BDE10 3C0C8005 */  lui   $t4, %hi(g_CurrentStageToLoad)
+/* 0F2944 7F0BDE14 8D8C8364 */  lw    $t4, %lo(g_CurrentStageToLoad)($t4)
 /* 0F2948 7F0BDE18 2401005A */  li    $at, 90
 /* 0F294C 7F0BDE1C 15810005 */  bne   $t4, $at, .L7F0BDE34
 /* 0F2950 7F0BDE20 00000000 */   nop
@@ -507,8 +727,8 @@ glabel stage_load
 GLOBAL_ASM(
 .text
 glabel stage_load
-/* 0F31D0 7F0BE660 3C018005 */  lui   $at, %hi(current_stage_to_load) # $at, 0x8005
-/* 0F31D4 7F0BE664 AC248394 */  sw    $a0, %lo(current_stage_to_load)($at)
+/* 0F31D0 7F0BE660 3C018005 */  lui   $at, %hi(g_CurrentStageToLoad) # $at, 0x8005
+/* 0F31D4 7F0BE664 AC248394 */  sw    $a0, %lo(g_CurrentStageToLoad)($at)
 /* 0F31D8 7F0BE668 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0F31DC 7F0BE66C 44816000 */  mtc1  $at, $f12
 /* 0F31E0 7F0BE670 24020001 */  li    $v0, 1
@@ -516,17 +736,17 @@ glabel stage_load
 /* 0F31E8 7F0BE678 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 0F31EC 7F0BE67C AC2283F4 */  sw    $v0, %lo(D_800483C0)($at)
 /* 0F31F0 7F0BE680 AFB10024 */  sw    $s1, 0x24($sp)
-/* 0F31F4 7F0BE684 3C018005 */  lui   $at, %hi(controls_locked_flag) # $at, 0x8005
-/* 0F31F8 7F0BE688 3C118005 */  lui   $s1, %hi(clock_timer) # $s1, 0x8005
-/* 0F31FC 7F0BE68C AC2083A0 */  sw    $zero, %lo(controls_locked_flag)($at)
-/* 0F3200 7F0BE690 263183A4 */  addiu $s1, %lo(clock_timer) # addiu $s1, $s1, -0x7c5c
+/* 0F31F4 7F0BE684 3C018005 */  lui   $at, %hi(g_ControlsLockedFlag) # $at, 0x8005
+/* 0F31F8 7F0BE688 3C118005 */  lui   $s1, %hi(g_ClockTimer) # $s1, 0x8005
+/* 0F31FC 7F0BE68C AC2083A0 */  sw    $zero, %lo(g_ControlsLockedFlag)($at)
+/* 0F3200 7F0BE690 263183A4 */  addiu $s1, %lo(g_ClockTimer) # addiu $s1, $s1, -0x7c5c
 /* 0F3204 7F0BE694 AE220000 */  sw    $v0, ($s1)
 /* 0F3208 7F0BE698 3C018005 */  lui   $at, %hi(jp_global_timer_delta) # $at, 0x8005
 /* 0F320C 7F0BE69C E42C83A8 */  swc1  $f12, %lo(jp_global_timer_delta)($at)
 /* 0F3210 7F0BE6A0 3C018005 */  lui   $at, %hi(D_80048380) # $at, 0x8005
 /* 0F3214 7F0BE6A4 AC2083B0 */  sw    $zero, %lo(D_80048380)($at)
-/* 0F3218 7F0BE6A8 3C018005 */  lui   $at, %hi(global_timer) # $at, 0x8005
-/* 0F321C 7F0BE6AC AC2083AC */  sw    $zero, %lo(global_timer)($at)
+/* 0F3218 7F0BE6A8 3C018005 */  lui   $at, %hi(g_GlobalTimer) # $at, 0x8005
+/* 0F321C 7F0BE6AC AC2083AC */  sw    $zero, %lo(g_GlobalTimer)($at)
 /* 0F3220 7F0BE6B0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0F3224 7F0BE6B4 44812000 */  mtc1  $at, $f4
 
@@ -544,12 +764,12 @@ glabel stage_load
 /* 0F3254 7F0BE6E4 261083C8 */  addiu $s0, %lo(D_80048394) # addiu $s0, $s0, -0x7c38
 
 /* 0F3258 7F0BE6E8 AE000000 */  sw    $zero, ($s0)
-/* 0F325C 7F0BE6EC 3C018005 */  lui   $at, %hi(cur_mp_sec) # $at, 0x8005
-/* 0F3260 7F0BE6F0 E42083D8 */  swc1  $f0, %lo(cur_mp_sec)($at)
+/* 0F325C 7F0BE6EC 3C018005 */  lui   $at, %hi(g_CurrentMultiPlayerSec) # $at, 0x8005
+/* 0F3260 7F0BE6F0 E42083D8 */  swc1  $f0, %lo(g_CurrentMultiPlayerSec)($at)
 /* 0F3264 7F0BE6F4 3C018005 */  lui   $at, %hi(D_800483B0) # $at, 0x8005
 /* 0F3268 7F0BE6F8 AC2083E4 */  sw    $zero, %lo(D_800483B0)($at)
-/* 0F326C 7F0BE6FC 3C018005 */  lui   $at, %hi(stage_time_sec) # $at, 0x8005
-/* 0F3270 7F0BE700 E42083E8 */  swc1  $f0, %lo(stage_time_sec)($at)
+/* 0F326C 7F0BE6FC 3C018005 */  lui   $at, %hi(g_StageTimeSec) # $at, 0x8005
+/* 0F3270 7F0BE700 E42083E8 */  swc1  $f0, %lo(g_StageTimeSec)($at)
 /* 0F3274 7F0BE704 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 0F3278 7F0BE708 3C018005 */  lui   $at, %hi(D_800483A0) # $at, 0x8005
 /* 0F327C 7F0BE70C AFB40030 */  sw    $s4, 0x30($sp)
@@ -586,10 +806,10 @@ glabel stage_load
 /* 0F32F8 7F0BE788 10000073 */  b     .Ljp7F0BE958
 /* 0F32FC 7F0BE78C 00000000 */   nop
 .Ljp7F0BE790:
-/* 0F3300 7F0BE790 3C048005 */  lui   $a0, %hi(current_stage_to_load) # $a0, 0x8005
-/* 0F3304 7F0BE794 8C848394 */  lw    $a0, %lo(current_stage_to_load)($a0)
-/* 0F3308 7F0BE798 3C018007 */  lui    $at, %hi(g_newcheatunlocked)
-/* 0F330C 7F0BE79C AC2097D0 */  sw    $zero, %lo(g_newcheatunlocked)($at)
+/* 0F3300 7F0BE790 3C048005 */  lui   $a0, %hi(g_CurrentStageToLoad) # $a0, 0x8005
+/* 0F3304 7F0BE794 8C848394 */  lw    $a0, %lo(g_CurrentStageToLoad)($a0)
+/* 0F3308 7F0BE798 3C018007 */  lui    $at, %hi(g_NewCheatUnlocked)
+/* 0F330C 7F0BE79C AC2097D0 */  sw    $zero, %lo(g_NewCheatUnlocked)($at)
 /* 0F3310 7F0BE7A0 2401005A */  li    $at, 90
 /* 0F3314 7F0BE7A4 1081001C */  beq   $a0, $at, .Ljp7F0BE818
 /* 0F3318 7F0BE7A8 00000000 */   nop
@@ -597,12 +817,12 @@ glabel stage_load
 /* 0F3320 7F0BE7B0 17000019 */  bnez  $t8, .Ljp7F0BE818
 /* 0F3324 7F0BE7B4 00000000 */   nop
 /* 0F3328 7F0BE7B8 8E390000 */  lw    $t9, ($s1)
-/* 0F332C 7F0BE7BC 3C088003 */  lui   $t0, %hi(append_cheat_sp) # $t0, 0x8003
+/* 0F332C 7F0BE7BC 3C088003 */  lui   $t0, %hi(g_AppendCheatSinglePlayer) # $t0, 0x8003
 /* 0F3330 7F0BE7C0 1B200015 */  blez  $t9, .Ljp7F0BE818
 /* 0F3334 7F0BE7C4 00000000 */   nop
-/* 0F3338 7F0BE7C8 8D08A940 */  lw    $t0, %lo(append_cheat_sp)($t0)
-/* 0F333C 7F0BE7CC 3C118007 */  lui   $s1, %hi(cheat_activated + 1) # $s1, 0x8007
-/* 0F3340 7F0BE7D0 263196E1 */  addiu $s1, %lo(cheat_activated + 1) # addiu $s1, $s1, -0x691f
+/* 0F3338 7F0BE7C8 8D08A940 */  lw    $t0, %lo(g_AppendCheatSinglePlayer)($t0)
+/* 0F333C 7F0BE7CC 3C118007 */  lui   $s1, %hi(g_CheatActivated + 1) # $s1, 0x8007
+/* 0F3340 7F0BE7D0 263196E1 */  addiu $s1, %lo(g_CheatActivated + 1) # addiu $s1, $s1, -0x691f
 /* 0F3344 7F0BE7D4 11000010 */  beqz  $t0, .Ljp7F0BE818
 /* 0F3348 7F0BE7D8 24100001 */   li    $s0, 1
 /* 0F334C 7F0BE7DC 2412004B */  li    $s2, 75
@@ -620,14 +840,14 @@ glabel stage_load
 .Ljp7F0BE808:
 /* 0F3378 7F0BE808 1612FFF5 */  bne   $s0, $s2, .Ljp7F0BE7E0
 /* 0F337C 7F0BE80C 26310001 */   addiu $s1, $s1, 1
-/* 0F3380 7F0BE810 3C048005 */  lui   $a0, %hi(current_stage_to_load) # $a0, 0x8005
-/* 0F3384 7F0BE814 8C848394 */  lw    $a0, %lo(current_stage_to_load)($a0)
+/* 0F3380 7F0BE810 3C048005 */  lui   $a0, %hi(g_CurrentStageToLoad) # $a0, 0x8005
+/* 0F3384 7F0BE814 8C848394 */  lw    $a0, %lo(g_CurrentStageToLoad)($a0)
 .Ljp7F0BE818:
 /* 0F3388 7F0BE818 0FC2D335 */  jal   load_bg_file
 /* 0F338C 7F0BE81C 00000000 */   nop
-/* 0F3390 7F0BE820 3C048005 */  lui   $a0, %hi(current_stage_to_load) # $a0, 0x8005
+/* 0F3390 7F0BE820 3C048005 */  lui   $a0, %hi(g_CurrentStageToLoad) # $a0, 0x8005
 /* 0F3394 7F0BE824 0FC253F3 */  jal   store_stagenum_to_copyof_stagenum
-/* 0F3398 7F0BE828 8C848394 */   lw    $a0, %lo(current_stage_to_load)($a0)
+/* 0F3398 7F0BE828 8C848394 */   lw    $a0, %lo(g_CurrentStageToLoad)($a0)
 /* 0F339C 7F0BE82C 0FC29502 */  jal   init_watch_at_start_of_stage
 /* 0F33A0 7F0BE830 00000000 */   nop
 /* 0F33A4 7F0BE834 0FC307AB */  jal   sub_GAME_7F0C11FC
@@ -740,8 +960,8 @@ glabel stage_load
 /* 0F3534 7F0BE9C4 00000000 */   nop
 /* 0F3538 7F0BE9C8 0FC01CB4 */  jal   sub_GAME_7F0072B0
 /* 0F353C 7F0BE9CC 00000000 */   nop
-/* 0F3540 7F0BE9D0 3C0C8005 */  lui   $t4, %hi(current_stage_to_load) # $t4, 0x8005
-/* 0F3544 7F0BE9D4 8D8C8394 */  lw    $t4, %lo(current_stage_to_load)($t4)
+/* 0F3540 7F0BE9D0 3C0C8005 */  lui   $t4, %hi(g_CurrentStageToLoad) # $t4, 0x8005
+/* 0F3544 7F0BE9D4 8D8C8394 */  lw    $t4, %lo(g_CurrentStageToLoad)($t4)
 /* 0F3548 7F0BE9D8 2401005A */  li    $at, 90
 /* 0F354C 7F0BE9DC 15810005 */  bne   $t4, $at, .Ljp7F0BE9F4
 /* 0F3550 7F0BE9E0 00000000 */   nop
@@ -811,8 +1031,8 @@ glabel stage_load
 GLOBAL_ASM(
 .text
 glabel stage_load
-/* 0F25E0 7F0BDAB0 3C018005 */  lui   $at, %hi(current_stage_to_load)
-/* 0F25E4 7F0BDAB4 AC248364 */  sw    $a0, %lo(current_stage_to_load)($at)
+/* 0F25E0 7F0BDAB0 3C018005 */  lui   $at, %hi(g_CurrentStageToLoad)
+/* 0F25E4 7F0BDAB4 AC248364 */  sw    $a0, %lo(g_CurrentStageToLoad)($at)
 /* 0F25E8 7F0BDAB8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0F25EC 7F0BDABC 44816000 */  mtc1  $at, $f12
 /* 0F25F0 7F0BDAC0 24020001 */  li    $v0, 1
@@ -820,17 +1040,17 @@ glabel stage_load
 /* 0F25F8 7F0BDAC8 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 0F25FC 7F0BDACC AC2283C0 */  sw    $v0, %lo(D_800483C0)($at)
 /* 0F2600 7F0BDAD0 AFB10024 */  sw    $s1, 0x24($sp)
-/* 0F2604 7F0BDAD4 3C018005 */  lui   $at, %hi(controls_locked_flag)
-/* 0F2608 7F0BDAD8 3C118005 */  lui   $s1, %hi(clock_timer)
-/* 0F260C 7F0BDADC AC208370 */  sw    $zero, %lo(controls_locked_flag)($at)
-/* 0F2610 7F0BDAE0 26318374 */  addiu $s1, %lo(clock_timer) # addiu $s1, $s1, -0x7c8c
+/* 0F2604 7F0BDAD4 3C018005 */  lui   $at, %hi(g_ControlsLockedFlag)
+/* 0F2608 7F0BDAD8 3C118005 */  lui   $s1, %hi(g_ClockTimer)
+/* 0F260C 7F0BDADC AC208370 */  sw    $zero, %lo(g_ControlsLockedFlag)($at)
+/* 0F2610 7F0BDAE0 26318374 */  addiu $s1, %lo(g_ClockTimer) # addiu $s1, $s1, -0x7c8c
 /* 0F2614 7F0BDAE4 AE220000 */  sw    $v0, ($s1)
-/* 0F2618 7F0BDAE8 3C018005 */  lui   $at, %hi(global_timer_delta)
-/* 0F261C 7F0BDAEC E42C8378 */  swc1  $f12, %lo(global_timer_delta)($at)
+/* 0F2618 7F0BDAE8 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta)
+/* 0F261C 7F0BDAEC E42C8378 */  swc1  $f12, %lo(g_GlobalTimerDelta)($at)
 /* 0F2620 7F0BDAF0 3C018005 */  lui   $at, %hi(D_80048380)
 /* 0F2624 7F0BDAF4 AC208380 */  sw    $zero, %lo(D_80048380)($at)
-/* 0F2628 7F0BDAF8 3C018005 */  lui   $at, %hi(global_timer)
-/* 0F262C 7F0BDAFC AC20837C */  sw    $zero, %lo(global_timer)($at)
+/* 0F2628 7F0BDAF8 3C018005 */  lui   $at, %hi(g_GlobalTimer)
+/* 0F262C 7F0BDAFC AC20837C */  sw    $zero, %lo(g_GlobalTimer)($at)
 
 /* 0F2630 7F0BDB00 3C018005 */  lui   $at, %hi(D_80048388)
 /* 0F2634 7F0BDB04 AC208388 */  sw    $zero, %lo(D_80048388)($at)
@@ -844,12 +1064,12 @@ glabel stage_load
 /* 0F2654 7F0BDB24 26108394 */  addiu $s0, %lo(D_80048394) # addiu $s0, $s0, -0x7c6c
 
 /* 0F2658 7F0BDB28 AE000000 */  sw    $zero, ($s0)
-/* 0F265C 7F0BDB2C 3C018005 */  lui   $at, %hi(cur_mp_sec)
-/* 0F2660 7F0BDB30 E42083A4 */  swc1  $f0, %lo(cur_mp_sec)($at)
+/* 0F265C 7F0BDB2C 3C018005 */  lui   $at, %hi(g_CurrentMultiPlayerSec)
+/* 0F2660 7F0BDB30 E42083A4 */  swc1  $f0, %lo(g_CurrentMultiPlayerSec)($at)
 /* 0F2664 7F0BDB34 3C018005 */  lui   $at, %hi(D_800483B0)
 /* 0F2668 7F0BDB38 AC2083B0 */  sw    $zero, %lo(D_800483B0)($at)
-/* 0F266C 7F0BDB3C 3C018005 */  lui   $at, %hi(stage_time_sec)
-/* 0F2670 7F0BDB40 E42083B4 */  swc1  $f0, %lo(stage_time_sec)($at)
+/* 0F266C 7F0BDB3C 3C018005 */  lui   $at, %hi(g_StageTimeSec)
+/* 0F2670 7F0BDB40 E42083B4 */  swc1  $f0, %lo(g_StageTimeSec)($at)
 /* 0F2674 7F0BDB44 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 0F2678 7F0BDB48 3C018005 */  lui   $at, %hi(D_800483A0)
 /* 0F267C 7F0BDB4C AFB40030 */  sw    $s4, 0x30($sp)
@@ -886,10 +1106,10 @@ glabel stage_load
 /* 0F26F8 7F0BDBC8 10000073 */  b     .L7F0BDD98
 /* 0F26FC 7F0BDBCC 00000000 */   nop
 .L7F0BDBD0:
-/* 0F2700 7F0BDBD0 3C048005 */  lui   $a0, %hi(current_stage_to_load)
-/* 0F2704 7F0BDBD4 8C848364 */  lw    $a0, %lo(current_stage_to_load)($a0)
-/* 0F2708 7F0BDBD8 3C018007 */  lui    $at, %hi(g_newcheatunlocked) # -0.000000
-/* 0F270C 7F0BDBDC AC209790 */  sw    $zero, %lo(g_newcheatunlocked)($at)
+/* 0F2700 7F0BDBD0 3C048005 */  lui   $a0, %hi(g_CurrentStageToLoad)
+/* 0F2704 7F0BDBD4 8C848364 */  lw    $a0, %lo(g_CurrentStageToLoad)($a0)
+/* 0F2708 7F0BDBD8 3C018007 */  lui    $at, %hi(g_NewCheatUnlocked) # -0.000000
+/* 0F270C 7F0BDBDC AC209790 */  sw    $zero, %lo(g_NewCheatUnlocked)($at)
 /* 0F2710 7F0BDBE0 2401005A */  li    $at, 90
 /* 0F2714 7F0BDBE4 1081001C */  beq   $a0, $at, .L7F0BDC58
 /* 0F2718 7F0BDBE8 00000000 */   nop
@@ -897,12 +1117,12 @@ glabel stage_load
 /* 0F2720 7F0BDBF0 17000019 */  bnez  $t8, .L7F0BDC58
 /* 0F2724 7F0BDBF4 00000000 */   nop
 /* 0F2728 7F0BDBF8 8E390000 */  lw    $t9, ($s1)
-/* 0F272C 7F0BDBFC 3C088003 */  lui   $t0, %hi(append_cheat_sp)
+/* 0F272C 7F0BDBFC 3C088003 */  lui   $t0, %hi(g_AppendCheatSinglePlayer)
 /* 0F2730 7F0BDC00 1B200015 */  blez  $t9, .L7F0BDC58
 /* 0F2734 7F0BDC04 00000000 */   nop
-/* 0F2738 7F0BDC08 8D08A900 */  lw    $t0, %lo(append_cheat_sp)($t0)
-/* 0F273C 7F0BDC0C 3C118007 */  lui   $s1, %hi(cheat_activated + 1)
-/* 0F2740 7F0BDC10 263196A1 */  addiu $s1, %lo(cheat_activated + 1) # addiu $s1, $s1, -0x695f
+/* 0F2738 7F0BDC08 8D08A900 */  lw    $t0, %lo(g_AppendCheatSinglePlayer)($t0)
+/* 0F273C 7F0BDC0C 3C118007 */  lui   $s1, %hi(g_CheatActivated + 1)
+/* 0F2740 7F0BDC10 263196A1 */  addiu $s1, %lo(g_CheatActivated + 1) # addiu $s1, $s1, -0x695f
 /* 0F2744 7F0BDC14 11000010 */  beqz  $t0, .L7F0BDC58
 /* 0F2748 7F0BDC18 24100001 */   li    $s0, 1
 /* 0F274C 7F0BDC1C 2412004B */  li    $s2, 75
@@ -920,14 +1140,14 @@ glabel stage_load
 .L7F0BDC48:
 /* 0F2778 7F0BDC48 1612FFF5 */  bne   $s0, $s2, .L7F0BDC20
 /* 0F277C 7F0BDC4C 26310001 */   addiu $s1, $s1, 1
-/* 0F2780 7F0BDC50 3C048005 */  lui   $a0, %hi(current_stage_to_load)
-/* 0F2784 7F0BDC54 8C848364 */  lw    $a0, %lo(current_stage_to_load)($a0)
+/* 0F2780 7F0BDC50 3C048005 */  lui   $a0, %hi(g_CurrentStageToLoad)
+/* 0F2784 7F0BDC54 8C848364 */  lw    $a0, %lo(g_CurrentStageToLoad)($a0)
 .L7F0BDC58:
 /* 0F2788 7F0BDC58 0FC2D049 */  jal   load_bg_file
 /* 0F278C 7F0BDC5C 00000000 */   nop
-/* 0F2790 7F0BDC60 3C048005 */  lui   $a0, %hi(current_stage_to_load)
+/* 0F2790 7F0BDC60 3C048005 */  lui   $a0, %hi(g_CurrentStageToLoad)
 /* 0F2794 7F0BDC64 0FC2510B */  jal   store_stagenum_to_copyof_stagenum
-/* 0F2798 7F0BDC68 8C848364 */   lw    $a0, %lo(current_stage_to_load)($a0)
+/* 0F2798 7F0BDC68 8C848364 */   lw    $a0, %lo(g_CurrentStageToLoad)($a0)
 /* 0F279C 7F0BDC6C 0FC2921A */  jal   init_watch_at_start_of_stage
 /* 0F27A0 7F0BDC70 00000000 */   nop
 /* 0F27A4 7F0BDC74 0FC3047F */  jal   sub_GAME_7F0C11FC
@@ -1040,8 +1260,8 @@ glabel stage_load
 /* 0F2934 7F0BDE04 00000000 */   nop
 /* 0F2938 7F0BDE08 0FC01CAC */  jal   sub_GAME_7F0072B0
 /* 0F293C 7F0BDE0C 00000000 */   nop
-/* 0F2940 7F0BDE10 3C0C8005 */  lui   $t4, %hi(current_stage_to_load)
-/* 0F2944 7F0BDE14 8D8C8364 */  lw    $t4, %lo(current_stage_to_load)($t4)
+/* 0F2940 7F0BDE10 3C0C8005 */  lui   $t4, %hi(g_CurrentStageToLoad)
+/* 0F2944 7F0BDE14 8D8C8364 */  lw    $t4, %lo(g_CurrentStageToLoad)($t4)
 /* 0F2948 7F0BDE18 2401005A */  li    $at, 90
 /* 0F294C 7F0BDE1C 15810005 */  bne   $t4, $at, .L7F0BDE34
 /* 0F2950 7F0BDE20 00000000 */   nop
@@ -1112,7 +1332,7 @@ glabel stage_load
 
 
 s32 sub_GAME_7F0BDF04(void) {
-    return current_stage_to_load;
+    return g_CurrentStageToLoad;
 }
 
 
@@ -1427,7 +1647,7 @@ Gfx* lvRender(Gfx* DL)
     //DL->unk0 = 0x6000000; //rsp_uc05_displaylist push
     //DL->unk4 = 0x1000020; //segment 1, offset 0x20
 
-    if (current_stage_to_load == 0x5A)
+    if (g_CurrentStageToLoad == LEVELID_TITLE)
     {
         DL = viClearZBufCurrentPlayer(DL);
         DL = video_related_F(DL);
@@ -1617,10 +1837,10 @@ glabel lvRender
 /* 0F2EB8 7F0BE388 27180020 */  addiu $t8, $t8, 0x20
 /* 0F2EBC 7F0BE38C 25CF0008 */  addiu $t7, $t6, 8
 /* 0F2EC0 7F0BE390 AFAF0060 */  sw    $t7, 0x60($sp)
-/* 0F2EC4 7F0BE394 3C198005 */  lui   $t9, %hi(current_stage_to_load)
+/* 0F2EC4 7F0BE394 3C198005 */  lui   $t9, %hi(g_CurrentStageToLoad)
 /* 0F2EC8 7F0BE398 ADD80004 */  sw    $t8, 4($t6)
 /* 0F2ECC 7F0BE39C ADC50000 */  sw    $a1, ($t6)
-/* 0F2ED0 7F0BE3A0 8F398364 */  lw    $t9, %lo(current_stage_to_load)($t9)
+/* 0F2ED0 7F0BE3A0 8F398364 */  lw    $t9, %lo(g_CurrentStageToLoad)($t9)
 /* 0F2ED4 7F0BE3A4 2401005A */  li    $at, 90
 /* 0F2ED8 7F0BE3A8 17210025 */  bne   $t9, $at, .L7F0BE440
 /* 0F2EDC 7F0BE3AC 00000000 */   nop
@@ -2041,10 +2261,10 @@ glabel lvRender
 /* 0F3AB8 7F0BEF48 27180020 */  addiu $t8, $t8, 0x20
 /* 0F3ABC 7F0BEF4C 25CF0008 */  addiu $t7, $t6, 8
 /* 0F3AC0 7F0BEF50 AFAF0060 */  sw    $t7, 0x60($sp)
-/* 0F3AC4 7F0BEF54 3C198005 */  lui   $t9, %hi(current_stage_to_load) # $t9, 0x8005
+/* 0F3AC4 7F0BEF54 3C198005 */  lui   $t9, %hi(g_CurrentStageToLoad) # $t9, 0x8005
 /* 0F3AC8 7F0BEF58 ADD80004 */  sw    $t8, 4($t6)
 /* 0F3ACC 7F0BEF5C ADC50000 */  sw    $a1, ($t6)
-/* 0F3AD0 7F0BEF60 8F398394 */  lw    $t9, %lo(current_stage_to_load)($t9)
+/* 0F3AD0 7F0BEF60 8F398394 */  lw    $t9, %lo(g_CurrentStageToLoad)($t9)
 /* 0F3AD4 7F0BEF64 2401005A */  li    $at, 90
 /* 0F3AD8 7F0BEF68 17210025 */  bne   $t9, $at, .Ljp7F0BF000
 /* 0F3ADC 7F0BEF6C 00000000 */   nop
@@ -2475,10 +2695,10 @@ glabel lvRender
 /* 0F2EB8 7F0BE388 27180020 */  addiu $t8, $t8, 0x20
 /* 0F2EBC 7F0BE38C 25CF0008 */  addiu $t7, $t6, 8
 /* 0F2EC0 7F0BE390 AFAF0060 */  sw    $t7, 0x60($sp)
-/* 0F2EC4 7F0BE394 3C198005 */  lui   $t9, %hi(current_stage_to_load)
+/* 0F2EC4 7F0BE394 3C198005 */  lui   $t9, %hi(g_CurrentStageToLoad)
 /* 0F2EC8 7F0BE398 ADD80004 */  sw    $t8, 4($t6)
 /* 0F2ECC 7F0BE39C ADC50000 */  sw    $a1, ($t6)
-/* 0F2ED0 7F0BE3A0 8F398364 */  lw    $t9, %lo(current_stage_to_load)($t9)
+/* 0F2ED0 7F0BE3A0 8F398364 */  lw    $t9, %lo(g_CurrentStageToLoad)($t9)
 /* 0F2ED4 7F0BE3A4 2401005A */  li    $at, 90
 /* 0F2ED8 7F0BE3A8 17210025 */  bne   $t9, $at, .L7F0BE440
 /* 0F2EDC 7F0BE3AC 00000000 */   nop
@@ -3577,56 +3797,56 @@ glabel manage_mp_game
 /* 0F36BC 7F0BEB8C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F36C0 7F0BEB90 0C000626 */  jal   tlbmanageResetCurrentEntriesCount
 /* 0F36C4 7F0BEB94 00000000 */   nop
-/* 0F36C8 7F0BEB98 3C0E8005 */  lui   $t6, %hi(controls_locked_flag)
-/* 0F36CC 7F0BEB9C 8DCE8370 */  lw    $t6, %lo(controls_locked_flag)($t6)
-/* 0F36D0 7F0BEBA0 3C018005 */  lui   $at, %hi(clock_timer)
+/* 0F36C8 7F0BEB98 3C0E8005 */  lui   $t6, %hi(g_ControlsLockedFlag)
+/* 0F36CC 7F0BEB9C 8DCE8370 */  lw    $t6, %lo(g_ControlsLockedFlag)($t6)
+/* 0F36D0 7F0BEBA0 3C018005 */  lui   $at, %hi(g_ClockTimer)
 /* 0F36D4 7F0BEBA4 11C00003 */  beqz  $t6, .L7F0BEBB4
 /* 0F36D8 7F0BEBA8 00000000 */   nop
 /* 0F36DC 7F0BEBAC 10000010 */  b     .L7F0BEBF0
-/* 0F36E0 7F0BEBB0 AC208374 */   sw    $zero, %lo(clock_timer)($at)
+/* 0F36E0 7F0BEBB0 AC208374 */   sw    $zero, %lo(g_ClockTimer)($at)
 .L7F0BEBB4:
 /* 0F36E4 7F0BEBB4 0FC31820 */  jal   checkGamePaused
 /* 0F36E8 7F0BEBB8 00000000 */   nop
 /* 0F36EC 7F0BEBBC 10400004 */  beqz  $v0, .L7F0BEBD0
 /* 0F36F0 7F0BEBC0 3C0F8005 */   lui   $t7, %hi(speedgraphframes)
-/* 0F36F4 7F0BEBC4 3C018005 */  lui   $at, %hi(clock_timer)
+/* 0F36F4 7F0BEBC4 3C018005 */  lui   $at, %hi(g_ClockTimer)
 /* 0F36F8 7F0BEBC8 10000009 */  b     .L7F0BEBF0
-/* 0F36FC 7F0BEBCC AC208374 */   sw    $zero, %lo(clock_timer)($at)
+/* 0F36FC 7F0BEBCC AC208374 */   sw    $zero, %lo(g_ClockTimer)($at)
 .L7F0BEBD0:
 /* 0F3700 7F0BEBD0 8DEF8498 */  lw    $t7, %lo(speedgraphframes)($t7)
 /* 0F3704 7F0BEBD4 3C028005 */  lui   $v0, %hi(D_80048380)
-/* 0F3708 7F0BEBD8 3C018005 */  lui   $at, %hi(clock_timer)
+/* 0F3708 7F0BEBD8 3C018005 */  lui   $at, %hi(g_ClockTimer)
 /* 0F370C 7F0BEBDC 24428380 */  addiu $v0, %lo(D_80048380) # addiu $v0, $v0, -0x7c80
-/* 0F3710 7F0BEBE0 AC2F8374 */  sw    $t7, %lo(clock_timer)($at)
+/* 0F3710 7F0BEBE0 AC2F8374 */  sw    $t7, %lo(g_ClockTimer)($at)
 /* 0F3714 7F0BEBE4 8C580000 */  lw    $t8, ($v0)
 /* 0F3718 7F0BEBE8 27190001 */  addiu $t9, $t8, 1
 /* 0F371C 7F0BEBEC AC590000 */  sw    $t9, ($v0)
 .L7F0BEBF0:
-/* 0F3720 7F0BEBF0 3C028005 */  lui   $v0, %hi(clock_timer)
-/* 0F3724 7F0BEBF4 8C428374 */  lw    $v0, %lo(clock_timer)($v0)
-/* 0F3728 7F0BEBF8 3C038005 */  lui   $v1, %hi(global_timer)
-/* 0F372C 7F0BEBFC 3C018005 */  lui   $at, %hi(global_timer_delta)
+/* 0F3720 7F0BEBF0 3C028005 */  lui   $v0, %hi(g_ClockTimer)
+/* 0F3724 7F0BEBF4 8C428374 */  lw    $v0, %lo(g_ClockTimer)($v0)
+/* 0F3728 7F0BEBF8 3C038005 */  lui   $v1, %hi(g_GlobalTimer)
+/* 0F372C 7F0BEBFC 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta)
 /* 0F3730 7F0BEC00 44822000 */  mtc1  $v0, $f4
-/* 0F3734 7F0BEC04 2463837C */  addiu $v1, %lo(global_timer) # addiu $v1, $v1, -0x7c84
-/* 0F3738 7F0BEC08 3C188005 */  lui   $t8, %hi(current_stage_to_load)
+/* 0F3734 7F0BEC04 2463837C */  addiu $v1, %lo(g_GlobalTimer) # addiu $v1, $v1, -0x7c84
+/* 0F3738 7F0BEC08 3C188005 */  lui   $t8, %hi(g_CurrentStageToLoad)
 /* 0F373C 7F0BEC0C 468021A0 */  cvt.s.w $f6, $f4
 /* 0F3740 7F0BEC10 3C198005 */  lui   $t9, %hi(D_80048394)
-/* 0F3744 7F0BEC14 E4268378 */  swc1  $f6, %lo(global_timer_delta)($at)
+/* 0F3744 7F0BEC14 E4268378 */  swc1  $f6, %lo(g_GlobalTimerDelta)($at)
 /* 0F3748 7F0BEC18 8C6E0000 */  lw    $t6, ($v1)
 /* 0F374C 7F0BEC1C 2401005A */  li    $at, 90
 /* 0F3750 7F0BEC20 01C27821 */  addu  $t7, $t6, $v0
 /* 0F3754 7F0BEC24 AC6F0000 */  sw    $t7, ($v1)
-/* 0F3758 7F0BEC28 8F188364 */  lw    $t8, %lo(current_stage_to_load)($t8)
+/* 0F3758 7F0BEC28 8F188364 */  lw    $t8, %lo(g_CurrentStageToLoad)($t8)
 /* 0F375C 7F0BEC2C 1301001D */  beq   $t8, $at, .L7F0BECA4
 /* 0F3760 7F0BEC30 00000000 */   nop
 /* 0F3764 7F0BEC34 8F398394 */  lw    $t9, %lo(D_80048394)($t9)
 /* 0F3768 7F0BEC38 1720001A */  bnez  $t9, .L7F0BECA4
 /* 0F376C 7F0BEC3C 00000000 */   nop
 /* 0F3770 7F0BEC40 18400018 */  blez  $v0, .L7F0BECA4
-/* 0F3774 7F0BEC44 3C0E8003 */   lui   $t6, %hi(append_cheat_sp)
-/* 0F3778 7F0BEC48 8DCEA900 */  lw    $t6, %lo(append_cheat_sp)($t6)
-/* 0F377C 7F0BEC4C 3C038007 */  lui   $v1, %hi(cheat_activated + 1)
-/* 0F3780 7F0BEC50 246396A1 */  addiu $v1, %lo(cheat_activated + 1) # addiu $v1, $v1, -0x695f
+/* 0F3774 7F0BEC44 3C0E8003 */   lui   $t6, %hi(g_AppendCheatSinglePlayer)
+/* 0F3778 7F0BEC48 8DCEA900 */  lw    $t6, %lo(g_AppendCheatSinglePlayer)($t6)
+/* 0F377C 7F0BEC4C 3C038007 */  lui   $v1, %hi(g_CheatActivated + 1)
+/* 0F3780 7F0BEC50 246396A1 */  addiu $v1, %lo(g_CheatActivated + 1) # addiu $v1, $v1, -0x695f
 /* 0F3784 7F0BEC54 11C00013 */  beqz  $t6, .L7F0BECA4
 /* 0F3788 7F0BEC58 24040001 */   li    $a0, 1
 .L7F0BEC5C:
@@ -3655,8 +3875,8 @@ glabel manage_mp_game
 /* 0F37D8 7F0BECA8 00000000 */   nop
 /* 0F37DC 7F0BECAC 28410002 */  slti  $at, $v0, 2
 /* 0F37E0 7F0BECB0 1420014B */  bnez  $at, .L7F0BF1E0
-/* 0F37E4 7F0BECB4 3C188005 */   lui   $t8, %hi(current_stage_to_load)
-/* 0F37E8 7F0BECB8 8F188364 */  lw    $t8, %lo(current_stage_to_load)($t8)
+/* 0F37E4 7F0BECB4 3C188005 */   lui   $t8, %hi(g_CurrentStageToLoad)
+/* 0F37E8 7F0BECB8 8F188364 */  lw    $t8, %lo(g_CurrentStageToLoad)($t8)
 /* 0F37EC 7F0BECBC 2401005A */  li    $at, 90
 /* 0F37F0 7F0BECC0 13010147 */  beq   $t8, $at, .L7F0BF1E0
 /* 0F37F4 7F0BECC4 00000000 */   nop
@@ -3712,11 +3932,11 @@ glabel manage_mp_game
 /* 0F38AC 7F0BED7C 3C038005 */  lui   $v1, %hi(mp_time)
 /* 0F38B0 7F0BED80 8C638398 */  lw    $v1, %lo(mp_time)($v1)
 /* 0F38B4 7F0BED84 3C028005 */  lui   $v0, %hi(D_80048394)
-/* 0F38B8 7F0BED88 3C198005 */  lui   $t9, %hi(clock_timer)
+/* 0F38B8 7F0BED88 3C198005 */  lui   $t9, %hi(g_ClockTimer)
 /* 0F38BC 7F0BED8C 18600049 */  blez  $v1, .L7F0BEEB4
 /* 0F38C0 7F0BED90 00000000 */   nop
 /* 0F38C4 7F0BED94 8C428394 */  lw    $v0, %lo(D_80048394)($v0)
-/* 0F38C8 7F0BED98 8F398374 */  lw    $t9, %lo(clock_timer)($t9)
+/* 0F38C8 7F0BED98 8F398374 */  lw    $t9, %lo(g_ClockTimer)($t9)
 /* 0F38CC 7F0BED9C 2464F1F0 */  addiu $a0, $v1, -0xe10
 /* 0F38D0 7F0BEDA0 0044082A */  slt   $at, $v0, $a0
 /* 0F38D4 7F0BEDA4 03227021 */  addu  $t6, $t9, $v0
@@ -3794,10 +4014,10 @@ glabel manage_mp_game
 .L7F0BEEB4:
 /* 0F39E4 7F0BEEB4 3C188005 */  lui   $t8, %hi(mp_point)
 /* 0F39E8 7F0BEEB8 8F18839C */  lw    $t8, %lo(mp_point)($t8)
-/* 0F39EC 7F0BEEBC 3C198005 */  lui   $t9, %hi(clock_timer)
+/* 0F39EC 7F0BEEBC 3C198005 */  lui   $t9, %hi(g_ClockTimer)
 /* 0F39F0 7F0BEEC0 1B00003D */  blez  $t8, .L7F0BEFB8
 /* 0F39F4 7F0BEEC4 00000000 */   nop
-/* 0F39F8 7F0BEEC8 8F398374 */  lw    $t9, %lo(clock_timer)($t9)
+/* 0F39F8 7F0BEEC8 8F398374 */  lw    $t9, %lo(g_ClockTimer)($t9)
 /* 0F39FC 7F0BEECC 1320003A */  beqz  $t9, .L7F0BEFB8
 /* 0F3A00 7F0BEED0 00000000 */   nop
 /* 0F3A04 7F0BEED4 0FC26919 */  jal   getPlayerCount
@@ -3868,8 +4088,8 @@ glabel manage_mp_game
 /* 0F3AEC 7F0BEFBC 00000000 */   nop
 /* 0F3AF0 7F0BEFC0 24010001 */  li    $at, 1
 /* 0F3AF4 7F0BEFC4 14410086 */  bne   $v0, $at, .L7F0BF1E0
-/* 0F3AF8 7F0BEFC8 3C0F8005 */   lui   $t7, %hi(clock_timer)
-/* 0F3AFC 7F0BEFCC 8DEF8374 */  lw    $t7, %lo(clock_timer)($t7)
+/* 0F3AF8 7F0BEFC8 3C0F8005 */   lui   $t7, %hi(g_ClockTimer)
+/* 0F3AFC 7F0BEFCC 8DEF8374 */  lw    $t7, %lo(g_ClockTimer)($t7)
 /* 0F3B00 7F0BEFD0 11E00083 */  beqz  $t7, .L7F0BF1E0
 /* 0F3B04 7F0BEFD4 00000000 */   nop
 /* 0F3B08 7F0BEFD8 0FC26919 */  jal   getPlayerCount
@@ -4018,10 +4238,10 @@ glabel manage_mp_game
 /* 0F3D08 7F0BF1D8 0FC30948 */  jal   mpwatchSetStopPlayFlag
 /* 0F3D0C 7F0BF1DC 00000000 */   nop
 .L7F0BF1E0:
-/* 0F3D10 7F0BF1E0 3C028005 */  lui   $v0, %hi(clock_timer)
+/* 0F3D10 7F0BF1E0 3C028005 */  lui   $v0, %hi(g_ClockTimer)
 /* 0F3D14 7F0BF1E4 3C0F8005 */  lui   $t7, %hi(D_80048394)
 /* 0F3D18 7F0BF1E8 8DEF8394 */  lw    $t7, %lo(D_80048394)($t7)
-/* 0F3D1C 7F0BF1EC 8C428374 */  lw    $v0, %lo(clock_timer)($v0)
+/* 0F3D1C 7F0BF1EC 8C428374 */  lw    $v0, %lo(g_ClockTimer)($v0)
 /* 0F3D20 7F0BF1F0 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 0F3D24 7F0BF1F4 44810000 */  mtc1  $at, $f0
 /* 0F3D28 7F0BF1F8 01E27021 */  addu  $t6, $t7, $v0
@@ -4030,12 +4250,12 @@ glabel manage_mp_game
 /* 0F3D34 7F0BF204 AC2E8394 */  sw    $t6, %lo(D_80048394)($at)
 /* 0F3D38 7F0BF208 468084A0 */  cvt.s.w $f18, $f16
 /* 0F3D3C 7F0BF20C 3C038005 */  lui   $v1, %hi(D_800483A8)
-/* 0F3D40 7F0BF210 3C018005 */  lui   $at, %hi(cur_mp_sec)
+/* 0F3D40 7F0BF210 3C018005 */  lui   $at, %hi(g_CurrentMultiPlayerSec)
 /* 0F3D44 7F0BF214 246383A8 */  addiu $v1, %lo(D_800483A8) # addiu $v1, $v1, -0x7c58
 /* 0F3D48 7F0BF218 00002025 */  move  $a0, $zero
 /* 0F3D4C 7F0BF21C 3405FFFF */  li    $a1, 65535
 /* 0F3D50 7F0BF220 46009103 */  div.s $f4, $f18, $f0
-/* 0F3D54 7F0BF224 E42483A4 */  swc1  $f4, %lo(cur_mp_sec)($at)
+/* 0F3D54 7F0BF224 E42483A4 */  swc1  $f4, %lo(g_CurrentMultiPlayerSec)($at)
 /* 0F3D58 7F0BF228 8C790000 */  lw    $t9, ($v1)
 /* 0F3D5C 7F0BF22C 3C018005 */  lui   $at, %hi(cur_mp_min)
 /* 0F3D60 7F0BF230 03227821 */  addu  $t7, $t9, $v0
@@ -4054,13 +4274,13 @@ glabel manage_mp_game
 /* 0F3D94 7F0BF264 24638390 */  addiu $v1, %lo(D_80048390) # addiu $v1, $v1, -0x7c70
 /* 0F3D98 7F0BF268 AC208388 */  sw    $zero, %lo(D_80048388)($at)
 /* 0F3D9C 7F0BF26C AC600000 */  sw    $zero, ($v1)
-/* 0F3DA0 7F0BF270 3C028005 */  lui   $v0, %hi(clock_timer)
+/* 0F3DA0 7F0BF270 3C028005 */  lui   $v0, %hi(g_ClockTimer)
 /* 0F3DA4 7F0BF274 1000000C */  b     .L7F0BF2A8
-/* 0F3DA8 7F0BF278 8C428374 */   lw    $v0, %lo(clock_timer)($v0)
+/* 0F3DA8 7F0BF278 8C428374 */   lw    $v0, %lo(g_ClockTimer)($v0)
 .L7F0BF27C:
 /* 0F3DAC 7F0BF27C 24638390 */  addiu $v1, $v1, %lo(D_80048390)
-/* 0F3DB0 7F0BF280 3C028005 */  lui   $v0, %hi(clock_timer)
-/* 0F3DB4 7F0BF284 8C428374 */  lw    $v0, %lo(clock_timer)($v0)
+/* 0F3DB0 7F0BF280 3C028005 */  lui   $v0, %hi(g_ClockTimer)
+/* 0F3DB4 7F0BF284 8C428374 */  lw    $v0, %lo(g_ClockTimer)($v0)
 /* 0F3DB8 7F0BF288 8C6E0000 */  lw    $t6, ($v1)
 /* 0F3DBC 7F0BF28C 240F0001 */  li    $t7, 1
 /* 0F3DC0 7F0BF290 01C2C821 */  addu  $t9, $t6, $v0
@@ -4085,14 +4305,14 @@ glabel manage_mp_game
 /* 0F3E04 7F0BF2D4 246383B0 */  addiu $v1, %lo(D_800483B0) # addiu $v1, $v1, -0x7c50
 /* 0F3E08 7F0BF2D8 8C6F0000 */  lw    $t7, ($v1)
 /* 0F3E0C 7F0BF2DC 3C048005 */  lui   $a0, %hi(D_800483B8)
-/* 0F3E10 7F0BF2E0 3C018005 */  lui   $at, %hi(stage_time_sec)
+/* 0F3E10 7F0BF2E0 3C018005 */  lui   $at, %hi(g_StageTimeSec)
 /* 0F3E14 7F0BF2E4 01E2C821 */  addu  $t9, $t7, $v0
 /* 0F3E18 7F0BF2E8 44998000 */  mtc1  $t9, $f16
 /* 0F3E1C 7F0BF2EC AC790000 */  sw    $t9, ($v1)
 /* 0F3E20 7F0BF2F0 248483B8 */  addiu $a0, %lo(D_800483B8) # addiu $a0, $a0, -0x7c48
 /* 0F3E24 7F0BF2F4 468084A0 */  cvt.s.w $f18, $f16
 /* 0F3E28 7F0BF2F8 46009103 */  div.s $f4, $f18, $f0
-/* 0F3E2C 7F0BF2FC E42483B4 */  swc1  $f4, %lo(stage_time_sec)($at)
+/* 0F3E2C 7F0BF2FC E42483B4 */  swc1  $f4, %lo(g_StageTimeSec)($at)
 /* 0F3E30 7F0BF300 8C980000 */  lw    $t8, ($a0)
 /* 0F3E34 7F0BF304 3C018005 */  lui   $at, %hi(poweron_time_sec)
 /* 0F3E38 7F0BF308 03027021 */  addu  $t6, $t8, $v0
@@ -4104,8 +4324,8 @@ glabel manage_mp_game
 .L7F0BF320:
 /* 0F3E50 7F0BF320 0C00114D */  jal   viSetUseZBuf
 /* 0F3E54 7F0BF324 24040001 */   li    $a0, 1
-/* 0F3E58 7F0BF328 3C198005 */  lui   $t9, %hi(current_stage_to_load)
-/* 0F3E5C 7F0BF32C 8F398364 */  lw    $t9, %lo(current_stage_to_load)($t9)
+/* 0F3E58 7F0BF328 3C198005 */  lui   $t9, %hi(g_CurrentStageToLoad)
+/* 0F3E5C 7F0BF32C 8F398364 */  lw    $t9, %lo(g_CurrentStageToLoad)($t9)
 /* 0F3E60 7F0BF330 2401005A */  li    $at, 90
 /* 0F3E64 7F0BF334 17210009 */  bne   $t9, $at, .L7F0BF35C
 /* 0F3E68 7F0BF338 00000000 */   nop
@@ -4463,60 +4683,60 @@ glabel manage_mp_game
 /* 0F4320 7F0BF7B0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F4324 7F0BF7B4 0C000626 */  jal   tlbmanageResetCurrentEntriesCount
 /* 0F4328 7F0BF7B8 00000000 */   nop
-/* 0F432C 7F0BF7BC 3C0E8005 */  lui   $t6, %hi(controls_locked_flag) # $t6, 0x8005
-/* 0F4330 7F0BF7C0 8DCE83A0 */  lw    $t6, %lo(controls_locked_flag)($t6)
-/* 0F4334 7F0BF7C4 3C018005 */  lui   $at, %hi(clock_timer) # $at, 0x8005
+/* 0F432C 7F0BF7BC 3C0E8005 */  lui   $t6, %hi(g_ControlsLockedFlag) # $t6, 0x8005
+/* 0F4330 7F0BF7C0 8DCE83A0 */  lw    $t6, %lo(g_ControlsLockedFlag)($t6)
+/* 0F4334 7F0BF7C4 3C018005 */  lui   $at, %hi(g_ClockTimer) # $at, 0x8005
 /* 0F4338 7F0BF7C8 11C00003 */  beqz  $t6, .Ljp7F0BF7D8
 /* 0F433C 7F0BF7CC 00000000 */   nop
 /* 0F4340 7F0BF7D0 10000010 */  b     .Ljp7F0BF814
-/* 0F4344 7F0BF7D4 AC2083A4 */   sw    $zero, %lo(clock_timer)($at)
+/* 0F4344 7F0BF7D4 AC2083A4 */   sw    $zero, %lo(g_ClockTimer)($at)
 .Ljp7F0BF7D8:
 /* 0F4348 7F0BF7D8 0FC31B59 */  jal   checkGamePaused
 /* 0F434C 7F0BF7DC 00000000 */   nop
 /* 0F4350 7F0BF7E0 10400004 */  beqz  $v0, .Ljp7F0BF7F4
 /* 0F4354 7F0BF7E4 3C0F8005 */   lui   $t7, %hi(speedgraphframes) # $t7, 0x8005
-/* 0F4358 7F0BF7E8 3C018005 */  lui   $at, %hi(clock_timer) # $at, 0x8005
+/* 0F4358 7F0BF7E8 3C018005 */  lui   $at, %hi(g_ClockTimer) # $at, 0x8005
 /* 0F435C 7F0BF7EC 10000009 */  b     .Ljp7F0BF814
-/* 0F4360 7F0BF7F0 AC2083A4 */   sw    $zero, %lo(clock_timer)($at)
+/* 0F4360 7F0BF7F0 AC2083A4 */   sw    $zero, %lo(g_ClockTimer)($at)
 .Ljp7F0BF7F4:
 /* 0F4364 7F0BF7F4 8DEF84C8 */  lw    $t7, %lo(speedgraphframes)($t7)
 /* 0F4368 7F0BF7F8 3C028005 */  lui   $v0, %hi(D_80048380) # $v0, 0x8005
-/* 0F436C 7F0BF7FC 3C018005 */  lui   $at, %hi(clock_timer) # $at, 0x8005
+/* 0F436C 7F0BF7FC 3C018005 */  lui   $at, %hi(g_ClockTimer) # $at, 0x8005
 /* 0F4370 7F0BF800 244283B0 */  addiu $v0, %lo(D_80048380) # addiu $v0, $v0, -0x7c50
-/* 0F4374 7F0BF804 AC2F83A4 */  sw    $t7, %lo(clock_timer)($at)
+/* 0F4374 7F0BF804 AC2F83A4 */  sw    $t7, %lo(g_ClockTimer)($at)
 /* 0F4378 7F0BF808 8C580000 */  lw    $t8, ($v0)
 /* 0F437C 7F0BF80C 27190001 */  addiu $t9, $t8, 1
 /* 0F4380 7F0BF810 AC590000 */  sw    $t9, ($v0)
 .Ljp7F0BF814:
-/* 0F4384 7F0BF814 3C028005 */  lui   $v0, %hi(clock_timer) # $v0, 0x8005
-/* 0F4388 7F0BF818 8C4283A4 */  lw    $v0, %lo(clock_timer)($v0)
+/* 0F4384 7F0BF814 3C028005 */  lui   $v0, %hi(g_ClockTimer) # $v0, 0x8005
+/* 0F4388 7F0BF818 8C4283A4 */  lw    $v0, %lo(g_ClockTimer)($v0)
 /* 0F438C 7F0BF81C 3C038005 */  lui   $v1, %hi(jp_global_timer_delta) # $v1, 0x8005
 /* 0F4390 7F0BF820 246383A8 */  addiu $v1, %lo(jp_global_timer_delta) # addiu $v1, $v1, -0x7c58
 /* 0F4394 7F0BF824 44822000 */  mtc1  $v0, $f4
-/* 0F4398 7F0BF828 3C048005 */  lui   $a0, %hi(global_timer) # $a0, 0x8005
-/* 0F439C 7F0BF82C 3C018005 */  lui   $at, %hi(global_timer_delta) # $at, 0x8005
+/* 0F4398 7F0BF828 3C048005 */  lui   $a0, %hi(g_GlobalTimer) # $a0, 0x8005
+/* 0F439C 7F0BF82C 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta) # $at, 0x8005
 /* 0F43A0 7F0BF830 468021A0 */  cvt.s.w $f6, $f4
-/* 0F43A4 7F0BF834 248483AC */  addiu $a0, %lo(global_timer) # addiu $a0, $a0, -0x7c54
-/* 0F43A8 7F0BF838 3C188005 */  lui   $t8, %hi(current_stage_to_load) # $t8, 0x8005
+/* 0F43A4 7F0BF834 248483AC */  addiu $a0, %lo(g_GlobalTimer) # addiu $a0, $a0, -0x7c54
+/* 0F43A8 7F0BF838 3C188005 */  lui   $t8, %hi(g_CurrentStageToLoad) # $t8, 0x8005
 /* 0F43AC 7F0BF83C 3C198005 */  lui   $t9, %hi(D_80048394) # $t9, 0x8005
 /* 0F43B0 7F0BF840 E4660000 */  swc1  $f6, ($v1)
 /* 0F43B4 7F0BF844 C4680000 */  lwc1  $f8, ($v1)
-/* 0F43B8 7F0BF848 E42883B4 */  swc1  $f8, %lo(global_timer_delta)($at)
+/* 0F43B8 7F0BF848 E42883B4 */  swc1  $f8, %lo(g_GlobalTimerDelta)($at)
 /* 0F43BC 7F0BF84C 8C8E0000 */  lw    $t6, ($a0)
 /* 0F43C0 7F0BF850 2401005A */  li    $at, 90
 /* 0F43C4 7F0BF854 01C27821 */  addu  $t7, $t6, $v0
 /* 0F43C8 7F0BF858 AC8F0000 */  sw    $t7, ($a0)
-/* 0F43CC 7F0BF85C 8F188394 */  lw    $t8, %lo(current_stage_to_load)($t8)
+/* 0F43CC 7F0BF85C 8F188394 */  lw    $t8, %lo(g_CurrentStageToLoad)($t8)
 /* 0F43D0 7F0BF860 1301001D */  beq   $t8, $at, .Ljp7F0BF8D8
 /* 0F43D4 7F0BF864 00000000 */   nop
 /* 0F43D8 7F0BF868 8F3983C8 */  lw    $t9, %lo(D_80048394)($t9)
 /* 0F43DC 7F0BF86C 1720001A */  bnez  $t9, .Ljp7F0BF8D8
 /* 0F43E0 7F0BF870 00000000 */   nop
 /* 0F43E4 7F0BF874 18400018 */  blez  $v0, .Ljp7F0BF8D8
-/* 0F43E8 7F0BF878 3C0E8003 */   lui   $t6, %hi(append_cheat_sp) # $t6, 0x8003
-/* 0F43EC 7F0BF87C 8DCEA940 */  lw    $t6, %lo(append_cheat_sp)($t6)
-/* 0F43F0 7F0BF880 3C038007 */  lui   $v1, %hi(cheat_activated + 1) # $v1, 0x8007
-/* 0F43F4 7F0BF884 246396E1 */  addiu $v1, %lo(cheat_activated + 1) # addiu $v1, $v1, -0x691f
+/* 0F43E8 7F0BF878 3C0E8003 */   lui   $t6, %hi(g_AppendCheatSinglePlayer) # $t6, 0x8003
+/* 0F43EC 7F0BF87C 8DCEA940 */  lw    $t6, %lo(g_AppendCheatSinglePlayer)($t6)
+/* 0F43F0 7F0BF880 3C038007 */  lui   $v1, %hi(g_CheatActivated + 1) # $v1, 0x8007
+/* 0F43F4 7F0BF884 246396E1 */  addiu $v1, %lo(g_CheatActivated + 1) # addiu $v1, $v1, -0x691f
 /* 0F43F8 7F0BF888 11C00013 */  beqz  $t6, .Ljp7F0BF8D8
 /* 0F43FC 7F0BF88C 24040001 */   li    $a0, 1
 .Ljp7F0BF890:
@@ -4545,8 +4765,8 @@ glabel manage_mp_game
 /* 0F444C 7F0BF8DC 00000000 */   nop
 /* 0F4450 7F0BF8E0 28410002 */  slti  $at, $v0, 2
 /* 0F4454 7F0BF8E4 1420014C */  bnez  $at, .Ljp7F0BFE18
-/* 0F4458 7F0BF8E8 3C188005 */   lui   $t8, %hi(current_stage_to_load) # $t8, 0x8005
-/* 0F445C 7F0BF8EC 8F188394 */  lw    $t8, %lo(current_stage_to_load)($t8)
+/* 0F4458 7F0BF8E8 3C188005 */   lui   $t8, %hi(g_CurrentStageToLoad) # $t8, 0x8005
+/* 0F445C 7F0BF8EC 8F188394 */  lw    $t8, %lo(g_CurrentStageToLoad)($t8)
 /* 0F4460 7F0BF8F0 2401005A */  li    $at, 90
 /* 0F4464 7F0BF8F4 13010148 */  beq   $t8, $at, .Ljp7F0BFE18
 /* 0F4468 7F0BF8F8 00000000 */   nop
@@ -4602,11 +4822,11 @@ glabel manage_mp_game
 /* 0F4520 7F0BF9B0 3C038005 */  lui   $v1, %hi(mp_time) # $v1, 0x8005
 /* 0F4524 7F0BF9B4 8C6383CC */  lw    $v1, %lo(mp_time)($v1)
 /* 0F4528 7F0BF9B8 3C028005 */  lui   $v0, %hi(D_80048394) # $v0, 0x8005
-/* 0F452C 7F0BF9BC 3C198005 */  lui   $t9, %hi(clock_timer) # $t9, 0x8005
+/* 0F452C 7F0BF9BC 3C198005 */  lui   $t9, %hi(g_ClockTimer) # $t9, 0x8005
 /* 0F4530 7F0BF9C0 1860004A */  blez  $v1, .Ljp7F0BFAEC
 /* 0F4534 7F0BF9C4 00000000 */   nop
 /* 0F4538 7F0BF9C8 8C4283C8 */  lw    $v0, %lo(D_80048394)($v0)
-/* 0F453C 7F0BF9CC 8F3983A4 */  lw    $t9, %lo(clock_timer)($t9)
+/* 0F453C 7F0BF9CC 8F3983A4 */  lw    $t9, %lo(g_ClockTimer)($t9)
 /* 0F4540 7F0BF9D0 2464F1F0 */  addiu $a0, $v1, -0xe10
 /* 0F4544 7F0BF9D4 0044082A */  slt   $at, $v0, $a0
 /* 0F4548 7F0BF9D8 03227021 */  addu  $t6, $t9, $v0
@@ -4685,10 +4905,10 @@ glabel manage_mp_game
 .Ljp7F0BFAEC:
 /* 0F465C 7F0BFAEC 3C188005 */  lui   $t8, %hi(mp_point) # $t8, 0x8005
 /* 0F4660 7F0BFAF0 8F1883D0 */  lw    $t8, %lo(mp_point)($t8)
-/* 0F4664 7F0BFAF4 3C198005 */  lui   $t9, %hi(clock_timer) # $t9, 0x8005
+/* 0F4664 7F0BFAF4 3C198005 */  lui   $t9, %hi(g_ClockTimer) # $t9, 0x8005
 /* 0F4668 7F0BFAF8 1B00003D */  blez  $t8, .Ljp7F0BFBF0
 /* 0F466C 7F0BFAFC 00000000 */   nop
-/* 0F4670 7F0BFB00 8F3983A4 */  lw    $t9, %lo(clock_timer)($t9)
+/* 0F4670 7F0BFB00 8F3983A4 */  lw    $t9, %lo(g_ClockTimer)($t9)
 /* 0F4674 7F0BFB04 1320003A */  beqz  $t9, .Ljp7F0BFBF0
 /* 0F4678 7F0BFB08 00000000 */   nop
 /* 0F467C 7F0BFB0C 0FC26C01 */  jal   getPlayerCount
@@ -4759,8 +4979,8 @@ glabel manage_mp_game
 /* 0F4764 7F0BFBF4 00000000 */   nop
 /* 0F4768 7F0BFBF8 24010001 */  li    $at, 1
 /* 0F476C 7F0BFBFC 14410086 */  bne   $v0, $at, .Ljp7F0BFE18
-/* 0F4770 7F0BFC00 3C0F8005 */   lui   $t7, %hi(clock_timer) # $t7, 0x8005
-/* 0F4774 7F0BFC04 8DEF83A4 */  lw    $t7, %lo(clock_timer)($t7)
+/* 0F4770 7F0BFC00 3C0F8005 */   lui   $t7, %hi(g_ClockTimer) # $t7, 0x8005
+/* 0F4774 7F0BFC04 8DEF83A4 */  lw    $t7, %lo(g_ClockTimer)($t7)
 /* 0F4778 7F0BFC08 11E00083 */  beqz  $t7, .Ljp7F0BFE18
 /* 0F477C 7F0BFC0C 00000000 */   nop
 /* 0F4780 7F0BFC10 0FC26C01 */  jal   getPlayerCount
@@ -4909,10 +5129,10 @@ glabel manage_mp_game
 /* 0F4980 7F0BFE10 0FC30C74 */  jal   mpwatchSetStopPlayFlag
 /* 0F4984 7F0BFE14 00000000 */   nop
 .Ljp7F0BFE18:
-/* 0F4988 7F0BFE18 3C028005 */  lui   $v0, %hi(clock_timer) # $v0, 0x8005
+/* 0F4988 7F0BFE18 3C028005 */  lui   $v0, %hi(g_ClockTimer) # $v0, 0x8005
 /* 0F498C 7F0BFE1C 3C0F8005 */  lui   $t7, %hi(D_80048394) # $t7, 0x8005
 /* 0F4990 7F0BFE20 8DEF83C8 */  lw    $t7, %lo(D_80048394)($t7)
-/* 0F4994 7F0BFE24 8C4283A4 */  lw    $v0, %lo(clock_timer)($v0)
+/* 0F4994 7F0BFE24 8C4283A4 */  lw    $v0, %lo(g_ClockTimer)($v0)
 /* 0F4998 7F0BFE28 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 0F499C 7F0BFE2C 44810000 */  mtc1  $at, $f0
 /* 0F49A0 7F0BFE30 01E27021 */  addu  $t6, $t7, $v0
@@ -4921,12 +5141,12 @@ glabel manage_mp_game
 /* 0F49AC 7F0BFE3C AC2E83C8 */  sw    $t6, %lo(D_80048394)($at)
 /* 0F49B0 7F0BFE40 46809120 */  cvt.s.w $f4, $f18
 /* 0F49B4 7F0BFE44 3C038005 */  lui   $v1, %hi(D_800483A8) # $v1, 0x8005
-/* 0F49B8 7F0BFE48 3C018005 */  lui   $at, %hi(cur_mp_sec) # $at, 0x8005
+/* 0F49B8 7F0BFE48 3C018005 */  lui   $at, %hi(g_CurrentMultiPlayerSec) # $at, 0x8005
 /* 0F49BC 7F0BFE4C 246383DC */  addiu $v1, %lo(D_800483A8) # addiu $v1, $v1, -0x7c24
 /* 0F49C0 7F0BFE50 00002025 */  move  $a0, $zero
 /* 0F49C4 7F0BFE54 3405FFFF */  li    $a1, 65535
 /* 0F49C8 7F0BFE58 46002183 */  div.s $f6, $f4, $f0
-/* 0F49CC 7F0BFE5C E42683D8 */  swc1  $f6, %lo(cur_mp_sec)($at)
+/* 0F49CC 7F0BFE5C E42683D8 */  swc1  $f6, %lo(g_CurrentMultiPlayerSec)($at)
 /* 0F49D0 7F0BFE60 8C790000 */  lw    $t9, ($v1)
 /* 0F49D4 7F0BFE64 3C018005 */  lui   $at, %hi(cur_mp_min) # $at, 0x8005
 /* 0F49D8 7F0BFE68 03227821 */  addu  $t7, $t9, $v0
@@ -4945,13 +5165,13 @@ glabel manage_mp_game
 /* 0F4A0C 7F0BFE9C 246383C4 */  addiu $v1, %lo(D_80048390) # addiu $v1, $v1, -0x7c3c
 /* 0F4A10 7F0BFEA0 AC2083BC */  sw    $zero, %lo(D_80048388)($at)
 /* 0F4A14 7F0BFEA4 AC600000 */  sw    $zero, ($v1)
-/* 0F4A18 7F0BFEA8 3C028005 */  lui   $v0, %hi(clock_timer) # $v0, 0x8005
+/* 0F4A18 7F0BFEA8 3C028005 */  lui   $v0, %hi(g_ClockTimer) # $v0, 0x8005
 /* 0F4A1C 7F0BFEAC 1000000C */  b     .Ljp7F0BFEE0
-/* 0F4A20 7F0BFEB0 8C4283A4 */   lw    $v0, %lo(clock_timer)($v0)
+/* 0F4A20 7F0BFEB0 8C4283A4 */   lw    $v0, %lo(g_ClockTimer)($v0)
 .Ljp7F0BFEB4:
 /* 0F4A24 7F0BFEB4 246383C4 */  addiu $v1, $v1, %lo(D_80048390)
-/* 0F4A28 7F0BFEB8 3C028005 */  lui   $v0, %hi(clock_timer) # $v0, 0x8005
-/* 0F4A2C 7F0BFEBC 8C4283A4 */  lw    $v0, %lo(clock_timer)($v0)
+/* 0F4A28 7F0BFEB8 3C028005 */  lui   $v0, %hi(g_ClockTimer) # $v0, 0x8005
+/* 0F4A2C 7F0BFEBC 8C4283A4 */  lw    $v0, %lo(g_ClockTimer)($v0)
 /* 0F4A30 7F0BFEC0 8C6E0000 */  lw    $t6, ($v1)
 /* 0F4A34 7F0BFEC4 240F0001 */  li    $t7, 1
 /* 0F4A38 7F0BFEC8 01C2C821 */  addu  $t9, $t6, $v0
@@ -4976,14 +5196,14 @@ glabel manage_mp_game
 /* 0F4A7C 7F0BFF0C 246383E4 */  addiu $v1, %lo(D_800483B0) # addiu $v1, $v1, -0x7c1c
 /* 0F4A80 7F0BFF10 8C6F0000 */  lw    $t7, ($v1)
 /* 0F4A84 7F0BFF14 3C048005 */  lui   $a0, %hi(D_800483B8) # $a0, 0x8005
-/* 0F4A88 7F0BFF18 3C018005 */  lui   $at, %hi(stage_time_sec) # $at, 0x8005
+/* 0F4A88 7F0BFF18 3C018005 */  lui   $at, %hi(g_StageTimeSec) # $at, 0x8005
 /* 0F4A8C 7F0BFF1C 01E2C821 */  addu  $t9, $t7, $v0
 /* 0F4A90 7F0BFF20 44999000 */  mtc1  $t9, $f18
 /* 0F4A94 7F0BFF24 AC790000 */  sw    $t9, ($v1)
 /* 0F4A98 7F0BFF28 248483EC */  addiu $a0, %lo(D_800483B8) # addiu $a0, $a0, -0x7c14
 /* 0F4A9C 7F0BFF2C 46809120 */  cvt.s.w $f4, $f18
 /* 0F4AA0 7F0BFF30 46002183 */  div.s $f6, $f4, $f0
-/* 0F4AA4 7F0BFF34 E42683E8 */  swc1  $f6, %lo(stage_time_sec)($at)
+/* 0F4AA4 7F0BFF34 E42683E8 */  swc1  $f6, %lo(g_StageTimeSec)($at)
 /* 0F4AA8 7F0BFF38 8C980000 */  lw    $t8, ($a0)
 /* 0F4AAC 7F0BFF3C 3C018005 */  lui   $at, %hi(poweron_time_sec) # $at, 0x8005
 /* 0F4AB0 7F0BFF40 03027021 */  addu  $t6, $t8, $v0
@@ -4995,8 +5215,8 @@ glabel manage_mp_game
 .Ljp7F0BFF58:
 /* 0F4AC8 7F0BFF58 0C00114D */  jal   viSetUseZBuf
 /* 0F4ACC 7F0BFF5C 24040001 */   li    $a0, 1
-/* 0F4AD0 7F0BFF60 3C198005 */  lui   $t9, %hi(current_stage_to_load) # $t9, 0x8005
-/* 0F4AD4 7F0BFF64 8F398394 */  lw    $t9, %lo(current_stage_to_load)($t9)
+/* 0F4AD0 7F0BFF60 3C198005 */  lui   $t9, %hi(g_CurrentStageToLoad) # $t9, 0x8005
+/* 0F4AD4 7F0BFF64 8F398394 */  lw    $t9, %lo(g_CurrentStageToLoad)($t9)
 /* 0F4AD8 7F0BFF68 2401005A */  li    $at, 90
 /* 0F4ADC 7F0BFF6C 17210009 */  bne   $t9, $at, .Ljp7F0BFF94
 /* 0F4AE0 7F0BFF70 00000000 */   nop
@@ -5348,56 +5568,56 @@ glabel manage_mp_game
 /* 0F36BC 7F0BEB8C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F36C0 7F0BEB90 0C000626 */  jal   tlbmanageResetCurrentEntriesCount
 /* 0F36C4 7F0BEB94 00000000 */   nop
-/* 0F36C8 7F0BEB98 3C0E8005 */  lui   $t6, %hi(controls_locked_flag)
-/* 0F36CC 7F0BEB9C 8DCE8370 */  lw    $t6, %lo(controls_locked_flag)($t6)
-/* 0F36D0 7F0BEBA0 3C018005 */  lui   $at, %hi(clock_timer)
+/* 0F36C8 7F0BEB98 3C0E8005 */  lui   $t6, %hi(g_ControlsLockedFlag)
+/* 0F36CC 7F0BEB9C 8DCE8370 */  lw    $t6, %lo(g_ControlsLockedFlag)($t6)
+/* 0F36D0 7F0BEBA0 3C018005 */  lui   $at, %hi(g_ClockTimer)
 /* 0F36D4 7F0BEBA4 11C00003 */  beqz  $t6, .L7F0BEBB4
 /* 0F36D8 7F0BEBA8 00000000 */   nop
 /* 0F36DC 7F0BEBAC 10000010 */  b     .L7F0BEBF0
-/* 0F36E0 7F0BEBB0 AC208374 */   sw    $zero, %lo(clock_timer)($at)
+/* 0F36E0 7F0BEBB0 AC208374 */   sw    $zero, %lo(g_ClockTimer)($at)
 .L7F0BEBB4:
 /* 0F36E4 7F0BEBB4 0FC31820 */  jal   checkGamePaused
 /* 0F36E8 7F0BEBB8 00000000 */   nop
 /* 0F36EC 7F0BEBBC 10400004 */  beqz  $v0, .L7F0BEBD0
 /* 0F36F0 7F0BEBC0 3C0F8005 */   lui   $t7, %hi(speedgraphframes)
-/* 0F36F4 7F0BEBC4 3C018005 */  lui   $at, %hi(clock_timer)
+/* 0F36F4 7F0BEBC4 3C018005 */  lui   $at, %hi(g_ClockTimer)
 /* 0F36F8 7F0BEBC8 10000009 */  b     .L7F0BEBF0
-/* 0F36FC 7F0BEBCC AC208374 */   sw    $zero, %lo(clock_timer)($at)
+/* 0F36FC 7F0BEBCC AC208374 */   sw    $zero, %lo(g_ClockTimer)($at)
 .L7F0BEBD0:
 /* 0F3700 7F0BEBD0 8DEF8498 */  lw    $t7, %lo(speedgraphframes)($t7)
 /* 0F3704 7F0BEBD4 3C028005 */  lui   $v0, %hi(D_80048380)
-/* 0F3708 7F0BEBD8 3C018005 */  lui   $at, %hi(clock_timer)
+/* 0F3708 7F0BEBD8 3C018005 */  lui   $at, %hi(g_ClockTimer)
 /* 0F370C 7F0BEBDC 24428380 */  addiu $v0, %lo(D_80048380) # addiu $v0, $v0, -0x7c80
-/* 0F3710 7F0BEBE0 AC2F8374 */  sw    $t7, %lo(clock_timer)($at)
+/* 0F3710 7F0BEBE0 AC2F8374 */  sw    $t7, %lo(g_ClockTimer)($at)
 /* 0F3714 7F0BEBE4 8C580000 */  lw    $t8, ($v0)
 /* 0F3718 7F0BEBE8 27190001 */  addiu $t9, $t8, 1
 /* 0F371C 7F0BEBEC AC590000 */  sw    $t9, ($v0)
 .L7F0BEBF0:
-/* 0F3720 7F0BEBF0 3C028005 */  lui   $v0, %hi(clock_timer)
-/* 0F3724 7F0BEBF4 8C428374 */  lw    $v0, %lo(clock_timer)($v0)
-/* 0F3728 7F0BEBF8 3C038005 */  lui   $v1, %hi(global_timer)
-/* 0F372C 7F0BEBFC 3C018005 */  lui   $at, %hi(global_timer_delta)
+/* 0F3720 7F0BEBF0 3C028005 */  lui   $v0, %hi(g_ClockTimer)
+/* 0F3724 7F0BEBF4 8C428374 */  lw    $v0, %lo(g_ClockTimer)($v0)
+/* 0F3728 7F0BEBF8 3C038005 */  lui   $v1, %hi(g_GlobalTimer)
+/* 0F372C 7F0BEBFC 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta)
 /* 0F3730 7F0BEC00 44822000 */  mtc1  $v0, $f4
-/* 0F3734 7F0BEC04 2463837C */  addiu $v1, %lo(global_timer) # addiu $v1, $v1, -0x7c84
-/* 0F3738 7F0BEC08 3C188005 */  lui   $t8, %hi(current_stage_to_load)
+/* 0F3734 7F0BEC04 2463837C */  addiu $v1, %lo(g_GlobalTimer) # addiu $v1, $v1, -0x7c84
+/* 0F3738 7F0BEC08 3C188005 */  lui   $t8, %hi(g_CurrentStageToLoad)
 /* 0F373C 7F0BEC0C 468021A0 */  cvt.s.w $f6, $f4
 /* 0F3740 7F0BEC10 3C198005 */  lui   $t9, %hi(D_80048394)
-/* 0F3744 7F0BEC14 E4268378 */  swc1  $f6, %lo(global_timer_delta)($at)
+/* 0F3744 7F0BEC14 E4268378 */  swc1  $f6, %lo(g_GlobalTimerDelta)($at)
 /* 0F3748 7F0BEC18 8C6E0000 */  lw    $t6, ($v1)
 /* 0F374C 7F0BEC1C 2401005A */  li    $at, 90
 /* 0F3750 7F0BEC20 01C27821 */  addu  $t7, $t6, $v0
 /* 0F3754 7F0BEC24 AC6F0000 */  sw    $t7, ($v1)
-/* 0F3758 7F0BEC28 8F188364 */  lw    $t8, %lo(current_stage_to_load)($t8)
+/* 0F3758 7F0BEC28 8F188364 */  lw    $t8, %lo(g_CurrentStageToLoad)($t8)
 /* 0F375C 7F0BEC2C 1301001D */  beq   $t8, $at, .L7F0BECA4
 /* 0F3760 7F0BEC30 00000000 */   nop
 /* 0F3764 7F0BEC34 8F398394 */  lw    $t9, %lo(D_80048394)($t9)
 /* 0F3768 7F0BEC38 1720001A */  bnez  $t9, .L7F0BECA4
 /* 0F376C 7F0BEC3C 00000000 */   nop
 /* 0F3770 7F0BEC40 18400018 */  blez  $v0, .L7F0BECA4
-/* 0F3774 7F0BEC44 3C0E8003 */   lui   $t6, %hi(append_cheat_sp)
-/* 0F3778 7F0BEC48 8DCEA900 */  lw    $t6, %lo(append_cheat_sp)($t6)
-/* 0F377C 7F0BEC4C 3C038007 */  lui   $v1, %hi(cheat_activated + 1)
-/* 0F3780 7F0BEC50 246396A1 */  addiu $v1, %lo(cheat_activated + 1) # addiu $v1, $v1, -0x695f
+/* 0F3774 7F0BEC44 3C0E8003 */   lui   $t6, %hi(g_AppendCheatSinglePlayer)
+/* 0F3778 7F0BEC48 8DCEA900 */  lw    $t6, %lo(g_AppendCheatSinglePlayer)($t6)
+/* 0F377C 7F0BEC4C 3C038007 */  lui   $v1, %hi(g_CheatActivated + 1)
+/* 0F3780 7F0BEC50 246396A1 */  addiu $v1, %lo(g_CheatActivated + 1) # addiu $v1, $v1, -0x695f
 /* 0F3784 7F0BEC54 11C00013 */  beqz  $t6, .L7F0BECA4
 /* 0F3788 7F0BEC58 24040001 */   li    $a0, 1
 .L7F0BEC5C:
@@ -5426,8 +5646,8 @@ glabel manage_mp_game
 /* 0F37D8 7F0BECA8 00000000 */   nop
 /* 0F37DC 7F0BECAC 28410002 */  slti  $at, $v0, 2
 /* 0F37E0 7F0BECB0 1420014B */  bnez  $at, .L7F0BF1E0
-/* 0F37E4 7F0BECB4 3C188005 */   lui   $t8, %hi(current_stage_to_load)
-/* 0F37E8 7F0BECB8 8F188364 */  lw    $t8, %lo(current_stage_to_load)($t8)
+/* 0F37E4 7F0BECB4 3C188005 */   lui   $t8, %hi(g_CurrentStageToLoad)
+/* 0F37E8 7F0BECB8 8F188364 */  lw    $t8, %lo(g_CurrentStageToLoad)($t8)
 /* 0F37EC 7F0BECBC 2401005A */  li    $at, 90
 /* 0F37F0 7F0BECC0 13010147 */  beq   $t8, $at, .L7F0BF1E0
 /* 0F37F4 7F0BECC4 00000000 */   nop
@@ -5483,11 +5703,11 @@ glabel manage_mp_game
 /* 0F38AC 7F0BED7C 3C038005 */  lui   $v1, %hi(mp_time)
 /* 0F38B0 7F0BED80 8C638398 */  lw    $v1, %lo(mp_time)($v1)
 /* 0F38B4 7F0BED84 3C028005 */  lui   $v0, %hi(D_80048394)
-/* 0F38B8 7F0BED88 3C198005 */  lui   $t9, %hi(clock_timer)
+/* 0F38B8 7F0BED88 3C198005 */  lui   $t9, %hi(g_ClockTimer)
 /* 0F38BC 7F0BED8C 18600049 */  blez  $v1, .L7F0BEEB4
 /* 0F38C0 7F0BED90 00000000 */   nop
 /* 0F38C4 7F0BED94 8C428394 */  lw    $v0, %lo(D_80048394)($v0)
-/* 0F38C8 7F0BED98 8F398374 */  lw    $t9, %lo(clock_timer)($t9)
+/* 0F38C8 7F0BED98 8F398374 */  lw    $t9, %lo(g_ClockTimer)($t9)
 /* 0F38CC 7F0BED9C 2464F1F0 */  addiu $a0, $v1, -0xe10
 /* 0F38D0 7F0BEDA0 0044082A */  slt   $at, $v0, $a0
 /* 0F38D4 7F0BEDA4 03227021 */  addu  $t6, $t9, $v0
@@ -5565,10 +5785,10 @@ glabel manage_mp_game
 .L7F0BEEB4:
 /* 0F39E4 7F0BEEB4 3C188005 */  lui   $t8, %hi(mp_point)
 /* 0F39E8 7F0BEEB8 8F18839C */  lw    $t8, %lo(mp_point)($t8)
-/* 0F39EC 7F0BEEBC 3C198005 */  lui   $t9, %hi(clock_timer)
+/* 0F39EC 7F0BEEBC 3C198005 */  lui   $t9, %hi(g_ClockTimer)
 /* 0F39F0 7F0BEEC0 1B00003D */  blez  $t8, .L7F0BEFB8
 /* 0F39F4 7F0BEEC4 00000000 */   nop
-/* 0F39F8 7F0BEEC8 8F398374 */  lw    $t9, %lo(clock_timer)($t9)
+/* 0F39F8 7F0BEEC8 8F398374 */  lw    $t9, %lo(g_ClockTimer)($t9)
 /* 0F39FC 7F0BEECC 1320003A */  beqz  $t9, .L7F0BEFB8
 /* 0F3A00 7F0BEED0 00000000 */   nop
 /* 0F3A04 7F0BEED4 0FC26919 */  jal   getPlayerCount
@@ -5639,8 +5859,8 @@ glabel manage_mp_game
 /* 0F3AEC 7F0BEFBC 00000000 */   nop
 /* 0F3AF0 7F0BEFC0 24010001 */  li    $at, 1
 /* 0F3AF4 7F0BEFC4 14410086 */  bne   $v0, $at, .L7F0BF1E0
-/* 0F3AF8 7F0BEFC8 3C0F8005 */   lui   $t7, %hi(clock_timer)
-/* 0F3AFC 7F0BEFCC 8DEF8374 */  lw    $t7, %lo(clock_timer)($t7)
+/* 0F3AF8 7F0BEFC8 3C0F8005 */   lui   $t7, %hi(g_ClockTimer)
+/* 0F3AFC 7F0BEFCC 8DEF8374 */  lw    $t7, %lo(g_ClockTimer)($t7)
 /* 0F3B00 7F0BEFD0 11E00083 */  beqz  $t7, .L7F0BF1E0
 /* 0F3B04 7F0BEFD4 00000000 */   nop
 /* 0F3B08 7F0BEFD8 0FC26919 */  jal   getPlayerCount
@@ -5789,10 +6009,10 @@ glabel manage_mp_game
 /* 0F3D08 7F0BF1D8 0FC30948 */  jal   mpwatchSetStopPlayFlag
 /* 0F3D0C 7F0BF1DC 00000000 */   nop
 .L7F0BF1E0:
-/* 0F3D10 7F0BF1E0 3C028005 */  lui   $v0, %hi(clock_timer)
+/* 0F3D10 7F0BF1E0 3C028005 */  lui   $v0, %hi(g_ClockTimer)
 /* 0F3D14 7F0BF1E4 3C0F8005 */  lui   $t7, %hi(D_80048394)
 /* 0F3D18 7F0BF1E8 8DEF8394 */  lw    $t7, %lo(D_80048394)($t7)
-/* 0F3D1C 7F0BF1EC 8C428374 */  lw    $v0, %lo(clock_timer)($v0)
+/* 0F3D1C 7F0BF1EC 8C428374 */  lw    $v0, %lo(g_ClockTimer)($v0)
 /* 0F3D20 7F0BF1F0 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 0F3D24 7F0BF1F4 44810000 */  mtc1  $at, $f0
 /* 0F3D28 7F0BF1F8 01E27021 */  addu  $t6, $t7, $v0
@@ -5801,12 +6021,12 @@ glabel manage_mp_game
 /* 0F3D34 7F0BF204 AC2E8394 */  sw    $t6, %lo(D_80048394)($at)
 /* 0F3D38 7F0BF208 468084A0 */  cvt.s.w $f18, $f16
 /* 0F3D3C 7F0BF20C 3C038005 */  lui   $v1, %hi(D_800483A8)
-/* 0F3D40 7F0BF210 3C018005 */  lui   $at, %hi(cur_mp_sec)
+/* 0F3D40 7F0BF210 3C018005 */  lui   $at, %hi(g_CurrentMultiPlayerSec)
 /* 0F3D44 7F0BF214 246383A8 */  addiu $v1, %lo(D_800483A8) # addiu $v1, $v1, -0x7c58
 /* 0F3D48 7F0BF218 00002025 */  move  $a0, $zero
 /* 0F3D4C 7F0BF21C 3405FFFF */  li    $a1, 65535
 /* 0F3D50 7F0BF220 46009103 */  div.s $f4, $f18, $f0
-/* 0F3D54 7F0BF224 E42483A4 */  swc1  $f4, %lo(cur_mp_sec)($at)
+/* 0F3D54 7F0BF224 E42483A4 */  swc1  $f4, %lo(g_CurrentMultiPlayerSec)($at)
 /* 0F3D58 7F0BF228 8C790000 */  lw    $t9, ($v1)
 /* 0F3D5C 7F0BF22C 3C018005 */  lui   $at, %hi(cur_mp_min)
 /* 0F3D60 7F0BF230 03227821 */  addu  $t7, $t9, $v0
@@ -5825,13 +6045,13 @@ glabel manage_mp_game
 /* 0F3D94 7F0BF264 24638390 */  addiu $v1, %lo(D_80048390) # addiu $v1, $v1, -0x7c70
 /* 0F3D98 7F0BF268 AC208388 */  sw    $zero, %lo(D_80048388)($at)
 /* 0F3D9C 7F0BF26C AC600000 */  sw    $zero, ($v1)
-/* 0F3DA0 7F0BF270 3C028005 */  lui   $v0, %hi(clock_timer)
+/* 0F3DA0 7F0BF270 3C028005 */  lui   $v0, %hi(g_ClockTimer)
 /* 0F3DA4 7F0BF274 1000000C */  b     .L7F0BF2A8
-/* 0F3DA8 7F0BF278 8C428374 */   lw    $v0, %lo(clock_timer)($v0)
+/* 0F3DA8 7F0BF278 8C428374 */   lw    $v0, %lo(g_ClockTimer)($v0)
 .L7F0BF27C:
 /* 0F3DAC 7F0BF27C 24638390 */  addiu $v1, $v1, %lo(D_80048390)
-/* 0F3DB0 7F0BF280 3C028005 */  lui   $v0, %hi(clock_timer)
-/* 0F3DB4 7F0BF284 8C428374 */  lw    $v0, %lo(clock_timer)($v0)
+/* 0F3DB0 7F0BF280 3C028005 */  lui   $v0, %hi(g_ClockTimer)
+/* 0F3DB4 7F0BF284 8C428374 */  lw    $v0, %lo(g_ClockTimer)($v0)
 /* 0F3DB8 7F0BF288 8C6E0000 */  lw    $t6, ($v1)
 /* 0F3DBC 7F0BF28C 240F0001 */  li    $t7, 1
 /* 0F3DC0 7F0BF290 01C2C821 */  addu  $t9, $t6, $v0
@@ -5856,14 +6076,14 @@ glabel manage_mp_game
 /* 0F3E04 7F0BF2D4 246383B0 */  addiu $v1, %lo(D_800483B0) # addiu $v1, $v1, -0x7c50
 /* 0F3E08 7F0BF2D8 8C6F0000 */  lw    $t7, ($v1)
 /* 0F3E0C 7F0BF2DC 3C048005 */  lui   $a0, %hi(D_800483B8)
-/* 0F3E10 7F0BF2E0 3C018005 */  lui   $at, %hi(stage_time_sec)
+/* 0F3E10 7F0BF2E0 3C018005 */  lui   $at, %hi(g_StageTimeSec)
 /* 0F3E14 7F0BF2E4 01E2C821 */  addu  $t9, $t7, $v0
 /* 0F3E18 7F0BF2E8 44998000 */  mtc1  $t9, $f16
 /* 0F3E1C 7F0BF2EC AC790000 */  sw    $t9, ($v1)
 /* 0F3E20 7F0BF2F0 248483B8 */  addiu $a0, %lo(D_800483B8) # addiu $a0, $a0, -0x7c48
 /* 0F3E24 7F0BF2F4 468084A0 */  cvt.s.w $f18, $f16
 /* 0F3E28 7F0BF2F8 46009103 */  div.s $f4, $f18, $f0
-/* 0F3E2C 7F0BF2FC E42483B4 */  swc1  $f4, %lo(stage_time_sec)($at)
+/* 0F3E2C 7F0BF2FC E42483B4 */  swc1  $f4, %lo(g_StageTimeSec)($at)
 /* 0F3E30 7F0BF300 8C980000 */  lw    $t8, ($a0)
 /* 0F3E34 7F0BF304 3C018005 */  lui   $at, %hi(poweron_time_sec)
 /* 0F3E38 7F0BF308 03027021 */  addu  $t6, $t8, $v0
@@ -5875,8 +6095,8 @@ glabel manage_mp_game
 .L7F0BF320:
 /* 0F3E50 7F0BF320 0C00114D */  jal   viSetUseZBuf
 /* 0F3E54 7F0BF324 24040001 */   li    $a0, 1
-/* 0F3E58 7F0BF328 3C198005 */  lui   $t9, %hi(current_stage_to_load)
-/* 0F3E5C 7F0BF32C 8F398364 */  lw    $t9, %lo(current_stage_to_load)($t9)
+/* 0F3E58 7F0BF328 3C198005 */  lui   $t9, %hi(g_CurrentStageToLoad)
+/* 0F3E5C 7F0BF32C 8F398364 */  lw    $t9, %lo(g_CurrentStageToLoad)($t9)
 /* 0F3E60 7F0BF330 2401005A */  li    $at, 90
 /* 0F3E64 7F0BF334 17210009 */  bne   $t9, $at, .L7F0BF35C
 /* 0F3E68 7F0BF338 00000000 */   nop
@@ -6401,8 +6621,8 @@ glabel sub_GAME_7F0BF800
 /* 0F45C0 7F0BFA90 3C038008 */  lui   $v1, %hi(pPlayersPerm)
 /* 0F45C4 7F0BFA94 2463A0B4 */  addiu $v1, %lo(pPlayersPerm) # addiu $v1, $v1, -0x5f4c
 /* 0F45C8 7F0BFA98 8C620000 */  lw    $v0, ($v1)
-/* 0F45CC 7F0BFA9C 3C0B8005 */  lui   $t3, %hi(clock_timer)
-/* 0F45D0 7F0BFAA0 8D6B8374 */  lw    $t3, %lo(clock_timer)($t3)
+/* 0F45CC 7F0BFA9C 3C0B8005 */  lui   $t3, %hi(g_ClockTimer)
+/* 0F45D0 7F0BFAA0 8D6B8374 */  lw    $t3, %lo(g_ClockTimer)($t3)
 /* 0F45D4 7F0BFAA4 8C4A0060 */  lw    $t2, 0x60($v0)
 /* 0F45D8 7F0BFAA8 240D0001 */  li    $t5, 1
 /* 0F45DC 7F0BFAAC 014B6021 */  addu  $t4, $t2, $t3
@@ -6454,9 +6674,9 @@ void unload_stage_text_data(void) {
             sndDeactivate(D_800483A0);
         }
     }
-    if (current_stage_to_load != 0x5a)
+    if (g_CurrentStageToLoad != 0x5a)
     {
-        blank_text_bank(get_textbank_number_for_stagenum(current_stage_to_load));
+        blank_text_bank(get_textbank_number_for_stagenum(g_CurrentStageToLoad));
         sub_GAME_7F007770();
     }
     cheatDisableAllCheats();
@@ -6466,7 +6686,7 @@ void unload_stage_text_data(void) {
     sub_GAME_7F007920();
     cleanup_REMOVED_();
     cleanupAlarms();
-    cleanupObjects(current_stage_to_load);
+    cleanupObjects(g_CurrentStageToLoad);
     cleanupObjectives();
     cleanupSFXRelated();
     cleanupplayersoundrelated();
@@ -6477,17 +6697,17 @@ void unload_stage_text_data(void) {
 
 void set_controls_locked_flag(s32 arg0) {
     #ifdef VERSION_JP
-    if ((arg0 != 0) && (controls_locked_flag == 0)) {
+    if ((arg0 != 0) && (g_ControlsLockedFlag == 0)) {
         joyRumblePakStop();
     }
     #endif
-    controls_locked_flag = arg0;
+    g_ControlsLockedFlag = arg0;
 }
 
 
 s32 get_controls_locked_flag(void) {
 
-    return controls_locked_flag;
+    return g_ControlsLockedFlag;
 }
 
 
@@ -6511,7 +6731,7 @@ void set_mp_point(s32 arg0) {
 
 
 f32 get_cur_mp_sec(void) {
-    return cur_mp_sec;
+    return g_CurrentMultiPlayerSec;
 }
 
 
@@ -6521,7 +6741,7 @@ f32 get_cur_mp_min(void) {
 
 
 f32 get_stage_time_sec(void) {
-    return stage_time_sec;
+    return g_StageTimeSec;
 }
 
 

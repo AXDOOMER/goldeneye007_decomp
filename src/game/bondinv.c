@@ -1481,7 +1481,7 @@ void increment_held_time(s32 weapon1, s32 weapon2)
         if (time >= 0) {
             if (weapon1 == currentplayer->gunheldarr[i].weapon1 &&
                     weapon2 == currentplayer->gunheldarr[i].weapon2) {
-                currentplayer->gunheldarr[i].totaltime = time + clock_timer;
+                currentplayer->gunheldarr[i].totaltime = time + g_ClockTimer;
                 break;
             }
 
@@ -1497,7 +1497,7 @@ void increment_held_time(s32 weapon1, s32 weapon2)
     }
 
     if (i == 10) {
-        currentplayer->gunheldarr[leastusedindex].totaltime = clock_timer;
+        currentplayer->gunheldarr[leastusedindex].totaltime = g_ClockTimer;
         currentplayer->gunheldarr[leastusedindex].weapon1 = weapon1;
         currentplayer->gunheldarr[leastusedindex].weapon2 = weapon2;
     }

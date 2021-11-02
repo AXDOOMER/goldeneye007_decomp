@@ -1,5 +1,5 @@
 #include "ultra64.h"
-#include "initunk_0072B0.h"
+#include "game/initunk_0072B0.h"
 #include "game/player.h"
 
 #ifdef NONMATCHING

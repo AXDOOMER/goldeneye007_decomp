@@ -7,4 +7,6 @@ extern struct sImageTableEntry *crosshairimage;
 
 extern struct sImageTableEntry *mainfolderimages;
 
+void load_prepare_global_image_bank(void);
+
 #endif

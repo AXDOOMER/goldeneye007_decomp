@@ -15,4 +15,6 @@ s32 sub_GAME_7F0C2024(int param_1, int param_2, int param_3, int param_4, int pa
 
 s32 sub_GAME_7F0C2114(int param_1, int param_2, int param_3, int param_4, int param_5);
 
+void mpwatchUnpauseGame(void);
+
 #endif

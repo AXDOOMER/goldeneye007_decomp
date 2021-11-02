@@ -241,10 +241,10 @@ glabel set_sound_effect_source_to_location
 /* 069350 7F034820 8E030008 */  lw    $v1, 8($s0)
 .L7F034824:
 /* 069354 7F034824 8E05000C */  lw    $a1, 0xc($s0)
-/* 069358 7F034828 3C048005 */  lui   $a0, %hi(clock_timer)
+/* 069358 7F034828 3C048005 */  lui   $a0, %hi(g_ClockTimer)
 /* 06935C 7F03482C 04600018 */  bltz  $v1, .L7F034890
 /* 069360 7F034830 00A03025 */   move  $a2, $a1
-/* 069364 7F034834 8C848374 */  lw    $a0, %lo(clock_timer)($a0)
+/* 069364 7F034834 8C848374 */  lw    $a0, %lo(g_ClockTimer)($a0)
 /* 069368 7F034838 0083082A */  slt   $at, $a0, $v1
 /* 06936C 7F03483C 10200013 */  beqz  $at, .L7F03488C
 /* 069370 7F034840 00645023 */   subu  $t2, $v1, $a0
@@ -7789,9 +7789,9 @@ actionDF_Open_Type_16_Door_Used_Cut_Scenes_2:
 /* 06E61C 7F039AEC 26520002 */   addiu $s2, $s2, 2
 /* 06E620 7F039AF0 C4500084 */  lwc1  $f16, 0x84($v0)
 /* 06E624 7F039AF4 E45400B8 */  swc1  $f20, 0xb8($v0)
-/* 06E628 7F039AF8 3C0F8005 */  lui   $t7, %hi(global_timer) 
+/* 06E628 7F039AF8 3C0F8005 */  lui   $t7, %hi(g_GlobalTimer) 
 /* 06E62C 7F039AFC E45000B4 */  swc1  $f16, 0xb4($v0)
-/* 06E630 7F039B00 8DEF837C */  lw    $t7, %lo(global_timer)($t7)
+/* 06E630 7F039B00 8DEF837C */  lw    $t7, %lo(g_GlobalTimer)($t7)
 /* 06E634 7F039B04 A04000BC */  sb    $zero, 0xbc($v0)
 /* 06E638 7F039B08 AC4F00EC */  sw    $t7, 0xec($v0)
 /* 06E63C 7F039B0C 0FC14AC0 */  jal   sub_GAME_7F052B00
@@ -13656,9 +13656,9 @@ actionDF_Open_Type_16_Door_Used_Cut_Scenes_2:
 /* 06E61C 7F039AEC 26520002 */   addiu $s2, $s2, 2
 /* 06E620 7F039AF0 C4500084 */  lwc1  $f16, 0x84($v0)
 /* 06E624 7F039AF4 E45400B8 */  swc1  $f20, 0xb8($v0)
-/* 06E628 7F039AF8 3C0F8005 */  lui   $t7, %hi(global_timer) 
+/* 06E628 7F039AF8 3C0F8005 */  lui   $t7, %hi(g_GlobalTimer) 
 /* 06E62C 7F039AFC E45000B4 */  swc1  $f16, 0xb4($v0)
-/* 06E630 7F039B00 8DEF837C */  lw    $t7, %lo(global_timer)($t7)
+/* 06E630 7F039B00 8DEF837C */  lw    $t7, %lo(g_GlobalTimer)($t7)
 /* 06E634 7F039B04 A04000BC */  sb    $zero, 0xbc($v0)
 /* 06E638 7F039B08 AC4F00EC */  sw    $t7, 0xec($v0)
 /* 06E63C 7F039B0C 0FC14AC0 */  jal   sub_GAME_7F052B00
@@ -19556,9 +19556,9 @@ actionDF_Open_Type_16_Door_Used_Cut_Scenes_2:
 /* 06C59C 7F039BAC 26520002 */   addiu $s2, $s2, 2
 /* 06C5A0 7F039BB0 C4500084 */  lwc1  $f16, 0x84($v0)
 /* 06C5A4 7F039BB4 E45400B8 */  swc1  $f20, 0xb8($v0)
-/* 06C5A8 7F039BB8 3C0E8004 */  lui   $t6, %hi(global_timer) # $t6, 0x8004
+/* 06C5A8 7F039BB8 3C0E8004 */  lui   $t6, %hi(g_GlobalTimer) # $t6, 0x8004
 /* 06C5AC 7F039BBC E45000B4 */  swc1  $f16, 0xb4($v0)
-/* 06C5B0 7F039BC0 8DCE0FFC */  lw    $t6, %lo(global_timer)($t6)
+/* 06C5B0 7F039BC0 8DCE0FFC */  lw    $t6, %lo(g_GlobalTimer)($t6)
 /* 06C5B4 7F039BC4 A04000BC */  sb    $zero, 0xbc($v0)
 /* 06C5B8 7F039BC8 AC4E00EC */  sw    $t6, 0xec($v0)
 /* 06C5BC 7F039BCC 0FC14B78 */  jal   sub_GAME_7F052B00
@@ -23017,8 +23017,8 @@ glabel handle_mp_respawn_and_some_things
 /* 071210 7F03C6E0 24030001 */   li    $v1, 1
 /* 071214 7F03C6E4 00001825 */  move  $v1, $zero
 .L7F03C6E8:
-/* 071218 7F03C6E8 3C0F8005 */  lui   $t7, %hi(clock_timer) 
-/* 07121C 7F03C6EC 8DEF8374 */  lw    $t7, %lo(clock_timer)($t7)
+/* 071218 7F03C6E8 3C0F8005 */  lui   $t7, %hi(g_ClockTimer) 
+/* 07121C 7F03C6EC 8DEF8374 */  lw    $t7, %lo(g_ClockTimer)($t7)
 /* 071220 7F03C6F0 004FC023 */  subu  $t8, $v0, $t7
 /* 071224 7F03C6F4 A6380002 */  sh    $t8, 2($s1)
 /* 071228 7F03C6F8 86390002 */  lh    $t9, 2($s1)

@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "game/cheat_buttons.h"
+#include "bondconstants.h"
 //#include "game/chraicommands.h" /* needed for ai list commands, remove when moving global ai lists to chraicommands/chrai */
 // bss
 char off_CODE_bss_80079E30[0x4C];
@@ -616,8 +617,8 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
   //u8 *text;
   s32 sVar10;
   //int amount;
-  STAGENUM stageid;
-  STAGENUM SVar11;
+  LEVEL_INDEX stageid;
+  LEVEL_INDEX SVar11;
   //f32 fVar12;
   f32 scale;
   PLAYER_ID local_10;
