@@ -6,6 +6,7 @@
 #include "game/front.h"
 #include "game/lvl_text.h"
 #include "game/textrelated.h"
+#include "game/bondview.h"
 #include "music.h"
 #include "bondconstants.h"
 #include "boss.h"

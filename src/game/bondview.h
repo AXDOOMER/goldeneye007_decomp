@@ -2817,4 +2817,6 @@ f32 getPlayer_c_perspfovy(void);
 
 f32 getPlayer_c_perspaspect(void);
 
+void set_open_close_solo_watch_menu_to1(void);
+
 #endif
