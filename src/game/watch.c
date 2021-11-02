@@ -9963,10 +9963,9 @@ Gfx *draw_toggle_options(Gfx *gdl)
 
 
 Gfx *draw_watch_game_options_page(Gfx *gdl, s32 param_2) {
-    
     s32 sp5C;
     u16 *textptr;
-    s32 sp54; //
+    s32 sp54;
     s32 sp50;
     s32 sp4C;
     s32 sp48;
@@ -9984,7 +9983,7 @@ Gfx *draw_watch_game_options_page(Gfx *gdl, s32 param_2) {
         ptr_second_font = ptrSecondFontTableSmall;
         gdl = microcode_constructor(gdl);
 
-        textptr = get_textptr_for_textID(0xAC35); //music
+        textptr = get_textptr_for_textID(TEXT(LOPTIONS, 0x35)); //music
 
         sp54 = 0x40;
         sp50 = 0x25;
@@ -9999,7 +9998,6 @@ Gfx *draw_watch_game_options_page(Gfx *gdl, s32 param_2) {
             }
         }
 
-        //L7F0ABEA8
         sub_GAME_7F0AE98C(&sp48, &sp4C, textptr, ptr_second_font, ptr_first_font, 0);
 
         if ((watch_soundrelated_maybe != 0) && (game_options_index == 0))
@@ -10012,7 +10010,7 @@ Gfx *draw_watch_game_options_page(Gfx *gdl, s32 param_2) {
         }
 
         sp5C = 0xFF00B0;
-        textptr = get_textptr_for_textID(0xAC36); //fx
+        textptr = get_textptr_for_textID(TEXT(LOPTIONS, 0x36)); //fx
         sp54 = 0x40;
         sp50 = 0x3B;
 

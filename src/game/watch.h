@@ -75,6 +75,8 @@ void set_mTrack2Vol(u16 param_1);
 void sub_GAME_7F0A91A0(u16 arg0);
 void cur_player_set_control_type(int type);
 
+Gfx *draw_watch_game_options_page(Gfx *gdl, s32 param_2);
+
 #endif
 
 
