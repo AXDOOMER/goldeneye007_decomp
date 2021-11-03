@@ -5748,7 +5748,7 @@ glabel draw_watch_inventory_page
 #endif
 
 
-Gfx *sub_GAME_7F0A8B10(Gfx *gdl, s32 arg1) {
+Gfx *unused_draw_watch_inventory_page(Gfx *gdl, s32 param_2) {
     s32 temp_1;
     s32 sp70;
     s32 sp6C;
@@ -5771,7 +5771,7 @@ Gfx *sub_GAME_7F0A8B10(Gfx *gdl, s32 arg1) {
     ptr_second_font = ptrSecondFontTableSmall;
 
     long_name = inv_get_long_name_by_index(D_800409B8);
-    gdl = draw_background_health_and_armor(gdl, arg1, 0);
+    gdl = draw_background_health_and_armor(gdl, param_2, 0);
 
     if (check_watch_page_transistion_running() != 1)
     {
