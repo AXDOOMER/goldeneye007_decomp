@@ -1462,279 +1462,65 @@ glabel sub_GAME_7F0C2E80
 #endif
 
 
+Gfx *display_text_for_playerdata_on_MP_menu(Gfx *gdl, s32 x, s32 y, u16* arg3, TEXTCOLORS text_color) {
+    
+    s32 sp5C;
+    s32 sp58;
+    s32 sp54;
+    s32 sp50;
+    s32 unused;
+    u16 *sp48;
+    s16 viX;
+    s32 viY;
 
+    sprintf(&sp48, &ascii_MP_watch_menu_percentd, arg3);
 
+    sub_GAME_7F0AE98C(&sp50, &sp54, &sp48, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0);
+    
+    sp5C = x - (sp54 >> 1);
+    sp58 = y;
 
+    switch (text_color) {
+        
+        case GREEN_NORMAL:
+            viX = viGetX();
+            viY = viGetY();
+            gdl = en_text_write_stuff(gdl, &sp5C, &sp58, &sp48, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF00B0, viX, viY, 0, 0);
+            break;
+        
+        case GREEN_HIGHLIGHT:
+            viX = viGetX();
+            viY = viGetY();
+            gdl = jp_text_write_stuff(gdl, &sp5C, &sp58, &sp48, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xA0FFA0F0, 0x7000A0, viX, viY, 0, 0);
+            break;
+        
+        case RED_NORMAL:
+            viX = viGetX();
+            viY = viGetY();
+            gdl = en_text_write_stuff(gdl, &sp5C, &sp58, &sp48, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFF4040B0, viX, viY, 0, 0);
+            break;
+        
+        case RED_HIGHLIGHT:
+            viX = viGetX();
+            viY = viGetY();
+            gdl = jp_text_write_stuff(gdl, &sp5C, &sp58, &sp48, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xFFA0A0F0, 0x700000A0, viX, viY, 0, 0);
+            break;
+        
+        case BLUE_NORMAL:
+            viX = viGetX();
+            viY = viGetY();
+            gdl = en_text_write_stuff(gdl, &sp5C, &sp58, &sp48, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0x4040FFB0, viX, viY, 0, 0);
+            break;
+        
+        case BLUE_HIGHLIGHT:
+            viX = viGetX();
+            viY = viGetY();
+            gdl = jp_text_write_stuff(gdl, &sp5C, &sp58, &sp48, ptrSecondFontTableSmall, ptrFirstFontTableSmall, 0xA0A0FFF0, 0x70A0, viX, viY, 0, 0);
+            break;
+    }
 
-
-
-#ifdef NONMATCHING
-
-void display_text_for_playerdata_on_MP_menu(u32 *param_1,int param_2,u32 param_3,char* param_4,TEXTCOLORS param_5)
-{
-  short sVar2;
-  char textbuf[8];
-  int iStack16;
-  int iStack12;
-  u32 uStack8;
-  u32 uStack4;
-  
-  sprintf(textbuf,"%d",param_4);
-  sub_GAME_7F0AE98C(&iStack16,&iStack12,textbuf,ptrSecondFontTableSmall,ptrFirstFontTableSmall,0);
-  uStack4 = param_2 - (iStack12 >> 1);
-  uStack8 = param_3;
-  switch(param_5) {
-  case GREEN_NORMAL:
-    en_text_write_stuff(param_1,&uStack4,&uStack8,textbuf,ptrSecondFontTableSmall,ptrFirstFontTableSmall,0xff00b0,viGetX(),viGetY(),0,0);
-    break;
-  case GREEN_HIGHLIGHT:
-    jp_text_write_stuff(param_1,&uStack4,&uStack8,textbuf,ptrSecondFontTableSmall,ptrFirstFontTableSmall,0xa0ffa0f0,0x007000a0,viGetX(),viGetY(),0,0);
-    break;
-  case RED_NORMAL:
-    en_text_write_stuff(param_1,&uStack4,&uStack8,textbuf,ptrSecondFontTableSmall,ptrFirstFontTableSmall,0xff4040b0,viGetX(),viGetY(),0,0);
-    break;
-  case RED_HIGHLIGHT:
-    jp_text_write_stuff(param_1,&uStack4,&uStack8,textbuf,ptrSecondFontTableSmall,ptrFirstFontTableSmall,0xffa0a0f0,0x700000a0,viGetX(),viGetY(),0,0);
-    break;
-  case BLUE_NORMAL:
-    en_text_write_stuff(param_1,&uStack4,&uStack8,textbuf,ptrSecondFontTableSmall,ptrFirstFontTableSmall,0x4040ffb0,viGetX(),viGetY(),0,0);
-    break;
-  case BLUE_HIGHLIGHT:
-    jp_text_write_stuff(param_1,&uStack4,&uStack8,textbuf,ptrSecondFontTableSmall,ptrFirstFontTableSmall,0xa0a0fff0,0x70a0,viGetX(),viGetY(),0,0);
-  }
-  return;
+    return gdl;
 }
-
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:8005BC88*/
-glabel jpt_MP_overlays_scoring_scenario_0
-.word green_text_normal
-.word green_text_highlighted
-.word red_text_normal
-.word red_text_highlighted
-.word blue_text_normal
-.word blue_text_highlighted
-
-.text
-glabel display_text_for_playerdata_on_MP_menu
-/* 0F80D0 7F0C35A0 27BDFFA0 */  addiu $sp, $sp, -0x60
-/* 0F80D4 7F0C35A4 AFB00034 */  sw    $s0, 0x34($sp)
-/* 0F80D8 7F0C35A8 00A08025 */  move  $s0, $a1
-/* 0F80DC 7F0C35AC AFB10038 */  sw    $s1, 0x38($sp)
-/* 0F80E0 7F0C35B0 00808825 */  move  $s1, $a0
-/* 0F80E4 7F0C35B4 AFBF003C */  sw    $ra, 0x3c($sp)
-/* 0F80E8 7F0C35B8 AFA60068 */  sw    $a2, 0x68($sp)
-/* 0F80EC 7F0C35BC 3C058006 */  lui   $a1, %hi(ascii_MP_watch_menu_percentd)
-/* 0F80F0 7F0C35C0 24A5BC20 */  addiu $a1, %lo(ascii_MP_watch_menu_percentd) # addiu $a1, $a1, -0x43e0
-/* 0F80F4 7F0C35C4 00E03025 */  move  $a2, $a3
-/* 0F80F8 7F0C35C8 0C002B25 */  jal   sprintf
-/* 0F80FC 7F0C35CC 27A40048 */   addiu $a0, $sp, 0x48
-/* 0F8100 7F0C35D0 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall) 
-/* 0F8104 7F0C35D4 8DCE0EAC */  lw    $t6, %lo(ptrFirstFontTableSmall)($t6)
-/* 0F8108 7F0C35D8 3C078004 */  lui   $a3, %hi(ptrSecondFontTableSmall)
-/* 0F810C 7F0C35DC 8CE70EB0 */  lw    $a3, %lo(ptrSecondFontTableSmall)($a3)
-/* 0F8110 7F0C35E0 27A40050 */  addiu $a0, $sp, 0x50
-/* 0F8114 7F0C35E4 27A50054 */  addiu $a1, $sp, 0x54
-/* 0F8118 7F0C35E8 27A60048 */  addiu $a2, $sp, 0x48
-/* 0F811C 7F0C35EC AFA00014 */  sw    $zero, 0x14($sp)
-/* 0F8120 7F0C35F0 0FC2BA63 */  jal   sub_GAME_7F0AE98C
-/* 0F8124 7F0C35F4 AFAE0010 */   sw    $t6, 0x10($sp)
-/* 0F8128 7F0C35F8 8FAF0054 */  lw    $t7, 0x54($sp)
-/* 0F812C 7F0C35FC 8FA90070 */  lw    $t1, 0x70($sp)
-/* 0F8130 7F0C3600 8FA80068 */  lw    $t0, 0x68($sp)
-/* 0F8134 7F0C3604 000FC043 */  sra   $t8, $t7, 1
-/* 0F8138 7F0C3608 0218C823 */  subu  $t9, $s0, $t8
-/* 0F813C 7F0C360C 2D210006 */  sltiu $at, $t1, 6
-/* 0F8140 7F0C3610 AFB9005C */  sw    $t9, 0x5c($sp)
-/* 0F8144 7F0C3614 102000AA */  beqz  $at, .L7F0C38C0
-/* 0F8148 7F0C3618 AFA80058 */   sw    $t0, 0x58($sp)
-/* 0F814C 7F0C361C 00094880 */  sll   $t1, $t1, 2
-/* 0F8150 7F0C3620 3C018006 */  lui   $at, %hi(jpt_MP_overlays_scoring_scenario_0)
-/* 0F8154 7F0C3624 00290821 */  addu  $at, $at, $t1
-/* 0F8158 7F0C3628 8C29BC88 */  lw    $t1, %lo(jpt_MP_overlays_scoring_scenario_0)($at)
-/* 0F815C 7F0C362C 01200008 */  jr    $t1
-/* 0F8160 7F0C3630 00000000 */   nop   
-green_text_normal:
-/* 0F8164 7F0C3634 0C001107 */  jal   viGetX
-/* 0F8168 7F0C3638 00000000 */   nop   
-/* 0F816C 7F0C363C 00028400 */  sll   $s0, $v0, 0x10
-/* 0F8170 7F0C3640 00105403 */  sra   $t2, $s0, 0x10
-/* 0F8174 7F0C3644 0C00110B */  jal   viGetY
-/* 0F8178 7F0C3648 01408025 */   move  $s0, $t2
-/* 0F817C 7F0C364C 3C0B8004 */  lui   $t3, %hi(ptrSecondFontTableSmall) 
-/* 0F8180 7F0C3650 3C0C8004 */  lui   $t4, %hi(ptrFirstFontTableSmall) 
-/* 0F8184 7F0C3654 8D8C0EAC */  lw    $t4, %lo(ptrFirstFontTableSmall)($t4)
-/* 0F8188 7F0C3658 8D6B0EB0 */  lw    $t3, %lo(ptrSecondFontTableSmall)($t3)
-/* 0F818C 7F0C365C 3C0D00FF */  lui   $t5, (0x00FF00B0 >> 16) # lui $t5, 0xff
-/* 0F8190 7F0C3660 35AD00B0 */  ori   $t5, (0x00FF00B0 & 0xFFFF) # ori $t5, $t5, 0xb0
-/* 0F8194 7F0C3664 AFAD0018 */  sw    $t5, 0x18($sp)
-/* 0F8198 7F0C3668 02202025 */  move  $a0, $s1
-/* 0F819C 7F0C366C 27A5005C */  addiu $a1, $sp, 0x5c
-/* 0F81A0 7F0C3670 27A60058 */  addiu $a2, $sp, 0x58
-/* 0F81A4 7F0C3674 27A70048 */  addiu $a3, $sp, 0x48
-/* 0F81A8 7F0C3678 AFB0001C */  sw    $s0, 0x1c($sp)
-/* 0F81AC 7F0C367C AFA20020 */  sw    $v0, 0x20($sp)
-/* 0F81B0 7F0C3680 AFA00024 */  sw    $zero, 0x24($sp)
-/* 0F81B4 7F0C3684 AFA00028 */  sw    $zero, 0x28($sp)
-/* 0F81B8 7F0C3688 AFAC0014 */  sw    $t4, 0x14($sp)
-/* 0F81BC 7F0C368C 0FC2B6AF */  jal   en_text_write_stuff
-/* 0F81C0 7F0C3690 AFAB0010 */   sw    $t3, 0x10($sp)
-/* 0F81C4 7F0C3694 1000008A */  b     .L7F0C38C0
-/* 0F81C8 7F0C3698 00408825 */   move  $s1, $v0
-green_text_highlighted:
-/* 0F81CC 7F0C369C 0C001107 */  jal   viGetX
-/* 0F81D0 7F0C36A0 00000000 */   nop   
-/* 0F81D4 7F0C36A4 00028400 */  sll   $s0, $v0, 0x10
-/* 0F81D8 7F0C36A8 00107403 */  sra   $t6, $s0, 0x10
-/* 0F81DC 7F0C36AC 0C00110B */  jal   viGetY
-/* 0F81E0 7F0C36B0 01C08025 */   move  $s0, $t6
-/* 0F81E4 7F0C36B4 3C0F8004 */  lui   $t7, %hi(ptrSecondFontTableSmall) 
-/* 0F81E8 7F0C36B8 3C188004 */  lui   $t8, %hi(ptrFirstFontTableSmall) 
-/* 0F81EC 7F0C36BC 8F180EAC */  lw    $t8, %lo(ptrFirstFontTableSmall)($t8)
-/* 0F81F0 7F0C36C0 8DEF0EB0 */  lw    $t7, %lo(ptrSecondFontTableSmall)($t7)
-/* 0F81F4 7F0C36C4 3C19A0FF */  lui   $t9, (0xA0FFA0F0 >> 16) # lui $t9, 0xa0ff
-/* 0F81F8 7F0C36C8 3C080070 */  lui   $t0, (0x007000A0 >> 16) # lui $t0, 0x70
-/* 0F81FC 7F0C36CC 350800A0 */  ori   $t0, (0x007000A0 & 0xFFFF) # ori $t0, $t0, 0xa0
-/* 0F8200 7F0C36D0 3739A0F0 */  ori   $t9, (0xA0FFA0F0 & 0xFFFF) # ori $t9, $t9, 0xa0f0
-/* 0F8204 7F0C36D4 AFB90018 */  sw    $t9, 0x18($sp)
-/* 0F8208 7F0C36D8 AFA8001C */  sw    $t0, 0x1c($sp)
-/* 0F820C 7F0C36DC 02202025 */  move  $a0, $s1
-/* 0F8210 7F0C36E0 27A5005C */  addiu $a1, $sp, 0x5c
-/* 0F8214 7F0C36E4 27A60058 */  addiu $a2, $sp, 0x58
-/* 0F8218 7F0C36E8 27A70048 */  addiu $a3, $sp, 0x48
-/* 0F821C 7F0C36EC AFB00020 */  sw    $s0, 0x20($sp)
-/* 0F8220 7F0C36F0 AFA20024 */  sw    $v0, 0x24($sp)
-/* 0F8224 7F0C36F4 AFA00028 */  sw    $zero, 0x28($sp)
-/* 0F8228 7F0C36F8 AFA0002C */  sw    $zero, 0x2c($sp)
-/* 0F822C 7F0C36FC AFB80014 */  sw    $t8, 0x14($sp)
-/* 0F8230 7F0C3700 0FC2B9BB */  jal   jp_text_write_stuff
-/* 0F8234 7F0C3704 AFAF0010 */   sw    $t7, 0x10($sp)
-/* 0F8238 7F0C3708 1000006D */  b     .L7F0C38C0
-/* 0F823C 7F0C370C 00408825 */   move  $s1, $v0
-red_text_normal:
-/* 0F8240 7F0C3710 0C001107 */  jal   viGetX
-/* 0F8244 7F0C3714 00000000 */   nop   
-/* 0F8248 7F0C3718 00028400 */  sll   $s0, $v0, 0x10
-/* 0F824C 7F0C371C 00104C03 */  sra   $t1, $s0, 0x10
-/* 0F8250 7F0C3720 0C00110B */  jal   viGetY
-/* 0F8254 7F0C3724 01208025 */   move  $s0, $t1
-/* 0F8258 7F0C3728 3C0A8004 */  lui   $t2, %hi(ptrSecondFontTableSmall) 
-/* 0F825C 7F0C372C 3C0B8004 */  lui   $t3, %hi(ptrFirstFontTableSmall) 
-/* 0F8260 7F0C3730 8D6B0EAC */  lw    $t3, %lo(ptrFirstFontTableSmall)($t3)
-/* 0F8264 7F0C3734 8D4A0EB0 */  lw    $t2, %lo(ptrSecondFontTableSmall)($t2)
-/* 0F8268 7F0C3738 3C0CFF40 */  lui   $t4, (0xFF4040B0 >> 16) # lui $t4, 0xff40
-/* 0F826C 7F0C373C 358C40B0 */  ori   $t4, (0xFF4040B0 & 0xFFFF) # ori $t4, $t4, 0x40b0
-/* 0F8270 7F0C3740 AFAC0018 */  sw    $t4, 0x18($sp)
-/* 0F8274 7F0C3744 02202025 */  move  $a0, $s1
-/* 0F8278 7F0C3748 27A5005C */  addiu $a1, $sp, 0x5c
-/* 0F827C 7F0C374C 27A60058 */  addiu $a2, $sp, 0x58
-/* 0F8280 7F0C3750 27A70048 */  addiu $a3, $sp, 0x48
-/* 0F8284 7F0C3754 AFB0001C */  sw    $s0, 0x1c($sp)
-/* 0F8288 7F0C3758 AFA20020 */  sw    $v0, 0x20($sp)
-/* 0F828C 7F0C375C AFA00024 */  sw    $zero, 0x24($sp)
-/* 0F8290 7F0C3760 AFA00028 */  sw    $zero, 0x28($sp)
-/* 0F8294 7F0C3764 AFAB0014 */  sw    $t3, 0x14($sp)
-/* 0F8298 7F0C3768 0FC2B6AF */  jal   en_text_write_stuff
-/* 0F829C 7F0C376C AFAA0010 */   sw    $t2, 0x10($sp)
-/* 0F82A0 7F0C3770 10000053 */  b     .L7F0C38C0
-/* 0F82A4 7F0C3774 00408825 */   move  $s1, $v0
-red_text_highlighted:
-/* 0F82A8 7F0C3778 0C001107 */  jal   viGetX
-/* 0F82AC 7F0C377C 00000000 */   nop   
-/* 0F82B0 7F0C3780 00028400 */  sll   $s0, $v0, 0x10
-/* 0F82B4 7F0C3784 00106C03 */  sra   $t5, $s0, 0x10
-/* 0F82B8 7F0C3788 0C00110B */  jal   viGetY
-/* 0F82BC 7F0C378C 01A08025 */   move  $s0, $t5
-/* 0F82C0 7F0C3790 3C0E8004 */  lui   $t6, %hi(ptrSecondFontTableSmall) 
-/* 0F82C4 7F0C3794 3C0F8004 */  lui   $t7, %hi(ptrFirstFontTableSmall) 
-/* 0F82C8 7F0C3798 8DEF0EAC */  lw    $t7, %lo(ptrFirstFontTableSmall)($t7)
-/* 0F82CC 7F0C379C 8DCE0EB0 */  lw    $t6, %lo(ptrSecondFontTableSmall)($t6)
-/* 0F82D0 7F0C37A0 3C18FFA0 */  lui   $t8, (0xFFA0A0F0 >> 16) # lui $t8, 0xffa0
-/* 0F82D4 7F0C37A4 3C197000 */  lui   $t9, (0x700000A0 >> 16) # lui $t9, 0x7000
-/* 0F82D8 7F0C37A8 373900A0 */  ori   $t9, (0x700000A0 & 0xFFFF) # ori $t9, $t9, 0xa0
-/* 0F82DC 7F0C37AC 3718A0F0 */  ori   $t8, (0xFFA0A0F0 & 0xFFFF) # ori $t8, $t8, 0xa0f0
-/* 0F82E0 7F0C37B0 AFB80018 */  sw    $t8, 0x18($sp)
-/* 0F82E4 7F0C37B4 AFB9001C */  sw    $t9, 0x1c($sp)
-/* 0F82E8 7F0C37B8 02202025 */  move  $a0, $s1
-/* 0F82EC 7F0C37BC 27A5005C */  addiu $a1, $sp, 0x5c
-/* 0F82F0 7F0C37C0 27A60058 */  addiu $a2, $sp, 0x58
-/* 0F82F4 7F0C37C4 27A70048 */  addiu $a3, $sp, 0x48
-/* 0F82F8 7F0C37C8 AFB00020 */  sw    $s0, 0x20($sp)
-/* 0F82FC 7F0C37CC AFA20024 */  sw    $v0, 0x24($sp)
-/* 0F8300 7F0C37D0 AFA00028 */  sw    $zero, 0x28($sp)
-/* 0F8304 7F0C37D4 AFA0002C */  sw    $zero, 0x2c($sp)
-/* 0F8308 7F0C37D8 AFAF0014 */  sw    $t7, 0x14($sp)
-/* 0F830C 7F0C37DC 0FC2B9BB */  jal   jp_text_write_stuff
-/* 0F8310 7F0C37E0 AFAE0010 */   sw    $t6, 0x10($sp)
-/* 0F8314 7F0C37E4 10000036 */  b     .L7F0C38C0
-/* 0F8318 7F0C37E8 00408825 */   move  $s1, $v0
-blue_text_normal:
-/* 0F831C 7F0C37EC 0C001107 */  jal   viGetX
-/* 0F8320 7F0C37F0 00000000 */   nop   
-/* 0F8324 7F0C37F4 00028400 */  sll   $s0, $v0, 0x10
-/* 0F8328 7F0C37F8 00104403 */  sra   $t0, $s0, 0x10
-/* 0F832C 7F0C37FC 0C00110B */  jal   viGetY
-/* 0F8330 7F0C3800 01008025 */   move  $s0, $t0
-/* 0F8334 7F0C3804 3C098004 */  lui   $t1, %hi(ptrSecondFontTableSmall) 
-/* 0F8338 7F0C3808 3C0A8004 */  lui   $t2, %hi(ptrFirstFontTableSmall) 
-/* 0F833C 7F0C380C 8D4A0EAC */  lw    $t2, %lo(ptrFirstFontTableSmall)($t2)
-/* 0F8340 7F0C3810 8D290EB0 */  lw    $t1, %lo(ptrSecondFontTableSmall)($t1)
-/* 0F8344 7F0C3814 3C0B4040 */  lui   $t3, (0x4040FFB0 >> 16) # lui $t3, 0x4040
-/* 0F8348 7F0C3818 356BFFB0 */  ori   $t3, (0x4040FFB0 & 0xFFFF) # ori $t3, $t3, 0xffb0
-/* 0F834C 7F0C381C AFAB0018 */  sw    $t3, 0x18($sp)
-/* 0F8350 7F0C3820 02202025 */  move  $a0, $s1
-/* 0F8354 7F0C3824 27A5005C */  addiu $a1, $sp, 0x5c
-/* 0F8358 7F0C3828 27A60058 */  addiu $a2, $sp, 0x58
-/* 0F835C 7F0C382C 27A70048 */  addiu $a3, $sp, 0x48
-/* 0F8360 7F0C3830 AFB0001C */  sw    $s0, 0x1c($sp)
-/* 0F8364 7F0C3834 AFA20020 */  sw    $v0, 0x20($sp)
-/* 0F8368 7F0C3838 AFA00024 */  sw    $zero, 0x24($sp)
-/* 0F836C 7F0C383C AFA00028 */  sw    $zero, 0x28($sp)
-/* 0F8370 7F0C3840 AFAA0014 */  sw    $t2, 0x14($sp)
-/* 0F8374 7F0C3844 0FC2B6AF */  jal   en_text_write_stuff
-/* 0F8378 7F0C3848 AFA90010 */   sw    $t1, 0x10($sp)
-/* 0F837C 7F0C384C 1000001C */  b     .L7F0C38C0
-/* 0F8380 7F0C3850 00408825 */   move  $s1, $v0
-blue_text_highlighted:
-/* 0F8384 7F0C3854 0C001107 */  jal   viGetX
-/* 0F8388 7F0C3858 00000000 */   nop   
-/* 0F838C 7F0C385C 00028400 */  sll   $s0, $v0, 0x10
-/* 0F8390 7F0C3860 00106403 */  sra   $t4, $s0, 0x10
-/* 0F8394 7F0C3864 0C00110B */  jal   viGetY
-/* 0F8398 7F0C3868 01808025 */   move  $s0, $t4
-/* 0F839C 7F0C386C 3C0D8004 */  lui   $t5, %hi(ptrSecondFontTableSmall) 
-/* 0F83A0 7F0C3870 3C0E8004 */  lui   $t6, %hi(ptrFirstFontTableSmall) 
-/* 0F83A4 7F0C3874 8DCE0EAC */  lw    $t6, %lo(ptrFirstFontTableSmall)($t6)
-/* 0F83A8 7F0C3878 8DAD0EB0 */  lw    $t5, %lo(ptrSecondFontTableSmall)($t5)
-/* 0F83AC 7F0C387C 3C0FA0A0 */  lui   $t7, (0xA0A0FFF0 >> 16) # lui $t7, 0xa0a0
-/* 0F83B0 7F0C3880 35EFFFF0 */  ori   $t7, (0xA0A0FFF0 & 0xFFFF) # ori $t7, $t7, 0xfff0
-/* 0F83B4 7F0C3884 241870A0 */  li    $t8, 28832
-/* 0F83B8 7F0C3888 AFB8001C */  sw    $t8, 0x1c($sp)
-/* 0F83BC 7F0C388C AFAF0018 */  sw    $t7, 0x18($sp)
-/* 0F83C0 7F0C3890 02202025 */  move  $a0, $s1
-/* 0F83C4 7F0C3894 27A5005C */  addiu $a1, $sp, 0x5c
-/* 0F83C8 7F0C3898 27A60058 */  addiu $a2, $sp, 0x58
-/* 0F83CC 7F0C389C 27A70048 */  addiu $a3, $sp, 0x48
-/* 0F83D0 7F0C38A0 AFB00020 */  sw    $s0, 0x20($sp)
-/* 0F83D4 7F0C38A4 AFA20024 */  sw    $v0, 0x24($sp)
-/* 0F83D8 7F0C38A8 AFA00028 */  sw    $zero, 0x28($sp)
-/* 0F83DC 7F0C38AC AFA0002C */  sw    $zero, 0x2c($sp)
-/* 0F83E0 7F0C38B0 AFAE0014 */  sw    $t6, 0x14($sp)
-/* 0F83E4 7F0C38B4 0FC2B9BB */  jal   jp_text_write_stuff
-/* 0F83E8 7F0C38B8 AFAD0010 */   sw    $t5, 0x10($sp)
-/* 0F83EC 7F0C38BC 00408825 */  move  $s1, $v0
-def_7F0C362C:
-.L7F0C38C0:
-/* 0F83F0 7F0C38C0 8FBF003C */  lw    $ra, 0x3c($sp)
-/* 0F83F4 7F0C38C4 02201025 */  move  $v0, $s1
-/* 0F83F8 7F0C38C8 8FB10038 */  lw    $s1, 0x38($sp)
-/* 0F83FC 7F0C38CC 8FB00034 */  lw    $s0, 0x34($sp)
-/* 0F8400 7F0C38D0 03E00008 */  jr    $ra
-/* 0F8404 7F0C38D4 27BD0060 */   addiu $sp, $sp, 0x60
-)
-#endif
 
 
 
