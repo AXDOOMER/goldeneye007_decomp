@@ -90,6 +90,8 @@ void indyGrabJpg16bit(void);
 void indyGrabJpg32bit(void);
 void indyGrabRgb16bit(void);
 void indyGrabRgb32bit(void);
+
+void viSetVideoMode(s32 m);
 #endif
 
 

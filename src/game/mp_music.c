@@ -2,6 +2,7 @@
 #include "music.h"
 #include "music_0D2720.h"
 #include "watch.h"
+#include "mp_music.h"
 
 // bss
 //CODE.bss:8008C600
@@ -1864,12 +1865,12 @@ glabel reset_all_music_slots
 /* 0F5EF8 7F0C13C8 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0F5EFC 7F0C13CC 3C078009 */  lui   $a3, %hi(music_slot_active_0)
 /* 0F5F00 7F0C13D0 3C048009 */  lui   $a0, %hi(music_slot_minutes_0)
-/* 0F5F04 7F0C13D4 3C068005 */  lui   $a2, %hi(clock_timer)
+/* 0F5F04 7F0C13D4 3C068005 */  lui   $a2, %hi(g_ClockTimer)
 /* 0F5F08 7F0C13D8 3C098009 */  lui   $t1, %hi(music_slot_seconds_0)
 /* 0F5F0C 7F0C13DC AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F5F10 7F0C13E0 00005025 */  move  $t2, $zero
 /* 0F5F14 7F0C13E4 2529C628 */  addiu $t1, %lo(music_slot_seconds_0) # addiu $t1, $t1, -0x39d8
-/* 0F5F18 7F0C13E8 8CC68374 */  lw    $a2, %lo(clock_timer)($a2)
+/* 0F5F18 7F0C13E8 8CC68374 */  lw    $a2, %lo(g_ClockTimer)($a2)
 /* 0F5F1C 7F0C13EC 2484C618 */  addiu $a0, %lo(music_slot_minutes_0) # addiu $a0, $a0, -0x39e8
 /* 0F5F20 7F0C13F0 24E7C608 */  addiu $a3, %lo(music_slot_active_0) # addiu $a3, $a3, -0x39f8
 /* 0F5F24 7F0C13F4 00004025 */  move  $t0, $zero

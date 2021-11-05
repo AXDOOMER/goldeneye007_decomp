@@ -1042,7 +1042,7 @@ void store_stagenum_to_copyof_stagenum(s32 stagenum) {
 #ifndef VERSION_EU
 void sub_GAME_7F094438(void)
 {
-    D_8003FD94[0] = (clock_timer + D_8003FD94[0]);
+    D_8003FD94[0] = (g_ClockTimer + D_8003FD94[0]);
     if ( D_8003FD94[0] > 4096.0f)
     {
         D_8003FD94[0] -= 4096.0f;
@@ -1056,8 +1056,8 @@ glabel sub_GAME_7F094438
 /* 0C636C 7F09397C 44811000 */  mtc1  $at, $f2
 /* 0C6370 7F093980 3C028004 */  lui   $v0, %hi(D_8003FD94) # $v0, 0x8004
 /* 0C6374 7F093984 244299E4 */  addiu $v0, %lo(D_8003FD94) # addiu $v0, $v0, -0x661c
-/* 0C6378 7F093988 3C018004 */  lui   $at, %hi(global_timer_delta) # $at, 0x8004
-/* 0C637C 7F09398C C4261004 */  lwc1  $f6, %lo(global_timer_delta)($at)
+/* 0C6378 7F093988 3C018004 */  lui   $at, %hi(g_GlobalTimerDelta) # $at, 0x8004
+/* 0C637C 7F09398C C4261004 */  lwc1  $f6, %lo(g_GlobalTimerDelta)($at)
 /* 0C6380 7F093990 C4440000 */  lwc1  $f4, ($v0)
 /* 0C6384 7F093994 46062200 */  add.s $f8, $f4, $f6
 /* 0C6388 7F093998 E4480000 */  swc1  $f8, ($v0)

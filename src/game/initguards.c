@@ -2,6 +2,7 @@
 #include "memp.h"
 #include "game/chr.h"
 #include "game/chrobjdata.h"
+#include "game/initguards.h"
 
 void init_guards(void) {
     animation_rate = 1.0f;

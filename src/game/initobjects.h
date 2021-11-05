@@ -44,5 +44,8 @@ struct object_animation_controller {
     f32 colorshifttimer;
 };
 
+void init_load_objpos_table(void);
+void reinit_between_menus(void);
+void init_sound_effects_registers(void);
 
 #endif

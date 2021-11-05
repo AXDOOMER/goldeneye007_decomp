@@ -77,10 +77,10 @@ extern s32 objectiveregisters3;
 extern u32 current_random_body;
 extern u32 current_random_male_head;
 extern u32 current_random_female_head;
-extern f32 ai_accuracy_modifier;
-extern f32 ai_damage_modifier;
-extern f32 ai_health_modifier;
-extern f32 ai_reaction_speed;
+extern f32 g_AiAccuracyModifier;
+extern f32 g_AiDamageModifier;
+extern f32 g_AiHealthModifier;
+extern f32 g_AiReactionSpeed;
 extern s32 setting_007_5;
 
 extern struct animation_something D_8002C914;

@@ -19,6 +19,10 @@
 #include "game/math_floor.h"
 #include "game/image_bank.h"
 
+// lvl.c checks for enabled cheats up to the "invalid" index of 0x4b (=75), which
+// is different from the 80 here ...
+#define CHEATS_TRACKED 80
+
 struct point {
     f32 x;
     f32 y;
@@ -93,10 +97,10 @@ f32 flt_CODE_bss_8006961C;
 struct coord3d dword_CODE_bss_80069620[0x4];
 
 //CODE.bss:80069650
-u8 cheat_available[80];
+u8 cheat_available[CHEATS_TRACKED];
 
 //CODE.bss:800696A0
-u8 cheat_activated[80];
+u8 g_CheatActivated[CHEATS_TRACKED];
 
 //CODE.bss:800696F0
 s32 array_favweapon[4][2];
@@ -151,7 +155,7 @@ s32 teamsize;
 //CODE.bss:8006978C
 s32 ptrbriefingdata;
 //CODE.bss:80069790
-s32 g_newcheatunlocked;
+s32 g_NewCheatUnlocked;
 //CODE.bss:80069794
 s32 highlight_enemy_reaction;
 //CODE.bss:80069798
@@ -219,7 +223,7 @@ s32 selected_stage = -1;
 s32 briefingpage = -1;
 DIFFICULTY selected_difficulty = DIFFICULTY_MULTI;
 
-s32 append_cheat_sp = FALSE;
+s32 g_AppendCheatSinglePlayer = FALSE;
 s32 append_cheat_mp = FALSE;
 
 f32 cursor_h_pos = 220.0;
@@ -250,7 +254,7 @@ s32 is_emulating_spectrum = FALSE;
 s32 is_cheat_menu_available = FALSE;
 
 Gfx * ptr_logo_and_walletbond_DL = 0;
-u8 * ptr_menu_videobuffer = 0;
+s32 ptr_menu_videobuffer = 0;
 s32 something_legalscreen_constructor = 0;
 struct object_standard * ptr_folder_object_instance = 0;
 s32 set0_never_used = 0;
@@ -1175,10 +1179,10 @@ void menu_control_stick_tracking(void) {
 
 
     if (stickx > 0) {
-        cursor_h_pos += (f32)(( (f32)stickx * 0.075f + 0.5f) * global_timer_delta);
+        cursor_h_pos += (f32)(( (f32)stickx * 0.075f + 0.5f) * g_GlobalTimerDelta);
     }
     else if (stickx < 0) {
-        cursor_h_pos += (f32)(( (f32)stickx * 0.075f - 0.5f) * global_timer_delta);
+        cursor_h_pos += (f32)(( (f32)stickx * 0.075f - 0.5f) * g_GlobalTimerDelta);
     }
 
     if ((getPlayer_c_screenleft() + getPlayer_c_screenwidth() - 20.0f) < cursor_h_pos) {
@@ -1193,10 +1197,10 @@ void menu_control_stick_tracking(void) {
 
 
     if (sticky > 0) {
-        cursor_v_pos += (f32)(( (f32)sticky * 0.075f + 0.5f) * global_timer_delta);
+        cursor_v_pos += (f32)(( (f32)sticky * 0.075f + 0.5f) * g_GlobalTimerDelta);
     }
     else if (sticky < 0) {
-        cursor_v_pos += (f32)(( (f32)sticky * 0.075f - 0.5f) * global_timer_delta);
+        cursor_v_pos += (f32)(( (f32)sticky * 0.075f - 0.5f) * g_GlobalTimerDelta);
     }
 
     if ((getPlayer_c_screentop() + getPlayer_c_screenheight() - 20.0f) < cursor_v_pos) {
@@ -1473,7 +1477,7 @@ void interface_menu00_legalscreen(void)
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(0);
 
-    menu_timer += clock_timer;
+    menu_timer += g_ClockTimer;
     if (menu_timer >= 0xF1)
     {
         if ((joyGetControllerCount() < 1) && (is_first_time_on_legal_screen))
@@ -1875,7 +1879,7 @@ void interface_menu01_nintendo(void)
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(0);
 
-    menu_timer = menu_timer + clock_timer;
+    menu_timer = menu_timer + g_ClockTimer;
     if (menu_timer >= 0x1F5)
     {
         set_menu_to_mode(MENU_RAREWARE_LOGO, 1);
@@ -2351,7 +2355,7 @@ void interface_menu04_goldeneyelogo(void)
     viSetAspect(1.3333334f);
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(0);
-    menu_timer += clock_timer;
+    menu_timer += g_ClockTimer;
     if (((is_first_time_on_main_menu == FALSE) || (0xb4 < menu_timer)) ||
        ((ge_logo_bool != FALSE && (0x5a < menu_timer)))) {
         if (menu_timer > 0xb4) {
@@ -2978,9 +2982,9 @@ void *init_menu05_fileselect(void)
         maybe_is_in_menu = 0;
     }
     menu_timer = 0;
-    cheat_activated[1] = (u8)0;
-    cheat_activated[1] = (u8)0;
-    phi_v0 = &cheat_activated[2];
+    g_CheatActivated[1] = (u8)0;
+    g_CheatActivated[1] = (u8)0;
+    phi_v0 = &g_CheatActivated[2];
 loop_5:
     temp_v0 = phi_v0 + 4;
     temp_v0->unk-3 = (u8)0;
@@ -2988,11 +2992,11 @@ loop_5:
     temp_v0->unk-1 = (u8)0;
     temp_v0->unk-4 = (u8)0;
     phi_v0 = temp_v0;
-    if (temp_v0 != &cheat_activated[74])
+    if (temp_v0 != &g_CheatActivated[74])
     {
         goto loop_5;
     }
-    append_cheat_sp = 0;
+    g_AppendCheatSinglePlayer = 0;
     append_cheat_mp = 0;
     return temp_v0;
 }
@@ -3044,13 +3048,13 @@ glabel init_menu05_fileselect
 .L7F00BA88:
 /* 0405B8 7F00BA88 3C018003 */  lui   $at, %hi(menu_timer)
 /* 0405BC 7F00BA8C AC20A8CC */  sw    $zero, %lo(menu_timer)($at)
-/* 0405C0 7F00BA90 3C018007 */  lui   $at, %hi(cheat_activated + 1)
-/* 0405C4 7F00BA94 3C028007 */  lui   $v0, %hi(cheat_activated + 3)
-/* 0405C8 7F00BA98 3C038007 */  lui   $v1, %hi(cheat_activated + 75)
-/* 0405CC 7F00BA9C 246396EB */  addiu $v1, %lo(cheat_activated + 75) # addiu $v1, $v1, -0x6915
-/* 0405D0 7F00BAA0 244296A3 */  addiu $v0, %lo(cheat_activated + 3) # addiu $v0, $v0, -0x695d
-/* 0405D4 7F00BAA4 A02096A1 */  sb    $zero, %lo(cheat_activated + 1)($at)
-/* 0405D8 7F00BAA8 A02096A2 */  sb    $zero, %lo(cheat_activated + 2)($at)
+/* 0405C0 7F00BA90 3C018007 */  lui   $at, %hi(g_CheatActivated + 1)
+/* 0405C4 7F00BA94 3C028007 */  lui   $v0, %hi(g_CheatActivated + 3)
+/* 0405C8 7F00BA98 3C038007 */  lui   $v1, %hi(g_CheatActivated + 75)
+/* 0405CC 7F00BA9C 246396EB */  addiu $v1, %lo(g_CheatActivated + 75) # addiu $v1, $v1, -0x6915
+/* 0405D0 7F00BAA0 244296A3 */  addiu $v0, %lo(g_CheatActivated + 3) # addiu $v0, $v0, -0x695d
+/* 0405D4 7F00BAA4 A02096A1 */  sb    $zero, %lo(g_CheatActivated + 1)($at)
+/* 0405D8 7F00BAA8 A02096A2 */  sb    $zero, %lo(g_CheatActivated + 2)($at)
 .L7F00BAAC:
 /* 0405DC 7F00BAAC 24420004 */  addiu $v0, $v0, 4
 /* 0405E0 7F00BAB0 A040FFFD */  sb    $zero, -3($v0)
@@ -3059,8 +3063,8 @@ glabel init_menu05_fileselect
 /* 0405EC 7F00BABC 1443FFFB */  bne   $v0, $v1, .L7F00BAAC
 /* 0405F0 7F00BAC0 A040FFFC */   sb    $zero, -4($v0)
 /* 0405F4 7F00BAC4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0405F8 7F00BAC8 3C018003 */  lui   $at, %hi(append_cheat_sp)
-/* 0405FC 7F00BACC AC20A900 */  sw    $zero, %lo(append_cheat_sp)($at)
+/* 0405F8 7F00BAC8 3C018003 */  lui   $at, %hi(g_AppendCheatSinglePlayer)
+/* 0405FC 7F00BACC AC20A900 */  sw    $zero, %lo(g_AppendCheatSinglePlayer)($at)
 /* 040600 7F00BAD0 3C018003 */  lui   $at, %hi(append_cheat_mp)
 /* 040604 7F00BAD4 AC20A904 */  sw    $zero, %lo(append_cheat_mp)($at)
 /* 040608 7F00BAD8 03E00008 */  jr    $ra
@@ -3173,7 +3177,7 @@ s32 interface_menu05_fileselect(void)
     }
     else
     {
-        menu_timer = (s32) (menu_timer + clock_timer);
+        menu_timer = (s32) (menu_timer + g_ClockTimer);
     }
     viSetFovY(0x42700000);
     viSetAspect(D_80051A1C);
@@ -3435,8 +3439,8 @@ glabel interface_menu05_fileselect
 /* 040780 7F00BC50 10000007 */  b     .L7F00BC70
 /* 040784 7F00BC54 AC20A8CC */   sw    $zero, %lo(menu_timer)($at)
 .L7F00BC58:
-/* 040788 7F00BC58 3C0F8005 */  lui   $t7, %hi(clock_timer)
-/* 04078C 7F00BC5C 8DEF8374 */  lw    $t7, %lo(clock_timer)($t7)
+/* 040788 7F00BC58 3C0F8005 */  lui   $t7, %hi(g_ClockTimer)
+/* 04078C 7F00BC5C 8DEF8374 */  lw    $t7, %lo(g_ClockTimer)($t7)
 /* 040790 7F00BC60 8DCEA8CC */  lw    $t6, %lo(menu_timer)($t6)
 /* 040794 7F00BC64 3C018003 */  lui   $at, %hi(menu_timer)
 /* 040798 7F00BC68 01CFC021 */  addu  $t8, $t6, $t7
@@ -5638,7 +5642,7 @@ Gfx* constructor_menu06_modesel(Gfx* DL)
 
     DL = write_text_at_abs_coord(DL,  0x96, 0xDC, "1.\n", ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
 
-    if (append_cheat_sp != 0)
+    if (g_AppendCheatSinglePlayer != 0)
     {
         textid = TEXT(LTITLE, 0x75);
     }
@@ -5752,8 +5756,8 @@ glabel constructor_menu06_modesel
 /* 0423EC 7F00D8BC AFB80010 */  sw    $t8, 0x10($sp)
 /* 0423F0 7F00D8C0 0FC025D8 */  jal   write_text_at_abs_coord
 /* 0423F4 7F00D8C4 AFA9001C */   sw    $t1, 0x1c($sp)
-/* 0423F8 7F00D8C8 3C0A8003 */  lui   $t2, %hi(append_cheat_sp)
-/* 0423FC 7F00D8CC 8D4AA900 */  lw    $t2, %lo(append_cheat_sp)($t2)
+/* 0423F8 7F00D8C8 3C0A8003 */  lui   $t2, %hi(g_AppendCheatSinglePlayer)
+/* 0423FC 7F00D8CC 8D4AA900 */  lw    $t2, %lo(g_AppendCheatSinglePlayer)($t2)
 /* 042400 7F00D8D0 00408025 */  move  $s0, $v0
 /* 042404 7F00D8D4 51400004 */  beql  $t2, $zero, .L7F00D8E8
 /* 042408 7F00D8D8 34049C1D */   li    $a0, 39965
@@ -6067,8 +6071,8 @@ glabel constructor_menu06_modesel
 /* 0401BC 7F00D7CC AFB80010 */  sw    $t8, 0x10($sp)
 /* 0401C0 7F00D7D0 0FC02598 */  jal   write_text_at_abs_coord
 /* 0401C4 7F00D7D4 AFA9001C */   sw    $t1, 0x1c($sp)
-/* 0401C8 7F00D7D8 3C0A8002 */  lui   $t2, %hi(append_cheat_sp) # $t2, 0x8002
-/* 0401CC 7F00D7DC 8D4A5E50 */  lw    $t2, %lo(append_cheat_sp)($t2)
+/* 0401C8 7F00D7D8 3C0A8002 */  lui   $t2, %hi(g_AppendCheatSinglePlayer) # $t2, 0x8002
+/* 0401CC 7F00D7DC 8D4A5E50 */  lw    $t2, %lo(g_AppendCheatSinglePlayer)($t2)
 /* 0401D0 7F00D7E0 00408025 */  move  $s0, $v0
 /* 0401D4 7F00D7E4 51400004 */  beql  $t2, $zero, .L7F00D7F8
 /* 0401D8 7F00D7E8 34049C1D */   li    $a0, 39965
@@ -6463,7 +6467,7 @@ s32 get_highest_unlocked_difficulty_for_level(s32 arg0)
             phi_s0 = phi_s1;
 loop_6:
             temp_ret_2 = fileIsStageUnlockedAtDifficulty(selected_folder_num, arg0, phi_s0);
-            if (append_cheat_sp == 0)
+            if (g_AppendCheatSinglePlayer == 0)
             {
                 if (temp_ret_2 != 0)
                 {
@@ -6522,8 +6526,8 @@ glabel get_highest_unlocked_difficulty_for_level
 .L7F00DDD0:
 /* 042900 7F00DDD0 06200016 */  bltz  $s1, .L7F00DE2C
 /* 042904 7F00DDD4 02208025 */   move  $s0, $s1
-/* 042908 7F00DDD8 3C118003 */  lui   $s1, %hi(append_cheat_sp)
-/* 04290C 7F00DDDC 2631A900 */  addiu $s1, %lo(append_cheat_sp) # addiu $s1, $s1, -0x5700
+/* 042908 7F00DDD8 3C118003 */  lui   $s1, %hi(g_AppendCheatSinglePlayer)
+/* 04290C 7F00DDDC 2631A900 */  addiu $s1, %lo(g_AppendCheatSinglePlayer) # addiu $s1, $s1, -0x5700
 /* 042910 7F00DDE0 24120003 */  li    $s2, 3
 /* 042914 7F00DDE4 8E840000 */  lw    $a0, ($s4)
 .L7F00DDE8:
@@ -20271,7 +20275,7 @@ void init_menu0D_missioncomplete(void)
     tab_3_selected = 0;
     load_walletbond();
     load_briefing_text_for_stage();
-    if (g_newcheatunlocked)
+    if (g_NewCheatUnlocked)
     {
         sndPlaySfx(g_musicSfxBufferPtr, RARELOGO_SFX, 0);
     }
@@ -20348,7 +20352,7 @@ void interface_menu0D_missioncomplete(u32 param_1,u32 param_2)
   }
   else {
     lVar2 = proc_7F01631C();
-    if ((lVar2 == 0) || (append_cheat_sp != FALSE)) {
+    if ((lVar2 == 0) || (g_AppendCheatSinglePlayer != FALSE)) {
       set_menu_to_mode(MENU_BRIEFING,0);
     }
     else {
@@ -20515,8 +20519,8 @@ glabel interface_menu0D_missioncomplete
 /* 04B3B4 7F016884 0FC058C7 */  jal   sub_GAME_7F01631C
 /* 04B3B8 7F016888 00000000 */   nop
 /* 04B3BC 7F01688C 10400044 */  beqz  $v0, .L7F0169A0
-/* 04B3C0 7F016890 3C198003 */   lui   $t9, %hi(append_cheat_sp)
-/* 04B3C4 7F016894 8F39A900 */  lw    $t9, %lo(append_cheat_sp)($t9)
+/* 04B3C0 7F016890 3C198003 */   lui   $t9, %hi(g_AppendCheatSinglePlayer)
+/* 04B3C4 7F016894 8F39A900 */  lw    $t9, %lo(g_AppendCheatSinglePlayer)($t9)
 /* 04B3C8 7F016898 3C088003 */  lui   $t0, %hi(briefingpage)
 /* 04B3CC 7F01689C 2508A8F8 */  addiu $t0, %lo(briefingpage) # addiu $t0, $t0, -0x5708
 /* 04B3D0 7F0168A0 57200040 */  bnezl $t9, .L7F0169A4
@@ -20709,7 +20713,7 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
     y = 0xA7;
     DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xFF, viGetX(), viGetY(), 0, 0);
 
-    if (g_newcheatunlocked) {
+    if (g_NewCheatUnlocked) {
         stagename[0] = '\0';
         sprintf(&stagename, "     [%s]", get_textptr_for_textID(TEXT(LTITLE, 0x113))); //New Cheat Available
         DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrSecondFontTableLarge, ptrFirstFontTableLarge, 0xA00000FF, viGetX(), viGetY(), 0, 0);
@@ -21111,8 +21115,8 @@ glabel constructor_menu0D_missioncomplete
 /* 04B8CC 7F016D9C AFAC0014 */  sw    $t4, 0x14($sp)
 /* 04B8D0 7F016DA0 0FC025D8 */  jal   write_text_at_abs_coord
 /* 04B8D4 7F016DA4 AFAB0010 */   sw    $t3, 0x10($sp)
-/* 04B8D8 7F016DA8 3C0E8007 */  lui   $t6, %hi(g_newcheatunlocked)
-/* 04B8DC 7F016DAC 8DCE9790 */  lw    $t6, %lo(g_newcheatunlocked)($t6)
+/* 04B8D8 7F016DA8 3C0E8007 */  lui   $t6, %hi(g_NewCheatUnlocked)
+/* 04B8DC 7F016DAC 8DCE9790 */  lw    $t6, %lo(g_NewCheatUnlocked)($t6)
 /* 04B8E0 7F016DB0 00408825 */  move  $s1, $v0
 /* 04B8E4 7F016DB4 51C00023 */  beql  $t6, $zero, .L7F016E44
 /* 04B8E8 7F016DB8 8FAB0060 */   lw    $t3, 0x60($sp)
@@ -22045,7 +22049,7 @@ void update_menu15_cheat(void)
   appendmp = FALSE;
 
   for (i = 1; i != 0x4b; i++) {
-    if (cheat_activated[i]) {
+    if (g_CheatActivated[i]) {
         appendsp = TRUE;
         if (cheatCheckIfMPCheat(i)) {
             appendmp = TRUE;
@@ -22053,7 +22057,7 @@ void update_menu15_cheat(void)
     }
   };
 
-  append_cheat_sp = appendsp;
+  g_AppendCheatSinglePlayer = appendsp;
   append_cheat_mp = appendmp;
 }
 
@@ -22342,11 +22346,11 @@ glabel interface_menu15_cheat
 /* 04CA48 7F017F18 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 04CA4C 7F017F1C 8F39B5E0 */  lw    $t9, %lo(D_8002B5E0)($t9)
 /* 04CA50 7F017F20 3C038007 */  lui   $v1, %hi(arrayUnlockedCheats)
-/* 04CA54 7F017F24 3C098007 */  lui   $t1, %hi(cheat_activated)
+/* 04CA54 7F017F24 3C098007 */  lui   $t1, %hi(g_CheatActivated)
 /* 04CA58 7F017F28 00194080 */  sll   $t0, $t9, 2
 /* 04CA5C 7F017F2C 00681821 */  addu  $v1, $v1, $t0
 /* 04CA60 7F017F30 8C6397F0 */  lw    $v1, %lo(arrayUnlockedCheats)($v1)
-/* 04CA64 7F017F34 252996A0 */  addiu $t1, %lo(cheat_activated) # addiu $t1, $t1, -0x6960
+/* 04CA64 7F017F34 252996A0 */  addiu $t1, %lo(g_CheatActivated) # addiu $t1, $t1, -0x6960
 /* 04CA68 7F017F38 240B0001 */  li    $t3, 1
 /* 04CA6C 7F017F3C 00691021 */  addu  $v0, $v1, $t1
 /* 04CA70 7F017F40 904A0000 */  lbu   $t2, ($v0)
@@ -22473,10 +22477,10 @@ glabel constructor_menu15_cheat
 /* 04CC0C 7F0180DC 0FC025D8 */  jal   write_text_at_abs_coord
 /* 04CC10 7F0180E0 AFAD0014 */   sw    $t5, 0x14($sp)
 /* 04CC14 7F0180E4 8E6F0000 */  lw    $t7, ($s3)
-/* 04CC18 7F0180E8 3C188007 */  lui   $t8, %hi(cheat_activated)
+/* 04CC18 7F0180E8 3C188007 */  lui   $t8, %hi(g_CheatActivated)
 /* 04CC1C 7F0180EC 0040A025 */  move  $s4, $v0
 /* 04CC20 7F0180F0 030FC021 */  addu  $t8, $t8, $t7
-/* 04CC24 7F0180F4 931896A0 */  lbu   $t8, %lo(cheat_activated)($t8)
+/* 04CC24 7F0180F4 931896A0 */  lbu   $t8, %lo(g_CheatActivated)($t8)
 /* 04CC28 7F0180F8 34119C74 */  li    $s1, 40052
 /* 04CC2C 7F0180FC 13000003 */  beqz  $t8, .L7F01810C
 /* 04CC30 7F018100 00000000 */   nop
@@ -22495,10 +22499,10 @@ glabel constructor_menu15_cheat
 /* 04CC60 7F018130 0FC2BA63 */  jal   sub_GAME_7F0AE98C
 /* 04CC64 7F018134 AFB90010 */   sw    $t9, 0x10($sp)
 /* 04CC68 7F018138 8E680000 */  lw    $t0, ($s3)
-/* 04CC6C 7F01813C 3C098007 */  lui   $t1, %hi(cheat_activated)
+/* 04CC6C 7F01813C 3C098007 */  lui   $t1, %hi(g_CheatActivated)
 /* 04CC70 7F018140 240200B3 */  li    $v0, 179
 /* 04CC74 7F018144 01284821 */  addu  $t1, $t1, $t0
-/* 04CC78 7F018148 912996A0 */  lbu   $t1, %lo(cheat_activated)($t1)
+/* 04CC78 7F018148 912996A0 */  lbu   $t1, %lo(g_CheatActivated)($t1)
 /* 04CC7C 7F01814C AFA20088 */  sw    $v0, 0x88($sp)
 /* 04CC80 7F018150 AFB50084 */  sw    $s5, 0x84($sp)
 /* 04CC84 7F018154 11200004 */  beqz  $t1, .L7F018168
@@ -22615,10 +22619,10 @@ glabel constructor_menu15_cheat
 /* 04CE28 7F0182F8 0FC025D8 */  jal   write_text_at_abs_coord
 /* 04CE2C 7F0182FC AFAC0014 */   sw    $t4, 0x14($sp)
 /* 04CE30 7F018300 8E6E0030 */  lw    $t6, 0x30($s3)
-/* 04CE34 7F018304 3C0F8007 */  lui   $t7, %hi(cheat_activated)
+/* 04CE34 7F018304 3C0F8007 */  lui   $t7, %hi(g_CheatActivated)
 /* 04CE38 7F018308 0040A025 */  move  $s4, $v0
 /* 04CE3C 7F01830C 01EE7821 */  addu  $t7, $t7, $t6
-/* 04CE40 7F018310 91EF96A0 */  lbu   $t7, %lo(cheat_activated)($t7)
+/* 04CE40 7F018310 91EF96A0 */  lbu   $t7, %lo(g_CheatActivated)($t7)
 /* 04CE44 7F018314 34119C74 */  li    $s1, 40052
 /* 04CE48 7F018318 11E00003 */  beqz  $t7, .L7F018328
 /* 04CE4C 7F01831C 00000000 */   nop
@@ -22637,10 +22641,10 @@ glabel constructor_menu15_cheat
 /* 04CE7C 7F01834C 0FC2BA63 */  jal   sub_GAME_7F0AE98C
 /* 04CE80 7F018350 AFB80010 */   sw    $t8, 0x10($sp)
 /* 04CE84 7F018354 8E790030 */  lw    $t9, 0x30($s3)
-/* 04CE88 7F018358 3C088007 */  lui   $t0, %hi(cheat_activated)
+/* 04CE88 7F018358 3C088007 */  lui   $t0, %hi(g_CheatActivated)
 /* 04CE8C 7F01835C 24020158 */  li    $v0, 344
 /* 04CE90 7F018360 01194021 */  addu  $t0, $t0, $t9
-/* 04CE94 7F018364 910896A0 */  lbu   $t0, %lo(cheat_activated)($t0)
+/* 04CE94 7F018364 910896A0 */  lbu   $t0, %lo(g_CheatActivated)($t0)
 /* 04CE98 7F018368 AFA20088 */  sw    $v0, 0x88($sp)
 /* 04CE9C 7F01836C AFB50084 */  sw    $s5, 0x84($sp)
 /* 04CEA0 7F018370 11000004 */  beqz  $t0, .L7F018384
@@ -24598,7 +24602,7 @@ void interface_menu18_displaycast(void)
     viSetViewSize(440, 330);
     set_cur_player_viewport_size(0, 0);
     viSetViewPosition(0, 0);
-    menu_timer += clock_timer;
+    menu_timer += g_ClockTimer;
     if (menu_timer >= 181)
     {
         intro_character_index++;
@@ -24682,8 +24686,8 @@ glabel interface_menu18_displaycast
 /* 04DB0C 7F018FDC 00002825 */   move  $a1, $zero
 /* 04DB10 7F018FE0 3C028003 */  lui   $v0, %hi(menu_timer)
 /* 04DB14 7F018FE4 2442A8CC */  addiu $v0, %lo(menu_timer) # addiu $v0, $v0, -0x5734
-/* 04DB18 7F018FE8 3C0F8005 */  lui   $t7, %hi(clock_timer)
-/* 04DB1C 7F018FEC 8DEF8374 */  lw    $t7, %lo(clock_timer)($t7)
+/* 04DB18 7F018FE8 3C0F8005 */  lui   $t7, %hi(g_ClockTimer)
+/* 04DB1C 7F018FEC 8DEF8374 */  lw    $t7, %lo(g_ClockTimer)($t7)
 /* 04DB20 7F018FF0 8C4E0000 */  lw    $t6, ($v0)
 /* 04DB24 7F018FF4 3C108003 */  lui   $s0, %hi(intro_character_index)
 /* 04DB28 7F018FF8 00002025 */  move  $a0, $zero
@@ -25211,9 +25215,9 @@ glabel constructor_menu18_displaycast
 /* 04E24C 7F01971C 2694B5F4 */  addiu $s4, %lo(objinstance) # addiu $s4, $s4, -0x4a0c
 /* 04E250 7F019720 ACF80004 */  sw    $t8, 4($a3)
 /* 04E254 7F019724 ACEB0000 */  sw    $t3, ($a3)
-/* 04E258 7F019728 3C058005 */  lui   $a1, %hi(clock_timer)
+/* 04E258 7F019728 3C058005 */  lui   $a1, %hi(g_ClockTimer)
 /* 04E25C 7F01972C 26730008 */  addiu $s3, $s3, 8
-/* 04E260 7F019730 8CA58374 */  lw    $a1, %lo(clock_timer)($a1)
+/* 04E260 7F019730 8CA58374 */  lw    $a1, %lo(g_ClockTimer)($a1)
 /* 04E264 7F019734 8E840000 */  lw    $a0, ($s4)
 /* 04E268 7F019738 0FC1C2BB */  jal   sub_GAME_7F070AEC
 /* 04E26C 7F01973C 24060001 */   li    $a2, 1
@@ -25270,7 +25274,7 @@ glabel constructor_menu18_displaycast
 /* 04E330 7F019800 24C695E4 */  addiu $a2, %lo(flt_CODE_bss_800695E4) # addiu $a2, $a2, -0x6a1c
 /* 04E334 7F019804 8CC20000 */  lw    $v0, ($a2)
 /* 04E338 7F019808 00008825 */  move  $s1, $zero
-/* 04E33C 7F01980C 3C038005 */  lui   $v1, %hi(clock_timer)
+/* 04E33C 7F01980C 3C038005 */  lui   $v1, %hi(g_ClockTimer)
 /* 04E340 7F019810 10400005 */  beqz  $v0, .L7F019828
 /* 04E344 7F019814 00000000 */   nop
 /* 04E348 7F019818 C7AA012C */  lwc1  $f10, 0x12c($sp)
@@ -25282,11 +25286,11 @@ glabel constructor_menu18_displaycast
 /* 04E35C 7F01982C 261095E8 */  addiu $s0, %lo(flt_CODE_bss_800695E8) # addiu $s0, $s0, -0x6a18
 /* 04E360 7F019830 C6040000 */  lwc1  $f4, ($s0)
 /* 04E364 7F019834 C7A60128 */  lwc1  $f6, 0x128($sp)
-/* 04E368 7F019838 3C018005 */  lui   $at, %hi(global_timer_delta)
+/* 04E368 7F019838 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta)
 /* 04E36C 7F01983C E7A4006C */  swc1  $f4, 0x6c($sp)
 /* 04E370 7F019840 C7A8006C */  lwc1  $f8, 0x6c($sp)
 /* 04E374 7F019844 C6040004 */  lwc1  $f4, 4($s0)
-/* 04E378 7F019848 C4328378 */  lwc1  $f18, %lo(global_timer_delta)($at)
+/* 04E378 7F019848 C4328378 */  lwc1  $f18, %lo(g_GlobalTimerDelta)($at)
 /* 04E37C 7F01984C 46083281 */  sub.s $f10, $f6, $f8
 /* 04E380 7F019850 E7A40064 */  swc1  $f4, 0x64($sp)
 /* 04E384 7F019854 C7A80064 */  lwc1  $f8, 0x64($sp)
@@ -25312,7 +25316,7 @@ glabel constructor_menu18_displaycast
 /* 04E3D4 7F0198A4 E4460004 */  swc1  $f6, 4($v0)
 /* 04E3D8 7F0198A8 E4480008 */  swc1  $f8, 8($v0)
 .L7F0198AC:
-/* 04E3DC 7F0198AC 8C638374 */  lw    $v1, %lo(clock_timer)($v1)
+/* 04E3DC 7F0198AC 8C638374 */  lw    $v1, %lo(g_ClockTimer)($v1)
 /* 04E3E0 7F0198B0 3C028007 */  lui   $v0, %hi(flt_CODE_bss_80069608)
 /* 04E3E4 7F0198B4 3C018005 */  lui   $at, %hi(D_80051B24)
 /* 04E3E8 7F0198B8 C4301B24 */  lwc1  $f16, %lo(D_80051B24)($at)
@@ -25421,8 +25425,8 @@ glabel constructor_menu18_displaycast
 /* 04E578 7F019A48 E4480004 */  swc1  $f8, 4($v0)
 /* 04E57C 7F019A4C E4440008 */  swc1  $f4, 8($v0)
 .L7F019A50:
-/* 04E580 7F019A50 3C038005 */  lui   $v1, %hi(clock_timer)
-/* 04E584 7F019A54 8C638374 */  lw    $v1, %lo(clock_timer)($v1)
+/* 04E580 7F019A50 3C038005 */  lui   $v1, %hi(g_ClockTimer)
+/* 04E584 7F019A54 8C638374 */  lw    $v1, %lo(g_ClockTimer)($v1)
 /* 04E588 7F019A58 3C028007 */  lui   $v0, %hi(flt_CODE_bss_800695D8)
 /* 04E58C 7F019A5C 244295D8 */  addiu $v0, %lo(flt_CODE_bss_800695D8) # addiu $v0, $v0, -0x6a28
 /* 04E590 7F019A60 58600021 */  blezl $v1, .L7F019AE8
@@ -26335,9 +26339,9 @@ glabel constructor_menu18_displaycast
 /* 04C188 7F019798 26946B44 */  addiu $s4, %lo(objinstance) # addiu $s4, $s4, 0x6b44
 /* 04C18C 7F01979C ACF80004 */  sw    $t8, 4($a3)
 /* 04C190 7F0197A0 ACEB0000 */  sw    $t3, ($a3)
-/* 04C194 7F0197A4 3C058004 */  lui   $a1, %hi(clock_timer) # $a1, 0x8004
+/* 04C194 7F0197A4 3C058004 */  lui   $a1, %hi(g_ClockTimer) # $a1, 0x8004
 /* 04C198 7F0197A8 26730008 */  addiu $s3, $s3, 8
-/* 04C19C 7F0197AC 8CA50FF4 */  lw    $a1, %lo(clock_timer)($a1)
+/* 04C19C 7F0197AC 8CA50FF4 */  lw    $a1, %lo(g_ClockTimer)($a1)
 /* 04C1A0 7F0197B0 8E840000 */  lw    $a0, ($s4)
 /* 04C1A4 7F0197B4 0FC1C323 */  jal   sub_GAME_7F070AEC
 /* 04C1A8 7F0197B8 24060001 */   li    $a2, 1
@@ -26394,7 +26398,7 @@ glabel constructor_menu18_displaycast
 /* 04C26C 7F01987C 24C68524 */  addiu $a2, %lo(flt_CODE_bss_800695E4) # addiu $a2, $a2, -0x7adc
 /* 04C270 7F019880 8CC20000 */  lw    $v0, ($a2)
 /* 04C274 7F019884 00008825 */  move  $s1, $zero
-/* 04C278 7F019888 3C038004 */  lui   $v1, %hi(clock_timer) # $v1, 0x8004
+/* 04C278 7F019888 3C038004 */  lui   $v1, %hi(g_ClockTimer) # $v1, 0x8004
 /* 04C27C 7F01988C 10400005 */  beqz  $v0, .L7F0198A4
 /* 04C280 7F019890 00000000 */   nop
 /* 04C284 7F019894 C7AA012C */  lwc1  $f10, 0x12c($sp)
@@ -26406,11 +26410,11 @@ glabel constructor_menu18_displaycast
 /* 04C298 7F0198A8 26108528 */  addiu $s0, %lo(flt_CODE_bss_800695E8) # addiu $s0, $s0, -0x7ad8
 /* 04C29C 7F0198AC C6040000 */  lwc1  $f4, ($s0)
 /* 04C2A0 7F0198B0 C7A60128 */  lwc1  $f6, 0x128($sp)
-/* 04C2A4 7F0198B4 3C018004 */  lui   $at, %hi(global_timer_delta) # $at, 0x8004
+/* 04C2A4 7F0198B4 3C018004 */  lui   $at, %hi(g_GlobalTimerDelta) # $at, 0x8004
 /* 04C2A8 7F0198B8 E7A4006C */  swc1  $f4, 0x6c($sp)
 /* 04C2AC 7F0198BC C7A8006C */  lwc1  $f8, 0x6c($sp)
 /* 04C2B0 7F0198C0 C6040004 */  lwc1  $f4, 4($s0)
-/* 04C2B4 7F0198C4 C4321004 */  lwc1  $f18, %lo(global_timer_delta)($at)
+/* 04C2B4 7F0198C4 C4321004 */  lwc1  $f18, %lo(g_GlobalTimerDelta)($at)
 /* 04C2B8 7F0198C8 46083281 */  sub.s $f10, $f6, $f8
 /* 04C2BC 7F0198CC E7A40064 */  swc1  $f4, 0x64($sp)
 /* 04C2C0 7F0198D0 C7A80064 */  lwc1  $f8, 0x64($sp)
@@ -26425,8 +26429,8 @@ glabel constructor_menu18_displaycast
 /* 04C2E4 7F0198F4 46083281 */  sub.s $f10, $f6, $f8
 /* 04C2E8 7F0198F8 1040000B */  beqz  $v0, .L7F019928
 /* 04C2EC 7F0198FC 46125383 */   div.s $f14, $f10, $f18
-/* 04C2F0 7F019900 3C018004 */  lui   $at, %hi(global_timer_delta) # $at, 0x8004
-/* 04C2F4 7F019904 C4307C48 */  lwc1  $f16, %lo(global_timer_delta)($at)
+/* 04C2F0 7F019900 3C018004 */  lui   $at, %hi(g_GlobalTimerDelta) # $at, 0x8004
+/* 04C2F4 7F019904 C4307C48 */  lwc1  $f16, %lo(g_GlobalTimerDelta)($at)
 /* 04C2F8 7F019908 3C028006 */  lui   $v0, %hi(flt_CODE_bss_80069608) # $v0, 0x8006
 /* 04C2FC 7F01990C 24428548 */  addiu $v0, %lo(flt_CODE_bss_80069608) # addiu $v0, $v0, -0x7ab8
 /* 04C300 7F019910 46101103 */  div.s $f4, $f2, $f16
@@ -26436,7 +26440,7 @@ glabel constructor_menu18_displaycast
 /* 04C310 7F019920 E4460004 */  swc1  $f6, 4($v0)
 /* 04C314 7F019924 E4480008 */  swc1  $f8, 8($v0)
 .L7F019928:
-/* 04C318 7F019928 8C630FF4 */  lw    $v1, %lo(clock_timer)($v1)
+/* 04C318 7F019928 8C630FF4 */  lw    $v1, %lo(g_ClockTimer)($v1)
 /* 04C31C 7F01992C 3C028006 */  lui   $v0, %hi(flt_CODE_bss_80069608) # $v0, 0x8006
 /* 04C320 7F019930 3C018004 */  lui   $at, %hi(D_80051B24) # $at, 0x8004
 /* 04C324 7F019934 C4307C4C */  lwc1  $f16, %lo(D_80051B24)($at)
@@ -26545,8 +26549,8 @@ glabel constructor_menu18_displaycast
 /* 04C4B4 7F019AC4 E4480004 */  swc1  $f8, 4($v0)
 /* 04C4B8 7F019AC8 E4440008 */  swc1  $f4, 8($v0)
 .L7F019ACC:
-/* 04C4BC 7F019ACC 3C038004 */  lui   $v1, %hi(clock_timer) # $v1, 0x8004
-/* 04C4C0 7F019AD0 8C630FF4 */  lw    $v1, %lo(clock_timer)($v1)
+/* 04C4BC 7F019ACC 3C038004 */  lui   $v1, %hi(g_ClockTimer) # $v1, 0x8004
+/* 04C4C0 7F019AD0 8C630FF4 */  lw    $v1, %lo(g_ClockTimer)($v1)
 /* 04C4C4 7F019AD4 3C028006 */  lui   $v0, %hi(flt_CODE_bss_800695D8) # $v0, 0x8006
 /* 04C4C8 7F019AD8 24428518 */  addiu $v0, %lo(flt_CODE_bss_800695D8) # addiu $v0, $v0, -0x7ae8
 /* 04C4CC 7F019ADC 58600021 */  blezl $v1, .L7F019B64

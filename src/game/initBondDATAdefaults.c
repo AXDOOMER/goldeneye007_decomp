@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "game/initBondDATAdefaults.h"
 
 
 //data

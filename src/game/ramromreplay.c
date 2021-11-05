@@ -93,7 +93,7 @@ void finalize_ramrom_on_hw(void)
   romWrite(source,address_demo_loaded,0x10);
   address_demo_loaded = address_demo_loaded + 4;
   ptr_active_demofile = romCopyAligned(&ramrom_data_target,0xf00000,0xf0);
-  ptr_active_demofile->totaltime_ms = global_timer - clock_timer;
+  ptr_active_demofile->totaltime_ms = g_GlobalTimer - g_ClockTimer;
   ptr_active_demofile->filesize = address_demo_loaded - 0xf00000;
   romWrite(ptr_active_demofile,0xf00000,0xf0);
   return;
@@ -127,10 +127,10 @@ glabel finalize_ramrom_on_hw
 /* 0F4838 7F0BFD08 3C038005 */  lui   $v1, %hi(ptr_active_demofile)
 /* 0F483C 7F0BFD0C 24638468 */  addiu $v1, %lo(ptr_active_demofile) # addiu $v1, $v1, -0x7b98
 /* 0F4840 7F0BFD10 AC620000 */  sw    $v0, ($v1)
-/* 0F4844 7F0BFD14 3C088005 */  lui   $t0, %hi(global_timer)
-/* 0F4848 7F0BFD18 3C098005 */  lui   $t1, %hi(clock_timer)
-/* 0F484C 7F0BFD1C 8D298374 */  lw    $t1, %lo(clock_timer)($t1)
-/* 0F4850 7F0BFD20 8D08837C */  lw    $t0, %lo(global_timer)($t0)
+/* 0F4844 7F0BFD14 3C088005 */  lui   $t0, %hi(g_GlobalTimer)
+/* 0F4848 7F0BFD18 3C098005 */  lui   $t1, %hi(g_ClockTimer)
+/* 0F484C 7F0BFD1C 8D298374 */  lw    $t1, %lo(g_ClockTimer)($t1)
+/* 0F4850 7F0BFD20 8D08837C */  lw    $t0, %lo(g_GlobalTimer)($t0)
 /* 0F4854 7F0BFD24 3C0C8009 */  lui   $t4, %hi(address_demo_loaded)
 /* 0F4858 7F0BFD28 3C0500F0 */  lui   $a1, 0xf0
 /* 0F485C 7F0BFD2C 01095023 */  subu  $t2, $t0, $t1
@@ -610,12 +610,12 @@ s32 iterate_ramrom_entries_handle_camera_out(void) {
     // Node 6
     sub_GAME_7F0C0AA0(*phi_v1_2);
     temp_v1 = (ptr_active_demofile->unk7C + -0x3c);
-    phi_return = global_timer;
-    if (global_timer >= temp_v1)
+    phi_return = g_GlobalTimer;
+    if (g_GlobalTimer >= temp_v1)
     {
         // Node 7
-        phi_return = global_timer;
-        if ((global_timer - clock_timer) < temp_v1)
+        phi_return = g_GlobalTimer;
+        if ((g_GlobalTimer - g_ClockTimer) < temp_v1)
         {
             // Node 8
             phi_return = ensureCameraModeA();
@@ -693,15 +693,15 @@ glabel iterate_ramrom_entries_handle_camera_out
 /* 0F4E80 7F0C0350 90640000 */   lbu   $a0, ($v1)
 /* 0F4E84 7F0C0354 3C198005 */  lui   $t9, %hi(ptr_active_demofile)
 /* 0F4E88 7F0C0358 8F398468 */  lw    $t9, %lo(ptr_active_demofile)($t9)
-/* 0F4E8C 7F0C035C 3C028005 */  lui   $v0, %hi(global_timer)
-/* 0F4E90 7F0C0360 8C42837C */  lw    $v0, %lo(global_timer)($v0)
+/* 0F4E8C 7F0C035C 3C028005 */  lui   $v0, %hi(g_GlobalTimer)
+/* 0F4E90 7F0C0360 8C42837C */  lw    $v0, %lo(g_GlobalTimer)($v0)
 /* 0F4E94 7F0C0364 8F23007C */  lw    $v1, 0x7c($t9)
-/* 0F4E98 7F0C0368 3C098005 */  lui   $t1, %hi(clock_timer)
+/* 0F4E98 7F0C0368 3C098005 */  lui   $t1, %hi(g_ClockTimer)
 /* 0F4E9C 7F0C036C 2463FFC4 */  addiu $v1, $v1, -0x3c
 /* 0F4EA0 7F0C0370 0043082A */  slt   $at, $v0, $v1
 /* 0F4EA4 7F0C0374 54200009 */  bnezl $at, .L7F0C039C
 /* 0F4EA8 7F0C0378 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F4EAC 7F0C037C 8D298374 */  lw    $t1, %lo(clock_timer)($t1)
+/* 0F4EAC 7F0C037C 8D298374 */  lw    $t1, %lo(g_ClockTimer)($t1)
 /* 0F4EB0 7F0C0380 00495023 */  subu  $t2, $v0, $t1
 /* 0F4EB4 7F0C0384 0143082A */  slt   $at, $t2, $v1
 /* 0F4EB8 7F0C0388 50200004 */  beql  $at, $zero, .L7F0C039C

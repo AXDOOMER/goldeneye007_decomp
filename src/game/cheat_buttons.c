@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "game/cheat_buttons.h"
+#include "bondconstants.h"
 //#include "game/chraicommands.h" /* needed for ai list commands, remove when moving global ai lists to chraicommands/chrai */
 // bss
 char off_CODE_bss_80079E30[0x4C];
@@ -456,7 +457,7 @@ glabel cheat_buttons_mp_related
 
 u32 is_cheat_index_equal_to_1C(u32 cheatindex)
 {
-    if (cheatindex == 0x1c) {
+    if (cheatindex == CHEAT_1C) {
         return 1;
     }
     return 0;
@@ -616,8 +617,8 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
   //u8 *text;
   s32 sVar10;
   //int amount;
-  STAGENUM stageid;
-  STAGENUM SVar11;
+  LEVEL_INDEX stageid;
+  LEVEL_INDEX SVar11;
   //f32 fVar12;
   f32 scale;
   PLAYER_ID local_10;
@@ -680,7 +681,7 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
   case CHEAT_LINEMODE:
     set_linemode_flag(1);
     break;
-  case cheats_cheat_2x_health:
+  case CHEAT_2X_HEALTH:
     if ((currentplayer->actual_health == 1.00000000) || (currentplayer->bondhealth < 1.00000000))
     {
       display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x12)))); //super 2x health
@@ -688,7 +689,7 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
       currentplayer->actual_health = 2.00000000;
     }
     break;
-  case cheats_cheat_2x_armor:
+  case CHEAT_2X_ARMOR:
     if ((currentplayer->actual_armor == 1.00000000) || (currentplayer->bondarmour < 1.00000000))
     {
       display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x13))); //super x2 armor
@@ -696,7 +697,7 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
       currentplayer->actual_armor = 2.00000000;
     }
     break;
-  case cheats_cheat_invisibility:
+  case CHEAT_INVISIBILITY:
     if (get_invisible_to_guards_flag() != 0)
     {
       display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x14))); //invisibility on
@@ -777,71 +778,71 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
       give_cur_player_ammo(AMMO_9MM, get_max_ammo_for_type(AMMO_9MM));
     }
     break;
-  case cheats_cheat_invisibility_mp:
+  case CHEAT_INVISIBILITY_mp:
     currentPlayerStartChrFade(300.00000000, 0.5f);
     break;
-  case cheats_cheat_fast:
+  case CHEAT_FAST:
     if (get_debug_fast_bond_flag() == FALSE)
     {
       display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x1D))); //fast mode on
       set_debug_fast_bond_flag(TRUE);
     }
     break;
-  case cheats_debug_pos:
+  case CHEAT_DEBUG_POS:
     if (get_debug_testingmanpos_flag() == FALSE)
     {
       set_debug_testingmanpos_flag(TRUE);
     }
     break;
-  case cheats_debug_fast_ani:
+  case CHEAT_DEBUG_FAST_ANI:
     if (get_animation_rate() < 4.00000000)
     {
       display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x34))); //fast motion
       animation_speed_related(4.00000000);
     }
     break;
-  case cheats_debug_slow_ani:
+  case CHEAT_DEBUG_SLOW_ANI:
     if (0.25000000 < get_animation_rate())
     {
       display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x32))); //slow motion
       animation_speed_related(0.25000000);
     }
     break;
-  case cheats_debug_2x_rockets:
+  case CHEAT_DEBUG_2X_ROCKETS:
     if (numplayers == PLAYER2)
     {
       add_doubles_item_to_inventory(ITEM_ROCKETLAUNCH, ITEM_ROCKETLAUNCH);
       give_cur_player_ammo(AMMO_ROCKETS, get_max_ammo_for_type(AMMO_ROCKETS));
     }
     break;
-  case cheats_debug_2x_grenade_launch:
+  case CHEAT_DEBUG_2X_GRENADE_LAUNCHER:
     if (numplayers == PLAYER2)
     {
       add_doubles_item_to_inventory(ITEM_GRENADELAUNCH, ITEM_GRENADELAUNCH);
       give_cur_player_ammo(AMMO_GRENADEROUND, get_max_ammo_for_type(AMMO_GRENADEROUND));
     }
     break;
-  case cheats_debug_2x_rcp90:
+  case CHEAT_DEBUG_2X_RCP90:
     if (numplayers == PLAYER2)
     {
       add_doubles_item_to_inventory(ITEM_FNP90, ITEM_FNP90);
       give_cur_player_ammo(AMMO_9MM, get_max_ammo_for_type(AMMO_9MM));
     }
     break;
-  case cheats_debug_2x_throwing_knife:
+  case CHEAT_DEBUG_2X_THROWING_KNIFE:
     if (numplayers == PLAYER2)
     {
       add_doubles_item_to_inventory(ITEM_THROWKNIFE, ITEM_THROWKNIFE);
       give_cur_player_ammo(AMMO_KNIFE, get_max_ammo_for_type(AMMO_KNIFE));
     }
     break;
-  case cheats_debug_2x_hunting_knife:
+  case CHEAT_DEBUG_2X_HUNTING_KNIFE:
     if (numplayers == PLAYER2)
     {
       add_doubles_item_to_inventory(ITEM_KNIFE, ITEM_KNIFE);
     }
     break;
-  case cheats_debug_2x_laser:
+  case CHEAT_DEBUG_2X_LASER:
     if (numplayers == PLAYER2)
     {
       add_doubles_item_to_inventory(ITEM_LASER, ITEM_LASER);
@@ -866,9 +867,9 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
   case UNUSED_33:
   case UNUSED_34:
   case UNUSED_35:
-  case UNLOCK_CHEATS:
+  case CHEAT_UNLOCK_CHEATS:
     if ((-1 < selected_folder_num) && (selected_folder_num < 4)) {
-      proc_7F01E760(selected_folder_num,cheat + ~cheats_debug_2x_laser);
+      proc_7F01E760(selected_folder_num,cheat + ~CHEAT_DEBUG_2X_LASER);
       sndPlaySfx(g_musicSfxBufferPtr,CAMERA_BEEP1_SFX,(ALSndPlayer *)0x0);
     }
     break;
@@ -891,8 +892,8 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
   case UNUSED_47:
   case UNUSED_48:
   case UNUSED_49:
-  case UNLOCK_STAGES:
-    SVar11 = cheat + ~UNLOCK_CHEATS;
+  case CHEAT_UNLOCK_STAGES:
+    SVar11 = cheat + ~CHEAT_UNLOCK_CHEATS;
     if ((-1 < (int)selected_folder_num) && (amount = 0, (int)selected_folder_num < 4)) {
       stageid = SP_STAGE_DAM;
       if (0 < (int)SVar11) {
@@ -926,9 +927,9 @@ glabel jpt_cheats_cheat
 .word cheats_debug_return_saved_ra
 .word cheats_cheat_deactivate_invincibility
 .word cheats_cheat_linemode
-.word cheats_cheat_2x_health
-.word cheats_cheat_2x_armor
-.word cheats_cheat_invisibility
+.word CHEAT_2X_HEALTH
+.word CHEAT_2X_ARMOR
+.word CHEAT_INVISIBILITY
 .word cheats_cheat_infinite_ammo
 .word cheats_cheat_dk_mode
 .word cheats_cheat_extra_weapons
@@ -940,19 +941,19 @@ glabel jpt_cheats_cheat
 .word cheats_cheat_goldengun
 .word cheats_cheat_silverpp7
 .word cheats_cheat_goldpp7
-.word cheats_cheat_invisibility_mp
+.word CHEAT_INVISIBILITY_mp
 .word cheats_debug_return_saved_ra
-.word cheats_cheat_fast
-.word cheats_debug_pos
-.word cheats_debug_fast_ani
-.word cheats_debug_slow_ani
+.word CHEAT_FAST
+.word CHEAT_DEBUG_POS
+.word CHEAT_DEBUG_FAST_ANI
+.word CHEAT_DEBUG_SLOW_ANI
 .word cheats_debug_return_saved_ra
-.word cheats_debug_2x_rockets
-.word cheats_debug_2x_grenade_launch
-.word cheats_debug_2x_rcp90
-.word cheats_debug_2x_throwing_knife
-.word cheats_debug_2x_hunting_knife
-.word cheats_debug_2x_laser
+.word CHEAT_DEBUG_2X_ROCKETS
+.word CHEAT_DEBUG_2X_GRENADE_LAUNCHER
+.word CHEAT_DEBUG_2X_RCP90
+.word CHEAT_DEBUG_2X_THROWING_KNIFE
+.word CHEAT_DEBUG_2X_HUNTING_KNIFE
+.word CHEAT_DEBUG_2X_LASER
 .word cheats_debug_unlockcheat
 .word cheats_debug_unlockcheat
 .word cheats_debug_unlockcheat
@@ -1127,7 +1128,7 @@ cheats_cheat_linemode:
 /* 0C685C 7F091D2C 24040001 */   li    $a0, 1
 /* 0C6860 7F091D30 100001BE */  b     .L7F09242C
 /* 0C6864 7F091D34 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_cheat_2x_health:
+CHEAT_2X_HEALTH:
 /* 0C6868 7F091D38 3C028008 */  lui   $v0, %hi(currentplayer)
 /* 0C686C 7F091D3C 8C42A0B0 */  lw    $v0, %lo(currentplayer)($v0)
 /* 0C6870 7F091D40 3C013F80 */  li    $at, 0x3F800000 # 1.000000
@@ -1161,7 +1162,7 @@ cheats_cheat_2x_health:
 /* 0C68DC 7F091DAC 44819000 */  mtc1  $at, $f18
 /* 0C68E0 7F091DB0 1000019D */  b     .L7F092428
 /* 0C68E4 7F091DB4 E7122A3C */   swc1  $f18, 0x2a3c($t8)
-cheats_cheat_2x_armor:
+CHEAT_2X_ARMOR:
 /* 0C68E8 7F091DB8 3C028008 */  lui   $v0, %hi(currentplayer)
 /* 0C68EC 7F091DBC 8C42A0B0 */  lw    $v0, %lo(currentplayer)($v0)
 /* 0C68F0 7F091DC0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
@@ -1192,7 +1193,7 @@ cheats_cheat_2x_armor:
 /* 0C6950 7F091E20 8C490000 */  lw    $t1, ($v0)
 /* 0C6954 7F091E24 10000180 */  b     .L7F092428
 /* 0C6958 7F091E28 E52A2A40 */   swc1  $f10, 0x2a40($t1)
-cheats_cheat_invisibility:
+CHEAT_INVISIBILITY:
 /* 0C695C 7F091E2C 0FC227DD */  jal   get_invisible_to_guards_flag
 /* 0C6960 7F091E30 00000000 */   nop
 /* 0C6964 7F091E34 5040017D */  beql  $v0, $zero, .L7F09242C
@@ -1403,7 +1404,7 @@ cheats_cheat_goldpp7:
 /* 0C6C68 7F092138 00402825 */   move  $a1, $v0
 /* 0C6C6C 7F09213C 100000BB */  b     .L7F09242C
 /* 0C6C70 7F092140 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_cheat_invisibility_mp:
+CHEAT_INVISIBILITY_mp:
 /* 0C6C74 7F092144 3C014396 */  li    $at, 0x43960000 # 300.000000
 /* 0C6C78 7F092148 44816000 */  mtc1  $at, $f12
 /* 0C6C7C 7F09214C 3C018005 */  lui   $at, %hi(finalamount)
@@ -1411,7 +1412,7 @@ cheats_cheat_invisibility_mp:
 /* 0C6C84 7F092154 C42E73D8 */   lwc1  $f14, %lo(finalamount)($at)
 /* 0C6C88 7F092158 100000B4 */  b     .L7F09242C
 /* 0C6C8C 7F09215C 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_cheat_fast:
+CHEAT_FAST:
 /* 0C6C90 7F092160 0FC24406 */  jal   get_debug_fast_bond_flag
 /* 0C6C94 7F092164 00000000 */   nop
 /* 0C6C98 7F092168 544000B0 */  bnezl $v0, .L7F09242C
@@ -1424,7 +1425,7 @@ cheats_cheat_fast:
 /* 0C6CB4 7F092184 24040001 */   li    $a0, 1
 /* 0C6CB8 7F092188 100000A8 */  b     .L7F09242C
 /* 0C6CBC 7F09218C 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_debug_pos:
+CHEAT_DEBUG_POS:
 /* 0C6CC0 7F092190 0FC243E2 */  jal   get_debug_testingmanpos_flag
 /* 0C6CC4 7F092194 00000000 */   nop
 /* 0C6CC8 7F092198 544000A4 */  bnezl $v0, .L7F09242C
@@ -1433,7 +1434,7 @@ cheats_debug_pos:
 /* 0C6CD4 7F0921A4 24040001 */   li    $a0, 1
 /* 0C6CD8 7F0921A8 100000A0 */  b     .L7F09242C
 /* 0C6CDC 7F0921AC 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_debug_fast_ani:
+CHEAT_DEBUG_FAST_ANI:
 /* 0C6CE0 7F0921B0 0FC08179 */  jal   get_animation_rate
 /* 0C6CE4 7F0921B4 00000000 */   nop
 /* 0C6CE8 7F0921B8 3C014080 */  li    $at, 0x40800000 # 4.000000
@@ -1453,7 +1454,7 @@ cheats_debug_fast_ani:
 /* 0C6D20 7F0921F0 00000000 */   nop
 /* 0C6D24 7F0921F4 1000008D */  b     .L7F09242C
 /* 0C6D28 7F0921F8 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_debug_slow_ani:
+CHEAT_DEBUG_SLOW_ANI:
 /* 0C6D2C 7F0921FC 0FC08179 */  jal   get_animation_rate
 /* 0C6D30 7F092200 00000000 */   nop
 /* 0C6D34 7F092204 3C013E80 */  li    $at, 0x3E800000 # 0.250000
@@ -1473,7 +1474,7 @@ cheats_debug_slow_ani:
 /* 0C6D6C 7F09223C 00000000 */   nop
 /* 0C6D70 7F092240 1000007A */  b     .L7F09242C
 /* 0C6D74 7F092244 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_debug_2x_rockets:
+CHEAT_DEBUG_2X_ROCKETS:
 /* 0C6D78 7F092248 24010001 */  li    $at, 1
 /* 0C6D7C 7F09224C 14410076 */  bne   $v0, $at, .L7F092428
 /* 0C6D80 7F092250 24040019 */   li    $a0, 25
@@ -1486,7 +1487,7 @@ cheats_debug_2x_rockets:
 /* 0C6D9C 7F09226C 00402825 */   move  $a1, $v0
 /* 0C6DA0 7F092270 1000006E */  b     .L7F09242C
 /* 0C6DA4 7F092274 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_debug_2x_grenade_launch:
+CHEAT_DEBUG_2X_GRENADE_LAUNCHER:
 /* 0C6DA8 7F092278 24010001 */  li    $at, 1
 /* 0C6DAC 7F09227C 1441006A */  bne   $v0, $at, .L7F092428
 /* 0C6DB0 7F092280 24040018 */   li    $a0, 24
@@ -1499,7 +1500,7 @@ cheats_debug_2x_grenade_launch:
 /* 0C6DCC 7F09229C 00402825 */   move  $a1, $v0
 /* 0C6DD0 7F0922A0 10000062 */  b     .L7F09242C
 /* 0C6DD4 7F0922A4 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_debug_2x_rcp90:
+CHEAT_DEBUG_2X_RCP90:
 /* 0C6DD8 7F0922A8 24010001 */  li    $at, 1
 /* 0C6DDC 7F0922AC 1441005E */  bne   $v0, $at, .L7F092428
 /* 0C6DE0 7F0922B0 2404000E */   li    $a0, 14
@@ -1512,7 +1513,7 @@ cheats_debug_2x_rcp90:
 /* 0C6DFC 7F0922CC 00402825 */   move  $a1, $v0
 /* 0C6E00 7F0922D0 10000056 */  b     .L7F09242C
 /* 0C6E04 7F0922D4 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_debug_2x_throwing_knife:
+CHEAT_DEBUG_2X_THROWING_KNIFE:
 /* 0C6E08 7F0922D8 24010001 */  li    $at, 1
 /* 0C6E0C 7F0922DC 14410052 */  bne   $v0, $at, .L7F092428
 /* 0C6E10 7F0922E0 24040003 */   li    $a0, 3
@@ -1525,7 +1526,7 @@ cheats_debug_2x_throwing_knife:
 /* 0C6E2C 7F0922FC 00402825 */   move  $a1, $v0
 /* 0C6E30 7F092300 1000004A */  b     .L7F09242C
 /* 0C6E34 7F092304 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_debug_2x_hunting_knife:
+CHEAT_DEBUG_2X_HUNTING_KNIFE:
 /* 0C6E38 7F092308 24010001 */  li    $at, 1
 /* 0C6E3C 7F09230C 14410046 */  bne   $v0, $at, .L7F092428
 /* 0C6E40 7F092310 24040002 */   li    $a0, 2
@@ -1533,7 +1534,7 @@ cheats_debug_2x_hunting_knife:
 /* 0C6E48 7F092318 24050002 */   li    $a1, 2
 /* 0C6E4C 7F09231C 10000043 */  b     .L7F09242C
 /* 0C6E50 7F092320 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_debug_2x_laser:
+CHEAT_DEBUG_2X_LASER:
 /* 0C6E54 7F092324 24010001 */  li    $at, 1
 /* 0C6E58 7F092328 1441003F */  bne   $v0, $at, .L7F092428
 /* 0C6E5C 7F09232C 24040016 */   li    $a0, 22
@@ -1626,9 +1627,9 @@ glabel jpt_cheats_cheat
 .word cheats_debug_return_saved_ra
 .word cheats_cheat_deactivate_invincibility
 .word cheats_cheat_linemode
-.word cheats_cheat_2x_health
-.word cheats_cheat_2x_armor
-.word cheats_cheat_invisibility
+.word CHEAT_2X_HEALTH
+.word CHEAT_2X_ARMOR
+.word CHEAT_INVISIBILITY
 .word cheats_cheat_infinite_ammo
 .word cheats_cheat_dk_mode
 .word cheats_cheat_extra_weapons
@@ -1640,19 +1641,19 @@ glabel jpt_cheats_cheat
 .word cheats_cheat_goldengun
 .word cheats_cheat_silverpp7
 .word cheats_cheat_goldpp7
-.word cheats_cheat_invisibility_mp
+.word CHEAT_INVISIBILITY_mp
 .word cheats_debug_return_saved_ra
-.word cheats_cheat_fast
-.word cheats_debug_pos
-.word cheats_debug_fast_ani
-.word cheats_debug_slow_ani
+.word CHEAT_FAST
+.word CHEAT_DEBUG_POS
+.word CHEAT_DEBUG_FAST_ANI
+.word CHEAT_DEBUG_SLOW_ANI
 .word cheats_debug_return_saved_ra
-.word cheats_debug_2x_rockets
-.word cheats_debug_2x_grenade_launch
-.word cheats_debug_2x_rcp90
-.word cheats_debug_2x_throwing_knife
-.word cheats_debug_2x_hunting_knife
-.word cheats_debug_2x_laser
+.word CHEAT_DEBUG_2X_ROCKETS
+.word CHEAT_DEBUG_2X_GRENADE_LAUNCHER
+.word CHEAT_DEBUG_2X_RCP90
+.word CHEAT_DEBUG_2X_THROWING_KNIFE
+.word CHEAT_DEBUG_2X_HUNTING_KNIFE
+.word CHEAT_DEBUG_2X_LASER
 .word cheats_debug_unlockcheat
 .word cheats_debug_unlockcheat
 .word cheats_debug_unlockcheat
@@ -1828,7 +1829,7 @@ cheats_cheat_linemode:
 /* 0C737C 7F09280C 24040001 */   li    $a0, 1
 /* 0C7380 7F092810 100001E6 */  b     .Ljp7F092FAC
 /* 0C7384 7F092814 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_cheat_2x_health:
+CHEAT_2X_HEALTH:
 /* 0C7388 7F092818 3C028008 */  lui   $v0, %hi(currentplayer) # $v0, 0x8008
 /* 0C738C 7F09281C 8C42A120 */  lw    $v0, %lo(currentplayer)($v0)
 /* 0C7390 7F092820 3C013F80 */  li    $at, 0x3F800000 # 1.000000
@@ -1862,7 +1863,7 @@ cheats_cheat_2x_health:
 /* 0C73FC 7F09288C 44819000 */  mtc1  $at, $f18
 /* 0C7400 7F092890 100001C5 */  b     .Ljp7F092FA8
 /* 0C7404 7F092894 E7122A3C */   swc1  $f18, 0x2a3c($t8)
-cheats_cheat_2x_armor:
+CHEAT_2X_ARMOR:
 /* 0C7408 7F092898 3C028008 */  lui   $v0, %hi(currentplayer) # $v0, 0x8008
 /* 0C740C 7F09289C 8C42A120 */  lw    $v0, %lo(currentplayer)($v0)
 /* 0C7410 7F0928A0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
@@ -1893,7 +1894,7 @@ cheats_cheat_2x_armor:
 /* 0C7470 7F092900 8C490000 */  lw    $t1, ($v0)
 /* 0C7474 7F092904 100001A8 */  b     .Ljp7F092FA8
 /* 0C7478 7F092908 E52A2A40 */   swc1  $f10, 0x2a40($t1)
-cheats_cheat_invisibility:
+CHEAT_INVISIBILITY:
 /* 0C747C 7F09290C 0FC229AB */  jal   get_invisible_to_guards_flag
 /* 0C7480 7F092910 00000000 */   nop
 /* 0C7484 7F092914 504001A5 */  beql  $v0, $zero, .Ljp7F092FAC
@@ -2104,7 +2105,7 @@ cheats_cheat_goldpp7:
 /* 0C7788 7F092C18 00402825 */   move  $a1, $v0
 /* 0C778C 7F092C1C 100000E3 */  b     .Ljp7F092FAC
 /* 0C7790 7F092C20 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_cheat_invisibility_mp:
+CHEAT_INVISIBILITY_mp:
 /* 0C7794 7F092C24 3C014396 */  li    $at, 0x43960000 # 300.000000
 /* 0C7798 7F092C28 44816000 */  mtc1  $at, $f12
 /* 0C779C 7F092C2C 3C018005 */  lui   $at, %hi(finalamount) # $at, 0x8005
@@ -2112,7 +2113,7 @@ cheats_cheat_invisibility_mp:
 /* 0C77A4 7F092C34 C42E7408 */   lwc1  $f14, %lo(finalamount)($at)
 /* 0C77A8 7F092C38 100000DC */  b     .Ljp7F092FAC
 /* 0C77AC 7F092C3C 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_cheat_fast:
+CHEAT_FAST:
 /* 0C77B0 7F092C40 0FC246BE */  jal   get_debug_fast_bond_flag
 /* 0C77B4 7F092C44 00000000 */   nop
 /* 0C77B8 7F092C48 544000D8 */  bnezl $v0, .Ljp7F092FAC
@@ -2125,7 +2126,7 @@ cheats_cheat_fast:
 /* 0C77D4 7F092C64 24040001 */   li    $a0, 1
 /* 0C77D8 7F092C68 100000D0 */  b     .Ljp7F092FAC
 /* 0C77DC 7F092C6C 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_debug_pos:
+CHEAT_DEBUG_POS:
 /* 0C77E0 7F092C70 0FC2469A */  jal   get_debug_testingmanpos_flag
 /* 0C77E4 7F092C74 00000000 */   nop
 /* 0C77E8 7F092C78 544000CC */  bnezl $v0, .Ljp7F092FAC
@@ -2134,7 +2135,7 @@ cheats_debug_pos:
 /* 0C77F4 7F092C84 24040001 */   li    $a0, 1
 /* 0C77F8 7F092C88 100000C8 */  b     .Ljp7F092FAC
 /* 0C77FC 7F092C8C 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_debug_fast_ani:
+CHEAT_DEBUG_FAST_ANI:
 /* 0C7800 7F092C90 0FC081E5 */  jal   get_animation_rate
 /* 0C7804 7F092C94 00000000 */   nop
 /* 0C7808 7F092C98 3C014080 */  li    $at, 0x40800000 # 4.000000
@@ -2154,7 +2155,7 @@ cheats_debug_fast_ani:
 /* 0C7840 7F092CD0 00000000 */   nop
 /* 0C7844 7F092CD4 100000B5 */  b     .Ljp7F092FAC
 /* 0C7848 7F092CD8 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_debug_slow_ani:
+CHEAT_DEBUG_SLOW_ANI:
 /* 0C784C 7F092CDC 0FC081E5 */  jal   get_animation_rate
 /* 0C7850 7F092CE0 00000000 */   nop
 /* 0C7854 7F092CE4 3C013E80 */  li    $at, 0x3E800000 # 0.250000
@@ -2174,7 +2175,7 @@ cheats_debug_slow_ani:
 /* 0C788C 7F092D1C 00000000 */   nop
 /* 0C7890 7F092D20 100000A2 */  b     .Ljp7F092FAC
 /* 0C7894 7F092D24 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_debug_2x_rockets:
+CHEAT_DEBUG_2X_ROCKETS:
 /* 0C7898 7F092D28 24010001 */  li    $at, 1
 /* 0C789C 7F092D2C 5441009F */  bnel  $v0, $at, .Ljp7F092FAC
 /* 0C78A0 7F092D30 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2190,7 +2191,7 @@ cheats_debug_2x_rockets:
 /* 0C78C8 7F092D58 00402825 */   move  $a1, $v0
 /* 0C78CC 7F092D5C 10000093 */  b     .Ljp7F092FAC
 /* 0C78D0 7F092D60 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_debug_2x_grenade_launch:
+CHEAT_DEBUG_2X_GRENADE_LAUNCHER:
 /* 0C78D4 7F092D64 24010001 */  li    $at, 1
 /* 0C78D8 7F092D68 54410090 */  bnel  $v0, $at, .Ljp7F092FAC
 /* 0C78DC 7F092D6C 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2206,7 +2207,7 @@ cheats_debug_2x_grenade_launch:
 /* 0C7904 7F092D94 00402825 */   move  $a1, $v0
 /* 0C7908 7F092D98 10000084 */  b     .Ljp7F092FAC
 /* 0C790C 7F092D9C 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_debug_2x_rcp90:
+CHEAT_DEBUG_2X_RCP90:
 /* 0C7910 7F092DA0 24010001 */  li    $at, 1
 /* 0C7914 7F092DA4 54410081 */  bnel  $v0, $at, .Ljp7F092FAC
 /* 0C7918 7F092DA8 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2222,7 +2223,7 @@ cheats_debug_2x_rcp90:
 /* 0C7940 7F092DD0 00402825 */   move  $a1, $v0
 /* 0C7944 7F092DD4 10000075 */  b     .Ljp7F092FAC
 /* 0C7948 7F092DD8 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_debug_2x_throwing_knife:
+CHEAT_DEBUG_2X_THROWING_KNIFE:
 /* 0C794C 7F092DDC 24010001 */  li    $at, 1
 /* 0C7950 7F092DE0 54410072 */  bnel  $v0, $at, .Ljp7F092FAC
 /* 0C7954 7F092DE4 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2238,12 +2239,12 @@ cheats_debug_2x_throwing_knife:
 /* 0C797C 7F092E0C 00402825 */   move  $a1, $v0
 /* 0C7980 7F092E10 10000066 */  b     .Ljp7F092FAC
 /* 0C7984 7F092E14 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_debug_2x_hunting_knife:
+CHEAT_DEBUG_2X_HUNTING_KNIFE:
 /* 0C7988 7F092E18 24010001 */  li    $at, 1
 /* 0C798C 7F092E1C 14410062 */  bne   $v0, $at, .Ljp7F092FA8
 /* 0C7990 7F092E20 3C0F8005 */   lui   $t7, %hi(j_text_trigger) # $t7, 0x8005
 /* 0C7994 7F092E24 8DEF8500 */  lw    $t7, %lo(j_text_trigger)($t7)
-/* 0C7998 7F092E28 11E00014 */  beqz  $t7, .cheats_debug_2x_hunting_knife_en
+/* 0C7998 7F092E28 11E00014 */  beqz  $t7, .CHEAT_DEBUG_2X_HUNTING_KNIFE_en
 /* 0C799C 7F092E2C 00000000 */   nop
 /* 0C79A0 7F092E30 0FC2335A */  jal   add_item_to_inventory
 /* 0C79A4 7F092E34 24040019 */   li    $a0, 25
@@ -2264,7 +2265,7 @@ cheats_debug_2x_hunting_knife:
 /* 0C79E0 7F092E70 00402825 */   move  $a1, $v0
 /* 0C79E4 7F092E74 1000004D */  b     .Ljp7F092FAC
 /* 0C79E8 7F092E78 8FBF0014 */   lw    $ra, 0x14($sp)
-.cheats_debug_2x_hunting_knife_en:
+.CHEAT_DEBUG_2X_HUNTING_KNIFE_en:
 /* 0C79EC 7F092E7C 0FC2335A */  jal   add_item_to_inventory
 /* 0C79F0 7F092E80 24040002 */   li    $a0, 2
 /* 0C79F4 7F092E84 24040002 */  li    $a0, 2
@@ -2272,7 +2273,7 @@ cheats_debug_2x_hunting_knife:
 /* 0C79FC 7F092E8C 24050002 */   li    $a1, 2
 /* 0C7A00 7F092E90 10000046 */  b     .Ljp7F092FAC
 /* 0C7A04 7F092E94 8FBF0014 */   lw    $ra, 0x14($sp)
-cheats_debug_2x_laser:
+CHEAT_DEBUG_2X_LASER:
 /* 0C7A08 7F092E98 24010001 */  li    $at, 1
 /* 0C7A0C 7F092E9C 54410043 */  bnel  $v0, $at, .Ljp7F092FAC
 /* 0C7A10 7F092EA0 8FBF0014 */   lw    $ra, 0x14($sp)

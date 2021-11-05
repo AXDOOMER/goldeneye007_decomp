@@ -98,7 +98,7 @@ void currentPlayerUpdateHeadPos(vec3 vel) {
         currentplayer->resetheadpos = FALSE;
     }
 
-    for (i = 0; i < clock_timer; i++) {
+    for (i = 0; i < g_ClockTimer; i++) {
         currentplayer->headpossum[0] = ((0.93f * currentplayer->headpossum[0]) + vel[0]);
         currentplayer->headpossum[1] = ((0.93f * currentplayer->headpossum[1]) + vel[1]);
         currentplayer->headpossum[2] = ((0.93f * currentplayer->headpossum[2]) + vel[2]);
@@ -124,7 +124,7 @@ void currentPlayerUpdateHeadRot(vec3 lookvel, vec3 upvel)
 		currentplayer->resetheadrot = FALSE;
 	}
 
-	for (i = 0; i < clock_timer; i++) {
+	for (i = 0; i < g_ClockTimer; i++) {
 		currentplayer->headlooksum[0] = currentplayer->headdamp * currentplayer->headlooksum[0] + lookvel[0];
 		currentplayer->headlooksum[1] = currentplayer->headdamp * currentplayer->headlooksum[1] + lookvel[1];
 		currentplayer->headlooksum[2] = currentplayer->headdamp * currentplayer->headlooksum[2] + lookvel[2];
@@ -320,8 +320,8 @@ glabel sub_GAME_7F08E240
 /* 0C2F54 7F08E424 0FC1C075 */  jal   sub_GAME_7F0701D4
 /* 0C2F58 7F08E428 AD0004E4 */   sw    $zero, 0x4e4($t0)
 /* 0C2F5C 7F08E42C 8E040000 */  lw    $a0, ($s0)
-/* 0C2F60 7F08E430 3C058005 */  lui   $a1, %hi(clock_timer)
-/* 0C2F64 7F08E434 8CA58374 */  lw    $a1, %lo(clock_timer)($a1)
+/* 0C2F60 7F08E430 3C058005 */  lui   $a1, %hi(g_ClockTimer)
+/* 0C2F64 7F08E434 8CA58374 */  lw    $a1, %lo(g_ClockTimer)($a1)
 /* 0C2F68 7F08E438 24060001 */  li    $a2, 1
 /* 0C2F6C 7F08E43C 0FC1C2BB */  jal   sub_GAME_7F070AEC
 /* 0C2F70 7F08E440 24840598 */   addiu $a0, $a0, 0x598
@@ -373,10 +373,10 @@ glabel sub_GAME_7F08E240
 /* 0C3028 7F08E4F8 8E020000 */   lw    $v0, ($s0)
 /* 0C302C 7F08E4FC 8E020000 */  lw    $v0, ($s0)
 /* 0C3030 7F08E500 C7A800EC */  lwc1  $f8, 0xec($sp)
-/* 0C3034 7F08E504 3C048005 */  lui   $a0, %hi(clock_timer)
+/* 0C3034 7F08E504 3C048005 */  lui   $a0, %hi(g_ClockTimer)
 /* 0C3038 7F08E508 C4460700 */  lwc1  $f6, 0x700($v0)
-/* 0C303C 7F08E50C 24848374 */  addiu $a0, %lo(clock_timer) # addiu $a0, $a0, -0x7c8c
-/* 0C3040 7F08E510 3C038005 */  lui   $v1, %hi(global_timer_delta)
+/* 0C303C 7F08E50C 24848374 */  addiu $a0, %lo(g_ClockTimer) # addiu $a0, $a0, -0x7c8c
+/* 0C3040 7F08E510 3C038005 */  lui   $v1, %hi(g_GlobalTimerDelta)
 /* 0C3044 7F08E514 46083280 */  add.s $f10, $f6, $f8
 /* 0C3048 7F08E518 E44A0700 */  swc1  $f10, 0x700($v0)
 /* 0C304C 7F08E51C 8E020000 */  lw    $v0, ($s0)
@@ -388,7 +388,7 @@ glabel sub_GAME_7F08E240
 /* 0C3064 7F08E534 59A0000D */  blezl $t5, .L7F08E56C
 /* 0C3068 7F08E538 8E020000 */   lw    $v0, ($s0)
 /* 0C306C 7F08E53C 8E020000 */  lw    $v0, ($s0)
-/* 0C3070 7F08E540 24638378 */  addiu $v1, %lo(global_timer_delta) # addiu $v1, $v1, -0x7c88
+/* 0C3070 7F08E540 24638378 */  addiu $v1, %lo(g_GlobalTimerDelta) # addiu $v1, $v1, -0x7c88
 /* 0C3074 7F08E544 C4680000 */  lwc1  $f8, ($v1)
 /* 0C3078 7F08E548 C4460700 */  lwc1  $f6, 0x700($v0)
 /* 0C307C 7F08E54C 46083283 */  div.s $f10, $f6, $f8
@@ -510,8 +510,8 @@ glabel sub_GAME_7F08E240
 /* 0C323C 7F08E70C C4285330 */  lwc1  $f8, %lo(D_80055330)($at)
 /* 0C3240 7F08E710 3C018005 */  lui   $at, %hi(D_80055334)
 /* 0C3244 7F08E714 C42A5334 */  lwc1  $f10, %lo(D_80055334)($at)
-/* 0C3248 7F08E718 3C038005 */  lui   $v1, %hi(global_timer_delta)
-/* 0C324C 7F08E71C 24638378 */  addiu $v1, %lo(global_timer_delta) # addiu $v1, $v1, -0x7c88
+/* 0C3248 7F08E718 3C038005 */  lui   $v1, %hi(g_GlobalTimerDelta)
+/* 0C324C 7F08E71C 24638378 */  addiu $v1, %lo(g_GlobalTimerDelta) # addiu $v1, $v1, -0x7c88
 /* 0C3250 7F08E720 46005402 */  mul.s $f16, $f10, $f0
 /* 0C3254 7F08E724 C4640000 */  lwc1  $f4, ($v1)
 /* 0C3258 7F08E728 8E020000 */  lw    $v0, ($s0)

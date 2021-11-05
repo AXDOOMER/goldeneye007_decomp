@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "memp.h"
+#include "game/unk_09B7A0.h"
 
 // bss
 //CODE.bss:8007A0D0
