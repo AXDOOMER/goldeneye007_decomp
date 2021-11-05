@@ -4,6 +4,8 @@
 #include "libultra/os.h"
 #include "include/PR/gbi.h"
 #include "macro.h"
+#include "game/player_2.h"
+#include "fr.h"
 
 // bss
 s32 z_buffer_width;
@@ -16,8 +18,6 @@ void zbufDeallocate(void) {
     z_buffer = 0;
 }
 
-u32 mempAllocBytesInBank(u32 bytes,u8 bank);
-s32 getPlayerCount(void);
 void zbufAllocate(void) {
     if (resolution != 0) {
         z_buffer_width = 440;
@@ -58,8 +58,6 @@ Gfx *zbufInit(Gfx *gdl) {
     return gdl;
 }
 
-s16 viGetX(void);
-s16 viGetY(void);
 Gfx *zbufClearCurrentPlayer(Gfx *gdl) {
     s32 start_x;
     s32 end_x;
