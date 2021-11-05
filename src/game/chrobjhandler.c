@@ -18621,8 +18621,8 @@ glabel object_interaction
 /* 07E704 7F049B94 44816000 */  mtc1  $at, $f12
 /* 07E708 7F049B98 3C018005 */  lui   $at, %hi(D_80052B74) # $at, 0x8005
 /* 07E70C 7F049B9C C4282BA4 */  lwc1  $f8, %lo(D_80052B74)($at)
-/* 07E710 7F049BA0 3C018005 */  lui   $at, %hi(jp_global_timer_delta) # $at, 0x8005
-/* 07E714 7F049BA4 C42A83A8 */  lwc1  $f10, %lo(jp_global_timer_delta)($at)
+/* 07E710 7F049BA0 3C018005 */  lui   $at, %hi(g_JP_GlobalTimerDelta) # $at, 0x8005
+/* 07E714 7F049BA4 C42A83A8 */  lwc1  $f10, %lo(g_JP_GlobalTimerDelta)($at)
 /* 07E718 7F049BA8 3C018003 */  lui   $at, %hi(F_80030B1C) # $at, 0x8003
 /* 07E71C 7F049BAC 4600603C */  c.lt.s $f12, $f0
 /* 07E720 7F049BB0 460A4182 */  mul.s $f6, $f8, $f10
@@ -25592,8 +25592,8 @@ command0E_set_rotation:
 /* 07EF20 7F04A3F0 E606000C */   swc1  $f6, 0xc($s0)
 command0F_rotate:
 /* 07EF24 7F04A3F4 8C6C0004 */  lw    $t4, 4($v1)
-/* 07EF28 7F04A3F8 3C018005 */  lui   $at, %hi(jp_global_timer_delta)
-/* 07EF2C 7F04A3FC C42A8378 */  lwc1  $f10, %lo(jp_global_timer_delta)($at)
+/* 07EF28 7F04A3F8 3C018005 */  lui   $at, %hi(g_JP_GlobalTimerDelta)
+/* 07EF2C 7F04A3FC C42A8378 */  lwc1  $f10, %lo(g_JP_GlobalTimerDelta)($at)
 /* 07EF30 7F04A400 448C9000 */  mtc1  $t4, $f18
 /* 07EF34 7F04A404 00000000 */  nop   
 /* 07EF38 7F04A408 46809120 */  cvt.s.w $f4, $f18
@@ -25630,8 +25630,8 @@ def_7F04A01C:
 /* 07EFA4 7F04A474 4600A03C */  c.lt.s $f20, $f0
 /* 07EFA8 7F04A478 00000000 */  nop   
 /* 07EFAC 7F04A47C 45000017 */  bc1f  .L7F04A4DC
-/* 07EFB0 7F04A480 3C028005 */   lui   $v0, %hi(jp_global_timer_delta)
-/* 07EFB4 7F04A484 24428378 */  addiu $v0, %lo(jp_global_timer_delta) # addiu $v0, $v0, -0x7c88
+/* 07EFB0 7F04A480 3C028005 */   lui   $v0, %hi(g_JP_GlobalTimerDelta)
+/* 07EFB4 7F04A484 24428378 */  addiu $v0, %lo(g_JP_GlobalTimerDelta) # addiu $v0, $v0, -0x7c88
 /* 07EFB8 7F04A488 C4520000 */  lwc1  $f18, ($v0)
 /* 07EFBC 7F04A48C C60A0014 */  lwc1  $f10, 0x14($s0)
 /* 07EFC0 7F04A490 46120102 */  mul.s $f4, $f0, $f18
@@ -25656,8 +25656,8 @@ def_7F04A01C:
 /* 07F008 7F04A4D8 E6080010 */  swc1  $f8, 0x10($s0)
 .L7F04A4DC:
 /* 07F00C 7F04A4DC C600002C */  lwc1  $f0, 0x2c($s0)
-/* 07F010 7F04A4E0 3C028005 */  lui   $v0, %hi(jp_global_timer_delta)
-/* 07F014 7F04A4E4 24428378 */  addiu $v0, %lo(jp_global_timer_delta) # addiu $v0, $v0, -0x7c88
+/* 07F010 7F04A4E0 3C028005 */  lui   $v0, %hi(g_JP_GlobalTimerDelta)
+/* 07F014 7F04A4E4 24428378 */  addiu $v0, %lo(g_JP_GlobalTimerDelta) # addiu $v0, $v0, -0x7c88
 /* 07F018 7F04A4E8 4600A03C */  c.lt.s $f20, $f0
 /* 07F01C 7F04A4EC 00000000 */  nop   
 /* 07F020 7F04A4F0 45020017 */  bc1fl .L7F04A550

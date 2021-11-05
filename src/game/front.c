@@ -19,6 +19,10 @@
 #include "game/math_floor.h"
 #include "game/image_bank.h"
 
+// lvl.c checks for enabled cheats up to the "invalid" index of 0x4b (=75), which
+// is different from the 80 here ...
+#define CHEATS_TRACKED 80
+
 struct point {
     f32 x;
     f32 y;
@@ -93,10 +97,10 @@ f32 flt_CODE_bss_8006961C;
 struct coord3d dword_CODE_bss_80069620[0x4];
 
 //CODE.bss:80069650
-u8 cheat_available[80];
+u8 cheat_available[CHEATS_TRACKED];
 
 //CODE.bss:800696A0
-u8 g_CheatActivated[80];
+u8 g_CheatActivated[CHEATS_TRACKED];
 
 //CODE.bss:800696F0
 s32 array_favweapon[4][2];

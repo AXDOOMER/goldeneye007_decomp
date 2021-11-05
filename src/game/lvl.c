@@ -88,18 +88,19 @@ s32 D_80048380 = 0;
 //D:80048384
 #endif
 #ifdef VERSION_JP
-u32 jp_global_timer_delta = 0;
-//D:8004837C
+// addresses updated, per build\ge007.j.map
+// 800483a8
+f32 g_JP_GlobalTimerDelta = 0;
+// 800483ac
 s32 g_GlobalTimer = 0;
-//D:80048380
+// 800483b0
 s32 D_80048380 = 0;
+// 800483b4
 f32 g_GlobalTimerDelta = 0;
 #endif
 #ifdef VERSION_EU
-u32 jp_global_timer_delta = 0;
-//D:8004837C
+f32 g_JP_GlobalTimerDelta = 0;
 s32 g_GlobalTimer = 0;
-//D:80048380
 s32 D_80048380 = 0;
 f32 g_GlobalTimerDelta = 0;
 #endif
@@ -128,8 +129,10 @@ s32 D_800483A8 = 0;
 f32 cur_mp_min = 0.0;
 //D:800483B0
 s32 D_800483B0 = 0;
+
 //D:800483B4
 f32 g_StageTimeSec = 0;
+
 //D:800483B8
 s32 D_800483B8 = 0;
 //D:800483BC
@@ -223,31 +226,56 @@ void music_play_stagetrack_or_random(void)
 
 
 
-#if 0
+#ifdef NONMATCHING
+/**
+ * Stage load method.
+ * Title screen is handled as a special case.
+ * First half of method resets stage and player values (including mutliplayer values) to defaults.
+ * Second part loads stage data (init guards, init guard heads, etc).
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: yes
+ * - identical registers: fail
+ * 
+ * notes: only regalloc issues. Problem seems to be around the do{}while loop on player1_player_data.
+ */
 void stage_load(s32 stage)
 {
-    ? *temp_s1;
-    ? *temp_s2;
-    s32 temp_a0;
-    s32 temp_s0;
-    s32 temp_s0_2;
-    s32 temp_s0_3;
-    u8 *phi_s1;
-    s32 phi_s0;
-    s32 phi_a0;
-    ? *phi_s4;
-    ? *phi_s1_2;
-    s32 phi_s0_2;
-    ? *phi_s2;
-    s32 phi_s0_3;
-
+    struct player_data *player_data;
+    struct player_data *phi_s1_2;
+    struct player_data *phi_s4;
+ 
     g_CurrentStageToLoad = stage;
+
+    // this if block pushes where g_CurrentStageToLoad gets loaded to the
+    // top of the method. Maybe a debug log about which level is loaded.
+    if(0)
+    {
+        #ifdef DEBUG
+        // removed
+        #endif
+    }
+
     D_800483C0 = 1;
     g_ControlsLockedFlag = 0;
     g_ClockTimer = 1;
+
+#ifdef VERSION_US
     g_GlobalTimerDelta = 1.0f;
+#endif
+#ifdef VERSION_JP
+    g_JP_GlobalTimerDelta = 1.0f;
+#endif
+
     D_80048380 = 0;
     g_GlobalTimer = 0;
+
+#ifdef VERSION_JP
+    g_GlobalTimerDelta = 1.f;
+#endif
+
     D_80048388 = 0;
     D_8004838C = 0;
     D_80048390 = 0;
@@ -268,105 +296,104 @@ void stage_load(s32 stage)
     load_prepare_global_image_bank();
     load_font_tables();
 
+    /* If title screen, initialize screen and folder setup. 
+    * Otherwise:
+    * - enable cheats for player
+    * - init watch
+    * - reset some player values, like view height
+    * - reset multiplayer stats
+    */
     if (stage == LEVELID_TITLE)
     {
         init_menus_or_reset();
     }
     else
     {
-        temp_a0 = g_CurrentStageToLoad;
         g_NewCheatUnlocked = 0;
-        phi_a0 = temp_a0;
 
-        if ((temp_a0 != LEVELID_TITLE) && (D_80048394 == 0) && (g_ClockTimer > 0))
+        if ((g_CurrentStageToLoad != LEVELID_TITLE) && (D_80048394 == 0) && (g_ClockTimer > 0))
         {
-            phi_s1 = &g_CheatActivated + 1;
-            phi_s0 = 1;
-
             if (g_AppendCheatSinglePlayer != 0)
             {
-                do
+                s32 s0 = 1;
+
+                for (s0 = 1; s0 != CHEAT_INVALID; s0++)
                 {
-                    if ((*phi_s1 != 0) && (is_cheat_index_equal_to_1C(phi_s0) != 0))
+                    if (g_CheatActivated[s0] && is_cheat_index_equal_to_1C(s0))
                     {
-                        turn_on_cheat_for_players(phi_s0);
+                        turn_on_cheat_for_players(s0);
                     }
-
-                    temp_s0 = phi_s0 + 1;
-                    phi_s1 += 1;
-                    phi_s0 = temp_s0;
-                } while (temp_s0 != 0x4B);
-
-                phi_a0 = g_CurrentStageToLoad;
+                }
             }
         }
 
-        load_bg_file(phi_a0);
+        load_bg_file(g_CurrentStageToLoad);
         store_stagenum_to_copyof_stagenum(g_CurrentStageToLoad);
         init_watch_at_start_of_stage();
         sub_GAME_7F0C11FC(stage);
 
+        // why oh why are there two pointers for the same data.
+        player_data = &player1_player_data;
         phi_s4 = &player1_player_data;
-        phi_s2 = &player1_player_data;
 
         do
         {
-            phi_s0_2 = 0;
-            
             if (getPlayerCount() == 1)
             {
-                phi_s4->unk6A = 0;
-                phi_s4->unk6B = 0;
-                phi_s4->unk5C = 1.0f;
-                phi_s4->unk64 = 1.0f;
+                player_data->autoaim = 0;
+                player_data->sight = 0;
+                player_data->handicap = 1.0f;
+                player_data->player_perspective_height = 1.0f;
             }
             else
             {
-                phi_s1_2 = &player1_player_data;
+                s32 s3;
 
-                do
+                // why is this looping from player1_player_data again, this inner block
+                // gets executed 16 times in multiplayer.
+                for (s3 = 0, phi_s1_2 = &player1_player_data; s3 < 4; s3++, phi_s1_2++)
                 {
-                    if (get_scenario() == 4)
+                    if (get_scenario() == SCENARIO_LTK)
                     {
-                        phi_s1_2->unk5C = 200.0f;
+                        phi_s1_2->handicap = 200.0f;
                     }
                     else
                     {
-                        phi_s1_2->unk5C = get_player_mp_handicap(phi_s0_2);
+                        phi_s1_2->handicap = get_player_mp_handicap(s3);
                     }
-
-                    temp_s0_2 = phi_s0_2 + 1;
-                    temp_s1 = phi_s1_2 + 0x70;
-                    temp_s1->unk-C = get_player_mp_char_height(phi_s0_2);
-                    phi_s1_2 = temp_s1;
-                    phi_s0_2 = temp_s0_2;
-                } while (temp_s0_2 != 4);
+                    
+                    phi_s1_2->player_perspective_height = get_player_mp_char_height(s3);
+                }
 
                 set_mp_time(get_mp_timelimit());
                 set_mp_point(get_mp_pointlimit());
                 copy_aim_settings_to_playerdata();
             }
+            
+            player_data->time_other_players_on_screen = 0;
+            player_data->damage_to_backside = 0;
+            player_data->min_time_between_kills = 0x7FFFFFFF;
+            player_data->max_time_between_kills = 0;
+            player_data->most_killed_one_life = 0;
+            player_data->most_killed_one_time = 0;
+            player_data->longest_inning = 0;
+            player_data->shortest_inning = 0x7FFFFFFF;
+            player_data->order_out_in_yolt = 0;
+            player_data->flag_counter = 0;
+            player_data->distance_traveled = 0.0f; // one kind of float zero
+            player_data->body_armor_pickups = 0.f; // a different kind of float zero
+            
+            player_data++;
 
-            phi_s4->unk34 = 0;
-            phi_s4->unk3C = 0;
-            phi_s4->unk44 = 0x7FFFFFFF;
-            phi_s4->unk48 = 0;
-            phi_s4->unk54 = 0;
-            phi_s4->unk58 = 0;
-            phi_s4->unk4C = 0;
-            phi_s4->unk50 = 0x7FFFFFFF;
-            phi_s4->unk68 = 0;
-            phi_s4->unk60 = 0;
-            phi_s4->unk38 = 0.0f;
-            phi_s4->unk40 = 0.0f;
-            temp_s2 = phi_s2 + 0x70;
-            temp_s2->unk-40 = 0;
-            temp_s2->unk-44 = 0;
-            temp_s2->unk-48 = 0;
-            temp_s2->unk-4C = 0;
-            phi_s4 += 0x70;
-            phi_s2 = temp_s2;
-        } while (temp_s2 != &currentplayer);
+            // what is this even doing, why can't it use the other pointer
+            phi_s4->killed_p4 = 0;
+            phi_s4->killed_p3 = 0;
+            phi_s4->killed_p2 = 0;
+            phi_s4->killed_p1 = 0;
+
+            phi_s4++;
+
+        } while ((void *)phi_s4 != (void *)(&player4_player_data + sizeof(player4_player_data)));
     }
 
     something_with_stage_objectives();
@@ -385,31 +412,28 @@ void stage_load(s32 stage)
     sub_GAME_7F007290();
     sub_GAME_7F0072B0();
 
+    // g_CurrentStageToLoad regalloc, should be t4, currently t3
     if (g_CurrentStageToLoad == LEVELID_TITLE)
     {
         disable_onscreen_cheat_text();
     }
     else
     {
+        s32 s0;
+        
         init_path_table_links();
         something_with_ejected_cartridges();
-        phi_s0_3 = 0;
 
-        if (getPlayerCount() > 0)
+        for (s0 = 0; s0 < getPlayerCount(); s0++)
         {
-            do
-            {
-                set_cur_player(phi_s0_3);
-                reinit_gunheld_totaltime();
-                init_player_BONDdata_stats();
-                init_player_BONDdata();
-                load_camera_intro_type_values();
-                sub_GAME_7F0798B8();
-                sets_a_bunch_of_BONDdata_values_to_default();
-                disable_onscreen_cheat_text();
-                temp_s0_3 = phi_s0_3 + 1;
-                phi_s0_3 = temp_s0_3;
-            } while (temp_s0_3 < getPlayerCount());
+            set_cur_player(s0);
+            reinit_gunheld_totaltime();
+            init_player_BONDdata_stats();
+            init_player_BONDdata();
+            load_camera_intro_type_values();
+            sub_GAME_7F0798B8();
+            sets_a_bunch_of_BONDdata_values_to_default();
+            disable_onscreen_cheat_text();
         }
 
         set_cur_player(0);
@@ -422,7 +446,7 @@ void stage_load(s32 stage)
     set_controls_locked_flag(0);
 }
 #endif
-#if 1
+#ifdef VERSION_US
 GLOBAL_ASM(
 .text
 glabel stage_load
@@ -741,8 +765,8 @@ glabel stage_load
 /* 0F31FC 7F0BE68C AC2083A0 */  sw    $zero, %lo(g_ControlsLockedFlag)($at)
 /* 0F3200 7F0BE690 263183A4 */  addiu $s1, %lo(g_ClockTimer) # addiu $s1, $s1, -0x7c5c
 /* 0F3204 7F0BE694 AE220000 */  sw    $v0, ($s1)
-/* 0F3208 7F0BE698 3C018005 */  lui   $at, %hi(jp_global_timer_delta) # $at, 0x8005
-/* 0F320C 7F0BE69C E42C83A8 */  swc1  $f12, %lo(jp_global_timer_delta)($at)
+/* 0F3208 7F0BE698 3C018005 */  lui   $at, %hi(g_JP_GlobalTimerDelta) # $at, 0x8005
+/* 0F320C 7F0BE69C E42C83A8 */  swc1  $f12, %lo(g_JP_GlobalTimerDelta)($at)
 /* 0F3210 7F0BE6A0 3C018005 */  lui   $at, %hi(D_80048380) # $at, 0x8005
 /* 0F3214 7F0BE6A4 AC2083B0 */  sw    $zero, %lo(D_80048380)($at)
 /* 0F3218 7F0BE6A8 3C018005 */  lui   $at, %hi(g_GlobalTimer) # $at, 0x8005
@@ -3061,7 +3085,7 @@ void setDamageMultipliersForDifficulty(void)
     f32 armorDiff;
     f32 damageMultiplier;
 
-    if (difficulty_0 == 0)
+    if (difficulty_0 == DIFFICULTY_AGENT)
     {
         armorDiff = get_BONDdata_watch_health() + get_BONDdata_watch_armor();
 
@@ -3094,7 +3118,7 @@ void setDamageMultipliersForDifficulty(void)
         ai_reaction_speed = 0.2f;
         return;
     }
-    if (difficulty_0 == 1)
+    if (difficulty_0 == DIFFICULTY_SECRET)
     {
         F_80030B14 = 1.0f;
         F_80030B18 = 1.0f;
@@ -3110,7 +3134,7 @@ void setDamageMultipliersForDifficulty(void)
         ai_reaction_speed = 0.5f;
         return;
     }
-    if (difficulty_0 == 2)
+    if (difficulty_0 == DIFFICULTY_00)
     {
         F_80030B14 = 1.0f;
         F_80030B18 = 1.0f;
@@ -3126,7 +3150,7 @@ void setDamageMultipliersForDifficulty(void)
         ai_reaction_speed = 1.0f;
         return;
     }
-    if (difficulty_0 == 3)
+    if (difficulty_0 == DIFFICULTY_007)
     {
         F_80030B14 = 1.0f;
         F_80030B18 = 1.0f;
@@ -4710,8 +4734,8 @@ glabel manage_mp_game
 .Ljp7F0BF814:
 /* 0F4384 7F0BF814 3C028005 */  lui   $v0, %hi(g_ClockTimer) # $v0, 0x8005
 /* 0F4388 7F0BF818 8C4283A4 */  lw    $v0, %lo(g_ClockTimer)($v0)
-/* 0F438C 7F0BF81C 3C038005 */  lui   $v1, %hi(jp_global_timer_delta) # $v1, 0x8005
-/* 0F4390 7F0BF820 246383A8 */  addiu $v1, %lo(jp_global_timer_delta) # addiu $v1, $v1, -0x7c58
+/* 0F438C 7F0BF81C 3C038005 */  lui   $v1, %hi(g_JP_GlobalTimerDelta) # $v1, 0x8005
+/* 0F4390 7F0BF820 246383A8 */  addiu $v1, %lo(g_JP_GlobalTimerDelta) # addiu $v1, $v1, -0x7c58
 /* 0F4394 7F0BF824 44822000 */  mtc1  $v0, $f4
 /* 0F4398 7F0BF828 3C048005 */  lui   $a0, %hi(g_GlobalTimer) # $a0, 0x8005
 /* 0F439C 7F0BF82C 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta) # $at, 0x8005

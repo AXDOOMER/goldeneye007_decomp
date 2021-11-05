@@ -4,6 +4,6 @@
 
 extern const u32 only_read_by_stageload[];
 
-void proplvreset2(void);
+void proplvreset2(s32);
 
 #endif

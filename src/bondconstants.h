@@ -458,9 +458,16 @@ typedef enum GAMEMODE {
 
 typedef enum MPSCENARIOS {
     SCENARIO_NORMAL=0,
+    // you only live twice
     SCENARIO_YOLT,
+
+    //"The Living Daylights [Flag Tag]"
     SCENARIO_TLD,
+
+    // The Man With the Golden Gun
     SCENARIO_MWTGG,
+
+    // License to Kill
     SCENARIO_LTK,
     SCENARIO_2v2,
     SCENARIO_3v1,
@@ -1660,6 +1667,82 @@ typedef enum CREDITS_ALIGNMENT {
     CREDITS_ALIGN_CENTER = 2,
     CREDITS_ALIGN_PREVIOUS = 0xffff
 } CREDITS_ALIGNMENT;
+
+/*
+values need to be verified against cheat_buttons.c : void handle_cheats_turned_on(CHEAT_IDS cheat)
+*/
+typedef enum CHEAT_IDS {
+    
+    CHEAT_EXTRA_MP_CHARS = 0, /* unverified */
+    CHEAT_INVINCIBILITY = 1, /* unverified */
+    CHEAT_ALLGUNS = 2, /* unverified */
+    CHEAT_MAXAMMO = 3, /* unverified */
+    CHEAT_REMOVE_INVINCIBILITY = 4, /* unverified */
+    CHEAT_LINEMODE = 5, /* unverified */
+    CHEAT_2X_HEALTH = 6, /* unverified */
+    CHEAT_2X_ARMOR = 7, /* unverified */
+    CHEAT_INVISIBILITY = 8, /* unverified */
+    CHEAT_FAST = 9, /* unverified */
+    CHEAT_DEBUG_POS = 0x0a, /* unverified */
+    CHEAT_DEBUG_FAST_ANI = 0x0b, /* unverified */
+    CHEAT_DEBUG_SLOW_ANI = 0x0c, /* unverified */
+    CHEAT_DEBUG_2X_ROCKETS = 0x0d, /* unverified */
+    CHEAT_DEBUG_2X_GRENADE_LAUNCHER = 0x0e, /* unverified */
+    CHEAT_DEBUG_2X_RCP90 = 0x0f, /* unverified */
+    CHEAT_DEBUG_2X_THROWING_KNIFE = 0x10, /* unverified */
+    CHEAT_DEBUG_2X_HUNTING_KNIFE = 0x11, /* unverified */
+    CHEAT_DEBUG_2X_LASER = 0x12, /* unverified */
+    
+    // ... ?
+
+    // unknown
+    CHEAT_1C = 0x1c,
+
+    // ... ?
+
+    CHEAT_UNUSED_23 = 0x23,
+    CHEAT_UNUSED_24,
+    CHEAT_UNUSED_25,
+    CHEAT_UNUSED_26,
+    CHEAT_UNUSED_27,
+    CHEAT_UNUSED_28,
+    CHEAT_UNUSED_29,
+    CHEAT_UNUSED_2A,
+    CHEAT_UNUSED_2B,
+    CHEAT_UNUSED_2C,
+    CHEAT_UNUSED_2D,
+    CHEAT_UNUSED_2E,
+    CHEAT_UNUSED_2F,
+    CHEAT_UNUSED_30,
+    CHEAT_UNUSED_31,
+    CHEAT_UNUSED_32,
+    CHEAT_UNUSED_33,
+    CHEAT_UNUSED_34,
+    CHEAT_UNUSED_35,
+    CHEAT_UNLOCK_CHEATS = 0x36, /* unverified */
+    CHEAT_UNUSED_37,
+    CHEAT_UNUSED_38,
+    CHEAT_UNUSED_39,
+    CHEAT_UNUSED_3A,
+    CHEAT_UNUSED_3B,
+    CHEAT_UNUSED_3C,
+    CHEAT_UNUSED_3D,
+    CHEAT_UNUSED_3E,
+    CHEAT_UNUSED_3F,
+    CHEAT_UNUSED_40,
+    CHEAT_UNUSED_41,
+    CHEAT_UNUSED_42,
+    CHEAT_UNUSED_43,
+    CHEAT_UNUSED_44,
+    CHEAT_UNUSED_45,
+    CHEAT_UNUSED_46,
+    CHEAT_UNUSED_47,
+    CHEAT_UNUSED_48,
+    CHEAT_UNUSED_49,
+    CHEAT_UNLOCK_STAGES = 0x4a, /* unverified */
+
+    CHEAT_INVALID = 0x4b,
+} CHEAT_ID;
 
 //macros for FILERECORDS
 #define STR(n) #n
