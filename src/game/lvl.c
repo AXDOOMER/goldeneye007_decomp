@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "game/debugmenu_handler.h"
 #include "game/lvl.h"
+#include "game/lvl_text.h"
 #include "game/initunk_0072B0.h"
 #include "game/front.h"
 #include "game/bondinv.h"
@@ -3077,22 +3078,19 @@ glabel lvRender
 #endif
 
 
-
-#ifdef NONMATCHING
-//mostly matching wrong float regs used
+/**
+ * Sets the modifier values for the level being loaded.
+ * This covers the enemy accuracy, reaction speed, and similar values.
+ * 
+ * address 0x7F0BE8D0
+ */
 void setDamageMultipliersForDifficulty(void)
 {
-    f32 armorDiff;
-    f32 damageMultiplier;
-
     if (difficulty_0 == DIFFICULTY_AGENT)
     {
-        armorDiff = get_BONDdata_watch_health() + get_BONDdata_watch_armor();
+        f32 armorDiff = get_BONDdata_watch_health() + get_BONDdata_watch_armor();
+        f32 damageMultiplier = 1.0f;
 
-    //damageMultiplier = (armorDiff > 0.125f) ? 1.0f : (armorDiff > 0.6f) ? 0.5f : (((armorDiff - 0.125f) * 0.5f) / 0.47500002f) + 0.5f;
-
-    //*
-        damageMultiplier = 1.0f;
         if (armorDiff <= 0.125f)
         {
             damageMultiplier = 0.5f;
@@ -3101,692 +3099,94 @@ void setDamageMultipliersForDifficulty(void)
         {
             damageMultiplier = (((armorDiff - 0.125f) * 0.5f) / 0.47500002f) + 0.5f;
         }
-    //*/
 
         F_80030B14 = 2.0f;
-        //(0.5f * damageMultiplier) = 0.5f * damageMultiplier;
         F_80030B18 = 2.0f;
         F_80030B1C = (0.5f * damageMultiplier);
         F_80030B20 = (0.5f * damageMultiplier);
         F_80030B24 = 2.0f;
-        ai_accuracy_modifier = 0.6f;
-        ai_damage_modifier = (0.5f * damageMultiplier);
-        ai_health_modifier = 2.0f;
+        g_AiAccuracyModifier = DEFAULT_AGENT_AI_ACCURACY_MODIFIER;
+        g_AiDamageModifier = (DEFAULT_AGENT_AI_DAMAGE_MODIFIER * damageMultiplier);
+        g_AiHealthModifier = 2.0f;
         D_80040178 = (f32) (0.25f * damageMultiplier);
         difficulty = 1.5f;
-        solo_ammo_multiplier = 2.0f;
-        ai_reaction_speed = 0.2f;
-        return;
+        g_SoloAmmoMultiplier = DEFAULT_AGENT_SOLO_AMMO_MULTIPLIER;
+        g_AiReactionSpeed = DEFAULT_AGENT_AI_REACTION_SPEED;
     }
-    if (difficulty_0 == DIFFICULTY_SECRET)
+    else if (difficulty_0 == DIFFICULTY_SECRET)
     {
         F_80030B14 = 1.0f;
         F_80030B18 = 1.0f;
         F_80030B1C = 0.75f;
         F_80030B20 = 0.75f;
         F_80030B24 = 1.0f;
-        ai_accuracy_modifier = 0.75f;
-        ai_damage_modifier = 0.75f;
-        ai_health_modifier = 1.0f;
+        g_AiAccuracyModifier = DEFAULT_SECRET_AGENT_AI_ACCURACY_MODIFIER;
+        g_AiDamageModifier = DEFAULT_SECRET_AGENT_AI_DAMAGE_MODIFIER;
+        g_AiHealthModifier = 1.0f;
         D_80040178 = 0.75f;
-        difficulty = 0.75f;
-        solo_ammo_multiplier = 1.5f;
-        ai_reaction_speed = 0.5f;
-        return;
-    }
-    if (difficulty_0 == DIFFICULTY_00)
-    {
-        F_80030B14 = 1.0f;
-        F_80030B18 = 1.0f;
-        F_80030B1C = 1.0f;
-        F_80030B20 = 1.0f;
-        F_80030B24 = 1.0f;
-        ai_accuracy_modifier = 1.0f;
-        ai_damage_modifier = 1.0f;
-        ai_health_modifier = 1.0f;
-        D_80040178 = 1.0f;
-        difficulty = 0.2f;
-        solo_ammo_multiplier = 1.0f;
-        ai_reaction_speed = 1.0f;
-        return;
-    }
-    if (difficulty_0 == DIFFICULTY_007)
-    {
-        F_80030B14 = 1.0f;
-        F_80030B18 = 1.0f;
-        F_80030B1C = 1.0f;
-        F_80030B20 = 1.0f;
-        F_80030B24 = 1.0f;
-        ai_accuracy_modifier = 1.0f;
-        ai_damage_modifier = 1.0f;
-        ai_health_modifier = 1.0f;
-        D_80040178 = 1.0f;
-        difficulty = 1.0f;
-        solo_ammo_multiplier = 1.0f;
-        ai_reaction_speed = 1.0f;
-        return;
-    }
-}
-#else
-#ifdef VERSION_US
-GLOBAL_ASM(
-.late_rodata
-glabel D_8005B73C
-.word 0x3f19999a /*0.60000002*/
-glabel D_8005B740
-.word 0x3ef33334 /*0.47500002*/
-glabel D_8005B744
-.word 0x3f19999a /*0.60000002*/
-glabel D_8005B748
-.word 0x3e4ccccd /*0.2*/
-glabel D_8005B74C
-.word 0x3e4ccccd /*0.2*/
-.text
-glabel setDamageMultipliersForDifficulty
-/* 0F3400 7F0BE8D0 3C028005 */  lui   $v0, %hi(difficulty_0)
-/* 0F3404 7F0BE8D4 8C428384 */  lw    $v0, %lo(difficulty_0)($v0)
-/* 0F3408 7F0BE8D8 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0F340C 7F0BE8DC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F3410 7F0BE8E0 14400048 */  bnez  $v0, .L7F0BEA04
-/* 0F3414 7F0BE8E4 24010001 */   li    $at, 1
-/* 0F3418 7F0BE8E8 0FC228BB */  jal   get_BONDdata_watch_health
-/* 0F341C 7F0BE8EC 00000000 */   nop
-/* 0F3420 7F0BE8F0 0FC228BF */  jal   get_BONDdata_watch_armor
-/* 0F3424 7F0BE8F4 E7A0001C */   swc1  $f0, 0x1c($sp)
-/* 0F3428 7F0BE8F8 C7A4001C */  lwc1  $f4, 0x1c($sp)
-/* 0F342C 7F0BE8FC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0F3430 7F0BE900 44816000 */  mtc1  $at, $f12
-/* 0F3434 7F0BE904 46040380 */  add.s $f14, $f0, $f4
-/* 0F3438 7F0BE908 3C013E00 */  li    $at, 0x3E000000 # 0.125000
-/* 0F343C 7F0BE90C 44818000 */  mtc1  $at, $f16
-/* 0F3440 7F0BE910 3C018006 */  lui   $at, %hi(D_8005B73C)
-/* 0F3444 7F0BE914 4610703E */  c.le.s $f14, $f16
-/* 0F3448 7F0BE918 00000000 */  nop
-/* 0F344C 7F0BE91C 45000005 */  bc1f  .L7F0BE934
-/* 0F3450 7F0BE920 00000000 */   nop
-/* 0F3454 7F0BE924 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0F3458 7F0BE928 44816000 */  mtc1  $at, $f12
-/* 0F345C 7F0BE92C 1000000F */  b     .L7F0BE96C
-/* 0F3460 7F0BE930 3C014000 */   lui   $at, 0x4000
-.L7F0BE934:
-/* 0F3464 7F0BE934 C426B73C */  lwc1  $f6, %lo(D_8005B73C)($at)
-/* 0F3468 7F0BE938 3C013F00 */  lui   $at, 0x3f00
-/* 0F346C 7F0BE93C 4606703E */  c.le.s $f14, $f6
-/* 0F3470 7F0BE940 00000000 */  nop
-/* 0F3474 7F0BE944 45020009 */  bc1fl .L7F0BE96C
-/* 0F3478 7F0BE948 3C014000 */   li    $at, 0x40000000 # 2.000000
-/* 0F347C 7F0BE94C 46107201 */  sub.s $f8, $f14, $f16
-/* 0F3480 7F0BE950 44819000 */  mtc1  $at, $f18
-/* 0F3484 7F0BE954 3C018006 */  lui   $at, %hi(D_8005B740)
-/* 0F3488 7F0BE958 C424B740 */  lwc1  $f4, %lo(D_8005B740)($at)
-/* 0F348C 7F0BE95C 46124282 */  mul.s $f10, $f8, $f18
-/* 0F3490 7F0BE960 46045183 */  div.s $f6, $f10, $f4
-/* 0F3494 7F0BE964 46123300 */  add.s $f12, $f6, $f18
-/* 0F3498 7F0BE968 3C014000 */  li    $at, 0x40000000 # 2.000000
-.L7F0BE96C:
-/* 0F349C 7F0BE96C 44811000 */  mtc1  $at, $f2
-/* 0F34A0 7F0BE970 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0F34A4 7F0BE974 44819000 */  mtc1  $at, $f18
-/* 0F34A8 7F0BE978 3C018003 */  lui   $at, %hi(F_80030B14)
-/* 0F34AC 7F0BE97C E4220B14 */  swc1  $f2, %lo(F_80030B14)($at)
-/* 0F34B0 7F0BE980 460C9002 */  mul.s $f0, $f18, $f12
-/* 0F34B4 7F0BE984 3C018003 */  lui   $at, %hi(F_80030B18)
-/* 0F34B8 7F0BE988 E4220B18 */  swc1  $f2, %lo(F_80030B18)($at)
-/* 0F34BC 7F0BE98C 3C018003 */  lui   $at, %hi(F_80030B1C)
-/* 0F34C0 7F0BE990 E4200B1C */  swc1  $f0, %lo(F_80030B1C)($at)
-/* 0F34C4 7F0BE994 3C018003 */  lui   $at, %hi(F_80030B20)
-/* 0F34C8 7F0BE998 E4200B20 */  swc1  $f0, %lo(F_80030B20)($at)
-/* 0F34CC 7F0BE99C 3C018003 */  lui   $at, %hi(F_80030B24)
-/* 0F34D0 7F0BE9A0 E4220B24 */  swc1  $f2, %lo(F_80030B24)($at)
-/* 0F34D4 7F0BE9A4 3C018006 */  lui   $at, %hi(D_8005B744)
-/* 0F34D8 7F0BE9A8 C428B744 */  lwc1  $f8, %lo(D_8005B744)($at)
-/* 0F34DC 7F0BE9AC 3C018003 */  lui   $at, %hi(ai_accuracy_modifier)
-/* 0F34E0 7F0BE9B0 E428CE40 */  swc1  $f8, %lo(ai_accuracy_modifier)($at)
-/* 0F34E4 7F0BE9B4 3C018003 */  lui   $at, %hi(ai_damage_modifier)
-/* 0F34E8 7F0BE9B8 E420CE44 */  swc1  $f0, %lo(ai_damage_modifier)($at)
-/* 0F34EC 7F0BE9BC 3C018003 */  lui   $at, %hi(ai_health_modifier)
-/* 0F34F0 7F0BE9C0 E422CE48 */  swc1  $f2, %lo(ai_health_modifier)($at)
-/* 0F34F4 7F0BE9C4 3C013E80 */  li    $at, 0x3E800000 # 0.250000
-/* 0F34F8 7F0BE9C8 44815000 */  mtc1  $at, $f10
-/* 0F34FC 7F0BE9CC 3C018004 */  lui   $at, %hi(D_80040178)
-/* 0F3500 7F0BE9D0 460C5102 */  mul.s $f4, $f10, $f12
-/* 0F3504 7F0BE9D4 E4240178 */  swc1  $f4, %lo(D_80040178)($at)
-/* 0F3508 7F0BE9D8 3C013FC0 */  li    $at, 0x3FC00000 # 1.500000
-/* 0F350C 7F0BE9DC 44813000 */  mtc1  $at, $f6
-/* 0F3510 7F0BE9E0 3C018003 */  lui   $at, %hi(difficulty)
-/* 0F3514 7F0BE9E4 E4260AAC */  swc1  $f6, %lo(difficulty)($at)
-/* 0F3518 7F0BE9E8 3C018003 */  lui   $at, %hi(solo_ammo_multiplier)
-/* 0F351C 7F0BE9EC E4220B28 */  swc1  $f2, %lo(solo_ammo_multiplier)($at)
-/* 0F3520 7F0BE9F0 3C018006 */  lui   $at, %hi(D_8005B748)
-/* 0F3524 7F0BE9F4 C428B748 */  lwc1  $f8, %lo(D_8005B748)($at)
-/* 0F3528 7F0BE9F8 3C018003 */  lui   $at, %hi(ai_reaction_speed)
-/* 0F352C 7F0BE9FC 1000005E */  b     .L7F0BEB78
-/* 0F3530 7F0BEA00 E428CE4C */   swc1  $f8, %lo(ai_reaction_speed)($at)
-.L7F0BEA04:
-/* 0F3534 7F0BEA04 14410021 */  bne   $v0, $at, .L7F0BEA8C
-/* 0F3538 7F0BEA08 3C013F40 */   li    $at, 0x3F400000 # 0.750000
-/* 0F353C 7F0BEA0C 44810000 */  mtc1  $at, $f0
-/* 0F3540 7F0BEA10 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0F3544 7F0BEA14 44811000 */  mtc1  $at, $f2
-/* 0F3548 7F0BEA18 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0F354C 7F0BEA1C 44819000 */  mtc1  $at, $f18
-/* 0F3550 7F0BEA20 3C018003 */  lui   $at, %hi(F_80030B14)
-/* 0F3554 7F0BEA24 E4220B14 */  swc1  $f2, %lo(F_80030B14)($at)
-/* 0F3558 7F0BEA28 3C018003 */  lui   $at, %hi(F_80030B18)
-/* 0F355C 7F0BEA2C E4220B18 */  swc1  $f2, %lo(F_80030B18)($at)
-/* 0F3560 7F0BEA30 3C018003 */  lui   $at, %hi(F_80030B1C)
-/* 0F3564 7F0BEA34 E4200B1C */  swc1  $f0, %lo(F_80030B1C)($at)
-/* 0F3568 7F0BEA38 3C018003 */  lui   $at, %hi(F_80030B20)
-/* 0F356C 7F0BEA3C E4200B20 */  swc1  $f0, %lo(F_80030B20)($at)
-/* 0F3570 7F0BEA40 3C018003 */  lui   $at, %hi(F_80030B24)
-/* 0F3574 7F0BEA44 E4220B24 */  swc1  $f2, %lo(F_80030B24)($at)
-/* 0F3578 7F0BEA48 3C018003 */  lui   $at, %hi(ai_accuracy_modifier)
-/* 0F357C 7F0BEA4C E420CE40 */  swc1  $f0, %lo(ai_accuracy_modifier)($at)
-/* 0F3580 7F0BEA50 3C018003 */  lui   $at, %hi(ai_damage_modifier)
-/* 0F3584 7F0BEA54 E420CE44 */  swc1  $f0, %lo(ai_damage_modifier)($at)
-/* 0F3588 7F0BEA58 3C018003 */  lui   $at, %hi(ai_health_modifier)
-/* 0F358C 7F0BEA5C E422CE48 */  swc1  $f2, %lo(ai_health_modifier)($at)
-/* 0F3590 7F0BEA60 3C018004 */  lui   $at, %hi(D_80040178)
-/* 0F3594 7F0BEA64 E4200178 */  swc1  $f0, %lo(D_80040178)($at)
-/* 0F3598 7F0BEA68 3C018003 */  lui   $at, %hi(difficulty)
-/* 0F359C 7F0BEA6C E4200AAC */  swc1  $f0, %lo(difficulty)($at)
-/* 0F35A0 7F0BEA70 3C013FC0 */  li    $at, 0x3FC00000 # 1.500000
-/* 0F35A4 7F0BEA74 44815000 */  mtc1  $at, $f10
-/* 0F35A8 7F0BEA78 3C018003 */  lui   $at, %hi(solo_ammo_multiplier)
-/* 0F35AC 7F0BEA7C E42A0B28 */  swc1  $f10, %lo(solo_ammo_multiplier)($at)
-/* 0F35B0 7F0BEA80 3C018003 */  lui   $at, %hi(ai_reaction_speed)
-/* 0F35B4 7F0BEA84 1000003C */  b     .L7F0BEB78
-/* 0F35B8 7F0BEA88 E432CE4C */   swc1  $f18, %lo(ai_reaction_speed)($at)
-.L7F0BEA8C:
-/* 0F35BC 7F0BEA8C 24010002 */  li    $at, 2
-/* 0F35C0 7F0BEA90 1441001D */  bne   $v0, $at, .L7F0BEB08
-/* 0F35C4 7F0BEA94 3C013F80 */   li    $at, 0x3F800000 # 1.000000
-/* 0F35C8 7F0BEA98 44811000 */  mtc1  $at, $f2
-/* 0F35CC 7F0BEA9C 3C018003 */  lui   $at, %hi(F_80030B14)
-/* 0F35D0 7F0BEAA0 E4220B14 */  swc1  $f2, %lo(F_80030B14)($at)
-/* 0F35D4 7F0BEAA4 3C018003 */  lui   $at, %hi(F_80030B18)
-/* 0F35D8 7F0BEAA8 E4220B18 */  swc1  $f2, %lo(F_80030B18)($at)
-/* 0F35DC 7F0BEAAC 3C018003 */  lui   $at, %hi(F_80030B1C)
-/* 0F35E0 7F0BEAB0 E4220B1C */  swc1  $f2, %lo(F_80030B1C)($at)
-/* 0F35E4 7F0BEAB4 3C018003 */  lui   $at, %hi(F_80030B20)
-/* 0F35E8 7F0BEAB8 E4220B20 */  swc1  $f2, %lo(F_80030B20)($at)
-/* 0F35EC 7F0BEABC 3C018003 */  lui   $at, %hi(F_80030B24)
-/* 0F35F0 7F0BEAC0 E4220B24 */  swc1  $f2, %lo(F_80030B24)($at)
-/* 0F35F4 7F0BEAC4 3C018003 */  lui   $at, %hi(ai_accuracy_modifier)
-/* 0F35F8 7F0BEAC8 E422CE40 */  swc1  $f2, %lo(ai_accuracy_modifier)($at)
-/* 0F35FC 7F0BEACC 3C018003 */  lui   $at, %hi(ai_damage_modifier)
-/* 0F3600 7F0BEAD0 E422CE44 */  swc1  $f2, %lo(ai_damage_modifier)($at)
-/* 0F3604 7F0BEAD4 3C018003 */  lui   $at, %hi(ai_health_modifier)
-/* 0F3608 7F0BEAD8 E422CE48 */  swc1  $f2, %lo(ai_health_modifier)($at)
-/* 0F360C 7F0BEADC 3C018004 */  lui   $at, %hi(D_80040178)
-/* 0F3610 7F0BEAE0 E4220178 */  swc1  $f2, %lo(D_80040178)($at)
-/* 0F3614 7F0BEAE4 3C018006 */  lui   $at, %hi(D_8005B74C)
-/* 0F3618 7F0BEAE8 C424B74C */  lwc1  $f4, %lo(D_8005B74C)($at)
-/* 0F361C 7F0BEAEC 3C018003 */  lui   $at, %hi(difficulty)
-/* 0F3620 7F0BEAF0 E4240AAC */  swc1  $f4, %lo(difficulty)($at)
-/* 0F3624 7F0BEAF4 3C018003 */  lui   $at, %hi(solo_ammo_multiplier)
-/* 0F3628 7F0BEAF8 E4220B28 */  swc1  $f2, %lo(solo_ammo_multiplier)($at)
-/* 0F362C 7F0BEAFC 3C018003 */  lui   $at, %hi(ai_reaction_speed)
-/* 0F3630 7F0BEB00 1000001D */  b     .L7F0BEB78
-/* 0F3634 7F0BEB04 E422CE4C */   swc1  $f2, %lo(ai_reaction_speed)($at)
-.L7F0BEB08:
-/* 0F3638 7F0BEB08 24010003 */  li    $at, 3
-/* 0F363C 7F0BEB0C 1441001A */  bne   $v0, $at, .L7F0BEB78
-/* 0F3640 7F0BEB10 3C013F80 */   li    $at, 0x3F800000 # 1.000000
-/* 0F3644 7F0BEB14 44811000 */  mtc1  $at, $f2
-/* 0F3648 7F0BEB18 3C018003 */  lui   $at, %hi(F_80030B14)
-/* 0F364C 7F0BEB1C E4220B14 */  swc1  $f2, %lo(F_80030B14)($at)
-/* 0F3650 7F0BEB20 3C018003 */  lui   $at, %hi(F_80030B18)
-/* 0F3654 7F0BEB24 E4220B18 */  swc1  $f2, %lo(F_80030B18)($at)
-/* 0F3658 7F0BEB28 3C018003 */  lui   $at, %hi(F_80030B1C)
-/* 0F365C 7F0BEB2C E4220B1C */  swc1  $f2, %lo(F_80030B1C)($at)
-/* 0F3660 7F0BEB30 3C018003 */  lui   $at, %hi(F_80030B20)
-/* 0F3664 7F0BEB34 E4220B20 */  swc1  $f2, %lo(F_80030B20)($at)
-/* 0F3668 7F0BEB38 3C018003 */  lui   $at, %hi(F_80030B24)
-/* 0F366C 7F0BEB3C E4220B24 */  swc1  $f2, %lo(F_80030B24)($at)
-/* 0F3670 7F0BEB40 3C018003 */  lui   $at, %hi(ai_accuracy_modifier)
-/* 0F3674 7F0BEB44 E422CE40 */  swc1  $f2, %lo(ai_accuracy_modifier)($at)
-/* 0F3678 7F0BEB48 3C018003 */  lui   $at, %hi(ai_damage_modifier)
-/* 0F367C 7F0BEB4C E422CE44 */  swc1  $f2, %lo(ai_damage_modifier)($at)
-/* 0F3680 7F0BEB50 3C018003 */  lui   $at, %hi(ai_health_modifier)
-/* 0F3684 7F0BEB54 E422CE48 */  swc1  $f2, %lo(ai_health_modifier)($at)
-/* 0F3688 7F0BEB58 3C018004 */  lui   $at, %hi(D_80040178)
-/* 0F368C 7F0BEB5C E4220178 */  swc1  $f2, %lo(D_80040178)($at)
-/* 0F3690 7F0BEB60 3C018003 */  lui   $at, %hi(difficulty)
-/* 0F3694 7F0BEB64 E4220AAC */  swc1  $f2, %lo(difficulty)($at)
-/* 0F3698 7F0BEB68 3C018003 */  lui   $at, %hi(solo_ammo_multiplier)
-/* 0F369C 7F0BEB6C E4220B28 */  swc1  $f2, %lo(solo_ammo_multiplier)($at)
-/* 0F36A0 7F0BEB70 3C018003 */  lui   $at, %hi(ai_reaction_speed)
-/* 0F36A4 7F0BEB74 E422CE4C */  swc1  $f2, %lo(ai_reaction_speed)($at)
-.L7F0BEB78:
-/* 0F36A8 7F0BEB78 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F36AC 7F0BEB7C 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0F36B0 7F0BEB80 03E00008 */  jr    $ra
-/* 0F36B4 7F0BEB84 00000000 */   nop
-)
-#endif
 
 #ifdef VERSION_JP
-GLOBAL_ASM(
-.late_rodata
-glabel D_8005B73C
-.word 0x3f19999a /*0.60000002*/
-glabel D_8005B740
-.word 0x3ef33334 /*0.47500002*/
-glabel D_8005B744
-.word 0x3f19999a /*0.60000002*/
-glabel D_8005B748
-.word 0x3e4ccccd /*0.2*/
-glabel D_8005B74C
-.word 0x3f8ccccd
-glabel jpD_8005B780
-.word 0x3e4ccccd /*0.2*/
-.text
-glabel setDamageMultipliersForDifficulty
-/* 0F4024 7F0BF4B4 3C028005 */  lui   $v0, %hi(difficulty_0) # $v0, 0x8005
-/* 0F4028 7F0BF4B8 8C4283B8 */  lw    $v0, %lo(difficulty_0)($v0)
-/* 0F402C 7F0BF4BC 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0F4030 7F0BF4C0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F4034 7F0BF4C4 14400048 */  bnez  $v0, .Ljp7F0BF5E8
-/* 0F4038 7F0BF4C8 24010001 */   li    $at, 1
-/* 0F403C 7F0BF4CC 0FC22A89 */  jal   get_BONDdata_watch_health
-/* 0F4040 7F0BF4D0 00000000 */   nop
-/* 0F4044 7F0BF4D4 0FC22A8D */  jal   get_BONDdata_watch_armor
-/* 0F4048 7F0BF4D8 E7A0001C */   swc1  $f0, 0x1c($sp)
-/* 0F404C 7F0BF4DC C7A4001C */  lwc1  $f4, 0x1c($sp)
-/* 0F4050 7F0BF4E0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0F4054 7F0BF4E4 44816000 */  mtc1  $at, $f12
-/* 0F4058 7F0BF4E8 46040380 */  add.s $f14, $f0, $f4
-/* 0F405C 7F0BF4EC 3C013E00 */  li    $at, 0x3E000000 # 0.125000
-/* 0F4060 7F0BF4F0 44818000 */  mtc1  $at, $f16
-/* 0F4064 7F0BF4F4 3C018006 */  lui   $at, %hi(D_8005B73C)
-/* 0F4068 7F0BF4F8 4610703E */  c.le.s $f14, $f16
-/* 0F406C 7F0BF4FC 00000000 */  nop
-/* 0F4070 7F0BF500 45000005 */  bc1f  .Ljp7F0BF518
-/* 0F4074 7F0BF504 00000000 */   nop
-/* 0F4078 7F0BF508 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0F407C 7F0BF50C 44816000 */  mtc1  $at, $f12
-/* 0F4080 7F0BF510 1000000F */  b     .Ljp7F0BF550
-/* 0F4084 7F0BF514 3C014000 */   lui   $at, 0x4000
-.Ljp7F0BF518:
-/* 0F4088 7F0BF518 C426B76C */  lwc1  $f6, %lo(D_8005B73C)($at)
-/* 0F408C 7F0BF51C 3C013F00 */  lui   $at, 0x3f00
-/* 0F4090 7F0BF520 4606703E */  c.le.s $f14, $f6
-/* 0F4094 7F0BF524 00000000 */  nop
-/* 0F4098 7F0BF528 45020009 */  bc1fl .Ljp7F0BF550
-/* 0F409C 7F0BF52C 3C014000 */   li    $at, 0x40000000 # 2.000000
-/* 0F40A0 7F0BF530 46107201 */  sub.s $f8, $f14, $f16
-/* 0F40A4 7F0BF534 44819000 */  mtc1  $at, $f18
-/* 0F40A8 7F0BF538 3C018006 */  lui   $at, %hi(D_8005B740) # $at, 0x8006
-/* 0F40AC 7F0BF53C C424B770 */  lwc1  $f4, %lo(D_8005B740)($at)
-/* 0F40B0 7F0BF540 46124282 */  mul.s $f10, $f8, $f18
-/* 0F40B4 7F0BF544 46045183 */  div.s $f6, $f10, $f4
-/* 0F40B8 7F0BF548 46123300 */  add.s $f12, $f6, $f18
-/* 0F40BC 7F0BF54C 3C014000 */  li    $at, 0x40000000 # 2.000000
-.Ljp7F0BF550:
-/* 0F40C0 7F0BF550 44811000 */  mtc1  $at, $f2
-/* 0F40C4 7F0BF554 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0F40C8 7F0BF558 44819000 */  mtc1  $at, $f18
-/* 0F40CC 7F0BF55C 3C018003 */  lui   $at, %hi(F_80030B14) # $at, 0x8003
-/* 0F40D0 7F0BF560 E4220B54 */  swc1  $f2, %lo(F_80030B14)($at)
-/* 0F40D4 7F0BF564 460C9002 */  mul.s $f0, $f18, $f12
-/* 0F40D8 7F0BF568 3C018003 */  lui   $at, %hi(F_80030B18) # $at, 0x8003
-/* 0F40DC 7F0BF56C E4220B58 */  swc1  $f2, %lo(F_80030B18)($at)
-/* 0F40E0 7F0BF570 3C018003 */  lui   $at, %hi(F_80030B1C) # $at, 0x8003
-/* 0F40E4 7F0BF574 E4200B5C */  swc1  $f0, %lo(F_80030B1C)($at)
-/* 0F40E8 7F0BF578 3C018003 */  lui   $at, %hi(F_80030B20) # $at, 0x8003
-/* 0F40EC 7F0BF57C E4200B60 */  swc1  $f0, %lo(F_80030B20)($at)
-/* 0F40F0 7F0BF580 3C018003 */  lui   $at, %hi(F_80030B24) # $at, 0x8003
-/* 0F40F4 7F0BF584 E4220B64 */  swc1  $f2, %lo(F_80030B24)($at)
-/* 0F40F8 7F0BF588 3C018006 */  lui   $at, %hi(D_8005B744) # $at, 0x8006
-/* 0F40FC 7F0BF58C C428B774 */  lwc1  $f8, %lo(D_8005B744)($at)
-/* 0F4100 7F0BF590 3C018003 */  lui   $at, %hi(ai_accuracy_modifier) # $at, 0x8003
-/* 0F4104 7F0BF594 E428CE80 */  swc1  $f8, %lo(ai_accuracy_modifier)($at)
-/* 0F4108 7F0BF598 3C018003 */  lui   $at, %hi(ai_damage_modifier) # $at, 0x8003
-/* 0F410C 7F0BF59C E420CE84 */  swc1  $f0, %lo(ai_damage_modifier)($at)
-/* 0F4110 7F0BF5A0 3C018003 */  lui   $at, %hi(ai_health_modifier) # $at, 0x8003
-/* 0F4114 7F0BF5A4 E422CE88 */  swc1  $f2, %lo(ai_health_modifier)($at)
-/* 0F4118 7F0BF5A8 3C013E80 */  li    $at, 0x3E800000 # 0.250000
-/* 0F411C 7F0BF5AC 44815000 */  mtc1  $at, $f10
-/* 0F4120 7F0BF5B0 3C018004 */  lui   $at, %hi(D_80040178) # $at, 0x8004
-/* 0F4124 7F0BF5B4 460C5102 */  mul.s $f4, $f10, $f12
-/* 0F4128 7F0BF5B8 E42401A8 */  swc1  $f4, %lo(D_80040178)($at)
-/* 0F412C 7F0BF5BC 3C013FC0 */  li    $at, 0x3FC00000 # 1.500000
-/* 0F4130 7F0BF5C0 44813000 */  mtc1  $at, $f6
-/* 0F4134 7F0BF5C4 3C018003 */  lui   $at, %hi(difficulty) # $at, 0x8003
-/* 0F4138 7F0BF5C8 E4260AEC */  swc1  $f6, %lo(difficulty)($at)
-/* 0F413C 7F0BF5CC 3C018003 */  lui   $at, %hi(solo_ammo_multiplier) # $at, 0x8003
-/* 0F4140 7F0BF5D0 E4220B68 */  swc1  $f2, %lo(solo_ammo_multiplier)($at)
-/* 0F4144 7F0BF5D4 3C018006 */  lui   $at, %hi(D_8005B748) # $at, 0x8006
-/* 0F4148 7F0BF5D8 C428B778 */  lwc1  $f8, %lo(D_8005B748)($at)
-/* 0F414C 7F0BF5DC 3C018003 */  lui   $at, %hi(ai_reaction_speed) # $at, 0x8003
-/* 0F4150 7F0BF5E0 1000006E */  b     .Ljp7F0BF79C
-/* 0F4154 7F0BF5E4 E428CE8C */   swc1  $f8, %lo(ai_reaction_speed)($at)
-.Ljp7F0BF5E8:
-/* 0F4158 7F0BF5E8 14410029 */  bne   $v0, $at, .Ljp7F0BF690
-/* 0F415C 7F0BF5EC 3C0E8005 */   lui   $t6, %hi(j_text_trigger) # $t6, 0x8005
-/* 0F4160 7F0BF5F0 3C013F40 */  li    $at, 0x3F400000 # 0.750000
-/* 0F4164 7F0BF5F4 44810000 */  mtc1  $at, $f0
-/* 0F4168 7F0BF5F8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0F416C 7F0BF5FC 44811000 */  mtc1  $at, $f2
-/* 0F4170 7F0BF600 3C018003 */  lui   $at, %hi(F_80030B14) # $at, 0x8003
-/* 0F4174 7F0BF604 8DCE8500 */  lw    $t6, %lo(j_text_trigger)($t6)
-/* 0F4178 7F0BF608 E4220B54 */  swc1  $f2, %lo(F_80030B14)($at)
-/* 0F417C 7F0BF60C 3C018003 */  lui   $at, %hi(F_80030B18) # $at, 0x8003
-/* 0F4180 7F0BF610 E4220B58 */  swc1  $f2, %lo(F_80030B18)($at)
-/* 0F4184 7F0BF614 3C018003 */  lui   $at, %hi(F_80030B1C) # $at, 0x8003
-/* 0F4188 7F0BF618 E4200B5C */  swc1  $f0, %lo(F_80030B1C)($at)
-/* 0F418C 7F0BF61C 3C018003 */  lui   $at, %hi(F_80030B20) # $at, 0x8003
-/* 0F4190 7F0BF620 E4200B60 */  swc1  $f0, %lo(F_80030B20)($at)
-/* 0F4194 7F0BF624 3C018003 */  lui   $at, %hi(F_80030B24) # $at, 0x8003
-/* 0F4198 7F0BF628 E4220B64 */  swc1  $f2, %lo(F_80030B24)($at)
-/* 0F419C 7F0BF62C 3C018003 */  lui   $at, %hi(ai_accuracy_modifier) # $at, 0x8003
-/* 0F41A0 7F0BF630 E420CE80 */  swc1  $f0, %lo(ai_accuracy_modifier)($at)
-/* 0F41A4 7F0BF634 3C018003 */  lui   $at, %hi(ai_damage_modifier) # $at, 0x8003
-/* 0F41A8 7F0BF638 E420CE84 */  swc1  $f0, %lo(ai_damage_modifier)($at)
-/* 0F41AC 7F0BF63C 3C018003 */  lui   $at, %hi(ai_health_modifier) # $at, 0x8003
-/* 0F41B0 7F0BF640 E422CE88 */  swc1  $f2, %lo(ai_health_modifier)($at)
-/* 0F41B4 7F0BF644 3C018004 */  lui   $at, %hi(D_80040178) # $at, 0x8004
-/* 0F41B8 7F0BF648 11C00006 */  beqz  $t6, .Ljp7F0BF664
-/* 0F41BC 7F0BF64C E42001A8 */   swc1  $f0, %lo(D_80040178)($at)
-/* 0F41C0 7F0BF650 3C018006 */  lui   $at, %hi(D_8005B74C) # $at, 0x8006
-/* 0F41C4 7F0BF654 C42AB77C */  lwc1  $f10, %lo(D_8005B74C)($at)
-/* 0F41C8 7F0BF658 3C018003 */  lui   $at, %hi(difficulty) # $at, 0x8003
-/* 0F41CC 7F0BF65C 10000003 */  b     .Ljp7F0BF66C
-/* 0F41D0 7F0BF660 E42A0AEC */   swc1  $f10, %lo(difficulty)($at)
-.Ljp7F0BF664:
-/* 0F41D4 7F0BF664 3C018003 */  lui   $at, %hi(difficulty) # $at, 0x8003
-/* 0F41D8 7F0BF668 E4200AEC */  swc1  $f0, %lo(difficulty)($at)
-.Ljp7F0BF66C:
-/* 0F41DC 7F0BF66C 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0F41E0 7F0BF670 44819000 */  mtc1  $at, $f18
-/* 0F41E4 7F0BF674 3C013FC0 */  li    $at, 0x3FC00000 # 1.500000
-/* 0F41E8 7F0BF678 44812000 */  mtc1  $at, $f4
-/* 0F41EC 7F0BF67C 3C018003 */  lui   $at, %hi(solo_ammo_multiplier) # $at, 0x8003
-/* 0F41F0 7F0BF680 E4240B68 */  swc1  $f4, %lo(solo_ammo_multiplier)($at)
-/* 0F41F4 7F0BF684 3C018003 */  lui   $at, %hi(ai_reaction_speed) # $at, 0x8003
-/* 0F41F8 7F0BF688 10000044 */  b     .Ljp7F0BF79C
-/* 0F41FC 7F0BF68C E432CE8C */   swc1  $f18, %lo(ai_reaction_speed)($at)
-.Ljp7F0BF690:
-/* 0F4200 7F0BF690 24010002 */  li    $at, 2
-/* 0F4204 7F0BF694 14410025 */  bne   $v0, $at, .Ljp7F0BF72C
-/* 0F4208 7F0BF698 3C0F8005 */   lui   $t7, %hi(j_text_trigger) # $t7, 0x8005
-/* 0F420C 7F0BF69C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0F4210 7F0BF6A0 44811000 */  mtc1  $at, $f2
-/* 0F4214 7F0BF6A4 3C018003 */  lui   $at, %hi(F_80030B14) # $at, 0x8003
-/* 0F4218 7F0BF6A8 8DEF8500 */  lw    $t7, %lo(j_text_trigger)($t7)
-/* 0F421C 7F0BF6AC E4220B54 */  swc1  $f2, %lo(F_80030B14)($at)
-/* 0F4220 7F0BF6B0 3C018003 */  lui   $at, %hi(F_80030B18) # $at, 0x8003
-/* 0F4224 7F0BF6B4 E4220B58 */  swc1  $f2, %lo(F_80030B18)($at)
-/* 0F4228 7F0BF6B8 3C018003 */  lui   $at, %hi(F_80030B1C) # $at, 0x8003
-/* 0F422C 7F0BF6BC E4220B5C */  swc1  $f2, %lo(F_80030B1C)($at)
-/* 0F4230 7F0BF6C0 3C018003 */  lui   $at, %hi(F_80030B20) # $at, 0x8003
-/* 0F4234 7F0BF6C4 E4220B60 */  swc1  $f2, %lo(F_80030B20)($at)
-/* 0F4238 7F0BF6C8 3C018003 */  lui   $at, %hi(F_80030B24) # $at, 0x8003
-/* 0F423C 7F0BF6CC E4220B64 */  swc1  $f2, %lo(F_80030B24)($at)
-/* 0F4240 7F0BF6D0 3C018003 */  lui   $at, %hi(ai_accuracy_modifier) # $at, 0x8003
-/* 0F4244 7F0BF6D4 E422CE80 */  swc1  $f2, %lo(ai_accuracy_modifier)($at)
-/* 0F4248 7F0BF6D8 3C018003 */  lui   $at, %hi(ai_damage_modifier) # $at, 0x8003
-/* 0F424C 7F0BF6DC E422CE84 */  swc1  $f2, %lo(ai_damage_modifier)($at)
-/* 0F4250 7F0BF6E0 3C018003 */  lui   $at, %hi(ai_health_modifier) # $at, 0x8003
-/* 0F4254 7F0BF6E4 E422CE88 */  swc1  $f2, %lo(ai_health_modifier)($at)
-/* 0F4258 7F0BF6E8 3C018004 */  lui   $at, %hi(D_80040178) # $at, 0x8004
-/* 0F425C 7F0BF6EC 11E00006 */  beqz  $t7, .Ljp7F0BF708
-/* 0F4260 7F0BF6F0 E42201A8 */   swc1  $f2, %lo(D_80040178)($at)
-/* 0F4264 7F0BF6F4 3C013F40 */  li    $at, 0x3F400000 # 0.750000
-/* 0F4268 7F0BF6F8 44810000 */  mtc1  $at, $f0
-/* 0F426C 7F0BF6FC 3C018003 */  lui   $at, %hi(difficulty) # $at, 0x8003
-/* 0F4270 7F0BF700 10000005 */  b     .Ljp7F0BF718
-/* 0F4274 7F0BF704 E4200AEC */   swc1  $f0, %lo(difficulty)($at)
-.Ljp7F0BF708:
-/* 0F4278 7F0BF708 3C018006 */  lui   $at, %hi(jpD_8005B780) # $at, 0x8006
-/* 0F427C 7F0BF70C C426B780 */  lwc1  $f6, %lo(jpD_8005B780)($at)
-/* 0F4280 7F0BF710 3C018003 */  lui   $at, %hi(difficulty) # $at, 0x8003
-/* 0F4284 7F0BF714 E4260AEC */  swc1  $f6, %lo(difficulty)($at)
-.Ljp7F0BF718:
-/* 0F4288 7F0BF718 3C018003 */  lui   $at, %hi(solo_ammo_multiplier) # $at, 0x8003
-/* 0F428C 7F0BF71C E4220B68 */  swc1  $f2, %lo(solo_ammo_multiplier)($at)
-/* 0F4290 7F0BF720 3C018003 */  lui   $at, %hi(ai_reaction_speed) # $at, 0x8003
-/* 0F4294 7F0BF724 1000001D */  b     .Ljp7F0BF79C
-/* 0F4298 7F0BF728 E422CE8C */   swc1  $f2, %lo(ai_reaction_speed)($at)
-.Ljp7F0BF72C:
-/* 0F429C 7F0BF72C 24010003 */  li    $at, 3
-/* 0F42A0 7F0BF730 1441001A */  bne   $v0, $at, .Ljp7F0BF79C
-/* 0F42A4 7F0BF734 3C013F80 */   li    $at, 0x3F800000 # 1.000000
-/* 0F42A8 7F0BF738 44811000 */  mtc1  $at, $f2
-/* 0F42AC 7F0BF73C 3C018003 */  lui   $at, %hi(F_80030B14) # $at, 0x8003
-/* 0F42B0 7F0BF740 E4220B54 */  swc1  $f2, %lo(F_80030B14)($at)
-/* 0F42B4 7F0BF744 3C018003 */  lui   $at, %hi(F_80030B18) # $at, 0x8003
-/* 0F42B8 7F0BF748 E4220B58 */  swc1  $f2, %lo(F_80030B18)($at)
-/* 0F42BC 7F0BF74C 3C018003 */  lui   $at, %hi(F_80030B1C) # $at, 0x8003
-/* 0F42C0 7F0BF750 E4220B5C */  swc1  $f2, %lo(F_80030B1C)($at)
-/* 0F42C4 7F0BF754 3C018003 */  lui   $at, %hi(F_80030B20) # $at, 0x8003
-/* 0F42C8 7F0BF758 E4220B60 */  swc1  $f2, %lo(F_80030B20)($at)
-/* 0F42CC 7F0BF75C 3C018003 */  lui   $at, %hi(F_80030B24) # $at, 0x8003
-/* 0F42D0 7F0BF760 E4220B64 */  swc1  $f2, %lo(F_80030B24)($at)
-/* 0F42D4 7F0BF764 3C018003 */  lui   $at, %hi(ai_accuracy_modifier) # $at, 0x8003
-/* 0F42D8 7F0BF768 E422CE80 */  swc1  $f2, %lo(ai_accuracy_modifier)($at)
-/* 0F42DC 7F0BF76C 3C018003 */  lui   $at, %hi(ai_damage_modifier) # $at, 0x8003
-/* 0F42E0 7F0BF770 E422CE84 */  swc1  $f2, %lo(ai_damage_modifier)($at)
-/* 0F42E4 7F0BF774 3C018003 */  lui   $at, %hi(ai_health_modifier) # $at, 0x8003
-/* 0F42E8 7F0BF778 E422CE88 */  swc1  $f2, %lo(ai_health_modifier)($at)
-/* 0F42EC 7F0BF77C 3C018004 */  lui   $at, %hi(D_80040178) # $at, 0x8004
-/* 0F42F0 7F0BF780 E42201A8 */  swc1  $f2, %lo(D_80040178)($at)
-/* 0F42F4 7F0BF784 3C018003 */  lui   $at, %hi(difficulty) # $at, 0x8003
-/* 0F42F8 7F0BF788 E4220AEC */  swc1  $f2, %lo(difficulty)($at)
-/* 0F42FC 7F0BF78C 3C018003 */  lui   $at, %hi(solo_ammo_multiplier) # $at, 0x8003
-/* 0F4300 7F0BF790 E4220B68 */  swc1  $f2, %lo(solo_ammo_multiplier)($at)
-/* 0F4304 7F0BF794 3C018003 */  lui   $at, %hi(ai_reaction_speed) # $at, 0x8003
-/* 0F4308 7F0BF798 E422CE8C */  swc1  $f2, %lo(ai_reaction_speed)($at)
-.Ljp7F0BF79C:
-/* 0F430C 7F0BF79C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F4310 7F0BF7A0 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0F4314 7F0BF7A4 03E00008 */  jr    $ra
-/* 0F4318 7F0BF7A8 00000000 */   nop
-)
+        if (j_text_trigger)
+        {
+            difficulty = 1.1f;
+        }
+        else
+        {
+            difficulty = 0.75f;
+        }
+#else
+        // VERSION_US, VERSION_EU
+        difficulty = 0.75f;
 #endif
 
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.late_rodata
-glabel D_8005B73C
-.word 0x3f19999a /*0.60000002*/
-glabel D_8005B740
-.word 0x3ef33334 /*0.47500002*/
-glabel D_8005B744
-.word 0x3f19999a /*0.60000002*/
-glabel D_8005B748
-.word 0x3e4ccccd /*0.2*/
-glabel D_8005B74C
-.word 0x3e4ccccd /*0.2*/
-.text
-glabel setDamageMultipliersForDifficulty
-/* 0F3400 7F0BE8D0 3C028005 */  lui   $v0, %hi(difficulty_0)
-/* 0F3404 7F0BE8D4 8C428384 */  lw    $v0, %lo(difficulty_0)($v0)
-/* 0F3408 7F0BE8D8 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0F340C 7F0BE8DC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F3410 7F0BE8E0 14400048 */  bnez  $v0, .L7F0BEA04
-/* 0F3414 7F0BE8E4 24010001 */   li    $at, 1
-/* 0F3418 7F0BE8E8 0FC228BB */  jal   get_BONDdata_watch_health
-/* 0F341C 7F0BE8EC 00000000 */   nop
-/* 0F3420 7F0BE8F0 0FC228BF */  jal   get_BONDdata_watch_armor
-/* 0F3424 7F0BE8F4 E7A0001C */   swc1  $f0, 0x1c($sp)
-/* 0F3428 7F0BE8F8 C7A4001C */  lwc1  $f4, 0x1c($sp)
-/* 0F342C 7F0BE8FC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0F3430 7F0BE900 44816000 */  mtc1  $at, $f12
-/* 0F3434 7F0BE904 46040380 */  add.s $f14, $f0, $f4
-/* 0F3438 7F0BE908 3C013E00 */  li    $at, 0x3E000000 # 0.125000
-/* 0F343C 7F0BE90C 44818000 */  mtc1  $at, $f16
-/* 0F3440 7F0BE910 3C018006 */  lui   $at, %hi(D_8005B73C)
-/* 0F3444 7F0BE914 4610703E */  c.le.s $f14, $f16
-/* 0F3448 7F0BE918 00000000 */  nop
-/* 0F344C 7F0BE91C 45000005 */  bc1f  .L7F0BE934
-/* 0F3450 7F0BE920 00000000 */   nop
-/* 0F3454 7F0BE924 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0F3458 7F0BE928 44816000 */  mtc1  $at, $f12
-/* 0F345C 7F0BE92C 1000000F */  b     .L7F0BE96C
-/* 0F3460 7F0BE930 3C014000 */   lui   $at, 0x4000
-.L7F0BE934:
-/* 0F3464 7F0BE934 C426B73C */  lwc1  $f6, %lo(D_8005B73C)($at)
-/* 0F3468 7F0BE938 3C013F00 */  lui   $at, 0x3f00
-/* 0F346C 7F0BE93C 4606703E */  c.le.s $f14, $f6
-/* 0F3470 7F0BE940 00000000 */  nop
-/* 0F3474 7F0BE944 45020009 */  bc1fl .L7F0BE96C
-/* 0F3478 7F0BE948 3C014000 */   li    $at, 0x40000000 # 2.000000
-/* 0F347C 7F0BE94C 46107201 */  sub.s $f8, $f14, $f16
-/* 0F3480 7F0BE950 44819000 */  mtc1  $at, $f18
-/* 0F3484 7F0BE954 3C018006 */  lui   $at, %hi(D_8005B740)
-/* 0F3488 7F0BE958 C424B740 */  lwc1  $f4, %lo(D_8005B740)($at)
-/* 0F348C 7F0BE95C 46124282 */  mul.s $f10, $f8, $f18
-/* 0F3490 7F0BE960 46045183 */  div.s $f6, $f10, $f4
-/* 0F3494 7F0BE964 46123300 */  add.s $f12, $f6, $f18
-/* 0F3498 7F0BE968 3C014000 */  li    $at, 0x40000000 # 2.000000
-.L7F0BE96C:
-/* 0F349C 7F0BE96C 44811000 */  mtc1  $at, $f2
-/* 0F34A0 7F0BE970 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0F34A4 7F0BE974 44819000 */  mtc1  $at, $f18
-/* 0F34A8 7F0BE978 3C018003 */  lui   $at, %hi(F_80030B14)
-/* 0F34AC 7F0BE97C E4220B14 */  swc1  $f2, %lo(F_80030B14)($at)
-/* 0F34B0 7F0BE980 460C9002 */  mul.s $f0, $f18, $f12
-/* 0F34B4 7F0BE984 3C018003 */  lui   $at, %hi(F_80030B18)
-/* 0F34B8 7F0BE988 E4220B18 */  swc1  $f2, %lo(F_80030B18)($at)
-/* 0F34BC 7F0BE98C 3C018003 */  lui   $at, %hi(F_80030B1C)
-/* 0F34C0 7F0BE990 E4200B1C */  swc1  $f0, %lo(F_80030B1C)($at)
-/* 0F34C4 7F0BE994 3C018003 */  lui   $at, %hi(F_80030B20)
-/* 0F34C8 7F0BE998 E4200B20 */  swc1  $f0, %lo(F_80030B20)($at)
-/* 0F34CC 7F0BE99C 3C018003 */  lui   $at, %hi(F_80030B24)
-/* 0F34D0 7F0BE9A0 E4220B24 */  swc1  $f2, %lo(F_80030B24)($at)
-/* 0F34D4 7F0BE9A4 3C018006 */  lui   $at, %hi(D_8005B744)
-/* 0F34D8 7F0BE9A8 C428B744 */  lwc1  $f8, %lo(D_8005B744)($at)
-/* 0F34DC 7F0BE9AC 3C018003 */  lui   $at, %hi(ai_accuracy_modifier)
-/* 0F34E0 7F0BE9B0 E428CE40 */  swc1  $f8, %lo(ai_accuracy_modifier)($at)
-/* 0F34E4 7F0BE9B4 3C018003 */  lui   $at, %hi(ai_damage_modifier)
-/* 0F34E8 7F0BE9B8 E420CE44 */  swc1  $f0, %lo(ai_damage_modifier)($at)
-/* 0F34EC 7F0BE9BC 3C018003 */  lui   $at, %hi(ai_health_modifier)
-/* 0F34F0 7F0BE9C0 E422CE48 */  swc1  $f2, %lo(ai_health_modifier)($at)
-/* 0F34F4 7F0BE9C4 3C013E80 */  li    $at, 0x3E800000 # 0.250000
-/* 0F34F8 7F0BE9C8 44815000 */  mtc1  $at, $f10
-/* 0F34FC 7F0BE9CC 3C018004 */  lui   $at, %hi(D_80040178)
-/* 0F3500 7F0BE9D0 460C5102 */  mul.s $f4, $f10, $f12
-/* 0F3504 7F0BE9D4 E4240178 */  swc1  $f4, %lo(D_80040178)($at)
-/* 0F3508 7F0BE9D8 3C013FC0 */  li    $at, 0x3FC00000 # 1.500000
-/* 0F350C 7F0BE9DC 44813000 */  mtc1  $at, $f6
-/* 0F3510 7F0BE9E0 3C018003 */  lui   $at, %hi(difficulty)
-/* 0F3514 7F0BE9E4 E4260AAC */  swc1  $f6, %lo(difficulty)($at)
-/* 0F3518 7F0BE9E8 3C018003 */  lui   $at, %hi(solo_ammo_multiplier)
-/* 0F351C 7F0BE9EC E4220B28 */  swc1  $f2, %lo(solo_ammo_multiplier)($at)
-/* 0F3520 7F0BE9F0 3C018006 */  lui   $at, %hi(D_8005B748)
-/* 0F3524 7F0BE9F4 C428B748 */  lwc1  $f8, %lo(D_8005B748)($at)
-/* 0F3528 7F0BE9F8 3C018003 */  lui   $at, %hi(ai_reaction_speed)
-/* 0F352C 7F0BE9FC 1000005E */  b     .L7F0BEB78
-/* 0F3530 7F0BEA00 E428CE4C */   swc1  $f8, %lo(ai_reaction_speed)($at)
-.L7F0BEA04:
-/* 0F3534 7F0BEA04 14410021 */  bne   $v0, $at, .L7F0BEA8C
-/* 0F3538 7F0BEA08 3C013F40 */   li    $at, 0x3F400000 # 0.750000
-/* 0F353C 7F0BEA0C 44810000 */  mtc1  $at, $f0
-/* 0F3540 7F0BEA10 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0F3544 7F0BEA14 44811000 */  mtc1  $at, $f2
-/* 0F3548 7F0BEA18 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0F354C 7F0BEA1C 44819000 */  mtc1  $at, $f18
-/* 0F3550 7F0BEA20 3C018003 */  lui   $at, %hi(F_80030B14)
-/* 0F3554 7F0BEA24 E4220B14 */  swc1  $f2, %lo(F_80030B14)($at)
-/* 0F3558 7F0BEA28 3C018003 */  lui   $at, %hi(F_80030B18)
-/* 0F355C 7F0BEA2C E4220B18 */  swc1  $f2, %lo(F_80030B18)($at)
-/* 0F3560 7F0BEA30 3C018003 */  lui   $at, %hi(F_80030B1C)
-/* 0F3564 7F0BEA34 E4200B1C */  swc1  $f0, %lo(F_80030B1C)($at)
-/* 0F3568 7F0BEA38 3C018003 */  lui   $at, %hi(F_80030B20)
-/* 0F356C 7F0BEA3C E4200B20 */  swc1  $f0, %lo(F_80030B20)($at)
-/* 0F3570 7F0BEA40 3C018003 */  lui   $at, %hi(F_80030B24)
-/* 0F3574 7F0BEA44 E4220B24 */  swc1  $f2, %lo(F_80030B24)($at)
-/* 0F3578 7F0BEA48 3C018003 */  lui   $at, %hi(ai_accuracy_modifier)
-/* 0F357C 7F0BEA4C E420CE40 */  swc1  $f0, %lo(ai_accuracy_modifier)($at)
-/* 0F3580 7F0BEA50 3C018003 */  lui   $at, %hi(ai_damage_modifier)
-/* 0F3584 7F0BEA54 E420CE44 */  swc1  $f0, %lo(ai_damage_modifier)($at)
-/* 0F3588 7F0BEA58 3C018003 */  lui   $at, %hi(ai_health_modifier)
-/* 0F358C 7F0BEA5C E422CE48 */  swc1  $f2, %lo(ai_health_modifier)($at)
-/* 0F3590 7F0BEA60 3C018004 */  lui   $at, %hi(D_80040178)
-/* 0F3594 7F0BEA64 E4200178 */  swc1  $f0, %lo(D_80040178)($at)
-/* 0F3598 7F0BEA68 3C018003 */  lui   $at, %hi(difficulty)
-/* 0F359C 7F0BEA6C E4200AAC */  swc1  $f0, %lo(difficulty)($at)
-/* 0F35A0 7F0BEA70 3C013FC0 */  li    $at, 0x3FC00000 # 1.500000
-/* 0F35A4 7F0BEA74 44815000 */  mtc1  $at, $f10
-/* 0F35A8 7F0BEA78 3C018003 */  lui   $at, %hi(solo_ammo_multiplier)
-/* 0F35AC 7F0BEA7C E42A0B28 */  swc1  $f10, %lo(solo_ammo_multiplier)($at)
-/* 0F35B0 7F0BEA80 3C018003 */  lui   $at, %hi(ai_reaction_speed)
-/* 0F35B4 7F0BEA84 1000003C */  b     .L7F0BEB78
-/* 0F35B8 7F0BEA88 E432CE4C */   swc1  $f18, %lo(ai_reaction_speed)($at)
-.L7F0BEA8C:
-/* 0F35BC 7F0BEA8C 24010002 */  li    $at, 2
-/* 0F35C0 7F0BEA90 1441001D */  bne   $v0, $at, .L7F0BEB08
-/* 0F35C4 7F0BEA94 3C013F80 */   li    $at, 0x3F800000 # 1.000000
-/* 0F35C8 7F0BEA98 44811000 */  mtc1  $at, $f2
-/* 0F35CC 7F0BEA9C 3C018003 */  lui   $at, %hi(F_80030B14)
-/* 0F35D0 7F0BEAA0 E4220B14 */  swc1  $f2, %lo(F_80030B14)($at)
-/* 0F35D4 7F0BEAA4 3C018003 */  lui   $at, %hi(F_80030B18)
-/* 0F35D8 7F0BEAA8 E4220B18 */  swc1  $f2, %lo(F_80030B18)($at)
-/* 0F35DC 7F0BEAAC 3C018003 */  lui   $at, %hi(F_80030B1C)
-/* 0F35E0 7F0BEAB0 E4220B1C */  swc1  $f2, %lo(F_80030B1C)($at)
-/* 0F35E4 7F0BEAB4 3C018003 */  lui   $at, %hi(F_80030B20)
-/* 0F35E8 7F0BEAB8 E4220B20 */  swc1  $f2, %lo(F_80030B20)($at)
-/* 0F35EC 7F0BEABC 3C018003 */  lui   $at, %hi(F_80030B24)
-/* 0F35F0 7F0BEAC0 E4220B24 */  swc1  $f2, %lo(F_80030B24)($at)
-/* 0F35F4 7F0BEAC4 3C018003 */  lui   $at, %hi(ai_accuracy_modifier)
-/* 0F35F8 7F0BEAC8 E422CE40 */  swc1  $f2, %lo(ai_accuracy_modifier)($at)
-/* 0F35FC 7F0BEACC 3C018003 */  lui   $at, %hi(ai_damage_modifier)
-/* 0F3600 7F0BEAD0 E422CE44 */  swc1  $f2, %lo(ai_damage_modifier)($at)
-/* 0F3604 7F0BEAD4 3C018003 */  lui   $at, %hi(ai_health_modifier)
-/* 0F3608 7F0BEAD8 E422CE48 */  swc1  $f2, %lo(ai_health_modifier)($at)
-/* 0F360C 7F0BEADC 3C018004 */  lui   $at, %hi(D_80040178)
-/* 0F3610 7F0BEAE0 E4220178 */  swc1  $f2, %lo(D_80040178)($at)
-/* 0F3614 7F0BEAE4 3C018006 */  lui   $at, %hi(D_8005B74C)
-/* 0F3618 7F0BEAE8 C424B74C */  lwc1  $f4, %lo(D_8005B74C)($at)
-/* 0F361C 7F0BEAEC 3C018003 */  lui   $at, %hi(difficulty)
-/* 0F3620 7F0BEAF0 E4240AAC */  swc1  $f4, %lo(difficulty)($at)
-/* 0F3624 7F0BEAF4 3C018003 */  lui   $at, %hi(solo_ammo_multiplier)
-/* 0F3628 7F0BEAF8 E4220B28 */  swc1  $f2, %lo(solo_ammo_multiplier)($at)
-/* 0F362C 7F0BEAFC 3C018003 */  lui   $at, %hi(ai_reaction_speed)
-/* 0F3630 7F0BEB00 1000001D */  b     .L7F0BEB78
-/* 0F3634 7F0BEB04 E422CE4C */   swc1  $f2, %lo(ai_reaction_speed)($at)
-.L7F0BEB08:
-/* 0F3638 7F0BEB08 24010003 */  li    $at, 3
-/* 0F363C 7F0BEB0C 1441001A */  bne   $v0, $at, .L7F0BEB78
-/* 0F3640 7F0BEB10 3C013F80 */   li    $at, 0x3F800000 # 1.000000
-/* 0F3644 7F0BEB14 44811000 */  mtc1  $at, $f2
-/* 0F3648 7F0BEB18 3C018003 */  lui   $at, %hi(F_80030B14)
-/* 0F364C 7F0BEB1C E4220B14 */  swc1  $f2, %lo(F_80030B14)($at)
-/* 0F3650 7F0BEB20 3C018003 */  lui   $at, %hi(F_80030B18)
-/* 0F3654 7F0BEB24 E4220B18 */  swc1  $f2, %lo(F_80030B18)($at)
-/* 0F3658 7F0BEB28 3C018003 */  lui   $at, %hi(F_80030B1C)
-/* 0F365C 7F0BEB2C E4220B1C */  swc1  $f2, %lo(F_80030B1C)($at)
-/* 0F3660 7F0BEB30 3C018003 */  lui   $at, %hi(F_80030B20)
-/* 0F3664 7F0BEB34 E4220B20 */  swc1  $f2, %lo(F_80030B20)($at)
-/* 0F3668 7F0BEB38 3C018003 */  lui   $at, %hi(F_80030B24)
-/* 0F366C 7F0BEB3C E4220B24 */  swc1  $f2, %lo(F_80030B24)($at)
-/* 0F3670 7F0BEB40 3C018003 */  lui   $at, %hi(ai_accuracy_modifier)
-/* 0F3674 7F0BEB44 E422CE40 */  swc1  $f2, %lo(ai_accuracy_modifier)($at)
-/* 0F3678 7F0BEB48 3C018003 */  lui   $at, %hi(ai_damage_modifier)
-/* 0F367C 7F0BEB4C E422CE44 */  swc1  $f2, %lo(ai_damage_modifier)($at)
-/* 0F3680 7F0BEB50 3C018003 */  lui   $at, %hi(ai_health_modifier)
-/* 0F3684 7F0BEB54 E422CE48 */  swc1  $f2, %lo(ai_health_modifier)($at)
-/* 0F3688 7F0BEB58 3C018004 */  lui   $at, %hi(D_80040178)
-/* 0F368C 7F0BEB5C E4220178 */  swc1  $f2, %lo(D_80040178)($at)
-/* 0F3690 7F0BEB60 3C018003 */  lui   $at, %hi(difficulty)
-/* 0F3694 7F0BEB64 E4220AAC */  swc1  $f2, %lo(difficulty)($at)
-/* 0F3698 7F0BEB68 3C018003 */  lui   $at, %hi(solo_ammo_multiplier)
-/* 0F369C 7F0BEB6C E4220B28 */  swc1  $f2, %lo(solo_ammo_multiplier)($at)
-/* 0F36A0 7F0BEB70 3C018003 */  lui   $at, %hi(ai_reaction_speed)
-/* 0F36A4 7F0BEB74 E422CE4C */  swc1  $f2, %lo(ai_reaction_speed)($at)
-.L7F0BEB78:
-/* 0F36A8 7F0BEB78 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F36AC 7F0BEB7C 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0F36B0 7F0BEB80 03E00008 */  jr    $ra
-/* 0F36B4 7F0BEB84 00000000 */   nop
-)
+        g_SoloAmmoMultiplier = DEFAULT_SECRET_AGENT_SOLO_AMMO_MULTIPLIER;
+        g_AiReactionSpeed = DEFAULT_SECRET_AGENT_AI_REACTION_SPEED;
+    }
+    else if (difficulty_0 == DIFFICULTY_00)
+    {
+        F_80030B14 = 1.0f;
+        F_80030B18 = 1.0f;
+        F_80030B1C = 1.0f;
+        F_80030B20 = 1.0f;
+        F_80030B24 = 1.0f;
+        g_AiAccuracyModifier = DEFAULT_00_AGENT_AI_ACCURACY_MODIFIER;
+        g_AiDamageModifier = DEFAULT_00_AGENT_AI_DAMAGE_MODIFIER;
+        g_AiHealthModifier = 1.0f;
+        D_80040178 = 1.0f;
+
+#ifdef VERSION_JP
+        if (j_text_trigger)
+        {
+            difficulty = 0.75f;
+        }
+        else
+        {
+            difficulty = 0.2f;
+        }
+#else
+        // VERSION_US, VERSION_EU
+        difficulty = 0.2f;
 #endif
 
-#endif
-
-
+        g_SoloAmmoMultiplier = DEFAULT_00_AGENT_SOLO_AMMO_MULTIPLIER;
+        g_AiReactionSpeed = DEFAULT_00_AGENT_AI_REACTION_SPEED;
+    }
+    else if (difficulty_0 == DIFFICULTY_007)
+    {
+        F_80030B14 = 1.0f;
+        F_80030B18 = 1.0f;
+        F_80030B1C = 1.0f;
+        F_80030B20 = 1.0f;
+        F_80030B24 = 1.0f;
+        g_AiAccuracyModifier = DEFAULT_007_AI_ACCURACY_MODIFIER;
+        g_AiDamageModifier = DEFAULT_007_AI_DAMAGE_MODIFIER;
+        g_AiHealthModifier = 1.0f;
+        D_80040178 = 1.0f;
+        difficulty = 1.0f;
+        g_SoloAmmoMultiplier = DEFAULT_007_SOLO_AMMO_MULTIPLIER;
+        g_AiReactionSpeed = DEFAULT_007_AI_REACTION_SPEED;
+    }
+}
 
 
 #ifdef NONMATCHING

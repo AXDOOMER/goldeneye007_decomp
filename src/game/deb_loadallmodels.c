@@ -23,10 +23,10 @@ s32 weapon_models_for_weapon_load[] = {
 
 void init_obj_register_difficulty_vals(void) {
     objectiveregisters1 = 0;
-    ai_accuracy_modifier = 1.0f;
-    ai_damage_modifier = 1.0f;
-    ai_health_modifier = 1.0f;
-    ai_reaction_speed = 1.0f;
+    g_AiAccuracyModifier = 1.0f;
+    g_AiDamageModifier = 1.0f;
+    g_AiHealthModifier = 1.0f;
+    g_AiReactionSpeed = 1.0f;
     setting_007_5 = 0;
 }
 

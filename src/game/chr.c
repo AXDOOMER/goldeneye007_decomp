@@ -84,10 +84,30 @@ s32 random_female_heads[] = {
 u32 current_random_body = 0;
 u32 current_random_male_head = 0;
 u32 current_random_female_head = 0;
-f32 ai_accuracy_modifier = 1.0f;
-f32 ai_damage_modifier = 1.0f;
-f32 ai_health_modifier = 1.0f;
-f32 ai_reaction_speed = 1.0f;
+
+/*
+* Enemy accuracy modifier.
+* Set on level load.
+* One of the values that can be set with the 007 slider.
+*/
+f32 g_AiAccuracyModifier = 1.0f;
+
+/*
+* Enemy damage modifier.
+* Set on level load.
+* One of the values that can be set with the 007 slider.
+*/
+f32 g_AiDamageModifier = 1.0f;
+
+f32 g_AiHealthModifier = 1.0f;
+
+/*
+* Enemy reaction speed modifier.
+* Set on level load.
+* One of the values that can be set with the 007 slider.
+*/
+f32 g_AiReactionSpeed = 1.0f;
+
 s32 setting_007_5 = 0;
 
 struct struck_animation_table D_8002CE54[] = {

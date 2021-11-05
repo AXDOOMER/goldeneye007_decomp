@@ -35329,7 +35329,7 @@ glabel sub_GAME_7F08A274
 
 
 #ifdef NONMATCHING
-void get_BONDdata_watch_health(void) {
+f32 get_BONDdata_watch_health(void) {
 
 }
 #else

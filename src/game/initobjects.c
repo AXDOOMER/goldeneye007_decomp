@@ -344,10 +344,10 @@ glabel reinit_between_menus
 /* 036424 7F0018F4 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 036428 7F0018F8 3C018003 */  lui   $at, %hi(F_80030B24)
 /* 03642C 7F0018FC E4200B24 */  swc1  $f0, %lo(F_80030B24)($at)
-/* 036430 7F001900 3C018003 */  lui   $at, %hi(solo_ammo_multiplier)
+/* 036430 7F001900 3C018003 */  lui   $at, %hi(g_SoloAmmoMultiplier)
 /* 036434 7F001904 27BD0018 */  addiu $sp, $sp, 0x18
 /* 036438 7F001908 03E00008 */  jr    $ra
-/* 03643C 7F00190C E4200B28 */   swc1  $f0, %lo(solo_ammo_multiplier)($at)
+/* 03643C 7F00190C E4200B28 */   swc1  $f0, %lo(g_SoloAmmoMultiplier)($at)
 )
 #endif
 

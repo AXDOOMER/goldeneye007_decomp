@@ -2821,5 +2821,7 @@ void set_open_close_solo_watch_menu_to1(void);
 
 void init_player_BONDdata(void);
 void sub_GAME_7F0798B8(void);
+f32 get_BONDdata_watch_health(void);
+f32 get_BONDdata_watch_armor(void);
 
 #endif

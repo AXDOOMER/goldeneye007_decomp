@@ -3661,8 +3661,8 @@ glabel sub_GAME_7F02587C
 /* 05A684 7F025B54 AEA00030 */   sw    $zero, 0x30($s5)
 /* 05A688 7F025B58 3C0143C8 */  li    $at, 0x43C80000 # 400.000000
 /* 05A68C 7F025B5C 44812000 */  mtc1  $at, $f4
-/* 05A690 7F025B60 3C018003 */  lui   $at, %hi(ai_reaction_speed)
-/* 05A694 7F025B64 C426CE4C */  lwc1  $f6, %lo(ai_reaction_speed)($at)
+/* 05A690 7F025B60 3C018003 */  lui   $at, %hi(g_AiReactionSpeed)
+/* 05A694 7F025B64 C426CE4C */  lwc1  $f6, %lo(g_AiReactionSpeed)($at)
 /* 05A698 7F025B68 AEA00038 */  sw    $zero, 0x38($s5)
 /* 05A69C 7F025B6C 46062202 */  mul.s $f8, $f4, $f6
 /* 05A6A0 7F025B70 4600428D */  trunc.w.s $f10, $f8
@@ -5514,8 +5514,8 @@ glabel handles_shot_actors
 /* 05BF84 7F027454 24010001 */  li    $at, 1
 /* 05BF88 7F027458 14410005 */  bne   $v0, $at, .L7F027470
 /* 05BF8C 7F02745C C7A2003C */   lwc1  $f2, 0x3c($sp)
-/* 05BF90 7F027460 3C018003 */  lui   $at, %hi(ai_health_modifier)
-/* 05BF94 7F027464 C424CE48 */  lwc1  $f4, %lo(ai_health_modifier)($at)
+/* 05BF90 7F027460 3C018003 */  lui   $at, %hi(g_AiHealthModifier)
+/* 05BF94 7F027464 C424CE48 */  lwc1  $f4, %lo(g_AiHealthModifier)($at)
 /* 05BF98 7F027468 46041082 */  mul.s $f2, $f2, $f4
 /* 05BF9C 7F02746C 00000000 */  nop   
 .L7F027470:
@@ -13744,8 +13744,8 @@ glabel sub_GAME_7F02D2E4
 /* 06204C 7F02D51C 46061082 */  mul.s $f2, $f2, $f6
 /* 062050 7F02D520 00000000 */  nop   
 .L7F02D524:
-/* 062054 7F02D524 3C018003 */  lui   $at, %hi(ai_accuracy_modifier)
-/* 062058 7F02D528 C428CE40 */  lwc1  $f8, %lo(ai_accuracy_modifier)($at)
+/* 062054 7F02D524 3C018003 */  lui   $at, %hi(g_AiAccuracyModifier)
+/* 062058 7F02D528 C428CE40 */  lwc1  $f8, %lo(g_AiAccuracyModifier)($at)
 /* 06205C 7F02D52C 8FA4006C */  lw    $a0, 0x6c($sp)
 /* 062060 7F02D530 46081082 */  mul.s $f2, $f2, $f8
 /* 062064 7F02D534 0FC177F3 */  jal   bondwalkItemGetAutomaticFiringRate
@@ -13781,8 +13781,8 @@ glabel sub_GAME_7F02D2E4
 /* 0620D0 7F02D5A0 3C013E00 */  li    $at, 0x3E000000 # 0.125000
 /* 0620D4 7F02D5A4 44815000 */  mtc1  $at, $f10
 /* 0620D8 7F02D5A8 C7A40020 */  lwc1  $f4, 0x20($sp)
-/* 0620DC 7F02D5AC 3C018003 */  lui   $at, %hi(ai_damage_modifier)
-/* 0620E0 7F02D5B0 C428CE44 */  lwc1  $f8, %lo(ai_damage_modifier)($at)
+/* 0620DC 7F02D5AC 3C018003 */  lui   $at, %hi(g_AiDamageModifier)
+/* 0620E0 7F02D5B0 C428CE44 */  lwc1  $f8, %lo(g_AiDamageModifier)($at)
 /* 0620E4 7F02D5B4 46045182 */  mul.s $f6, $f10, $f4
 /* 0620E8 7F02D5B8 8FA9006C */  lw    $t1, 0x6c($sp)
 /* 0620EC 7F02D5BC 2401000F */  li    $at, 15
@@ -13987,8 +13987,8 @@ glabel sub_GAME_7F02D2E4
 /* 06204C 7F02D51C 46061082 */  mul.s $f2, $f2, $f6
 /* 062050 7F02D520 00000000 */  nop   
 .L7F02D524:
-/* 062054 7F02D524 3C018003 */  lui   $at, %hi(ai_accuracy_modifier)
-/* 062058 7F02D528 C428CE40 */  lwc1  $f8, %lo(ai_accuracy_modifier)($at)
+/* 062054 7F02D524 3C018003 */  lui   $at, %hi(g_AiAccuracyModifier)
+/* 062058 7F02D528 C428CE40 */  lwc1  $f8, %lo(g_AiAccuracyModifier)($at)
 /* 06205C 7F02D52C 8FA4006C */  lw    $a0, 0x6c($sp)
 /* 062060 7F02D530 46081082 */  mul.s $f2, $f2, $f8
 /* 062064 7F02D534 0FC177F3 */  jal   bondwalkItemGetAutomaticFiringRate
@@ -14024,8 +14024,8 @@ glabel sub_GAME_7F02D2E4
 /* 0620D0 7F02D5A0 3C013E00 */  li    $at, 0x3E000000 # 0.125000
 /* 0620D4 7F02D5A4 44815000 */  mtc1  $at, $f10
 /* 0620D8 7F02D5A8 C7A40020 */  lwc1  $f4, 0x20($sp)
-/* 0620DC 7F02D5AC 3C018003 */  lui   $at, %hi(ai_damage_modifier)
-/* 0620E0 7F02D5B0 C428CE44 */  lwc1  $f8, %lo(ai_damage_modifier)($at)
+/* 0620DC 7F02D5AC 3C018003 */  lui   $at, %hi(g_AiDamageModifier)
+/* 0620E0 7F02D5B0 C428CE44 */  lwc1  $f8, %lo(g_AiDamageModifier)($at)
 /* 0620E4 7F02D5B4 46045182 */  mul.s $f6, $f10, $f4
 /* 0620E8 7F02D5B8 8FA9006C */  lw    $t1, 0x6c($sp)
 /* 0620EC 7F02D5BC 2401000F */  li    $at, 15
@@ -14231,8 +14231,8 @@ glabel sub_GAME_7F02D2E4
 /* 06204C 7F02D51C 46061082 */  mul.s $f2, $f2, $f6
 /* 062050 7F02D520 00000000 */  nop   
 .L7F02D524:
-/* 062054 7F02D524 3C018003 */  lui   $at, %hi(ai_accuracy_modifier)
-/* 062058 7F02D528 C428CE40 */  lwc1  $f8, %lo(ai_accuracy_modifier)($at)
+/* 062054 7F02D524 3C018003 */  lui   $at, %hi(g_AiAccuracyModifier)
+/* 062058 7F02D528 C428CE40 */  lwc1  $f8, %lo(g_AiAccuracyModifier)($at)
 /* 06205C 7F02D52C 8FA4006C */  lw    $a0, 0x6c($sp)
 /* 062060 7F02D530 46081082 */  mul.s $f2, $f2, $f8
 /* 062064 7F02D534 0FC177F3 */  jal   bondwalkItemGetAutomaticFiringRate
@@ -14268,8 +14268,8 @@ glabel sub_GAME_7F02D2E4
 /* 0620D0 7F02D5A0 3C013E00 */  li    $at, 0x3E000000 # 0.125000
 /* 0620D4 7F02D5A4 44815000 */  mtc1  $at, $f10
 /* 0620D8 7F02D5A8 C7A40020 */  lwc1  $f4, 0x20($sp)
-/* 0620DC 7F02D5AC 3C018003 */  lui   $at, %hi(ai_damage_modifier)
-/* 0620E0 7F02D5B0 C428CE44 */  lwc1  $f8, %lo(ai_damage_modifier)($at)
+/* 0620DC 7F02D5AC 3C018003 */  lui   $at, %hi(g_AiDamageModifier)
+/* 0620E0 7F02D5B0 C428CE44 */  lwc1  $f8, %lo(g_AiDamageModifier)($at)
 /* 0620E4 7F02D5B4 46045182 */  mul.s $f6, $f10, $f4
 /* 0620E8 7F02D5B8 8FA9006C */  lw    $t1, 0x6c($sp)
 /* 0620EC 7F02D5BC 2401000F */  li    $at, 15

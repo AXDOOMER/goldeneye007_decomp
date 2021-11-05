@@ -45,7 +45,12 @@ f32 F_80030B18 = 1.0;
 f32 F_80030B1C = 1.0;
 f32 F_80030B20 = 1.0;
 f32 F_80030B24 = 1.0;
-f32 solo_ammo_multiplier = 1.0;
+
+/*
+* Set on level load.
+*/
+f32 g_SoloAmmoMultiplier = 1.0;
+
 s16 Throwing_knife_SFX[] = {0x5F, 0x60, 0x61};
 
 u32 D_80030B34[] = {
@@ -34313,8 +34318,8 @@ magazine_has_default_ammo_rounds:
 /* 0847EC 7F04FCBC 14410009 */  bne   $v0, $at, .L7F04FCE4
 /* 0847F0 7F04FCC0 8FA3001C */   lw    $v1, 0x1c($sp)
 /* 0847F4 7F04FCC4 44832000 */  mtc1  $v1, $f4
-/* 0847F8 7F04FCC8 3C018003 */  lui   $at, %hi(solo_ammo_multiplier)
-/* 0847FC 7F04FCCC C4280B28 */  lwc1  $f8, %lo(solo_ammo_multiplier)($at)
+/* 0847F8 7F04FCC8 3C018003 */  lui   $at, %hi(g_SoloAmmoMultiplier)
+/* 0847FC 7F04FCCC C4280B28 */  lwc1  $f8, %lo(g_SoloAmmoMultiplier)($at)
 /* 084800 7F04FCD0 468021A0 */  cvt.s.w $f6, $f4
 /* 084804 7F04FCD4 46083282 */  mul.s $f10, $f6, $f8
 /* 084808 7F04FCD8 4600540D */  trunc.w.s $f16, $f10
@@ -34417,8 +34422,8 @@ weapon_has_default_ammo:
 /* 0848D4 7F04FDA4 14410009 */  bne   $v0, $at, .L7F04FDCC
 /* 0848D8 7F04FDA8 8FA30018 */   lw    $v1, 0x18($sp)
 /* 0848DC 7F04FDAC 44832000 */  mtc1  $v1, $f4
-/* 0848E0 7F04FDB0 3C018003 */  lui   $at, %hi(solo_ammo_multiplier)
-/* 0848E4 7F04FDB4 C4280B28 */  lwc1  $f8, %lo(solo_ammo_multiplier)($at)
+/* 0848E0 7F04FDB0 3C018003 */  lui   $at, %hi(g_SoloAmmoMultiplier)
+/* 0848E4 7F04FDB4 C4280B28 */  lwc1  $f8, %lo(g_SoloAmmoMultiplier)($at)
 /* 0848E8 7F04FDB8 468021A0 */  cvt.s.w $f6, $f4
 /* 0848EC 7F04FDBC 46083282 */  mul.s $f10, $f6, $f8
 /* 0848F0 7F04FDC0 4600540D */  trunc.w.s $f16, $f10
@@ -35173,8 +35178,8 @@ interact_ammobox_object:
 /* 084EA4 7F050374 14410009 */  bne   $v0, $at, .L7F05039C
 /* 084EA8 7F050378 8FA50050 */   lw    $a1, 0x50($sp)
 /* 084EAC 7F05037C 44852000 */  mtc1  $a1, $f4
-/* 084EB0 7F050380 3C018003 */  lui   $at, %hi(solo_ammo_multiplier)
-/* 084EB4 7F050384 C4280B28 */  lwc1  $f8, %lo(solo_ammo_multiplier)($at)
+/* 084EB0 7F050380 3C018003 */  lui   $at, %hi(g_SoloAmmoMultiplier)
+/* 084EB4 7F050384 C4280B28 */  lwc1  $f8, %lo(g_SoloAmmoMultiplier)($at)
 /* 084EB8 7F050388 468021A0 */  cvt.s.w $f6, $f4
 /* 084EBC 7F05038C 46083282 */  mul.s $f10, $f6, $f8
 /* 084EC0 7F050390 4600540D */  trunc.w.s $f16, $f10
@@ -35553,8 +35558,8 @@ interact_ammobox_object:
 /* 084EA4 7F050374 14410009 */  bne   $v0, $at, .L7F05039C
 /* 084EA8 7F050378 8FA50050 */   lw    $a1, 0x50($sp)
 /* 084EAC 7F05037C 44852000 */  mtc1  $a1, $f4
-/* 084EB0 7F050380 3C018003 */  lui   $at, %hi(solo_ammo_multiplier)
-/* 084EB4 7F050384 C4280B28 */  lwc1  $f8, %lo(solo_ammo_multiplier)($at)
+/* 084EB0 7F050380 3C018003 */  lui   $at, %hi(g_SoloAmmoMultiplier)
+/* 084EB4 7F050384 C4280B28 */  lwc1  $f8, %lo(g_SoloAmmoMultiplier)($at)
 /* 084EB8 7F050388 468021A0 */  cvt.s.w $f6, $f4
 /* 084EBC 7F05038C 46083282 */  mul.s $f10, $f6, $f8
 /* 084EC0 7F050390 4600540D */  trunc.w.s $f16, $f10
@@ -35934,8 +35939,8 @@ interact_ammobox_object:
 /* 084EA4 7F050374 14410009 */  bne   $v0, $at, .L7F05039C
 /* 084EA8 7F050378 8FA50050 */   lw    $a1, 0x50($sp)
 /* 084EAC 7F05037C 44852000 */  mtc1  $a1, $f4
-/* 084EB0 7F050380 3C018003 */  lui   $at, %hi(solo_ammo_multiplier)
-/* 084EB4 7F050384 C4280B28 */  lwc1  $f8, %lo(solo_ammo_multiplier)($at)
+/* 084EB0 7F050380 3C018003 */  lui   $at, %hi(g_SoloAmmoMultiplier)
+/* 084EB4 7F050384 C4280B28 */  lwc1  $f8, %lo(g_SoloAmmoMultiplier)($at)
 /* 084EB8 7F050388 468021A0 */  cvt.s.w $f6, $f4
 /* 084EBC 7F05038C 46083282 */  mul.s $f10, $f6, $f8
 /* 084EC0 7F050390 4600540D */  trunc.w.s $f16, $f10
