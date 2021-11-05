@@ -308,7 +308,7 @@ extern s32 spectrum_related_flag;
 extern s32 is_emulating_spectrum;
 extern s32 is_cheat_menu_available;
 extern Gfx * ptr_logo_and_walletbond_DL;
-extern u8 * ptr_menu_videobuffer;
+extern s32 ptr_menu_videobuffer;
 extern s32 something_legalscreen_constructor;
 extern struct object_standard * ptr_folder_object_instance;
 extern s32 set0_never_used;

@@ -254,7 +254,7 @@ s32 is_emulating_spectrum = FALSE;
 s32 is_cheat_menu_available = FALSE;
 
 Gfx * ptr_logo_and_walletbond_DL = 0;
-u8 * ptr_menu_videobuffer = 0;
+s32 ptr_menu_videobuffer = 0;
 s32 something_legalscreen_constructor = 0;
 struct object_standard * ptr_folder_object_instance = 0;
 s32 set0_never_used = 0;

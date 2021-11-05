@@ -8,6 +8,7 @@
 #include "matrixmath.h"
 #include "ramrom.h"
 #include "game/math_floor.h"
+#include "macro.h"
 
 // bss
 //CODE.bss:80069550
@@ -485,7 +486,6 @@ Gfx *load_display_rare_logo(Gfx *gdl, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     return gdl;
 }
 
-#define ALIGN64(val)        ((((u32)val) + 0x3f | 0x3f) ^ 0x3f)
 extern void *_GlobalimagetablecmdblkSegmentRomStart;
 extern void *D_02000000;
 extern void *D_020067F0;
@@ -495,7 +495,7 @@ void sub_GAME_7F008B58(s32 address, s32 size) {
     D_8002A89C = -40.0f;
     intro_eye_counter = 0;
     virtualaddress = address;
-    romCopy(virtualaddress, &_GlobalimagetablecmdblkSegmentRomStart, ALIGN64((u32)&D_020067F0 - (u32)&D_02000000));
+    romCopy(virtualaddress, &_GlobalimagetablecmdblkSegmentRomStart, ALIGN64_V2((u32)&D_020067F0 - (u32)&D_02000000));
 }
 
 Gfx *retrieve_display_rareware_logo(Gfx *gdl) {
@@ -545,7 +545,7 @@ void sub_GAME_7F008DE4(u8 **arg0, s32 *arg1) {
     *arg1 -= 0x40400;
     *arg0 += 0x40400;
     dword_CODE_bss_80069588 = *arg0;
-    romCopy(dword_CODE_bss_80069588, &unknown2, ALIGN64(((u32)&unknown2_end - (u32)&unknown2)));
+    romCopy(dword_CODE_bss_80069588, &unknown2, ALIGN64_V2(((u32)&unknown2_end - (u32)&unknown2)));
     sub_GAME_7F01B0E0(dword_CODE_bss_80069588, dword_CODE_bss_8006958C);
 }
 #else
