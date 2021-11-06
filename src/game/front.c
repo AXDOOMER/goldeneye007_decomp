@@ -18,6 +18,7 @@
 #include "lvl_text.h"
 #include "game/math_floor.h"
 #include "game/image_bank.h"
+#include "game/file2.h"
 
 // lvl.c checks for enabled cheats up to the "invalid" index of 0x4b (=75), which
 // is different from the 80 here ...
@@ -994,135 +995,135 @@ glabel write_text_at_abs_coord
 
 s32 check_if_cheat_available(s32 cheat)
 {
-  switch(cheat)
-  {
-  case 1:
-  case 4:
-  case 5:
-  case 6:
-  case 7:
-  case 8:
-  case 9:
-  case 0xd:
-  case 0x10:
-  case 0x16:
-  case 0x19:
-  case 0x23:
-  case 0x24:
-  case 0x25:
-  case 0x26:
-  case 0x27:
-  case 0x28:
-  case 0x29:
-  case 0x2a:
-  case 0x2b:
-  case 0x2c:
-  case 0x2d:
-  case 0x2e:
-  case 0x2f:
-  case 0x30:
-  case 0x31:
-  case 0x32:
-  case 0x33:
-  case 0x34:
-  case 0x35:
-  case 0x36:
-  case 0x37:
-  case 0x38:
-  case 0x39:
-  case 0x3a:
-  case 0x3b:
-  case 0x3c:
-  case 0x3d:
-  case 0x3e:
-  case 0x3f:
-  case 0x40:
-  case 0x41:
-  case 0x42:
-  case 0x43:
-  case 0x44:
-  case 0x45:
-  case 0x46:
-  case 0x47:
-  case 0x48:
-  case 0x49:
-  case 0x4a:
-    return 0;
+    switch(cheat)
+    {
+        case CHEAT_EXTRA_MP_CHARS:
+        case CHEAT_MAXAMMO:
+        case CHEAT_DEBUG_RETURN_SAVED_RA:
+        case CHEAT_DEACTIVATE_INVINCIBILITY:
+        case CHEAT_LINEMODE:
+        case CHEAT_2X_HEALTH:
+        case CHEAT_2X_ARMOR:
+        case CHEAT_EXTRA_WEAPONS:
+        case CHEAT_10X_HEALTH:
+        case CHEAT_INVINCIBILITY_MP:
+        case CHEAT_DEBUG_POS:
+        case CHEAT_UNUSED_0x23:
+        case CHEAT_UNUSED_0x24:
+        case CHEAT_UNUSED_0x25:
+        case CHEAT_UNUSED_0x26:
+        case CHEAT_UNUSED_0x27:
+        case CHEAT_UNUSED_0x28:
+        case CHEAT_UNUSED_0x29:
+        case CHEAT_UNUSED_0x2A:
+        case CHEAT_UNUSED_0x2B:
+        case CHEAT_UNUSED_0x2C:
+        case CHEAT_UNUSED_0x2D:
+        case CHEAT_UNUSED_0x2E:
+        case CHEAT_UNUSED_0x2F:
+        case CHEAT_UNUSED_0x30:
+        case CHEAT_UNUSED_0x31:
+        case CHEAT_UNUSED_0x32:
+        case CHEAT_UNUSED_0x33:
+        case CHEAT_UNUSED_0x34:
+        case CHEAT_UNUSED_0x35:
+        case CHEAT_UNLOCK_CHEATS:
+        case CHEAT_UNUSED_0x37:
+        case CHEAT_UNUSED_0x38:
+        case CHEAT_UNUSED_0x39:
+        case CHEAT_UNUSED_0x3A:
+        case CHEAT_UNUSED_0x3B:
+        case CHEAT_UNUSED_0x3C:
+        case CHEAT_UNUSED_0x3D:
+        case CHEAT_UNUSED_0x3E:
+        case CHEAT_UNUSED_0x3F:
+        case CHEAT_UNUSED_0x40:
+        case CHEAT_UNUSED_0x41:
+        case CHEAT_UNUSED_0x42:
+        case CHEAT_UNUSED_0x43:
+        case CHEAT_UNUSED_0x44:
+        case CHEAT_UNUSED_0x45:
+        case CHEAT_UNUSED_0x46:
+        case CHEAT_UNUSED_0x47:
+        case CHEAT_UNUSED_0x48:
+        case CHEAT_UNUSED_0x49:
+        case CHEAT_UNLOCK_STAGES:
+            return 0;
 
-  case 2:
-    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),1);
+        case CHEAT_INVINCIBILITY:
+            return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num), SP_LEVEL_FACILITY);
 
-  case 3:
-    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),0x13);
+        case CHEAT_ALLGUNS:
+            return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num), SP_LEVEL_EGYPT);
 
-  case 0x17:
-    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),6);
+        case CHEAT_NO_RADAR_MP:
+            return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num), SP_LEVEL_FRIGATE);
 
-  case 0x1a:
-    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),9);
+        case CHEAT_FAST_ANIMATION:
+            return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num), SP_LEVEL_STATUE);
 
-  case 10:
-    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),10);
+        case CHEAT_INVISIBILITY:
+            return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num), SP_LEVEL_ARCHIVES);
 
-  case 0xb:
-    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),0xf);
+        case CHEAT_INFINITE_AMMO:
+            return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num), SP_LEVEL_CONTROL);
 
-  case 0xc:
-    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),2);
+        case CHEAT_DK_MODE:
+            return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num), SP_LEVEL_RUNWAY);
 
-  case 0xe:
-    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),7);
+        case CHEAT_TINY_BOND:
+            return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num), SP_LEVEL_SURFACE2);
 
-  case 0x1b:
-    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),0xc);
+        case CHEAT_SLOW_ANIMATION:
+            return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num), SP_LEVEL_DEPOT);
 
-  case 0xf:
-    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),0);
+        case CHEAT_PAINTBALL:
+            return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num), SP_LEVEL_DAM);
 
-  case 0x14:
-    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),0xd);
+        case CHEAT_SILVER_PP7:
+            return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num), SP_LEVEL_TRAIN);
 
-  case 0x15:
-    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),0x11);
+        case CHEAT_GOLD_PP7:
+            return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num), SP_LEVEL_CRADLE);
 
-  case 0x1c:
-    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),0xb);
+        case CHEAT_ENEMY_ROCKETS:
+            return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num), SP_LEVEL_STREETS);
 
-  case 0x1d:
-    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),4);
+        case CHEAT_2X_ROCKET_LAUNCHER:
+            return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num), SP_LEVEL_BUNKER1);
 
-  case 0x1e:
-    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),3);
+        case CHEAT_2X_GRENADE_LAUNCHER:
+            return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num), SP_LEVEL_SURFACE1);
 
-  case 0x1f:
-    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),0x10);
+        case CHEAT_2X_RCP90:
+            return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num), SP_LEVEL_CAVERNS);
 
-  case 0x20:
-    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),8);
+        case CHEAT_2X_THROWING_KNIFE:
+            return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num), SP_LEVEL_BUNKER2);
 
-  case 0x21:
-    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),0xe);
+        case CHEAT_2X_HUNTING_KNIFE:
+            return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num), SP_LEVEL_JUNGLE);
 
-  case 0x22:
-    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),0x12);
+        case CHEAT_2X_LASER:
+            return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num), SP_LEVEL_AZTEC);
 
-  case 0x18:
-    return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num),5);
+        case CHEAT_TURBO_MODE:
+            return fileGetIsCheatUnlocked( fileGetSaveForFoldernum(selected_folder_num), SP_LEVEL_SILO);
 
-  case 0x11:
-    return fileIsCradleCompletedForFolder(selected_folder_num);
+        case CHEAT_MAGNUM:
+            return fileIsCradleCompletedForFolder(selected_folder_num);
 
-  case 0x12:
-    return fileIsAztecCompletedOnSecretOr00ForFolder(selected_folder_num);
+        case CHEAT_LASER:
+            return fileIsAztecCompletedOnSecretOr00ForFolder(selected_folder_num);
 
-  case 0x13:
-    return fileIsEgyptCompletedOn00ForFolder(selected_folder_num);
+        case CHEAT_GOLDEN_GUN:
+            return fileIsEgyptCompletedOn00ForFolder(selected_folder_num);
 
-  default:
-    do {
-                    /* WARNING: Do nothing block with infinite loop */
-    } while( 1 );
-  }
+        default:
+            do {
+                /* WARNING: Do nothing block with infinite loop */
+            } while( 1 );
+        }
 }
 
 

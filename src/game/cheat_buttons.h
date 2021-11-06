@@ -14,7 +14,7 @@ struct struct_15 {
 
 extern char off_CODE_bss_80079E30[0x4C];
 
-u32 is_cheat_index_equal_to_1C(u32 cheatindex);
+u32 cheatIsEnemyRockets(u32 cheatindex);
 void turn_on_cheat_for_players(u32 cheatindex);
 void cheat_buttons_mp_related(void);
 

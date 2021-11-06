@@ -368,7 +368,7 @@ void stage_load(s32 stage)
 
                 for (s0 = 1; s0 != CHEAT_INVALID; s0++)
                 {
-                    if (g_CheatActivated[s0] && is_cheat_index_equal_to_1C(s0))
+                    if (g_CheatActivated[s0] && cheatIsEnemyRockets(s0))
                     {
                         turn_on_cheat_for_players(s0);
                     }
@@ -598,7 +598,7 @@ glabel stage_load
 /* 0F2750 7F0BDC20 92290000 */  lbu   $t1, ($s1)
 /* 0F2754 7F0BDC24 51200008 */  beql  $t1, $zero, .L7F0BDC48
 /* 0F2758 7F0BDC28 26100001 */   addiu $s0, $s0, 1
-/* 0F275C 7F0BDC2C 0FC24697 */  jal   is_cheat_index_equal_to_1C
+/* 0F275C 7F0BDC2C 0FC24697 */  jal   cheatIsEnemyRockets
 /* 0F2760 7F0BDC30 02002025 */   move  $a0, $s0
 /* 0F2764 7F0BDC34 50400004 */  beql  $v0, $zero, .L7F0BDC48
 /* 0F2768 7F0BDC38 26100001 */   addiu $s0, $s0, 1
@@ -903,7 +903,7 @@ glabel stage_load
 /* 0F3350 7F0BE7E0 92290000 */  lbu   $t1, ($s1)
 /* 0F3354 7F0BE7E4 51200008 */  beql  $t1, $zero, .Ljp7F0BE808
 /* 0F3358 7F0BE7E8 26100001 */   addiu $s0, $s0, 1
-/* 0F335C 7F0BE7EC 0FC2494F */  jal   is_cheat_index_equal_to_1C
+/* 0F335C 7F0BE7EC 0FC2494F */  jal   cheatIsEnemyRockets
 /* 0F3360 7F0BE7F0 02002025 */   move  $a0, $s0
 /* 0F3364 7F0BE7F4 50400004 */  beql  $v0, $zero, .Ljp7F0BE808
 /* 0F3368 7F0BE7F8 26100001 */   addiu $s0, $s0, 1
@@ -1203,7 +1203,7 @@ glabel stage_load
 /* 0F2750 7F0BDC20 92290000 */  lbu   $t1, ($s1)
 /* 0F2754 7F0BDC24 51200008 */  beql  $t1, $zero, .L7F0BDC48
 /* 0F2758 7F0BDC28 26100001 */   addiu $s0, $s0, 1
-/* 0F275C 7F0BDC2C 0FC24697 */  jal   is_cheat_index_equal_to_1C
+/* 0F275C 7F0BDC2C 0FC24697 */  jal   cheatIsEnemyRockets
 /* 0F2760 7F0BDC30 02002025 */   move  $a0, $s0
 /* 0F2764 7F0BDC34 50400004 */  beql  $v0, $zero, .L7F0BDC48
 /* 0F2768 7F0BDC38 26100001 */   addiu $s0, $s0, 1
@@ -3522,7 +3522,7 @@ void manage_mp_game(void)
 
                 for (s0 = 1; s0 != CHEAT_INVALID; s0++)
                 {
-                    if (g_CheatActivated[s0] && is_cheat_index_equal_to_1C(s0))
+                    if (g_CheatActivated[s0] && cheatIsEnemyRockets(s0))
                     {
                         turn_on_cheat_for_players(s0);
                     }
@@ -4133,7 +4133,7 @@ glabel manage_mp_game
 /* 0F3790 7F0BEC60 51E0000D */  beql  $t7, $zero, .L7F0BEC98
 /* 0F3794 7F0BEC64 24840001 */   addiu $a0, $a0, 1
 /* 0F3798 7F0BEC68 AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0F379C 7F0BEC6C 0FC24697 */  jal   is_cheat_index_equal_to_1C
+/* 0F379C 7F0BEC6C 0FC24697 */  jal   cheatIsEnemyRockets
 /* 0F37A0 7F0BEC70 AFA40194 */   sw    $a0, 0x194($sp)
 /* 0F37A4 7F0BEC74 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0F37A8 7F0BEC78 14400006 */  bnez  $v0, .L7F0BEC94
@@ -5023,7 +5023,7 @@ glabel manage_mp_game
 /* 0F4404 7F0BF894 51E0000D */  beql  $t7, $zero, .Ljp7F0BF8CC
 /* 0F4408 7F0BF898 24840001 */   addiu $a0, $a0, 1
 /* 0F440C 7F0BF89C AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0F4410 7F0BF8A0 0FC2494F */  jal   is_cheat_index_equal_to_1C
+/* 0F4410 7F0BF8A0 0FC2494F */  jal   cheatIsEnemyRockets
 /* 0F4414 7F0BF8A4 AFA40194 */   sw    $a0, 0x194($sp)
 /* 0F4418 7F0BF8A8 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0F441C 7F0BF8AC 14400006 */  bnez  $v0, .Ljp7F0BF8C8
@@ -5904,7 +5904,7 @@ glabel manage_mp_game
 /* 0F3790 7F0BEC60 51E0000D */  beql  $t7, $zero, .L7F0BEC98
 /* 0F3794 7F0BEC64 24840001 */   addiu $a0, $a0, 1
 /* 0F3798 7F0BEC68 AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0F379C 7F0BEC6C 0FC24697 */  jal   is_cheat_index_equal_to_1C
+/* 0F379C 7F0BEC6C 0FC24697 */  jal   cheatIsEnemyRockets
 /* 0F37A0 7F0BEC70 AFA40194 */   sw    $a0, 0x194($sp)
 /* 0F37A4 7F0BEC74 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0F37A8 7F0BEC78 14400006 */  bnez  $v0, .L7F0BEC94

@@ -304,7 +304,7 @@ void fileSetDifficultyStageTime(save_data *save, LEVEL_SOLO_SEQUENCE stage, DIFF
  */
 bool fileGetSaveStageCompletedForDifficulty(save_data *folder, s32 levelid, DIFFICULTY difficulty)
 {
-    if ((levelid >= 0) && (levelid < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007))
+    if ((levelid >= 0) && (levelid < SP_LEVEL_MAX) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007))
     {
         return fileGetSaveStageDifficultyTime(folder, levelid, difficulty) != 0;
     }
@@ -322,7 +322,7 @@ bool fileGetSaveStageCompletedForDifficulty(save_data *folder, s32 levelid, DIFF
  */
 void fileCheckSaveStageDifficultyTime(save_data *folder, LEVEL_SOLO_SEQUENCE stage, DIFFICULTY difficulty, s32 newtime)
 {
-    if ((stage >= 0) && (stage < 0x14) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007))
+    if ((stage >= 0) && (stage < SP_LEVEL_MAX) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007))
     {
         s32 time = fileGetSaveStageDifficultyTime(folder, stage, difficulty);
 
@@ -344,7 +344,7 @@ bool fileGetIsCheatUnlocked(save_data *save, s32 cheat)
 {
     s32 bits;
 
-    if (cheat >= 0 && cheat < 0x14)
+    if (cheat >= 0 && cheat < SP_LEVEL_MAX)
     {
         bits = save->unlocked_cheats_1 | save->unlocked_cheats_3 << 0x18 | save->unlocked_cheats_3 << 0x10 | save->unlocked_cheats_2 << 8;
         return ((1 << cheat) & bits) != 0;
@@ -364,7 +364,7 @@ void sub_GAME_7F01DD74(save_data *save, s32 cheat)
     u32 i;
     u32 temp;
 
-    if (cheat >= 0 && cheat < 0x14)
+    if (cheat >= 0 && cheat < SP_LEVEL_MAX)
     {
         temp = 1 << (cheat);
 
@@ -790,7 +790,7 @@ void sub_GAME_7F01E760(s32 foldernum, s32 cheat)
     save_data *save;
     save_data new_save;
 
-    if ((foldernum >= 0) && (foldernum < 4) && (cheat >= 0) && (cheat < 0x14))
+    if ((foldernum >= 0) && (foldernum < 4) && (cheat >= 0) && (cheat < SP_LEVEL_MAX))
     {
         save = fileGetSaveForFoldernum(foldernum);
 
