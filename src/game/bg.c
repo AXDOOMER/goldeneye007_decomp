@@ -10944,8 +10944,15 @@ glabel sub_GAME_7F0B9DBC
 
 
 #ifdef NONMATCHING
-s32 sub_GAME_7F0B9DE4(s32 arg0, s32 arg1, ? arg2) {
-    // Node 0
+/**
+ * Debug method, called from lvl.c.
+ * Something to do with portals.
+ */
+s32 sub_GAME_7F0B9DE4(s32 arg0, s32 arg1, s32 arg2)
+{
+#if DEBUG
+    // removed
+#endif
     return arg0;
 }
 #else
@@ -10962,12 +10969,21 @@ glabel sub_GAME_7F0B9DE4
 
 
 
+/**
+ * Debug method, called from lvl.c.
+ * Something to do with portals.
+ */
+void sub_GAME_7F0B9DF4(s32 arg0)
+{
+#if DEBUG
+    // removed
+#endif
 
-void sub_GAME_7F0B9DF4(s32 arg0) {
     return;
 }
 
-void sub_GAME_7F0B9DFC(s32 arg0) {
+void sub_GAME_7F0B9DFC(s32 arg0)
+{
     return;
 }
 

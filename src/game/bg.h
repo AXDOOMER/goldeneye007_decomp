@@ -88,4 +88,15 @@ u32 bgDecompress(u8* source, u8 *target);
 void sub_GAME_7F0B65C4(s32 roomID);
 void load_bg_file(LEVEL_INDEX stagenum);
 
+s32 sub_GAME_7F0B9DE4(s32 arg0, s32 arg1, s32 arg2);
+void sub_GAME_7F0B9DF4(s32 arg0);
+s8 sub_GAME_7F0B9B64(s32 arg0);
+s32 sub_GAME_7F0B9AE4(s32 arg0);
+void *sub_GAME_7F0B9DBC(s32 arg0, u32 arg1);
+s32 sub_GAME_7F0B9B04(s32 arg0);
+void *sub_GAME_7F0B9B44(s32 arg0);
+void *sub_GAME_7F0B9B24(s32 arg0);
+s32 sub_GAME_7F0B9A7C(s32 arg0);
+s32 sub_GAME_7F0B9A2C(s32 arg0);
+
 #endif
