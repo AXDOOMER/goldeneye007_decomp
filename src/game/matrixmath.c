@@ -1987,42 +1987,45 @@ void matrix_4x4_7F05A250(Mtxf *arg0, Mtxf *arg1) {
     }
 }
 
-#ifdef NONMATCHING
+//#ifdef NONMATCHING
+#if 1
 f32 matrix_3x3_determinant(f32 a, f32 d, f32 g, f32 b, f32 e, f32 h, f32 c, f32 f, f32 i);
 // Stack pointer mostly
-void matrix_4x4_7F05A310(Mtxf arg0, Mtxf arg1) {
-    f32 m00 = arg0->m[0][0];
-    f32 m01 = arg0->m[0][1];
-    f32 m02 = arg0->m[0][2];
-    f32 m03 = arg0->m[0][3];
-    f32 m10 = arg0->m[1][0];
-    f32 m11 = arg0->m[1][1];
-    f32 m12 = arg0->m[1][2];
-    f32 m13 = arg0->m[1][3];
-    f32 m20 = arg0->m[2][0];
-    f32 m21 = arg0->m[2][1];
-    f32 m22 = arg0->m[2][2];
-    f32 m23 = arg0->m[2][3];
-    f32 m30 = arg0->m[3][0];
-    f32 m31 = arg0->m[3][1];
-    f32 m32 = arg0->m[3][2];
-    f32 m33 = arg0->m[3][3];
-    arg1->m[0][0] =  matrix_3x3_determinant(m11, m21, m31, m12, m22, m32, m13, m23, m33);
-    arg1->m[1][0] = -matrix_3x3_determinant(m10, m20, m30, m12, m22, m32, m13, m23, m33);
-    arg1->m[2][0] =  matrix_3x3_determinant(m10, m20, m30, m11, m21, m31, m13, m23, m33);
-    arg1->m[3][0] = -matrix_3x3_determinant(m10, m20, m30, m11, m21, m31, m12, m22, m32);
-    arg1->m[0][1] = -matrix_3x3_determinant(m01, m21, m31, m02, m22, m32, m03, m23, m33);
-    arg1->m[1][1] =  matrix_3x3_determinant(m00, m20, m30, m02, m22, m32, m03, m23, m33);
-    arg1->m[2][1] = -matrix_3x3_determinant(m00, m20, m30, m01, m21, m31, m03, m23, m33);
-    arg1->m[3][1] =  matrix_3x3_determinant(m00, m20, m30, m01, m21, m31, m02, m22, m32);
-    arg1->m[0][2] =  matrix_3x3_determinant(m01, m11, m31, m02, m12, m32, m03, m13, m33);
-    arg1->m[1][2] = -matrix_3x3_determinant(m00, m10, m30, m02, m12, m32, m03, m13, m33);
-    arg1->m[2][2] =  matrix_3x3_determinant(m00, m10, m30, m01, m11, m31, m03, m13, m33);
-    arg1->m[3][2] = -matrix_3x3_determinant(m00, m10, m30, m01, m11, m31, m02, m12, m32);
-    arg1->m[0][3] = -matrix_3x3_determinant(m01, m11, m21, m02, m12, m22, m03, m13, m23);
-    arg1->m[1][3] =  matrix_3x3_determinant(m00, m10, m20, m02, m12, m22, m03, m13, m23);
-    arg1->m[2][3] = -matrix_3x3_determinant(m00, m10, m20, m01, m11, m21, m03, m13, m23);
-    arg1->m[3][3] =  matrix_3x3_determinant(m00, m10, m20, m01, m11, m21, m02, m12, m22);
+void matrix_4x4_7F05A310(Mtxf *arg0, Mtxf *arg1) {
+    f32 mtx00, mtx10, mtx20, mtx30;
+	f32 mtx04, mtx14, mtx24, mtx34;
+	f32 mtx08, mtx18, mtx28, mtx38;
+	f32 mtx0c, mtx1c, mtx2c, mtx3c;
+
+	mtx00 = arg0->m[0][0]; mtx04 = arg0->m[0][1];
+	mtx08 = arg0->m[0][2]; mtx0c = arg0->m[0][3];
+	mtx10 = arg0->m[1][0]; mtx14 = arg0->m[1][1];
+	mtx18 = arg0->m[1][2]; mtx1c = arg0->m[1][3];
+	mtx20 = arg0->m[2][0]; mtx24 = arg0->m[2][1];
+	mtx28 = arg0->m[2][2]; mtx2c = arg0->m[2][3];
+	mtx30 = arg0->m[3][0]; mtx34 = arg0->m[3][1];
+	mtx38 = arg0->m[3][2]; mtx3c = arg0->m[3][3];
+
+	arg1->m[0][0] =  matrix_3x3_determinant(mtx14, mtx24, mtx34, mtx18, mtx28, mtx38, mtx1c, mtx2c, mtx3c);
+	arg1->m[1][0] = -matrix_3x3_determinant(mtx10, mtx20, mtx30, mtx18, mtx28, mtx38, mtx1c, mtx2c, mtx3c);
+	arg1->m[2][0] =  matrix_3x3_determinant(mtx10, mtx20, mtx30, mtx14, mtx24, mtx34, mtx1c, mtx2c, mtx3c);
+	arg1->m[3][0] = -matrix_3x3_determinant(mtx10, mtx20, mtx30, mtx14, mtx24, mtx34, mtx18, mtx28, mtx38);
+	arg1->m[0][1] = -matrix_3x3_determinant(mtx04, mtx24, mtx34, mtx08, mtx28, mtx38, mtx0c, mtx2c, mtx3c);
+	arg1->m[1][1] =  matrix_3x3_determinant(mtx00, mtx20, mtx30, mtx08, mtx28, mtx38, mtx0c, mtx2c, mtx3c);
+	arg1->m[2][1] = -matrix_3x3_determinant(mtx00, mtx20, mtx30, mtx04, mtx24, mtx34, mtx0c, mtx2c, mtx3c);
+	arg1->m[3][1] =  matrix_3x3_determinant(mtx00, mtx20, mtx30, mtx04, mtx24, mtx34, mtx08, mtx28, mtx38);
+	arg1->m[0][2] =  matrix_3x3_determinant(mtx04, mtx14, mtx34, mtx08, mtx18, mtx38, mtx0c, mtx1c, mtx3c);
+	arg1->m[1][2] = -matrix_3x3_determinant(mtx00, mtx10, mtx30, mtx08, mtx18, mtx38, mtx0c, mtx1c, mtx3c);
+	arg1->m[2][2] =  matrix_3x3_determinant(mtx00, mtx10, mtx30, mtx04, mtx14, mtx34, mtx0c, mtx1c, mtx3c);
+	arg1->m[3][2] = -matrix_3x3_determinant(mtx00, mtx10, mtx30, mtx04, mtx14, mtx34, mtx08, mtx18, mtx38);
+	arg1->m[0][3] = -matrix_3x3_determinant(mtx04, mtx14, mtx24, mtx08, mtx18, mtx28, mtx0c, mtx1c, mtx2c);
+	arg1->m[1][3] =  matrix_3x3_determinant(mtx00, mtx10, mtx20, mtx08, mtx18, mtx28, mtx0c, mtx1c, mtx2c);
+	arg1->m[2][3] = -matrix_3x3_determinant(mtx00, mtx10, mtx20, mtx04, mtx14, mtx24, mtx0c, mtx1c, mtx2c);
+	arg1->m[3][3] =  matrix_3x3_determinant(mtx00, mtx10, mtx20, mtx04, mtx14, mtx24, mtx08, mtx18, mtx28);
+
+
+
+
 }
 #else
 GLOBAL_ASM(
@@ -2312,32 +2315,10 @@ glabel matrix_4x4_7F05A310
 )
 #endif
 
- //#ifdef NONMATCHING
- #if 1
 f32 matrix_3x3_determinant(f32 a, f32 d, f32 g, f32 b, f32 e, f32 h, f32 c, f32 f, f32 i);
- // Stack pointer mostly
-f32 matrix_4x4_determinant(Mtxf *matrix) {
-    // f32 det;
-    // f32 a = matrix->m[0][0];
-    // f32 b = matrix->m[0][1];
-    // f32 c = matrix->m[0][2];
-    // f32 d = matrix->m[0][3];
-    // f32 e = matrix->m[1][0];
-    // f32 f = matrix->m[1][1];
-    // f32 g = matrix->m[1][2];
-    // f32 h = matrix->m[1][3];
-    // f32 i = matrix->m[2][0];
-    // f32 j = matrix->m[2][1];
-    // f32 k = matrix->m[2][2];
-    // f32 l = matrix->m[2][3];
-    // f32 m = matrix->m[3][0];
-    // f32 n = matrix->m[3][1];
-    // f32 o = matrix->m[3][2];
-    // f32 p = matrix->m[3][3];
-    // det = (a * matrix_3x3_determinant(f, j, n, g, k, o, h, l, p)) - (b * matrix_3x3_determinant(e, i, m, g, k, o, h, l, p)) + (c * matrix_3x3_determinant(e, i, m, f, j, n, h, l, p)) - (d * matrix_3x3_determinant(e, i, m, f, j, n, g, k, o));
-    // // det = (a * matrix_3x3_determinant(f, g, h, j, k, l, n, o, p)) - (b * matrix_3x3_determinant(e, g, h, i, k, l, m, o, p)) + (c * matrix_3x3_determinant(e, f, h, i, j, l, m, n, p)) - (d * matrix_3x3_determinant(e, f, g, i, j, k, m, n, o));
-    // return det;
-
+ 
+f32 matrix_4x4_determinant(Mtxf *matrix)
+{
     f32 tmp;
 	f32 sp78, sp74, sp70, sp6c;
 	f32 sp68, sp64, sp60, sp5c;
@@ -2365,122 +2346,6 @@ f32 matrix_4x4_determinant(Mtxf *matrix) {
 	return (sp78 * sp38 - sp68 * sp34 + sp58 * sp30) - tmp * sp48;
 
 }
-#else
-GLOBAL_ASM(
-.text
-glabel matrix_4x4_determinant
-/* 08F2A4 7F05A774 27BDFF80 */  addiu $sp, $sp, -0x80
-/* 08F2A8 7F05A778 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 08F2AC 7F05A77C C4840000 */  lwc1  $f4, ($a0)
-/* 08F2B0 7F05A780 E7A40078 */  swc1  $f4, 0x78($sp)
-/* 08F2B4 7F05A784 C4860004 */  lwc1  $f6, 4($a0)
-/* 08F2B8 7F05A788 E7A60068 */  swc1  $f6, 0x68($sp)
-/* 08F2BC 7F05A78C C4880008 */  lwc1  $f8, 8($a0)
-/* 08F2C0 7F05A790 E7A80058 */  swc1  $f8, 0x58($sp)
-/* 08F2C4 7F05A794 C48A000C */  lwc1  $f10, 0xc($a0)
-/* 08F2C8 7F05A798 E7AA0048 */  swc1  $f10, 0x48($sp)
-/* 08F2CC 7F05A79C C4840018 */  lwc1  $f4, 0x18($a0)
-/* 08F2D0 7F05A7A0 C4800014 */  lwc1  $f0, 0x14($a0)
-/* 08F2D4 7F05A7A4 C48C0010 */  lwc1  $f12, 0x10($a0)
-/* 08F2D8 7F05A7A8 E7A40054 */  swc1  $f4, 0x54($sp)
-/* 08F2DC 7F05A7AC C4860028 */  lwc1  $f6, 0x28($a0)
-/* 08F2E0 7F05A7B0 C482001C */  lwc1  $f2, 0x1c($a0)
-/* 08F2E4 7F05A7B4 C4900024 */  lwc1  $f16, 0x24($a0)
-/* 08F2E8 7F05A7B8 C48E0020 */  lwc1  $f14, 0x20($a0)
-/* 08F2EC 7F05A7BC E7A60050 */  swc1  $f6, 0x50($sp)
-/* 08F2F0 7F05A7C0 C4880030 */  lwc1  $f8, 0x30($a0)
-/* 08F2F4 7F05A7C4 C492002C */  lwc1  $f18, 0x2c($a0)
-/* 08F2F8 7F05A7C8 44070000 */  mfc1  $a3, $f0
-/* 08F2FC 7F05A7CC E7A8006C */  swc1  $f8, 0x6c($sp)
-/* 08F300 7F05A7D0 C48A0034 */  lwc1  $f10, 0x34($a0)
-/* 08F304 7F05A7D4 8FA6006C */  lw    $a2, 0x6c($sp)
-/* 08F308 7F05A7D8 E7AA005C */  swc1  $f10, 0x5c($sp)
-/* 08F30C 7F05A7DC C4840038 */  lwc1  $f4, 0x38($a0)
-/* 08F310 7F05A7E0 C7A8005C */  lwc1  $f8, 0x5c($sp)
-/* 08F314 7F05A7E4 E7A4004C */  swc1  $f4, 0x4c($sp)
-/* 08F318 7F05A7E8 C486003C */  lwc1  $f6, 0x3c($a0)
-/* 08F31C 7F05A7EC E7A00064 */  swc1  $f0, 0x64($sp)
-/* 08F320 7F05A7F0 E7AC0074 */  swc1  $f12, 0x74($sp)
-/* 08F324 7F05A7F4 E7A6003C */  swc1  $f6, 0x3c($sp)
-/* 08F328 7F05A7F8 C7AA003C */  lwc1  $f10, 0x3c($sp)
-/* 08F32C 7F05A7FC E7A20044 */  swc1  $f2, 0x44($sp)
-/* 08F330 7F05A800 E7A20018 */  swc1  $f2, 0x18($sp)
-/* 08F334 7F05A804 E7B00060 */  swc1  $f16, 0x60($sp)
-/* 08F338 7F05A808 E7B00010 */  swc1  $f16, 0x10($sp)
-/* 08F33C 7F05A80C E7AE0070 */  swc1  $f14, 0x70($sp)
-/* 08F340 7F05A810 E7B20040 */  swc1  $f18, 0x40($sp)
-/* 08F344 7F05A814 E7B2001C */  swc1  $f18, 0x1c($sp)
-/* 08F348 7F05A818 E7A80014 */  swc1  $f8, 0x14($sp)
-/* 08F34C 7F05A81C 0FC16A4A */  jal   matrix_3x3_determinant
-/* 08F350 7F05A820 E7AA0020 */   swc1  $f10, 0x20($sp)
-/* 08F354 7F05A824 C7A40050 */  lwc1  $f4, 0x50($sp)
-/* 08F358 7F05A828 C7A6004C */  lwc1  $f6, 0x4c($sp)
-/* 08F35C 7F05A82C C7A80044 */  lwc1  $f8, 0x44($sp)
-/* 08F360 7F05A830 E7A40010 */  swc1  $f4, 0x10($sp)
-/* 08F364 7F05A834 C7A4003C */  lwc1  $f4, 0x3c($sp)
-/* 08F368 7F05A838 C7AA0040 */  lwc1  $f10, 0x40($sp)
-/* 08F36C 7F05A83C E7A00030 */  swc1  $f0, 0x30($sp)
-/* 08F370 7F05A840 C7AC0074 */  lwc1  $f12, 0x74($sp)
-/* 08F374 7F05A844 C7AE0070 */  lwc1  $f14, 0x70($sp)
-/* 08F378 7F05A848 8FA6006C */  lw    $a2, 0x6c($sp)
-/* 08F37C 7F05A84C 8FA70054 */  lw    $a3, 0x54($sp)
-/* 08F380 7F05A850 E7A60014 */  swc1  $f6, 0x14($sp)
-/* 08F384 7F05A854 E7A80018 */  swc1  $f8, 0x18($sp)
-/* 08F388 7F05A858 E7A40020 */  swc1  $f4, 0x20($sp)
-/* 08F38C 7F05A85C 0FC16A4A */  jal   matrix_3x3_determinant
-/* 08F390 7F05A860 E7AA001C */   swc1  $f10, 0x1c($sp)
-/* 08F394 7F05A864 C7A60050 */  lwc1  $f6, 0x50($sp)
-/* 08F398 7F05A868 C7A8004C */  lwc1  $f8, 0x4c($sp)
-/* 08F39C 7F05A86C C7AA0044 */  lwc1  $f10, 0x44($sp)
-/* 08F3A0 7F05A870 E7A60010 */  swc1  $f6, 0x10($sp)
-/* 08F3A4 7F05A874 C7A6003C */  lwc1  $f6, 0x3c($sp)
-/* 08F3A8 7F05A878 C7A40040 */  lwc1  $f4, 0x40($sp)
-/* 08F3AC 7F05A87C E7A00034 */  swc1  $f0, 0x34($sp)
-/* 08F3B0 7F05A880 C7AC0064 */  lwc1  $f12, 0x64($sp)
-/* 08F3B4 7F05A884 C7AE0060 */  lwc1  $f14, 0x60($sp)
-/* 08F3B8 7F05A888 8FA6005C */  lw    $a2, 0x5c($sp)
-/* 08F3BC 7F05A88C 8FA70054 */  lw    $a3, 0x54($sp)
-/* 08F3C0 7F05A890 E7A80014 */  swc1  $f8, 0x14($sp)
-/* 08F3C4 7F05A894 E7AA0018 */  swc1  $f10, 0x18($sp)
-/* 08F3C8 7F05A898 E7A60020 */  swc1  $f6, 0x20($sp)
-/* 08F3CC 7F05A89C 0FC16A4A */  jal   matrix_3x3_determinant
-/* 08F3D0 7F05A8A0 E7A4001C */   swc1  $f4, 0x1c($sp)
-/* 08F3D4 7F05A8A4 C7A80060 */  lwc1  $f8, 0x60($sp)
-/* 08F3D8 7F05A8A8 C7AA005C */  lwc1  $f10, 0x5c($sp)
-/* 08F3DC 7F05A8AC C7A40054 */  lwc1  $f4, 0x54($sp)
-/* 08F3E0 7F05A8B0 E7A80010 */  swc1  $f8, 0x10($sp)
-/* 08F3E4 7F05A8B4 C7A8004C */  lwc1  $f8, 0x4c($sp)
-/* 08F3E8 7F05A8B8 C7A60050 */  lwc1  $f6, 0x50($sp)
-/* 08F3EC 7F05A8BC E7A00038 */  swc1  $f0, 0x38($sp)
-/* 08F3F0 7F05A8C0 C7AC0074 */  lwc1  $f12, 0x74($sp)
-/* 08F3F4 7F05A8C4 C7AE0070 */  lwc1  $f14, 0x70($sp)
-/* 08F3F8 7F05A8C8 8FA6006C */  lw    $a2, 0x6c($sp)
-/* 08F3FC 7F05A8CC 8FA70064 */  lw    $a3, 0x64($sp)
-/* 08F400 7F05A8D0 E7AA0014 */  swc1  $f10, 0x14($sp)
-/* 08F404 7F05A8D4 E7A40018 */  swc1  $f4, 0x18($sp)
-/* 08F408 7F05A8D8 E7A80020 */  swc1  $f8, 0x20($sp)
-/* 08F40C 7F05A8DC 0FC16A4A */  jal   matrix_3x3_determinant
-/* 08F410 7F05A8E0 E7A6001C */   swc1  $f6, 0x1c($sp)
-/* 08F414 7F05A8E4 C7AA0078 */  lwc1  $f10, 0x78($sp)
-/* 08F418 7F05A8E8 C7A40038 */  lwc1  $f4, 0x38($sp)
-/* 08F41C 7F05A8EC C7A80068 */  lwc1  $f8, 0x68($sp)
-/* 08F420 7F05A8F0 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 08F424 7F05A8F4 46045182 */  mul.s $f6, $f10, $f4
-/* 08F428 7F05A8F8 C7AA0034 */  lwc1  $f10, 0x34($sp)
-/* 08F42C 7F05A8FC 460A4102 */  mul.s $f4, $f8, $f10
-/* 08F430 7F05A900 C7AA0058 */  lwc1  $f10, 0x58($sp)
-/* 08F434 7F05A904 46043201 */  sub.s $f8, $f6, $f4
-/* 08F438 7F05A908 C7A60030 */  lwc1  $f6, 0x30($sp)
-/* 08F43C 7F05A90C 46065102 */  mul.s $f4, $f10, $f6
-/* 08F440 7F05A910 C7A60048 */  lwc1  $f6, 0x48($sp)
-/* 08F444 7F05A914 27BD0080 */  addiu $sp, $sp, 0x80
-/* 08F448 7F05A918 46044280 */  add.s $f10, $f8, $f4
-/* 08F44C 7F05A91C 46060202 */  mul.s $f8, $f0, $f6
-/* 08F450 7F05A920 03E00008 */  jr    $ra
-/* 08F454 7F05A924 46085001 */   sub.s $f0, $f10, $f8
-)
-#endif
-
 
 f32 matrix_2x2_determinant(f32 a, f32 c, f32 b, f32 d);
 
