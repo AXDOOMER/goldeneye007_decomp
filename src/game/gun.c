@@ -1349,22 +1349,10 @@ s32 get_itemtype_in_hand(s32 hand)
 }
 
 
-#ifdef NONMATCHING
-void get_ptr_itemheader_in_hand(void) {
-
+ModelFileHeader *get_ptr_itemheader_in_hand(HANDEDNESS hand)
+{
+    return &currentplayer->copy_of_body_obj_header[hand];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_ptr_itemheader_in_hand
-/* 091A48 7F05CF18 3C0E8008 */  lui   $t6, %hi(currentplayer)
-/* 091A4C 7F05CF1C 8DCEA0B0 */  lw    $t6, %lo(currentplayer)($t6)
-/* 091A50 7F05CF20 00047940 */  sll   $t7, $a0, 5
-/* 091A54 7F05CF24 01CF1021 */  addu  $v0, $t6, $t7
-/* 091A58 7F05CF28 03E00008 */  jr    $ra
-/* 091A5C 7F05CF2C 24420810 */   addiu $v0, $v0, 0x810
-)
-#endif
 
 
 #ifndef VERSION_EU
