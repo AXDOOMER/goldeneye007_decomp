@@ -29042,7 +29042,7 @@ glabel get_curplayer_viewport_uly
 
 
 #ifdef NONMATCHING
-void possibly_reset_viewport_options_for_player(void) {
+void possibly_reset_viewport_options_for_player(s8 arg0, s8 arg1, u16 arg2) {
 
 }
 #else

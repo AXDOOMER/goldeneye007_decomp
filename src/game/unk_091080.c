@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "bondtypes.h"
+#include "game/unk_091080.h"
 
 // bss
 //CODE.bss:80079E20
@@ -59,7 +60,7 @@ struct coord3d D_80037060 = {0.0f,0.0f,0.0f};
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F091080(s32 arg0, s32 arg1, s32 arg2)
+void sub_GAME_7F091080(s8 arg0, s8 arg1, u16 arg2)
 {
 }
 #else

@@ -557,9 +557,20 @@ struct player
   s32 colourfadebluenew;
   f32 colourfadefracold;
   f32 colourfadefracnew;
-  s32 field_408;
+
+  /*
+  * Something with position, like previous x position.
+  * Offset 0x408.
+  */
+  f32 field_408;
   s32 field_40C;
-  s32 field_410;
+
+  /*
+  * Something with position, like previous z position.
+  * Offset 0x410.
+  */
+  f32 field_410;
+  
   s32 field_414;
   s32 field_418;
   s32 cuff_value;
@@ -2839,6 +2850,6 @@ void init_player_BONDdata(void);
 void sub_GAME_7F0798B8(void);
 f32 get_BONDdata_watch_health(void);
 f32 get_BONDdata_watch_armor(void);
-void possibly_reset_viewport_options_for_player(void);
+void possibly_reset_viewport_options_for_player(s8 arg0, s8 arg1, u16 arg2);
 
 #endif
