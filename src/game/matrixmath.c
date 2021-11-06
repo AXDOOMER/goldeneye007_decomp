@@ -2312,30 +2312,58 @@ glabel matrix_4x4_7F05A310
 )
 #endif
 
- #ifdef NONMATCHING
+ //#ifdef NONMATCHING
+ #if 1
 f32 matrix_3x3_determinant(f32 a, f32 d, f32 g, f32 b, f32 e, f32 h, f32 c, f32 f, f32 i);
  // Stack pointer mostly
 f32 matrix_4x4_determinant(Mtxf *matrix) {
-    f32 det;
-    f32 a = matrix->m[0][0];
-    f32 b = matrix->m[0][1];
-    f32 c = matrix->m[0][2];
-    f32 d = matrix->m[0][3];
-    f32 e = matrix->m[1][0];
-    f32 f = matrix->m[1][1];
-    f32 g = matrix->m[1][2];
-    f32 h = matrix->m[1][3];
-    f32 i = matrix->m[2][0];
-    f32 j = matrix->m[2][1];
-    f32 k = matrix->m[2][2];
-    f32 l = matrix->m[2][3];
-    f32 m = matrix->m[3][0];
-    f32 n = matrix->m[3][1];
-    f32 o = matrix->m[3][2];
-    f32 p = matrix->m[3][3];
-    det = (a * matrix_3x3_determinant(f, j, n, g, k, o, h, l, p)) - (b * matrix_3x3_determinant(e, i, m, g, k, o, h, l, p)) + (c * matrix_3x3_determinant(e, i, m, f, j, n, h, l, p)) - (d * matrix_3x3_determinant(e, i, m, f, j, n, g, k, o));
-    // det = (a * matrix_3x3_determinant(f, g, h, j, k, l, n, o, p)) - (b * matrix_3x3_determinant(e, g, h, i, k, l, m, o, p)) + (c * matrix_3x3_determinant(e, f, h, i, j, l, m, n, p)) - (d * matrix_3x3_determinant(e, f, g, i, j, k, m, n, o));
-    return det;
+    // f32 det;
+    // f32 a = matrix->m[0][0];
+    // f32 b = matrix->m[0][1];
+    // f32 c = matrix->m[0][2];
+    // f32 d = matrix->m[0][3];
+    // f32 e = matrix->m[1][0];
+    // f32 f = matrix->m[1][1];
+    // f32 g = matrix->m[1][2];
+    // f32 h = matrix->m[1][3];
+    // f32 i = matrix->m[2][0];
+    // f32 j = matrix->m[2][1];
+    // f32 k = matrix->m[2][2];
+    // f32 l = matrix->m[2][3];
+    // f32 m = matrix->m[3][0];
+    // f32 n = matrix->m[3][1];
+    // f32 o = matrix->m[3][2];
+    // f32 p = matrix->m[3][3];
+    // det = (a * matrix_3x3_determinant(f, j, n, g, k, o, h, l, p)) - (b * matrix_3x3_determinant(e, i, m, g, k, o, h, l, p)) + (c * matrix_3x3_determinant(e, i, m, f, j, n, h, l, p)) - (d * matrix_3x3_determinant(e, i, m, f, j, n, g, k, o));
+    // // det = (a * matrix_3x3_determinant(f, g, h, j, k, l, n, o, p)) - (b * matrix_3x3_determinant(e, g, h, i, k, l, m, o, p)) + (c * matrix_3x3_determinant(e, f, h, i, j, l, m, n, p)) - (d * matrix_3x3_determinant(e, f, g, i, j, k, m, n, o));
+    // return det;
+
+    f32 tmp;
+	f32 sp78, sp74, sp70, sp6c;
+	f32 sp68, sp64, sp60, sp5c;
+	f32 sp58, sp54, sp50, sp4c;
+	f32 sp48, sp44, sp40, sp3c;
+	f32 sp38;
+	f32 sp34;
+	f32 sp30;
+
+	sp78 = matrix->m[0][0]; sp68 = matrix->m[0][1];
+	sp58 = matrix->m[0][2]; sp48 = matrix->m[0][3];
+	sp74 = matrix->m[1][0]; sp64 = matrix->m[1][1];
+	sp54 = matrix->m[1][2]; sp44 = matrix->m[1][3];
+	sp70 = matrix->m[2][0]; sp60 = matrix->m[2][1];
+	sp50 = matrix->m[2][2]; sp40 = matrix->m[2][3];
+	sp6c = matrix->m[3][0]; sp5c = matrix->m[3][1];
+	sp4c = matrix->m[3][2]; sp3c = matrix->m[3][3];
+
+	sp30 = matrix_3x3_determinant(sp74, sp70, sp6c, sp64, sp60, sp5c, sp44, sp40, sp3c);
+	sp34 = matrix_3x3_determinant(sp74, sp70, sp6c, sp54, sp50, sp4c, sp44, sp40, sp3c);
+	sp38 = matrix_3x3_determinant(sp64, sp60, sp5c, sp54, sp50, sp4c, sp44, sp40, sp3c);
+
+	tmp = matrix_3x3_determinant(sp74, sp70, sp6c, sp64, sp60, sp5c, sp54, sp50, sp4c);
+
+	return (sp78 * sp38 - sp68 * sp34 + sp58 * sp30) - tmp * sp48;
+
 }
 #else
 GLOBAL_ASM(
