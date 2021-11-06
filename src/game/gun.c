@@ -1343,7 +1343,7 @@ glabel sub_GAME_7F05CEBC
 
 
 
-s32 get_itemtype_in_hand(s32 hand)
+s32 get_itemtype_in_hand(HANDEDNESS hand)
 {
     return currentplayer->hand_item[hand];
 }
