@@ -135,4 +135,6 @@ typedef struct BetaStandTile {
 
 StandTilePoint *stanMatchTileName(char*);
 
+void sub_GAME_7F0B2D38(s32 arg0, s32 arg1, s32 arg2);
+
 #endif

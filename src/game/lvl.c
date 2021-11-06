@@ -48,6 +48,8 @@
 #include "game/initBondDATAdefaults.h"
 #include "game/viewport.h"
 #include "joy.h"
+#include "game/stan.h"
+#include "game/gun.h"
 
 // bss
 //CODE.bss:8008C260
@@ -1410,6 +1412,12 @@ s32 sub_GAME_7F0BDF04(void) {
  * on controller 1 and 2 are used for control flow.
  *
  * address 0x7F0BDF10.
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: wrong
+ * - identical instructions: no
+ * - identical registers: fail
  */
 s32 sub_GAME_7F0BDF10(s32 arg0)
 {
@@ -6040,8 +6048,122 @@ glabel manage_mp_game
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BF800(void) {
 
+/**
+ * Multiplayer related. Has some debug code.
+ * 
+ * Address 0x7F0BF800.
+ */
+void sub_GAME_7F0BF800(void)
+{
+    s8 local_player_number;
+    s8 sp19;
+    s8 sp18;
+    f32 temp_f0;
+    f32 temp_f2;
+    s32 temp_v0;
+    void *temp_v0_2;
+    void *temp_v0_3;
+    void *temp_v0_4;
+    void *temp_v0_5;
+    void *temp_v1;
+
+    local_player_number = get_cur_playernum();
+    cheat_buttons_mp_related();
+    temp_v0 = get_debug_freeze_processing();
+
+    if (temp_v0 != 0)
+    {
+        if (temp_v0 != 1)
+        {
+            if (temp_v0 != 2)
+            {
+
+            }
+            else
+            {
+                if (get_debug_limit_controller_input() == 2)
+                {
+                    sp18 = joyGetStickX(local_player_number);
+                    sp19 = joyGetStickY(local_player_number);
+                    possibly_reset_viewport_options_for_player(sp18, sp19, joyGetButtons(local_player_number, ANY_BUTTON));
+                }
+                else
+                {
+                    sp18 = joyGetStickX(local_player_number);
+                    possibly_reset_viewport_options_for_player(sp18, joyGetStickY(local_player_number), 0);
+                }
+
+                sub_GAME_7F0C2E80();
+            }
+        }
+        else if (get_debug_limit_controller_input() == 1)
+        {
+            sp18 = joyGetStickX(local_player_number);
+            sp19 = joyGetStickY(local_player_number);
+            sub_GAME_7F0B2D38(sp18, sp19, joyGetButtons(local_player_number, ANY_BUTTON));
+        }
+        else
+        {
+            sp18 = joyGetStickX(local_player_number);
+            sub_GAME_7F0B2D38(sp18, joyGetStickY(local_player_number), 0);
+        }
+    }
+    else if ((get_debug_limit_controller_input() == 0) || ((get_debug_limit_controller_input() == 0x3B) && (D_80036ABC < 0)))
+    {
+        sp18 = joyGetStickX(local_player_number);
+        sp19 = joyGetStickY(local_player_number);
+        sub_GAME_7F091080(sp18, sp19, joyGetButtons(local_player_number, ANY_BUTTON));
+    }
+    else
+    {
+        sp18 = joyGetStickX(local_player_number);
+        sub_GAME_7F091080(sp18, joyGetStickY(local_player_number), 0);
+    }
+
+    temp_v0_2 = currentplayer;
+    temp_v1 = temp_v0_2->prop;
+    temp_f0 = temp_v1->position.x - temp_v0_2->field_408;
+    temp_f2 = temp_v1->position.z - temp_v0_2->field_410;
+
+    temp_v0_3 = pPlayersPerm;
+    temp_v0_3->distance_traveled = (f32) (temp_v0_3->distance_traveled + sqrtf((temp_f0 * temp_f0) + (temp_f2 * temp_f2)));
+
+    if (get_scenario() == SCENARIO_TLD)
+    {
+        if (bondinvIsAliveWithFlag() != 0)
+        {
+            if (get_item_in_hand(RIGHT_HAND) != ITEM_TOKEN)
+            {
+                draw_item_in_hand_has_more_ammo(0, ITEM_TOKEN);
+                temp_v0_4 = currentplayer;
+
+                if (temp_v0_4->hands[RIGHT_HAND].when_detonating_mines_is_0 == 2)
+                {
+                    temp_v0_4->hands[RIGHT_HAND].when_detonating_mines_is_0 = 5;
+                }
+            }
+
+            temp_v0_5 = pPlayersPerm;
+            temp_v0_5->flag_counter = (s32) (temp_v0_5->flag_counter + g_ClockTimer);
+            pPlayersPerm->have_token_or_goldengun = 1;
+            return;
+        }
+
+        pPlayersPerm->have_token_or_goldengun = 0;
+        return;
+    }
+
+    if (get_scenario() == SCENARIO_MWTGG)
+    {
+        if (checkforgoldengun() != 0)
+        {
+            pPlayersPerm->have_token_or_goldengun = 1;
+            return;
+        }
+        pPlayersPerm->have_token_or_goldengun = 0;
+        /* Duplicate return node #27. Try simplifying control flow for better match */
+    }
 }
 #else
 GLOBAL_ASM(

@@ -3,5 +3,6 @@
 #include "ultra64.h"
 
 s32 getPlayerCount(void);
+s32 get_cur_playernum(void);
 
 #endif

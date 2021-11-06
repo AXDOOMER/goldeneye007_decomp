@@ -59,8 +59,8 @@ struct coord3d D_80037060 = {0.0f,0.0f,0.0f};
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F091080(void) {
-
+void sub_GAME_7F091080(s32 arg0, s32 arg1, s32 arg2)
+{
 }
 #else
 GLOBAL_ASM(

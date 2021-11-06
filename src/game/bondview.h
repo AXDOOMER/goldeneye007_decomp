@@ -811,10 +811,26 @@ struct player
   s32 field_854;
   s32 field_858;
   s32 field_85C;
-  s32 field_860;  
+  s32 field_860;
+
+  /**
+   * Offset 0x864.
+   */
   s32 right_item_related1;
+
+  /**
+   * Offset 0x868.
+   */
   s32 right_item_related2;
+
+  /**
+   * Offset 0x86c.
+   */
   s32 right_item_related3;
+
+  /**
+   * Offset 0x870.
+   */
   struct hand hands[2];
   f32 field_FC0;
   f32 field_FC4;
@@ -2823,5 +2839,6 @@ void init_player_BONDdata(void);
 void sub_GAME_7F0798B8(void);
 f32 get_BONDdata_watch_health(void);
 f32 get_BONDdata_watch_armor(void);
+void possibly_reset_viewport_options_for_player(void);
 
 #endif
