@@ -4,5 +4,6 @@
 
 void sub_GAME_7F0C1364(void);
 void sub_GAME_7F0C11FC(s32 stagenum);
+void set_missionstate(u32 arg0);
 
 #endif
