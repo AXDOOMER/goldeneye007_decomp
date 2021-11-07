@@ -304,9 +304,8 @@ void music_play_stagetrack_or_random(void)
  */
 void stage_load(s32 stage)
 {
+    s32 i;
     struct player_data *player_data;
-    struct player_data *phi_s1_2;
-    struct player_data *phi_s4;
  
     g_CurrentStageToLoad = stage;
 
@@ -394,13 +393,15 @@ void stage_load(s32 stage)
         sub_GAME_7F0C11FC(stage);
 
         // why oh why are there two pointers for the same data.
-        player_data = &player1_player_data;
-        phi_s4 = &player1_player_data;
+        // g_playerPlayerData should be s2
+        // then copied into s4
+        player_data = (struct player_data *)&g_playerPlayerData;
 
-        do
+        for (i=0; i<4; i++, player_data++)
         {
             if (getPlayerCount() == 1)
             {
+                // s4 variable
                 player_data->autoaim = 0;
                 player_data->sight = 0;
                 player_data->handicap = 1.0f;
@@ -410,27 +411,28 @@ void stage_load(s32 stage)
             {
                 s32 s3;
 
-                // why is this looping from player1_player_data again, this inner block
+                // why is this looping from g_playerPlayerData again, this inner block
                 // gets executed 16 times in multiplayer.
-                for (s3 = 0, phi_s1_2 = &player1_player_data; s3 < 4; s3++, phi_s1_2++)
+                for (s3 = 0; s3 < 4; s3++)
                 {
                     if (get_scenario() == SCENARIO_LTK)
                     {
-                        phi_s1_2->handicap = 200.0f;
+                        g_playerPlayerData[s3].handicap = 200.0f;
                     }
                     else
                     {
-                        phi_s1_2->handicap = get_player_mp_handicap(s3);
+                        g_playerPlayerData[s3].handicap = get_player_mp_handicap(s3);
                     }
                     
-                    phi_s1_2->player_perspective_height = get_player_mp_char_height(s3);
+                    g_playerPlayerData[s3].player_perspective_height = get_player_mp_char_height(s3);
                 }
 
                 set_mp_time(get_mp_timelimit());
                 set_mp_point(get_mp_pointlimit());
                 copy_aim_settings_to_playerdata();
             }
-            
+
+            // g_playerPlayerData s4 variable
             player_data->time_other_players_on_screen = 0;
             player_data->damage_to_backside = 0;
             player_data->min_time_between_kills = 0x7FFFFFFF;
@@ -443,18 +445,13 @@ void stage_load(s32 stage)
             player_data->flag_counter = 0;
             player_data->distance_traveled = 0.0f; // one kind of float zero
             player_data->body_armor_pickups = 0.f; // a different kind of float zero
-            
-            player_data++;
 
-            // what is this even doing, why can't it use the other pointer
-            phi_s4->killed_p4 = 0;
-            phi_s4->killed_p3 = 0;
-            phi_s4->killed_p2 = 0;
-            phi_s4->killed_p1 = 0;
-
-            phi_s4++;
-
-        } while ((void *)phi_s4 != (void *)(&player4_player_data + sizeof(player4_player_data)));
+            // g_playerPlayerData s2, different than above
+            g_playerPlayerData[i].killed_p4 = 0;
+            g_playerPlayerData[i].killed_p3 = 0;
+            g_playerPlayerData[i].killed_p2 = 0;
+            g_playerPlayerData[i].killed_p1 = 0;
+        }
     }
 
     something_with_stage_objectives();
@@ -473,7 +470,6 @@ void stage_load(s32 stage)
     sub_GAME_7F007290();
     sub_GAME_7F0072B0();
 
-    // g_CurrentStageToLoad regalloc, should be t4, currently t3
     if (g_CurrentStageToLoad == LEVELID_TITLE)
     {
         disable_onscreen_cheat_text();
@@ -3392,6 +3388,7 @@ void setDamageMultipliersForDifficulty(void)
 
 
 #ifdef NONMATCHING
+//#if 0
 void manage_mp_game(void)
 {
     s32 sp194;
