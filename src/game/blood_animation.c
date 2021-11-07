@@ -218,23 +218,23 @@ s32 die_blood_image_routine(s32 arg0) {
    u8* temp_v0_2;
 
    if (arg0 == 0) {
-      currentplayer->field_11A8 = die_blood_image_1;
+      g_CurrentPlayer->field_11A8 = die_blood_image_1;
    } else if (arg0 == 1) {
-      if (currentplayer->field_11AC < &D_8002C50C) {
-         currentplayer->field_11A8 = currentplayer->field_11AC;
+      if (g_CurrentPlayer->field_11AC < &D_8002C50C) {
+         g_CurrentPlayer->field_11A8 = g_CurrentPlayer->field_11AC;
       }
    }
 
-   currentplayer->field_11B8 = (1 - currentplayer->field_11B8);
-   currentplayer->field_11B0[currentplayer->field_11B8] = dynAllocate(0x1E00);
+   g_CurrentPlayer->field_11B8 = (1 - g_CurrentPlayer->field_11B8);
+   g_CurrentPlayer->field_11B0[g_CurrentPlayer->field_11B8] = dynAllocate(0x1E00);
    temp_v0_2 = dynAllocate(0x1E00);
-   currentplayer->field_11AC = decrypt_bleeding_animation_data(currentplayer->field_11A8, 0x50, 0x60, temp_v0_2, &sp37);
-   sub_GAME_7F01D16C(temp_v0_2, 0x50, 0x60, currentplayer->field_11B0[currentplayer->field_11B8]);
-   sub_GAME_7F01D02C(currentplayer->field_11B0[currentplayer->field_11B8], 0x50, currentplayer->field_11B0[currentplayer->field_11B8]);
-   sub_GAME_7F01CEEC(currentplayer->field_11B0[currentplayer->field_11B8], 0x50, currentplayer->field_11B0[currentplayer->field_11B8]);
-   sub_GAME_7F01CC94(currentplayer->field_11B0[currentplayer->field_11B8], 0x1E00, currentplayer->field_11B0[currentplayer->field_11B8]);
+   g_CurrentPlayer->field_11AC = decrypt_bleeding_animation_data(g_CurrentPlayer->field_11A8, 0x50, 0x60, temp_v0_2, &sp37);
+   sub_GAME_7F01D16C(temp_v0_2, 0x50, 0x60, g_CurrentPlayer->field_11B0[g_CurrentPlayer->field_11B8]);
+   sub_GAME_7F01D02C(g_CurrentPlayer->field_11B0[g_CurrentPlayer->field_11B8], 0x50, g_CurrentPlayer->field_11B0[g_CurrentPlayer->field_11B8]);
+   sub_GAME_7F01CEEC(g_CurrentPlayer->field_11B0[g_CurrentPlayer->field_11B8], 0x50, g_CurrentPlayer->field_11B0[g_CurrentPlayer->field_11B8]);
+   sub_GAME_7F01CC94(g_CurrentPlayer->field_11B0[g_CurrentPlayer->field_11B8], 0x1E00, g_CurrentPlayer->field_11B0[g_CurrentPlayer->field_11B8]);
 
-   return (currentplayer->field_11AC >= &D_8002C50C);
+   return (g_CurrentPlayer->field_11AC >= &D_8002C50C);
 }
 
 Gfx *sub_GAME_7F01C400(Gfx *gdl) {
@@ -249,7 +249,7 @@ Gfx *sub_GAME_7F01C400(Gfx *gdl) {
    gDPSetColorDither(gdl++, G_CD_MAGICSQ);
    gDPSetPrimColor(gdl++, 0, 0, 0x96, 0x00, 0x00, 0xB4);
    gDPSetTexturePersp(gdl++, G_TP_NONE);
-   gDPLoadTextureBlock_4b(gdl++, OS_K0_TO_PHYSICAL(currentplayer->field_11B0[currentplayer->field_11B8]), G_IM_FMT_I, 96, 80, 0, (G_TX_NOMIRROR | G_TX_CLAMP), (G_TX_NOMIRROR | G_TX_CLAMP), G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+   gDPLoadTextureBlock_4b(gdl++, OS_K0_TO_PHYSICAL(g_CurrentPlayer->field_11B0[g_CurrentPlayer->field_11B8]), G_IM_FMT_I, 96, 80, 0, (G_TX_NOMIRROR | G_TX_CLAMP), (G_TX_NOMIRROR | G_TX_CLAMP), G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
    gSPTextureRectangle(gdl++, 0, 0, ((viGetX() * 4) - 1), ((viGetY() * 4) - 1), G_TX_RENDERTILE, 0, 0, 0x18000 / viGetX(), 0x14000 / viGetY());
    
    return gdl;
@@ -266,7 +266,7 @@ Gfx *sub_GAME_7F01C670(Gfx *gdl) {
    gDPSetColorDither(gdl++, G_CD_MAGICSQ);
    gDPSetPrimColor(gdl++, 0, 0, 0x96, 0x00, 0x00, 0xB4);
    gDPSetTexturePersp(gdl++, G_TP_NONE);
-   gDPLoadTextureBlock_4b(gdl++, OS_K0_TO_PHYSICAL(currentplayer->field_11B0[currentplayer->field_11B8]), G_IM_FMT_I, 96, 80, 0, (G_TX_NOMIRROR | G_TX_CLAMP), (G_TX_NOMIRROR | G_TX_CLAMP), G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD); 
+   gDPLoadTextureBlock_4b(gdl++, OS_K0_TO_PHYSICAL(g_CurrentPlayer->field_11B0[g_CurrentPlayer->field_11B8]), G_IM_FMT_I, 96, 80, 0, (G_TX_NOMIRROR | G_TX_CLAMP), (G_TX_NOMIRROR | G_TX_CLAMP), G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD); 
    gSPTextureRectangle(gdl++, (viGetViewLeft() * 4), (viGetViewTop() * 4), (((viGetViewLeft() + viGetViewWidth()) * 4) - 1), (((viGetViewTop() + viGetViewHeight()) * 4) - 1), G_TX_RENDERTILE, 0, 0, (0x18000 / viGetViewWidth()), (0x14000 / viGetViewHeight()));
    gDPPipeSync(gdl++);
    gDPSetColorDither(gdl++, G_CD_BAYER);

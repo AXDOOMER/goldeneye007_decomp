@@ -28,8 +28,8 @@ glabel sub_GAME_7F0BC530
 /* 0F1078 7F0BC548 00008025 */   move  $s0, $zero
 /* 0F107C 7F0BC54C 1840000D */  blez  $v0, .L7F0BC584
 /* 0F1080 7F0BC550 00107080 */   sll   $t6, $s0, 2
-/* 0F1084 7F0BC554 3C0F8008 */  lui   $t7, %hi(players) 
-/* 0F1088 7F0BC558 25EF9EE0 */  addiu $t7, %lo(players) # addiu $t7, $t7, -0x6120
+/* 0F1084 7F0BC554 3C0F8008 */  lui   $t7, %hi(g_playerPointers) 
+/* 0F1088 7F0BC558 25EF9EE0 */  addiu $t7, %lo(g_playerPointers) # addiu $t7, $t7, -0x6120
 /* 0F108C 7F0BC55C 01CF8821 */  addu  $s1, $t6, $t7
 /* 0F1090 7F0BC560 2412FFFF */  li    $s2, -1
 /* 0F1094 7F0BC564 8E380000 */  lw    $t8, ($s1)
@@ -94,7 +94,7 @@ glabel sub_GAME_7F0BC530
 
 
 void sub_GAME_7F0BC624(s32 param_1) {
-  currentplayer->field_108C = param_1;
+  g_CurrentPlayer->field_108C = param_1;
 }
 
 
@@ -357,22 +357,22 @@ s32 sub_GAME_7F0BC85C(s32 index)
   float mtx [4] [4];
   
   iVar2 = array_room_info[index].field_36;
-  if ((iVar2 == -1) || (currentplayer->field_108C != dword_CODE_bss_80083900[iVar2])) {
+  if ((iVar2 == -1) || (g_CurrentPlayer->field_108C != dword_CODE_bss_80083900[iVar2])) {
     if (iVar2 != -1) {
       sub_GAME_7F0BC660(iVar2,index);
     }
     iVar2 = sub_GAME_7F0BC6F0();
     sub_GAME_7F0BC634(iVar2,index);
     dword_CODE_bss_80083320[iVar2] = 0;
-    dword_CODE_bss_80083900[iVar2] = currentplayer->field_108C;
+    dword_CODE_bss_80083900[iVar2] = g_CurrentPlayer->field_108C;
     matrix_4x4_set_identity(mtx);
     mtx[0][0] = room_data_float2;
     mtx[1][1] = room_data_float2;
     mtx[2][2] = room_data_float2;
     room = &ptr_bgdata_room_fileposition_list[index];
-    mtx[3][0] = (room->pos).x * room_data_float2 - currentplayer->current_model_pos.x;
-    mtx[3][1] = (room->pos).y * room_data_float2 - currentplayer->current_model_pos.y;
-    mtx[3][2] = (room->pos).z * room_data_float2 - currentplayer->current_model_pos.z;
+    mtx[3][0] = (room->pos).x * room_data_float2 - g_CurrentPlayer->current_model_pos.x;
+    mtx[3][1] = (room->pos).y * room_data_float2 - g_CurrentPlayer->current_model_pos.y;
+    mtx[3][2] = (room->pos).z * room_data_float2 - g_CurrentPlayer->current_model_pos.z;
     sub_GAME_7F058C9C(mtx,dword_CODE_bss_80083DB0[iVar2]);
   }
   else {
@@ -396,8 +396,8 @@ glabel sub_GAME_7F0BC85C
 /* 0F13B0 7F0BC880 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 0F13B4 7F0BC884 1202000C */  beq   $s0, $v0, .L7F0BC8B8
 /* 0F13B8 7F0BC888 AFA40070 */   sw    $a0, 0x70($sp)
-/* 0F13BC 7F0BC88C 3C188008 */  lui   $t8, %hi(currentplayer) 
-/* 0F13C0 7F0BC890 8F18A0B0 */  lw    $t8, %lo(currentplayer)($t8)
+/* 0F13BC 7F0BC88C 3C188008 */  lui   $t8, %hi(g_CurrentPlayer) 
+/* 0F13C0 7F0BC890 8F18A0B0 */  lw    $t8, %lo(g_CurrentPlayer)($t8)
 /* 0F13C4 7F0BC894 00104080 */  sll   $t0, $s0, 2
 /* 0F13C8 7F0BC898 3C098008 */  lui   $t1, %hi(dword_CODE_bss_80083900)
 /* 0F13CC 7F0BC89C 01284821 */  addu  $t1, $t1, $t0
@@ -428,8 +428,8 @@ glabel sub_GAME_7F0BC85C
 /* 0F1424 7F0BC8F4 1000002E */  b     .L7F0BC9B0
 /* 0F1428 7F0BC8F8 02001025 */   move  $v0, $s0
 .L7F0BC8FC:
-/* 0F142C 7F0BC8FC 3C0A8008 */  lui   $t2, %hi(currentplayer) 
-/* 0F1430 7F0BC900 8D4AA0B0 */  lw    $t2, %lo(currentplayer)($t2)
+/* 0F142C 7F0BC8FC 3C0A8008 */  lui   $t2, %hi(g_CurrentPlayer) 
+/* 0F1430 7F0BC900 8D4AA0B0 */  lw    $t2, %lo(g_CurrentPlayer)($t2)
 /* 0F1434 7F0BC904 00106080 */  sll   $t4, $s0, 2
 /* 0F1438 7F0BC908 3C018008 */  lui   $at, %hi(dword_CODE_bss_80083900)
 /* 0F143C 7F0BC90C 8D4B108C */  lw    $t3, 0x108c($t2)
@@ -450,8 +450,8 @@ glabel sub_GAME_7F0BC85C
 /* 0F1478 7F0BC948 E7A00054 */  swc1  $f0, 0x54($sp)
 /* 0F147C 7F0BC94C 01AF1821 */  addu  $v1, $t5, $t7
 /* 0F1480 7F0BC950 C464000C */  lwc1  $f4, 0xc($v1)
-/* 0F1484 7F0BC954 3C028008 */  lui   $v0, %hi(currentplayer)
-/* 0F1488 7F0BC958 8C42A0B0 */  lw    $v0, %lo(currentplayer)($v0)
+/* 0F1484 7F0BC954 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
+/* 0F1488 7F0BC958 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
 /* 0F148C 7F0BC95C 46002182 */  mul.s $f6, $f4, $f0
 /* 0F1490 7F0BC960 3C088008 */  lui   $t0, %hi(dword_CODE_bss_80083DB0) 
 /* 0F1494 7F0BC964 C4480038 */  lwc1  $f8, 0x38($v0)

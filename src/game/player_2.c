@@ -16,24 +16,24 @@ void default_player_perspective_and_height(void)
 
   if (0) { }
 
-  players_player_data[0].player_perspective_height = value;
-  players_player_data[0].handicap = value;
-  players_player_data[1].player_perspective_height = value;
-  players_player_data[1].handicap = value;
-  players_player_data[2].player_perspective_height = value;
-  players_player_data[2].handicap = value;
-  players_player_data[3].player_perspective_height = value;
-  players_player_data[3].handicap = value;
+  g_playerPlayerData[0].player_perspective_height = value;
+  g_playerPlayerData[0].handicap = value;
+  g_playerPlayerData[1].player_perspective_height = value;
+  g_playerPlayerData[1].handicap = value;
+  g_playerPlayerData[2].player_perspective_height = value;
+  g_playerPlayerData[2].handicap = value;
+  g_playerPlayerData[3].player_perspective_height = value;
+  g_playerPlayerData[3].handicap = value;
 }
 
 void reset_play_data_ptrs(void) 
 {
-    players[0] = 0;
-    players[1] = 0;
-    players[2] = 0;
-    players[3] = 0;
-    currentplayer = 0;
-    pPlayersPerm = 0;
+    g_playerPointers[0] = 0;
+    g_playerPointers[1] = 0;
+    g_playerPointers[2] = 0;
+    g_playerPointers[3] = 0;
+    g_CurrentPlayer = 0;
+    g_playerPerm = 0;
     player_num = 0;
     random_byte = 0;
     array_PLAYER_IDs[0] = 0;
@@ -46,10 +46,10 @@ void init_player_data_ptrs_construct_viewports(s32 playercount)
 {
     s32 i;
 
-    players[0] = NULL;
-    players[1] = NULL;
-    players[2] = NULL;
-    players[3] = NULL;
+    g_playerPointers[0] = NULL;
+    g_playerPointers[1] = NULL;
+    g_playerPointers[2] = NULL;
+    g_playerPointers[3] = NULL;
     random_byte = (s32) (randomGetNext() & 0xFF);
     if (playercount > 0)
     {
@@ -71,7 +71,7 @@ s32 getPlayerCount(void)
     s32 count = 0;
     s32 i;
     for (i = 0; i < 4; i++) {
-        if (players[i] != NULL) {
+        if (g_playerPointers[i] != NULL) {
             count++;
         }
     }
@@ -103,7 +103,7 @@ void initBONDdataforPlayer(PLAYER_ID player)
         dest = dest + 3;
     } while (src_next != (int *)0x80040148);
     pPVar4 = (player *)mempAllocBytesInBank(0x2a80,4);
-    ppPVar3 = players + player;
+    ppPVar3 = g_playerPointers + player;
     *ppPVar3 = pPVar4;
     pPVar4->unknown = 0;
     (*ppPVar3)->xpos = 0.00000000;
@@ -508,8 +508,8 @@ glabel initBONDdataforPlayer
 /* 0CF030 7F09A500 0C0025C8 */  jal   mempAllocBytesInBank
 /* 0CF034 7F09A504 24050004 */   li    $a1, 4
 /* 0CF038 7F09A508 8FAC03D0 */  lw    $t4, 0x3d0($sp)
-/* 0CF03C 7F09A50C 3C198008 */  lui   $t9, %hi(players)
-/* 0CF040 7F09A510 27399EE0 */  addiu $t9, %lo(players) # addiu $t9, $t9, -0x6120
+/* 0CF03C 7F09A50C 3C198008 */  lui   $t9, %hi(g_playerPointers)
+/* 0CF040 7F09A510 27399EE0 */  addiu $t9, %lo(g_playerPointers) # addiu $t9, $t9, -0x6120
 /* 0CF044 7F09A514 000C6880 */  sll   $t5, $t4, 2
 /* 0CF048 7F09A518 01B91821 */  addu  $v1, $t5, $t9
 /* 0CF04C 7F09A51C AC620000 */  sw    $v0, ($v1)
@@ -1322,8 +1322,8 @@ glabel initBONDdataforPlayer
 /* 0CFC10 7F09B0A0 0C0025CC */  jal   mempAllocBytesInBank
 /* 0CFC14 7F09B0A4 24050004 */   li    $a1, 4
 /* 0CFC18 7F09B0A8 8FAC03D0 */  lw    $t4, 0x3d0($sp)
-/* 0CFC1C 7F09B0AC 3C198008 */  lui   $t9, %hi(players) # $t9, 0x8008
-/* 0CFC20 7F09B0B0 27399F50 */  addiu $t9, %lo(players) # addiu $t9, $t9, -0x60b0
+/* 0CFC1C 7F09B0AC 3C198008 */  lui   $t9, %hi(g_playerPointers) # $t9, 0x8008
+/* 0CFC20 7F09B0B0 27399F50 */  addiu $t9, %lo(g_playerPointers) # addiu $t9, $t9, -0x60b0
 /* 0CFC24 7F09B0B4 000C6880 */  sll   $t5, $t4, 2
 /* 0CFC28 7F09B0B8 01B91821 */  addu  $v1, $t5, $t9
 /* 0CFC2C 7F09B0BC AC620000 */  sw    $v0, ($v1)
@@ -2104,8 +2104,8 @@ glabel initBONDdataforPlayer
 void set_cur_player(s32 playernum)
 {
     player_num = playernum;
-    currentplayer = players[playernum];
-    pPlayersPerm = &players_player_data[playernum];
+    g_CurrentPlayer = g_playerPointers[playernum];
+    g_playerPerm = &g_playerPlayerData[playernum];
 }
 
 
@@ -2119,7 +2119,7 @@ s32 sub_GAME_7F09B15C(struct prop* prop)
     s32 i;
 
     for(i = 0; i < getPlayerCount(); i++) {
-        if (players[i]->prop == prop) {
+        if (g_playerPointers[i]->prop == prop) {
            return i;
         }
     }
@@ -2130,49 +2130,49 @@ s32 sub_GAME_7F09B15C(struct prop* prop)
 
 void set_cur_player_screen_size(u32 width, u32 height) {
     #ifdef XBLADEBUG
-        if (currentplayer == NULL) {
-        assertPrint_8291E690(".\\ported\\player.cpp",0x25a,"Assertion failed: currentplayer");
+        if (g_CurrentPlayer == NULL) {
+        assertPrint_8291E690(".\\ported\\player.cpp",0x25a,"Assertion failed: g_CurrentPlayer");
     }
     #endif
-  currentplayer->viewx = width;
-  currentplayer->viewy = height;
+  g_CurrentPlayer->viewx = width;
+  g_CurrentPlayer->viewy = height;
 }
 
 void set_cur_player_viewport_size(u32 ulx, u32 uly) {
         #ifdef XBLADEBUG
-        if (currentplayer == NULL) {
-        assertPrint_8291E690(".\\ported\\player.cpp",0x262,"Assertion failed: currentplayer");
+        if (g_CurrentPlayer == NULL) {
+        assertPrint_8291E690(".\\ported\\player.cpp",0x262,"Assertion failed: g_CurrentPlayer");
     }
     #endif
-  currentplayer->viewleft = ulx;
-  currentplayer->viewtop = uly;
+  g_CurrentPlayer->viewleft = ulx;
+  g_CurrentPlayer->viewtop = uly;
 }
 
 void set_cur_player_fovy(f32 fovy) {
             #ifdef XBLADEBUG
-        if (currentplayer == NULL) {
-        assertPrint_8291E690(".\\ported\\player.cpp",0x26a,"Assertion failed: currentplayer");
+        if (g_CurrentPlayer == NULL) {
+        assertPrint_8291E690(".\\ported\\player.cpp",0x26a,"Assertion failed: g_CurrentPlayer");
     }
     #endif
-    currentplayer->fovy = fovy;
+    g_CurrentPlayer->fovy = fovy;
 }
 
 void set_cur_player_aspect(f32 aspect) {
     #ifdef XBLADEBUG
-        if (currentplayer == NULL) {
-        assertPrint_8291E690(".\\ported\\player.cpp",0x271,"Assertion failed: currentplayer");
+        if (g_CurrentPlayer == NULL) {
+        assertPrint_8291E690(".\\ported\\player.cpp",0x271,"Assertion failed: g_CurrentPlayer");
     }
     #endif
-    currentplayer->aspect = aspect;
+    g_CurrentPlayer->aspect = aspect;
 }
 
 f32 get_cur_player_fovy(void) {
     #ifdef XBLADEBUG
-        if (currentplayer == NULL) {
-        assertPrint_8291E690(".\\ported\\player.cpp",0x278,"Assertion failed: currentplayer");
+        if (g_CurrentPlayer == NULL) {
+        assertPrint_8291E690(".\\ported\\player.cpp",0x278,"Assertion failed: g_CurrentPlayer");
     }
     #endif
-    return currentplayer->fovy;
+    return g_CurrentPlayer->fovy;
 }
 
 
@@ -2365,7 +2365,7 @@ weapon_multi_none:
 #ifdef NONMATCHING
 void sub_GAME_7F09B368(s32 arg0) {
     // Node 0
-    return set_0x4_in_runtime_flags_for_item_in_guards_hand(currentplayer->unkA8->unk4, arg0);
+    return set_0x4_in_runtime_flags_for_item_in_guards_hand(g_CurrentPlayer->unkA8->unk4, arg0);
 }
 
 #else
@@ -2383,8 +2383,8 @@ GLOBAL_ASM(
 /*.word weapon_multi_none*/
 .text
 glabel sub_GAME_7F09B368
-/* 0CFE98 7F09B368 3C0E8008 */  lui   $t6, %hi(currentplayer)
-/* 0CFE9C 7F09B36C 8DCEA0B0 */  lw    $t6, %lo(currentplayer)($t6)
+/* 0CFE98 7F09B368 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer)
+/* 0CFE9C 7F09B36C 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
 /* 0CFEA0 7F09B370 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0CFEA4 7F09B374 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0CFEA8 7F09B378 8DCF00A8 */  lw    $t7, 0xa8($t6)
@@ -2411,7 +2411,7 @@ void sub_GAME_7F09B398(HANDEDNESS hand) {
     ITEM_IDS weaponNum;
     s32 weaponIdMaybe;
 
-    temp_v0 = currentplayer->prop->chr;
+    temp_v0 = g_CurrentPlayer->prop->chr;
     if (!temp_v0->handle_positiondata[hand]) {
         weaponNum = get_item_in_hand(hand);
         weaponIdMaybe = sub_GAME_7F09B244(weaponNum);
@@ -2433,8 +2433,8 @@ GLOBAL_ASM(
 
 .text
 glabel sub_GAME_7F09B398
-/* 0CFEC8 7F09B398 3C0E8008 */  lui   $t6, %hi(currentplayer)
-/* 0CFECC 7F09B39C 8DCEA0B0 */  lw    $t6, %lo(currentplayer)($t6)
+/* 0CFEC8 7F09B398 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer)
+/* 0CFECC 7F09B39C 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
 /* 0CFED0 7F09B3A0 27BDFFC8 */  addiu $sp, $sp, -0x38
 /* 0CFED4 7F09B3A4 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 0CFED8 7F09B3A8 8DCF00A8 */  lw    $t7, 0xa8($t6)
@@ -2519,7 +2519,7 @@ loop_1:
     {
         // Node 2
         phi_v1_2 = phi_v1_3;
-        if (*(&players + (temp_v0 * 4)) != 0)
+        if (*(&g_playerPointers + (temp_v0 * 4)) != 0)
         {
             // Node 3
             phi_v1_2 = (phi_v1_3 + 1);
@@ -2542,9 +2542,9 @@ GLOBAL_ASM(
 glabel sub_GAME_7F09B4D8
 /* 0D0008 7F09B4D8 3C058008 */  lui   $a1, %hi(array_PLAYER_IDs)
 /* 0D000C 7F09B4DC 3C078008 */  lui   $a3, %hi(dword_CODE_bss_8007A0D0)
-/* 0D0010 7F09B4E0 3C068008 */  lui   $a2, %hi(players)
+/* 0D0010 7F09B4E0 3C068008 */  lui   $a2, %hi(g_playerPointers)
 /* 0D0014 7F09B4E4 00001825 */  move  $v1, $zero
-/* 0D0018 7F09B4E8 24C69EE0 */  addiu $a2, %lo(players) # addiu $a2, $a2, -0x6120
+/* 0D0018 7F09B4E8 24C69EE0 */  addiu $a2, %lo(g_playerPointers) # addiu $a2, $a2, -0x6120
 /* 0D001C 7F09B4EC 24E7A0D0 */  addiu $a3, %lo(dword_CODE_bss_8007A0D0) # addiu $a3, $a3, -0x5f30
 /* 0D0020 7F09B4F0 24A5A0C0 */  addiu $a1, %lo(array_PLAYER_IDs) # addiu $a1, $a1, -0x5f40
 /* 0D0024 7F09B4F4 8CA20000 */  lw    $v0, ($a1)
@@ -2575,7 +2575,7 @@ s32 get_nth_player_from_shuffled(PLAYER_ID id)
     s32 i;
 
     for (i = 0; i < 4; i++) {
-        if (players[array_PLAYER_IDs[i]] != NULL) {
+        if (g_playerPointers[array_PLAYER_IDs[i]] != NULL) {
             if (id == 0) {
                return array_PLAYER_IDs[i];
             }

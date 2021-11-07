@@ -10,14 +10,14 @@ s32 copyof_stagenum;
 s32 dword_CODE_bss_80079E94;
 char dword_CODE_bss_80079E98[0x48];
 
-struct player *players[4];
-struct player_data players_player_data[4];
+struct player *g_playerPointers[4];
+struct player_data g_playerPlayerData[4];
 
 /**
  * Address 0x8007a0b0.
  */
-struct player *currentplayer;
-struct player_data *pPlayersPerm;
+struct player *g_CurrentPlayer;
+struct player_data *g_playerPerm;
 
 s32 player_num;
 s32 random_byte;
@@ -1171,7 +1171,7 @@ glabel sub_GAME_7F094488
 /* 0C9014 7F0944E4 00000000 */   nop
 /* 0C9018 7F0944E8 24010001 */  li    $at, 1
 /* 0C901C 7F0944EC 1441003B */  bne   $v0, $at, .L7F0945DC
-/* 0C9020 7F0944F0 3C088008 */   lui   $t0, %hi(currentplayer)
+/* 0C9020 7F0944F0 3C088008 */   lui   $t0, %hi(g_CurrentPlayer)
 /* 0C9024 7F0944F4 8FAF06B0 */  lw    $t7, 0x6b0($sp)
 /* 0C9028 7F0944F8 3C19BA00 */  lui   $t9, (0xBA001402 >> 16) # lui $t9, 0xba00
 /* 0C902C 7F0944FC 37391402 */  ori   $t9, (0xBA001402 & 0xFFFF) # ori $t9, $t9, 0x1402
@@ -1253,7 +1253,7 @@ glabel sub_GAME_7F094488
 /* 0C9158 7F094628 AF000004 */  sw    $zero, 4($t8)
 /* 0C915C 7F09462C AF0B0000 */  sw    $t3, ($t8)
 /* 0C9160 7F094630 8FA606B0 */  lw    $a2, 0x6b0($sp)
-/* 0C9164 7F094634 2508A0B0 */  addiu $t0, %lo(currentplayer) # addiu $t0, $t0, -0x5f50
+/* 0C9164 7F094634 2508A0B0 */  addiu $t0, %lo(g_CurrentPlayer) # addiu $t0, $t0, -0x5f50
 /* 0C9168 7F094638 8D020000 */  lw    $v0, ($t0)
 /* 0C916C 7F09463C 24CC0008 */  addiu $t4, $a2, 8
 /* 0C9170 7F094640 AFAC06B0 */  sw    $t4, 0x6b0($sp)

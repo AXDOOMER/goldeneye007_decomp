@@ -63,7 +63,7 @@ u32 D_80036B6C = 0;
 // rodata
 
 void currentPlayerToggle5BC() {
-    currentplayer->field_5BC = !currentplayer->field_5BC;
+    g_CurrentPlayer->field_5BC = !g_CurrentPlayer->field_5BC;
 }
 
 u32 randomGetNext();
@@ -71,87 +71,87 @@ u32 randomGetNext();
 void currentPlayerUpdateIdleHeadRoll() {
     f32 mult = 1.0f / U32_MAX;
 
-	currentplayer->standlook[currentplayer->standcnt][0] = ((f32)randomGetNext() * mult - 0.5f) * 0.02f;
-	currentplayer->standlook[currentplayer->standcnt][2] = 1;
-	currentplayer->standup[currentplayer->standcnt][0] = ((f32)randomGetNext() * mult - 0.5f) * 0.02f;
-	currentplayer->standup[currentplayer->standcnt][1] = 1;
+	g_CurrentPlayer->standlook[g_CurrentPlayer->standcnt][0] = ((f32)randomGetNext() * mult - 0.5f) * 0.02f;
+	g_CurrentPlayer->standlook[g_CurrentPlayer->standcnt][2] = 1;
+	g_CurrentPlayer->standup[g_CurrentPlayer->standcnt][0] = ((f32)randomGetNext() * mult - 0.5f) * 0.02f;
+	g_CurrentPlayer->standup[g_CurrentPlayer->standcnt][1] = 1;
 
-	if (currentplayer->standcnt) {
-		currentplayer->standlook[currentplayer->standcnt][1] = (f32)randomGetNext() * mult * 0.01f;
-		currentplayer->standup[currentplayer->standcnt][2] = (f32)randomGetNext() * mult * -0.01f;
+	if (g_CurrentPlayer->standcnt) {
+		g_CurrentPlayer->standlook[g_CurrentPlayer->standcnt][1] = (f32)randomGetNext() * mult * 0.01f;
+		g_CurrentPlayer->standup[g_CurrentPlayer->standcnt][2] = (f32)randomGetNext() * mult * -0.01f;
 	} else {
-		currentplayer->standlook[currentplayer->standcnt][1] = (f32)randomGetNext() * mult * -0.01f;
-		currentplayer->standup[currentplayer->standcnt][2] = (f32)randomGetNext() * mult * 0.01f;
+		g_CurrentPlayer->standlook[g_CurrentPlayer->standcnt][1] = (f32)randomGetNext() * mult * -0.01f;
+		g_CurrentPlayer->standup[g_CurrentPlayer->standcnt][2] = (f32)randomGetNext() * mult * 0.01f;
 	}
 
-	currentplayer->standcnt = 1 - currentplayer->standcnt;
+	g_CurrentPlayer->standcnt = 1 - g_CurrentPlayer->standcnt;
 }
 
 void currentPlayerUpdateHeadPos(vec3 vel) {
     s32 i;
 
-    if (currentplayer->resetheadpos) {
-        currentplayer->headpossum[0] = 0.0f;
-        currentplayer->headpossum[1] = (vel[1] / (1.0f - 0.93f));
-        currentplayer->headpossum[2] = 0.0f;
+    if (g_CurrentPlayer->resetheadpos) {
+        g_CurrentPlayer->headpossum[0] = 0.0f;
+        g_CurrentPlayer->headpossum[1] = (vel[1] / (1.0f - 0.93f));
+        g_CurrentPlayer->headpossum[2] = 0.0f;
 
-        currentplayer->resetheadpos = FALSE;
+        g_CurrentPlayer->resetheadpos = FALSE;
     }
 
     for (i = 0; i < g_ClockTimer; i++) {
-        currentplayer->headpossum[0] = ((0.93f * currentplayer->headpossum[0]) + vel[0]);
-        currentplayer->headpossum[1] = ((0.93f * currentplayer->headpossum[1]) + vel[1]);
-        currentplayer->headpossum[2] = ((0.93f * currentplayer->headpossum[2]) + vel[2]);
+        g_CurrentPlayer->headpossum[0] = ((0.93f * g_CurrentPlayer->headpossum[0]) + vel[0]);
+        g_CurrentPlayer->headpossum[1] = ((0.93f * g_CurrentPlayer->headpossum[1]) + vel[1]);
+        g_CurrentPlayer->headpossum[2] = ((0.93f * g_CurrentPlayer->headpossum[2]) + vel[2]);
     }
 
-    currentplayer->headpos[0] = (currentplayer->headpossum[0] * (1.0f - 0.93f));
-    currentplayer->headpos[1] = (currentplayer->headpossum[1] * (1.0f - 0.93f));
-    currentplayer->headpos[2] = (currentplayer->headpossum[2] * (1.0f - 0.93f));
+    g_CurrentPlayer->headpos[0] = (g_CurrentPlayer->headpossum[0] * (1.0f - 0.93f));
+    g_CurrentPlayer->headpos[1] = (g_CurrentPlayer->headpossum[1] * (1.0f - 0.93f));
+    g_CurrentPlayer->headpos[2] = (g_CurrentPlayer->headpossum[2] * (1.0f - 0.93f));
 }
 
 void currentPlayerUpdateHeadRot(vec3 lookvel, vec3 upvel)
 {
 	s32 i;
 
-	if (currentplayer->resetheadrot) {
-		currentplayer->headlooksum[0] = lookvel[0] / (1.0f - currentplayer->headdamp);
-		currentplayer->headlooksum[1] = lookvel[1] / (1.0f - currentplayer->headdamp);
-		currentplayer->headlooksum[2] = lookvel[2] / (1.0f - currentplayer->headdamp);
-		currentplayer->headupsum[0] = upvel[0] / (1.0f - currentplayer->headdamp);
-		currentplayer->headupsum[1] = upvel[1] / (1.0f - currentplayer->headdamp);
-		currentplayer->headupsum[2] = upvel[2] / (1.0f - currentplayer->headdamp);
+	if (g_CurrentPlayer->resetheadrot) {
+		g_CurrentPlayer->headlooksum[0] = lookvel[0] / (1.0f - g_CurrentPlayer->headdamp);
+		g_CurrentPlayer->headlooksum[1] = lookvel[1] / (1.0f - g_CurrentPlayer->headdamp);
+		g_CurrentPlayer->headlooksum[2] = lookvel[2] / (1.0f - g_CurrentPlayer->headdamp);
+		g_CurrentPlayer->headupsum[0] = upvel[0] / (1.0f - g_CurrentPlayer->headdamp);
+		g_CurrentPlayer->headupsum[1] = upvel[1] / (1.0f - g_CurrentPlayer->headdamp);
+		g_CurrentPlayer->headupsum[2] = upvel[2] / (1.0f - g_CurrentPlayer->headdamp);
 
-		currentplayer->resetheadrot = FALSE;
+		g_CurrentPlayer->resetheadrot = FALSE;
 	}
 
 	for (i = 0; i < g_ClockTimer; i++) {
-		currentplayer->headlooksum[0] = currentplayer->headdamp * currentplayer->headlooksum[0] + lookvel[0];
-		currentplayer->headlooksum[1] = currentplayer->headdamp * currentplayer->headlooksum[1] + lookvel[1];
-		currentplayer->headlooksum[2] = currentplayer->headdamp * currentplayer->headlooksum[2] + lookvel[2];
-		currentplayer->headupsum[0] = currentplayer->headdamp * currentplayer->headupsum[0] + upvel[0];
-		currentplayer->headupsum[1] = currentplayer->headdamp * currentplayer->headupsum[1] + upvel[1];
-		currentplayer->headupsum[2] = currentplayer->headdamp * currentplayer->headupsum[2] + upvel[2];
+		g_CurrentPlayer->headlooksum[0] = g_CurrentPlayer->headdamp * g_CurrentPlayer->headlooksum[0] + lookvel[0];
+		g_CurrentPlayer->headlooksum[1] = g_CurrentPlayer->headdamp * g_CurrentPlayer->headlooksum[1] + lookvel[1];
+		g_CurrentPlayer->headlooksum[2] = g_CurrentPlayer->headdamp * g_CurrentPlayer->headlooksum[2] + lookvel[2];
+		g_CurrentPlayer->headupsum[0] = g_CurrentPlayer->headdamp * g_CurrentPlayer->headupsum[0] + upvel[0];
+		g_CurrentPlayer->headupsum[1] = g_CurrentPlayer->headdamp * g_CurrentPlayer->headupsum[1] + upvel[1];
+		g_CurrentPlayer->headupsum[2] = g_CurrentPlayer->headdamp * g_CurrentPlayer->headupsum[2] + upvel[2];
 	}
 
-	currentplayer->headlook[0] = currentplayer->headlooksum[0] * (1.0f - currentplayer->headdamp);
-	currentplayer->headlook[1] = currentplayer->headlooksum[1] * (1.0f - currentplayer->headdamp);
-	currentplayer->headlook[2] = currentplayer->headlooksum[2] * (1.0f - currentplayer->headdamp);
-	currentplayer->headup[0] = currentplayer->headupsum[0] * (1.0f - currentplayer->headdamp);
-	currentplayer->headup[1] = currentplayer->headupsum[1] * (1.0f - currentplayer->headdamp);
-	currentplayer->headup[2] = currentplayer->headupsum[2] * (1.0f - currentplayer->headdamp);
+	g_CurrentPlayer->headlook[0] = g_CurrentPlayer->headlooksum[0] * (1.0f - g_CurrentPlayer->headdamp);
+	g_CurrentPlayer->headlook[1] = g_CurrentPlayer->headlooksum[1] * (1.0f - g_CurrentPlayer->headdamp);
+	g_CurrentPlayer->headlook[2] = g_CurrentPlayer->headlooksum[2] * (1.0f - g_CurrentPlayer->headdamp);
+	g_CurrentPlayer->headup[0] = g_CurrentPlayer->headupsum[0] * (1.0f - g_CurrentPlayer->headdamp);
+	g_CurrentPlayer->headup[1] = g_CurrentPlayer->headupsum[1] * (1.0f - g_CurrentPlayer->headdamp);
+	g_CurrentPlayer->headup[2] = g_CurrentPlayer->headupsum[2] * (1.0f - g_CurrentPlayer->headdamp);
 }
 
 void currentPlayerSetHeadDamp(f32 headdamp)
 {
-	if (headdamp != currentplayer->headdamp) {
+	if (headdamp != g_CurrentPlayer->headdamp) {
 		f32 divisor = 1.0f - headdamp;
-		currentplayer->headlooksum[0] = (currentplayer->headlooksum[0] * (1.0f - currentplayer->headdamp)) / divisor;
-		currentplayer->headlooksum[1] = (currentplayer->headlooksum[1] * (1.0f - currentplayer->headdamp)) / divisor;
-		currentplayer->headlooksum[2] = (currentplayer->headlooksum[2] * (1.0f - currentplayer->headdamp)) / divisor;
-		currentplayer->headupsum[0] = (currentplayer->headupsum[0] * (1.0f - currentplayer->headdamp)) / divisor;
-		currentplayer->headupsum[1] = (currentplayer->headupsum[1] * (1.0f - currentplayer->headdamp)) / divisor;
-		currentplayer->headupsum[2] = (currentplayer->headupsum[2] * (1.0f - currentplayer->headdamp)) / divisor;
-		currentplayer->headdamp = headdamp;
+		g_CurrentPlayer->headlooksum[0] = (g_CurrentPlayer->headlooksum[0] * (1.0f - g_CurrentPlayer->headdamp)) / divisor;
+		g_CurrentPlayer->headlooksum[1] = (g_CurrentPlayer->headlooksum[1] * (1.0f - g_CurrentPlayer->headdamp)) / divisor;
+		g_CurrentPlayer->headlooksum[2] = (g_CurrentPlayer->headlooksum[2] * (1.0f - g_CurrentPlayer->headdamp)) / divisor;
+		g_CurrentPlayer->headupsum[0] = (g_CurrentPlayer->headupsum[0] * (1.0f - g_CurrentPlayer->headdamp)) / divisor;
+		g_CurrentPlayer->headupsum[1] = (g_CurrentPlayer->headupsum[1] * (1.0f - g_CurrentPlayer->headdamp)) / divisor;
+		g_CurrentPlayer->headupsum[2] = (g_CurrentPlayer->headupsum[2] * (1.0f - g_CurrentPlayer->headdamp)) / divisor;
+		g_CurrentPlayer->headdamp = headdamp;
 	}
 }
 
@@ -220,8 +220,8 @@ glabel sub_GAME_7F08E240
 /* 0C2DDC 7F08E2AC 8F080004 */  lw    $t0, 4($t8)
 /* 0C2DE0 7F08E2B0 AF210000 */  sw    $at, ($t9)
 /* 0C2DE4 7F08E2B4 8F010008 */  lw    $at, 8($t8)
-/* 0C2DE8 7F08E2B8 3C108008 */  lui   $s0, %hi(currentplayer)
-/* 0C2DEC 7F08E2BC 2610A0B0 */  addiu $s0, %lo(currentplayer) # addiu $s0, $s0, -0x5f50
+/* 0C2DE8 7F08E2B8 3C108008 */  lui   $s0, %hi(g_CurrentPlayer)
+/* 0C2DEC 7F08E2BC 2610A0B0 */  addiu $s0, %lo(g_CurrentPlayer) # addiu $s0, $s0, -0x5f50
 /* 0C2DF0 7F08E2C0 AF280004 */  sw    $t0, 4($t9)
 /* 0C2DF4 7F08E2C4 AF210008 */  sw    $at, 8($t9)
 /* 0C2DF8 7F08E2C8 8E040000 */  lw    $a0, ($s0)
@@ -650,8 +650,8 @@ glabel sub_GAME_7F08E8BC
 /* 0C3424 7F08E8F4 4608603E */  c.le.s $f12, $f8
 /* 0C3428 7F08E8F8 00000000 */  nop   
 /* 0C342C 7F08E8FC 4500004A */  bc1f  .L7F08EA28
-/* 0C3430 7F08E900 3C088008 */   lui   $t0, %hi(currentplayer) 
-/* 0C3434 7F08E904 8D08A0B0 */  lw    $t0, %lo(currentplayer)($t0)
+/* 0C3430 7F08E900 3C088008 */   lui   $t0, %hi(g_CurrentPlayer) 
+/* 0C3434 7F08E904 8D08A0B0 */  lw    $t0, %lo(g_CurrentPlayer)($t0)
 /* 0C3438 7F08E908 3C188007 */  lui   $t8, %hi(ptr_animation_table) 
 /* 0C343C 7F08E90C 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 0C3440 7F08E910 8D0404E8 */  lw    $a0, 0x4e8($t0)
@@ -689,30 +689,30 @@ glabel sub_GAME_7F08E8BC
 /* 0C34BC 7F08E98C E7B00014 */  swc1  $f16, 0x14($sp)
 /* 0C34C0 7F08E990 0FC1BF2A */  jal   sub_GAME_7F06FCA8
 /* 0C34C4 7F08E994 01F82821 */   addu  $a1, $t7, $t8
-/* 0C34C8 7F08E998 3C048008 */  lui   $a0, %hi(currentplayer)
-/* 0C34CC 7F08E99C 8C84A0B0 */  lw    $a0, %lo(currentplayer)($a0)
+/* 0C34C8 7F08E998 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
+/* 0C34CC 7F08E99C 8C84A0B0 */  lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 0C34D0 7F08E9A0 8E050004 */  lw    $a1, 4($s0)
 /* 0C34D4 7F08E9A4 24060000 */  li    $a2, 0
 /* 0C34D8 7F08E9A8 0FC1BF73 */  jal   sub_GAME_7F06FDCC
 /* 0C34DC 7F08E9AC 24840598 */   addiu $a0, $a0, 0x598
-/* 0C34E0 7F08E9B0 3C048008 */  lui   $a0, %hi(currentplayer)
-/* 0C34E4 7F08E9B4 8C84A0B0 */  lw    $a0, %lo(currentplayer)($a0)
+/* 0C34E0 7F08E9B0 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
+/* 0C34E4 7F08E9B4 8C84A0B0 */  lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 0C34E8 7F08E9B8 8E050008 */  lw    $a1, 8($s0)
 /* 0C34EC 7F08E9BC 0FC1BF7A */  jal   sub_GAME_7F06FDE8
 /* 0C34F0 7F08E9C0 24840598 */   addiu $a0, $a0, 0x598
-/* 0C34F4 7F08E9C4 3C048008 */  lui   $a0, %hi(currentplayer)
-/* 0C34F8 7F08E9C8 8C84A0B0 */  lw    $a0, %lo(currentplayer)($a0)
+/* 0C34F4 7F08E9C4 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
+/* 0C34F8 7F08E9C8 8C84A0B0 */  lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 0C34FC 7F08E9CC 3C057F09 */  lui   $a1, %hi(currentPlayerToggle5BC) # $a1, 0x7f09
 /* 0C3500 7F08E9D0 24A5DBB0 */  addiu $a1, %lo(currentPlayerToggle5BC) # addiu $a1, $a1, -0x2450
 /* 0C3504 7F08E9D4 0FC1BF8F */  jal   sub_GAME_7F06FE3C
 /* 0C3508 7F08E9D8 24840598 */   addiu $a0, $a0, 0x598
-/* 0C350C 7F08E9DC 3C198008 */  lui   $t9, %hi(currentplayer) 
+/* 0C350C 7F08E9DC 3C198008 */  lui   $t9, %hi(g_CurrentPlayer) 
 /* 0C3510 7F08E9E0 8FA2002C */  lw    $v0, 0x2c($sp)
-/* 0C3514 7F08E9E4 8F39A0B0 */  lw    $t9, %lo(currentplayer)($t9)
+/* 0C3514 7F08E9E4 8F39A0B0 */  lw    $t9, %lo(g_CurrentPlayer)($t9)
 /* 0C3518 7F08E9E8 C7AC0030 */  lwc1  $f12, 0x30($sp)
-/* 0C351C 7F08E9EC 3C088008 */  lui   $t0, %hi(currentplayer) 
+/* 0C351C 7F08E9EC 3C088008 */  lui   $t0, %hi(g_CurrentPlayer) 
 /* 0C3520 7F08E9F0 AF2204E8 */  sw    $v0, 0x4e8($t9)
-/* 0C3524 7F08E9F4 8D08A0B0 */  lw    $t0, %lo(currentplayer)($t0)
+/* 0C3524 7F08E9F4 8D08A0B0 */  lw    $t0, %lo(g_CurrentPlayer)($t0)
 /* 0C3528 7F08E9F8 C600000C */  lwc1  $f0, 0xc($s0)
 /* 0C352C 7F08E9FC 46006303 */  div.s $f12, $f12, $f0
 .L7F08EA00:
@@ -760,10 +760,10 @@ glabel sub_GAME_7F08EA48
 /* 0C3590 7F08EA60 44866000 */  mtc1  $a2, $f12
 /* 0C3594 7F08EA64 00802825 */  move  $a1, $a0
 /* 0C3598 7F08EA68 AFA40020 */  sw    $a0, 0x20($sp)
-/* 0C359C 7F08EA6C 3C048008 */  lui   $a0, %hi(currentplayer)
+/* 0C359C 7F08EA6C 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
 /* 0C35A0 7F08EA70 3C014140 */  li    $at, 0x41400000 # 12.000000
 /* 0C35A4 7F08EA74 44814000 */  mtc1  $at, $f8
-/* 0C35A8 7F08EA78 8C84A0B0 */  lw    $a0, %lo(currentplayer)($a0)
+/* 0C35A8 7F08EA78 8C84A0B0 */  lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 0C35AC 7F08EA7C AFBF001C */  sw    $ra, 0x1c($sp)
 /* 0C35B0 7F08EA80 44076000 */  mfc1  $a3, $f12
 /* 0C35B4 7F08EA84 8FA60024 */  lw    $a2, 0x24($sp)
@@ -771,8 +771,8 @@ glabel sub_GAME_7F08EA48
 /* 0C35BC 7F08EA8C 24840598 */  addiu $a0, $a0, 0x598
 /* 0C35C0 7F08EA90 0FC1BF2A */  jal   sub_GAME_7F06FCA8
 /* 0C35C4 7F08EA94 E7A80014 */   swc1  $f8, 0x14($sp)
-/* 0C35C8 7F08EA98 3C0F8008 */  lui   $t7, %hi(currentplayer) 
-/* 0C35CC 7F08EA9C 8DEFA0B0 */  lw    $t7, %lo(currentplayer)($t7)
+/* 0C35C8 7F08EA98 3C0F8008 */  lui   $t7, %hi(g_CurrentPlayer) 
+/* 0C35CC 7F08EA9C 8DEFA0B0 */  lw    $t7, %lo(g_CurrentPlayer)($t7)
 /* 0C35D0 7F08EAA0 240EFFFF */  li    $t6, -1
 /* 0C35D4 7F08EAA4 ADEE04E8 */  sw    $t6, 0x4e8($t7)
 /* 0C35D8 7F08EAA8 8FBF001C */  lw    $ra, 0x1c($sp)
@@ -790,7 +790,7 @@ glabel sub_GAME_7F08EA48
 #ifdef NONMATCHING
 void sub_GAME_7F08EAB8(f32 param_1)
 {
-    sub_GAME_7F06FE4C(currentplayer->field_598, param_1 * 0.5f, 0);
+    sub_GAME_7F06FE4C(g_CurrentPlayer->field_598, param_1 * 0.5f, 0);
     return;
 }
 #else
@@ -799,8 +799,8 @@ GLOBAL_ASM(
 glabel sub_GAME_7F08EAB8
 /* 0C35E8 7F08EAB8 3C013F00 */  li    $at, 0x3F000000 # 0.500000
 /* 0C35EC 7F08EABC 44812000 */  mtc1  $at, $f4
-/* 0C35F0 7F08EAC0 3C048008 */  lui   $a0, %hi(currentplayer)
-/* 0C35F4 7F08EAC4 8C84A0B0 */  lw    $a0, %lo(currentplayer)($a0)
+/* 0C35F0 7F08EAC0 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
+/* 0C35F4 7F08EAC4 8C84A0B0 */  lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 0C35F8 7F08EAC8 46046182 */  mul.s $f6, $f12, $f4
 /* 0C35FC 7F08EACC 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0C3600 7F08EAD0 AFBF0014 */  sw    $ra, 0x14($sp)
@@ -833,8 +833,8 @@ glabel D_8005533C
 .word 0x3b888889 /*0.0041666669*/
 .text
 glabel sub_GAME_7F08EAF8
-/* 0C3628 7F08EAF8 3C0E8008 */  lui   $t6, %hi(currentplayer) 
-/* 0C362C 7F08EAFC 8DCEA0B0 */  lw    $t6, %lo(currentplayer)($t6)
+/* 0C3628 7F08EAF8 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer) 
+/* 0C362C 7F08EAFC 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
 /* 0C3630 7F08EB00 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0C3634 7F08EB04 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0C3638 7F08EB08 8DCF04E8 */  lw    $t7, 0x4e8($t6)
@@ -847,20 +847,20 @@ glabel sub_GAME_7F08EAF8
 /* 0C3654 7F08EB24 3C018005 */  lui   $at, %hi(D_8005533C)
 /* 0C3658 7F08EB28 C428533C */  lwc1  $f8, %lo(D_8005533C)($at)
 /* 0C365C 7F08EB2C 46040182 */  mul.s $f6, $f0, $f4
-/* 0C3660 7F08EB30 3C048008 */  lui   $a0, %hi(currentplayer)
-/* 0C3664 7F08EB34 8C84A0B0 */  lw    $a0, %lo(currentplayer)($a0)
+/* 0C3660 7F08EB30 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
+/* 0C3664 7F08EB34 8C84A0B0 */  lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 0C3668 7F08EB38 24840598 */  addiu $a0, $a0, 0x598
 /* 0C366C 7F08EB3C 46083080 */  add.s $f2, $f6, $f8
 /* 0C3670 7F08EB40 0FC1BD86 */  jal   sub_GAME_7F06F618
 /* 0C3674 7F08EB44 E7A2001C */   swc1  $f2, 0x1c($sp)
 /* 0C3678 7F08EB48 44805000 */  mtc1  $zero, $f10
 /* 0C367C 7F08EB4C C7A2001C */  lwc1  $f2, 0x1c($sp)
-/* 0C3680 7F08EB50 3C188008 */  lui   $t8, %hi(currentplayer) 
+/* 0C3680 7F08EB50 3C188008 */  lui   $t8, %hi(g_CurrentPlayer) 
 /* 0C3684 7F08EB54 4600503C */  c.lt.s $f10, $f0
 /* 0C3688 7F08EB58 00000000 */  nop   
 /* 0C368C 7F08EB5C 45000014 */  bc1f  .L7F08EBB0
 /* 0C3690 7F08EB60 00000000 */   nop   
-/* 0C3694 7F08EB64 8F18A0B0 */  lw    $t8, %lo(currentplayer)($t8)
+/* 0C3694 7F08EB64 8F18A0B0 */  lw    $t8, %lo(g_CurrentPlayer)($t8)
 /* 0C3698 7F08EB68 3C098003 */  lui   $t1, %hi(D_80036AD0) 
 /* 0C369C 7F08EB6C 25296AD0 */  addiu $t1, %lo(D_80036AD0) # addiu $t1, $t1, 0x6ad0
 /* 0C36A0 7F08EB70 8F1904E8 */  lw    $t9, 0x4e8($t8)
