@@ -548,6 +548,10 @@ struct player
   s32 colourscreenblue;
   f32 colourscreenfrac;
   f32 colourfadetime60;
+
+  /**
+   * Offset 0x3e4.
+   */
   f32 colourfadetimemax60;
   s32 colourfaderedold;
   s32 colourfaderednew;

@@ -1527,7 +1527,7 @@ Gfx *display_text_for_playerdata_on_MP_menu(Gfx *gdl, s32 x, s32 y, u16* arg3, T
 
 
 #ifdef NONMATCHING
-void get_points_for_mp_player(int arg0) {
+s32 get_points_for_mp_player(s32 arg0) {
 
 }
 #else
@@ -1814,7 +1814,6 @@ team_player_kills:
 .L7F0C3C78:
 /* 0F87A8 7F0C3C78 152AFFB0 */  bne   $t1, $t2, .L7F0C3B3C
 /* 0F87AC 7F0C3C7C 258C0070 */   addiu $t4, $t4, 0x70
-def_7F0C394C:
 .L7F0C3C80:
 /* 0F87B0 7F0C3C80 8FBF0014 */  lw    $ra, 0x14($sp)
 .L7F0C3C84:

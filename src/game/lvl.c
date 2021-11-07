@@ -55,6 +55,7 @@
 #include "game/mp_music.h"
 #include "game/unk_0BC530.h"
 #include "game/unk_092E50.h"
+#include "game/unk_0C0A70.h"
 
 // bss
 //CODE.bss:8008C260
@@ -3387,8 +3388,8 @@ void setDamageMultipliersForDifficulty(void)
 }
 
 
-#ifdef NONMATCHING
-//#if 0
+//#ifdef NONMATCHING
+#if 1
 void manage_mp_game(void)
 {
     s32 sp194;
@@ -3530,7 +3531,7 @@ void manage_mp_game(void)
 
             for (s0 = 1; s0 != CHEAT_INVALID; s0++)
             {
-                if (g_CheatActivated[s0] && cheatIsEnemyRockets(s0))
+                if (g_CheatActivated[s0] && !cheatIsEnemyRockets(s0))
                 {
                     turn_on_cheat_for_players(s0);
                 }
@@ -3542,22 +3543,22 @@ void manage_mp_game(void)
     {
         if (get_mission_state() == MISSION_STATE_6)
         {
-            if (getPlayerCount() > 0)
+            s32 i;
+            struct player* p;
+
+            mp_alive_count = 0;
+            mp_player_field424_count = 0;
+
+            for (i=0; i<getPlayerCount(); i++)
             {
-                s32 i;
-                struct player* p;
+                p = g_playerPointers[i];
 
-                for (i=0; i<getPlayerCount(); i++)
+                if (p->bonddead != 0)
                 {
-                    p = g_playerPointers[i];
-
-                    if (p->bonddead != 0)
+                    mp_alive_count++;
+                    if (p->field_424 != 0)
                     {
-                        mp_alive_count++;
-                        if (p->field_424 != 0)
-                        {
-                            mp_player_field424_count++;
-                        }
+                        mp_player_field424_count++;
                     }
                 }
             }
@@ -3579,16 +3580,11 @@ void manage_mp_game(void)
 
             if ((temp_v0_3 < temp_a0_3) && (temp_t6 >= temp_a0_3))
             {
-                if (getPlayerCount() > 0)
+                s32 i = 0;
+                for (i=0; i<getPlayerCount(); i++)
                 {
-                    s32 i = 0;
-
-                    do
-                    {
-                        set_cur_player(i);
-                        display_string_in_lower_left_corner("One minute left");
-                        i++;
-                    } while (i < getPlayerCount());
+                    set_cur_player(i);
+                    display_string_in_lower_left_corner("One minute left");
                 }
             }
 
@@ -3614,26 +3610,26 @@ void manage_mp_game(void)
 
         if ((g_MpPoint > 0) && (g_ClockTimer != 0))
         {
+            s32 i;
+            struct player* p;
+
             var_player_count1 = getPlayerCount();
-            
-            if (var_player_count1 > 0)
+            mp_points_count1 = 0;
+            mp_something_count1 = 0;
+
+            for (i=0; i<var_player_count1; i++)
             {
-                s32 i;
-                struct player* p;
+                p = g_playerPointers[i];
 
-                for (i=0; i<var_player_count1; i++)
+                if (p->bonddead != 0 &&
+                    (p->field_424 == 0 || p->field_428 == 0 || p->colourfadetimemax60 >= 0.0f))
                 {
-                    p = g_playerPointers[i];
+                    mp_something_count1++;
+                }
 
-                    if ((p->bonddead != 0) && ((p->field_424 == 0) || (p->field_428 == 0) || (p->colourfadetimemax60 >= 0.0f)))
-                    {
-                        mp_something_count1++;
-                    }
-
-                    if (get_points_for_mp_player(i) >= g_MpPoint)
-                    {
-                        mp_points_count1++;
-                    }
+                if (get_points_for_mp_player(i) >= g_MpPoint)
+                {
+                    mp_points_count1++;
                 }
             }
 
@@ -3650,143 +3646,92 @@ void manage_mp_game(void)
             }
         }
 
+#error instructions match up to here, .s line (good) ~1840, assembly line (good) ~16c4
         if ((get_scenario() == SCENARIO_YOLT) && (g_ClockTimer != 0))
         {
+            s32 not_dead_count = 0;
+            s32 killed_count = 0;
+
             var_player_count2 = getPlayerCount();
-            // phi_t4 = 0;
-            // phi_ra = 0;
-            // phi_t5 = 0;
-            // phi_ra_3 = 0;
-            // phi_t5_3 = 0;
 
             if (var_player_count2 > 0)
             {
                 s32 i;
                 for (i=0; i < var_player_count2; i++)
                 {
-                    // phi_a3_3 = 0;
-                    // phi_a1_5 = 0;
-                    // phi_a2_5 = 0;
-                    // phi_a3_4 = 0;
-                    // phi_a1_8 = 0;
-                    // phi_ra_2 = phi_ra_3;
-                    // phi_t5_2 = phi_t5_3;
-                    // phi_a1_9 = 0;
-                    // phi_a2_10 = 0;
-                    // phi_a2_14 = 0;
                     if (var_player_count2 > 0)
                     {
                         var_player_count2_again = var_player_count2 & 3;
-                        temp_t3 = phi_t4 * 4;
 
                         if (var_player_count2_again != 0)
                         {
-                            phi_v1_4 = (0 * 4) + &g_playerPointers;
-                            phi_a0_5 = (0 * 0x70) + temp_t3 + &player1_player_data;
-                            do
+                            s32 j;
+                            for (j=0; j<var_player_count2_again; j++)
                             {
-                                temp_a3 = phi_a3_3 + 1;
-                                phi_v1_4 += 4;
-                                phi_a3_3 = temp_a3;
-                                phi_a3_4 = temp_a3;
-                                phi_a2_8 = phi_a2_10;
-                                if ((*phi_v1_4)->unkD8 == 0)
+                                if (g_playerPointers[j]->bonddead == 0)
                                 {
-                                    phi_a2_8 = phi_a2_10 + 1;
+                                    not_dead_count++;
                                 }
-                                temp_a1 = phi_a1_8 + phi_a0_5->unk24;
-                                phi_a1_5 = temp_a1;
-                                phi_a2_5 = phi_a2_8;
-                                phi_a1_8 = temp_a1;
-                                phi_a0_5 += 0x70;
-                                phi_a1_9 = temp_a1;
-                                phi_a2_10 = phi_a2_8;
-                                phi_a2_14 = phi_a2_8;
-                            } while (var_player_count2_again != temp_a3);
 
-                            if (temp_a3 != var_player_count2)
-                            {
-                                goto block_67;
+                                killed_count += g_playerPlayerData[j].killed_p1;
                             }
                         }
                         else
                         {
-block_67:
-                            phi_v1_5 = (phi_a3_4 * 4) + &g_playerPointers;
-                            phi_a0_6 = (phi_a3_4 * 0x70) + temp_t3 + &player1_player_data;
-                            do
+                            s32 j;
+                            for (j=0; j<var_player_count2_again; j++)
                             {
-                                phi_a2_13 = phi_a2_14;
-                                if (phi_v1_5->unk0->unkD8 == 0)
+                                if (g_playerPointers[0]->bonddead == 0)
                                 {
-                                    phi_a2_13 = phi_a2_14 + 1;
+                                    not_dead_count++;
+                                }
+                                if (g_playerPointers[1]->bonddead == 0)
+                                {
+                                    not_dead_count++;
+                                }
+                                if (g_playerPointers[2]->bonddead == 0)
+                                {
+                                    not_dead_count++;
+                                }
+                                if (g_playerPointers[3]->bonddead == 0)
+                                {
+                                    not_dead_count++;
                                 }
 
-                                phi_a2_12 = phi_a2_13;
-                                if (phi_v1_5->unk4->unkD8 == 0)
-                                {
-                                    phi_a2_12 = phi_a2_13 + 1;
-                                }
-
-                                phi_a2_11 = phi_a2_12;
-                                if (phi_v1_5->unk8->unkD8 == 0)
-                                {
-                                    phi_a2_11 = phi_a2_12 + 1;
-                                }
-
-                                temp_v1_4 = phi_v1_5 + 0x10;
-                                phi_v1_5 = temp_v1_4;
-                                phi_a2_9 = phi_a2_11;
-                                if (phi_v1_5->unkC->unkD8 == 0)
-                                {
-                                    phi_a2_9 = phi_a2_11 + 1;
-                                }
-
-                                temp_a1_2 = phi_a1_9 + phi_a0_6->unk24 + phi_a0_6->unk94 + phi_a0_6->unk104 + phi_a0_6->unk174;
-                                phi_a1_5 = temp_a1_2;
-                                phi_a2_5 = phi_a2_9;
-                                phi_a1_9 = temp_a1_2;
-                                phi_a0_6 += 0x1C0;
-                                phi_a2_14 = phi_a2_9;
-                            } while (temp_v1_4 != ((var_player_count2 * 4) + &g_playerPointers));
+                                killed_count =
+                                    g_playerPlayerData[0].killed_p1 +
+                                    g_playerPlayerData[1].killed_p1 +
+                                    g_playerPlayerData[2].killed_p1 +
+                                    g_playerPlayerData[3].killed_p1;
+                            }
                         }
                     }
 
-                    if (phi_a1_5 >= 2)
+                    if (killed_count >= 2)
                     {
-                        temp_v1_5 = (phi_t4 * 0x70) + &player1_player_data;
-                        if (temp_v1_5->unk68 == 0)
+                        if (g_playerPlayerData[i].order_out_in_yolt == 0)
                         {
-                            temp_v1_5->unk68 = (u8) (phi_a2_5 + 1);
+                            g_playerPlayerData[i].order_out_in_yolt = (u8) (phi_a2_5 + 1);
                         }
 
-                        temp_v1_6 = *((phi_t4 * 4) + &g_playerPointers);
-                        phi_t5_2 = phi_t5_3 + 1;
-                        if ((temp_v1_6->unk424 != 0) && (temp_v1_6->unk428 != 0) && (temp_v1_6->unk3E4 < 0.0f))
+                        if ((g_playerPointers[i]->field_424 != 0) && (g_playerPointers[i]->field_428 != 0) && (g_playerPointers[i]->colourfadetimemax60 < 0.0f))
                         {
                             phi_ra_2 = phi_ra_3 + 1;
                         }
                     }
-
-                    // temp_t4 = phi_t4 + 1;
-                    // phi_t4 = temp_t4;
-                    // phi_ra = phi_ra_2;
-                    // phi_t5 = phi_t5_2;
-                    // phi_ra_3 = phi_ra_2;
-                    // phi_t5_3 = phi_t5_2;
                 }
             }
             
             temp_v1_7 = var_player_count2 - 1;
-            if (phi_ra >= temp_v1_7)
+            if (not_dead_count >= temp_v1_7)
             {
                 sub_GAME_7F0C2530(0);
             }
-            else if (phi_t5 >= temp_v1_7)
+            else if (killed_count >= temp_v1_7)
             {
                 mpwatchSetStopPlayFlag();
             }
-        }
+        } // end YOLT
     }
 
     temp_v0_7 = g_ClockTimer;
