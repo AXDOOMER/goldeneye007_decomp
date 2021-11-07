@@ -53,7 +53,7 @@ s32 sub_GAME_7F0C0C10(void) {
 }
 
 
-s32 get_mission_state(void) {
+MISSION_STATE_ID get_mission_state(void) {
     return mission_state;
 }
 
@@ -64,7 +64,7 @@ s32 get_mission_state(void) {
 
 #ifdef NONMATCHING
 //close, minor reg at beginning, tiny chunk missing at end, i gave up on for now
-void set_missionstate(u32 arg0)
+void set_missionstate(MISSION_STATE_ID arg0)
 {
     switch (mission_state)
     {

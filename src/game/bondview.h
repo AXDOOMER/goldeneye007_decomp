@@ -575,7 +575,17 @@ struct player
   s32 field_418;
   s32 cuff_value;
   s32 field_420;
+
+  /**
+   * Multiplayer related.
+   * Offset 0x424.
+   */
   s32 field_424;
+
+  /**
+   * Multiplayer related.
+   * Offset 0x428.
+   */
   s32 field_428;
   s32 field_42C;
   s32 field_430;

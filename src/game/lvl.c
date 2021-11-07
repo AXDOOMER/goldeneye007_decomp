@@ -128,12 +128,22 @@ s32 D_8004838C = 0;
 s32 D_80048390 = 0;
 //D:80048394
 s32 D_80048394 = 0;
-//D:80048398
-s32 mp_time = 0x8CA0;
-//D:8004839C
-s32 mp_point = 0xA;
-//D:800483A0
-ALSoundState * D_800483A0 = NULL;
+
+/**
+ * Address 0x80048398.
+ */
+s32 g_MpTime = 0x8CA0;
+
+/**
+ * Address 0x8004839C.
+ */
+s32 g_MpPoint = 0xA;
+
+/**
+ * Address 0x800483A0.
+ */
+ALSoundState * g_MpSoundStateRelated = NULL;
+
 //D:800483A4
 f32 g_CurrentMultiPlayerSec = 0.0;
 //D:800483A8
@@ -161,8 +171,9 @@ s32 D_800483C0 = 1;
 
 //D:800483C4
 s32 D_800483C4 = 0xFFFFFFFF;
+
 //D:800483C8
-s32 D_800483C8 = 0;
+struct s_unk_lvl* D_800483C8 = NULL;
 
 /*
 * Debug variable, something to do with portals.
@@ -333,7 +344,7 @@ void stage_load(s32 stage)
     g_CurrentMultiPlayerSec = 0.0f;
     D_800483B0 = 0;
     g_StageTimeSec = 0.0f;
-    D_800483A0 = 0;
+    g_MpSoundStateRelated = 0;
 
     sndSetScalerApplyVolumeAllSfxSlot(1.0f);
     musicTrack1ApplySeqpVol(VOLUME_MAX);
@@ -540,14 +551,14 @@ glabel stage_load
 /* 0F266C 7F0BDB3C 3C018005 */  lui   $at, %hi(g_StageTimeSec)
 /* 0F2670 7F0BDB40 E42083B4 */  swc1  $f0, %lo(g_StageTimeSec)($at)
 /* 0F2674 7F0BDB44 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 0F2678 7F0BDB48 3C018005 */  lui   $at, %hi(D_800483A0)
+/* 0F2678 7F0BDB48 3C018005 */  lui   $at, %hi(g_MpSoundStateRelated)
 /* 0F267C 7F0BDB4C AFB40030 */  sw    $s4, 0x30($sp)
 /* 0F2680 7F0BDB50 AFB3002C */  sw    $s3, 0x2c($sp)
 /* 0F2684 7F0BDB54 AFB20028 */  sw    $s2, 0x28($sp)
 /* 0F2688 7F0BDB58 F7B40018 */  sdc1  $f20, 0x18($sp)
 /* 0F268C 7F0BDB5C AFA40038 */  sw    $a0, 0x38($sp)
 /* 0F2690 7F0BDB60 0C00248E */  jal   sndSetScalerApplyVolumeAllSfxSlot
-/* 0F2694 7F0BDB64 AC2083A0 */   sw    $zero, %lo(D_800483A0)($at)
+/* 0F2694 7F0BDB64 AC2083A0 */   sw    $zero, %lo(g_MpSoundStateRelated)($at)
 /* 0F2698 7F0BDB68 0C001C0F */  jal   musicTrack1ApplySeqpVol
 /* 0F269C 7F0BDB6C 24047FFF */   li    $a0, 32767
 /* 0F26A0 7F0BDB70 0C001CF1 */  jal   musicTrack2ApplySeqpVol
@@ -845,14 +856,14 @@ glabel stage_load
 /* 0F326C 7F0BE6FC 3C018005 */  lui   $at, %hi(g_StageTimeSec) # $at, 0x8005
 /* 0F3270 7F0BE700 E42083E8 */  swc1  $f0, %lo(g_StageTimeSec)($at)
 /* 0F3274 7F0BE704 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 0F3278 7F0BE708 3C018005 */  lui   $at, %hi(D_800483A0) # $at, 0x8005
+/* 0F3278 7F0BE708 3C018005 */  lui   $at, %hi(g_MpSoundStateRelated) # $at, 0x8005
 /* 0F327C 7F0BE70C AFB40030 */  sw    $s4, 0x30($sp)
 /* 0F3280 7F0BE710 AFB3002C */  sw    $s3, 0x2c($sp)
 /* 0F3284 7F0BE714 AFB20028 */  sw    $s2, 0x28($sp)
 /* 0F3288 7F0BE718 F7B40018 */  sdc1  $f20, 0x18($sp)
 /* 0F328C 7F0BE71C AFA40038 */  sw    $a0, 0x38($sp)
 /* 0F3290 7F0BE720 0C002492 */  jal   sndSetScalerApplyVolumeAllSfxSlot
-/* 0F3294 7F0BE724 AC2083D4 */   sw    $zero, %lo(D_800483A0)($at)
+/* 0F3294 7F0BE724 AC2083D4 */   sw    $zero, %lo(g_MpSoundStateRelated)($at)
 /* 0F3298 7F0BE728 0C001C13 */  jal   musicTrack1ApplySeqpVol
 /* 0F329C 7F0BE72C 24047FFF */   li    $a0, 32767
 /* 0F32A0 7F0BE730 0C001CF5 */  jal   musicTrack2ApplySeqpVol
@@ -1145,14 +1156,14 @@ glabel stage_load
 /* 0F266C 7F0BDB3C 3C018005 */  lui   $at, %hi(g_StageTimeSec)
 /* 0F2670 7F0BDB40 E42083B4 */  swc1  $f0, %lo(g_StageTimeSec)($at)
 /* 0F2674 7F0BDB44 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 0F2678 7F0BDB48 3C018005 */  lui   $at, %hi(D_800483A0)
+/* 0F2678 7F0BDB48 3C018005 */  lui   $at, %hi(g_MpSoundStateRelated)
 /* 0F267C 7F0BDB4C AFB40030 */  sw    $s4, 0x30($sp)
 /* 0F2680 7F0BDB50 AFB3002C */  sw    $s3, 0x2c($sp)
 /* 0F2684 7F0BDB54 AFB20028 */  sw    $s2, 0x28($sp)
 /* 0F2688 7F0BDB58 F7B40018 */  sdc1  $f20, 0x18($sp)
 /* 0F268C 7F0BDB5C AFA40038 */  sw    $a0, 0x38($sp)
 /* 0F2690 7F0BDB60 0C00248E */  jal   sndSetScalerApplyVolumeAllSfxSlot
-/* 0F2694 7F0BDB64 AC2083A0 */   sw    $zero, %lo(D_800483A0)($at)
+/* 0F2694 7F0BDB64 AC2083A0 */   sw    $zero, %lo(g_MpSoundStateRelated)($at)
 /* 0F2698 7F0BDB68 0C001C0F */  jal   musicTrack1ApplySeqpVol
 /* 0F269C 7F0BDB6C 24047FFF */   li    $a0, 32767
 /* 0F26A0 7F0BDB70 0C001CF1 */  jal   musicTrack2ApplySeqpVol
@@ -3381,7 +3392,6 @@ void setDamageMultipliersForDifficulty(void)
 
 
 #ifdef NONMATCHING
-
 void manage_mp_game(void)
 {
     s32 sp194;
@@ -3410,7 +3420,7 @@ void manage_mp_game(void)
     s32 temp_f16;
     s32 temp_f6;
     s32 temp_f6_2;
-    s32 temp_t1;
+    s32 var_player_count2_again;
     s32 temp_t3;
     s32 temp_t4;
     s32 temp_t6;
@@ -3423,11 +3433,11 @@ void manage_mp_game(void)
     s32 temp_v0_18;
     s32 temp_v0_19;
     s32 temp_v0_3;
-    s32 temp_v0_4;
-    s32 temp_v0_6;
+    s32 var_player_count1;
+    s32 var_player_count2;
     s32 temp_v0_7;
     s32 temp_v0_8;
-    s32 temp_v0_9;
+    struct s_unk_lvl* temp_v0_9;
     s32 temp_v1;
     s32 temp_v1_2;
     s32 temp_v1_3;
@@ -3451,13 +3461,13 @@ void manage_mp_game(void)
     s32 phi_a0;
     u8 *phi_a0_2;
     s32 phi_v1_2;
-    s32 phi_a1;
-    s32 phi_a2;
+    s32 mp_alive_count;
+    s32 mp_player_field424_count;
     s32 phi_a1_2;
     s32 phi_a2_2;
     u8 *phi_v1_3;
     s32 phi_a0_3;
-    s32 phi_a1_3;
+    s32 mp_something_count1;
     s32 phi_a2_3;
     s32 phi_a3;
     s32 phi_a2_4;
@@ -3477,7 +3487,7 @@ void manage_mp_game(void)
     s32 phi_a1_6;
     s32 phi_a2_6;
     s32 phi_a1_7;
-    s32 phi_a2_7;
+    s32 mp_points_count1;
     s32 phi_a3_4;
     s32 phi_a1_8;
     void *phi_a0_5;
@@ -3535,51 +3545,33 @@ void manage_mp_game(void)
     {
         if (get_mission_state() == MISSION_STATE_6)
         {
-            sp190 = 0;
-            sp18C = 0;
-            sp188 = 0;
-            phi_v1_2 = sp190;
-            phi_a1_2 = sp18C;
-            phi_a2_2 = sp188;
-            phi_a1_6 = sp18C;
-            phi_a2_6 = sp188;
             if (getPlayerCount() > 0)
             {
-                phi_a0_2 = (sp190 * 4) + &players;
-                do
+                s32 i;
+                struct player* p;
+
+                for (i=0; i<getPlayerCount(); i++)
                 {
-                    temp_v0_2 = *phi_a0_2;
-                    temp_v1 = phi_v1_2 + 1;
-                    temp_a0_2 = phi_a0_2 + 4;
-                    phi_a1 = phi_a1_6;
-                    phi_a2 = phi_a2_6;
-                    if (temp_v0_2->unkD8 != 0)
+                    p = players[i];
+
+                    if (p->bonddead != 0)
                     {
-                        phi_a1 = phi_a1_6 + 1;
-                        if (temp_v0_2->unk424 != 0)
+                        mp_alive_count++;
+                        if (p->field_424 != 0)
                         {
-                            phi_a2 = phi_a2_6 + 1;
+                            mp_player_field424_count++;
                         }
                     }
-                    sp190 = temp_v1;
-                    sp1C = temp_a0_2;
-                    sp18C = phi_a1;
-                    sp188 = phi_a2;
-                    phi_a0_2 = temp_a0_2;
-                    phi_v1_2 = temp_v1;
-                    phi_a1_2 = phi_a1;
-                    phi_a2_2 = phi_a2;
-                    phi_a1_6 = phi_a1;
-                    phi_a2_6 = phi_a2;
-                } while (temp_v1 < getPlayerCount());
+                }
             }
-            if ((phi_a1_2 > 0) && (phi_a1_2 == phi_a2_2))
+
+            if ((mp_alive_count > 0) && (mp_alive_count == mp_player_field424_count))
             {
-                set_missionstate(1);
+                set_missionstate(MISSION_STATE_1);
             }
         }
 
-        temp_v1_2 = mp_time;
+        temp_v1_2 = g_MpTime;
         if (temp_v1_2 > 0)
         {
             temp_v0_3 = D_80048394;
@@ -3590,88 +3582,67 @@ void manage_mp_game(void)
 
             if ((temp_v0_3 < temp_a0_3) && (temp_t6 >= temp_a0_3))
             {
-                sp17C = 0;
-                if (getPlayerCount((u8 *) temp_a0_3) > 0)
+                if (getPlayerCount() > 0)
                 {
+                    s32 i = 0;
+
                     do
                     {
-                        set_cur_player(sp17C);
+                        set_cur_player(i);
                         display_string_in_lower_left_corner("One minute left");
-                        sp17C += 1;
-                    } while (sp17C < getPlayerCount());
+                        i++;
+                    } while (i < getPlayerCount());
                 }
             }
 
-            if ((sp180 >= (mp_time - 0x258)) && (D_800483A0 == 0) && (get_controls_locked_flag() == 0))
+            if ((sp180 >= (g_MpTime - 0x258)) && (g_MpSoundStateRelated == 0) && (get_controls_locked_flag() == 0))
             {
-                sndPlaySfx(g_musicSfxBufferPtr, 0xA1, &D_800483A0);
+                sndPlaySfx(g_musicSfxBufferPtr, 0xA1, &g_MpSoundStateRelated);
             }
 
             if (get_controls_locked_flag() != 0)
             {
-                temp_a0_4 = D_800483A0;
-                if ((temp_a0_4 != 0) && (sndGetPlayingState(temp_a0_4) != 0))
+                if ((g_MpSoundStateRelated != NULL) && (sndGetPlayingState(g_MpSoundStateRelated) != 0))
                 {
-                    sndDeactivate(D_800483A0);
+                    sndDeactivate(g_MpSoundStateRelated);
                 }
             }
 
-            temp_v1_3 = mp_time;
+            temp_v1_3 = g_MpTime;
             if ((sp184 < temp_v1_3) && (sp180 >= temp_v1_3))
             {
                 sub_GAME_7F0C2530(0);
             }
         }
 
-        if ((mp_point > 0) && (g_ClockTimer != 0))
+        if ((g_MpPoint > 0) && (g_ClockTimer != 0))
         {
-            temp_v0_4 = getPlayerCount();
-            phi_a0_3 = 0;
-            phi_a2_3 = 0;
-            phi_a3 = temp_v0_4;
-            phi_a2_4 = 0;
-            phi_a1_4 = 0;
-            phi_a3_2 = temp_v0_4;
-            phi_a0_4 = 0;
-            phi_a1_7 = 0;
-
-            if (temp_v0_4 > 0)
+            var_player_count1 = getPlayerCount();
+            
+            if (var_player_count1 > 0)
             {
-                phi_v1_3 = &players;
-                do
-                {
-                    temp_v0_5 = *phi_v1_3;
-                    phi_a1_3 = phi_a1_7;
-                    if ((temp_v0_5->unkD8 != 0) && ((temp_v0_5->unk424 == 0) || (temp_v0_5->unk428 == 0) || (temp_v0_5->unk3E4 >= 0.0f)))
-                    {
-                        phi_a1_3 = phi_a1_7 + 1;
-                    }
-                    sp1C = phi_v1_3;
-                    sp174 = phi_a0_3;
-                    sp170 = phi_a1_3;
-                    sp16C = phi_a2_3;
-                    sp178 = phi_a3;
-                    phi_a1_4 = phi_a1_3;
-                    phi_a3_2 = phi_a3;
-                    phi_a1_7 = phi_a1_3;
-                    phi_a2_7 = phi_a2_3;
+                s32 i;
+                struct player* p;
 
-                    if (get_points_for_mp_player(phi_a0_3, phi_a1_3, phi_a2_3, phi_a3) >= mp_point)
+                for (i=0; i<var_player_count1; i++)
+                {
+                    p = players[i];
+
+                    if ((p->bonddead != 0) && ((p->field_424 == 0) || (p->field_428 == 0) || (p->colourfadetimemax60 >= 0.0f)))
                     {
-                        phi_a2_7 = phi_a2_3 + 1;
+                        mp_something_count1++;
                     }
-                    temp_a0_5 = phi_a0_3 + 1;
-                    phi_v1_3 += 4;
-                    phi_a0_3 = temp_a0_5;
-                    phi_a2_3 = phi_a2_7;
-                    phi_a2_4 = phi_a2_7;
-                    phi_a0_4 = temp_a0_5;
-                } while (temp_a0_5 < phi_a3);
+
+                    if (get_points_for_mp_player(i) >= g_MpPoint)
+                    {
+                        mp_points_count1++;
+                    }
+                }
             }
 
-            if (phi_a2_4 > 0)
+            if (mp_points_count1 > 0)
             {
-                if (phi_a1_4 == 0)
+                if (mp_something_count1 == 0)
                 {
                     sub_GAME_7F0C2530(0);
                 }
@@ -3684,33 +3655,34 @@ void manage_mp_game(void)
 
         if ((get_scenario() == SCENARIO_YOLT) && (g_ClockTimer != 0))
         {
-            temp_v0_6 = getPlayerCount();
-            phi_t4 = 0;
-            phi_ra = 0;
-            phi_t5 = 0;
-            phi_ra_3 = 0;
-            phi_t5_3 = 0;
+            var_player_count2 = getPlayerCount();
+            // phi_t4 = 0;
+            // phi_ra = 0;
+            // phi_t5 = 0;
+            // phi_ra_3 = 0;
+            // phi_t5_3 = 0;
 
-            if (temp_v0_6 > 0)
+            if (var_player_count2 > 0)
             {
-                do
+                s32 i;
+                for (i=0; i < var_player_count2; i++)
                 {
-                    phi_a3_3 = 0;
-                    phi_a1_5 = 0;
-                    phi_a2_5 = 0;
-                    phi_a3_4 = 0;
-                    phi_a1_8 = 0;
-                    phi_ra_2 = phi_ra_3;
-                    phi_t5_2 = phi_t5_3;
-                    phi_a1_9 = 0;
-                    phi_a2_10 = 0;
-                    phi_a2_14 = 0;
-                    if (temp_v0_6 > 0)
+                    // phi_a3_3 = 0;
+                    // phi_a1_5 = 0;
+                    // phi_a2_5 = 0;
+                    // phi_a3_4 = 0;
+                    // phi_a1_8 = 0;
+                    // phi_ra_2 = phi_ra_3;
+                    // phi_t5_2 = phi_t5_3;
+                    // phi_a1_9 = 0;
+                    // phi_a2_10 = 0;
+                    // phi_a2_14 = 0;
+                    if (var_player_count2 > 0)
                     {
-                        temp_t1 = temp_v0_6 & 3;
+                        var_player_count2_again = var_player_count2 & 3;
                         temp_t3 = phi_t4 * 4;
 
-                        if (temp_t1 != 0)
+                        if (var_player_count2_again != 0)
                         {
                             phi_v1_4 = (0 * 4) + &players;
                             phi_a0_5 = (0 * 0x70) + temp_t3 + &player1_player_data;
@@ -3733,9 +3705,9 @@ void manage_mp_game(void)
                                 phi_a1_9 = temp_a1;
                                 phi_a2_10 = phi_a2_8;
                                 phi_a2_14 = phi_a2_8;
-                            } while (temp_t1 != temp_a3);
+                            } while (var_player_count2_again != temp_a3);
 
-                            if (temp_a3 != temp_v0_6)
+                            if (temp_a3 != var_player_count2)
                             {
                                 goto block_67;
                             }
@@ -3779,7 +3751,7 @@ block_67:
                                 phi_a1_9 = temp_a1_2;
                                 phi_a0_6 += 0x1C0;
                                 phi_a2_14 = phi_a2_9;
-                            } while (temp_v1_4 != ((temp_v0_6 * 4) + &players));
+                            } while (temp_v1_4 != ((var_player_count2 * 4) + &players));
                         }
                     }
 
@@ -3799,16 +3771,16 @@ block_67:
                         }
                     }
 
-                    temp_t4 = phi_t4 + 1;
-                    phi_t4 = temp_t4;
-                    phi_ra = phi_ra_2;
-                    phi_t5 = phi_t5_2;
-                    phi_ra_3 = phi_ra_2;
-                    phi_t5_3 = phi_t5_2;
-                } while (temp_t4 < temp_v0_6);
+                    // temp_t4 = phi_t4 + 1;
+                    // phi_t4 = temp_t4;
+                    // phi_ra = phi_ra_2;
+                    // phi_t5 = phi_t5_2;
+                    // phi_ra_3 = phi_ra_2;
+                    // phi_t5_3 = phi_t5_2;
+                }
             }
             
-            temp_v1_7 = temp_v0_6 - 1;
+            temp_v1_7 = var_player_count2 - 1;
             if (phi_ra >= temp_v1_7)
             {
                 sub_GAME_7F0C2530(0);
@@ -3890,40 +3862,31 @@ block_67:
 
         if ((get_debug_joy2detailedit_flag() != 0) && (D_800483C8 == 0))
         {
-            temp_v0_9 = mempAllocBytesInBank(0x3000, 4);
+            temp_v0_9 = (struct s_unk_lvl*)mempAllocBytesInBank(0x3000, 4);
             D_800483C8 = temp_v0_9;
             if (temp_v0_9 != 0)
             {
+                s32 i;
                 phi_v1_6 = 0;
-                do
+
+                for (i=0; i<768; i++, temp_v0_9++)
                 {
-                    *(D_800483C8 + phi_v1_6) = 0xFF;
-                    temp_v0_10 = D_800483C8 + phi_v1_6;
-                    temp_v0_10->unk1 = (u8) ((temp_v0_10->unk1 & 0xFF1F) | 0x20);
-                    temp_v0_11 = D_800483C8 + phi_v1_6;
-                    temp_v0_11->unk1 = (u8) ((temp_v0_11->unk1 & 0xFFE3) | 4);
+                    temp_v0_9[phi_v1_6].unk_0 = 0xff;
+                    temp_v0_9[phi_v1_6].unk_1 = (temp_v0_9[phi_v1_6].unk_1 & 0xff1f) | 0x20;
+                    temp_v0_9[phi_v1_6].unk_1 = (temp_v0_9[phi_v1_6].unk_1 & 0xffe3) | 0x04;
 
-                    (D_800483C8 + phi_v1_6)->unk4 = 0xFF;
-                    temp_v0_12 = D_800483C8 + phi_v1_6;
-                    temp_v0_12->unk5 = (u8) ((temp_v0_12->unk5 & 0xFF1F) | 0x20);
-                    temp_v0_13 = D_800483C8 + phi_v1_6;
-                    temp_v0_13->unk5 = (u8) ((temp_v0_13->unk5 & 0xFFE3) | 4);
+                    temp_v0_9[phi_v1_6].unk_4 = 0xff;
+                    temp_v0_9[phi_v1_6].unk_5 = (temp_v0_9[phi_v1_6].unk_5 & 0xff1f) | 0x20;
+                    temp_v0_9[phi_v1_6].unk_5 = (temp_v0_9[phi_v1_6].unk_5 & 0xffe3) | 0x04;
 
-                    (D_800483C8 + phi_v1_6)->unk8 = 0xFF;
-                    temp_v0_14 = D_800483C8 + phi_v1_6;
-                    temp_v0_14->unk9 = (u8) ((temp_v0_14->unk9 & 0xFF1F) | 0x20);
-                    temp_v0_15 = D_800483C8 + phi_v1_6;
-                    temp_v0_15->unk9 = (u8) ((temp_v0_15->unk9 & 0xFFE3) | 4);
+                    temp_v0_9[phi_v1_6].unk_8 = 0xff;
+                    temp_v0_9[phi_v1_6].unk_9 = (temp_v0_9[phi_v1_6].unk_9 & 0xff1f) | 0x20;
+                    temp_v0_9[phi_v1_6].unk_9 = (temp_v0_9[phi_v1_6].unk_9 & 0xffe3) | 0x04;
 
-                    (D_800483C8 + phi_v1_6)->unkC = 0xFF;
-                    temp_v0_16 = D_800483C8 + phi_v1_6;
-                    temp_v0_16->unkD = (u8) ((temp_v0_16->unkD & 0xFF1F) | 0x20);
-                    temp_v0_17 = D_800483C8 + phi_v1_6;
-                    temp_v1_8 = phi_v1_6 + 0x10;
-                    temp_v0_17->unkD = (u8) ((temp_v0_17->unkD & 0xFFE3) | 4);
-
-                    phi_v1_6 = temp_v1_8;
-                } while (temp_v1_8 != 0x2EE0);
+                    temp_v0_9[phi_v1_6].unk_c = 0xff;
+                    temp_v0_9[phi_v1_6].unk_d = (temp_v0_9[phi_v1_6].unk_d & 0xff1f) | 0x20;
+                    temp_v0_9[phi_v1_6].unk_d = (temp_v0_9[phi_v1_6].unk_d & 0xffe3) | 0x04;
+                }
             }
         }
 
@@ -3982,7 +3945,7 @@ block_67:
         {
             if (temp_v0_19 == 0x38)
             {
-                sp30 = viGetHorizontalOffset(0);
+                sp30 = viGetHorizontalOffset();
                 sp2C = viGet800232A0();
                 if (joyGetButtons(PLAYER_1, D_CBUTTONS))
                 {
@@ -4010,16 +3973,22 @@ block_67:
 
         if (joyGetButtonsPressedThisFrame(PLAYER_1, (D_JPAD | L_JPAD | L_TRIG | L_CBUTTONS)))
         {
-            temp_a1_3 = *(s16 *)0x80050000 - 1;
-            D_800483E4 = temp_a1_3;
-            sndPlaySfx(g_musicSfxBufferPtr, temp_a1_3, NULL);
+            //temp_a1_3 = *(s16 *)0x80050000 - 1;
+            //D_800483E4 = temp_a1_3;
+            //sndPlaySfx(g_musicSfxBufferPtr, temp_a1_3, NULL);
+            
+            D_800483E4--;
+            sndPlaySfx(g_musicSfxBufferPtr, D_800483E4, NULL);
         }
 
         if (joyGetButtonsPressedThisFrame(PLAYER_1, (U_JPAD | R_JPAD | R_TRIG | R_CBUTTONS)))
         {
-            temp_a1_4 = *(void *)0x80050000 + 1;
-            D_800483E4 = temp_a1_4;
-            sndPlaySfx(g_musicSfxBufferPtr, temp_a1_4, NULL);
+            //temp_a1_4 = *(void *)0x80050000 + 1;
+            //D_800483E4 = temp_a1_4;
+            //sndPlaySfx(g_musicSfxBufferPtr, temp_a1_4, NULL);
+            
+            D_800483E4++;
+            sndPlaySfx(g_musicSfxBufferPtr, D_800483E4, NULL);
         }
 
         if (joyGetButtonsPressedThisFrame(PLAYER_1, D_CBUTTONS))
@@ -4215,8 +4184,8 @@ glabel manage_mp_game
 /* 0F38A4 7F0BED74 0FC3030F */  jal   set_missionstate
 /* 0F38A8 7F0BED78 24040001 */   li    $a0, 1
 .L7F0BED7C:
-/* 0F38AC 7F0BED7C 3C038005 */  lui   $v1, %hi(mp_time)
-/* 0F38B0 7F0BED80 8C638398 */  lw    $v1, %lo(mp_time)($v1)
+/* 0F38AC 7F0BED7C 3C038005 */  lui   $v1, %hi(g_MpTime)
+/* 0F38B0 7F0BED80 8C638398 */  lw    $v1, %lo(g_MpTime)($v1)
 /* 0F38B4 7F0BED84 3C028005 */  lui   $v0, %hi(D_80048394)
 /* 0F38B8 7F0BED88 3C198005 */  lui   $t9, %hi(g_ClockTimer)
 /* 0F38BC 7F0BED8C 18600049 */  blez  $v1, .L7F0BEEB4
@@ -4251,23 +4220,23 @@ glabel manage_mp_game
 /* 0F392C 7F0BEDFC 1420FFF4 */  bnez  $at, .L7F0BEDD0
 /* 0F3930 7F0BEE00 00000000 */   nop
 .L7F0BEE04:
-/* 0F3934 7F0BEE04 3C0F8005 */  lui   $t7, %hi(mp_time)
-/* 0F3938 7F0BEE08 8DEF8398 */  lw    $t7, %lo(mp_time)($t7)
+/* 0F3934 7F0BEE04 3C0F8005 */  lui   $t7, %hi(g_MpTime)
+/* 0F3938 7F0BEE08 8DEF8398 */  lw    $t7, %lo(g_MpTime)($t7)
 /* 0F393C 7F0BEE0C 8FAE0180 */  lw    $t6, 0x180($sp)
-/* 0F3940 7F0BEE10 3C198005 */  lui   $t9, %hi(D_800483A0)
+/* 0F3940 7F0BEE10 3C198005 */  lui   $t9, %hi(g_MpSoundStateRelated)
 /* 0F3944 7F0BEE14 25F8FDA8 */  addiu $t8, $t7, -0x258
 /* 0F3948 7F0BEE18 01D8082A */  slt   $at, $t6, $t8
 /* 0F394C 7F0BEE1C 1420000D */  bnez  $at, .L7F0BEE54
 /* 0F3950 7F0BEE20 00000000 */   nop
-/* 0F3954 7F0BEE24 8F3983A0 */  lw    $t9, %lo(D_800483A0)($t9)
+/* 0F3954 7F0BEE24 8F3983A0 */  lw    $t9, %lo(g_MpSoundStateRelated)($t9)
 /* 0F3958 7F0BEE28 1720000A */  bnez  $t9, .L7F0BEE54
 /* 0F395C 7F0BEE2C 00000000 */   nop
 /* 0F3960 7F0BEE30 0FC2FF01 */  jal   get_controls_locked_flag
 /* 0F3964 7F0BEE34 00000000 */   nop
 /* 0F3968 7F0BEE38 14400006 */  bnez  $v0, .L7F0BEE54
 /* 0F396C 7F0BEE3C 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0F3970 7F0BEE40 3C068005 */  lui   $a2, %hi(D_800483A0)
-/* 0F3974 7F0BEE44 24C683A0 */  addiu $a2, %lo(D_800483A0) # addiu $a2, $a2, -0x7c60
+/* 0F3970 7F0BEE40 3C068005 */  lui   $a2, %hi(g_MpSoundStateRelated)
+/* 0F3974 7F0BEE44 24C683A0 */  addiu $a2, %lo(g_MpSoundStateRelated) # addiu $a2, $a2, -0x7c60
 /* 0F3978 7F0BEE48 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0F397C 7F0BEE4C 0C002382 */  jal   sndPlaySfx
 /* 0F3980 7F0BEE50 240500A1 */   li    $a1, 161
@@ -4275,19 +4244,19 @@ glabel manage_mp_game
 /* 0F3984 7F0BEE54 0FC2FF01 */  jal   get_controls_locked_flag
 /* 0F3988 7F0BEE58 00000000 */   nop
 /* 0F398C 7F0BEE5C 1040000A */  beqz  $v0, .L7F0BEE88
-/* 0F3990 7F0BEE60 3C048005 */   lui   $a0, %hi(D_800483A0)
-/* 0F3994 7F0BEE64 8C8483A0 */  lw    $a0, %lo(D_800483A0)($a0)
+/* 0F3990 7F0BEE60 3C048005 */   lui   $a0, %hi(g_MpSoundStateRelated)
+/* 0F3994 7F0BEE64 8C8483A0 */  lw    $a0, %lo(g_MpSoundStateRelated)($a0)
 /* 0F3998 7F0BEE68 10800007 */  beqz  $a0, .L7F0BEE88
 /* 0F399C 7F0BEE6C 00000000 */   nop
 /* 0F39A0 7F0BEE70 0C00237C */  jal   sndGetPlayingState
 /* 0F39A4 7F0BEE74 00000000 */   nop
 /* 0F39A8 7F0BEE78 10400003 */  beqz  $v0, .L7F0BEE88
-/* 0F39AC 7F0BEE7C 3C048005 */   lui   $a0, %hi(D_800483A0)
+/* 0F39AC 7F0BEE7C 3C048005 */   lui   $a0, %hi(g_MpSoundStateRelated)
 /* 0F39B0 7F0BEE80 0C002408 */  jal   sndDeactivate
-/* 0F39B4 7F0BEE84 8C8483A0 */   lw    $a0, %lo(D_800483A0)($a0)
+/* 0F39B4 7F0BEE84 8C8483A0 */   lw    $a0, %lo(g_MpSoundStateRelated)($a0)
 .L7F0BEE88:
-/* 0F39B8 7F0BEE88 3C038005 */  lui   $v1, %hi(mp_time)
-/* 0F39BC 7F0BEE8C 8C638398 */  lw    $v1, %lo(mp_time)($v1)
+/* 0F39B8 7F0BEE88 3C038005 */  lui   $v1, %hi(g_MpTime)
+/* 0F39BC 7F0BEE8C 8C638398 */  lw    $v1, %lo(g_MpTime)($v1)
 /* 0F39C0 7F0BEE90 8FAF0184 */  lw    $t7, 0x184($sp)
 /* 0F39C4 7F0BEE94 8FAE0180 */  lw    $t6, 0x180($sp)
 /* 0F39C8 7F0BEE98 01E3082A */  slt   $at, $t7, $v1
@@ -4298,8 +4267,8 @@ glabel manage_mp_game
 /* 0F39DC 7F0BEEAC 0FC3094C */  jal   sub_GAME_7F0C2530
 /* 0F39E0 7F0BEEB0 00002025 */   move  $a0, $zero
 .L7F0BEEB4:
-/* 0F39E4 7F0BEEB4 3C188005 */  lui   $t8, %hi(mp_point)
-/* 0F39E8 7F0BEEB8 8F18839C */  lw    $t8, %lo(mp_point)($t8)
+/* 0F39E4 7F0BEEB4 3C188005 */  lui   $t8, %hi(g_MpPoint)
+/* 0F39E8 7F0BEEB8 8F18839C */  lw    $t8, %lo(g_MpPoint)($t8)
 /* 0F39EC 7F0BEEBC 3C198005 */  lui   $t9, %hi(g_ClockTimer)
 /* 0F39F0 7F0BEEC0 1B00003D */  blez  $t8, .L7F0BEFB8
 /* 0F39F4 7F0BEEC4 00000000 */   nop
@@ -4341,8 +4310,8 @@ glabel manage_mp_game
 /* 0F3A78 7F0BEF48 AFA6016C */  sw    $a2, 0x16c($sp)
 /* 0F3A7C 7F0BEF4C 0FC30E36 */  jal   get_points_for_mp_player
 /* 0F3A80 7F0BEF50 AFA70178 */   sw    $a3, 0x178($sp)
-/* 0F3A84 7F0BEF54 3C198005 */  lui   $t9, %hi(mp_point)
-/* 0F3A88 7F0BEF58 8F39839C */  lw    $t9, %lo(mp_point)($t9)
+/* 0F3A84 7F0BEF54 3C198005 */  lui   $t9, %hi(g_MpPoint)
+/* 0F3A88 7F0BEF58 8F39839C */  lw    $t9, %lo(g_MpPoint)($t9)
 /* 0F3A8C 7F0BEF5C 44800000 */  mtc1  $zero, $f0
 /* 0F3A90 7F0BEF60 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0F3A94 7F0BEF64 0059082A */  slt   $at, $v0, $t9
@@ -5105,8 +5074,8 @@ glabel manage_mp_game
 /* 0F4518 7F0BF9A8 0FC30633 */  jal   set_missionstate
 /* 0F451C 7F0BF9AC 24040001 */   li    $a0, 1
 .Ljp7F0BF9B0:
-/* 0F4520 7F0BF9B0 3C038005 */  lui   $v1, %hi(mp_time) # $v1, 0x8005
-/* 0F4524 7F0BF9B4 8C6383CC */  lw    $v1, %lo(mp_time)($v1)
+/* 0F4520 7F0BF9B0 3C038005 */  lui   $v1, %hi(g_MpTime) # $v1, 0x8005
+/* 0F4524 7F0BF9B4 8C6383CC */  lw    $v1, %lo(g_MpTime)($v1)
 /* 0F4528 7F0BF9B8 3C028005 */  lui   $v0, %hi(D_80048394) # $v0, 0x8005
 /* 0F452C 7F0BF9BC 3C198005 */  lui   $t9, %hi(g_ClockTimer) # $t9, 0x8005
 /* 0F4530 7F0BF9C0 1860004A */  blez  $v1, .Ljp7F0BFAEC
@@ -5142,23 +5111,23 @@ glabel manage_mp_game
 /* 0F45A4 7F0BFA34 1420FFF3 */  bnez  $at, .Ljp7F0BFA04
 /* 0F45A8 7F0BFA38 00000000 */   nop
 .Ljp7F0BFA3C:
-/* 0F45AC 7F0BFA3C 3C0F8005 */  lui   $t7, %hi(mp_time) # $t7, 0x8005
-/* 0F45B0 7F0BFA40 8DEF83CC */  lw    $t7, %lo(mp_time)($t7)
+/* 0F45AC 7F0BFA3C 3C0F8005 */  lui   $t7, %hi(g_MpTime) # $t7, 0x8005
+/* 0F45B0 7F0BFA40 8DEF83CC */  lw    $t7, %lo(g_MpTime)($t7)
 /* 0F45B4 7F0BFA44 8FAE0180 */  lw    $t6, 0x180($sp)
-/* 0F45B8 7F0BFA48 3C198005 */  lui   $t9, %hi(D_800483A0) # $t9, 0x8005
+/* 0F45B8 7F0BFA48 3C198005 */  lui   $t9, %hi(g_MpSoundStateRelated) # $t9, 0x8005
 /* 0F45BC 7F0BFA4C 25F8FDA8 */  addiu $t8, $t7, -0x258
 /* 0F45C0 7F0BFA50 01D8082A */  slt   $at, $t6, $t8
 /* 0F45C4 7F0BFA54 1420000D */  bnez  $at, .Ljp7F0BFA8C
 /* 0F45C8 7F0BFA58 00000000 */   nop
-/* 0F45CC 7F0BFA5C 8F3983D4 */  lw    $t9, %lo(D_800483A0)($t9)
+/* 0F45CC 7F0BFA5C 8F3983D4 */  lw    $t9, %lo(g_MpSoundStateRelated)($t9)
 /* 0F45D0 7F0BFA60 1720000A */  bnez  $t9, .Ljp7F0BFA8C
 /* 0F45D4 7F0BFA64 00000000 */   nop
 /* 0F45D8 7F0BFA68 0FC3021B */  jal   get_controls_locked_flag
 /* 0F45DC 7F0BFA6C 00000000 */   nop
 /* 0F45E0 7F0BFA70 14400006 */  bnez  $v0, .Ljp7F0BFA8C
 /* 0F45E4 7F0BFA74 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
-/* 0F45E8 7F0BFA78 3C068005 */  lui   $a2, %hi(D_800483A0) # $a2, 0x8005
-/* 0F45EC 7F0BFA7C 24C683D4 */  addiu $a2, %lo(D_800483A0) # addiu $a2, $a2, -0x7c2c
+/* 0F45E8 7F0BFA78 3C068005 */  lui   $a2, %hi(g_MpSoundStateRelated) # $a2, 0x8005
+/* 0F45EC 7F0BFA7C 24C683D4 */  addiu $a2, %lo(g_MpSoundStateRelated) # addiu $a2, $a2, -0x7c2c
 /* 0F45F0 7F0BFA80 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0F45F4 7F0BFA84 0C002386 */  jal   sndPlaySfx
 /* 0F45F8 7F0BFA88 240500A1 */   li    $a1, 161
@@ -5166,19 +5135,19 @@ glabel manage_mp_game
 /* 0F45FC 7F0BFA8C 0FC3021B */  jal   get_controls_locked_flag
 /* 0F4600 7F0BFA90 00000000 */   nop
 /* 0F4604 7F0BFA94 1040000A */  beqz  $v0, .Ljp7F0BFAC0
-/* 0F4608 7F0BFA98 3C048005 */   lui   $a0, %hi(D_800483A0) # $a0, 0x8005
-/* 0F460C 7F0BFA9C 8C8483D4 */  lw    $a0, %lo(D_800483A0)($a0)
+/* 0F4608 7F0BFA98 3C048005 */   lui   $a0, %hi(g_MpSoundStateRelated) # $a0, 0x8005
+/* 0F460C 7F0BFA9C 8C8483D4 */  lw    $a0, %lo(g_MpSoundStateRelated)($a0)
 /* 0F4610 7F0BFAA0 10800007 */  beqz  $a0, .Ljp7F0BFAC0
 /* 0F4614 7F0BFAA4 00000000 */   nop
 /* 0F4618 7F0BFAA8 0C002380 */  jal   sndGetPlayingState
 /* 0F461C 7F0BFAAC 00000000 */   nop
 /* 0F4620 7F0BFAB0 10400003 */  beqz  $v0, .Ljp7F0BFAC0
-/* 0F4624 7F0BFAB4 3C048005 */   lui   $a0, %hi(D_800483A0) # $a0, 0x8005
+/* 0F4624 7F0BFAB4 3C048005 */   lui   $a0, %hi(g_MpSoundStateRelated) # $a0, 0x8005
 /* 0F4628 7F0BFAB8 0C00240C */  jal   sndDeactivate
-/* 0F462C 7F0BFABC 8C8483D4 */   lw    $a0, %lo(D_800483A0)($a0)
+/* 0F462C 7F0BFABC 8C8483D4 */   lw    $a0, %lo(g_MpSoundStateRelated)($a0)
 .Ljp7F0BFAC0:
-/* 0F4630 7F0BFAC0 3C038005 */  lui   $v1, %hi(mp_time) # $v1, 0x8005
-/* 0F4634 7F0BFAC4 8C6383CC */  lw    $v1, %lo(mp_time)($v1)
+/* 0F4630 7F0BFAC0 3C038005 */  lui   $v1, %hi(g_MpTime) # $v1, 0x8005
+/* 0F4634 7F0BFAC4 8C6383CC */  lw    $v1, %lo(g_MpTime)($v1)
 /* 0F4638 7F0BFAC8 8FAF0184 */  lw    $t7, 0x184($sp)
 /* 0F463C 7F0BFACC 8FAE0180 */  lw    $t6, 0x180($sp)
 /* 0F4640 7F0BFAD0 01E3082A */  slt   $at, $t7, $v1
@@ -5189,8 +5158,8 @@ glabel manage_mp_game
 /* 0F4654 7F0BFAE4 0FC30C78 */  jal   sub_GAME_7F0C2530
 /* 0F4658 7F0BFAE8 00002025 */   move  $a0, $zero
 .Ljp7F0BFAEC:
-/* 0F465C 7F0BFAEC 3C188005 */  lui   $t8, %hi(mp_point) # $t8, 0x8005
-/* 0F4660 7F0BFAF0 8F1883D0 */  lw    $t8, %lo(mp_point)($t8)
+/* 0F465C 7F0BFAEC 3C188005 */  lui   $t8, %hi(g_MpPoint) # $t8, 0x8005
+/* 0F4660 7F0BFAF0 8F1883D0 */  lw    $t8, %lo(g_MpPoint)($t8)
 /* 0F4664 7F0BFAF4 3C198005 */  lui   $t9, %hi(g_ClockTimer) # $t9, 0x8005
 /* 0F4668 7F0BFAF8 1B00003D */  blez  $t8, .Ljp7F0BFBF0
 /* 0F466C 7F0BFAFC 00000000 */   nop
@@ -5232,8 +5201,8 @@ glabel manage_mp_game
 /* 0F46F0 7F0BFB80 AFA6016C */  sw    $a2, 0x16c($sp)
 /* 0F46F4 7F0BFB84 0FC31162 */  jal   get_points_for_mp_player
 /* 0F46F8 7F0BFB88 AFA70178 */   sw    $a3, 0x178($sp)
-/* 0F46FC 7F0BFB8C 3C198005 */  lui   $t9, %hi(mp_point) # $t9, 0x8005
-/* 0F4700 7F0BFB90 8F3983D0 */  lw    $t9, %lo(mp_point)($t9)
+/* 0F46FC 7F0BFB8C 3C198005 */  lui   $t9, %hi(g_MpPoint) # $t9, 0x8005
+/* 0F4700 7F0BFB90 8F3983D0 */  lw    $t9, %lo(g_MpPoint)($t9)
 /* 0F4704 7F0BFB94 44800000 */  mtc1  $zero, $f0
 /* 0F4708 7F0BFB98 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0F470C 7F0BFB9C 0059082A */  slt   $at, $v0, $t9
@@ -5986,8 +5955,8 @@ glabel manage_mp_game
 /* 0F38A4 7F0BED74 0FC3030F */  jal   set_missionstate
 /* 0F38A8 7F0BED78 24040001 */   li    $a0, 1
 .L7F0BED7C:
-/* 0F38AC 7F0BED7C 3C038005 */  lui   $v1, %hi(mp_time)
-/* 0F38B0 7F0BED80 8C638398 */  lw    $v1, %lo(mp_time)($v1)
+/* 0F38AC 7F0BED7C 3C038005 */  lui   $v1, %hi(g_MpTime)
+/* 0F38B0 7F0BED80 8C638398 */  lw    $v1, %lo(g_MpTime)($v1)
 /* 0F38B4 7F0BED84 3C028005 */  lui   $v0, %hi(D_80048394)
 /* 0F38B8 7F0BED88 3C198005 */  lui   $t9, %hi(g_ClockTimer)
 /* 0F38BC 7F0BED8C 18600049 */  blez  $v1, .L7F0BEEB4
@@ -6022,23 +5991,23 @@ glabel manage_mp_game
 /* 0F392C 7F0BEDFC 1420FFF4 */  bnez  $at, .L7F0BEDD0
 /* 0F3930 7F0BEE00 00000000 */   nop
 .L7F0BEE04:
-/* 0F3934 7F0BEE04 3C0F8005 */  lui   $t7, %hi(mp_time)
-/* 0F3938 7F0BEE08 8DEF8398 */  lw    $t7, %lo(mp_time)($t7)
+/* 0F3934 7F0BEE04 3C0F8005 */  lui   $t7, %hi(g_MpTime)
+/* 0F3938 7F0BEE08 8DEF8398 */  lw    $t7, %lo(g_MpTime)($t7)
 /* 0F393C 7F0BEE0C 8FAE0180 */  lw    $t6, 0x180($sp)
-/* 0F3940 7F0BEE10 3C198005 */  lui   $t9, %hi(D_800483A0)
+/* 0F3940 7F0BEE10 3C198005 */  lui   $t9, %hi(g_MpSoundStateRelated)
 /* 0F3944 7F0BEE14 25F8FDA8 */  addiu $t8, $t7, -0x258
 /* 0F3948 7F0BEE18 01D8082A */  slt   $at, $t6, $t8
 /* 0F394C 7F0BEE1C 1420000D */  bnez  $at, .L7F0BEE54
 /* 0F3950 7F0BEE20 00000000 */   nop
-/* 0F3954 7F0BEE24 8F3983A0 */  lw    $t9, %lo(D_800483A0)($t9)
+/* 0F3954 7F0BEE24 8F3983A0 */  lw    $t9, %lo(g_MpSoundStateRelated)($t9)
 /* 0F3958 7F0BEE28 1720000A */  bnez  $t9, .L7F0BEE54
 /* 0F395C 7F0BEE2C 00000000 */   nop
 /* 0F3960 7F0BEE30 0FC2FF01 */  jal   get_controls_locked_flag
 /* 0F3964 7F0BEE34 00000000 */   nop
 /* 0F3968 7F0BEE38 14400006 */  bnez  $v0, .L7F0BEE54
 /* 0F396C 7F0BEE3C 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0F3970 7F0BEE40 3C068005 */  lui   $a2, %hi(D_800483A0)
-/* 0F3974 7F0BEE44 24C683A0 */  addiu $a2, %lo(D_800483A0) # addiu $a2, $a2, -0x7c60
+/* 0F3970 7F0BEE40 3C068005 */  lui   $a2, %hi(g_MpSoundStateRelated)
+/* 0F3974 7F0BEE44 24C683A0 */  addiu $a2, %lo(g_MpSoundStateRelated) # addiu $a2, $a2, -0x7c60
 /* 0F3978 7F0BEE48 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0F397C 7F0BEE4C 0C002382 */  jal   sndPlaySfx
 /* 0F3980 7F0BEE50 240500A1 */   li    $a1, 161
@@ -6046,19 +6015,19 @@ glabel manage_mp_game
 /* 0F3984 7F0BEE54 0FC2FF01 */  jal   get_controls_locked_flag
 /* 0F3988 7F0BEE58 00000000 */   nop
 /* 0F398C 7F0BEE5C 1040000A */  beqz  $v0, .L7F0BEE88
-/* 0F3990 7F0BEE60 3C048005 */   lui   $a0, %hi(D_800483A0)
-/* 0F3994 7F0BEE64 8C8483A0 */  lw    $a0, %lo(D_800483A0)($a0)
+/* 0F3990 7F0BEE60 3C048005 */   lui   $a0, %hi(g_MpSoundStateRelated)
+/* 0F3994 7F0BEE64 8C8483A0 */  lw    $a0, %lo(g_MpSoundStateRelated)($a0)
 /* 0F3998 7F0BEE68 10800007 */  beqz  $a0, .L7F0BEE88
 /* 0F399C 7F0BEE6C 00000000 */   nop
 /* 0F39A0 7F0BEE70 0C00237C */  jal   sndGetPlayingState
 /* 0F39A4 7F0BEE74 00000000 */   nop
 /* 0F39A8 7F0BEE78 10400003 */  beqz  $v0, .L7F0BEE88
-/* 0F39AC 7F0BEE7C 3C048005 */   lui   $a0, %hi(D_800483A0)
+/* 0F39AC 7F0BEE7C 3C048005 */   lui   $a0, %hi(g_MpSoundStateRelated)
 /* 0F39B0 7F0BEE80 0C002408 */  jal   sndDeactivate
-/* 0F39B4 7F0BEE84 8C8483A0 */   lw    $a0, %lo(D_800483A0)($a0)
+/* 0F39B4 7F0BEE84 8C8483A0 */   lw    $a0, %lo(g_MpSoundStateRelated)($a0)
 .L7F0BEE88:
-/* 0F39B8 7F0BEE88 3C038005 */  lui   $v1, %hi(mp_time)
-/* 0F39BC 7F0BEE8C 8C638398 */  lw    $v1, %lo(mp_time)($v1)
+/* 0F39B8 7F0BEE88 3C038005 */  lui   $v1, %hi(g_MpTime)
+/* 0F39BC 7F0BEE8C 8C638398 */  lw    $v1, %lo(g_MpTime)($v1)
 /* 0F39C0 7F0BEE90 8FAF0184 */  lw    $t7, 0x184($sp)
 /* 0F39C4 7F0BEE94 8FAE0180 */  lw    $t6, 0x180($sp)
 /* 0F39C8 7F0BEE98 01E3082A */  slt   $at, $t7, $v1
@@ -6069,8 +6038,8 @@ glabel manage_mp_game
 /* 0F39DC 7F0BEEAC 0FC3094C */  jal   sub_GAME_7F0C2530
 /* 0F39E0 7F0BEEB0 00002025 */   move  $a0, $zero
 .L7F0BEEB4:
-/* 0F39E4 7F0BEEB4 3C188005 */  lui   $t8, %hi(mp_point)
-/* 0F39E8 7F0BEEB8 8F18839C */  lw    $t8, %lo(mp_point)($t8)
+/* 0F39E4 7F0BEEB4 3C188005 */  lui   $t8, %hi(g_MpPoint)
+/* 0F39E8 7F0BEEB8 8F18839C */  lw    $t8, %lo(g_MpPoint)($t8)
 /* 0F39EC 7F0BEEBC 3C198005 */  lui   $t9, %hi(g_ClockTimer)
 /* 0F39F0 7F0BEEC0 1B00003D */  blez  $t8, .L7F0BEFB8
 /* 0F39F4 7F0BEEC4 00000000 */   nop
@@ -6112,8 +6081,8 @@ glabel manage_mp_game
 /* 0F3A78 7F0BEF48 AFA6016C */  sw    $a2, 0x16c($sp)
 /* 0F3A7C 7F0BEF4C 0FC30E36 */  jal   get_points_for_mp_player
 /* 0F3A80 7F0BEF50 AFA70178 */   sw    $a3, 0x178($sp)
-/* 0F3A84 7F0BEF54 3C198005 */  lui   $t9, %hi(mp_point)
-/* 0F3A88 7F0BEF58 8F39839C */  lw    $t9, %lo(mp_point)($t9)
+/* 0F3A84 7F0BEF54 3C198005 */  lui   $t9, %hi(g_MpPoint)
+/* 0F3A88 7F0BEF58 8F39839C */  lw    $t9, %lo(g_MpPoint)($t9)
 /* 0F3A8C 7F0BEF5C 44800000 */  mtc1  $zero, $f0
 /* 0F3A90 7F0BEF60 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0F3A94 7F0BEF64 0059082A */  slt   $at, $v0, $t9
@@ -7065,11 +7034,11 @@ glabel sub_GAME_7F0BF800
 
 
 void unload_stage_text_data(void) {
-    if (D_800483A0 != NULL)
+    if (g_MpSoundStateRelated != NULL)
     {
-        if (sndGetPlayingState(D_800483A0) != AL_STOPPED)
+        if (sndGetPlayingState(g_MpSoundStateRelated) != AL_STOPPED)
         {
-            sndDeactivate(D_800483A0);
+            sndDeactivate(g_MpSoundStateRelated);
         }
     }
     if (g_CurrentStageToLoad != 0x5a)
@@ -7119,12 +7088,12 @@ void set_difficulty(s32 arg0) {
 }
 
 void set_mp_time(s32 arg0) {
-    mp_time = arg0;
+    g_MpTime = arg0;
 }
 
 
 void set_mp_point(s32 arg0) {
-    mp_point = arg0;
+    g_MpPoint = arg0;
 }
 
 

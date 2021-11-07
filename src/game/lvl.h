@@ -28,8 +28,26 @@ struct ramrom_struct {
     u32 locked;
 };
 
+struct s_unk_lvl {
+    u8 unk_0;
+    u8 unk_1;
+    s16 unk_2;
+
+    u8 unk_4;
+    u8 unk_5;
+    s16 unk_6;
+
+    u8 unk_8;
+    u8 unk_9;
+    s16 unk_a;
+
+    u8 unk_c;
+    u8 unk_d;
+    s16 unk_e;
+};
+
 extern s32 D_800483C4;
-extern s32 D_800483C8;
+extern struct s_unk_lvl* D_800483C8;
 
 extern s32 g_ClockTimer;
 extern s32 g_GlobalTimer;
