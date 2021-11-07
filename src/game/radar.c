@@ -100,7 +100,7 @@ block_4:
     DL = microcode_constructor_related_to_menus(DL, phi_s5 - 2, temp_s6 - 2, phi_s5 + 2, temp_s6 + 2, 0x40);
     if ((scenario == 5) || (scenario == 6) || (scenario == 7) || (scenario == 2) || (scenario == 3))
     {
-        if (*(&player1_player_data.have_token_or_goldengun + (curplayernum * 0x70)) == 0)
+        if (players_player_data[curplayernum].have_token_or_goldengun == 0)
         {
             phi_v0 = 0xFF7777FF;
         }
@@ -133,7 +133,7 @@ loop_22:
                 temp_f2 = sqrtf((temp_f20 * temp_f20) + (temp_f22 * temp_f22)) * (16.0f / 4000.0f);
                 if ((scenario == 5) || (scenario == 6) || (scenario == 7) || (scenario == 2) || (scenario == 3))
                 {
-                    temp_v0_5 = (((phi_s3 * 8) - phi_s3) * 0x10) + &player1_player_data;
+                    temp_v0_5 = (((phi_s3 * 8) - phi_s3) * 0x10) + &players_player_data;
                     if (temp_f2 < temp_f24)
                     {
                         if (temp_v0_5->unk69 == 0)
@@ -349,13 +349,13 @@ glabel display_red_blue_on_radar
 /* 0FAE08 7F0C62D8 8FA40088 */   lw    $a0, 0x88($sp)
 .L7F0C62DC:
 /* 0FAE0C 7F0C62DC 8FAC0070 */  lw    $t4, 0x70($sp)
-/* 0FAE10 7F0C62E0 3C0E8008 */  lui   $t6, %hi(player1_player_data+0x69)
+/* 0FAE10 7F0C62E0 3C0E8008 */  lui   $t6, %hi(players_player_data+0x69)
 /* 0FAE14 7F0C62E4 8FA40088 */  lw    $a0, 0x88($sp)
 /* 0FAE18 7F0C62E8 000C68C0 */  sll   $t5, $t4, 3
 /* 0FAE1C 7F0C62EC 01AC6823 */  subu  $t5, $t5, $t4
 /* 0FAE20 7F0C62F0 000D6900 */  sll   $t5, $t5, 4
 /* 0FAE24 7F0C62F4 01CD7021 */  addu  $t6, $t6, $t5
-/* 0FAE28 7F0C62F8 91CE9F59 */  lbu   $t6, %lo(player1_player_data+0x69)($t6)
+/* 0FAE28 7F0C62F8 91CE9F59 */  lbu   $t6, %lo(players_player_data+0x69)($t6)
 /* 0FAE2C 7F0C62FC 26A5FFFF */  addiu $a1, $s5, -1
 /* 0FAE30 7F0C6300 26C6FFFF */  addiu $a2, $s6, -1
 /* 0FAE34 7F0C6304 15C00004 */  bnez  $t6, .L7F0C6318
@@ -450,8 +450,8 @@ glabel display_red_blue_on_radar
 /* 0FAF84 7F0C6454 4618103C */   c.lt.s $f2, $f24
 .L7F0C6458:
 /* 0FAF88 7F0C6458 4618103C */  c.lt.s $f2, $f24
-/* 0FAF8C 7F0C645C 3C0F8008 */  lui   $t7, %hi(player1_player_data) 
-/* 0FAF90 7F0C6460 25EF9EF0 */  addiu $t7, %lo(player1_player_data) # addiu $t7, $t7, -0x6110
+/* 0FAF8C 7F0C645C 3C0F8008 */  lui   $t7, %hi(players_player_data) 
+/* 0FAF90 7F0C6460 25EF9EF0 */  addiu $t7, %lo(players_player_data) # addiu $t7, $t7, -0x6110
 /* 0FAF94 7F0C6464 00094900 */  sll   $t1, $t1, 4
 /* 0FAF98 7F0C6468 4500000A */  bc1f  .L7F0C6494
 /* 0FAF9C 7F0C646C 012F1021 */   addu  $v0, $t1, $t7

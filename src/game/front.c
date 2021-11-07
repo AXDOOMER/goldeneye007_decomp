@@ -11010,14 +11010,14 @@ void select_game_length(void)
 #ifdef NONMATCHING
 void copy_aim_settings_to_playerdata(void)
 {
-  player1_player_data.autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
-  player1_player_data.sight = mp_sight_adjust_table[aim_sight_adjustment].sight;
-  player2_player_data.autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
-  player2_player_data.sight = mp_sight_adjust_table[aim_sight_adjustment].sight;
-  player3_player_data.autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
-  player3_player_data.sight = mp_sight_adjust_table[aim_sight_adjustment].sight;
-  player4_player_data.autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
-  player4_player_data.sight = mp_sight_adjust_table[aim_sight_adjustment].sight;
+  players_player_data[0].autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
+  players_player_data[0].sight = mp_sight_adjust_table[aim_sight_adjustment].sight;
+  players_player_data[1].autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
+  players_player_data[1].sight = mp_sight_adjust_table[aim_sight_adjustment].sight;
+  players_player_data[2].autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
+  players_player_data[2].sight = mp_sight_adjust_table[aim_sight_adjustment].sight;
+  players_player_data[3].autoaim = mp_sight_adjust_table[aim_sight_adjustment].autoaim;
+  players_player_data[3].sight = mp_sight_adjust_table[aim_sight_adjustment].sight;
 }
 #else
 GLOBAL_ASM(
@@ -11030,24 +11030,24 @@ glabel copy_aim_settings_to_playerdata
 /* 044D18 7F0101E8 000E7880 */  sll   $t7, $t6, 2
 /* 044D1C 7F0101EC 01F81021 */  addu  $v0, $t7, $t8
 /* 044D20 7F0101F0 90430003 */  lbu   $v1, 3($v0)
-/* 044D24 7F0101F4 3C018008 */  lui   $at, %hi(player1_player_data+0x6A)
-/* 044D28 7F0101F8 A0239F5A */  sb    $v1, %lo(player1_player_data+0x6A)($at)
+/* 044D24 7F0101F4 3C018008 */  lui   $at, %hi(players_player_data+0x6A)
+/* 044D28 7F0101F8 A0239F5A */  sb    $v1, %lo(players_player_data+0x6A)($at)
 /* 044D2C 7F0101FC 90440002 */  lbu   $a0, 2($v0)
-/* 044D30 7F010200 3C018008 */  lui   $at, %hi(player1_player_data+0x6B)
-/* 044D34 7F010204 A0249F5B */  sb    $a0, %lo(player1_player_data+0x6B)($at)
-/* 044D38 7F010208 3C018008 */  lui   $at, %hi(player2_player_data+0x6A)
-/* 044D3C 7F01020C A0239FCA */  sb    $v1, %lo(player2_player_data+0x6A)($at)
-/* 044D40 7F010210 3C018008 */  lui   $at, %hi(player2_player_data+0x6B)
-/* 044D44 7F010214 A0249FCB */  sb    $a0, %lo(player2_player_data+0x6B)($at)
-/* 044D48 7F010218 3C018008 */  lui   $at, %hi(player3_player_data+0x6A)
-/* 044D4C 7F01021C A023A03A */  sb    $v1, %lo(player3_player_data+0x6A)($at)
-/* 044D50 7F010220 3C018008 */  lui   $at, %hi(player3_player_data+0x6B)
-/* 044D54 7F010224 A024A03B */  sb    $a0, %lo(player3_player_data+0x6B)($at)
-/* 044D58 7F010228 3C018008 */  lui   $at, %hi(player4_player_data+0x6A)
-/* 044D5C 7F01022C A023A0AA */  sb    $v1, %lo(player4_player_data+0x6A)($at)
-/* 044D60 7F010230 3C018008 */  lui   $at, %hi(player4_player_data+0x6B)
+/* 044D30 7F010200 3C018008 */  lui   $at, %hi(players_player_data+0x6B)
+/* 044D34 7F010204 A0249F5B */  sb    $a0, %lo(players_player_data+0x6B)($at)
+/* 044D38 7F010208 3C018008 */  lui   $at, %hi(players_player_data+0x70+0x6A)
+/* 044D3C 7F01020C A0239FCA */  sb    $v1, %lo(players_player_data+0x70+0x6A)($at)
+/* 044D40 7F010210 3C018008 */  lui   $at, %hi(players_player_data+0x70+0x6B)
+/* 044D44 7F010214 A0249FCB */  sb    $a0, %lo(players_player_data+0x70+0x6B)($at)
+/* 044D48 7F010218 3C018008 */  lui   $at, %hi(players_player_data+0x70+0x70+0x6A)
+/* 044D4C 7F01021C A023A03A */  sb    $v1, %lo(players_player_data+0x70+0x70+0x6A)($at)
+/* 044D50 7F010220 3C018008 */  lui   $at, %hi(players_player_data+0x70+0x70+0x6B)
+/* 044D54 7F010224 A024A03B */  sb    $a0, %lo(players_player_data+0x70+0x70+0x6B)($at)
+/* 044D58 7F010228 3C018008 */  lui   $at, %hi(players_player_data+0x70+0x70+0x70+0x6A)
+/* 044D5C 7F01022C A023A0AA */  sb    $v1, %lo(players_player_data+0x70+0x70+0x70+0x6A)($at)
+/* 044D60 7F010230 3C018008 */  lui   $at, %hi(players_player_data+0x70+0x70+0x70+0x6B)
 /* 044D64 7F010234 03E00008 */  jr    $ra
-/* 044D68 7F010238 A024A0AB */   sb    $a0, %lo(player4_player_data+0x6B)($at)
+/* 044D68 7F010238 A024A0AB */   sb    $a0, %lo(players_player_data+0x70+0x70+0x70+0x6B)($at)
 )
 #endif
 
@@ -18008,7 +18008,7 @@ glabel constructor_menu13_mpscenario
 #ifdef NONMATCHING
 s32 get_players_team_or_scenario_item_flag(int player)
 {
-  return (s32)(u8)(&player1_player_data)[player].have_token_or_goldengun;
+  return (s32)(u8)players_player_data[player].have_token_or_goldengun;
 }
 #else
 GLOBAL_ASM(
@@ -18017,10 +18017,10 @@ glabel get_players_team_or_scenario_item_flag
 /* 0497B8 7F014C88 000470C0 */  sll   $t6, $a0, 3
 /* 0497BC 7F014C8C 01C47023 */  subu  $t6, $t6, $a0
 /* 0497C0 7F014C90 000E7100 */  sll   $t6, $t6, 4
-/* 0497C4 7F014C94 3C028008 */  lui   $v0, %hi(player1_player_data+105)
+/* 0497C4 7F014C94 3C028008 */  lui   $v0, %hi(players_player_data+105)
 /* 0497C8 7F014C98 004E1021 */  addu  $v0, $v0, $t6
 /* 0497CC 7F014C9C 03E00008 */  jr    $ra
-/* 0497D0 7F014CA0 90429F59 */   lbu   $v0, %lo(player1_player_data+105)($v0)
+/* 0497D0 7F014CA0 90429F59 */   lbu   $v0, %lo(players_player_data+105)($v0)
 )
 #endif
 
@@ -18032,7 +18032,7 @@ glabel get_players_team_or_scenario_item_flag
 #ifdef NONMATCHING
 void set_players_team_or_scenario_item_flag(int player,char flag)
 {
-  (&player1_player_data)[player].have_token_or_goldengun = flag;
+  players_player_data[player].have_token_or_goldengun = flag;
 }
 #else
 GLOBAL_ASM(
@@ -18041,10 +18041,10 @@ glabel set_players_team_or_scenario_item_flag
 /* 0497D4 7F014CA4 000470C0 */  sll   $t6, $a0, 3
 /* 0497D8 7F014CA8 01C47023 */  subu  $t6, $t6, $a0
 /* 0497DC 7F014CAC 000E7100 */  sll   $t6, $t6, 4
-/* 0497E0 7F014CB0 3C018008 */  lui   $at, %hi(player1_player_data+105)
+/* 0497E0 7F014CB0 3C018008 */  lui   $at, %hi(players_player_data+105)
 /* 0497E4 7F014CB4 002E0821 */  addu  $at, $at, $t6
 /* 0497E8 7F014CB8 03E00008 */  jr    $ra
-/* 0497EC 7F014CBC A0259F59 */   sb    $a1, %lo(player1_player_data+105)($at)
+/* 0497EC 7F014CBC A0259F59 */   sb    $a1, %lo(players_player_data+105)($at)
 )
 #endif
 

@@ -9,16 +9,16 @@
 s32 copyof_stagenum;
 s32 dword_CODE_bss_80079E94;
 char dword_CODE_bss_80079E98[0x48];
+
 struct player *players[4];
+struct player_data players_player_data[4];
 
-struct player_data player1_player_data;
-struct player_data player2_player_data;
-struct player_data player3_player_data;
-struct player_data player4_player_data;
-
-// 0x8007a0b0
+/**
+ * Address 0x8007a0b0.
+ */
 struct player *currentplayer;
 struct player_data *pPlayersPerm;
+
 s32 player_num;
 s32 random_byte;
 PLAYER_ID array_PLAYER_IDs[4];

@@ -92,10 +92,12 @@ struct player_data {
 
 extern struct player *players[4];
 
-extern struct player_data player1_player_data;
-extern struct player_data player2_player_data;
-extern struct player_data player3_player_data;
-extern struct player_data player4_player_data;
+// extern struct player_data player1_player_data;
+// extern struct player_data player2_player_data;
+// extern struct player_data player3_player_data;
+// extern struct player_data player4_player_data;
+
+extern struct player_data players_player_data[4];
 
 extern struct player *currentplayer;
 extern struct player_data *pPlayersPerm;

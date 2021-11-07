@@ -16,14 +16,14 @@ void default_player_perspective_and_height(void)
 
   if (0) { }
 
-  player1_player_data.player_perspective_height = value;
-  player1_player_data.handicap = value;
-  player2_player_data.player_perspective_height = value;
-  player2_player_data.handicap = value;
-  player3_player_data.player_perspective_height = value;
-  player3_player_data.handicap = value;
-  player4_player_data.player_perspective_height = value;
-  player4_player_data.handicap = value;
+  players_player_data[0].player_perspective_height = value;
+  players_player_data[0].handicap = value;
+  players_player_data[1].player_perspective_height = value;
+  players_player_data[1].handicap = value;
+  players_player_data[2].player_perspective_height = value;
+  players_player_data[2].handicap = value;
+  players_player_data[3].player_perspective_height = value;
+  players_player_data[3].handicap = value;
 }
 
 void reset_play_data_ptrs(void) 
@@ -2105,7 +2105,7 @@ void set_cur_player(s32 playernum)
 {
     player_num = playernum;
     currentplayer = players[playernum];
-    pPlayersPerm = &player1_player_data + playernum;
+    pPlayersPerm = &players_player_data[playernum];
 }
 
 

@@ -2861,6 +2861,6 @@ void sub_GAME_7F0798B8(void);
 f32 get_BONDdata_watch_health(void);
 f32 get_BONDdata_watch_armor(void);
 void possibly_reset_viewport_options_for_player(s8 arg0, s8 arg1, u16 arg2);
-void display_string_in_lower_left_corner(void);
+void display_string_in_lower_left_corner(char *string);
 
 #endif

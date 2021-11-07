@@ -300,7 +300,7 @@ void music_play_stagetrack_or_random(void)
  * - identical instructions: yes
  * - identical registers: fail
  * 
- * notes: only regalloc issues. Problem seems to be around the do{}while loop on player1_player_data.
+ * notes: only regalloc issues. Problem seems to be around the do{}while loop on players_player_data.
  */
 void stage_load(s32 stage)
 {
@@ -632,9 +632,9 @@ glabel stage_load
 /* 0F27A0 7F0BDC70 00000000 */   nop
 /* 0F27A4 7F0BDC74 0FC3047F */  jal   sub_GAME_7F0C11FC
 /* 0F27A8 7F0BDC78 8FA40038 */   lw    $a0, 0x38($sp)
-/* 0F27AC 7F0BDC7C 3C0A8008 */  lui   $t2, %hi(player1_player_data)
+/* 0F27AC 7F0BDC7C 3C0A8008 */  lui   $t2, %hi(players_player_data)
 /* 0F27B0 7F0BDC80 3C014348 */  li    $at, 0x43480000 # 200.000000
-/* 0F27B4 7F0BDC84 25529EF0 */  addiu $s2, $t2, %lo(player1_player_data)
+/* 0F27B4 7F0BDC84 25529EF0 */  addiu $s2, $t2, %lo(players_player_data)
 /* 0F27B8 7F0BDC88 4481A000 */  mtc1  $at, $f20
 /* 0F27BC 7F0BDC8C 0240A025 */  move  $s4, $s2
 /* 0F27C0 7F0BDC90 24130004 */  li    $s3, 4
@@ -653,8 +653,8 @@ glabel stage_load
 /* 0F27F0 7F0BDCC0 1000001C */  b     .L7F0BDD34
 /* 0F27F4 7F0BDCC4 E6860064 */   swc1  $f6, 0x64($s4)
 .L7F0BDCC8:
-/* 0F27F8 7F0BDCC8 3C118008 */  lui   $s1, %hi(player1_player_data)
-/* 0F27FC 7F0BDCCC 26319EF0 */  addiu $s1, %lo(player1_player_data) # addiu $s1, $s1, -0x6110
+/* 0F27F8 7F0BDCC8 3C118008 */  lui   $s1, %hi(players_player_data)
+/* 0F27FC 7F0BDCCC 26319EF0 */  addiu $s1, %lo(players_player_data) # addiu $s1, $s1, -0x6110
 .L7F0BDCD0:
 /* 0F2800 7F0BDCD0 0FC051D6 */  jal   get_scenario
 /* 0F2804 7F0BDCD4 00000000 */   nop
@@ -937,9 +937,9 @@ glabel stage_load
 /* 0F33A0 7F0BE830 00000000 */   nop
 /* 0F33A4 7F0BE834 0FC307AB */  jal   sub_GAME_7F0C11FC
 /* 0F33A8 7F0BE838 8FA40038 */   lw    $a0, 0x38($sp)
-/* 0F33AC 7F0BE83C 3C0A8008 */  lui   $t2, %hi(player1_player_data)
+/* 0F33AC 7F0BE83C 3C0A8008 */  lui   $t2, %hi(players_player_data)
 /* 0F33B0 7F0BE840 3C014348 */  li    $at, 0x43480000 # 200.000000
-/* 0F33B4 7F0BE844 25529F60 */  addiu $s2, $t2, %lo(player1_player_data)
+/* 0F33B4 7F0BE844 25529F60 */  addiu $s2, $t2, %lo(players_player_data)
 /* 0F33B8 7F0BE848 4481A000 */  mtc1  $at, $f20
 /* 0F33BC 7F0BE84C 0240A025 */  move  $s4, $s2
 /* 0F33C0 7F0BE850 24130004 */  li    $s3, 4
@@ -958,8 +958,8 @@ glabel stage_load
 /* 0F33F0 7F0BE880 1000001C */  b     .Ljp7F0BE8F4
 /* 0F33F4 7F0BE884 E6880064 */   swc1  $f8, 0x64($s4)
 .Ljp7F0BE888:
-/* 0F33F8 7F0BE888 3C118008 */  lui   $s1, %hi(player1_player_data) # $s1, 0x8008
-/* 0F33FC 7F0BE88C 26319F60 */  addiu $s1, %lo(player1_player_data) # addiu $s1, $s1, -0x60a0
+/* 0F33F8 7F0BE888 3C118008 */  lui   $s1, %hi(players_player_data) # $s1, 0x8008
+/* 0F33FC 7F0BE88C 26319F60 */  addiu $s1, %lo(players_player_data) # addiu $s1, $s1, -0x60a0
 .Ljp7F0BE890:
 /* 0F3400 7F0BE890 0FC05202 */  jal   get_scenario
 /* 0F3404 7F0BE894 00000000 */   nop
@@ -1237,9 +1237,9 @@ glabel stage_load
 /* 0F27A0 7F0BDC70 00000000 */   nop
 /* 0F27A4 7F0BDC74 0FC3047F */  jal   sub_GAME_7F0C11FC
 /* 0F27A8 7F0BDC78 8FA40038 */   lw    $a0, 0x38($sp)
-/* 0F27AC 7F0BDC7C 3C0A8008 */  lui   $t2, %hi(player1_player_data)
+/* 0F27AC 7F0BDC7C 3C0A8008 */  lui   $t2, %hi(players_player_data)
 /* 0F27B0 7F0BDC80 3C014348 */  li    $at, 0x43480000 # 200.000000
-/* 0F27B4 7F0BDC84 25529EF0 */  addiu $s2, $t2, %lo(player1_player_data)
+/* 0F27B4 7F0BDC84 25529EF0 */  addiu $s2, $t2, %lo(players_player_data)
 /* 0F27B8 7F0BDC88 4481A000 */  mtc1  $at, $f20
 /* 0F27BC 7F0BDC8C 0240A025 */  move  $s4, $s2
 /* 0F27C0 7F0BDC90 24130004 */  li    $s3, 4
@@ -1258,8 +1258,8 @@ glabel stage_load
 /* 0F27F0 7F0BDCC0 1000001C */  b     .L7F0BDD34
 /* 0F27F4 7F0BDCC4 E6860064 */   swc1  $f6, 0x64($s4)
 .L7F0BDCC8:
-/* 0F27F8 7F0BDCC8 3C118008 */  lui   $s1, %hi(player1_player_data)
-/* 0F27FC 7F0BDCCC 26319EF0 */  addiu $s1, %lo(player1_player_data) # addiu $s1, $s1, -0x6110
+/* 0F27F8 7F0BDCC8 3C118008 */  lui   $s1, %hi(players_player_data)
+/* 0F27FC 7F0BDCCC 26319EF0 */  addiu $s1, %lo(players_player_data) # addiu $s1, $s1, -0x6110
 .L7F0BDCD0:
 /* 0F2800 7F0BDCD0 0FC051D6 */  jal   get_scenario
 /* 0F2804 7F0BDCD4 00000000 */   nop
@@ -4369,10 +4369,10 @@ glabel manage_mp_game
 /* 0F3B50 7F0BF020 0000C8C0 */  sll   $t9, $zero, 3
 /* 0F3B54 7F0BF024 0320C823 */  subu  $t9, $t9, $zero
 /* 0F3B58 7F0BF028 01D81821 */  addu  $v1, $t6, $t8
-/* 0F3B5C 7F0BF02C 3C0E8008 */  lui   $t6, %hi(player1_player_data)
+/* 0F3B5C 7F0BF02C 3C0E8008 */  lui   $t6, %hi(players_player_data)
 /* 0F3B60 7F0BF030 0019C900 */  sll   $t9, $t9, 4
 /* 0F3B64 7F0BF034 032B7821 */  addu  $t7, $t9, $t3
-/* 0F3B68 7F0BF038 25CE9EF0 */  addiu $t6, %lo(player1_player_data) # addiu $t6, $t6, -0x6110
+/* 0F3B68 7F0BF038 25CE9EF0 */  addiu $t6, %lo(players_player_data) # addiu $t6, $t6, -0x6110
 /* 0F3B6C 7F0BF03C 01EE2021 */  addu  $a0, $t7, $t6
 /* 0F3B70 7F0BF040 01204025 */  move  $t0, $t1
 .L7F0BF044:
@@ -4398,8 +4398,8 @@ glabel manage_mp_game
 /* 0F3BB8 7F0BF088 01D81821 */  addu  $v1, $t6, $t8
 /* 0F3BBC 7F0BF08C 0019C900 */  sll   $t9, $t9, 4
 /* 0F3BC0 7F0BF090 032B7821 */  addu  $t7, $t9, $t3
-/* 0F3BC4 7F0BF094 3C0E8008 */  lui   $t6, %hi(player1_player_data)
-/* 0F3BC8 7F0BF098 25CE9EF0 */  addiu $t6, %lo(player1_player_data) # addiu $t6, $t6, -0x6110
+/* 0F3BC4 7F0BF094 3C0E8008 */  lui   $t6, %hi(players_player_data)
+/* 0F3BC8 7F0BF098 25CE9EF0 */  addiu $t6, %lo(players_player_data) # addiu $t6, $t6, -0x6110
 /* 0F3BCC 7F0BF09C 000AC880 */  sll   $t9, $t2, 2
 /* 0F3BD0 7F0BF0A0 03384021 */  addu  $t0, $t9, $t8
 /* 0F3BD4 7F0BF0A4 01EE2021 */  addu  $a0, $t7, $t6
@@ -4444,8 +4444,8 @@ glabel manage_mp_game
 /* 0F3C58 7F0BF128 1420001C */  bnez  $at, .L7F0BF19C
 /* 0F3C5C 7F0BF12C 000C78C0 */   sll   $t7, $t4, 3
 /* 0F3C60 7F0BF130 01EC7823 */  subu  $t7, $t7, $t4
-/* 0F3C64 7F0BF134 3C0E8008 */  lui   $t6, %hi(player1_player_data)
-/* 0F3C68 7F0BF138 25CE9EF0 */  addiu $t6, %lo(player1_player_data) # addiu $t6, $t6, -0x6110
+/* 0F3C64 7F0BF134 3C0E8008 */  lui   $t6, %hi(players_player_data)
+/* 0F3C68 7F0BF138 25CE9EF0 */  addiu $t6, %lo(players_player_data) # addiu $t6, $t6, -0x6110
 /* 0F3C6C 7F0BF13C 000F7900 */  sll   $t7, $t7, 4
 /* 0F3C70 7F0BF140 01EE1821 */  addu  $v1, $t7, $t6
 /* 0F3C74 7F0BF144 906F0068 */  lbu   $t7, 0x68($v1)
@@ -5260,10 +5260,10 @@ glabel manage_mp_game
 /* 0F47C8 7F0BFC58 0000C8C0 */  sll   $t9, $zero, 3
 /* 0F47CC 7F0BFC5C 0320C823 */  subu  $t9, $t9, $zero
 /* 0F47D0 7F0BFC60 01D81821 */  addu  $v1, $t6, $t8
-/* 0F47D4 7F0BFC64 3C0E8008 */  lui   $t6, %hi(player1_player_data) # $t6, 0x8008
+/* 0F47D4 7F0BFC64 3C0E8008 */  lui   $t6, %hi(players_player_data) # $t6, 0x8008
 /* 0F47D8 7F0BFC68 0019C900 */  sll   $t9, $t9, 4
 /* 0F47DC 7F0BFC6C 032B7821 */  addu  $t7, $t9, $t3
-/* 0F47E0 7F0BFC70 25CE9F60 */  addiu $t6, %lo(player1_player_data) # addiu $t6, $t6, -0x60a0
+/* 0F47E0 7F0BFC70 25CE9F60 */  addiu $t6, %lo(players_player_data) # addiu $t6, $t6, -0x60a0
 /* 0F47E4 7F0BFC74 01EE2021 */  addu  $a0, $t7, $t6
 /* 0F47E8 7F0BFC78 01204025 */  move  $t0, $t1
 .Ljp7F0BFC7C:
@@ -5289,8 +5289,8 @@ glabel manage_mp_game
 /* 0F4830 7F0BFCC0 01D81821 */  addu  $v1, $t6, $t8
 /* 0F4834 7F0BFCC4 0019C900 */  sll   $t9, $t9, 4
 /* 0F4838 7F0BFCC8 032B7821 */  addu  $t7, $t9, $t3
-/* 0F483C 7F0BFCCC 3C0E8008 */  lui   $t6, %hi(player1_player_data) # $t6, 0x8008
-/* 0F4840 7F0BFCD0 25CE9F60 */  addiu $t6, %lo(player1_player_data) # addiu $t6, $t6, -0x60a0
+/* 0F483C 7F0BFCCC 3C0E8008 */  lui   $t6, %hi(players_player_data) # $t6, 0x8008
+/* 0F4840 7F0BFCD0 25CE9F60 */  addiu $t6, %lo(players_player_data) # addiu $t6, $t6, -0x60a0
 /* 0F4844 7F0BFCD4 000AC880 */  sll   $t9, $t2, 2
 /* 0F4848 7F0BFCD8 03384021 */  addu  $t0, $t9, $t8
 /* 0F484C 7F0BFCDC 01EE2021 */  addu  $a0, $t7, $t6
@@ -5335,8 +5335,8 @@ glabel manage_mp_game
 /* 0F48D0 7F0BFD60 1420001C */  bnez  $at, .Ljp7F0BFDD4
 /* 0F48D4 7F0BFD64 000C78C0 */   sll   $t7, $t4, 3
 /* 0F48D8 7F0BFD68 01EC7823 */  subu  $t7, $t7, $t4
-/* 0F48DC 7F0BFD6C 3C0E8008 */  lui   $t6, %hi(player1_player_data) # $t6, 0x8008
-/* 0F48E0 7F0BFD70 25CE9F60 */  addiu $t6, %lo(player1_player_data) # addiu $t6, $t6, -0x60a0
+/* 0F48DC 7F0BFD6C 3C0E8008 */  lui   $t6, %hi(players_player_data) # $t6, 0x8008
+/* 0F48E0 7F0BFD70 25CE9F60 */  addiu $t6, %lo(players_player_data) # addiu $t6, $t6, -0x60a0
 /* 0F48E4 7F0BFD74 000F7900 */  sll   $t7, $t7, 4
 /* 0F48E8 7F0BFD78 01EE1821 */  addu  $v1, $t7, $t6
 /* 0F48EC 7F0BFD7C 906F0068 */  lbu   $t7, 0x68($v1)
@@ -6140,10 +6140,10 @@ glabel manage_mp_game
 /* 0F3B50 7F0BF020 0000C8C0 */  sll   $t9, $zero, 3
 /* 0F3B54 7F0BF024 0320C823 */  subu  $t9, $t9, $zero
 /* 0F3B58 7F0BF028 01D81821 */  addu  $v1, $t6, $t8
-/* 0F3B5C 7F0BF02C 3C0E8008 */  lui   $t6, %hi(player1_player_data)
+/* 0F3B5C 7F0BF02C 3C0E8008 */  lui   $t6, %hi(players_player_data)
 /* 0F3B60 7F0BF030 0019C900 */  sll   $t9, $t9, 4
 /* 0F3B64 7F0BF034 032B7821 */  addu  $t7, $t9, $t3
-/* 0F3B68 7F0BF038 25CE9EF0 */  addiu $t6, %lo(player1_player_data) # addiu $t6, $t6, -0x6110
+/* 0F3B68 7F0BF038 25CE9EF0 */  addiu $t6, %lo(players_player_data) # addiu $t6, $t6, -0x6110
 /* 0F3B6C 7F0BF03C 01EE2021 */  addu  $a0, $t7, $t6
 /* 0F3B70 7F0BF040 01204025 */  move  $t0, $t1
 .L7F0BF044:
@@ -6169,8 +6169,8 @@ glabel manage_mp_game
 /* 0F3BB8 7F0BF088 01D81821 */  addu  $v1, $t6, $t8
 /* 0F3BBC 7F0BF08C 0019C900 */  sll   $t9, $t9, 4
 /* 0F3BC0 7F0BF090 032B7821 */  addu  $t7, $t9, $t3
-/* 0F3BC4 7F0BF094 3C0E8008 */  lui   $t6, %hi(player1_player_data)
-/* 0F3BC8 7F0BF098 25CE9EF0 */  addiu $t6, %lo(player1_player_data) # addiu $t6, $t6, -0x6110
+/* 0F3BC4 7F0BF094 3C0E8008 */  lui   $t6, %hi(players_player_data)
+/* 0F3BC8 7F0BF098 25CE9EF0 */  addiu $t6, %lo(players_player_data) # addiu $t6, $t6, -0x6110
 /* 0F3BCC 7F0BF09C 000AC880 */  sll   $t9, $t2, 2
 /* 0F3BD0 7F0BF0A0 03384021 */  addu  $t0, $t9, $t8
 /* 0F3BD4 7F0BF0A4 01EE2021 */  addu  $a0, $t7, $t6
@@ -6215,8 +6215,8 @@ glabel manage_mp_game
 /* 0F3C58 7F0BF128 1420001C */  bnez  $at, .L7F0BF19C
 /* 0F3C5C 7F0BF12C 000C78C0 */   sll   $t7, $t4, 3
 /* 0F3C60 7F0BF130 01EC7823 */  subu  $t7, $t7, $t4
-/* 0F3C64 7F0BF134 3C0E8008 */  lui   $t6, %hi(player1_player_data)
-/* 0F3C68 7F0BF138 25CE9EF0 */  addiu $t6, %lo(player1_player_data) # addiu $t6, $t6, -0x6110
+/* 0F3C64 7F0BF134 3C0E8008 */  lui   $t6, %hi(players_player_data)
+/* 0F3C68 7F0BF138 25CE9EF0 */  addiu $t6, %lo(players_player_data) # addiu $t6, $t6, -0x6110
 /* 0F3C6C 7F0BF13C 000F7900 */  sll   $t7, $t7, 4
 /* 0F3C70 7F0BF140 01EE1821 */  addu  $v1, $t7, $t6
 /* 0F3C74 7F0BF144 906F0068 */  lbu   $t7, 0x68($v1)
