@@ -29,6 +29,8 @@ struct ramrom_struct {
 };
 
 extern s32 D_800483C4;
+extern s32 D_800483C8;
+
 extern s32 g_ClockTimer;
 extern s32 g_GlobalTimer;
 extern f32 g_GlobalTimerDelta;
@@ -53,5 +55,7 @@ void stage_load(s32 arg0);
 void set_mp_time(s32 arg0);
 void set_mp_point(s32 arg0);
 void set_controls_locked_flag(s32 arg0);
+s32 get_controls_locked_flag(void);
+void setDamageMultipliersForDifficulty(void);
 
 #endif

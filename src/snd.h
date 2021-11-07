@@ -151,9 +151,10 @@ struct ALBankAlt_s
 
 void sndNewPlayerInit(ALSeqpSfxConfig *arg0);
 u8 sndGetPlayingState(ALSoundState *state);
+void sndDeactivate(ALSoundState *state);
 void sndDeactivateAllSfxByFlag_1(void);
 void sndCreatePostEvent(ALSoundState *state, s16 eventType, s32 arg2);
-ALSoundState *sndPlaySfx(struct ALBankAlt_s *arg0, s16 arg1, ALSoundState *arg2);
+ALSoundState *sndPlaySfx(struct ALBankAlt_s *soundBank, s16 soundIndex, ALSoundState *pendingState);
 u16 sndGetSfxSlotFirstNaturalVolume(void);
 void sndApplyVolumeAllSfxSlot(u16 arg0);
 void sndSetScalerApplyVolumeAllSfxSlot(f32 arg0);

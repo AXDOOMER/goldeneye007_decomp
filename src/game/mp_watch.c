@@ -293,7 +293,7 @@ void mpwatchSetStopPlayFlag(void) {
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0C2530(void) {
+void sub_GAME_7F0C2530(int arg0) {
 
 }
 #else
@@ -1527,7 +1527,7 @@ Gfx *display_text_for_playerdata_on_MP_menu(Gfx *gdl, s32 x, s32 y, u16* arg3, T
 
 
 #ifdef NONMATCHING
-void get_points_for_mp_player(void) {
+void get_points_for_mp_player(int arg0) {
 
 }
 #else

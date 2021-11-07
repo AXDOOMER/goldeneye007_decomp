@@ -53,6 +53,8 @@
 #include "game/unk_091080.h"
 #include "include/math.h"
 #include "game/mp_music.h"
+#include "game/unk_0BC530.h"
+#include "game/unk_092E50.h"
 
 // bss
 //CODE.bss:8008C260
@@ -208,7 +210,6 @@ extern u8* _jfontdlSegmentEnd;
 // forward declarations
 
 s32 sub_GAME_7F0BDF10(s32 arg0);
-
 
 s32 sub_GAME_7F0BD8F0(void) {
     return D_800483C0;
@@ -3515,24 +3516,24 @@ void manage_mp_game(void)
     g_GlobalTimer += temp_v0;
 
     if ((g_CurrentStageToLoad != LEVELID_TITLE) && (D_80048394 == 0) && (g_ClockTimer > 0))
+    {
+        if (g_AppendCheatSinglePlayer != 0)
         {
-            if (g_AppendCheatSinglePlayer != 0)
-            {
-                s32 s0 = 1;
+            s32 s0 = 1;
 
-                for (s0 = 1; s0 != CHEAT_INVALID; s0++)
+            for (s0 = 1; s0 != CHEAT_INVALID; s0++)
+            {
+                if (g_CheatActivated[s0] && cheatIsEnemyRockets(s0))
                 {
-                    if (g_CheatActivated[s0] && cheatIsEnemyRockets(s0))
-                    {
-                        turn_on_cheat_for_players(s0);
-                    }
+                    turn_on_cheat_for_players(s0);
                 }
             }
         }
+    }
 
     if ((getPlayerCount() >= 2) && (g_CurrentStageToLoad != LEVELID_TITLE))
     {
-        if (get_mission_state() == 6)
+        if (get_mission_state() == MISSION_STATE_6)
         {
             sp190 = 0;
             sp18C = 0;
@@ -3570,7 +3571,7 @@ void manage_mp_game(void)
                     phi_a2_2 = phi_a2;
                     phi_a1_6 = phi_a1;
                     phi_a2_6 = phi_a2;
-                } while (temp_v1 < getPlayerCount(temp_a0_2, phi_a1, phi_a2));
+                } while (temp_v1 < getPlayerCount());
             }
             if ((phi_a1_2 > 0) && (phi_a1_2 == phi_a2_2))
             {
@@ -3672,11 +3673,11 @@ void manage_mp_game(void)
             {
                 if (phi_a1_4 == 0)
                 {
-                    sub_GAME_7F0C2530(0, phi_a1_4, phi_a2_4, phi_a3_2);
+                    sub_GAME_7F0C2530(0);
                 }
                 else
                 {
-                    mpwatchSetStopPlayFlag(phi_a0_4, phi_a1_4, phi_a2_4, phi_a3_2);
+                    mpwatchSetStopPlayFlag();
                 }
             }
         }
@@ -3840,6 +3841,7 @@ block_67:
         temp_t9 = D_80048390 + temp_v0_8;
         D_80048390 = temp_t9;
         phi_v0 = temp_v0_8;
+
         if (temp_t9 >= 0x708)
         {
             D_80048388 = 1;
@@ -3872,6 +3874,7 @@ block_67:
     }
     else
     {
+
         sub_GAME_7F09BBBC();
         setDamageMultipliersForDifficulty();
         sub_GAME_7F0BC7D4();
@@ -3899,22 +3902,26 @@ block_67:
                     temp_v0_10->unk1 = (u8) ((temp_v0_10->unk1 & 0xFF1F) | 0x20);
                     temp_v0_11 = D_800483C8 + phi_v1_6;
                     temp_v0_11->unk1 = (u8) ((temp_v0_11->unk1 & 0xFFE3) | 4);
+
                     (D_800483C8 + phi_v1_6)->unk4 = 0xFF;
                     temp_v0_12 = D_800483C8 + phi_v1_6;
                     temp_v0_12->unk5 = (u8) ((temp_v0_12->unk5 & 0xFF1F) | 0x20);
                     temp_v0_13 = D_800483C8 + phi_v1_6;
                     temp_v0_13->unk5 = (u8) ((temp_v0_13->unk5 & 0xFFE3) | 4);
+
                     (D_800483C8 + phi_v1_6)->unk8 = 0xFF;
                     temp_v0_14 = D_800483C8 + phi_v1_6;
                     temp_v0_14->unk9 = (u8) ((temp_v0_14->unk9 & 0xFF1F) | 0x20);
                     temp_v0_15 = D_800483C8 + phi_v1_6;
                     temp_v0_15->unk9 = (u8) ((temp_v0_15->unk9 & 0xFFE3) | 4);
+
                     (D_800483C8 + phi_v1_6)->unkC = 0xFF;
                     temp_v0_16 = D_800483C8 + phi_v1_6;
                     temp_v0_16->unkD = (u8) ((temp_v0_16->unkD & 0xFF1F) | 0x20);
                     temp_v0_17 = D_800483C8 + phi_v1_6;
                     temp_v1_8 = phi_v1_6 + 0x10;
                     temp_v0_17->unkD = (u8) ((temp_v0_17->unkD & 0xFFE3) | 4);
+
                     phi_v1_6 = temp_v1_8;
                 } while (temp_v1_8 != 0x2EE0);
             }

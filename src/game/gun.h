@@ -230,5 +230,6 @@ WeaponStats *get_ptr_item_statistics(ITEM_IDS item);
 
 s32 get_item_in_hand(HANDEDNESS hand);
 s32 draw_item_in_hand_has_more_ammo(HANDEDNESS hand, s32 next_weapon);
+void sub_GAME_7F068E6C(void);
 
 #endif

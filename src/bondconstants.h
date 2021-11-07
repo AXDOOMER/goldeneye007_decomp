@@ -1750,8 +1750,18 @@ typedef enum CHEAT_IDS {
     CHEAT_UNUSED_0x49,
     CHEAT_UNLOCK_STAGES = 0x4a, /* unverified */
 
-    CHEAT_INVALID = 0x4b,
+    CHEAT_INVALID = 0x4b
 } CHEAT_ID;
+
+typedef enum MISSION_STATE_IDS {
+    MISSION_STATE_0 = 0,
+    MISSION_STATE_1,
+    MISSION_STATE_2,
+    MISSION_STATE_3,
+    MISSION_STATE_4,
+    MISSION_STATE_5,
+    MISSION_STATE_6
+} MISSION_STATE_ID;
 
 //macros for FILERECORDS
 #define STR(n) #n

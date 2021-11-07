@@ -1,6 +1,8 @@
 #include "ultra64.h"
 #include "game/player.h"
 #include "game/bg.h"
+#include "game/unk_0BC530.h"
+
 // bss
 char dword_CODE_bss_80083320[0x130];
 char dword_CODE_bss_80083450[0x4B0];

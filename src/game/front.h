@@ -600,5 +600,6 @@ int get_mp_timelimit(void);
 int get_mp_pointlimit(void);
 void reset_mp_options_for_scenario(MPSCENARIOS scenarioid);
 void copy_aim_settings_to_playerdata(void);
+void menu_init();
 
 #endif

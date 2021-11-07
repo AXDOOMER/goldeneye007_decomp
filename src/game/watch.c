@@ -1037,7 +1037,7 @@ void watch_screen0_navigation(void)
     else if ((D_800409A4) && (joyGetButtonsPressedThisFrame(0, Z_TRIG|A_BUTTON)))
     {
         D_800409A4 = 0;
-        set_missionstate(0);
+        set_missionstate(MISSION_STATE_0);
         bossRunTitleStage();
         mission_failed_or_aborted = 1;
         deleteCurrentSelectedFolder();
