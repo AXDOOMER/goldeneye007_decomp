@@ -47,7 +47,7 @@ struct s_unk_lvl {
 };
 
 extern s32 D_800483C4;
-extern struct s_unk_lvl* D_800483C8;
+extern struct s_unk_lvl** D_800483C8;
 
 extern s32 g_ClockTimer;
 extern s32 g_GlobalTimer;

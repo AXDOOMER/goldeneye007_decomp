@@ -56,6 +56,7 @@
 #include "game/unk_0BC530.h"
 #include "game/unk_092E50.h"
 #include "game/unk_0C0A70.h"
+#include "game/chr.h"
 
 // bss
 //CODE.bss:8008C260
@@ -149,8 +150,12 @@ ALSoundState * g_MpSoundStateRelated = NULL;
 f32 g_CurrentMultiPlayerSec = 0.0;
 //D:800483A8
 s32 D_800483A8 = 0;
-//D:800483AC
-f32 cur_mp_min = 0.0;
+
+/**
+ * Address 0x800483AC.
+ */
+f32 g_CurrentMultiPlayerMin = 0.0;
+
 //D:800483B0
 s32 D_800483B0 = 0;
 
@@ -174,7 +179,7 @@ s32 D_800483C0 = 1;
 s32 D_800483C4 = 0xFFFFFFFF;
 
 //D:800483C8
-struct s_unk_lvl* D_800483C8 = NULL;
+struct s_unk_lvl** D_800483C8 = NULL;
 
 /*
 * Debug variable, something to do with portals.
@@ -212,8 +217,15 @@ s32 g_DebugPortalsInputBuffer_3 = 0;
  */
 s32 g_DebugPortalsInputBuffer_4 = 0;
 
-//D:800483E4
-s32 D_800483E4 = 0;
+/**
+ * Something debug related in the MP manage method.
+ * Index to play sound effect.
+ * Address 0x800483E4.
+ */
+s16 g_DebugMpGameSoundFxIndex = 0;
+
+// unused address padding
+s16 D_800483E6 = 0;
 
 
 extern u8* _jfontdlSegmentStart;
@@ -3480,7 +3492,7 @@ void manage_mp_game(void)
     s32 phi_a2_5;
     s32 phi_ra;
     s32 phi_t5;
-    s32 phi_v0;
+    s32 copy_g_clockTimer;
     s32 phi_v1_6;
     s32 phi_a1_6;
     s32 phi_a2_6;
@@ -3646,7 +3658,8 @@ void manage_mp_game(void)
             }
         }
 
-#error instructions match up to here, .s line (good) ~1840, assembly line (good) ~16c4
+// instructions match up to here, .s line (good) ~1840, assembly line (good) ~16c4
+// decomp issue: begin very wrong section
         if ((get_scenario() == SCENARIO_YOLT) && (g_ClockTimer != 0))
         {
             s32 not_dead_count = 0;
@@ -3732,31 +3745,26 @@ void manage_mp_game(void)
                 mpwatchSetStopPlayFlag();
             }
         } // end YOLT
+// decomp issue: end very wrong section
     }
 
-    temp_v0_7 = g_ClockTimer;
-    temp_t6_2 = D_80048394 + temp_v0_7;
-    D_80048394 = temp_t6_2;
-    g_CurrentMultiPlayerSec = (f32) temp_t6_2 / 60.0f;
-    temp_t7 = D_800483A8 + temp_v0_7;
-    temp_f6 = temp_t7;
-    D_800483A8 = temp_t7;
-    cur_mp_min = (f32) temp_f6 / 60.0f;
+    D_80048394 = D_80048394 + g_ClockTimer;
+    g_CurrentMultiPlayerSec = (f32) (D_80048394) / 60.0f;
+    D_800483A8 = D_800483A8 + g_ClockTimer;
+    g_CurrentMultiPlayerMin = (f32) (D_800483A8) / 60.0f;
 
     if (joyGetButtonsPressedThisFrame(PLAYER_1, ANY_BUTTON))
     {
         D_80048388 = 0;
         D_80048390 = 0;
-        phi_v0 = g_ClockTimer;
+        copy_g_clockTimer = g_ClockTimer;
     }
     else
     {
-        temp_v0_8 = g_ClockTimer;
-        temp_t9 = D_80048390 + temp_v0_8;
-        D_80048390 = temp_t9;
-        phi_v0 = temp_v0_8;
+        D_80048390 = D_80048390 + g_ClockTimer;
+        copy_g_clockTimer = g_ClockTimer;
 
-        if (temp_t9 >= 0x708)
+        if (D_80048390 >= 0x708)
         {
             D_80048388 = 1;
         }
@@ -3764,18 +3772,14 @@ void manage_mp_game(void)
 
     if (D_80048388 != 0)
     {
-        D_8004838C += phi_v0;
+        D_8004838C += copy_g_clockTimer;
     }
     else
     {
-        temp_t9_2 = D_800483B0 + phi_v0;
-        temp_f16 = temp_t9_2;
-        D_800483B0 = temp_t9_2;
-        g_StageTimeSec = (f32) temp_f16 / 60.0f;
-        temp_t6_3 = D_800483B8 + phi_v0;
-        temp_f6_2 = temp_t6_3;
-        D_800483B8 = temp_t6_3;
-        poweron_time_sec = (f32) temp_f6_2 / 60.0f;
+        D_800483B0 = D_800483B0 + copy_g_clockTimer;
+        g_StageTimeSec = (f32) (D_800483B0) / 60.0f;
+        D_800483B8 = D_800483B8 + copy_g_clockTimer;
+        poweron_time_sec = (f32) (D_800483B8) / 60.0f;
     }
 
     viSetUseZBuf(1);
@@ -3804,32 +3808,32 @@ void manage_mp_game(void)
 
         if ((get_debug_joy2detailedit_flag() != 0) && (D_800483C8 == 0))
         {
-            temp_v0_9 = (struct s_unk_lvl*)mempAllocBytesInBank(0x3000, 4);
-            D_800483C8 = temp_v0_9;
-            if (temp_v0_9 != 0)
+// decomp issue: begin very wrong section, .s line ~2100
+            D_800483C8 = (struct s_unk_lvl**)mempAllocBytesInBank(0x3000, 4);
+            if (D_800483C8 != 0)
             {
                 s32 i;
-                phi_v1_6 = 0;
 
-                for (i=0; i<768; i++, temp_v0_9++)
+                for (i=0; i<768; i++)
                 {
-                    temp_v0_9[phi_v1_6].unk_0 = 0xff;
-                    temp_v0_9[phi_v1_6].unk_1 = (temp_v0_9[phi_v1_6].unk_1 & 0xff1f) | 0x20;
-                    temp_v0_9[phi_v1_6].unk_1 = (temp_v0_9[phi_v1_6].unk_1 & 0xffe3) | 0x04;
+                    D_800483C8[i]->unk_0 = 0xff;
+                    D_800483C8[i]->unk_1 = (D_800483C8[i]->unk_1 & 0xff1f) | 0x20;
+                    D_800483C8[i]->unk_1 = (D_800483C8[i]->unk_1 & 0xffe3) | 0x04;
 
-                    temp_v0_9[phi_v1_6].unk_4 = 0xff;
-                    temp_v0_9[phi_v1_6].unk_5 = (temp_v0_9[phi_v1_6].unk_5 & 0xff1f) | 0x20;
-                    temp_v0_9[phi_v1_6].unk_5 = (temp_v0_9[phi_v1_6].unk_5 & 0xffe3) | 0x04;
+                    D_800483C8[i]->unk_4 = 0xff;
+                    D_800483C8[i]->unk_5 = (D_800483C8[i]->unk_5 & 0xff1f) | 0x20;
+                    D_800483C8[i]->unk_5 = (D_800483C8[i]->unk_5 & 0xffe3) | 0x04;
 
-                    temp_v0_9[phi_v1_6].unk_8 = 0xff;
-                    temp_v0_9[phi_v1_6].unk_9 = (temp_v0_9[phi_v1_6].unk_9 & 0xff1f) | 0x20;
-                    temp_v0_9[phi_v1_6].unk_9 = (temp_v0_9[phi_v1_6].unk_9 & 0xffe3) | 0x04;
+                    D_800483C8[i]->unk_8 = 0xff;
+                    D_800483C8[i]->unk_9 = (D_800483C8[i]->unk_9 & 0xff1f) | 0x20;
+                    D_800483C8[i]->unk_9 = (D_800483C8[i]->unk_9 & 0xffe3) | 0x04;
 
-                    temp_v0_9[phi_v1_6].unk_c = 0xff;
-                    temp_v0_9[phi_v1_6].unk_d = (temp_v0_9[phi_v1_6].unk_d & 0xff1f) | 0x20;
-                    temp_v0_9[phi_v1_6].unk_d = (temp_v0_9[phi_v1_6].unk_d & 0xffe3) | 0x04;
+                    D_800483C8[i]->unk_c = 0xff;
+                    D_800483C8[i]->unk_d = (D_800483C8[i]->unk_d & 0xff1f) | 0x20;
+                    D_800483C8[i]->unk_d = (D_800483C8[i]->unk_d & 0xffe3) | 0x04;
                 }
             }
+// decomp issue: end very wrong section
         }
 
         if (get_debug_portal_flag() != 0)
@@ -3837,14 +3841,25 @@ void manage_mp_game(void)
             sub_GAME_7F0BDF10(0);
         }
 
-        temp_v0_18 = get_debug_limit_controller_input();
-        if (temp_v0_18 != 4)
+        switch (get_debug_limit_controller_input())
         {
-            if (temp_v0_18 != 8)
+            case 4:
             {
+                if (joyGetButtonsPressedThisFrame(PLAYER_1, L_CBUTTONS))
+                {
+                    sub_GAME_7F0AF630(-1);
+                    sub_GAME_7F0B2D38(0, 0, 0);
+                }
 
+                if (joyGetButtonsPressedThisFrame(PLAYER_1, R_CBUTTONS))
+                {
+                    sub_GAME_7F0AF630(1);
+                    sub_GAME_7F0B2D38(0, 0, 0);
+                }
             }
-            else
+            break;
+
+            case 8:
             {
                 if (joyGetButtonsPressedThisFrame(PLAYER_1, L_CBUTTONS))
                 {
@@ -3861,110 +3876,101 @@ void manage_mp_game(void)
                     sub_GAME_7F022EC8();
                 }
 
-                sub_GAME_7F022EE0(joyGetButtons(PLAYER_1, R_TRIG));
+                sub_GAME_7F022EE0(0 < joyGetButtons(PLAYER_1, R_TRIG));
             }
+            break;
         }
-        else
+
+    }
+
+    switch (get_debug_limit_controller_input())
+    {
+        case 0x38:
         {
-            if (joyGetButtonsPressedThisFrame(PLAYER_1, L_CBUTTONS))
+            sp30 = viGetHorizontalOffset();
+            sp2C = viGet800232A0();
+            if (joyGetButtons(PLAYER_1, D_CBUTTONS))
             {
-                sub_GAME_7F0AF630(-1);
-                sub_GAME_7F0B2D38(0, 0, 0);
+                sp2C += 1;
             }
-
-            if (joyGetButtonsPressedThisFrame(PLAYER_1, R_CBUTTONS))
+            if (joyGetButtons(PLAYER_1, U_CBUTTONS))
             {
-                sub_GAME_7F0AF630(1);
-                sub_GAME_7F0B2D38(0, 0, 0);
+                sp2C += -1;
             }
-        }
-    }
-
-    temp_v0_19 = get_debug_limit_controller_input();
-    if (temp_v0_19 != 0xC)
-    {
-        if (temp_v0_19 != 0xD)
-        {
-            if (temp_v0_19 == 0x38)
+            if (joyGetButtons(PLAYER_1, R_CBUTTONS))
             {
-                sp30 = viGetHorizontalOffset();
-                sp2C = viGet800232A0();
-                if (joyGetButtons(PLAYER_1, D_CBUTTONS))
-                {
-                    sp2C += 1;
-                }
-                if (joyGetButtons(PLAYER_1, U_CBUTTONS))
-                {
-                    sp2C += -1;
-                }
-                if (joyGetButtons(PLAYER_1, R_CBUTTONS))
-                {
-                    sp30 += 1;
-                }
-                if (joyGetButtons(PLAYER_1, L_CBUTTONS))
-                {
-                    sp30 += -1;
-                }
-                viSetHorizontalOffset(sp30);
-                viSet800232A0(sp2C);
-                return;
+                sp30 += 1;
             }
-            /* Duplicate return node #147. Try simplifying control flow for better match */
-            return;
+            if (joyGetButtons(PLAYER_1, L_CBUTTONS))
+            {
+                sp30 += -1;
+            }
+            viSetHorizontalOffset(sp30);
+            viSet800232A0(sp2C);
         }
+        break;
 
-        if (joyGetButtonsPressedThisFrame(PLAYER_1, (D_JPAD | L_JPAD | L_TRIG | L_CBUTTONS)))
+        case 0xc:
         {
-            //temp_a1_3 = *(s16 *)0x80050000 - 1;
-            //D_800483E4 = temp_a1_3;
-            //sndPlaySfx(g_musicSfxBufferPtr, temp_a1_3, NULL);
-            
-            D_800483E4--;
-            sndPlaySfx(g_musicSfxBufferPtr, D_800483E4, NULL);
-        }
+            if (joyGetButtonsPressedThisFrame(PLAYER_1, (L_JPAD | L_CBUTTONS)))
+            {
+                music_append_play_endtheme();
+            }
 
-        if (joyGetButtonsPressedThisFrame(PLAYER_1, (U_JPAD | R_JPAD | R_TRIG | R_CBUTTONS)))
+            if (joyGetButtonsPressedThisFrame(PLAYER_1, (R_JPAD | R_CBUTTONS)))
+            {
+                music_append_play_solo_death_short();
+            }
+
+            if (joyGetButtonsPressedThisFrame(PLAYER_1, D_JPAD))
+            {
+                musicTrack1Stop();
+            }
+
+            if (joyGetButtonsPressedThisFrame(PLAYER_1, B_BUTTON))
+            {
+                musicTrack1SaveCurrentVolumeAsTrackDefault();
+            }
+        }
+        break;
+
+        // decomp issue: some of the lui R_MIPS_HI16 for g_musicSfxBufferPtr and g_DebugMpGameSoundFxIndex are swapped
+        case 0xd:
         {
-            //temp_a1_4 = *(void *)0x80050000 + 1;
-            //D_800483E4 = temp_a1_4;
-            //sndPlaySfx(g_musicSfxBufferPtr, temp_a1_4, NULL);
-            
-            D_800483E4++;
-            sndPlaySfx(g_musicSfxBufferPtr, D_800483E4, NULL);
+            s16 sound_index;
+            s16 *sound_index_ptr = &g_DebugMpGameSoundFxIndex;
+
+            if (joyGetButtonsPressedThisFrame(PLAYER_1, (D_JPAD | L_JPAD | L_TRIG | L_CBUTTONS)))
+            {
+                sound_index = g_DebugMpGameSoundFxIndex - 1;
+                *sound_index_ptr = sound_index;
+                sndPlaySfx(g_musicSfxBufferPtr, sound_index, NULL);
+            }
+
+            if (joyGetButtonsPressedThisFrame(PLAYER_1, (U_JPAD | R_JPAD | R_TRIG | R_CBUTTONS)))
+            {
+                sound_index = g_DebugMpGameSoundFxIndex + 1;
+                *sound_index_ptr = sound_index;
+                sndPlaySfx(g_musicSfxBufferPtr, sound_index, NULL);
+            }
+
+            if (joyGetButtonsPressedThisFrame(PLAYER_1, D_CBUTTONS))
+            {
+                sndDeactivateAllSfxByFlag_1();
+            }
+
+            if (joyGetButtonsPressedThisFrame(PLAYER_1, U_CBUTTONS))
+            {
+                sound_index = g_DebugMpGameSoundFxIndex;
+                sndPlaySfx(g_musicSfxBufferPtr, sound_index, NULL);
+            }
         }
+        break;
 
-        if (joyGetButtonsPressedThisFrame(PLAYER_1, D_CBUTTONS))
-        {
-            sndDeactivateAllSfxByFlag_1();
-        }
-
-        if (joyGetButtonsPressedThisFrame(PLAYER_1, U_CBUTTONS))
-        {
-            sndPlaySfx(g_musicSfxBufferPtr, D_800483E4, NULL);
-        }
-        /* Duplicate return node #147. Try simplifying control flow for better match */
-        return;
+        default:
+        break;
     }
 
-    if (joyGetButtonsPressedThisFrame(PLAYER_1, (L_JPAD | L_CBUTTONS)))
-    {
-        music_append_play_endtheme();
-    }
-
-    if (joyGetButtonsPressedThisFrame(PLAYER_1, (R_JPAD | R_CBUTTONS)))
-    {
-        music_append_play_solo_death_short();
-    }
-
-    if (joyGetButtonsPressedThisFrame(PLAYER_1, D_JPAD))
-    {
-        musicTrack1Stop();
-    }
-
-    if (joyGetButtonsPressedThisFrame(PLAYER_1, B_BUTTON))
-    {
-        musicTrack1SaveCurrentVolumeAsTrackDefault();
-    }
 }
 #else
 #ifdef VERSION_US
@@ -4454,14 +4460,14 @@ glabel manage_mp_game
 /* 0F3D50 7F0BF220 46009103 */  div.s $f4, $f18, $f0
 /* 0F3D54 7F0BF224 E42483A4 */  swc1  $f4, %lo(g_CurrentMultiPlayerSec)($at)
 /* 0F3D58 7F0BF228 8C790000 */  lw    $t9, ($v1)
-/* 0F3D5C 7F0BF22C 3C018005 */  lui   $at, %hi(cur_mp_min)
+/* 0F3D5C 7F0BF22C 3C018005 */  lui   $at, %hi(g_CurrentMultiPlayerMin)
 /* 0F3D60 7F0BF230 03227821 */  addu  $t7, $t9, $v0
 /* 0F3D64 7F0BF234 448F3000 */  mtc1  $t7, $f6
 /* 0F3D68 7F0BF238 AC6F0000 */  sw    $t7, ($v1)
 /* 0F3D6C 7F0BF23C 46803220 */  cvt.s.w $f8, $f6
 /* 0F3D70 7F0BF240 46004283 */  div.s $f10, $f8, $f0
 /* 0F3D74 7F0BF244 0C0030EB */  jal   joyGetButtonsPressedThisFrame
-/* 0F3D78 7F0BF248 E42A83AC */   swc1  $f10, %lo(cur_mp_min)($at)
+/* 0F3D78 7F0BF248 E42A83AC */   swc1  $f10, %lo(g_CurrentMultiPlayerMin)($at)
 /* 0F3D7C 7F0BF24C 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 0F3D80 7F0BF250 44810000 */  mtc1  $at, $f0
 /* 0F3D84 7F0BF254 10400009 */  beqz  $v0, .L7F0BF27C
@@ -4805,13 +4811,13 @@ glabel manage_mp_game
 /* 0F426C 7F0BF73C 24050622 */   li    $a1, 1570
 /* 0F4270 7F0BF740 1040000B */  beqz  $v0, .L7F0BF770
 /* 0F4274 7F0BF744 3C058005 */   lui   $a1, 0x8005
-/* 0F4278 7F0BF748 84A583E4 */  lh    $a1, %lo(D_800483E4)($a1)
+/* 0F4278 7F0BF748 84A583E4 */  lh    $a1, %lo(g_DebugMpGameSoundFxIndex)($a1)
 /* 0F427C 7F0BF74C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0F4280 7F0BF750 3C018005 */  lui   $at, %hi(D_800483E4)
+/* 0F4280 7F0BF750 3C018005 */  lui   $at, %hi(g_DebugMpGameSoundFxIndex)
 /* 0F4284 7F0BF754 24A5FFFF */  addiu $a1, $a1, -1
 /* 0F4288 7F0BF758 00057400 */  sll   $t6, $a1, 0x10
 /* 0F428C 7F0BF75C 000E2C03 */  sra   $a1, $t6, 0x10
-/* 0F4290 7F0BF760 A42583E4 */  sh    $a1, %lo(D_800483E4)($at)
+/* 0F4290 7F0BF760 A42583E4 */  sh    $a1, %lo(g_DebugMpGameSoundFxIndex)($at)
 /* 0F4294 7F0BF764 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0F4298 7F0BF768 0C002382 */  jal   sndPlaySfx
 /* 0F429C 7F0BF76C 00003025 */   move  $a2, $zero
@@ -4821,13 +4827,13 @@ glabel manage_mp_game
 /* 0F42A8 7F0BF778 24050911 */   li    $a1, 2321
 /* 0F42AC 7F0BF77C 1040000B */  beqz  $v0, .L7F0BF7AC
 /* 0F42B0 7F0BF780 3C058005 */   lui   $a1, 0x8005
-/* 0F42B4 7F0BF784 84A583E4 */  lh    $a1, %lo(D_800483E4)($a1)
+/* 0F42B4 7F0BF784 84A583E4 */  lh    $a1, %lo(g_DebugMpGameSoundFxIndex)($a1)
 /* 0F42B8 7F0BF788 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0F42BC 7F0BF78C 3C018005 */  lui   $at, %hi(D_800483E4)
+/* 0F42BC 7F0BF78C 3C018005 */  lui   $at, %hi(g_DebugMpGameSoundFxIndex)
 /* 0F42C0 7F0BF790 24A50001 */   addiu $a1, $a1, 1
 /* 0F42C4 7F0BF794 0005C400 */  sll   $t8, $a1, 0x10
 /* 0F42C8 7F0BF798 00182C03 */  sra   $a1, $t8, 0x10
-/* 0F42CC 7F0BF79C A42583E4 */  sh    $a1, %lo(D_800483E4)($at)
+/* 0F42CC 7F0BF79C A42583E4 */  sh    $a1, %lo(g_DebugMpGameSoundFxIndex)($at)
 /* 0F42D0 7F0BF7A0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0F42D4 7F0BF7A4 0C002382 */  jal   sndPlaySfx
 /* 0F42D8 7F0BF7A8 00003025 */   move  $a2, $zero
@@ -4844,10 +4850,10 @@ glabel manage_mp_game
 /* 0F42FC 7F0BF7CC 0C0030EB */  jal   joyGetButtonsPressedThisFrame
 /* 0F4300 7F0BF7D0 24050008 */   li    $a1, 8
 /* 0F4304 7F0BF7D4 10400006 */  beqz  $v0, .L7F0BF7F0
-/* 0F4308 7F0BF7D8 3C058005 */   lui   $a1, %hi(D_800483E4)
+/* 0F4308 7F0BF7D8 3C058005 */   lui   $a1, %hi(g_DebugMpGameSoundFxIndex)
 /* 0F430C 7F0BF7DC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0F4310 7F0BF7E0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0F4314 7F0BF7E4 84A583E4 */  lh    $a1, %lo(D_800483E4)($a1)
+/* 0F4314 7F0BF7E4 84A583E4 */  lh    $a1, %lo(g_DebugMpGameSoundFxIndex)($a1)
 /* 0F4318 7F0BF7E8 0C002382 */  jal   sndPlaySfx
 /* 0F431C 7F0BF7EC 00003025 */   move  $a2, $zero
 .L7F0BF7F0:
@@ -5345,14 +5351,14 @@ glabel manage_mp_game
 /* 0F49C8 7F0BFE58 46002183 */  div.s $f6, $f4, $f0
 /* 0F49CC 7F0BFE5C E42683D8 */  swc1  $f6, %lo(g_CurrentMultiPlayerSec)($at)
 /* 0F49D0 7F0BFE60 8C790000 */  lw    $t9, ($v1)
-/* 0F49D4 7F0BFE64 3C018005 */  lui   $at, %hi(cur_mp_min) # $at, 0x8005
+/* 0F49D4 7F0BFE64 3C018005 */  lui   $at, %hi(g_CurrentMultiPlayerMin) # $at, 0x8005
 /* 0F49D8 7F0BFE68 03227821 */  addu  $t7, $t9, $v0
 /* 0F49DC 7F0BFE6C 448F4000 */  mtc1  $t7, $f8
 /* 0F49E0 7F0BFE70 AC6F0000 */  sw    $t7, ($v1)
 /* 0F49E4 7F0BFE74 468042A0 */  cvt.s.w $f10, $f8
 /* 0F49E8 7F0BFE78 46005403 */  div.s $f16, $f10, $f0
 /* 0F49EC 7F0BFE7C 0C003104 */  jal   joyGetButtonsPressedThisFrame
-/* 0F49F0 7F0BFE80 E43083E0 */   swc1  $f16, %lo(cur_mp_min)($at)
+/* 0F49F0 7F0BFE80 E43083E0 */   swc1  $f16, %lo(g_CurrentMultiPlayerMin)($at)
 /* 0F49F4 7F0BFE84 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 0F49F8 7F0BFE88 44810000 */  mtc1  $at, $f0
 /* 0F49FC 7F0BFE8C 10400009 */  beqz  $v0, .Ljp7F0BFEB4
@@ -5696,13 +5702,13 @@ glabel manage_mp_game
 /* 0F4EE4 7F0C0374 24050622 */   li    $a1, 1570
 /* 0F4EE8 7F0C0378 1040000B */  beqz  $v0, .Ljp7F0C03A8
 /* 0F4EEC 7F0C037C 3C058005 */   lui   $a1, 0x8005
-/* 0F4EF0 7F0C0380 84A58418 */  lh    $a1, %lo(D_800483E4)($a1)
+/* 0F4EF0 7F0C0380 84A58418 */  lh    $a1, %lo(g_DebugMpGameSoundFxIndex)($a1)
 /* 0F4EF4 7F0C0384 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
-/* 0F4EF8 7F0C0388 3C018005 */  lui   $at, %hi(D_800483E4) # $at, 0x8005
+/* 0F4EF8 7F0C0388 3C018005 */  lui   $at, %hi(g_DebugMpGameSoundFxIndex) # $at, 0x8005
 /* 0F4EFC 7F0C038C 24A5FFFF */  addiu $a1, $a1, -1
 /* 0F4F00 7F0C0390 00057400 */  sll   $t6, $a1, 0x10
 /* 0F4F04 7F0C0394 000E2C03 */  sra   $a1, $t6, 0x10
-/* 0F4F08 7F0C0398 A4258418 */  sh    $a1, %lo(D_800483E4)($at)
+/* 0F4F08 7F0C0398 A4258418 */  sh    $a1, %lo(g_DebugMpGameSoundFxIndex)($at)
 /* 0F4F0C 7F0C039C 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0F4F10 7F0C03A0 0C002386 */  jal   sndPlaySfx
 /* 0F4F14 7F0C03A4 00003025 */   move  $a2, $zero
@@ -5712,13 +5718,13 @@ glabel manage_mp_game
 /* 0F4F20 7F0C03B0 24050911 */   li    $a1, 2321
 /* 0F4F24 7F0C03B4 1040000B */  beqz  $v0, .Ljp7F0C03E4
 /* 0F4F28 7F0C03B8 3C058005 */   lui   $a1, 0x8005
-/* 0F4F2C 7F0C03BC 84A58418 */  lh    $a1, %lo(D_800483E4)($a1)
+/* 0F4F2C 7F0C03BC 84A58418 */  lh    $a1, %lo(g_DebugMpGameSoundFxIndex)($a1)
 /* 0F4F30 7F0C03C0 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
-/* 0F4F34 7F0C03C4 3C018005 */  lui   $at, %hi(D_800483E4) # $at, 0x8005
+/* 0F4F34 7F0C03C4 3C018005 */  lui   $at, %hi(g_DebugMpGameSoundFxIndex) # $at, 0x8005
 /* 0F4F38 7F0C03C8 24A50001 */  addiu $a1, $a1, 1
 /* 0F4F3C 7F0C03CC 0005C400 */  sll   $t8, $a1, 0x10
 /* 0F4F40 7F0C03D0 00182C03 */  sra   $a1, $t8, 0x10
-/* 0F4F44 7F0C03D4 A4258418 */  sh    $a1, %lo(D_800483E4)($at)
+/* 0F4F44 7F0C03D4 A4258418 */  sh    $a1, %lo(g_DebugMpGameSoundFxIndex)($at)
 /* 0F4F48 7F0C03D8 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0F4F4C 7F0C03DC 0C002386 */  jal   sndPlaySfx
 /* 0F4F50 7F0C03E0 00003025 */   move  $a2, $zero
@@ -5735,10 +5741,10 @@ glabel manage_mp_game
 /* 0F4F74 7F0C0404 0C003104 */  jal   joyGetButtonsPressedThisFrame
 /* 0F4F78 7F0C0408 24050008 */   li    $a1, 8
 /* 0F4F7C 7F0C040C 10400006 */  beqz  $v0, .Ljp7F0C0428
-/* 0F4F80 7F0C0410 3C058005 */   lui   $a1, %hi(D_800483E4) # $a1, 0x8005
+/* 0F4F80 7F0C0410 3C058005 */   lui   $a1, %hi(g_DebugMpGameSoundFxIndex) # $a1, 0x8005
 /* 0F4F84 7F0C0414 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
 /* 0F4F88 7F0C0418 8C843760 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0F4F8C 7F0C041C 84A58418 */  lh    $a1, %lo(D_800483E4)($a1)
+/* 0F4F8C 7F0C041C 84A58418 */  lh    $a1, %lo(g_DebugMpGameSoundFxIndex)($a1)
 /* 0F4F90 7F0C0420 0C002386 */  jal   sndPlaySfx
 /* 0F4F94 7F0C0424 00003025 */   move  $a2, $zero
 .Ljp7F0C0428:
@@ -6225,14 +6231,14 @@ glabel manage_mp_game
 /* 0F3D50 7F0BF220 46009103 */  div.s $f4, $f18, $f0
 /* 0F3D54 7F0BF224 E42483A4 */  swc1  $f4, %lo(g_CurrentMultiPlayerSec)($at)
 /* 0F3D58 7F0BF228 8C790000 */  lw    $t9, ($v1)
-/* 0F3D5C 7F0BF22C 3C018005 */  lui   $at, %hi(cur_mp_min)
+/* 0F3D5C 7F0BF22C 3C018005 */  lui   $at, %hi(g_CurrentMultiPlayerMin)
 /* 0F3D60 7F0BF230 03227821 */  addu  $t7, $t9, $v0
 /* 0F3D64 7F0BF234 448F3000 */  mtc1  $t7, $f6
 /* 0F3D68 7F0BF238 AC6F0000 */  sw    $t7, ($v1)
 /* 0F3D6C 7F0BF23C 46803220 */  cvt.s.w $f8, $f6
 /* 0F3D70 7F0BF240 46004283 */  div.s $f10, $f8, $f0
 /* 0F3D74 7F0BF244 0C0030EB */  jal   joyGetButtonsPressedThisFrame
-/* 0F3D78 7F0BF248 E42A83AC */   swc1  $f10, %lo(cur_mp_min)($at)
+/* 0F3D78 7F0BF248 E42A83AC */   swc1  $f10, %lo(g_CurrentMultiPlayerMin)($at)
 /* 0F3D7C 7F0BF24C 3C014270 */  li    $at, 0x42700000 # 60.000000
 /* 0F3D80 7F0BF250 44810000 */  mtc1  $at, $f0
 /* 0F3D84 7F0BF254 10400009 */  beqz  $v0, .L7F0BF27C
@@ -6576,13 +6582,13 @@ glabel manage_mp_game
 /* 0F426C 7F0BF73C 24050622 */   li    $a1, 1570
 /* 0F4270 7F0BF740 1040000B */  beqz  $v0, .L7F0BF770
 /* 0F4274 7F0BF744 3C058005 */   lui   $a1, 0x8005
-/* 0F4278 7F0BF748 84A583E4 */  lh    $a1, %lo(D_800483E4)($a1)
+/* 0F4278 7F0BF748 84A583E4 */  lh    $a1, %lo(g_DebugMpGameSoundFxIndex)($a1)
 /* 0F427C 7F0BF74C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0F4280 7F0BF750 3C018005 */  lui   $at, %hi(D_800483E4)
+/* 0F4280 7F0BF750 3C018005 */  lui   $at, %hi(g_DebugMpGameSoundFxIndex)
 /* 0F4284 7F0BF754 24A5FFFF */  addiu $a1, $a1, -1
 /* 0F4288 7F0BF758 00057400 */  sll   $t6, $a1, 0x10
 /* 0F428C 7F0BF75C 000E2C03 */  sra   $a1, $t6, 0x10
-/* 0F4290 7F0BF760 A42583E4 */  sh    $a1, %lo(D_800483E4)($at)
+/* 0F4290 7F0BF760 A42583E4 */  sh    $a1, %lo(g_DebugMpGameSoundFxIndex)($at)
 /* 0F4294 7F0BF764 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0F4298 7F0BF768 0C002382 */  jal   sndPlaySfx
 /* 0F429C 7F0BF76C 00003025 */   move  $a2, $zero
@@ -6592,13 +6598,13 @@ glabel manage_mp_game
 /* 0F42A8 7F0BF778 24050911 */   li    $a1, 2321
 /* 0F42AC 7F0BF77C 1040000B */  beqz  $v0, .L7F0BF7AC
 /* 0F42B0 7F0BF780 3C058005 */   lui   $a1, 0x8005
-/* 0F42B4 7F0BF784 84A583E4 */  lh    $a1, %lo(D_800483E4)($a1)
+/* 0F42B4 7F0BF784 84A583E4 */  lh    $a1, %lo(g_DebugMpGameSoundFxIndex)($a1)
 /* 0F42B8 7F0BF788 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0F42BC 7F0BF78C 3C018005 */  lui   $at, %hi(D_800483E4)
+/* 0F42BC 7F0BF78C 3C018005 */  lui   $at, %hi(g_DebugMpGameSoundFxIndex)
 /* 0F42C0 7F0BF790 24A50001 */   addiu $a1, $a1, 1
 /* 0F42C4 7F0BF794 0005C400 */  sll   $t8, $a1, 0x10
 /* 0F42C8 7F0BF798 00182C03 */  sra   $a1, $t8, 0x10
-/* 0F42CC 7F0BF79C A42583E4 */  sh    $a1, %lo(D_800483E4)($at)
+/* 0F42CC 7F0BF79C A42583E4 */  sh    $a1, %lo(g_DebugMpGameSoundFxIndex)($at)
 /* 0F42D0 7F0BF7A0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
 /* 0F42D4 7F0BF7A4 0C002382 */  jal   sndPlaySfx
 /* 0F42D8 7F0BF7A8 00003025 */   move  $a2, $zero
@@ -6615,10 +6621,10 @@ glabel manage_mp_game
 /* 0F42FC 7F0BF7CC 0C0030EB */  jal   joyGetButtonsPressedThisFrame
 /* 0F4300 7F0BF7D0 24050008 */   li    $a1, 8
 /* 0F4304 7F0BF7D4 10400006 */  beqz  $v0, .L7F0BF7F0
-/* 0F4308 7F0BF7D8 3C058005 */   lui   $a1, %hi(D_800483E4)
+/* 0F4308 7F0BF7D8 3C058005 */   lui   $a1, %hi(g_DebugMpGameSoundFxIndex)
 /* 0F430C 7F0BF7DC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0F4310 7F0BF7E0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0F4314 7F0BF7E4 84A583E4 */  lh    $a1, %lo(D_800483E4)($a1)
+/* 0F4314 7F0BF7E4 84A583E4 */  lh    $a1, %lo(g_DebugMpGameSoundFxIndex)($a1)
 /* 0F4318 7F0BF7E8 0C002382 */  jal   sndPlaySfx
 /* 0F431C 7F0BF7EC 00003025 */   move  $a2, $zero
 .L7F0BF7F0:
@@ -7044,8 +7050,8 @@ f32 get_cur_mp_sec(void) {
 }
 
 
-f32 get_cur_mp_min(void) {
-    return cur_mp_min;
+f32 get_g_CurrentMultiPlayerMin(void) {
+    return g_CurrentMultiPlayerMin;
 }
 
 

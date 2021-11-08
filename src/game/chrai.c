@@ -5608,7 +5608,7 @@ action74_Go_To_RVL_If_Power_On_Time_LTV_4:
 /* 06C718 7F037BE8 00000000 */  nop   
 /* 06C71C 7F037BEC 46802220 */  cvt.s.w $f8, $f4
 /* 06C720 7F037BF0 46164282 */  mul.s $f10, $f8, $f22
-/* 06C724 7F037BF4 0FC2FF13 */  jal   get_cur_mp_min
+/* 06C724 7F037BF4 0FC2FF13 */  jal   get_g_CurrentMultiPlayerMin
 /* 06C728 7F037BF8 E7AA03F0 */   swc1  $f10, 0x3f0($sp)
 /* 06C72C 7F037BFC C7B203F0 */  lwc1  $f18, 0x3f0($sp)
 /* 06C730 7F037C00 02C02025 */  move  $a0, $s6
@@ -5635,7 +5635,7 @@ action75_Go_To_RVL_If_Power_On_Time_GTV_4:
 /* 06C77C 7F037C4C 00000000 */  nop   
 /* 06C780 7F037C50 46803420 */  cvt.s.w $f16, $f6
 /* 06C784 7F037C54 46168102 */  mul.s $f4, $f16, $f22
-/* 06C788 7F037C58 0FC2FF13 */  jal   get_cur_mp_min
+/* 06C788 7F037C58 0FC2FF13 */  jal   get_g_CurrentMultiPlayerMin
 /* 06C78C 7F037C5C E7A403E8 */   swc1  $f4, 0x3e8($sp)
 /* 06C790 7F037C60 C7A803E8 */  lwc1  $f8, 0x3e8($sp)
 /* 06C794 7F037C64 02C02025 */  move  $a0, $s6
@@ -11475,7 +11475,7 @@ action74_Go_To_RVL_If_Power_On_Time_LTV_4:
 /* 06C718 7F037BE8 00000000 */  nop   
 /* 06C71C 7F037BEC 46802220 */  cvt.s.w $f8, $f4
 /* 06C720 7F037BF0 46164282 */  mul.s $f10, $f8, $f22
-/* 06C724 7F037BF4 0FC2FF13 */  jal   get_cur_mp_min
+/* 06C724 7F037BF4 0FC2FF13 */  jal   get_g_CurrentMultiPlayerMin
 /* 06C728 7F037BF8 E7AA03F0 */   swc1  $f10, 0x3f0($sp)
 /* 06C72C 7F037BFC C7B203F0 */  lwc1  $f18, 0x3f0($sp)
 /* 06C730 7F037C00 02C02025 */  move  $a0, $s6
@@ -11502,7 +11502,7 @@ action75_Go_To_RVL_If_Power_On_Time_GTV_4:
 /* 06C77C 7F037C4C 00000000 */  nop   
 /* 06C780 7F037C50 46803420 */  cvt.s.w $f16, $f6
 /* 06C784 7F037C54 46168102 */  mul.s $f4, $f16, $f22
-/* 06C788 7F037C58 0FC2FF13 */  jal   get_cur_mp_min
+/* 06C788 7F037C58 0FC2FF13 */  jal   get_g_CurrentMultiPlayerMin
 /* 06C78C 7F037C5C E7A403E8 */   swc1  $f4, 0x3e8($sp)
 /* 06C790 7F037C60 C7A803E8 */  lwc1  $f8, 0x3e8($sp)
 /* 06C794 7F037C64 02C02025 */  move  $a0, $s6
@@ -17343,7 +17343,7 @@ action74_Go_To_RVL_If_Power_On_Time_LTV_4:
 /* 06C718 7F037BE8 00000000 */  nop   
 /* 06C71C 7F037BEC 46802220 */  cvt.s.w $f8, $f4
 /* 06C720 7F037BF0 46164282 */  mul.s $f10, $f8, $f22
-/* 06C724 7F037BF4 0FC2FF13 */  jal   get_cur_mp_min
+/* 06C724 7F037BF4 0FC2FF13 */  jal   get_g_CurrentMultiPlayerMin
 /* 06C728 7F037BF8 E7AA03F0 */   swc1  $f10, 0x3f0($sp)
 /* 06C72C 7F037BFC C7B203F0 */  lwc1  $f18, 0x3f0($sp)
 /* 06C730 7F037C00 02C02025 */  move  $a0, $s6
@@ -17370,7 +17370,7 @@ action75_Go_To_RVL_If_Power_On_Time_GTV_4:
 /* 06C77C 7F037C4C 00000000 */  nop   
 /* 06C780 7F037C50 46803420 */  cvt.s.w $f16, $f6
 /* 06C784 7F037C54 46168102 */  mul.s $f4, $f16, $f22
-/* 06C788 7F037C58 0FC2FF13 */  jal   get_cur_mp_min
+/* 06C788 7F037C58 0FC2FF13 */  jal   get_g_CurrentMultiPlayerMin
 /* 06C78C 7F037C5C E7A403E8 */   swc1  $f4, 0x3e8($sp)
 /* 06C790 7F037C60 C7A803E8 */  lwc1  $f8, 0x3e8($sp)
 /* 06C794 7F037C64 02C02025 */  move  $a0, $s6
