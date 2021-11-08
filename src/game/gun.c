@@ -925,40 +925,18 @@ void copy_item_in_hand(struct coord3d *pos)
 }
 
 
+void copy_item_in_hand_to_main_list(struct Coord3d *pos) {
+    
+    WeaponStats *stats;
+    ITEM_IDS item;
 
+    item = get_item_in_hand(0);
+    stats = get_ptr_item_statistics(item);
 
-
-#ifdef NONMATCHING
-void copy_item_in_hand_to_main_list(void) {
-
+    stats->PosX = pos->x;
+    stats->PosY = pos->y;
+    stats->PosZ = pos->z;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel copy_item_in_hand_to_main_list
-/* 091468 7F05C938 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 09146C 7F05C93C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 091470 7F05C940 AFA40018 */  sw    $a0, 0x18($sp)
-/* 091474 7F05C944 0FC17674 */  jal   get_item_in_hand
-/* 091478 7F05C948 00002025 */   move  $a0, $zero
-/* 09147C 7F05C94C 0FC1722D */  jal   get_ptr_item_statistics
-/* 091480 7F05C950 00402025 */   move  $a0, $v0
-/* 091484 7F05C954 8FA30018 */  lw    $v1, 0x18($sp)
-/* 091488 7F05C958 C4640000 */  lwc1  $f4, ($v1)
-/* 09148C 7F05C95C E4440004 */  swc1  $f4, 4($v0)
-/* 091490 7F05C960 C4660004 */  lwc1  $f6, 4($v1)
-/* 091494 7F05C964 E4460008 */  swc1  $f6, 8($v0)
-/* 091498 7F05C968 C4680008 */  lwc1  $f8, 8($v1)
-/* 09149C 7F05C96C E448000C */  swc1  $f8, 0xc($v0)
-/* 0914A0 7F05C970 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0914A4 7F05C974 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0914A8 7F05C978 03E00008 */  jr    $ra
-/* 0914AC 7F05C97C 00000000 */   nop
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -1365,28 +1343,16 @@ glabel sub_GAME_7F05CEBC
 
 
 
-s32 get_itemtype_in_hand(s32 hand)
+s32 get_itemtype_in_hand(HANDEDNESS hand)
 {
     return currentplayer->hand_item[hand];
 }
 
 
-#ifdef NONMATCHING
-void get_ptr_itemheader_in_hand(void) {
-
+ModelFileHeader *get_ptr_itemheader_in_hand(HANDEDNESS hand)
+{
+    return &currentplayer->copy_of_body_obj_header[hand];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_ptr_itemheader_in_hand
-/* 091A48 7F05CF18 3C0E8008 */  lui   $t6, %hi(currentplayer)
-/* 091A4C 7F05CF1C 8DCEA0B0 */  lw    $t6, %lo(currentplayer)($t6)
-/* 091A50 7F05CF20 00047940 */  sll   $t7, $a0, 5
-/* 091A54 7F05CF24 01CF1021 */  addu  $v0, $t6, $t7
-/* 091A58 7F05CF28 03E00008 */  jr    $ra
-/* 091A5C 7F05CF2C 24420810 */   addiu $v0, $v0, 0x810
-)
-#endif
 
 
 #ifndef VERSION_EU

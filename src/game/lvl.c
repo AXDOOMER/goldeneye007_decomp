@@ -47,6 +47,11 @@
 #include "game/bondview_r.h"
 #include "game/initBondDATAdefaults.h"
 #include "game/viewport.h"
+#include "joy.h"
+#include "game/stan.h"
+#include "game/gun.h"
+#include "game/unk_091080.h"
+#include "include/math.h"
 
 // bss
 //CODE.bss:8008C260
@@ -106,8 +111,12 @@ s32 D_80048380 = 0;
 f32 g_GlobalTimerDelta = 0;
 #endif
 
-//D:80048384
-s32 difficulty_0 = 0;
+/*
+* Selected difficulty mode.
+* 0x80048384
+*/
+s32 g_SelectedDifficulty = DIFFICULTY_AGENT;
+
 //D:80048388
 s32 D_80048388 = 0;
 //D:8004838C
@@ -138,30 +147,66 @@ f32 g_StageTimeSec = 0;
 s32 D_800483B8 = 0;
 //D:800483BC
 f32 poweron_time_sec = 0;
-//D:800483C0
+
+/**
+ * Debug variable, seems to track whether user input has changed since
+ * the last time the method was entered.
+ * 
+ * Addres 0x800483C0.
+ */
 s32 D_800483C0 = 1;
+
 //D:800483C4
 s32 D_800483C4 = 0xFFFFFFFF;
 //D:800483C8
 s32 D_800483C8 = 0;
-//D:800483CC
-s32 D_800483CC = 0;
-//D:800483D0
-s32 D_800483D0 = 0;
-//D:800483D4
-s32 D_800483D4 = 0;
-//D:800483D8
-s32 D_800483D8 = 0;
-//D:800483DC
-s32 D_800483DC = 0;
-//D:800483E0
-s32 D_800483E0 = 0;
+
+/*
+* Debug variable, something to do with portals.
+* Address 0x800483CC.
+*/
+u32 g_DebugPortalsD_800483CC = 0;
+
+/**
+ * Input buffer, used in debug portal method. Might be array.
+ * Address 0x800483D0.
+ */
+s32 g_DebugPortalsInputBuffer_0 = 0;
+
+/**
+ * Input buffer, used in debug portal method. Might be array.
+ * Address 0x800483D4.
+ */
+s32 g_DebugPortalsInputBuffer_1 = 0;
+
+/**
+ * Input buffer, used in debug portal method. Might be array.
+ * Address 0x800483D8.
+ */
+s32 g_DebugPortalsInputBuffer_2 = 0;
+
+/**
+ * Input buffer, used in debug portal method. Might be array.
+ * Address 0x800483DC.
+ */
+s32 g_DebugPortalsInputBuffer_3 = 0;
+
+/**
+ * Input buffer, used in debug portal method. Might be array.
+ * Address 0x800483E0.
+ */
+s32 g_DebugPortalsInputBuffer_4 = 0;
+
 //D:800483E4
 s32 D_800483E4 = 0;
 
 
 extern u8* _jfontdlSegmentStart;
 extern u8* _jfontdlSegmentEnd;
+
+// forward declarations
+
+s32 sub_GAME_7F0BDF10(s32 arg0);
 
 
 s32 sub_GAME_7F0BD8F0(void) {
@@ -233,6 +278,8 @@ void music_play_stagetrack_or_random(void)
  * Title screen is handled as a special case.
  * First half of method resets stage and player values (including mutliplayer values) to defaults.
  * Second part loads stage data (init guards, init guard heads, etc).
+ * 
+ * Address: 0x7F0BDAB0.
  * 
  * decomp status:
  * - compiles: yes
@@ -1361,11 +1408,153 @@ s32 sub_GAME_7F0BDF04(void) {
 }
 
 
-
-
-
 #ifdef NONMATCHING
-void sub_GAME_7F0BDF10(void) {
+/**
+ * Debug method. Something to do with portals. Button press
+ * on controller 1 and 2 are used for control flow.
+ *
+ * address 0x7F0BDF10.
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: wrong
+ * - identical instructions: no
+ * - identical registers: fail
+ */
+s32 sub_GAME_7F0BDF10(s32 arg0)
+{
+    s32 sp20;
+    s32 temp_v1;
+    s32 phi_a0;
+    s32 i;
+    s32 *p;
+
+    sp20 = 0;
+
+    if (arg0 != 0)
+    {
+        arg0 = sub_GAME_7F0B9DE4(arg0, g_DebugPortalsD_800483CC, -1);
+
+        // decomp issue. Can't get the loads and stores to match.
+        for (i = 0, p = &g_DebugPortalsInputBuffer_0; i < 4; i++)
+        {
+            p[i] = p[i+1];
+        }
+
+        temp_v1 = joyGetButtons(PLAYER_1, A_BUTTON) | joyGetButtons(PLAYER_2, A_BUTTON);
+
+        if (g_DebugPortalsInputBuffer_3 != temp_v1)
+        {
+            D_800483C0 ^= 1;
+        }
+
+        if (g_DebugPortalsInputBuffer_0 != g_DebugPortalsInputBuffer_1)
+        {
+            D_800483C0 ^= 1;
+        }
+
+        g_DebugPortalsInputBuffer_4 = temp_v1;
+
+        if (temp_v1 != 0)
+        {
+            phi_a0 = g_DebugPortalsD_800483CC;
+        }
+        else
+        {
+            phi_a0 = -1;
+        }
+
+        sub_GAME_7F0B9DF4(phi_a0);
+
+        return arg0;
+    }
+
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, L_JPAD) | joyGetButtonsPressedThisFrame(PLAYER_2, L_JPAD))
+    {
+        sp20 = 1;
+
+        // decomp issue:
+        // this is incomplete / wrong.
+        g_DebugPortalsD_800483CC = g_DebugPortalsD_800483CC - 1;
+        
+        if (g_DebugPortalsD_800483CC < 0)
+        {
+            g_DebugPortalsD_800483CC = 0;
+        }
+    }
+
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, R_JPAD) | joyGetButtonsPressedThisFrame(PLAYER_2, R_JPAD))
+    {
+        sp20 = 1;
+        g_DebugPortalsD_800483CC = g_DebugPortalsD_800483CC + 1;
+    }
+
+    if (
+        (joyGetButtons(PLAYER_1, R_TRIG) | joyGetButtons(PLAYER_2, R_TRIG))
+        && (joyGetButtons(PLAYER_1, L_TRIG) | joyGetButtons(PLAYER_2, L_TRIG)))
+    {
+        if (joyGetButtonsPressedThisFrame(PLAYER_1, D_JPAD) != 0)
+        {
+            sub_GAME_7F0B9B64(g_DebugPortalsD_800483CC);
+        }
+    }
+    else if (joyGetButtons(PLAYER_1, R_TRIG) | joyGetButtons(PLAYER_2, R_TRIG))
+    {
+        if (
+            (joyGetButtonsPressedThisFrame(PLAYER_1, D_JPAD) | joyGetButtonsPressedThisFrame(PLAYER_2, D_JPAD)) 
+            && (sub_GAME_7F0B9AE4(g_DebugPortalsD_800483CC) == 0))
+        {
+            sp20 = 1;
+            sub_GAME_7F0B9DBC(g_DebugPortalsD_800483CC, 0);
+        }
+
+        if (
+            (joyGetButtonsPressedThisFrame(PLAYER_1, U_JPAD) | joyGetButtonsPressedThisFrame(PLAYER_2, U_JPAD))
+            && (sub_GAME_7F0B9AE4(g_DebugPortalsD_800483CC) != 0))
+        {
+            sp20 = 1;
+            sub_GAME_7F0B9DBC(g_DebugPortalsD_800483CC, 1);
+        }
+    }
+    else if (joyGetButtons(PLAYER_1, L_TRIG) | joyGetButtons(PLAYER_2, L_TRIG))
+    {
+        if (
+            (joyGetButtonsPressedThisFrame(PLAYER_1, D_JPAD) | joyGetButtonsPressedThisFrame(PLAYER_2, D_JPAD))
+            && sub_GAME_7F0B9B04(g_DebugPortalsD_800483CC))
+        {
+            sp20 = 1;
+            sub_GAME_7F0B9B44(g_DebugPortalsD_800483CC);
+        }
+
+        if (
+            (joyGetButtonsPressedThisFrame(PLAYER_1, U_JPAD) | joyGetButtonsPressedThisFrame(PLAYER_2, U_JPAD))
+            && (sub_GAME_7F0B9B04(g_DebugPortalsD_800483CC) == 0))
+        {
+            sp20 = 1;
+            sub_GAME_7F0B9B24(g_DebugPortalsD_800483CC);
+        }
+    }
+    else
+    {
+        if (joyGetButtonsPressedThisFrame(PLAYER_1, D_JPAD) | joyGetButtonsPressedThisFrame(PLAYER_2, D_JPAD))
+        {
+            sp20 = 1;
+            sub_GAME_7F0B9A7C(g_DebugPortalsD_800483CC);
+        }
+
+        if (joyGetButtonsPressedThisFrame(PLAYER_1, U_JPAD) | joyGetButtonsPressedThisFrame(PLAYER_2, U_JPAD))
+        {
+            sp20 = 1;
+            sub_GAME_7F0B9A2C(g_DebugPortalsD_800483CC);
+        }
+    }
+
+    if (sp20)
+    {
+        // removed?
+    }
+
+    return 0;
 
 }
 #else
@@ -1377,61 +1566,61 @@ glabel sub_GAME_7F0BDF10
 /* 0F2A48 7F0BDF18 AFB00018 */  sw    $s0, 0x18($sp)
 /* 0F2A4C 7F0BDF1C 1080003B */  beqz  $a0, .L7F0BE00C
 /* 0F2A50 7F0BDF20 AFA00020 */   sw    $zero, 0x20($sp)
-/* 0F2A54 7F0BDF24 3C058005 */  lui   $a1, %hi(D_800483CC)
-/* 0F2A58 7F0BDF28 8CA583CC */  lw    $a1, %lo(D_800483CC)($a1)
+/* 0F2A54 7F0BDF24 3C058005 */  lui   $a1, %hi(g_DebugPortalsD_800483CC)
+/* 0F2A58 7F0BDF28 8CA583CC */  lw    $a1, %lo(g_DebugPortalsD_800483CC)($a1)
 /* 0F2A5C 7F0BDF2C 0FC2E779 */  jal   sub_GAME_7F0B9DE4
 /* 0F2A60 7F0BDF30 2406FFFF */   li    $a2, -1
-/* 0F2A64 7F0BDF34 3C0E8005 */  lui   $t6, %hi(D_800483D4)
-/* 0F2A68 7F0BDF38 8DCE83D4 */  lw    $t6, %lo(D_800483D4)($t6)
-/* 0F2A6C 7F0BDF3C 3C0F8005 */  lui   $t7, %hi(D_800483D8)
-/* 0F2A70 7F0BDF40 8DEF83D8 */  lw    $t7, %lo(D_800483D8)($t7)
-/* 0F2A74 7F0BDF44 3C018005 */  lui   $at, %hi(D_800483D0)
-/* 0F2A78 7F0BDF48 3C188005 */  lui   $t8, %hi(D_800483DC)
-/* 0F2A7C 7F0BDF4C AC2E83D0 */  sw    $t6, %lo(D_800483D0)($at)
-/* 0F2A80 7F0BDF50 8F1883DC */  lw    $t8, %lo(D_800483DC)($t8)
-/* 0F2A84 7F0BDF54 3C018005 */  lui   $at, %hi(D_800483D4)
-/* 0F2A88 7F0BDF58 AC2F83D4 */  sw    $t7, %lo(D_800483D4)($at)
-/* 0F2A8C 7F0BDF5C 3C038005 */  lui   $v1, %hi(D_800483E0)
-/* 0F2A90 7F0BDF60 3C018005 */  lui   $at, %hi(D_800483D8)
-/* 0F2A94 7F0BDF64 8C6383E0 */  lw    $v1, %lo(D_800483E0)($v1)
-/* 0F2A98 7F0BDF68 AC3883D8 */  sw    $t8, %lo(D_800483D8)($at)
-/* 0F2A9C 7F0BDF6C 3C018005 */  lui   $at, %hi(D_800483DC)
+/* 0F2A64 7F0BDF34 3C0E8005 */  lui   $t6, %hi(g_DebugPortalsInputBuffer_1)
+/* 0F2A68 7F0BDF38 8DCE83D4 */  lw    $t6, %lo(g_DebugPortalsInputBuffer_1)($t6)
+/* 0F2A6C 7F0BDF3C 3C0F8005 */  lui   $t7, %hi(g_DebugPortalsInputBuffer_2)
+/* 0F2A70 7F0BDF40 8DEF83D8 */  lw    $t7, %lo(g_DebugPortalsInputBuffer_2)($t7)
+/* 0F2A74 7F0BDF44 3C018005 */  lui   $at, %hi(g_DebugPortalsInputBuffer_0)
+/* 0F2A78 7F0BDF48 3C188005 */  lui   $t8, %hi(g_DebugPortalsInputBuffer_3)
+/* 0F2A7C 7F0BDF4C AC2E83D0 */  sw    $t6, %lo(g_DebugPortalsInputBuffer_0)($at)
+/* 0F2A80 7F0BDF50 8F1883DC */  lw    $t8, %lo(g_DebugPortalsInputBuffer_3)($t8)
+/* 0F2A84 7F0BDF54 3C018005 */  lui   $at, %hi(g_DebugPortalsInputBuffer_1)
+/* 0F2A88 7F0BDF58 AC2F83D4 */  sw    $t7, %lo(g_DebugPortalsInputBuffer_1)($at)
+/* 0F2A8C 7F0BDF5C 3C038005 */  lui   $v1, %hi(g_DebugPortalsInputBuffer_4)
+/* 0F2A90 7F0BDF60 3C018005 */  lui   $at, %hi(g_DebugPortalsInputBuffer_2)
+/* 0F2A94 7F0BDF64 8C6383E0 */  lw    $v1, %lo(g_DebugPortalsInputBuffer_4)($v1)
+/* 0F2A98 7F0BDF68 AC3883D8 */  sw    $t8, %lo(g_DebugPortalsInputBuffer_2)($at)
+/* 0F2A9C 7F0BDF6C 3C018005 */  lui   $at, %hi(g_DebugPortalsInputBuffer_3)
 /* 0F2AA0 7F0BDF70 AFA20028 */  sw    $v0, 0x28($sp)
 /* 0F2AA4 7F0BDF74 00002025 */  move  $a0, $zero
 /* 0F2AA8 7F0BDF78 34058000 */  li    $a1, 32768
 /* 0F2AAC 7F0BDF7C 0C0030C3 */  jal   joyGetButtons
-/* 0F2AB0 7F0BDF80 AC2383DC */   sw    $v1, %lo(D_800483DC)($at)
+/* 0F2AB0 7F0BDF80 AC2383DC */   sw    $v1, %lo(g_DebugPortalsInputBuffer_3)($at)
 /* 0F2AB4 7F0BDF84 3050FFFF */  andi  $s0, $v0, 0xffff
 /* 0F2AB8 7F0BDF88 24040001 */  li    $a0, 1
 /* 0F2ABC 7F0BDF8C 0C0030C3 */  jal   joyGetButtons
 /* 0F2AC0 7F0BDF90 34058000 */   li    $a1, 32768
-/* 0F2AC4 7F0BDF94 3C198005 */  lui   $t9, %hi(D_800483DC)
-/* 0F2AC8 7F0BDF98 8F3983DC */  lw    $t9, %lo(D_800483DC)($t9)
+/* 0F2AC4 7F0BDF94 3C198005 */  lui   $t9, %hi(g_DebugPortalsInputBuffer_3)
+/* 0F2AC8 7F0BDF98 8F3983DC */  lw    $t9, %lo(g_DebugPortalsInputBuffer_3)($t9)
 /* 0F2ACC 7F0BDF9C 00501825 */  or    $v1, $v0, $s0
-/* 0F2AD0 7F0BDFA0 3C0B8005 */  lui   $t3, %hi(D_800483D0)
+/* 0F2AD0 7F0BDFA0 3C0B8005 */  lui   $t3, %hi(g_DebugPortalsInputBuffer_0)
 /* 0F2AD4 7F0BDFA4 13230006 */  beq   $t9, $v1, .L7F0BDFC0
-/* 0F2AD8 7F0BDFA8 3C0C8005 */   lui   $t4, %hi(D_800483D4)
+/* 0F2AD8 7F0BDFA8 3C0C8005 */   lui   $t4, %hi(g_DebugPortalsInputBuffer_1)
 /* 0F2ADC 7F0BDFAC 3C028005 */  lui   $v0, %hi(D_800483C0)
 /* 0F2AE0 7F0BDFB0 244283C0 */  addiu $v0, %lo(D_800483C0) # addiu $v0, $v0, -0x7c40
 /* 0F2AE4 7F0BDFB4 8C490000 */  lw    $t1, ($v0)
 /* 0F2AE8 7F0BDFB8 392A0001 */  xori  $t2, $t1, 1
 /* 0F2AEC 7F0BDFBC AC4A0000 */  sw    $t2, ($v0)
 .L7F0BDFC0:
-/* 0F2AF0 7F0BDFC0 8D6B83D0 */  lw    $t3, %lo(D_800483D0)($t3)
-/* 0F2AF4 7F0BDFC4 8D8C83D4 */  lw    $t4, %lo(D_800483D4)($t4)
+/* 0F2AF0 7F0BDFC0 8D6B83D0 */  lw    $t3, %lo(g_DebugPortalsInputBuffer_0)($t3)
+/* 0F2AF4 7F0BDFC4 8D8C83D4 */  lw    $t4, %lo(g_DebugPortalsInputBuffer_1)($t4)
 /* 0F2AF8 7F0BDFC8 3C028005 */  lui   $v0, %hi(D_800483C0)
 /* 0F2AFC 7F0BDFCC 244283C0 */  addiu $v0, %lo(D_800483C0) # addiu $v0, $v0, -0x7c40
 /* 0F2B00 7F0BDFD0 116C0004 */  beq   $t3, $t4, .L7F0BDFE4
-/* 0F2B04 7F0BDFD4 3C018005 */   lui   $at, %hi(D_800483E0)
+/* 0F2B04 7F0BDFD4 3C018005 */   lui   $at, %hi(g_DebugPortalsInputBuffer_4)
 /* 0F2B08 7F0BDFD8 8C4E0000 */  lw    $t6, ($v0)
 /* 0F2B0C 7F0BDFDC 39CF0001 */  xori  $t7, $t6, 1
 /* 0F2B10 7F0BDFE0 AC4F0000 */  sw    $t7, ($v0)
 .L7F0BDFE4:
 /* 0F2B14 7F0BDFE4 10600004 */  beqz  $v1, .L7F0BDFF8
-/* 0F2B18 7F0BDFE8 AC2383E0 */   sw    $v1, %lo(D_800483E0)($at)
-/* 0F2B1C 7F0BDFEC 3C048005 */  lui   $a0, %hi(D_800483CC)
+/* 0F2B18 7F0BDFE8 AC2383E0 */   sw    $v1, %lo(g_DebugPortalsInputBuffer_4)($at)
+/* 0F2B1C 7F0BDFEC 3C048005 */  lui   $a0, %hi(g_DebugPortalsD_800483CC)
 /* 0F2B20 7F0BDFF0 10000002 */  b     .L7F0BDFFC
-/* 0F2B24 7F0BDFF4 8C8483CC */   lw    $a0, %lo(D_800483CC)($a0)
+/* 0F2B24 7F0BDFF4 8C8483CC */   lw    $a0, %lo(g_DebugPortalsD_800483CC)($a0)
 .L7F0BDFF8:
 /* 0F2B28 7F0BDFF8 2404FFFF */  li    $a0, -1
 .L7F0BDFFC:
@@ -1450,16 +1639,16 @@ glabel sub_GAME_7F0BDF10
 /* 0F2B58 7F0BE028 0050C025 */  or    $t8, $v0, $s0
 /* 0F2B5C 7F0BE02C 1300000B */  beqz  $t8, .L7F0BE05C
 /* 0F2B60 7F0BE030 24050100 */   li    $a1, 256
-/* 0F2B64 7F0BE034 3C048005 */  lui   $a0, %hi(D_800483CC)
-/* 0F2B68 7F0BE038 8C8483CC */  lw    $a0, %lo(D_800483CC)($a0)
+/* 0F2B64 7F0BE034 3C048005 */  lui   $a0, %hi(g_DebugPortalsD_800483CC)
+/* 0F2B68 7F0BE038 8C8483CC */  lw    $a0, %lo(g_DebugPortalsD_800483CC)($a0)
 /* 0F2B6C 7F0BE03C 24190001 */  li    $t9, 1
-/* 0F2B70 7F0BE040 3C018005 */  lui   $at, %hi(D_800483CC)
+/* 0F2B70 7F0BE040 3C018005 */  lui   $at, %hi(g_DebugPortalsD_800483CC)
 /* 0F2B74 7F0BE044 2484FFFF */  addiu $a0, $a0, -1
-/* 0F2B78 7F0BE048 AC2483CC */  sw    $a0, %lo(D_800483CC)($at)
+/* 0F2B78 7F0BE048 AC2483CC */  sw    $a0, %lo(g_DebugPortalsD_800483CC)($at)
 /* 0F2B7C 7F0BE04C 04810003 */  bgez  $a0, .L7F0BE05C
 /* 0F2B80 7F0BE050 AFB90020 */   sw    $t9, 0x20($sp)
-/* 0F2B84 7F0BE054 3C018005 */  lui   $at, %hi(D_800483CC)
-/* 0F2B88 7F0BE058 AC2083CC */  sw    $zero, %lo(D_800483CC)($at)
+/* 0F2B84 7F0BE054 3C018005 */  lui   $at, %hi(g_DebugPortalsD_800483CC)
+/* 0F2B88 7F0BE058 AC2083CC */  sw    $zero, %lo(g_DebugPortalsD_800483CC)($at)
 .L7F0BE05C:
 /* 0F2B8C 7F0BE05C 0C0030EB */  jal   joyGetButtonsPressedThisFrame
 /* 0F2B90 7F0BE060 00002025 */   move  $a0, $zero
@@ -1470,12 +1659,12 @@ glabel sub_GAME_7F0BDF10
 /* 0F2BA4 7F0BE074 00504025 */  or    $t0, $v0, $s0
 /* 0F2BA8 7F0BE078 11000008 */  beqz  $t0, .L7F0BE09C
 /* 0F2BAC 7F0BE07C 24050010 */   li    $a1, 16
-/* 0F2BB0 7F0BE080 3C048005 */  lui   $a0, %hi(D_800483CC)
-/* 0F2BB4 7F0BE084 8C8483CC */  lw    $a0, %lo(D_800483CC)($a0)
+/* 0F2BB0 7F0BE080 3C048005 */  lui   $a0, %hi(g_DebugPortalsD_800483CC)
+/* 0F2BB4 7F0BE084 8C8483CC */  lw    $a0, %lo(g_DebugPortalsD_800483CC)($a0)
 /* 0F2BB8 7F0BE088 24090001 */  li    $t1, 1
-/* 0F2BBC 7F0BE08C 3C018005 */  lui   $at, %hi(D_800483CC)
+/* 0F2BBC 7F0BE08C 3C018005 */  lui   $at, %hi(g_DebugPortalsD_800483CC)
 /* 0F2BC0 7F0BE090 24840001 */  addiu $a0, $a0, 1
-/* 0F2BC4 7F0BE094 AC2483CC */  sw    $a0, %lo(D_800483CC)($at)
+/* 0F2BC4 7F0BE094 AC2483CC */  sw    $a0, %lo(g_DebugPortalsD_800483CC)($at)
 /* 0F2BC8 7F0BE098 AFA90020 */  sw    $t1, 0x20($sp)
 .L7F0BE09C:
 /* 0F2BCC 7F0BE09C 0C0030C3 */  jal   joyGetButtons
@@ -1499,9 +1688,9 @@ glabel sub_GAME_7F0BDF10
 /* 0F2C14 7F0BE0E4 0C0030EB */  jal   joyGetButtonsPressedThisFrame
 /* 0F2C18 7F0BE0E8 24050400 */   li    $a1, 1024
 /* 0F2C1C 7F0BE0EC 10400081 */  beqz  $v0, .L7F0BE2F4
-/* 0F2C20 7F0BE0F0 3C048005 */   lui   $a0, %hi(D_800483CC)
+/* 0F2C20 7F0BE0F0 3C048005 */   lui   $a0, %hi(g_DebugPortalsD_800483CC)
 /* 0F2C24 7F0BE0F4 0FC2E6D9 */  jal   sub_GAME_7F0B9B64
-/* 0F2C28 7F0BE0F8 8C8483CC */   lw    $a0, %lo(D_800483CC)($a0)
+/* 0F2C28 7F0BE0F8 8C8483CC */   lw    $a0, %lo(g_DebugPortalsD_800483CC)($a0)
 /* 0F2C2C 7F0BE0FC 1000007E */  b     .L7F0BE2F8
 /* 0F2C30 7F0BE100 00001025 */   move  $v0, $zero
 .L7F0BE104:
@@ -1524,14 +1713,14 @@ glabel sub_GAME_7F0BDF10
 /* 0F2C74 7F0BE144 24050400 */   li    $a1, 1024
 /* 0F2C78 7F0BE148 00506825 */  or    $t5, $v0, $s0
 /* 0F2C7C 7F0BE14C 11A0000A */  beqz  $t5, .L7F0BE178
-/* 0F2C80 7F0BE150 3C048005 */   lui   $a0, %hi(D_800483CC)
+/* 0F2C80 7F0BE150 3C048005 */   lui   $a0, %hi(g_DebugPortalsD_800483CC)
 /* 0F2C84 7F0BE154 0FC2E6B9 */  jal   sub_GAME_7F0B9AE4
-/* 0F2C88 7F0BE158 8C8483CC */   lw    $a0, %lo(D_800483CC)($a0)
+/* 0F2C88 7F0BE158 8C8483CC */   lw    $a0, %lo(g_DebugPortalsD_800483CC)($a0)
 /* 0F2C8C 7F0BE15C 14400006 */  bnez  $v0, .L7F0BE178
-/* 0F2C90 7F0BE160 3C048005 */   lui   $a0, %hi(D_800483CC)
+/* 0F2C90 7F0BE160 3C048005 */   lui   $a0, %hi(g_DebugPortalsD_800483CC)
 /* 0F2C94 7F0BE164 240E0001 */  li    $t6, 1
 /* 0F2C98 7F0BE168 AFAE0020 */  sw    $t6, 0x20($sp)
-/* 0F2C9C 7F0BE16C 8C8483CC */  lw    $a0, %lo(D_800483CC)($a0)
+/* 0F2C9C 7F0BE16C 8C8483CC */  lw    $a0, %lo(g_DebugPortalsD_800483CC)($a0)
 /* 0F2CA0 7F0BE170 0FC2E76F */  jal   sub_GAME_7F0B9DBC
 /* 0F2CA4 7F0BE174 00002825 */   move  $a1, $zero
 .L7F0BE178:
@@ -1544,14 +1733,14 @@ glabel sub_GAME_7F0BDF10
 /* 0F2CC0 7F0BE190 24050800 */   li    $a1, 2048
 /* 0F2CC4 7F0BE194 00507825 */  or    $t7, $v0, $s0
 /* 0F2CC8 7F0BE198 11E00056 */  beqz  $t7, .L7F0BE2F4
-/* 0F2CCC 7F0BE19C 3C048005 */   lui   $a0, %hi(D_800483CC)
+/* 0F2CCC 7F0BE19C 3C048005 */   lui   $a0, %hi(g_DebugPortalsD_800483CC)
 /* 0F2CD0 7F0BE1A0 0FC2E6B9 */  jal   sub_GAME_7F0B9AE4
-/* 0F2CD4 7F0BE1A4 8C8483CC */   lw    $a0, %lo(D_800483CC)($a0)
+/* 0F2CD4 7F0BE1A4 8C8483CC */   lw    $a0, %lo(g_DebugPortalsD_800483CC)($a0)
 /* 0F2CD8 7F0BE1A8 10400052 */  beqz  $v0, .L7F0BE2F4
-/* 0F2CDC 7F0BE1AC 3C048005 */   lui   $a0, %hi(D_800483CC)
+/* 0F2CDC 7F0BE1AC 3C048005 */   lui   $a0, %hi(g_DebugPortalsD_800483CC)
 /* 0F2CE0 7F0BE1B0 24180001 */  li    $t8, 1
 /* 0F2CE4 7F0BE1B4 AFB80020 */  sw    $t8, 0x20($sp)
-/* 0F2CE8 7F0BE1B8 8C8483CC */  lw    $a0, %lo(D_800483CC)($a0)
+/* 0F2CE8 7F0BE1B8 8C8483CC */  lw    $a0, %lo(g_DebugPortalsD_800483CC)($a0)
 /* 0F2CEC 7F0BE1BC 0FC2E76F */  jal   sub_GAME_7F0B9DBC
 /* 0F2CF0 7F0BE1C0 24050001 */   li    $a1, 1
 /* 0F2CF4 7F0BE1C4 1000004C */  b     .L7F0BE2F8
@@ -1575,15 +1764,15 @@ glabel sub_GAME_7F0BDF10
 /* 0F2D38 7F0BE208 24050400 */   li    $a1, 1024
 /* 0F2D3C 7F0BE20C 00504025 */  or    $t0, $v0, $s0
 /* 0F2D40 7F0BE210 11000009 */  beqz  $t0, .L7F0BE238
-/* 0F2D44 7F0BE214 3C048005 */   lui   $a0, %hi(D_800483CC)
+/* 0F2D44 7F0BE214 3C048005 */   lui   $a0, %hi(g_DebugPortalsD_800483CC)
 /* 0F2D48 7F0BE218 0FC2E6C1 */  jal   sub_GAME_7F0B9B04
-/* 0F2D4C 7F0BE21C 8C8483CC */   lw    $a0, %lo(D_800483CC)($a0)
+/* 0F2D4C 7F0BE21C 8C8483CC */   lw    $a0, %lo(g_DebugPortalsD_800483CC)($a0)
 /* 0F2D50 7F0BE220 10400005 */  beqz  $v0, .L7F0BE238
-/* 0F2D54 7F0BE224 3C048005 */   lui   $a0, %hi(D_800483CC)
+/* 0F2D54 7F0BE224 3C048005 */   lui   $a0, %hi(g_DebugPortalsD_800483CC)
 /* 0F2D58 7F0BE228 24090001 */  li    $t1, 1
 /* 0F2D5C 7F0BE22C AFA90020 */  sw    $t1, 0x20($sp)
 /* 0F2D60 7F0BE230 0FC2E6D1 */  jal   sub_GAME_7F0B9B44
-/* 0F2D64 7F0BE234 8C8483CC */   lw    $a0, %lo(D_800483CC)($a0)
+/* 0F2D64 7F0BE234 8C8483CC */   lw    $a0, %lo(g_DebugPortalsD_800483CC)($a0)
 .L7F0BE238:
 /* 0F2D68 7F0BE238 00002025 */  move  $a0, $zero
 /* 0F2D6C 7F0BE23C 0C0030EB */  jal   joyGetButtonsPressedThisFrame
@@ -1594,15 +1783,15 @@ glabel sub_GAME_7F0BDF10
 /* 0F2D80 7F0BE250 24050800 */   li    $a1, 2048
 /* 0F2D84 7F0BE254 00505025 */  or    $t2, $v0, $s0
 /* 0F2D88 7F0BE258 11400026 */  beqz  $t2, .L7F0BE2F4
-/* 0F2D8C 7F0BE25C 3C048005 */   lui   $a0, %hi(D_800483CC)
+/* 0F2D8C 7F0BE25C 3C048005 */   lui   $a0, %hi(g_DebugPortalsD_800483CC)
 /* 0F2D90 7F0BE260 0FC2E6C1 */  jal   sub_GAME_7F0B9B04
-/* 0F2D94 7F0BE264 8C8483CC */   lw    $a0, %lo(D_800483CC)($a0)
+/* 0F2D94 7F0BE264 8C8483CC */   lw    $a0, %lo(g_DebugPortalsD_800483CC)($a0)
 /* 0F2D98 7F0BE268 14400022 */  bnez  $v0, .L7F0BE2F4
-/* 0F2D9C 7F0BE26C 3C048005 */   lui   $a0, %hi(D_800483CC)
+/* 0F2D9C 7F0BE26C 3C048005 */   lui   $a0, %hi(g_DebugPortalsD_800483CC)
 /* 0F2DA0 7F0BE270 240B0001 */  li    $t3, 1
 /* 0F2DA4 7F0BE274 AFAB0020 */  sw    $t3, 0x20($sp)
 /* 0F2DA8 7F0BE278 0FC2E6C9 */  jal   sub_GAME_7F0B9B24
-/* 0F2DAC 7F0BE27C 8C8483CC */   lw    $a0, %lo(D_800483CC)($a0)
+/* 0F2DAC 7F0BE27C 8C8483CC */   lw    $a0, %lo(g_DebugPortalsD_800483CC)($a0)
 /* 0F2DB0 7F0BE280 1000001D */  b     .L7F0BE2F8
 /* 0F2DB4 7F0BE284 00001025 */   move  $v0, $zero
 .L7F0BE288:
@@ -1614,11 +1803,11 @@ glabel sub_GAME_7F0BDF10
 /* 0F2DCC 7F0BE29C 24050400 */   li    $a1, 1024
 /* 0F2DD0 7F0BE2A0 00506025 */  or    $t4, $v0, $s0
 /* 0F2DD4 7F0BE2A4 11800005 */  beqz  $t4, .L7F0BE2BC
-/* 0F2DD8 7F0BE2A8 3C048005 */   lui   $a0, %hi(D_800483CC)
+/* 0F2DD8 7F0BE2A8 3C048005 */   lui   $a0, %hi(g_DebugPortalsD_800483CC)
 /* 0F2DDC 7F0BE2AC 240D0001 */  li    $t5, 1
 /* 0F2DE0 7F0BE2B0 AFAD0020 */  sw    $t5, 0x20($sp)
 /* 0F2DE4 7F0BE2B4 0FC2E69F */  jal   sub_GAME_7F0B9A7C
-/* 0F2DE8 7F0BE2B8 8C8483CC */   lw    $a0, %lo(D_800483CC)($a0)
+/* 0F2DE8 7F0BE2B8 8C8483CC */   lw    $a0, %lo(g_DebugPortalsD_800483CC)($a0)
 .L7F0BE2BC:
 /* 0F2DEC 7F0BE2BC 00002025 */  move  $a0, $zero
 /* 0F2DF0 7F0BE2C0 0C0030EB */  jal   joyGetButtonsPressedThisFrame
@@ -1629,11 +1818,11 @@ glabel sub_GAME_7F0BDF10
 /* 0F2E04 7F0BE2D4 24050800 */   li    $a1, 2048
 /* 0F2E08 7F0BE2D8 00507025 */  or    $t6, $v0, $s0
 /* 0F2E0C 7F0BE2DC 11C00005 */  beqz  $t6, .L7F0BE2F4
-/* 0F2E10 7F0BE2E0 3C048005 */   lui   $a0, %hi(D_800483CC)
+/* 0F2E10 7F0BE2E0 3C048005 */   lui   $a0, %hi(g_DebugPortalsD_800483CC)
 /* 0F2E14 7F0BE2E4 240F0001 */  li    $t7, 1
 /* 0F2E18 7F0BE2E8 AFAF0020 */  sw    $t7, 0x20($sp)
 /* 0F2E1C 7F0BE2EC 0FC2E68B */  jal   sub_GAME_7F0B9A2C
-/* 0F2E20 7F0BE2F0 8C8483CC */   lw    $a0, %lo(D_800483CC)($a0)
+/* 0F2E20 7F0BE2F0 8C8483CC */   lw    $a0, %lo(g_DebugPortalsD_800483CC)($a0)
 .L7F0BE2F4:
 /* 0F2E24 7F0BE2F4 00001025 */  move  $v0, $zero
 .L7F0BE2F8:
@@ -3086,7 +3275,7 @@ glabel lvRender
  */
 void setDamageMultipliersForDifficulty(void)
 {
-    if (difficulty_0 == DIFFICULTY_AGENT)
+    if (g_SelectedDifficulty == DIFFICULTY_AGENT)
     {
         f32 armorDiff = get_BONDdata_watch_health() + get_BONDdata_watch_armor();
         f32 damageMultiplier = 1.0f;
@@ -3113,7 +3302,7 @@ void setDamageMultipliersForDifficulty(void)
         g_SoloAmmoMultiplier = DEFAULT_AGENT_SOLO_AMMO_MULTIPLIER;
         g_AiReactionSpeed = DEFAULT_AGENT_AI_REACTION_SPEED;
     }
-    else if (difficulty_0 == DIFFICULTY_SECRET)
+    else if (g_SelectedDifficulty == DIFFICULTY_SECRET)
     {
         F_80030B14 = 1.0f;
         F_80030B18 = 1.0f;
@@ -3142,7 +3331,7 @@ void setDamageMultipliersForDifficulty(void)
         g_SoloAmmoMultiplier = DEFAULT_SECRET_AGENT_SOLO_AMMO_MULTIPLIER;
         g_AiReactionSpeed = DEFAULT_SECRET_AGENT_AI_REACTION_SPEED;
     }
-    else if (difficulty_0 == DIFFICULTY_00)
+    else if (g_SelectedDifficulty == DIFFICULTY_00)
     {
         F_80030B14 = 1.0f;
         F_80030B18 = 1.0f;
@@ -3171,7 +3360,7 @@ void setDamageMultipliersForDifficulty(void)
         g_SoloAmmoMultiplier = DEFAULT_00_AGENT_SOLO_AMMO_MULTIPLIER;
         g_AiReactionSpeed = DEFAULT_00_AGENT_AI_REACTION_SPEED;
     }
-    else if (difficulty_0 == DIFFICULTY_007)
+    else if (g_SelectedDifficulty == DIFFICULTY_007)
     {
         F_80030B14 = 1.0f;
         F_80030B18 = 1.0f;
@@ -5861,8 +6050,120 @@ glabel manage_mp_game
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0BF800(void) {
+/**
+ * Multiplayer related. Has some debug code which passes in controller input.
+ * 
+ * Updates distance_traveled and possibly (depending on scenario) have_token_or_goldengun.
+ * 
+ * Address 0x7F0BF800.
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: yes
+ * - identical registers: fail
+ * 
+ * notes: only regalloc issues near the sqrtf call.
+ */
+void sub_GAME_7F0BF800(void)
+{
+    s8 local_player_number;
+    f32 temp_f0;
+    f32 temp_f2;
+    s32 temp_v0;
 
+    local_player_number = get_cur_playernum();
+    cheat_buttons_mp_related();
+    temp_v0 = get_debug_freeze_processing();
+
+    switch (temp_v0)
+    {
+        case 0:
+        {
+            if ((get_debug_limit_controller_input() == 0) || ((get_debug_limit_controller_input() == 0x3B) && (D_80036ABC < 0)))
+            {
+                sub_GAME_7F091080(joyGetStickX(local_player_number), joyGetStickY(local_player_number), joyGetButtons(local_player_number, ANY_BUTTON));
+            }
+            else
+            {
+                sub_GAME_7F091080(joyGetStickX(local_player_number), joyGetStickY(local_player_number), 0);
+            }
+        }
+        break;
+
+        case 1:
+        {
+            if (get_debug_limit_controller_input() == 1)
+            {
+                sub_GAME_7F0B2D38(joyGetStickX(local_player_number), joyGetStickY(local_player_number), joyGetButtons(local_player_number, ANY_BUTTON));
+            }
+            else
+            {
+                sub_GAME_7F0B2D38(joyGetStickX(local_player_number), joyGetStickY(local_player_number), 0);
+            }
+        }
+        break;
+
+        case 2:
+        {
+            if (get_debug_limit_controller_input() == 2)
+            {
+                possibly_reset_viewport_options_for_player(joyGetStickX(local_player_number), joyGetStickY(local_player_number), joyGetButtons(local_player_number, ANY_BUTTON));
+            }
+            else
+            {
+                possibly_reset_viewport_options_for_player(joyGetStickX(local_player_number), joyGetStickY(local_player_number), 0);
+            }
+
+            sub_GAME_7F0C2E80();
+        }
+        break;
+    }
+
+    // decomp issue: `currentplayer->prop` and `currentplayer` registers are swapped.
+    temp_f0 = currentplayer->prop->position.x - currentplayer->field_408;
+    temp_f2 = currentplayer->prop->position.z - currentplayer->field_410;
+
+    pPlayersPerm->distance_traveled += sqrtf((temp_f0 * temp_f0) + (temp_f2 * temp_f2));
+
+    if (get_scenario() == SCENARIO_TLD)
+    {
+        if (bondinvIsAliveWithFlag())
+        {
+            if (get_item_in_hand(RIGHT_HAND) != ITEM_TOKEN)
+            {
+                draw_item_in_hand_has_more_ammo(RIGHT_HAND, ITEM_TOKEN);
+
+                if (currentplayer->hands[RIGHT_HAND].when_detonating_mines_is_0 == 2)
+                {
+                    currentplayer->hands[RIGHT_HAND].when_detonating_mines_is_0 = 5;
+                }
+            }
+
+            pPlayersPerm->flag_counter += g_ClockTimer;
+            pPlayersPerm->have_token_or_goldengun = 1;
+        }
+        else
+        {
+            pPlayersPerm->have_token_or_goldengun = 0;
+        }
+
+        return;
+    }
+
+    if (get_scenario() == SCENARIO_MWTGG)
+    {
+        if (checkforgoldengun())
+        {
+            pPlayersPerm->have_token_or_goldengun = 1;
+        }
+        else
+        {
+            pPlayersPerm->have_token_or_goldengun = 0;
+        }
+
+        return;
+    }
 }
 #else
 GLOBAL_ASM(
@@ -6136,12 +6437,12 @@ s32 get_controls_locked_flag(void) {
 
 
 DIFFICULTY get_current_difficulty(void) {
-    return difficulty_0;
+    return g_SelectedDifficulty;
 }
 
 
 void set_difficulty(s32 arg0) {
-    difficulty_0 = arg0;
+    g_SelectedDifficulty = arg0;
 }
 
 void set_mp_time(s32 arg0) {

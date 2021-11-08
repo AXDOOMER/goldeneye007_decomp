@@ -5887,7 +5887,7 @@ float sub_GAME_7F0B2D14(struct StandTile* tile) {
 
 
 
-void sub_GAME_7F0B2D38(s32 arg0, s32 arg1, s32 arg2) {
+void sub_GAME_7F0B2D38(s8 arg0, s8 arg1, u16 arg2) {
     return;
 }
 

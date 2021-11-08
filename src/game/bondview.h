@@ -557,9 +557,20 @@ struct player
   s32 colourfadebluenew;
   f32 colourfadefracold;
   f32 colourfadefracnew;
-  s32 field_408;
+
+  /*
+  * Something with position, like previous x position.
+  * Offset 0x408.
+  */
+  f32 field_408;
   s32 field_40C;
-  s32 field_410;
+
+  /*
+  * Something with position, like previous z position.
+  * Offset 0x410.
+  */
+  f32 field_410;
+  
   s32 field_414;
   s32 field_418;
   s32 cuff_value;
@@ -805,16 +816,36 @@ struct player
   s32 hand_invisible[2];
   s32 hand_item[2];
   u8 *ptr_hand_weapon_buffer[2];
-  s32 copy_of_body_obj_header[8];
-  s32 copy_of_right_weapon_obj_header[8];
+  
+  /**
+   * Offset 0x810.
+   */
+  ModelFileHeader copy_of_body_obj_header[2];
+  
   s32 field_850;
   s32 field_854;
   s32 field_858;
   s32 field_85C;
-  s32 field_860;  
+  s32 field_860;
+
+  /**
+   * Offset 0x864.
+   */
   s32 right_item_related1;
+
+  /**
+   * Offset 0x868.
+   */
   s32 right_item_related2;
+
+  /**
+   * Offset 0x86c.
+   */
   s32 right_item_related3;
+
+  /**
+   * Offset 0x870.
+   */
   struct hand hands[2];
   f32 field_FC0;
   f32 field_FC4;
@@ -2823,5 +2854,6 @@ void init_player_BONDdata(void);
 void sub_GAME_7F0798B8(void);
 f32 get_BONDdata_watch_health(void);
 f32 get_BONDdata_watch_armor(void);
+void possibly_reset_viewport_options_for_player(s8 arg0, s8 arg1, u16 arg2);
 
 #endif
