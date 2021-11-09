@@ -3,6 +3,7 @@
 #include "game/bg.h"
 #include "game/math_ceil.h"
 #include "game/decompress.h"
+#include "game/matrixmath.h"
 
 // bss
 //CODE.bss:8007BF90
@@ -229,6 +230,12 @@ u32 D_8004491C = 0;
 u32 D_80044920 = 0;
 //D:80044924
 u32 D_80044924 = 0;
+
+// forward declarations
+
+void unload_rooms(void);
+
+// end forward declarations
 
 
 // RenderMode/Combiner Look-Up-Tables
@@ -1873,29 +1880,11 @@ glabel load_bg_file
 
 
 
-#ifdef NONMATCHING
+
 void sub_GAME_7F0B47E0(void) {
     unload_rooms();
     matrix_4x4_7F058C4C(1.0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B47E0
-/* 0E9310 7F0B47E0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0E9314 7F0B47E4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E9318 7F0B47E8 0FC2D99F */  jal   unload_rooms
-/* 0E931C 7F0B47EC 00000000 */   nop   
-/* 0E9320 7F0B47F0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0E9324 7F0B47F4 44816000 */  mtc1  $at, $f12
-/* 0E9328 7F0B47F8 0FC16313 */  jal   matrix_4x4_7F058C4C
-/* 0E932C 7F0B47FC 00000000 */   nop   
-/* 0E9330 7F0B4800 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0E9334 7F0B4804 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0E9338 7F0B4808 03E00008 */  jr    $ra
-/* 0E933C 7F0B480C 00000000 */   nop   
-)
-#endif
 
 
 

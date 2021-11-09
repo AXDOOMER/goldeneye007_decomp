@@ -1948,8 +1948,8 @@ Gfx* lvlRender(Gfx* DL)
 
             if (sub_GAME_7F089F38() && sub_GAME_7F03C4F0())
             {
-                attempt_reload_item_in_hand(0);
-                attempt_reload_item_in_hand(1);
+                attempt_reload_item_in_hand(RIGHT_HAND);
+                attempt_reload_item_in_hand(LEFT_HAND);
             }
 
             sub_GAME_7F03D0D4();

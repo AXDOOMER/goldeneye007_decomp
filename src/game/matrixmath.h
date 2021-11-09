@@ -27,6 +27,8 @@ f32 matrix_4x4_determinant(Mtxf *matrix);
 f32 matrix_3x3_determinant(f32 a, f32 d, f32 g, f32 b, f32 e, f32 h, f32 c, f32 f, f32 i);
 f32 matrix_2x2_determinant(f32 a, f32 c, f32 b, f32 d);
 
+void matrix_4x4_7F058C4C(f32 arg0);
+
 /* matrixmath_misc.h */
 
 void sub_GAME_7F05AE00(vec3 x, vec3 y, f32 scaler, vec3 result);
