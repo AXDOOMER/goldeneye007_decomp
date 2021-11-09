@@ -3401,6 +3401,22 @@ void setDamageMultipliersForDifficulty(void)
 
 
 #ifdef NONMATCHING
+/**
+ * Multiplayer method.
+ * Tracks you-only-live-twice kills/deaths.
+ * Lots of debug code.
+ * 
+ * Address: 0x7F0BEB88 (NTSC).
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: fail
+ * - identical instructions: fail
+ * - identical registers: fail
+ * 
+ * notes: there is one big `if` block that is very wrong. A few places where two instructions are swapped.
+ * Otherwise just lots of regalloc.
+ */
 void manage_mp_game(void)
 {
     s32 sp184;
@@ -3569,7 +3585,7 @@ void manage_mp_game(void)
             }
         }
 
-// instructions match up to here, .s line (good) ~1840, assembly line (good) ~16c4
+
 // decomp issue: begin very wrong section
         if ((get_scenario() == SCENARIO_YOLT) && (g_ClockTimer != 0))
         {

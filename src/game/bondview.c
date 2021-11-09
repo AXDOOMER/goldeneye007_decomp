@@ -35486,7 +35486,7 @@ void setFontTables(s32 arg0, s32 arg1)
 
 
 #ifdef NONMATCHING
-void display_string_in_lower_left_corner(char *string) {
+void display_string_in_lower_left_corner(char *string, s32 arg1, s32 arg2) {
 
 }
 #else
@@ -35681,7 +35681,7 @@ glabel display_string_in_lower_left_corner
 #ifndef VERSION_US
 void jp_display_string_in_lower_left_corner(char *string)
 {
-  display_string_in_lower_left_corner(string,ptrSecondFontTableSmall,ptrFirstFontTableSmall);
+  display_string_in_lower_left_corner(string, ptrSecondFontTableSmall, ptrFirstFontTableSmall);
 }
 #endif
 
