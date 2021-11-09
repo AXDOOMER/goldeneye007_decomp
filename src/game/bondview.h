@@ -830,8 +830,12 @@ struct player
   s32 hand_invisible[2];
   s32 hand_item[2];
   u8 *ptr_hand_weapon_buffer[2];
-  s32 copy_of_body_obj_header[8];
-  s32 copy_of_right_weapon_obj_header[8];
+  
+  /**
+   * Offset 0x810.
+   */
+  ModelFileHeader copy_of_body_obj_header[2];
+  
   s32 field_850;
   s32 field_854;
   s32 field_858;
