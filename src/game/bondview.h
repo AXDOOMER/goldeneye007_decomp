@@ -2865,6 +2865,14 @@ void sub_GAME_7F0798B8(void);
 f32 get_BONDdata_watch_health(void);
 f32 get_BONDdata_watch_armor(void);
 void possibly_reset_viewport_options_for_player(s8 arg0, s8 arg1, u16 arg2);
+
+#ifndef VERSION_US
+// VERSION_EU, VERSION_JP
 void display_string_in_lower_left_corner(char *string, s32 arg1, s32 arg2);
+#else
+// VERSION_US
+void display_string_in_lower_left_corner(char *string);
+#endif
+
 
 #endif

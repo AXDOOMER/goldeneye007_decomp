@@ -35486,7 +35486,7 @@ void setFontTables(s32 arg0, s32 arg1)
 
 
 #ifdef NONMATCHING
-void display_string_in_lower_left_corner(char *string, s32 arg1, s32 arg2) {
+void display_string_in_lower_left_corner(char *string) {
 
 }
 #else
