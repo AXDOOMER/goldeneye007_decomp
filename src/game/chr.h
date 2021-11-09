@@ -204,4 +204,6 @@ extern s32 random_female_heads[];
 extern u32 current_random_body;
 extern u32 current_random_male_head;
 extern u32 current_random_female_head;
+
+void sub_GAME_7F022EE0(s32 param_1);
 #endif

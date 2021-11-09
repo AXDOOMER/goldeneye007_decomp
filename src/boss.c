@@ -123,7 +123,7 @@ s32 g_DebugFeatureFlag = 0;
 OSScMsg g_bossGfxDoneMsg = { OS_SC_DONE_MSG };
 
 // extern declarations
-extern struct player *currentplayer;
+extern struct player *g_CurrentPlayer;
 
 /**
  * 6930    70005D30
@@ -493,10 +493,10 @@ void bossMainloop(void)
                                 {
                                     set_cur_player(get_nth_player_from_shuffled(i));
 
-                                    localPlayer = currentplayer;
+                                    localPlayer = g_CurrentPlayer;
                                     viSetViewSize(localPlayer->viewx, localPlayer->viewy);
 
-                                    localPlayer = currentplayer;
+                                    localPlayer = g_CurrentPlayer;
                                     viSetViewPosition(localPlayer->viewleft, localPlayer->viewtop);
 
                                     sub_GAME_7F0BF800();

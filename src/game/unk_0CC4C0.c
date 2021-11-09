@@ -2655,7 +2655,7 @@ GLOBAL_ASM(
 glabel PADDINGHACKING
 .word 0
 /*D:8005BF20*/
-glabel tlb_ptr_DL_type_B1toC0
+glabel jpt_tlb_ptr_DL_type_B1toC0
 .word .L7F0CE66C
 .word .L7F0CE720
 .word .L7F0CE720
@@ -2674,7 +2674,7 @@ glabel tlb_ptr_DL_type_B1toC0
 .word .L7F0CE1D8
 
 /*D:8005BF60*/
-glabel tlb_ptr_C0_image_recall_types
+glabel jpt_tlb_ptr_C0_image_recall_types
 .word .L7F0CE2BC
 .word .L7F0CE428
 .word .L7F0CE4B8
@@ -2728,9 +2728,9 @@ glabel process_microcode_sort_display_modes_expand_image_calls
 /* 102CE8 7F0CE1B8 2DE10010 */  sltiu $at, $t7, 0x10
 /* 102CEC 7F0CE1BC 10200158 */  beqz  $at, .L7F0CE720
 /* 102CF0 7F0CE1C0 000F7880 */   sll   $t7, $t7, 2
-/* 102CF4 7F0CE1C4 3C018006 */  lui   $at, %hi(tlb_ptr_DL_type_B1toC0)
+/* 102CF4 7F0CE1C4 3C018006 */  lui   $at, %hi(jpt_tlb_ptr_DL_type_B1toC0)
 /* 102CF8 7F0CE1C8 002F0821 */  addu  $at, $at, $t7
-/* 102CFC 7F0CE1CC 8C2FBF20 */  lw    $t7, %lo(tlb_ptr_DL_type_B1toC0)($at)
+/* 102CFC 7F0CE1CC 8C2FBF20 */  lw    $t7, %lo(jpt_tlb_ptr_DL_type_B1toC0)($at)
 /* 102D00 7F0CE1D0 01E00008 */  jr    $t7
 /* 102D04 7F0CE1D4 00000000 */   nop   
 .L7F0CE1D8:
@@ -2791,9 +2791,9 @@ glabel process_microcode_sort_display_modes_expand_image_calls
 /* 102DCC 7F0CE29C 2DA10005 */  sltiu $at, $t5, 5
 /* 102DD0 7F0CE2A0 102000D3 */  beqz  $at, .L7F0CE5F0
 /* 102DD4 7F0CE2A4 000D6880 */   sll   $t5, $t5, 2
-/* 102DD8 7F0CE2A8 3C018006 */  lui   $at, %hi(tlb_ptr_C0_image_recall_types)
+/* 102DD8 7F0CE2A8 3C018006 */  lui   $at, %hi(jpt_tlb_ptr_C0_image_recall_types)
 /* 102DDC 7F0CE2AC 002D0821 */  addu  $at, $at, $t5
-/* 102DE0 7F0CE2B0 8C2DBF60 */  lw    $t5, %lo(tlb_ptr_C0_image_recall_types)($at)
+/* 102DE0 7F0CE2B0 8C2DBF60 */  lw    $t5, %lo(jpt_tlb_ptr_C0_image_recall_types)($at)
 /* 102DE4 7F0CE2B4 01A00008 */  jr    $t5
 /* 102DE8 7F0CE2B8 00000000 */   nop   
 .L7F0CE2BC:

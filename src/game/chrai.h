@@ -216,5 +216,6 @@ extern struct object_standard * ptr_setup_objects;
 void stop_alarm(void);
 
 void check_deactivate_gas_sound(void);
+void handle_mp_respawn_and_some_things(void);
 
 #endif

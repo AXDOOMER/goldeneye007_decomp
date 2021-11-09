@@ -8,4 +8,6 @@ struct stringentry {
 
 extern s32 j_text_trigger;
 
+void something_with_LnameJ(void);
+
 #endif

@@ -9,4 +9,6 @@ extern f32 flt_CODE_bss_80079E80;
 extern f32 flt_CODE_bss_80079E84;
 extern f32 flt_CODE_bss_80079E88;
 
+void sub_GAME_7F092E50(void);
+
 #endif

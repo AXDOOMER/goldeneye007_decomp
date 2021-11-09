@@ -548,6 +548,10 @@ struct player
   s32 colourscreenblue;
   f32 colourscreenfrac;
   f32 colourfadetime60;
+
+  /**
+   * Offset 0x3e4.
+   */
   f32 colourfadetimemax60;
   s32 colourfaderedold;
   s32 colourfaderednew;
@@ -575,7 +579,17 @@ struct player
   s32 field_418;
   s32 cuff_value;
   s32 field_420;
+
+  /**
+   * Multiplayer related.
+   * Offset 0x424.
+   */
   s32 field_424;
+
+  /**
+   * Multiplayer related.
+   * Offset 0x428.
+   */
   s32 field_428;
   s32 field_42C;
   s32 field_430;
@@ -2855,5 +2869,14 @@ void sub_GAME_7F0798B8(void);
 f32 get_BONDdata_watch_health(void);
 f32 get_BONDdata_watch_armor(void);
 void possibly_reset_viewport_options_for_player(s8 arg0, s8 arg1, u16 arg2);
+
+#ifndef VERSION_US
+// VERSION_EU, VERSION_JP
+void display_string_in_lower_left_corner(char *string, s32 arg1, s32 arg2);
+#else
+// VERSION_US
+void display_string_in_lower_left_corner(char *string);
+#endif
+
 
 #endif

@@ -35,7 +35,7 @@ glabel sub_GAME_7F0072B0
 
 void disable_onscreen_cheat_text(void)
 {
-  currentplayer->something_with_cheat_text = 0;
-  currentplayer->can_display_cheat_text = 0;
+  g_CurrentPlayer->something_with_cheat_text = 0;
+  g_CurrentPlayer->can_display_cheat_text = 0;
 }
 

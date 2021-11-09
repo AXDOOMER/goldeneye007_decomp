@@ -127,7 +127,6 @@ void sndUnlinkClearSound(ALSoundState *state);
 void sndSetPriority(ALSoundState *state, u8 priority);
 u8 sndGetPlayingState(ALSoundState *state);
 ALSoundState *sndPlaySfx(struct ALBankAlt_s *soundBank, s16 soundIndex, ALSoundState *pendingState);
-void sndDeactivate(ALSoundState *state);
 void sndDeactivateAllSfxByFlag(u8 flag);
 void sndDeactivateAllSfxByFlag_1(void);
 void sndDeactivateAllSfxByFlag_11(void);

@@ -1695,10 +1695,10 @@ glabel sub_GAME_7F0A2C44
 /* 0D78B8 7F0A2D88 0000A025 */  move  $s4, $zero
 /* 0D78BC 7F0A2D8C 18800044 */  blez  $a0, .L7F0A2EA0
 /* 0D78C0 7F0A2D90 3C170420 */   lui   $s7, (0x04200030 >> 16) # lui $s7, 0x420
-/* 0D78C4 7F0A2D94 3C168008 */  lui   $s6, %hi(currentplayer)
+/* 0D78C4 7F0A2D94 3C168008 */  lui   $s6, %hi(g_CurrentPlayer)
 /* 0D78C8 7F0A2D98 3C138008 */  lui   $s3, %hi(dword_CODE_bss_8007A164)
 /* 0D78CC 7F0A2D9C 2673A164 */  addiu $s3, %lo(dword_CODE_bss_8007A164) # addiu $s3, $s3, -0x5e9c
-/* 0D78D0 7F0A2DA0 26D6A0B0 */  addiu $s6, %lo(currentplayer) # addiu $s6, $s6, -0x5f50
+/* 0D78D0 7F0A2DA0 26D6A0B0 */  addiu $s6, %lo(g_CurrentPlayer) # addiu $s6, $s6, -0x5f50
 /* 0D78D4 7F0A2DA4 3C1EBF00 */  lui   $fp, 0xbf00
 /* 0D78D8 7F0A2DA8 36F70030 */  ori   $s7, (0x04200030 & 0xFFFF) # ori $s7, $s7, 0x30
 /* 0D78DC 7F0A2DAC 27B50090 */  addiu $s5, $sp, 0x90

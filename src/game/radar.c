@@ -25,7 +25,7 @@ Gfx *display_red_blue_on_radar(Gfx *DL)
     s32 playerCount;
     s32 temp_v0_6;
     struct player *temp_a0_2;
-    //struct player *currentplayer;
+    //struct player *g_CurrentPlayer;
     struct prop *temp_v0_4;
     struct prop *temp_v1;
     void *temp_a0;
@@ -50,13 +50,13 @@ Gfx *display_red_blue_on_radar(Gfx *DL)
     {
         return DL;
     }
-    currentplayer = currentplayer;
-    if (currentplayer->mpmenuon != 0)
+    g_CurrentPlayer = g_CurrentPlayer;
+    if (g_CurrentPlayer->mpmenuon != 0)
     {
 block_4:
         return DL;
     }
-    if (currentplayer->bonddead != 0)
+    if (g_CurrentPlayer->bonddead != 0)
     {
         goto block_4;
     }
@@ -100,7 +100,7 @@ block_4:
     DL = microcode_constructor_related_to_menus(DL, phi_s5 - 2, temp_s6 - 2, phi_s5 + 2, temp_s6 + 2, 0x40);
     if ((scenario == 5) || (scenario == 6) || (scenario == 7) || (scenario == 2) || (scenario == 3))
     {
-        if (*(&player1_player_data.have_token_or_goldengun + (curplayernum * 0x70)) == 0)
+        if (g_playerPlayerData[curplayernum].have_token_or_goldengun == 0)
         {
             phi_v0 = 0xFF7777FF;
         }
@@ -121,19 +121,19 @@ block_4:
 loop_22:
         if (phi_s3 != curplayernum)
         {
-            temp_a0_2 = players[phi_s3];
+            temp_a0_2 = g_playerPointers[phi_s3];
             if (temp_a0_2->bonddead == 0)
             {
                 temp_v0_4 = temp_a0_2->prop;
-                temp_v1 = currentplayer->prop;
+                temp_v1 = g_CurrentPlayer->prop;
                 temp_f20 = temp_v0_4->position.x - temp_v1->position.x;
                 temp_f22 = temp_v0_4->position.z - temp_v1->position.z;
                 temp_f24 = (f32) 0x10;
-                temp_f28 = ((atan2f(temp_f20, temp_f22, temp_a0_2) * 180.0f) / 3.1415927f) + currentplayer->vv_theta + 180.0f;
+                temp_f28 = ((atan2f(temp_f20, temp_f22, temp_a0_2) * 180.0f) / 3.1415927f) + g_CurrentPlayer->vv_theta + 180.0f;
                 temp_f2 = sqrtf((temp_f20 * temp_f20) + (temp_f22 * temp_f22)) * (16.0f / 4000.0f);
                 if ((scenario == 5) || (scenario == 6) || (scenario == 7) || (scenario == 2) || (scenario == 3))
                 {
-                    temp_v0_5 = (((phi_s3 * 8) - phi_s3) * 0x10) + &player1_player_data;
+                    temp_v0_5 = (((phi_s3 * 8) - phi_s3) * 0x10) + &g_playerPlayerData;
                     if (temp_f2 < temp_f24)
                     {
                         if (temp_v0_5->unk69 == 0)
@@ -222,8 +222,8 @@ glabel display_red_blue_on_radar
 /* 0FAC24 7F0C60F4 10000124 */  b     .L7F0C6588
 /* 0FAC28 7F0C60F8 8FA20088 */   lw    $v0, 0x88($sp)
 .L7F0C60FC:
-/* 0FAC2C 7F0C60FC 3C178008 */  lui   $s7, %hi(currentplayer) 
-/* 0FAC30 7F0C6100 26F7A0B0 */  addiu $s7, %lo(currentplayer) # addiu $s7, $s7, -0x5f50
+/* 0FAC2C 7F0C60FC 3C178008 */  lui   $s7, %hi(g_CurrentPlayer) 
+/* 0FAC30 7F0C6100 26F7A0B0 */  addiu $s7, %lo(g_CurrentPlayer) # addiu $s7, $s7, -0x5f50
 /* 0FAC34 7F0C6104 8EE20000 */  lw    $v0, ($s7)
 /* 0FAC38 7F0C6108 8C4E29C4 */  lw    $t6, 0x29c4($v0)
 /* 0FAC3C 7F0C610C 15C00004 */  bnez  $t6, .L7F0C6120
@@ -349,13 +349,13 @@ glabel display_red_blue_on_radar
 /* 0FAE08 7F0C62D8 8FA40088 */   lw    $a0, 0x88($sp)
 .L7F0C62DC:
 /* 0FAE0C 7F0C62DC 8FAC0070 */  lw    $t4, 0x70($sp)
-/* 0FAE10 7F0C62E0 3C0E8008 */  lui   $t6, %hi(player1_player_data+0x69)
+/* 0FAE10 7F0C62E0 3C0E8008 */  lui   $t6, %hi(g_playerPlayerData+0x69)
 /* 0FAE14 7F0C62E4 8FA40088 */  lw    $a0, 0x88($sp)
 /* 0FAE18 7F0C62E8 000C68C0 */  sll   $t5, $t4, 3
 /* 0FAE1C 7F0C62EC 01AC6823 */  subu  $t5, $t5, $t4
 /* 0FAE20 7F0C62F0 000D6900 */  sll   $t5, $t5, 4
 /* 0FAE24 7F0C62F4 01CD7021 */  addu  $t6, $t6, $t5
-/* 0FAE28 7F0C62F8 91CE9F59 */  lbu   $t6, %lo(player1_player_data+0x69)($t6)
+/* 0FAE28 7F0C62F8 91CE9F59 */  lbu   $t6, %lo(g_playerPlayerData+0x69)($t6)
 /* 0FAE2C 7F0C62FC 26A5FFFF */  addiu $a1, $s5, -1
 /* 0FAE30 7F0C6300 26C6FFFF */  addiu $a2, $s6, -1
 /* 0FAE34 7F0C6304 15C00004 */  bnez  $t6, .L7F0C6318
@@ -394,10 +394,10 @@ glabel display_red_blue_on_radar
 /* 0FAEA8 7F0C6378 8FAA0070 */  lw    $t2, 0x70($sp)
 .L7F0C637C:
 /* 0FAEAC 7F0C637C 00135880 */  sll   $t3, $s3, 2
-/* 0FAEB0 7F0C6380 3C048008 */  lui   $a0, %hi(players)
+/* 0FAEB0 7F0C6380 3C048008 */  lui   $a0, %hi(g_playerPointers)
 /* 0FAEB4 7F0C6384 126A007A */  beq   $s3, $t2, .L7F0C6570
 /* 0FAEB8 7F0C6388 008B2021 */   addu  $a0, $a0, $t3
-/* 0FAEBC 7F0C638C 8C849EE0 */  lw    $a0, %lo(players)($a0)
+/* 0FAEBC 7F0C638C 8C849EE0 */  lw    $a0, %lo(g_playerPointers)($a0)
 /* 0FAEC0 7F0C6390 8C8C00D8 */  lw    $t4, 0xd8($a0)
 /* 0FAEC4 7F0C6394 55800077 */  bnezl $t4, .L7F0C6574
 /* 0FAEC8 7F0C6398 8FB80074 */   lw    $t8, 0x74($sp)
@@ -450,8 +450,8 @@ glabel display_red_blue_on_radar
 /* 0FAF84 7F0C6454 4618103C */   c.lt.s $f2, $f24
 .L7F0C6458:
 /* 0FAF88 7F0C6458 4618103C */  c.lt.s $f2, $f24
-/* 0FAF8C 7F0C645C 3C0F8008 */  lui   $t7, %hi(player1_player_data) 
-/* 0FAF90 7F0C6460 25EF9EF0 */  addiu $t7, %lo(player1_player_data) # addiu $t7, $t7, -0x6110
+/* 0FAF8C 7F0C645C 3C0F8008 */  lui   $t7, %hi(g_playerPlayerData) 
+/* 0FAF90 7F0C6460 25EF9EF0 */  addiu $t7, %lo(g_playerPlayerData) # addiu $t7, $t7, -0x6110
 /* 0FAF94 7F0C6464 00094900 */  sll   $t1, $t1, 4
 /* 0FAF98 7F0C6468 4500000A */  bc1f  .L7F0C6494
 /* 0FAF9C 7F0C646C 012F1021 */   addu  $v0, $t1, $t7

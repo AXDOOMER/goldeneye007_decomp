@@ -92,6 +92,8 @@ void indyGrabRgb16bit(void);
 void indyGrabRgb32bit(void);
 
 void viSetVideoMode(s32 m);
+s32 viGet800232A0(void);
+void viSet800232A0(s32 arg0);
 #endif
 
 

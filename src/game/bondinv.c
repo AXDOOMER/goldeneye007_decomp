@@ -13,13 +13,13 @@
 void reinit_inventory(void) {
     s32 i;
 
-    for (i=0; i < currentplayer->equipmaxitems; i++) {
-        currentplayer->p_itemcur[i].type = -1;
+    for (i=0; i < g_CurrentPlayer->equipmaxitems; i++) {
+        g_CurrentPlayer->p_itemcur[i].type = -1;
     }
     
-    currentplayer->ptr_inventory_first_in_cycle = NULL;
-    currentplayer->textoverrides = NULL;
-    currentplayer->equipcuritem = 0;
+    g_CurrentPlayer->ptr_inventory_first_in_cycle = NULL;
+    g_CurrentPlayer->textoverrides = NULL;
+    g_CurrentPlayer->equipcuritem = 0;
 }
 
 /**
@@ -48,7 +48,7 @@ void inv_sort_item(InvItem *subject) {
 
     candidate = subject->next;
 
-    while (currentplayer->ptr_inventory_first_in_cycle != subject->next) {
+    while (g_CurrentPlayer->ptr_inventory_first_in_cycle != subject->next) {
         // Prepare candidate's properties for comparisons
         candweapon1 = -1;
         candweapon2 = -1;
@@ -72,7 +72,7 @@ void inv_sort_item(InvItem *subject) {
         // If there's only two items in the list then there's no point swapping
         // them. Just set the list head to the candidate.
         if (candidate->next == subject) {
-            currentplayer->ptr_inventory_first_in_cycle = candidate;
+            g_CurrentPlayer->ptr_inventory_first_in_cycle = candidate;
         } else {
             // Swap subject with candidate
             subject->next = candidate->next;
@@ -83,8 +83,8 @@ void inv_sort_item(InvItem *subject) {
             candidate->prev->next = candidate;
 
             // Set new list head if subject was the head
-            if (subject == currentplayer->ptr_inventory_first_in_cycle) {
-                currentplayer->ptr_inventory_first_in_cycle = candidate;
+            if (subject == g_CurrentPlayer->ptr_inventory_first_in_cycle) {
+                g_CurrentPlayer->ptr_inventory_first_in_cycle = candidate;
             }
         }
 
@@ -94,10 +94,10 @@ void inv_sort_item(InvItem *subject) {
 
 void inv_insert_item(InvItem *item) {
   
-  if (currentplayer->ptr_inventory_first_in_cycle) {
+  if (g_CurrentPlayer->ptr_inventory_first_in_cycle) {
         
-        item->next = currentplayer->ptr_inventory_first_in_cycle;
-        item->prev = currentplayer->ptr_inventory_first_in_cycle->prev;
+        item->next = g_CurrentPlayer->ptr_inventory_first_in_cycle;
+        item->prev = g_CurrentPlayer->ptr_inventory_first_in_cycle->prev;
 
         item->next->prev = item;
         item->prev->next = item;
@@ -108,7 +108,7 @@ void inv_insert_item(InvItem *item) {
         item->prev = item;
     }
 
-    currentplayer->ptr_inventory_first_in_cycle = item;
+    g_CurrentPlayer->ptr_inventory_first_in_cycle = item;
     inv_sort_item(item);
     return;
 }
@@ -122,13 +122,13 @@ void inventory_remove_item(InvItem *item) {
     next = item->next;
     prev = item->prev;
 
-    if (item == currentplayer->ptr_inventory_first_in_cycle) {
+    if (item == g_CurrentPlayer->ptr_inventory_first_in_cycle) {
     
         if (item == item->next) {
-            currentplayer->ptr_inventory_first_in_cycle = NULL;
+            g_CurrentPlayer->ptr_inventory_first_in_cycle = NULL;
         }
         else {
-            currentplayer->ptr_inventory_first_in_cycle = item->next;
+            g_CurrentPlayer->ptr_inventory_first_in_cycle = item->next;
         }
     }
   
@@ -142,9 +142,9 @@ InvItem *get_ptr_next_available_weapon(void)
 {
     int i;
 
-    for (i = 0; i < currentplayer->equipmaxitems; i++) {
-        if (currentplayer->p_itemcur[i].type == -1) {
-            return &currentplayer->p_itemcur[i];
+    for (i = 0; i < g_CurrentPlayer->equipmaxitems; i++) {
+        if (g_CurrentPlayer->p_itemcur[i].type == -1) {
+            return &g_CurrentPlayer->p_itemcur[i];
         }
     }
 
@@ -153,17 +153,17 @@ InvItem *get_ptr_next_available_weapon(void)
 
 
 void set_BONDdata_allguns_flag(s32 all_guns) {
-    currentplayer->equipallguns = all_guns;
+    g_CurrentPlayer->equipallguns = all_guns;
 }
 
 s32 get_BONDdata_allguns_flag(void) {
-    return currentplayer->equipallguns;
+    return g_CurrentPlayer->equipallguns;
 }
 
 
 InvItem *get_inventory_item(ITEM_IDS weapon) {
 
-    InvItem *first = currentplayer->ptr_inventory_first_in_cycle;
+    InvItem *first = g_CurrentPlayer->ptr_inventory_first_in_cycle;
     InvItem *item = first;
 
     while (item) {
@@ -196,7 +196,7 @@ int is_item_in_inventory(ITEM_IDS item)
 
 InvItem *get_dual_weapon(ITEM_IDS right, ITEM_IDS left) {
 
-    InvItem *first = currentplayer->ptr_inventory_first_in_cycle;
+    InvItem *first = g_CurrentPlayer->ptr_inventory_first_in_cycle;
     InvItem *item = first;
 
     while (item) {
@@ -232,7 +232,7 @@ int is_dual_weapon_in_inventory(ITEM_IDS right, ITEM_IDS left)
 int check_if_item_available(ITEM_IDS weaponid)
 {    
 
-    if (((currentplayer->equipallguns) && (weaponid != ITEM_UNARMED) && (weaponid < ITEM_BOMBCASE)))
+    if (((g_CurrentPlayer->equipallguns) && (weaponid != ITEM_UNARMED) && (weaponid < ITEM_BOMBCASE)))
     {
 #ifndef VERSION_US
     if  ((!j_text_trigger || (weaponid != ITEM_KNIFE)))
@@ -250,7 +250,7 @@ int check_if_item_available(ITEM_IDS weaponid)
 int check_if_item_for_hand_available(ITEM_IDS right, ITEM_IDS left)
 {
 #ifdef VERSION_US
-    if (currentplayer->equipallguns &&
+    if (g_CurrentPlayer->equipallguns &&
         right < ITEM_BOMBCASE &&
         right == left &&
         getPlayerCount() == 1 &&
@@ -265,7 +265,7 @@ int check_if_item_for_hand_available(ITEM_IDS right, ITEM_IDS left)
     }
     else
     {
-        if (currentplayer->equipallguns &&
+        if (g_CurrentPlayer->equipallguns &&
             right < ITEM_BOMBCASE &&
             right == left &&
             getPlayerCount() == 1 &&
@@ -296,7 +296,7 @@ int add_item_to_inventory(ITEM_IDS item)
             inv_insert_item(nextItem);
         }
 
-        if ((currentplayer->equipallguns) && (item < ITEM_BOMBCASE))
+        if ((g_CurrentPlayer->equipallguns) && (item < ITEM_BOMBCASE))
         {
 #ifndef VERSION_US
         if  ((!j_text_trigger || (item != ITEM_KNIFE)))
@@ -336,8 +336,8 @@ int add_doubles_item_to_inventory(ITEM_IDS right, ITEM_IDS left)
 
 WeaponObjRecord *inventory_remove_prop_weapon_by_id(ITEM_IDS weaponnum)
 {
-    if (currentplayer->ptr_inventory_first_in_cycle) {
-        InvItem *item = currentplayer->ptr_inventory_first_in_cycle->next;
+    if (g_CurrentPlayer->ptr_inventory_first_in_cycle) {
+        InvItem *item = g_CurrentPlayer->ptr_inventory_first_in_cycle->next;
 
         while (TRUE) {
             InvItem *next = item->next;
@@ -359,7 +359,7 @@ WeaponObjRecord *inventory_remove_prop_weapon_by_id(ITEM_IDS weaponnum)
                 }
             }
 
-            if ((item == currentplayer->ptr_inventory_first_in_cycle) || (!currentplayer->ptr_inventory_first_in_cycle)) {   
+            if ((item == g_CurrentPlayer->ptr_inventory_first_in_cycle) || (!g_CurrentPlayer->ptr_inventory_first_in_cycle)) {   
                 break;
             }
 
@@ -372,8 +372,8 @@ WeaponObjRecord *inventory_remove_prop_weapon_by_id(ITEM_IDS weaponnum)
 
 void inventory_remove_item_by_id(ITEM_IDS weaponnum)
 {
-    if (currentplayer->ptr_inventory_first_in_cycle) {
-        InvItem *item = currentplayer->ptr_inventory_first_in_cycle->next;
+    if (g_CurrentPlayer->ptr_inventory_first_in_cycle) {
+        InvItem *item = g_CurrentPlayer->ptr_inventory_first_in_cycle->next;
 
         while (TRUE) {
             InvItem *next = item->next;
@@ -399,7 +399,7 @@ void inventory_remove_item_by_id(ITEM_IDS weaponnum)
                 }
             }
 
-            if ((item == currentplayer->ptr_inventory_first_in_cycle) || (!currentplayer->ptr_inventory_first_in_cycle)) {   
+            if ((item == g_CurrentPlayer->ptr_inventory_first_in_cycle) || (!g_CurrentPlayer->ptr_inventory_first_in_cycle)) {   
                 break;
             }
 
@@ -566,7 +566,7 @@ void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
 	s32 weapon1 = *nextright;
 	s32 weapon2 = *nextleft;
 
-    InvItem *item = currentplayer->ptr_inventory_first_in_cycle;
+    InvItem *item = g_CurrentPlayer->ptr_inventory_first_in_cycle;
         
     while (item) {
         if (item->type == INV_ITEM_WEAPON) {
@@ -590,7 +590,7 @@ void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
 
         item = item->next;
 
-        if (item == currentplayer->ptr_inventory_first_in_cycle) {
+        if (item == g_CurrentPlayer->ptr_inventory_first_in_cycle) {
             if (requireammo) {
                 break;
             }
@@ -600,7 +600,7 @@ void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
         }
     }
     
-	if (currentplayer->equipallguns) {
+	if (g_CurrentPlayer->equipallguns) {
         
         s32 candidate = *nextright;
 
@@ -653,9 +653,9 @@ void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
 	s32 weapon1 = *nextright;
 	s32 weapon2 = *nextleft;
 
-    if (currentplayer->ptr_inventory_first_in_cycle != NULL) {
+    if (g_CurrentPlayer->ptr_inventory_first_in_cycle != NULL) {
 
-        InvItem *item = currentplayer->ptr_inventory_first_in_cycle->prev;
+        InvItem *item = g_CurrentPlayer->ptr_inventory_first_in_cycle->prev;
             
         while (TRUE) {
             if (item->type == INV_ITEM_WEAPON) {
@@ -678,7 +678,7 @@ void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
                 }
             }
 
-            if (item == currentplayer->ptr_inventory_first_in_cycle) {
+            if (item == g_CurrentPlayer->ptr_inventory_first_in_cycle) {
                 if (requireammo) {
                     break;
                 }
@@ -691,7 +691,7 @@ void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
         }
     }
     
-	if (currentplayer->equipallguns) {
+	if (g_CurrentPlayer->equipallguns) {
         
         s32 candidate = *nextright;
 
@@ -761,7 +761,7 @@ void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo)
 s32 inv_has_key_flags(u32 wantkeyflags)
 {
     u32 heldkeyflags = 0;
-    InvItem *item = currentplayer->ptr_inventory_first_in_cycle;
+    InvItem *item = g_CurrentPlayer->ptr_inventory_first_in_cycle;
 
     while (item) {
         if (item->type == INV_ITEM_PROP) {
@@ -784,7 +784,7 @@ s32 inv_has_key_flags(u32 wantkeyflags)
 
         item = item->next;
 
-        if (item == currentplayer->ptr_inventory_first_in_cycle) {
+        if (item == g_CurrentPlayer->ptr_inventory_first_in_cycle) {
             break;
         }
     }
@@ -800,7 +800,7 @@ s32 checkHasGEKey(void)
     PropRecord *prop;
     ObjectRecord *obj;
     
-    item = currentplayer->ptr_inventory_first_in_cycle;
+    item = g_CurrentPlayer->ptr_inventory_first_in_cycle;
 
     while (item) {
 
@@ -820,7 +820,7 @@ s32 checkHasGEKey(void)
 
         item = item->next;
 
-        if (item == currentplayer->ptr_inventory_first_in_cycle) {
+        if (item == g_CurrentPlayer->ptr_inventory_first_in_cycle) {
             break;
         }
     }
@@ -834,7 +834,7 @@ s32 checkHasGEKey(void)
  */
 int bondinvIsAliveWithFlag(void)
 {
-    if (!currentplayer->bonddead) {
+    if (!g_CurrentPlayer->bonddead) {
         return is_item_in_inventory(ITEM_TOKEN);
     }
 
@@ -853,7 +853,7 @@ int checkforgoldengun(void)
 
 int is_prop_in_inventory(PropRecord *prop) {
 
-    InvItem *item = currentplayer->ptr_inventory_first_in_cycle;
+    InvItem *item = g_CurrentPlayer->ptr_inventory_first_in_cycle;
 
     while (item) {
 
@@ -863,7 +863,7 @@ int is_prop_in_inventory(PropRecord *prop) {
 
         item = item->next;
 
-        if (item == currentplayer->ptr_inventory_first_in_cycle) {
+        if (item == g_CurrentPlayer->ptr_inventory_first_in_cycle) {
             break;
         }
     }
@@ -878,7 +878,7 @@ s32 count_total_items_in_inventory(void) {
     InvItem *item;
     s32 numitems = 0;
 
-    if (currentplayer->equipallguns) {
+    if (g_CurrentPlayer->equipallguns) {
         #ifndef VERSION_US
             numitems = (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS);
         #else
@@ -886,7 +886,7 @@ s32 count_total_items_in_inventory(void) {
         #endif
     }
 
-    item = currentplayer->ptr_inventory_first_in_cycle;
+    item = g_CurrentPlayer->ptr_inventory_first_in_cycle;
 
     while (item) {
       
@@ -911,14 +911,14 @@ s32 count_total_items_in_inventory(void) {
 
         } else if (item->type == INV_ITEM_WEAPON) { 
             
-            if ((currentplayer->equipallguns == FALSE) || (item->type_inv_item.type_weap.weapon > ITEM_TANKSHELLS)) {
+            if ((g_CurrentPlayer->equipallguns == FALSE) || (item->type_inv_item.type_weap.weapon > ITEM_TANKSHELLS)) {
                 numitems = numitems + 1;
             }
         }
 
         item = item->next;
 
-        if (item == currentplayer->ptr_inventory_first_in_cycle) {
+        if (item == g_CurrentPlayer->ptr_inventory_first_in_cycle) {
             break;
         }
     }
@@ -934,7 +934,7 @@ InvItem *inv_get_item_by_index(s32 index)
 {
     InvItem *item;
 
-    if (currentplayer->equipallguns) {
+    if (g_CurrentPlayer->equipallguns) {
 
 #ifndef VERSION_US
         if (index < (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS)) {
@@ -951,7 +951,7 @@ InvItem *inv_get_item_by_index(s32 index)
 #endif
     }
 
-    item = currentplayer->ptr_inventory_first_in_cycle;
+    item = g_CurrentPlayer->ptr_inventory_first_in_cycle;
 
     while (item) {
         
@@ -982,7 +982,7 @@ InvItem *inv_get_item_by_index(s32 index)
             
         } else if (item->type == INV_ITEM_WEAPON) {
 
-            if ((currentplayer->equipallguns == FALSE) || ( item->type_inv_item.type_weap.weapon > ITEM_TANKSHELLS)) {
+            if ((g_CurrentPlayer->equipallguns == FALSE) || ( item->type_inv_item.type_weap.weapon > ITEM_TANKSHELLS)) {
                 if (index == 0) {
                     return item;
                 }
@@ -992,7 +992,7 @@ InvItem *inv_get_item_by_index(s32 index)
 
         item = item->next;
 
-        if (item == currentplayer->ptr_inventory_first_in_cycle) {
+        if (item == g_CurrentPlayer->ptr_inventory_first_in_cycle) {
             break;
         }
     }
@@ -1008,7 +1008,7 @@ InvItem *inv_get_item_by_index(s32 index)
 
 textoverride *get_textoverride_by_obj(ObjectRecord *obj) {
     
-    textoverride *override = currentplayer->textoverrides;
+    textoverride *override = g_CurrentPlayer->textoverrides;
 
     while (override) {
       
@@ -1024,7 +1024,7 @@ textoverride *get_textoverride_by_obj(ObjectRecord *obj) {
 
 textoverride *get_textoverride_by_weaponum(ITEM_IDS weaponnum) {
     
-    textoverride *override = currentplayer->textoverrides;
+    textoverride *override = g_CurrentPlayer->textoverrides;
 
     while (override) {
       
@@ -1064,7 +1064,7 @@ s32 get_weaponnum_by_inv_index(s32 index) {
 
     } else { 
     
-        if (currentplayer->equipallguns) {
+        if (g_CurrentPlayer->equipallguns) {
 #ifndef VERSION_US
             if (index < (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS))
             {
@@ -1121,7 +1121,7 @@ u16 *inv_get_name_by_index(s32 index) {
 
     } else { 
     
-        if (currentplayer->equipallguns) {
+        if (g_CurrentPlayer->equipallguns) {
 #ifndef VERSION_US
             if (index < (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS))
             {
@@ -1184,7 +1184,7 @@ u16 *inv_get_long_name_by_index(s32 index) {
 
     } else { 
     
-        if (currentplayer->equipallguns) {
+        if (g_CurrentPlayer->equipallguns) {
 #ifndef VERSION_US
             if (index < (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS))
             {
@@ -1273,7 +1273,7 @@ u16 *inv_get_first_title_name_by_index(s32 index) {
 
     } else { 
     
-        if (currentplayer->equipallguns) {
+        if (g_CurrentPlayer->equipallguns) {
 #ifndef VERSION_US
             if (index < (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS))
             {
@@ -1333,7 +1333,7 @@ u16 *inv_get_second_title_name_by_index(s32 index) {
 
     } else { 
     
-        if (currentplayer->equipallguns) {
+        if (g_CurrentPlayer->equipallguns) {
 #ifndef VERSION_US
             if (index < (j_text_trigger ? ITEM_TASER : ITEM_TANKSHELLS))
             {
@@ -1403,17 +1403,17 @@ int sub_GAME_7F08D878(int index) {
 
 
 void sub_GAME_7F08D8A0(textoverride *override) {
-  override->next = currentplayer->textoverrides;
-  currentplayer->textoverrides = override;
+  override->next = g_CurrentPlayer->textoverrides;
+  g_CurrentPlayer->textoverrides = override;
 }
 
 int get_BONDdata_equipcuritem(void) {
-  return currentplayer->equipcuritem;
+  return g_CurrentPlayer->equipcuritem;
 }
 
 
 void set_BONDdata_equipcuritem(int current_item) {
-    currentplayer->equipcuritem = current_item;
+    g_CurrentPlayer->equipcuritem = current_item;
 }
 
 void calculate_equip_cur_item(void) {
@@ -1422,12 +1422,12 @@ void calculate_equip_cur_item(void) {
 
     current_weapon = get_item_in_hand(RIGHT_HAND);
     
-    currentplayer->equipcuritem = 0;
+    g_CurrentPlayer->equipcuritem = 0;
 
     for (i=0; i < count_total_items_in_inventory(); i++) {
         
         if (get_weaponnum_by_inv_index(i) == current_weapon) {
-            currentplayer->equipcuritem = i;
+            g_CurrentPlayer->equipcuritem = i;
             return;
         }
 
@@ -1476,12 +1476,12 @@ void increment_held_time(s32 weapon1, s32 weapon2)
     }
 
     for (i = 0; i < 10; i++) {
-        s32 time = currentplayer->gunheldarr[i].totaltime;
+        s32 time = g_CurrentPlayer->gunheldarr[i].totaltime;
 
         if (time >= 0) {
-            if (weapon1 == currentplayer->gunheldarr[i].weapon1 &&
-                    weapon2 == currentplayer->gunheldarr[i].weapon2) {
-                currentplayer->gunheldarr[i].totaltime = time + g_ClockTimer;
+            if (weapon1 == g_CurrentPlayer->gunheldarr[i].weapon1 &&
+                    weapon2 == g_CurrentPlayer->gunheldarr[i].weapon2) {
+                g_CurrentPlayer->gunheldarr[i].totaltime = time + g_ClockTimer;
                 break;
             }
 
@@ -1497,9 +1497,9 @@ void increment_held_time(s32 weapon1, s32 weapon2)
     }
 
     if (i == 10) {
-        currentplayer->gunheldarr[leastusedindex].totaltime = g_ClockTimer;
-        currentplayer->gunheldarr[leastusedindex].weapon1 = weapon1;
-        currentplayer->gunheldarr[leastusedindex].weapon2 = weapon2;
+        g_CurrentPlayer->gunheldarr[leastusedindex].totaltime = g_ClockTimer;
+        g_CurrentPlayer->gunheldarr[leastusedindex].weapon1 = weapon1;
+        g_CurrentPlayer->gunheldarr[leastusedindex].weapon2 = weapon2;
     }
 }
 
@@ -1513,11 +1513,11 @@ s32 get_weapon_of_choice(s32 *weapon1, s32 *weapon2)
 
     for (i = 0; i < 10; i++) {
 
-        if (currentplayer->gunheldarr[i].totaltime >= 0
-                && currentplayer->gunheldarr[i].totaltime > mosttime) {
-            mosttime = currentplayer->gunheldarr[i].totaltime;
-            *weapon1 = currentplayer->gunheldarr[i].weapon1;
-            *weapon2 = currentplayer->gunheldarr[i].weapon2;
+        if (g_CurrentPlayer->gunheldarr[i].totaltime >= 0
+                && g_CurrentPlayer->gunheldarr[i].totaltime > mosttime) {
+            mosttime = g_CurrentPlayer->gunheldarr[i].totaltime;
+            *weapon1 = g_CurrentPlayer->gunheldarr[i].weapon1;
+            *weapon2 = g_CurrentPlayer->gunheldarr[i].weapon2;
         }
     }
 }

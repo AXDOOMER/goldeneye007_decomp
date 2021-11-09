@@ -90,15 +90,17 @@ struct player_data {
     int killed_civilians;
 };
 
-extern struct player *players[4];
+extern struct player *g_playerPointers[4];
 
-extern struct player_data player1_player_data;
-extern struct player_data player2_player_data;
-extern struct player_data player3_player_data;
-extern struct player_data player4_player_data;
+// extern struct player_data player1_player_data;
+// extern struct player_data player2_player_data;
+// extern struct player_data player3_player_data;
+// extern struct player_data player4_player_data;
 
-extern struct player *currentplayer;
-extern struct player_data *pPlayersPerm;
+extern struct player_data g_playerPlayerData[4];
+
+extern struct player *g_CurrentPlayer;
+extern struct player_data *g_playerPerm;
 extern s32 player_num;
 extern s32 random_byte;
 extern PLAYER_ID array_PLAYER_IDs[4];
@@ -113,5 +115,6 @@ s32 getPlayerCount(void);
 void set_cur_player_screen_size(u32 width, u32 height);
 void set_cur_player_viewport_size(u32 ulx, u32 uly);
 void store_stagenum_to_copyof_stagenum(s32 stagenum);
+void sub_GAME_7F094438(void);
 
 #endif

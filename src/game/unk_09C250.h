@@ -8,5 +8,7 @@ extern s32 numExplosionEntries;
 extern f32 D_80040178;
 extern char dword_CODE_bss_8007A100[];
 
+void sub_GAME_7F09FD3C(void);
+
 
 #endif

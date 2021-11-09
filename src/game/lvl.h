@@ -28,7 +28,16 @@ struct ramrom_struct {
     u32 locked;
 };
 
+struct LvlMpUnknown {
+    u8 unk_0;
+    u8 unk_1;
+    u8 unk_2;
+    u8 unk_3;
+};
+
 extern s32 D_800483C4;
+extern struct LvlMpUnknown *D_800483C8;
+
 extern s32 g_ClockTimer;
 extern s32 g_GlobalTimer;
 extern f32 g_GlobalTimerDelta;
@@ -48,10 +57,12 @@ void manage_mp_game(void);
 void sub_GAME_7F0BF800(void);
 void unload_stage_text_data(void);
 DIFFICULTY get_current_difficulty(void);
-void stage_load(s32 arg0);
+void stage_load(s32 stage);
 
 void set_mp_time(s32 arg0);
 void set_mp_point(s32 arg0);
 void set_controls_locked_flag(s32 arg0);
+s32 get_controls_locked_flag(void);
+void setDamageMultipliersForDifficulty(void);
 
 #endif

@@ -259,8 +259,8 @@ glabel cheatButton_7F09177C
 .L7F0917D8:
 /* 0C6308 7F0917D8 3C0E8004 */  lui   $t6, %hi(D_8003F80C)
 /* 0C630C 7F0917DC 91CEF80C */  lbu   $t6, %lo(D_8003F80C)($t6)
-/* 0C6310 7F0917E0 3C128008 */  lui   $s2, %hi(currentplayer)
-/* 0C6314 7F0917E4 2652A0B0 */  addiu $s2, %lo(currentplayer) # addiu $s2, $s2, -0x5f50
+/* 0C6310 7F0917E0 3C128008 */  lui   $s2, %hi(g_CurrentPlayer)
+/* 0C6314 7F0917E4 2652A0B0 */  addiu $s2, %lo(g_CurrentPlayer) # addiu $s2, $s2, -0x5f50
 /* 0C6318 7F0917E8 11C0004C */  beqz  $t6, .L7F09191C
 /* 0C631C 7F0917EC 24100014 */   li    $s0, 20
 /* 0C6320 7F0917F0 92250001 */  lbu   $a1, 1($s1)
@@ -412,8 +412,8 @@ glabel cheat_buttons_mp_related
 /* 0C64FC 7F0919CC 24010001 */  li    $at, 1
 /* 0C6500 7F0919D0 14410018 */  bne   $v0, $at, .L7F091A34
 /* 0C6504 7F0919D4 8FA70018 */   lw    $a3, 0x18($sp)
-/* 0C6508 7F0919D8 3C048008 */  lui   $a0, %hi(currentplayer)
-/* 0C650C 7F0919DC 2484A0B0 */  addiu $a0, %lo(currentplayer) # addiu $a0, $a0, -0x5f50
+/* 0C6508 7F0919D8 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
+/* 0C650C 7F0919DC 2484A0B0 */  addiu $a0, %lo(g_CurrentPlayer) # addiu $a0, $a0, -0x5f50
 /* 0C6510 7F0919E0 8C820000 */  lw    $v0, ($a0)
 /* 0C6514 7F0919E4 97AB0024 */  lhu   $t3, 0x24($sp)
 /* 0C6518 7F0919E8 24010014 */  li    $at, 20
@@ -436,8 +436,8 @@ glabel cheat_buttons_mp_related
 /* 0C655C 7F091A2C 10000005 */  b     .L7F091A44
 /* 0C6560 7F091A30 A04912B5 */   sb    $t1, 0x12b5($v0)
 .L7F091A34:
-/* 0C6564 7F091A34 3C048008 */  lui   $a0, %hi(currentplayer)
-/* 0C6568 7F091A38 2484A0B0 */  addiu $a0, %lo(currentplayer) # addiu $a0, $a0, -0x5f50
+/* 0C6564 7F091A34 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
+/* 0C6568 7F091A38 2484A0B0 */  addiu $a0, %lo(g_CurrentPlayer) # addiu $a0, $a0, -0x5f50
 /* 0C656C 7F091A3C 8C8A0000 */  lw    $t2, ($a0)
 /* 0C6570 7F091A40 A14012B5 */  sb    $zero, 0x12b5($t2)
 .L7F091A44:
@@ -455,9 +455,9 @@ glabel cheat_buttons_mp_related
 
 
 
-u32 is_cheat_index_equal_to_1C(u32 cheatindex)
+u32 cheatIsEnemyRockets(u32 cheatindex)
 {
-    if (cheatindex == CHEAT_1C) {
+    if (cheatindex == CHEAT_ENEMY_ROCKETS) {
         return 1;
     }
     return 0;
@@ -682,19 +682,19 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
     set_linemode_flag(1);
     break;
   case CHEAT_2X_HEALTH:
-    if ((currentplayer->actual_health == 1.00000000) || (currentplayer->bondhealth < 1.00000000))
+    if ((g_CurrentPlayer->actual_health == 1.00000000) || (g_CurrentPlayer->bondhealth < 1.00000000))
     {
       display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x12)))); //super 2x health
-      currentplayer->bondhealth = 1.00000000;
-      currentplayer->actual_health = 2.00000000;
+      g_CurrentPlayer->bondhealth = 1.00000000;
+      g_CurrentPlayer->actual_health = 2.00000000;
     }
     break;
   case CHEAT_2X_ARMOR:
-    if ((currentplayer->actual_armor == 1.00000000) || (currentplayer->bondarmour < 1.00000000))
+    if ((g_CurrentPlayer->actual_armor == 1.00000000) || (g_CurrentPlayer->bondarmour < 1.00000000))
     {
       display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x13))); //super x2 armor
-      currentplayer->bondarmour = 1.00000000;
-      currentplayer->actual_armor = 2.00000000;
+      g_CurrentPlayer->bondarmour = 1.00000000;
+      g_CurrentPlayer->actual_armor = 2.00000000;
     }
     break;
   case CHEAT_INVISIBILITY:
@@ -724,13 +724,13 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
     }
     break;
   case cheats_cheat_tiny_bond:
-    if ((numplayers == PLAYER2) && (pPlayersPerm->player_perspective_height == 1.00000000))
+    if ((numplayers == PLAYER2) && (g_playerPerm->player_perspective_height == 1.00000000))
     {
       display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x19))); //tiny bond on
-      pPlayersPerm->player_perspective_height = 0.50000000;
-      if (currentplayer->ptr_char_objectinstance != 0)
+      g_playerPerm->player_perspective_height = 0.50000000;
+      if (g_CurrentPlayer->ptr_char_objectinstance != 0)
       {
-        set_obj_instance_controller_scale(currentplayer->ptr_char_objectinstance,scale);
+        set_obj_instance_controller_scale(g_CurrentPlayer->ptr_char_objectinstance,scale);
       }
     }
     break;
@@ -738,11 +738,11 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
     display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x1A))); //paintball mod on
     break;
   case cheats_cheat_10x_health:
-    if ((currentplayer->actual_health == 1.00000000) || (currentplayer->bondhealth < 1.00000000))
+    if ((g_CurrentPlayer->actual_health == 1.00000000) || (g_CurrentPlayer->bondhealth < 1.00000000))
     {
       display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x1B)));
-      currentplayer->bondhealth = 1.00000000;
-      currentplayer->actual_health = 10.00000000;
+      g_CurrentPlayer->bondhealth = 1.00000000;
+      g_CurrentPlayer->actual_health = 10.00000000;
     }
     break;
   case cheats_cheat_magnum:
@@ -781,7 +781,7 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
   case CHEAT_INVISIBILITY_mp:
     currentPlayerStartChrFade(300.00000000, 0.5f);
     break;
-  case CHEAT_FAST:
+  case CHEAT_TURBO_MODE:
     if (get_debug_fast_bond_flag() == FALSE)
     {
       display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x1D))); //fast mode on
@@ -794,55 +794,55 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
       set_debug_testingmanpos_flag(TRUE);
     }
     break;
-  case CHEAT_DEBUG_FAST_ANI:
+  case CHEAT_FAST_ANIMATION:
     if (get_animation_rate() < 4.00000000)
     {
       display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x34))); //fast motion
       animation_speed_related(4.00000000);
     }
     break;
-  case CHEAT_DEBUG_SLOW_ANI:
+  case CHEAT_SLOW_ANIMATION:
     if (0.25000000 < get_animation_rate())
     {
       display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x32))); //slow motion
       animation_speed_related(0.25000000);
     }
     break;
-  case CHEAT_DEBUG_2X_ROCKETS:
+  case CHEAT_2X_ROCKET_LAUNCHER:
     if (numplayers == PLAYER2)
     {
       add_doubles_item_to_inventory(ITEM_ROCKETLAUNCH, ITEM_ROCKETLAUNCH);
       give_cur_player_ammo(AMMO_ROCKETS, get_max_ammo_for_type(AMMO_ROCKETS));
     }
     break;
-  case CHEAT_DEBUG_2X_GRENADE_LAUNCHER:
+  case CHEAT_2X_GRENADE_LAUNCHER:
     if (numplayers == PLAYER2)
     {
       add_doubles_item_to_inventory(ITEM_GRENADELAUNCH, ITEM_GRENADELAUNCH);
       give_cur_player_ammo(AMMO_GRENADEROUND, get_max_ammo_for_type(AMMO_GRENADEROUND));
     }
     break;
-  case CHEAT_DEBUG_2X_RCP90:
+  case CHEAT_2X_RCP90:
     if (numplayers == PLAYER2)
     {
       add_doubles_item_to_inventory(ITEM_FNP90, ITEM_FNP90);
       give_cur_player_ammo(AMMO_9MM, get_max_ammo_for_type(AMMO_9MM));
     }
     break;
-  case CHEAT_DEBUG_2X_THROWING_KNIFE:
+  case CHEAT_2X_THROWING_KNIFE:
     if (numplayers == PLAYER2)
     {
       add_doubles_item_to_inventory(ITEM_THROWKNIFE, ITEM_THROWKNIFE);
       give_cur_player_ammo(AMMO_KNIFE, get_max_ammo_for_type(AMMO_KNIFE));
     }
     break;
-  case CHEAT_DEBUG_2X_HUNTING_KNIFE:
+  case CHEAT_2X_HUNTING_KNIFE:
     if (numplayers == PLAYER2)
     {
       add_doubles_item_to_inventory(ITEM_KNIFE, ITEM_KNIFE);
     }
     break;
-  case CHEAT_DEBUG_2X_LASER:
+  case CHEAT_2X_LASER:
     if (numplayers == PLAYER2)
     {
       add_doubles_item_to_inventory(ITEM_LASER, ITEM_LASER);
@@ -869,7 +869,7 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
   case UNUSED_35:
   case CHEAT_UNLOCK_CHEATS:
     if ((-1 < selected_folder_num) && (selected_folder_num < 4)) {
-      proc_7F01E760(selected_folder_num,cheat + ~CHEAT_DEBUG_2X_LASER);
+      proc_7F01E760(selected_folder_num,cheat + ~CHEAT_2X_LASER);
       sndPlaySfx(g_musicSfxBufferPtr,CAMERA_BEEP1_SFX,(ALSndPlayer *)0x0);
     }
     break;
@@ -943,17 +943,17 @@ glabel jpt_cheats_cheat
 .word cheats_cheat_goldpp7
 .word CHEAT_INVISIBILITY_mp
 .word cheats_debug_return_saved_ra
-.word CHEAT_FAST
+.word CHEAT_TURBO_MODE
 .word CHEAT_DEBUG_POS
-.word CHEAT_DEBUG_FAST_ANI
-.word CHEAT_DEBUG_SLOW_ANI
+.word CHEAT_FAST_ANIMATION
+.word CHEAT_SLOW_ANIMATION
 .word cheats_debug_return_saved_ra
-.word CHEAT_DEBUG_2X_ROCKETS
-.word CHEAT_DEBUG_2X_GRENADE_LAUNCHER
-.word CHEAT_DEBUG_2X_RCP90
-.word CHEAT_DEBUG_2X_THROWING_KNIFE
-.word CHEAT_DEBUG_2X_HUNTING_KNIFE
-.word CHEAT_DEBUG_2X_LASER
+.word CHEAT_2X_ROCKET_LAUNCHER
+.word CHEAT_2X_GRENADE_LAUNCHER
+.word CHEAT_2X_RCP90
+.word CHEAT_2X_THROWING_KNIFE
+.word CHEAT_2X_HUNTING_KNIFE
+.word CHEAT_2X_LASER
 .word cheats_debug_unlockcheat
 .word cheats_debug_unlockcheat
 .word cheats_debug_unlockcheat
@@ -1129,8 +1129,8 @@ cheats_cheat_linemode:
 /* 0C6860 7F091D30 100001BE */  b     .L7F09242C
 /* 0C6864 7F091D34 8FBF0014 */   lw    $ra, 0x14($sp)
 CHEAT_2X_HEALTH:
-/* 0C6868 7F091D38 3C028008 */  lui   $v0, %hi(currentplayer)
-/* 0C686C 7F091D3C 8C42A0B0 */  lw    $v0, %lo(currentplayer)($v0)
+/* 0C6868 7F091D38 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
+/* 0C686C 7F091D3C 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
 /* 0C6870 7F091D40 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0C6874 7F091D44 44812000 */  mtc1  $at, $f4
 /* 0C6878 7F091D48 C4462A3C */  lwc1  $f6, 0x2a3c($v0)
@@ -1152,19 +1152,19 @@ CHEAT_2X_HEALTH:
 /* 0C68B4 7F091D84 0FC228F2 */  jal   display_string_in_lower_left_corner
 /* 0C68B8 7F091D88 00402025 */   move  $a0, $v0
 /* 0C68BC 7F091D8C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0C68C0 7F091D90 3C0F8008 */  lui   $t7, %hi(currentplayer)
-/* 0C68C4 7F091D94 8DEFA0B0 */  lw    $t7, %lo(currentplayer)($t7)
+/* 0C68C0 7F091D90 3C0F8008 */  lui   $t7, %hi(g_CurrentPlayer)
+/* 0C68C4 7F091D94 8DEFA0B0 */  lw    $t7, %lo(g_CurrentPlayer)($t7)
 /* 0C68C8 7F091D98 44818000 */  mtc1  $at, $f16
 /* 0C68CC 7F091D9C 3C014000 */  li    $at, 0x40000000 # 2.000000
-/* 0C68D0 7F091DA0 3C188008 */  lui   $t8, %hi(currentplayer)
+/* 0C68D0 7F091DA0 3C188008 */  lui   $t8, %hi(g_CurrentPlayer)
 /* 0C68D4 7F091DA4 E5F000DC */  swc1  $f16, 0xdc($t7)
-/* 0C68D8 7F091DA8 8F18A0B0 */  lw    $t8, %lo(currentplayer)($t8)
+/* 0C68D8 7F091DA8 8F18A0B0 */  lw    $t8, %lo(g_CurrentPlayer)($t8)
 /* 0C68DC 7F091DAC 44819000 */  mtc1  $at, $f18
 /* 0C68E0 7F091DB0 1000019D */  b     .L7F092428
 /* 0C68E4 7F091DB4 E7122A3C */   swc1  $f18, 0x2a3c($t8)
 CHEAT_2X_ARMOR:
-/* 0C68E8 7F091DB8 3C028008 */  lui   $v0, %hi(currentplayer)
-/* 0C68EC 7F091DBC 8C42A0B0 */  lw    $v0, %lo(currentplayer)($v0)
+/* 0C68E8 7F091DB8 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
+/* 0C68EC 7F091DBC 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
 /* 0C68F0 7F091DC0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0C68F4 7F091DC4 44810000 */  mtc1  $at, $f0
 /* 0C68F8 7F091DC8 C4442A40 */  lwc1  $f4, 0x2a40($v0)
@@ -1182,8 +1182,8 @@ CHEAT_2X_ARMOR:
 /* 0C6924 7F091DF4 3404B013 */   li    $a0, 45075
 /* 0C6928 7F091DF8 0FC228F2 */  jal   display_string_in_lower_left_corner
 /* 0C692C 7F091DFC 00402025 */   move  $a0, $v0
-/* 0C6930 7F091E00 3C028008 */  lui   $v0, %hi(currentplayer)
-/* 0C6934 7F091E04 2442A0B0 */  addiu $v0, %lo(currentplayer) # addiu $v0, $v0, -0x5f50
+/* 0C6930 7F091E00 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
+/* 0C6934 7F091E04 2442A0B0 */  addiu $v0, %lo(g_CurrentPlayer) # addiu $v0, $v0, -0x5f50
 /* 0C6938 7F091E08 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0C693C 7F091E0C 44814000 */  mtc1  $at, $f8
 /* 0C6940 7F091E10 8C590000 */  lw    $t9, ($v0)
@@ -1276,8 +1276,8 @@ cheats_cheat_extra_weapons:
 cheats_cheat_tiny_bond:
 /* 0C6A8C 7F091F5C 24010001 */  li    $at, 1
 /* 0C6A90 7F091F60 14410131 */  bne   $v0, $at, .L7F092428
-/* 0C6A94 7F091F64 3C0B8008 */   lui   $t3, %hi(pPlayersPerm)
-/* 0C6A98 7F091F68 8D6BA0B4 */  lw    $t3, %lo(pPlayersPerm)($t3)
+/* 0C6A94 7F091F64 3C0B8008 */   lui   $t3, %hi(g_playerPerm)
+/* 0C6A98 7F091F68 8D6BA0B4 */  lw    $t3, %lo(g_playerPerm)($t3)
 /* 0C6A9C 7F091F6C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0C6AA0 7F091F70 44818000 */  mtc1  $at, $f16
 /* 0C6AA4 7F091F74 C5720064 */  lwc1  $f18, 0x64($t3)
@@ -1290,12 +1290,12 @@ cheats_cheat_tiny_bond:
 /* 0C6AC0 7F091F90 0FC228F2 */  jal   display_string_in_lower_left_corner
 /* 0C6AC4 7F091F94 00402025 */   move  $a0, $v0
 /* 0C6AC8 7F091F98 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0C6ACC 7F091F9C 3C0A8008 */  lui   $t2, %hi(pPlayersPerm)
+/* 0C6ACC 7F091F9C 3C0A8008 */  lui   $t2, %hi(g_playerPerm)
 /* 0C6AD0 7F091FA0 44810000 */  mtc1  $at, $f0
-/* 0C6AD4 7F091FA4 8D4AA0B4 */  lw    $t2, %lo(pPlayersPerm)($t2)
-/* 0C6AD8 7F091FA8 3C0C8008 */  lui   $t4, %hi(currentplayer)
+/* 0C6AD4 7F091FA4 8D4AA0B4 */  lw    $t2, %lo(g_playerPerm)($t2)
+/* 0C6AD8 7F091FA8 3C0C8008 */  lui   $t4, %hi(g_CurrentPlayer)
 /* 0C6ADC 7F091FAC E5400064 */  swc1  $f0, 0x64($t2)
-/* 0C6AE0 7F091FB0 8D8CA0B0 */  lw    $t4, %lo(currentplayer)($t4)
+/* 0C6AE0 7F091FB0 8D8CA0B0 */  lw    $t4, %lo(g_CurrentPlayer)($t4)
 /* 0C6AE4 7F091FB4 8D8400D4 */  lw    $a0, 0xd4($t4)
 /* 0C6AE8 7F091FB8 5080011C */  beql  $a0, $zero, .L7F09242C
 /* 0C6AEC 7F091FBC 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -1314,8 +1314,8 @@ cheats_cheat_paintball:
 /* 0C6B1C 7F091FEC 1000010F */  b     .L7F09242C
 /* 0C6B20 7F091FF0 8FBF0014 */   lw    $ra, 0x14($sp)
 cheats_cheat_10x_health:
-/* 0C6B24 7F091FF4 3C028008 */  lui   $v0, %hi(currentplayer)
-/* 0C6B28 7F091FF8 8C42A0B0 */  lw    $v0, %lo(currentplayer)($v0)
+/* 0C6B24 7F091FF4 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
+/* 0C6B28 7F091FF8 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
 /* 0C6B2C 7F091FFC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0C6B30 7F092000 44810000 */  mtc1  $at, $f0
 /* 0C6B34 7F092004 C4482A3C */  lwc1  $f8, 0x2a3c($v0)
@@ -1333,8 +1333,8 @@ cheats_cheat_10x_health:
 /* 0C6B60 7F092030 3404B01B */   li    $a0, 45083
 /* 0C6B64 7F092034 0FC228F2 */  jal   display_string_in_lower_left_corner
 /* 0C6B68 7F092038 00402025 */   move  $a0, $v0
-/* 0C6B6C 7F09203C 3C028008 */  lui   $v0, %hi(currentplayer)
-/* 0C6B70 7F092040 2442A0B0 */  addiu $v0, %lo(currentplayer) # addiu $v0, $v0, -0x5f50
+/* 0C6B6C 7F09203C 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
+/* 0C6B70 7F092040 2442A0B0 */  addiu $v0, %lo(g_CurrentPlayer) # addiu $v0, $v0, -0x5f50
 /* 0C6B74 7F092044 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0C6B78 7F092048 44818000 */  mtc1  $at, $f16
 /* 0C6B7C 7F09204C 8C4D0000 */  lw    $t5, ($v0)
@@ -1412,7 +1412,7 @@ CHEAT_INVISIBILITY_mp:
 /* 0C6C84 7F092154 C42E73D8 */   lwc1  $f14, %lo(finalamount)($at)
 /* 0C6C88 7F092158 100000B4 */  b     .L7F09242C
 /* 0C6C8C 7F09215C 8FBF0014 */   lw    $ra, 0x14($sp)
-CHEAT_FAST:
+CHEAT_TURBO_MODE:
 /* 0C6C90 7F092160 0FC24406 */  jal   get_debug_fast_bond_flag
 /* 0C6C94 7F092164 00000000 */   nop
 /* 0C6C98 7F092168 544000B0 */  bnezl $v0, .L7F09242C
@@ -1434,7 +1434,7 @@ CHEAT_DEBUG_POS:
 /* 0C6CD4 7F0921A4 24040001 */   li    $a0, 1
 /* 0C6CD8 7F0921A8 100000A0 */  b     .L7F09242C
 /* 0C6CDC 7F0921AC 8FBF0014 */   lw    $ra, 0x14($sp)
-CHEAT_DEBUG_FAST_ANI:
+CHEAT_FAST_ANIMATION:
 /* 0C6CE0 7F0921B0 0FC08179 */  jal   get_animation_rate
 /* 0C6CE4 7F0921B4 00000000 */   nop
 /* 0C6CE8 7F0921B8 3C014080 */  li    $at, 0x40800000 # 4.000000
@@ -1454,7 +1454,7 @@ CHEAT_DEBUG_FAST_ANI:
 /* 0C6D20 7F0921F0 00000000 */   nop
 /* 0C6D24 7F0921F4 1000008D */  b     .L7F09242C
 /* 0C6D28 7F0921F8 8FBF0014 */   lw    $ra, 0x14($sp)
-CHEAT_DEBUG_SLOW_ANI:
+CHEAT_SLOW_ANIMATION:
 /* 0C6D2C 7F0921FC 0FC08179 */  jal   get_animation_rate
 /* 0C6D30 7F092200 00000000 */   nop
 /* 0C6D34 7F092204 3C013E80 */  li    $at, 0x3E800000 # 0.250000
@@ -1474,7 +1474,7 @@ CHEAT_DEBUG_SLOW_ANI:
 /* 0C6D6C 7F09223C 00000000 */   nop
 /* 0C6D70 7F092240 1000007A */  b     .L7F09242C
 /* 0C6D74 7F092244 8FBF0014 */   lw    $ra, 0x14($sp)
-CHEAT_DEBUG_2X_ROCKETS:
+CHEAT_2X_ROCKET_LAUNCHER:
 /* 0C6D78 7F092248 24010001 */  li    $at, 1
 /* 0C6D7C 7F09224C 14410076 */  bne   $v0, $at, .L7F092428
 /* 0C6D80 7F092250 24040019 */   li    $a0, 25
@@ -1487,7 +1487,7 @@ CHEAT_DEBUG_2X_ROCKETS:
 /* 0C6D9C 7F09226C 00402825 */   move  $a1, $v0
 /* 0C6DA0 7F092270 1000006E */  b     .L7F09242C
 /* 0C6DA4 7F092274 8FBF0014 */   lw    $ra, 0x14($sp)
-CHEAT_DEBUG_2X_GRENADE_LAUNCHER:
+CHEAT_2X_GRENADE_LAUNCHER:
 /* 0C6DA8 7F092278 24010001 */  li    $at, 1
 /* 0C6DAC 7F09227C 1441006A */  bne   $v0, $at, .L7F092428
 /* 0C6DB0 7F092280 24040018 */   li    $a0, 24
@@ -1500,7 +1500,7 @@ CHEAT_DEBUG_2X_GRENADE_LAUNCHER:
 /* 0C6DCC 7F09229C 00402825 */   move  $a1, $v0
 /* 0C6DD0 7F0922A0 10000062 */  b     .L7F09242C
 /* 0C6DD4 7F0922A4 8FBF0014 */   lw    $ra, 0x14($sp)
-CHEAT_DEBUG_2X_RCP90:
+CHEAT_2X_RCP90:
 /* 0C6DD8 7F0922A8 24010001 */  li    $at, 1
 /* 0C6DDC 7F0922AC 1441005E */  bne   $v0, $at, .L7F092428
 /* 0C6DE0 7F0922B0 2404000E */   li    $a0, 14
@@ -1513,7 +1513,7 @@ CHEAT_DEBUG_2X_RCP90:
 /* 0C6DFC 7F0922CC 00402825 */   move  $a1, $v0
 /* 0C6E00 7F0922D0 10000056 */  b     .L7F09242C
 /* 0C6E04 7F0922D4 8FBF0014 */   lw    $ra, 0x14($sp)
-CHEAT_DEBUG_2X_THROWING_KNIFE:
+CHEAT_2X_THROWING_KNIFE:
 /* 0C6E08 7F0922D8 24010001 */  li    $at, 1
 /* 0C6E0C 7F0922DC 14410052 */  bne   $v0, $at, .L7F092428
 /* 0C6E10 7F0922E0 24040003 */   li    $a0, 3
@@ -1526,7 +1526,7 @@ CHEAT_DEBUG_2X_THROWING_KNIFE:
 /* 0C6E2C 7F0922FC 00402825 */   move  $a1, $v0
 /* 0C6E30 7F092300 1000004A */  b     .L7F09242C
 /* 0C6E34 7F092304 8FBF0014 */   lw    $ra, 0x14($sp)
-CHEAT_DEBUG_2X_HUNTING_KNIFE:
+CHEAT_2X_HUNTING_KNIFE:
 /* 0C6E38 7F092308 24010001 */  li    $at, 1
 /* 0C6E3C 7F09230C 14410046 */  bne   $v0, $at, .L7F092428
 /* 0C6E40 7F092310 24040002 */   li    $a0, 2
@@ -1534,7 +1534,7 @@ CHEAT_DEBUG_2X_HUNTING_KNIFE:
 /* 0C6E48 7F092318 24050002 */   li    $a1, 2
 /* 0C6E4C 7F09231C 10000043 */  b     .L7F09242C
 /* 0C6E50 7F092320 8FBF0014 */   lw    $ra, 0x14($sp)
-CHEAT_DEBUG_2X_LASER:
+CHEAT_2X_LASER:
 /* 0C6E54 7F092324 24010001 */  li    $at, 1
 /* 0C6E58 7F092328 1441003F */  bne   $v0, $at, .L7F092428
 /* 0C6E5C 7F09232C 24040016 */   li    $a0, 22
@@ -1643,17 +1643,17 @@ glabel jpt_cheats_cheat
 .word cheats_cheat_goldpp7
 .word CHEAT_INVISIBILITY_mp
 .word cheats_debug_return_saved_ra
-.word CHEAT_FAST
+.word CHEAT_TURBO_MODE
 .word CHEAT_DEBUG_POS
-.word CHEAT_DEBUG_FAST_ANI
-.word CHEAT_DEBUG_SLOW_ANI
+.word CHEAT_FAST_ANIMATION
+.word CHEAT_SLOW_ANIMATION
 .word cheats_debug_return_saved_ra
-.word CHEAT_DEBUG_2X_ROCKETS
-.word CHEAT_DEBUG_2X_GRENADE_LAUNCHER
-.word CHEAT_DEBUG_2X_RCP90
-.word CHEAT_DEBUG_2X_THROWING_KNIFE
-.word CHEAT_DEBUG_2X_HUNTING_KNIFE
-.word CHEAT_DEBUG_2X_LASER
+.word CHEAT_2X_ROCKET_LAUNCHER
+.word CHEAT_2X_GRENADE_LAUNCHER
+.word CHEAT_2X_RCP90
+.word CHEAT_2X_THROWING_KNIFE
+.word CHEAT_2X_HUNTING_KNIFE
+.word CHEAT_2X_LASER
 .word cheats_debug_unlockcheat
 .word cheats_debug_unlockcheat
 .word cheats_debug_unlockcheat
@@ -1830,8 +1830,8 @@ cheats_cheat_linemode:
 /* 0C7380 7F092810 100001E6 */  b     .Ljp7F092FAC
 /* 0C7384 7F092814 8FBF0014 */   lw    $ra, 0x14($sp)
 CHEAT_2X_HEALTH:
-/* 0C7388 7F092818 3C028008 */  lui   $v0, %hi(currentplayer) # $v0, 0x8008
-/* 0C738C 7F09281C 8C42A120 */  lw    $v0, %lo(currentplayer)($v0)
+/* 0C7388 7F092818 3C028008 */  lui   $v0, %hi(g_CurrentPlayer) # $v0, 0x8008
+/* 0C738C 7F09281C 8C42A120 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
 /* 0C7390 7F092820 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0C7394 7F092824 44812000 */  mtc1  $at, $f4
 /* 0C7398 7F092828 C4462A3C */  lwc1  $f6, 0x2a3c($v0)
@@ -1853,19 +1853,19 @@ CHEAT_2X_HEALTH:
 /* 0C73D4 7F092864 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0C73D8 7F092868 00402025 */   move  $a0, $v0
 /* 0C73DC 7F09286C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0C73E0 7F092870 3C0F8008 */  lui   $t7, %hi(currentplayer) # $t7, 0x8008
-/* 0C73E4 7F092874 8DEFA120 */  lw    $t7, %lo(currentplayer)($t7)
+/* 0C73E0 7F092870 3C0F8008 */  lui   $t7, %hi(g_CurrentPlayer) # $t7, 0x8008
+/* 0C73E4 7F092874 8DEFA120 */  lw    $t7, %lo(g_CurrentPlayer)($t7)
 /* 0C73E8 7F092878 44818000 */  mtc1  $at, $f16
 /* 0C73EC 7F09287C 3C014000 */  li    $at, 0x40000000 # 2.000000
-/* 0C73F0 7F092880 3C188008 */  lui   $t8, %hi(currentplayer) # $t8, 0x8008
+/* 0C73F0 7F092880 3C188008 */  lui   $t8, %hi(g_CurrentPlayer) # $t8, 0x8008
 /* 0C73F4 7F092884 E5F000DC */  swc1  $f16, 0xdc($t7)
-/* 0C73F8 7F092888 8F18A120 */  lw    $t8, %lo(currentplayer)($t8)
+/* 0C73F8 7F092888 8F18A120 */  lw    $t8, %lo(g_CurrentPlayer)($t8)
 /* 0C73FC 7F09288C 44819000 */  mtc1  $at, $f18
 /* 0C7400 7F092890 100001C5 */  b     .Ljp7F092FA8
 /* 0C7404 7F092894 E7122A3C */   swc1  $f18, 0x2a3c($t8)
 CHEAT_2X_ARMOR:
-/* 0C7408 7F092898 3C028008 */  lui   $v0, %hi(currentplayer) # $v0, 0x8008
-/* 0C740C 7F09289C 8C42A120 */  lw    $v0, %lo(currentplayer)($v0)
+/* 0C7408 7F092898 3C028008 */  lui   $v0, %hi(g_CurrentPlayer) # $v0, 0x8008
+/* 0C740C 7F09289C 8C42A120 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
 /* 0C7410 7F0928A0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0C7414 7F0928A4 44810000 */  mtc1  $at, $f0
 /* 0C7418 7F0928A8 C4442A40 */  lwc1  $f4, 0x2a40($v0)
@@ -1883,8 +1883,8 @@ CHEAT_2X_ARMOR:
 /* 0C7444 7F0928D4 3404B013 */   li    $a0, 45075
 /* 0C7448 7F0928D8 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0C744C 7F0928DC 00402025 */   move  $a0, $v0
-/* 0C7450 7F0928E0 3C028008 */  lui   $v0, %hi(currentplayer) # $v0, 0x8008
-/* 0C7454 7F0928E4 2442A120 */  addiu $v0, %lo(currentplayer) # addiu $v0, $v0, -0x5ee0
+/* 0C7450 7F0928E0 3C028008 */  lui   $v0, %hi(g_CurrentPlayer) # $v0, 0x8008
+/* 0C7454 7F0928E4 2442A120 */  addiu $v0, %lo(g_CurrentPlayer) # addiu $v0, $v0, -0x5ee0
 /* 0C7458 7F0928E8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0C745C 7F0928EC 44814000 */  mtc1  $at, $f8
 /* 0C7460 7F0928F0 8C590000 */  lw    $t9, ($v0)
@@ -1977,8 +1977,8 @@ cheats_cheat_extra_weapons:
 cheats_cheat_tiny_bond:
 /* 0C75AC 7F092A3C 24010001 */  li    $at, 1
 /* 0C75B0 7F092A40 14410159 */  bne   $v0, $at, .Ljp7F092FA8
-/* 0C75B4 7F092A44 3C0B8008 */   lui   $t3, %hi(pPlayersPerm) # $t3, 0x8008
-/* 0C75B8 7F092A48 8D6BA124 */  lw    $t3, %lo(pPlayersPerm)($t3)
+/* 0C75B4 7F092A44 3C0B8008 */   lui   $t3, %hi(g_playerPerm) # $t3, 0x8008
+/* 0C75B8 7F092A48 8D6BA124 */  lw    $t3, %lo(g_playerPerm)($t3)
 /* 0C75BC 7F092A4C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0C75C0 7F092A50 44818000 */  mtc1  $at, $f16
 /* 0C75C4 7F092A54 C5720064 */  lwc1  $f18, 0x64($t3)
@@ -1991,12 +1991,12 @@ cheats_cheat_tiny_bond:
 /* 0C75E0 7F092A70 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0C75E4 7F092A74 00402025 */   move  $a0, $v0
 /* 0C75E8 7F092A78 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0C75EC 7F092A7C 3C0A8008 */  lui   $t2, %hi(pPlayersPerm) # $t2, 0x8008
+/* 0C75EC 7F092A7C 3C0A8008 */  lui   $t2, %hi(g_playerPerm) # $t2, 0x8008
 /* 0C75F0 7F092A80 44810000 */  mtc1  $at, $f0
-/* 0C75F4 7F092A84 8D4AA124 */  lw    $t2, %lo(pPlayersPerm)($t2)
-/* 0C75F8 7F092A88 3C0C8008 */  lui   $t4, %hi(currentplayer) # $t4, 0x8008
+/* 0C75F4 7F092A84 8D4AA124 */  lw    $t2, %lo(g_playerPerm)($t2)
+/* 0C75F8 7F092A88 3C0C8008 */  lui   $t4, %hi(g_CurrentPlayer) # $t4, 0x8008
 /* 0C75FC 7F092A8C E5400064 */  swc1  $f0, 0x64($t2)
-/* 0C7600 7F092A90 8D8CA120 */  lw    $t4, %lo(currentplayer)($t4)
+/* 0C7600 7F092A90 8D8CA120 */  lw    $t4, %lo(g_CurrentPlayer)($t4)
 /* 0C7604 7F092A94 8D8400D4 */  lw    $a0, 0xd4($t4)
 /* 0C7608 7F092A98 50800144 */  beql  $a0, $zero, .Ljp7F092FAC
 /* 0C760C 7F092A9C 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2015,8 +2015,8 @@ cheats_cheat_paintball:
 /* 0C763C 7F092ACC 10000137 */  b     .Ljp7F092FAC
 /* 0C7640 7F092AD0 8FBF0014 */   lw    $ra, 0x14($sp)
 cheats_cheat_10x_health:
-/* 0C7644 7F092AD4 3C028008 */  lui   $v0, %hi(currentplayer) # $v0, 0x8008
-/* 0C7648 7F092AD8 8C42A120 */  lw    $v0, %lo(currentplayer)($v0)
+/* 0C7644 7F092AD4 3C028008 */  lui   $v0, %hi(g_CurrentPlayer) # $v0, 0x8008
+/* 0C7648 7F092AD8 8C42A120 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
 /* 0C764C 7F092ADC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0C7650 7F092AE0 44810000 */  mtc1  $at, $f0
 /* 0C7654 7F092AE4 C4482A3C */  lwc1  $f8, 0x2a3c($v0)
@@ -2034,8 +2034,8 @@ cheats_cheat_10x_health:
 /* 0C7680 7F092B10 3404B01B */   li    $a0, 45083
 /* 0C7684 7F092B14 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0C7688 7F092B18 00402025 */   move  $a0, $v0
-/* 0C768C 7F092B1C 3C028008 */  lui   $v0, %hi(currentplayer) # $v0, 0x8008
-/* 0C7690 7F092B20 2442A120 */  addiu $v0, %lo(currentplayer) # addiu $v0, $v0, -0x5ee0
+/* 0C768C 7F092B1C 3C028008 */  lui   $v0, %hi(g_CurrentPlayer) # $v0, 0x8008
+/* 0C7690 7F092B20 2442A120 */  addiu $v0, %lo(g_CurrentPlayer) # addiu $v0, $v0, -0x5ee0
 /* 0C7694 7F092B24 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0C7698 7F092B28 44818000 */  mtc1  $at, $f16
 /* 0C769C 7F092B2C 8C4D0000 */  lw    $t5, ($v0)
@@ -2113,7 +2113,7 @@ CHEAT_INVISIBILITY_mp:
 /* 0C77A4 7F092C34 C42E7408 */   lwc1  $f14, %lo(finalamount)($at)
 /* 0C77A8 7F092C38 100000DC */  b     .Ljp7F092FAC
 /* 0C77AC 7F092C3C 8FBF0014 */   lw    $ra, 0x14($sp)
-CHEAT_FAST:
+CHEAT_TURBO_MODE:
 /* 0C77B0 7F092C40 0FC246BE */  jal   get_debug_fast_bond_flag
 /* 0C77B4 7F092C44 00000000 */   nop
 /* 0C77B8 7F092C48 544000D8 */  bnezl $v0, .Ljp7F092FAC
@@ -2135,7 +2135,7 @@ CHEAT_DEBUG_POS:
 /* 0C77F4 7F092C84 24040001 */   li    $a0, 1
 /* 0C77F8 7F092C88 100000C8 */  b     .Ljp7F092FAC
 /* 0C77FC 7F092C8C 8FBF0014 */   lw    $ra, 0x14($sp)
-CHEAT_DEBUG_FAST_ANI:
+CHEAT_FAST_ANIMATION:
 /* 0C7800 7F092C90 0FC081E5 */  jal   get_animation_rate
 /* 0C7804 7F092C94 00000000 */   nop
 /* 0C7808 7F092C98 3C014080 */  li    $at, 0x40800000 # 4.000000
@@ -2155,7 +2155,7 @@ CHEAT_DEBUG_FAST_ANI:
 /* 0C7840 7F092CD0 00000000 */   nop
 /* 0C7844 7F092CD4 100000B5 */  b     .Ljp7F092FAC
 /* 0C7848 7F092CD8 8FBF0014 */   lw    $ra, 0x14($sp)
-CHEAT_DEBUG_SLOW_ANI:
+CHEAT_SLOW_ANIMATION:
 /* 0C784C 7F092CDC 0FC081E5 */  jal   get_animation_rate
 /* 0C7850 7F092CE0 00000000 */   nop
 /* 0C7854 7F092CE4 3C013E80 */  li    $at, 0x3E800000 # 0.250000
@@ -2175,7 +2175,7 @@ CHEAT_DEBUG_SLOW_ANI:
 /* 0C788C 7F092D1C 00000000 */   nop
 /* 0C7890 7F092D20 100000A2 */  b     .Ljp7F092FAC
 /* 0C7894 7F092D24 8FBF0014 */   lw    $ra, 0x14($sp)
-CHEAT_DEBUG_2X_ROCKETS:
+CHEAT_2X_ROCKET_LAUNCHER:
 /* 0C7898 7F092D28 24010001 */  li    $at, 1
 /* 0C789C 7F092D2C 5441009F */  bnel  $v0, $at, .Ljp7F092FAC
 /* 0C78A0 7F092D30 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2191,7 +2191,7 @@ CHEAT_DEBUG_2X_ROCKETS:
 /* 0C78C8 7F092D58 00402825 */   move  $a1, $v0
 /* 0C78CC 7F092D5C 10000093 */  b     .Ljp7F092FAC
 /* 0C78D0 7F092D60 8FBF0014 */   lw    $ra, 0x14($sp)
-CHEAT_DEBUG_2X_GRENADE_LAUNCHER:
+CHEAT_2X_GRENADE_LAUNCHER:
 /* 0C78D4 7F092D64 24010001 */  li    $at, 1
 /* 0C78D8 7F092D68 54410090 */  bnel  $v0, $at, .Ljp7F092FAC
 /* 0C78DC 7F092D6C 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2207,7 +2207,7 @@ CHEAT_DEBUG_2X_GRENADE_LAUNCHER:
 /* 0C7904 7F092D94 00402825 */   move  $a1, $v0
 /* 0C7908 7F092D98 10000084 */  b     .Ljp7F092FAC
 /* 0C790C 7F092D9C 8FBF0014 */   lw    $ra, 0x14($sp)
-CHEAT_DEBUG_2X_RCP90:
+CHEAT_2X_RCP90:
 /* 0C7910 7F092DA0 24010001 */  li    $at, 1
 /* 0C7914 7F092DA4 54410081 */  bnel  $v0, $at, .Ljp7F092FAC
 /* 0C7918 7F092DA8 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2223,7 +2223,7 @@ CHEAT_DEBUG_2X_RCP90:
 /* 0C7940 7F092DD0 00402825 */   move  $a1, $v0
 /* 0C7944 7F092DD4 10000075 */  b     .Ljp7F092FAC
 /* 0C7948 7F092DD8 8FBF0014 */   lw    $ra, 0x14($sp)
-CHEAT_DEBUG_2X_THROWING_KNIFE:
+CHEAT_2X_THROWING_KNIFE:
 /* 0C794C 7F092DDC 24010001 */  li    $at, 1
 /* 0C7950 7F092DE0 54410072 */  bnel  $v0, $at, .Ljp7F092FAC
 /* 0C7954 7F092DE4 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2239,12 +2239,12 @@ CHEAT_DEBUG_2X_THROWING_KNIFE:
 /* 0C797C 7F092E0C 00402825 */   move  $a1, $v0
 /* 0C7980 7F092E10 10000066 */  b     .Ljp7F092FAC
 /* 0C7984 7F092E14 8FBF0014 */   lw    $ra, 0x14($sp)
-CHEAT_DEBUG_2X_HUNTING_KNIFE:
+CHEAT_2X_HUNTING_KNIFE:
 /* 0C7988 7F092E18 24010001 */  li    $at, 1
 /* 0C798C 7F092E1C 14410062 */  bne   $v0, $at, .Ljp7F092FA8
 /* 0C7990 7F092E20 3C0F8005 */   lui   $t7, %hi(j_text_trigger) # $t7, 0x8005
 /* 0C7994 7F092E24 8DEF8500 */  lw    $t7, %lo(j_text_trigger)($t7)
-/* 0C7998 7F092E28 11E00014 */  beqz  $t7, .CHEAT_DEBUG_2X_HUNTING_KNIFE_en
+/* 0C7998 7F092E28 11E00014 */  beqz  $t7, .CHEAT_2X_HUNTING_KNIFE_en
 /* 0C799C 7F092E2C 00000000 */   nop
 /* 0C79A0 7F092E30 0FC2335A */  jal   add_item_to_inventory
 /* 0C79A4 7F092E34 24040019 */   li    $a0, 25
@@ -2265,7 +2265,7 @@ CHEAT_DEBUG_2X_HUNTING_KNIFE:
 /* 0C79E0 7F092E70 00402825 */   move  $a1, $v0
 /* 0C79E4 7F092E74 1000004D */  b     .Ljp7F092FAC
 /* 0C79E8 7F092E78 8FBF0014 */   lw    $ra, 0x14($sp)
-.CHEAT_DEBUG_2X_HUNTING_KNIFE_en:
+.CHEAT_2X_HUNTING_KNIFE_en:
 /* 0C79EC 7F092E7C 0FC2335A */  jal   add_item_to_inventory
 /* 0C79F0 7F092E80 24040002 */   li    $a0, 2
 /* 0C79F4 7F092E84 24040002 */  li    $a0, 2
@@ -2273,7 +2273,7 @@ CHEAT_DEBUG_2X_HUNTING_KNIFE:
 /* 0C79FC 7F092E8C 24050002 */   li    $a1, 2
 /* 0C7A00 7F092E90 10000046 */  b     .Ljp7F092FAC
 /* 0C7A04 7F092E94 8FBF0014 */   lw    $ra, 0x14($sp)
-CHEAT_DEBUG_2X_LASER:
+CHEAT_2X_LASER:
 /* 0C7A08 7F092E98 24010001 */  li    $at, 1
 /* 0C7A0C 7F092E9C 54410043 */  bnel  $v0, $at, .Ljp7F092FAC
 /* 0C7A10 7F092EA0 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2554,8 +2554,8 @@ cheat_button_dkmode:
 cheat_button_unknown_0:
 /* 0C70E0 7F0925B0 24010001 */  li    $at, 1
 /* 0C70E4 7F0925B4 1441003E */  bne   $v0, $at, .L7F0926B0
-/* 0C70E8 7F0925B8 3C188008 */   lui   $t8, %hi(pPlayersPerm)
-/* 0C70EC 7F0925BC 8F18A0B4 */  lw    $t8, %lo(pPlayersPerm)($t8)
+/* 0C70E8 7F0925B8 3C188008 */   lui   $t8, %hi(g_playerPerm)
+/* 0C70EC 7F0925BC 8F18A0B4 */  lw    $t8, %lo(g_playerPerm)($t8)
 /* 0C70F0 7F0925C0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0C70F4 7F0925C4 44812000 */  mtc1  $at, $f4
 /* 0C70F8 7F0925C8 C7060064 */  lwc1  $f6, 0x64($t8)
@@ -2568,12 +2568,12 @@ cheat_button_unknown_0:
 /* 0C7114 7F0925E4 0FC228F2 */  jal   display_string_in_lower_left_corner
 /* 0C7118 7F0925E8 00402025 */   move  $a0, $v0
 /* 0C711C 7F0925EC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0C7120 7F0925F0 3C198008 */  lui   $t9, %hi(pPlayersPerm)
-/* 0C7124 7F0925F4 8F39A0B4 */  lw    $t9, %lo(pPlayersPerm)($t9)
+/* 0C7120 7F0925F0 3C198008 */  lui   $t9, %hi(g_playerPerm)
+/* 0C7124 7F0925F4 8F39A0B4 */  lw    $t9, %lo(g_playerPerm)($t9)
 /* 0C7128 7F0925F8 44814000 */  mtc1  $at, $f8
-/* 0C712C 7F0925FC 3C088008 */  lui   $t0, %hi(currentplayer)
+/* 0C712C 7F0925FC 3C088008 */  lui   $t0, %hi(g_CurrentPlayer)
 /* 0C7130 7F092600 E7280064 */  swc1  $f8, 0x64($t9)
-/* 0C7134 7F092604 8D08A0B0 */  lw    $t0, %lo(currentplayer)($t0)
+/* 0C7134 7F092604 8D08A0B0 */  lw    $t0, %lo(g_CurrentPlayer)($t0)
 /* 0C7138 7F092608 8D0400D4 */  lw    $a0, 0xd4($t0)
 /* 0C713C 7F09260C 50800029 */  beql  $a0, $zero, .L7F0926B4
 /* 0C7140 7F092610 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2816,8 +2816,8 @@ cheat_button_dkmode:
 cheat_button_unknown_0:
 /* 0C70E0 7F0925B0 24010001 */  li    $at, 1
 /* 0C70E4 7F0925B4 1441003E */  bne   $v0, $at, .L7F0926B0
-/* 0C70E8 7F0925B8 3C188008 */   lui   $t8, %hi(pPlayersPerm)
-/* 0C70EC 7F0925BC 8F18A0B4 */  lw    $t8, %lo(pPlayersPerm)($t8)
+/* 0C70E8 7F0925B8 3C188008 */   lui   $t8, %hi(g_playerPerm)
+/* 0C70EC 7F0925BC 8F18A0B4 */  lw    $t8, %lo(g_playerPerm)($t8)
 /* 0C70F0 7F0925C0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0C70F4 7F0925C4 44812000 */  mtc1  $at, $f4
 /* 0C70F8 7F0925C8 C7060064 */  lwc1  $f6, 0x64($t8)
@@ -2830,12 +2830,12 @@ cheat_button_unknown_0:
 /* 0C7114 7F0925E4 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
 /* 0C7118 7F0925E8 00402025 */   move  $a0, $v0
 /* 0C711C 7F0925EC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0C7120 7F0925F0 3C198008 */  lui   $t9, %hi(pPlayersPerm)
-/* 0C7124 7F0925F4 8F39A0B4 */  lw    $t9, %lo(pPlayersPerm)($t9)
+/* 0C7120 7F0925F0 3C198008 */  lui   $t9, %hi(g_playerPerm)
+/* 0C7124 7F0925F4 8F39A0B4 */  lw    $t9, %lo(g_playerPerm)($t9)
 /* 0C7128 7F0925F8 44814000 */  mtc1  $at, $f8
-/* 0C712C 7F0925FC 3C088008 */  lui   $t0, %hi(currentplayer)
+/* 0C712C 7F0925FC 3C088008 */  lui   $t0, %hi(g_CurrentPlayer)
 /* 0C7130 7F092600 E7280064 */  swc1  $f8, 0x64($t9)
-/* 0C7134 7F092604 8D08A0B0 */  lw    $t0, %lo(currentplayer)($t0)
+/* 0C7134 7F092604 8D08A0B0 */  lw    $t0, %lo(g_CurrentPlayer)($t0)
 /* 0C7138 7F092608 8D0400D4 */  lw    $a0, 0xd4($t0)
 /* 0C713C 7F09260C 50800029 */  beql  $a0, $zero, .L7F0926B4
 /* 0C7140 7F092610 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -3079,8 +3079,8 @@ cheat_button_dkmode:
 cheat_button_unknown_0:
 /* 0C70E0 7F0925B0 24010001 */  li    $at, 1
 /* 0C70E4 7F0925B4 1441003E */  bne   $v0, $at, .L7F0926B0
-/* 0C70E8 7F0925B8 3C188008 */   lui   $t8, %hi(pPlayersPerm)
-/* 0C70EC 7F0925BC 8F18A0B4 */  lw    $t8, %lo(pPlayersPerm)($t8)
+/* 0C70E8 7F0925B8 3C188008 */   lui   $t8, %hi(g_playerPerm)
+/* 0C70EC 7F0925BC 8F18A0B4 */  lw    $t8, %lo(g_playerPerm)($t8)
 /* 0C70F0 7F0925C0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0C70F4 7F0925C4 44812000 */  mtc1  $at, $f4
 /* 0C70F8 7F0925C8 C7060064 */  lwc1  $f6, 0x64($t8)
@@ -3093,12 +3093,12 @@ cheat_button_unknown_0:
 /* 0C7114 7F0925E4 0FC228F2 */  jal   display_string_in_lower_left_corner
 /* 0C7118 7F0925E8 00402025 */   move  $a0, $v0
 /* 0C711C 7F0925EC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0C7120 7F0925F0 3C198008 */  lui   $t9, %hi(pPlayersPerm)
-/* 0C7124 7F0925F4 8F39A0B4 */  lw    $t9, %lo(pPlayersPerm)($t9)
+/* 0C7120 7F0925F0 3C198008 */  lui   $t9, %hi(g_playerPerm)
+/* 0C7124 7F0925F4 8F39A0B4 */  lw    $t9, %lo(g_playerPerm)($t9)
 /* 0C7128 7F0925F8 44814000 */  mtc1  $at, $f8
-/* 0C712C 7F0925FC 3C088008 */  lui   $t0, %hi(currentplayer)
+/* 0C712C 7F0925FC 3C088008 */  lui   $t0, %hi(g_CurrentPlayer)
 /* 0C7130 7F092600 E7280064 */  swc1  $f8, 0x64($t9)
-/* 0C7134 7F092604 8D08A0B0 */  lw    $t0, %lo(currentplayer)($t0)
+/* 0C7134 7F092604 8D08A0B0 */  lw    $t0, %lo(g_CurrentPlayer)($t0)
 /* 0C7138 7F092608 8D0400D4 */  lw    $a0, 0xd4($t0)
 /* 0C713C 7F09260C 50800029 */  beql  $a0, $zero, .L7F0926B4
 /* 0C7140 7F092610 8FBF0014 */   lw    $ra, 0x14($sp)
