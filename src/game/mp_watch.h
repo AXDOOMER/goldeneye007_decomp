@@ -23,5 +23,6 @@ s32 checkGamePaused(void);
 void sub_GAME_7F0C2530(int arg0);
 s32 get_points_for_mp_player(s32 arg0);
 void mpwatchSetStopPlayFlag(void);
+Gfx * mp_watch_menu_display(Gfx *arg0);
 
 #endif

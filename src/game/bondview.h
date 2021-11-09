@@ -2878,5 +2878,10 @@ void display_string_in_lower_left_corner(char *string, s32 arg1, s32 arg2);
 void display_string_in_lower_left_corner(char *string);
 #endif
 
+Gfx * sub_GAME_7F087A08(Gfx *arg0);
+s32 sub_GAME_7F089F38(void);
+Gfx* write_stan_tiles_in_yellow(Gfx *arg0);
+Gfx * maybe_mp_interface(Gfx *arg0);
+Gfx * sub_GAME_7F08BCB8(Gfx *arg0);
 
 #endif

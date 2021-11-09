@@ -3342,7 +3342,7 @@ glabel cheatGetMenuTextPointer
 
 
 #ifdef NONMATCHING
-void cheatCheckIfOn(void) {
+s32 cheatCheckIfOn(CHEAT_ID cheat) {
 
 }
 #else

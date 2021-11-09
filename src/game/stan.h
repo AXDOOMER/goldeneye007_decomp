@@ -137,5 +137,10 @@ StandTilePoint *stanMatchTileName(char*);
 
 void sub_GAME_7F0B2D38(s8 arg0, s8 arg1, u16 arg2);
 void sub_GAME_7F0AF630(s32 arg0);
+Gfx * sub_GAME_7F0B2D48(Gfx *arg0);
+Gfx * sub_GAME_7F0B303C(Gfx *arg0);
+Gfx * sub_GAME_7F0B3034(Gfx *arg0);
+Gfx * sub_GAME_7F0B312C(Gfx *arg0, s32 arg1);
+Gfx * sub_GAME_7F0B3024(Gfx *ptrdl, s32 *ptrtile, u32 RGBAColor);
 
 #endif

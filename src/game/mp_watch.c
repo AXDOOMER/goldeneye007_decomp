@@ -2087,7 +2087,7 @@ s32 mpwatchShouldDisplayScore(s32 param_1)
 
 
 #ifdef NONMATCHING
-void mp_watch_menu_display(void) {
+Gfx * mp_watch_menu_display(Gfx *arg0) {
 
 }
 #else

@@ -28444,7 +28444,7 @@ menu0B_runstage_interface:
 
 
 #ifdef NONMATCHING
-void menu_jump_constructor_handler(Gfx *DL)
+Gfx * menu_jump_constructor_handler(Gfx *DL)
 {
     switch(current_menu) {
         case MENU_LEGAL_SCREEN:

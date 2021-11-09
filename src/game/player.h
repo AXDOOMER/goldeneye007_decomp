@@ -116,5 +116,6 @@ void set_cur_player_screen_size(u32 width, u32 height);
 void set_cur_player_viewport_size(u32 ulx, u32 uly);
 void store_stagenum_to_copyof_stagenum(s32 stagenum);
 void sub_GAME_7F094438(void);
+Gfx * sub_GAME_7F094488(Gfx *arg0);
 
 #endif

@@ -5145,7 +5145,7 @@ glabel sub_GAME_7F09FD3C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A0034(void) {
+Gfx * sub_GAME_7F0A0034(Gfx *arg0) {
 
 }
 #else

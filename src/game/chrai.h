@@ -217,5 +217,11 @@ void stop_alarm(void);
 
 void check_deactivate_gas_sound(void);
 void handle_mp_respawn_and_some_things(void);
+void determing_type_of_object_and_detection(void);
+void sub_GAME_7F03A240(void);
+void sub_GAME_7F03D78C(void);
+void sub_GAME_7F03C294(void);
+s32 sub_GAME_7F03C4F0(void);
+void sub_GAME_7F03D0D4(void);
 
 #endif

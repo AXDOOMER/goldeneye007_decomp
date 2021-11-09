@@ -2400,7 +2400,7 @@ glabel sub_GAME_7F0B4AB4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B4E40(void *arg0) {
+Gfx* sub_GAME_7F0B4E40(Gfx *arg0) {
     void *temp_v1;
     void *temp_a1;
     void *temp_a2;

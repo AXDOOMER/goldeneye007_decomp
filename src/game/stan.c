@@ -5891,7 +5891,7 @@ void sub_GAME_7F0B2D38(s8 arg0, s8 arg1, u16 arg2) {
     return;
 }
 
-s32 sub_GAME_7F0B2D48(s32 arg0) {
+Gfx * sub_GAME_7F0B2D48(Gfx *arg0) {
     return arg0;
 }
 
@@ -6333,7 +6333,7 @@ float sub_GAME_7F0B3004(struct StandTile* tile) {
 
 
 #ifdef NONMATCHING
-s32 sub_GAME_7F0B3024(s32 *ptrdl, s32 *ptrtile, u32 RGBAColor) {
+Gfx * sub_GAME_7F0B3024(Gfx *ptrdl, s32 *ptrtile, u32 RGBAColor) {
     return *ptrdl;
 }
 
@@ -6353,11 +6353,11 @@ glabel sub_GAME_7F0B3024
 
 
 
-s32 sub_GAME_7F0B3034(s32 arg0) {
+Gfx * sub_GAME_7F0B3034(Gfx *arg0) {
     return arg0;
 }
 
-s32 sub_GAME_7F0B303C(s32 arg0) {
+Gfx * sub_GAME_7F0B303C(Gfx * arg0) {
     return arg0;
 }
 
@@ -6444,7 +6444,7 @@ glabel sub_GAME_7F0B3044
 
 
 #ifdef NONMATCHING
-s32 sub_GAME_7F0B312C(s32 arg0, s32 arg1) {
+Gfx * sub_GAME_7F0B312C(Gfx *arg0, s32 arg1) {
     // Node 0
     return arg0;
 }

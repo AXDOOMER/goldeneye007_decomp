@@ -24005,7 +24005,7 @@ glabel object_interaction
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F049B58(void) {
+Gfx * sub_GAME_7F049B58(Gfx *arg0) {
 
 }
 #else

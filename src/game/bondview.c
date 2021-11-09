@@ -33488,7 +33488,7 @@ glabel sub_GAME_7F088CD8
 
 
 #ifdef NONMATCHING
-void maybe_mp_interface(void) {
+Gfx * maybe_mp_interface(Gfx *arg0) {
 
 }
 #else
@@ -38756,7 +38756,7 @@ glabel sub_GAME_7F08B0F0
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F08BCB8(void) {
+Gfx * sub_GAME_7F08BCB8(Gfx *arg0) {
 
 }
 #else

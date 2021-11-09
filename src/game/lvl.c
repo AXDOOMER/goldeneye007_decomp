@@ -57,6 +57,7 @@
 #include "game/unk_092E50.h"
 #include "game/unk_0C0A70.h"
 #include "game/chr.h"
+#include "token.h"
 
 // bss
 //CODE.bss:8008C260
@@ -233,7 +234,7 @@ extern u8* _jfontdlSegmentEnd;
 
 // forward declarations
 
-s32 sub_GAME_7F0BDF10(s32 arg0);
+Gfx * sub_GAME_7F0BDF10(Gfx * arg0);
 
 s32 sub_GAME_7F0BD8F0(void) {
     return D_800483C0;
@@ -1443,7 +1444,7 @@ s32 sub_GAME_7F0BDF04(void) {
  * - identical instructions: no
  * - identical registers: fail
  */
-s32 sub_GAME_7F0BDF10(s32 arg0)
+Gfx * sub_GAME_7F0BDF10(Gfx * arg0)
 {
     s32 sp20;
     s32 temp_v1;
@@ -1861,6 +1862,7 @@ glabel sub_GAME_7F0BDF10
 
 
 #ifdef NONMATCHING
+
 Gfx* lvRender(Gfx* DL)
 {
     s32 i;
@@ -1984,10 +1986,11 @@ Gfx* lvRender(Gfx* DL)
                 sub_GAME_7F0A4824(&DL, 1);
                 DL = sub_GAME_7F0A2C44(DL);
                 DL = sub_GAME_7F0A0034(DL);
-                if (cheatCheckIfOn(0xB) != 0)
+                if (cheatCheckIfOn(CHEAT_INFINITE_AMMO) != 0)
                 {
                     set_max_ammo_for_cur_player();
                 }
+
                 if (get_debug_render_raster() == 2)
                 {
                     DL = maybe_mp_interface(DL);
@@ -2000,6 +2003,7 @@ Gfx* lvRender(Gfx* DL)
                 DL = mp_watch_menu_display(DL);
         }
     }
+
     gDPSetScissor(DL++, 0, 0, 0, viGetX(), viGetY());
     return DL;
 }

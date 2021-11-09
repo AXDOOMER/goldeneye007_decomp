@@ -428,7 +428,7 @@ glabel sub_GAME_7F091080
 
 
 
-s32 sub_GAME_7F091580(s32 arg0) {
+Gfx * sub_GAME_7F091580(Gfx * arg0) {
     sub_GAME_7F0876C4(&stanbondx, &D_80037020, &D_8003702C);
     return arg0;
 }
