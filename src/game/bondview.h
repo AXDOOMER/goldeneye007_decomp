@@ -864,7 +864,13 @@ struct player
   f32 field_FC0;
   f32 field_FC4;
   s32 field_FC8;
+
+  /**
+   * Used in lvRender method, in VERSION_JP build.
+   * Offset 0xfcc.
+   */
   s32 field_FCC;
+  
   s32 field_FD0;
   s32 field_FD4;
   s32 field_FD8;
