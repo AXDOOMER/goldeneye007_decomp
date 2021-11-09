@@ -324,7 +324,7 @@ void bossMainloop(void)
         {
             // convert ASCII difficulty value to int in set difficulty calls
             set_selected_difficulty(*(const unsigned char*)tokenFind(1, "-hard") - '0');
-            set_difficulty(*(const unsigned char*)tokenFind(1, "-hard") - '0');
+            lvlSetSelectedDifficulty(*(const unsigned char*)tokenFind(1, "-hard") - '0');
         }
     }
 
@@ -339,7 +339,7 @@ void bossMainloop(void)
         toggleFlag = 0;
         pendingGfx = 0;
 
-        test_if_recording_demos_this_stage_load(g_StageNum, get_current_difficulty());
+        test_if_recording_demos_this_stage_load(g_StageNum, lvlGetSelectedDifficulty());
         if (g_DebugAndUpdateStageFlag)
         {
             stringIndex = -1;
@@ -410,7 +410,7 @@ void bossMainloop(void)
         init_player_data_ptrs_construct_viewports(localSelectedNumPlayers);
         dynInitMemory();
         joyCheckStatusThreadSafe();
-        stage_load(g_StageNum);
+        lvlStageLoad(g_StageNum);
         viInitBuffers();
         debmenuInit();
         sub_GAME_7F0C0B4C();
@@ -484,7 +484,7 @@ void bossMainloop(void)
                                     g_DebugFeatureFlag = debug_menu_processor(joyStickXPos, joyStickYPos, joyButtons, joyGetButtonsPressedThisFrame(0, ANY_BUTTON));
                             }
 
-                            manage_mp_game();
+                            lvlManageMpGame();
                             shuffle_player_ids();
 
                             if (g_StageNum != LEVELID_TITLE)
@@ -499,11 +499,11 @@ void bossMainloop(void)
                                     localPlayer = g_CurrentPlayer;
                                     viSetViewPosition(localPlayer->viewleft, localPlayer->viewtop);
 
-                                    sub_GAME_7F0BF800();
+                                    lvlUpdateMpPlayerData();
                                 }
                             }
 
-                            gdl = lvRender(gdl);
+                            gdl = lvlRender(gdl);
 
                             // Lets Visualise the Coverage Value used for Scilohete Anti-Ailising (edges)
                             // (done on the VI), also produces a cool looking linemode - providing AA is working.
@@ -601,7 +601,7 @@ void bossMainloop(void)
             }
         }
 
-        unload_stage_text_data();
+        lvlUnloadStageTextData();
         stop_demo_playback();
         mempNullNextEntryInBank(4);
         obBlankResourcesLoadedInBank(4);

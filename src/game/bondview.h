@@ -866,7 +866,7 @@ struct player
   s32 field_FC8;
 
   /**
-   * Used in lvRender method, in VERSION_JP build.
+   * Used in lvlRender method, in VERSION_JP build.
    * Offset 0xfcc.
    */
   s32 field_FCC;

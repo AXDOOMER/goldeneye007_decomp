@@ -3990,7 +3990,7 @@ glabel proplvreset2
 /* 038E24 7F0042F4 8D6B5D0C */  lw    $t3, %lo(ptr_setup_objects)($t3)
 /* 038E28 7F0042F8 116002DF */  beqz  $t3, .L7F004E78
 /* 038E2C 7F0042FC 00000000 */   nop   
-/* 038E30 7F004300 0FC2FF04 */  jal   get_current_difficulty
+/* 038E30 7F004300 0FC2FF04 */  jal   lvlGetSelectedDifficulty
 /* 038E34 7F004304 00000000 */   nop   
 /* 038E38 7F004308 244C0004 */  addiu $t4, $v0, 4
 /* 038E3C 7F00430C 240D0001 */  li    $t5, 1
@@ -5383,7 +5383,7 @@ glabel jpt_8004F02C
 /* 038E64 7F0042F4 8D6B5D4C */  lw    $t3, %lo(ptr_setup_objects)($t3)
 /* 038E68 7F0042F8 116002E3 */  beqz  $t3, .L7F004E88
 /* 038E6C 7F0042FC 00000000 */   nop   
-/* 038E70 7F004300 0FC3021E */  jal   get_current_difficulty
+/* 038E70 7F004300 0FC3021E */  jal   lvlGetSelectedDifficulty
 /* 038E74 7F004304 00000000 */   nop   
 /* 038E78 7F004308 244C0004 */  addiu $t4, $v0, 4
 /* 038E7C 7F00430C 240D0001 */  li    $t5, 1
@@ -6781,7 +6781,7 @@ glabel proplvreset2
 /* 036C70 7F004280 8D6B4C4C */  lw    $t3, %lo(ptr_setup_objects)($t3)
 /* 036C74 7F004284 116002E1 */  beqz  $t3, .L7F004E88
 /* 036C78 7F004288 00000000 */   nop   
-/* 036C7C 7F00428C 0FC2FC21 */  jal   get_current_difficulty
+/* 036C7C 7F00428C 0FC2FC21 */  jal   lvlGetSelectedDifficulty
 /* 036C80 7F004290 00000000 */   nop   
 /* 036C84 7F004294 244C0004 */  addiu $t4, $v0, 4
 /* 036C88 7F004298 240D0001 */  li    $t5, 1

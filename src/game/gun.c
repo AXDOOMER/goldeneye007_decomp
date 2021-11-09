@@ -14967,7 +14967,7 @@ glabel handle_weapon_id_values_possibly_1st_person_animation
 /* 099788 7F064C58 8E020024 */   lw    $v0, 0x24($s0)
 /* 09978C 7F064C5C 50C00051 */  beql  $a2, $zero, .L7F064DA4
 /* 099790 7F064C60 8E020024 */   lw    $v0, 0x24($s0)
-/* 099794 7F064C64 0FC2FF01 */  jal   get_controls_locked_flag
+/* 099794 7F064C64 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 099798 7F064C68 AFA601C4 */   sw    $a2, 0x1c4($sp)
 /* 09979C 7F064C6C 1440004C */  bnez  $v0, .L7F064DA0
 /* 0997A0 7F064C70 8FA601C4 */   lw    $a2, 0x1c4($sp)
@@ -15225,7 +15225,7 @@ Weapon_shooting_watch_magnet:
 /* 099B1C 7F064FEC 24190003 */  li    $t9, 3
 /* 099B20 7F064FF0 55E0000D */  bnezl $t7, .L7F065028
 /* 099B24 7F064FF4 AE190024 */   sw    $t9, 0x24($s0)
-/* 099B28 7F064FF8 0FC2FF01 */  jal   get_controls_locked_flag
+/* 099B28 7F064FF8 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 099B2C 7F064FFC 00000000 */   nop
 /* 099B30 7F065000 2C450001 */  sltiu $a1, $v0, 1
 /* 099B34 7F065004 10A00005 */  beqz  $a1, .L7F06501C
@@ -15263,7 +15263,7 @@ Weapon_shooting_pistol:
 .L7F065078:
 /* 099BA8 7F065078 A20F000D */  sb    $t7, 0xd($s0)
 .L7F06507C:
-/* 099BAC 7F06507C 0FC2FF01 */  jal   get_controls_locked_flag
+/* 099BAC 7F06507C 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 099BB0 7F065080 00000000 */   nop
 /* 099BB4 7F065084 2C450001 */  sltiu $a1, $v0, 1
 /* 099BB8 7F065088 10A00005 */  beqz  $a1, .L7F0650A0
@@ -15340,7 +15340,7 @@ Weapon_shooting_machinegun:
 .L7F06518C:
 /* 099CBC 7F06518C A20C000D */  sb    $t4, 0xd($s0)
 .L7F065190:
-/* 099CC0 7F065190 0FC2FF01 */  jal   get_controls_locked_flag
+/* 099CC0 7F065190 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 099CC4 7F065194 00000000 */   nop
 /* 099CC8 7F065198 2C450001 */  sltiu $a1, $v0, 1
 /* 099CCC 7F06519C 10A00005 */  beqz  $a1, .L7F0651B4
@@ -15396,7 +15396,7 @@ Weapon_shooting_tazer:
 /* 099D78 7F065248 AE0E00BC */  sw    $t6, 0xbc($s0)
 /* 099D7C 7F06524C 1720000F */  bnez  $t9, .L7F06528C
 /* 099D80 7F065250 A218000D */   sb    $t8, 0xd($s0)
-/* 099D84 7F065254 0FC2FF01 */  jal   get_controls_locked_flag
+/* 099D84 7F065254 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 099D88 7F065258 00000000 */   nop
 /* 099D8C 7F06525C 2C450001 */  sltiu $a1, $v0, 1
 /* 099D90 7F065260 10A00005 */  beqz  $a1, .L7F065278
@@ -17813,7 +17813,7 @@ glabel handle_weapon_id_values_possibly_1st_person_animation
 /* 099D5C 7F0651EC 8E020024 */   lw    $v0, 0x24($s0)
 /* 099D60 7F0651F0 50C00051 */  beql  $a2, $zero, .Ljp7F065338
 /* 099D64 7F0651F4 8E020024 */   lw    $v0, 0x24($s0)
-/* 099D68 7F0651F8 0FC3021B */  jal   get_controls_locked_flag
+/* 099D68 7F0651F8 0FC3021B */  jal   lvlGetControlsLockedFlag
 /* 099D6C 7F0651FC AFA601D4 */   sw    $a2, 0x1d4($sp)
 /* 099D70 7F065200 1440004C */  bnez  $v0, .Ljp7F065334
 /* 099D74 7F065204 8FA601D4 */   lw    $a2, 0x1d4($sp)
@@ -18070,7 +18070,7 @@ Weapon_shooting_watch_magnet:
 /* 09A0F0 7F065580 240F0003 */  li    $t7, 3
 /* 09A0F4 7F065584 5700000D */  bnezl $t8, .Ljp7F0655BC
 /* 09A0F8 7F065588 AE0F0024 */   sw    $t7, 0x24($s0)
-/* 09A0FC 7F06558C 0FC3021B */  jal   get_controls_locked_flag
+/* 09A0FC 7F06558C 0FC3021B */  jal   lvlGetControlsLockedFlag
 /* 09A100 7F065590 00000000 */   nop
 /* 09A104 7F065594 2C450001 */  sltiu $a1, $v0, 1
 /* 09A108 7F065598 10A00005 */  beqz  $a1, .Ljp7F0655B0
@@ -18108,7 +18108,7 @@ Weapon_shooting_pistol:
 .Ljp7F06560C:
 /* 09A17C 7F06560C A20F000D */  sb    $t7, 0xd($s0)
 .Ljp7F065610:
-/* 09A180 7F065610 0FC3021B */  jal   get_controls_locked_flag
+/* 09A180 7F065610 0FC3021B */  jal   lvlGetControlsLockedFlag
 /* 09A184 7F065614 00000000 */   nop
 /* 09A188 7F065618 2C450001 */  sltiu $a1, $v0, 1
 /* 09A18C 7F06561C 10A00005 */  beqz  $a1, .Ljp7F065634
@@ -18185,7 +18185,7 @@ Weapon_shooting_machinegun:
 .Ljp7F065720:
 /* 09A290 7F065720 A20F000D */  sb    $t7, 0xd($s0)
 .Ljp7F065724:
-/* 09A294 7F065724 0FC3021B */  jal   get_controls_locked_flag
+/* 09A294 7F065724 0FC3021B */  jal   lvlGetControlsLockedFlag
 /* 09A298 7F065728 00000000 */   nop
 /* 09A29C 7F06572C 2C450001 */  sltiu $a1, $v0, 1
 /* 09A2A0 7F065730 10A00005 */  beqz  $a1, .Ljp7F065748
@@ -18241,7 +18241,7 @@ Weapon_shooting_tazer:
 /* 09A34C 7F0657DC AE0E00BC */  sw    $t6, 0xbc($s0)
 /* 09A350 7F0657E0 15E0000F */  bnez  $t7, Weapon_shooting_throwable
 /* 09A354 7F0657E4 A219000D */   sb    $t9, 0xd($s0)
-/* 09A358 7F0657E8 0FC3021B */  jal   get_controls_locked_flag
+/* 09A358 7F0657E8 0FC3021B */  jal   lvlGetControlsLockedFlag
 /* 09A35C 7F0657EC 00000000 */   nop
 /* 09A360 7F0657F0 2C450001 */  sltiu $a1, $v0, 1
 /* 09A364 7F0657F4 10A00005 */  beqz  $a1, .Ljp7F06580C
@@ -20672,7 +20672,7 @@ glabel handle_weapon_id_values_possibly_1st_person_animation
 /* 097B74 7F065184 8E020024 */   lw    $v0, 0x24($s0)
 /* 097B78 7F065188 50C00051 */  beql  $a2, $zero, .L7F0652D0
 /* 097B7C 7F06518C 8E020024 */   lw    $v0, 0x24($s0)
-/* 097B80 7F065190 0FC2FC1E */  jal   get_controls_locked_flag
+/* 097B80 7F065190 0FC2FC1E */  jal   lvlGetControlsLockedFlag
 /* 097B84 7F065194 AFA601D4 */   sw    $a2, 0x1d4($sp)
 /* 097B88 7F065198 1440004C */  bnez  $v0, .L7F0652CC
 /* 097B8C 7F06519C 8FA601D4 */   lw    $a2, 0x1d4($sp)
@@ -20936,7 +20936,7 @@ Weapon_shooting_watch_magnet:
 /* 097F20 7F065530 240F0003 */  li    $t7, 3
 /* 097F24 7F065534 5700000D */  bnezl $t8, .L7F06556C
 /* 097F28 7F065538 AE0F0024 */   sw    $t7, 0x24($s0)
-/* 097F2C 7F06553C 0FC2FC1E */  jal   get_controls_locked_flag
+/* 097F2C 7F06553C 0FC2FC1E */  jal   lvlGetControlsLockedFlag
 /* 097F30 7F065540 00000000 */   nop
 /* 097F34 7F065544 2C450001 */  sltiu $a1, $v0, 1
 /* 097F38 7F065548 10A00005 */  beqz  $a1, .L7F065560
@@ -20974,7 +20974,7 @@ Weapon_shooting_pistol:
 .L7F0655BC:
 /* 097FAC 7F0655BC A20F000D */  sb    $t7, 0xd($s0)
 .L7F0655C0:
-/* 097FB0 7F0655C0 0FC2FC1E */  jal   get_controls_locked_flag
+/* 097FB0 7F0655C0 0FC2FC1E */  jal   lvlGetControlsLockedFlag
 /* 097FB4 7F0655C4 00000000 */   nop
 /* 097FB8 7F0655C8 2C450001 */  sltiu $a1, $v0, 1
 /* 097FBC 7F0655CC 10A00005 */  beqz  $a1, .L7F0655E4
@@ -21051,7 +21051,7 @@ Weapon_shooting_machinegun:
 .L7F0656D0:
 /* 0980C0 7F0656D0 A20F000D */  sb    $t7, 0xd($s0)
 .L7F0656D4:
-/* 0980C4 7F0656D4 0FC2FC1E */  jal   get_controls_locked_flag
+/* 0980C4 7F0656D4 0FC2FC1E */  jal   lvlGetControlsLockedFlag
 /* 0980C8 7F0656D8 00000000 */   nop
 /* 0980CC 7F0656DC 2C450001 */  sltiu $a1, $v0, 1
 /* 0980D0 7F0656E0 10A00005 */  beqz  $a1, .L7F0656F8
@@ -21107,7 +21107,7 @@ Weapon_shooting_tazer:
 /* 09817C 7F06578C AE0E00BC */  sw    $t6, 0xbc($s0)
 /* 098180 7F065790 15E0000F */  bnez  $t7, .L7F0657D0
 /* 098184 7F065794 A219000D */   sb    $t9, 0xd($s0)
-/* 098188 7F065798 0FC2FC1E */  jal   get_controls_locked_flag
+/* 098188 7F065798 0FC2FC1E */  jal   lvlGetControlsLockedFlag
 /* 09818C 7F06579C 00000000 */   nop
 /* 098190 7F0657A0 2C450001 */  sltiu $a1, $v0, 1
 /* 098194 7F0657A4 10A00005 */  beqz  $a1, .L7F0657BC
@@ -24095,7 +24095,7 @@ glabel sub_GAME_7F067420
 /* 09C564 7F067A34 14400016 */  bnez  $v0, .L7F067A90
 /* 09C568 7F067A38 8FA70034 */   lw    $a3, 0x34($sp)
 .L7F067A3C:
-/* 09C56C 7F067A3C 0FC2FF01 */  jal   get_controls_locked_flag
+/* 09C56C 7F067A3C 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 09C570 7F067A40 AFA70034 */   sw    $a3, 0x34($sp)
 /* 09C574 7F067A44 14400012 */  bnez  $v0, .L7F067A90
 /* 09C578 7F067A48 8FA70034 */   lw    $a3, 0x34($sp)

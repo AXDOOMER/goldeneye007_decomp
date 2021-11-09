@@ -20002,7 +20002,7 @@ glabel constructor_menu0A_briefing
 void init_menu0B_runstage(void)
 {
     bossSetLoadedStage(selected_stage);
-    set_difficulty(selected_difficulty);
+    lvlSetSelectedDifficulty(selected_difficulty);
 }
 
 void init_menu0C_missionfailed(void)
@@ -20117,7 +20117,7 @@ block_2:
 loop_4:
     if ((ptrbriefingdata + phi_s1)->unk8 != 0)
     {
-        if (get_current_difficulty() >= (ptrbriefingdata + phi_s1)->unkA)
+        if (lvlGetSelectedDifficulty() >= (ptrbriefingdata + phi_s1)->unkA)
         {
             if (get_status_of_objective(phi_s0) != 1)
             {
@@ -20167,7 +20167,7 @@ glabel sub_GAME_7F01631C
 /* 04AEA8 7F016378 97280008 */  lhu   $t0, 8($t9)
 /* 04AEAC 7F01637C 51000010 */  beql  $t0, $zero, .L7F0163C0
 /* 04AEB0 7F016380 26100001 */   addiu $s0, $s0, 1
-/* 04AEB4 7F016384 0FC2FF04 */  jal   get_current_difficulty
+/* 04AEB4 7F016384 0FC2FF04 */  jal   lvlGetSelectedDifficulty
 /* 04AEB8 7F016388 00000000 */   nop
 /* 04AEBC 7F01638C 8E490000 */  lw    $t1, ($s2)
 /* 04AEC0 7F016390 01315021 */  addu  $t2, $t1, $s1

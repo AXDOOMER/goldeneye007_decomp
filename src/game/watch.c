@@ -10154,7 +10154,7 @@ glabel draw_watch_mission_briefing_page
 .L7F0AC590:
 /* 0E10C0 7F0AC590 0FC15C81 */  jal   get_difficulty_for_objective
 /* 0E10C4 7F0AC594 03C02025 */   move  $a0, $fp
-/* 0E10C8 7F0AC598 0FC2FF04 */  jal   get_current_difficulty
+/* 0E10C8 7F0AC598 0FC2FF04 */  jal   lvlGetSelectedDifficulty
 /* 0E10CC 7F0AC59C AFA20068 */   sw    $v0, 0x68($sp)
 /* 0E10D0 7F0AC5A0 8FA40068 */  lw    $a0, 0x68($sp)
 /* 0E10D4 7F0AC5A4 0044082A */  slt   $at, $v0, $a0

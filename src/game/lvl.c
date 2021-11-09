@@ -147,8 +147,11 @@ s32 g_MpPoint = 0xA;
  */
 ALSoundState * g_MpSoundStateRelated = NULL;
 
-//D:800483A4
+/**
+ * Address 0x800483A4.
+ */
 f32 g_CurrentMultiPlayerSec = 0.0;
+
 //D:800483A8
 s32 D_800483A8 = 0;
 
@@ -160,13 +163,19 @@ f32 g_CurrentMultiPlayerMin = 0.0;
 //D:800483B0
 s32 D_800483B0 = 0;
 
-//D:800483B4
+/**
+ * Address 0x800483B4.
+ */
 f32 g_StageTimeSec = 0;
 
 //D:800483B8
 s32 D_800483B8 = 0;
-//D:800483BC
-f32 poweron_time_sec = 0;
+
+/**
+ * Power on time in seconds.
+ * Address 0x800483BC.
+ */
+f32 g_PowerOnTimeSec = 0;
 
 /**
  * Debug variable, seems to track whether user input has changed since
@@ -182,7 +191,7 @@ s32 D_800483C4 = 0xFFFFFFFF;
 //D:800483C8
 struct LvlMpUnknown *D_800483C8 = NULL;
 
-/*
+/**
 * Debug variable, something to do with portals.
 * Address 0x800483CC.
 */
@@ -237,15 +246,17 @@ extern Gfx *D_01000040;
 
 // forward declarations
 
-Gfx * sub_GAME_7F0BDF10(Gfx * arg0);
+Gfx * lvlPortalDebug7F0BDF10(Gfx * arg0);
 
 // end forward declarations
 
-s32 sub_GAME_7F0BD8F0(void) {
+s32 sub_GAME_7F0BD8F0(void)
+{
     return D_800483C0;
 }
 
-void sub_GAME_7F0BD8FC(s32 arg0) {
+void sub_GAME_7F0BD8FC(s32 arg0)
+{
     D_800483C0 = arg0;
 }
 
@@ -260,46 +271,51 @@ void lvInitDebugNoticeList(void)
     romCopy(ptr_jfont_DL, &_jfontdlSegmentStart, temp_a2);
 }
 
-
-
-
-void playrandommusictrack1(void)
+/**
+ * Unreferenced.
+ */
+void lvlPlayRandomMusicTrack1(void)
 {
     musictrack1_playing = randomGetNext() % 0x3dU + M_INTRO;
     musicTrack1Play(musictrack1_playing);
 }
 
-void playmusictrack1(MUSIC_TRACKS track)
+void lvlPlayMusicTrack1(MUSIC_TRACKS track)
 {
     musictrack1_playing = track;
     musicTrack1Play(musictrack1_playing);
 }
 
-void music_append_play_solo_death_short(void)
+void lvlMusicAppendPlaySoloDeathShort(void)
 {
-    musictrack1_playing = (musictrack1_playing + M_SHORT_SOLO_DEATH) % 0x3f;
+    musictrack1_playing = (musictrack1_playing + M_SHORT_SOLO_DEATH) % NUM_MUSIC_TRACKS;
 
-    if (musictrack1_playing == M_NONE) {
+    if (musictrack1_playing == M_NONE)
+    {
         musictrack1_playing = M_SHORT_SOLO_DEATH;
     }
 
     musicTrack1Play(musictrack1_playing);
 }
 
-void music_append_play_endtheme(void)
+void lvlMusicAppendPlayEndTheme(void)
 {
-    musictrack1_playing = (musictrack1_playing + M_END_SOMETHING) % 0x3f;
+    musictrack1_playing = (musictrack1_playing + M_END_SOMETHING) % NUM_MUSIC_TRACKS;
 
-    if (musictrack1_playing == M_NONE) {
+    if (musictrack1_playing == M_NONE)
+    {
         musictrack1_playing = M_END_SOMETHING;
     }
 
     musicTrack1Play(musictrack1_playing);
 }
 
-void music_play_stagetrack_or_random(void)
+/**
+ * Unreferenced.
+ */
+void lvlMusicPlayStageTrackOrRandom(void)
 {
-    playmusictrack1(getmusictrack_or_randomtrack(g_CurrentStageToLoad));
+    lvlPlayMusicTrack1(getmusictrack_or_randomtrack(g_CurrentStageToLoad));
 }
 
 
@@ -319,9 +335,9 @@ void music_play_stagetrack_or_random(void)
  * - identical instructions: yes
  * - identical registers: fail
  * 
- * notes: only regalloc issues. Problem seems to be around the do{}while loop on g_playerPlayerData.
+ * notes: only regalloc issues. Problem seems to be around the do{}while / for loop on g_playerPlayerData.
  */
-void stage_load(s32 stage)
+void lvlStageLoad(s32 stage)
 {
     s32 i;
     struct player_data *player_data;
@@ -446,8 +462,8 @@ void stage_load(s32 stage)
                     g_playerPlayerData[s3].player_perspective_height = get_player_mp_char_height(s3);
                 }
 
-                set_mp_time(get_mp_timelimit());
-                set_mp_point(get_mp_pointlimit());
+                lvlSetMpTime(get_mp_timelimit());
+                lvlSetMpPoint(get_mp_pointlimit());
                 copy_aim_settings_to_playerdata();
             }
 
@@ -519,13 +535,13 @@ void stage_load(s32 stage)
     zbufDeallocate();
     viSetVideoMode(1);
     D_80048368 = 1.0f;
-    set_controls_locked_flag(0);
+    lvlSetControlsLockedFlag(0);
 }
 #endif
 #ifdef VERSION_US
 GLOBAL_ASM(
 .text
-glabel stage_load
+glabel lvlStageLoad
 /* 0F25E0 7F0BDAB0 3C018005 */  lui   $at, %hi(g_CurrentStageToLoad)
 /* 0F25E4 7F0BDAB4 AC248364 */  sw    $a0, %lo(g_CurrentStageToLoad)($at)
 /* 0F25E8 7F0BDAB8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
@@ -690,11 +706,11 @@ glabel stage_load
 /* 0F2838 7F0BDD08 E620FFF4 */   swc1  $f0, -0xc($s1)
 /* 0F283C 7F0BDD0C 0FC04108 */  jal   get_mp_timelimit
 /* 0F2840 7F0BDD10 00000000 */   nop
-/* 0F2844 7F0BDD14 0FC2FF0A */  jal   set_mp_time
+/* 0F2844 7F0BDD14 0FC2FF0A */  jal   lvlSetMpTime
 /* 0F2848 7F0BDD18 00402025 */   move  $a0, $v0
 /* 0F284C 7F0BDD1C 0FC04111 */  jal   get_mp_pointlimit
 /* 0F2850 7F0BDD20 00000000 */   nop
-/* 0F2854 7F0BDD24 0FC2FF0D */  jal   set_mp_point
+/* 0F2854 7F0BDD24 0FC2FF0D */  jal   lvlSetMpPoint
 /* 0F2858 7F0BDD28 00402025 */   move  $a0, $v0
 /* 0F285C 7F0BDD2C 0FC04076 */  jal   copy_aim_settings_to_playerdata
 /* 0F2860 7F0BDD30 00000000 */   nop
@@ -809,7 +825,7 @@ glabel stage_load
 /* 0F29FC 7F0BDECC 44818000 */  mtc1  $at, $f16
 /* 0F2A00 7F0BDED0 3C018005 */  lui   $at, %hi(D_80048368)
 /* 0F2A04 7F0BDED4 00002025 */  move  $a0, $zero
-/* 0F2A08 7F0BDED8 0FC2FEFE */  jal   set_controls_locked_flag
+/* 0F2A08 7F0BDED8 0FC2FEFE */  jal   lvlSetControlsLockedFlag
 /* 0F2A0C 7F0BDEDC E4308368 */   swc1  $f16, %lo(D_80048368)($at)
 /* 0F2A10 7F0BDEE0 8FBF0034 */  lw    $ra, 0x34($sp)
 /* 0F2A14 7F0BDEE4 D7B40018 */  ldc1  $f20, 0x18($sp)
@@ -826,7 +842,7 @@ glabel stage_load
 #ifdef VERSION_JP
 GLOBAL_ASM(
 .text
-glabel stage_load
+glabel lvlStageLoad
 /* 0F31D0 7F0BE660 3C018005 */  lui   $at, %hi(g_CurrentStageToLoad) # $at, 0x8005
 /* 0F31D4 7F0BE664 AC248394 */  sw    $a0, %lo(g_CurrentStageToLoad)($at)
 /* 0F31D8 7F0BE668 3C013F80 */  li    $at, 0x3F800000 # 1.000000
@@ -995,11 +1011,11 @@ glabel stage_load
 /* 0F3438 7F0BE8C8 E620FFF4 */   swc1  $f0, -0xc($s1)
 /* 0F343C 7F0BE8CC 0FC04118 */  jal   get_mp_timelimit
 /* 0F3440 7F0BE8D0 00000000 */   nop
-/* 0F3444 7F0BE8D4 0FC30224 */  jal   set_mp_time
+/* 0F3444 7F0BE8D4 0FC30224 */  jal   lvlSetMpTime
 /* 0F3448 7F0BE8D8 00402025 */   move  $a0, $v0
 /* 0F344C 7F0BE8DC 0FC04121 */  jal   get_mp_pointlimit
 /* 0F3450 7F0BE8E0 00000000 */   nop
-/* 0F3454 7F0BE8E4 0FC30227 */  jal   set_mp_point
+/* 0F3454 7F0BE8E4 0FC30227 */  jal   lvlSetMpPoint
 /* 0F3458 7F0BE8E8 00402025 */   move  $a0, $v0
 /* 0F345C 7F0BE8EC 0FC04086 */  jal   copy_aim_settings_to_playerdata
 /* 0F3460 7F0BE8F0 00000000 */   nop
@@ -1114,7 +1130,7 @@ glabel stage_load
 /* 0F35FC 7F0BEA8C 44819000 */  mtc1  $at, $f18
 /* 0F3600 7F0BEA90 3C018005 */  lui   $at, %hi(D_80048368) # $at, 0x8005
 /* 0F3604 7F0BEA94 00002025 */  move  $a0, $zero
-/* 0F3608 7F0BEA98 0FC3020C */  jal   set_controls_locked_flag
+/* 0F3608 7F0BEA98 0FC3020C */  jal   lvlSetControlsLockedFlag
 /* 0F360C 7F0BEA9C E4328398 */   swc1  $f18, %lo(D_80048368)($at)
 /* 0F3610 7F0BEAA0 8FBF0034 */  lw    $ra, 0x34($sp)
 /* 0F3614 7F0BEAA4 D7B40018 */  ldc1  $f20, 0x18($sp)
@@ -1130,7 +1146,7 @@ glabel stage_load
 #ifdef VERSION_EU
 GLOBAL_ASM(
 .text
-glabel stage_load
+glabel lvlStageLoad
 /* 0F25E0 7F0BDAB0 3C018005 */  lui   $at, %hi(g_CurrentStageToLoad)
 /* 0F25E4 7F0BDAB4 AC248364 */  sw    $a0, %lo(g_CurrentStageToLoad)($at)
 /* 0F25E8 7F0BDAB8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
@@ -1295,11 +1311,11 @@ glabel stage_load
 /* 0F2838 7F0BDD08 E620FFF4 */   swc1  $f0, -0xc($s1)
 /* 0F283C 7F0BDD0C 0FC04108 */  jal   get_mp_timelimit
 /* 0F2840 7F0BDD10 00000000 */   nop
-/* 0F2844 7F0BDD14 0FC2FF0A */  jal   set_mp_time
+/* 0F2844 7F0BDD14 0FC2FF0A */  jal   lvlSetMpTime
 /* 0F2848 7F0BDD18 00402025 */   move  $a0, $v0
 /* 0F284C 7F0BDD1C 0FC04111 */  jal   get_mp_pointlimit
 /* 0F2850 7F0BDD20 00000000 */   nop
-/* 0F2854 7F0BDD24 0FC2FF0D */  jal   set_mp_point
+/* 0F2854 7F0BDD24 0FC2FF0D */  jal   lvlSetMpPoint
 /* 0F2858 7F0BDD28 00402025 */   move  $a0, $v0
 /* 0F285C 7F0BDD2C 0FC04076 */  jal   copy_aim_settings_to_playerdata
 /* 0F2860 7F0BDD30 00000000 */   nop
@@ -1414,7 +1430,7 @@ glabel stage_load
 /* 0F29FC 7F0BDECC 44818000 */  mtc1  $at, $f16
 /* 0F2A00 7F0BDED0 3C018005 */  lui   $at, %hi(D_80048368)
 /* 0F2A04 7F0BDED4 00002025 */  move  $a0, $zero
-/* 0F2A08 7F0BDED8 0FC2FEFE */  jal   set_controls_locked_flag
+/* 0F2A08 7F0BDED8 0FC2FEFE */  jal   lvlSetControlsLockedFlag
 /* 0F2A0C 7F0BDEDC E4308368 */   swc1  $f16, %lo(D_80048368)($at)
 /* 0F2A10 7F0BDEE0 8FBF0034 */  lw    $ra, 0x34($sp)
 /* 0F2A14 7F0BDEE4 D7B40018 */  ldc1  $f20, 0x18($sp)
@@ -1431,7 +1447,8 @@ glabel stage_load
 
 
 
-s32 sub_GAME_7F0BDF04(void) {
+s32 lvlGetCurrentStageToLoad(void)
+{
     return g_CurrentStageToLoad;
 }
 
@@ -1449,7 +1466,7 @@ s32 sub_GAME_7F0BDF04(void) {
  * - identical instructions: no
  * - identical registers: fail
  */
-Gfx * sub_GAME_7F0BDF10(Gfx * arg0)
+Gfx * lvlPortalDebug7F0BDF10(Gfx * arg0)
 {
     s32 sp20;
     s32 temp_v1;
@@ -1588,7 +1605,7 @@ Gfx * sub_GAME_7F0BDF10(Gfx * arg0)
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0BDF10
+glabel lvlPortalDebug7F0BDF10
 /* 0F2A40 7F0BDF10 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0F2A44 7F0BDF14 AFBF001C */  sw    $ra, 0x1c($sp)
 /* 0F2A48 7F0BDF18 AFB00018 */  sw    $s0, 0x18($sp)
@@ -1870,7 +1887,7 @@ glabel sub_GAME_7F0BDF10
  * 
  * Address 0x7F0BE30C (VERSION_US).
  */
-Gfx* lvRender(Gfx* DL)
+Gfx* lvlRender(Gfx* DL)
 {
     gSPSegment(DL++, 0, NULL);
     gSPSegment(DL++, 1, osVirtualToPhysical(ptr_jfont_DL));
@@ -1940,7 +1957,7 @@ Gfx* lvRender(Gfx* DL)
 
             if (get_debug_portal_flag())
             {
-                DL = sub_GAME_7F0BDF10(DL);
+                DL = lvlPortalDebug7F0BDF10(DL);
             }
 
             if (get_debug_stan_problems_flag())
@@ -2042,7 +2059,7 @@ Gfx* lvRender(Gfx* DL)
  * 
  * address 0x7F0BE8D0
  */
-void setDamageMultipliersForDifficulty(void)
+void lvlSetMultipliersForDifficulty(void)
 {
     if (g_SelectedDifficulty == DIFFICULTY_AGENT)
     {
@@ -2164,7 +2181,7 @@ void setDamageMultipliersForDifficulty(void)
  * notes: there is one big `if` block that is very wrong. A few places where two instructions are swapped.
  * Otherwise just lots of regalloc.
  */
-void manage_mp_game(void)
+void lvlManageMpGame(void)
 {
     s32 sp184;
     s32 sp180;
@@ -2274,12 +2291,12 @@ void manage_mp_game(void)
                 }
             }
 
-            if ((sp180 >= (g_MpTime - 0x258)) && (g_MpSoundStateRelated == 0) && (get_controls_locked_flag() == 0))
+            if ((sp180 >= (g_MpTime - 0x258)) && (g_MpSoundStateRelated == 0) && (lvlGetControlsLockedFlag() == 0))
             {
                 sndPlaySfx(g_musicSfxBufferPtr, 0xA1, &g_MpSoundStateRelated);
             }
 
-            if (get_controls_locked_flag() != 0)
+            if (lvlGetControlsLockedFlag() != 0)
             {
                 if ((g_MpSoundStateRelated != NULL) && (sndGetPlayingState(g_MpSoundStateRelated) != 0))
                 {
@@ -2452,7 +2469,7 @@ void manage_mp_game(void)
         D_800483B0 = D_800483B0 + copy_g_clockTimer;
         g_StageTimeSec = (f32) (D_800483B0) / 60.0f;
         D_800483B8 = D_800483B8 + copy_g_clockTimer;
-        poweron_time_sec = (f32) (D_800483B8) / 60.0f;
+        g_PowerOnTimeSec = (f32) (D_800483B8) / 60.0f;
     }
 
     viSetUseZBuf(1);
@@ -2466,7 +2483,7 @@ void manage_mp_game(void)
     else
     {
         sub_GAME_7F09BBBC();
-        setDamageMultipliersForDifficulty();
+        lvlSetMultipliersForDifficulty();
         sub_GAME_7F0BC7D4();
         sub_GAME_7F092E50();
         sub_GAME_7F094438();
@@ -2495,7 +2512,7 @@ void manage_mp_game(void)
 
         if (get_debug_portal_flag() != 0)
         {
-            sub_GAME_7F0BDF10(0);
+            lvlPortalDebug7F0BDF10(0);
         }
 
         switch (get_debug_limit_controller_input())
@@ -2571,12 +2588,12 @@ void manage_mp_game(void)
         {
             if (joyGetButtonsPressedThisFrame(PLAYER_1, (L_JPAD | L_CBUTTONS)))
             {
-                music_append_play_endtheme();
+                lvlMusicAppendPlayEndTheme();
             }
 
             if (joyGetButtonsPressedThisFrame(PLAYER_1, (R_JPAD | R_CBUTTONS)))
             {
-                music_append_play_solo_death_short();
+                lvlMusicAppendPlaySoloDeathShort();
             }
 
             if (joyGetButtonsPressedThisFrame(PLAYER_1, D_JPAD))
@@ -2652,7 +2669,7 @@ glabel aSetdetailDDDDDDDDD
 .word 0x64202564
 .word 0x00000000
 .text
-glabel manage_mp_game
+glabel lvlManageMpGame
 /* 0F36B8 7F0BEB88 27BDFE68 */  addiu $sp, $sp, -0x198
 /* 0F36BC 7F0BEB8C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F36C0 7F0BEB90 0C000626 */  jal   tlbmanageResetCurrentEntriesCount
@@ -2836,7 +2853,7 @@ glabel manage_mp_game
 /* 0F3954 7F0BEE24 8F3983A0 */  lw    $t9, %lo(g_MpSoundStateRelated)($t9)
 /* 0F3958 7F0BEE28 1720000A */  bnez  $t9, .L7F0BEE54
 /* 0F395C 7F0BEE2C 00000000 */   nop
-/* 0F3960 7F0BEE30 0FC2FF01 */  jal   get_controls_locked_flag
+/* 0F3960 7F0BEE30 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 0F3964 7F0BEE34 00000000 */   nop
 /* 0F3968 7F0BEE38 14400006 */  bnez  $v0, .L7F0BEE54
 /* 0F396C 7F0BEE3C 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
@@ -2846,7 +2863,7 @@ glabel manage_mp_game
 /* 0F397C 7F0BEE4C 0C002382 */  jal   sndPlaySfx
 /* 0F3980 7F0BEE50 240500A1 */   li    $a1, 161
 .L7F0BEE54:
-/* 0F3984 7F0BEE54 0FC2FF01 */  jal   get_controls_locked_flag
+/* 0F3984 7F0BEE54 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 0F3988 7F0BEE58 00000000 */   nop
 /* 0F398C 7F0BEE5C 1040000A */  beqz  $v0, .L7F0BEE88
 /* 0F3990 7F0BEE60 3C048005 */   lui   $a0, %hi(g_MpSoundStateRelated)
@@ -3174,13 +3191,13 @@ glabel manage_mp_game
 /* 0F3E28 7F0BF2F8 46009103 */  div.s $f4, $f18, $f0
 /* 0F3E2C 7F0BF2FC E42483B4 */  swc1  $f4, %lo(g_StageTimeSec)($at)
 /* 0F3E30 7F0BF300 8C980000 */  lw    $t8, ($a0)
-/* 0F3E34 7F0BF304 3C018005 */  lui   $at, %hi(poweron_time_sec)
+/* 0F3E34 7F0BF304 3C018005 */  lui   $at, %hi(g_PowerOnTimeSec)
 /* 0F3E38 7F0BF308 03027021 */  addu  $t6, $t8, $v0
 /* 0F3E3C 7F0BF30C 448E3000 */  mtc1  $t6, $f6
 /* 0F3E40 7F0BF310 AC8E0000 */  sw    $t6, ($a0)
 /* 0F3E44 7F0BF314 46803220 */  cvt.s.w $f8, $f6
 /* 0F3E48 7F0BF318 46004283 */  div.s $f10, $f8, $f0
-/* 0F3E4C 7F0BF31C E42A83BC */  swc1  $f10, %lo(poweron_time_sec)($at)
+/* 0F3E4C 7F0BF31C E42A83BC */  swc1  $f10, %lo(g_PowerOnTimeSec)($at)
 .L7F0BF320:
 /* 0F3E50 7F0BF320 0C00114D */  jal   viSetUseZBuf
 /* 0F3E54 7F0BF324 24040001 */   li    $a0, 1
@@ -3200,7 +3217,7 @@ glabel manage_mp_game
 .L7F0BF35C:
 /* 0F3E8C 7F0BF35C 0FC26EEF */  jal   sub_GAME_7F09BBBC
 /* 0F3E90 7F0BF360 00000000 */   nop
-/* 0F3E94 7F0BF364 0FC2FA34 */  jal   setDamageMultipliersForDifficulty
+/* 0F3E94 7F0BF364 0FC2FA34 */  jal   lvlSetMultipliersForDifficulty
 /* 0F3E98 7F0BF368 00000000 */   nop
 /* 0F3E9C 7F0BF36C 0FC2F1F5 */  jal   sub_GAME_7F0BC7D4
 /* 0F3EA0 7F0BF370 00000000 */   nop
@@ -3308,7 +3325,7 @@ glabel manage_mp_game
 /* 0F4030 7F0BF500 00000000 */   nop
 /* 0F4034 7F0BF504 10400003 */  beqz  $v0, .L7F0BF514
 /* 0F4038 7F0BF508 00000000 */   nop
-/* 0F403C 7F0BF50C 0FC2F7C4 */  jal   sub_GAME_7F0BDF10
+/* 0F403C 7F0BF50C 0FC2F7C4 */  jal   lvlPortalDebug7F0BDF10
 /* 0F4040 7F0BF510 00002025 */   move  $a0, $zero
 .L7F0BF514:
 /* 0F4044 7F0BF514 0FC243C5 */  jal   get_debug_limit_controller_input
@@ -3435,7 +3452,7 @@ glabel manage_mp_game
 /* 0F41F8 7F0BF6C8 24050202 */   li    $a1, 514
 /* 0F41FC 7F0BF6CC 50400004 */  beql  $v0, $zero, .L7F0BF6E0
 /* 0F4200 7F0BF6D0 00002025 */   move  $a0, $zero
-/* 0F4204 7F0BF6D4 0FC2F68E */  jal   music_append_play_endtheme
+/* 0F4204 7F0BF6D4 0FC2F68E */  jal   lvlMusicAppendPlayEndTheme
 /* 0F4208 7F0BF6D8 00000000 */   nop
 /* 0F420C 7F0BF6DC 00002025 */  move  $a0, $zero
 .L7F0BF6E0:
@@ -3443,7 +3460,7 @@ glabel manage_mp_game
 /* 0F4214 7F0BF6E4 24050101 */   li    $a1, 257
 /* 0F4218 7F0BF6E8 50400004 */  beql  $v0, $zero, .L7F0BF6FC
 /* 0F421C 7F0BF6EC 00002025 */   move  $a0, $zero
-/* 0F4220 7F0BF6F0 0FC2F67B */  jal   music_append_play_solo_death_short
+/* 0F4220 7F0BF6F0 0FC2F67B */  jal   lvlMusicAppendPlaySoloDeathShort
 /* 0F4224 7F0BF6F4 00000000 */   nop
 /* 0F4228 7F0BF6F8 00002025 */  move  $a0, $zero
 .L7F0BF6FC:
@@ -3538,7 +3555,7 @@ glabel aSetdetailDDDDDDDDD
 .word 0x64202564
 .word 0x00000000
 .text
-glabel manage_mp_game
+glabel lvlManageMpGame
 /* 0F431C 7F0BF7AC 27BDFE68 */  addiu $sp, $sp, -0x198
 /* 0F4320 7F0BF7B0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F4324 7F0BF7B4 0C000626 */  jal   tlbmanageResetCurrentEntriesCount
@@ -3727,7 +3744,7 @@ glabel manage_mp_game
 /* 0F45CC 7F0BFA5C 8F3983D4 */  lw    $t9, %lo(g_MpSoundStateRelated)($t9)
 /* 0F45D0 7F0BFA60 1720000A */  bnez  $t9, .Ljp7F0BFA8C
 /* 0F45D4 7F0BFA64 00000000 */   nop
-/* 0F45D8 7F0BFA68 0FC3021B */  jal   get_controls_locked_flag
+/* 0F45D8 7F0BFA68 0FC3021B */  jal   lvlGetControlsLockedFlag
 /* 0F45DC 7F0BFA6C 00000000 */   nop
 /* 0F45E0 7F0BFA70 14400006 */  bnez  $v0, .Ljp7F0BFA8C
 /* 0F45E4 7F0BFA74 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
@@ -3737,7 +3754,7 @@ glabel manage_mp_game
 /* 0F45F4 7F0BFA84 0C002386 */  jal   sndPlaySfx
 /* 0F45F8 7F0BFA88 240500A1 */   li    $a1, 161
 .Ljp7F0BFA8C:
-/* 0F45FC 7F0BFA8C 0FC3021B */  jal   get_controls_locked_flag
+/* 0F45FC 7F0BFA8C 0FC3021B */  jal   lvlGetControlsLockedFlag
 /* 0F4600 7F0BFA90 00000000 */   nop
 /* 0F4604 7F0BFA94 1040000A */  beqz  $v0, .Ljp7F0BFAC0
 /* 0F4608 7F0BFA98 3C048005 */   lui   $a0, %hi(g_MpSoundStateRelated) # $a0, 0x8005
@@ -4065,13 +4082,13 @@ glabel manage_mp_game
 /* 0F4AA0 7F0BFF30 46002183 */  div.s $f6, $f4, $f0
 /* 0F4AA4 7F0BFF34 E42683E8 */  swc1  $f6, %lo(g_StageTimeSec)($at)
 /* 0F4AA8 7F0BFF38 8C980000 */  lw    $t8, ($a0)
-/* 0F4AAC 7F0BFF3C 3C018005 */  lui   $at, %hi(poweron_time_sec) # $at, 0x8005
+/* 0F4AAC 7F0BFF3C 3C018005 */  lui   $at, %hi(g_PowerOnTimeSec) # $at, 0x8005
 /* 0F4AB0 7F0BFF40 03027021 */  addu  $t6, $t8, $v0
 /* 0F4AB4 7F0BFF44 448E4000 */  mtc1  $t6, $f8
 /* 0F4AB8 7F0BFF48 AC8E0000 */  sw    $t6, ($a0)
 /* 0F4ABC 7F0BFF4C 468042A0 */  cvt.s.w $f10, $f8
 /* 0F4AC0 7F0BFF50 46005403 */  div.s $f16, $f10, $f0
-/* 0F4AC4 7F0BFF54 E43083F0 */  swc1  $f16, %lo(poweron_time_sec)($at)
+/* 0F4AC4 7F0BFF54 E43083F0 */  swc1  $f16, %lo(g_PowerOnTimeSec)($at)
 .Ljp7F0BFF58:
 /* 0F4AC8 7F0BFF58 0C00114D */  jal   viSetUseZBuf
 /* 0F4ACC 7F0BFF5C 24040001 */   li    $a0, 1
@@ -4091,7 +4108,7 @@ glabel manage_mp_game
 .Ljp7F0BFF94:
 /* 0F4B04 7F0BFF94 0FC271D7 */  jal   sub_GAME_7F09BBBC
 /* 0F4B08 7F0BFF98 00000000 */   nop
-/* 0F4B0C 7F0BFF9C 0FC2FD2D */  jal   setDamageMultipliersForDifficulty
+/* 0F4B0C 7F0BFF9C 0FC2FD2D */  jal   lvlSetMultipliersForDifficulty
 /* 0F4B10 7F0BFFA0 00000000 */   nop
 /* 0F4B14 7F0BFFA4 0FC2F4E1 */  jal   sub_GAME_7F0BC7D4
 /* 0F4B18 7F0BFFA8 00000000 */   nop
@@ -4199,7 +4216,7 @@ glabel manage_mp_game
 /* 0F4CA8 7F0C0138 00000000 */   nop
 /* 0F4CAC 7F0C013C 10400003 */  beqz  $v0, .Ljp7F0C014C
 /* 0F4CB0 7F0C0140 00000000 */   nop
-/* 0F4CB4 7F0C0144 0FC2FAB4 */  jal   sub_GAME_7F0BDF10
+/* 0F4CB4 7F0C0144 0FC2FAB4 */  jal   lvlPortalDebug7F0BDF10
 /* 0F4CB8 7F0C0148 00002025 */   move  $a0, $zero
 .Ljp7F0C014C:
 /* 0F4CBC 7F0C014C 0FC2467D */  jal   get_debug_limit_controller_input
@@ -4326,7 +4343,7 @@ glabel manage_mp_game
 /* 0F4E70 7F0C0300 24050202 */   li    $a1, 514
 /* 0F4E74 7F0C0304 50400004 */  beql  $v0, $zero, .Ljp7F0C0318
 /* 0F4E78 7F0C0308 00002025 */   move  $a0, $zero
-/* 0F4E7C 7F0C030C 0FC2F97A */  jal   music_append_play_endtheme
+/* 0F4E7C 7F0C030C 0FC2F97A */  jal   lvlMusicAppendPlayEndTheme
 /* 0F4E80 7F0C0310 00000000 */   nop
 /* 0F4E84 7F0C0314 00002025 */  move  $a0, $zero
 .Ljp7F0C0318:
@@ -4334,7 +4351,7 @@ glabel manage_mp_game
 /* 0F4E8C 7F0C031C 24050101 */   li    $a1, 257
 /* 0F4E90 7F0C0320 50400004 */  beql  $v0, $zero, .Ljp7F0C0334
 /* 0F4E94 7F0C0324 00002025 */   move  $a0, $zero
-/* 0F4E98 7F0C0328 0FC2F967 */  jal   music_append_play_solo_death_short
+/* 0F4E98 7F0C0328 0FC2F967 */  jal   lvlMusicAppendPlaySoloDeathShort
 /* 0F4E9C 7F0C032C 00000000 */   nop
 /* 0F4EA0 7F0C0330 00002025 */  move  $a0, $zero
 .Ljp7F0C0334:
@@ -4423,7 +4440,7 @@ glabel aOneMinuteLeft
 .word 0x7465206c
 .word 0x65667400
 .text
-glabel manage_mp_game
+glabel lvlManageMpGame
 /* 0F36B8 7F0BEB88 27BDFE68 */  addiu $sp, $sp, -0x198
 /* 0F36BC 7F0BEB8C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F36C0 7F0BEB90 0C000626 */  jal   tlbmanageResetCurrentEntriesCount
@@ -4607,7 +4624,7 @@ glabel manage_mp_game
 /* 0F3954 7F0BEE24 8F3983A0 */  lw    $t9, %lo(g_MpSoundStateRelated)($t9)
 /* 0F3958 7F0BEE28 1720000A */  bnez  $t9, .L7F0BEE54
 /* 0F395C 7F0BEE2C 00000000 */   nop
-/* 0F3960 7F0BEE30 0FC2FF01 */  jal   get_controls_locked_flag
+/* 0F3960 7F0BEE30 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 0F3964 7F0BEE34 00000000 */   nop
 /* 0F3968 7F0BEE38 14400006 */  bnez  $v0, .L7F0BEE54
 /* 0F396C 7F0BEE3C 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
@@ -4617,7 +4634,7 @@ glabel manage_mp_game
 /* 0F397C 7F0BEE4C 0C002382 */  jal   sndPlaySfx
 /* 0F3980 7F0BEE50 240500A1 */   li    $a1, 161
 .L7F0BEE54:
-/* 0F3984 7F0BEE54 0FC2FF01 */  jal   get_controls_locked_flag
+/* 0F3984 7F0BEE54 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 0F3988 7F0BEE58 00000000 */   nop
 /* 0F398C 7F0BEE5C 1040000A */  beqz  $v0, .L7F0BEE88
 /* 0F3990 7F0BEE60 3C048005 */   lui   $a0, %hi(g_MpSoundStateRelated)
@@ -4945,13 +4962,13 @@ glabel manage_mp_game
 /* 0F3E28 7F0BF2F8 46009103 */  div.s $f4, $f18, $f0
 /* 0F3E2C 7F0BF2FC E42483B4 */  swc1  $f4, %lo(g_StageTimeSec)($at)
 /* 0F3E30 7F0BF300 8C980000 */  lw    $t8, ($a0)
-/* 0F3E34 7F0BF304 3C018005 */  lui   $at, %hi(poweron_time_sec)
+/* 0F3E34 7F0BF304 3C018005 */  lui   $at, %hi(g_PowerOnTimeSec)
 /* 0F3E38 7F0BF308 03027021 */  addu  $t6, $t8, $v0
 /* 0F3E3C 7F0BF30C 448E3000 */  mtc1  $t6, $f6
 /* 0F3E40 7F0BF310 AC8E0000 */  sw    $t6, ($a0)
 /* 0F3E44 7F0BF314 46803220 */  cvt.s.w $f8, $f6
 /* 0F3E48 7F0BF318 46004283 */  div.s $f10, $f8, $f0
-/* 0F3E4C 7F0BF31C E42A83BC */  swc1  $f10, %lo(poweron_time_sec)($at)
+/* 0F3E4C 7F0BF31C E42A83BC */  swc1  $f10, %lo(g_PowerOnTimeSec)($at)
 .L7F0BF320:
 /* 0F3E50 7F0BF320 0C00114D */  jal   viSetUseZBuf
 /* 0F3E54 7F0BF324 24040001 */   li    $a0, 1
@@ -4971,7 +4988,7 @@ glabel manage_mp_game
 .L7F0BF35C:
 /* 0F3E8C 7F0BF35C 0FC26EEF */  jal   sub_GAME_7F09BBBC
 /* 0F3E90 7F0BF360 00000000 */   nop
-/* 0F3E94 7F0BF364 0FC2FA34 */  jal   setDamageMultipliersForDifficulty
+/* 0F3E94 7F0BF364 0FC2FA34 */  jal   lvlSetMultipliersForDifficulty
 /* 0F3E98 7F0BF368 00000000 */   nop
 /* 0F3E9C 7F0BF36C 0FC2F1F5 */  jal   sub_GAME_7F0BC7D4
 /* 0F3EA0 7F0BF370 00000000 */   nop
@@ -5079,7 +5096,7 @@ glabel manage_mp_game
 /* 0F4030 7F0BF500 00000000 */   nop
 /* 0F4034 7F0BF504 10400003 */  beqz  $v0, .L7F0BF514
 /* 0F4038 7F0BF508 00000000 */   nop
-/* 0F403C 7F0BF50C 0FC2F7C4 */  jal   sub_GAME_7F0BDF10
+/* 0F403C 7F0BF50C 0FC2F7C4 */  jal   lvlPortalDebug7F0BDF10
 /* 0F4040 7F0BF510 00002025 */   move  $a0, $zero
 .L7F0BF514:
 /* 0F4044 7F0BF514 0FC243C5 */  jal   get_debug_limit_controller_input
@@ -5206,7 +5223,7 @@ glabel manage_mp_game
 /* 0F41F8 7F0BF6C8 24050202 */   li    $a1, 514
 /* 0F41FC 7F0BF6CC 50400004 */  beql  $v0, $zero, .L7F0BF6E0
 /* 0F4200 7F0BF6D0 00002025 */   move  $a0, $zero
-/* 0F4204 7F0BF6D4 0FC2F68E */  jal   music_append_play_endtheme
+/* 0F4204 7F0BF6D4 0FC2F68E */  jal   lvlMusicAppendPlayEndTheme
 /* 0F4208 7F0BF6D8 00000000 */   nop
 /* 0F420C 7F0BF6DC 00002025 */  move  $a0, $zero
 .L7F0BF6E0:
@@ -5214,7 +5231,7 @@ glabel manage_mp_game
 /* 0F4214 7F0BF6E4 24050101 */   li    $a1, 257
 /* 0F4218 7F0BF6E8 50400004 */  beql  $v0, $zero, .L7F0BF6FC
 /* 0F421C 7F0BF6EC 00002025 */   move  $a0, $zero
-/* 0F4220 7F0BF6F0 0FC2F67B */  jal   music_append_play_solo_death_short
+/* 0F4220 7F0BF6F0 0FC2F67B */  jal   lvlMusicAppendPlaySoloDeathShort
 /* 0F4224 7F0BF6F4 00000000 */   nop
 /* 0F4228 7F0BF6F8 00002025 */  move  $a0, $zero
 .L7F0BF6FC:
@@ -5312,7 +5329,7 @@ glabel manage_mp_game
  * 
  * notes: only regalloc issues near the sqrtf call.
  */
-void sub_GAME_7F0BF800(void)
+void lvlUpdateMpPlayerData(void)
 {
     s8 local_player_number;
     f32 temp_f0;
@@ -5415,7 +5432,7 @@ void sub_GAME_7F0BF800(void)
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0BF800
+glabel lvlUpdateMpPlayerData
 /* 0F4330 7F0BF800 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 0F4334 7F0BF804 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F4338 7F0BF808 0FC26C54 */  jal   get_cur_playernum
@@ -5638,7 +5655,8 @@ glabel sub_GAME_7F0BF800
 
 
 
-void unload_stage_text_data(void) {
+void lvlUnloadStageTextData(void)
+{
     if (g_MpSoundStateRelated != NULL)
     {
         if (sndGetPlayingState(g_MpSoundStateRelated) != AL_STOPPED)
@@ -5646,11 +5664,13 @@ void unload_stage_text_data(void) {
             sndDeactivate(g_MpSoundStateRelated);
         }
     }
+
     if (g_CurrentStageToLoad != 0x5a)
     {
         blank_text_bank(get_textbank_number_for_stagenum(g_CurrentStageToLoad));
         sub_GAME_7F007770();
     }
+
     cheatDisableAllCheats();
     cleanupGuardData();
     cleanupObjectSounds();
@@ -5667,58 +5687,75 @@ void unload_stage_text_data(void) {
 }
 
 
-void set_controls_locked_flag(s32 arg0) {
+void lvlSetControlsLockedFlag(s32 arg0)
+{
     #ifdef VERSION_JP
-    if ((arg0 != 0) && (g_ControlsLockedFlag == 0)) {
+    if ((arg0 != 0) && (g_ControlsLockedFlag == 0))
+    {
         joyRumblePakStop();
     }
     #endif
+
     g_ControlsLockedFlag = arg0;
 }
 
 
-s32 get_controls_locked_flag(void) {
-
+s32 lvlGetControlsLockedFlag(void)
+{
     return g_ControlsLockedFlag;
 }
 
 
-DIFFICULTY get_current_difficulty(void) {
+DIFFICULTY lvlGetSelectedDifficulty(void)
+{
     return g_SelectedDifficulty;
 }
 
 
-void set_difficulty(s32 arg0) {
+void lvlSetSelectedDifficulty(DIFFICULTY arg0)
+{
     g_SelectedDifficulty = arg0;
 }
 
-void set_mp_time(s32 arg0) {
+void lvlSetMpTime(s32 arg0)
+{
     g_MpTime = arg0;
 }
 
 
-void set_mp_point(s32 arg0) {
+void lvlSetMpPoint(s32 arg0)
+{
     g_MpPoint = arg0;
 }
 
 
-f32 get_cur_mp_sec(void) {
+f32 lvlGetCurrentMultiPlayerSec(void)
+{
     return g_CurrentMultiPlayerSec;
 }
 
 
-f32 get_g_CurrentMultiPlayerMin(void) {
+f32 lvlGetCurrentMultiPlayerMin(void)
+{
     return g_CurrentMultiPlayerMin;
 }
 
 
-f32 get_stage_time_sec(void) {
+/**
+ * Unreferenced.
+ */
+f32 lvlGetStageTimeSec(void)
+{
     return g_StageTimeSec;
 }
 
 
-f32 get_poweron_time_sec(void) {
-    return poweron_time_sec;
+/**
+ * Unreferenced.
+ */
+f32 lvlGetPowerOnTimeSec(void)
+{
+    return g_PowerOnTimeSec;
 }
 
 

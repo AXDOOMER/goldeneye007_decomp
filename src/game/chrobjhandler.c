@@ -5564,7 +5564,7 @@ glabel sub_GAME_7F043650
 /* 07826C 7F04373C 8DF90098 */  lw    $t9, 0x98($t7)
 /* 078270 7F043740 57200039 */  bnezl $t9, .L7F043828
 /* 078274 7F043744 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 078278 7F043748 0FC2FF01 */  jal   get_controls_locked_flag
+/* 078278 7F043748 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 07827C 7F04374C AFAD002C */   sw    $t5, 0x2c($sp)
 /* 078280 7F043750 14400034 */  bnez  $v0, .L7F043824
 /* 078284 7F043754 8FA7002C */   lw    $a3, 0x2c($sp)
@@ -11274,7 +11274,7 @@ glabel object_interaction
 /* 07C194 7F047664 5440000A */  bnezl $v0, .L7F047690
 /* 07C198 7F047668 8E2400AC */   lw    $a0, 0xac($s1)
 .L7F04766C:
-/* 07C19C 7F04766C 0FC2FF01 */  jal   get_controls_locked_flag
+/* 07C19C 7F04766C 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 07C1A0 7F047670 00000000 */   nop   
 /* 07C1A4 7F047674 14400005 */  bnez  $v0, .L7F04768C
 /* 07C1A8 7F047678 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
@@ -12041,7 +12041,7 @@ glabel object_interaction
 /* 07CCF0 7F0481C0 5440000A */  bnezl $v0, .L7F0481EC
 /* 07CCF4 7F0481C4 8E2400B0 */   lw    $a0, 0xb0($s1)
 .L7F0481C8:
-/* 07CCF8 7F0481C8 0FC2FF01 */  jal   get_controls_locked_flag
+/* 07CCF8 7F0481C8 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 07CCFC 7F0481CC 00000000 */   nop   
 /* 07CD00 7F0481D0 14400005 */  bnez  $v0, .L7F0481E8
 /* 07CD04 7F0481D4 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
@@ -13219,7 +13219,7 @@ glabel object_interaction
 .L7F049310:
 /* 07DE40 7F049310 144101FF */  bne   $v0, $at, .L7F049B10
 /* 07DE44 7F049314 00000000 */   nop   
-/* 07DE48 7F049318 0FC2FF01 */  jal   get_controls_locked_flag
+/* 07DE48 7F049318 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 07DE4C 7F04931C 00000000 */   nop   
 /* 07DE50 7F049320 144001FB */  bnez  $v0, .L7F049B10
 /* 07DE54 7F049324 00000000 */   nop   
@@ -16380,7 +16380,7 @@ glabel object_interaction
 /* 07C5D8 7F047A68 5440000A */  bnezl $v0, .Ljp7F047A94
 /* 07C5DC 7F047A6C 8E2400AC */   lw    $a0, 0xac($s1)
 .Ljp7F047A70:
-/* 07C5E0 7F047A70 0FC3021B */  jal   get_controls_locked_flag
+/* 07C5E0 7F047A70 0FC3021B */  jal   lvlGetControlsLockedFlag
 /* 07C5E4 7F047A74 00000000 */   nop   
 /* 07C5E8 7F047A78 14400005 */  bnez  $v0, .Ljp7F047A90
 /* 07C5EC 7F047A7C 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
@@ -17147,7 +17147,7 @@ glabel object_interaction
 /* 07D134 7F0485C4 5440000A */  bnezl $v0, .Ljp7F0485F0
 /* 07D138 7F0485C8 8E2400B0 */   lw    $a0, 0xb0($s1)
 .Ljp7F0485CC:
-/* 07D13C 7F0485CC 0FC3021B */  jal   get_controls_locked_flag
+/* 07D13C 7F0485CC 0FC3021B */  jal   lvlGetControlsLockedFlag
 /* 07D140 7F0485D0 00000000 */   nop   
 /* 07D144 7F0485D4 14400005 */  bnez  $v0, .Ljp7F0485EC
 /* 07D148 7F0485D8 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
@@ -18325,7 +18325,7 @@ glabel object_interaction
 .Ljp7F049714:
 /* 07E284 7F049714 144101FF */  bne   $v0, $at, .Ljp7F049F14
 /* 07E288 7F049718 00000000 */   nop   
-/* 07E28C 7F04971C 0FC3021B */  jal   get_controls_locked_flag
+/* 07E28C 7F04971C 0FC3021B */  jal   lvlGetControlsLockedFlag
 /* 07E290 7F049720 00000000 */   nop   
 /* 07E294 7F049724 144001FB */  bnez  $v0, .Ljp7F049F14
 /* 07E298 7F049728 00000000 */   nop   
@@ -21493,7 +21493,7 @@ glabel object_interaction
 /* 07A230 7F047840 5440000A */  bnezl $v0, .L7F04786C
 /* 07A234 7F047844 8E2400AC */   lw    $a0, 0xac($s1)
 .L7F047848:
-/* 07A238 7F047848 0FC2FC1E */  jal   get_controls_locked_flag
+/* 07A238 7F047848 0FC2FC1E */  jal   lvlGetControlsLockedFlag
 /* 07A23C 7F04784C 00000000 */   nop   
 /* 07A240 7F047850 14400005 */  bnez  $v0, .L7F047868
 /* 07A244 7F047854 3C048005 */   lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8005
@@ -22261,7 +22261,7 @@ glabel object_interaction
 /* 07AD90 7F0483A0 5440000A */  bnezl $v0, .L7F0483CC
 /* 07AD94 7F0483A4 8E2400B0 */   lw    $a0, 0xb0($s1)
 .L7F0483A8:
-/* 07AD98 7F0483A8 0FC2FC1E */  jal   get_controls_locked_flag
+/* 07AD98 7F0483A8 0FC2FC1E */  jal   lvlGetControlsLockedFlag
 /* 07AD9C 7F0483AC 00000000 */   nop   
 /* 07ADA0 7F0483B0 14400005 */  bnez  $v0, .L7F0483C8
 /* 07ADA4 7F0483B4 3C048005 */   lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8005
@@ -23438,7 +23438,7 @@ glabel object_interaction
 .L7F0494EC:
 /* 07BEDC 7F0494EC 144101FF */  bne   $v0, $at, .L7F049CEC
 /* 07BEE0 7F0494F0 00000000 */   nop   
-/* 07BEE4 7F0494F4 0FC2FC1E */  jal   get_controls_locked_flag
+/* 07BEE4 7F0494F4 0FC2FC1E */  jal   lvlGetControlsLockedFlag
 /* 07BEE8 7F0494F8 00000000 */   nop   
 /* 07BEEC 7F0494FC 144001FB */  bnez  $v0, .L7F049CEC
 /* 07BEF0 7F049500 00000000 */   nop   
@@ -41111,7 +41111,7 @@ glabel sub_GAME_7F053A3C
 /* 0885D4 7F053AA4 AFA30018 */  sw    $v1, 0x18($sp)
 /* 0885D8 7F053AA8 0FC14E79 */  jal   sub_GAME_7F0539E4
 /* 0885DC 7F053AAC 24840008 */   addiu $a0, $a0, 8
-/* 0885E0 7F053AB0 0FC2FF01 */  jal   get_controls_locked_flag
+/* 0885E0 7F053AB0 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 0885E4 7F053AB4 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 0885E8 7F053AB8 10400002 */  beqz  $v0, .L7F053AC4
 /* 0885EC 7F053ABC 8FA30018 */   lw    $v1, 0x18($sp)
@@ -44410,7 +44410,7 @@ void handle_gas_damage(void)
                     D_80030AE0 = (f32) (D_80030AE0 + g_GlobalTimerDelta);
                     if (ptr_gas_sound == NULL)
                     {
-                        if (get_controls_locked_flag(&ptr_gas_sound) == 0)
+                        if (lvlGetControlsLockedFlag(&ptr_gas_sound) == 0)
                         {
                             sndPlaySfx(g_musicSfxBufferPtr, GAS_HISS_SFX, &ptr_gas_sound);
                         }
@@ -44538,7 +44538,7 @@ glabel handle_gas_damage
 /* 08AC08 7F0560D8 8D290AE4 */  lw    $t1, %lo(ptr_gas_sound)($t1)
 /* 08AC0C 7F0560DC 1520000A */  bnez  $t1, .L7F056108
 /* 08AC10 7F0560E0 00000000 */   nop   
-/* 08AC14 7F0560E4 0FC2FF01 */  jal   get_controls_locked_flag
+/* 08AC14 7F0560E4 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 08AC18 7F0560E8 00000000 */   nop   
 /* 08AC1C 7F0560EC 14400006 */  bnez  $v0, .L7F056108
 /* 08AC20 7F0560F0 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
@@ -44926,7 +44926,7 @@ glabel sub_GAME_7F056210
 void handle_alarm_gas_timer_calldamage(void)
 {
     if (is_alarm_on() != 0) {
-        if ((ptr_alarm_sfx == 0) && (get_controls_locked_flag() == 0)) {
+        if ((ptr_alarm_sfx == 0) && (lvlGetControlsLockedFlag() == 0)) {
             sndPlaySfx(g_musicSfxBufferPtr, ALARM3_SFX, &ptr_alarm_sfx);
         }
         alarm_timer = alarm_timer + g_ClockTimer;

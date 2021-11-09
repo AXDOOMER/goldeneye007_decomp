@@ -63,7 +63,7 @@ save_data blank_eeprom = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0
 
 f32 get_007_reaction_speed(void)
 {
-    if (get_current_difficulty() == DIFFICULTY_007) {
+    if (lvlGetSelectedDifficulty() == DIFFICULTY_007) {
         return slider_007_mode_reaction;
     }
     return 0.f;
@@ -71,7 +71,7 @@ f32 get_007_reaction_speed(void)
 
 f32 get_007_health_mod(void)
 {
-    if (get_current_difficulty() == DIFFICULTY_007) {
+    if (lvlGetSelectedDifficulty() == DIFFICULTY_007) {
         return slider_007_mode_health;
     }
     return 1.f;
@@ -79,7 +79,7 @@ f32 get_007_health_mod(void)
 
 f32 get_007_damage_mod(void)
 {
-    if (get_current_difficulty() == DIFFICULTY_007) {
+    if (lvlGetSelectedDifficulty() == DIFFICULTY_007) {
         return slider_007_mode_accuracy;
     }
     return 1.f;
@@ -87,7 +87,7 @@ f32 get_007_damage_mod(void)
 
 f32 get_007_accuracy_mod(void)
 {
-    if (get_current_difficulty() == DIFFICULTY_007) {
+    if (lvlGetSelectedDifficulty() == DIFFICULTY_007) {
         return slider_007_mode_damage;
     }
     return 1.f;
