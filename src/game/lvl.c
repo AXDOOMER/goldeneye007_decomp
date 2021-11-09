@@ -179,7 +179,7 @@ s32 D_800483C0 = 1;
 s32 D_800483C4 = 0xFFFFFFFF;
 
 //D:800483C8
-struct s_unk_lvl** D_800483C8 = NULL;
+struct LvlMpUnknown *D_800483C8 = NULL;
 
 /*
 * Debug variable, something to do with portals.
@@ -3400,120 +3400,31 @@ void setDamageMultipliersForDifficulty(void)
 }
 
 
-//#ifdef NONMATCHING
-#if 1
+#ifdef NONMATCHING
 void manage_mp_game(void)
 {
-    s32 sp194;
-    s32 sp190;
-    s32 sp18C;
-    s32 sp188;
     s32 sp184;
     s32 sp180;
-    s32 sp17C;
-    s32 sp178;
-    s32 sp174;
-    s32 sp170;
-    s32 sp16C;
     s32 sp30;
     s32 sp2C;
-    u8 *sp1C;
-    s16 temp_a1_3;
-    s16 temp_a1_4;
-    s32 temp_a0;
     s32 temp_a0_3;
-    s32 temp_a0_4;
-    s32 temp_a0_5;
-    s32 temp_a1;
-    s32 temp_a1_2;
-    s32 temp_a3;
-    s32 temp_f16;
-    s32 temp_f6;
-    s32 temp_f6_2;
     s32 var_player_count2_again;
-    s32 temp_t3;
-    s32 temp_t4;
     s32 temp_t6;
-    s32 temp_t6_2;
-    s32 temp_t6_3;
-    s32 temp_t7;
-    s32 temp_t9;
-    s32 temp_t9_2;
     s32 temp_v0;
-    s32 temp_v0_18;
-    s32 temp_v0_19;
     s32 temp_v0_3;
     s32 var_player_count1;
     s32 var_player_count2;
-    s32 temp_v0_7;
-    s32 temp_v0_8;
-    struct s_unk_lvl* temp_v0_9;
-    s32 temp_v1;
     s32 temp_v1_2;
     s32 temp_v1_3;
     s32 temp_v1_7;
-    s32 temp_v1_8;
-    u8 *temp_a0_2;
-    void *temp_v0_10;
-    void *temp_v0_11;
-    void *temp_v0_12;
-    void *temp_v0_13;
-    void *temp_v0_14;
-    void *temp_v0_15;
-    void *temp_v0_16;
-    void *temp_v0_17;
-    void *temp_v0_2;
-    void *temp_v0_5;
-    void *temp_v1_4;
-    void *temp_v1_5;
-    void *temp_v1_6;
-    u8 *phi_v1;
-    s32 phi_a0;
-    u8 *phi_a0_2;
-    s32 phi_v1_2;
     s32 mp_alive_count;
     s32 mp_player_field424_count;
-    s32 phi_a1_2;
-    s32 phi_a2_2;
-    u8 *phi_v1_3;
-    s32 phi_a0_3;
     s32 mp_something_count1;
-    s32 phi_a2_3;
-    s32 phi_a3;
-    s32 phi_a2_4;
-    s32 phi_a1_4;
-    s32 phi_a3_2;
-    s32 phi_a0_4;
-    void **phi_v1_4;
-    s32 phi_a3_3;
-    void *phi_v1_5;
-    s32 phi_a1_5;
-    s32 phi_t4;
     s32 phi_a2_5;
-    s32 phi_ra;
-    s32 phi_t5;
     s32 copy_g_clockTimer;
-    s32 phi_v1_6;
-    s32 phi_a1_6;
-    s32 phi_a2_6;
-    s32 phi_a1_7;
     s32 mp_points_count1;
-    s32 phi_a3_4;
-    s32 phi_a1_8;
-    void *phi_a0_5;
-    s32 phi_a1_9;
-    void *phi_a0_6;
-    s32 phi_a2_8;
-    s32 phi_a2_9;
     s32 phi_ra_2;
-    s32 phi_t5_2;
-    s32 phi_a2_10;
-    s32 phi_a2_11;
     s32 phi_ra_3;
-    s32 phi_t5_3;
-    s32 phi_a2_12;
-    s32 phi_a2_13;
-    s32 phi_a2_14;
 
     tlbmanageResetCurrentEntriesCount();
 
@@ -3664,12 +3575,13 @@ void manage_mp_game(void)
         {
             s32 not_dead_count = 0;
             s32 killed_count = 0;
+            s32 i;
+            s32 j;
 
             var_player_count2 = getPlayerCount();
 
-            if (var_player_count2 > 0)
-            {
-                s32 i;
+            //if (var_player_count2 > 0)
+            //{
                 for (i=0; i < var_player_count2; i++)
                 {
                     if (var_player_count2 > 0)
@@ -3678,7 +3590,6 @@ void manage_mp_game(void)
 
                         if (var_player_count2_again != 0)
                         {
-                            s32 j;
                             for (j=0; j<var_player_count2_again; j++)
                             {
                                 if (g_playerPointers[j]->bonddead == 0)
@@ -3691,7 +3602,6 @@ void manage_mp_game(void)
                         }
                         else
                         {
-                            s32 j;
                             for (j=0; j<var_player_count2_again; j++)
                             {
                                 if (g_playerPointers[0]->bonddead == 0)
@@ -3733,7 +3643,7 @@ void manage_mp_game(void)
                         }
                     }
                 }
-            }
+            //}
             
             temp_v1_7 = var_player_count2 - 1;
             if (not_dead_count >= temp_v1_7)
@@ -3792,7 +3702,6 @@ void manage_mp_game(void)
     }
     else
     {
-
         sub_GAME_7F09BBBC();
         setDamageMultipliersForDifficulty();
         sub_GAME_7F0BC7D4();
@@ -3808,32 +3717,17 @@ void manage_mp_game(void)
 
         if ((get_debug_joy2detailedit_flag() != 0) && (D_800483C8 == 0))
         {
-// decomp issue: begin very wrong section, .s line ~2100
-            D_800483C8 = (struct s_unk_lvl**)mempAllocBytesInBank(0x3000, 4);
+            s32 i;
+            D_800483C8 = (struct LvlMpUnknown*)mempAllocBytesInBank(0x3000, 4);
             if (D_800483C8 != 0)
             {
-                s32 i;
-
-                for (i=0; i<768; i++)
+                for (i=0; i<3000; i++)
                 {
-                    D_800483C8[i]->unk_0 = 0xff;
-                    D_800483C8[i]->unk_1 = (D_800483C8[i]->unk_1 & 0xff1f) | 0x20;
-                    D_800483C8[i]->unk_1 = (D_800483C8[i]->unk_1 & 0xffe3) | 0x04;
-
-                    D_800483C8[i]->unk_4 = 0xff;
-                    D_800483C8[i]->unk_5 = (D_800483C8[i]->unk_5 & 0xff1f) | 0x20;
-                    D_800483C8[i]->unk_5 = (D_800483C8[i]->unk_5 & 0xffe3) | 0x04;
-
-                    D_800483C8[i]->unk_8 = 0xff;
-                    D_800483C8[i]->unk_9 = (D_800483C8[i]->unk_9 & 0xff1f) | 0x20;
-                    D_800483C8[i]->unk_9 = (D_800483C8[i]->unk_9 & 0xffe3) | 0x04;
-
-                    D_800483C8[i]->unk_c = 0xff;
-                    D_800483C8[i]->unk_d = (D_800483C8[i]->unk_d & 0xff1f) | 0x20;
-                    D_800483C8[i]->unk_d = (D_800483C8[i]->unk_d & 0xffe3) | 0x04;
+                    D_800483C8[i].unk_0 = 0xff;
+                    D_800483C8[i].unk_1 = (D_800483C8[i].unk_1 & 0xFF1F) | 0x20;
+                    D_800483C8[i].unk_1 = (D_800483C8[i].unk_1 & 0xFFE3) | 4;
                 }
             }
-// decomp issue: end very wrong section
         }
 
         if (get_debug_portal_flag() != 0)
