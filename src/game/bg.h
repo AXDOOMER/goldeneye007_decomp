@@ -63,7 +63,8 @@ typedef struct bg_portal_data_entry
     bg_portal_entry *offset_portal;
     u8 connectedRoom1;
     u8 connectedRoom2;
-    u16 controlbytes;
+    u8 controlbytes1;
+    u8 controlbytes2;
 } bg_portal_data_entry;
 
 typedef struct bg_room_data

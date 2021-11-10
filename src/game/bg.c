@@ -33,8 +33,10 @@ char bgDebPortalOutBuffer[10][9];
 char bgDebRoomOutBuffer[10][9];
 //CODE.bss:8007C100
 char dword_CODE_bss_8007C100[0x3E80];
+
 //CODE.bss:8007FF80
 bg_portal_data_entry* ptr_bgdata_portals;
+
 //CODE.bss:8007FF84
 s32 ptr_bgdata_offsets;
 //CODE.bss:8007FF88
@@ -10010,25 +10012,15 @@ glabel sub_GAME_7F0B9990
 
 
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F0B9A14(s32 arg0) {
-    // Node 0
-    return (ptr_bgdata_portals + (arg0 * 8))->unk7;
+/**
+ * Unreferenced.
+ * 
+ * Address 0x7F0B9A14.
+ */
+u8 bgGetDataPortalsControlBytes2(s32 arg0)
+{
+    return ptr_bgdata_portals[arg0].controlbytes2;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B9A14
-/* 0EE544 7F0B9A14 3C0E8008 */  lui   $t6, %hi(ptr_bgdata_portals) 
-/* 0EE548 7F0B9A18 8DCEFF80 */  lw    $t6, %lo(ptr_bgdata_portals)($t6)
-/* 0EE54C 7F0B9A1C 000478C0 */  sll   $t7, $a0, 3
-/* 0EE550 7F0B9A20 01CFC021 */  addu  $t8, $t6, $t7
-/* 0EE554 7F0B9A24 03E00008 */  jr    $ra
-/* 0EE558 7F0B9A28 93020007 */   lbu   $v0, 7($t8)
-)
-#endif
 
 
 
