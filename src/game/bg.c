@@ -78,10 +78,12 @@ f32 room_data_float2 = 1.0;
 f32 D_800413FC = 1.0;
 //D:80041400
 s32 levelentry_index = 1;
-//D:80041404
-s32 D_80041404 = 1;
-//D:80041408
-s32 D_80041408 = 1;
+
+/**
+ * Address 0x80041404.
+ */
+s32 bgViewRelatedMaybe[] = { 1, 1 };
+
 //D:8004140C
 s32 D_8004140C = -1;
 //D:80041410
@@ -9153,42 +9155,22 @@ glabel sub_GAME_7F0B8FD0
 
 
 
-#ifdef NONMATCHING
-f32 sub_GAME_7F0B9040(s32 arg0, s32 arg1, f32 arg2) {
-    void *temp_v0;
-    s32 temp_f16;
-
-    // Node 0
-    temp_v0 = ((arg0 * 4) + &D_80041404);
-    temp_f16 = (s32) (((f32) *temp_v0 * arg1) + arg2);
-    *temp_v0 = temp_f16;
-    return (f32) temp_f16;
+/**
+ * Unreferenced.
+ * 
+ * Adjusts value in bgViewRelatedMaybe and returns the new value.
+ * 
+ * @param index: index into bgViewRelatedMaybe.
+ * @param times: multiples value by this amount first.
+ * @param add: then adds this.
+ * 
+ * Address 0x7F0B9040.
+ */
+f32 bgTimesAddViewRelatedMaybe(s32 index, f32 times, f32 add)
+{
+    bgViewRelatedMaybe[index] = (s32) (((f32) bgViewRelatedMaybe[index] * times) + add);
+    return (f32) bgViewRelatedMaybe[index];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B9040
-/* 0EDB70 7F0B9040 3C0F8004 */  lui   $t7, %hi(D_80041404) 
-/* 0EDB74 7F0B9044 25EF1404 */  addiu $t7, %lo(D_80041404) # addiu $t7, $t7, 0x1404
-/* 0EDB78 7F0B9048 00047080 */  sll   $t6, $a0, 2
-/* 0EDB7C 7F0B904C 01CF1021 */  addu  $v0, $t6, $t7
-/* 0EDB80 7F0B9050 8C580000 */  lw    $t8, ($v0)
-/* 0EDB84 7F0B9054 44856000 */  mtc1  $a1, $f12
-/* 0EDB88 7F0B9058 44867000 */  mtc1  $a2, $f14
-/* 0EDB8C 7F0B905C 44982000 */  mtc1  $t8, $f4
-/* 0EDB90 7F0B9060 00000000 */  nop   
-/* 0EDB94 7F0B9064 468021A0 */  cvt.s.w $f6, $f4
-/* 0EDB98 7F0B9068 460C3202 */  mul.s $f8, $f6, $f12
-/* 0EDB9C 7F0B906C 460E4280 */  add.s $f10, $f8, $f14
-/* 0EDBA0 7F0B9070 4600540D */  trunc.w.s $f16, $f10
-/* 0EDBA4 7F0B9074 44098000 */  mfc1  $t1, $f16
-/* 0EDBA8 7F0B9078 00000000 */  nop   
-/* 0EDBAC 7F0B907C 44899000 */  mtc1  $t1, $f18
-/* 0EDBB0 7F0B9080 AC490000 */  sw    $t1, ($v0)
-/* 0EDBB4 7F0B9084 03E00008 */  jr    $ra
-/* 0EDBB8 7F0B9088 46809020 */   cvt.s.w $f0, $f18
-)
-#endif
 
 
 
@@ -9203,8 +9185,8 @@ f32 sub_GAME_7F0B908C(void) {
     f32 sp2C;
 
     // Node 0
-    sp2C = (f32) D_80041404;
-    sp24 = (f32) D_80041404.unk4;
+    sp2C = (f32) bgViewRelatedMaybe;
+    sp24 = (f32) bgViewRelatedMaybe.unk4;
     sp28 = (f32) ((f32) D_8004140C + (f32) viGetX());
     sp20 = (f32) ((f32) D_80041410 + (f32) viGetY());
     g_CurrentPlayer->unk1118 = (f32) viGetViewLeft();
@@ -9267,8 +9249,8 @@ f32 sub_GAME_7F0B908C(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B908C
-/* 0EDBBC 7F0B908C 3C028004 */  lui   $v0, %hi(D_80041404)
-/* 0EDBC0 7F0B9090 24421404 */  addiu $v0, %lo(D_80041404) # addiu $v0, $v0, 0x1404
+/* 0EDBBC 7F0B908C 3C028004 */  lui   $v0, %hi(bgViewRelatedMaybe)
+/* 0EDBC0 7F0B9090 24421404 */  addiu $v0, %lo(bgViewRelatedMaybe) # addiu $v0, $v0, 0x1404
 /* 0EDBC4 7F0B9094 8C4E0000 */  lw    $t6, ($v0)
 /* 0EDBC8 7F0B9098 8C4F0004 */  lw    $t7, 4($v0)
 /* 0EDBCC 7F0B909C 27BDFFD0 */  addiu $sp, $sp, -0x30
