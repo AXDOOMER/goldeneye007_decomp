@@ -3743,16 +3743,16 @@ Gfx *bgFillRectangle(Gfx *gdl, s32 ulx, s32 uly, s32 lrx, s32 lry)
 
 
 
-void sub_GAME_7F0B5B60(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
+void bgFillRectangleWithSides(Gfx *gdl, s32 ulx, s32 uly, s32 lrx, s32 lry)
 {
     bgFillRectangle(
         bgFillRectangle(
             bgFillRectangle(
-                bgFillRectangle(arg0,
-                arg1, arg2, arg3, arg2),
-                arg3, arg2, arg3, arg4),
-                arg1, arg4, arg3, arg4),
-                arg1, arg2, arg1, arg4);
+                bgFillRectangle(gdl,
+                ulx, uly, lrx, uly), /* full rectangle */
+                lrx, uly, lrx, lry), /* right side */
+                ulx, lry, lrx, lry), /* bottom */
+                ulx, uly, ulx, lry); /* top */
 }
 
 
