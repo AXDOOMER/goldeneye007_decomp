@@ -10476,28 +10476,20 @@ void bgToggleDataPortalsContrlBytes1Bit1(s32 index, s32 toggle)
 
 
 
-#ifdef NONMATCHING
 /**
  * Debug method, called from lvl.c.
  * Something to do with portals.
+ * 
+ * Address 0x7F0B9DE4.
  */
-s32 sub_GAME_7F0B9DE4(s32 arg0, s32 arg1, s32 arg2)
+s32 bgDebugRemoved7F0B9DE4(s32 arg0, s32 arg1, s32 arg2)
 {
 #if DEBUG
     // removed
 #endif
+
     return arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B9DE4
-/* 0EE914 7F0B9DE4 AFA50004 */  sw    $a1, 4($sp)
-/* 0EE918 7F0B9DE8 AFA60008 */  sw    $a2, 8($sp)
-/* 0EE91C 7F0B9DEC 03E00008 */  jr    $ra
-/* 0EE920 7F0B9DF0 00801025 */   move  $v0, $a0
-)
-#endif
 
 
 
@@ -10505,8 +10497,10 @@ glabel sub_GAME_7F0B9DE4
 /**
  * Debug method, called from lvl.c.
  * Something to do with portals.
+ * 
+ * Address 0x7F0B9DF4.
  */
-void sub_GAME_7F0B9DF4(s32 arg0)
+void bgRemoved7F0B9DF4(s32 arg0)
 {
 #if DEBUG
     // removed
@@ -10515,8 +10509,17 @@ void sub_GAME_7F0B9DF4(s32 arg0)
     return;
 }
 
-void sub_GAME_7F0B9DFC(s32 arg0)
+/**
+ * Unreferenced.
+ * 
+ * Address 0x7F0B9DFC.
+ */
+void bgRemoved7F0B9DFC(s32 arg0)
 {
+#if DEBUG
+    // removed
+#endif
+
     return;
 }
 

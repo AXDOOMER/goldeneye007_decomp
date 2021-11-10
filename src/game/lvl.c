@@ -1478,7 +1478,7 @@ Gfx * lvlPortalDebug7F0BDF10(Gfx * arg0)
 
     if (arg0 != 0)
     {
-        arg0 = sub_GAME_7F0B9DE4(arg0, g_DebugPortalsD_800483CC, -1);
+        arg0 = bgDebugRemoved7F0B9DE4(arg0, g_DebugPortalsD_800483CC, -1);
 
         // decomp issue. Can't get the loads and stores to match.
         for (i = 0, p = &g_DebugPortalsInputBuffer_0; i < 4; i++)
@@ -1509,7 +1509,7 @@ Gfx * lvlPortalDebug7F0BDF10(Gfx * arg0)
             phi_a0 = -1;
         }
 
-        sub_GAME_7F0B9DF4(phi_a0);
+        bgRemoved7F0B9DF4(phi_a0);
 
         return arg0;
     }
@@ -1613,7 +1613,7 @@ glabel lvlPortalDebug7F0BDF10
 /* 0F2A50 7F0BDF20 AFA00020 */   sw    $zero, 0x20($sp)
 /* 0F2A54 7F0BDF24 3C058005 */  lui   $a1, %hi(g_DebugPortalsD_800483CC)
 /* 0F2A58 7F0BDF28 8CA583CC */  lw    $a1, %lo(g_DebugPortalsD_800483CC)($a1)
-/* 0F2A5C 7F0BDF2C 0FC2E779 */  jal   sub_GAME_7F0B9DE4
+/* 0F2A5C 7F0BDF2C 0FC2E779 */  jal   bgDebugRemoved7F0B9DE4
 /* 0F2A60 7F0BDF30 2406FFFF */   li    $a2, -1
 /* 0F2A64 7F0BDF34 3C0E8005 */  lui   $t6, %hi(g_DebugPortalsInputBuffer_1)
 /* 0F2A68 7F0BDF38 8DCE83D4 */  lw    $t6, %lo(g_DebugPortalsInputBuffer_1)($t6)
@@ -1669,7 +1669,7 @@ glabel lvlPortalDebug7F0BDF10
 .L7F0BDFF8:
 /* 0F2B28 7F0BDFF8 2404FFFF */  li    $a0, -1
 .L7F0BDFFC:
-/* 0F2B2C 7F0BDFFC 0FC2E77D */  jal   sub_GAME_7F0B9DF4
+/* 0F2B2C 7F0BDFFC 0FC2E77D */  jal   bgRemoved7F0B9DF4
 /* 0F2B30 7F0BE000 00000000 */   nop
 /* 0F2B34 7F0BE004 100000BC */  b     .L7F0BE2F8
 /* 0F2B38 7F0BE008 8FA20028 */   lw    $v0, 0x28($sp)

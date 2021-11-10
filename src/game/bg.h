@@ -89,8 +89,8 @@ u32 bgDecompress(u8* source, u8 *target);
 void sub_GAME_7F0B65C4(s32 roomID);
 void load_bg_file(LEVEL_INDEX stagenum);
 
-s32 sub_GAME_7F0B9DE4(s32 arg0, s32 arg1, s32 arg2);
-void sub_GAME_7F0B9DF4(s32 arg0);
+s32 bgDebugRemoved7F0B9DE4(s32 arg0, s32 arg1, s32 arg2);
+void bgRemoved7F0B9DF4(s32 arg0);
 s8 bgSwapConnectedRooms(s32 index);
 s32 bgGetDataPortalsControlBytes1Bit1(s32 index);
 void bgToggleDataPortalsContrlBytes1Bit1(s32 index, s32 toggle);
