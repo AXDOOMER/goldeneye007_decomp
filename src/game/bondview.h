@@ -952,10 +952,30 @@ struct player
   u32 c_lodscalezu32;
   struct coord3d c_cameratopnorm;
   struct coord3d c_cameraleftnorm;
+
+  /**
+   * Offset 0x1118.
+   */
   f32 screenxminf;
+
+  /**
+   * Offset 0x111c.
+   */
   f32 screenyminf;
+
+  /**
+   * Offset 0x1120.
+   */
   f32 screenxmaxf;
+
+  /**
+   * Offset 0x1124.
+   */
   f32 screenymaxf;
+
+  /**
+   * Offset 0x1128.
+   */
   s32 somekinda_bitflags;
   s32 field_112C;
   s32 ammoheldarr[30];
