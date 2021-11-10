@@ -251,6 +251,10 @@ u32 D_80044924 = 0;
 
 void unload_rooms(void);
 
+// second parameter is almost certainly a struct
+void sub_GAME_7F0B96CC(f32 arg0, f32 *arg1);
+s32 sub_GAME_7F0B993C(f32 arg0);
+
 // end forward declarations
 
 
@@ -9878,50 +9882,26 @@ glabel sub_GAME_7F0B96CC
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B993C(void) {
-    f32 sp1C;
+/**
+ * Unknown, makes use of sub_GAME_7F0B96CC.
+ * 
+ * Address 0x7F0B993C.
+ */
+s32 sub_GAME_7F0B993C(f32 arg0)
+{
+    // probably a struct here.
+    f32 fp[6];
 
-    // Node 0
-    sub_GAME_7F0B96CC(&sp1C);
-    if (((sp24 * sp24) + (sp1C * sp1C)) < D_80058D5C)
+    sub_GAME_7F0B96CC(arg0, &fp[1]);
+
+    if (((fp[1] * fp[1]) + (fp[3] * fp[3])) < 0.999f)
     {
-        // Node 1
+        return 0;
     }
-    // Node 2
+
     return 1;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80058D5C
-.word 0x3f7fbe77 /*0.99900001*/
-.text
-glabel sub_GAME_7F0B993C
-/* 0EE46C 7F0B993C 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0EE470 7F0B9940 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0EE474 7F0B9944 0FC2E5B3 */  jal   sub_GAME_7F0B96CC
-/* 0EE478 7F0B9948 27A5001C */   addiu $a1, $sp, 0x1c
-/* 0EE47C 7F0B994C C7A00024 */  lwc1  $f0, 0x24($sp)
-/* 0EE480 7F0B9950 C7A2001C */  lwc1  $f2, 0x1c($sp)
-/* 0EE484 7F0B9954 3C018006 */  lui   $at, %hi(D_80058D5C)
-/* 0EE488 7F0B9958 46000102 */  mul.s $f4, $f0, $f0
-/* 0EE48C 7F0B995C C42A8D5C */  lwc1  $f10, %lo(D_80058D5C)($at)
-/* 0EE490 7F0B9960 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0EE494 7F0B9964 46021182 */  mul.s $f6, $f2, $f2
-/* 0EE498 7F0B9968 24020001 */  li    $v0, 1
-/* 0EE49C 7F0B996C 46062200 */  add.s $f8, $f4, $f6
-/* 0EE4A0 7F0B9970 460A403C */  c.lt.s $f8, $f10
-/* 0EE4A4 7F0B9974 00000000 */  nop   
-/* 0EE4A8 7F0B9978 45000003 */  bc1f  .L7F0B9988
-/* 0EE4AC 7F0B997C 00000000 */   nop   
-/* 0EE4B0 7F0B9980 10000001 */  b     .L7F0B9988
-/* 0EE4B4 7F0B9984 00001025 */   move  $v0, $zero
-.L7F0B9988:
-/* 0EE4B8 7F0B9988 03E00008 */  jr    $ra
-/* 0EE4BC 7F0B998C 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
+
 
 
 
