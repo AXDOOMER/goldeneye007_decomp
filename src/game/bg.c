@@ -7,6 +7,7 @@
 #include "game/decompress.h"
 #include "game/matrixmath.h"
 #include "game/player.h"
+#include "game/math_ceil.h"
 
 #define BG_STACK_SIZE 20
 
@@ -256,7 +257,7 @@ void unload_rooms(void);
 // second parameter is almost certainly a struct
 void sub_GAME_7F0B96CC(f32 arg0, f32 *arg1);
 s32 sub_GAME_7F0B993C(f32 arg0);
-s32 sub_GAME_7F0B5058(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4);
+s32 sub_GAME_7F0B5058(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 // end forward declarations
 
@@ -2593,44 +2594,18 @@ void sub_GAME_7F0B4FB4(s32 arg0)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B4FF4(s32 arg0, s32 arg1, f32 arg2, ? arg3, ? arg4) {
-    s32 sp20;
-
-    sp20 = ceilFloatToInt(arg3);
-    return sub_GAME_7F0B5058(arg0, (s32) arg1, (s32) arg2, sp20, ceilFloatToInt(arg4));
+/**
+ * Address 0x7F0B4FF4.
+ */
+void sub_GAME_7F0B4FF4(s32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
+{
+    sub_GAME_7F0B5058(
+        arg0,
+        (s32)arg1,
+        (s32)arg2,
+        ceilFloatToInt(arg3),
+        ceilFloatToInt(arg4));
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B4FF4
-/* 0E9B24 7F0B4FF4 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0E9B28 7F0B4FF8 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0E9B2C 7F0B4FFC 44876000 */  mtc1  $a3, $f12
-/* 0E9B30 7F0B5000 AFA40028 */  sw    $a0, 0x28($sp)
-/* 0E9B34 7F0B5004 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 0E9B38 7F0B5008 0FC1712E */  jal   ceilFloatToInt
-/* 0E9B3C 7F0B500C AFA60030 */   sw    $a2, 0x30($sp)
-/* 0E9B40 7F0B5010 AFA20020 */  sw    $v0, 0x20($sp)
-/* 0E9B44 7F0B5014 0FC1712E */  jal   ceilFloatToInt
-/* 0E9B48 7F0B5018 C7AC0038 */   lwc1  $f12, 0x38($sp)
-/* 0E9B4C 7F0B501C C7A4002C */  lwc1  $f4, 0x2c($sp)
-/* 0E9B50 7F0B5020 C7A80030 */  lwc1  $f8, 0x30($sp)
-/* 0E9B54 7F0B5024 8FA40028 */  lw    $a0, 0x28($sp)
-/* 0E9B58 7F0B5028 4600218D */  trunc.w.s $f6, $f4
-/* 0E9B5C 7F0B502C 8FA70020 */  lw    $a3, 0x20($sp)
-/* 0E9B60 7F0B5030 AFA20010 */  sw    $v0, 0x10($sp)
-/* 0E9B64 7F0B5034 4600428D */  trunc.w.s $f10, $f8
-/* 0E9B68 7F0B5038 44053000 */  mfc1  $a1, $f6
-/* 0E9B6C 7F0B503C 44065000 */  mfc1  $a2, $f10
-/* 0E9B70 7F0B5040 0FC2D416 */  jal   sub_GAME_7F0B5058
-/* 0E9B74 7F0B5044 00000000 */   nop   
-/* 0E9B78 7F0B5048 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0E9B7C 7F0B504C 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0E9B80 7F0B5050 03E00008 */  jr    $ra
-/* 0E9B84 7F0B5054 00000000 */   nop   
-)
-#endif
 
 
 
@@ -10147,7 +10122,7 @@ glabel sub_GAME_7F0B9A7C
 
 
 /**
- * @param index: inedx into prtal array.
+ * @param index: index into portal array.
  * 
  * Address 0x7F0B9AE4.
  */
@@ -10159,7 +10134,7 @@ s32 bgGetDataPortalsControlBytes1Bit1(s32 index)
 
 
 /**
- * @param index: inedx into prtal array.
+ * @param index: index into portal array.
  * 
  * Address 0x7F0B9B04.
  */
@@ -10171,7 +10146,7 @@ s32 bgGetDataPortalsControlBytes1Bit2(s32 index)
 
 
 /**
- * @param index: inedx into prtal array.
+ * @param index: index into portal array.
  * 
  * Address 0x7F0B9B24.
  */
@@ -10183,7 +10158,7 @@ void bgSetDataPortalsControlBytes1Bit2(s32 index)
 
 
 /**
- * @param index: inedx into prtal array.
+ * @param index: index into portal array.
  * 
  * Address 0x7F0B9B44.
  */
@@ -10197,7 +10172,7 @@ void bgClearDataPortalsControlBytes1Low2Bits(s32 index)
 /**
  * Swaps connected rooms.
  * 
- * @param index: inedx into prtal array.
+ * @param index: index into portal array.
  * 
  * Address 0x7F0B9B64.
  */
