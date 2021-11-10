@@ -6,6 +6,8 @@
 #include "game/matrixmath.h"
 #include "include/PR/gbi.h"
 
+#define BG_STACK_SIZE 20
+
 // bss
 //CODE.bss:8007BF90
 s32 ptr_bg_data;
@@ -204,12 +206,24 @@ s32 D_8004489C = 0xF;
 s32 D_800448A0 = 0;
 //D:800448A4
 s32 D_800448A4 = 0;
-//D:800448A8
-s32 D_800448A8[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-//D:800448F8
-s32 D_800448F8 = 0;
+
+/**
+ * Local stack.
+ * 
+ * Address 0x800448A8.
+ */
+s32 g_BgStack[BG_STACK_SIZE] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+/**
+ * Current top of the stack.
+ * 
+ * Address 0x800448F8.
+ */
+s32 g_BgStackCount = 0;
+
 //D:800448FC
 s32 current_visibility = 0;
+
 //D:80044900
 s32 D_80044900 = 0;
 
@@ -7885,35 +7899,16 @@ glabel sub_GAME_7F0B7F84
 
 
 
-#ifdef NONMATCHING
-s32 push_arg_to_table(s32 arg0) {
-    // Node 0
-    *(&D_800448A8 + (D_800448F8 * 4)) = arg0;
-    D_800448F8 = (s32) ((s32) (D_800448F8 + 1) % 0x14);
+/**
+ * Address 0x7F0B8374.
+ */
+
+s32 bgStackPush(s32 arg0)
+{
+    g_BgStack[g_BgStackCount] = arg0;
+    g_BgStackCount = (s32) (g_BgStackCount + 1) % BG_STACK_SIZE;
     return arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel push_arg_to_table
-/* 0ECEA4 7F0B8374 3C058004 */  lui   $a1, %hi(D_800448F8)
-/* 0ECEA8 7F0B8378 24A548F8 */  addiu $a1, %lo(D_800448F8) # addiu $a1, $a1, 0x48f8
-/* 0ECEAC 7F0B837C 8CA30000 */  lw    $v1, ($a1)
-/* 0ECEB0 7F0B8380 3C018004 */  lui   $at, %hi(D_800448A8)
-/* 0ECEB4 7F0B8384 00801025 */  move  $v0, $a0
-/* 0ECEB8 7F0B8388 00037080 */  sll   $t6, $v1, 2
-/* 0ECEBC 7F0B838C 002E0821 */  addu  $at, $at, $t6
-/* 0ECEC0 7F0B8390 AC2448A8 */  sw    $a0, %lo(D_800448A8)($at)
-/* 0ECEC4 7F0B8394 24010014 */  li    $at, 20
-/* 0ECEC8 7F0B8398 246F0001 */  addiu $t7, $v1, 1
-/* 0ECECC 7F0B839C 01E1001A */  div   $zero, $t7, $at
-/* 0ECED0 7F0B83A0 0000C010 */  mfhi  $t8
-/* 0ECED4 7F0B83A4 ACB80000 */  sw    $t8, ($a1)
-/* 0ECED8 7F0B83A8 03E00008 */  jr    $ra
-/* 0ECEDC 7F0B83AC 00000000 */   nop   
-)
-#endif
-
 
 
 
@@ -7923,19 +7918,19 @@ void pull_arg_from_stack(void) {
     s32 temp_hi;
 
     // Node 0
-    temp_hi = ((s32) (D_800448F8 + 0x13) % 0x14);
-    D_800448F8 = temp_hi;
-    return *(&D_800448A8 + (temp_hi * 4));
+    temp_hi = ((s32) (g_BgStackCount + 0x13) % 0x14);
+    g_BgStackCount = temp_hi;
+    return *(&g_BgStack + (temp_hi * 4));
 }
 #else
 GLOBAL_ASM(
 .text
 glabel pull_arg_from_stack
-/* 0ECEE0 7F0B83B0 3C048004 */  lui   $a0, %hi(D_800448F8)
-/* 0ECEE4 7F0B83B4 248448F8 */  addiu $a0, %lo(D_800448F8) # addiu $a0, $a0, 0x48f8
+/* 0ECEE0 7F0B83B0 3C048004 */  lui   $a0, %hi(g_BgStackCount)
+/* 0ECEE4 7F0B83B4 248448F8 */  addiu $a0, %lo(g_BgStackCount) # addiu $a0, $a0, 0x48f8
 /* 0ECEE8 7F0B83B8 8C8E0000 */  lw    $t6, ($a0)
 /* 0ECEEC 7F0B83BC 24010014 */  li    $at, 20
-/* 0ECEF0 7F0B83C0 3C038004 */  lui   $v1, %hi(D_800448A8)
+/* 0ECEF0 7F0B83C0 3C038004 */  lui   $v1, %hi(g_BgStack)
 /* 0ECEF4 7F0B83C4 25CF0013 */  addiu $t7, $t6, 0x13
 /* 0ECEF8 7F0B83C8 01E1001A */  div   $zero, $t7, $at
 /* 0ECEFC 7F0B83CC 0000C010 */  mfhi  $t8
@@ -7943,7 +7938,7 @@ glabel pull_arg_from_stack
 /* 0ECF04 7F0B83D4 00681821 */  addu  $v1, $v1, $t0
 /* 0ECF08 7F0B83D8 AC980000 */  sw    $t8, ($a0)
 /* 0ECF0C 7F0B83DC 03E00008 */  jr    $ra
-/* 0ECF10 7F0B83E0 8C6248A8 */   lw    $v0, %lo(D_800448A8)($v1)
+/* 0ECF10 7F0B83E0 8C6248A8 */   lw    $v0, %lo(g_BgStack)($v1)
 )
 #endif
 
@@ -7959,10 +7954,10 @@ void sub_GAME_7F0B83E4(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B83E4
-/* 0ECF14 7F0B83E4 3C0E8004 */  lui   $t6, %hi(D_800448F8) 
-/* 0ECF18 7F0B83E8 8DCE48F8 */  lw    $t6, %lo(D_800448F8)($t6)
+/* 0ECF14 7F0B83E4 3C0E8004 */  lui   $t6, %hi(g_BgStackCount) 
+/* 0ECF18 7F0B83E8 8DCE48F8 */  lw    $t6, %lo(g_BgStackCount)($t6)
 /* 0ECF1C 7F0B83EC 24010014 */  li    $at, 20
-/* 0ECF20 7F0B83F0 3C028004 */  lui   $v0, %hi(D_800448A8)
+/* 0ECF20 7F0B83F0 3C028004 */  lui   $v0, %hi(g_BgStack)
 /* 0ECF24 7F0B83F4 01C47823 */  subu  $t7, $t6, $a0
 /* 0ECF28 7F0B83F8 25F80013 */  addiu $t8, $t7, 0x13
 /* 0ECF2C 7F0B83FC 0301001A */  div   $zero, $t8, $at
@@ -7970,7 +7965,7 @@ glabel sub_GAME_7F0B83E4
 /* 0ECF34 7F0B8404 00194080 */  sll   $t0, $t9, 2
 /* 0ECF38 7F0B8408 00481021 */  addu  $v0, $v0, $t0
 /* 0ECF3C 7F0B840C 03E00008 */  jr    $ra
-/* 0ECF40 7F0B8410 8C4248A8 */   lw    $v0, %lo(D_800448A8)($v0)
+/* 0ECF40 7F0B8410 8C4248A8 */   lw    $v0, %lo(g_BgStack)($v0)
 )
 #endif
 
@@ -8102,7 +8097,7 @@ break:
 push_to_stack:
 /* 0ED008 7F0B84D8 52400004 */  beql  $s2, $zero, .L7F0B84EC
 /* 0ED00C 7F0B84DC 92380001 */   lbu   $t8, 1($s1)
-/* 0ED010 7F0B84E0 0FC2E0DD */  jal   push_arg_to_table
+/* 0ED010 7F0B84E0 0FC2E0DD */  jal   bgStackPush
 /* 0ED014 7F0B84E4 8E240004 */   lw    $a0, 4($s1)
 /* 0ED018 7F0B84E8 92380001 */  lbu   $t8, 1($s1)
 .L7F0B84EC:
@@ -8126,7 +8121,7 @@ and_merge_last_two_on_stack:
 /* 0ED054 7F0B8524 00000000 */   nop   
 /* 0ED058 7F0B8528 0FC2E0EC */  jal   pull_arg_from_stack
 /* 0ED05C 7F0B852C 00408025 */   move  $s0, $v0
-/* 0ED060 7F0B8530 0FC2E0DD */  jal   push_arg_to_table
+/* 0ED060 7F0B8530 0FC2E0DD */  jal   bgStackPush
 /* 0ED064 7F0B8534 00502024 */   and   $a0, $v0, $s0
 /* 0ED068 7F0B8538 922A0001 */  lbu   $t2, 1($s1)
 .L7F0B853C:
@@ -8140,7 +8135,7 @@ or_merge_last_two_on_stack:
 /* 0ED084 7F0B8554 00000000 */   nop   
 /* 0ED088 7F0B8558 0FC2E0EC */  jal   pull_arg_from_stack
 /* 0ED08C 7F0B855C 00408025 */   move  $s0, $v0
-/* 0ED090 7F0B8560 0FC2E0DD */  jal   push_arg_to_table
+/* 0ED090 7F0B8560 0FC2E0DD */  jal   bgStackPush
 /* 0ED094 7F0B8564 00502025 */   or    $a0, $v0, $s0
 /* 0ED098 7F0B8568 922C0001 */  lbu   $t4, 1($s1)
 .L7F0B856C:
@@ -8152,7 +8147,7 @@ not_merge_last_two_on_stack:
 /* 0ED0AC 7F0B857C 922E0001 */   lbu   $t6, 1($s1)
 /* 0ED0B0 7F0B8580 0FC2E0EC */  jal   pull_arg_from_stack
 /* 0ED0B4 7F0B8584 00000000 */   nop   
-/* 0ED0B8 7F0B8588 0FC2E0DD */  jal   push_arg_to_table
+/* 0ED0B8 7F0B8588 0FC2E0DD */  jal   bgStackPush
 /* 0ED0BC 7F0B858C 2C440001 */   sltiu $a0, $v0, 1
 /* 0ED0C0 7F0B8590 922E0001 */  lbu   $t6, 1($s1)
 .L7F0B8594:
@@ -8166,7 +8161,7 @@ carrot_merge_last_two_on_stack:
 /* 0ED0DC 7F0B85AC 00000000 */   nop   
 /* 0ED0E0 7F0B85B0 0FC2E0EC */  jal   pull_arg_from_stack
 /* 0ED0E4 7F0B85B4 00408025 */   move  $s0, $v0
-/* 0ED0E8 7F0B85B8 0FC2E0DD */  jal   push_arg_to_table
+/* 0ED0E8 7F0B85B8 0FC2E0DD */  jal   bgStackPush
 /* 0ED0EC 7F0B85BC 00502026 */   xor   $a0, $v0, $s0
 /* 0ED0F0 7F0B85C0 92380001 */  lbu   $t8, 1($s1)
 .L7F0B85C4:
@@ -8186,7 +8181,7 @@ push_tf_if_in_range_rooms:
 /* 0ED124 7F0B85F4 0122202A */  slt   $a0, $t1, $v0
 /* 0ED128 7F0B85F8 38840001 */  xori  $a0, $a0, 1
 .L7F0B85FC:
-/* 0ED12C 7F0B85FC 0FC2E0DD */  jal   push_arg_to_table
+/* 0ED12C 7F0B85FC 0FC2E0DD */  jal   bgStackPush
 /* 0ED130 7F0B8600 00000000 */   nop   
 .L7F0B8604:
 /* 0ED134 7F0B8604 922A0001 */  lbu   $t2, 1($s1)
