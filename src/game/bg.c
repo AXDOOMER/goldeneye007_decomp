@@ -4,6 +4,7 @@
 #include "game/math_ceil.h"
 #include "game/decompress.h"
 #include "game/matrixmath.h"
+#include "include/PR/gbi.h"
 
 // bss
 //CODE.bss:8007BF90
@@ -3726,52 +3727,28 @@ glabel sub_GAME_7F0B5864
 
 
 
-void *sub_GAME_7F0B5B14(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
-#ifdef NONMATCHING
-void *sub_GAME_7F0B5B14(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
+
+/**
+ * Address 0x7F0B5B14.
+ */
+Gfx *bgFillRectangle(Gfx *gdl, s32 ulx, s32 uly, s32 lrx, s32 lry)
 {
-    arg0->unk4 = (s32) (((arg1 & 0x3FF) << 0xE) | ((arg2 & 0x3FF) * 4));
-    arg0->unk0 = (s32) ((((arg3 + 1) & 0x3FF) << 0xE) | 0xF6000000 | (((arg4 + 1) & 0x3FF) * 4));
-    return arg0 + 8;
+    gDPFillRectangle(gdl++, ulx, uly, lrx + 1, lry + 1);
+    return gdl;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B5B14
-/* 0EA644 7F0B5B14 8FA80010 */  lw    $t0, 0x10($sp)
-/* 0EA648 7F0B5B18 24EE0001 */  addiu $t6, $a3, 1
-/* 0EA64C 7F0B5B1C 31CF03FF */  andi  $t7, $t6, 0x3ff
-/* 0EA650 7F0B5B20 000FC380 */  sll   $t8, $t7, 0xe
-/* 0EA654 7F0B5B24 3C01F600 */  lui   $at, 0xf600
-/* 0EA658 7F0B5B28 25090001 */  addiu $t1, $t0, 1
-/* 0EA65C 7F0B5B2C 312A03FF */  andi  $t2, $t1, 0x3ff
-/* 0EA660 7F0B5B30 0301C825 */  or    $t9, $t8, $at
-/* 0EA664 7F0B5B34 30CF03FF */  andi  $t7, $a2, 0x3ff
-/* 0EA668 7F0B5B38 30AD03FF */  andi  $t5, $a1, 0x3ff
-/* 0EA66C 7F0B5B3C 000D7380 */  sll   $t6, $t5, 0xe
-/* 0EA670 7F0B5B40 000FC080 */  sll   $t8, $t7, 2
-/* 0EA674 7F0B5B44 000A5880 */  sll   $t3, $t2, 2
-/* 0EA678 7F0B5B48 032B6025 */  or    $t4, $t9, $t3
-/* 0EA67C 7F0B5B4C 01D84025 */  or    $t0, $t6, $t8
-/* 0EA680 7F0B5B50 AC880004 */  sw    $t0, 4($a0)
-/* 0EA684 7F0B5B54 AC8C0000 */  sw    $t4, ($a0)
-/* 0EA688 7F0B5B58 03E00008 */  jr    $ra
-/* 0EA68C 7F0B5B5C 24820008 */   addiu $v0, $a0, 8
-)
-#endif
 
 
 
 
 
 
-void sub_GAME_7F0B5B60(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
+void sub_GAME_7F0B5B60(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 {
-    sub_GAME_7F0B5B14(
-        sub_GAME_7F0B5B14(
-            sub_GAME_7F0B5B14(
-                sub_GAME_7F0B5B14(arg0,
+    bgFillRectangle(
+        bgFillRectangle(
+            bgFillRectangle(
+                bgFillRectangle(arg0,
                 arg1, arg2, arg3, arg2),
                 arg3, arg2, arg3, arg4),
                 arg1, arg4, arg3, arg4),
