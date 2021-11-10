@@ -256,6 +256,7 @@ void unload_rooms(void);
 // second parameter is almost certainly a struct
 void sub_GAME_7F0B96CC(f32 arg0, f32 *arg1);
 s32 sub_GAME_7F0B993C(f32 arg0);
+s32 sub_GAME_7F0B5058(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4);
 
 // end forward declarations
 
@@ -2575,32 +2576,18 @@ glabel sub_GAME_7F0B4F9C
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B4FB4(void) {
-    return sub_GAME_7F0B5058(g_CurrentPlayer->viewleft, g_CurrentPlayer->viewtop, (g_CurrentPlayer->viewleft + g_CurrentPlayer->unk7F0), (s32) (g_CurrentPlayer->viewtop + g_CurrentPlayer->unk7F2));
+/**
+ * Address 0x7F0B4FB4.
+ */
+void sub_GAME_7F0B4FB4(s32 arg0)
+{
+    sub_GAME_7F0B5058(
+        arg0,
+        g_CurrentPlayer->viewleft,
+        g_CurrentPlayer->viewtop,
+        g_CurrentPlayer->viewleft + g_CurrentPlayer->viewx,
+        g_CurrentPlayer->viewtop + g_CurrentPlayer->viewy);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B4FB4
-/* 0E9AE4 7F0B4FB4 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
-/* 0E9AE8 7F0B4FB8 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
-/* 0E9AEC 7F0B4FBC 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0E9AF0 7F0B4FC0 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0E9AF4 7F0B4FC4 844F07F2 */  lh    $t7, 0x7f2($v0)
-/* 0E9AF8 7F0B4FC8 844607F6 */  lh    $a2, 0x7f6($v0)
-/* 0E9AFC 7F0B4FCC 844E07F0 */  lh    $t6, 0x7f0($v0)
-/* 0E9B00 7F0B4FD0 844507F4 */  lh    $a1, 0x7f4($v0)
-/* 0E9B04 7F0B4FD4 00CFC021 */  addu  $t8, $a2, $t7
-/* 0E9B08 7F0B4FD8 AFB80010 */  sw    $t8, 0x10($sp)
-/* 0E9B0C 7F0B4FDC 0FC2D416 */  jal   sub_GAME_7F0B5058
-/* 0E9B10 7F0B4FE0 00AE3821 */   addu  $a3, $a1, $t6
-/* 0E9B14 7F0B4FE4 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0E9B18 7F0B4FE8 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0E9B1C 7F0B4FEC 03E00008 */  jr    $ra
-/* 0E9B20 7F0B4FF0 00000000 */   nop   
-)
-#endif
 
 
 
