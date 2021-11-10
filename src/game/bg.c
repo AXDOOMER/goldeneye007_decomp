@@ -10161,25 +10161,13 @@ glabel sub_GAME_7F0B9A7C
 
 
 
-#ifdef NONMATCHING
-s32 sub_GAME_7F0B9AE4(s32 arg0) {
-    // Node 0
-    return ((ptr_bgdata_portals + (arg0 * 8))->unk6 & 1);
+/**
+ * Address 0x7F0B9AE4.
+ */
+s32 bgGetDataPortalsControlBytes1Bit1(s32 arg0)
+{
+    return ptr_bgdata_portals[arg0].controlbytes1 & 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B9AE4
-/* 0EE614 7F0B9AE4 3C0E8008 */  lui   $t6, %hi(ptr_bgdata_portals) 
-/* 0EE618 7F0B9AE8 8DCEFF80 */  lw    $t6, %lo(ptr_bgdata_portals)($t6)
-/* 0EE61C 7F0B9AEC 000478C0 */  sll   $t7, $a0, 3
-/* 0EE620 7F0B9AF0 01CFC021 */  addu  $t8, $t6, $t7
-/* 0EE624 7F0B9AF4 93020006 */  lbu   $v0, 6($t8)
-/* 0EE628 7F0B9AF8 30590001 */  andi  $t9, $v0, 1
-/* 0EE62C 7F0B9AFC 03E00008 */  jr    $ra
-/* 0EE630 7F0B9B00 03201025 */   move  $v0, $t9
-)
-#endif
 
 
 

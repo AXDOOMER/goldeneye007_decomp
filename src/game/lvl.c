@@ -1547,7 +1547,7 @@ Gfx * lvlPortalDebug7F0BDF10(Gfx * arg0)
     {
         if (
             (joyGetButtonsPressedThisFrame(PLAYER_1, D_JPAD) | joyGetButtonsPressedThisFrame(PLAYER_2, D_JPAD)) 
-            && (sub_GAME_7F0B9AE4(g_DebugPortalsD_800483CC) == 0))
+            && (bgGetDataPortalsControlBytes1Bit1(g_DebugPortalsD_800483CC) == 0))
         {
             sp20 = 1;
             sub_GAME_7F0B9DBC(g_DebugPortalsD_800483CC, 0);
@@ -1555,7 +1555,7 @@ Gfx * lvlPortalDebug7F0BDF10(Gfx * arg0)
 
         if (
             (joyGetButtonsPressedThisFrame(PLAYER_1, U_JPAD) | joyGetButtonsPressedThisFrame(PLAYER_2, U_JPAD))
-            && (sub_GAME_7F0B9AE4(g_DebugPortalsD_800483CC) != 0))
+            && (bgGetDataPortalsControlBytes1Bit1(g_DebugPortalsD_800483CC) != 0))
         {
             sp20 = 1;
             sub_GAME_7F0B9DBC(g_DebugPortalsD_800483CC, 1);
@@ -1759,7 +1759,7 @@ glabel lvlPortalDebug7F0BDF10
 /* 0F2C78 7F0BE148 00506825 */  or    $t5, $v0, $s0
 /* 0F2C7C 7F0BE14C 11A0000A */  beqz  $t5, .L7F0BE178
 /* 0F2C80 7F0BE150 3C048005 */   lui   $a0, %hi(g_DebugPortalsD_800483CC)
-/* 0F2C84 7F0BE154 0FC2E6B9 */  jal   sub_GAME_7F0B9AE4
+/* 0F2C84 7F0BE154 0FC2E6B9 */  jal   bgGetDataPortalsControlBytes1Bit1
 /* 0F2C88 7F0BE158 8C8483CC */   lw    $a0, %lo(g_DebugPortalsD_800483CC)($a0)
 /* 0F2C8C 7F0BE15C 14400006 */  bnez  $v0, .L7F0BE178
 /* 0F2C90 7F0BE160 3C048005 */   lui   $a0, %hi(g_DebugPortalsD_800483CC)
@@ -1779,7 +1779,7 @@ glabel lvlPortalDebug7F0BDF10
 /* 0F2CC4 7F0BE194 00507825 */  or    $t7, $v0, $s0
 /* 0F2CC8 7F0BE198 11E00056 */  beqz  $t7, .L7F0BE2F4
 /* 0F2CCC 7F0BE19C 3C048005 */   lui   $a0, %hi(g_DebugPortalsD_800483CC)
-/* 0F2CD0 7F0BE1A0 0FC2E6B9 */  jal   sub_GAME_7F0B9AE4
+/* 0F2CD0 7F0BE1A0 0FC2E6B9 */  jal   bgGetDataPortalsControlBytes1Bit1
 /* 0F2CD4 7F0BE1A4 8C8483CC */   lw    $a0, %lo(g_DebugPortalsD_800483CC)($a0)
 /* 0F2CD8 7F0BE1A8 10400052 */  beqz  $v0, .L7F0BE2F4
 /* 0F2CDC 7F0BE1AC 3C048005 */   lui   $a0, %hi(g_DebugPortalsD_800483CC)
