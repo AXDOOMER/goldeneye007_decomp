@@ -7900,9 +7900,10 @@ glabel sub_GAME_7F0B7F84
 
 
 /**
+ * Add to stack. Push and then increment position. Will wrap on overflow.
+ * 
  * Address 0x7F0B8374.
  */
-
 s32 bgStackPush(s32 arg0)
 {
     g_BgStack[g_BgStackCount] = arg0;
@@ -7913,36 +7914,19 @@ s32 bgStackPush(s32 arg0)
 
 
 
-#ifdef NONMATCHING
-void pull_arg_from_stack(void) {
-    s32 temp_hi;
+/**
+ * Pop from stack. Decrement position and retrieve from there. Wraps on underflow.
+ * 
+ * Address 0x7F0B83B0.
+ */
+s32 bgStackPop(void)
+{
+    s32 val;
 
-    // Node 0
-    temp_hi = ((s32) (g_BgStackCount + 0x13) % 0x14);
-    g_BgStackCount = temp_hi;
-    return *(&g_BgStack + (temp_hi * 4));
+    // ok, who thought this was a good idea
+    val = g_BgStack[g_BgStackCount = (g_BgStackCount + (BG_STACK_SIZE-1)) % BG_STACK_SIZE];
+    return val;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel pull_arg_from_stack
-/* 0ECEE0 7F0B83B0 3C048004 */  lui   $a0, %hi(g_BgStackCount)
-/* 0ECEE4 7F0B83B4 248448F8 */  addiu $a0, %lo(g_BgStackCount) # addiu $a0, $a0, 0x48f8
-/* 0ECEE8 7F0B83B8 8C8E0000 */  lw    $t6, ($a0)
-/* 0ECEEC 7F0B83BC 24010014 */  li    $at, 20
-/* 0ECEF0 7F0B83C0 3C038004 */  lui   $v1, %hi(g_BgStack)
-/* 0ECEF4 7F0B83C4 25CF0013 */  addiu $t7, $t6, 0x13
-/* 0ECEF8 7F0B83C8 01E1001A */  div   $zero, $t7, $at
-/* 0ECEFC 7F0B83CC 0000C010 */  mfhi  $t8
-/* 0ECF00 7F0B83D0 00184080 */  sll   $t0, $t8, 2
-/* 0ECF04 7F0B83D4 00681821 */  addu  $v1, $v1, $t0
-/* 0ECF08 7F0B83D8 AC980000 */  sw    $t8, ($a0)
-/* 0ECF0C 7F0B83DC 03E00008 */  jr    $ra
-/* 0ECF10 7F0B83E0 8C6248A8 */   lw    $v0, %lo(g_BgStack)($v1)
-)
-#endif
-
-
 
 
 
@@ -8107,7 +8091,7 @@ push_to_stack:
 pull_from_stack:
 /* 0ED028 7F0B84F8 52400004 */  beql  $s2, $zero, .L7F0B850C
 /* 0ED02C 7F0B84FC 92280001 */   lbu   $t0, 1($s1)
-/* 0ED030 7F0B8500 0FC2E0EC */  jal   pull_arg_from_stack
+/* 0ED030 7F0B8500 0FC2E0EC */  jal   bgStackPop
 /* 0ED034 7F0B8504 00000000 */   nop   
 /* 0ED038 7F0B8508 92280001 */  lbu   $t0, 1($s1)
 .L7F0B850C:
@@ -8117,9 +8101,9 @@ pull_from_stack:
 and_merge_last_two_on_stack:
 /* 0ED048 7F0B8518 52400008 */  beql  $s2, $zero, .L7F0B853C
 /* 0ED04C 7F0B851C 922A0001 */   lbu   $t2, 1($s1)
-/* 0ED050 7F0B8520 0FC2E0EC */  jal   pull_arg_from_stack
+/* 0ED050 7F0B8520 0FC2E0EC */  jal   bgStackPop
 /* 0ED054 7F0B8524 00000000 */   nop   
-/* 0ED058 7F0B8528 0FC2E0EC */  jal   pull_arg_from_stack
+/* 0ED058 7F0B8528 0FC2E0EC */  jal   bgStackPop
 /* 0ED05C 7F0B852C 00408025 */   move  $s0, $v0
 /* 0ED060 7F0B8530 0FC2E0DD */  jal   bgStackPush
 /* 0ED064 7F0B8534 00502024 */   and   $a0, $v0, $s0
@@ -8131,9 +8115,9 @@ and_merge_last_two_on_stack:
 or_merge_last_two_on_stack:
 /* 0ED078 7F0B8548 52400008 */  beql  $s2, $zero, .L7F0B856C
 /* 0ED07C 7F0B854C 922C0001 */   lbu   $t4, 1($s1)
-/* 0ED080 7F0B8550 0FC2E0EC */  jal   pull_arg_from_stack
+/* 0ED080 7F0B8550 0FC2E0EC */  jal   bgStackPop
 /* 0ED084 7F0B8554 00000000 */   nop   
-/* 0ED088 7F0B8558 0FC2E0EC */  jal   pull_arg_from_stack
+/* 0ED088 7F0B8558 0FC2E0EC */  jal   bgStackPop
 /* 0ED08C 7F0B855C 00408025 */   move  $s0, $v0
 /* 0ED090 7F0B8560 0FC2E0DD */  jal   bgStackPush
 /* 0ED094 7F0B8564 00502025 */   or    $a0, $v0, $s0
@@ -8145,7 +8129,7 @@ or_merge_last_two_on_stack:
 not_merge_last_two_on_stack:
 /* 0ED0A8 7F0B8578 52400006 */  beql  $s2, $zero, .L7F0B8594
 /* 0ED0AC 7F0B857C 922E0001 */   lbu   $t6, 1($s1)
-/* 0ED0B0 7F0B8580 0FC2E0EC */  jal   pull_arg_from_stack
+/* 0ED0B0 7F0B8580 0FC2E0EC */  jal   bgStackPop
 /* 0ED0B4 7F0B8584 00000000 */   nop   
 /* 0ED0B8 7F0B8588 0FC2E0DD */  jal   bgStackPush
 /* 0ED0BC 7F0B858C 2C440001 */   sltiu $a0, $v0, 1
@@ -8157,9 +8141,9 @@ not_merge_last_two_on_stack:
 carrot_merge_last_two_on_stack:
 /* 0ED0D0 7F0B85A0 52400008 */  beql  $s2, $zero, .L7F0B85C4
 /* 0ED0D4 7F0B85A4 92380001 */   lbu   $t8, 1($s1)
-/* 0ED0D8 7F0B85A8 0FC2E0EC */  jal   pull_arg_from_stack
+/* 0ED0D8 7F0B85A8 0FC2E0EC */  jal   bgStackPop
 /* 0ED0DC 7F0B85AC 00000000 */   nop   
-/* 0ED0E0 7F0B85B0 0FC2E0EC */  jal   pull_arg_from_stack
+/* 0ED0E0 7F0B85B0 0FC2E0EC */  jal   bgStackPop
 /* 0ED0E4 7F0B85B4 00408025 */   move  $s0, $v0
 /* 0ED0E8 7F0B85B8 0FC2E0DD */  jal   bgStackPush
 /* 0ED0EC 7F0B85BC 00502026 */   xor   $a0, $v0, $s0
@@ -8446,7 +8430,7 @@ dont_exec_commands_even_on_return:
 /* 0ED4B8 7F0B8988 1000FEBD */  b     .L7F0B8480
 /* 0ED4BC 7F0B898C AC371610 */   sw    $s7, %lo(dword_CODE_bss_80081600 + 0x10)($at)
 if_statement_pull_from_stack:
-/* 0ED4C0 7F0B8990 0FC2E0EC */  jal   pull_arg_from_stack
+/* 0ED4C0 7F0B8990 0FC2E0EC */  jal   bgStackPop
 /* 0ED4C4 7F0B8994 00000000 */   nop   
 /* 0ED4C8 7F0B8998 922D0001 */  lbu   $t5, 1($s1)
 /* 0ED4CC 7F0B899C 00522824 */  and   $a1, $v0, $s2
