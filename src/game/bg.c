@@ -10162,9 +10162,9 @@ glabel sub_GAME_7F0B9A7C
 /**
  * Address 0x7F0B9AE4.
  */
-s32 bgGetDataPortalsControlBytes1Bit1(s32 arg0)
+s32 bgGetDataPortalsControlBytes1Bit1(s32 index)
 {
-    return ptr_bgdata_portals[arg0].controlbytes1 & 1;
+    return ptr_bgdata_portals[index].controlbytes1 & 1;
 }
 
 
@@ -10172,9 +10172,9 @@ s32 bgGetDataPortalsControlBytes1Bit1(s32 arg0)
 /**
  * Address 0x7F0B9B04.
  */
-s32 bgGetDataPortalsControlBytes1Bit2(s32 arg0)
+s32 bgGetDataPortalsControlBytes1Bit2(s32 index)
 {
-    return ptr_bgdata_portals[arg0].controlbytes1 & 2;
+    return ptr_bgdata_portals[index].controlbytes1 & 2;
 }
 
 
@@ -10182,9 +10182,9 @@ s32 bgGetDataPortalsControlBytes1Bit2(s32 arg0)
 /**
  * Address 0x7F0B9B24.
  */
-void bgSetDataPortalsControlBytes1Bit2(s32 arg0)
+void bgSetDataPortalsControlBytes1Bit2(s32 index)
 {
-    ptr_bgdata_portals[arg0].controlbytes1 |= 2;
+    ptr_bgdata_portals[index].controlbytes1 |= 2;
 }
 
 
@@ -10192,43 +10192,26 @@ void bgSetDataPortalsControlBytes1Bit2(s32 arg0)
 /**
  * Address 0x7F0B9B44.
  */
-void bgClearDataPortalsControlBytes1Low2Bits(s32 arg0)
+void bgClearDataPortalsControlBytes1Low2Bits(s32 index)
 {
-    ptr_bgdata_portals[arg0].controlbytes1 &= 0xFD;
+    ptr_bgdata_portals[index].controlbytes1 &= 0xFD;
 }
 
 
 
-#ifdef NONMATCHING
-s8 sub_GAME_7F0B9B64(s32 arg0) {
-    s32 temp_v1;
-    void *temp_a1;
+/**
+ * Swaps connected rooms.
+ * 
+ * Address 0x7F0B9B64.
+ */
+s8 bgSwapConnectedRooms(s32 index)
+{
+    u8 t;
 
-    // Node 0
-    temp_v1 = (arg0 * 8);
-    temp_a1 = (ptr_bgdata_portals + temp_v1);
-    temp_a1->unk4 = (s8) temp_a1->unk5;
-    (ptr_bgdata_portals + temp_v1)->unk5 = (s8) temp_a1->unk4;
-    return temp_a1->unk4;
+    t = ptr_bgdata_portals[index].connectedRoom1;
+    ptr_bgdata_portals[index].connectedRoom1 = ptr_bgdata_portals[index].connectedRoom2;
+    ptr_bgdata_portals[index].connectedRoom2 = t;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B9B64
-/* 0EE694 7F0B9B64 3C068008 */  lui   $a2, %hi(ptr_bgdata_portals)
-/* 0EE698 7F0B9B68 24C6FF80 */  addiu $a2, %lo(ptr_bgdata_portals) # addiu $a2, $a2, -0x80
-/* 0EE69C 7F0B9B6C 8CCE0000 */  lw    $t6, ($a2)
-/* 0EE6A0 7F0B9B70 000418C0 */  sll   $v1, $a0, 3
-/* 0EE6A4 7F0B9B74 01C32821 */  addu  $a1, $t6, $v1
-/* 0EE6A8 7F0B9B78 90AF0005 */  lbu   $t7, 5($a1)
-/* 0EE6AC 7F0B9B7C 90A20004 */  lbu   $v0, 4($a1)
-/* 0EE6B0 7F0B9B80 A0AF0004 */  sb    $t7, 4($a1)
-/* 0EE6B4 7F0B9B84 8CD80000 */  lw    $t8, ($a2)
-/* 0EE6B8 7F0B9B88 0303C821 */  addu  $t9, $t8, $v1
-/* 0EE6BC 7F0B9B8C 03E00008 */  jr    $ra
-/* 0EE6C0 7F0B9B90 A3220005 */   sb    $v0, 5($t9)
-)
-#endif
 
 
 
@@ -10267,7 +10250,7 @@ f32 sub_GAME_7F0B9B94(s32 arg0) {
     {
         // Node 1
         sp24 = 1;
-        sub_GAME_7F0B9B64(sp44, sp40, arg0);
+        bgSwapConnectedRooms(sp44, sp40, arg0);
         sp38 = (f32) -sp38;
         phi_f16 = -sp3C;
         phi_f18 = -sp34;
@@ -10288,7 +10271,7 @@ f32 sub_GAME_7F0B9B94(s32 arg0) {
         {
             // Node 4
             sp24 = (s32) phi_v0;
-            phi_return = sub_GAME_7F0B9B64(phi_f12, phi_f14, arg0);
+            phi_return = bgSwapConnectedRooms(phi_f12, phi_f14, arg0);
         }
     }
     // Node 5
@@ -10336,7 +10319,7 @@ glabel sub_GAME_7F0B9B94
 /* 0EE750 7F0B9C20 45020012 */  bc1fl .L7F0B9C6C
 /* 0EE754 7F0B9C24 C7A40038 */   lwc1  $f4, 0x38($sp)
 /* 0EE758 7F0B9C28 24020001 */  li    $v0, 1
-/* 0EE75C 7F0B9C2C 0FC2E6D9 */  jal   sub_GAME_7F0B9B64
+/* 0EE75C 7F0B9C2C 0FC2E6D9 */  jal   bgSwapConnectedRooms
 /* 0EE760 7F0B9C30 AFA20024 */   sw    $v0, 0x24($sp)
 /* 0EE764 7F0B9C34 C7AC0044 */  lwc1  $f12, 0x44($sp)
 /* 0EE768 7F0B9C38 C7A00040 */  lwc1  $f0, 0x40($sp)
@@ -10370,7 +10353,7 @@ glabel sub_GAME_7F0B9B94
 /* 0EE7D4 7F0B9CA4 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0EE7D8 7F0B9CA8 10400003 */  beqz  $v0, .L7F0B9CB8
 /* 0EE7DC 7F0B9CAC 8FA40060 */   lw    $a0, 0x60($sp)
-/* 0EE7E0 7F0B9CB0 0FC2E6D9 */  jal   sub_GAME_7F0B9B64
+/* 0EE7E0 7F0B9CB0 0FC2E6D9 */  jal   bgSwapConnectedRooms
 /* 0EE7E4 7F0B9CB4 AFA20024 */   sw    $v0, 0x24($sp)
 .L7F0B9CB8:
 /* 0EE7E8 7F0B9CB8 8FBF0014 */  lw    $ra, 0x14($sp)

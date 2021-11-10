@@ -1540,7 +1540,7 @@ Gfx * lvlPortalDebug7F0BDF10(Gfx * arg0)
     {
         if (joyGetButtonsPressedThisFrame(PLAYER_1, D_JPAD) != 0)
         {
-            sub_GAME_7F0B9B64(g_DebugPortalsD_800483CC);
+            bgSwapConnectedRooms(g_DebugPortalsD_800483CC);
         }
     }
     else if (joyGetButtons(PLAYER_1, R_TRIG) | joyGetButtons(PLAYER_2, R_TRIG))
@@ -1734,7 +1734,7 @@ glabel lvlPortalDebug7F0BDF10
 /* 0F2C18 7F0BE0E8 24050400 */   li    $a1, 1024
 /* 0F2C1C 7F0BE0EC 10400081 */  beqz  $v0, .L7F0BE2F4
 /* 0F2C20 7F0BE0F0 3C048005 */   lui   $a0, %hi(g_DebugPortalsD_800483CC)
-/* 0F2C24 7F0BE0F4 0FC2E6D9 */  jal   sub_GAME_7F0B9B64
+/* 0F2C24 7F0BE0F4 0FC2E6D9 */  jal   bgSwapConnectedRooms
 /* 0F2C28 7F0BE0F8 8C8483CC */   lw    $a0, %lo(g_DebugPortalsD_800483CC)($a0)
 /* 0F2C2C 7F0BE0FC 1000007E */  b     .L7F0BE2F8
 /* 0F2C30 7F0BE100 00001025 */   move  $v0, $zero
