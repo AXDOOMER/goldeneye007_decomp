@@ -2762,67 +2762,30 @@ glabel sub_GAME_7F0B5168
 
 
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F0B519C(void *arg0, void *arg1) {
-    // Node 0
-    if (*arg1 <= *arg0)
+/**
+ * Unreferenced.
+ * 
+ * Loosely checks that arg1 surrounds arg0. Requires points be ordered according to min/max.
+ * 
+ * Address 0x7F0B519C.
+ */
+s32 bgRectIsInside(struct bbox2d *arg0, struct bbox2d *arg1)
+{
+    if (arg1->min.x <= arg0->min.x)
     {
-        // Node 1
-        if (*arg0 <= arg1->unk8)
+        if (arg0->min.x <= arg1->max.x)
         {
-            // Node 2
-            if (arg1->unk4 <= arg0->unk4)
+            if (arg1->min.y <= arg0->min.y)
             {
-                // Node 3
-                if (arg0->unk4 <= arg1->unkC)
+                if (arg0->min.y <= arg1->max.y)
                 {
-                    // Node 4
                     return 1;
                 }
             }
         }
     }
-    // Node 5
     return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B519C
-/* 0E9CCC 7F0B519C C4800000 */  lwc1  $f0, ($a0)
-/* 0E9CD0 7F0B51A0 C4A40000 */  lwc1  $f4, ($a1)
-/* 0E9CD4 7F0B51A4 00001025 */  move  $v0, $zero
-/* 0E9CD8 7F0B51A8 4600203E */  c.le.s $f4, $f0
-/* 0E9CDC 7F0B51AC 00000000 */  nop   
-/* 0E9CE0 7F0B51B0 45000013 */  bc1f  .L7F0B5200
-/* 0E9CE4 7F0B51B4 00000000 */   nop   
-/* 0E9CE8 7F0B51B8 C4A60008 */  lwc1  $f6, 8($a1)
-/* 0E9CEC 7F0B51BC 4606003E */  c.le.s $f0, $f6
-/* 0E9CF0 7F0B51C0 00000000 */  nop   
-/* 0E9CF4 7F0B51C4 4500000E */  bc1f  .L7F0B5200
-/* 0E9CF8 7F0B51C8 00000000 */   nop   
-/* 0E9CFC 7F0B51CC C4800004 */  lwc1  $f0, 4($a0)
-/* 0E9D00 7F0B51D0 C4A80004 */  lwc1  $f8, 4($a1)
-/* 0E9D04 7F0B51D4 4600403E */  c.le.s $f8, $f0
-/* 0E9D08 7F0B51D8 00000000 */  nop   
-/* 0E9D0C 7F0B51DC 45000008 */  bc1f  .L7F0B5200
-/* 0E9D10 7F0B51E0 00000000 */   nop   
-/* 0E9D14 7F0B51E4 C4AA000C */  lwc1  $f10, 0xc($a1)
-/* 0E9D18 7F0B51E8 460A003E */  c.le.s $f0, $f10
-/* 0E9D1C 7F0B51EC 00000000 */  nop   
-/* 0E9D20 7F0B51F0 45000003 */  bc1f  .L7F0B5200
-/* 0E9D24 7F0B51F4 00000000 */   nop   
-/* 0E9D28 7F0B51F8 03E00008 */  jr    $ra
-/* 0E9D2C 7F0B51FC 24020001 */   li    $v0, 1
-
-.L7F0B5200:
-/* 0E9D30 7F0B5200 03E00008 */  jr    $ra
-/* 0E9D34 7F0B5204 00000000 */   nop   
-)
-#endif
-
-
 
 
 
