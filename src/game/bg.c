@@ -10173,15 +10173,18 @@ s32 bgGetDataPortalsControlBytes1Bit1(s32 arg0)
 
 
 
-#ifdef NONMATCHING
-s32 sub_GAME_7F0B9B04(s32 arg0) {
-    // Node 0
-    return ((ptr_bgdata_portals + (arg0 * 8))->unk6 & 2);
+#if 1
+/**
+ * Address 0x7F0B9B04.
+ */
+s32 bgGetDataPortalsControlBytes1Bit2(s32 arg0)
+{
+    return ptr_bgdata_portals[arg0].controlbytes1 & 2;
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0B9B04
+glabel bgGetDataPortalsControlBytes1Bit2
 /* 0EE634 7F0B9B04 3C0E8008 */  lui   $t6, %hi(ptr_bgdata_portals) 
 /* 0EE638 7F0B9B08 8DCEFF80 */  lw    $t6, %lo(ptr_bgdata_portals)($t6)
 /* 0EE63C 7F0B9B0C 000478C0 */  sll   $t7, $a0, 3
