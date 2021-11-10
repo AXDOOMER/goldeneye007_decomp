@@ -3730,6 +3730,8 @@ glabel sub_GAME_7F0B5864
 
 
 /**
+ * Unreferenced.
+ * 
  * Address 0x7F0B5B14.
  */
 Gfx *bgFillRectangle(Gfx *gdl, s32 ulx, s32 uly, s32 lrx, s32 lry)
@@ -3742,7 +3744,9 @@ Gfx *bgFillRectangle(Gfx *gdl, s32 ulx, s32 uly, s32 lrx, s32 lry)
 
 
 
-
+/**
+ * Unreferenced.
+ */
 void bgFillRectangleWithSides(Gfx *gdl, s32 ulx, s32 uly, s32 lrx, s32 lry)
 {
     bgFillRectangle(
@@ -3757,140 +3761,86 @@ void bgFillRectangleWithSides(Gfx *gdl, s32 ulx, s32 uly, s32 lrx, s32 lry)
 
 
 
-#ifdef NONMATCHING
-f32 vis_is_inline_of_sight(void *arg0, void *arg1) {
-    // Node 0
-    if (*arg1 < *arg0)
+/**
+ * Determines if two rectangles overlap, adjusting first argument to be the intersection.
+ * 
+ * Returns 0 if no intersection (or edge equality), 1 otherwise.
+ * 
+ * Address 0x7F0B5BDC.
+ */
+s32 bgRectIntersect(struct bbox2d *arg0, struct bbox2d *arg1)
+{
+    f32 temp_f0;
+    f32 temp_f0_2;
+    f32 temp_f0_3;
+    f32 temp_f0_4;
+    f32 temp_f0_5;
+    f32 temp_f0_6;
+    f32 temp_f2;
+    f32 temp_f2_2;
+    f32 temp_f2_3;
+    f32 temp_f2_4;
+
+    temp_f0 = arg1->min.x;
+    temp_f2 = arg0->min.x;
+    if (temp_f0 < temp_f2)
     {
-        // Node 1
-        *arg0 = (f32) *arg0;
+        arg0->min.x = temp_f2;
     }
     else
     {
-        // Node 2
-        *arg0 = (f32) *arg1;
+        arg0->min.x = temp_f0;
     }
-    // Node 3
-    if (arg1->unk4 < arg0->unk4)
+
+    temp_f0_2 = arg1->min.y;
+    temp_f2_2 = arg0->min.y;
+    if (temp_f0_2 < temp_f2_2)
     {
-        // Node 4
-        arg0->unk4 = (f32) arg0->unk4;
+        arg0->min.y = temp_f2_2;
     }
     else
     {
-        // Node 5
-        arg0->unk4 = (f32) arg1->unk4;
+        arg0->min.y = temp_f0_2;
     }
-    // Node 6
-    if (arg0->unk8 < arg1->unk8)
+
+    temp_f0_3 = arg0->max.x;
+    temp_f2_3 = arg1->max.x;
+    if (temp_f0_3 < temp_f2_3)
     {
-        // Node 7
-        arg0->unk8 = (f32) arg0->unk8;
+        arg0->max.x = temp_f0_3;
     }
     else
     {
-        // Node 8
-        arg0->unk8 = (f32) arg1->unk8;
+        arg0->max.x = temp_f2_3;
     }
-    // Node 9
-    if (arg0->unkC < arg1->unkC)
+
+    temp_f0_4 = arg0->max.y;
+    temp_f2_4 = arg1->max.y;
+    if (temp_f0_4 < temp_f2_4)
     {
-        // Node 10
-        arg0->unkC = (f32) arg0->unkC;
+        arg0->max.y = temp_f0_4;
     }
     else
     {
-        // Node 11
-        arg0->unkC = (f32) arg1->unkC;
+        arg0->max.y = temp_f2_4;
     }
-    // Node 12
-    if (arg0->unk8 <= *arg0)
+
+    temp_f0_5 = arg0->max.x;
+    if (temp_f0_5 <= arg0->min.x)
     {
-        // Node 13
-        *arg0 = (f32) arg0->unk8;
-        return arg0->unk8;
+        arg0->min.x = temp_f0_5;
+        return 0;
     }
-    // Node 14
-    if (arg0->unkC <= arg0->unk4)
+
+    temp_f0_6 = arg0->max.y;
+    if (temp_f0_6 <= arg0->min.y)
     {
-        // Node 15
-        arg0->unk4 = (f32) arg0->unkC;
-        return 0.0f;
+        arg0->min.y = temp_f0_6;
+        return 0;
     }
-    // Node 16
-    return 1.401298464324817e-45f;
+
+    return 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel vis_is_inline_of_sight
-/* 0EA70C 7F0B5BDC C4A00000 */  lwc1  $f0, ($a1)
-/* 0EA710 7F0B5BE0 C4820000 */  lwc1  $f2, ($a0)
-/* 0EA714 7F0B5BE4 4602003C */  c.lt.s $f0, $f2
-/* 0EA718 7F0B5BE8 00000000 */  nop   
-/* 0EA71C 7F0B5BEC 45020004 */  bc1fl .L7F0B5C00
-/* 0EA720 7F0B5BF0 E4800000 */   swc1  $f0, ($a0)
-/* 0EA724 7F0B5BF4 10000002 */  b     .L7F0B5C00
-/* 0EA728 7F0B5BF8 E4820000 */   swc1  $f2, ($a0)
-/* 0EA72C 7F0B5BFC E4800000 */  swc1  $f0, ($a0)
-.L7F0B5C00:
-/* 0EA730 7F0B5C00 C4A00004 */  lwc1  $f0, 4($a1)
-/* 0EA734 7F0B5C04 C4820004 */  lwc1  $f2, 4($a0)
-/* 0EA738 7F0B5C08 00001025 */  move  $v0, $zero
-/* 0EA73C 7F0B5C0C 4602003C */  c.lt.s $f0, $f2
-/* 0EA740 7F0B5C10 00000000 */  nop   
-/* 0EA744 7F0B5C14 45020004 */  bc1fl .L7F0B5C28
-/* 0EA748 7F0B5C18 E4800004 */   swc1  $f0, 4($a0)
-/* 0EA74C 7F0B5C1C 10000002 */  b     .L7F0B5C28
-/* 0EA750 7F0B5C20 E4820004 */   swc1  $f2, 4($a0)
-/* 0EA754 7F0B5C24 E4800004 */  swc1  $f0, 4($a0)
-.L7F0B5C28:
-/* 0EA758 7F0B5C28 C4800008 */  lwc1  $f0, 8($a0)
-/* 0EA75C 7F0B5C2C C4A20008 */  lwc1  $f2, 8($a1)
-/* 0EA760 7F0B5C30 4602003C */  c.lt.s $f0, $f2
-/* 0EA764 7F0B5C34 00000000 */  nop   
-/* 0EA768 7F0B5C38 45020004 */  bc1fl .L7F0B5C4C
-/* 0EA76C 7F0B5C3C E4820008 */   swc1  $f2, 8($a0)
-/* 0EA770 7F0B5C40 10000002 */  b     .L7F0B5C4C
-/* 0EA774 7F0B5C44 E4800008 */   swc1  $f0, 8($a0)
-/* 0EA778 7F0B5C48 E4820008 */  swc1  $f2, 8($a0)
-.L7F0B5C4C:
-/* 0EA77C 7F0B5C4C C480000C */  lwc1  $f0, 0xc($a0)
-/* 0EA780 7F0B5C50 C4A2000C */  lwc1  $f2, 0xc($a1)
-/* 0EA784 7F0B5C54 4602003C */  c.lt.s $f0, $f2
-/* 0EA788 7F0B5C58 00000000 */  nop   
-/* 0EA78C 7F0B5C5C 45020004 */  bc1fl .L7F0B5C70
-/* 0EA790 7F0B5C60 E482000C */   swc1  $f2, 0xc($a0)
-/* 0EA794 7F0B5C64 10000002 */  b     .L7F0B5C70
-/* 0EA798 7F0B5C68 E480000C */   swc1  $f0, 0xc($a0)
-/* 0EA79C 7F0B5C6C E482000C */  swc1  $f2, 0xc($a0)
-.L7F0B5C70:
-/* 0EA7A0 7F0B5C70 C4800008 */  lwc1  $f0, 8($a0)
-/* 0EA7A4 7F0B5C74 C4840000 */  lwc1  $f4, ($a0)
-/* 0EA7A8 7F0B5C78 4604003E */  c.le.s $f0, $f4
-/* 0EA7AC 7F0B5C7C 00000000 */  nop   
-/* 0EA7B0 7F0B5C80 45020004 */  bc1fl .L7F0B5C94
-/* 0EA7B4 7F0B5C84 C480000C */   lwc1  $f0, 0xc($a0)
-/* 0EA7B8 7F0B5C88 03E00008 */  jr    $ra
-/* 0EA7BC 7F0B5C8C E4800000 */   swc1  $f0, ($a0)
-
-/* 0EA7C0 7F0B5C90 C480000C */  lwc1  $f0, 0xc($a0)
-.L7F0B5C94:
-/* 0EA7C4 7F0B5C94 C4860004 */  lwc1  $f6, 4($a0)
-/* 0EA7C8 7F0B5C98 24020001 */  li    $v0, 1
-/* 0EA7CC 7F0B5C9C 4606003E */  c.le.s $f0, $f6
-/* 0EA7D0 7F0B5CA0 00000000 */  nop   
-/* 0EA7D4 7F0B5CA4 45000004 */  bc1f  .L7F0B5CB8
-/* 0EA7D8 7F0B5CA8 00000000 */   nop   
-/* 0EA7DC 7F0B5CAC E4800004 */  swc1  $f0, 4($a0)
-/* 0EA7E0 7F0B5CB0 03E00008 */  jr    $ra
-/* 0EA7E4 7F0B5CB4 00001025 */   move  $v0, $zero
-
-.L7F0B5CB8:
-/* 0EA7E8 7F0B5CB8 03E00008 */  jr    $ra
-/* 0EA7EC 7F0B5CBC 00000000 */   nop   
-)
-#endif
 
 
 
@@ -7864,12 +7814,12 @@ glabel sub_GAME_7F0B7F84
 /* 0ECD34 7F0B8204 10000053 */  b     .L7F0B8354
 /* 0ECD38 7F0B8208 02401025 */   move  $v0, $s2
 .L7F0B820C:
-/* 0ECD3C 7F0B820C 0FC2D6F7 */  jal   vis_is_inline_of_sight
+/* 0ECD3C 7F0B820C 0FC2D6F7 */  jal   bgRectIntersect
 /* 0ECD40 7F0B8210 8FA50090 */   lw    $a1, 0x90($sp)
 /* 0ECD44 7F0B8214 3C058008 */  lui   $a1, %hi(g_CurrentPlayer)
 /* 0ECD48 7F0B8218 8CA5A0B0 */  lw    $a1, %lo(g_CurrentPlayer)($a1)
 /* 0ECD4C 7F0B821C 27A40070 */  addiu $a0, $sp, 0x70
-/* 0ECD50 7F0B8220 0FC2D6F7 */  jal   vis_is_inline_of_sight
+/* 0ECD50 7F0B8220 0FC2D6F7 */  jal   bgRectIntersect
 /* 0ECD54 7F0B8224 24A51118 */   addiu $a1, $a1, 0x1118
 .L7F0B8228:
 /* 0ECD58 7F0B8228 C7A80070 */  lwc1  $f8, 0x70($sp)
@@ -8310,7 +8260,7 @@ match_portal_vis:
 /* 0ED1A4 7F0B8674 8FC50000 */  lw    $a1, ($fp)
 .L7F0B8678:
 /* 0ED1A8 7F0B8678 02C02025 */  move  $a0, $s6
-/* 0ED1AC 7F0B867C 0FC2D6F7 */  jal   vis_is_inline_of_sight
+/* 0ED1AC 7F0B867C 0FC2D6F7 */  jal   bgRectIntersect
 /* 0ED1B0 7F0B8680 24A51118 */   addiu $a1, $a1, 0x1118
 /* 0ED1B4 7F0B8684 54400004 */  bnezl $v0, .L7F0B8698
 /* 0ED1B8 7F0B8688 AE800000 */   sw    $zero, ($s4)
@@ -8331,7 +8281,7 @@ visible_if_seen_through_portal:
 /* 0ED1EC 7F0B86BC 92390001 */   lbu   $t9, 1($s1)
 /* 0ED1F0 7F0B86C0 8FC50000 */  lw    $a1, ($fp)
 /* 0ED1F4 7F0B86C4 27A40068 */  addiu $a0, $sp, 0x68
-/* 0ED1F8 7F0B86C8 0FC2D6F7 */  jal   vis_is_inline_of_sight
+/* 0ED1F8 7F0B86C8 0FC2D6F7 */  jal   bgRectIntersect
 /* 0ED1FC 7F0B86CC 24A51118 */   addiu $a1, $a1, 0x1118
 /* 0ED200 7F0B86D0 5040000D */  beql  $v0, $zero, .L7F0B8708
 /* 0ED204 7F0B86D4 92390001 */   lbu   $t9, 1($s1)
@@ -8369,14 +8319,14 @@ not_visible_if_seen_through_portal:
 /* 0ED274 7F0B8744 8FC50000 */  lw    $a1, ($fp)
 .L7F0B8748:
 /* 0ED278 7F0B8748 27A40058 */  addiu $a0, $sp, 0x58
-/* 0ED27C 7F0B874C 0FC2D6F7 */  jal   vis_is_inline_of_sight
+/* 0ED27C 7F0B874C 0FC2D6F7 */  jal   bgRectIntersect
 /* 0ED280 7F0B8750 24A51118 */   addiu $a1, $a1, 0x1118
 /* 0ED284 7F0B8754 14400003 */  bnez  $v0, .L7F0B8764
 /* 0ED288 7F0B8758 02C02025 */   move  $a0, $s6
 /* 0ED28C 7F0B875C 10000006 */  b     .L7F0B8778
 /* 0ED290 7F0B8760 AE970000 */   sw    $s7, ($s4)
 .L7F0B8764:
-/* 0ED294 7F0B8764 0FC2D6F7 */  jal   vis_is_inline_of_sight
+/* 0ED294 7F0B8764 0FC2D6F7 */  jal   bgRectIntersect
 /* 0ED298 7F0B8768 27A50058 */   addiu $a1, $sp, 0x58
 /* 0ED29C 7F0B876C 54400003 */  bnezl $v0, .L7F0B877C
 /* 0ED2A0 7F0B8770 922A0001 */   lbu   $t2, 1($s1)
