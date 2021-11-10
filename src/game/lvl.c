@@ -1550,7 +1550,7 @@ Gfx * lvlPortalDebug7F0BDF10(Gfx * arg0)
             && (bgGetDataPortalsControlBytes1Bit1(g_DebugPortalsD_800483CC) == 0))
         {
             sp20 = 1;
-            sub_GAME_7F0B9DBC(g_DebugPortalsD_800483CC, 0);
+            bgToggleDataPortalsContrlBytes1Bit1(g_DebugPortalsD_800483CC, 0);
         }
 
         if (
@@ -1558,7 +1558,7 @@ Gfx * lvlPortalDebug7F0BDF10(Gfx * arg0)
             && (bgGetDataPortalsControlBytes1Bit1(g_DebugPortalsD_800483CC) != 0))
         {
             sp20 = 1;
-            sub_GAME_7F0B9DBC(g_DebugPortalsD_800483CC, 1);
+            bgToggleDataPortalsContrlBytes1Bit1(g_DebugPortalsD_800483CC, 1);
         }
     }
     else if (joyGetButtons(PLAYER_1, L_TRIG) | joyGetButtons(PLAYER_2, L_TRIG))
@@ -1766,7 +1766,7 @@ glabel lvlPortalDebug7F0BDF10
 /* 0F2C94 7F0BE164 240E0001 */  li    $t6, 1
 /* 0F2C98 7F0BE168 AFAE0020 */  sw    $t6, 0x20($sp)
 /* 0F2C9C 7F0BE16C 8C8483CC */  lw    $a0, %lo(g_DebugPortalsD_800483CC)($a0)
-/* 0F2CA0 7F0BE170 0FC2E76F */  jal   sub_GAME_7F0B9DBC
+/* 0F2CA0 7F0BE170 0FC2E76F */  jal   bgToggleDataPortalsContrlBytes1Bit1
 /* 0F2CA4 7F0BE174 00002825 */   move  $a1, $zero
 .L7F0BE178:
 /* 0F2CA8 7F0BE178 00002025 */  move  $a0, $zero
@@ -1786,7 +1786,7 @@ glabel lvlPortalDebug7F0BDF10
 /* 0F2CE0 7F0BE1B0 24180001 */  li    $t8, 1
 /* 0F2CE4 7F0BE1B4 AFB80020 */  sw    $t8, 0x20($sp)
 /* 0F2CE8 7F0BE1B8 8C8483CC */  lw    $a0, %lo(g_DebugPortalsD_800483CC)($a0)
-/* 0F2CEC 7F0BE1BC 0FC2E76F */  jal   sub_GAME_7F0B9DBC
+/* 0F2CEC 7F0BE1BC 0FC2E76F */  jal   bgToggleDataPortalsContrlBytes1Bit1
 /* 0F2CF0 7F0BE1C0 24050001 */   li    $a1, 1
 /* 0F2CF4 7F0BE1C4 1000004C */  b     .L7F0BE2F8
 /* 0F2CF8 7F0BE1C8 00001025 */   move  $v0, $zero

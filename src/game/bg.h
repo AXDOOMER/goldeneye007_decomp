@@ -93,7 +93,7 @@ s32 sub_GAME_7F0B9DE4(s32 arg0, s32 arg1, s32 arg2);
 void sub_GAME_7F0B9DF4(s32 arg0);
 s8 bgSwapConnectedRooms(s32 index);
 s32 bgGetDataPortalsControlBytes1Bit1(s32 index);
-void *sub_GAME_7F0B9DBC(s32 arg0, u32 arg1);
+void bgToggleDataPortalsContrlBytes1Bit1(s32 index, s32 toggle);
 s32 bgGetDataPortalsControlBytes1Bit2(s32 arg0);
 void bgClearDataPortalsControlBytes1Low2Bits(s32 index);
 void bgSetDataPortalsControlBytes1Bit2(s32 index);

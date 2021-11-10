@@ -10160,6 +10160,8 @@ glabel sub_GAME_7F0B9A7C
 
 
 /**
+ * @param index: inedx into prtal array.
+ * 
  * Address 0x7F0B9AE4.
  */
 s32 bgGetDataPortalsControlBytes1Bit1(s32 index)
@@ -10170,6 +10172,8 @@ s32 bgGetDataPortalsControlBytes1Bit1(s32 index)
 
 
 /**
+ * @param index: inedx into prtal array.
+ * 
  * Address 0x7F0B9B04.
  */
 s32 bgGetDataPortalsControlBytes1Bit2(s32 index)
@@ -10180,6 +10184,8 @@ s32 bgGetDataPortalsControlBytes1Bit2(s32 index)
 
 
 /**
+ * @param index: inedx into prtal array.
+ * 
  * Address 0x7F0B9B24.
  */
 void bgSetDataPortalsControlBytes1Bit2(s32 index)
@@ -10190,6 +10196,8 @@ void bgSetDataPortalsControlBytes1Bit2(s32 index)
 
 
 /**
+ * @param index: inedx into prtal array.
+ * 
  * Address 0x7F0B9B44.
  */
 void bgClearDataPortalsControlBytes1Low2Bits(s32 index)
@@ -10201,6 +10209,8 @@ void bgClearDataPortalsControlBytes1Low2Bits(s32 index)
 
 /**
  * Swaps connected rooms.
+ * 
+ * @param index: inedx into prtal array.
  * 
  * Address 0x7F0B9B64.
  */
@@ -10450,32 +10460,18 @@ glabel sub_GAME_7F0B9CC8
 
 
 
-#ifdef NONMATCHING
-void *sub_GAME_7F0B9DBC(s32 arg0, u32 arg1) {
-    void *temp_v0;
-
-    // Node 0
-    temp_v0 = (ptr_bgdata_portals + (arg0 * 8));
-    temp_v0->unk6 = (s8) ((temp_v0->unk6 | 1) ^ (0U < arg1));
-    return temp_v0;
+/**
+ * Toggles control bytes 1 lowest bit, based on toggle parameter.
+ * 
+ * @param index: index into data portals.
+ * @param toggle: When zero, sets lowest bit. Otherwise, clears lowest bit.
+ * 
+ * Address 0x7F0B9DBC.
+ */
+void bgToggleDataPortalsContrlBytes1Bit1(s32 index, s32 toggle)
+{
+    ptr_bgdata_portals[index].controlbytes1 = (ptr_bgdata_portals[index].controlbytes1 | 1) ^ (toggle != 0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B9DBC
-/* 0EE8EC 7F0B9DBC 3C0E8008 */  lui   $t6, %hi(ptr_bgdata_portals) 
-/* 0EE8F0 7F0B9DC0 8DCEFF80 */  lw    $t6, %lo(ptr_bgdata_portals)($t6)
-/* 0EE8F4 7F0B9DC4 000478C0 */  sll   $t7, $a0, 3
-/* 0EE8F8 7F0B9DC8 0005402B */  sltu  $t0, $zero, $a1
-/* 0EE8FC 7F0B9DCC 01CF1021 */  addu  $v0, $t6, $t7
-/* 0EE900 7F0B9DD0 90580006 */  lbu   $t8, 6($v0)
-/* 0EE904 7F0B9DD4 37190001 */  ori   $t9, $t8, 1
-/* 0EE908 7F0B9DD8 03284826 */  xor   $t1, $t9, $t0
-/* 0EE90C 7F0B9DDC 03E00008 */  jr    $ra
-/* 0EE910 7F0B9DE0 A0490006 */   sb    $t1, 6($v0)
-)
-#endif
-
 
 
 
