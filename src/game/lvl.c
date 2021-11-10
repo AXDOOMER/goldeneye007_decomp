@@ -1568,7 +1568,7 @@ Gfx * lvlPortalDebug7F0BDF10(Gfx * arg0)
             && bgGetDataPortalsControlBytes1Bit2(g_DebugPortalsD_800483CC))
         {
             sp20 = 1;
-            sub_GAME_7F0B9B44(g_DebugPortalsD_800483CC);
+            bgClearDataPortalsControlBytes1Low2Bits(g_DebugPortalsD_800483CC);
         }
 
         if (
@@ -1816,7 +1816,7 @@ glabel lvlPortalDebug7F0BDF10
 /* 0F2D54 7F0BE224 3C048005 */   lui   $a0, %hi(g_DebugPortalsD_800483CC)
 /* 0F2D58 7F0BE228 24090001 */  li    $t1, 1
 /* 0F2D5C 7F0BE22C AFA90020 */  sw    $t1, 0x20($sp)
-/* 0F2D60 7F0BE230 0FC2E6D1 */  jal   sub_GAME_7F0B9B44
+/* 0F2D60 7F0BE230 0FC2E6D1 */  jal   bgClearDataPortalsControlBytes1Low2Bits
 /* 0F2D64 7F0BE234 8C8483CC */   lw    $a0, %lo(g_DebugPortalsD_800483CC)($a0)
 .L7F0BE238:
 /* 0F2D68 7F0BE238 00002025 */  move  $a0, $zero

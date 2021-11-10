@@ -95,7 +95,7 @@ s8 sub_GAME_7F0B9B64(s32 arg0);
 s32 bgGetDataPortalsControlBytes1Bit1(s32 arg0);
 void *sub_GAME_7F0B9DBC(s32 arg0, u32 arg1);
 s32 bgGetDataPortalsControlBytes1Bit2(s32 arg0);
-void *sub_GAME_7F0B9B44(s32 arg0);
+void bgClearDataPortalsControlBytes1Low2Bits(s32 arg0);
 void bgSetDataPortalsControlBytes1Bit2(s32 arg0);
 s32 sub_GAME_7F0B9A7C(s32 arg0);
 s32 sub_GAME_7F0B9A2C(s32 arg0);
