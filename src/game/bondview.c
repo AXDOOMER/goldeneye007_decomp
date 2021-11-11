@@ -8916,42 +8916,18 @@ void set_BONDdata_autoaim_x(s32 param_1) {
 
 
 
-#ifdef NONMATCHING
-void get_BONDdata_autoaim_x(void) {
-    // Node 0
-    if (getPlayerCount() != 1)
+/**
+ * Address 0x7F07C668.
+ */
+s32 get_BONDdata_autoaim_x(void)
+{
+    if (getPlayerCount() == 1)
     {
-        // Node 2
-        // Node 3
-        return g_playerPerm->unk6A;
+        return g_CurrentPlayer->autoxaimenabled;
     }
-    // Node 1
-    return g_playerPerm->unk6A;
+    return (s32) g_playerPerm->autoaim;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_BONDdata_autoaim_x
-/* 0B1198 7F07C668 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0B119C 7F07C66C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0B11A0 7F07C670 0FC26919 */  jal   getPlayerCount
-/* 0B11A4 7F07C674 00000000 */   nop
-/* 0B11A8 7F07C678 24010001 */  li    $at, 1
-/* 0B11AC 7F07C67C 14410005 */  bne   $v0, $at, .L7F07C694
-/* 0B11B0 7F07C680 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0B11B4 7F07C684 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer)
-/* 0B11B8 7F07C688 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 0B11BC 7F07C68C 10000004 */  b     .L7F07C6A0
-/* 0B11C0 7F07C690 8DC20138 */   lw    $v0, 0x138($t6)
-.L7F07C694:
-/* 0B11C4 7F07C694 3C0F8008 */  lui   $t7, %hi(g_playerPerm)
-/* 0B11C8 7F07C698 8DEFA0B4 */  lw    $t7, %lo(g_playerPerm)($t7)
-/* 0B11CC 7F07C69C 91E2006A */  lbu   $v0, 0x6a($t7)
-.L7F07C6A0:
-/* 0B11D0 7F07C6A0 03E00008 */  jr    $ra
-/* 0B11D4 7F07C6A4 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
+
 
 
 
