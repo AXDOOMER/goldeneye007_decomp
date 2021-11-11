@@ -623,7 +623,7 @@ struct player
   s32 field_47C;
   s32 field_480;
   s32 field_484;
-  s32 current_tile_ptr;
+  StandTile *current_tile_ptr;
 
   /**
    * Offset 0x048c.
@@ -2587,6 +2587,12 @@ struct player
   s32 field_29F8;
   s32 autocrouchpos;
   s32 healthdisplaytime;
+
+  /**
+   * Current tile pointer -> room.
+   * 
+   * Offset 0x2a04.
+   */
   s16 field_2A04;
   f32 field_2A08;
   f32 field_2A0C;

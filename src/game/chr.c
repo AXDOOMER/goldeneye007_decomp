@@ -4371,7 +4371,8 @@ glabel sub_GAME_7F02083C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F020D94(void) {
+void sub_GAME_7F020D94(struct chrdata *)
+{
 
 }
 #else

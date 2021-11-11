@@ -223,5 +223,6 @@ void sub_GAME_7F03D78C(void);
 void sub_GAME_7F03C294(void);
 s32 sub_GAME_7F03C4F0(void);
 void sub_GAME_7F03D0D4(void);
+void sub_GAME_7F03DD9C(struct prop *, s16, struct player *);
 
 #endif
