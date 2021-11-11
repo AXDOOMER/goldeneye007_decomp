@@ -2663,15 +2663,15 @@ extern s32 SFX_8003645C;
 //D:80036460
 extern s32 D_80036460;
 //D:80036464
-extern s32 D_80036464;
+extern f32 D_80036464;
 //D:80036468
 extern s32 D_80036468;
 //D:8003646C
-extern s32 D_8003646C;
+extern f32 D_8003646C;
 //D:80036470
 extern s32 D_80036470;
 //D:80036474
-extern s32 D_80036474;
+extern f32 D_80036474;
 //D:80036478
 extern s32 D_80036478;
 //D:8003647C
@@ -2987,5 +2987,6 @@ s32 getMissiontimer(void);
 void solo_char_load(void);
 void bondviewUpdateYAutoAimTime(s32 auto_aim_time, f32 auto_aim_y);
 void bondviewUpdateXAutoAimTime(s32 auto_aim_time, f32 auto_aim_x);
+void bondviewSet3dCoord7F07CEB0(struct coord3d *arg0);
 
 #endif
