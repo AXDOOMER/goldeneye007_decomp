@@ -9850,10 +9850,10 @@ f32 bondviewGet8003646CRad(void)
 
 
 
-
+s32 cal_player_collision(struct coord3d *arg0, void *arg1);
 
 #ifdef NONMATCHING
-s32 cal_player_collision(void *arg0, void *arg1) {
+s32 cal_player_collision(struct coord3d *arg0, void *arg1) {
     ? sp3C;
     s32 sp7C;
     ? sp80;
@@ -10201,67 +10201,32 @@ glabel cal_player_collision
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F07D234(void *arg0, s32 arg1, ? arg2) {
-    ?32 sp1C;
+/**
+ * Calculates collision with current player.
+ * 
+ * Address 0x7F07D234.
+ */
+s32 bondviewUpdatePlayerCollision(struct coord3d *arg0, struct float3 *arg1, struct float3 *arg2)
+{
+    s32 sp1C;
 
-    // Node 0
+    // resets stan global collision variables
     sub_GAME_7F0B1CC4();
-    if (cal_player_collision(arg0, &sp1C) == 0)
+
+    if (cal_player_collision(arg0, &sp1C) != 0)
     {
-        // Node 2
-        getCollisionEdge_maybe(arg1, arg2);
-        // Node 3
-        return 0;
+        g_CurrentPlayer->current_tile_ptr = sp1C;
+        g_CurrentPlayer->collision_position.f[0] = arg0->f[0];
+        g_CurrentPlayer->collision_position.f[2] = arg0->f[2];
+
+        return 1;
     }
-    // Node 1
-    g_CurrentPlayer->field_488 = sp1C;
-    g_CurrentPlayer->field_48C = (f32) *arg0;
-    g_CurrentPlayer->field_494 = (f32) arg0->unk8;
+
+    // unused?
+    getCollisionEdge_maybe(arg1, arg2);
+
     return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F07D234
-/* 0B1D64 7F07D234 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0B1D68 7F07D238 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0B1D6C 7F07D23C AFA40020 */  sw    $a0, 0x20($sp)
-/* 0B1D70 7F07D240 AFA50024 */  sw    $a1, 0x24($sp)
-/* 0B1D74 7F07D244 0FC2C731 */  jal   sub_GAME_7F0B1CC4
-/* 0B1D78 7F07D248 AFA60028 */   sw    $a2, 0x28($sp)
-/* 0B1D7C 7F07D24C 8FA40020 */  lw    $a0, 0x20($sp)
-/* 0B1D80 7F07D250 0FC1F3E3 */  jal   cal_player_collision
-/* 0B1D84 7F07D254 27A5001C */   addiu $a1, $sp, 0x1c
-/* 0B1D88 7F07D258 1040000E */  beqz  $v0, .L7F07D294
-/* 0B1D8C 7F07D25C 8FA40020 */   lw    $a0, 0x20($sp)
-/* 0B1D90 7F07D260 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
-/* 0B1D94 7F07D264 2463A0B0 */  addiu $v1, %lo(g_CurrentPlayer) # addiu $v1, $v1, -0x5f50
-/* 0B1D98 7F07D268 8C6F0000 */  lw    $t7, ($v1)
-/* 0B1D9C 7F07D26C 8FAE001C */  lw    $t6, 0x1c($sp)
-/* 0B1DA0 7F07D270 24020001 */  li    $v0, 1
-/* 0B1DA4 7F07D274 ADEE0488 */  sw    $t6, 0x488($t7)
-/* 0B1DA8 7F07D278 8C780000 */  lw    $t8, ($v1)
-/* 0B1DAC 7F07D27C C4840000 */  lwc1  $f4, ($a0)
-/* 0B1DB0 7F07D280 E704048C */  swc1  $f4, 0x48c($t8)
-/* 0B1DB4 7F07D284 8C790000 */  lw    $t9, ($v1)
-/* 0B1DB8 7F07D288 C4860008 */  lwc1  $f6, 8($a0)
-/* 0B1DBC 7F07D28C 10000005 */  b     .L7F07D2A4
-/* 0B1DC0 7F07D290 E7260494 */   swc1  $f6, 0x494($t9)
-.L7F07D294:
-/* 0B1DC4 7F07D294 8FA40024 */  lw    $a0, 0x24($sp)
-/* 0B1DC8 7F07D298 0FC2CA2C */  jal   getCollisionEdge_maybe
-/* 0B1DCC 7F07D29C 8FA50028 */   lw    $a1, 0x28($sp)
-/* 0B1DD0 7F07D2A0 00001025 */  move  $v0, $zero
-.L7F07D2A4:
-/* 0B1DD4 7F07D2A4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0B1DD8 7F07D2A8 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0B1DDC 7F07D2AC 03E00008 */  jr    $ra
-/* 0B1DE0 7F07D2B0 00000000 */   nop
-)
-#endif
-
-
 
 
 
@@ -10998,7 +10963,7 @@ glabel sub_GAME_7F07D960
 /* 0B2720 7F07DBF0 27B000B4 */  addiu $s0, $sp, 0xb4
 /* 0B2724 7F07DBF4 02002025 */  move  $a0, $s0
 /* 0B2728 7F07DBF8 27A500A8 */  addiu $a1, $sp, 0xa8
-/* 0B272C 7F07DBFC 0FC1F48D */  jal   sub_GAME_7F07D234
+/* 0B272C 7F07DBFC 0FC1F48D */  jal   bondviewUpdatePlayerCollision
 /* 0B2730 7F07DC00 27A6009C */   addiu $a2, $sp, 0x9c
 /* 0B2734 7F07DC04 14400037 */  bnez  $v0, .L7F07DCE4
 /* 0B2738 7F07DC08 02002025 */   move  $a0, $s0

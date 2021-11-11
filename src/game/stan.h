@@ -160,6 +160,7 @@ StandTilePoint *stanMatchTileName(char*);
 
 void sub_GAME_7F0B2D38(s8 arg0, s8 arg1, u16 arg2);
 void sub_GAME_7F0AF630(s32 arg0);
+void sub_GAME_7F0B1CC4(void);
 Gfx * sub_GAME_7F0B2D48(Gfx *arg0);
 Gfx * sub_GAME_7F0B303C(Gfx *arg0);
 Gfx * sub_GAME_7F0B3034(Gfx *arg0);
@@ -168,5 +169,6 @@ Gfx * sub_GAME_7F0B3024(Gfx *ptrdl, s32 *ptrtile, u32 RGBAColor);
 s32 walkTilesBetweenPoints_NoCallback(struct StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z);
 s32 sub_GAME_7F0B0518(struct StandTile *tile, f32 p_x, f32 p_z);
 f32 stanGetPositionYValue(struct StandTile* tile, f32 p_x, f32 p_z);
+s32 getCollisionEdge_maybe(struct float3 *pntA, struct float3 *pntB);
 
 #endif

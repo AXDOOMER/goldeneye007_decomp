@@ -624,9 +624,12 @@ struct player
   s32 field_480;
   s32 field_484;
   s32 current_tile_ptr;
-  s32 positionx;
-  s32 positiony;
-  s32 positionz;
+
+  /**
+   * Offset 0x048c.
+   */
+  struct coord3d collision_position;
+
   s32 field_498;
   s32 field_49C;
   s32 field_4A0;
