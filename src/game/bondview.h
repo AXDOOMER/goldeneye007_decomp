@@ -303,19 +303,28 @@ typedef struct gunheld {
 struct player
 {
   /* 0x0000 */ s32 unknown;
-  /* 0x0004 */ f32 xpos;
-  /* 0x0008 */ f32 ypos;
-  /* 0x000c */ f32 zpos;
-  /* 0x0010 */ f32 xpos2;
-  /* 0x0014 */ f32 ypos2;
-  /* 0x0018 */ f32 zpos2;
-  /* 0x001c */ f32 xoffset;
-  /* 0x0020 */ f32 yoffset;
-  /* 0x0024 */ f32 zoffset;
-  /* 0x0028 */ f32 xpos3;
-  /* 0x002c */ f32 ypos3;
-  /* 0x0030 */ f32 zpos3;
-  /* 0x0034 */ s32 room_pointer;
+
+  /**
+   * Offset 0x0004.
+   */
+  f32 pos[3];
+
+  /**
+   * Offset 0x0010.
+   */
+  f32 pos2[3];
+
+  /**
+   * Offset 0x001c.
+   */
+  f32 offset[3];
+
+  /**
+   * Offset 0x0028.
+   */
+  f32 pos3[3];
+
+  /* 0x0034 */ StandTile *room_pointer;
   /* 0x0038 */ struct coord3d current_model_pos;
   /* 0x0044 */ vec3 previous_model_pos;
   /* 0x0050 */ f32 current_room_xpos;
