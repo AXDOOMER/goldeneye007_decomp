@@ -1,4 +1,5 @@
 #include "ultra64.h"
+#include "include/math.h"
 #include "game/bondview.h"
 #include "game/chr.h"
 #include "game/player.h"
@@ -617,75 +618,19 @@ void sub_GAME_7F078140(struct coord3d *in, struct coord3d *out, f32 value1, f32 
     out->z = (-1.0f * var1);
 }
 
-#ifdef NONMATCHING
-// acdf8:    mul.s   $f4,$f18,$f0                    r acdf8:    mul.s   $f4,$f0,$f18
-void sub_GAME_7F078258(struct coord3d *in, struct coord3d *out, f32 angle, f32 value) {
-    f32 var0 = DEG2RAD(angle);
-    f32 var1 = (cosf(var0) * g_CurrentPlayer->c_halfheight) / (sinf(var0) * in->z);
+/**
+ * Unreferenced.
+ * 
+ * Address 0x7F078258.
+ */
+void sub_GAME_7F078258(struct coord3d *in, struct coord3d *out, f32 angle, f32 value)
+{
+    f32 var1 = (cosf(DEG2RAD(angle)) * g_CurrentPlayer->c_halfheight) / (sinf(DEG2RAD(angle)) * in->f[2]);
     f32 var2 = (var1 * g_CurrentPlayer->c_halfwidth) / (value * g_CurrentPlayer->c_halfheight);
-    out->y = ((in->y * var1) + (g_CurrentPlayer->c_screentop + g_CurrentPlayer->c_halfheight));
-    out->x = ((g_CurrentPlayer->c_screenleft + g_CurrentPlayer->c_halfwidth) - (in->x * var2));
+
+    out->f[1] = (in->f[1] * var1) + (g_CurrentPlayer->c_screentop + g_CurrentPlayer->c_halfheight);
+    out->f[0] = (g_CurrentPlayer->c_screenleft + g_CurrentPlayer->c_halfwidth) - (in->f[0] * var2);
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80054FB4
-.word 0x40490fdb /*3.1415927*/
-.text
-glabel sub_GAME_7F078258
-/* 0ACD88 7F078258 3C018005 */  lui   $at, %hi(D_80054FB4)
-/* 0ACD8C 7F07825C 44867000 */  mtc1  $a2, $f14
-/* 0ACD90 7F078260 C4244FB4 */  lwc1  $f4, %lo(D_80054FB4)($at)
-/* 0ACD94 7F078264 3C0143B4 */  li    $at, 0x43B40000 # 360.000000
-/* 0ACD98 7F078268 44814000 */  mtc1  $at, $f8
-/* 0ACD9C 7F07826C 46047182 */  mul.s $f6, $f14, $f4
-/* 0ACDA0 7F078270 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0ACDA4 7F078274 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0ACDA8 7F078278 AFA40030 */  sw    $a0, 0x30($sp)
-/* 0ACDAC 7F07827C AFA50034 */  sw    $a1, 0x34($sp)
-/* 0ACDB0 7F078280 AFA7003C */  sw    $a3, 0x3c($sp)
-/* 0ACDB4 7F078284 46083303 */  div.s $f12, $f6, $f8
-/* 0ACDB8 7F078288 0FC15FA8 */  jal   cosf
-/* 0ACDBC 7F07828C E7AC001C */   swc1  $f12, 0x1c($sp)
-/* 0ACDC0 7F078290 C7AC001C */  lwc1  $f12, 0x1c($sp)
-/* 0ACDC4 7F078294 0FC15FAB */  jal   sinf
-/* 0ACDC8 7F078298 E7A00020 */   swc1  $f0, 0x20($sp)
-/* 0ACDCC 7F07829C 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
-/* 0ACDD0 7F0782A0 2463A0B0 */  addiu $v1, %lo(g_CurrentPlayer) # addiu $v1, $v1, -0x5f50
-/* 0ACDD4 7F0782A4 8C620000 */  lw    $v0, ($v1)
-/* 0ACDD8 7F0782A8 8FA40030 */  lw    $a0, 0x30($sp)
-/* 0ACDDC 7F0782AC C7AA0020 */  lwc1  $f10, 0x20($sp)
-/* 0ACDE0 7F0782B0 C44210B0 */  lwc1  $f2, 0x10b0($v0)
-/* 0ACDE4 7F0782B4 C4920008 */  lwc1  $f18, 8($a0)
-/* 0ACDE8 7F0782B8 C44610AC */  lwc1  $f6, 0x10ac($v0)
-/* 0ACDEC 7F0782BC 46025402 */  mul.s $f16, $f10, $f2
-/* 0ACDF0 7F0782C0 C7AA003C */  lwc1  $f10, 0x3c($sp)
-/* 0ACDF4 7F0782C4 8FA50034 */  lw    $a1, 0x34($sp)
-/* 0ACDF8 7F0782C8 46009102 */  mul.s $f4, $f18, $f0
-/* 0ACDFC 7F0782CC 46048303 */  div.s $f12, $f16, $f4
-/* 0ACE00 7F0782D0 C4900004 */  lwc1  $f16, 4($a0)
-/* 0ACE04 7F0782D4 460C3202 */  mul.s $f8, $f6, $f12
-/* 0ACE08 7F0782D8 C446109C */  lwc1  $f6, 0x109c($v0)
-/* 0ACE0C 7F0782DC 46025482 */  mul.s $f18, $f10, $f2
-/* 0ACE10 7F0782E0 46023280 */  add.s $f10, $f6, $f2
-/* 0ACE14 7F0782E4 460C8102 */  mul.s $f4, $f16, $f12
-/* 0ACE18 7F0782E8 46124383 */  div.s $f14, $f8, $f18
-/* 0ACE1C 7F0782EC 460A2200 */  add.s $f8, $f4, $f10
-/* 0ACE20 7F0782F0 E4A80004 */  swc1  $f8, 4($a1)
-/* 0ACE24 7F0782F4 8C620000 */  lw    $v0, ($v1)
-/* 0ACE28 7F0782F8 C4840000 */  lwc1  $f4, ($a0)
-/* 0ACE2C 7F0782FC C4521098 */  lwc1  $f18, 0x1098($v0)
-/* 0ACE30 7F078300 C45010AC */  lwc1  $f16, 0x10ac($v0)
-/* 0ACE34 7F078304 46109180 */  add.s $f6, $f18, $f16
-/* 0ACE38 7F078308 460E2282 */  mul.s $f10, $f4, $f14
-/* 0ACE3C 7F07830C 460A3201 */  sub.s $f8, $f6, $f10
-/* 0ACE40 7F078310 E4A80000 */  swc1  $f8, ($a1)
-/* 0ACE44 7F078314 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0ACE48 7F078318 27BD0030 */  addiu $sp, $sp, 0x30
-/* 0ACE4C 7F07831C 03E00008 */  jr    $ra
-/* 0ACE50 7F078320 00000000 */   nop
-)
-#endif
 
 void currentPlayerSetMatrix10C4(Mtx *matrix) {
     g_CurrentPlayer->field_10C4 = matrix;

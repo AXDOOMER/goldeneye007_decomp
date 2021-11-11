@@ -922,17 +922,65 @@ struct player
   f32 sniper_zoom;
   f32 camera_zoom;
   s32 field_108C;
+
+  /**
+   * Offset 0x1090.
+   */
   f32 c_screenwidth;
+
+  /**
+   * Offset 0x1094.
+   */
   f32 c_screenheight;
+
+  /**
+   * Offset 0x1098.
+   */
   f32 c_screenleft;
+
+  /**
+   * Offset 0x109c.
+   */
   f32 c_screentop;
+
+  /**
+   * Offset 0x10a0.
+   */
   f32 c_perspnear;
+
+  /**
+   * Offset 0x10a4.
+   */
   f32 c_perspfovy;
+
+  /**
+   * Offset 0x10a8.
+   */
   f32 c_perspaspect;
+
+  /**
+   * Offset 0x10ac.
+   */
   f32 c_halfwidth;
+
+  /**
+   * Offset 0x10b0.
+   */
   f32 c_halfheight;
+
+  /**
+   * Offset 0x10b4.
+   */
   f32 c_scalex;
+
+  /**
+   * Offset 0x10b8.
+   */
   f32 c_scaley;
+
+  /**
+   * Offset 0x10bc.
+   */
   f32 c_recipscalex;
   f32 c_recipscaley;
   Mtx* field_10C4;
