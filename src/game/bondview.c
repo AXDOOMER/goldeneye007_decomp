@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "include/math.h"
 #include "game/bondview.h"
+#include "game/bondinv.h"
 #include "game/chr.h"
 #include "game/player.h"
 #include "game/textrelated.h"
@@ -2377,123 +2378,28 @@ glabel init_player_BONDdata
 )
 #endif
 
-#ifdef NONMATCHING
-void sub_GAME_7F0798B8(void) {
-    ? temp_ret;
-    ? phi_return;
+void bondviewPlayerSpawnRelated(void)
+{
+    g_CurrentPlayer->field_29BC = ((g_playerPerm->player_perspective_height * 185.0f * (s32)1) - 10.0f);
 
-    // Node 0
-    g_CurrentPlayer->field_29BC = (f32) (((g_playerPerm->unk64 * 185.0f) * 1.0f) - 10.0f);
     g_CurrentPlayer->field_29F8 = 0;
     g_CurrentPlayer->field_29F4 = getMissiontimer();
-    g_CurrentPlayer->field_2A00 = 0;
-    add_item_to_inventory(1);
-    temp_ret = getPlayerCount();
-    phi_return = temp_ret;
-    if (temp_ret >= 2)
+    g_CurrentPlayer->healthdisplaytime = 0;
+
+    add_item_to_inventory(ITEM_FIST);
+
+    if (getPlayerCount() >= 2)
     {
-        // Node 1
-        draw_item_in_hand_has_more_ammo(1, starting_left_weapon);
-        phi_return = draw_item_in_hand_has_more_ammo(0, starting_right_weapon);
-        if (g_CurrentPlayer->field_D4 == 0)
+        draw_item_in_hand_has_more_ammo(LEFT_HAND, starting_left_weapon);
+        draw_item_in_hand_has_more_ammo(RIGHT_HAND, starting_right_weapon);
+
+        if (g_CurrentPlayer->ptr_char_objectinstance == NULL)
         {
-            // Node 2
-            phi_return = solo_char_load();
+            solo_char_load();
         }
     }
-    // Node 3
-    return phi_return;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80054FB8
-.word 0
-glabel D_80054FBC
-.word 0
 
-/*D:80054FC0*/
-glabel a8s
-/*"%8s"*/
-.word 0x25387300
-
-glabel aX4_0f
-/*"x %4.0f"*/
-.word 0x78202534
-.word 0x2E306600
-
-glabel aY4_0f
-/*"y %4.0f"*/
-.word 0x79202534
-.word 0x2E306600
-
-glabel aZ4_0f
-/*"z %4.0f"*/
-.word 0x7A202534
-.word 0x2E306600
-
-glabel aS3d
-/*"%s %3d"*/
-.word 0x25732025
-.word 0x33640000
-.text
-glabel sub_GAME_7F0798B8
-/* 0AE3E8 7F0798B8 3C0E8008 */  lui   $t6, %hi(g_playerPerm)
-/* 0AE3EC 7F0798BC 8DCEA0B4 */  lw    $t6, %lo(g_playerPerm)($t6)
-/* 0AE3F0 7F0798C0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0AE3F4 7F0798C4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0AE3F8 7F0798C8 3C014339 */  li    $at, 0x43390000 # 185.000000
-/* 0AE3FC 7F0798CC 44813000 */  mtc1  $at, $f6
-/* 0AE400 7F0798D0 C5C40064 */  lwc1  $f4, 0x64($t6)
-/* 0AE404 7F0798D4 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0AE408 7F0798D8 44815000 */  mtc1  $at, $f10
-/* 0AE40C 7F0798DC 46062202 */  mul.s $f8, $f4, $f6
-/* 0AE410 7F0798E0 3C014120 */  li    $at, 0x41200000 # 10.000000
-/* 0AE414 7F0798E4 44819000 */  mtc1  $at, $f18
-/* 0AE418 7F0798E8 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
-/* 0AE41C 7F0798EC 2442A0B0 */  addiu $v0, %lo(g_CurrentPlayer) # addiu $v0, $v0, -0x5f50
-/* 0AE420 7F0798F0 8C4F0000 */  lw    $t7, ($v0)
-/* 0AE424 7F0798F4 460A4402 */  mul.s $f16, $f8, $f10
-/* 0AE428 7F0798F8 46128101 */  sub.s $f4, $f16, $f18
-/* 0AE42C 7F0798FC E5E429BC */  swc1  $f4, 0x29bc($t7)
-/* 0AE430 7F079900 8C580000 */  lw    $t8, ($v0)
-/* 0AE434 7F079904 0FC22FEE */  jal   getMissiontimer
-/* 0AE438 7F079908 AF0029F8 */   sw    $zero, 0x29f8($t8)
-/* 0AE43C 7F07990C 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
-/* 0AE440 7F079910 2463A0B0 */  addiu $v1, %lo(g_CurrentPlayer) # addiu $v1, $v1, -0x5f50
-/* 0AE444 7F079914 8C790000 */  lw    $t9, ($v1)
-/* 0AE448 7F079918 24040001 */  li    $a0, 1
-/* 0AE44C 7F07991C AF2229F4 */  sw    $v0, 0x29f4($t9)
-/* 0AE450 7F079920 8C680000 */  lw    $t0, ($v1)
-/* 0AE454 7F079924 0FC23122 */  jal   add_item_to_inventory
-/* 0AE458 7F079928 AD002A00 */   sw    $zero, 0x2a00($t0)
-/* 0AE45C 7F07992C 0FC26919 */  jal   getPlayerCount
-/* 0AE460 7F079930 00000000 */   nop
-/* 0AE464 7F079934 28410002 */  slti  $at, $v0, 2
-/* 0AE468 7F079938 1420000F */  bnez  $at, .L7F079978
-/* 0AE46C 7F07993C 24040001 */   li    $a0, 1
-/* 0AE470 7F079940 3C058008 */  lui   $a1, %hi(starting_left_weapon)
-/* 0AE474 7F079944 0FC17645 */  jal   draw_item_in_hand_has_more_ammo
-/* 0AE478 7F079948 8CA599E4 */   lw    $a1, %lo(starting_left_weapon)($a1)
-/* 0AE47C 7F07994C 3C058008 */  lui   $a1, %hi(starting_right_weapon)
-/* 0AE480 7F079950 8CA599E0 */  lw    $a1, %lo(starting_right_weapon)($a1)
-/* 0AE484 7F079954 0FC17645 */  jal   draw_item_in_hand_has_more_ammo
-/* 0AE488 7F079958 00002025 */   move  $a0, $zero
-/* 0AE48C 7F07995C 3C098008 */  lui   $t1, %hi(g_CurrentPlayer)
-/* 0AE490 7F079960 8D29A0B0 */  lw    $t1, %lo(g_CurrentPlayer)($t1)
-/* 0AE494 7F079964 8D2A00D4 */  lw    $t2, 0xd4($t1)
-/* 0AE498 7F079968 55400004 */  bnezl $t2, .L7F07997C
-/* 0AE49C 7F07996C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0AE4A0 7F079970 0FC1E73C */  jal   solo_char_load
-/* 0AE4A4 7F079974 00000000 */   nop
-.L7F079978:
-/* 0AE4A8 7F079978 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F07997C:
-/* 0AE4AC 7F07997C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0AE4B0 7F079980 03E00008 */  jr    $ra
-/* 0AE4B4 7F079984 00000000 */   nop
-)
-#endif
 
 void currentPlayerSetSwayTarget(s32 value) {
     g_CurrentPlayer->swaytarget = (value * 75.0f);
@@ -2797,6 +2703,35 @@ void solo_char_load(void) {
 #ifdef VERSION_US
 GLOBAL_ASM(
 .late_rodata
+glabel D_80054FB8
+.word 0
+glabel D_80054FBC
+.word 0
+
+/*D:80054FC0*/
+glabel a8s
+/*"%8s"*/
+.word 0x25387300
+
+glabel aX4_0f
+/*"x %4.0f"*/
+.word 0x78202534
+.word 0x2E306600
+
+glabel aY4_0f
+/*"y %4.0f"*/
+.word 0x79202534
+.word 0x2E306600
+
+glabel aZ4_0f
+/*"z %4.0f"*/
+.word 0x7A202534
+.word 0x2E306600
+
+glabel aS3d
+/*"%s %3d"*/
+.word 0x25732025
+.word 0x33640000
 /*D:80054FE4*/
 glabel jpt_bondcuff
 .word .L7F079EA4
@@ -32694,7 +32629,7 @@ glabel mp_respawn_handler
 /* 0BD44C 7F08891C ADC10008 */  sw    $at, 8($t6)
 /* 0BD450 7F088920 0FC1E4FB */  jal   init_player_BONDdata
 /* 0BD454 7F088924 8E105D08 */   lw    $s0, %lo(ptr_setup_intro)($s0)
-/* 0BD458 7F088928 0FC1E62E */  jal   sub_GAME_7F0798B8
+/* 0BD458 7F088928 0FC1E62E */  jal   bondviewPlayerSpawnRelated
 /* 0BD45C 7F08892C 00000000 */   nop
 /* 0BD460 7F088930 3C118008 */  lui   $s1, %hi(g_CurrentPlayer)
 /* 0BD464 7F088934 2631A0B0 */  addiu $s1, %lo(g_CurrentPlayer) # addiu $s1, $s1, -0x5f50

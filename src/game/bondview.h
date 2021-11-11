@@ -351,7 +351,7 @@ struct player
   /* 0x00c8 */ s32 xpos_1;
   /* 0x00cc */ s32 field_CC;
   /* 0x00d0 */ s32 field_D0;
-  /* 0x00d4 */ s32 ptr_char_objectinstance;
+  /* 0x00d4 */ s32 *ptr_char_objectinstance;
   /* 0x00d8 */ s32 bonddead;
   /* 0x00dc */ f32 bondhealth;
   /* 0x00e0 */ f32 bondarmour;
@@ -2545,7 +2545,13 @@ struct player
   s32 field_29B0;
   s32 field_29B4;
   s32 field_29B8;
-  s32 field_29BC;
+
+  /**
+   * Related to player perspective.
+   * Offset 0x29bc.
+   */
+  f32 field_29BC;
+
   f32 field_29C0;
   s32 mpmenuon;
   s32 mpmenumode;
@@ -2559,7 +2565,13 @@ struct player
   s32 field_29E8;
   s32 field_29EC;
   s32 field_29F0;
+
+  /**
+   * Holds mission offset timer value.
+   * Offset 0x29f4.
+   */
   s32 field_29F4;
+
   s32 field_29F8;
   s32 autocrouchpos;
   s32 healthdisplaytime;
@@ -2943,7 +2955,7 @@ f32 getPlayer_c_perspaspect(void);
 void set_open_close_solo_watch_menu_to1(void);
 
 void init_player_BONDdata(void);
-void sub_GAME_7F0798B8(void);
+void bondviewPlayerSpawnRelated(void);
 f32 get_BONDdata_watch_health(void);
 f32 get_BONDdata_watch_armor(void);
 void possibly_reset_viewport_options_for_player(s8 arg0, s8 arg1, u16 arg2);
@@ -2962,5 +2974,7 @@ Gfx* write_stan_tiles_in_yellow(Gfx *arg0);
 Gfx * maybe_mp_interface(Gfx *arg0);
 Gfx * sub_GAME_7F08BCB8(Gfx *arg0);
 s32 sub_GAME_7F078A58(struct coord3d *vec_scale, f32 norm_scale);
+s32 getMissiontimer(void);
+void solo_char_load(void);
 
 #endif
