@@ -24483,7 +24483,7 @@ glabel sub_GAME_7F03D78C
 /* 072464 7F03D934 46125103 */  div.s $f4, $f10, $f18
 /* 072468 7F03D938 46162181 */  sub.s $f6, $f4, $f22
 /* 07246C 7F03D93C 44053000 */  mfc1  $a1, $f6
-/* 072470 7F03D940 0FC1F17C */  jal   bondviewUpdateAutoAimTime
+/* 072470 7F03D940 0FC1F17C */  jal   bondviewUpdateYAutoAimTime
 /* 072474 7F03D944 00000000 */   nop   
 /* 072478 7F03D948 0FC1F1AA */  jal   redirect_get_BONDdata_autoaim_x
 /* 07247C 7F03D94C 00000000 */   nop   
@@ -24502,7 +24502,7 @@ glabel sub_GAME_7F03D78C
 /* 0724B0 7F03D980 46128103 */  div.s $f4, $f16, $f18
 /* 0724B4 7F03D984 46162181 */  sub.s $f6, $f4, $f22
 /* 0724B8 7F03D988 44053000 */  mfc1  $a1, $f6
-/* 0724BC 7F03D98C 0FC1F1B2 */  jal   sub_GAME_7F07C6C8
+/* 0724BC 7F03D98C 0FC1F1B2 */  jal   bondviewUpdateXAutoAimTime
 /* 0724C0 7F03D990 00000000 */   nop   
 /* 0724C4 7F03D994 1000000A */  b     .L7F03D9C0
 /* 0724C8 7F03D998 8FBF004C */   lw    $ra, 0x4c($sp)
@@ -24510,10 +24510,10 @@ glabel sub_GAME_7F03D78C
 .L7F03D9A0:
 /* 0724D0 7F03D9A0 00002025 */  move  $a0, $zero
 /* 0724D4 7F03D9A4 4405A000 */  mfc1  $a1, $f20
-/* 0724D8 7F03D9A8 0FC1F17C */  jal   bondviewUpdateAutoAimTime
+/* 0724D8 7F03D9A8 0FC1F17C */  jal   bondviewUpdateYAutoAimTime
 /* 0724DC 7F03D9AC 00000000 */   nop   
 /* 0724E0 7F03D9B0 4405A000 */  mfc1  $a1, $f20
-/* 0724E4 7F03D9B4 0FC1F1B2 */  jal   sub_GAME_7F07C6C8
+/* 0724E4 7F03D9B4 0FC1F1B2 */  jal   bondviewUpdateXAutoAimTime
 /* 0724E8 7F03D9B8 00002025 */   move  $a0, $zero
 /* 0724EC 7F03D9BC 8FBF004C */  lw    $ra, 0x4c($sp)
 .L7F03D9C0:

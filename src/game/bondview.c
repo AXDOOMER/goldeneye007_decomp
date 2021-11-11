@@ -8880,7 +8880,7 @@ s32 get_BONDdata_is_aiming(void) {
  * 
  * Address 0x7F07C5F0.
  */
-void bondviewUpdateAutoAimTime(s32 auto_aim_time, f32 auto_aim_y)
+void bondviewUpdateYAutoAimTime(s32 auto_aim_time, f32 auto_aim_y)
 {
     if (g_CurrentPlayer->autoyaimtime60 >= 0)
     {
@@ -8942,44 +8942,35 @@ int redirect_get_BONDdata_autoaim_x(void) {
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F07C6C8(void) {
+/**
+ * Updates autoxaimtime60 by g_ClockTimer.
+ * Will update player->autoaimx if new autoxaimtime60 < 0 or auto_aim_time != g_CurrentPlayer->autoxaimtime.
+ * 
+ * Address 0x7F07C6C8.
+ */
+void bondviewUpdateXAutoAimTime(s32 auto_aim_time, f32 auto_aim_x)
+{
+    if (g_CurrentPlayer->autoxaimtime60 >= 0)
+    {
+        g_CurrentPlayer->autoxaimtime60 = g_CurrentPlayer->autoxaimtime60 - g_ClockTimer;
+    }
+
+    if (auto_aim_time != g_CurrentPlayer->autoxaimtime)
+    {
+        if (g_CurrentPlayer->autoxaimtime60 < 0)
+        {
+            g_CurrentPlayer->autoxaimtime60 = 30;
+            g_CurrentPlayer->autoxaimtime = auto_aim_time;
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    g_CurrentPlayer->autoaimx = auto_aim_x;
 
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F07C6C8
-/* 0B11F8 7F07C6C8 44856000 */  mtc1  $a1, $f12
-/* 0B11FC 7F07C6CC 3C058008 */  lui   $a1, %hi(g_CurrentPlayer)
-/* 0B1200 7F07C6D0 24A5A0B0 */  addiu $a1, %lo(g_CurrentPlayer) # addiu $a1, $a1, -0x5f50
-/* 0B1204 7F07C6D4 8CA20000 */  lw    $v0, ($a1)
-/* 0B1208 7F07C6D8 3C0E8005 */  lui   $t6, %hi(g_ClockTimer)
-/* 0B120C 7F07C6DC 8C430144 */  lw    $v1, 0x144($v0)
-/* 0B1210 7F07C6E0 04620006 */  bltzl $v1, .L7F07C6FC
-/* 0B1214 7F07C6E4 8C580140 */   lw    $t8, 0x140($v0)
-/* 0B1218 7F07C6E8 8DCE8374 */  lw    $t6, %lo(g_ClockTimer)($t6)
-/* 0B121C 7F07C6EC 006E7823 */  subu  $t7, $v1, $t6
-/* 0B1220 7F07C6F0 AC4F0144 */  sw    $t7, 0x144($v0)
-/* 0B1224 7F07C6F4 8CA20000 */  lw    $v0, ($a1)
-/* 0B1228 7F07C6F8 8C580140 */  lw    $t8, 0x140($v0)
-.L7F07C6FC:
-/* 0B122C 7F07C6FC 5098000A */  beql  $a0, $t8, .L7F07C728
-/* 0B1230 7F07C700 E44C013C */   swc1  $f12, 0x13c($v0)
-/* 0B1234 7F07C704 8C590144 */  lw    $t9, 0x144($v0)
-/* 0B1238 7F07C708 2408001E */  li    $t0, 30
-/* 0B123C 7F07C70C 07210006 */  bgez  $t9, .L7F07C728
-/* 0B1240 7F07C710 00000000 */   nop
-/* 0B1244 7F07C714 AC480144 */  sw    $t0, 0x144($v0)
-/* 0B1248 7F07C718 8CA90000 */  lw    $t1, ($a1)
-/* 0B124C 7F07C71C AD240140 */  sw    $a0, 0x140($t1)
-/* 0B1250 7F07C720 8CA20000 */  lw    $v0, ($a1)
-/* 0B1254 7F07C724 E44C013C */  swc1  $f12, 0x13c($v0)
-.L7F07C728:
-/* 0B1258 7F07C728 03E00008 */  jr    $ra
-/* 0B125C 7F07C72C 00000000 */   nop
-)
-#endif
 
 
 
