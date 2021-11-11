@@ -8874,45 +8874,34 @@ s32 get_BONDdata_is_aiming(void) {
 
 
 
+/**
+ * Updates autoyaimtime60 by g_ClockTimer.
+ * Will update player->autoaimy if new autoyaimtime60 < 0 or auto_aim_time != g_CurrentPlayer->autoyaimtime.
+ * 
+ * Address 0x7F07C5F0.
+ */
+void bondviewUpdateAutoAimTime(s32 auto_aim_time, f32 auto_aim_y)
+{
+    if (g_CurrentPlayer->autoyaimtime60 >= 0)
+    {
+        g_CurrentPlayer->autoyaimtime60 = g_CurrentPlayer->autoyaimtime60 - g_ClockTimer;
+    }
 
-#ifdef NONMATCHING
-void sub_GAME_7F07C5F0(void) {
+    if (auto_aim_time != g_CurrentPlayer->autoyaimtime)
+    {
+        if (g_CurrentPlayer->autoyaimtime60 < 0)
+        {
+            g_CurrentPlayer->autoyaimtime60 = 30;
+            g_CurrentPlayer->autoyaimtime = auto_aim_time;
+        }
+        else
+        {
+            return;
+        }
+    }
 
+    g_CurrentPlayer->autoaimy = auto_aim_y;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F07C5F0
-/* 0B1120 7F07C5F0 44856000 */  mtc1  $a1, $f12
-/* 0B1124 7F07C5F4 3C058008 */  lui   $a1, %hi(g_CurrentPlayer)
-/* 0B1128 7F07C5F8 24A5A0B0 */  addiu $a1, %lo(g_CurrentPlayer) # addiu $a1, $a1, -0x5f50
-/* 0B112C 7F07C5FC 8CA20000 */  lw    $v0, ($a1)
-/* 0B1130 7F07C600 3C0E8005 */  lui   $t6, %hi(g_ClockTimer)
-/* 0B1134 7F07C604 8C430134 */  lw    $v1, 0x134($v0)
-/* 0B1138 7F07C608 04620006 */  bltzl $v1, .L7F07C624
-/* 0B113C 7F07C60C 8C580130 */   lw    $t8, 0x130($v0)
-/* 0B1140 7F07C610 8DCE8374 */  lw    $t6, %lo(g_ClockTimer)($t6)
-/* 0B1144 7F07C614 006E7823 */  subu  $t7, $v1, $t6
-/* 0B1148 7F07C618 AC4F0134 */  sw    $t7, 0x134($v0)
-/* 0B114C 7F07C61C 8CA20000 */  lw    $v0, ($a1)
-/* 0B1150 7F07C620 8C580130 */  lw    $t8, 0x130($v0)
-.L7F07C624:
-/* 0B1154 7F07C624 5098000A */  beql  $a0, $t8, .L7F07C650
-/* 0B1158 7F07C628 E44C012C */   swc1  $f12, 0x12c($v0)
-/* 0B115C 7F07C62C 8C590134 */  lw    $t9, 0x134($v0)
-/* 0B1160 7F07C630 2408001E */  li    $t0, 30
-/* 0B1164 7F07C634 07210006 */  bgez  $t9, .L7F07C650
-/* 0B1168 7F07C638 00000000 */   nop
-/* 0B116C 7F07C63C AC480134 */  sw    $t0, 0x134($v0)
-/* 0B1170 7F07C640 8CA90000 */  lw    $t1, ($a1)
-/* 0B1174 7F07C644 AD240130 */  sw    $a0, 0x130($t1)
-/* 0B1178 7F07C648 8CA20000 */  lw    $v0, ($a1)
-/* 0B117C 7F07C64C E44C012C */  swc1  $f12, 0x12c($v0)
-.L7F07C650:
-/* 0B1180 7F07C650 03E00008 */  jr    $ra
-/* 0B1184 7F07C654 00000000 */   nop
-)
-#endif
 
 
 

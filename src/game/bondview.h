@@ -2985,5 +2985,6 @@ Gfx * sub_GAME_7F08BCB8(Gfx *arg0);
 s32 sub_GAME_7F078A58(struct coord3d *vec_scale, f32 norm_scale);
 s32 getMissiontimer(void);
 void solo_char_load(void);
+void bondviewUpdateAutoAimTime(s32 auto_aim_time, f32 auto_aim_y);
 
 #endif
