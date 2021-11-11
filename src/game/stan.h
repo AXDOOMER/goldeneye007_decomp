@@ -102,7 +102,7 @@ typedef struct StandFileFooter {
 } StandFileFooter;
 
 typedef s32 (*standTileLocusCallback_A_t)(struct StandTile*, struct StandTileLocusCallbackRecord*);
-typedef s32 (*standTileLocusCallback_B_t)(struct StandTile*, s32, float, float, void, float*);  // 5th parameter uncertain
+typedef s32 (*standTileLocusCallback_B_t)(struct StandTile*, s32, f32, f32, void, f32*);  // 5th parameter uncertain
 typedef s32 (*standTileLocusCallback_C_t)(struct StandTile**, s32, struct StandTileLocusCallbackRecord*);
 
 typedef s32 (*tilePredicate_t)(struct StandTile*);
@@ -112,9 +112,9 @@ void stanInitDebugNoticeList(void);
 /* Beta definitions, to allow citadel stan in .c file to build into .bin */
 
 typedef struct BetaStandFilePoint {
-    float x;
-    float y;
-    float z;
+    f32 x;
+    f32 y;
+    f32 z;
     u32 link;
 } BetaStandFilePoint;
 
@@ -142,5 +142,8 @@ Gfx * sub_GAME_7F0B303C(Gfx *arg0);
 Gfx * sub_GAME_7F0B3034(Gfx *arg0);
 Gfx * sub_GAME_7F0B312C(Gfx *arg0, s32 arg1);
 Gfx * sub_GAME_7F0B3024(Gfx *ptrdl, s32 *ptrtile, u32 RGBAColor);
+s32 walkTilesBetweenPoints_NoCallback(struct StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z);
+s32 sub_GAME_7F0B0518(struct StandTile *tile, f32 p_x, f32 p_z);
+f32 sub_GAME_7F0B2970(struct StandTile* tile, f32 p_x, f32 p_z);
 
 #endif

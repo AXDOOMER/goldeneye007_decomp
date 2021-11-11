@@ -1161,7 +1161,7 @@ glabel sub_GAME_7F0AF760
 void sub_GAME_7F0AF808(void) {
 
 // Still quite a long way off.
-struct StandTile* sub_GAME_7F0AF808(float f1,float f2,float f3,float f4)
+struct StandTile* sub_GAME_7F0AF808(f32 f1,f32 f2,f32 f3,f32 f4)
 {
     // 'findSomeTile' atm
     // It seems a silly thing to be doing during runtime.
@@ -1289,7 +1289,7 @@ glabel sub_GAME_7F0AF808
 // I've tried all orderings of the A,B,C assignments, both as indices and as pointers to StandTilePoints
 // Summing the x,y,z components first just makes more regalloc issues
 // Placing the macros directly in the indexing doesn't help either.
-// Making midPnt a float* did nothing.
+// Making midPnt a f32* did nothing.
 
 // I'm out of ideas.
 void getTileMidPoint(struct StandTile *tile, struct float3 *midPnt)
@@ -1304,9 +1304,9 @@ void getTileMidPoint(struct StandTile *tile, struct float3 *midPnt)
     indexB = STAN_TRIPLE_TO_PNT_INDEX(tile, 1);
     indexC = STAN_TRIPLE_TO_PNT_INDEX(tile, 2);
 
-    midPnt->x = ((float)tile->points[indexA].x + tile->points[indexB].x + tile->points[indexC].x) / 3 * inv_level_scale;
-    midPnt->y = ((float)tile->points[indexA].y + tile->points[indexB].y + tile->points[indexC].y) / 3 * inv_level_scale;
-    midPnt->z = ((float)tile->points[indexA].z + tile->points[indexB].z + tile->points[indexC].z) / 3 * inv_level_scale;
+    midPnt->x = ((f32)tile->points[indexA].x + tile->points[indexB].x + tile->points[indexC].x) / 3 * inv_level_scale;
+    midPnt->y = ((f32)tile->points[indexA].y + tile->points[indexB].y + tile->points[indexC].y) / 3 * inv_level_scale;
+    midPnt->z = ((f32)tile->points[indexA].z + tile->points[indexB].z + tile->points[indexC].z) / 3 * inv_level_scale;
 
     return;
 }
@@ -1489,11 +1489,11 @@ glabel getPointJustInsideOfTileTriple
 
 #ifdef NONMATCHING
 // Missing addiu sp, sp, -0x10 : I can't get it to use the stack at all. 
-float sub_GAME_7F0AFB1C(struct float3 *p,struct float3 *q)
+f32 sub_GAME_7F0AFB1C(struct float3 *p,struct float3 *q)
 {
-  float xDiff = q->x - p->x;
-  float yDiff = q->y - p->y;
-  float zDiff = q->z - p->z;
+  f32 xDiff = q->x - p->x;
+  f32 yDiff = q->y - p->y;
+  f32 zDiff = q->z - p->z;
   
   return xDiff*xDiff + yDiff*yDiff + zDiff*zDiff;
 }
@@ -1661,22 +1661,22 @@ glabel sub_GAME_7F0AFB78
 
 // Returns the shortest distance from (p_x,p_z) to the infinite extention of tile's index-th edge, projected into XZ.
 // Where the edge is vertical (or degenerate) they just return the distance between the points.
-float getShortest2dDispToInfTileEdge(struct StandTile *tile,s32 index,float p_x,float p_z)
+f32 getShortest2dDispToInfTileEdge(struct StandTile *tile,s32 index,f32 p_x,f32 p_z)
 {
     s32 nextIndex;
-    float edge_x;
-    float edge_z;
-    float edge_len;
+    f32 edge_x;
+    f32 edge_z;
+    f32 edge_len;
 
-    float v_x;
-    float v_z;
-    float crossProduct;
+    f32 v_x;
+    f32 v_z;
+    f32 crossProduct;
 
     // 3 unused. We use 2 for the points to make our code cleaner,
     //   though it seems much more likely that the variables were used in the else clause.
     struct StandTilePoint* currPnt;
     struct StandTilePoint* nextPnt;
-    float UNUSED;
+    f32 UNUSED;
 
     // Omiting the '& 0xF' is equivalent, but keeping it is necessary to match.
     // Perhaps the structure isn't correct but this seems much cleaner than doing an explicit >> 0xC. 
@@ -1684,16 +1684,16 @@ float getShortest2dDispToInfTileEdge(struct StandTile *tile,s32 index,float p_x,
 
     nextPnt = &tile->points[nextIndex];
     currPnt = &tile->points[index];
-    edge_x = (float)(nextPnt->x - currPnt->x);
-    edge_z = (float)(nextPnt->z - currPnt->z);
+    edge_x = (f32)(nextPnt->x - currPnt->x);
+    edge_z = (f32)(nextPnt->z - currPnt->z);
 
     edge_len = sqrtf(edge_x * edge_x + edge_z * edge_z);
 
     if (edge_len == 0) {
         // Degenerate case, edge is vertical
         // They just return the distance between the points, which is sensible and the correct value in 3 dimensions.
-        v_x = p_x - (float)tile->points[nextIndex].x;
-        v_z = p_z - (float)tile->points[nextIndex].z;
+        v_x = p_x - (f32)tile->points[nextIndex].x;
+        v_z = p_z - (f32)tile->points[nextIndex].z;
         return sqrtf(v_x * v_x + v_z * v_z);  
     }
     else
@@ -1701,9 +1701,9 @@ float getShortest2dDispToInfTileEdge(struct StandTile *tile,s32 index,float p_x,
         // | (AP x AB) / ||AB|| | = ||PA|| sin(a),
         // so we're returning the SIGNED displacement
         crossProduct = (
-            edge_z * (p_x - (float)tile->points[index].x)
+            edge_z * (p_x - (f32)tile->points[index].x)
             +
-            -edge_x * (p_z - (float)tile->points[index].z)
+            -edge_x * (p_z - (f32)tile->points[index].z)
         );
         return crossProduct / edge_len;
     }
@@ -1712,7 +1712,7 @@ float getShortest2dDispToInfTileEdge(struct StandTile *tile,s32 index,float p_x,
 
 
 // Sig needed for caller matches.
-float getShortest2dDispToInfTripleEdge(struct StandTile *tile,s32 start3index,float p_x,float p_z);
+f32 getShortest2dDispToInfTripleEdge(struct StandTile *tile,s32 start3index,f32 p_x,f32 p_z);
 
 #ifdef NONMATCHING
 // Only regalloc incorrect essentially. Any change I make seems to make things much worse though,
@@ -1721,20 +1721,20 @@ float getShortest2dDispToInfTripleEdge(struct StandTile *tile,s32 start3index,fl
 // Similar to getShortest2dDispToInfTileEdge
 // 2nd arg must be in {0,1,2}
 // New name needed though: getShortest2dDispToInfTripleEdge
-float getShortest2dDispToInfTripleEdge(struct StandTile *tile,s32 start3index,float p_x,float p_z)
+f32 getShortest2dDispToInfTripleEdge(struct StandTile *tile,s32 start3index,f32 p_x,f32 p_z)
 {
     s32 end3index;      // types seem correct, changing introduces more instructions
 
-    float edge_x;       // 0x40 (8)
-    float edge_z;       // 0x3C 
-    float edge_len;
+    f32 edge_x;       // 0x40 (8)
+    f32 edge_z;       // 0x3C 
+    f32 edge_len;
 
     s32 currPntI;   
     s32 nextPntI;
 
-    float v_x;
-    float v_z;
-    float crossProduct;
+    f32 v_x;
+    f32 v_z;
+    f32 crossProduct;
 
 
     // end3index = (start3index + 1) % 3, start3index in [0,3)
@@ -1749,8 +1749,8 @@ float getShortest2dDispToInfTripleEdge(struct StandTile *tile,s32 start3index,fl
     currPntI = STAN_TRIPLE_TO_PNT_INDEX(tile, start3index);
     nextPntI = STAN_TRIPLE_TO_PNT_INDEX(tile, end3index);
 
-    edge_x = (float)(tile->points[nextPntI].x - tile->points[currPntI].x);
-    edge_z = (float)(tile->points[nextPntI].z - tile->points[currPntI].z);
+    edge_x = (f32)(tile->points[nextPntI].x - tile->points[currPntI].x);
+    edge_z = (f32)(tile->points[nextPntI].z - tile->points[currPntI].z);
 
 
     // Identical to getShortest2dDispToInfTileEdge from here
@@ -1760,17 +1760,17 @@ float getShortest2dDispToInfTripleEdge(struct StandTile *tile,s32 start3index,fl
     if (edge_len == 0) {
         // Degenerate case, edge is vertical
         // They just return the distance between the points, which is sensible and the correct value in 3 dimensions.
-        v_x = p_x - (float)tile->points[nextPntI].x;
-        v_z = p_z - (float)tile->points[nextPntI].z;
+        v_x = p_x - (f32)tile->points[nextPntI].x;
+        v_z = p_z - (f32)tile->points[nextPntI].z;
         return sqrtf(v_x * v_x + v_z * v_z);  
     }
     else
     {
         // - (AP x AB) / ||AB|| = ||PA|| sin(a)
         crossProduct = (
-            edge_z * (p_x - (float)tile->points[currPntI].x)
+            edge_z * (p_x - (f32)tile->points[currPntI].x)
             +
-            -edge_x * (p_z - (float)tile->points[currPntI].z)
+            -edge_x * (p_z - (f32)tile->points[currPntI].z)
         );
         return crossProduct / edge_len;
     }
@@ -1878,9 +1878,9 @@ glabel getShortest2dDispToInfTripleEdge
 
 
 
-float getShortest2dDispToInfTileEdgeUnscaled(struct StandTile *tile, int index,float x,float z)
+f32 getShortest2dDispToInfTileEdgeUnscaled(struct StandTile *tile, int index,f32 x,f32 z)
 {
-  float disp;
+  f32 disp;
   
   disp = getShortest2dDispToInfTileEdge(tile, index, x * level_scale, z * level_scale);
   return disp * inv_level_scale;
@@ -1891,9 +1891,9 @@ float getShortest2dDispToInfTileEdgeUnscaled(struct StandTile *tile, int index,f
 
 
 
-float getShortest2dDispToInfTripleEdgeUnscaled(struct StandTile *tile,s32 start3index,float p_x,float p_z)
+f32 getShortest2dDispToInfTripleEdgeUnscaled(struct StandTile *tile,s32 start3index,f32 p_x,f32 p_z)
 {
-  float disp;
+  f32 disp;
   
   disp = getShortest2dDispToInfTripleEdge(tile, start3index, p_x * level_scale, p_z * level_scale);
   return disp * inv_level_scale;
@@ -1902,12 +1902,12 @@ float getShortest2dDispToInfTripleEdgeUnscaled(struct StandTile *tile,s32 start3
 
 
 
-float distToTilePnt2D(struct StandTile *tile,int pntI,float p_x,float p_z)
+f32 distToTilePnt2D(struct StandTile *tile,int pntI,f32 p_x,f32 p_z)
 {
-  float len;
+  f32 len;
   
-  p_x -= (float)tile->points[pntI].x;
-  p_z -= (float)tile->points[pntI].z;
+  p_x -= (f32)tile->points[pntI].x;
+  p_z -= (f32)tile->points[pntI].z;
   return sqrtf(p_x * p_x + p_z * p_z);
 }
 
@@ -1915,14 +1915,14 @@ float distToTilePnt2D(struct StandTile *tile,int pntI,float p_x,float p_z)
 
 
 #ifdef NONMATCHING
-float sub_GAME_7F0B00C4(struct StandTile* tile,s32 index,float p_x,float p_z)
+f32 sub_GAME_7F0B00C4(struct StandTile* tile,s32 index,f32 p_x,f32 p_z)
 {
-  float v_x;
-  float v_z;
-  float dist;
+  f32 v_x;
+  f32 v_z;
+  f32 dist;
   
-  v_x = p_x * level_scale - (float)tile->points[index].x;
-  v_z = p_z * level_scale - (float)tile->points[index].z;
+  v_x = p_x * level_scale - (f32)tile->points[index].x;
+  v_z = p_z * level_scale - (f32)tile->points[index].z;
   dist = sqrtf(v_x * v_x + v_z * v_z);
   
   return dist * inv_level_scale;
@@ -1972,10 +1972,10 @@ glabel sub_GAME_7F0B00C4
 #ifdef NONMATCHING
 
 // dot product
-f32 sub_GAME_7F0B0140(struct StandTile* tile, s32 index, float p_x, float p_z)
+f32 sub_GAME_7F0B0140(struct StandTile* tile, s32 index, f32 p_x, f32 p_z)
 {
-    float d_x;
-    float d_z;
+    f32 d_x;
+    f32 d_z;
 
     d_x = (p_x * level_scale) * tile->points[index].x;
     d_z = (p_z * level_scale) * tile->points[index].z;  // was originally commuted
@@ -2200,9 +2200,9 @@ glabel sub_GAME_7F0B0198
 
 // Determines if inside (presumably - it effectively does an && of the checks on signs of cross products)
 //   based on the 3 edges. So probably only for triangular tiles.
-s32 isPointInsideTriStandTile_Maybe(struct StandTile *tile, float p_x, float p_z)
+s32 isPointInsideTriStandTile_Maybe(struct StandTile *tile, f32 p_x, f32 p_z)
 {
-    float disp;
+    f32 disp;
     s32 i;
 
     for (i = 0; i != 3; i++)
@@ -2218,9 +2218,9 @@ s32 isPointInsideTriStandTile_Maybe(struct StandTile *tile, float p_x, float p_z
 
 
 
-s32 isPointInsideTriStandTileUnscaled_Maybe(struct StandTile *tile, float p_x, float p_z)
+s32 isPointInsideTriStandTileUnscaled_Maybe(struct StandTile *tile, f32 p_x, f32 p_z)
 {
-    float disp;
+    f32 disp;
     s32 i;
 
     for (i = 0; i != 3; i++)
@@ -2236,7 +2236,7 @@ s32 isPointInsideTriStandTileUnscaled_Maybe(struct StandTile *tile, float p_x, f
 
 
 // Sig for caller matches
-float sub_GAME_7F0B0400(struct StandTile *tile, s32 start3index, float p_x,float p_z);
+f32 sub_GAME_7F0B0400(struct StandTile *tile, s32 start3index, f32 p_x,f32 p_z);
 
 #ifdef NONMATCHING
 // Similar to a prev func, but simplier.
@@ -2365,9 +2365,9 @@ glabel sub_GAME_7F0B0400
 
 
 
-s32 sub_GAME_7F0B0518(struct StandTile *tile, float p_x, float p_z)
+s32 sub_GAME_7F0B0518(struct StandTile *tile, f32 p_x, f32 p_z)
 {
-    float unk;
+    f32 unk;
     s32 i;
 
     p_x *= level_scale;
@@ -2388,7 +2388,7 @@ s32 sub_GAME_7F0B0518(struct StandTile *tile, float p_x, float p_z)
 
 // A->B ACWS returns 1, CWS (including opposite) returns -1.
 // Identical direction and |A| >= |B| returns 0
-int getRotationalDirectionBetween(float a_x,float a_z,float b_x,float b_z)
+int getRotationalDirectionBetween(f32 a_x,f32 a_z,f32 b_x,f32 b_z)
 {
     // The main 2 cases : return the sign of AxB where it's non-zero
     if (a_z * b_x < a_x * b_z) {
@@ -2672,7 +2672,7 @@ glabel sub_GAME_7F0B07BC
 
 // 'walkTilesBetweenPoints_withCallback'
 // sig declared for caller matches
-s32 sub_GAME_7F0B0914(struct StandTile **tileStack, float start_x, float start_z, float dest_x, float dest_z,
+s32 sub_GAME_7F0B0914(struct StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z,
     standTileWalkCallback_t func, struct StandTileWalkCallbackRecord *funcData);
 
 
@@ -2884,7 +2884,7 @@ glabel sub_GAME_7F0B0914
 
 
 // 'walkTilesBetweenPoints_NoCallback'
-s32 walkTilesBetweenPoints_NoCallback(struct StandTile **tileStack, float start_x, float start_z, float dest_x, float dest_z)
+s32 walkTilesBetweenPoints_NoCallback(struct StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z)
 {
     return sub_GAME_7F0B0914(tileStack, start_x, start_z, dest_x, dest_z, 0, 0);
 }
@@ -2893,7 +2893,7 @@ s32 walkTilesBetweenPoints_NoCallback(struct StandTile **tileStack, float start_
 
 
 // 'walkTilesBetweenPoints_NotingRooms'
-s32 sub_GAME_7F0B0C24(struct StandTile **tileStack, float start_x, float start_z, float dest_x, float dest_z, s32 *roomBuffer, s32 *rtnCountSize, s32 maxBufSize)
+s32 sub_GAME_7F0B0C24(struct StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z, s32 *roomBuffer, s32 *rtnCountSize, s32 maxBufSize)
 {
     struct StandTileWalkCallbackRecord callbackData;
     s32 rtn;
@@ -2943,8 +2943,8 @@ void noteTileRoomIfDifferentToPrev_2(struct StandTile *tile, struct StandTile *u
 #ifdef NONMATCHING
 // Not too close
 
-s32 sub_GAME_7F0B0D0C(struct StandTile *tile, float start_x, float start_z, struct StandTile **tilePtr,
-    float end_x, float end_z, s32 *roomBuf, s32 maxBufSize)
+s32 sub_GAME_7F0B0D0C(struct StandTile *tile, f32 start_x, f32 start_z, struct StandTile **tilePtr,
+    f32 end_x, f32 end_z, s32 *roomBuf, s32 maxBufSize)
 {
     s32 roomA;
     s32 roomB;
@@ -3087,13 +3087,13 @@ glabel sub_GAME_7F0B0D0C
 
 
 // sig for caller matches
-int sub_GAME_7F0B0E24(struct StandTile **pTile, float p_x, float p_z, float dest_x, float dest_z,
-    int objFlags, float unkHeight, float unkA, float unkB, float unkC);
+int sub_GAME_7F0B0E24(struct StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z,
+    int objFlags, f32 unkHeight, f32 unkA, f32 unkB, f32 unkC);
 
 #ifdef NONMATCHING
 // 'testLineUnobstructed'
-int sub_GAME_7F0B0E24(struct StandTile **pTile, float p_x, float p_z, float dest_x, float dest_z,
-    int objFlags, float unkHeight, float unkA, float unkB, float unkC) {
+int sub_GAME_7F0B0E24(struct StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z,
+    int objFlags, f32 unkHeight, f32 unkA, f32 unkB, f32 unkC) {
 
 }
 #else
@@ -3707,21 +3707,21 @@ glabel sub_GAME_7F0B1410
 
 #ifdef NONMATCHING
 // general regalloc
-float sub_GAME_7F0B16C4(float a_x,float a_z,float b_x,float b_z,float c_x,float c_z)
+f32 sub_GAME_7F0B16C4(f32 a_x,f32 a_z,f32 b_x,f32 b_z,f32 c_x,f32 c_z)
 {
-    float AB_x;
-    float AB_y; // unused
-    float AB_z;
+    f32 AB_x;
+    f32 AB_y; // unused
+    f32 AB_z;
 
-    float dist;
+    f32 dist;
 
-    float BC_x;
-    float BC_y; // unused
-    float BC_z;
+    f32 BC_x;
+    f32 BC_y; // unused
+    f32 BC_z;
 
-    float AC_x;
-    float AC_y; // unused
-    float AC_z;
+    f32 AC_x;
+    f32 AC_y; // unused
+    f32 AC_z;
     
     AB_x = b_x - a_x;
     AB_z = b_z - a_z;
@@ -3805,7 +3805,7 @@ glabel sub_GAME_7F0B16C4
 
 
 
-float distBetweenPoints2d(float o_x,float o_z,float p_x,float p_z)
+f32 distBetweenPoints2d(f32 o_x,f32 o_z,f32 p_x,f32 p_z)
 {
   p_x -= o_x;
   p_z -= o_z;
@@ -3819,14 +3819,14 @@ float distBetweenPoints2d(float o_x,float o_z,float p_x,float p_z)
 #ifdef NONMATCHING
 // Not 100% sure it's logically equivalent.
 // Pretty sure the test at least needs rephrasing to match.
-s32 sub_GAME_7F0B17E4(float a_x,float a_z,float b_x,float b_z,float c_x,float c_z)
+s32 sub_GAME_7F0B17E4(f32 a_x,f32 a_z,f32 b_x,f32 b_z,f32 c_x,f32 c_z)
 {
-    float AB_x;
-    float AB_z;
-    float len_AB_sq;
-    float AC_x;
-    float AC_z;
-    float AC_dot_AB;
+    f32 AB_x;
+    f32 AB_z;
+    f32 len_AB_sq;
+    f32 AC_x;
+    f32 AC_z;
+    f32 AC_dot_AB;
     
     AB_x = b_x - a_x;
     AB_z = b_z - a_z;
@@ -4238,17 +4238,17 @@ void getTileEdgePoints(struct StandTile *tile, s32 pointI, struct float3 *currPn
   
   tilePntA = &tile->points[pointI];
 
-  currPntRtn->x = (float)tilePntA->x * inv_level_scale;
-  currPntRtn->y = (float)tilePntA->y * inv_level_scale;
-  currPntRtn->z = (float)tilePntA->z * inv_level_scale;
+  currPntRtn->x = (f32)tilePntA->x * inv_level_scale;
+  currPntRtn->y = (f32)tilePntA->y * inv_level_scale;
+  currPntRtn->z = (f32)tilePntA->z * inv_level_scale;
 
   pointCount = STAN_POINT_COUNT(tile);
   tilePntB = &tile->points[(pointI + 1) % pointCount];
 
 
-  nextPointRtn->x = (float)tilePntB->x * inv_level_scale;
-  nextPointRtn->y = (float)tilePntB->y * inv_level_scale;
-  nextPointRtn->z = (float)tilePntB->z * inv_level_scale;
+  nextPointRtn->x = (f32)tilePntB->x * inv_level_scale;
+  nextPointRtn->y = (f32)tilePntB->y * inv_level_scale;
+  nextPointRtn->z = (f32)tilePntB->z * inv_level_scale;
   
 }
 #else
@@ -4319,7 +4319,7 @@ glabel getTileEdgePoints
 
 // Sig for caller matches
 // Note it's not clear from caller usage alone what the type of C's 5th parameter is
-s32 sub_GAME_7F0B1DDC(struct StandTile**, float, float, float,
+s32 sub_GAME_7F0B1DDC(struct StandTile**, f32, f32, f32,
     standTileLocusCallback_A_t, standTileLocusCallback_B_t, standTileLocusCallback_C_t,
     struct StandTileLocusCallbackRecord*
 );
@@ -4544,7 +4544,7 @@ glabel sub_GAME_7F0B1DDC
 
 
 
-s32 sub_GAME_7F0B20D0(struct StandTile** tileStack, float target_x, float target_z, float unknown) {
+s32 sub_GAME_7F0B20D0(struct StandTile** tileStack, f32 target_x, f32 target_z, f32 unknown) {
     return sub_GAME_7F0B1DDC(tileStack, target_x, target_z, unknown, 0, 0, 0, 0);
 }
 
@@ -4633,7 +4633,7 @@ s32 incrNearEdgeCount(struct StandTile** tileStack, s32 stackHeight, struct Stan
 
 
 
-s32 sub_GAME_7F0B21B0(struct StandTile **tileStack, float target_x, float target_z, float unknown, s32 *roomBuf, s32 *count_rtn, s32 bufMax){
+s32 sub_GAME_7F0B21B0(struct StandTile **tileStack, f32 target_x, f32 target_z, f32 unknown, s32 *roomBuf, s32 *count_rtn, s32 bufMax){
     struct StandTileLocusCallbackRecord data;
     s32 rtn;
 
@@ -4897,9 +4897,9 @@ void sub_GAME_7F0B23AC(struct StandTile *tile, s32 tripleIndex, struct float3 *p
 {
     s32 pntIndex = STAN_TRIPLE_TO_PNT_INDEX(tile, tripleIndex);
 
-    pnt->x = (float)tile->points[pntIndex].x * inv_level_scale;
-    pnt->y = (float)tile->points[pntIndex].y * inv_level_scale;
-    pnt->z = (float)tile->points[pntIndex].z * inv_level_scale;
+    pnt->x = (f32)tile->points[pntIndex].x * inv_level_scale;
+    pnt->y = (f32)tile->points[pntIndex].y * inv_level_scale;
+    pnt->z = (f32)tile->points[pntIndex].z * inv_level_scale;
     return;
 }
 
@@ -5092,12 +5092,12 @@ glabel sub_GAME_7F0B2420
 
 #ifdef NONMATCHING
 // Tests do appear to be lts
-s32 sub_GAME_7F0B260C(struct StandTile *tile, s32 index, float p_x,float p_z, void, float *rtn)
+s32 sub_GAME_7F0B260C(struct StandTile *tile, s32 index, f32 p_x,f32 p_z, void, f32 *rtn)
 {
     s32 nextIndex;
 
-    if (*rtn < (float)tile->points[index].y) {
-        if (*rtn < (float)tile->points[(index + 1) % STAN_POINT_COUNT(tile)].y)
+    if (*rtn < (f32)tile->points[index].y) {
+        if (*rtn < (f32)tile->points[(index + 1) % STAN_POINT_COUNT(tile)].y)
         {
             return 1;
         }
@@ -5166,10 +5166,10 @@ glabel sub_GAME_7F0B260C
 
 
 #ifdef NONMATCHING
-// We'll wait to decomp sub_GAME_7F0B260C properly, the reference to the float seems to be misbehaving and pointless.
-void sub_GAME_7F0B26B8(struct StandTile **tile, float target_x, float target_z, float b_z, float param_5)
+// We'll wait to decomp sub_GAME_7F0B260C properly, the reference to the f32 seems to be misbehaving and pointless.
+void sub_GAME_7F0B26B8(struct StandTile **tile, f32 target_x, f32 target_z, f32 b_z, f32 param_5)
 {
-    float unk_float;
+    f32 unk_float;
     
     unk_float = param_5 * level_scale;
     
@@ -5455,7 +5455,7 @@ s32 getCollisionEdge_maybe(struct float3 *pntA, struct float3 *pntB)
 
 
 
-void setLevelScale(float ls) {
+void setLevelScale(f32 ls) {
     level_scale = ls;
     inv_level_scale = (1.0f / ls);
     return;
@@ -5463,7 +5463,7 @@ void setLevelScale(float ls) {
 
 
 
-float sub_GAME_7F0B2970(struct StandTile* tile, float p_x, float p_z);
+
 
 #ifdef NONMATCHING
 f32 sub_GAME_7F0B2970(void *arg0, s32 arg1, f32 arg2) {
@@ -5761,7 +5761,7 @@ glabel sub_GAME_7F0B2970
 #ifdef NONMATCHING
 
 // Some instructions misordered
-s32 copy_tile_RGB_as_24bit(struct StandTile* tile, float p_x, float p_z, u8* rtn) {
+s32 copy_tile_RGB_as_24bit(struct StandTile* tile, f32 p_x, f32 p_z, u8* rtn) {
     
     u8 B;
     u8 C;
@@ -5803,16 +5803,16 @@ glabel copy_tile_RGB_as_24bit
 
 
 
-float sub_GAME_7F0B2C74(struct StandTile *tile, float *heights);
+f32 sub_GAME_7F0B2C74(struct StandTile *tile, f32 *heights);
 
 #ifdef NONMATCHING
 
 // Very interesting. The target has a load of filler crap including instructions like "c.lt.S f2,f2"
 // Presumably something has been generated from a macro but using the fixed value 0
 
-float sub_GAME_7F0B2C74(struct StandTile *tile, float *heights)
+f32 sub_GAME_7F0B2C74(struct StandTile *tile, f32 *heights)
 {
-    float y;
+    f32 y;
 
     y = tile->points[STAN_TRIPLE_TO_PNT_INDEX(tile, 0)].y;
 
@@ -5877,8 +5877,8 @@ glabel sub_GAME_7F0B2C74
 
 
 
-float sub_GAME_7F0B2D14(struct StandTile* tile) {
-    float vs[2];
+f32 sub_GAME_7F0B2D14(struct StandTile* tile) {
+    f32 vs[2];
 
     sub_GAME_7F0B2C74(tile, vs);
     return vs[0];
@@ -6324,7 +6324,7 @@ s32 sub_GAME_7F0B2FE0(struct StandTile* tile) {
 
 
 
-float sub_GAME_7F0B3004(struct StandTile* tile) {
+f32 sub_GAME_7F0B3004(struct StandTile* tile) {
     return sub_GAME_7F0B2D14(tile);
 }
 
@@ -6465,8 +6465,8 @@ glabel sub_GAME_7F0B312C
 #ifdef NONMATCHING
 // Only difference is an extra sw a1,0x34(sp) appearing.
 // There is the unused first argument which may have the wrong type
-int sub_GAME_7F0B3138(void* unused, struct StandTile **pTile, float p_x, float p_z, float dest_x, float dest_z,
-        int objFlags, float unkHeight, float unkA) {
+int sub_GAME_7F0B3138(void* unused, struct StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z,
+        int objFlags, f32 unkHeight, f32 unkA) {
 
     return sub_GAME_7F0B0E24(pTile, p_x, p_z, dest_x, dest_z, objFlags, unkHeight, unkA, 0, 1);
 }

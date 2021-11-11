@@ -8,6 +8,7 @@
 #include "game/lvl.h"
 #include "game/bondinv.h"
 #include "game/gun.h"
+#include "game/stan.h"
 #include "game/quaternion.h"
 #include "boss.h"
 #include "music.h"
