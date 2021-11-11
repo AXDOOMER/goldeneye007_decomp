@@ -987,6 +987,10 @@ struct player
   Mtx* field_10C8;
   Mtxf* field_10CC;
   s32 field_10D0; // ptr
+
+  /**
+   * Offset 0x10d4.
+   */
   Mtxf* field_10D4;
   Mtx* projmatrix;
   Mtxf* projmatrixf;
@@ -2957,5 +2961,6 @@ s32 sub_GAME_7F089F38(void);
 Gfx* write_stan_tiles_in_yellow(Gfx *arg0);
 Gfx * maybe_mp_interface(Gfx *arg0);
 Gfx * sub_GAME_7F08BCB8(Gfx *arg0);
+s32 sub_GAME_7F078A58(struct coord3d *vec_scale, f32 norm_scale);
 
 #endif
