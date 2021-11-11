@@ -10759,23 +10759,17 @@ glabel sub_GAME_7F07D61C
 
 
 
-
-#ifdef NONMATCHING
-s32 sub_GAME_7F07D954(s32 arg0) {
-    // Node 0
-    return arg0;
+/**
+ * Unreferenced.
+ * 
+ * Bitwise convert 32bit int to float.
+ * 
+ * Address 0x7F07D954.
+ */
+f32 bondviewBitconvertIntToFloat(s32 arg0)
+{
+    return *(f32*)&arg0;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F07D954
-/* 0B2484 7F07D954 44840000 */  mtc1  $a0, $f0
-/* 0B2488 7F07D958 03E00008 */  jr    $ra
-/* 0B248C 7F07D95C AFA40000 */   sw    $a0, ($sp)
-)
-#endif
-
 
 
 
