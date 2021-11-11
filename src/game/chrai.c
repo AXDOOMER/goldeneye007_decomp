@@ -25859,7 +25859,7 @@ glabel sub_GAME_7F03E830
 /* 073368 7F03E838 8C820010 */  lw    $v0, 0x10($a0)
 /* 07336C 7F03E83C 8C440014 */  lw    $a0, 0x14($v0)
 /* 073370 7F03E840 8C450008 */  lw    $a1, 8($v0)
-/* 073374 7F03E844 0FC2CA5C */  jal   sub_GAME_7F0B2970
+/* 073374 7F03E844 0FC2CA5C */  jal   stanGetPositionYValue
 /* 073378 7F03E848 8C460010 */   lw    $a2, 0x10($v0)
 /* 07337C 7F03E84C 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 073380 7F03E850 27BD0018 */  addiu $sp, $sp, 0x18

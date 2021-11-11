@@ -4365,7 +4365,7 @@ type2D_tank:
 /* 0393A0 7F004870 E65000DC */   swc1  $f16, 0xdc($s2)
 /* 0393A4 7F004874 8C440014 */  lw    $a0, 0x14($v0)
 /* 0393A8 7F004878 8C450008 */  lw    $a1, 8($v0)
-/* 0393AC 7F00487C 0FC2CA5C */  jal   sub_GAME_7F0B2970
+/* 0393AC 7F00487C 0FC2CA5C */  jal   stanGetPositionYValue
 /* 0393B0 7F004880 8C460010 */   lw    $a2, 0x10($v0)
 /* 0393B4 7F004884 E7A000E8 */  swc1  $f0, 0xe8($sp)
 .L7F004888:
@@ -5763,7 +5763,7 @@ type2D_tank:
 /* 0393F0 7F004880 E65000DC */   swc1  $f16, 0xdc($s2)
 /* 0393F4 7F004884 8C440014 */  lw    $a0, 0x14($v0)
 /* 0393F8 7F004888 8C450008 */  lw    $a1, 8($v0)
-/* 0393FC 7F00488C 0FC2CD48 */  jal   sub_GAME_7F0B2970
+/* 0393FC 7F00488C 0FC2CD48 */  jal   stanGetPositionYValue
 /* 039400 7F004890 8C460010 */   lw    $a2, 0x10($v0)
 /* 039404 7F004894 E7A000E8 */  swc1  $f0, 0xe8($sp)
 .L7F004898:
@@ -7159,7 +7159,7 @@ type2D_tank:
 /* 0371F4 7F004804 E65000DC */   swc1  $f16, 0xdc($s2)
 /* 0371F8 7F004808 8C440014 */  lw    $a0, 0x14($v0)
 /* 0371FC 7F00480C 8C450008 */  lw    $a1, 8($v0)
-/* 037200 7F004810 0FC2C70C */  jal   sub_GAME_7F0B2970
+/* 037200 7F004810 0FC2C70C */  jal   stanGetPositionYValue
 /* 037204 7F004814 8C460010 */   lw    $a2, 0x10($v0)
 /* 037208 7F004818 E7A000E8 */  swc1  $f0, 0xe8($sp)
 .L7F004898:
