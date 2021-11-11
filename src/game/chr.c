@@ -3021,7 +3021,7 @@ glabel replace_GUARDdata_with_actual_values
 
 
 #ifdef NONMATCHING
-void disable_sounds_attached_to_player_then_something(void) {
+void disable_sounds_attached_to_player_then_something(struct prop* prop) {
 
 }
 #else

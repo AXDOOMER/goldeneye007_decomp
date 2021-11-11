@@ -493,6 +493,12 @@ f32 D_80036AC0 = 1.0;
 //D:80036AC4
 f32 D_80036AC4 = 0.1;
 
+// forward declarations
+
+void sub_GAME_7F07DE9C(struct player *arg0);
+
+// end forward declarations
+
 void nullsub_75(void)
 {
     return;
@@ -519,9 +525,6 @@ void currentPlayerSetPerspective(f32 near, f32 fovy, f32 aspect)
     g_CurrentPlayer->c_perspaspect = aspect;
 }
 
-#define DEG2RAD(x) ((x * 3.1415927f) / 360.0f)
-float sinf(float);
-float cosf(float);
 void currentPlayerSetCameraScale(void)
 {
 	f32 fVar4;
@@ -4320,69 +4323,20 @@ variable_body_head:
 
 #endif
 
-
-#ifdef NONMATCHING
-void maybe_solo_intro_camera_handler(void) {
-    // Node 0
-    if (g_CurrentPlayer->field_A8->unk4 != 0)
+/**
+ * Address 0x7F07A4A0.
+ */
+void maybe_solo_intro_camera_handler(void)
+{
+    if ((g_CurrentPlayer->prop->chr != 0) && (getPlayerCount() == 1))
     {
-        // Node 1
-        if (getPlayerCount() == 1)
-        {
-            // Node 2
-            disable_sounds_attached_to_player_then_something(g_CurrentPlayer->field_A8);
-            g_CurrentPlayer->field_A8->unk4 = 0;
-            g_CurrentPlayer->field_D4 = 0;
-            camera_80036424 = 1;
-            sub_GAME_7F07DE9C(g_CurrentPlayer);
-        }
+        disable_sounds_attached_to_player_then_something(g_CurrentPlayer->prop);
+        g_CurrentPlayer->prop->chr = NULL;
+        g_CurrentPlayer->ptr_char_objectinstance = 0;
+        camera_80036424 = 1;
+        sub_GAME_7F07DE9C(g_CurrentPlayer);
     }
-    // Node 3
-    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel maybe_solo_intro_camera_handler
-/* 0AEFD0 7F07A4A0 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
-/* 0AEFD4 7F07A4A4 2463A0B0 */  addiu $v1, %lo(g_CurrentPlayer) # addiu $v1, $v1, -0x5f50
-/* 0AEFD8 7F07A4A8 8C6E0000 */  lw    $t6, ($v1)
-/* 0AEFDC 7F07A4AC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0AEFE0 7F07A4B0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0AEFE4 7F07A4B4 8DCF00A8 */  lw    $t7, 0xa8($t6)
-/* 0AEFE8 7F07A4B8 8DF80004 */  lw    $t8, 4($t7)
-/* 0AEFEC 7F07A4BC 53000017 */  beql  $t8, $zero, .L7F07A51C
-/* 0AEFF0 7F07A4C0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0AEFF4 7F07A4C4 0FC26919 */  jal   getPlayerCount
-/* 0AEFF8 7F07A4C8 00000000 */   nop
-/* 0AEFFC 7F07A4CC 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
-/* 0AF000 7F07A4D0 24010001 */  li    $at, 1
-/* 0AF004 7F07A4D4 14410010 */  bne   $v0, $at, .L7F07A518
-/* 0AF008 7F07A4D8 2463A0B0 */   addiu $v1, %lo(g_CurrentPlayer) # addiu $v1, $v1, -0x5f50
-/* 0AF00C 7F07A4DC 8C790000 */  lw    $t9, ($v1)
-/* 0AF010 7F07A4E0 0FC08105 */  jal   disable_sounds_attached_to_player_then_something
-/* 0AF014 7F07A4E4 8F2400A8 */   lw    $a0, 0xa8($t9)
-/* 0AF018 7F07A4E8 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
-/* 0AF01C 7F07A4EC 2463A0B0 */  addiu $v1, %lo(g_CurrentPlayer) # addiu $v1, $v1, -0x5f50
-/* 0AF020 7F07A4F0 8C680000 */  lw    $t0, ($v1)
-/* 0AF024 7F07A4F4 240B0001 */  li    $t3, 1
-/* 0AF028 7F07A4F8 3C018003 */  lui   $at, %hi(camera_80036424)
-/* 0AF02C 7F07A4FC 8D0900A8 */  lw    $t1, 0xa8($t0)
-/* 0AF030 7F07A500 AD200004 */  sw    $zero, 4($t1)
-/* 0AF034 7F07A504 8C6A0000 */  lw    $t2, ($v1)
-/* 0AF038 7F07A508 AD4000D4 */  sw    $zero, 0xd4($t2)
-/* 0AF03C 7F07A50C AC2B6424 */  sw    $t3, %lo(camera_80036424)($at)
-/* 0AF040 7F07A510 0FC1F7A7 */  jal   sub_GAME_7F07DE9C
-/* 0AF044 7F07A514 8C640000 */   lw    $a0, ($v1)
-.L7F07A518:
-/* 0AF048 7F07A518 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F07A51C:
-/* 0AF04C 7F07A51C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0AF050 7F07A520 03E00008 */  jr    $ra
-/* 0AF054 7F07A524 00000000 */   nop
-)
-#endif
-
 
 
 
