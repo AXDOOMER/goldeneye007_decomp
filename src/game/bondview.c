@@ -9836,20 +9836,17 @@ void bondviewSet3dCoord7F07CEB0(struct coord3d *arg0)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F07CF80(void) {
-    // Node 0
+/**
+ * Unreferenced.
+ * 
+ * Returns global variable D_8003646C, which is in radians.
+ * 
+ * Address 0x7F07CF80.
+ */
+f32 bondviewGet8003646CRad(void)
+{
     return D_8003646C;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F07CF80
-/* 0B1AB0 7F07CF80 3C018003 */  lui   $at, %hi(D_8003646C)
-/* 0B1AB4 7F07CF84 03E00008 */  jr    $ra
-/* 0B1AB8 7F07CF88 C420646C */   lwc1  $f0, %lo(D_8003646C)($at)
-)
-#endif
 
 
 
