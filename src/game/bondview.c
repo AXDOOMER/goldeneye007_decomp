@@ -11481,7 +11481,7 @@ void trigger_watch_zoom(f32 final,f32 time)
 }
 
 
-f32 sub_GAME_7F07E438(void) {
+f32 bondviewGetWatchZoomFovy(void) {
 
     if (g_CurrentPlayer->zoomintime < g_CurrentPlayer->zoomintimemax)
     {
@@ -11491,83 +11491,32 @@ f32 sub_GAME_7F07E438(void) {
     return g_CurrentPlayer->zoominfovy;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F07E46C(f32 arg0) {
-    ? temp_ret;
-    ? phi_return;
+/**
+ * Triggers watch zoom if new value.
+ * 
+ * @param zoominfovy: watch zoom fovy.
+ * 
+ * Address 0x7F07E46C.
+ */
+void bondviewTriggerWatchZoom(f32 zoominfovy)
+{
+    if (bondviewGetWatchZoomFovy() != zoominfovy)
+    {
+        if (zoominfovy < g_CurrentPlayer->zoominfovy)
+        {
+            trigger_watch_zoom(zoominfovy, ((g_CurrentPlayer->zoominfovy - zoominfovy) * 15.0f) / 30.0f);
 
-    // Node 0
-    temp_ret = sub_GAME_7F07E438();
-    phi_return = temp_ret;
-    if (temp_ret == arg0)
-    {
-        // Node 4
-        // Node 5
-        return phi_return;
+            return;
+        }
+
+        trigger_watch_zoom(zoominfovy, ((zoominfovy - g_CurrentPlayer->zoominfovy) * 15.0f) / 30.0f);
     }
-    // Node 1
-    if (arg0 >= g_CurrentPlayer->field_11C4)
-    {
-        // Node 3
-        phi_return = trigger_watch_zoom(arg0, (((arg0 - g_CurrentPlayer->field_11C4) * 15.0f) / 30.0f));
-        // Node 4
-        // Node 5
-        return phi_return;
-    }
-    // Node 2
-    return phi_return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F07E46C
-/* 0B2F9C 7F07E46C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0B2FA0 7F07E470 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0B2FA4 7F07E474 0FC1F90E */  jal   sub_GAME_7F07E438
-/* 0B2FA8 7F07E478 E7AC0018 */   swc1  $f12, 0x18($sp)
-/* 0B2FAC 7F07E47C C7AC0018 */  lwc1  $f12, 0x18($sp)
-/* 0B2FB0 7F07E480 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer)
-/* 0B2FB4 7F07E484 460C0032 */  c.eq.s $f0, $f12
-/* 0B2FB8 7F07E488 00000000 */  nop
-/* 0B2FBC 7F07E48C 4503001A */  bc1tl .L7F07E4F8
-/* 0B2FC0 7F07E490 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0B2FC4 7F07E494 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 0B2FC8 7F07E498 3C014170 */  li    $at, 0x41700000 # 15.000000
-/* 0B2FCC 7F07E49C C5C011C4 */  lwc1  $f0, 0x11c4($t6)
-/* 0B2FD0 7F07E4A0 4600603C */  c.lt.s $f12, $f0
-/* 0B2FD4 7F07E4A4 00000000 */  nop
-/* 0B2FD8 7F07E4A8 4502000C */  bc1fl .L7F07E4DC
-/* 0B2FDC 7F07E4AC 46006401 */   sub.s $f16, $f12, $f0
-/* 0B2FE0 7F07E4B0 460C0101 */  sub.s $f4, $f0, $f12
-/* 0B2FE4 7F07E4B4 3C014170 */  li    $at, 0x41700000 # 15.000000
-/* 0B2FE8 7F07E4B8 44813000 */  mtc1  $at, $f6
-/* 0B2FEC 7F07E4BC 3C0141F0 */  li    $at, 0x41F00000 # 30.000000
-/* 0B2FF0 7F07E4C0 44815000 */  mtc1  $at, $f10
-/* 0B2FF4 7F07E4C4 46062202 */  mul.s $f8, $f4, $f6
-/* 0B2FF8 7F07E4C8 0FC1F900 */  jal   trigger_watch_zoom
-/* 0B2FFC 7F07E4CC 460A4383 */   div.s $f14, $f8, $f10
-/* 0B3000 7F07E4D0 10000009 */  b     .L7F07E4F8
-/* 0B3004 7F07E4D4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0B3008 7F07E4D8 46006401 */  sub.s $f16, $f12, $f0
-.L7F07E4DC:
-/* 0B300C 7F07E4DC 44819000 */  mtc1  $at, $f18
-/* 0B3010 7F07E4E0 3C0141F0 */  li    $at, 0x41F00000 # 30.000000
-/* 0B3014 7F07E4E4 44813000 */  mtc1  $at, $f6
-/* 0B3018 7F07E4E8 46128102 */  mul.s $f4, $f16, $f18
-/* 0B301C 7F07E4EC 0FC1F900 */  jal   trigger_watch_zoom
-/* 0B3020 7F07E4F0 46062383 */   div.s $f14, $f4, $f6
-/* 0B3024 7F07E4F4 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F07E4F8:
-/* 0B3028 7F07E4F8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0B302C 7F07E4FC 03E00008 */  jr    $ra
-/* 0B3030 7F07E500 00000000 */   nop
-)
-#endif
 
 
 
 void sub_GAME_7F07E504(void) {
-    sub_GAME_7F07E46C(60.0f);
+    bondviewTriggerWatchZoom(60.0f);
 }
 
 #ifdef NONMATCHING
@@ -17912,7 +17861,7 @@ glabel controller_gameplay_interaction
 /* 0B78E8 7F082DB8 44816000 */  mtc1  $at, $f12
 /* 0B78EC 7F082DBC 00000000 */  nop
 .L7F082DC0:
-/* 0B78F0 7F082DC0 0FC1F91B */  jal   sub_GAME_7F07E46C
+/* 0B78F0 7F082DC0 0FC1F91B */  jal   bondviewTriggerWatchZoom
 /* 0B78F4 7F082DC4 00000000 */   nop
 /* 0B78F8 7F082DC8 0FC1F98B */  jal   sub_GAME_7F07E62C
 /* 0B78FC 7F082DCC 00000000 */   nop
