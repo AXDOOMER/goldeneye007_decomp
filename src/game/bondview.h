@@ -445,8 +445,17 @@ struct player
   s32 field_21C;
   s32 step_in_view_watch_animation;
   f32 pause_animation_counter;
-  s32 field_228;
-  s32 field_22C;
+
+  /**
+   * Offset 0x0228.
+   */
+  f32 pause_watch_related;
+
+  /**
+   * Looks to be same as pause_watch_related, but adjusted by scale factor.
+   * Offset 0x022c.
+   */
+  f32 pause_watch_related_scaled;
   s32 something_with_watch_object_instance;
   s32 field_234;
   s32 field_238;
@@ -457,7 +466,12 @@ struct player
   s32 field_24C;
   s32 field_250;
   s32 field_254;
-  s32 field_258;
+
+  /**
+   * Some kind of adjustment applied before scaling to set pause_watch_related_scaled.
+   * Offset 0x0258.
+   */
+  f32 pause_watch_related_adjust;
   s32 field_25C;
   s32 field_260;
   s32 field_264;
