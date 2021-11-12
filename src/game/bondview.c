@@ -525,6 +525,7 @@ void bondviewCurrentPlayerUpdateSpeedVerta(f32 value);
 void bondviewCurrentPlayerUpdateSpeedTheta(f32 value);
 s16 bondviewGetCurrentPlayerViewportWidth(void);
 s16 bondviewGetCurrentPlayerViewportHeight(void);
+s16 bondviewGetCurrentPlayerViewportUly(void);
 
 // end forward declarations
 
@@ -27727,114 +27728,64 @@ s16 bondviewGetCurrentPlayerViewportHeight(void)
 
 
 
-#ifdef NONMATCHING
-void get_curplayer_viewport_uly(void) {
+/**
+ * Address 0x7F086E38.
+ */
+s16 bondviewGetCurrentPlayerViewportUly(void)
+{
+    f32 t;
 
+    if (getPlayerCount() == 2)
+    {
+        if (get_cur_playernum() == 0)
+        {
+            return VIEWPORT_ULY_2P_PLAYER_1;
+        }
+
+        return VIEWPORT_ULY_2P_PLAYER_2;
+    }
+
+    if (getPlayerCount() >= 3)
+    {
+        if (get_cur_playernum() < 2)
+        {
+            return VIEWPORT_ULY_4P_PLAYER_12;
+        }
+
+        return VIEWPORT_ULY_4P_PLAYER_34;
+    }
+
+    if (camera_8003642C != 0)
+    {
+        if (cur_player_get_screen_setting() == SCREEN_SIZE_WIDESCREEN)
+        {
+            return VIEWPORT_ULY_CAM_WIDESCREEN;
+        }
+        else if (cur_player_get_screen_setting() == SCREEN_SIZE_CINEMA)
+        {
+            return VIEWPORT_ULY_CAM_CINEMA;
+        }
+        else
+        {
+            return VIEWPORT_ULY_CAM_FULLSCREEN;
+        }
+    }
+
+    if (cur_player_get_screen_setting() == SCREEN_SIZE_WIDESCREEN)
+    {
+        t = bondviewGetPauseAnimationPercent();
+        return (s16) ((s32) (-20.0f * t) + VIEWPORT_ULY_WIDESCREEN_OFFSET);
+    }
+    else if (cur_player_get_screen_setting() == SCREEN_SIZE_CINEMA)
+    {
+        t = bondviewGetPauseAnimationPercent();
+        return (s16) ((s32) (-42.0f * t) + VIEWPORT_ULY_CINEMA_OFFSET);
+    }
+    else
+    {
+        return VIEWPORT_ULY_DEFAULT;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_curplayer_viewport_uly
-/* 0BB968 7F086E38 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0BB96C 7F086E3C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0BB970 7F086E40 0FC26919 */  jal   getPlayerCount
-/* 0BB974 7F086E44 00000000 */   nop
-/* 0BB978 7F086E48 24010002 */  li    $at, 2
-/* 0BB97C 7F086E4C 14410009 */  bne   $v0, $at, .L7F086E74
-/* 0BB980 7F086E50 00000000 */   nop
-/* 0BB984 7F086E54 0FC26C54 */  jal   get_cur_playernum
-/* 0BB988 7F086E58 00000000 */   nop
-/* 0BB98C 7F086E5C 14400003 */  bnez  $v0, .L7F086E6C
-/* 0BB990 7F086E60 00000000 */   nop
-/* 0BB994 7F086E64 10000049 */  b     .L7F086F8C
-/* 0BB998 7F086E68 2402000A */   li    $v0, 10
-.L7F086E6C:
-/* 0BB99C 7F086E6C 10000047 */  b     .L7F086F8C
-/* 0BB9A0 7F086E70 24020079 */   li    $v0, 121
-.L7F086E74:
-/* 0BB9A4 7F086E74 0FC26919 */  jal   getPlayerCount
-/* 0BB9A8 7F086E78 00000000 */   nop
-/* 0BB9AC 7F086E7C 28410003 */  slti  $at, $v0, 3
-/* 0BB9B0 7F086E80 1420000A */  bnez  $at, .L7F086EAC
-/* 0BB9B4 7F086E84 3C0E8003 */   lui   $t6, %hi(camera_8003642C)
-/* 0BB9B8 7F086E88 0FC26C54 */  jal   get_cur_playernum
-/* 0BB9BC 7F086E8C 00000000 */   nop
-/* 0BB9C0 7F086E90 28410002 */  slti  $at, $v0, 2
-/* 0BB9C4 7F086E94 10200003 */  beqz  $at, .L7F086EA4
-/* 0BB9C8 7F086E98 00000000 */   nop
-/* 0BB9CC 7F086E9C 1000003B */  b     .L7F086F8C
-/* 0BB9D0 7F086EA0 2402000A */   li    $v0, 10
-.L7F086EA4:
-/* 0BB9D4 7F086EA4 10000039 */  b     .L7F086F8C
-/* 0BB9D8 7F086EA8 24020079 */   li    $v0, 121
-.L7F086EAC:
-/* 0BB9DC 7F086EAC 8DCE642C */  lw    $t6, %lo(camera_8003642C)($t6)
-/* 0BB9E0 7F086EB0 11C00011 */  beqz  $t6, .L7F086EF8
-/* 0BB9E4 7F086EB4 00000000 */   nop
-/* 0BB9E8 7F086EB8 0FC293B2 */  jal   cur_player_get_screen_setting
-/* 0BB9EC 7F086EBC 00000000 */   nop
-/* 0BB9F0 7F086EC0 24010001 */  li    $at, 1
-/* 0BB9F4 7F086EC4 14410003 */  bne   $v0, $at, .L7F086ED4
-/* 0BB9F8 7F086EC8 00000000 */   nop
-/* 0BB9FC 7F086ECC 1000002F */  b     .L7F086F8C
-/* 0BBA00 7F086ED0 24020029 */   li    $v0, 41
-.L7F086ED4:
-/* 0BBA04 7F086ED4 0FC293B2 */  jal   cur_player_get_screen_setting
-/* 0BBA08 7F086ED8 00000000 */   nop
-/* 0BBA0C 7F086EDC 24010002 */  li    $at, 2
-/* 0BBA10 7F086EE0 14410003 */  bne   $v0, $at, .L7F086EF0
-/* 0BBA14 7F086EE4 00000000 */   nop
-/* 0BBA18 7F086EE8 10000028 */  b     .L7F086F8C
-/* 0BBA1C 7F086EEC 24020046 */   li    $v0, 70
-.L7F086EF0:
-/* 0BBA20 7F086EF0 10000026 */  b     .L7F086F8C
-/* 0BBA24 7F086EF4 2402000D */   li    $v0, 13
-.L7F086EF8:
-/* 0BBA28 7F086EF8 0FC293B2 */  jal   cur_player_get_screen_setting
-/* 0BBA2C 7F086EFC 00000000 */   nop
-/* 0BBA30 7F086F00 24010001 */  li    $at, 1
-/* 0BBA34 7F086F04 1441000E */  bne   $v0, $at, .L7F086F40
-/* 0BBA38 7F086F08 00000000 */   nop
-/* 0BBA3C 7F086F0C 0FC1FA9E */  jal   bondviewGetPauseAnimationPercent
-/* 0BBA40 7F086F10 00000000 */   nop
-/* 0BBA44 7F086F14 3C01C1A0 */  li    $at, 0xC1A00000 # -20.000000
-/* 0BBA48 7F086F18 44812000 */  mtc1  $at, $f4
-/* 0BBA4C 7F086F1C 00000000 */  nop
-/* 0BBA50 7F086F20 46002182 */  mul.s $f6, $f4, $f0
-/* 0BBA54 7F086F24 4600320D */  trunc.w.s $f8, $f6
-/* 0BBA58 7F086F28 44024000 */  mfc1  $v0, $f8
-/* 0BBA5C 7F086F2C 00000000 */  nop
-/* 0BBA60 7F086F30 2442001E */  addiu $v0, $v0, 0x1e
-/* 0BBA64 7F086F34 0002C400 */  sll   $t8, $v0, 0x10
-/* 0BBA68 7F086F38 10000014 */  b     .L7F086F8C
-/* 0BBA6C 7F086F3C 00181403 */   sra   $v0, $t8, 0x10
-.L7F086F40:
-/* 0BBA70 7F086F40 0FC293B2 */  jal   cur_player_get_screen_setting
-/* 0BBA74 7F086F44 00000000 */   nop
-/* 0BBA78 7F086F48 24010002 */  li    $at, 2
-/* 0BBA7C 7F086F4C 5441000F */  bnel  $v0, $at, .L7F086F8C
-/* 0BBA80 7F086F50 2402000A */   li    $v0, 10
-/* 0BBA84 7F086F54 0FC1FA9E */  jal   bondviewGetPauseAnimationPercent
-/* 0BBA88 7F086F58 00000000 */   nop
-/* 0BBA8C 7F086F5C 3C01C228 */  li    $at, 0xC2280000 # -42.000000
-/* 0BBA90 7F086F60 44815000 */  mtc1  $at, $f10
-/* 0BBA94 7F086F64 00000000 */  nop
-/* 0BBA98 7F086F68 46005402 */  mul.s $f16, $f10, $f0
-/* 0BBA9C 7F086F6C 4600848D */  trunc.w.s $f18, $f16
-/* 0BBAA0 7F086F70 44029000 */  mfc1  $v0, $f18
-/* 0BBAA4 7F086F74 00000000 */  nop
-/* 0BBAA8 7F086F78 24420034 */  addiu $v0, $v0, 0x34
-/* 0BBAAC 7F086F7C 00024C00 */  sll   $t1, $v0, 0x10
-/* 0BBAB0 7F086F80 10000002 */  b     .L7F086F8C
-/* 0BBAB4 7F086F84 00091403 */   sra   $v0, $t1, 0x10
-/* 0BBAB8 7F086F88 2402000A */  li    $v0, 10
-.L7F086F8C:
-/* 0BBABC 7F086F8C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0BBAC0 7F086F90 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0BBAC4 7F086F94 03E00008 */  jr    $ra
-/* 0BBAC8 7F086F98 00000000 */   nop
-)
-#endif
 
 
 
@@ -28010,7 +27961,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BBD0C 7F0871DC 00402825 */   move  $a1, $v0
 /* 0BBD10 7F0871E0 0FC21B31 */  jal   get_curplayer_viewport_ulx
 /* 0BBD14 7F0871E4 00000000 */   nop
-/* 0BBD18 7F0871E8 0FC21B8E */  jal   get_curplayer_viewport_uly
+/* 0BBD18 7F0871E8 0FC21B8E */  jal   bondviewGetCurrentPlayerViewportUly
 /* 0BBD1C 7F0871EC A7A2001C */   sh    $v0, 0x1c($sp)
 /* 0BBD20 7F0871F0 87A4001C */  lh    $a0, 0x1c($sp)
 /* 0BBD24 7F0871F4 0FC26C7E */  jal   set_cur_player_viewport_size
@@ -28044,7 +27995,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BBD94 7F087264 87A4001C */   lh    $a0, 0x1c($sp)
 /* 0BBD98 7F087268 0FC21B31 */  jal   get_curplayer_viewport_ulx
 /* 0BBD9C 7F08726C 00000000 */   nop
-/* 0BBDA0 7F087270 0FC21B8E */  jal   get_curplayer_viewport_uly
+/* 0BBDA0 7F087270 0FC21B8E */  jal   bondviewGetCurrentPlayerViewportUly
 /* 0BBDA4 7F087274 A7A2001C */   sh    $v0, 0x1c($sp)
 /* 0BBDA8 7F087278 00022C00 */  sll   $a1, $v0, 0x10
 /* 0BBDAC 7F08727C 00055C03 */  sra   $t3, $a1, 0x10
@@ -28447,7 +28398,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BC418 7F0878A8 00402825 */   move  $a1, $v0
 /* 0BC41C 7F0878AC 0FC21CE4 */  jal   get_curplayer_viewport_ulx
 /* 0BC420 7F0878B0 00000000 */   nop
-/* 0BC424 7F0878B4 0FC21D41 */  jal   get_curplayer_viewport_uly
+/* 0BC424 7F0878B4 0FC21D41 */  jal   bondviewGetCurrentPlayerViewportUly
 /* 0BC428 7F0878B8 A7A2001C */   sh    $v0, 0x1c($sp)
 /* 0BC42C 7F0878BC 87A4001C */  lh    $a0, 0x1c($sp)
 /* 0BC430 7F0878C0 0FC26F66 */  jal   set_cur_player_viewport_size
@@ -28481,7 +28432,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0BC4A0 7F087930 87A4001C */   lh    $a0, 0x1c($sp)
 /* 0BC4A4 7F087934 0FC21CE4 */  jal   get_curplayer_viewport_ulx
 /* 0BC4A8 7F087938 00000000 */   nop
-/* 0BC4AC 7F08793C 0FC21D41 */  jal   get_curplayer_viewport_uly
+/* 0BC4AC 7F08793C 0FC21D41 */  jal   bondviewGetCurrentPlayerViewportUly
 /* 0BC4B0 7F087940 A7A2001C */   sh    $v0, 0x1c($sp)
 /* 0BC4B4 7F087944 00022C00 */  sll   $a1, $v0, 0x10
 /* 0BC4B8 7F087948 00055C03 */  sra   $t3, $a1, 0x10
@@ -28863,7 +28814,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0B9C94 7F0872A4 00402825 */   move  $a1, $v0
 /* 0B9C98 7F0872A8 0FC21B79 */  jal   get_curplayer_viewport_ulx
 /* 0B9C9C 7F0872AC 00000000 */   nop
-/* 0B9CA0 7F0872B0 0FC21BD6 */  jal   get_curplayer_viewport_uly
+/* 0B9CA0 7F0872B0 0FC21BD6 */  jal   bondviewGetCurrentPlayerViewportUly
 /* 0B9CA4 7F0872B4 A7A20018 */   sh    $v0, 0x18($sp)
 /* 0B9CA8 7F0872B8 87A40018 */  lh    $a0, 0x18($sp)
 /* 0B9CAC 7F0872BC 0FC269CE */  jal   set_cur_player_viewport_size
@@ -28897,7 +28848,7 @@ glabel possibly_reset_viewport_options_for_player
 /* 0B9D1C 7F08732C 87A40018 */   lh    $a0, 0x18($sp)
 /* 0B9D20 7F087330 0FC21B79 */  jal   get_curplayer_viewport_ulx
 /* 0B9D24 7F087334 00000000 */   nop
-/* 0B9D28 7F087338 0FC21BD6 */  jal   get_curplayer_viewport_uly
+/* 0B9D28 7F087338 0FC21BD6 */  jal   bondviewGetCurrentPlayerViewportUly
 /* 0B9D2C 7F08733C A7A20018 */   sh    $v0, 0x18($sp)
 /* 0B9D30 7F087340 00022C00 */  sll   $a1, $v0, 0x10
 /* 0B9D34 7F087344 00055403 */  sra   $t2, $a1, 0x10
