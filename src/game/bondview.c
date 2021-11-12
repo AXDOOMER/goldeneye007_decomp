@@ -1993,7 +1993,7 @@ void init_player_BONDdata(void)
     g_CurrentPlayer->healthshowtime = -1;
     g_CurrentPlayer->field_1C0 = 0;
     g_CurrentPlayer->field_1C4 = 0;
-    g_CurrentPlayer->watch_animation_state = 0;
+    g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x0;
     g_CurrentPlayer->paused_flag = 1;
     g_CurrentPlayer->open_close_solo_watch_menu = 0;
     g_CurrentPlayer->field_1A0 = 0;
@@ -11579,12 +11579,14 @@ void bondviewUpdateWatchZoomIn(void)
 {
     if (g_CurrentPlayer->zoomintime < g_CurrentPlayer->zoomintimemax)
     {
-        if ((g_CurrentPlayer->watch_animation_state == 5) || (g_CurrentPlayer->watch_animation_state == 0xC))
+        if ((g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x5) || (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0xc))
         {
 #if defined(VERSION_US)
             g_CurrentPlayer->zoomintime = g_CurrentPlayer->zoomintime + (f32) speedgraphframes;
 #elif defined(VERSION_JP)
             g_CurrentPlayer->zoomintime = g_CurrentPlayer->zoomintime + (f32) jpD_800484D0;
+#else
+#error version not specified
 #endif
         }
         else
@@ -11593,6 +11595,8 @@ void bondviewUpdateWatchZoomIn(void)
             g_CurrentPlayer->zoomintime = g_CurrentPlayer->zoomintime + (speedgraphframes * watch_transition_time);
 #elif defined(VERSION_JP)
             g_CurrentPlayer->zoomintime = g_CurrentPlayer->zoomintime + (jpD_800484D0 * watch_transition_time);
+#else
+#error version not specified
 #endif
         }
 
@@ -11697,61 +11701,31 @@ glabel bondviewUpdateWatchZoomIn
 #endif
 
 
-#endif
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F07E740(void) {
 
+/**
+ * Address 0x7F07E740.
+ */
+f32 bondviewWatchAnimationRelated(void)
+{
+    if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x4)
+    {
+        return ((45.0f - g_CurrentPlayer->zoomintimemax) + g_CurrentPlayer->zoomintime) / 45.0f;
+    }
+
+    if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x6)
+    {
+        return (g_CurrentPlayer->zoomintimemax - g_CurrentPlayer->zoomintime) / 45.0f;
+    }
+
+    if ((g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x5) || (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0xc))
+    {
+        return 1.0f;
+    }
+
+    return 0.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F07E740
-/* 0B3270 7F07E740 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
-/* 0B3274 7F07E744 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
-/* 0B3278 7F07E748 24010004 */  li    $at, 4
-/* 0B327C 7F07E74C 8C4301C8 */  lw    $v1, 0x1c8($v0)
-/* 0B3280 7F07E750 14610008 */  bne   $v1, $at, .L7F07E774
-/* 0B3284 7F07E754 3C014234 */   li    $at, 0x42340000 # 45.000000
-/* 0B3288 7F07E758 44811000 */  mtc1  $at, $f2
-/* 0B328C 7F07E75C C44411C0 */  lwc1  $f4, 0x11c0($v0)
-/* 0B3290 7F07E760 C44811BC */  lwc1  $f8, 0x11bc($v0)
-/* 0B3294 7F07E764 46041181 */  sub.s $f6, $f2, $f4
-/* 0B3298 7F07E768 46083280 */  add.s $f10, $f6, $f8
-/* 0B329C 7F07E76C 03E00008 */  jr    $ra
-/* 0B32A0 7F07E770 46025003 */   div.s $f0, $f10, $f2
-
-.L7F07E774:
-/* 0B32A4 7F07E774 24010006 */  li    $at, 6
-/* 0B32A8 7F07E778 54610009 */  bnel  $v1, $at, .L7F07E7A0
-/* 0B32AC 7F07E77C 24010005 */   li    $at, 5
-/* 0B32B0 7F07E780 C45011C0 */  lwc1  $f16, 0x11c0($v0)
-/* 0B32B4 7F07E784 C45211BC */  lwc1  $f18, 0x11bc($v0)
-/* 0B32B8 7F07E788 3C014234 */  li    $at, 0x42340000 # 45.000000
-/* 0B32BC 7F07E78C 44811000 */  mtc1  $at, $f2
-/* 0B32C0 7F07E790 46128101 */  sub.s $f4, $f16, $f18
-/* 0B32C4 7F07E794 03E00008 */  jr    $ra
-/* 0B32C8 7F07E798 46022003 */   div.s $f0, $f4, $f2
-
-/* 0B32CC 7F07E79C 24010005 */  li    $at, 5
-.L7F07E7A0:
-/* 0B32D0 7F07E7A0 10610002 */  beq   $v1, $at, .L7F07E7AC
-/* 0B32D4 7F07E7A4 2401000C */   li    $at, 12
-/* 0B32D8 7F07E7A8 14610004 */  bne   $v1, $at, .L7F07E7BC
-.L7F07E7AC:
-/* 0B32DC 7F07E7AC 3C013F80 */   li    $at, 0x3F800000 # 1.000000
-/* 0B32E0 7F07E7B0 44810000 */  mtc1  $at, $f0
-/* 0B32E4 7F07E7B4 03E00008 */  jr    $ra
-/* 0B32E8 7F07E7B8 00000000 */   nop
-
-.L7F07E7BC:
-/* 0B32EC 7F07E7BC 44800000 */  mtc1  $zero, $f0
-/* 0B32F0 7F07E7C0 00000000 */  nop
-/* 0B32F4 7F07E7C4 03E00008 */  jr    $ra
-/* 0B32F8 7F07E7C8 00000000 */   nop
-)
-#endif
 
 
 

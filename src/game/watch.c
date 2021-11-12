@@ -3091,7 +3091,7 @@ glabel draw_background_health_and_armor
 /* 0DBE1C 7F0A72EC 54410005 */  bnel  $v0, $at, .L7F0A7304
 /* 0DBE20 7F0A72F0 3C013E80 */   lui   $at, 0x3e80
 .L7F0A72F4:
-/* 0DBE24 7F0A72F4 0FC1F9D0 */  jal   sub_GAME_7F07E740
+/* 0DBE24 7F0A72F4 0FC1F9D0 */  jal   bondviewWatchAnimationRelated
 /* 0DBE28 7F0A72F8 00000000 */   nop
 /* 0DBE2C 7F0A72FC 46000086 */  mov.s $f2, $f0
 .L7F0A7300:
