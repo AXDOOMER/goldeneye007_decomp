@@ -511,6 +511,7 @@ void bondviewSetPauseWatchRelated(f32 arg0);
 void bondviewSetPauseWatchRelatedAlt(f32 arg0);
 void bondviewStepWatchAnimation(void);
 f32 bondviewGetPauseAnimationPercent(void);
+void bondviewCurrentPlayerUpdateSpeedVerta(f32 value);
 
 // end forward declarations
 
@@ -14187,209 +14188,69 @@ f32 sub_GAME_7F07FF74(f32 value) {
     return 0;
 }
 
-#ifdef NONMATCHING
-// g_GlobalTimerDelta should be loaded and multiplied two more times
-void currentPlayerUpdateSpeedVerta(f32 value) {
+
+/**
+ * Address 0x7F080010.
+ */
+void bondviewCurrentPlayerUpdateSpeedVerta(f32 value)
+{
     f32 mult = viGetFovY() / 60.0f;
     f32 limit = sub_GAME_7F07FF74(value);
-    if (value > 0) {
-        if (g_CurrentPlayer->speedverta > 0) {
+    
+    if (value > 0.0f)
+    {
+        if (g_CurrentPlayer->speedverta > 0.0f)
+        {
             g_CurrentPlayer->speedverta -= (0.05f * g_GlobalTimerDelta * mult);
-        } else {
+        }
+        else
+        {
             g_CurrentPlayer->speedverta -= (0.0125f * g_GlobalTimerDelta * mult);
         }
 
-        if (g_CurrentPlayer->speedverta < limit) {
+        if (g_CurrentPlayer->speedverta < limit)
+        {
             g_CurrentPlayer->speedverta = limit;
         }
-    } else if (value < 0) {
-        if (g_CurrentPlayer->speedverta < 0) {
-            g_CurrentPlayer->speedverta += (0.05f * 0.0125f * mult);
-        } else {
+    }
+    else if (value < 0.0f)
+    {
+        if (g_CurrentPlayer->speedverta < 0.0f)
+        {
+            g_CurrentPlayer->speedverta += (0.05f * g_GlobalTimerDelta * mult);
+        }
+        else
+        {
             g_CurrentPlayer->speedverta += (0.0125f * g_GlobalTimerDelta * mult);
         }
 
-        if (g_CurrentPlayer->speedverta > limit) {
+        if (g_CurrentPlayer->speedverta > limit)
+        {
             g_CurrentPlayer->speedverta = limit;
         }
-    } else {
-        if (g_CurrentPlayer->speedverta > limit) {
-            g_CurrentPlayer->speedverta -= (0.05f * 0.05f * mult);
+    }
+    else
+    {
+        if (g_CurrentPlayer->speedverta > limit)
+        {
+            g_CurrentPlayer->speedverta -= (0.05f * g_GlobalTimerDelta * mult);
 
-            if (g_CurrentPlayer->speedverta < limit) {
+            if (g_CurrentPlayer->speedverta < limit)
+            {
                 g_CurrentPlayer->speedverta = limit;
             }
-        } else {
+        }
+        else
+        {
             g_CurrentPlayer->speedverta += (0.05f * g_GlobalTimerDelta * mult);
 
-            if (g_CurrentPlayer->speedverta > limit) {
+            if (g_CurrentPlayer->speedverta > limit)
+            {
                 g_CurrentPlayer->speedverta = limit;
             }
         }
     }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_8005509C
-.word 0x3d4ccccd /*0.050000001*/
-glabel D_800550A0
-.word 0x3c4ccccd /*0.0125*/
-glabel D_800550A4
-.word 0x3d4ccccd /*0.050000001*/
-glabel D_800550A8
-.word 0x3c4ccccd /*0.0125*/
-glabel D_800550AC
-.word 0x3d4ccccd /*0.050000001*/
-glabel D_800550B0
-.word 0x3d4ccccd /*0.050000001*/
-.text
-glabel currentPlayerUpdateSpeedVerta
-/* 0B4B40 7F080010 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0B4B44 7F080014 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0B4B48 7F080018 0C001177 */  jal   viGetFovY
-/* 0B4B4C 7F08001C E7AC0020 */   swc1  $f12, 0x20($sp)
-/* 0B4B50 7F080020 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 0B4B54 7F080024 44812000 */  mtc1  $at, $f4
-/* 0B4B58 7F080028 C7AC0020 */  lwc1  $f12, 0x20($sp)
-/* 0B4B5C 7F08002C 46040383 */  div.s $f14, $f0, $f4
-/* 0B4B60 7F080030 0FC1FFDD */  jal   sub_GAME_7F07FF74
-/* 0B4B64 7F080034 E7AE001C */   swc1  $f14, 0x1c($sp)
-/* 0B4B68 7F080038 C7A20020 */  lwc1  $f2, 0x20($sp)
-/* 0B4B6C 7F08003C 44806000 */  mtc1  $zero, $f12
-/* 0B4B70 7F080040 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
-/* 0B4B74 7F080044 C7AE001C */  lwc1  $f14, 0x1c($sp)
-/* 0B4B78 7F080048 4602603C */  c.lt.s $f12, $f2
-/* 0B4B7C 7F08004C 2463A0B0 */  addiu $v1, %lo(g_CurrentPlayer) # addiu $v1, $v1, -0x5f50
-/* 0B4B80 7F080050 45020023 */  bc1fl .L7F0800E0
-/* 0B4B84 7F080054 460C103C */   c.lt.s $f2, $f12
-/* 0B4B88 7F080058 8C620000 */  lw    $v0, ($v1)
-/* 0B4B8C 7F08005C 3C018005 */  lui   $at, %hi(D_800550A0)
-/* 0B4B90 7F080060 C4420160 */  lwc1  $f2, 0x160($v0)
-/* 0B4B94 7F080064 4602603C */  c.lt.s $f12, $f2
-/* 0B4B98 7F080068 00000000 */  nop
-/* 0B4B9C 7F08006C 4500000B */  bc1f  .L7F08009C
-/* 0B4BA0 7F080070 00000000 */   nop
-/* 0B4BA4 7F080074 3C018005 */  lui   $at, %hi(D_8005509C)
-/* 0B4BA8 7F080078 C426509C */  lwc1  $f6, %lo(D_8005509C)($at)
-/* 0B4BAC 7F08007C 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta)
-/* 0B4BB0 7F080080 C4288378 */  lwc1  $f8, %lo(g_GlobalTimerDelta)($at)
-/* 0B4BB4 7F080084 46083282 */  mul.s $f10, $f6, $f8
-/* 0B4BB8 7F080088 00000000 */  nop
-/* 0B4BBC 7F08008C 460E5402 */  mul.s $f16, $f10, $f14
-/* 0B4BC0 7F080090 46101481 */  sub.s $f18, $f2, $f16
-/* 0B4BC4 7F080094 10000009 */  b     .L7F0800BC
-/* 0B4BC8 7F080098 E4520160 */   swc1  $f18, 0x160($v0)
-.L7F08009C:
-/* 0B4BCC 7F08009C C42450A0 */  lwc1  $f4, %lo(D_800550A0)($at)
-/* 0B4BD0 7F0800A0 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta)
-/* 0B4BD4 7F0800A4 C4268378 */  lwc1  $f6, %lo(g_GlobalTimerDelta)($at)
-/* 0B4BD8 7F0800A8 46062202 */  mul.s $f8, $f4, $f6
-/* 0B4BDC 7F0800AC 00000000 */  nop
-/* 0B4BE0 7F0800B0 460E4282 */  mul.s $f10, $f8, $f14
-/* 0B4BE4 7F0800B4 460A1401 */  sub.s $f16, $f2, $f10
-/* 0B4BE8 7F0800B8 E4500160 */  swc1  $f16, 0x160($v0)
-.L7F0800BC:
-/* 0B4BEC 7F0800BC 8C620000 */  lw    $v0, ($v1)
-/* 0B4BF0 7F0800C0 C4520160 */  lwc1  $f18, 0x160($v0)
-/* 0B4BF4 7F0800C4 4600903C */  c.lt.s $f18, $f0
-/* 0B4BF8 7F0800C8 00000000 */  nop
-/* 0B4BFC 7F0800CC 45020053 */  bc1fl .L7F08021C
-/* 0B4C00 7F0800D0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0B4C04 7F0800D4 10000050 */  b     .L7F080218
-/* 0B4C08 7F0800D8 E4400160 */   swc1  $f0, 0x160($v0)
-/* 0B4C0C 7F0800DC 460C103C */  c.lt.s $f2, $f12
-.L7F0800E0:
-/* 0B4C10 7F0800E0 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
-/* 0B4C14 7F0800E4 2463A0B0 */  addiu $v1, %lo(g_CurrentPlayer) # addiu $v1, $v1, -0x5f50
-/* 0B4C18 7F0800E8 45020025 */  bc1fl .L7F080180
-/* 0B4C1C 7F0800EC 8C620000 */   lw    $v0, ($v1)
-/* 0B4C20 7F0800F0 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
-/* 0B4C24 7F0800F4 2463A0B0 */  addiu $v1, %lo(g_CurrentPlayer) # addiu $v1, $v1, -0x5f50
-/* 0B4C28 7F0800F8 8C620000 */  lw    $v0, ($v1)
-/* 0B4C2C 7F0800FC 3C018005 */  lui   $at, %hi(D_800550A8)
-/* 0B4C30 7F080100 C4420160 */  lwc1  $f2, 0x160($v0)
-/* 0B4C34 7F080104 460C103C */  c.lt.s $f2, $f12
-/* 0B4C38 7F080108 00000000 */  nop
-/* 0B4C3C 7F08010C 4500000B */  bc1f  .L7F08013C
-/* 0B4C40 7F080110 00000000 */   nop
-/* 0B4C44 7F080114 3C018005 */  lui   $at, %hi(D_800550A4)
-/* 0B4C48 7F080118 C42450A4 */  lwc1  $f4, %lo(D_800550A4)($at)
-/* 0B4C4C 7F08011C 3C018005 */  lui   $at, %hi(D_800550A8)
-/* 0B4C50 7F080120 C4268378 */  lwc1  $f6, %lo(g_GlobalTimerDelta)($at)
-/* 0B4C54 7F080124 46062202 */  mul.s $f8, $f4, $f6
-/* 0B4C58 7F080128 00000000 */  nop
-/* 0B4C5C 7F08012C 460E4282 */  mul.s $f10, $f8, $f14
-/* 0B4C60 7F080130 460A1400 */  add.s $f16, $f2, $f10
-/* 0B4C64 7F080134 10000009 */  b     .L7F08015C
-/* 0B4C68 7F080138 E4500160 */   swc1  $f16, 0x160($v0)
-.L7F08013C:
-/* 0B4C6C 7F08013C C43250A8 */  lwc1  $f18, %lo(D_800550A8)($at)
-/* 0B4C70 7F080140 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta)
-/* 0B4C74 7F080144 C4248378 */  lwc1  $f4, %lo(g_GlobalTimerDelta)($at)
-/* 0B4C78 7F080148 46049182 */  mul.s $f6, $f18, $f4
-/* 0B4C7C 7F08014C 00000000 */  nop
-/* 0B4C80 7F080150 460E3202 */  mul.s $f8, $f6, $f14
-/* 0B4C84 7F080154 46081280 */  add.s $f10, $f2, $f8
-/* 0B4C88 7F080158 E44A0160 */  swc1  $f10, 0x160($v0)
-.L7F08015C:
-/* 0B4C8C 7F08015C 8C620000 */  lw    $v0, ($v1)
-/* 0B4C90 7F080160 C4500160 */  lwc1  $f16, 0x160($v0)
-/* 0B4C94 7F080164 4610003C */  c.lt.s $f0, $f16
-/* 0B4C98 7F080168 00000000 */  nop
-/* 0B4C9C 7F08016C 4502002B */  bc1fl .L7F08021C
-/* 0B4CA0 7F080170 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0B4CA4 7F080174 10000028 */  b     .L7F080218
-/* 0B4CA8 7F080178 E4400160 */   swc1  $f0, 0x160($v0)
-/* 0B4CAC 7F08017C 8C620000 */  lw    $v0, ($v1)
-.L7F080180:
-/* 0B4CB0 7F080180 3C018005 */  lui   $at, %hi(D_800550B0)
-/* 0B4CB4 7F080184 C4420160 */  lwc1  $f2, 0x160($v0)
-/* 0B4CB8 7F080188 4602003C */  c.lt.s $f0, $f2
-/* 0B4CBC 7F08018C 00000000 */  nop
-/* 0B4CC0 7F080190 45000012 */  bc1f  .L7F0801DC
-/* 0B4CC4 7F080194 00000000 */   nop
-/* 0B4CC8 7F080198 3C018005 */  lui   $at, %hi(D_800550AC)
-/* 0B4CCC 7F08019C C43250AC */  lwc1  $f18, %lo(D_800550AC)($at)
-/* 0B4CD0 7F0801A0 3C018005 */  lui   $at, %hi(D_800550B0)
-/* 0B4CD4 7F0801A4 C4248378 */  lwc1  $f4, %lo(g_GlobalTimerDelta)($at)
-/* 0B4CD8 7F0801A8 46049182 */  mul.s $f6, $f18, $f4
-/* 0B4CDC 7F0801AC 00000000 */  nop
-/* 0B4CE0 7F0801B0 460E3202 */  mul.s $f8, $f6, $f14
-/* 0B4CE4 7F0801B4 46081281 */  sub.s $f10, $f2, $f8
-/* 0B4CE8 7F0801B8 E44A0160 */  swc1  $f10, 0x160($v0)
-/* 0B4CEC 7F0801BC 8C620000 */  lw    $v0, ($v1)
-/* 0B4CF0 7F0801C0 C4500160 */  lwc1  $f16, 0x160($v0)
-/* 0B4CF4 7F0801C4 4600803C */  c.lt.s $f16, $f0
-/* 0B4CF8 7F0801C8 00000000 */  nop
-/* 0B4CFC 7F0801CC 45000012 */  bc1f  .L7F080218
-/* 0B4D00 7F0801D0 00000000 */   nop
-/* 0B4D04 7F0801D4 10000010 */  b     .L7F080218
-/* 0B4D08 7F0801D8 E4400160 */   swc1  $f0, 0x160($v0)
-.L7F0801DC:
-/* 0B4D0C 7F0801DC C43250B0 */  lwc1  $f18, %lo(D_800550B0)($at)
-/* 0B4D10 7F0801E0 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta)
-/* 0B4D14 7F0801E4 C4248378 */  lwc1  $f4, %lo(g_GlobalTimerDelta)($at)
-/* 0B4D18 7F0801E8 46049182 */  mul.s $f6, $f18, $f4
-/* 0B4D1C 7F0801EC 00000000 */  nop
-/* 0B4D20 7F0801F0 460E3202 */  mul.s $f8, $f6, $f14
-/* 0B4D24 7F0801F4 46081280 */  add.s $f10, $f2, $f8
-/* 0B4D28 7F0801F8 E44A0160 */  swc1  $f10, 0x160($v0)
-/* 0B4D2C 7F0801FC 8C620000 */  lw    $v0, ($v1)
-/* 0B4D30 7F080200 C4500160 */  lwc1  $f16, 0x160($v0)
-/* 0B4D34 7F080204 4610003C */  c.lt.s $f0, $f16
-/* 0B4D38 7F080208 00000000 */  nop
-/* 0B4D3C 7F08020C 45000002 */  bc1f  .L7F080218
-/* 0B4D40 7F080210 00000000 */   nop
-/* 0B4D44 7F080214 E4400160 */  swc1  $f0, 0x160($v0)
-.L7F080218:
-/* 0B4D48 7F080218 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F08021C:
-/* 0B4D4C 7F08021C 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0B4D50 7F080220 03E00008 */  jr    $ra
-/* 0B4D54 7F080224 00000000 */   nop
-)
-#endif
 
 
 
@@ -18194,7 +18055,7 @@ glabel controller_gameplay_interaction
 /* 0B83BC 7F08388C 45020007 */  bc1fl .L7F0838AC
 /* 0B83C0 7F083890 460C7281 */   sub.s $f10, $f14, $f12
 /* 0B83C4 7F083894 44816000 */  mtc1  $at, $f12
-/* 0B83C8 7F083898 0FC20004 */  jal   currentPlayerUpdateSpeedVerta
+/* 0B83C8 7F083898 0FC20004 */  jal   bondviewCurrentPlayerUpdateSpeedVerta
 /* 0B83CC 7F08389C E7AE00C4 */   swc1  $f14, 0xc4($sp)
 /* 0B83D0 7F0838A0 10000010 */  b     .L7F0838E4
 /* 0B83D4 7F0838A4 C7AE00C4 */   lwc1  $f14, 0xc4($sp)
@@ -18206,13 +18067,13 @@ glabel controller_gameplay_interaction
 /* 0B83E8 7F0838B8 45020007 */  bc1fl .L7F0838D8
 /* 0B83EC 7F0838BC 4600A306 */   mov.s $f12, $f20
 /* 0B83F0 7F0838C0 44816000 */  mtc1  $at, $f12
-/* 0B83F4 7F0838C4 0FC20004 */  jal   currentPlayerUpdateSpeedVerta
+/* 0B83F4 7F0838C4 0FC20004 */  jal   bondviewCurrentPlayerUpdateSpeedVerta
 /* 0B83F8 7F0838C8 E7AE00C4 */   swc1  $f14, 0xc4($sp)
 /* 0B83FC 7F0838CC 10000005 */  b     .L7F0838E4
 /* 0B8400 7F0838D0 C7AE00C4 */   lwc1  $f14, 0xc4($sp)
 /* 0B8404 7F0838D4 4600A306 */  mov.s $f12, $f20
 .L7F0838D8:
-/* 0B8408 7F0838D8 0FC20004 */  jal   currentPlayerUpdateSpeedVerta
+/* 0B8408 7F0838D8 0FC20004 */  jal   bondviewCurrentPlayerUpdateSpeedVerta
 /* 0B840C 7F0838DC E7AE00C4 */   swc1  $f14, 0xc4($sp)
 /* 0B8410 7F0838E0 C7AE00C4 */  lwc1  $f14, 0xc4($sp)
 .L7F0838E4:
@@ -18311,7 +18172,7 @@ glabel controller_gameplay_interaction
 /* 0B8560 7F083A30 C7A40180 */  lwc1  $f4, 0x180($sp)
 /* 0B8564 7F083A34 45020010 */  bc1fl .L7F083A78
 /* 0B8568 7F083A38 4604A03C */   c.lt.s $f20, $f4
-/* 0B856C 7F083A3C 0FC20004 */  jal   currentPlayerUpdateSpeedVerta
+/* 0B856C 7F083A3C 0FC20004 */  jal   bondviewCurrentPlayerUpdateSpeedVerta
 /* 0B8570 7F083A40 46009306 */   mov.s $f12, $f18
 /* 0B8574 7F083A44 8FAC01AC */  lw    $t4, 0x1ac($sp)
 /* 0B8578 7F083A48 8FB80120 */  lw    $t8, 0x120($sp)
@@ -18331,7 +18192,7 @@ glabel controller_gameplay_interaction
 /* 0B85A8 7F083A78 00000000 */  nop
 /* 0B85AC 7F083A7C 4500000F */  bc1f  .L7F083ABC
 /* 0B85B0 7F083A80 00000000 */   nop
-/* 0B85B4 7F083A84 0FC20004 */  jal   currentPlayerUpdateSpeedVerta
+/* 0B85B4 7F083A84 0FC20004 */  jal   bondviewCurrentPlayerUpdateSpeedVerta
 /* 0B85B8 7F083A88 46002307 */   neg.s $f12, $f4
 /* 0B85BC 7F083A8C 8FB901AC */  lw    $t9, 0x1ac($sp)
 /* 0B85C0 7F083A90 8FAA0120 */  lw    $t2, 0x120($sp)
@@ -18347,7 +18208,7 @@ glabel controller_gameplay_interaction
 /* 0B85E4 7F083AB4 10000003 */  b     .L7F083AC4
 /* 0B85E8 7F083AB8 ADAB0110 */   sw    $t3, 0x110($t5)
 .L7F083ABC:
-/* 0B85EC 7F083ABC 0FC20004 */  jal   currentPlayerUpdateSpeedVerta
+/* 0B85EC 7F083ABC 0FC20004 */  jal   bondviewCurrentPlayerUpdateSpeedVerta
 /* 0B85F0 7F083AC0 4600A306 */   mov.s $f12, $f20
 .L7F083AC4:
 /* 0B85F4 7F083AC4 8E080000 */  lw    $t0, ($s0)
