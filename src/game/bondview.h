@@ -2633,8 +2633,16 @@ struct player
   f32 cur_player_control_type_2;
   s32 neg_vspacing_for_control_type_entry;
   u32 has_set_control_type_data;
+  /**
+   * Offset 0x2a6c. Related to 0ffset 0x2a70.
+   */
   s32 field_2A6C;
-  s32 field_2A70;
+
+  /**
+   * Offset 0x2a70
+   */
+  StandTile *field_2A70;
+
   s32 field_2A74;
   s32 field_2A78;
   s32 field_2A7C;
@@ -2677,10 +2685,16 @@ extern s32 D_80036444;
 extern s32 in_tank_flag;
 //D:8003644C
 extern s32 D_8003644C;
+
 //D:80036450
 extern s32 ptr_playerstank;
-//D:80036454
-extern s32 D_80036454;
+
+/**
+ * Related to ptr_playerstank.
+ * Address 0x80036454.
+ */
+extern f32 g_PlayerTankYOffset;
+
 //D:80036458
 extern s32 SFX_80036458;
 //D:8003645C
@@ -3013,5 +3027,6 @@ void solo_char_load(void);
 void bondviewUpdateYAutoAimTime(s32 auto_aim_time, f32 auto_aim_y);
 void bondviewUpdateXAutoAimTime(s32 auto_aim_time, f32 auto_aim_x);
 void bondviewSet3dCoord7F07CEB0(struct coord3d *arg0);
+f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2);
 
 #endif
