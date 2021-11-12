@@ -2,6 +2,8 @@
 #define _STAN_H_
 #include "ultra64.h"
 
+#include "structs.h"
+
 
 
 typedef struct StandTilePoint {
