@@ -206,4 +206,8 @@ extern u32 current_random_male_head;
 extern u32 current_random_female_head;
 
 void sub_GAME_7F022EE0(s32 param_1);
+void sub_GAME_7F022E24(s32 param_1);
+void disable_sounds_attached_to_player_then_something(struct prop* prop);
+void sub_GAME_7F020D94(struct chrdata *);
+
 #endif

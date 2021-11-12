@@ -257,7 +257,7 @@ s32 sub_GAME_7F0C234C(s32 numplayers, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
 
 
 void pauseAndLockControls(void) {
-    set_controls_locked_flag(1);
+    lvlSetControlsLockedFlag(1);
     g_pausedFlag = 1;
 }
 
@@ -1201,7 +1201,7 @@ glabel sub_GAME_7F0C2E80
 /* 0F7D30 7F0C3200 AC790000 */   sw    $t9, ($v1)
 /* 0F7D34 7F0C3204 3C018009 */  lui   $at, %hi(who_paused)
 /* 0F7D38 7F0C3208 AC22C71C */  sw    $v0, %lo(who_paused)($at)
-/* 0F7D3C 7F0C320C 0FC2FEFE */  jal   set_controls_locked_flag
+/* 0F7D3C 7F0C320C 0FC2FEFE */  jal   lvlSetControlsLockedFlag
 /* 0F7D40 7F0C3210 24040001 */   li    $a0, 1
 /* 0F7D44 7F0C3214 100000BD */  b     .L7F0C350C
 /* 0F7D48 7F0C3218 8FA2002C */   lw    $v0, 0x2c($sp)
@@ -1214,7 +1214,7 @@ glabel sub_GAME_7F0C2E80
 /* 0F7D60 7F0C3230 2463C718 */  addiu $v1, %lo(g_pausedFlag) # addiu $v1, $v1, -0x38e8
 /* 0F7D64 7F0C3234 144900B4 */  bne   $v0, $t1, .L7F0C3508
 /* 0F7D68 7F0C3238 00002025 */   move  $a0, $zero
-/* 0F7D6C 7F0C323C 0FC2FEFE */  jal   set_controls_locked_flag
+/* 0F7D6C 7F0C323C 0FC2FEFE */  jal   lvlSetControlsLockedFlag
 /* 0F7D70 7F0C3240 AC600000 */   sw    $zero, ($v1)
 /* 0F7D74 7F0C3244 100000B1 */  b     .L7F0C350C
 /* 0F7D78 7F0C3248 8FA2002C */   lw    $v0, 0x2c($sp)
@@ -1360,7 +1360,7 @@ glabel sub_GAME_7F0C2E80
 /* 0F7F64 7F0C3434 2463C718 */  addiu $v1, %lo(g_pausedFlag) # addiu $v1, $v1, -0x38e8
 /* 0F7F68 7F0C3438 144A0033 */  bne   $v0, $t2, .L7F0C3508
 /* 0F7F6C 7F0C343C 00002025 */   move  $a0, $zero
-/* 0F7F70 7F0C3440 0FC2FEFE */  jal   set_controls_locked_flag
+/* 0F7F70 7F0C3440 0FC2FEFE */  jal   lvlSetControlsLockedFlag
 /* 0F7F74 7F0C3444 AC600000 */   sw    $zero, ($v1)
 /* 0F7F78 7F0C3448 10000030 */  b     .L7F0C350C
 /* 0F7F7C 7F0C344C 8FA2002C */   lw    $v0, 0x2c($sp)
@@ -2087,7 +2087,7 @@ s32 mpwatchShouldDisplayScore(s32 param_1)
 
 
 #ifdef NONMATCHING
-void mp_watch_menu_display(void) {
+Gfx * mp_watch_menu_display(Gfx *arg0) {
 
 }
 #else

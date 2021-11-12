@@ -14,6 +14,10 @@ typedef s32 bool;
 // coord->x, coord->y and coord->z, but also as
 // coord->f[0], coord->f[1] and coord->f[2].
 // In some places code only matches when using the float array.
+// from discord,
+// "It tends to just be multiplications where the array 
+//      style is needed for a match. Assigns and reads use the
+//      same codegen for x/y/z and arrays"
 struct coord3d {
     union {
         struct {

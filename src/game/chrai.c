@@ -270,7 +270,7 @@ glabel set_sound_effect_source_to_location
 .L7F03488C:
 /* 0693BC 7F03488C AE0A0008 */  sw    $t2, 8($s0)
 .L7F034890:
-/* 0693C0 7F034890 0FC2FF01 */  jal   get_controls_locked_flag
+/* 0693C0 7F034890 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 0693C4 7F034894 AFA60024 */   sw    $a2, 0x24($sp)
 /* 0693C8 7F034898 10400002 */  beqz  $v0, .L7F0348A4
 /* 0693CC 7F03489C 8FA60024 */   lw    $a2, 0x24($sp)
@@ -5512,7 +5512,7 @@ action80_If_Health_Above_Value_RVL_3:
 /* 06C5BC 7F037A8C 1000F6BF */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C5C0 7F037A90 26310003 */   addiu $s1, $s1, 3
 action70_Go_Into_RVL_Difficulty_LTV_3:
-/* 06C5C4 7F037A94 0FC2FF04 */  jal   get_current_difficulty
+/* 06C5C4 7F037A94 0FC2FF04 */  jal   lvlGetSelectedDifficulty
 /* 06C5C8 7F037A98 00000000 */   nop   
 /* 06C5CC 7F037A9C 92290001 */  lbu   $t1, 1($s1)
 /* 06C5D0 7F037AA0 02C02025 */  move  $a0, $s6
@@ -5530,7 +5530,7 @@ action70_Go_Into_RVL_Difficulty_LTV_3:
 /* 06C5FC 7F037ACC 1000F6AF */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C600 7F037AD0 26310003 */   addiu $s1, $s1, 3
 action71_GoIntoRVLIf_Difficulty_GTV_3:
-/* 06C604 7F037AD4 0FC2FF04 */  jal   get_current_difficulty
+/* 06C604 7F037AD4 0FC2FF04 */  jal   lvlGetSelectedDifficulty
 /* 06C608 7F037AD8 00000000 */   nop   
 /* 06C60C 7F037ADC 922A0001 */  lbu   $t2, 1($s1)
 /* 06C610 7F037AE0 02C02025 */  move  $a0, $s6
@@ -5555,7 +5555,7 @@ action72_Go_To_RVL_If_Time_LTV_4:
 /* 06C654 7F037B24 448D2000 */  mtc1  $t5, $f4
 /* 06C658 7F037B28 00000000 */  nop   
 /* 06C65C 7F037B2C 46802220 */  cvt.s.w $f8, $f4
-/* 06C660 7F037B30 0FC2FF10 */  jal   get_cur_mp_sec
+/* 06C660 7F037B30 0FC2FF10 */  jal   lvlGetCurrentMultiPlayerSec
 /* 06C664 7F037B34 E7A80400 */   swc1  $f8, 0x400($sp)
 /* 06C668 7F037B38 C7AA0400 */  lwc1  $f10, 0x400($sp)
 /* 06C66C 7F037B3C 02C02025 */  move  $a0, $s6
@@ -5581,7 +5581,7 @@ action73_Go_To_RVL_If_Time_GTV_4:
 /* 06C6B4 7F037B84 44899000 */  mtc1  $t1, $f18
 /* 06C6B8 7F037B88 00000000 */  nop   
 /* 06C6BC 7F037B8C 468091A0 */  cvt.s.w $f6, $f18
-/* 06C6C0 7F037B90 0FC2FF10 */  jal   get_cur_mp_sec
+/* 06C6C0 7F037B90 0FC2FF10 */  jal   lvlGetCurrentMultiPlayerSec
 /* 06C6C4 7F037B94 E7A603F8 */   swc1  $f6, 0x3f8($sp)
 /* 06C6C8 7F037B98 C7B003F8 */  lwc1  $f16, 0x3f8($sp)
 /* 06C6CC 7F037B9C 02C02025 */  move  $a0, $s6
@@ -5608,7 +5608,7 @@ action74_Go_To_RVL_If_Power_On_Time_LTV_4:
 /* 06C718 7F037BE8 00000000 */  nop   
 /* 06C71C 7F037BEC 46802220 */  cvt.s.w $f8, $f4
 /* 06C720 7F037BF0 46164282 */  mul.s $f10, $f8, $f22
-/* 06C724 7F037BF4 0FC2FF13 */  jal   get_g_CurrentMultiPlayerMin
+/* 06C724 7F037BF4 0FC2FF13 */  jal   lvlGetCurrentMultiPlayerMin
 /* 06C728 7F037BF8 E7AA03F0 */   swc1  $f10, 0x3f0($sp)
 /* 06C72C 7F037BFC C7B203F0 */  lwc1  $f18, 0x3f0($sp)
 /* 06C730 7F037C00 02C02025 */  move  $a0, $s6
@@ -5635,7 +5635,7 @@ action75_Go_To_RVL_If_Power_On_Time_GTV_4:
 /* 06C77C 7F037C4C 00000000 */  nop   
 /* 06C780 7F037C50 46803420 */  cvt.s.w $f16, $f6
 /* 06C784 7F037C54 46168102 */  mul.s $f4, $f16, $f22
-/* 06C788 7F037C58 0FC2FF13 */  jal   get_g_CurrentMultiPlayerMin
+/* 06C788 7F037C58 0FC2FF13 */  jal   lvlGetCurrentMultiPlayerMin
 /* 06C78C 7F037C5C E7A403E8 */   swc1  $f4, 0x3e8($sp)
 /* 06C790 7F037C60 C7A803E8 */  lwc1  $f8, 0x3e8($sp)
 /* 06C794 7F037C64 02C02025 */  move  $a0, $s6
@@ -11379,7 +11379,7 @@ action80_If_Health_Above_Value_RVL_3:
 /* 06C5BC 7F037A8C 1000F6BF */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C5C0 7F037A90 26310003 */   addiu $s1, $s1, 3
 action70_Go_Into_RVL_Difficulty_LTV_3:
-/* 06C5C4 7F037A94 0FC2FF04 */  jal   get_current_difficulty
+/* 06C5C4 7F037A94 0FC2FF04 */  jal   lvlGetSelectedDifficulty
 /* 06C5C8 7F037A98 00000000 */   nop   
 /* 06C5CC 7F037A9C 92290001 */  lbu   $t1, 1($s1)
 /* 06C5D0 7F037AA0 02C02025 */  move  $a0, $s6
@@ -11397,7 +11397,7 @@ action70_Go_Into_RVL_Difficulty_LTV_3:
 /* 06C5FC 7F037ACC 1000F6AF */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C600 7F037AD0 26310003 */   addiu $s1, $s1, 3
 action71_GoIntoRVLIf_Difficulty_GTV_3:
-/* 06C604 7F037AD4 0FC2FF04 */  jal   get_current_difficulty
+/* 06C604 7F037AD4 0FC2FF04 */  jal   lvlGetSelectedDifficulty
 /* 06C608 7F037AD8 00000000 */   nop   
 /* 06C60C 7F037ADC 922A0001 */  lbu   $t2, 1($s1)
 /* 06C610 7F037AE0 02C02025 */  move  $a0, $s6
@@ -11422,7 +11422,7 @@ action72_Go_To_RVL_If_Time_LTV_4:
 /* 06C654 7F037B24 448D2000 */  mtc1  $t5, $f4
 /* 06C658 7F037B28 00000000 */  nop   
 /* 06C65C 7F037B2C 46802220 */  cvt.s.w $f8, $f4
-/* 06C660 7F037B30 0FC2FF10 */  jal   get_cur_mp_sec
+/* 06C660 7F037B30 0FC2FF10 */  jal   lvlGetCurrentMultiPlayerSec
 /* 06C664 7F037B34 E7A80400 */   swc1  $f8, 0x400($sp)
 /* 06C668 7F037B38 C7AA0400 */  lwc1  $f10, 0x400($sp)
 /* 06C66C 7F037B3C 02C02025 */  move  $a0, $s6
@@ -11448,7 +11448,7 @@ action73_Go_To_RVL_If_Time_GTV_4:
 /* 06C6B4 7F037B84 44899000 */  mtc1  $t1, $f18
 /* 06C6B8 7F037B88 00000000 */  nop   
 /* 06C6BC 7F037B8C 468091A0 */  cvt.s.w $f6, $f18
-/* 06C6C0 7F037B90 0FC2FF10 */  jal   get_cur_mp_sec
+/* 06C6C0 7F037B90 0FC2FF10 */  jal   lvlGetCurrentMultiPlayerSec
 /* 06C6C4 7F037B94 E7A603F8 */   swc1  $f6, 0x3f8($sp)
 /* 06C6C8 7F037B98 C7B003F8 */  lwc1  $f16, 0x3f8($sp)
 /* 06C6CC 7F037B9C 02C02025 */  move  $a0, $s6
@@ -11475,7 +11475,7 @@ action74_Go_To_RVL_If_Power_On_Time_LTV_4:
 /* 06C718 7F037BE8 00000000 */  nop   
 /* 06C71C 7F037BEC 46802220 */  cvt.s.w $f8, $f4
 /* 06C720 7F037BF0 46164282 */  mul.s $f10, $f8, $f22
-/* 06C724 7F037BF4 0FC2FF13 */  jal   get_g_CurrentMultiPlayerMin
+/* 06C724 7F037BF4 0FC2FF13 */  jal   lvlGetCurrentMultiPlayerMin
 /* 06C728 7F037BF8 E7AA03F0 */   swc1  $f10, 0x3f0($sp)
 /* 06C72C 7F037BFC C7B203F0 */  lwc1  $f18, 0x3f0($sp)
 /* 06C730 7F037C00 02C02025 */  move  $a0, $s6
@@ -11502,7 +11502,7 @@ action75_Go_To_RVL_If_Power_On_Time_GTV_4:
 /* 06C77C 7F037C4C 00000000 */  nop   
 /* 06C780 7F037C50 46803420 */  cvt.s.w $f16, $f6
 /* 06C784 7F037C54 46168102 */  mul.s $f4, $f16, $f22
-/* 06C788 7F037C58 0FC2FF13 */  jal   get_g_CurrentMultiPlayerMin
+/* 06C788 7F037C58 0FC2FF13 */  jal   lvlGetCurrentMultiPlayerMin
 /* 06C78C 7F037C5C E7A403E8 */   swc1  $f4, 0x3e8($sp)
 /* 06C790 7F037C60 C7A803E8 */  lwc1  $f8, 0x3e8($sp)
 /* 06C794 7F037C64 02C02025 */  move  $a0, $s6
@@ -17247,7 +17247,7 @@ action80_If_Health_Above_Value_RVL_3:
 /* 06C5BC 7F037A8C 1000F6BF */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C5C0 7F037A90 26310003 */   addiu $s1, $s1, 3
 action70_Go_Into_RVL_Difficulty_LTV_3:
-/* 06C5C4 7F037A94 0FC2FF04 */  jal   get_current_difficulty
+/* 06C5C4 7F037A94 0FC2FF04 */  jal   lvlGetSelectedDifficulty
 /* 06C5C8 7F037A98 00000000 */   nop   
 /* 06C5CC 7F037A9C 92290001 */  lbu   $t1, 1($s1)
 /* 06C5D0 7F037AA0 02C02025 */  move  $a0, $s6
@@ -17265,7 +17265,7 @@ action70_Go_Into_RVL_Difficulty_LTV_3:
 /* 06C5FC 7F037ACC 1000F6AF */  b     GetByteS1_ParseCommandByte_SwitchCase
 /* 06C600 7F037AD0 26310003 */   addiu $s1, $s1, 3
 action71_GoIntoRVLIf_Difficulty_GTV_3:
-/* 06C604 7F037AD4 0FC2FF04 */  jal   get_current_difficulty
+/* 06C604 7F037AD4 0FC2FF04 */  jal   lvlGetSelectedDifficulty
 /* 06C608 7F037AD8 00000000 */   nop   
 /* 06C60C 7F037ADC 922A0001 */  lbu   $t2, 1($s1)
 /* 06C610 7F037AE0 02C02025 */  move  $a0, $s6
@@ -17290,7 +17290,7 @@ action72_Go_To_RVL_If_Time_LTV_4:
 /* 06C654 7F037B24 448D2000 */  mtc1  $t5, $f4
 /* 06C658 7F037B28 00000000 */  nop   
 /* 06C65C 7F037B2C 46802220 */  cvt.s.w $f8, $f4
-/* 06C660 7F037B30 0FC2FF10 */  jal   get_cur_mp_sec
+/* 06C660 7F037B30 0FC2FF10 */  jal   lvlGetCurrentMultiPlayerSec
 /* 06C664 7F037B34 E7A80400 */   swc1  $f8, 0x400($sp)
 /* 06C668 7F037B38 C7AA0400 */  lwc1  $f10, 0x400($sp)
 /* 06C66C 7F037B3C 02C02025 */  move  $a0, $s6
@@ -17316,7 +17316,7 @@ action73_Go_To_RVL_If_Time_GTV_4:
 /* 06C6B4 7F037B84 44899000 */  mtc1  $t1, $f18
 /* 06C6B8 7F037B88 00000000 */  nop   
 /* 06C6BC 7F037B8C 468091A0 */  cvt.s.w $f6, $f18
-/* 06C6C0 7F037B90 0FC2FF10 */  jal   get_cur_mp_sec
+/* 06C6C0 7F037B90 0FC2FF10 */  jal   lvlGetCurrentMultiPlayerSec
 /* 06C6C4 7F037B94 E7A603F8 */   swc1  $f6, 0x3f8($sp)
 /* 06C6C8 7F037B98 C7B003F8 */  lwc1  $f16, 0x3f8($sp)
 /* 06C6CC 7F037B9C 02C02025 */  move  $a0, $s6
@@ -17343,7 +17343,7 @@ action74_Go_To_RVL_If_Power_On_Time_LTV_4:
 /* 06C718 7F037BE8 00000000 */  nop   
 /* 06C71C 7F037BEC 46802220 */  cvt.s.w $f8, $f4
 /* 06C720 7F037BF0 46164282 */  mul.s $f10, $f8, $f22
-/* 06C724 7F037BF4 0FC2FF13 */  jal   get_g_CurrentMultiPlayerMin
+/* 06C724 7F037BF4 0FC2FF13 */  jal   lvlGetCurrentMultiPlayerMin
 /* 06C728 7F037BF8 E7AA03F0 */   swc1  $f10, 0x3f0($sp)
 /* 06C72C 7F037BFC C7B203F0 */  lwc1  $f18, 0x3f0($sp)
 /* 06C730 7F037C00 02C02025 */  move  $a0, $s6
@@ -17370,7 +17370,7 @@ action75_Go_To_RVL_If_Power_On_Time_GTV_4:
 /* 06C77C 7F037C4C 00000000 */  nop   
 /* 06C780 7F037C50 46803420 */  cvt.s.w $f16, $f6
 /* 06C784 7F037C54 46168102 */  mul.s $f4, $f16, $f22
-/* 06C788 7F037C58 0FC2FF13 */  jal   get_g_CurrentMultiPlayerMin
+/* 06C788 7F037C58 0FC2FF13 */  jal   lvlGetCurrentMultiPlayerMin
 /* 06C78C 7F037C5C E7A403E8 */   swc1  $f4, 0x3e8($sp)
 /* 06C790 7F037C60 C7A803E8 */  lwc1  $f8, 0x3e8($sp)
 /* 06C794 7F037C64 02C02025 */  move  $a0, $s6
@@ -23085,7 +23085,7 @@ glabel handle_mp_respawn_and_some_things
 /* 07130C 7F03C7DC AE0B0064 */   sw    $t3, 0x64($s0)
 /* 071310 7F03C7E0 AFA20030 */  sw    $v0, 0x30($sp)
 /* 071314 7F03C7E4 860C0006 */  lh    $t4, 6($s0)
-/* 071318 7F03C7E8 0FC2F7C1 */  jal   sub_GAME_7F0BDF04
+/* 071318 7F03C7E8 0FC2F7C1 */  jal   lvlGetCurrentStageToLoad
 /* 07131C 7F03C7EC AFAC002C */   sw    $t4, 0x2c($sp)
 /* 071320 7F03C7F0 8FAD0030 */  lw    $t5, 0x30($sp)
 /* 071324 7F03C7F4 8FAE002C */  lw    $t6, 0x2c($sp)
@@ -24483,7 +24483,7 @@ glabel sub_GAME_7F03D78C
 /* 072464 7F03D934 46125103 */  div.s $f4, $f10, $f18
 /* 072468 7F03D938 46162181 */  sub.s $f6, $f4, $f22
 /* 07246C 7F03D93C 44053000 */  mfc1  $a1, $f6
-/* 072470 7F03D940 0FC1F17C */  jal   sub_GAME_7F07C5F0
+/* 072470 7F03D940 0FC1F17C */  jal   bondviewUpdateYAutoAimTime
 /* 072474 7F03D944 00000000 */   nop   
 /* 072478 7F03D948 0FC1F1AA */  jal   redirect_get_BONDdata_autoaim_x
 /* 07247C 7F03D94C 00000000 */   nop   
@@ -24502,7 +24502,7 @@ glabel sub_GAME_7F03D78C
 /* 0724B0 7F03D980 46128103 */  div.s $f4, $f16, $f18
 /* 0724B4 7F03D984 46162181 */  sub.s $f6, $f4, $f22
 /* 0724B8 7F03D988 44053000 */  mfc1  $a1, $f6
-/* 0724BC 7F03D98C 0FC1F1B2 */  jal   sub_GAME_7F07C6C8
+/* 0724BC 7F03D98C 0FC1F1B2 */  jal   bondviewUpdateXAutoAimTime
 /* 0724C0 7F03D990 00000000 */   nop   
 /* 0724C4 7F03D994 1000000A */  b     .L7F03D9C0
 /* 0724C8 7F03D998 8FBF004C */   lw    $ra, 0x4c($sp)
@@ -24510,10 +24510,10 @@ glabel sub_GAME_7F03D78C
 .L7F03D9A0:
 /* 0724D0 7F03D9A0 00002025 */  move  $a0, $zero
 /* 0724D4 7F03D9A4 4405A000 */  mfc1  $a1, $f20
-/* 0724D8 7F03D9A8 0FC1F17C */  jal   sub_GAME_7F07C5F0
+/* 0724D8 7F03D9A8 0FC1F17C */  jal   bondviewUpdateYAutoAimTime
 /* 0724DC 7F03D9AC 00000000 */   nop   
 /* 0724E0 7F03D9B0 4405A000 */  mfc1  $a1, $f20
-/* 0724E4 7F03D9B4 0FC1F1B2 */  jal   sub_GAME_7F07C6C8
+/* 0724E4 7F03D9B4 0FC1F1B2 */  jal   bondviewUpdateXAutoAimTime
 /* 0724E8 7F03D9B8 00002025 */   move  $a0, $zero
 /* 0724EC 7F03D9BC 8FBF004C */  lw    $ra, 0x4c($sp)
 .L7F03D9C0:
@@ -25859,7 +25859,7 @@ glabel sub_GAME_7F03E830
 /* 073368 7F03E838 8C820010 */  lw    $v0, 0x10($a0)
 /* 07336C 7F03E83C 8C440014 */  lw    $a0, 0x14($v0)
 /* 073370 7F03E840 8C450008 */  lw    $a1, 8($v0)
-/* 073374 7F03E844 0FC2CA5C */  jal   sub_GAME_7F0B2970
+/* 073374 7F03E844 0FC2CA5C */  jal   stanGetPositionYValue
 /* 073378 7F03E848 8C460010 */   lw    $a2, 0x10($v0)
 /* 07337C 7F03E84C 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 073380 7F03E850 27BD0018 */  addiu $sp, $sp, 0x18

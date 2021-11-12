@@ -476,7 +476,7 @@ u32 check_objectives_complete(void)
     for (objective = 0; objective < add_objective(); objective++)
     {
         objdiff = get_difficulty_for_objective(objective);
-        curdiff = get_current_difficulty();
+        curdiff = lvlGetSelectedDifficulty();
         if ((objdiff <= curdiff) && (get_status_of_objective(objective) != 1)) {
             return 0;
         }
@@ -558,7 +558,7 @@ glabel display_objective_status_text_on_status_change
 /* 08C124 7F0575F4 00000000 */   nop   
 /* 08C128 7F0575F8 0FC15C81 */  jal   get_difficulty_for_objective
 /* 08C12C 7F0575FC AEA20000 */   sw    $v0, ($s5)
-/* 08C130 7F057600 0FC2FF04 */  jal   get_current_difficulty
+/* 08C130 7F057600 0FC2FF04 */  jal   lvlGetSelectedDifficulty
 /* 08C134 7F057604 00408025 */   move  $s0, $v0
 /* 08C138 7F057608 0050082A */  slt   $at, $v0, $s0
 /* 08C13C 7F05760C 14200033 */  bnez  $at, .L7F0576DC
@@ -621,7 +621,7 @@ glabel display_objective_status_text_on_status_change
 .L7F0576DC:
 /* 08C20C 7F0576DC 0FC15C81 */  jal   get_difficulty_for_objective
 /* 08C210 7F0576E0 02402025 */   move  $a0, $s2
-/* 08C214 7F0576E4 0FC2FF04 */  jal   get_current_difficulty
+/* 08C214 7F0576E4 0FC2FF04 */  jal   lvlGetSelectedDifficulty
 /* 08C218 7F0576E8 00408025 */   move  $s0, $v0
 /* 08C21C 7F0576EC 0050082A */  slt   $at, $v0, $s0
 /* 08C220 7F0576F0 54200003 */  bnezl $at, .L7F057700
@@ -707,7 +707,7 @@ glabel display_objective_status_text_on_status_change
 /* 08C680 7F057B10 00000000 */   nop   
 /* 08C684 7F057B14 0FC15DC1 */  jal   get_difficulty_for_objective
 /* 08C688 7F057B18 AE820000 */   sw    $v0, ($s4)
-/* 08C68C 7F057B1C 0FC3021E */  jal   get_current_difficulty
+/* 08C68C 7F057B1C 0FC3021E */  jal   lvlGetSelectedDifficulty
 /* 08C690 7F057B20 00408025 */   move  $s0, $v0
 /* 08C694 7F057B24 0050082A */  slt   $at, $v0, $s0
 /* 08C698 7F057B28 14200033 */  bnez  $at, .L7F057BF8
@@ -770,7 +770,7 @@ glabel display_objective_status_text_on_status_change
 .L7F057BF8:
 /* 08C768 7F057BF8 0FC15DC1 */  jal   get_difficulty_for_objective
 /* 08C76C 7F057BFC 02402025 */   move  $a0, $s2
-/* 08C770 7F057C00 0FC3021E */  jal   get_current_difficulty
+/* 08C770 7F057C00 0FC3021E */  jal   lvlGetSelectedDifficulty
 /* 08C774 7F057C04 00408025 */   move  $s0, $v0
 /* 08C778 7F057C08 0050082A */  slt   $at, $v0, $s0
 /* 08C77C 7F057C0C 54200003 */  bnezl $at, .L7F057C1C
@@ -861,7 +861,7 @@ glabel display_objective_status_text_on_status_change
 /* 08A2E0 7F0578F0 00000000 */   nop   
 /* 08A2E4 7F0578F4 0FC15D39 */  jal   get_difficulty_for_objective
 /* 08A2E8 7F0578F8 AE820000 */   sw    $v0, ($s4)
-/* 08A2EC 7F0578FC 0FC2FC21 */  jal   get_current_difficulty
+/* 08A2EC 7F0578FC 0FC2FC21 */  jal   lvlGetSelectedDifficulty
 /* 08A2F0 7F057900 00408025 */   move  $s0, $v0
 /* 08A2F4 7F057904 0050082A */  slt   $at, $v0, $s0
 /* 08A2F8 7F057908 14200033 */  bnez  $at, .L7F0579D8
@@ -924,7 +924,7 @@ glabel display_objective_status_text_on_status_change
 .L7F0579D8:
 /* 08A3C8 7F0579D8 0FC15D39 */  jal   get_difficulty_for_objective
 /* 08A3CC 7F0579DC 02402025 */   move  $a0, $s2
-/* 08A3D0 7F0579E0 0FC2FC21 */  jal   get_current_difficulty
+/* 08A3D0 7F0579E0 0FC2FC21 */  jal   lvlGetSelectedDifficulty
 /* 08A3D4 7F0579E4 00408025 */   move  $s0, $v0
 /* 08A3D8 7F0579E8 0050082A */  slt   $at, $v0, $s0
 /* 08A3DC 7F0579EC 54200003 */  bnezl $at, .L7F0579FC

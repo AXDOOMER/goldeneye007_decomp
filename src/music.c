@@ -23,13 +23,6 @@
 #endif
 
 /**
- * Counting definitions for music in this file, there
- * are 63 distinct entries. This exlcudes the "NONE" music
- * and control sequence entries.
- */
-#define NUM_MUSIC_TRACKS  63
-
-/**
  * Similar to NUM_MUSIC_TRACKS, but also counts "NONE" track
  * and control sequence.
  */

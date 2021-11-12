@@ -1113,7 +1113,7 @@ glabel sub_GAME_7F01F574
 /* 0540D4 7F01F5A4 44800000 */   mtc1  $zero, $f0
 /* 0540D8 7F01F5A8 8E040014 */  lw    $a0, 0x14($s0)
 /* 0540DC 7F01F5AC 8E050008 */  lw    $a1, 8($s0)
-/* 0540E0 7F01F5B0 0FC2CA5C */  jal   sub_GAME_7F0B2970
+/* 0540E0 7F01F5B0 0FC2CA5C */  jal   stanGetPositionYValue
 /* 0540E4 7F01F5B4 8E060010 */   lw    $a2, 0x10($s0)
 /* 0540E8 7F01F5B8 10000007 */  b     .L7F01F5D8
 /* 0540EC 7F01F5BC 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -1730,7 +1730,7 @@ glabel sub_GAME_7F01FC10
 /* 0548C8 7F01FD98 8E180018 */  lw    $t8, 0x18($s0)
 /* 0548CC 7F01FD9C 8C650000 */  lw    $a1, ($v1)
 /* 0548D0 7F01FDA0 8C660008 */  lw    $a2, 8($v1)
-/* 0548D4 7F01FDA4 0FC2CA5C */  jal   sub_GAME_7F0B2970
+/* 0548D4 7F01FDA4 0FC2CA5C */  jal   stanGetPositionYValue
 /* 0548D8 7F01FDA8 8F040014 */   lw    $a0, 0x14($t8)
 /* 0548DC 7F01FDAC 8E190014 */  lw    $t9, 0x14($s0)
 /* 0548E0 7F01FDB0 44806000 */  mtc1  $zero, $f12
@@ -2053,7 +2053,7 @@ glabel sub_GAME_7F01FC10
 /* 0548C8 7F01FD98 8E180018 */  lw    $t8, 0x18($s0)
 /* 0548CC 7F01FD9C 8C650000 */  lw    $a1, ($v1)
 /* 0548D0 7F01FDA0 8C660008 */  lw    $a2, 8($v1)
-/* 0548D4 7F01FDA4 0FC2CA5C */  jal   sub_GAME_7F0B2970
+/* 0548D4 7F01FDA4 0FC2CA5C */  jal   stanGetPositionYValue
 /* 0548D8 7F01FDA8 8F040014 */   lw    $a0, 0x14($t8)
 /* 0548DC 7F01FDAC 8E190014 */  lw    $t9, 0x14($s0)
 /* 0548E0 7F01FDB0 44806000 */  mtc1  $zero, $f12
@@ -2378,7 +2378,7 @@ glabel sub_GAME_7F01FC10
 /* 0548C8 7F01FD98 8E180018 */  lw    $t8, 0x18($s0)
 /* 0548CC 7F01FD9C 8C650000 */  lw    $a1, ($v1)
 /* 0548D0 7F01FDA0 8C660008 */  lw    $a2, 8($v1)
-/* 0548D4 7F01FDA4 0FC2CA5C */  jal   sub_GAME_7F0B2970
+/* 0548D4 7F01FDA4 0FC2CA5C */  jal   stanGetPositionYValue
 /* 0548D8 7F01FDA8 8F040014 */   lw    $a0, 0x14($t8)
 /* 0548DC 7F01FDAC 8E190014 */  lw    $t9, 0x14($s0)
 /* 0548E0 7F01FDB0 44806000 */  mtc1  $zero, $f12
@@ -3021,7 +3021,7 @@ glabel replace_GUARDdata_with_actual_values
 
 
 #ifdef NONMATCHING
-void disable_sounds_attached_to_player_then_something(void) {
+void disable_sounds_attached_to_player_then_something(struct prop* prop) {
 
 }
 #else
@@ -4371,7 +4371,8 @@ glabel sub_GAME_7F02083C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F020D94(void) {
+void sub_GAME_7F020D94(struct chrdata *)
+{
 
 }
 #else

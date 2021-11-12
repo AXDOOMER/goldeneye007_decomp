@@ -2070,7 +2070,7 @@ glabel sub_GAME_7F0407F4
 /* 07534C 7F04081C AFA20020 */  sw    $v0, 0x20($sp)
 /* 075350 7F040820 8E060008 */  lw    $a2, 8($s0)
 /* 075354 7F040824 8E050000 */  lw    $a1, ($s0)
-/* 075358 7F040828 0FC2CA5C */  jal   sub_GAME_7F0B2970
+/* 075358 7F040828 0FC2CA5C */  jal   stanGetPositionYValue
 /* 07535C 7F04082C 8FA40034 */   lw    $a0, 0x34($sp)
 /* 075360 7F040830 3C014080 */  li    $at, 0x40800000 # 4.000000
 /* 075364 7F040834 44812000 */  mtc1  $at, $f4
@@ -2209,7 +2209,7 @@ glabel sub_GAME_7F04088C
 /* 0754E0 7F0409B0 8C450000 */  lw    $a1, ($v0)
 /* 0754E4 7F0409B4 8C460008 */  lw    $a2, 8($v0)
 /* 0754E8 7F0409B8 E7A2009C */  swc1  $f2, 0x9c($sp)
-/* 0754EC 7F0409BC 0FC2CA5C */  jal   sub_GAME_7F0B2970
+/* 0754EC 7F0409BC 0FC2CA5C */  jal   stanGetPositionYValue
 /* 0754F0 7F0409C0 00E02025 */   move  $a0, $a3
 /* 0754F4 7F0409C4 8FA400B0 */  lw    $a0, 0xb0($sp)
 /* 0754F8 7F0409C8 27A50048 */  addiu $a1, $sp, 0x48
@@ -2594,7 +2594,7 @@ glabel sub_GAME_7F040D98
 /* 0759D0 7F040EA0 8E44008C */  lw    $a0, 0x8c($s2)
 /* 0759D4 7F040EA4 04820020 */  bltzl $a0, .L7F040F28
 /* 0759D8 7F040EA8 8E510010 */   lw    $s1, 0x10($s2)
-/* 0759DC 7F040EAC 0FC2E76F */  jal   sub_GAME_7F0B9DBC
+/* 0759DC 7F040EAC 0FC2E76F */  jal   bgToggleDataPortalsContrlBytes1Bit1
 /* 0759E0 7F040EB0 24050001 */   li    $a1, 1
 /* 0759E4 7F040EB4 1000001C */  b     .L7F040F28
 /* 0759E8 7F040EB8 8E510010 */   lw    $s1, 0x10($s2)
@@ -4669,7 +4669,7 @@ glabel sub_GAME_7F042A0C
 /* 0775EC 7F042ABC 8FBF0034 */   lw    $ra, 0x34($sp)
 /* 0775F0 7F042AC0 8E040014 */  lw    $a0, 0x14($s0)
 /* 0775F4 7F042AC4 8E050008 */  lw    $a1, 8($s0)
-/* 0775F8 7F042AC8 0FC2CA5C */  jal   sub_GAME_7F0B2970
+/* 0775F8 7F042AC8 0FC2CA5C */  jal   stanGetPositionYValue
 /* 0775FC 7F042ACC 8E060010 */   lw    $a2, 0x10($s0)
 /* 077600 7F042AD0 8FA900C0 */  lw    $t1, 0xc0($sp)
 /* 077604 7F042AD4 C7AA009C */  lwc1  $f10, 0x9c($sp)
@@ -5564,7 +5564,7 @@ glabel sub_GAME_7F043650
 /* 07826C 7F04373C 8DF90098 */  lw    $t9, 0x98($t7)
 /* 078270 7F043740 57200039 */  bnezl $t9, .L7F043828
 /* 078274 7F043744 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 078278 7F043748 0FC2FF01 */  jal   get_controls_locked_flag
+/* 078278 7F043748 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 07827C 7F04374C AFAD002C */   sw    $t5, 0x2c($sp)
 /* 078280 7F043750 14400034 */  bnez  $v0, .L7F043824
 /* 078284 7F043754 8FA7002C */   lw    $a3, 0x2c($sp)
@@ -8219,7 +8219,7 @@ glabel sub_GAME_7F044B38
 /* 079760 7F044C30 10400006 */  beqz  $v0, .L7F044C4C
 /* 079764 7F044C34 8FA400C4 */   lw    $a0, 0xc4($sp)
 /* 079768 7F044C38 8FA50130 */  lw    $a1, 0x130($sp)
-/* 07976C 7F044C3C 0FC2CA5C */  jal   sub_GAME_7F0B2970
+/* 07976C 7F044C3C 0FC2CA5C */  jal   stanGetPositionYValue
 /* 079770 7F044C40 8FA60138 */   lw    $a2, 0x138($sp)
 /* 079774 7F044C44 10000002 */  b     .L7F044C50
 /* 079778 7F044C48 E7A00134 */   swc1  $f0, 0x134($sp)
@@ -8238,7 +8238,7 @@ glabel sub_GAME_7F044B38
 /* 0797A4 7F044C74 10400006 */  beqz  $v0, .L7F044C90
 /* 0797A8 7F044C78 8FA400C4 */   lw    $a0, 0xc4($sp)
 /* 0797AC 7F044C7C 8FA50124 */  lw    $a1, 0x124($sp)
-/* 0797B0 7F044C80 0FC2CA5C */  jal   sub_GAME_7F0B2970
+/* 0797B0 7F044C80 0FC2CA5C */  jal   stanGetPositionYValue
 /* 0797B4 7F044C84 8FA6012C */   lw    $a2, 0x12c($sp)
 /* 0797B8 7F044C88 10000002 */  b     .L7F044C94
 /* 0797BC 7F044C8C E7A00128 */   swc1  $f0, 0x128($sp)
@@ -8257,7 +8257,7 @@ glabel sub_GAME_7F044B38
 /* 0797E8 7F044CB8 10400006 */  beqz  $v0, .L7F044CD4
 /* 0797EC 7F044CBC 8FA400C4 */   lw    $a0, 0xc4($sp)
 /* 0797F0 7F044CC0 8FA50118 */  lw    $a1, 0x118($sp)
-/* 0797F4 7F044CC4 0FC2CA5C */  jal   sub_GAME_7F0B2970
+/* 0797F4 7F044CC4 0FC2CA5C */  jal   stanGetPositionYValue
 /* 0797F8 7F044CC8 8FA60120 */   lw    $a2, 0x120($sp)
 /* 0797FC 7F044CCC 10000002 */  b     .L7F044CD8
 /* 079800 7F044CD0 E7A0011C */   swc1  $f0, 0x11c($sp)
@@ -8276,7 +8276,7 @@ glabel sub_GAME_7F044B38
 /* 07982C 7F044CFC 10400006 */  beqz  $v0, .L7F044D18
 /* 079830 7F044D00 8FA400C4 */   lw    $a0, 0xc4($sp)
 /* 079834 7F044D04 8FA5010C */  lw    $a1, 0x10c($sp)
-/* 079838 7F044D08 0FC2CA5C */  jal   sub_GAME_7F0B2970
+/* 079838 7F044D08 0FC2CA5C */  jal   stanGetPositionYValue
 /* 07983C 7F044D0C 8FA60114 */   lw    $a2, 0x114($sp)
 /* 079840 7F044D10 10000002 */  b     .L7F044D1C
 /* 079844 7F044D14 E7A00110 */   swc1  $f0, 0x110($sp)
@@ -8572,7 +8572,7 @@ glabel sub_GAME_7F044B38
 /* 079CAC 7F04517C C72C0014 */   lwc1  $f12, 0x14($t9)
 /* 079CB0 7F045180 8E240014 */  lw    $a0, 0x14($s1)
 /* 079CB4 7F045184 8E250008 */  lw    $a1, 8($s1)
-/* 079CB8 7F045188 0FC2CA5C */  jal   sub_GAME_7F0B2970
+/* 079CB8 7F045188 0FC2CA5C */  jal   stanGetPositionYValue
 /* 079CBC 7F04518C 8E260010 */   lw    $a2, 0x10($s1)
 /* 079CC0 7F045190 E7A0005C */  swc1  $f0, 0x5c($sp)
 /* 079CC4 7F045194 0FC0FA19 */  jal   sub_GAME_7F03E864
@@ -9596,7 +9596,7 @@ glabel object_interaction
 /* 07A978 7F045E48 00000000 */   nop   
 /* 07A97C 7F045E4C 8E640014 */  lw    $a0, 0x14($s3)
 /* 07A980 7F045E50 8E650008 */  lw    $a1, 8($s3)
-/* 07A984 7F045E54 0FC2CA5C */  jal   sub_GAME_7F0B2970
+/* 07A984 7F045E54 0FC2CA5C */  jal   stanGetPositionYValue
 /* 07A988 7F045E58 8E660010 */   lw    $a2, 0x10($s3)
 /* 07A98C 7F045E5C 46000506 */  mov.s $f20, $f0
 /* 07A990 7F045E60 8FA40640 */  lw    $a0, 0x640($sp)
@@ -10081,7 +10081,7 @@ glabel object_interaction
 /* 07B05C 7F04652C AFA80690 */  sw    $t0, 0x690($sp)
 /* 07B060 7F046530 8E660010 */  lw    $a2, 0x10($s3)
 /* 07B064 7F046534 8E650008 */  lw    $a1, 8($s3)
-/* 07B068 7F046538 0FC2CA5C */  jal   sub_GAME_7F0B2970
+/* 07B068 7F046538 0FC2CA5C */  jal   stanGetPositionYValue
 /* 07B06C 7F04653C 8E640014 */   lw    $a0, 0x14($s3)
 /* 07B070 7F046540 46000506 */  mov.s $f20, $f0
 /* 07B074 7F046544 8FA4054C */  lw    $a0, 0x54c($sp)
@@ -11274,7 +11274,7 @@ glabel object_interaction
 /* 07C194 7F047664 5440000A */  bnezl $v0, .L7F047690
 /* 07C198 7F047668 8E2400AC */   lw    $a0, 0xac($s1)
 .L7F04766C:
-/* 07C19C 7F04766C 0FC2FF01 */  jal   get_controls_locked_flag
+/* 07C19C 7F04766C 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 07C1A0 7F047670 00000000 */   nop   
 /* 07C1A4 7F047674 14400005 */  bnez  $v0, .L7F04768C
 /* 07C1A8 7F047678 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
@@ -12041,7 +12041,7 @@ glabel object_interaction
 /* 07CCF0 7F0481C0 5440000A */  bnezl $v0, .L7F0481EC
 /* 07CCF4 7F0481C4 8E2400B0 */   lw    $a0, 0xb0($s1)
 .L7F0481C8:
-/* 07CCF8 7F0481C8 0FC2FF01 */  jal   get_controls_locked_flag
+/* 07CCF8 7F0481C8 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 07CCFC 7F0481CC 00000000 */   nop   
 /* 07CD00 7F0481D0 14400005 */  bnez  $v0, .L7F0481E8
 /* 07CD04 7F0481D4 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
@@ -12099,12 +12099,12 @@ glabel object_interaction
 /* 07CDC0 7F048290 240100FF */   li    $at, 255
 /* 07CDC4 7F048294 14410005 */  bne   $v0, $at, .L7F0482AC
 /* 07CDC8 7F048298 00000000 */   nop   
-/* 07CDCC 7F04829C 0FC2E76F */  jal   sub_GAME_7F0B9DBC
+/* 07CDCC 7F04829C 0FC2E76F */  jal   bgToggleDataPortalsContrlBytes1Bit1
 /* 07CDD0 7F0482A0 00002825 */   move  $a1, $zero
 /* 07CDD4 7F0482A4 10000003 */  b     .L7F0482B4
 /* 07CDD8 7F0482A8 00000000 */   nop   
 .L7F0482AC:
-/* 07CDDC 7F0482AC 0FC2E76F */  jal   sub_GAME_7F0B9DBC
+/* 07CDDC 7F0482AC 0FC2E76F */  jal   bgToggleDataPortalsContrlBytes1Bit1
 /* 07CDE0 7F0482B0 24050001 */   li    $a1, 1
 .L7F0482B4:
 /* 07CDE4 7F0482B4 1000003B */  b     .L7F0483A4
@@ -13219,7 +13219,7 @@ glabel object_interaction
 .L7F049310:
 /* 07DE40 7F049310 144101FF */  bne   $v0, $at, .L7F049B10
 /* 07DE44 7F049314 00000000 */   nop   
-/* 07DE48 7F049318 0FC2FF01 */  jal   get_controls_locked_flag
+/* 07DE48 7F049318 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 07DE4C 7F04931C 00000000 */   nop   
 /* 07DE50 7F049320 144001FB */  bnez  $v0, .L7F049B10
 /* 07DE54 7F049324 00000000 */   nop   
@@ -14693,7 +14693,7 @@ glabel object_interaction
 /* 07AD9C 7F04622C 00000000 */   nop   
 /* 07ADA0 7F046230 8E640014 */  lw    $a0, 0x14($s3)
 /* 07ADA4 7F046234 8E650008 */  lw    $a1, 8($s3)
-/* 07ADA8 7F046238 0FC2CD48 */  jal   sub_GAME_7F0B2970
+/* 07ADA8 7F046238 0FC2CD48 */  jal   stanGetPositionYValue
 /* 07ADAC 7F04623C 8E660010 */   lw    $a2, 0x10($s3)
 /* 07ADB0 7F046240 46000506 */  mov.s $f20, $f0
 /* 07ADB4 7F046244 8FA40648 */  lw    $a0, 0x648($sp)
@@ -15178,7 +15178,7 @@ glabel object_interaction
 /* 07B480 7F046910 AFAC0698 */  sw    $t4, 0x698($sp)
 /* 07B484 7F046914 8E660010 */  lw    $a2, 0x10($s3)
 /* 07B488 7F046918 8E650008 */  lw    $a1, 8($s3)
-/* 07B48C 7F04691C 0FC2CD48 */  jal   sub_GAME_7F0B2970
+/* 07B48C 7F04691C 0FC2CD48 */  jal   stanGetPositionYValue
 /* 07B490 7F046920 8E640014 */   lw    $a0, 0x14($s3)
 /* 07B494 7F046924 46000506 */  mov.s $f20, $f0
 /* 07B498 7F046928 8FA40554 */  lw    $a0, 0x554($sp)
@@ -16380,7 +16380,7 @@ glabel object_interaction
 /* 07C5D8 7F047A68 5440000A */  bnezl $v0, .Ljp7F047A94
 /* 07C5DC 7F047A6C 8E2400AC */   lw    $a0, 0xac($s1)
 .Ljp7F047A70:
-/* 07C5E0 7F047A70 0FC3021B */  jal   get_controls_locked_flag
+/* 07C5E0 7F047A70 0FC3021B */  jal   lvlGetControlsLockedFlag
 /* 07C5E4 7F047A74 00000000 */   nop   
 /* 07C5E8 7F047A78 14400005 */  bnez  $v0, .Ljp7F047A90
 /* 07C5EC 7F047A7C 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
@@ -17147,7 +17147,7 @@ glabel object_interaction
 /* 07D134 7F0485C4 5440000A */  bnezl $v0, .Ljp7F0485F0
 /* 07D138 7F0485C8 8E2400B0 */   lw    $a0, 0xb0($s1)
 .Ljp7F0485CC:
-/* 07D13C 7F0485CC 0FC3021B */  jal   get_controls_locked_flag
+/* 07D13C 7F0485CC 0FC3021B */  jal   lvlGetControlsLockedFlag
 /* 07D140 7F0485D0 00000000 */   nop   
 /* 07D144 7F0485D4 14400005 */  bnez  $v0, .Ljp7F0485EC
 /* 07D148 7F0485D8 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8006
@@ -17205,12 +17205,12 @@ glabel object_interaction
 /* 07D204 7F048694 240100FF */   li    $at, 255
 /* 07D208 7F048698 14410005 */  bne   $v0, $at, .Ljp7F0486B0
 /* 07D20C 7F04869C 00000000 */   nop   
-/* 07D210 7F0486A0 0FC2EA5B */  jal   sub_GAME_7F0B9DBC
+/* 07D210 7F0486A0 0FC2EA5B */  jal   bgToggleDataPortalsContrlBytes1Bit1
 /* 07D214 7F0486A4 00002825 */   move  $a1, $zero
 /* 07D218 7F0486A8 10000003 */  b     .Ljp7F0486B8
 /* 07D21C 7F0486AC 00000000 */   nop   
 .Ljp7F0486B0:
-/* 07D220 7F0486B0 0FC2EA5B */  jal   sub_GAME_7F0B9DBC
+/* 07D220 7F0486B0 0FC2EA5B */  jal   bgToggleDataPortalsContrlBytes1Bit1
 /* 07D224 7F0486B4 24050001 */   li    $a1, 1
 .Ljp7F0486B8:
 /* 07D228 7F0486B8 1000003B */  b     .Ljp7F0487A8
@@ -18325,7 +18325,7 @@ glabel object_interaction
 .Ljp7F049714:
 /* 07E284 7F049714 144101FF */  bne   $v0, $at, .Ljp7F049F14
 /* 07E288 7F049718 00000000 */   nop   
-/* 07E28C 7F04971C 0FC3021B */  jal   get_controls_locked_flag
+/* 07E28C 7F04971C 0FC3021B */  jal   lvlGetControlsLockedFlag
 /* 07E290 7F049720 00000000 */   nop   
 /* 07E294 7F049724 144001FB */  bnez  $v0, .Ljp7F049F14
 /* 07E298 7F049728 00000000 */   nop   
@@ -19799,7 +19799,7 @@ glabel object_interaction
 /* 0789DC 7F045FEC 00000000 */   nop   
 /* 0789E0 7F045FF0 8E640014 */  lw    $a0, 0x14($s3)
 /* 0789E4 7F045FF4 8E650008 */  lw    $a1, 8($s3)
-/* 0789E8 7F045FF8 0FC2C70C */  jal   sub_GAME_7F0B2970
+/* 0789E8 7F045FF8 0FC2C70C */  jal   stanGetPositionYValue
 /* 0789EC 7F045FFC 8E660010 */   lw    $a2, 0x10($s3)
 /* 0789F0 7F046000 46000506 */  mov.s $f20, $f0
 /* 0789F4 7F046004 8FA40648 */  lw    $a0, 0x648($sp)
@@ -20284,7 +20284,7 @@ glabel object_interaction
 /* 0790C0 7F0466D0 AFA90698 */  sw    $t1, 0x698($sp)
 /* 0790C4 7F0466D4 8E660010 */  lw    $a2, 0x10($s3)
 /* 0790C8 7F0466D8 8E650008 */  lw    $a1, 8($s3)
-/* 0790CC 7F0466DC 0FC2C70C */  jal   sub_GAME_7F0B2970
+/* 0790CC 7F0466DC 0FC2C70C */  jal   stanGetPositionYValue
 /* 0790D0 7F0466E0 8E640014 */   lw    $a0, 0x14($s3)
 /* 0790D4 7F0466E4 46000506 */  mov.s $f20, $f0
 /* 0790D8 7F0466E8 8FA40554 */  lw    $a0, 0x554($sp)
@@ -21493,7 +21493,7 @@ glabel object_interaction
 /* 07A230 7F047840 5440000A */  bnezl $v0, .L7F04786C
 /* 07A234 7F047844 8E2400AC */   lw    $a0, 0xac($s1)
 .L7F047848:
-/* 07A238 7F047848 0FC2FC1E */  jal   get_controls_locked_flag
+/* 07A238 7F047848 0FC2FC1E */  jal   lvlGetControlsLockedFlag
 /* 07A23C 7F04784C 00000000 */   nop   
 /* 07A240 7F047850 14400005 */  bnez  $v0, .L7F047868
 /* 07A244 7F047854 3C048005 */   lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8005
@@ -22261,7 +22261,7 @@ glabel object_interaction
 /* 07AD90 7F0483A0 5440000A */  bnezl $v0, .L7F0483CC
 /* 07AD94 7F0483A4 8E2400B0 */   lw    $a0, 0xb0($s1)
 .L7F0483A8:
-/* 07AD98 7F0483A8 0FC2FC1E */  jal   get_controls_locked_flag
+/* 07AD98 7F0483A8 0FC2FC1E */  jal   lvlGetControlsLockedFlag
 /* 07AD9C 7F0483AC 00000000 */   nop   
 /* 07ADA0 7F0483B0 14400005 */  bnez  $v0, .L7F0483C8
 /* 07ADA4 7F0483B4 3C048005 */   lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8005
@@ -22319,12 +22319,12 @@ glabel object_interaction
 /* 07AE60 7F048470 240100FF */   li    $at, 255
 /* 07AE64 7F048474 14410005 */  bne   $v0, $at, .L7F04848C
 /* 07AE68 7F048478 00000000 */   nop   
-/* 07AE6C 7F04847C 0FC2E416 */  jal   sub_GAME_7F0B9DBC
+/* 07AE6C 7F04847C 0FC2E416 */  jal   bgToggleDataPortalsContrlBytes1Bit1
 /* 07AE70 7F048480 00002825 */   move  $a1, $zero
 /* 07AE74 7F048484 10000003 */  b     .L7F048494
 /* 07AE78 7F048488 00000000 */   nop   
 .L7F04848C:
-/* 07AE7C 7F04848C 0FC2E416 */  jal   sub_GAME_7F0B9DBC
+/* 07AE7C 7F04848C 0FC2E416 */  jal   bgToggleDataPortalsContrlBytes1Bit1
 /* 07AE80 7F048490 24050001 */   li    $a1, 1
 .L7F048494:
 /* 07AE84 7F048494 1000003B */  b     .L7F048584
@@ -23438,7 +23438,7 @@ glabel object_interaction
 .L7F0494EC:
 /* 07BEDC 7F0494EC 144101FF */  bne   $v0, $at, .L7F049CEC
 /* 07BEE0 7F0494F0 00000000 */   nop   
-/* 07BEE4 7F0494F4 0FC2FC1E */  jal   get_controls_locked_flag
+/* 07BEE4 7F0494F4 0FC2FC1E */  jal   lvlGetControlsLockedFlag
 /* 07BEE8 7F0494F8 00000000 */   nop   
 /* 07BEEC 7F0494FC 144001FB */  bnez  $v0, .L7F049CEC
 /* 07BEF0 7F049500 00000000 */   nop   
@@ -24005,7 +24005,7 @@ glabel object_interaction
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F049B58(void) {
+Gfx * sub_GAME_7F049B58(Gfx *arg0) {
 
 }
 #else
@@ -40638,7 +40638,7 @@ glabel sub_GAME_7F053598
 /* 0880D0 7F0535A0 8C8600F0 */  lw    $a2, 0xf0($a0)
 /* 0880D4 7F0535A4 04C00003 */  bltz  $a2, .L7F0535B4
 /* 0880D8 7F0535A8 00C02025 */   move  $a0, $a2
-/* 0880DC 7F0535AC 0FC2E76F */  jal   sub_GAME_7F0B9DBC
+/* 0880DC 7F0535AC 0FC2E76F */  jal   bgToggleDataPortalsContrlBytes1Bit1
 /* 0880E0 7F0535B0 24050001 */   li    $a1, 1
 .L7F0535B4:
 /* 0880E4 7F0535B4 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -40665,7 +40665,7 @@ glabel sub_GAME_7F0535C4
 /* 0880FC 7F0535CC 8C8600F0 */  lw    $a2, 0xf0($a0)
 /* 088100 7F0535D0 04C00003 */  bltz  $a2, .L7F0535E0
 /* 088104 7F0535D4 00C02025 */   move  $a0, $a2
-/* 088108 7F0535D8 0FC2E76F */  jal   sub_GAME_7F0B9DBC
+/* 088108 7F0535D8 0FC2E76F */  jal   bgToggleDataPortalsContrlBytes1Bit1
 /* 08810C 7F0535DC 00002825 */   move  $a1, $zero
 .L7F0535E0:
 /* 088110 7F0535E0 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -41111,7 +41111,7 @@ glabel sub_GAME_7F053A3C
 /* 0885D4 7F053AA4 AFA30018 */  sw    $v1, 0x18($sp)
 /* 0885D8 7F053AA8 0FC14E79 */  jal   sub_GAME_7F0539E4
 /* 0885DC 7F053AAC 24840008 */   addiu $a0, $a0, 8
-/* 0885E0 7F053AB0 0FC2FF01 */  jal   get_controls_locked_flag
+/* 0885E0 7F053AB0 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 0885E4 7F053AB4 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 0885E8 7F053AB8 10400002 */  beqz  $v0, .L7F053AC4
 /* 0885EC 7F053ABC 8FA30018 */   lw    $v1, 0x18($sp)
@@ -44410,7 +44410,7 @@ void handle_gas_damage(void)
                     D_80030AE0 = (f32) (D_80030AE0 + g_GlobalTimerDelta);
                     if (ptr_gas_sound == NULL)
                     {
-                        if (get_controls_locked_flag(&ptr_gas_sound) == 0)
+                        if (lvlGetControlsLockedFlag(&ptr_gas_sound) == 0)
                         {
                             sndPlaySfx(g_musicSfxBufferPtr, GAS_HISS_SFX, &ptr_gas_sound);
                         }
@@ -44538,7 +44538,7 @@ glabel handle_gas_damage
 /* 08AC08 7F0560D8 8D290AE4 */  lw    $t1, %lo(ptr_gas_sound)($t1)
 /* 08AC0C 7F0560DC 1520000A */  bnez  $t1, .L7F056108
 /* 08AC10 7F0560E0 00000000 */   nop   
-/* 08AC14 7F0560E4 0FC2FF01 */  jal   get_controls_locked_flag
+/* 08AC14 7F0560E4 0FC2FF01 */  jal   lvlGetControlsLockedFlag
 /* 08AC18 7F0560E8 00000000 */   nop   
 /* 08AC1C 7F0560EC 14400006 */  bnez  $v0, .L7F056108
 /* 08AC20 7F0560F0 3C048006 */   lui   $a0, %hi(g_musicSfxBufferPtr)
@@ -44926,7 +44926,7 @@ glabel sub_GAME_7F056210
 void handle_alarm_gas_timer_calldamage(void)
 {
     if (is_alarm_on() != 0) {
-        if ((ptr_alarm_sfx == 0) && (get_controls_locked_flag() == 0)) {
+        if ((ptr_alarm_sfx == 0) && (lvlGetControlsLockedFlag() == 0)) {
             sndPlaySfx(g_musicSfxBufferPtr, ALARM3_SFX, &ptr_alarm_sfx);
         }
         alarm_timer = alarm_timer + g_ClockTimer;

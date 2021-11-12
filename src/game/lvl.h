@@ -51,18 +51,18 @@ extern s32 address_demo_loaded;
 extern s32 dword_CODE_bss_8008C5F8;
 
 void lvInitDebugNoticeList(void);
-Gfx * lvRender(Gfx *);
-void set_difficulty(s32 arg0);
-void manage_mp_game(void);
-void sub_GAME_7F0BF800(void);
-void unload_stage_text_data(void);
-DIFFICULTY get_current_difficulty(void);
-void stage_load(s32 stage);
+Gfx * lvlRender(Gfx *);
+void lvlSetSelectedDifficulty(DIFFICULTY arg0);
+void lvlManageMpGame(void);
+void lvlUpdateMpPlayerData(void);
+void lvlUnloadStageTextData(void);
+DIFFICULTY lvlGetSelectedDifficulty(void);
+void lvlStageLoad(s32 stage);
 
-void set_mp_time(s32 arg0);
-void set_mp_point(s32 arg0);
-void set_controls_locked_flag(s32 arg0);
-s32 get_controls_locked_flag(void);
-void setDamageMultipliersForDifficulty(void);
+void lvlSetMpTime(s32 arg0);
+void lvlSetMpPoint(s32 arg0);
+void lvlSetControlsLockedFlag(s32 arg0);
+s32 lvlGetControlsLockedFlag(void);
+void lvlSetMultipliersForDifficulty(void);
 
 #endif

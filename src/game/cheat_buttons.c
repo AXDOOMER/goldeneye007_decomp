@@ -241,7 +241,7 @@ glabel cheatButton_7F09177C
 /* 0C62C4 7F091794 AFB20020 */  sw    $s2, 0x20($sp)
 /* 0C62C8 7F091798 AFB00018 */  sw    $s0, 0x18($sp)
 /* 0C62CC 7F09179C 2631F80C */  addiu $s1, %lo(D_8003F80C) # addiu $s1, $s1, -0x7f4
-/* 0C62D0 7F0917A0 0FC2F7C1 */  jal   sub_GAME_7F0BDF04
+/* 0C62D0 7F0917A0 0FC2F7C1 */  jal   lvlGetCurrentStageToLoad
 /* 0C62D4 7F0917A4 0000A025 */   move  $s4, $zero
 /* 0C62D8 7F0917A8 2401005A */  li    $at, 90
 /* 0C62DC 7F0917AC 14410003 */  bne   $v0, $at, .L7F0917BC
@@ -3342,7 +3342,7 @@ glabel cheatGetMenuTextPointer
 
 
 #ifdef NONMATCHING
-void cheatCheckIfOn(void) {
+s32 cheatCheckIfOn(CHEAT_ID cheat) {
 
 }
 #else

@@ -6,7 +6,7 @@
 
 #ifdef NONMATCHING
 //s32 getPlayerCount(); // extern
-//s32 sub_GAME_7F0BDF04(); // extern
+//s32 lvlGetCurrentStageToLoad(); // extern
 extern u32 D_80040940[];
 extern s32 bufferentrycount_8007A160;
 extern u32 dword_CODE_bss_8007A164;
@@ -18,7 +18,7 @@ void sub_GAME_7F007180(void)
     s32 j;
 
 
-    sp18 = sub_GAME_7F0BDF04();
+    sp18 = lvlGetCurrentStageToLoad();
     bufferentrycount_8007A160 = (s32) (0xC8 / getPlayerCount());
     if ((sp18 == 0x1D) || (sp18 == 0x1E))
     {
@@ -38,7 +38,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F007180
 /* 03BCB0 7F007180 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 03BCB4 7F007184 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 03BCB8 7F007188 0FC2F7C1 */  jal   sub_GAME_7F0BDF04
+/* 03BCB8 7F007188 0FC2F7C1 */  jal   lvlGetCurrentStageToLoad
 /* 03BCBC 7F00718C 00000000 */   nop   
 /* 03BCC0 7F007190 0FC26919 */  jal   getPlayerCount
 /* 03BCC4 7F007194 AFA20018 */   sw    $v0, 0x18($sp)

@@ -303,19 +303,28 @@ typedef struct gunheld {
 struct player
 {
   /* 0x0000 */ s32 unknown;
-  /* 0x0004 */ f32 xpos;
-  /* 0x0008 */ f32 ypos;
-  /* 0x000c */ f32 zpos;
-  /* 0x0010 */ f32 xpos2;
-  /* 0x0014 */ f32 ypos2;
-  /* 0x0018 */ f32 zpos2;
-  /* 0x001c */ f32 xoffset;
-  /* 0x0020 */ f32 yoffset;
-  /* 0x0024 */ f32 zoffset;
-  /* 0x0028 */ f32 xpos3;
-  /* 0x002c */ f32 ypos3;
-  /* 0x0030 */ f32 zpos3;
-  /* 0x0034 */ s32 room_pointer;
+
+  /**
+   * Offset 0x0004.
+   */
+  f32 pos[3];
+
+  /**
+   * Offset 0x0010.
+   */
+  f32 pos2[3];
+
+  /**
+   * Offset 0x001c.
+   */
+  f32 offset[3];
+
+  /**
+   * Offset 0x0028.
+   */
+  f32 pos3[3];
+
+  /* 0x0034 */ StandTile *room_pointer;
   /* 0x0038 */ struct coord3d current_model_pos;
   /* 0x0044 */ vec3 previous_model_pos;
   /* 0x0050 */ f32 current_room_xpos;
@@ -351,7 +360,7 @@ struct player
   /* 0x00c8 */ s32 xpos_1;
   /* 0x00cc */ s32 field_CC;
   /* 0x00d0 */ s32 field_D0;
-  /* 0x00d4 */ s32 ptr_char_objectinstance;
+  /* 0x00d4 */ s32 *ptr_char_objectinstance;
   /* 0x00d8 */ s32 bonddead;
   /* 0x00dc */ f32 bondhealth;
   /* 0x00e0 */ f32 bondarmour;
@@ -428,7 +437,7 @@ struct player
   s32 field_1FC;
   s32 pausing_flag;
   f32 pause_starting_angle;
-  f32 field_208;
+  f32 pause_related;
   f32 pause_target_angle;
   f32 field_210;
   f32 field_214;
@@ -436,9 +445,20 @@ struct player
   s32 field_21C;
   s32 step_in_view_watch_animation;
   f32 pause_animation_counter;
-  s32 field_228;
-  s32 field_22C;
+
+  /**
+   * Offset 0x0228.
+   */
+  f32 pause_watch_related;
+
+  /**
+   * Looks to be same as pause_watch_related, but adjusted by scale factor.
+   * Offset 0x022c.
+   */
+  f32 pause_watch_related_scaled;
+  
   s32 something_with_watch_object_instance;
+
   s32 field_234;
   s32 field_238;
   s32 field_23C;
@@ -448,7 +468,12 @@ struct player
   s32 field_24C;
   s32 field_250;
   s32 field_254;
-  s32 field_258;
+
+  /**
+   * Some kind of adjustment applied before scaling to set pause_watch_related_scaled.
+   * Offset 0x0258.
+   */
+  f32 pause_watch_related_adjust;
   s32 field_25C;
   s32 field_260;
   s32 field_264;
@@ -614,10 +639,13 @@ struct player
   s32 field_47C;
   s32 field_480;
   s32 field_484;
-  s32 current_tile_ptr;
-  s32 positionx;
-  s32 positiony;
-  s32 positionz;
+  StandTile *current_tile_ptr;
+
+  /**
+   * Offset 0x048c.
+   */
+  struct coord3d collision_position;
+
   s32 field_498;
   s32 field_49C;
   s32 field_4A0;
@@ -864,7 +892,13 @@ struct player
   f32 field_FC0;
   f32 field_FC4;
   s32 field_FC8;
+
+  /**
+   * Used in lvlRender method, in VERSION_JP build.
+   * Offset 0xfcc.
+   */
   s32 field_FCC;
+  
   s32 field_FD0;
   s32 field_FD4;
   s32 field_FD8;
@@ -916,23 +950,75 @@ struct player
   f32 sniper_zoom;
   f32 camera_zoom;
   s32 field_108C;
+
+  /**
+   * Offset 0x1090.
+   */
   f32 c_screenwidth;
+
+  /**
+   * Offset 0x1094.
+   */
   f32 c_screenheight;
+
+  /**
+   * Offset 0x1098.
+   */
   f32 c_screenleft;
+
+  /**
+   * Offset 0x109c.
+   */
   f32 c_screentop;
+
+  /**
+   * Offset 0x10a0.
+   */
   f32 c_perspnear;
+
+  /**
+   * Offset 0x10a4.
+   */
   f32 c_perspfovy;
+
+  /**
+   * Offset 0x10a8.
+   */
   f32 c_perspaspect;
+
+  /**
+   * Offset 0x10ac.
+   */
   f32 c_halfwidth;
+
+  /**
+   * Offset 0x10b0.
+   */
   f32 c_halfheight;
+
+  /**
+   * Offset 0x10b4.
+   */
   f32 c_scalex;
+
+  /**
+   * Offset 0x10b8.
+   */
   f32 c_scaley;
+
+  /**
+   * Offset 0x10bc.
+   */
   f32 c_recipscalex;
   f32 c_recipscaley;
   Mtx* field_10C4;
   Mtx* field_10C8;
   Mtxf* field_10CC;
   s32 field_10D0; // ptr
+
+  /**
+   * Offset 0x10d4.
+   */
   Mtxf* field_10D4;
   Mtx* projmatrix;
   Mtxf* projmatrixf;
@@ -946,10 +1032,30 @@ struct player
   u32 c_lodscalezu32;
   struct coord3d c_cameratopnorm;
   struct coord3d c_cameraleftnorm;
+
+  /**
+   * Offset 0x1118.
+   */
   f32 screenxminf;
+
+  /**
+   * Offset 0x111c.
+   */
   f32 screenyminf;
+
+  /**
+   * Offset 0x1120.
+   */
   f32 screenxmaxf;
+
+  /**
+   * Offset 0x1124.
+   */
   f32 screenymaxf;
+
+  /**
+   * Offset 0x1128.
+   */
   s32 somekinda_bitflags;
   s32 field_112C;
   s32 ammoheldarr[30];
@@ -2467,7 +2573,13 @@ struct player
   s32 field_29B0;
   s32 field_29B4;
   s32 field_29B8;
-  s32 field_29BC;
+
+  /**
+   * Related to player perspective.
+   * Offset 0x29bc.
+   */
+  f32 field_29BC;
+
   f32 field_29C0;
   s32 mpmenuon;
   s32 mpmenumode;
@@ -2481,10 +2593,22 @@ struct player
   s32 field_29E8;
   s32 field_29EC;
   s32 field_29F0;
+
+  /**
+   * Holds mission offset timer value.
+   * Offset 0x29f4.
+   */
   s32 field_29F4;
+
   s32 field_29F8;
   s32 autocrouchpos;
   s32 healthdisplaytime;
+
+  /**
+   * Current tile pointer -> room.
+   * 
+   * Offset 0x2a04.
+   */
   s16 field_2A04;
   f32 field_2A08;
   f32 field_2A0C;
@@ -2564,15 +2688,15 @@ extern s32 SFX_8003645C;
 //D:80036460
 extern s32 D_80036460;
 //D:80036464
-extern s32 D_80036464;
+extern f32 D_80036464;
 //D:80036468
 extern s32 D_80036468;
 //D:8003646C
-extern s32 D_8003646C;
+extern f32 D_8003646C;
 //D:80036470
 extern s32 D_80036470;
 //D:80036474
-extern s32 D_80036474;
+extern f32 D_80036474;
 //D:80036478
 extern s32 D_80036478;
 //D:8003647C
@@ -2839,7 +2963,7 @@ extern f32 D_80036AC4;
 
 u32 get_camera_mode(void);
 
-void sub_GAME_7F07E46C(f32 param);
+void bondviewTriggerWatchZoom(f32 zoominfovy);
 
 void trigger_watch_zoom(f32 final, f32 time);
 
@@ -2865,7 +2989,7 @@ f32 getPlayer_c_perspaspect(void);
 void set_open_close_solo_watch_menu_to1(void);
 
 void init_player_BONDdata(void);
-void sub_GAME_7F0798B8(void);
+void bondviewPlayerSpawnRelated(void);
 f32 get_BONDdata_watch_health(void);
 f32 get_BONDdata_watch_armor(void);
 void possibly_reset_viewport_options_for_player(s8 arg0, s8 arg1, u16 arg2);
@@ -2878,5 +3002,16 @@ void display_string_in_lower_left_corner(char *string, s32 arg1, s32 arg2);
 void display_string_in_lower_left_corner(char *string);
 #endif
 
+Gfx * sub_GAME_7F087A08(Gfx *arg0);
+s32 sub_GAME_7F089F38(void);
+Gfx* write_stan_tiles_in_yellow(Gfx *arg0);
+Gfx * maybe_mp_interface(Gfx *arg0);
+Gfx * sub_GAME_7F08BCB8(Gfx *arg0);
+s32 sub_GAME_7F078A58(struct coord3d *vec_scale, f32 norm_scale);
+s32 getMissiontimer(void);
+void solo_char_load(void);
+void bondviewUpdateYAutoAimTime(s32 auto_aim_time, f32 auto_aim_y);
+void bondviewUpdateXAutoAimTime(s32 auto_aim_time, f32 auto_aim_x);
+void bondviewSet3dCoord7F07CEB0(struct coord3d *arg0);
 
 #endif

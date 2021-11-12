@@ -3990,7 +3990,7 @@ glabel proplvreset2
 /* 038E24 7F0042F4 8D6B5D0C */  lw    $t3, %lo(ptr_setup_objects)($t3)
 /* 038E28 7F0042F8 116002DF */  beqz  $t3, .L7F004E78
 /* 038E2C 7F0042FC 00000000 */   nop   
-/* 038E30 7F004300 0FC2FF04 */  jal   get_current_difficulty
+/* 038E30 7F004300 0FC2FF04 */  jal   lvlGetSelectedDifficulty
 /* 038E34 7F004304 00000000 */   nop   
 /* 038E38 7F004308 244C0004 */  addiu $t4, $v0, 4
 /* 038E3C 7F00430C 240D0001 */  li    $t5, 1
@@ -4365,7 +4365,7 @@ type2D_tank:
 /* 0393A0 7F004870 E65000DC */   swc1  $f16, 0xdc($s2)
 /* 0393A4 7F004874 8C440014 */  lw    $a0, 0x14($v0)
 /* 0393A8 7F004878 8C450008 */  lw    $a1, 8($v0)
-/* 0393AC 7F00487C 0FC2CA5C */  jal   sub_GAME_7F0B2970
+/* 0393AC 7F00487C 0FC2CA5C */  jal   stanGetPositionYValue
 /* 0393B0 7F004880 8C460010 */   lw    $a2, 0x10($v0)
 /* 0393B4 7F004884 E7A000E8 */  swc1  $f0, 0xe8($sp)
 .L7F004888:
@@ -5383,7 +5383,7 @@ glabel jpt_8004F02C
 /* 038E64 7F0042F4 8D6B5D4C */  lw    $t3, %lo(ptr_setup_objects)($t3)
 /* 038E68 7F0042F8 116002E3 */  beqz  $t3, .L7F004E88
 /* 038E6C 7F0042FC 00000000 */   nop   
-/* 038E70 7F004300 0FC3021E */  jal   get_current_difficulty
+/* 038E70 7F004300 0FC3021E */  jal   lvlGetSelectedDifficulty
 /* 038E74 7F004304 00000000 */   nop   
 /* 038E78 7F004308 244C0004 */  addiu $t4, $v0, 4
 /* 038E7C 7F00430C 240D0001 */  li    $t5, 1
@@ -5763,7 +5763,7 @@ type2D_tank:
 /* 0393F0 7F004880 E65000DC */   swc1  $f16, 0xdc($s2)
 /* 0393F4 7F004884 8C440014 */  lw    $a0, 0x14($v0)
 /* 0393F8 7F004888 8C450008 */  lw    $a1, 8($v0)
-/* 0393FC 7F00488C 0FC2CD48 */  jal   sub_GAME_7F0B2970
+/* 0393FC 7F00488C 0FC2CD48 */  jal   stanGetPositionYValue
 /* 039400 7F004890 8C460010 */   lw    $a2, 0x10($v0)
 /* 039404 7F004894 E7A000E8 */  swc1  $f0, 0xe8($sp)
 .L7F004898:
@@ -6781,7 +6781,7 @@ glabel proplvreset2
 /* 036C70 7F004280 8D6B4C4C */  lw    $t3, %lo(ptr_setup_objects)($t3)
 /* 036C74 7F004284 116002E1 */  beqz  $t3, .L7F004E88
 /* 036C78 7F004288 00000000 */   nop   
-/* 036C7C 7F00428C 0FC2FC21 */  jal   get_current_difficulty
+/* 036C7C 7F00428C 0FC2FC21 */  jal   lvlGetSelectedDifficulty
 /* 036C80 7F004290 00000000 */   nop   
 /* 036C84 7F004294 244C0004 */  addiu $t4, $v0, 4
 /* 036C88 7F004298 240D0001 */  li    $t5, 1
@@ -7159,7 +7159,7 @@ type2D_tank:
 /* 0371F4 7F004804 E65000DC */   swc1  $f16, 0xdc($s2)
 /* 0371F8 7F004808 8C440014 */  lw    $a0, 0x14($v0)
 /* 0371FC 7F00480C 8C450008 */  lw    $a1, 8($v0)
-/* 037200 7F004810 0FC2C70C */  jal   sub_GAME_7F0B2970
+/* 037200 7F004810 0FC2C70C */  jal   stanGetPositionYValue
 /* 037204 7F004814 8C460010 */   lw    $a2, 0x10($v0)
 /* 037208 7F004818 E7A000E8 */  swc1  $f0, 0xe8($sp)
 .L7F004898:

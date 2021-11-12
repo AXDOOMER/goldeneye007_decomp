@@ -73,6 +73,7 @@ s16 viGetViewWidth(void);
 s16 viGetViewHeight(void);
 u8 *viGetFrameBuf2(void);
 void viSetFovY(f32 fovy);
+f32 viGetFovY(void);
 void viSetAspect(f32 aspect);
 void viSetZRange(f32 near, f32 far);
 void viSetUseZBuf(s32 usezbuf);
@@ -94,6 +95,9 @@ void indyGrabRgb32bit(void);
 void viSetVideoMode(s32 m);
 s32 viGet800232A0(void);
 void viSet800232A0(s32 arg0);
+
+Gfx *viClearZBufCurrentPlayer(Gfx *gdl);
+Gfx *video_related_F(Gfx *gdl);
 #endif
 
 

@@ -3091,7 +3091,7 @@ glabel draw_background_health_and_armor
 /* 0DBE1C 7F0A72EC 54410005 */  bnel  $v0, $at, .L7F0A7304
 /* 0DBE20 7F0A72F0 3C013E80 */   lui   $at, 0x3e80
 .L7F0A72F4:
-/* 0DBE24 7F0A72F4 0FC1F9D0 */  jal   sub_GAME_7F07E740
+/* 0DBE24 7F0A72F4 0FC1F9D0 */  jal   bondviewWatchAnimationRelated
 /* 0DBE28 7F0A72F8 00000000 */   nop
 /* 0DBE2C 7F0A72FC 46000086 */  mov.s $f2, $f0
 .L7F0A7300:
@@ -10154,7 +10154,7 @@ glabel draw_watch_mission_briefing_page
 .L7F0AC590:
 /* 0E10C0 7F0AC590 0FC15C81 */  jal   get_difficulty_for_objective
 /* 0E10C4 7F0AC594 03C02025 */   move  $a0, $fp
-/* 0E10C8 7F0AC598 0FC2FF04 */  jal   get_current_difficulty
+/* 0E10C8 7F0AC598 0FC2FF04 */  jal   lvlGetSelectedDifficulty
 /* 0E10CC 7F0AC59C AFA20068 */   sw    $v0, 0x68($sp)
 /* 0E10D0 7F0AC5A0 8FA40068 */  lw    $a0, 0x68($sp)
 /* 0E10D4 7F0AC5A4 0044082A */  slt   $at, $v0, $a0

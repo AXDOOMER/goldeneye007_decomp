@@ -2,6 +2,8 @@
 #define _STAN_H_
 #include "ultra64.h"
 
+#include "structs.h"
+
 
 
 typedef struct StandTilePoint {
@@ -29,12 +31,19 @@ typedef struct StandTile {
     u32 name1:24;
 
     u8 room;    // compared to 0xFF, not -1 in a function. Seen LBUs.
-    StandTileHeaderMid headerMid;
 
+    union {
+        StandTileHeaderMid headerMid;
+        s16 half;
+    } mid;
+    
     /* 0x06 */
     // They appear to have performed the bit field work themselves here,
     //   but we provide the StandTileHeaderTail member for clarity - it should be unused I believe.
-    StandTileHeaderTail hdrTail;
+    union {
+        StandTileHeaderTail hdrTail;
+        s16 half;
+    } tail;
 
     /* 0x08 */
     struct StandTilePoint points[];
@@ -51,12 +60,18 @@ typedef struct StandFileTile {
     u32 name1:24;
     //u8 name2;
     u8 room;    // compared to 0xFF, not -1 in a function. Seen LBUs.
-    StandTileHeaderMid headerMid;
+    union {
+        StandTileHeaderMid headerMid;
+        s16 half;
+    } mid;
 
     /* 0x06 */
     // They appear to have performed the bit field work themselves here,
     //   but we provide the StandTileHeaderTail member for clarity - it should be unused I believe.
-    StandTileHeaderTail hdrTail;
+    union {
+        StandTileHeaderTail hdrTail;
+        s16 half;
+    } tail;
 
     /* 0x08 */
     //hack remove for compiling stan files
@@ -72,7 +87,17 @@ typedef struct StandFileHeader {
 // RGB? I've called them 'triple' because I don't really know what RGB is
 // No parens around params
 #define STAN_TRIPLE_TO_PNT_INDEX(tile, tripleIndex) (tile->hdrTail >> (8 - 4*tripleIndex) & 0xF)
-#define STAN_POINT_COUNT(tile) (tile->hdrTail.pointCount & 0xF)
+#define STAN_POINT_COUNT(tile) (tile->tail.half & 0xF)
+
+#define STAN_MID_SPECIAL(tile) (tile->mid.half & 0xF)
+#define STAN_MID_R(tile) ((tile->mid.half >> 0x04) & 0xF)
+#define STAN_MID_G(tile) ((tile->mid.half >> 0x08) & 0xF)
+#define STAN_MID_B(tile) ((tile->mid.half >> 0x0C) & 0xF)
+
+#define STAN_TAIL_POINT_COUNT(tile) (tile->tail.half & 0xF)
+#define STAN_TAIL_C(tile) ((tile->tail.half >> 0x04) & 0xF)
+#define STAN_TAIL_D(tile) ((tile->tail.half >> 0x08) & 0xF)
+#define STAN_TAIL_E(tile) ((tile->tail.half >> 0x0C) & 0xF)
 
 // May be internal only, nice here.
 struct StandTileWalkCallbackRecord {
@@ -102,7 +127,7 @@ typedef struct StandFileFooter {
 } StandFileFooter;
 
 typedef s32 (*standTileLocusCallback_A_t)(struct StandTile*, struct StandTileLocusCallbackRecord*);
-typedef s32 (*standTileLocusCallback_B_t)(struct StandTile*, s32, float, float, void, float*);  // 5th parameter uncertain
+typedef s32 (*standTileLocusCallback_B_t)(struct StandTile*, s32, f32, f32, void, f32*);  // 5th parameter uncertain
 typedef s32 (*standTileLocusCallback_C_t)(struct StandTile**, s32, struct StandTileLocusCallbackRecord*);
 
 typedef s32 (*tilePredicate_t)(struct StandTile*);
@@ -112,9 +137,9 @@ void stanInitDebugNoticeList(void);
 /* Beta definitions, to allow citadel stan in .c file to build into .bin */
 
 typedef struct BetaStandFilePoint {
-    float x;
-    float y;
-    float z;
+    f32 x;
+    f32 y;
+    f32 z;
     u32 link;
 } BetaStandFilePoint;
 
@@ -137,5 +162,15 @@ StandTilePoint *stanMatchTileName(char*);
 
 void sub_GAME_7F0B2D38(s8 arg0, s8 arg1, u16 arg2);
 void sub_GAME_7F0AF630(s32 arg0);
+void sub_GAME_7F0B1CC4(void);
+Gfx * sub_GAME_7F0B2D48(Gfx *arg0);
+Gfx * sub_GAME_7F0B303C(Gfx *arg0);
+Gfx * sub_GAME_7F0B3034(Gfx *arg0);
+Gfx * sub_GAME_7F0B312C(Gfx *arg0, s32 arg1);
+Gfx * sub_GAME_7F0B3024(Gfx *ptrdl, s32 *ptrtile, u32 RGBAColor);
+s32 walkTilesBetweenPoints_NoCallback(struct StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z);
+s32 sub_GAME_7F0B0518(struct StandTile *tile, f32 p_x, f32 p_z);
+f32 stanGetPositionYValue(struct StandTile* tile, f32 p_x, f32 p_z);
+s32 getCollisionEdge_maybe(struct float3 *pntA, struct float3 *pntB);
 
 #endif
