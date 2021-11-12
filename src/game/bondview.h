@@ -437,7 +437,7 @@ struct player
   s32 field_1FC;
   s32 pausing_flag;
   f32 pause_starting_angle;
-  f32 field_208;
+  f32 pause_related;
   f32 pause_target_angle;
   f32 field_210;
   f32 field_214;
