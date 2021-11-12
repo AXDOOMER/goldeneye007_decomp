@@ -456,7 +456,9 @@ struct player
    * Offset 0x022c.
    */
   f32 pause_watch_related_scaled;
+  
   s32 something_with_watch_object_instance;
+
   s32 field_234;
   s32 field_238;
   s32 field_23C;

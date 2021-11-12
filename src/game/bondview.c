@@ -3,6 +3,7 @@
 #include "game/bondview.h"
 #include "game/bondinv.h"
 #include "game/chr.h"
+#include "game/objecthandler.h"
 #include "game/player.h"
 #include "game/player_2.h"
 #include "game/textrelated.h"
@@ -508,6 +509,7 @@ void sub_GAME_7F07DE64(struct player *player);
 void bondviewUpdateWatchZoomIn(void);
 void bondviewSetPauseWatchRelated(f32 arg0);
 void bondviewSetPauseWatchRelatedAlt(f32 arg0);
+void bondviewStepWatchAnimation(void);
 
 // end forward declarations
 
@@ -11928,132 +11930,38 @@ void bondviewSetPauseWatchRelatedAlt(f32 arg0)
 
 
 
-#ifdef NONMATCHING
-void *sub_GAME_7F07E964(void) {
-    void *phi_return;
-
-    // Node 0
-    phi_return = g_CurrentPlayer;
-    if (g_CurrentPlayer->step_in_view_watch_animation != 0)
+/**
+ * Address 0x7F07E964.
+ */
+void bondviewStepWatchAnimation(void)
+{
+    if ((g_CurrentPlayer->step_in_view_watch_animation != 0) && (g_CurrentPlayer->step_in_view_watch_animation != 3))
     {
-        // Node 1
-        phi_return = g_CurrentPlayer;
-        if (3 != g_CurrentPlayer->step_in_view_watch_animation)
+        if (g_CurrentPlayer->step_in_view_watch_animation == 1)
         {
-            // Node 2
-            if (g_CurrentPlayer->step_in_view_watch_animation == 20.0f)
+            g_CurrentPlayer->pause_animation_counter += g_GlobalTimerDelta * watch_transition_time * g_CurrentPlayer->pause_watch_related_scaled;
+
+            if (g_CurrentPlayer->pause_animation_counter > 20.0f)
             {
-                // Node 3
-                g_CurrentPlayer->pause_animation_counter = (f32) (g_CurrentPlayer->pause_animation_counter + ((g_GlobalTimerDelta * watch_transition_time) * g_CurrentPlayer->pause_watch_related_scaled));
-                if (20.0f < g_CurrentPlayer->pause_animation_counter)
-                {
-                    // Node 4
-                    g_CurrentPlayer->pause_animation_counter = 20.0f;
-                    g_CurrentPlayer->step_in_view_watch_animation = 3;
-                }
+                g_CurrentPlayer->pause_animation_counter = 20.0f;
+                g_CurrentPlayer->step_in_view_watch_animation = 3;
             }
-            else
-            {
-                // Node 5
-                if (g_CurrentPlayer->step_in_view_watch_animation == &g_GlobalTimerDelta)
-                {
-                    // Node 6
-                    g_CurrentPlayer->pause_animation_counter = (f32) (g_CurrentPlayer->pause_animation_counter - ((g_GlobalTimerDelta * watch_transition_time) * g_CurrentPlayer->pause_watch_related_scaled));
-                    if (g_CurrentPlayer->pause_animation_counter < 0.0f)
-                    {
-                        // Node 7
-                        g_CurrentPlayer->pause_animation_counter = 0.0f;
-                        g_CurrentPlayer->step_in_view_watch_animation = 0;
-                    }
-                }
-            }
-            // Node 8
-            phi_return = sub_GAME_7F070090((g_CurrentPlayer + 0x230), g_CurrentPlayer->pause_animation_counter, 0);
         }
+        else if (g_CurrentPlayer->step_in_view_watch_animation == 2)
+        {
+            g_CurrentPlayer->pause_animation_counter -= g_GlobalTimerDelta * watch_transition_time * g_CurrentPlayer->pause_watch_related_scaled;
+
+            if (g_CurrentPlayer->pause_animation_counter < 0.0f)
+            {
+                g_CurrentPlayer->pause_animation_counter = 0.0f;
+                g_CurrentPlayer->step_in_view_watch_animation = 0;
+            }
+        }
+
+        sub_GAME_7F070090((void*)&g_CurrentPlayer->something_with_watch_object_instance, g_CurrentPlayer->pause_animation_counter, 0.0f);
     }
-    // Node 9
-    return phi_return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F07E964
-/* 0B3494 7F07E964 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
-/* 0B3498 7F07E968 2484A0B0 */  addiu $a0, %lo(g_CurrentPlayer) # addiu $a0, $a0, -0x5f50
-/* 0B349C 7F07E96C 8C820000 */  lw    $v0, ($a0)
-/* 0B34A0 7F07E970 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0B34A4 7F07E974 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0B34A8 7F07E978 8C430220 */  lw    $v1, 0x220($v0)
-/* 0B34AC 7F07E97C 24050003 */  li    $a1, 3
-/* 0B34B0 7F07E980 5060003A */  beql  $v1, $zero, .L7F07EA6C
-/* 0B34B4 7F07E984 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0B34B8 7F07E988 10A30037 */  beq   $a1, $v1, .L7F07EA68
-/* 0B34BC 7F07E98C 24010001 */   li    $at, 1
-/* 0B34C0 7F07E990 14610018 */  bne   $v1, $at, .L7F07E9F4
-/* 0B34C4 7F07E994 3C0141A0 */   li    $at, 0x41A00000 # 20.000000
-/* 0B34C8 7F07E998 44810000 */  mtc1  $at, $f0
-/* 0B34CC 7F07E99C 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta)
-/* 0B34D0 7F07E9A0 C4248378 */  lwc1  $f4, %lo(g_GlobalTimerDelta)($at)
-/* 0B34D4 7F07E9A4 3C018003 */  lui   $at, %hi(watch_transition_time)
-/* 0B34D8 7F07E9A8 C42665A8 */  lwc1  $f6, %lo(watch_transition_time)($at)
-/* 0B34DC 7F07E9AC C44A022C */  lwc1  $f10, 0x22c($v0)
-/* 0B34E0 7F07E9B0 C4520224 */  lwc1  $f18, 0x224($v0)
-/* 0B34E4 7F07E9B4 46062202 */  mul.s $f8, $f4, $f6
-/* 0B34E8 7F07E9B8 00000000 */  nop
-/* 0B34EC 7F07E9BC 460A4402 */  mul.s $f16, $f8, $f10
-/* 0B34F0 7F07E9C0 46109100 */  add.s $f4, $f18, $f16
-/* 0B34F4 7F07E9C4 E4440224 */  swc1  $f4, 0x224($v0)
-/* 0B34F8 7F07E9C8 8C820000 */  lw    $v0, ($a0)
-/* 0B34FC 7F07E9CC C4460224 */  lwc1  $f6, 0x224($v0)
-/* 0B3500 7F07E9D0 4606003C */  c.lt.s $f0, $f6
-/* 0B3504 7F07E9D4 00000000 */  nop
-/* 0B3508 7F07E9D8 4500001D */  bc1f  .L7F07EA50
-/* 0B350C 7F07E9DC 00000000 */   nop
-/* 0B3510 7F07E9E0 E4400224 */  swc1  $f0, 0x224($v0)
-/* 0B3514 7F07E9E4 8C8E0000 */  lw    $t6, ($a0)
-/* 0B3518 7F07E9E8 ADC50220 */  sw    $a1, 0x220($t6)
-/* 0B351C 7F07E9EC 10000018 */  b     .L7F07EA50
-/* 0B3520 7F07E9F0 8C820000 */   lw    $v0, ($a0)
-.L7F07E9F4:
-/* 0B3524 7F07E9F4 24010002 */  li    $at, 2
-/* 0B3528 7F07E9F8 14610015 */  bne   $v1, $at, .L7F07EA50
-/* 0B352C 7F07E9FC 3C018005 */   lui   $at, %hi(g_GlobalTimerDelta)
-/* 0B3530 7F07EA00 C4288378 */  lwc1  $f8, %lo(g_GlobalTimerDelta)($at)
-/* 0B3534 7F07EA04 3C018003 */  lui   $at, %hi(watch_transition_time)
-/* 0B3538 7F07EA08 C42A65A8 */  lwc1  $f10, %lo(watch_transition_time)($at)
-/* 0B353C 7F07EA0C C450022C */  lwc1  $f16, 0x22c($v0)
-/* 0B3540 7F07EA10 C4460224 */  lwc1  $f6, 0x224($v0)
-/* 0B3544 7F07EA14 460A4482 */  mul.s $f18, $f8, $f10
-/* 0B3548 7F07EA18 44800000 */  mtc1  $zero, $f0
-/* 0B354C 7F07EA1C 46109102 */  mul.s $f4, $f18, $f16
-/* 0B3550 7F07EA20 46043201 */  sub.s $f8, $f6, $f4
-/* 0B3554 7F07EA24 E4480224 */  swc1  $f8, 0x224($v0)
-/* 0B3558 7F07EA28 8C820000 */  lw    $v0, ($a0)
-/* 0B355C 7F07EA2C C44A0224 */  lwc1  $f10, 0x224($v0)
-/* 0B3560 7F07EA30 4600503C */  c.lt.s $f10, $f0
-/* 0B3564 7F07EA34 00000000 */  nop
-/* 0B3568 7F07EA38 45020006 */  bc1fl .L7F07EA54
-/* 0B356C 7F07EA3C 44800000 */   mtc1  $zero, $f0
-/* 0B3570 7F07EA40 E4400224 */  swc1  $f0, 0x224($v0)
-/* 0B3574 7F07EA44 8C8F0000 */  lw    $t7, ($a0)
-/* 0B3578 7F07EA48 ADE00220 */  sw    $zero, 0x220($t7)
-/* 0B357C 7F07EA4C 8C820000 */  lw    $v0, ($a0)
-.L7F07EA50:
-/* 0B3580 7F07EA50 44800000 */  mtc1  $zero, $f0
-.L7F07EA54:
-/* 0B3584 7F07EA54 24440230 */  addiu $a0, $v0, 0x230
-/* 0B3588 7F07EA58 8C450224 */  lw    $a1, 0x224($v0)
-/* 0B358C 7F07EA5C 44060000 */  mfc1  $a2, $f0
-/* 0B3590 7F07EA60 0FC1C024 */  jal   sub_GAME_7F070090
-/* 0B3594 7F07EA64 00000000 */   nop
-.L7F07EA68:
-/* 0B3598 7F07EA68 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F07EA6C:
-/* 0B359C 7F07EA6C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0B35A0 7F07EA70 03E00008 */  jr    $ra
-/* 0B35A4 7F07EA74 00000000 */   nop
-)
-#endif
+
 
 
 
@@ -13039,7 +12947,7 @@ glabel sub_GAME_7F07EC54
 .L7F07F7E4:
 /* 0B4314 7F07F7E4 0FC1F824 */  jal   sub_GAME_7F07E090
 /* 0B4318 7F07F7E8 00000000 */   nop
-/* 0B431C 7F07F7EC 0FC1FA59 */  jal   sub_GAME_7F07E964
+/* 0B431C 7F07F7EC 0FC1FA59 */  jal   bondviewStepWatchAnimation
 /* 0B4320 7F07F7F0 00000000 */   nop
 /* 0B4324 7F07F7F4 0FC1F98B */  jal   bondviewUpdateWatchZoomIn
 /* 0B4328 7F07F7F8 00000000 */   nop
@@ -13876,7 +13784,7 @@ glabel sub_GAME_7F07EC54
 .Ljp7F07FDF4:
 /* 0B4964 7F07FDF4 0FC1F9AD */  jal   sub_GAME_7F07E090
 /* 0B4968 7F07FDF8 00000000 */   nop
-/* 0B496C 7F07FDFC 0FC1FBDC */  jal   sub_GAME_7F07E964
+/* 0B496C 7F07FDFC 0FC1FBDC */  jal   bondviewStepWatchAnimation
 /* 0B4970 7F07FE00 00000000 */   nop
 /* 0B4974 7F07FE04 0FC1FB14 */  jal   bondviewUpdateWatchZoomIn
 /* 0B4978 7F07FE08 00000000 */   nop
