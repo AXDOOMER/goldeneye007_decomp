@@ -12,7 +12,7 @@
             "wslPath": "${defaultWSLPath}",
             "defines": [
                 "TRI4_Ext",
-                "DEBUG"
+                "VERSION_US"
             ]
             //"compilerPath": "/usr/",
                    }
