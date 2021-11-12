@@ -335,18 +335,52 @@ struct player
   /* 0x0064 */ s32 field_64;
   /* 0x0068 */ s32 field_68;
 
+  /**
+   * Collision / clipping related.
+   * Offset 0x006c.
+   */
   /* 0x006c */ f32 field_6C;
 
+  /**
+   * Collision / clipping related.
+   * Offset 0x0070.
+   */
   /* 0x0070 */ f32 field_70;
 
   /* 0x0074 */ f32 clipping_height;
 
   /* 0x0078 */ s32 field_78;
-  /* 0x007c */ s32 field_7C;
+
+  /**
+   * Collision / clipping related.
+   * Offset 0x007c.
+   */
+  /* 0x007c */ f32 field_7C;
+  
   /* 0x0080 */ s32 field_80;
+
+  /**
+   * Collision / clipping related.
+   * Offset 0x0084.
+   */
   /* 0x0084 */ f32 field_84;
+
+  /**
+   * Collision / clipping related.
+   * Offset 0x0088.
+   */
   /* 0x0088 */ f32 field_88;
+
+  /**
+   * Collision / clipping related.
+   * Offset 0x008c.
+   */
   /* 0x008c */ s32 field_8C;
+
+  /**
+   * Collision / clipping related.
+   * Offset 0x0090.
+   */
   /* 0x0090 */ f32 field_90;
   /* 0x0094 */ s32 field_94;
   /* 0x0098 */ f32 field_98;
@@ -2642,11 +2676,14 @@ struct player
   s32 neg_vspacing_for_control_type_entry;
   u32 has_set_control_type_data;
   /**
-   * Offset 0x2a6c. Related to 0ffset 0x2a70.
+   * Collision / clipping related.
+   * Related to 0ffset 0x2a70.
+   * Offset 0x2a6c.
    */
   s32 field_2A6C;
 
   /**
+   * Collision / clipping related.
    * Offset 0x2a70
    */
   StandTile *field_2A70;
@@ -3038,6 +3075,6 @@ void bondviewSet3dCoord7F07CEB0(struct coord3d *arg0);
 f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2);
 f32 sub_GAME_7F089780(struct player *player);
 void bondviewCollisionRadiusRelated(struct prop* arg0, f32 *arg1, f32 *arg2, f32 *arg3);
-
+void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_offset);
 
 #endif

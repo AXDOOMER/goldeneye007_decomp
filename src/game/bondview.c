@@ -14717,15 +14717,31 @@ glabel bondviewYPositionRelated
 
 
 
-#if 0
-void sub_GAME_7F080DF8(s32 arg0, f32 arg1)
+#ifdef NONMATCHING
+/**
+ * Address 0x7F080DF8.
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: wrong
+ * - identical instructions: fail
+ * - identical registers: fail
+ * 
+ * notes: one large wrong section. There's a load that's swapped near the beginning.
+ *     Rest of the function just has regalloc issues.
+ */
+void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_offset)
 {
     s32 i;
     f32 temp_f0;
-    f32 temp_f2_2;
-    f32 temp_f18;
+    f32 sp5C;
+    f32 sp58;
+    f32 sp54;
+    f32 new_field_7c;
+    f32 new_field_70;
     f32 sp40;
     f32 sp64;
+    f32 save_field_7C;
 
     if (in_tank_flag == 1)
     {
@@ -14748,9 +14764,9 @@ void sub_GAME_7F080DF8(s32 arg0, f32 arg1)
     }
     else
     {
-        if (arg0 != 0)
+        if (use_clipping_height != 0)
         {
-            g_CurrentPlayer->clipping_height = g_CurrentPlayer->clipping_height + arg1;
+            g_CurrentPlayer->clipping_height = g_CurrentPlayer->clipping_height + clipping_height_offset;
 
             temp_f0 = bondviewYPositionRelated(
                 g_CurrentPlayer->current_tile_ptr,
@@ -14764,11 +14780,9 @@ void sub_GAME_7F080DF8(s32 arg0, f32 arg1)
         }
         else
         {
-            f32 sp5C;
-            f32 sp58;
-            f32 sp54;
+            StandTile *st = g_CurrentPlayer->current_tile_ptr;
 
-            bondviewCollisionRadiusRelated(arg1, g_CurrentPlayer->prop, &sp5C, &sp58, &sp54);
+            bondviewCollisionRadiusRelated(g_CurrentPlayer->prop, &sp5C, &sp58, &sp54);
             
             sp64 = bondviewYPositionRelated(
                 g_CurrentPlayer->current_tile_ptr,
@@ -14776,7 +14790,7 @@ void sub_GAME_7F080DF8(s32 arg0, f32 arg1)
                 g_CurrentPlayer->collision_position.f[2]);
 
             if (sub_GAME_7F0B26B8(
-                &g_CurrentPlayer->current_tile_ptr,
+                &st,
                 g_CurrentPlayer->collision_position.f[0],
                 g_CurrentPlayer->collision_position.f[2],
                 sp5C,
@@ -14813,6 +14827,8 @@ void sub_GAME_7F080DF8(s32 arg0, f32 arg1)
             }
         }
 
+        // decomp issue: begin very wrong section
+        save_field_7C = g_CurrentPlayer->field_7C;
 
         if (g_CurrentPlayer->clipping_height < g_CurrentPlayer->field_70)
         {
@@ -14825,12 +14841,18 @@ void sub_GAME_7F080DF8(s32 arg0, f32 arg1)
                 sp40 = 0.2777778f;
             }
 
-            temp_f2_2 = g_CurrentPlayer->field_7C - (g_GlobalTimerDelta * sp40);
-            temp_f18 = g_CurrentPlayer->field_70 + (g_GlobalTimerDelta * (g_CurrentPlayer->field_7C + temp_f2_2) * 0.5f);
+            new_field_7c = save_field_7C - (g_GlobalTimerDelta * sp40);
+            new_field_70 = g_CurrentPlayer->field_70 + (g_GlobalTimerDelta * (save_field_7C + new_field_7c) * 0.5f);
 
-            if (temp_f18 < g_CurrentPlayer->clipping_height)
+            if (new_field_70 < g_CurrentPlayer->clipping_height)
             {
-                temp_f2_2 = -sqrtf((g_CurrentPlayer->field_7C * g_CurrentPlayer->field_7C) + (((2.0f * (g_CurrentPlayer->field_70 - g_CurrentPlayer->clipping_height) * 0.2777778f) / 60.0f) * 60.0f));
+                f32 f_7c_square = (g_CurrentPlayer->field_7C * g_CurrentPlayer->field_7C);
+                f32 td = (g_CurrentPlayer->field_70 - g_CurrentPlayer->clipping_height);
+                f32 td2 = (2.0f * td * 0.2777778f);
+                f32 tsq = f_7c_square + ((td2 / 60.0f) * 60.0f);
+                new_field_7c = -sqrtf(tsq);
+
+                new_field_70 = g_CurrentPlayer->clipping_height;
 
                 if (g_CurrentPlayer->field_2A6C != 0)
                 {
@@ -14840,19 +14862,21 @@ void sub_GAME_7F080DF8(s32 arg0, f32 arg1)
                 }
             }
 
-            g_CurrentPlayer->field_70 = temp_f18;
-            g_CurrentPlayer->field_7C = temp_f2_2;
+            g_CurrentPlayer->field_70 = new_field_70;
+            g_CurrentPlayer->field_7C = new_field_7c;
+            save_field_7C = g_CurrentPlayer->field_7C;
         }
 
-        if ((g_CurrentPlayer->field_7C < 0.0f) && (g_CurrentPlayer->field_70 <= g_CurrentPlayer->clipping_height))
+        // end very wrong section
+
+        if ((save_field_7C < 0.0f) && (g_CurrentPlayer->field_70 <= g_CurrentPlayer->clipping_height))
         {
-            if (g_CurrentPlayer->field_7C < -13.333333f)
+            if (save_field_7C < -13.333333f)
             {
                 g_CurrentPlayer->field_8C = 0xF;
                 g_CurrentPlayer->field_90 = -90.0f;
             }
-
-            if (g_CurrentPlayer->field_7C < -5.0f)
+            else if (save_field_7C < -5.0f)
             {
                 g_CurrentPlayer->field_8C = 0xF;
                 g_CurrentPlayer->field_90 = ((-5.0f - g_CurrentPlayer->field_7C) * -90.0f) / 8.333333f;
@@ -14922,7 +14946,7 @@ glabel D_80055100
 glabel D_80055104
 .word 0x3e4ccccc /*0.19999999*/
 .text
-glabel sub_GAME_7F080DF8
+glabel bondviewUpdatePlayerClipping
 /* 0B5928 7F080DF8 3C0E8003 */  lui   $t6, %hi(in_tank_flag)
 /* 0B592C 7F080DFC 8DCE6448 */  lw    $t6, %lo(in_tank_flag)($t6)
 /* 0B5930 7F080E00 27BDFF90 */  addiu $sp, $sp, -0x70
@@ -22255,7 +22279,7 @@ glabel MoveBond
 /* 0BB460 7F086930 8FAC0138 */   lw    $t4, 0x138($sp)
 /* 0BB464 7F086934 8FA40394 */  lw    $a0, 0x394($sp)
 .L7F086938:
-/* 0BB468 7F086938 0FC2037E */  jal   sub_GAME_7F080DF8
+/* 0BB468 7F086938 0FC2037E */  jal   bondviewUpdatePlayerClipping
 /* 0BB46C 7F08693C 8FA50390 */   lw    $a1, 0x390($sp)
 /* 0BB470 7F086940 0FC2051E */  jal   sub_GAME_7F081478
 /* 0BB474 7F086944 00000000 */   nop
@@ -24802,7 +24826,7 @@ glabel MoveBond
 /* 0BBB6C 7F086FFC 8FAE0138 */   lw    $t6, 0x138($sp)
 /* 0BBB70 7F087000 8FA40394 */  lw    $a0, 0x394($sp)
 .Ljp7F087004:
-/* 0BBB74 7F087004 0FC20502 */  jal   sub_GAME_7F080DF8
+/* 0BBB74 7F087004 0FC20502 */  jal   bondviewUpdatePlayerClipping
 /* 0BBB78 7F087008 8FA50390 */   lw    $a1, 0x390($sp)
 /* 0BBB7C 7F08700C 0FC206A2 */  jal   sub_GAME_7F081478
 /* 0BBB80 7F087010 00000000 */   nop
@@ -27332,7 +27356,7 @@ glabel MoveBond
 /* 0B9440 7F086A50 8FAC0138 */   lw    $t4, 0x138($sp)
 /* 0B9444 7F086A54 8FA40394 */  lw    $a0, 0x394($sp)
 .L7F086A58:
-/* 0B9448 7F086A58 0FC203A7 */  jal   sub_GAME_7F080DF8
+/* 0B9448 7F086A58 0FC203A7 */  jal   bondviewUpdatePlayerClipping
 /* 0B944C 7F086A5C 8FA50390 */   lw    $a1, 0x390($sp)
 /* 0B9450 7F086A60 0FC20547 */  jal   sub_GAME_7F081478
 /* 0B9454 7F086A64 00000000 */   nop
@@ -27403,7 +27427,7 @@ void sub_GAME_7F086990(s32 arg0, s32 arg1, ? arg2, ? arg_unalignedA, ? arg3, ? a
     sp40 = (f32) (sp40 + (((g_CurrentPlayer->field_504 * g_CurrentPlayer->field_498) - (g_CurrentPlayer->field_4FC * g_CurrentPlayer->field_4A0)) * g_GlobalTimerDelta));
     sp48 = (f32) (sp48 + (((g_CurrentPlayer->field_504 * g_CurrentPlayer->field_4A0) + (g_CurrentPlayer->field_4FC * g_CurrentPlayer->field_498)) * g_GlobalTimerDelta));
     sub_GAME_7F07D960(0.0f, &sp40, 1);
-    sub_GAME_7F080DF8(0, 0, 0);
+    bondviewUpdatePlayerClipping(0, 0, 0);
     sub_GAME_7F081478();
     if (cameramode != 4)
     {
@@ -27544,7 +27568,7 @@ glabel sub_GAME_7F086990
 /* 0BB67C 7F086B4C 44806000 */  mtc1  $zero, $f12
 /* 0BB680 7F086B50 00002025 */  move  $a0, $zero
 /* 0BB684 7F086B54 44056000 */  mfc1  $a1, $f12
-/* 0BB688 7F086B58 0FC2037E */  jal   sub_GAME_7F080DF8
+/* 0BB688 7F086B58 0FC2037E */  jal   bondviewUpdatePlayerClipping
 /* 0BB68C 7F086B5C 00000000 */   nop
 /* 0BB690 7F086B60 0FC2051E */  jal   sub_GAME_7F081478
 /* 0BB694 7F086B64 00000000 */   nop
