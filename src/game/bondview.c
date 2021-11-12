@@ -507,6 +507,7 @@ void sub_GAME_7F07DE9C(struct player *player);
 void sub_GAME_7F07DE64(struct player *player);
 void bondviewUpdateWatchZoomIn(void);
 void bondviewSetPauseWatchRelated(f32 arg0);
+void bondviewSetPauseWatchRelatedAlt(f32 arg0);
 
 // end forward declarations
 
@@ -11905,53 +11906,23 @@ void bondviewSetPauseWatchRelated(f32 arg0)
 
 
 
-#ifdef NONMATCHING
-void *sub_GAME_7F07E910(f32 arg0) {
-    // Node 0
-    if (g_CurrentPlayer->step_in_view_watch_animation == 20.0f)
+/**
+ * Address 0x7F07E910.
+ */
+void bondviewSetPauseWatchRelatedAlt(f32 arg0)
+{
+    if (g_CurrentPlayer->step_in_view_watch_animation == 3)
     {
-        // Node 1
-        g_CurrentPlayer->pause_watch_related_scaled = (f32) (20.0f / arg0);
+        g_CurrentPlayer->pause_watch_related_scaled = 20.0f / arg0;
     }
     else
     {
-        // Node 2
-        g_CurrentPlayer->pause_watch_related_scaled = (f32) (g_CurrentPlayer->pause_watch_related_adjust / arg0);
+        g_CurrentPlayer->pause_watch_related_scaled = g_CurrentPlayer->pause_watch_related_adjust / arg0;
     }
-    // Node 3
+
     g_CurrentPlayer->step_in_view_watch_animation = 2;
     g_CurrentPlayer->pause_watch_related = arg0;
-    return g_CurrentPlayer;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F07E910
-/* 0B3440 7F07E910 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
-/* 0B3444 7F07E914 2463A0B0 */  addiu $v1, %lo(g_CurrentPlayer) # addiu $v1, $v1, -0x5f50
-/* 0B3448 7F07E918 8C620000 */  lw    $v0, ($v1)
-/* 0B344C 7F07E91C 24010003 */  li    $at, 3
-/* 0B3450 7F07E920 8C4E0220 */  lw    $t6, 0x220($v0)
-/* 0B3454 7F07E924 15C10006 */  bne   $t6, $at, .L7F07E940
-/* 0B3458 7F07E928 3C0141A0 */   li    $at, 0x41A00000 # 20.000000
-/* 0B345C 7F07E92C 44812000 */  mtc1  $at, $f4
-/* 0B3460 7F07E930 00000000 */  nop
-/* 0B3464 7F07E934 460C2183 */  div.s $f6, $f4, $f12
-/* 0B3468 7F07E938 10000004 */  b     .L7F07E94C
-/* 0B346C 7F07E93C E446022C */   swc1  $f6, 0x22c($v0)
-.L7F07E940:
-/* 0B3470 7F07E940 C4480258 */  lwc1  $f8, 0x258($v0)
-/* 0B3474 7F07E944 460C4283 */  div.s $f10, $f8, $f12
-/* 0B3478 7F07E948 E44A022C */  swc1  $f10, 0x22c($v0)
-.L7F07E94C:
-/* 0B347C 7F07E94C 8C780000 */  lw    $t8, ($v1)
-/* 0B3480 7F07E950 240F0002 */  li    $t7, 2
-/* 0B3484 7F07E954 AF0F0220 */  sw    $t7, 0x220($t8)
-/* 0B3488 7F07E958 8C790000 */  lw    $t9, ($v1)
-/* 0B348C 7F07E95C 03E00008 */  jr    $ra
-/* 0B3490 7F07E960 E72C0228 */   swc1  $f12, 0x228($t9)
-)
-#endif
 
 
 
@@ -12749,7 +12720,7 @@ glabel sub_GAME_7F07EC54
 .L7F07F32C:
 /* 0B3E5C 7F07F32C 0FC1F80F */  jal   sub_GAME_7F07E03C
 /* 0B3E60 7F07F330 E7AE0028 */   swc1  $f14, 0x28($sp)
-/* 0B3E64 7F07F334 0FC1FA44 */  jal   sub_GAME_7F07E910
+/* 0B3E64 7F07F334 0FC1FA44 */  jal   bondviewSetPauseWatchRelatedAlt
 /* 0B3E68 7F07F338 C7AC0028 */   lwc1  $f12, 0x28($sp)
 /* 0B3E6C 7F07F33C 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
 /* 0B3E70 7F07F340 8C63A0B0 */  lw    $v1, %lo(g_CurrentPlayer)($v1)
@@ -13586,7 +13557,7 @@ glabel sub_GAME_7F07EC54
 .Ljp7F07F93C:
 /* 0B44AC 7F07F93C 0FC1F998 */  jal   sub_GAME_7F07E03C
 /* 0B44B0 7F07F940 E7AE0028 */   swc1  $f14, 0x28($sp)
-/* 0B44B4 7F07F944 0FC1FBC7 */  jal   sub_GAME_7F07E910
+/* 0B44B4 7F07F944 0FC1FBC7 */  jal   bondviewSetPauseWatchRelatedAlt
 /* 0B44B8 7F07F948 C7AC0028 */   lwc1  $f12, 0x28($sp)
 /* 0B44BC 7F07F94C 3C038008 */  lui   $v1, %hi(g_CurrentPlayer) # $v1, 0x8008
 /* 0B44C0 7F07F950 8C63A120 */  lw    $v1, %lo(g_CurrentPlayer)($v1)
