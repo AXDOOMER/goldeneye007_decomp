@@ -510,6 +510,7 @@ void bondviewUpdateWatchZoomIn(void);
 void bondviewSetPauseWatchRelated(f32 arg0);
 void bondviewSetPauseWatchRelatedAlt(f32 arg0);
 void bondviewStepWatchAnimation(void);
+f32 bondviewGetPauseAnimationPercent(void);
 
 // end forward declarations
 
@@ -11967,52 +11968,23 @@ void bondviewStepWatchAnimation(void)
 
 
 
-#ifdef NONMATCHING
-// Regalloc, v1 and v0 switched
-f32 sub_GAME_7F07EA78() {
-    s32 temp_v1 = g_CurrentPlayer->step_in_view_watch_animation;
-    if (temp_v1 == 1 || temp_v1 == 2) {
+/**
+ * Address 0x7F07EA78.
+ */
+f32 bondviewGetPauseAnimationPercent(void)
+{
+    if ((g_CurrentPlayer->step_in_view_watch_animation == 1) || (g_CurrentPlayer->step_in_view_watch_animation == 2))
+    {
         return g_CurrentPlayer->pause_animation_counter / 20.0f;
     }
-    else if (temp_v1 == 3) {
+    
+    if (g_CurrentPlayer->step_in_view_watch_animation == 3)
+    {
         return 1.0f;
     }
+
     return 0.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F07EA78
-/* 0B35A8 7F07EA78 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
-/* 0B35AC 7F07EA7C 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
-/* 0B35B0 7F07EA80 24010001 */  li    $at, 1
-/* 0B35B4 7F07EA84 8C430220 */  lw    $v1, 0x220($v0)
-/* 0B35B8 7F07EA88 10610002 */  beq   $v1, $at, .L7F07EA94
-/* 0B35BC 7F07EA8C 24010002 */   li    $at, 2
-/* 0B35C0 7F07EA90 14610005 */  bne   $v1, $at, .L7F07EAA8
-.L7F07EA94:
-/* 0B35C4 7F07EA94 3C0141A0 */   li    $at, 0x41A00000 # 20.000000
-/* 0B35C8 7F07EA98 44813000 */  mtc1  $at, $f6
-/* 0B35CC 7F07EA9C C4440224 */  lwc1  $f4, 0x224($v0)
-/* 0B35D0 7F07EAA0 03E00008 */  jr    $ra
-/* 0B35D4 7F07EAA4 46062003 */   div.s $f0, $f4, $f6
-
-.L7F07EAA8:
-/* 0B35D8 7F07EAA8 24010003 */  li    $at, 3
-/* 0B35DC 7F07EAAC 14610004 */  bne   $v1, $at, .L7F07EAC0
-/* 0B35E0 7F07EAB0 3C013F80 */   li    $at, 0x3F800000 # 1.000000
-/* 0B35E4 7F07EAB4 44810000 */  mtc1  $at, $f0
-/* 0B35E8 7F07EAB8 03E00008 */  jr    $ra
-/* 0B35EC 7F07EABC 00000000 */   nop
-
-.L7F07EAC0:
-/* 0B35F0 7F07EAC0 44800000 */  mtc1  $zero, $f0
-/* 0B35F4 7F07EAC4 00000000 */  nop
-/* 0B35F8 7F07EAC8 03E00008 */  jr    $ra
-/* 0B35FC 7F07EACC 00000000 */   nop
-)
-#endif
-
 
 
 
@@ -14202,8 +14174,6 @@ void sub_GAME_7F07FE1C(s32 arg0) {
     }
     g_CurrentPlayer->speedforwards = g_CurrentPlayer->field_2A4C;
 }
-
-f32 viGetFovY(void);
 
 f32 sub_GAME_7F07FF74(f32 value) {
     if (value > 0) {
@@ -27741,11 +27711,11 @@ s32 get_curplayer_viewport_height(void)
     }
     if (cur_player_get_screen_setting() == 1)
     {
-        return (s32) (((s32) (40.0f * sub_GAME_7F07EA78()) + 0xb4) << 0x10) >> 0x10;
+        return (s32) (((s32) (40.0f * bondviewGetPauseAnimationPercent()) + 0xb4) << 0x10) >> 0x10;
     }
     if (cur_player_get_screen_setting() == 2)
     {
-        return (s32) (((s32) (84.0f * sub_GAME_7F07EA78()) + 0x88) << 0x10) >> 0x10;
+        return (s32) (((s32) (84.0f * bondviewGetPauseAnimationPercent()) + 0x88) << 0x10) >> 0x10;
     }
     return 0xdc;
 }
@@ -27790,7 +27760,7 @@ glabel get_curplayer_viewport_height
 /* 0BB8CC 7F086D9C 24010001 */  li    $at, 1
 /* 0BB8D0 7F086DA0 1441000E */  bne   $v0, $at, .L7F086DDC
 /* 0BB8D4 7F086DA4 00000000 */   nop
-/* 0BB8D8 7F086DA8 0FC1FA9E */  jal   sub_GAME_7F07EA78
+/* 0BB8D8 7F086DA8 0FC1FA9E */  jal   bondviewGetPauseAnimationPercent
 /* 0BB8DC 7F086DAC 00000000 */   nop
 /* 0BB8E0 7F086DB0 3C014220 */  li    $at, 0x42200000 # 40.000000
 /* 0BB8E4 7F086DB4 44812000 */  mtc1  $at, $f4
@@ -27809,7 +27779,7 @@ glabel get_curplayer_viewport_height
 /* 0BB914 7F086DE4 24010002 */  li    $at, 2
 /* 0BB918 7F086DE8 5441000F */  bnel  $v0, $at, .L7F086E28
 /* 0BB91C 7F086DEC 240200DC */   li    $v0, 220
-/* 0BB920 7F086DF0 0FC1FA9E */  jal   sub_GAME_7F07EA78
+/* 0BB920 7F086DF0 0FC1FA9E */  jal   bondviewGetPauseAnimationPercent
 /* 0BB924 7F086DF4 00000000 */   nop
 /* 0BB928 7F086DF8 3C0142A8 */  li    $at, 0x42A80000 # 84.000000
 /* 0BB92C 7F086DFC 44815000 */  mtc1  $at, $f10
@@ -27903,7 +27873,7 @@ glabel get_curplayer_viewport_uly
 /* 0BBA30 7F086F00 24010001 */  li    $at, 1
 /* 0BBA34 7F086F04 1441000E */  bne   $v0, $at, .L7F086F40
 /* 0BBA38 7F086F08 00000000 */   nop
-/* 0BBA3C 7F086F0C 0FC1FA9E */  jal   sub_GAME_7F07EA78
+/* 0BBA3C 7F086F0C 0FC1FA9E */  jal   bondviewGetPauseAnimationPercent
 /* 0BBA40 7F086F10 00000000 */   nop
 /* 0BBA44 7F086F14 3C01C1A0 */  li    $at, 0xC1A00000 # -20.000000
 /* 0BBA48 7F086F18 44812000 */  mtc1  $at, $f4
@@ -27922,7 +27892,7 @@ glabel get_curplayer_viewport_uly
 /* 0BBA78 7F086F48 24010002 */  li    $at, 2
 /* 0BBA7C 7F086F4C 5441000F */  bnel  $v0, $at, .L7F086F8C
 /* 0BBA80 7F086F50 2402000A */   li    $v0, 10
-/* 0BBA84 7F086F54 0FC1FA9E */  jal   sub_GAME_7F07EA78
+/* 0BBA84 7F086F54 0FC1FA9E */  jal   bondviewGetPauseAnimationPercent
 /* 0BBA88 7F086F58 00000000 */   nop
 /* 0BBA8C 7F086F5C 3C01C228 */  li    $at, 0xC2280000 # -42.000000
 /* 0BBA90 7F086F60 44815000 */  mtc1  $at, $f10
