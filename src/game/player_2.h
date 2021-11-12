@@ -5,5 +5,6 @@
 s32 getPlayerCount(void);
 s32 get_cur_playernum(void);
 void set_cur_player_fovy(f32 fovy);
+s32 sub_GAME_7F09B15C(struct prop* prop);
 
 #endif

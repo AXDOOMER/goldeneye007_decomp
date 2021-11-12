@@ -334,9 +334,13 @@ struct player
   /* 0x0060 */ s32 field_60;
   /* 0x0064 */ s32 field_64;
   /* 0x0068 */ s32 field_68;
-  /* 0x006c */ s32 field_6C;
-  /* 0x0070 */ s32 field_70;
-  /* 0x0074 */ s32 clipping_height;
+
+  /* 0x006c */ f32 field_6C;
+
+  /* 0x0070 */ f32 field_70;
+
+  /* 0x0074 */ f32 clipping_height;
+
   /* 0x0078 */ s32 field_78;
   /* 0x007c */ s32 field_7C;
   /* 0x0080 */ s32 field_80;
@@ -652,7 +656,11 @@ struct player
   s32 field_4A4;
   s32 field_4A8;
   s32 field_4AC;
-  s32 collision_radius;
+
+  /**
+   * Offset 0x04b0.
+   */
+  f32 collision_radius;
   s32 field_4B4;
   s32 field_4B8;
   s32 field_4BC;
@@ -3028,5 +3036,8 @@ void bondviewUpdateYAutoAimTime(s32 auto_aim_time, f32 auto_aim_y);
 void bondviewUpdateXAutoAimTime(s32 auto_aim_time, f32 auto_aim_x);
 void bondviewSet3dCoord7F07CEB0(struct coord3d *arg0);
 f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2);
+f32 sub_GAME_7F089780(struct player *player);
+void bondviewCollisionRadiusRelated(struct prop* arg0, f32 *arg1, f32 *arg2, f32 *arg3);
+
 
 #endif
