@@ -11514,124 +11514,57 @@ void bondviewTriggerWatchZoom(f32 zoominfovy)
 }
 
 
-
-void sub_GAME_7F07E504(void) {
+/**
+ * Trigger watch zoom with default angle.
+ * 
+ * Address 0x7F07E504.
+ */
+void bondviewTriggerWatchZoomDefault(void)
+{
     bondviewTriggerWatchZoom(60.0f);
 }
 
-#ifdef NONMATCHING
-void zoom_to_watch_on_open(void) {
-    f32 temp_f14;
-    f32 phi_f14;
 
-    // Node 0
-    temp_f14 = (((final - g_CurrentPlayer->field_11C4) * 45.0f) / D_80055080);
-    phi_f14 = temp_f14;
-    if (temp_f14 < 0.0f)
+/**
+ * Address 0x7F07E52C.
+ */
+void bondviewZoomToWatchOnOpen(void)
+{
+    f32 f;
+
+    f = ((5.9f - g_CurrentPlayer->zoominfovy) * 45.0f) / -54.1f;
+
+    if (f < 0.0f)
     {
-        // Node 1
-        phi_f14 = -temp_f14;
+        f = -f;
     }
-    // Node 2
-    return trigger_watch_zoom(final, phi_f14);
+
+    trigger_watch_zoom(5.9f, f);
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel final
-.word 0x40bccccd /*5.9000001*/
-glabel D_80055080
-.word 0xc2586666 /*-54.099998*/
-glabel D_80055084
-.word 0xc2586666 /*-54.099998*/
-.text
-glabel zoom_to_watch_on_open
-/* 0B305C 7F07E52C 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer)
-/* 0B3060 7F07E530 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 0B3064 7F07E534 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0B3068 7F07E538 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0B306C 7F07E53C 3C018005 */  lui   $at, %hi(final)
-/* 0B3070 7F07E540 C42C507C */  lwc1  $f12, %lo(final)($at)
-/* 0B3074 7F07E544 C5C411C4 */  lwc1  $f4, 0x11c4($t6)
-/* 0B3078 7F07E548 3C014234 */  li    $at, 0x42340000 # 45.000000
-/* 0B307C 7F07E54C 44814000 */  mtc1  $at, $f8
-/* 0B3080 7F07E550 46046181 */  sub.s $f6, $f12, $f4
-/* 0B3084 7F07E554 3C018005 */  lui   $at, %hi(D_80055080)
-/* 0B3088 7F07E558 C4305080 */  lwc1  $f16, %lo(D_80055080)($at)
-/* 0B308C 7F07E55C 44809000 */  mtc1  $zero, $f18
-/* 0B3090 7F07E560 46083282 */  mul.s $f10, $f6, $f8
-/* 0B3094 7F07E564 46105383 */  div.s $f14, $f10, $f16
-/* 0B3098 7F07E568 4612703C */  c.lt.s $f14, $f18
-/* 0B309C 7F07E56C 00000000 */  nop
-/* 0B30A0 7F07E570 45000002 */  bc1f  .L7F07E57C
-/* 0B30A4 7F07E574 00000000 */   nop
-/* 0B30A8 7F07E578 46007387 */  neg.s $f14, $f14
-.L7F07E57C:
-/* 0B30AC 7F07E57C 0FC1F900 */  jal   trigger_watch_zoom
-/* 0B30B0 7F07E580 00000000 */   nop
-/* 0B30B4 7F07E584 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0B30B8 7F07E588 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0B30BC 7F07E58C 03E00008 */  jr    $ra
-/* 0B30C0 7F07E590 00000000 */   nop
-)
-#endif
 
 
 
+/**
+ * Address 0x7F07E594.
+ */
+void bondviewZoomFromWatchOnExit(void)
+{
+    f32 f;
 
+    f = ((60.0f - g_CurrentPlayer->zoominfovy) * 45.0f) / -54.1f;
 
-#ifdef NONMATCHING
-void zoom_from_watch_on_exit(void) {
-    f32 temp_f14;
-    f32 phi_f14;
-
-    // Node 0
-    temp_f14 = (((60.0f - g_CurrentPlayer->field_11C4) * 45.0f) / D_80055084);
-    phi_f14 = temp_f14;
-    if (temp_f14 < 0.0f)
+    if (f < 0.0f)
     {
-        // Node 1
-        phi_f14 = -temp_f14;
+        f = -f;
     }
-    // Node 2
-    return trigger_watch_zoom(60.0f, phi_f14);
+
+    trigger_watch_zoom(60.0f, f);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel zoom_from_watch_on_exit
-/* 0B30C4 7F07E594 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer)
-/* 0B30C8 7F07E598 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 0B30CC 7F07E59C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0B30D0 7F07E5A0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0B30D4 7F07E5A4 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 0B30D8 7F07E5A8 44816000 */  mtc1  $at, $f12
-/* 0B30DC 7F07E5AC C5C411C4 */  lwc1  $f4, 0x11c4($t6)
-/* 0B30E0 7F07E5B0 3C014234 */  li    $at, 0x42340000 # 45.000000
-/* 0B30E4 7F07E5B4 44814000 */  mtc1  $at, $f8
-/* 0B30E8 7F07E5B8 46046181 */  sub.s $f6, $f12, $f4
-/* 0B30EC 7F07E5BC 3C018005 */  lui   $at, %hi(D_80055084)
-/* 0B30F0 7F07E5C0 C4305084 */  lwc1  $f16, %lo(D_80055084)($at)
-/* 0B30F4 7F07E5C4 44809000 */  mtc1  $zero, $f18
-/* 0B30F8 7F07E5C8 46083282 */  mul.s $f10, $f6, $f8
-/* 0B30FC 7F07E5CC 46105383 */  div.s $f14, $f10, $f16
-/* 0B3100 7F07E5D0 4612703C */  c.lt.s $f14, $f18
-/* 0B3104 7F07E5D4 00000000 */  nop
-/* 0B3108 7F07E5D8 45000002 */  bc1f  .L7F07E5E4
-/* 0B310C 7F07E5DC 00000000 */   nop
-/* 0B3110 7F07E5E0 46007387 */  neg.s $f14, $f14
-.L7F07E5E4:
-/* 0B3114 7F07E5E4 0FC1F900 */  jal   trigger_watch_zoom
-/* 0B3118 7F07E5E8 00000000 */   nop
-/* 0B311C 7F07E5EC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0B3120 7F07E5F0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0B3124 7F07E5F4 03E00008 */  jr    $ra
-/* 0B3128 7F07E5F8 00000000 */   nop
-)
-#endif
 
 
-s32 check_watch_page_transistion_running(void) {
+
+s32 check_watch_page_transistion_running(void)
+{
     return (g_CurrentPlayer->zoomintime < g_CurrentPlayer->zoomintimemax);
 }
 
@@ -12846,7 +12779,7 @@ glabel sub_GAME_7F07EC54
 /* 0B3BDC 7F07F0AC 8D08A0B0 */  lw    $t0, %lo(g_CurrentPlayer)($t0)
 /* 0B3BE0 7F07F0B0 AD00021C */  sw    $zero, 0x21c($t0)
 .L7F07F0B4:
-/* 0B3BE4 7F07F0B4 0FC1F94B */  jal   zoom_to_watch_on_open
+/* 0B3BE4 7F07F0B4 0FC1F94B */  jal   bondviewZoomToWatchOnOpen
 /* 0B3BE8 7F07F0B8 00000000 */   nop
 /* 0B3BEC 7F07F0BC 0FC1F97F */  jal   check_watch_page_transistion_running
 /* 0B3BF0 7F07F0C0 00000000 */   nop
@@ -12934,7 +12867,7 @@ glabel sub_GAME_7F07EC54
 /* 0B3D1C 7F07F1EC 24010001 */  li    $at, 1
 /* 0B3D20 7F07F1F0 1701000D */  bne   $t8, $at, .L7F07F228
 /* 0B3D24 7F07F1F4 00000000 */   nop
-/* 0B3D28 7F07F1F8 0FC1F965 */  jal   zoom_from_watch_on_exit
+/* 0B3D28 7F07F1F8 0FC1F965 */  jal   bondviewZoomFromWatchOnExit
 /* 0B3D2C 7F07F1FC 00000000 */   nop
 /* 0B3D30 7F07F200 8FB9001C */  lw    $t9, 0x1c($sp)
 /* 0B3D34 7F07F204 00002025 */  move  $a0, $zero
@@ -13683,7 +13616,7 @@ glabel sub_GAME_7F07EC54
 /* 0B422C 7F07F6BC 8D4AA120 */  lw    $t2, %lo(g_CurrentPlayer)($t2)
 /* 0B4230 7F07F6C0 AD40021C */  sw    $zero, 0x21c($t2)
 .Ljp7F07F6C4:
-/* 0B4234 7F07F6C4 0FC1FAD4 */  jal   zoom_to_watch_on_open
+/* 0B4234 7F07F6C4 0FC1FAD4 */  jal   bondviewZoomToWatchOnOpen
 /* 0B4238 7F07F6C8 00000000 */   nop
 /* 0B423C 7F07F6CC 0FC1FB08 */  jal   check_watch_page_transistion_running
 /* 0B4240 7F07F6D0 00000000 */   nop
@@ -13771,7 +13704,7 @@ glabel sub_GAME_7F07EC54
 /* 0B436C 7F07F7FC 24010001 */  li    $at, 1
 /* 0B4370 7F07F800 1501000D */  bne   $t0, $at, .Ljp7F07F838
 /* 0B4374 7F07F804 00000000 */   nop
-/* 0B4378 7F07F808 0FC1FAEE */  jal   zoom_from_watch_on_exit
+/* 0B4378 7F07F808 0FC1FAEE */  jal   bondviewZoomFromWatchOnExit
 /* 0B437C 7F07F80C 00000000 */   nop
 /* 0B4380 7F07F810 8FA9001C */  lw    $t1, 0x1c($sp)
 /* 0B4384 7F07F814 00002025 */  move  $a0, $zero
@@ -14302,7 +14235,7 @@ glabel trigger_solo_watch_menu
 /* 0B4484 7F07F954 8E990000 */  lw    $t9, ($s4)
 /* 0B4488 7F07F958 0FC1F7BF */  jal   sub_GAME_7F07DEFC
 /* 0B448C 7F07F95C AF2001C4 */   sw    $zero, 0x1c4($t9)
-/* 0B4490 7F07F960 0FC1F941 */  jal   sub_GAME_7F07E504
+/* 0B4490 7F07F960 0FC1F941 */  jal   bondviewTriggerWatchZoomDefault
 /* 0B4494 7F07F964 00000000 */   nop
 /* 0B4498 7F07F968 0FC228BF */  jal   get_BONDdata_watch_armor
 /* 0B449C 7F07F96C 00000000 */   nop
