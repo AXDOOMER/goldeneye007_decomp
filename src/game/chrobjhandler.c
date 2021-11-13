@@ -35343,7 +35343,7 @@ interact_weapon_object:
 /* 0850DC 7F0505AC 10000031 */  b     .L7F050674
 /* 0850E0 7F0505B0 8FA30068 */   lw    $v1, 0x68($sp)
 interact_bodyarmor_object:
-/* 0850E4 7F0505B4 0FC228C3 */  jal   add_BONDdata_watch_armor
+/* 0850E4 7F0505B4 0FC228C3 */  jal   bondviewAddCurrentPlayerArmor
 /* 0850E8 7F0505B8 C46C0084 */   lwc1  $f12, 0x84($v1)
 /* 0850EC 7F0505BC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0850F0 7F0505C0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
@@ -35723,7 +35723,7 @@ interact_weapon_object:
 /* 0850DC 7F0505AC 10000031 */  b     .L7F050674
 /* 0850E0 7F0505B0 8FA30068 */   lw    $v1, 0x68($sp)
 interact_bodyarmor_object:
-/* 0850E4 7F0505B4 0FC228C3 */  jal   add_BONDdata_watch_armor
+/* 0850E4 7F0505B4 0FC228C3 */  jal   bondviewAddCurrentPlayerArmor
 /* 0850E8 7F0505B8 C46C0084 */   lwc1  $f12, 0x84($v1)
 /* 0850EC 7F0505BC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0850F0 7F0505C0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
@@ -36104,7 +36104,7 @@ interact_weapon_object:
 /* 0850DC 7F0505AC 10000031 */  b     .L7F050674
 /* 0850E0 7F0505B0 8FA30068 */   lw    $v1, 0x68($sp)
 interact_bodyarmor_object:
-/* 0850E4 7F0505B4 0FC228C3 */  jal   add_BONDdata_watch_armor
+/* 0850E4 7F0505B4 0FC228C3 */  jal   bondviewAddCurrentPlayerArmor
 /* 0850E8 7F0505B8 C46C0084 */   lwc1  $f12, 0x84($v1)
 /* 0850EC 7F0505BC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
 /* 0850F0 7F0505C0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)

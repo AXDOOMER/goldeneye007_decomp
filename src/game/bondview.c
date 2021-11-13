@@ -33167,25 +33167,14 @@ f32 get_BONDdata_watch_armor(void)
 
 
 
-#ifdef NONMATCHING
-void add_BONDdata_watch_armor(void) {
-
+/**
+ * Address 0x7F08A30C.
+ */
+void bondviewAddCurrentPlayerArmor(f32 arg0)
+{
+    g_playerPerm->body_armor_pickups += arg0;
+    g_CurrentPlayer->bondarmour = arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel add_BONDdata_watch_armor
-/* 0BEE3C 7F08A30C 3C028008 */  lui   $v0, %hi(g_playerPerm)
-/* 0BEE40 7F08A310 8C42A0B4 */  lw    $v0, %lo(g_playerPerm)($v0)
-/* 0BEE44 7F08A314 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer)
-/* 0BEE48 7F08A318 C4440040 */  lwc1  $f4, 0x40($v0)
-/* 0BEE4C 7F08A31C 460C2180 */  add.s $f6, $f4, $f12
-/* 0BEE50 7F08A320 E4460040 */  swc1  $f6, 0x40($v0)
-/* 0BEE54 7F08A324 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 0BEE58 7F08A328 03E00008 */  jr    $ra
-/* 0BEE5C 7F08A32C E5CC00E0 */   swc1  $f12, 0xe0($t6)
-)
-#endif
 
 
 
