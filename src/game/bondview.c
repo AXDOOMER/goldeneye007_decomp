@@ -15,19 +15,18 @@
 #include "game/chrobjhandler.h"
 #include "game/debugmenu_handler.h"
 #include "game/front.h"
+#include "game/gun.h"
 #include "game/objecthandler.h"
+#include "game/lvl.h"
+#include "game/math_atan2f.h"
+#include "game/matrixmath.h"
 #include "game/player.h"
 #include "game/player_2.h"
-#include "game/textrelated.h"
-#include "game/lvl.h"
-#include "game/bondinv.h"
-#include "game/gun.h"
+#include "game/quaternion.h"
 #include "game/stan.h"
+#include "game/textrelated.h"
 #include "game/unk_0C0A70.h"
 #include "game/unk_0BC530.h"
-#include "game/quaternion.h"
-#include "game/math_atan2f.h"
-#include "game/chrobjhandler.h"
 
 // bss
 struct coord3d flt_CODE_bss_80079940;
@@ -36462,28 +36461,18 @@ Gfx* bondviewGfxPlayerField5cMatrix(Gfx* gdl)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08BD18(void) {
+/**
+ * Unreferenced.
+ * 
+ * Address 0x7F08BD18.
+ */
+void sub_GAME_7F08BD18(Mtxf *arg0)
+{
+    Mtxf sp18;
 
+    matrix_4x4_copy(arg0, (Mtxf *) &sp18);
+    sub_GAME_7F058C9C((Mtxf *) &sp18, arg0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08BD18
-/* 0C0848 7F08BD18 27BDFFA8 */  addiu $sp, $sp, -0x58
-/* 0C084C 7F08BD1C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C0850 7F08BD20 AFA40058 */  sw    $a0, 0x58($sp)
-/* 0C0854 7F08BD24 0FC16008 */  jal   matrix_4x4_copy
-/* 0C0858 7F08BD28 27A50018 */   addiu $a1, $sp, 0x18
-/* 0C085C 7F08BD2C 27A40018 */  addiu $a0, $sp, 0x18
-/* 0C0860 7F08BD30 0FC16327 */  jal   sub_GAME_7F058C9C
-/* 0C0864 7F08BD34 8FA50058 */   lw    $a1, 0x58($sp)
-/* 0C0868 7F08BD38 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C086C 7F08BD3C 27BD0058 */  addiu $sp, $sp, 0x58
-/* 0C0870 7F08BD40 03E00008 */  jr    $ra
-/* 0C0874 7F08BD44 00000000 */   nop
-)
-#endif
 
 
 
