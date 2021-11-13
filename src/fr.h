@@ -5,6 +5,8 @@
 #define NUM_VIDEO_FRAME_BUFFERS    2
 #define NUM_VIDEO_SETTINGS         NUM_VIDEO_FRAME_BUFFERS
 
+#define WIDESCREEN_ASPECT ((f32)(16.0f/9.0f))
+
 
 #define	SCREEN_HEIGHT_MIN   240
 #define	SCREEN_HEIGHT_240   240
@@ -101,6 +103,7 @@ s16 viGetViewTop(void);
 s16 viGetViewWidth(void);
 s16 viGetViewHeight(void);
 u8 *viGetFrameBuf2(void);
+void viSetFrameBuf2(u8 *buf);
 void viSetFovY(f32 fovy);
 f32 viGetFovY(void);
 void viSetAspect(f32 aspect);
@@ -113,6 +116,8 @@ void viVsyncRelated(void);
 void viSetHorizontalOffset(s32 arg0);
 s32 viGetHorizontalOffset(void);
 void video_related_8(void);
+void viSetBuf(s16 x, s16 y);
+void viSetXY(s16 x, s16 y);
 
 Gfx *viSetupScreensForNumPlayers(Gfx *gdl);
 
