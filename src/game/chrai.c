@@ -22299,7 +22299,7 @@ glabel sub_GAME_7F03BDEC
 /* 070958 7F03BE28 AFA000BC */   sw    $zero, 0xbc($sp)
 /* 07095C 7F03BE2C 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
 /* 070960 7F03BE30 0040A025 */  move  $s4, $v0
-/* 070964 7F03BE34 0FC225E0 */  jal   sub_GAME_7F089780
+/* 070964 7F03BE34 0FC225E0 */  jal   bondviewGetPlayerDuckingHeightRelated
 /* 070968 7F03BE38 8C84A0B0 */   lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 07096C 7F03BE3C 3C138007 */  lui   $s3, %hi(dword_CODE_bss_80071DF0)
 /* 070970 7F03BE40 8E731DF0 */  lw    $s3, %lo(dword_CODE_bss_80071DF0)($s3)
@@ -24193,7 +24193,7 @@ glabel sub_GAME_7F03D188
 /* 07204C 7F03D51C 8C4A0014 */  lw    $t2, 0x14($v0)
 /* 072050 7F03D520 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
 /* 072054 7F03D524 8C84A0B0 */  lw    $a0, %lo(g_CurrentPlayer)($a0)
-/* 072058 7F03D528 0FC225E0 */  jal   sub_GAME_7F089780
+/* 072058 7F03D528 0FC225E0 */  jal   bondviewGetPlayerDuckingHeightRelated
 /* 07205C 7F03D52C AFAA0050 */   sw    $t2, 0x50($sp)
 /* 072060 7F03D530 8FA40054 */  lw    $a0, 0x54($sp)
 /* 072064 7F03D534 00002825 */  move  $a1, $zero

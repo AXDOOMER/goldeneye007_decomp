@@ -3087,7 +3087,7 @@ void bondviewUpdateYAutoAimTime(s32 auto_aim_time, f32 auto_aim_y);
 void bondviewUpdateXAutoAimTime(s32 auto_aim_time, f32 auto_aim_x);
 void bondviewSet3dCoord7F07CEB0(struct coord3d *arg0);
 f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2);
-f32 sub_GAME_7F089780(struct player *player);
+f32 bondviewGetPlayerDuckingHeightRelated(struct player *player);
 void bondviewCollisionRadiusRelated(struct prop* arg0, f32 *arg1, f32 *arg2, f32 *arg3);
 void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_offset);
 void currentPlayerSetFadeColour(s32 r, s32 g, s32 b, f32 frac);

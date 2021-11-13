@@ -14819,7 +14819,7 @@ void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_o
                 g_CurrentPlayer->collision_position.f[0],
                 g_CurrentPlayer->collision_position.f[2],
                 sp5C,
-                sub_GAME_7F089780(g_CurrentPlayer) + sp64) >= 0)
+                bondviewGetPlayerDuckingHeightRelated(g_CurrentPlayer) + sp64) >= 0)
             {
                 if (sp64 < g_CurrentPlayer->clipping_height)
                 {
@@ -14912,7 +14912,7 @@ void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_o
 
         if (g_CurrentPlayer->field_2A6C != 0)
         {
-            if ((g_CurrentPlayer->field_70 + sub_GAME_7F089780(g_CurrentPlayer)) < stanGetPositionYValue(g_CurrentPlayer->current_tile_ptr, g_CurrentPlayer->collision_position.f[0], g_CurrentPlayer->collision_position.f[2]))
+            if ((g_CurrentPlayer->field_70 + bondviewGetPlayerDuckingHeightRelated(g_CurrentPlayer)) < stanGetPositionYValue(g_CurrentPlayer->current_tile_ptr, g_CurrentPlayer->collision_position.f[0], g_CurrentPlayer->collision_position.f[2]))
             {
                 g_CurrentPlayer->field_2A6C = 0;
                 g_CurrentPlayer->current_tile_ptr = g_CurrentPlayer->field_2A70;
@@ -15070,7 +15070,7 @@ glabel bondviewUpdatePlayerClipping
 /* 0B5A94 7F080F64 3C088008 */  lui   $t0, %hi(g_CurrentPlayer)
 /* 0B5A98 7F080F68 2508A0B0 */  addiu $t0, %lo(g_CurrentPlayer) # addiu $t0, $t0, -0x5f50
 /* 0B5A9C 7F080F6C 8D040000 */  lw    $a0, ($t0)
-/* 0B5AA0 7F080F70 0FC225E0 */  jal   sub_GAME_7F089780
+/* 0B5AA0 7F080F70 0FC225E0 */  jal   bondviewGetPlayerDuckingHeightRelated
 /* 0B5AA4 7F080F74 E7A00064 */   swc1  $f0, 0x64($sp)
 /* 0B5AA8 7F080F78 3C088008 */  lui   $t0, %hi(g_CurrentPlayer)
 /* 0B5AAC 7F080F7C C7A20064 */  lwc1  $f2, 0x64($sp)
@@ -15324,7 +15324,7 @@ glabel bondviewUpdatePlayerClipping
 .L7F081318:
 /* 0B5E48 7F081318 11E0001F */  beqz  $t7, .L7F081398
 /* 0B5E4C 7F08131C 02002025 */   move  $a0, $s0
-/* 0B5E50 7F081320 0FC225E0 */  jal   sub_GAME_7F089780
+/* 0B5E50 7F081320 0FC225E0 */  jal   bondviewGetPlayerDuckingHeightRelated
 /* 0B5E54 7F081324 AFA3006C */   sw    $v1, 0x6c($sp)
 /* 0B5E58 7F081328 3C088008 */  lui   $t0, %hi(g_CurrentPlayer)
 /* 0B5E5C 7F08132C 2508A0B0 */  addiu $t0, %lo(g_CurrentPlayer) # addiu $t0, $t0, -0x5f50
@@ -31953,23 +31953,13 @@ f32 bondviewGetPlayerClippingHeight(struct player *player)
 
 
 
-#ifdef NONMATCHING
-f32 sub_GAME_7F089780(struct player *player)
+/**
+ * Address 0x7F089780.
+ */
+f32 bondviewGetPlayerDuckingHeightRelated(struct player *player)
 {
     return player->field_29BC + player->field_88 + player->ducking_height_offset;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F089780
-/* 0BE2B0 7F089780 C48429BC */  lwc1  $f4, 0x29bc($a0)
-/* 0BE2B4 7F089784 C4860088 */  lwc1  $f6, 0x88($a0)
-/* 0BE2B8 7F089788 C48A00A0 */  lwc1  $f10, 0xa0($a0)
-/* 0BE2BC 7F08978C 46062200 */  add.s $f8, $f4, $f6
-/* 0BE2C0 7F089790 03E00008 */  jr    $ra
-/* 0BE2C4 7F089794 460A4000 */   add.s $f0, $f8, $f10
-)
-#endif
 
 
 
@@ -33187,7 +33177,7 @@ glabel sub_GAME_7F08A0B0
 /* 0BEC7C 7F08A14C 8FAB0030 */  lw    $t3, 0x30($sp)
 /* 0BEC80 7F08A150 C5440070 */  lwc1  $f4, 0x70($t2)
 /* 0BEC84 7F08A154 E5640000 */  swc1  $f4, ($t3)
-/* 0BEC88 7F08A158 0FC225E0 */  jal   sub_GAME_7F089780
+/* 0BEC88 7F08A158 0FC225E0 */  jal   bondviewGetPlayerDuckingHeightRelated
 /* 0BEC8C 7F08A15C 8C440000 */   lw    $a0, ($v0)
 /* 0BEC90 7F08A160 8FAC0030 */  lw    $t4, 0x30($sp)
 /* 0BEC94 7F08A164 3C014120 */  li    $at, 0x41200000 # 10.000000
@@ -33294,7 +33284,7 @@ void bondviewCollisionRadiusRelated(struct prop* arg0, f32 *arg1, f32 *arg2, f32
 
     temp_v1 = &g_playerPointers[sub_GAME_7F09B15C(arg0)];
     *arg1 = (*temp_v1)->collision_radius;
-    *arg2 = (sub_GAME_7F089780(*temp_v1) + 10.0f) - 30.0f;
+    *arg2 = (bondviewGetPlayerDuckingHeightRelated(*temp_v1) + 10.0f) - 30.0f;
     *arg3 = 30.0f;
 }
 

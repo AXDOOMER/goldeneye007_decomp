@@ -1,10 +1,11 @@
 #include "ultra64.h"
 #include "bondgame.h"
+#include "bondconstants.h"
+#include "chrlv.h"
+#include "game/bondview.h"
 #include "game/chr.h"
 #include "game/gun.h"
 #include "game/lvl.h"
-#include "bondconstants.h"
-#include "chrlv.h"
 #include "game/math_asinfacosf.h"
 #include "game/math_atan2f.h"
 
@@ -12576,7 +12577,7 @@ glabel sub_GAME_7F02C4C0
 /* 061134 7F02C604 8CC4001C */   lw    $a0, 0x1c($a2)
 /* 061138 7F02C608 8C84A0B0 */  lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 06113C 7F02C60C E7A2002C */  swc1  $f2, 0x2c($sp)
-/* 061140 7F02C610 0FC225E0 */  jal   sub_GAME_7F089780
+/* 061140 7F02C610 0FC225E0 */  jal   bondviewGetPlayerDuckingHeightRelated
 /* 061144 7F02C614 E7B00160 */   swc1  $f16, 0x160($sp)
 /* 061148 7F02C618 8FB80168 */  lw    $t8, 0x168($sp)
 /* 06114C 7F02C61C E7A00130 */  swc1  $f0, 0x130($sp)
