@@ -3128,5 +3128,6 @@ int bondviewGetIfCurrentPlayerHealthShowTime(void);
 u8 bondviewGetCurrentPlayersRoom(void);
 struct coord3d *bondviewGetCurrentPlayersPosition(void);
 void bondviewUpdateGuardTankFlagsRelated(struct prop *arg0, s32 flags);
+void bondviewGetPropHeightRelatedValues(struct prop *arg0, s32 **field_B0, s32 *arg2, f32 *height_related, f32 *collision);
 
 #endif

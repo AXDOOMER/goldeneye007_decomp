@@ -23455,7 +23455,7 @@ glabel sub_GAME_7F03CC20
 .L7F03CC58:
 /* 071788 7F03CC58 14410005 */  bne   $v0, $at, .L7F03CC70
 /* 07178C 7F03CC5C 8FAF0030 */   lw    $t7, 0x30($sp)
-/* 071790 7F03CC60 0FC2282C */  jal   sub_GAME_7F08A0B0
+/* 071790 7F03CC60 0FC2282C */  jal   bondviewGetPropHeightRelatedValues
 /* 071794 7F03CC64 AFAF0010 */   sw    $t7, 0x10($sp)
 /* 071798 7F03CC68 1000000E */  b     .L7F03CCA4
 /* 07179C 7F03CC6C 8FBF001C */   lw    $ra, 0x1c($sp)

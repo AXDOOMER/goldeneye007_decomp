@@ -33073,80 +33073,32 @@ void bondviewUpdateGuardTankFlagsRelated(struct prop *arg0, s32 flags)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08A0B0(void) {
+/**
+ * Address 0x7F08A0B0.
+ */
+void bondviewGetPropHeightRelatedValues(struct prop *arg0, s32 **field_B0, s32 *arg2, f32 *height_related, f32 *collision)
+{
+    s32 temp_v0;
 
+    temp_v0 = sub_GAME_7F09B15C(arg0);
+    if (g_playerPointers[temp_v0]->field_AC != 0)
+    {
+        if (getPlayerCount() == 1 || g_playerPointers[temp_v0]->bonddead == 0)
+        {
+            if (g_playerPointers[temp_v0]->unknown != 1)
+            {
+                *arg2 = 4;
+                *field_B0 = &g_playerPointers[temp_v0]->field_B0;
+                *collision = g_playerPointers[temp_v0]->field_70;
+                *height_related = *collision + bondviewGetPlayerDuckingHeightRelated(g_playerPointers[temp_v0]) + 10.0f;
+
+                return;
+            }
+        }
+    }
+
+    *arg2 = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08A0B0
-/* 0BEBE0 7F08A0B0 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0BEBE4 7F08A0B4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0BEBE8 7F08A0B8 AFA50024 */  sw    $a1, 0x24($sp)
-/* 0BEBEC 7F08A0BC AFA60028 */  sw    $a2, 0x28($sp)
-/* 0BEBF0 7F08A0C0 0FC26C57 */  jal   sub_GAME_7F09B15C
-/* 0BEBF4 7F08A0C4 AFA7002C */   sw    $a3, 0x2c($sp)
-/* 0BEBF8 7F08A0C8 3C048008 */  lui   $a0, %hi(g_playerPointers)
-/* 0BEBFC 7F08A0CC 24849EE0 */  addiu $a0, %lo(g_playerPointers) # addiu $a0, $a0, -0x6120
-/* 0BEC00 7F08A0D0 00027080 */  sll   $t6, $v0, 2
-/* 0BEC04 7F08A0D4 008E7821 */  addu  $t7, $a0, $t6
-/* 0BEC08 7F08A0D8 8DF80000 */  lw    $t8, ($t7)
-/* 0BEC0C 7F08A0DC 8F1900AC */  lw    $t9, 0xac($t8)
-/* 0BEC10 7F08A0E0 53200029 */  beql  $t9, $zero, .L7F08A188
-/* 0BEC14 7F08A0E4 8FAE0028 */   lw    $t6, 0x28($sp)
-/* 0BEC18 7F08A0E8 0FC26919 */  jal   getPlayerCount
-/* 0BEC1C 7F08A0EC AFA2001C */   sw    $v0, 0x1c($sp)
-/* 0BEC20 7F08A0F0 3C048008 */  lui   $a0, %hi(g_playerPointers)
-/* 0BEC24 7F08A0F4 24050001 */  li    $a1, 1
-/* 0BEC28 7F08A0F8 24849EE0 */  addiu $a0, %lo(g_playerPointers) # addiu $a0, $a0, -0x6120
-/* 0BEC2C 7F08A0FC 10450006 */  beq   $v0, $a1, .L7F08A118
-/* 0BEC30 7F08A100 8FA3001C */   lw    $v1, 0x1c($sp)
-/* 0BEC34 7F08A104 00034080 */  sll   $t0, $v1, 2
-/* 0BEC38 7F08A108 00884821 */  addu  $t1, $a0, $t0
-/* 0BEC3C 7F08A10C 8D2A0000 */  lw    $t2, ($t1)
-/* 0BEC40 7F08A110 8D4B00D8 */  lw    $t3, 0xd8($t2)
-/* 0BEC44 7F08A114 1560001B */  bnez  $t3, .L7F08A184
-.L7F08A118:
-/* 0BEC48 7F08A118 00036080 */   sll   $t4, $v1, 2
-/* 0BEC4C 7F08A11C 008C1021 */  addu  $v0, $a0, $t4
-/* 0BEC50 7F08A120 8C4D0000 */  lw    $t5, ($v0)
-/* 0BEC54 7F08A124 8FB80028 */  lw    $t8, 0x28($sp)
-/* 0BEC58 7F08A128 8DAE0000 */  lw    $t6, ($t5)
-/* 0BEC5C 7F08A12C 10AE0015 */  beq   $a1, $t6, .L7F08A184
-/* 0BEC60 7F08A130 240F0004 */   li    $t7, 4
-/* 0BEC64 7F08A134 AF0F0000 */  sw    $t7, ($t8)
-/* 0BEC68 7F08A138 8C590000 */  lw    $t9, ($v0)
-/* 0BEC6C 7F08A13C 8FA90024 */  lw    $t1, 0x24($sp)
-/* 0BEC70 7F08A140 272800B0 */  addiu $t0, $t9, 0xb0
-/* 0BEC74 7F08A144 AD280000 */  sw    $t0, ($t1)
-/* 0BEC78 7F08A148 8C4A0000 */  lw    $t2, ($v0)
-/* 0BEC7C 7F08A14C 8FAB0030 */  lw    $t3, 0x30($sp)
-/* 0BEC80 7F08A150 C5440070 */  lwc1  $f4, 0x70($t2)
-/* 0BEC84 7F08A154 E5640000 */  swc1  $f4, ($t3)
-/* 0BEC88 7F08A158 0FC225E0 */  jal   bondviewGetPlayerDuckingHeightRelated
-/* 0BEC8C 7F08A15C 8C440000 */   lw    $a0, ($v0)
-/* 0BEC90 7F08A160 8FAC0030 */  lw    $t4, 0x30($sp)
-/* 0BEC94 7F08A164 3C014120 */  li    $at, 0x41200000 # 10.000000
-/* 0BEC98 7F08A168 44815000 */  mtc1  $at, $f10
-/* 0BEC9C 7F08A16C C5860000 */  lwc1  $f6, ($t4)
-/* 0BECA0 7F08A170 8FAD002C */  lw    $t5, 0x2c($sp)
-/* 0BECA4 7F08A174 46060200 */  add.s $f8, $f0, $f6
-/* 0BECA8 7F08A178 460A4400 */  add.s $f16, $f8, $f10
-/* 0BECAC 7F08A17C 10000003 */  b     .L7F08A18C
-/* 0BECB0 7F08A180 E5B00000 */   swc1  $f16, ($t5)
-.L7F08A184:
-/* 0BECB4 7F08A184 8FAE0028 */  lw    $t6, 0x28($sp)
-.L7F08A188:
-/* 0BECB8 7F08A188 ADC00000 */  sw    $zero, ($t6)
-.L7F08A18C:
-/* 0BECBC 7F08A18C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0BECC0 7F08A190 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0BECC4 7F08A194 03E00008 */  jr    $ra
-/* 0BECC8 7F08A198 00000000 */   nop
-)
-#endif
-
 
 
 
