@@ -5,6 +5,7 @@
 #include "game/bondinv.h"
 #include "game/chr.h"
 #include "game/debugmenu_handler.h"
+#include "game/front.h"
 #include "game/objecthandler.h"
 #include "game/player.h"
 #include "game/player_2.h"
@@ -548,6 +549,7 @@ s16 get_curplayer_viewport_ulx(void);
 void sub_GAME_7F086990(s8, s8, u16, u16);
 void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2);
 void bondviewUpdateCurrentRoomPosition(s32 arg0);
+void trigger_solo_watch_menu(s32 arg0);
 
 // end forward declarations
 
@@ -31974,8 +31976,59 @@ struct prop* get_curplayer_positiondata(void) {
 
 
 #ifdef NONMATCHING
-void kill_current_player(void) {
+/**
+ * Address 0x7F0897A8.
+ */
+void kill_current_player(void)
+{
+    if ((g_CurrentPlayer->bondinvincible == 0) && (g_CurrentPlayer->bonddead == 0))
+    {
+        if (g_CurrentPlayer->watch_animation_state != 0)
+        {
+            trigger_solo_watch_menu(1);
+        }
 
+        mission_kia_flag = 1;
+        g_CurrentPlayer->bonddead = 1;
+
+        // decomp issue: begin wrong section
+        //
+        // This seems to be a block copy within g_CurrentPlayer.
+        // Starting at offset 1160 (decimal) copy into offset 1064 (decimal).
+        // It does this three words at time, seven times total (84 bytes).
+        do {
+            s32 *src;
+            s32 *dest;
+            src = (s32 *)g_CurrentPlayer; 
+            dest = (s32 *)g_CurrentPlayer;
+            do
+            {
+                (dest++)[269] = (src++)[290];
+                (dest++)[269] = (src++)[290];
+                (dest++)[269] = (src++)[290];
+            } while ((void*)src != (void*)(((s32)&g_CurrentPlayer)+84));
+        } while(0);
+
+        // end wrong section
+
+        g_CurrentPlayer->field_414 = g_CurrentPlayer->vv_theta;
+        g_CurrentPlayer->field_418 = g_CurrentPlayer->vv_verta;
+
+        if (ptr_playerstank != 0)
+        {
+            D_8003648C = 1;
+        }
+
+        draw_item_in_hand_has_more_ammo(LEFT_HAND, 0);
+        draw_item_in_hand_has_more_ammo(RIGHT_HAND, 0);
+
+        if ((getMissiontimer() - g_CurrentPlayer->field_29F4) < g_playerPerm->shortest_inning)
+        {
+            g_playerPerm->shortest_inning = getMissiontimer() - g_CurrentPlayer->field_29F4;
+        }
+
+        g_CurrentPlayer->field_29F4 = getMissiontimer();
+    }
 }
 #else
 GLOBAL_ASM(

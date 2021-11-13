@@ -652,8 +652,8 @@ struct player
   */
   f32 field_410;
   
-  s32 field_414;
-  s32 field_418;
+  f32 field_414;
+  f32 field_418;
   s32 cuff_value;
   s32 field_420;
 
@@ -670,27 +670,35 @@ struct player
   s32 field_428;
   s32 field_42C;
   s32 field_430;
+
   s32 field_434;
   s32 field_438;
   s32 field_43C;
+
   s32 field_440;
   s32 field_444;
   s32 field_448;
+
   s32 field_44C;
   s32 field_450;
   s32 field_454;
+
   s32 field_458;
   s32 field_45C;
   s32 field_460;
+
   s32 field_464;
   s32 field_468;
   s32 field_46C;
+
   s32 field_470;
   s32 field_474;
   s32 field_478;
+
   s32 field_47C;
   s32 field_480;
   s32 field_484;
+  
   StandTile *current_tile_ptr;
 
   /**
