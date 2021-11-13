@@ -3097,7 +3097,7 @@ void set_open_close_solo_watch_menu_to1(void);
 
 void init_player_BONDdata(void);
 void bondviewPlayerSpawnRelated(void);
-f32 get_BONDdata_watch_health(void);
+f32 bondviewGetCurrentPlayerHealth(void);
 f32 get_BONDdata_watch_armor(void);
 void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2);
 

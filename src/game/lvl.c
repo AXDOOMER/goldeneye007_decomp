@@ -2063,7 +2063,7 @@ void lvlSetMultipliersForDifficulty(void)
 {
     if (g_SelectedDifficulty == DIFFICULTY_AGENT)
     {
-        f32 armorDiff = get_BONDdata_watch_health() + get_BONDdata_watch_armor();
+        f32 armorDiff = bondviewGetCurrentPlayerHealth() + get_BONDdata_watch_armor();
         f32 damageMultiplier = 1.0f;
 
         if (armorDiff <= 0.125f)

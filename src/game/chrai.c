@@ -5462,7 +5462,7 @@ action7F_If_Health_Below_Value_RVL_3:
 /* 06C500 7F0379D0 44819000 */  mtc1  $at, $f18
 /* 06C504 7F0379D4 00000000 */  nop   
 /* 06C508 7F0379D8 46124183 */  div.s $f6, $f8, $f18
-/* 06C50C 7F0379DC 0FC228BB */  jal   get_BONDdata_watch_health
+/* 06C50C 7F0379DC 0FC228BB */  jal   bondviewGetCurrentPlayerHealth
 /* 06C510 7F0379E0 E7A60418 */   swc1  $f6, 0x418($sp)
 /* 06C514 7F0379E4 C7B00418 */  lwc1  $f16, 0x418($sp)
 /* 06C518 7F0379E8 02C02025 */  move  $a0, $s6
@@ -5494,7 +5494,7 @@ action80_If_Health_Above_Value_RVL_3:
 /* 06C574 7F037A44 44819000 */  mtc1  $at, $f18
 /* 06C578 7F037A48 00000000 */  nop   
 /* 06C57C 7F037A4C 46125183 */  div.s $f6, $f10, $f18
-/* 06C580 7F037A50 0FC228BB */  jal   get_BONDdata_watch_health
+/* 06C580 7F037A50 0FC228BB */  jal   bondviewGetCurrentPlayerHealth
 /* 06C584 7F037A54 E7A60410 */   swc1  $f6, 0x410($sp)
 /* 06C588 7F037A58 C7B00410 */  lwc1  $f16, 0x410($sp)
 /* 06C58C 7F037A5C 02C02025 */  move  $a0, $s6
@@ -11329,7 +11329,7 @@ action7F_If_Health_Below_Value_RVL_3:
 /* 06C500 7F0379D0 44819000 */  mtc1  $at, $f18
 /* 06C504 7F0379D4 00000000 */  nop   
 /* 06C508 7F0379D8 46124183 */  div.s $f6, $f8, $f18
-/* 06C50C 7F0379DC 0FC228BB */  jal   get_BONDdata_watch_health
+/* 06C50C 7F0379DC 0FC228BB */  jal   bondviewGetCurrentPlayerHealth
 /* 06C510 7F0379E0 E7A60418 */   swc1  $f6, 0x418($sp)
 /* 06C514 7F0379E4 C7B00418 */  lwc1  $f16, 0x418($sp)
 /* 06C518 7F0379E8 02C02025 */  move  $a0, $s6
@@ -11361,7 +11361,7 @@ action80_If_Health_Above_Value_RVL_3:
 /* 06C574 7F037A44 44819000 */  mtc1  $at, $f18
 /* 06C578 7F037A48 00000000 */  nop   
 /* 06C57C 7F037A4C 46125183 */  div.s $f6, $f10, $f18
-/* 06C580 7F037A50 0FC228BB */  jal   get_BONDdata_watch_health
+/* 06C580 7F037A50 0FC228BB */  jal   bondviewGetCurrentPlayerHealth
 /* 06C584 7F037A54 E7A60410 */   swc1  $f6, 0x410($sp)
 /* 06C588 7F037A58 C7B00410 */  lwc1  $f16, 0x410($sp)
 /* 06C58C 7F037A5C 02C02025 */  move  $a0, $s6
@@ -17197,7 +17197,7 @@ action7F_If_Health_Below_Value_RVL_3:
 /* 06C500 7F0379D0 44819000 */  mtc1  $at, $f18
 /* 06C504 7F0379D4 00000000 */  nop   
 /* 06C508 7F0379D8 46124183 */  div.s $f6, $f8, $f18
-/* 06C50C 7F0379DC 0FC228BB */  jal   get_BONDdata_watch_health
+/* 06C50C 7F0379DC 0FC228BB */  jal   bondviewGetCurrentPlayerHealth
 /* 06C510 7F0379E0 E7A60418 */   swc1  $f6, 0x418($sp)
 /* 06C514 7F0379E4 C7B00418 */  lwc1  $f16, 0x418($sp)
 /* 06C518 7F0379E8 02C02025 */  move  $a0, $s6
@@ -17229,7 +17229,7 @@ action80_If_Health_Above_Value_RVL_3:
 /* 06C574 7F037A44 44819000 */  mtc1  $at, $f18
 /* 06C578 7F037A48 00000000 */  nop   
 /* 06C57C 7F037A4C 46125183 */  div.s $f6, $f10, $f18
-/* 06C580 7F037A50 0FC228BB */  jal   get_BONDdata_watch_health
+/* 06C580 7F037A50 0FC228BB */  jal   bondviewGetCurrentPlayerHealth
 /* 06C584 7F037A54 E7A60410 */   swc1  $f6, 0x410($sp)
 /* 06C588 7F037A58 C7B00410 */  lwc1  $f16, 0x410($sp)
 /* 06C58C 7F037A5C 02C02025 */  move  $a0, $s6

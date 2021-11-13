@@ -13941,7 +13941,7 @@ glabel trigger_solo_watch_menu
 /* 0B44C8 7F07F998 00612821 */  addu  $a1, $v1, $at
 /* 0B44CC 7F07F99C 0FC28CCC */  jal   sub_GAME_7F0A3330
 /* 0B44D0 7F07F9A0 246419F8 */   addiu $a0, $v1, 0x19f8
-/* 0B44D4 7F07F9A4 0FC228BB */  jal   get_BONDdata_watch_health
+/* 0B44D4 7F07F9A4 0FC228BB */  jal   bondviewGetCurrentPlayerHealth
 /* 0B44D8 7F07F9A8 00000000 */   nop
 /* 0B44DC 7F07F9AC 8E840000 */  lw    $a0, ($s4)
 /* 0B44E0 7F07F9B0 44070000 */  mfc1  $a3, $f0
@@ -18753,7 +18753,7 @@ glabel sub_GAME_7F083FC8
 /* 0B8B40 7F084010 24040008 */  li    $a0, 8
 /* 0B8B44 7F084014 0FC15858 */  jal   set_unset_clock_lock_bits
 /* 0B8B48 7F084018 00002825 */   move  $a1, $zero
-/* 0B8B4C 7F08401C 0FC228BB */  jal   get_BONDdata_watch_health
+/* 0B8B4C 7F08401C 0FC228BB */  jal   bondviewGetCurrentPlayerHealth
 /* 0B8B50 7F084020 00000000 */   nop
 /* 0B8B54 7F084024 3C014100 */  li    $at, 0x41000000 # 8.000000
 /* 0B8B58 7F084028 44812000 */  mtc1  $at, $f4
@@ -18890,7 +18890,7 @@ glabel sub_GAME_7F083FC8
 /* 0B8D38 7F084208 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0B8D3C 7F08420C 54600017 */  bnezl $v1, .L7F08426C
 /* 0B8D40 7F084210 8C4C00D8 */   lw    $t4, 0xd8($v0)
-/* 0B8D44 7F084214 0FC228BB */  jal   get_BONDdata_watch_health
+/* 0B8D44 7F084214 0FC228BB */  jal   bondviewGetCurrentPlayerHealth
 /* 0B8D48 7F084218 00000000 */   nop
 /* 0B8D4C 7F08421C 3C014100 */  li    $at, 0x41000000 # 8.000000
 /* 0B8D50 7F084220 44815000 */  mtc1  $at, $f10
@@ -19013,7 +19013,7 @@ glabel sub_GAME_7F083FC8
 /* 0B91AC 7F08463C 24040008 */  li    $a0, 8
 /* 0B91B0 7F084640 0FC15997 */  jal   set_unset_clock_lock_bits
 /* 0B91B4 7F084644 00002825 */   move  $a1, $zero
-/* 0B91B8 7F084648 0FC22A89 */  jal   get_BONDdata_watch_health
+/* 0B91B8 7F084648 0FC22A89 */  jal   bondviewGetCurrentPlayerHealth
 /* 0B91BC 7F08464C 00000000 */   nop
 /* 0B91C0 7F084650 3C014100 */  li    $at, 0x41000000 # 8.000000
 /* 0B91C4 7F084654 44814000 */  mtc1  $at, $f8
@@ -19162,7 +19162,7 @@ glabel sub_GAME_7F083FC8
 /* 0B93D0 7F084860 00000000 */  nop
 /* 0B93D4 7F084864 4502001D */  bc1fl .Ljp7F0848DC
 /* 0B93D8 7F084868 8C4800D8 */   lw    $t0, 0xd8($v0)
-/* 0B93DC 7F08486C 0FC22A89 */  jal   get_BONDdata_watch_health
+/* 0B93DC 7F08486C 0FC22A89 */  jal   bondviewGetCurrentPlayerHealth
 /* 0B93E0 7F084870 00000000 */   nop
 /* 0B93E4 7F084874 3C014100 */  li    $at, 0x41000000 # 8.000000
 /* 0B93E8 7F084878 44812000 */  mtc1  $at, $f4
@@ -19309,7 +19309,7 @@ glabel sub_GAME_7F083FC8
 /* 0B6AC0 7F0840D0 24040008 */  li    $a0, 8
 /* 0B6AC4 7F0840D4 0FC15910 */  jal   set_unset_clock_lock_bits
 /* 0B6AC8 7F0840D8 00002825 */   move  $a1, $zero
-/* 0B6ACC 7F0840DC 0FC2292E */  jal   get_BONDdata_watch_health
+/* 0B6ACC 7F0840DC 0FC2292E */  jal   bondviewGetCurrentPlayerHealth
 /* 0B6AD0 7F0840E0 00000000 */   nop
 /* 0B6AD4 7F0840E4 3C014100 */  li    $at, 0x41000000 # 8.000000
 /* 0B6AD8 7F0840E8 44814000 */  mtc1  $at, $f8
@@ -19458,7 +19458,7 @@ glabel sub_GAME_7F083FC8
 /* 0B6CE4 7F0842F4 00000000 */  nop
 /* 0B6CE8 7F0842F8 4502001D */  bc1fl .L7F084370
 /* 0B6CEC 7F0842FC 8C4800D8 */   lw    $t0, 0xd8($v0)
-/* 0B6CF0 7F084300 0FC2292E */  jal   get_BONDdata_watch_health
+/* 0B6CF0 7F084300 0FC2292E */  jal   bondviewGetCurrentPlayerHealth
 /* 0B6CF4 7F084304 00000000 */   nop
 /* 0B6CF8 7F084308 3C014100 */  li    $at, 0x41000000 # 8.000000
 /* 0B6CFC 7F08430C 44812000 */  mtc1  $at, $f4
@@ -32181,7 +32181,7 @@ glabel record_damage_kills
 /* 0BE4A0 7F089970 24060001 */  li    $a2, 1
 /* 0BE4A4 7F089974 0FC28BCC */  jal   sub_GAME_7F0A2F30
 /* 0BE4A8 7F089978 248412B8 */   addiu $a0, $a0, 0x12b8
-/* 0BE4AC 7F08997C 0FC228BB */  jal   get_BONDdata_watch_health
+/* 0BE4AC 7F08997C 0FC228BB */  jal   bondviewGetCurrentPlayerHealth
 /* 0BE4B0 7F089980 00000000 */   nop
 /* 0BE4B4 7F089984 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
 /* 0BE4B8 7F089988 8C84A0B0 */  lw    $a0, %lo(g_CurrentPlayer)($a0)
@@ -32545,7 +32545,7 @@ glabel record_damage_kills
 /* 0BEBB4 7F08A044 24060001 */  li    $a2, 1
 /* 0BEBB8 7F08A048 0FC28EB4 */  jal   sub_GAME_7F0A2F30
 /* 0BEBBC 7F08A04C 248412B8 */   addiu $a0, $a0, 0x12b8
-/* 0BEBC0 7F08A050 0FC22A89 */  jal   get_BONDdata_watch_health
+/* 0BEBC0 7F08A050 0FC22A89 */  jal   bondviewGetCurrentPlayerHealth
 /* 0BEBC4 7F08A054 00000000 */   nop
 /* 0BEBC8 7F08A058 3C048008 */  lui   $a0, %hi(g_CurrentPlayer) # $a0, 0x8008
 /* 0BEBCC 7F08A05C 8C84A120 */  lw    $a0, %lo(g_CurrentPlayer)($a0)
@@ -33149,24 +33149,17 @@ void bondviewCollisionRadiusRelated(struct prop* arg0, f32 *arg1, f32 *arg2, f32
 
 
 
-#ifdef NONMATCHING
-f32 get_BONDdata_watch_health(void) {
-
+/**
+ * Address 0x7F08A2EC.
+ */
+f32 bondviewGetCurrentPlayerHealth(void)
+{
+    return g_CurrentPlayer->bondhealth;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_BONDdata_watch_health
-/* 0BEE1C 7F08A2EC 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer)
-/* 0BEE20 7F08A2F0 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 0BEE24 7F08A2F4 03E00008 */  jr    $ra
-/* 0BEE28 7F08A2F8 C5C000DC */   lwc1  $f0, 0xdc($t6)
-)
-#endif
 
 
-
-f32 get_BONDdata_watch_armor(void) {
+f32 get_BONDdata_watch_armor(void)
+{
   return g_CurrentPlayer->bondarmour;
 }
 
