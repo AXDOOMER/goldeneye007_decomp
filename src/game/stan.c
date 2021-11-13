@@ -6092,7 +6092,7 @@ f32 sub_GAME_7F0B3004(struct StandTile* tile) {
 
 
 #ifdef NONMATCHING
-Gfx * sub_GAME_7F0B3024(Gfx *ptrdl, s32 *ptrtile, u32 RGBAColor) {
+Gfx * sub_GAME_7F0B3024(Gfx *ptrdl, struct StandTilePoint *tile_point, u32 RGBAColor) {
     return *ptrdl;
 }
 

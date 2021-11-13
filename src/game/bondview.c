@@ -141,10 +141,12 @@ s32 startpadcount;
 s32 dword_CODE_bss_80079C6C;
 //CODE.bss:80079C70
 char dword_CODE_bss_80079C70[0x130];
+
 //CODE.bss:80079DA0
-s32 dword_CODE_bss_80079DA0;
+StandTilePoint *dword_CODE_bss_80079DA0;
 //CODE.bss:80079DA4
-s32 dword_CODE_bss_80079DA4;
+StandTilePoint *dword_CODE_bss_80079DA4;
+
 //CODE.bss:80079DA8
 char dword_CODE_bss_80079DA8[0x20];
 //CODE.bss:80079DC8
@@ -31863,58 +31865,24 @@ glabel maybe_mp_interface
 
 
 
-#ifdef NONMATCHING
-s32 write_stan_tiles_in_yellow(s32 arg0) {
-    s32 phi_a0;
-    s32 phi_a0_2;
+/**
+ * Address 0x7F0896C0.
+ */
+Gfx *write_stan_tiles_in_yellow(Gfx *gdl)
+{
+    if (dword_CODE_bss_80079DA0 != NULL)
+    {
+        gdl = sub_GAME_7F0B3024(gdl, dword_CODE_bss_80079DA0, 0xFF00FF80U);
+    }
 
-    // Node 0
-    phi_a0 = arg0;
-    if (dword_CODE_bss_80079DA0 != 0)
+    if (dword_CODE_bss_80079DA4 != NULL)
     {
-        // Node 1
-        phi_a0 = sub_GAME_7F0B3024(dword_CODE_bss_80079DA0, 0xff00ff80);
+        gdl = sub_GAME_7F0B3024(gdl, dword_CODE_bss_80079DA4, 0xFF00FF80U);
     }
-    // Node 2
-    phi_a0_2 = phi_a0;
-    if (dword_CODE_bss_80079DA4 != 0)
-    {
-        // Node 3
-        phi_a0_2 = sub_GAME_7F0B3024(phi_a0, dword_CODE_bss_80079DA4, 0xff00ff80);
-    }
-    // Node 4
-    return phi_a0_2;
+
+    return gdl;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel write_stan_tiles_in_yellow
-/* 0BE1F0 7F0896C0 3C058008 */  lui   $a1, %hi(dword_CODE_bss_80079DA0)
-/* 0BE1F4 7F0896C4 8CA59DA0 */  lw    $a1, %lo(dword_CODE_bss_80079DA0)($a1)
-/* 0BE1F8 7F0896C8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0BE1FC 7F0896CC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0BE200 7F0896D0 10A00004 */  beqz  $a1, .L7F0896E4
-/* 0BE204 7F0896D4 3C06FF00 */   lui   $a2, (0xFF00FF80 >> 16) # lui $a2, 0xff00
-/* 0BE208 7F0896D8 0FC2CC09 */  jal   sub_GAME_7F0B3024
-/* 0BE20C 7F0896DC 34C6FF80 */   ori   $a2, (0xFF00FF80 & 0xFFFF) # ori $a2, $a2, 0xff80
-/* 0BE210 7F0896E0 00402025 */  move  $a0, $v0
-.L7F0896E4:
-/* 0BE214 7F0896E4 3C058008 */  lui   $a1, %hi(dword_CODE_bss_80079DA4)
-/* 0BE218 7F0896E8 8CA59DA4 */  lw    $a1, %lo(dword_CODE_bss_80079DA4)($a1)
-/* 0BE21C 7F0896EC 3C06FF00 */  lui   $a2, (0xFF00FF80 >> 16) # lui $a2, 0xff00
-/* 0BE220 7F0896F0 50A00005 */  beql  $a1, $zero, .L7F089708
-/* 0BE224 7F0896F4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0BE228 7F0896F8 0FC2CC09 */  jal   sub_GAME_7F0B3024
-/* 0BE22C 7F0896FC 34C6FF80 */   ori   $a2, (0xFF00FF80 & 0xFFFF) # ori $a2, $a2, 0xff80
-/* 0BE230 7F089700 00402025 */  move  $a0, $v0
-/* 0BE234 7F089704 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F089708:
-/* 0BE238 7F089708 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0BE23C 7F08970C 00801025 */  move  $v0, $a0
-/* 0BE240 7F089710 03E00008 */  jr    $ra
-/* 0BE244 7F089714 00000000 */   nop
-)
-#endif
+
 
 
 
