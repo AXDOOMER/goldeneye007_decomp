@@ -23833,7 +23833,7 @@ glabel sub_GAME_7F03D058
 .L7F03D088:
 /* 071BB8 7F03D088 54410006 */  bnel  $v0, $at, .L7F03D0A4
 /* 071BBC 7F03D08C 24010001 */   li    $at, 1
-/* 071BC0 7F03D090 0FC2280F */  jal   sub_GAME_7F08A03C
+/* 071BC0 7F03D090 0FC2280F */  jal   bondviewUpdateGuardTankFlagsRelated
 /* 071BC4 7F03D094 00C02025 */   move  $a0, $a2
 /* 071BC8 7F03D098 1000000B */  b     .L7F03D0C8
 /* 071BCC 7F03D09C 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -24197,7 +24197,7 @@ glabel sub_GAME_7F03D188
 /* 07205C 7F03D52C AFAA0050 */   sw    $t2, 0x50($sp)
 /* 072060 7F03D530 8FA40054 */  lw    $a0, 0x54($sp)
 /* 072064 7F03D534 00002825 */  move  $a1, $zero
-/* 072068 7F03D538 0FC2280F */  jal   sub_GAME_7F08A03C
+/* 072068 7F03D538 0FC2280F */  jal   bondviewUpdateGuardTankFlagsRelated
 /* 07206C 7F03D53C E7A0004C */   swc1  $f0, 0x4c($sp)
 /* 072070 7F03D540 8FA20054 */  lw    $v0, 0x54($sp)
 /* 072074 7F03D544 8FA300B0 */  lw    $v1, 0xb0($sp)
@@ -24347,7 +24347,7 @@ glabel sub_GAME_7F03D188
 /* 072298 7F03D768 E7AA0060 */  swc1  $f10, 0x60($sp)
 .L7F03D76C:
 /* 07229C 7F03D76C 8FA40054 */  lw    $a0, 0x54($sp)
-/* 0722A0 7F03D770 0FC2280F */  jal   sub_GAME_7F08A03C
+/* 0722A0 7F03D770 0FC2280F */  jal   bondviewUpdateGuardTankFlagsRelated
 /* 0722A4 7F03D774 24050001 */   li    $a1, 1
 /* 0722A8 7F03D778 8FBF002C */  lw    $ra, 0x2c($sp)
 .L7F03D77C:

@@ -11,6 +11,7 @@
 #include "game/bondview.h"
 #include "game/bondinv.h"
 #include "game/chr.h"
+#include "game/chrobjhandler.h"
 #include "game/debugmenu_handler.h"
 #include "game/front.h"
 #include "game/objecthandler.h"
@@ -33045,47 +33046,28 @@ int get_BONDdata_field408(void) {
     return (int) &g_CurrentPlayer->field_408;
 }
 
-#ifdef NONMATCHING
-void sub_GAME_7F08A03C(void) {
 
+/**
+ * Address 0x7F08A03C.
+ */
+void bondviewUpdateGuardTankFlagsRelated(struct prop *arg0, s32 flags)
+{
+    s32 sp1C;
+
+    sp1C = sub_GAME_7F09B15C(arg0);
+
+    if (arg0->chr != NULL)
+    {
+        set_or_unset_GUARDdata_flag(arg0->chr, flags);
+    }
+
+    if (ptr_playerstank != 0)
+    {
+        sub_GAME_7F04F218(ptr_playerstank, flags);
+    }
+
+    g_playerPointers[sp1C]->field_AC = flags;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08A03C
-/* 0BEB6C 7F08A03C 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0BEB70 7F08A040 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0BEB74 7F08A044 AFA40020 */  sw    $a0, 0x20($sp)
-/* 0BEB78 7F08A048 0FC26C57 */  jal   sub_GAME_7F09B15C
-/* 0BEB7C 7F08A04C AFA50024 */   sw    $a1, 0x24($sp)
-/* 0BEB80 7F08A050 8FAE0020 */  lw    $t6, 0x20($sp)
-/* 0BEB84 7F08A054 AFA2001C */  sw    $v0, 0x1c($sp)
-/* 0BEB88 7F08A058 8DC40004 */  lw    $a0, 4($t6)
-/* 0BEB8C 7F08A05C 10800003 */  beqz  $a0, .L7F08A06C
-/* 0BEB90 7F08A060 00000000 */   nop
-/* 0BEB94 7F08A064 0FC07D7A */  jal   set_or_unset_GUARDdata_flag
-/* 0BEB98 7F08A068 8FA50024 */   lw    $a1, 0x24($sp)
-.L7F08A06C:
-/* 0BEB9C 7F08A06C 3C048003 */  lui   $a0, %hi(ptr_playerstank)
-/* 0BEBA0 7F08A070 8C846450 */  lw    $a0, %lo(ptr_playerstank)($a0)
-/* 0BEBA4 7F08A074 50800004 */  beql  $a0, $zero, .L7F08A088
-/* 0BEBA8 7F08A078 8FB8001C */   lw    $t8, 0x1c($sp)
-/* 0BEBAC 7F08A07C 0FC13C86 */  jal   sub_GAME_7F04F218
-/* 0BEBB0 7F08A080 8FA50024 */   lw    $a1, 0x24($sp)
-/* 0BEBB4 7F08A084 8FB8001C */  lw    $t8, 0x1c($sp)
-.L7F08A088:
-/* 0BEBB8 7F08A088 3C088008 */  lui   $t0, %hi(g_playerPointers)
-/* 0BEBBC 7F08A08C 8FAF0024 */  lw    $t7, 0x24($sp)
-/* 0BEBC0 7F08A090 0018C880 */  sll   $t9, $t8, 2
-/* 0BEBC4 7F08A094 01194021 */  addu  $t0, $t0, $t9
-/* 0BEBC8 7F08A098 8D089EE0 */  lw    $t0, %lo(g_playerPointers)($t0)
-/* 0BEBCC 7F08A09C AD0F00AC */  sw    $t7, 0xac($t0)
-/* 0BEBD0 7F08A0A0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0BEBD4 7F08A0A4 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0BEBD8 7F08A0A8 03E00008 */  jr    $ra
-/* 0BEBDC 7F08A0AC 00000000 */   nop
-)
-#endif
 
 
 
