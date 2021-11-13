@@ -2040,7 +2040,7 @@ Gfx* lvlRender(Gfx* DL)
             }
             else
             {
-                DL = sub_GAME_7F08BCB8(DL);
+                DL = bondviewRemoved7F08BCB8(DL);
             }
 
             DL = mp_watch_menu_display(DL);

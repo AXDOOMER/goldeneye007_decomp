@@ -36416,18 +36416,17 @@ glabel sub_GAME_7F08B0F0
 
 
 
-#ifdef NONMATCHING
-Gfx * sub_GAME_7F08BCB8(Gfx *arg0) {
+/**
+ * Address 0x7F08BCB8.
+ */
+Gfx * bondviewRemoved7F08BCB8(Gfx *arg0)
+{
+    #ifdef DEBUG
+    // removed
+    #endif
 
+    return arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08BCB8
-/* 0C07E8 7F08BCB8 03E00008 */  jr    $ra
-/* 0C07EC 7F08BCBC 00801025 */   move  $v0, $a0
-)
-#endif
 
 
 
