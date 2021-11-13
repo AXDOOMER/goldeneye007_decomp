@@ -33015,35 +33015,27 @@ u8 bondviewGetCurrentPlayersRoom(void)
 
 
 
-#ifdef NONMATCHING
-void get_BONDdata_position(void) {
+/**
+ * Address 0x7F089FD4.
+ */
+struct coord3d *bondviewGetCurrentPlayersPosition(void)
+{
+    if (g_CurrentPlayer->unknown == 1)
+    {
+        return &g_CurrentPlayer->pos;
+    }
 
+    return &g_CurrentPlayer->field_4B4;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_BONDdata_position
-/* 0BEB04 7F089FD4 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
-/* 0BEB08 7F089FD8 8C63A0B0 */  lw    $v1, %lo(g_CurrentPlayer)($v1)
-/* 0BEB0C 7F089FDC 24010001 */  li    $at, 1
-/* 0BEB10 7F089FE0 8C6E0000 */  lw    $t6, ($v1)
-/* 0BEB14 7F089FE4 246204B4 */  addiu $v0, $v1, 0x4b4
-/* 0BEB18 7F089FE8 15C10003 */  bne   $t6, $at, .L7F089FF8
-/* 0BEB1C 7F089FEC 00000000 */   nop
-/* 0BEB20 7F089FF0 03E00008 */  jr    $ra
-/* 0BEB24 7F089FF4 24620004 */   addiu $v0, $v1, 4
-
-.L7F089FF8:
-/* 0BEB28 7F089FF8 03E00008 */  jr    $ra
-/* 0BEB2C 7F089FFC 00000000 */   nop
-)
-#endif
 
 
-int * get_BONDdata_position3(void) {
 
-    if (g_CurrentPlayer->unknown == 1) {
-        return (int *) &g_CurrentPlayer->pos3.f[0];
+struct coord3d * bondviewGetCurrentPlayersPosition3(void)
+{
+
+    if (g_CurrentPlayer->unknown == 1)
+    {
+        return &g_CurrentPlayer->pos3;
     }
 
     return &g_CurrentPlayer->field_4A4;

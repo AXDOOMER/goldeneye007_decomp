@@ -42676,7 +42676,7 @@ glabel sub_GAME_7F054C58
 /* 0897A0 7F054C70 AFAE0034 */   sw    $t6, 0x34($sp)
 /* 0897A4 7F054C74 50400039 */  beql  $v0, $zero, .L7F054D5C
 /* 0897A8 7F054C78 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0897AC 7F054C7C 0FC227F5 */  jal   get_BONDdata_position
+/* 0897AC 7F054C7C 0FC227F5 */  jal   bondviewGetCurrentPlayersPosition
 /* 0897B0 7F054C80 AFA20030 */   sw    $v0, 0x30($sp)
 /* 0897B4 7F054C84 0FC1E0F1 */  jal   currentPlayerGetMatrix10CC
 /* 0897B8 7F054C88 AFA2001C */   sw    $v0, 0x1c($sp)
@@ -42828,7 +42828,7 @@ glabel sub_GAME_7F054D6C
 .L7F054E18:
 /* 089948 7F054E18 5040001E */  beql  $v0, $zero, .L7F054E94
 /* 08994C 7F054E1C 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 089950 7F054E20 0FC227F5 */  jal   get_BONDdata_position
+/* 089950 7F054E20 0FC227F5 */  jal   bondviewGetCurrentPlayersPosition
 /* 089954 7F054E24 00000000 */   nop   
 /* 089958 7F054E28 C6240000 */  lwc1  $f4, ($s1)
 /* 08995C 7F054E2C C4460000 */  lwc1  $f6, ($v0)

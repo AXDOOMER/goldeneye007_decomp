@@ -717,17 +717,24 @@ struct player
   s32 field_498;
   s32 field_49C;
   s32 field_4A0;
-  s32 field_4A4;
-  s32 field_4A8;
-  s32 field_4AC;
+  
+  /**
+   * Some kind of alternative to pos3.
+   * Offset 0x04a4.
+   */
+  struct coord3d field_4A4;
 
   /**
    * Offset 0x04b0.
    */
   f32 collision_radius;
-  s32 field_4B4;
-  s32 field_4B8;
-  s32 field_4BC;
+
+  /**
+   * Some kind of alternative to pos.
+   * Offset 0x04b4.
+   */
+  struct coord3d field_4B4;
+
   s32 field_4C0;
   s32 field_4C4;
   s32 field_4C8;
@@ -3119,5 +3126,6 @@ void bondviewCallRecordDamageKills(f32 arg0, f32 rad, s32 arg2, s32 arg3);
 int bondviewGetIfCurrentPlayerDamageShowTime(void);
 int bondviewGetIfCurrentPlayerHealthShowTime(void);
 u8 bondviewGetCurrentPlayersRoom(void);
+struct coord3d *bondviewGetCurrentPlayersPosition(void);
 
 #endif

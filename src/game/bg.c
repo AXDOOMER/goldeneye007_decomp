@@ -2041,9 +2041,9 @@ def_7F0B490C:
 /* 0E9450 7F0B4920 00000000 */   nop   
 /* 0E9454 7F0B4924 3C018004 */  lui   $at, %hi(current_room_maybe)
 /* 0E9458 7F0B4928 00409825 */  move  $s3, $v0
-/* 0E945C 7F0B492C 0FC227F5 */  jal   get_BONDdata_position
+/* 0E945C 7F0B492C 0FC227F5 */  jal   bondviewGetCurrentPlayersPosition
 /* 0E9460 7F0B4930 AC224838 */   sw    $v0, %lo(current_room_maybe)($at)
-/* 0E9464 7F0B4934 0FC22800 */  jal   get_BONDdata_position3
+/* 0E9464 7F0B4934 0FC22800 */  jal   bondviewGetCurrentPlayersPosition3
 /* 0E9468 7F0B4938 0040A025 */   move  $s4, $v0
 /* 0E946C 7F0B493C 3C038008 */  lui   $v1, %hi(ptr_bgdata_portals)
 /* 0E9470 7F0B4940 0040A825 */  move  $s5, $v0
@@ -7636,7 +7636,7 @@ glabel sub_GAME_7F0B7F84
 /* 0ECB60 7F0B8030 02401025 */   move  $v0, $s2
 /* 0ECB64 7F0B8034 AFA20044 */  sw    $v0, 0x44($sp)
 .L7F0B8038:
-/* 0ECB68 7F0B8038 0FC227F5 */  jal   get_BONDdata_position
+/* 0ECB68 7F0B8038 0FC227F5 */  jal   bondviewGetCurrentPlayersPosition
 /* 0ECB6C 7F0B803C AFA3003C */   sw    $v1, 0x3c($sp)
 /* 0ECB70 7F0B8040 00408025 */  move  $s0, $v0
 /* 0ECB74 7F0B8044 02802025 */  move  $a0, $s4

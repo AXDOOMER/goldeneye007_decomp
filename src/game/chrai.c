@@ -21480,7 +21480,7 @@ glabel sub_GAME_7F03B15C
 /* 06FE0C 7F03B2DC E7A00048 */   swc1  $f0, 0x48($sp)
 /* 06FE10 7F03B2E0 C7A20048 */  lwc1  $f2, 0x48($sp)
 /* 06FE14 7F03B2E4 46020202 */  mul.s $f8, $f0, $f2
-/* 06FE18 7F03B2E8 0FC227F5 */  jal   get_BONDdata_position
+/* 06FE18 7F03B2E8 0FC227F5 */  jal   bondviewGetCurrentPlayersPosition
 /* 06FE1C 7F03B2EC E7A8006C */   swc1  $f8, 0x6c($sp)
 /* 06FE20 7F03B2F0 0FC2C731 */  jal   sub_GAME_7F0B1CC4
 /* 06FE24 7F03B2F4 00408025 */   move  $s0, $v0
