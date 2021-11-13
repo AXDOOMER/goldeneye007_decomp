@@ -4,6 +4,7 @@
 #include "boss.h"
 #include "game/math_atan2f.h"
 #include "game/bondview_r.h"
+#include "game/bondview.h"
 
 
 // data

@@ -31941,18 +31941,13 @@ void sub_GAME_7F08976C(f32 param_1) {
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F089778(void) {
-
+/**
+ * Address 0x7F089778.
+ */
+f32 bondviewGetPlayerClippingHeight(struct player *player)
+{
+    return player->clipping_height;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F089778
-/* 0BE2A8 7F089778 03E00008 */  jr    $ra
-/* 0BE2AC 7F08977C C4800074 */   lwc1  $f0, 0x74($a0)
-)
-#endif
 
 
 

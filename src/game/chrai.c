@@ -1,12 +1,13 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "boss.h"
-#include "game/chr.h"
-#include "game/chrai.h"
 #include "snd.h"
 #include "music.h"
-#include "game/lvl_text.h"
 #include "structs.h"
+#include "game/bondview.h"
+#include "game/chr.h"
+#include "game/chrai.h"
+#include "game/lvl_text.h"
 #include "game/math_floor.h"
 #include "game/math_ceil.h"
 #include "game/math_atan2f.h"
@@ -23790,7 +23791,7 @@ glabel sub_GAME_7F03CFE8
 /* 071B54 7F03D024 00027080 */  sll   $t6, $v0, 2
 /* 071B58 7F03D028 3C048008 */  lui   $a0, %hi(g_playerPointers)
 /* 071B5C 7F03D02C 008E2021 */  addu  $a0, $a0, $t6
-/* 071B60 7F03D030 0FC225DE */  jal   sub_GAME_7F089778
+/* 071B60 7F03D030 0FC225DE */  jal   bondviewGetPlayerClippingHeight
 /* 071B64 7F03D034 8C849EE0 */   lw    $a0, %lo(g_playerPointers)($a0)
 /* 071B68 7F03D038 10000004 */  b     .L7F03D04C
 /* 071B6C 7F03D03C 8FBF0014 */   lw    $ra, 0x14($sp)

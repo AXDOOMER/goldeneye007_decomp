@@ -3096,5 +3096,6 @@ void set_BONDdata_autoaim_x(s32 param_1);
 s32 get_BONDdata_autoaim_x(void);
 void set_BONDdata_autoaim_y(s32 param_1);
 void set_BONDdata_lookahead_setting(s32 arg0);
+f32 bondviewGetPlayerClippingHeight(struct player *player);
 
 #endif
