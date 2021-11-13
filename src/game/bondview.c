@@ -1981,28 +1981,28 @@ void init_player_BONDdata(void)
         g_CurrentPlayer->field_430 = get_player_control_style(get_cur_playernum());
         cur_player_set_control_type(get_player_control_style(get_cur_playernum()));
     }
-    g_CurrentPlayer->current_model_pos.x = 0.0f;
-    g_CurrentPlayer->current_model_pos.y = 0.0f;
-    g_CurrentPlayer->current_model_pos.z = 0.0f;
-    g_CurrentPlayer->previous_model_pos[0] = 0.0f;
-    g_CurrentPlayer->previous_model_pos[1] = 0.0f;
-    g_CurrentPlayer->previous_model_pos[2] = 0.0f;
+    g_CurrentPlayer->current_model_pos.f[0] = 0.0f;
+    g_CurrentPlayer->current_model_pos.f[1] = 0.0f;
+    g_CurrentPlayer->current_model_pos.f[2] = 0.0f;
+    g_CurrentPlayer->previous_model_pos.f[0] = 0.0f;
+    g_CurrentPlayer->previous_model_pos.f[1] = 0.0f;
+    g_CurrentPlayer->previous_model_pos.f[2] = 0.0f;
     g_CurrentPlayer->current_room_pos.f[0] = 0.0f;
     g_CurrentPlayer->current_room_pos.f[1] = 0.0f;
     g_CurrentPlayer->current_room_pos.f[2] = 0.0f;
     g_CurrentPlayer->unknown = 0;
-    g_CurrentPlayer->pos[0] = 0.0f;
-    g_CurrentPlayer->pos[1] = 0.0f;
-    g_CurrentPlayer->pos[2] = 0.0f;
-    g_CurrentPlayer->pos2[0] = 0.0f;
-    g_CurrentPlayer->pos2[1] = 0.0f;
-    g_CurrentPlayer->pos2[2] = 1.0f;
-    g_CurrentPlayer->offset[0] = 0.0f;
-    g_CurrentPlayer->offset[1] = 1.0f;
-    g_CurrentPlayer->offset[2] = 0.0f;
-    g_CurrentPlayer->pos3[0] = 0.0f;
-    g_CurrentPlayer->pos3[1] = 0.0f;
-    g_CurrentPlayer->pos3[2] = 0.0f;
+    g_CurrentPlayer->pos.f[0] = 0.0f;
+    g_CurrentPlayer->pos.f[1] = 0.0f;
+    g_CurrentPlayer->pos.f[2] = 0.0f;
+    g_CurrentPlayer->pos2.f[0] = 0.0f;
+    g_CurrentPlayer->pos2.f[1] = 0.0f;
+    g_CurrentPlayer->pos2.f[2] = 1.0f;
+    g_CurrentPlayer->offset.f[0] = 0.0f;
+    g_CurrentPlayer->offset.f[1] = 1.0f;
+    g_CurrentPlayer->offset.f[2] = 0.0f;
+    g_CurrentPlayer->pos3.f[0] = 0.0f;
+    g_CurrentPlayer->pos3.f[1] = 0.0f;
+    g_CurrentPlayer->pos3.f[2] = 0.0f;
     g_CurrentPlayer->room_pointer = 0;
     g_CurrentPlayer->field_3C4 = 0.0f;
     g_CurrentPlayer->field_3C8 = 0.0f;
@@ -2496,15 +2496,15 @@ void bondviewUpdateCurrentPlayerPosition(struct coord3d *pos, struct coord3d *po
     StandTile *sp30;
 
     if (
-        (pos->f[0] != g_CurrentPlayer->pos[0])
-        || (pos->f[1] != g_CurrentPlayer->pos[1])
-        || (pos->f[2] != g_CurrentPlayer->pos[2])
-        || (pos2->f[0] != g_CurrentPlayer->pos2[0])
-        || (pos2->f[1] != g_CurrentPlayer->pos2[1])
-        || (pos2->f[2] != g_CurrentPlayer->pos2[2])
-        || (offset->f[0] != g_CurrentPlayer->offset[0])
-        || (offset->f[1] != g_CurrentPlayer->offset[1])
-        || (offset->f[2] != g_CurrentPlayer->offset[2])
+        (pos->f[0] != g_CurrentPlayer->pos.f[0])
+        || (pos->f[1] != g_CurrentPlayer->pos.f[1])
+        || (pos->f[2] != g_CurrentPlayer->pos.f[2])
+        || (pos2->f[0] != g_CurrentPlayer->pos2.f[0])
+        || (pos2->f[1] != g_CurrentPlayer->pos2.f[1])
+        || (pos2->f[2] != g_CurrentPlayer->pos2.f[2])
+        || (offset->f[0] != g_CurrentPlayer->offset.f[0])
+        || (offset->f[1] != g_CurrentPlayer->offset.f[1])
+        || (offset->f[2] != g_CurrentPlayer->offset.f[2])
         || (g_CurrentPlayer->room_pointer == NULL))
     {
         sp34 = tile;
@@ -2518,7 +2518,7 @@ void bondviewUpdateCurrentPlayerPosition(struct coord3d *pos, struct coord3d *po
             if (g_CurrentPlayer->room_pointer != NULL)
             {
                 sp30 = g_CurrentPlayer->room_pointer;
-                if (walkTilesBetweenPoints_NoCallback((StandTile **) &sp30, g_CurrentPlayer->pos[0], g_CurrentPlayer->pos[2], pos->f[0], pos->f[2]))
+                if (walkTilesBetweenPoints_NoCallback((StandTile **) &sp30, g_CurrentPlayer->pos.f[0], g_CurrentPlayer->pos.f[2], pos->f[0], pos->f[2]))
                 {
                     g_CurrentPlayer->room_pointer = sp30;
                 }
@@ -2533,18 +2533,18 @@ void bondviewUpdateCurrentPlayerPosition(struct coord3d *pos, struct coord3d *po
             }
         }
 
-        g_CurrentPlayer->pos[0] = pos->f[0];
-        g_CurrentPlayer->pos[1] = pos->f[1];
-        g_CurrentPlayer->pos[2] = pos->f[2];
-        g_CurrentPlayer->pos2[0] = pos2->f[0];
-        g_CurrentPlayer->pos2[1] = pos2->f[1];
-        g_CurrentPlayer->pos2[2] = pos2->f[2];
-        g_CurrentPlayer->offset[0] = offset->f[0];
-        g_CurrentPlayer->offset[1] = offset->f[1];
-        g_CurrentPlayer->offset[2] = offset->f[2];
-        g_CurrentPlayer->pos3[0] = g_CurrentPlayer->pos[0];
-        g_CurrentPlayer->pos3[2] = g_CurrentPlayer->pos[2];
-        g_CurrentPlayer->pos3[1] = stanGetPositionYValue(g_CurrentPlayer->room_pointer, g_CurrentPlayer->pos[0], g_CurrentPlayer->pos[2]);
+        g_CurrentPlayer->pos.f[0] = pos->f[0];
+        g_CurrentPlayer->pos.f[1] = pos->f[1];
+        g_CurrentPlayer->pos.f[2] = pos->f[2];
+        g_CurrentPlayer->pos2.f[0] = pos2->f[0];
+        g_CurrentPlayer->pos2.f[1] = pos2->f[1];
+        g_CurrentPlayer->pos2.f[2] = pos2->f[2];
+        g_CurrentPlayer->offset.f[0] = offset->f[0];
+        g_CurrentPlayer->offset.f[1] = offset->f[1];
+        g_CurrentPlayer->offset.f[2] = offset->f[2];
+        g_CurrentPlayer->pos3.f[0] = g_CurrentPlayer->pos.f[0];
+        g_CurrentPlayer->pos3.f[2] = g_CurrentPlayer->pos.f[2];
+        g_CurrentPlayer->pos3.f[1] = stanGetPositionYValue(g_CurrentPlayer->room_pointer, g_CurrentPlayer->pos.f[0], g_CurrentPlayer->pos.f[2]);
     }
 }
 
@@ -28427,10 +28427,10 @@ void bondviewUpdateCurrentRoomPosition(s32 arg0)
 
 
 void store_BONDdata_curpos_to_previous(void) {
-    g_CurrentPlayer->previous_model_pos[0] = g_CurrentPlayer->current_model_pos.x;
-    g_CurrentPlayer->previous_model_pos[1] = g_CurrentPlayer->current_model_pos.y;
-    g_CurrentPlayer->previous_model_pos[2] = g_CurrentPlayer->current_model_pos.z;
-    matrix_4x4_rotate_vector_in_place(currentPlayerGetMatrix10CC(), g_CurrentPlayer->previous_model_pos);
+    g_CurrentPlayer->previous_model_pos.f[0] = g_CurrentPlayer->current_model_pos.f[0];
+    g_CurrentPlayer->previous_model_pos.f[1] = g_CurrentPlayer->current_model_pos.f[1];
+    g_CurrentPlayer->previous_model_pos.f[2] = g_CurrentPlayer->current_model_pos.f[2];
+    matrix_4x4_rotate_vector_in_place(currentPlayerGetMatrix10CC(), g_CurrentPlayer->previous_model_pos.f);
 }
 
 #ifdef NONMATCHING
@@ -33117,7 +33117,7 @@ glabel get_BONDdata_position
 int * get_BONDdata_position3(void) {
 
     if (g_CurrentPlayer->unknown == 1) {
-        return (int *) &g_CurrentPlayer->pos3[0];
+        return (int *) &g_CurrentPlayer->pos3.f[0];
     }
 
     return &g_CurrentPlayer->field_4A4;

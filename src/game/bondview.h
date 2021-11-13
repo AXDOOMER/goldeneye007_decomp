@@ -307,26 +307,37 @@ struct player
   /**
    * Offset 0x0004.
    */
-  f32 pos[3];
+  struct coord3d pos;
 
   /**
    * Offset 0x0010.
    */
-  f32 pos2[3];
+  struct coord3d pos2;
 
   /**
    * Offset 0x001c.
    */
-  f32 offset[3];
+  struct coord3d offset;
 
   /**
    * Offset 0x0028.
    */
-  f32 pos3[3];
+  struct coord3d pos3;
 
-  /* 0x0034 */ StandTile *room_pointer;
-  /* 0x0038 */ struct coord3d current_model_pos;
-  /* 0x0044 */ vec3 previous_model_pos;
+  /**
+   * Offset 0x0034.
+   */
+  StandTile *room_pointer;
+
+  /**
+   * Offset 0x0038.
+   */
+  struct coord3d current_model_pos;
+
+  /**
+   * Offset 0x0044.
+   */
+  struct coord3d previous_model_pos;
 
   /**
    * Offset 0x0050.
