@@ -5314,7 +5314,7 @@ glabel sub_GAME_7F07B1A4
 /* 0AFD0C 7F07B1DC 24010002 */  li    $at, 2
 /* 0AFD10 7F07B1E0 54410008 */  bnel  $v0, $at, .L7F07B204
 /* 0AFD14 7F07B1E4 24010009 */   li    $at, 9
-/* 0AFD18 7F07B1E8 0FC228CC */  jal   reset_intro_camera_message_dialogs_for_BONDdata
+/* 0AFD18 7F07B1E8 0FC228CC */  jal   bondviewResetIntroCameraMessageDialogs
 /* 0AFD1C 7F07B1EC 00000000 */   nop
 /* 0AFD20 7F07B1F0 0FC1EA6E */  jal   set_camera_mode
 /* 0AFD24 7F07B1F4 24040003 */   li    $a0, 3
@@ -33180,58 +33180,21 @@ void bondviewAddCurrentPlayerArmor(f32 arg0)
 
 
 
-#ifdef NONMATCHING
-void reset_intro_camera_message_dialogs_for_BONDdata(void) {
+/**
+ * Address 0x7F08A330.
+ */
+void bondviewResetIntroCameraMessageDialogs(void)
+{
+    g_CurrentPlayer->hudmessoff = 0;
+    g_CurrentPlayer->bondmesscnt = -1;
+    display_statusbar = 0;
+    status_bar_text_buffer_index = 0;
 
-}
-#else
 #ifdef VERSION_US
-GLOBAL_ASM(
-.text
-glabel reset_intro_camera_message_dialogs_for_BONDdata
-/* 0BEE60 7F08A330 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
-/* 0BEE64 7F08A334 2442A0B0 */  addiu $v0, %lo(g_CurrentPlayer) # addiu $v0, $v0, -0x5f50
-/* 0BEE68 7F08A338 8C4E0000 */  lw    $t6, ($v0)
-/* 0BEE6C 7F08A33C 240FFFFF */  li    $t7, -1
-/* 0BEE70 7F08A340 3C018003 */  lui   $at, %hi(display_statusbar)
-/* 0BEE74 7F08A344 ADC011D8 */  sw    $zero, 0x11d8($t6)
-/* 0BEE78 7F08A348 8C580000 */  lw    $t8, ($v0)
-/* 0BEE7C 7F08A34C 3C198004 */  lui   $t9, %hi(ptrFirstFontTableSmall)
-/* 0BEE80 7F08A350 3C088004 */  lui   $t0, %hi(ptrSecondFontTableSmall)
-/* 0BEE84 7F08A354 AF0F11DC */  sw    $t7, 0x11dc($t8)
-/* 0BEE88 7F08A358 AC20689C */  sw    $zero, %lo(display_statusbar)($at)
-/* 0BEE8C 7F08A35C 8F390EAC */  lw    $t9, %lo(ptrFirstFontTableSmall)($t9)
-/* 0BEE90 7F08A360 3C018003 */  lui   $at, %hi(status_bar_text_buffer_index)
-/* 0BEE94 7F08A364 AC206898 */  sw    $zero, %lo(status_bar_text_buffer_index)($at)
-/* 0BEE98 7F08A368 3C018003 */  lui   $at, %hi(copy_1stfonttable)
-/* 0BEE9C 7F08A36C 8D080EB0 */  lw    $t0, %lo(ptrSecondFontTableSmall)($t0)
-/* 0BEEA0 7F08A370 AC3968A0 */  sw    $t9, %lo(copy_1stfonttable)($at)
-/* 0BEEA4 7F08A374 3C018003 */  lui   $at, %hi(copy_2ndfonttable)
-/* 0BEEA8 7F08A378 03E00008 */  jr    $ra
-/* 0BEEAC 7F08A37C AC2868A4 */   sw    $t0, %lo(copy_2ndfonttable)($at)
-)
+    copy_1stfonttable = ptrFirstFontTableSmall;
+    copy_2ndfonttable = ptrSecondFontTableSmall;
 #endif
-
-#ifndef VERSION_US
-GLOBAL_ASM(
-.text
-glabel reset_intro_camera_message_dialogs_for_BONDdata
-/* 0BF5D8 7F08AA68 3C028008 */  lui   $v0, %hi(g_CurrentPlayer) # $v0, 0x8008
-/* 0BF5DC 7F08AA6C 2442A120 */  addiu $v0, %lo(g_CurrentPlayer) # addiu $v0, $v0, -0x5ee0
-/* 0BF5E0 7F08AA70 8C4E0000 */  lw    $t6, ($v0)
-/* 0BF5E4 7F08AA74 240FFFFF */  li    $t7, -1
-/* 0BF5E8 7F08AA78 3C018003 */  lui   $at, %hi(display_statusbar) # $at, 0x8003
-/* 0BF5EC 7F08AA7C ADC011D8 */  sw    $zero, 0x11d8($t6)
-/* 0BF5F0 7F08AA80 8C580000 */  lw    $t8, ($v0)
-/* 0BF5F4 7F08AA84 AF0F11DC */  sw    $t7, 0x11dc($t8)
-/* 0BF5F8 7F08AA88 AC2068DC */  sw    $zero, %lo(display_statusbar)($at)
-/* 0BF5FC 7F08AA8C 3C018003 */  lui   $at, %hi(status_bar_text_buffer_index)
-/* 0BF600 7F08AA90 03E00008 */  jr    $ra
-/* 0BF604 7F08AA94 AC2068D8 */   sw    $zero, %lo(status_bar_text_buffer_index)($at)
-)
-#endif
-
-#endif
+}
 
 
 
