@@ -344,7 +344,12 @@ struct player
    */
   struct coord3d current_room_pos;
 
-  /* 0x005c */ s32 field_5C;
+  /**
+   * Used as parameter to gbi macro.
+   * Offset 0x005c.
+   */
+  s32 field_5C;
+
   /* 0x0060 */ s32 field_60;
   /* 0x0064 */ s32 field_64;
   /* 0x0068 */ s32 field_68;
@@ -3143,6 +3148,8 @@ void bondviewAddCurrentPlayerArmor(f32 arg0);
 void bondviewResetIntroCameraMessageDialogs(void);
 void bondviewUnsetIntroCameraFlags(s32 flag);
 void bondviewSetIntroCameraFlags(s32 flags);
+Gfx* bondviewGfxPlayerField5cMatrix(Gfx* gdl);
+
 
 // unknown pointer arg0
 s32 sub_GAME_7F08BCC0(void *arg0, s32 arg1);

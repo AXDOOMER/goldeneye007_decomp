@@ -36449,25 +36449,14 @@ s32 sub_GAME_7F08BCC0(void *arg0, s32 arg1)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08BCF4(void) {
-
+/**
+ * Address 0x7F08BCF4.
+ */
+Gfx* bondviewGfxPlayerField5cMatrix(Gfx* gdl)
+{
+    gSPMatrix(gdl++, g_CurrentPlayer->field_5C, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+    return gdl;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08BCF4
-/* 0C0824 7F08BCF4 3C0E0102 */  lui   $t6, (0x01020040 >> 16) # lui $t6, 0x102
-/* 0C0828 7F08BCF8 35CE0040 */  ori   $t6, (0x01020040 & 0xFFFF) # ori $t6, $t6, 0x40
-/* 0C082C 7F08BCFC AC8E0000 */  sw    $t6, ($a0)
-/* 0C0830 7F08BD00 3C0F8008 */  lui   $t7, %hi(g_CurrentPlayer)
-/* 0C0834 7F08BD04 8DEFA0B0 */  lw    $t7, %lo(g_CurrentPlayer)($t7)
-/* 0C0838 7F08BD08 24820008 */  addiu $v0, $a0, 8
-/* 0C083C 7F08BD0C 8DF8005C */  lw    $t8, 0x5c($t7)
-/* 0C0840 7F08BD10 03E00008 */  jr    $ra
-/* 0C0844 7F08BD14 AC980004 */   sw    $t8, 4($a0)
-)
-#endif
 
 
 

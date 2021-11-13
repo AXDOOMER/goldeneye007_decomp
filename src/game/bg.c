@@ -2454,7 +2454,7 @@ Gfx* sub_GAME_7F0B4E40(Gfx *arg0) {
     temp_v0 = phi_a0;
     *temp_v0 = 0x1030040;
     temp_v0->unk4 = (?32) m;
-    return sub_GAME_7F08BCF4((phi_a0 + 8));
+    return bondviewGfxPlayerField5cMatrix((phi_a0 + 8));
 }
 #else
 GLOBAL_ASM(
@@ -2543,7 +2543,7 @@ glabel sub_GAME_7F0B4E40
 /* 0E9AA8 7F0B4F78 3C098006 */  lui   $t1, %hi(g_viProjectionMatrix) 
 /* 0E9AAC 7F0B4F7C 8D290820 */  lw    $t1, %lo(g_viProjectionMatrix)($t1)
 /* 0E9AB0 7F0B4F80 24840008 */  addiu $a0, $a0, 8
-/* 0E9AB4 7F0B4F84 0FC22F3D */  jal   sub_GAME_7F08BCF4
+/* 0E9AB4 7F0B4F84 0FC22F3D */  jal   bondviewGfxPlayerField5cMatrix
 /* 0E9AB8 7F0B4F88 AC490004 */   sw    $t1, 4($v0)
 /* 0E9ABC 7F0B4F8C 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0E9AC0 7F0B4F90 27BD0030 */  addiu $sp, $sp, 0x30
