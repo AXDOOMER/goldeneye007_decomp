@@ -5,6 +5,7 @@
 #include "joy.h"
 #include "music.h"
 #include "snd.h"
+#include "str.h"
 #include "structs.h"
 #include "watch.h"
 #include "game/bg.h"
@@ -132,6 +133,7 @@ s32 watch_time_0;
 
 //CODE.bss:80079A28
 char stringbuffer_lowerleft[0x200];
+
 #ifdef VERSION_JP
 //CODE.bss:80079Cd8
 char dword_CODE_bss_jp80079Cd8[0x30];
@@ -33230,8 +33232,31 @@ void setFontTables(s32 arg0, s32 arg1)
 
 
 #ifdef NONMATCHING
-void display_string_in_lower_left_corner(char *string) {
+void display_string_in_lower_left_corner(s8 *string)
+{
+    s32 temp_v0;
+    char *cc;
 
+    if (getPlayerCount() == 1 && display_statusbar < 5)
+    {
+        temp_v0 = ((status_bar_text_buffer_index + display_statusbar) % 5);
+        
+        cc = &stringbuffer_lowerleft[temp_v0 * 0x65];
+        strncpy(cc, string, 0x64U);
+        stringbuffer_lowerleft[0x64 + (temp_v0 * 0x65)] = '\0';
+
+        display_statusbar += 1;
+    }
+    else
+    {
+        temp_v0 = get_cur_playernum();
+
+        cc = &stringbuffer_lowerleft[temp_v0 * 0x65];
+        strncpy(cc, string, 0x64U);
+        stringbuffer_lowerleft[0x64 + (temp_v0 * 0x65)] = '\0';
+
+        g_CurrentPlayer->bondmesscnt = 0x78;
+    }
 }
 #else
 #ifdef VERSION_US
