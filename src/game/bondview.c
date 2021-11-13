@@ -32892,39 +32892,18 @@ glabel record_damage_kills
 #endif
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F089E4C(void) {
-
+/**
+ * @param arg0: unknown
+ * @param rad: value in radians
+ * @param arg2: unknown
+ * @param arg3: unknown
+ * 
+ * Address 0x7F089E4C.
+ */
+void bondviewCallRecordDamageKills(f32 arg0, f32 rad, s32 arg2, s32 arg3)
+{
+    record_damage_kills(arg0, sinf(rad), cosf(rad), arg2, arg3);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F089E4C
-/* 0BE97C 7F089E4C 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0BE980 7F089E50 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0BE984 7F089E54 E7AC0028 */  swc1  $f12, 0x28($sp)
-/* 0BE988 7F089E58 E7AE002C */  swc1  $f14, 0x2c($sp)
-/* 0BE98C 7F089E5C AFA60030 */  sw    $a2, 0x30($sp)
-/* 0BE990 7F089E60 AFA70034 */  sw    $a3, 0x34($sp)
-/* 0BE994 7F089E64 0FC15FAB */  jal   sinf
-/* 0BE998 7F089E68 C7AC002C */   lwc1  $f12, 0x2c($sp)
-/* 0BE99C 7F089E6C E7A00020 */  swc1  $f0, 0x20($sp)
-/* 0BE9A0 7F089E70 0FC15FA8 */  jal   cosf
-/* 0BE9A4 7F089E74 C7AC002C */   lwc1  $f12, 0x2c($sp)
-/* 0BE9A8 7F089E78 8FAE0034 */  lw    $t6, 0x34($sp)
-/* 0BE9AC 7F089E7C 44060000 */  mfc1  $a2, $f0
-/* 0BE9B0 7F089E80 C7AC0028 */  lwc1  $f12, 0x28($sp)
-/* 0BE9B4 7F089E84 C7AE0020 */  lwc1  $f14, 0x20($sp)
-/* 0BE9B8 7F089E88 8FA70030 */  lw    $a3, 0x30($sp)
-/* 0BE9BC 7F089E8C 0FC22647 */  jal   record_damage_kills
-/* 0BE9C0 7F089E90 AFAE0010 */   sw    $t6, 0x10($sp)
-/* 0BE9C4 7F089E94 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0BE9C8 7F089E98 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0BE9CC 7F089E9C 03E00008 */  jr    $ra
-/* 0BE9D0 7F089EA0 00000000 */   nop
-)
-#endif
-
 
 
 

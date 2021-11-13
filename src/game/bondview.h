@@ -698,7 +698,7 @@ struct player
   s32 field_47C;
   s32 field_480;
   s32 field_484;
-  
+
   StandTile *current_tile_ptr;
 
   /**
@@ -3105,5 +3105,7 @@ s32 get_BONDdata_autoaim_x(void);
 void set_BONDdata_autoaim_y(s32 param_1);
 void set_BONDdata_lookahead_setting(s32 arg0);
 f32 bondviewGetPlayerClippingHeight(struct player *player);
+void record_damage_kills(f32, f32, f32, s32, s32);
+void bondviewCallRecordDamageKills(f32 arg0, f32 rad, s32 arg2, s32 arg3);
 
 #endif

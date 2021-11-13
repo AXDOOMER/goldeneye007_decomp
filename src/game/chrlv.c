@@ -13803,7 +13803,7 @@ glabel sub_GAME_7F02D2E4
 /* 062120 7F02D5F0 46046302 */  mul.s $f12, $f12, $f4
 /* 062124 7F02D5F4 00000000 */  nop   
 .L7F02D5F8:
-/* 062128 7F02D5F8 0FC22793 */  jal   sub_GAME_7F089E4C
+/* 062128 7F02D5F8 0FC22793 */  jal   bondviewCallRecordDamageKills
 /* 06212C 7F02D5FC 24070001 */   li    $a3, 1
 /* 062130 7F02D600 44803000 */  mtc1  $zero, $f6
 /* 062134 7F02D604 8FAA0060 */  lw    $t2, 0x60($sp)
@@ -14046,7 +14046,7 @@ glabel sub_GAME_7F02D2E4
 /* 062120 7F02D5F0 46046302 */  mul.s $f12, $f12, $f4
 /* 062124 7F02D5F4 00000000 */  nop   
 .L7F02D5F8:
-/* 062128 7F02D5F8 0FC22793 */  jal   sub_GAME_7F089E4C
+/* 062128 7F02D5F8 0FC22793 */  jal   bondviewCallRecordDamageKills
 /* 06212C 7F02D5FC 24070001 */   li    $a3, 1
 /* 062130 7F02D600 44803000 */  mtc1  $zero, $f6
 /* 062134 7F02D604 8FAA0060 */  lw    $t2, 0x60($sp)
@@ -14290,7 +14290,7 @@ glabel sub_GAME_7F02D2E4
 /* 062120 7F02D5F0 46046302 */  mul.s $f12, $f12, $f4
 /* 062124 7F02D5F4 00000000 */  nop   
 .L7F02D5F8:
-/* 062128 7F02D5F8 0FC22793 */  jal   sub_GAME_7F089E4C
+/* 062128 7F02D5F8 0FC22793 */  jal   bondviewCallRecordDamageKills
 /* 06212C 7F02D5FC 24070001 */   li    $a3, 1
 /* 062130 7F02D600 44803000 */  mtc1  $zero, $f6
 /* 062134 7F02D604 8FAA0060 */  lw    $t2, 0x60($sp)
