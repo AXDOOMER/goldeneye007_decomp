@@ -13663,7 +13663,7 @@ glabel sub_GAME_7F02D2E4
 .L7F02D3EC:
 /* 061F1C 7F02D3EC 8FB80068 */  lw    $t8, 0x68($sp)
 /* 061F20 7F02D3F0 AF000000 */  sw    $zero, ($t8)
-/* 061F24 7F02D3F4 0FC227A9 */  jal   check_if_bond_is_invincible
+/* 061F24 7F02D3F4 0FC227A9 */  jal   bondviewGetIfCurrentPlayerDamageShowTime
 /* 061F28 7F02D3F8 AFA30024 */   sw    $v1, 0x24($sp)
 /* 061F2C 7F02D3FC 14400088 */  bnez  $v0, .L7F02D620
 /* 061F30 7F02D400 8FA30024 */   lw    $v1, 0x24($sp)
@@ -13807,7 +13807,7 @@ glabel sub_GAME_7F02D2E4
 /* 06212C 7F02D5FC 24070001 */   li    $a3, 1
 /* 062130 7F02D600 44803000 */  mtc1  $zero, $f6
 /* 062134 7F02D604 8FAA0060 */  lw    $t2, 0x60($sp)
-/* 062138 7F02D608 0FC227A9 */  jal   check_if_bond_is_invincible
+/* 062138 7F02D608 0FC227A9 */  jal   bondviewGetIfCurrentPlayerDamageShowTime
 /* 06213C 7F02D60C E546013C */   swc1  $f6, 0x13c($t2)
 /* 062140 7F02D610 10400003 */  beqz  $v0, .L7F02D620
 /* 062144 7F02D614 8FAC0068 */   lw    $t4, 0x68($sp)
@@ -13906,7 +13906,7 @@ glabel sub_GAME_7F02D2E4
 .L7F02D3EC:
 /* 061F1C 7F02D3EC 8FB80068 */  lw    $t8, 0x68($sp)
 /* 061F20 7F02D3F0 AF000000 */  sw    $zero, ($t8)
-/* 061F24 7F02D3F4 0FC227A9 */  jal   check_if_bond_is_invincible
+/* 061F24 7F02D3F4 0FC227A9 */  jal   bondviewGetIfCurrentPlayerDamageShowTime
 /* 061F28 7F02D3F8 AFA30024 */   sw    $v1, 0x24($sp)
 /* 061F2C 7F02D3FC 14400088 */  bnez  $v0, .L7F02D620
 /* 061F30 7F02D400 8FA30024 */   lw    $v1, 0x24($sp)
@@ -14050,7 +14050,7 @@ glabel sub_GAME_7F02D2E4
 /* 06212C 7F02D5FC 24070001 */   li    $a3, 1
 /* 062130 7F02D600 44803000 */  mtc1  $zero, $f6
 /* 062134 7F02D604 8FAA0060 */  lw    $t2, 0x60($sp)
-/* 062138 7F02D608 0FC227A9 */  jal   check_if_bond_is_invincible
+/* 062138 7F02D608 0FC227A9 */  jal   bondviewGetIfCurrentPlayerDamageShowTime
 /* 06213C 7F02D60C E546013C */   swc1  $f6, 0x13c($t2)
 /* 062140 7F02D610 10400003 */  beqz  $v0, .L7F02D620
 /* 062144 7F02D614 8FAC0068 */   lw    $t4, 0x68($sp)
@@ -14150,7 +14150,7 @@ glabel sub_GAME_7F02D2E4
 .L7F02D3EC:
 /* 061F1C 7F02D3EC 8FB80068 */  lw    $t8, 0x68($sp)
 /* 061F20 7F02D3F0 AF000000 */  sw    $zero, ($t8)
-/* 061F24 7F02D3F4 0FC227A9 */  jal   check_if_bond_is_invincible
+/* 061F24 7F02D3F4 0FC227A9 */  jal   bondviewGetIfCurrentPlayerDamageShowTime
 /* 061F28 7F02D3F8 AFA30024 */   sw    $v1, 0x24($sp)
 /* 061F2C 7F02D3FC 14400088 */  bnez  $v0, .L7F02D620
 /* 061F30 7F02D400 8FA30024 */   lw    $v1, 0x24($sp)
@@ -14294,7 +14294,7 @@ glabel sub_GAME_7F02D2E4
 /* 06212C 7F02D5FC 24070001 */   li    $a3, 1
 /* 062130 7F02D600 44803000 */  mtc1  $zero, $f6
 /* 062134 7F02D604 8FAA0060 */  lw    $t2, 0x60($sp)
-/* 062138 7F02D608 0FC227A9 */  jal   check_if_bond_is_invincible
+/* 062138 7F02D608 0FC227A9 */  jal   bondviewGetIfCurrentPlayerDamageShowTime
 /* 06213C 7F02D60C E546013C */   swc1  $f6, 0x13c($t2)
 /* 062140 7F02D610 10400003 */  beqz  $v0, .L7F02D620
 /* 062144 7F02D614 8FAC0068 */   lw    $t4, 0x68($sp)

@@ -13510,7 +13510,7 @@ glabel object_interaction
 /* 07E298 7F049768 00000000 */  nop   
 /* 07E29C 7F04976C 45000033 */  bc1f  .L7F04983C
 /* 07E2A0 7F049770 00000000 */   nop   
-/* 07E2A4 7F049774 0FC227A9 */  jal   check_if_bond_is_invincible
+/* 07E2A4 7F049774 0FC227A9 */  jal   bondviewGetIfCurrentPlayerDamageShowTime
 /* 07E2A8 7F049778 00000000 */   nop   
 /* 07E2AC 7F04977C 54400030 */  bnezl $v0, .L7F049840
 /* 07E2B0 7F049780 8FB9011C */   lw    $t9, 0x11c($sp)
@@ -13556,7 +13556,7 @@ glabel object_interaction
 /* 07E34C 7F04981C 46043302 */  mul.s $f12, $f6, $f4
 /* 07E350 7F049820 0FC22793 */  jal   bondviewCallRecordDamageKills
 /* 07E354 7F049824 00000000 */   nop   
-/* 07E358 7F049828 0FC227A9 */  jal   check_if_bond_is_invincible
+/* 07E358 7F049828 0FC227A9 */  jal   bondviewGetIfCurrentPlayerDamageShowTime
 /* 07E35C 7F04982C E61600D4 */   swc1  $f22, 0xd4($s0)
 /* 07E360 7F049830 50400003 */  beql  $v0, $zero, .L7F049840
 /* 07E364 7F049834 8FB9011C */   lw    $t9, 0x11c($sp)
@@ -18616,7 +18616,7 @@ glabel object_interaction
 /* 07E6DC 7F049B6C 00000000 */  nop   
 /* 07E6E0 7F049B70 45000033 */  bc1f  .Ljp7F049C40
 /* 07E6E4 7F049B74 00000000 */   nop   
-/* 07E6E8 7F049B78 0FC2296B */  jal   check_if_bond_is_invincible
+/* 07E6E8 7F049B78 0FC2296B */  jal   bondviewGetIfCurrentPlayerDamageShowTime
 /* 07E6EC 7F049B7C 00000000 */   nop   
 /* 07E6F0 7F049B80 54400030 */  bnezl $v0, .Ljp7F049C44
 /* 07E6F4 7F049B84 8FB90120 */   lw    $t9, 0x120($sp)
@@ -18662,7 +18662,7 @@ glabel object_interaction
 /* 07E790 7F049C20 46043302 */  mul.s $f12, $f6, $f4
 /* 07E794 7F049C24 0FC22955 */  jal   bondviewCallRecordDamageKills
 /* 07E798 7F049C28 00000000 */   nop   
-/* 07E79C 7F049C2C 0FC2296B */  jal   check_if_bond_is_invincible
+/* 07E79C 7F049C2C 0FC2296B */  jal   bondviewGetIfCurrentPlayerDamageShowTime
 /* 07E7A0 7F049C30 E61600D4 */   swc1  $f22, 0xd4($s0)
 /* 07E7A4 7F049C34 50400003 */  beql  $v0, $zero, .Ljp7F049C44
 /* 07E7A8 7F049C38 8FB90120 */   lw    $t9, 0x120($sp)
@@ -23729,7 +23729,7 @@ glabel object_interaction
 /* 07C334 7F049944 00000000 */  nop   
 /* 07C338 7F049948 45000033 */  bc1f  .L7F049A18
 /* 07C33C 7F04994C 00000000 */   nop   
-/* 07C340 7F049950 0FC22810 */  jal   check_if_bond_is_invincible
+/* 07C340 7F049950 0FC22810 */  jal   bondviewGetIfCurrentPlayerDamageShowTime
 /* 07C344 7F049954 00000000 */   nop   
 /* 07C348 7F049958 54400030 */  bnezl $v0, .L7F049A1C
 /* 07C34C 7F04995C 8FAA0120 */   lw    $t2, 0x120($sp)
@@ -23775,7 +23775,7 @@ glabel object_interaction
 /* 07C3E8 7F0499F8 46043302 */  mul.s $f12, $f6, $f4
 /* 07C3EC 7F0499FC 0FC227FA */  jal   bondviewCallRecordDamageKills
 /* 07C3F0 7F049A00 00000000 */   nop   
-/* 07C3F4 7F049A04 0FC22810 */  jal   check_if_bond_is_invincible
+/* 07C3F4 7F049A04 0FC22810 */  jal   bondviewGetIfCurrentPlayerDamageShowTime
 /* 07C3F8 7F049A08 E61600D4 */   swc1  $f22, 0xd4($s0)
 /* 07C3FC 7F049A0C 50400003 */  beql  $v0, $zero, .L7F049A1C
 /* 07C400 7F049A10 8FAA0120 */   lw    $t2, 0x120($sp)

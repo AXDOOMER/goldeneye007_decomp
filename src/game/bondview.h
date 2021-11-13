@@ -420,8 +420,16 @@ struct player
   /* 0x00e8 */ f32 oldarmour;
   /* 0x00ec */ f32 apparenthealth;
   /* 0x00f0 */ f32 apparentarmour;
+
+#if defined(VERSION_JP)
+/* 0x00f4 */ f32 damageshowtime;
+/* 0x00f8 */ f32 healthshowtime;
+#else
   /* 0x00f4 */ s32 damageshowtime;
   /* 0x00f8 */ s32 healthshowtime;
+#endif
+
+
   /* 0x00fc */ s32 healthshowmode;
   /* 0x0100 */ s32 field_100;
   /* 0x0104 */ s32 field_104;
@@ -3107,5 +3115,6 @@ void set_BONDdata_lookahead_setting(s32 arg0);
 f32 bondviewGetPlayerClippingHeight(struct player *player);
 void record_damage_kills(f32, f32, f32, s32, s32);
 void bondviewCallRecordDamageKills(f32 arg0, f32 rad, s32 arg2, s32 arg3);
+int check_if_bond_is_invincible(void);
 
 #endif

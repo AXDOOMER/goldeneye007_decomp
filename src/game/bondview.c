@@ -17349,7 +17349,7 @@ glabel controller_gameplay_interaction
 /* 0B7788 7F082C58 E7A00180 */  swc1  $f0, 0x180($sp)
 /* 0B778C 7F082C5C E7A80184 */  swc1  $f8, 0x184($sp)
 .L7F082C60:
-/* 0B7790 7F082C60 0FC227A9 */  jal   check_if_bond_is_invincible
+/* 0B7790 7F082C60 0FC227A9 */  jal   bondviewGetIfCurrentPlayerDamageShowTime
 /* 0B7794 7F082C64 00000000 */   nop
 /* 0B7798 7F082C68 10400007 */  beqz  $v0, .L7F082C88
 /* 0B779C 7F082C6C 00000000 */   nop
@@ -32908,31 +32908,16 @@ void bondviewCallRecordDamageKills(f32 arg0, f32 rad, s32 arg2, s32 arg3)
 
 
 
-#ifdef VERSION_US
-int check_if_bond_is_invincible(void) {
-    return (g_CurrentPlayer->damageshowtime < 0) ^ 1;
-}
-#endif
 
-#ifndef VERSION_US
-GLOBAL_ASM(
-.text
-glabel check_if_bond_is_invincible
-/* 0BF11C 7F08A5AC 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer) # $t6, 0x8008
-/* 0BF120 7F08A5B0 8DCEA120 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 0BF124 7F08A5B4 44803000 */  mtc1  $zero, $f6
-/* 0BF128 7F08A5B8 00001025 */  move  $v0, $zero
-/* 0BF12C 7F08A5BC C5C400F4 */  lwc1  $f4, 0xf4($t6)
-/* 0BF130 7F08A5C0 4604303E */  c.le.s $f6, $f4
-/* 0BF134 7F08A5C4 00000000 */  nop
-/* 0BF138 7F08A5C8 45000002 */  bc1f  .Ljp7F08A5D4
-/* 0BF13C 7F08A5CC 00000000 */   nop
-/* 0BF140 7F08A5D0 24020001 */  li    $v0, 1
-.Ljp7F08A5D4:
-/* 0BF144 7F08A5D4 03E00008 */  jr    $ra
-/* 0BF148 7F08A5D8 00000000 */   nop
-)
+int bondviewGetIfCurrentPlayerDamageShowTime(void)
+{
+#ifdef VERSION_US
+    return (g_CurrentPlayer->damageshowtime >= 0);
+#else
+    return (g_CurrentPlayer->damageshowtime >= 0.0f);
 #endif
+}
+
 
 
 #ifdef VERSION_US
