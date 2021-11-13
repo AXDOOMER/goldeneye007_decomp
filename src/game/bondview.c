@@ -36432,30 +36432,18 @@ Gfx * bondviewRemoved7F08BCB8(Gfx *arg0)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08BCC0(void) {
+/**
+ * Address 0x7F08BCC0.
+ */
+s32 sub_GAME_7F08BCC0(void *arg0, s32 arg1)
+{
+    if (((s32*)(arg0))[1] != 0)
+    {
+        arg1 = sub_GAME_7F021BFC();
+    }
 
+    return arg1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08BCC0
-/* 0C07F0 7F08BCC0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C07F4 7F08BCC4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C07F8 7F08BCC8 8C8E0004 */  lw    $t6, 4($a0)
-/* 0C07FC 7F08BCCC 51C00005 */  beql  $t6, $zero, .L7F08BCE4
-/* 0C0800 7F08BCD0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C0804 7F08BCD4 0FC086FF */  jal   sub_GAME_7F021BFC
-/* 0C0808 7F08BCD8 00000000 */   nop
-/* 0C080C 7F08BCDC 00402825 */  move  $a1, $v0
-/* 0C0810 7F08BCE0 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F08BCE4:
-/* 0C0814 7F08BCE4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C0818 7F08BCE8 00A01025 */  move  $v0, $a1
-/* 0C081C 7F08BCEC 03E00008 */  jr    $ra
-/* 0C0820 7F08BCF0 00000000 */   nop
-)
-#endif
 
 
 

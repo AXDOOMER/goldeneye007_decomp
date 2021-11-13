@@ -3144,4 +3144,7 @@ void bondviewResetIntroCameraMessageDialogs(void);
 void bondviewUnsetIntroCameraFlags(s32 flag);
 void bondviewSetIntroCameraFlags(s32 flags);
 
+// unknown pointer arg0
+s32 sub_GAME_7F08BCC0(void *arg0, s32 arg1);
+
 #endif
