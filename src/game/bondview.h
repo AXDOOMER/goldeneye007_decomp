@@ -334,15 +334,53 @@ struct player
   /* 0x0060 */ s32 field_60;
   /* 0x0064 */ s32 field_64;
   /* 0x0068 */ s32 field_68;
-  /* 0x006c */ s32 field_6C;
-  /* 0x0070 */ s32 field_70;
-  /* 0x0074 */ s32 clipping_height;
+
+  /**
+   * Collision / clipping related.
+   * Offset 0x006c.
+   */
+  /* 0x006c */ f32 field_6C;
+
+  /**
+   * Collision / clipping related.
+   * Offset 0x0070.
+   */
+  /* 0x0070 */ f32 field_70;
+
+  /* 0x0074 */ f32 clipping_height;
+
   /* 0x0078 */ s32 field_78;
-  /* 0x007c */ s32 field_7C;
+
+  /**
+   * Collision / clipping related.
+   * Offset 0x007c.
+   */
+  /* 0x007c */ f32 field_7C;
+  
   /* 0x0080 */ s32 field_80;
+
+  /**
+   * Collision / clipping related.
+   * Offset 0x0084.
+   */
   /* 0x0084 */ f32 field_84;
+
+  /**
+   * Collision / clipping related.
+   * Offset 0x0088.
+   */
   /* 0x0088 */ f32 field_88;
+
+  /**
+   * Collision / clipping related.
+   * Offset 0x008c.
+   */
   /* 0x008c */ s32 field_8C;
+
+  /**
+   * Collision / clipping related.
+   * Offset 0x0090.
+   */
   /* 0x0090 */ f32 field_90;
   /* 0x0094 */ s32 field_94;
   /* 0x0098 */ f32 field_98;
@@ -560,7 +598,7 @@ struct player
   s32 field_3A8;
   s32 field_3AC;
   s32 field_3B0;
-  s16 field_3B4;
+  u16 field_3B4;
   s16 field_3B6;
   s32 field_3B8;
   s32 field_3BC;
@@ -652,7 +690,11 @@ struct player
   s32 field_4A4;
   s32 field_4A8;
   s32 field_4AC;
-  s32 collision_radius;
+
+  /**
+   * Offset 0x04b0.
+   */
+  f32 collision_radius;
   s32 field_4B4;
   s32 field_4B8;
   s32 field_4BC;
@@ -2633,8 +2675,19 @@ struct player
   f32 cur_player_control_type_2;
   s32 neg_vspacing_for_control_type_entry;
   u32 has_set_control_type_data;
+  /**
+   * Collision / clipping related.
+   * Related to 0ffset 0x2a70.
+   * Offset 0x2a6c.
+   */
   s32 field_2A6C;
-  s32 field_2A70;
+
+  /**
+   * Collision / clipping related.
+   * Offset 0x2a70
+   */
+  StandTile *field_2A70;
+
   s32 field_2A74;
   s32 field_2A78;
   s32 field_2A7C;
@@ -2677,10 +2730,16 @@ extern s32 D_80036444;
 extern s32 in_tank_flag;
 //D:8003644C
 extern s32 D_8003644C;
+
 //D:80036450
 extern s32 ptr_playerstank;
-//D:80036454
-extern s32 D_80036454;
+
+/**
+ * Related to ptr_playerstank.
+ * Address 0x80036454.
+ */
+extern f32 g_PlayerTankYOffset;
+
 //D:80036458
 extern s32 SFX_80036458;
 //D:8003645C
@@ -2992,7 +3051,7 @@ void init_player_BONDdata(void);
 void bondviewPlayerSpawnRelated(void);
 f32 get_BONDdata_watch_health(void);
 f32 get_BONDdata_watch_armor(void);
-void possibly_reset_viewport_options_for_player(s8 arg0, s8 arg1, u16 arg2);
+void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2);
 
 #ifndef VERSION_US
 // VERSION_EU, VERSION_JP
@@ -3013,5 +3072,15 @@ void solo_char_load(void);
 void bondviewUpdateYAutoAimTime(s32 auto_aim_time, f32 auto_aim_y);
 void bondviewUpdateXAutoAimTime(s32 auto_aim_time, f32 auto_aim_x);
 void bondviewSet3dCoord7F07CEB0(struct coord3d *arg0);
+f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2);
+f32 sub_GAME_7F089780(struct player *player);
+void bondviewCollisionRadiusRelated(struct prop* arg0, f32 *arg1, f32 *arg2, f32 *arg3);
+void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_offset);
+void currentPlayerSetFadeColour(s32 r, s32 g, s32 b, f32 frac);
+void currentPlayerSetFadeFrac(f32 maxfadetime, f32 frac);
+void set_BONDdata_autoaim_x(s32 param_1);
+s32 get_BONDdata_autoaim_x(void);
+void set_BONDdata_autoaim_y(s32 param_1);
+void set_BONDdata_lookahead_setting(s32 arg0);
 
 #endif

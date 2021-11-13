@@ -183,9 +183,9 @@ glabel load_camera_intro_type_values
 /* 03A410 7F0058E0 44808000 */  mtc1  $zero, $f16
 /* 03A414 7F0058E4 3C018003 */  lui   $at, %hi(ptr_playerstank)
 /* 03A418 7F0058E8 AC206450 */  sw    $zero, %lo(ptr_playerstank)($at)
-/* 03A41C 7F0058EC 3C018003 */  lui   $at, %hi(D_80036454)
+/* 03A41C 7F0058EC 3C018003 */  lui   $at, %hi(g_PlayerTankYOffset)
 /* 03A420 7F0058F0 3C038003 */  lui   $v1, %hi(SFX_80036458)
-/* 03A424 7F0058F4 E4306454 */  swc1  $f16, %lo(D_80036454)($at)
+/* 03A424 7F0058F4 E4306454 */  swc1  $f16, %lo(g_PlayerTankYOffset)($at)
 /* 03A428 7F0058F8 44809000 */  mtc1  $zero, $f18
 /* 03A42C 7F0058FC 24636458 */  addiu $v1, %lo(SFX_80036458) # addiu $v1, $v1, 0x6458
 /* 03A430 7F005900 44802000 */  mtc1  $zero, $f4
@@ -605,7 +605,7 @@ def_7F005A74:
 /* 03AA2C 7F005EFC E7AA0094 */  swc1  $f10, 0x94($sp)
 /* 03AA30 7F005F00 8E040028 */  lw    $a0, 0x28($s0)
 /* 03AA34 7F005F04 8FA60094 */  lw    $a2, 0x94($sp)
-/* 03AA38 7F005F08 0FC20358 */  jal   sub_GAME_7F080D60
+/* 03AA38 7F005F08 0FC20358 */  jal   bondviewYPositionRelated
 /* 03AA3C 7F005F0C AFA40084 */   sw    $a0, 0x84($sp)
 /* 03AA40 7F005F10 8E420000 */  lw    $v0, ($s2)
 /* 03AA44 7F005F14 46000506 */  mov.s $f20, $f0
@@ -631,7 +631,7 @@ def_7F005A74:
 /* 03AA90 7F005F60 AFA20084 */  sw    $v0, 0x84($sp)
 /* 03AA94 7F005F64 00402025 */  move  $a0, $v0
 /* 03AA98 7F005F68 8FA5008C */  lw    $a1, 0x8c($sp)
-/* 03AA9C 7F005F6C 0FC20358 */  jal   sub_GAME_7F080D60
+/* 03AA9C 7F005F6C 0FC20358 */  jal   bondviewYPositionRelated
 /* 03AAA0 7F005F70 8FA60094 */   lw    $a2, 0x94($sp)
 /* 03AAA4 7F005F74 8E420000 */  lw    $v0, ($s2)
 /* 03AAA8 7F005F78 46000506 */  mov.s $f20, $f0
@@ -902,9 +902,9 @@ glabel load_camera_intro_type_values
 /* 03A464 7F0058F4 AC20648C */  sw    $zero, %lo(D_8003644C)($at)
 /* 03A468 7F0058F8 3C018003 */  lui   $at, %hi(ptr_playerstank) # $at, 0x8003
 /* 03A46C 7F0058FC AC206490 */  sw    $zero, %lo(ptr_playerstank)($at)
-/* 03A470 7F005900 3C018003 */  lui   $at, %hi(D_80036454) # $at, 0x8003
+/* 03A470 7F005900 3C018003 */  lui   $at, %hi(g_PlayerTankYOffset) # $at, 0x8003
 /* 03A474 7F005904 3C038003 */  lui   $v1, %hi(SFX_80036458) # $v1, 0x8003
-/* 03A478 7F005908 E4386494 */  swc1  $f24, %lo(D_80036454)($at)
+/* 03A478 7F005908 E4386494 */  swc1  $f24, %lo(g_PlayerTankYOffset)($at)
 /* 03A47C 7F00590C 24636498 */  addiu $v1, %lo(SFX_80036458) # addiu $v1, $v1, 0x6498
 /* 03A480 7F005910 AC600000 */  sw    $zero, ($v1)
 /* 03A484 7F005914 AC600004 */  sw    $zero, 4($v1)
@@ -1318,7 +1318,7 @@ def_7F005A74:
 /* 03AA68 7F005EF8 E7A4009C */  swc1  $f4, 0x9c($sp)
 /* 03AA6C 7F005EFC 8E040028 */  lw    $a0, 0x28($s0)
 /* 03AA70 7F005F00 8FA6009C */  lw    $a2, 0x9c($sp)
-/* 03AA74 7F005F04 0FC204DC */  jal   sub_GAME_7F080D60
+/* 03AA74 7F005F04 0FC204DC */  jal   bondviewYPositionRelated
 /* 03AA78 7F005F08 AFA4008C */   sw    $a0, 0x8c($sp)
 /* 03AA7C 7F005F0C 8E420000 */  lw    $v0, ($s2)
 /* 03AA80 7F005F10 46000506 */  mov.s $f20, $f0
@@ -1344,7 +1344,7 @@ def_7F005A74:
 /* 03AACC 7F005F5C AFA2008C */  sw    $v0, 0x8c($sp)
 /* 03AAD0 7F005F60 00402025 */  move  $a0, $v0
 /* 03AAD4 7F005F64 8FA50094 */  lw    $a1, 0x94($sp)
-/* 03AAD8 7F005F68 0FC204DC */  jal   sub_GAME_7F080D60
+/* 03AAD8 7F005F68 0FC204DC */  jal   bondviewYPositionRelated
 /* 03AADC 7F005F6C 8FA6009C */   lw    $a2, 0x9c($sp)
 /* 03AAE0 7F005F70 8E420000 */  lw    $v0, ($s2)
 /* 03AAE4 7F005F74 46000506 */  mov.s $f20, $f0
@@ -1616,9 +1616,9 @@ glabel load_camera_intro_type_values
 /* 03A464 7F0058F4 AC20648C */  sw    $zero, %lo(D_8003644C)($at)
 /* 03A468 7F0058F8 3C018003 */  lui   $at, %hi(ptr_playerstank) # $at, 0x8003
 /* 03A46C 7F0058FC AC206490 */  sw    $zero, %lo(ptr_playerstank)($at)
-/* 03A470 7F005900 3C018003 */  lui   $at, %hi(D_80036454) # $at, 0x8003
+/* 03A470 7F005900 3C018003 */  lui   $at, %hi(g_PlayerTankYOffset) # $at, 0x8003
 /* 03A474 7F005904 3C038003 */  lui   $v1, %hi(SFX_80036458) # $v1, 0x8003
-/* 03A478 7F005908 E4386494 */  swc1  $f24, %lo(D_80036454)($at)
+/* 03A478 7F005908 E4386494 */  swc1  $f24, %lo(g_PlayerTankYOffset)($at)
 /* 03A47C 7F00590C 24636498 */  addiu $v1, %lo(SFX_80036458) # addiu $v1, $v1, 0x6498
 /* 03A480 7F005910 AC600000 */  sw    $zero, ($v1)
 /* 03A484 7F005914 AC600004 */  sw    $zero, 4($v1)
@@ -2032,7 +2032,7 @@ def_7F005A74:
 /* 03AA68 7F005EF8 E7A4009C */  swc1  $f4, 0x9c($sp)
 /* 03AA6C 7F005EFC 8E040028 */  lw    $a0, 0x28($s0)
 /* 03AA70 7F005F00 8FA6009C */  lw    $a2, 0x9c($sp)
-/* 03AA74 7F005F04 0FC204DC */  jal   sub_GAME_7F080D60
+/* 03AA74 7F005F04 0FC204DC */  jal   bondviewYPositionRelated
 /* 03AA78 7F005F08 AFA4008C */   sw    $a0, 0x8c($sp)
 /* 03AA7C 7F005F0C 8E420000 */  lw    $v0, ($s2)
 /* 03AA80 7F005F10 46000506 */  mov.s $f20, $f0
@@ -2058,7 +2058,7 @@ def_7F005A74:
 /* 03AACC 7F005F5C AFA2008C */  sw    $v0, 0x8c($sp)
 /* 03AAD0 7F005F60 00402025 */  move  $a0, $v0
 /* 03AAD4 7F005F64 8FA50094 */  lw    $a1, 0x94($sp)
-/* 03AAD8 7F005F68 0FC204DC */  jal   sub_GAME_7F080D60
+/* 03AAD8 7F005F68 0FC204DC */  jal   bondviewYPositionRelated
 /* 03AADC 7F005F6C 8FA6009C */   lw    $a2, 0x9c($sp)
 /* 03AAE0 7F005F70 8E420000 */  lw    $v0, ($s2)
 /* 03AAE4 7F005F74 46000506 */  mov.s $f20, $f0
