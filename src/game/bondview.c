@@ -1,5 +1,12 @@
 #include "ultra64.h"
 #include "include/math.h"
+#include "boss.h"
+#include "fr.h"
+#include "joy.h"
+#include "music.h"
+#include "snd.h"
+#include "structs.h"
+#include "watch.h"
 #include "game/bg.h"
 #include "game/bondview.h"
 #include "game/bondinv.h"
@@ -17,14 +24,8 @@
 #include "game/unk_0C0A70.h"
 #include "game/unk_0BC530.h"
 #include "game/quaternion.h"
-#include "boss.h"
-#include "music.h"
-#include "fr.h"
-#include "snd.h"
 #include "game/math_atan2f.h"
 #include "game/chrobjhandler.h"
-#include "structs.h"
-#include "watch.h"
 
 // bss
 struct coord3d flt_CODE_bss_80079940;
@@ -32126,29 +32127,16 @@ glabel kill_current_player
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0898E8(void) {
-
+/**
+ * Unreferenced.
+ * 
+ * Address 0x7F0898E8.
+ */
+s32 sub_GAME_7F0898E8(void)
+{
+    return (s32) ((joyGetStickY(0) * 8) + 0x280) / 0xA0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0898E8
-/* 0BE418 7F0898E8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0BE41C 7F0898EC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0BE420 7F0898F0 0C00307F */  jal   joyGetStickY
-/* 0BE424 7F0898F4 00002025 */   move  $a0, $zero
-/* 0BE428 7F0898F8 000270C0 */  sll   $t6, $v0, 3
-/* 0BE42C 7F0898FC 25C20280 */  addiu $v0, $t6, 0x280
-/* 0BE430 7F089900 240100A0 */  li    $at, 160
-/* 0BE434 7F089904 0041001A */  div   $zero, $v0, $at
-/* 0BE438 7F089908 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0BE43C 7F08990C 00001012 */  mflo  $v0
-/* 0BE440 7F089910 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0BE444 7F089914 03E00008 */  jr    $ra
-/* 0BE448 7F089918 00000000 */   nop
-)
-#endif
+
 
 
 
