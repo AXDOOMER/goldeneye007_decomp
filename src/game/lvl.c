@@ -5372,11 +5372,11 @@ void lvlUpdateMpPlayerData(void)
         {
             if (get_debug_limit_controller_input() == 2)
             {
-                possibly_reset_viewport_options_for_player(joyGetStickX(local_player_number), joyGetStickY(local_player_number), joyGetButtons(local_player_number, ANY_BUTTON));
+                bondviewMovePlayerUpdateViewport(joyGetStickX(local_player_number), joyGetStickY(local_player_number), joyGetButtons(local_player_number, ANY_BUTTON));
             }
             else
             {
-                possibly_reset_viewport_options_for_player(joyGetStickX(local_player_number), joyGetStickY(local_player_number), 0);
+                bondviewMovePlayerUpdateViewport(joyGetStickX(local_player_number), joyGetStickY(local_player_number), 0);
             }
 
             sub_GAME_7F0C2E80();
@@ -5544,7 +5544,7 @@ glabel lvlUpdateMpPlayerData
 /* 0F44C8 7F0BF998 3405FFFF */   li    $a1, 65535
 /* 0F44CC 7F0BF99C 83A40018 */  lb    $a0, 0x18($sp)
 /* 0F44D0 7F0BF9A0 83A50019 */  lb    $a1, 0x19($sp)
-/* 0F44D4 7F0BF9A4 0FC21BE7 */  jal   possibly_reset_viewport_options_for_player
+/* 0F44D4 7F0BF9A4 0FC21BE7 */  jal   bondviewMovePlayerUpdateViewport
 /* 0F44D8 7F0BF9A8 3046FFFF */   andi  $a2, $v0, 0xffff
 /* 0F44DC 7F0BF9AC 1000000C */  b     .L7F0BF9E0
 /* 0F44E0 7F0BF9B0 00000000 */   nop
@@ -5558,7 +5558,7 @@ glabel lvlUpdateMpPlayerData
 /* 0F44FC 7F0BF9CC 0005CE03 */  sra   $t9, $a1, 0x18
 /* 0F4500 7F0BF9D0 03202825 */  move  $a1, $t9
 /* 0F4504 7F0BF9D4 83A40018 */  lb    $a0, 0x18($sp)
-/* 0F4508 7F0BF9D8 0FC21BE7 */  jal   possibly_reset_viewport_options_for_player
+/* 0F4508 7F0BF9D8 0FC21BE7 */  jal   bondviewMovePlayerUpdateViewport
 /* 0F450C 7F0BF9DC 00003025 */   move  $a2, $zero
 .L7F0BF9E0:
 /* 0F4510 7F0BF9E0 0FC30BA0 */  jal   sub_GAME_7F0C2E80

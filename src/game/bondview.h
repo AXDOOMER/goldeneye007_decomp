@@ -598,7 +598,7 @@ struct player
   s32 field_3A8;
   s32 field_3AC;
   s32 field_3B0;
-  s16 field_3B4;
+  u16 field_3B4;
   s16 field_3B6;
   s32 field_3B8;
   s32 field_3BC;
@@ -3051,7 +3051,7 @@ void init_player_BONDdata(void);
 void bondviewPlayerSpawnRelated(void);
 f32 get_BONDdata_watch_health(void);
 f32 get_BONDdata_watch_armor(void);
-void possibly_reset_viewport_options_for_player(s8 arg0, s8 arg1, u16 arg2);
+void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2);
 
 #ifndef VERSION_US
 // VERSION_EU, VERSION_JP
@@ -3076,5 +3076,11 @@ f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2);
 f32 sub_GAME_7F089780(struct player *player);
 void bondviewCollisionRadiusRelated(struct prop* arg0, f32 *arg1, f32 *arg2, f32 *arg3);
 void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_offset);
+void currentPlayerSetFadeColour(s32 r, s32 g, s32 b, f32 frac);
+void currentPlayerSetFadeFrac(f32 maxfadetime, f32 frac);
+void set_BONDdata_autoaim_x(s32 param_1);
+s32 get_BONDdata_autoaim_x(void);
+void set_BONDdata_autoaim_y(s32 param_1);
+void set_BONDdata_lookahead_setting(s32 arg0);
 
 #endif

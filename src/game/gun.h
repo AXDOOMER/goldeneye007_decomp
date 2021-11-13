@@ -233,5 +233,7 @@ s32 draw_item_in_hand_has_more_ammo(HANDEDNESS hand, s32 next_weapon);
 void sub_GAME_7F068E6C(void);
 void attempt_reload_item_in_hand(HANDEDNESS hand);
 void set_max_ammo_for_cur_player(void);
+void set_unset_ammo_on_screen_setting(s32 flags, s32 isset);
+void set_unset_bitflags(s32 bitflags, s32 flag);
 
 #endif
