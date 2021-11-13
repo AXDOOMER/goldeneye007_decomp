@@ -3115,6 +3115,7 @@ void set_BONDdata_lookahead_setting(s32 arg0);
 f32 bondviewGetPlayerClippingHeight(struct player *player);
 void record_damage_kills(f32, f32, f32, s32, s32);
 void bondviewCallRecordDamageKills(f32 arg0, f32 rad, s32 arg2, s32 arg3);
-int check_if_bond_is_invincible(void);
+int bondviewGetIfCurrentPlayerDamageShowTime(void);
+int bondviewGetIfCurrentPlayerHealthShowTime(void)
 
 #endif

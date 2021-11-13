@@ -31612,7 +31612,7 @@ glabel maybe_mp_interface
 /* 0BDE50 7F089320 AFAC0010 */   sw    $t4, 0x10($sp)
 /* 0BDE54 7F089324 AFA20058 */  sw    $v0, 0x58($sp)
 .L7F089328:
-/* 0BDE58 7F089328 0FC227AF */  jal   check_if_healthbar_timer_greater_than_0
+/* 0BDE58 7F089328 0FC227AF */  jal   bondviewGetIfCurrentPlayerHealthShowTime
 /* 0BDE5C 7F08932C 00000000 */   nop
 /* 0BDE60 7F089330 10400009 */  beqz  $v0, .L7F089358
 /* 0BDE64 7F089334 3C0E8008 */   lui   $t6, %hi(g_CurrentPlayer)
@@ -32918,32 +32918,16 @@ int bondviewGetIfCurrentPlayerDamageShowTime(void)
 #endif
 }
 
-
-
+int bondviewGetIfCurrentPlayerHealthShowTime(void)
+{
 #ifdef VERSION_US
-int check_if_healthbar_timer_greater_than_0(void) {
-  return (0 < g_CurrentPlayer->healthshowtime);
+    return (g_CurrentPlayer->healthshowtime > 0);
+#else
+    return (g_CurrentPlayer->healthshowtime > 0.0f);
+#endif
 }
-#endif
-#ifndef VERSION_US
-GLOBAL_ASM(
-.text
-glabel check_if_healthbar_timer_greater_than_0
-/* 0BF14C 7F08A5DC 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer) # $t6, 0x8008
-/* 0BF150 7F08A5E0 8DCEA120 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 0BF154 7F08A5E4 44802000 */  mtc1  $zero, $f4
-/* 0BF158 7F08A5E8 00001025 */  move  $v0, $zero
-/* 0BF15C 7F08A5EC C5C600F8 */  lwc1  $f6, 0xf8($t6)
-/* 0BF160 7F08A5F0 4606203C */  c.lt.s $f4, $f6
-/* 0BF164 7F08A5F4 00000000 */  nop
-/* 0BF168 7F08A5F8 45000002 */  bc1f  .Ljp7F08A604
-/* 0BF16C 7F08A5FC 00000000 */   nop
-/* 0BF170 7F08A600 24020001 */  li    $v0, 1
-.Ljp7F08A604:
-/* 0BF174 7F08A604 03E00008 */  jr    $ra
-/* 0BF178 7F08A608 00000000 */   nop
-)
-#endif
+
+
 
 
 
