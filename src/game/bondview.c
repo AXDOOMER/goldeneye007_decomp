@@ -13,6 +13,7 @@
 #include "game/gun.h"
 #include "game/stan.h"
 #include "game/unk_0C0A70.h"
+#include "game/unk_0BC530.h"
 #include "game/quaternion.h"
 #include "boss.h"
 #include "music.h"
@@ -27814,6 +27815,8 @@ s16 bondviewGetCurrentPlayerViewportUly(void)
  * Set player field_3B4 to arg2.
  * 
  * Address 0x7F086F9C (VERSION_US).
+ * Address 0x7F0870BC (VERSION_EU).
+ * Address 0x7F087668 (VERSION_JP).
  */
 void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
 {
