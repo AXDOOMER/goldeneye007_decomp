@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "include/math.h"
+#include "game/bg.h"
 #include "game/bondview.h"
 #include "game/bondinv.h"
 #include "game/chr.h"
@@ -544,6 +545,7 @@ s32 /*bool*/ currentPlayerIsFadeComplete(void);
 s16 get_curplayer_viewport_ulx(void);
 void sub_GAME_7F086990(s8, s8, u16, u16);
 void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2);
+void bondviewUpdateCurrentRoomPosition(s32 arg0);
 
 // end forward declarations
 
@@ -1985,9 +1987,9 @@ void init_player_BONDdata(void)
     g_CurrentPlayer->previous_model_pos[0] = 0.0f;
     g_CurrentPlayer->previous_model_pos[1] = 0.0f;
     g_CurrentPlayer->previous_model_pos[2] = 0.0f;
-    g_CurrentPlayer->current_room_xpos = 0.0f;
-    g_CurrentPlayer->current_room_ypos = 0.0f;
-    g_CurrentPlayer->current_room_zpos = 0.0f;
+    g_CurrentPlayer->current_room_pos.f[0] = 0.0f;
+    g_CurrentPlayer->current_room_pos.f[1] = 0.0f;
+    g_CurrentPlayer->current_room_pos.f[2] = 0.0f;
     g_CurrentPlayer->unknown = 0;
     g_CurrentPlayer->pos[0] = 0.0f;
     g_CurrentPlayer->pos[1] = 0.0f;
@@ -28411,53 +28413,18 @@ glabel bondviewMovePlayerUpdateViewport
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0875E4(s32 arg0) {
-    // Node 0
-    sub_GAME_7F0BCA34(g_CurrentPlayer->current_model_xpos);
-    g_CurrentPlayer->current_room_xpos = (f32) (get_room_data_float1() * g_CurrentPlayer->current_model_xpos);
-    g_CurrentPlayer->current_room_ypos = (f32) (get_room_data_float1() * g_CurrentPlayer->current_model_ypos);
-    g_CurrentPlayer->current_room_zpos = (f32) (get_room_data_float1() * g_CurrentPlayer->current_model_zpos);
-    return sub_GAME_7F0BC624(arg0);
+/**
+ * Address 0x7F0875E4.
+ */
+void bondviewUpdateCurrentRoomPosition(s32 arg0)
+{
+    sub_GAME_7F0BCA34(arg0, &g_CurrentPlayer->current_model_pos);
+    g_CurrentPlayer->current_room_pos.f[0] = g_CurrentPlayer->current_model_pos.f[0] * get_room_data_float1();
+    g_CurrentPlayer->current_room_pos.f[1] = g_CurrentPlayer->current_model_pos.f[1] * get_room_data_float1();
+    g_CurrentPlayer->current_room_pos.f[2] = g_CurrentPlayer->current_model_pos.f[2] * get_room_data_float1();
+    sub_GAME_7F0BC624(arg0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0875E4
-/* 0BC114 7F0875E4 3C058008 */  lui   $a1, %hi(g_CurrentPlayer)
-/* 0BC118 7F0875E8 8CA5A0B0 */  lw    $a1, %lo(g_CurrentPlayer)($a1)
-/* 0BC11C 7F0875EC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0BC120 7F0875F0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0BC124 7F0875F4 AFA40018 */  sw    $a0, 0x18($sp)
-/* 0BC128 7F0875F8 0FC2F28D */  jal   sub_GAME_7F0BCA34
-/* 0BC12C 7F0875FC 24A50038 */   addiu $a1, $a1, 0x38
-/* 0BC130 7F087600 0FC2D20F */  jal   get_room_data_float1
-/* 0BC134 7F087604 00000000 */   nop
-/* 0BC138 7F087608 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
-/* 0BC13C 7F08760C 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
-/* 0BC140 7F087610 C4440038 */  lwc1  $f4, 0x38($v0)
-/* 0BC144 7F087614 46040182 */  mul.s $f6, $f0, $f4
-/* 0BC148 7F087618 0FC2D20F */  jal   get_room_data_float1
-/* 0BC14C 7F08761C E4460050 */   swc1  $f6, 0x50($v0)
-/* 0BC150 7F087620 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
-/* 0BC154 7F087624 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
-/* 0BC158 7F087628 C448003C */  lwc1  $f8, 0x3c($v0)
-/* 0BC15C 7F08762C 46080282 */  mul.s $f10, $f0, $f8
-/* 0BC160 7F087630 0FC2D20F */  jal   get_room_data_float1
-/* 0BC164 7F087634 E44A0054 */   swc1  $f10, 0x54($v0)
-/* 0BC168 7F087638 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
-/* 0BC16C 7F08763C 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
-/* 0BC170 7F087640 C4500040 */  lwc1  $f16, 0x40($v0)
-/* 0BC174 7F087644 46100482 */  mul.s $f18, $f0, $f16
-/* 0BC178 7F087648 E4520058 */  swc1  $f18, 0x58($v0)
-/* 0BC17C 7F08764C 0FC2F189 */  jal   sub_GAME_7F0BC624
-/* 0BC180 7F087650 8FA40018 */   lw    $a0, 0x18($sp)
-/* 0BC184 7F087654 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0BC188 7F087658 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0BC18C 7F08765C 03E00008 */  jr    $ra
-/* 0BC190 7F087660 00000000 */   nop
-)
-#endif
+
 
 void store_BONDdata_curpos_to_previous(void) {
     g_CurrentPlayer->previous_model_pos[0] = g_CurrentPlayer->current_model_pos.x;
@@ -28492,7 +28459,7 @@ void sub_GAME_7F0876C4(void *arg0, void *arg1, void *arg2) {
     void *phi_a1;
 
     // Node 0
-    sub_GAME_7F0875E4(get_cur_players_room());
+    bondviewUpdateCurrentRoomPosition(get_cur_players_room());
     g_CurrentPlayer->field_5C = dynAllocateMatrix();
     g_CurrentPlayer->field_60 = dynAllocateMatrix();
     g_CurrentPlayer->field_64 = dynAllocateMatrix();
@@ -28578,7 +28545,7 @@ glabel sub_GAME_7F0876C4
 /* 0BC20C 7F0876DC AFB20040 */  sw    $s2, 0x40($sp)
 /* 0BC210 7F0876E0 0FC227E6 */  jal   get_cur_players_room
 /* 0BC214 7F0876E4 AFA40148 */   sw    $a0, 0x148($sp)
-/* 0BC218 7F0876E8 0FC21D79 */  jal   sub_GAME_7F0875E4
+/* 0BC218 7F0876E8 0FC21D79 */  jal   bondviewUpdateCurrentRoomPosition
 /* 0BC21C 7F0876EC 00402025 */   move  $a0, $v0
 /* 0BC220 7F0876F0 0FC2F5B8 */  jal   dynAllocateMatrix
 /* 0BC224 7F0876F4 00000000 */   nop

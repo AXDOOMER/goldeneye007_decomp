@@ -327,9 +327,12 @@ struct player
   /* 0x0034 */ StandTile *room_pointer;
   /* 0x0038 */ struct coord3d current_model_pos;
   /* 0x0044 */ vec3 previous_model_pos;
-  /* 0x0050 */ f32 current_room_xpos;
-  /* 0x0054 */ f32 current_room_ypos;
-  /* 0x0058 */ f32 current_room_zpos;
+
+  /**
+   * Offset 0x0050.
+   */
+  struct coord3d current_room_pos;
+
   /* 0x005c */ s32 field_5C;
   /* 0x0060 */ s32 field_60;
   /* 0x0064 */ s32 field_64;
