@@ -403,14 +403,24 @@ struct player
   /* 0x00a4 */ f32 field_A4;
   /* 0x00a8 */ struct prop* prop;
   /* 0x00ac */ s32 field_AC;
-  /* 0x00b0 */ s32 field_B0;
-  /* 0x00b4 */ s32 zpos_0;
-  /* 0x00b8 */ s32 xpos_0;
-  /* 0x00bc */ s32 field_BC;
-  /* 0x00c0 */ s32 field_C0;
-  /* 0x00c4 */ s32 zpos_1;
-  /* 0x00c8 */ s32 xpos_1;
-  /* 0x00cc */ s32 field_CC;
+
+//   /* 0x00b0 */ f32 field_B0;
+//   /* 0x00b4 */ f32 zpos_0;
+
+//   /* 0x00b8 */ f32 xpos_0;
+//   /* 0x00bc */ f32 field_BC;
+
+//   /* 0x00c0 */ f32 field_C0;
+//   /* 0x00c4 */ f32 zpos_1;
+
+//   /* 0x00c8 */ f32 xpos_1;
+//   /* 0x00cc */ f32 field_CC;
+
+  /**
+   * Offset 0x00b0.
+   */
+  struct rect4f collision_bounds;
+
   /* 0x00d0 */ s32 field_D0;
   /* 0x00d4 */ s32 *ptr_char_objectinstance;
   /* 0x00d8 */ s32 bonddead;
@@ -3128,6 +3138,6 @@ int bondviewGetIfCurrentPlayerHealthShowTime(void);
 u8 bondviewGetCurrentPlayersRoom(void);
 struct coord3d *bondviewGetCurrentPlayersPosition(void);
 void bondviewUpdateGuardTankFlagsRelated(struct prop *arg0, s32 flags);
-void bondviewGetPropHeightRelatedValues(struct prop *arg0, s32 **field_B0, s32 *arg2, f32 *height_related, f32 *collision);
+void bondviewGetPropHeightRelatedValues(struct prop *arg0, struct rect4f **field_B0, s32 *arg2, f32 *height_related, f32 *collision);
 
 #endif

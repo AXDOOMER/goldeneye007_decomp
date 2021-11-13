@@ -85,6 +85,14 @@ struct bbox
     float zmax;
 };
 
+struct rect4f
+{
+    union {
+        struct coord2d points[4];
+        f32 f[8];
+    };
+};
+
 struct pad
 {
     struct coord3d pos;
