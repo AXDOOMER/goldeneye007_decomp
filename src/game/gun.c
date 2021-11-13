@@ -3206,7 +3206,7 @@ glabel sub_GAME_7F05EC1C
 /* 0938EC 7F05EDBC C6260008 */  lwc1  $f6, 8($s1)
 /* 0938F0 7F05EDC0 E72600DC */  swc1  $f6, 0xdc($t9)
 .L7F05EDC4:
-/* 0938F4 7F05EDC4 0FC227E6 */  jal   get_cur_players_room
+/* 0938F4 7F05EDC4 0FC227E6 */  jal   bondviewGetCurrentPlayersRoom
 /* 0938F8 7F05EDC8 00000000 */   nop
 /* 0938FC 7F05EDCC 240800FF */  li    $t0, 255
 /* 093900 7F05EDD0 A3A200A8 */  sb    $v0, 0xa8($sp)

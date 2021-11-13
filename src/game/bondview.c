@@ -28464,7 +28464,7 @@ void sub_GAME_7F0876C4(void *arg0, void *arg1, void *arg2) {
     void *phi_a1;
 
     // Node 0
-    bondviewUpdateCurrentRoomPosition(get_cur_players_room());
+    bondviewUpdateCurrentRoomPosition(bondviewGetCurrentPlayersRoom());
     g_CurrentPlayer->field_5C = dynAllocateMatrix();
     g_CurrentPlayer->field_60 = dynAllocateMatrix();
     g_CurrentPlayer->field_64 = dynAllocateMatrix();
@@ -28548,7 +28548,7 @@ glabel sub_GAME_7F0876C4
 /* 0BC204 7F0876D4 00A08025 */  move  $s0, $a1
 /* 0BC208 7F0876D8 00C08825 */  move  $s1, $a2
 /* 0BC20C 7F0876DC AFB20040 */  sw    $s2, 0x40($sp)
-/* 0BC210 7F0876E0 0FC227E6 */  jal   get_cur_players_room
+/* 0BC210 7F0876E0 0FC227E6 */  jal   bondviewGetCurrentPlayersRoom
 /* 0BC214 7F0876E4 AFA40148 */   sw    $a0, 0x148($sp)
 /* 0BC218 7F0876E8 0FC21D79 */  jal   bondviewUpdateCurrentRoomPosition
 /* 0BC21C 7F0876EC 00402025 */   move  $a0, $v0
@@ -32999,34 +32999,18 @@ s32 get_obj_collision_flag(void) {
 
 
 
-#ifdef NONMATCHING
-void get_cur_players_room(void) {
+/**
+ * Address 0x7F089F98.
+ */
+u8 bondviewGetCurrentPlayersRoom(void)
+{
+    if ((g_CurrentPlayer->unknown == 1) && (g_CurrentPlayer->room_pointer != 0))
+    {
+        return g_CurrentPlayer->room_pointer->room;
+    }
 
+    return g_CurrentPlayer->current_tile_ptr_for_portals->room;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel get_cur_players_room
-/* 0BEAC8 7F089F98 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
-/* 0BEACC 7F089F9C 8C63A0B0 */  lw    $v1, %lo(g_CurrentPlayer)($v1)
-/* 0BEAD0 7F089FA0 24010001 */  li    $at, 1
-/* 0BEAD4 7F089FA4 8C6E0000 */  lw    $t6, ($v1)
-/* 0BEAD8 7F089FA8 55C10007 */  bnel  $t6, $at, .L7F089FC8
-/* 0BEADC 7F089FAC 8C6F04D8 */   lw    $t7, 0x4d8($v1)
-/* 0BEAE0 7F089FB0 8C640034 */  lw    $a0, 0x34($v1)
-/* 0BEAE4 7F089FB4 50800004 */  beql  $a0, $zero, .L7F089FC8
-/* 0BEAE8 7F089FB8 8C6F04D8 */   lw    $t7, 0x4d8($v1)
-/* 0BEAEC 7F089FBC 03E00008 */  jr    $ra
-/* 0BEAF0 7F089FC0 90820003 */   lbu   $v0, 3($a0)
-
-/* 0BEAF4 7F089FC4 8C6F04D8 */  lw    $t7, 0x4d8($v1)
-.L7F089FC8:
-/* 0BEAF8 7F089FC8 91E20003 */  lbu   $v0, 3($t7)
-/* 0BEAFC 7F089FCC 03E00008 */  jr    $ra
-/* 0BEB00 7F089FD0 00000000 */   nop
-)
-#endif
-
 
 
 

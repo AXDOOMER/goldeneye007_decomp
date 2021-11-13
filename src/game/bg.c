@@ -2037,7 +2037,7 @@ glabel sub_GAME_7F0B4884
 /* 0E9448 7F0B4918 AC780000 */  sw    $t8, ($v1)
 def_7F0B490C:
 .L7F0B491C:
-/* 0E944C 7F0B491C 0FC227E6 */  jal   get_cur_players_room
+/* 0E944C 7F0B491C 0FC227E6 */  jal   bondviewGetCurrentPlayersRoom
 /* 0E9450 7F0B4920 00000000 */   nop   
 /* 0E9454 7F0B4924 3C018004 */  lui   $at, %hi(current_room_maybe)
 /* 0E9458 7F0B4928 00409825 */  move  $s3, $v0

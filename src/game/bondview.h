@@ -734,7 +734,8 @@ struct player
   s32 field_4CC;
   s32 field_4D0;
   s32 field_4D4;
-  s32 current_tile_ptr_for_portals;
+  StandTile *current_tile_ptr_for_portals;
+
   u32 resetheadpos; // bool
   u32 resetheadrot; // bool
   s32 field_4E4;
@@ -3116,6 +3117,7 @@ f32 bondviewGetPlayerClippingHeight(struct player *player);
 void record_damage_kills(f32, f32, f32, s32, s32);
 void bondviewCallRecordDamageKills(f32 arg0, f32 rad, s32 arg2, s32 arg3);
 int bondviewGetIfCurrentPlayerDamageShowTime(void);
-int bondviewGetIfCurrentPlayerHealthShowTime(void)
+int bondviewGetIfCurrentPlayerHealthShowTime(void);
+u8 bondviewGetCurrentPlayersRoom(void);
 
 #endif
