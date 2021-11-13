@@ -3141,5 +3141,6 @@ void bondviewUpdateGuardTankFlagsRelated(struct prop *arg0, s32 flags);
 void bondviewGetPropHeightRelatedValues(struct prop *arg0, struct rect4f **field_B0, s32 *arg2, f32 *height_related, f32 *collision);
 void bondviewAddCurrentPlayerArmor(f32 arg0);
 void bondviewResetIntroCameraMessageDialogs(void);
+void bondviewUnsetIntroCameraFlags(s32 flag);
 
 #endif
