@@ -3142,5 +3142,6 @@ void bondviewGetPropHeightRelatedValues(struct prop *arg0, struct rect4f **field
 void bondviewAddCurrentPlayerArmor(f32 arg0);
 void bondviewResetIntroCameraMessageDialogs(void);
 void bondviewUnsetIntroCameraFlags(s32 flag);
+void bondviewSetIntroCameraFlags(s32 flags);
 
 #endif

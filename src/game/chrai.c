@@ -7513,7 +7513,7 @@ actionD7_Disable_Text_Variable_2:
 /* 06E228 7F0396F8 30AF0002 */  andi  $t7, $a1, 2
 /* 06E22C 7F0396FC 55E00005 */  bnezl $t7, .L7F039714
 /* 06E230 7F039700 30AA0001 */   andi  $t2, $a1, 1
-/* 06E234 7F039704 0FC228E7 */  jal   set_flags_in_BONDdata_stationary_intro_cam
+/* 06E234 7F039704 0FC228E7 */  jal   bondviewSetIntroCameraFlags
 /* 06E238 7F039708 24040002 */   li    $a0, 2
 /* 06E23C 7F03970C 92250001 */  lbu   $a1, 1($s1)
 /* 06E240 7F039710 30AA0001 */  andi  $t2, $a1, 1
@@ -13380,7 +13380,7 @@ actionD7_Disable_Text_Variable_2:
 /* 06E228 7F0396F8 30AF0002 */  andi  $t7, $a1, 2
 /* 06E22C 7F0396FC 55E00005 */  bnezl $t7, .L7F039714
 /* 06E230 7F039700 30AA0001 */   andi  $t2, $a1, 1
-/* 06E234 7F039704 0FC228E7 */  jal   set_flags_in_BONDdata_stationary_intro_cam
+/* 06E234 7F039704 0FC228E7 */  jal   bondviewSetIntroCameraFlags
 /* 06E238 7F039708 24040002 */   li    $a0, 2
 /* 06E23C 7F03970C 92250001 */  lbu   $a1, 1($s1)
 /* 06E240 7F039710 30AA0001 */  andi  $t2, $a1, 1
@@ -19280,7 +19280,7 @@ actionD7_Disable_Text_Variable_2:
 /* 06C1A8 7F0397B8 30AE0002 */  andi  $t6, $a1, 2
 /* 06C1AC 7F0397BC 55C00005 */  bnezl $t6, .L7F0397D4
 /* 06C1B0 7F0397C0 30AF0001 */   andi  $t7, $a1, 1
-/* 06C1B4 7F0397C4 0FC22952 */  jal   set_flags_in_BONDdata_stationary_intro_cam
+/* 06C1B4 7F0397C4 0FC22952 */  jal   bondviewSetIntroCameraFlags
 /* 06C1B8 7F0397C8 24040002 */   li    $a0, 2
 /* 06C1BC 7F0397CC 92250001 */  lbu   $a1, 1($s1)
 /* 06C1C0 7F0397D0 30AF0001 */  andi  $t7, $a1, 1

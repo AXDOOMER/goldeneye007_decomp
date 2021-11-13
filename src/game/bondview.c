@@ -12293,7 +12293,7 @@ glabel sub_GAME_7F07EC54
 /* 0B3958 7F07EE28 24040004 */  li    $a0, 4
 /* 0B395C 7F07EE2C 0FC1A43D */  jal   set_unset_ammo_on_screen_setting
 /* 0B3960 7F07EE30 00002825 */   move  $a1, $zero
-/* 0B3964 7F07EE34 0FC228E7 */  jal   set_flags_in_BONDdata_stationary_intro_cam
+/* 0B3964 7F07EE34 0FC228E7 */  jal   bondviewSetIntroCameraFlags
 /* 0B3968 7F07EE38 24040001 */   li    $a0, 1
 /* 0B396C 7F07EE3C 0FC22A51 */  jal   sub_GAME_7F08A944
 /* 0B3970 7F07EE40 24040001 */   li    $a0, 1
@@ -13130,7 +13130,7 @@ glabel sub_GAME_7F07EC54
 /* 0B3FA8 7F07F438 24040004 */  li    $a0, 4
 /* 0B3FAC 7F07F43C 0FC1A5B8 */  jal   set_unset_ammo_on_screen_setting
 /* 0B3FB0 7F07F440 00002825 */   move  $a1, $zero
-/* 0B3FB4 7F07F444 0FC22AAD */  jal   set_flags_in_BONDdata_stationary_intro_cam
+/* 0B3FB4 7F07F444 0FC22AAD */  jal   bondviewSetIntroCameraFlags
 /* 0B3FB8 7F07F448 24040001 */   li    $a0, 1
 /* 0B3FBC 7F07F44C 0FC22C48 */  jal   sub_GAME_7F08A944
 /* 0B3FC0 7F07F450 24040001 */   li    $a0, 1
@@ -18746,7 +18746,7 @@ glabel sub_GAME_7F083FC8
 /* 0B8B24 7F083FF4 24040010 */  li    $a0, 16
 /* 0B8B28 7F083FF8 0FC1A96A */  jal   set_unset_bitflags
 /* 0B8B2C 7F083FFC 00002825 */   move  $a1, $zero
-/* 0B8B30 7F084000 0FC228E7 */  jal   set_flags_in_BONDdata_stationary_intro_cam
+/* 0B8B30 7F084000 0FC228E7 */  jal   bondviewSetIntroCameraFlags
 /* 0B8B34 7F084004 24040004 */   li    $a0, 4
 /* 0B8B38 7F084008 0FC22A51 */  jal   sub_GAME_7F08A944
 /* 0B8B3C 7F08400C 24040004 */   li    $a0, 4
@@ -19006,7 +19006,7 @@ glabel sub_GAME_7F083FC8
 /* 0B9190 7F084620 24040010 */  li    $a0, 16
 /* 0B9194 7F084624 0FC1AAE5 */  jal   set_unset_bitflags
 /* 0B9198 7F084628 00002825 */   move  $a1, $zero
-/* 0B919C 7F08462C 0FC22AAD */  jal   set_flags_in_BONDdata_stationary_intro_cam
+/* 0B919C 7F08462C 0FC22AAD */  jal   bondviewSetIntroCameraFlags
 /* 0B91A0 7F084630 24040004 */   li    $a0, 4
 /* 0B91A4 7F084634 0FC22C48 */  jal   sub_GAME_7F08A944
 /* 0B91A8 7F084638 24040004 */   li    $a0, 4
@@ -19302,7 +19302,7 @@ glabel sub_GAME_7F083FC8
 /* 0B6AA4 7F0840B4 24040010 */  li    $a0, 16
 /* 0B6AA8 7F0840B8 0FC1AB4F */  jal   set_unset_bitflags
 /* 0B6AAC 7F0840BC 00002825 */   move  $a1, $zero
-/* 0B6AB0 7F0840C0 0FC22952 */  jal   set_flags_in_BONDdata_stationary_intro_cam
+/* 0B6AB0 7F0840C0 0FC22952 */  jal   bondviewSetIntroCameraFlags
 /* 0B6AB4 7F0840C4 24040004 */   li    $a0, 4
 /* 0B6AB8 7F0840C8 0FC22AE3 */  jal   sub_GAME_7F08A944
 /* 0B6ABC 7F0840CC 24040004 */   li    $a0, 4
@@ -33207,22 +33207,13 @@ void bondviewUnsetIntroCameraFlags(s32 flag)
 
 
 
-#ifdef NONMATCHING
-void set_flags_in_BONDdata_stationary_intro_cam(void) {
-
+/**
+ * Address 0x7F08A39C.
+ */
+void bondviewSetIntroCameraFlags(s32 flags)
+{
+    g_CurrentPlayer->hudmessoff |= flags;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_flags_in_BONDdata_stationary_intro_cam
-/* 0BEECC 7F08A39C 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
-/* 0BEED0 7F08A3A0 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
-/* 0BEED4 7F08A3A4 8C4E11D8 */  lw    $t6, 0x11d8($v0)
-/* 0BEED8 7F08A3A8 01C47825 */  or    $t7, $t6, $a0
-/* 0BEEDC 7F08A3AC 03E00008 */  jr    $ra
-/* 0BEEE0 7F08A3B0 AC4F11D8 */   sw    $t7, 0x11d8($v0)
-)
-#endif
 
 
 
