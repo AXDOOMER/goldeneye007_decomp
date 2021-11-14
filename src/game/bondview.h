@@ -3149,6 +3149,8 @@ void bondviewResetIntroCameraMessageDialogs(void);
 void bondviewUnsetIntroCameraFlags(s32 flag);
 void bondviewSetIntroCameraFlags(s32 flags);
 Gfx* bondviewGfxPlayerField5cMatrix(Gfx* gdl);
+Mtxf *currentPlayerGetMatrix10D4(void);
+void sub_GAME_7F08BEEC(Mtxf *arg0, s32 arg1);
 
 
 // unknown pointer arg0

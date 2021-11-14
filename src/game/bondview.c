@@ -36481,6 +36481,14 @@ void sub_GAME_7F08BD18(Mtxf *arg0)
 #ifdef NONMATCHING
 /**
  * Address 0x7F08BD48.
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: fail
+ * - identical registers: fail
+ * 
+ * notes: two swapped instructions at start, then just regalloc.
  */
 void sub_GAME_7F08BD48(Mtxf *arg0, s32 arg1)
 {
@@ -36490,6 +36498,7 @@ void sub_GAME_7F08BD48(Mtxf *arg0, s32 arg1)
 
     for (i=0, phi_s1=arg0; i<arg1; i++, phi_s1++)
     {
+        // if you get this to match, see sub_GAME_7F08BE2C
         matrix_4x4_copy(phi_s1, (Mtxf *) &sp38);
         sub_GAME_7F058C9C((Mtxf *) &sp38, &arg0[i]);
     }
@@ -36538,50 +36547,35 @@ glabel sub_GAME_7F08BD48
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F08BDC4(void) {
+/**
+ * Unreferenced.
+ * 
+ * Address 0x7F08BDC4.
+ */
+void sub_GAME_7F08BDC4(Mtxf *arg0)
+{
+    Mtxf sp20;
 
+    matrix_4x4_copy(arg0, (Mtxf *) &sp20);
+    sp20.m[3][0] -= g_CurrentPlayer->previous_model_pos.f[0];
+    sp20.m[3][1] -= g_CurrentPlayer->previous_model_pos.f[1];
+    sp20.m[3][2] -= g_CurrentPlayer->previous_model_pos.f[2];
+    sub_GAME_7F058C9C((Mtxf *) &sp20, arg0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F08BDC4
-/* 0C08F4 7F08BDC4 27BDFFA0 */  addiu $sp, $sp, -0x60
-/* 0C08F8 7F08BDC8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C08FC 7F08BDCC AFA40060 */  sw    $a0, 0x60($sp)
-/* 0C0900 7F08BDD0 0FC16008 */  jal   matrix_4x4_copy
-/* 0C0904 7F08BDD4 27A50020 */   addiu $a1, $sp, 0x20
-/* 0C0908 7F08BDD8 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
-/* 0C090C 7F08BDDC 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
-/* 0C0910 7F08BDE0 C7A40050 */  lwc1  $f4, 0x50($sp)
-/* 0C0914 7F08BDE4 C7AA0054 */  lwc1  $f10, 0x54($sp)
-/* 0C0918 7F08BDE8 C4460044 */  lwc1  $f6, 0x44($v0)
-/* 0C091C 7F08BDEC 27A40020 */  addiu $a0, $sp, 0x20
-/* 0C0920 7F08BDF0 8FA50060 */  lw    $a1, 0x60($sp)
-/* 0C0924 7F08BDF4 46062201 */  sub.s $f8, $f4, $f6
-/* 0C0928 7F08BDF8 C7A40058 */  lwc1  $f4, 0x58($sp)
-/* 0C092C 7F08BDFC E7A80050 */  swc1  $f8, 0x50($sp)
-/* 0C0930 7F08BE00 C4500048 */  lwc1  $f16, 0x48($v0)
-/* 0C0934 7F08BE04 46105481 */  sub.s $f18, $f10, $f16
-/* 0C0938 7F08BE08 E7B20054 */  swc1  $f18, 0x54($sp)
-/* 0C093C 7F08BE0C C446004C */  lwc1  $f6, 0x4c($v0)
-/* 0C0940 7F08BE10 46062201 */  sub.s $f8, $f4, $f6
-/* 0C0944 7F08BE14 0FC16327 */  jal   sub_GAME_7F058C9C
-/* 0C0948 7F08BE18 E7A80058 */   swc1  $f8, 0x58($sp)
-/* 0C094C 7F08BE1C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C0950 7F08BE20 27BD0060 */  addiu $sp, $sp, 0x60
-/* 0C0954 7F08BE24 03E00008 */  jr    $ra
-/* 0C0958 7F08BE28 00000000 */   nop
-)
-#endif
 
 
 
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F08BE2C(void) {
-
+/**
+ * Unreferenced.
+ * 
+ * Address 0x7F08BE2C.
+ */
+void sub_GAME_7F08BE2C(Mtxf *arg0, s32 arg1)
+{
+    // combination of sub_GAME_7F08BDC4 and sub_GAME_7F08BD48
 }
 #else
 GLOBAL_ASM(
@@ -36645,8 +36639,31 @@ glabel sub_GAME_7F08BE2C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F08BEEC(void) {
+/**
+ * Address 0x7F08BEEC.
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: fail
+ * - identical registers: fail
+ * 
+ * notes: two swapped instructions at start, then just regalloc.
+ */
+void sub_GAME_7F08BEEC(Mtxf *arg0, s32 arg1)
+{
+    Mtxf sp38;
+    s32 i;
+    Mtxf *phi_s1;
 
+    for (i=0, phi_s1=arg0; i<arg1; i++, phi_s1++)
+    {
+        matrix_4x4_multiply_homogeneous(currentPlayerGetMatrix10D4(), phi_s1, (Mtxf *) &sp38);
+        sp38.m[3][0] -= g_CurrentPlayer->previous_model_pos.f[0];
+        sp38.m[3][1] -= g_CurrentPlayer->previous_model_pos.f[1];
+        sp38.m[3][2] -= g_CurrentPlayer->previous_model_pos.f[2];
+        sub_GAME_7F058C9C((Mtxf *) &sp38, &arg0[i]);
+    }
 }
 #else
 GLOBAL_ASM(
