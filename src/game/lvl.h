@@ -64,5 +64,6 @@ void lvlSetMpPoint(s32 arg0);
 void lvlSetControlsLockedFlag(s32 arg0);
 s32 lvlGetControlsLockedFlag(void);
 void lvlSetMultipliersForDifficulty(void);
+s32 lvlGetCurrentStageToLoad(void);
 
 #endif

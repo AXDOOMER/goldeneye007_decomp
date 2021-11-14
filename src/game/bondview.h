@@ -1178,16 +1178,19 @@ struct player
   s32 field_1280;
   s32 players_cur_animation;
   s32 field_1288;
-  s32 field_128C;
-  s32 field_1290;
-  s32 field_1294;
-  s32 field_1298;
-  s32 field_129C;
-  s32 field_12A0;
-  s32 field_12A4;
-  s32 field_12A8;
-  s32 field_12AC;
-  s32 field_12B0;
+
+  u16 cheat_display_text_related[20];
+//   s32 field_128C;
+//   s32 field_1290;
+//   s32 field_1294;
+//   s32 field_1298;
+//   s32 field_129C;
+//   s32 field_12A0;
+//   s32 field_12A4;
+//   s32 field_12A8;
+//   s32 field_12AC;
+//   s32 field_12B0;
+
   u8 something_with_cheat_text;
   u8 can_display_cheat_text;
   u8 bondinvincible;
