@@ -22,6 +22,64 @@ typedef struct invitem_dual
 	s32 weapon_left;
 } invitem_dual;
 
+/** unknown struct, used in `strut player`.
+ * We know this is a struct from the compiler auto-generated
+ * code to copy structs in bondview.c kill_current_player.
+ * 
+ * sizeof == 84 (0x54)
+ */
+struct collision434 {
+
+    /**
+     * Offset 0x00.
+     */
+    StandTile *current_tile_ptr;
+
+    /**
+     * Offset 0x04.
+     */
+    struct coord3d collision_position;
+
+    /**
+     * Offset 0x10.
+     */
+    s32 field_10;
+    s32 field_14;
+    s32 field_18;
+
+    /**
+     * Some kind of alternative to pos3 (in player struct).
+     * Offset 0x20.
+     */
+    struct coord3d pos3;
+
+    /**
+     * Offset 0x2c.
+     */
+    f32 collision_radius;
+
+    /**
+     * Some kind of alternative to pos (in player struct).
+     * Offset 0x30.
+     */
+    struct coord3d pos;
+
+    /**
+     * Offset 0x3c.
+     */
+    s32 field_3C;
+    s32 field_40;
+    s32 field_44;
+    s32 field_48;
+    s32 field_4C;
+    s32 field_50;
+
+    /**
+     * Offset 0x54.
+     */
+    StandTile *current_tile_ptr_for_portals;
+};
+
 struct hand
 {
   s32 weaponnum;
@@ -694,69 +752,8 @@ struct player
   s32 field_42C;
   s32 field_430;
 
-  s32 field_434;
-  s32 field_438;
-  s32 field_43C;
-
-  s32 field_440;
-  s32 field_444;
-  s32 field_448;
-
-  s32 field_44C;
-  s32 field_450;
-  s32 field_454;
-
-  s32 field_458;
-  s32 field_45C;
-  s32 field_460;
-
-  s32 field_464;
-  s32 field_468;
-  s32 field_46C;
-
-  s32 field_470;
-  s32 field_474;
-  s32 field_478;
-
-  s32 field_47C;
-  s32 field_480;
-  s32 field_484;
-
-  StandTile *current_tile_ptr;
-
-  /**
-   * Offset 0x048c.
-   */
-  struct coord3d collision_position;
-
-  s32 field_498;
-  s32 field_49C;
-  s32 field_4A0;
-  
-  /**
-   * Some kind of alternative to pos3.
-   * Offset 0x04a4.
-   */
-  struct coord3d field_4A4;
-
-  /**
-   * Offset 0x04b0.
-   */
-  f32 collision_radius;
-
-  /**
-   * Some kind of alternative to pos.
-   * Offset 0x04b4.
-   */
-  struct coord3d field_4B4;
-
-  s32 field_4C0;
-  s32 field_4C4;
-  s32 field_4C8;
-  s32 field_4CC;
-  s32 field_4D0;
-  s32 field_4D4;
-  StandTile *current_tile_ptr_for_portals;
+  struct collision434 previous_collision_info;
+  struct collision434 field_488;
 
   u32 resetheadpos; // bool
   u32 resetheadrot; // bool
