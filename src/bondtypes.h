@@ -300,6 +300,9 @@ typedef struct Model
     u8 unk01;       /*0x01*/
     ChrRecord *chr;   /*0x04*/
     ModelFileHeader *obj;
+    void *unk0c;                                            /*0x0c*/
+    void **datas; // array of pointers to modeldata structs /*0x10*/
+    f32 scale;                                              /*0x14*/
 } Model;
 
 

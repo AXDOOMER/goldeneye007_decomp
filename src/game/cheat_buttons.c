@@ -3,6 +3,8 @@
 #include "bondconstants.h"
 #include "joy.h"
 #include "game/cheat_buttons.h"
+#include "game/chr.h"
+#include "game/objecthandler.h"
 #include "game/player.h"
 #include "game/player_2.h"
 //#include "game/chraicommands.h" /* needed for ai list commands, remove when moving global ai lists to chraicommands/chrai */
@@ -210,6 +212,7 @@ void cheatButtonActivateRelated(void);
 void handle_cheats_turned_on(CHEAT_ID cheat);
 void cheatDisplayMessageActivateCheat(s32 arg0);
 s32 cheatCheckIfMPCheat(s32 arg0);
+void cheatButtonSetDkMode(s32 arg0);
 
 // end forward declarations
 
@@ -613,7 +616,7 @@ void handle_cheats_turned_on(CHEAT_IDS cheat)
     break;
   case cheats_cheat_dk_mode:
     display_string_in_lower_left_corner(get_textptr_for_textID(TEXT(LMISC, 0x17))); //dk mode on
-    set_DKMode(1);
+ cheatButtonSetDkMode(1);
     break;
   case cheats_cheat_extra_weapons:
     if (numplayers == PLAYER2)
@@ -1122,7 +1125,7 @@ cheats_cheat_dk_mode:
 /* 0C69A8 7F091E78 3404B017 */   li    $a0, 45079
 /* 0C69AC 7F091E7C 0FC228F2 */  jal   display_string_in_lower_left_corner
 /* 0C69B0 7F091E80 00402025 */   move  $a0, $v0
-/* 0C69B4 7F091E84 0FC249FD */  jal   set_DKMode
+/* 0C69B4 7F091E84 0FC249FD */  jal cheatButtonSetDkMode
 /* 0C69B8 7F091E88 24040001 */   li    $a0, 1
 /* 0C69BC 7F091E8C 10000167 */  b     .L7F09242C
 /* 0C69C0 7F091E90 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -1823,7 +1826,7 @@ cheats_cheat_dk_mode:
 /* 0C74C8 7F092958 3404B017 */   li    $a0, 45079
 /* 0C74CC 7F09295C 0FC22B10 */  jal   jp_display_string_in_lower_left_corner
 /* 0C74D0 7F092960 00402025 */   move  $a0, $v0
-/* 0C74D4 7F092964 0FC24CDD */  jal   set_DKMode
+/* 0C74D4 7F092964 0FC24CDD */  jal cheatButtonSetDkMode
 /* 0C74D8 7F092968 24040001 */   li    $a0, 1
 /* 0C74DC 7F09296C 1000018F */  b     .Ljp7F092FAC
 /* 0C74E0 7F092970 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2451,7 +2454,7 @@ cheat_button_dkmode:
 /* 0C70C4 7F092594 3404B023 */   li    $a0, 45091
 /* 0C70C8 7F092598 0FC228F2 */  jal   display_string_in_lower_left_corner
 /* 0C70CC 7F09259C 00402025 */   move  $a0, $v0
-/* 0C70D0 7F0925A0 0FC249FD */  jal   set_DKMode
+/* 0C70D0 7F0925A0 0FC249FD */  jal cheatButtonSetDkMode
 /* 0C70D4 7F0925A4 00002025 */   move  $a0, $zero
 /* 0C70D8 7F0925A8 10000042 */  b     .L7F0926B4
 /* 0C70DC 7F0925AC 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2713,7 +2716,7 @@ cheat_button_dkmode:
 /* 0C70C4 7F092594 3404B023 */   li    $a0, 45091
 /* 0C70C8 7F092598 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
 /* 0C70CC 7F09259C 00402025 */   move  $a0, $v0
-/* 0C70D0 7F0925A0 0FC249FD */  jal   set_DKMode
+/* 0C70D0 7F0925A0 0FC249FD */  jal cheatButtonSetDkMode
 /* 0C70D4 7F0925A4 00002025 */   move  $a0, $zero
 /* 0C70D8 7F0925A8 10000042 */  b     .L7F0926B4
 /* 0C70DC 7F0925AC 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -2976,7 +2979,7 @@ cheat_button_dkmode:
 /* 0C70C4 7F092594 3404B023 */   li    $a0, 45091
 /* 0C70C8 7F092598 0FC228F2 */  jal   display_string_in_lower_left_corner
 /* 0C70CC 7F09259C 00402025 */   move  $a0, $v0
-/* 0C70D0 7F0925A0 0FC249FD */  jal   set_DKMode
+/* 0C70D0 7F0925A0 0FC249FD */  jal cheatButtonSetDkMode
 /* 0C70D4 7F0925A4 00002025 */   move  $a0, $zero
 /* 0C70D8 7F0925A8 10000042 */  b     .L7F0926B4
 /* 0C70DC 7F0925AC 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -3257,123 +3260,40 @@ glabel cheatCheckIfOn
 
 
 
-#ifdef NONMATCHING
-void set_DKMode(void) {
+void cheatButtonSetDkMode(s32 arg0)
+{
+    s32 num_guards;
+    s32 i;
+    f32 scale;
+    struct Model *model;
+    struct chrdata* guard = ptr_guard_data;
 
-}
+    num_guards = get_numguards();
+
+    if (arg0 != 0)
+    {
+        scale = 0.8f;
+    }
+    else
+    {
+        scale = 1.25f;
+    }
+
+    for (i=0; i<num_guards; i++, guard++)
+    {
+
+#if defined(VERSION_US)
+        model = (struct Model*)guard->model;
+        if (model != NULL)
+        {
+            set_obj_instance_controller_scale(model, model->scale * scale);
+        }
 #else
-#ifdef VERSION_US
-GLOBAL_ASM(
-.late_rodata
-glabel D_80057504
-.word 0x3f4ccccd /*0.80000001*/
-.text
-glabel set_DKMode
-/* 0C7324 7F0927F4 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0C7328 7F0927F8 AFB10024 */  sw    $s1, 0x24($sp)
-/* 0C732C 7F0927FC AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0C7330 7F092800 AFB00020 */  sw    $s0, 0x20($sp)
-/* 0C7334 7F092804 3C118003 */  lui   $s1, %hi(ptr_guard_data)
-/* 0C7338 7F092808 00808025 */  move  $s0, $a0
-/* 0C733C 7F09280C AFB20028 */  sw    $s2, 0x28($sp)
-/* 0C7340 7F092810 F7B40018 */  sdc1  $f20, 0x18($sp)
-/* 0C7344 7F092814 0FC07D4C */  jal   get_numguards
-/* 0C7348 7F092818 8E31CC64 */   lw    $s1, %lo(ptr_guard_data)($s1)
-/* 0C734C 7F09281C 12000004 */  beqz  $s0, .L7F092830
-/* 0C7350 7F092820 00409025 */   move  $s2, $v0
-/* 0C7354 7F092824 3C018005 */  lui   $at, %hi(D_80057504)
-/* 0C7358 7F092828 10000004 */  b     .L7F09283C
-/* 0C735C 7F09282C C4347504 */   lwc1  $f20, %lo(D_80057504)($at)
-.L7F092830:
-/* 0C7360 7F092830 3C013FA0 */  li    $at, 0x3FA00000 # 1.250000
-/* 0C7364 7F092834 4481A000 */  mtc1  $at, $f20
-/* 0C7368 7F092838 00000000 */  nop
-.L7F09283C:
-/* 0C736C 7F09283C 1840000C */  blez  $v0, .L7F092870
-/* 0C7370 7F092840 00008025 */   move  $s0, $zero
-.L7F092844:
-/* 0C7374 7F092844 8E24001C */  lw    $a0, 0x1c($s1)
-/* 0C7378 7F092848 50800007 */  beql  $a0, $zero, .L7F092868
-/* 0C737C 7F09284C 26100001 */   addiu $s0, $s0, 1
-/* 0C7380 7F092850 C4840014 */  lwc1  $f4, 0x14($a0)
-/* 0C7384 7F092854 46142182 */  mul.s $f6, $f4, $f20
-/* 0C7388 7F092858 44053000 */  mfc1  $a1, $f6
-/* 0C738C 7F09285C 0FC1B39E */  jal   set_obj_instance_controller_scale
-/* 0C7390 7F092860 00000000 */   nop
-/* 0C7394 7F092864 26100001 */  addiu $s0, $s0, 1
-.L7F092868:
-/* 0C7398 7F092868 1612FFF6 */  bne   $s0, $s2, .L7F092844
-/* 0C739C 7F09286C 263101DC */   addiu $s1, $s1, 0x1dc
-.L7F092870:
-/* 0C73A0 7F092870 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0C73A4 7F092874 D7B40018 */  ldc1  $f20, 0x18($sp)
-/* 0C73A8 7F092878 8FB00020 */  lw    $s0, 0x20($sp)
-/* 0C73AC 7F09287C 8FB10024 */  lw    $s1, 0x24($sp)
-/* 0C73B0 7F092880 8FB20028 */  lw    $s2, 0x28($sp)
-/* 0C73B4 7F092884 03E00008 */  jr    $ra
-/* 0C73B8 7F092888 27BD0030 */   addiu $sp, $sp, 0x30
-)
+        if (guard->model != NULL && (not_in_us_7F0209EC(guard->bodynum, guard->headnum) != 0))
+        {
+            model = (struct Model*)guard->model;
+            set_obj_instance_controller_scale(model, model->scale * scale);
+        }
 #endif
-
-#ifndef VERSION_US
-GLOBAL_ASM(
-.late_rodata
-glabel D_80057504
-.word 0x3f4ccccd /*0.80000001*/
-.text
-glabel set_DKMode
-/* 0C7EE4 7F093374 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0C7EE8 7F093378 AFB00020 */  sw    $s0, 0x20($sp)
-/* 0C7EEC 7F09337C AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0C7EF0 7F093380 AFB10024 */  sw    $s1, 0x24($sp)
-/* 0C7EF4 7F093384 3C108003 */  lui   $s0, %hi(ptr_guard_data) # $s0, 0x8003
-/* 0C7EF8 7F093388 00808825 */  move  $s1, $a0
-/* 0C7EFC 7F09338C AFB20028 */  sw    $s2, 0x28($sp)
-/* 0C7F00 7F093390 F7B40018 */  sdc1  $f20, 0x18($sp)
-/* 0C7F04 7F093394 0FC07DB8 */  jal   get_numguards
-/* 0C7F08 7F093398 8E10CCA4 */   lw    $s0, %lo(ptr_guard_data)($s0)
-/* 0C7F0C 7F09339C 12200004 */  beqz  $s1, .L7F0933B0
-/* 0C7F10 7F0933A0 00409025 */   move  $s2, $v0
-/* 0C7F14 7F0933A4 3C018005 */  lui   $at, %hi(D_80057504) # $at, 0x8005
-/* 0C7F18 7F0933A8 10000004 */  b     .L7F0933BC
-/* 0C7F1C 7F0933AC C4347534 */   lwc1  $f20, %lo(D_80057504)($at)
-.L7F0933B0:
-/* 0C7F20 7F0933B0 3C013FA0 */  li    $at, 0x3FA00000 # 1.250000
-/* 0C7F24 7F0933B4 4481A000 */  mtc1  $at, $f20
-/* 0C7F28 7F0933B8 00000000 */  nop
-.L7F0933BC:
-/* 0C7F2C 7F0933BC 18400012 */  blez  $v0, .L7F093408
-/* 0C7F30 7F0933C0 00008825 */   move  $s1, $zero
-.L7F0933C4:
-/* 0C7F34 7F0933C4 8E0E001C */  lw    $t6, 0x1c($s0)
-/* 0C7F38 7F0933C8 51C0000D */  beql  $t6, $zero, .L7F093400
-/* 0C7F3C 7F0933CC 26310001 */   addiu $s1, $s1, 1
-/* 0C7F40 7F0933D0 8204000F */  lb    $a0, 0xf($s0)
-/* 0C7F44 7F0933D4 0FC0827B */  jal   not_in_us_7F0209EC
-/* 0C7F48 7F0933D8 82050006 */   lb    $a1, 6($s0)
-/* 0C7F4C 7F0933DC 50400008 */  beql  $v0, $zero, .L7F093400
-/* 0C7F50 7F0933E0 26310001 */   addiu $s1, $s1, 1
-/* 0C7F54 7F0933E4 8E04001C */  lw    $a0, 0x1c($s0)
-/* 0C7F58 7F0933E8 C4840014 */  lwc1  $f4, 0x14($a0)
-/* 0C7F5C 7F0933EC 46142182 */  mul.s $f6, $f4, $f20
-/* 0C7F60 7F0933F0 44053000 */  mfc1  $a1, $f6
-/* 0C7F64 7F0933F4 0FC1B51A */  jal   set_obj_instance_controller_scale
-/* 0C7F68 7F0933F8 00000000 */   nop
-/* 0C7F6C 7F0933FC 26310001 */  addiu $s1, $s1, 1
-.L7F093400:
-/* 0C7F70 7F093400 1632FFF0 */  bne   $s1, $s2, .L7F0933C4
-/* 0C7F74 7F093404 261001DC */   addiu $s0, $s0, 0x1dc
-.L7F093408:
-/* 0C7F78 7F093408 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0C7F7C 7F09340C D7B40018 */  ldc1  $f20, 0x18($sp)
-/* 0C7F80 7F093410 8FB00020 */  lw    $s0, 0x20($sp)
-/* 0C7F84 7F093414 8FB10024 */  lw    $s1, 0x24($sp)
-/* 0C7F88 7F093418 8FB20028 */  lw    $s2, 0x28($sp)
-/* 0C7F8C 7F09341C 03E00008 */  jr    $ra
-/* 0C7F90 7F093420 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
-
-
-#endif
-
+    }
+}
