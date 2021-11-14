@@ -2,6 +2,7 @@
 #include "bondgame.h"
 #include "bondconstants.h"
 #include "joy.h"
+#include "game/bondview.h"
 #include "game/cheat_buttons.h"
 #include "game/chr.h"
 #include "game/lvl_text.h"
@@ -15,7 +16,7 @@
 #define CHEAT_20    20
 
 
-char off_CODE_bss_80079E30[0x4C];
+u8 g_CheatPlayerTextRelated[CHEAT_INVALID + 1];
 
 
 
@@ -211,9 +212,10 @@ struct struct_15 D_8003F80C[] = {
 s32 cheatButtonCountBitsSet(u16 param_1);
 void cheatButtonActivateRelated(void);
 void handle_cheats_turned_on(CHEAT_ID cheat);
-void cheatDisplayMessageActivateCheat(s32 arg0);
-s32 cheatCheckIfMPCheat(s32 arg0);
-void cheatButtonSetDkMode(s32 arg0);
+void cheatDisplayMessageActivateCheat(s32 cheat_id);
+s32 cheatCheckIfMPCheat(s32 cheat_id);
+void cheatButtonSetDkMode(s32 cheat_id);
+void cheatDisplayMessageActivateCheat(s32 cheat);
 
 // end forward declarations
 
@@ -446,13 +448,13 @@ u32 cheatIsEnemyRockets(u32 cheatindex)
 
 
 /**
- * @param arg0: 1 based index.
+ * @param cheat_id: 1 based index.
  * 
  * Address 0x7F091A78.
  */
-s32 cheatCheckIfMPCheat(s32 arg0)
+s32 cheatCheckIfMPCheat(s32 cheat_id)
 {
-    if ((D_8003F80C[arg0 - 1].maskfield & CHEAT_MASK_MULTIPLAYER) == CHEAT_MASK_MULTIPLAYER)
+    if ((D_8003F80C[cheat_id - 1].maskfield & CHEAT_MASK_MULTIPLAYER) == CHEAT_MASK_MULTIPLAYER)
     {
         return 1;
     }
@@ -927,8 +929,8 @@ glabel handle_cheats_turned_on
 /* 0C66D4 7F091BA4 30790020 */   andi  $t9, $v1, 0x20
 /* 0C66D8 7F091BA8 1720000A */  bnez  $t9, .L7F091BD4
 /* 0C66DC 7F091BAC 8FA50038 */   lw    $a1, 0x38($sp)
-/* 0C66E0 7F091BB0 3C098008 */  lui   $t1, %hi(off_CODE_bss_80079E30)
-/* 0C66E4 7F091BB4 25299E30 */  addiu $t1, %lo(off_CODE_bss_80079E30) # addiu $t1, $t1, -0x61d0
+/* 0C66E0 7F091BB0 3C098008 */  lui   $t1, %hi(g_CheatPlayerTextRelated)
+/* 0C66E4 7F091BB4 25299E30 */  addiu $t1, %lo(g_CheatPlayerTextRelated) # addiu $t1, $t1, -0x61d0
 /* 0C66E8 7F091BB8 00C91821 */  addu  $v1, $a2, $t1
 /* 0C66EC 7F091BBC 906A0000 */  lbu   $t2, ($v1)
 /* 0C66F0 7F091BC0 240B0001 */  li    $t3, 1
@@ -939,10 +941,10 @@ glabel handle_cheats_turned_on
 .L7F091BD4:
 /* 0C6704 7F091BD4 240E0001 */  li    $t6, 1
 /* 0C6708 7F091BD8 004E7804 */  sllv  $t7, $t6, $v0
-/* 0C670C 7F091BDC 3C018008 */  lui   $at, %hi(off_CODE_bss_80079E30)
+/* 0C670C 7F091BDC 3C018008 */  lui   $at, %hi(g_CheatPlayerTextRelated)
 /* 0C6710 7F091BE0 00260821 */  addu  $at, $at, $a2
 /* 0C6714 7F091BE4 25F8FFFF */  addiu $t8, $t7, -1
-/* 0C6718 7F091BE8 A0389E30 */  sb    $t8, %lo(off_CODE_bss_80079E30)($at)
+/* 0C6718 7F091BE8 A0389E30 */  sb    $t8, %lo(g_CheatPlayerTextRelated)($at)
 .L7F091BEC:
 /* 0C671C 7F091BEC 24D9FFFF */  addiu $t9, $a2, -1
 /* 0C6720 7F091BF0 2F21004A */  sltiu $at, $t9, 0x4a
@@ -1628,8 +1630,8 @@ glabel handle_cheats_turned_on
 /* 0C71F4 7F092684 30790020 */   andi  $t9, $v1, 0x20
 /* 0C71F8 7F092688 1720000A */  bnez  $t9, .Ljp7F0926B4
 /* 0C71FC 7F09268C 8FA50038 */   lw    $a1, 0x38($sp)
-/* 0C7200 7F092690 3C098008 */  lui   $t1, %hi(off_CODE_bss_80079E30) # $t1, 0x8008
-/* 0C7204 7F092694 25299EA0 */  addiu $t1, %lo(off_CODE_bss_80079E30) # addiu $t1, $t1, -0x6160
+/* 0C7200 7F092690 3C098008 */  lui   $t1, %hi(g_CheatPlayerTextRelated) # $t1, 0x8008
+/* 0C7204 7F092694 25299EA0 */  addiu $t1, %lo(g_CheatPlayerTextRelated) # addiu $t1, $t1, -0x6160
 /* 0C7208 7F092698 00C91821 */  addu  $v1, $a2, $t1
 /* 0C720C 7F09269C 906A0000 */  lbu   $t2, ($v1)
 /* 0C7210 7F0926A0 240B0001 */  li    $t3, 1
@@ -1640,10 +1642,10 @@ glabel handle_cheats_turned_on
 .Ljp7F0926B4:
 /* 0C7224 7F0926B4 240E0001 */  li    $t6, 1
 /* 0C7228 7F0926B8 004E7804 */  sllv  $t7, $t6, $v0
-/* 0C722C 7F0926BC 3C018008 */  lui   $at, %hi(off_CODE_bss_80079E30)
+/* 0C722C 7F0926BC 3C018008 */  lui   $at, %hi(g_CheatPlayerTextRelated)
 /* 0C7230 7F0926C0 00260821 */  addu  $at, $at, $a2
 /* 0C7234 7F0926C4 25F8FFFF */  addiu $t8, $t7, -1
-/* 0C7238 7F0926C8 A0389EA0 */  sb    $t8, %lo(off_CODE_bss_80079E30)($at)
+/* 0C7238 7F0926C8 A0389EA0 */  sb    $t8, %lo(g_CheatPlayerTextRelated)($at)
 .Ljp7F0926CC:
 /* 0C723C 7F0926CC 24D9FFFF */  addiu $t9, $a2, -1
 /* 0C7240 7F0926D0 2F21004A */  sltiu $at, $t9, 0x4a
@@ -2269,817 +2271,226 @@ cheats_debug_return_saved_ra:
 #endif
 
 
+/**
+ * Address 0x7F092438 (all versions)
+ */
+void cheatDisplayMessageActivateCheat(s32 cheat_id)
+{
+    s32 mask;
+    s32 current_player_number;
+    s32 player_count;
 
-#ifdef NONMATCHING
-void cheatDisplayMessageActivateCheat(void) {
+    mask = D_8003F80C[cheat_id - 1].maskfield;
+    current_player_number = get_cur_playernum();
+    player_count = getPlayerCount();
 
-}
+    if ((mask & CHEAT_MASK_16) == 0)
+    {
+        if ((mask & CHEAT_MASK_32) == 0)
+        {
+            g_CheatPlayerTextRelated[cheat_id] &= ~(1 << current_player_number);
+        }
+        else
+        {
+            g_CheatPlayerTextRelated[cheat_id] = 0;
+        }
+    }
+
+    switch (cheat_id)
+    {
+        case CHEAT_INVINCIBILITY:
+            if (get_bondata_invincible_flag(cheat_id) != 0)
+            {
+#if defined(VERSION_JP)
+                jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB01E));
 #else
-#ifdef VERSION_US
-GLOBAL_ASM(
-.late_rodata
-/*D:800573DC*/
-glabel jpt_800573DC
-.word cheat_button_default
-.word cheat_button_invincibility
-.word cheat_button_all_guns
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_line_mode
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_unknown
-.word cheat_button_infinite_ammo
-.word cheat_button_dkmode
-.word cheat_button_default
-.word cheat_button_unknown_0
-.word cheat_button_paintball
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_mp_invis
-.word cheat_button_default
-.word cheat_button_fast_mode
-.word cheat_button_debug_mode
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-
-.text
-glabel cheatDisplayMessageActivateCheat
-/* 0C6F68 7F092438 00047100 */  sll   $t6, $a0, 4
-/* 0C6F6C 7F09243C 3C0F8004 */  lui   $t7, %hi(D_8003F808)
-/* 0C6F70 7F092440 01EE7821 */  addu  $t7, $t7, $t6
-/* 0C6F74 7F092444 8DEFF808 */  lw    $t7, %lo(D_8003F808)($t7)
-/* 0C6F78 7F092448 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0C6F7C 7F09244C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C6F80 7F092450 AFA40020 */  sw    $a0, 0x20($sp)
-/* 0C6F84 7F092454 0FC26C54 */  jal   get_cur_playernum
-/* 0C6F88 7F092458 AFAF001C */   sw    $t7, 0x1c($sp)
-/* 0C6F8C 7F09245C 0FC26919 */  jal   getPlayerCount
-/* 0C6F90 7F092460 AFA20018 */   sw    $v0, 0x18($sp)
-/* 0C6F94 7F092464 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 0C6F98 7F092468 8FA40020 */  lw    $a0, 0x20($sp)
-/* 0C6F9C 7F09246C 30780010 */  andi  $t8, $v1, 0x10
-/* 0C6FA0 7F092470 17000010 */  bnez  $t8, .L7F0924B4
-/* 0C6FA4 7F092474 30790020 */   andi  $t9, $v1, 0x20
-/* 0C6FA8 7F092478 1720000B */  bnez  $t9, .L7F0924A8
-/* 0C6FAC 7F09247C 3C088008 */   lui   $t0, %hi(off_CODE_bss_80079E30)
-/* 0C6FB0 7F092480 8FAA0018 */  lw    $t2, 0x18($sp)
-/* 0C6FB4 7F092484 25089E30 */  addiu $t0, %lo(off_CODE_bss_80079E30) # addiu $t0, $t0, -0x61d0
-/* 0C6FB8 7F092488 00881821 */  addu  $v1, $a0, $t0
-/* 0C6FBC 7F09248C 90690000 */  lbu   $t1, ($v1)
-/* 0C6FC0 7F092490 240B0001 */  li    $t3, 1
-/* 0C6FC4 7F092494 014B6004 */  sllv  $t4, $t3, $t2
-/* 0C6FC8 7F092498 01806827 */  not   $t5, $t4
-/* 0C6FCC 7F09249C 012D7024 */  and   $t6, $t1, $t5
-/* 0C6FD0 7F0924A0 10000004 */  b     .L7F0924B4
-/* 0C6FD4 7F0924A4 A06E0000 */   sb    $t6, ($v1)
-.L7F0924A8:
-/* 0C6FD8 7F0924A8 3C018008 */  lui   $at, %hi(off_CODE_bss_80079E30)
-/* 0C6FDC 7F0924AC 00240821 */  addu  $at, $at, $a0
-/* 0C6FE0 7F0924B0 A0209E30 */  sb    $zero, %lo(off_CODE_bss_80079E30)($at)
-.L7F0924B4:
-/* 0C6FE4 7F0924B4 248FFFFF */  addiu $t7, $a0, -1
-/* 0C6FE8 7F0924B8 2DE1004A */  sltiu $at, $t7, 0x4a
-/* 0C6FEC 7F0924BC 1020007C */  beqz  $at, .L7F0926B0
-/* 0C6FF0 7F0924C0 000F7880 */   sll   $t7, $t7, 2
-/* 0C6FF4 7F0924C4 3C018005 */  lui   $at, %hi(jpt_800573DC)
-/* 0C6FF8 7F0924C8 002F0821 */  addu  $at, $at, $t7
-/* 0C6FFC 7F0924CC 8C2F73DC */  lw    $t7, %lo(jpt_800573DC)($at)
-/* 0C7000 7F0924D0 01E00008 */  jr    $t7
-/* 0C7004 7F0924D4 00000000 */   nop
-cheat_button_invincibility:
-/* 0C7008 7F0924D8 0FC227D6 */  jal   get_bondata_invincible_flag
-/* 0C700C 7F0924DC 00000000 */   nop
-/* 0C7010 7F0924E0 50400074 */  beql  $v0, $zero, .L7F0926B4
-/* 0C7014 7F0924E4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C7018 7F0924E8 0FC30776 */  jal   get_textptr_for_textID
-/* 0C701C 7F0924EC 3404B01E */   li    $a0, 45086
-/* 0C7020 7F0924F0 0FC228F2 */  jal   display_string_in_lower_left_corner
-/* 0C7024 7F0924F4 00402025 */   move  $a0, $v0
-/* 0C7028 7F0924F8 0FC227D2 */  jal   set_bondata_invincible_flag
-/* 0C702C 7F0924FC 00002025 */   move  $a0, $zero
-/* 0C7030 7F092500 1000006C */  b     .L7F0926B4
-/* 0C7034 7F092504 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_all_guns:
-/* 0C7038 7F092508 0FC230AB */  jal   get_BONDdata_allguns_flag
-/* 0C703C 7F09250C 00000000 */   nop
-/* 0C7040 7F092510 50400068 */  beql  $v0, $zero, .L7F0926B4
-/* 0C7044 7F092514 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C7048 7F092518 0FC30776 */  jal   get_textptr_for_textID
-/* 0C704C 7F09251C 3404B01F */   li    $a0, 45087
-/* 0C7050 7F092520 0FC228F2 */  jal   display_string_in_lower_left_corner
-/* 0C7054 7F092524 00402025 */   move  $a0, $v0
-/* 0C7058 7F092528 0FC230A7 */  jal   set_BONDdata_allguns_flag
-/* 0C705C 7F09252C 00002025 */   move  $a0, $zero
-/* 0C7060 7F092530 10000060 */  b     .L7F0926B4
-/* 0C7064 7F092534 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_line_mode:
-/* 0C7068 7F092538 0FC243FA */  jal   set_debug_VisCVG_flag
-/* 0C706C 7F09253C 00002025 */   move  $a0, $zero
-/* 0C7070 7F092540 1000005C */  b     .L7F0926B4
-/* 0C7074 7F092544 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_unknown:
-/* 0C7078 7F092548 0FC227DD */  jal   get_invisible_to_guards_flag
-/* 0C707C 7F09254C 00000000 */   nop
-/* 0C7080 7F092550 54400058 */  bnezl $v0, .L7F0926B4
-/* 0C7084 7F092554 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C7088 7F092558 0FC30776 */  jal   get_textptr_for_textID
-/* 0C708C 7F09255C 3404B020 */   li    $a0, 45088
-/* 0C7090 7F092560 0FC228F2 */  jal   display_string_in_lower_left_corner
-/* 0C7094 7F092564 00402025 */   move  $a0, $v0
-/* 0C7098 7F092568 0FC227DA */  jal   set_invisible_to_guards_flag
-/* 0C709C 7F09256C 24040001 */   li    $a0, 1
-/* 0C70A0 7F092570 10000050 */  b     .L7F0926B4
-/* 0C70A4 7F092574 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_infinite_ammo:
-/* 0C70A8 7F092578 0FC30776 */  jal   get_textptr_for_textID
-/* 0C70AC 7F09257C 3404B022 */   li    $a0, 45090
-/* 0C70B0 7F092580 0FC228F2 */  jal   display_string_in_lower_left_corner
-/* 0C70B4 7F092584 00402025 */   move  $a0, $v0
-/* 0C70B8 7F092588 1000004A */  b     .L7F0926B4
-/* 0C70BC 7F09258C 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_dkmode:
-/* 0C70C0 7F092590 0FC30776 */  jal   get_textptr_for_textID
-/* 0C70C4 7F092594 3404B023 */   li    $a0, 45091
-/* 0C70C8 7F092598 0FC228F2 */  jal   display_string_in_lower_left_corner
-/* 0C70CC 7F09259C 00402025 */   move  $a0, $v0
-/* 0C70D0 7F0925A0 0FC249FD */  jal cheatButtonSetDkMode
-/* 0C70D4 7F0925A4 00002025 */   move  $a0, $zero
-/* 0C70D8 7F0925A8 10000042 */  b     .L7F0926B4
-/* 0C70DC 7F0925AC 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_unknown_0:
-/* 0C70E0 7F0925B0 24010001 */  li    $at, 1
-/* 0C70E4 7F0925B4 1441003E */  bne   $v0, $at, .L7F0926B0
-/* 0C70E8 7F0925B8 3C188008 */   lui   $t8, %hi(g_playerPerm)
-/* 0C70EC 7F0925BC 8F18A0B4 */  lw    $t8, %lo(g_playerPerm)($t8)
-/* 0C70F0 7F0925C0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0C70F4 7F0925C4 44812000 */  mtc1  $at, $f4
-/* 0C70F8 7F0925C8 C7060064 */  lwc1  $f6, 0x64($t8)
-/* 0C70FC 7F0925CC 46062032 */  c.eq.s $f4, $f6
-/* 0C7100 7F0925D0 00000000 */  nop
-/* 0C7104 7F0925D4 45030037 */  bc1tl .L7F0926B4
-/* 0C7108 7F0925D8 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C710C 7F0925DC 0FC30776 */  jal   get_textptr_for_textID
-/* 0C7110 7F0925E0 3404B024 */   li    $a0, 45092
-/* 0C7114 7F0925E4 0FC228F2 */  jal   display_string_in_lower_left_corner
-/* 0C7118 7F0925E8 00402025 */   move  $a0, $v0
-/* 0C711C 7F0925EC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0C7120 7F0925F0 3C198008 */  lui   $t9, %hi(g_playerPerm)
-/* 0C7124 7F0925F4 8F39A0B4 */  lw    $t9, %lo(g_playerPerm)($t9)
-/* 0C7128 7F0925F8 44814000 */  mtc1  $at, $f8
-/* 0C712C 7F0925FC 3C088008 */  lui   $t0, %hi(g_CurrentPlayer)
-/* 0C7130 7F092600 E7280064 */  swc1  $f8, 0x64($t9)
-/* 0C7134 7F092604 8D08A0B0 */  lw    $t0, %lo(g_CurrentPlayer)($t0)
-/* 0C7138 7F092608 8D0400D4 */  lw    $a0, 0xd4($t0)
-/* 0C713C 7F09260C 50800029 */  beql  $a0, $zero, .L7F0926B4
-/* 0C7140 7F092610 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C7144 7F092614 C4800014 */  lwc1  $f0, 0x14($a0)
-/* 0C7148 7F092618 46000280 */  add.s $f10, $f0, $f0
-/* 0C714C 7F09261C 44055000 */  mfc1  $a1, $f10
-/* 0C7150 7F092620 0FC1B39E */  jal   set_obj_instance_controller_scale
-/* 0C7154 7F092624 00000000 */   nop
-/* 0C7158 7F092628 10000022 */  b     .L7F0926B4
-/* 0C715C 7F09262C 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_paintball:
-/* 0C7160 7F092630 0FC30776 */  jal   get_textptr_for_textID
-/* 0C7164 7F092634 3404B025 */   li    $a0, 45093
-/* 0C7168 7F092638 0FC228F2 */  jal   display_string_in_lower_left_corner
-/* 0C716C 7F09263C 00402025 */   move  $a0, $v0
-/* 0C7170 7F092640 1000001C */  b     .L7F0926B4
-/* 0C7174 7F092644 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_mp_invis:
-/* 0C7178 7F092648 3C014396 */  li    $at, 0x43960000 # 300.000000
-/* 0C717C 7F09264C 44816000 */  mtc1  $at, $f12
-/* 0C7180 7F092650 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0C7184 7F092654 44817000 */  mtc1  $at, $f14
-/* 0C7188 7F092658 0FC20284 */  jal   currentPlayerStartChrFade
-/* 0C718C 7F09265C 00000000 */   nop
-/* 0C7190 7F092660 10000014 */  b     .L7F0926B4
-/* 0C7194 7F092664 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_fast_mode:
-/* 0C7198 7F092668 0FC24406 */  jal   get_debug_fast_bond_flag
-/* 0C719C 7F09266C 00000000 */   nop
-/* 0C71A0 7F092670 50400010 */  beql  $v0, $zero, .L7F0926B4
-/* 0C71A4 7F092674 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C71A8 7F092678 0FC30776 */  jal   get_textptr_for_textID
-/* 0C71AC 7F09267C 3404B027 */   li    $a0, 45095
-/* 0C71B0 7F092680 0FC228F2 */  jal   display_string_in_lower_left_corner
-/* 0C71B4 7F092684 00402025 */   move  $a0, $v0
-/* 0C71B8 7F092688 0FC24409 */  jal   set_debug_fast_bond_flag
-/* 0C71BC 7F09268C 00002025 */   move  $a0, $zero
-/* 0C71C0 7F092690 10000008 */  b     .L7F0926B4
-/* 0C71C4 7F092694 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_debug_mode:
-/* 0C71C8 7F092698 0FC243E2 */  jal   get_debug_testingmanpos_flag
-/* 0C71CC 7F09269C 00000000 */   nop
-/* 0C71D0 7F0926A0 50400004 */  beql  $v0, $zero, .L7F0926B4
-/* 0C71D4 7F0926A4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C71D8 7F0926A8 0FC243E5 */  jal   set_debug_testingmanpos_flag
-/* 0C71DC 7F0926AC 00002025 */   move  $a0, $zero
-cheat_button_default:
-.L7F0926B0:
-/* 0C71E0 7F0926B0 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0926B4:
-/* 0C71E4 7F0926B4 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0C71E8 7F0926B8 03E00008 */  jr    $ra
-/* 0C71EC 7F0926BC 00000000 */   nop
-)
+                display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB01E));
 #endif
-#ifdef VERSION_JP
-GLOBAL_ASM(
-.late_rodata
-/*D:800573DC*/
-glabel jpt_800573DC
-.word cheat_button_default
-.word cheat_button_invincibility
-.word cheat_button_all_guns
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_line_mode
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_unknown
-.word cheat_button_infinite_ammo
-.word cheat_button_dkmode
-.word cheat_button_default
-.word cheat_button_unknown_0
-.word cheat_button_paintball
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_mp_invis
-.word cheat_button_default
-.word cheat_button_fast_mode
-.word cheat_button_debug_mode
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-
-.text
-glabel cheatDisplayMessageActivateCheat
-/* 0C6F68 7F092438 00047100 */  sll   $t6, $a0, 4
-/* 0C6F6C 7F09243C 3C0F8004 */  lui   $t7, %hi(D_8003F808)
-/* 0C6F70 7F092440 01EE7821 */  addu  $t7, $t7, $t6
-/* 0C6F74 7F092444 8DEFF808 */  lw    $t7, %lo(D_8003F808)($t7)
-/* 0C6F78 7F092448 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0C6F7C 7F09244C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C6F80 7F092450 AFA40020 */  sw    $a0, 0x20($sp)
-/* 0C6F84 7F092454 0FC26C54 */  jal   get_cur_playernum
-/* 0C6F88 7F092458 AFAF001C */   sw    $t7, 0x1c($sp)
-/* 0C6F8C 7F09245C 0FC26919 */  jal   getPlayerCount
-/* 0C6F90 7F092460 AFA20018 */   sw    $v0, 0x18($sp)
-/* 0C6F94 7F092464 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 0C6F98 7F092468 8FA40020 */  lw    $a0, 0x20($sp)
-/* 0C6F9C 7F09246C 30780010 */  andi  $t8, $v1, 0x10
-/* 0C6FA0 7F092470 17000010 */  bnez  $t8, .L7F0924B4
-/* 0C6FA4 7F092474 30790020 */   andi  $t9, $v1, 0x20
-/* 0C6FA8 7F092478 1720000B */  bnez  $t9, .L7F0924A8
-/* 0C6FAC 7F09247C 3C088008 */   lui   $t0, %hi(off_CODE_bss_80079E30)
-/* 0C6FB0 7F092480 8FAA0018 */  lw    $t2, 0x18($sp)
-/* 0C6FB4 7F092484 25089E30 */  addiu $t0, %lo(off_CODE_bss_80079E30) # addiu $t0, $t0, -0x61d0
-/* 0C6FB8 7F092488 00881821 */  addu  $v1, $a0, $t0
-/* 0C6FBC 7F09248C 90690000 */  lbu   $t1, ($v1)
-/* 0C6FC0 7F092490 240B0001 */  li    $t3, 1
-/* 0C6FC4 7F092494 014B6004 */  sllv  $t4, $t3, $t2
-/* 0C6FC8 7F092498 01806827 */  not   $t5, $t4
-/* 0C6FCC 7F09249C 012D7024 */  and   $t6, $t1, $t5
-/* 0C6FD0 7F0924A0 10000004 */  b     .L7F0924B4
-/* 0C6FD4 7F0924A4 A06E0000 */   sb    $t6, ($v1)
-.L7F0924A8:
-/* 0C6FD8 7F0924A8 3C018008 */  lui   $at, %hi(off_CODE_bss_80079E30)
-/* 0C6FDC 7F0924AC 00240821 */  addu  $at, $at, $a0
-/* 0C6FE0 7F0924B0 A0209E30 */  sb    $zero, %lo(off_CODE_bss_80079E30)($at)
-.L7F0924B4:
-/* 0C6FE4 7F0924B4 248FFFFF */  addiu $t7, $a0, -1
-/* 0C6FE8 7F0924B8 2DE1004A */  sltiu $at, $t7, 0x4a
-/* 0C6FEC 7F0924BC 1020007C */  beqz  $at, .L7F0926B0
-/* 0C6FF0 7F0924C0 000F7880 */   sll   $t7, $t7, 2
-/* 0C6FF4 7F0924C4 3C018005 */  lui   $at, %hi(jpt_800573DC)
-/* 0C6FF8 7F0924C8 002F0821 */  addu  $at, $at, $t7
-/* 0C6FFC 7F0924CC 8C2F73DC */  lw    $t7, %lo(jpt_800573DC)($at)
-/* 0C7000 7F0924D0 01E00008 */  jr    $t7
-/* 0C7004 7F0924D4 00000000 */   nop
-cheat_button_invincibility:
-/* 0C7008 7F0924D8 0FC227D6 */  jal   get_bondata_invincible_flag
-/* 0C700C 7F0924DC 00000000 */   nop
-/* 0C7010 7F0924E0 50400074 */  beql  $v0, $zero, .L7F0926B4
-/* 0C7014 7F0924E4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C7018 7F0924E8 0FC30776 */  jal   get_textptr_for_textID
-/* 0C701C 7F0924EC 3404B01E */   li    $a0, 45086
-/* 0C7020 7F0924F0 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
-/* 0C7024 7F0924F4 00402025 */   move  $a0, $v0
-/* 0C7028 7F0924F8 0FC227D2 */  jal   set_bondata_invincible_flag
-/* 0C702C 7F0924FC 00002025 */   move  $a0, $zero
-/* 0C7030 7F092500 1000006C */  b     .L7F0926B4
-/* 0C7034 7F092504 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_all_guns:
-/* 0C7038 7F092508 0FC230AB */  jal   get_BONDdata_allguns_flag
-/* 0C703C 7F09250C 00000000 */   nop
-/* 0C7040 7F092510 50400068 */  beql  $v0, $zero, .L7F0926B4
-/* 0C7044 7F092514 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C7048 7F092518 0FC30776 */  jal   get_textptr_for_textID
-/* 0C704C 7F09251C 3404B01F */   li    $a0, 45087
-/* 0C7050 7F092520 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
-/* 0C7054 7F092524 00402025 */   move  $a0, $v0
-/* 0C7058 7F092528 0FC230A7 */  jal   set_BONDdata_allguns_flag
-/* 0C705C 7F09252C 00002025 */   move  $a0, $zero
-/* 0C7060 7F092530 10000060 */  b     .L7F0926B4
-/* 0C7064 7F092534 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_line_mode:
-/* 0C7068 7F092538 0FC243FA */  jal   set_debug_VisCVG_flag
-/* 0C706C 7F09253C 00002025 */   move  $a0, $zero
-/* 0C7070 7F092540 1000005C */  b     .L7F0926B4
-/* 0C7074 7F092544 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_unknown:
-/* 0C7078 7F092548 0FC227DD */  jal   get_invisible_to_guards_flag
-/* 0C707C 7F09254C 00000000 */   nop
-/* 0C7080 7F092550 54400058 */  bnezl $v0, .L7F0926B4
-/* 0C7084 7F092554 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C7088 7F092558 0FC30776 */  jal   get_textptr_for_textID
-/* 0C708C 7F09255C 3404B020 */   li    $a0, 45088
-/* 0C7090 7F092560 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
-/* 0C7094 7F092564 00402025 */   move  $a0, $v0
-/* 0C7098 7F092568 0FC227DA */  jal   set_invisible_to_guards_flag
-/* 0C709C 7F09256C 24040001 */   li    $a0, 1
-/* 0C70A0 7F092570 10000050 */  b     .L7F0926B4
-/* 0C70A4 7F092574 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_infinite_ammo:
-/* 0C70A8 7F092578 0FC30776 */  jal   get_textptr_for_textID
-/* 0C70AC 7F09257C 3404B022 */   li    $a0, 45090
-/* 0C70B0 7F092580 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
-/* 0C70B4 7F092584 00402025 */   move  $a0, $v0
-/* 0C70B8 7F092588 1000004A */  b     .L7F0926B4
-/* 0C70BC 7F09258C 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_dkmode:
-/* 0C70C0 7F092590 0FC30776 */  jal   get_textptr_for_textID
-/* 0C70C4 7F092594 3404B023 */   li    $a0, 45091
-/* 0C70C8 7F092598 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
-/* 0C70CC 7F09259C 00402025 */   move  $a0, $v0
-/* 0C70D0 7F0925A0 0FC249FD */  jal cheatButtonSetDkMode
-/* 0C70D4 7F0925A4 00002025 */   move  $a0, $zero
-/* 0C70D8 7F0925A8 10000042 */  b     .L7F0926B4
-/* 0C70DC 7F0925AC 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_unknown_0:
-/* 0C70E0 7F0925B0 24010001 */  li    $at, 1
-/* 0C70E4 7F0925B4 1441003E */  bne   $v0, $at, .L7F0926B0
-/* 0C70E8 7F0925B8 3C188008 */   lui   $t8, %hi(g_playerPerm)
-/* 0C70EC 7F0925BC 8F18A0B4 */  lw    $t8, %lo(g_playerPerm)($t8)
-/* 0C70F0 7F0925C0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0C70F4 7F0925C4 44812000 */  mtc1  $at, $f4
-/* 0C70F8 7F0925C8 C7060064 */  lwc1  $f6, 0x64($t8)
-/* 0C70FC 7F0925CC 46062032 */  c.eq.s $f4, $f6
-/* 0C7100 7F0925D0 00000000 */  nop
-/* 0C7104 7F0925D4 45030037 */  bc1tl .L7F0926B4
-/* 0C7108 7F0925D8 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C710C 7F0925DC 0FC30776 */  jal   get_textptr_for_textID
-/* 0C7110 7F0925E0 3404B024 */   li    $a0, 45092
-/* 0C7114 7F0925E4 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
-/* 0C7118 7F0925E8 00402025 */   move  $a0, $v0
-/* 0C711C 7F0925EC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0C7120 7F0925F0 3C198008 */  lui   $t9, %hi(g_playerPerm)
-/* 0C7124 7F0925F4 8F39A0B4 */  lw    $t9, %lo(g_playerPerm)($t9)
-/* 0C7128 7F0925F8 44814000 */  mtc1  $at, $f8
-/* 0C712C 7F0925FC 3C088008 */  lui   $t0, %hi(g_CurrentPlayer)
-/* 0C7130 7F092600 E7280064 */  swc1  $f8, 0x64($t9)
-/* 0C7134 7F092604 8D08A0B0 */  lw    $t0, %lo(g_CurrentPlayer)($t0)
-/* 0C7138 7F092608 8D0400D4 */  lw    $a0, 0xd4($t0)
-/* 0C713C 7F09260C 50800029 */  beql  $a0, $zero, .L7F0926B4
-/* 0C7140 7F092610 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C7144 7F092614 C4800014 */  lwc1  $f0, 0x14($a0)
-/* 0C7148 7F092618 46000280 */  add.s $f10, $f0, $f0
-/* 0C714C 7F09261C 44055000 */  mfc1  $a1, $f10
-/* 0C7150 7F092620 0FC1B39E */  jal   set_obj_instance_controller_scale
-/* 0C7154 7F092624 00000000 */   nop
-/* 0C7158 7F092628 10000022 */  b     .L7F0926B4
-/* 0C715C 7F09262C 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_paintball:
-/* 0C7160 7F092630 0FC30776 */  jal   get_textptr_for_textID
-/* 0C7164 7F092634 3404B025 */   li    $a0, 45093
-/* 0C7168 7F092638 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
-/* 0C716C 7F09263C 00402025 */   move  $a0, $v0
-/* 0C7170 7F092640 1000001C */  b     .L7F0926B4
-/* 0C7174 7F092644 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_mp_invis:
-/* 0C7178 7F092648 3C014396 */  li    $at, 0x43960000 # 300.000000
-/* 0C717C 7F09264C 44816000 */  mtc1  $at, $f12
-/* 0C7180 7F092650 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0C7184 7F092654 44817000 */  mtc1  $at, $f14
-/* 0C7188 7F092658 0FC20284 */  jal   currentPlayerStartChrFade
-/* 0C718C 7F09265C 00000000 */   nop
-/* 0C7190 7F092660 10000014 */  b     .L7F0926B4
-/* 0C7194 7F092664 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_fast_mode:
-/* 0C7198 7F092668 0FC24406 */  jal   get_debug_fast_bond_flag
-/* 0C719C 7F09266C 00000000 */   nop
-/* 0C71A0 7F092670 50400010 */  beql  $v0, $zero, .L7F0926B4
-/* 0C71A4 7F092674 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C71A8 7F092678 0FC30776 */  jal   get_textptr_for_textID
-/* 0C71AC 7F09267C 3404B027 */   li    $a0, 45095
-/* 0C71B0 7F092680 0FC228F2 */  jal   jp_display_string_in_lower_left_corner
-/* 0C71B4 7F092684 00402025 */   move  $a0, $v0
-/* 0C71B8 7F092688 0FC24409 */  jal   set_debug_fast_bond_flag
-/* 0C71BC 7F09268C 00002025 */   move  $a0, $zero
-/* 0C71C0 7F092690 10000008 */  b     .L7F0926B4
-/* 0C71C4 7F092694 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_debug_mode:
-/* 0C71C8 7F092698 0FC243E2 */  jal   get_debug_testingmanpos_flag
-/* 0C71CC 7F09269C 00000000 */   nop
-/* 0C71D0 7F0926A0 50400004 */  beql  $v0, $zero, .L7F0926B4
-/* 0C71D4 7F0926A4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C71D8 7F0926A8 0FC243E5 */  jal   set_debug_testingmanpos_flag
-/* 0C71DC 7F0926AC 00002025 */   move  $a0, $zero
-cheat_button_default:
-.L7F0926B0:
-/* 0C71E0 7F0926B0 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0926B4:
-/* 0C71E4 7F0926B4 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0C71E8 7F0926B8 03E00008 */  jr    $ra
-/* 0C71EC 7F0926BC 00000000 */   nop
-)
+                set_bondata_invincible_flag(0);
+                return;
+            }
+            return;
+            
+        case CHEAT_ALLGUNS:
+            if (get_BONDdata_allguns_flag(cheat_id) != 0)
+            {
+#if defined(VERSION_JP)
+                jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB01F));
+#else
+                display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB01F));
 #endif
+                set_BONDdata_allguns_flag(0);
+                return;
+            }
+            return;
 
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.late_rodata
-/*D:800573DC*/
-glabel jpt_800573DC
-.word cheat_button_default
-.word cheat_button_invincibility
-.word cheat_button_all_guns
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_line_mode
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_unknown
-.word cheat_button_infinite_ammo
-.word cheat_button_dkmode
-.word cheat_button_default
-.word cheat_button_unknown_0
-.word cheat_button_paintball
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_mp_invis
-.word cheat_button_default
-.word cheat_button_fast_mode
-.word cheat_button_debug_mode
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
+        case CHEAT_LINEMODE:
+            set_debug_VisCVG_flag(0);
+            return;
 
-.text
-glabel cheatDisplayMessageActivateCheat
-/* 0C6F68 7F092438 00047100 */  sll   $t6, $a0, 4
-/* 0C6F6C 7F09243C 3C0F8004 */  lui   $t7, %hi(D_8003F808)
-/* 0C6F70 7F092440 01EE7821 */  addu  $t7, $t7, $t6
-/* 0C6F74 7F092444 8DEFF808 */  lw    $t7, %lo(D_8003F808)($t7)
-/* 0C6F78 7F092448 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0C6F7C 7F09244C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C6F80 7F092450 AFA40020 */  sw    $a0, 0x20($sp)
-/* 0C6F84 7F092454 0FC26C54 */  jal   get_cur_playernum
-/* 0C6F88 7F092458 AFAF001C */   sw    $t7, 0x1c($sp)
-/* 0C6F8C 7F09245C 0FC26919 */  jal   getPlayerCount
-/* 0C6F90 7F092460 AFA20018 */   sw    $v0, 0x18($sp)
-/* 0C6F94 7F092464 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 0C6F98 7F092468 8FA40020 */  lw    $a0, 0x20($sp)
-/* 0C6F9C 7F09246C 30780010 */  andi  $t8, $v1, 0x10
-/* 0C6FA0 7F092470 17000010 */  bnez  $t8, .L7F0924B4
-/* 0C6FA4 7F092474 30790020 */   andi  $t9, $v1, 0x20
-/* 0C6FA8 7F092478 1720000B */  bnez  $t9, .L7F0924A8
-/* 0C6FAC 7F09247C 3C088008 */   lui   $t0, %hi(off_CODE_bss_80079E30)
-/* 0C6FB0 7F092480 8FAA0018 */  lw    $t2, 0x18($sp)
-/* 0C6FB4 7F092484 25089E30 */  addiu $t0, %lo(off_CODE_bss_80079E30) # addiu $t0, $t0, -0x61d0
-/* 0C6FB8 7F092488 00881821 */  addu  $v1, $a0, $t0
-/* 0C6FBC 7F09248C 90690000 */  lbu   $t1, ($v1)
-/* 0C6FC0 7F092490 240B0001 */  li    $t3, 1
-/* 0C6FC4 7F092494 014B6004 */  sllv  $t4, $t3, $t2
-/* 0C6FC8 7F092498 01806827 */  not   $t5, $t4
-/* 0C6FCC 7F09249C 012D7024 */  and   $t6, $t1, $t5
-/* 0C6FD0 7F0924A0 10000004 */  b     .L7F0924B4
-/* 0C6FD4 7F0924A4 A06E0000 */   sb    $t6, ($v1)
-.L7F0924A8:
-/* 0C6FD8 7F0924A8 3C018008 */  lui   $at, %hi(off_CODE_bss_80079E30)
-/* 0C6FDC 7F0924AC 00240821 */  addu  $at, $at, $a0
-/* 0C6FE0 7F0924B0 A0209E30 */  sb    $zero, %lo(off_CODE_bss_80079E30)($at)
-.L7F0924B4:
-/* 0C6FE4 7F0924B4 248FFFFF */  addiu $t7, $a0, -1
-/* 0C6FE8 7F0924B8 2DE1004A */  sltiu $at, $t7, 0x4a
-/* 0C6FEC 7F0924BC 1020007C */  beqz  $at, .L7F0926B0
-/* 0C6FF0 7F0924C0 000F7880 */   sll   $t7, $t7, 2
-/* 0C6FF4 7F0924C4 3C018005 */  lui   $at, %hi(jpt_800573DC)
-/* 0C6FF8 7F0924C8 002F0821 */  addu  $at, $at, $t7
-/* 0C6FFC 7F0924CC 8C2F73DC */  lw    $t7, %lo(jpt_800573DC)($at)
-/* 0C7000 7F0924D0 01E00008 */  jr    $t7
-/* 0C7004 7F0924D4 00000000 */   nop
-cheat_button_invincibility:
-/* 0C7008 7F0924D8 0FC227D6 */  jal   get_bondata_invincible_flag
-/* 0C700C 7F0924DC 00000000 */   nop
-/* 0C7010 7F0924E0 50400074 */  beql  $v0, $zero, .L7F0926B4
-/* 0C7014 7F0924E4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C7018 7F0924E8 0FC30776 */  jal   get_textptr_for_textID
-/* 0C701C 7F0924EC 3404B01E */   li    $a0, 45086
-/* 0C7020 7F0924F0 0FC228F2 */  jal   display_string_in_lower_left_corner
-/* 0C7024 7F0924F4 00402025 */   move  $a0, $v0
-/* 0C7028 7F0924F8 0FC227D2 */  jal   set_bondata_invincible_flag
-/* 0C702C 7F0924FC 00002025 */   move  $a0, $zero
-/* 0C7030 7F092500 1000006C */  b     .L7F0926B4
-/* 0C7034 7F092504 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_all_guns:
-/* 0C7038 7F092508 0FC230AB */  jal   get_BONDdata_allguns_flag
-/* 0C703C 7F09250C 00000000 */   nop
-/* 0C7040 7F092510 50400068 */  beql  $v0, $zero, .L7F0926B4
-/* 0C7044 7F092514 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C7048 7F092518 0FC30776 */  jal   get_textptr_for_textID
-/* 0C704C 7F09251C 3404B01F */   li    $a0, 45087
-/* 0C7050 7F092520 0FC228F2 */  jal   display_string_in_lower_left_corner
-/* 0C7054 7F092524 00402025 */   move  $a0, $v0
-/* 0C7058 7F092528 0FC230A7 */  jal   set_BONDdata_allguns_flag
-/* 0C705C 7F09252C 00002025 */   move  $a0, $zero
-/* 0C7060 7F092530 10000060 */  b     .L7F0926B4
-/* 0C7064 7F092534 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_line_mode:
-/* 0C7068 7F092538 0FC243FA */  jal   set_debug_VisCVG_flag
-/* 0C706C 7F09253C 00002025 */   move  $a0, $zero
-/* 0C7070 7F092540 1000005C */  b     .L7F0926B4
-/* 0C7074 7F092544 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_unknown:
-/* 0C7078 7F092548 0FC227DD */  jal   get_invisible_to_guards_flag
-/* 0C707C 7F09254C 00000000 */   nop
-/* 0C7080 7F092550 54400058 */  bnezl $v0, .L7F0926B4
-/* 0C7084 7F092554 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C7088 7F092558 0FC30776 */  jal   get_textptr_for_textID
-/* 0C708C 7F09255C 3404B020 */   li    $a0, 45088
-/* 0C7090 7F092560 0FC228F2 */  jal   display_string_in_lower_left_corner
-/* 0C7094 7F092564 00402025 */   move  $a0, $v0
-/* 0C7098 7F092568 0FC227DA */  jal   set_invisible_to_guards_flag
-/* 0C709C 7F09256C 24040001 */   li    $a0, 1
-/* 0C70A0 7F092570 10000050 */  b     .L7F0926B4
-/* 0C70A4 7F092574 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_infinite_ammo:
-/* 0C70A8 7F092578 0FC30776 */  jal   get_textptr_for_textID
-/* 0C70AC 7F09257C 3404B022 */   li    $a0, 45090
-/* 0C70B0 7F092580 0FC228F2 */  jal   display_string_in_lower_left_corner
-/* 0C70B4 7F092584 00402025 */   move  $a0, $v0
-/* 0C70B8 7F092588 1000004A */  b     .L7F0926B4
-/* 0C70BC 7F09258C 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_dkmode:
-/* 0C70C0 7F092590 0FC30776 */  jal   get_textptr_for_textID
-/* 0C70C4 7F092594 3404B023 */   li    $a0, 45091
-/* 0C70C8 7F092598 0FC228F2 */  jal   display_string_in_lower_left_corner
-/* 0C70CC 7F09259C 00402025 */   move  $a0, $v0
-/* 0C70D0 7F0925A0 0FC249FD */  jal cheatButtonSetDkMode
-/* 0C70D4 7F0925A4 00002025 */   move  $a0, $zero
-/* 0C70D8 7F0925A8 10000042 */  b     .L7F0926B4
-/* 0C70DC 7F0925AC 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_unknown_0:
-/* 0C70E0 7F0925B0 24010001 */  li    $at, 1
-/* 0C70E4 7F0925B4 1441003E */  bne   $v0, $at, .L7F0926B0
-/* 0C70E8 7F0925B8 3C188008 */   lui   $t8, %hi(g_playerPerm)
-/* 0C70EC 7F0925BC 8F18A0B4 */  lw    $t8, %lo(g_playerPerm)($t8)
-/* 0C70F0 7F0925C0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0C70F4 7F0925C4 44812000 */  mtc1  $at, $f4
-/* 0C70F8 7F0925C8 C7060064 */  lwc1  $f6, 0x64($t8)
-/* 0C70FC 7F0925CC 46062032 */  c.eq.s $f4, $f6
-/* 0C7100 7F0925D0 00000000 */  nop
-/* 0C7104 7F0925D4 45030037 */  bc1tl .L7F0926B4
-/* 0C7108 7F0925D8 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C710C 7F0925DC 0FC30776 */  jal   get_textptr_for_textID
-/* 0C7110 7F0925E0 3404B024 */   li    $a0, 45092
-/* 0C7114 7F0925E4 0FC228F2 */  jal   display_string_in_lower_left_corner
-/* 0C7118 7F0925E8 00402025 */   move  $a0, $v0
-/* 0C711C 7F0925EC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0C7120 7F0925F0 3C198008 */  lui   $t9, %hi(g_playerPerm)
-/* 0C7124 7F0925F4 8F39A0B4 */  lw    $t9, %lo(g_playerPerm)($t9)
-/* 0C7128 7F0925F8 44814000 */  mtc1  $at, $f8
-/* 0C712C 7F0925FC 3C088008 */  lui   $t0, %hi(g_CurrentPlayer)
-/* 0C7130 7F092600 E7280064 */  swc1  $f8, 0x64($t9)
-/* 0C7134 7F092604 8D08A0B0 */  lw    $t0, %lo(g_CurrentPlayer)($t0)
-/* 0C7138 7F092608 8D0400D4 */  lw    $a0, 0xd4($t0)
-/* 0C713C 7F09260C 50800029 */  beql  $a0, $zero, .L7F0926B4
-/* 0C7140 7F092610 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C7144 7F092614 C4800014 */  lwc1  $f0, 0x14($a0)
-/* 0C7148 7F092618 46000280 */  add.s $f10, $f0, $f0
-/* 0C714C 7F09261C 44055000 */  mfc1  $a1, $f10
-/* 0C7150 7F092620 0FC1B39E */  jal   set_obj_instance_controller_scale
-/* 0C7154 7F092624 00000000 */   nop
-/* 0C7158 7F092628 10000022 */  b     .L7F0926B4
-/* 0C715C 7F09262C 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_paintball:
-/* 0C7160 7F092630 0FC30776 */  jal   get_textptr_for_textID
-/* 0C7164 7F092634 3404B025 */   li    $a0, 45093
-/* 0C7168 7F092638 0FC228F2 */  jal   display_string_in_lower_left_corner
-/* 0C716C 7F09263C 00402025 */   move  $a0, $v0
-/* 0C7170 7F092640 1000001C */  b     .L7F0926B4
-/* 0C7174 7F092644 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_mp_invis:
-/* 0C7178 7F092648 3C014396 */  li    $at, 0x43960000 # 300.000000
-/* 0C717C 7F09264C 44816000 */  mtc1  $at, $f12
-/* 0C7180 7F092650 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0C7184 7F092654 44817000 */  mtc1  $at, $f14
-/* 0C7188 7F092658 0FC20284 */  jal   currentPlayerStartChrFade
-/* 0C718C 7F09265C 00000000 */   nop
-/* 0C7190 7F092660 10000014 */  b     .L7F0926B4
-/* 0C7194 7F092664 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_fast_mode:
-/* 0C7198 7F092668 0FC24406 */  jal   get_debug_fast_bond_flag
-/* 0C719C 7F09266C 00000000 */   nop
-/* 0C71A0 7F092670 50400010 */  beql  $v0, $zero, .L7F0926B4
-/* 0C71A4 7F092674 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C71A8 7F092678 0FC30776 */  jal   get_textptr_for_textID
-/* 0C71AC 7F09267C 3404B027 */   li    $a0, 45095
-/* 0C71B0 7F092680 0FC228F2 */  jal   display_string_in_lower_left_corner
-/* 0C71B4 7F092684 00402025 */   move  $a0, $v0
-/* 0C71B8 7F092688 0FC24409 */  jal   set_debug_fast_bond_flag
-/* 0C71BC 7F09268C 00002025 */   move  $a0, $zero
-/* 0C71C0 7F092690 10000008 */  b     .L7F0926B4
-/* 0C71C4 7F092694 8FBF0014 */   lw    $ra, 0x14($sp)
-cheat_button_debug_mode:
-/* 0C71C8 7F092698 0FC243E2 */  jal   get_debug_testingmanpos_flag
-/* 0C71CC 7F09269C 00000000 */   nop
-/* 0C71D0 7F0926A0 50400004 */  beql  $v0, $zero, .L7F0926B4
-/* 0C71D4 7F0926A4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0C71D8 7F0926A8 0FC243E5 */  jal   set_debug_testingmanpos_flag
-/* 0C71DC 7F0926AC 00002025 */   move  $a0, $zero
-cheat_button_default:
-.L7F0926B0:
-/* 0C71E0 7F0926B0 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0926B4:
-/* 0C71E4 7F0926B4 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0C71E8 7F0926B8 03E00008 */  jr    $ra
-/* 0C71EC 7F0926BC 00000000 */   nop
-)
+        case CHEAT_INVISIBILITY:
+            if (get_invisible_to_guards_flag(cheat_id) == 0)
+            {
+#if defined(VERSION_JP)
+                jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB020));
+#else
+                display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB020));
 #endif
+                set_invisible_to_guards_flag(1);
+                return;
+            }
+            return;
 
+        case CHEAT_INFINITE_AMMO:
+#if defined(VERSION_JP)
+            jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB022));
+#else
+            display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB022));
 #endif
+            return;
+            
+        case CHEAT_DK_MODE:
+#if defined(VERSION_JP)
+            jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB023));
+#else
+            display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB023));
+#endif
+            cheatButtonSetDkMode(0);
+            return;
+
+        case CHEAT_TINY_BOND:
+            if ((player_count == 1) && (g_playerPerm->player_perspective_height != 1.0f))
+            {
+#if defined(VERSION_JP)
+                jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB024));
+#else
+                display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB024));
+#endif
+                g_playerPerm->player_perspective_height = 1.0f;
+                if (g_CurrentPlayer->ptr_char_objectinstance != 0)
+                {
+                    set_obj_instance_controller_scale(g_CurrentPlayer->ptr_char_objectinstance, 2.0f * ((struct Model *)g_CurrentPlayer->ptr_char_objectinstance)->scale);
+                }
+                return;
+            }
+            return;
+
+        case CHEAT_PAINTBALL:
+#if defined(VERSION_JP)
+            jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB025));
+#else
+            display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB025));
+#endif
+            return;
+
+        case 0x16: /* multiplayer? but the function call is for "fade"? */
+            currentPlayerStartChrFade(300.0f, 1.0f);
+            return;
+
+        case CHEAT_TURBO_MODE:
+            if (get_debug_fast_bond_flag(cheat_id) != 0)
+            {
+#if defined(VERSION_JP)
+                jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB027));
+#else
+                display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB027));
+#endif
+                set_debug_fast_bond_flag(0);
+                return;
+            }
+            return;
+
+        case CHEAT_DEBUG_POS:
+            if (get_debug_testingmanpos_flag(cheat_id) != 0)
+            {
+                set_debug_testingmanpos_flag(0);
+            }
+            return;
+
+        
+        case CHEAT_EXTRA_MP_CHARS:
+        case CHEAT_MAXAMMO:
+        case CHEAT_DEBUG_RETURN_SAVED_RA:
+        case CHEAT_DEACTIVATE_INVINCIBILITY:
+        case CHEAT_2X_HEALTH:
+        case CHEAT_2X_ARMOR:
+        case CHEAT_EXTRA_WEAPONS:
+        case CHEAT_10X_HEALTH:
+        case CHEAT_MAGNUM:
+        case CHEAT_LASER:
+        case CHEAT_GOLDEN_GUN:
+        case CHEAT_SILVER_PP7:
+        case CHEAT_GOLD_PP7:
+        case CHEAT_NO_RADAR_MP:
+        case CHEAT_FAST_ANIMATION:
+        case CHEAT_SLOW_ANIMATION:
+        case CHEAT_ENEMY_ROCKETS:
+        case CHEAT_2X_ROCKET_LAUNCHER:
+        case CHEAT_2X_GRENADE_LAUNCHER:
+        case CHEAT_2X_RCP90:
+        case CHEAT_2X_THROWING_KNIFE:
+        case CHEAT_2X_HUNTING_KNIFE:
+        case CHEAT_2X_LASER:
+        case 0x23:
+        case 0x24:
+        case 0x25:
+        case 0x26:
+        case 0x27:
+        case 0x28:
+        case 0x29:
+        case 0x2A:
+        case 0x2B:
+        case 0x2C:
+        case 0x2D:
+        case 0x2E:
+        case 0x2F:
+        case 0x30:
+        case 0x31:
+        case 0x32:
+        case 0x33:
+        case 0x34:
+        case 0x35:
+        case CHEAT_UNLOCK_CHEATS:
+        case 0x37:
+        case 0x38:
+        case 0x39:
+        case 0x3a:
+        case 0x3b:
+        case 0x3c:
+        case 0x3d:
+        case 0x3e:
+        case 0x3f:
+        case 0x40:
+        case 0x41:
+        case 0x42:
+        case 0x43:
+        case 0x44:
+        case 0x45:
+        case 0x46:
+        case 0x47:
+        case 0x48:
+        case 0x49:
+        case CHEAT_UNLOCK_STAGES:
+        
+        default:
+        break;
+    }
+    
+}
 
 
 
 
-
-#if 0
+/**
+ * Address 0x7F0926C0.
+ */
 void cheatDisableAllCheats(void)
 {
-    //u32 cheat_mask;
     s32 numplayers;
     s32 starting_player_number;
     s32 i;
     s32 j;
-    //struct struct_15 *cheat;
 
-    //cheat_mask = D_8003F80C[cheatindex - 1].maskfield;
     numplayers = getPlayerCount();
     starting_player_number = get_cur_playernum();
 
@@ -3098,182 +2509,43 @@ void cheatDisableAllCheats(void)
 
     set_cur_player(starting_player_number);
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*hack for jtbl*/
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-.text
-glabel cheatDisableAllCheats
-/* 0C71F0 7F0926C0 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 0C71F4 7F0926C4 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0C71F8 7F0926C8 AFB40028 */  sw    $s4, 0x28($sp)
-/* 0C71FC 7F0926CC AFB30024 */  sw    $s3, 0x24($sp)
-/* 0C7200 7F0926D0 AFB20020 */  sw    $s2, 0x20($sp)
-/* 0C7204 7F0926D4 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0C7208 7F0926D8 0FC26919 */  jal   getPlayerCount
-/* 0C720C 7F0926DC AFB00018 */   sw    $s0, 0x18($sp)
-/* 0C7210 7F0926E0 0FC26C54 */  jal   get_cur_playernum
-/* 0C7214 7F0926E4 0040A025 */   move  $s4, $v0
-/* 0C7218 7F0926E8 AFA20030 */  sw    $v0, 0x30($sp)
-/* 0C721C 7F0926EC 1A800017 */  blez  $s4, .L7F09274C
-/* 0C7220 7F0926F0 00009825 */   move  $s3, $zero
-/* 0C7224 7F0926F4 2412004B */  li    $s2, 75
-.L7F0926F8:
-/* 0C7228 7F0926F8 0FC26C43 */  jal   set_cur_player
-/* 0C722C 7F0926FC 02602025 */   move  $a0, $s3
-/* 0C7230 7F092700 3C118004 */  lui   $s1, %hi(D_8003F80C+0x10)
-/* 0C7234 7F092704 2631F81C */  addiu $s1, %lo(D_8003F80C+0x10) # addiu $s1, $s1, -0x7e4
-/* 0C7238 7F092708 24100001 */  li    $s0, 1
-.L7F09270C:
-/* 0C723C 7F09270C 8E2EFFFC */  lw    $t6, -4($s1)
-/* 0C7240 7F092710 31CF0040 */  andi  $t7, $t6, 0x40
-/* 0C7244 7F092714 51E00008 */  beql  $t7, $zero, .L7F092738
-/* 0C7248 7F092718 26100001 */   addiu $s0, $s0, 1
-/* 0C724C 7F09271C 0FC249EF */  jal   cheatCheckIfOn
-/* 0C7250 7F092720 02002025 */   move  $a0, $s0
-/* 0C7254 7F092724 50400004 */  beql  $v0, $zero, .L7F092738
-/* 0C7258 7F092728 26100001 */   addiu $s0, $s0, 1
-/* 0C725C 7F09272C 0FC2490E */  jal   cheatDisplayMessageActivateCheat
-/* 0C7260 7F092730 02002025 */   move  $a0, $s0
-/* 0C7264 7F092734 26100001 */  addiu $s0, $s0, 1
-.L7F092738:
-/* 0C7268 7F092738 1612FFF4 */  bne   $s0, $s2, .L7F09270C
-/* 0C726C 7F09273C 26310010 */   addiu $s1, $s1, 0x10
-/* 0C7270 7F092740 26730001 */  addiu $s3, $s3, 1
-/* 0C7274 7F092744 1674FFEC */  bne   $s3, $s4, .L7F0926F8
-/* 0C7278 7F092748 00000000 */   nop
-.L7F09274C:
-/* 0C727C 7F09274C 0FC26C43 */  jal   set_cur_player
-/* 0C7280 7F092750 8FA40030 */   lw    $a0, 0x30($sp)
-/* 0C7284 7F092754 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0C7288 7F092758 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0C728C 7F09275C 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 0C7290 7F092760 8FB20020 */  lw    $s2, 0x20($sp)
-/* 0C7294 7F092764 8FB30024 */  lw    $s3, 0x24($sp)
-/* 0C7298 7F092768 8FB40028 */  lw    $s4, 0x28($sp)
-/* 0C729C 7F09276C 03E00008 */  jr    $ra
-/* 0C72A0 7F092770 27BD0038 */   addiu $sp, $sp, 0x38
-)
-#endif
 
 
 
 
 
-#if 0
-char *cheatGetMenuTextPointer(s32 arg0)
+/**
+ * Address 0x7F092774.
+ */
+char *cheatGetMenuTextPointer(s32 cheat_id)
 {
     u16 temp_v0;
 
-    temp_v0 = D_8003F80C[arg0 - 1].text_bank_id;
+    temp_v0 = D_8003F80C[cheat_id - 1].text_bank_id;
+
     if (temp_v0 != 0)
     {
         return get_textptr_for_textID((s32) temp_v0);
-        //return;
     }
 
     return get_textptr_for_textID(0xB028);
 }
 
-#else
-GLOBAL_ASM(
-.late_rodata
-/*hack for jtbl*/
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-/*.word cheat_button_default*/
-.text
-glabel cheatGetMenuTextPointer
-/* 0C72A4 7F092774 00047100 */  sll   $t6, $a0, 4
-/* 0C72A8 7F092778 3C028004 */  lui   $v0, %hi(D_8003F804)
-/* 0C72AC 7F09277C 004E1021 */  addu  $v0, $v0, $t6
-/* 0C72B0 7F092780 9442F804 */  lhu   $v0, %lo(D_8003F804)($v0)
-/* 0C72B4 7F092784 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C72B8 7F092788 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C72BC 7F09278C 10400005 */  beqz  $v0, .L7F0927A4
-/* 0C72C0 7F092790 00000000 */   nop
-/* 0C72C4 7F092794 0FC30776 */  jal   get_textptr_for_textID
-/* 0C72C8 7F092798 00402025 */   move  $a0, $v0
-/* 0C72CC 7F09279C 10000004 */  b     .L7F0927B0
-/* 0C72D0 7F0927A0 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0927A4:
-/* 0C72D4 7F0927A4 0FC30776 */  jal   get_textptr_for_textID
-/* 0C72D8 7F0927A8 3404B028 */   li    $a0, 45096
-/* 0C72DC 7F0927AC 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0927B0:
-/* 0C72E0 7F0927B0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C72E4 7F0927B4 03E00008 */  jr    $ra
-/* 0C72E8 7F0927B8 00000000 */   nop
-)
-#endif
 
 
-
-
-
-#if 0
+/**
+ * Address 0x7F0927BC.
+ */
 s32 cheatCheckIfOn(CHEAT_ID cheat)
 {
-    return ((s32) (u8) off_CODE_bss_80079E30[cheat] >> get_cur_playernum()) & 1;
+    return ((s32) (u8) g_CheatPlayerTextRelated[cheat] >> get_cur_playernum()) & 1;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*ugh hack for jtbl*/
-.word cheat_button_default
-.word cheat_button_default
-.word cheat_button_default
-
-.text
-glabel cheatCheckIfOn
-/* 0C72EC 7F0927BC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0C72F0 7F0927C0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C72F4 7F0927C4 0FC26C54 */  jal   get_cur_playernum
-/* 0C72F8 7F0927C8 AFA40018 */   sw    $a0, 0x18($sp)
-/* 0C72FC 7F0927CC 8FAE0018 */  lw    $t6, 0x18($sp)
-/* 0C7300 7F0927D0 3C0F8008 */  lui   $t7, %hi(off_CODE_bss_80079E30)
-/* 0C7304 7F0927D4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0C7308 7F0927D8 01EE7821 */  addu  $t7, $t7, $t6
-/* 0C730C 7F0927DC 91EF9E30 */  lbu   $t7, %lo(off_CODE_bss_80079E30)($t7)
-/* 0C7310 7F0927E0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0C7314 7F0927E4 004F1007 */  srav  $v0, $t7, $v0
-/* 0C7318 7F0927E8 30580001 */  andi  $t8, $v0, 1
-/* 0C731C 7F0927EC 03E00008 */  jr    $ra
-/* 0C7320 7F0927F0 03001025 */   move  $v0, $t8
-)
-#endif
 
 
 
 
 
-void cheatButtonSetDkMode(s32 arg0)
+void cheatButtonSetDkMode(s32 cheat_id)
 {
     s32 num_guards;
     s32 i;
@@ -3283,7 +2555,7 @@ void cheatButtonSetDkMode(s32 arg0)
 
     num_guards = get_numguards();
 
-    if (arg0 != 0)
+    if (cheat_id != 0)
     {
         scale = 0.8f;
     }

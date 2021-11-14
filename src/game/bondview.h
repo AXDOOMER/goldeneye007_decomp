@@ -3102,11 +3102,11 @@ f32 bondviewGetCurrentPlayerHealth(void);
 f32 get_BONDdata_watch_armor(void);
 void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2);
 
-#ifndef VERSION_US
-// VERSION_EU, VERSION_JP
+#ifdef VERSION_JP
+// VERSION_JP
 void display_string_in_lower_left_corner(char *string, s32 arg1, s32 arg2);
 #else
-// VERSION_US
+// VERSION_US, VERSION_EU
 void display_string_in_lower_left_corner(char *string);
 #endif
 
@@ -3147,7 +3147,7 @@ void bondviewSetIntroCameraFlags(s32 flags);
 Gfx* bondviewGfxPlayerField5cMatrix(Gfx* gdl);
 Mtxf *currentPlayerGetMatrix10D4(void);
 void sub_GAME_7F08BEEC(Mtxf *arg0, s32 arg1);
-
+void currentPlayerStartChrFade(f32 duration60, f32 targetfrac);
 
 // unknown pointer arg0
 s32 sub_GAME_7F08BCC0(void *arg0, s32 arg1);

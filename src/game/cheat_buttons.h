@@ -33,7 +33,7 @@ struct struct_15 {
     int maskfield;
 };
 
-extern char off_CODE_bss_80079E30[0x4C];
+extern u8 g_CheatPlayerTextRelated[0x4C];
 
 u32 cheatIsEnemyRockets(u32 cheatindex);
 void cheatButtonTurnOnCheatForPlayers(u32 cheatindex);
