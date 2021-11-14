@@ -43,5 +43,6 @@ void cheatButtonTurnOnCheatForPlayers(u32 cheatindex);
 void cheat_buttons_mp_related(void);
 s32 cheatCheckIfOn(CHEAT_ID cheat);
 s32 cheatCheckIfMPCheat(s32 arg0);
+void cheatDisableAllCheats(void);
 
 #endif

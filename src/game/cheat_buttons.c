@@ -3065,57 +3065,34 @@ cheat_button_default:
 
 
 
-#ifdef NONMATCHING
-void cheatDisableAllCheats(void) {
-    s32 sp30;
-    s32 temp_s4;
-    s32 temp_s0;
-    s32 temp_s3;
-    s32 phi_s3;
-    void *phi_s1;
-    s32 phi_s0;
+#if 0
+void cheatDisableAllCheats(void)
+{
+    //u32 cheat_mask;
+    s32 numplayers;
+    s32 starting_player_number;
+    s32 i;
+    s32 j;
+    //struct struct_15 *cheat;
 
-    // Node 0
-    temp_s4 = getPlayerCount();
-    sp30 = get_cur_playernum();
-    if (temp_s4 > 0)
+    //cheat_mask = D_8003F80C[cheatindex - 1].maskfield;
+    numplayers = getPlayerCount();
+    starting_player_number = get_cur_playernum();
+
+    for (i=0; i<numplayers; i++)
     {
-        // Node 1
-        phi_s3 = 0;
-loop_2:
-        // Node 2
-        set_cur_player(phi_s3);
-        phi_s1 = &D_8003F80C+0x10;
-        phi_s0 = 1;
-loop_3:
-        // Node 3
-        if ((phi_s1->unk-4 & 0x40) != 0)
+        set_cur_player(i);
+
+        for (j=1; j<CHEAT_INVALID; j++)
         {
-            // Node 4
-            if (cheatCheckIfOn(phi_s0) != 0)
+            if ((D_8003F80C[j - 1].maskfield & CHEAT_MASK_64) && (cheatCheckIfOn(j) != 0))
             {
-                // Node 5
-                cheatDisplayMessageActivateCheat(phi_s0);
+                cheatDisplayMessageActivateCheat(j);
             }
         }
-        // Node 6
-        temp_s0 = (phi_s0 + 1);
-        phi_s1 = (phi_s1 + 0x10);
-        phi_s0 = temp_s0;
-        if (temp_s0 != 0x4b)
-        {
-            goto loop_3;
-        }
-        // Node 7
-        temp_s3 = (phi_s3 + 1);
-        phi_s3 = temp_s3;
-        if (temp_s3 != temp_s4)
-        {
-            goto loop_2;
-        }
     }
-    // Node 8
-    return set_cur_player(sp30);
+
+    set_cur_player(starting_player_number);
 }
 #else
 GLOBAL_ASM(
