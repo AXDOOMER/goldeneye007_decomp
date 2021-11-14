@@ -3153,5 +3153,6 @@ Gfx* bondviewGfxPlayerField5cMatrix(Gfx* gdl);
 
 // unknown pointer arg0
 s32 sub_GAME_7F08BCC0(void *arg0, s32 arg1);
+void sub_GAME_7F08BD48(Mtxf *arg0, s32 arg1);
 
 #endif

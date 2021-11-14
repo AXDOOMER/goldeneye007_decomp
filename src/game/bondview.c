@@ -36479,8 +36479,20 @@ void sub_GAME_7F08BD18(Mtxf *arg0)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F08BD48(void) {
+/**
+ * Address 0x7F08BD48.
+ */
+void sub_GAME_7F08BD48(Mtxf *arg0, s32 arg1)
+{
+    Mtxf sp38;
+    s32 i;
+    Mtxf *phi_s1;
 
+    for (i=0, phi_s1=arg0; i<arg1; i++, phi_s1++)
+    {
+        matrix_4x4_copy(phi_s1, (Mtxf *) &sp38);
+        sub_GAME_7F058C9C((Mtxf *) &sp38, &arg0[i]);
+    }
 }
 #else
 GLOBAL_ASM(
