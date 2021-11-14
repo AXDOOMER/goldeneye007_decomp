@@ -199,10 +199,6 @@ struct struct_15 D_8003F80C[] = {
     {0}
 };
 
-//D:8003FCBC
-//u32 D_8003FCBC = 0;
-
-
 
 
 // rodata
@@ -213,6 +209,7 @@ s32 cheatButtonCountBitsSet(u16 param_1);
 void cheatButtonActivateRelated(void);
 void handle_cheats_turned_on(CHEAT_ID cheat);
 void cheatDisplayMessageActivateCheat(s32 arg0);
+s32 cheatCheckIfMPCheat(s32 arg0);
 
 // end forward declarations
 
@@ -444,32 +441,20 @@ u32 cheatIsEnemyRockets(u32 cheatindex)
 
 
 
-#ifdef NONMATCHING
-void cheatCheckIfMPCheat(void) {
+/**
+ * @param arg0: 1 based index.
+ * 
+ * Address 0x7F091A78.
+ */
+s32 cheatCheckIfMPCheat(s32 arg0)
+{
+    if ((D_8003F80C[arg0 - 1].maskfield & CHEAT_MASK_MULTIPLAYER) == CHEAT_MASK_MULTIPLAYER)
+    {
+        return 1;
+    }
 
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel cheatCheckIfMPCheat
-/* 0C65A8 7F091A78 00047100 */  sll   $t6, $a0, 4
-/* 0C65AC 7F091A7C 3C0F8004 */  lui   $t7, %hi(D_8003F808)
-/* 0C65B0 7F091A80 01EE7821 */  addu  $t7, $t7, $t6
-/* 0C65B4 7F091A84 8DEFF808 */  lw    $t7, %lo(D_8003F808)($t7)
-/* 0C65B8 7F091A88 24010004 */  li    $at, 4
-/* 0C65BC 7F091A8C 00001025 */  move  $v0, $zero
-/* 0C65C0 7F091A90 31F80004 */  andi  $t8, $t7, 4
-/* 0C65C4 7F091A94 17010003 */  bne   $t8, $at, .L7F091AA4
-/* 0C65C8 7F091A98 00000000 */   nop
-/* 0C65CC 7F091A9C 03E00008 */  jr    $ra
-/* 0C65D0 7F091AA0 24020001 */   li    $v0, 1
-
-.L7F091AA4:
-/* 0C65D4 7F091AA4 03E00008 */  jr    $ra
-/* 0C65D8 7F091AA8 00000000 */   nop
-)
-#endif
-
 
 
 

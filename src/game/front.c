@@ -2,6 +2,7 @@
 #include "bondgame.h"
 #include "bondconstants.h"
 #include "boss.h"
+#include "game/cheat_buttons.h"
 #include "game/spectrum.h"
 #include "game/front.h"
 #include "game/player.h"
