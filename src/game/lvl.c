@@ -416,7 +416,7 @@ void lvlStageLoad(s32 stage)
                 {
                     if (g_CheatActivated[s0] && cheatIsEnemyRockets(s0))
                     {
-                        turn_on_cheat_for_players(s0);
+                        cheatButtonTurnOnCheatForPlayers(s0);
                     }
                 }
             }
@@ -645,7 +645,7 @@ glabel lvlStageLoad
 /* 0F2760 7F0BDC30 02002025 */   move  $a0, $s0
 /* 0F2764 7F0BDC34 50400004 */  beql  $v0, $zero, .L7F0BDC48
 /* 0F2768 7F0BDC38 26100001 */   addiu $s0, $s0, 1
-/* 0F276C 7F0BDC3C 0FC246AB */  jal   turn_on_cheat_for_players
+/* 0F276C 7F0BDC3C 0FC246AB */  jal   cheatButtonTurnOnCheatForPlayers
 /* 0F2770 7F0BDC40 02002025 */   move  $a0, $s0
 /* 0F2774 7F0BDC44 26100001 */  addiu $s0, $s0, 1
 .L7F0BDC48:
@@ -950,7 +950,7 @@ glabel lvlStageLoad
 /* 0F3360 7F0BE7F0 02002025 */   move  $a0, $s0
 /* 0F3364 7F0BE7F4 50400004 */  beql  $v0, $zero, .Ljp7F0BE808
 /* 0F3368 7F0BE7F8 26100001 */   addiu $s0, $s0, 1
-/* 0F336C 7F0BE7FC 0FC24963 */  jal   turn_on_cheat_for_players
+/* 0F336C 7F0BE7FC 0FC24963 */  jal   cheatButtonTurnOnCheatForPlayers
 /* 0F3370 7F0BE800 02002025 */   move  $a0, $s0
 /* 0F3374 7F0BE804 26100001 */  addiu $s0, $s0, 1
 .Ljp7F0BE808:
@@ -1250,7 +1250,7 @@ glabel lvlStageLoad
 /* 0F2760 7F0BDC30 02002025 */   move  $a0, $s0
 /* 0F2764 7F0BDC34 50400004 */  beql  $v0, $zero, .L7F0BDC48
 /* 0F2768 7F0BDC38 26100001 */   addiu $s0, $s0, 1
-/* 0F276C 7F0BDC3C 0FC246AB */  jal   turn_on_cheat_for_players
+/* 0F276C 7F0BDC3C 0FC246AB */  jal   cheatButtonTurnOnCheatForPlayers
 /* 0F2770 7F0BDC40 02002025 */   move  $a0, $s0
 /* 0F2774 7F0BDC44 26100001 */  addiu $s0, $s0, 1
 .L7F0BDC48:
@@ -2236,7 +2236,7 @@ void lvlManageMpGame(void)
             {
                 if (g_CheatActivated[s0] && !cheatIsEnemyRockets(s0))
                 {
-                    turn_on_cheat_for_players(s0);
+                    cheatButtonTurnOnCheatForPlayers(s0);
                 }
             }
         }
@@ -2737,7 +2737,7 @@ glabel lvlManageMpGame
 /* 0F37A8 7F0BEC78 14400006 */  bnez  $v0, .L7F0BEC94
 /* 0F37AC 7F0BEC7C 8FA40194 */   lw    $a0, 0x194($sp)
 /* 0F37B0 7F0BEC80 AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0F37B4 7F0BEC84 0FC246AB */  jal   turn_on_cheat_for_players
+/* 0F37B4 7F0BEC84 0FC246AB */  jal   cheatButtonTurnOnCheatForPlayers
 /* 0F37B8 7F0BEC88 AFA40194 */   sw    $a0, 0x194($sp)
 /* 0F37BC 7F0BEC8C 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0F37C0 7F0BEC90 8FA40194 */  lw    $a0, 0x194($sp)
@@ -3627,7 +3627,7 @@ glabel lvlManageMpGame
 /* 0F441C 7F0BF8AC 14400006 */  bnez  $v0, .Ljp7F0BF8C8
 /* 0F4420 7F0BF8B0 8FA40194 */   lw    $a0, 0x194($sp)
 /* 0F4424 7F0BF8B4 AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0F4428 7F0BF8B8 0FC24963 */  jal   turn_on_cheat_for_players
+/* 0F4428 7F0BF8B8 0FC24963 */  jal   cheatButtonTurnOnCheatForPlayers
 /* 0F442C 7F0BF8BC AFA40194 */   sw    $a0, 0x194($sp)
 /* 0F4430 7F0BF8C0 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0F4434 7F0BF8C4 8FA40194 */  lw    $a0, 0x194($sp)
@@ -4508,7 +4508,7 @@ glabel lvlManageMpGame
 /* 0F37A8 7F0BEC78 14400006 */  bnez  $v0, .L7F0BEC94
 /* 0F37AC 7F0BEC7C 8FA40194 */   lw    $a0, 0x194($sp)
 /* 0F37B0 7F0BEC80 AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0F37B4 7F0BEC84 0FC246AB */  jal   turn_on_cheat_for_players
+/* 0F37B4 7F0BEC84 0FC246AB */  jal   cheatButtonTurnOnCheatForPlayers
 /* 0F37B8 7F0BEC88 AFA40194 */   sw    $a0, 0x194($sp)
 /* 0F37BC 7F0BEC8C 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0F37C0 7F0BEC90 8FA40194 */  lw    $a0, 0x194($sp)

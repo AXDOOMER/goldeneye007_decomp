@@ -459,104 +459,47 @@ s32 cheatCheckIfMPCheat(s32 arg0)
 
 
 
-#ifdef NONMATCHING
-void turn_on_cheat_for_players(u32 cheatindex)
+/**
+ * Address 0x7F091AAC.
+ */
+void cheatButtonTurnOnCheatForPlayers(u32 cheatindex)
 {
-  u32 uVar1;
-  u32 playernum;
-  u32 numplayers;
-  u32 i;
+    u32 cheat_mask;
+    s32 starting_player_number;
+    s32 numplayers;
+    s32 i;
 
-  uVar1 = D_8003F80C[cheatindex];
-  playernum = get_cur_playernum();
-  numplayers = getPlayerCount();
-  if (numplayers == 1) {
-    handle_cheats_turned_on(cheatindex);
-  }
-  else {
-    if ((uVar1 & 4) != 0)
+    cheat_mask = D_8003F80C[cheatindex - 1].maskfield;
+    starting_player_number = get_cur_playernum();
+    numplayers = getPlayerCount();
+
+    if (numplayers == 1)
     {
-      if ((uVar1 & 0x20) == 0)
-      {
-        i = 0;
-        if (0 < (int)numplayers)
-        {
-            while (i != numplayers)
-            {
-                set_cur_player(i);
-                handle_cheats_turned_on(cheatindex);
-                i = i + 1;
-            };
-        }
-        set_cur_player(playernum);
-      }
-      else
-      {
         handle_cheats_turned_on(cheatindex);
-      }
     }
-  }
-  return;
-}
-#else
-GLOBAL_ASM(
-.text
-glabel turn_on_cheat_for_players
-/* 0C65DC 7F091AAC 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 0C65E0 7F091AB0 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0C65E4 7F091AB4 3C108004 */  lui   $s0, %hi(D_8003F808)
-/* 0C65E8 7F091AB8 00047100 */  sll   $t6, $a0, 4
-/* 0C65EC 7F091ABC AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0C65F0 7F091AC0 AFB20020 */  sw    $s2, 0x20($sp)
-/* 0C65F4 7F091AC4 020E8021 */  addu  $s0, $s0, $t6
-/* 0C65F8 7F091AC8 00809025 */  move  $s2, $a0
-/* 0C65FC 7F091ACC AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0C6600 7F091AD0 0FC26C54 */  jal   get_cur_playernum
-/* 0C6604 7F091AD4 8E10F808 */   lw    $s0, %lo(D_8003F808)($s0)
-/* 0C6608 7F091AD8 0FC26919 */  jal   getPlayerCount
-/* 0C660C 7F091ADC AFA20028 */   sw    $v0, 0x28($sp)
-/* 0C6610 7F091AE0 24010001 */  li    $at, 1
-/* 0C6614 7F091AE4 14410005 */  bne   $v0, $at, .L7F091AFC
-/* 0C6618 7F091AE8 00408825 */   move  $s1, $v0
-/* 0C661C 7F091AEC 0FC246D9 */  jal   handle_cheats_turned_on
-/* 0C6620 7F091AF0 02402025 */   move  $a0, $s2
-/* 0C6624 7F091AF4 10000016 */  b     .L7F091B50
-/* 0C6628 7F091AF8 8FBF0024 */   lw    $ra, 0x24($sp)
-.L7F091AFC:
-/* 0C662C 7F091AFC 320F0004 */  andi  $t7, $s0, 4
-/* 0C6630 7F091B00 11E00012 */  beqz  $t7, .L7F091B4C
-/* 0C6634 7F091B04 32180020 */   andi  $t8, $s0, 0x20
-/* 0C6638 7F091B08 13000005 */  beqz  $t8, .L7F091B20
-/* 0C663C 7F091B0C 00000000 */   nop
-/* 0C6640 7F091B10 0FC246D9 */  jal   handle_cheats_turned_on
-/* 0C6644 7F091B14 02402025 */   move  $a0, $s2
-/* 0C6648 7F091B18 1000000D */  b     .L7F091B50
-/* 0C664C 7F091B1C 8FBF0024 */   lw    $ra, 0x24($sp)
-.L7F091B20:
-/* 0C6650 7F091B20 18400008 */  blez  $v0, .L7F091B44
-/* 0C6654 7F091B24 00008025 */   move  $s0, $zero
-.L7F091B28:
-/* 0C6658 7F091B28 0FC26C43 */  jal   set_cur_player
-/* 0C665C 7F091B2C 02002025 */   move  $a0, $s0
-/* 0C6660 7F091B30 0FC246D9 */  jal   handle_cheats_turned_on
-/* 0C6664 7F091B34 02402025 */   move  $a0, $s2
-/* 0C6668 7F091B38 26100001 */  addiu $s0, $s0, 1
-/* 0C666C 7F091B3C 1611FFFA */  bne   $s0, $s1, .L7F091B28
-/* 0C6670 7F091B40 00000000 */   nop
-.L7F091B44:
-/* 0C6674 7F091B44 0FC26C43 */  jal   set_cur_player
-/* 0C6678 7F091B48 8FA40028 */   lw    $a0, 0x28($sp)
-.L7F091B4C:
-/* 0C667C 7F091B4C 8FBF0024 */  lw    $ra, 0x24($sp)
-.L7F091B50:
-/* 0C6680 7F091B50 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0C6684 7F091B54 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 0C6688 7F091B58 8FB20020 */  lw    $s2, 0x20($sp)
-/* 0C668C 7F091B5C 03E00008 */  jr    $ra
-/* 0C6690 7F091B60 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
+    else
+    {
+        if (cheat_mask & CHEAT_MASK_MULTIPLAYER)
+        {
+            if (cheat_mask & CHEAT_MASK_32)
+            {
+                handle_cheats_turned_on(cheatindex);
+            }
+            else
+            {
+                for(i=0; i<numplayers; i++)
+                {
+                    set_cur_player(i);
+                    handle_cheats_turned_on(cheatindex);
+                }
 
+                set_cur_player(starting_player_number);
+            }
+        }
+    }
+
+    return;
+}
 
 
 
