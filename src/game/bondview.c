@@ -31983,11 +31983,10 @@ struct prop* get_curplayer_positiondata(void) {
 
 
 
-#if 1
 /**
  * Address 0x7F0897A8.
  */
-void kill_current_player(void)
+void bondviewKillCurrentPlayer(void)
 {
     if ((g_CurrentPlayer->bondinvincible == 0) && (g_CurrentPlayer->bonddead == 0))
     {
@@ -32020,97 +32019,6 @@ void kill_current_player(void)
         g_CurrentPlayer->field_29F4 = getMissiontimer();
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel kill_current_player
-/* 0BE2D8 7F0897A8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0BE2DC 7F0897AC AFB00018 */  sw    $s0, 0x18($sp)
-/* 0BE2E0 7F0897B0 3C108008 */  lui   $s0, %hi(g_CurrentPlayer)
-/* 0BE2E4 7F0897B4 2610A0B0 */  addiu $s0, %lo(g_CurrentPlayer) # addiu $s0, $s0, -0x5f50
-/* 0BE2E8 7F0897B8 8E020000 */  lw    $v0, ($s0)
-/* 0BE2EC 7F0897BC AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0BE2F0 7F0897C0 904E12B6 */  lbu   $t6, 0x12b6($v0)
-/* 0BE2F4 7F0897C4 55C00044 */  bnezl $t6, .L7F0898D8
-/* 0BE2F8 7F0897C8 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0BE2FC 7F0897CC 8C4F00D8 */  lw    $t7, 0xd8($v0)
-/* 0BE300 7F0897D0 55E00041 */  bnezl $t7, .L7F0898D8
-/* 0BE304 7F0897D4 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0BE308 7F0897D8 8C5801C8 */  lw    $t8, 0x1c8($v0)
-/* 0BE30C 7F0897DC 53000005 */  beql  $t8, $zero, .L7F0897F4
-/* 0BE310 7F0897E0 24030001 */   li    $v1, 1
-/* 0BE314 7F0897E4 0FC1FE1D */  jal   trigger_solo_watch_menu
-/* 0BE318 7F0897E8 24040001 */   li    $a0, 1
-/* 0BE31C 7F0897EC 8E020000 */  lw    $v0, ($s0)
-/* 0BE320 7F0897F0 24030001 */  li    $v1, 1
-.L7F0897F4:
-/* 0BE324 7F0897F4 3C018003 */  lui   $at, %hi(mission_kia_flag)
-/* 0BE328 7F0897F8 AC23A928 */  sw    $v1, %lo(mission_kia_flag)($at)
-/* 0BE32C 7F0897FC AC4300D8 */  sw    $v1, 0xd8($v0)
-/* 0BE330 7F089800 8E0A0000 */  lw    $t2, ($s0)
-/* 0BE334 7F089804 24040001 */  li    $a0, 1
-/* 0BE338 7F089808 01404825 */  move  $t1, $t2
-/* 0BE33C 7F08980C 25480054 */  addiu $t0, $t2, 0x54
-.L7F089810:
-/* 0BE340 7F089810 8D210488 */  lw    $at, 0x488($t1)
-/* 0BE344 7F089814 2529000C */  addiu $t1, $t1, 0xc
-/* 0BE348 7F089818 254A000C */  addiu $t2, $t2, 0xc
-/* 0BE34C 7F08981C AD410428 */  sw    $at, 0x428($t2)
-/* 0BE350 7F089820 8D210480 */  lw    $at, 0x480($t1)
-/* 0BE354 7F089824 AD41042C */  sw    $at, 0x42c($t2)
-/* 0BE358 7F089828 8D210484 */  lw    $at, 0x484($t1)
-/* 0BE35C 7F08982C 1528FFF8 */  bne   $t1, $t0, .L7F089810
-/* 0BE360 7F089830 AD410430 */   sw    $at, 0x430($t2)
-/* 0BE364 7F089834 8E020000 */  lw    $v0, ($s0)
-/* 0BE368 7F089838 3C0B8003 */  lui   $t3, %hi(ptr_playerstank)
-/* 0BE36C 7F08983C 3C018003 */  lui   $at, %hi(D_8003648C)
-/* 0BE370 7F089840 C4440148 */  lwc1  $f4, 0x148($v0)
-/* 0BE374 7F089844 E4440414 */  swc1  $f4, 0x414($v0)
-/* 0BE378 7F089848 8E020000 */  lw    $v0, ($s0)
-/* 0BE37C 7F08984C C4460158 */  lwc1  $f6, 0x158($v0)
-/* 0BE380 7F089850 E4460418 */  swc1  $f6, 0x418($v0)
-/* 0BE384 7F089854 8D6B6450 */  lw    $t3, %lo(ptr_playerstank)($t3)
-/* 0BE388 7F089858 11600002 */  beqz  $t3, .L7F089864
-/* 0BE38C 7F08985C 00000000 */   nop
-/* 0BE390 7F089860 AC23648C */  sw    $v1, %lo(D_8003648C)($at)
-.L7F089864:
-/* 0BE394 7F089864 0FC17645 */  jal   draw_item_in_hand_has_more_ammo
-/* 0BE398 7F089868 00002825 */   move  $a1, $zero
-/* 0BE39C 7F08986C 00002025 */  move  $a0, $zero
-/* 0BE3A0 7F089870 0FC17645 */  jal   draw_item_in_hand_has_more_ammo
-/* 0BE3A4 7F089874 00002825 */   move  $a1, $zero
-/* 0BE3A8 7F089878 0FC22FEE */  jal   getMissiontimer
-/* 0BE3AC 7F08987C 00000000 */   nop
-/* 0BE3B0 7F089880 8E0C0000 */  lw    $t4, ($s0)
-/* 0BE3B4 7F089884 3C0F8008 */  lui   $t7, %hi(g_playerPerm)
-/* 0BE3B8 7F089888 8DEFA0B4 */  lw    $t7, %lo(g_playerPerm)($t7)
-/* 0BE3BC 7F08988C 8D8D29F4 */  lw    $t5, 0x29f4($t4)
-/* 0BE3C0 7F089890 8DF80050 */  lw    $t8, 0x50($t7)
-/* 0BE3C4 7F089894 004D7023 */  subu  $t6, $v0, $t5
-/* 0BE3C8 7F089898 01D8082A */  slt   $at, $t6, $t8
-/* 0BE3CC 7F08989C 10200009 */  beqz  $at, .L7F0898C4
-/* 0BE3D0 7F0898A0 00000000 */   nop
-/* 0BE3D4 7F0898A4 0FC22FEE */  jal   getMissiontimer
-/* 0BE3D8 7F0898A8 00000000 */   nop
-/* 0BE3DC 7F0898AC 8E190000 */  lw    $t9, ($s0)
-/* 0BE3E0 7F0898B0 3C0A8008 */  lui   $t2, %hi(g_playerPerm)
-/* 0BE3E4 7F0898B4 8D4AA0B4 */  lw    $t2, %lo(g_playerPerm)($t2)
-/* 0BE3E8 7F0898B8 8F2829F4 */  lw    $t0, 0x29f4($t9)
-/* 0BE3EC 7F0898BC 00484823 */  subu  $t1, $v0, $t0
-/* 0BE3F0 7F0898C0 AD490050 */  sw    $t1, 0x50($t2)
-.L7F0898C4:
-/* 0BE3F4 7F0898C4 0FC22FEE */  jal   getMissiontimer
-/* 0BE3F8 7F0898C8 00000000 */   nop
-/* 0BE3FC 7F0898CC 8E0B0000 */  lw    $t3, ($s0)
-/* 0BE400 7F0898D0 AD6229F4 */  sw    $v0, 0x29f4($t3)
-/* 0BE404 7F0898D4 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F0898D8:
-/* 0BE408 7F0898D8 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0BE40C 7F0898DC 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0BE410 7F0898E0 03E00008 */  jr    $ra
-/* 0BE414 7F0898E4 00000000 */   nop
-)
-#endif
 
 
 
@@ -32459,7 +32367,7 @@ glabel record_damage_kills
 /* 0BE8F0 7F089DC0 252A0001 */  addiu $t2, $t1, 1
 /* 0BE8F4 7F089DC4 AC4A0024 */  sw    $t2, 0x24($v0)
 .L7F089DC8:
-/* 0BE8F8 7F089DC8 0FC225EA */  jal   kill_current_player
+/* 0BE8F8 7F089DC8 0FC225EA */  jal   bondviewKillCurrentPlayer
 /* 0BE8FC 7F089DCC 00000000 */   nop
 /* 0BE900 7F089DD0 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
 /* 0BE904 7F089DD4 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
@@ -32829,7 +32737,7 @@ glabel record_damage_kills
 /* 0BF020 7F08A4B0 27280001 */  addiu $t0, $t9, 1
 /* 0BF024 7F08A4B4 AC480024 */  sw    $t0, 0x24($v0)
 .Ljp7F08A4B8:
-/* 0BF028 7F08A4B8 0FC2279F */  jal   kill_current_player
+/* 0BF028 7F08A4B8 0FC2279F */  jal   bondviewKillCurrentPlayer
 /* 0BF02C 7F08A4BC 00000000 */   nop
 /* 0BF030 7F08A4C0 3C028008 */  lui   $v0, %hi(g_CurrentPlayer) # $v0, 0x8008
 /* 0BF034 7F08A4C4 44806000 */  mtc1  $zero, $f12

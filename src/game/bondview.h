@@ -24,7 +24,7 @@ typedef struct invitem_dual
 
 /** unknown struct, used in `strut player`.
  * We know this is a struct from the compiler auto-generated
- * code to copy structs in bondview.c kill_current_player.
+ * code to copy structs in bondview.c bondviewKillCurrentPlayer.
  * 
  * sizeof == 84 (0x54)
  */
