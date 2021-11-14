@@ -1,10 +1,17 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "bondconstants.h"
+#include "joy.h"
 #include "game/cheat_buttons.h"
 #include "game/player.h"
+#include "game/player_2.h"
 //#include "game/chraicommands.h" /* needed for ai list commands, remove when moving global ai lists to chraicommands/chrai */
 // bss
+
+// This shows up a lot but not quite sure what it represents.
+#define CHEAT_20    20
+
+
 char off_CODE_bss_80079E30[0x4C];
 
 
@@ -202,6 +209,7 @@ struct struct_15 D_8003F80C[] = {
 
 // forward declarations
 
+s32 cheatButtonCountBitsSet(u16 param_1);
 void cheatButtonActivateRelated(void);
 void handle_cheats_turned_on(CHEAT_ID cheat);
 void cheatDisplayMessageActivateCheat(s32 arg0);
@@ -212,19 +220,19 @@ void cheatDisplayMessageActivateCheat(s32 arg0);
 
 
 
-s32 cheatButton_7F091740(u16 param_1)
+s32 cheatButtonCountBitsSet(u16 param_1)
 {
-  s32 count;
+    s32 count;
 
-  for (count = 0; (u32)param_1 != 0; param_1 >>= 1)
-  {
-      if (param_1 & 1)
-      {
-          count++;
-      }
-  }
+    for (count = 0; (u32)param_1 != 0; param_1 >>= 1)
+    {
+        if (param_1 & 1)
+        {
+            count++;
+        }
+    }
 
-  return count;
+    return count;
 }
 
 
@@ -257,14 +265,14 @@ void cheatButtonActivateRelated(void)
         {
             if ((g_CurrentPlayer->can_display_cheat_text >= info->count_of_something) && ((info->maskfield & bitmask) != 0))
             {
-                id_index = ((g_CurrentPlayer->something_with_cheat_text - info->count_of_something) + 0x14) % 0x14;
+                id_index = ((g_CurrentPlayer->something_with_cheat_text - info->count_of_something) + CHEAT_20) % CHEAT_20;
 
                 find_index=0;
                 for (; find_index < info->count_of_something; find_index++)
                 {
                     if (g_CurrentPlayer->cheat_display_text_related[id_index] == info->anonymous_1[find_index])
                     {
-                        id_index = (s32) (id_index + 1) % 0x14;
+                        id_index = (s32) (id_index + 1) % CHEAT_20;
                         continue;
                     }
 
@@ -294,8 +302,48 @@ void cheatButtonActivateRelated(void)
 
 
 #ifdef NONMATCHING
+/**
+ * Address 0x7F09193C.
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: fail
+ * - identical registers: fail
+ * 
+ * notes: the u16/bit operators are not playing nicely, just a few misordered instructions there.
+ */
 void cheat_buttons_mp_related(void)
+{
+    u16 jgb;
+    u16 jgbptf;
+    u16 jgb_trig;
 
+    jgb = joyGetButtons(get_cur_playernum(), ANY_BUTTON);
+    jgbptf = joyGetButtonsPressedThisFrame(get_cur_playernum(), ANY_BUTTON);
+    jgb_trig = (jgb & (L_TRIG | R_TRIG));
+    jgbptf &= ~(jgb_trig & ANY_BUTTON);
+    jgb &= ~(jgb & (L_TRIG | R_TRIG));
+
+    if (jgbptf != 0)
+    {
+        if ((cheatButtonCountBitsSet(jgbptf) == 1) && ((cheatButtonCountBitsSet(jgb) == 1)))
+        {
+            g_CurrentPlayer->cheat_display_text_related[g_CurrentPlayer->something_with_cheat_text] = jgbptf | jgb_trig;
+            g_CurrentPlayer->something_with_cheat_text = (u8) ((g_CurrentPlayer->something_with_cheat_text + 1) % CHEAT_20);
+
+            if ((s32) g_CurrentPlayer->can_display_cheat_text < CHEAT_20)
+            {
+                g_CurrentPlayer->can_display_cheat_text += 1;
+            }
+        }
+        else
+        {
+            g_CurrentPlayer->can_display_cheat_text = 0;
+        }
+    }
+
+    cheatButtonActivateRelated();
 }
 #else
 GLOBAL_ASM(
@@ -329,13 +377,13 @@ glabel cheat_buttons_mp_related
 /* 0C64D0 7F0919A0 11400028 */  beqz  $t2, .L7F091A44
 /* 0C64D4 7F0919A4 A7A50024 */   sh    $a1, 0x24($sp)
 /* 0C64D8 7F0919A8 30A4FFFF */  andi  $a0, $a1, 0xffff
-/* 0C64DC 7F0919AC 0FC245D0 */  jal   cheatButton_7F091740
+/* 0C64DC 7F0919AC 0FC245D0 */  jal   cheatButtonCountBitsSet
 /* 0C64E0 7F0919B0 AFA60018 */   sw    $a2, 0x18($sp)
 /* 0C64E4 7F0919B4 24010001 */  li    $at, 1
 /* 0C64E8 7F0919B8 1441001E */  bne   $v0, $at, .L7F091A34
 /* 0C64EC 7F0919BC 8FA70018 */   lw    $a3, 0x18($sp)
 /* 0C64F0 7F0919C0 97A40026 */  lhu   $a0, 0x26($sp)
-/* 0C64F4 7F0919C4 0FC245D0 */  jal   cheatButton_7F091740
+/* 0C64F4 7F0919C4 0FC245D0 */  jal   cheatButtonCountBitsSet
 /* 0C64F8 7F0919C8 AFA70018 */   sw    $a3, 0x18($sp)
 /* 0C64FC 7F0919CC 24010001 */  li    $at, 1
 /* 0C6500 7F0919D0 14410018 */  bne   $v0, $at, .L7F091A34

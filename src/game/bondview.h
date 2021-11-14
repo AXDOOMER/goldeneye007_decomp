@@ -1179,18 +1179,14 @@ struct player
   s32 players_cur_animation;
   s32 field_1288;
 
+  /**
+   * Offset 0x128c.
+   */
   u16 cheat_display_text_related[20];
-//   s32 field_128C;
-//   s32 field_1290;
-//   s32 field_1294;
-//   s32 field_1298;
-//   s32 field_129C;
-//   s32 field_12A0;
-//   s32 field_12A4;
-//   s32 field_12A8;
-//   s32 field_12AC;
-//   s32 field_12B0;
 
+  /**
+   * Offset 0x12b4.
+   */
   u8 something_with_cheat_text;
   u8 can_display_cheat_text;
   u8 bondinvincible;
