@@ -24,15 +24,12 @@ struct struct_15 {
     u8 count_of_something;
     u8 field_2;
     u8 field_3;
-    u16 * anonymous_1;
-    int anonymous_2;
 
-    /**
-     * 0x0 = ?
-     * 0x1 = ?
-     * 0x2 = ?
-     * 0x4 = multiplayer
-     */
+    u16 * anonymous_1;
+
+    u16 text_bank_id;
+    u16 unk_a;
+
     int maskfield;
 };
 
@@ -44,5 +41,6 @@ void cheat_buttons_mp_related(void);
 s32 cheatCheckIfOn(CHEAT_ID cheat);
 s32 cheatCheckIfMPCheat(s32 arg0);
 void cheatDisableAllCheats(void);
+char *cheatGetMenuTextPointer(s32 arg0);
 
 #endif
