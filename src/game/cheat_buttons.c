@@ -3225,9 +3225,10 @@ glabel cheatGetMenuTextPointer
 
 
 
-#ifdef NONMATCHING
-s32 cheatCheckIfOn(CHEAT_ID cheat) {
-
+#if 0
+s32 cheatCheckIfOn(CHEAT_ID cheat)
+{
+    return ((s32) (u8) off_CODE_bss_80079E30[cheat] >> get_cur_playernum()) & 1;
 }
 #else
 GLOBAL_ASM(
