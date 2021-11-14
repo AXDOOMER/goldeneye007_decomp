@@ -22,6 +22,64 @@ typedef struct invitem_dual
 	s32 weapon_left;
 } invitem_dual;
 
+/** unknown struct, used in `strut player`.
+ * We know this is a struct from the compiler auto-generated
+ * code to copy structs in bondview.c bondviewKillCurrentPlayer.
+ * 
+ * sizeof == 84 (0x54)
+ */
+struct collision434 {
+
+    /**
+     * Offset 0x00.
+     */
+    StandTile *current_tile_ptr;
+
+    /**
+     * Offset 0x04.
+     */
+    struct coord3d collision_position;
+
+    /**
+     * Offset 0x10.
+     */
+    s32 field_10;
+    s32 field_14;
+    s32 field_18;
+
+    /**
+     * Some kind of alternative to pos3 (in player struct).
+     * Offset 0x20.
+     */
+    struct coord3d pos3;
+
+    /**
+     * Offset 0x2c.
+     */
+    f32 collision_radius;
+
+    /**
+     * Some kind of alternative to pos (in player struct).
+     * Offset 0x30.
+     */
+    struct coord3d pos;
+
+    /**
+     * Offset 0x3c.
+     */
+    s32 field_3C;
+    s32 field_40;
+    s32 field_44;
+    s32 field_48;
+    s32 field_4C;
+    s32 field_50;
+
+    /**
+     * Offset 0x54.
+     */
+    StandTile *current_tile_ptr_for_portals;
+};
+
 struct hand
 {
   s32 weaponnum;
@@ -307,30 +365,49 @@ struct player
   /**
    * Offset 0x0004.
    */
-  f32 pos[3];
+  struct coord3d pos;
 
   /**
    * Offset 0x0010.
    */
-  f32 pos2[3];
+  struct coord3d pos2;
 
   /**
    * Offset 0x001c.
    */
-  f32 offset[3];
+  struct coord3d offset;
 
   /**
    * Offset 0x0028.
    */
-  f32 pos3[3];
+  struct coord3d pos3;
 
-  /* 0x0034 */ StandTile *room_pointer;
-  /* 0x0038 */ struct coord3d current_model_pos;
-  /* 0x0044 */ vec3 previous_model_pos;
-  /* 0x0050 */ f32 current_room_xpos;
-  /* 0x0054 */ f32 current_room_ypos;
-  /* 0x0058 */ f32 current_room_zpos;
-  /* 0x005c */ s32 field_5C;
+  /**
+   * Offset 0x0034.
+   */
+  StandTile *room_pointer;
+
+  /**
+   * Offset 0x0038.
+   */
+  struct coord3d current_model_pos;
+
+  /**
+   * Offset 0x0044.
+   */
+  struct coord3d previous_model_pos;
+
+  /**
+   * Offset 0x0050.
+   */
+  struct coord3d current_room_pos;
+
+  /**
+   * Used as parameter to gbi macro.
+   * Offset 0x005c.
+   */
+  s32 field_5C;
+
   /* 0x0060 */ s32 field_60;
   /* 0x0064 */ s32 field_64;
   /* 0x0068 */ s32 field_68;
@@ -389,14 +466,24 @@ struct player
   /* 0x00a4 */ f32 field_A4;
   /* 0x00a8 */ struct prop* prop;
   /* 0x00ac */ s32 field_AC;
-  /* 0x00b0 */ s32 field_B0;
-  /* 0x00b4 */ s32 zpos_0;
-  /* 0x00b8 */ s32 xpos_0;
-  /* 0x00bc */ s32 field_BC;
-  /* 0x00c0 */ s32 field_C0;
-  /* 0x00c4 */ s32 zpos_1;
-  /* 0x00c8 */ s32 xpos_1;
-  /* 0x00cc */ s32 field_CC;
+
+//   /* 0x00b0 */ f32 field_B0;
+//   /* 0x00b4 */ f32 zpos_0;
+
+//   /* 0x00b8 */ f32 xpos_0;
+//   /* 0x00bc */ f32 field_BC;
+
+//   /* 0x00c0 */ f32 field_C0;
+//   /* 0x00c4 */ f32 zpos_1;
+
+//   /* 0x00c8 */ f32 xpos_1;
+//   /* 0x00cc */ f32 field_CC;
+
+  /**
+   * Offset 0x00b0.
+   */
+  struct rect4f collision_bounds;
+
   /* 0x00d0 */ s32 field_D0;
   /* 0x00d4 */ s32 *ptr_char_objectinstance;
   /* 0x00d8 */ s32 bonddead;
@@ -406,8 +493,16 @@ struct player
   /* 0x00e8 */ f32 oldarmour;
   /* 0x00ec */ f32 apparenthealth;
   /* 0x00f0 */ f32 apparentarmour;
+
+#if defined(VERSION_JP)
+/* 0x00f4 */ f32 damageshowtime;
+/* 0x00f8 */ f32 healthshowtime;
+#else
   /* 0x00f4 */ s32 damageshowtime;
   /* 0x00f8 */ s32 healthshowtime;
+#endif
+
+
   /* 0x00fc */ s32 healthshowmode;
   /* 0x0100 */ s32 field_100;
   /* 0x0104 */ s32 field_104;
@@ -638,8 +733,8 @@ struct player
   */
   f32 field_410;
   
-  s32 field_414;
-  s32 field_418;
+  f32 field_414;
+  f32 field_418;
   s32 cuff_value;
   s32 field_420;
 
@@ -656,55 +751,10 @@ struct player
   s32 field_428;
   s32 field_42C;
   s32 field_430;
-  s32 field_434;
-  s32 field_438;
-  s32 field_43C;
-  s32 field_440;
-  s32 field_444;
-  s32 field_448;
-  s32 field_44C;
-  s32 field_450;
-  s32 field_454;
-  s32 field_458;
-  s32 field_45C;
-  s32 field_460;
-  s32 field_464;
-  s32 field_468;
-  s32 field_46C;
-  s32 field_470;
-  s32 field_474;
-  s32 field_478;
-  s32 field_47C;
-  s32 field_480;
-  s32 field_484;
-  StandTile *current_tile_ptr;
 
-  /**
-   * Offset 0x048c.
-   */
-  struct coord3d collision_position;
+  struct collision434 previous_collision_info;
+  struct collision434 field_488;
 
-  s32 field_498;
-  s32 field_49C;
-  s32 field_4A0;
-  s32 field_4A4;
-  s32 field_4A8;
-  s32 field_4AC;
-
-  /**
-   * Offset 0x04b0.
-   */
-  f32 collision_radius;
-  s32 field_4B4;
-  s32 field_4B8;
-  s32 field_4BC;
-  s32 field_4C0;
-  s32 field_4C4;
-  s32 field_4C8;
-  s32 field_4CC;
-  s32 field_4D0;
-  s32 field_4D4;
-  s32 current_tile_ptr_for_portals;
   u32 resetheadpos; // bool
   u32 resetheadrot; // bool
   s32 field_4E4;
@@ -3049,7 +3099,7 @@ void set_open_close_solo_watch_menu_to1(void);
 
 void init_player_BONDdata(void);
 void bondviewPlayerSpawnRelated(void);
-f32 get_BONDdata_watch_health(void);
+f32 bondviewGetCurrentPlayerHealth(void);
 f32 get_BONDdata_watch_armor(void);
 void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2);
 
@@ -3065,7 +3115,7 @@ Gfx * sub_GAME_7F087A08(Gfx *arg0);
 s32 sub_GAME_7F089F38(void);
 Gfx* write_stan_tiles_in_yellow(Gfx *arg0);
 Gfx * maybe_mp_interface(Gfx *arg0);
-Gfx * sub_GAME_7F08BCB8(Gfx *arg0);
+Gfx * bondviewRemoved7F08BCB8(Gfx *arg0);
 s32 sub_GAME_7F078A58(struct coord3d *vec_scale, f32 norm_scale);
 s32 getMissiontimer(void);
 void solo_char_load(void);
@@ -3073,7 +3123,7 @@ void bondviewUpdateYAutoAimTime(s32 auto_aim_time, f32 auto_aim_y);
 void bondviewUpdateXAutoAimTime(s32 auto_aim_time, f32 auto_aim_x);
 void bondviewSet3dCoord7F07CEB0(struct coord3d *arg0);
 f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2);
-f32 sub_GAME_7F089780(struct player *player);
+f32 bondviewGetPlayerDuckingHeightRelated(struct player *player);
 void bondviewCollisionRadiusRelated(struct prop* arg0, f32 *arg1, f32 *arg2, f32 *arg3);
 void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_offset);
 void currentPlayerSetFadeColour(s32 r, s32 g, s32 b, f32 frac);
@@ -3082,5 +3132,26 @@ void set_BONDdata_autoaim_x(s32 param_1);
 s32 get_BONDdata_autoaim_x(void);
 void set_BONDdata_autoaim_y(s32 param_1);
 void set_BONDdata_lookahead_setting(s32 arg0);
+f32 bondviewGetPlayerClippingHeight(struct player *player);
+void record_damage_kills(f32, f32, f32, s32, s32);
+void bondviewCallRecordDamageKills(f32 arg0, f32 rad, s32 arg2, s32 arg3);
+int bondviewGetIfCurrentPlayerDamageShowTime(void);
+int bondviewGetIfCurrentPlayerHealthShowTime(void);
+u8 bondviewGetCurrentPlayersRoom(void);
+struct coord3d *bondviewGetCurrentPlayersPosition(void);
+void bondviewUpdateGuardTankFlagsRelated(struct prop *arg0, s32 flags);
+void bondviewGetPropHeightRelatedValues(struct prop *arg0, struct rect4f **field_B0, s32 *arg2, f32 *height_related, f32 *collision);
+void bondviewAddCurrentPlayerArmor(f32 arg0);
+void bondviewResetIntroCameraMessageDialogs(void);
+void bondviewUnsetIntroCameraFlags(s32 flag);
+void bondviewSetIntroCameraFlags(s32 flags);
+Gfx* bondviewGfxPlayerField5cMatrix(Gfx* gdl);
+Mtxf *currentPlayerGetMatrix10D4(void);
+void sub_GAME_7F08BEEC(Mtxf *arg0, s32 arg1);
+
+
+// unknown pointer arg0
+s32 sub_GAME_7F08BCC0(void *arg0, s32 arg1);
+void sub_GAME_7F08BD48(Mtxf *arg0, s32 arg1);
 
 #endif

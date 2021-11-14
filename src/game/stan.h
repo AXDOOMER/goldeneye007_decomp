@@ -5,7 +5,6 @@
 #include "structs.h"
 
 
-
 typedef struct StandTilePoint {
     s16 x;
     s16 y;
@@ -167,7 +166,7 @@ Gfx * sub_GAME_7F0B2D48(Gfx *arg0);
 Gfx * sub_GAME_7F0B303C(Gfx *arg0);
 Gfx * sub_GAME_7F0B3034(Gfx *arg0);
 Gfx * sub_GAME_7F0B312C(Gfx *arg0, s32 arg1);
-Gfx * sub_GAME_7F0B3024(Gfx *ptrdl, s32 *ptrtile, u32 RGBAColor);
+Gfx * sub_GAME_7F0B3024(Gfx *ptrdl, struct StandTilePoint *tile_point, u32 RGBAColor);
 s32 walkTilesBetweenPoints_NoCallback(struct StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z);
 s32 sub_GAME_7F0B0518(struct StandTile *tile, f32 p_x, f32 p_z);
 f32 stanGetPositionYValue(struct StandTile* tile, f32 p_x, f32 p_z);

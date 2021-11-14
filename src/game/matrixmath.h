@@ -28,6 +28,10 @@ f32 matrix_3x3_determinant(f32 a, f32 d, f32 g, f32 b, f32 e, f32 h, f32 c, f32 
 f32 matrix_2x2_determinant(f32 a, f32 c, f32 b, f32 d);
 
 void matrix_4x4_7F058C4C(f32 arg0);
+void matrix_4x4_copy(Mtxf *src, Mtxf *dst);
+s32 matrix_4x4_multiply_homogeneous(Mtxf *lhs, Mtxf *rhs, Mtxf *result);
+
+void sub_GAME_7F058C9C(Mtxf *a, Mtxf *b);
 
 /* matrixmath_misc.h */
 

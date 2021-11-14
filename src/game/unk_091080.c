@@ -455,7 +455,7 @@ void handle_debug_intropos(void)
 {
     float __x;
     
-    get_BONDdata_position();
+    bondviewGetCurrentPlayersPosition();
     __x = 6.2831855f -  get_curplay_horizontal_rotation_in_degrees();
     cosf(__x);
     sinf(__x);
@@ -472,7 +472,7 @@ glabel D_80055860
 glabel sub_GAME_7F091618
 /* 0C6148 7F091618 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0C614C 7F09161C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C6150 7F091620 0FC227F5 */  jal   get_BONDdata_position
+/* 0C6150 7F091620 0FC227F5 */  jal   bondviewGetCurrentPlayersPosition
 /* 0C6154 7F091624 00000000 */   nop   
 /* 0C6158 7F091628 0FC227B9 */  jal   get_curplay_horizontal_rotation_in_degrees
 /* 0C615C 7F09162C 00000000 */   nop   
@@ -518,7 +518,7 @@ void sub_GAME_7F0916F4(void)
 {
     struct coord3d *pos;
     
-    pos = get_BONDdata_position();
+    pos = bondviewGetCurrentPlayersPosition();
     stanbondx.x = pos->x;
     stanbondx.y = pos->y;
     stanbondx.z = pos->z;
@@ -531,7 +531,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0916F4
 /* 0C6224 7F0916F4 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0C6228 7F0916F8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0C622C 7F0916FC 0FC227F5 */  jal   get_BONDdata_position
+/* 0C622C 7F0916FC 0FC227F5 */  jal   bondviewGetCurrentPlayersPosition
 /* 0C6230 7F091700 00000000 */   nop   
 /* 0C6234 7F091704 C4440000 */  lwc1  $f4, ($v0)
 /* 0C6238 7F091708 3C038003 */  lui   $v1, %hi(stanbondx)

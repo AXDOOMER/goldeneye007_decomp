@@ -498,7 +498,7 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                 bossSetLoadedStage(0x5A);
                 break;
             case 7: // bond die
-                kill_current_player();
+                bondviewKillCurrentPlayer();
                 break;
             case 29: // pr room loads
                 debug_prroomloads_flag ^= 1;
@@ -1131,7 +1131,7 @@ debug_playtitle:
 /* 0C5598 7F090A68 10000103 */  b     .L7F090E78
 /* 0C559C 7F090A6C 8FB80018 */   lw    $t8, 0x18($sp)
 debug_bonddie:
-/* 0C55A0 7F090A70 0FC225EA */  jal   kill_current_player
+/* 0C55A0 7F090A70 0FC225EA */  jal   bondviewKillCurrentPlayer
 /* 0C55A4 7F090A74 00000000 */   nop   
 /* 0C55A8 7F090A78 100000FF */  b     .L7F090E78
 /* 0C55AC 7F090A7C 8FB80018 */   lw    $t8, 0x18($sp)

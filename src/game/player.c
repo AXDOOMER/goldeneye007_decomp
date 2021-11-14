@@ -101,7 +101,7 @@ f32 sub_GAME_7F0938FC(void *arg0, void *arg1, void *arg2) {
     f32 phi_return;
 
     // Node 0
-    temp_s1 = get_BONDdata_position();
+    temp_s1 = bondviewGetCurrentPlayersPosition();
     temp_f12 = ((arg0->unk4 + arg0->unk4) / sqrtf((((arg0->unk8 * arg0->unk8) + (*arg0 * *arg0)) + D_80057520), *arg0));
     phi_f12 = temp_f12;
     if (1.0f < temp_f12)
@@ -162,7 +162,7 @@ glabel sub_GAME_7F0938FC
 /* 0C8438 7F093908 00808025 */  move  $s0, $a0
 /* 0C843C 7F09390C AFB10018 */  sw    $s1, 0x18($sp)
 /* 0C8440 7F093910 AFA5003C */  sw    $a1, 0x3c($sp)
-/* 0C8444 7F093914 0FC227F5 */  jal   get_BONDdata_position
+/* 0C8444 7F093914 0FC227F5 */  jal   bondviewGetCurrentPlayersPosition
 /* 0C8448 7F093918 AFA60040 */   sw    $a2, 0x40($sp)
 /* 0C844C 7F09391C C6000008 */  lwc1  $f0, 8($s0)
 /* 0C8450 7F093920 C60E0000 */  lwc1  $f14, ($s0)
@@ -276,7 +276,7 @@ f32 sub_GAME_7F093A78(void *arg0, void *arg1, void *arg2) {
     f32 phi_return;
 
     // Node 0
-    temp_s1 = get_BONDdata_position();
+    temp_s1 = bondviewGetCurrentPlayersPosition();
     temp_f2_2 = ((-2.0f * arg0->unk4) / sqrtf((((arg0->unk8 * arg0->unk8) + (*arg0 * *arg0)) + D_8005752C), *arg0));
     phi_f2 = temp_f2_2;
     if (1.0f < temp_f2_2)
@@ -337,7 +337,7 @@ glabel sub_GAME_7F093A78
 /* 0C85B4 7F093A84 00808025 */  move  $s0, $a0
 /* 0C85B8 7F093A88 AFB10018 */  sw    $s1, 0x18($sp)
 /* 0C85BC 7F093A8C AFA5003C */  sw    $a1, 0x3c($sp)
-/* 0C85C0 7F093A90 0FC227F5 */  jal   get_BONDdata_position
+/* 0C85C0 7F093A90 0FC227F5 */  jal   bondviewGetCurrentPlayersPosition
 /* 0C85C4 7F093A94 AFA60040 */   sw    $a2, 0x40($sp)
 /* 0C85C8 7F093A98 C6000008 */  lwc1  $f0, 8($s0)
 /* 0C85CC 7F093A9C C60E0000 */  lwc1  $f14, ($s0)

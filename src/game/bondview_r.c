@@ -4,6 +4,7 @@
 #include "boss.h"
 #include "game/math_atan2f.h"
 #include "game/bondview_r.h"
+#include "game/bondview.h"
 
 
 // data
@@ -691,7 +692,7 @@ def_7F005A74:
 /* 03AB78 7F006048 AC40FFFC */  sw    $zero, -4($v0)
 /* 03AB7C 7F00604C 1443FFFB */  bne   $v0, $v1, .L7F00603C
 /* 03AB80 7F006050 AC40FFF0 */   sw    $zero, -0x10($v0)
-/* 03AB84 7F006054 0FC228CC */  jal   reset_intro_camera_message_dialogs_for_BONDdata
+/* 03AB84 7F006054 0FC228CC */  jal   bondviewResetIntroCameraMessageDialogs
 /* 03AB88 7F006058 00000000 */   nop   
 /* 03AB8C 7F00605C 0FC22A40 */  jal   sub_GAME_7F08A900
 /* 03AB90 7F006060 00000000 */   nop   
@@ -1403,7 +1404,7 @@ def_7F005A74:
 /* 03ABB0 7F006040 AC40FFFC */  sw    $zero, -4($v0)
 /* 03ABB4 7F006044 1443FFFB */  bne   $v0, $v1, .L7F006034
 /* 03ABB8 7F006048 AC40FFF0 */   sw    $zero, -0x10($v0)
-/* 03ABBC 7F00604C 0FC22A9A */  jal   reset_intro_camera_message_dialogs_for_BONDdata
+/* 03ABBC 7F00604C 0FC22A9A */  jal   bondviewResetIntroCameraMessageDialogs
 /* 03ABC0 7F006050 00000000 */   nop   
 /* 03ABC4 7F006054 0FC22C37 */  jal   sub_GAME_7F08A900
 /* 03ABC8 7F006058 00000000 */   nop   
@@ -2117,7 +2118,7 @@ def_7F005A74:
 /* 03ABB0 7F006040 AC40FFFC */  sw    $zero, -4($v0)
 /* 03ABB4 7F006044 1443FFFB */  bne   $v0, $v1, .L7F006034
 /* 03ABB8 7F006048 AC40FFF0 */   sw    $zero, -0x10($v0)
-/* 03ABBC 7F00604C 0FC22A9A */  jal   reset_intro_camera_message_dialogs_for_BONDdata
+/* 03ABBC 7F00604C 0FC22A9A */  jal   bondviewResetIntroCameraMessageDialogs
 /* 03ABC0 7F006050 00000000 */   nop   
 /* 03ABC4 7F006054 0FC22C37 */  jal   sub_GAME_7F08A900
 /* 03ABC8 7F006058 00000000 */   nop   

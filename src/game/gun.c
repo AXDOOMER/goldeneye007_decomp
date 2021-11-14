@@ -3111,7 +3111,7 @@ glabel sub_GAME_7F05EC1C
 /* 093780 7F05EC50 00000000 */   nop
 /* 093784 7F05EC54 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
 /* 093788 7F05EC58 00408025 */  move  $s0, $v0
-/* 09378C 7F05EC5C 0FC225DE */  jal   sub_GAME_7F089778
+/* 09378C 7F05EC5C 0FC225DE */  jal   bondviewGetPlayerClippingHeight
 /* 093790 7F05EC60 8C84A0B0 */   lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 093794 7F05EC64 AFA000B0 */  sw    $zero, 0xb0($sp)
 /* 093798 7F05EC68 C60C000C */  lwc1  $f12, 0xc($s0)
@@ -3132,7 +3132,7 @@ glabel sub_GAME_7F05EC1C
 /* 0937CC 7F05EC9C 8E0E0014 */  lw    $t6, 0x14($s0)
 /* 0937D0 7F05ECA0 E7B000B4 */  swc1  $f16, 0xb4($sp)
 /* 0937D4 7F05ECA4 E7AE00B8 */  swc1  $f14, 0xb8($sp)
-/* 0937D8 7F05ECA8 0FC2280F */  jal   sub_GAME_7F08A03C
+/* 0937D8 7F05ECA8 0FC2280F */  jal   bondviewUpdateGuardTankFlagsRelated
 /* 0937DC 7F05ECAC AFAE00C4 */   sw    $t6, 0xc4($sp)
 /* 0937E0 7F05ECB0 C6240008 */  lwc1  $f4, 8($s1)
 /* 0937E4 7F05ECB4 8E050008 */  lw    $a1, 8($s0)
@@ -3173,7 +3173,7 @@ glabel sub_GAME_7F05EC1C
 /* 09386C 7F05ED3C AFB900B0 */  sw    $t9, 0xb0($sp)
 /* 093870 7F05ED40 E7AA00D0 */  swc1  $f10, 0xd0($sp)
 .L7F05ED44:
-/* 093874 7F05ED44 0FC2280F */  jal   sub_GAME_7F08A03C
+/* 093874 7F05ED44 0FC2280F */  jal   bondviewUpdateGuardTankFlagsRelated
 /* 093878 7F05ED48 24050001 */   li    $a1, 1
 /* 09387C 7F05ED4C 8FA800E4 */  lw    $t0, 0xe4($sp)
 /* 093880 7F05ED50 8FA900E8 */  lw    $t1, 0xe8($sp)
@@ -3206,11 +3206,11 @@ glabel sub_GAME_7F05EC1C
 /* 0938EC 7F05EDBC C6260008 */  lwc1  $f6, 8($s1)
 /* 0938F0 7F05EDC0 E72600DC */  swc1  $f6, 0xdc($t9)
 .L7F05EDC4:
-/* 0938F4 7F05EDC4 0FC227E6 */  jal   get_cur_players_room
+/* 0938F4 7F05EDC4 0FC227E6 */  jal   bondviewGetCurrentPlayersRoom
 /* 0938F8 7F05EDC8 00000000 */   nop
 /* 0938FC 7F05EDCC 240800FF */  li    $t0, 255
 /* 093900 7F05EDD0 A3A200A8 */  sb    $v0, 0xa8($sp)
-/* 093904 7F05EDD4 0FC22800 */  jal   get_BONDdata_position3
+/* 093904 7F05EDD4 0FC22800 */  jal   bondviewGetCurrentPlayersPosition3
 /* 093908 7F05EDD8 A3A800A9 */   sb    $t0, 0xa9($sp)
 /* 09390C 7F05EDDC 8E47006C */  lw    $a3, 0x6c($s2)
 /* 093910 7F05EDE0 27A90054 */  addiu $t1, $sp, 0x54
@@ -6366,7 +6366,7 @@ weapon_bullet_type_shotgun_mine:
 /* 096320 7F0617F0 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
 /* 096324 7F0617F4 53200046 */  beql  $t9, $zero, .L7F061910
 /* 096328 7F0617F8 8FBF0034 */   lw    $ra, 0x34($sp)
-/* 09632C 7F0617FC 0FC225DE */  jal   sub_GAME_7F089778
+/* 09632C 7F0617FC 0FC225DE */  jal   bondviewGetPlayerClippingHeight
 /* 096330 7F061800 8C84A0B0 */   lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 096334 7F061804 44050000 */  mfc1  $a1, $f0
 /* 096338 7F061808 0FC1A142 */  jal   sub_GAME_7F068508
@@ -8152,7 +8152,7 @@ weapon_bullet_type_shotgun_mine:
 /* 09688C 7F061D1C 3C048008 */  lui   $a0, %hi(g_CurrentPlayer) # $a0, 0x8008
 /* 096890 7F061D20 53000046 */  beql  $t8, $zero, .Ljp7F061E3C
 /* 096894 7F061D24 8FBF0034 */   lw    $ra, 0x34($sp)
-/* 096898 7F061D28 0FC22793 */  jal   sub_GAME_7F089778
+/* 096898 7F061D28 0FC22793 */  jal   bondviewGetPlayerClippingHeight
 /* 09689C 7F061D2C 8C84A120 */   lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 0968A0 7F061D30 44050000 */  mfc1  $a1, $f0
 /* 0968A4 7F061D34 0FC1A2B8 */  jal   sub_GAME_7F068508
@@ -9940,7 +9940,7 @@ weapon_bullet_type_shotgun_mine:
 /* 0946A4 7F061CB4 3C048007 */  lui   $a0, %hi(g_CurrentPlayer) # $a0, 0x8007
 /* 0946A8 7F061CB8 51E00046 */  beql  $t7, $zero, .L7F061DD4
 /* 0946AC 7F061CBC 8FBF0034 */   lw    $ra, 0x34($sp)
-/* 0946B0 7F061CC0 0FC22638 */  jal   sub_GAME_7F089778
+/* 0946B0 7F061CC0 0FC22638 */  jal   bondviewGetPlayerClippingHeight
 /* 0946B4 7F061CC4 8C848BC0 */   lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 0946B8 7F061CC8 44050000 */  mfc1  $a1, $f0
 /* 0946BC 7F061CCC 0FC1A31A */  jal   sub_GAME_7F068508
@@ -10461,7 +10461,7 @@ glabel sub_GAME_7F061E18
 /* 09698C 7F061E5C 8DD9000C */  lw    $t9, 0xc($t6)
 /* 096990 7F061E60 8DC10008 */  lw    $at, 8($t6)
 /* 096994 7F061E64 AD39000C */  sw    $t9, 0xc($t1)
-/* 096998 7F061E68 0FC227F5 */  jal   get_BONDdata_position
+/* 096998 7F061E68 0FC227F5 */  jal   bondviewGetCurrentPlayersPosition
 /* 09699C 7F061E6C AD210008 */   sw    $at, 8($t1)
 /* 0969A0 7F061E70 AFA200F8 */  sw    $v0, 0xf8($sp)
 /* 0969A4 7F061E74 3C0D8003 */  lui   $t5, %hi(D_80035CA8)

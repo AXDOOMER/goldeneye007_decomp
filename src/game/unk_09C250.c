@@ -2350,7 +2350,7 @@ glabel sub_GAME_7F09D82C
 /* 0D23A0 7F09D870 ADC8000C */  sw    $t0, 0xc($t6)
 /* 0D23A4 7F09D874 0FC1E111 */  jal   currentPlayerGetMatrix10D4
 /* 0D23A8 7F09D878 ADC10008 */   sw    $at, 8($t6)
-/* 0D23AC 7F09D87C 0FC227F5 */  jal   get_BONDdata_position
+/* 0D23AC 7F09D87C 0FC227F5 */  jal   bondviewGetCurrentPlayersPosition
 /* 0D23B0 7F09D880 AFA2009C */   sw    $v0, 0x9c($sp)
 /* 0D23B4 7F09D884 C6040000 */  lwc1  $f4, ($s0)
 /* 0D23B8 7F09D888 C4460000 */  lwc1  $f6, ($v0)
@@ -2730,7 +2730,7 @@ glabel sub_GAME_7F09DDA4
 /* 0D292C 7F09DDFC ADC8000C */  sw    $t0, 0xc($t6)
 /* 0D2930 7F09DE00 0FC1E111 */  jal   currentPlayerGetMatrix10D4
 /* 0D2934 7F09DE04 ADC10008 */   sw    $at, 8($t6)
-/* 0D2938 7F09DE08 0FC227F5 */  jal   get_BONDdata_position
+/* 0D2938 7F09DE08 0FC227F5 */  jal   bondviewGetCurrentPlayersPosition
 /* 0D293C 7F09DE0C AFA200BC */   sw    $v0, 0xbc($sp)
 /* 0D2940 7F09DE10 AFA20070 */  sw    $v0, 0x70($sp)
 /* 0D2944 7F09DE14 86490006 */  lh    $t1, 6($s2)

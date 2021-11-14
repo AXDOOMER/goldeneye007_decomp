@@ -370,9 +370,9 @@ s32 sub_GAME_7F0BC85C(s32 index)
     mtx[1][1] = room_data_float2;
     mtx[2][2] = room_data_float2;
     room = &ptr_bgdata_room_fileposition_list[index];
-    mtx[3][0] = (room->pos).x * room_data_float2 - g_CurrentPlayer->current_model_pos.x;
-    mtx[3][1] = (room->pos).y * room_data_float2 - g_CurrentPlayer->current_model_pos.y;
-    mtx[3][2] = (room->pos).z * room_data_float2 - g_CurrentPlayer->current_model_pos.z;
+    mtx[3][0] = (room->pos).x * room_data_float2 - g_CurrentPlayer->current_model_pos.f[0];
+    mtx[3][1] = (room->pos).y * room_data_float2 - g_CurrentPlayer->current_model_pos.f[1];
+    mtx[3][2] = (room->pos).z * room_data_float2 - g_CurrentPlayer->current_model_pos.f[2];
     sub_GAME_7F058C9C(mtx,dword_CODE_bss_80083DB0[iVar2]);
   }
   else {

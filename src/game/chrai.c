@@ -1,12 +1,13 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "boss.h"
-#include "game/chr.h"
-#include "game/chrai.h"
 #include "snd.h"
 #include "music.h"
-#include "game/lvl_text.h"
 #include "structs.h"
+#include "game/bondview.h"
+#include "game/chr.h"
+#include "game/chrai.h"
+#include "game/lvl_text.h"
 #include "game/math_floor.h"
 #include "game/math_ceil.h"
 #include "game/math_atan2f.h"
@@ -5461,7 +5462,7 @@ action7F_If_Health_Below_Value_RVL_3:
 /* 06C500 7F0379D0 44819000 */  mtc1  $at, $f18
 /* 06C504 7F0379D4 00000000 */  nop   
 /* 06C508 7F0379D8 46124183 */  div.s $f6, $f8, $f18
-/* 06C50C 7F0379DC 0FC228BB */  jal   get_BONDdata_watch_health
+/* 06C50C 7F0379DC 0FC228BB */  jal   bondviewGetCurrentPlayerHealth
 /* 06C510 7F0379E0 E7A60418 */   swc1  $f6, 0x418($sp)
 /* 06C514 7F0379E4 C7B00418 */  lwc1  $f16, 0x418($sp)
 /* 06C518 7F0379E8 02C02025 */  move  $a0, $s6
@@ -5493,7 +5494,7 @@ action80_If_Health_Above_Value_RVL_3:
 /* 06C574 7F037A44 44819000 */  mtc1  $at, $f18
 /* 06C578 7F037A48 00000000 */  nop   
 /* 06C57C 7F037A4C 46125183 */  div.s $f6, $f10, $f18
-/* 06C580 7F037A50 0FC228BB */  jal   get_BONDdata_watch_health
+/* 06C580 7F037A50 0FC228BB */  jal   bondviewGetCurrentPlayerHealth
 /* 06C584 7F037A54 E7A60410 */   swc1  $f6, 0x410($sp)
 /* 06C588 7F037A58 C7B00410 */  lwc1  $f16, 0x410($sp)
 /* 06C58C 7F037A5C 02C02025 */  move  $a0, $s6
@@ -7512,7 +7513,7 @@ actionD7_Disable_Text_Variable_2:
 /* 06E228 7F0396F8 30AF0002 */  andi  $t7, $a1, 2
 /* 06E22C 7F0396FC 55E00005 */  bnezl $t7, .L7F039714
 /* 06E230 7F039700 30AA0001 */   andi  $t2, $a1, 1
-/* 06E234 7F039704 0FC228E7 */  jal   set_flags_in_BONDdata_stationary_intro_cam
+/* 06E234 7F039704 0FC228E7 */  jal   bondviewSetIntroCameraFlags
 /* 06E238 7F039708 24040002 */   li    $a0, 2
 /* 06E23C 7F03970C 92250001 */  lbu   $a1, 1($s1)
 /* 06E240 7F039710 30AA0001 */  andi  $t2, $a1, 1
@@ -7541,7 +7542,7 @@ actionD8_Enable_All_On_Screen_Displays_1:
 /* 06E28C 7F03975C 24040002 */  li    $a0, 2
 /* 06E290 7F039760 0FC1A43D */  jal   set_unset_ammo_on_screen_setting
 /* 06E294 7F039764 24050001 */   li    $a1, 1
-/* 06E298 7F039768 0FC228E0 */  jal   unset_flags_in_BONDdata_stationary_intro_cam
+/* 06E298 7F039768 0FC228E0 */  jal   bondviewUnsetIntroCameraFlags
 /* 06E29C 7F03976C 24040002 */   li    $a0, 2
 /* 06E2A0 7F039770 0FC22A4A */  jal   sub_GAME_7F08A928
 /* 06E2A4 7F039774 24040002 */   li    $a0, 2
@@ -11328,7 +11329,7 @@ action7F_If_Health_Below_Value_RVL_3:
 /* 06C500 7F0379D0 44819000 */  mtc1  $at, $f18
 /* 06C504 7F0379D4 00000000 */  nop   
 /* 06C508 7F0379D8 46124183 */  div.s $f6, $f8, $f18
-/* 06C50C 7F0379DC 0FC228BB */  jal   get_BONDdata_watch_health
+/* 06C50C 7F0379DC 0FC228BB */  jal   bondviewGetCurrentPlayerHealth
 /* 06C510 7F0379E0 E7A60418 */   swc1  $f6, 0x418($sp)
 /* 06C514 7F0379E4 C7B00418 */  lwc1  $f16, 0x418($sp)
 /* 06C518 7F0379E8 02C02025 */  move  $a0, $s6
@@ -11360,7 +11361,7 @@ action80_If_Health_Above_Value_RVL_3:
 /* 06C574 7F037A44 44819000 */  mtc1  $at, $f18
 /* 06C578 7F037A48 00000000 */  nop   
 /* 06C57C 7F037A4C 46125183 */  div.s $f6, $f10, $f18
-/* 06C580 7F037A50 0FC228BB */  jal   get_BONDdata_watch_health
+/* 06C580 7F037A50 0FC228BB */  jal   bondviewGetCurrentPlayerHealth
 /* 06C584 7F037A54 E7A60410 */   swc1  $f6, 0x410($sp)
 /* 06C588 7F037A58 C7B00410 */  lwc1  $f16, 0x410($sp)
 /* 06C58C 7F037A5C 02C02025 */  move  $a0, $s6
@@ -13379,7 +13380,7 @@ actionD7_Disable_Text_Variable_2:
 /* 06E228 7F0396F8 30AF0002 */  andi  $t7, $a1, 2
 /* 06E22C 7F0396FC 55E00005 */  bnezl $t7, .L7F039714
 /* 06E230 7F039700 30AA0001 */   andi  $t2, $a1, 1
-/* 06E234 7F039704 0FC228E7 */  jal   set_flags_in_BONDdata_stationary_intro_cam
+/* 06E234 7F039704 0FC228E7 */  jal   bondviewSetIntroCameraFlags
 /* 06E238 7F039708 24040002 */   li    $a0, 2
 /* 06E23C 7F03970C 92250001 */  lbu   $a1, 1($s1)
 /* 06E240 7F039710 30AA0001 */  andi  $t2, $a1, 1
@@ -13408,7 +13409,7 @@ actionD8_Enable_All_On_Screen_Displays_1:
 /* 06E28C 7F03975C 24040002 */  li    $a0, 2
 /* 06E290 7F039760 0FC1A43D */  jal   set_unset_ammo_on_screen_setting
 /* 06E294 7F039764 24050001 */   li    $a1, 1
-/* 06E298 7F039768 0FC228E0 */  jal   unset_flags_in_BONDdata_stationary_intro_cam
+/* 06E298 7F039768 0FC228E0 */  jal   bondviewUnsetIntroCameraFlags
 /* 06E29C 7F03976C 24040002 */   li    $a0, 2
 /* 06E2A0 7F039770 0FC22A4A */  jal   sub_GAME_7F08A928
 /* 06E2A4 7F039774 24040002 */   li    $a0, 2
@@ -17196,7 +17197,7 @@ action7F_If_Health_Below_Value_RVL_3:
 /* 06C500 7F0379D0 44819000 */  mtc1  $at, $f18
 /* 06C504 7F0379D4 00000000 */  nop   
 /* 06C508 7F0379D8 46124183 */  div.s $f6, $f8, $f18
-/* 06C50C 7F0379DC 0FC228BB */  jal   get_BONDdata_watch_health
+/* 06C50C 7F0379DC 0FC228BB */  jal   bondviewGetCurrentPlayerHealth
 /* 06C510 7F0379E0 E7A60418 */   swc1  $f6, 0x418($sp)
 /* 06C514 7F0379E4 C7B00418 */  lwc1  $f16, 0x418($sp)
 /* 06C518 7F0379E8 02C02025 */  move  $a0, $s6
@@ -17228,7 +17229,7 @@ action80_If_Health_Above_Value_RVL_3:
 /* 06C574 7F037A44 44819000 */  mtc1  $at, $f18
 /* 06C578 7F037A48 00000000 */  nop   
 /* 06C57C 7F037A4C 46125183 */  div.s $f6, $f10, $f18
-/* 06C580 7F037A50 0FC228BB */  jal   get_BONDdata_watch_health
+/* 06C580 7F037A50 0FC228BB */  jal   bondviewGetCurrentPlayerHealth
 /* 06C584 7F037A54 E7A60410 */   swc1  $f6, 0x410($sp)
 /* 06C588 7F037A58 C7B00410 */  lwc1  $f16, 0x410($sp)
 /* 06C58C 7F037A5C 02C02025 */  move  $a0, $s6
@@ -19279,7 +19280,7 @@ actionD7_Disable_Text_Variable_2:
 /* 06C1A8 7F0397B8 30AE0002 */  andi  $t6, $a1, 2
 /* 06C1AC 7F0397BC 55C00005 */  bnezl $t6, .L7F0397D4
 /* 06C1B0 7F0397C0 30AF0001 */   andi  $t7, $a1, 1
-/* 06C1B4 7F0397C4 0FC22952 */  jal   set_flags_in_BONDdata_stationary_intro_cam
+/* 06C1B4 7F0397C4 0FC22952 */  jal   bondviewSetIntroCameraFlags
 /* 06C1B8 7F0397C8 24040002 */   li    $a0, 2
 /* 06C1BC 7F0397CC 92250001 */  lbu   $a1, 1($s1)
 /* 06C1C0 7F0397D0 30AF0001 */  andi  $t7, $a1, 1
@@ -19308,7 +19309,7 @@ actionD8_Enable_All_On_Screen_Displays_1:
 /* 06C20C 7F03981C 24040002 */  li    $a0, 2
 /* 06C210 7F039820 0FC1A622 */  jal   set_unset_ammo_on_screen_setting
 /* 06C214 7F039824 24050001 */   li    $a1, 1
-/* 06C218 7F039828 0FC2294B */  jal   unset_flags_in_BONDdata_stationary_intro_cam
+/* 06C218 7F039828 0FC2294B */  jal   bondviewUnsetIntroCameraFlags
 /* 06C21C 7F03982C 24040002 */   li    $a0, 2
 /* 06C220 7F039830 0FC22ADC */  jal   sub_GAME_7F08A928
 /* 06C224 7F039834 24040002 */   li    $a0, 2
@@ -21479,7 +21480,7 @@ glabel sub_GAME_7F03B15C
 /* 06FE0C 7F03B2DC E7A00048 */   swc1  $f0, 0x48($sp)
 /* 06FE10 7F03B2E0 C7A20048 */  lwc1  $f2, 0x48($sp)
 /* 06FE14 7F03B2E4 46020202 */  mul.s $f8, $f0, $f2
-/* 06FE18 7F03B2E8 0FC227F5 */  jal   get_BONDdata_position
+/* 06FE18 7F03B2E8 0FC227F5 */  jal   bondviewGetCurrentPlayersPosition
 /* 06FE1C 7F03B2EC E7A8006C */   swc1  $f8, 0x6c($sp)
 /* 06FE20 7F03B2F0 0FC2C731 */  jal   sub_GAME_7F0B1CC4
 /* 06FE24 7F03B2F4 00408025 */   move  $s0, $v0
@@ -22298,7 +22299,7 @@ glabel sub_GAME_7F03BDEC
 /* 070958 7F03BE28 AFA000BC */   sw    $zero, 0xbc($sp)
 /* 07095C 7F03BE2C 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
 /* 070960 7F03BE30 0040A025 */  move  $s4, $v0
-/* 070964 7F03BE34 0FC225E0 */  jal   sub_GAME_7F089780
+/* 070964 7F03BE34 0FC225E0 */  jal   bondviewGetPlayerDuckingHeightRelated
 /* 070968 7F03BE38 8C84A0B0 */   lw    $a0, %lo(g_CurrentPlayer)($a0)
 /* 07096C 7F03BE3C 3C138007 */  lui   $s3, %hi(dword_CODE_bss_80071DF0)
 /* 070970 7F03BE40 8E731DF0 */  lw    $s3, %lo(dword_CODE_bss_80071DF0)($s3)
@@ -23454,7 +23455,7 @@ glabel sub_GAME_7F03CC20
 .L7F03CC58:
 /* 071788 7F03CC58 14410005 */  bne   $v0, $at, .L7F03CC70
 /* 07178C 7F03CC5C 8FAF0030 */   lw    $t7, 0x30($sp)
-/* 071790 7F03CC60 0FC2282C */  jal   sub_GAME_7F08A0B0
+/* 071790 7F03CC60 0FC2282C */  jal   bondviewGetPropHeightRelatedValues
 /* 071794 7F03CC64 AFAF0010 */   sw    $t7, 0x10($sp)
 /* 071798 7F03CC68 1000000E */  b     .L7F03CCA4
 /* 07179C 7F03CC6C 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -23790,7 +23791,7 @@ glabel sub_GAME_7F03CFE8
 /* 071B54 7F03D024 00027080 */  sll   $t6, $v0, 2
 /* 071B58 7F03D028 3C048008 */  lui   $a0, %hi(g_playerPointers)
 /* 071B5C 7F03D02C 008E2021 */  addu  $a0, $a0, $t6
-/* 071B60 7F03D030 0FC225DE */  jal   sub_GAME_7F089778
+/* 071B60 7F03D030 0FC225DE */  jal   bondviewGetPlayerClippingHeight
 /* 071B64 7F03D034 8C849EE0 */   lw    $a0, %lo(g_playerPointers)($a0)
 /* 071B68 7F03D038 10000004 */  b     .L7F03D04C
 /* 071B6C 7F03D03C 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -23832,7 +23833,7 @@ glabel sub_GAME_7F03D058
 .L7F03D088:
 /* 071BB8 7F03D088 54410006 */  bnel  $v0, $at, .L7F03D0A4
 /* 071BBC 7F03D08C 24010001 */   li    $at, 1
-/* 071BC0 7F03D090 0FC2280F */  jal   sub_GAME_7F08A03C
+/* 071BC0 7F03D090 0FC2280F */  jal   bondviewUpdateGuardTankFlagsRelated
 /* 071BC4 7F03D094 00C02025 */   move  $a0, $a2
 /* 071BC8 7F03D098 1000000B */  b     .L7F03D0C8
 /* 071BCC 7F03D09C 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -24192,11 +24193,11 @@ glabel sub_GAME_7F03D188
 /* 07204C 7F03D51C 8C4A0014 */  lw    $t2, 0x14($v0)
 /* 072050 7F03D520 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
 /* 072054 7F03D524 8C84A0B0 */  lw    $a0, %lo(g_CurrentPlayer)($a0)
-/* 072058 7F03D528 0FC225E0 */  jal   sub_GAME_7F089780
+/* 072058 7F03D528 0FC225E0 */  jal   bondviewGetPlayerDuckingHeightRelated
 /* 07205C 7F03D52C AFAA0050 */   sw    $t2, 0x50($sp)
 /* 072060 7F03D530 8FA40054 */  lw    $a0, 0x54($sp)
 /* 072064 7F03D534 00002825 */  move  $a1, $zero
-/* 072068 7F03D538 0FC2280F */  jal   sub_GAME_7F08A03C
+/* 072068 7F03D538 0FC2280F */  jal   bondviewUpdateGuardTankFlagsRelated
 /* 07206C 7F03D53C E7A0004C */   swc1  $f0, 0x4c($sp)
 /* 072070 7F03D540 8FA20054 */  lw    $v0, 0x54($sp)
 /* 072074 7F03D544 8FA300B0 */  lw    $v1, 0xb0($sp)
@@ -24346,7 +24347,7 @@ glabel sub_GAME_7F03D188
 /* 072298 7F03D768 E7AA0060 */  swc1  $f10, 0x60($sp)
 .L7F03D76C:
 /* 07229C 7F03D76C 8FA40054 */  lw    $a0, 0x54($sp)
-/* 0722A0 7F03D770 0FC2280F */  jal   sub_GAME_7F08A03C
+/* 0722A0 7F03D770 0FC2280F */  jal   bondviewUpdateGuardTankFlagsRelated
 /* 0722A4 7F03D774 24050001 */   li    $a1, 1
 /* 0722A8 7F03D778 8FBF002C */  lw    $ra, 0x2c($sp)
 .L7F03D77C:
