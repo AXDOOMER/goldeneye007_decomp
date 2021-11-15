@@ -2,6 +2,7 @@
 #include "bondtypes.h"
 #include "game/chrai.h"
 #include "game/chrobjdata.h"
+#include "game/loadobjectmodel.h"
 
 #ifdef NONMATCHING
 void sub_GAME_7F056850(void) {

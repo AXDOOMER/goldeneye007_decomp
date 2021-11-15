@@ -307,11 +307,11 @@ void cheatButtonActivateRelated(void)
     
     if (lvlGetCurrentStageToLoad() == LEVELID_TITLE)
     {
-        bitmask = 1;
+        bitmask = CHEAT_MASK_1;
     }
     else
     {
-        bitmask = (getPlayerCount() == 1) ? 2 : 4;
+        bitmask = (getPlayerCount() == 1) ? CHEAT_MASK_2 : CHEAT_MASK_MULTIPLAYER;
     }
 
     for (; info->cheat_id != 0 && not_done == 0; info++)
@@ -338,7 +338,7 @@ void cheatButtonActivateRelated(void)
                 {
                     g_CurrentPlayer->can_display_cheat_text = 0;
 
-                    if ((cheatCheckIfOn((s32) info->cheat_id) == 0) || ((info->maskfield & 0x10) != 0))
+                    if ((cheatCheckIfOn((s32) info->cheat_id) == 0) || ((info->maskfield & CHEAT_MASK_16) != 0))
                     {
                         cheatButtonHandleCheatsTurnedOn(info->cheat_id);
                     }

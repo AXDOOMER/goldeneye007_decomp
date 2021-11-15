@@ -16,6 +16,7 @@
 #include "game/player.h"
 #include "game/player_2.h"
 #include "game/chrobjhandler.h"
+#include "game/cleanup_objects.h"
 #include "game/unk_09C250.h"
 #include "game/chrai.h"
 #include "game/mp_music.h"

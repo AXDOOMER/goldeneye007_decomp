@@ -4,11 +4,19 @@
 
 enum CHEAT_MASK {
     CHEAT_MASK_0 = 0,
+
+    /**
+     * Title screen related.
+     */
     CHEAT_MASK_1 = (1 << 0),
-    
+
+    /**
+     * Maybe single player?
+     */
     CHEAT_MASK_2 = (1 << 1),
 
     CHEAT_MASK_MULTIPLAYER = (1 << 2),
+    
     CHEAT_MASK_8 = (1 << 3),
 
     /**

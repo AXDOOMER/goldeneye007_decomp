@@ -1,9 +1,60 @@
 #include "ultra64.h"
 
+#include "bondtypes.h"
+#include "game/chrai.h"
+#include "game/cleanup_objects.h"
+#include "game/loadobjectmodel.h"
+
 
 #ifdef NONMATCHING
-void cleanupObjects(s32 stage) {
+/**
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: fail
+ * - identical registers: fail
+ * 
+ * notes: something wrong with the comparison to 0x38. Also the first compare to NULL is wrong.
+ */
+void cleanupObjects(s32 stage)
+{
+    object_standard *obj = ptr_setup_objects;
 
+    if (obj != NULL)
+    {
+        for (; obj->type != 0x30;)
+        {
+            switch (obj->type)
+            {
+                case 1:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 10:
+                case 11:
+                case 12:
+                case 13:
+                case 17:
+                case 20:
+                case 21:
+                case 36:
+                case 39:
+                case 40:
+                case 41:
+                case 42:
+                case 43:
+                case 45:
+                case 47:
+                    sub_GAME_7F041024((object_standard *)obj, 1);
+                    break;
+            }
+
+            obj = &(((s32*)obj)[sizepropdef(obj)]);
+        }
+    }
 }
 #else
 GLOBAL_ASM(
