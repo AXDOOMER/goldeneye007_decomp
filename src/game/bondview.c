@@ -11211,7 +11211,7 @@ void sub_GAME_7F07DE9C(struct player *player)
 
     if (player->prop->chr)
     {
-        sub_GAME_7F020D94(player->prop->chr);
+        chrPositionRelated(player->prop->chr);
         return;
     }
 

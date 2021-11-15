@@ -7635,7 +7635,7 @@ actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5:
 /* 06E3F4 7F0398C4 8E04001C */  lw    $a0, 0x1c($s0)
 /* 06E3F8 7F0398C8 0FC1B303 */  jal   setsuboffset
 /* 06E3FC 7F0398CC 27A50124 */   addiu $a1, $sp, 0x124
-/* 06E400 7F0398D0 0FC08365 */  jal   sub_GAME_7F020D94
+/* 06E400 7F0398D0 0FC08365 */  jal   chrPositionRelated
 /* 06E404 7F0398D4 02002025 */   move  $a0, $s0
 /* 06E408 7F0398D8 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
 /* 06E40C 7F0398DC 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
@@ -13502,7 +13502,7 @@ actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5:
 /* 06E3F4 7F0398C4 8E04001C */  lw    $a0, 0x1c($s0)
 /* 06E3F8 7F0398C8 0FC1B303 */  jal   setsuboffset
 /* 06E3FC 7F0398CC 27A50124 */   addiu $a1, $sp, 0x124
-/* 06E400 7F0398D0 0FC08365 */  jal   sub_GAME_7F020D94
+/* 06E400 7F0398D0 0FC08365 */  jal   chrPositionRelated
 /* 06E404 7F0398D4 02002025 */   move  $a0, $s0
 /* 06E408 7F0398D8 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
 /* 06E40C 7F0398DC 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
@@ -19402,7 +19402,7 @@ actionD9_GuardIDMovedToPresetReturnLoopIfSuccessful_5:
 /* 06C374 7F039984 8E04001C */  lw    $a0, 0x1c($s0)
 /* 06C378 7F039988 0FC1B480 */  jal   setsuboffset
 /* 06C37C 7F03998C 27A50124 */   addiu $a1, $sp, 0x124
-/* 06C380 7F039990 0FC08343 */  jal   sub_GAME_7F020D94
+/* 06C380 7F039990 0FC08343 */  jal   chrPositionRelated
 /* 06C384 7F039994 02002025 */   move  $a0, $s0
 /* 06C388 7F039998 3C028007 */  lui   $v0, %hi(g_CurrentPlayer) # $v0, 0x8007
 /* 06C38C 7F03999C 8C428BC0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
@@ -25192,7 +25192,7 @@ glabel sub_GAME_7F03E134
 /* 072C74 7F03E144 00802825 */  move  $a1, $a0
 /* 072C78 7F03E148 54410006 */  bnel  $v0, $at, .L7F03E164
 /* 072C7C 7F03E14C 24010001 */   li    $at, 1
-/* 072C80 7F03E150 0FC08365 */  jal   sub_GAME_7F020D94
+/* 072C80 7F03E150 0FC08365 */  jal   chrPositionRelated
 /* 072C84 7F03E154 8C840004 */   lw    $a0, 4($a0)
 /* 072C88 7F03E158 10000009 */  b     .L7F03E180
 /* 072C8C 7F03E15C 8FBF0014 */   lw    $ra, 0x14($sp)
