@@ -180,7 +180,7 @@ extern struct weapon_firing_animation_table D_80030930;
 
 extern f32 animation_rate;
 extern s32 D_8002C904;
-extern s32 D_8002C908;
+extern s32 g_AnimationTablePointerCountRelated;
 extern s32 D_8002C90C;
 extern s32 D_8002C910;
 
@@ -217,6 +217,7 @@ s32 init_GUARDdata_with_set_values(s32, s32, s32, s32, s32, s32);
 s32 replace_GUARDdata_with_actual_values(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void chrSetHiddenToRandom(struct chrdata *arg0);
 void  chrRemoved7F022E1C(f32 arg0);
+void chrDecrementAnimationTablePointerCount(void);
 
 #ifndef VERSION_US
 s32 not_in_us_7F0209EC(s32 bodynum, s32 headnum);

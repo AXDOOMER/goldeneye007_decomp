@@ -7,6 +7,7 @@
 #include "game/chrai.h"
 #include "game/chrobjhandler.h"
 #include "game/gun.h"
+#include "game/initanitable.h"
 #include "game/lvl.h"
 #include "game/lvl_text.h"
 #include "game/objecthandler.h"
@@ -22,7 +23,11 @@ void chrPositionRelated7F020E40(struct chrdata *chr, s32 arg1);
 // data
 f32 animation_rate = 0;
 s32 D_8002C904 = 0;
-s32 D_8002C908 = 0;
+
+/**
+ * Address 0x8002C908.
+ */
+s32 g_AnimationTablePointerCountRelated = 0;
 s32 D_8002C90C = 0;
 s32 D_8002C910 = 0;
 
@@ -4256,10 +4261,10 @@ glabel sub_GAME_7F020EF0
 /* 055AA8 7F020F78 96180012 */   lhu   $t8, 0x12($s0)
 .L7F020F7C:
 /* 055AAC 7F020F7C 8F18C904 */  lw    $t8, %lo(D_8002C904)($t8)
-/* 055AB0 7F020F80 3C088003 */  lui   $t0, %hi(D_8002C908) 
+/* 055AB0 7F020F80 3C088003 */  lui   $t0, %hi(g_AnimationTablePointerCountRelated) 
 /* 055AB4 7F020F84 1300001E */  beqz  $t8, .L7F021000
 /* 055AB8 7F020F88 00000000 */   nop   
-/* 055ABC 7F020F8C 8D08C908 */  lw    $t0, %lo(D_8002C908)($t0)
+/* 055ABC 7F020F8C 8D08C908 */  lw    $t0, %lo(g_AnimationTablePointerCountRelated)($t0)
 /* 055AC0 7F020F90 3C0E8003 */  lui   $t6, %hi(animation_table_ptrs1)
 /* 055AC4 7F020F94 24010001 */  li    $at, 1
 /* 055AC8 7F020F98 00087880 */  sll   $t7, $t0, 2
@@ -4269,8 +4274,8 @@ glabel sub_GAME_7F020EF0
 /* 055AD8 7F020FA8 00000000 */   nop   
 /* 055ADC 7F020FAC 0FC1BD6B */  jal   sub_GAME_7F06F5AC
 /* 055AE0 7F020FB0 8FA40110 */   lw    $a0, 0x110($sp)
-/* 055AE4 7F020FB4 3C098003 */  lui   $t1, %hi(D_8002C908) 
-/* 055AE8 7F020FB8 8D29C908 */  lw    $t1, %lo(D_8002C908)($t1)
+/* 055AE4 7F020FB4 3C098003 */  lui   $t1, %hi(g_AnimationTablePointerCountRelated) 
+/* 055AE8 7F020FB8 8D29C908 */  lw    $t1, %lo(g_AnimationTablePointerCountRelated)($t1)
 /* 055AEC 7F020FBC 3C058003 */  lui   $a1, %hi(animation_table_ptrs1)
 /* 055AF0 7F020FC0 8FA40110 */  lw    $a0, 0x110($sp)
 /* 055AF4 7F020FC4 00095080 */  sll   $t2, $t1, 2
@@ -5108,10 +5113,10 @@ glabel sub_GAME_7F020EF0
 /* 055D80 7F021210 96180012 */   lhu   $t8, 0x12($s0)
 .Ljp7F021214:
 /* 055D84 7F021214 8F18C944 */  lw    $t8, %lo(D_8002C904)($t8)
-/* 055D88 7F021218 3C088003 */  lui   $t0, %hi(D_8002C908) # $t0, 0x8003
+/* 055D88 7F021218 3C088003 */  lui   $t0, %hi(g_AnimationTablePointerCountRelated) # $t0, 0x8003
 /* 055D8C 7F02121C 1300001E */  beqz  $t8, .Ljp7F021298
 /* 055D90 7F021220 00000000 */   nop   
-/* 055D94 7F021224 8D08C948 */  lw    $t0, %lo(D_8002C908)($t0)
+/* 055D94 7F021224 8D08C948 */  lw    $t0, %lo(g_AnimationTablePointerCountRelated)($t0)
 /* 055D98 7F021228 3C0E8003 */  lui   $t6, %hi(animation_table_ptrs1)
 /* 055D9C 7F02122C 24010001 */  li    $at, 1
 /* 055DA0 7F021230 00087880 */  sll   $t7, $t0, 2
@@ -5121,8 +5126,8 @@ glabel sub_GAME_7F020EF0
 /* 055DB0 7F021240 00000000 */   nop   
 /* 055DB4 7F021244 0FC1BEE7 */  jal   sub_GAME_7F06F5AC
 /* 055DB8 7F021248 8FA40110 */   lw    $a0, 0x110($sp)
-/* 055DBC 7F02124C 3C098003 */  lui   $t1, %hi(D_8002C908) # $t1, 0x8003
-/* 055DC0 7F021250 8D29C948 */  lw    $t1, %lo(D_8002C908)($t1)
+/* 055DBC 7F02124C 3C098003 */  lui   $t1, %hi(g_AnimationTablePointerCountRelated) # $t1, 0x8003
+/* 055DC0 7F021250 8D29C948 */  lw    $t1, %lo(g_AnimationTablePointerCountRelated)($t1)
 /* 055DC4 7F021254 3C058003 */  lui   $a1, %hi(animation_table_ptrs1)
 /* 055DC8 7F021258 8FA40110 */  lw    $a0, 0x110($sp)
 /* 055DCC 7F02125C 00095080 */  sll   $t2, $t1, 2
@@ -7367,7 +7372,7 @@ glabel sub_GAME_7F022980
  * 
  * Address 0x7F022E1C.
  */
-void  chrRemoved7F022E1C(f32 arg0)
+void chrRemoved7F022E1C(f32 arg0)
 {
     // removed
 }
@@ -7381,42 +7386,28 @@ void sub_GAME_7F022E24(s32 param_1){
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F022E30(void) {
+/**
+ * Decrements g_AnimationTablePointerCountRelated.
+ * If less than zero, the variable will then be set to the
+ * number of non-zero entries in animation_table_ptrs1.
+ * 
+ * Address 0x7F022E30.
+ */
+void chrDecrementAnimationTablePointerCount(void)
+{
+    g_AnimationTablePointerCountRelated--;
 
+    if (g_AnimationTablePointerCountRelated < 0)
+    {
+        for (
+            g_AnimationTablePointerCountRelated = 0;
+            animation_table_ptrs1[g_AnimationTablePointerCountRelated+1] != 0;
+            g_AnimationTablePointerCountRelated++)
+        {
+            // nothing to do.
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F022E30
-/* 057960 7F022E30 3C038003 */  lui   $v1, %hi(D_8002C908)
-/* 057964 7F022E34 2463C908 */  addiu $v1, %lo(D_8002C908) # addiu $v1, $v1, -0x36f8
-/* 057968 7F022E38 8C6E0000 */  lw    $t6, ($v1)
-/* 05796C 7F022E3C 3C048003 */  lui   $a0, %hi(animation_table_ptrs1)
-/* 057970 7F022E40 24849D6C */  addiu $a0, %lo(animation_table_ptrs1) # addiu $a0, $a0, -0x6294
-/* 057974 7F022E44 25CFFFFF */  addiu $t7, $t6, -1
-/* 057978 7F022E48 05E1000F */  bgez  $t7, .L7F022E88
-/* 05797C 7F022E4C AC6F0000 */   sw    $t7, ($v1)
-/* 057980 7F022E50 0000C880 */  sll   $t9, $zero, 2
-/* 057984 7F022E54 00994021 */  addu  $t0, $a0, $t9
-/* 057988 7F022E58 8D090004 */  lw    $t1, 4($t0)
-/* 05798C 7F022E5C AC600000 */  sw    $zero, ($v1)
-/* 057990 7F022E60 00001025 */  move  $v0, $zero
-/* 057994 7F022E64 11200008 */  beqz  $t1, .L7F022E88
-/* 057998 7F022E68 244A0001 */   addiu $t2, $v0, 1
-.L7F022E6C:
-/* 05799C 7F022E6C 000A5880 */  sll   $t3, $t2, 2
-/* 0579A0 7F022E70 008B6021 */  addu  $t4, $a0, $t3
-/* 0579A4 7F022E74 8D8D0004 */  lw    $t5, 4($t4)
-/* 0579A8 7F022E78 AC6A0000 */  sw    $t2, ($v1)
-/* 0579AC 7F022E7C 01401025 */  move  $v0, $t2
-/* 0579B0 7F022E80 55A0FFFA */  bnezl $t5, .L7F022E6C
-/* 0579B4 7F022E84 244A0001 */   addiu $t2, $v0, 1
-.L7F022E88:
-/* 0579B8 7F022E88 03E00008 */  jr    $ra
-/* 0579BC 7F022E8C 00000000 */   nop   
-)
-#endif
 
 
 
@@ -7428,8 +7419,8 @@ void sub_GAME_7F022E90(void) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F022E90
-/* 0579C0 7F022E90 3C028003 */  lui   $v0, %hi(D_8002C908)
-/* 0579C4 7F022E94 2442C908 */  addiu $v0, %lo(D_8002C908) # addiu $v0, $v0, -0x36f8
+/* 0579C0 7F022E90 3C028003 */  lui   $v0, %hi(g_AnimationTablePointerCountRelated)
+/* 0579C4 7F022E94 2442C908 */  addiu $v0, %lo(g_AnimationTablePointerCountRelated) # addiu $v0, $v0, -0x36f8
 /* 0579C8 7F022E98 8C4E0000 */  lw    $t6, ($v0)
 /* 0579CC 7F022E9C 3C088003 */  lui   $t0, %hi(animation_table_ptrs1)
 /* 0579D0 7F022EA0 25CF0001 */  addiu $t7, $t6, 1
