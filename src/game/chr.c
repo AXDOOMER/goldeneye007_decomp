@@ -7361,19 +7361,16 @@ glabel sub_GAME_7F022980
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F022E1C(void) {
 
+/**
+ * Removed.
+ * 
+ * Address 0x7F022E1C.
+ */
+void  chrRemoved7F022E1C(f32 arg0)
+{
+    // removed
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F022E1C
-/* 05794C 7F022E1C 03E00008 */  jr    $ra
-/* 057950 7F022E20 E7AC0000 */   swc1  $f12, ($sp)
-)
-#endif
-
 
 
 

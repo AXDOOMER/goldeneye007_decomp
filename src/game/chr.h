@@ -216,6 +216,7 @@ void animation_speed_related(f32);
 s32 init_GUARDdata_with_set_values(s32, s32, s32, s32, s32, s32);
 s32 replace_GUARDdata_with_actual_values(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void chrSetHiddenToRandom(struct chrdata *arg0);
+void  chrRemoved7F022E1C(f32 arg0);
 
 #ifndef VERSION_US
 s32 not_in_us_7F0209EC(s32 bodynum, s32 headnum);
