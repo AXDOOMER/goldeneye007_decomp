@@ -172,5 +172,6 @@ s32 sub_GAME_7F0B0518(struct StandTile *tile, f32 p_x, f32 p_z);
 f32 stanGetPositionYValue(struct StandTile* tile, f32 p_x, f32 p_z);
 s32 getCollisionEdge_maybe(struct float3 *pntA, struct float3 *pntB);
 s32 sub_GAME_7F0B26B8(struct StandTile **tile, f32 target_x, f32 target_z, f32 b_z, f32 param_5);
+s32 sub_GAME_7F0B20D0(struct StandTile** tileStack, f32 target_x, f32 target_z, f32 unknown);
 
 #endif

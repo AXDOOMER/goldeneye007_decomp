@@ -3,6 +3,8 @@
 #include "game/chr.h"
 #include "game/gun.h"
 #include "game/lvl_text.h"
+#include "game/stan.h"
+
 // data
 f32 animation_rate = 0;
 s32 D_8002C904 = 0;
@@ -1090,48 +1092,25 @@ s32 get_show_patrols_flag(void){
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F01F574(void) {
+/**
+ * Unreferenced.
+ * 
+ * Address 0x7F01F574.
+ */
+f32 chrUnusedYPositionRelated(struct prop *arg0)
+{
+    if (arg0->standTile != 0)
+    {
+        if (sub_GAME_7F0B20D0(&arg0->standTile, arg0->position.x, arg0->position.z, 1.0f) < 0)
+        {
+            return stanGetPositionYValue(arg0->standTile, arg0->position.x, arg0->position.z);
+        }
 
+        return 0.0f;
+    }
+
+    return 0.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01F574
-/* 0540A4 7F01F574 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0540A8 7F01F578 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0540AC 7F01F57C AFB00018 */  sw    $s0, 0x18($sp)
-/* 0540B0 7F01F580 8C8E0014 */  lw    $t6, 0x14($a0)
-/* 0540B4 7F01F584 00808025 */  move  $s0, $a0
-/* 0540B8 7F01F588 24840014 */  addiu $a0, $a0, 0x14
-/* 0540BC 7F01F58C 11C0000F */  beqz  $t6, .L7F01F5CC
-/* 0540C0 7F01F590 3C073F80 */   lui   $a3, 0x3f80
-/* 0540C4 7F01F594 8E050008 */  lw    $a1, 8($s0)
-/* 0540C8 7F01F598 0FC2C834 */  jal   sub_GAME_7F0B20D0
-/* 0540CC 7F01F59C 8E060010 */   lw    $a2, 0x10($s0)
-/* 0540D0 7F01F5A0 04430008 */  bgezl $v0, .L7F01F5C4
-/* 0540D4 7F01F5A4 44800000 */   mtc1  $zero, $f0
-/* 0540D8 7F01F5A8 8E040014 */  lw    $a0, 0x14($s0)
-/* 0540DC 7F01F5AC 8E050008 */  lw    $a1, 8($s0)
-/* 0540E0 7F01F5B0 0FC2CA5C */  jal   stanGetPositionYValue
-/* 0540E4 7F01F5B4 8E060010 */   lw    $a2, 0x10($s0)
-/* 0540E8 7F01F5B8 10000007 */  b     .L7F01F5D8
-/* 0540EC 7F01F5BC 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0540F0 7F01F5C0 44800000 */  mtc1  $zero, $f0
-.L7F01F5C4:
-/* 0540F4 7F01F5C4 10000004 */  b     .L7F01F5D8
-/* 0540F8 7F01F5C8 8FBF001C */   lw    $ra, 0x1c($sp)
-.L7F01F5CC:
-/* 0540FC 7F01F5CC 44800000 */  mtc1  $zero, $f0
-/* 054100 7F01F5D0 00000000 */  nop   
-/* 054104 7F01F5D4 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F01F5D8:
-/* 054108 7F01F5D8 8FB00018 */  lw    $s0, 0x18($sp)
-/* 05410C 7F01F5DC 27BD0020 */  addiu $sp, $sp, 0x20
-/* 054110 7F01F5E0 03E00008 */  jr    $ra
-/* 054114 7F01F5E4 00000000 */   nop   
-)
-#endif
 
 
 
