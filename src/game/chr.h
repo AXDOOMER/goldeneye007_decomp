@@ -208,7 +208,7 @@ extern u32 current_random_female_head;
 void sub_GAME_7F022EE0(s32 param_1);
 void sub_GAME_7F022E24(s32 param_1);
 void disable_sounds_attached_to_player_then_something(struct prop* prop);
-void chrPositionRelated(struct chrdata *);
+void chrPositionRelated7F020D94(struct chrdata *);
 void set_or_unset_GUARDdata_flag(struct chrdata *guard,s32 param_2);
 s32 sub_GAME_7F021BFC();
 f32 get_animation_rate(void);

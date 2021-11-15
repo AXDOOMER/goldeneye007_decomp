@@ -21,5 +21,6 @@ void sub_GAME_7F041024(object_standard *, s32);
 
 void chrobjApplySpeed(f32 *distDone, f32 maxDist, f32 *speedPtr, f32 accel, f32 decel, f32 maxSpeed);
 Gfx * sub_GAME_7F049B58(Gfx *arg0);
+void set_color_shading_from_tile(struct prop*, u8 *);
 
 #endif

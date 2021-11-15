@@ -15,6 +15,7 @@
 // forward declarations
 
 void chrAimGlobalTimerTickRelated(struct chrdata *arg0);
+void chrPositionRelated7F020E40(struct chrdata *chr, s32 arg1);
 
 // end forward declarations
 
@@ -2753,7 +2754,7 @@ glabel init_GUARDdata_with_set_values
 /* 054EB0 7F020380 AE080104 */  sw    $t0, 0x104($s0)
 /* 054EB4 7F020384 0FC07F04 */  jal   sub_GAME_7F01FC10
 /* 054EB8 7F020388 E6120028 */   swc1  $f18, 0x28($s0)
-/* 054EBC 7F02038C 0FC08365 */  jal   chrPositionRelated
+/* 054EBC 7F02038C 0FC08365 */  jal   chrPositionRelated7F020D94
 /* 054EC0 7F020390 02002025 */   move  $a0, $s0
 /* 054EC4 7F020394 8FBF002C */  lw    $ra, 0x2c($sp)
 /* 054EC8 7F020398 02201025 */  move  $v0, $s1
@@ -2958,7 +2959,7 @@ glabel init_GUARDdata_with_set_values
 /* 052BE4 7F0201F4 AE080104 */  sw    $t0, 0x104($s0)
 /* 052BE8 7F0201F8 0FC07E9C */  jal   sub_GAME_7F01FC10
 /* 052BEC 7F0201FC E6080028 */   swc1  $f8, 0x28($s0)
-/* 052BF0 7F020200 0FC08343 */  jal   chrPositionRelated
+/* 052BF0 7F020200 0FC08343 */  jal   chrPositionRelated7F020D94
 /* 052BF4 7F020204 02002025 */   move  $a0, $s0
 /* 052BF8 7F020208 8FBF002C */  lw    $ra, 0x2c($sp)
 /* 052BFC 7F02020C 02201025 */  move  $v0, $s1
@@ -4153,7 +4154,7 @@ glabel sub_GAME_7F02083C
 /**
  * Address 0x7F020D94.
  */
-void chrPositionRelated(struct chrdata *arg0)
+void chrPositionRelated7F020D94(struct chrdata *arg0)
 {
     struct prop *temp_a0;
     struct float3 p1;
@@ -4177,62 +4178,32 @@ void chrPositionRelated(struct chrdata *arg0)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F020E40(void) {
+/**
+ * Address 0x7F020E40.
+ */
+void chrPositionRelated7F020E40(struct chrdata *chr, s32 arg1)
+{
+    struct object_standard *model;
+    struct prop* prop;
 
+    model = chr->model;
+    prop = chr->posdata;
+
+    if ((chr->hidden & 0x800) == 0)
+    {
+        getsuboffset(model, &chr->prevpos);
+        sub_GAME_7F070AEC(model, arg1, 1);
+        subcalcpos(model);
+        set_color_shading_from_tile(prop, &chr->nextcol);
+        getsuboffset(model, &prop->position);
+        chrPositionRelated7F020D94(chr);
+
+        return;
+    }
+
+    subcalcpos(model);
+    getsuboffset(model, &prop->position);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F020E40
-/* 055970 7F020E40 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 055974 7F020E44 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 055978 7F020E48 AFB10018 */  sw    $s1, 0x18($sp)
-/* 05597C 7F020E4C AFB00014 */  sw    $s0, 0x14($sp)
-/* 055980 7F020E50 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 055984 7F020E54 8C8E0018 */  lw    $t6, 0x18($a0)
-/* 055988 7F020E58 8C90001C */  lw    $s0, 0x1c($a0)
-/* 05598C 7F020E5C 00808825 */  move  $s1, $a0
-/* 055990 7F020E60 AFAE0020 */  sw    $t6, 0x20($sp)
-/* 055994 7F020E64 948F0012 */  lhu   $t7, 0x12($a0)
-/* 055998 7F020E68 02002025 */  move  $a0, $s0
-/* 05599C 7F020E6C 31F80800 */  andi  $t8, $t7, 0x800
-/* 0559A0 7F020E70 17000014 */  bnez  $t8, .L7F020EC4
-/* 0559A4 7F020E74 00000000 */   nop   
-/* 0559A8 7F020E78 0FC1B2E6 */  jal   getsuboffset
-/* 0559AC 7F020E7C 262500BC */   addiu $a1, $s1, 0xbc
-/* 0559B0 7F020E80 02002025 */  move  $a0, $s0
-/* 0559B4 7F020E84 8FA5002C */  lw    $a1, 0x2c($sp)
-/* 0559B8 7F020E88 0FC1C2BB */  jal   sub_GAME_7F070AEC
-/* 0559BC 7F020E8C 24060001 */   li    $a2, 1
-/* 0559C0 7F020E90 0FC1B5AC */  jal   subcalcpos
-/* 0559C4 7F020E94 02002025 */   move  $a0, $s0
-/* 0559C8 7F020E98 8FA40020 */  lw    $a0, 0x20($sp)
-/* 0559CC 7F020E9C 0FC10027 */  jal   set_color_shading_from_tile
-/* 0559D0 7F020EA0 262500F8 */   addiu $a1, $s1, 0xf8
-/* 0559D4 7F020EA4 8FA50020 */  lw    $a1, 0x20($sp)
-/* 0559D8 7F020EA8 02002025 */  move  $a0, $s0
-/* 0559DC 7F020EAC 0FC1B2E6 */  jal   getsuboffset
-/* 0559E0 7F020EB0 24A50008 */   addiu $a1, $a1, 8
-/* 0559E4 7F020EB4 0FC08365 */  jal   chrPositionRelated
-/* 0559E8 7F020EB8 02202025 */   move  $a0, $s1
-/* 0559EC 7F020EBC 10000008 */  b     .L7F020EE0
-/* 0559F0 7F020EC0 8FBF001C */   lw    $ra, 0x1c($sp)
-.L7F020EC4:
-/* 0559F4 7F020EC4 0FC1B5AC */  jal   subcalcpos
-/* 0559F8 7F020EC8 02002025 */   move  $a0, $s0
-/* 0559FC 7F020ECC 8FA50020 */  lw    $a1, 0x20($sp)
-/* 055A00 7F020ED0 02002025 */  move  $a0, $s0
-/* 055A04 7F020ED4 0FC1B2E6 */  jal   getsuboffset
-/* 055A08 7F020ED8 24A50008 */   addiu $a1, $a1, 8
-/* 055A0C 7F020EDC 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F020EE0:
-/* 055A10 7F020EE0 8FB00014 */  lw    $s0, 0x14($sp)
-/* 055A14 7F020EE4 8FB10018 */  lw    $s1, 0x18($sp)
-/* 055A18 7F020EE8 03E00008 */  jr    $ra
-/* 055A1C 7F020EEC 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
 
 
 
@@ -4416,7 +4387,7 @@ glabel sub_GAME_7F020EF0
 /* 055C90 7F021160 10000003 */  b     .L7F021170
 /* 055C94 7F021164 00000000 */   nop   
 .L7F021168:
-/* 055C98 7F021168 0FC08390 */  jal   sub_GAME_7F020E40
+/* 055C98 7F021168 0FC08390 */  jal   chrPositionRelated7F020E40
 /* 055C9C 7F02116C 8FA50104 */   lw    $a1, 0x104($sp)
 .L7F021170:
 /* 055CA0 7F021170 10000095 */  b     .L7F0213C8
@@ -4465,12 +4436,12 @@ glabel sub_GAME_7F020EF0
 /* 055D3C 7F02120C 8FA40110 */  lw    $a0, 0x110($sp)
 /* 055D40 7F021210 0FC1B2E6 */  jal   getsuboffset
 /* 055D44 7F021214 8FA50030 */   lw    $a1, 0x30($sp)
-/* 055D48 7F021218 0FC08365 */  jal   chrPositionRelated
+/* 055D48 7F021218 0FC08365 */  jal   chrPositionRelated7F020D94
 /* 055D4C 7F02121C 02002025 */   move  $a0, $s0
 /* 055D50 7F021220 10000019 */  b     .L7F021288
 /* 055D54 7F021224 00000000 */   nop   
 .L7F021228:
-/* 055D58 7F021228 0FC08390 */  jal   sub_GAME_7F020E40
+/* 055D58 7F021228 0FC08390 */  jal   chrPositionRelated7F020E40
 /* 055D5C 7F02122C 8FA50104 */   lw    $a1, 0x104($sp)
 /* 055D60 7F021230 0FC1B403 */  jal   getinstsize
 /* 055D64 7F021234 8FA40110 */   lw    $a0, 0x110($sp)
@@ -4518,7 +4489,7 @@ glabel sub_GAME_7F020EF0
 /* 055E00 7F0212D0 02002025 */  move  $a0, $s0
 /* 055E04 7F0212D4 55400006 */  bnezl $t2, .L7F0212F0
 /* 055E08 7F0212D8 8FA40110 */   lw    $a0, 0x110($sp)
-/* 055E0C 7F0212DC 0FC08390 */  jal   sub_GAME_7F020E40
+/* 055E0C 7F0212DC 0FC08390 */  jal   chrPositionRelated7F020E40
 /* 055E10 7F0212E0 8FA50104 */   lw    $a1, 0x104($sp)
 /* 055E14 7F0212E4 10000005 */  b     .L7F0212FC
 /* 055E18 7F0212E8 00000000 */   nop   
@@ -4550,7 +4521,7 @@ glabel sub_GAME_7F020EF0
 /* 055E70 7F021340 11800005 */  beqz  $t4, .L7F021358
 .L7F021344:
 /* 055E74 7F021344 02002025 */   move  $a0, $s0
-/* 055E78 7F021348 0FC08390 */  jal   sub_GAME_7F020E40
+/* 055E78 7F021348 0FC08390 */  jal   chrPositionRelated7F020E40
 /* 055E7C 7F02134C 8FA50104 */   lw    $a1, 0x104($sp)
 /* 055E80 7F021350 10000008 */  b     .L7F021374
 /* 055E84 7F021354 00000000 */   nop   
@@ -4575,7 +4546,7 @@ glabel sub_GAME_7F020EF0
 /* 055EC4 7F021394 10000003 */  b     .L7F0213A4
 /* 055EC8 7F021398 00000000 */   nop   
 .L7F02139C:
-/* 055ECC 7F02139C 0FC08390 */  jal   sub_GAME_7F020E40
+/* 055ECC 7F02139C 0FC08390 */  jal   chrPositionRelated7F020E40
 /* 055ED0 7F0213A0 8FA50104 */   lw    $a1, 0x104($sp)
 .L7F0213A4:
 /* 055ED4 7F0213A4 0FC1B403 */  jal   getinstsize
@@ -5268,7 +5239,7 @@ glabel sub_GAME_7F020EF0
 /* 055F68 7F0213F8 10000003 */  b     .Ljp7F021408
 /* 055F6C 7F0213FC 00000000 */   nop   
 .Ljp7F021400:
-/* 055F70 7F021400 0FC08436 */  jal   sub_GAME_7F020E40
+/* 055F70 7F021400 0FC08436 */  jal   chrPositionRelated7F020E40
 /* 055F74 7F021404 8FA50104 */   lw    $a1, 0x104($sp)
 .Ljp7F021408:
 /* 055F78 7F021408 10000095 */  b     .Ljp7F021660
@@ -5317,12 +5288,12 @@ glabel sub_GAME_7F020EF0
 /* 056014 7F0214A4 8FA40110 */  lw    $a0, 0x110($sp)
 /* 056018 7F0214A8 0FC1B462 */  jal   getsuboffset
 /* 05601C 7F0214AC 8FA50030 */   lw    $a1, 0x30($sp)
-/* 056020 7F0214B0 0FC0840B */  jal   chrPositionRelated
+/* 056020 7F0214B0 0FC0840B */  jal   chrPositionRelated7F020D94
 /* 056024 7F0214B4 02002025 */   move  $a0, $s0
 /* 056028 7F0214B8 10000019 */  b     .Ljp7F021520
 /* 05602C 7F0214BC 00000000 */   nop   
 .Ljp7F0214C0:
-/* 056030 7F0214C0 0FC08436 */  jal   sub_GAME_7F020E40
+/* 056030 7F0214C0 0FC08436 */  jal   chrPositionRelated7F020E40
 /* 056034 7F0214C4 8FA50104 */   lw    $a1, 0x104($sp)
 /* 056038 7F0214C8 0FC1B57F */  jal   getinstsize
 /* 05603C 7F0214CC 8FA40110 */   lw    $a0, 0x110($sp)
@@ -5370,7 +5341,7 @@ glabel sub_GAME_7F020EF0
 /* 0560D8 7F021568 02002025 */  move  $a0, $s0
 /* 0560DC 7F02156C 55400006 */  bnezl $t2, .Ljp7F021588
 /* 0560E0 7F021570 8FA40110 */   lw    $a0, 0x110($sp)
-/* 0560E4 7F021574 0FC08436 */  jal   sub_GAME_7F020E40
+/* 0560E4 7F021574 0FC08436 */  jal   chrPositionRelated7F020E40
 /* 0560E8 7F021578 8FA50104 */   lw    $a1, 0x104($sp)
 /* 0560EC 7F02157C 10000005 */  b     .Ljp7F021594
 /* 0560F0 7F021580 00000000 */   nop   
@@ -5402,7 +5373,7 @@ glabel sub_GAME_7F020EF0
 /* 056148 7F0215D8 11800005 */  beqz  $t4, .Ljp7F0215F0
 .Ljp7F0215DC:
 /* 05614C 7F0215DC 02002025 */   move  $a0, $s0
-/* 056150 7F0215E0 0FC08436 */  jal   sub_GAME_7F020E40
+/* 056150 7F0215E0 0FC08436 */  jal   chrPositionRelated7F020E40
 /* 056154 7F0215E4 8FA50104 */   lw    $a1, 0x104($sp)
 /* 056158 7F0215E8 10000008 */  b     .Ljp7F02160C
 /* 05615C 7F0215EC 00000000 */   nop   
@@ -5427,7 +5398,7 @@ glabel sub_GAME_7F020EF0
 /* 05619C 7F02162C 10000003 */  b     .Ljp7F02163C
 /* 0561A0 7F021630 00000000 */   nop   
 .Ljp7F021634:
-/* 0561A4 7F021634 0FC08436 */  jal   sub_GAME_7F020E40
+/* 0561A4 7F021634 0FC08436 */  jal   chrPositionRelated7F020E40
 /* 0561A8 7F021638 8FA50104 */   lw    $a1, 0x104($sp)
 .Ljp7F02163C:
 /* 0561AC 7F02163C 0FC1B57F */  jal   getinstsize
