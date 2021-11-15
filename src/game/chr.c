@@ -60,7 +60,8 @@ s32 D_8002CCA8 = 0;
 s32 D_8002CCAC = 0;
 s32 D_8002CCB0 = 0;
 s32 D_8002CCB4 = 0;
-u8 D_8002CCB8 = 0x5A;
+
+u8 D_8002CCB8[4] = { 0x5a, 0, 0, 0};
 
 u32 D_8002CCBC = 0;
 u32 D_8002CCC0[] = {1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -6021,31 +6022,29 @@ glabel sub_GAME_7F021B20
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F021BB4(void) {
-
+/**
+ * Unreferenced.
+ * 
+ * Sets D_8002CCB8 3 bytes from paramter.
+ * 
+ * @param arg0: u8[3].
+ * 
+ * Address 0x7F021BB4.
+ */
+void chrSetD_8002CCB8(u8 *arg0)
+{
+    D_8002CCB8[0] = arg0[0];
+    D_8002CCB8[1] = arg0[1];
+    D_8002CCB8[2] = arg0[2];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F021BB4
-/* 0566E4 7F021BB4 908E0000 */  lbu   $t6, ($a0)
-/* 0566E8 7F021BB8 3C028003 */  lui   $v0, %hi(D_8002CCB8)
-/* 0566EC 7F021BBC 2442CCB8 */  addiu $v0, %lo(D_8002CCB8) # addiu $v0, $v0, -0x3348
-/* 0566F0 7F021BC0 A04E0000 */  sb    $t6, ($v0)
-/* 0566F4 7F021BC4 908F0001 */  lbu   $t7, 1($a0)
-/* 0566F8 7F021BC8 A04F0001 */  sb    $t7, 1($v0)
-/* 0566FC 7F021BCC 90980002 */  lbu   $t8, 2($a0)
-/* 056700 7F021BD0 03E00008 */  jr    $ra
-/* 056704 7F021BD4 A0580002 */   sb    $t8, 2($v0)
-)
-#endif
-
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F021BD8(void) {
-
+void sub_GAME_7F021BD8(void *arg0)
+{
+    arg0->unk0 = (u8) D_8002CCB8.unk0;
+    arg0->unk1 = (u8) D_8002CCB8.unk1;
+    arg0->unk2 = (u8) D_8002CCB8.unk2;
 }
 #else
 GLOBAL_ASM(
