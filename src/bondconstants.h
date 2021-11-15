@@ -579,10 +579,18 @@ typedef enum ITEM_IDS
     ITEM_MP5KSIL = 11,
     ITEM_SPECTRE = 12,
     ITEM_M16 = 13,
+
+    /**
+     * aka rcp90
+     */
     ITEM_FNP90 = 14,
     ITEM_SHOTGUN = 15,
     ITEM_AUTOSHOT = 16,
     ITEM_SNIPERRIFLE = 17,
+
+    /**
+     * aka magnum
+    */
     ITEM_RUGER = 18,
     ITEM_GOLDENGUN = 19,
     ITEM_SILVERWPPK = 20,
@@ -1680,22 +1688,22 @@ values need to be verified against cheat_buttons.c : void cheatButtonHandleCheat
 typedef enum CHEAT_IDS {
     
     CHEAT_UNUSED = 0,
-    CHEAT_EXTRA_MP_CHARS, /* unverified */
+    CHEAT_EXTRA_MP_CHARS = 1,
     CHEAT_INVINCIBILITY = 2,
     CHEAT_ALLGUNS = 3,
-    CHEAT_MAXAMMO, /* unverified */
+    CHEAT_MAXAMMO = 4,
     CHEAT_DEBUG_RETURN_SAVED_RA, /* unverified */
-    CHEAT_DEACTIVATE_INVINCIBILITY, /* unverified */
-    CHEAT_LINEMODE, /* unverified */
-    CHEAT_2X_HEALTH, /* unverified */
-    CHEAT_2X_ARMOR, /* unverified */
+    CHEAT_DEACTIVATE_INVINCIBILITY = 6,
+    CHEAT_LINEMODE = 7,
+    CHEAT_2X_HEALTH = 8,
+    CHEAT_2X_ARMOR = 9,
     CHEAT_INVISIBILITY = 10,
     CHEAT_INFINITE_AMMO = 11,
     CHEAT_DK_MODE = 12,
-    CHEAT_EXTRA_WEAPONS, /* unverified */
+    CHEAT_EXTRA_WEAPONS = 13,
     CHEAT_TINY_BOND = 14,
     CHEAT_PAINTBALL = 15,
-    CHEAT_10X_HEALTH, /* unverified */
+    CHEAT_10X_HEALTH = 16,
     CHEAT_MAGNUM = 17,
     CHEAT_LASER = 18,
     CHEAT_GOLDEN_GUN = 19,
@@ -1704,7 +1712,7 @@ typedef enum CHEAT_IDS {
     CHEAT_INVINCIBILITY_MP, /* unverified */
     CHEAT_NO_RADAR_MP = 23,
     CHEAT_TURBO_MODE = 24,
-    CHEAT_DEBUG_POS, /* unverified */
+    CHEAT_DEBUG_POS = 25,
     CHEAT_FAST_ANIMATION = 26,
     CHEAT_SLOW_ANIMATION = 27,
     CHEAT_ENEMY_ROCKETS = 28,
@@ -1734,7 +1742,8 @@ typedef enum CHEAT_IDS {
     CHEAT_UNUSED_0x33,
     CHEAT_UNUSED_0x34,
     CHEAT_UNUSED_0x35,
-    CHEAT_UNLOCK_CHEATS = 0x36, /* unverified */
+    CHEAT_UNLOCK_CHEATS = 0x36,
+    
     CHEAT_UNUSED_0x37,
     CHEAT_UNUSED_0x38,
     CHEAT_UNUSED_0x39,
@@ -1754,7 +1763,7 @@ typedef enum CHEAT_IDS {
     CHEAT_UNUSED_0x47,
     CHEAT_UNUSED_0x48,
     CHEAT_UNUSED_0x49,
-    CHEAT_UNLOCK_STAGES = 0x4a, /* unverified */
+    CHEAT_UNLOCK_STAGES = 0x4a,
 
     CHEAT_INVALID = 0x4b
 } CHEAT_ID;

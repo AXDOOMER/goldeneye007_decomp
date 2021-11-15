@@ -2844,7 +2844,7 @@ extern s32 D_800364BC;
 //D:800364C0
 extern s32 ptr_random06cam_entry;
 //D:800364C4
-extern s32 invisible_to_guards_flag;
+extern s32 g_VisibleToGuardsFlag;
 //D:800364C8
 extern s32 obj_collision_flag;
 //D:800364CC
@@ -3148,10 +3148,10 @@ Gfx* bondviewGfxPlayerField5cMatrix(Gfx* gdl);
 Mtxf *currentPlayerGetMatrix10D4(void);
 void sub_GAME_7F08BEEC(Mtxf *arg0, s32 arg1);
 void currentPlayerStartChrFade(f32 duration60, f32 targetfrac);
-s32 get_invisible_to_guards_flag(void);
+s32 bondviewGetVisibleToGuardsFlag(void);
 u8 get_bondata_invincible_flag(void);
 void set_bondata_invincible_flag(u32 arg0);
-void set_invisible_to_guards_flag(s32 param_1);
+void bondviewSetVisibleToGuardsFlag(s32 param_1);
 
 // unknown pointer arg0
 s32 sub_GAME_7F08BCC0(void *arg0, s32 arg1);

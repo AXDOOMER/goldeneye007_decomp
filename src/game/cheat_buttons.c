@@ -22,6 +22,49 @@
 // This shows up a lot but not quite sure what it represents.
 #define CHEAT_20    20
 
+struct CheatInfo {
+    /**
+     * Offset 0x0.
+     */
+    u8 cheat_id;
+
+    /**
+     * Offset 0x1.
+     */
+    u8 count_of_something;
+
+    /**
+     * Offset 0x2.
+     */
+    u8 field_2;
+
+    /**
+     * Offset 0x3.
+     */
+    u8 field_3;
+
+    /**
+     * Seems to be pointer to u16 array.
+     * Offset 0x4.
+     */
+    u16 * anonymous_1;
+
+    /**
+     * Offset 0x8.
+     */
+    u16 text_bank_id;
+
+    /**
+     * Offset 0xa.
+     */
+    u16 unk_a;
+
+    /**
+     * Offset 0xc.
+     */
+    int maskfield;
+};
+
 
 u8 g_CheatPlayerTextRelated[CHEAT_INVALID + 1];
 
@@ -131,82 +174,84 @@ u32 D_8003F804 = 0x8200002;
 //D:8003F808
 u32 D_8003F808 = 0x2000004;
 
-//D:8003F80C
-struct struct_15 D_8003F80C[] = {
-    {0x01, 0xA, 0, 0, dword_D_8003F430,      0, 0, 0x31},
-    {0x02, 0xA, 0, 0, dword_D_8003F444, 0xB000, 0,    6},
-    {0x03, 0xA, 0, 0, dword_D_8003F458, 0xB001, 0,    2},
-    {0x04, 0xA, 0, 0, dword_D_8003F46C,      0, 0, 0x16},
-    {0x05, 0xA, 0, 0, dword_D_8003F480,      0, 0, 0x16},
-    {0x06, 0xA, 0, 0, dword_D_8003F494,      0, 0, 0x34},
-    {0x07, 0xA, 0, 0, dword_D_8003F4A8, 0xB037, 0, 0x66},
-    {0x08,   0, 0, 0,                0,      0, 0, 0x16},
-    {0x09,   0, 0, 0,                0,      0, 0, 0x16},
-    {0x0A, 0xA, 0, 0, dword_D_8003F4BC, 0xB004, 0, 0x62},
-    {0x0B,   0, 0, 0,                0, 0xB006, 0, 0x66},
-    {0x0C,   0, 0, 0,                0, 0xB007, 0, 0x26},
-    {0x0D,   0, 0, 0,                0,      0, 0, 0x12},
-    {0x0E,   0, 0, 0,                0, 0xB008, 0,    2},
-    {0x0F,   0, 0, 0,                0, 0xB038, 0, 0x66},
-    {0x10,   0, 0, 0,                0,      0, 0, 0x16},
-    {0x11,   0, 0, 0,                0, 0xB00A, 0, 0x12},
-    {0x12,   0, 0, 0,                0, 0xB00B, 0, 0x12},
-    {0x13,   0, 0, 0,                0, 0xB00C, 0, 0x12},
-    {0x14,   0, 0, 0,                0, 0xB00D, 0, 0x12},
-    {0x15,   0, 0, 0,                0, 0xB00E, 0, 0x12},
-    {0x16, 0xA, 0, 0, dword_D_8003F4D0,      0, 0,    4},
-    {0x17,   0, 0, 0,                0, 0xB043, 0, 0x64},
-    {0x18,   0, 0, 0,                0, 0xB040, 0, 0x66},
-    {0x19,   0, 0, 0,                0,      0, 0, 0x20},
-    {0x1A,   0, 0, 0,                0, 0xB041, 0, 0x72},
-    {0x1B,   0, 0, 0,                0, 0xB042, 0, 0x72},
-    {0x1C,   0, 0, 0,                0, 0xB039, 0,    1},
-    {0x1D,   0, 0, 0,                0, 0xB03A, 0, 0x12},
-    {0x1E,   0, 0, 0,                0, 0xB03B, 0, 0x12},
-    {0x1F,   0, 0, 0,                0, 0xB03C, 0, 0x12},
-    {0x20,   0, 0, 0,                0, 0xB03D, 0, 0x12},
-    {0x21,   0, 0, 0,                0, 0xB03E, 0, 0x12},
-    {0x22,   0, 0, 0,                0, 0xB03F, 0, 0x12},
-    {0x23, 0xA, 0, 0, dword_D_8003F67C,      0, 0, 0x11},
-    {0x24, 0xA, 0, 0, dword_D_8003F690,      0, 0, 0x11},
-    {0x25, 0xA, 0, 0, dword_D_8003F6A4,      0, 0, 0x11},
-    {0x26, 0xA, 0, 0, dword_D_8003F6B8,      0, 0, 0x11},
-    {0x27, 0xA, 0, 0, dword_D_8003F6CC,      0, 0, 0x11},
-    {0x28, 0xA, 0, 0, dword_D_8003F6E0,      0, 0, 0x11},
-    {0x29, 0xA, 0, 0, dword_D_8003F6F4,      0, 0, 0x11},
-    {0x2A, 0xA, 0, 0, dword_D_8003F708,      0, 0, 0x11},
-    {0x2B, 0xA, 0, 0, dword_D_8003F71C,      0, 0, 0x11},
-    {0x2C, 0xA, 0, 0, dword_D_8003F730,      0, 0, 0x11},
-    {0x2D, 0xA, 0, 0, dword_D_8003F744,      0, 0, 0x11},
-    {0x2E, 0xA, 0, 0, dword_D_8003F758,      0, 0, 0x11},
-    {0x2F, 0xA, 0, 0, dword_D_8003F76C,      0, 0, 0x11},
-    {0x30, 0xA, 0, 0, dword_D_8003F780,      0, 0, 0x11},
-    {0x31, 0xA, 0, 0, dword_D_8003F794,      0, 0, 0x11},
-    {0x32, 0xA, 0, 0, dword_D_8003F7A8,      0, 0, 0x11},
-    {0x33, 0xA, 0, 0, dword_D_8003F7BC,      0, 0, 0x11},
-    {0x34, 0xA, 0, 0, dword_D_8003F7D0,      0, 0, 0x11},
-    {0x35, 0xA, 0, 0, dword_D_8003F7E4,      0, 0, 0x11},
-    {0x36, 0xA, 0, 0, dword_D_8003F7F8,      0, 0, 0x11},
-    {0x37, 0xA, 0, 0, dword_D_8003F4E4,      0, 0, 0x11},
-    {0x38, 0xA, 0, 0, dword_D_8003F4F8,      0, 0, 0x11},
-    {0x39, 0xA, 0, 0, dword_D_8003F50C,      0, 0, 0x11},
-    {0x3A, 0xA, 0, 0, dword_D_8003F520,      0, 0, 0x11},
-    {0x3B, 0xA, 0, 0, dword_D_8003F534,      0, 0, 0x11},
-    {0x3C, 0xA, 0, 0, dword_D_8003F548,      0, 0, 0x11},
-    {0x3D, 0xA, 0, 0, dword_D_8003F55C,      0, 0, 0x11},
-    {0x3E, 0xA, 0, 0, dword_D_8003F570,      0, 0, 0x11},
-    {0x3F, 0xA, 0, 0, dword_D_8003F584,      0, 0, 0x11},
-    {0x40, 0xA, 0, 0, dword_D_8003F598,      0, 0, 0x11},
-    {0x41, 0xA, 0, 0, dword_D_8003F5AC,      0, 0, 0x11},
-    {0x42, 0xA, 0, 0, dword_D_8003F5C0,      0, 0, 0x11},
-    {0x43, 0xA, 0, 0, dword_D_8003F5D4,      0, 0, 0x11},
-    {0x44, 0xA, 0, 0, dword_D_8003F5E8,      0, 0, 0x11},
-    {0x45, 0xA, 0, 0, dword_D_8003F5FC,      0, 0, 0x11},
-    {0x46, 0xA, 0, 0, dword_D_8003F610,      0, 0, 0x11},
-    {0x47, 0xA, 0, 0, dword_D_8003F624,      0, 0, 0x11},
-    {0x48, 0xA, 0, 0, dword_D_8003F638,      0, 0, 0x11},
-    {0x49, 0xA, 0, 0, dword_D_8003F64C,      0, 0, 0x11},
-    {0x4A, 0xA, 0, 0, dword_D_8003F660,      0, 0, 0x11},
+/**
+ * Address 0x8003F80C.
+ */
+struct CheatInfo g_CheatInfo[] = {
+    {          CHEAT_EXTRA_MP_CHARS,  0xA, 0, 0, dword_D_8003F430,       0, 0,  /* 0x31 */ CHEAT_MASK_GLOBAL | CHEAT_MASK_16 | CHEAT_MASK_1},
+    {           CHEAT_INVINCIBILITY,  0xA, 0, 0, dword_D_8003F444,  0xB000, 0,  /* 0x06 */ CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
+    {                 CHEAT_ALLGUNS,  0xA, 0, 0, dword_D_8003F458,  0xB001, 0,  /* 0x02 */ CHEAT_MASK_2},
+    {                 CHEAT_MAXAMMO,  0xA, 0, 0, dword_D_8003F46C,       0, 0,  /* 0x16 */ CHEAT_MASK_16 | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
+    {                           0x5,  0xA, 0, 0, dword_D_8003F480,       0, 0,  /* 0x16 */ CHEAT_MASK_16 | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
+    {CHEAT_DEACTIVATE_INVINCIBILITY,  0xA, 0, 0, dword_D_8003F494,       0, 0,  /* 0x34 */ CHEAT_MASK_GLOBAL | CHEAT_MASK_16 | CHEAT_MASK_MULTIPLAYER},
+    {                CHEAT_LINEMODE,  0xA, 0, 0, dword_D_8003F4A8,  0xB037, 0,  /* 0x66 */ CHEAT_MASK_64 | CHEAT_MASK_GLOBAL | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
+    {               CHEAT_2X_HEALTH,    0, 0, 0,                0,       0, 0,  /* 0x16 */ CHEAT_MASK_16 | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
+    {                CHEAT_2X_ARMOR,    0, 0, 0,                0,       0, 0,  /* 0x16 */ CHEAT_MASK_16 | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
+    {            CHEAT_INVISIBILITY,  0xA, 0, 0, dword_D_8003F4BC,  0xB004, 0,  /* 0x62 */ CHEAT_MASK_64 | CHEAT_MASK_GLOBAL | CHEAT_MASK_2},
+    {           CHEAT_INFINITE_AMMO,    0, 0, 0,                0,  0xB006, 0,  /* 0x66 */ CHEAT_MASK_64 | CHEAT_MASK_GLOBAL | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
+    {                 CHEAT_DK_MODE,    0, 0, 0,                0,  0xB007, 0,  /* 0x26 */ CHEAT_MASK_GLOBAL | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
+    {           CHEAT_EXTRA_WEAPONS,    0, 0, 0,                0,       0, 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
+    {               CHEAT_TINY_BOND,    0, 0, 0,                0,  0xB008, 0,  /* 0x02 */ CHEAT_MASK_2},
+    {               CHEAT_PAINTBALL,    0, 0, 0,                0,  0xB038, 0,  /* 0x66 */ CHEAT_MASK_64 | CHEAT_MASK_GLOBAL | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
+    {              CHEAT_10X_HEALTH,    0, 0, 0,                0,       0, 0,  /* 0x16 */ CHEAT_MASK_16 | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
+    {                  CHEAT_MAGNUM,    0, 0, 0,                0,  0xB00A, 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
+    {                   CHEAT_LASER,    0, 0, 0,                0,  0xB00B, 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
+    {              CHEAT_GOLDEN_GUN,    0, 0, 0,                0,  0xB00C, 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
+    {              CHEAT_SILVER_PP7,    0, 0, 0,                0,  0xB00D, 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
+    {                CHEAT_GOLD_PP7,    0, 0, 0,                0,  0xB00E, 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
+    {                          0x16,  0xA, 0, 0, dword_D_8003F4D0,       0, 0,  /* 0x12 */ CHEAT_MASK_MULTIPLAYER},
+    {             CHEAT_NO_RADAR_MP,    0, 0, 0,                0,  0xB043, 0,  /* 0x64 */ CHEAT_MASK_64 | CHEAT_MASK_GLOBAL | CHEAT_MASK_MULTIPLAYER},
+    {              CHEAT_TURBO_MODE,    0, 0, 0,                0,  0xB040, 0,  /* 0x66 */ CHEAT_MASK_64 | CHEAT_MASK_GLOBAL | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
+    {               CHEAT_DEBUG_POS,    0, 0, 0,                0,       0, 0,  /* 0x20 */ CHEAT_MASK_GLOBAL},
+    {          CHEAT_FAST_ANIMATION,    0, 0, 0,                0,  0xB041, 0,  /* 0x72 */ CHEAT_MASK_64 | CHEAT_MASK_GLOBAL | CHEAT_MASK_16 | CHEAT_MASK_2},
+    {          CHEAT_SLOW_ANIMATION,    0, 0, 0,                0,  0xB042, 0,  /* 0x72 */ CHEAT_MASK_64 | CHEAT_MASK_GLOBAL | CHEAT_MASK_16 | CHEAT_MASK_2},
+    {           CHEAT_ENEMY_ROCKETS,    0, 0, 0,                0,  0xB039, 0,  /* 0x01 */ CHEAT_MASK_1},
+    {      CHEAT_2X_ROCKET_LAUNCHER,    0, 0, 0,                0,  0xB03A, 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
+    {     CHEAT_2X_GRENADE_LAUNCHER,    0, 0, 0,                0,  0xB03B, 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
+    {                CHEAT_2X_RCP90,    0, 0, 0,                0,  0xB03C, 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
+    {       CHEAT_2X_THROWING_KNIFE,    0, 0, 0,                0,  0xB03D, 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
+    {        CHEAT_2X_HUNTING_KNIFE,    0, 0, 0,                0,  0xB03E, 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
+    {                CHEAT_2X_LASER,    0, 0, 0,                0,  0xB03F, 0,  /* 0x12 */ CHEAT_MASK_16 | CHEAT_MASK_2},
+    {                          0x23,  0xA, 0, 0, dword_D_8003F67C,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x24,  0xA, 0, 0, dword_D_8003F690,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x25,  0xA, 0, 0, dword_D_8003F6A4,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x26,  0xA, 0, 0, dword_D_8003F6B8,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x27,  0xA, 0, 0, dword_D_8003F6CC,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x28,  0xA, 0, 0, dword_D_8003F6E0,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x29,  0xA, 0, 0, dword_D_8003F6F4,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x2A,  0xA, 0, 0, dword_D_8003F708,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x2B,  0xA, 0, 0, dword_D_8003F71C,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x2C,  0xA, 0, 0, dword_D_8003F730,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x2D,  0xA, 0, 0, dword_D_8003F744,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x2E,  0xA, 0, 0, dword_D_8003F758,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x2F,  0xA, 0, 0, dword_D_8003F76C,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x30,  0xA, 0, 0, dword_D_8003F780,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x31,  0xA, 0, 0, dword_D_8003F794,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x32,  0xA, 0, 0, dword_D_8003F7A8,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x33,  0xA, 0, 0, dword_D_8003F7BC,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x34,  0xA, 0, 0, dword_D_8003F7D0,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x35,  0xA, 0, 0, dword_D_8003F7E4,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {           CHEAT_UNLOCK_CHEATS,  0xA, 0, 0, dword_D_8003F7F8,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x37,  0xA, 0, 0, dword_D_8003F4E4,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x38,  0xA, 0, 0, dword_D_8003F4F8,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x39,  0xA, 0, 0, dword_D_8003F50C,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x3A,  0xA, 0, 0, dword_D_8003F520,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x3B,  0xA, 0, 0, dword_D_8003F534,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x3C,  0xA, 0, 0, dword_D_8003F548,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x3D,  0xA, 0, 0, dword_D_8003F55C,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x3E,  0xA, 0, 0, dword_D_8003F570,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x3F,  0xA, 0, 0, dword_D_8003F584,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x40,  0xA, 0, 0, dword_D_8003F598,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x41,  0xA, 0, 0, dword_D_8003F5AC,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x42,  0xA, 0, 0, dword_D_8003F5C0,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x43,  0xA, 0, 0, dword_D_8003F5D4,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x44,  0xA, 0, 0, dword_D_8003F5E8,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x45,  0xA, 0, 0, dword_D_8003F5FC,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x46,  0xA, 0, 0, dword_D_8003F610,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x47,  0xA, 0, 0, dword_D_8003F624,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x48,  0xA, 0, 0, dword_D_8003F638,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {                          0x49,  0xA, 0, 0, dword_D_8003F64C,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
+    {           CHEAT_UNLOCK_STAGES,  0xA, 0, 0, dword_D_8003F660,       0, 0,  /* 0x11 */ CHEAT_MASK_16 | CHEAT_MASK_1},
     {0}
 };
 
@@ -219,10 +264,10 @@ struct struct_15 D_8003F80C[] = {
 s32 cheatButtonCountBitsSet(u16 param_1);
 void cheatButtonActivateRelated(void);
 void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat);
-void cheatDisplayMessageActivateCheat(s32 cheat_id);
+void cheatButtonHandleCheatsTurnedOff(s32 cheat_id);
 s32 cheatCheckIfMPCheat(s32 cheat_id);
 void cheatButtonSetDkMode(s32 cheat_id);
-void cheatDisplayMessageActivateCheat(s32 cheat);
+void cheatButtonHandleCheatsTurnedOff(s32 cheat);
 
 // end forward declarations
 
@@ -254,7 +299,7 @@ s32 cheatButtonCountBitsSet(u16 param_1)
  */
 void cheatButtonActivateRelated(void)
 {
-    struct struct_15 *info = &D_8003F80C[0];
+    struct CheatInfo *info = &g_CheatInfo[0];
     s32 bitmask;
     s32 id_index;
     s32 find_index;
@@ -299,7 +344,7 @@ void cheatButtonActivateRelated(void)
                     }
                     else
                     {
-                        cheatDisplayMessageActivateCheat(info->cheat_id);
+                        cheatButtonHandleCheatsTurnedOff(info->cheat_id);
                     }
                 }
             }
@@ -461,7 +506,7 @@ u32 cheatIsEnemyRockets(u32 cheatindex)
  */
 s32 cheatCheckIfMPCheat(s32 cheat_id)
 {
-    if ((D_8003F80C[cheat_id - 1].maskfield & CHEAT_MASK_MULTIPLAYER) == CHEAT_MASK_MULTIPLAYER)
+    if ((g_CheatInfo[cheat_id - 1].maskfield & CHEAT_MASK_MULTIPLAYER) == CHEAT_MASK_MULTIPLAYER)
     {
         return 1;
     }
@@ -482,7 +527,7 @@ void cheatButtonTurnOnCheatForPlayers(u32 cheatindex)
     s32 numplayers;
     s32 i;
 
-    cheat_mask = D_8003F80C[cheatindex - 1].maskfield;
+    cheat_mask = g_CheatInfo[cheatindex - 1].maskfield;
     starting_player_number = get_cur_playernum();
     numplayers = getPlayerCount();
 
@@ -494,7 +539,7 @@ void cheatButtonTurnOnCheatForPlayers(u32 cheatindex)
     {
         if (cheat_mask & CHEAT_MASK_MULTIPLAYER)
         {
-            if (cheat_mask & CHEAT_MASK_32)
+            if (cheat_mask & CHEAT_MASK_GLOBAL)
             {
                 cheatButtonHandleCheatsTurnedOn(cheatindex);
             }
@@ -526,13 +571,13 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
     s32 current_player_number;
     s32 player_count;
     
-    mask = D_8003F80C[cheat_id - 1].maskfield;
+    mask = g_CheatInfo[cheat_id - 1].maskfield;
     current_player_number = get_cur_playernum();
     player_count = getPlayerCount();
 
     if ((mask & CHEAT_MASK_16) == 0)
     {
-        if ((mask & CHEAT_MASK_32) == 0)
+        if ((mask & CHEAT_MASK_GLOBAL) == 0)
         {
             g_CheatPlayerTextRelated[cheat_id] |= (1 << current_player_number);
         }
@@ -544,11 +589,11 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
 
     switch (cheat_id)
     {
-        case 0x1:
+        case CHEAT_EXTRA_MP_CHARS:
             unlock_all_mp_chars();
             return;
 
-        case 0x2:
+        case CHEAT_INVINCIBILITY:
             if (get_bondata_invincible_flag() == 0)
             {
 #if defined(VERSION_JP)
@@ -561,7 +606,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             }
             return;
 
-        case 0x3:
+        case CHEAT_ALLGUNS:
             if (get_BONDdata_allguns_flag() == 0)
             {
 #if defined(VERSION_JP)
@@ -574,7 +619,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             }
             return;
 
-        case 0x4:
+        case CHEAT_MAXAMMO:
 #if defined(VERSION_JP)
             jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB011));
 #else
@@ -583,7 +628,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             set_max_ammo_for_cur_player();
             return;
 
-        case 0x6:
+        case CHEAT_DEACTIVATE_INVINCIBILITY:
             {
                 s32 i;
                 s32 flag=0;
@@ -616,11 +661,11 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             }
             return;
 
-        case 0x7:
+        case CHEAT_LINEMODE:
             set_debug_VisCVG_flag(1);
             return;
 
-        case 0x8:
+        case CHEAT_2X_HEALTH:
             if ((g_CurrentPlayer->actual_health == 1.0f) || (g_CurrentPlayer->bondhealth < 1.0f))
             {
 #if defined(VERSION_JP)
@@ -633,7 +678,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             }
             return;
 
-        case 0x9:
+        case CHEAT_2X_ARMOR:
             if ((g_CurrentPlayer->actual_armor == 1.0f) || (g_CurrentPlayer->bondarmour < 1.0f))
             {
 #if defined(VERSION_JP)
@@ -650,28 +695,31 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             }
             return;
 
-        case 0xA:
-            if (get_invisible_to_guards_flag() != 0)
+        case CHEAT_INVISIBILITY:
+            if (bondviewGetVisibleToGuardsFlag() != 0)
             {
 #if defined(VERSION_JP)
                 jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB014));
 #else
                 display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB014));
 #endif
-                set_invisible_to_guards_flag(0);
+                bondviewSetVisibleToGuardsFlag(0);
                 return;
             }
             return;
 
-        case 0xB:
+        case CHEAT_INFINITE_AMMO:
 #if defined(VERSION_JP)
             jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB016));
 #else
             display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB016));
 #endif
+            /**
+            * Note: the lvlRender in lvl.c checks if infinite ammo is on then calls set_max_ammo_for_cur_player
+            */
             return;
 
-        case 0xC:
+        case CHEAT_DK_MODE:
 #if defined(VERSION_JP)
             jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB017));
 #else
@@ -680,20 +728,20 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             cheatButtonSetDkMode(1);
             return;
 
-        case 0xD:
+        case CHEAT_EXTRA_WEAPONS:
             if (player_count == 1)
             {
                 s32 vvv;
 
-                vvv = add_item_to_inventory(0x12);
-                vvv += add_item_to_inventory(0x16);
-                vvv += add_item_to_inventory(0x13);
-                vvv += add_item_to_inventory(0x14);
-                vvv += add_item_to_inventory(0x15);
+                vvv = add_item_to_inventory(ITEM_RUGER);
+                vvv += add_item_to_inventory(ITEM_LASER);
+                vvv += add_item_to_inventory(ITEM_GOLDENGUN);
+                vvv += add_item_to_inventory(ITEM_SILVERWPPK);
+                vvv += add_item_to_inventory(ITEM_GOLDWPPK);
 
-                give_cur_player_ammo(0xC, get_max_ammo_for_type(0xC));
-                give_cur_player_ammo(0xD, get_max_ammo_for_type(0xD));
-                give_cur_player_ammo(1, get_max_ammo_for_type(1));
+                give_cur_player_ammo(AMMO_MAGNUM, get_max_ammo_for_type(AMMO_MAGNUM));
+                give_cur_player_ammo(AMMO_GGUN, get_max_ammo_for_type(AMMO_GGUN));
+                give_cur_player_ammo(AMMO_9MM, get_max_ammo_for_type(AMMO_9MM));
 
                 if (vvv > 0)
                 {
@@ -707,7 +755,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             }
             return;
 
-        case 0xE:
+        case CHEAT_TINY_BOND:
             if ((player_count == 1) && (g_playerPerm->player_perspective_height == 1.0f))
             {
 #if defined(VERSION_JP)
@@ -725,7 +773,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             }
             return;
 
-        case 0xF:
+        case CHEAT_PAINTBALL:
 #if defined(VERSION_JP)
             jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB01A));
 #else
@@ -733,7 +781,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
 #endif
             return;
 
-        case 0x10:
+        case CHEAT_10X_HEALTH:
             if ((g_CurrentPlayer->actual_health == 1.0f) || (g_CurrentPlayer->bondhealth < 1.0f))
             {
 #if defined(VERSION_JP)
@@ -751,55 +799,55 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             }
             return;
 
-        case 0x11:
+        case CHEAT_MAGNUM:
             if (player_count == 1)
             {
-                add_item_to_inventory(0x12);
-                give_cur_player_ammo(0xC, get_max_ammo_for_type(0xC));
+                add_item_to_inventory(ITEM_RUGER);
+                give_cur_player_ammo(AMMO_MAGNUM, get_max_ammo_for_type(AMMO_MAGNUM));
                 return;
             }
             return;
 
-        case 0x12:
+        case CHEAT_LASER:
             if (player_count == 1)
             {
-                add_item_to_inventory(0x16);
+                add_item_to_inventory(ITEM_LASER);
                 return;
             }
             return;
 
-        case 0x13:
+        case CHEAT_GOLDEN_GUN:
             if (player_count == 1)
             {
-                add_item_to_inventory(0x13);
-                give_cur_player_ammo(0xD, get_max_ammo_for_type(0xD));
+                add_item_to_inventory(ITEM_GOLDENGUN);
+                give_cur_player_ammo(AMMO_GGUN, get_max_ammo_for_type(AMMO_GGUN));
                 return;
             }
             return;
 
-        case 0x14:
+        case CHEAT_SILVER_PP7:
             if (player_count == 1)
             {
-                add_item_to_inventory(0x14);
-                give_cur_player_ammo(1, get_max_ammo_for_type(1));
+                add_item_to_inventory(ITEM_SILVERWPPK);
+                give_cur_player_ammo(AMMO_9MM, get_max_ammo_for_type(AMMO_9MM));
                 return;
             }
             return;
 
-        case 0x15:
+        case CHEAT_GOLD_PP7:
             if (player_count == 1)
             {
-                add_item_to_inventory(0x15);
-                give_cur_player_ammo(1, get_max_ammo_for_type(1));
+                add_item_to_inventory(ITEM_GOLDWPPK);
+                give_cur_player_ammo(AMMO_9MM, get_max_ammo_for_type(AMMO_9MM));
                 return;
             }
             return;
 
-        case 0x16:
+        case 0x16: /* unknown */
             currentPlayerStartChrFade(300.0f, 0.05f);
             return;
 
-        case 0x18:
+        case CHEAT_TURBO_MODE:
             if (get_debug_fast_bond_flag() == 0)
             {
 #if defined(VERSION_JP)
@@ -812,7 +860,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             }
             return;
 
-        case 0x19:
+        case CHEAT_DEBUG_POS:
             if (get_debug_testingmanpos_flag() == 0)
             {
                 set_debug_testingmanpos_flag(1);
@@ -820,7 +868,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             }
             return;
 
-        case 0x1A:
+        case CHEAT_FAST_ANIMATION:
             if (get_animation_rate() < 4.0f)
             {
 #if defined(VERSION_JP)
@@ -833,7 +881,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             }
             return;
 
-        case 0x1B:
+        case CHEAT_SLOW_ANIMATION:
             if (get_animation_rate() > 0.25f)
             {
 #if defined(VERSION_JP)
@@ -846,81 +894,81 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             }
             return;
 
-        case 0x1D:
+        case CHEAT_2X_ROCKET_LAUNCHER:
             if (player_count == 1)
             {
 #if defined(VERSION_JP)
-                add_item_to_inventory(0x19);
+                add_item_to_inventory(ITEM_ROCKETLAUNCH);
 #endif
-                add_doubles_item_to_inventory(0x19, 0x19);
-                give_cur_player_ammo(6, get_max_ammo_for_type(6));
+                add_doubles_item_to_inventory(ITEM_ROCKETLAUNCH, ITEM_ROCKETLAUNCH);
+                give_cur_player_ammo(AMMO_ROCKETS, get_max_ammo_for_type(AMMO_ROCKETS));
                 return;
             }
             return;
 
-        case 0x1E:
+        case CHEAT_2X_GRENADE_LAUNCHER:
             if (player_count == 1)
             {
 #if defined(VERSION_JP)
-                add_item_to_inventory(0x18);
+                add_item_to_inventory(ITEM_GRENADELAUNCH);
 #endif
-                add_doubles_item_to_inventory(0x18, 0x18);
-                give_cur_player_ammo(0xB, get_max_ammo_for_type(0xB));
+                add_doubles_item_to_inventory(ITEM_GRENADELAUNCH, ITEM_GRENADELAUNCH);
+                give_cur_player_ammo(AMMO_GRENADEROUND, get_max_ammo_for_type(AMMO_GRENADEROUND));
                 return;
             }
             return;
 
-        case 0x1F:
+        case CHEAT_2X_RCP90:
             if (player_count == 1)
             {
 #if defined(VERSION_JP)
-                add_item_to_inventory(0xE);
+                add_item_to_inventory(ITEM_FNP90);
 #endif
-                add_doubles_item_to_inventory(0xE, 0xE);
-                give_cur_player_ammo(1, get_max_ammo_for_type(1));
+                add_doubles_item_to_inventory(ITEM_FNP90, ITEM_FNP90);
+                give_cur_player_ammo(AMMO_9MM, get_max_ammo_for_type(AMMO_9MM));
                 return;
             }
             return;
 
-        case 0x20:
+        case CHEAT_2X_THROWING_KNIFE:
             if (player_count == 1)
             {
 #if defined(VERSION_JP)
-                add_item_to_inventory(3);
+                add_item_to_inventory(ITEM_THROWKNIFE);
 #endif
-                add_doubles_item_to_inventory(3, 3);
-                give_cur_player_ammo(0xA, get_max_ammo_for_type(0xA));
+                add_doubles_item_to_inventory(ITEM_THROWKNIFE, ITEM_THROWKNIFE);
+                give_cur_player_ammo(AMMO_KNIFE, get_max_ammo_for_type(AMMO_KNIFE));
                 return;
             }
             return;
 
-        case 0x21:
+        case CHEAT_2X_HUNTING_KNIFE:
             if (player_count == 1)
             {
 #if defined(VERSION_JP)
                 if (j_text_trigger != 0)
                 {
-                    add_item_to_inventory(0x19);
-                    add_item_to_inventory(0x11);
-                    add_doubles_item_to_inventory(0x11, 0x19);
-                    give_cur_player_ammo(6, get_max_ammo_for_type(6));
-                    give_cur_player_ammo(3, get_max_ammo_for_type(3));
+                    add_item_to_inventory(ITEM_ROCKETLAUNCH);
+                    add_item_to_inventory(ITEM_SNIPERRIFLE);
+                    add_doubles_item_to_inventory(ITEM_SNIPERRIFLE, ITEM_ROCKETLAUNCH);
+                    give_cur_player_ammo(AMMO_ROCKETS, get_max_ammo_for_type(AMMO_ROCKETS));
+                    give_cur_player_ammo(ITEM_THROWKNIFE, get_max_ammo_for_type(ITEM_THROWKNIFE));
                     return;
                 }
-                add_item_to_inventory(2);
+                add_item_to_inventory(ITEM_KNIFE);
 #endif
-                add_doubles_item_to_inventory(2, 2);
+                add_doubles_item_to_inventory(ITEM_KNIFE, ITEM_KNIFE);
                 return;
             }
             return;
 
-        case 0x22:
+        case CHEAT_2X_LASER:
             if (player_count == 1)
             {
 #if defined(VERSION_JP)
-                add_item_to_inventory(0x16);
+                add_item_to_inventory(ITEM_LASER);
 #endif
-                add_doubles_item_to_inventory(0x16, 0x16);
+                add_doubles_item_to_inventory(ITEM_LASER, ITEM_LASER);
                 return;
             }
             return;
@@ -1010,19 +1058,19 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
 /**
  * Address 0x7F092438 (all versions)
  */
-void cheatDisplayMessageActivateCheat(s32 cheat_id)
+void cheatButtonHandleCheatsTurnedOff(s32 cheat_id)
 {
     s32 mask;
     s32 current_player_number;
     s32 player_count;
 
-    mask = D_8003F80C[cheat_id - 1].maskfield;
+    mask = g_CheatInfo[cheat_id - 1].maskfield;
     current_player_number = get_cur_playernum();
     player_count = getPlayerCount();
 
     if ((mask & CHEAT_MASK_16) == 0)
     {
-        if ((mask & CHEAT_MASK_32) == 0)
+        if ((mask & CHEAT_MASK_GLOBAL) == 0)
         {
             g_CheatPlayerTextRelated[cheat_id] &= ~(1 << current_player_number);
         }
@@ -1065,14 +1113,14 @@ void cheatDisplayMessageActivateCheat(s32 cheat_id)
             return;
 
         case CHEAT_INVISIBILITY:
-            if (get_invisible_to_guards_flag() == 0)
+            if (bondviewGetVisibleToGuardsFlag() == 0)
             {
 #if defined(VERSION_JP)
                 jp_display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB020));
 #else
                 display_string_in_lower_left_corner((char *)get_textptr_for_textID(0xB020));
 #endif
-                set_invisible_to_guards_flag(1);
+                bondviewSetVisibleToGuardsFlag(1);
                 return;
             }
             return;
@@ -1236,9 +1284,9 @@ void cheatDisableAllCheats(void)
 
         for (j=1; j<CHEAT_INVALID; j++)
         {
-            if ((D_8003F80C[j - 1].maskfield & CHEAT_MASK_64) && (cheatCheckIfOn(j) != 0))
+            if ((g_CheatInfo[j - 1].maskfield & CHEAT_MASK_64) && (cheatCheckIfOn(j) != 0))
             {
-                cheatDisplayMessageActivateCheat(j);
+                cheatButtonHandleCheatsTurnedOff(j);
             }
         }
     }
@@ -1257,7 +1305,7 @@ char *cheatGetMenuTextPointer(s32 cheat_id)
 {
     u16 temp_v0;
 
-    temp_v0 = D_8003F80C[cheat_id - 1].text_bank_id;
+    temp_v0 = g_CheatInfo[cheat_id - 1].text_bank_id;
 
     if (temp_v0 != 0)
     {

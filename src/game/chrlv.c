@@ -8075,7 +8075,7 @@ glabel sub_GAME_7F0292A8
 /* 05DE74 7F029344 8D8400A8 */  lw    $a0, 0xa8($t4)
 /* 05DE78 7F029348 0FC2280F */  jal   bondviewUpdateGuardTankFlagsRelated
 /* 05DE7C 7F02934C AFA3003C */   sw    $v1, 0x3c($sp)
-/* 05DE80 7F029350 0FC227DD */  jal   get_invisible_to_guards_flag
+/* 05DE80 7F029350 0FC227DD */  jal   bondviewGetVisibleToGuardsFlag
 /* 05DE84 7F029354 00000000 */   nop   
 /* 05DE88 7F029358 10400019 */  beqz  $v0, .L7F0293C0
 /* 05DE8C 7F02935C 8FA3003C */   lw    $v1, 0x3c($sp)
@@ -8189,7 +8189,7 @@ glabel sub_GAME_7F0294BC
 /* 05DFF0 7F0294C0 AFBF0034 */  sw    $ra, 0x34($sp)
 /* 05DFF4 7F0294C4 AFB00030 */  sw    $s0, 0x30($sp)
 /* 05DFF8 7F0294C8 00808025 */  move  $s0, $a0
-/* 05DFFC 7F0294CC 0FC227DD */  jal   get_invisible_to_guards_flag
+/* 05DFFC 7F0294CC 0FC227DD */  jal   bondviewGetVisibleToGuardsFlag
 /* 05E000 7F0294D0 AFA0004C */   sw    $zero, 0x4c($sp)
 /* 05E004 7F0294D4 5040003A */  beql  $v0, $zero, .L7F0295C0
 /* 05E008 7F0294D8 8FBF0034 */   lw    $ra, 0x34($sp)
