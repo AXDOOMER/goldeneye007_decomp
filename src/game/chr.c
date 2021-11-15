@@ -5,9 +5,16 @@
 #include "game/chrai.h"
 #include "game/chrobjhandler.h"
 #include "game/gun.h"
+#include "game/lvl.h"
 #include "game/lvl_text.h"
 #include "game/objecthandler.h"
 #include "game/stan.h"
+
+// forward declarations
+
+void chrAimGlobalTimerTickRelated(struct chrdata *arg0);
+
+// end forward declarations
 
 // data
 f32 animation_rate = 0;
@@ -3170,211 +3177,40 @@ f32 get_animation_rate(void) {
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0205F0(void) {
+/**
+ * Address 0x7F0205F0 (all versions).
+ */
+void chrAimGlobalTimerTickRelated(struct chrdata *arg0)
+{
+    f32 temp_f0;
 
-}
+    if (arg0->aimendcount >= 2)
+    {
+#if defined(VERSION_JP)
+        temp_f0 = g_JP_GlobalTimerDelta / (f32) arg0->aimendcount;
 #else
-#ifdef VERSION_US
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0205F0
-/* 055120 7F0205F0 8082000E */  lb    $v0, 0xe($a0)
-/* 055124 7F0205F4 28410002 */  slti  $at, $v0, 2
-/* 055128 7F0205F8 5420002D */  bnezl $at, .L7F0206B0
-/* 05512C 7F0205FC C4920150 */   lwc1  $f18, 0x150($a0)
-/* 055130 7F020600 44823000 */  mtc1  $v0, $f6
-/* 055134 7F020604 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 055138 7F020608 44811000 */  mtc1  $at, $f2
-/* 05513C 7F02060C 46803220 */  cvt.s.w $f8, $f6
-/* 055140 7F020610 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta)
-/* 055144 7F020614 C4248378 */  lwc1  $f4, %lo(g_GlobalTimerDelta)($at)
-/* 055148 7F020618 46082003 */  div.s $f0, $f4, $f8
-/* 05514C 7F02061C 4600103C */  c.lt.s $f2, $f0
-/* 055150 7F020620 00000000 */  nop   
-/* 055154 7F020624 45020003 */  bc1fl .L7F020634
-/* 055158 7F020628 C4820140 */   lwc1  $f2, 0x140($a0)
-/* 05515C 7F02062C 46001006 */  mov.s $f0, $f2
-/* 055160 7F020630 C4820140 */  lwc1  $f2, 0x140($a0)
-.L7F020634:
-/* 055164 7F020634 C48A0150 */  lwc1  $f10, 0x150($a0)
-/* 055168 7F020638 C48C0144 */  lwc1  $f12, 0x144($a0)
-/* 05516C 7F02063C C4880154 */  lwc1  $f8, 0x154($a0)
-/* 055170 7F020640 46025481 */  sub.s $f18, $f10, $f2
-/* 055174 7F020644 C48E0148 */  lwc1  $f14, 0x148($a0)
-/* 055178 7F020648 C490014C */  lwc1  $f16, 0x14c($a0)
-/* 05517C 7F02064C 460C4281 */  sub.s $f10, $f8, $f12
-/* 055180 7F020650 46009182 */  mul.s $f6, $f18, $f0
-/* 055184 7F020654 3C0F8005 */  lui   $t7, %hi(g_ClockTimer) 
-/* 055188 7F020658 808E000E */  lb    $t6, 0xe($a0)
-/* 05518C 7F02065C 46005482 */  mul.s $f18, $f10, $f0
-/* 055190 7F020660 46061100 */  add.s $f4, $f2, $f6
-/* 055194 7F020664 46126180 */  add.s $f6, $f12, $f18
-/* 055198 7F020668 E4840140 */  swc1  $f4, 0x140($a0)
-/* 05519C 7F02066C C4840158 */  lwc1  $f4, 0x158($a0)
-/* 0551A0 7F020670 E4860144 */  swc1  $f6, 0x144($a0)
-/* 0551A4 7F020674 460E2201 */  sub.s $f8, $f4, $f14
-/* 0551A8 7F020678 C486015C */  lwc1  $f6, 0x15c($a0)
-/* 0551AC 7F02067C 46103101 */  sub.s $f4, $f6, $f16
-/* 0551B0 7F020680 46004282 */  mul.s $f10, $f8, $f0
-/* 0551B4 7F020684 00000000 */  nop   
-/* 0551B8 7F020688 46002202 */  mul.s $f8, $f4, $f0
-/* 0551BC 7F02068C 460A7480 */  add.s $f18, $f14, $f10
-/* 0551C0 7F020690 46088280 */  add.s $f10, $f16, $f8
-/* 0551C4 7F020694 E4920148 */  swc1  $f18, 0x148($a0)
-/* 0551C8 7F020698 E48A014C */  swc1  $f10, 0x14c($a0)
-/* 0551CC 7F02069C 8DEF8374 */  lw    $t7, %lo(g_ClockTimer)($t7)
-/* 0551D0 7F0206A0 01CFC023 */  subu  $t8, $t6, $t7
-/* 0551D4 7F0206A4 03E00008 */  jr    $ra
-/* 0551D8 7F0206A8 A098000E */   sb    $t8, 0xe($a0)
-
-/* 0551DC 7F0206AC C4920150 */  lwc1  $f18, 0x150($a0)
-.L7F0206B0:
-/* 0551E0 7F0206B0 C4860154 */  lwc1  $f6, 0x154($a0)
-/* 0551E4 7F0206B4 C4840158 */  lwc1  $f4, 0x158($a0)
-/* 0551E8 7F0206B8 C488015C */  lwc1  $f8, 0x15c($a0)
-/* 0551EC 7F0206BC E4920140 */  swc1  $f18, 0x140($a0)
-/* 0551F0 7F0206C0 E4860144 */  swc1  $f6, 0x144($a0)
-/* 0551F4 7F0206C4 E4840148 */  swc1  $f4, 0x148($a0)
-/* 0551F8 7F0206C8 E488014C */  swc1  $f8, 0x14c($a0)
-/* 0551FC 7F0206CC 03E00008 */  jr    $ra
-/* 055200 7F0206D0 00000000 */   nop   
-)
+        temp_f0 = g_GlobalTimerDelta / (f32) arg0->aimendcount;
 #endif
-#ifdef VERSION_JP
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0205F0
-/* 055120 7F0205F0 8082000E */  lb    $v0, 0xe($a0)
-/* 055124 7F0205F4 28410002 */  slti  $at, $v0, 2
-/* 055128 7F0205F8 5420002D */  bnezl $at, .L7F0206B0
-/* 05512C 7F0205FC C4920150 */   lwc1  $f18, 0x150($a0)
-/* 055130 7F020600 44823000 */  mtc1  $v0, $f6
-/* 055134 7F020604 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 055138 7F020608 44811000 */  mtc1  $at, $f2
-/* 05513C 7F02060C 46803220 */  cvt.s.w $f8, $f6
-/* 055140 7F020610 3C018005 */  lui   $at, %hi(g_JP_GlobalTimerDelta)
-/* 055144 7F020614 C4248378 */  lwc1  $f4, %lo(g_JP_GlobalTimerDelta)($at)
-/* 055148 7F020618 46082003 */  div.s $f0, $f4, $f8
-/* 05514C 7F02061C 4600103C */  c.lt.s $f2, $f0
-/* 055150 7F020620 00000000 */  nop   
-/* 055154 7F020624 45020003 */  bc1fl .L7F020634
-/* 055158 7F020628 C4820140 */   lwc1  $f2, 0x140($a0)
-/* 05515C 7F02062C 46001006 */  mov.s $f0, $f2
-/* 055160 7F020630 C4820140 */  lwc1  $f2, 0x140($a0)
-.L7F020634:
-/* 055164 7F020634 C48A0150 */  lwc1  $f10, 0x150($a0)
-/* 055168 7F020638 C48C0144 */  lwc1  $f12, 0x144($a0)
-/* 05516C 7F02063C C4880154 */  lwc1  $f8, 0x154($a0)
-/* 055170 7F020640 46025481 */  sub.s $f18, $f10, $f2
-/* 055174 7F020644 C48E0148 */  lwc1  $f14, 0x148($a0)
-/* 055178 7F020648 C490014C */  lwc1  $f16, 0x14c($a0)
-/* 05517C 7F02064C 460C4281 */  sub.s $f10, $f8, $f12
-/* 055180 7F020650 46009182 */  mul.s $f6, $f18, $f0
-/* 055184 7F020654 3C0F8005 */  lui   $t7, %hi(g_ClockTimer) 
-/* 055188 7F020658 808E000E */  lb    $t6, 0xe($a0)
-/* 05518C 7F02065C 46005482 */  mul.s $f18, $f10, $f0
-/* 055190 7F020660 46061100 */  add.s $f4, $f2, $f6
-/* 055194 7F020664 46126180 */  add.s $f6, $f12, $f18
-/* 055198 7F020668 E4840140 */  swc1  $f4, 0x140($a0)
-/* 05519C 7F02066C C4840158 */  lwc1  $f4, 0x158($a0)
-/* 0551A0 7F020670 E4860144 */  swc1  $f6, 0x144($a0)
-/* 0551A4 7F020674 460E2201 */  sub.s $f8, $f4, $f14
-/* 0551A8 7F020678 C486015C */  lwc1  $f6, 0x15c($a0)
-/* 0551AC 7F02067C 46103101 */  sub.s $f4, $f6, $f16
-/* 0551B0 7F020680 46004282 */  mul.s $f10, $f8, $f0
-/* 0551B4 7F020684 00000000 */  nop   
-/* 0551B8 7F020688 46002202 */  mul.s $f8, $f4, $f0
-/* 0551BC 7F02068C 460A7480 */  add.s $f18, $f14, $f10
-/* 0551C0 7F020690 46088280 */  add.s $f10, $f16, $f8
-/* 0551C4 7F020694 E4920148 */  swc1  $f18, 0x148($a0)
-/* 0551C8 7F020698 E48A014C */  swc1  $f10, 0x14c($a0)
-/* 0551CC 7F02069C 8DEF8374 */  lw    $t7, %lo(g_ClockTimer)($t7)
-/* 0551D0 7F0206A0 01CFC023 */  subu  $t8, $t6, $t7
-/* 0551D4 7F0206A4 03E00008 */  jr    $ra
-/* 0551D8 7F0206A8 A098000E */   sb    $t8, 0xe($a0)
+        
+        if (temp_f0 > 1.0f)
+        {
+            temp_f0 = 1.0f;
+        }
 
-/* 0551DC 7F0206AC C4920150 */  lwc1  $f18, 0x150($a0)
-.L7F0206B0:
-/* 0551E0 7F0206B0 C4860154 */  lwc1  $f6, 0x154($a0)
-/* 0551E4 7F0206B4 C4840158 */  lwc1  $f4, 0x158($a0)
-/* 0551E8 7F0206B8 C488015C */  lwc1  $f8, 0x15c($a0)
-/* 0551EC 7F0206BC E4920140 */  swc1  $f18, 0x140($a0)
-/* 0551F0 7F0206C0 E4860144 */  swc1  $f6, 0x144($a0)
-/* 0551F4 7F0206C4 E4840148 */  swc1  $f4, 0x148($a0)
-/* 0551F8 7F0206C8 E488014C */  swc1  $f8, 0x14c($a0)
-/* 0551FC 7F0206CC 03E00008 */  jr    $ra
-/* 055200 7F0206D0 00000000 */   nop   
-)
-#endif
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0205F0
-/* 055120 7F0205F0 8082000E */  lb    $v0, 0xe($a0)
-/* 055124 7F0205F4 28410002 */  slti  $at, $v0, 2
-/* 055128 7F0205F8 5420002D */  bnezl $at, .L7F0206B0
-/* 05512C 7F0205FC C4920150 */   lwc1  $f18, 0x150($a0)
-/* 055130 7F020600 44823000 */  mtc1  $v0, $f6
-/* 055134 7F020604 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 055138 7F020608 44811000 */  mtc1  $at, $f2
-/* 05513C 7F02060C 46803220 */  cvt.s.w $f8, $f6
-/* 055140 7F020610 3C018005 */  lui   $at, %hi(g_GlobalTimerDelta)
-/* 055144 7F020614 C4248378 */  lwc1  $f4, %lo(g_GlobalTimerDelta)($at)
-/* 055148 7F020618 46082003 */  div.s $f0, $f4, $f8
-/* 05514C 7F02061C 4600103C */  c.lt.s $f2, $f0
-/* 055150 7F020620 00000000 */  nop   
-/* 055154 7F020624 45020003 */  bc1fl .L7F020634
-/* 055158 7F020628 C4820140 */   lwc1  $f2, 0x140($a0)
-/* 05515C 7F02062C 46001006 */  mov.s $f0, $f2
-/* 055160 7F020630 C4820140 */  lwc1  $f2, 0x140($a0)
-.L7F020634:
-/* 055164 7F020634 C48A0150 */  lwc1  $f10, 0x150($a0)
-/* 055168 7F020638 C48C0144 */  lwc1  $f12, 0x144($a0)
-/* 05516C 7F02063C C4880154 */  lwc1  $f8, 0x154($a0)
-/* 055170 7F020640 46025481 */  sub.s $f18, $f10, $f2
-/* 055174 7F020644 C48E0148 */  lwc1  $f14, 0x148($a0)
-/* 055178 7F020648 C490014C */  lwc1  $f16, 0x14c($a0)
-/* 05517C 7F02064C 460C4281 */  sub.s $f10, $f8, $f12
-/* 055180 7F020650 46009182 */  mul.s $f6, $f18, $f0
-/* 055184 7F020654 3C0F8005 */  lui   $t7, %hi(g_ClockTimer) 
-/* 055188 7F020658 808E000E */  lb    $t6, 0xe($a0)
-/* 05518C 7F02065C 46005482 */  mul.s $f18, $f10, $f0
-/* 055190 7F020660 46061100 */  add.s $f4, $f2, $f6
-/* 055194 7F020664 46126180 */  add.s $f6, $f12, $f18
-/* 055198 7F020668 E4840140 */  swc1  $f4, 0x140($a0)
-/* 05519C 7F02066C C4840158 */  lwc1  $f4, 0x158($a0)
-/* 0551A0 7F020670 E4860144 */  swc1  $f6, 0x144($a0)
-/* 0551A4 7F020674 460E2201 */  sub.s $f8, $f4, $f14
-/* 0551A8 7F020678 C486015C */  lwc1  $f6, 0x15c($a0)
-/* 0551AC 7F02067C 46103101 */  sub.s $f4, $f6, $f16
-/* 0551B0 7F020680 46004282 */  mul.s $f10, $f8, $f0
-/* 0551B4 7F020684 00000000 */  nop   
-/* 0551B8 7F020688 46002202 */  mul.s $f8, $f4, $f0
-/* 0551BC 7F02068C 460A7480 */  add.s $f18, $f14, $f10
-/* 0551C0 7F020690 46088280 */  add.s $f10, $f16, $f8
-/* 0551C4 7F020694 E4920148 */  swc1  $f18, 0x148($a0)
-/* 0551C8 7F020698 E48A014C */  swc1  $f10, 0x14c($a0)
-/* 0551CC 7F02069C 8DEF8374 */  lw    $t7, %lo(g_ClockTimer)($t7)
-/* 0551D0 7F0206A0 01CFC023 */  subu  $t8, $t6, $t7
-/* 0551D4 7F0206A4 03E00008 */  jr    $ra
-/* 0551D8 7F0206A8 A098000E */   sb    $t8, 0xe($a0)
+        arg0->aimuplshoulder += ((arg0->aimendlshoulder - arg0->aimuplshoulder) * temp_f0);
+        arg0->aimuprshoulder += ((arg0->aimendrshoulder - arg0->aimuprshoulder) * temp_f0);
+        arg0->aimupback += ((arg0->aimendback - arg0->aimupback) * temp_f0);
+        arg0->aimsideback += ((arg0->aimendsideback - arg0->aimsideback) * temp_f0);
+        arg0->aimendcount -= g_ClockTimer;
 
-/* 0551DC 7F0206AC C4920150 */  lwc1  $f18, 0x150($a0)
-.L7F0206B0:
-/* 0551E0 7F0206B0 C4860154 */  lwc1  $f6, 0x154($a0)
-/* 0551E4 7F0206B4 C4840158 */  lwc1  $f4, 0x158($a0)
-/* 0551E8 7F0206B8 C488015C */  lwc1  $f8, 0x15c($a0)
-/* 0551EC 7F0206BC E4920140 */  swc1  $f18, 0x140($a0)
-/* 0551F0 7F0206C0 E4860144 */  swc1  $f6, 0x144($a0)
-/* 0551F4 7F0206C4 E4840148 */  swc1  $f4, 0x148($a0)
-/* 0551F8 7F0206C8 E488014C */  swc1  $f8, 0x14c($a0)
-/* 0551FC 7F0206CC 03E00008 */  jr    $ra
-/* 055200 7F0206D0 00000000 */   nop   
-)
-#endif
+        return;
+    }
 
-#endif
+    arg0->aimuplshoulder = arg0->aimendlshoulder;
+    arg0->aimuprshoulder = arg0->aimendrshoulder;
+    arg0->aimupback = arg0->aimendback;
+    arg0->aimsideback = arg0->aimendsideback;
+}
 
 
 
@@ -4792,7 +4628,7 @@ glabel sub_GAME_7F020EF0
 /* 055F28 7F0213F8 35AC0200 */  ori   $t4, $t5, 0x200
 /* 055F2C 7F0213FC A60C0012 */  sh    $t4, 0x12($s0)
 .L7F021400:
-/* 055F30 7F021400 0FC0817C */  jal   sub_GAME_7F0205F0
+/* 055F30 7F021400 0FC0817C */  jal   chrAimGlobalTimerTickRelated
 /* 055F34 7F021404 02002025 */   move  $a0, $s0
 /* 055F38 7F021408 8E040020 */  lw    $a0, 0x20($s0)
 /* 055F3C 7F02140C 50800005 */  beql  $a0, $zero, .L7F021424
@@ -5644,7 +5480,7 @@ glabel sub_GAME_7F020EF0
 /* 056200 7F021690 35AC0200 */  ori   $t4, $t5, 0x200
 /* 056204 7F021694 A60C0012 */  sh    $t4, 0x12($s0)
 .Ljp7F021698:
-/* 056208 7F021698 0FC081E8 */  jal   sub_GAME_7F0205F0
+/* 056208 7F021698 0FC081E8 */  jal   chrAimGlobalTimerTickRelated
 /* 05620C 7F02169C 02002025 */   move  $a0, $s0
 /* 056210 7F0216A0 8E040020 */  lw    $a0, 0x20($s0)
 /* 056214 7F0216A4 50800005 */  beql  $a0, $zero, .Ljp7F0216BC

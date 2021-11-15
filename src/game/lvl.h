@@ -50,6 +50,10 @@ extern s32 record_slot_num;
 extern s32 address_demo_loaded;
 extern s32 dword_CODE_bss_8008C5F8;
 
+#ifdef VERSION_JP
+extern f32 g_JP_GlobalTimerDelta;
+#endif
+
 void lvInitDebugNoticeList(void);
 Gfx * lvlRender(Gfx *);
 void lvlSetSelectedDifficulty(DIFFICULTY arg0);
