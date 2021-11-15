@@ -3,12 +3,15 @@
 #include "ultra64.h"
 #include "bondconstants.h"
 #include "structs.h"
+#include "snd.h"
 #include "game/chrobjdata.h"
 
 #define _mkshort(a, b) ((a << 8) | (b & 0xff))
 #define _mkword(a, b) ((a << 16) | (b & 0xffff))
 
 typedef s32 bool;
+
+struct object_standard;
 
 // This hacky structure allows coords to be accessed using
 // coord->x, coord->y and coord->z, but also as
@@ -767,7 +770,7 @@ struct chrdata {
     u16 hidden;
     s32 chrflags;
     struct prop* posdata;
-    void * model;
+    struct object_standard *model;
     /* 0x0020 */
     void * field_20;
     f32 chrwidth;
@@ -874,11 +877,11 @@ struct chrdata {
     f32 aimendsideback;
     /* 0x0160 */
     int * handle_positiondata[2];
-    int * ptr_SEbuffer1;
-    int * ptr_SEbuffer2;
+    ALSoundState *ptr_SEbuffer1;
+    ALSoundState *ptr_SEbuffer2;
     /* 0x0170 */
-    int * ptr_SEbuffer3;
-    int * ptr_SEbuffer4;
+    ALSoundState *ptr_SEbuffer3;
+    ALSoundState *ptr_SEbuffer4;
     int field_178;
     int field_17C;
     /* 0x0180 */

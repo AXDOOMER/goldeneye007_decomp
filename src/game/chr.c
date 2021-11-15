@@ -1,7 +1,9 @@
 #include "ultra64.h"
 #include "bondgame.h"
+#include "snd.h"
 #include "game/chr.h"
 #include "game/chrai.h"
+#include "game/chrobjhandler.h"
 #include "game/gun.h"
 #include "game/lvl_text.h"
 #include "game/stan.h"
@@ -2985,8 +2987,65 @@ s32 replace_GUARDdata_with_actual_values(s32 arg0, s32 arg1, s32 arg2, s32 arg3,
 
 
 #ifdef NONMATCHING
-void disable_sounds_attached_to_player_then_something(struct prop* prop) {
+/**
+ * Address 0x7F020414.
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: fail
+ * - identical registers: fail
+ * 
+ * notes: something isn't right around the area the nextSibling pointer is iterated.
+ */
+void disable_sounds_attached_to_player_then_something(struct prop *prop)
+{
+    struct prop *p;
+    struct chrdata *chr;
+    struct object_standard *model;
+    
+    chr = prop->chr;
+    model = chr->model;
 
+    if ((chr->ptr_SEbuffer1 != NULL) && (sndGetPlayingState(chr->ptr_SEbuffer1) != 0))
+    {
+        sndDeactivate(chr->ptr_SEbuffer1);
+    }
+
+    if ((chr->ptr_SEbuffer2 != NULL) && (sndGetPlayingState(chr->ptr_SEbuffer2) != 0))
+    {
+        sndDeactivate(chr->ptr_SEbuffer2);
+    }
+
+    if ((chr->ptr_SEbuffer3 != NULL) && (sndGetPlayingState(chr->ptr_SEbuffer3) != 0))
+    {
+        sndDeactivate(chr->ptr_SEbuffer3);
+    }
+
+    if ((chr->ptr_SEbuffer4 != NULL) && (sndGetPlayingState(chr->ptr_SEbuffer4) != 0))
+    {
+        sndDeactivate(chr->ptr_SEbuffer4);
+    }
+
+    sub_GAME_7F050DE8(model);
+    sub_GAME_7F03E18C(prop);
+
+    p = prop->child;
+    while (p != NULL)
+    {
+        sub_GAME_7F04C044(p);
+        sub_GAME_7F041024(p->chr, 1);
+        p = p->nextSibling;
+    }
+
+    set_aircraft_obj_inst_scale_to_zero(model);
+
+    chr->model = NULL;
+    chr->chrnum = -1;
+    if (chr->field_20 != NULL)
+    {
+        sub_GAME_7F06B248(chr->field_20);
+    }
 }
 #else
 GLOBAL_ASM(
