@@ -261,8 +261,16 @@ s32 D_800364B8 = 0;
 s32 D_800364BC = 0;
 //D:800364C0
 s32 ptr_random06cam_entry = 0;
-//D:800364C4
-s32 invisible_to_guards_flag = 1;
+
+/**
+ * Flag to toggle invisibility cheat.
+ * 1 = visible to guards
+ * 0 = not visible to guards
+ * 
+ * Address 0x800364C4.
+ */
+s32 g_VisibleToGuardsFlag = 1;
+
 //D:800364C8
 s32 obj_collision_flag = 1;
 //D:800364CC
@@ -17369,7 +17377,7 @@ glabel controller_gameplay_interaction
 .L7F082C88:
 /* 0B77B8 7F082C88 0FC19D08 */  jal   sub_GAME_7F067420
 /* 0B77BC 7F082C8C 8FA401B4 */   lw    $a0, 0x1b4($sp)
-/* 0B77C0 7F082C90 0FC227DD */  jal   get_invisible_to_guards_flag
+/* 0B77C0 7F082C90 0FC227DD */  jal   bondviewGetVisibleToGuardsFlag
 /* 0B77C4 7F082C94 00000000 */   nop
 /* 0B77C8 7F082C98 50400028 */  beql  $v0, $zero, .L7F082D3C
 /* 0B77CC 7F082C9C 24040002 */   li    $a0, 2
@@ -32874,13 +32882,22 @@ u8 get_bondata_invincible_flag(void) {
 }
 
 
-
-void set_invisible_to_guards_flag(s32 param_1) {
-  invisible_to_guards_flag = param_1;
+/**
+ * Sets g_VisibleToGuardsFlag.
+ * 1 = visible, 0 = not visible.
+ */
+void bondviewSetVisibleToGuardsFlag(s32 param_1)
+{
+  g_VisibleToGuardsFlag = param_1;
 }
 
-s32 get_invisible_to_guards_flag(void) {
-    return invisible_to_guards_flag;
+/**
+ * Gets g_VisibleToGuardsFlag.
+ * 1 = visible, 0 = not visible
+ */
+s32 bondviewGetVisibleToGuardsFlag(void)
+{
+    return g_VisibleToGuardsFlag;
 }
 
 void set_obj_collision_flag(s32 flag) {

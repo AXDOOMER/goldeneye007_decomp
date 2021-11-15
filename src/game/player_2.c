@@ -1195,7 +1195,7 @@ glabel initBONDdataforPlayer
 /* 0CFAE0 7F09AFB0 E58C11D0 */  swc1  $f12, 0x11d0($t4)
 /* 0CFAE4 7F09AFB4 8C6D0000 */  lw    $t5, ($v1)
 /* 0CFAE8 7F09AFB8 C4247628 */  lwc1  $f4, %lo(D_80057628)($at)
-/* 0CFAEC 7F09AFBC 3C018003 */  lui   $at, %hi(invisible_to_guards_flag)
+/* 0CFAEC 7F09AFBC 3C018003 */  lui   $at, %hi(g_VisibleToGuardsFlag)
 /* 0CFAF0 7F09AFC0 E5A411D4 */  swc1  $f4, 0x11d4($t5)
 /* 0CFAF4 7F09AFC4 8C780000 */  lw    $t8, ($v1)
 /* 0CFAF8 7F09AFC8 AF0011D8 */  sw    $zero, 0x11d8($t8)
@@ -1274,7 +1274,7 @@ glabel initBONDdataforPlayer
 /* 0CFC1C 7F09B0EC 8C6F0000 */  lw    $t7, ($v1)
 /* 0CFC20 7F09B0F0 ADE02A70 */  sw    $zero, 0x2a70($t7)
 /* 0CFC24 7F09B0F4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0CFC28 7F09B0F8 AC2864C4 */  sw    $t0, %lo(invisible_to_guards_flag)($at)
+/* 0CFC28 7F09B0F8 AC2864C4 */  sw    $t0, %lo(g_VisibleToGuardsFlag)($at)
 /* 0CFC2C 7F09B0FC 3C018003 */  lui   $at, %hi(obj_collision_flag)
 /* 0CFC30 7F09B100 AC2864C8 */  sw    $t0, %lo(obj_collision_flag)($at)
 /* 0CFC34 7F09B104 03E00008 */  jr    $ra
@@ -2009,7 +2009,7 @@ glabel initBONDdataforPlayer
 /* 0D06C0 7F09BB50 E58C11D0 */  swc1  $f12, 0x11d0($t4)
 /* 0D06C4 7F09BB54 8C6D0000 */  lw    $t5, ($v1)
 /* 0D06C8 7F09BB58 C4247658 */  lwc1  $f4, %lo(D_80057628)($at)
-/* 0D06CC 7F09BB5C 3C018003 */  lui   $at, %hi(invisible_to_guards_flag) # $at, 0x8003
+/* 0D06CC 7F09BB5C 3C018003 */  lui   $at, %hi(g_VisibleToGuardsFlag) # $at, 0x8003
 /* 0D06D0 7F09BB60 E5A411D4 */  swc1  $f4, 0x11d4($t5)
 /* 0D06D4 7F09BB64 8C780000 */  lw    $t8, ($v1)
 /* 0D06D8 7F09BB68 AF0011D8 */  sw    $zero, 0x11d8($t8)
@@ -2088,7 +2088,7 @@ glabel initBONDdataforPlayer
 /* 0D07FC 7F09BC8C 8C6F0000 */  lw    $t7, ($v1)
 /* 0D0800 7F09BC90 ADE02A70 */  sw    $zero, 0x2a70($t7)
 /* 0D0804 7F09BC94 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0D0808 7F09BC98 AC286504 */  sw    $t0, %lo(invisible_to_guards_flag)($at)
+/* 0D0808 7F09BC98 AC286504 */  sw    $t0, %lo(g_VisibleToGuardsFlag)($at)
 /* 0D080C 7F09BC9C 3C018003 */  lui   $at, %hi(obj_collision_flag) # $at, 0x8003
 /* 0D0810 7F09BCA0 AC286508 */  sw    $t0, %lo(obj_collision_flag)($at)
 /* 0D0814 7F09BCA4 03E00008 */  jr    $ra

@@ -1178,16 +1178,15 @@ struct player
   s32 field_1280;
   s32 players_cur_animation;
   s32 field_1288;
-  s32 field_128C;
-  s32 field_1290;
-  s32 field_1294;
-  s32 field_1298;
-  s32 field_129C;
-  s32 field_12A0;
-  s32 field_12A4;
-  s32 field_12A8;
-  s32 field_12AC;
-  s32 field_12B0;
+
+  /**
+   * Offset 0x128c.
+   */
+  u16 cheat_display_text_related[20];
+
+  /**
+   * Offset 0x12b4.
+   */
   u8 something_with_cheat_text;
   u8 can_display_cheat_text;
   u8 bondinvincible;
@@ -2715,8 +2714,8 @@ struct player
   s32 field_2A30;
   s32 field_2A34;
   s32 cur_item_weapon_getname;
-  s32 actual_health;
-  s32 actual_armor;
+  f32 actual_health;
+  f32 actual_armor;
   s32 field_2A44[2];
   f32 field_2A4C;
   s32 lock_hand_model[2];
@@ -2845,7 +2844,7 @@ extern s32 D_800364BC;
 //D:800364C0
 extern s32 ptr_random06cam_entry;
 //D:800364C4
-extern s32 invisible_to_guards_flag;
+extern s32 g_VisibleToGuardsFlag;
 //D:800364C8
 extern s32 obj_collision_flag;
 //D:800364CC
@@ -3103,11 +3102,11 @@ f32 bondviewGetCurrentPlayerHealth(void);
 f32 get_BONDdata_watch_armor(void);
 void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2);
 
-#ifndef VERSION_US
-// VERSION_EU, VERSION_JP
+#ifdef VERSION_JP
+// VERSION_JP
 void display_string_in_lower_left_corner(char *string, s32 arg1, s32 arg2);
 #else
-// VERSION_US
+// VERSION_US, VERSION_EU
 void display_string_in_lower_left_corner(char *string);
 #endif
 
@@ -3148,7 +3147,11 @@ void bondviewSetIntroCameraFlags(s32 flags);
 Gfx* bondviewGfxPlayerField5cMatrix(Gfx* gdl);
 Mtxf *currentPlayerGetMatrix10D4(void);
 void sub_GAME_7F08BEEC(Mtxf *arg0, s32 arg1);
-
+void currentPlayerStartChrFade(f32 duration60, f32 targetfrac);
+s32 bondviewGetVisibleToGuardsFlag(void);
+u8 get_bondata_invincible_flag(void);
+void set_bondata_invincible_flag(u32 arg0);
+void bondviewSetVisibleToGuardsFlag(s32 param_1);
 
 // unknown pointer arg0
 s32 sub_GAME_7F08BCC0(void *arg0, s32 arg1);

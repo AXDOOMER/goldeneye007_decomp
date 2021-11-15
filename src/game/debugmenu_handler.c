@@ -446,7 +446,7 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                 set_bondata_invincible_flag(get_bondata_invincible_flag() == 0);
                 break;
             case 15: // visible
-                set_invisible_to_guards_flag(get_invisible_to_guards_flag() == 0);
+                bondviewSetVisibleToGuardsFlag(bondviewGetVisibleToGuardsFlag() == 0);
                 break;
             case 16: // collisions
                 set_obj_collision_flag(get_obj_collision_flag() == 0);
@@ -1004,9 +1004,9 @@ debug_invincible:
 /* 0C53DC 7F0908AC 10000172 */  b     .L7F090E78
 /* 0C53E0 7F0908B0 8FB80018 */   lw    $t8, 0x18($sp)
 debug_visible:
-/* 0C53E4 7F0908B4 0FC227DD */  jal   get_invisible_to_guards_flag
+/* 0C53E4 7F0908B4 0FC227DD */  jal   bondviewGetVisibleToGuardsFlag
 /* 0C53E8 7F0908B8 00000000 */   nop   
-/* 0C53EC 7F0908BC 0FC227DA */  jal   set_invisible_to_guards_flag
+/* 0C53EC 7F0908BC 0FC227DA */  jal   bondviewSetVisibleToGuardsFlag
 /* 0C53F0 7F0908C0 2C440001 */   sltiu $a0, $v0, 1
 /* 0C53F4 7F0908C4 1000016C */  b     .L7F090E78
 /* 0C53F8 7F0908C8 8FB80018 */   lw    $t8, 0x18($sp)

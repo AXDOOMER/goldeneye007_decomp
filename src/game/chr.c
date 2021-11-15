@@ -3566,16 +3566,19 @@ glabel sub_GAME_7F020794
 #endif
 
 #ifndef VERSION_US
-s32 not_in_us_7F0209EC(s32 arg0, s32 arg1)
+s32 not_in_us_7F0209EC(s32 bodynum, s32 headnum)
 {
     if (j_text_trigger == 0)
     {
         return 1;
     }
-    if ((arg0 != 6) && (arg0 != 7) && (arg0 != 8) && (arg0 != 9) && (arg0 != 0xA) && (arg0 != 0xB) && (arg0 != 0xC) && (arg0 != 0xD) && (arg0 != 0xE) && (arg0 != 0xF) && (arg0 != 0x10) && (arg0 != 0x4F) && (arg1 != 0x4A) && (arg1 != 0x4B) && (arg1 != 0x4C) && (arg1 != 0x4D) && (arg1 != 0x4E) && (arg1 != 0x45))
+
+    if ((bodynum != 6) && (bodynum != 7) && (bodynum != 8) && (bodynum != 9) && (bodynum != 0xA) && (bodynum != 0xB) && (bodynum != 0xC) && (bodynum != 0xD) && (bodynum != 0xE) && (bodynum != 0xF) && (bodynum != 0x10) && (bodynum != 0x4F) 
+        && (headnum != 0x4A) && (headnum != 0x4B) && (headnum != 0x4C) && (headnum != 0x4D) && (headnum != 0x4E) && (headnum != 0x45))
     {
         return 1;
     }
+
     return 0;
 }
 #endif
