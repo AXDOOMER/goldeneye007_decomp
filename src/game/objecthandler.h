@@ -12,7 +12,7 @@ extern s32 vtxallocator;
 
 // arg0 unknown pointer
 void sub_GAME_7F070090(void *arg0, f32 arg1, f32 arg2);
-
+void sub_GAME_7F06FF18(struct object_standard *, f32, f32);
 void set_obj_instance_controller_scale(struct Model*, f32);
 
 #endif
