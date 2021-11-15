@@ -7430,22 +7430,13 @@ void chrIncrementAnimationTablePointerCount(void)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F022EC8(void) {
-
+/**
+ * Address 0x7F022EC8.
+ */
+void chrToggleD_8002C90C(void)
+{
+    D_8002C90C = !D_8002C90C;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F022EC8
-/* 0579F8 7F022EC8 3C038003 */  lui   $v1, %hi(D_8002C90C)
-/* 0579FC 7F022ECC 2463C90C */  addiu $v1, %lo(D_8002C90C) # addiu $v1, $v1, -0x36f4
-/* 057A00 7F022ED0 8C620000 */  lw    $v0, ($v1)
-/* 057A04 7F022ED4 2C4E0001 */  sltiu $t6, $v0, 1
-/* 057A08 7F022ED8 03E00008 */  jr    $ra
-/* 057A0C 7F022EDC AC6E0000 */   sw    $t6, ($v1)
-)
-#endif
 
 
 
