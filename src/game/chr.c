@@ -6039,28 +6039,21 @@ void chrSetD_8002CCB8(u8 *arg0)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F021BD8(void *arg0)
+/**
+ * Unreferenced.
+ * 
+ * Gets D_8002CCB8 3 bytes and sets them into parameter.
+ * 
+ * @param arg0: u8[3].
+ * 
+ * Address 0x7F021BD8.
+ */
+void chrGetD_8002CCB8(u8 *arg0)
 {
-    arg0->unk0 = (u8) D_8002CCB8.unk0;
-    arg0->unk1 = (u8) D_8002CCB8.unk1;
-    arg0->unk2 = (u8) D_8002CCB8.unk2;
+    arg0[0] = D_8002CCB8[0];
+    arg0[1] = D_8002CCB8[1];
+    arg0[2] = D_8002CCB8[2];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F021BD8
-/* 056708 7F021BD8 3C028003 */  lui   $v0, %hi(D_8002CCB8)
-/* 05670C 7F021BDC 2442CCB8 */  addiu $v0, %lo(D_8002CCB8) # addiu $v0, $v0, -0x3348
-/* 056710 7F021BE0 904E0000 */  lbu   $t6, ($v0)
-/* 056714 7F021BE4 A08E0000 */  sb    $t6, ($a0)
-/* 056718 7F021BE8 904F0001 */  lbu   $t7, 1($v0)
-/* 05671C 7F021BEC A08F0001 */  sb    $t7, 1($a0)
-/* 056720 7F021BF0 90580002 */  lbu   $t8, 2($v0)
-/* 056724 7F021BF4 03E00008 */  jr    $ra
-/* 056728 7F021BF8 A0980002 */   sb    $t8, 2($a0)
-)
-#endif
 
 
 
