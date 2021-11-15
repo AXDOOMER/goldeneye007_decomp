@@ -2543,7 +2543,7 @@ void lvlManageMpGame(void)
 
                 if (joyGetButtonsPressedThisFrame(PLAYER_1, R_CBUTTONS))
                 {
-                    sub_GAME_7F022E90();
+                    chrIncrementAnimationTablePointerCount();
                 }
 
                 if (joyGetButtonsPressedThisFrame(PLAYER_1, L_TRIG))
@@ -3377,7 +3377,7 @@ glabel lvlManageMpGame
 /* 0F40E8 7F0BF5B8 24050001 */   li    $a1, 1
 /* 0F40EC 7F0BF5BC 50400004 */  beql  $v0, $zero, .L7F0BF5D0
 /* 0F40F0 7F0BF5C0 00002025 */   move  $a0, $zero
-/* 0F40F4 7F0BF5C4 0FC08BA4 */  jal   sub_GAME_7F022E90
+/* 0F40F4 7F0BF5C4 0FC08BA4 */  jal   chrIncrementAnimationTablePointerCount
 /* 0F40F8 7F0BF5C8 00000000 */   nop
 /* 0F40FC 7F0BF5CC 00002025 */  move  $a0, $zero
 .L7F0BF5D0:
@@ -4268,7 +4268,7 @@ glabel lvlManageMpGame
 /* 0F4D60 7F0C01F0 24050001 */   li    $a1, 1
 /* 0F4D64 7F0C01F4 50400004 */  beql  $v0, $zero, .Ljp7F0C0208
 /* 0F4D68 7F0C01F8 00002025 */   move  $a0, $zero
-/* 0F4D6C 7F0C01FC 0FC08C5E */  jal   sub_GAME_7F022E90
+/* 0F4D6C 7F0C01FC 0FC08C5E */  jal   chrIncrementAnimationTablePointerCount
 /* 0F4D70 7F0C0200 00000000 */   nop
 /* 0F4D74 7F0C0204 00002025 */  move  $a0, $zero
 .Ljp7F0C0208:
@@ -5148,7 +5148,7 @@ glabel lvlManageMpGame
 /* 0F40E8 7F0BF5B8 24050001 */   li    $a1, 1
 /* 0F40EC 7F0BF5BC 50400004 */  beql  $v0, $zero, .L7F0BF5D0
 /* 0F40F0 7F0BF5C0 00002025 */   move  $a0, $zero
-/* 0F40F4 7F0BF5C4 0FC08BA4 */  jal   sub_GAME_7F022E90
+/* 0F40F4 7F0BF5C4 0FC08BA4 */  jal   chrIncrementAnimationTablePointerCount
 /* 0F40F8 7F0BF5C8 00000000 */   nop
 /* 0F40FC 7F0BF5CC 00002025 */  move  $a0, $zero
 .L7F0BF5D0:

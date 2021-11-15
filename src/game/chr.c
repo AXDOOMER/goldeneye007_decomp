@@ -7411,31 +7411,22 @@ void chrDecrementAnimationTablePointerCount(void)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F022E90(void) {
+/**
+ * Decrements g_AnimationTablePointerCountRelated.
+ * If the entry in animation_table_ptrs1 at that index is zero
+ * then the global variable will be set to zero.
+ * 
+ * Address 0x7F022E90.
+ */
+void chrIncrementAnimationTablePointerCount(void)
+{
+    g_AnimationTablePointerCountRelated++;
 
+    if (animation_table_ptrs1[g_AnimationTablePointerCountRelated] == 0)
+    {
+        g_AnimationTablePointerCountRelated = 0;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F022E90
-/* 0579C0 7F022E90 3C028003 */  lui   $v0, %hi(g_AnimationTablePointerCountRelated)
-/* 0579C4 7F022E94 2442C908 */  addiu $v0, %lo(g_AnimationTablePointerCountRelated) # addiu $v0, $v0, -0x36f8
-/* 0579C8 7F022E98 8C4E0000 */  lw    $t6, ($v0)
-/* 0579CC 7F022E9C 3C088003 */  lui   $t0, %hi(animation_table_ptrs1)
-/* 0579D0 7F022EA0 25CF0001 */  addiu $t7, $t6, 1
-/* 0579D4 7F022EA4 000FC880 */  sll   $t9, $t7, 2
-/* 0579D8 7F022EA8 AC4F0000 */  sw    $t7, ($v0)
-/* 0579DC 7F022EAC 01194021 */  addu  $t0, $t0, $t9
-/* 0579E0 7F022EB0 8D089D6C */  lw    $t0, %lo(animation_table_ptrs1)($t0)
-/* 0579E4 7F022EB4 15000002 */  bnez  $t0, .L7F022EC0
-/* 0579E8 7F022EB8 00000000 */   nop   
-/* 0579EC 7F022EBC AC400000 */  sw    $zero, ($v0)
-.L7F022EC0:
-/* 0579F0 7F022EC0 03E00008 */  jr    $ra
-/* 0579F4 7F022EC4 00000000 */   nop   
-)
-#endif
 
 
 
