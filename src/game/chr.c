@@ -2,6 +2,7 @@
 #include "bondgame.h"
 #include "random.h"
 #include "snd.h"
+#include "include/math.h"
 #include "game/chr.h"
 #include "game/chrai.h"
 #include "game/chrobjhandler.h"
@@ -3266,8 +3267,29 @@ void chrSetHiddenToRandom(struct chrdata *arg0)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F020794(void) {
+/**
+ * Address 0x7F020794.
+ */
+f32 sub_GAME_7F020794(struct chrdata *arg0)
+{
+    // this method matches, but references D_80051D28,D_80051D2C
+    // for the M_2PI_F variable.
+    
+    f32 temp_f2;
+    f32 phi_f2;
 
+    temp_f2 = (f32) arg0->flinchcnt;
+
+    if (temp_f2 < 10.0f)
+    {
+        phi_f2 = sinf((temp_f2 * M_2PI_F * 0.25f) / 10.0f);
+    }
+    else
+    {
+        phi_f2 = 1.0f - sinf(((temp_f2 - 10.0f) * M_2PI_F * 0.25f) / 20.0f);
+    }
+
+    return phi_f2;
 }
 #else
 GLOBAL_ASM(
