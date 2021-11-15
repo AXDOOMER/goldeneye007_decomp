@@ -211,6 +211,8 @@ void disable_sounds_attached_to_player_then_something(struct prop* prop);
 void sub_GAME_7F020D94(struct chrdata *);
 void set_or_unset_GUARDdata_flag(struct chrdata *guard,s32 param_2);
 s32 sub_GAME_7F021BFC();
+f32 get_animation_rate(void);
+void animation_speed_related(f32);
 
 #ifndef VERSION_US
 s32 not_in_us_7F0209EC(s32 bodynum, s32 headnum);

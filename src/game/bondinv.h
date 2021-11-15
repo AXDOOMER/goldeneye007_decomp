@@ -16,5 +16,8 @@ void choose_cycle_back_weapon(s32 *nextright, s32 *nextleft, s32 requireammo);
 void choose_cycle_forward_weapon(s32 *nextright, s32 *nextleft, s32 requireammo);
 int checkforgoldengun(void);
 int add_item_to_inventory(ITEM_IDS item);
+int add_doubles_item_to_inventory(ITEM_IDS right, ITEM_IDS left);
+s32 get_BONDdata_allguns_flag(void);
+void set_BONDdata_allguns_flag(s32 all_guns);
 
 #endif

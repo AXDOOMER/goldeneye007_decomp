@@ -1675,7 +1675,7 @@ typedef enum CREDITS_ALIGNMENT {
 } CREDITS_ALIGNMENT;
 
 /*
-values need to be verified against cheat_buttons.c : void handle_cheats_turned_on(CHEAT_IDS cheat)
+values need to be verified against cheat_buttons.c : void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat)
 */
 typedef enum CHEAT_IDS {
     

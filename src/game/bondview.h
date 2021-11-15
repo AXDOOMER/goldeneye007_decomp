@@ -2714,8 +2714,8 @@ struct player
   s32 field_2A30;
   s32 field_2A34;
   s32 cur_item_weapon_getname;
-  s32 actual_health;
-  s32 actual_armor;
+  f32 actual_health;
+  f32 actual_armor;
   s32 field_2A44[2];
   f32 field_2A4C;
   s32 lock_hand_model[2];
@@ -3148,6 +3148,10 @@ Gfx* bondviewGfxPlayerField5cMatrix(Gfx* gdl);
 Mtxf *currentPlayerGetMatrix10D4(void);
 void sub_GAME_7F08BEEC(Mtxf *arg0, s32 arg1);
 void currentPlayerStartChrFade(f32 duration60, f32 targetfrac);
+s32 get_invisible_to_guards_flag(void);
+u8 get_bondata_invincible_flag(void);
+void set_bondata_invincible_flag(u32 arg0);
+void set_invisible_to_guards_flag(s32 param_1);
 
 // unknown pointer arg0
 s32 sub_GAME_7F08BCC0(void *arg0, s32 arg1);
