@@ -47,7 +47,7 @@ struct CheatInfo {
      * Seems to be pointer to u16 array.
      * Offset 0x4.
      */
-    u16 * anonymous_1;
+    u16 * cheatbuttons;
 
     /**
      * Offset 0x8.
@@ -727,7 +727,7 @@ struct CheatInfo g_CheatInfo[] = {
     {           CHEAT_INVINCIBILITY,  0xA, 0, 0, btncheat_invincibility,       0xB000, 0,  /* 0x06 */ CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
     {                 CHEAT_ALLGUNS,  0xA, 0, 0, btncheat_allguns,             0xB001, 0,  /* 0x02 */ CHEAT_MASK_2},
     {                 CHEAT_MAXAMMO,  0xA, 0, 0, btncheat_maxammo,                  0, 0,  /* 0x16 */ CHEAT_MASK_16 | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
-    {                           0x5,  0xA, 0, 0, btncheat_0x5,                  0, 0,  /* 0x16 */ CHEAT_MASK_16 | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
+    {                           0x5,  0xA, 0, 0, btncheat_0x5,                      0, 0,  /* 0x16 */ CHEAT_MASK_16 | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
     {CHEAT_DEACTIVATE_INVINCIBILITY,  0xA, 0, 0, btncheat_removeinvincibility,      0, 0,  /* 0x34 */ CHEAT_MASK_GLOBAL | CHEAT_MASK_16 | CHEAT_MASK_MULTIPLAYER},
     {                CHEAT_LINEMODE,  0xA, 0, 0, btncheat_linemode,            0xB037, 0,  /* 0x66 */ CHEAT_MASK_64 | CHEAT_MASK_GLOBAL | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
     {               CHEAT_2X_HEALTH,    0, 0, 0,                0,                  0, 0,  /* 0x16 */ CHEAT_MASK_16 | CHEAT_MASK_MULTIPLAYER | CHEAT_MASK_2},
@@ -870,7 +870,7 @@ void cheatButtonActivateRelated(void)
                 find_index=0;
                 for (; find_index < info->count_of_something; find_index++)
                 {
-                    if (g_CurrentPlayer->cheat_display_text_related[id_index] == info->anonymous_1[find_index])
+                    if (g_CurrentPlayer->cheat_display_text_related[id_index] == info->cheatbuttons[find_index])
                     {
                         id_index = (s32) (id_index + 1) % CHEAT_20;
                         continue;
