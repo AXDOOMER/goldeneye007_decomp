@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "bondgame.h"
+#include "random.h"
 #include "snd.h"
 #include "game/chr.h"
 #include "game/chrai.h"
@@ -3214,69 +3215,53 @@ void chrAimGlobalTimerTickRelated(struct chrdata *arg0)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0206D4(void) {
+/**
+ * Address 0x7F0206D4.
+ */
+void chrSetHiddenToRandom(struct chrdata *arg0)
+{
+    struct chrdata *temp_a0;
+    u32 rand;
 
+    if ((s32) arg0->flinchcnt < 0)
+    {
+        arg0->flinchcnt = 1;
+        arg0->hidden &= 0xFFF;
+        
+        // roll for bits 12,13.
+        // rand -> value
+        // 2 => nothing
+        // 0 => set bit 12
+        // 1 => set bit 13
+        rand = randomGetNext() % 3U;
+        
+        if (rand == 0)
+        {
+            arg0->hidden |= 0x1000;
+        }
+        else if (rand == 1)
+        {
+            arg0->hidden |= 0x2000;
+        }
+
+        // roll for bits 14,15.
+        // rand -> value
+        // 2 => nothing
+        // 0 => set bit 14
+        // 1 => set bit 15
+        rand = randomGetNext() % 3U;
+        
+        if (rand == 0)
+        {
+            arg0->hidden |= 0x4000;
+        }
+        else if (rand == 1)
+        {
+            arg0->hidden |= 0x8000;
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0206D4
-/* 055204 7F0206D4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 055208 7F0206D8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05520C 7F0206DC 808E0011 */  lb    $t6, 0x11($a0)
-/* 055210 7F0206E0 05C30029 */  bgezl $t6, .L7F020788
-/* 055214 7F0206E4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 055218 7F0206E8 94980012 */  lhu   $t8, 0x12($a0)
-/* 05521C 7F0206EC 240F0001 */  li    $t7, 1
-/* 055220 7F0206F0 A08F0011 */  sb    $t7, 0x11($a0)
-/* 055224 7F0206F4 33190FFF */  andi  $t9, $t8, 0xfff
-/* 055228 7F0206F8 A4990012 */  sh    $t9, 0x12($a0)
-/* 05522C 7F0206FC 0C002914 */  jal   randomGetNext
-/* 055230 7F020700 AFA40018 */   sw    $a0, 0x18($sp)
-/* 055234 7F020704 24010003 */  li    $at, 3
-/* 055238 7F020708 0041001B */  divu  $zero, $v0, $at
-/* 05523C 7F02070C 00001810 */  mfhi  $v1
-/* 055240 7F020710 8FA40018 */  lw    $a0, 0x18($sp)
-/* 055244 7F020714 14600005 */  bnez  $v1, .L7F02072C
-/* 055248 7F020718 24010001 */   li    $at, 1
-/* 05524C 7F02071C 94880012 */  lhu   $t0, 0x12($a0)
-/* 055250 7F020720 35091000 */  ori   $t1, $t0, 0x1000
-/* 055254 7F020724 10000006 */  b     .L7F020740
-/* 055258 7F020728 A4890012 */   sh    $t1, 0x12($a0)
-.L7F02072C:
-/* 05525C 7F02072C 14610004 */  bne   $v1, $at, .L7F020740
-/* 055260 7F020730 00000000 */   nop   
-/* 055264 7F020734 948A0012 */  lhu   $t2, 0x12($a0)
-/* 055268 7F020738 354B2000 */  ori   $t3, $t2, 0x2000
-/* 05526C 7F02073C A48B0012 */  sh    $t3, 0x12($a0)
-.L7F020740:
-/* 055270 7F020740 0C002914 */  jal   randomGetNext
-/* 055274 7F020744 AFA40018 */   sw    $a0, 0x18($sp)
-/* 055278 7F020748 24010003 */  li    $at, 3
-/* 05527C 7F02074C 0041001B */  divu  $zero, $v0, $at
-/* 055280 7F020750 00001810 */  mfhi  $v1
-/* 055284 7F020754 8FA40018 */  lw    $a0, 0x18($sp)
-/* 055288 7F020758 14600005 */  bnez  $v1, .L7F020770
-/* 05528C 7F02075C 24010001 */   li    $at, 1
-/* 055290 7F020760 948C0012 */  lhu   $t4, 0x12($a0)
-/* 055294 7F020764 358D4000 */  ori   $t5, $t4, 0x4000
-/* 055298 7F020768 10000006 */  b     .L7F020784
-/* 05529C 7F02076C A48D0012 */   sh    $t5, 0x12($a0)
-.L7F020770:
-/* 0552A0 7F020770 54610005 */  bnel  $v1, $at, .L7F020788
-/* 0552A4 7F020774 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0552A8 7F020778 948E0012 */  lhu   $t6, 0x12($a0)
-/* 0552AC 7F02077C 35CF8000 */  ori   $t7, $t6, 0x8000
-/* 0552B0 7F020780 A48F0012 */  sh    $t7, 0x12($a0)
-.L7F020784:
-/* 0552B4 7F020784 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F020788:
-/* 0552B8 7F020788 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0552BC 7F02078C 03E00008 */  jr    $ra
-/* 0552C0 7F020790 00000000 */   nop   
-)
-#endif
+
 
 
 

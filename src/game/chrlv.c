@@ -5493,7 +5493,7 @@ glabel handles_shot_actors
 /* 05BF30 7F027400 A208000B */  sb    $t0, 0xb($s0)
 /* 05BF34 7F027404 11800005 */  beqz  $t4, .L7F02741C
 /* 05BF38 7F027408 AE090014 */   sw    $t1, 0x14($s0)
-/* 05BF3C 7F02740C 0FC081B5 */  jal   sub_GAME_7F0206D4
+/* 05BF3C 7F02740C 0FC081B5 */  jal   chrSetHiddenToRandom
 /* 05BF40 7F027410 02002025 */   move  $a0, $s0
 /* 05BF44 7F027414 100000F6 */  b     .L7F0277F0
 /* 05BF48 7F027418 00001025 */   move  $v0, $zero
@@ -5708,7 +5708,7 @@ glabel handles_shot_actors
 /* 05C240 7F027710 E7A60034 */   swc1  $f6, 0x34($sp)
 /* 05C244 7F027714 54400006 */  bnezl $v0, .L7F027730
 /* 05C248 7F027718 8FAA006C */   lw    $t2, 0x6c($sp)
-/* 05C24C 7F02771C 0FC081B5 */  jal   sub_GAME_7F0206D4
+/* 05C24C 7F02771C 0FC081B5 */  jal   chrSetHiddenToRandom
 /* 05C250 7F027720 02002025 */   move  $a0, $s0
 /* 05C254 7F027724 10000032 */  b     .L7F0277F0
 /* 05C258 7F027728 00001025 */   move  $v0, $zero
