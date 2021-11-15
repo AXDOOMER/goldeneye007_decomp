@@ -876,7 +876,7 @@ struct chrdata {
     f32 aimendback;
     f32 aimendsideback;
     /* 0x0160 */
-    int * handle_positiondata[2];
+    struct prop * handle_positiondata[2];
     ALSoundState *ptr_SEbuffer1;
     ALSoundState *ptr_SEbuffer2;
     /* 0x0170 */
@@ -918,7 +918,7 @@ struct chrdata {
     /* 0x01D0 */
     int field_1D0;
     int field_1D4;
-    int * handle_positiondata_hat;
+    struct prop * handle_positiondata_hat;
 };
 
 typedef struct object_standard {

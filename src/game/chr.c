@@ -5942,9 +5942,36 @@ glabel sub_GAME_7F020EF0
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F021B20(void) {
+/**
+ * Address 0x7F021B20.
+ * 
+ *  decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: yes
+ * - identical registers: fail
+ * 
+ * notes: just regalloc
+ */
+void sub_GAME_7F021B20(struct chrdata *arg0)
+{
+    struct prop *phi_s0;
 
+    for (phi_s0 = arg0->posdata->child; phi_s0 != NULL; phi_s0 = phi_s0->nextSibling)
+    {
+        if (
+            (phi_s0 != arg0->handle_positiondata_hat)
+            && (phi_s0 != arg0->handle_positiondata[1])
+            && (phi_s0 != arg0->handle_positiondata[0])
+            && ((phi_s0->obj->flags & 0x2000) == 0))
+        {
+            sub_GAME_7F04BFD0(phi_s0, 1);
+        }
+    }
+
+    arg0->hidden |= 1;
 }
+
 #else
 GLOBAL_ASM(
 .text
