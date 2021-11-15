@@ -1,6 +1,7 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "game/chr.h"
+#include "game/chrai.h"
 #include "game/gun.h"
 #include "game/lvl_text.h"
 #include "game/stan.h"
@@ -2962,40 +2963,24 @@ glabel init_GUARDdata_with_set_values
 
 
 
-#ifdef NONMATCHING
-void replace_GUARDdata_with_actual_values(void) {
+/**
+ * Address 0x7F0203B8.
+ */
+s32 replace_GUARDdata_with_actual_values(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
+{
+    s32 ret;
+    s32 phi_a0;
 
+    ret = remove_last_obj_pos_data_entry();
+
+    if (ret != 0)
+    {
+        ret = init_GUARDdata_with_set_values(ret, arg0, arg1, arg2, arg3, arg4);
+    }
+
+    return ret;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel replace_GUARDdata_with_actual_values
-/* 054EE8 7F0203B8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 054EEC 7F0203BC AFBF001C */  sw    $ra, 0x1c($sp)
-/* 054EF0 7F0203C0 AFA40020 */  sw    $a0, 0x20($sp)
-/* 054EF4 7F0203C4 AFA50024 */  sw    $a1, 0x24($sp)
-/* 054EF8 7F0203C8 AFA60028 */  sw    $a2, 0x28($sp)
-/* 054EFC 7F0203CC 0FC0E90C */  jal   remove_last_obj_pos_data_entry
-/* 054F00 7F0203D0 AFA7002C */   sw    $a3, 0x2c($sp)
-/* 054F04 7F0203D4 1040000A */  beqz  $v0, .L7F020400
-/* 054F08 7F0203D8 00402025 */   move  $a0, $v0
-/* 054F0C 7F0203DC 8FAE002C */  lw    $t6, 0x2c($sp)
-/* 054F10 7F0203E0 8FAF0030 */  lw    $t7, 0x30($sp)
-/* 054F14 7F0203E4 8FA50020 */  lw    $a1, 0x20($sp)
-/* 054F18 7F0203E8 8FA60024 */  lw    $a2, 0x24($sp)
-/* 054F1C 7F0203EC 8FA70028 */  lw    $a3, 0x28($sp)
-/* 054F20 7F0203F0 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 054F24 7F0203F4 0FC0802F */  jal   init_GUARDdata_with_set_values
-/* 054F28 7F0203F8 AFAF0014 */   sw    $t7, 0x14($sp)
-/* 054F2C 7F0203FC 00402025 */  move  $a0, $v0
-.L7F020400:
-/* 054F30 7F020400 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 054F34 7F020404 27BD0020 */  addiu $sp, $sp, 0x20
-/* 054F38 7F020408 00801025 */  move  $v0, $a0
-/* 054F3C 7F02040C 03E00008 */  jr    $ra
-/* 054F40 7F020410 00000000 */   nop   
-)
-#endif
+
 
 
 
