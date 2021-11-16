@@ -857,13 +857,12 @@ struct chrdata {
     u16 chrpreset1; /* ID CHR_PRESET */
     u16 chrseeshot; /* ID CHR_SEE_SHOT - ignores invincible/armoured guards */
     u16 chrseedie; /* ID CHR_SEE_DIE */
-    /* 0x011C */
-    f32 field_11C[2];
-    f32 field_124[2];
-    f32 field_12C[2];
-    /* 0x0134 */
-    int field_134;
-    int field_138;
+
+    /**
+     * Offset 0x011c.
+     */
+    struct rect4f collision_bounds;
+
     f32 shotbondsum;
     /* 0x0140 */
     f32 aimuplshoulder;

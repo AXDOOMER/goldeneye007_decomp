@@ -467,18 +467,6 @@ struct player
   /* 0x00a8 */ struct prop* prop;
   /* 0x00ac */ s32 field_AC;
 
-//   /* 0x00b0 */ f32 field_B0;
-//   /* 0x00b4 */ f32 zpos_0;
-
-//   /* 0x00b8 */ f32 xpos_0;
-//   /* 0x00bc */ f32 field_BC;
-
-//   /* 0x00c0 */ f32 field_C0;
-//   /* 0x00c4 */ f32 zpos_1;
-
-//   /* 0x00c8 */ f32 xpos_1;
-//   /* 0x00cc */ f32 field_CC;
-
   /**
    * Offset 0x00b0.
    */

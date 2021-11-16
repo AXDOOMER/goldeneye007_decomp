@@ -7532,71 +7532,53 @@ struct prop *is_weapon_in_guarddata_hand(struct chrdata *arg0, s32 arg1)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02308C(void) {
+/**
+ * Updates character collision bounds based on chracter width.
+ * 
+ * @param arg0: prop
+ * @param arg1: out parameter, will contain character collision_bounds.
+ * @param arg2: out parameter, will contain 0 or 4
+ * @param y_out: out parameter, will be character ground + character height
+ * @param ground: out parameter, will contain character ground
+ * 
+ * Address 0x7F02308C.
+ */
+void chrUpdateCollisionBounds(struct prop *arg0, struct rect4f **arg1, s32 *arg2, f32 *y_out, f32 *ground)
+{
+    struct chrdata *chr;
 
+    chr = arg0->chr;
+
+    if (
+        (chr->actiontype != ACT_DIE)
+        && (chr->actiontype != ACT_DEAD)
+        && ((chr->chrflags & 0x10400) == 0)
+        && ((chr->hidden & 0x100) == 0))
+    {
+        *arg2 = 4;
+        *arg1 = &chr->collision_bounds;
+
+        chr->collision_bounds.f[0] = arg0->position.x + chr->chrwidth;
+        chr->collision_bounds.f[1] = arg0->position.z;
+
+        chr->collision_bounds.f[2] = arg0->position.x;
+        chr->collision_bounds.f[3] = arg0->position.z + chr->chrwidth;
+
+        chr->collision_bounds.f[4] = arg0->position.x - chr->chrwidth;
+        chr->collision_bounds.f[5] = arg0->position.z;
+
+        chr->collision_bounds.f[6] = arg0->position.x;
+        chr->collision_bounds.f[7] = arg0->position.z - chr->chrwidth;
+
+        *ground = chr->ground;
+        *y_out = *ground + chr->chrheight;
+
+        return;
+    }
+
+    *arg2 = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02308C
-/* 057BBC 7F02308C 8C820004 */  lw    $v0, 4($a0)
-/* 057BC0 7F023090 24080004 */  li    $t0, 4
-/* 057BC4 7F023094 24010005 */  li    $at, 5
-/* 057BC8 7F023098 80430007 */  lb    $v1, 7($v0)
-/* 057BCC 7F02309C 5103002E */  beql  $t0, $v1, .L7F023158
-/* 057BD0 7F0230A0 ACC00000 */   sw    $zero, ($a2)
-/* 057BD4 7F0230A4 5061002C */  beql  $v1, $at, .L7F023158
-/* 057BD8 7F0230A8 ACC00000 */   sw    $zero, ($a2)
-/* 057BDC 7F0230AC 8C4E0014 */  lw    $t6, 0x14($v0)
-/* 057BE0 7F0230B0 3C010001 */  lui   $at, (0x00010400 >> 16) # lui $at, 1
-/* 057BE4 7F0230B4 34210400 */  ori   $at, (0x00010400 & 0xFFFF) # ori $at, $at, 0x400
-/* 057BE8 7F0230B8 01C17824 */  and   $t7, $t6, $at
-/* 057BEC 7F0230BC 55E00026 */  bnezl $t7, .L7F023158
-/* 057BF0 7F0230C0 ACC00000 */   sw    $zero, ($a2)
-/* 057BF4 7F0230C4 94580012 */  lhu   $t8, 0x12($v0)
-/* 057BF8 7F0230C8 2449011C */  addiu $t1, $v0, 0x11c
-/* 057BFC 7F0230CC 33190100 */  andi  $t9, $t8, 0x100
-/* 057C00 7F0230D0 57200021 */  bnezl $t9, .L7F023158
-/* 057C04 7F0230D4 ACC00000 */   sw    $zero, ($a2)
-/* 057C08 7F0230D8 ACC80000 */  sw    $t0, ($a2)
-/* 057C0C 7F0230DC ACA90000 */  sw    $t1, ($a1)
-/* 057C10 7F0230E0 C4840008 */  lwc1  $f4, 8($a0)
-/* 057C14 7F0230E4 C4400024 */  lwc1  $f0, 0x24($v0)
-/* 057C18 7F0230E8 46002180 */  add.s $f6, $f4, $f0
-/* 057C1C 7F0230EC E446011C */  swc1  $f6, 0x11c($v0)
-/* 057C20 7F0230F0 C4880010 */  lwc1  $f8, 0x10($a0)
-/* 057C24 7F0230F4 E4480120 */  swc1  $f8, 0x120($v0)
-/* 057C28 7F0230F8 C48A0008 */  lwc1  $f10, 8($a0)
-/* 057C2C 7F0230FC E44A0124 */  swc1  $f10, 0x124($v0)
-/* 057C30 7F023100 C4900010 */  lwc1  $f16, 0x10($a0)
-/* 057C34 7F023104 46008480 */  add.s $f18, $f16, $f0
-/* 057C38 7F023108 E4520128 */  swc1  $f18, 0x128($v0)
-/* 057C3C 7F02310C C4840008 */  lwc1  $f4, 8($a0)
-/* 057C40 7F023110 46002181 */  sub.s $f6, $f4, $f0
-/* 057C44 7F023114 C44400AC */  lwc1  $f4, 0xac($v0)
-/* 057C48 7F023118 E446012C */  swc1  $f6, 0x12c($v0)
-/* 057C4C 7F02311C C4880010 */  lwc1  $f8, 0x10($a0)
-/* 057C50 7F023120 E4480130 */  swc1  $f8, 0x130($v0)
-/* 057C54 7F023124 C48A0008 */  lwc1  $f10, 8($a0)
-/* 057C58 7F023128 E44A0134 */  swc1  $f10, 0x134($v0)
-/* 057C5C 7F02312C C4900010 */  lwc1  $f16, 0x10($a0)
-/* 057C60 7F023130 8FA30010 */  lw    $v1, 0x10($sp)
-/* 057C64 7F023134 46008481 */  sub.s $f18, $f16, $f0
-/* 057C68 7F023138 E4520138 */  swc1  $f18, 0x138($v0)
-/* 057C6C 7F02313C E4640000 */  swc1  $f4, ($v1)
-/* 057C70 7F023140 C4480028 */  lwc1  $f8, 0x28($v0)
-/* 057C74 7F023144 C4660000 */  lwc1  $f6, ($v1)
-/* 057C78 7F023148 46083280 */  add.s $f10, $f6, $f8
-/* 057C7C 7F02314C 03E00008 */  jr    $ra
-/* 057C80 7F023150 E4EA0000 */   swc1  $f10, ($a3)
 
-/* 057C84 7F023154 ACC00000 */  sw    $zero, ($a2)
-.L7F023158:
-/* 057C88 7F023158 03E00008 */  jr    $ra
-/* 057C8C 7F02315C 00000000 */   nop   
-)
-#endif
 
 
 

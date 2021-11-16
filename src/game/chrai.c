@@ -23447,7 +23447,7 @@ glabel sub_GAME_7F03CC20
 /* 071768 7F03CC38 8FAE0030 */  lw    $t6, 0x30($sp)
 /* 07176C 7F03CC3C 54410006 */  bnel  $v0, $at, .L7F03CC58
 /* 071770 7F03CC40 24010006 */   li    $at, 6
-/* 071774 7F03CC44 0FC08C23 */  jal   sub_GAME_7F02308C
+/* 071774 7F03CC44 0FC08C23 */  jal   chrUpdateCollisionBounds
 /* 071778 7F03CC48 AFAE0010 */   sw    $t6, 0x10($sp)
 /* 07177C 7F03CC4C 10000015 */  b     .L7F03CCA4
 /* 071780 7F03CC50 8FBF001C */   lw    $ra, 0x1c($sp)
