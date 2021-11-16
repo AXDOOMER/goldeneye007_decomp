@@ -10,6 +10,12 @@
 #include "game/math_asinfacosf.h"
 #include "game/math_atan2f.h"
 
+// forward declarations
+
+u32 check_if_item_held_like_pistol(struct prop *arg0);
+
+// end forward declarations
+
 
 s32 load_body_head_if_not_loaded(s32 model)
 {
@@ -590,32 +596,20 @@ glabel expand_09_characters
 
 
 
-#ifdef NONMATCHING
-void check_if_item_held_like_pistol(void) {
+/**
+ * Address 0x7F023910.
+ */
+u32 check_if_item_held_like_pistol(struct prop *arg0)
+{
+    if (arg0 != NULL)
+    {
+        struct chrdata *v = (struct chrdata*)arg0->voidp;
 
+        return bondwalkItemCheckBitflags(v->field_80[0], 0x100U);
+    }
+
+    return 0U;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_item_held_like_pistol
-/* 058440 7F023910 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 058444 7F023914 10800007 */  beqz  $a0, .L7F023934
-/* 058448 7F023918 AFBF0014 */   sw    $ra, 0x14($sp)
-/* 05844C 7F02391C 8C820004 */  lw    $v0, 4($a0)
-/* 058450 7F023920 24050100 */  li    $a1, 256
-/* 058454 7F023924 0FC1782D */  jal   bondwalkItemCheckBitflags
-/* 058458 7F023928 80440080 */   lb    $a0, 0x80($v0)
-/* 05845C 7F02392C 10000003 */  b     .L7F02393C
-/* 058460 7F023930 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F023934:
-/* 058464 7F023934 00001025 */  move  $v0, $zero
-/* 058468 7F023938 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F02393C:
-/* 05846C 7F02393C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 058470 7F023940 03E00008 */  jr    $ra
-/* 058474 7F023944 00000000 */   nop   
-)
-#endif
 
 
 

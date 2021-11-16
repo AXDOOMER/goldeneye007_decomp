@@ -34,6 +34,7 @@ struct prop {
     u8 flags;
     s16 timetoregen;
     union {
+        void *voidp;
         struct chrdata* chr;
         struct ObjectRecord* obj;
         // 	struct defaultobj *obj;
