@@ -56,4 +56,25 @@ struct prop {
     u8 rooms[4];
 };
 
+struct prop_chr {
+    u8 type; // enum EObjectClass
+    u8 flags;
+    s16 timetoregen;
+
+    struct chrdata* chr;
+    
+    /* 0x08 */
+    struct float3 position;
+    /* 0x14 */
+    struct StandTile * standTile;
+    /* 0x18 */
+    u32 unknown_0x18;
+    /* 0x1C */
+    struct prop * host;
+    struct prop * child;
+    struct prop * nextSibling;
+    struct prop * prevSibling;
+    u8 rooms[4];
+};
+
 #endif

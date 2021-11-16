@@ -7508,38 +7508,27 @@ struct prop *something_with_weaponpos_of_guarddata_hand(struct chrdata *arg0, s3
 
 
 
-#ifdef NONMATCHING
-void is_weapon_in_guarddata_hand(void) {
+/**
+ * Address 0x7F02303C.
+ */
+struct prop *is_weapon_in_guarddata_hand(struct chrdata *arg0, s32 arg1)
+{
+    struct prop *ret;
 
+    ret = arg0->handle_positiondata[arg1];
+
+    if (ret != NULL)
+    {
+        struct chrdata *c = ret->chr;
+
+        if (bondwalkItemCheckBitflags(c->field_80[0], 0x200) == 0)
+        {
+            ret = NULL;
+        }
+    }
+
+    return ret;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel is_weapon_in_guarddata_hand
-/* 057B6C 7F02303C 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 057B70 7F023040 00057080 */  sll   $t6, $a1, 2
-/* 057B74 7F023044 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 057B78 7F023048 008E7821 */  addu  $t7, $a0, $t6
-/* 057B7C 7F02304C 8DE30160 */  lw    $v1, 0x160($t7)
-/* 057B80 7F023050 5060000A */  beql  $v1, $zero, .L7F02307C
-/* 057B84 7F023054 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 057B88 7F023058 8C620004 */  lw    $v0, 4($v1)
-/* 057B8C 7F02305C 24050200 */  li    $a1, 512
-/* 057B90 7F023060 80440080 */  lb    $a0, 0x80($v0)
-/* 057B94 7F023064 0FC1782D */  jal   bondwalkItemCheckBitflags
-/* 057B98 7F023068 AFA3001C */   sw    $v1, 0x1c($sp)
-/* 057B9C 7F02306C 14400002 */  bnez  $v0, .L7F023078
-/* 057BA0 7F023070 8FA3001C */   lw    $v1, 0x1c($sp)
-/* 057BA4 7F023074 00001825 */  move  $v1, $zero
-.L7F023078:
-/* 057BA8 7F023078 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F02307C:
-/* 057BAC 7F02307C 27BD0020 */  addiu $sp, $sp, 0x20
-/* 057BB0 7F023080 00601025 */  move  $v0, $v1
-/* 057BB4 7F023084 03E00008 */  jr    $ra
-/* 057BB8 7F023088 00000000 */   nop   
-)
-#endif
 
 
 

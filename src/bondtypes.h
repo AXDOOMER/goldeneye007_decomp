@@ -809,7 +809,7 @@ struct chrdata {
     int field_78;
     int field_7C;
     /* 0x0080 */
-    int field_80;
+    s8 field_80[4];
     int field_84;
     int field_88;
     int field_8C;
