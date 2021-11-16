@@ -23,7 +23,7 @@ s32 select_psuedorandom_heads(s32 id);
 s32 get_random_head(s32 id);
 f32 distToBond3D(struct chrdata *guardData);
 
-void sub_GAME_7F029C00(struct chrdata *);
+void chrlvAlertGuardToPlayerPosition(struct chrdata *);
 
 
 

@@ -8769,40 +8769,21 @@ glabel sub_GAME_7F029BB0
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F029C00(void) {
+/**
+ * Address 0x7F029C00.
+ */
+void chrlvAlertGuardToPlayerPosition(struct chrdata *arg0)
+{
+    struct prop *temp_v0;
 
+    temp_v0 = get_curplayer_positiondata();
+    arg0->hidden |= 2;
+    arg0->lastheartarget60 = g_GlobalTimer;
+    arg0->lastvisibletarg[0] = temp_v0->position.x;
+    arg0->lastvisibletarg[1] = temp_v0->position.y;
+    arg0->lastvisibletarg[2] = temp_v0->position.z;
+    arg0->field_E4 = temp_v0->standTile;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F029C00
-/* 05E730 7F029C00 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 05E734 7F029C04 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05E738 7F029C08 0FC225E6 */  jal   get_curplayer_positiondata
-/* 05E73C 7F029C0C AFA40018 */   sw    $a0, 0x18($sp)
-/* 05E740 7F029C10 8FA40018 */  lw    $a0, 0x18($sp)
-/* 05E744 7F029C14 3C188005 */  lui   $t8, %hi(g_GlobalTimer) 
-/* 05E748 7F029C18 948E0012 */  lhu   $t6, 0x12($a0)
-/* 05E74C 7F029C1C 35CF0002 */  ori   $t7, $t6, 2
-/* 05E750 7F029C20 A48F0012 */  sh    $t7, 0x12($a0)
-/* 05E754 7F029C24 8F18837C */  lw    $t8, %lo(g_GlobalTimer)($t8)
-/* 05E758 7F029C28 AC9800F0 */  sw    $t8, 0xf0($a0)
-/* 05E75C 7F029C2C C4440008 */  lwc1  $f4, 8($v0)
-/* 05E760 7F029C30 E48400D8 */  swc1  $f4, 0xd8($a0)
-/* 05E764 7F029C34 C446000C */  lwc1  $f6, 0xc($v0)
-/* 05E768 7F029C38 E48600DC */  swc1  $f6, 0xdc($a0)
-/* 05E76C 7F029C3C C4480010 */  lwc1  $f8, 0x10($v0)
-/* 05E770 7F029C40 E48800E0 */  swc1  $f8, 0xe0($a0)
-/* 05E774 7F029C44 8C590014 */  lw    $t9, 0x14($v0)
-/* 05E778 7F029C48 AC9900E4 */  sw    $t9, 0xe4($a0)
-/* 05E77C 7F029C4C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05E780 7F029C50 27BD0018 */  addiu $sp, $sp, 0x18
-/* 05E784 7F029C54 03E00008 */  jr    $ra
-/* 05E788 7F029C58 00000000 */   nop   
-)
-#endif
-
 
 
 #ifdef NONMATCHING
