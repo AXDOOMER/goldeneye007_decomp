@@ -2778,9 +2778,10 @@ extern s32 ptr_playerstank;
 extern f32 g_PlayerTankYOffset;
 
 //D:80036458
-extern s32 SFX_80036458;
+extern ALSoundState * SFX_80036458;
 //D:8003645C
-extern s32 SFX_8003645C;
+extern ALSoundState * SFX_8003645C;
+
 //D:80036460
 extern s32 D_80036460;
 //D:80036464

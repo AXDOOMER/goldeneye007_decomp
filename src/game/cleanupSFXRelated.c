@@ -1,6 +1,7 @@
 #include "ultra64.h"
-#include "game/bondview.h"
+#include "snd.h"
 #include "include/PR/libaudio.h"
+#include "game/bondview.h"
 
 void cleanupSFXRelated(void) {
     if (SFX_80036458 != 0)

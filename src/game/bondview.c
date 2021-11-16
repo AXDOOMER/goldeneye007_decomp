@@ -202,9 +202,9 @@ s32 ptr_playerstank = 0;
 f32 g_PlayerTankYOffset = 0;
 
 //D:80036458
-s32 SFX_80036458 = 0;
+ALSoundState * SFX_80036458 = NULL;
 //D:8003645C
-s32 SFX_8003645C = 0;
+ALSoundState * SFX_8003645C = NULL;
 //D:80036460
 s32 D_80036460 = 0;
 //D:80036464
