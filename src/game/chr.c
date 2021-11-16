@@ -5948,21 +5948,13 @@ glabel sub_GAME_7F020EF0
 #endif
 
 
-#ifdef NONMATCHING
 /**
  * Address 0x7F021B20.
- * 
- *  decomp status:
- * - compiles: yes
- * - stack resize: ok
- * - identical instructions: yes
- * - identical registers: fail
- * 
- * notes: just regalloc
  */
 void sub_GAME_7F021B20(struct chrdata *arg0)
 {
     struct prop *phi_s0;
+    struct ObjectRecord * obj;
 
     for (phi_s0 = arg0->posdata->child; phi_s0 != NULL; phi_s0 = phi_s0->nextSibling)
     {
@@ -5970,61 +5962,19 @@ void sub_GAME_7F021B20(struct chrdata *arg0)
             (phi_s0 != arg0->handle_positiondata_hat)
             && (phi_s0 != arg0->handle_positiondata[1])
             && (phi_s0 != arg0->handle_positiondata[0])
-            && ((phi_s0->obj->flags & 0x2000) == 0))
+            )
         {
-            sub_GAME_7F04BFD0(phi_s0, 1);
+            obj = phi_s0->obj;
+
+            if ((obj->flags & 0x2000) == 0)
+            {
+                sub_GAME_7F04BFD0(phi_s0, 1);
+            }
         }
     }
 
     arg0->hidden |= 1;
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F021B20
-/* 056650 7F021B20 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 056654 7F021B24 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 056658 7F021B28 AFB10018 */  sw    $s1, 0x18($sp)
-/* 05665C 7F021B2C AFB00014 */  sw    $s0, 0x14($sp)
-/* 056660 7F021B30 8C8E0018 */  lw    $t6, 0x18($a0)
-/* 056664 7F021B34 00808825 */  move  $s1, $a0
-/* 056668 7F021B38 8DD00020 */  lw    $s0, 0x20($t6)
-/* 05666C 7F021B3C 52000016 */  beql  $s0, $zero, .L7F021B98
-/* 056670 7F021B40 962A0012 */   lhu   $t2, 0x12($s1)
-/* 056674 7F021B44 8E2F01D8 */  lw    $t7, 0x1d8($s1)
-.L7F021B48:
-/* 056678 7F021B48 520F0010 */  beql  $s0, $t7, .L7F021B8C
-/* 05667C 7F021B4C 8E100024 */   lw    $s0, 0x24($s0)
-/* 056680 7F021B50 8E380164 */  lw    $t8, 0x164($s1)
-/* 056684 7F021B54 5218000D */  beql  $s0, $t8, .L7F021B8C
-/* 056688 7F021B58 8E100024 */   lw    $s0, 0x24($s0)
-/* 05668C 7F021B5C 8E390160 */  lw    $t9, 0x160($s1)
-/* 056690 7F021B60 5219000A */  beql  $s0, $t9, .L7F021B8C
-/* 056694 7F021B64 8E100024 */   lw    $s0, 0x24($s0)
-/* 056698 7F021B68 8E020004 */  lw    $v0, 4($s0)
-/* 05669C 7F021B6C 02002025 */  move  $a0, $s0
-/* 0566A0 7F021B70 8C480008 */  lw    $t0, 8($v0)
-/* 0566A4 7F021B74 31092000 */  andi  $t1, $t0, 0x2000
-/* 0566A8 7F021B78 55200004 */  bnezl $t1, .L7F021B8C
-/* 0566AC 7F021B7C 8E100024 */   lw    $s0, 0x24($s0)
-/* 0566B0 7F021B80 0FC12FF4 */  jal   sub_GAME_7F04BFD0
-/* 0566B4 7F021B84 24050001 */   li    $a1, 1
-/* 0566B8 7F021B88 8E100024 */  lw    $s0, 0x24($s0)
-.L7F021B8C:
-/* 0566BC 7F021B8C 5600FFEE */  bnezl $s0, .L7F021B48
-/* 0566C0 7F021B90 8E2F01D8 */   lw    $t7, 0x1d8($s1)
-/* 0566C4 7F021B94 962A0012 */  lhu   $t2, 0x12($s1)
-.L7F021B98:
-/* 0566C8 7F021B98 354B0001 */  ori   $t3, $t2, 1
-/* 0566CC 7F021B9C A62B0012 */  sh    $t3, 0x12($s1)
-/* 0566D0 7F021BA0 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0566D4 7F021BA4 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0566D8 7F021BA8 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0566DC 7F021BAC 03E00008 */  jr    $ra
-/* 0566E0 7F021BB0 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
 
 
 
