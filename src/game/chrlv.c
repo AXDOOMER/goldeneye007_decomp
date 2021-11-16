@@ -21651,7 +21651,7 @@ glabel get_angle_between_actor_cur_player
 #endif
 
 
-float distToBond3D(struct chrdata *guardData)
+f32 distToBond3D(struct chrdata *guardData)
 {
   struct prop *guardPosData;
   struct prop *playerPosData;

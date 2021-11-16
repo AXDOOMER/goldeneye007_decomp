@@ -17420,7 +17420,7 @@ glabel controller_gameplay_interaction
 /* 0B7858 7F082D28 24040001 */   li    $a0, 1
 /* 0B785C 7F082D2C E7A000E4 */  swc1  $f0, 0xe4($sp)
 .L7F082D30:
-/* 0B7860 7F082D30 0FC08BBB */  jal   sub_GAME_7F022EEC
+/* 0B7860 7F082D30 0FC08BBB */  jal   chrCheckGuardsHeardSound
 /* 0B7864 7F082D34 C7AC00E4 */   lwc1  $f12, 0xe4($sp)
 /* 0B7868 7F082D38 24040002 */  li    $a0, 2
 .L7F082D3C:

@@ -5,6 +5,7 @@
 #include "include/math.h"
 #include "game/chr.h"
 #include "game/chrai.h"
+#include "game/chrlv.h"
 #include "game/chrobjhandler.h"
 #include "game/gun.h"
 #include "game/initanitable.h"
@@ -7447,74 +7448,29 @@ void sub_GAME_7F022EE0(s32 param_1){
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F022EEC(void) {
 
+/**
+ * Iterates all guards and checks if the noise is within the hearing scale distance.
+ * 
+ * @param noise: noise amount to check.
+ * 
+ * Address 0x7F022EEC.
+ */
+void chrCheckGuardsHeardSound(f32 noise)
+{
+    s32 i;
+
+    for (i=0; i<num_guards; i++)
+    {
+        if (ptr_guard_data[i].model != NULL)
+        {
+            if (distToBond3D(&ptr_guard_data[i]) < ptr_guard_data[i].hearingscale * (noise * 100.0f))
+            {
+                sub_GAME_7F029C00(&ptr_guard_data[i]);
+            }
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F022EEC
-/* 057A1C 7F022EEC 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 057A20 7F022EF0 AFB40038 */  sw    $s4, 0x38($sp)
-/* 057A24 7F022EF4 3C148003 */  lui   $s4, %hi(num_guards)
-/* 057A28 7F022EF8 2694CC68 */  addiu $s4, %lo(num_guards) # addiu $s4, $s4, -0x3398
-/* 057A2C 7F022EFC 8E8E0000 */  lw    $t6, ($s4)
-/* 057A30 7F022F00 AFB20030 */  sw    $s2, 0x30($sp)
-/* 057A34 7F022F04 F7B60020 */  sdc1  $f22, 0x20($sp)
-/* 057A38 7F022F08 46006586 */  mov.s $f22, $f12
-/* 057A3C 7F022F0C AFBF003C */  sw    $ra, 0x3c($sp)
-/* 057A40 7F022F10 AFB30034 */  sw    $s3, 0x34($sp)
-/* 057A44 7F022F14 AFB1002C */  sw    $s1, 0x2c($sp)
-/* 057A48 7F022F18 AFB00028 */  sw    $s0, 0x28($sp)
-/* 057A4C 7F022F1C F7B40018 */  sdc1  $f20, 0x18($sp)
-/* 057A50 7F022F20 19C0001F */  blez  $t6, .L7F022FA0
-/* 057A54 7F022F24 00009025 */   move  $s2, $zero
-/* 057A58 7F022F28 3C138003 */  lui   $s3, %hi(ptr_guard_data)
-/* 057A5C 7F022F2C 2673CC64 */  addiu $s3, %lo(ptr_guard_data) # addiu $s3, $s3, -0x339c
-/* 057A60 7F022F30 00008825 */  move  $s1, $zero
-/* 057A64 7F022F34 8E700000 */  lw    $s0, ($s3)
-.L7F022F38:
-/* 057A68 7F022F38 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 057A6C 7F022F3C 02117821 */  addu  $t7, $s0, $s1
-/* 057A70 7F022F40 8DF8001C */  lw    $t8, 0x1c($t7)
-/* 057A74 7F022F44 53000011 */  beql  $t8, $zero, .L7F022F8C
-/* 057A78 7F022F48 8E880000 */   lw    $t0, ($s4)
-/* 057A7C 7F022F4C 44812000 */  mtc1  $at, $f4
-/* 057A80 7F022F50 02302021 */  addu  $a0, $s1, $s0
-/* 057A84 7F022F54 4604B502 */  mul.s $f20, $f22, $f4
-/* 057A88 7F022F58 0FC0CB79 */  jal   distToBond3D
-/* 057A8C 7F022F5C 00000000 */   nop   
-/* 057A90 7F022F60 8E700000 */  lw    $s0, ($s3)
-/* 057A94 7F022F64 0211C821 */  addu  $t9, $s0, $s1
-/* 057A98 7F022F68 C72600EC */  lwc1  $f6, 0xec($t9)
-/* 057A9C 7F022F6C 46143202 */  mul.s $f8, $f6, $f20
-/* 057AA0 7F022F70 4608003C */  c.lt.s $f0, $f8
-/* 057AA4 7F022F74 00000000 */  nop   
-/* 057AA8 7F022F78 45020004 */  bc1fl .L7F022F8C
-/* 057AAC 7F022F7C 8E880000 */   lw    $t0, ($s4)
-/* 057AB0 7F022F80 0FC0A700 */  jal   sub_GAME_7F029C00
-/* 057AB4 7F022F84 02302021 */   addu  $a0, $s1, $s0
-/* 057AB8 7F022F88 8E880000 */  lw    $t0, ($s4)
-.L7F022F8C:
-/* 057ABC 7F022F8C 26520001 */  addiu $s2, $s2, 1
-/* 057AC0 7F022F90 263101DC */  addiu $s1, $s1, 0x1dc
-/* 057AC4 7F022F94 0248082A */  slt   $at, $s2, $t0
-/* 057AC8 7F022F98 5420FFE7 */  bnezl $at, .L7F022F38
-/* 057ACC 7F022F9C 8E700000 */   lw    $s0, ($s3)
-.L7F022FA0:
-/* 057AD0 7F022FA0 8FBF003C */  lw    $ra, 0x3c($sp)
-/* 057AD4 7F022FA4 D7B40018 */  ldc1  $f20, 0x18($sp)
-/* 057AD8 7F022FA8 D7B60020 */  ldc1  $f22, 0x20($sp)
-/* 057ADC 7F022FAC 8FB00028 */  lw    $s0, 0x28($sp)
-/* 057AE0 7F022FB0 8FB1002C */  lw    $s1, 0x2c($sp)
-/* 057AE4 7F022FB4 8FB20030 */  lw    $s2, 0x30($sp)
-/* 057AE8 7F022FB8 8FB30034 */  lw    $s3, 0x34($sp)
-/* 057AEC 7F022FBC 8FB40038 */  lw    $s4, 0x38($sp)
-/* 057AF0 7F022FC0 03E00008 */  jr    $ra
-/* 057AF4 7F022FC4 27BD0040 */   addiu $sp, $sp, 0x40
-)
-#endif
 
 
 

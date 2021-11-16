@@ -220,6 +220,7 @@ void  chrRemoved7F022E1C(f32 arg0);
 void chrDecrementAnimationTablePointerCount(void);
 void chrIncrementAnimationTablePointerCount(void);
 void chrToggleD_8002C90C(void);
+void chrCheckGuardsHeardSound(f32 arg0);
 
 #ifndef VERSION_US
 s32 not_in_us_7F0209EC(s32 bodynum, s32 headnum);
