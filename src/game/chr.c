@@ -7497,20 +7497,14 @@ struct chrdata* chrGetGuardData(s32 index)
 
 
 
-#ifdef NONMATCHING
-void something_with_weaponpos_of_guarddata_hand(void) {
-
+/**
+ * Address 0x7F02302C.
+ */
+struct prop *something_with_weaponpos_of_guarddata_hand(struct chrdata *arg0, s32 arg1)
+{
+    return arg0->handle_positiondata[arg1];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel something_with_weaponpos_of_guarddata_hand
-/* 057B5C 7F02302C 00057080 */  sll   $t6, $a1, 2
-/* 057B60 7F023030 008E7821 */  addu  $t7, $a0, $t6
-/* 057B64 7F023034 03E00008 */  jr    $ra
-/* 057B68 7F023038 8DE20160 */   lw    $v0, 0x160($t7)
-)
-#endif
+
 
 
 
