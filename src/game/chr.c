@@ -1167,7 +1167,7 @@ glabel sub_GAME_7F01F614
 /* 05416C 7F01F63C 8C840018 */  lw    $a0, 0x18($a0)
 /* 054170 7F01F640 27A50084 */  addiu $a1, $sp, 0x84
 /* 054174 7F01F644 27A70088 */  addiu $a3, $sp, 0x88
-/* 054178 7F01F648 0FC08C58 */  jal   sub_GAME_7F023160
+/* 054178 7F01F648 0FC08C58 */  jal   chrGetChrWidthHeight
 /* 05417C 7F01F64C 27A6008C */   addiu $a2, $sp, 0x8c
 /* 054180 7F01F650 8FA40098 */  lw    $a0, 0x98($sp)
 /* 054184 7F01F654 0FC07D7A */  jal   set_or_unset_GUARDdata_flag
@@ -7582,26 +7582,24 @@ void chrUpdateCollisionBounds(struct prop *arg0, struct rect4f **arg1, s32 *arg2
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F023160(void) {
+/**
+ * @param arg0: prop
+ * @param width: out parameter, will be set to character width
+ * @param height: out parameter, will be set to character height - 20
+ * @param always_20: out parameter, will be set to 20
+ * 
+ * Address 0x7F023160.
+ */
+void chrGetChrWidthHeight(struct prop *arg0, f32 *width, f32 *height, f32 *always_20)
+{
+    void *temp_v0;
 
+    struct chrdata *c = arg0->chr;
+
+    *width = c->chrwidth;
+    *height = c->chrheight - 20.0f;
+    *always_20 = 20.0f;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F023160
-/* 057C90 7F023160 8C820004 */  lw    $v0, 4($a0)
-/* 057C94 7F023164 3C0141A0 */  li    $at, 0x41A00000 # 20.000000
-/* 057C98 7F023168 44810000 */  mtc1  $at, $f0
-/* 057C9C 7F02316C C4440024 */  lwc1  $f4, 0x24($v0)
-/* 057CA0 7F023170 E4A40000 */  swc1  $f4, ($a1)
-/* 057CA4 7F023174 C4460028 */  lwc1  $f6, 0x28($v0)
-/* 057CA8 7F023178 46003201 */  sub.s $f8, $f6, $f0
-/* 057CAC 7F02317C E4C80000 */  swc1  $f8, ($a2)
-/* 057CB0 7F023180 03E00008 */  jr    $ra
-/* 057CB4 7F023184 E4E00000 */   swc1  $f0, ($a3)
-)
-#endif
 
 
 

@@ -225,6 +225,7 @@ struct chrdata* chrGetGuardData(s32 index);
 struct prop *something_with_weaponpos_of_guarddata_hand(struct chrdata *arg0, s32 arg1);
 struct prop *is_weapon_in_guarddata_hand(struct chrdata *arg0, s32 arg1);
 void chrUpdateCollisionBounds(struct prop *arg0, struct rect4f **arg1, s32 *arg2, f32 *y_out, f32 *ground);
+void chrGetChrWidthHeight(struct prop *arg0, f32 *width, f32 *height, f32 *always_20);
 
 #ifndef VERSION_US
 s32 not_in_us_7F0209EC(s32 bodynum, s32 headnum);
