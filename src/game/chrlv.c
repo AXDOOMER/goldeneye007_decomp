@@ -2,6 +2,7 @@
 #include "bondgame.h"
 #include "bondconstants.h"
 #include "chrlv.h"
+#include "random.h"
 #include "game/bondview.h"
 #include "game/chr.h"
 #include "game/gun.h"
@@ -409,73 +410,26 @@ s32 get_current_random_body(void)
 
 
 
-#ifdef NONMATCHING
+/**
+ * Address 0x7F0235AC.
+ */
 s32 select_psuedorandom_heads(s32 id)
 {
+    s32 ret;
+
     if (c_item_entries[id].isMale)
     {
-        return random_male_heads[(current_random_male_head + (randomGetNext() & 3)) % num_male_heads];
+        ret = randomGetNext() & 3;
+        ret = ((s32)current_random_male_head + ret) % (s32)num_male_heads;
+        ret = random_male_heads[ret];
     }
     else
     {
-        return random_female_heads[current_random_female_head];
+        ret = random_female_heads[current_random_female_head];
     }
+
+    return ret;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel select_psuedorandom_heads
-/* 0580DC 7F0235AC 00047080 */  sll   $t6, $a0, 2
-/* 0580E0 7F0235B0 01C47021 */  addu  $t6, $t6, $a0
-/* 0580E4 7F0235B4 000E7080 */  sll   $t6, $t6, 2
-/* 0580E8 7F0235B8 3C0F8004 */  lui   $t7, %hi(c_item_entries+16)
-/* 0580EC 7F0235BC 01EE7821 */  addu  $t7, $t7, $t6
-/* 0580F0 7F0235C0 91EFDE20 */  lbu   $t7, %lo(c_item_entries+16)($t7)
-/* 0580F4 7F0235C4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0580F8 7F0235C8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0580FC 7F0235CC 11E0001A */  beqz  $t7, .L7F023638
-/* 058100 7F0235D0 3C0B8003 */   lui   $t3, %hi(current_random_female_head) 
-/* 058104 7F0235D4 0C002914 */  jal   randomGetNext
-/* 058108 7F0235D8 00000000 */   nop   
-/* 05810C 7F0235DC 3C188003 */  lui   $t8, %hi(current_random_male_head) 
-/* 058110 7F0235E0 8F18CE38 */  lw    $t8, %lo(current_random_male_head)($t8)
-/* 058114 7F0235E4 30590003 */  andi  $t9, $v0, 3
-/* 058118 7F0235E8 3C098003 */  lui   $t1, %hi(num_male_heads) 
-/* 05811C 7F0235EC 8D29CD04 */  lw    $t1, %lo(num_male_heads)($t1)
-/* 058120 7F0235F0 03194021 */  addu  $t0, $t8, $t9
-/* 058124 7F0235F4 0109001A */  div   $zero, $t0, $t1
-/* 058128 7F0235F8 00001810 */  mfhi  $v1
-/* 05812C 7F0235FC 00035080 */  sll   $t2, $v1, 2
-/* 058130 7F023600 3C038003 */  lui   $v1, %hi(random_male_heads)
-/* 058134 7F023604 006A1821 */  addu  $v1, $v1, $t2
-/* 058138 7F023608 15200002 */  bnez  $t1, .L7F023614
-/* 05813C 7F02360C 00000000 */   nop   
-/* 058140 7F023610 0007000D */  break 7
-.L7F023614:
-/* 058144 7F023614 2401FFFF */  li    $at, -1
-/* 058148 7F023618 15210004 */  bne   $t1, $at, .L7F02362C
-/* 05814C 7F02361C 3C018000 */   lui   $at, 0x8000
-/* 058150 7F023620 15010002 */  bne   $t0, $at, .L7F02362C
-/* 058154 7F023624 00000000 */   nop   
-/* 058158 7F023628 0006000D */  break 6
-.L7F02362C:
-/* 05815C 7F02362C 8C63CDB8 */  lw    $v1, %lo(random_male_heads)($v1)
-/* 058160 7F023630 10000007 */  b     .L7F023650
-/* 058164 7F023634 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F023638:
-/* 058168 7F023638 8D6BCE3C */  lw    $t3, %lo(current_random_female_head)($t3)
-/* 05816C 7F02363C 3C038003 */  lui   $v1, %hi(random_female_heads)
-/* 058170 7F023640 000B6080 */  sll   $t4, $t3, 2
-/* 058174 7F023644 006C1821 */  addu  $v1, $v1, $t4
-/* 058178 7F023648 8C63CE20 */  lw    $v1, %lo(random_female_heads)($v1)
-/* 05817C 7F02364C 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F023650:
-/* 058180 7F023650 27BD0018 */  addiu $sp, $sp, 0x18
-/* 058184 7F023654 00601025 */  move  $v0, $v1
-/* 058188 7F023658 03E00008 */  jr    $ra
-/* 05818C 7F02365C 00000000 */   nop   
-)
-#endif
 
 
 

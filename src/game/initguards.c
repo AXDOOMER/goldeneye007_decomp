@@ -1,5 +1,7 @@
 #include "ultra64.h"
+#include "deb_loadallmodels.h"
 #include "memp.h"
+#include "random.h"
 #include "game/chr.h"
 #include "game/chrobjdata.h"
 #include "game/initguards.h"

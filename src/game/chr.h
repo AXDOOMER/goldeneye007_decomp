@@ -74,9 +74,6 @@ extern s32 objectiveregisters1;
 extern s32 objectiveregisters2;
 extern s32 objectiveregisters3;
 
-extern u32 current_random_body;
-extern u32 current_random_male_head;
-extern u32 current_random_female_head;
 extern f32 g_AiAccuracyModifier;
 extern f32 g_AiDamageModifier;
 extern f32 g_AiHealthModifier;
