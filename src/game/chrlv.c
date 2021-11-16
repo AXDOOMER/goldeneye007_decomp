@@ -367,98 +367,36 @@ Model * setup_chr_instance(int body,int head,ModelFileHeader *body_header, Model
 
 
 
-#ifdef NONMATCHING
-/*
- * 5802c:    move    v1,zero  <
- * is moved to delay slot 
- * 58048:    nop              | 58044:    move    v1,zero
+/**
+ * Address 0x7F0234D0.
  */
-Model *retrieve_header_for_body_and_head(s32 body, s32 head, u32 bitflags)
+Model * retrieve_header_for_body_and_head(s32 body, s32 head, u32 bitflags)
 {
     ModelFileHeader *body_header;
     ModelFileHeader *head_header;
     s32 sunglasses;
-
    
     body_header = c_item_entries[body].header;
     head_header = NULL;
     
+    sunglasses = 0;
+
     if ((bitflags & 1))
     {
         sunglasses = 1;
     }
-    else
+    else if ((bitflags & 2))
     {
-        sunglasses = 0;
-        if ((bitflags & 2))
-        {
-            sunglasses = (randomGetNext() & 1) == 0;
-        }
+        sunglasses = (randomGetNext() & 1) == 0;
     }
+    
     if ((head >= 0) && (c_item_entries[body].hasHead == 0))
     {
         head_header = c_item_entries[head].header;
     }
+    
     return setup_chr_instance(body, head, body_header, head_header, sunglasses);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel retrieve_header_for_body_and_head
-/* 058000 7F0234D0 00047080 */  sll   $t6, $a0, 2
-/* 058004 7F0234D4 01C47021 */  addu  $t6, $t6, $a0
-/* 058008 7F0234D8 3C0F8004 */  lui   $t7, %hi(c_item_entries) 
-/* 05800C 7F0234DC 25EFDE10 */  addiu $t7, %lo(c_item_entries) # addiu $t7, $t7, -0x21f0
-/* 058010 7F0234E0 000E7080 */  sll   $t6, $t6, 2
-/* 058014 7F0234E4 01CF3821 */  addu  $a3, $t6, $t7
-/* 058018 7F0234E8 8CF80000 */  lw    $t8, ($a3)
-/* 05801C 7F0234EC 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 058020 7F0234F0 30D90001 */  andi  $t9, $a2, 1
-/* 058024 7F0234F4 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 058028 7F0234F8 AFA00028 */  sw    $zero, 0x28($sp)
-/* 05802C 7F0234FC 00001825 */  move  $v1, $zero
-/* 058030 7F023500 13200003 */  beqz  $t9, .L7F023510
-/* 058034 7F023504 AFB8002C */   sw    $t8, 0x2c($sp)
-/* 058038 7F023508 1000000E */  b     .L7F023544
-/* 05803C 7F02350C 24030001 */   li    $v1, 1
-.L7F023510:
-/* 058040 7F023510 30C80002 */  andi  $t0, $a2, 2
-/* 058044 7F023514 1100000B */  beqz  $t0, .L7F023544
-/* 058048 7F023518 00000000 */   nop   
-/* 05804C 7F02351C AFA40030 */  sw    $a0, 0x30($sp)
-/* 058050 7F023520 AFA50034 */  sw    $a1, 0x34($sp)
-/* 058054 7F023524 0C002914 */  jal   randomGetNext
-/* 058058 7F023528 AFA70020 */   sw    $a3, 0x20($sp)
-/* 05805C 7F02352C 30430001 */  andi  $v1, $v0, 1
-/* 058060 7F023530 2C690001 */  sltiu $t1, $v1, 1
-/* 058064 7F023534 01201825 */  move  $v1, $t1
-/* 058068 7F023538 8FA40030 */  lw    $a0, 0x30($sp)
-/* 05806C 7F02353C 8FA50034 */  lw    $a1, 0x34($sp)
-/* 058070 7F023540 8FA70020 */  lw    $a3, 0x20($sp)
-.L7F023544:
-/* 058074 7F023544 04A2000B */  bltzl $a1, .L7F023574
-/* 058078 7F023548 8FA6002C */   lw    $a2, 0x2c($sp)
-/* 05807C 7F02354C 90EA0011 */  lbu   $t2, 0x11($a3)
-/* 058080 7F023550 00055880 */  sll   $t3, $a1, 2
-/* 058084 7F023554 01655821 */  addu  $t3, $t3, $a1
-/* 058088 7F023558 15400005 */  bnez  $t2, .L7F023570
-/* 05808C 7F02355C 000B5880 */   sll   $t3, $t3, 2
-/* 058090 7F023560 3C0C8004 */  lui   $t4, %hi(c_item_entries)
-/* 058094 7F023564 018B6021 */  addu  $t4, $t4, $t3
-/* 058098 7F023568 8D8CDE10 */  lw    $t4, %lo(c_item_entries)($t4)
-/* 05809C 7F02356C AFAC0028 */  sw    $t4, 0x28($sp)
-.L7F023570:
-/* 0580A0 7F023570 8FA6002C */  lw    $a2, 0x2c($sp)
-.L7F023574:
-/* 0580A4 7F023574 8FA70028 */  lw    $a3, 0x28($sp)
-/* 0580A8 7F023578 0FC08D2A */  jal   setup_chr_instance
-/* 0580AC 7F02357C AFA30010 */   sw    $v1, 0x10($sp)
-/* 0580B0 7F023580 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0580B4 7F023584 27BD0030 */  addiu $sp, $sp, 0x30
-/* 0580B8 7F023588 03E00008 */  jr    $ra
-/* 0580BC 7F02358C 00000000 */   nop   
-)
-#endif
 
 
 

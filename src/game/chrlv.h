@@ -14,7 +14,7 @@ Model * makeonebody(int body,int head, ModelFileHeader *bodyheader,ModelFileHead
 
 Model * setup_chr_instance(int body,int head, ModelFileHeader *body_header, ModelFileHeader *head_header,int sunglasses);
 
-Model *retrieve_header_for_body_and_head(s32 body, s32 head, u32 bitflags);
+Model * retrieve_header_for_body_and_head(s32 body, s32 head, u32 bitflags);
 
 s32 get_current_random_body(void);
 
