@@ -14669,7 +14669,6 @@ glabel sub_GAME_7F080B34
 
 
 
-#ifdef NONMATCHING
 /**
  * Address 0x7F080D60.
  * 
@@ -14687,8 +14686,9 @@ f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2)
 
     if (ptr_playerstank != 0)
     {
-        struct PropRecord *b = (struct PropRecord *)ptr_playerstank;
-        struct prop *p = ((struct prop *)b->Entityp.obj->prop);
+        /* union is messing with regalloc, declaring an explicit object pointer seems to fix it (cast isn't good enough) ... */
+        ObjectRecord * obj = ((struct prop *)ptr_playerstank)->obj;
+        struct prop *p = ((struct prop *)obj->prop);
 
         ret = stanGetPositionYValue(p->standTile, p->position.x, p->position.z);
             
@@ -14708,55 +14708,6 @@ f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2)
 
     return ret;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel bondviewYPositionRelated
-/* 0B5890 7F080D60 3C078003 */  lui   $a3, %hi(ptr_playerstank)
-/* 0B5894 7F080D64 8CE76450 */  lw    $a3, %lo(ptr_playerstank)($a3)
-/* 0B5898 7F080D68 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0B589C 7F080D6C 44856000 */  mtc1  $a1, $f12
-/* 0B58A0 7F080D70 44867000 */  mtc1  $a2, $f14
-/* 0B58A4 7F080D74 10E0000B */  beqz  $a3, .L7F080DA4
-/* 0B58A8 7F080D78 AFBF0014 */   sw    $ra, 0x14($sp)
-/* 0B58AC 7F080D7C 8CE30004 */  lw    $v1, 4($a3)
-/* 0B58B0 7F080D80 8C620010 */  lw    $v0, 0x10($v1)
-/* 0B58B4 7F080D84 8C440014 */  lw    $a0, 0x14($v0)
-/* 0B58B8 7F080D88 8C450008 */  lw    $a1, 8($v0)
-/* 0B58BC 7F080D8C 0FC2CA5C */  jal   stanGetPositionYValue
-/* 0B58C0 7F080D90 8C460010 */   lw    $a2, 0x10($v0)
-/* 0B58C4 7F080D94 3C018003 */  lui   $at, %hi(g_PlayerTankYOffset)
-/* 0B58C8 7F080D98 C4246454 */  lwc1  $f4, %lo(g_PlayerTankYOffset)($at)
-/* 0B58CC 7F080D9C 10000011 */  b     .L7F080DE4
-/* 0B58D0 7F080DA0 46040080 */   add.s $f2, $f0, $f4
-.L7F080DA4:
-/* 0B58D4 7F080DA4 3C028008 */  lui   $v0, %hi(g_CurrentPlayer)
-/* 0B58D8 7F080DA8 8C42A0B0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
-/* 0B58DC 7F080DAC 8C4E2A6C */  lw    $t6, 0x2a6c($v0)
-/* 0B58E0 7F080DB0 51C00008 */  beql  $t6, $zero, .L7F080DD4
-/* 0B58E4 7F080DB4 44056000 */   mfc1  $a1, $f12
-/* 0B58E8 7F080DB8 44056000 */  mfc1  $a1, $f12
-/* 0B58EC 7F080DBC 44067000 */  mfc1  $a2, $f14
-/* 0B58F0 7F080DC0 0FC2CA5C */  jal   stanGetPositionYValue
-/* 0B58F4 7F080DC4 8C442A70 */   lw    $a0, 0x2a70($v0)
-/* 0B58F8 7F080DC8 10000006 */  b     .L7F080DE4
-/* 0B58FC 7F080DCC 46000086 */   mov.s $f2, $f0
-/* 0B5900 7F080DD0 44056000 */  mfc1  $a1, $f12
-.L7F080DD4:
-/* 0B5904 7F080DD4 44067000 */  mfc1  $a2, $f14
-/* 0B5908 7F080DD8 0FC2CA5C */  jal   stanGetPositionYValue
-/* 0B590C 7F080DDC 00000000 */   nop
-/* 0B5910 7F080DE0 46000086 */  mov.s $f2, $f0
-.L7F080DE4:
-/* 0B5914 7F080DE4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0B5918 7F080DE8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0B591C 7F080DEC 46001006 */  mov.s $f0, $f2
-/* 0B5920 7F080DF0 03E00008 */  jr    $ra
-/* 0B5924 7F080DF4 00000000 */   nop
-)
-#endif
-
-
 
 
 
