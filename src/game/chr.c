@@ -7603,19 +7603,14 @@ void chrGetChrWidthHeight(struct prop *arg0, f32 *width, f32 *height, f32 *alway
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F023188(void) {
-
+/**
+ * Address 0x7F023188.
+ */
+f32 chrGetChrGround(struct prop *arg0)
+{
+    struct chrdata *c = arg0->chr;
+    return c->ground;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F023188
-/* 057CB8 7F023188 8C820004 */  lw    $v0, 4($a0)
-/* 057CBC 7F02318C 03E00008 */  jr    $ra
-/* 057CC0 7F023190 C44000AC */   lwc1  $f0, 0xac($v0)
-)
-#endif
 
 
 

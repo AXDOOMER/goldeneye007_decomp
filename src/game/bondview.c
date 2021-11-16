@@ -14686,7 +14686,6 @@ f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2)
 
     if (ptr_playerstank != 0)
     {
-        /* union is messing with regalloc, declaring an explicit object pointer seems to fix it (cast isn't good enough) ... */
         ObjectRecord * obj = ((struct prop *)ptr_playerstank)->obj;
         struct prop *p = ((struct prop *)obj->prop);
 
