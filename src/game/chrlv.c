@@ -21847,7 +21847,7 @@ glabel get_handle_for_guard_id
 /* 067B78 7F033048 0FC0CBEB */  jal   sub_GAME_7F032FAC
 /* 067B7C 7F03304C 00000000 */   nop   
 /* 067B80 7F033050 00402025 */  move  $a0, $v0
-/* 067B84 7F033054 0FC08BF2 */  jal   check_if_guardnum_loaded_get_ptr_GUARDdata
+/* 067B84 7F033054 0FC08BF2 */  jal   chrGetGuardData
 /* 067B88 7F033058 AFA2001C */   sw    $v0, 0x1c($sp)
 /* 067B8C 7F03305C 8FA6001C */  lw    $a2, 0x1c($sp)
 /* 067B90 7F033060 14400013 */  bnez  $v0, .L7F0330B0

@@ -221,6 +221,7 @@ void chrDecrementAnimationTablePointerCount(void);
 void chrIncrementAnimationTablePointerCount(void);
 void chrToggleD_8002C90C(void);
 void chrCheckGuardsHeardSound(f32 arg0);
+struct chrdata* chrGetGuardData(s32 index);
 
 #ifndef VERSION_US
 s32 not_in_us_7F0209EC(s32 bodynum, s32 headnum);

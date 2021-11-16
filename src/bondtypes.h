@@ -749,7 +749,7 @@ typedef struct KeyRecord
 
 /* unfinished struct, WIP */
 struct chrdata {
-    u16 chrnum;
+    s16 chrnum;
     s8 accuracyrating;
     s8 speedrating;
     u8 firecountleft;

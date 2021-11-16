@@ -7474,45 +7474,26 @@ void chrCheckGuardsHeardSound(f32 noise)
 
 
 
-#ifdef NONMATCHING
-void check_if_guardnum_loaded_get_ptr_GUARDdata(void) {
+/**
+ * Iterates ptr_guard_data. Returns the first object that (1) model
+ * is not null and (2) chrnum matches index.
+ * 
+ * Address 0x7F022FC8.
+ */
+struct chrdata* chrGetGuardData(s32 index)
+{
+    s32 i;
 
+    for (i=0; i<num_guards; i++)
+    {
+        if (ptr_guard_data[i].model != NULL && ptr_guard_data[i].chrnum == index)
+        {
+            return &ptr_guard_data[i];
+        }
+    }
+
+    return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_guardnum_loaded_get_ptr_GUARDdata
-/* 057AF8 7F022FC8 3C038003 */  lui   $v1, %hi(num_guards)
-/* 057AFC 7F022FCC 8C63CC68 */  lw    $v1, %lo(num_guards)($v1)
-/* 057B00 7F022FD0 00803825 */  move  $a3, $a0
-/* 057B04 7F022FD4 3C048003 */  lui   $a0, %hi(ptr_guard_data)
-/* 057B08 7F022FD8 18600011 */  blez  $v1, .L7F023020
-/* 057B0C 7F022FDC 00001025 */   move  $v0, $zero
-/* 057B10 7F022FE0 8C84CC64 */  lw    $a0, %lo(ptr_guard_data)($a0)
-/* 057B14 7F022FE4 00002825 */  move  $a1, $zero
-/* 057B18 7F022FE8 00803025 */  move  $a2, $a0
-.L7F022FEC:
-/* 057B1C 7F022FEC 8CCE001C */  lw    $t6, 0x1c($a2)
-/* 057B20 7F022FF0 24420001 */  addiu $v0, $v0, 1
-/* 057B24 7F022FF4 0043082A */  slt   $at, $v0, $v1
-/* 057B28 7F022FF8 51C00007 */  beql  $t6, $zero, .L7F023018
-/* 057B2C 7F022FFC 24A501DC */   addiu $a1, $a1, 0x1dc
-/* 057B30 7F023000 84CF0000 */  lh    $t7, ($a2)
-/* 057B34 7F023004 54EF0004 */  bnel  $a3, $t7, .L7F023018
-/* 057B38 7F023008 24A501DC */   addiu $a1, $a1, 0x1dc
-/* 057B3C 7F02300C 03E00008 */  jr    $ra
-/* 057B40 7F023010 00A41021 */   addu  $v0, $a1, $a0
-
-/* 057B44 7F023014 24A501DC */  addiu $a1, $a1, 0x1dc
-.L7F023018:
-/* 057B48 7F023018 1420FFF4 */  bnez  $at, .L7F022FEC
-/* 057B4C 7F02301C 24C601DC */   addiu $a2, $a2, 0x1dc
-.L7F023020:
-/* 057B50 7F023020 00001025 */  move  $v0, $zero
-/* 057B54 7F023024 03E00008 */  jr    $ra
-/* 057B58 7F023028 00000000 */   nop   
-)
-#endif
 
 
 

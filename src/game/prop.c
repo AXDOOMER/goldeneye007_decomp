@@ -365,7 +365,7 @@ glabel prepare_load_objects
 .L7F001F20:
 /* 036A50 7F001F20 53000031 */  beql  $t8, $zero, .L7F001FE8
 /* 036A54 7F001F24 86230006 */   lh    $v1, 6($s1)
-/* 036A58 7F001F28 0FC08BF2 */  jal   check_if_guardnum_loaded_get_ptr_GUARDdata
+/* 036A58 7F001F28 0FC08BF2 */  jal   chrGetGuardData
 /* 036A5C 7F001F2C 86240006 */   lh    $a0, 6($s1)
 /* 036A60 7F001F30 104001FC */  beqz  $v0, .L7F002724
 /* 036A64 7F001F34 AFA2006C */   sw    $v0, 0x6c($sp)
@@ -984,7 +984,7 @@ glabel expand_08_obj_set_guard_MP_weapons
 /* 037284 7F002754 51E0002B */  beql  $t7, $zero, .L7F002804
 /* 037288 7F002758 24050001 */   li    $a1, 1
 /* 03728C 7F00275C 84A40006 */  lh    $a0, 6($a1)
-/* 037290 7F002760 0FC08BF2 */  jal   check_if_guardnum_loaded_get_ptr_GUARDdata
+/* 037290 7F002760 0FC08BF2 */  jal   chrGetGuardData
 /* 037294 7F002764 AFA5002C */   sw    $a1, 0x2c($sp)
 /* 037298 7F002768 8FA7002C */  lw    $a3, 0x2c($sp)
 /* 03729C 7F00276C 1040008A */  beqz  $v0, .L7F002998
@@ -1201,7 +1201,7 @@ glabel expand_08_obj_set_guard_MP_weapons
 /* 035144 7F002754 51E0002B */  beql  $t7, $zero, .L7F002804
 /* 035148 7F002758 24050001 */   li    $a1, 1
 /* 03514C 7F00275C 84A40006 */  lh    $a0, 6($a1)
-/* 035150 7F002760 0FC08BE4 */  jal   check_if_guardnum_loaded_get_ptr_GUARDdata
+/* 035150 7F002760 0FC08BE4 */  jal   chrGetGuardData
 /* 035154 7F002764 AFA5002C */   sw    $a1, 0x2c($sp)
 /* 035158 7F002768 8FA7002C */  lw    $a3, 0x2c($sp)
 /* 03515C 7F00276C 10400064 */  beqz  $v0, .L7F002900
@@ -1330,7 +1330,7 @@ void MP_weapon_expansion_routine(void *arg1, ? arg7) {
     if ((arg1->unk8 & 0x4000) != 0)
     {
         // Node 1
-        temp_ret = check_if_guardnum_loaded_get_ptr_GUARDdata(arg1->unk6, arg1);
+        temp_ret = chrGetGuardData(arg1->unk6, arg1);
         if (temp_ret != 0)
         {
             // Node 2
@@ -1369,7 +1369,7 @@ glabel MP_weapon_expansion_routine
 /* 0374EC 7F0029BC 11E00011 */  beqz  $t7, .L7F002A04
 /* 0374F0 7F0029C0 00000000 */   nop   
 /* 0374F4 7F0029C4 84A40006 */  lh    $a0, 6($a1)
-/* 0374F8 7F0029C8 0FC08BF2 */  jal   check_if_guardnum_loaded_get_ptr_GUARDdata
+/* 0374F8 7F0029C8 0FC08BF2 */  jal   chrGetGuardData
 /* 0374FC 7F0029CC AFA5001C */   sw    $a1, 0x1c($sp)
 /* 037500 7F0029D0 8FA7001C */  lw    $a3, 0x1c($sp)
 /* 037504 7F0029D4 1040000D */  beqz  $v0, .L7F002A0C
@@ -4028,7 +4028,7 @@ glabel proplvreset2
 /* 038EB4 7F004384 00000000 */   nop   
 actor_attr_expand:
 /* 038EB8 7F004388 9250000B */  lbu   $s0, 0xb($s2)
-/* 038EBC 7F00438C 0FC08BF2 */  jal   check_if_guardnum_loaded_get_ptr_GUARDdata
+/* 038EBC 7F00438C 0FC08BF2 */  jal   chrGetGuardData
 /* 038EC0 7F004390 8E440004 */   lw    $a0, 4($s2)
 /* 038EC4 7F004394 104001D9 */  beqz  $v0, other_obj_expand
 /* 038EC8 7F004398 00000000 */   nop   
@@ -5421,7 +5421,7 @@ glabel jpt_8004F02C
 /* 038EF4 7F004384 00000000 */   nop   
 actor_attr_expand:
 /* 038EF8 7F004388 9250000B */  lbu   $s0, 0xb($s2)
-/* 038EFC 7F00438C 0FC08CAC */  jal   check_if_guardnum_loaded_get_ptr_GUARDdata
+/* 038EFC 7F00438C 0FC08CAC */  jal   chrGetGuardData
 /* 038F00 7F004390 8E440004 */   lw    $a0, 4($s2)
 /* 038F04 7F004394 104001DD */  beqz  $v0, other_obj_expand
 /* 038F08 7F004398 00000000 */   nop   
@@ -6819,7 +6819,7 @@ glabel proplvreset2
 /* 036D00 7F004310 00000000 */   nop   
 actor_attr_expand:
 /* 036D04 7F004314 9250000B */  lbu   $s0, 0xb($s2)
-/* 036D08 7F004318 0FC08BE4 */  jal   check_if_guardnum_loaded_get_ptr_GUARDdata
+/* 036D08 7F004318 0FC08BE4 */  jal   chrGetGuardData
 /* 036D0C 7F00431C 8E440004 */   lw    $a0, 4($s2)
 /* 036D10 7F004320 104001DB */  beqz  $v0, other_obj_expand
 /* 036D14 7F004324 00000000 */   nop   
