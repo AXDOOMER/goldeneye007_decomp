@@ -64,6 +64,13 @@ LCDEFS := -DVERSION_JP
 ASMDEFS := --defsym VERSION_JP=1
 endif
 
+ALLOWED_VERSIONS := US EU JP
+ifneq ($(filter $(VERSION),$(ALLOWED_VERSIONS)),)
+$(info VERSION=$(VERSION))
+else
+$(error VERSION "$(VERSION)" not supported")
+endif
+
 BUILD_DIR_BASE := build
 # BUILD_DIR is the location where all build artifacts are placed
 BUILD_DIR      := $(BUILD_DIR_BASE)/$(COUNTRYCODE)
