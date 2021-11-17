@@ -757,27 +757,6 @@ typedef struct WeaponObjRecord
     struct WeaponObjRecord *dualweapon; // other weapon when dual wielding /*0x84*/
 } WeaponObjRecord;
 
-/******
-
- The following struct PropRecord was copied from AIListLogic branch
- and should be removed when merged
-
-******/
-typedef struct GuardRecord
-{
-    PropDefHeaderRecord Head;
-    u16 chrnum;         /*0x4*/
-    u16 PadID;      /*0x6*/
-    u16 BodyID;     /*0x8*/
-    u16 AIListID;   /*0xa*/
-    u16 Preset;     /*0xc*/
-    u16 unk0a;      /*0xe*/
-    u16 health;     /*0x10*/
-    u16 ReactionTime; /*0x12*/
-    u16 unk10;        /*0x14*/
-    u16 HeadID;       /*0x16*/
-    ChrRecord *Data;  /*0x18*/
-} GuardRecord;
 
 typedef struct KeyRecord
 {
@@ -962,12 +941,18 @@ typedef struct object_standard {
     s16 scale;
     u8 state;
     u8 type;
+    // 4
     u16 objectID;
     u16 presetID;
+    // 8
     u32 flags1;
+    // c
     u32 flags2;
+    // 10
     void* ptrPOSData;
+    // 14
     void* ptrObjInstanceController;
+    // 18
     f32 runtime_MATRIX[4][4];
     f32 xPOS;
     f32 yPOS;
@@ -1093,5 +1078,102 @@ typedef struct CreditsEntry_s {
     u16 Alignment2;
 
 } CreditsEntry;
+
+struct s_unk_ext {
+    s32 unk00;
+    s32 unk04;
+    s32 unk08;
+    s32 unk0c;
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    s32 unk1c;
+    s32 unk20;
+    s8 unk24_ref;
+    s8 unk25;
+    s8 unk26;
+    s8 unk27;
+
+    s32 unk28;
+    s32 unk2c;
+    s32 unk30;
+    s32 unk34;
+    s32 unk38;
+    s32 unk3c;
+
+    s32 unk40;
+    s32 unk44;
+    s32 unk48;
+    s32 unk4c;
+    s32 unk50;
+    s32 unk54;
+    s32 unk58;
+    s32 unk5c;
+    s32 unk60;
+    s32 unk64;
+    s32 unk68;
+    s32 unk6c;
+    s32 unk70;
+    s32 unk74;
+    s32 unk78;
+    s32 unk7c;
+
+    s32 unk80;
+    s32 unk84;
+    s32 unk88;
+    s32 unk8c;
+    s32 unk90;
+    s32 unk94;
+    s32 unk98;
+
+    s32 unk9c;
+    s32 unka0;
+    f32 unka4_ref;
+
+};
+
+struct s_unk_guard {
+    /*
+    * "_ref" means used (referenced) but unknown
+    */
+
+    // offset 0
+    s8 unk00;
+    s8 unk01;
+    s8 unk02;
+    s8 speedrating;
+
+    s8 unk04;
+    s8 unk05;
+    s8 unk06;
+    s8 actiontype;
+
+    s8 sleep;
+    s8 unk09;
+    s8 unk0a;
+    s8 unk0b;
+
+    s8 unk0c;
+    s8 arghrating;
+    s8 unk0e;
+    s8 unk0f;
+
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    struct s_unk_ext *ext;
+    // 20
+    s32 unk20;
+    // 24
+    s32 unk24_ref;
+    s32 unk28;
+    s32 unk2c_ref;
+    s32 unk30_ref;
+    s32 unk34_ref;
+    s32 unk38_ref;
+    s32 unk3c_ref;
+    s32 unk40_ref;
+    s32 unk44_ref;
+};
 
 #endif
