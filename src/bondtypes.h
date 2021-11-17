@@ -1129,6 +1129,13 @@ struct s_unk_ext {
     s32 unk9c;
     s32 unka0;
     f32 unka4_ref;
+    s32 unka8;
+    s32 unkac;
+
+    s32 unkb0;
+    s32 unkb4;
+    f32 unkb8_ref;
+    s32 unkbc;
 
 };
 

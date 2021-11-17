@@ -24,6 +24,11 @@ void chrlvKneelingAnimationRelated(struct s_unk_guard *arg0);
 void chrlvIdleAnimationRelated7F023E14(struct s_unk_guard *arg0, f32 arg1);
 void chrlvKneelingAnimationRelated7F023E48(struct s_unk_guard *arg0);
 void chrlvActorKneel(struct s_unk_guard *arg0);
+void  chrlvPerformAnimationForActor(struct s_unk_guard *arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s32 arg5);
+
+
+
+
 
 void sub_GAME_7F02D184(struct s_unk_guard *arg0);
 
@@ -843,113 +848,51 @@ void chrlvActorKneel(struct s_unk_guard *arg0)
 }
 
 
+/**
+ * Address 0x7F023FE4.
+ */
+void  chrlvPerformAnimationForActor(struct s_unk_guard *arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s32 arg5)
+{
+    f32 farg2 = (f32)arg2;
+    f32 phi_f0;
 
-#ifdef NONMATCHING
-void perform_animation_for_actor(void) {
+    phi_f0 = 0.5f;
+    if ((arg4 & 0x80) != 0)
+    {
+        phi_f0 = -0.5f;
+    }
 
+    sub_GAME_7F02D184(arg0);
+    objecthandlerAnimationRelated7F06FCA8(arg0->ext, (void *) animation_table_ptrs1[arg1], (arg4 & 1) != 0, farg2, phi_f0, (f32)arg5);
+
+    if (arg3 >= 0)
+    {
+        sub_GAME_7F06FDE8(arg0->ext, (f32)arg3);
+    }
+
+    if ((arg4 & 0x20) != 0)
+    {
+        sub_GAME_7F06CE84(arg0->ext, arg0->ext->unkb8_ref * 4.0f);
+    }
+
+    arg0->unk14 &= 0xFDFFFFFF;
+    arg0->actiontype = ACT_ANIM;
+    arg0->unk2c_ref = (arg4 & 2) != 0;
+    arg0->unk30_ref = (arg4 & 4) != 0;
+    arg0->unk34_ref = (arg4 & 8) != 0;
+    arg0->unk38_ref = (arg4 & 0x10) != 0;
+    arg0->unk3c_ref = (arg4 & 0x40) != 0;
+
+    if (arg0->unk38_ref != 0)
+    {
+        arg0->sleep = (s8) arg5;
+    }
+    else
+    {
+        arg0->sleep = 0;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel perform_animation_for_actor
-/* 058B14 7F023FE4 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 058B18 7F023FE8 AFB10020 */  sw    $s1, 0x20($sp)
-/* 058B1C 7F023FEC 93B10043 */  lbu   $s1, 0x43($sp)
-/* 058B20 7F023FF0 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 058B24 7F023FF4 AFB0001C */  sw    $s0, 0x1c($sp)
-/* 058B28 7F023FF8 44810000 */  mtc1  $at, $f0
-/* 058B2C 7F023FFC 322E0080 */  andi  $t6, $s1, 0x80
-/* 058B30 7F024000 00808025 */  move  $s0, $a0
-/* 058B34 7F024004 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 058B38 7F024008 AFA50034 */  sw    $a1, 0x34($sp)
-/* 058B3C 7F02400C AFA60038 */  sw    $a2, 0x38($sp)
-/* 058B40 7F024010 11C00004 */  beqz  $t6, .L7F024024
-/* 058B44 7F024014 AFA7003C */   sw    $a3, 0x3c($sp)
-/* 058B48 7F024018 3C01BF00 */  li    $at, 0xBF000000 # -0.500000
-/* 058B4C 7F02401C 44810000 */  mtc1  $at, $f0
-/* 058B50 7F024020 00000000 */  nop   
-.L7F024024:
-/* 058B54 7F024024 02002025 */  move  $a0, $s0
-/* 058B58 7F024028 0FC0B461 */  jal   sub_GAME_7F02D184
-/* 058B5C 7F02402C E7A00028 */   swc1  $f0, 0x28($sp)
-/* 058B60 7F024030 8FA80038 */  lw    $t0, 0x38($sp)
-/* 058B64 7F024034 8FA90044 */  lw    $t1, 0x44($sp)
-/* 058B68 7F024038 8FAF0034 */  lw    $t7, 0x34($sp)
-/* 058B6C 7F02403C 44882000 */  mtc1  $t0, $f4
-/* 058B70 7F024040 44893000 */  mtc1  $t1, $f6
-/* 058B74 7F024044 C7A00028 */  lwc1  $f0, 0x28($sp)
-/* 058B78 7F024048 46802120 */  cvt.s.w $f4, $f4
-/* 058B7C 7F02404C 3C058003 */  lui   $a1, %hi(animation_table_ptrs1)
-/* 058B80 7F024050 32260001 */  andi  $a2, $s1, 1
-/* 058B84 7F024054 000FC080 */  sll   $t8, $t7, 2
-/* 058B88 7F024058 00B82821 */  addu  $a1, $a1, $t8
-/* 058B8C 7F02405C 46803220 */  cvt.s.w $f8, $f6
-/* 058B90 7F024060 0006C82B */  sltu  $t9, $zero, $a2
-/* 058B94 7F024064 44072000 */  mfc1  $a3, $f4
-/* 058B98 7F024068 8E04001C */  lw    $a0, 0x1c($s0)
-/* 058B9C 7F02406C 03203025 */  move  $a2, $t9
-/* 058BA0 7F024070 8CA59D6C */  lw    $a1, %lo(animation_table_ptrs1)($a1)
-/* 058BA4 7F024074 E7A80014 */  swc1  $f8, 0x14($sp)
-/* 058BA8 7F024078 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
-/* 058BAC 7F02407C E7A00010 */   swc1  $f0, 0x10($sp)
-/* 058BB0 7F024080 8FA2003C */  lw    $v0, 0x3c($sp)
-/* 058BB4 7F024084 04420008 */  bltzl $v0, .L7F0240A8
-/* 058BB8 7F024088 322A0020 */   andi  $t2, $s1, 0x20
-/* 058BBC 7F02408C 44825000 */  mtc1  $v0, $f10
-/* 058BC0 7F024090 8E04001C */  lw    $a0, 0x1c($s0)
-/* 058BC4 7F024094 468052A0 */  cvt.s.w $f10, $f10
-/* 058BC8 7F024098 44055000 */  mfc1  $a1, $f10
-/* 058BCC 7F02409C 0FC1BF7A */  jal   sub_GAME_7F06FDE8
-/* 058BD0 7F0240A0 00000000 */   nop   
-/* 058BD4 7F0240A4 322A0020 */  andi  $t2, $s1, 0x20
-.L7F0240A8:
-/* 058BD8 7F0240A8 5140000A */  beql  $t2, $zero, .L7F0240D4
-/* 058BDC 7F0240AC 8E0B0014 */   lw    $t3, 0x14($s0)
-/* 058BE0 7F0240B0 8E04001C */  lw    $a0, 0x1c($s0)
-/* 058BE4 7F0240B4 3C014080 */  li    $at, 0x40800000 # 4.000000
-/* 058BE8 7F0240B8 44819000 */  mtc1  $at, $f18
-/* 058BEC 7F0240BC C49000B8 */  lwc1  $f16, 0xb8($a0)
-/* 058BF0 7F0240C0 46128102 */  mul.s $f4, $f16, $f18
-/* 058BF4 7F0240C4 44052000 */  mfc1  $a1, $f4
-/* 058BF8 7F0240C8 0FC1B3A1 */  jal   sub_GAME_7F06CE84
-/* 058BFC 7F0240CC 00000000 */   nop   
-/* 058C00 7F0240D0 8E0B0014 */  lw    $t3, 0x14($s0)
-.L7F0240D4:
-/* 058C04 7F0240D4 3C01FDFF */  lui   $at, (0xFDFFFFFF >> 16) # lui $at, 0xfdff
-/* 058C08 7F0240D8 3421FFFF */  ori   $at, (0xFDFFFFFF & 0xFFFF) # ori $at, $at, 0xffff
-/* 058C0C 7F0240DC 01616024 */  and   $t4, $t3, $at
-/* 058C10 7F0240E0 AE0C0014 */  sw    $t4, 0x14($s0)
-/* 058C14 7F0240E4 322E0002 */  andi  $t6, $s1, 2
-/* 058C18 7F0240E8 32380004 */  andi  $t8, $s1, 4
-/* 058C1C 7F0240EC 32280008 */  andi  $t0, $s1, 8
-/* 058C20 7F0240F0 32220010 */  andi  $v0, $s1, 0x10
-/* 058C24 7F0240F4 322B0040 */  andi  $t3, $s1, 0x40
-/* 058C28 7F0240F8 240D0003 */  li    $t5, 3
-/* 058C2C 7F0240FC 000E782B */  sltu  $t7, $zero, $t6
-/* 058C30 7F024100 0018C82B */  sltu  $t9, $zero, $t8
-/* 058C34 7F024104 0008482B */  sltu  $t1, $zero, $t0
-/* 058C38 7F024108 0002502B */  sltu  $t2, $zero, $v0
-/* 058C3C 7F02410C 000B602B */  sltu  $t4, $zero, $t3
-/* 058C40 7F024110 A20D0007 */  sb    $t5, 7($s0)
-/* 058C44 7F024114 AE0F002C */  sw    $t7, 0x2c($s0)
-/* 058C48 7F024118 AE190030 */  sw    $t9, 0x30($s0)
-/* 058C4C 7F02411C AE090034 */  sw    $t1, 0x34($s0)
-/* 058C50 7F024120 AE0A0038 */  sw    $t2, 0x38($s0)
-/* 058C54 7F024124 11400004 */  beqz  $t2, .L7F024138
-/* 058C58 7F024128 AE0C003C */   sw    $t4, 0x3c($s0)
-/* 058C5C 7F02412C 8FAD0044 */  lw    $t5, 0x44($sp)
-/* 058C60 7F024130 10000002 */  b     .L7F02413C
-/* 058C64 7F024134 A20D0008 */   sb    $t5, 8($s0)
-.L7F024138:
-/* 058C68 7F024138 A2000008 */  sb    $zero, 8($s0)
-.L7F02413C:
-/* 058C6C 7F02413C 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 058C70 7F024140 8FB0001C */  lw    $s0, 0x1c($sp)
-/* 058C74 7F024144 8FB10020 */  lw    $s1, 0x20($sp)
-/* 058C78 7F024148 03E00008 */  jr    $ra
-/* 058C7C 7F02414C 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
+
 
 
 
@@ -22204,7 +22147,7 @@ glabel check_if_able_to_then_perform_animation
 /* 068260 7F033730 8FA60028 */  lw    $a2, 0x28($sp)
 /* 068264 7F033734 8FA7002C */  lw    $a3, 0x2c($sp)
 /* 068268 7F033738 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 06826C 7F03373C 0FC08FF9 */  jal   perform_animation_for_actor
+/* 06826C 7F03373C 0FC08FF9 */  jal    chrlvPerformAnimationForActor
 /* 068270 7F033740 AFAF0014 */   sw    $t7, 0x14($sp)
 /* 068274 7F033744 10000002 */  b     .L7F033750
 /* 068278 7F033748 24020001 */   li    $v0, 1

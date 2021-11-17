@@ -22,6 +22,7 @@ s32 sub_GAME_7F06F5AC(struct s_unk_ext *);
 
 void sub_GAME_7F06FDCC(struct s_unk_ext *, f32, f32);
 void sub_GAME_7F06FDE8(struct s_unk_ext *, f32);
+void sub_GAME_7F06CE84(struct s_unk_ext *, f32);
 
 void sub_GAME_7F06FF18(struct object_standard *, f32, f32);
 void set_obj_instance_controller_scale(struct Model*, f32);
