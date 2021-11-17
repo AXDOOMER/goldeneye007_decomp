@@ -18,6 +18,7 @@
 u32 check_if_item_held_like_pistol(struct prop *arg0);
 void chrlvIdleAnimationRelated(struct chrdata *arg0, f32 arg1);
 f32 chrlvIGetGuard007SpeedRating(struct chrdata *arg0, f32 min, f32 max);
+s32 chrlvIGetGuard007SpeedRatingInt(struct chrdata *arg0, s32 arg1);
 
 // end forward declarations
 
@@ -711,55 +712,20 @@ f32 chrlvIGetGuard007SpeedRating(struct chrdata *arg0, f32 min, f32 max)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F023BC0(void) {
+/**
+ * @param arg0: guard
+ * @param scale: scale factor
+ * Address 0x7F023BC0.
+ */
+s32 chrlvIGetGuard007SpeedRatingInt(struct chrdata *arg0, s32 scale)
+{
+    s32 ret;
 
+    ret = (s32) arg0->speedrating;
+    ret = (s32)(get_007_reaction_speed() * (f32)(100 - ret)) + ret;
+    return ((100 - ret) * scale) / 100;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F023BC0
-/* 0586F0 7F023BC0 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0586F4 7F023BC4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0586F8 7F023BC8 AFA50024 */  sw    $a1, 0x24($sp)
-/* 0586FC 7F023BCC 80830003 */  lb    $v1, 3($a0)
-/* 058700 7F023BD0 0FC074AC */  jal   get_007_reaction_speed
-/* 058704 7F023BD4 AFA3001C */   sw    $v1, 0x1c($sp)
-/* 058708 7F023BD8 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 05870C 7F023BDC 24040064 */  li    $a0, 100
-/* 058710 7F023BE0 8FA80024 */  lw    $t0, 0x24($sp)
-/* 058714 7F023BE4 00837023 */  subu  $t6, $a0, $v1
-/* 058718 7F023BE8 448E2000 */  mtc1  $t6, $f4
-/* 05871C 7F023BEC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 058720 7F023BF0 27BD0020 */  addiu $sp, $sp, 0x20
-/* 058724 7F023BF4 468021A0 */  cvt.s.w $f6, $f4
-/* 058728 7F023BF8 46060202 */  mul.s $f8, $f0, $f6
-/* 05872C 7F023BFC 4600428D */  trunc.w.s $f10, $f8
-/* 058730 7F023C00 44185000 */  mfc1  $t8, $f10
-/* 058734 7F023C04 00000000 */  nop   
-/* 058738 7F023C08 03031821 */  addu  $v1, $t8, $v1
-/* 05873C 7F023C0C 0083C823 */  subu  $t9, $a0, $v1
-/* 058740 7F023C10 03280019 */  multu $t9, $t0
-/* 058744 7F023C14 00004812 */  mflo  $t1
-/* 058748 7F023C18 00000000 */  nop   
-/* 05874C 7F023C1C 00000000 */  nop   
-/* 058750 7F023C20 0124001A */  div   $zero, $t1, $a0
-/* 058754 7F023C24 00001012 */  mflo  $v0
-/* 058758 7F023C28 14800002 */  bnez  $a0, .L7F023C34
-/* 05875C 7F023C2C 00000000 */   nop   
-/* 058760 7F023C30 0007000D */  break 7
-.L7F023C34:
-/* 058764 7F023C34 2401FFFF */  li    $at, -1
-/* 058768 7F023C38 14810004 */  bne   $a0, $at, .L7F023C4C
-/* 05876C 7F023C3C 3C018000 */   lui   $at, 0x8000
-/* 058770 7F023C40 15210002 */  bne   $t1, $at, .L7F023C4C
-/* 058774 7F023C44 00000000 */   nop   
-/* 058778 7F023C48 0006000D */  break 6
-.L7F023C4C:
-/* 05877C 7F023C4C 03E00008 */  jr    $ra
-/* 058780 7F023C50 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -8778,7 +8744,7 @@ glabel sub_GAME_7F029D70
 /* 05EAFC 7F029FCC 00000000 */  nop   
 /* 05EB00 7F029FD0 00000000 */  nop   
 .L7F029FD4:
-/* 05EB04 7F029FD4 0FC08EF0 */  jal   sub_GAME_7F023BC0
+/* 05EB04 7F029FD4 0FC08EF0 */  jal   chrlvIGetGuard007SpeedRatingInt
 /* 05EB08 7F029FD8 8FA40058 */   lw    $a0, 0x58($sp)
 /* 05EB0C 7F029FDC 24450001 */  addiu $a1, $v0, 1
 /* 05EB10 7F029FE0 0C002914 */  jal   randomGetNext
