@@ -12,6 +12,7 @@
 #include "game/bondview.h"
 #include "game/bondinv.h"
 #include "game/chr.h"
+#include "game/chrlv.h"
 #include "game/chrobjhandler.h"
 #include "game/debugmenu_handler.h"
 #include "game/front.h"
@@ -3151,7 +3152,7 @@ variable_body_head:
 /* 0AEF54 7F07A424 AFAB0014 */   sw    $t3, 0x14($sp)
 .L7F07A428:
 /* 0AEF58 7F07A428 8FA40110 */  lw    $a0, 0x110($sp)
-/* 0AEF5C 7F07A42C 0FC08EA5 */  jal   sub_GAME_7F023A94
+/* 0AEF5C 7F07A42C 0FC08EA5 */  jal   chrlvIdleAnimationRelated7F023A94
 /* 0AEF60 7F07A430 24050000 */   li    $a1, 0
 /* 0AEF64 7F07A434 10000017 */  b     .L7F07A494
 /* 0AEF68 7F07A438 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -3164,7 +3165,7 @@ variable_body_head:
 /* 0AEF80 7F07A450 8C4C0014 */  lw    $t4, 0x14($v0)
 /* 0AEF84 7F07A454 24050000 */  li    $a1, 0
 /* 0AEF88 7F07A458 358A0001 */  ori   $t2, $t4, 1
-/* 0AEF8C 7F07A45C 0FC08EA5 */  jal   sub_GAME_7F023A94
+/* 0AEF8C 7F07A45C 0FC08EA5 */  jal   chrlvIdleAnimationRelated7F023A94
 /* 0AEF90 7F07A460 AC4A0014 */   sw    $t2, 0x14($v0)
 /* 0AEF94 7F07A464 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
 /* 0AEF98 7F07A468 8C63A0B0 */  lw    $v1, %lo(g_CurrentPlayer)($v1)
@@ -3756,7 +3757,7 @@ variable_body_head:
 /* 0AF5B4 7F07AA44 AFAF0014 */   sw    $t7, 0x14($sp)
 .Ljp7F07AA48:
 /* 0AF5B8 7F07AA48 8FA40110 */  lw    $a0, 0x110($sp)
-/* 0AF5BC 7F07AA4C 0FC08F65 */  jal   sub_GAME_7F023A94
+/* 0AF5BC 7F07AA4C 0FC08F65 */  jal   chrlvIdleAnimationRelated7F023A94
 /* 0AF5C0 7F07AA50 24050000 */   li    $a1, 0
 /* 0AF5C4 7F07AA54 10000017 */  b     .Ljp7F07AAB4
 /* 0AF5C8 7F07AA58 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -3769,7 +3770,7 @@ variable_body_head:
 /* 0AF5E0 7F07AA70 8C4D0014 */  lw    $t5, 0x14($v0)
 /* 0AF5E4 7F07AA74 24050000 */  li    $a1, 0
 /* 0AF5E8 7F07AA78 35AE0001 */  ori   $t6, $t5, 1
-/* 0AF5EC 7F07AA7C 0FC08F65 */  jal   sub_GAME_7F023A94
+/* 0AF5EC 7F07AA7C 0FC08F65 */  jal   chrlvIdleAnimationRelated7F023A94
 /* 0AF5F0 7F07AA80 AC4E0014 */   sw    $t6, 0x14($v0)
 /* 0AF5F4 7F07AA84 3C038008 */  lui   $v1, %hi(g_CurrentPlayer) # $v1, 0x8008
 /* 0AF5F8 7F07AA88 8C63A120 */  lw    $v1, %lo(g_CurrentPlayer)($v1)
@@ -4357,7 +4358,7 @@ variable_body_head:
 /* 0ACEAC 7F07A4BC AFAF0014 */   sw    $t7, 0x14($sp)
 .L7F07A4C0:
 /* 0ACEB0 7F07A4C0 8FA40110 */  lw    $a0, 0x110($sp)
-/* 0ACEB4 7F07A4C4 0FC08E9D */  jal   sub_GAME_7F023A94
+/* 0ACEB4 7F07A4C4 0FC08E9D */  jal   chrlvIdleAnimationRelated7F023A94
 /* 0ACEB8 7F07A4C8 24050000 */   li    $a1, 0
 /* 0ACEBC 7F07A4CC 10000017 */  b     .L7F07A52C
 /* 0ACEC0 7F07A4D0 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -4370,7 +4371,7 @@ variable_body_head:
 /* 0ACED8 7F07A4E8 8C4D0014 */  lw    $t5, 0x14($v0)
 /* 0ACEDC 7F07A4EC 24050000 */  li    $a1, 0
 /* 0ACEE0 7F07A4F0 35AE0001 */  ori   $t6, $t5, 1
-/* 0ACEE4 7F07A4F4 0FC08E9D */  jal   sub_GAME_7F023A94
+/* 0ACEE4 7F07A4F4 0FC08E9D */  jal   chrlvIdleAnimationRelated7F023A94
 /* 0ACEE8 7F07A4F8 AC4E0014 */   sw    $t6, 0x14($v0)
 /* 0ACEEC 7F07A4FC 3C038007 */  lui   $v1, %hi(g_CurrentPlayer) # $v1, 0x8007
 /* 0ACEF0 7F07A500 8C638BC0 */  lw    $v1, %lo(g_CurrentPlayer)($v1)

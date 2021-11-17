@@ -296,6 +296,22 @@ typedef struct ChrRecord {
     int * handle_positiondata_hat;
 } ChrRecord;
 
+typedef struct PropDefHeaderRecord
+{
+    u16 extrascale; /*0x0 Fixed-Point format u8.8 eg: 0x03.80 = 3.5*/
+    u8 state;     // state - Destroyed, respawn, defused etc /*0x2*/
+                    /*
+                    8x	destroyed
+                    4x	datathief/defuser/decoder used on obj (activated?)
+                    2x
+                    1x
+                    x8	external allocated collision block present
+                    x4	respawn enabled
+                    x2
+                    x1	damaged*/
+    u8 type;        /*0x3*/
+} PropDefHeaderRecord;
+
 
 typedef struct Model
 {
@@ -740,6 +756,28 @@ typedef struct WeaponObjRecord
 
     struct WeaponObjRecord *dualweapon; // other weapon when dual wielding /*0x84*/
 } WeaponObjRecord;
+
+/******
+
+ The following struct PropRecord was copied from AIListLogic branch
+ and should be removed when merged
+
+******/
+typedef struct GuardRecord
+{
+    PropDefHeaderRecord Head;
+    u16 chrnum;         /*0x4*/
+    u16 PadID;      /*0x6*/
+    u16 BodyID;     /*0x8*/
+    u16 AIListID;   /*0xa*/
+    u16 Preset;     /*0xc*/
+    u16 unk0a;      /*0xe*/
+    u16 health;     /*0x10*/
+    u16 ReactionTime; /*0x12*/
+    u16 unk10;        /*0x14*/
+    u16 HeadID;       /*0x16*/
+    ChrRecord *Data;  /*0x18*/
+} GuardRecord;
 
 typedef struct KeyRecord
 {
