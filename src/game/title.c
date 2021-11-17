@@ -231,7 +231,7 @@ glabel sub_GAME_7F007F30
 /* 03CB2C 7F007FFC 3C074000 */  lui   $a3, 0x4000
 /* 03CB30 7F008000 E7A40010 */  swc1  $f4, 0x10($sp)
 /* 03CB34 7F008004 028B2821 */  addu  $a1, $s4, $t3
-/* 03CB38 7F008008 0FC1BF2A */  jal   sub_GAME_7F06FCA8
+/* 03CB38 7F008008 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 03CB3C 7F00800C E7A60014 */   swc1  $f6, 0x14($sp)
 /* 03CB40 7F008010 8E020000 */  lw    $v0, ($s0)
 .L7F008014:
@@ -788,7 +788,7 @@ glabel sub_GAME_7F008E80
 /* 03DC6C 7F00913C E7A60010 */  swc1  $f6, 0x10($sp)
 /* 03DC70 7F009140 E7A80014 */  swc1  $f8, 0x14($sp)
 /* 03DC74 7F009144 44072000 */  mfc1  $a3, $f4
-/* 03DC78 7F009148 0FC1BF2A */  jal   sub_GAME_7F06FCA8
+/* 03DC78 7F009148 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 03DC7C 7F00914C 00000000 */   nop   
 /* 03DC80 7F009150 3C108004 */  lui   $s0, %hi(PitemZ_entries)
 /* 03DC84 7F009154 2610A228 */  addiu $s0, %lo(PitemZ_entries) # addiu $s0, $s0, -0x5dd8
@@ -1027,7 +1027,7 @@ glabel sub_GAME_7F008E80
 /* 03BAB0 7F0090C0 E7A60010 */  swc1  $f6, 0x10($sp)
 /* 03BAB4 7F0090C4 E7A80014 */  swc1  $f8, 0x14($sp)
 /* 03BAB8 7F0090C8 44072000 */  mfc1  $a3, $f4
-/* 03BABC 7F0090CC 0FC1BF92 */  jal   sub_GAME_7F06FCA8
+/* 03BABC 7F0090CC 0FC1BF92 */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 03BAC0 7F0090D0 00000000 */   nop   
 /* 03BAC4 7F0090D4 3C108003 */  lui   $s0, %hi(PitemZ_entries) # $s0, 0x8003
 /* 03BAC8 7F0090D8 26104D88 */  addiu $s0, %lo(PitemZ_entries) # addiu $s0, $s0, 0x4d88

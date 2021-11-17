@@ -3,6 +3,7 @@
 #include "ultra64.h"
 
 // these defines are named "PTR_" + nameof(enum ANIMATIONS value)
+// These values are "really const" compile time constants, used to define the enum in bondconstants.h
 
 #define PTR_ANIM_idle 0x1C
 #define PTR_ANIM_fire_standing 0x144
@@ -194,12 +195,229 @@
 #define PTR_ANIM_plane_runway 0xE5F4
 #define PTR_ANIM_helicopter_takeoff 0xE7C0
 
+// these externs are listed in the undefined_syms.txt. The value of each in that file
+// must be exactly the same as the #defines above.
+// These are compile time extern constants (so not "really" const), but used the same
+// as the defines above, which is to index into ptr_animation_table.
+
+extern s32 ADDR_ANIM_idle;
+extern s32 ADDR_ANIM_fire_standing;
+extern s32 ADDR_ANIM_fire_standing_fast;
+extern s32 ADDR_ANIM_fire_hip;
+extern s32 ADDR_ANIM_fire_shoulder_left;
+extern s32 ADDR_ANIM_fire_turn_right1;
+extern s32 ADDR_ANIM_fire_turn_right2;
+extern s32 ADDR_ANIM_fire_kneel_right_leg;
+extern s32 ADDR_ANIM_fire_kneel_left_leg;
+extern s32 ADDR_ANIM_fire_kneel_left;
+extern s32 ADDR_ANIM_fire_kneel_right;
+extern s32 ADDR_ANIM_fire_roll_left;
+extern s32 ADDR_ANIM_fire_roll_right1;
+extern s32 ADDR_ANIM_fire_roll_left_fast;
+extern s32 ADDR_ANIM_hit_left_shoulder;
+extern s32 ADDR_ANIM_hit_right_shoulder;
+extern s32 ADDR_ANIM_hit_left_arm;
+extern s32 ADDR_ANIM_hit_right_arm;
+extern s32 ADDR_ANIM_hit_left_hand;
+extern s32 ADDR_ANIM_hit_right_hand;
+extern s32 ADDR_ANIM_hit_left_leg;
+extern s32 ADDR_ANIM_hit_right_leg;
+extern s32 ADDR_ANIM_death_genitalia;
+extern s32 ADDR_ANIM_hit_neck;
+extern s32 ADDR_ANIM_death_neck;
+extern s32 ADDR_ANIM_death_stagger_back_to_wall;
+extern s32 ADDR_ANIM_death_forward_face_down;
+extern s32 ADDR_ANIM_death_forward_spin_face_up;
+extern s32 ADDR_ANIM_death_backward_fall_face_up1;
+extern s32 ADDR_ANIM_death_backward_spin_face_down_right;
+extern s32 ADDR_ANIM_death_backward_spin_face_up_right;
+extern s32 ADDR_ANIM_death_backward_spin_face_down_left;
+extern s32 ADDR_ANIM_death_backward_spin_face_up_left;
+extern s32 ADDR_ANIM_death_forward_face_down_hard;
+extern s32 ADDR_ANIM_death_forward_face_down_soft;
+extern s32 ADDR_ANIM_death_fetal_position_right;
+extern s32 ADDR_ANIM_death_fetal_position_left;
+extern s32 ADDR_ANIM_death_backward_fall_face_up2;
+extern s32 ADDR_ANIM_side_step_left;
+extern s32 ADDR_ANIM_fire_roll_right2;
+extern s32 ADDR_ANIM_walking;
+extern s32 ADDR_ANIM_sprinting;
+extern s32 ADDR_ANIM_running;
+extern s32 ADDR_ANIM_bond_eye_walk;
+extern s32 ADDR_ANIM_bond_eye_fire;
+extern s32 ADDR_ANIM_bond_watch;
+extern s32 ADDR_ANIM_surrendering_armed;
+extern s32 ADDR_ANIM_surrendering_armed_drop_weapon;
+extern s32 ADDR_ANIM_fire_walking;
+extern s32 ADDR_ANIM_fire_running;
+extern s32 ADDR_ANIM_null50;
+extern s32 ADDR_ANIM_null51;
+extern s32 ADDR_ANIM_fire_jump_to_side_left;
+extern s32 ADDR_ANIM_fire_jump_to_side_right;
+extern s32 ADDR_ANIM_hit_butt_long;
+extern s32 ADDR_ANIM_hit_butt_short;
+extern s32 ADDR_ANIM_death_head;
+extern s32 ADDR_ANIM_death_left_leg;
+extern s32 ADDR_ANIM_slide_right;
+extern s32 ADDR_ANIM_slide_left;
+extern s32 ADDR_ANIM_jump_backwards;
+extern s32 ADDR_ANIM_extending_left_hand;
+extern s32 ADDR_ANIM_fire_throw_grenade;
+extern s32 ADDR_ANIM_spotting_bond;
+extern s32 ADDR_ANIM_look_around;
+extern s32 ADDR_ANIM_fire_standing_one_handed_weapon;
+extern s32 ADDR_ANIM_fire_standing_draw_one_handed_weapon_fast;
+extern s32 ADDR_ANIM_fire_standing_draw_one_handed_weapon_slow;
+extern s32 ADDR_ANIM_fire_hip_one_handed_weapon_fast;
+extern s32 ADDR_ANIM_fire_hip_one_handed_weapon_slow;
+extern s32 ADDR_ANIM_fire_hip_forward_one_handed_weapon;
+extern s32 ADDR_ANIM_fire_standing_right_one_handed_weapon;
+extern s32 ADDR_ANIM_fire_step_right_one_handed_weapon;
+extern s32 ADDR_ANIM_fire_standing_left_one_handed_weapon_slow;
+extern s32 ADDR_ANIM_fire_standing_left_one_handed_weapon_fast;
+extern s32 ADDR_ANIM_fire_kneel_forward_one_handed_weapon_slow;
+extern s32 ADDR_ANIM_fire_kneel_forward_one_handed_weapon_fast;
+extern s32 ADDR_ANIM_fire_kneel_right_one_handed_weapon_slow;
+extern s32 ADDR_ANIM_fire_kneel_right_one_handed_weapon_fast;
+extern s32 ADDR_ANIM_fire_kneel_left_one_handed_weapon_slow;
+extern s32 ADDR_ANIM_fire_kneel_left_one_handed_weapon_fast;
+extern s32 ADDR_ANIM_fire_kneel_left_one_handed_weapon;
+extern s32 ADDR_ANIM_aim_walking_one_handed_weapon;
+extern s32 ADDR_ANIM_aim_walking_left_one_handed_weapon;
+extern s32 ADDR_ANIM_aim_walking_right_one_handed_weapon;
+extern s32 ADDR_ANIM_aim_running_one_handed_weapon;
+extern s32 ADDR_ANIM_aim_running_right_one_handed_weapon;
+extern s32 ADDR_ANIM_aim_running_left_one_handed_weapon;
+extern s32 ADDR_ANIM_aim_sprinting_one_handed_weapon;
+extern s32 ADDR_ANIM_running_one_handed_weapon;
+extern s32 ADDR_ANIM_sprinting_one_handed_weapon;
+extern s32 ADDR_ANIM_null91;
+extern s32 ADDR_ANIM_null92;
+extern s32 ADDR_ANIM_null93;
+extern s32 ADDR_ANIM_null94;
+extern s32 ADDR_ANIM_null95;
+extern s32 ADDR_ANIM_null96;
+extern s32 ADDR_ANIM_draw_one_handed_weapon_and_look_around;
+extern s32 ADDR_ANIM_draw_one_handed_weapon_and_stand_up;
+extern s32 ADDR_ANIM_aim_one_handed_weapon_left_right;
+extern s32 ADDR_ANIM_cock_one_handed_weapon_and_turn_around;
+extern s32 ADDR_ANIM_holster_one_handed_weapon_and_cross_arms;
+extern s32 ADDR_ANIM_cock_one_handed_weapon_turn_around_and_stand_up;
+extern s32 ADDR_ANIM_draw_one_handed_weapon_and_turn_around;
+extern s32 ADDR_ANIM_step_forward_and_hold_one_handed_weapon;
+extern s32 ADDR_ANIM_holster_one_handed_weapon_and_adjust_suit;
+extern s32 ADDR_ANIM_idle_unarmed;
+extern s32 ADDR_ANIM_walking_unarmed;
+extern s32 ADDR_ANIM_fire_walking_dual_wield;
+extern s32 ADDR_ANIM_fire_walking_dual_wield_hands_crossed;
+extern s32 ADDR_ANIM_fire_running_dual_wield;
+extern s32 ADDR_ANIM_fire_running_dual_wield_hands_crossed;
+extern s32 ADDR_ANIM_fire_sprinting_dual_wield;
+extern s32 ADDR_ANIM_fire_sprinting_dual_wield_hands_crossed;
+extern s32 ADDR_ANIM_walking_female;
+extern s32 ADDR_ANIM_running_female;
+extern s32 ADDR_ANIM_fire_kneel_dual_wield;
+extern s32 ADDR_ANIM_fire_kneel_dual_wield_left;
+extern s32 ADDR_ANIM_fire_kneel_dual_wield_right;
+extern s32 ADDR_ANIM_fire_kneel_dual_wield_hands_crossed;
+extern s32 ADDR_ANIM_fire_kneel_dual_wield_hands_crossed_left;
+extern s32 ADDR_ANIM_fire_kneel_dual_wield_hands_crossed_right;
+extern s32 ADDR_ANIM_fire_standing_dual_wield;
+extern s32 ADDR_ANIM_fire_standing_dual_wield_left;
+extern s32 ADDR_ANIM_fire_standing_dual_wield_right;
+extern s32 ADDR_ANIM_fire_standing_dual_wield_hands_crossed_left;
+extern s32 ADDR_ANIM_fire_standing_dual_wield_hands_crossed_right;
+extern s32 ADDR_ANIM_fire_standing_aiming_down_sights;
+extern s32 ADDR_ANIM_fire_kneel_aiming_down_sights;
+extern s32 ADDR_ANIM_hit_taser;
+extern s32 ADDR_ANIM_death_explosion_forward;
+extern s32 ADDR_ANIM_death_explosion_left1;
+extern s32 ADDR_ANIM_death_explosion_back_left;
+extern s32 ADDR_ANIM_death_explosion_back1;
+extern s32 ADDR_ANIM_death_explosion_right;
+extern s32 ADDR_ANIM_death_explosion_forward_right1;
+extern s32 ADDR_ANIM_death_explosion_back2;
+extern s32 ADDR_ANIM_death_explosion_forward_roll;
+extern s32 ADDR_ANIM_death_explosion_forward_face_down;
+extern s32 ADDR_ANIM_death_explosion_left2;
+extern s32 ADDR_ANIM_death_explosion_forward_right2;
+extern s32 ADDR_ANIM_death_explosion_forward_right2_alt;
+extern s32 ADDR_ANIM_death_explosion_forward_right3;
+extern s32 ADDR_ANIM_null143;
+extern s32 ADDR_ANIM_null144;
+extern s32 ADDR_ANIM_null145;
+extern s32 ADDR_ANIM_null146;
+extern s32 ADDR_ANIM_running_hands_up;
+extern s32 ADDR_ANIM_sprinting_hands_up;
+extern s32 ADDR_ANIM_aim_and_blow_one_handed_weapon;
+extern s32 ADDR_ANIM_aim_one_handed_weapon_left;
+extern s32 ADDR_ANIM_aim_one_handed_weapon_right;
+extern s32 ADDR_ANIM_conversation;
+extern s32 ADDR_ANIM_drop_weapon_and_show_fight_stance;
+extern s32 ADDR_ANIM_yawning;
+extern s32 ADDR_ANIM_swatting_flies;
+extern s32 ADDR_ANIM_scratching_leg;
+extern s32 ADDR_ANIM_scratching_butt;
+extern s32 ADDR_ANIM_adjusting_crotch;
+extern s32 ADDR_ANIM_sneeze;
+extern s32 ADDR_ANIM_conversation_cleaned;
+extern s32 ADDR_ANIM_conversation_listener;
+extern s32 ADDR_ANIM_startled_and_looking_around;
+extern s32 ADDR_ANIM_laughing_in_disbelief;
+extern s32 ADDR_ANIM_surrendering_unarmed;
+extern s32 ADDR_ANIM_coughing_standing;
+extern s32 ADDR_ANIM_coughing_kneel1;
+extern s32 ADDR_ANIM_coughing_kneel2;
+extern s32 ADDR_ANIM_standing_up;
+extern s32 ADDR_ANIM_null169;
+extern s32 ADDR_ANIM_dancing;
+extern s32 ADDR_ANIM_dancing_one_handed_weapon;
+extern s32 ADDR_ANIM_keyboard_right_hand1;
+extern s32 ADDR_ANIM_keyboard_right_hand2;
+extern s32 ADDR_ANIM_keyboard_left_hand;
+extern s32 ADDR_ANIM_keyboard_right_hand_tapping;
+extern s32 ADDR_ANIM_bond_eye_fire_alt;
+extern s32 ADDR_ANIM_dam_jump;
+extern s32 ADDR_ANIM_surface_vent_jump;
+extern s32 ADDR_ANIM_cradle_jump;
+extern s32 ADDR_ANIM_cradle_fall;
+extern s32 ADDR_ANIM_credits_bond_kissing;
+extern s32 ADDR_ANIM_credits_natalya_kissing;
+
+extern s32 ADDR_ANIM_helicopter_cradle;
+extern s32 ADDR_ANIM_plane_runway;
+extern s32 ADDR_ANIM_helicopter_takeoff;
+
+/**
+ * Struct to hold animation data. This is never instantiated.
+ * Instead, only a pointer to this will exist.
+ */
 struct animation_table_data {
+    /**
+     * Array length is arbitrary and shouldn't matter. The largest offset
+     * into this is for the last animation pointer 0xE7C0, so just choosing
+     * a value bigger than that, like u16_max_value.
+    */
     u8 data[0xffff];
 };
 
+/**
+ * Data holder for animations.
+ */
 extern struct animation_table_data* ptr_animation_table;
+
+/**
+ * Contains offsets into ptr_animation_table for player and guard animations.
+ * The index of each value corresponds to `enum ANIMATIONS`.
+ * The value corresponds to (e.g. index=0) PTR_ANIM_idle (same as ADDR_ANIM_idle)
+*/
 extern s32 animation_table_ptrs1[];
+
+/**
+ * Contains offsets into ptr_animation_table for object/vehicle animations.
+ * The index of each value corresponds to `enum AIRCRAFT_ANIMATIONS`.
+ * The value corresponds to (e.g. index=0) PTR_ANIM_helicopter_cradle (same as ADDR_ANIM_helicopter_cradle)
+*/
 extern s32 animation_table_ptrs2[];
 
 
