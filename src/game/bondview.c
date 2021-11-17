@@ -16,6 +16,7 @@
 #include "game/debugmenu_handler.h"
 #include "game/front.h"
 #include "game/gun.h"
+#include "game/initanitable.h"
 #include "game/objecthandler.h"
 #include "game/lvl.h"
 #include "game/math_atan2f.h"
@@ -11805,7 +11806,7 @@ void sub_GAME_7F07E7CC(void)
     #endif
     _sub_GAME_7F075FAC(&g_CurrentPlayer->something_with_watch_object_instance, objheader, &g_CurrentPlayer->field_2EC);
     set_obj_instance_controller_scale(&g_CurrentPlayer->something_with_watch_object_instance, c_item_entries[41].scale * 0.1f);
-    _sub_GAME_7F06FCA8(&g_CurrentPlayer->something_with_watch_object_instance, ptr_animation_table + 0x42c8, 0, 0.0, watch_transition_time * 0.5, 0.0);
+    _sub_GAME_7F06FCA8(&g_CurrentPlayer->something_with_watch_object_instance, ptr_animation_table + PTR_ANIM_bond_watch, 0, 0.0, watch_transition_time * 0.5, 0.0);
     g_CurrentPlayer->step_in_view_watch_animation = 0;
     return;
 }

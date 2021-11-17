@@ -6,6 +6,7 @@
 #include "game/bondview.h"
 #include "game/chr.h"
 #include "game/gun.h"
+#include "game/initanitable.h"
 #include "game/lvl.h"
 #include "game/math_asinfacosf.h"
 #include "game/math_atan2f.h"
@@ -612,10 +613,44 @@ u32 check_if_item_held_like_pistol(struct prop *arg0)
 }
 
 
-
 #ifdef NONMATCHING
-void sub_GAME_7F023948(void) {
 
+void sub_GAME_7F06FCA8(object_standard *, void*, s32, f32, f32, f32);
+void sub_GAME_7F06FDCC(object_standard *, f32, f32);
+void sub_GAME_7F06FDE8(object_standard *, f32);
+
+extern s32 D_PTR_ANIM_idle_unarmed;
+extern s32 D_PTR_ANIM_idle;
+
+void sub_GAME_7F023948(struct chrdata *arg0, f32 arg1)
+{
+    struct prop *left;
+    struct prop *right;
+
+    left = something_with_weaponpos_of_guarddata_hand(arg0, LEFT_HAND);
+    right = something_with_weaponpos_of_guarddata_hand(arg0, RIGHT_HAND);
+
+    if (
+        ((left != NULL) && (right != NULL))
+        || ((left == NULL) && (right == NULL))
+        || (check_if_item_held_like_pistol(left) != 0)
+        || (check_if_item_held_like_pistol(right) != 0))
+    {
+        s32 a = (s32)&D_PTR_ANIM_idle_unarmed;
+
+        sub_GAME_7F06FCA8(arg0->model, &ptr_animation_table->data[a], randomGetNext() & 1, 0, 0.25f, arg1);
+        sub_GAME_7F06FDCC(arg0->model, 0, 16.0f);
+    }
+    else if ((right != NULL) || (left != NULL))
+    {
+        s32 b = (s32)&D_PTR_ANIM_idle;
+
+        sub_GAME_7F06FCA8(arg0->model, &ptr_animation_table->data[b], left != NULL, 0, 0.25f, arg1);
+        sub_GAME_7F06FDCC(arg0->model, 0, 16.0f);
+        sub_GAME_7F06FDE8(arg0->model, 120.0f);
+    }
+
+    return;
 }
 #else
 GLOBAL_ASM(
