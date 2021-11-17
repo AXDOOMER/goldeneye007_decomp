@@ -22,6 +22,8 @@ s32 chrlvGetGuard007SpeedRatingInt(struct s_unk_guard *arg0, s32 arg1);
 f32 chrlvGetGuard007ArghRating(struct s_unk_guard *arg0, f32 min, f32 max);
 void chrlvKneelingAnimationRelated(struct s_unk_guard *arg0);
 void chrlvIdleAnimationRelated7F023E14(struct s_unk_guard *arg0, f32 arg1);
+void chrlvKneelingAnimationRelated7F023E48(struct s_unk_guard *arg0);
+
 
 void sub_GAME_7F02D184(struct s_unk_guard *arg0);
 
@@ -797,27 +799,15 @@ void chrlvIdleAnimationRelated7F023E14(struct s_unk_guard *arg0, f32 arg1)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F023E48(void) {
-
+/**
+ * Address 0x7F023E48.
+ */
+void chrlvKneelingAnimationRelated7F023E48(struct s_unk_guard *arg0)
+{
+    chrlvKneelingAnimationRelated(arg0);
+    arg0->unk40_ref = 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F023E48
-/* 058978 7F023E48 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 05897C 7F023E4C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 058980 7F023E50 0FC08F2E */  jal   chrlvKneelingAnimationRelated
-/* 058984 7F023E54 AFA40018 */   sw    $a0, 0x18($sp)
-/* 058988 7F023E58 8FAF0018 */  lw    $t7, 0x18($sp)
-/* 05898C 7F023E5C 240E0001 */  li    $t6, 1
-/* 058990 7F023E60 ADEE0040 */  sw    $t6, 0x40($t7)
-/* 058994 7F023E64 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 058998 7F023E68 27BD0018 */  addiu $sp, $sp, 0x18
-/* 05899C 7F023E6C 03E00008 */  jr    $ra
-/* 0589A0 7F023E70 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -6778,7 +6768,7 @@ glabel sub_GAME_7F028600
 /* 05D310 7F0287E0 0FC1B34F */  jal   setsubroty
 /* 05D314 7F0287E4 8E04001C */   lw    $a0, 0x1c($s0)
 .L7F0287E8:
-/* 05D318 7F0287E8 0FC08F92 */  jal   sub_GAME_7F023E48
+/* 05D318 7F0287E8 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
 /* 05D31C 7F0287EC 02002025 */   move  $a0, $s0
 /* 05D320 7F0287F0 10000021 */  b     .L7F028878
 /* 05D324 7F0287F4 02002025 */   move  $a0, $s0
@@ -10961,7 +10951,7 @@ glabel sub_GAME_7F02BC80
 /* 060820 7F02BCF0 10000004 */  b     .L7F02BD04
 /* 060824 7F02BCF4 02002025 */   move  $a0, $s0
 .L7F02BCF8:
-/* 060828 7F02BCF8 0FC08F92 */  jal   sub_GAME_7F023E48
+/* 060828 7F02BCF8 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
 /* 06082C 7F02BCFC 02002025 */   move  $a0, $s0
 /* 060830 7F02BD00 02002025 */  move  $a0, $s0
 .L7F02BD04:
@@ -11085,7 +11075,7 @@ glabel sub_GAME_7F02BE00
 /* 060964 7F02BE34 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 060968 7F02BE38 0FC0A6EC */  jal   sub_GAME_7F029BB0
 /* 06096C 7F02BE3C 8FA40020 */   lw    $a0, 0x20($sp)
-/* 060970 7F02BE40 0FC08F92 */  jal   sub_GAME_7F023E48
+/* 060970 7F02BE40 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
 /* 060974 7F02BE44 8FA40020 */   lw    $a0, 0x20($sp)
 /* 060978 7F02BE48 8FBF0014 */  lw    $ra, 0x14($sp)
 .L7F02BE4C:
@@ -11165,7 +11155,7 @@ glabel sub_GAME_7F02BEA8
 /* 060A30 7F02BF00 00000000 */  nop   
 /* 060A34 7F02BF04 45020004 */  bc1fl .L7F02BF18
 /* 060A38 7F02BF08 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 060A3C 7F02BF0C 0FC08F92 */  jal   sub_GAME_7F023E48
+/* 060A3C 7F02BF0C 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
 /* 060A40 7F02BF10 8FA40020 */   lw    $a0, 0x20($sp)
 /* 060A44 7F02BF14 8FBF0014 */  lw    $ra, 0x14($sp)
 .L7F02BF18:
@@ -11228,7 +11218,7 @@ glabel sub_GAME_7F02BF24
 /* 060AF0 7F02BFC0 10000004 */  b     .L7F02BFD4
 /* 060AF4 7F02BFC4 8FBF001C */   lw    $ra, 0x1c($sp)
 .L7F02BFC8:
-/* 060AF8 7F02BFC8 0FC08F92 */  jal   sub_GAME_7F023E48
+/* 060AF8 7F02BFC8 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
 /* 060AFC 7F02BFCC 8FA40028 */   lw    $a0, 0x28($sp)
 /* 060B00 7F02BFD0 8FBF001C */  lw    $ra, 0x1c($sp)
 .L7F02BFD4:
@@ -15109,7 +15099,7 @@ glabel sub_GAME_7F02E4C0
 /* 0631C8 7F02E698 0FC0A6EC */  jal   sub_GAME_7F029BB0
 /* 0631CC 7F02E69C 02002025 */   move  $a0, $s0
 .L7F02E6A0:
-/* 0631D0 7F02E6A0 0FC08F92 */  jal   sub_GAME_7F023E48
+/* 0631D0 7F02E6A0 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
 /* 0631D4 7F02E6A4 02002025 */   move  $a0, $s0
 /* 0631D8 7F02E6A8 1000014B */  b     .L7F02EBD8
 /* 0631DC 7F02E6AC 8FBF0044 */   lw    $ra, 0x44($sp)
@@ -15621,7 +15611,7 @@ glabel sub_GAME_7F02E4C0
 /* 0610BC 7F02E6CC 0FC0A6F9 */  jal   sub_GAME_7F029BB0
 /* 0610C0 7F02E6D0 02002025 */   move  $a0, $s0
 .L7F02E6D4:
-/* 0610C4 7F02E6D4 0FC08F8C */  jal   sub_GAME_7F023E48
+/* 0610C4 7F02E6D4 0FC08F8C */  jal   chrlvKneelingAnimationRelated7F023E48
 /* 0610C8 7F02E6D8 02002025 */   move  $a0, $s0
 /* 0610CC 7F02E6DC 10000151 */  b     .L7F02EC24
 /* 0610D0 7F02E6E0 8FBF0044 */   lw    $ra, 0x44($sp)
@@ -16887,7 +16877,7 @@ glabel sub_GAME_7F02F3F8
 /* 06404C 7F02F51C 00000000 */  nop   
 /* 064050 7F02F520 45020006 */  bc1fl .L7F02F53C
 /* 064054 7F02F524 44818000 */   mtc1  $at, $f16
-/* 064058 7F02F528 0FC08F92 */  jal   sub_GAME_7F023E48
+/* 064058 7F02F528 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
 /* 06405C 7F02F52C 02002025 */   move  $a0, $s0
 /* 064060 7F02F530 10000018 */  b     .L7F02F594
 /* 064064 7F02F534 8FBF0024 */   lw    $ra, 0x24($sp)
@@ -17290,7 +17280,7 @@ glabel sub_GAME_7F02F888
 .L7F02F9BC:
 /* 0644EC 7F02F9BC 0FC0A6EC */  jal   sub_GAME_7F029BB0
 /* 0644F0 7F02F9C0 02002025 */   move  $a0, $s0
-/* 0644F4 7F02F9C4 0FC08F92 */  jal   sub_GAME_7F023E48
+/* 0644F4 7F02F9C4 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
 /* 0644F8 7F02F9C8 02002025 */   move  $a0, $s0
 /* 0644FC 7F02F9CC 10000094 */  b     .L7F02FC20
 /* 064500 7F02F9D0 8FBF002C */   lw    $ra, 0x2c($sp)
@@ -17325,7 +17315,7 @@ glabel sub_GAME_7F02F888
 /* 064570 7F02FA40 00000000 */   nop   
 /* 064574 7F02FA44 0FC0A6EC */  jal   sub_GAME_7F029BB0
 /* 064578 7F02FA48 02002025 */   move  $a0, $s0
-/* 06457C 7F02FA4C 0FC08F92 */  jal   sub_GAME_7F023E48
+/* 06457C 7F02FA4C 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
 /* 064580 7F02FA50 02002025 */   move  $a0, $s0
 /* 064584 7F02FA54 10000072 */  b     .L7F02FC20
 /* 064588 7F02FA58 8FBF002C */   lw    $ra, 0x2c($sp)
@@ -17791,7 +17781,7 @@ glabel sub_GAME_7F02FE78
 /* 064B98 7F030068 0FC1BFA4 */  jal   sub_GAME_7F06FE90
 /* 064B9C 7F03006C 3C064180 */   lui   $a2, 0x4180
 .L7F030070:
-/* 064BA0 7F030070 0FC08F92 */  jal   sub_GAME_7F023E48
+/* 064BA0 7F030070 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
 /* 064BA4 7F030074 02002025 */   move  $a0, $s0
 /* 064BA8 7F030078 10000027 */  b     .L7F030118
 /* 064BAC 7F03007C 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -20185,7 +20175,7 @@ glabel sub_GAME_7F032088
 /* 066C8C 7F03215C 2B01000A */  slti  $at, $t8, 0xa
 /* 066C90 7F032160 54200006 */  bnezl $at, .L7F03217C
 /* 066C94 7F032164 8219005C */   lb    $t9, 0x5c($s0)
-/* 066C98 7F032168 0FC08F92 */  jal   sub_GAME_7F023E48
+/* 066C98 7F032168 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
 /* 066C9C 7F03216C 02002025 */   move  $a0, $s0
 /* 066CA0 7F032170 100000F1 */  b     .L7F032538
 /* 066CA4 7F032174 8FBF0024 */   lw    $ra, 0x24($sp)
@@ -20270,7 +20260,7 @@ glabel sub_GAME_7F032088
 /* 066DCC 7F03229C AFA5002C */   sw    $a1, 0x2c($sp)
 /* 066DD0 7F0322A0 10400005 */  beqz  $v0, .L7F0322B8
 /* 066DD4 7F0322A4 8FA3004C */   lw    $v1, 0x4c($sp)
-/* 066DD8 7F0322A8 0FC08F92 */  jal   sub_GAME_7F023E48
+/* 066DD8 7F0322A8 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
 /* 066DDC 7F0322AC 02002025 */   move  $a0, $s0
 /* 066DE0 7F0322B0 100000A1 */  b     .L7F032538
 /* 066DE4 7F0322B4 8FBF0024 */   lw    $ra, 0x24($sp)
@@ -22139,7 +22129,7 @@ glabel sub_GAME_7F0335D4
 /* 068110 7F0335E0 AFA40018 */   sw    $a0, 0x18($sp)
 /* 068114 7F0335E4 50400006 */  beql  $v0, $zero, .L7F033600
 /* 068118 7F0335E8 00001025 */   move  $v0, $zero
-/* 06811C 7F0335EC 0FC08F92 */  jal   sub_GAME_7F023E48
+/* 06811C 7F0335EC 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
 /* 068120 7F0335F0 8FA40018 */   lw    $a0, 0x18($sp)
 /* 068124 7F0335F4 10000002 */  b     .L7F033600
 /* 068128 7F0335F8 24020001 */   li    $v0, 1
