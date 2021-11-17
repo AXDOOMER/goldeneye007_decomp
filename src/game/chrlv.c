@@ -19,6 +19,7 @@ u32 check_if_item_held_like_pistol(struct prop *arg0);
 void chrlvIdleAnimationRelated(struct chrdata *arg0, f32 arg1);
 f32 chrlvIGetGuard007SpeedRating(struct chrdata *arg0, f32 min, f32 max);
 s32 chrlvIGetGuard007SpeedRatingInt(struct chrdata *arg0, s32 arg1);
+f32 chrlvIGetGuard007ArghRating(struct chrdata *arg0, f32 min, f32 max);
 
 // end forward declarations
 
@@ -729,41 +730,20 @@ s32 chrlvIGetGuard007SpeedRatingInt(struct chrdata *arg0, s32 scale)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F023C54(void) {
+/**
+ * @param arg0: guard
+ * @param min: min argh speed range
+ * @param max: max argh speed range
+ * Address 0x7F023C54.
+ */
+f32 chrlvIGetGuard007ArghRating(struct chrdata *arg0, f32 min, f32 max)
+{
+    f32 ret;
 
+    ret = (f32) arg0->arghrating;
+    ret = (get_007_reaction_speed() * (100.0f - ret)) + ret;
+    return ((ret * (max - min)) / 100.0f) + min;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F023C54
-/* 058784 7F023C54 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 058788 7F023C58 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05878C 7F023C5C AFA50024 */  sw    $a1, 0x24($sp)
-/* 058790 7F023C60 AFA60028 */  sw    $a2, 0x28($sp)
-/* 058794 7F023C64 808E000D */  lb    $t6, 0xd($a0)
-/* 058798 7F023C68 448E2000 */  mtc1  $t6, $f4
-/* 05879C 7F023C6C 00000000 */  nop   
-/* 0587A0 7F023C70 468020A0 */  cvt.s.w $f2, $f4
-/* 0587A4 7F023C74 0FC074AC */  jal   get_007_reaction_speed
-/* 0587A8 7F023C78 E7A2001C */   swc1  $f2, 0x1c($sp)
-/* 0587AC 7F023C7C 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 0587B0 7F023C80 44816000 */  mtc1  $at, $f12
-/* 0587B4 7F023C84 C7A2001C */  lwc1  $f2, 0x1c($sp)
-/* 0587B8 7F023C88 C7AE0024 */  lwc1  $f14, 0x24($sp)
-/* 0587BC 7F023C8C C7AA0028 */  lwc1  $f10, 0x28($sp)
-/* 0587C0 7F023C90 46026181 */  sub.s $f6, $f12, $f2
-/* 0587C4 7F023C94 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0587C8 7F023C98 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0587CC 7F023C9C 460E5401 */  sub.s $f16, $f10, $f14
-/* 0587D0 7F023CA0 46060202 */  mul.s $f8, $f0, $f6
-/* 0587D4 7F023CA4 46024080 */  add.s $f2, $f8, $f2
-/* 0587D8 7F023CA8 46028482 */  mul.s $f18, $f16, $f2
-/* 0587DC 7F023CAC 460C9103 */  div.s $f4, $f18, $f12
-/* 0587E0 7F023CB0 03E00008 */  jr    $ra
-/* 0587E4 7F023CB4 460E2000 */   add.s $f0, $f4, $f14
-)
-#endif
 
 
 
@@ -4522,7 +4502,7 @@ glabel triggered_on_shot_hit
 /* 05B670 7F026B40 2C410002 */  sltiu $at, $v0, 2
 /* 05B674 7F026B44 50200009 */  beql  $at, $zero, .L7F026B6C
 /* 05B678 7F026B48 2C410004 */   sltiu $at, $v0, 4
-/* 05B67C 7F026B4C 0FC08F15 */  jal   sub_GAME_7F023C54
+/* 05B67C 7F026B4C 0FC08F15 */  jal   chrlvIGetGuard007ArghRating
 /* 05B680 7F026B50 3C064100 */   lui   $a2, 0x4100
 /* 05B684 7F026B54 44050000 */  mfc1  $a1, $f0
 /* 05B688 7F026B58 0FC1BF7A */  jal   sub_GAME_7F06FDE8
@@ -4535,7 +4515,7 @@ glabel triggered_on_shot_hit
 /* 05B6A0 7F026B70 8FAD0080 */   lw    $t5, 0x80($sp)
 /* 05B6A4 7F026B74 02002025 */  move  $a0, $s0
 /* 05B6A8 7F026B78 3C05428E */  lui   $a1, 0x428e
-/* 05B6AC 7F026B7C 0FC08F15 */  jal   sub_GAME_7F023C54
+/* 05B6AC 7F026B7C 0FC08F15 */  jal   chrlvIGetGuard007ArghRating
 /* 05B6B0 7F026B80 3C064100 */   lui   $a2, 0x4100
 /* 05B6B4 7F026B84 44050000 */  mfc1  $a1, $f0
 /* 05B6B8 7F026B88 0FC1BF7A */  jal   sub_GAME_7F06FDE8
@@ -4551,7 +4531,7 @@ glabel triggered_on_shot_hit
 /* 05B6DC 7F026BAC 00000000 */  nop   
 /* 05B6E0 7F026BB0 468052A0 */  cvt.s.w $f10, $f10
 /* 05B6E4 7F026BB4 44055000 */  mfc1  $a1, $f10
-/* 05B6E8 7F026BB8 0FC08F15 */  jal   sub_GAME_7F023C54
+/* 05B6E8 7F026BB8 0FC08F15 */  jal   chrlvIGetGuard007ArghRating
 /* 05B6EC 7F026BBC 00000000 */   nop   
 /* 05B6F0 7F026BC0 44050000 */  mfc1  $a1, $f0
 /* 05B6F4 7F026BC4 0FC1BF7A */  jal   sub_GAME_7F06FDE8
@@ -4586,7 +4566,7 @@ glabel triggered_on_shot_hit
 /* 05B764 7F026C34 2C410002 */  sltiu $at, $v0, 2
 /* 05B768 7F026C38 50200009 */  beql  $at, $zero, .L7F026C60
 /* 05B76C 7F026C3C 2C410004 */   sltiu $at, $v0, 4
-/* 05B770 7F026C40 0FC08F15 */  jal   sub_GAME_7F023C54
+/* 05B770 7F026C40 0FC08F15 */  jal   chrlvIGetGuard007ArghRating
 /* 05B774 7F026C44 3C064100 */   lui   $a2, 0x4100
 /* 05B778 7F026C48 44050000 */  mfc1  $a1, $f0
 /* 05B77C 7F026C4C 0FC1BF7A */  jal   sub_GAME_7F06FDE8
@@ -4599,7 +4579,7 @@ glabel triggered_on_shot_hit
 /* 05B794 7F026C64 8FAC0080 */   lw    $t4, 0x80($sp)
 /* 05B798 7F026C68 02002025 */  move  $a0, $s0
 /* 05B79C 7F026C6C 3C05428C */  lui   $a1, 0x428c
-/* 05B7A0 7F026C70 0FC08F15 */  jal   sub_GAME_7F023C54
+/* 05B7A0 7F026C70 0FC08F15 */  jal   chrlvIGetGuard007ArghRating
 /* 05B7A4 7F026C74 3C064100 */   lui   $a2, 0x4100
 /* 05B7A8 7F026C78 44050000 */  mfc1  $a1, $f0
 /* 05B7AC 7F026C7C 0FC1BF7A */  jal   sub_GAME_7F06FDE8
@@ -4615,7 +4595,7 @@ glabel triggered_on_shot_hit
 /* 05B7D0 7F026CA0 00000000 */  nop   
 /* 05B7D4 7F026CA4 46804220 */  cvt.s.w $f8, $f8
 /* 05B7D8 7F026CA8 44054000 */  mfc1  $a1, $f8
-/* 05B7DC 7F026CAC 0FC08F15 */  jal   sub_GAME_7F023C54
+/* 05B7DC 7F026CAC 0FC08F15 */  jal   chrlvIGetGuard007ArghRating
 /* 05B7E0 7F026CB0 00000000 */   nop   
 /* 05B7E4 7F026CB4 44050000 */  mfc1  $a1, $f0
 /* 05B7E8 7F026CB8 0FC1BF7A */  jal   sub_GAME_7F06FDE8
@@ -4723,7 +4703,7 @@ glabel triggered_on_shot_hit
 /* 05B968 7F026E38 4502000A */  bc1fl .L7F026E64
 /* 05B96C 7F026E3C 8C690000 */   lw    $t1, ($v1)
 /* 05B970 7F026E40 44050000 */  mfc1  $a1, $f0
-/* 05B974 7F026E44 0FC08F15 */  jal   sub_GAME_7F023C54
+/* 05B974 7F026E44 0FC08F15 */  jal   chrlvIGetGuard007ArghRating
 /* 05B978 7F026E48 3C064100 */   lui   $a2, 0x4100
 /* 05B97C 7F026E4C 44050000 */  mfc1  $a1, $f0
 /* 05B980 7F026E50 0FC1BF7A */  jal   sub_GAME_7F06FDE8
@@ -4740,7 +4720,7 @@ glabel triggered_on_shot_hit
 /* 05B9A8 7F026E78 00000000 */  nop   
 /* 05B9AC 7F026E7C 46804220 */  cvt.s.w $f8, $f8
 /* 05B9B0 7F026E80 44054000 */  mfc1  $a1, $f8
-/* 05B9B4 7F026E84 0FC08F15 */  jal   sub_GAME_7F023C54
+/* 05B9B4 7F026E84 0FC08F15 */  jal   chrlvIGetGuard007ArghRating
 /* 05B9B8 7F026E88 00000000 */   nop   
 /* 05B9BC 7F026E8C 44050000 */  mfc1  $a1, $f0
 /* 05B9C0 7F026E90 0FC1BF7A */  jal   sub_GAME_7F06FDE8
