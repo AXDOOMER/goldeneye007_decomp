@@ -32,6 +32,7 @@ void chrlvActorShuffleFeet(struct s_unk_guard *arg0);
 void chrlvSurrenderAnimationRelated(struct s_unk_guard *arg0);
 void chrlvActorLookFlustered(struct s_unk_guard *arg0);
 void chrlvActorThrowWeaponSurrender(struct s_unk_guard *arg0);
+void chrlvActorFadeAway(struct s_unk_guard *arg0);
 
 
 
@@ -1118,35 +1119,19 @@ void chrlvActorThrowWeaponSurrender(struct s_unk_guard *arg0)
 
 
 
-#ifdef NONMATCHING
-void actor_fade_away(void) {
-
+/**
+ * Address 0x7F0247B8.
+ */
+void chrlvActorFadeAway(struct s_unk_guard *arg0)
+{
+    if (arg0->actiontype != ACT_DEAD)
+    {
+        sub_GAME_7F02D184(arg0);
+        arg0->actiontype = ACT_DEAD;
+        arg0->unk2c_ref = -1;
+        arg0->sleep = 0;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel actor_fade_away
-/* 0592E8 7F0247B8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0592EC 7F0247BC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0592F0 7F0247C0 808E0007 */  lb    $t6, 7($a0)
-/* 0592F4 7F0247C4 24010005 */  li    $at, 5
-/* 0592F8 7F0247C8 51C1000A */  beql  $t6, $at, .L7F0247F4
-/* 0592FC 7F0247CC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 059300 7F0247D0 0FC0B461 */  jal   sub_GAME_7F02D184
-/* 059304 7F0247D4 AFA40018 */   sw    $a0, 0x18($sp)
-/* 059308 7F0247D8 8FA40018 */  lw    $a0, 0x18($sp)
-/* 05930C 7F0247DC 240F0005 */  li    $t7, 5
-/* 059310 7F0247E0 2418FFFF */  li    $t8, -1
-/* 059314 7F0247E4 A08F0007 */  sb    $t7, 7($a0)
-/* 059318 7F0247E8 AC98002C */  sw    $t8, 0x2c($a0)
-/* 05931C 7F0247EC A0800008 */  sb    $zero, 8($a0)
-/* 059320 7F0247F0 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0247F4:
-/* 059324 7F0247F4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 059328 7F0247F8 03E00008 */  jr    $ra
-/* 05932C 7F0247FC 00000000 */   nop   
-)
-#endif
 
 
 
@@ -10447,7 +10432,7 @@ glabel guard_body_hit_sfx
 /* 060780 7F02BC50 10000007 */  b     .L7F02BC70
 /* 060784 7F02BC54 8FBF0024 */   lw    $ra, 0x24($sp)
 .L7F02BC58:
-/* 060788 7F02BC58 0FC091EE */  jal   actor_fade_away
+/* 060788 7F02BC58 0FC091EE */  jal   chrlvActorFadeAway
 /* 06078C 7F02BC5C 02002025 */   move  $a0, $s0
 /* 060790 7F02BC60 02002025 */  move  $a0, $s0
 .L7F02BC64:
@@ -21384,7 +21369,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0333A0
 /* 067ED0 7F0333A0 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 067ED4 7F0333A4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 067ED8 7F0333A8 0FC091EE */  jal   actor_fade_away
+/* 067ED8 7F0333A8 0FC091EE */  jal   chrlvActorFadeAway
 /* 067EDC 7F0333AC 00000000 */   nop   
 /* 067EE0 7F0333B0 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 067EE4 7F0333B4 27BD0018 */  addiu $sp, $sp, 0x18
