@@ -13,7 +13,7 @@
 
 // forward declarations
 
-u32 check_if_item_held_like_pistol(struct prop *arg0);
+u32 check_if_item_held_like_pistol(struct PropRecord *arg0);
 
 // end forward declarations
 
@@ -600,13 +600,13 @@ glabel expand_09_characters
 /**
  * Address 0x7F023910.
  */
-u32 check_if_item_held_like_pistol(struct prop *arg0)
+u32 check_if_item_held_like_pistol(struct PropRecord *arg0)
 {
     if (arg0 != NULL)
     {
-        struct chrdata *v = (struct chrdata*)arg0->voidp;
+        struct ChrRecord *v = (struct ChrRecord*)arg0->voidp;
 
-        return bondwalkItemCheckBitflags(v->field_80[0], 0x100U);
+        return bondwalkItemCheckBitflags(v->act_bytes.padding[84], 0x100U);
     }
 
     return 0U;
@@ -622,7 +622,7 @@ void sub_GAME_7F06FDE8(object_standard *, f32);
 extern s32 D_PTR_ANIM_idle_unarmed;
 extern s32 D_PTR_ANIM_idle;
 
-void sub_GAME_7F023948(struct chrdata *arg0, f32 arg1)
+void sub_GAME_7F023948(struct ChrRecord *arg0, f32 arg1)
 {
     struct prop *left;
     struct prop *right;
@@ -7936,9 +7936,9 @@ glabel set_actor_on_path
 
 
 
-void setSeenBondTimeToNow(struct chrdata *guardData)
+void setSeenBondTimeToNow(struct ChrRecord *guardData)
 {
-  guardData->timeshooter = g_GlobalTimer;
+  guardData->seen_bond_time = g_GlobalTimer;
   return;
 }
 
@@ -8693,17 +8693,17 @@ glabel sub_GAME_7F029BB0
 /**
  * Address 0x7F029C00.
  */
-void chrlvAlertGuardToPlayerPosition(struct chrdata *arg0)
+void chrlvAlertGuardToPlayerPosition(struct ChrRecord *arg0)
 {
-    struct prop *temp_v0;
+    struct PropRecord *temp_v0;
 
     temp_v0 = get_curplayer_positiondata();
     arg0->hidden |= 2;
     arg0->lastheartarget60 = g_GlobalTimer;
-    arg0->lastvisibletarg[0] = temp_v0->position.x;
-    arg0->lastvisibletarg[1] = temp_v0->position.y;
-    arg0->lastvisibletarg[2] = temp_v0->position.z;
-    arg0->field_E4 = temp_v0->standTile;
+    arg0->lastknowntargetpos.f[0] = temp_v0->pos.x;
+    arg0->lastknowntargetpos.f[1] = temp_v0->pos.y;
+    arg0->lastknowntargetpos.f[2] = temp_v0->pos.z;
+    arg0->targetTile = temp_v0->stan;
 }
 
 
@@ -9210,17 +9210,18 @@ glabel sub_GAME_7F02A1E8
 
 
 
-s32 true_if_actor_dying_fading_limping_shot(struct chrdata *chr) {
+s32 true_if_actor_dying_fading_limping_shot(struct ChrRecord *chr) {
     s8 currentaction = chr->actiontype;
 
-    if ((currentaction == ACT_DIE) || (currentaction == ACT_DEAD) || (currentaction == ACT_PREARGH) || (currentaction == ACT_ARGH) && !(chr->chrflags & CHRFLAG_00000200))
+    if ((currentaction == ACT_DIE) || (currentaction == ACT_DEAD) || (currentaction == ACT_PREARGH) 
+        || (currentaction == ACT_ARGH) && !(chr->chrflags & CHRFLAG_00000200))
         return 0;
     return 1;
 }
 
 
 
-s32 true_if_actor_dying_fading(struct chrdata *chr) {
+s32 true_if_actor_dying_fading(struct ChrRecord *chr) {
     s8 currentaction = chr->actiontype;
 
     return ((currentaction == ACT_DIE) || (currentaction == ACT_DEAD));
@@ -9916,14 +9917,14 @@ glabel actor_kneel_aim_at_actor
 
 
 
-int actor_fire_or_aim_at_target_update(struct chrdata *chr, u32 newflag, u32 newtarget)
+int actor_fire_or_aim_at_target_update(struct ChrRecord *chr, u32 newflag, u32 newtarget)
 {
     if(chr->actiontype == ACT_ATTACK)
     {
-        if((chr->targetflag & (TARGET_AIM_ONLY | TARGET_DONTTURN)) != 0)
+        if((chr->act_attack.attacktype & (TARGET_AIM_ONLY | TARGET_DONTTURN)) != 0)
         {
-            chr->targetflag = newflag;
-            chr->targettoshoot = newtarget;
+            chr->act_attack.attacktype = newflag;
+            chr->act_attack.entityid = newtarget;
             sub_GAME_7F024F8C(chr);
             return 1;
         }
@@ -10668,7 +10669,7 @@ glabel sub_GAME_7F02AD98
 
 
 
-void actor_reset_sleep(struct chrdata *actor) {
+void actor_reset_sleep(struct ChrRecord *actor) {
     actor->sleep = 0;
 }
 
@@ -21553,19 +21554,20 @@ glabel get_angle_between_actor_cur_player
 #endif
 
 
-f32 distToBond3D(struct chrdata *guardData)
+f32 distToBond3D(struct ChrRecord *guardData)
 {
-  struct prop *guardPosData;
-  struct prop *playerPosData;
+  struct PropRecord *guardPosData;
+  struct PropRecord *playerPosData;
   float xDiff;
   float yDiff;
   float zDiff;
   
-  guardPosData = guardData->posdata;
+  guardPosData = guardData->prop;
   playerPosData = get_curplayer_positiondata();
-  xDiff = (playerPosData->position).x - (guardPosData->position).x;
-  yDiff = (playerPosData->position).y - (guardPosData->position).y;
-  zDiff = (playerPosData->position).z - (guardPosData->position).z;
+  xDiff = playerPosData->pos.x - guardPosData->pos.x;
+  yDiff = playerPosData->pos.y - guardPosData->pos.y;
+  zDiff = playerPosData->pos.z - guardPosData->pos.z;
+
   return sqrtf(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff);
 }
 
@@ -21684,7 +21686,7 @@ glabel check_if_room_for_preset_loaded
 #endif
 
 
-s32 convertPadIf9000(struct chrdata *guardData,s32 padNo)
+s32 convertPadIf9000(struct ChrRecord *guardData,s32 padNo)
 {
     // Guard's target pad.
     if (padNo == PAD_PRESET) {

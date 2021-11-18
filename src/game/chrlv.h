@@ -21,9 +21,9 @@ s32 get_current_random_body(void);
 s32 select_psuedorandom_heads(s32 id);
 
 s32 get_random_head(s32 id);
-f32 distToBond3D(struct chrdata *guardData);
+f32 distToBond3D(struct ChrRecord *guardData);
 
-void chrlvAlertGuardToPlayerPosition(struct chrdata *);
+void chrlvAlertGuardToPlayerPosition(struct ChrRecord *);
 
 
 

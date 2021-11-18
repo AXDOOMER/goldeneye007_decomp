@@ -2407,7 +2407,7 @@ glabel sub_GAME_7F09B368
 // something_with_generating_object is supposed
 // to be returned here?
 void sub_GAME_7F09B398(HANDEDNESS hand) {
-    struct chrdata* temp_v0;
+    struct ChrRecord* temp_v0;
     ITEM_IDS weaponNum;
     s32 weaponIdMaybe;
 

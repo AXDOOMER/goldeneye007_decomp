@@ -184,7 +184,7 @@ extern s32 D_8002C910;
 extern s32 D_8002CC58;
 extern s32 show_patrols_flag;
 extern s32 player1_guardID;
-extern struct chrdata *ptr_guard_data;
+extern struct ChrRecord *ptr_guard_data;
 extern s32 num_guards;
 extern s32 D_8002CC6C[];
 extern s32 D_8002CCA8;
@@ -218,13 +218,13 @@ void chrDecrementAnimationTablePointerCount(void);
 void chrIncrementAnimationTablePointerCount(void);
 void chrToggleD_8002C90C(void);
 void chrCheckGuardsHeardSound(f32 arg0);
-struct chrdata* chrGetGuardData(s32 index);
+struct ChrRecord* chrGetGuardData(s32 index);
 struct PropRecord *something_with_weaponpos_of_guarddata_hand(struct ChrRecord *arg0, s32 arg1);
 struct PropRecord *is_weapon_in_guarddata_hand(struct ChrRecord *ChrRecord, s32 arg1);
-void chrUpdateCollisionBounds(struct prop *arg0, struct rect4f **arg1, s32 *arg2, f32 *y_out, f32 *ground);
+void chrUpdateCollisionBounds(struct PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *y_out, f32 *ground);
 void chrGetChrWidthHeight(struct prop *arg0, f32 *width, f32 *height, f32 *always_20);
 f32 chrGetChrGround(struct prop *arg0);
-void sub_GAME_7F021B20(struct chrdata *arg0);
+void sub_GAME_7F021B20(struct ChrRecord *arg0);
 
 #ifndef VERSION_US
 s32 not_in_us_7F0209EC(s32 bodynum, s32 headnum);

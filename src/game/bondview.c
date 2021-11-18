@@ -14471,7 +14471,7 @@ void currentPlayerUpdateColourScreenProperties(void)
 
 void currentPlayerStartChrFade(f32 duration60, f32 targetfrac)
 {
-	struct chrdata* chr = g_CurrentPlayer->prop->chr;
+	struct ChrRecord* chr = g_CurrentPlayer->prop->chr;
 
 	if (chr) {
 		g_CurrentPlayer->bondfadetime60 = 0;
@@ -14484,7 +14484,7 @@ void currentPlayerStartChrFade(f32 duration60, f32 targetfrac)
 void currentPlayerTickChrFade(void)
 {
 	if (g_CurrentPlayer->bondfadetimemax60 >= 0) {
-		struct chrdata *chr = g_CurrentPlayer->prop->chr;
+		struct ChrRecord *chr = (struct ChrRecord *)g_CurrentPlayer->prop->chr;
 		f32 frac;
 
 		g_CurrentPlayer->bondfadetime60 += g_GlobalTimerDelta;

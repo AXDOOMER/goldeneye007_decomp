@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "bondgame.h"
+#include "bondtypes.h"
 #include "random.h"
 #include "snd.h"
 #include "include/math.h"
@@ -59,7 +60,7 @@ struct animation_something D_8002CC2C = {0xFFFFFFFF, 0, 0, 0.0, 0, 0, 0.0, NULL,
 s32 D_8002CC58 = 0;
 s32 show_patrols_flag = FALSE;
 s32 player1_guardID = 5000;
-struct chrdata *ptr_guard_data = 0;
+struct ChrRecord *ptr_guard_data = 0;
 s32 num_guards = 0;
 s32 D_8002CC6C[] = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 s32 D_8002CCA8 = 0;
@@ -3019,7 +3020,7 @@ s32 replace_GUARDdata_with_actual_values(s32 arg0, s32 arg1, s32 arg2, s32 arg3,
 void disable_sounds_attached_to_player_then_something(struct prop *prop)
 {
     struct prop *p;
-    struct chrdata *chr;
+    struct ChrRecord *chr;
     struct object_standard *model;
     
     chr = prop->chr;
@@ -3278,7 +3279,7 @@ void chrSetHiddenToRandom(struct ChrRecord *arg0)
 /**
  * Address 0x7F020794.
  */
-f32 sub_GAME_7F020794(struct chrdata *arg0)
+f32 sub_GAME_7F020794(struct ChrRecord *arg0)
 {
     // this method matches, but references D_80051D28,D_80051D2C
     // for the M_2PI_F variable.
@@ -5951,20 +5952,20 @@ glabel sub_GAME_7F020EF0
 /**
  * Address 0x7F021B20.
  */
-void sub_GAME_7F021B20(struct chrdata *arg0)
+void sub_GAME_7F021B20(struct ChrRecord *arg0)
 {
-    struct prop *phi_s0;
+    struct PropRecord *phi_s0;
     struct ObjectRecord * obj;
 
-    for (phi_s0 = arg0->posdata->child; phi_s0 != NULL; phi_s0 = phi_s0->nextSibling)
+    for (phi_s0 = arg0->prop->child; phi_s0 != NULL; phi_s0 = phi_s0->prev)
     {
         if (
             (phi_s0 != arg0->handle_positiondata_hat)
-            && (phi_s0 != arg0->handle_positiondata[1])
-            && (phi_s0 != arg0->handle_positiondata[0])
+            && (phi_s0 != arg0->weapons_held[1])
+            && (phi_s0 != arg0->weapons_held[0])
             )
         {
-            obj = phi_s0->obj;
+            obj = (struct ObjectRecord *)phi_s0->voidp;
 
             if ((obj->flags & 0x2000) == 0)
             {
@@ -7430,7 +7431,7 @@ void chrCheckGuardsHeardSound(f32 noise)
  * 
  * Address 0x7F022FC8.
  */
-struct chrdata* chrGetGuardData(s32 index)
+struct ChrRecord* chrGetGuardData(s32 index)
 {
     s32 i;
 
@@ -7493,9 +7494,9 @@ struct PropRecord *is_weapon_in_guarddata_hand(struct ChrRecord *arg0, s32 arg1)
  * 
  * Address 0x7F02308C.
  */
-void chrUpdateCollisionBounds(struct prop *arg0, struct rect4f **arg1, s32 *arg2, f32 *y_out, f32 *ground)
+void chrUpdateCollisionBounds(struct PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *y_out, f32 *ground)
 {
-    struct chrdata *chr;
+    struct ChrRecord *chr;
 
     chr = arg0->chr;
 
@@ -7508,17 +7509,17 @@ void chrUpdateCollisionBounds(struct prop *arg0, struct rect4f **arg1, s32 *arg2
         *arg2 = 4;
         *arg1 = &chr->collision_bounds;
 
-        chr->collision_bounds.f[0] = arg0->position.x + chr->chrwidth;
-        chr->collision_bounds.f[1] = arg0->position.z;
+        chr->collision_bounds.f[0] = arg0->pos.x + chr->chrwidth;
+        chr->collision_bounds.f[1] = arg0->pos.z;
 
-        chr->collision_bounds.f[2] = arg0->position.x;
-        chr->collision_bounds.f[3] = arg0->position.z + chr->chrwidth;
+        chr->collision_bounds.f[2] = arg0->pos.x;
+        chr->collision_bounds.f[3] = arg0->pos.z + chr->chrwidth;
 
-        chr->collision_bounds.f[4] = arg0->position.x - chr->chrwidth;
-        chr->collision_bounds.f[5] = arg0->position.z;
+        chr->collision_bounds.f[4] = arg0->pos.x - chr->chrwidth;
+        chr->collision_bounds.f[5] = arg0->pos.z;
 
-        chr->collision_bounds.f[6] = arg0->position.x;
-        chr->collision_bounds.f[7] = arg0->position.z - chr->chrwidth;
+        chr->collision_bounds.f[6] = arg0->pos.x;
+        chr->collision_bounds.f[7] = arg0->pos.z - chr->chrwidth;
 
         *ground = chr->ground;
         *y_out = *ground + chr->chrheight;
@@ -7544,7 +7545,7 @@ void chrGetChrWidthHeight(struct prop *arg0, f32 *width, f32 *height, f32 *alway
 {
     void *temp_v0;
 
-    struct chrdata *c = arg0->chr;
+    struct ChrRecord *c = arg0->chr;
 
     *width = c->chrwidth;
     *height = c->chrheight - 20.0f;
@@ -7558,7 +7559,7 @@ void chrGetChrWidthHeight(struct prop *arg0, f32 *width, f32 *height, f32 *alway
  */
 f32 chrGetChrGround(struct prop *arg0)
 {
-    struct chrdata *c = arg0->chr;
+    struct ChrRecord *c = arg0->chr;
     return c->ground;
 }
 

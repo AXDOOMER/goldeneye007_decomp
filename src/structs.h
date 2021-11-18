@@ -35,7 +35,7 @@ struct prop {
     s16 timetoregen;
     union {
         void *voidp;
-        struct chrdata* chr;
+        struct ChrRecord* chr;
         struct ObjectRecord* obj;
         // 	struct defaultobj *obj;
         // 	struct doorobj *door;
