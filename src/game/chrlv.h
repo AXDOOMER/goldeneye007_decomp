@@ -18,7 +18,7 @@ s32 get_random_head(s32 id);
 f32 distToBond3D(struct chrdata *guardData);
 void chrlvAlertGuardToPlayerPosition(struct chrdata *);
 void chrlvIdleAnimationRelated7F023A94(struct s_unk_guard *arg0, f32 arg1);
-
+f32 sub_GAME_7F032C4C(struct s_unk_guard *arg0);
 
 
 #endif
