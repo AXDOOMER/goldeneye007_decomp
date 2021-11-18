@@ -24,9 +24,11 @@ void chrlvKneelingAnimationRelated(struct s_unk_guard *arg0);
 void chrlvIdleAnimationRelated7F023E14(struct s_unk_guard *arg0, f32 arg1);
 void chrlvKneelingAnimationRelated7F023E48(struct s_unk_guard *arg0);
 void chrlvActorKneel(struct s_unk_guard *arg0);
-void  chrlvPerformAnimationForActor(struct s_unk_guard *arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s32 arg5);
+void chrlvPerformAnimationForActor(struct s_unk_guard *arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s32 arg5);
 void chrlvExtendLeftHandAnimationRelated(struct s_unk_guard *arg0);
 void chrlvThrowGrenadeAnimationRelated(struct s_unk_guard *arg0, s32 arg1, s32 arg2, s32 arg3);
+void chrlvSpotBondAnimationRelated(struct s_unk_guard *arg0, f32 arg1);
+
 
 
 
@@ -851,7 +853,7 @@ void chrlvActorKneel(struct s_unk_guard *arg0)
 /**
  * Address 0x7F023FE4.
  */
-void  chrlvPerformAnimationForActor(struct s_unk_guard *arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s32 arg5)
+void chrlvPerformAnimationForActor(struct s_unk_guard *arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s32 arg5)
 {
     f32 farg2 = (f32)arg2;
     f32 phi_f0;
@@ -897,6 +899,8 @@ void  chrlvPerformAnimationForActor(struct s_unk_guard *arg0, s32 arg1, s32 arg2
 
 
 /**
+ * Extend left hand = ACT_STARTALARM.
+ * 
  * Address 0x7F024150.
  */
 void chrlvExtendLeftHandAnimationRelated(struct s_unk_guard *arg0)
@@ -920,7 +924,7 @@ void chrlvExtendLeftHandAnimationRelated(struct s_unk_guard *arg0)
 
     sub_GAME_7F02D184(arg0);
 
-    arg0->actiontype = 0x13;
+    arg0->actiontype = ACT_STARTALARM;
     arg0->sleep = 0;
 
     objecthandlerAnimationRelated7F06FCA8(arg0->ext, (void*)&ptr_animation_table->data[(s32)&ADDR_ANIM_extending_left_hand], phi_a2, 40.0f, 1.0f, 16.0f);
@@ -937,7 +941,7 @@ void chrlvThrowGrenadeAnimationRelated(struct s_unk_guard *arg0, s32 arg1, s32 a
 {
     sub_GAME_7F02D184(arg0);
 
-    arg0->actiontype = 0x14;
+    arg0->actiontype = ACT_THROWGRENADE;
     arg0->sleep = 0;
 
     if (arg3 != 0)
@@ -954,78 +958,35 @@ void chrlvThrowGrenadeAnimationRelated(struct s_unk_guard *arg0, s32 arg1, s32 a
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F024334(void) {
+/**
+ * Addres 0x7F024334.
+ */
+void chrlvSpotBondAnimationRelated(struct s_unk_guard *arg0, f32 arg1)
+{
+    struct prop *left;
+    struct prop *right;
+    s32 sp2C;
+    f32 objarg4;
 
+    left = something_with_weaponpos_of_guarddata_hand((struct chrdata *) arg0, LEFT_HAND);
+    right = something_with_weaponpos_of_guarddata_hand((struct chrdata *) arg0, RIGHT_HAND);
+
+    sp2C = 0;
+    if ((left != NULL) && (right == NULL))
+    {
+        sp2C = 1;
+    }
+    else if (((left != NULL) && (right != NULL)) || ((left == NULL) && (right == NULL)))
+    {
+        sp2C = randomGetNext() & 1;
+    }
+
+    objarg4 = chrlvGetGuard007SpeedRating(arg0, 0.6f, 0.96000004f); // 0.96000004 is different from 0.96
+    objecthandlerAnimationRelated7F06FCA8(arg0->ext, (void*)&ptr_animation_table->data[(s32)&ADDR_ANIM_spotting_bond], sp2C, 10.0f, objarg4, arg1);
+    sub_GAME_7F06FDE8(arg0->ext, 52.0f);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F024334
-/* 058E64 7F024334 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 058E68 7F024338 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 058E6C 7F02433C AFB00020 */  sw    $s0, 0x20($sp)
-/* 058E70 7F024340 AFA5003C */  sw    $a1, 0x3c($sp)
-/* 058E74 7F024344 00808025 */  move  $s0, $a0
-/* 058E78 7F024348 0FC08C0B */  jal   something_with_weaponpos_of_guarddata_hand
-/* 058E7C 7F02434C 24050001 */   li    $a1, 1
-/* 058E80 7F024350 02002025 */  move  $a0, $s0
-/* 058E84 7F024354 00002825 */  move  $a1, $zero
-/* 058E88 7F024358 0FC08C0B */  jal   something_with_weaponpos_of_guarddata_hand
-/* 058E8C 7F02435C AFA20034 */   sw    $v0, 0x34($sp)
-/* 058E90 7F024360 8FA30034 */  lw    $v1, 0x34($sp)
-/* 058E94 7F024364 AFA0002C */  sw    $zero, 0x2c($sp)
-/* 058E98 7F024368 10600005 */  beqz  $v1, .L7F024380
-/* 058E9C 7F02436C 00000000 */   nop   
-/* 058EA0 7F024370 14400003 */  bnez  $v0, .L7F024380
-/* 058EA4 7F024374 240E0001 */   li    $t6, 1
-/* 058EA8 7F024378 1000000D */  b     .L7F0243B0
-/* 058EAC 7F02437C AFAE002C */   sw    $t6, 0x2c($sp)
-.L7F024380:
-/* 058EB0 7F024380 10600003 */  beqz  $v1, .L7F024390
-/* 058EB4 7F024384 00000000 */   nop   
-/* 058EB8 7F024388 14400005 */  bnez  $v0, .L7F0243A0
-/* 058EBC 7F02438C 00000000 */   nop   
-.L7F024390:
-/* 058EC0 7F024390 54600008 */  bnezl $v1, .L7F0243B4
-/* 058EC4 7F024394 3C053F19 */   lui   $a1, 0x3f19
-/* 058EC8 7F024398 54400006 */  bnezl $v0, .L7F0243B4
-/* 058ECC 7F02439C 3C053F19 */   lui   $a1, 0x3f19
-.L7F0243A0:
-/* 058ED0 7F0243A0 0C002914 */  jal   randomGetNext
-/* 058ED4 7F0243A4 00000000 */   nop   
-/* 058ED8 7F0243A8 304F0001 */  andi  $t7, $v0, 1
-/* 058EDC 7F0243AC AFAF002C */  sw    $t7, 0x2c($sp)
-.L7F0243B0:
-/* 058EE0 7F0243B0 3C053F19 */  lui   $a1, (0x3F19999A >> 16) # lui $a1, 0x3f19
-.L7F0243B4:
-/* 058EE4 7F0243B4 3C063F75 */  lui   $a2, (0x3F75C290 >> 16) # lui $a2, 0x3f75
-/* 058EE8 7F0243B8 34C6C290 */  ori   $a2, (0x3F75C290 & 0xFFFF) # ori $a2, $a2, 0xc290
-/* 058EEC 7F0243BC 34A5999A */  ori   $a1, (0x3F19999A & 0xFFFF) # ori $a1, $a1, 0x999a
-/* 058EF0 7F0243C0 0FC08ED7 */  jal   chrlvGetGuard007SpeedRating
-/* 058EF4 7F0243C4 02002025 */   move  $a0, $s0
-/* 058EF8 7F0243C8 3C188007 */  lui   $t8, %hi(ptr_animation_table) 
-/* 058EFC 7F0243CC 8F189538 */  lw    $t8, %lo(ptr_animation_table)($t8)
-/* 058F00 7F0243D0 C7A4003C */  lwc1  $f4, 0x3c($sp)
-/* 058F04 7F0243D4 3C190000 */  lui   $t9, %hi(0x00005D10) # $t9, 0
-/* 058F08 7F0243D8 27395D10 */  addiu $t9, %lo(0x00005D10) # addiu $t9, $t9, 0x5d10
-/* 058F0C 7F0243DC 8E04001C */  lw    $a0, 0x1c($s0)
-/* 058F10 7F0243E0 E7A00010 */  swc1  $f0, 0x10($sp)
-/* 058F14 7F0243E4 8FA6002C */  lw    $a2, 0x2c($sp)
-/* 058F18 7F0243E8 3C074120 */  lui   $a3, 0x4120
-/* 058F1C 7F0243EC 03192821 */  addu  $a1, $t8, $t9
-/* 058F20 7F0243F0 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
-/* 058F24 7F0243F4 E7A40014 */   swc1  $f4, 0x14($sp)
-/* 058F28 7F0243F8 8E04001C */  lw    $a0, 0x1c($s0)
-/* 058F2C 7F0243FC 0FC1BF7A */  jal   sub_GAME_7F06FDE8
-/* 058F30 7F024400 3C054250 */   lui   $a1, 0x4250
-/* 058F34 7F024404 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 058F38 7F024408 8FB00020 */  lw    $s0, 0x20($sp)
-/* 058F3C 7F02440C 27BD0038 */  addiu $sp, $sp, 0x38
-/* 058F40 7F024410 03E00008 */  jr    $ra
-/* 058F44 7F024414 00000000 */   nop   
-)
-#endif
+
+
 
 
 
@@ -1061,7 +1022,7 @@ glabel actor_shuffle_feet
 /* 058F88 7F024458 45000009 */  bc1f  .L7F024480
 /* 058F8C 7F02445C 00000000 */   nop   
 .L7F024460:
-/* 058F90 7F024460 0FC090CD */  jal   sub_GAME_7F024334
+/* 058F90 7F024460 0FC090CD */  jal   chrlvSpotBondAnimationRelated
 /* 058F94 7F024464 3C054180 */   lui   $a1, 0x4180
 /* 058F98 7F024468 0FC0B461 */  jal   sub_GAME_7F02D184
 /* 058F9C 7F02446C 02002025 */   move  $a0, $s0
@@ -22051,7 +22012,7 @@ glabel check_if_able_to_then_perform_animation
 /* 068260 7F033730 8FA60028 */  lw    $a2, 0x28($sp)
 /* 068264 7F033734 8FA7002C */  lw    $a3, 0x2c($sp)
 /* 068268 7F033738 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 06826C 7F03373C 0FC08FF9 */  jal    chrlvPerformAnimationForActor
+/* 06826C 7F03373C 0FC08FF9 */  jal   chrlvPerformAnimationForActor
 /* 068270 7F033740 AFAF0014 */   sw    $t7, 0x14($sp)
 /* 068274 7F033744 10000002 */  b     .L7F033750
 /* 068278 7F033748 24020001 */   li    $v0, 1
