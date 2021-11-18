@@ -1039,10 +1039,10 @@ s32 objectiveregisters1 = 0;
 s32 objectiveregisters2 = 0;
 s32 objectiveregisters3 = 0;
 s32 D_80030984 = 0;
-s32 D_80030988 = 0;
+f32 D_80030988 = 0;
 s32 D_8003098C = 0;
 s32 D_80030990 = 0;
-s32 D_80030994 = 0;
+f32 D_80030994 = 0;
 s32 D_80030998 = 0;
 s32 D_8003099C = 0;
 s32 D_800309A0 = 0;
@@ -7450,9 +7450,9 @@ struct chrdata* chrGetGuardData(s32 index)
 /**
  * Address 0x7F02302C.
  */
-struct prop *something_with_weaponpos_of_guarddata_hand(struct chrdata *arg0, s32 arg1)
+struct PropRecord *something_with_weaponpos_of_guarddata_hand(struct ChrRecord *arg0, s32 arg1)
 {
-    return arg0->handle_positiondata[arg1];
+    return arg0->weapons_held[arg1];
 }
 
 
@@ -7461,17 +7461,17 @@ struct prop *something_with_weaponpos_of_guarddata_hand(struct chrdata *arg0, s3
 /**
  * Address 0x7F02303C.
  */
-struct prop *is_weapon_in_guarddata_hand(struct chrdata *arg0, s32 arg1)
+struct PropRecord *is_weapon_in_guarddata_hand(struct ChrRecord *arg0, s32 arg1)
 {
-    struct prop *ret;
+    struct PropRecord *ret;
 
-    ret = arg0->handle_positiondata[arg1];
+    ret = arg0->weapons_held[arg1];
 
     if (ret != NULL)
     {
-        struct chrdata *c = ret->chr;
+        struct ChrRecord *c = ret->chr;
 
-        if (bondwalkItemCheckBitflags(c->field_80[0], 0x200) == 0)
+        if (bondwalkItemCheckBitflags(c->act_null.padding[20], 0x200) == 0)
         {
             ret = NULL;
         }

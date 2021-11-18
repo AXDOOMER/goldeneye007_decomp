@@ -192,6 +192,10 @@ extern s32 D_8002CCAC;
 extern s32 D_8002CCB0;
 extern s32 D_8002CCB4;
 extern u8 D_8002CCB8[4];
+
+extern f32 D_80030988;
+extern f32 D_80030994;
+
 extern u32 num_bodies;
 extern u32 num_male_heads;
 extern u32 num_female_heads;
@@ -219,8 +223,8 @@ void chrIncrementAnimationTablePointerCount(void);
 void chrToggleD_8002C90C(void);
 void chrCheckGuardsHeardSound(f32 arg0);
 struct chrdata* chrGetGuardData(s32 index);
-struct prop *something_with_weaponpos_of_guarddata_hand(struct chrdata *arg0, s32 arg1);
-struct prop *is_weapon_in_guarddata_hand(struct chrdata *arg0, s32 arg1);
+struct PropRecord *something_with_weaponpos_of_guarddata_hand(struct ChrRecord *arg0, s32 arg1);
+struct PropRecord *is_weapon_in_guarddata_hand(struct ChrRecord *arg0, s32 arg1);
 void chrUpdateCollisionBounds(struct prop *arg0, struct rect4f **arg1, s32 *arg2, f32 *y_out, f32 *ground);
 void chrGetChrWidthHeight(struct prop *arg0, f32 *width, f32 *height, f32 *always_20);
 f32 chrGetChrGround(struct prop *arg0);
