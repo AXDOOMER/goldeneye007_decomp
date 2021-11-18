@@ -624,8 +624,8 @@ extern s32 D_PTR_ANIM_idle;
 
 void sub_GAME_7F023948(struct ChrRecord *arg0, f32 arg1)
 {
-    struct prop *left;
-    struct prop *right;
+    struct PropRecord *left;
+    struct PropRecord *right;
 
     left = something_with_weaponpos_of_guarddata_hand(arg0, LEFT_HAND);
     right = something_with_weaponpos_of_guarddata_hand(arg0, RIGHT_HAND);

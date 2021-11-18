@@ -2114,7 +2114,7 @@ s32 get_cur_playernum(void) {
 }
 
 
-s32 sub_GAME_7F09B15C(struct prop* prop)
+s32 sub_GAME_7F09B15C(struct PropRecord* prop)
 {
     s32 i;
 

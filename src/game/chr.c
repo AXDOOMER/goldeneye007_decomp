@@ -1119,13 +1119,13 @@ s32 get_show_patrols_flag(void){
  * 
  * Address 0x7F01F574.
  */
-f32 chrUnusedYPositionRelated(struct prop *arg0)
+f32 chrUnusedYPositionRelated(struct PropRecord *arg0)
 {
-    if (arg0->standTile != 0)
+    if (arg0->stan != 0)
     {
-        if (sub_GAME_7F0B20D0(&arg0->standTile, arg0->position.x, arg0->position.z, 1.0f) < 0)
+        if (sub_GAME_7F0B20D0(&arg0->stan, arg0->pos.x, arg0->pos.z, 1.0f) < 0)
         {
-            return stanGetPositionYValue(arg0->standTile, arg0->position.x, arg0->position.z);
+            return stanGetPositionYValue(arg0->stan, arg0->pos.x, arg0->pos.z);
         }
 
         return 0.0f;
@@ -3017,9 +3017,9 @@ s32 replace_GUARDdata_with_actual_values(s32 arg0, s32 arg1, s32 arg2, s32 arg3,
  * 
  * notes: something isn't right around the area the nextSibling pointer is iterated.
  */
-void disable_sounds_attached_to_player_then_something(struct prop *prop)
+void disable_sounds_attached_to_player_then_something(struct PropRecord *prop)
 {
-    struct prop *p;
+    struct PropRecord *p;
     struct ChrRecord *chr;
     struct object_standard *model;
     
@@ -7541,7 +7541,7 @@ void chrUpdateCollisionBounds(struct PropRecord *arg0, struct rect4f **arg1, s32
  * 
  * Address 0x7F023160.
  */
-void chrGetChrWidthHeight(struct prop *arg0, f32 *width, f32 *height, f32 *always_20)
+void chrGetChrWidthHeight(struct PropRecord *arg0, f32 *width, f32 *height, f32 *always_20)
 {
     void *temp_v0;
 
@@ -7557,7 +7557,7 @@ void chrGetChrWidthHeight(struct prop *arg0, f32 *width, f32 *height, f32 *alway
 /**
  * Address 0x7F023188.
  */
-f32 chrGetChrGround(struct prop *arg0)
+f32 chrGetChrGround(struct PropRecord *arg0)
 {
     struct ChrRecord *c = arg0->chr;
     return c->ground;

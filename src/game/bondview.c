@@ -14687,10 +14687,10 @@ f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2)
 
     if (ptr_playerstank != 0)
     {
-        ObjectRecord * obj = ((struct prop *)ptr_playerstank)->obj;
-        struct prop *p = ((struct prop *)obj->prop);
+        ObjectRecord * obj = ((struct PropRecord *)ptr_playerstank)->obj;
+        struct PropRecord *p = obj->prop;
 
-        ret = stanGetPositionYValue(p->standTile, p->position.x, p->position.z);
+        ret = stanGetPositionYValue(p->stan, p->pos.x, p->pos.z);
             
         ret += g_PlayerTankYOffset;
     }
@@ -31934,7 +31934,7 @@ f32 bondviewGetPlayerDuckingHeightRelated(struct player *player)
 
 
 
-struct prop* get_curplayer_positiondata(void) {
+struct PropRecord* get_curplayer_positiondata(void) {
     return g_CurrentPlayer->prop;
 }
 
@@ -32914,7 +32914,7 @@ int get_BONDdata_field408(void) {
 /**
  * Address 0x7F08A03C.
  */
-void bondviewUpdateGuardTankFlagsRelated(struct prop *arg0, s32 flags)
+void bondviewUpdateGuardTankFlagsRelated(struct PropRecord *arg0, s32 flags)
 {
     s32 sp1C;
 
@@ -32940,7 +32940,7 @@ void bondviewUpdateGuardTankFlagsRelated(struct prop *arg0, s32 flags)
 /**
  * Address 0x7F08A0B0.
  */
-void bondviewGetPropHeightRelatedValues(struct prop *arg0, struct rect4f **field_B0, s32 *arg2, f32 *height_related, f32 *collision)
+void bondviewGetPropHeightRelatedValues(struct PropRecord *arg0, struct rect4f **field_B0, s32 *arg2, f32 *height_related, f32 *collision)
 {
     s32 temp_v0;
 
@@ -32997,7 +32997,7 @@ void bondviewUpdatePlayerCollisionBounds(void)
 /**
  * Address 0x7F08A274.
  */
-void bondviewCollisionRadiusRelated(struct prop* arg0, f32 *arg1, f32 *arg2, f32 *arg3)
+void bondviewCollisionRadiusRelated(struct PropRecord* arg0, f32 *arg1, f32 *arg2, f32 *arg3)
 {
     struct player **temp_v1;
 

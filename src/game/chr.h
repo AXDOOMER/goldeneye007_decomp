@@ -204,7 +204,7 @@ extern u32 current_random_female_head;
 
 void sub_GAME_7F022EE0(s32 param_1);
 void sub_GAME_7F022E24(s32 param_1);
-void disable_sounds_attached_to_player_then_something(struct prop* prop);
+void disable_sounds_attached_to_player_then_something(struct PropRecord* prop);
 void chrPositionRelated7F020D94(struct ChrRecord *);
 void set_or_unset_GUARDdata_flag(struct ChrRecord *guard,s32 param_2);
 s32 sub_GAME_7F021BFC();
@@ -222,8 +222,8 @@ struct ChrRecord* chrGetGuardData(s32 index);
 struct PropRecord *something_with_weaponpos_of_guarddata_hand(struct ChrRecord *arg0, s32 arg1);
 struct PropRecord *is_weapon_in_guarddata_hand(struct ChrRecord *ChrRecord, s32 arg1);
 void chrUpdateCollisionBounds(struct PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *y_out, f32 *ground);
-void chrGetChrWidthHeight(struct prop *arg0, f32 *width, f32 *height, f32 *always_20);
-f32 chrGetChrGround(struct prop *arg0);
+void chrGetChrWidthHeight(struct PropRecord *arg0, f32 *width, f32 *height, f32 *always_20);
+f32 chrGetChrGround(struct PropRecord *arg0);
 void sub_GAME_7F021B20(struct ChrRecord *arg0);
 
 #ifndef VERSION_US

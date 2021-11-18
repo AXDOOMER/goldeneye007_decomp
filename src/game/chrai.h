@@ -225,10 +225,10 @@ void sub_GAME_7F03D78C(void);
 void sub_GAME_7F03C294(void);
 s32 sub_GAME_7F03C4F0(void);
 void sub_GAME_7F03D0D4(void);
-void sub_GAME_7F03DD9C(struct prop *, s16, struct player *);
+void sub_GAME_7F03DD9C(struct PropRecord *, s16, struct player *);
 s32 remove_last_obj_pos_data_entry();
-void sub_GAME_7F03E18C(struct prop *, struct ChrRecord *);
-void sub_GAME_7F03E27C(struct prop *, struct float3 *, struct float3 *, f32);
-void sub_GAME_7F03E210(struct prop *posData);
+void sub_GAME_7F03E18C(struct PropRecord *, struct ChrRecord *);
+void sub_GAME_7F03E27C(struct PropRecord *, struct float3 *, struct float3 *, f32);
+void sub_GAME_7F03E210(struct PropRecord *posData);
 
 #endif
