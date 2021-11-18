@@ -22,7 +22,7 @@ void sub_GAME_7F041024(struct object_standard * arg0, s32 arg1);
 
 void chrobjApplySpeed(f32 *distDone, f32 maxDist, f32 *speedPtr, f32 accel, f32 decel, f32 maxSpeed);
 Gfx * sub_GAME_7F049B58(Gfx *arg0);
-void set_color_shading_from_tile(struct prop*, u8 *);
-void sub_GAME_7F04BFD0(struct prop *, s32);
+void set_color_shading_from_tile(struct PropRecord*, u8 *);
+void sub_GAME_7F04BFD0(struct PropRecord *, s32);
 
 #endif

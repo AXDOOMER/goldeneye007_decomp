@@ -1880,7 +1880,7 @@ void cheatButtonSetDkMode(s32 cheat_id)
     s32 i;
     f32 scale;
     struct Model *model;
-    struct chrdata* guard = ptr_guard_data;
+    struct ChrRecord* guard = ptr_guard_data;
 
     num_guards = get_numguards();
 

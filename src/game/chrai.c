@@ -185,7 +185,7 @@ s32 D_80030A98 = 0;
 s32 D_80030A9C = 0;
 s32 *ptr_obj_pos_list_current_entry = 0;
 s32 *ptr_obj_pos_list_first_entry = 0;
-struct prop *ptr_obj_pos_list_final_entry = 0;
+struct PropRecord *ptr_obj_pos_list_final_entry = 0;
 f32 difficulty = 1.0;
 s32 D_80030AB0 = 0;
 s32 D_80030AB4 = 0;
@@ -20243,7 +20243,7 @@ glabel set_stateflag_0x04_for_posdata
 
 
 
-void propHide(struct prop *prop)
+void propHide(struct PropRecord *prop)
 {
     prop->flags = prop->flags & 0xfffb;
 }
@@ -20302,12 +20302,12 @@ glabel remove_last_obj_pos_data_entry
 
 
 
-void propFree(struct prop *prop)
+void propFree(struct PropRecord *prop)
 
 {
-    prop->nextSibling = ptr_obj_pos_list_final_entry;
-    prop->prevSibling = 0x0;
-    prop->standTile = 0x0;
+    prop->prev = ptr_obj_pos_list_final_entry;
+    prop->next = 0x0;
+    prop->stan = 0x0;
     ptr_obj_pos_list_final_entry = prop;
 }
 
@@ -20431,21 +20431,20 @@ glabel sub_GAME_7F03A538
 
 
 
-void attachNewChild(struct prop *newChild,struct prop *host)
+void attachNewChild(PropRecord *newChild, PropRecord *host)
 {
-    newChild->host = host;
+    newChild->parent = host;
 
     // Link the newChild into its siblings
-    if (host->child) {
-        host->child->prevSibling = newChild;
+    if (host->child)
+    {
+        host->child->next = newChild;
     }
-    newChild->nextSibling = host->child;
-    newChild->prevSibling = 0x0;
+    newChild->prev = host->child;
+    newChild->next = NULL;
+    newChild->stan = NULL;
+    host->child    = newChild;
 
-    newChild->standTile = 0x0;
-    host->child = newChild;
-
-    return;
 }
 
 
@@ -25280,7 +25279,7 @@ Main missing these kinds of instructions:
 So it looks like a conversion from u32 to u16, but we're reading a u8?
 I tried u32 room but no joy.
 */
-void sub_GAME_7F03E210(struct prop *posData)
+void sub_GAME_7F03E210(struct PropRecord *posData)
 {
   u8 room;
   u8 *roomIter;

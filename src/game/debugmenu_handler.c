@@ -314,7 +314,7 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
 //    f32 tempz;
 //    f32 tempy;
     s32 debug_profile_flag;
-    struct prop *playerprop;
+    struct PropRecord *playerprop;
 
 
     if (grab_rgb_screenshot_flag != 0)

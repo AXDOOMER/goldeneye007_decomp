@@ -151,8 +151,8 @@ ifeq ($(IDO_RECOMP), NO)
 else
   CC := $(IRIX_ROOT)/cc
 endif
-CFLAGS := 0 -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838 -signed $(INCLUDE) -mips2 $(LCDEFS) -DTARGET_N64
-CFLAGS_LIBULTRA := 0 -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838 -signed $(INCLUDE) -mips2 $(LCDEFS) -DTARGET_N64
+CFLAGS := 0 -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838,649 -signed $(INCLUDE) -mips2 $(LCDEFS) -DTARGET_N64
+CFLAGS_LIBULTRA := 0 -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838,649 -signed $(INCLUDE) -mips2 $(LCDEFS) -DTARGET_N64
 
 LD := $(TOOLCHAIN)ld
 LD_SCRIPT := ge007.$(COUNTRYCODE).ld

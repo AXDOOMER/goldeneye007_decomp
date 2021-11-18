@@ -464,7 +464,7 @@ struct player
   /* 0x009c */ s32 crouchpos;
   /* 0x00a0 */ f32 ducking_height_offset;
   /* 0x00a4 */ f32 field_A4;
-  /* 0x00a8 */ struct prop* prop;
+  /* 0x00a8 */ struct PropRecord* prop;
   /* 0x00ac */ s32 field_AC;
 
   /**
@@ -3064,7 +3064,7 @@ void bondviewTriggerWatchZoom(f32 zoominfovy);
 
 void trigger_watch_zoom(f32 final, f32 time);
 
-struct prop* get_curplayer_positiondata(void);
+struct PropRecord* get_curplayer_positiondata(void);
 
 void currentPlayerSetScreenSize(f32 width, f32 height);
 void currentPlayerSetCameraScale(void);
@@ -3112,7 +3112,7 @@ void bondviewUpdateXAutoAimTime(s32 auto_aim_time, f32 auto_aim_x);
 void bondviewSet3dCoord7F07CEB0(struct coord3d *arg0);
 f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2);
 f32 bondviewGetPlayerDuckingHeightRelated(struct player *player);
-void bondviewCollisionRadiusRelated(struct prop* arg0, f32 *arg1, f32 *arg2, f32 *arg3);
+void bondviewCollisionRadiusRelated(struct PropRecord* arg0, f32 *arg1, f32 *arg2, f32 *arg3);
 void bondviewUpdatePlayerClipping(s32 use_clipping_height, f32 clipping_height_offset);
 void currentPlayerSetFadeColour(s32 r, s32 g, s32 b, f32 frac);
 void currentPlayerSetFadeFrac(f32 maxfadetime, f32 frac);
@@ -3127,8 +3127,8 @@ int bondviewGetIfCurrentPlayerDamageShowTime(void);
 int bondviewGetIfCurrentPlayerHealthShowTime(void);
 u8 bondviewGetCurrentPlayersRoom(void);
 struct coord3d *bondviewGetCurrentPlayersPosition(void);
-void bondviewUpdateGuardTankFlagsRelated(struct prop *arg0, s32 flags);
-void bondviewGetPropHeightRelatedValues(struct prop *arg0, struct rect4f **field_B0, s32 *arg2, f32 *height_related, f32 *collision);
+void bondviewUpdateGuardTankFlagsRelated(struct PropRecord *arg0, s32 flags);
+void bondviewGetPropHeightRelatedValues(struct PropRecord *arg0, struct rect4f **field_B0, s32 *arg2, f32 *height_related, f32 *collision);
 void bondviewAddCurrentPlayerArmor(f32 arg0);
 void bondviewResetIntroCameraMessageDialogs(void);
 void bondviewUnsetIntroCameraFlags(s32 flag);
