@@ -29,6 +29,8 @@ void chrlvExtendLeftHandAnimationRelated(struct s_unk_guard *arg0);
 void chrlvThrowGrenadeAnimationRelated(struct s_unk_guard *arg0, s32 arg1, s32 arg2, s32 arg3);
 void chrlvSpotBondAnimationRelated(struct s_unk_guard *arg0, f32 arg1);
 void chrlvActorShuffleFeet(struct s_unk_guard *arg0);
+void chrlvSurrenderAnimationRelated(struct s_unk_guard *arg0);
+
 
 
 s32 check_if_actor_stationary(struct s_unk_guard *);
@@ -1018,55 +1020,18 @@ void chrlvActorShuffleFeet(struct s_unk_guard *arg0)
 
 
 
-#ifdef NONMATCHING
-void actor_fawn_on_shoulder(void) {
-
+/**
+ * Address 0x7F0244AC.
+ */
+void chrlvSurrenderAnimationRelated(struct s_unk_guard *arg0)
+{
+    sub_GAME_7F02D184(arg0);
+    arg0->actiontype = ACT_SURPRISED;
+    arg0->sleep = 0;
+    objecthandlerAnimationRelated7F06FCA8(arg0->ext, &ptr_animation_table->data[(s32)&ADDR_ANIM_surrendering_armed], randomGetNext() & 1, 0.0f, chrlvGetGuard007SpeedRating(arg0, 0.35f, 0.56f), 16.0f);
+    sub_GAME_7F06FDE8(arg0->ext, 7.0f);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel actor_fawn_on_shoulder
-/* 058FDC 7F0244AC 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 058FE0 7F0244B0 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 058FE4 7F0244B4 AFB00020 */  sw    $s0, 0x20($sp)
-/* 058FE8 7F0244B8 0FC0B461 */  jal   sub_GAME_7F02D184
-/* 058FEC 7F0244BC 00808025 */   move  $s0, $a0
-/* 058FF0 7F0244C0 240E0012 */  li    $t6, 18
-/* 058FF4 7F0244C4 A20E0007 */  sb    $t6, 7($s0)
-/* 058FF8 7F0244C8 0C002914 */  jal   randomGetNext
-/* 058FFC 7F0244CC A2000008 */   sb    $zero, 8($s0)
-/* 059000 7F0244D0 3C053EB3 */  lui   $a1, (0x3EB33333 >> 16) # lui $a1, 0x3eb3
-/* 059004 7F0244D4 3C063F0F */  lui   $a2, (0x3F0F5C29 >> 16) # lui $a2, 0x3f0f
-/* 059008 7F0244D8 34C65C29 */  ori   $a2, (0x3F0F5C29 & 0xFFFF) # ori $a2, $a2, 0x5c29
-/* 05900C 7F0244DC 34A53333 */  ori   $a1, (0x3EB33333 & 0xFFFF) # ori $a1, $a1, 0x3333
-/* 059010 7F0244E0 AFA20028 */  sw    $v0, 0x28($sp)
-/* 059014 7F0244E4 0FC08ED7 */  jal   chrlvGetGuard007SpeedRating
-/* 059018 7F0244E8 02002025 */   move  $a0, $s0
-/* 05901C 7F0244EC 8FA60028 */  lw    $a2, 0x28($sp)
-/* 059020 7F0244F0 3C0F8007 */  lui   $t7, %hi(ptr_animation_table) 
-/* 059024 7F0244F4 3C014180 */  li    $at, 0x41800000 # 16.000000
-/* 059028 7F0244F8 44812000 */  mtc1  $at, $f4
-/* 05902C 7F0244FC 8DEF9538 */  lw    $t7, %lo(ptr_animation_table)($t7)
-/* 059030 7F024500 3C180000 */  lui   $t8, %hi(0x00004384) # $t8, 0
-/* 059034 7F024504 27184384 */  addiu $t8, %lo(0x00004384) # addiu $t8, $t8, 0x4384
-/* 059038 7F024508 8E04001C */  lw    $a0, 0x1c($s0)
-/* 05903C 7F02450C 30D90001 */  andi  $t9, $a2, 1
-/* 059040 7F024510 03203025 */  move  $a2, $t9
-/* 059044 7F024514 E7A00010 */  swc1  $f0, 0x10($sp)
-/* 059048 7F024518 24070000 */  li    $a3, 0
-/* 05904C 7F02451C E7A40014 */  swc1  $f4, 0x14($sp)
-/* 059050 7F024520 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
-/* 059054 7F024524 01F82821 */   addu  $a1, $t7, $t8
-/* 059058 7F024528 8E04001C */  lw    $a0, 0x1c($s0)
-/* 05905C 7F02452C 0FC1BF7A */  jal   sub_GAME_7F06FDE8
-/* 059060 7F024530 3C0540E0 */   lui   $a1, 0x40e0
-/* 059064 7F024534 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 059068 7F024538 8FB00020 */  lw    $s0, 0x20($sp)
-/* 05906C 7F02453C 27BD0030 */  addiu $sp, $sp, 0x30
-/* 059070 7F024540 03E00008 */  jr    $ra
-/* 059074 7F024544 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -21885,7 +21850,7 @@ glabel check_if_able_to_then_fawn_on_shoulder
 /* 068188 7F033658 AFA40018 */   sw    $a0, 0x18($sp)
 /* 06818C 7F03365C 50400006 */  beql  $v0, $zero, .L7F033678
 /* 068190 7F033660 00001025 */   move  $v0, $zero
-/* 068194 7F033664 0FC0912B */  jal   actor_fawn_on_shoulder
+/* 068194 7F033664 0FC0912B */  jal   chrlvSurrenderAnimationRelated
 /* 068198 7F033668 8FA40018 */   lw    $a0, 0x18($sp)
 /* 06819C 7F03366C 10000002 */  b     .L7F033678
 /* 0681A0 7F033670 24020001 */   li    $v0, 1
