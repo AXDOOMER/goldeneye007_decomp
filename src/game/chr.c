@@ -1,5 +1,6 @@
 #include "ultra64.h"
 #include "bondgame.h"
+#include "bondtypes.h"
 #include "random.h"
 #include "snd.h"
 #include "include/math.h"
@@ -16,8 +17,8 @@
 
 // forward declarations
 
-void chrAimGlobalTimerTickRelated(struct chrdata *arg0);
-void chrPositionRelated7F020E40(struct chrdata *chr, s32 arg1);
+void chrAimGlobalTimerTickRelated(struct ChrRecord *arg0);
+void chrPositionRelated7F020E40(struct ChrRecord *chr, s32 arg1);
 
 // end forward declarations
 
@@ -59,7 +60,7 @@ struct animation_something D_8002CC2C = {0xFFFFFFFF, 0, 0, 0.0, 0, 0, 0.0, NULL,
 s32 D_8002CC58 = 0;
 s32 show_patrols_flag = FALSE;
 s32 player1_guardID = 5000;
-struct chrdata *ptr_guard_data = 0;
+struct ChrRecord *ptr_guard_data = 0;
 s32 num_guards = 0;
 s32 D_8002CC6C[] = {0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 s32 D_8002CCA8 = 0;
@@ -1118,13 +1119,13 @@ s32 get_show_patrols_flag(void){
  * 
  * Address 0x7F01F574.
  */
-f32 chrUnusedYPositionRelated(struct prop *arg0)
+f32 chrUnusedYPositionRelated(struct PropRecord *arg0)
 {
-    if (arg0->standTile != 0)
+    if (arg0->stan != 0)
     {
-        if (sub_GAME_7F0B20D0(&arg0->standTile, arg0->position.x, arg0->position.z, 1.0f) < 0)
+        if (sub_GAME_7F0B20D0(&arg0->stan, arg0->pos.x, arg0->pos.z, 1.0f) < 0)
         {
-            return stanGetPositionYValue(arg0->standTile, arg0->position.x, arg0->position.z);
+            return stanGetPositionYValue(arg0->stan, arg0->pos.x, arg0->pos.z);
         }
 
         return 0.0f;
@@ -1135,7 +1136,7 @@ f32 chrUnusedYPositionRelated(struct prop *arg0)
 
 
 
-void set_or_unset_GUARDdata_flag(struct chrdata *guard,s32 param_2){
+void set_or_unset_GUARDdata_flag(struct ChrRecord *guard,s32 param_2){
   if (param_2 != 0) {
     guard->hidden = guard->hidden & 0xfeff;
     return;
@@ -2545,22 +2546,22 @@ s32 chrGetNumFree(void)
 
 f32 get_007_health_mod(void);
 
-void chrSetMaxDamage(struct chrdata *chr, f32 maxdamage)
+void chrSetMaxDamage(struct ChrRecord *chr, f32 maxdamage)
 {
     chr->maxdamage = (get_007_health_mod() * maxdamage);
 }
 
-f32 chrGetMaxDamage(struct chrdata *chr)
+f32 chrGetMaxDamage(struct ChrRecord *chr)
 {
     return chr->maxdamage;
 }
 
-void chrAddHealth(struct chrdata *chr, f32 health)
+void chrAddHealth(struct ChrRecord *chr, f32 health)
 {
     chr->damage -= (health * get_007_health_mod());
 }
 
-f32 chrGetArmor(struct chrdata *chr)
+f32 chrGetArmor(struct ChrRecord *chr)
 {
 	if (chr->damage < 0) {
 		return -chr->damage;
@@ -3016,10 +3017,10 @@ s32 replace_GUARDdata_with_actual_values(s32 arg0, s32 arg1, s32 arg2, s32 arg3,
  * 
  * notes: something isn't right around the area the nextSibling pointer is iterated.
  */
-void disable_sounds_attached_to_player_then_something(struct prop *prop)
+void disable_sounds_attached_to_player_then_something(struct PropRecord *prop)
 {
-    struct prop *p;
-    struct chrdata *chr;
+    struct PropRecord *p;
+    struct ChrRecord *chr;
     struct object_standard *model;
     
     chr = prop->chr;
@@ -3190,7 +3191,7 @@ f32 get_animation_rate(void) {
 /**
  * Address 0x7F0205F0 (all versions).
  */
-void chrAimGlobalTimerTickRelated(struct chrdata *arg0)
+void chrAimGlobalTimerTickRelated(struct ChrRecord *arg0)
 {
     f32 temp_f0;
 
@@ -3227,9 +3228,9 @@ void chrAimGlobalTimerTickRelated(struct chrdata *arg0)
 /**
  * Address 0x7F0206D4.
  */
-void chrSetHiddenToRandom(struct chrdata *arg0)
+void chrSetHiddenToRandom(struct ChrRecord *arg0)
 {
-    struct chrdata *temp_a0;
+    struct ChrRecord *temp_a0;
     u32 rand;
 
     if ((s32) arg0->flinchcnt < 0)
@@ -3278,7 +3279,7 @@ void chrSetHiddenToRandom(struct chrdata *arg0)
 /**
  * Address 0x7F020794.
  */
-f32 sub_GAME_7F020794(struct chrdata *arg0)
+f32 sub_GAME_7F020794(struct ChrRecord *arg0)
 {
     // this method matches, but references D_80051D28,D_80051D2C
     // for the M_2PI_F variable.
@@ -4161,21 +4162,21 @@ glabel sub_GAME_7F02083C
 /**
  * Address 0x7F020D94.
  */
-void chrPositionRelated7F020D94(struct chrdata *arg0)
+void chrPositionRelated7F020D94(struct ChrRecord *arg0)
 {
-    struct prop *temp_a0;
+    struct PropRecord *temp_a0;
     struct float3 p1;
     struct float3 p2;
 
-    temp_a0 = arg0->posdata;
+    temp_a0 = arg0->prop;
 
-    p1.x = temp_a0->position.x - 50.0f;
+    p1.x = temp_a0->pos.x - 50.0f;
     p1.y = arg0->ground - 1.0f;
-    p1.z= temp_a0->position.z - 50.0f;
+    p1.z= temp_a0->pos.z - 50.0f;
 
-    p2.x = temp_a0->position.x + 50.0f;
-    p2.y = temp_a0->position.y + 100.0f;
-    p2.z = temp_a0->position.z + 50.0f;
+    p2.x = temp_a0->pos.x + 50.0f;
+    p2.y = temp_a0->pos.y + 100.0f;
+    p2.z = temp_a0->pos.z + 50.0f;
 
     sub_GAME_7F03E18C(temp_a0, arg0);
     sub_GAME_7F03E27C(temp_a0, &p1, &p2, 50.0f);
@@ -4188,13 +4189,13 @@ void chrPositionRelated7F020D94(struct chrdata *arg0)
 /**
  * Address 0x7F020E40.
  */
-void chrPositionRelated7F020E40(struct chrdata *chr, s32 arg1)
+void chrPositionRelated7F020E40(struct ChrRecord *chr, s32 arg1)
 {
     struct object_standard *model;
-    struct prop* prop;
+    struct PropRecord* prop;
 
     model = chr->model;
-    prop = chr->posdata;
+    prop = chr->prop;
 
     if ((chr->hidden & 0x800) == 0)
     {
@@ -4202,14 +4203,14 @@ void chrPositionRelated7F020E40(struct chrdata *chr, s32 arg1)
         sub_GAME_7F070AEC(model, arg1, 1);
         subcalcpos(model);
         set_color_shading_from_tile(prop, &chr->nextcol);
-        getsuboffset(model, &prop->position);
+        getsuboffset(model, &prop->pos);
         chrPositionRelated7F020D94(chr);
 
         return;
     }
 
     subcalcpos(model);
-    getsuboffset(model, &prop->position);
+    getsuboffset(model, &prop->pos);
 }
 
 
@@ -4290,7 +4291,7 @@ glabel sub_GAME_7F020EF0
 /* 055B14 7F020FE4 44812000 */  mtc1  $at, $f4
 /* 055B18 7F020FE8 44070000 */  mfc1  $a3, $f0
 /* 055B1C 7F020FEC E7A00014 */  swc1  $f0, 0x14($sp)
-/* 055B20 7F020FF0 0FC1BF2A */  jal   sub_GAME_7F06FCA8
+/* 055B20 7F020FF0 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 055B24 7F020FF4 E7A40010 */   swc1  $f4, 0x10($sp)
 /* 055B28 7F020FF8 10000008 */  b     .L7F02101C
 /* 055B2C 7F020FFC 00000000 */   nop   
@@ -5142,7 +5143,7 @@ glabel sub_GAME_7F020EF0
 /* 055DEC 7F02127C 44812000 */  mtc1  $at, $f4
 /* 055DF0 7F021280 44070000 */  mfc1  $a3, $f0
 /* 055DF4 7F021284 E7A00014 */  swc1  $f0, 0x14($sp)
-/* 055DF8 7F021288 0FC1C0A6 */  jal   sub_GAME_7F06FCA8
+/* 055DF8 7F021288 0FC1C0A6 */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 055DFC 7F02128C E7A40010 */   swc1  $f4, 0x10($sp)
 /* 055E00 7F021290 10000008 */  b     .Ljp7F0212B4
 /* 055E04 7F021294 00000000 */   nop   
@@ -5951,20 +5952,20 @@ glabel sub_GAME_7F020EF0
 /**
  * Address 0x7F021B20.
  */
-void sub_GAME_7F021B20(struct chrdata *arg0)
+void sub_GAME_7F021B20(struct ChrRecord *arg0)
 {
-    struct prop *phi_s0;
+    struct PropRecord *phi_s0;
     struct ObjectRecord * obj;
 
-    for (phi_s0 = arg0->posdata->child; phi_s0 != NULL; phi_s0 = phi_s0->nextSibling)
+    for (phi_s0 = arg0->prop->child; phi_s0 != NULL; phi_s0 = phi_s0->prev)
     {
         if (
             (phi_s0 != arg0->handle_positiondata_hat)
-            && (phi_s0 != arg0->handle_positiondata[1])
-            && (phi_s0 != arg0->handle_positiondata[0])
+            && (phi_s0 != arg0->weapons_held[1])
+            && (phi_s0 != arg0->weapons_held[0])
             )
         {
-            obj = phi_s0->obj;
+            obj = (struct ObjectRecord *)phi_s0->voidp;
 
             if ((obj->flags & 0x2000) == 0)
             {
@@ -7430,7 +7431,7 @@ void chrCheckGuardsHeardSound(f32 noise)
  * 
  * Address 0x7F022FC8.
  */
-struct chrdata* chrGetGuardData(s32 index)
+struct ChrRecord* chrGetGuardData(s32 index)
 {
     s32 i;
 
@@ -7450,9 +7451,9 @@ struct chrdata* chrGetGuardData(s32 index)
 /**
  * Address 0x7F02302C.
  */
-struct prop *something_with_weaponpos_of_guarddata_hand(struct chrdata *arg0, s32 arg1)
+struct PropRecord *something_with_weaponpos_of_guarddata_hand(struct ChrRecord *arg0, s32 arg1)
 {
-    return arg0->handle_positiondata[arg1];
+    return arg0->weapons_held[arg1];
 }
 
 
@@ -7461,17 +7462,17 @@ struct prop *something_with_weaponpos_of_guarddata_hand(struct chrdata *arg0, s3
 /**
  * Address 0x7F02303C.
  */
-struct prop *is_weapon_in_guarddata_hand(struct chrdata *arg0, s32 arg1)
+struct PropRecord *is_weapon_in_guarddata_hand(struct ChrRecord *arg0, s32 arg1)
 {
-    struct prop *ret;
+    struct PropRecord *ret;
 
-    ret = arg0->handle_positiondata[arg1];
+    ret = arg0->weapons_held[arg1];
 
     if (ret != NULL)
     {
-        struct chrdata *c = ret->chr;
+        struct ChrRecord *c = ret->chr;
 
-        if (bondwalkItemCheckBitflags(c->field_80[0], 0x200) == 0)
+        if (bondwalkItemCheckBitflags(c->act_bytes.padding[84], 0x200) == 0)
         {
             ret = NULL;
         }
@@ -7493,9 +7494,9 @@ struct prop *is_weapon_in_guarddata_hand(struct chrdata *arg0, s32 arg1)
  * 
  * Address 0x7F02308C.
  */
-void chrUpdateCollisionBounds(struct prop *arg0, struct rect4f **arg1, s32 *arg2, f32 *y_out, f32 *ground)
+void chrUpdateCollisionBounds(struct PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *y_out, f32 *ground)
 {
-    struct chrdata *chr;
+    struct ChrRecord *chr;
 
     chr = arg0->chr;
 
@@ -7508,17 +7509,17 @@ void chrUpdateCollisionBounds(struct prop *arg0, struct rect4f **arg1, s32 *arg2
         *arg2 = 4;
         *arg1 = &chr->collision_bounds;
 
-        chr->collision_bounds.f[0] = arg0->position.x + chr->chrwidth;
-        chr->collision_bounds.f[1] = arg0->position.z;
+        chr->collision_bounds.f[0] = arg0->pos.x + chr->chrwidth;
+        chr->collision_bounds.f[1] = arg0->pos.z;
 
-        chr->collision_bounds.f[2] = arg0->position.x;
-        chr->collision_bounds.f[3] = arg0->position.z + chr->chrwidth;
+        chr->collision_bounds.f[2] = arg0->pos.x;
+        chr->collision_bounds.f[3] = arg0->pos.z + chr->chrwidth;
 
-        chr->collision_bounds.f[4] = arg0->position.x - chr->chrwidth;
-        chr->collision_bounds.f[5] = arg0->position.z;
+        chr->collision_bounds.f[4] = arg0->pos.x - chr->chrwidth;
+        chr->collision_bounds.f[5] = arg0->pos.z;
 
-        chr->collision_bounds.f[6] = arg0->position.x;
-        chr->collision_bounds.f[7] = arg0->position.z - chr->chrwidth;
+        chr->collision_bounds.f[6] = arg0->pos.x;
+        chr->collision_bounds.f[7] = arg0->pos.z - chr->chrwidth;
 
         *ground = chr->ground;
         *y_out = *ground + chr->chrheight;
@@ -7540,11 +7541,11 @@ void chrUpdateCollisionBounds(struct prop *arg0, struct rect4f **arg1, s32 *arg2
  * 
  * Address 0x7F023160.
  */
-void chrGetChrWidthHeight(struct prop *arg0, f32 *width, f32 *height, f32 *always_20)
+void chrGetChrWidthHeight(struct PropRecord *arg0, f32 *width, f32 *height, f32 *always_20)
 {
     void *temp_v0;
 
-    struct chrdata *c = arg0->chr;
+    struct ChrRecord *c = arg0->chr;
 
     *width = c->chrwidth;
     *height = c->chrheight - 20.0f;
@@ -7556,9 +7557,9 @@ void chrGetChrWidthHeight(struct prop *arg0, f32 *width, f32 *height, f32 *alway
 /**
  * Address 0x7F023188.
  */
-f32 chrGetChrGround(struct prop *arg0)
+f32 chrGetChrGround(struct PropRecord *arg0)
 {
-    struct chrdata *c = arg0->chr;
+    struct ChrRecord *c = arg0->chr;
     return c->ground;
 }
 

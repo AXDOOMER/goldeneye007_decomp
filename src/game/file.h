@@ -47,4 +47,6 @@ void set_selected_folder_num(u32 foldernum);
 void set_selected_difficulty(DIFFICULTY difficulty);
 void set_solo_and_ptr_briefing(LEVELID stage);
 
+f32 get_007_reaction_speed(void);
+
 #endif

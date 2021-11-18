@@ -3,7 +3,7 @@
 #include "ultra64.h"
 #include "bondgame.h"
 #include "chrai.h"
-#include "bondtypes.h"  // chrdata
+#include "bondtypes.h"
 
  struct animation_something
  {
@@ -74,9 +74,6 @@ extern s32 objectiveregisters1;
 extern s32 objectiveregisters2;
 extern s32 objectiveregisters3;
 
-extern u32 current_random_body;
-extern u32 current_random_male_head;
-extern u32 current_random_female_head;
 extern f32 g_AiAccuracyModifier;
 extern f32 g_AiDamageModifier;
 extern f32 g_AiHealthModifier;
@@ -187,7 +184,7 @@ extern s32 D_8002C910;
 extern s32 D_8002CC58;
 extern s32 show_patrols_flag;
 extern s32 player1_guardID;
-extern struct chrdata *ptr_guard_data;
+extern struct ChrRecord *ptr_guard_data;
 extern s32 num_guards;
 extern s32 D_8002CC6C[];
 extern s32 D_8002CCA8;
@@ -207,27 +204,27 @@ extern u32 current_random_female_head;
 
 void sub_GAME_7F022EE0(s32 param_1);
 void sub_GAME_7F022E24(s32 param_1);
-void disable_sounds_attached_to_player_then_something(struct prop* prop);
-void chrPositionRelated7F020D94(struct chrdata *);
-void set_or_unset_GUARDdata_flag(struct chrdata *guard,s32 param_2);
+void disable_sounds_attached_to_player_then_something(struct PropRecord* prop);
+void chrPositionRelated7F020D94(struct ChrRecord *);
+void set_or_unset_GUARDdata_flag(struct ChrRecord *guard,s32 param_2);
 s32 sub_GAME_7F021BFC();
 f32 get_animation_rate(void);
 void animation_speed_related(f32);
 s32 init_GUARDdata_with_set_values(s32, s32, s32, s32, s32, s32);
 s32 replace_GUARDdata_with_actual_values(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
-void chrSetHiddenToRandom(struct chrdata *arg0);
+void chrSetHiddenToRandom(struct ChrRecord *arg0);
 void  chrRemoved7F022E1C(f32 arg0);
 void chrDecrementAnimationTablePointerCount(void);
 void chrIncrementAnimationTablePointerCount(void);
 void chrToggleD_8002C90C(void);
 void chrCheckGuardsHeardSound(f32 arg0);
-struct chrdata* chrGetGuardData(s32 index);
-struct prop *something_with_weaponpos_of_guarddata_hand(struct chrdata *arg0, s32 arg1);
-struct prop *is_weapon_in_guarddata_hand(struct chrdata *arg0, s32 arg1);
-void chrUpdateCollisionBounds(struct prop *arg0, struct rect4f **arg1, s32 *arg2, f32 *y_out, f32 *ground);
-void chrGetChrWidthHeight(struct prop *arg0, f32 *width, f32 *height, f32 *always_20);
-f32 chrGetChrGround(struct prop *arg0);
-void sub_GAME_7F021B20(struct chrdata *arg0);
+struct ChrRecord* chrGetGuardData(s32 index);
+struct PropRecord *something_with_weaponpos_of_guarddata_hand(struct ChrRecord *arg0, s32 arg1);
+struct PropRecord *is_weapon_in_guarddata_hand(struct ChrRecord *ChrRecord, s32 arg1);
+void chrUpdateCollisionBounds(struct PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *y_out, f32 *ground);
+void chrGetChrWidthHeight(struct PropRecord *arg0, f32 *width, f32 *height, f32 *always_20);
+f32 chrGetChrGround(struct PropRecord *arg0);
+void sub_GAME_7F021B20(struct ChrRecord *arg0);
 
 #ifndef VERSION_US
 s32 not_in_us_7F0209EC(s32 bodynum, s32 headnum);

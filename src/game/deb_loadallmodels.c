@@ -2,6 +2,7 @@
 #include "bondconstants.h"
 #include "memp.h"
 #include "chr.h"
+#include "deb_loadallmodels.h"
 //i belong in a header, probably to another file
 
 

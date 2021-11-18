@@ -346,10 +346,10 @@ WeaponObjRecord *inventory_remove_prop_weapon_by_id(ITEM_IDS weaponnum)
                 PropRecord *prop = item->type_inv_item.type_prop.prop;
                 
                 if (prop->type == PROP_TYPE_WEAPON) {
-                    ObjectRecord *obj = prop->Entityp.obj;
+                    ObjectRecord *obj = prop->obj;
                     
                     if (obj->head.type == PROPDEF_COLLECTABLE) {
-                        WeaponObjRecord *weapon = (WeaponObjRecord *)prop->Entityp.obj;
+                        WeaponObjRecord *weapon = (WeaponObjRecord *)prop->obj;
 
                         if (weapon->weaponnum == weaponnum) {
                             inventory_remove_item(item);
@@ -382,10 +382,10 @@ void inventory_remove_item_by_id(ITEM_IDS weaponnum)
                 PropRecord *prop = item->type_inv_item.type_prop.prop;
                 
                 if (prop->type == PROP_TYPE_WEAPON) {
-                    ObjectRecord *obj = prop->Entityp.obj;
+                    ObjectRecord *obj = prop->obj;
 
                     if (obj->head.type == PROPDEF_COLLECTABLE) {
-                        WeaponObjRecord *weapon = (WeaponObjRecord *)prop->Entityp.obj;
+                        WeaponObjRecord *weapon = (WeaponObjRecord *)prop->obj;
                         
                         if (weapon->weaponnum == weaponnum) {
                             inventory_remove_item(item);
@@ -431,11 +431,11 @@ int add_weapon_by_prop(PropRecord *prop)
 
     if (prop->type == PROP_TYPE_WEAPON)
     {
-        ObjectRecord *obj = prop->Entityp.obj;
+        ObjectRecord *obj = prop->obj;
 
         if (obj->head.type == PROPDEF_COLLECTABLE)
         {
-            WeaponObjRecord *weapon = (WeaponObjRecord *)prop->Entityp.obj;
+            WeaponObjRecord *weapon = (WeaponObjRecord *)prop->obj;
             WeaponObjRecord *otherweapon;
 
             s8 weaponnum = weapon->weaponnum;
@@ -768,10 +768,10 @@ s32 inv_has_key_flags(u32 wantkeyflags)
             PropRecord *prop = item->type_inv_item.type_prop.prop;
 
             if (prop->type == PROP_TYPE_OBJ) {
-                ObjectRecord *obj = prop->Entityp.obj;
+                ObjectRecord *obj = prop->obj;
 
                 if (obj->head.type == PROPDEF_KEY) {
-                    KeyRecord *key = (KeyRecord *)prop->Entityp.obj;
+                    KeyRecord *key = (KeyRecord *)prop->obj;
 
                     heldkeyflags |= key->keyflags;
 
@@ -810,7 +810,7 @@ s32 checkHasGEKey(void)
             
             if (prop->type == PROP_TYPE_WEAPON) {
 
-                obj = prop->Entityp.obj;
+                obj = prop->obj;
                 
                 if (obj->obj == PROJECTILES_TYPE_GE_KEY) {
                     return TRUE;
@@ -896,7 +896,7 @@ s32 count_total_items_in_inventory(void) {
 
             if (prop->type == PROP_TYPE_WEAPON) {
 
-                ObjectRecord *obj = prop->Entityp.obj;
+                ObjectRecord *obj = prop->obj;
      
                 if (obj->runtime_bitflags & 0x400) {
                     numitems = numitems + 1;
@@ -904,7 +904,7 @@ s32 count_total_items_in_inventory(void) {
 
             } else if (prop->type == PROP_TYPE_OBJ) {
 
-                if ((prop->Entityp.obj->flags2 & 0x40000) == 0) {
+                if ((prop->obj->flags2 & 0x40000) == 0) {
                     numitems = numitems + 1;
                 }
             }
@@ -961,7 +961,7 @@ InvItem *inv_get_item_by_index(s32 index)
 
             if (prop->type == PROP_TYPE_WEAPON) {
 
-                ObjectRecord *obj = prop->Entityp.obj;
+                ObjectRecord *obj = prop->obj;
                 
                 if (obj->runtime_bitflags & 0x400) {
                     if (index == 0) {
@@ -972,7 +972,7 @@ InvItem *inv_get_item_by_index(s32 index)
 
             } else if (prop->type == PROP_TYPE_OBJ) {
                 
-                if ((prop->Entityp.obj->flags2 & 0x40000) == 0) {
+                if ((prop->obj->flags2 & 0x40000) == 0) {
                     if (index == 0) {
                         return item;
                     }
@@ -1052,7 +1052,7 @@ s32 get_weaponnum_by_inv_index(s32 index) {
 
             PropRecord *prop = inv_item->type_inv_item.type_prop.prop;
             
-            override = get_textoverride_by_obj(prop->Entityp.obj);
+            override = get_textoverride_by_obj(prop->obj);
             
             if (override) {
                 return override->weapon;
@@ -1098,7 +1098,7 @@ u16 *inv_get_name_by_index(s32 index) {
         if (item->type == INV_ITEM_PROP) {
             
             PropRecord *prop = item->type_inv_item.type_prop.prop;
-            override = get_textoverride_by_obj(prop->Entityp.obj);
+            override = get_textoverride_by_obj(prop->obj);
 
             if (override) {
                 
@@ -1161,7 +1161,7 @@ u16 *inv_get_long_name_by_index(s32 index) {
         if (item->type == INV_ITEM_PROP) {
             
             PropRecord *prop = item->type_inv_item.type_prop.prop;
-            override = get_textoverride_by_obj(prop->Entityp.obj);
+            override = get_textoverride_by_obj(prop->obj);
 
             if (override) {
                 
@@ -1250,7 +1250,7 @@ u16 *inv_get_first_title_name_by_index(s32 index) {
         if (item->type == INV_ITEM_PROP) {
             
             PropRecord *prop = item->type_inv_item.type_prop.prop;
-            override = get_textoverride_by_obj(prop->Entityp.obj);
+            override = get_textoverride_by_obj(prop->obj);
 
             if (override) {
                 
@@ -1310,7 +1310,7 @@ u16 *inv_get_second_title_name_by_index(s32 index) {
         if (item->type == INV_ITEM_PROP) {
             
             PropRecord *prop = item->type_inv_item.type_prop.prop;
-            override = get_textoverride_by_obj(prop->Entityp.obj);
+            override = get_textoverride_by_obj(prop->obj);
 
             if (override) {
                 

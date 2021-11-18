@@ -6,9 +6,9 @@
 //CODE.bss:8007A100
 char dword_CODE_bss_8007A100[0x40];
 //CODE.bss:8007A140
-struct prop *ptr_smoke_buf;
+struct PropRecord *ptr_smoke_buf;
 //CODE.bss:8007A144
-struct prop *ptr_explosion_buf;
+struct PropRecord *ptr_explosion_buf;
 //CODE.bss:8007A148
 s32 max_casings;
 //CODE.bss:8007A14C

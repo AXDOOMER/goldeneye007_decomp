@@ -283,7 +283,7 @@ glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03B1A0 7F006670 E7B60010 */  swc1  $f22, 0x10($sp)
 /* 03B1A4 7F006674 00003025 */  move  $a2, $zero
 /* 03B1A8 7F006678 016C2821 */  addu  $a1, $t3, $t4
-/* 03B1AC 7F00667C 0FC1BF2A */  jal   sub_GAME_7F06FCA8
+/* 03B1AC 7F00667C 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 03B1B0 7F006680 24840598 */   addiu $a0, $a0, 0x598
 /* 03B1B4 7F006684 8E240000 */  lw    $a0, ($s1)
 /* 03B1B8 7F006688 0FC1B5AC */  jal   subcalcpos
@@ -328,7 +328,7 @@ glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03B254 7F006724 02581021 */  addu  $v0, $s2, $t8
 /* 03B258 7F006728 8C480000 */  lw    $t0, ($v0)
 /* 03B25C 7F00672C 8C470004 */  lw    $a3, 4($v0)
-/* 03B260 7F006730 0FC1BF2A */  jal   sub_GAME_7F06FCA8
+/* 03B260 7F006730 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 03B264 7F006734 01092821 */   addu  $a1, $t0, $t1
 /* 03B268 7F006738 8E300000 */  lw    $s0, ($s1)
 /* 03B26C 7F00673C 4406A000 */  mfc1  $a2, $f20
@@ -576,7 +576,7 @@ glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03B1FC 7F00668C E7B60010 */  swc1  $f22, 0x10($sp)
 /* 03B200 7F006690 00003025 */  move  $a2, $zero
 /* 03B204 7F006694 016C2821 */  addu  $a1, $t3, $t4
-/* 03B208 7F006698 0FC1C0A6 */  jal   sub_GAME_7F06FCA8
+/* 03B208 7F006698 0FC1C0A6 */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 03B20C 7F00669C 24840598 */   addiu $a0, $a0, 0x598
 /* 03B210 7F0066A0 8E240000 */  lw    $a0, ($s1)
 /* 03B214 7F0066A4 0FC1B728 */  jal   subcalcpos
@@ -621,7 +621,7 @@ glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 03B2B0 7F006740 02581021 */  addu  $v0, $s2, $t8
 /* 03B2B4 7F006744 8C480000 */  lw    $t0, ($v0)
 /* 03B2B8 7F006748 8C470004 */  lw    $a3, 4($v0)
-/* 03B2BC 7F00674C 0FC1C0A6 */  jal   sub_GAME_7F06FCA8
+/* 03B2BC 7F00674C 0FC1C0A6 */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 03B2C0 7F006750 01092821 */   addu  $a1, $t0, $t1
 /* 03B2C4 7F006754 8E300000 */  lw    $s0, ($s1)
 /* 03B2C8 7F006758 4406A000 */  mfc1  $a2, $f20
@@ -861,7 +861,7 @@ glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 038FE0 7F0065F0 E7B60010 */  swc1  $f22, 0x10($sp)
 /* 038FE4 7F0065F4 00003025 */  move  $a2, $zero
 /* 038FE8 7F0065F8 014B2821 */  addu  $a1, $t2, $t3
-/* 038FEC 7F0065FC 0FC1BF92 */  jal   sub_GAME_7F06FCA8
+/* 038FEC 7F0065FC 0FC1BF92 */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 038FF0 7F006600 24840598 */   addiu $a0, $a0, 0x598
 /* 038FF4 7F006604 8E240000 */  lw    $a0, ($s1)
 /* 038FF8 7F006608 0FC1B6B8 */  jal   subcalcpos
@@ -906,7 +906,7 @@ glabel sets_a_bunch_of_BONDdata_values_to_default
 /* 039094 7F0066A4 024F1021 */  addu  $v0, $s2, $t7
 /* 039098 7F0066A8 8C590000 */  lw    $t9, ($v0)
 /* 03909C 7F0066AC 8C470004 */  lw    $a3, 4($v0)
-/* 0390A0 7F0066B0 0FC1BF92 */  jal   sub_GAME_7F06FCA8
+/* 0390A0 7F0066B0 0FC1BF92 */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 0390A4 7F0066B4 03282821 */   addu  $a1, $t9, $t0
 /* 0390A8 7F0066B8 8E300000 */  lw    $s0, ($s1)
 /* 0390AC 7F0066BC 4406A000 */  mfc1  $a2, $f20

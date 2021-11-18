@@ -12,10 +12,12 @@
 #include "game/bondview.h"
 #include "game/bondinv.h"
 #include "game/chr.h"
+#include "game/chrlv.h"
 #include "game/chrobjhandler.h"
 #include "game/debugmenu_handler.h"
 #include "game/front.h"
 #include "game/gun.h"
+#include "game/initanitable.h"
 #include "game/objecthandler.h"
 #include "game/lvl.h"
 #include "game/math_atan2f.h"
@@ -3150,7 +3152,7 @@ variable_body_head:
 /* 0AEF54 7F07A424 AFAB0014 */   sw    $t3, 0x14($sp)
 .L7F07A428:
 /* 0AEF58 7F07A428 8FA40110 */  lw    $a0, 0x110($sp)
-/* 0AEF5C 7F07A42C 0FC08EA5 */  jal   sub_GAME_7F023A94
+/* 0AEF5C 7F07A42C 0FC08EA5 */  jal   chrlvIdleAnimationRelated7F023A94
 /* 0AEF60 7F07A430 24050000 */   li    $a1, 0
 /* 0AEF64 7F07A434 10000017 */  b     .L7F07A494
 /* 0AEF68 7F07A438 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -3163,7 +3165,7 @@ variable_body_head:
 /* 0AEF80 7F07A450 8C4C0014 */  lw    $t4, 0x14($v0)
 /* 0AEF84 7F07A454 24050000 */  li    $a1, 0
 /* 0AEF88 7F07A458 358A0001 */  ori   $t2, $t4, 1
-/* 0AEF8C 7F07A45C 0FC08EA5 */  jal   sub_GAME_7F023A94
+/* 0AEF8C 7F07A45C 0FC08EA5 */  jal   chrlvIdleAnimationRelated7F023A94
 /* 0AEF90 7F07A460 AC4A0014 */   sw    $t2, 0x14($v0)
 /* 0AEF94 7F07A464 3C038008 */  lui   $v1, %hi(g_CurrentPlayer)
 /* 0AEF98 7F07A468 8C63A0B0 */  lw    $v1, %lo(g_CurrentPlayer)($v1)
@@ -3755,7 +3757,7 @@ variable_body_head:
 /* 0AF5B4 7F07AA44 AFAF0014 */   sw    $t7, 0x14($sp)
 .Ljp7F07AA48:
 /* 0AF5B8 7F07AA48 8FA40110 */  lw    $a0, 0x110($sp)
-/* 0AF5BC 7F07AA4C 0FC08F65 */  jal   sub_GAME_7F023A94
+/* 0AF5BC 7F07AA4C 0FC08F65 */  jal   chrlvIdleAnimationRelated7F023A94
 /* 0AF5C0 7F07AA50 24050000 */   li    $a1, 0
 /* 0AF5C4 7F07AA54 10000017 */  b     .Ljp7F07AAB4
 /* 0AF5C8 7F07AA58 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -3768,7 +3770,7 @@ variable_body_head:
 /* 0AF5E0 7F07AA70 8C4D0014 */  lw    $t5, 0x14($v0)
 /* 0AF5E4 7F07AA74 24050000 */  li    $a1, 0
 /* 0AF5E8 7F07AA78 35AE0001 */  ori   $t6, $t5, 1
-/* 0AF5EC 7F07AA7C 0FC08F65 */  jal   sub_GAME_7F023A94
+/* 0AF5EC 7F07AA7C 0FC08F65 */  jal   chrlvIdleAnimationRelated7F023A94
 /* 0AF5F0 7F07AA80 AC4E0014 */   sw    $t6, 0x14($v0)
 /* 0AF5F4 7F07AA84 3C038008 */  lui   $v1, %hi(g_CurrentPlayer) # $v1, 0x8008
 /* 0AF5F8 7F07AA88 8C63A120 */  lw    $v1, %lo(g_CurrentPlayer)($v1)
@@ -4356,7 +4358,7 @@ variable_body_head:
 /* 0ACEAC 7F07A4BC AFAF0014 */   sw    $t7, 0x14($sp)
 .L7F07A4C0:
 /* 0ACEB0 7F07A4C0 8FA40110 */  lw    $a0, 0x110($sp)
-/* 0ACEB4 7F07A4C4 0FC08E9D */  jal   sub_GAME_7F023A94
+/* 0ACEB4 7F07A4C4 0FC08E9D */  jal   chrlvIdleAnimationRelated7F023A94
 /* 0ACEB8 7F07A4C8 24050000 */   li    $a1, 0
 /* 0ACEBC 7F07A4CC 10000017 */  b     .L7F07A52C
 /* 0ACEC0 7F07A4D0 8FBF001C */   lw    $ra, 0x1c($sp)
@@ -4369,7 +4371,7 @@ variable_body_head:
 /* 0ACED8 7F07A4E8 8C4D0014 */  lw    $t5, 0x14($v0)
 /* 0ACEDC 7F07A4EC 24050000 */  li    $a1, 0
 /* 0ACEE0 7F07A4F0 35AE0001 */  ori   $t6, $t5, 1
-/* 0ACEE4 7F07A4F4 0FC08E9D */  jal   sub_GAME_7F023A94
+/* 0ACEE4 7F07A4F4 0FC08E9D */  jal   chrlvIdleAnimationRelated7F023A94
 /* 0ACEE8 7F07A4F8 AC4E0014 */   sw    $t6, 0x14($v0)
 /* 0ACEEC 7F07A4FC 3C038007 */  lui   $v1, %hi(g_CurrentPlayer) # $v1, 0x8007
 /* 0ACEF0 7F07A500 8C638BC0 */  lw    $v1, %lo(g_CurrentPlayer)($v1)
@@ -4913,7 +4915,7 @@ glabel set_camera_mode
 /* 0AF738 7F07AC08 016C2821 */  addu  $a1, $t3, $t4
 /* 0AF73C 7F07AC0C E7AC0078 */  swc1  $f12, 0x78($sp)
 /* 0AF740 7F07AC10 E7A20010 */  swc1  $f2, 0x10($sp)
-/* 0AF744 7F07AC14 0FC1BF2A */  jal   sub_GAME_7F06FCA8
+/* 0AF744 7F07AC14 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 0AF748 7F07AC18 E7AA0014 */   swc1  $f10, 0x14($sp)
 /* 0AF74C 7F07AC1C C7AC0078 */  lwc1  $f12, 0x78($sp)
 /* 0AF750 7F07AC20 44808000 */  mtc1  $zero, $f16
@@ -5104,7 +5106,7 @@ glabel set_camera_mode
 /* 0AFA0C 7F07AEDC 8FA50038 */  lw    $a1, 0x38($sp)
 /* 0AFA10 7F07AEE0 00403025 */  move  $a2, $v0
 /* 0AFA14 7F07AEE4 E7A00014 */  swc1  $f0, 0x14($sp)
-/* 0AFA18 7F07AEE8 0FC1BF2A */  jal   sub_GAME_7F06FCA8
+/* 0AFA18 7F07AEE8 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 0AFA1C 7F07AEEC E7B20010 */   swc1  $f18, 0x10($sp)
 /* 0AFA20 7F07AEF0 8E0D0000 */  lw    $t5, ($s0)
 /* 0AFA24 7F07AEF4 24180018 */  li    $t8, 24
@@ -11805,7 +11807,7 @@ void sub_GAME_7F07E7CC(void)
     #endif
     _sub_GAME_7F075FAC(&g_CurrentPlayer->something_with_watch_object_instance, objheader, &g_CurrentPlayer->field_2EC);
     set_obj_instance_controller_scale(&g_CurrentPlayer->something_with_watch_object_instance, c_item_entries[41].scale * 0.1f);
-    _sub_GAME_7F06FCA8(&g_CurrentPlayer->something_with_watch_object_instance, ptr_animation_table + 0x42c8, 0, 0.0, watch_transition_time * 0.5, 0.0);
+    _ objecthandlerAnimationRelated7F06FCA8(&g_CurrentPlayer->something_with_watch_object_instance, ptr_animation_table + PTR_ANIM_bond_watch, 0, 0.0, watch_transition_time * 0.5, 0.0);
     g_CurrentPlayer->step_in_view_watch_animation = 0;
     return;
 }
@@ -11867,7 +11869,7 @@ glabel sub_GAME_7F07E7CC
 /* 0B33B0 7F07E880 00003025 */  move  $a2, $zero
 /* 0B33B4 7F07E884 E7A00014 */  swc1  $f0, 0x14($sp)
 /* 0B33B8 7F07E888 03192821 */  addu  $a1, $t8, $t9
-/* 0B33BC 7F07E88C 0FC1BF2A */  jal   sub_GAME_7F06FCA8
+/* 0B33BC 7F07E88C 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 0B33C0 7F07E890 24840230 */   addiu $a0, $a0, 0x230
 /* 0B33C4 7F07E894 3C088008 */  lui   $t0, %hi(g_CurrentPlayer)
 /* 0B33C8 7F07E898 8D08A0B0 */  lw    $t0, %lo(g_CurrentPlayer)($t0)
@@ -11926,7 +11928,7 @@ glabel sub_GAME_7F07E7CC
 /* 0B1310 7F07E920 00003025 */  move  $a2, $zero
 /* 0B1314 7F07E924 E7A00014 */  swc1  $f0, 0x14($sp)
 /* 0B1318 7F07E928 01CF2821 */  addu  $a1, $t6, $t7
-/* 0B131C 7F07E92C 0FC1BF92 */  jal   sub_GAME_7F06FCA8
+/* 0B131C 7F07E92C 0FC1BF92 */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 0B1320 7F07E930 24840230 */   addiu $a0, $a0, 0x230
 /* 0B1324 7F07E934 3C188007 */  lui   $t8, %hi(g_CurrentPlayer) # $t8, 0x8007
 /* 0B1328 7F07E938 8F188BC0 */  lw    $t8, %lo(g_CurrentPlayer)($t8)
@@ -14470,7 +14472,7 @@ void currentPlayerUpdateColourScreenProperties(void)
 
 void currentPlayerStartChrFade(f32 duration60, f32 targetfrac)
 {
-	struct chrdata* chr = g_CurrentPlayer->prop->chr;
+	struct ChrRecord* chr = g_CurrentPlayer->prop->chr;
 
 	if (chr) {
 		g_CurrentPlayer->bondfadetime60 = 0;
@@ -14483,7 +14485,7 @@ void currentPlayerStartChrFade(f32 duration60, f32 targetfrac)
 void currentPlayerTickChrFade(void)
 {
 	if (g_CurrentPlayer->bondfadetimemax60 >= 0) {
-		struct chrdata *chr = g_CurrentPlayer->prop->chr;
+		struct ChrRecord *chr = (struct ChrRecord *)g_CurrentPlayer->prop->chr;
 		f32 frac;
 
 		g_CurrentPlayer->bondfadetime60 += g_GlobalTimerDelta;
@@ -14686,10 +14688,10 @@ f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2)
 
     if (ptr_playerstank != 0)
     {
-        ObjectRecord * obj = ((struct prop *)ptr_playerstank)->obj;
-        struct prop *p = ((struct prop *)obj->prop);
+        ObjectRecord * obj = ((struct PropRecord *)ptr_playerstank)->obj;
+        struct PropRecord *p = obj->prop;
 
-        ret = stanGetPositionYValue(p->standTile, p->position.x, p->position.z);
+        ret = stanGetPositionYValue(p->stan, p->pos.x, p->pos.z);
             
         ret += g_PlayerTankYOffset;
     }
@@ -31933,7 +31935,7 @@ f32 bondviewGetPlayerDuckingHeightRelated(struct player *player)
 
 
 
-struct prop* get_curplayer_positiondata(void) {
+struct PropRecord* get_curplayer_positiondata(void) {
     return g_CurrentPlayer->prop;
 }
 
@@ -32913,7 +32915,7 @@ int get_BONDdata_field408(void) {
 /**
  * Address 0x7F08A03C.
  */
-void bondviewUpdateGuardTankFlagsRelated(struct prop *arg0, s32 flags)
+void bondviewUpdateGuardTankFlagsRelated(struct PropRecord *arg0, s32 flags)
 {
     s32 sp1C;
 
@@ -32939,7 +32941,7 @@ void bondviewUpdateGuardTankFlagsRelated(struct prop *arg0, s32 flags)
 /**
  * Address 0x7F08A0B0.
  */
-void bondviewGetPropHeightRelatedValues(struct prop *arg0, struct rect4f **field_B0, s32 *arg2, f32 *height_related, f32 *collision)
+void bondviewGetPropHeightRelatedValues(struct PropRecord *arg0, struct rect4f **field_B0, s32 *arg2, f32 *height_related, f32 *collision)
 {
     s32 temp_v0;
 
@@ -32996,7 +32998,7 @@ void bondviewUpdatePlayerCollisionBounds(void)
 /**
  * Address 0x7F08A274.
  */
-void bondviewCollisionRadiusRelated(struct prop* arg0, f32 *arg1, f32 *arg2, f32 *arg3)
+void bondviewCollisionRadiusRelated(struct PropRecord* arg0, f32 *arg1, f32 *arg2, f32 *arg3)
 {
     struct player **temp_v1;
 
@@ -36027,7 +36029,7 @@ glabel sub_GAME_7F08B0F0
 /* 0C045C 7F08B92C E7AC0010 */  swc1  $f12, 0x10($sp)
 /* 0C0460 7F08B930 E7B20014 */  swc1  $f18, 0x14($sp)
 /* 0C0464 7F08B934 E7A20094 */  swc1  $f2, 0x94($sp)
-/* 0C0468 7F08B938 0FC1BF2A */  jal   sub_GAME_7F06FCA8
+/* 0C0468 7F08B938 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 0C046C 7F08B93C E7AC0098 */   swc1  $f12, 0x98($sp)
 /* 0C0470 7F08B940 C7A20094 */  lwc1  $f2, 0x94($sp)
 /* 0C0474 7F08B944 44807000 */  mtc1  $zero, $f14

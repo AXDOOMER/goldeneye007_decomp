@@ -26,8 +26,8 @@ Gfx *display_red_blue_on_radar(Gfx *DL)
     s32 temp_v0_6;
     struct player *temp_a0_2;
     //struct player *g_CurrentPlayer;
-    struct prop *temp_v0_4;
-    struct prop *temp_v1;
+    struct PropRecord *temp_v0_4;
+    struct PropRecord *temp_v1;
     void *temp_a0;
     void *temp_t3;
     void *temp_t7;
