@@ -424,20 +424,26 @@ SECTIONS
    _romfiles_117880SegmentEnd = ADDR(.romfiles_117880) + SIZEOF(.romfiles_117880);
    _romfiles_117880SegmentRomEnd = _romfiles_117880SegmentRomStart + SIZEOF(.romfiles_117880);
 
+   _animation_dataSegmentStart = ADDR(.animation_data);
+   _animation_dataSegmentRomStart = _romfiles_117880SegmentRomEnd;
+   .animation_data 0x00000000 : AT(_animation_dataSegmentRomStart) {
+      build/j/assets/animationtable_data.o(.data);
+   }
+   _animation_dataSegmentEnd = ADDR(.animation_data) + SIZEOF(.animation_data);
+   _animation_dataSegmentRomEnd = _animation_dataSegmentRomStart + SIZEOF(.animation_data);
 
-
-   _G_I_TSegmentStart = ADDR(.romfiles_29d160);
-   _G_I_TSegmentRomStart = _romfiles_117880SegmentRomEnd;
-   .romfiles_29d160 0x02000000 : AT(_G_I_TSegmentRomStart) {
+   _GlobalimagetableSegmentStart = ADDR(.romfiles_29d160);
+   _GlobalimagetableSegmentRomStart = _animation_dataSegmentRomEnd;
+   .romfiles_29d160 0x02000000 : AT(_GlobalimagetableSegmentRomStart) {
       build/j/assets/GlobalImageTable.o (.data);
    }
-   _G_I_TSegmentEnd = ADDR(.romfiles_29d160) + SIZEOF(.romfiles_29d160);
-   _G_I_TSegmentRomEnd = _G_I_TSegmentRomStart + SIZEOF(.romfiles_29d160);
+   _GlobalimagetableSegmentEnd = ADDR(.romfiles_29d160) + SIZEOF(.romfiles_29d160);
+   _GlobalimagetableSegmentRomEnd = _GlobalimagetableSegmentRomStart + SIZEOF(.romfiles_29d160);
 
 
 
    _romfiles2SegmentStart = ADDR(.romfiles2);
-   _romfiles2SegmentRomStart = _G_I_TSegmentRomEnd;
+   _romfiles2SegmentRomStart = _GlobalimagetableSegmentRomEnd;
    .romfiles2 _romfiles2SegmentRomStart : AT(_romfiles2SegmentRomStart) {
       build/j/assets/romfiles2.o (.data);
    }

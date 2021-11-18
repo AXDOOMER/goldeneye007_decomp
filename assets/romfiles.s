@@ -29,10 +29,4 @@ _animation_tableSegmentRomStart:
 .global _animation_tableSegmentRomEnd
 _animation_tableSegmentRomEnd:
 
-.global _animation_dataSegmentRomStart
-_animation_dataSegmentRomStart:
-.incbin "assets/animationtable_data.bin"
-.global _animation_dataSegmentRomEnd
-_animation_dataSegmentRomEnd:
-.global _GlobalimagetableSegmentRomStart
-_GlobalimagetableSegmentRomStart:
+
