@@ -35,7 +35,7 @@ void chrlvActorThrowWeaponSurrender(struct ChrRecord *arg0);
 void chrlvActorFadeAway(struct ChrRecord *arg0);
 void chrlvSideStepAnimationRelated(struct ChrRecord *arg0, s32 arg1);
 void chrlvFireJumpToSideAnimationRelated(struct ChrRecord *arg0, s32 arg1);
-
+void chrlvDeathStaggerAnimationRelated(struct ChrRecord *arg0);
 
 
 
@@ -1643,51 +1643,16 @@ glabel sub_GAME_7F024CF8
 #endif
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F024F00(void) {
-
+void chrlvDeathStaggerAnimationRelated(struct ChrRecord *arg0)
+{
+    sub_GAME_7F02D184(arg0);
+    arg0->actiontype = ACT_TEST;
+    arg0->sleep = 0;
+    objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ADDR_ANIM_death_stagger_back_to_wall], 0, 10.0f, 0.5f, 16.0f);
+    sub_GAME_7F06FDCC(arg0->model, 10.0f, 16.0f);
+    sub_GAME_7F06FDE8(arg0->model, 40.0f);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F024F00
-/* 059A30 7F024F00 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 059A34 7F024F04 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 059A38 7F024F08 AFB00020 */  sw    $s0, 0x20($sp)
-/* 059A3C 7F024F0C 0FC0B461 */  jal   sub_GAME_7F02D184
-/* 059A40 7F024F10 00808025 */   move  $s0, $a0
-/* 059A44 7F024F14 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 059A48 7F024F18 44812000 */  mtc1  $at, $f4
-/* 059A4C 7F024F1C 240E0016 */  li    $t6, 22
-/* 059A50 7F024F20 A20E0007 */  sb    $t6, 7($s0)
-/* 059A54 7F024F24 A2000008 */  sb    $zero, 8($s0)
-/* 059A58 7F024F28 3C014180 */  li    $at, 0x41800000 # 16.000000
-/* 059A5C 7F024F2C 3C0F8007 */  lui   $t7, %hi(ptr_animation_table) 
-/* 059A60 7F024F30 8DEF9538 */  lw    $t7, %lo(ptr_animation_table)($t7)
-/* 059A64 7F024F34 44813000 */  mtc1  $at, $f6
-/* 059A68 7F024F38 3C180000 */  lui   $t8, %hi(0x00002F94) # $t8, 0
-/* 059A6C 7F024F3C 27182F94 */  addiu $t8, %lo(0x00002F94) # addiu $t8, $t8, 0x2f94
-/* 059A70 7F024F40 8E04001C */  lw    $a0, 0x1c($s0)
-/* 059A74 7F024F44 00003025 */  move  $a2, $zero
-/* 059A78 7F024F48 3C074120 */  lui   $a3, 0x4120
-/* 059A7C 7F024F4C E7A40010 */  swc1  $f4, 0x10($sp)
-/* 059A80 7F024F50 01F82821 */  addu  $a1, $t7, $t8
-/* 059A84 7F024F54 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
-/* 059A88 7F024F58 E7A60014 */   swc1  $f6, 0x14($sp)
-/* 059A8C 7F024F5C 8E04001C */  lw    $a0, 0x1c($s0)
-/* 059A90 7F024F60 3C054120 */  lui   $a1, 0x4120
-/* 059A94 7F024F64 0FC1BF73 */  jal   sub_GAME_7F06FDCC
-/* 059A98 7F024F68 3C064180 */   lui   $a2, 0x4180
-/* 059A9C 7F024F6C 8E04001C */  lw    $a0, 0x1c($s0)
-/* 059AA0 7F024F70 0FC1BF7A */  jal   sub_GAME_7F06FDE8
-/* 059AA4 7F024F74 3C054220 */   lui   $a1, 0x4220
-/* 059AA8 7F024F78 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 059AAC 7F024F7C 8FB00020 */  lw    $s0, 0x20($sp)
-/* 059AB0 7F024F80 27BD0028 */  addiu $sp, $sp, 0x28
-/* 059AB4 7F024F84 03E00008 */  jr    $ra
-/* 059AB8 7F024F88 00000000 */   nop   
-)
-#endif
+
 
 
 

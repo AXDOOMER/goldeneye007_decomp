@@ -19,9 +19,9 @@ void getsuboffset(s32, struct float3 *);
 void sub_GAME_7F070AEC(struct object_standard *, s32, s32);
 void subcalcpos(struct object_standard *);
 
-void objecthandlerAnimationRelated7F06FCA8(struct PropModel *, void*, s32, f32, f32, f32);
-void sub_GAME_7F06FDCC(struct PropModel *, f32, f32);
-void sub_GAME_7F06FDE8(struct PropModel *, f32);
-void sub_GAME_7F06CE84(struct PropModel *, f32);
+void objecthandlerAnimationRelated7F06FCA8(struct Model *, void*, s32, f32, f32, f32);
+void sub_GAME_7F06FDCC(struct Model *, f32, f32);
+void sub_GAME_7F06FDE8(struct Model *, f32);
+void sub_GAME_7F06CE84(struct Model *, f32);
 
 #endif
