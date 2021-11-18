@@ -188,6 +188,60 @@ typedef struct Model
     struct Model *attachedto;                               /*0x18*/
     ModelNode *unk1c;                                       /*0x1c*/
     struct anim *anim;                                      /*0x20*/
+
+    s8 unk24; // used by ACT_STAND
+    s8 unk25;
+    s8 unk26;
+    s8 unk27;
+
+    s32 unk28;
+    s32 unk2c;
+    // 0x30
+    s32 unk30;
+    s32 unk34;
+    s32 unk38;
+    s32 unk3c;
+    // 0x40
+    s32 unk40;
+    s32 unk44;
+    s32 unk48;
+    s32 unk4c;
+    // 0x50
+    s32 unk50;
+    s32 unk54;
+    s32 unk58;
+    s32 unk5c;
+    // 0x60
+    s32 unk60;
+    s32 unk64;
+    s32 unk68;
+    s32 unk6c;
+    // 0x70
+    s32 unk70;
+    s32 unk74;
+    s32 unk78;
+    s32 unk7c;
+    // 0x80
+    s32 unk80;
+    s32 unk84;
+    s32 unk88;
+    s32 unk8c;
+    // 0x90
+    s32 unk90;
+    s32 unk94;
+    s32 unk98;
+    s32 unk9c;
+    // 0xa0
+    s32 unka0;
+    f32 unka4; // used by ACT_STAND in chrlv
+    s32 unka8;
+    s32 unkac;
+    // 0xb0
+    s32 unkb0;
+    s32 unkb4; 
+    f32 unkb8; // used by ACT_ANIM in chrlv
+    s32 unkbc;
+    
 } Model;
 
 struct waydata
@@ -586,7 +640,7 @@ typedef struct ChrRecord
         struct {
             s16 lastshooter;            /*0xE8 */
             s16 timeshooter;            /*0xEA*/
-        }
+        };
     };
     f32 hearingscale;           /*0xEC increases when shot at*/
     s32 lastheartarget60;       /*0xF0 increases after hearing bond (NOTE s32 not u32) */

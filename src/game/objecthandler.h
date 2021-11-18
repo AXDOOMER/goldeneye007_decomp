@@ -1,6 +1,7 @@
 #ifndef _OBJECTHANDLER_
 #define _OBJECTHANDLER_
 #include "ultra64.h"
+#include "bondtypes.h"
 
 extern s32 D_80036410;
 extern s32 D_80036414;
@@ -17,5 +18,10 @@ void set_obj_instance_controller_scale(struct Model*, f32);
 void getsuboffset(s32, struct float3 *);
 void sub_GAME_7F070AEC(struct object_standard *, s32, s32);
 void subcalcpos(struct object_standard *);
+
+void objecthandlerAnimationRelated7F06FCA8(struct PropModel *, void*, s32, f32, f32, f32);
+void sub_GAME_7F06FDCC(struct PropModel *, f32, f32);
+void sub_GAME_7F06FDE8(struct PropModel *, f32);
+void sub_GAME_7F06CE84(struct PropModel *, f32);
 
 #endif

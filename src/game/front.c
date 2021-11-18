@@ -23824,7 +23824,7 @@ glabel init_menu18_displaycast
 /* 04D804 7F018CD4 8C470004 */  lw    $a3, 4($v0)
 /* 04D808 7F018CD8 8FA60070 */  lw    $a2, 0x70($sp)
 /* 04D80C 7F018CDC E7A40010 */  swc1  $f4, 0x10($sp)
-/* 04D810 7F018CE0 0FC1BF2A */  jal   sub_GAME_7F06FCA8
+/* 04D810 7F018CE0 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 04D814 7F018CE4 E7A60014 */   swc1  $f6, 0x14($sp)
 /* 04D818 7F018CE8 3C018003 */  lui   $at, %hi(menu_timer)
 /* 04D81C 7F018CEC 0C002914 */  jal   randomGetNext
@@ -24421,7 +24421,7 @@ glabel init_menu18_displaycast
 /* 04B740 7F018D50 8C470004 */  lw    $a3, 4($v0)
 /* 04B744 7F018D54 8FA60070 */  lw    $a2, 0x70($sp)
 /* 04B748 7F018D58 E7A40010 */  swc1  $f4, 0x10($sp)
-/* 04B74C 7F018D5C 0FC1BF92 */  jal   sub_GAME_7F06FCA8
+/* 04B74C 7F018D5C 0FC1BF92 */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 04B750 7F018D60 E7A60014 */   swc1  $f6, 0x14($sp)
 /* 04B754 7F018D64 3C018002 */  lui   $at, %hi(menu_timer) # $at, 0x8002
 /* 04B758 7F018D68 0C00262C */  jal   randomGetNext

@@ -3064,7 +3064,7 @@ action0A_Animation_9:
 /* 06A388 7F035858 44072000 */  mfc1  $a3, $f4
 /* 06A38C 7F03585C 8CA5A04C */  lw    $a1, %lo(animation_table_ptrs2)($a1)
 /* 06A390 7F035860 00003025 */  move  $a2, $zero
-/* 06A394 7F035864 0FC1BF2A */  jal   sub_GAME_7F06FCA8
+/* 06A394 7F035864 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 06A398 7F035868 E7AA0014 */   swc1  $f10, 0x14($sp)
 /* 06A39C 7F03586C 06620009 */  bltzl $s3, .L7F035894
 /* 06A3A0 7F035870 26520009 */   addiu $s2, $s2, 9
@@ -8931,7 +8931,7 @@ action0A_Animation_9:
 /* 06A388 7F035858 44072000 */  mfc1  $a3, $f4
 /* 06A38C 7F03585C 8CA5A04C */  lw    $a1, %lo(animation_table_ptrs2)($a1)
 /* 06A390 7F035860 00003025 */  move  $a2, $zero
-/* 06A394 7F035864 0FC1BF2A */  jal   sub_GAME_7F06FCA8
+/* 06A394 7F035864 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 06A398 7F035868 E7AA0014 */   swc1  $f10, 0x14($sp)
 /* 06A39C 7F03586C 06620009 */  bltzl $s3, .L7F035894
 /* 06A3A0 7F035870 26520009 */   addiu $s2, $s2, 9
@@ -14799,7 +14799,7 @@ action0A_Animation_9:
 /* 06A388 7F035858 44072000 */  mfc1  $a3, $f4
 /* 06A38C 7F03585C 8CA5A04C */  lw    $a1, %lo(animation_table_ptrs2)($a1)
 /* 06A390 7F035860 00003025 */  move  $a2, $zero
-/* 06A394 7F035864 0FC1BF2A */  jal   sub_GAME_7F06FCA8
+/* 06A394 7F035864 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 06A398 7F035868 E7AA0014 */   swc1  $f10, 0x14($sp)
 /* 06A39C 7F03586C 06620009 */  bltzl $s3, .L7F035894
 /* 06A3A0 7F035870 26520009 */   addiu $s2, $s2, 9
@@ -20431,21 +20431,20 @@ glabel sub_GAME_7F03A538
 
 
 
-void attachNewChild(struct PropRecord *newChild,struct PropRecord *host)
+void attachNewChild(PropRecord *newChild, PropRecord *host)
 {
     newChild->parent = host;
 
     // Link the newChild into its siblings
-    if (host->child) {
+    if (host->child)
+    {
         host->child->next = newChild;
     }
     newChild->prev = host->child;
-    newChild->next = 0x0;
+    newChild->next = NULL;
+    newChild->stan = NULL;
+    host->child    = newChild;
 
-    newChild->stan = 0x0;
-    host->child = newChild;
-
-    return;
 }
 
 

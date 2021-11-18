@@ -24,7 +24,9 @@ s32 get_random_head(s32 id);
 f32 distToBond3D(struct ChrRecord *guardData);
 
 void chrlvAlertGuardToPlayerPosition(struct ChrRecord *);
-
+void chrlvIdleAnimationRelated7F023A94(struct ChrRecord *arg0, f32 arg1);
+f32 sub_GAME_7F032C4C(struct ChrRecord *arg0);
+s32 check_if_actor_stationary(struct ChrRecord *);
 
 
 #endif
