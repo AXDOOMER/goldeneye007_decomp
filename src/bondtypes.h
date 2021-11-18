@@ -1165,7 +1165,8 @@ struct s_unk_guard {
     s8 unk0e;
     s8 unk0f;
 
-    s32 unk10;
+    u16 unk10;
+    u16 unk12_ref;
     s32 unk14;
     s32 unk18;
     struct s_unk_ext *ext;
