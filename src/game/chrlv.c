@@ -1271,8 +1271,71 @@ void chrlvFireJumpToSideAnimationRelated(struct ChrRecord *arg0, s32 arg1)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F024CF8(void) {
+/**
+ * Address 0x7F024CF8.
+ * 
+ *  decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: fail
+ * - identical registers: fail
+ * 
+ * notes: stack should be ordered correctly. looks like a `NULL != left` is in the wrong spot?
+ */
+void sub_GAME_7F024CF8(ChrRecord *arg0, struct coord3d *arg1)
+{
+    f32 dx;
+    f32 dz;
+    s32 phi_a2;
+    f32 sq;
+    struct PropRecord *left;
+    struct PropRecord *right;
+    s32 sp2C;
 
+    dx = arg0->prop->pos.f[0] - arg1->f[0];
+    dz = arg0->prop->pos.f[2] - arg1->f[2];
+    sq = sqrtf((dx * dx) + (dz * dz));
+    
+    left = something_with_weaponpos_of_guarddata_hand(arg0, LEFT_HAND);
+    right = something_with_weaponpos_of_guarddata_hand(arg0, RIGHT_HAND);
+
+    sp2C = 1;
+
+    if (((left != NULL) && (right != NULL)) || ((left == NULL) && (right == NULL)))
+    {
+        sp2C = 0;
+        phi_a2 = randomGetNext() & 1;
+    }
+    else
+    {
+        if ((check_if_item_held_like_pistol(left)) || (check_if_item_held_like_pistol(right)))
+        {
+            sp2C = 0;
+        }
+
+        phi_a2 = NULL != left;
+    }
+
+    sub_GAME_7F02D184(arg0);
+
+    arg0->actiontype = ACT_RUNPOS;
+    arg0->act_runpos.pos.f[0] = arg1->f[0];
+    arg0->act_runpos.pos.f[1] = arg1->f[1];
+    arg0->act_runpos.pos.f[2] = arg1->f[2];
+    arg0->sleep = 0;
+    arg0->act_runpos.unk040 = 0;
+    arg0->act_runpos.unk038 = 30.0f;
+
+    if (sp2C)
+    {
+        arg0->act_runpos.unk03c = (s32) (sq / (D_80030988 * 0.5f));
+        objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ADDR_ANIM_running], phi_a2, 0, 0.5f, 16.0f);
+    }
+    else
+    {
+        arg0->act_runpos.unk03c = (s32) (sq / (D_80030994 * 0.5f));
+        objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ADDR_ANIM_running_one_handed_weapon], phi_a2, 0, 0.5f, 16.0f);
+    }
 }
 #else
 #ifndef VERSION_EU
@@ -2084,7 +2147,7 @@ glabel sub_GAME_7F02516C
 
 #ifdef NONMATCHING
 void sub_GAME_7F025560(void) {
-
+ // break
 }
 #else
 GLOBAL_ASM(

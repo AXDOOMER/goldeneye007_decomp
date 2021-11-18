@@ -192,6 +192,9 @@ extern s32 D_8002CCAC;
 extern s32 D_8002CCB0;
 extern s32 D_8002CCB4;
 extern u8 D_8002CCB8[4];
+extern f32 D_80030988;
+extern f32 D_80030994;
+
 extern u32 num_bodies;
 extern u32 num_male_heads;
 extern u32 num_female_heads;
