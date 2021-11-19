@@ -1052,10 +1052,15 @@ s32 D_800309A8 = 0;
 s32 D_800309AC = 0;
 s32 D_800309B0 = 0;
 s32 D_800309B4 = 0;
+
+// D_800309B8 is probably a struct of some kind.
 s32 D_800309B8 = 0;
 s32 D_800309BC = 0;
+
+// D_800309C0 is the same type as above
 s32 D_800309C0 = 0;
 s32 D_800309C4 = 0;
+
 s32 D_800309C8 = 0;
 s32 D_800309CC = 0;
 s32 D_800309D0 = 0;
@@ -7451,7 +7456,7 @@ struct ChrRecord* chrGetGuardData(s32 index)
 /**
  * Address 0x7F02302C.
  */
-struct PropRecord *something_with_weaponpos_of_guarddata_hand(struct ChrRecord *arg0, s32 arg1)
+struct PropRecord *something_with_weaponpos_of_guarddata_hand(struct ChrRecord *arg0, HANDEDNESS arg1)
 {
     return arg0->weapons_held[arg1];
 }
@@ -7462,7 +7467,7 @@ struct PropRecord *something_with_weaponpos_of_guarddata_hand(struct ChrRecord *
 /**
  * Address 0x7F02303C.
  */
-struct PropRecord *is_weapon_in_guarddata_hand(struct ChrRecord *arg0, s32 arg1)
+struct PropRecord *is_weapon_in_guarddata_hand(struct ChrRecord *arg0, HANDEDNESS arg1)
 {
     struct PropRecord *ret;
 

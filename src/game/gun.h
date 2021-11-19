@@ -238,5 +238,6 @@ void set_unset_bitflags(s32 bitflags, s32 flag);
 
 s32 get_max_ammo_for_type(s32);
 void give_cur_player_ammo(s32, s32);
+s8 bondwalkItemGetAutomaticFiringRate(ITEM_IDS item);
 
 #endif

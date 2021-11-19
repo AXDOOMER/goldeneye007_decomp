@@ -40,7 +40,7 @@ void chrlvAttackActionRelated(struct ChrRecord *arg0);
 f32 chrlvDistanceToChrRelated(ChrRecord *arg0, s32 arg1, s32 arg2);
 f32 get_distance_actor_to_position(ChrRecord *arg0, struct coord3d *arg1);
 
-
+void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2);
 void *sub_GAME_7F032C78(ChrRecord *arg0, s32 arg1, s32 arg2, s32 *arg3);
 void sub_GAME_7F02D184(struct ChrRecord *arg0);
 
@@ -1741,7 +1741,14 @@ f32 chrlvDistanceToChrRelated(ChrRecord *arg0, s32 arg1, s32 arg2)
 
 #ifdef NONMATCHING
 void sub_GAME_7F02516C(void) {
-
+ /**
+  * @param arg0:
+  * @param arg1: address of array of firing animations (example: ptr_pistol_firing_animation_groups)
+  * @param arg2:
+  * @param arg3: s32 array, seems to only have 2-4 elements? (not sure...)
+  */
+ // tenative signature: void sub_GAME_7F02516C(ChrRecord *arg0, s32 arg1, s32 arg2, s32 *arg3, s32 arg4, s32 arg5, s32 arg6)
+ // mostly setting a bunch of the struct act_* properties, unsure of type
 }
 #else
 GLOBAL_ASM(
@@ -2031,8 +2038,71 @@ glabel sub_GAME_7F02516C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F025560(void) {
- // break
+void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2)
+{
+    PropRecord *left;
+    PropRecord *right;
+    s32 sp[4];
+    s32 animation_pointer;
+    s32 last_arg2;
+
+    left = something_with_weaponpos_of_guarddata_hand(arg0, LEFT_HAND);
+    right = something_with_weaponpos_of_guarddata_hand(arg0, RIGHT_HAND);
+
+    // this is probably a struct copy
+    sp[0] = D_800309B8;
+    sp[1] = D_800309BC;
+
+    if ((left != NULL) && (right != NULL))
+    {
+        left = is_weapon_in_guarddata_hand(arg0, LEFT_HAND);
+        right = is_weapon_in_guarddata_hand(arg0, RIGHT_HAND);
+
+        last_arg2 = right == NULL;
+        animation_pointer = (s32) ptr_pistol_firing_animation_groups;
+
+        if ((left != NULL) && (right != NULL))
+        {
+            sp[2] = randomGetNext() & 1;
+
+            if ((randomGetNext() % 3U) == 0)
+            {
+                sp[1] = sp[2];
+                sp[0] = sp[2] == 0;
+                animation_pointer = (s32) ptr_pistol_firing_animation_groups;
+            }
+            else
+            {
+                sp[1] = last_arg2;
+                sp[0] = last_arg2;
+                animation_pointer = (s32) ptr_doubles_firing_animation_groups;
+            }
+        }
+        else
+        {
+            sp[1] = last_arg2;
+            sp[0] = last_arg2 == 0;
+        }
+    }
+    else
+    {
+        if ((check_if_item_held_like_pistol(left) != 0) || (check_if_item_held_like_pistol(right) != 0))
+        {
+            last_arg2 = left != NULL;
+            sp[1] = last_arg2;
+            sp[0] = last_arg2 == 0;
+            animation_pointer = (s32) ptr_pistol_firing_animation_groups;
+        }
+        else
+        {
+            last_arg2 = left != NULL;
+            sp[1] = last_arg2;
+            sp[0] = last_arg2 == 0;
+            animation_pointer = (s32) ptr_rifle_firing_animation_groups;
+        }
+    }
+
+    sub_GAME_7F02516C(arg0, animation_pointer, last_arg2, &sp, arg1, arg2, 1);
 }
 #else
 GLOBAL_ASM(
@@ -2152,7 +2222,7 @@ glabel sub_GAME_7F025560
 
 #ifdef NONMATCHING
 void sub_GAME_7F0256F0(void) {
-
+// very similar to sub_GAME_7F025560.
 }
 #else
 GLOBAL_ASM(
