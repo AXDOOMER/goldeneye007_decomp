@@ -36,6 +36,8 @@ void chrlvActorFadeAway(struct ChrRecord *arg0);
 void chrlvSideStepAnimationRelated(struct ChrRecord *arg0, s32 arg1);
 void chrlvFireJumpToSideAnimationRelated(struct ChrRecord *arg0, s32 arg1);
 void chrlvDeathStaggerAnimationRelated(struct ChrRecord *arg0);
+void chrlvAttackActionRelated(struct ChrRecord *arg0);
+
 
 
 
@@ -1656,99 +1658,51 @@ void chrlvDeathStaggerAnimationRelated(struct ChrRecord *arg0)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F024F8C(void) {
+/**
+ * Called from actor_fire_or_aim_at_target_update, where action type is ACT_ATTACK.
+ * 
+ * Address 0x7F024F8C.
+ */
+void chrlvAttackActionRelated(struct ChrRecord *arg0)
+{
+    struct Model* model = arg0->model;
+    f32 *f = arg0->act_attack.unk02c;
 
+    if ((arg0->act_attack.attacktype & 0x20) != 0)
+    {
+        if ((f[8] >= 0.0f) && (f[8] < f[6]))
+        {
+            sub_GAME_7F06FDE8(model, f[8]);
+        }
+        else
+        {
+            sub_GAME_7F06FDE8(model, f[6]);
+        }
+    }
+    else if (arg0->act_attack.unk036 != 0)
+    {
+        if (f[8] >= 0.0f)
+        {
+            sub_GAME_7F06FDE8(model, f[8]);
+        }
+        else
+        {
+            sub_GAME_7F06FDE8(model, f[6]);
+        }
+    }
+    else if (f[8] >= 0.0f)
+    {
+        sub_GAME_7F06FDE8(model, f[8]);
+    }
+    else if (f[5] >= 0.0f)
+    {
+        sub_GAME_7F06FDE8(model, f[5]);
+    }
+    else
+    {
+        sub_GAME_7F06FDE8(model, -1.0f);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F024F8C
-/* 059ABC 7F024F8C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 059AC0 7F024F90 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 059AC4 7F024F94 8C8E004C */  lw    $t6, 0x4c($a0)
-/* 059AC8 7F024F98 8C86001C */  lw    $a2, 0x1c($a0)
-/* 059ACC 7F024F9C 8C82002C */  lw    $v0, 0x2c($a0)
-/* 059AD0 7F024FA0 31CF0020 */  andi  $t7, $t6, 0x20
-/* 059AD4 7F024FA4 51E00017 */  beql  $t7, $zero, .L7F025004
-/* 059AD8 7F024FA8 80980036 */   lb    $t8, 0x36($a0)
-/* 059ADC 7F024FAC 44801000 */  mtc1  $zero, $f2
-/* 059AE0 7F024FB0 C4400020 */  lwc1  $f0, 0x20($v0)
-/* 059AE4 7F024FB4 00C02025 */  move  $a0, $a2
-/* 059AE8 7F024FB8 4600103E */  c.le.s $f2, $f0
-/* 059AEC 7F024FBC 00000000 */  nop   
-/* 059AF0 7F024FC0 4500000B */  bc1f  .L7F024FF0
-/* 059AF4 7F024FC4 00000000 */   nop   
-/* 059AF8 7F024FC8 C4440018 */  lwc1  $f4, 0x18($v0)
-/* 059AFC 7F024FCC 4604003C */  c.lt.s $f0, $f4
-/* 059B00 7F024FD0 00000000 */  nop   
-/* 059B04 7F024FD4 45000006 */  bc1f  .L7F024FF0
-/* 059B08 7F024FD8 00000000 */   nop   
-/* 059B0C 7F024FDC 44050000 */  mfc1  $a1, $f0
-/* 059B10 7F024FE0 0FC1BF7A */  jal   sub_GAME_7F06FDE8
-/* 059B14 7F024FE4 00C02025 */   move  $a0, $a2
-/* 059B18 7F024FE8 10000031 */  b     .L7F0250B0
-/* 059B1C 7F024FEC 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F024FF0:
-/* 059B20 7F024FF0 0FC1BF7A */  jal   sub_GAME_7F06FDE8
-/* 059B24 7F024FF4 8C450018 */   lw    $a1, 0x18($v0)
-/* 059B28 7F024FF8 1000002D */  b     .L7F0250B0
-/* 059B2C 7F024FFC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 059B30 7F025000 80980036 */  lb    $t8, 0x36($a0)
-.L7F025004:
-/* 059B34 7F025004 53000012 */  beql  $t8, $zero, .L7F025050
-/* 059B38 7F025008 44801000 */   mtc1  $zero, $f2
-/* 059B3C 7F02500C 44801000 */  mtc1  $zero, $f2
-/* 059B40 7F025010 C4400020 */  lwc1  $f0, 0x20($v0)
-/* 059B44 7F025014 00C02025 */  move  $a0, $a2
-/* 059B48 7F025018 4600103E */  c.le.s $f2, $f0
-/* 059B4C 7F02501C 00000000 */  nop   
-/* 059B50 7F025020 45000006 */  bc1f  .L7F02503C
-/* 059B54 7F025024 00000000 */   nop   
-/* 059B58 7F025028 44050000 */  mfc1  $a1, $f0
-/* 059B5C 7F02502C 0FC1BF7A */  jal   sub_GAME_7F06FDE8
-/* 059B60 7F025030 00C02025 */   move  $a0, $a2
-/* 059B64 7F025034 1000001E */  b     .L7F0250B0
-/* 059B68 7F025038 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F02503C:
-/* 059B6C 7F02503C 0FC1BF7A */  jal   sub_GAME_7F06FDE8
-/* 059B70 7F025040 8C450018 */   lw    $a1, 0x18($v0)
-/* 059B74 7F025044 1000001A */  b     .L7F0250B0
-/* 059B78 7F025048 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 059B7C 7F02504C 44801000 */  mtc1  $zero, $f2
-.L7F025050:
-/* 059B80 7F025050 C4400020 */  lwc1  $f0, 0x20($v0)
-/* 059B84 7F025054 4600103E */  c.le.s $f2, $f0
-/* 059B88 7F025058 00000000 */  nop   
-/* 059B8C 7F02505C 45020007 */  bc1fl .L7F02507C
-/* 059B90 7F025060 C4400014 */   lwc1  $f0, 0x14($v0)
-/* 059B94 7F025064 44050000 */  mfc1  $a1, $f0
-/* 059B98 7F025068 0FC1BF7A */  jal   sub_GAME_7F06FDE8
-/* 059B9C 7F02506C 00C02025 */   move  $a0, $a2
-/* 059BA0 7F025070 1000000F */  b     .L7F0250B0
-/* 059BA4 7F025074 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 059BA8 7F025078 C4400014 */  lwc1  $f0, 0x14($v0)
-.L7F02507C:
-/* 059BAC 7F02507C 00C02025 */  move  $a0, $a2
-/* 059BB0 7F025080 4600103E */  c.le.s $f2, $f0
-/* 059BB4 7F025084 00000000 */  nop   
-/* 059BB8 7F025088 45000006 */  bc1f  .L7F0250A4
-/* 059BBC 7F02508C 00000000 */   nop   
-/* 059BC0 7F025090 44050000 */  mfc1  $a1, $f0
-/* 059BC4 7F025094 0FC1BF7A */  jal   sub_GAME_7F06FDE8
-/* 059BC8 7F025098 00C02025 */   move  $a0, $a2
-/* 059BCC 7F02509C 10000004 */  b     .L7F0250B0
-/* 059BD0 7F0250A0 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0250A4:
-/* 059BD4 7F0250A4 0FC1BF7A */  jal   sub_GAME_7F06FDE8
-/* 059BD8 7F0250A8 3C05BF80 */   lui   $a1, 0xbf80
-/* 059BDC 7F0250AC 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0250B0:
-/* 059BE0 7F0250B0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 059BE4 7F0250B4 03E00008 */  jr    $ra
-/* 059BE8 7F0250B8 00000000 */   nop   
-)
-#endif
 
 
 
@@ -2092,7 +2046,7 @@ glabel sub_GAME_7F02516C
 /* 05A050 7F025520 8FA60098 */  lw    $a2, 0x98($sp)
 /* 05A054 7F025524 0FC1BF2A */  jal   objecthandlerAnimationRelated7F06FCA8
 /* 05A058 7F025528 E7A60014 */   swc1  $f6, 0x14($sp)
-/* 05A05C 7F02552C 0FC093E3 */  jal   sub_GAME_7F024F8C
+/* 05A05C 7F02552C 0FC093E3 */  jal   chrlvAttackActionRelated
 /* 05A060 7F025530 02802025 */   move  $a0, $s4
 /* 05A064 7F025534 8FBF003C */  lw    $ra, 0x3c($sp)
 /* 05A068 7F025538 8FB0001C */  lw    $s0, 0x1c($sp)
@@ -8910,7 +8864,7 @@ int actor_fire_or_aim_at_target_update(struct ChrRecord *chr, u32 newflag, u32 n
         {
             chr->act_attack.attacktype = newflag;
             chr->act_attack.entityid = newtarget;
-            sub_GAME_7F024F8C(chr);
+            chrlvAttackActionRelated(chr);
             return 1;
         }
     }
