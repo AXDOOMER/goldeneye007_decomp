@@ -1332,12 +1332,12 @@ void sub_GAME_7F024CF8(ChrRecord *arg0, struct coord3d *arg1)
     if (sp2C)
     {
         arg0->act_runpos.unk03c = (s32) (sq / (D_80030988 * 0.5f));
-        objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ADDR_ANIM_running], phi_a2, 0, 0.5f, 16.0f);
+        objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_running], phi_a2, 0, 0.5f, 16.0f);
     }
     else
     {
         arg0->act_runpos.unk03c = (s32) (sq / (D_80030994 * 0.5f));
-        objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ADDR_ANIM_running_one_handed_weapon], phi_a2, 0, 0.5f, 16.0f);
+        objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_running_one_handed_weapon], phi_a2, 0, 0.5f, 16.0f);
     }
 }
 #else
@@ -1651,7 +1651,7 @@ void chrlvDeathStaggerAnimationRelated(struct ChrRecord *arg0)
     sub_GAME_7F02D184(arg0);
     arg0->actiontype = ACT_TEST;
     arg0->sleep = 0;
-    objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ADDR_ANIM_death_stagger_back_to_wall], 0, 10.0f, 0.5f, 16.0f);
+    objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ANIM_DATA_death_stagger_back_to_wall], 0, 10.0f, 0.5f, 16.0f);
     sub_GAME_7F06FDCC(arg0->model, 10.0f, 16.0f);
     sub_GAME_7F06FDE8(arg0->model, 40.0f);
 }
