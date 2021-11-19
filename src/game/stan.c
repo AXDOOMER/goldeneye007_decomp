@@ -3087,12 +3087,12 @@ glabel sub_GAME_7F0B0D0C
 
 
 // sig for caller matches
-int sub_GAME_7F0B0E24(struct StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z,
+s32 sub_GAME_7F0B0E24(struct StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z,
     int objFlags, f32 unkHeight, f32 unkA, f32 unkB, f32 unkC);
 
 #ifdef NONMATCHING
 // 'testLineUnobstructed'
-int sub_GAME_7F0B0E24(struct StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z,
+s32 sub_GAME_7F0B0E24(struct StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z,
     int objFlags, f32 unkHeight, f32 unkA, f32 unkB, f32 unkC) {
 
 }
