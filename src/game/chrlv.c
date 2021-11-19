@@ -41,6 +41,7 @@ void chrlvAttackActionRelated(struct ChrRecord *arg0);
 f32 chrlvDistanceToChrRelated(ChrRecord *arg0, s32 arg1, s32 arg2);
 f32 get_distance_actor_to_position(ChrRecord *arg0, struct coord3d *arg1);
 f32 chrlvPathingCollisionRelated(PropRecord *arg0, f32 arg1, f32 arg2, s32 objFlags, f32 unkHeight, f32 unkA);
+f32 chrlvPathingCollisionRelated7F0264B0(PropRecord *arg0, f32 arg1, f32 arg2);
 
 void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2);
 void *sub_GAME_7F032C78(ChrRecord *arg0, s32 arg1, s32 arg2, s32 *arg3);
@@ -3111,38 +3112,19 @@ f32 chrlvPathingCollisionRelated(PropRecord *arg0, f32 arg1, f32 arg2, s32 objFl
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0264B0(void) {
+/**
+ * Address 0x7F0264B0.
+*/
+f32 chrlvPathingCollisionRelated7F0264B0(PropRecord *arg0, f32 arg1, f32 arg2)
+{
+    f32 sp2C;
+    f32 sp28;
+    f32 sp24;
 
+    chrGetChrWidthHeight(arg0, &sp24, &sp2C, &sp28);
+    return chrlvPathingCollisionRelated(arg0, arg1, arg2, 0x1F, sp2C, sp28);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0264B0
-/* 05AFE0 7F0264B0 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 05AFE4 7F0264B4 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 05AFE8 7F0264B8 AFA50034 */  sw    $a1, 0x34($sp)
-/* 05AFEC 7F0264BC AFA60038 */  sw    $a2, 0x38($sp)
-/* 05AFF0 7F0264C0 AFA40030 */  sw    $a0, 0x30($sp)
-/* 05AFF4 7F0264C4 27A6002C */  addiu $a2, $sp, 0x2c
-/* 05AFF8 7F0264C8 27A50024 */  addiu $a1, $sp, 0x24
-/* 05AFFC 7F0264CC 0FC08C58 */  jal   chrGetChrWidthHeight
-/* 05B000 7F0264D0 27A70028 */   addiu $a3, $sp, 0x28
-/* 05B004 7F0264D4 C7A4002C */  lwc1  $f4, 0x2c($sp)
-/* 05B008 7F0264D8 C7A60028 */  lwc1  $f6, 0x28($sp)
-/* 05B00C 7F0264DC 8FA40030 */  lw    $a0, 0x30($sp)
-/* 05B010 7F0264E0 8FA50034 */  lw    $a1, 0x34($sp)
-/* 05B014 7F0264E4 8FA60038 */  lw    $a2, 0x38($sp)
-/* 05B018 7F0264E8 2407001F */  li    $a3, 31
-/* 05B01C 7F0264EC E7A40010 */  swc1  $f4, 0x10($sp)
-/* 05B020 7F0264F0 0FC098D9 */  jal   chrlvPathingCollisionRelated
-/* 05B024 7F0264F4 E7A60014 */   swc1  $f6, 0x14($sp)
-/* 05B028 7F0264F8 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 05B02C 7F0264FC 27BD0030 */  addiu $sp, $sp, 0x30
-/* 05B030 7F026500 03E00008 */  jr    $ra
-/* 05B034 7F026504 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -3283,12 +3265,12 @@ glabel triggered_on_shot_hit
 /* 05B1D0 7F0266A0 46127281 */  sub.s $f10, $f14, $f18
 /* 05B1D4 7F0266A4 E7AA0070 */  swc1  $f10, 0x70($sp)
 .L7F0266A8:
-/* 05B1D8 7F0266A8 0FC0992C */  jal   sub_GAME_7F0264B0
+/* 05B1D8 7F0266A8 0FC0992C */  jal   chrlvPathingCollisionRelated7F0264B0
 /* 05B1DC 7F0266AC 8FA40098 */   lw    $a0, 0x98($sp)
 /* 05B1E0 7F0266B0 8FA40098 */  lw    $a0, 0x98($sp)
 /* 05B1E4 7F0266B4 8FA50070 */  lw    $a1, 0x70($sp)
 /* 05B1E8 7F0266B8 3C064316 */  lui   $a2, 0x4316
-/* 05B1EC 7F0266BC 0FC0992C */  jal   sub_GAME_7F0264B0
+/* 05B1EC 7F0266BC 0FC0992C */  jal   chrlvPathingCollisionRelated7F0264B0
 /* 05B1F0 7F0266C0 E7A0006C */   swc1  $f0, 0x6c($sp)
 /* 05B1F4 7F0266C4 3C014316 */  li    $at, 0x43160000 # 150.000000
 /* 05B1F8 7F0266C8 44816000 */  mtc1  $at, $f12
