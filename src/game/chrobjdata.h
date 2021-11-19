@@ -34,7 +34,7 @@ typedef struct ModelSkeleton {
 } ModelSkeleton;
 
 typedef struct ModelNode {
-    short Opcode;
+    u16 Opcode;
     void * Data;
     struct ModelNode * Parent;
     struct ModelNode * Next;

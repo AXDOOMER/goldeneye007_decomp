@@ -38,9 +38,10 @@ void chrlvFireJumpToSideAnimationRelated(struct ChrRecord *arg0, s32 arg1);
 void chrlvDeathStaggerAnimationRelated(struct ChrRecord *arg0);
 void chrlvAttackActionRelated(struct ChrRecord *arg0);
 
+f32 get_distance_actor_to_position(ChrRecord *arg0, struct coord3d *arg1);
 
 
-
+void *sub_GAME_7F032C78(ChrRecord *arg0, s32 arg1, s32 arg2, s32 *arg3);
 void sub_GAME_7F02D184(struct ChrRecord *arg0);
 
 
@@ -20297,8 +20298,25 @@ glabel sub_GAME_7F032BA0
 
 
 #ifdef NONMATCHING
-void get_distance_actor_to_position(void) {
+// arg1 might be void?
+f32 get_distance_actor_to_position(ChrRecord *arg0, struct coord3d *arg1)
+{
+    f32 sp18;
+    PropRecord *temp_v0;
+    f32 temp_f0;
+    f32 temp_f14;
+    f32 phi_f12;
 
+    temp_v0 = arg0->prop;
+    sp18 = getsubroty(arg0->model);
+    temp_f0 = atan2f(arg1->x - temp_v0->pos.x, arg1->f[2] - temp_v0->pos.f[2]);
+    temp_f14 = temp_f0 - sp18;
+    phi_f12 = temp_f14;
+    if (temp_f0 < sp18)
+    {
+        phi_f12 = temp_f14 + 6.2831855f;
+    }
+    return phi_f12;
 }
 #else
 GLOBAL_ASM(

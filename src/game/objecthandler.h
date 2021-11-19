@@ -24,4 +24,11 @@ void sub_GAME_7F06FDCC(struct Model *, f32, f32);
 void sub_GAME_7F06FDE8(struct Model *, f32);
 void sub_GAME_7F06CE84(struct Model *, f32);
 
+void *extract_id_from_object_structure_microcode(Model *Objinst, ModelNode *root);
+f32 getsubroty(Model *objinst);
+
+#ifndef VERSION_EU
+void return_null(void);
+#endif
+
 #endif
