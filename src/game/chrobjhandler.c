@@ -5,6 +5,7 @@
 #include "game/bondinv.h"
 #include "game/chr.h"
 #include "game/chrai.h"
+#include "game/chrlv.h"
 #include "snd.h"
 #include "music.h"
 #include "game/lvl.h"
@@ -3206,7 +3207,7 @@ glabel sub_GAME_7F041400
 /* 0761B0 7F041680 27A5007C */  addiu $a1, $sp, 0x7c
 /* 0761B4 7F041684 02A03025 */  move  $a2, $s5
 /* 0761B8 7F041688 8FA700E4 */  lw    $a3, 0xe4($sp)
-/* 0761BC 7F04168C 0FC0984C */  jal   sub_GAME_7F026130
+/* 0761BC 7F04168C 0FC0984C */  jal   chrlvCoordinateTransformSomething
 /* 0761C0 7F041690 E7A60084 */   swc1  $f6, 0x84($sp)
 /* 0761C4 7F041694 C7AA006C */  lwc1  $f10, 0x6c($sp)
 /* 0761C8 7F041698 C6A80000 */  lwc1  $f8, ($s5)
