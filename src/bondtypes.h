@@ -172,6 +172,28 @@ typedef struct AIRecord
     u8 val[];
 } AIRecord;
 
+/*
+ * Model Root Runtime Data (pos, heading, height etc)
+ */
+struct modeldata_root
+{                       // type 0x01
+    u16 unk00;          /*0*/
+    u8 unk02;           /*2*/
+    f32 ground;         /*4*/
+    struct coord3d pos; //8, 12, 16 - this is the right poition for this, but no idea what this node actually is (used in extract_id_from_object_structure_microcode)
+    f32 subroty;        //14 angle - this also happens to fit best for getsubroty
+    f32 unk18;          /*18*/
+    u32 unk1c;          /*1c*/
+    f32 unk20;          //20 angle
+    struct coord3d unk24;
+    f32 unk30; // angle copy of 20
+    struct coord3d unk34;
+    struct coord3d unk40; // "2" version of unk24
+    struct coord3d unk4c; // "2" version of unk34
+    u32 unk58;
+    u32 unk5c;
+};
+
 /**
  * I beleve that "datas" is actually " struct modeldata_root" and that 
  * unk1c is the model node data array

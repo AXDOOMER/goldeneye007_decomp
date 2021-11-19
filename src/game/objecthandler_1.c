@@ -3,6 +3,7 @@
 #include "game/objecthandler.h"
 
 #include "structs.h"
+#include "rmon.h"
 #include "game/math_floor.h"
 #include "game/math_ceil.h"
 #include "game/quaternion.h"
@@ -1442,76 +1443,80 @@ glabel setsuboffset
 
 
 
-#ifdef NONMATCHING
-void getsubroty(void) {
-
-}
-#else
 #ifndef VERSION_EU
-//D:8005473C
-const char aGetsubrotyNoObjinst[] = "getsubroty: no objinst!";
-//D:80054754
-const char aGetsubrotyObjinstHasNoObject[] = "getsubroty: objinst has no object!";
-//D:80054778
-const char aGetsubrotyObjinstHasNoRootPart[] = "getsubroty: objinst has no root part!";
-GLOBAL_ASM(
-.text
-glabel getsubroty
-/* 0A17B0 7F06CC80 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A17B4 7F06CC84 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A17B8 7F06CC88 14800006 */  bnez  $a0, .L7F06CCA4
-/* 0A17BC 7F06CC8C AFA40018 */   sw    $a0, 0x18($sp)
-/* 0A17C0 7F06CC90 3C048005 */  lui   $a0, %hi(aGetsubrotyNoObjinst)
-/* 0A17C4 7F06CC94 0C0033D1 */  jal   osSyncPrintf
-/* 0A17C8 7F06CC98 2484473C */   addiu $a0, %lo(aGetsubrotyNoObjinst) # addiu $a0, $a0, 0x473c
-/* 0A17CC 7F06CC9C 0FC1B11B */  jal   return_null
-/* 0A17D0 7F06CCA0 00000000 */   nop   
-.L7F06CCA4:
-/* 0A17D4 7F06CCA4 8FAF0018 */  lw    $t7, 0x18($sp)
-/* 0A17D8 7F06CCA8 3C048005 */  lui   $a0, %hi(aGetsubrotyObjinstHasNoObject)
-/* 0A17DC 7F06CCAC 8DE20008 */  lw    $v0, 8($t7)
-/* 0A17E0 7F06CCB0 54400008 */  bnezl $v0, .L7F06CCD4
-/* 0A17E4 7F06CCB4 8C430000 */   lw    $v1, ($v0)
-/* 0A17E8 7F06CCB8 0C0033D1 */  jal   osSyncPrintf
-/* 0A17EC 7F06CCBC 24844754 */   addiu $a0, %lo(aGetsubrotyObjinstHasNoObject) # addiu $a0, $a0, 0x4754
-/* 0A17F0 7F06CCC0 0FC1B11B */  jal   return_null
-/* 0A17F4 7F06CCC4 00000000 */   nop   
-/* 0A17F8 7F06CCC8 8FB80018 */  lw    $t8, 0x18($sp)
-/* 0A17FC 7F06CCCC 8F020008 */  lw    $v0, 8($t8)
-/* 0A1800 7F06CCD0 8C430000 */  lw    $v1, ($v0)
-.L7F06CCD4:
-/* 0A1804 7F06CCD4 3C048005 */  lui   $a0, %hi(aGetsubrotyObjinstHasNoRootPart)
-/* 0A1808 7F06CCD8 54600009 */  bnezl $v1, .L7F06CD00
-/* 0A180C 7F06CCDC 94690000 */   lhu   $t1, ($v1)
-/* 0A1810 7F06CCE0 0C0033D1 */  jal   osSyncPrintf
-/* 0A1814 7F06CCE4 24844778 */   addiu $a0, %lo(aGetsubrotyObjinstHasNoRootPart) # addiu $a0, $a0, 0x4778
-/* 0A1818 7F06CCE8 0FC1B11B */  jal   return_null
-/* 0A181C 7F06CCEC 00000000 */   nop   
-/* 0A1820 7F06CCF0 8FB90018 */  lw    $t9, 0x18($sp)
-/* 0A1824 7F06CCF4 8F280008 */  lw    $t0, 8($t9)
-/* 0A1828 7F06CCF8 8D030000 */  lw    $v1, ($t0)
-/* 0A182C 7F06CCFC 94690000 */  lhu   $t1, ($v1)
-.L7F06CD00:
-/* 0A1830 7F06CD00 24010001 */  li    $at, 1
-/* 0A1834 7F06CD04 00602825 */  move  $a1, $v1
-/* 0A1838 7F06CD08 312A00FF */  andi  $t2, $t1, 0xff
-/* 0A183C 7F06CD0C 55410006 */  bnel  $t2, $at, .L7F06CD28
-/* 0A1840 7F06CD10 44800000 */   mtc1  $zero, $f0
-/* 0A1844 7F06CD14 0FC1B1E7 */  jal   extract_id_from_object_structure_microcode
-/* 0A1848 7F06CD18 8FA40018 */   lw    $a0, 0x18($sp)
-/* 0A184C 7F06CD1C 10000003 */  b     .L7F06CD2C
-/* 0A1850 7F06CD20 C4400014 */   lwc1  $f0, 0x14($v0)
-/* 0A1854 7F06CD24 44800000 */  mtc1  $zero, $f0
-.L7F06CD28:
-/* 0A1858 7F06CD28 00000000 */  nop   
-.L7F06CD2C:
-/* 0A185C 7F06CD2C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0A1860 7F06CD30 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A1864 7F06CD34 03E00008 */  jr    $ra
-/* 0A1868 7F06CD38 00000000 */   nop   
-)
-#endif
-#ifdef VERSION_EU
+/**
+ * Address 0x7F06CC80.
+ */
+f32 getsubroty(Model *objinst)
+{
+    ModelNode *root;
+    
+    if(0)
+    {
+        // removed
+    }
+
+    if (objinst == NULL)
+    {
+        osSyncPrintf("getsubroty: no objinst!");
+        return_null();
+    }
+
+    if(0)
+    {
+        // removed
+    }
+
+    if (objinst->obj == NULL)
+    {
+        osSyncPrintf("getsubroty: objinst has no object!");
+        return_null();
+    }
+
+    if(0)
+    {
+        // removed
+    }
+
+    if (objinst->obj->RootNode == NULL)
+    {
+        osSyncPrintf("getsubroty: objinst has no root part!");
+        return_null();
+    }
+
+    if(0)
+    {
+        // removed
+    }
+
+    root = objinst->obj->RootNode;
+    if ((root->Opcode & 0xFF) == 1)
+    {
+        return ((struct modeldata_root *)extract_id_from_object_structure_microcode(objinst, root))->subroty;
+    }
+
+    return 0.0f;
+}
+
+
+
+#else
+
+#ifdef NONMATCHING
+// untested
+// f32 getsubroty(Model *arg0)
+// {
+//     ModelNode *root;
+//    
+//     root = arg0->obj->RootNode;
+//     if ((root->Opcode & 0xFF) == 1)
+//     {
+//         return ((struct modeldata_root *)extract_id_from_object_structure_microcode(arg0, root))->subroty;
+//     }
+//
+//     return 0.0f;
+// }
+#else
 GLOBAL_ASM(
 .text
 glabel getsubroty
@@ -1537,8 +1542,8 @@ glabel getsubroty
 /* 09FC5C 7F06D26C 03E00008 */  jr    $ra
 /* 09FC60 7F06D270 00000000 */   nop   
 )
-#endif
-#endif
+#endif /* end eu NONMATCHING */
+#endif 
 
 
 

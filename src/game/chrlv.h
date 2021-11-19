@@ -27,6 +27,7 @@ void chrlvAlertGuardToPlayerPosition(struct ChrRecord *);
 void chrlvIdleAnimationRelated7F023A94(struct ChrRecord *arg0, f32 arg1);
 f32 sub_GAME_7F032C4C(struct ChrRecord *arg0);
 s32 check_if_actor_stationary(struct ChrRecord *);
+s32 convertPadIf9000(struct ChrRecord *guardData,s32 padNo);
 
 
 #endif
