@@ -658,12 +658,12 @@ void chrlvIdleAnimationRelated(struct ChrRecord *arg0, f32 arg1)
         || (check_if_item_held_like_pistol(left) != 0)
         || (check_if_item_held_like_pistol(right) != 0))
     {
-        objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ADDR_ANIM_idle_unarmed], randomGetNext() & 1, 0, 0.25f, arg1);
+        objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ANIM_DATA_idle_unarmed], randomGetNext() & 1, 0, 0.25f, arg1);
         sub_GAME_7F06FDCC(arg0->model, 0, 16.0f);
     }
     else if ((right != NULL) || (left != NULL))
     {
-        objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ADDR_ANIM_idle], left != NULL, 0, 0.25f, arg1);
+        objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ANIM_DATA_idle], left != NULL, 0, 0.25f, arg1);
         sub_GAME_7F06FDCC(arg0->model, 0, 16.0f);
         sub_GAME_7F06FDE8(arg0->model, 120.0f);
     }
@@ -784,14 +784,14 @@ void chrlvKneelingAnimationRelated(struct ChrRecord *arg0)
         arg0->act_stand.unk044 = (randomGetNext() % 0x78U) + 0xB4;
         arg0->sleep = 0;
 
-        if ((s32)sub_GAME_7F06F5AC(arg0->model) == (s32)&ADDR_ANIM_fire_kneel_forward_one_handed_weapon_slow + (s32)&ptr_animation_table->data)
+        if ((s32)sub_GAME_7F06F5AC(arg0->model) == (s32)&ANIM_DATA_fire_kneel_forward_one_handed_weapon_slow + (s32)&ptr_animation_table->data)
         {
-            objecthandlerAnimationRelated7F06FCA8(arg0->model, (s32)&ADDR_ANIM_fire_kneel_forward_one_handed_weapon_slow + (s32)&ptr_animation_table->data, (s32) arg0->model->unk24, 109.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
+            objecthandlerAnimationRelated7F06FCA8(arg0->model, (s32)&ANIM_DATA_fire_kneel_forward_one_handed_weapon_slow + (s32)&ptr_animation_table->data, (s32) arg0->model->unk24, 109.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
             sub_GAME_7F06FDE8(arg0->model, 140.0f);
         }
         else
         {
-            objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ADDR_ANIM_fire_kneel_left_leg], (s32) arg0->model->unk24, 120.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
+            objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_kneel_left_leg], (s32) arg0->model->unk24, 120.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
             sub_GAME_7F06FDE8(arg0->model, 151.0f);
         }
 
@@ -846,12 +846,12 @@ void chrlvActorKneel(struct ChrRecord *arg0)
         || (check_if_item_held_like_pistol(right) != 0))
     {
         s32 r = randomGetNext() & 1;
-        objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ADDR_ANIM_fire_kneel_forward_one_handed_weapon_slow], r, 0.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
+        objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ANIM_DATA_fire_kneel_forward_one_handed_weapon_slow], r, 0.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
         sub_GAME_7F06FDE8(arg0->model, 28.0f);
     }
     else if ((right != NULL) || (left != NULL))
     {
-        objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ADDR_ANIM_fire_kneel_left_leg], left != NULL, 0.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
+        objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ANIM_DATA_fire_kneel_left_leg], left != NULL, 0.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
         sub_GAME_7F06FDE8(arg0->model, 27.0f);
     }
 
@@ -938,7 +938,7 @@ void chrlvExtendLeftHandAnimationRelated(struct ChrRecord *arg0)
     arg0->actiontype = ACT_STARTALARM;
     arg0->sleep = 0;
 
-    objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ADDR_ANIM_extending_left_hand], phi_a2, 40.0f, 1.0f, 16.0f);
+    objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_extending_left_hand], phi_a2, 40.0f, 1.0f, 16.0f);
     sub_GAME_7F06FDE8(arg0->model, 82.0f);
 }
 
@@ -956,11 +956,11 @@ void chrlvThrowGrenadeAnimationRelated(struct ChrRecord *arg0, s32 arg1, s32 arg
 
     if (arg3 != 0)
     {
-        objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ADDR_ANIM_fire_throw_grenade], arg2 != 0, 0.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
+        objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_throw_grenade], arg2 != 0, 0.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
     }
     else
     {
-        objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ADDR_ANIM_fire_throw_grenade], arg2 != 0, 84.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
+        objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_throw_grenade], arg2 != 0, 84.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
     }
 
     sub_GAME_7F06FDE8(arg0->model, 193.0f);
@@ -993,7 +993,7 @@ void chrlvSpotBondAnimationRelated(struct ChrRecord *arg0, f32 arg1)
     }
 
     objarg4 = chrlvGetGuard007SpeedRating(arg0, 0.6f, 0.96000004f); // 0.96000004 is different from 0.96
-    objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ADDR_ANIM_spotting_bond], sp2C, 10.0f, objarg4, arg1);
+    objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_spotting_bond], sp2C, 10.0f, objarg4, arg1);
     sub_GAME_7F06FDE8(arg0->model, 52.0f);
 }
 
@@ -1035,7 +1035,7 @@ void chrlvSurrenderAnimationRelated(struct ChrRecord *arg0)
     sub_GAME_7F02D184(arg0);
     arg0->actiontype = ACT_SURPRISED;
     arg0->sleep = 0;
-    objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ADDR_ANIM_surrendering_armed], randomGetNext() & 1, 0.0f, chrlvGetGuard007SpeedRating(arg0, 0.35f, 0.56f), 16.0f);
+    objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ANIM_DATA_surrendering_armed], randomGetNext() & 1, 0.0f, chrlvGetGuard007SpeedRating(arg0, 0.35f, 0.56f), 16.0f);
     sub_GAME_7F06FDE8(arg0->model, 7.0f);
 }
 
@@ -1054,7 +1054,7 @@ void chrlvActorLookFlustered(struct ChrRecord *arg0)
 
     arg0->actiontype = ACT_SURPRISED;
     arg0->sleep = 0;
-    objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ADDR_ANIM_look_around], randomGetNext() & 1, 17.0f, 0.6f, 16.0f);
+    objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ANIM_DATA_look_around], randomGetNext() & 1, 17.0f, 0.6f, 16.0f);
 
     if (sp2C == 0)
     {
@@ -1092,7 +1092,7 @@ void chrlvActorThrowWeaponSurrender(struct ChrRecord *arg0)
 
         if ((right != NULL) || (left != NULL))
         {
-            objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ADDR_ANIM_surrendering_armed_drop_weapon], randomGetNext() & 1, 0.0f, 0.5f, 16.0f);
+            objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ANIM_DATA_surrendering_armed_drop_weapon], randomGetNext() & 1, 0.0f, 0.5f, 16.0f);
             sub_GAME_7F06FDCC(arg0->model, 40.0f, 16.0f);
 
             arg0->sleep = 0x10;
@@ -1110,7 +1110,7 @@ void chrlvActorThrowWeaponSurrender(struct ChrRecord *arg0)
         }
         else
         {
-            objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ADDR_ANIM_surrendering_armed], randomGetNext() & 1, 0.0f, 0.5f, 16.0f);
+            objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ANIM_DATA_surrendering_armed], randomGetNext() & 1, 0.0f, 0.5f, 16.0f);
             sub_GAME_7F06FDCC(arg0->model, 30.0f, 16.0f);
 
             arg0->sleep = 0x10;
@@ -1176,12 +1176,12 @@ void chrlvSideStepAnimationRelated(struct ChrRecord *arg0, s32 arg1)
     {
         if (arg1 != 0)
         {
-            objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ADDR_ANIM_side_step_left], 0, 5.0f, chrlvGetGuard007SpeedRating(arg0, 0.55f, 0.88000005f), 16.0f);
+            objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_side_step_left], 0, 5.0f, chrlvGetGuard007SpeedRating(arg0, 0.55f, 0.88000005f), 16.0f);
             sub_GAME_7F06FDE8(arg0->model, 27.0f);
         }
         else
         {
-            objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ADDR_ANIM_side_step_left], 1, 5.0f, chrlvGetGuard007SpeedRating(arg0, 0.55f, 0.88000005f), 16.0f);
+            objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_side_step_left], 1, 5.0f, chrlvGetGuard007SpeedRating(arg0, 0.55f, 0.88000005f), 16.0f);
             sub_GAME_7F06FDE8(arg0->model, 27.0f);
         }
 
@@ -1190,13 +1190,13 @@ void chrlvSideStepAnimationRelated(struct ChrRecord *arg0, s32 arg1)
 
     if (((arg1 != 0) && (sp2C == 0)) || ((arg1 == 0) && (sp2C != 0)))
     {
-        objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ADDR_ANIM_slide_left], sp2C, 5.0f, chrlvGetGuard007SpeedRating(arg0, 0.7f, 1.12f), 16.0f);
+        objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_slide_left], sp2C, 5.0f, chrlvGetGuard007SpeedRating(arg0, 0.7f, 1.12f), 16.0f);
         sub_GAME_7F06FDE8(arg0->model, 34.0f);
 
     }
     else
     {
-        objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ADDR_ANIM_slide_right], sp2C, 5.0f, chrlvGetGuard007SpeedRating(arg0, 0.7f, 1.12f), 16.0f);
+        objecthandlerAnimationRelated7F06FCA8(arg0->model, (void*)&ptr_animation_table->data[(s32)&ANIM_DATA_slide_right], sp2C, 5.0f, chrlvGetGuard007SpeedRating(arg0, 0.7f, 1.12f), 16.0f);
         sub_GAME_7F06FDE8(arg0->model, 32.0f);
     }
 
@@ -1241,12 +1241,12 @@ void chrlvFireJumpToSideAnimationRelated(struct ChrRecord *arg0, s32 arg1)
     {
         if ((randomGetNext() & 1) != 0)
         {
-            objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ADDR_ANIM_fire_jump_to_side_left], sp2C, 5.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
+            objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ANIM_DATA_fire_jump_to_side_left], sp2C, 5.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
             sub_GAME_7F06FDE8(arg0->model, 49.0f);
         }
         else
         {
-            objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ADDR_ANIM_fire_jump_to_side_right], sp2C, 130.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
+            objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ANIM_DATA_fire_jump_to_side_right], sp2C, 130.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
             sub_GAME_7F06FDE8(arg0->model, 173.0f);
         }
 
@@ -1255,12 +1255,12 @@ void chrlvFireJumpToSideAnimationRelated(struct ChrRecord *arg0, s32 arg1)
 
     if ((randomGetNext() & 1) != 0)
     {
-        objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ADDR_ANIM_fire_jump_to_side_right], sp2C, 20.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
+        objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ANIM_DATA_fire_jump_to_side_right], sp2C, 20.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
         sub_GAME_7F06FDE8(arg0->model, 63.0f);
     }
     else
     {
-        objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ADDR_ANIM_fire_jump_to_side_left], sp2C, 91.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
+        objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ANIM_DATA_fire_jump_to_side_left], sp2C, 91.0f, chrlvGetGuard007SpeedRating(arg0, 0.5f, 0.8f), 16.0f);
         sub_GAME_7F06FDE8(arg0->model, 136.0f);
     }
 
