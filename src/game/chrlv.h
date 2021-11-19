@@ -30,6 +30,7 @@ s32 check_if_actor_stationary(struct ChrRecord *);
 s32 convertPadIf9000(struct ChrRecord *guardData,s32 padNo);
 void chrlvCoordinateTransformSomething(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2, struct coord3d *arg3, struct coord3d *result);
 void chrlvStanCollisionRelated(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *result);
+void chrlvStanCollisionRelated7F026298(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *result);
 
 
 #endif

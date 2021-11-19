@@ -4560,7 +4560,7 @@ glabel sub_GAME_7F07A534
 /* 0AF220 7F07A6F0 16000010 */  bnez  $s0, .L7F07A734
 /* 0AF224 7F07A6F4 02602025 */   move  $a0, $s3
 /* 0AF228 7F07A6F8 27A500BC */  addiu $a1, $sp, 0xbc
-/* 0AF22C 7F07A6FC 0FC098A6 */  jal   sub_GAME_7F026298
+/* 0AF22C 7F07A6FC 0FC098A6 */  jal   chrlvStanCollisionRelated7F026298
 /* 0AF230 7F07A700 27A600B0 */   addiu $a2, $sp, 0xb0
 /* 0AF234 7F07A704 C7A800B0 */  lwc1  $f8, 0xb0($sp)
 /* 0AF238 7F07A708 C6700000 */  lwc1  $f16, ($s3)
@@ -17947,7 +17947,7 @@ glabel controller_gameplay_interaction
 /* 0B8094 7F083564 27A600AC */  addiu $a2, $sp, 0xac
 /* 0B8098 7F083568 E7AE00C4 */  swc1  $f14, 0xc4($sp)
 /* 0B809C 7F08356C 2504048C */  addiu $a0, $t0, 0x48c
-/* 0B80A0 7F083570 0FC098A6 */  jal   sub_GAME_7F026298
+/* 0B80A0 7F083570 0FC098A6 */  jal   chrlvStanCollisionRelated7F026298
 /* 0B80A4 7F083574 25050498 */   addiu $a1, $t0, 0x498
 /* 0B80A8 7F083578 8E080000 */  lw    $t0, ($s0)
 /* 0B80AC 7F08357C C7A400AC */  lwc1  $f4, 0xac($sp)

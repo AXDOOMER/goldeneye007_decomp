@@ -3038,67 +3038,29 @@ void chrlvStanCollisionRelated(struct coord3d *arg0, struct coord3d *arg1, struc
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F026298(void) {
+/**
+ * @param arg0:
+ * @param arg1:
+ * @param result: out parameter, contains result.
+ * 
+ * Address 0x7F026298.
+ */
+void chrlvStanCollisionRelated7F026298(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *result)
+{
+    struct coord3d sp2C;
+    struct coord3d sp20;
+    f32 f;
 
+    getCollisionEdge_maybe((struct float3 *) &sp2C, (struct float3 *) &sp20);
+
+    f = ((arg1->f[0] * (sp2C.f[2] - arg0->f[2])) - (arg1->f[2] * (sp2C.f[0] - arg0->f[0]))) 
+        / ((arg1->f[2] * (sp20.f[0] - sp2C.f[0])) - (arg1->f[0] * (sp20.f[2] - sp2C.f[2])));
+
+    result->f[0] = sp2C.f[0] + ((sp20.f[0] - sp2C.f[0]) * f);
+    result->f[1] = sp2C.f[1] + ((sp20.f[1] - sp2C.f[1]) * f);
+    result->f[2] = sp2C.f[2] + ((sp20.f[2] - sp2C.f[2]) * f);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F026298
-/* 05ADC8 7F026298 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 05ADCC 7F02629C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05ADD0 7F0262A0 AFA40038 */  sw    $a0, 0x38($sp)
-/* 05ADD4 7F0262A4 AFA5003C */  sw    $a1, 0x3c($sp)
-/* 05ADD8 7F0262A8 27A50020 */  addiu $a1, $sp, 0x20
-/* 05ADDC 7F0262AC 27A4002C */  addiu $a0, $sp, 0x2c
-/* 05ADE0 7F0262B0 0FC2CA2C */  jal   getCollisionEdge_maybe
-/* 05ADE4 7F0262B4 AFA60040 */   sw    $a2, 0x40($sp)
-/* 05ADE8 7F0262B8 8FA30038 */  lw    $v1, 0x38($sp)
-/* 05ADEC 7F0262BC C7A40020 */  lwc1  $f4, 0x20($sp)
-/* 05ADF0 7F0262C0 C7A6002C */  lwc1  $f6, 0x2c($sp)
-/* 05ADF4 7F0262C4 C7A80034 */  lwc1  $f8, 0x34($sp)
-/* 05ADF8 7F0262C8 C46A0008 */  lwc1  $f10, 8($v1)
-/* 05ADFC 7F0262CC 8FA2003C */  lw    $v0, 0x3c($sp)
-/* 05AE00 7F0262D0 46062381 */  sub.s $f14, $f4, $f6
-/* 05AE04 7F0262D4 C4640000 */  lwc1  $f4, ($v1)
-/* 05AE08 7F0262D8 C4420000 */  lwc1  $f2, ($v0)
-/* 05AE0C 7F0262DC 460A4401 */  sub.s $f16, $f8, $f10
-/* 05AE10 7F0262E0 C44C0008 */  lwc1  $f12, 8($v0)
-/* 05AE14 7F0262E4 8FA60040 */  lw    $a2, 0x40($sp)
-/* 05AE18 7F0262E8 46043281 */  sub.s $f10, $f6, $f4
-/* 05AE1C 7F0262EC 46101482 */  mul.s $f18, $f2, $f16
-/* 05AE20 7F0262F0 00000000 */  nop   
-/* 05AE24 7F0262F4 460A6402 */  mul.s $f16, $f12, $f10
-/* 05AE28 7F0262F8 C7AA0028 */  lwc1  $f10, 0x28($sp)
-/* 05AE2C 7F0262FC 46109101 */  sub.s $f4, $f18, $f16
-/* 05AE30 7F026300 46085481 */  sub.s $f18, $f10, $f8
-/* 05AE34 7F026304 46029402 */  mul.s $f16, $f18, $f2
-/* 05AE38 7F026308 00000000 */  nop   
-/* 05AE3C 7F02630C 460E6282 */  mul.s $f10, $f12, $f14
-/* 05AE40 7F026310 46105201 */  sub.s $f8, $f10, $f16
-/* 05AE44 7F026314 46082003 */  div.s $f0, $f4, $f8
-/* 05AE48 7F026318 46007482 */  mul.s $f18, $f14, $f0
-/* 05AE4C 7F02631C 46069280 */  add.s $f10, $f18, $f6
-/* 05AE50 7F026320 E4CA0000 */  swc1  $f10, ($a2)
-/* 05AE54 7F026324 C7A40030 */  lwc1  $f4, 0x30($sp)
-/* 05AE58 7F026328 C7B00024 */  lwc1  $f16, 0x24($sp)
-/* 05AE5C 7F02632C 46048201 */  sub.s $f8, $f16, $f4
-/* 05AE60 7F026330 46004482 */  mul.s $f18, $f8, $f0
-/* 05AE64 7F026334 46049180 */  add.s $f6, $f18, $f4
-/* 05AE68 7F026338 E4C60004 */  swc1  $f6, 4($a2)
-/* 05AE6C 7F02633C C7B00034 */  lwc1  $f16, 0x34($sp)
-/* 05AE70 7F026340 C7AA0028 */  lwc1  $f10, 0x28($sp)
-/* 05AE74 7F026344 46105201 */  sub.s $f8, $f10, $f16
-/* 05AE78 7F026348 46004482 */  mul.s $f18, $f8, $f0
-/* 05AE7C 7F02634C 46109100 */  add.s $f4, $f18, $f16
-/* 05AE80 7F026350 E4C40008 */  swc1  $f4, 8($a2)
-/* 05AE84 7F026354 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05AE88 7F026358 27BD0038 */  addiu $sp, $sp, 0x38
-/* 05AE8C 7F02635C 03E00008 */  jr    $ra
-/* 05AE90 7F026360 00000000 */   nop   
-)
-#endif
+
 
 
 
