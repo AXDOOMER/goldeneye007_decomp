@@ -5425,7 +5425,10 @@ glabel sub_GAME_7F0B2718
 
 
 
-
+/**
+ * @param pntA: out parameter, will contain stanSavedColl_pntA (x,z)
+ * @param pntB: out parameter, will contain stanSavedColl_pntB (x,z)
+ */
 s32 getCollisionEdge_maybe(struct float3 *pntA, struct float3 *pntB)
 {
     // The moral is that they prefer == 0 tests?

@@ -3020,35 +3020,21 @@ void chrlvCoordinateTransformSomething(struct coord3d *arg0, struct coord3d *arg
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02624C(void) {
+/**
+ * @param arg0:
+ * @param arg1:
+ * @param result: out parameter, contains result.
+ * 
+ * Address 0x7F02624C.
+ */
+void chrlvStanCollisionRelated(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *result)
+{
+    struct coord3d sp2C;
+    struct coord3d sp20;
 
+    getCollisionEdge_maybe((struct float3 *) &sp2C, (struct float3 *) &sp20);
+    chrlvCoordinateTransformSomething(&sp2C, &sp20, arg0, arg1, result);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02624C
-/* 05AD7C 7F02624C 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 05AD80 7F026250 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 05AD84 7F026254 AFA40038 */  sw    $a0, 0x38($sp)
-/* 05AD88 7F026258 AFA5003C */  sw    $a1, 0x3c($sp)
-/* 05AD8C 7F02625C AFA60040 */  sw    $a2, 0x40($sp)
-/* 05AD90 7F026260 27A50020 */  addiu $a1, $sp, 0x20
-/* 05AD94 7F026264 0FC2CA2C */  jal   getCollisionEdge_maybe
-/* 05AD98 7F026268 27A4002C */   addiu $a0, $sp, 0x2c
-/* 05AD9C 7F02626C 8FAE0040 */  lw    $t6, 0x40($sp)
-/* 05ADA0 7F026270 27A4002C */  addiu $a0, $sp, 0x2c
-/* 05ADA4 7F026274 27A50020 */  addiu $a1, $sp, 0x20
-/* 05ADA8 7F026278 8FA60038 */  lw    $a2, 0x38($sp)
-/* 05ADAC 7F02627C 8FA7003C */  lw    $a3, 0x3c($sp)
-/* 05ADB0 7F026280 0FC0984C */  jal   chrlvCoordinateTransformSomething
-/* 05ADB4 7F026284 AFAE0010 */   sw    $t6, 0x10($sp)
-/* 05ADB8 7F026288 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 05ADBC 7F02628C 27BD0038 */  addiu $sp, $sp, 0x38
-/* 05ADC0 7F026290 03E00008 */  jr    $ra
-/* 05ADC4 7F026294 00000000 */   nop   
-)
-#endif
 
 
 
@@ -3184,7 +3170,7 @@ glabel sub_GAME_7F026364
 /* 05AF78 7F026448 C7A20070 */   lwc1  $f2, 0x70($sp)
 .L7F02644C:
 /* 05AF7C 7F02644C 27A5005C */  addiu $a1, $sp, 0x5c
-/* 05AF80 7F026450 0FC09893 */  jal   sub_GAME_7F02624C
+/* 05AF80 7F026450 0FC09893 */  jal   chrlvStanCollisionRelated
 /* 05AF84 7F026454 27A6003C */   addiu $a2, $sp, 0x3c
 /* 05AF88 7F026458 C7B2003C */  lwc1  $f18, 0x3c($sp)
 /* 05AF8C 7F02645C C6040008 */  lwc1  $f4, 8($s0)
@@ -13561,7 +13547,7 @@ glabel sub_GAME_7F02D734
 /* 0626A4 7F02DB74 14400017 */  bnez  $v0, .L7F02DBD4
 /* 0626A8 7F02DB78 27A40240 */   addiu $a0, $sp, 0x240
 /* 0626AC 7F02DB7C 27A50220 */  addiu $a1, $sp, 0x220
-/* 0626B0 7F02DB80 0FC09893 */  jal   sub_GAME_7F02624C
+/* 0626B0 7F02DB80 0FC09893 */  jal   chrlvStanCollisionRelated
 /* 0626B4 7F02DB84 27A60258 */   addiu $a2, $sp, 0x258
 /* 0626B8 7F02DB88 3C0141D0 */  li    $at, 0x41D00000 # 26.000000
 /* 0626BC 7F02DB8C 44810000 */  mtc1  $at, $f0
