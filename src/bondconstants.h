@@ -26,6 +26,18 @@
 
 #define PAD3D_START 10000
 
+/***************************************************************************************************************************/
+// AI branch merge/delete section.
+
+// update this section into AI branch
+
+/* CHRFLAG */
+#define IMPACT_RELATED 0x8000
+
+// Delete this section when merged.
+#define COUNT_DEATH_AS_CIVILIAN 0x100000
+/***************************************************************************************************************************/
+
 typedef u16 PAD;
 typedef u16 PAD3D;
 

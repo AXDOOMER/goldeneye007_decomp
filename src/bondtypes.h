@@ -337,10 +337,8 @@ struct act_die
     f32 thudframe1;                                                    /*0x30*/
     f32 thudframe2;                                                    /*0x34*/
     f32 unk038;                                                        /*0x38*/
-    u32 unk03c;                                                        /*0x3c*/
-    u32 unk040;                                                        /*0x40*/
-    u32 unk044;                                                        /*0x44*/
-    u32 unk048;                                                        /*0x48*/
+    f32 unk03c;                                                        /*0x3c*/
+    struct coord3d unk040;                                             /*0x40*/
     s16 drcarollimagedelay;                                            /*0x4c*/
 };
 
@@ -356,6 +354,7 @@ struct act_dead
 struct act_argh
 {
     s32 notifychrindex;                                                /*0x2c*/
+    s32 unk030;
 };
 
 struct act_preargh
@@ -547,6 +546,7 @@ struct act_ubytes
 ******/
 typedef struct PropRecord
 {
+    // PROP_TYPE or PROPDEF_TYPE
     u8 type;         /*0x00*/
     u8 flags;        /*0x01*/
     s16 timetoregen; // ticks down /*0x02*/

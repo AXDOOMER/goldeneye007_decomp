@@ -5,30 +5,38 @@
 #include "chrai.h"
 #include "bondtypes.h"
 
- struct animation_something
- {
-   s32 anonymous_0;
-  s32 field_4;
-  s32 field_8;
-  f32 field_C;
-  s32 field_10;
-  s32 field_14;
-  f32 field_18;
-  struct struck_animation_table *field_1C;
-  s32 field_20;
-  struct struck_animation_table *field_24;
-  s32 field_28;
- };
+struct struck_animation_table;
+
+struct animation_something
+{
+    s32 id;
+    s32 field_4;
+    s32 field_8;
+    f32 field_C;
+    s32 field_10;
+    s32 field_14;
+    f32 field_18;
+    
+    struct struck_animation_table *field_1C;
+
+    // maybe count of field_1C
+    s32 field_20;
+
+    struct struck_animation_table *field_24;
+
+    // maybe count of field_24
+    s32 field_28;
+};
 
 struct struck_animation_table
 {
-  void *anonymous_0;
-  s32 anonymous_1;
-  f32 anonymous_2;
-  f32 anonymous_3;
-  s32 anonymous_4;
-  f32 sfx1_timer_60;
-  f32 sfx2_timer_60;
+    void *anonymous_0; // This might be pointer to struct of ANIM_DATA_x
+    s32 anonymous_1;
+    f32 anonymous_2;
+    f32 anonymous_3;
+    s32 anonymous_4;
+    f32 sfx1_timer_60;
+    f32 sfx2_timer_60;
 };
 
 struct explosion_death_animation
@@ -80,8 +88,7 @@ extern f32 g_AiHealthModifier;
 extern f32 g_AiReactionSpeed;
 extern s32 setting_007_5;
 
-extern struct animation_something D_8002C914;
-
+extern struct animation_something D_8002C914[];
 
 extern struct struck_animation_table D_8002CE54[];
 extern struct struck_animation_table D_8002DF10[];
@@ -115,6 +122,12 @@ extern struct struck_animation_table D_8002DA24[];
 extern struct struck_animation_table D_8002E530[];
 extern struct struck_animation_table D_8002DCE0[];
 extern struct struck_animation_table D_8002E5BC[];
+
+extern struct struck_animation_table D_8002DEBC[];
+extern struct animation_something D_8002CAA0;
+extern struct animation_something D_8002CACC;
+extern struct animation_something D_8002CB24;
+extern struct animation_something D_8002CB50;
 
 extern struct weapon_firing_animation_table rifle_firing_animation_group1[];
 extern struct weapon_firing_animation_table rifle_firing_animation_group2[];

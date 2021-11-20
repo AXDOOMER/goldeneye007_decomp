@@ -35,25 +35,28 @@ s32 D_8002C910 = 0;
 
 
 //D:8002C914
-struct animation_something D_8002C914 = {0,0,0,0,0,0,0,NULL,0,NULL,0};
-struct animation_something D_8002C940 = {1, 1, 0, 17.0, 3, 0, 34.0, D_8002CE54, 0, D_8002DF10, 0};
-struct animation_something D_8002C96C = {2, 1, 0, 17.0, 3, 0, 39.0, D_8002CEE0, 0, D_8002DF64, 0};
-struct animation_something D_8002C998 = {3, 1, 0, 21.0, 3, 0, 43.0, D_8002CF6C, 0, D_8002DFB8, 0};
-struct animation_something D_8002C9C4 = {4, 1, 0, 17.0, 3, 0, 34.0, D_8002D014, 0, D_8002E028, 0};
-struct animation_something D_8002C9F0 = {5, 1, 0, 17.0, 3, 0, 39.0, D_8002D0A0, 0, D_8002E07C, 0};
-struct animation_something D_8002CA1C = {6, 1, 0, 21.0, 3, 0, 43.0, D_8002D12C, 0, D_8002E0D0, 0};
-struct animation_something D_8002CA48 = {7, 1, 0, 21.0, 3, 0, 52.0, D_8002D1D4, 0, D_8002E140, 0};
-struct animation_something D_8002CA74 = {8, 1, 0, 21.0, 3, 0, 43.0, D_8002D3B0, 0, D_8002E23C, 0};
-struct animation_something D_8002CAA0 = {9, 1, 0, 17.0, 3, 0, 34.0, D_8002D6DC, 0, D_8002E300, 0};
-struct animation_something D_8002CACC = {0xA, 1, 0, 17.0, 3, 0, 43.0, D_8002D768, 0, D_8002E354, 0};
-struct animation_something D_8002CAF8 = {0xB, 1, 0, 21.0, 3, 0, 52.0, D_8002D7F4, 0, D_8002E3A8, 0};
-struct animation_something D_8002CB24 = {0xC, 1, 0, 17.0, 3, 0, 34.0, D_8002D880, 0, D_8002E418, 0};
-struct animation_something D_8002CB50 = {0xD, 1, 0, 17.0, 3, 0, 43.0, D_8002D90C, 0, D_8002E46C, 0};
-struct animation_something D_8002CB7C = {0xE, 1, 0, 21.0, 3, 0, 52.0, D_8002D998, 0, D_8002E4C0, 0};
-struct animation_something D_8002CBA8 = {0xF, 1, 0, 26.0, 3, 0, 60.0, D_8002DA24, 0, D_8002E530, 0};
-struct animation_something D_8002CBD4 = {0x64, 1, 0, 26.0, 0, 0, 0.0, D_8002DCE0, 0, D_8002E5BC, 0};
-struct animation_something D_8002CC00 = {0x6E, 1, 0, 21.0, 0, 0, 0.0, NULL, 0, NULL, 0};
-struct animation_something D_8002CC2C = {0xFFFFFFFF, 0, 0, 0.0, 0, 0, 0.0, NULL, 0, NULL, 0};
+struct animation_something D_8002C914[] = {
+    {0         , 0, 0,    0, 0, 0,    0,       NULL, 0,       NULL, 0},
+    {1         , 1, 0, 17.0, 3, 0, 34.0, D_8002CE54, 0, D_8002DF10, 0},
+    {2         , 1, 0, 17.0, 3, 0, 39.0, D_8002CEE0, 0, D_8002DF64, 0},
+    {3         , 1, 0, 21.0, 3, 0, 43.0, D_8002CF6C, 0, D_8002DFB8, 0},
+    {4         , 1, 0, 17.0, 3, 0, 34.0, D_8002D014, 0, D_8002E028, 0},
+    {5         , 1, 0, 17.0, 3, 0, 39.0, D_8002D0A0, 0, D_8002E07C, 0},
+    {6         , 1, 0, 21.0, 3, 0, 43.0, D_8002D12C, 0, D_8002E0D0, 0},
+    {7         , 1, 0, 21.0, 3, 0, 52.0, D_8002D1D4, 0, D_8002E140, 0},
+    {8         , 1, 0, 21.0, 3, 0, 43.0, D_8002D3B0, 0, D_8002E23C, 0},
+    {9         , 1, 0, 17.0, 3, 0, 34.0, D_8002D6DC, 0, D_8002E300, 0}, // previously D_8002CAA0 = &D_8002C914 + (0x2c * 9)
+    {0xA       , 1, 0, 17.0, 3, 0, 43.0, D_8002D768, 0, D_8002E354, 0}, // previously D_8002CACC
+    {0xB       , 1, 0, 21.0, 3, 0, 52.0, D_8002D7F4, 0, D_8002E3A8, 0},
+    {0xC       , 1, 0, 17.0, 3, 0, 34.0, D_8002D880, 0, D_8002E418, 0}, // previously D_8002CB24
+    {0xD       , 1, 0, 17.0, 3, 0, 43.0, D_8002D90C, 0, D_8002E46C, 0}, // previously D_8002CB50
+    {0xE       , 1, 0, 21.0, 3, 0, 52.0, D_8002D998, 0, D_8002E4C0, 0},
+    {0xF       , 1, 0, 26.0, 3, 0, 60.0, D_8002DA24, 0, D_8002E530, 0},
+    {0x64      , 1, 0, 26.0, 0, 0,  0.0, D_8002DCE0, 0, D_8002E5BC, 0},
+    {0x6E      , 1, 0, 21.0, 0, 0,  0.0,       NULL, 0,       NULL, 0},
+    {0xFFFFFFFF, 0, 0,  0.0, 0, 0,  0.0,       NULL, 0,       NULL, 0},
+};
+
 
 
 
