@@ -6,6 +6,7 @@
 #include "random.h"
 #include "game/bondview.h"
 #include "game/chr.h"
+#include "game/chrai.h"
 #include "game/chrobjhandler.h"
 #include "game/file.h"
 #include "game/gun.h"
@@ -4329,8 +4330,28 @@ glabel sub_GAME_7F027804
 
 
 #ifdef NONMATCHING
-void get_ptrpreset_in_table_matching_tile(void) {
+/**
+ * Address 0x7F027BF4.
+*/
+struct Pad *get_ptrpreset_in_table_matching_tile(s32 arg0)
+{
+    struct Pad *pad;
+    struct preset_0xxx *preset;
 
+    if (ptr_setup_path_tbl != NULL)
+    {
+        for (pad = ptr_setup_path_tbl; (s32)pad->padNumber >= 0; pad++)
+        {
+            preset = &((struct preset_0xxx *)ptr_0xxxpresets)[(s32)pad->padNumber];
+
+            if (preset->unk28 == arg0)
+            {
+                return pad;
+            }
+        }
+    }
+
+    return NULL;
 }
 #else
 GLOBAL_ASM(
@@ -4888,7 +4909,7 @@ glabel sub_GAME_7F0281F4
 
 #ifdef NONMATCHING
 void sub_GAME_7F0281FC(void) {
-
+// break
 }
 #else
 #ifndef VERSION_EU

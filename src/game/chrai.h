@@ -177,7 +177,25 @@ struct Pad {
     s32 dist_tmp;
 };
 
+struct preset_0xxx
+{
+    s32 unk00;
+    s32 unk04;
+    s32 unk08;
+    s32 unk0c;
+
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    s32 unk1c;
+
+    s32 unk20;
+    s32 unk24;
+    s32 unk28;
+};
+
 extern struct Pad * ptr_setup_path_tbl;
+extern struct preset_0xxx * ptr_0xxxpresets;
 extern u32 monAnimRadarSub1[];
 extern u32 monAnimRadarSub2[];
 extern u32 monAnimRadarSub3[];
