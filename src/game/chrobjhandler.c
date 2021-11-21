@@ -3207,7 +3207,7 @@ glabel sub_GAME_7F041400
 /* 0761B0 7F041680 27A5007C */  addiu $a1, $sp, 0x7c
 /* 0761B4 7F041684 02A03025 */  move  $a2, $s5
 /* 0761B8 7F041688 8FA700E4 */  lw    $a3, 0xe4($sp)
-/* 0761BC 7F04168C 0FC0984C */  jal   chrlvCoordinateTransformSomething
+/* 0761BC 7F04168C 0FC0984C */  jal   chrlvLineLineIntersection
 /* 0761C0 7F041690 E7A60084 */   swc1  $f6, 0x84($sp)
 /* 0761C4 7F041694 C7AA006C */  lwc1  $f10, 0x6c($sp)
 /* 0761C8 7F041698 C6A80000 */  lwc1  $f8, ($s5)
@@ -4822,7 +4822,7 @@ glabel sub_GAME_7F042A0C
 /* 07782C 7F042CFC E7A800A8 */  swc1  $f8, 0xa8($sp)
 /* 077830 7F042D00 C60A0010 */  lwc1  $f10, 0x10($s0)
 /* 077834 7F042D04 460A8481 */  sub.s $f18, $f16, $f10
-/* 077838 7F042D08 0FC09893 */  jal   chrlvStanCollisionRelated
+/* 077838 7F042D08 0FC09893 */  jal   chrlvStanLineDirIntersection
 /* 07783C 7F042D0C E7B200AC */   swc1  $f18, 0xac($sp)
 /* 077840 7F042D10 C7A400B4 */  lwc1  $f4, 0xb4($sp)
 /* 077844 7F042D14 C7B00080 */  lwc1  $f16, 0x80($sp)
@@ -13451,7 +13451,7 @@ glabel object_interaction
 /* 07E1AC 7F04967C 14400017 */  bnez  $v0, .L7F0496DC
 /* 07E1B0 7F049680 27A60110 */   addiu $a2, $sp, 0x110
 /* 07E1B4 7F049684 27A4012C */  addiu $a0, $sp, 0x12c
-/* 07E1B8 7F049688 0FC09893 */  jal   chrlvStanCollisionRelated
+/* 07E1B8 7F049688 0FC09893 */  jal   chrlvStanLineDirIntersection
 /* 07E1BC 7F04968C 27A50120 */   addiu $a1, $sp, 0x120
 /* 07E1C0 7F049690 3C0141D0 */  li    $at, 0x41D00000 # 26.000000
 /* 07E1C4 7F049694 44818000 */  mtc1  $at, $f16
@@ -18557,7 +18557,7 @@ glabel object_interaction
 /* 07E5F0 7F049A80 14400017 */  bnez  $v0, .Ljp7F049AE0
 /* 07E5F4 7F049A84 27A60114 */   addiu $a2, $sp, 0x114
 /* 07E5F8 7F049A88 27A40130 */  addiu $a0, $sp, 0x130
-/* 07E5FC 7F049A8C 0FC09955 */  jal   chrlvStanCollisionRelated
+/* 07E5FC 7F049A8C 0FC09955 */  jal   chrlvStanLineDirIntersection
 /* 07E600 7F049A90 27A50124 */   addiu $a1, $sp, 0x124
 /* 07E604 7F049A94 3C0141D0 */  li    $at, 0x41D00000 # 26.000000
 /* 07E608 7F049A98 44818000 */  mtc1  $at, $f16
@@ -23670,7 +23670,7 @@ glabel object_interaction
 /* 07C248 7F049858 14400017 */  bnez  $v0, .L7F0498B8
 /* 07C24C 7F04985C 27A60114 */   addiu $a2, $sp, 0x114
 /* 07C250 7F049860 27A40130 */  addiu $a0, $sp, 0x130
-/* 07C254 7F049864 0FC09899 */  jal   chrlvStanCollisionRelated
+/* 07C254 7F049864 0FC09899 */  jal   chrlvStanLineDirIntersection
 /* 07C258 7F049868 27A50124 */   addiu $a1, $sp, 0x124
 /* 07C25C 7F04986C 3C0141D0 */  li    $at, 0x41D00000 # 26.000000
 /* 07C260 7F049870 44818000 */  mtc1  $at, $f16

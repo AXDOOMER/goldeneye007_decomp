@@ -160,7 +160,7 @@ void * ptr_setup_path_sets;
 //CODE.bss:80075D14
 void * ptr_setup_actions;
 //CODE.bss:80075D18
-void * ptr_0xxxpresets;
+struct preset_0xxx * ptr_0xxxpresets;
 //CODE.bss:80075D1C
 void * ptr_2xxxpresets;
 //CODE.bss:80075D20
@@ -21495,7 +21495,7 @@ glabel sub_GAME_7F03B15C
 /* 06FE48 7F03B318 C7B204EC */   lwc1  $f18, 0x4ec($sp)
 /* 06FE4C 7F03B31C 27A401B0 */  addiu $a0, $sp, 0x1b0
 /* 06FE50 7F03B320 27A501BC */  addiu $a1, $sp, 0x1bc
-/* 06FE54 7F03B324 0FC09893 */  jal   chrlvStanCollisionRelated
+/* 06FE54 7F03B324 0FC09893 */  jal   chrlvStanLineDirIntersection
 /* 06FE58 7F03B328 27A60560 */   addiu $a2, $sp, 0x560
 /* 06FE5C 7F03B32C 240F0001 */  li    $t7, 1
 /* 06FE60 7F03B330 10000006 */  b     .L7F03B34C

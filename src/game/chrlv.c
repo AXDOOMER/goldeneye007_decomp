@@ -15,6 +15,7 @@
 #include "game/math_asinfacosf.h"
 #include "game/math_atan2f.h"
 #include "game/objecthandler.h"
+#include "game/stan.h"
 
 // forward declarations
 
@@ -47,8 +48,10 @@ f32 chrlvPathingCollisionRelated7F0264B0(PropRecord *arg0, f32 arg1, f32 arg2);
 void triggered_on_shot_hit(struct ChrRecord *arg0, struct coord3d *arg1, f32 arg2, s32 req_animation_id, ITEM_IDS item);
 s32 chrlvAttackAnimationRelated7F026F30(struct ChrRecord *arg0, f32 *result);
 
-struct Pad *get_ptrpreset_in_table_matching_tile(s32 arg0);
-s32 check_if_any_path_preset_lies_on_tile(s32 arg0);
+struct Pad *get_ptrpreset_in_table_matching_tile(struct StandTile* arg0);
+s32 check_if_any_path_preset_lies_on_tile(struct StandTile* arg0);
+f32 sub_GAME_7F027C84(struct coord3d *arg0, struct Pad *arg1);
+
 
 
 void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2);
@@ -2990,61 +2993,89 @@ glabel sub_GAME_7F025C40
 
 
 /**
- * @param arg0:
- * @param arg1:
- * @param arg2:
- * @param arg3:
+ * Line-line intersection, where arg0 and arg1 are two points on line1, and arg2 and arg3 are a point and a direction of line2.
+ * 3d coord/vector are passed as arguments, but only the 2d (x,z) values are used to find the intersection.
+ * 
+ * @param line1_p1: first point to describe line1
+ * @param line1_p2: second point to describe line1
+ * @param line2_p3: first point to describe line2
+ * @param dir: vector giving direction of line2
  * @param result: contains result
  * 
  * Address 0x7F026130.
  */
-void chrlvCoordinateTransformSomething(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2, struct coord3d *arg3, struct coord3d *result)
+void chrlvLineLineIntersection(struct coord3d *line1_p1, struct coord3d *line1_p2, struct coord3d *line2_p3, struct coord3d *dir, struct coord3d *result)
 {
+    /*
+     * Line1 = P1 + u * (P2 - P1) 
+     * Line2 = P3 + v * D
+     * 
+     * Intersection is where Line1==Line2, or:
+     *     P1 + u * (P2 - P1) = P3 + v * D
+     * 
+     * u and v are unknown.
+     * 
+     * Isolate u:
+     * 
+     * u = (P3 + v*D - P1) / (P2 - P1)
+     */
     f32 denom;
+
+    // solve for v. (much algebra follows, not shown)
     
-    denom = (arg3->f[2] * (arg1->f[0] - arg0->f[0])) - (arg3->f[0] * (arg1->f[2] - arg0->f[2]));
+    denom = (dir->f[2] * (line1_p2->f[0] - line1_p1->f[0])) - (dir->f[0] * (line1_p2->f[2] - line1_p1->f[2]));
 
     if (denom != 0.0f)
     {
-        f32 t = (
-            ((arg0->f[2] - arg2->f[2]) * (arg1->f[0] - arg0->f[0])) 
-            + ((arg2->f[0] - arg0->f[0]) * (arg1->f[2] - arg0->f[2]))
+        f32 v = (
+            ((line1_p1->f[2] - line2_p3->f[2]) * (line1_p2->f[0] - line1_p1->f[0])) 
+            + ((line2_p3->f[0] - line1_p1->f[0]) * (line1_p2->f[2] - line1_p1->f[2]))
         ) / denom;
 
-        result->f[0] = arg2->f[0] + (arg3->f[0] * t);
-        result->f[1] = arg2->f[1] + (arg3->f[1] * t);
-        result->f[2] = arg2->f[2] + (arg3->f[2] * t);
+        // v is known, denom is non-zero, plug back into equation for Line2 = P3 + v * D
+
+        result->f[0] = line2_p3->f[0] + (dir->f[0] * v);
+        result->f[1] = line2_p3->f[1] + (dir->f[1] * v);
+        result->f[2] = line2_p3->f[2] + (dir->f[2] * v);
     }
-    else if ((arg3->f[0] == 0.0f) && (arg3->f[2] == 0.0f))
+    else if ((dir->f[0] == 0.0f) && (dir->f[2] == 0.0f))
     {
-        result->f[0] = arg2->f[0];
-        result->f[1] = arg2->f[1];
-        result->f[2] = arg2->f[2];
+        // else, denominator is zero, but direction is also zero, so assume Line 2 point as result
+        result->f[0] = line2_p3->f[0];
+        result->f[1] = line2_p3->f[1];
+        result->f[2] = line2_p3->f[2];
     }
     else
     {
-        result->f[0] = arg0->f[0];
-        result->f[1] = arg0->f[1];
-        result->f[2] = arg0->f[2];
+        // all other cases, fallback to Line 1 first point
+        result->f[0] = line1_p1->f[0];
+        result->f[1] = line1_p1->f[1];
+        result->f[2] = line1_p1->f[2];
     }
 }
 
 
 
 /**
- * @param arg0:
- * @param arg1:
+ * Line-line intersection.
+ * The first two points are retrieved from getCollisionEdge_maybe.
+ * The arguments to the method supply the other line, described by a point and direction.
+ * 
+ * 3d coord/vector are passed as arguments, but only the 2d (x,z) values are used to find the intersection.
+ * 
+ * @param line2_p3: first point to describe line2
+ * @param dir: vector giving direction of line2
  * @param result: out parameter, contains result.
  * 
  * Address 0x7F02624C.
  */
-void chrlvStanCollisionRelated(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *result)
+void chrlvStanLineDirIntersection(struct coord3d *line2_p3, struct coord3d *dir, struct coord3d *result)
 {
     struct coord3d sp2C;
     struct coord3d sp20;
 
     getCollisionEdge_maybe((struct float3 *) &sp2C, (struct float3 *) &sp20);
-    chrlvCoordinateTransformSomething(&sp2C, &sp20, arg0, arg1, result);
+    chrlvLineLineIntersection(&sp2C, &sp20, line2_p3, dir, result);
 }
 
 
@@ -3056,20 +3087,22 @@ void chrlvStanCollisionRelated(struct coord3d *arg0, struct coord3d *arg1, struc
  * 
  * Address 0x7F026298.
  */
-void chrlvStanCollisionRelated7F026298(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *result)
+void chrlvStanPointPointIntersection(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *result)
 {
     struct coord3d sp2C;
     struct coord3d sp20;
-    f32 f;
+    f32 v;
 
     getCollisionEdge_maybe((struct float3 *) &sp2C, (struct float3 *) &sp20);
 
-    f = ((arg1->f[0] * (sp2C.f[2] - arg0->f[2])) - (arg1->f[2] * (sp2C.f[0] - arg0->f[0]))) 
+    // see comments in chrlvLineLineIntersection
+
+    v = ((arg1->f[0] * (sp2C.f[2] - arg0->f[2])) - (arg1->f[2] * (sp2C.f[0] - arg0->f[0]))) 
         / ((arg1->f[2] * (sp20.f[0] - sp2C.f[0])) - (arg1->f[0] * (sp20.f[2] - sp2C.f[2])));
 
-    result->f[0] = sp2C.f[0] + ((sp20.f[0] - sp2C.f[0]) * f);
-    result->f[1] = sp2C.f[1] + ((sp20.f[1] - sp2C.f[1]) * f);
-    result->f[2] = sp2C.f[2] + ((sp20.f[2] - sp2C.f[2]) * f);
+    result->f[0] = sp2C.f[0] + ((sp20.f[0] - sp2C.f[0]) * v);
+    result->f[1] = sp2C.f[1] + ((sp20.f[1] - sp2C.f[1]) * v);
+    result->f[2] = sp2C.f[2] + ((sp20.f[2] - sp2C.f[2]) * v);
 }
 
 
@@ -3106,7 +3139,7 @@ f32 chrlvPathingCollisionRelated(PropRecord *arg0, f32 arg1, f32 arg2, s32 objFl
     }
     else
     {
-        chrlvStanCollisionRelated(&arg0->pos, &sp5C, &sp3C);
+        chrlvStanLineDirIntersection(&arg0->pos, &sp5C, &sp3C);
         dest_x = sp3C.f[0] - arg0->pos.f[0];
         dest_z = sp3C.f[2] - arg0->pos.f[2];
         ret = sqrtf((dest_x * dest_x) + (dest_z * dest_z));
@@ -4333,7 +4366,7 @@ glabel sub_GAME_7F027804
 /**
  * Address 0x7F027BF4.
 */
-struct Pad *get_ptrpreset_in_table_matching_tile(s32 arg0)
+struct Pad *get_ptrpreset_in_table_matching_tile(struct StandTile* arg0)
 {
     struct Pad *pad;
     struct preset_0xxx *preset;
@@ -4397,7 +4430,7 @@ glabel get_ptrpreset_in_table_matching_tile
 /**
  * Address 0x7F027C60.
 */
-s32 check_if_any_path_preset_lies_on_tile(s32 arg0)
+s32 check_if_any_path_preset_lies_on_tile(struct StandTile* arg0)
 {
     return get_ptrpreset_in_table_matching_tile(arg0) != NULL;
 }
@@ -4408,13 +4441,13 @@ s32 check_if_any_path_preset_lies_on_tile(s32 arg0)
  * 100% match, unsure of argument types.
  * Addresss 0x7F027C84.
 */
-f32 sub_GAME_7F027C84(struct coord3d *arg0, s32 *arg1)
+f32 sub_GAME_7F027C84(struct coord3d *arg0, struct Pad *arg1)
 {
     f32 temp_f12;
     f32 temp_f2;
     struct preset_0xxx *temp_v0;
 
-    temp_v0 = &ptr_0xxxpresets[*arg1];
+    temp_v0 = &ptr_0xxxpresets[arg1->padNumber];
     temp_f2 = temp_v0->unk00 - arg0->f[0];
     temp_f12 = temp_v0->unk08 - arg0->f[2];
     return (temp_f2 * temp_f2) + (temp_f12 * temp_f12);
@@ -4450,9 +4483,85 @@ glabel sub_GAME_7F027C84
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F027CD4(void) {
+struct Pad *sub_GAME_7F027CD4(struct coord3d *arg0, StandTile *arg1)
+{
+    StandTile *tile;
+    f32 temp_f20;
+    // s32 *temp_s1;
+    // s32 temp_v0_3;
+    // s32 temp_v0_4;
+    // struct Pad *temp_s0;
+    struct Pad *pad;
+    struct Pad *pad2;
+    // s32 phi_v0;
+    // s32 *phi_s1;
+    // struct Pad *phi_s3;
+    // struct Pad *phi_s3;
 
+    struct Pad *ret;
+    s32 *n;
+
+    tile = sub_GAME_7F0B2718(arg1, check_if_any_path_preset_lies_on_tile);
+
+    ret = NULL;
+    if (tile != NULL)
+    {
+        pad = get_ptrpreset_in_table_matching_tile(tile);
+        if (pad != NULL)
+        {
+            n = pad->neighbours;
+            temp_f20 = sub_GAME_7F027C84(arg0, pad);
+
+            for (; *n >= 0; n++)
+            {
+                pad2 = &ptr_setup_path_tbl[*n];
+                if (sub_GAME_7F027C84(arg0, pad2) < temp_f20)
+                {
+                    ret = pad2;
+                }
+            }
+        }
+    }
+
+    return ret;
+
+    // phi_s3 = NULL;
+    // if (tile != 0)
+    // {
+    //     pad = get_ptrpreset_in_table_matching_tile(tile);
+    //     phi_s3 = pad;
+    //     phi_s3_2 = pad;
+
+    //     if (pad != 0)
+    //     {
+    //         temp_s1 = pad->neighbours;
+    //         temp_f20 = sub_GAME_7F027C84(arg0, pad);
+    //         temp_v0_3 = *temp_s1;
+    //         phi_v0 = temp_v0_3;
+    //         phi_s1 = temp_s1;
+
+    //         if (temp_v0_3 >= 0)
+    //         {
+    //             do
+    //             {
+    //                 temp_s0 = &ptr_setup_path_tbl[phi_v0];
+    //                 if (sub_GAME_7F027C84(arg0, temp_s0) < temp_f20)
+    //                 {
+    //                     phi_s3_2 = temp_s0;
+    //                 }
+    //                 temp_v0_4 = phi_s1->unk4;
+    //                 phi_v0 = temp_v0_4;
+    //                 phi_s1 += 4;
+    //                 phi_s3 = phi_s3_2;
+    //             } while (temp_v0_4 >= 0);
+    //         }
+    //     }
+    // }
+
+    // return phi_s3;
 }
+
+
 #else
 GLOBAL_ASM(
 .text
@@ -11348,7 +11457,7 @@ glabel sub_GAME_7F02C4C0
 /* 0618A4 7F02CD74 C5840010 */  lwc1  $f4, 0x10($t4)
 /* 0618A8 7F02CD78 AFAD0010 */  sw    $t5, 0x10($sp)
 /* 0618AC 7F02CD7C 46122180 */  add.s $f6, $f4, $f18
-/* 0618B0 7F02CD80 0FC0984C */  jal   chrlvCoordinateTransformSomething
+/* 0618B0 7F02CD80 0FC0984C */  jal   chrlvLineLineIntersection
 /* 0618B4 7F02CD84 E7A6004C */   swc1  $f6, 0x4c($sp)
 /* 0618B8 7F02CD88 8FAE0134 */  lw    $t6, 0x134($sp)
 /* 0618BC 7F02CD8C C7A8005C */  lwc1  $f8, 0x5c($sp)
@@ -12999,7 +13108,7 @@ glabel sub_GAME_7F02D734
 /* 0626A4 7F02DB74 14400017 */  bnez  $v0, .L7F02DBD4
 /* 0626A8 7F02DB78 27A40240 */   addiu $a0, $sp, 0x240
 /* 0626AC 7F02DB7C 27A50220 */  addiu $a1, $sp, 0x220
-/* 0626B0 7F02DB80 0FC09893 */  jal   chrlvStanCollisionRelated
+/* 0626B0 7F02DB80 0FC09893 */  jal   chrlvStanLineDirIntersection
 /* 0626B4 7F02DB84 27A60258 */   addiu $a2, $sp, 0x258
 /* 0626B8 7F02DB88 3C0141D0 */  li    $at, 0x41D00000 # 26.000000
 /* 0626BC 7F02DB8C 44810000 */  mtc1  $at, $f0

@@ -194,7 +194,7 @@ struct preset_0xxx
 
     s32 unk20;
     s32 unk24;
-    s32 unk28;
+    struct StandTile* unk28;
 };
 
 extern struct Pad * ptr_setup_path_tbl;
