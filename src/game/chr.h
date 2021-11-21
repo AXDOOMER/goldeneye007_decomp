@@ -218,8 +218,17 @@ extern s32 D_8002CCAC;
 extern s32 D_8002CCB0;
 extern s32 D_8002CCB4;
 extern u8 D_8002CCB8[4];
+
+extern f32 D_80030984;
 extern f32 D_80030988;
+extern f32 D_8003098C;
+extern f32 D_80030990;
 extern f32 D_80030994;
+extern f32 D_80030998;
+extern f32 D_8003099C;
+extern f32 D_800309A0;
+extern f32 D_800309A4;
+
 extern s32 D_800309B8;
 extern s32 D_800309BC;
 

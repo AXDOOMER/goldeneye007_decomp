@@ -153,6 +153,8 @@ struct ailist {
 };
 
 // this is something in between struct s_pathTbl and struct waypoint.
+// theory: s_pathTbl is correct, waypoint needs to be updated, and then this
+// struct can be deprecated (replace with waypoint).
 struct path_table_alt
 {
     s32 id;
@@ -218,7 +220,9 @@ typedef struct Model
     f32 scale;                                              /*0x14*/
     struct Model *attachedto;                               /*0x18*/
     ModelNode *unk1c;                                       /*0x1c*/
-    struct anim *anim;                                      /*0x20*/
+
+    // need `struct anim` definition from AI branch.
+    void *anim;                                      /*0x20*/
 
     s8 unk24; // used by ACT_STAND
     s8 unk25;

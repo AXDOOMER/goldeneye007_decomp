@@ -1042,25 +1042,71 @@ struct weapon_firing_animation_table D_80030930 = {0, 0.0, 0.0, 0.0, 0.0, -1.0, 
 s32 objectiveregisters1 = 0;
 s32 objectiveregisters2 = 0;
 s32 objectiveregisters3 = 0;
-s32 D_80030984 = 0;
+
+/**
+ * Default factor in chrlvModelScaleAnimationRelated.
+ * Address 0x80030984.
+*/
+f32 D_80030984 = 0;
+
+/**
+ * Scale factor in chrlvModelScaleAnimationRelated, used by ANIM_DATA_running.
+ * Address 0x80030988.
+*/
 f32 D_80030988 = 0;
-s32 D_8003098C = 0;
-s32 D_80030990 = 0;
+
+/**
+ * Scale factor in chrlvModelScaleAnimationRelated, used by ANIM_DATA_sprinting.
+ * Address 0x8003098C.
+*/
+f32 D_8003098C = 0;
+
+/**
+ * Scale factor in chrlvModelScaleAnimationRelated, used by ANIM_DATA_walking_unarmed.
+ * Address 0x80030990.
+*/
+f32 D_80030990 = 0;
+
+/**
+ * Scale factor in chrlvModelScaleAnimationRelated, used by ANIM_DATA_running_one_handed_weapon.
+ * Address 0x80030994.
+*/
 f32 D_80030994 = 0;
-s32 D_80030998 = 0;
-s32 D_8003099C = 0;
-s32 D_800309A0 = 0;
-s32 D_800309A4 = 0;
+
+/**
+ * Scale factor in chrlvModelScaleAnimationRelated, used by first ANIM_DATA_sprinting_one_handed_weapon.
+ * Address 0x80030998.
+*/
+f32 D_80030998 = 0;
+
+/**
+ * Scale factor in chrlvModelScaleAnimationRelated, used by ANIM_DATA_walking_female.
+ * Address 0x8003099C.
+*/
+f32 D_8003099C = 0;
+
+/**
+ * Scale factor in chrlvModelScaleAnimationRelated, used by ANIM_DATA_running_female.
+ * Address 0x800309A0.
+*/
+f32 D_800309A0 = 0;
+
+/**
+ * Scale factor in chrlvModelScaleAnimationRelated, used by duplicate ANIM_DATA_sprinting_one_handed_weapon.
+ * Address 0x800309A4.
+*/
+f32 D_800309A4 = 0;
+
 s32 D_800309A8 = 0;
 s32 D_800309AC = 0;
 s32 D_800309B0 = 0;
 s32 D_800309B4 = 0;
 
-// D_800309B8 is probably a struct of some kind.
+// D_800309B8 is probably a struct of some kind. (2 words)
 s32 D_800309B8 = 0;
 s32 D_800309BC = 0;
 
-// D_800309C0 is the same type as above
+// D_800309C0 is the same type as above (2 words)
 s32 D_800309C0 = 0;
 s32 D_800309C4 = 0;
 
