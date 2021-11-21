@@ -4,6 +4,7 @@
 #include "chrlv.h"
 #include "include/math.h"
 #include "random.h"
+#include "game/bg.h"
 #include "game/bondview.h"
 #include "game/chr.h"
 #include "game/chrai.h"
@@ -50,8 +51,8 @@ s32 chrlvAttackAnimationRelated7F026F30(struct ChrRecord *arg0, f32 *result);
 
 struct Pad *get_ptrpreset_in_table_matching_tile(struct StandTile* arg0);
 s32 check_if_any_path_preset_lies_on_tile(struct StandTile* arg0);
-f32 sub_GAME_7F027C84(struct coord3d *arg0, struct Pad *arg1);
-
+f32 chrlvPadPresetRelated(struct coord3d *arg0, struct Pad *arg1);
+struct Pad *chrlvStanPadPresetRelated(struct coord3d *arg0, StandTile *arg1);
 
 
 void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2);
@@ -4436,12 +4437,11 @@ s32 check_if_any_path_preset_lies_on_tile(struct StandTile* arg0)
 }
 
 
-#ifdef NONMATCHING
 /**
  * 100% match, unsure of argument types.
  * Addresss 0x7F027C84.
 */
-f32 sub_GAME_7F027C84(struct coord3d *arg0, struct Pad *arg1)
+f32 chrlvPadPresetRelated(struct coord3d *arg0, struct Pad *arg1)
 {
     f32 temp_f12;
     f32 temp_f2;
@@ -4453,180 +4453,43 @@ f32 sub_GAME_7F027C84(struct coord3d *arg0, struct Pad *arg1)
     return (temp_f2 * temp_f2) + (temp_f12 * temp_f12);
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F027C84
-/* 05C7B4 7F027C84 8CAE0000 */  lw    $t6, ($a1)
-/* 05C7B8 7F027C88 3C188007 */  lui   $t8, %hi(ptr_0xxxpresets) 
-/* 05C7BC 7F027C8C 8F185D18 */  lw    $t8, %lo(ptr_0xxxpresets)($t8)
-/* 05C7C0 7F027C90 000E7880 */  sll   $t7, $t6, 2
-/* 05C7C4 7F027C94 01EE7823 */  subu  $t7, $t7, $t6
-/* 05C7C8 7F027C98 000F7880 */  sll   $t7, $t7, 2
-/* 05C7CC 7F027C9C 01EE7823 */  subu  $t7, $t7, $t6
-/* 05C7D0 7F027CA0 000F7880 */  sll   $t7, $t7, 2
-/* 05C7D4 7F027CA4 01F81021 */  addu  $v0, $t7, $t8
-/* 05C7D8 7F027CA8 C4440000 */  lwc1  $f4, ($v0)
-/* 05C7DC 7F027CAC C4860000 */  lwc1  $f6, ($a0)
-/* 05C7E0 7F027CB0 C4480008 */  lwc1  $f8, 8($v0)
-/* 05C7E4 7F027CB4 C48A0008 */  lwc1  $f10, 8($a0)
-/* 05C7E8 7F027CB8 46062081 */  sub.s $f2, $f4, $f6
-/* 05C7EC 7F027CBC 460A4301 */  sub.s $f12, $f8, $f10
-/* 05C7F0 7F027CC0 46021402 */  mul.s $f16, $f2, $f2
-/* 05C7F4 7F027CC4 00000000 */  nop   
-/* 05C7F8 7F027CC8 460C6482 */  mul.s $f18, $f12, $f12
-/* 05C7FC 7F027CCC 03E00008 */  jr    $ra
-/* 05C800 7F027CD0 46128000 */   add.s $f0, $f16, $f18
-)
-#endif
 
 
-
-#ifdef NONMATCHING
-struct Pad *sub_GAME_7F027CD4(struct coord3d *arg0, StandTile *arg1)
+/**
+ * Address 0x7F027CD4.
+*/
+struct Pad *chrlvStanPadPresetRelated(struct coord3d *arg0, StandTile *arg1)
 {
-    StandTile *tile;
+    StandTile *tile = NULL;
     f32 temp_f20;
-    // s32 *temp_s1;
-    // s32 temp_v0_3;
-    // s32 temp_v0_4;
-    // struct Pad *temp_s0;
-    struct Pad *pad;
-    struct Pad *pad2;
-    // s32 phi_v0;
-    // s32 *phi_s1;
-    // struct Pad *phi_s3;
-    // struct Pad *phi_s3;
-
-    struct Pad *ret;
-    s32 *n;
-
+    struct Pad *ret = NULL;
+    struct Pad *pad = NULL;
+    s32 *n = NULL;
+    
     tile = sub_GAME_7F0B2718(arg1, check_if_any_path_preset_lies_on_tile);
-
-    ret = NULL;
     if (tile != NULL)
     {
-        pad = get_ptrpreset_in_table_matching_tile(tile);
-        if (pad != NULL)
+        ret = get_ptrpreset_in_table_matching_tile(tile);
+        
+        if (ret != NULL)
         {
-            n = pad->neighbours;
-            temp_f20 = sub_GAME_7F027C84(arg0, pad);
+            temp_f20 = chrlvPadPresetRelated(arg0, ret);
 
-            for (; *n >= 0; n++)
+            for (n = ret->neighbours; *n >= 0; n++)
             {
-                pad2 = &ptr_setup_path_tbl[*n];
-                if (sub_GAME_7F027C84(arg0, pad2) < temp_f20)
+                pad = &ptr_setup_path_tbl[*n];
+                
+                if (chrlvPadPresetRelated(arg0, pad) < temp_f20)
                 {
-                    ret = pad2;
+                    ret = pad;
                 }
             }
         }
     }
 
     return ret;
-
-    // phi_s3 = NULL;
-    // if (tile != 0)
-    // {
-    //     pad = get_ptrpreset_in_table_matching_tile(tile);
-    //     phi_s3 = pad;
-    //     phi_s3_2 = pad;
-
-    //     if (pad != 0)
-    //     {
-    //         temp_s1 = pad->neighbours;
-    //         temp_f20 = sub_GAME_7F027C84(arg0, pad);
-    //         temp_v0_3 = *temp_s1;
-    //         phi_v0 = temp_v0_3;
-    //         phi_s1 = temp_s1;
-
-    //         if (temp_v0_3 >= 0)
-    //         {
-    //             do
-    //             {
-    //                 temp_s0 = &ptr_setup_path_tbl[phi_v0];
-    //                 if (sub_GAME_7F027C84(arg0, temp_s0) < temp_f20)
-    //                 {
-    //                     phi_s3_2 = temp_s0;
-    //                 }
-    //                 temp_v0_4 = phi_s1->unk4;
-    //                 phi_v0 = temp_v0_4;
-    //                 phi_s1 += 4;
-    //                 phi_s3 = phi_s3_2;
-    //             } while (temp_v0_4 >= 0);
-    //         }
-    //     }
-    // }
-
-    // return phi_s3;
 }
 
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F027CD4
-/* 05C804 7F027CD4 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 05C808 7F027CD8 AFB40030 */  sw    $s4, 0x30($sp)
-/* 05C80C 7F027CDC 0080A025 */  move  $s4, $a0
-/* 05C810 7F027CE0 00A02025 */  move  $a0, $a1
-/* 05C814 7F027CE4 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 05C818 7F027CE8 AFB3002C */  sw    $s3, 0x2c($sp)
-/* 05C81C 7F027CEC 3C057F02 */  lui   $a1, %hi(check_if_any_path_preset_lies_on_tile) # $a1, 0x7f02
-/* 05C820 7F027CF0 AFB20028 */  sw    $s2, 0x28($sp)
-/* 05C824 7F027CF4 AFB10024 */  sw    $s1, 0x24($sp)
-/* 05C828 7F027CF8 AFB00020 */  sw    $s0, 0x20($sp)
-/* 05C82C 7F027CFC F7B40018 */  sdc1  $f20, 0x18($sp)
-/* 05C830 7F027D00 00009825 */  move  $s3, $zero
-/* 05C834 7F027D04 0FC2C9C6 */  jal   sub_GAME_7F0B2718
-/* 05C838 7F027D08 24A57C60 */   addiu $a1, %lo(check_if_any_path_preset_lies_on_tile) # addiu $a1, $a1, 0x7c60
-/* 05C83C 7F027D0C 1040001E */  beqz  $v0, .L7F027D88
-/* 05C840 7F027D10 00402025 */   move  $a0, $v0
-/* 05C844 7F027D14 0FC09EFD */  jal   get_ptrpreset_in_table_matching_tile
-/* 05C848 7F027D18 00000000 */   nop   
-/* 05C84C 7F027D1C 1040001A */  beqz  $v0, .L7F027D88
-/* 05C850 7F027D20 00409825 */   move  $s3, $v0
-/* 05C854 7F027D24 02802025 */  move  $a0, $s4
-/* 05C858 7F027D28 0FC09F21 */  jal   sub_GAME_7F027C84
-/* 05C85C 7F027D2C 00402825 */   move  $a1, $v0
-/* 05C860 7F027D30 8E710004 */  lw    $s1, 4($s3)
-/* 05C864 7F027D34 3C128007 */  lui   $s2, %hi(ptr_setup_path_tbl)
-/* 05C868 7F027D38 46000506 */  mov.s $f20, $f0
-/* 05C86C 7F027D3C 8E220000 */  lw    $v0, ($s1)
-/* 05C870 7F027D40 26525D00 */  addiu $s2, %lo(ptr_setup_path_tbl) # addiu $s2, $s2, 0x5d00
-/* 05C874 7F027D44 04420011 */  bltzl $v0, .L7F027D8C
-/* 05C878 7F027D48 8FBF0034 */   lw    $ra, 0x34($sp)
-/* 05C87C 7F027D4C 8E4F0000 */  lw    $t7, ($s2)
-.L7F027D50:
-/* 05C880 7F027D50 00027100 */  sll   $t6, $v0, 4
-/* 05C884 7F027D54 02802025 */  move  $a0, $s4
-/* 05C888 7F027D58 01CF8021 */  addu  $s0, $t6, $t7
-/* 05C88C 7F027D5C 0FC09F21 */  jal   sub_GAME_7F027C84
-/* 05C890 7F027D60 02002825 */   move  $a1, $s0
-/* 05C894 7F027D64 4614003C */  c.lt.s $f0, $f20
-/* 05C898 7F027D68 00000000 */  nop   
-/* 05C89C 7F027D6C 45020003 */  bc1fl .L7F027D7C
-/* 05C8A0 7F027D70 8E220004 */   lw    $v0, 4($s1)
-/* 05C8A4 7F027D74 02009825 */  move  $s3, $s0
-/* 05C8A8 7F027D78 8E220004 */  lw    $v0, 4($s1)
-.L7F027D7C:
-/* 05C8AC 7F027D7C 26310004 */  addiu $s1, $s1, 4
-/* 05C8B0 7F027D80 0443FFF3 */  bgezl $v0, .L7F027D50
-/* 05C8B4 7F027D84 8E4F0000 */   lw    $t7, ($s2)
-.L7F027D88:
-/* 05C8B8 7F027D88 8FBF0034 */  lw    $ra, 0x34($sp)
-.L7F027D8C:
-/* 05C8BC 7F027D8C 02601025 */  move  $v0, $s3
-/* 05C8C0 7F027D90 8FB3002C */  lw    $s3, 0x2c($sp)
-/* 05C8C4 7F027D94 D7B40018 */  ldc1  $f20, 0x18($sp)
-/* 05C8C8 7F027D98 8FB00020 */  lw    $s0, 0x20($sp)
-/* 05C8CC 7F027D9C 8FB10024 */  lw    $s1, 0x24($sp)
-/* 05C8D0 7F027DA0 8FB20028 */  lw    $s2, 0x28($sp)
-/* 05C8D4 7F027DA4 8FB40030 */  lw    $s4, 0x30($sp)
-/* 05C8D8 7F027DA8 03E00008 */  jr    $ra
-/* 05C8DC 7F027DAC 27BD0038 */   addiu $sp, $sp, 0x38
-)
-#endif
 
 
 
@@ -6075,11 +5938,11 @@ glabel plot_course_for_actor
 /* 05D94C 7F028E1C 8C650014 */  lw    $a1, 0x14($v1)
 /* 05D950 7F028E20 AFA30064 */  sw    $v1, 0x64($sp)
 /* 05D954 7F028E24 AFA20028 */  sw    $v0, 0x28($sp)
-/* 05D958 7F028E28 0FC09F35 */  jal   sub_GAME_7F027CD4
+/* 05D958 7F028E28 0FC09F35 */  jal   chrlvStanPadPresetRelated
 /* 05D95C 7F028E2C 24640008 */   addiu $a0, $v1, 8
 /* 05D960 7F028E30 AFA20060 */  sw    $v0, 0x60($sp)
 /* 05D964 7F028E34 8FA4006C */  lw    $a0, 0x6c($sp)
-/* 05D968 7F028E38 0FC09F35 */  jal   sub_GAME_7F027CD4
+/* 05D968 7F028E38 0FC09F35 */  jal   chrlvStanPadPresetRelated
 /* 05D96C 7F028E3C 8FA50070 */   lw    $a1, 0x70($sp)
 /* 05D970 7F028E40 8FA40060 */  lw    $a0, 0x60($sp)
 /* 05D974 7F028E44 00402825 */  move  $a1, $v0
@@ -21256,7 +21119,7 @@ glabel sub_GAME_7F033834
 /* 068384 7F033854 AFB3002C */  sw    $s3, 0x2c($sp)
 /* 068388 7F033858 AFB20028 */  sw    $s2, 0x28($sp)
 /* 06838C 7F03385C AFB10024 */  sw    $s1, 0x24($sp)
-/* 068390 7F033860 0FC09F35 */  jal   sub_GAME_7F027CD4
+/* 068390 7F033860 0FC09F35 */  jal   chrlvStanPadPresetRelated
 /* 068394 7F033864 AFA70044 */   sw    $a3, 0x44($sp)
 /* 068398 7F033868 10400041 */  beqz  $v0, .L7F033970
 /* 06839C 7F03386C 00409825 */   move  $s3, $v0
@@ -21376,12 +21239,12 @@ glabel check_2328_preset_set_with_method
 /* 068504 7F0339D4 AFA60020 */   sw    $a2, 0x20($sp)
 /* 068508 7F0339D8 8E050014 */  lw    $a1, 0x14($s0)
 /* 06850C 7F0339DC AFA20040 */  sw    $v0, 0x40($sp)
-/* 068510 7F0339E0 0FC09F35 */  jal   sub_GAME_7F027CD4
+/* 068510 7F0339E0 0FC09F35 */  jal   chrlvStanPadPresetRelated
 /* 068514 7F0339E4 26040008 */   addiu $a0, $s0, 8
 /* 068518 7F0339E8 8FA30040 */  lw    $v1, 0x40($sp)
 /* 06851C 7F0339EC 00408025 */  move  $s0, $v0
 /* 068520 7F0339F0 24640008 */  addiu $a0, $v1, 8
-/* 068524 7F0339F4 0FC09F35 */  jal   sub_GAME_7F027CD4
+/* 068524 7F0339F4 0FC09F35 */  jal   chrlvStanPadPresetRelated
 /* 068528 7F0339F8 8C650014 */   lw    $a1, 0x14($v1)
 /* 06852C 7F0339FC 8FA60020 */  lw    $a2, 0x20($sp)
 /* 068530 7F033A00 12000024 */  beqz  $s0, .L7F033A94
