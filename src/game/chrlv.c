@@ -4394,26 +4394,13 @@ glabel get_ptrpreset_in_table_matching_tile
 
 
 
-#ifdef NONMATCHING
-void check_if_any_path_preset_lies_on_tile(void) {
-
+/**
+ * Address 0x7F027C60.
+*/
+s32 check_if_any_path_preset_lies_on_tile(s32 arg0)
+{
+    return get_ptrpreset_in_table_matching_tile(arg0) != NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_any_path_preset_lies_on_tile
-/* 05C790 7F027C60 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 05C794 7F027C64 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05C798 7F027C68 0FC09EFD */  jal   get_ptrpreset_in_table_matching_tile
-/* 05C79C 7F027C6C 00000000 */   nop   
-/* 05C7A0 7F027C70 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05C7A4 7F027C74 0002702B */  sltu  $t6, $zero, $v0
-/* 05C7A8 7F027C78 01C01025 */  move  $v0, $t6
-/* 05C7AC 7F027C7C 03E00008 */  jr    $ra
-/* 05C7B0 7F027C80 27BD0018 */   addiu $sp, $sp, 0x18
-)
-#endif
-
 
 
 #ifdef NONMATCHING

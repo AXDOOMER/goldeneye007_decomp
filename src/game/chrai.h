@@ -177,6 +177,9 @@ struct Pad {
     s32 dist_tmp;
 };
 
+/**
+ * sizeof this struct must be exactly 0x2c=44 bytes.
+*/
 struct preset_0xxx
 {
     s32 unk00;
