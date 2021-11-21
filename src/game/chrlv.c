@@ -50,8 +50,7 @@ void triggered_on_shot_hit(struct ChrRecord *arg0, struct coord3d *arg1, f32 arg
 s32 chrlvAttackAnimationRelated7F026F30(struct ChrRecord *arg0, f32 *result);
 s32 chrlvStanRoomRelated(ChrRecord *arg0, struct pad *arg1, StandTile *tile);
 f32 chrlvModelScaleAnimationRelated(struct ChrRecord *arg0);
-
-void sub_GAME_7F027F20(struct ChrRecord *arg0, struct coord3d *arg1, struct StandTile **arg2);
+void chrlvActGoposRelated(struct ChrRecord *arg0, struct coord3d *arg1, struct StandTile **arg2);
 s32 chrlvMovementTargetRelated(ChrRecord *arg0);
 struct path_table_alt *get_ptrpreset_in_table_matching_tile(struct StandTile* arg0);
 s32 check_if_any_path_preset_lies_on_tile(struct StandTile* arg0);
@@ -4614,71 +4613,39 @@ glabel sub_GAME_7F027E90
 
 
 
-#ifdef NONMATCHING
-// unknown type for arg0.
-// maybe ChrRecord, and action type is act_gopos
-void sub_GAME_7F027F20(struct ChrRecord *arg0, struct coord3d *arg1, struct StandTile **arg2)
+/**
+ * @param arg0:
+ * @param target_point: out paramter, will contain target position
+ * @param target_stan: out parameter, will contain pointer to target stan
+ * 
+ * Address 0x7F027F20.
+*/
+void chrlvActGoposRelated(struct ChrRecord *arg0, struct coord3d *target_point, struct StandTile **target_stan)
 {
-    s32 *temp_v0;
+    struct waypoint *temp_v0;
     struct pad *temp_v1;
 
-    temp_v0 = (arg0 + (arg0->unk58 * 4))->unk40;
-    if (temp_v0 != 0)
-    {
-        temp_v1 = &ptr_0xxxpresets[*temp_v0];
-        arg1->pos.f[0] = temp_v1->pos.f[0];
-        arg1->pos.f[1] = temp_v1->pos.f[1];
-        arg1->pos.f[2] = temp_v1->pos.f[2];
-        *arg2 = temp_v1->stan;
-        return;
-    }
-    arg1->pos.f[0] = arg0->unk2C;
-    arg1->pos.f[1] = arg0->unk30;
-    arg1->pos.f[2] = arg0->unk34;
-    *arg2 = arg0->unk38;
-}
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F027F20
-/* 05CA50 7F027F20 908E0058 */  lbu   $t6, 0x58($a0)
-/* 05CA54 7F027F24 000E7880 */  sll   $t7, $t6, 2
-/* 05CA58 7F027F28 008FC021 */  addu  $t8, $a0, $t7
-/* 05CA5C 7F027F2C 8F020040 */  lw    $v0, 0x40($t8)
-/* 05CA60 7F027F30 50400014 */  beql  $v0, $zero, .L7F027F84
-/* 05CA64 7F027F34 C48A002C */   lwc1  $f10, 0x2c($a0)
-/* 05CA68 7F027F38 8C590000 */  lw    $t9, ($v0)
-/* 05CA6C 7F027F3C 3C098007 */  lui   $t1, %hi(ptr_0xxxpresets) 
-/* 05CA70 7F027F40 8D295D18 */  lw    $t1, %lo(ptr_0xxxpresets)($t1)
-/* 05CA74 7F027F44 00194080 */  sll   $t0, $t9, 2
-/* 05CA78 7F027F48 01194023 */  subu  $t0, $t0, $t9
-/* 05CA7C 7F027F4C 00084080 */  sll   $t0, $t0, 2
-/* 05CA80 7F027F50 01194023 */  subu  $t0, $t0, $t9
-/* 05CA84 7F027F54 00084080 */  sll   $t0, $t0, 2
-/* 05CA88 7F027F58 01091821 */  addu  $v1, $t0, $t1
-/* 05CA8C 7F027F5C C4640000 */  lwc1  $f4, ($v1)
-/* 05CA90 7F027F60 E4A40000 */  swc1  $f4, ($a1)
-/* 05CA94 7F027F64 C4660004 */  lwc1  $f6, 4($v1)
-/* 05CA98 7F027F68 E4A60004 */  swc1  $f6, 4($a1)
-/* 05CA9C 7F027F6C C4680008 */  lwc1  $f8, 8($v1)
-/* 05CAA0 7F027F70 E4A80008 */  swc1  $f8, 8($a1)
-/* 05CAA4 7F027F74 8C6A0028 */  lw    $t2, 0x28($v1)
-/* 05CAA8 7F027F78 03E00008 */  jr    $ra
-/* 05CAAC 7F027F7C ACCA0000 */   sw    $t2, ($a2)
+    temp_v0 = arg0->act_gopos.waypoints[arg0->act_gopos.waydata.mode];
 
-/* 05CAB0 7F027F80 C48A002C */  lwc1  $f10, 0x2c($a0)
-.L7F027F84:
-/* 05CAB4 7F027F84 E4AA0000 */  swc1  $f10, ($a1)
-/* 05CAB8 7F027F88 C4900030 */  lwc1  $f16, 0x30($a0)
-/* 05CABC 7F027F8C E4B00004 */  swc1  $f16, 4($a1)
-/* 05CAC0 7F027F90 C4920034 */  lwc1  $f18, 0x34($a0)
-/* 05CAC4 7F027F94 E4B20008 */  swc1  $f18, 8($a1)
-/* 05CAC8 7F027F98 8C8B0038 */  lw    $t3, 0x38($a0)
-/* 05CACC 7F027F9C ACCB0000 */  sw    $t3, ($a2)
-/* 05CAD0 7F027FA0 03E00008 */  jr    $ra
-/* 05CAD4 7F027FA4 00000000 */   nop   
-)
-#endif
+    if (temp_v0 != NULL)
+    {
+        temp_v1 = &ptr_0xxxpresets[temp_v0->PadID];
+
+        target_point->f[0] = temp_v1->pos.f[0];
+        target_point->f[1] = temp_v1->pos.f[1];
+        target_point->f[2] = temp_v1->pos.f[2];
+
+        *target_stan = temp_v1->stan;
+    }
+    else
+    {
+        target_point->f[0] = arg0->act_gopos.targetpos.f[0];
+        target_point->f[1] = arg0->act_gopos.targetpos.f[1];
+        target_point->f[2] = arg0->act_gopos.targetpos.f[2];
+
+        *target_stan = (struct StandTile *) arg0->act_gopos.target;
+    }
+}
 
 
 
@@ -4744,7 +4711,7 @@ s32 chrlvMovementTargetRelated(ChrRecord *arg0)
     f32 sp18; // 24
 
     sp18 = sub_GAME_7F06F618(arg0->model);
-    sub_GAME_7F027F20(arg0, &sp20, &sp1C);
+    chrlvActGoposRelated(arg0, &sp20, &sp1C);
     temp_v0 = arg0->prop;
     dx = sp20.f[0] - temp_v0->pos.f[0];
     dz = sp20.f[2] - temp_v0->pos.f[2];
@@ -4901,7 +4868,7 @@ glabel sub_GAME_7F02828C
 /* 05CDC0 7F028290 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 05CDC4 7F028294 27A5001C */  addiu $a1, $sp, 0x1c
 /* 05CDC8 7F028298 27A60018 */  addiu $a2, $sp, 0x18
-/* 05CDCC 7F02829C 0FC09FC8 */  jal   sub_GAME_7F027F20
+/* 05CDCC 7F02829C 0FC09FC8 */  jal   chrlvActGoposRelated
 /* 05CDD0 7F0282A0 AFA40028 */   sw    $a0, 0x28($sp)
 /* 05CDD4 7F0282A4 8FA40028 */  lw    $a0, 0x28($sp)
 /* 05CDD8 7F0282A8 A080005C */  sb    $zero, 0x5c($a0)
@@ -5367,7 +5334,7 @@ glabel sub_GAME_7F028600
 /* 05D32C 7F0287FC 02002025 */   move  $a0, $s0
 /* 05D330 7F028800 02002025 */  move  $a0, $s0
 /* 05D334 7F028804 27A50040 */  addiu $a1, $sp, 0x40
-/* 05D338 7F028808 0FC09FC8 */  jal   sub_GAME_7F027F20
+/* 05D338 7F028808 0FC09FC8 */  jal   chrlvActGoposRelated
 /* 05D33C 7F02880C 27A6003C */   addiu $a2, $sp, 0x3c
 /* 05D340 7F028810 02002025 */  move  $a0, $s0
 /* 05D344 7F028814 8FA5006C */  lw    $a1, 0x6c($sp)
@@ -5482,7 +5449,7 @@ glabel sub_GAME_7F028894
 /* 05D4AC 7F02897C 1501002A */  bne   $t0, $at, .L7F028A28
 /* 05D4B0 7F028980 27A60028 */   addiu $a2, $sp, 0x28
 /* 05D4B4 7F028984 AFA40040 */  sw    $a0, 0x40($sp)
-/* 05D4B8 7F028988 0FC09FC8 */  jal   sub_GAME_7F027F20
+/* 05D4B8 7F028988 0FC09FC8 */  jal   chrlvActGoposRelated
 /* 05D4BC 7F02898C AFA70044 */   sw    $a3, 0x44($sp)
 /* 05D4C0 7F028990 8FA40040 */  lw    $a0, 0x40($sp)
 /* 05D4C4 7F028994 8FA70044 */  lw    $a3, 0x44($sp)
@@ -5912,7 +5879,7 @@ glabel plot_course_for_actor
 /* 05DA74 7F028F44 02002025 */  move  $a0, $s0
 .L7F028F48:
 /* 05DA78 7F028F48 27A50034 */  addiu $a1, $sp, 0x34
-/* 05DA7C 7F028F4C 0FC09FC8 */  jal   sub_GAME_7F027F20
+/* 05DA7C 7F028F4C 0FC09FC8 */  jal   chrlvActGoposRelated
 /* 05DA80 7F028F50 27A60030 */   addiu $a2, $sp, 0x30
 /* 05DA84 7F028F54 8FAA0064 */  lw    $t2, 0x64($sp)
 /* 05DA88 7F028F58 02002025 */  move  $a0, $s0
@@ -18741,7 +18708,7 @@ glabel sub_GAME_7F032088
 /* 066C44 7F032114 01CC082A */  slt   $at, $t6, $t4
 /* 066C48 7F032118 1020000E */  beqz  $at, .L7F032154
 /* 066C4C 7F03211C 27A50068 */   addiu $a1, $sp, 0x68
-/* 066C50 7F032120 0FC09FC8 */  jal   sub_GAME_7F027F20
+/* 066C50 7F032120 0FC09FC8 */  jal   chrlvActGoposRelated
 /* 066C54 7F032124 27A60064 */   addiu $a2, $sp, 0x64
 /* 066C58 7F032128 02002025 */  move  $a0, $s0
 /* 066C5C 7F03212C 27A50068 */  addiu $a1, $sp, 0x68
@@ -18770,7 +18737,7 @@ glabel sub_GAME_7F032088
 /* 066CB0 7F032180 02002025 */  move  $a0, $s0
 /* 066CB4 7F032184 17210024 */  bne   $t9, $at, .L7F032218
 /* 066CB8 7F032188 27A50058 */   addiu $a1, $sp, 0x58
-/* 066CBC 7F03218C 0FC09FC8 */  jal   sub_GAME_7F027F20
+/* 066CBC 7F03218C 0FC09FC8 */  jal   chrlvActGoposRelated
 /* 066CC0 7F032190 27A60054 */   addiu $a2, $sp, 0x54
 /* 066CC4 7F032194 8FA90074 */  lw    $t1, 0x74($sp)
 /* 066CC8 7F032198 8FA80078 */  lw    $t0, 0x78($sp)

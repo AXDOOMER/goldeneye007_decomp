@@ -299,7 +299,7 @@ struct waypoint
 
 struct waydata
 {
-    s8 mode;                 /*0x00 5c*/
+    u8 mode;                 /*0x00 5c*/
     u8 unk01;                /*0x01 5d*/
     u8 unk02;                /*0x02 5e*/
     u8 unk03;                /*0x03 5f*/
@@ -473,11 +473,15 @@ struct act_gopos
 {
     struct coord3d targetpos;  // Target pos                             /*0x02c*/
     //s16 rooms[7];          // Target rooms only in PD                /*0x038*/
+
+    // this might be a pointer to a stan?
     struct waypoint *target; // Target/final waypoint                  /*0x038*/
+
+    s32 unk3c;                                                        /*0x03c*/
 
     // Array of pointers to the next couple of waypoints. Recalculated each time
     // a waypoint is reached, and probably even more frequently than that.
-    struct waypoint *waypoints[6]; // MAX_CHRWAYPOINTS];               /*0x040*/
+    struct waypoint *waypoints[5]; // MAX_CHRWAYPOINTS];               /*0x040*/
 
     // Index of the waypoint in the above array that the chr is running to. If
     // the chr has line of sight (through doors) to the next or next + 1 then
