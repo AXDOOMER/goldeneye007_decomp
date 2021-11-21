@@ -237,7 +237,7 @@ typedef struct Model
     s32 unk38;
     s32 unk3c;
     // 0x40
-    s32 unk40;
+    f32 unk40;
     s32 unk44;
     s32 unk48;
     s32 unk4c;

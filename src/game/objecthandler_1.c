@@ -5529,8 +5529,18 @@ glabel sub_GAME_7F06F610
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06F618(void) {
+f32 sub_GAME_7F06F618(struct Model *arg0)
+{
+    f32 phi_f2;
 
+    phi_f2 = arg0->unk40;
+    
+    if (phi_f2 < 0.0f)
+    {
+        phi_f2 = -phi_f2;
+    }
+    
+    return phi_f2;
 }
 #else
 GLOBAL_ASM(
