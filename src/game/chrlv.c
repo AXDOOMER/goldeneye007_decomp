@@ -44,6 +44,11 @@ f32 get_distance_actor_to_position(ChrRecord *arg0, struct coord3d *arg1);
 f32 chrlvPathingCollisionRelated(PropRecord *arg0, f32 arg1, f32 arg2, s32 objFlags, f32 unkHeight, f32 unkA);
 f32 chrlvPathingCollisionRelated7F0264B0(PropRecord *arg0, f32 arg1, f32 arg2);
 void triggered_on_shot_hit(struct ChrRecord *arg0, struct coord3d *arg1, f32 arg2, s32 req_animation_id, ITEM_IDS item);
+s32 chrlvAttackAnimationRelated7F026F30(struct ChrRecord *arg0, f32 *result);
+
+
+
+
 
 void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2);
 void *sub_GAME_7F032C78(ChrRecord *arg0, s32 arg1, s32 arg2, s32 *arg3);
@@ -3412,150 +3417,63 @@ void triggered_on_shot_hit(struct ChrRecord *arg0, struct coord3d *arg1, f32 arg
 }
 
 
-#if 0
-f32 objecthandlerGetModelField28(void *);
-
-s32 sub_GAME_7F026F30(struct ChrRecord *arg0, f32 *arg1)
+/**
+ * @param arg0:
+ * @param result: out parameter, will contain result
+ * @returns status indicating if result is set
+ * 
+ * Address 0x7F026F30.
+*/
+s32 chrlvAttackAnimationRelated7F026F30(struct ChrRecord *arg0, f32 *result)
 {
-    s32 sp1C;
-    f32 sp18;
-    f32 temp_f2;
-    struct weapon_firing_animation_table *temp_v0_2;
-    f32 phi_f2;
-    s32 phi_v1;
+    s32 flag;
+    f32 out_val;
 
-    phi_v1 = 0;
+    flag = 0;
+
     if (arg0->actiontype == ACT_ATTACKROLL)
     {
         if (arg0->act_attackroll.unk035 != 0)
         {
-            temp_v0_2 = arg0->act_attackroll.animfloats;
-
-            if ((&D_80030198 == temp_v0_2) || (&D_800301E0 == temp_v0_2) || (&D_80030228 == temp_v0_2) || (&D_80030270 == temp_v0_2))
+            if (
+                (arg0->act_attackroll.animfloats == &D_80030198)
+                || (arg0->act_attackroll.animfloats == &D_800301E0)
+                || (arg0->act_attackroll.animfloats == &D_80030228)
+                || (arg0->act_attackroll.animfloats == &D_80030270))
             {
-                phi_f2 = temp_v0_2->anonymous_1 - 8.0f;
-                if (temp_v0_2->anonymous_5 < temp_v0_2->anonymous_1)
+                out_val = arg0->act_attackroll.animfloats->anonymous_1 - 8.0f;
+
+                if (arg0->act_attackroll.animfloats->anonymous_5 < arg0->act_attackroll.animfloats->anonymous_1)
                 {
-                    phi_f2 = temp_v0_2->anonymous_5;
+                    out_val = arg0->act_attackroll.animfloats->anonymous_5;
                 }
 
-                sp18 = phi_f2;
-                sp1C = 0;
-                if (objecthandlerGetModelField28(arg0->model) < phi_f2)
+                if (objecthandlerGetModelField28(arg0->model) < out_val)
                 {
-                    *arg1 = phi_f2;
-                    goto block_13;
+                    *result = out_val;
+                    flag = 1;
                 }
             }
         }
         else
         {
-            sp1C = 0;
-            temp_f2 = arg0->act_attackroll.animfloats->anonymous_1 - 8.0f;
-            sp18 = temp_f2;
-            if (objecthandlerGetModelField28(arg0->model) < temp_f2)
+            out_val = arg0->act_attackroll.animfloats->anonymous_1 - 8.0f;
+            if (objecthandlerGetModelField28(arg0->model) < out_val)
             {
-                *arg1 = temp_f2;
-                goto block_13;
+                *result = out_val;
+                flag = 1;
             }
         }
     }
     else if (arg0->actiontype == ACT_PREARGH)
     {
-block_13:
-        phi_v1 = 1;
+        // typo/mistake, return without setting *result
+        flag = 1;
     }
 
-    return phi_v1;
+    return flag;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F026F30
-/* 05BA60 7F026F30 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 05BA64 7F026F34 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05BA68 7F026F38 AFA50024 */  sw    $a1, 0x24($sp)
-/* 05BA6C 7F026F3C 80820007 */  lb    $v0, 7($a0)
-/* 05BA70 7F026F40 2401000A */  li    $at, 10
-/* 05BA74 7F026F44 00803025 */  move  $a2, $a0
-/* 05BA78 7F026F48 1441003C */  bne   $v0, $at, .L7F02703C
-/* 05BA7C 7F026F4C 00001825 */   move  $v1, $zero
-/* 05BA80 7F026F50 808E0035 */  lb    $t6, 0x35($a0)
-/* 05BA84 7F026F54 51C00027 */  beql  $t6, $zero, .L7F026FF4
-/* 05BA88 7F026F58 8CCA002C */   lw    $t2, 0x2c($a2)
-/* 05BA8C 7F026F5C 8C82002C */  lw    $v0, 0x2c($a0)
-/* 05BA90 7F026F60 3C0F8003 */  lui   $t7, %hi(D_80030198) 
-/* 05BA94 7F026F64 25EF0198 */  addiu $t7, %lo(D_80030198) # addiu $t7, $t7, 0x198
-/* 05BA98 7F026F68 11E2000A */  beq   $t7, $v0, .L7F026F94
-/* 05BA9C 7F026F6C 3C188003 */   lui   $t8, %hi(D_800301E0) 
-/* 05BAA0 7F026F70 271801E0 */  addiu $t8, %lo(D_800301E0) # addiu $t8, $t8, 0x1e0
-/* 05BAA4 7F026F74 13020007 */  beq   $t8, $v0, .L7F026F94
-/* 05BAA8 7F026F78 3C198003 */   lui   $t9, %hi(D_80030228) 
-/* 05BAAC 7F026F7C 27390228 */  addiu $t9, %lo(D_80030228) # addiu $t9, $t9, 0x228
-/* 05BAB0 7F026F80 13220004 */  beq   $t9, $v0, .L7F026F94
-/* 05BAB4 7F026F84 3C088003 */   lui   $t0, %hi(D_80030270) 
-/* 05BAB8 7F026F88 25080270 */  addiu $t0, %lo(D_80030270) # addiu $t0, $t0, 0x270
-/* 05BABC 7F026F8C 55020030 */  bnel  $t0, $v0, .L7F027050
-/* 05BAC0 7F026F90 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F026F94:
-/* 05BAC4 7F026F94 C4400004 */  lwc1  $f0, 4($v0)
-/* 05BAC8 7F026F98 C44C0014 */  lwc1  $f12, 0x14($v0)
-/* 05BACC 7F026F9C 3C014100 */  li    $at, 0x41000000 # 8.000000
-/* 05BAD0 7F026FA0 44812000 */  mtc1  $at, $f4
-/* 05BAD4 7F026FA4 4600603C */  c.lt.s $f12, $f0
-/* 05BAD8 7F026FA8 46040081 */  sub.s $f2, $f0, $f4
-/* 05BADC 7F026FAC 45020003 */  bc1fl .L7F026FBC
-/* 05BAE0 7F026FB0 8CC4001C */   lw    $a0, 0x1c($a2)
-/* 05BAE4 7F026FB4 46006086 */  mov.s $f2, $f12
-/* 05BAE8 7F026FB8 8CC4001C */  lw    $a0, 0x1c($a2)
-.L7F026FBC:
-/* 05BAEC 7F026FBC E7A20018 */  swc1  $f2, 0x18($sp)
-/* 05BAF0 7F026FC0 0FC1BD6F */  jal   objecthandlerGetModelField28
-/* 05BAF4 7F026FC4 AFA3001C */   sw    $v1, 0x1c($sp)
-/* 05BAF8 7F026FC8 C7A20018 */  lwc1  $f2, 0x18($sp)
-/* 05BAFC 7F026FCC 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 05BB00 7F026FD0 8FA90024 */  lw    $t1, 0x24($sp)
-/* 05BB04 7F026FD4 4602003C */  c.lt.s $f0, $f2
-/* 05BB08 7F026FD8 00000000 */  nop   
-/* 05BB0C 7F026FDC 4502001C */  bc1fl .L7F027050
-/* 05BB10 7F026FE0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 05BB14 7F026FE4 E5220000 */  swc1  $f2, ($t1)
-/* 05BB18 7F026FE8 10000018 */  b     .L7F02704C
-/* 05BB1C 7F026FEC 24030001 */   li    $v1, 1
-/* 05BB20 7F026FF0 8CCA002C */  lw    $t2, 0x2c($a2)
-.L7F026FF4:
-/* 05BB24 7F026FF4 3C014100 */  li    $at, 0x41000000 # 8.000000
-/* 05BB28 7F026FF8 44814000 */  mtc1  $at, $f8
-/* 05BB2C 7F026FFC C5460004 */  lwc1  $f6, 4($t2)
-/* 05BB30 7F027000 8CC4001C */  lw    $a0, 0x1c($a2)
-/* 05BB34 7F027004 AFA3001C */  sw    $v1, 0x1c($sp)
-/* 05BB38 7F027008 46083081 */  sub.s $f2, $f6, $f8
-/* 05BB3C 7F02700C 0FC1BD6F */  jal   objecthandlerGetModelField28
-/* 05BB40 7F027010 E7A20018 */   swc1  $f2, 0x18($sp)
-/* 05BB44 7F027014 C7A20018 */  lwc1  $f2, 0x18($sp)
-/* 05BB48 7F027018 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 05BB4C 7F02701C 8FAB0024 */  lw    $t3, 0x24($sp)
-/* 05BB50 7F027020 4602003C */  c.lt.s $f0, $f2
-/* 05BB54 7F027024 00000000 */  nop   
-/* 05BB58 7F027028 45020009 */  bc1fl .L7F027050
-/* 05BB5C 7F02702C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 05BB60 7F027030 E5620000 */  swc1  $f2, ($t3)
-/* 05BB64 7F027034 10000005 */  b     .L7F02704C
-/* 05BB68 7F027038 24030001 */   li    $v1, 1
-.L7F02703C:
-/* 05BB6C 7F02703C 24010007 */  li    $at, 7
-/* 05BB70 7F027040 54410003 */  bnel  $v0, $at, .L7F027050
-/* 05BB74 7F027044 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 05BB78 7F027048 24030001 */  li    $v1, 1
-.L7F02704C:
-/* 05BB7C 7F02704C 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F027050:
-/* 05BB80 7F027050 27BD0020 */  addiu $sp, $sp, 0x20
-/* 05BB84 7F027054 00601025 */  move  $v0, $v1
-/* 05BB88 7F027058 03E00008 */  jr    $ra
-/* 05BB8C 7F02705C 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -4054,7 +3972,7 @@ glabel handles_shot_actors
 /* 05C230 7F027700 8FAA006C */   lw    $t2, 0x6c($sp)
 /* 05C234 7F027704 44813000 */  mtc1  $at, $f6
 /* 05C238 7F027708 27A50034 */  addiu $a1, $sp, 0x34
-/* 05C23C 7F02770C 0FC09BCC */  jal   sub_GAME_7F026F30
+/* 05C23C 7F02770C 0FC09BCC */  jal   chrlvAttackAnimationRelated7F026F30
 /* 05C240 7F027710 E7A60034 */   swc1  $f6, 0x34($sp)
 /* 05C244 7F027714 54400006 */  bnezl $v0, .L7F027730
 /* 05C248 7F027718 8FAA006C */   lw    $t2, 0x6c($sp)
@@ -4072,7 +3990,7 @@ glabel handles_shot_actors
 /* 05C274 7F027744 0FC09C18 */  jal   play_sound_for_shot_actor
 /* 05C278 7F027748 E7A80030 */   swc1  $f8, 0x30($sp)
 /* 05C27C 7F02774C 02002025 */  move  $a0, $s0
-/* 05C280 7F027750 0FC09BCC */  jal   sub_GAME_7F026F30
+/* 05C280 7F027750 0FC09BCC */  jal   chrlvAttackAnimationRelated7F026F30
 /* 05C284 7F027754 27A50030 */   addiu $a1, $sp, 0x30
 /* 05C288 7F027758 1040001E */  beqz  $v0, .L7F0277D4
 /* 05C28C 7F02775C 02002025 */   move  $a0, $s0
