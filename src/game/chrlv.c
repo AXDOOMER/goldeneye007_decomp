@@ -48,13 +48,13 @@ f32 chrlvPathingCollisionRelated(PropRecord *arg0, f32 arg1, f32 arg2, s32 objFl
 f32 chrlvPathingCollisionRelated7F0264B0(PropRecord *arg0, f32 arg1, f32 arg2);
 void triggered_on_shot_hit(struct ChrRecord *arg0, struct coord3d *arg1, f32 arg2, s32 req_animation_id, ITEM_IDS item);
 s32 chrlvAttackAnimationRelated7F026F30(struct ChrRecord *arg0, f32 *result);
-s32 chrlvStanRoomRelated(ChrRecord *arg0, struct coord3d *arg1, StandTile *tile);
+s32 chrlvStanRoomRelated(ChrRecord *arg0, struct preset_0xxx *arg1, StandTile *tile);
 
 struct Pad *get_ptrpreset_in_table_matching_tile(struct StandTile* arg0);
 s32 check_if_any_path_preset_lies_on_tile(struct StandTile* arg0);
 f32 chrlvPadPresetRelated(struct coord3d *arg0, struct Pad *arg1);
 struct Pad *chrlvStanPadPresetRelated(struct coord3d *arg0, StandTile *arg1);
-
+void chrlvStanRoomRelatedAlt(ChrRecord *arg0, struct preset_0xxx *arg1);
 
 void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2);
 void *sub_GAME_7F032C78(ChrRecord *arg0, s32 arg1, s32 arg2, s32 *arg3);
@@ -4379,7 +4379,7 @@ struct Pad *get_ptrpreset_in_table_matching_tile(struct StandTile* arg0)
         {
             preset = &((struct preset_0xxx *)ptr_0xxxpresets)[(s32)pad->padNumber];
 
-            if (preset->unk28 == arg0)
+            if (preset->stan == arg0)
             {
                 return pad;
             }
@@ -4497,7 +4497,7 @@ struct Pad *chrlvStanPadPresetRelated(struct coord3d *arg0, StandTile *arg1)
 /**
  * Address 0x7F027DB0.
 */
-s32 chrlvStanRoomRelated(ChrRecord *arg0, struct coord3d *arg1, StandTile *tile)
+s32 chrlvStanRoomRelated(ChrRecord *arg0, struct preset_0xxx *arg1, StandTile *tile)
 {
 
 #define BUFFER_SIZE_7F027DB0 0x14
@@ -4508,7 +4508,7 @@ s32 chrlvStanRoomRelated(ChrRecord *arg0, struct coord3d *arg1, StandTile *tile)
     s32 i;
 
     prop = arg0->prop;
-    tile_something = sub_GAME_7F0B0D0C(prop->stan, prop->pos.x, prop->pos.f[2], &tile, arg1->f[0], arg1->f[2], &sp48[0], BUFFER_SIZE_7F027DB0);
+    tile_something = sub_GAME_7F0B0D0C(prop->stan, prop->pos.x, prop->pos.f[2], &tile, arg1->unk00, arg1->unk08, &sp48[0], BUFFER_SIZE_7F027DB0);
 
     if (tile_something > 0 && tile_something < BUFFER_SIZE_7F027DB0)
     {
@@ -4530,24 +4530,14 @@ s32 chrlvStanRoomRelated(ChrRecord *arg0, struct coord3d *arg1, StandTile *tile)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F027E70(void) {
-
+/**
+ * Address 0x7F027E70.
+*/
+void chrlvStanRoomRelatedAlt(ChrRecord *arg0, struct preset_0xxx *arg1)
+{
+    chrlvStanRoomRelated(arg0, arg1, arg1->stan);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F027E70
-/* 05C9A0 7F027E70 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 05C9A4 7F027E74 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05C9A8 7F027E78 0FC09F6C */  jal   chrlvStanRoomRelated
-/* 05C9AC 7F027E7C 8CA60028 */   lw    $a2, 0x28($a1)
-/* 05C9B0 7F027E80 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05C9B4 7F027E84 27BD0018 */  addiu $sp, $sp, 0x18
-/* 05C9B8 7F027E88 03E00008 */  jr    $ra
-/* 05C9BC 7F027E8C 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -6228,7 +6218,7 @@ glabel set_actor_on_path
 /* 05DD8C 7F02925C 33190002 */  andi  $t9, $t8, 2
 /* 05DD90 7F029260 57200009 */  bnezl $t9, .L7F029288
 /* 05DD94 7F029264 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 05DD98 7F029268 0FC09F9C */  jal   sub_GAME_7F027E70
+/* 05DD98 7F029268 0FC09F9C */  jal   chrlvStanRoomRelatedAlt
 /* 05DD9C 7F02926C AFA20024 */   sw    $v0, 0x24($sp)
 /* 05DDA0 7F029270 10400004 */  beqz  $v0, .L7F029284
 /* 05DDA4 7F029274 8FA60024 */   lw    $a2, 0x24($sp)
@@ -19138,7 +19128,7 @@ glabel sub_GAME_7F032548
 /* 0670D8 7F0325A8 0169082A */  slt   $at, $t3, $t1
 /* 0670DC 7F0325AC 5020000B */  beql  $at, $zero, .L7F0325DC
 /* 0670E0 7F0325B0 820D0038 */   lb    $t5, 0x38($s0)
-/* 0670E4 7F0325B4 0FC09F9C */  jal   sub_GAME_7F027E70
+/* 0670E4 7F0325B4 0FC09F9C */  jal   chrlvStanRoomRelatedAlt
 /* 0670E8 7F0325B8 00402825 */   move  $a1, $v0
 /* 0670EC 7F0325BC 10400006 */  beqz  $v0, .L7F0325D8
 /* 0670F0 7F0325C0 240C0001 */   li    $t4, 1
@@ -19163,7 +19153,7 @@ glabel sub_GAME_7F032548
 /* 067134 7F032604 33190002 */  andi  $t9, $t8, 2
 /* 067138 7F032608 17200004 */  bnez  $t9, .L7F03261C
 /* 06713C 7F03260C 00000000 */   nop   
-/* 067140 7F032610 0FC09F9C */  jal   sub_GAME_7F027E70
+/* 067140 7F032610 0FC09F9C */  jal   chrlvStanRoomRelatedAlt
 /* 067144 7F032614 02202825 */   move  $a1, $s1
 /* 067148 7F032618 14400007 */  bnez  $v0, .L7F032638
 .L7F03261C:
