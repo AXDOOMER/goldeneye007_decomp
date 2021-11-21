@@ -216,7 +216,7 @@ typedef struct Model
     s8 unk26;
     s8 unk27;
 
-    s32 unk28;
+    f32 unk28;
     s32 unk2c;
     // 0x30
     s32 unk30;
@@ -336,9 +336,9 @@ struct act_die
     s32 notifychrindex;                                                /*0x2c*/
     f32 thudframe1;                                                    /*0x30*/
     f32 thudframe2;                                                    /*0x34*/
-    f32 unk038;                                                        /*0x38*/
-    f32 unk03c;                                                        /*0x3c*/
-    struct coord3d unk040;                                             /*0x40*/
+    f32 timeextra;              /* name from PD */                     /*0x38*/
+    f32 elapseextra;            /* name from PD */                     /*0x3c*/
+    struct coord3d extraspeed;  /* name from PD */                     /*0x40*/
     s16 drcarollimagedelay;                                            /*0x4c*/
 };
 
@@ -392,7 +392,7 @@ struct act_attackwalk
     u32 unk030;                                                        /*0x30*/
     u32 unk034;                                                        /*0x34*/
     u32 unk038;                                                        /*0x38*/
-    struct animfloats *animfloats;                                     /*0x3c*/
+    struct weapon_firing_animation_table *animfloats;                                     /*0x3c*/
     u32 unk040;                                                        /*0x40*/
     u32 unk044;                                                        /*0x44*/
     u32 unk048;                                                        /*0x48*/
@@ -402,7 +402,7 @@ struct act_attackwalk
 
 struct act_attackroll
 {
-    struct animfloats *animfloats;                                     /*0x2c*/
+    struct weapon_firing_animation_table *animfloats;                                     /*0x2c*/
     u32 unk030;                                                        /*0x30*/
     u8 unk034;                                                         /*0x34*/
     s8 unk035;                                                         /*0x35*/

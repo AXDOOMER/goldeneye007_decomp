@@ -6242,7 +6242,7 @@ glabel sub_GAME_7F07B56C
 /* 0B09C8 7F07BE98 8F0400D4 */  lw    $a0, 0xd4($t8)
 /* 0B09CC 7F07BE9C 50800015 */  beql  $a0, $zero, .L7F07BEF4
 /* 0B09D0 7F07BEA0 C5460000 */   lwc1  $f6, ($t2)
-/* 0B09D4 7F07BEA4 0FC1BD6F */  jal   sub_GAME_7F06F5BC
+/* 0B09D4 7F07BEA4 0FC1BD6F */  jal   objecthandlerGetModelField28
 /* 0B09D8 7F07BEA8 00000000 */   nop
 /* 0B09DC 7F07BEAC 3C098008 */  lui   $t1, %hi(g_CurrentPlayer)
 /* 0B09E0 7F07BEB0 2529A0B0 */  addiu $t1, %lo(g_CurrentPlayer) # addiu $t1, $t1, -0x5f50
@@ -7334,7 +7334,7 @@ glabel sub_GAME_7F07B56C
 /* 0B102C 7F07C4BC 8F0400D4 */  lw    $a0, 0xd4($t8)
 /* 0B1030 7F07C4C0 50800015 */  beql  $a0, $zero, .Ljp7F07C518
 /* 0B1034 7F07C4C4 C5460000 */   lwc1  $f6, ($t2)
-/* 0B1038 7F07C4C8 0FC1BEEB */  jal   sub_GAME_7F06F5BC
+/* 0B1038 7F07C4C8 0FC1BEEB */  jal   objecthandlerGetModelField28
 /* 0B103C 7F07C4CC 00000000 */   nop
 /* 0B1040 7F07C4D0 3C098008 */  lui   $t1, %hi(g_CurrentPlayer) # $t1, 0x8008
 /* 0B1044 7F07C4D4 2529A120 */  addiu $t1, %lo(g_CurrentPlayer) # addiu $t1, $t1, -0x5ee0
@@ -8438,7 +8438,7 @@ glabel sub_GAME_7F07B56C
 /* 0AE954 7F07BF64 8DC400D4 */  lw    $a0, 0xd4($t6)
 /* 0AE958 7F07BF68 50800016 */  beql  $a0, $zero, .L7F07BFC4
 /* 0AE95C 7F07BF6C C5460000 */   lwc1  $f6, ($t2)
-/* 0AE960 7F07BF70 0FC1BDD7 */  jal   sub_GAME_7F06F5BC
+/* 0AE960 7F07BF70 0FC1BDD7 */  jal   objecthandlerGetModelField28
 /* 0AE964 7F07BF74 00000000 */   nop
 /* 0AE968 7F07BF78 3C098007 */  lui   $t1, %hi(g_CurrentPlayer) # $t1, 0x8007
 /* 0AE96C 7F07BF7C 25298BC0 */  addiu $t1, %lo(g_CurrentPlayer) # addiu $t1, $t1, -0x7440
@@ -31709,7 +31709,7 @@ glabel maybe_mp_interface
 /* 0BE028 7F0894F8 8C63A0B0 */  lw    $v1, %lo(g_CurrentPlayer)($v1)
 /* 0BE02C 7F0894FC AFA20058 */  sw    $v0, 0x58($sp)
 .L7F089500:
-/* 0BE030 7F089500 0FC1BD6F */  jal   sub_GAME_7F06F5BC
+/* 0BE030 7F089500 0FC1BD6F */  jal   objecthandlerGetModelField28
 /* 0BE034 7F089504 24640598 */   addiu $a0, $v1, 0x598
 /* 0BE038 7F089508 3C048008 */  lui   $a0, %hi(g_CurrentPlayer)
 /* 0BE03C 7F08950C 8C84A0B0 */  lw    $a0, %lo(g_CurrentPlayer)($a0)

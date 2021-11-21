@@ -5461,18 +5461,13 @@ glabel sub_GAME_7F06F5B4
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F06F5BC(void) {
-
+/**
+ * Address 0x7F06F5BC.
+*/
+f32 objecthandlerGetModelField28(struct Model *model)
+{
+    return model->unk28;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F06F5BC
-/* 0A40EC 7F06F5BC 03E00008 */  jr    $ra
-/* 0A40F0 7F06F5C0 C4800028 */   lwc1  $f0, 0x28($a0)
-)
-#endif
 
 
 

@@ -58,24 +58,24 @@ struct explosion_animation
 
 struct weapon_firing_animation_table
 {
-  s32 anonymous_0;
-  f32 anonymous_1;
-  f32 anonymous_2;
-  f32 anonymous_3;
-  f32 anonymous_4;
-  f32 anonymous_5;
-  f32 anonymous_6;
-  f32 anonymous_7;
-  f32 anonymous_8;
-  f32 anonymous_9;
-  f32 anonymous_10;
-  f32 anonymous_11;
-  f32 anonymous_12;
-  f32 anonymous_13;
-  f32 anonymous_14;
-  f32 anonymous_15;
-  f32 anonymous_16;
-  f32 anonymous_17;
+    s32 anonymous_0;
+    f32 anonymous_1;
+    f32 anonymous_2;
+    f32 anonymous_3;
+    f32 anonymous_4;
+    f32 anonymous_5;
+    f32 anonymous_6;
+    f32 anonymous_7;
+    f32 anonymous_8;
+    f32 anonymous_9;
+    f32 anonymous_10;
+    f32 anonymous_11;
+    f32 anonymous_12;
+    f32 anonymous_13;
+    f32 anonymous_14;
+    f32 anonymous_15;
+    f32 anonymous_16;
+    f32 anonymous_17;
 };
 
 extern s32 objectiveregisters1;

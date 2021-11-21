@@ -32,7 +32,7 @@
 // update this section into AI branch
 
 /* CHRFLAG */
-#define IMPACT_RELATED 0x8000
+#define IMPACT_ALWAYS 0x8000 /* Trev on cradle sets this flag so he can be shot off the platform */
 
 // Delete this section when merged.
 #define COUNT_DEATH_AS_CIVILIAN 0x100000
