@@ -48,13 +48,13 @@ f32 chrlvPathingCollisionRelated(PropRecord *arg0, f32 arg1, f32 arg2, s32 objFl
 f32 chrlvPathingCollisionRelated7F0264B0(PropRecord *arg0, f32 arg1, f32 arg2);
 void triggered_on_shot_hit(struct ChrRecord *arg0, struct coord3d *arg1, f32 arg2, s32 req_animation_id, ITEM_IDS item);
 s32 chrlvAttackAnimationRelated7F026F30(struct ChrRecord *arg0, f32 *result);
-s32 chrlvStanRoomRelated(ChrRecord *arg0, struct preset_0xxx *arg1, StandTile *tile);
+s32 chrlvStanRoomRelated(ChrRecord *arg0, struct pad *arg1, StandTile *tile);
 
-struct Pad *get_ptrpreset_in_table_matching_tile(struct StandTile* arg0);
+struct path_table_alt *get_ptrpreset_in_table_matching_tile(struct StandTile* arg0);
 s32 check_if_any_path_preset_lies_on_tile(struct StandTile* arg0);
-f32 chrlvPadPresetRelated(struct coord3d *arg0, struct Pad *arg1);
-struct Pad *chrlvStanPadPresetRelated(struct coord3d *arg0, StandTile *arg1);
-void chrlvStanRoomRelatedAlt(ChrRecord *arg0, struct preset_0xxx *arg1);
+f32 chrlvPadPresetRelated(struct coord3d *arg0, struct path_table_alt *arg1);
+struct path_table_alt *chrlvStanPathRelated(struct coord3d *arg0, StandTile *arg1);
+void chrlvStanRoomRelatedAlt(ChrRecord *arg0, struct pad *arg1);
 
 void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2);
 void *sub_GAME_7F032C78(ChrRecord *arg0, s32 arg1, s32 arg2, s32 *arg3);
@@ -4368,20 +4368,20 @@ glabel sub_GAME_7F027804
 /**
  * Address 0x7F027BF4.
 */
-struct Pad *get_ptrpreset_in_table_matching_tile(struct StandTile* arg0)
+struct path_table_alt *get_ptrpreset_in_table_matching_tile(struct StandTile* arg0)
 {
-    struct Pad *pad;
-    struct preset_0xxx *preset;
+    struct path_table_alt *path;
+    struct pad *preset;
 
     if (ptr_setup_path_tbl != NULL)
     {
-        for (pad = ptr_setup_path_tbl; (s32)pad->padNumber >= 0; pad++)
+        for (path = ptr_setup_path_tbl; path->id >= 0; path++)
         {
-            preset = &((struct preset_0xxx *)ptr_0xxxpresets)[(s32)pad->padNumber];
+            preset = &((struct pad *)ptr_0xxxpresets)[path->id];
 
             if (preset->stan == arg0)
             {
-                return pad;
+                return path;
             }
         }
     }
@@ -4442,15 +4442,15 @@ s32 check_if_any_path_preset_lies_on_tile(struct StandTile* arg0)
  * 100% match, unsure of argument types.
  * Addresss 0x7F027C84.
 */
-f32 chrlvPadPresetRelated(struct coord3d *arg0, struct Pad *arg1)
+f32 chrlvPadPresetRelated(struct coord3d *arg0, struct path_table_alt *arg1)
 {
     f32 temp_f12;
     f32 temp_f2;
-    struct preset_0xxx *temp_v0;
+    struct pad *temp_v0;
 
-    temp_v0 = &ptr_0xxxpresets[arg1->padNumber];
-    temp_f2 = temp_v0->unk00 - arg0->f[0];
-    temp_f12 = temp_v0->unk08 - arg0->f[2];
+    temp_v0 = &ptr_0xxxpresets[arg1->id];
+    temp_f2 = temp_v0->pos.f[0] - arg0->f[0];
+    temp_f12 = temp_v0->pos.f[2] - arg0->f[2];
     return (temp_f2 * temp_f2) + (temp_f12 * temp_f12);
 }
 
@@ -4459,12 +4459,12 @@ f32 chrlvPadPresetRelated(struct coord3d *arg0, struct Pad *arg1)
 /**
  * Address 0x7F027CD4.
 */
-struct Pad *chrlvStanPadPresetRelated(struct coord3d *arg0, StandTile *arg1)
+struct path_table_alt *chrlvStanPathRelated(struct coord3d *arg0, StandTile *arg1)
 {
     StandTile *tile = NULL;
     f32 temp_f20;
-    struct Pad *ret = NULL;
-    struct Pad *pad = NULL;
+    struct path_table_alt *ret = NULL;
+    struct path_table_alt *wayp = NULL;
     s32 *n = NULL;
     
     tile = sub_GAME_7F0B2718(arg1, check_if_any_path_preset_lies_on_tile);
@@ -4478,11 +4478,11 @@ struct Pad *chrlvStanPadPresetRelated(struct coord3d *arg0, StandTile *arg1)
 
             for (n = ret->neighbours; *n >= 0; n++)
             {
-                pad = &ptr_setup_path_tbl[*n];
+                wayp = &ptr_setup_path_tbl[*n];
                 
-                if (chrlvPadPresetRelated(arg0, pad) < temp_f20)
+                if (chrlvPadPresetRelated(arg0, wayp) < temp_f20)
                 {
-                    ret = pad;
+                    ret = wayp;
                 }
             }
         }
@@ -4497,7 +4497,7 @@ struct Pad *chrlvStanPadPresetRelated(struct coord3d *arg0, StandTile *arg1)
 /**
  * Address 0x7F027DB0.
 */
-s32 chrlvStanRoomRelated(ChrRecord *arg0, struct preset_0xxx *arg1, StandTile *tile)
+s32 chrlvStanRoomRelated(ChrRecord *arg0, struct pad *arg1, StandTile *tile)
 {
 
 #define BUFFER_SIZE_7F027DB0 0x14
@@ -4508,7 +4508,7 @@ s32 chrlvStanRoomRelated(ChrRecord *arg0, struct preset_0xxx *arg1, StandTile *t
     s32 i;
 
     prop = arg0->prop;
-    tile_something = sub_GAME_7F0B0D0C(prop->stan, prop->pos.x, prop->pos.f[2], &tile, arg1->unk00, arg1->unk08, &sp48[0], BUFFER_SIZE_7F027DB0);
+    tile_something = sub_GAME_7F0B0D0C(prop->stan, prop->pos.x, prop->pos.f[2], &tile, arg1->pos.f[0], arg1->pos.f[2], &sp48[0], BUFFER_SIZE_7F027DB0);
 
     if (tile_something > 0 && tile_something < BUFFER_SIZE_7F027DB0)
     {
@@ -4533,7 +4533,7 @@ s32 chrlvStanRoomRelated(ChrRecord *arg0, struct preset_0xxx *arg1, StandTile *t
 /**
  * Address 0x7F027E70.
 */
-void chrlvStanRoomRelatedAlt(ChrRecord *arg0, struct preset_0xxx *arg1)
+void chrlvStanRoomRelatedAlt(ChrRecord *arg0, struct pad *arg1)
 {
     chrlvStanRoomRelated(arg0, arg1, arg1->stan);
 }
@@ -4542,8 +4542,29 @@ void chrlvStanRoomRelatedAlt(ChrRecord *arg0, struct preset_0xxx *arg1)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F027E90(void) {
+// unknown type for arg1.
+// arg2, might be struct coord3d, or struct pad
+void sub_GAME_7F027E90(struct ChrRecord *arg0, void *arg1, void *arg2)
+{
+    f32 sp20;
+    f32 sp1C;
+    f32 sp18;
+    f32 temp_f12;
+    f32 temp_f14;
+    void *temp_v0;
 
+    temp_v0 = arg0->unk18;
+    temp_f12 = arg2->unk0 - temp_v0->unk8;
+    temp_f14 = arg2->unk8 - temp_v0->unk10;
+    sp20 = temp_f12;
+    sp1C = temp_f14;
+    sp18 = atan2f(temp_f12, temp_f14);
+
+    arg1->unk0 = 6;
+    arg1->unk38 = 0.0f;
+    arg1->unk3C = sqrtf((sp20 * sp20) + (temp_f14 * temp_f14));
+
+    setsubroty(arg0->unk1C, sp18);
 }
 #else
 GLOBAL_ASM(
@@ -5899,11 +5920,11 @@ glabel plot_course_for_actor
 /* 05D94C 7F028E1C 8C650014 */  lw    $a1, 0x14($v1)
 /* 05D950 7F028E20 AFA30064 */  sw    $v1, 0x64($sp)
 /* 05D954 7F028E24 AFA20028 */  sw    $v0, 0x28($sp)
-/* 05D958 7F028E28 0FC09F35 */  jal   chrlvStanPadPresetRelated
+/* 05D958 7F028E28 0FC09F35 */  jal   chrlvStanPathRelated
 /* 05D95C 7F028E2C 24640008 */   addiu $a0, $v1, 8
 /* 05D960 7F028E30 AFA20060 */  sw    $v0, 0x60($sp)
 /* 05D964 7F028E34 8FA4006C */  lw    $a0, 0x6c($sp)
-/* 05D968 7F028E38 0FC09F35 */  jal   chrlvStanPadPresetRelated
+/* 05D968 7F028E38 0FC09F35 */  jal   chrlvStanPathRelated
 /* 05D96C 7F028E3C 8FA50070 */   lw    $a1, 0x70($sp)
 /* 05D970 7F028E40 8FA40060 */  lw    $a0, 0x60($sp)
 /* 05D974 7F028E44 00402825 */  move  $a1, $v0
@@ -21080,7 +21101,7 @@ glabel sub_GAME_7F033834
 /* 068384 7F033854 AFB3002C */  sw    $s3, 0x2c($sp)
 /* 068388 7F033858 AFB20028 */  sw    $s2, 0x28($sp)
 /* 06838C 7F03385C AFB10024 */  sw    $s1, 0x24($sp)
-/* 068390 7F033860 0FC09F35 */  jal   chrlvStanPadPresetRelated
+/* 068390 7F033860 0FC09F35 */  jal   chrlvStanPathRelated
 /* 068394 7F033864 AFA70044 */   sw    $a3, 0x44($sp)
 /* 068398 7F033868 10400041 */  beqz  $v0, .L7F033970
 /* 06839C 7F03386C 00409825 */   move  $s3, $v0
@@ -21200,12 +21221,12 @@ glabel check_2328_preset_set_with_method
 /* 068504 7F0339D4 AFA60020 */   sw    $a2, 0x20($sp)
 /* 068508 7F0339D8 8E050014 */  lw    $a1, 0x14($s0)
 /* 06850C 7F0339DC AFA20040 */  sw    $v0, 0x40($sp)
-/* 068510 7F0339E0 0FC09F35 */  jal   chrlvStanPadPresetRelated
+/* 068510 7F0339E0 0FC09F35 */  jal   chrlvStanPathRelated
 /* 068514 7F0339E4 26040008 */   addiu $a0, $s0, 8
 /* 068518 7F0339E8 8FA30040 */  lw    $v1, 0x40($sp)
 /* 06851C 7F0339EC 00408025 */  move  $s0, $v0
 /* 068520 7F0339F0 24640008 */  addiu $a0, $v1, 8
-/* 068524 7F0339F4 0FC09F35 */  jal   chrlvStanPadPresetRelated
+/* 068524 7F0339F4 0FC09F35 */  jal   chrlvStanPathRelated
 /* 068528 7F0339F8 8C650014 */   lw    $a1, 0x14($v1)
 /* 06852C 7F0339FC 8FA60020 */  lw    $a2, 0x20($sp)
 /* 068530 7F033A00 12000024 */  beqz  $s0, .L7F033A94

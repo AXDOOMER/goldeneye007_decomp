@@ -148,7 +148,7 @@ char dword_CODE_bss_80075C10[0x78];
 char dword_CODE_bss_80075C88[0x78];
 
 //CODE.bss:80075D00
-struct Pad * ptr_setup_path_tbl;
+struct path_table_alt * ptr_setup_path_tbl;
 //CODE.bss:80075D04
 void * ptr_setup_path_link;
 //CODE.bss:80075D08
@@ -160,7 +160,7 @@ void * ptr_setup_path_sets;
 //CODE.bss:80075D14
 void * ptr_setup_actions;
 //CODE.bss:80075D18
-struct preset_0xxx * ptr_0xxxpresets;
+struct pad * ptr_0xxxpresets;
 //CODE.bss:80075D1C
 void * ptr_2xxxpresets;
 //CODE.bss:80075D20

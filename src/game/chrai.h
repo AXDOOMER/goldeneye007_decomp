@@ -169,36 +169,8 @@ struct sfx_register_struct {
     u32 field_0x14;
 };
 
-
-struct Pad {
-    u32 padNumber;
-    s32* neighbours;
-    u32 pathSetIndex;
-    s32 dist_tmp;
-};
-
-/**
- * sizeof this struct must be exactly 0x2c=44 bytes.
-*/
-struct preset_0xxx
-{
-    f32 unk00;
-    s32 unk04;
-    f32 unk08;
-    s32 unk0c;
-
-    s32 unk10;
-    s32 unk14;
-    s32 unk18;
-    s32 unk1c;
-
-    s32 unk20;
-    s32 unk24;
-    struct StandTile* stan;
-};
-
-extern struct Pad * ptr_setup_path_tbl;
-extern struct preset_0xxx * ptr_0xxxpresets;
+extern struct path_table_alt * ptr_setup_path_tbl;
+extern struct pad * ptr_0xxxpresets;
 extern u32 monAnimRadarSub1[];
 extern u32 monAnimRadarSub2[];
 extern u32 monAnimRadarSub3[];

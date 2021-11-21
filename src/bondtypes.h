@@ -115,7 +115,7 @@ struct pad
     struct coord3d up;
     struct coord3d look;
     char *plink;
-    int unknown;
+    struct StandTile *stan;
 };
 
 struct pad3d
@@ -150,6 +150,15 @@ struct s_pathSet {
 struct ailist {
     u32 (*script)[];
     s32 id;
+};
+
+// this is something in between struct s_pathTbl and struct waypoint.
+struct path_table_alt
+{
+    s32 id;
+    s32 *neighbours;
+    s32 unk08;
+    s32 unk0c;
 };
 
 struct stagesetup {
@@ -265,6 +274,24 @@ typedef struct Model
     s32 unkbc;
     
 } Model;
+
+struct waypoint;
+
+struct waygroup
+{
+    struct waygroup *neighbours; //offset to an array linking each waygroup
+    struct waypoint *waypoints;  //offset to an array of waypoints in this set
+    s32 unk08;                   // *set to zero*
+};
+
+struct waypoint
+{
+    s32 PadID;                   // 0xxx ID
+    struct waypoint *neighbours; // most significant two bits are booleans, remaining bits are waypoint index.
+                                 // points to a series of values connecting each table entry
+    struct waygroup *groupnum;          // entry in the linkage table that contains this path entry
+    s32 dist_tmp;                //used in game.  set to 0
+};                      /*the table ends with a ID = -1*/
 
 struct waydata
 {
