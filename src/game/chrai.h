@@ -182,9 +182,9 @@ struct Pad {
 */
 struct preset_0xxx
 {
-    s32 unk00;
+    f32 unk00;
     s32 unk04;
-    s32 unk08;
+    f32 unk08;
     s32 unk0c;
 
     s32 unk10;

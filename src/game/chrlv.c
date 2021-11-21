@@ -47,8 +47,8 @@ f32 chrlvPathingCollisionRelated7F0264B0(PropRecord *arg0, f32 arg1, f32 arg2);
 void triggered_on_shot_hit(struct ChrRecord *arg0, struct coord3d *arg1, f32 arg2, s32 req_animation_id, ITEM_IDS item);
 s32 chrlvAttackAnimationRelated7F026F30(struct ChrRecord *arg0, f32 *result);
 
-
-
+struct Pad *get_ptrpreset_in_table_matching_tile(s32 arg0);
+s32 check_if_any_path_preset_lies_on_tile(s32 arg0);
 
 
 void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2);
@@ -4404,9 +4404,22 @@ s32 check_if_any_path_preset_lies_on_tile(s32 arg0)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F027C84(void) {
+/**
+ * 100% match, unsure of argument types.
+ * Addresss 0x7F027C84.
+*/
+f32 sub_GAME_7F027C84(struct coord3d *arg0, s32 *arg1)
+{
+    f32 temp_f12;
+    f32 temp_f2;
+    struct preset_0xxx *temp_v0;
 
+    temp_v0 = &ptr_0xxxpresets[*arg1];
+    temp_f2 = temp_v0->unk00 - arg0->f[0];
+    temp_f12 = temp_v0->unk08 - arg0->f[2];
+    return (temp_f2 * temp_f2) + (temp_f12 * temp_f12);
 }
+
 #else
 GLOBAL_ASM(
 .text
