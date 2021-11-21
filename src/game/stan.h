@@ -176,5 +176,6 @@ s32 sub_GAME_7F0B20D0(struct StandTile** tileStack, f32 target_x, f32 target_z, 
 
 s32 sub_GAME_7F0B0E24(struct StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z, int objFlags, f32 unkHeight, f32 unkA, f32 unkB, f32 unkC);
 struct StandTile* sub_GAME_7F0B2718(struct StandTile* srcTile, tilePredicate_t tilePred);
+s32 sub_GAME_7F0B0D0C(struct StandTile *tile, f32 start_x, f32 start_z, struct StandTile **tilePtr, f32 end_x, f32 end_z, s32 *roomBuf, s32 maxBufSize);
 
 #endif

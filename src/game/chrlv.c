@@ -48,6 +48,7 @@ f32 chrlvPathingCollisionRelated(PropRecord *arg0, f32 arg1, f32 arg2, s32 objFl
 f32 chrlvPathingCollisionRelated7F0264B0(PropRecord *arg0, f32 arg1, f32 arg2);
 void triggered_on_shot_hit(struct ChrRecord *arg0, struct coord3d *arg1, f32 arg2, s32 req_animation_id, ITEM_IDS item);
 s32 chrlvAttackAnimationRelated7F026F30(struct ChrRecord *arg0, f32 *result);
+s32 chrlvStanRoomRelated(ChrRecord *arg0, struct coord3d *arg1, StandTile *tile);
 
 struct Pad *get_ptrpreset_in_table_matching_tile(struct StandTile* arg0);
 s32 check_if_any_path_preset_lies_on_tile(struct StandTile* arg0);
@@ -4493,69 +4494,39 @@ struct Pad *chrlvStanPadPresetRelated(struct coord3d *arg0, StandTile *arg1)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F027DB0(void) {
+/**
+ * Address 0x7F027DB0.
+*/
+s32 chrlvStanRoomRelated(ChrRecord *arg0, struct coord3d *arg1, StandTile *tile)
+{
 
+#define BUFFER_SIZE_7F027DB0 0x14
+
+    s32 sp48[BUFFER_SIZE_7F027DB0];
+    PropRecord *prop;
+    s32 tile_something;
+    s32 i;
+
+    prop = arg0->prop;
+    tile_something = sub_GAME_7F0B0D0C(prop->stan, prop->pos.x, prop->pos.f[2], &tile, arg1->f[0], arg1->f[2], &sp48[0], BUFFER_SIZE_7F027DB0);
+
+    if (tile_something > 0 && tile_something < BUFFER_SIZE_7F027DB0)
+    {
+        for (i=0; i<tile_something; i++)
+        {
+            if (getROOMID_Bitflags(sp48[i]) != 0)
+            {
+                return 0;
+            }
+        }
+    }
+    else
+    {
+        return 0;
+    }
+
+    return 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F027DB0
-/* 05C8E0 7F027DB0 27BDFF68 */  addiu $sp, $sp, -0x98
-/* 05C8E4 7F027DB4 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 05C8E8 7F027DB8 AFB20030 */  sw    $s2, 0x30($sp)
-/* 05C8EC 7F027DBC AFB1002C */  sw    $s1, 0x2c($sp)
-/* 05C8F0 7F027DC0 AFB00028 */  sw    $s0, 0x28($sp)
-/* 05C8F4 7F027DC4 AFA600A0 */  sw    $a2, 0xa0($sp)
-/* 05C8F8 7F027DC8 8C820018 */  lw    $v0, 0x18($a0)
-/* 05C8FC 7F027DCC 00A08025 */  move  $s0, $a1
-/* 05C900 7F027DD0 C6040000 */  lwc1  $f4, ($s0)
-/* 05C904 7F027DD4 8C450008 */  lw    $a1, 8($v0)
-/* 05C908 7F027DD8 8C440014 */  lw    $a0, 0x14($v0)
-/* 05C90C 7F027DDC 8C460010 */  lw    $a2, 0x10($v0)
-/* 05C910 7F027DE0 E7A40010 */  swc1  $f4, 0x10($sp)
-/* 05C914 7F027DE4 C6060008 */  lwc1  $f6, 8($s0)
-/* 05C918 7F027DE8 27AE0048 */  addiu $t6, $sp, 0x48
-/* 05C91C 7F027DEC 240F0014 */  li    $t7, 20
-/* 05C920 7F027DF0 AFAF001C */  sw    $t7, 0x1c($sp)
-/* 05C924 7F027DF4 AFAE0018 */  sw    $t6, 0x18($sp)
-/* 05C928 7F027DF8 27A700A0 */  addiu $a3, $sp, 0xa0
-/* 05C92C 7F027DFC 0FC2C343 */  jal   sub_GAME_7F0B0D0C
-/* 05C930 7F027E00 E7A60014 */   swc1  $f6, 0x14($sp)
-/* 05C934 7F027E04 18400011 */  blez  $v0, .L7F027E4C
-/* 05C938 7F027E08 00409025 */   move  $s2, $v0
-/* 05C93C 7F027E0C 28410014 */  slti  $at, $v0, 0x14
-/* 05C940 7F027E10 1020000E */  beqz  $at, .L7F027E4C
-/* 05C944 7F027E14 00000000 */   nop   
-/* 05C948 7F027E18 1840000E */  blez  $v0, .L7F027E54
-/* 05C94C 7F027E1C 00008025 */   move  $s0, $zero
-/* 05C950 7F027E20 27B10048 */  addiu $s1, $sp, 0x48
-.L7F027E24:
-/* 05C954 7F027E24 0FC2D794 */  jal   getROOMID_Bitflags
-/* 05C958 7F027E28 8E240000 */   lw    $a0, ($s1)
-/* 05C95C 7F027E2C 10400003 */  beqz  $v0, .L7F027E3C
-/* 05C960 7F027E30 26100001 */   addiu $s0, $s0, 1
-/* 05C964 7F027E34 10000008 */  b     .L7F027E58
-/* 05C968 7F027E38 00001025 */   move  $v0, $zero
-.L7F027E3C:
-/* 05C96C 7F027E3C 1612FFF9 */  bne   $s0, $s2, .L7F027E24
-/* 05C970 7F027E40 26310004 */   addiu $s1, $s1, 4
-/* 05C974 7F027E44 10000004 */  b     .L7F027E58
-/* 05C978 7F027E48 24020001 */   li    $v0, 1
-.L7F027E4C:
-/* 05C97C 7F027E4C 10000002 */  b     .L7F027E58
-/* 05C980 7F027E50 00001025 */   move  $v0, $zero
-.L7F027E54:
-/* 05C984 7F027E54 24020001 */  li    $v0, 1
-.L7F027E58:
-/* 05C988 7F027E58 8FBF0034 */  lw    $ra, 0x34($sp)
-/* 05C98C 7F027E5C 8FB00028 */  lw    $s0, 0x28($sp)
-/* 05C990 7F027E60 8FB1002C */  lw    $s1, 0x2c($sp)
-/* 05C994 7F027E64 8FB20030 */  lw    $s2, 0x30($sp)
-/* 05C998 7F027E68 03E00008 */  jr    $ra
-/* 05C99C 7F027E6C 27BD0098 */   addiu $sp, $sp, 0x98
-)
-#endif
 
 
 
@@ -4569,7 +4540,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F027E70
 /* 05C9A0 7F027E70 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 05C9A4 7F027E74 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05C9A8 7F027E78 0FC09F6C */  jal   sub_GAME_7F027DB0
+/* 05C9A8 7F027E78 0FC09F6C */  jal   chrlvStanRoomRelated
 /* 05C9AC 7F027E7C 8CA60028 */   lw    $a2, 0x28($a1)
 /* 05C9B0 7F027E80 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 05C9B4 7F027E84 27BD0018 */  addiu $sp, $sp, 0x18
@@ -6021,7 +5992,7 @@ glabel plot_course_for_actor
 /* 05DA94 7F028F64 316C0002 */  andi  $t4, $t3, 2
 /* 05DA98 7F028F68 15800008 */  bnez  $t4, .L7F028F8C
 /* 05DA9C 7F028F6C 00000000 */   nop   
-/* 05DAA0 7F028F70 0FC09F6C */  jal   sub_GAME_7F027DB0
+/* 05DAA0 7F028F70 0FC09F6C */  jal   chrlvStanRoomRelated
 /* 05DAA4 7F028F74 8FA60030 */   lw    $a2, 0x30($sp)
 /* 05DAA8 7F028F78 10400004 */  beqz  $v0, .L7F028F8C
 /* 05DAAC 7F028F7C 02002025 */   move  $a0, $s0
@@ -18845,7 +18816,7 @@ glabel sub_GAME_7F032088
 /* 066C54 7F032124 27A60064 */   addiu $a2, $sp, 0x64
 /* 066C58 7F032128 02002025 */  move  $a0, $s0
 /* 066C5C 7F03212C 27A50068 */  addiu $a1, $sp, 0x68
-/* 066C60 7F032130 0FC09F6C */  jal   sub_GAME_7F027DB0
+/* 066C60 7F032130 0FC09F6C */  jal   chrlvStanRoomRelated
 /* 066C64 7F032134 8FA60064 */   lw    $a2, 0x64($sp)
 /* 066C68 7F032138 10400006 */  beqz  $v0, .L7F032154
 /* 066C6C 7F03213C 240F0001 */   li    $t7, 1
@@ -18882,7 +18853,7 @@ glabel sub_GAME_7F032088
 /* 066CE0 7F0321B0 314B0002 */  andi  $t3, $t2, 2
 /* 066CE4 7F0321B4 15600005 */  bnez  $t3, .L7F0321CC
 /* 066CE8 7F0321B8 00000000 */   nop   
-/* 066CEC 7F0321BC 0FC09F6C */  jal   sub_GAME_7F027DB0
+/* 066CEC 7F0321BC 0FC09F6C */  jal   chrlvStanRoomRelated
 /* 066CF0 7F0321C0 8FA60054 */   lw    $a2, 0x54($sp)
 /* 066CF4 7F0321C4 54400008 */  bnezl $v0, .L7F0321E8
 /* 066CF8 7F0321C8 260C005C */   addiu $t4, $s0, 0x5c
