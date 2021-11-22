@@ -4708,7 +4708,10 @@ void chrlvActGoposIncCurIndex(struct ChrRecord *arg0)
 
 #ifdef NONMATCHING
 void sub_GAME_7F028348(void) {
-
+// param arg0: unknown. If this is chrrecord, need to know action type. doesn't look like gopos.
+// param arg1: out parameter, integral type
+// param arg2: integral type
+// tentative signature: s32 sub_GAME_7F028348(void *arg0, s32 *arg1, s32 arg2)
 }
 #else
 GLOBAL_ASM(
@@ -4771,8 +4774,21 @@ glabel sub_GAME_7F028348
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0283FC(void) {
+// s32 sub_GAME_7F028348(void *arg0, s32 *arg1, s32 arg2);
 
+s32 sub_GAME_7F0283FC(void *arg0, s32 arg1)
+{
+    // act_patrol ???
+
+    s32 sp20;
+    s32 *temp_a1;
+
+    temp_a1 = &sp20;
+    sp20 = arg0->unk34;
+
+    // struct path_table_alt * ptr_setup_path_tbl
+
+    return (ptr_setup_path_tbl.unk0[*(*arg0->unk2C + (sub_GAME_7F028348(temp_a1, arg1) * 4))].id * 0x2C) + ptr_setup_path_tbl.unk18;
 }
 #else
 GLOBAL_ASM(
@@ -4813,25 +4829,15 @@ glabel sub_GAME_7F0283FC
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F028474(void) {
-
+/**
+ * Unknown type for arg0.
+ * 
+ * Address 0x7F028474.
+*/
+void sub_GAME_7F028474(void *arg0)
+{
+    sub_GAME_7F0283FC(arg0, 0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F028474
-/* 05CFA4 7F028474 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 05CFA8 7F028478 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05CFAC 7F02847C 0FC0A0FF */  jal   sub_GAME_7F0283FC
-/* 05CFB0 7F028480 00002825 */   move  $a1, $zero
-/* 05CFB4 7F028484 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05CFB8 7F028488 27BD0018 */  addiu $sp, $sp, 0x18
-/* 05CFBC 7F02848C 03E00008 */  jr    $ra
-/* 05CFC0 7F028490 00000000 */   nop   
-)
-#endif
-
 
 
 #ifdef NONMATCHING
