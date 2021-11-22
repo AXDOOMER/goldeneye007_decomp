@@ -241,5 +241,6 @@ void give_cur_player_ammo(s32, s32);
 s8 bondwalkItemGetAutomaticFiringRate(ITEM_IDS item);
 void inc_cur_civilian_casualties(void);
 void increment_num_kills_display_text_in_MP();
+f32 bondwalkItemGetDestructionAmount(ITEM_IDS item);
 
 #endif

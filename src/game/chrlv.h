@@ -31,6 +31,6 @@ s32 convertPadIf9000(struct ChrRecord *guardData,s32 padNo);
 void chrlvLineLineIntersection(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *arg2, struct coord3d *arg3, struct coord3d *result);
 void chrlvStanLineDirIntersection(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *result);
 void chrlvStanPointPointIntersection(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *result);
-
+bool handles_shot_actors(struct ChrRecord *self, s32 hitpart, struct coord3d *vector, s32 weaponid, bool isPlayer);
 
 #endif

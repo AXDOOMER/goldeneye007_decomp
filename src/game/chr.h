@@ -5,6 +5,8 @@
 #include "chrai.h"
 #include "bondtypes.h"
 
+extern s16 metal_ricochet_SFX[3];
+
 struct struck_animation_table;
 
 struct animation_something

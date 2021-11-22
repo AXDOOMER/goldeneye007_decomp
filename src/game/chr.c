@@ -1136,7 +1136,7 @@ s16 female_guard_yelps[] = {
 s32 male_guard_yelp_counter = 0;
 s32 female_guard_yelp_counter = 0;
 
-s16 metal_ricochet_SFX[] = {0xEF, 0x48, 0x49};
+s16 metal_ricochet_SFX[3] = {0xEF, 0x48, 0x49};
 
 
 s32 D_80030A44 = 0;
