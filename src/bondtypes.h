@@ -487,11 +487,13 @@ struct act_gopos
 
     s8 unk5c; // flag or type?
     s8 unk5d;
-    u16 unk5e;
+    s8 unk5e;
+    s8 unk5f;
 
-    s32 unk60;
-    s32 unk64;
-    s32 unk68;
+    /**
+     * struct offset 0x34, chr offset 0x60.
+    */
+    struct coord3d pos;
     s32 unk6c;
 
     s32 unk70;

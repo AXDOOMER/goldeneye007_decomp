@@ -68,6 +68,7 @@ void sub_GAME_7F02D184(struct ChrRecord *arg0);
 void sub_GAME_7F0281F4(struct ChrRecord *arg0);
 void plot_course_for_actor(struct ChrRecord *arg0, struct act_gopos *, struct StandTile *, u8);
 void chrlvPlotCourseRelated(struct ChrRecord *arg0);
+void chrlvActGoposSetTargetPosRelated(ChrRecord *arg0);
 
 // end forward declarations
 
@@ -4657,51 +4658,26 @@ glabel chrlvPlotCourseRelated
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02828C(ChrRecord *arg0)
+/**
+ * Address 0x7F02828C.
+*/
+void chrlvActGoposSetTargetPosRelated(ChrRecord *arg0)
 {
     struct coord3d sp1C;
     StandTile *sp18;
 
     chrlvActGoposRelated(arg0, (struct coord3d *) &sp1C, &sp18);
 
-    arg0->act_bytes.padding[0x30] = 0;
-    arg0->act_bytes.padding[0x31] = 0;
-    arg0->act_bytes.padding[0x32] = 0;
+    arg0->act_gopos.unk5c = 0;
+    arg0->act_gopos.unk5d = 0;
+    arg0->act_gopos.unk5e = 0;
 
-    arg0->act_init.padding[0xD] = sp1C.f[0];
-    arg0->act_init.padding[0xE] = sp1C.f[1];
-    arg0->act_init.padding[0xF] = sp1C.f[2];
+    arg0->act_gopos.pos.f[0] = sp1C.f[0];
+    arg0->act_gopos.pos.f[1] = sp1C.f[1];
+    arg0->act_gopos.pos.f[2] = sp1C.f[2];
 
     sub_GAME_7F0281F4(arg0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02828C
-/* 05CDBC 7F02828C 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 05CDC0 7F028290 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05CDC4 7F028294 27A5001C */  addiu $a1, $sp, 0x1c
-/* 05CDC8 7F028298 27A60018 */  addiu $a2, $sp, 0x18
-/* 05CDCC 7F02829C 0FC09FC8 */  jal   chrlvActGoposRelated
-/* 05CDD0 7F0282A0 AFA40028 */   sw    $a0, 0x28($sp)
-/* 05CDD4 7F0282A4 8FA40028 */  lw    $a0, 0x28($sp)
-/* 05CDD8 7F0282A8 A080005C */  sb    $zero, 0x5c($a0)
-/* 05CDDC 7F0282AC A080005D */  sb    $zero, 0x5d($a0)
-/* 05CDE0 7F0282B0 A080005E */  sb    $zero, 0x5e($a0)
-/* 05CDE4 7F0282B4 C7A4001C */  lwc1  $f4, 0x1c($sp)
-/* 05CDE8 7F0282B8 E4840060 */  swc1  $f4, 0x60($a0)
-/* 05CDEC 7F0282BC C7A60020 */  lwc1  $f6, 0x20($sp)
-/* 05CDF0 7F0282C0 E4860064 */  swc1  $f6, 0x64($a0)
-/* 05CDF4 7F0282C4 C7A80024 */  lwc1  $f8, 0x24($sp)
-/* 05CDF8 7F0282C8 0FC0A07D */  jal   sub_GAME_7F0281F4
-/* 05CDFC 7F0282CC E4880068 */   swc1  $f8, 0x68($a0)
-/* 05CE00 7F0282D0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05CE04 7F0282D4 27BD0028 */  addiu $sp, $sp, 0x28
-/* 05CE08 7F0282D8 03E00008 */  jr    $ra
-/* 05CE0C 7F0282DC 00000000 */   nop   
-)
-#endif
 
 
 
@@ -4734,7 +4710,7 @@ glabel sub_GAME_7F0282E0
 /* 05CE54 7F028324 0FC23D3C */  jal   sub_GAME_7F08F4F0
 /* 05CE58 7F028328 24070006 */   li    $a3, 6
 .L7F02832C:
-/* 05CE5C 7F02832C 0FC0A0A3 */  jal   sub_GAME_7F02828C
+/* 05CE5C 7F02832C 0FC0A0A3 */  jal   chrlvActGoposSetTargetPosRelated
 /* 05CE60 7F028330 02002025 */   move  $a0, $s0
 /* 05CE64 7F028334 8FBF001C */  lw    $ra, 0x1c($sp)
 /* 05CE68 7F028338 8FB00018 */  lw    $s0, 0x18($sp)
@@ -5176,7 +5152,7 @@ glabel sub_GAME_7F028600
 .L7F028864:
 /* 05D394 7F028864 8D29837C */  lw    $t1, %lo(g_GlobalTimer)($t1)
 /* 05D398 7F028868 02002025 */  move  $a0, $s0
-/* 05D39C 7F02886C 0FC0A0A3 */  jal   sub_GAME_7F02828C
+/* 05D39C 7F02886C 0FC0A0A3 */  jal   chrlvActGoposSetTargetPosRelated
 /* 05D3A0 7F028870 AE09009C */   sw    $t1, 0x9c($s0)
 /* 05D3A4 7F028874 02002025 */  move  $a0, $s0
 .L7F028878:
@@ -5683,7 +5659,7 @@ glabel plot_course_for_actor
 /* 05DA48 7F028F18 8C790008 */  lw    $t9, 8($v1)
 /* 05DA4C 7F028F1C AC590048 */  sw    $t9, 0x48($v0)
 /* 05DA50 7F028F20 8C68000C */  lw    $t0, 0xc($v1)
-/* 05DA54 7F028F24 0FC0A0A3 */  jal   sub_GAME_7F02828C
+/* 05DA54 7F028F24 0FC0A0A3 */  jal   chrlvActGoposSetTargetPosRelated
 /* 05DA58 7F028F28 AC48004C */   sw    $t0, 0x4c($v0)
 /* 05DA5C 7F028F2C A2000008 */  sb    $zero, 8($s0)
 /* 05DA60 7F028F30 8FA90028 */  lw    $t1, 0x28($sp)
@@ -18569,7 +18545,7 @@ glabel sub_GAME_7F032088
 /* 066CF4 7F0321C4 54400008 */  bnezl $v0, .L7F0321E8
 /* 066CF8 7F0321C8 260C005C */   addiu $t4, $s0, 0x5c
 .L7F0321CC:
-/* 066CFC 7F0321CC 0FC0A0A3 */  jal   sub_GAME_7F02828C
+/* 066CFC 7F0321CC 0FC0A0A3 */  jal   chrlvActGoposSetTargetPosRelated
 /* 066D00 7F0321D0 02002025 */   move  $a0, $s0
 /* 066D04 7F0321D4 3C0D8005 */  lui   $t5, %hi(g_GlobalTimer) 
 /* 066D08 7F0321D8 8DAD837C */  lw    $t5, %lo(g_GlobalTimer)($t5)
