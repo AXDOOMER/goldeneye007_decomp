@@ -4776,7 +4776,7 @@ glabel sub_GAME_7F028348
 #ifdef NONMATCHING
 // s32 sub_GAME_7F028348(void *arg0, s32 *arg1, s32 arg2);
 
-s32 sub_GAME_7F0283FC(void *arg0, s32 arg1)
+s32 sub_GAME_7F0283FC(struct ChrRecord *arg0, s32 arg1)
 {
     // act_patrol ???
 
@@ -4831,43 +4831,32 @@ glabel sub_GAME_7F0283FC
 
 /**
  * Unknown type for arg0.
+ * Unknown return type.
  * 
  * Address 0x7F028474.
 */
-void sub_GAME_7F028474(void *arg0)
+void * sub_GAME_7F028474(struct ChrRecord *arg0)
 {
-    sub_GAME_7F0283FC(arg0, 0);
+    return sub_GAME_7F0283FC(arg0, 0);
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F028494(void) {
+/**
+ * Address 0x7F028494.
+*/
+void sub_GAME_7F028494(struct ChrRecord *arg0)
+{
+    struct coord3d *temp_v0; // or maybe struct pad.
 
+    temp_v0 = sub_GAME_7F028474(arg0);
+    arg0->act_patrol.waydata.mode = 0;
+    arg0->act_patrol.waydata.unk01 = 0;
+    arg0->act_patrol.waydata.unk02 = 0;
+    arg0->act_patrol.waydata.pos.f[0] = temp_v0->f[0];
+    arg0->act_patrol.waydata.pos.f[1] = temp_v0->f[1];
+    arg0->act_patrol.waydata.pos.f[2] = temp_v0->f[2];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F028494
-/* 05CFC4 7F028494 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 05CFC8 7F028498 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05CFCC 7F02849C 0FC0A11D */  jal   sub_GAME_7F028474
-/* 05CFD0 7F0284A0 AFA40018 */   sw    $a0, 0x18($sp)
-/* 05CFD4 7F0284A4 8FA40018 */  lw    $a0, 0x18($sp)
-/* 05CFD8 7F0284A8 A0800038 */  sb    $zero, 0x38($a0)
-/* 05CFDC 7F0284AC A0800039 */  sb    $zero, 0x39($a0)
-/* 05CFE0 7F0284B0 A080003A */  sb    $zero, 0x3a($a0)
-/* 05CFE4 7F0284B4 C4440000 */  lwc1  $f4, ($v0)
-/* 05CFE8 7F0284B8 E484003C */  swc1  $f4, 0x3c($a0)
-/* 05CFEC 7F0284BC C4460004 */  lwc1  $f6, 4($v0)
-/* 05CFF0 7F0284C0 E4860040 */  swc1  $f6, 0x40($a0)
-/* 05CFF4 7F0284C4 C4480008 */  lwc1  $f8, 8($v0)
-/* 05CFF8 7F0284C8 E4880044 */  swc1  $f8, 0x44($a0)
-/* 05CFFC 7F0284CC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05D000 7F0284D0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 05D004 7F0284D4 03E00008 */  jr    $ra
-/* 05D008 7F0284D8 00000000 */   nop   
-)
-#endif
+
 
 
 
