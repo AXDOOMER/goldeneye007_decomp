@@ -4950,7 +4950,7 @@ glabel sub_GAME_7F028510
 
 #ifdef NONMATCHING
 void sub_GAME_7F028600(void) {
-// break
+
 }
 #else
 GLOBAL_ASM(
@@ -5504,31 +5504,14 @@ glabel get_sound_at_range
 
 
 
-#ifdef NONMATCHING
-void play_hit_soundeffect_and_proper_volume(void) {
-
+/**
+ * Address 0x7F028DA0.
+*/
+void play_hit_soundeffect_and_proper_volume(struct ChrRecord *arg0)
+{
+    get_sound_at_range(arg0, arg0->act_ubytes.padding[45], c_item_entries[arg0->bodynum].isMale);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel play_hit_soundeffect_and_proper_volume
-/* 05D8D0 7F028DA0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 05D8D4 7F028DA4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05D8D8 7F028DA8 808E000F */  lb    $t6, 0xf($a0)
-/* 05D8DC 7F028DAC 3C068004 */  lui   $a2, %hi(c_item_entries+16)
-/* 05D8E0 7F028DB0 90850059 */  lbu   $a1, 0x59($a0)
-/* 05D8E4 7F028DB4 000E7880 */  sll   $t7, $t6, 2
-/* 05D8E8 7F028DB8 01EE7821 */  addu  $t7, $t7, $t6
-/* 05D8EC 7F028DBC 000F7880 */  sll   $t7, $t7, 2
-/* 05D8F0 7F028DC0 00CF3021 */  addu  $a2, $a2, $t7
-/* 05D8F4 7F028DC4 0FC0A297 */  jal   get_sound_at_range
-/* 05D8F8 7F028DC8 90C6DE20 */   lbu   $a2, %lo(c_item_entries+16)($a2)
-/* 05D8FC 7F028DCC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05D900 7F028DD0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 05D904 7F028DD4 03E00008 */  jr    $ra
-/* 05D908 7F028DD8 00000000 */   nop   
-)
-#endif
+
 
 
 
