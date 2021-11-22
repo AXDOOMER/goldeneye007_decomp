@@ -471,10 +471,7 @@ struct act_patrol
 struct act_gopos
 {
     struct coord3d targetpos;  // Target pos                           /*0x02c*/
-    //s16 rooms[7];          // Target rooms only in PD                /*0x038*/
-
-    // this might be a pointer to a stan?
-    struct waypoint *target; // Target/final waypoint                  /*0x038*/
+    struct StandTile *target; // Target/final waypoint                  /*0x038*/
 
     s32 unk3c;                                                        /*0x03c*/
 
@@ -482,24 +479,72 @@ struct act_gopos
     // a waypoint is reached, and probably even more frequently than that.
     struct waypoint *waypoints[5]; // MAX_CHRWAYPOINTS];               /*0x040*/
 
+    s32 unk54;
     
+    u8 unk58;
+    u8 unk59;  // guess: room
+    u16 unk5a; // g_ClockTimer related
+
+    s8 unk5c; // flag or type?
+    s8 unk5d;
+    u16 unk5e;
+
+    s32 unk60;
+    s32 unk64;
+    s32 unk68;
+    s32 unk6c;
+
+    s32 unk70;
+    s32 unk74;
+    s32 unk78;
+    s32 unk7c;
+
+    s32 unk80;
+    s32 unk84;
+    s32 unk88;
+    s32 unk8c;
+
+    // PD reference below:
+
+    // Array of pointers to the next couple of waypoints. Recalculated each time
+    // a waypoint is reached, and probably even more frequently than that.
+    // struct waypoint *waypoints[5]; // MAX_CHRWAYPOINTS];               /*0x040*/
 
     // Index of the waypoint in the above array that the chr is running to. If
     // the chr has line of sight (through doors) to the next or next + 1 then
     // the index can be changed to that one and the chr will run straight to it.
     // This index will always be 0, 1 or 2. When it reaches 3 the pathfinding is
     // recalculated, the array replaced with a new one and index set to 0.
-    u8 curindex;                                                       /*0x054*/
+    //u8 curindex;                                                       /*0x054*/
 
     // x....... = walking directly to pad due to PADFLAG_AIWALKDIRECT
     // .x...... = ducking due to PADFLAG_AIDUCK
     // ....x... = on preset path
     // ......xx = speed
-    u8 flags;                                                          /*0x055*/
-    u16 restartttl;                                                    /*0x056*/
-    struct waydata waydata;                                            /*0x058*/
-    s32 cheapend60; // lvframe60 time that the chr exited cheap method of wayfinding /*0x098*/ 
-    f32 unk0ac;                                                        /*0x09c*/
+    //u8 flags;                                                          /*0x055*/
+    //u16 restartttl;                                                    /*0x056*/
+
+    //struct waydata waydata;                                            /*0x058*/
+    ///////////////////////////////////////////
+    // u8 mode;                 /*0x00 58*/
+    // u8 unk01;                /*0x01 59*/
+    // u16 unk02;               /*0x02 5a*/
+    // struct coord3d pos;      /*0x04 5c*/
+    // struct coord3d pos2;     /*0x10 68*/
+    // u32 unk1c;               /*0x1c 74*/
+    // u32 unk20;               /*0x20 78*/
+    // u32 unk24;               /*0x24 7c*/
+    // s32 age;                 /*0x28 80*/
+    // struct coord3d pos_copy; /*0x2c 84*/
+
+    // // These are the distances between the current waypoint and the previous
+    // // when using cheap mode.
+    // f32 segdistdone;  /*0x38 90*/
+    // f32 segdisttotal; /*0x3c 94*/
+    ///////////////////////////////////////////
+
+    //s32 cheapend60; // lvframe60 time that the chr exited cheap method of wayfinding /*0x098*/ 
+    //f32 unk0ac;                                                        /*0x09c*/
 };
 struct act_surrender
 {

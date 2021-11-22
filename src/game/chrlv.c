@@ -66,6 +66,8 @@ void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2);
 void *sub_GAME_7F032C78(ChrRecord *arg0, s32 arg1, s32 arg2, s32 *arg3);
 void sub_GAME_7F02D184(struct ChrRecord *arg0);
 void sub_GAME_7F0281F4(struct ChrRecord *arg0);
+void plot_course_for_actor(struct ChrRecord *arg0, struct act_gopos *, struct StandTile *, u8);
+void chrlvPlotCourseRelated(struct ChrRecord *arg0);
 
 // end forward declarations
 
@@ -3789,7 +3791,7 @@ bool handles_shot_actors(struct ChrRecord *self, s32 hitpart, struct coord3d *ve
                 (self->actiontype != ACT_PATROL) &&
                 (self->actiontype != ACT_SURRENDER) &&
                 (self->actiontype != ACT_ANIM) &&
-                ((self->actiontype != ACT_GOPOS) || self->act_gopos.waydata.unk01))
+                ((self->actiontype != ACT_GOPOS) || self->act_gopos.unk59))
             {
                 // Punching and pistol whipping is less effective from the front
                 if ((angle < 1.0471976f) || (angle > 5.2359877f))
@@ -4430,7 +4432,7 @@ void chrlvActGoposRelated(struct ChrRecord *arg0, struct coord3d *target_point, 
     struct waypoint *temp_v0;
     struct pad *temp_v1;
 
-    temp_v0 = arg0->act_gopos.waypoints[arg0->act_gopos.waydata.mode];
+    temp_v0 = arg0->act_gopos.waypoints[arg0->act_gopos.unk58];
 
     if (temp_v0 != NULL)
     {
@@ -4448,7 +4450,7 @@ void chrlvActGoposRelated(struct ChrRecord *arg0, struct coord3d *target_point, 
         target_point->f[1] = arg0->act_gopos.targetpos.f[1];
         target_point->f[2] = arg0->act_gopos.targetpos.f[2];
 
-        *target_stan = (struct StandTile *) arg0->act_gopos.target;
+        *target_stan = arg0->act_gopos.target;
     }
 }
 
@@ -4541,102 +4543,66 @@ s32 chrlvMovementTargetRelated(ChrRecord *arg0)
 */
 void sub_GAME_7F0281F4(struct ChrRecord *arg0)
 {
-    arg0->act_gopos.waydata.unk02 = 0;
+    arg0->act_gopos.unk5a = 0;
 }
 
 
-
-#ifdef NONMATCHING
-// need to know the action type to get the right properties.
-// specificallly, arg0->act_bytes.padding[0x30]
-void sub_GAME_7F0281FC(ChrRecord *arg0)
+/* VERSION_US, VERSION_JP */
+#ifndef VERSION_EU
+/**
+ * Address 0x7F0281FC (US,JP)
+ * Address 0x7F028214 (VERSION_EU)
+*/
+void chrlvPlotCourseRelated(struct ChrRecord *arg0)
 {
     s32 temp_a1;
-    u16 temp_v0;
-    u16 temp_v1;
-    u16 phi_a1;
+    s32 temp_v0;
+    s32 temp_v1;
 
-    if (arg0->act_bytes.padding[0x30] != 6)
+    if (arg0->act_gopos.unk5c != 6)
     {
-        temp_v0 = arg0->act_gopos.waydata.unk02;
+        temp_v0 = arg0->act_gopos.unk5a;
 
         if (temp_v0 == 0)
         {
-            temp_a1 = (chrlvMovementTargetRelated(arg0) * 2) + 0x12C;
-            phi_a1 = (u16) temp_a1;
+#ifndef VERSION_EU
+            temp_a1 = (chrlvMovementTargetRelated(arg0) * 2) + 300;
+#else
+            temp_a1 = ((chrlvMovementTargetRelated(arg0) * 100) + 15000) / 60;
+#endif
+
             if (temp_a1 >= 0x10000)
             {
-                phi_a1 = 0xFFFFU;
+                temp_a1 = (u16)-1;
             }
 
-            arg0->act_gopos.waydata.unk02 = phi_a1;
+            arg0->act_gopos.unk5a = (s16)temp_a1;
 
             return;
         }
 
-        temp_v1 = *(&g_ClockTimer + 2);
+        temp_v1 = (u16)g_ClockTimer;
 
-        if ((s32) temp_v1 >= (s32) temp_v0)
+        if (temp_v1 >= temp_v0)
         {
-            plot_course_for_actor(&arg0->act_gopos, arg0->act_gopos.target, arg0->act_gopos.waydata.unk01);
+            plot_course_for_actor(arg0, &arg0->act_gopos, arg0->act_gopos.target, arg0->act_gopos.unk59);
+            
             return;
         }
 
-        arg0->act_gopos.waydata.unk02 = (u16) (temp_v0 - temp_v1);
+        arg0->act_gopos.unk5a = (u16) (temp_v0 - temp_v1);
     }
 }
 #else
-#ifndef VERSION_EU
+/* VERSION_EU */
+
+#ifdef NONMATCHING
+// implemented above, but untested
+#else
+
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0281FC
-/* 05CD2C 7F0281FC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 05CD30 7F028200 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05CD34 7F028204 808E005C */  lb    $t6, 0x5c($a0)
-/* 05CD38 7F028208 24010006 */  li    $at, 6
-/* 05CD3C 7F02820C 51C1001C */  beql  $t6, $at, .L7F028280
-/* 05CD40 7F028210 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 05CD44 7F028214 9482005A */  lhu   $v0, 0x5a($a0)
-/* 05CD48 7F028218 3C038005 */  lui   $v1, %hi(g_ClockTimer+2)
-/* 05CD4C 7F02821C 1440000C */  bnez  $v0, .L7F028250
-/* 05CD50 7F028220 00000000 */   nop   
-/* 05CD54 7F028224 0FC0A051 */  jal   chrlvMovementTargetRelated
-/* 05CD58 7F028228 AFA40018 */   sw    $a0, 0x18($sp)
-/* 05CD5C 7F02822C 00021840 */  sll   $v1, $v0, 1
-/* 05CD60 7F028230 2465012C */  addiu $a1, $v1, 0x12c
-/* 05CD64 7F028234 3C010001 */  lui   $at, 1
-/* 05CD68 7F028238 00A1082A */  slt   $at, $a1, $at
-/* 05CD6C 7F02823C 14200002 */  bnez  $at, .L7F028248
-/* 05CD70 7F028240 8FA40018 */   lw    $a0, 0x18($sp)
-/* 05CD74 7F028244 3405FFFF */  li    $a1, 65535
-.L7F028248:
-/* 05CD78 7F028248 1000000C */  b     .L7F02827C
-/* 05CD7C 7F02824C A485005A */   sh    $a1, 0x5a($a0)
-.L7F028250:
-/* 05CD80 7F028250 94638376 */  lhu   $v1, %lo(g_ClockTimer+2)($v1)
-/* 05CD84 7F028254 2485002C */  addiu $a1, $a0, 0x2c
-/* 05CD88 7F028258 0062082A */  slt   $at, $v1, $v0
-/* 05CD8C 7F02825C 14200006 */  bnez  $at, .L7F028278
-/* 05CD90 7F028260 00437823 */   subu  $t7, $v0, $v1
-/* 05CD94 7F028264 8C860038 */  lw    $a2, 0x38($a0)
-/* 05CD98 7F028268 0FC0A377 */  jal   plot_course_for_actor
-/* 05CD9C 7F02826C 90870059 */   lbu   $a3, 0x59($a0)
-/* 05CDA0 7F028270 10000003 */  b     .L7F028280
-/* 05CDA4 7F028274 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F028278:
-/* 05CDA8 7F028278 A48F005A */  sh    $t7, 0x5a($a0)
-.L7F02827C:
-/* 05CDAC 7F02827C 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F028280:
-/* 05CDB0 7F028280 27BD0018 */  addiu $sp, $sp, 0x18
-/* 05CDB4 7F028284 03E00008 */  jr    $ra
-/* 05CDB8 7F028288 00000000 */   nop   
-)
-#endif
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0281FC
+glabel chrlvPlotCourseRelated
 /* 05AC04 7F028214 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 05AC08 7F028218 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 05AC0C 7F02821C 808E005C */  lb    $t6, 0x5c($a0)
@@ -5628,7 +5594,7 @@ glabel play_hit_soundeffect_and_proper_volume
 
 #ifdef NONMATCHING
 void plot_course_for_actor(void) {
-// tenative signature: void plot_course_for_actor(struct act_gopos *, struct waypoint *, u8); 
+
 }
 #else
 GLOBAL_ASM(
@@ -18543,7 +18509,7 @@ glabel sub_GAME_7F032088
 /* 066C10 7F0320E0 0FC0A377 */  jal   plot_course_for_actor
 /* 066C14 7F0320E4 92070059 */   lbu   $a3, 0x59($s0)
 .L7F0320E8:
-/* 066C18 7F0320E8 0FC0A07F */  jal   sub_GAME_7F0281FC
+/* 066C18 7F0320E8 0FC0A07F */  jal   chrlvPlotCourseRelated
 /* 066C1C 7F0320EC 02002025 */   move  $a0, $s0
 /* 066C20 7F0320F0 820B005C */  lb    $t3, 0x5c($s0)
 /* 066C24 7F0320F4 24010006 */  li    $at, 6
