@@ -21,6 +21,7 @@
 #include "game/player.h"
 #include "game/player_2.h"
 #include "game/stan.h"
+#include "game/unk_08DBB0.h"
 
 // forward declarations
 
@@ -69,6 +70,7 @@ void sub_GAME_7F0281F4(struct ChrRecord *arg0);
 void plot_course_for_actor(struct ChrRecord *arg0, struct act_gopos *, struct StandTile *, u8);
 void chrlvPlotCourseRelated(struct ChrRecord *arg0);
 void chrlvActGoposSetTargetPosRelated(ChrRecord *arg0);
+void chrlvActGoposIncCurIndex(struct ChrRecord *arg0);
 
 // end forward declarations
 
@@ -4433,9 +4435,9 @@ void chrlvActGoposRelated(struct ChrRecord *arg0, struct coord3d *target_point, 
     struct waypoint *temp_v0;
     struct pad *temp_v1;
 
-    temp_v0 = arg0->act_gopos.waypoints[arg0->act_gopos.unk58];
+    temp_v0 = arg0->act_gopos.waypoints[arg0->act_gopos.curindex];
 
-    if (temp_v0 != NULL)
+    if (temp_v0 != 0)
     {
         temp_v1 = &ptr_0xxxpresets[temp_v0->PadID];
 
@@ -4681,44 +4683,26 @@ void chrlvActGoposSetTargetPosRelated(ChrRecord *arg0)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0282E0(void) {
+/**
+ * Address 0x7F0282E0.
+*/
+void chrlvActGoposIncCurIndex(struct ChrRecord *arg0)
+{
+    if (arg0->act_gopos.curindex < 3)
+    {
+        arg0->act_gopos.curindex++;
+    }
+    else
+    {
+        struct waypoint * p = arg0->act_gopos.waypoints[arg0->act_gopos.curindex];
 
+        arg0->act_gopos.curindex = 1;
+
+        sub_GAME_7F08F4F0(p, arg0->act_gopos.unk3c, &arg0->act_gopos.waypoints, 6);
+    }
+
+    chrlvActGoposSetTargetPosRelated(arg0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0282E0
-/* 05CE10 7F0282E0 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 05CE14 7F0282E4 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 05CE18 7F0282E8 AFB00018 */  sw    $s0, 0x18($sp)
-/* 05CE1C 7F0282EC 90820058 */  lbu   $v0, 0x58($a0)
-/* 05CE20 7F0282F0 00808025 */  move  $s0, $a0
-/* 05CE24 7F0282F4 24190001 */  li    $t9, 1
-/* 05CE28 7F0282F8 28410003 */  slti  $at, $v0, 3
-/* 05CE2C 7F0282FC 10200004 */  beqz  $at, .L7F028310
-/* 05CE30 7F028300 00027880 */   sll   $t7, $v0, 2
-/* 05CE34 7F028304 244E0001 */  addiu $t6, $v0, 1
-/* 05CE38 7F028308 10000008 */  b     .L7F02832C
-/* 05CE3C 7F02830C A08E0058 */   sb    $t6, 0x58($a0)
-.L7F028310:
-/* 05CE40 7F028310 020FC021 */  addu  $t8, $s0, $t7
-/* 05CE44 7F028314 8F040040 */  lw    $a0, 0x40($t8)
-/* 05CE48 7F028318 A2190058 */  sb    $t9, 0x58($s0)
-/* 05CE4C 7F02831C 8E05003C */  lw    $a1, 0x3c($s0)
-/* 05CE50 7F028320 26060040 */  addiu $a2, $s0, 0x40
-/* 05CE54 7F028324 0FC23D3C */  jal   sub_GAME_7F08F4F0
-/* 05CE58 7F028328 24070006 */   li    $a3, 6
-.L7F02832C:
-/* 05CE5C 7F02832C 0FC0A0A3 */  jal   chrlvActGoposSetTargetPosRelated
-/* 05CE60 7F028330 02002025 */   move  $a0, $s0
-/* 05CE64 7F028334 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 05CE68 7F028338 8FB00018 */  lw    $s0, 0x18($sp)
-/* 05CE6C 7F02833C 27BD0020 */  addiu $sp, $sp, 0x20
-/* 05CE70 7F028340 03E00008 */  jr    $ra
-/* 05CE74 7F028344 00000000 */   nop   
-)
-#endif
 
 
 
@@ -5121,7 +5105,7 @@ glabel sub_GAME_7F028600
 /* 05D320 7F0287F0 10000021 */  b     .L7F028878
 /* 05D324 7F0287F4 02002025 */   move  $a0, $s0
 .L7F0287F8:
-/* 05D328 7F0287F8 0FC0A0B8 */  jal   sub_GAME_7F0282E0
+/* 05D328 7F0287F8 0FC0A0B8 */  jal   chrlvActGoposIncCurIndex
 /* 05D32C 7F0287FC 02002025 */   move  $a0, $s0
 /* 05D330 7F028800 02002025 */  move  $a0, $s0
 /* 05D334 7F028804 27A50040 */  addiu $a1, $sp, 0x40
@@ -18611,7 +18595,7 @@ glabel sub_GAME_7F032088
 /* 066DE8 7F0322B8 260B005C */  addiu $t3, $s0, 0x5c
 /* 066DEC 7F0322BC 10600003 */  beqz  $v1, .L7F0322CC
 /* 066DF0 7F0322C0 AFAB0034 */   sw    $t3, 0x34($sp)
-/* 066DF4 7F0322C4 0FC0A0B8 */  jal   sub_GAME_7F0282E0
+/* 066DF4 7F0322C4 0FC0A0B8 */  jal   chrlvActGoposIncCurIndex
 /* 066DF8 7F0322C8 02002025 */   move  $a0, $s0
 .L7F0322CC:
 /* 066DFC 7F0322CC 8E0D0084 */  lw    $t5, 0x84($s0)
@@ -18680,9 +18664,9 @@ glabel sub_GAME_7F032088
 /* 066EF0 7F0323C0 E7A80010 */   swc1  $f8, 0x10($sp)
 /* 066EF4 7F0323C4 50400006 */  beql  $v0, $zero, .L7F0323E0
 /* 066EF8 7F0323C8 8E190084 */   lw    $t9, 0x84($s0)
-/* 066EFC 7F0323CC 0FC0A0B8 */  jal   sub_GAME_7F0282E0
+/* 066EFC 7F0323CC 0FC0A0B8 */  jal   chrlvActGoposIncCurIndex
 /* 066F00 7F0323D0 02002025 */   move  $a0, $s0
-/* 066F04 7F0323D4 0FC0A0B8 */  jal   sub_GAME_7F0282E0
+/* 066F04 7F0323D4 0FC0A0B8 */  jal   chrlvActGoposIncCurIndex
 /* 066F08 7F0323D8 02002025 */   move  $a0, $s0
 .L7F0323DC:
 /* 066F0C 7F0323DC 8E190084 */  lw    $t9, 0x84($s0)
@@ -18747,7 +18731,7 @@ glabel sub_GAME_7F032088
 /* 066FEC 7F0324BC E7B20010 */   swc1  $f18, 0x10($sp)
 /* 066FF0 7F0324C0 50400004 */  beql  $v0, $zero, .L7F0324D4
 /* 066FF4 7F0324C4 920C0058 */   lbu   $t4, 0x58($s0)
-/* 066FF8 7F0324C8 0FC0A0B8 */  jal   sub_GAME_7F0282E0
+/* 066FF8 7F0324C8 0FC0A0B8 */  jal   chrlvActGoposIncCurIndex
 /* 066FFC 7F0324CC 02002025 */   move  $a0, $s0
 .L7F0324D0:
 /* 067000 7F0324D0 920C0058 */  lbu   $t4, 0x58($s0)

@@ -481,7 +481,12 @@ struct act_gopos
 
     s32 unk54;
     
-    u8 unk58;
+    // Index of the waypoint in the above array that the chr is running to. If
+    // the chr has line of sight (through doors) to the next or next + 1 then
+    // the index can be changed to that one and the chr will run straight to it.
+    // This index will always be 0, 1 or 2. When it reaches 3 the pathfinding is
+    // recalculated, the array replaced with a new one and index set to 0.
+    u8 curindex;
     u8 unk59;  // guess: room
     u16 unk5a; // g_ClockTimer related
 
