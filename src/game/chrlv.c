@@ -4860,29 +4860,14 @@ void sub_GAME_7F028494(struct ChrRecord *arg0)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0284DC(void) {
-
+/**
+ * Address 0x7F0284DC.
+*/
+void sub_GAME_7F0284DC(struct ChrRecord *arg0)
+{
+    arg0->act_patrol.nextstep = sub_GAME_7F028348(arg0, &arg0->act_patrol.forward, 1);
+    sub_GAME_7F028494(arg0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0284DC
-/* 05D00C 7F0284DC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 05D010 7F0284E0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05D014 7F0284E4 AFA40018 */  sw    $a0, 0x18($sp)
-/* 05D018 7F0284E8 24850034 */  addiu $a1, $a0, 0x34
-/* 05D01C 7F0284EC 0FC0A0D2 */  jal   sub_GAME_7F028348
-/* 05D020 7F0284F0 24060001 */   li    $a2, 1
-/* 05D024 7F0284F4 8FA40018 */  lw    $a0, 0x18($sp)
-/* 05D028 7F0284F8 0FC0A125 */  jal   sub_GAME_7F028494
-/* 05D02C 7F0284FC AC820030 */   sw    $v0, 0x30($a0)
-/* 05D030 7F028500 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05D034 7F028504 27BD0018 */  addiu $sp, $sp, 0x18
-/* 05D038 7F028508 03E00008 */  jr    $ra
-/* 05D03C 7F02850C 00000000 */   nop   
-)
-#endif
 
 
 
