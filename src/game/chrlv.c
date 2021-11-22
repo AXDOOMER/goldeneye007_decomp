@@ -65,7 +65,7 @@ void play_sound_for_shot_actor(ChrRecord *);
 void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2);
 void *sub_GAME_7F032C78(ChrRecord *arg0, s32 arg1, s32 arg2, s32 *arg3);
 void sub_GAME_7F02D184(struct ChrRecord *arg0);
-
+void sub_GAME_7F0281F4(struct ChrRecord *arg0);
 
 // end forward declarations
 
@@ -4536,24 +4536,54 @@ s32 chrlvMovementTargetRelated(ChrRecord *arg0)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0281F4(void) {
-
+/**
+ * Address 0x7F0281F4.
+*/
+void sub_GAME_7F0281F4(struct ChrRecord *arg0)
+{
+    arg0->act_gopos.waydata.unk02 = 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0281F4
-/* 05CD24 7F0281F4 03E00008 */  jr    $ra
-/* 05CD28 7F0281F8 A480005A */   sh    $zero, 0x5a($a0)
-)
-#endif
 
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0281FC(void) {
-// break
+// need to know the action type to get the right properties.
+// specificallly, arg0->act_bytes.padding[0x30]
+void sub_GAME_7F0281FC(ChrRecord *arg0)
+{
+    s32 temp_a1;
+    u16 temp_v0;
+    u16 temp_v1;
+    u16 phi_a1;
+
+    if (arg0->act_bytes.padding[0x30] != 6)
+    {
+        temp_v0 = arg0->act_gopos.waydata.unk02;
+
+        if (temp_v0 == 0)
+        {
+            temp_a1 = (chrlvMovementTargetRelated(arg0) * 2) + 0x12C;
+            phi_a1 = (u16) temp_a1;
+            if (temp_a1 >= 0x10000)
+            {
+                phi_a1 = 0xFFFFU;
+            }
+
+            arg0->act_gopos.waydata.unk02 = phi_a1;
+
+            return;
+        }
+
+        temp_v1 = *(&g_ClockTimer + 2);
+
+        if ((s32) temp_v1 >= (s32) temp_v0)
+        {
+            plot_course_for_actor(&arg0->act_gopos, arg0->act_gopos.target, arg0->act_gopos.waydata.unk01);
+            return;
+        }
+
+        arg0->act_gopos.waydata.unk02 = (u16) (temp_v0 - temp_v1);
+    }
 }
 #else
 #ifndef VERSION_EU
@@ -4662,8 +4692,22 @@ glabel sub_GAME_7F0281FC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F02828C(void) {
+void sub_GAME_7F02828C(ChrRecord *arg0)
+{
+    struct coord3d sp1C;
+    StandTile *sp18;
 
+    chrlvActGoposRelated(arg0, (struct coord3d *) &sp1C, &sp18);
+
+    arg0->act_bytes.padding[0x30] = 0;
+    arg0->act_bytes.padding[0x31] = 0;
+    arg0->act_bytes.padding[0x32] = 0;
+
+    arg0->act_init.padding[0xD] = sp1C.f[0];
+    arg0->act_init.padding[0xE] = sp1C.f[1];
+    arg0->act_init.padding[0xF] = sp1C.f[2];
+
+    sub_GAME_7F0281F4(arg0);
 }
 #else
 GLOBAL_ASM(
@@ -5000,7 +5044,7 @@ glabel sub_GAME_7F028510
 
 #ifdef NONMATCHING
 void sub_GAME_7F028600(void) {
-
+// break
 }
 #else
 GLOBAL_ASM(
@@ -5584,7 +5628,7 @@ glabel play_hit_soundeffect_and_proper_volume
 
 #ifdef NONMATCHING
 void plot_course_for_actor(void) {
-
+// tenative signature: void plot_course_for_actor(struct act_gopos *, struct waypoint *, u8); 
 }
 #else
 GLOBAL_ASM(
@@ -5823,7 +5867,7 @@ glabel sub_GAME_7F028FAC
 
 #ifdef NONMATCHING
 void set_actor_on_path(void) {
-
+// AI branch
 }
 #else
 GLOBAL_ASM(
@@ -6112,7 +6156,7 @@ glabel sub_GAME_7F0292A8
 
 #ifdef NONMATCHING
 void sub_GAME_7F0294BC(void) {
-
+// AI Branch
 }
 #else
 GLOBAL_ASM(
@@ -6197,7 +6241,7 @@ glabel sub_GAME_7F0294BC
 
 #ifdef NONMATCHING
 void check_if_position_in_same_room(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -6721,7 +6765,7 @@ void chrlvAlertGuardToPlayerPosition(struct ChrRecord *arg0)
 
 #ifdef NONMATCHING
 void check_if_actor_stationary(void) {
-
+ // ai branch
 }
 #else
 GLOBAL_ASM(
@@ -6808,7 +6852,7 @@ glabel check_if_actor_stationary
 
 #ifdef NONMATCHING
 void sub_GAME_7F029D70(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -7243,7 +7287,7 @@ s32 true_if_actor_dying_fading(struct ChrRecord *chr) {
 
 #ifdef NONMATCHING
 void actor_steps_sideways(void) {
-
+ // ai branch (also, fix the names of the two methods above to be same as AI)
 }
 #else
 GLOBAL_ASM(
@@ -7360,7 +7404,7 @@ glabel actor_steps_sideways
 
 #ifdef NONMATCHING
 void actor_hops_sideways(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -7477,7 +7521,7 @@ glabel actor_hops_sideways
 
 #ifdef NONMATCHING
 void actor_runs_sideways(void) {
-
+// ai branch actor_jogs_sideways
 }
 #else
 GLOBAL_ASM(
@@ -7669,7 +7713,7 @@ glabel actor_walks_and_fires
 
 #ifdef NONMATCHING
 void actor_runs_and_fires(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -7749,7 +7793,7 @@ glabel actor_runs_and_fires
 
 #ifdef NONMATCHING
 void actor_rolls_fires_crouched(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -7845,7 +7889,7 @@ glabel actor_rolls_fires_crouched
 
 #ifdef NONMATCHING
 void actor_aim_at_actor(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -7888,7 +7932,7 @@ glabel actor_aim_at_actor
 
 #ifdef NONMATCHING
 void actor_kneel_aim_at_actor(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -7949,7 +7993,7 @@ int actor_fire_or_aim_at_target_update(struct ChrRecord *chr, u32 newflag, u32 n
 
 #ifdef NONMATCHING
 void check_set_actor_standing_still(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -7993,7 +8037,7 @@ glabel check_set_actor_standing_still
 
 #ifdef NONMATCHING
 void actor_moves_to_preset_at_speed(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -8118,7 +8162,7 @@ glabel actor_moves_to_preset_at_speed
 
 #ifdef NONMATCHING
 void if_actor_able_set_on_path(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -19342,7 +19386,7 @@ glabel sub_GAME_7F032B68
 
 #ifdef NONMATCHING
 void sub_GAME_7F032BA0(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -19370,25 +19414,24 @@ glabel sub_GAME_7F032BA0
 
 
 #ifdef NONMATCHING
-// arg1 might be void?
-f32 get_distance_actor_to_position(ChrRecord *arg0, struct coord3d *arg1)
+// copied from ai branch:
+f32 get_distance_actor_to_position(ChrRecord *self, coord3d *pos)
 {
-    f32 sp18;
-    PropRecord *temp_v0;
-    f32 temp_f0;
-    f32 temp_f14;
-    f32 phi_f12;
+    f32 radToPos;
+    f32 radMyHeading;
+    PropRecord *myprop;
+    f32 angle;
 
-    temp_v0 = arg0->prop;
-    sp18 = getsubroty(arg0->model);
-    temp_f0 = atan2f(arg1->x - temp_v0->pos.x, arg1->f[2] - temp_v0->pos.f[2]);
-    temp_f14 = temp_f0 - sp18;
-    phi_f12 = temp_f14;
-    if (temp_f0 < sp18)
+    radMyHeading = getsubroty(self->model);
+    myprop       = self->prop;
+    angle        = atan2f(pos->x - myprop->pos.x, pos->z - myprop->pos.z);
+    radToPos     = angle - radMyHeading;
+
+    if (angle < radMyHeading)
     {
-        phi_f12 = temp_f14 + 6.2831855f;
+        radToPos = radToPos + M_TAU;
     }
-    return phi_f12;
+    return radToPos;
 }
 #else
 GLOBAL_ASM(
@@ -19434,7 +19477,7 @@ glabel get_distance_actor_to_position
 
 #ifdef NONMATCHING
 void sub_GAME_7F032C4C(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -19540,7 +19583,7 @@ glabel sub_GAME_7F032C78
 
 #ifdef NONMATCHING
 void get_angle_between_actor_cur_player(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -19603,7 +19646,7 @@ f32 distToBond3D(struct ChrRecord *guardData)
 
 #ifdef NONMATCHING
 void sub_GAME_7F032E48(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -19663,7 +19706,7 @@ glabel sub_GAME_7F032E48
 
 #ifdef NONMATCHING
 void check_if_room_for_preset_loaded(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -19727,7 +19770,7 @@ s32 convertPadIf9000(struct ChrRecord *guardData,s32 padNo)
 
 #ifdef NONMATCHING
 void sub_GAME_7F032FAC(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -19838,7 +19881,7 @@ glabel get_handle_for_guard_id
 
 #ifdef NONMATCHING
 void get_distance_between_actor_and_actorID(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -19889,7 +19932,7 @@ glabel get_distance_between_actor_and_actorID
 
 #ifdef NONMATCHING
 void get_distance_between_actor_and_preset(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -20062,7 +20105,7 @@ glabel sub_GAME_7F033290
 
 #ifdef NONMATCHING
 void sub_GAME_7F0332C0(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -20637,7 +20680,7 @@ glabel check_if_able_to_then_kneel
 
 #ifdef NONMATCHING
 void check_if_able_to_then_perform_animation(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -20676,7 +20719,7 @@ glabel check_if_able_to_then_perform_animation
 
 #ifdef NONMATCHING
 void alarm_timer_related(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -20765,7 +20808,7 @@ glabel sub_GAME_7F033780
 
 #ifdef NONMATCHING
 void sub_GAME_7F033834(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -20886,7 +20929,7 @@ glabel sub_GAME_7F033834
 
 #ifdef NONMATCHING
 void check_2328_preset_set_with_method(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -20973,7 +21016,7 @@ glabel check_2328_preset_set_with_method
 
 #ifdef NONMATCHING
 void sub_GAME_7F033AAC(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -21026,7 +21069,7 @@ glabel sub_GAME_7F033AAC
 
 #ifdef NONMATCHING
 void sub_GAME_7F033B38(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -21155,7 +21198,7 @@ glabel sub_GAME_7F033B38
 
 #ifdef NONMATCHING
 void sub_GAME_7F033CF4(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -21178,7 +21221,7 @@ glabel sub_GAME_7F033CF4
 
 #ifdef NONMATCHING
 void sub_GAME_7F033D1C(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -21208,7 +21251,7 @@ glabel sub_GAME_7F033D1C
 
 #ifdef NONMATCHING
 void sub_GAME_7F033D5C(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -21231,7 +21274,7 @@ glabel sub_GAME_7F033D5C
 
 #ifdef NONMATCHING
 void sub_GAME_7F033D84(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -21261,7 +21304,7 @@ glabel sub_GAME_7F033D84
 
 #ifdef NONMATCHING
 void sub_GAME_7F033DC4(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -21390,7 +21433,7 @@ glabel sub_GAME_7F033EAC
 
 #ifdef NONMATCHING
 void sub_GAME_7F033F48(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -21549,7 +21592,7 @@ glabel sub_GAME_7F033F48
 
 #ifdef NONMATCHING
 void actionblock_guard_constructor_BDBE(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -21628,7 +21671,7 @@ glabel actionblock_guard_constructor_BDBE
 
 #ifdef NONMATCHING
 void guard_constructor_BD(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -21687,7 +21730,7 @@ glabel guard_constructor_BD
 
 #ifdef NONMATCHING
 void guard_constructor_BE(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -21734,7 +21777,7 @@ glabel guard_constructor_BE
 
 #ifdef NONMATCHING
 void check_if_actorID_is_at_preset(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -21799,7 +21842,7 @@ glabel check_if_actorID_is_at_preset
 
 #ifdef NONMATCHING
 void check_if_actor_is_at_preset(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -21859,7 +21902,7 @@ glabel check_if_actor_is_at_preset
 
 #ifdef NONMATCHING
 void removed_animation_routine_27(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -21875,7 +21918,7 @@ glabel removed_animation_routine_27
 
 #ifdef NONMATCHING
 void removed_animation_routine_2B(void) {
-
+// ai branch
 }
 #else
 GLOBAL_ASM(
@@ -21890,6 +21933,7 @@ glabel removed_animation_routine_2B
 
 
 #ifdef NONMATCHING
+// ai branch
 ? sub_GAME_7F034514(s32 arg0, s32 arg1)
 {
     s32 temp_ret;
@@ -21947,6 +21991,7 @@ glabel sub_GAME_7F034514
 
 
 #ifdef NONMATCHING
+// ai branch
 ? actor_draws_throws_grenade_at_player_if_possible(void *arg0)
 {
     s32 sp24;
@@ -22129,6 +22174,7 @@ glabel actor_draws_throws_grenade_at_player_if_possible
 
 
 #ifdef NONMATCHING
+// ai branch
 ? actor_drops_itemtype_setting_timer(void *arg0, s32 arg1, s32 arg2)
 {
     s32 sp1C;
