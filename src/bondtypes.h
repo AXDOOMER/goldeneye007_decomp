@@ -9,6 +9,8 @@
 #define _mkshort(a, b) ((a << 8) | (b & 0xff))
 #define _mkword(a, b) ((a << 16) | (b & 0xffff))
 
+#define MAX_CHRWAYPOINTS 6
+
 typedef s32 bool;
 
 struct object_standard;
@@ -299,22 +301,37 @@ struct waypoint
 
 struct waydata
 {
-    u8 mode;                 /*0x00 58*/
-    u8 unk01;                /*0x01 59*/
-    u8 unk02;                /*0x02 5a*/
-    u8 unk03;                /*0x03 5b*/
-    struct coord3d pos;      /*0x04 5c*/
-    struct coord3d pos2;     /*0x10 68*/
-    u32 unk1c;               /*0x1c 74*/
-    u32 unk20;               /*0x20 78*/
-    u32 unk24;               /*0x24 7c*/
-    s32 age;                 /*0x28 80*/
-    struct coord3d pos_copy; /*0x2c 84*/
+    /**
+     * player.act_gopos.waydata starts at 0x5c.
+    */
+
+    s8 mode;                 /*0x00 */
+    u8 unk01;                /*0x01 */
+    u8 unk02;                /*0x02 */
+    u8 unk03;                /*0x03 */
+
+    struct coord3d pos;      /*0x04 */
+
+    // from PD - unverified/unmatched
+    struct coord3d pos2;     /*0x10 */
+
+    u32 unk1c;               /*0x1c */
+    u32 unk20;               /*0x20 */
+    u32 unk24;               /*0x24 */
+
+    // from PD - unverified/unmatched
+    s32 age;                 /*0x28 */
+
+    // from PD - unverified/unmatched
+    struct coord3d pos_copy; /*0x2c */
 
     // These are the distances between the current waypoint and the previous
     // when using cheap mode.
-    f32 segdistdone;  /*0x38 90*/
-    f32 segdisttotal; /*0x3c 94*/
+    // from PD - unverified/unmatched
+    f32 segdistdone;  /*0x38 */
+
+    // from PD - unverified/unmatched
+    f32 segdisttotal; /*0x3c */
 };
 
 #pragma region ACT_TYPES
@@ -474,14 +491,12 @@ struct act_gopos
     struct coord3d targetpos;  // Target pos                           /*0x02c*/
     struct StandTile *target; // Target/final waypoint                  /*0x038*/
 
-    struct path_table_alt * unk3c;                                      /*0x03c*/
+    struct path_table_alt * target_path;                                      /*0x03c*/
 
     // Array of pointers to the next couple of waypoints. Recalculated each time
     // a waypoint is reached, and probably even more frequently than that.
-    struct path_table_alt *waypoints[6]; // MAX_CHRWAYPOINTS];               /*0x040*/
+    struct path_table_alt *waypoints[MAX_CHRWAYPOINTS];         /*0x040*/
 
-
-    
     // Index of the waypoint in the above array that the chr is running to. If
     // the chr has line of sight (through doors) to the next or next + 1 then
     // the index can be changed to that one and the chr will run straight to it.
@@ -490,34 +505,13 @@ struct act_gopos
     /* player offset 0x58 */
     u8 curindex;
     u8 unk59;  // guess: room
-    u16 unk5a; // g_ClockTimer related
 
-    // local offset 0x30
+    // g_ClockTimer related
+    u16 unk5a;
 
-    s8 unk5c; // flag or type?
-    s8 unk5d;
-    s8 unk5e;
-    s8 unk5f;
+    // offset 0x5c
+    struct waydata waydata;
 
-    /**
-     * struct offset 0x34, chr offset 0x60.
-    */
-    struct coord3d pos;
-    s32 unk6c;
-
-    s32 unk70;
-    s32 unk74;
-    s32 unk78;
-    s32 unk7c;
-
-    s32 unk80;
-    s32 unk84;
-    s32 unk88;
-    s32 unk8c;
-
-    s32 unk90;
-    s32 unk94;
-    s32 unk98;
     s32 unk9c;
 
     f32 unka0;

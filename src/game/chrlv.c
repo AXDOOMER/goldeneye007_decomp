@@ -73,10 +73,9 @@ void chrlvActGoposSetTargetPosRelated(ChrRecord *arg0);
 void chrlvActGoposIncCurIndex(struct ChrRecord *arg0);
 void play_hit_soundeffect_and_proper_volume(struct ChrRecord *arg0);
 void get_sound_at_range(ChrRecord *arg0, s32 arg1, s32 arg2);
+void chrlvSetGoposSegDistTotal(struct ChrRecord *arg0, struct waydata *arg1, struct coord3d *arg2);
 
 
-///? ?????
-void sub_GAME_7F027E90(struct ChrRecord *arg0, void *arg1, void *arg2);
 
 // end forward declarations
 
@@ -3532,7 +3531,7 @@ s32 chrlvAttackAnimationRelated7F026F30(struct ChrRecord *arg0, f32 *result)
 
 #ifdef NONMATCHING
 void play_sound_for_shot_actor(void) {
-
+// todo
 }
 #else
 GLOBAL_ASM(
@@ -4359,76 +4358,28 @@ void chrlvStanRoomRelatedPad(ChrRecord *arg0, struct pad *arg1)
 
 
 
-#ifdef NONMATCHING
-// unknown type for arg1. I think it's `struct waydata`?
-// There should be a struct starting at gopos local offset 0x30 (player 0x5c),
-// arg1 is a pointer to this.
-// TODO:
-void sub_GAME_7F027E90(struct ChrRecord *arg0, void *arg1, struct coord3d *arg2)
+/**
+ * Address 0x7F027E90.
+*/
+void chrlvSetGoposSegDistTotal(struct ChrRecord *arg0, struct waydata *arg1, struct coord3d *arg2)
 {
-    f32 sp20;
-    f32 sp1C;
+    PropRecord *prop;
+    f32 dx;
+    f32 dz;
     f32 sp18;
-    f32 temp_f12;
-    f32 temp_f14;
-    void *temp_v0;
 
-    temp_v0 = arg0->unk18;
-    temp_f12 = arg2->unk0 - temp_v0->unk8;
-    temp_f14 = arg2->unk8 - temp_v0->unk10;
-    sp20 = temp_f12;
-    sp1C = temp_f14;
-    sp18 = atan2f(temp_f12, temp_f14);
+    prop = arg0->prop;
+    dx = arg2->f[0] - prop->pos.f[0];
+    dz = arg2->f[2] - prop->pos.f[2];
 
-    arg1->unk0 = 6;
-    arg1->unk38 = 0.0f;
-    arg1->unk3C = sqrtf((sp20 * sp20) + (temp_f14 * temp_f14));
+    sp18 = atan2f(dx, dz);
 
-    setsubroty(arg0->unk1C, sp18);
+    arg1->mode = 6;
+    arg1->segdistdone = 0.0f;
+    arg1->segdisttotal = sqrtf((dx * dx) + (dz * dz));
+
+    setsubroty(arg0->model, sp18);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F027E90
-/* 05C9C0 7F027E90 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 05C9C4 7F027E94 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05C9C8 7F027E98 AFA40028 */  sw    $a0, 0x28($sp)
-/* 05C9CC 7F027E9C AFA5002C */  sw    $a1, 0x2c($sp)
-/* 05C9D0 7F027EA0 8C820018 */  lw    $v0, 0x18($a0)
-/* 05C9D4 7F027EA4 C4C40000 */  lwc1  $f4, ($a2)
-/* 05C9D8 7F027EA8 C4C80008 */  lwc1  $f8, 8($a2)
-/* 05C9DC 7F027EAC C4460008 */  lwc1  $f6, 8($v0)
-/* 05C9E0 7F027EB0 C44A0010 */  lwc1  $f10, 0x10($v0)
-/* 05C9E4 7F027EB4 46062301 */  sub.s $f12, $f4, $f6
-/* 05C9E8 7F027EB8 460A4381 */  sub.s $f14, $f8, $f10
-/* 05C9EC 7F027EBC E7AC0020 */  swc1  $f12, 0x20($sp)
-/* 05C9F0 7F027EC0 0FC16A8C */  jal   atan2f
-/* 05C9F4 7F027EC4 E7AE001C */   swc1  $f14, 0x1c($sp)
-/* 05C9F8 7F027EC8 C7A20020 */  lwc1  $f2, 0x20($sp)
-/* 05C9FC 7F027ECC C7AE001C */  lwc1  $f14, 0x1c($sp)
-/* 05CA00 7F027ED0 8FA2002C */  lw    $v0, 0x2c($sp)
-/* 05CA04 7F027ED4 46021482 */  mul.s $f18, $f2, $f2
-/* 05CA08 7F027ED8 44808000 */  mtc1  $zero, $f16
-/* 05CA0C 7F027EDC E7A00018 */  swc1  $f0, 0x18($sp)
-/* 05CA10 7F027EE0 460E7102 */  mul.s $f4, $f14, $f14
-/* 05CA14 7F027EE4 240F0006 */  li    $t7, 6
-/* 05CA18 7F027EE8 A04F0000 */  sb    $t7, ($v0)
-/* 05CA1C 7F027EEC E4500038 */  swc1  $f16, 0x38($v0)
-/* 05CA20 7F027EF0 0C007DF8 */  jal   sqrtf
-/* 05CA24 7F027EF4 46049300 */   add.s $f12, $f18, $f4
-/* 05CA28 7F027EF8 8FB8002C */  lw    $t8, 0x2c($sp)
-/* 05CA2C 7F027EFC E700003C */  swc1  $f0, 0x3c($t8)
-/* 05CA30 7F027F00 8FB90028 */  lw    $t9, 0x28($sp)
-/* 05CA34 7F027F04 8FA50018 */  lw    $a1, 0x18($sp)
-/* 05CA38 7F027F08 0FC1B34F */  jal   setsubroty
-/* 05CA3C 7F027F0C 8F24001C */   lw    $a0, 0x1c($t9)
-/* 05CA40 7F027F10 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05CA44 7F027F14 27BD0028 */  addiu $sp, $sp, 0x28
-/* 05CA48 7F027F18 03E00008 */  jr    $ra
-/* 05CA4C 7F027F1C 00000000 */   nop   
-)
-#endif
-
 
 
 /**
@@ -4570,7 +4521,7 @@ void chrlvPlotCourseRelated(struct ChrRecord *arg0)
     s32 temp_v0;
     s32 temp_v1;
 
-    if (arg0->act_gopos.unk5c != 6)
+    if (arg0->act_gopos.waydata.mode != 6)
     {
         temp_v0 = arg0->act_gopos.unk5a;
 
@@ -4678,13 +4629,13 @@ void chrlvActGoposSetTargetPosRelated(ChrRecord *arg0)
 
     chrlvActGoposRelated(arg0, (struct coord3d *) &sp1C, &sp18);
 
-    arg0->act_gopos.unk5c = 0;
-    arg0->act_gopos.unk5d = 0;
-    arg0->act_gopos.unk5e = 0;
+    arg0->act_gopos.waydata.mode = 0;
+    arg0->act_gopos.waydata.unk01 = 0;
+    arg0->act_gopos.waydata.unk02 = 0;
 
-    arg0->act_gopos.pos.f[0] = sp1C.f[0];
-    arg0->act_gopos.pos.f[1] = sp1C.f[1];
-    arg0->act_gopos.pos.f[2] = sp1C.f[2];
+    arg0->act_gopos.waydata.pos.f[0] = sp1C.f[0];
+    arg0->act_gopos.waydata.pos.f[1] = sp1C.f[1];
+    arg0->act_gopos.waydata.pos.f[2] = sp1C.f[2];
 
     sub_GAME_7F0281F4(arg0);
 }
@@ -4706,7 +4657,7 @@ void chrlvActGoposIncCurIndex(struct ChrRecord *arg0)
 
         arg0->act_gopos.curindex = 1;
 
-        sub_GAME_7F08F4F0(p, arg0->act_gopos.unk3c, &arg0->act_gopos.waypoints, 6);
+        sub_GAME_7F08F4F0(p, arg0->act_gopos.target_path, &arg0->act_gopos.waypoints, MAX_CHRWAYPOINTS);
     }
 
     chrlvActGoposSetTargetPosRelated(arg0);
@@ -4838,7 +4789,6 @@ glabel sub_GAME_7F0283FC
 
 
 /**
- * Unknown type for arg0.
  * Unknown return type.
  * 
  * Address 0x7F028474.
@@ -5050,7 +5000,7 @@ glabel sub_GAME_7F028600
 /* 05D27C 7F02874C 02002025 */   move  $a0, $s0
 /* 05D280 7F028750 02002025 */  move  $a0, $s0
 /* 05D284 7F028754 8FA5006C */  lw    $a1, 0x6c($sp)
-/* 05D288 7F028758 0FC09FA4 */  jal   sub_GAME_7F027E90
+/* 05D288 7F028758 0FC09FA4 */  jal   chrlvSetGoposSegDistTotal
 /* 05D28C 7F02875C 00403025 */   move  $a2, $v0
 /* 05D290 7F028760 10000045 */  b     .L7F028878
 /* 05D294 7F028764 02002025 */   move  $a0, $s0
@@ -5101,7 +5051,7 @@ glabel sub_GAME_7F028600
 /* 05D33C 7F02880C 27A6003C */   addiu $a2, $sp, 0x3c
 /* 05D340 7F028810 02002025 */  move  $a0, $s0
 /* 05D344 7F028814 8FA5006C */  lw    $a1, 0x6c($sp)
-/* 05D348 7F028818 0FC09FA4 */  jal   sub_GAME_7F027E90
+/* 05D348 7F028818 0FC09FA4 */  jal   chrlvSetGoposSegDistTotal
 /* 05D34C 7F02881C 27A60040 */   addiu $a2, $sp, 0x40
 /* 05D350 7F028820 10000015 */  b     .L7F028878
 /* 05D354 7F028824 02002025 */   move  $a0, $s0
@@ -5386,7 +5336,7 @@ s32 plot_course_for_actor(ChrRecord *arg0, struct act_gopos *arg1, struct StandT
     PropRecord *prop; //sp 100
     struct path_table_alt *prop_path; // sp96
     struct path_table_alt *target_path; // sp92
-    struct path_table_alt *sp44[6];
+    struct path_table_alt *sp44[MAX_CHRWAYPOINTS];
     s32 i;
     struct coord3d sp34;
     struct StandTile *sp30;
@@ -5401,7 +5351,7 @@ s32 plot_course_for_actor(ChrRecord *arg0, struct act_gopos *arg1, struct StandT
 
     if ((prop_path != NULL) 
         && (target_path != NULL) 
-        && !(sub_GAME_7F08F4F0(prop_path, target_path, &sp44, 6) < 2)
+        && !(sub_GAME_7F08F4F0(prop_path, target_path, &sp44, MAX_CHRWAYPOINTS) < 2)
     )
     {
         sub_GAME_7F02D184(arg0);
@@ -5412,15 +5362,15 @@ s32 plot_course_for_actor(ChrRecord *arg0, struct act_gopos *arg1, struct StandT
         arg0->act_gopos.targetpos.f[1] = arg1->targetpos.f[1];
         arg0->act_gopos.targetpos.f[2] = arg1->targetpos.f[2];
         arg0->act_gopos.target = stan;
-        arg0->act_gopos.unk3c = (s32) target_path;
+        arg0->act_gopos.target_path = target_path;
         arg0->act_gopos.curindex = 0;
         arg0->act_gopos.unk59 = arg3;
         arg0->act_gopos.unka0 = 0.0f;
-        arg0->act_gopos.unk84 = (s32) (randomGetNext() % 100U);
-        arg0->act_gopos.unk5f = 0;
+        arg0->act_gopos.waydata.age = (s32) (randomGetNext() % 100U);
+        arg0->act_gopos.waydata.unk03 = 0;
         arg0->act_gopos.unk9c = -1;
 
-        for (i=0; i<6; i++)
+        for (i=0; i<MAX_CHRWAYPOINTS; i++)
         {
             arg0->act_gopos.waypoints[i] = sp44[i];
         }
@@ -5437,7 +5387,7 @@ s32 plot_course_for_actor(ChrRecord *arg0, struct act_gopos *arg1, struct StandT
 
         if (((prop->flags & 2) == 0) && (chrlvStanRoomRelated(arg0, &sp34, sp30) != 0))
         {
-            sub_GAME_7F027E90(arg0, &arg0->act_gopos.unk5c, &sp34);
+            chrlvSetGoposSegDistTotal(arg0, &arg0->act_gopos.waydata, &sp34);
         }
 
         return 1;
@@ -5667,7 +5617,7 @@ glabel set_actor_on_path
 /* 05DDA0 7F029270 10400004 */  beqz  $v0, .L7F029284
 /* 05DDA4 7F029274 8FA60024 */   lw    $a2, 0x24($sp)
 /* 05DDA8 7F029278 02002025 */  move  $a0, $s0
-/* 05DDAC 7F02927C 0FC09FA4 */  jal   sub_GAME_7F027E90
+/* 05DDAC 7F02927C 0FC09FA4 */  jal   chrlvSetGoposSegDistTotal
 /* 05DDB0 7F029280 26050038 */   addiu $a1, $s0, 0x38
 .L7F029284:
 /* 05DDB4 7F029284 8FBF001C */  lw    $ra, 0x1c($sp)
@@ -18257,7 +18207,7 @@ glabel sub_GAME_7F032088
 /* 066C70 7F032140 AFAF0074 */  sw    $t7, 0x74($sp)
 /* 066C74 7F032144 02002025 */  move  $a0, $s0
 /* 066C78 7F032148 2605005C */  addiu $a1, $s0, 0x5c
-/* 066C7C 7F03214C 0FC09FA4 */  jal   sub_GAME_7F027E90
+/* 066C7C 7F03214C 0FC09FA4 */  jal   chrlvSetGoposSegDistTotal
 /* 066C80 7F032150 27A60068 */   addiu $a2, $sp, 0x68
 .L7F032154:
 /* 066C84 7F032154 3C188003 */  lui   $t8, %hi(setting_007_5) 
@@ -18579,7 +18529,7 @@ glabel sub_GAME_7F032548
 /* 0670F4 7F0325C4 AFAC0034 */  sw    $t4, 0x34($sp)
 /* 0670F8 7F0325C8 02002025 */  move  $a0, $s0
 /* 0670FC 7F0325CC 26050038 */  addiu $a1, $s0, 0x38
-/* 067100 7F0325D0 0FC09FA4 */  jal   sub_GAME_7F027E90
+/* 067100 7F0325D0 0FC09FA4 */  jal   chrlvSetGoposSegDistTotal
 /* 067104 7F0325D4 02203025 */   move  $a2, $s1
 .L7F0325D8:
 /* 067108 7F0325D8 820D0038 */  lb    $t5, 0x38($s0)
