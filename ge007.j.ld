@@ -414,18 +414,24 @@ SECTIONS
    _gameSegmentRomEnd = _gameSegmentRomStart + SIZEOF(.game);
 
 
+   _fontdlSegmentStart = ADDR(.fontdl);
+   _fontdlSegmentRomStart = _gameSegmentRomEnd;
+   .fontdl _fontdlSegmentRomStart : AT(_fontdlSegmentRomStart) {
+      build/j/assets/ge007.u.117880.font_dl.o (.data);
+   }
+   _fontdlSegmentEnd = ADDR(.fontdl) + SIZEOF(.fontdl);
+   _fontdlSegmentRomEnd = _fontdlSegmentRomStart + SIZEOF(.fontdl);
 
-
-   _romfiles_117880SegmentStart = ADDR(.romfiles_117880);
-   _romfiles_117880SegmentRomStart = _gameSegmentRomEnd;
-   .romfiles_117880 _romfiles_117880SegmentRomStart : AT(_romfiles_117880SegmentRomStart) {
+   _romfiles_117940SegmentStart = ADDR(.romfiles_117940);
+   _romfiles_117940SegmentRomStart = _fontdlSegmentRomEnd;
+   .romfiles_117940 _romfiles_117940SegmentRomStart : AT(_romfiles_117940SegmentRomStart) {
       build/j/assets/romfiles.o (.data);
    }
-   _romfiles_117880SegmentEnd = ADDR(.romfiles_117880) + SIZEOF(.romfiles_117880);
-   _romfiles_117880SegmentRomEnd = _romfiles_117880SegmentRomStart + SIZEOF(.romfiles_117880);
+   _romfiles_117940SegmentEnd = ADDR(.romfiles_117940) + SIZEOF(.romfiles_117940);
+   _romfiles_117940SegmentRomEnd = _romfiles_117940SegmentRomStart + SIZEOF(.romfiles_117940);
 
    _animation_entriesSegmentStart = ADDR(.animation_entries);
-   _animation_entriesSegmentRomStart = _romfiles_117880SegmentRomEnd;
+   _animation_entriesSegmentRomStart = _romfiles_117940SegmentRomEnd;
    .animation_entries 0x00000000 : AT(_animation_entriesSegmentRomStart) {
       build/j/assets/animationtable_entries.o(.data);
    }

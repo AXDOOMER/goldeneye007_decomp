@@ -41,7 +41,7 @@ extern struct LvlMpUnknown *D_800483C8;
 extern s32 g_ClockTimer;
 extern s32 g_GlobalTimer;
 extern f32 g_GlobalTimerDelta;
-extern u32 *ptr_jfont_DL;
+extern u32 *ptr_font_DL;
 extern s32 dword_CODE_bss_8008C264;
 extern s32 dword_CODE_bss_8008C268;
 extern s32 dword_CODE_bss_8008C26C;

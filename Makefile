@@ -113,7 +113,7 @@ GAMEOBJECTS := $(foreach file,$(GAMEFILES_S),$(BUILD_DIR)/$(file:.s=.o)) \
 ROMFILES := assets/romfiles.s
 ROMOBJECTS := $(BUILD_DIR)/assets/romfiles.o
 
-ASSET_DATAFILES := assets/GlobalImageTable.c assets/animationtable_data.c assets/animationtable_entries.c
+ASSET_DATAFILES := assets/GlobalImageTable.c assets/animationtable_data.c assets/animationtable_entries.c assets/ge007.u.117880.font_dl.c
 ASSET_DATAOBJECTS := $(foreach file,$(ASSET_DATAFILES),$(BUILD_DIR)/$(file:.c=.o))
 
 ROMFILES2 := assets/romfiles2.s

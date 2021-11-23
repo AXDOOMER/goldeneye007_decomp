@@ -62,7 +62,7 @@
 
 // bss
 //CODE.bss:8008C260
-u32 *ptr_jfont_DL;
+u32 *ptr_font_DL;
 //CODE.bss:8008C264
 s32 dword_CODE_bss_8008C264;
 s32 dword_CODE_bss_8008C268;
@@ -239,8 +239,8 @@ s16 g_DebugMpGameSoundFxIndex = 0;
 s16 D_800483E6 = 0;
 
 
-extern u8* _jfontdlSegmentStart;
-extern u8* _jfontdlSegmentEnd;
+extern u8* _fontdlSegmentStart;
+extern u8* _fontdlSegmentEnd;
 
 extern Gfx *D_01000020;
 extern Gfx *D_01000040;
@@ -263,13 +263,13 @@ void sub_GAME_7F0BD8FC(s32 arg0)
 
 void lvInitDebugNoticeList(void)
 {
-    s32 temp_a2;
+    s32 size;
 
     debTryAdd(&lvl_c_debug_notice_list, "lv_c_debug");
-    temp_a2 = (s32)&_jfontdlSegmentEnd - (s32)&_jfontdlSegmentStart;
+    size = (s32)&_fontdlSegmentEnd - (s32)&_fontdlSegmentStart;
     lvl_c_debug_notice_list = 1;
-    ptr_jfont_DL = mempAllocBytesInBank(temp_a2, 6);
-    romCopy(ptr_jfont_DL, &_jfontdlSegmentStart, temp_a2);
+    ptr_font_DL = mempAllocBytesInBank(size, 6);
+    romCopy(ptr_font_DL, &_fontdlSegmentStart, size);
 }
 
 /**
@@ -1891,7 +1891,7 @@ glabel lvlPortalDebug7F0BDF10
 Gfx* lvlRender(Gfx* DL)
 {
     gSPSegment(DL++, 0, NULL);
-    gSPSegment(DL++, 1, osVirtualToPhysical(ptr_jfont_DL));
+    gSPSegment(DL++, 1, osVirtualToPhysical(ptr_font_DL));
 
     gSPDisplayList(DL++, &D_01000040);
     gSPDisplayList(DL++, &D_01000020);
