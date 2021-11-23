@@ -1139,13 +1139,10 @@ s32 female_guard_yelp_counter = 0;
 s16 metal_ricochet_SFX[3] = {0xEF, 0x48, 0x49};
 
 
-s32 D_80030A44 = 0;
-s32 D_80030A48 = 0;
-s32 D_80030A4C = 0;
+// probably better described as vec3 than coordinates.
+struct coord3d D_80030A44 = {0,0,0};
 
-//s16 body_hit_SFX[] = {0x7B, 0x7C, 0x7D, 0x7E, 0x7F, 0x80, 0x81, 0x82, 0x83, 0x84, 0x85};
 
-//s32 D_80030A68 = 0;
 
 
 

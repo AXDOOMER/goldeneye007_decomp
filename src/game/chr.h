@@ -249,6 +249,8 @@ extern s16 female_guard_yelps[];
 extern s32 male_guard_yelp_counter;
 extern s16 male_guard_yelps[];
 
+extern struct coord3d D_80030A44;
+
 void sub_GAME_7F022EE0(s32 param_1);
 void sub_GAME_7F022E24(s32 param_1);
 void disable_sounds_attached_to_player_then_something(struct PropRecord* prop);

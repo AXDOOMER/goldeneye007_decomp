@@ -3,6 +3,7 @@
 
 #include "ultra64.h"
 #include "bondtypes.h"
+#include "snd.h"
 
 extern s32 D_80030B00;
 extern f32 F_80030B14;
@@ -24,5 +25,6 @@ void chrobjApplySpeed(f32 *distDone, f32 maxDist, f32 *speedPtr, f32 accel, f32 
 Gfx * sub_GAME_7F049B58(Gfx *arg0);
 void set_color_shading_from_tile(struct PropRecord*, u8 *);
 void sub_GAME_7F04BFD0(struct PropRecord *, s32);
+void sub_GAME_7F053A10(ALSoundState *, struct coord3d *);
 
 #endif
