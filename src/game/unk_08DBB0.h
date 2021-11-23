@@ -4,6 +4,6 @@
 
 #include "bondtypes.h"
 
-void sub_GAME_7F08F4F0(struct waypoint *, s32, struct waypoint **, s32);
+s32 sub_GAME_7F08F4F0(struct path_table_alt *, struct path_table_alt *, struct path_table_alt **, s32);
 
 #endif

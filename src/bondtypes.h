@@ -474,22 +474,25 @@ struct act_gopos
     struct coord3d targetpos;  // Target pos                           /*0x02c*/
     struct StandTile *target; // Target/final waypoint                  /*0x038*/
 
-    s32 unk3c;                                                        /*0x03c*/
+    struct path_table_alt * unk3c;                                      /*0x03c*/
 
     // Array of pointers to the next couple of waypoints. Recalculated each time
     // a waypoint is reached, and probably even more frequently than that.
-    struct waypoint *waypoints[5]; // MAX_CHRWAYPOINTS];               /*0x040*/
+    struct path_table_alt *waypoints[6]; // MAX_CHRWAYPOINTS];               /*0x040*/
 
-    s32 unk54;
+
     
     // Index of the waypoint in the above array that the chr is running to. If
     // the chr has line of sight (through doors) to the next or next + 1 then
     // the index can be changed to that one and the chr will run straight to it.
     // This index will always be 0, 1 or 2. When it reaches 3 the pathfinding is
     // recalculated, the array replaced with a new one and index set to 0.
+    /* player offset 0x58 */
     u8 curindex;
     u8 unk59;  // guess: room
     u16 unk5a; // g_ClockTimer related
+
+    // local offset 0x30
 
     s8 unk5c; // flag or type?
     s8 unk5d;
@@ -511,6 +514,13 @@ struct act_gopos
     s32 unk84;
     s32 unk88;
     s32 unk8c;
+
+    s32 unk90;
+    s32 unk94;
+    s32 unk98;
+    s32 unk9c;
+
+    f32 unka0;
 
     // PD reference below:
 

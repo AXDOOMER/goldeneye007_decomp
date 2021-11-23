@@ -53,7 +53,7 @@ f32 chrlvPathingCollisionRelated(PropRecord *arg0, f32 arg1, f32 arg2, s32 objFl
 f32 chrlvPathingCollisionRelated7F0264B0(PropRecord *arg0, f32 arg1, f32 arg2);
 void triggered_on_shot_hit(struct ChrRecord *arg0, struct coord3d *arg1, f32 arg2, s32 req_animation_id, ITEM_IDS item);
 s32 chrlvAttackAnimationRelated7F026F30(struct ChrRecord *arg0, f32 *result);
-s32 chrlvStanRoomRelated(ChrRecord *arg0, struct pad *arg1, StandTile *tile);
+s32 chrlvStanRoomRelated(ChrRecord *arg0, struct coord3d *arg1, StandTile *tile);
 f32 chrlvModelScaleAnimationRelated(struct ChrRecord *arg0);
 void chrlvActGoposRelated(struct ChrRecord *arg0, struct coord3d *arg1, struct StandTile **arg2);
 s32 chrlvMovementTargetRelated(ChrRecord *arg0);
@@ -61,18 +61,22 @@ struct path_table_alt *get_ptrpreset_in_table_matching_tile(struct StandTile* ar
 s32 check_if_any_path_preset_lies_on_tile(struct StandTile* arg0);
 f32 chrlvPadPresetRelated(struct coord3d *arg0, struct path_table_alt *arg1);
 struct path_table_alt *chrlvStanPathRelated(struct coord3d *arg0, StandTile *arg1);
-void chrlvStanRoomRelatedAlt(ChrRecord *arg0, struct pad *arg1);
+void chrlvStanRoomRelatedPad(ChrRecord *arg0, struct pad *arg1);
 void play_sound_for_shot_actor(ChrRecord *);
 void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2);
 void *sub_GAME_7F032C78(ChrRecord *arg0, s32 arg1, s32 arg2, s32 *arg3);
 void sub_GAME_7F02D184(struct ChrRecord *arg0);
 void sub_GAME_7F0281F4(struct ChrRecord *arg0);
-void plot_course_for_actor(struct ChrRecord *arg0, struct act_gopos *, struct StandTile *, u8);
+s32 plot_course_for_actor(ChrRecord *arg0, struct act_gopos *arg1, struct StandTile *stan, s32 arg3);
 void chrlvPlotCourseRelated(struct ChrRecord *arg0);
 void chrlvActGoposSetTargetPosRelated(ChrRecord *arg0);
 void chrlvActGoposIncCurIndex(struct ChrRecord *arg0);
 void play_hit_soundeffect_and_proper_volume(struct ChrRecord *arg0);
 void get_sound_at_range(ChrRecord *arg0, s32 arg1, s32 arg2);
+
+
+///? ?????
+void sub_GAME_7F027E90(struct ChrRecord *arg0, void *arg1, void *arg2);
 
 // end forward declarations
 
@@ -4311,7 +4315,7 @@ struct path_table_alt *chrlvStanPathRelated(struct coord3d *arg0, StandTile *arg
 /**
  * Address 0x7F027DB0.
 */
-s32 chrlvStanRoomRelated(ChrRecord *arg0, struct pad *arg1, StandTile *tile)
+s32 chrlvStanRoomRelated(ChrRecord *arg0, struct coord3d *arg1, StandTile *tile)
 {
 
 #define BUFFER_SIZE_7F027DB0 0x14
@@ -4322,7 +4326,7 @@ s32 chrlvStanRoomRelated(ChrRecord *arg0, struct pad *arg1, StandTile *tile)
     s32 i;
 
     prop = arg0->prop;
-    tile_something = sub_GAME_7F0B0D0C(prop->stan, prop->pos.x, prop->pos.f[2], &tile, arg1->pos.f[0], arg1->pos.f[2], &sp48[0], BUFFER_SIZE_7F027DB0);
+    tile_something = sub_GAME_7F0B0D0C(prop->stan, prop->pos.x, prop->pos.f[2], &tile, arg1->f[0], arg1->f[2], &sp48[0], BUFFER_SIZE_7F027DB0);
 
     if (tile_something > 0 && tile_something < BUFFER_SIZE_7F027DB0)
     {
@@ -4347,18 +4351,20 @@ s32 chrlvStanRoomRelated(ChrRecord *arg0, struct pad *arg1, StandTile *tile)
 /**
  * Address 0x7F027E70.
 */
-void chrlvStanRoomRelatedAlt(ChrRecord *arg0, struct pad *arg1)
+void chrlvStanRoomRelatedPad(ChrRecord *arg0, struct pad *arg1)
 {
-    chrlvStanRoomRelated(arg0, arg1, arg1->stan);
+    chrlvStanRoomRelated(arg0, &arg1->pos, arg1->stan);
 }
 
 
 
 
 #ifdef NONMATCHING
-// unknown type for arg1.
-// arg2, might be struct coord3d, or struct pad
-void sub_GAME_7F027E90(struct ChrRecord *arg0, void *arg1, void *arg2)
+// unknown type for arg1. I think it's `struct waydata`?
+// There should be a struct starting at gopos local offset 0x30 (player 0x5c),
+// arg1 is a pointer to this.
+// TODO:
+void sub_GAME_7F027E90(struct ChrRecord *arg0, void *arg1, struct coord3d *arg2)
 {
     f32 sp20;
     f32 sp1C;
@@ -4696,7 +4702,7 @@ void chrlvActGoposIncCurIndex(struct ChrRecord *arg0)
     }
     else
     {
-        struct waypoint * p = arg0->act_gopos.waypoints[arg0->act_gopos.curindex];
+        struct path_table_alt * p = arg0->act_gopos.waypoints[arg0->act_gopos.curindex];
 
         arg0->act_gopos.curindex = 1;
 
@@ -5372,137 +5378,74 @@ void play_hit_soundeffect_and_proper_volume(struct ChrRecord *arg0)
 
 
 
-#ifdef NONMATCHING
-void plot_course_for_actor(void) {
+/**
+ * Address 0x7F028DDC.
+*/
+s32 plot_course_for_actor(ChrRecord *arg0, struct act_gopos *arg1, struct StandTile *stan, s32 arg3)
+{
+    PropRecord *prop; //sp 100
+    struct path_table_alt *prop_path; // sp96
+    struct path_table_alt *target_path; // sp92
+    struct path_table_alt *sp44[6];
+    s32 i;
+    struct coord3d sp34;
+    struct StandTile *sp30;
+    s32 phi_v0;
 
+    prop = arg0->prop;
+
+    phi_v0 = (arg0->actiontype == ACT_GOPOS) && (arg0->act_gopos.unk59 == (u8)arg3);
+
+    prop_path = chrlvStanPathRelated(&prop->pos, prop->stan);
+    target_path = chrlvStanPathRelated(&arg1->targetpos, stan);
+
+    if ((prop_path != NULL) 
+        && (target_path != NULL) 
+        && !(sub_GAME_7F08F4F0(prop_path, target_path, &sp44, 6) < 2)
+    )
+    {
+        sub_GAME_7F02D184(arg0);
+
+        arg0->actiontype = ACT_GOPOS;
+
+        arg0->act_gopos.targetpos.f[0] = arg1->targetpos.x;
+        arg0->act_gopos.targetpos.f[1] = arg1->targetpos.f[1];
+        arg0->act_gopos.targetpos.f[2] = arg1->targetpos.f[2];
+        arg0->act_gopos.target = stan;
+        arg0->act_gopos.unk3c = (s32) target_path;
+        arg0->act_gopos.curindex = 0;
+        arg0->act_gopos.unk59 = arg3;
+        arg0->act_gopos.unka0 = 0.0f;
+        arg0->act_gopos.unk84 = (s32) (randomGetNext() % 100U);
+        arg0->act_gopos.unk5f = 0;
+        arg0->act_gopos.unk9c = -1;
+
+        for (i=0; i<6; i++)
+        {
+            arg0->act_gopos.waypoints[i] = sp44[i];
+        }
+
+        chrlvActGoposSetTargetPosRelated(arg0);
+        arg0->sleep = 0;
+
+        if (phi_v0 == 0)
+        {
+            play_hit_soundeffect_and_proper_volume(arg0);
+        }
+
+        chrlvActGoposRelated(arg0, &sp34, &sp30);
+
+        if (((prop->flags & 2) == 0) && (chrlvStanRoomRelated(arg0, &sp34, sp30) != 0))
+        {
+            sub_GAME_7F027E90(arg0, &arg0->act_gopos.unk5c, &sp34);
+        }
+
+        return 1;
+    }
+
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel plot_course_for_actor
-/* 05D90C 7F028DDC 27BDFF98 */  addiu $sp, $sp, -0x68
-/* 05D910 7F028DE0 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 05D914 7F028DE4 AFB00018 */  sw    $s0, 0x18($sp)
-/* 05D918 7F028DE8 AFA5006C */  sw    $a1, 0x6c($sp)
-/* 05D91C 7F028DEC AFA60070 */  sw    $a2, 0x70($sp)
-/* 05D920 7F028DF0 AFA70074 */  sw    $a3, 0x74($sp)
-/* 05D924 7F028DF4 80820007 */  lb    $v0, 7($a0)
-/* 05D928 7F028DF8 00808025 */  move  $s0, $a0
-/* 05D92C 7F028DFC 8C830018 */  lw    $v1, 0x18($a0)
-/* 05D930 7F028E00 384E000F */  xori  $t6, $v0, 0xf
-/* 05D934 7F028E04 2DC20001 */  sltiu $v0, $t6, 1
-/* 05D938 7F028E08 10400004 */  beqz  $v0, .L7F028E1C
-/* 05D93C 7F028E0C 93AF0077 */   lbu   $t7, 0x77($sp)
-/* 05D940 7F028E10 90980059 */  lbu   $t8, 0x59($a0)
-/* 05D944 7F028E14 01F81026 */  xor   $v0, $t7, $t8
-/* 05D948 7F028E18 2C420001 */  sltiu $v0, $v0, 1
-.L7F028E1C:
-/* 05D94C 7F028E1C 8C650014 */  lw    $a1, 0x14($v1)
-/* 05D950 7F028E20 AFA30064 */  sw    $v1, 0x64($sp)
-/* 05D954 7F028E24 AFA20028 */  sw    $v0, 0x28($sp)
-/* 05D958 7F028E28 0FC09F35 */  jal   chrlvStanPathRelated
-/* 05D95C 7F028E2C 24640008 */   addiu $a0, $v1, 8
-/* 05D960 7F028E30 AFA20060 */  sw    $v0, 0x60($sp)
-/* 05D964 7F028E34 8FA4006C */  lw    $a0, 0x6c($sp)
-/* 05D968 7F028E38 0FC09F35 */  jal   chrlvStanPathRelated
-/* 05D96C 7F028E3C 8FA50070 */   lw    $a1, 0x70($sp)
-/* 05D970 7F028E40 8FA40060 */  lw    $a0, 0x60($sp)
-/* 05D974 7F028E44 00402825 */  move  $a1, $v0
-/* 05D978 7F028E48 50800053 */  beql  $a0, $zero, .L7F028F98
-/* 05D97C 7F028E4C 00001025 */   move  $v0, $zero
-/* 05D980 7F028E50 10400050 */  beqz  $v0, .L7F028F94
-/* 05D984 7F028E54 27A60044 */   addiu $a2, $sp, 0x44
-/* 05D988 7F028E58 24070006 */  li    $a3, 6
-/* 05D98C 7F028E5C 0FC23D3C */  jal   sub_GAME_7F08F4F0
-/* 05D990 7F028E60 AFA2005C */   sw    $v0, 0x5c($sp)
-/* 05D994 7F028E64 28410002 */  slti  $at, $v0, 2
-/* 05D998 7F028E68 5420004B */  bnezl $at, .L7F028F98
-/* 05D99C 7F028E6C 00001025 */   move  $v0, $zero
-/* 05D9A0 7F028E70 0FC0B461 */  jal   sub_GAME_7F02D184
-/* 05D9A4 7F028E74 02002025 */   move  $a0, $s0
-/* 05D9A8 7F028E78 8FA2006C */  lw    $v0, 0x6c($sp)
-/* 05D9AC 7F028E7C 2419000F */  li    $t9, 15
-/* 05D9B0 7F028E80 A2190007 */  sb    $t9, 7($s0)
-/* 05D9B4 7F028E84 C4440000 */  lwc1  $f4, ($v0)
-/* 05D9B8 7F028E88 44805000 */  mtc1  $zero, $f10
-/* 05D9BC 7F028E8C E604002C */  swc1  $f4, 0x2c($s0)
-/* 05D9C0 7F028E90 C4460004 */  lwc1  $f6, 4($v0)
-/* 05D9C4 7F028E94 E6060030 */  swc1  $f6, 0x30($s0)
-/* 05D9C8 7F028E98 C4480008 */  lwc1  $f8, 8($v0)
-/* 05D9CC 7F028E9C E6080034 */  swc1  $f8, 0x34($s0)
-/* 05D9D0 7F028EA0 8FA80070 */  lw    $t0, 0x70($sp)
-/* 05D9D4 7F028EA4 AE080038 */  sw    $t0, 0x38($s0)
-/* 05D9D8 7F028EA8 8FA9005C */  lw    $t1, 0x5c($sp)
-/* 05D9DC 7F028EAC A2000058 */  sb    $zero, 0x58($s0)
-/* 05D9E0 7F028EB0 AE09003C */  sw    $t1, 0x3c($s0)
-/* 05D9E4 7F028EB4 8FAA0074 */  lw    $t2, 0x74($sp)
-/* 05D9E8 7F028EB8 E60A00A0 */  swc1  $f10, 0xa0($s0)
-/* 05D9EC 7F028EBC 0C002914 */  jal   randomGetNext
-/* 05D9F0 7F028EC0 A20A0059 */   sb    $t2, 0x59($s0)
-/* 05D9F4 7F028EC4 24010064 */  li    $at, 100
-/* 05D9F8 7F028EC8 0041001B */  divu  $zero, $v0, $at
-/* 05D9FC 7F028ECC 00005810 */  mfhi  $t3
-/* 05DA00 7F028ED0 240CFFFF */  li    $t4, -1
-/* 05DA04 7F028ED4 AE0B0084 */  sw    $t3, 0x84($s0)
-/* 05DA08 7F028ED8 A200005F */  sb    $zero, 0x5f($s0)
-/* 05DA0C 7F028EDC AE0C009C */  sw    $t4, 0x9c($s0)
-/* 05DA10 7F028EE0 8FAD0044 */  lw    $t5, 0x44($sp)
-/* 05DA14 7F028EE4 24050002 */  li    $a1, 2
-/* 05DA18 7F028EE8 27A60044 */  addiu $a2, $sp, 0x44
-/* 05DA1C 7F028EEC AE0D0040 */  sw    $t5, 0x40($s0)
-/* 05DA20 7F028EF0 8FAE0048 */  lw    $t6, 0x48($sp)
-/* 05DA24 7F028EF4 00052080 */  sll   $a0, $a1, 2
-/* 05DA28 7F028EF8 00C41821 */  addu  $v1, $a2, $a0
-/* 05DA2C 7F028EFC AE0E0044 */  sw    $t6, 0x44($s0)
-/* 05DA30 7F028F00 8C6F0000 */  lw    $t7, ($v1)
-/* 05DA34 7F028F04 02041021 */  addu  $v0, $s0, $a0
-/* 05DA38 7F028F08 02002025 */  move  $a0, $s0
-/* 05DA3C 7F028F0C AC4F0040 */  sw    $t7, 0x40($v0)
-/* 05DA40 7F028F10 8C780004 */  lw    $t8, 4($v1)
-/* 05DA44 7F028F14 AC580044 */  sw    $t8, 0x44($v0)
-/* 05DA48 7F028F18 8C790008 */  lw    $t9, 8($v1)
-/* 05DA4C 7F028F1C AC590048 */  sw    $t9, 0x48($v0)
-/* 05DA50 7F028F20 8C68000C */  lw    $t0, 0xc($v1)
-/* 05DA54 7F028F24 0FC0A0A3 */  jal   chrlvActGoposSetTargetPosRelated
-/* 05DA58 7F028F28 AC48004C */   sw    $t0, 0x4c($v0)
-/* 05DA5C 7F028F2C A2000008 */  sb    $zero, 8($s0)
-/* 05DA60 7F028F30 8FA90028 */  lw    $t1, 0x28($sp)
-/* 05DA64 7F028F34 55200004 */  bnezl $t1, .L7F028F48
-/* 05DA68 7F028F38 02002025 */   move  $a0, $s0
-/* 05DA6C 7F028F3C 0FC0A368 */  jal   play_hit_soundeffect_and_proper_volume
-/* 05DA70 7F028F40 02002025 */   move  $a0, $s0
-/* 05DA74 7F028F44 02002025 */  move  $a0, $s0
-.L7F028F48:
-/* 05DA78 7F028F48 27A50034 */  addiu $a1, $sp, 0x34
-/* 05DA7C 7F028F4C 0FC09FC8 */  jal   chrlvActGoposRelated
-/* 05DA80 7F028F50 27A60030 */   addiu $a2, $sp, 0x30
-/* 05DA84 7F028F54 8FAA0064 */  lw    $t2, 0x64($sp)
-/* 05DA88 7F028F58 02002025 */  move  $a0, $s0
-/* 05DA8C 7F028F5C 27A50034 */  addiu $a1, $sp, 0x34
-/* 05DA90 7F028F60 914B0001 */  lbu   $t3, 1($t2)
-/* 05DA94 7F028F64 316C0002 */  andi  $t4, $t3, 2
-/* 05DA98 7F028F68 15800008 */  bnez  $t4, .L7F028F8C
-/* 05DA9C 7F028F6C 00000000 */   nop   
-/* 05DAA0 7F028F70 0FC09F6C */  jal   chrlvStanRoomRelated
-/* 05DAA4 7F028F74 8FA60030 */   lw    $a2, 0x30($sp)
-/* 05DAA8 7F028F78 10400004 */  beqz  $v0, .L7F028F8C
-/* 05DAAC 7F028F7C 02002025 */   move  $a0, $s0
-/* 05DAB0 7F028F80 2605005C */  addiu $a1, $s0, 0x5c
-/* 05DAB4 7F028F84 0FC09FA4 */  jal   sub_GAME_7F027E90
-/* 05DAB8 7F028F88 27A60034 */   addiu $a2, $sp, 0x34
-.L7F028F8C:
-/* 05DABC 7F028F8C 10000002 */  b     .L7F028F98
-/* 05DAC0 7F028F90 24020001 */   li    $v0, 1
-.L7F028F94:
-/* 05DAC4 7F028F94 00001025 */  move  $v0, $zero
-.L7F028F98:
-/* 05DAC8 7F028F98 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 05DACC 7F028F9C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 05DAD0 7F028FA0 27BD0068 */  addiu $sp, $sp, 0x68
-/* 05DAD4 7F028FA4 03E00008 */  jr    $ra
-/* 05DAD8 7F028FA8 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -5719,7 +5662,7 @@ glabel set_actor_on_path
 /* 05DD8C 7F02925C 33190002 */  andi  $t9, $t8, 2
 /* 05DD90 7F029260 57200009 */  bnezl $t9, .L7F029288
 /* 05DD94 7F029264 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 05DD98 7F029268 0FC09F9C */  jal   chrlvStanRoomRelatedAlt
+/* 05DD98 7F029268 0FC09F9C */  jal   chrlvStanRoomRelatedPad
 /* 05DD9C 7F02926C AFA20024 */   sw    $v0, 0x24($sp)
 /* 05DDA0 7F029270 10400004 */  beqz  $v0, .L7F029284
 /* 05DDA4 7F029274 8FA60024 */   lw    $a2, 0x24($sp)
@@ -18629,7 +18572,7 @@ glabel sub_GAME_7F032548
 /* 0670D8 7F0325A8 0169082A */  slt   $at, $t3, $t1
 /* 0670DC 7F0325AC 5020000B */  beql  $at, $zero, .L7F0325DC
 /* 0670E0 7F0325B0 820D0038 */   lb    $t5, 0x38($s0)
-/* 0670E4 7F0325B4 0FC09F9C */  jal   chrlvStanRoomRelatedAlt
+/* 0670E4 7F0325B4 0FC09F9C */  jal   chrlvStanRoomRelatedPad
 /* 0670E8 7F0325B8 00402825 */   move  $a1, $v0
 /* 0670EC 7F0325BC 10400006 */  beqz  $v0, .L7F0325D8
 /* 0670F0 7F0325C0 240C0001 */   li    $t4, 1
@@ -18654,7 +18597,7 @@ glabel sub_GAME_7F032548
 /* 067134 7F032604 33190002 */  andi  $t9, $t8, 2
 /* 067138 7F032608 17200004 */  bnez  $t9, .L7F03261C
 /* 06713C 7F03260C 00000000 */   nop   
-/* 067140 7F032610 0FC09F9C */  jal   chrlvStanRoomRelatedAlt
+/* 067140 7F032610 0FC09F9C */  jal   chrlvStanRoomRelatedPad
 /* 067144 7F032614 02202825 */   move  $a1, $s1
 /* 067148 7F032618 14400007 */  bnez  $v0, .L7F032638
 .L7F03261C:
