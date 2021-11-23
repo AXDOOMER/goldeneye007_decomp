@@ -23,10 +23,5 @@ _efontcharSegmentStart:
 .global _efontcharSegmentEnd
 _efontcharSegmentEnd:
 
-.global _animation_tableSegmentRomStart
-_animation_tableSegmentRomStart:
-.incbin "assets/animationtable_entries.bin"
-.global _animation_tableSegmentRomEnd
-_animation_tableSegmentRomEnd:
 
 

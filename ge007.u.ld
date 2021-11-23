@@ -422,8 +422,16 @@ SECTIONS
    _romfiles_117880SegmentEnd = ADDR(.romfiles_117880) + SIZEOF(.romfiles_117880);
    _romfiles_117880SegmentRomEnd = _romfiles_117880SegmentRomStart + SIZEOF(.romfiles_117880);
 
+   _animation_entriesSegmentStart = ADDR(.animation_entries);
+   _animation_entriesSegmentRomStart = _romfiles_117880SegmentRomEnd;
+   .animation_entries 0x00000000 : AT(_animation_entriesSegmentRomStart) {
+      build/u/assets/animationtable_entries.o(.data);
+   }
+   _animation_entriesSegmentEnd = ADDR(.animation_entries) + SIZEOF(.animation_entries);
+   _animation_entriesSegmentRomEnd = _animation_entriesSegmentRomStart + SIZEOF(.animation_entries);
+
    _animation_dataSegmentStart = ADDR(.animation_data);
-   _animation_dataSegmentRomStart = _romfiles_117880SegmentRomEnd;
+   _animation_dataSegmentRomStart = _animation_entriesSegmentRomEnd;
    .animation_data 0x00000000 : AT(_animation_dataSegmentRomStart) {
       build/u/assets/animationtable_data.o(.data);
    }

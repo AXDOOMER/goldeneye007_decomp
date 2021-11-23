@@ -248,8 +248,8 @@ glabel expand_ani_table_entries
 .L7F000A6C:
 /* 03559C 7F000A6C 1060000D */  beqz  $v1, .L7F000AA4
 /* 0355A0 7F000A70 24050001 */   li    $a1, 1
-/* 0355A4 7F000A74 3C040012 */  lui   $a0, %hi(_animation_tableSegmentRomStart) # $a0, 0x12
-/* 0355A8 7F000A78 24844AC0 */  addiu $a0, %lo(_animation_tableSegmentRomStart) # addiu $a0, $a0, 0x4ac0
+/* 0355A4 7F000A74 3C040012 */  lui   $a0, %hi(_animation_entriesSegmentRomStart) # $a0, 0x12
+/* 0355A8 7F000A78 24844AC0 */  addiu $a0, %lo(_animation_entriesSegmentRomStart) # addiu $a0, $a0, 0x4ac0
 /* 0355AC 7F000A7C 8C430000 */  lw    $v1, ($v0)
 .L7F000A80:
 /* 0355B0 7F000A80 50A30005 */  beql  $a1, $v1, .L7F000A98
