@@ -82,6 +82,7 @@ void chrlvWalkingAnimationRelated(ChrRecord *arg0);
 void setSeenBondTimeToNow(struct ChrRecord *guardData);
 s32 chrlvAttackRelated7F0292A8(ChrRecord *arg0, struct coord3d *arg1, StandTile *arg2);
 s32 chrlvMaybeSameRoom(ChrRecord *arg0, struct coord3d *arg1, StandTile *arg2);
+s32 chrlvCurrentPlayerCall7F0B0E24(ChrRecord *arg0);
 
 // move to chrobjecthandler.h
 
@@ -5873,7 +5874,7 @@ bool check_if_position_in_same_room(struct ChrRecord *self, struct coord3d *pos,
 /**
  * Address 0x7F02969C.
 */
-s32 chrlvMaybeSameRoom(ChrRecord *arg0, struct coord3d *arg1, StandTile *arg2)
+s32 chrlvMaybeSameRoom(struct ChrRecord *arg0, struct coord3d *arg1, struct StandTile *arg2)
 {
     f32 atan;
     f32 roty;
@@ -5899,68 +5900,45 @@ s32 chrlvMaybeSameRoom(ChrRecord *arg0, struct coord3d *arg1, StandTile *arg2)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F029760(void) {
+/**
+ * Address 0x7F029760.
+*/
+s32 chrlvCurrentPlayerCall7F0B0E24(ChrRecord *arg0)
+{
+    PropRecord *sp3C;
+    PropRecord *bond_prop;
+    StandTile *bond_stan;
+    s32 ret;
 
+    sp3C = arg0->prop;
+    bond_prop = get_curplayer_positiondata();
+    ret = 0;
+
+    bondviewUpdateGuardTankFlagsRelated(g_CurrentPlayer->prop, 0);
+
+    bond_stan = bond_prop->stan;
+    
+    if ((sub_GAME_7F0B0E24(
+            &bond_stan,
+            bond_prop->pos.f[0],
+            bond_prop->pos.f[2],
+            sp3C->pos.f[0],
+            sp3C->pos.f[2],
+            0x13,
+            bond_prop->pos.f[1],
+            bond_prop->pos.f[1],
+            0.0f,
+            1.0f) != 0)
+        && (bond_stan == sp3C->stan))
+    {
+        ret = 1;
+    }
+
+    bondviewUpdateGuardTankFlagsRelated(g_CurrentPlayer->prop, 1);
+
+    return ret;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F029760
-/* 05E290 7F029760 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 05E294 7F029764 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 05E298 7F029768 8C8E0018 */  lw    $t6, 0x18($a0)
-/* 05E29C 7F02976C 0FC225E6 */  jal   get_curplayer_positiondata
-/* 05E2A0 7F029770 AFAE003C */   sw    $t6, 0x3c($sp)
-/* 05E2A4 7F029774 3C0F8008 */  lui   $t7, %hi(g_CurrentPlayer) 
-/* 05E2A8 7F029778 8DEFA0B0 */  lw    $t7, %lo(g_CurrentPlayer)($t7)
-/* 05E2AC 7F02977C AFA00030 */  sw    $zero, 0x30($sp)
-/* 05E2B0 7F029780 00002825 */  move  $a1, $zero
-/* 05E2B4 7F029784 8DE400A8 */  lw    $a0, 0xa8($t7)
-/* 05E2B8 7F029788 0FC2280F */  jal   bondviewUpdateGuardTankFlagsRelated
-/* 05E2BC 7F02978C AFA20038 */   sw    $v0, 0x38($sp)
-/* 05E2C0 7F029790 8FA30038 */  lw    $v1, 0x38($sp)
-/* 05E2C4 7F029794 8FA2003C */  lw    $v0, 0x3c($sp)
-/* 05E2C8 7F029798 24190013 */  li    $t9, 19
-/* 05E2CC 7F02979C 8C780014 */  lw    $t8, 0x14($v1)
-/* 05E2D0 7F0297A0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 05E2D4 7F0297A4 44814000 */  mtc1  $at, $f8
-/* 05E2D8 7F0297A8 AFB80034 */  sw    $t8, 0x34($sp)
-/* 05E2DC 7F0297AC C4440010 */  lwc1  $f4, 0x10($v0)
-/* 05E2E0 7F0297B0 8C660010 */  lw    $a2, 0x10($v1)
-/* 05E2E4 7F0297B4 8C650008 */  lw    $a1, 8($v1)
-/* 05E2E8 7F0297B8 8C470008 */  lw    $a3, 8($v0)
-/* 05E2EC 7F0297BC AFB90014 */  sw    $t9, 0x14($sp)
-/* 05E2F0 7F0297C0 E7A40010 */  swc1  $f4, 0x10($sp)
-/* 05E2F4 7F0297C4 C460000C */  lwc1  $f0, 0xc($v1)
-/* 05E2F8 7F0297C8 44803000 */  mtc1  $zero, $f6
-/* 05E2FC 7F0297CC 27A40034 */  addiu $a0, $sp, 0x34
-/* 05E300 7F0297D0 E7A80024 */  swc1  $f8, 0x24($sp)
-/* 05E304 7F0297D4 E7A00018 */  swc1  $f0, 0x18($sp)
-/* 05E308 7F0297D8 E7A0001C */  swc1  $f0, 0x1c($sp)
-/* 05E30C 7F0297DC 0FC2C389 */  jal   sub_GAME_7F0B0E24
-/* 05E310 7F0297E0 E7A60020 */   swc1  $f6, 0x20($sp)
-/* 05E314 7F0297E4 10400008 */  beqz  $v0, .L7F029808
-/* 05E318 7F0297E8 3C0C8008 */   lui   $t4, %hi(g_CurrentPlayer) 
-/* 05E31C 7F0297EC 8FA9003C */  lw    $t1, 0x3c($sp)
-/* 05E320 7F0297F0 8FA80034 */  lw    $t0, 0x34($sp)
-/* 05E324 7F0297F4 240B0001 */  li    $t3, 1
-/* 05E328 7F0297F8 8D2A0014 */  lw    $t2, 0x14($t1)
-/* 05E32C 7F0297FC 150A0002 */  bne   $t0, $t2, .L7F029808
-/* 05E330 7F029800 00000000 */   nop   
-/* 05E334 7F029804 AFAB0030 */  sw    $t3, 0x30($sp)
-.L7F029808:
-/* 05E338 7F029808 8D8CA0B0 */  lw    $t4, %lo(g_CurrentPlayer)($t4)
-/* 05E33C 7F02980C 24050001 */  li    $a1, 1
-/* 05E340 7F029810 0FC2280F */  jal   bondviewUpdateGuardTankFlagsRelated
-/* 05E344 7F029814 8D8400A8 */   lw    $a0, 0xa8($t4)
-/* 05E348 7F029818 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 05E34C 7F02981C 8FA20030 */  lw    $v0, 0x30($sp)
-/* 05E350 7F029820 27BD0040 */  addiu $sp, $sp, 0x40
-/* 05E354 7F029824 03E00008 */  jr    $ra
-/* 05E358 7F029828 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -19637,7 +19615,7 @@ glabel D_800520D8
 glabel sub_GAME_7F0333F8
 /* 067F28 7F0333F8 27BDFFB8 */  addiu $sp, $sp, -0x48
 /* 067F2C 7F0333FC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 067F30 7F033400 0FC0A5D8 */  jal   sub_GAME_7F029760
+/* 067F30 7F033400 0FC0A5D8 */  jal   chrlvCurrentPlayerCall7F0B0E24
 /* 067F34 7F033404 AFA40048 */   sw    $a0, 0x48($sp)
 /* 067F38 7F033408 1040001C */  beqz  $v0, .L7F03347C
 /* 067F3C 7F03340C 8FAE0048 */   lw    $t6, 0x48($sp)
