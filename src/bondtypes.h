@@ -417,12 +417,16 @@ struct act_preargh
 struct act_attack
 {
     f32 *unk02c;                                                       /*0x2c*/
+    
     u16 unk030;                                                        /*0x30*/
     u8 unk032;                                                         /*0x32*/
     s8 unk033;                                                         /*0x33*/
+    
     s8 unk034;                                                         /*0x34*/
     u8 unk035;                                                         /*0x35*/
     s8 unk036;                                                         /*0x36*/
+    s8 unk037;
+
     u32 unk038;                                                        /*0x38*/
     u32 unk03c;                                                        /*0x3c*/
     u32 unk040;                                                        /*0x40*/
