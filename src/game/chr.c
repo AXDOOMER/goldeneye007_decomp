@@ -1139,7 +1139,7 @@ s32 female_guard_yelp_counter = 0;
 s16 metal_ricochet_SFX[3] = {0xEF, 0x48, 0x49};
 
 
-// probably better described as vec3 than coordinates.
+// // probably better described as vec3 than coordinates.
 struct coord3d D_80030A44 = {0,0,0};
 
 

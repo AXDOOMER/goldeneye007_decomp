@@ -12,6 +12,7 @@
 #include "game/chrai.h"
 #include "game/chrobjhandler.h"
 #include "game/file.h"
+#include "game/front.h"
 #include "game/gun.h"
 #include "game/initanitable.h"
 #include "game/lvl.h"
@@ -3535,26 +3536,39 @@ s32 chrlvAttackAnimationRelated7F026F30(struct ChrRecord *arg0, f32 *result)
 
 #ifdef NONMATCHING
 
-void sub_GAME_7F053A10(ALSoundState *, struct coord3d *);
-
+/**
+ * Address 0x7F027060.
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: ok
+ * - identical instructions: fail
+ * - identical registers: fail
+ * 
+ * notes: mystery section, seems to be missing something mips_to_c can't see.
+ * male_guard_yelp_counter, female_guard_yelp_counter are static, need to be moved from chr.c
+ * Also need to remove female_guard_yelps, male_guard_yelps from chr.c once this matches.
+*/
 void play_sound_for_shot_actor(ChrRecord *arg0)
 {
-    PropRecord *prop;
-    s32 male;
-    s16 soundnum;
+    ALSoundState * sndstate = NULL;
+    s32 male = 0;
 
-    ALSoundState * sndstate;
+    static s32 male_guard_yelp_counter = 0;
+    static s32 female_guard_yelp_counter = 0;
 
-    prop = arg0->prop;
-    male = 0;
-
-    if ((prop->type != PROP_TYPE_VIEWER) || (g_playerPointers[sub_GAME_7F09B15C(prop)]->bonddead == 0))
+    if ((arg0->prop->type != PROP_TYPE_VIEWER) || (g_playerPointers[sub_GAME_7F09B15C(arg0->prop)]->bonddead == 0))
     {
-        if (prop->type == PROP_TYPE_VIEWER)
+        /*
+        * decomp issue: mystery section.
+        * what is going on right here?
+        * arg0 = 104(sp), why is it only loaded six times instead of seven?
+        */
+        if (arg0->prop->type == PROP_TYPE_VIEWER)
         {
             if (getPlayerCount() == 1)
             {
-                if (c_item_entries[arg0->bodynum].isMale)
+                if (c_item_entries[arg0->bodynum].isMale != 0)
                 {
                     male = 1;
                 }
@@ -3567,17 +3581,21 @@ void play_sound_for_shot_actor(ChrRecord *arg0)
                 }
             }
         }
-        else if (c_item_entries[arg0->bodynum].isMale)
+        else if (c_item_entries[arg0->bodynum].isMale != 0)
         {
             male = 1;
         }
 
-        if (male)
+        if (male != 0)
         {
-            s16 sounds[26] = male_guard_yelps;
-            soundnum = sounds[male_guard_yelp_counter];
+            //s16 sounds[26] = male_guard_yelps;
+            s16 sounds[] = {
+                0x86,  0x87,  0x88,  0x89,  0x8A,  0x8B,  0x8C,  0x8D,  0x8E,  0x8F,
+                0x90,  0x91,  0x92,  0x93,  0x94,  0x95,  0x96,  0x97,  0x98,  0x99,
+                0x9A,  0x9B,  0x9C,  0x9D,  0x9E
+            };
 
-            sndstate = sndPlaySfx(g_musicSfxBufferPtr, soundnum, NULL);
+            sndstate = sndPlaySfx(g_musicSfxBufferPtr, sounds[male_guard_yelp_counter], NULL);
 
             male_guard_yelp_counter++;
             if (male_guard_yelp_counter >= 25)
@@ -3587,10 +3605,12 @@ void play_sound_for_shot_actor(ChrRecord *arg0)
         }
         else
         {
-            s16 sounds[4] = female_guard_yelps;
-            soundnum = sounds[female_guard_yelp_counter];
+            //s16 sounds[4] = female_guard_yelps;
+            s16 sounds[] = {
+                0xD,   0xE,   0xF
+            };
 
-            sndstate = sndPlaySfx(g_musicSfxBufferPtr, soundnum, NULL);
+            sndstate = sndPlaySfx(g_musicSfxBufferPtr, sounds[female_guard_yelp_counter], NULL);
 
             female_guard_yelp_counter++;
             if (female_guard_yelp_counter >= 3)

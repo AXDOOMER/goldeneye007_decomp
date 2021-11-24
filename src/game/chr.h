@@ -5,8 +5,6 @@
 #include "chrai.h"
 #include "bondtypes.h"
 
-extern s16 metal_ricochet_SFX[3];
-
 struct struck_animation_table;
 
 struct animation_something
@@ -250,6 +248,7 @@ extern s32 male_guard_yelp_counter;
 extern s16 male_guard_yelps[];
 
 extern struct coord3d D_80030A44;
+extern s16 metal_ricochet_SFX[3];
 
 void sub_GAME_7F022EE0(s32 param_1);
 void sub_GAME_7F022E24(s32 param_1);
