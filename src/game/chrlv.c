@@ -81,6 +81,7 @@ void chrlvSurrenderAnimationRelated7F02B638(struct ChrRecord *arg0);
 void chrlvWalkingAnimationRelated(ChrRecord *arg0);
 void setSeenBondTimeToNow(struct ChrRecord *guardData);
 s32 chrlvAttackRelated7F0292A8(ChrRecord *arg0, struct coord3d *arg1, StandTile *arg2);
+s32 chrlvMaybeSameRoom(ChrRecord *arg0, struct coord3d *arg1, StandTile *arg2);
 
 // move to chrobjecthandler.h
 
@@ -5869,76 +5870,32 @@ bool check_if_position_in_same_room(struct ChrRecord *self, struct coord3d *pos,
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02969C(void) {
+/**
+ * Address 0x7F02969C.
+*/
+s32 chrlvMaybeSameRoom(ChrRecord *arg0, struct coord3d *arg1, StandTile *arg2)
+{
+    f32 atan;
+    f32 roty;
+    f32 df;
 
+    roty = getsubroty(arg0->model);
+    atan = atan2f(arg1->f[0] - arg0->prop->pos.f[0], arg1->f[2] - arg0->prop->pos.f[2]);
+    df = atan - roty;
+
+    if (atan < roty)
+    {
+        df += M_2PI_F;
+    }
+
+    if ((df < M_100_DEG_IN_RAD) || (df > M_260_DEG_IN_RAD))
+    {
+        return check_if_position_in_same_room(arg0, arg1, arg2);
+    }
+
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80051DFC
-.word 0x40c90fdb /*6.2831855*/
-glabel D_80051E00
-.word 0x3fdf66f3 /*1.7453293*/
-glabel D_80051E04
-.word 0x4091361e /*4.5378561*/
-.text
-glabel sub_GAME_7F02969C
-/* 05E1CC 7F02969C 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 05E1D0 7F0296A0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05E1D4 7F0296A4 AFA40020 */  sw    $a0, 0x20($sp)
-/* 05E1D8 7F0296A8 AFA50024 */  sw    $a1, 0x24($sp)
-/* 05E1DC 7F0296AC AFA60028 */  sw    $a2, 0x28($sp)
-/* 05E1E0 7F0296B0 0FC1B320 */  jal   getsubroty
-/* 05E1E4 7F0296B4 8C84001C */   lw    $a0, 0x1c($a0)
-/* 05E1E8 7F0296B8 8FAF0020 */  lw    $t7, 0x20($sp)
-/* 05E1EC 7F0296BC 8FA30024 */  lw    $v1, 0x24($sp)
-/* 05E1F0 7F0296C0 8DE20018 */  lw    $v0, 0x18($t7)
-/* 05E1F4 7F0296C4 C4640000 */  lwc1  $f4, ($v1)
-/* 05E1F8 7F0296C8 C4680008 */  lwc1  $f8, 8($v1)
-/* 05E1FC 7F0296CC C4460008 */  lwc1  $f6, 8($v0)
-/* 05E200 7F0296D0 C44A0010 */  lwc1  $f10, 0x10($v0)
-/* 05E204 7F0296D4 E7A00018 */  swc1  $f0, 0x18($sp)
-/* 05E208 7F0296D8 46062301 */  sub.s $f12, $f4, $f6
-/* 05E20C 7F0296DC 0FC16A8C */  jal   atan2f
-/* 05E210 7F0296E0 460A4381 */   sub.s $f14, $f8, $f10
-/* 05E214 7F0296E4 C7B00018 */  lwc1  $f16, 0x18($sp)
-/* 05E218 7F0296E8 3C018005 */  lui   $at, %hi(D_80051DFC)
-/* 05E21C 7F0296EC 8FA40020 */  lw    $a0, 0x20($sp)
-/* 05E220 7F0296F0 4610003C */  c.lt.s $f0, $f16
-/* 05E224 7F0296F4 8FA50024 */  lw    $a1, 0x24($sp)
-/* 05E228 7F0296F8 46100301 */  sub.s $f12, $f0, $f16
-/* 05E22C 7F0296FC 45000003 */  bc1f  .L7F02970C
-/* 05E230 7F029700 46006086 */   mov.s $f2, $f12
-/* 05E234 7F029704 C4321DFC */  lwc1  $f18, %lo(D_80051DFC)($at)
-/* 05E238 7F029708 46126080 */  add.s $f2, $f12, $f18
-.L7F02970C:
-/* 05E23C 7F02970C 3C018005 */  lui   $at, %hi(D_80051E00)
-/* 05E240 7F029710 C4241E00 */  lwc1  $f4, %lo(D_80051E00)($at)
-/* 05E244 7F029714 3C018005 */  lui   $at, %hi(D_80051E04)
-/* 05E248 7F029718 4604103C */  c.lt.s $f2, $f4
-/* 05E24C 7F02971C 00000000 */  nop   
-/* 05E250 7F029720 45010007 */  bc1t  .L7F029740
-/* 05E254 7F029724 00000000 */   nop   
-/* 05E258 7F029728 C4261E04 */  lwc1  $f6, %lo(D_80051E04)($at)
-/* 05E25C 7F02972C 00001025 */  move  $v0, $zero
-/* 05E260 7F029730 4602303C */  c.lt.s $f6, $f2
-/* 05E264 7F029734 00000000 */  nop   
-/* 05E268 7F029738 45000005 */  bc1f  .L7F029750
-/* 05E26C 7F02973C 00000000 */   nop   
-.L7F029740:
-/* 05E270 7F029740 0FC0A574 */  jal   check_if_position_in_same_room
-/* 05E274 7F029744 8FA60028 */   lw    $a2, 0x28($sp)
-/* 05E278 7F029748 10000002 */  b     .L7F029754
-/* 05E27C 7F02974C 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F029750:
-/* 05E280 7F029750 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F029754:
-/* 05E284 7F029754 27BD0020 */  addiu $sp, $sp, 0x20
-/* 05E288 7F029758 03E00008 */  jr    $ra
-/* 05E28C 7F02975C 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -8563,7 +8520,7 @@ glabel sub_GAME_7F02B800
 /* 060428 7F02B8F8 4502000E */  bc1fl .L7F02B934
 /* 06042C 7F02B8FC 26730001 */   addiu $s3, $s3, 1
 /* 060430 7F02B900 26520001 */  addiu $s2, $s2, 1
-/* 060434 7F02B904 0FC0A5A7 */  jal   sub_GAME_7F02969C
+/* 060434 7F02B904 0FC0A5A7 */  jal   chrlvMaybeSameRoom
 /* 060438 7F02B908 8C660014 */   lw    $a2, 0x14($v1)
 /* 06043C 7F02B90C 50400009 */  beql  $v0, $zero, .L7F02B934
 /* 060440 7F02B910 26730001 */   addiu $s3, $s3, 1

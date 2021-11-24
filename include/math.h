@@ -9,6 +9,9 @@
 #define M_2PI 6.2831855
 #define M_2PI_F 6.2831855f
 
+#define M_100_DEG_IN_RAD 1.7453293f
+#define M_260_DEG_IN_RAD 4.537856f
+
 #define M_U16_MAX_VALUE_F 65536.0f
 
 float sinf(float);

@@ -32,5 +32,7 @@ void chrlvLineLineIntersection(struct coord3d *arg0, struct coord3d *arg1, struc
 void chrlvStanLineDirIntersection(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *result);
 void chrlvStanPointPointIntersection(struct coord3d *arg0, struct coord3d *arg1, struct coord3d *result);
 bool handles_shot_actors(struct ChrRecord *self, s32 hitpart, struct coord3d *vector, s32 weaponid, bool isPlayer);
+bool sub_GAME_7F0294BC(ChrRecord *self);
+bool check_if_position_in_same_room(struct ChrRecord *self, struct coord3d *pos, struct StandTile *stan);
 
 #endif
