@@ -480,10 +480,21 @@ struct act_runpos
 
 struct act_patrol
 {
-    struct path *path;                                                /*0x02c*/
+    s32 *path;                                                /*0x02c*/
     s32 nextstep;                                                     /*0x030*/
     bool forward;                                                     /*0x034*/
     struct waydata waydata;                                           /*0x038*/
+    s32 unk78;
+    f32 unk7c;
+    s32 unk80;
+    s32 unk84;
+    s32 unk88;
+    s32 unk8c;
+    s32 unk90;
+    s32 unk94;
+    s32 unk98;
+    s32 unk9c;
+    s32 unka0;
 };
 
 struct act_gopos
@@ -654,7 +665,7 @@ typedef struct PropRecord
         void *voidp;
     };                         /*0x04*/
     struct coord3d pos;                 /*0x08*/
-    StandTile *stan;           /*0x14 name confirmed?*/
+    struct StandTile *stan;           /*0x14 name confirmed?*/
     void *Unk18;                 /*0x18*/
     struct PropRecord *parent;   /*0x1c*/
     struct PropRecord *child; /*0x20*/

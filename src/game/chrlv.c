@@ -62,7 +62,7 @@ struct path_table_alt *get_ptrpreset_in_table_matching_tile(struct StandTile* ar
 s32 check_if_any_path_preset_lies_on_tile(struct StandTile* arg0);
 f32 chrlvPadPresetRelated(struct coord3d *arg0, struct path_table_alt *arg1);
 struct path_table_alt *chrlvStanPathRelated(struct coord3d *arg0, StandTile *arg1);
-void chrlvStanRoomRelatedPad(ChrRecord *arg0, struct pad *arg1);
+s32 chrlvStanRoomRelatedPad(ChrRecord *arg0, struct pad *arg1);
 void play_sound_for_shot_actor(ChrRecord *);
 void sub_GAME_7F025560(ChrRecord *arg0, s32 arg1, s32 arg2);
 void *sub_GAME_7F032C78(ChrRecord *arg0, s32 arg1, s32 arg2, s32 *arg3);
@@ -4440,9 +4440,9 @@ s32 chrlvStanRoomRelated(ChrRecord *arg0, struct coord3d *arg1, StandTile *tile)
 /**
  * Address 0x7F027E70.
 */
-void chrlvStanRoomRelatedPad(ChrRecord *arg0, struct pad *arg1)
+s32 chrlvStanRoomRelatedPad(ChrRecord *arg0, struct pad *arg1)
 {
-    chrlvStanRoomRelated(arg0, &arg1->pos, arg1->stan);
+    return chrlvStanRoomRelated(arg0, &arg1->pos, arg1->stan);
 }
 
 
@@ -5541,9 +5541,69 @@ void chrlvWalkingAnimationRelated(ChrRecord *arg0)
 
 
 #ifdef NONMATCHING
-void set_actor_on_path(void) {
-// AI branch
+
+// arg1 is probably a struct
+void set_actor_on_path(ChrRecord *self, s32 **pathid)
+{
+    struct pad * pad;
+    s32 next_step = -1;
+    struct PropRecord *prop = self->prop;
+    s32 count = 0;
+    s32 *arr = *pathid;
+
+    // decomp problem area: can't seem to get arr[count] to dereference the correct number of times.
+    for ( ; arr[count] >= 0; count++)
+    {
+        s32 aa;
+
+        aa = ptr_setup_path_tbl[arr[count]].id;
+        pad = &ptr_0xxxpresets[aa];
+
+        if ((pad->stan != NULL) && (prop->stan == pad->stan))
+        {
+            f32 dx = pad->pos.f[0] - prop->pos.f[0];
+            f32 dz = pad->pos.f[2] - prop->pos.f[2];
+
+            if (((((dx * dx) + (dz * dz)) < 10000.0f)))
+            {
+                next_step = count;
+                break;
+            }
+        }
+    }
+    // end problem area.
+
+    if (next_step < 0)
+    {
+        next_step = 0;
+    }
+
+    sub_GAME_7F02D184(self);
+    self->actiontype = ACT_PATROL;
+    self->act_patrol.path = pathid;
+
+    self->act_patrol.nextstep = next_step;
+    self->act_patrol.forward = TRUE;
+
+    self->act_patrol.waydata.age = randomGetNext() % 0x64U;
+    self->act_patrol.waydata.unk03 = 0;
+    self->act_init.padding[0x13] = -1;
+
+    self->act_patrol.unk7c = 0.0f;
+    sub_GAME_7F028494(self);
+    self->sleep = 0;
+    chrlvWalkingAnimationRelated(self);
+    pad = sub_GAME_7F028474(self);
+
+    if ((self->prop->flags & 2) == 0)
+    {
+        if (chrlvStanRoomRelatedPad(self, pad) != 0)
+        {
+            chrlvSetGoposSegDistTotal(self, &self->act_patrol.waydata, &pad->pos);
+        }
+    }
 }
+
 #else
 GLOBAL_ASM(
 .late_rodata
