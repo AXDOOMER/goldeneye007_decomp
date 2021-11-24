@@ -5805,88 +5805,41 @@ s32 chrlvAttackRelated7F0292A8(ChrRecord *arg0, struct coord3d *arg1, StandTile 
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0294BC(void) {
-// AI Branch
+/**
+ * Address 0x7F0294BC.
+*/
+bool sub_GAME_7F0294BC(ChrRecord *self)
+{
+    bool pass = FALSE;
+    PropRecord *myprop;
+    PropRecord *bondprop;
+    StandTile *mystan;
+    f32 myheight;
+
+    if (bondviewGetVisibleToGuardsFlag())
+    {
+        myprop   = self->prop;
+        bondprop = get_curplayer_positiondata();
+        myheight = self->chrheight - 20.0f;
+
+        set_or_unset_GUARDdata_flag(self, FALSE);
+        bondviewUpdateGuardTankFlagsRelated(g_CurrentPlayer->prop, 0);
+
+        mystan = myprop->stan;
+
+        if (sub_GAME_7F0B0E24(&mystan, myprop->pos.x, myprop->pos.z, bondprop->pos.x, bondprop->pos.z, 0x11B, myheight, myheight, 0.0f, 1.0f) && (mystan == bondprop->stan))
+        {
+            setSeenBondTimeToNow(self);
+            pass = TRUE;
+        }
+
+        set_or_unset_GUARDdata_flag(self, TRUE);
+        bondviewUpdateGuardTankFlagsRelated(g_CurrentPlayer->prop, 1);
+    }
+
+    return pass;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0294BC
-/* 05DFEC 7F0294BC 27BDFFB0 */  addiu $sp, $sp, -0x50
-/* 05DFF0 7F0294C0 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 05DFF4 7F0294C4 AFB00030 */  sw    $s0, 0x30($sp)
-/* 05DFF8 7F0294C8 00808025 */  move  $s0, $a0
-/* 05DFFC 7F0294CC 0FC227DD */  jal   bondviewGetVisibleToGuardsFlag
-/* 05E000 7F0294D0 AFA0004C */   sw    $zero, 0x4c($sp)
-/* 05E004 7F0294D4 5040003A */  beql  $v0, $zero, .L7F0295C0
-/* 05E008 7F0294D8 8FBF0034 */   lw    $ra, 0x34($sp)
-/* 05E00C 7F0294DC 8E0E0018 */  lw    $t6, 0x18($s0)
-/* 05E010 7F0294E0 0FC225E6 */  jal   get_curplayer_positiondata
-/* 05E014 7F0294E4 AFAE0048 */   sw    $t6, 0x48($sp)
-/* 05E018 7F0294E8 AFA20044 */  sw    $v0, 0x44($sp)
-/* 05E01C 7F0294EC 3C0141A0 */  li    $at, 0x41A00000 # 20.000000
-/* 05E020 7F0294F0 44813000 */  mtc1  $at, $f6
-/* 05E024 7F0294F4 C6040028 */  lwc1  $f4, 0x28($s0)
-/* 05E028 7F0294F8 02002025 */  move  $a0, $s0
-/* 05E02C 7F0294FC 00002825 */  move  $a1, $zero
-/* 05E030 7F029500 46062201 */  sub.s $f8, $f4, $f6
-/* 05E034 7F029504 0FC07D7A */  jal   set_or_unset_GUARDdata_flag
-/* 05E038 7F029508 E7A8003C */   swc1  $f8, 0x3c($sp)
-/* 05E03C 7F02950C 3C0F8008 */  lui   $t7, %hi(g_CurrentPlayer) 
-/* 05E040 7F029510 8DEFA0B0 */  lw    $t7, %lo(g_CurrentPlayer)($t7)
-/* 05E044 7F029514 00002825 */  move  $a1, $zero
-/* 05E048 7F029518 0FC2280F */  jal   bondviewUpdateGuardTankFlagsRelated
-/* 05E04C 7F02951C 8DE400A8 */   lw    $a0, 0xa8($t7)
-/* 05E050 7F029520 8FA20048 */  lw    $v0, 0x48($sp)
-/* 05E054 7F029524 8FA30044 */  lw    $v1, 0x44($sp)
-/* 05E058 7F029528 C7A0003C */  lwc1  $f0, 0x3c($sp)
-/* 05E05C 7F02952C 8C580014 */  lw    $t8, 0x14($v0)
-/* 05E060 7F029530 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 05E064 7F029534 44819000 */  mtc1  $at, $f18
-/* 05E068 7F029538 AFB80040 */  sw    $t8, 0x40($sp)
-/* 05E06C 7F02953C C46A0010 */  lwc1  $f10, 0x10($v1)
-/* 05E070 7F029540 8C460010 */  lw    $a2, 0x10($v0)
-/* 05E074 7F029544 8C450008 */  lw    $a1, 8($v0)
-/* 05E078 7F029548 8C670008 */  lw    $a3, 8($v1)
-/* 05E07C 7F02954C 44808000 */  mtc1  $zero, $f16
-/* 05E080 7F029550 2419011B */  li    $t9, 283
-/* 05E084 7F029554 AFB90014 */  sw    $t9, 0x14($sp)
-/* 05E088 7F029558 27A40040 */  addiu $a0, $sp, 0x40
-/* 05E08C 7F02955C E7A0001C */  swc1  $f0, 0x1c($sp)
-/* 05E090 7F029560 E7A00018 */  swc1  $f0, 0x18($sp)
-/* 05E094 7F029564 E7B20024 */  swc1  $f18, 0x24($sp)
-/* 05E098 7F029568 E7AA0010 */  swc1  $f10, 0x10($sp)
-/* 05E09C 7F02956C 0FC2C389 */  jal   sub_GAME_7F0B0E24
-/* 05E0A0 7F029570 E7B00020 */   swc1  $f16, 0x20($sp)
-/* 05E0A4 7F029574 10400009 */  beqz  $v0, .L7F02959C
-/* 05E0A8 7F029578 8FA90044 */   lw    $t1, 0x44($sp)
-/* 05E0AC 7F02957C 8FA80040 */  lw    $t0, 0x40($sp)
-/* 05E0B0 7F029580 8D2A0014 */  lw    $t2, 0x14($t1)
-/* 05E0B4 7F029584 550A0006 */  bnel  $t0, $t2, .L7F0295A0
-/* 05E0B8 7F029588 02002025 */   move  $a0, $s0
-/* 05E0BC 7F02958C 0FC0A4A6 */  jal   setSeenBondTimeToNow
-/* 05E0C0 7F029590 02002025 */   move  $a0, $s0
-/* 05E0C4 7F029594 240B0001 */  li    $t3, 1
-/* 05E0C8 7F029598 AFAB004C */  sw    $t3, 0x4c($sp)
-.L7F02959C:
-/* 05E0CC 7F02959C 02002025 */  move  $a0, $s0
-.L7F0295A0:
-/* 05E0D0 7F0295A0 0FC07D7A */  jal   set_or_unset_GUARDdata_flag
-/* 05E0D4 7F0295A4 24050001 */   li    $a1, 1
-/* 05E0D8 7F0295A8 3C0C8008 */  lui   $t4, %hi(g_CurrentPlayer) 
-/* 05E0DC 7F0295AC 8D8CA0B0 */  lw    $t4, %lo(g_CurrentPlayer)($t4)
-/* 05E0E0 7F0295B0 24050001 */  li    $a1, 1
-/* 05E0E4 7F0295B4 0FC2280F */  jal   bondviewUpdateGuardTankFlagsRelated
-/* 05E0E8 7F0295B8 8D8400A8 */   lw    $a0, 0xa8($t4)
-/* 05E0EC 7F0295BC 8FBF0034 */  lw    $ra, 0x34($sp)
-.L7F0295C0:
-/* 05E0F0 7F0295C0 8FA2004C */  lw    $v0, 0x4c($sp)
-/* 05E0F4 7F0295C4 8FB00030 */  lw    $s0, 0x30($sp)
-/* 05E0F8 7F0295C8 03E00008 */  jr    $ra
-/* 05E0FC 7F0295CC 27BD0050 */   addiu $sp, $sp, 0x50
-)
-#endif
+
 
 
 
