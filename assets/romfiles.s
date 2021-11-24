@@ -1,10 +1,6 @@
 .section .data, "a"
 
-.global _jfontdlSegmentStart
-_jfontdlSegmentStart:
-.incbin "assets/ge007.u.117880.jfont_dl.bin"
-.global _jfontdlSegmentEnd
-_jfontdlSegmentEnd:
+
 
 .global _jfontcharSegmentStart
 _jfontcharSegmentStart:
@@ -23,10 +19,5 @@ _efontcharSegmentStart:
 .global _efontcharSegmentEnd
 _efontcharSegmentEnd:
 
-.global _animation_tableSegmentRomStart
-_animation_tableSegmentRomStart:
-.incbin "assets/animationtable_entries.bin"
-.global _animation_tableSegmentRomEnd
-_animation_tableSegmentRomEnd:
 
 
