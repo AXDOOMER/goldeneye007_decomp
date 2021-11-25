@@ -6092,90 +6092,32 @@ void chrlvAlertGuardToPlayerPosition(struct ChrRecord *arg0)
 }
 
 
-#ifdef NONMATCHING
-void check_if_actor_stationary(void) {
- // ai branch
+/**
+ * Address 0x7F029C5C.
+*/
+bool check_if_actor_stationary(ChrRecord *self)
+{
+    if ((self->actiontype == ACT_STAND) && !self->act_stand.unk02c && !self->act_stand.unk038)
+    {
+        return TRUE;
+    }
+    else if (self->actiontype == ACT_ANIM)
+    {
+        if (self->act_anim.unk034 ||
+            ((sub_GAME_7F06F610(self->model) >= 0.0f) && objecthandlerGetModelField28(self->model) >= (sub_GAME_7F06F5C4(self->model))) ||
+            ((sub_GAME_7F06F610(self->model) < 0.0f) && (objecthandlerGetModelField28(self->model) <= 0.0f)))
+        {
+            return TRUE;
+        }
+    }
+    else if (self->actiontype == ACT_PATROL)
+    {
+        return TRUE;
+    }
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_if_actor_stationary
-/* 05E78C 7F029C5C 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 05E790 7F029C60 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 05E794 7F029C64 AFB00018 */  sw    $s0, 0x18($sp)
-/* 05E798 7F029C68 80820007 */  lb    $v0, 7($a0)
-/* 05E79C 7F029C6C 24010001 */  li    $at, 1
-/* 05E7A0 7F029C70 00808025 */  move  $s0, $a0
-/* 05E7A4 7F029C74 5441000A */  bnel  $v0, $at, .L7F029CA0
-/* 05E7A8 7F029C78 24010003 */   li    $at, 3
-/* 05E7AC 7F029C7C 8C8E002C */  lw    $t6, 0x2c($a0)
-/* 05E7B0 7F029C80 55C00007 */  bnezl $t6, .L7F029CA0
-/* 05E7B4 7F029C84 24010003 */   li    $at, 3
-/* 05E7B8 7F029C88 8C8F0038 */  lw    $t7, 0x38($a0)
-/* 05E7BC 7F029C8C 55E00004 */  bnezl $t7, .L7F029CA0
-/* 05E7C0 7F029C90 24010003 */   li    $at, 3
-/* 05E7C4 7F029C94 10000031 */  b     .L7F029D5C
-/* 05E7C8 7F029C98 24020001 */   li    $v0, 1
-/* 05E7CC 7F029C9C 24010003 */  li    $at, 3
-.L7F029CA0:
-/* 05E7D0 7F029CA0 54410029 */  bnel  $v0, $at, .L7F029D48
-/* 05E7D4 7F029CA4 2401000E */   li    $at, 14
-/* 05E7D8 7F029CA8 8E180034 */  lw    $t8, 0x34($s0)
-/* 05E7DC 7F029CAC 17000023 */  bnez  $t8, .L7F029D3C
-/* 05E7E0 7F029CB0 00000000 */   nop   
-/* 05E7E4 7F029CB4 0FC1BD84 */  jal   sub_GAME_7F06F610
-/* 05E7E8 7F029CB8 8E04001C */   lw    $a0, 0x1c($s0)
-/* 05E7EC 7F029CBC 44802000 */  mtc1  $zero, $f4
-/* 05E7F0 7F029CC0 00000000 */  nop   
-/* 05E7F4 7F029CC4 4600203E */  c.le.s $f4, $f0
-/* 05E7F8 7F029CC8 00000000 */  nop   
-/* 05E7FC 7F029CCC 4500000B */  bc1f  .L7F029CFC
-/* 05E800 7F029CD0 00000000 */   nop   
-/* 05E804 7F029CD4 0FC1BD6F */  jal   objecthandlerGetModelField28
-/* 05E808 7F029CD8 8E04001C */   lw    $a0, 0x1c($s0)
-/* 05E80C 7F029CDC E7A00024 */  swc1  $f0, 0x24($sp)
-/* 05E810 7F029CE0 0FC1BD71 */  jal   sub_GAME_7F06F5C4
-/* 05E814 7F029CE4 8E04001C */   lw    $a0, 0x1c($s0)
-/* 05E818 7F029CE8 C7A60024 */  lwc1  $f6, 0x24($sp)
-/* 05E81C 7F029CEC 4606003E */  c.le.s $f0, $f6
-/* 05E820 7F029CF0 00000000 */  nop   
-/* 05E824 7F029CF4 45010011 */  bc1t  .L7F029D3C
-/* 05E828 7F029CF8 00000000 */   nop   
-.L7F029CFC:
-/* 05E82C 7F029CFC 0FC1BD84 */  jal   sub_GAME_7F06F610
-/* 05E830 7F029D00 8E04001C */   lw    $a0, 0x1c($s0)
-/* 05E834 7F029D04 44804000 */  mtc1  $zero, $f8
-/* 05E838 7F029D08 00000000 */  nop   
-/* 05E83C 7F029D0C 4608003C */  c.lt.s $f0, $f8
-/* 05E840 7F029D10 00000000 */  nop   
-/* 05E844 7F029D14 45020011 */  bc1fl .L7F029D5C
-/* 05E848 7F029D18 00001025 */   move  $v0, $zero
-/* 05E84C 7F029D1C 0FC1BD6F */  jal   objecthandlerGetModelField28
-/* 05E850 7F029D20 8E04001C */   lw    $a0, 0x1c($s0)
-/* 05E854 7F029D24 44805000 */  mtc1  $zero, $f10
-/* 05E858 7F029D28 00000000 */  nop   
-/* 05E85C 7F029D2C 460A003E */  c.le.s $f0, $f10
-/* 05E860 7F029D30 00000000 */  nop   
-/* 05E864 7F029D34 45020009 */  bc1fl .L7F029D5C
-/* 05E868 7F029D38 00001025 */   move  $v0, $zero
-.L7F029D3C:
-/* 05E86C 7F029D3C 10000007 */  b     .L7F029D5C
-/* 05E870 7F029D40 24020001 */   li    $v0, 1
-/* 05E874 7F029D44 2401000E */  li    $at, 14
-.L7F029D48:
-/* 05E878 7F029D48 54410004 */  bnel  $v0, $at, .L7F029D5C
-/* 05E87C 7F029D4C 00001025 */   move  $v0, $zero
-/* 05E880 7F029D50 10000002 */  b     .L7F029D5C
-/* 05E884 7F029D54 24020001 */   li    $v0, 1
-/* 05E888 7F029D58 00001025 */  move  $v0, $zero
-.L7F029D5C:
-/* 05E88C 7F029D5C 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 05E890 7F029D60 8FB00018 */  lw    $s0, 0x18($sp)
-/* 05E894 7F029D64 27BD0028 */  addiu $sp, $sp, 0x28
-/* 05E898 7F029D68 03E00008 */  jr    $ra
-/* 05E89C 7F029D6C 00000000 */   nop   
-)
-#endif
+
 
 
 

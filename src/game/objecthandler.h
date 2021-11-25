@@ -35,6 +35,7 @@ f32 sub_GAME_7F06F618(struct Model*);
 s32 sub_GAME_7F06F5B4(Model *);
 f32 sub_GAME_7F06F5C4(Model *);
 s32 sub_GAME_7F06FE4C(Model *, f32, f32);
+f32 sub_GAME_7F06F610(struct PropModel *);
 
 #ifndef VERSION_EU
 void return_null(void);
