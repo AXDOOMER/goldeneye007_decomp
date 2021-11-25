@@ -6486,9 +6486,49 @@ bool actor_hops_sideways(ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-void actor_runs_sideways(void) {
-// ai branch actor_jogs_sideways
+#if 1
+/**
+ * Unreferenced.
+ * 
+ * Address 0x7F02A588.
+*/
+bool actor_jogs_sideways(ChrRecord *self)
+{
+    struct PropRecord *myprop;
+    f32 distToRun;
+    struct vec3d TargetVector;
+    struct coord3d TargetCoord;
+
+    if (chrIsNotDeadOrShot(self) && ((global_timer - self->lastwalk60) >= 181)) //>3 seconds since last walk
+    {
+        myprop    = self->prop;
+        distToRun = (randomGetNext() * (1.0f / UINT_MAX) * 200.0f) + 200.0f; //random dist to run between 0 and 200
+        sub_GAME_7F02A044(self, (randomGetNext() & 1) == 0, &TargetVector);  //get vector to run on
+        
+        TargetCoord.x = (TargetVector.x * distToRun) + myprop->pos.x;
+        TargetCoord.y = myprop->pos.y;
+        TargetCoord.z = (TargetVector.z * distToRun) + myprop->pos.z;
+
+        if (sub_GAME_7F02982C(myprop, &TargetCoord, &TargetVector))
+        {
+            sub_GAME_7F024CF8(self, &TargetCoord);
+            return TRUE;
+        }
+
+        TargetVector.x = -TargetVector.x;
+        TargetVector.z = -TargetVector.z;
+        TargetCoord.x  = (TargetVector.x * distToRun) + myprop->pos.x;
+        TargetCoord.y  = myprop->pos.y;
+        TargetCoord.z  = (TargetVector.z * distToRun) + myprop->pos.z;
+
+        if (sub_GAME_7F02982C(myprop, &TargetCoord, &TargetVector))
+        {
+            sub_GAME_7F024CF8(self, &TargetCoord);
+            return TRUE;
+        }
+    }
+
+    return FALSE;
 }
 #else
 GLOBAL_ASM(
