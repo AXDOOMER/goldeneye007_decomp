@@ -98,6 +98,7 @@ void chrlvManageGuardFade(ChrRecord *arg0);
 void sub_GAME_7F02BC80(ChrRecord *arg0);
 void chrlvCheckTriggeredOnShotHit(ChrRecord *arg0);
 void sub_GAME_7F02BDA4(ChrRecord *arg0);
+void sub_GAME_7F02BE00(ChrRecord *arg0);
 
 void sub_GAME_7F025C40(struct ChrRecord *chr, s32);
 void sub_GAME_7F02587C(struct ChrRecord *chr, s32);
@@ -7654,39 +7655,20 @@ void sub_GAME_7F02BDA4(ChrRecord *arg0)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02BE00(void) {
+/**
+ * Address 0x7F02BE00.
+*/
+void sub_GAME_7F02BE00(ChrRecord *arg0)
+{
+    Model *model = arg0->model;
 
+    if (objecthandlerGetModelField28(model) >= sub_GAME_7F06F5C4(model))
+    {
+        chrlvSetTargetToPlayer(arg0);
+        chrlvKneelingAnimationRelated7F023E48(arg0);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02BE00
-/* 060930 7F02BE00 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 060934 7F02BE04 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 060938 7F02BE08 AFA40020 */  sw    $a0, 0x20($sp)
-/* 06093C 7F02BE0C 8C84001C */  lw    $a0, 0x1c($a0)
-/* 060940 7F02BE10 0FC1BD6F */  jal   objecthandlerGetModelField28
-/* 060944 7F02BE14 AFA4001C */   sw    $a0, 0x1c($sp)
-/* 060948 7F02BE18 8FA4001C */  lw    $a0, 0x1c($sp)
-/* 06094C 7F02BE1C 0FC1BD71 */  jal   sub_GAME_7F06F5C4
-/* 060950 7F02BE20 E7A00018 */   swc1  $f0, 0x18($sp)
-/* 060954 7F02BE24 C7A40018 */  lwc1  $f4, 0x18($sp)
-/* 060958 7F02BE28 4604003E */  c.le.s $f0, $f4
-/* 06095C 7F02BE2C 00000000 */  nop   
-/* 060960 7F02BE30 45020006 */  bc1fl .L7F02BE4C
-/* 060964 7F02BE34 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 060968 7F02BE38 0FC0A6EC */  jal   chrlvSetTargetToPlayer
-/* 06096C 7F02BE3C 8FA40020 */   lw    $a0, 0x20($sp)
-/* 060970 7F02BE40 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
-/* 060974 7F02BE44 8FA40020 */   lw    $a0, 0x20($sp)
-/* 060978 7F02BE48 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F02BE4C:
-/* 06097C 7F02BE4C 27BD0020 */  addiu $sp, $sp, 0x20
-/* 060980 7F02BE50 03E00008 */  jr    $ra
-/* 060984 7F02BE54 00000000 */   nop   
-)
-#endif
+
 
 
 
