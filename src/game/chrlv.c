@@ -89,6 +89,7 @@ void chrlvSetTargetToPlayer(ChrRecord *arg0);
 s32 sub_GAME_7F032B68(ChrRecord *);
 s32 sub_GAME_7F029D70(ChrRecord *self);
 void chrlvNormDistanceToPlayer(ChrRecord *arg0, s32 arg1, struct coord3d *arg2);
+s32 sub_GAME_7F02A0EC(ChrRecord *arg0, s32 arg1, f32 arg2);
 
 // move to chrobjecthandler.h
 
@@ -6264,44 +6265,25 @@ void chrlvNormDistanceToPlayer(ChrRecord *arg0, s32 arg1, struct coord3d *arg2)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02A0EC(void) {
+/**
+ * Address 0x7F02A0EC.
+*/
+s32 sub_GAME_7F02A0EC(ChrRecord *arg0, s32 arg1, f32 arg2)
+{
+    PropRecord *prop;
+    struct coord3d sp28;
+    struct coord3d sp1C;
 
+    prop = arg0->prop;
+    chrlvNormDistanceToPlayer(arg0, arg1, &sp28);
+
+    sp1C.f[0] = prop->pos.f[0] + (sp28.f[0] * arg2);
+    sp1C.f[1] = prop->pos.f[1];
+    sp1C.f[2] = prop->pos.f[2] + (sp28.f[2] * arg2);
+
+    return chrlvCall7F0B0E24WithChrWidthHeight(prop, &sp1C, &sp28);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02A0EC
-/* 05EC1C 7F02A0EC 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 05EC20 7F02A0F0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05EC24 7F02A0F4 AFA60040 */  sw    $a2, 0x40($sp)
-/* 05EC28 7F02A0F8 8C870018 */  lw    $a3, 0x18($a0)
-/* 05EC2C 7F02A0FC 27A60028 */  addiu $a2, $sp, 0x28
-/* 05EC30 7F02A100 0FC0A811 */  jal   chrlvNormDistanceToPlayer
-/* 05EC34 7F02A104 AFA70034 */   sw    $a3, 0x34($sp)
-/* 05EC38 7F02A108 C7A00040 */  lwc1  $f0, 0x40($sp)
-/* 05EC3C 7F02A10C C7A40028 */  lwc1  $f4, 0x28($sp)
-/* 05EC40 7F02A110 8FA40034 */  lw    $a0, 0x34($sp)
-/* 05EC44 7F02A114 C7B20030 */  lwc1  $f18, 0x30($sp)
-/* 05EC48 7F02A118 46002182 */  mul.s $f6, $f4, $f0
-/* 05EC4C 7F02A11C C4880008 */  lwc1  $f8, 8($a0)
-/* 05EC50 7F02A120 27A5001C */  addiu $a1, $sp, 0x1c
-/* 05EC54 7F02A124 46009102 */  mul.s $f4, $f18, $f0
-/* 05EC58 7F02A128 27A60028 */  addiu $a2, $sp, 0x28
-/* 05EC5C 7F02A12C 46083280 */  add.s $f10, $f6, $f8
-/* 05EC60 7F02A130 E7AA001C */  swc1  $f10, 0x1c($sp)
-/* 05EC64 7F02A134 C490000C */  lwc1  $f16, 0xc($a0)
-/* 05EC68 7F02A138 E7B00020 */  swc1  $f16, 0x20($sp)
-/* 05EC6C 7F02A13C C4860010 */  lwc1  $f6, 0x10($a0)
-/* 05EC70 7F02A140 46062200 */  add.s $f8, $f4, $f6
-/* 05EC74 7F02A144 0FC0A60B */  jal   chrlvCall7F0B0E24WithChrWidthHeight
-/* 05EC78 7F02A148 E7A80024 */   swc1  $f8, 0x24($sp)
-/* 05EC7C 7F02A14C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05EC80 7F02A150 27BD0038 */  addiu $sp, $sp, 0x38
-/* 05EC84 7F02A154 03E00008 */  jr    $ra
-/* 05EC88 7F02A158 00000000 */   nop   
-)
-#endif
+
 
 
 
