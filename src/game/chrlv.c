@@ -88,6 +88,7 @@ s32 chrlvCall7F0B0E24WithChrWidthHeight(PropRecord *arg0, struct coord3d *arg1, 
 void chrlvSetTargetToPlayer(ChrRecord *arg0);
 s32 sub_GAME_7F032B68(ChrRecord *);
 s32 sub_GAME_7F029D70(ChrRecord *self);
+void chrlvNormDistanceToPlayer(ChrRecord *arg0, s32 arg1, struct coord3d *arg2);
 
 // move to chrobjecthandler.h
 
@@ -6221,60 +6222,45 @@ s32 sub_GAME_7F029D70(ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02A044(void) {
+/**
+ * @param arg0:
+ * @param arg1: flag. If set result is (dz, -dx), otherwise (-dz, dx).
+ * @param arg2: Out parameter. Contains result coordinat.
+ * 
+ * Address 0x7F02A044.
+*/
+void chrlvNormDistanceToPlayer(ChrRecord *arg0, s32 arg1, struct coord3d *arg2)
+{
+    PropRecord *prop;
+    f32 norm;
+    f32 dx;
+    f32 dz;
+    PropRecord *player_prop;
 
+    prop = arg0->prop;
+    player_prop = get_curplayer_positiondata();
+    dx = player_prop->pos.f[0] - prop->pos.f[0];
+    dz = player_prop->pos.f[2] - prop->pos.f[2];
+
+    norm = sqrtf((dx * dx) + (dz * dz));
+
+    dx = dx / norm;
+    dz = dz / norm;
+
+    if (arg1 != 0)
+    {
+        arg2->f[1] = 0;
+        arg2->f[0] = dz;
+        arg2->f[2] = -(dx);
+    }
+    else
+    {
+        arg2->f[2] = dx;
+        arg2->f[0] = -(dz);
+        arg2->f[1] = 0;
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02A044
-/* 05EB74 7F02A044 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 05EB78 7F02A048 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05EB7C 7F02A04C AFA5002C */  sw    $a1, 0x2c($sp)
-/* 05EB80 7F02A050 8C830018 */  lw    $v1, 0x18($a0)
-/* 05EB84 7F02A054 AFA60030 */  sw    $a2, 0x30($sp)
-/* 05EB88 7F02A058 0FC225E6 */  jal   get_curplayer_positiondata
-/* 05EB8C 7F02A05C AFA30024 */   sw    $v1, 0x24($sp)
-/* 05EB90 7F02A060 8FA30024 */  lw    $v1, 0x24($sp)
-/* 05EB94 7F02A064 C4440008 */  lwc1  $f4, 8($v0)
-/* 05EB98 7F02A068 C4480010 */  lwc1  $f8, 0x10($v0)
-/* 05EB9C 7F02A06C C4660008 */  lwc1  $f6, 8($v1)
-/* 05EBA0 7F02A070 C46A0010 */  lwc1  $f10, 0x10($v1)
-/* 05EBA4 7F02A074 46062081 */  sub.s $f2, $f4, $f6
-/* 05EBA8 7F02A078 460A4381 */  sub.s $f14, $f8, $f10
-/* 05EBAC 7F02A07C 46021402 */  mul.s $f16, $f2, $f2
-/* 05EBB0 7F02A080 E7A2001C */  swc1  $f2, 0x1c($sp)
-/* 05EBB4 7F02A084 460E7482 */  mul.s $f18, $f14, $f14
-/* 05EBB8 7F02A088 E7AE0018 */  swc1  $f14, 0x18($sp)
-/* 05EBBC 7F02A08C 0C007DF8 */  jal   sqrtf
-/* 05EBC0 7F02A090 46128300 */   add.s $f12, $f16, $f18
-/* 05EBC4 7F02A094 8FAE002C */  lw    $t6, 0x2c($sp)
-/* 05EBC8 7F02A098 C7A2001C */  lwc1  $f2, 0x1c($sp)
-/* 05EBCC 7F02A09C C7AE0018 */  lwc1  $f14, 0x18($sp)
-/* 05EBD0 7F02A0A0 8FA60030 */  lw    $a2, 0x30($sp)
-/* 05EBD4 7F02A0A4 46001083 */  div.s $f2, $f2, $f0
-/* 05EBD8 7F02A0A8 11C00007 */  beqz  $t6, .L7F02A0C8
-/* 05EBDC 7F02A0AC 46007383 */   div.s $f14, $f14, $f0
-/* 05EBE0 7F02A0B0 44802000 */  mtc1  $zero, $f4
-/* 05EBE4 7F02A0B4 46001187 */  neg.s $f6, $f2
-/* 05EBE8 7F02A0B8 E4CE0000 */  swc1  $f14, ($a2)
-/* 05EBEC 7F02A0BC E4C60008 */  swc1  $f6, 8($a2)
-/* 05EBF0 7F02A0C0 10000006 */  b     .L7F02A0DC
-/* 05EBF4 7F02A0C4 E4C40004 */   swc1  $f4, 4($a2)
-.L7F02A0C8:
-/* 05EBF8 7F02A0C8 44805000 */  mtc1  $zero, $f10
-/* 05EBFC 7F02A0CC 46007207 */  neg.s $f8, $f14
-/* 05EC00 7F02A0D0 E4C20008 */  swc1  $f2, 8($a2)
-/* 05EC04 7F02A0D4 E4C80000 */  swc1  $f8, ($a2)
-/* 05EC08 7F02A0D8 E4CA0004 */  swc1  $f10, 4($a2)
-.L7F02A0DC:
-/* 05EC0C 7F02A0DC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05EC10 7F02A0E0 27BD0028 */  addiu $sp, $sp, 0x28
-/* 05EC14 7F02A0E4 03E00008 */  jr    $ra
-/* 05EC18 7F02A0E8 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -6291,7 +6277,7 @@ glabel sub_GAME_7F02A0EC
 /* 05EC24 7F02A0F4 AFA60040 */  sw    $a2, 0x40($sp)
 /* 05EC28 7F02A0F8 8C870018 */  lw    $a3, 0x18($a0)
 /* 05EC2C 7F02A0FC 27A60028 */  addiu $a2, $sp, 0x28
-/* 05EC30 7F02A100 0FC0A811 */  jal   sub_GAME_7F02A044
+/* 05EC30 7F02A100 0FC0A811 */  jal   chrlvNormDistanceToPlayer
 /* 05EC34 7F02A104 AFA70034 */   sw    $a3, 0x34($sp)
 /* 05EC38 7F02A108 C7A00040 */  lwc1  $f0, 0x40($sp)
 /* 05EC3C 7F02A10C C7A40028 */  lwc1  $f4, 0x28($sp)
@@ -6710,7 +6696,7 @@ glabel actor_runs_sideways
 /* 05F144 7F02A614 2CB90001 */  sltiu $t9, $a1, 1
 /* 05F148 7F02A618 03202825 */  move  $a1, $t9
 /* 05F14C 7F02A61C 02202025 */  move  $a0, $s1
-/* 05F150 7F02A620 0FC0A811 */  jal   sub_GAME_7F02A044
+/* 05F150 7F02A620 0FC0A811 */  jal   chrlvNormDistanceToPlayer
 /* 05F154 7F02A624 27A6003C */   addiu $a2, $sp, 0x3c
 /* 05F158 7F02A628 C7A4003C */  lwc1  $f4, 0x3c($sp)
 /* 05F15C 7F02A62C C6060008 */  lwc1  $f6, 8($s0)
