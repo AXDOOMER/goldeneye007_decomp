@@ -76,7 +76,7 @@ void play_hit_soundeffect_and_proper_volume(struct ChrRecord *arg0);
 void get_sound_at_range(ChrRecord *arg0, s32 arg1, s32 arg2);
 void chrlvSetGoposSegDistTotal(struct ChrRecord *arg0, struct waydata *arg1, struct coord3d *arg2);
 s32 sub_GAME_7F02B800(ChrRecord *, s32);
-s32 sub_GAME_7F029A94(s32, struct coord3d *, f32);
+s32 chrlvCall7F02982C(PropRecord *arg0, struct coord3d *arg1, f32 arg2);
 void chrlvSurrenderAnimationRelated7F02B638(struct ChrRecord *arg0);
 void chrlvWalkingAnimationRelated(ChrRecord *arg0);
 void setSeenBondTimeToNow(struct ChrRecord *guardData);
@@ -6006,39 +6006,20 @@ s32 chrlvCall7F0B0E24WithChrWidthHeight(PropRecord *arg0, struct coord3d *arg1, 
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F029A94(void) {
-//break;
+/**
+ * Addres 0x7F029A94.
+*/
+s32 chrlvCall7F02982C(PropRecord *arg0, struct coord3d *arg1, f32 arg2)
+{
+    struct coord3d sp1C;
+
+    sp1C.f[0] = arg0->pos.f[0] + (arg1->f[0] * arg2);
+    sp1C.f[1] = arg0->pos.f[1];
+    sp1C.f[2] = arg0->pos.f[2] + (arg1->f[2] * arg2);
+
+    return chrlvCall7F0B0E24WithChrWidthHeight(arg0, &sp1C, arg1);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F029A94
-/* 05E5C4 7F029A94 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 05E5C8 7F029A98 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05E5CC 7F029A9C AFA5002C */  sw    $a1, 0x2c($sp)
-/* 05E5D0 7F029AA0 44866000 */  mtc1  $a2, $f12
-/* 05E5D4 7F029AA4 C4A40000 */  lwc1  $f4, ($a1)
-/* 05E5D8 7F029AA8 C4880008 */  lwc1  $f8, 8($a0)
-/* 05E5DC 7F029AAC 00A03025 */  move  $a2, $a1
-/* 05E5E0 7F029AB0 460C2182 */  mul.s $f6, $f4, $f12
-/* 05E5E4 7F029AB4 46083280 */  add.s $f10, $f6, $f8
-/* 05E5E8 7F029AB8 E7AA001C */  swc1  $f10, 0x1c($sp)
-/* 05E5EC 7F029ABC C490000C */  lwc1  $f16, 0xc($a0)
-/* 05E5F0 7F029AC0 E7B00020 */  swc1  $f16, 0x20($sp)
-/* 05E5F4 7F029AC4 C4B20008 */  lwc1  $f18, 8($a1)
-/* 05E5F8 7F029AC8 C4860010 */  lwc1  $f6, 0x10($a0)
-/* 05E5FC 7F029ACC 27A5001C */  addiu $a1, $sp, 0x1c
-/* 05E600 7F029AD0 460C9102 */  mul.s $f4, $f18, $f12
-/* 05E604 7F029AD4 46062200 */  add.s $f8, $f4, $f6
-/* 05E608 7F029AD8 0FC0A60B */  jal   chrlvCall7F0B0E24WithChrWidthHeight
-/* 05E60C 7F029ADC E7A80024 */   swc1  $f8, 0x24($sp)
-/* 05E610 7F029AE0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05E614 7F029AE4 27BD0028 */  addiu $sp, $sp, 0x28
-/* 05E618 7F029AE8 03E00008 */  jr    $ra
-/* 05E61C 7F029AEC 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -8246,7 +8227,7 @@ void chrlvSurrenderAnimationRelated7F02B638(struct ChrRecord *arg0)
             sp30.f[0] = -sinf(t);
             sp30.f[2] = -cosf(t);
 
-            if (sub_GAME_7F029A94(arg0->prop, &sp30, 20.0f) == 0)
+            if (chrlvCall7F02982C(arg0->prop, &sp30, 20.0f) == 0)
             {
                 objecthandlerAnimationRelated7F06FCA8(arg0->model, &ptr_animation_table->data[(s32)&ANIM_DATA_surrendering_armed], randomGetNext() & 1, 30.0f, 0.5f, 16.0f);
                 sub_GAME_7F06FDCC(arg0->model, 30.0f, 16.0f);
