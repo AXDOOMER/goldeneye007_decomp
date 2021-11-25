@@ -273,6 +273,7 @@ void chrUpdateCollisionBounds(struct PropRecord *arg0, struct rect4f **arg1, s32
 void chrGetChrWidthHeight(struct PropRecord *arg0, f32 *width, f32 *height, f32 *always_20);
 f32 chrGetChrGround(struct PropRecord *arg0);
 void sub_GAME_7F021B20(struct ChrRecord *arg0);
+s32 get_numguards(void);
 
 #ifndef VERSION_US
 s32 not_in_us_7F0209EC(s32 bodynum, s32 headnum);
