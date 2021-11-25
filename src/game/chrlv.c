@@ -84,6 +84,7 @@ s32 chrlvAttackRelated7F0292A8(ChrRecord *arg0, struct coord3d *arg1, StandTile 
 s32 chrlvMaybeSameRoom(ChrRecord *arg0, struct coord3d *arg1, StandTile *arg2);
 s32 chrlvCurrentPlayerCall7F0B0E24(ChrRecord *arg0);
 s32 chrlvCall7F0B0E24WithChrWidthHeight(PropRecord *arg0, struct coord3d *arg1, struct coord3d *arg2);
+void chrlvSetTargetToPlayer(ChrRecord *arg0);
 
 // move to chrobjecthandler.h
 
@@ -6052,40 +6053,29 @@ s32 chrlvCall7F0B0E24Normalized(PropRecord *arg0, struct coord3d *arg1)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F029BB0(void) {
+/**
+ * Same as chrlvAlertGuardToPlayerPosition, except without setting `hidden` flag 0x2.
+ * 
+ * Address 0x7F029BB0.
+*/
+void chrlvSetTargetToPlayer(ChrRecord *arg0)
+{
+    PropRecord *temp_v0;
 
+    temp_v0 = get_curplayer_positiondata();
+    arg0->lastseetarget60 = g_GlobalTimer;
+    arg0->lastknowntargetpos.f[0] = temp_v0->pos.f[0];
+    arg0->lastknowntargetpos.f[1] = temp_v0->pos.f[1];
+    arg0->lastknowntargetpos.f[2] = temp_v0->pos.f[2];
+    arg0->targetTile = temp_v0->stan;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F029BB0
-/* 05E6E0 7F029BB0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 05E6E4 7F029BB4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05E6E8 7F029BB8 0FC225E6 */  jal   get_curplayer_positiondata
-/* 05E6EC 7F029BBC AFA40018 */   sw    $a0, 0x18($sp)
-/* 05E6F0 7F029BC0 3C0E8005 */  lui   $t6, %hi(g_GlobalTimer) 
-/* 05E6F4 7F029BC4 8FA40018 */  lw    $a0, 0x18($sp)
-/* 05E6F8 7F029BC8 8DCE837C */  lw    $t6, %lo(g_GlobalTimer)($t6)
-/* 05E6FC 7F029BCC AC8E00D4 */  sw    $t6, 0xd4($a0)
-/* 05E700 7F029BD0 C4440008 */  lwc1  $f4, 8($v0)
-/* 05E704 7F029BD4 E48400D8 */  swc1  $f4, 0xd8($a0)
-/* 05E708 7F029BD8 C446000C */  lwc1  $f6, 0xc($v0)
-/* 05E70C 7F029BDC E48600DC */  swc1  $f6, 0xdc($a0)
-/* 05E710 7F029BE0 C4480010 */  lwc1  $f8, 0x10($v0)
-/* 05E714 7F029BE4 E48800E0 */  swc1  $f8, 0xe0($a0)
-/* 05E718 7F029BE8 8C4F0014 */  lw    $t7, 0x14($v0)
-/* 05E71C 7F029BEC AC8F00E4 */  sw    $t7, 0xe4($a0)
-/* 05E720 7F029BF0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05E724 7F029BF4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 05E728 7F029BF8 03E00008 */  jr    $ra
-/* 05E72C 7F029BFC 00000000 */   nop   
-)
-#endif
+
 
 
 
 /**
+ * See also chrlvSetTargetToPlayer.
+ * 
  * Address 0x7F029C00.
  */
 void chrlvAlertGuardToPlayerPosition(struct ChrRecord *arg0)
@@ -6402,7 +6392,7 @@ glabel sub_GAME_7F029D70
 .L7F02A01C:
 /* 05EB4C 7F02A01C 10600004 */  beqz  $v1, .L7F02A030
 /* 05EB50 7F02A020 8FA40058 */   lw    $a0, 0x58($sp)
-/* 05EB54 7F02A024 0FC0A6EC */  jal   sub_GAME_7F029BB0
+/* 05EB54 7F02A024 0FC0A6EC */  jal   chrlvSetTargetToPlayer
 /* 05EB58 7F02A028 AFA3002C */   sw    $v1, 0x2c($sp)
 /* 05EB5C 7F02A02C 8FA3002C */  lw    $v1, 0x2c($sp)
 .L7F02A030:
@@ -8482,7 +8472,7 @@ glabel sub_GAME_7F02BC80
 /* 0607E0 7F02BCB0 00000000 */  nop   
 /* 0607E4 7F02BCB4 45020013 */  bc1fl .L7F02BD04
 /* 0607E8 7F02BCB8 02002025 */   move  $a0, $s0
-/* 0607EC 7F02BCBC 0FC0A6EC */  jal   sub_GAME_7F029BB0
+/* 0607EC 7F02BCBC 0FC0A6EC */  jal   chrlvSetTargetToPlayer
 /* 0607F0 7F02BCC0 02002025 */   move  $a0, $s0
 /* 0607F4 7F02BCC4 0FC1BD6B */  jal   sub_GAME_7F06F5AC
 /* 0607F8 7F02BCC8 8FA40024 */   lw    $a0, 0x24($sp)
@@ -8583,7 +8573,7 @@ glabel sub_GAME_7F02BDA4
 /* 060900 7F02BDD0 00000000 */  nop   
 /* 060904 7F02BDD4 45020007 */  bc1fl .L7F02BDF4
 /* 060908 7F02BDD8 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 06090C 7F02BDDC 0FC0A6EC */  jal   sub_GAME_7F029BB0
+/* 06090C 7F02BDDC 0FC0A6EC */  jal   chrlvSetTargetToPlayer
 /* 060910 7F02BDE0 8FA40020 */   lw    $a0, 0x20($sp)
 /* 060914 7F02BDE4 8FA40020 */  lw    $a0, 0x20($sp)
 /* 060918 7F02BDE8 0FC08F85 */  jal   chrlvIdleAnimationRelated7F023E14
@@ -8620,7 +8610,7 @@ glabel sub_GAME_7F02BE00
 /* 06095C 7F02BE2C 00000000 */  nop   
 /* 060960 7F02BE30 45020006 */  bc1fl .L7F02BE4C
 /* 060964 7F02BE34 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 060968 7F02BE38 0FC0A6EC */  jal   sub_GAME_7F029BB0
+/* 060968 7F02BE38 0FC0A6EC */  jal   chrlvSetTargetToPlayer
 /* 06096C 7F02BE3C 8FA40020 */   lw    $a0, 0x20($sp)
 /* 060970 7F02BE40 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
 /* 060974 7F02BE44 8FA40020 */   lw    $a0, 0x20($sp)
@@ -12637,7 +12627,7 @@ glabel sub_GAME_7F02E4C0
 /* 0631BC 7F02E68C 31EE0001 */  andi  $t6, $t7, 1
 /* 0631C0 7F02E690 11C00003 */  beqz  $t6, .L7F02E6A0
 /* 0631C4 7F02E694 00000000 */   nop   
-/* 0631C8 7F02E698 0FC0A6EC */  jal   sub_GAME_7F029BB0
+/* 0631C8 7F02E698 0FC0A6EC */  jal   chrlvSetTargetToPlayer
 /* 0631CC 7F02E69C 02002025 */   move  $a0, $s0
 .L7F02E6A0:
 /* 0631D0 7F02E6A0 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
@@ -13149,7 +13139,7 @@ glabel sub_GAME_7F02E4C0
 /* 0610B0 7F02E6C0 31EE0001 */  andi  $t6, $t7, 1
 /* 0610B4 7F02E6C4 11C00003 */  beqz  $t6, .L7F02E6D4
 /* 0610B8 7F02E6C8 00000000 */   nop   
-/* 0610BC 7F02E6CC 0FC0A6F9 */  jal   sub_GAME_7F029BB0
+/* 0610BC 7F02E6CC 0FC0A6F9 */  jal   chrlvSetTargetToPlayer
 /* 0610C0 7F02E6D0 02002025 */   move  $a0, $s0
 .L7F02E6D4:
 /* 0610C4 7F02E6D4 0FC08F8C */  jal   chrlvKneelingAnimationRelated7F023E48
@@ -14819,7 +14809,7 @@ glabel sub_GAME_7F02F888
 /* 0644E4 7F02F9B4 0FC1BFA4 */  jal   sub_GAME_7F06FE90
 /* 0644E8 7F02F9B8 00000000 */   nop   
 .L7F02F9BC:
-/* 0644EC 7F02F9BC 0FC0A6EC */  jal   sub_GAME_7F029BB0
+/* 0644EC 7F02F9BC 0FC0A6EC */  jal   chrlvSetTargetToPlayer
 /* 0644F0 7F02F9C0 02002025 */   move  $a0, $s0
 /* 0644F4 7F02F9C4 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
 /* 0644F8 7F02F9C8 02002025 */   move  $a0, $s0
@@ -14854,7 +14844,7 @@ glabel sub_GAME_7F02F888
 /* 064568 7F02FA38 00000000 */  nop   
 /* 06456C 7F02FA3C 45000007 */  bc1f  .L7F02FA5C
 /* 064570 7F02FA40 00000000 */   nop   
-/* 064574 7F02FA44 0FC0A6EC */  jal   sub_GAME_7F029BB0
+/* 064574 7F02FA44 0FC0A6EC */  jal   chrlvSetTargetToPlayer
 /* 064578 7F02FA48 02002025 */   move  $a0, $s0
 /* 06457C 7F02FA4C 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
 /* 064580 7F02FA50 02002025 */   move  $a0, $s0
