@@ -814,13 +814,20 @@ typedef struct ChrRecord
     f32 aimendrshoulder;
     f32 aimendback;
     f32 aimendsideback;
+
     /* 0x0160 */
+    // this section needs work, see:
+    // - sub_GAME_7F02BFE4
+    // - disable_sounds_attached_to_player_then_something
+    // there should be some ALSoundState * pointers in here.
+    //
     PropRecord *weapons_held[3]; /* handle_positiondata 0x0160 0x0164  0x0168 Right, Left, Hat*/
     s8 fireslot[2];                          /* 0x016C 0x0170*/
     int *ptr_SEbuffer3;
     int *ptr_SEbuffer4;
-    int field_178;
-    int field_17C;
+    int field_178[2];
+    //int field_17C;
+
     /* 0x0180 */
     char field_180;
     char field_181;

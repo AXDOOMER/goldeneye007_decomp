@@ -102,6 +102,7 @@ void sub_GAME_7F02BE00(ChrRecord *arg0);
 void sub_GAME_7F02BE58(ChrRecord *arg0);
 void sub_GAME_7F02BEA8(ChrRecord *arg0);
 void sub_GAME_7F02BF24(ChrRecord *arg0);
+void sub_GAME_7F02BFE4(ChrRecord *arg0, s32 arg1, s32 arg2);
 
 void sub_GAME_7F025C40(struct ChrRecord *chr, s32);
 void sub_GAME_7F02587C(struct ChrRecord *chr, s32);
@@ -7752,11 +7753,97 @@ void sub_GAME_7F02BF24(ChrRecord *arg0)
 
 
 
-
 #ifdef NONMATCHING
-void sub_GAME_7F02BFE4(void) {
+/**
+ * Address 0x7F02BFE4.
+ * 
+ * decomp status:
+ * - compiles: yes
+ * - stack resize: no
+ * - identical instructions: fail
+ * - identical registers: fail
+ * 
+ * notes: struct ChrRecord needs some changes, but not sure what to figure out the weird section below.
+*/
+void sub_GAME_7F02BFE4(ChrRecord *arg0, s32 arg1, s32 arg2)
+{
+    struct PropRecord *prop;
+    u8 sp33;
+    u16 sp30;
+    s32 phi_a1;
+    ChrRecord *temp_v1;
+    s32 unused[1];
+    s32 sp28;
+    ALSoundState *phi_a2;
 
+    prop = something_with_weaponpos_of_guarddata_hand(arg0, arg1);
+    temp_v1 = prop->chr;
+    phi_a1 = 0;
+
+    sp33 = bondwalkItemGetSoundTriggerRate((s32) temp_v1->act_bytes.padding[0x54]);
+    sp30 = bondwalkItemGetSound((s32) temp_v1->act_bytes.padding[0x54]);
+
+    if (arg2 != 0)
+    {
+        if ((s32) sp33 > 0)
+        {
+            if (((arg0->hidden & 0x80) == 0) && arg0->field_178[arg1] < g_GlobalTimer)
+            {
+                phi_a1 = 1;
+            }
+        }
+        else
+        {
+            phi_a1 = 1;
+        }
+    }
+
+    if (phi_a1 != 0)
+    {
+        // begin decomp problem area.
+        // I can't make sense of this with the current ChrRecord definition.
+
+        // if (arg0->unk160 != NULL)
+        // {
+        //     if (sndGetPlayingState(arg0->unk160[arg1]) != AL_STOPPED)
+        //     {
+        //         sndDeactivate(arg0->unk160[arg1]);
+        //     }
+        // }
+
+        // if (arg0->unk164[arg1] != NULL)
+        // {
+        //     if (sndGetPlayingState(arg0->unk164[arg1]) != AL_STOPPED)
+        //     {
+        //         sndDeactivate(arg0->unk164[arg1]);
+        //     }
+        // }
+        
+        // if (sp30 != 0)
+        // {
+        //     phi_a2 = NULL;
+        //     if (arg0->unk160[arg1] == NULL)
+        //     {
+        //         phi_a2 = arg0->unk160[arg1];
+        //     }
+        //     else if (arg0->unk164[arg1] == NULL)
+        //     {
+        //         phi_a2 = arg0->unk164[arg1];
+        //     }
+
+        //     if (phi_a2 != NULL)
+        //     {
+        //         sndPlaySfx(g_musicSfxBufferPtr, (s16) sp30, phi_a2);
+        //         sub_GAME_7F053A10(phi_a2, &arg0->prop->pos);
+
+        //         arg0->field_178[arg1] = g_GlobalTimer + sp33;
+        //         arg0->hidden |= 0x80;
+        //     }
+        // }
+        // end decomp problem area.
+    }
 }
+
 #else
 GLOBAL_ASM(
 .text
