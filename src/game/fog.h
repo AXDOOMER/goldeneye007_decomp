@@ -57,4 +57,6 @@ struct fog_element2 {
     f32 waterconcavity;
 };
 
+f32 square_near_fog_value(void);
+
 #endif

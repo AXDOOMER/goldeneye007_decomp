@@ -34,5 +34,6 @@ void chrlvStanPointPointIntersection(struct coord3d *arg0, struct coord3d *arg1,
 bool handles_shot_actors(struct ChrRecord *self, s32 hitpart, struct coord3d *vector, s32 weaponid, bool isPlayer);
 bool sub_GAME_7F0294BC(ChrRecord *self);
 bool check_if_position_in_same_room(struct ChrRecord *self, struct coord3d *pos, struct StandTile *stan);
+s32 sub_GAME_7F032B68(ChrRecord *);
 
 #endif

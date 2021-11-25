@@ -12,6 +12,7 @@
 #include "game/chrai.h"
 #include "game/chrobjhandler.h"
 #include "game/file.h"
+#include "game/fog.h"
 #include "game/front.h"
 #include "game/gun.h"
 #include "game/initanitable.h"
@@ -85,6 +86,8 @@ s32 chrlvMaybeSameRoom(ChrRecord *arg0, struct coord3d *arg1, StandTile *arg2);
 s32 chrlvCurrentPlayerCall7F0B0E24(ChrRecord *arg0);
 s32 chrlvCall7F0B0E24WithChrWidthHeight(PropRecord *arg0, struct coord3d *arg1, struct coord3d *arg2);
 void chrlvSetTargetToPlayer(ChrRecord *arg0);
+s32 sub_GAME_7F032B68(ChrRecord *);
+s32 sub_GAME_7F029D70(ChrRecord *self);
 
 // move to chrobjecthandler.h
 
@@ -6121,230 +6124,100 @@ bool check_if_actor_stationary(ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F029D70(void) {
-// ai branch
+/**
+ * Address 0x7F029D70.
+*/
+s32 sub_GAME_7F029D70(ChrRecord *self)
+{
+    PropRecord *myprop; // sp84
+    PropRecord *bondprop; // sp80
+    f32 rrr;
+    f32 vec2rd;
+    f32 myRadDirection; // sp68
+    struct coord3d vec; // sp64 = x, sp60 = y, sp56 = z
+    f32 atn;
+    f32 radChangeToFaceBond; // sp48?
+    s32 pass; // sp44
+    u32 rt;
+    s32 distance;
+
+    myprop               = self->prop;
+    bondprop             = get_curplayer_positiondata();
+    myRadDirection       = getsubroty(self->model);
+    // note: x and z get swapped
+    vec.z                = bondprop->pos.x - myprop->pos.x;
+    vec.y                = bondprop->pos.y - myprop->pos.y;
+    vec.x                = bondprop->pos.z - myprop->pos.z;
+
+    atn = atan2f(vec.z, vec.x);
+
+    pass = 0;
+    rrr = atn - myRadDirection;
+    radChangeToFaceBond = rrr;
+    if (atn < myRadDirection)
+    {
+        radChangeToFaceBond = rrr + M_TAU;
+    }
+
+    if (sub_GAME_7F032B68(self))
+    {
+        pass = 1;
+    }
+    else
+    {
+        vec2rd = (vec.z * vec.z) + (vec.y * vec.y) + (vec.x * vec.x);
+
+        if (
+            /*within 220 degrees of forward and within range*/
+            (
+                (vec2rd < (self->visionrange * self->visionrange * 100.0f * 100.0f))
+                && ((radChangeToFaceBond < M_110_DEG_IN_RAD) || (radChangeToFaceBond > M_250_DEG_IN_RAD))
+            )
+            ||
+            /*or within clamped minimum of 200*/
+            (
+                (vec2rd < (200 * 200))
+                && ((radChangeToFaceBond < M_110_DEG_IN_RAD) || (radChangeToFaceBond > M_250_DEG_IN_RAD))
+            )
+        )
+        {
+            if (vec2rd < square_near_fog_value())
+            {
+                distance = (s32)((sqrtf(vec2rd) * 30.0f) / 16000.0f);
+
+                //Not facing bond
+                if ((radChangeToFaceBond > M_45_DEG_IN_RAD) && (radChangeToFaceBond < M_315_DEG_IN_RAD))
+                {
+                    f32 f0 = radChangeToFaceBond;
+                    if (radChangeToFaceBond > M_PI_F)
+                    {
+                        //confine/wrap to half
+                        f0 = M_TAU - radChangeToFaceBond;
+                    }
+
+                    f0 -= M_45_DEG_IN_RAD;
+
+                    distance *= (s32)((f0 * 24.0f) / M_TAU) + 1;
+                }
+
+                distance = chrlvGetGuard007SpeedRatingInt(self, distance) + 1;
+                pass = ((u32)randomGetNext() % (u32)distance) == 0;
+            }
+        }
+    }
+
+    if (pass)
+    {
+        pass = sub_GAME_7F0294BC(self);
+    }
+
+    if (pass)
+    {
+        chrlvSetTargetToPlayer(self);
+    }
+
+    return pass;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80051E0C
-.word 0x40c90fdb /*6.2831855*/
-glabel D_80051E10
-.word 0x3ff5be0b /*1.9198622*/
-glabel D_80051E14
-.word 0x408ba058 /*4.3633232*/
-glabel D_80051E18
-.word 0x471c4000 /*40000.0*/
-glabel D_80051E1C
-.word 0x3ff5be0b /*1.9198622*/
-glabel D_80051E20
-.word 0x408ba058 /*4.3633232*/
-glabel D_80051E24
-.word 0x3f490fdb /*0.78539819*/
-glabel D_80051E28
-.word 0x40afede0 /*5.4977875*/
-glabel D_80051E2C
-.word 0x40490fdb /*3.1415927*/
-glabel D_80051E30
-.word 0x40c90fdb /*6.2831855*/
-glabel D_80051E34
-.word 0x40c90fdb /*6.2831855*/
-.text
-glabel sub_GAME_7F029D70
-/* 05E8A0 7F029D70 27BDFFA8 */  addiu $sp, $sp, -0x58
-/* 05E8A4 7F029D74 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05E8A8 7F029D78 AFA40058 */  sw    $a0, 0x58($sp)
-/* 05E8AC 7F029D7C 8C830018 */  lw    $v1, 0x18($a0)
-/* 05E8B0 7F029D80 0FC225E6 */  jal   get_curplayer_positiondata
-/* 05E8B4 7F029D84 AFA30054 */   sw    $v1, 0x54($sp)
-/* 05E8B8 7F029D88 8FAF0058 */  lw    $t7, 0x58($sp)
-/* 05E8BC 7F029D8C 8DE4001C */  lw    $a0, 0x1c($t7)
-/* 05E8C0 7F029D90 0FC1B320 */  jal   getsubroty
-/* 05E8C4 7F029D94 AFA20050 */   sw    $v0, 0x50($sp)
-/* 05E8C8 7F029D98 8FA30054 */  lw    $v1, 0x54($sp)
-/* 05E8CC 7F029D9C 8FA50050 */  lw    $a1, 0x50($sp)
-/* 05E8D0 7F029DA0 C4660008 */  lwc1  $f6, 8($v1)
-/* 05E8D4 7F029DA4 C4A40008 */  lwc1  $f4, 8($a1)
-/* 05E8D8 7F029DA8 C46A000C */  lwc1  $f10, 0xc($v1)
-/* 05E8DC 7F029DAC C4A8000C */  lwc1  $f8, 0xc($a1)
-/* 05E8E0 7F029DB0 46062301 */  sub.s $f12, $f4, $f6
-/* 05E8E4 7F029DB4 460A4101 */  sub.s $f4, $f8, $f10
-/* 05E8E8 7F029DB8 E7A4003C */  swc1  $f4, 0x3c($sp)
-/* 05E8EC 7F029DBC C4680010 */  lwc1  $f8, 0x10($v1)
-/* 05E8F0 7F029DC0 C4A60010 */  lwc1  $f6, 0x10($a1)
-/* 05E8F4 7F029DC4 E7A00044 */  swc1  $f0, 0x44($sp)
-/* 05E8F8 7F029DC8 E7AC0040 */  swc1  $f12, 0x40($sp)
-/* 05E8FC 7F029DCC 46083381 */  sub.s $f14, $f6, $f8
-/* 05E900 7F029DD0 0FC16A8C */  jal   atan2f
-/* 05E904 7F029DD4 E7AE0038 */   swc1  $f14, 0x38($sp)
-/* 05E908 7F029DD8 C7B00044 */  lwc1  $f16, 0x44($sp)
-/* 05E90C 7F029DDC C7AE0038 */  lwc1  $f14, 0x38($sp)
-/* 05E910 7F029DE0 00001825 */  move  $v1, $zero
-/* 05E914 7F029DE4 4610003C */  c.lt.s $f0, $f16
-/* 05E918 7F029DE8 3C018005 */  lui   $at, %hi(D_80051E0C)
-/* 05E91C 7F029DEC 46100301 */  sub.s $f12, $f0, $f16
-/* 05E920 7F029DF0 8FA40058 */  lw    $a0, 0x58($sp)
-/* 05E924 7F029DF4 45000003 */  bc1f  .L7F029E04
-/* 05E928 7F029DF8 46006086 */   mov.s $f2, $f12
-/* 05E92C 7F029DFC C42A1E0C */  lwc1  $f10, %lo(D_80051E0C)($at)
-/* 05E930 7F029E00 460A6080 */  add.s $f2, $f12, $f10
-.L7F029E04:
-/* 05E934 7F029E04 AFA3002C */  sw    $v1, 0x2c($sp)
-/* 05E938 7F029E08 E7A20030 */  swc1  $f2, 0x30($sp)
-/* 05E93C 7F029E0C 0FC0CADA */  jal   sub_GAME_7F032B68
-/* 05E940 7F029E10 E7AE0038 */   swc1  $f14, 0x38($sp)
-/* 05E944 7F029E14 8FA3002C */  lw    $v1, 0x2c($sp)
-/* 05E948 7F029E18 C7A20030 */  lwc1  $f2, 0x30($sp)
-/* 05E94C 7F029E1C 10400003 */  beqz  $v0, .L7F029E2C
-/* 05E950 7F029E20 C7AE0038 */   lwc1  $f14, 0x38($sp)
-/* 05E954 7F029E24 10000078 */  b     .L7F02A008
-/* 05E958 7F029E28 24030001 */   li    $v1, 1
-.L7F029E2C:
-/* 05E95C 7F029E2C C7A4003C */  lwc1  $f4, 0x3c($sp)
-/* 05E960 7F029E30 C7B20040 */  lwc1  $f18, 0x40($sp)
-/* 05E964 7F029E34 8FB80058 */  lw    $t8, 0x58($sp)
-/* 05E968 7F029E38 46042182 */  mul.s $f6, $f4, $f4
-/* 05E96C 7F029E3C 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 05E970 7F029E40 C70000D0 */  lwc1  $f0, 0xd0($t8)
-/* 05E974 7F029E44 46129202 */  mul.s $f8, $f18, $f18
-/* 05E978 7F029E48 44818000 */  mtc1  $at, $f16
-/* 05E97C 7F029E4C 3C018005 */  lui   $at, %hi(D_80051E10)
-/* 05E980 7F029E50 460E7102 */  mul.s $f4, $f14, $f14
-/* 05E984 7F029E54 46064280 */  add.s $f10, $f8, $f6
-/* 05E988 7F029E58 46000202 */  mul.s $f8, $f0, $f0
-/* 05E98C 7F029E5C 46045300 */  add.s $f12, $f10, $f4
-/* 05E990 7F029E60 46104182 */  mul.s $f6, $f8, $f16
-/* 05E994 7F029E64 00000000 */  nop   
-/* 05E998 7F029E68 46103282 */  mul.s $f10, $f6, $f16
-/* 05E99C 7F029E6C 460A603C */  c.lt.s $f12, $f10
-/* 05E9A0 7F029E70 00000000 */  nop   
-/* 05E9A4 7F029E74 4500000B */  bc1f  .L7F029EA4
-/* 05E9A8 7F029E78 00000000 */   nop   
-/* 05E9AC 7F029E7C C4241E10 */  lwc1  $f4, %lo(D_80051E10)($at)
-/* 05E9B0 7F029E80 3C018005 */  lui   $at, %hi(D_80051E14)
-/* 05E9B4 7F029E84 4604103C */  c.lt.s $f2, $f4
-/* 05E9B8 7F029E88 00000000 */  nop   
-/* 05E9BC 7F029E8C 45030018 */  bc1tl .L7F029EF0
-/* 05E9C0 7F029E90 AFA3002C */   sw    $v1, 0x2c($sp)
-/* 05E9C4 7F029E94 C4281E14 */  lwc1  $f8, %lo(D_80051E14)($at)
-/* 05E9C8 7F029E98 4602403C */  c.lt.s $f8, $f2
-/* 05E9CC 7F029E9C 00000000 */  nop   
-/* 05E9D0 7F029EA0 45010012 */  bc1t  .L7F029EEC
-.L7F029EA4:
-/* 05E9D4 7F029EA4 3C018005 */   lui   $at, %hi(D_80051E18)
-/* 05E9D8 7F029EA8 C4261E18 */  lwc1  $f6, %lo(D_80051E18)($at)
-/* 05E9DC 7F029EAC 3C018005 */  lui   $at, %hi(D_80051E1C)
-/* 05E9E0 7F029EB0 4606603C */  c.lt.s $f12, $f6
-/* 05E9E4 7F029EB4 00000000 */  nop   
-/* 05E9E8 7F029EB8 45000053 */  bc1f  .L7F02A008
-/* 05E9EC 7F029EBC 00000000 */   nop   
-/* 05E9F0 7F029EC0 C42A1E1C */  lwc1  $f10, %lo(D_80051E1C)($at)
-/* 05E9F4 7F029EC4 3C018005 */  lui   $at, %hi(D_80051E20)
-/* 05E9F8 7F029EC8 460A103C */  c.lt.s $f2, $f10
-/* 05E9FC 7F029ECC 00000000 */  nop   
-/* 05EA00 7F029ED0 45030007 */  bc1tl .L7F029EF0
-/* 05EA04 7F029ED4 AFA3002C */   sw    $v1, 0x2c($sp)
-/* 05EA08 7F029ED8 C4241E20 */  lwc1  $f4, %lo(D_80051E20)($at)
-/* 05EA0C 7F029EDC 4602203C */  c.lt.s $f4, $f2
-/* 05EA10 7F029EE0 00000000 */  nop   
-/* 05EA14 7F029EE4 45000048 */  bc1f  .L7F02A008
-/* 05EA18 7F029EE8 00000000 */   nop   
-.L7F029EEC:
-/* 05EA1C 7F029EEC AFA3002C */  sw    $v1, 0x2c($sp)
-.L7F029EF0:
-/* 05EA20 7F029EF0 E7A20030 */  swc1  $f2, 0x30($sp)
-/* 05EA24 7F029EF4 0FC2E9D1 */  jal   square_near_fog_value
-/* 05EA28 7F029EF8 E7AC001C */   swc1  $f12, 0x1c($sp)
-/* 05EA2C 7F029EFC C7AC001C */  lwc1  $f12, 0x1c($sp)
-/* 05EA30 7F029F00 8FA3002C */  lw    $v1, 0x2c($sp)
-/* 05EA34 7F029F04 C7A20030 */  lwc1  $f2, 0x30($sp)
-/* 05EA38 7F029F08 4600603C */  c.lt.s $f12, $f0
-/* 05EA3C 7F029F0C 00000000 */  nop   
-/* 05EA40 7F029F10 4500003D */  bc1f  .L7F02A008
-/* 05EA44 7F029F14 00000000 */   nop   
-/* 05EA48 7F029F18 0C007DF8 */  jal   sqrtf
-/* 05EA4C 7F029F1C E7A20030 */   swc1  $f2, 0x30($sp)
-/* 05EA50 7F029F20 3C018005 */  lui   $at, %hi(D_80051E24)
-/* 05EA54 7F029F24 C42C1E24 */  lwc1  $f12, %lo(D_80051E24)($at)
-/* 05EA58 7F029F28 3C0141F0 */  li    $at, 0x41F00000 # 30.000000
-/* 05EA5C 7F029F2C 44814000 */  mtc1  $at, $f8
-/* 05EA60 7F029F30 3C01467A */  li    $at, 0x467A0000 # 16000.000000
-/* 05EA64 7F029F34 44815000 */  mtc1  $at, $f10
-/* 05EA68 7F029F38 46080182 */  mul.s $f6, $f0, $f8
-/* 05EA6C 7F029F3C C7A20030 */  lwc1  $f2, 0x30($sp)
-/* 05EA70 7F029F40 3C018005 */  lui   $at, %hi(D_80051E28)
-/* 05EA74 7F029F44 4602603C */  c.lt.s $f12, $f2
-/* 05EA78 7F029F48 460A3103 */  div.s $f4, $f6, $f10
-/* 05EA7C 7F029F4C 4600220D */  trunc.w.s $f8, $f4
-/* 05EA80 7F029F50 44054000 */  mfc1  $a1, $f8
-/* 05EA84 7F029F54 4500001F */  bc1f  .L7F029FD4
-/* 05EA88 7F029F58 00000000 */   nop   
-/* 05EA8C 7F029F5C C4261E28 */  lwc1  $f6, %lo(D_80051E28)($at)
-/* 05EA90 7F029F60 3C018005 */  lui   $at, %hi(D_80051E2C)
-/* 05EA94 7F029F64 4606103C */  c.lt.s $f2, $f6
-/* 05EA98 7F029F68 00000000 */  nop   
-/* 05EA9C 7F029F6C 45000019 */  bc1f  .L7F029FD4
-/* 05EAA0 7F029F70 00000000 */   nop   
-/* 05EAA4 7F029F74 C42A1E2C */  lwc1  $f10, %lo(D_80051E2C)($at)
-/* 05EAA8 7F029F78 46001006 */  mov.s $f0, $f2
-/* 05EAAC 7F029F7C 3C018005 */  lui   $at, %hi(D_80051E30)
-/* 05EAB0 7F029F80 4602503C */  c.lt.s $f10, $f2
-/* 05EAB4 7F029F84 00000000 */  nop   
-/* 05EAB8 7F029F88 45020004 */  bc1fl .L7F029F9C
-/* 05EABC 7F029F8C 460C0001 */   sub.s $f0, $f0, $f12
-/* 05EAC0 7F029F90 C4241E30 */  lwc1  $f4, %lo(D_80051E30)($at)
-/* 05EAC4 7F029F94 46022001 */  sub.s $f0, $f4, $f2
-/* 05EAC8 7F029F98 460C0001 */  sub.s $f0, $f0, $f12
-.L7F029F9C:
-/* 05EACC 7F029F9C 3C0141C0 */  li    $at, 0x41C00000 # 24.000000
-/* 05EAD0 7F029FA0 44814000 */  mtc1  $at, $f8
-/* 05EAD4 7F029FA4 3C018005 */  lui   $at, %hi(D_80051E34)
-/* 05EAD8 7F029FA8 C42A1E34 */  lwc1  $f10, %lo(D_80051E34)($at)
-/* 05EADC 7F029FAC 46080182 */  mul.s $f6, $f0, $f8
-/* 05EAE0 7F029FB0 460A3103 */  div.s $f4, $f6, $f10
-/* 05EAE4 7F029FB4 4600220D */  trunc.w.s $f8, $f4
-/* 05EAE8 7F029FB8 44094000 */  mfc1  $t1, $f8
-/* 05EAEC 7F029FBC 00000000 */  nop   
-/* 05EAF0 7F029FC0 252A0001 */  addiu $t2, $t1, 1
-/* 05EAF4 7F029FC4 00AA0019 */  multu $a1, $t2
-/* 05EAF8 7F029FC8 00002812 */  mflo  $a1
-/* 05EAFC 7F029FCC 00000000 */  nop   
-/* 05EB00 7F029FD0 00000000 */  nop   
-.L7F029FD4:
-/* 05EB04 7F029FD4 0FC08EF0 */  jal   chrlvGetGuard007SpeedRatingInt
-/* 05EB08 7F029FD8 8FA40058 */   lw    $a0, 0x58($sp)
-/* 05EB0C 7F029FDC 24450001 */  addiu $a1, $v0, 1
-/* 05EB10 7F029FE0 0C002914 */  jal   randomGetNext
-/* 05EB14 7F029FE4 AFA50024 */   sw    $a1, 0x24($sp)
-/* 05EB18 7F029FE8 8FA50024 */  lw    $a1, 0x24($sp)
-/* 05EB1C 7F029FEC 0045001B */  divu  $zero, $v0, $a1
-/* 05EB20 7F029FF0 00001810 */  mfhi  $v1
-/* 05EB24 7F029FF4 2C6B0001 */  sltiu $t3, $v1, 1
-/* 05EB28 7F029FF8 01601825 */  move  $v1, $t3
-/* 05EB2C 7F029FFC 14A00002 */  bnez  $a1, .L7F02A008
-/* 05EB30 7F02A000 00000000 */   nop   
-/* 05EB34 7F02A004 0007000D */  break 7
-.L7F02A008:
-/* 05EB38 7F02A008 10600004 */  beqz  $v1, .L7F02A01C
-/* 05EB3C 7F02A00C 00000000 */   nop   
-/* 05EB40 7F02A010 0FC0A52F */  jal   sub_GAME_7F0294BC
-/* 05EB44 7F02A014 8FA40058 */   lw    $a0, 0x58($sp)
-/* 05EB48 7F02A018 00401825 */  move  $v1, $v0
-.L7F02A01C:
-/* 05EB4C 7F02A01C 10600004 */  beqz  $v1, .L7F02A030
-/* 05EB50 7F02A020 8FA40058 */   lw    $a0, 0x58($sp)
-/* 05EB54 7F02A024 0FC0A6EC */  jal   chrlvSetTargetToPlayer
-/* 05EB58 7F02A028 AFA3002C */   sw    $v1, 0x2c($sp)
-/* 05EB5C 7F02A02C 8FA3002C */  lw    $v1, 0x2c($sp)
-.L7F02A030:
-/* 05EB60 7F02A030 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05EB64 7F02A034 27BD0058 */  addiu $sp, $sp, 0x58
-/* 05EB68 7F02A038 00601025 */  move  $v0, $v1
-/* 05EB6C 7F02A03C 03E00008 */  jr    $ra
-/* 05EB70 7F02A040 00000000 */   nop   
-)
-#endif
 
 
 
