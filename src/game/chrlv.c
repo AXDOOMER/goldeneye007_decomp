@@ -6657,46 +6657,20 @@ bool actor_rolls_fires_crouched(ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-void actor_aim_at_actor(void) {
-// ai branch
+/**
+ * Address 0x7F02AA1C.
+*/
+bool actor_aim_at_actor(ChrRecord *self, s32 a, s32 b)
+{
+    if ((chrIsNotDeadOrShot(self) != 0) && ((is_weapon_in_guarddata_hand(self, RIGHT_HAND) != 0) || (is_weapon_in_guarddata_hand(self, LEFT_HAND) != 0)))
+    {
+        sub_GAME_7F025560(self, a, b);
+        return TRUE;
+    }
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel actor_aim_at_actor
-/* 05F54C 7F02AA1C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 05F550 7F02AA20 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05F554 7F02AA24 AFA40018 */  sw    $a0, 0x18($sp)
-/* 05F558 7F02AA28 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 05F55C 7F02AA2C 0FC0A896 */  jal   chrIsNotDeadOrShot
-/* 05F560 7F02AA30 AFA60020 */   sw    $a2, 0x20($sp)
-/* 05F564 7F02AA34 1040000F */  beqz  $v0, .L7F02AA74
-/* 05F568 7F02AA38 8FA40018 */   lw    $a0, 0x18($sp)
-/* 05F56C 7F02AA3C 0FC08C0F */  jal   is_weapon_in_guarddata_hand
-/* 05F570 7F02AA40 00002825 */   move  $a1, $zero
-/* 05F574 7F02AA44 14400005 */  bnez  $v0, .L7F02AA5C
-/* 05F578 7F02AA48 8FA40018 */   lw    $a0, 0x18($sp)
-/* 05F57C 7F02AA4C 0FC08C0F */  jal   is_weapon_in_guarddata_hand
-/* 05F580 7F02AA50 24050001 */   li    $a1, 1
-/* 05F584 7F02AA54 50400008 */  beql  $v0, $zero, .L7F02AA78
-/* 05F588 7F02AA58 00001025 */   move  $v0, $zero
-.L7F02AA5C:
-/* 05F58C 7F02AA5C 8FA40018 */  lw    $a0, 0x18($sp)
-/* 05F590 7F02AA60 8FA5001C */  lw    $a1, 0x1c($sp)
-/* 05F594 7F02AA64 0FC09558 */  jal   sub_GAME_7F025560
-/* 05F598 7F02AA68 8FA60020 */   lw    $a2, 0x20($sp)
-/* 05F59C 7F02AA6C 10000002 */  b     .L7F02AA78
-/* 05F5A0 7F02AA70 24020001 */   li    $v0, 1
-.L7F02AA74:
-/* 05F5A4 7F02AA74 00001025 */  move  $v0, $zero
-.L7F02AA78:
-/* 05F5A8 7F02AA78 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05F5AC 7F02AA7C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 05F5B0 7F02AA80 03E00008 */  jr    $ra
-/* 05F5B4 7F02AA84 00000000 */   nop   
-)
-#endif
+
 
 
 
