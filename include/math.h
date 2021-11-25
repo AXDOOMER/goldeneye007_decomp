@@ -9,6 +9,8 @@
 #define M_2PI    6.2831855
 #define M_2PI_F  6.2831855f
 #define M_TAU    M_2PI_F
+#define M_HALF_PI         M_PI_F / 2
+#define M_THREE_HALF_PI   3 * M_HALF_PI
 
 #define M_45_DEG_IN_RAD  0.7853982f
 #define M_100_DEG_IN_RAD 1.7453293f

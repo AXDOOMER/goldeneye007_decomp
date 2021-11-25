@@ -1,11 +1,7 @@
 #include "ultra64.h"
+#include "../../include/math.h"
 #include "game/math_asinfacosf.h"
 #include "game/math_atan2f.h"
-
-#define M_PI 3.1415927f
-#define M_HALF_PI M_PI / 2
-#define M_THREE_HALF_PI 3 * M_HALF_PI
-#define M_TAU 2 * M_PI
 
 f32 atan2f(f32 y, f32 x)
 {
@@ -14,7 +10,7 @@ f32 atan2f(f32 y, f32 x)
         if (0.0f <= x) {
             angle = 0.0f;
         } else {
-            angle = M_PI;
+            angle = M_PI_F;
         }
     } else if (x == 0.0f) {
         if (0.0f < y) {
@@ -32,7 +28,7 @@ f32 atan2f(f32 y, f32 x)
         } else {
             angle = M_HALF_PI - acosf(y / angle);
             if (x < 0.0f) {
-                angle = M_PI - angle;
+                angle = M_PI_F - angle;
             }
             if (angle < 0.0f) {
                 angle += M_TAU;
