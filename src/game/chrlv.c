@@ -8023,33 +8023,21 @@ f32 chrlvGetSubrotySideback(ChrRecord *arg0)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02C27C(void) {
+/**
+ * Address 0x7F02C27C.
+*/
+f32 sub_GAME_7F02C27C(struct ChrRecord *arg0)
+{
+    f32 temp_f2;
 
+    temp_f2 = arg0->aimuprshoulder + arg0->aimupback;
+    if (temp_f2 < 0.0f)
+    {
+        temp_f2 = temp_f2 + M_TAU;
+    }
+
+    return temp_f2;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80051E9C
-.word 0x40c90fdb /*6.2831855*/
-.text
-glabel sub_GAME_7F02C27C
-/* 060DAC 7F02C27C C4840144 */  lwc1  $f4, 0x144($a0)
-/* 060DB0 7F02C280 C4860148 */  lwc1  $f6, 0x148($a0)
-/* 060DB4 7F02C284 44804000 */  mtc1  $zero, $f8
-/* 060DB8 7F02C288 3C018005 */  lui   $at, %hi(D_80051E9C)
-/* 060DBC 7F02C28C 46062080 */  add.s $f2, $f4, $f6
-/* 060DC0 7F02C290 4608103C */  c.lt.s $f2, $f8
-/* 060DC4 7F02C294 00000000 */  nop   
-/* 060DC8 7F02C298 45000003 */  bc1f  .L7F02C2A8
-/* 060DCC 7F02C29C 00000000 */   nop   
-/* 060DD0 7F02C2A0 C42A1E9C */  lwc1  $f10, %lo(D_80051E9C)($at)
-/* 060DD4 7F02C2A4 460A1080 */  add.s $f2, $f2, $f10
-.L7F02C2A8:
-/* 060DD8 7F02C2A8 03E00008 */  jr    $ra
-/* 060DDC 7F02C2AC 46001006 */   mov.s $f0, $f2
-)
-#endif
 
 
 
