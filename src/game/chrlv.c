@@ -95,6 +95,7 @@ void chrlvModelRotyRelated(ChrRecord *arg0, s32 arg1, struct coord3d *arg2);
 s32 chrIsNotDeadOrShot(struct ChrRecord *chr);
 void chrlvSneezeRelated(ChrRecord *arg0);
 void chrlvManageGuardFade(ChrRecord *arg0);
+void sub_GAME_7F02BC80(ChrRecord *arg0);
 
 void sub_GAME_7F025C40(struct ChrRecord *chr, s32);
 void sub_GAME_7F02587C(struct ChrRecord *chr, s32);
@@ -7588,58 +7589,29 @@ void guard_body_hit_sfx(ChrRecord *arg0)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02BC80(void) {
+/**
+ * Address 0x7F02BC80.
+*/
+void sub_GAME_7F02BC80(ChrRecord *arg0)
+{
+    Model *model = arg0->model;
 
+    if (objecthandlerGetModelField28(model) >= sub_GAME_7F06F5C4(model))
+    {
+        chrlvSetTargetToPlayer(arg0);
+
+        if (sub_GAME_7F06F5AC(model) == &ptr_animation_table->data[(s32)&ANIM_DATA_death_left_leg])
+        {
+            chrlvIdleAnimationRelated7F023E14(arg0, 26.0f);
+        }
+        else
+        {
+            chrlvKneelingAnimationRelated7F023E48(arg0);
+        }
+    }
+
+    chrlvIterateGuardSeeShotDie(arg0, 0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02BC80
-/* 0607B0 7F02BC80 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0607B4 7F02BC84 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0607B8 7F02BC88 00808025 */  move  $s0, $a0
-/* 0607BC 7F02BC8C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0607C0 7F02BC90 8C84001C */  lw    $a0, 0x1c($a0)
-/* 0607C4 7F02BC94 0FC1BD6F */  jal   objecthandlerGetModelField28
-/* 0607C8 7F02BC98 AFA40024 */   sw    $a0, 0x24($sp)
-/* 0607CC 7F02BC9C E7A00020 */  swc1  $f0, 0x20($sp)
-/* 0607D0 7F02BCA0 0FC1BD71 */  jal   sub_GAME_7F06F5C4
-/* 0607D4 7F02BCA4 8FA40024 */   lw    $a0, 0x24($sp)
-/* 0607D8 7F02BCA8 C7A40020 */  lwc1  $f4, 0x20($sp)
-/* 0607DC 7F02BCAC 4604003E */  c.le.s $f0, $f4
-/* 0607E0 7F02BCB0 00000000 */  nop   
-/* 0607E4 7F02BCB4 45020013 */  bc1fl .L7F02BD04
-/* 0607E8 7F02BCB8 02002025 */   move  $a0, $s0
-/* 0607EC 7F02BCBC 0FC0A6EC */  jal   chrlvSetTargetToPlayer
-/* 0607F0 7F02BCC0 02002025 */   move  $a0, $s0
-/* 0607F4 7F02BCC4 0FC1BD6B */  jal   sub_GAME_7F06F5AC
-/* 0607F8 7F02BCC8 8FA40024 */   lw    $a0, 0x24($sp)
-/* 0607FC 7F02BCCC 3C0E8007 */  lui   $t6, %hi(ptr_animation_table) 
-/* 060800 7F02BCD0 8DCE9538 */  lw    $t6, %lo(ptr_animation_table)($t6)
-/* 060804 7F02BCD4 3C0F0000 */  lui   $t7, %hi(0x0000540C) # $t7, 0
-/* 060808 7F02BCD8 25EF540C */  addiu $t7, %lo(0x0000540C) # addiu $t7, $t7, 0x540c
-/* 06080C 7F02BCDC 01CFC021 */  addu  $t8, $t6, $t7
-/* 060810 7F02BCE0 14580005 */  bne   $v0, $t8, .L7F02BCF8
-/* 060814 7F02BCE4 02002025 */   move  $a0, $s0
-/* 060818 7F02BCE8 0FC08F85 */  jal   chrlvIdleAnimationRelated7F023E14
-/* 06081C 7F02BCEC 3C0541D0 */   lui   $a1, 0x41d0
-/* 060820 7F02BCF0 10000004 */  b     .L7F02BD04
-/* 060824 7F02BCF4 02002025 */   move  $a0, $s0
-.L7F02BCF8:
-/* 060828 7F02BCF8 0FC08F92 */  jal   chrlvKneelingAnimationRelated7F023E48
-/* 06082C 7F02BCFC 02002025 */   move  $a0, $s0
-/* 060830 7F02BD00 02002025 */  move  $a0, $s0
-.L7F02BD04:
-/* 060834 7F02BD04 0FC0AE00 */  jal   chrlvIterateGuardSeeShotDie
-/* 060838 7F02BD08 00002825 */   move  $a1, $zero
-/* 06083C 7F02BD0C 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 060840 7F02BD10 8FB00018 */  lw    $s0, 0x18($sp)
-/* 060844 7F02BD14 27BD0028 */  addiu $sp, $sp, 0x28
-/* 060848 7F02BD18 03E00008 */  jr    $ra
-/* 06084C 7F02BD1C 00000000 */   nop   
-)
-#endif
 
 
 
