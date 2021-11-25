@@ -6267,6 +6267,7 @@ void chrlvNormDistanceToPlayer(ChrRecord *arg0, s32 arg1, struct coord3d *arg2)
 
 
 /**
+ * @see sub_GAME_7F02A1E8
  * Address 0x7F02A0EC.
 */
 s32 sub_GAME_7F02A0EC(ChrRecord *arg0, s32 arg1, f32 arg2)
@@ -6318,44 +6319,27 @@ void chrlvModelRotyRelated(ChrRecord *arg0, s32 arg1, struct coord3d *arg2)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02A1E8(void) {
+/**
+ * @see sub_GAME_7F02A0EC
+ * 
+ * Address 0x7F02A1E8.
+*/
+s32 sub_GAME_7F02A1E8(ChrRecord *arg0, s32 arg1, f32 arg2)
+{
+    PropRecord *prop;
+    struct coord3d sp28;
+    struct coord3d sp1C;
 
+    prop = arg0->prop;
+    chrlvModelRotyRelated(arg0, arg1, &sp28);
+
+    sp1C.f[0] = prop->pos.f[0] + (sp28.f[0] * arg2);
+    sp1C.f[1] = prop->pos.f[1];
+    sp1C.f[2] = prop->pos.f[2] + (sp28.f[2] * arg2);
+
+    return chrlvCall7F0B0E24WithChrWidthHeight(prop, &sp1C, &sp28);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02A1E8
-/* 05ED18 7F02A1E8 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 05ED1C 7F02A1EC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05ED20 7F02A1F0 AFA60040 */  sw    $a2, 0x40($sp)
-/* 05ED24 7F02A1F4 8C870018 */  lw    $a3, 0x18($a0)
-/* 05ED28 7F02A1F8 27A60028 */  addiu $a2, $sp, 0x28
-/* 05ED2C 7F02A1FC 0FC0A857 */  jal   chrlvModelRotyRelated
-/* 05ED30 7F02A200 AFA70034 */   sw    $a3, 0x34($sp)
-/* 05ED34 7F02A204 C7A00040 */  lwc1  $f0, 0x40($sp)
-/* 05ED38 7F02A208 C7A40028 */  lwc1  $f4, 0x28($sp)
-/* 05ED3C 7F02A20C 8FA40034 */  lw    $a0, 0x34($sp)
-/* 05ED40 7F02A210 C7B20030 */  lwc1  $f18, 0x30($sp)
-/* 05ED44 7F02A214 46002182 */  mul.s $f6, $f4, $f0
-/* 05ED48 7F02A218 C4880008 */  lwc1  $f8, 8($a0)
-/* 05ED4C 7F02A21C 27A5001C */  addiu $a1, $sp, 0x1c
-/* 05ED50 7F02A220 46009102 */  mul.s $f4, $f18, $f0
-/* 05ED54 7F02A224 27A60028 */  addiu $a2, $sp, 0x28
-/* 05ED58 7F02A228 46083280 */  add.s $f10, $f6, $f8
-/* 05ED5C 7F02A22C E7AA001C */  swc1  $f10, 0x1c($sp)
-/* 05ED60 7F02A230 C490000C */  lwc1  $f16, 0xc($a0)
-/* 05ED64 7F02A234 E7B00020 */  swc1  $f16, 0x20($sp)
-/* 05ED68 7F02A238 C4860010 */  lwc1  $f6, 0x10($a0)
-/* 05ED6C 7F02A23C 46062200 */  add.s $f8, $f4, $f6
-/* 05ED70 7F02A240 0FC0A60B */  jal   chrlvCall7F0B0E24WithChrWidthHeight
-/* 05ED74 7F02A244 E7A80024 */   swc1  $f8, 0x24($sp)
-/* 05ED78 7F02A248 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05ED7C 7F02A24C 27BD0038 */  addiu $sp, $sp, 0x38
-/* 05ED80 7F02A250 03E00008 */  jr    $ra
-/* 05ED84 7F02A254 00000000 */   nop   
-)
-#endif
+
 
 
 
