@@ -6420,125 +6420,69 @@ bool actor_steps_sideways(ChrRecord *self)
         }
     }
 
+    return FALSE; //unable to step
+}
+
+
+
+/**
+ * Address 0x7F02A428.
+*/
+bool actor_hops_sideways(ChrRecord *self)
+{
+    PropRecord *myprop;
+    PropRecord *bondprop;
+    int pad1; //needed for stack size - check debug rom
+    f32 myRadDirection;
+    int pad2; //needed for stack size
+    f32 myRadDirectionToBond;
+    f32 radChangeToFaceBond;
+    bool HopOtherDirection; //needed for stack size
+    bool HopDirection;
+    f32 myNormalizedRadToBond;
+
+    if (chrIsNotDeadOrShot(self))
+    {
+        myprop                = self->prop;
+        bondprop              = get_curplayer_positiondata();
+        myRadDirection        = getsubroty(self->model);
+        myRadDirectionToBond  = atan2f(bondprop->pos.x - myprop->pos.x, bondprop->pos.z - myprop->pos.z);
+        radChangeToFaceBond   = myRadDirectionToBond - myRadDirection;
+        myNormalizedRadToBond = radChangeToFaceBond;
+
+        if (myRadDirectionToBond < myRadDirection) //avoid negative radians
+        {
+            myNormalizedRadToBond = radChangeToFaceBond + M_TAU;
+        }
+
+        /*DegToRad(45)*/
+        if ((myNormalizedRadToBond < M_45_DEG_IN_RAD)            
+            /*DegToRad(360-45)*/
+            || (myNormalizedRadToBond > M_315_DEG_IN_RAD)                 
+            /*DegToRad(180-45) && DegToRad(180+45)*/
+            || ((myNormalizedRadToBond > M_135_DEG_IN_RAD) && (myNormalizedRadToBond < M_225_DEG_IN_RAD))
+        )
+        {
+            HopDirection = (randomGetNext() & 1) == 0;         //Hop Left or Right
+
+            if (sub_GAME_7F02A1E8(self, HopDirection, 200.0f)) //able to hop dir?
+            {
+                chrlvFireJumpToSideAnimationRelated(self, HopDirection);
+                return TRUE;
+            }
+
+            HopOtherDirection = HopDirection == 0;
+
+            if (sub_GAME_7F02A1E8(self, HopOtherDirection, 200.0f)) //able to hop other dir?
+            {
+                chrlvFireJumpToSideAnimationRelated(self, HopOtherDirection);
+                return TRUE;
+            }
+        }
+    }
+
     return FALSE; //unable to hop
 }
-
-
-
-#ifdef NONMATCHING
-void actor_hops_sideways(void) {
-// ai branch
-}
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80051E4C
-.word 0x40c90fdb /*6.2831855*/
-glabel D_80051E50
-.word 0x3f490fdb /*0.78539819*/
-glabel D_80051E54
-.word 0x40afede0 /*5.4977875*/
-glabel D_80051E58
-.word 0x4016cbe4 /*2.3561945*/
-glabel D_80051E5C
-.word 0x407b53d2 /*3.926991*/
-.text
-glabel actor_hops_sideways
-/* 05EF58 7F02A428 27BDFFB0 */  addiu $sp, $sp, -0x50
-/* 05EF5C 7F02A42C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 05EF60 7F02A430 AFB00018 */  sw    $s0, 0x18($sp)
-/* 05EF64 7F02A434 0FC0A896 */  jal   chrIsNotDeadOrShot
-/* 05EF68 7F02A438 00808025 */   move  $s0, $a0
-/* 05EF6C 7F02A43C 5040004D */  beql  $v0, $zero, .L7F02A574
-/* 05EF70 7F02A440 00001025 */   move  $v0, $zero
-/* 05EF74 7F02A444 8E0E0018 */  lw    $t6, 0x18($s0)
-/* 05EF78 7F02A448 0FC225E6 */  jal   get_curplayer_positiondata
-/* 05EF7C 7F02A44C AFAE004C */   sw    $t6, 0x4c($sp)
-/* 05EF80 7F02A450 8E04001C */  lw    $a0, 0x1c($s0)
-/* 05EF84 7F02A454 0FC1B320 */  jal   getsubroty
-/* 05EF88 7F02A458 AFA20048 */   sw    $v0, 0x48($sp)
-/* 05EF8C 7F02A45C 8FA2004C */  lw    $v0, 0x4c($sp)
-/* 05EF90 7F02A460 8FA30048 */  lw    $v1, 0x48($sp)
-/* 05EF94 7F02A464 C4460008 */  lwc1  $f6, 8($v0)
-/* 05EF98 7F02A468 C44A0010 */  lwc1  $f10, 0x10($v0)
-/* 05EF9C 7F02A46C C4640008 */  lwc1  $f4, 8($v1)
-/* 05EFA0 7F02A470 C4680010 */  lwc1  $f8, 0x10($v1)
-/* 05EFA4 7F02A474 E7A00040 */  swc1  $f0, 0x40($sp)
-/* 05EFA8 7F02A478 46062301 */  sub.s $f12, $f4, $f6
-/* 05EFAC 7F02A47C 0FC16A8C */  jal   atan2f
-/* 05EFB0 7F02A480 460A4381 */   sub.s $f14, $f8, $f10
-/* 05EFB4 7F02A484 C7B00040 */  lwc1  $f16, 0x40($sp)
-/* 05EFB8 7F02A488 3C018005 */  lui   $at, %hi(D_80051E4C)
-/* 05EFBC 7F02A48C 4610003C */  c.lt.s $f0, $f16
-/* 05EFC0 7F02A490 46100301 */  sub.s $f12, $f0, $f16
-/* 05EFC4 7F02A494 45000003 */  bc1f  .L7F02A4A4
-/* 05EFC8 7F02A498 46006086 */   mov.s $f2, $f12
-/* 05EFCC 7F02A49C C4321E4C */  lwc1  $f18, %lo(D_80051E4C)($at)
-/* 05EFD0 7F02A4A0 46126080 */  add.s $f2, $f12, $f18
-.L7F02A4A4:
-/* 05EFD4 7F02A4A4 3C018005 */  lui   $at, %hi(D_80051E50)
-/* 05EFD8 7F02A4A8 C4241E50 */  lwc1  $f4, %lo(D_80051E50)($at)
-/* 05EFDC 7F02A4AC 3C018005 */  lui   $at, %hi(D_80051E54)
-/* 05EFE0 7F02A4B0 4604103C */  c.lt.s $f2, $f4
-/* 05EFE4 7F02A4B4 00000000 */  nop   
-/* 05EFE8 7F02A4B8 45010012 */  bc1t  .L7F02A504
-/* 05EFEC 7F02A4BC 00000000 */   nop   
-/* 05EFF0 7F02A4C0 C4261E54 */  lwc1  $f6, %lo(D_80051E54)($at)
-/* 05EFF4 7F02A4C4 3C018005 */  lui   $at, %hi(D_80051E58)
-/* 05EFF8 7F02A4C8 4602303C */  c.lt.s $f6, $f2
-/* 05EFFC 7F02A4CC 00000000 */  nop   
-/* 05F000 7F02A4D0 4501000C */  bc1t  .L7F02A504
-/* 05F004 7F02A4D4 00000000 */   nop   
-/* 05F008 7F02A4D8 C4281E58 */  lwc1  $f8, %lo(D_80051E58)($at)
-/* 05F00C 7F02A4DC 3C018005 */  lui   $at, %hi(D_80051E5C)
-/* 05F010 7F02A4E0 4602403C */  c.lt.s $f8, $f2
-/* 05F014 7F02A4E4 00000000 */  nop   
-/* 05F018 7F02A4E8 45020022 */  bc1fl .L7F02A574
-/* 05F01C 7F02A4EC 00001025 */   move  $v0, $zero
-/* 05F020 7F02A4F0 C42A1E5C */  lwc1  $f10, %lo(D_80051E5C)($at)
-/* 05F024 7F02A4F4 460A103C */  c.lt.s $f2, $f10
-/* 05F028 7F02A4F8 00000000 */  nop   
-/* 05F02C 7F02A4FC 4502001D */  bc1fl .L7F02A574
-/* 05F030 7F02A500 00001025 */   move  $v0, $zero
-.L7F02A504:
-/* 05F034 7F02A504 0C002914 */  jal   randomGetNext
-/* 05F038 7F02A508 00000000 */   nop   
-/* 05F03C 7F02A50C 30450001 */  andi  $a1, $v0, 1
-/* 05F040 7F02A510 2CAF0001 */  sltiu $t7, $a1, 1
-/* 05F044 7F02A514 01E02825 */  move  $a1, $t7
-/* 05F048 7F02A518 AFAF002C */  sw    $t7, 0x2c($sp)
-/* 05F04C 7F02A51C 02002025 */  move  $a0, $s0
-/* 05F050 7F02A520 0FC0A87A */  jal   sub_GAME_7F02A1E8
-/* 05F054 7F02A524 3C064348 */   lui   $a2, 0x4348
-/* 05F058 7F02A528 10400006 */  beqz  $v0, .L7F02A544
-/* 05F05C 7F02A52C 8FA7002C */   lw    $a3, 0x2c($sp)
-/* 05F060 7F02A530 02002025 */  move  $a0, $s0
-/* 05F064 7F02A534 0FC092A1 */  jal   chrlvFireJumpToSideAnimationRelated
-/* 05F068 7F02A538 00E02825 */   move  $a1, $a3
-/* 05F06C 7F02A53C 1000000D */  b     .L7F02A574
-/* 05F070 7F02A540 24020001 */   li    $v0, 1
-.L7F02A544:
-/* 05F074 7F02A544 2CE50001 */  sltiu $a1, $a3, 1
-/* 05F078 7F02A548 AFA50024 */  sw    $a1, 0x24($sp)
-/* 05F07C 7F02A54C 02002025 */  move  $a0, $s0
-/* 05F080 7F02A550 0FC0A87A */  jal   sub_GAME_7F02A1E8
-/* 05F084 7F02A554 3C064348 */   lui   $a2, 0x4348
-/* 05F088 7F02A558 10400005 */  beqz  $v0, .L7F02A570
-/* 05F08C 7F02A55C 8FA50024 */   lw    $a1, 0x24($sp)
-/* 05F090 7F02A560 0FC092A1 */  jal   chrlvFireJumpToSideAnimationRelated
-/* 05F094 7F02A564 02002025 */   move  $a0, $s0
-/* 05F098 7F02A568 10000002 */  b     .L7F02A574
-/* 05F09C 7F02A56C 24020001 */   li    $v0, 1
-.L7F02A570:
-/* 05F0A0 7F02A570 00001025 */  move  $v0, $zero
-.L7F02A574:
-/* 05F0A4 7F02A574 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 05F0A8 7F02A578 8FB00018 */  lw    $s0, 0x18($sp)
-/* 05F0AC 7F02A57C 27BD0050 */  addiu $sp, $sp, 0x50
-/* 05F0B0 7F02A580 03E00008 */  jr    $ra
-/* 05F0B4 7F02A584 00000000 */   nop   
-)
-#endif
 
 
 

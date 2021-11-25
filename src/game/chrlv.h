@@ -36,5 +36,7 @@ bool sub_GAME_7F0294BC(ChrRecord *self);
 bool check_if_position_in_same_room(struct ChrRecord *self, struct coord3d *pos, struct StandTile *stan);
 s32 sub_GAME_7F032B68(ChrRecord *);
 s32 chrIsDead(struct ChrRecord *chr);
+bool actor_steps_sideways(ChrRecord *self);
+bool actor_hops_sideways(ChrRecord *self);
 
 #endif
