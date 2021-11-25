@@ -6788,35 +6788,19 @@ bool actor_moves_to_preset_at_speed(ChrRecord *self, s32 padid, SPEED speed)
 
 
 
-#ifdef NONMATCHING
-void if_actor_able_set_on_path(void) {
-// ai branch
+/**
+ * Address 0x7F02AD54.
+*/
+bool if_actor_able_set_on_path(ChrRecord *self, s32 pathid)
+{
+    if (pathid && chrIsNotDeadOrShot(self))
+    {
+        set_actor_on_path(self, pathid);
+        return TRUE;
+    }
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel if_actor_able_set_on_path
-/* 05F884 7F02AD54 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 05F888 7F02AD58 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05F88C 7F02AD5C 10A00009 */  beqz  $a1, .L7F02AD84
-/* 05F890 7F02AD60 AFA40018 */   sw    $a0, 0x18($sp)
-/* 05F894 7F02AD64 0FC0A896 */  jal   chrIsNotDeadOrShot
-/* 05F898 7F02AD68 AFA5001C */   sw    $a1, 0x1c($sp)
-/* 05F89C 7F02AD6C 10400005 */  beqz  $v0, .L7F02AD84
-/* 05F8A0 7F02AD70 8FA5001C */   lw    $a1, 0x1c($sp)
-/* 05F8A4 7F02AD74 0FC0A43E */  jal   set_actor_on_path
-/* 05F8A8 7F02AD78 8FA40018 */   lw    $a0, 0x18($sp)
-/* 05F8AC 7F02AD7C 10000002 */  b     .L7F02AD88
-/* 05F8B0 7F02AD80 24020001 */   li    $v0, 1
-.L7F02AD84:
-/* 05F8B4 7F02AD84 00001025 */  move  $v0, $zero
-.L7F02AD88:
-/* 05F8B8 7F02AD88 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05F8BC 7F02AD8C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 05F8C0 7F02AD90 03E00008 */  jr    $ra
-/* 05F8C4 7F02AD94 00000000 */   nop   
-)
-#endif
 
 
 
