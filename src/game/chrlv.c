@@ -96,6 +96,7 @@ s32 chrIsNotDeadOrShot(struct ChrRecord *chr);
 void chrlvSneezeRelated(ChrRecord *arg0);
 void chrlvManageGuardFade(ChrRecord *arg0);
 void sub_GAME_7F02BC80(ChrRecord *arg0);
+void chrlvCheckTriggeredOnShotHit(ChrRecord *arg0);
 
 void sub_GAME_7F025C40(struct ChrRecord *chr, s32);
 void sub_GAME_7F02587C(struct ChrRecord *chr, s32);
@@ -7615,50 +7616,25 @@ void sub_GAME_7F02BC80(ChrRecord *arg0)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02BD20(void) {
+/**
+ * Address 0x7F02BD20.
+*/
+void chrlvCheckTriggeredOnShotHit(ChrRecord *arg0)
+{
+    Model *model;
+    struct coord3d sp30;
 
+    model = arg0->model;
+
+    if (objecthandlerGetModelField28(model) >= sub_GAME_7F06F5C4(model))
+    {
+        sp30.f[0] = arg0->act_preargh.pos.f[0];
+        sp30.f[1] = arg0->act_preargh.pos.f[1];
+        sp30.f[2] = arg0->act_preargh.pos.f[2];
+        triggered_on_shot_hit(arg0, &sp30, arg0->act_preargh.unk038, arg0->act_preargh.unk03c, arg0->act_preargh.unk040);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02BD20
-/* 060850 7F02BD20 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 060854 7F02BD24 AFB00020 */  sw    $s0, 0x20($sp)
-/* 060858 7F02BD28 00808025 */  move  $s0, $a0
-/* 06085C 7F02BD2C AFBF0024 */  sw    $ra, 0x24($sp)
-/* 060860 7F02BD30 8C84001C */  lw    $a0, 0x1c($a0)
-/* 060864 7F02BD34 0FC1BD6F */  jal   objecthandlerGetModelField28
-/* 060868 7F02BD38 AFA4003C */   sw    $a0, 0x3c($sp)
-/* 06086C 7F02BD3C 8FA4003C */  lw    $a0, 0x3c($sp)
-/* 060870 7F02BD40 0FC1BD71 */  jal   sub_GAME_7F06F5C4
-/* 060874 7F02BD44 E7A0002C */   swc1  $f0, 0x2c($sp)
-/* 060878 7F02BD48 C7A4002C */  lwc1  $f4, 0x2c($sp)
-/* 06087C 7F02BD4C 4604003E */  c.le.s $f0, $f4
-/* 060880 7F02BD50 00000000 */  nop   
-/* 060884 7F02BD54 4502000F */  bc1fl .L7F02BD94
-/* 060888 7F02BD58 8FBF0024 */   lw    $ra, 0x24($sp)
-/* 06088C 7F02BD5C C606002C */  lwc1  $f6, 0x2c($s0)
-/* 060890 7F02BD60 02002025 */  move  $a0, $s0
-/* 060894 7F02BD64 27A50030 */  addiu $a1, $sp, 0x30
-/* 060898 7F02BD68 E7A60030 */  swc1  $f6, 0x30($sp)
-/* 06089C 7F02BD6C C6080030 */  lwc1  $f8, 0x30($s0)
-/* 0608A0 7F02BD70 E7A80034 */  swc1  $f8, 0x34($sp)
-/* 0608A4 7F02BD74 C60A0034 */  lwc1  $f10, 0x34($s0)
-/* 0608A8 7F02BD78 E7AA0038 */  swc1  $f10, 0x38($sp)
-/* 0608AC 7F02BD7C 8E0E0040 */  lw    $t6, 0x40($s0)
-/* 0608B0 7F02BD80 8E07003C */  lw    $a3, 0x3c($s0)
-/* 0608B4 7F02BD84 8E060038 */  lw    $a2, 0x38($s0)
-/* 0608B8 7F02BD88 0FC09942 */  jal   triggered_on_shot_hit
-/* 0608BC 7F02BD8C AFAE0010 */   sw    $t6, 0x10($sp)
-/* 0608C0 7F02BD90 8FBF0024 */  lw    $ra, 0x24($sp)
-.L7F02BD94:
-/* 0608C4 7F02BD94 8FB00020 */  lw    $s0, 0x20($sp)
-/* 0608C8 7F02BD98 27BD0040 */  addiu $sp, $sp, 0x40
-/* 0608CC 7F02BD9C 03E00008 */  jr    $ra
-/* 0608D0 7F02BDA0 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -17317,7 +17293,7 @@ glabel manage_actions
 /* 067300 7F0327D0 10000044 */  b     .L7F0328E4
 /* 067304 7F0327D4 8E080014 */   lw    $t0, 0x14($s0)
 .L7F0327D8:
-/* 067308 7F0327D8 0FC0AF48 */  jal   sub_GAME_7F02BD20
+/* 067308 7F0327D8 0FC0AF48 */  jal   chrlvCheckTriggeredOnShotHit
 /* 06730C 7F0327DC 02002025 */   move  $a0, $s0
 /* 067310 7F0327E0 10000040 */  b     .L7F0328E4
 /* 067314 7F0327E4 8E080014 */   lw    $t0, 0x14($s0)
