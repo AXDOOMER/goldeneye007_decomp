@@ -47,5 +47,6 @@ bool actor_kneel_aim_at_actor(ChrRecord *self, s32 targettype, s32 targetid);
 bool check_set_actor_standing_still(ChrRecord *self, s32 faceentitytype, s32 faceentityid);
 bool actor_moves_to_preset_at_speed(ChrRecord *self, s32 padid, SPEED speed);
 bool if_actor_able_set_on_path(ChrRecord *self, s32 pathid);
+f32 chrlvGetSubrotySideback(ChrRecord *arg0);
 
 #endif

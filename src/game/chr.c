@@ -3674,7 +3674,7 @@ glabel sub_GAME_7F02083C
 /* 0556CC 7F020B9C 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0556D0 7F020BA0 E7AC008C */  swc1  $f12, 0x8c($sp)
 .L7F020BA4:
-/* 0556D4 7F020BA4 0FC0B064 */  jal   sub_GAME_7F02C190
+/* 0556D4 7F020BA4 0FC0B064 */  jal   chrlvGetSubrotySideback
 /* 0556D8 7F020BA8 E7AE0090 */   swc1  $f14, 0x90($sp)
 /* 0556DC 7F020BAC C7AE0090 */  lwc1  $f14, 0x90($sp)
 /* 0556E0 7F020BB0 44809000 */  mtc1  $zero, $f18
@@ -4068,7 +4068,7 @@ glabel sub_GAME_7F02083C
 /* 0559A4 7F020E34 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0559A8 7F020E38 E7AC008C */  swc1  $f12, 0x8c($sp)
 .L7F020E3C:
-/* 0559AC 7F020E3C 0FC0B126 */  jal   sub_GAME_7F02C190
+/* 0559AC 7F020E3C 0FC0B126 */  jal   chrlvGetSubrotySideback
 /* 0559B0 7F020E40 E7AE0090 */   swc1  $f14, 0x90($sp)
 /* 0559B4 7F020E44 C7AE0090 */  lwc1  $f14, 0x90($sp)
 /* 0559B8 7F020E48 44809000 */  mtc1  $zero, $f18
