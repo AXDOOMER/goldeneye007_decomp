@@ -99,6 +99,7 @@ void sub_GAME_7F02BC80(ChrRecord *arg0);
 void chrlvCheckTriggeredOnShotHit(ChrRecord *arg0);
 void sub_GAME_7F02BDA4(ChrRecord *arg0);
 void sub_GAME_7F02BE00(ChrRecord *arg0);
+void sub_GAME_7F02BE58(ChrRecord *arg0);
 
 void sub_GAME_7F025C40(struct ChrRecord *chr, s32);
 void sub_GAME_7F02587C(struct ChrRecord *chr, s32);
@@ -7641,6 +7642,9 @@ void chrlvCheckTriggeredOnShotHit(ChrRecord *arg0)
 
 
 /**
+ * @see sub_GAME_7F02BE00
+ * @see sub_GAME_7F02BE58
+ * 
  * Address 0x7F02BDA4.
 */
 void sub_GAME_7F02BDA4(ChrRecord *arg0)
@@ -7656,6 +7660,9 @@ void sub_GAME_7F02BDA4(ChrRecord *arg0)
 
 
 /**
+ * @see sub_GAME_7F02BDA4
+ * @see sub_GAME_7F02BE58
+ * 
  * Address 0x7F02BE00.
 */
 void sub_GAME_7F02BE00(ChrRecord *arg0)
@@ -7672,37 +7679,21 @@ void sub_GAME_7F02BE00(ChrRecord *arg0)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02BE58(void) {
+/**
+ * @see sub_GAME_7F02BDA4
+ * @see sub_GAME_7F02BE00
+ * 
+ * Address 0x7F02BE58.
+*/
+void sub_GAME_7F02BE58(ChrRecord *arg0)
+{
+    Model *model = arg0->model;
 
+    if (objecthandlerGetModelField28(model) >= sub_GAME_7F06F5C4(model))
+    {
+        chrlvKneelingAnimationRelated(arg0);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02BE58
-/* 060988 7F02BE58 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 06098C 7F02BE5C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 060990 7F02BE60 AFA40020 */  sw    $a0, 0x20($sp)
-/* 060994 7F02BE64 8C84001C */  lw    $a0, 0x1c($a0)
-/* 060998 7F02BE68 0FC1BD6F */  jal   objecthandlerGetModelField28
-/* 06099C 7F02BE6C AFA4001C */   sw    $a0, 0x1c($sp)
-/* 0609A0 7F02BE70 8FA4001C */  lw    $a0, 0x1c($sp)
-/* 0609A4 7F02BE74 0FC1BD71 */  jal   sub_GAME_7F06F5C4
-/* 0609A8 7F02BE78 E7A00018 */   swc1  $f0, 0x18($sp)
-/* 0609AC 7F02BE7C C7A40018 */  lwc1  $f4, 0x18($sp)
-/* 0609B0 7F02BE80 4604003E */  c.le.s $f0, $f4
-/* 0609B4 7F02BE84 00000000 */  nop   
-/* 0609B8 7F02BE88 45020004 */  bc1fl .L7F02BE9C
-/* 0609BC 7F02BE8C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0609C0 7F02BE90 0FC08F2E */  jal   chrlvKneelingAnimationRelated
-/* 0609C4 7F02BE94 8FA40020 */   lw    $a0, 0x20($sp)
-/* 0609C8 7F02BE98 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F02BE9C:
-/* 0609CC 7F02BE9C 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0609D0 7F02BEA0 03E00008 */  jr    $ra
-/* 0609D4 7F02BEA4 00000000 */   nop   
-)
-#endif
 
 
 
