@@ -6567,83 +6567,39 @@ bool actor_walks_and_fires(ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-void actor_runs_and_fires(void) {
-// ai branch
+/**
+ * Address 0x7F02A7F8.
+*/
+bool actor_runs_and_fires(ChrRecord *self)
+{
+    PropRecord *myprop;
+    PropRecord *bondprop;
+
+    if (chrIsNotDeadOrShot(self))
+    {
+        myprop   = self->prop;
+        bondprop = get_curplayer_positiondata();
+
+        if (
+            (is_weapon_in_guarddata_hand(self, RIGHT_HAND) || is_weapon_in_guarddata_hand(self, LEFT_HAND))
+            &&
+            ((g_GlobalTimer - self->lastwalk60) >= 181)
+            )
+        {
+            f32 dx = bondprop->pos.f[0] - myprop->pos.f[0];
+            f32 dy = bondprop->pos.f[1] - myprop->pos.f[1];
+            f32 dz = bondprop->pos.f[2] - myprop->pos.f[2];
+
+            if ( ((dx*dx) + (dy*dy) + (dz*dz)) >= (1000000.0f))
+            {
+                sub_GAME_7F02587C(self, SPEED_JOG);
+                return TRUE;
+            }
+        }
+    }
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80051E64
-.word 0x49742400 /*1000000.0*/
-.text
-glabel actor_runs_and_fires
-/* 05F328 7F02A7F8 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 05F32C 7F02A7FC AFBF001C */  sw    $ra, 0x1c($sp)
-/* 05F330 7F02A800 AFB00018 */  sw    $s0, 0x18($sp)
-/* 05F334 7F02A804 0FC0A896 */  jal   chrIsNotDeadOrShot
-/* 05F338 7F02A808 00808025 */   move  $s0, $a0
-/* 05F33C 7F02A80C 50400032 */  beql  $v0, $zero, .L7F02A8D8
-/* 05F340 7F02A810 00001025 */   move  $v0, $zero
-/* 05F344 7F02A814 8E0E0018 */  lw    $t6, 0x18($s0)
-/* 05F348 7F02A818 0FC225E6 */  jal   get_curplayer_positiondata
-/* 05F34C 7F02A81C AFAE0024 */   sw    $t6, 0x24($sp)
-/* 05F350 7F02A820 02002025 */  move  $a0, $s0
-/* 05F354 7F02A824 00002825 */  move  $a1, $zero
-/* 05F358 7F02A828 0FC08C0F */  jal   is_weapon_in_guarddata_hand
-/* 05F35C 7F02A82C AFA20020 */   sw    $v0, 0x20($sp)
-/* 05F360 7F02A830 14400007 */  bnez  $v0, .L7F02A850
-/* 05F364 7F02A834 8FA30020 */   lw    $v1, 0x20($sp)
-/* 05F368 7F02A838 02002025 */  move  $a0, $s0
-/* 05F36C 7F02A83C 24050001 */  li    $a1, 1
-/* 05F370 7F02A840 0FC08C0F */  jal   is_weapon_in_guarddata_hand
-/* 05F374 7F02A844 AFA30020 */   sw    $v1, 0x20($sp)
-/* 05F378 7F02A848 10400022 */  beqz  $v0, .L7F02A8D4
-/* 05F37C 7F02A84C 8FA30020 */   lw    $v1, 0x20($sp)
-.L7F02A850:
-/* 05F380 7F02A850 3C0F8005 */  lui   $t7, %hi(g_GlobalTimer) 
-/* 05F384 7F02A854 8DEF837C */  lw    $t7, %lo(g_GlobalTimer)($t7)
-/* 05F388 7F02A858 8E1800C8 */  lw    $t8, 0xc8($s0)
-/* 05F38C 7F02A85C 8FA20024 */  lw    $v0, 0x24($sp)
-/* 05F390 7F02A860 01F8C823 */  subu  $t9, $t7, $t8
-/* 05F394 7F02A864 2B2100B5 */  slti  $at, $t9, 0xb5
-/* 05F398 7F02A868 5420001B */  bnezl $at, .L7F02A8D8
-/* 05F39C 7F02A86C 00001025 */   move  $v0, $zero
-/* 05F3A0 7F02A870 C4640008 */  lwc1  $f4, 8($v1)
-/* 05F3A4 7F02A874 C4460008 */  lwc1  $f6, 8($v0)
-/* 05F3A8 7F02A878 C468000C */  lwc1  $f8, 0xc($v1)
-/* 05F3AC 7F02A87C C44A000C */  lwc1  $f10, 0xc($v0)
-/* 05F3B0 7F02A880 46062001 */  sub.s $f0, $f4, $f6
-/* 05F3B4 7F02A884 C4700010 */  lwc1  $f16, 0x10($v1)
-/* 05F3B8 7F02A888 C4520010 */  lwc1  $f18, 0x10($v0)
-/* 05F3BC 7F02A88C 460A4081 */  sub.s $f2, $f8, $f10
-/* 05F3C0 7F02A890 46000102 */  mul.s $f4, $f0, $f0
-/* 05F3C4 7F02A894 3C018005 */  lui   $at, %hi(D_80051E64)
-/* 05F3C8 7F02A898 46128301 */  sub.s $f12, $f16, $f18
-/* 05F3CC 7F02A89C 46021182 */  mul.s $f6, $f2, $f2
-/* 05F3D0 7F02A8A0 C4321E64 */  lwc1  $f18, %lo(D_80051E64)($at)
-/* 05F3D4 7F02A8A4 02002025 */  move  $a0, $s0
-/* 05F3D8 7F02A8A8 460C6282 */  mul.s $f10, $f12, $f12
-/* 05F3DC 7F02A8AC 46062200 */  add.s $f8, $f4, $f6
-/* 05F3E0 7F02A8B0 460A4400 */  add.s $f16, $f8, $f10
-/* 05F3E4 7F02A8B4 4610903E */  c.le.s $f18, $f16
-/* 05F3E8 7F02A8B8 00000000 */  nop   
-/* 05F3EC 7F02A8BC 45020006 */  bc1fl .L7F02A8D8
-/* 05F3F0 7F02A8C0 00001025 */   move  $v0, $zero
-/* 05F3F4 7F02A8C4 0FC0961F */  jal   sub_GAME_7F02587C
-/* 05F3F8 7F02A8C8 24050001 */   li    $a1, 1
-/* 05F3FC 7F02A8CC 10000002 */  b     .L7F02A8D8
-/* 05F400 7F02A8D0 24020001 */   li    $v0, 1
-.L7F02A8D4:
-/* 05F404 7F02A8D4 00001025 */  move  $v0, $zero
-.L7F02A8D8:
-/* 05F408 7F02A8D8 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 05F40C 7F02A8DC 8FB00018 */  lw    $s0, 0x18($sp)
-/* 05F410 7F02A8E0 27BD0028 */  addiu $sp, $sp, 0x28
-/* 05F414 7F02A8E4 03E00008 */  jr    $ra
-/* 05F418 7F02A8E8 00000000 */   nop   
-)
-#endif
 
 
 
