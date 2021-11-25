@@ -43,5 +43,6 @@ bool actor_walks_and_fires(ChrRecord *self);
 bool actor_runs_and_fires(ChrRecord *self);
 bool actor_rolls_fires_crouched(ChrRecord *self);
 bool actor_aim_at_actor(ChrRecord *self, s32 a, s32 b);
+bool actor_kneel_aim_at_actor(ChrRecord *self, s32 targettype, s32 targetid);
 
 #endif

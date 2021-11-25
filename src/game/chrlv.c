@@ -6662,7 +6662,8 @@ bool actor_rolls_fires_crouched(ChrRecord *self)
 */
 bool actor_aim_at_actor(ChrRecord *self, s32 a, s32 b)
 {
-    if ((chrIsNotDeadOrShot(self) != 0) && ((is_weapon_in_guarddata_hand(self, RIGHT_HAND) != 0) || (is_weapon_in_guarddata_hand(self, LEFT_HAND) != 0)))
+    if ((chrIsNotDeadOrShot(self)) &&
+        ((is_weapon_in_guarddata_hand(self, RIGHT_HAND)) || (is_weapon_in_guarddata_hand(self, LEFT_HAND))))
     {
         sub_GAME_7F025560(self, a, b);
         return TRUE;
@@ -6674,46 +6675,21 @@ bool actor_aim_at_actor(ChrRecord *self, s32 a, s32 b)
 
 
 
-#ifdef NONMATCHING
-void actor_kneel_aim_at_actor(void) {
-// ai branch
+/**
+ * Address 0x7F02AA88.
+*/
+bool actor_kneel_aim_at_actor(ChrRecord *self, s32 targettype, s32 targetid)
+{
+    if ((chrIsNotDeadOrShot(self)) &&
+        ((is_weapon_in_guarddata_hand(self, RIGHT_HAND)) || (is_weapon_in_guarddata_hand(self, LEFT_HAND))))
+    {
+        sub_GAME_7F0256F0(self, targettype, targetid);
+        return TRUE;
+    }
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel actor_kneel_aim_at_actor
-/* 05F5B8 7F02AA88 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 05F5BC 7F02AA8C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05F5C0 7F02AA90 AFA40018 */  sw    $a0, 0x18($sp)
-/* 05F5C4 7F02AA94 AFA5001C */  sw    $a1, 0x1c($sp)
-/* 05F5C8 7F02AA98 0FC0A896 */  jal   chrIsNotDeadOrShot
-/* 05F5CC 7F02AA9C AFA60020 */   sw    $a2, 0x20($sp)
-/* 05F5D0 7F02AAA0 1040000F */  beqz  $v0, .L7F02AAE0
-/* 05F5D4 7F02AAA4 8FA40018 */   lw    $a0, 0x18($sp)
-/* 05F5D8 7F02AAA8 0FC08C0F */  jal   is_weapon_in_guarddata_hand
-/* 05F5DC 7F02AAAC 00002825 */   move  $a1, $zero
-/* 05F5E0 7F02AAB0 14400005 */  bnez  $v0, .L7F02AAC8
-/* 05F5E4 7F02AAB4 8FA40018 */   lw    $a0, 0x18($sp)
-/* 05F5E8 7F02AAB8 0FC08C0F */  jal   is_weapon_in_guarddata_hand
-/* 05F5EC 7F02AABC 24050001 */   li    $a1, 1
-/* 05F5F0 7F02AAC0 50400008 */  beql  $v0, $zero, .L7F02AAE4
-/* 05F5F4 7F02AAC4 00001025 */   move  $v0, $zero
-.L7F02AAC8:
-/* 05F5F8 7F02AAC8 8FA40018 */  lw    $a0, 0x18($sp)
-/* 05F5FC 7F02AACC 8FA5001C */  lw    $a1, 0x1c($sp)
-/* 05F600 7F02AAD0 0FC095BC */  jal   sub_GAME_7F0256F0
-/* 05F604 7F02AAD4 8FA60020 */   lw    $a2, 0x20($sp)
-/* 05F608 7F02AAD8 10000002 */  b     .L7F02AAE4
-/* 05F60C 7F02AADC 24020001 */   li    $v0, 1
-.L7F02AAE0:
-/* 05F610 7F02AAE0 00001025 */  move  $v0, $zero
-.L7F02AAE4:
-/* 05F614 7F02AAE4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05F618 7F02AAE8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 05F61C 7F02AAEC 03E00008 */  jr    $ra
-/* 05F620 7F02AAF0 00000000 */   nop   
-)
-#endif
+
 
 
 
