@@ -90,6 +90,7 @@ s32 sub_GAME_7F032B68(ChrRecord *);
 s32 sub_GAME_7F029D70(ChrRecord *self);
 void chrlvNormDistanceToPlayer(ChrRecord *arg0, s32 arg1, struct coord3d *arg2);
 s32 sub_GAME_7F02A0EC(ChrRecord *arg0, s32 arg1, f32 arg2);
+void chrlvModelRotyRelated(ChrRecord *arg0, s32 arg1, struct coord3d *arg2);
 
 // move to chrobjecthandler.h
 
@@ -6287,53 +6288,33 @@ s32 sub_GAME_7F02A0EC(ChrRecord *arg0, s32 arg1, f32 arg2)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F02A15C(void) {
+/**
+ * @param arg0:
+ * @param arg1: flag. If set result is (cos, -sin), otherwise (-cos, sin).
+ * @param arg2: out parameter, contains coordinate result.
+ * 
+ * Address 0x7F02A15C.
+*/
+void chrlvModelRotyRelated(ChrRecord *arg0, s32 arg1, struct coord3d *arg2)
+{
+    f32 temp_f12;
 
+    temp_f12 = getsubroty(arg0->model);
+
+    if (arg1 != 0)
+    {
+        arg2->f[0] = cosf(temp_f12);
+        arg2->f[1] = 0.0f;
+        arg2->f[2] = -sinf(temp_f12);
+    }
+    else
+    {
+        arg2->f[0] = -cosf(temp_f12);
+        arg2->f[1] = 0.0f;
+        arg2->f[2] = sinf(temp_f12);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F02A15C
-/* 05EC8C 7F02A15C 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 05EC90 7F02A160 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 05EC94 7F02A164 AFB00018 */  sw    $s0, 0x18($sp)
-/* 05EC98 7F02A168 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 05EC9C 7F02A16C 00C08025 */  move  $s0, $a2
-/* 05ECA0 7F02A170 0FC1B320 */  jal   getsubroty
-/* 05ECA4 7F02A174 8C84001C */   lw    $a0, 0x1c($a0)
-/* 05ECA8 7F02A178 8FAE002C */  lw    $t6, 0x2c($sp)
-/* 05ECAC 7F02A17C 46000306 */  mov.s $f12, $f0
-/* 05ECB0 7F02A180 11C0000B */  beqz  $t6, .L7F02A1B0
-/* 05ECB4 7F02A184 00000000 */   nop   
-/* 05ECB8 7F02A188 0FC15FA8 */  jal   cosf
-/* 05ECBC 7F02A18C E7AC0024 */   swc1  $f12, 0x24($sp)
-/* 05ECC0 7F02A190 44802000 */  mtc1  $zero, $f4
-/* 05ECC4 7F02A194 C7AC0024 */  lwc1  $f12, 0x24($sp)
-/* 05ECC8 7F02A198 E6000000 */  swc1  $f0, ($s0)
-/* 05ECCC 7F02A19C 0FC15FAB */  jal   sinf
-/* 05ECD0 7F02A1A0 E6040004 */   swc1  $f4, 4($s0)
-/* 05ECD4 7F02A1A4 46000187 */  neg.s $f6, $f0
-/* 05ECD8 7F02A1A8 1000000A */  b     .L7F02A1D4
-/* 05ECDC 7F02A1AC E6060008 */   swc1  $f6, 8($s0)
-.L7F02A1B0:
-/* 05ECE0 7F02A1B0 0FC15FA8 */  jal   cosf
-/* 05ECE4 7F02A1B4 E7AC0024 */   swc1  $f12, 0x24($sp)
-/* 05ECE8 7F02A1B8 44805000 */  mtc1  $zero, $f10
-/* 05ECEC 7F02A1BC 46000207 */  neg.s $f8, $f0
-/* 05ECF0 7F02A1C0 C7AC0024 */  lwc1  $f12, 0x24($sp)
-/* 05ECF4 7F02A1C4 E6080000 */  swc1  $f8, ($s0)
-/* 05ECF8 7F02A1C8 0FC15FAB */  jal   sinf
-/* 05ECFC 7F02A1CC E60A0004 */   swc1  $f10, 4($s0)
-/* 05ED00 7F02A1D0 E6000008 */  swc1  $f0, 8($s0)
-.L7F02A1D4:
-/* 05ED04 7F02A1D4 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 05ED08 7F02A1D8 8FB00018 */  lw    $s0, 0x18($sp)
-/* 05ED0C 7F02A1DC 27BD0028 */  addiu $sp, $sp, 0x28
-/* 05ED10 7F02A1E0 03E00008 */  jr    $ra
-/* 05ED14 7F02A1E4 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -6350,7 +6331,7 @@ glabel sub_GAME_7F02A1E8
 /* 05ED20 7F02A1F0 AFA60040 */  sw    $a2, 0x40($sp)
 /* 05ED24 7F02A1F4 8C870018 */  lw    $a3, 0x18($a0)
 /* 05ED28 7F02A1F8 27A60028 */  addiu $a2, $sp, 0x28
-/* 05ED2C 7F02A1FC 0FC0A857 */  jal   sub_GAME_7F02A15C
+/* 05ED2C 7F02A1FC 0FC0A857 */  jal   chrlvModelRotyRelated
 /* 05ED30 7F02A200 AFA70034 */   sw    $a3, 0x34($sp)
 /* 05ED34 7F02A204 C7A00040 */  lwc1  $f0, 0x40($sp)
 /* 05ED38 7F02A208 C7A40028 */  lwc1  $f4, 0x28($sp)
