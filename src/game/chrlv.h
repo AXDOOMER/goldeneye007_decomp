@@ -41,5 +41,6 @@ bool actor_hops_sideways(ChrRecord *self);
 bool actor_jogs_sideways(ChrRecord *self);
 bool actor_walks_and_fires(ChrRecord *self);
 bool actor_runs_and_fires(ChrRecord *self);
+bool actor_rolls_fires_crouched(ChrRecord *self);
 
 #endif

@@ -94,7 +94,9 @@ s32 sub_GAME_7F02A0EC(ChrRecord *arg0, s32 arg1, f32 arg2);
 void chrlvModelRotyRelated(ChrRecord *arg0, s32 arg1, struct coord3d *arg2);
 s32 chrIsNotDeadOrShot(struct ChrRecord *chr);
 
+void sub_GAME_7F025C40(struct ChrRecord *chr, s32);
 void sub_GAME_7F02587C(struct ChrRecord *chr, s32);
+void sub_GAME_7F024CF8(struct ChrRecord *chr, s32);
 
 
 // end forward declarations
@@ -6603,99 +6605,55 @@ bool actor_runs_and_fires(ChrRecord *self)
 
 
 
-#ifdef NONMATCHING
-void actor_rolls_fires_crouched(void) {
-// ai branch
+/**
+ * Address 0x7F02A8EC.
+*/
+bool actor_rolls_fires_crouched(ChrRecord *self)
+{
+    PropRecord *myprop;
+    PropRecord *bondprop;
+
+    struct coord3d vec;
+
+    bool HopOtherDirection;
+    bool HopDirection;
+    float vec2rd;
+
+    if (chrIsNotDeadOrShot(self))
+    {
+        myprop   = self->prop;
+        bondprop = get_curplayer_positiondata();
+
+        if (is_weapon_in_guarddata_hand(self, RIGHT_HAND) || is_weapon_in_guarddata_hand(self, LEFT_HAND))
+        {
+            vec.x  = bondprop->pos.x - myprop->pos.x;
+            vec.y  = bondprop->pos.y - myprop->pos.y;
+            vec.z  = bondprop->pos.z - myprop->pos.z;
+            vec2rd = (vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z);
+
+            if ((200.0f * 200.0f) <= vec2rd) /*Bond GT 200 from chr*/
+            {
+                HopDirection = (randomGetNext() & 1) == 0; //Hop Left or Right
+
+                if (sub_GAME_7F02A0EC(self, HopDirection, 200))
+                {
+                    sub_GAME_7F025C40(self, HopDirection);
+                    return TRUE;
+                }
+
+                HopOtherDirection = HopDirection == 0;
+
+                if (sub_GAME_7F02A0EC(self, HopOtherDirection, 200))
+                {
+                    sub_GAME_7F025C40(self, HopOtherDirection);
+                    return TRUE;
+                }
+            }
+        }
+    }
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80051E68
-.word 0x471c4000 /*40000.0*/
-.text
-glabel actor_rolls_fires_crouched
-/* 05F41C 7F02A8EC 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 05F420 7F02A8F0 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 05F424 7F02A8F4 AFB00018 */  sw    $s0, 0x18($sp)
-/* 05F428 7F02A8F8 0FC0A896 */  jal   chrIsNotDeadOrShot
-/* 05F42C 7F02A8FC 00808025 */   move  $s0, $a0
-/* 05F430 7F02A900 50400041 */  beql  $v0, $zero, .L7F02AA08
-/* 05F434 7F02A904 00001025 */   move  $v0, $zero
-/* 05F438 7F02A908 8E0E0018 */  lw    $t6, 0x18($s0)
-/* 05F43C 7F02A90C 0FC225E6 */  jal   get_curplayer_positiondata
-/* 05F440 7F02A910 AFAE0044 */   sw    $t6, 0x44($sp)
-/* 05F444 7F02A914 02002025 */  move  $a0, $s0
-/* 05F448 7F02A918 00002825 */  move  $a1, $zero
-/* 05F44C 7F02A91C 0FC08C0F */  jal   is_weapon_in_guarddata_hand
-/* 05F450 7F02A920 AFA20040 */   sw    $v0, 0x40($sp)
-/* 05F454 7F02A924 14400007 */  bnez  $v0, .L7F02A944
-/* 05F458 7F02A928 8FA30040 */   lw    $v1, 0x40($sp)
-/* 05F45C 7F02A92C 02002025 */  move  $a0, $s0
-/* 05F460 7F02A930 24050001 */  li    $a1, 1
-/* 05F464 7F02A934 0FC08C0F */  jal   is_weapon_in_guarddata_hand
-/* 05F468 7F02A938 AFA30040 */   sw    $v1, 0x40($sp)
-/* 05F46C 7F02A93C 10400031 */  beqz  $v0, .L7F02AA04
-/* 05F470 7F02A940 8FA30040 */   lw    $v1, 0x40($sp)
-.L7F02A944:
-/* 05F474 7F02A944 8FA20044 */  lw    $v0, 0x44($sp)
-/* 05F478 7F02A948 C4640008 */  lwc1  $f4, 8($v1)
-/* 05F47C 7F02A94C C468000C */  lwc1  $f8, 0xc($v1)
-/* 05F480 7F02A950 C4460008 */  lwc1  $f6, 8($v0)
-/* 05F484 7F02A954 C44A000C */  lwc1  $f10, 0xc($v0)
-/* 05F488 7F02A958 C4700010 */  lwc1  $f16, 0x10($v1)
-/* 05F48C 7F02A95C 46062001 */  sub.s $f0, $f4, $f6
-/* 05F490 7F02A960 C4520010 */  lwc1  $f18, 0x10($v0)
-/* 05F494 7F02A964 3C018005 */  lui   $at, %hi(D_80051E68)
-/* 05F498 7F02A968 460A4081 */  sub.s $f2, $f8, $f10
-/* 05F49C 7F02A96C 46000102 */  mul.s $f4, $f0, $f0
-/* 05F4A0 7F02A970 46128301 */  sub.s $f12, $f16, $f18
-/* 05F4A4 7F02A974 46021182 */  mul.s $f6, $f2, $f2
-/* 05F4A8 7F02A978 C4321E68 */  lwc1  $f18, %lo(D_80051E68)($at)
-/* 05F4AC 7F02A97C 460C6282 */  mul.s $f10, $f12, $f12
-/* 05F4B0 7F02A980 46062200 */  add.s $f8, $f4, $f6
-/* 05F4B4 7F02A984 460A4400 */  add.s $f16, $f8, $f10
-/* 05F4B8 7F02A988 4610903E */  c.le.s $f18, $f16
-/* 05F4BC 7F02A98C 00000000 */  nop   
-/* 05F4C0 7F02A990 4502001D */  bc1fl .L7F02AA08
-/* 05F4C4 7F02A994 00001025 */   move  $v0, $zero
-/* 05F4C8 7F02A998 0C002914 */  jal   randomGetNext
-/* 05F4CC 7F02A99C 00000000 */   nop   
-/* 05F4D0 7F02A9A0 30450001 */  andi  $a1, $v0, 1
-/* 05F4D4 7F02A9A4 2CAF0001 */  sltiu $t7, $a1, 1
-/* 05F4D8 7F02A9A8 01E02825 */  move  $a1, $t7
-/* 05F4DC 7F02A9AC AFAF002C */  sw    $t7, 0x2c($sp)
-/* 05F4E0 7F02A9B0 02002025 */  move  $a0, $s0
-/* 05F4E4 7F02A9B4 0FC0A83B */  jal   sub_GAME_7F02A0EC
-/* 05F4E8 7F02A9B8 3C064348 */   lui   $a2, 0x4348
-/* 05F4EC 7F02A9BC 10400006 */  beqz  $v0, .L7F02A9D8
-/* 05F4F0 7F02A9C0 8FA7002C */   lw    $a3, 0x2c($sp)
-/* 05F4F4 7F02A9C4 02002025 */  move  $a0, $s0
-/* 05F4F8 7F02A9C8 0FC09710 */  jal   sub_GAME_7F025C40
-/* 05F4FC 7F02A9CC 00E02825 */   move  $a1, $a3
-/* 05F500 7F02A9D0 1000000D */  b     .L7F02AA08
-/* 05F504 7F02A9D4 24020001 */   li    $v0, 1
-.L7F02A9D8:
-/* 05F508 7F02A9D8 2CE50001 */  sltiu $a1, $a3, 1
-/* 05F50C 7F02A9DC AFA50024 */  sw    $a1, 0x24($sp)
-/* 05F510 7F02A9E0 02002025 */  move  $a0, $s0
-/* 05F514 7F02A9E4 0FC0A83B */  jal   sub_GAME_7F02A0EC
-/* 05F518 7F02A9E8 3C064348 */   lui   $a2, 0x4348
-/* 05F51C 7F02A9EC 10400005 */  beqz  $v0, .L7F02AA04
-/* 05F520 7F02A9F0 8FA50024 */   lw    $a1, 0x24($sp)
-/* 05F524 7F02A9F4 0FC09710 */  jal   sub_GAME_7F025C40
-/* 05F528 7F02A9F8 02002025 */   move  $a0, $s0
-/* 05F52C 7F02A9FC 10000002 */  b     .L7F02AA08
-/* 05F530 7F02AA00 24020001 */   li    $v0, 1
-.L7F02AA04:
-/* 05F534 7F02AA04 00001025 */  move  $v0, $zero
-.L7F02AA08:
-/* 05F538 7F02AA08 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 05F53C 7F02AA0C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 05F540 7F02AA10 27BD0048 */  addiu $sp, $sp, 0x48
-/* 05F544 7F02AA14 03E00008 */  jr    $ra
-/* 05F548 7F02AA18 00000000 */   nop   
-)
-#endif
 
 
 
