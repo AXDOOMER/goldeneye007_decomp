@@ -6711,47 +6711,28 @@ int actor_fire_or_aim_at_target_update(struct ChrRecord *chr, u32 newflag, u32 n
 
 
 
-#ifdef NONMATCHING
-void check_set_actor_standing_still(void) {
-// ai branch
+/**
+ * Address 0x7F02AB44.
+*/
+bool check_set_actor_standing_still(ChrRecord *self, s32 faceentitytype, s32 faceentityid)
+{
+    if (chrIsNotDeadOrShot(self) != 0)
+    {
+        if (self->actiontype != ACT_STAND)
+        {
+            chrlvKneelingAnimationRelated(self);
+        }
+
+        self->act_stand.face_entitytype = faceentitytype;
+        self->act_stand.face_entityid   = faceentityid;
+        self->act_stand.unk038          = 0;
+        self->act_stand.unk040          = 0;
+
+        return TRUE;
+    }
+
+    return FALSE;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel check_set_actor_standing_still
-/* 05F674 7F02AB44 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 05F678 7F02AB48 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 05F67C 7F02AB4C AFA5001C */  sw    $a1, 0x1c($sp)
-/* 05F680 7F02AB50 AFA60020 */  sw    $a2, 0x20($sp)
-/* 05F684 7F02AB54 0FC0A896 */  jal   chrIsNotDeadOrShot
-/* 05F688 7F02AB58 AFA40018 */   sw    $a0, 0x18($sp)
-/* 05F68C 7F02AB5C 10400010 */  beqz  $v0, .L7F02ABA0
-/* 05F690 7F02AB60 8FA40018 */   lw    $a0, 0x18($sp)
-/* 05F694 7F02AB64 808E0007 */  lb    $t6, 7($a0)
-/* 05F698 7F02AB68 24010001 */  li    $at, 1
-/* 05F69C 7F02AB6C 51C10005 */  beql  $t6, $at, .L7F02AB84
-/* 05F6A0 7F02AB70 8FAF001C */   lw    $t7, 0x1c($sp)
-/* 05F6A4 7F02AB74 0FC08F2E */  jal   chrlvKneelingAnimationRelated
-/* 05F6A8 7F02AB78 AFA40018 */   sw    $a0, 0x18($sp)
-/* 05F6AC 7F02AB7C 8FA40018 */  lw    $a0, 0x18($sp)
-/* 05F6B0 7F02AB80 8FAF001C */  lw    $t7, 0x1c($sp)
-.L7F02AB84:
-/* 05F6B4 7F02AB84 24020001 */  li    $v0, 1
-/* 05F6B8 7F02AB88 AC8F0030 */  sw    $t7, 0x30($a0)
-/* 05F6BC 7F02AB8C 8FB80020 */  lw    $t8, 0x20($sp)
-/* 05F6C0 7F02AB90 AC800038 */  sw    $zero, 0x38($a0)
-/* 05F6C4 7F02AB94 AC800040 */  sw    $zero, 0x40($a0)
-/* 05F6C8 7F02AB98 10000002 */  b     .L7F02ABA4
-/* 05F6CC 7F02AB9C AC980034 */   sw    $t8, 0x34($a0)
-.L7F02ABA0:
-/* 05F6D0 7F02ABA0 00001025 */  move  $v0, $zero
-.L7F02ABA4:
-/* 05F6D4 7F02ABA4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 05F6D8 7F02ABA8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 05F6DC 7F02ABAC 03E00008 */  jr    $ra
-/* 05F6E0 7F02ABB0 00000000 */   nop   
-)
-#endif
 
 
 
